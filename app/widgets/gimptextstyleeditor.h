@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextStyleEditor
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextStyleEditor
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,31 +18,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_STYLE_EDITOR_H__
-#define __GIMP_TEXT_STYLE_EDITOR_H__
+#ifndef __LIGMA_TEXT_STYLE_EDITOR_H__
+#define __LIGMA_TEXT_STYLE_EDITOR_H__
 
 
-#define GIMP_TYPE_TEXT_STYLE_EDITOR            (gimp_text_style_editor_get_type ())
-#define GIMP_TEXT_STYLE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_STYLE_EDITOR, GimpTextStyleEditor))
-#define GIMP_TEXT_STYLE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_STYLE_EDITOR, GimpTextStyleEditorClass))
-#define GIMP_IS_TEXT_STYLE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_STYLE_EDITOR))
-#define GIMP_IS_TEXT_STYLE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_STYLE_EDITOR))
-#define GIMP_TEXT_STYLE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEXT_STYLE_EDITOR, GimpTextStyleEditorClass))
+#define LIGMA_TYPE_TEXT_STYLE_EDITOR            (ligma_text_style_editor_get_type ())
+#define LIGMA_TEXT_STYLE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEXT_STYLE_EDITOR, LigmaTextStyleEditor))
+#define LIGMA_TEXT_STYLE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEXT_STYLE_EDITOR, LigmaTextStyleEditorClass))
+#define LIGMA_IS_TEXT_STYLE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEXT_STYLE_EDITOR))
+#define LIGMA_IS_TEXT_STYLE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEXT_STYLE_EDITOR))
+#define LIGMA_TEXT_STYLE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEXT_STYLE_EDITOR, LigmaTextStyleEditorClass))
 
 
-typedef struct _GimpTextStyleEditorClass GimpTextStyleEditorClass;
+typedef struct _LigmaTextStyleEditorClass LigmaTextStyleEditorClass;
 
-struct _GimpTextStyleEditor
+struct _LigmaTextStyleEditor
 {
   GtkBox          parent_instance;
 
-  Gimp           *gimp;
-  GimpContext    *context;
+  Ligma           *ligma;
+  LigmaContext    *context;
 
-  GimpText       *text; /* read-only for default values */
-  GimpTextBuffer *buffer;
+  LigmaText       *text; /* read-only for default values */
+  LigmaTextBuffer *buffer;
 
-  GimpContainer  *fonts;
+  LigmaContainer  *fonts;
   gdouble         resolution_x;
   gdouble         resolution_y;
 
@@ -67,23 +67,23 @@ struct _GimpTextStyleEditor
   guint           update_idle_id;
 };
 
-struct _GimpTextStyleEditorClass
+struct _LigmaTextStyleEditorClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
+GType       ligma_text_style_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_style_editor_new       (Gimp                 *gimp,
-                                              GimpText             *text,
-                                              GimpTextBuffer       *buffer,
-                                              GimpContainer        *fonts,
+GtkWidget * ligma_text_style_editor_new       (Ligma                 *ligma,
+                                              LigmaText             *text,
+                                              LigmaTextBuffer       *buffer,
+                                              LigmaContainer        *fonts,
                                               gdouble               resolution_x,
                                               gdouble               resolution_y);
 
-GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
+GList     * ligma_text_style_editor_list_tags (LigmaTextStyleEditor  *editor,
                                               GList               **remove_tags);
 
 
-#endif /*  __GIMP_TEXT_STYLE_EDITOR_H__  */
+#endif /*  __LIGMA_TEXT_STYLE_EDITOR_H__  */

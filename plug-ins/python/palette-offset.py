@@ -14,10 +14,10 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -27,10 +27,10 @@ def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
 
-class PaletteOffset (Gimp.PlugIn):
+class PaletteOffset (Ligma.PlugIn):
     ## Parameter: run-mode ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
+    @GObject.Property(type=Ligma.RunMode,
+                      default=Ligma.RunMode.NONINTERACTIVE,
                       nick="Run mode", blurb="The run mode")
     def run_mode(self):
         """Read-write integer property."""
@@ -76,16 +76,16 @@ class PaletteOffset (Gimp.PlugIn):
     def new_palette(self, new_palette):
         self.new_palette = new_palette
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ "python-fu-palette-offset" ]
 
     def do_create_procedure(self, name):
-        procedure = Gimp.Procedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
+        procedure = Ligma.Procedure.new(self, name,
+                                       Ligma.PDBProcType.PLUGIN,
                                        self.run, None)
         if name == 'python-fu-palette-offset':
             procedure.set_menu_label(_("_Offset Palette..."))
@@ -112,31 +112,31 @@ class PaletteOffset (Gimp.PlugIn):
         # Get the parameters
         if args.length() < 1:
             error = 'No parameters given'
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+            return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                                GLib.Error(error))
         runmode = args.index(0)
 
         if args.length() > 1:
             palette = args.index(1)
         if palette == '' or palette is None:
-            palette = Gimp.context_get_palette()
-        (exists, num_colors) = Gimp.palette_get_info(palette)
+            palette = Ligma.context_get_palette()
+        (exists, num_colors) = Ligma.palette_get_info(palette)
         if not exists:
             error = 'Unknown palette: {}'.format(palette)
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+            return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                                GLib.Error(error))
 
         if args.length() > 2:
             amount = args.index(2)
 
-        if runmode == Gimp.RunMode.INTERACTIVE:
+        if runmode == Ligma.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')
             from gi.repository import Gtk
 
-            GimpUi.init ("palette-offset.py")
+            LigmaUi.init ("palette-offset.py")
 
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
+            dialog = LigmaUi.Dialog(use_header_bar=use_header_bar,
                                  title=_("Offset Palette..."))
 
             dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
@@ -152,39 +152,39 @@ class PaletteOffset (Gimp.PlugIn):
             label.show()
 
             amount = self.set_property("amount", amount)
-            spin = GimpUi.prop_spin_button_new(self, "amount", 1.0, 5.0, 0)
+            spin = LigmaUi.prop_spin_button_new(self, "amount", 1.0, 5.0, 0)
             spin.set_activates_default(True)
             box.pack_end(spin, False, False, 1)
             spin.show()
 
             dialog.show()
             if dialog.run() != Gtk.ResponseType.OK:
-                return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
+                return procedure.new_return_values(Ligma.PDBStatusType.CANCEL,
                                                    GLib.Error())
             amount = self.get_property("amount")
 
         #If palette is read only, work on a copy:
-        editable = Gimp.palette_is_editable(palette)
+        editable = Ligma.palette_is_editable(palette)
         if not editable:
-            palette = Gimp.palette_duplicate (palette)
+            palette = Ligma.palette_duplicate (palette)
 
         tmp_entry_array = []
         for i in range (num_colors):
-            tmp_entry_array.append  ((Gimp.palette_entry_get_name (palette, i)[1],
-                                      Gimp.palette_entry_get_color (palette, i)[1]))
+            tmp_entry_array.append  ((Ligma.palette_entry_get_name (palette, i)[1],
+                                      Ligma.palette_entry_get_color (palette, i)[1]))
         for i in range (num_colors):
             target_index = i + amount
             if target_index >= num_colors:
                 target_index -= num_colors
             elif target_index < 0:
                 target_index += num_colors
-            Gimp.palette_entry_set_name (palette, target_index, tmp_entry_array[i][0])
-            Gimp.palette_entry_set_color (palette, target_index, tmp_entry_array[i][1])
+            Ligma.palette_entry_set_name (palette, target_index, tmp_entry_array[i][0])
+            Ligma.palette_entry_set_color (palette, target_index, tmp_entry_array[i][1])
 
-        retval = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+        retval = procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
         value = GObject.Value(GObject.TYPE_STRING, palette)
         retval.remove(1)
         retval.insert(1, value)
         return retval
 
-Gimp.main(PaletteOffset.__gtype__, sys.argv)
+Ligma.main(PaletteOffset.__gtype__, sys.argv)

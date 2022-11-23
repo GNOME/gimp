@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextLayer
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaTextLayer
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYER_H__
-#define __GIMP_TEXT_LAYER_H__
+#ifndef __LIGMA_TEXT_LAYER_H__
+#define __LIGMA_TEXT_LAYER_H__
 
 
-#include "core/gimplayer.h"
+#include "core/ligmalayer.h"
 
 
-#define GIMP_TYPE_TEXT_LAYER            (gimp_text_layer_get_type ())
-#define GIMP_TEXT_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_LAYER, GimpTextLayer))
-#define GIMP_TEXT_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_LAYER, GimpTextLayerClass))
-#define GIMP_IS_TEXT_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_LAYER))
-#define GIMP_IS_TEXT_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_LAYER))
-#define GIMP_TEXT_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEXT_LAYER, GimpTextLayerClass))
+#define LIGMA_TYPE_TEXT_LAYER            (ligma_text_layer_get_type ())
+#define LIGMA_TEXT_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEXT_LAYER, LigmaTextLayer))
+#define LIGMA_TEXT_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEXT_LAYER, LigmaTextLayerClass))
+#define LIGMA_IS_TEXT_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEXT_LAYER))
+#define LIGMA_IS_TEXT_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEXT_LAYER))
+#define LIGMA_TEXT_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEXT_LAYER, LigmaTextLayerClass))
 
 
-typedef struct _GimpTextLayerClass   GimpTextLayerClass;
-typedef struct _GimpTextLayerPrivate GimpTextLayerPrivate;
+typedef struct _LigmaTextLayerClass   LigmaTextLayerClass;
+typedef struct _LigmaTextLayerPrivate LigmaTextLayerPrivate;
 
-struct _GimpTextLayer
+struct _LigmaTextLayer
 {
-  GimpLayer     layer;
+  LigmaLayer     layer;
 
-  GimpText     *text;
+  LigmaText     *text;
   const gchar  *text_parasite;  /*  parasite name that this text was set from,
                                  *  and that should be removed when the text
                                  *  is changed.
@@ -50,29 +50,29 @@ struct _GimpTextLayer
 
   const Babl   *convert_format;
 
-  GimpTextLayerPrivate *private;
+  LigmaTextLayerPrivate *private;
 };
 
-struct _GimpTextLayerClass
+struct _LigmaTextLayerClass
 {
-  GimpLayerClass  parent_class;
+  LigmaLayerClass  parent_class;
 };
 
 
-GType       gimp_text_layer_get_type    (void) G_GNUC_CONST;
+GType       ligma_text_layer_get_type    (void) G_GNUC_CONST;
 
-GimpLayer * gimp_text_layer_new         (GimpImage     *image,
-                                         GimpText      *text);
-GimpText  * gimp_text_layer_get_text    (GimpTextLayer *layer);
-void        gimp_text_layer_set_text    (GimpTextLayer *layer,
-                                         GimpText      *text);
-void        gimp_text_layer_discard     (GimpTextLayer *layer);
-void        gimp_text_layer_set         (GimpTextLayer *layer,
+LigmaLayer * ligma_text_layer_new         (LigmaImage     *image,
+                                         LigmaText      *text);
+LigmaText  * ligma_text_layer_get_text    (LigmaTextLayer *layer);
+void        ligma_text_layer_set_text    (LigmaTextLayer *layer,
+                                         LigmaText      *text);
+void        ligma_text_layer_discard     (LigmaTextLayer *layer);
+void        ligma_text_layer_set         (LigmaTextLayer *layer,
                                          const gchar   *undo_desc,
                                          const gchar   *first_property_name,
                                          ...) G_GNUC_NULL_TERMINATED;
 
-gboolean    gimp_item_is_text_layer     (GimpItem      *item);
+gboolean    ligma_item_is_text_layer     (LigmaItem      *item);
 
 
-#endif /* __GIMP_TEXT_LAYER_H__ */
+#endif /* __LIGMA_TEXT_LAYER_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * image-properties-dialog.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,45 +25,45 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpimagecommenteditor.h"
-#include "widgets/gimpimagepropview.h"
-#include "widgets/gimpimageprofileview.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaimagecommenteditor.h"
+#include "widgets/ligmaimagepropview.h"
+#include "widgets/ligmaimageprofileview.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "image-properties-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GtkWidget *
-image_properties_dialog_new (GimpImage   *image,
-                             GimpContext *context,
+image_properties_dialog_new (LigmaImage   *image,
+                             LigmaContext *context,
                              GtkWidget   *parent)
 {
   GtkWidget *dialog;
   GtkWidget *notebook;
   GtkWidget *view;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      _("Image Properties"),
-                                     "gimp-image-properties",
+                                     "ligma-image-properties",
                                      "dialog-information",
                                      _("Image Properties"),
                                      parent,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_IMAGE_PROPERTIES,
+                                     ligma_standard_help_func,
+                                     LIGMA_HELP_IMAGE_PROPERTIES,
 
                                      _("_Close"), GTK_RESPONSE_CLOSE,
 
@@ -80,18 +80,18 @@ image_properties_dialog_new (GimpImage   *image,
                       notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
-  view = gimp_image_prop_view_new (image);
+  view = ligma_image_prop_view_new (image);
   gtk_container_set_border_width (GTK_CONTAINER (view), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             view, gtk_label_new_with_mnemonic (_("_Properties")));
   gtk_widget_show (view);
 
-  view = gimp_image_profile_view_new (image);
+  view = ligma_image_profile_view_new (image);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             view, gtk_label_new_with_mnemonic (_("C_olor Profile")));
   gtk_widget_show (view);
 
-  view = gimp_image_comment_editor_new (image);
+  view = ligma_image_comment_editor_new (image);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             view, gtk_label_new_with_mnemonic (_("Co_mment")));
   gtk_widget_show (view);

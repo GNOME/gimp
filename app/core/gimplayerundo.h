@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_UNDO_H__
-#define __GIMP_LAYER_UNDO_H__
+#ifndef __LIGMA_LAYER_UNDO_H__
+#define __LIGMA_LAYER_UNDO_H__
 
 
-#include "gimpitemundo.h"
+#include "ligmaitemundo.h"
 
 
-#define GIMP_TYPE_LAYER_UNDO            (gimp_layer_undo_get_type ())
-#define GIMP_LAYER_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_UNDO, GimpLayerUndo))
-#define GIMP_LAYER_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_UNDO, GimpLayerUndoClass))
-#define GIMP_IS_LAYER_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_UNDO))
-#define GIMP_IS_LAYER_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_UNDO))
-#define GIMP_LAYER_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_UNDO, GimpLayerUndoClass))
+#define LIGMA_TYPE_LAYER_UNDO            (ligma_layer_undo_get_type ())
+#define LIGMA_LAYER_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LAYER_UNDO, LigmaLayerUndo))
+#define LIGMA_LAYER_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LAYER_UNDO, LigmaLayerUndoClass))
+#define LIGMA_IS_LAYER_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LAYER_UNDO))
+#define LIGMA_IS_LAYER_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LAYER_UNDO))
+#define LIGMA_LAYER_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LAYER_UNDO, LigmaLayerUndoClass))
 
 
-typedef struct _GimpLayerUndo      GimpLayerUndo;
-typedef struct _GimpLayerUndoClass GimpLayerUndoClass;
+typedef struct _LigmaLayerUndo      LigmaLayerUndo;
+typedef struct _LigmaLayerUndoClass LigmaLayerUndoClass;
 
-struct _GimpLayerUndo
+struct _LigmaLayerUndo
 {
-  GimpItemUndo  parent_instance;
+  LigmaItemUndo  parent_instance;
 
-  GimpLayer    *prev_parent;
+  LigmaLayer    *prev_parent;
   gint          prev_position;   /*  former position in list  */
   GList        *prev_layers;     /*  previous selected layers */
 };
 
-struct _GimpLayerUndoClass
+struct _LigmaLayerUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  LigmaItemUndoClass  parent_class;
 };
 
 
-GType   gimp_layer_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_layer_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_LAYER_UNDO_H__ */
+#endif /* __LIGMA_LAYER_UNDO_H__ */

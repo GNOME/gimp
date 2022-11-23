@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,36 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_H__
-#define __GIMP_PROCEDURE_H__
+#ifndef __LIGMA_PROCEDURE_H__
+#define __LIGMA_PROCEDURE_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/ligmaviewable.h"
 
 
-typedef GimpValueArray * (* GimpMarshalFunc) (GimpProcedure         *procedure,
-                                              Gimp                  *gimp,
-                                              GimpContext           *context,
-                                              GimpProgress          *progress,
-                                              const GimpValueArray  *args,
+typedef LigmaValueArray * (* LigmaMarshalFunc) (LigmaProcedure         *procedure,
+                                              Ligma                  *ligma,
+                                              LigmaContext           *context,
+                                              LigmaProgress          *progress,
+                                              const LigmaValueArray  *args,
                                               GError               **error);
 
 
-#define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
-#define GIMP_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE, GimpProcedure))
-#define GIMP_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
-#define GIMP_IS_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROCEDURE))
-#define GIMP_IS_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROCEDURE))
-#define GIMP_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
+#define LIGMA_TYPE_PROCEDURE            (ligma_procedure_get_type ())
+#define LIGMA_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PROCEDURE, LigmaProcedure))
+#define LIGMA_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PROCEDURE, LigmaProcedureClass))
+#define LIGMA_IS_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PROCEDURE))
+#define LIGMA_IS_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PROCEDURE))
+#define LIGMA_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PROCEDURE, LigmaProcedureClass))
 
 
-typedef struct _GimpProcedureClass GimpProcedureClass;
+typedef struct _LigmaProcedureClass LigmaProcedureClass;
 
-struct _GimpProcedure
+struct _LigmaProcedure
 {
-  GimpViewable      parent_instance;
+  LigmaViewable      parent_instance;
 
-  GimpPDBProcType   proc_type;      /* Type of procedure              */
+  LigmaPDBProcType   proc_type;      /* Type of procedure              */
 
   gboolean          static_help;    /* Are the strings allocated?     */
   gchar            *blurb;          /* Short procedure description    */
@@ -66,109 +66,109 @@ struct _GimpProcedure
   gint32            num_values;     /* Number of return values        */
   GParamSpec      **values;         /* Array of return values         */
 
-  GimpMarshalFunc   marshal_func;   /* Marshaller for internal procs  */
+  LigmaMarshalFunc   marshal_func;   /* Marshaller for internal procs  */
 };
 
-struct _GimpProcedureClass
+struct _LigmaProcedureClass
 {
-  GimpViewableClass parent_class;
+  LigmaViewableClass parent_class;
 
-  const gchar    * (* get_label)      (GimpProcedure   *procedure);
-  const gchar    * (* get_menu_label) (GimpProcedure   *procedure);
-  const gchar    * (* get_blurb)      (GimpProcedure   *procedure);
-  const gchar    * (* get_help_id)    (GimpProcedure   *procedure);
-  gboolean         (* get_sensitive)  (GimpProcedure   *procedure,
-                                       GimpObject      *object,
+  const gchar    * (* get_label)      (LigmaProcedure   *procedure);
+  const gchar    * (* get_menu_label) (LigmaProcedure   *procedure);
+  const gchar    * (* get_blurb)      (LigmaProcedure   *procedure);
+  const gchar    * (* get_help_id)    (LigmaProcedure   *procedure);
+  gboolean         (* get_sensitive)  (LigmaProcedure   *procedure,
+                                       LigmaObject      *object,
                                        const gchar    **reason);
 
-  GimpValueArray * (* execute)        (GimpProcedure   *procedure,
-                                       Gimp            *gimp,
-                                       GimpContext     *context,
-                                       GimpProgress    *progress,
-                                       GimpValueArray  *args,
+  LigmaValueArray * (* execute)        (LigmaProcedure   *procedure,
+                                       Ligma            *ligma,
+                                       LigmaContext     *context,
+                                       LigmaProgress    *progress,
+                                       LigmaValueArray  *args,
                                        GError         **error);
-  void             (* execute_async)  (GimpProcedure   *procedure,
-                                       Gimp            *gimp,
-                                       GimpContext     *context,
-                                       GimpProgress    *progress,
-                                       GimpValueArray  *args,
-                                       GimpDisplay     *display);
+  void             (* execute_async)  (LigmaProcedure   *procedure,
+                                       Ligma            *ligma,
+                                       LigmaContext     *context,
+                                       LigmaProgress    *progress,
+                                       LigmaValueArray  *args,
+                                       LigmaDisplay     *display);
 };
 
 
-GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
+GType            ligma_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
+LigmaProcedure  * ligma_procedure_new                (LigmaMarshalFunc   marshal_func);
 
-void             gimp_procedure_set_help           (GimpProcedure    *procedure,
+void             ligma_procedure_set_help           (LigmaProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
                                                     const gchar      *help_id);
-void             gimp_procedure_set_static_help    (GimpProcedure    *procedure,
+void             ligma_procedure_set_static_help    (LigmaProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
                                                     const gchar      *help_id);
-void             gimp_procedure_take_help          (GimpProcedure    *procedure,
+void             ligma_procedure_take_help          (LigmaProcedure    *procedure,
                                                     gchar            *blurb,
                                                     gchar            *help,
                                                     gchar            *help_id);
 
-void             gimp_procedure_set_attribution    (GimpProcedure    *procedure,
+void             ligma_procedure_set_attribution    (LigmaProcedure    *procedure,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date);
-void             gimp_procedure_set_static_attribution
-                                                   (GimpProcedure    *procedure,
+void             ligma_procedure_set_static_attribution
+                                                   (LigmaProcedure    *procedure,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date);
-void             gimp_procedure_take_attribution   (GimpProcedure    *procedure,
+void             ligma_procedure_take_attribution   (LigmaProcedure    *procedure,
                                                     gchar            *authors,
                                                     gchar            *copyright,
                                                     gchar            *date);
 
-void             gimp_procedure_set_deprecated     (GimpProcedure    *procedure,
+void             ligma_procedure_set_deprecated     (LigmaProcedure    *procedure,
                                                     const gchar      *deprecated);
 
-const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_menu_label     (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_help           (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_help_id        (GimpProcedure    *procedure);
-gboolean         gimp_procedure_get_sensitive      (GimpProcedure    *procedure,
-                                                    GimpObject       *object,
+const gchar    * ligma_procedure_get_label          (LigmaProcedure    *procedure);
+const gchar    * ligma_procedure_get_menu_label     (LigmaProcedure    *procedure);
+const gchar    * ligma_procedure_get_blurb          (LigmaProcedure    *procedure);
+const gchar    * ligma_procedure_get_help           (LigmaProcedure    *procedure);
+const gchar    * ligma_procedure_get_help_id        (LigmaProcedure    *procedure);
+gboolean         ligma_procedure_get_sensitive      (LigmaProcedure    *procedure,
+                                                    LigmaObject       *object,
                                                     const gchar     **reason);
 
-void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
+void             ligma_procedure_add_argument       (LigmaProcedure    *procedure,
                                                     GParamSpec       *pspec);
-void             gimp_procedure_add_return_value   (GimpProcedure    *procedure,
+void             ligma_procedure_add_return_value   (LigmaProcedure    *procedure,
                                                     GParamSpec       *pspec);
 
-GimpValueArray * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
-GimpValueArray * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
+LigmaValueArray * ligma_procedure_get_arguments      (LigmaProcedure    *procedure);
+LigmaValueArray * ligma_procedure_get_return_values  (LigmaProcedure    *procedure,
                                                     gboolean          success,
                                                     const GError     *error);
 
-GimpProcedure  * gimp_procedure_create_override    (GimpProcedure    *procedure,
-                                                    GimpMarshalFunc   new_marshal_func);
+LigmaProcedure  * ligma_procedure_create_override    (LigmaProcedure    *procedure,
+                                                    LigmaMarshalFunc   new_marshal_func);
 
-GimpValueArray * gimp_procedure_execute            (GimpProcedure    *procedure,
-                                                    Gimp             *gimp,
-                                                    GimpContext      *context,
-                                                    GimpProgress     *progress,
-                                                    GimpValueArray   *args,
+LigmaValueArray * ligma_procedure_execute            (LigmaProcedure    *procedure,
+                                                    Ligma             *ligma,
+                                                    LigmaContext      *context,
+                                                    LigmaProgress     *progress,
+                                                    LigmaValueArray   *args,
                                                     GError          **error);
-void             gimp_procedure_execute_async      (GimpProcedure    *procedure,
-                                                    Gimp             *gimp,
-                                                    GimpContext      *context,
-                                                    GimpProgress     *progress,
-                                                    GimpValueArray   *args,
-                                                    GimpDisplay      *display,
+void             ligma_procedure_execute_async      (LigmaProcedure    *procedure,
+                                                    Ligma             *ligma,
+                                                    LigmaContext      *context,
+                                                    LigmaProgress     *progress,
+                                                    LigmaValueArray   *args,
+                                                    LigmaDisplay      *display,
                                                     GError          **error);
 
-gint             gimp_procedure_name_compare       (GimpProcedure    *proc1,
-                                                    GimpProcedure    *proc2);
+gint             ligma_procedure_name_compare       (LigmaProcedure    *proc1,
+                                                    LigmaProcedure    *proc2);
 
 
 
-#endif  /*  __GIMP_PROCEDURE_H__  */
+#endif  /*  __LIGMA_PROCEDURE_H__  */

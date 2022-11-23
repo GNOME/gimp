@@ -1,4 +1,4 @@
-# translation of gimp-script-fu.HEAD.ne.po to Nepali
+# translation of ligma-script-fu.HEAD.ne.po to Nepali
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -11,8 +11,8 @@
 # Nabin Gautam <nabin@mpp.org.np>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.HEAD.ne\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu.HEAD.ne\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2007-07-27 17:05+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
@@ -42,7 +42,7 @@ msgid "_Start Server..."
 msgstr "सर्भर सुरु गर्नुहोस्..."
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
+msgid "_LIGMA Online"
 msgstr "गिम्प अनलाइन"
 
 #: ../plug-ins/script-fu/script-fu.c:308
@@ -82,8 +82,8 @@ msgid "_Beveled Pattern"
 msgstr "बेभेल गरिएको बाँन्की"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
-msgstr "Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
@@ -300,7 +300,7 @@ msgid "Delta value on color"
 msgstr "रङमा डेल्टा मान"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "फ्रेम"
 
@@ -649,7 +649,7 @@ msgstr "अर्धव्यास अस्पष्ट पार्नुह�
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "रङ"
 
@@ -785,69 +785,69 @@ msgstr "छायाँ तौल (%)"
 msgid "Flatten image"
 msgstr "छवि चौडा पार्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "मार्गहरू प्रयोग गर्दै"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "प्रयोगकर्ता म्यानुअललाई पुस्तकचिनो गर्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "तपाईँको छवि वेबका लागि तयारी "
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "डिजिटल क्यामेराको फोटोहरूसँग काम गर्दै"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "सिर्जना गर्नुहोस्, खोल्नुहोस् र फाइलहरू बचत गर्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "आधारभूत विचारहरू"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "संवाद कसरि प्रयोग गर्ने"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "साधारण वस्तुहरू रेखाङ्कन गर्दै"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "सिर्जना गर्नुहोस् र चयन प्रयोग गर्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "मुख्य वेब साइट"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
 msgstr "गिम्प वेब साइटलाई पुस्तकचिनो गर्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "विकासकर्ता वेब साइट"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr "प्रयोगकर्ता म्यानुअल वेब साइट"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "प्लगइन रजिष्ट्री"
 
@@ -974,7 +974,7 @@ msgid "Roughness"
 msgstr "खस्रोपना"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "ग्रेडिएन्ट"
 
@@ -1382,125 +1382,125 @@ msgstr "पारदर्शी पृष्ठभूमि"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "एन रङहरूमा अनुक्रमणिका गर्नुहोस् (० = बाँकी RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr "रेन्डरिङ स्पाइरो"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
 msgstr "स्पाइरोगिम्प..."
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "हालको स्तरमा स्पाइरोग्राफ, इपिट्रोकोइड्स र लिस्साजिअस वक्र थप्नुहोस्"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "प्रकार"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "स्पाइरोग्राफ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "इपिट्रोकोइड"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "लिस्साजियस"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "साइज"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "वृत"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "त्रिभुज"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "चतुर्भुज"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "पेन्टागन"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "हेक्सागन"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "बहुभुज: ७ छेउहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "बहुभुज: ८ छेउहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "बहुभुज: ९ छेउहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "बहुभुज: १० छेउहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "बाहिरी दाँतहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "आन्तरिक दाँतहरू"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "सीमान्त (पिक्सेल)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 msgid "Hole ratio"
 msgstr "प्वालको अनुपात"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "सुरुआत कोण"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "उपकरण"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "शीशाकलम"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "ब्रस"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "एयरब्रस"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "रङ तरिका"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "ठोस रङ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "ग्रेडिएन्ट: लुप सटुथ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "ग्रेडिएन्ट: लुप त्रिभुज"
 
@@ -2133,11 +2133,11 @@ msgstr "छायाँ झार्ने Y अफसेट"
 #~ msgid "Autocrop"
 #~ msgstr "स्वत:काट्नुहोस्"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर ठूलो हेडरको एउटा छवि सिर्जना गर्नुहोस्"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
+#~ msgstr "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर ठूलो हेडरको एउटा छवि सिर्जना गर्नुहोस्"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर सानो हेडरको छवि सिर्जना गर्नुहोस्"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
+#~ msgstr "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर सानो हेडरको छवि सिर्जना गर्नुहोस्"
 
 #~ msgid "Index image"
 #~ msgstr "अनुक्रमणिका छवि"
@@ -2161,28 +2161,28 @@ msgstr "छायाँ झार्ने Y अफसेट"
 #~ msgstr "सानो हेडर..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
-#~ "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर नली बटन लेबुल हेडरको एउटा छवि सिर्जना गर्नुहोस्"
+#~ "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर नली बटन लेबुल हेडरको एउटा छवि सिर्जना गर्नुहोस्"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर नली बटन लेबुलको एउटा छवि सिर्जना गर्नुहोस्"
+#~ "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर नली बटन लेबुलको एउटा छवि सिर्जना गर्नुहोस्"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर दोस्रो स्तरको नली बटन लेबुलको एउटा छवि "
+#~ "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर दोस्रो स्तरको नली बटन लेबुलको एउटा छवि "
 #~ "सिर्जना गर्नुहोस्"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर तेस्रो स्तरको नली बटन लेबुलको एउटा छवि सिर्जना "
+#~ "ligma.org वेबपृष्ठ विषयवस्तु प्रयोग गरेर तेस्रो स्तरको नली बटन लेबुलको एउटा छवि सिर्जना "
 #~ "गर्नुहोस्"
 
 #~ msgid "T_ube Sub-Button Label..."

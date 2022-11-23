@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,24 +15,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_ERROR_H__
-#define __GIMP_PDB_ERROR_H__
+#ifndef __LIGMA_PDB_ERROR_H__
+#define __LIGMA_PDB_ERROR_H__
 
 
 typedef enum
 {
-  GIMP_PDB_ERROR_FAILED,  /* generic error condition */
-  GIMP_PDB_ERROR_CANCELLED,
-  GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
-  GIMP_PDB_ERROR_INVALID_ARGUMENT,
-  GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
-  GIMP_PDB_ERROR_INTERNAL_ERROR
-} GimpPdbErrorCode;
+  LIGMA_PDB_ERROR_FAILED,  /* generic error condition */
+  LIGMA_PDB_ERROR_CANCELLED,
+  LIGMA_PDB_ERROR_PROCEDURE_NOT_FOUND,
+  LIGMA_PDB_ERROR_INVALID_ARGUMENT,
+  LIGMA_PDB_ERROR_INVALID_RETURN_VALUE,
+  LIGMA_PDB_ERROR_INTERNAL_ERROR
+} LigmaPdbErrorCode;
 
 
-#define GIMP_PDB_ERROR (gimp_pdb_error_quark ())
+#define LIGMA_PDB_ERROR (ligma_pdb_error_quark ())
 
-GQuark  gimp_pdb_error_quark (void) G_GNUC_CONST;
+GQuark  ligma_pdb_error_quark (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_PDB_ERROR_H__ */
+#endif /* __LIGMA_PDB_ERROR_H__ */

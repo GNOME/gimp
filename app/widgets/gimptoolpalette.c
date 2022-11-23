@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolpalette.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmatoolpalette.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,116 +23,116 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
-#include "core/gimptoolitem.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmatoolitem.h"
 
-#include "gimptoolbox.h"
-#include "gimptoolbutton.h"
-#include "gimptoolpalette.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindowstrategy.h"
+#include "ligmatoolbox.h"
+#include "ligmatoolbutton.h"
+#include "ligmatoolpalette.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindowstrategy.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON
 #define DEFAULT_BUTTON_RELIEF  GTK_RELIEF_NONE
 
 
-typedef struct _GimpToolPalettePrivate GimpToolPalettePrivate;
+typedef struct _LigmaToolPalettePrivate LigmaToolPalettePrivate;
 
-struct _GimpToolPalettePrivate
+struct _LigmaToolPalettePrivate
 {
-  GimpToolbox *toolbox;
+  LigmaToolbox *toolbox;
 
   GtkWidget   *group;
   GHashTable  *buttons;
 };
 
-#define GET_PRIVATE(p) ((GimpToolPalettePrivate *) gimp_tool_palette_get_instance_private ((GimpToolPalette *) (p)))
+#define GET_PRIVATE(p) ((LigmaToolPalettePrivate *) ligma_tool_palette_get_instance_private ((LigmaToolPalette *) (p)))
 
 
-static void     gimp_tool_palette_finalize            (GObject         *object);
+static void     ligma_tool_palette_finalize            (GObject         *object);
 
 static GtkSizeRequestMode
-                gimp_tool_palette_get_request_mode    (GtkWidget       *widget);
-static void     gimp_tool_palette_get_preferred_width (GtkWidget       *widget,
+                ligma_tool_palette_get_request_mode    (GtkWidget       *widget);
+static void     ligma_tool_palette_get_preferred_width (GtkWidget       *widget,
                                                        gint            *min_width,
                                                        gint            *pref_width);
-static void     gimp_tool_palette_get_preferred_height(GtkWidget       *widget,
+static void     ligma_tool_palette_get_preferred_height(GtkWidget       *widget,
                                                        gint            *min_width,
                                                        gint            *pref_width);
-static void     gimp_tool_palette_height_for_width    (GtkWidget       *widget,
+static void     ligma_tool_palette_height_for_width    (GtkWidget       *widget,
                                                        gint             width,
                                                        gint            *min_height,
                                                        gint            *pref_height);
-static void     gimp_tool_palette_style_updated       (GtkWidget       *widget);
+static void     ligma_tool_palette_style_updated       (GtkWidget       *widget);
 
-static void     gimp_tool_palette_tool_add            (GimpContainer   *container,
-                                                       GimpToolItem    *tool_item,
-                                                       GimpToolPalette *palette);
-static void     gimp_tool_palette_tool_remove         (GimpContainer   *container,
-                                                       GimpToolItem    *tool_item,
-                                                       GimpToolPalette *palette);
-static void     gimp_tool_palette_tool_reorder        (GimpContainer   *container,
-                                                       GimpToolItem    *tool_item,
+static void     ligma_tool_palette_tool_add            (LigmaContainer   *container,
+                                                       LigmaToolItem    *tool_item,
+                                                       LigmaToolPalette *palette);
+static void     ligma_tool_palette_tool_remove         (LigmaContainer   *container,
+                                                       LigmaToolItem    *tool_item,
+                                                       LigmaToolPalette *palette);
+static void     ligma_tool_palette_tool_reorder        (LigmaContainer   *container,
+                                                       LigmaToolItem    *tool_item,
                                                        gint             index,
-                                                       GimpToolPalette *palette);
+                                                       LigmaToolPalette *palette);
 
-static void     gimp_tool_palette_add_button          (GimpToolPalette *palette,
-                                                       GimpToolItem    *tool_item,
+static void     ligma_tool_palette_add_button          (LigmaToolPalette *palette,
+                                                       LigmaToolItem    *tool_item,
                                                        gint             index);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPalette, gimp_tool_palette,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolPalette, ligma_tool_palette,
                             GTK_TYPE_TOOL_PALETTE)
 
-#define parent_class gimp_tool_palette_parent_class
+#define parent_class ligma_tool_palette_parent_class
 
 
 static void
-gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
+ligma_tool_palette_class_init (LigmaToolPaletteClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize                       = gimp_tool_palette_finalize;
+  object_class->finalize                       = ligma_tool_palette_finalize;
 
-  widget_class->get_request_mode               = gimp_tool_palette_get_request_mode;
-  widget_class->get_preferred_width            = gimp_tool_palette_get_preferred_width;
-  widget_class->get_preferred_height           = gimp_tool_palette_get_preferred_height;
-  widget_class->get_preferred_height_for_width = gimp_tool_palette_height_for_width;
-  widget_class->style_updated                  = gimp_tool_palette_style_updated;
+  widget_class->get_request_mode               = ligma_tool_palette_get_request_mode;
+  widget_class->get_preferred_width            = ligma_tool_palette_get_preferred_width;
+  widget_class->get_preferred_height           = ligma_tool_palette_get_preferred_height;
+  widget_class->get_preferred_height_for_width = ligma_tool_palette_height_for_width;
+  widget_class->style_updated                  = ligma_tool_palette_style_updated;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TOOL_ICON_SIZE,
-                                                              GIMP_PARAM_READABLE));
+                                                              LIGMA_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("button-relief",
                                                               NULL, NULL,
                                                               GTK_TYPE_RELIEF_STYLE,
                                                               DEFAULT_BUTTON_RELIEF,
-                                                              GIMP_PARAM_READABLE));
+                                                              LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_tool_palette_init (GimpToolPalette *palette)
+ligma_tool_palette_init (LigmaToolPalette *palette)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (palette);
 
   private->buttons = g_hash_table_new (g_direct_hash, g_direct_equal);
 
@@ -140,9 +140,9 @@ gimp_tool_palette_init (GimpToolPalette *palette)
 }
 
 static void
-gimp_tool_palette_finalize (GObject *object)
+ligma_tool_palette_finalize (GObject *object)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (object);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->buttons, g_hash_table_unref);
 
@@ -150,20 +150,20 @@ gimp_tool_palette_finalize (GObject *object)
 }
 
 static GtkSizeRequestMode
-gimp_tool_palette_get_request_mode (GtkWidget *widget)
+ligma_tool_palette_get_request_mode (GtkWidget *widget)
 {
   return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
 }
 
 static gint
-gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
+ligma_tool_palette_get_n_tools (LigmaToolPalette *palette,
                                gint            *button_width,
                                gint            *button_height,
                                gint            *min_columns,
                                gint            *min_rows)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
-  GimpToolItem           *tool_item;
+  LigmaToolPalettePrivate *private = GET_PRIVATE (palette);
+  LigmaToolItem           *tool_item;
   GHashTableIter          iter;
   GdkMonitor             *monitor;
   GdkRectangle            workarea;
@@ -171,7 +171,7 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
   gint                    max_rows;
   gint                    max_columns;
 
-  if (! gimp_tool_palette_get_button_size (palette,
+  if (! ligma_tool_palette_get_button_size (palette,
                                            button_width, button_height))
     {
       /* arbitrary values, just to simplify our callers */
@@ -185,11 +185,11 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
 
   while (g_hash_table_iter_next (&iter, (gpointer *) &tool_item, NULL))
     {
-      if (gimp_tool_item_get_visible (tool_item))
+      if (ligma_tool_item_get_visible (tool_item))
         n_tools++;
     }
 
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (palette));
+  monitor = ligma_widget_get_monitor (GTK_WIDGET (palette));
   gdk_monitor_get_workarea (monitor, &workarea);
 
   max_columns = (workarea.width  * 0.9) / *button_width;
@@ -202,7 +202,7 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
 }
 
 static void
-gimp_tool_palette_get_preferred_width (GtkWidget *widget,
+ligma_tool_palette_get_preferred_width (GtkWidget *widget,
                                        gint      *min_width,
                                        gint      *pref_width)
 {
@@ -211,7 +211,7 @@ gimp_tool_palette_get_preferred_width (GtkWidget *widget,
   gint min_columns;
   gint min_rows;
 
-  gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+  ligma_tool_palette_get_n_tools (LIGMA_TOOL_PALETTE (widget),
                                  &button_width, &button_height,
                                  &min_columns, &min_rows);
 
@@ -220,7 +220,7 @@ gimp_tool_palette_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-gimp_tool_palette_get_preferred_height (GtkWidget *widget,
+ligma_tool_palette_get_preferred_height (GtkWidget *widget,
                                         gint      *min_height,
                                         gint      *pref_height)
 {
@@ -229,7 +229,7 @@ gimp_tool_palette_get_preferred_height (GtkWidget *widget,
   gint min_columns;
   gint min_rows;
 
-  gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+  ligma_tool_palette_get_n_tools (LIGMA_TOOL_PALETTE (widget),
                                  &button_width, &button_height,
                                  &min_columns, &min_rows);
 
@@ -238,7 +238,7 @@ gimp_tool_palette_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_tool_palette_height_for_width (GtkWidget *widget,
+ligma_tool_palette_height_for_width (GtkWidget *widget,
                                     gint       width,
                                     gint      *min_height,
                                     gint      *pref_height)
@@ -251,7 +251,7 @@ gimp_tool_palette_height_for_width (GtkWidget *widget,
   gint tool_columns;
   gint tool_rows;
 
-  n_tools = gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+  n_tools = ligma_tool_palette_get_n_tools (LIGMA_TOOL_PALETTE (widget),
                                            &button_width, &button_height,
                                            &min_columns, &min_rows);
 
@@ -265,9 +265,9 @@ gimp_tool_palette_height_for_width (GtkWidget *widget,
 }
 
 static void
-gimp_tool_palette_style_updated (GtkWidget *widget)
+ligma_tool_palette_style_updated (GtkWidget *widget)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (widget);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (widget);
   GtkWidget              *tool_button;
   GHashTableIter          iter;
   GtkReliefStyle          relief;
@@ -275,7 +275,7 @@ gimp_tool_palette_style_updated (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  if (! gimp_toolbox_get_context (private->toolbox))
+  if (! ligma_toolbox_get_context (private->toolbox))
     return;
 
   gtk_widget_style_get (widget,
@@ -295,34 +295,34 @@ gimp_tool_palette_style_updated (GtkWidget *widget)
       gtk_button_set_relief (GTK_BUTTON (button), relief);
     }
 
-  gimp_dock_invalidate_geometry (GIMP_DOCK (private->toolbox));
+  ligma_dock_invalidate_geometry (LIGMA_DOCK (private->toolbox));
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_tool_palette_new (void)
+ligma_tool_palette_new (void)
 {
-  return g_object_new (GIMP_TYPE_TOOL_PALETTE, NULL);
+  return g_object_new (LIGMA_TYPE_TOOL_PALETTE, NULL);
 }
 
 void
-gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
-                               GimpToolbox     *toolbox)
+ligma_tool_palette_set_toolbox (LigmaToolPalette *palette,
+                               LigmaToolbox     *toolbox)
 {
-  GimpToolPalettePrivate *private;
-  GimpContext            *context;
+  LigmaToolPalettePrivate *private;
+  LigmaContext            *context;
   GList                  *list;
 
-  g_return_if_fail (GIMP_IS_TOOL_PALETTE (palette));
-  g_return_if_fail (GIMP_IS_TOOLBOX (toolbox));
+  g_return_if_fail (LIGMA_IS_TOOL_PALETTE (palette));
+  g_return_if_fail (LIGMA_IS_TOOLBOX (toolbox));
 
   private = GET_PRIVATE (palette);
 
   private->toolbox = toolbox;
 
-  context = gimp_toolbox_get_context (toolbox);
+  context = ligma_toolbox_get_context (toolbox);
 
   private->group = gtk_tool_item_group_new (_("Tools"));
   gtk_tool_item_group_set_label_widget (GTK_TOOL_ITEM_GROUP (private->group),
@@ -330,49 +330,49 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   gtk_container_add (GTK_CONTAINER (palette), private->group);
   gtk_widget_show (private->group);
 
-  for (list = gimp_get_tool_item_ui_iter (context->gimp);
+  for (list = ligma_get_tool_item_ui_iter (context->ligma);
        list;
        list = g_list_next (list))
     {
-      GimpToolItem *tool_item = list->data;
+      LigmaToolItem *tool_item = list->data;
 
-      gimp_tool_palette_add_button (palette, tool_item, -1);
+      ligma_tool_palette_add_button (palette, tool_item, -1);
     }
 
-  g_signal_connect_object (context->gimp->tool_item_ui_list, "add",
-                           G_CALLBACK (gimp_tool_palette_tool_add),
+  g_signal_connect_object (context->ligma->tool_item_ui_list, "add",
+                           G_CALLBACK (ligma_tool_palette_tool_add),
                            palette, 0);
-  g_signal_connect_object (context->gimp->tool_item_ui_list, "remove",
-                           G_CALLBACK (gimp_tool_palette_tool_remove),
+  g_signal_connect_object (context->ligma->tool_item_ui_list, "remove",
+                           G_CALLBACK (ligma_tool_palette_tool_remove),
                            palette, 0);
-  g_signal_connect_object (context->gimp->tool_item_ui_list, "reorder",
-                           G_CALLBACK (gimp_tool_palette_tool_reorder),
+  g_signal_connect_object (context->ligma->tool_item_ui_list, "reorder",
+                           G_CALLBACK (ligma_tool_palette_tool_reorder),
                            palette, 0);
 
-  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+  g_signal_connect_object (LIGMA_GUI_CONFIG (context->ligma->config),
                            "notify::theme",
-                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           G_CALLBACK (ligma_tool_palette_style_updated),
                            palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+  g_signal_connect_object (LIGMA_GUI_CONFIG (context->ligma->config),
                            "notify::override-theme-icon-size",
-                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           G_CALLBACK (ligma_tool_palette_style_updated),
                            palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+  g_signal_connect_object (LIGMA_GUI_CONFIG (context->ligma->config),
                            "notify::custom-icon-size",
-                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           G_CALLBACK (ligma_tool_palette_style_updated),
                            palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 }
 
 gboolean
-gimp_tool_palette_get_button_size (GimpToolPalette *palette,
+ligma_tool_palette_get_button_size (LigmaToolPalette *palette,
                                    gint            *width,
                                    gint            *height)
 {
-  GimpToolPalettePrivate *private;
+  LigmaToolPalettePrivate *private;
   GHashTableIter          iter;
   GtkWidget              *tool_button;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_PALETTE (palette), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_PALETTE (palette), FALSE);
   g_return_val_if_fail (width != NULL, FALSE);
   g_return_val_if_fail (height != NULL, FALSE);
 
@@ -399,22 +399,22 @@ gimp_tool_palette_get_button_size (GimpToolPalette *palette,
 /*  private functions  */
 
 static void
-gimp_tool_palette_tool_add (GimpContainer   *container,
-                            GimpToolItem    *tool_item,
-                            GimpToolPalette *palette)
+ligma_tool_palette_tool_add (LigmaContainer   *container,
+                            LigmaToolItem    *tool_item,
+                            LigmaToolPalette *palette)
 {
-  gimp_tool_palette_add_button (
+  ligma_tool_palette_add_button (
     palette,
     tool_item,
-    gimp_container_get_child_index (container, GIMP_OBJECT (tool_item)));
+    ligma_container_get_child_index (container, LIGMA_OBJECT (tool_item)));
 }
 
 static void
-gimp_tool_palette_tool_remove (GimpContainer   *container,
-                               GimpToolItem    *tool_item,
-                               GimpToolPalette *palette)
+ligma_tool_palette_tool_remove (LigmaContainer   *container,
+                               LigmaToolItem    *tool_item,
+                               LigmaToolPalette *palette)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (palette);
   GtkWidget              *tool_button;
 
   tool_button = g_hash_table_lookup (private->buttons, tool_item);
@@ -428,12 +428,12 @@ gimp_tool_palette_tool_remove (GimpContainer   *container,
 }
 
 static void
-gimp_tool_palette_tool_reorder (GimpContainer   *container,
-                                GimpToolItem    *tool_item,
+ligma_tool_palette_tool_reorder (LigmaContainer   *container,
+                                LigmaToolItem    *tool_item,
                                 gint             index,
-                                GimpToolPalette *palette)
+                                LigmaToolPalette *palette)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (palette);
   GtkWidget              *tool_button;
 
   tool_button = g_hash_table_lookup (private->buttons, tool_item);
@@ -447,16 +447,16 @@ gimp_tool_palette_tool_reorder (GimpContainer   *container,
 }
 
 static void
-gimp_tool_palette_add_button (GimpToolPalette *palette,
-                              GimpToolItem    *tool_item,
+ligma_tool_palette_add_button (LigmaToolPalette *palette,
+                              LigmaToolItem    *tool_item,
                               gint             index)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  LigmaToolPalettePrivate *private = GET_PRIVATE (palette);
   GtkToolItem            *tool_button;
   GtkWidget              *button;
   GtkReliefStyle          relief;
 
-  tool_button = gimp_tool_button_new (private->toolbox, tool_item);
+  tool_button = ligma_tool_button_new (private->toolbox, tool_item);
   gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (private->group),
                               tool_button, index);
   gtk_widget_show (GTK_WIDGET (tool_button));

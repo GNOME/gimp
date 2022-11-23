@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpnavigationeditor.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmanavigationeditor.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * partly based on app/nav_window
- * Copyright (C) 1999 Andy Thomas <alt@gimp.org>
+ * Copyright (C) 1999 Andy Thomas <alt@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_NAVIGATION_EDITOR_H__
-#define __GIMP_NAVIGATION_EDITOR_H__
+#ifndef __LIGMA_NAVIGATION_EDITOR_H__
+#define __LIGMA_NAVIGATION_EDITOR_H__
 
 
-#include "widgets/gimpeditor.h"
+#include "widgets/ligmaeditor.h"
 
 
-#define GIMP_TYPE_NAVIGATION_EDITOR            (gimp_navigation_editor_get_type ())
-#define GIMP_NAVIGATION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditor))
-#define GIMP_NAVIGATION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditorClass))
-#define GIMP_IS_NAVIGATION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NAVIGATION_EDITOR))
-#define GIMP_IS_NAVIGATION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NAVIGATION_EDITOR))
-#define GIMP_NAVIGATION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditorClass))
+#define LIGMA_TYPE_NAVIGATION_EDITOR            (ligma_navigation_editor_get_type ())
+#define LIGMA_NAVIGATION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_NAVIGATION_EDITOR, LigmaNavigationEditor))
+#define LIGMA_NAVIGATION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_NAVIGATION_EDITOR, LigmaNavigationEditorClass))
+#define LIGMA_IS_NAVIGATION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_NAVIGATION_EDITOR))
+#define LIGMA_IS_NAVIGATION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_NAVIGATION_EDITOR))
+#define LIGMA_NAVIGATION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_NAVIGATION_EDITOR, LigmaNavigationEditorClass))
 
 
-typedef struct _GimpNavigationEditorClass  GimpNavigationEditorClass;
+typedef struct _LigmaNavigationEditorClass  LigmaNavigationEditorClass;
 
-struct _GimpNavigationEditor
+struct _LigmaNavigationEditor
 {
-  GimpEditor        parent_instance;
+  LigmaEditor        parent_instance;
 
-  GimpContext      *context;
-  GimpDisplayShell *shell;
+  LigmaContext      *context;
+  LigmaDisplayShell *shell;
 
-  GimpImageProxy   *image_proxy;
+  LigmaImageProxy   *image_proxy;
 
   GtkWidget        *view;
   GtkWidget        *zoom_label;
@@ -61,20 +61,20 @@ struct _GimpNavigationEditor
   guint             scale_timeout;
 };
 
-struct _GimpNavigationEditorClass
+struct _LigmaNavigationEditorClass
 {
-  GimpEditorClass  parent_class;
+  LigmaEditorClass  parent_class;
 };
 
 
-GType       gimp_navigation_editor_get_type  (void) G_GNUC_CONST;
+GType       ligma_navigation_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_navigation_editor_new       (GimpMenuFactory  *menu_factory);
-void        gimp_navigation_editor_popup     (GimpDisplayShell *shell,
+GtkWidget * ligma_navigation_editor_new       (LigmaMenuFactory  *menu_factory);
+void        ligma_navigation_editor_popup     (LigmaDisplayShell *shell,
                                               GtkWidget        *widget,
                                               GdkEvent         *event,
                                               gint              click_x,
                                               gint              click_y);
 
 
-#endif  /*  __GIMP_NAVIGATION_EDITOR_H__  */
+#endif  /*  __LIGMA_NAVIGATION_EDITOR_H__  */

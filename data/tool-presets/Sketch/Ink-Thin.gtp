@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-ink")
+(icon-name "ligma-tool-ink")
 (name "Ink Thin")
-(tool-options "GimpInkOptions"
-    (tool "gimp-ink-tool")
+(tool-options "LigmaInkOptions"
+    (tool "ligma-ink-tool")
     (foreground (color-rgb 0.102075 0.183901 0.594317))
     (brush-size 400.000000)
     (size 10.000000)
@@ -19,4 +19,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

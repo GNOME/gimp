@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcurvesconfig.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmacurvesconfig.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "core/gimp-utils.h"
-#include "core/gimpcurve.h"
-#include "core/gimphistogram.h"
+#include "core/ligma-utils.h"
+#include "core/ligmacurve.h"
+#include "core/ligmahistogram.h"
 
-#include "gimpcurvesconfig.h"
+#include "ligmacurvesconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -50,122 +50,122 @@ enum
 };
 
 
-static void     gimp_curves_config_iface_init   (GimpConfigInterface *iface);
+static void     ligma_curves_config_iface_init   (LigmaConfigInterface *iface);
 
-static void     gimp_curves_config_finalize     (GObject          *object);
-static void     gimp_curves_config_get_property (GObject          *object,
+static void     ligma_curves_config_finalize     (GObject          *object);
+static void     ligma_curves_config_get_property (GObject          *object,
                                                  guint             property_id,
                                                  GValue           *value,
                                                  GParamSpec       *pspec);
-static void     gimp_curves_config_set_property (GObject          *object,
+static void     ligma_curves_config_set_property (GObject          *object,
                                                  guint             property_id,
                                                  const GValue     *value,
                                                  GParamSpec       *pspec);
 
-static gboolean gimp_curves_config_serialize    (GimpConfig       *config,
-                                                 GimpConfigWriter *writer,
+static gboolean ligma_curves_config_serialize    (LigmaConfig       *config,
+                                                 LigmaConfigWriter *writer,
                                                  gpointer          data);
-static gboolean gimp_curves_config_deserialize  (GimpConfig       *config,
+static gboolean ligma_curves_config_deserialize  (LigmaConfig       *config,
                                                  GScanner         *scanner,
                                                  gint              nest_level,
                                                  gpointer          data);
-static gboolean gimp_curves_config_equal        (GimpConfig       *a,
-                                                 GimpConfig       *b);
-static void     gimp_curves_config_reset        (GimpConfig       *config);
-static gboolean gimp_curves_config_copy         (GimpConfig       *src,
-                                                 GimpConfig       *dest,
+static gboolean ligma_curves_config_equal        (LigmaConfig       *a,
+                                                 LigmaConfig       *b);
+static void     ligma_curves_config_reset        (LigmaConfig       *config);
+static gboolean ligma_curves_config_copy         (LigmaConfig       *src,
+                                                 LigmaConfig       *dest,
                                                  GParamFlags       flags);
 
-static void     gimp_curves_config_curve_dirty  (GimpCurve        *curve,
-                                                 GimpCurvesConfig *config);
+static void     ligma_curves_config_curve_dirty  (LigmaCurve        *curve,
+                                                 LigmaCurvesConfig *config);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
-                         GIMP_TYPE_OPERATION_SETTINGS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_curves_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaCurvesConfig, ligma_curves_config,
+                         LIGMA_TYPE_OPERATION_SETTINGS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_curves_config_iface_init))
 
-#define parent_class gimp_curves_config_parent_class
+#define parent_class ligma_curves_config_parent_class
 
 
 static void
-gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
+ligma_curves_config_class_init (LigmaCurvesConfigClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->finalize            = gimp_curves_config_finalize;
-  object_class->set_property        = gimp_curves_config_set_property;
-  object_class->get_property        = gimp_curves_config_get_property;
+  object_class->finalize            = ligma_curves_config_finalize;
+  object_class->set_property        = ligma_curves_config_set_property;
+  object_class->get_property        = ligma_curves_config_get_property;
 
-  viewable_class->default_icon_name = "gimp-tool-curves";
+  viewable_class->default_icon_name = "ligma-tool-curves";
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TRC,
                          "trc",
                          _("Linear/Perceptual"),
                          _("Work on linear or perceptual RGB"),
-                         GIMP_TYPE_TRC_TYPE,
-                         GIMP_TRC_NON_LINEAR, 0);
+                         LIGMA_TYPE_TRC_TYPE,
+                         LIGMA_TRC_NON_LINEAR, 0);
 
   /* compat */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
                             "linear",
                             _("Linear"),
                             _("Work on linear RGB"),
                             FALSE, 0);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
                          _("Channel"),
                          _("The affected channel"),
-                         GIMP_TYPE_HISTOGRAM_CHANNEL,
-                         GIMP_HISTOGRAM_VALUE, 0);
+                         LIGMA_TYPE_HISTOGRAM_CHANNEL,
+                         LIGMA_HISTOGRAM_VALUE, 0);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_CURVE,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_CURVE,
                            "curve",
                            _("Curve"),
                            _("Curve"),
-                           GIMP_TYPE_CURVE,
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_CURVE,
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
-gimp_curves_config_iface_init (GimpConfigInterface *iface)
+ligma_curves_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_curves_config_serialize;
-  iface->deserialize = gimp_curves_config_deserialize;
-  iface->equal       = gimp_curves_config_equal;
-  iface->reset       = gimp_curves_config_reset;
-  iface->copy        = gimp_curves_config_copy;
+  iface->serialize   = ligma_curves_config_serialize;
+  iface->deserialize = ligma_curves_config_deserialize;
+  iface->equal       = ligma_curves_config_equal;
+  iface->reset       = ligma_curves_config_reset;
+  iface->copy        = ligma_curves_config_copy;
 }
 
 static void
-gimp_curves_config_init (GimpCurvesConfig *self)
+ligma_curves_config_init (LigmaCurvesConfig *self)
 {
-  GimpHistogramChannel channel;
+  LigmaHistogramChannel channel;
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
-      self->curve[channel] = GIMP_CURVE (gimp_curve_new ("curves config"));
+      self->curve[channel] = LIGMA_CURVE (ligma_curve_new ("curves config"));
 
       g_signal_connect_object (self->curve[channel], "dirty",
-                               G_CALLBACK (gimp_curves_config_curve_dirty),
+                               G_CALLBACK (ligma_curves_config_curve_dirty),
                                self, 0);
     }
 
-  gimp_config_reset (GIMP_CONFIG (self));
+  ligma_config_reset (LIGMA_CONFIG (self));
 }
 
 static void
-gimp_curves_config_finalize (GObject *object)
+ligma_curves_config_finalize (GObject *object)
 {
-  GimpCurvesConfig     *self = GIMP_CURVES_CONFIG (object);
-  GimpHistogramChannel  channel;
+  LigmaCurvesConfig     *self = LIGMA_CURVES_CONFIG (object);
+  LigmaHistogramChannel  channel;
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
       g_object_unref (self->curve[channel]);
@@ -176,12 +176,12 @@ gimp_curves_config_finalize (GObject *object)
 }
 
 static void
-gimp_curves_config_get_property (GObject    *object,
+ligma_curves_config_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpCurvesConfig *self = GIMP_CURVES_CONFIG (object);
+  LigmaCurvesConfig *self = LIGMA_CURVES_CONFIG (object);
 
   switch (property_id)
     {
@@ -190,7 +190,7 @@ gimp_curves_config_get_property (GObject    *object,
       break;
 
     case PROP_LINEAR:
-      g_value_set_boolean (value, self->trc == GIMP_TRC_LINEAR ? TRUE : FALSE);
+      g_value_set_boolean (value, self->trc == LIGMA_TRC_LINEAR ? TRUE : FALSE);
       break;
 
     case PROP_CHANNEL:
@@ -208,12 +208,12 @@ gimp_curves_config_get_property (GObject    *object,
 }
 
 static void
-gimp_curves_config_set_property (GObject      *object,
+ligma_curves_config_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpCurvesConfig *self = GIMP_CURVES_CONFIG (object);
+  LigmaCurvesConfig *self = LIGMA_CURVES_CONFIG (object);
 
   switch (property_id)
     {
@@ -223,7 +223,7 @@ gimp_curves_config_set_property (GObject      *object,
 
     case PROP_LINEAR:
       self->trc = g_value_get_boolean (value) ?
-                  GIMP_TRC_LINEAR : GIMP_TRC_NON_LINEAR;
+                  LIGMA_TRC_LINEAR : LIGMA_TRC_NON_LINEAR;
       g_object_notify (object, "trc");
       break;
 
@@ -234,13 +234,13 @@ gimp_curves_config_set_property (GObject      *object,
 
     case PROP_CURVE:
       {
-        GimpCurve *src_curve  = g_value_get_object (value);
-        GimpCurve *dest_curve = self->curve[self->channel];
+        LigmaCurve *src_curve  = g_value_get_object (value);
+        LigmaCurve *dest_curve = self->curve[self->channel];
 
         if (src_curve && dest_curve)
           {
-            gimp_config_copy (GIMP_CONFIG (src_curve),
-                              GIMP_CONFIG (dest_curve), 0);
+            ligma_config_copy (LIGMA_CONFIG (src_curve),
+                              LIGMA_CONFIG (dest_curve), 0);
           }
       }
       break;
@@ -252,35 +252,35 @@ gimp_curves_config_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_curves_config_serialize (GimpConfig       *config,
-                              GimpConfigWriter *writer,
+ligma_curves_config_serialize (LigmaConfig       *config,
+                              LigmaConfigWriter *writer,
                               gpointer          data)
 {
-  GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
-  GimpHistogramChannel  channel;
-  GimpHistogramChannel  old_channel;
+  LigmaCurvesConfig     *c_config = LIGMA_CURVES_CONFIG (config);
+  LigmaHistogramChannel  channel;
+  LigmaHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_operation_settings_config_serialize_base (config, writer, data) ||
-      ! gimp_config_serialize_property_by_name (config, "trc", writer))
+  if (! ligma_operation_settings_config_serialize_base (config, writer, data) ||
+      ! ligma_config_serialize_property_by_name (config, "trc", writer))
     return FALSE;
 
   old_channel = c_config->channel;
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
       c_config->channel = channel;
 
       /*  serialize the channel properties manually (not using
-       *  gimp_config_serialize_properties()), so the parent class'
+       *  ligma_config_serialize_properties()), so the parent class'
        *  properties don't end up in the config file one per channel.
        *  See bug #700653.
        */
       success =
-        (gimp_config_serialize_property_by_name (config, "channel", writer) &&
-         gimp_config_serialize_property_by_name (config, "curve",   writer));
+        (ligma_config_serialize_property_by_name (config, "channel", writer) &&
+         ligma_config_serialize_property_by_name (config, "curve",   writer));
 
       if (! success)
         break;
@@ -292,18 +292,18 @@ gimp_curves_config_serialize (GimpConfig       *config,
 }
 
 static gboolean
-gimp_curves_config_deserialize (GimpConfig *config,
+ligma_curves_config_deserialize (LigmaConfig *config,
                                 GScanner   *scanner,
                                 gint        nest_level,
                                 gpointer    data)
 {
-  GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
-  GimpHistogramChannel  old_channel;
+  LigmaCurvesConfig     *c_config = LIGMA_CURVES_CONFIG (config);
+  LigmaHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
   old_channel = c_config->channel;
 
-  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+  success = ligma_config_deserialize_properties (config, scanner, nest_level);
 
   g_object_set (config, "channel", old_channel, NULL);
 
@@ -311,28 +311,28 @@ gimp_curves_config_deserialize (GimpConfig *config,
 }
 
 static gboolean
-gimp_curves_config_equal (GimpConfig *a,
-                          GimpConfig *b)
+ligma_curves_config_equal (LigmaConfig *a,
+                          LigmaConfig *b)
 {
-  GimpCurvesConfig     *config_a = GIMP_CURVES_CONFIG (a);
-  GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
-  GimpHistogramChannel  channel;
+  LigmaCurvesConfig     *config_a = LIGMA_CURVES_CONFIG (a);
+  LigmaCurvesConfig     *config_b = LIGMA_CURVES_CONFIG (b);
+  LigmaHistogramChannel  channel;
 
-  if (! gimp_operation_settings_config_equal_base (a, b) ||
+  if (! ligma_operation_settings_config_equal_base (a, b) ||
       config_a->trc != config_b->trc)
     return FALSE;
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
-      GimpCurve *curve_a = config_a->curve[channel];
-      GimpCurve *curve_b = config_b->curve[channel];
+      LigmaCurve *curve_a = config_a->curve[channel];
+      LigmaCurve *curve_b = config_b->curve[channel];
 
       if (curve_a && curve_b)
         {
-          if (! gimp_config_is_equal_to (GIMP_CONFIG (curve_a),
-                                         GIMP_CONFIG (curve_b)))
+          if (! ligma_config_is_equal_to (LIGMA_CONFIG (curve_a),
+                                         LIGMA_CONFIG (curve_b)))
             return FALSE;
         }
       else if (curve_a || curve_b)
@@ -347,43 +347,43 @@ gimp_curves_config_equal (GimpConfig *a,
 }
 
 static void
-gimp_curves_config_reset (GimpConfig *config)
+ligma_curves_config_reset (LigmaConfig *config)
 {
-  GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
-  GimpHistogramChannel  channel;
+  LigmaCurvesConfig     *c_config = LIGMA_CURVES_CONFIG (config);
+  LigmaHistogramChannel  channel;
 
-  gimp_operation_settings_config_reset_base (config);
+  ligma_operation_settings_config_reset_base (config);
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
       c_config->channel = channel;
-      gimp_curves_config_reset_channel (c_config);
+      ligma_curves_config_reset_channel (c_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "trc");
-  gimp_config_reset_property (G_OBJECT (config), "channel");
+  ligma_config_reset_property (G_OBJECT (config), "trc");
+  ligma_config_reset_property (G_OBJECT (config), "channel");
 }
 
 static gboolean
-gimp_curves_config_copy (GimpConfig  *src,
-                         GimpConfig  *dest,
+ligma_curves_config_copy (LigmaConfig  *src,
+                         LigmaConfig  *dest,
                          GParamFlags  flags)
 {
-  GimpCurvesConfig     *src_config  = GIMP_CURVES_CONFIG (src);
-  GimpCurvesConfig     *dest_config = GIMP_CURVES_CONFIG (dest);
-  GimpHistogramChannel  channel;
+  LigmaCurvesConfig     *src_config  = LIGMA_CURVES_CONFIG (src);
+  LigmaCurvesConfig     *dest_config = LIGMA_CURVES_CONFIG (dest);
+  LigmaHistogramChannel  channel;
 
-  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+  if (! ligma_operation_settings_config_copy_base (src, dest, flags))
     return FALSE;
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
+  for (channel = LIGMA_HISTOGRAM_VALUE;
+       channel <= LIGMA_HISTOGRAM_ALPHA;
        channel++)
     {
-      gimp_config_copy (GIMP_CONFIG (src_config->curve[channel]),
-                        GIMP_CONFIG (dest_config->curve[channel]),
+      ligma_config_copy (LIGMA_CONFIG (src_config->curve[channel]),
+                        LIGMA_CONFIG (dest_config->curve[channel]),
                         flags);
     }
 
@@ -397,8 +397,8 @@ gimp_curves_config_copy (GimpConfig  *src,
 }
 
 static void
-gimp_curves_config_curve_dirty (GimpCurve        *curve,
-                                GimpCurvesConfig *config)
+ligma_curves_config_curve_dirty (LigmaCurve        *curve,
+                                LigmaCurvesConfig *config)
 {
   g_object_notify (G_OBJECT (config), "curve");
 }
@@ -407,73 +407,73 @@ gimp_curves_config_curve_dirty (GimpCurve        *curve,
 /*  public functions  */
 
 GObject *
-gimp_curves_config_new_spline (gint32         channel,
+ligma_curves_config_new_spline (gint32         channel,
                                const gdouble *points,
                                gint           n_points)
 {
-  GimpCurvesConfig *config;
-  GimpCurve        *curve;
+  LigmaCurvesConfig *config;
+  LigmaCurve        *curve;
   gint              i;
 
-  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
-                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (channel >= LIGMA_HISTOGRAM_VALUE &&
+                        channel <= LIGMA_HISTOGRAM_ALPHA, NULL);
   g_return_val_if_fail (points != NULL, NULL);
   g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
 
-  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+  config = g_object_new (LIGMA_TYPE_CURVES_CONFIG, NULL);
 
   curve = config->curve[channel];
 
-  gimp_data_freeze (GIMP_DATA (curve));
+  ligma_data_freeze (LIGMA_DATA (curve));
 
-  gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-  gimp_curve_clear_points (curve);
+  ligma_curve_set_curve_type (curve, LIGMA_CURVE_SMOOTH);
+  ligma_curve_clear_points (curve);
 
   for (i = 0; i < n_points; i++)
-    gimp_curve_add_point (curve,
+    ligma_curve_add_point (curve,
                           (gdouble) points[i * 2],
                           (gdouble) points[i * 2 + 1]);
 
-  gimp_data_thaw (GIMP_DATA (curve));
+  ligma_data_thaw (LIGMA_DATA (curve));
 
   return G_OBJECT (config);
 }
 
 GObject *
-gimp_curves_config_new_explicit (gint32         channel,
+ligma_curves_config_new_explicit (gint32         channel,
                                  const gdouble *samples,
                                  gint           n_samples)
 {
-  GimpCurvesConfig *config;
-  GimpCurve        *curve;
+  LigmaCurvesConfig *config;
+  LigmaCurve        *curve;
   gint              i;
 
-  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
-                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (channel >= LIGMA_HISTOGRAM_VALUE &&
+                        channel <= LIGMA_HISTOGRAM_ALPHA, NULL);
   g_return_val_if_fail (samples != NULL, NULL);
   g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
 
-  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+  config = g_object_new (LIGMA_TYPE_CURVES_CONFIG, NULL);
 
   curve = config->curve[channel];
 
-  gimp_data_freeze (GIMP_DATA (curve));
+  ligma_data_freeze (LIGMA_DATA (curve));
 
-  gimp_curve_set_curve_type (curve, GIMP_CURVE_FREE);
-  gimp_curve_set_n_samples (curve, n_samples);
+  ligma_curve_set_curve_type (curve, LIGMA_CURVE_FREE);
+  ligma_curve_set_n_samples (curve, n_samples);
 
   for (i = 0; i < n_samples; i++)
-    gimp_curve_set_curve (curve,
+    ligma_curve_set_curve (curve,
                           (gdouble) i / (gdouble) (n_samples - 1),
                           (gdouble) samples[i]);
 
-  gimp_data_thaw (GIMP_DATA (curve));
+  ligma_data_thaw (LIGMA_DATA (curve));
 
   return G_OBJECT (config);
 }
 
 GObject *
-gimp_curves_config_new_spline_cruft (gint32        channel,
+ligma_curves_config_new_spline_cruft (gint32        channel,
                                      const guint8 *points,
                                      gint          n_points)
 {
@@ -481,8 +481,8 @@ gimp_curves_config_new_spline_cruft (gint32        channel,
   gdouble *d_points;
   gint     i;
 
-  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
-                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (channel >= LIGMA_HISTOGRAM_VALUE &&
+                        channel <= LIGMA_HISTOGRAM_ALPHA, NULL);
   g_return_val_if_fail (points != NULL, NULL);
   g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
 
@@ -494,7 +494,7 @@ gimp_curves_config_new_spline_cruft (gint32        channel,
       d_points[i * 2 + 1] = (gdouble) points[i * 2 + 1] / 255.0;
     }
 
-  config = gimp_curves_config_new_spline (channel, d_points, n_points);
+  config = ligma_curves_config_new_spline (channel, d_points, n_points);
 
   g_free (d_points);
 
@@ -502,7 +502,7 @@ gimp_curves_config_new_spline_cruft (gint32        channel,
 }
 
 GObject *
-gimp_curves_config_new_explicit_cruft (gint32        channel,
+ligma_curves_config_new_explicit_cruft (gint32        channel,
                                        const guint8 *samples,
                                        gint          n_samples)
 {
@@ -510,8 +510,8 @@ gimp_curves_config_new_explicit_cruft (gint32        channel,
   gdouble *d_samples;
   gint     i;
 
-  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
-                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (channel >= LIGMA_HISTOGRAM_VALUE &&
+                        channel <= LIGMA_HISTOGRAM_ALPHA, NULL);
   g_return_val_if_fail (samples != NULL, NULL);
   g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
 
@@ -522,7 +522,7 @@ gimp_curves_config_new_explicit_cruft (gint32        channel,
       d_samples[i] = (gdouble) samples[i] / 255.0;
     }
 
-  config = gimp_curves_config_new_explicit (channel, d_samples, n_samples);
+  config = ligma_curves_config_new_explicit (channel, d_samples, n_samples);
 
   g_free (d_samples);
 
@@ -530,43 +530,43 @@ gimp_curves_config_new_explicit_cruft (gint32        channel,
 }
 
 void
-gimp_curves_config_reset_channel (GimpCurvesConfig *config)
+ligma_curves_config_reset_channel (LigmaCurvesConfig *config)
 {
-  g_return_if_fail (GIMP_IS_CURVES_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_CURVES_CONFIG (config));
 
-  gimp_config_reset (GIMP_CONFIG (config->curve[config->channel]));
+  ligma_config_reset (LIGMA_CONFIG (config->curve[config->channel]));
 }
 
-#define GIMP_CURVE_N_CRUFT_POINTS 17
+#define LIGMA_CURVE_N_CRUFT_POINTS 17
 
 gboolean
-gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
+ligma_curves_config_load_cruft (LigmaCurvesConfig  *config,
                                GInputStream      *input,
                                GError           **error)
 {
   GDataInputStream *data_input;
-  gint              index[5][GIMP_CURVE_N_CRUFT_POINTS];
-  gint              value[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gint              index[5][LIGMA_CURVE_N_CRUFT_POINTS];
+  gint              value[5][LIGMA_CURVE_N_CRUFT_POINTS];
   gchar            *line;
   gsize             line_len;
   gint              i, j;
 
-  g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CURVES_CONFIG (config), FALSE);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   data_input = g_data_input_stream_new (input);
 
   line_len = 64;
-  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+  line = ligma_data_input_stream_read_line_always (data_input, &line_len,
                                                   NULL, error);
   if (! line)
     return FALSE;
 
-  if (strcmp (line, "# GIMP Curves File") != 0)
+  if (strcmp (line, "# LIGMA Curves File") != 0)
     {
-      g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                           _("not a GIMP Curves file"));
+      g_set_error_literal (error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
+                           _("not a LIGMA Curves file"));
       g_object_unref (data_input);
       g_free (line);
       return FALSE;
@@ -574,7 +574,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
   for (i = 0; i < 5; i++)
     {
-      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
+      for (j = 0; j < LIGMA_CURVE_N_CRUFT_POINTS; j++)
         {
           gchar *x_str = NULL;
           gchar *y_str = NULL;
@@ -596,7 +596,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
               sscanf (y_str, "%d", &value[i][j]) != 1)
             {
               g_set_error_literal (error,
-                                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                                   LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
                                    _("Parse error, didn't find 2 integers"));
               g_free (x_str);
               g_free (y_str);
@@ -615,14 +615,14 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
   for (i = 0; i < 5; i++)
     {
-      GimpCurve *curve = config->curve[i];
+      LigmaCurve *curve = config->curve[i];
 
-      gimp_data_freeze (GIMP_DATA (curve));
+      ligma_data_freeze (LIGMA_DATA (curve));
 
-      gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-      gimp_curve_clear_points (curve);
+      ligma_curve_set_curve_type (curve, LIGMA_CURVE_SMOOTH);
+      ligma_curve_clear_points (curve);
 
-      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
+      for (j = 0; j < LIGMA_CURVE_N_CRUFT_POINTS; j++)
         {
           gdouble x;
           gdouble y;
@@ -631,13 +631,13 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
           y = (gdouble) value[i][j] / 255.0;
 
           if (x >= 0.0)
-            gimp_curve_add_point (curve, x, y);
+            ligma_curve_add_point (curve, x, y);
         }
 
-      gimp_data_thaw (GIMP_DATA (curve));
+      ligma_data_thaw (LIGMA_DATA (curve));
     }
 
-  config->trc = GIMP_TRC_NON_LINEAR;
+  config->trc = LIGMA_TRC_NON_LINEAR;
 
   g_object_notify (G_OBJECT (config), "trc");
 
@@ -647,46 +647,46 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 }
 
 gboolean
-gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
+ligma_curves_config_save_cruft (LigmaCurvesConfig  *config,
                                GOutputStream     *output,
                                GError           **error)
 {
   GString *string;
   gint     i;
 
-  g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CURVES_CONFIG (config), FALSE);
   g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  string = g_string_new ("# GIMP Curves File\n");
+  string = g_string_new ("# LIGMA Curves File\n");
 
   for (i = 0; i < 5; i++)
     {
-      GimpCurve *curve = config->curve[i];
+      LigmaCurve *curve = config->curve[i];
       gint       j;
 
-      if (curve->curve_type == GIMP_CURVE_SMOOTH)
+      if (curve->curve_type == LIGMA_CURVE_SMOOTH)
         {
           g_object_ref (curve);
         }
       else
         {
-          curve = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (curve)));
+          curve = LIGMA_CURVE (ligma_data_duplicate (LIGMA_DATA (curve)));
 
-          gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+          ligma_curve_set_curve_type (curve, LIGMA_CURVE_SMOOTH);
         }
 
-      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
+      for (j = 0; j < LIGMA_CURVE_N_CRUFT_POINTS; j++)
         {
           gint x = -1;
           gint y = -1;
 
-          if (j < gimp_curve_get_n_points (curve))
+          if (j < ligma_curve_get_n_points (curve))
             {
               gdouble point_x;
               gdouble point_y;
 
-              gimp_curve_get_point (curve, j, &point_x, &point_y);
+              ligma_curve_get_point (curve, j, &point_x, &point_y);
 
               x = floor (point_x * 255.999);
               y = floor (point_y * 255.999);

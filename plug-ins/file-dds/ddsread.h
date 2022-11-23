@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -22,10 +22,10 @@
 #define __DDSREAD_H__
 
 
-extern GimpPDBStatusType read_dds (GFile          *file,
-                                   GimpImage     **image,
+extern LigmaPDBStatusType read_dds (GFile          *file,
+                                   LigmaImage     **image,
                                    gboolean        interactive,
-                                   GimpProcedure  *procedure,
+                                   LigmaProcedure  *procedure,
                                    GObject        *config,
                                    GError        **error);
 

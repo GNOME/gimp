@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_VIEW_H__
-#define __GIMP_HISTOGRAM_VIEW_H__
+#ifndef __LIGMA_HISTOGRAM_VIEW_H__
+#define __LIGMA_HISTOGRAM_VIEW_H__
 
 
-#define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
-#define GIMP_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
-#define GIMP_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))
-#define GIMP_IS_HISTOGRAM_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_VIEW))
-#define GIMP_IS_HISTOGRAM_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_VIEW))
-#define GIMP_HISTOGRAM_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))
+#define LIGMA_TYPE_HISTOGRAM_VIEW            (ligma_histogram_view_get_type ())
+#define LIGMA_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HISTOGRAM_VIEW, LigmaHistogramView))
+#define LIGMA_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HISTOGRAM_VIEW, LigmaHistogramViewClass))
+#define LIGMA_IS_HISTOGRAM_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HISTOGRAM_VIEW))
+#define LIGMA_IS_HISTOGRAM_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HISTOGRAM_VIEW))
+#define LIGMA_HISTOGRAM_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HISTOGRAM_VIEW, LigmaHistogramViewClass))
 
 
-typedef struct _GimpHistogramViewClass  GimpHistogramViewClass;
+typedef struct _LigmaHistogramViewClass  LigmaHistogramViewClass;
 
-struct _GimpHistogramView
+struct _LigmaHistogramView
 {
   GtkDrawingArea         parent_instance;
 
-  GimpHistogram         *histogram;
-  GimpHistogram         *bg_histogram;
-  GimpHistogramChannel   channel;
-  GimpHistogramScale     scale;
+  LigmaHistogram         *histogram;
+  LigmaHistogram         *bg_histogram;
+  LigmaHistogramChannel   channel;
+  LigmaHistogramScale     scale;
   gint                   n_bins;
   gint                   start;
   gint                   end;
@@ -47,44 +47,44 @@ struct _GimpHistogramView
   GdkSeat               *grab_seat;
 };
 
-struct _GimpHistogramViewClass
+struct _LigmaHistogramViewClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* range_changed) (GimpHistogramView *view,
+  void (* range_changed) (LigmaHistogramView *view,
                           gint               start,
                           gint               end);
 };
 
 
-GType           gimp_histogram_view_get_type       (void) G_GNUC_CONST;
+GType           ligma_histogram_view_get_type       (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_histogram_view_new            (gboolean             range);
+GtkWidget     * ligma_histogram_view_new            (gboolean             range);
 
-void            gimp_histogram_view_set_histogram  (GimpHistogramView   *view,
-                                                    GimpHistogram       *histogram);
-GimpHistogram * gimp_histogram_view_get_histogram  (GimpHistogramView   *view);
+void            ligma_histogram_view_set_histogram  (LigmaHistogramView   *view,
+                                                    LigmaHistogram       *histogram);
+LigmaHistogram * ligma_histogram_view_get_histogram  (LigmaHistogramView   *view);
 
-void            gimp_histogram_view_set_background (GimpHistogramView   *view,
-                                                    GimpHistogram       *histogram);
-GimpHistogram * gimp_histogram_view_get_background (GimpHistogramView   *view);
+void            ligma_histogram_view_set_background (LigmaHistogramView   *view,
+                                                    LigmaHistogram       *histogram);
+LigmaHistogram * ligma_histogram_view_get_background (LigmaHistogramView   *view);
 
-void            gimp_histogram_view_set_channel    (GimpHistogramView   *view,
-                                                    GimpHistogramChannel channel);
-GimpHistogramChannel
-                gimp_histogram_view_get_channel    (GimpHistogramView   *view);
+void            ligma_histogram_view_set_channel    (LigmaHistogramView   *view,
+                                                    LigmaHistogramChannel channel);
+LigmaHistogramChannel
+                ligma_histogram_view_get_channel    (LigmaHistogramView   *view);
 
-void            gimp_histogram_view_set_scale      (GimpHistogramView   *view,
-                                                    GimpHistogramScale   scale);
-GimpHistogramScale
-                gimp_histogram_view_get_scale      (GimpHistogramView   *view);
+void            ligma_histogram_view_set_scale      (LigmaHistogramView   *view,
+                                                    LigmaHistogramScale   scale);
+LigmaHistogramScale
+                ligma_histogram_view_get_scale      (LigmaHistogramView   *view);
 
-void            gimp_histogram_view_set_range      (GimpHistogramView   *view,
+void            ligma_histogram_view_set_range      (LigmaHistogramView   *view,
                                                     gint                 start,
                                                     gint                 end);
-void            gimp_histogram_view_get_range      (GimpHistogramView   *view,
+void            ligma_histogram_view_get_range      (LigmaHistogramView   *view,
                                                     gint                *start,
                                                     gint                *end);
 
 
-#endif /* __GIMP_HISTOGRAM_VIEW_H__ */
+#endif /* __LIGMA_HISTOGRAM_VIEW_H__ */

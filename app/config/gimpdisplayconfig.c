@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDisplayConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaDisplayConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,17 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimprc-blurbs.h"
-#include "gimpdisplayconfig.h"
-#include "gimpdisplayoptions.h"
+#include "ligmarc-blurbs.h"
+#include "ligmadisplayconfig.h"
+#include "ligmadisplayoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_ACTIVATE_ON_FOCUS    TRUE
@@ -88,307 +88,307 @@ enum
 };
 
 
-static void  gimp_display_config_finalize          (GObject      *object);
-static void  gimp_display_config_set_property      (GObject      *object,
+static void  ligma_display_config_finalize          (GObject      *object);
+static void  ligma_display_config_set_property      (GObject      *object,
                                                     guint         property_id,
                                                     const GValue *value,
                                                     GParamSpec   *pspec);
-static void  gimp_display_config_get_property      (GObject      *object,
+static void  ligma_display_config_get_property      (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
 
-static void  gimp_display_config_view_notify       (GObject      *object,
+static void  ligma_display_config_view_notify       (GObject      *object,
                                                     GParamSpec   *pspec,
                                                     gpointer      data);
-static void  gimp_display_config_fullscreen_notify (GObject      *object,
+static void  ligma_display_config_fullscreen_notify (GObject      *object,
                                                     GParamSpec   *pspec,
                                                     gpointer      data);
 
 
-G_DEFINE_TYPE (GimpDisplayConfig, gimp_display_config, GIMP_TYPE_CORE_CONFIG)
+G_DEFINE_TYPE (LigmaDisplayConfig, ligma_display_config, LIGMA_TYPE_CORE_CONFIG)
 
-#define parent_class gimp_display_config_parent_class
+#define parent_class ligma_display_config_parent_class
 
 
 static void
-gimp_display_config_class_init (GimpDisplayConfigClass *klass)
+ligma_display_config_class_init (LigmaDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       color        = { 0, 0, 0, 0 };
+  LigmaRGB       color        = { 0, 0, 0, 0 };
 
-  object_class->finalize     = gimp_display_config_finalize;
-  object_class->set_property = gimp_display_config_set_property;
-  object_class->get_property = gimp_display_config_get_property;
+  object_class->finalize     = ligma_display_config_finalize;
+  object_class->set_property = ligma_display_config_set_property;
+  object_class->get_property = ligma_display_config_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
                          "transparency-size",
                          "Transparency size",
                          TRANSPARENCY_SIZE_BLURB,
-                         GIMP_TYPE_CHECK_SIZE,
-                         GIMP_CHECK_SIZE_MEDIUM_CHECKS,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CHECK_SIZE,
+                         LIGMA_CHECK_SIZE_MEDIUM_CHECKS,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
                          "transparency-type",
                          "Transparency type",
                          TRANSPARENCY_TYPE_BLURB,
-                         GIMP_TYPE_CHECK_TYPE,
-                         GIMP_CHECK_TYPE_GRAY_CHECKS,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CHECK_TYPE,
+                         LIGMA_CHECK_TYPE_GRAY_CHECKS,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
                         "transparency-custom-color1",
                         "Transparency custom color 1",
                         TRANSPARENCY_CUSTOM_COLOR1_BLURB,
-                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR1,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        FALSE, &LIGMA_CHECKS_CUSTOM_COLOR1,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
                         "transparency-custom-color2",
                         "Transparency custom color 2",
                         TRANSPARENCY_CUSTOM_COLOR2_BLURB,
-                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR2,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        FALSE, &LIGMA_CHECKS_CUSTOM_COLOR2,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                         "snap-distance",
                         "Snap distance",
                         DEFAULT_SNAP_DISTANCE_BLURB,
                         1, 255, 8,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                         "marching-ants-speed",
                         "Marching ants speed",
                         MARCHING_ANTS_SPEED_BLURB,
                         10, 10000, DEFAULT_MARCHING_ANTS_SPEED,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                             "resize-windows-on-zoom",
                             "Resize windows on zoom",
                             RESIZE_WINDOWS_ON_ZOOM_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
                             "resize-windows-on-resize",
                             "Resize windows on resize",
                             RESIZE_WINDOWS_ON_RESIZE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SHOW_ALL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SHOW_ALL,
                             "default-show-all",
                             "Default show-all",
                             DEFAULT_SHOW_ALL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                             "default-dot-for-dot",
                             "Default dot-for-dot",
                             DEFAULT_DOT_FOR_DOT_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
                             "initial-zoom-to-fit",
                             "Initial zoom-to-fit",
                             INITIAL_ZOOM_TO_FIT_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DRAG_ZOOM_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DRAG_ZOOM_MODE,
                          "drag-zoom-mode",
                          "Drag-to-zoom behavior",
                          DRAG_ZOOM_MODE_BLURB,
-                         GIMP_TYPE_DRAG_ZOOM_MODE,
+                         LIGMA_TYPE_DRAG_ZOOM_MODE,
                          PROP_DRAG_ZOOM_MODE_DISTANCE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE(object_class, PROP_DRAG_ZOOM_SPEED,
+  LIGMA_CONFIG_PROP_DOUBLE(object_class, PROP_DRAG_ZOOM_SPEED,
                           "drag-zoom-speed",
                           "Drag-to-zoom speed",
                           DRAG_ZOOM_SPEED_BLURB,
                           25.0, 300.0, 100.0,
-                          GIMP_PARAM_STATIC_STRINGS);
+                          LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                          "cursor-mode",
                          "Cursor mode",
                          CURSOR_MODE_BLURB,
-                         GIMP_TYPE_CURSOR_MODE,
-                         GIMP_CURSOR_MODE_TOOL_CROSSHAIR,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CURSOR_MODE,
+                         LIGMA_CURSOR_MODE_TOOL_CROSSHAIR,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
                             "cursor-updating",
                             "Cursor updating",
                             CURSOR_UPDATING_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
                             "show-brush-outline",
                             "Show brush outline",
                             SHOW_BRUSH_OUTLINE_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_BRUSH_OUTLINE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_BRUSH_OUTLINE,
                             "snap-brush-outline",
                             "Snap brush outline",
                             SNAP_BRUSH_OUTLINE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
                             "show-paint-tool-cursor",
                             "Show paint tool cursor",
                             SHOW_PAINT_TOOL_CURSOR_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                            "image-title-format",
                            "Image title format",
                            IMAGE_TITLE_FORMAT_BLURB,
-                           GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
                            "image-status-format",
                            "Image statusbar format",
                            IMAGE_STATUS_FORMAT_BLURB,
-                           GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
+  LIGMA_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
                                "monitor-xresolution",
                                "Monitor resolution X",
                                MONITOR_XRESOLUTION_BLURB,
                                DEFAULT_MONITOR_RESOLUTION,
-                               GIMP_PARAM_STATIC_STRINGS);
+                               LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
+  LIGMA_CONFIG_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
                                "monitor-yresolution",
                                "Monitor resolution Y",
                                MONITOR_YRESOLUTION_BLURB,
                                DEFAULT_MONITOR_RESOLUTION,
-                               GIMP_PARAM_STATIC_STRINGS);
+                               LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                             "monitor-resolution-from-windowing-system",
                             "Monitor resolution from windowing system",
                             MONITOR_RES_FROM_GDK_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                          "navigation-preview-size",
                          "Navigation preview size",
                          NAVIGATION_PREVIEW_SIZE_BLURB,
-                         GIMP_TYPE_VIEW_SIZE,
-                         GIMP_VIEW_SIZE_MEDIUM,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_VIEW_SIZE,
+                         LIGMA_VIEW_SIZE_MEDIUM,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
                            "default-view",
                            "Default view options",
                            DEFAULT_VIEW_BLURB,
-                           GIMP_TYPE_DISPLAY_OPTIONS,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_DISPLAY_OPTIONS,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
                            "default-fullscreen-view",
                            "Default fullscreen view options",
                            DEFAULT_FULLSCREEN_VIEW_BLURB,
-                           GIMP_TYPE_DISPLAY_OPTIONS,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_DISPLAY_OPTIONS,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
                             "activate-on-focus",
                             "Activate on focus",
                             ACTIVATE_ON_FOCUS_BLURB,
                             DEFAULT_ACTIVATE_ON_FOCUS,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SPACE_BAR_ACTION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_SPACE_BAR_ACTION,
                          "space-bar-action",
                          "Space bar action",
                          SPACE_BAR_ACTION_BLURB,
-                         GIMP_TYPE_SPACE_BAR_ACTION,
-                         GIMP_SPACE_BAR_ACTION_PAN,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_SPACE_BAR_ACTION,
+                         LIGMA_SPACE_BAR_ACTION_PAN,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_QUALITY,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_QUALITY,
                          "zoom-quality",
                          "Zoom quality",
                          ZOOM_QUALITY_BLURB,
-                         GIMP_TYPE_ZOOM_QUALITY,
-                         GIMP_ZOOM_QUALITY_HIGH,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_ZOOM_QUALITY,
+                         LIGMA_ZOOM_QUALITY_HIGH,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_EVENT_HISTORY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_EVENT_HISTORY,
                             "use-event-history",
                             "Use event history",
                             DEFAULT_USE_EVENT_HISTORY_BLURB,
                             DEFAULT_USE_EVENT_HISTORY,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
                             "default-snap-to-guides",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
                             "default-snap-to-grid",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
                             "default-snap-to-canvas",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
                             "default-snap-to-path",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                             "confirm-on-close",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_XOR_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_XOR_COLOR,
                         "xor-color",
                         NULL, NULL,
                         FALSE, &color,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_IGNORE);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
                             "perfect-mouse",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
   /* Stored as a property because we want to copy the object when we
    * copy the config (for Preferences, etc.). But we don't want it to be
@@ -399,31 +399,31 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    g_param_spec_object ("modifiers-manager",
                                                         NULL, NULL,
                                                         G_TYPE_OBJECT,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_display_config_init (GimpDisplayConfig *config)
+ligma_display_config_init (LigmaDisplayConfig *config)
 {
   config->default_view =
-    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+    g_object_new (LIGMA_TYPE_DISPLAY_OPTIONS, NULL);
 
   g_signal_connect (config->default_view, "notify",
-                    G_CALLBACK (gimp_display_config_view_notify),
+                    G_CALLBACK (ligma_display_config_view_notify),
                     config);
 
   config->default_fullscreen_view =
-    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+    g_object_new (LIGMA_TYPE_DISPLAY_OPTIONS, NULL);
 
   g_signal_connect (config->default_fullscreen_view, "notify",
-                    G_CALLBACK (gimp_display_config_fullscreen_notify),
+                    G_CALLBACK (ligma_display_config_fullscreen_notify),
                     config);
 }
 
 static void
-gimp_display_config_finalize (GObject *object)
+ligma_display_config_finalize (GObject *object)
 {
-  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
+  LigmaDisplayConfig *display_config = LIGMA_DISPLAY_CONFIG (object);
 
   g_free (display_config->image_title_format);
   g_free (display_config->image_status_format);
@@ -436,12 +436,12 @@ gimp_display_config_finalize (GObject *object)
 }
 
 static void
-gimp_display_config_set_property (GObject      *object,
+ligma_display_config_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
+  LigmaDisplayConfig *display_config = LIGMA_DISPLAY_CONFIG (object);
 
   switch (property_id)
     {
@@ -452,10 +452,10 @@ gimp_display_config_set_property (GObject      *object,
       display_config->transparency_type = g_value_get_enum (value);
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR1:
-      display_config->transparency_custom_color1 = *(GimpRGB *) g_value_get_boxed (value);
+      display_config->transparency_custom_color1 = *(LigmaRGB *) g_value_get_boxed (value);
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR2:
-      display_config->transparency_custom_color2 = *(GimpRGB *) g_value_get_boxed (value);
+      display_config->transparency_custom_color2 = *(LigmaRGB *) g_value_get_boxed (value);
       break;
     case PROP_SNAP_DISTANCE:
       display_config->snap_distance = g_value_get_int (value);
@@ -521,12 +521,12 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_VIEW:
       if (g_value_get_object (value))
-        gimp_config_sync (g_value_get_object (value),
+        ligma_config_sync (g_value_get_object (value),
                           G_OBJECT (display_config->default_view), 0);
       break;
     case PROP_DEFAULT_FULLSCREEN_VIEW:
       if (g_value_get_object (value))
-        gimp_config_sync (g_value_get_object (value),
+        ligma_config_sync (g_value_get_object (value),
                           G_OBJECT (display_config->default_fullscreen_view),
                           0);
       break;
@@ -563,12 +563,12 @@ gimp_display_config_set_property (GObject      *object,
 }
 
 static void
-gimp_display_config_get_property (GObject    *object,
+ligma_display_config_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
+  LigmaDisplayConfig *display_config = LIGMA_DISPLAY_CONFIG (object);
 
   switch (property_id)
     {
@@ -683,7 +683,7 @@ gimp_display_config_get_property (GObject    *object,
 }
 
 static void
-gimp_display_config_view_notify (GObject    *object,
+ligma_display_config_view_notify (GObject    *object,
                                  GParamSpec *pspec,
                                  gpointer    data)
 {
@@ -691,7 +691,7 @@ gimp_display_config_view_notify (GObject    *object,
 }
 
 static void
-gimp_display_config_fullscreen_notify (GObject    *object,
+ligma_display_config_fullscreen_notify (GObject    *object,
                                        GParamSpec *pspec,
                                        gpointer    data)
 {

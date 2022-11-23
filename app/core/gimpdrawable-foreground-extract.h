@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
-#define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
+#ifndef  __LIGMA_DRAWABLE_FOREGROUND_EXTRACT_H__
+#define  __LIGMA_DRAWABLE_FOREGROUND_EXTRACT_H__
 
 
-GeglBuffer * gimp_drawable_foreground_extract (GimpDrawable       *drawable,
-                                               GimpMattingEngine   engine,
+GeglBuffer * ligma_drawable_foreground_extract (LigmaDrawable       *drawable,
+                                               LigmaMattingEngine   engine,
                                                gint                global_iterations,
                                                gint                levin_levels,
                                                gint                levin_active_levels,
                                                GeglBuffer         *trimap,
-                                               GimpProgress       *progress);
+                                               LigmaProgress       *progress);
 
 
-#endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
+#endif  /*  __LIGMA_DRAWABLE_FOREGROUND_EXTRACT_H__  */

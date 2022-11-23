@@ -35,37 +35,37 @@
         )
 
   (define (chris-color-edge inImage inLayer inColor inSize)
-    (gimp-selection-all inImage)
-    (gimp-selection-shrink inImage inSize)
-    (gimp-selection-invert inImage)
-    (gimp-context-set-background inColor)
-    (gimp-drawable-edit-fill inLayer FILL-BACKGROUND)
-    (gimp-selection-none inImage)
+    (ligma-selection-all inImage)
+    (ligma-selection-shrink inImage inSize)
+    (ligma-selection-invert inImage)
+    (ligma-context-set-background inColor)
+    (ligma-drawable-edit-fill inLayer FILL-BACKGROUND)
+    (ligma-selection-none inImage)
   )
 
   (let (
-       (theWidth (car (gimp-image-get-width inImage)))
-       (theHeight (car (gimp-image-get-height inImage)))
-       (theImage (if (= inCopy TRUE) (car (gimp-image-duplicate inImage))
+       (theWidth (car (ligma-image-get-width inImage)))
+       (theHeight (car (ligma-image-get-height inImage)))
+       (theImage (if (= inCopy TRUE) (car (ligma-image-duplicate inImage))
                                       inImage))
        (theLayer 0)
        )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
     (if (= inCopy TRUE)
-        (gimp-image-undo-disable theImage)
-        (gimp-image-undo-group-start theImage)
+        (ligma-image-undo-disable theImage)
+        (ligma-image-undo-group-start theImage)
     )
 
-    (gimp-selection-all theImage)
+    (ligma-selection-all theImage)
 
-    (if (> (car (gimp-drawable-type inLayer)) 1)
-        (gimp-image-convert-rgb theImage)
+    (if (> (car (ligma-drawable-type inLayer)) 1)
+        (ligma-image-convert-rgb theImage)
     )
 
-    (set! theLayer (car (gimp-layer-new theImage
+    (set! theLayer (car (ligma-layer-new theImage
                                         theWidth
                                         theHeight
                                         RGBA-IMAGE
@@ -73,13 +73,13 @@
                                         100
                                         LAYER-MODE-NORMAL)))
 
-    (gimp-image-insert-layer theImage theLayer 0 0)
+    (ligma-image-insert-layer theImage theLayer 0 0)
 
 
-    (gimp-drawable-edit-clear theLayer)
+    (ligma-drawable-edit-clear theLayer)
     (chris-color-edge theImage theLayer inColor inSize)
 
-    (gimp-layer-scale theLayer
+    (ligma-layer-scale theLayer
                       (/ theWidth inGranu)
                       (/ theHeight inGranu)
                       TRUE)
@@ -90,16 +90,16 @@
                     (/ inSize inGranu)
                     (/ inSize inGranu))
     (chris-color-edge theImage theLayer inColor 1)
-    (gimp-layer-scale theLayer theWidth theHeight TRUE)
+    (ligma-layer-scale theLayer theWidth theHeight TRUE)
 
-    (gimp-image-select-item theImage CHANNEL-OP-REPLACE theLayer)
-    (gimp-selection-invert theImage)
-    (gimp-drawable-edit-clear theLayer)
-    (gimp-selection-invert theImage)
-    (gimp-drawable-edit-clear theLayer)
-    (gimp-context-set-background inColor)
-    (gimp-drawable-edit-fill theLayer FILL-BACKGROUND)
-    (gimp-selection-none theImage)
+    (ligma-image-select-item theImage CHANNEL-OP-REPLACE theLayer)
+    (ligma-selection-invert theImage)
+    (ligma-drawable-edit-clear theLayer)
+    (ligma-selection-invert theImage)
+    (ligma-drawable-edit-clear theLayer)
+    (ligma-context-set-background inColor)
+    (ligma-drawable-edit-fill theLayer FILL-BACKGROUND)
+    (ligma-selection-none theImage)
     (chris-color-edge theImage theLayer inColor 1)
 
     (if (= inBlur TRUE)
@@ -108,14 +108,14 @@
     )
     (if (= inShadow TRUE)
         (begin
-          (gimp-image-insert-layer theImage
-                                   (car (gimp-layer-copy theLayer FALSE)) 0 -1)
-          (gimp-layer-scale theLayer
+          (ligma-image-insert-layer theImage
+                                   (car (ligma-layer-copy theLayer FALSE)) 0 -1)
+          (ligma-layer-scale theLayer
                             (- theWidth inSize) (- theHeight inSize) TRUE)
-          (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
-          (gimp-drawable-brightness-contrast theLayer 0.5 0.5)
-          (gimp-drawable-invert theLayer FALSE)
-          (gimp-layer-resize theLayer
+          (ligma-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
+          (ligma-drawable-brightness-contrast theLayer 0.5 0.5)
+          (ligma-drawable-invert theLayer FALSE)
+          (ligma-layer-resize theLayer
                              theWidth
                              theHeight
                              (/ inSize 2)
@@ -126,22 +126,22 @@
                              (/ inSize 2)
                              TRUE
                              TRUE)
-          (gimp-layer-set-opacity theLayer inShadWeight)
+          (ligma-layer-set-opacity theLayer inShadWeight)
         )
     )
     (if (= inFlatten TRUE)
-        (gimp-image-flatten theImage)
+        (ligma-image-flatten theImage)
     )
     (if (= inCopy TRUE)
-        (begin  (gimp-image-clean-all theImage)
-                (gimp-display-new theImage)
-                (gimp-image-undo-enable theImage)
+        (begin  (ligma-image-clean-all theImage)
+                (ligma-display-new theImage)
+                (ligma-image-undo-enable theImage)
          )
-        (gimp-image-undo-group-end theImage)
+        (ligma-image-undo-group-end theImage)
     )
-    (gimp-displays-flush)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 

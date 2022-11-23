@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,850 +27,850 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp-gradients.h"
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdashpattern.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpstrokeoptions.h"
-#include "paint/gimppaintoptions.h"
-#include "plug-in/gimpplugin-context.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager.h"
+#include "core/ligma-gradients.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadashpattern.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmalist.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmastrokeoptions.h"
+#include "paint/ligmapaintoptions.h"
+#include "plug-in/ligmaplugin-context.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-context_push_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_push_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_context_push (plug_in);
+    success = ligma_plug_in_context_push (plug_in);
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_pop_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_pop_invoker (LigmaProcedure         *procedure,
+                     Ligma                  *ligma,
+                     LigmaContext           *context,
+                     LigmaProgress          *progress,
+                     const LigmaValueArray  *args,
                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_context_pop (plug_in);
+    success = ligma_plug_in_context_pop (plug_in);
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_defaults_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_defaults_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
-    gimp_config_reset (GIMP_CONFIG (context));
+    ligma_config_reset (LIGMA_CONFIG (context));
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_list_paint_methods_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_list_paint_methods_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar **paint_methods = NULL;
 
-  paint_methods = gimp_container_get_name_array (gimp->paint_info_list);
+  paint_methods = ligma_container_get_name_array (ligma->paint_info_list);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_boxed (gimp_value_array_index (return_vals, 1), paint_methods);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_boxed (ligma_value_array_index (return_vals, 1), paint_methods);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_get_paint_method_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_paint_method_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
+  LigmaPaintInfo *paint_info = ligma_context_get_paint_info (context);
 
   if (paint_info)
-    name = g_strdup (gimp_object_get_name (paint_info));
+    name = g_strdup (ligma_object_get_name (paint_info));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_paint_method_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_paint_method_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintInfo *paint_info = gimp_pdb_get_paint_info (gimp, name, error);
+      LigmaPaintInfo *paint_info = ligma_pdb_get_paint_info (ligma, name, error);
 
       if (paint_info)
-        gimp_context_set_paint_info (context, paint_info);
+        ligma_context_set_paint_info (context, paint_info);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_stroke_method_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_stroke_method_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint stroke_method = 0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "method", &stroke_method,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), stroke_method);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), stroke_method);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_stroke_method_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_stroke_method_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   gint stroke_method;
 
-  stroke_method = g_value_get_enum (gimp_value_array_index (args, 0));
+  stroke_method = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "method", stroke_method,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_foreground_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_foreground_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaValueArray *return_vals;
+  LigmaRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
 
-  gimp_context_get_foreground (context, &foreground);
-  gimp_rgb_set_alpha (&foreground, 1.0);
+  ligma_context_get_foreground (context, &foreground);
+  ligma_rgb_set_alpha (&foreground, 1.0);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &foreground);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  ligma_value_set_rgb (ligma_value_array_index (return_vals, 1), &foreground);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_foreground_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_foreground_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpRGB foreground;
+  LigmaRGB foreground;
 
-  gimp_value_get_rgb (gimp_value_array_index (args, 0), &foreground);
+  ligma_value_get_rgb (ligma_value_array_index (args, 0), &foreground);
 
   if (success)
     {
-      gimp_rgb_set_alpha (&foreground, 1.0);
-      gimp_context_set_foreground (context, &foreground);
+      ligma_rgb_set_alpha (&foreground, 1.0);
+      ligma_context_set_foreground (context, &foreground);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_background_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_background_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaValueArray *return_vals;
+  LigmaRGB background = { 0.0, 0.0, 0.0, 1.0 };
 
-  gimp_context_get_background (context, &background);
-  gimp_rgb_set_alpha (&background, 1.0);
+  ligma_context_get_background (context, &background);
+  ligma_rgb_set_alpha (&background, 1.0);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &background);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  ligma_value_set_rgb (ligma_value_array_index (return_vals, 1), &background);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_background_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_background_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpRGB background;
+  LigmaRGB background;
 
-  gimp_value_get_rgb (gimp_value_array_index (args, 0), &background);
+  ligma_value_get_rgb (ligma_value_array_index (args, 0), &background);
 
   if (success)
     {
-      gimp_rgb_set_alpha (&background, 1.0);
-      gimp_context_set_background (context, &background);
+      ligma_rgb_set_alpha (&background, 1.0);
+      ligma_context_set_background (context, &background);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_default_colors_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_default_colors_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
-  gimp_context_set_default_colors (context);
+  ligma_context_set_default_colors (context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_swap_colors_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_swap_colors_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
-  gimp_context_swap_colors (context);
+  ligma_context_swap_colors (context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_get_opacity_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_opacity_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble opacity = 0.0;
 
-  opacity = gimp_context_get_opacity (context) * 100.0;
+  opacity = ligma_context_get_opacity (context) * 100.0;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (gimp_value_array_index (return_vals, 1), opacity);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), opacity);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_opacity_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_opacity_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
   gdouble opacity;
 
-  opacity = g_value_get_double (gimp_value_array_index (args, 0));
+  opacity = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_context_set_opacity (context, opacity / 100.0);
+      ligma_context_set_opacity (context, opacity / 100.0);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_paint_mode_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_paint_mode_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint paint_mode = 0;
 
-  paint_mode = gimp_context_get_paint_mode (context);
+  paint_mode = ligma_context_get_paint_mode (context);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), paint_mode);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), paint_mode);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_paint_mode_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_paint_mode_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
   gint paint_mode;
 
-  paint_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+  paint_mode = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+      if (paint_mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+        paint_mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-      gimp_context_set_paint_mode (context, paint_mode);
+      ligma_context_set_paint_mode (context, paint_mode);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_width_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_width_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble line_width = 0.0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "width", &line_width,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (gimp_value_array_index (return_vals, 1), line_width);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), line_width);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_width_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_width_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
   gdouble line_width;
 
-  line_width = g_value_get_double (gimp_value_array_index (args, 0));
+  line_width = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "width", line_width,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_width_unit_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_width_unit_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
+  LigmaValueArray *return_vals;
+  LigmaUnit line_width_unit = LIGMA_UNIT_PIXEL;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "unit", &line_width_unit,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), line_width_unit);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (ligma_value_array_index (return_vals, 1), line_width_unit);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_width_unit_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_width_unit_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpUnit line_width_unit;
+  LigmaUnit line_width_unit;
 
-  line_width_unit = g_value_get_int (gimp_value_array_index (args, 0));
+  line_width_unit = g_value_get_int (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "unit", line_width_unit,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_cap_style_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_cap_style_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint cap_style = 0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "cap-style", &cap_style,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), cap_style);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), cap_style);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_cap_style_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_cap_style_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
   gint cap_style;
 
-  cap_style = g_value_get_enum (gimp_value_array_index (args, 0));
+  cap_style = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "cap-style", cap_style,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_join_style_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_join_style_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint join_style = 0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "join-style", &join_style,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), join_style);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), join_style);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_join_style_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_join_style_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
   gboolean success = TRUE;
   gint join_style;
 
-  join_style = g_value_get_enum (gimp_value_array_index (args, 0));
+  join_style = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "join-style", join_style,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_miter_limit_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_miter_limit_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble miter_limit = 0.0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "miter-limit", &miter_limit,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (gimp_value_array_index (return_vals, 1), miter_limit);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), miter_limit);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_miter_limit_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_miter_limit_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gdouble miter_limit;
 
-  miter_limit = g_value_get_double (gimp_value_array_index (args, 0));
+  miter_limit = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "miter-limit", miter_limit,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_dash_offset_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_dash_offset_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble dash_offset = 0.0;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "dash-offset", &dash_offset,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (gimp_value_array_index (return_vals, 1), dash_offset);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), dash_offset);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_dash_offset_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_dash_offset_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gdouble dash_offset;
 
-  dash_offset = g_value_get_double (gimp_value_array_index (args, 0));
+  dash_offset = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       g_object_set (options,
                     "dash-offset", dash_offset,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_line_dash_pattern_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_line_dash_pattern_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_dashes = 0;
   gdouble *dashes = NULL;
 
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
-  GArray *pattern = gimp_stroke_options_get_dash_info (options);
+  GArray *pattern = ligma_stroke_options_get_dash_info (options);
 
-  dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
+  dashes = ligma_dash_pattern_to_double_array (pattern, &num_dashes);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_int (gimp_value_array_index (return_vals, 1), num_dashes);
-  gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), dashes, num_dashes);
+  g_value_set_int (ligma_value_array_index (return_vals, 1), num_dashes);
+  ligma_value_take_float_array (ligma_value_array_index (return_vals, 2), dashes, num_dashes);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_line_dash_pattern_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
   gint num_dashes;
   const gdouble *dashes;
 
-  num_dashes = g_value_get_int (gimp_value_array_index (args, 0));
-  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 1));
+  num_dashes = g_value_get_int (ligma_value_array_index (args, 0));
+  dashes = ligma_value_get_float_array (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpStrokeOptions *options =
-        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      LigmaStrokeOptions *options =
+        ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       GArray *pattern = NULL;
 
       if (num_dashes > 0)
         {
-          pattern = gimp_dash_pattern_from_double_array (num_dashes, dashes);
+          pattern = ligma_dash_pattern_from_double_array (num_dashes, dashes);
 
           if (! pattern)
             success = FALSE;
         }
 
       if (success)
-        gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM, pattern);
+        ligma_stroke_options_take_dash_pattern (options, LIGMA_DASH_CUSTOM, pattern);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
-    name = g_strdup (gimp_object_get_name (brush));
+    name = g_strdup (ligma_object_get_name (brush));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, FALSE, error);
 
       if (brush)
-        gimp_context_set_brush (context, brush);
+        ligma_context_set_brush (context, brush);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_size_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_size_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -879,34 +879,34 @@ context_get_brush_size_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), size);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), size);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_size_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_size_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (gimp_value_array_index (args, 0));
+  size = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -916,30 +916,30 @@ context_set_brush_size_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_brush_default_size_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_default_size_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_size (list->data, brush);
+        ligma_paint_options_set_default_brush_size (list->data, brush);
 
       g_list_free (options);
     }
@@ -948,26 +948,26 @@ context_set_brush_default_size_invoker (GimpProcedure         *procedure,
       success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble aspect = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -976,34 +976,34 @@ context_get_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), aspect);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), aspect);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
   gdouble aspect;
 
-  aspect = g_value_get_double (gimp_value_array_index (args, 0));
+  aspect = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -1013,26 +1013,26 @@ context_set_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_angle_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_angle_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1041,34 +1041,34 @@ context_get_brush_angle_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_angle_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_angle_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (gimp_value_array_index (args, 0));
+  angle = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -1078,26 +1078,26 @@ context_set_brush_angle_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_spacing_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_spacing_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble spacing = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1106,34 +1106,34 @@ context_get_brush_spacing_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), spacing);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), spacing);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_spacing_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_spacing_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   gdouble spacing;
 
-  spacing = g_value_get_double (gimp_value_array_index (args, 0));
+  spacing = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -1143,30 +1143,30 @@ context_set_brush_spacing_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_brush_default_spacing_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_default_spacing_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_spacing (list->data, brush);
+        ligma_paint_options_set_default_brush_spacing (list->data, brush);
 
       g_list_free (options);
     }
@@ -1175,26 +1175,26 @@ context_set_brush_default_spacing_invoker (GimpProcedure         *procedure,
       success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_hardness_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_hardness_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble hardness = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1203,34 +1203,34 @@ context_get_brush_hardness_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), hardness);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), hardness);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_hardness_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_hardness_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
   gdouble hardness;
 
-  hardness = g_value_get_double (gimp_value_array_index (args, 0));
+  hardness = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -1240,30 +1240,30 @@ context_set_brush_hardness_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_brush_default_hardness_invoker (GimpProcedure         *procedure,
-                                            Gimp                  *gimp,
-                                            GimpContext           *context,
-                                            GimpProgress          *progress,
-                                            const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_default_hardness_invoker (LigmaProcedure         *procedure,
+                                            Ligma                  *ligma,
+                                            LigmaContext           *context,
+                                            LigmaProgress          *progress,
+                                            const LigmaValueArray  *args,
                                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_hardness (list->data, brush);
+        ligma_paint_options_set_default_brush_hardness (list->data, brush);
 
       g_list_free (options);
     }
@@ -1272,26 +1272,26 @@ context_set_brush_default_hardness_invoker (GimpProcedure         *procedure,
       success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_brush_force_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_brush_force_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble force = 0.0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1300,34 +1300,34 @@ context_get_brush_force_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), force);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), force);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_brush_force_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_brush_force_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
   gdouble force;
 
-  force = g_value_get_double (gimp_value_array_index (args, 0));
+  force = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
@@ -1337,361 +1337,361 @@ context_set_brush_force_invoker (GimpProcedure         *procedure,
       g_list_free (options);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_dynamics_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_dynamics_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpDynamics *dynamics = gimp_context_get_dynamics (context);
+  LigmaDynamics *dynamics = ligma_context_get_dynamics (context);
 
   if (dynamics)
-    name = g_strdup (gimp_object_get_name (dynamics));
+    name = g_strdup (ligma_object_get_name (dynamics));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_dynamics_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_dynamics_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaDynamics *dynamics = ligma_pdb_get_dynamics (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (dynamics)
-        gimp_context_set_dynamics (context, dynamics);
+        ligma_context_set_dynamics (context, dynamics);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_are_dynamics_enabled_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_are_dynamics_enabled_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean enabled = FALSE;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
-    enabled = gimp_paint_options_are_dynamics_enabled (options);
+    enabled = ligma_paint_options_are_dynamics_enabled (options);
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), enabled);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), enabled);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_enable_dynamics_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+context_enable_dynamics_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
   gboolean enable;
 
-  enable = g_value_get_boolean (gimp_value_array_index (args, 0));
+  enable = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-paintbrush");
 
       if (options)
-        gimp_paint_options_enable_dynamics (options, enable);
+        ligma_paint_options_enable_dynamics (options, enable);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_mypaint_brush_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_mypaint_brush_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpMybrush *brush = gimp_context_get_mybrush (context);
+  LigmaMybrush *brush = ligma_context_get_mybrush (context);
 
   if (brush)
-    name = g_strdup (gimp_object_get_name (brush));
+    name = g_strdup (ligma_object_get_name (brush));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_mypaint_brush_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_mypaint_brush_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaMybrush *brush = ligma_pdb_get_mybrush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        gimp_context_set_mybrush (context, brush);
+        ligma_context_set_mybrush (context, brush);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_pattern_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_pattern_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpPattern *pattern = gimp_context_get_pattern (context);
+  LigmaPattern *pattern = ligma_context_get_pattern (context);
 
   if (pattern)
-    name = g_strdup (gimp_object_get_name (pattern));
+    name = g_strdup (ligma_object_get_name (pattern));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_pattern_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_pattern_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+      LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
       if (pattern)
-        gimp_context_set_pattern (context, pattern);
+        ligma_context_set_pattern (context, pattern);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_gradient_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_gradient_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpGradient *gradient = gimp_context_get_gradient (context);
+  LigmaGradient *gradient = ligma_context_get_gradient (context);
 
   if (gradient)
-    name = g_strdup (gimp_object_get_name (gradient));
+    name = g_strdup (ligma_object_get_name (gradient));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_gradient_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, FALSE, error);
 
       if (gradient)
-        gimp_context_set_gradient (context, gradient);
+        ligma_context_set_gradient (context, gradient);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_set_gradient_fg_bg_rgb_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_fg_bg_rgb_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_rgb (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_rgb (ligma));
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_set_gradient_fg_bg_hsv_cw_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_fg_bg_hsv_cw_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_hsv_cw (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_hsv_cw (ligma));
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_set_gradient_fg_bg_hsv_ccw_invoker (GimpProcedure         *procedure,
-                                            Gimp                  *gimp,
-                                            GimpContext           *context,
-                                            GimpProgress          *progress,
-                                            const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_fg_bg_hsv_ccw_invoker (LigmaProcedure         *procedure,
+                                            Ligma                  *ligma,
+                                            LigmaContext           *context,
+                                            LigmaProgress          *progress,
+                                            const LigmaValueArray  *args,
                                             GError               **error)
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_hsv_ccw (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_hsv_ccw (ligma));
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_set_gradient_fg_transparent_invoker (GimpProcedure         *procedure,
-                                             Gimp                  *gimp,
-                                             GimpContext           *context,
-                                             GimpProgress          *progress,
-                                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_fg_transparent_invoker (LigmaProcedure         *procedure,
+                                             Ligma                  *ligma,
+                                             LigmaContext           *context,
+                                             LigmaProgress          *progress,
+                                             const LigmaValueArray  *args,
                                              GError               **error)
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_transparent (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_transparent (ligma));
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-context_get_gradient_blend_color_space_invoker (GimpProcedure         *procedure,
-                                                Gimp                  *gimp,
-                                                GimpContext           *context,
-                                                GimpProgress          *progress,
-                                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_gradient_blend_color_space_invoker (LigmaProcedure         *procedure,
+                                                Ligma                  *ligma,
+                                                LigmaContext           *context,
+                                                LigmaProgress          *progress,
+                                                const LigmaValueArray  *args,
                                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint blend_color_space = 0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1700,61 +1700,61 @@ context_get_gradient_blend_color_space_invoker (GimpProcedure         *procedure
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), blend_color_space);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), blend_color_space);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_gradient_blend_color_space_invoker (GimpProcedure         *procedure,
-                                                Gimp                  *gimp,
-                                                GimpContext           *context,
-                                                GimpProgress          *progress,
-                                                const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_blend_color_space_invoker (LigmaProcedure         *procedure,
+                                                Ligma                  *ligma,
+                                                LigmaContext           *context,
+                                                LigmaProgress          *progress,
+                                                const LigmaValueArray  *args,
                                                 GError               **error)
 {
   gboolean success = TRUE;
   gint blend_color_space;
 
-  blend_color_space = g_value_get_enum (gimp_value_array_index (args, 0));
+  blend_color_space = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpContainer *options;
+      LigmaContainer *options;
       GList         *list;
 
-      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+      for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
         g_object_set (list->data,
                       "gradient-blend-color-space", blend_color_space,
                        NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_gradient_repeat_mode_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint repeat_mode = 0;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1763,61 +1763,61 @@ context_get_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), repeat_mode);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), repeat_mode);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_repeat_mode_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
   gint repeat_mode;
 
-  repeat_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+  repeat_mode = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpContainer *options;
+      LigmaContainer *options;
       GList         *list;
 
-      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+      for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
         g_object_set (list->data,
                       "gradient-repeat", repeat_mode,
                        NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_gradient_reverse_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_gradient_reverse_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean reverse = FALSE;
 
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1826,188 +1826,188 @@ context_get_gradient_reverse_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), reverse);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), reverse);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_gradient_reverse_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_gradient_reverse_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gboolean reverse;
 
-  reverse = g_value_get_boolean (gimp_value_array_index (args, 0));
+  reverse = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpContainer *options;
+      LigmaContainer *options;
       GList         *list;
 
-      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+      for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
         g_object_set (list->data,
                       "gradient-reverse", reverse,
                        NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_palette_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_palette_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpPalette *palette = gimp_context_get_palette (context);
+  LigmaPalette *palette = ligma_context_get_palette (context);
 
   if (palette)
-    name = g_strdup (gimp_object_get_name (palette));
+    name = g_strdup (ligma_object_get_name (palette));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_palette_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_palette_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, FALSE, error);
 
       if (palette)
-        gimp_context_set_palette (context, palette);
+        ligma_context_set_palette (context, palette);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_font_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_font_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  GimpFont *font = gimp_context_get_font (context);
+  LigmaFont *font = ligma_context_get_font (context);
 
   if (font)
-    name = g_strdup (gimp_object_get_name (font));
+    name = g_strdup (ligma_object_get_name (font));
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_font_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_font_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpFont *font = gimp_pdb_get_font (gimp, name, error);
+      LigmaFont *font = ligma_pdb_get_font (ligma, name, error);
 
       if (font)
-        gimp_context_set_font (context, font);
+        ligma_context_set_font (context, font);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_antialias_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_antialias_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean antialias = FALSE;
 
   g_object_get (context,
                 "antialias", &antialias,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), antialias);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (ligma_value_array_index (return_vals, 1), antialias);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_antialias_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_antialias_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
   gboolean antialias;
 
-  antialias = g_value_get_boolean (gimp_value_array_index (args, 0));
+  antialias = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2016,43 +2016,43 @@ context_set_antialias_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_feather_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_feather_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean feather = FALSE;
 
   g_object_get (context,
                 "feather", &feather,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), feather);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (ligma_value_array_index (return_vals, 1), feather);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_feather_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_feather_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
   gboolean feather;
 
-  feather = g_value_get_boolean (gimp_value_array_index (args, 0));
+  feather = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2061,19 +2061,19 @@ context_set_feather_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_feather_radius_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_feather_radius_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble feather_radius_x = 0.0;
   gdouble feather_radius_y = 0.0;
 
@@ -2082,28 +2082,28 @@ context_get_feather_radius_invoker (GimpProcedure         *procedure,
                 "feather-radius-y", &feather_radius_y,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_double (gimp_value_array_index (return_vals, 1), feather_radius_x);
-  g_value_set_double (gimp_value_array_index (return_vals, 2), feather_radius_y);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), feather_radius_x);
+  g_value_set_double (ligma_value_array_index (return_vals, 2), feather_radius_y);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_feather_radius_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_feather_radius_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 0));
-  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 1));
+  feather_radius_x = g_value_get_double (ligma_value_array_index (args, 0));
+  feather_radius_y = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
@@ -2113,43 +2113,43 @@ context_set_feather_radius_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_sample_merged_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_sample_merged_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean sample_merged = FALSE;
 
   g_object_get (context,
                 "sample-merged", &sample_merged,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), sample_merged);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (ligma_value_array_index (return_vals, 1), sample_merged);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_sample_merged_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_sample_merged_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   gboolean sample_merged;
 
-  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 0));
+  sample_merged = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2158,43 +2158,43 @@ context_set_sample_merged_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_sample_criterion_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_sample_criterion_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint sample_criterion = 0;
 
   g_object_get (context,
                 "sample-criterion", &sample_criterion,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), sample_criterion);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), sample_criterion);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_sample_criterion_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_sample_criterion_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gint sample_criterion;
 
-  sample_criterion = g_value_get_enum (gimp_value_array_index (args, 0));
+  sample_criterion = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2203,43 +2203,43 @@ context_set_sample_criterion_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_sample_threshold_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_sample_threshold_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble sample_threshold = 0.0;
 
   g_object_get (context,
                 "sample-threshold", &sample_threshold,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (gimp_value_array_index (return_vals, 1), sample_threshold);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), sample_threshold);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_sample_threshold_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_sample_threshold_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gdouble sample_threshold;
 
-  sample_threshold = g_value_get_double (gimp_value_array_index (args, 0));
+  sample_threshold = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2248,19 +2248,19 @@ context_set_sample_threshold_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_sample_threshold_int_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_sample_threshold_int_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint sample_threshold = 0;
 
   gdouble threshold;
@@ -2271,24 +2271,24 @@ context_get_sample_threshold_int_invoker (GimpProcedure         *procedure,
 
   sample_threshold = (gint) (threshold * 255.99);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), sample_threshold);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (ligma_value_array_index (return_vals, 1), sample_threshold);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_sample_threshold_int_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_sample_threshold_int_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
   gint sample_threshold;
 
-  sample_threshold = g_value_get_int (gimp_value_array_index (args, 0));
+  sample_threshold = g_value_get_int (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2297,43 +2297,43 @@ context_set_sample_threshold_int_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_sample_transparent_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_sample_transparent_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean sample_transparent = FALSE;
 
   g_object_get (context,
                 "sample-transparent", &sample_transparent,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), sample_transparent);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (ligma_value_array_index (return_vals, 1), sample_transparent);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_sample_transparent_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_sample_transparent_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
   gboolean sample_transparent;
 
-  sample_transparent = g_value_get_boolean (gimp_value_array_index (args, 0));
+  sample_transparent = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2342,43 +2342,43 @@ context_set_sample_transparent_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_diagonal_neighbors_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_diagonal_neighbors_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean diagonal_neighbors = FALSE;
 
   g_object_get (context,
                 "diagonal-neighbors", &diagonal_neighbors,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), diagonal_neighbors);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (ligma_value_array_index (return_vals, 1), diagonal_neighbors);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_diagonal_neighbors_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_diagonal_neighbors_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
   gboolean diagonal_neighbors;
 
-  diagonal_neighbors = g_value_get_boolean (gimp_value_array_index (args, 0));
+  diagonal_neighbors = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2387,43 +2387,43 @@ context_set_diagonal_neighbors_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_distance_metric_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_distance_metric_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint metric = 0;
 
   g_object_get (context,
                 "distance-metric", &metric,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), metric);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), metric);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_distance_metric_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_distance_metric_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
   gboolean success = TRUE;
   gint metric;
 
-  metric = g_value_get_enum (gimp_value_array_index (args, 0));
+  metric = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2432,43 +2432,43 @@ context_set_distance_metric_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_interpolation_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_interpolation_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint interpolation = 0;
 
   g_object_get (context,
                 "interpolation", &interpolation,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), interpolation);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), interpolation);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_interpolation_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_interpolation_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   gint interpolation;
 
-  interpolation = g_value_get_enum (gimp_value_array_index (args, 0));
+  interpolation = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2477,43 +2477,43 @@ context_set_interpolation_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_transform_direction_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_transform_direction_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint transform_direction = 0;
 
   g_object_get (context,
                 "transform-direction", &transform_direction,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), transform_direction);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), transform_direction);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_transform_direction_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_transform_direction_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
   gint transform_direction;
 
-  transform_direction = g_value_get_enum (gimp_value_array_index (args, 0));
+  transform_direction = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2522,43 +2522,43 @@ context_set_transform_direction_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_transform_resize_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_transform_resize_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint transform_resize = 0;
 
   g_object_get (context,
                 "transform-resize", &transform_resize,
                 NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), transform_resize);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (ligma_value_array_index (return_vals, 1), transform_resize);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_transform_resize_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_transform_resize_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   gint transform_resize;
 
-  transform_resize = g_value_get_enum (gimp_value_array_index (args, 0));
+  transform_resize = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -2567,25 +2567,25 @@ context_set_transform_resize_invoker (GimpProcedure         *procedure,
                     NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_size_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_size_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2594,33 +2594,33 @@ context_get_ink_size_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), size);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), size);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_size_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_size_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (gimp_value_array_index (args, 0));
+  size = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2630,25 +2630,25 @@ context_set_ink_size_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_angle_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_angle_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2657,33 +2657,33 @@ context_get_ink_angle_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_angle_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_angle_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (gimp_value_array_index (args, 0));
+  angle = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2693,25 +2693,25 @@ context_set_ink_angle_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_size_sensitivity_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2720,33 +2720,33 @@ context_get_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), size);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), size);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_size_sensitivity_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (gimp_value_array_index (args, 0));
+  size = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2756,25 +2756,25 @@ context_set_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_tilt_sensitivity_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble tilt = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2783,33 +2783,33 @@ context_get_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), tilt);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), tilt);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_tilt_sensitivity_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error)
 {
   gboolean success = TRUE;
   gdouble tilt;
 
-  tilt = g_value_get_double (gimp_value_array_index (args, 0));
+  tilt = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2819,25 +2819,25 @@ context_set_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_speed_sensitivity_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble speed = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2846,33 +2846,33 @@ context_get_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), speed);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), speed);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_speed_sensitivity_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
   gboolean success = TRUE;
   gdouble speed;
 
-  speed = g_value_get_double (gimp_value_array_index (args, 0));
+  speed = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2882,25 +2882,25 @@ context_set_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_blob_type_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_blob_type_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint type = 0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2909,33 +2909,33 @@ context_get_ink_blob_type_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), type);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_blob_type_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_blob_type_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
   gint type;
 
-  type = g_value_get_enum (gimp_value_array_index (args, 0));
+  type = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -2945,25 +2945,25 @@ context_set_ink_blob_type_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_blob_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble aspect = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2972,33 +2972,33 @@ context_get_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), aspect);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), aspect);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_blob_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                           Ligma                  *ligma,
+                                           LigmaContext           *context,
+                                           LigmaProgress          *progress,
+                                           const LigmaValueArray  *args,
                                            GError               **error)
 {
   gboolean success = TRUE;
   gdouble aspect;
 
-  aspect = g_value_get_double (gimp_value_array_index (args, 0));
+  aspect = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -3008,25 +3008,25 @@ context_set_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_ink_blob_angle_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_get_ink_blob_angle_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     {
@@ -3038,33 +3038,33 @@ context_get_ink_blob_angle_invoker (GimpProcedure         *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GimpValueArray *
-context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+context_set_ink_blob_angle_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (gimp_value_array_index (args, 0));
+  angle = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-ink");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-ink");
 
       if (options)
         g_object_set (options,
@@ -3074,2697 +3074,2697 @@ context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_context_procs (GimpPDB *pdb)
+register_context_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-context-push
+   * ligma-context-push
    */
-  procedure = gimp_procedure_new (context_push_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-push");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_push_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-push");
+  ligma_procedure_set_static_help (procedure,
                                   "Pushes a context to the top of the plug-in's context stack.",
-                                  "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using 'gimp-context-pop'.",
+                                  "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using 'ligma-context-pop'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-pop
+   * ligma-context-pop
    */
-  procedure = gimp_procedure_new (context_pop_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-pop");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_pop_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-pop");
+  ligma_procedure_set_static_help (procedure,
                                   "Pops the topmost context from the plug-in's context stack.",
-                                  "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to 'gimp-context-push' becomes the new current context of the plug-in.",
+                                  "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to 'ligma-context-push' becomes the new current context of the plug-in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-defaults
+   * ligma-context-set-defaults
    */
-  procedure = gimp_procedure_new (context_set_defaults_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-defaults");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_defaults_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-defaults");
+  ligma_procedure_set_static_help (procedure,
                                   "Reset context settings to their default values.",
                                   "This procedure resets context settings used by various procedures to their default value. This procedure will usually be called after a context push so that a script which calls procedures affected by context settings will not be affected by changes in the global context.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Kevin Cozens <kcozens@svn.gnome.org>",
                                          "Kevin Cozens",
                                          "2011");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-list-paint-methods
+   * ligma-context-list-paint-methods
    */
-  procedure = gimp_procedure_new (context_list_paint_methods_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-list-paint-methods");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_list_paint_methods_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-list-paint-methods");
+  ligma_procedure_set_static_help (procedure,
                                   "Lists the available paint methods.",
-                                  "This procedure lists the names of the available paint methods. Any of the results can be used for 'gimp-context-set-paint-method'.",
+                                  "This procedure lists the names of the available paint methods. Any of the results can be used for 'ligma-context-set-paint-method'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2007");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("paint-methods",
                                                        "paint methods",
                                                        "The names of the available paint methods",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-paint-method
+   * ligma-context-get-paint-method
    */
-  procedure = gimp_procedure_new (context_get_paint_method_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-paint-method");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_paint_method_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-paint-method");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active paint method.",
                                   "This procedure returns the name of the currently active paint method.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active paint method",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-paint-method
+   * ligma-context-set-paint-method
    */
-  procedure = gimp_procedure_new (context_set_paint_method_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-paint-method");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_paint_method_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-paint-method");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified paint method as the active paint method.",
                                   "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the paint method",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-stroke-method
+   * ligma-context-get-stroke-method
    */
-  procedure = gimp_procedure_new (context_get_stroke_method_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-stroke-method");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_stroke_method_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-stroke-method");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active stroke method.",
                                   "This procedure returns the currently active stroke method.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("stroke-method",
                                                       "stroke method",
                                                       "The active stroke method",
-                                                      GIMP_TYPE_STROKE_METHOD,
-                                                      GIMP_STROKE_LINE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_STROKE_METHOD,
+                                                      LIGMA_STROKE_LINE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-stroke-method
+   * ligma-context-set-stroke-method
    */
-  procedure = gimp_procedure_new (context_set_stroke_method_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-stroke-method");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_stroke_method_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-stroke-method");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified stroke method as the active stroke method.",
                                   "This procedure set the specified stroke method as the active stroke method. The new method will be used in all subsequent stroke operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("stroke-method",
                                                   "stroke method",
                                                   "The new stroke method",
-                                                  GIMP_TYPE_STROKE_METHOD,
-                                                  GIMP_STROKE_LINE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_STROKE_METHOD,
+                                                  LIGMA_STROKE_LINE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-foreground
+   * ligma-context-get-foreground
    */
-  procedure = gimp_procedure_new (context_get_foreground_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-foreground");
-  gimp_procedure_set_static_help (procedure,
-                                  "Get the current GIMP foreground color.",
-                                  "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
+  procedure = ligma_procedure_new (context_get_foreground_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-foreground");
+  ligma_procedure_set_static_help (procedure,
+                                  "Get the current LIGMA foreground color.",
+                                  "This procedure returns the current LIGMA foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("foreground",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_rgb ("foreground",
                                                         "foreground",
                                                         "The foreground color",
                                                         FALSE,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-foreground
+   * ligma-context-set-foreground
    */
-  procedure = gimp_procedure_new (context_set_foreground_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-foreground");
-  gimp_procedure_set_static_help (procedure,
-                                  "Set the current GIMP foreground color.",
-                                  "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
+  procedure = ligma_procedure_new (context_set_foreground_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-foreground");
+  ligma_procedure_set_static_help (procedure,
+                                  "Set the current LIGMA foreground color.",
+                                  "This procedure sets the current LIGMA foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("foreground",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("foreground",
                                                     "foreground",
                                                     "The foreground color",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-background
+   * ligma-context-get-background
    */
-  procedure = gimp_procedure_new (context_get_background_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-background");
-  gimp_procedure_set_static_help (procedure,
-                                  "Get the current GIMP background color.",
-                                  "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
+  procedure = ligma_procedure_new (context_get_background_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-background");
+  ligma_procedure_set_static_help (procedure,
+                                  "Get the current LIGMA background color.",
+                                  "This procedure returns the current LIGMA background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("background",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_rgb ("background",
                                                         "background",
                                                         "The background color",
                                                         FALSE,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-background
+   * ligma-context-set-background
    */
-  procedure = gimp_procedure_new (context_set_background_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-background");
-  gimp_procedure_set_static_help (procedure,
-                                  "Set the current GIMP background color.",
-                                  "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
+  procedure = ligma_procedure_new (context_set_background_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-background");
+  ligma_procedure_set_static_help (procedure,
+                                  "Set the current LIGMA background color.",
+                                  "This procedure sets the current LIGMA background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("background",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("background",
                                                     "background",
                                                     "The background color",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-default-colors
+   * ligma-context-set-default-colors
    */
-  procedure = gimp_procedure_new (context_set_default_colors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-default-colors");
-  gimp_procedure_set_static_help (procedure,
-                                  "Set the current GIMP foreground and background colors to black and white.",
-                                  "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
+  procedure = ligma_procedure_new (context_set_default_colors_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-default-colors");
+  ligma_procedure_set_static_help (procedure,
+                                  "Set the current LIGMA foreground and background colors to black and white.",
+                                  "This procedure sets the current LIGMA foreground and background colors to their initial default values, black and white.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-swap-colors
+   * ligma-context-swap-colors
    */
-  procedure = gimp_procedure_new (context_swap_colors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-swap-colors");
-  gimp_procedure_set_static_help (procedure,
-                                  "Swap the current GIMP foreground and background colors.",
-                                  "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
+  procedure = ligma_procedure_new (context_swap_colors_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-swap-colors");
+  ligma_procedure_set_static_help (procedure,
+                                  "Swap the current LIGMA foreground and background colors.",
+                                  "This procedure swaps the current LIGMA foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-opacity
+   * ligma-context-get-opacity
    */
-  procedure = gimp_procedure_new (context_get_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the opacity.",
                                   "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The opacity",
                                                         0, 100, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-opacity
+   * ligma-context-set-opacity
    */
-  procedure = gimp_procedure_new (context_set_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the opacity.",
                                   "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The opacity",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-paint-mode
+   * ligma-context-get-paint-mode
    */
-  procedure = gimp_procedure_new (context_get_paint_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-paint-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_paint_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-paint-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the paint mode.",
                                   "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
                                                       "The paint mode",
-                                                      GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_LAYER_MODE,
+                                                      LIGMA_LAYER_MODE_NORMAL,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-paint-mode
+   * ligma-context-set-paint-mode
    */
-  procedure = gimp_procedure_new (context_set_paint_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-paint-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_paint_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-paint-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the paint mode.",
                                   "This procedure modifies the paint_mode setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint mode",
-                                                  GIMP_TYPE_LAYER_MODE,
-                                                  GIMP_LAYER_MODE_NORMAL,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_LAYER_MODE,
+                                                  LIGMA_LAYER_MODE_NORMAL,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-width
+   * ligma-context-get-line-width
    */
-  procedure = gimp_procedure_new (context_get_line_width_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-width");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_width_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-width");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line width setting.",
                                   "This procedure returns the line width setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("line-width",
                                                         "line width",
                                                         "The line width setting",
                                                         0.0, 2000.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-width
+   * ligma-context-set-line-width
    */
-  procedure = gimp_procedure_new (context_set_line_width_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-width");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_width_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-width");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line width setting.",
                                   "This procedure modifies the line width setting for stroking lines.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("line-width",
                                                     "line width",
                                                     "The line width setting",
                                                     0.0, 2000.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-width-unit
+   * ligma-context-get-line-width-unit
    */
-  procedure = gimp_procedure_new (context_get_line_width_unit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-width-unit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_width_unit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-width-unit");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line width unit setting.",
                                   "This procedure returns the line width unit setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_unit ("line-width-unit",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_unit ("line-width-unit",
                                                          "line width unit",
                                                          "The line width unit setting",
                                                          TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_UNIT_PIXEL,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-width-unit
+   * ligma-context-set-line-width-unit
    */
-  procedure = gimp_procedure_new (context_set_line_width_unit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-width-unit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_width_unit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-width-unit");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line width unit setting.",
                                   "This procedure modifies the line width unit setting for stroking lines.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_unit ("line-width-unit",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_unit ("line-width-unit",
                                                      "line width unit",
                                                      "The line width setting unit",
                                                      TRUE,
                                                      FALSE,
-                                                     GIMP_UNIT_PIXEL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_UNIT_PIXEL,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-cap-style
+   * ligma-context-get-line-cap-style
    */
-  procedure = gimp_procedure_new (context_get_line_cap_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-cap-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_cap_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-cap-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line cap style setting.",
                                   "This procedure returns the line cap style setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("cap-style",
                                                       "cap style",
                                                       "The line cap style setting",
-                                                      GIMP_TYPE_CAP_STYLE,
-                                                      GIMP_CAP_BUTT,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_CAP_STYLE,
+                                                      LIGMA_CAP_BUTT,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-cap-style
+   * ligma-context-set-line-cap-style
    */
-  procedure = gimp_procedure_new (context_set_line_cap_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-cap-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_cap_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-cap-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line cap style setting.",
                                   "This procedure modifies the line cap style setting for stroking lines.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("cap-style",
                                                   "cap style",
                                                   "The line cap style setting",
-                                                  GIMP_TYPE_CAP_STYLE,
-                                                  GIMP_CAP_BUTT,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_CAP_STYLE,
+                                                  LIGMA_CAP_BUTT,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-join-style
+   * ligma-context-get-line-join-style
    */
-  procedure = gimp_procedure_new (context_get_line_join_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-join-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_join_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-join-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line join style setting.",
                                   "This procedure returns the line join style setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("join-style",
                                                       "join style",
                                                       "The line join style setting",
-                                                      GIMP_TYPE_JOIN_STYLE,
-                                                      GIMP_JOIN_MITER,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_JOIN_STYLE,
+                                                      LIGMA_JOIN_MITER,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-join-style
+   * ligma-context-set-line-join-style
    */
-  procedure = gimp_procedure_new (context_set_line_join_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-join-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_join_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-join-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line join style setting.",
                                   "This procedure modifies the line join style setting for stroking lines.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("join-style",
                                                   "join style",
                                                   "The line join style setting",
-                                                  GIMP_TYPE_JOIN_STYLE,
-                                                  GIMP_JOIN_MITER,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_JOIN_STYLE,
+                                                  LIGMA_JOIN_MITER,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-miter-limit
+   * ligma-context-get-line-miter-limit
    */
-  procedure = gimp_procedure_new (context_get_line_miter_limit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-miter-limit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_miter_limit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-miter-limit");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line miter limit setting.",
                                   "This procedure returns the line miter limit setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("miter-limit",
                                                         "miter limit",
                                                         "The line miter limit setting",
                                                         0.0, 100.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-miter-limit
+   * ligma-context-set-line-miter-limit
    */
-  procedure = gimp_procedure_new (context_set_line_miter_limit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-miter-limit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_miter_limit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-miter-limit");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line miter limit setting.",
                                   "This procedure modifies the line miter limit setting for stroking lines.\n"
                                   "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("miter-limit",
                                                     "miter limit",
                                                     "The line miter limit setting",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-dash-offset
+   * ligma-context-get-line-dash-offset
    */
-  procedure = gimp_procedure_new (context_get_line_dash_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-dash-offset");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_dash_offset_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-dash-offset");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line dash offset setting.",
                                   "This procedure returns the line dash offset setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("dash-offset",
                                                         "dash offset",
                                                         "The line dash offset setting",
                                                         0.0, 2000.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-dash-offset
+   * ligma-context-set-line-dash-offset
    */
-  procedure = gimp_procedure_new (context_set_line_dash_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-dash-offset");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_dash_offset_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-dash-offset");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line dash offset setting.",
                                   "This procedure modifies the line dash offset setting for stroking lines.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("dash-offset",
                                                     "dash offset",
                                                     "The line dash offset setting",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-line-dash-pattern
+   * ligma-context-get-line-dash-pattern
    */
-  procedure = gimp_procedure_new (context_get_line_dash_pattern_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-line-dash-pattern");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_line_dash_pattern_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-line-dash-pattern");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the line dash pattern setting.",
                                   "This procedure returns the line dash pattern setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-dashes",
                                                      "num dashes",
                                                      "The number of dashes in the dash_pattern array",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array ("dashes",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_float_array ("dashes",
                                                                 "dashes",
                                                                 "The line dash pattern setting",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-line-dash-pattern
+   * ligma-context-set-line-dash-pattern
    */
-  procedure = gimp_procedure_new (context_set_line_dash_pattern_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-line-dash-pattern");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_line_dash_pattern_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-line-dash-pattern");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the line dash pattern setting.",
                                   "This procedure modifies the line dash pattern setting for stroking lines.\n"
                                   "\n"
                                   "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-stroke-selection', 'ligma-drawable-edit-stroke-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-dashes",
                                                  "num dashes",
                                                  "The number of dashes in the dash_pattern array",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("dashes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("dashes",
                                                             "dashes",
                                                             "The line dash pattern setting",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush
+   * ligma-context-get-brush
    */
-  procedure = gimp_procedure_new (context_get_brush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active brush.",
                                   "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active brush",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush
+   * ligma-context-set-brush
    */
-  procedure = gimp_procedure_new (context_set_brush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified brush as the active brush.",
                                   "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the brush",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-size
+   * ligma-context-get-brush-size
    */
-  procedure = gimp_procedure_new (context_get_brush_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush size in pixels.",
                                   "Get the brush size in pixels for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
                                                         "Brush size in pixels",
                                                         0, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-size
+   * ligma-context-set-brush-size
    */
-  procedure = gimp_procedure_new (context_set_brush_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush size in pixels.",
                                   "Set the brush size in pixels for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
                                                     "Brush size in pixels",
                                                     1, 10000, 1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-default-size
+   * ligma-context-set-brush-default-size
    */
-  procedure = gimp_procedure_new (context_set_brush_default_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-default-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_default_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-default-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush size to its default.",
                                   "Set the brush size to the default (max of width and height) for paintbrush, airbrush, or pencil tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-aspect-ratio
+   * ligma-context-get-brush-aspect-ratio
    */
-  procedure = gimp_procedure_new (context_get_brush_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush aspect ratio.",
                                   "Set the aspect ratio for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
                                                         "Aspect ratio",
                                                         -20, 20, -20,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-aspect-ratio
+   * ligma-context-set-brush-aspect-ratio
    */
-  procedure = gimp_procedure_new (context_set_brush_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush aspect ratio.",
                                   "Set the aspect ratio for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
                                                     "Aspect ratio",
                                                     -20, 20, -20,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-angle
+   * ligma-context-get-brush-angle
    */
-  procedure = gimp_procedure_new (context_get_brush_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush angle in degrees.",
                                   "Set the angle in degrees for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
                                                         "Angle in degrees",
                                                         -180, 180, -180,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-angle
+   * ligma-context-set-brush-angle
    */
-  procedure = gimp_procedure_new (context_set_brush_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush angle in degrees.",
                                   "Set the angle in degrees for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "Angle in degrees",
                                                     -180, 180, -180,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-spacing
+   * ligma-context-get-brush-spacing
    */
-  procedure = gimp_procedure_new (context_get_brush_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush spacing as percent of size.",
                                   "Get the brush spacing as percent of size for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
                                                         "Brush spacing as fraction of size",
                                                         0.01, 50.0, 0.01,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-spacing
+   * ligma-context-set-brush-spacing
    */
-  procedure = gimp_procedure_new (context_set_brush_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush spacing as percent of size.",
                                   "Set the brush spacing as percent of size for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
                                                     "Brush spacing as fraction of size",
                                                     0.01, 50.0, 0.01,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-default-spacing
+   * ligma-context-set-brush-default-spacing
    */
-  procedure = gimp_procedure_new (context_set_brush_default_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-default-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_default_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-default-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush spacing to its default.",
                                   "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-hardness
+   * ligma-context-get-brush-hardness
    */
-  procedure = gimp_procedure_new (context_get_brush_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-hardness");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_hardness_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-hardness");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush hardness in paint options.",
                                   "Get the brush hardness for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
                                                         "hardness",
                                                         "Brush hardness",
                                                         0.0, 1.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-hardness
+   * ligma-context-set-brush-hardness
    */
-  procedure = gimp_procedure_new (context_set_brush_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-hardness");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_hardness_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-hardness");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush hardness.",
                                   "Set the brush hardness for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness",
                                                     "hardness",
                                                     "Brush hardness",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-default-hardness
+   * ligma-context-set-brush-default-hardness
    */
-  procedure = gimp_procedure_new (context_set_brush_default_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-default-hardness");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_default_hardness_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-default-hardness");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush spacing to its default.",
                                   "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-brush-force
+   * ligma-context-get-brush-force
    */
-  procedure = gimp_procedure_new (context_get_brush_force_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-brush-force");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_brush_force_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-brush-force");
+  ligma_procedure_set_static_help (procedure,
                                   "Get brush force in paint options.",
                                   "Get the brush application force for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("force",
                                                         "force",
                                                         "Brush application force",
                                                         0.0, 1.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-brush-force
+   * ligma-context-set-brush-force
    */
-  procedure = gimp_procedure_new (context_set_brush_force_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-brush-force");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_brush_force_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-brush-force");
+  ligma_procedure_set_static_help (procedure,
                                   "Set brush application force.",
                                   "Set the brush application force for brush based paint tools.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Alexia Death",
                                          "Alexia Death",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("force",
                                                     "force",
                                                     "Brush application force",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-dynamics
+   * ligma-context-get-dynamics
    */
-  procedure = gimp_procedure_new (context_get_dynamics_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-dynamics");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_dynamics_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-dynamics");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active paint dynamics.",
                                   "This procedure returns the name of the currently active paint dynamics. If enabled, all paint operations and stroke operations use this paint dynamics to control the application of paint to the image. If disabled, the dynamics will be ignored during paint actions.\n"
-                                  "See 'gimp-context-are-dynamics-enabled' to enquire whether dynamics are used or ignored.",
+                                  "See 'ligma-context-are-dynamics-enabled' to enquire whether dynamics are used or ignored.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active paint dynamics",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-dynamics
+   * ligma-context-set-dynamics
    */
-  procedure = gimp_procedure_new (context_set_dynamics_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-dynamics");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_dynamics_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-dynamics");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified paint dynamics as the active paint dynamics.",
                                   "This procedure allows the active paint dynamics to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed paint dynamics. If there is no matching paint dynamics found, this procedure will return an error. Otherwise, the specified paint dynamics becomes active and will be used in all subsequent paint operations as long as dynamics are enabled.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the paint dynamics",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-are-dynamics-enabled
+   * ligma-context-are-dynamics-enabled
    */
-  procedure = gimp_procedure_new (context_are_dynamics_enabled_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-are-dynamics-enabled");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_are_dynamics_enabled_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-are-dynamics-enabled");
+  ligma_procedure_set_static_help (procedure,
                                   "Inform whether the currently active paint dynamics will be applied to painting.",
-                                  "This procedure returns whether the currently active paint dynamics (as returned by 'gimp-context-get-dynamics') is enabled.",
+                                  "This procedure returns whether the currently active paint dynamics (as returned by 'ligma-context-get-dynamics') is enabled.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jehan",
                                          "Jehan",
                                          "2022");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("enabled",
                                                          "enabled",
                                                          "Whether dynamics enabled or disabled",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-enable-dynamics
+   * ligma-context-enable-dynamics
    */
-  procedure = gimp_procedure_new (context_enable_dynamics_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-enable-dynamics");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_enable_dynamics_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-enable-dynamics");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified paint dynamics as the active paint dynamics.",
                                   "This procedure enables the active paint dynamics to be used in all subsequent paint operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jehan",
                                          "Jehan",
                                          "2022");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("enable",
                                                      "enable",
                                                      "Whether to enable or disable dynamics",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-mypaint-brush
+   * ligma-context-get-mypaint-brush
    */
-  procedure = gimp_procedure_new (context_get_mypaint_brush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-mypaint-brush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_mypaint_brush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-mypaint-brush");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active MyPaint brush.",
                                   "This procedure returns the name of the currently active MyPaint brush.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2016");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active MyPaint brush",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-mypaint-brush
+   * ligma-context-set-mypaint-brush
    */
-  procedure = gimp_procedure_new (context_set_mypaint_brush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-mypaint-brush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_mypaint_brush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-mypaint-brush");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified MyPaint brush as the active MyPaint brush.",
                                   "This procedure allows the active MyPaint brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed MyPaint brushes. If there is no matching MyPaint brush found, this procedure will return an error. Otherwise, the specified MyPaint brush becomes active and will be used in all subsequent MyPaint paint operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2016");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the MyPaint brush",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-pattern
+   * ligma-context-get-pattern
    */
-  procedure = gimp_procedure_new (context_get_pattern_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-pattern");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_pattern_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-pattern");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active pattern.",
                                   "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active pattern",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-pattern
+   * ligma-context-set-pattern
    */
-  procedure = gimp_procedure_new (context_set_pattern_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-pattern");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_pattern_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-pattern");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified pattern as the active pattern.",
                                   "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the pattern",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-gradient
+   * ligma-context-get-gradient
    */
-  procedure = gimp_procedure_new (context_get_gradient_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-gradient");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_gradient_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-gradient");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active gradient.",
                                   "This procedure returns the name of the currently active gradient.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active gradient",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient
+   * ligma-context-set-gradient
    */
-  procedure = gimp_procedure_new (context_set_gradient_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the specified gradient as the active gradient.",
                                   "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the gradient",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-fg-bg-rgb
+   * ligma-context-set-gradient-fg-bg-rgb
    */
-  procedure = gimp_procedure_new (context_set_gradient_fg_bg_rgb_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-fg-bg-rgb");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_fg_bg_rgb_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-fg-bg-rgb");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the built-in FG-BG RGB gradient as the active gradient.",
                                   "This procedure sets the built-in FG-BG RGB gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-fg-bg-hsv-cw
+   * ligma-context-set-gradient-fg-bg-hsv-cw
    */
-  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_cw_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-fg-bg-hsv-cw");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_fg_bg_hsv_cw_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-fg-bg-hsv-cw");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the built-in FG-BG HSV (cw) gradient as the active gradient.",
                                   "This procedure sets the built-in FG-BG HSV (cw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-fg-bg-hsv-ccw
+   * ligma-context-set-gradient-fg-bg-hsv-ccw
    */
-  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_ccw_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-fg-bg-hsv-ccw");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_fg_bg_hsv_ccw_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-fg-bg-hsv-ccw");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.",
                                   "This procedure sets the built-in FG-BG HSV (ccw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-fg-transparent
+   * ligma-context-set-gradient-fg-transparent
    */
-  procedure = gimp_procedure_new (context_set_gradient_fg_transparent_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-fg-transparent");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_fg_transparent_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-fg-transparent");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the built-in FG-Transparent gradient as the active gradient.",
                                   "This procedure sets the built-in FG-Transparent gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-gradient-blend-color-space
+   * ligma-context-get-gradient-blend-color-space
    */
-  procedure = gimp_procedure_new (context_get_gradient_blend_color_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-gradient-blend-color-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_gradient_blend_color_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-gradient-blend-color-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the gradient blend color space.",
                                   "Get the gradient blend color space for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("blend-color-space",
                                                       "blend color space",
                                                       "Color blend space",
-                                                      GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
-                                                      GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                      LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-blend-color-space
+   * ligma-context-set-gradient-blend-color-space
    */
-  procedure = gimp_procedure_new (context_set_gradient_blend_color_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-blend-color-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_blend_color_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-blend-color-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the gradient blend color space.",
                                   "Set the gradient blend color space for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("blend-color-space",
                                                   "blend color space",
                                                   "Blend color space",
-                                                  GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
-                                                  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                  LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-gradient-repeat-mode
+   * ligma-context-get-gradient-repeat-mode
    */
-  procedure = gimp_procedure_new (context_get_gradient_repeat_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-gradient-repeat-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_gradient_repeat_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-gradient-repeat-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the gradient repeat mode.",
                                   "Get the gradient repeat mode for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("repeat-mode",
                                                       "repeat mode",
                                                       "Repeat mode",
-                                                      GIMP_TYPE_REPEAT_MODE,
-                                                      GIMP_REPEAT_NONE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_REPEAT_MODE,
+                                                      LIGMA_REPEAT_NONE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-repeat-mode
+   * ligma-context-set-gradient-repeat-mode
    */
-  procedure = gimp_procedure_new (context_set_gradient_repeat_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-repeat-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_repeat_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-repeat-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the gradient repeat mode.",
                                   "Set the gradient repeat mode for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("repeat-mode",
                                                   "repeat mode",
                                                   "Repeat mode",
-                                                  GIMP_TYPE_REPEAT_MODE,
-                                                  GIMP_REPEAT_NONE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_REPEAT_MODE,
+                                                  LIGMA_REPEAT_NONE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-gradient-reverse
+   * ligma-context-get-gradient-reverse
    */
-  procedure = gimp_procedure_new (context_get_gradient_reverse_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-gradient-reverse");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_gradient_reverse_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-gradient-reverse");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the gradient reverse setting.",
                                   "Get the gradient reverse setting for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("reverse",
                                                          "reverse",
                                                          "Reverse",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-gradient-reverse
+   * ligma-context-set-gradient-reverse
    */
-  procedure = gimp_procedure_new (context_set_gradient_reverse_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-gradient-reverse");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_gradient_reverse_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-gradient-reverse");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the gradient reverse setting.",
                                   "Set the gradient reverse setting for paint tools and the gradient tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
                                                      "Reverse",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-palette
+   * ligma-context-get-palette
    */
-  procedure = gimp_procedure_new (context_get_palette_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-palette");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_palette_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-palette");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active palette.",
                                   "This procedure returns the name of the the currently active palette.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active palette",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-palette
+   * ligma-context-set-palette
    */
-  procedure = gimp_procedure_new (context_set_palette_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-palette");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_palette_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-palette");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified palette as the active palette.",
                                   "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the palette",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-font
+   * ligma-context-get-font
    */
-  procedure = gimp_procedure_new (context_get_font_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-font");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_font_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-font");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the currently active font.",
                                   "This procedure returns the name of the currently active font.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active font",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-font
+   * ligma-context-set-font
    */
-  procedure = gimp_procedure_new (context_set_font_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-font");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_font_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-font");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the specified font as the active font.",
                                   "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>",
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the font",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-antialias
+   * ligma-context-get-antialias
    */
-  procedure = gimp_procedure_new (context_get_antialias_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-antialias");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_antialias_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-antialias");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the antialias setting.",
                                   "This procedure returns the antialias setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("antialias",
                                                          "antialias",
                                                          "The antialias setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-antialias
+   * ligma-context-set-antialias
    */
-  procedure = gimp_procedure_new (context_set_antialias_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-antialias");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_antialias_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-antialias");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the antialias setting.",
                                   "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill', 'gimp-drawable-edit-stroke-item', 'gimp-drawable-edit-stroke-selection'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-image-select-round-rectangle', 'ligma-image-select-ellipse', 'ligma-image-select-polygon', 'ligma-image-select-item', 'ligma-drawable-edit-bucket-fill', 'ligma-drawable-edit-stroke-item', 'ligma-drawable-edit-stroke-selection'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
                                                      "The antialias setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-feather
+   * ligma-context-get-feather
    */
-  procedure = gimp_procedure_new (context_get_feather_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-feather");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_feather_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-feather");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the feather setting.",
                                   "This procedure returns the feather setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("feather",
                                                          "feather",
                                                          "The feather setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-feather
+   * ligma-context-set-feather
    */
-  procedure = gimp_procedure_new (context_set_feather_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-feather");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_feather_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-feather");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the feather setting.",
-                                  "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
+                                  "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'ligma-context-set-feather-radius'.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-image-select-rectangle', 'ligma-image-select-round-rectangle', 'ligma-image-select-ellipse', 'ligma-image-select-polygon', 'ligma-image-select-item'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("feather",
                                                      "feather",
                                                      "The feather setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-feather-radius
+   * ligma-context-get-feather-radius
    */
-  procedure = gimp_procedure_new (context_get_feather_radius_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-feather-radius");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_feather_radius_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-feather-radius");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the feather radius setting.",
                                   "This procedure returns the feather radius setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("feather-radius-x",
                                                         "feather radius x",
                                                         "The horizontal feather radius",
                                                         0, 1000, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("feather-radius-y",
                                                         "feather radius y",
                                                         "The vertical feather radius",
                                                         0, 1000, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-feather-radius
+   * ligma-context-set-feather-radius
    */
-  procedure = gimp_procedure_new (context_set_feather_radius_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-feather-radius");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_feather_radius_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-feather-radius");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the feather radius setting.",
                                   "This procedure modifies the feather radius setting.\n"
                                   "\n"
-                                  "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
+                                  "This setting affects all procedures that are affected by 'ligma-context-set-feather'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("feather-radius-x",
                                                     "feather radius x",
                                                     "The horizontal feather radius",
                                                     0, 1000, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("feather-radius-y",
                                                     "feather radius y",
                                                     "The vertical feather radius",
                                                     0, 1000, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-sample-merged
+   * ligma-context-get-sample-merged
    */
-  procedure = gimp_procedure_new (context_get_sample_merged_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-sample-merged");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_sample_merged_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-sample-merged");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the sample merged setting.",
                                   "This procedure returns the sample merged setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-merged",
                                                          "sample merged",
                                                          "The sample merged setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-sample-merged
+   * ligma-context-set-sample-merged
    */
-  procedure = gimp_procedure_new (context_set_sample_merged_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-sample-merged");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_sample_merged_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-sample-merged");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the sample merged setting.",
                                   "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-drawable-edit-bucket-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
                                                      "The sample merged setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-sample-criterion
+   * ligma-context-get-sample-criterion
    */
-  procedure = gimp_procedure_new (context_get_sample_criterion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-sample-criterion");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_sample_criterion_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-sample-criterion");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the sample criterion setting.",
                                   "This procedure returns the sample criterion setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("sample-criterion",
                                                       "sample criterion",
                                                       "The sample criterion setting",
-                                                      GIMP_TYPE_SELECT_CRITERION,
-                                                      GIMP_SELECT_CRITERION_COMPOSITE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_SELECT_CRITERION,
+                                                      LIGMA_SELECT_CRITERION_COMPOSITE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-sample-criterion
+   * ligma-context-set-sample-criterion
    */
-  procedure = gimp_procedure_new (context_set_sample_criterion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-sample-criterion");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_sample_criterion_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-sample-criterion");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the sample criterion setting.",
                                   "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-drawable-edit-bucket-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("sample-criterion",
                                                   "sample criterion",
                                                   "The sample criterion setting",
-                                                  GIMP_TYPE_SELECT_CRITERION,
-                                                  GIMP_SELECT_CRITERION_COMPOSITE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_SELECT_CRITERION,
+                                                  LIGMA_SELECT_CRITERION_COMPOSITE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-sample-threshold
+   * ligma-context-get-sample-threshold
    */
-  procedure = gimp_procedure_new (context_get_sample_threshold_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-sample-threshold");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_sample_threshold_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-sample-threshold");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the sample threshold setting.",
                                   "This procedure returns the sample threshold setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("sample-threshold",
                                                         "sample threshold",
                                                         "The sample threshold setting",
                                                         0.0, 1.0, 0.0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-sample-threshold
+   * ligma-context-set-sample-threshold
    */
-  procedure = gimp_procedure_new (context_set_sample_threshold_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-sample-threshold");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_sample_threshold_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-sample-threshold");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the sample threshold setting.",
-                                  "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
+                                  "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in ligmarc will be used.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-drawable-edit-bucket-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("sample-threshold",
                                                     "sample threshold",
                                                     "The sample threshold setting",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-sample-threshold-int
+   * ligma-context-get-sample-threshold-int
    */
-  procedure = gimp_procedure_new (context_get_sample_threshold_int_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-sample-threshold-int");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_sample_threshold_int_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-sample-threshold-int");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the sample threshold setting as an integer value.",
-                                  "This procedure returns the sample threshold setting as an integer value. See 'gimp-context-get-sample-threshold'.",
+                                  "This procedure returns the sample threshold setting as an integer value. See 'ligma-context-get-sample-threshold'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("sample-threshold",
                                                      "sample threshold",
                                                      "The sample threshold setting",
                                                      0, 255, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-sample-threshold-int
+   * ligma-context-set-sample-threshold-int
    */
-  procedure = gimp_procedure_new (context_set_sample_threshold_int_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-sample-threshold-int");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_sample_threshold_int_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-sample-threshold-int");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the sample threshold setting as an integer value.",
-                                  "This procedure modifies the sample threshold setting as an integer value. See 'gimp-context-set-sample-threshold'.",
+                                  "This procedure modifies the sample threshold setting as an integer value. See 'ligma-context-set-sample-threshold'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("sample-threshold",
                                                  "sample threshold",
                                                  "The sample threshold setting",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-sample-transparent
+   * ligma-context-get-sample-transparent
    */
-  procedure = gimp_procedure_new (context_get_sample_transparent_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-sample-transparent");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_sample_transparent_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-sample-transparent");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the sample transparent setting.",
                                   "This procedure returns the sample transparent setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-transparent",
                                                          "sample transparent",
                                                          "The sample transparent setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-sample-transparent
+   * ligma-context-set-sample-transparent
    */
-  procedure = gimp_procedure_new (context_set_sample_transparent_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-sample-transparent");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_sample_transparent_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-sample-transparent");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the sample transparent setting.",
                                   "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-color', 'ligma-image-select-contiguous-color', 'ligma-drawable-edit-bucket-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2011");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-transparent",
                                                      "sample transparent",
                                                      "The sample transparent setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-diagonal-neighbors
+   * ligma-context-get-diagonal-neighbors
    */
-  procedure = gimp_procedure_new (context_get_diagonal_neighbors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-diagonal-neighbors");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_diagonal_neighbors_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-diagonal-neighbors");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the diagonal neighbors setting.",
                                   "This procedure returns the diagonal neighbors setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2016");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("diagonal-neighbors",
                                                          "diagonal neighbors",
                                                          "The diagonal neighbors setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-diagonal-neighbors
+   * ligma-context-set-diagonal-neighbors
    */
-  procedure = gimp_procedure_new (context_set_diagonal_neighbors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-diagonal-neighbors");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_diagonal_neighbors_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-diagonal-neighbors");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the diagonal neighbors setting.",
                                   "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "This setting affects the following procedures: 'ligma-image-select-contiguous-color', 'ligma-drawable-edit-bucket-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2016");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("diagonal-neighbors",
                                                      "diagonal neighbors",
                                                      "The diagonal neighbors setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-distance-metric
+   * ligma-context-get-distance-metric
    */
-  procedure = gimp_procedure_new (context_get_distance_metric_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-distance-metric");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_distance_metric_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-distance-metric");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the distance metric used in some computations.",
-                                  "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
+                                  "This procedure returns the distance metric in the current context. See 'ligma-context-set-distance-metric' to know more about its usage.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jehan",
                                          "Jehan",
                                          "2018");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("metric",
                                                       "metric",
                                                       "The distance metric",
                                                       GEGL_TYPE_DISTANCE_METRIC,
                                                       GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-distance-metric
+   * ligma-context-set-distance-metric
    */
-  procedure = gimp_procedure_new (context_set_distance_metric_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-distance-metric");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_distance_metric_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-distance-metric");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the distance metric used in some computations.",
-                                  "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
+                                  "This procedure modifies the distance metric used in some computations, such as 'ligma-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
                                   "\n"
-                                  "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
+                                  "This setting affects the following procedures: 'ligma-drawable-edit-gradient-fill'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jehan",
                                          "Jehan",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("metric",
                                                   "metric",
                                                   "The distance metric",
                                                   GEGL_TYPE_DISTANCE_METRIC,
                                                   GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-interpolation
+   * ligma-context-get-interpolation
    */
-  procedure = gimp_procedure_new (context_get_interpolation_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-interpolation");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_interpolation_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-interpolation");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the interpolation type.",
-                                  "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description. If the interpolation has not been set explicitly by 'gimp-context-set-interpolation', the default interpolation set in gimprc will be used.",
+                                  "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description. If the interpolation has not been set explicitly by 'ligma-context-set-interpolation', the default interpolation set in ligmarc will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("interpolation",
                                                       "interpolation",
                                                       "The interpolation type",
-                                                      GIMP_TYPE_INTERPOLATION_TYPE,
-                                                      GIMP_INTERPOLATION_NONE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_INTERPOLATION_TYPE,
+                                                      LIGMA_INTERPOLATION_NONE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-interpolation
+   * ligma-context-set-interpolation
    */
-  procedure = gimp_procedure_new (context_set_interpolation_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-interpolation");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_interpolation_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-interpolation");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the interpolation type.",
                                   "This procedure modifies the interpolation setting.\n"
                                   "\n"
-                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
+                                  "This setting affects affects the following procedures: 'ligma-item-transform-flip', 'ligma-item-transform-perspective', 'ligma-item-transform-rotate', 'ligma-item-transform-scale', 'ligma-item-transform-shear', 'ligma-item-transform-2d', 'ligma-item-transform-matrix', 'ligma-image-scale', 'ligma-layer-scale'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("interpolation",
                                                   "interpolation",
                                                   "The interpolation type",
-                                                  GIMP_TYPE_INTERPOLATION_TYPE,
-                                                  GIMP_INTERPOLATION_NONE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_INTERPOLATION_TYPE,
+                                                  LIGMA_INTERPOLATION_NONE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-transform-direction
+   * ligma-context-get-transform-direction
    */
-  procedure = gimp_procedure_new (context_get_transform_direction_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-transform-direction");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_transform_direction_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-transform-direction");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the transform direction.",
                                   "This procedure returns the transform direction. The return value is an integer which corresponds to the values listed in the argument description.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-direction",
                                                       "transform direction",
                                                       "The transform direction",
-                                                      GIMP_TYPE_TRANSFORM_DIRECTION,
-                                                      GIMP_TRANSFORM_FORWARD,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_TRANSFORM_DIRECTION,
+                                                      LIGMA_TRANSFORM_FORWARD,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-transform-direction
+   * ligma-context-set-transform-direction
    */
-  procedure = gimp_procedure_new (context_set_transform_direction_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-transform-direction");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_transform_direction_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-transform-direction");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the transform direction.",
                                   "This procedure modifies the transform direction setting.\n"
                                   "\n"
-                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
+                                  "This setting affects affects the following procedures: 'ligma-item-transform-flip', 'ligma-item-transform-perspective', 'ligma-item-transform-rotate', 'ligma-item-transform-scale', 'ligma-item-transform-shear', 'ligma-item-transform-2d', 'ligma-item-transform-matrix'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-direction",
                                                   "transform direction",
                                                   "The transform direction",
-                                                  GIMP_TYPE_TRANSFORM_DIRECTION,
-                                                  GIMP_TRANSFORM_FORWARD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_TRANSFORM_DIRECTION,
+                                                  LIGMA_TRANSFORM_FORWARD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-transform-resize
+   * ligma-context-get-transform-resize
    */
-  procedure = gimp_procedure_new (context_get_transform_resize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-transform-resize");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_transform_resize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-transform-resize");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the transform resize type.",
                                   "This procedure returns the transform resize setting. The return value is an integer which corresponds to the values listed in the argument description.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-resize",
                                                       "transform resize",
                                                       "The transform resize type",
-                                                      GIMP_TYPE_TRANSFORM_RESIZE,
-                                                      GIMP_TRANSFORM_RESIZE_ADJUST,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_TRANSFORM_RESIZE,
+                                                      LIGMA_TRANSFORM_RESIZE_ADJUST,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-transform-resize
+   * ligma-context-set-transform-resize
    */
-  procedure = gimp_procedure_new (context_set_transform_resize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-transform-resize");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_transform_resize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-transform-resize");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the transform resize type.",
                                   "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
                                   "\n"
-                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
+                                  "This setting affects affects the following procedures: 'ligma-item-transform-flip', 'ligma-item-transform-flip-simple', 'ligma-item-transform-perspective', 'ligma-item-transform-rotate', 'ligma-item-transform-rotate-simple', 'ligma-item-transform-scale', 'ligma-item-transform-shear', 'ligma-item-transform-2d', 'ligma-item-transform-matrix'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-resize",
                                                   "transform resize",
                                                   "The transform resize type",
-                                                  GIMP_TYPE_TRANSFORM_RESIZE,
-                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_TRANSFORM_RESIZE,
+                                                  LIGMA_TRANSFORM_RESIZE_ADJUST,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-size
+   * ligma-context-get-ink-size
    */
-  procedure = gimp_procedure_new (context_get_ink_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink blob size in pixels.",
                                   "Get the ink blob size in pixels for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
                                                         "ink blob size in pixels",
                                                         0, 200, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-size
+   * ligma-context-set-ink-size
    */
-  procedure = gimp_procedure_new (context_set_ink_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink blob size in pixels.",
                                   "Set the ink blob size in pixels for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
                                                     "ink blob size in pixels",
                                                     0, 200, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-angle
+   * ligma-context-get-ink-angle
    */
-  procedure = gimp_procedure_new (context_get_ink_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink angle in degrees.",
                                   "Get the ink angle in degrees for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
                                                         "ink angle in degrees",
                                                         -90, 90, -90,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-angle
+   * ligma-context-set-ink-angle
    */
-  procedure = gimp_procedure_new (context_set_ink_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink angle in degrees.",
                                   "Set the ink angle in degrees for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "ink angle in degrees",
                                                     -90, 90, -90,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-size-sensitivity
+   * ligma-context-get-ink-size-sensitivity
    */
-  procedure = gimp_procedure_new (context_get_ink_size_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-size-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_size_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-size-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink size sensitivity.",
                                   "Get the ink size sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
                                                         "ink size sensitivity",
                                                         0, 1, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-size-sensitivity
+   * ligma-context-set-ink-size-sensitivity
    */
-  procedure = gimp_procedure_new (context_set_ink_size_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-size-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_size_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-size-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink size sensitivity.",
                                   "Set the ink size sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
                                                     "ink size sensitivity",
                                                     0, 1, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-tilt-sensitivity
+   * ligma-context-get-ink-tilt-sensitivity
    */
-  procedure = gimp_procedure_new (context_get_ink_tilt_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-tilt-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_tilt_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-tilt-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink tilt sensitivity.",
                                   "Get the ink tilt sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("tilt",
                                                         "tilt",
                                                         "ink tilt sensitivity",
                                                         0, 1, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-tilt-sensitivity
+   * ligma-context-set-ink-tilt-sensitivity
    */
-  procedure = gimp_procedure_new (context_set_ink_tilt_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-tilt-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_tilt_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-tilt-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink tilt sensitivity.",
                                   "Set the ink tilt sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tilt",
                                                     "tilt",
                                                     "ink tilt sensitivity",
                                                     0, 1, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-speed-sensitivity
+   * ligma-context-get-ink-speed-sensitivity
    */
-  procedure = gimp_procedure_new (context_get_ink_speed_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-speed-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_speed_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-speed-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink speed sensitivity.",
                                   "Get the ink speed sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("speed",
                                                         "speed",
                                                         "ink speed sensitivity",
                                                         0, 1, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-speed-sensitivity
+   * ligma-context-set-ink-speed-sensitivity
    */
-  procedure = gimp_procedure_new (context_set_ink_speed_sensitivity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-speed-sensitivity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_speed_sensitivity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-speed-sensitivity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink speed sensitivity.",
                                   "Set the ink speed sensitivity for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("speed",
                                                     "speed",
                                                     "ink speed sensitivity",
                                                     0, 1, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-blob-type
+   * ligma-context-get-ink-blob-type
    */
-  procedure = gimp_procedure_new (context_get_ink_blob_type_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-blob-type");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_blob_type_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-blob-type");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink blob type.",
                                   "Get the ink blob type for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
                                                       "Ink blob type",
-                                                      GIMP_TYPE_INK_BLOB_TYPE,
-                                                      GIMP_INK_BLOB_TYPE_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_INK_BLOB_TYPE,
+                                                      LIGMA_INK_BLOB_TYPE_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-blob-type
+   * ligma-context-set-ink-blob-type
    */
-  procedure = gimp_procedure_new (context_set_ink_blob_type_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-blob-type");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_blob_type_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-blob-type");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink blob type.",
                                   "Set the ink blob type for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
                                                   "Ink blob type",
-                                                  GIMP_TYPE_INK_BLOB_TYPE,
-                                                  GIMP_INK_BLOB_TYPE_CIRCLE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_INK_BLOB_TYPE,
+                                                  LIGMA_INK_BLOB_TYPE_CIRCLE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-blob-aspect-ratio
+   * ligma-context-get-ink-blob-aspect-ratio
    */
-  procedure = gimp_procedure_new (context_get_ink_blob_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-blob-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_blob_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-blob-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink blob aspect ratio.",
                                   "Get the ink blob aspect ratio for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
                                                         "ink blob aspect ratio",
                                                         1, 10, 1,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-blob-aspect-ratio
+   * ligma-context-set-ink-blob-aspect-ratio
    */
-  procedure = gimp_procedure_new (context_set_ink_blob_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-blob-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_blob_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-blob-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink blob aspect ratio.",
                                   "Set the ink blob aspect ratio for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
                                                     "ink blob aspect ratio",
                                                     1, 10, 1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-ink-blob-angle
+   * ligma-context-get-ink-blob-angle
    */
-  procedure = gimp_procedure_new (context_get_ink_blob_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-ink-blob-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_get_ink_blob_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-get-ink-blob-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Get ink blob angle in degrees.",
                                   "Get the ink blob angle in degrees for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
                                                         "ink blob angle in degrees",
                                                         -180, 180, -180,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-ink-blob-angle
+   * ligma-context-set-ink-blob-angle
    */
-  procedure = gimp_procedure_new (context_set_ink_blob_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-ink-blob-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (context_set_ink_blob_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-context-set-ink-blob-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Set ink blob angle in degrees.",
                                   "Set the ink blob angle in degrees for ink tool.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ed Swartz",
                                          "Ed Swartz",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "ink blob angle in degrees",
                                                     -180, 180, -180,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -1,6 +1,6 @@
 %{
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *

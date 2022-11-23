@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-color-rotate.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-color-rotate.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-color-rotate.h"
-#include "gimppropgui-generic.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-color-rotate.h"
+#include "ligmapropgui-generic.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void
@@ -85,7 +85,7 @@ select_all_clicked (GtkWidget *button,
 }
 
 static GtkWidget *
-gimp_prop_angle_range_box_new (GObject     *config,
+ligma_prop_angle_range_box_new (GObject     *config,
                                const gchar *alpha_property_name,
                                const gchar *beta_property_name,
                                const gchar *clockwise_property_name)
@@ -105,12 +105,12 @@ gimp_prop_angle_range_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, alpha_property_name,
+  scale = ligma_prop_spin_scale_new (config, alpha_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, beta_property_name,
+  scale = ligma_prop_spin_scale_new (config, beta_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -120,7 +120,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_prop_check_button_new (config, clockwise_property_name,
+  button = ligma_prop_check_button_new (config, clockwise_property_name,
                                        _("Clockwise"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
@@ -132,7 +132,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (hbox), all_button, TRUE, TRUE, 0);
   gtk_widget_show (all_button);
 
-  dial = gimp_prop_angle_range_dial_new (config,
+  dial = ligma_prop_angle_range_dial_new (config,
                                          alpha_property_name,
                                          beta_property_name,
                                          clockwise_property_name);
@@ -152,7 +152,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
 }
 
 static GtkWidget *
-gimp_prop_polar_box_new (GObject     *config,
+ligma_prop_polar_box_new (GObject     *config,
                          const gchar *angle_property_name,
                          const gchar *radius_property_name)
 {
@@ -167,16 +167,16 @@ gimp_prop_polar_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, angle_property_name,
+  scale = ligma_prop_spin_scale_new (config, angle_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, radius_property_name,
+  scale = ligma_prop_spin_scale_new (config, radius_property_name,
                                     1.0, 15.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  polar = gimp_prop_polar_new (config,
+  polar = ligma_prop_polar_new (config,
                                angle_property_name,
                                radius_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), polar, FALSE, FALSE, 0);
@@ -187,13 +187,13 @@ gimp_prop_polar_box_new (GObject     *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_color_rotate (GObject                  *config,
+_ligma_prop_gui_new_color_rotate (GObject                  *config,
                                  GParamSpec              **param_specs,
                                  guint                     n_param_specs,
                                  GeglRectangle            *area,
-                                 GimpContext              *context,
-                                 GimpCreatePickerFunc      create_picker_func,
-                                 GimpCreateControllerFunc  create_controller_func,
+                                 LigmaContext              *context,
+                                 LigmaCreatePickerFunc      create_picker_func,
+                                 LigmaCreateControllerFunc  create_controller_func,
                                  gpointer                  creator)
 {
   GtkWidget *main_vbox;
@@ -204,31 +204,31 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_frame_new (_("Source Range"));
+  frame = ligma_frame_new (_("Source Range"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  box = gimp_prop_angle_range_box_new (config,
+  box = ligma_prop_angle_range_box_new (config,
                                        param_specs[1]->name,
                                        param_specs[2]->name,
                                        param_specs[0]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
-  frame = gimp_frame_new (_("Destination Range"));
+  frame = ligma_frame_new (_("Destination Range"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  box = gimp_prop_angle_range_box_new (config,
+  box = ligma_prop_angle_range_box_new (config,
                                        param_specs[4]->name,
                                        param_specs[5]->name,
                                        param_specs[3]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
-  frame = gimp_frame_new (_("Gray Handling"));
+  frame = ligma_frame_new (_("Gray Handling"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -236,7 +236,7 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  box = _gimp_prop_gui_new_generic (config,
+  box = _ligma_prop_gui_new_generic (config,
                                     param_specs + 6, 2,
                                     area, context,
                                     create_picker_func,
@@ -244,7 +244,7 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
                                     creator);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
-  box = gimp_prop_polar_box_new (config,
+  box = ligma_prop_polar_box_new (config,
                                  param_specs[8]->name,
                                  param_specs[9]->name);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);

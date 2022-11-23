@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,83 +24,83 @@
 
 #include "paint-types.h"
 
-#include "gimpink.h"
-#include "gimpink-blob.h"
-#include "gimpinkundo.h"
+#include "ligmaink.h"
+#include "ligmaink-blob.h"
+#include "ligmainkundo.h"
 
 
-static void   gimp_ink_undo_constructed (GObject             *object);
+static void   ligma_ink_undo_constructed (GObject             *object);
 
-static void   gimp_ink_undo_pop         (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode,
-                                         GimpUndoAccumulator *accum);
-static void   gimp_ink_undo_free        (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode);
+static void   ligma_ink_undo_pop         (LigmaUndo            *undo,
+                                         LigmaUndoMode         undo_mode,
+                                         LigmaUndoAccumulator *accum);
+static void   ligma_ink_undo_free        (LigmaUndo            *undo,
+                                         LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpInkUndo, gimp_ink_undo, GIMP_TYPE_PAINT_CORE_UNDO)
+G_DEFINE_TYPE (LigmaInkUndo, ligma_ink_undo, LIGMA_TYPE_PAINT_CORE_UNDO)
 
-#define parent_class gimp_ink_undo_parent_class
+#define parent_class ligma_ink_undo_parent_class
 
 
 static void
-gimp_ink_undo_class_init (GimpInkUndoClass *klass)
+ligma_ink_undo_class_init (LigmaInkUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_ink_undo_constructed;
+  object_class->constructed = ligma_ink_undo_constructed;
 
-  undo_class->pop           = gimp_ink_undo_pop;
-  undo_class->free          = gimp_ink_undo_free;
+  undo_class->pop           = ligma_ink_undo_pop;
+  undo_class->free          = ligma_ink_undo_free;
 }
 
 static void
-gimp_ink_undo_init (GimpInkUndo *undo)
+ligma_ink_undo_init (LigmaInkUndo *undo)
 {
   undo->last_blobs = NULL;
 }
 
 static void
-gimp_ink_undo_constructed (GObject *object)
+ligma_ink_undo_constructed (GObject *object)
 {
-  GimpInkUndo *ink_undo = GIMP_INK_UNDO (object);
-  GimpInk     *ink;
+  LigmaInkUndo *ink_undo = LIGMA_INK_UNDO (object);
+  LigmaInk     *ink;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core));
+  ligma_assert (LIGMA_IS_INK (LIGMA_PAINT_CORE_UNDO (ink_undo)->paint_core));
 
-  ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
+  ink = LIGMA_INK (LIGMA_PAINT_CORE_UNDO (ink_undo)->paint_core);
 
   if (ink->start_blobs)
     {
       gint      i;
-      GimpBlob *blob;
+      LigmaBlob *blob;
 
       for (i = 0; i < g_list_length (ink->start_blobs); i++)
         {
           blob = g_list_nth_data (ink->start_blobs, i);
 
           ink_undo->last_blobs = g_list_prepend (ink_undo->last_blobs,
-                                                 gimp_blob_duplicate (blob));
+                                                 ligma_blob_duplicate (blob));
         }
       ink_undo->last_blobs = g_list_reverse (ink_undo->last_blobs);
     }
 }
 
 static void
-gimp_ink_undo_pop (GimpUndo              *undo,
-                   GimpUndoMode           undo_mode,
-                   GimpUndoAccumulator   *accum)
+ligma_ink_undo_pop (LigmaUndo              *undo,
+                   LigmaUndoMode           undo_mode,
+                   LigmaUndoAccumulator   *accum)
 {
-  GimpInkUndo *ink_undo = GIMP_INK_UNDO (undo);
+  LigmaInkUndo *ink_undo = LIGMA_INK_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core)
+  if (LIGMA_PAINT_CORE_UNDO (ink_undo)->paint_core)
     {
-      GimpInk  *ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
+      LigmaInk  *ink = LIGMA_INK (LIGMA_PAINT_CORE_UNDO (ink_undo)->paint_core);
       GList    *tmp_blobs;
 
       tmp_blobs = ink->last_blobs;
@@ -110,10 +110,10 @@ gimp_ink_undo_pop (GimpUndo              *undo,
 }
 
 static void
-gimp_ink_undo_free (GimpUndo     *undo,
-                    GimpUndoMode  undo_mode)
+ligma_ink_undo_free (LigmaUndo     *undo,
+                    LigmaUndoMode  undo_mode)
 {
-  GimpInkUndo *ink_undo = GIMP_INK_UNDO (undo);
+  LigmaInkUndo *ink_undo = LIGMA_INK_UNDO (undo);
 
   if (ink_undo->last_blobs)
     {
@@ -121,5 +121,5 @@ gimp_ink_undo_free (GimpUndo     *undo,
       ink_undo->last_blobs = NULL;
     }
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

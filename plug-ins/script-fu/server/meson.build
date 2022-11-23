@@ -31,7 +31,7 @@ endif
 executable(executable_name,
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
     winsock,
   ],
@@ -43,5 +43,5 @@ executable(executable_name,
   ],
   link_with : libscriptfu,
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / executable_name,
+  install_dir: ligmaplugindir / 'plug-ins' / executable_name,
 )

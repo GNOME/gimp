@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-tool-ellipse-select-symbolic.svg">
+   sodipodi:docname="ligma-tool-ellipse-select-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -150,10 +150,10 @@
   </defs>
   <g
      style="display:inline"
-     id="gimp-tool-ellipse-select"
-     inkscape:label="gimp-tool-ellipse-select"
+     id="ligma-tool-ellipse-select"
+     inkscape:label="ligma-tool-ellipse-select"
      transform="translate(-61.0002,-257)"
-     inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-ellipse-select.png"
+     inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/16/ligma-tool-ellipse-select.png"
      inkscape:export-xdpi="95.999985"
      inkscape:export-ydpi="95.999985">
     <rect

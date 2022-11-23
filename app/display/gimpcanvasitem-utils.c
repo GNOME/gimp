@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasitem-utils.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasitem-utils.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,56 +23,56 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmaanchor.h"
+#include "vectors/ligmabezierstroke.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimpcanvasitem.h"
-#include "gimpcanvasitem-utils.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
+#include "ligmacanvasitem.h"
+#include "ligmacanvasitem-utils.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-transform.h"
 
 
 gboolean
-gimp_canvas_item_on_handle (GimpCanvasItem  *item,
+ligma_canvas_item_on_handle (LigmaCanvasItem  *item,
                             gdouble           x,
                             gdouble           y,
-                            GimpHandleType    type,
+                            LigmaHandleType    type,
                             gdouble           handle_x,
                             gdouble           handle_y,
                             gint              width,
                             gint              height,
-                            GimpHandleAnchor  anchor)
+                            LigmaHandleAnchor  anchor)
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
   gdouble           tx, ty;
   gdouble           handle_tx, handle_ty;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_ITEM (item), FALSE);
 
-  shell = gimp_canvas_item_get_shell (item);
+  shell = ligma_canvas_item_get_shell (item);
 
-  gimp_display_shell_zoom_xy_f (shell,
+  ligma_display_shell_zoom_xy_f (shell,
                                 x, y,
                                 &tx, &ty);
-  gimp_display_shell_zoom_xy_f (shell,
+  ligma_display_shell_zoom_xy_f (shell,
                                 handle_x, handle_y,
                                 &handle_tx, &handle_ty);
 
   switch (type)
     {
-    case GIMP_HANDLE_SQUARE:
-    case GIMP_HANDLE_FILLED_SQUARE:
-    case GIMP_HANDLE_CROSS:
-    case GIMP_HANDLE_CROSSHAIR:
-      gimp_canvas_item_shift_to_north_west (anchor,
+    case LIGMA_HANDLE_SQUARE:
+    case LIGMA_HANDLE_FILLED_SQUARE:
+    case LIGMA_HANDLE_CROSS:
+    case LIGMA_HANDLE_CROSSHAIR:
+      ligma_canvas_item_shift_to_north_west (anchor,
                                             handle_tx, handle_ty,
                                             width, height,
                                             &handle_tx, &handle_ty);
@@ -80,9 +80,9 @@ gimp_canvas_item_on_handle (GimpCanvasItem  *item,
       return (tx == CLAMP (tx, handle_tx, handle_tx + width) &&
               ty == CLAMP (ty, handle_ty, handle_ty + height));
 
-    case GIMP_HANDLE_CIRCLE:
-    case GIMP_HANDLE_FILLED_CIRCLE:
-      gimp_canvas_item_shift_to_center (anchor,
+    case LIGMA_HANDLE_CIRCLE:
+    case LIGMA_HANDLE_FILLED_CIRCLE:
+      ligma_canvas_item_shift_to_center (anchor,
                                         handle_tx, handle_ty,
                                         width, height,
                                         &handle_tx, &handle_ty);
@@ -104,58 +104,58 @@ gimp_canvas_item_on_handle (GimpCanvasItem  *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
-                                    GimpVectors       *vectors,
-                                    const GimpCoords  *coord,
+ligma_canvas_item_on_vectors_handle (LigmaCanvasItem    *item,
+                                    LigmaVectors       *vectors,
+                                    const LigmaCoords  *coord,
                                     gint               width,
                                     gint               height,
-                                    GimpAnchorType     preferred,
+                                    LigmaAnchorType     preferred,
                                     gboolean           exclusive,
-                                    GimpAnchor       **ret_anchor,
-                                    GimpStroke       **ret_stroke)
+                                    LigmaAnchor       **ret_anchor,
+                                    LigmaStroke       **ret_stroke)
 {
-  GimpStroke *stroke       = NULL;
-  GimpStroke *pref_stroke  = NULL;
-  GimpAnchor *anchor       = NULL;
-  GimpAnchor *pref_anchor  = NULL;
+  LigmaStroke *stroke       = NULL;
+  LigmaStroke *pref_stroke  = NULL;
+  LigmaAnchor *anchor       = NULL;
+  LigmaAnchor *pref_anchor  = NULL;
   gdouble     dx, dy;
   gdouble     pref_mindist = -1;
   gdouble     mindist      = -1;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_anchor) *ret_anchor = NULL;
   if (ret_stroke) *ret_stroke = NULL;
 
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+  while ((stroke = ligma_vectors_stroke_get_next (vectors, stroke)))
     {
       GList *anchor_list;
       GList *list;
 
-      anchor_list = g_list_concat (gimp_stroke_get_draw_anchors (stroke),
-                                   gimp_stroke_get_draw_controls (stroke));
+      anchor_list = g_list_concat (ligma_stroke_get_draw_anchors (stroke),
+                                   ligma_stroke_get_draw_controls (stroke));
 
       for (list = anchor_list; list; list = g_list_next (list))
         {
-          dx = coord->x - GIMP_ANCHOR (list->data)->position.x;
-          dy = coord->y - GIMP_ANCHOR (list->data)->position.y;
+          dx = coord->x - LIGMA_ANCHOR (list->data)->position.x;
+          dy = coord->y - LIGMA_ANCHOR (list->data)->position.y;
 
           if (mindist < 0 || mindist > dx * dx + dy * dy)
             {
               mindist = dx * dx + dy * dy;
-              anchor = GIMP_ANCHOR (list->data);
+              anchor = LIGMA_ANCHOR (list->data);
 
               if (ret_stroke)
                 *ret_stroke = stroke;
             }
 
           if ((pref_mindist < 0 || pref_mindist > dx * dx + dy * dy) &&
-              GIMP_ANCHOR (list->data)->type == preferred)
+              LIGMA_ANCHOR (list->data)->type == preferred)
             {
               pref_mindist = dx * dx + dy * dy;
-              pref_anchor = GIMP_ANCHOR (list->data);
+              pref_anchor = LIGMA_ANCHOR (list->data);
               pref_stroke = stroke;
             }
         }
@@ -165,14 +165,14 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
 
   /* If the data passed into ret_anchor is a preferred anchor, return it. */
   if (ret_anchor && *ret_anchor &&
-      gimp_canvas_item_on_handle (item,
+      ligma_canvas_item_on_handle (item,
                                   coord->x,
                                   coord->y,
-                                  GIMP_HANDLE_CIRCLE,
+                                  LIGMA_HANDLE_CIRCLE,
                                   (*ret_anchor)->position.x,
                                   (*ret_anchor)->position.y,
                                   width, height,
-                                  GIMP_HANDLE_ANCHOR_CENTER) &&
+                                  LIGMA_HANDLE_ANCHOR_CENTER) &&
       (*ret_anchor)->type == preferred)
     {
       if (ret_stroke) *ret_stroke = pref_stroke;
@@ -180,14 +180,14 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
       return TRUE;
     }
 
-  if (pref_anchor && gimp_canvas_item_on_handle (item,
+  if (pref_anchor && ligma_canvas_item_on_handle (item,
                                                  coord->x,
                                                  coord->y,
-                                                 GIMP_HANDLE_CIRCLE,
+                                                 LIGMA_HANDLE_CIRCLE,
                                                  pref_anchor->position.x,
                                                  pref_anchor->position.y,
                                                  width, height,
-                                                 GIMP_HANDLE_ANCHOR_CENTER))
+                                                 LIGMA_HANDLE_ANCHOR_CENTER))
     {
       if (ret_anchor) *ret_anchor = pref_anchor;
       if (ret_stroke) *ret_stroke = pref_stroke;
@@ -195,14 +195,14 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
       return TRUE;
     }
   else if (!exclusive && anchor &&
-           gimp_canvas_item_on_handle (item,
+           ligma_canvas_item_on_handle (item,
                                        coord->x,
                                        coord->y,
-                                       GIMP_HANDLE_CIRCLE,
+                                       LIGMA_HANDLE_CIRCLE,
                                        anchor->position.x,
                                        anchor->position.y,
                                        width, height,
-                                       GIMP_HANDLE_ANCHOR_CENTER))
+                                       LIGMA_HANDLE_ANCHOR_CENTER))
     {
       if (ret_anchor)
         *ret_anchor = anchor;
@@ -220,26 +220,26 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
-                                   GimpVectors       *vectors,
-                                   const GimpCoords  *coord,
+ligma_canvas_item_on_vectors_curve (LigmaCanvasItem    *item,
+                                   LigmaVectors       *vectors,
+                                   const LigmaCoords  *coord,
                                    gint               width,
                                    gint               height,
-                                   GimpCoords        *ret_coords,
+                                   LigmaCoords        *ret_coords,
                                    gdouble           *ret_pos,
-                                   GimpAnchor       **ret_segment_start,
-                                   GimpAnchor       **ret_segment_end,
-                                   GimpStroke       **ret_stroke)
+                                   LigmaAnchor       **ret_segment_start,
+                                   LigmaAnchor       **ret_segment_end,
+                                   LigmaStroke       **ret_stroke)
 {
-  GimpStroke *stroke = NULL;
-  GimpAnchor *segment_start;
-  GimpAnchor *segment_end;
-  GimpCoords  min_coords = GIMP_COORDS_DEFAULT_VALUES;
-  GimpCoords  cur_coords;
+  LigmaStroke *stroke = NULL;
+  LigmaAnchor *segment_start;
+  LigmaAnchor *segment_end;
+  LigmaCoords  min_coords = LIGMA_COORDS_DEFAULT_VALUES;
+  LigmaCoords  cur_coords;
   gdouble     min_dist, cur_dist, cur_pos;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_coords)        *ret_coords        = *coord;
@@ -250,9 +250,9 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
 
   min_dist = -1.0;
 
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+  while ((stroke = ligma_vectors_stroke_get_next (vectors, stroke)))
     {
-      cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
+      cur_dist = ligma_stroke_nearest_point_get (stroke, coord, 1.0,
                                                 &cur_coords,
                                                 &segment_start,
                                                 &segment_end,
@@ -272,14 +272,14 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
     }
 
   if (min_dist >= 0 &&
-      gimp_canvas_item_on_handle (item,
+      ligma_canvas_item_on_handle (item,
                                   coord->x,
                                   coord->y,
-                                  GIMP_HANDLE_CIRCLE,
+                                  LIGMA_HANDLE_CIRCLE,
                                   min_coords.x,
                                   min_coords.y,
                                   width, height,
-                                  GIMP_HANDLE_ANCHOR_CENTER))
+                                  LIGMA_HANDLE_ANCHOR_CENTER))
     {
       return TRUE;
     }
@@ -288,27 +288,27 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
-                             const GimpCoords  *coords,
+ligma_canvas_item_on_vectors (LigmaCanvasItem    *item,
+                             const LigmaCoords  *coords,
                              gint               width,
                              gint               height,
-                             GimpCoords        *ret_coords,
+                             LigmaCoords        *ret_coords,
                              gdouble           *ret_pos,
-                             GimpAnchor       **ret_segment_start,
-                             GimpAnchor       **ret_segment_end,
-                             GimpStroke       **ret_stroke,
-                             GimpVectors      **ret_vectors)
+                             LigmaAnchor       **ret_segment_start,
+                             LigmaAnchor       **ret_segment_end,
+                             LigmaStroke       **ret_stroke,
+                             LigmaVectors      **ret_vectors)
 {
-  GimpDisplayShell *shell;
-  GimpImage        *image;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
   GList            *all_vectors;
   GList            *list;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_ITEM (item), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  shell = gimp_canvas_item_get_shell (item);
-  image = gimp_display_get_image (shell->display);
+  shell = ligma_canvas_item_get_shell (item);
+  image = ligma_display_get_image (shell->display);
 
   if (ret_coords)        *ret_coords         = *coords;
   if (ret_pos)           *ret_pos            = -1.0;
@@ -317,16 +317,16 @@ gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  all_vectors = gimp_image_get_vectors_list (image);
+  all_vectors = ligma_image_get_vectors_list (image);
 
   for (list = all_vectors; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
+      LigmaVectors *vectors = list->data;
 
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+      if (! ligma_item_get_visible (LIGMA_ITEM (vectors)))
         continue;
 
-      if (gimp_canvas_item_on_vectors_curve (item,
+      if (ligma_canvas_item_on_vectors_curve (item,
                                              vectors, coords,
                                              width, height,
                                              ret_coords,
@@ -350,7 +350,7 @@ gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
 }
 
 void
-gimp_canvas_item_shift_to_north_west (GimpHandleAnchor  anchor,
+ligma_canvas_item_shift_to_north_west (LigmaHandleAnchor  anchor,
                                       gdouble           x,
                                       gdouble           y,
                                       gint              width,
@@ -360,42 +360,42 @@ gimp_canvas_item_shift_to_north_west (GimpHandleAnchor  anchor,
 {
   switch (anchor)
     {
-    case GIMP_HANDLE_ANCHOR_CENTER:
+    case LIGMA_HANDLE_ANCHOR_CENTER:
       x -= width  / 2;
       y -= height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH:
+    case LIGMA_HANDLE_ANCHOR_NORTH:
       x -= width / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_WEST:
       /*  nothing, this is the default  */
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_EAST:
       x -= width;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH:
+    case LIGMA_HANDLE_ANCHOR_SOUTH:
       x -= width / 2;
       y -= height;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_WEST:
       y -= height;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_EAST:
       x -= width;
       y -= height;
       break;
 
-    case GIMP_HANDLE_ANCHOR_WEST:
+    case LIGMA_HANDLE_ANCHOR_WEST:
       y -= height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_EAST:
+    case LIGMA_HANDLE_ANCHOR_EAST:
       x -= width;
       y -= height / 2;
       break;
@@ -412,7 +412,7 @@ gimp_canvas_item_shift_to_north_west (GimpHandleAnchor  anchor,
 }
 
 void
-gimp_canvas_item_shift_to_center (GimpHandleAnchor  anchor,
+ligma_canvas_item_shift_to_center (LigmaHandleAnchor  anchor,
                                   gdouble           x,
                                   gdouble           y,
                                   gint              width,
@@ -422,43 +422,43 @@ gimp_canvas_item_shift_to_center (GimpHandleAnchor  anchor,
 {
   switch (anchor)
     {
-    case GIMP_HANDLE_ANCHOR_CENTER:
+    case LIGMA_HANDLE_ANCHOR_CENTER:
       /*  nothing, this is the default  */
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH:
+    case LIGMA_HANDLE_ANCHOR_NORTH:
       y += height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_WEST:
       x += width  / 2;
       y += height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_EAST:
       x -= width  / 2;
       y += height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH:
+    case LIGMA_HANDLE_ANCHOR_SOUTH:
       y -= height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_WEST:
       x += width  / 2;
       y -= height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_EAST:
       x -= width  / 2;
       y -= height / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_WEST:
+    case LIGMA_HANDLE_ANCHOR_WEST:
       x += width / 2;
       break;
 
-    case GIMP_HANDLE_ANCHOR_EAST:
+    case LIGMA_HANDLE_ANCHOR_EAST:
       x -= width / 2;
       break;
 

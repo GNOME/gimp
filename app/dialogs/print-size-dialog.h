@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,22 +19,22 @@
 #define __PRINT_SIZE_DIALOG_H__
 
 
-typedef void (* GimpResolutionCallback) (GtkWidget *dialog,
-                                         GimpImage *image,
+typedef void (* LigmaResolutionCallback) (GtkWidget *dialog,
+                                         LigmaImage *image,
                                          gdouble    xresolution,
                                          gdouble    yresolution,
-                                         GimpUnit   resolution_unit,
+                                         LigmaUnit   resolution_unit,
                                          gpointer   user_data);
 
 
-GtkWidget * print_size_dialog_new (GimpImage              *image,
-                                   GimpContext            *context,
+GtkWidget * print_size_dialog_new (LigmaImage              *image,
+                                   LigmaContext            *context,
                                    const gchar            *title,
                                    const gchar            *role,
                                    GtkWidget              *parent,
-                                   GimpHelpFunc            help_func,
+                                   LigmaHelpFunc            help_func,
                                    const gchar            *help_id,
-                                   GimpResolutionCallback  callback,
+                                   LigmaResolutionCallback  callback,
                                    gpointer                user_data);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATES_H__
-#define __GIMP_TEMPLATES_H__
+#ifndef __LIGMA_TEMPLATES_H__
+#define __LIGMA_TEMPLATES_H__
 
 
-void  gimp_templates_load    (Gimp        *gimp);
-void  gimp_templates_save    (Gimp        *gimp);
+void  ligma_templates_load    (Ligma        *ligma);
+void  ligma_templates_save    (Ligma        *ligma);
 
-void  gimp_templates_migrate (const gchar *olddir);
+void  ligma_templates_migrate (const gchar *olddir);
 
 
-#endif  /*  __GIMP_TEMPLATES_H__  */
+#endif  /*  __LIGMA_TEMPLATES_H__  */

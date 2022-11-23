@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbutton.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmabutton.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,63 +19,63 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BUTTON_H__
-#define __GIMP_BUTTON_H__
+#ifndef __LIGMA_BUTTON_H__
+#define __LIGMA_BUTTON_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_BUTTON            (gimp_button_get_type ())
-#define GIMP_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
-#define GIMP_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
-#define GIMP_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUTTON))
-#define GIMP_IS_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
-#define GIMP_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUTTON, GimpButtonClass))
+#define LIGMA_TYPE_BUTTON            (ligma_button_get_type ())
+#define LIGMA_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUTTON, LigmaButton))
+#define LIGMA_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUTTON, LigmaButtonClass))
+#define LIGMA_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUTTON))
+#define LIGMA_IS_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUTTON))
+#define LIGMA_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUTTON, LigmaButtonClass))
 
 
-typedef struct _GimpButtonPrivate GimpButtonPrivate;
-typedef struct _GimpButtonClass   GimpButtonClass;
+typedef struct _LigmaButtonPrivate LigmaButtonPrivate;
+typedef struct _LigmaButtonClass   LigmaButtonClass;
 
-struct _GimpButton
+struct _LigmaButton
 {
   GtkButton         parent_instance;
 
-  GimpButtonPrivate *priv;
+  LigmaButtonPrivate *priv;
 };
 
-struct _GimpButtonClass
+struct _LigmaButtonClass
 {
   GtkButtonClass  parent_class;
 
-  void (* extended_clicked) (GimpButton      *button,
+  void (* extended_clicked) (LigmaButton      *button,
                              GdkModifierType  modifier_state);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_button_get_type         (void) G_GNUC_CONST;
+GType       ligma_button_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_button_new              (void);
+GtkWidget * ligma_button_new              (void);
 
-void        gimp_button_extended_clicked (GimpButton      *button,
+void        ligma_button_extended_clicked (LigmaButton      *button,
                                           GdkModifierType  modifier_state);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_BUTTON_H__ */
+#endif /* __LIGMA_BUTTON_H__ */

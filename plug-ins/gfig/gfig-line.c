@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -24,14 +24,14 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "gfig.h"
 #include "gfig-dobject.h"
 #include "gfig-line.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static GfigObject *d_copy_line   (GfigObject *obj);

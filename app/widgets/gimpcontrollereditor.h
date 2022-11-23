@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontrollereditor.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollereditor.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_EDITOR_H__
-#define __GIMP_CONTROLLER_EDITOR_H__
+#ifndef __LIGMA_CONTROLLER_EDITOR_H__
+#define __LIGMA_CONTROLLER_EDITOR_H__
 
 
-#define GIMP_TYPE_CONTROLLER_EDITOR            (gimp_controller_editor_get_type ())
-#define GIMP_CONTROLLER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER_EDITOR, GimpControllerEditor))
-#define GIMP_CONTROLLER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER_EDITOR, GimpControllerEditorClass))
-#define GIMP_IS_CONTROLLER_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTROLLER_EDITOR))
-#define GIMP_IS_CONTROLLER_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTROLLER_EDITOR))
-#define GIMP_CONTROLLER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTROLLER_EDITOR, GimpControllerEditorClass))
+#define LIGMA_TYPE_CONTROLLER_EDITOR            (ligma_controller_editor_get_type ())
+#define LIGMA_CONTROLLER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTROLLER_EDITOR, LigmaControllerEditor))
+#define LIGMA_CONTROLLER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTROLLER_EDITOR, LigmaControllerEditorClass))
+#define LIGMA_IS_CONTROLLER_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTROLLER_EDITOR))
+#define LIGMA_IS_CONTROLLER_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTROLLER_EDITOR))
+#define LIGMA_CONTROLLER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTROLLER_EDITOR, LigmaControllerEditorClass))
 
 
-typedef struct _GimpControllerEditorClass GimpControllerEditorClass;
+typedef struct _LigmaControllerEditorClass LigmaControllerEditorClass;
 
-struct _GimpControllerEditor
+struct _LigmaControllerEditor
 {
   GtkBox              parent_instance;
 
-  GimpControllerInfo *info;
-  GimpContext        *context;
+  LigmaControllerInfo *info;
+  LigmaContext        *context;
 
   GtkTreeSelection   *sel;
 
@@ -49,16 +49,16 @@ struct _GimpControllerEditor
   GtkTreeSelection   *edit_sel;
 };
 
-struct _GimpControllerEditorClass
+struct _LigmaControllerEditorClass
 {
   GtkBoxClass   parent_class;
 };
 
 
-GType       gimp_controller_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_controller_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_controller_editor_new      (GimpControllerInfo *info,
-                                             GimpContext        *context);
+GtkWidget * ligma_controller_editor_new      (LigmaControllerInfo *info,
+                                             LigmaContext        *context);
 
 
-#endif  /*  __GIMP_CONTROLLER_EDITOR_H__  */
+#endif  /*  __LIGMA_CONTROLLER_EDITOR_H__  */

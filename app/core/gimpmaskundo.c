@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,15 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimp-memsize.h"
-#include "gimpchannel.h"
-#include "gimpmaskundo.h"
+#include "ligma-memsize.h"
+#include "ligmachannel.h"
+#include "ligmamaskundo.h"
 
 
 enum
@@ -38,83 +38,83 @@ enum
 };
 
 
-static void     gimp_mask_undo_constructed  (GObject             *object);
-static void     gimp_mask_undo_set_property (GObject             *object,
+static void     ligma_mask_undo_constructed  (GObject             *object);
+static void     ligma_mask_undo_set_property (GObject             *object,
                                              guint                property_id,
                                              const GValue        *value,
                                              GParamSpec          *pspec);
-static void     gimp_mask_undo_get_property (GObject             *object,
+static void     ligma_mask_undo_get_property (GObject             *object,
                                              guint                property_id,
                                              GValue              *value,
                                              GParamSpec          *pspec);
 
-static gint64   gimp_mask_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_mask_undo_get_memsize  (LigmaObject          *object,
                                              gint64              *gui_size);
 
-static void     gimp_mask_undo_pop          (GimpUndo            *undo,
-                                             GimpUndoMode         undo_mode,
-                                             GimpUndoAccumulator *accum);
-static void     gimp_mask_undo_free         (GimpUndo            *undo,
-                                             GimpUndoMode         undo_mode);
+static void     ligma_mask_undo_pop          (LigmaUndo            *undo,
+                                             LigmaUndoMode         undo_mode,
+                                             LigmaUndoAccumulator *accum);
+static void     ligma_mask_undo_free         (LigmaUndo            *undo,
+                                             LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpMaskUndo, gimp_mask_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaMaskUndo, ligma_mask_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_mask_undo_parent_class
+#define parent_class ligma_mask_undo_parent_class
 
 
 static void
-gimp_mask_undo_class_init (GimpMaskUndoClass *klass)
+ligma_mask_undo_class_init (LigmaMaskUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_mask_undo_constructed;
-  object_class->set_property     = gimp_mask_undo_set_property;
-  object_class->get_property     = gimp_mask_undo_get_property;
+  object_class->constructed      = ligma_mask_undo_constructed;
+  object_class->set_property     = ligma_mask_undo_set_property;
+  object_class->get_property     = ligma_mask_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_mask_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_mask_undo_get_memsize;
 
-  undo_class->pop                = gimp_mask_undo_pop;
-  undo_class->free               = gimp_mask_undo_free;
+  undo_class->pop                = ligma_mask_undo_pop;
+  undo_class->free               = ligma_mask_undo_free;
 
   g_object_class_install_property (object_class, PROP_CONVERT_FORMAT,
                                    g_param_spec_boolean ("convert-format",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_mask_undo_init (GimpMaskUndo *undo)
+ligma_mask_undo_init (LigmaMaskUndo *undo)
 {
 }
 
 static void
-gimp_mask_undo_constructed (GObject *object)
+ligma_mask_undo_constructed (GObject *object)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
-  GimpItem     *item;
-  GimpDrawable *drawable;
+  LigmaMaskUndo *mask_undo = LIGMA_MASK_UNDO (object);
+  LigmaItem     *item;
+  LigmaDrawable *drawable;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_CHANNEL (LIGMA_ITEM_UNDO (object)->item));
 
-  item     = GIMP_ITEM_UNDO (object)->item;
-  drawable = GIMP_DRAWABLE (item);
+  item     = LIGMA_ITEM_UNDO (object)->item;
+  drawable = LIGMA_DRAWABLE (item);
 
-  mask_undo->format = gimp_drawable_get_format (drawable);
+  mask_undo->format = ligma_drawable_get_format (drawable);
 
-  if (gimp_item_bounds (item,
+  if (ligma_item_bounds (item,
                         &mask_undo->bounds.x,
                         &mask_undo->bounds.y,
                         &mask_undo->bounds.width,
                         &mask_undo->bounds.height))
     {
-      GeglBuffer    *buffer = gimp_drawable_get_buffer (drawable);
+      GeglBuffer    *buffer = ligma_drawable_get_buffer (drawable);
       GeglRectangle  rect;
 
       gegl_rectangle_align_to_buffer (&rect, &mask_undo->bounds, buffer,
@@ -125,7 +125,7 @@ gimp_mask_undo_constructed (GObject *object)
                                                            rect.height),
                                            mask_undo->format);
 
-      gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                              mask_undo->buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
       mask_undo->x = rect.x;
@@ -134,12 +134,12 @@ gimp_mask_undo_constructed (GObject *object)
 }
 
 static void
-gimp_mask_undo_set_property (GObject      *object,
+ligma_mask_undo_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+  LigmaMaskUndo *mask_undo = LIGMA_MASK_UNDO (object);
 
   switch (property_id)
     {
@@ -154,12 +154,12 @@ gimp_mask_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_mask_undo_get_property (GObject    *object,
+ligma_mask_undo_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+  LigmaMaskUndo *mask_undo = LIGMA_MASK_UNDO (object);
 
   switch (property_id)
     {
@@ -174,43 +174,43 @@ gimp_mask_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_mask_undo_get_memsize (GimpObject *object,
+ligma_mask_undo_get_memsize (LigmaObject *object,
                             gint64     *gui_size)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+  LigmaMaskUndo *mask_undo = LIGMA_MASK_UNDO (object);
   gint64        memsize   = 0;
 
-  memsize += gimp_gegl_buffer_get_memsize (mask_undo->buffer);
+  memsize += ligma_gegl_buffer_get_memsize (mask_undo->buffer);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_mask_undo_pop (GimpUndo            *undo,
-                    GimpUndoMode         undo_mode,
-                    GimpUndoAccumulator *accum)
+ligma_mask_undo_pop (LigmaUndo            *undo,
+                    LigmaUndoMode         undo_mode,
+                    LigmaUndoAccumulator *accum)
 {
-  GimpMaskUndo  *mask_undo  = GIMP_MASK_UNDO (undo);
-  GimpItem      *item       = GIMP_ITEM_UNDO (undo)->item;
-  GimpDrawable  *drawable   = GIMP_DRAWABLE (item);
-  GimpChannel   *channel    = GIMP_CHANNEL (item);
+  LigmaMaskUndo  *mask_undo  = LIGMA_MASK_UNDO (undo);
+  LigmaItem      *item       = LIGMA_ITEM_UNDO (undo)->item;
+  LigmaDrawable  *drawable   = LIGMA_DRAWABLE (item);
+  LigmaChannel   *channel    = LIGMA_CHANNEL (item);
   GeglBuffer    *new_buffer = NULL;
   GeglRectangle  bounds     = {};
   GeglRectangle  rect       = {};
   const Babl    *format;
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  format = gimp_drawable_get_format (drawable);
+  format = ligma_drawable_get_format (drawable);
 
-  if (gimp_item_bounds (item,
+  if (ligma_item_bounds (item,
                         &bounds.x,
                         &bounds.y,
                         &bounds.width,
                         &bounds.height))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+      GeglBuffer *buffer = ligma_drawable_get_buffer (drawable);
 
       gegl_rectangle_align_to_buffer (&rect, &bounds, buffer,
                                       GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
@@ -219,7 +219,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
                                                     rect.width, rect.height),
                                     format);
 
-      gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                              new_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
       gegl_buffer_clear (buffer, &rect);
@@ -228,29 +228,29 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   if (mask_undo->convert_format)
     {
       GeglBuffer *buffer;
-      gint        width  = gimp_item_get_width  (item);
-      gint        height = gimp_item_get_height (item);
+      gint        width  = ligma_item_get_width  (item);
+      gint        height = ligma_item_get_height (item);
 
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 mask_undo->format);
 
-      gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+      ligma_drawable_set_buffer (drawable, FALSE, NULL, buffer);
       g_object_unref (buffer);
     }
 
   if (mask_undo->buffer)
     {
-      gimp_gegl_buffer_copy (mask_undo->buffer,
+      ligma_gegl_buffer_copy (mask_undo->buffer,
                              NULL,
                              GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (drawable),
+                             ligma_drawable_get_buffer (drawable),
                              GEGL_RECTANGLE (mask_undo->x, mask_undo->y, 0, 0));
 
       g_object_unref (mask_undo->buffer);
     }
 
   /* invalidate the current bounds and boundary of the mask */
-  gimp_drawable_invalidate_boundary (drawable);
+  ligma_drawable_invalidate_boundary (drawable);
 
   if (mask_undo->buffer)
     {
@@ -265,8 +265,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
-      channel->x2    = gimp_item_get_width  (item);
-      channel->y2    = gimp_item_get_height (item);
+      channel->x2    = ligma_item_get_width  (item);
+      channel->y2    = ligma_item_get_height (item);
     }
 
   /* we know the bounds */
@@ -279,16 +279,16 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   mask_undo->x      = rect.x;
   mask_undo->y      = rect.y;
 
-  gimp_drawable_update (drawable, 0, 0, -1, -1);
+  ligma_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 static void
-gimp_mask_undo_free (GimpUndo     *undo,
-                     GimpUndoMode  undo_mode)
+ligma_mask_undo_free (LigmaUndo     *undo,
+                     LigmaUndoMode  undo_mode)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (undo);
+  LigmaMaskUndo *mask_undo = LIGMA_MASK_UNDO (undo);
 
   g_clear_object (&mask_undo->buffer);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

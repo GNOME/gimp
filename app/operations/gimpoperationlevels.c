@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlevels.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationlevels.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,17 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "gimplevelsconfig.h"
-#include "gimpoperationlevels.h"
+#include "ligmalevelsconfig.h"
+#include "ligmaoperationlevels.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean gimp_operation_levels_process (GeglOperation       *operation,
+static gboolean ligma_operation_levels_process (GeglOperation       *operation,
                                                void                *in_buf,
                                                void                *out_buf,
                                                glong                samples,
@@ -42,56 +42,56 @@ static gboolean gimp_operation_levels_process (GeglOperation       *operation,
                                                gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationLevels, gimp_operation_levels,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationLevels, ligma_operation_levels,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_levels_parent_class
+#define parent_class ligma_operation_levels_parent_class
 
 
 static void
-gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
+ligma_operation_levels_class_init (LigmaOperationLevelsClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_point_filter_set_property;
-  object_class->get_property   = gimp_operation_point_filter_get_property;
+  object_class->set_property   = ligma_operation_point_filter_set_property;
+  object_class->get_property   = ligma_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:levels",
+                                 "name",        "ligma:levels",
                                  "categories",  "color",
                                  "description", _("Adjust color levels"),
                                  NULL);
 
-  point_class->process = gimp_operation_levels_process;
+  point_class->process = ligma_operation_levels_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_TRC,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_TRC,
                                    g_param_spec_enum ("trc",
                                                       "Linear/Percptual",
                                                       "What TRC to operate on",
-                                                      GIMP_TYPE_TRC_TYPE,
-                                                      GIMP_TRC_NON_LINEAR,
+                                                      LIGMA_TYPE_TRC_TYPE,
+                                                      LIGMA_TRC_NON_LINEAR,
                                                       G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
-                                                        GIMP_TYPE_LEVELS_CONFIG,
+                                                        LIGMA_TYPE_LEVELS_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_operation_levels_init (GimpOperationLevels *self)
+ligma_operation_levels_init (LigmaOperationLevels *self)
 {
 }
 
 static inline gdouble
-gimp_operation_levels_map (gdouble  value,
+ligma_operation_levels_map (gdouble  value,
                            gdouble  low_input,
                            gdouble  high_input,
                            gboolean clamp_input,
@@ -125,15 +125,15 @@ gimp_operation_levels_map (gdouble  value,
 }
 
 static gboolean
-gimp_operation_levels_process (GeglOperation       *operation,
+ligma_operation_levels_process (GeglOperation       *operation,
                                void                *in_buf,
                                void                *out_buf,
                                glong                samples,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpLevelsConfig         *config = GIMP_LEVELS_CONFIG (point->config);
+  LigmaOperationPointFilter *point  = LIGMA_OPERATION_POINT_FILTER (operation);
+  LigmaLevelsConfig         *config = LIGMA_LEVELS_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
   gfloat                    inv_gamma[5];
@@ -155,7 +155,7 @@ gimp_operation_levels_process (GeglOperation       *operation,
         {
           gdouble value;
 
-          value = gimp_operation_levels_map (src[channel],
+          value = ligma_operation_levels_map (src[channel],
                                              config->low_input[channel + 1],
                                              config->high_input[channel + 1],
                                              config->clamp_input,
@@ -166,7 +166,7 @@ gimp_operation_levels_process (GeglOperation       *operation,
 
           /* don't apply the overall curve to the alpha channel */
           if (channel != ALPHA)
-            value = gimp_operation_levels_map (value,
+            value = ligma_operation_levels_map (value,
                                                config->low_input[0],
                                                config->high_input[0],
                                                config->clamp_input,
@@ -189,11 +189,11 @@ gimp_operation_levels_process (GeglOperation       *operation,
 /*  public functions  */
 
 gdouble
-gimp_operation_levels_map_input (GimpLevelsConfig     *config,
-                                 GimpHistogramChannel  channel,
+ligma_operation_levels_map_input (LigmaLevelsConfig     *config,
+                                 LigmaHistogramChannel  channel,
                                  gdouble               value)
 {
-  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), 0.0);
+  g_return_val_if_fail (LIGMA_IS_LEVELS_CONFIG (config), 0.0);
 
   /*  determine input intensity  */
   if (config->high_input[channel] != config->low_input[channel])

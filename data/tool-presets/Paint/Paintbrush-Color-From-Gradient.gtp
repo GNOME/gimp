@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-paintbrush")
+(icon-name "ligma-tool-paintbrush")
 (name "Paintbrush (Color From Gradient)")
-(tool-options "GimpPaintOptions"
-    (tool "gimp-paintbrush-tool")
+(tool-options "LigmaPaintOptions"
+    (tool "ligma-paintbrush-tool")
     (foreground (color-rgb 0.572549 0.363737 0.363737))
     (brush "2. Hardness 050")
     (dynamics "Color From Gradient")
@@ -21,4 +21,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

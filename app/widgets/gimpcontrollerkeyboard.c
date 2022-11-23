@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontrollerkeyboard.c
- * Copyright (C) 2004-2015 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerkeyboard.c
+ * Copyright (C) 2004-2015 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpcontrollerkeyboard.h"
-#include "gimphelp-ids.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacontrollerkeyboard.h"
+#include "ligmahelp-ids.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _KeyboardEvent KeyboardEvent;
@@ -47,19 +47,19 @@ struct _KeyboardEvent
 };
 
 
-static void          gimp_controller_keyboard_constructed     (GObject        *object);
+static void          ligma_controller_keyboard_constructed     (GObject        *object);
 
-static gint          gimp_controller_keyboard_get_n_events    (GimpController *controller);
-static const gchar * gimp_controller_keyboard_get_event_name  (GimpController *controller,
+static gint          ligma_controller_keyboard_get_n_events    (LigmaController *controller);
+static const gchar * ligma_controller_keyboard_get_event_name  (LigmaController *controller,
                                                                gint            event_id);
-static const gchar * gimp_controller_keyboard_get_event_blurb (GimpController *controller,
+static const gchar * ligma_controller_keyboard_get_event_blurb (LigmaController *controller,
                                                                gint            event_id);
 
 
-G_DEFINE_TYPE (GimpControllerKeyboard, gimp_controller_keyboard,
-               GIMP_TYPE_CONTROLLER)
+G_DEFINE_TYPE (LigmaControllerKeyboard, ligma_controller_keyboard,
+               LIGMA_TYPE_CONTROLLER)
 
-#define parent_class gimp_controller_keyboard_parent_class
+#define parent_class ligma_controller_keyboard_parent_class
 
 
 static KeyboardEvent keyboard_events[] =
@@ -167,24 +167,24 @@ static KeyboardEvent keyboard_events[] =
 
 
 static void
-gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
+ligma_controller_keyboard_class_init (LigmaControllerKeyboardClass *klass)
 {
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-  GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
+  LigmaControllerClass *controller_class = LIGMA_CONTROLLER_CLASS (klass);
 
-  object_class->constructed         = gimp_controller_keyboard_constructed;
+  object_class->constructed         = ligma_controller_keyboard_constructed;
 
   controller_class->name            = _("Keyboard");
-  controller_class->help_id         = GIMP_HELP_CONTROLLER_KEYBOARD;
-  controller_class->icon_name       = GIMP_ICON_CONTROLLER_KEYBOARD;
+  controller_class->help_id         = LIGMA_HELP_CONTROLLER_KEYBOARD;
+  controller_class->icon_name       = LIGMA_ICON_CONTROLLER_KEYBOARD;
 
-  controller_class->get_n_events    = gimp_controller_keyboard_get_n_events;
-  controller_class->get_event_name  = gimp_controller_keyboard_get_event_name;
-  controller_class->get_event_blurb = gimp_controller_keyboard_get_event_blurb;
+  controller_class->get_n_events    = ligma_controller_keyboard_get_n_events;
+  controller_class->get_event_name  = ligma_controller_keyboard_get_event_name;
+  controller_class->get_event_blurb = ligma_controller_keyboard_get_event_blurb;
 }
 
 static void
-gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
+ligma_controller_keyboard_init (LigmaControllerKeyboard *keyboard)
 {
   static gboolean event_names_initialized = FALSE;
 
@@ -208,7 +208,7 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
             {
               kevent->blurb =
                 g_strdup_printf ("%s (%s)", gettext (kevent->blurb),
-                                 gimp_get_mod_string (kevent->modifiers));
+                                 ligma_get_mod_string (kevent->modifiers));
             }
           else
             {
@@ -221,7 +221,7 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
 }
 
 static void
-gimp_controller_keyboard_constructed (GObject *object)
+ligma_controller_keyboard_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -232,13 +232,13 @@ gimp_controller_keyboard_constructed (GObject *object)
 }
 
 static gint
-gimp_controller_keyboard_get_n_events (GimpController *controller)
+ligma_controller_keyboard_get_n_events (LigmaController *controller)
 {
   return G_N_ELEMENTS (keyboard_events);
 }
 
 static const gchar *
-gimp_controller_keyboard_get_event_name (GimpController *controller,
+ligma_controller_keyboard_get_event_name (LigmaController *controller,
                                          gint            event_id)
 {
   if (event_id < 0 || event_id >= G_N_ELEMENTS (keyboard_events))
@@ -248,7 +248,7 @@ gimp_controller_keyboard_get_event_name (GimpController *controller,
 }
 
 static const gchar *
-gimp_controller_keyboard_get_event_blurb (GimpController *controller,
+ligma_controller_keyboard_get_event_blurb (LigmaController *controller,
                                           gint            event_id)
 {
   if (event_id < 0 || event_id >= G_N_ELEMENTS (keyboard_events))
@@ -258,12 +258,12 @@ gimp_controller_keyboard_get_event_blurb (GimpController *controller,
 }
 
 gboolean
-gimp_controller_keyboard_key_press (GimpControllerKeyboard *keyboard,
+ligma_controller_keyboard_key_press (LigmaControllerKeyboard *keyboard,
                                     const GdkEventKey      *kevent)
 {
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_KEYBOARD (keyboard), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER_KEYBOARD (keyboard), FALSE);
   g_return_val_if_fail (kevent != NULL, FALSE);
 
   /*  start with the last event because the last ones in the
@@ -275,16 +275,16 @@ gimp_controller_keyboard_key_press (GimpControllerKeyboard *keyboard,
           (keyboard_events[i].modifiers & kevent->state) ==
           keyboard_events[i].modifiers)
         {
-          GimpControllerEvent         controller_event;
-          GimpControllerEventTrigger *trigger;
+          LigmaControllerEvent         controller_event;
+          LigmaControllerEventTrigger *trigger;
 
-          trigger = (GimpControllerEventTrigger *) &controller_event;
+          trigger = (LigmaControllerEventTrigger *) &controller_event;
 
-          trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-          trigger->source   = GIMP_CONTROLLER (keyboard);
+          trigger->type     = LIGMA_CONTROLLER_EVENT_TRIGGER;
+          trigger->source   = LIGMA_CONTROLLER (keyboard);
           trigger->event_id = i;
 
-          return gimp_controller_event (GIMP_CONTROLLER (keyboard),
+          return ligma_controller_event (LIGMA_CONTROLLER (keyboard),
                                         &controller_event);
         }
     }

@@ -1,24 +1,24 @@
 The GNU Image Manipulation Program Version 2.2
 ----------------------------------------------
 
-This is version 2.2 of The GIMP. Version 2.2 is an update on GIMP 2.0.
-GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
-scripts written for GIMP 2.0 will continue to work and don't need to
-be changed nor recompiled to be used with GIMP 2.2.  We do however
-hope that plug-in authors will update their plug-ins for GIMP 2.2 and
+This is version 2.2 of The LIGMA. Version 2.2 is an update on LIGMA 2.0.
+LIGMA 2.2 is fully backward compatible to LIGMA 2.0. Plug-ins and
+scripts written for LIGMA 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with LIGMA 2.2.  We do however
+hope that plug-in authors will update their plug-ins for LIGMA 2.2 and
 adapt the GUI changes we did with this version.
 
 Please follow the installation instructions in INSTALL.
 
 
-Overview of Changes in GIMP 2.2.0 (since 2.2-pre2 was released)
+Overview of Changes in LIGMA 2.2.0 (since 2.2-pre2 was released)
 =================================
 
 - More work on GFig plug-in.
 
 - Build fixes for Win32 and IRIX.
 
-- Added --no-splash command-line option for gimp-remote.
+- Added --no-splash command-line option for ligma-remote.
 
 - More tweaks to the migration of user settings.
 
@@ -28,7 +28,7 @@ Overview of Changes in GIMP 2.2.0 (since 2.2-pre2 was released)
 
 - Let the histogram respect the selection.
 
-- Added gimp_edit_copy_visible as a replacement for the "Copy Visible" script.
+- Added ligma_edit_copy_visible as a replacement for the "Copy Visible" script.
 
 - Improved color dithering routines.
 
@@ -44,7 +44,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.2-pre2
+Overview of Changes in LIGMA 2.2-pre2
 ====================================
 
 - More work on GFig (still more to come here).
@@ -55,7 +55,7 @@ Overview of Changes in GIMP 2.2-pre2
 
 - Ported some more item factories to GtkUIManager.
 
-- Added new PDB function gimp_layer_from_mask().
+- Added new PDB function ligma_layer_from_mask().
 
 - User interface cleanup in IFS Fractal plug-in (former IfsCompose).
 
@@ -71,7 +71,7 @@ Overview of Changes in GIMP 2.2-pre2
 
 - Added a Print Size dialog to bring back missing functionality from 2.0.
 
-- Several improvements to the GIMP Python bindins.
+- Several improvements to the LIGMA Python bindins.
 
 - Guard the core better against misbehaving scripts and plug-ins.
 
@@ -94,7 +94,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.2-pre1
+Overview of Changes in LIGMA 2.2-pre1
 ====================================
 
 - Added more plug-in previews (Displace, Color To Alpha, Newsprint)
@@ -114,11 +114,11 @@ Overview of Changes in GIMP 2.2-pre1
 
 - Added new PDB API for drawable transformations.
 
-- Register all libgimp enums to allow language bindings such as
+- Register all libligma enums to allow language bindings such as
   Script-Fu to access them using GType introspection.
 
 - Improved how we attach user-visible strings to enums registered with
-  the type system. Added API to access these strings to libgimpbase.
+  the type system. Added API to access these strings to libligmabase.
 
 - Cleanups to the new GFig GUI (still work in progress).
 
@@ -130,7 +130,7 @@ Overview of Changes in GIMP 2.2-pre1
 
 - Redid Scale and Resize dialogs.
 
-- Added code to migrate user settings from ~/.gimp-2.0.
+- Added code to migrate user settings from ~/.ligma-2.0.
 
 - lots of bug fixes.
 
@@ -143,7 +143,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.7
+Overview of Changes in LIGMA 2.1.7
 =================================
 
 - Added even more plug-in previews (Value Propagate, Cubism, Colorify)
@@ -158,7 +158,7 @@ Overview of Changes in GIMP 2.1.7
 
 - Don't switch the active layer when using the Move tool.
 
-- Updated libgimpthumb to support local thumbnails as introduced by
+- Updated libligmathumb to support local thumbnails as introduced by
   version 0.7 of the thumbnail spec.
 
 - Automatically create thumbnails from the Open dialog.
@@ -179,7 +179,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.6
+Overview of Changes in LIGMA 2.1.6
 =================================
 
 - Added more drawable previews (Color Exchange, DOG, Deinterlace,
@@ -196,16 +196,16 @@ Overview of Changes in GIMP 2.1.6
   recently used files (really URIs).
 
 - Cleaned up plug-in procedure handling. Added the possibility to let
-  plug-ins and scripts run using a private GimpContext.
+  plug-ins and scripts run using a private LigmaContext.
 
-- Added multi-line text entries for Script-Fu and Gimp-Python.
+- Added multi-line text entries for Script-Fu and Ligma-Python.
 
 - Cleaned up PDB API for brushes, gradients, palettes and patterns.
   Deprecated lots of functions and added saner replacements. Added
-  gimp-context-* PDB namespace with replacements for some of the 
+  ligma-context-* PDB namespace with replacements for some of the 
   deprecated stuff.
 
-- Let GimpView handle pixbuf previews. Added a (themable) drop shadow
+- Let LigmaView handle pixbuf previews. Added a (themable) drop shadow
   to image-file previews.
 
 - Cleaned up the dbbrowser and plugindetails code and GUI and factored
@@ -215,7 +215,7 @@ Overview of Changes in GIMP 2.1.6
 
 - Dim the outer (to be cropped) area when using the Crop tool.
 
-- Let GimpDialog add a help button to give easier access to the help pages.
+- Let LigmaDialog add a help button to give easier access to the help pages.
 
 
 Contributors:
@@ -226,7 +226,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.5
+Overview of Changes in LIGMA 2.1.5
 =================================
 
 - Ask the user to save the image when closing the last display.
@@ -240,12 +240,12 @@ Overview of Changes in GIMP 2.1.5
    * let the preview expand with the plug-in dialog
    * added a navigation popup similar to the one in the image window
    * respect the selection and show how it will affect the filter
-   * added API to draw to a GimpDrawablePreview from a GimpPixelRgn
+   * added API to draw to a LigmaDrawablePreview from a LigmaPixelRgn
 
 - Added preview to more plug-ins: Cartoon, Apply Canvas, Photocopy,
   Motion Blur,
 
-- Ported the Bumpmap plug-in preview to GimpDrawablePreview.
+- Ported the Bumpmap plug-in preview to LigmaDrawablePreview.
 
 - Removed -u linker hacks from all Makefiles.
 
@@ -258,7 +258,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.4
+Overview of Changes in LIGMA 2.1.4
 =================================
 
 - Rewritten internal handling of progress indicators. Embed progress
@@ -267,8 +267,8 @@ Overview of Changes in GIMP 2.1.4
 - Added an API for plug-ins to embed a progress bar. Let the Script-Fu
   dialog swallow the progress bars created by running the script.
 
-- Ported remaining plug-ins and modules to GimpPreviewArea and removed
-  GimpOldPreview.
+- Ported remaining plug-ins and modules to LigmaPreviewArea and removed
+  LigmaOldPreview.
 
 - Show progress while converting from RGB to Indexed Colors.
 
@@ -280,16 +280,16 @@ Overview of Changes in GIMP 2.1.4
 
 - Improved GIH and guillotine plug-ins.
 
-- Added GimpMessageBox widget. Collect error messages in a single
+- Added LigmaMessageBox widget. Collect error messages in a single
   dialog to reduce popups.
 
-- Renamed the core GimpPreview widget to GimpView.
+- Renamed the core LigmaPreview widget to LigmaView.
 
-- Added a GimpPreview widget to libgimpwidgets. This is an abstract
-  class that combines a GimpPreviewArea with scrollbars and a "Preview"
+- Added a LigmaPreview widget to libligmawidgets. This is an abstract
+  class that combines a LigmaPreviewArea with scrollbars and a "Preview"
   toggle button.
 
-- Added GimpDrawablePreview derived from GimpPreview.
+- Added LigmaDrawablePreview derived from LigmaPreview.
 
 - Improved previews in Unsharp Mask, Scatter RGB, Sharpen, Spread and
   Grid plug-ins.
@@ -297,7 +297,7 @@ Overview of Changes in GIMP 2.1.4
 - Added previews to Edge, Gaussian Blur, Neon, Soft Glow, Sobel and
   Selective Gaussian Blur.
 
-- Added a logarithmic mode for the slider in a GimpScaleEntry.
+- Added a logarithmic mode for the slider in a LigmaScaleEntry.
 
 - Script-Fu code cleanups.
 
@@ -307,7 +307,7 @@ Overview of Changes in GIMP 2.1.4
 
 - Image comment, if any, is now shown within the info window.
 
-- New function "Fit Canvas to Layers" (gimp_image_resize_to_layers)
+- New function "Fit Canvas to Layers" (ligma_image_resize_to_layers)
 
 
 Contributors:
@@ -318,12 +318,12 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.3
+Overview of Changes in LIGMA 2.1.3
 =================================
 
 - Cleanups to the MMX code and the composite subsystem in general
 
-- Cleanups and fixes to Gimpressionst plug-in (bug #148088)
+- Cleanups and fixes to Ligmaressionst plug-in (bug #148088)
 
 - Redone light settings GUI for Lighting plug-in.
 
@@ -336,22 +336,22 @@ Overview of Changes in GIMP 2.1.3
   share gradient definitions with Inkscape and Sodipodi (bug #148127)
 
 - Added parsers for the various ways to define a color in SVG to
-  libgimpcolor.
+  libligmacolor.
 
-- Added GimpColorHexEntry widget to libgimpwidgets. It displays colors
+- Added LigmaColorHexEntry widget to libligmawidgets. It displays colors
   in hexadecimal represention and takes hex and SVG color names as input.
 
-- Added GimpCellRendererColor and GimpCellRendererToggle to libgimpwidgets.
+- Added LigmaCellRendererColor and LigmaCellRendererToggle to libligmawidgets.
 
-- Renamed GimpColor boxed type to GimpRGB and moved it to libgimpcolor.
+- Renamed LigmaColor boxed type to LigmaRGB and moved it to libligmacolor.
 
-- Moved GIMP_TYPE_UNIT and GIMP_TYPE_MEMSIZE to libgimpbase.
+- Moved LIGMA_TYPE_UNIT and LIGMA_TYPE_MEMSIZE to libligmabase.
 
 - Fixes to the BMP loader plug-in (bug #143682).
 
 - Fixes to the Decompose plug-in (bug #147603).
 
-- Added palette selector widgets to libgimpui.
+- Added palette selector widgets to libligmaui.
 
 - Allow to disable mnemonics in menus (bug #120034).
 
@@ -366,7 +366,7 @@ Overview of Changes in GIMP 2.1.3
 - Changed default config for keyboard controller to allow scrolling
   the display using the cursor keys (#53988).
 
-- Added GimpPreviewArea widget as replacement for the deprecated
+- Added LigmaPreviewArea widget as replacement for the deprecated
   GtkPreview widget. Ported most plug-ins to the new widget.
 
 - Added shapes for generated brushes and allow for softer brushes.
@@ -384,7 +384,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.2
+Overview of Changes in LIGMA 2.1.2
 =================================
 
 - Further improvements to the new input controllers; added a keyboard
@@ -398,27 +398,27 @@ Overview of Changes in GIMP 2.1.2
    * layers dialog accepts URI, color and pattern drops
    * path dialog takes and offers DND of SVG data
 
-- Implemented PDB function gimp-path-get-point-at-dist.
+- Implemented PDB function ligma-path-get-point-at-dist.
 
-- Allow to use the color picker to edit palettes (as in gimp-1.2).
+- Allow to use the color picker to edit palettes (as in ligma-1.2).
 
-- Improvements and code cleanup in gimpressionist plug-in.
+- Improvements and code cleanup in ligmaressionist plug-in.
 
-- Allow to cut'n'paste image data between GIMP and other applications
+- Allow to cut'n'paste image data between LIGMA and other applications
   (for example Abiword) using the system clipboard.
 
 - List unsaved images in Quit dialog.
 
-- Completed core/gui separation. Optionally build a gimp-console
-  application that behaves like 'gimp --no-interface' and doesn't link
+- Completed core/gui separation. Optionally build a ligma-console
+  application that behaves like 'ligma --no-interface' and doesn't link
   to GTK+ at all.
 
-- Deprecated GimpPixmap and ported almost all users to GtkImage.
+- Deprecated LigmaPixmap and ported almost all users to GtkImage.
 
-- Moved display projection code into a GimpProjection object. This means
+- Moved display projection code into a LigmaProjection object. This means
   there's finally only a single projection per image.
 
-- Introduced GimpPickable interface and implemented it for all core
+- Introduced LigmaPickable interface and implemented it for all core
   objects that you can pick colors from.
 
 - Write smaller indexed MNG files.
@@ -447,7 +447,7 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.1
+Overview of Changes in LIGMA 2.1.1
 =================================
 
 - Added support for loading patterns in formats supported by GdkPixbuf
@@ -477,7 +477,7 @@ Overview of Changes in GIMP 2.1.1
 - Show the brush outline while painting.
 
 - Added an interface that allows to add controller modules. Such a module
-  can dispatch events to The GIMP which are mapped to actions by a
+  can dispatch events to The LIGMA which are mapped to actions by a
   user-configurable mapping table.  Added controller modules for mouse
   wheel, midi and linux_input devices.
 
@@ -495,14 +495,14 @@ Contributors:
 
 
 
-Overview of Changes in GIMP 2.1.0
+Overview of Changes in LIGMA 2.1.0
 =================================
 
-GIMP 2.1.0 includes the following enhancements over GIMP 2.0:
+LIGMA 2.1.0 includes the following enhancements over LIGMA 2.0:
 
  - Major user interface improvements.
 
-   * Large parts of the GIMP user interface have been changed to 
+   * Large parts of the LIGMA user interface have been changed to 
      comply better with the GNOME Human Interface Guidelines. This is
      an ongoing effort and the interface may still be inconsistent in
      a few places.
@@ -524,9 +524,9 @@ GIMP 2.1.0 includes the following enhancements over GIMP 2.0:
        This means that a hotkey will do the same thing regardless of
        which dock or image window you are using.
      + adds replacement widgets based on GtkComboBox for most uses of
-       GtkOptionMenu (GimpUnitMenu remains to be ported)
-     + adds GimpContainerEntry, a GtkEntry with completion based on
-       the contents of a GimpContainer.
+       GtkOptionMenu (LigmaUnitMenu remains to be ported)
+     + adds LigmaContainerEntry, a GtkEntry with completion based on
+       the contents of a LigmaContainer.
      + makes the order and visibility of tools in the toolbox configurable
      + allows keeping toolbox and dock windows above other windows (if
        the WM supports this hint)
@@ -562,7 +562,7 @@ GIMP 2.1.0 includes the following enhancements over GIMP 2.0:
      dialog.
 
    * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap2
-     does everything than AlienMap did, and the GIMP-specific GIcon format
+     does everything than AlienMap did, and the LIGMA-specific GIcon format
      has not been used by anything for quite some time now.
 
    * A plug-in to load and save windows icon files has been added.

@@ -1,12 +1,12 @@
-# Japanese translation for gimp-windows-installer
-# Copyright (C) 2018 the gimp authors
-# This file is distributed under the same license as the GIMP package.
+# Japanese translation for ligma-windows-installer
+# Copyright (C) 2018 the ligma authors
+# This file is distributed under the same license as the LIGMA package.
 # Kiyotaka Nishibori (as nishbone2016) <ml.nishibori.kiyotaka@gmail.com>, 2018-2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date:  2019-01-08 19:15+0900\n"
 "Last-Translator: Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>\n"
@@ -25,14 +25,14 @@ msgid "License Agreement"
 msgstr "インストールの前に"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "インストーラー作成者: Jernej Simoncic <jernej-gimp@ena.si>"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "インストーラー作成者: Jernej Simoncic <jernej-ligma@ena.si>"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
 msgstr ""
-"今回インストールする GIMP には Windows 7 またはそれより新しい Windows が必要"
+"今回インストールする LIGMA には Windows 7 またはそれより新しい Windows が必要"
 "です。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
@@ -41,19 +41,19 @@ msgstr "開発版について"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"今回インストールする GIMP は開発版で、未完成の機能が含まれ動作も安定していま"
+"今回インストールする LIGMA は開発版で、未完成の機能が含まれ動作も安定していま"
 "せん。このため日常の作業には適しませんし、作業中のデータが失われる可能性もあ"
 "ります。%nもし問題に直面したときは、GIT においても未修正であることを確認のう"
-"え、開発陣へ連絡するか GIMP gitlab へ報告してください。%nGIMP gitlab の URL "
-"は次のとおりです。%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nインストー"
+"え、開発陣へ連絡するか LIGMA gitlab へ報告してください。%nLIGMA gitlab の URL "
+"は次のとおりです。%n_https://gitlab.gnome.org/GNOME/ligma/issues%n%nインストー"
 "ルを続行しますか？"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
@@ -67,9 +67,9 @@ msgstr "中止"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
+"This version of LIGMA requires a processor that supports SSE instructions."
 msgstr ""
-"今回インストールする GIMP には、SSE 命令セットをサポートするプロセッサーが必"
+"今回インストールする LIGMA には、SSE 命令セットをサポートするプロセッサーが必"
 "要です。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
@@ -79,12 +79,12 @@ msgstr "ディスプレイ設定の問題"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
 "お使いの Windows のディスプレイ設定 (表示色数) が 32BPP (Windows 7 では "
-"[True Color (32 ビット)]) になっていません。この状態は GIMP の安定動作に支障"
+"[True Color (32 ビット)]) になっていません。この状態は LIGMA の安定動作に支障"
 "をきたすことが確認されています。インストールを続行する前に表示色設定の変更を"
 "お薦めします。"
 
@@ -94,11 +94,11 @@ msgstr "中止(&X)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP のインストール準備が整いました。[インストール] をクリックすると標準的な"
+"LIGMA のインストール準備が整いました。[インストール] をクリックすると標準的な"
 "構成でインストールを開始します。インストール項目を調整したいときは [カスタマ"
 "イズ] をクリックしてください。"
 
@@ -127,12 +127,12 @@ msgid "Description"
 msgstr "説明"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP 本体とすべての標準プラグイン"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA 本体とすべての標準プラグイン"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -140,15 +140,15 @@ msgstr "ランタイムライブラリ"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "GTK+ ランタイム環境を含む GIMP で使用されるランタイムライブラリ群"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
+msgstr "GTK+ ランタイム環境を含む LIGMA で使用されるランタイムライブラリ群"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "デバッグシンボル"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
+msgid "Include information to help with debugging LIGMA"
 msgstr "デバッグやバグ報告に役立つ情報"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
@@ -157,8 +157,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "GTK+ の MS-Windows エンジン"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "GIMP の外観を Windows 風に見せるエンジン"
+msgid "Native Windows look for LIGMA"
+msgstr "LIGMA の外観を Windows 風に見せるエンジン"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -178,7 +178,7 @@ msgid "Python scripting"
 msgstr "Python スクリプティング"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
 msgstr "Python で記述されたプラグインを使用可能にするコンポーネント"
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
@@ -188,7 +188,7 @@ msgstr "Python スクリプティング"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
 #, fuzzy
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
 msgstr "Python で記述されたプラグインを使用可能にするコンポーネント"
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
@@ -204,7 +204,7 @@ msgid "PostScript support"
 msgstr "PostScript のサポート"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
+msgid "Allow LIGMA to load PostScript files"
 msgstr "PostScript ファイルを読み込み可能にするコンポーネント"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
@@ -230,16 +230,16 @@ msgid "Create a &Quick Launch icon"
 msgstr "クイック起動バーにアイコンを追加(&Q)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
+msgid "Remove previous LIGMA version"
 msgstr "旧バージョンの削除"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"%1 にある GIMP 環境の更新時に問題が発生しました。もしプラグイン読み込み時にエ"
-"ラーが発生するようなら、一旦 GIMP をアンインストールし、再度インストールして"
+"%1 にある LIGMA 環境の更新時に問題が発生しました。もしプラグイン読み込み時にエ"
+"ラーが発生するようなら、一旦 LIGMA をアンインストールし、再度インストールして"
 "ください。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
@@ -259,13 +259,13 @@ msgid "There was an error updating %1."
 msgstr "%1 の更新時にエラーが発生しました。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "GIMP 設定ファイル %1 の更新時にエラーが発生しました。"
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "LIGMA 設定ファイル %1 の更新時にエラーが発生しました。"
 
 #  displayed in Explorer's right-click menu
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "GIMP で編集するファイル"
+msgid "Edit with LIGMA"
+msgstr "LIGMA で編集するファイル"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -276,16 +276,16 @@ msgid "Extensions:"
 msgstr "ファイル拡張子:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "GIMP を既定のプログラムとするファイル形式を指定します。"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "LIGMA を既定のプログラムとするファイル形式を指定します。"
 
 #  エクスプローラー上とは限らない（例: デスクトップ上のアイコン)
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"指定された形式のファイルは、そのアイコンをダブルクリックすると GIMP で開かれ"
+"指定された形式のファイルは、そのアイコンをダブルクリックすると LIGMA で開かれ"
 "るようになります。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
@@ -301,48 +301,48 @@ msgid "Select &Unused"
 msgstr "選択を反転(&U)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "GIMP を既定のプログラムとするファイル形式:"
+msgid "File types to associate with LIGMA:"
+msgstr "LIGMA を既定のプログラムとするファイル形式:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
+msgid "Removing previous version of LIGMA:"
 msgstr "旧バージョンの削除について:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 を現在インストールされているバージョンへ上書きインストールすることは"
+"LIGMA %1 を現在インストールされているバージョンへ上書きインストールすることは"
 "できません。旧バージョンの自動アンインストールは失敗しました。%n%n新バージョ"
 "ンを %2 へインストールする前にご自身で旧バージョンを削除するか、このウィザー"
 "ドの [カスタマイズ] へ進み、そこでインストール先フォルダーを変更してくださ"
-"い。%n%nGIMP のセットアップを中止します。"
+"い。%n%nLIGMA のセットアップを中止します。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 を現在インストールされているバージョンへ上書きインストールすることは"
+"LIGMA %1 を現在インストールされているバージョンへ上書きインストールすることは"
 "できません。旧バージョンを自動削除する方法を決定できませんでした。%n%n新バー"
 "ジョンを %2 へインストールする前にご自身で旧バージョンと付随するアドオンを削"
 "除するか、このウィザードの [カスタマイズ] へ進み、そこでインストール先フォル"
-"ダーを変更してください。%n%nGIMP のセットアップを中止します。"
+"ダーを変更してください。%n%nLIGMA のセットアップを中止します。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"旧バージョンの GIMP は問題なく削除されましたが、セットアップ続行の前に "
+"旧バージョンの LIGMA は問題なく削除されましたが、セットアップ続行の前に "
 "Windows の再起動が必要です。%n%n再起動後は、管理者ログインからセットアップを"
 "再開します。"
 
@@ -355,14 +355,14 @@ msgid "Cleaning up old files..."
 msgstr "旧ファイルを削除しています..."
 
 #  以下の2項目は次のように表示される。
-#  Remember: GIMP is Free Software.
+#  Remember: LIGMA is Free Software.
 #          Please visit
-#      https://www.gimp.org/
+#      https://www.ligma.org/
 #       for free updates.
 #  
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "GIMP は自由ソフトウェアです。%n%nアップデートはこちらから"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "LIGMA は自由ソフトウェアです。%n%nアップデートはこちらから"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -373,24 +373,24 @@ msgid "Setting up file associations..."
 msgstr "ファイルの関連付けをセットアップしています..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "GIMP Python 拡張の環境をセットアップしています..."
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "LIGMA Python 拡張の環境をセットアップしています..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Mypaint ブラシをセットアップしています..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "GIMP 本体の環境をセットアップしています..."
+msgid "Setting up LIGMA environment..."
+msgstr "LIGMA 本体の環境をセットアップしています..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
 msgstr "32ビットプラグインサポート用の設定をセットアップしています..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "GIMP を起動する"
+msgid "Launch LIGMA"
+msgstr "LIGMA を起動する"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -402,7 +402,7 @@ msgstr "内部エラーが発生しました (%1)。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"指定されたフォルダーに GIMP がインストールされていません。続行しますか？"
+"指定されたフォルダーに LIGMA がインストールされていません。続行しますか？"

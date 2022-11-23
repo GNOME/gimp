@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; "Copy Visible" -- copy the visible selection so that it can be pasted easily
@@ -18,28 +18,28 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ;
 ; 2004-04-14 This script was almost rewritten from scratch
-;     by Raphaël Quinet <raphael@gimp.org>
+;     by Raphaël Quinet <raphael@ligma.org>
 ;     see also http://bugzilla.gnome.org/show_bug.cgi?id=139989
 ;
 ; The code is new but the API is the same as in the previous version:
 ; "Copy Visible"  version 0.11 01/24/98
-;     by Adrian Likins <adrian@gimp.org>
+;     by Adrian Likins <adrian@ligma.org>
 ;   _heavily_ based on:
 ;        cyn-merge.scm   version 0.02   10/10/97
 ;        Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
 ;
 ; Removed all code and made it a backward-compat wrapper around
-;     (gimp-edit-copy-visible)
-;     2004-12-12 Michael Natterer <mitch@gimp.org>
+;     (ligma-edit-copy-visible)
+;     2004-12-12 Michael Natterer <mitch@ligma.org>
 ;
 
 (define (script-fu-copy-visible image drawable)
-  (gimp-edit-copy-visible image)
+  (ligma-edit-copy-visible image)
 )
 
 (script-fu-register "script-fu-copy-visible"
   "Copy Visible"
-  "This procedure is deprecated! Use \'gimp-edit-copy-visible\' instead."
+  "This procedure is deprecated! Use \'ligma-edit-copy-visible\' instead."
   ""
   ""
   ""

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,29 +19,29 @@
 #define __CONVERT_INDEXED_DIALOG_H__
 
 
-typedef void (* GimpConvertIndexedCallback) (GtkWidget              *dialog,
-                                             GimpImage              *image,
-                                             GimpConvertPaletteType  palette_type,
+typedef void (* LigmaConvertIndexedCallback) (GtkWidget              *dialog,
+                                             LigmaImage              *image,
+                                             LigmaConvertPaletteType  palette_type,
                                              gint                    max_colors,
                                              gboolean                remove_duplicates,
-                                             GimpConvertDitherType   dither_type,
+                                             LigmaConvertDitherType   dither_type,
                                              gboolean                dither_alpha,
                                              gboolean                dither_text_layers,
-                                             GimpPalette            *custom_palette,
+                                             LigmaPalette            *custom_palette,
                                              gpointer                user_data);
 
 
-GtkWidget * convert_indexed_dialog_new (GimpImage                  *image,
-                                        GimpContext                *context,
+GtkWidget * convert_indexed_dialog_new (LigmaImage                  *image,
+                                        LigmaContext                *context,
                                         GtkWidget                  *parent,
-                                        GimpConvertPaletteType      palette_type,
+                                        LigmaConvertPaletteType      palette_type,
                                         gint                        max_colors,
                                         gboolean                    remove_duplicates,
-                                        GimpConvertDitherType       dither_type,
+                                        LigmaConvertDitherType       dither_type,
                                         gboolean                    dither_alpha,
                                         gboolean                    dither_text_layers,
-                                        GimpPalette                *custom_palette,
-                                        GimpConvertIndexedCallback  callback,
+                                        LigmaPalette                *custom_palette,
+                                        LigmaConvertIndexedCallback  callback,
                                         gpointer                    user_data);
 
 

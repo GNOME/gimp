@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PRIORITIES_H__
-#define __GIMP_PRIORITIES_H__
+#ifndef __LIGMA_PRIORITIES_H__
+#define __LIGMA_PRIORITIES_H__
 
 
 /* #define G_PRIORITY_HIGH -100 */
@@ -28,17 +28,17 @@
 /* #define GTK_PRIORITY_REDRAW (G_PRIORITY_HIGH_IDLE + 20) */
 
 /*  a bit higher than projection construction  */
-#define GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE             (G_PRIORITY_HIGH_IDLE + 21)
-#define GIMP_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE (G_PRIORITY_HIGH_IDLE + 21)
+#define LIGMA_PRIORITY_DISPLAY_SHELL_FILL_IDLE             (G_PRIORITY_HIGH_IDLE + 21)
+#define LIGMA_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE (G_PRIORITY_HIGH_IDLE + 21)
 
 /*  just a bit less than GDK_PRIORITY_REDRAW   */
-#define GIMP_PRIORITY_PROJECTION_IDLE (G_PRIORITY_HIGH_IDLE + 22)
+#define LIGMA_PRIORITY_PROJECTION_IDLE (G_PRIORITY_HIGH_IDLE + 22)
 
 /* #define G_PRIORITY_DEFAULT_IDLE 200 */
 
-#define GIMP_PRIORITY_VIEWABLE_IDLE (G_PRIORITY_LOW)
+#define LIGMA_PRIORITY_VIEWABLE_IDLE (G_PRIORITY_LOW)
 
 /* #define G_PRIORITY_LOW 300 */
 
 
-#endif /* __GIMP_PRIORITIES_H__ */
+#endif /* __LIGMA_PRIORITIES_H__ */

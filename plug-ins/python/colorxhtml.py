@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-#   Gimp-Python - allows the writing of Gimp plugins in Python.
-#   Copyright (C) 2003, 2005  Manish Singh <yosh@gimp.org>
+#   Ligma-Python - allows the writing of Ligma plugins in Python.
+#   Copyright (C) 2003, 2005  Manish Singh <yosh@ligma.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@ import os.path
 import sys
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -52,7 +52,7 @@ style_def = """body {
 preamble = """<!DOCTYPE html>
 <html>
 <head>
-<title>CSS Color XHTML written by GIMP</title>
+<title>CSS Color XHTML written by LIGMA</title>
 %s
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
@@ -76,15 +76,15 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
 
     if file is None:
         error = 'No file given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
-    if run_mode == Gimp.RunMode.INTERACTIVE:
+    if run_mode == Ligma.RunMode.INTERACTIVE:
 
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        GimpUi.init ("file-colorxhtml-save")
+        LigmaUi.init ("file-colorxhtml-save")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.Dialog(use_header_bar=use_header_bar,
@@ -171,7 +171,7 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
             source_file = characters_checkbox.get_active()
             characters = characters_entry.get_text()
         else:
-            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
+            return procedure.new_return_values(Ligma.PDBStatusType.CANCEL,
                                                GLib.Error())
 
     #For now, work with a single layer
@@ -212,7 +212,7 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
     else:
         data = list('X' * 80)
 
-    Gimp.progress_init(_("Saving as colored XHTML"))
+    Ligma.progress_init(_("Saving as colored XHTML"))
 
     style = style_def % size
 
@@ -264,7 +264,7 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
 
         html.write('\n')
 
-        Gimp.progress_update(y / float(height))
+        Ligma.progress_update(y / float(height))
 
     html.write(postamble)
 
@@ -272,12 +272,12 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
     if separate:
         css.close()
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
+    return Ligma.ValueArray.new_from_values([
+        GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.SUCCESS)
     ])
 
 
-class ColorXhtml(Gimp.PlugIn):
+class ColorXhtml(Ligma.PlugIn):
     ## Parameters ##
     __gproperties__ = {
         "source-file":(bool,
@@ -302,9 +302,9 @@ class ColorXhtml(Gimp.PlugIn):
                      GObject.ParamFlags.READWRITE)
     }
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ 'file-colorxhtml-save' ]
@@ -312,8 +312,8 @@ class ColorXhtml(Gimp.PlugIn):
     def do_create_procedure(self, name):
         procedure = None
         if name == 'file-colorxhtml-save':
-            procedure = Gimp.SaveProcedure.new(self, name,
-                                           Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.SaveProcedure.new(self, name,
+                                           Ligma.PDBProcType.PLUGIN,
                                            save_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
@@ -334,4 +334,4 @@ class ColorXhtml(Gimp.PlugIn):
 
         return procedure
 
-Gimp.main(ColorXhtml.__gtype__, sys.argv)
+Ligma.main(ColorXhtml.__gtype__, sys.argv)

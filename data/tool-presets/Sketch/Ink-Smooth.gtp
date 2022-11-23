@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-ink")
+(icon-name "ligma-tool-ink")
 (name "Ink Smooth")
-(tool-options "GimpInkOptions"
-    (tool "gimp-ink-tool")
+(tool-options "LigmaInkOptions"
+    (tool "ligma-ink-tool")
     (foreground (color-rgb 0.000000 0.023605 0.142004))
     (brush-size 250.000000)
     (use-smoothing yes)
@@ -22,4 +22,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

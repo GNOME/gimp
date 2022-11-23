@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,17 +20,17 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-quick-mask.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-quick-mask.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/channel-options-dialog.h"
@@ -39,7 +39,7 @@
 #include "actions.h"
 #include "quick-mask-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RGBA_EPSILON 1e-6
@@ -48,14 +48,14 @@
 /*  local function prototypes  */
 
 static void   quick_mask_configure_callback (GtkWidget     *dialog,
-                                             GimpImage     *image,
-                                             GimpChannel   *channel,
-                                             GimpContext   *context,
+                                             LigmaImage     *image,
+                                             LigmaChannel   *channel,
+                                             LigmaContext   *context,
                                              const gchar   *channel_name,
-                                             const GimpRGB *channel_color,
+                                             const LigmaRGB *channel_color,
                                              gboolean       save_selection,
                                              gboolean       channel_visible,
-                                             GimpColorTag   channel_color_tag,
+                                             LigmaColorTag   channel_color_tag,
                                              gboolean       channel_lock_content,
                                              gboolean       channel_lock_position,
                                              gpointer       user_data);
@@ -64,77 +64,77 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
 /*  public functions */
 
 void
-quick_mask_toggle_cmd_callback (GimpAction *action,
+quick_mask_toggle_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gboolean   active;
   return_if_no_image (image, data);
 
   active = g_variant_get_boolean (value);
 
-  if (active != gimp_image_get_quick_mask_state (image))
+  if (active != ligma_image_get_quick_mask_state (image))
     {
-      gimp_image_set_quick_mask_state (image, active);
-      gimp_image_flush (image);
+      ligma_image_set_quick_mask_state (image, active);
+      ligma_image_flush (image);
     }
 }
 
 void
-quick_mask_invert_cmd_callback (GimpAction *action,
+quick_mask_invert_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gboolean   inverted;
   return_if_no_image (image, data);
 
   inverted = (gboolean) g_variant_get_int32 (value);
 
-  if (inverted != gimp_image_get_quick_mask_inverted (image))
+  if (inverted != ligma_image_get_quick_mask_inverted (image))
     {
-      gimp_image_quick_mask_invert (image);
-      gimp_image_flush (image);
+      ligma_image_quick_mask_invert (image);
+      ligma_image_flush (image);
     }
 }
 
 void
-quick_mask_configure_cmd_callback (GimpAction *action,
+quick_mask_configure_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-#define CONFIGURE_DIALOG_KEY "gimp-image-quick-mask-configure-dialog"
+#define CONFIGURE_DIALOG_KEY "ligma-image-quick-mask-configure-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), CONFIGURE_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpRGB color;
+      LigmaRGB color;
 
-      gimp_image_get_quick_mask_color (image, &color);
+      ligma_image_get_quick_mask_color (image, &color);
 
       dialog = channel_options_dialog_new (image, NULL,
                                            action_data_get_context (data),
                                            widget,
                                            _("Quick Mask Attributes"),
-                                           "gimp-quick-mask-edit",
-                                           GIMP_ICON_QUICK_MASK_ON,
+                                           "ligma-quick-mask-edit",
+                                           LIGMA_ICON_QUICK_MASK_ON,
                                            _("Edit Quick Mask Attributes"),
-                                           GIMP_HELP_QUICK_MASK_EDIT,
+                                           LIGMA_HELP_QUICK_MASK_EDIT,
                                            _("Edit Quick Mask Color"),
                                            _("_Mask opacity:"),
                                            FALSE,
                                            NULL,
                                            &color,
                                            FALSE,
-                                           GIMP_COLOR_TAG_NONE,
+                                           LIGMA_COLOR_TAG_NONE,
                                            FALSE,
                                            FALSE,
                                            quick_mask_configure_callback,
@@ -153,26 +153,26 @@ quick_mask_configure_cmd_callback (GimpAction *action,
 
 static void
 quick_mask_configure_callback (GtkWidget     *dialog,
-                               GimpImage     *image,
-                               GimpChannel   *channel,
-                               GimpContext   *context,
+                               LigmaImage     *image,
+                               LigmaChannel   *channel,
+                               LigmaContext   *context,
                                const gchar   *channel_name,
-                               const GimpRGB *channel_color,
+                               const LigmaRGB *channel_color,
                                gboolean       save_selection,
                                gboolean       channel_visible,
-                               GimpColorTag   channel_color_tag,
+                               LigmaColorTag   channel_color_tag,
                                gboolean       channel_lock_content,
                                gboolean       channel_lock_position,
                                gpointer       user_data)
 {
-  GimpRGB old_color;
+  LigmaRGB old_color;
 
-  gimp_image_get_quick_mask_color (image, &old_color);
+  ligma_image_get_quick_mask_color (image, &old_color);
 
-  if (gimp_rgba_distance (&old_color, channel_color) > RGBA_EPSILON)
+  if (ligma_rgba_distance (&old_color, channel_color) > RGBA_EPSILON)
     {
-      gimp_image_set_quick_mask_color (image, channel_color);
-      gimp_image_flush (image);
+      ligma_image_set_quick_mask_color (image, channel_color);
+      ligma_image_flush (image);
     }
 
   gtk_widget_destroy (dialog);

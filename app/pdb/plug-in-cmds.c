@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,36 +28,36 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimpplugindef.h"
-#include "plug-in/gimppluginmanager-menu-branch.h"
-#include "plug-in/gimppluginmanager-query.h"
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmaplugindef.h"
+#include "plug-in/ligmapluginmanager-menu-branch.h"
+#include "plug-in/ligmapluginmanager-query.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-plug_ins_query_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_ins_query_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *search_string;
   gchar **procedures = NULL;
   gchar **accelerators = NULL;
@@ -65,50 +65,50 @@ plug_ins_query_invoker (GimpProcedure         *procedure,
   gint num_install_times = 0;
   gint32 *install_times = NULL;
 
-  search_string = g_value_get_string (gimp_value_array_index (args, 0));
+  search_string = g_value_get_string (ligma_value_array_index (args, 0));
 
-  num_install_times = gimp_plug_in_manager_query (gimp->plug_in_manager,
+  num_install_times = ligma_plug_in_manager_query (ligma->plug_in_manager,
                                                   search_string,
                                                   &procedures,
                                                   &accelerators,
                                                   &locations,
                                                   &install_times);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_take_boxed (gimp_value_array_index (return_vals, 1), procedures);
-  g_value_take_boxed (gimp_value_array_index (return_vals, 2), accelerators);
-  g_value_take_boxed (gimp_value_array_index (return_vals, 3), locations);
-  g_value_set_int (gimp_value_array_index (return_vals, 4), num_install_times);
-  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 5), install_times, num_install_times);
+  g_value_take_boxed (ligma_value_array_index (return_vals, 1), procedures);
+  g_value_take_boxed (ligma_value_array_index (return_vals, 2), accelerators);
+  g_value_take_boxed (ligma_value_array_index (return_vals, 3), locations);
+  g_value_set_int (ligma_value_array_index (return_vals, 4), num_install_times);
+  ligma_value_take_int32_array (ligma_value_array_index (return_vals, 5), install_times, num_install_times);
 
   return return_vals;
 }
 
-static GimpValueArray *
-plug_in_help_register_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_help_register_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
   const gchar *domain_name;
   GFile *domain_file;
 
-  domain_name = g_value_get_string (gimp_value_array_index (args, 0));
-  domain_file = g_value_get_object (gimp_value_array_index (args, 1));
+  domain_name = g_value_get_string (ligma_value_array_index (args, 0));
+  domain_file = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
-      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
+      if (plug_in && plug_in->call_mode == LIGMA_PLUG_IN_CALL_QUERY)
         {
           gchar *domain_uri = domain_file ? g_file_get_uri (domain_file) : NULL;
 
-          gimp_plug_in_def_set_help_domain (plug_in->plug_in_def,
+          ligma_plug_in_def_set_help_domain (plug_in->plug_in_def,
                                             domain_name, domain_uri);
 
           g_free (domain_uri);
@@ -117,265 +117,265 @@ plug_in_help_register_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_menu_branch_register_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_menu_branch_register_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
   const gchar *menu_path;
   const gchar *menu_name;
 
-  menu_path = g_value_get_string (gimp_value_array_index (args, 0));
-  menu_name = g_value_get_string (gimp_value_array_index (args, 1));
+  menu_path = g_value_get_string (ligma_value_array_index (args, 0));
+  menu_name = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in)
         {
-          gimp_plug_in_manager_add_menu_branch (gimp->plug_in_manager,
+          ligma_plug_in_manager_add_menu_branch (ligma->plug_in_manager,
                                                 plug_in->file, menu_path, menu_name);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_set_pdb_error_handler_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
   gint handler;
 
-  handler = g_value_get_enum (gimp_value_array_index (args, 0));
+  handler = g_value_get_enum (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in)
         {
-          gimp_plug_in_set_error_handler (plug_in, handler);
+          ligma_plug_in_set_error_handler (plug_in, handler);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_get_pdb_error_handler_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_get_pdb_error_handler_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint handler = 0;
 
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
     {
-      handler = gimp_plug_in_get_error_handler (plug_in);
+      handler = ligma_plug_in_get_error_handler (plug_in);
     }
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), handler);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), handler);
 
   return return_vals;
 }
 
 void
-register_plug_in_procs (GimpPDB *pdb)
+register_plug_in_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-plug-ins-query
+   * ligma-plug-ins-query
    */
-  procedure = gimp_procedure_new (plug_ins_query_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-ins-query");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (plug_ins_query_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-plug-ins-query");
+  ligma_procedure_set_static_help (procedure,
                                   "Queries the plug-in database for its contents.",
                                   "This procedure queries the contents of the plug-in database.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("search-string",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("search-string",
                                                        "search string",
                                                        "If not an empty string then use this as a search pattern",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("procedures",
                                                        "procedures",
                                                        "The plug-in procedure name",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("accelerators",
                                                        "accelerators",
                                                        "String representing keyboard accelerator (could be empty string)",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("locations",
                                                        "locations",
                                                        "Location of the plug-in program",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-install-times",
                                                      "num install times",
                                                      "The number of matching procedures",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("install-times",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_int32_array ("install-times",
                                                                 "install times",
                                                                 "Time that the plug-in was installed",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-help-register
+   * ligma-plug-in-help-register
    */
-  procedure = gimp_procedure_new (plug_in_help_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-in-help-register");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (plug_in_help_register_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-plug-in-help-register");
+  ligma_procedure_set_static_help (procedure,
                                   "Register a help path for a plug-in.",
-                                  "This procedure registers user documentation for the calling plug-in with the GIMP help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'gimp-help.xml' that maps the help IDs to the actual help files.",
+                                  "This procedure registers user documentation for the calling plug-in with the LIGMA help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'ligma-help.xml' that maps the help IDs to the actual help files.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2000");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("domain-name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("domain-name",
                                                        "domain name",
                                                        "The XML namespace of the plug-in's help pages",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("domain-file",
                                                     "domain file",
                                                     "The root URI of the plug-in's help pages",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-menu-branch-register
+   * ligma-plug-in-menu-branch-register
    */
-  procedure = gimp_procedure_new (plug_in_menu_branch_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-in-menu-branch-register");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (plug_in_menu_branch_register_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-plug-in-menu-branch-register");
+  ligma_procedure_set_static_help (procedure,
                                   "Register a sub-menu.",
-                                  "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
+                                  "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. LIGMA will look up the translation in the textdomain registered for the plug-in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("menu-path",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("menu-path",
                                                        "menu path",
                                                        "The sub-menu's menu path",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("menu-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("menu-name",
                                                        "menu name",
                                                        "The name of the sub-menu",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-set-pdb-error-handler
+   * ligma-plug-in-set-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plug_in_set_pdb_error_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-in-set-pdb-error-handler");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (plug_in_set_pdb_error_handler_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-plug-in-set-pdb-error-handler");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets an error handler for procedure calls.",
-                                  "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
+                                  "This procedure changes the way that errors in procedure calls are handled. By default LIGMA will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %LIGMA_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'ligma-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2008");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",
                                                   "Who is responsible for handling procedure call errors",
-                                                  GIMP_TYPE_PDB_ERROR_HANDLER,
-                                                  GIMP_PDB_ERROR_HANDLER_INTERNAL,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_PDB_ERROR_HANDLER,
+                                                  LIGMA_PDB_ERROR_HANDLER_INTERNAL,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-get-pdb-error-handler
+   * ligma-plug-in-get-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plug_in_get_pdb_error_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-in-get-pdb-error-handler");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (plug_in_get_pdb_error_handler_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-plug-in-get-pdb-error-handler");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieves the active error handler for procedure calls.",
-                                  "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",
+                                  "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'ligma-plugin-set-pdb-error-handler' for details.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2008");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",
                                                       "Who is responsible for handling procedure call errors",
-                                                      GIMP_TYPE_PDB_ERROR_HANDLER,
-                                                      GIMP_PDB_ERROR_HANDLER_INTERNAL,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_PDB_ERROR_HANDLER,
+                                                      LIGMA_PDB_ERROR_HANDLER_INTERNAL,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

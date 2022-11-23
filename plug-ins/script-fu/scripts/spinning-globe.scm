@@ -29,22 +29,22 @@
                                   inCopy)
   (let* (
         (theImage (if (= inCopy TRUE)
-                      (car (gimp-image-duplicate inImage))
+                      (car (ligma-image-duplicate inImage))
                       inImage))
-        (theLayer (aref (cadr (gimp-image-get-selected-layers theImage)) 0))
+        (theLayer (aref (cadr (ligma-image-get-selected-layers theImage)) 0))
         (n 0)
         (ang (* (/ 360 inFrames)
                 (if (= inFromLeft TRUE) 1 -1) ))
         (theFrame 0)
         )
 
-  (gimp-layer-add-alpha theLayer)
+  (ligma-layer-add-alpha theLayer)
 
   (while (> inFrames n)
     (set! n (+ n 1))
-    (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
-    (gimp-image-insert-layer theImage theFrame 0 0)
-    (gimp-item-set-name theFrame
+    (set! theFrame (car (ligma-layer-copy theLayer FALSE)))
+    (ligma-image-insert-layer theImage theFrame 0 0)
+    (ligma-item-set-name theFrame
                          (string-append "Anim Frame: "
                                         (number->string (- inFrames n) 10)
                                         " (replace)"))
@@ -71,22 +71,22 @@
     )
   )
 
-  (gimp-image-remove-layer theImage theLayer)
+  (ligma-image-remove-layer theImage theLayer)
   (plug-in-autocrop RUN-NONINTERACTIVE theImage theFrame)
 
   (if (= inIndex 0)
       ()
-      (gimp-image-convert-indexed theImage CONVERT-DITHER-FS CONVERT-PALETTE-GENERATE inIndex
+      (ligma-image-convert-indexed theImage CONVERT-DITHER-FS CONVERT-PALETTE-GENERATE inIndex
                                   FALSE FALSE ""))
 
   (if (= inCopy TRUE)
     (begin
-      (gimp-image-clean-all theImage)
-      (gimp-display-new theImage)
+      (ligma-image-clean-all theImage)
+      (ligma-display-new theImage)
     )
   )
 
-  (gimp-displays-flush)
+  (ligma-displays-flush)
   )
 )
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * IfsCompose is a interface for creating IFS fractals by
@@ -25,7 +25,7 @@
 
 #include <gdk/gdk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "ifs-compose.h"
 
@@ -773,7 +773,7 @@ aff_element_draw (AffElement  *elem,
 AffElement *
 aff_element_new (gdouble  x,
                  gdouble  y,
-                 GimpRGB *color,
+                 LigmaRGB *color,
                  gint     count)
 {
   AffElement *elem = g_new (AffElement, 1);
@@ -967,7 +967,7 @@ ifs_render (AffElement     **elements,
   for (i = 0; i < nsteps; i++)
     {
       if (!preview && ((i % n) == 0))
-        gimp_progress_update ((gdouble) i / (gdouble) nsteps);
+        ligma_progress_update ((gdouble) i / (gdouble) nsteps);
 
       p0 = g_random_int ();
       k = 0;
@@ -1084,7 +1084,7 @@ ifs_render (AffElement     **elements,
     } /* main iteration */
 
   if (!preview )
-    gimp_progress_update (1.0);
+    ligma_progress_update (1.0);
 
   g_free (brush);
   g_free (prob);

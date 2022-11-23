@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGroupLayer
- * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ * LigmaGroupLayer
+ * Copyright (C) 2009  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,61 +18,61 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GROUP_LAYER_H__
-#define __GIMP_GROUP_LAYER_H__
+#ifndef __LIGMA_GROUP_LAYER_H__
+#define __LIGMA_GROUP_LAYER_H__
 
 
-#include "core/gimplayer.h"
+#include "core/ligmalayer.h"
 
 
-#define GIMP_TYPE_GROUP_LAYER            (gimp_group_layer_get_type ())
-#define GIMP_GROUP_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GROUP_LAYER, GimpGroupLayer))
-#define GIMP_GROUP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GROUP_LAYER, GimpGroupLayerClass))
-#define GIMP_IS_GROUP_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GROUP_LAYER))
-#define GIMP_IS_GROUP_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GROUP_LAYER))
-#define GIMP_GROUP_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GROUP_LAYER, GimpGroupLayerClass))
+#define LIGMA_TYPE_GROUP_LAYER            (ligma_group_layer_get_type ())
+#define LIGMA_GROUP_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GROUP_LAYER, LigmaGroupLayer))
+#define LIGMA_GROUP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GROUP_LAYER, LigmaGroupLayerClass))
+#define LIGMA_IS_GROUP_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GROUP_LAYER))
+#define LIGMA_IS_GROUP_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GROUP_LAYER))
+#define LIGMA_GROUP_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GROUP_LAYER, LigmaGroupLayerClass))
 
 
-typedef struct _GimpGroupLayerClass GimpGroupLayerClass;
+typedef struct _LigmaGroupLayerClass LigmaGroupLayerClass;
 
-struct _GimpGroupLayer
+struct _LigmaGroupLayer
 {
-  GimpLayer  parent_instance;
+  LigmaLayer  parent_instance;
 };
 
-struct _GimpGroupLayerClass
+struct _LigmaGroupLayerClass
 {
-  GimpLayerClass  parent_class;
+  LigmaLayerClass  parent_class;
 };
 
 
-GType            gimp_group_layer_get_type            (void) G_GNUC_CONST;
+GType            ligma_group_layer_get_type            (void) G_GNUC_CONST;
 
-GimpLayer      * gimp_group_layer_new                 (GimpImage           *image);
+LigmaLayer      * ligma_group_layer_new                 (LigmaImage           *image);
 
-GimpProjection * gimp_group_layer_get_projection      (GimpGroupLayer      *group);
+LigmaProjection * ligma_group_layer_get_projection      (LigmaGroupLayer      *group);
 
-void             gimp_group_layer_suspend_resize      (GimpGroupLayer      *group,
+void             ligma_group_layer_suspend_resize      (LigmaGroupLayer      *group,
                                                        gboolean             push_undo);
-void             gimp_group_layer_resume_resize       (GimpGroupLayer      *group,
-                                                       gboolean             push_undo);
-
-void             gimp_group_layer_suspend_mask        (GimpGroupLayer      *group,
-                                                       gboolean             push_undo);
-void             gimp_group_layer_resume_mask         (GimpGroupLayer      *group,
+void             ligma_group_layer_resume_resize       (LigmaGroupLayer      *group,
                                                        gboolean             push_undo);
 
+void             ligma_group_layer_suspend_mask        (LigmaGroupLayer      *group,
+                                                       gboolean             push_undo);
+void             ligma_group_layer_resume_mask         (LigmaGroupLayer      *group,
+                                                       gboolean             push_undo);
 
-void             _gimp_group_layer_set_suspended_mask (GimpGroupLayer      *group,
+
+void             _ligma_group_layer_set_suspended_mask (LigmaGroupLayer      *group,
                                                        GeglBuffer          *buffer,
                                                        const GeglRectangle *bounds);
-GeglBuffer     * _gimp_group_layer_get_suspended_mask (GimpGroupLayer      *group,
+GeglBuffer     * _ligma_group_layer_get_suspended_mask (LigmaGroupLayer      *group,
                                                        GeglRectangle       *bounds);
 
-void             _gimp_group_layer_start_transform    (GimpGroupLayer      *group,
+void             _ligma_group_layer_start_transform    (LigmaGroupLayer      *group,
                                                        gboolean             push_undo);
-void             _gimp_group_layer_end_transform      (GimpGroupLayer      *group,
+void             _ligma_group_layer_end_transform      (LigmaGroupLayer      *group,
                                                        gboolean             push_undo);
 
 
-#endif /* __GIMP_GROUP_LAYER_H__ */
+#endif /* __LIGMA_GROUP_LAYER_H__ */

@@ -1,12 +1,12 @@
 
-/* Generated data (by gimp-mkenums) */
+/* Generated data (by ligma-mkenums) */
 
-#include "stamp-gimpcompatenums.h"
+#include "stamp-ligmacompatenums.h"
 #include "config.h"
 #include <glib-object.h>
-#include "gimpbasetypes.h"
-#include "gimpcompatenums.h"
-#include "libgimp/libgimp-intl.h"
+#include "ligmabasetypes.h"
+#include "ligmacompatenums.h"
+#include "libligma/libligma-intl.h"
 
 /* Generated data ends here */
 

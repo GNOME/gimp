@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,30 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_H__
-#define __GIMP_TOOL_H__
+#ifndef __LIGMA_TOOL_H__
+#define __LIGMA_TOOL_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
-#define GIMP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL, GimpTool))
-#define GIMP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL, GimpToolClass))
-#define GIMP_IS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL))
-#define GIMP_IS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL))
-#define GIMP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL, GimpToolClass))
+#define LIGMA_TYPE_TOOL            (ligma_tool_get_type ())
+#define LIGMA_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL, LigmaTool))
+#define LIGMA_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL, LigmaToolClass))
+#define LIGMA_IS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL))
+#define LIGMA_IS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL))
+#define LIGMA_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL, LigmaToolClass))
 
-#define GIMP_TOOL_GET_OPTIONS(t)  (gimp_tool_get_options (GIMP_TOOL (t)))
+#define LIGMA_TOOL_GET_OPTIONS(t)  (ligma_tool_get_options (LIGMA_TOOL (t)))
 
 
-typedef struct _GimpToolClass GimpToolClass;
+typedef struct _LigmaToolClass LigmaToolClass;
 
-struct _GimpTool
+struct _LigmaTool
 {
-  GimpObject       parent_instance;
+  LigmaObject       parent_instance;
 
-  GimpToolInfo    *tool_info;
+  LigmaToolInfo    *tool_info;
 
   gchar           *label;
   gchar           *undo_desc;
@@ -47,22 +47,22 @@ struct _GimpTool
 
   gint             ID;          /*  unique tool ID                         */
 
-  GimpToolControl *control;
+  LigmaToolControl *control;
 
-  GimpDisplay     *display;     /*  pointer to currently active display    */
+  LigmaDisplay     *display;     /*  pointer to currently active display    */
   GList           *drawables;   /*  list of the tool's current drawables   */
 
-  /*  private state of gimp_tool_set_focus_display() and
-   *  gimp_tool_set_[active_]modifier_state()
+  /*  private state of ligma_tool_set_focus_display() and
+   *  ligma_tool_set_[active_]modifier_state()
    */
-  GimpDisplay     *focus_display;
+  LigmaDisplay     *focus_display;
   GdkModifierType  modifier_state;
   GdkModifierType  button_press_state;
   GdkModifierType  active_modifier_state;
 
   /*  private state for synthesizing button_release() events
    */
-  GimpCoords       last_pointer_coords;
+  LigmaCoords       last_pointer_coords;
   guint32          last_pointer_time;
   GdkModifierType  last_pointer_state;
 
@@ -70,7 +70,7 @@ struct _GimpTool
    */
   gboolean         in_click_distance;
   gboolean         got_motion_event;
-  GimpCoords       button_press_coords;
+  LigmaCoords       button_press_coords;
   guint32          button_press_time;
 
   /*  private list of displays which have a status message from this tool
@@ -78,223 +78,223 @@ struct _GimpTool
   GList           *status_displays;
 
   /*  on-canvas progress  */
-  GimpCanvasItem  *progress;
-  GimpDisplay     *progress_display;
+  LigmaCanvasItem  *progress;
+  LigmaDisplay     *progress_display;
   GtkWidget       *progress_grab_widget;
   gboolean         progress_cancelable;
 };
 
-struct _GimpToolClass
+struct _LigmaToolClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   /*  virtual functions  */
 
-  gboolean        (* has_display)         (GimpTool              *tool,
-                                           GimpDisplay           *display);
-  GimpDisplay   * (* has_image)           (GimpTool              *tool,
-                                           GimpImage             *image);
+  gboolean        (* has_display)         (LigmaTool              *tool,
+                                           LigmaDisplay           *display);
+  LigmaDisplay   * (* has_image)           (LigmaTool              *tool,
+                                           LigmaImage             *image);
 
-  gboolean        (* initialize)          (GimpTool              *tool,
-                                           GimpDisplay           *display,
+  gboolean        (* initialize)          (LigmaTool              *tool,
+                                           LigmaDisplay           *display,
                                            GError               **error);
-  void            (* control)             (GimpTool              *tool,
-                                           GimpToolAction         action,
-                                           GimpDisplay           *display);
+  void            (* control)             (LigmaTool              *tool,
+                                           LigmaToolAction         action,
+                                           LigmaDisplay           *display);
 
-  void            (* button_press)        (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+  void            (* button_press)        (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
-                                           GimpButtonPressType    press_type,
-                                           GimpDisplay           *display);
-  void            (* button_release)      (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+                                           LigmaButtonPressType    press_type,
+                                           LigmaDisplay           *display);
+  void            (* button_release)      (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
-                                           GimpButtonReleaseType  release_type,
-                                           GimpDisplay           *display);
-  void            (* motion)              (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+                                           LigmaButtonReleaseType  release_type,
+                                           LigmaDisplay           *display);
+  void            (* motion)              (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
-                                           GimpDisplay           *display);
+                                           LigmaDisplay           *display);
 
-  gboolean        (* key_press)           (GimpTool              *tool,
+  gboolean        (* key_press)           (LigmaTool              *tool,
                                            GdkEventKey           *kevent,
-                                           GimpDisplay           *display);
-  gboolean        (* key_release)         (GimpTool              *tool,
+                                           LigmaDisplay           *display);
+  gboolean        (* key_release)         (LigmaTool              *tool,
                                            GdkEventKey           *kevent,
-                                           GimpDisplay           *display);
-  void            (* modifier_key)        (GimpTool              *tool,
+                                           LigmaDisplay           *display);
+  void            (* modifier_key)        (LigmaTool              *tool,
                                            GdkModifierType        key,
                                            gboolean               press,
                                            GdkModifierType        state,
-                                           GimpDisplay           *display);
-  void            (* active_modifier_key) (GimpTool              *tool,
+                                           LigmaDisplay           *display);
+  void            (* active_modifier_key) (LigmaTool              *tool,
                                            GdkModifierType        key,
                                            gboolean               press,
                                            GdkModifierType        state,
-                                           GimpDisplay           *display);
+                                           LigmaDisplay           *display);
 
-  void            (* oper_update)         (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+  void            (* oper_update)         (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            GdkModifierType        state,
                                            gboolean               proximity,
-                                           GimpDisplay           *display);
-  void            (* cursor_update)       (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+                                           LigmaDisplay           *display);
+  void            (* cursor_update)       (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            GdkModifierType        state,
-                                           GimpDisplay           *display);
+                                           LigmaDisplay           *display);
 
-  const gchar   * (* can_undo)            (GimpTool              *tool,
-                                           GimpDisplay           *display);
-  const gchar   * (* can_redo)            (GimpTool              *tool,
-                                           GimpDisplay           *display);
-  gboolean        (* undo)                (GimpTool              *tool,
-                                           GimpDisplay           *display);
-  gboolean        (* redo)                (GimpTool              *tool,
-                                           GimpDisplay           *display);
+  const gchar   * (* can_undo)            (LigmaTool              *tool,
+                                           LigmaDisplay           *display);
+  const gchar   * (* can_redo)            (LigmaTool              *tool,
+                                           LigmaDisplay           *display);
+  gboolean        (* undo)                (LigmaTool              *tool,
+                                           LigmaDisplay           *display);
+  gboolean        (* redo)                (LigmaTool              *tool,
+                                           LigmaDisplay           *display);
 
-  GimpUIManager * (* get_popup)           (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+  LigmaUIManager * (* get_popup)           (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            GdkModifierType        state,
-                                           GimpDisplay           *display,
+                                           LigmaDisplay           *display,
                                            const gchar          **ui_path);
 
-  void            (* options_notify)      (GimpTool              *tool,
-                                           GimpToolOptions       *options,
+  void            (* options_notify)      (LigmaTool              *tool,
+                                           LigmaToolOptions       *options,
                                            const GParamSpec      *pspec);
 };
 
 
-GType             gimp_tool_get_type            (void) G_GNUC_CONST;
+GType             ligma_tool_get_type            (void) G_GNUC_CONST;
 
-GimpToolOptions * gimp_tool_get_options         (GimpTool            *tool);
+LigmaToolOptions * ligma_tool_get_options         (LigmaTool            *tool);
 
-void              gimp_tool_set_label           (GimpTool            *tool,
+void              ligma_tool_set_label           (LigmaTool            *tool,
                                                  const gchar         *label);
-const gchar     * gimp_tool_get_label           (GimpTool            *tool);
+const gchar     * ligma_tool_get_label           (LigmaTool            *tool);
 
-void              gimp_tool_set_undo_desc       (GimpTool            *tool,
+void              ligma_tool_set_undo_desc       (LigmaTool            *tool,
                                                  const gchar         *undo_desc);
-const gchar     * gimp_tool_get_undo_desc       (GimpTool            *tool);
+const gchar     * ligma_tool_get_undo_desc       (LigmaTool            *tool);
 
-void              gimp_tool_set_icon_name       (GimpTool            *tool,
+void              ligma_tool_set_icon_name       (LigmaTool            *tool,
                                                  const gchar         *icon_name);
-const gchar     * gimp_tool_get_icon_name       (GimpTool            *tool);
+const gchar     * ligma_tool_get_icon_name       (LigmaTool            *tool);
 
-void              gimp_tool_set_help_id         (GimpTool            *tool,
+void              ligma_tool_set_help_id         (LigmaTool            *tool,
                                                  const gchar         *help_id);
-const gchar     * gimp_tool_get_help_id         (GimpTool            *tool);
+const gchar     * ligma_tool_get_help_id         (LigmaTool            *tool);
 
-gboolean          gimp_tool_has_display         (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-GimpDisplay     * gimp_tool_has_image           (GimpTool            *tool,
-                                                 GimpImage           *image);
+gboolean          ligma_tool_has_display         (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+LigmaDisplay     * ligma_tool_has_image           (LigmaTool            *tool,
+                                                 LigmaImage           *image);
 
-gboolean          gimp_tool_initialize          (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-void              gimp_tool_control             (GimpTool            *tool,
-                                                 GimpToolAction       action,
-                                                 GimpDisplay         *display);
+gboolean          ligma_tool_initialize          (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+void              ligma_tool_control             (LigmaTool            *tool,
+                                                 LigmaToolAction       action,
+                                                 LigmaDisplay         *display);
 
-void              gimp_tool_button_press        (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+void              ligma_tool_button_press        (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  guint32              time,
                                                  GdkModifierType      state,
-                                                 GimpButtonPressType  press_type,
-                                                 GimpDisplay         *display);
-void              gimp_tool_button_release      (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+                                                 LigmaButtonPressType  press_type,
+                                                 LigmaDisplay         *display);
+void              ligma_tool_button_release      (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  guint32              time,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display);
-void              gimp_tool_motion              (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+                                                 LigmaDisplay         *display);
+void              ligma_tool_motion              (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  guint32              time,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display);
+                                                 LigmaDisplay         *display);
 
-gboolean          gimp_tool_key_press           (GimpTool            *tool,
+gboolean          ligma_tool_key_press           (LigmaTool            *tool,
                                                  GdkEventKey         *kevent,
-                                                 GimpDisplay         *display);
-gboolean          gimp_tool_key_release         (GimpTool            *tool,
+                                                 LigmaDisplay         *display);
+gboolean          ligma_tool_key_release         (LigmaTool            *tool,
                                                  GdkEventKey         *kevent,
-                                                 GimpDisplay         *display);
+                                                 LigmaDisplay         *display);
 
-void              gimp_tool_set_focus_display   (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-void              gimp_tool_set_modifier_state  (GimpTool            *tool,
+void              ligma_tool_set_focus_display   (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+void              ligma_tool_set_modifier_state  (LigmaTool            *tool,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display);
-void        gimp_tool_set_active_modifier_state (GimpTool            *tool,
+                                                 LigmaDisplay         *display);
+void        ligma_tool_set_active_modifier_state (LigmaTool            *tool,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display);
+                                                 LigmaDisplay         *display);
 
-void              gimp_tool_oper_update         (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+void              ligma_tool_oper_update         (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  GdkModifierType      state,
                                                  gboolean             proximity,
-                                                 GimpDisplay         *display);
-void              gimp_tool_cursor_update       (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+                                                 LigmaDisplay         *display);
+void              ligma_tool_cursor_update       (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display);
+                                                 LigmaDisplay         *display);
 
-const gchar     * gimp_tool_can_undo            (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-const gchar     * gimp_tool_can_redo            (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-gboolean          gimp_tool_undo                (GimpTool            *tool,
-                                                 GimpDisplay         *display);
-gboolean          gimp_tool_redo                (GimpTool            *tool,
-                                                 GimpDisplay         *display);
+const gchar     * ligma_tool_can_undo            (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+const gchar     * ligma_tool_can_redo            (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+gboolean          ligma_tool_undo                (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
+gboolean          ligma_tool_redo                (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
 
-GimpUIManager   * gimp_tool_get_popup           (GimpTool            *tool,
-                                                 const GimpCoords    *coords,
+LigmaUIManager   * ligma_tool_get_popup           (LigmaTool            *tool,
+                                                 const LigmaCoords    *coords,
                                                  GdkModifierType      state,
-                                                 GimpDisplay         *display,
+                                                 LigmaDisplay         *display,
                                                  const gchar        **ui_path);
 
-void              gimp_tool_push_status         (GimpTool            *tool,
-                                                 GimpDisplay         *display,
+void              ligma_tool_push_status         (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
                                                  const gchar         *format,
                                                  ...) G_GNUC_PRINTF(3,4);
-void              gimp_tool_push_status_coords  (GimpTool            *tool,
-                                                 GimpDisplay         *display,
-                                                 GimpCursorPrecision  precision,
+void              ligma_tool_push_status_coords  (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
+                                                 LigmaCursorPrecision  precision,
                                                  const gchar         *title,
                                                  gdouble              x,
                                                  const gchar         *separator,
                                                  gdouble              y,
                                                  const gchar         *help);
-void              gimp_tool_push_status_length  (GimpTool            *tool,
-                                                 GimpDisplay         *display,
+void              ligma_tool_push_status_length  (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
                                                  const gchar         *title,
-                                                 GimpOrientationType  axis,
+                                                 LigmaOrientationType  axis,
                                                  gdouble              value,
                                                  const gchar         *help);
-void              gimp_tool_replace_status      (GimpTool            *tool,
-                                                 GimpDisplay         *display,
+void              ligma_tool_replace_status      (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
                                                  const gchar         *format,
                                                  ...) G_GNUC_PRINTF(3,4);
-void              gimp_tool_pop_status          (GimpTool            *tool,
-                                                 GimpDisplay         *display);
+void              ligma_tool_pop_status          (LigmaTool            *tool,
+                                                 LigmaDisplay         *display);
 
-void              gimp_tool_message             (GimpTool            *tool,
-                                                 GimpDisplay         *display,
+void              ligma_tool_message             (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
                                                  const gchar         *format,
                                                  ...) G_GNUC_PRINTF(3,4);
-void              gimp_tool_message_literal     (GimpTool            *tool,
-                                                 GimpDisplay         *display,
+void              ligma_tool_message_literal     (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
                                                  const gchar         *message);
 
-void              gimp_tool_set_cursor          (GimpTool            *tool,
-                                                 GimpDisplay         *display,
-                                                 GimpCursorType       cursor,
-                                                 GimpToolCursorType   tool_cursor,
-                                                 GimpCursorModifier   modifier);
+void              ligma_tool_set_cursor          (LigmaTool            *tool,
+                                                 LigmaDisplay         *display,
+                                                 LigmaCursorType       cursor,
+                                                 LigmaToolCursorType   tool_cursor,
+                                                 LigmaCursorModifier   modifier);
 
 
-#endif  /*  __GIMP_TOOL_H__  */
+#endif  /*  __LIGMA_TOOL_H__  */

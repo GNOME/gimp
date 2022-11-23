@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-spiral.c
- * Copyright (C) 2017  Michael Natterer <mitch@gimp.org>
+ * ligmapropgui-spiral.c
+ * Copyright (C) 2017  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-spiral.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-spiral.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef enum
@@ -51,7 +51,7 @@ slider_line_callback (GObject                    *config,
                       gdouble                     y1,
                       gdouble                     x2,
                       gdouble                     y2,
-                      const GimpControllerSlider *sliders,
+                      const LigmaControllerSlider *sliders,
                       gint                        n_sliders)
 {
   GeglSpiralType type;
@@ -121,7 +121,7 @@ config_notify (GObject          *config,
                const GParamSpec *pspec,
                gpointer          set_data)
 {
-  GimpControllerSliderLineCallback  set_func;
+  LigmaControllerSliderLineCallback  set_func;
   GeglRectangle                    *area;
   GeglSpiralType                    type;
   gdouble                           x, y;
@@ -130,7 +130,7 @@ config_notify (GObject          *config,
   gdouble                           base;
   gdouble                           balance;
   gdouble                           x1, y1, x2, y2;
-  GimpControllerSlider              sliders[2];
+  LigmaControllerSlider              sliders[2];
   gint                              n_sliders = 0;
 
   set_func = g_object_get_data (G_OBJECT (config), "set-func");
@@ -157,7 +157,7 @@ config_notify (GObject          *config,
     n_sliders = 1;
 
     /* balance */
-    sliders[0]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
+    sliders[0]       = LIGMA_CONTROLLER_SLIDER_DEFAULT;
     sliders[0].min   = 0.5;
     sliders[0].max   = 1.0;
     sliders[0].value = 0.5 + (1.0 - balance) / 4.0;
@@ -168,13 +168,13 @@ config_notify (GObject          *config,
     n_sliders = 2;
 
     /* balance */
-    sliders[0]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
+    sliders[0]       = LIGMA_CONTROLLER_SLIDER_DEFAULT;
     sliders[0].min   = 1.0 / sqrt (base);
     sliders[0].max   = 1.0;
     sliders[0].value = pow (base, -(balance + 1.0) / 4.0);
 
     /* base */
-    sliders[1]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
+    sliders[1]       = LIGMA_CONTROLLER_SLIDER_DEFAULT;
     sliders[1].min   = 0.0;
     sliders[1].max   = 1.0;
     sliders[1].value = 1.0 / base;
@@ -186,13 +186,13 @@ config_notify (GObject          *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_spiral (GObject                  *config,
+_ligma_prop_gui_new_spiral (GObject                  *config,
                            GParamSpec              **param_specs,
                            guint                     n_param_specs,
                            GeglRectangle            *area,
-                           GimpContext              *context,
-                           GimpCreatePickerFunc      create_picker_func,
-                           GimpCreateControllerFunc  create_controller_func,
+                           LigmaContext              *context,
+                           LigmaCreatePickerFunc      create_picker_func,
+                           LigmaCreateControllerFunc  create_controller_func,
                            gpointer                  creator)
 {
   GtkWidget *vbox;
@@ -200,9 +200,9 @@ _gimp_prop_gui_new_spiral (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs, n_param_specs,
                                      area, context,
                                      create_picker_func,
@@ -216,7 +216,7 @@ _gimp_prop_gui_new_spiral (GObject                  *config,
       gpointer  set_data;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_SLIDER_LINE,
+                                         LIGMA_CONTROLLER_TYPE_SLIDER_LINE,
                                          _("Spiral: "),
                                          (GCallback) slider_line_callback,
                                          config,

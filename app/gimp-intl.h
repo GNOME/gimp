@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTL_H__
-#define __GIMP_INTL_H__
+#ifndef __LIGMA_INTL_H__
+#define __LIGMA_INTL_H__
 
 #ifndef GETTEXT_PACKAGE
-#error "config.h must be included prior to gimp-intl.h"
+#error "config.h must be included prior to ligma-intl.h"
 #endif
 
 #include <glib/gi18n.h>
 
-#endif /* __GIMP_INTL_H__ */
+#endif /* __LIGMA_INTL_H__ */

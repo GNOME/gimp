@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -31,7 +31,7 @@
 #include "imap_main.h"
 #include "imap_source.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static void   save_to_view (GtkTextBuffer *buffer,
                             const char    *format,

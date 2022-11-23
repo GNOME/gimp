@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimphandletransformoptions.h"
+#include "ligmahandletransformoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,51 +44,51 @@ enum
 };
 
 
-static void   gimp_handle_transform_options_set_property (GObject         *object,
+static void   ligma_handle_transform_options_set_property (GObject         *object,
                                                           guint            property_id,
                                                           const GValue    *value,
                                                           GParamSpec      *pspec);
-static void   gimp_handle_transform_options_get_property (GObject         *object,
+static void   ligma_handle_transform_options_get_property (GObject         *object,
                                                           guint            property_id,
                                                           GValue          *value,
                                                           GParamSpec      *pspec);
 
 
-G_DEFINE_TYPE (GimpHandleTransformOptions, gimp_handle_transform_options,
-               GIMP_TYPE_TRANSFORM_GRID_OPTIONS)
+G_DEFINE_TYPE (LigmaHandleTransformOptions, ligma_handle_transform_options,
+               LIGMA_TYPE_TRANSFORM_GRID_OPTIONS)
 
-#define parent_class gimp_handle_transform_options_parent_class
+#define parent_class ligma_handle_transform_options_parent_class
 
 
 static void
-gimp_handle_transform_options_class_init (GimpHandleTransformOptionsClass *klass)
+ligma_handle_transform_options_class_init (LigmaHandleTransformOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_handle_transform_options_set_property;
-  object_class->get_property = gimp_handle_transform_options_get_property;
+  object_class->set_property = ligma_handle_transform_options_set_property;
+  object_class->get_property = ligma_handle_transform_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HANDLE_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_HANDLE_MODE,
                          "handle-mode",
                          _("Handle mode"),
                          _("Handle mode"),
-                         GIMP_TYPE_TRANSFORM_HANDLE_MODE,
-                         GIMP_HANDLE_MODE_ADD_TRANSFORM,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TRANSFORM_HANDLE_MODE,
+                         LIGMA_HANDLE_MODE_ADD_TRANSFORM,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_handle_transform_options_init (GimpHandleTransformOptions *options)
+ligma_handle_transform_options_init (LigmaHandleTransformOptions *options)
 {
 }
 
 static void
-gimp_handle_transform_options_set_property (GObject      *object,
+ligma_handle_transform_options_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec)
 {
-  GimpHandleTransformOptions *options = GIMP_HANDLE_TRANSFORM_OPTIONS (object);
+  LigmaHandleTransformOptions *options = LIGMA_HANDLE_TRANSFORM_OPTIONS (object);
 
   switch (property_id)
     {
@@ -103,12 +103,12 @@ gimp_handle_transform_options_set_property (GObject      *object,
 }
 
 static void
-gimp_handle_transform_options_get_property (GObject    *object,
+ligma_handle_transform_options_get_property (GObject    *object,
                                             guint       property_id,
                                             GValue     *value,
                                             GParamSpec *pspec)
 {
-  GimpHandleTransformOptions *options = GIMP_HANDLE_TRANSFORM_OPTIONS (object);
+  LigmaHandleTransformOptions *options = LIGMA_HANDLE_TRANSFORM_OPTIONS (object);
 
   switch (property_id)
     {
@@ -123,23 +123,23 @@ gimp_handle_transform_options_get_property (GObject    *object,
 }
 
 /**
- * gimp_handle_transform_options_gui:
- * @tool_options: a #GimpToolOptions
+ * ligma_handle_transform_options_gui:
+ * @tool_options: a #LigmaToolOptions
  *
  * Build the Transform Tool Options.
  *
  * Returns: a container holding the transform tool options
  **/
 GtkWidget *
-gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
+ligma_handle_transform_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_transform_grid_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_transform_grid_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *button;
   gint       i;
 
-  frame = gimp_prop_enum_radio_frame_new (config, "handle-mode", NULL,
+  frame = ligma_prop_enum_radio_frame_new (config, "handle-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -152,8 +152,8 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
 
       for (i = g_slist_length (list) - 1 ; list; list = list->next, i--)
         {
-          GdkModifierType  shift    = gimp_get_extend_selection_mask ();
-          GdkModifierType  ctrl     = gimp_get_constrain_behavior_mask ();
+          GdkModifierType  shift    = ligma_get_extend_selection_mask ();
+          GdkModifierType  ctrl     = ligma_get_constrain_behavior_mask ();
           GdkModifierType  modifier = 0;
           gchar           *tooltip  = "";
           gchar           *tip;
@@ -161,17 +161,17 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
 
           switch (i)
             {
-            case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+            case LIGMA_HANDLE_MODE_ADD_TRANSFORM:
               modifier = 0;
               tooltip  = _("Add handles and transform the image");
               break;
 
-            case GIMP_HANDLE_MODE_MOVE:
+            case LIGMA_HANDLE_MODE_MOVE:
               modifier = shift;
               tooltip  = _("Move transform handles");
               break;
 
-            case GIMP_HANDLE_MODE_REMOVE:
+            case LIGMA_HANDLE_MODE_REMOVE:
               modifier = ctrl;
               tooltip  = _("Remove transform handles");
               break;
@@ -181,18 +181,18 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
             {
               label = g_strdup_printf ("%s (%s)",
                                        gtk_button_get_label (GTK_BUTTON (list->data)),
-                                       gimp_get_mod_string (modifier));
+                                       ligma_get_mod_string (modifier));
               gtk_button_set_label (GTK_BUTTON (list->data), label);
               g_free (label);
 
               tip = g_strdup_printf ("%s  (%s)",
-                                     tooltip, gimp_get_mod_string (modifier));
-              gimp_help_set_help_data (list->data, tip, NULL);
+                                     tooltip, ligma_get_mod_string (modifier));
+              ligma_help_set_help_data (list->data, tip, NULL);
               g_free (tip);
             }
           else
             {
-              gimp_help_set_help_data (list->data, tooltip, NULL);
+              ligma_help_set_help_data (list->data, tooltip, NULL);
             }
         }
     }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,144 +22,144 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimppattern.h"
-#include "gimppattern-load.h"
-#include "gimppattern-save.h"
-#include "gimptagged.h"
-#include "gimptempbuf.h"
+#include "ligmapattern.h"
+#include "ligmapattern-load.h"
+#include "ligmapattern-save.h"
+#include "ligmatagged.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void          gimp_pattern_tagged_iface_init (GimpTaggedInterface  *iface);
-static void          gimp_pattern_finalize          (GObject              *object);
+static void          ligma_pattern_tagged_iface_init (LigmaTaggedInterface  *iface);
+static void          ligma_pattern_finalize          (GObject              *object);
 
-static gint64        gimp_pattern_get_memsize       (GimpObject           *object,
+static gint64        ligma_pattern_get_memsize       (LigmaObject           *object,
                                                      gint64               *gui_size);
 
-static gboolean      gimp_pattern_get_size          (GimpViewable         *viewable,
+static gboolean      ligma_pattern_get_size          (LigmaViewable         *viewable,
                                                      gint                 *width,
                                                      gint                 *height);
-static GimpTempBuf * gimp_pattern_get_new_preview   (GimpViewable         *viewable,
-                                                     GimpContext          *context,
+static LigmaTempBuf * ligma_pattern_get_new_preview   (LigmaViewable         *viewable,
+                                                     LigmaContext          *context,
                                                      gint                  width,
                                                      gint                  height);
-static gchar       * gimp_pattern_get_description   (GimpViewable         *viewable,
+static gchar       * ligma_pattern_get_description   (LigmaViewable         *viewable,
                                                      gchar               **tooltip);
 
-static const gchar * gimp_pattern_get_extension     (GimpData             *data);
-static void          gimp_pattern_copy              (GimpData             *data,
-                                                     GimpData             *src_data);
+static const gchar * ligma_pattern_get_extension     (LigmaData             *data);
+static void          ligma_pattern_copy              (LigmaData             *data,
+                                                     LigmaData             *src_data);
 
-static gchar       * gimp_pattern_get_checksum      (GimpTagged           *tagged);
+static gchar       * ligma_pattern_get_checksum      (LigmaTagged           *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_pattern_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaPattern, ligma_pattern, LIGMA_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_pattern_tagged_iface_init))
 
-#define parent_class gimp_pattern_parent_class
+#define parent_class ligma_pattern_parent_class
 
 
 static void
-gimp_pattern_class_init (GimpPatternClass *klass)
+ligma_pattern_class_init (LigmaPatternClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
 
-  object_class->finalize            = gimp_pattern_finalize;
+  object_class->finalize            = ligma_pattern_finalize;
 
-  gimp_object_class->get_memsize    = gimp_pattern_get_memsize;
+  ligma_object_class->get_memsize    = ligma_pattern_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-bucket-fill";
-  viewable_class->get_size          = gimp_pattern_get_size;
-  viewable_class->get_new_preview   = gimp_pattern_get_new_preview;
-  viewable_class->get_description   = gimp_pattern_get_description;
+  viewable_class->default_icon_name = "ligma-tool-bucket-fill";
+  viewable_class->get_size          = ligma_pattern_get_size;
+  viewable_class->get_new_preview   = ligma_pattern_get_new_preview;
+  viewable_class->get_description   = ligma_pattern_get_description;
 
-  data_class->save                  = gimp_pattern_save;
-  data_class->get_extension         = gimp_pattern_get_extension;
-  data_class->copy                  = gimp_pattern_copy;
+  data_class->save                  = ligma_pattern_save;
+  data_class->get_extension         = ligma_pattern_get_extension;
+  data_class->copy                  = ligma_pattern_copy;
 }
 
 static void
-gimp_pattern_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_pattern_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->get_checksum = gimp_pattern_get_checksum;
+  iface->get_checksum = ligma_pattern_get_checksum;
 }
 
 static void
-gimp_pattern_init (GimpPattern *pattern)
+ligma_pattern_init (LigmaPattern *pattern)
 {
   pattern->mask = NULL;
 }
 
 static void
-gimp_pattern_finalize (GObject *object)
+ligma_pattern_finalize (GObject *object)
 {
-  GimpPattern *pattern = GIMP_PATTERN (object);
+  LigmaPattern *pattern = LIGMA_PATTERN (object);
 
-  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
+  g_clear_pointer (&pattern->mask, ligma_temp_buf_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gint64
-gimp_pattern_get_memsize (GimpObject *object,
+ligma_pattern_get_memsize (LigmaObject *object,
                           gint64     *gui_size)
 {
-  GimpPattern *pattern = GIMP_PATTERN (object);
+  LigmaPattern *pattern = LIGMA_PATTERN (object);
   gint64       memsize = 0;
 
-  memsize += gimp_temp_buf_get_memsize (pattern->mask);
+  memsize += ligma_temp_buf_get_memsize (pattern->mask);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_pattern_get_size (GimpViewable *viewable,
+ligma_pattern_get_size (LigmaViewable *viewable,
                        gint         *width,
                        gint         *height)
 {
-  GimpPattern *pattern = GIMP_PATTERN (viewable);
+  LigmaPattern *pattern = LIGMA_PATTERN (viewable);
 
-  *width  = gimp_temp_buf_get_width  (pattern->mask);
-  *height = gimp_temp_buf_get_height (pattern->mask);
+  *width  = ligma_temp_buf_get_width  (pattern->mask);
+  *height = ligma_temp_buf_get_height (pattern->mask);
 
   return TRUE;
 }
 
-static GimpTempBuf *
-gimp_pattern_get_new_preview (GimpViewable *viewable,
-                              GimpContext  *context,
+static LigmaTempBuf *
+ligma_pattern_get_new_preview (LigmaViewable *viewable,
+                              LigmaContext  *context,
                               gint          width,
                               gint          height)
 {
-  GimpPattern *pattern = GIMP_PATTERN (viewable);
-  GimpTempBuf *temp_buf;
+  LigmaPattern *pattern = LIGMA_PATTERN (viewable);
+  LigmaTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
   GeglBuffer  *dest_buffer;
   gint         copy_width;
   gint         copy_height;
 
-  copy_width  = MIN (width,  gimp_temp_buf_get_width  (pattern->mask));
-  copy_height = MIN (height, gimp_temp_buf_get_height (pattern->mask));
+  copy_width  = MIN (width,  ligma_temp_buf_get_width  (pattern->mask));
+  copy_height = MIN (height, ligma_temp_buf_get_height (pattern->mask));
 
-  temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                gimp_temp_buf_get_format (pattern->mask));
+  temp_buf = ligma_temp_buf_new (copy_width, copy_height,
+                                ligma_temp_buf_get_format (pattern->mask));
 
-  src_buffer  = gimp_temp_buf_create_buffer (pattern->mask);
-  dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
+  src_buffer  = ligma_temp_buf_create_buffer (pattern->mask);
+  dest_buffer = ligma_temp_buf_create_buffer (temp_buf);
 
-  gimp_gegl_buffer_copy (src_buffer,
+  ligma_gegl_buffer_copy (src_buffer,
                          GEGL_RECTANGLE (0, 0, copy_width, copy_height),
                          GEGL_ABYSS_NONE,
                          dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
@@ -171,48 +171,48 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 }
 
 static gchar *
-gimp_pattern_get_description (GimpViewable  *viewable,
+ligma_pattern_get_description (LigmaViewable  *viewable,
                               gchar        **tooltip)
 {
-  GimpPattern *pattern = GIMP_PATTERN (viewable);
+  LigmaPattern *pattern = LIGMA_PATTERN (viewable);
 
   return g_strdup_printf ("%s (%d × %d)",
-                          gimp_object_get_name (pattern),
-                          gimp_temp_buf_get_width  (pattern->mask),
-                          gimp_temp_buf_get_height (pattern->mask));
+                          ligma_object_get_name (pattern),
+                          ligma_temp_buf_get_width  (pattern->mask),
+                          ligma_temp_buf_get_height (pattern->mask));
 }
 
 static const gchar *
-gimp_pattern_get_extension (GimpData *data)
+ligma_pattern_get_extension (LigmaData *data)
 {
-  return GIMP_PATTERN_FILE_EXTENSION;
+  return LIGMA_PATTERN_FILE_EXTENSION;
 }
 
 static void
-gimp_pattern_copy (GimpData *data,
-                   GimpData *src_data)
+ligma_pattern_copy (LigmaData *data,
+                   LigmaData *src_data)
 {
-  GimpPattern *pattern     = GIMP_PATTERN (data);
-  GimpPattern *src_pattern = GIMP_PATTERN (src_data);
+  LigmaPattern *pattern     = LIGMA_PATTERN (data);
+  LigmaPattern *src_pattern = LIGMA_PATTERN (src_data);
 
-  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
-  pattern->mask = gimp_temp_buf_copy (src_pattern->mask);
+  g_clear_pointer (&pattern->mask, ligma_temp_buf_unref);
+  pattern->mask = ligma_temp_buf_copy (src_pattern->mask);
 
-  gimp_data_dirty (data);
+  ligma_data_dirty (data);
 }
 
 static gchar *
-gimp_pattern_get_checksum (GimpTagged *tagged)
+ligma_pattern_get_checksum (LigmaTagged *tagged)
 {
-  GimpPattern *pattern         = GIMP_PATTERN (tagged);
+  LigmaPattern *pattern         = LIGMA_PATTERN (tagged);
   gchar       *checksum_string = NULL;
 
   if (pattern->mask)
     {
       GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-      g_checksum_update (checksum, gimp_temp_buf_get_data (pattern->mask),
-                         gimp_temp_buf_get_data_size (pattern->mask));
+      g_checksum_update (checksum, ligma_temp_buf_get_data (pattern->mask),
+                         ligma_temp_buf_get_data_size (pattern->mask));
 
       checksum_string = g_strdup (g_checksum_get_string (checksum));
 
@@ -222,46 +222,46 @@ gimp_pattern_get_checksum (GimpTagged *tagged)
   return checksum_string;
 }
 
-GimpData *
-gimp_pattern_new (GimpContext *context,
+LigmaData *
+ligma_pattern_new (LigmaContext *context,
                   const gchar *name)
 {
-  GimpPattern *pattern;
+  LigmaPattern *pattern;
   guchar      *data;
   gint         row, col;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (name[0] != '\n', NULL);
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN,
+  pattern = g_object_new (LIGMA_TYPE_PATTERN,
                           "name", name,
                           NULL);
 
-  pattern->mask = gimp_temp_buf_new (32, 32, babl_format ("R'G'B' u8"));
+  pattern->mask = ligma_temp_buf_new (32, 32, babl_format ("R'G'B' u8"));
 
-  data = gimp_temp_buf_get_data (pattern->mask);
+  data = ligma_temp_buf_get_data (pattern->mask);
 
-  for (row = 0; row < gimp_temp_buf_get_height (pattern->mask); row++)
-    for (col = 0; col < gimp_temp_buf_get_width (pattern->mask); col++)
+  for (row = 0; row < ligma_temp_buf_get_height (pattern->mask); row++)
+    for (col = 0; col < ligma_temp_buf_get_width (pattern->mask); col++)
       {
         memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
         data += 3;
       }
 
-  return GIMP_DATA (pattern);
+  return LIGMA_DATA (pattern);
 }
 
-GimpData *
-gimp_pattern_get_standard (GimpContext *context)
+LigmaData *
+ligma_pattern_get_standard (LigmaContext *context)
 {
-  static GimpData *standard_pattern = NULL;
+  static LigmaData *standard_pattern = NULL;
 
   if (! standard_pattern)
     {
-      standard_pattern = gimp_pattern_new (context, "Standard");
+      standard_pattern = ligma_pattern_new (context, "Standard");
 
-      gimp_data_clean (standard_pattern);
-      gimp_data_make_internal (standard_pattern, "gimp-pattern-standard");
+      ligma_data_clean (standard_pattern);
+      ligma_data_make_internal (standard_pattern, "ligma-pattern-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_pattern),
                                  (gpointer *) &standard_pattern);
@@ -270,18 +270,18 @@ gimp_pattern_get_standard (GimpContext *context)
   return standard_pattern;
 }
 
-GimpTempBuf *
-gimp_pattern_get_mask (GimpPattern *pattern)
+LigmaTempBuf *
+ligma_pattern_get_mask (LigmaPattern *pattern)
 {
-  g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
+  g_return_val_if_fail (LIGMA_IS_PATTERN (pattern), NULL);
 
   return pattern->mask;
 }
 
 GeglBuffer *
-gimp_pattern_create_buffer (GimpPattern *pattern)
+ligma_pattern_create_buffer (LigmaPattern *pattern)
 {
-  g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
+  g_return_val_if_fail (LIGMA_IS_PATTERN (pattern), NULL);
 
-  return gimp_temp_buf_create_buffer (pattern->mask);
+  return ligma_temp_buf_create_buffer (pattern->mask);
 }

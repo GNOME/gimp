@@ -1,4 +1,4 @@
-/* parasitelist.h: Copyright 1998 Jay Cox <jaycox@gimp.org>
+/* parasitelist.h: Copyright 1998 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,56 +14,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITE_LIST_H__
-#define __GIMP_PARASITE_LIST_H__
+#ifndef __LIGMA_PARASITE_LIST_H__
+#define __LIGMA_PARASITE_LIST_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_PARASITE_LIST            (gimp_parasite_list_get_type ())
-#define GIMP_PARASITE_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
-#define GIMP_PARASITE_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PARASITE_LIST, GimpParasiteListClass))
-#define GIMP_IS_PARASITE_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
-#define GIMP_IS_PARASITE_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PARASITE_LIST))
-#define GIMP_PARASITE_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteListClass))
+#define LIGMA_TYPE_PARASITE_LIST            (ligma_parasite_list_get_type ())
+#define LIGMA_PARASITE_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PARASITE_LIST, LigmaParasiteList))
+#define LIGMA_PARASITE_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PARASITE_LIST, LigmaParasiteListClass))
+#define LIGMA_IS_PARASITE_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PARASITE_LIST))
+#define LIGMA_IS_PARASITE_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PARASITE_LIST))
+#define LIGMA_PARASITE_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PARASITE_LIST, LigmaParasiteListClass))
 
 
-typedef struct _GimpParasiteListClass GimpParasiteListClass;
+typedef struct _LigmaParasiteListClass LigmaParasiteListClass;
 
-struct _GimpParasiteList
+struct _LigmaParasiteList
 {
-  GimpObject  object;
+  LigmaObject  object;
 
   GHashTable *table;
 };
 
-struct _GimpParasiteListClass
+struct _LigmaParasiteListClass
 {
-  GimpObjectClass parent_class;
+  LigmaObjectClass parent_class;
 
-  void (* add)    (GimpParasiteList *list,
-                   GimpParasite     *parasite);
-  void (* remove) (GimpParasiteList *list,
-                   GimpParasite     *parasite);
+  void (* add)    (LigmaParasiteList *list,
+                   LigmaParasite     *parasite);
+  void (* remove) (LigmaParasiteList *list,
+                   LigmaParasite     *parasite);
 };
 
 
-GType                gimp_parasite_list_get_type (void) G_GNUC_CONST;
+GType                ligma_parasite_list_get_type (void) G_GNUC_CONST;
 
-GimpParasiteList   * gimp_parasite_list_new      (void);
-GimpParasiteList   * gimp_parasite_list_copy     (GimpParasiteList       *list);
-void                 gimp_parasite_list_add      (GimpParasiteList       *list,
-                                                  const GimpParasite     *parasite);
-void                 gimp_parasite_list_remove   (GimpParasiteList       *list,
+LigmaParasiteList   * ligma_parasite_list_new      (void);
+LigmaParasiteList   * ligma_parasite_list_copy     (LigmaParasiteList       *list);
+void                 ligma_parasite_list_add      (LigmaParasiteList       *list,
+                                                  const LigmaParasite     *parasite);
+void                 ligma_parasite_list_remove   (LigmaParasiteList       *list,
                                                   const gchar            *name);
-gint                 gimp_parasite_list_length   (GimpParasiteList       *list);
-gint                 gimp_parasite_list_persistent_length (GimpParasiteList *list);
-void                 gimp_parasite_list_foreach  (GimpParasiteList       *list,
+gint                 ligma_parasite_list_length   (LigmaParasiteList       *list);
+gint                 ligma_parasite_list_persistent_length (LigmaParasiteList *list);
+void                 ligma_parasite_list_foreach  (LigmaParasiteList       *list,
                                                   GHFunc                  function,
                                                   gpointer                user_data);
-const GimpParasite * gimp_parasite_list_find     (GimpParasiteList       *list,
+const LigmaParasite * ligma_parasite_list_find     (LigmaParasiteList       *list,
                                                   const gchar            *name);
 
 
-#endif  /*  __GIMP_PARASITE_LIST_H__  */
+#endif  /*  __LIGMA_PARASITE_LIST_H__  */

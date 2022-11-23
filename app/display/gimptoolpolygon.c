@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolpolygon.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolpolygon.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
- * Based on GimpFreeSelectTool
+ * Based on LigmaFreeSelectTool
  *
  * Major improvement to support polygonal segments
  * Copyright (C) 2008 Martin Nordholts
@@ -31,27 +31,27 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
+#include "core/ligma-utils.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvashandle.h"
-#include "gimpcanvasline.h"
-#include "gimpcanvaspolygon.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-utils.h"
-#include "gimptoolpolygon.h"
+#include "ligmacanvashandle.h"
+#include "ligmacanvasline.h"
+#include "ligmacanvaspolygon.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-utils.h"
+#include "ligmatoolpolygon.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define POINT_GRAB_THRESHOLD_SQ SQR (GIMP_CANVAS_HANDLE_SIZE_CIRCLE / 2)
-#define POINT_SHOW_THRESHOLD_SQ SQR (GIMP_CANVAS_HANDLE_SIZE_CIRCLE * 7)
+#define POINT_GRAB_THRESHOLD_SQ SQR (LIGMA_CANVAS_HANDLE_SIZE_CIRCLE / 2)
+#define POINT_SHOW_THRESHOLD_SQ SQR (LIGMA_CANVAS_HANDLE_SIZE_CIRCLE * 7)
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)
 #define NO_CLICK_TIME_AVAILABLE 0
@@ -64,7 +64,7 @@ enum
 };
 
 
-struct _GimpToolPolygonPrivate
+struct _LigmaToolPolygonPrivate
 {
   /* Index of grabbed segment index. */
   gint               grabbed_segment_index;
@@ -72,8 +72,8 @@ struct _GimpToolPolygonPrivate
   /* We need to keep track of a number of points when we move a
    * segment vertex
    */
-  GimpVector2       *saved_points_lower_segment;
-  GimpVector2       *saved_points_higher_segment;
+  LigmaVector2       *saved_points_lower_segment;
+  LigmaVector2       *saved_points_higher_segment;
   gint               max_n_saved_points_lower_segment;
   gint               max_n_saved_points_higher_segment;
 
@@ -85,11 +85,11 @@ struct _GimpToolPolygonPrivate
   /* Point which is used to draw the polygon but which is not part of
    * it yet
    */
-  GimpVector2        pending_point;
+  LigmaVector2        pending_point;
   gboolean           show_pending_point;
 
   /* The points of the polygon */
-  GimpVector2       *points;
+  LigmaVector2       *points;
   gint               max_n_points;
 
   /* The number of points actually in use */
@@ -120,167 +120,167 @@ struct _GimpToolPolygonPrivate
 
   /* Last _oper_update or _motion coords */
   gboolean           hover;
-  GimpVector2        last_coords;
+  LigmaVector2        last_coords;
 
   /* A double-click commits the selection, keep track of last
    * click-time and click-position.
    */
   guint32            last_click_time;
-  GimpCoords         last_click_coord;
+  LigmaCoords         last_click_coord;
 
   /* Are we in a click-drag-release? */
   gboolean           button_down;
 
-  GimpCanvasItem    *polygon;
-  GimpCanvasItem    *pending_line;
-  GimpCanvasItem    *closing_line;
+  LigmaCanvasItem    *polygon;
+  LigmaCanvasItem    *pending_line;
+  LigmaCanvasItem    *closing_line;
   GPtrArray         *handles;
 };
 
 
 /*  local function prototypes  */
 
-static void     gimp_tool_polygon_constructed     (GObject               *object);
-static void     gimp_tool_polygon_finalize        (GObject               *object);
-static void     gimp_tool_polygon_set_property    (GObject               *object,
+static void     ligma_tool_polygon_constructed     (GObject               *object);
+static void     ligma_tool_polygon_finalize        (GObject               *object);
+static void     ligma_tool_polygon_set_property    (GObject               *object,
                                                    guint                  property_id,
                                                    const GValue          *value,
                                                    GParamSpec            *pspec);
-static void     gimp_tool_polygon_get_property    (GObject               *object,
+static void     ligma_tool_polygon_get_property    (GObject               *object,
                                                    guint                  property_id,
                                                    GValue                *value,
                                                    GParamSpec            *pspec);
 
-static void     gimp_tool_polygon_changed         (GimpToolWidget        *widget);
-static gint     gimp_tool_polygon_button_press    (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+static void     ligma_tool_polygon_changed         (LigmaToolWidget        *widget);
+static gint     ligma_tool_polygon_button_press    (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
-                                                   GimpButtonPressType    press_type);
-static void     gimp_tool_polygon_button_release  (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+                                                   LigmaButtonPressType    press_type);
+static void     ligma_tool_polygon_button_release  (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
-                                                   GimpButtonReleaseType  release_type);
-static void     gimp_tool_polygon_motion          (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+                                                   LigmaButtonReleaseType  release_type);
+static void     ligma_tool_polygon_motion          (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state);
-static GimpHit  gimp_tool_polygon_hit             (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+static LigmaHit  ligma_tool_polygon_hit             (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    GdkModifierType        state,
                                                    gboolean               proximity);
-static void     gimp_tool_polygon_hover           (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+static void     ligma_tool_polygon_hover           (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    GdkModifierType        state,
                                                    gboolean               proximity);
-static void     gimp_tool_polygon_leave_notify    (GimpToolWidget        *widget);
-static gboolean gimp_tool_polygon_key_press       (GimpToolWidget        *widget,
+static void     ligma_tool_polygon_leave_notify    (LigmaToolWidget        *widget);
+static gboolean ligma_tool_polygon_key_press       (LigmaToolWidget        *widget,
                                                    GdkEventKey           *kevent);
-static void     gimp_tool_polygon_motion_modifier (GimpToolWidget        *widget,
+static void     ligma_tool_polygon_motion_modifier (LigmaToolWidget        *widget,
                                                    GdkModifierType        key,
                                                    gboolean               press,
                                                    GdkModifierType        state);
-static void     gimp_tool_polygon_hover_modifier  (GimpToolWidget        *widget,
+static void     ligma_tool_polygon_hover_modifier  (LigmaToolWidget        *widget,
                                                    GdkModifierType        key,
                                                    gboolean               press,
                                                    GdkModifierType        state);
-static gboolean gimp_tool_polygon_get_cursor      (GimpToolWidget        *widget,
-                                                   const GimpCoords      *coords,
+static gboolean ligma_tool_polygon_get_cursor      (LigmaToolWidget        *widget,
+                                                   const LigmaCoords      *coords,
                                                    GdkModifierType        state,
-                                                   GimpCursorType        *cursor,
-                                                   GimpToolCursorType    *tool_cursor,
-                                                   GimpCursorModifier    *modifier);
+                                                   LigmaCursorType        *cursor,
+                                                   LigmaToolCursorType    *tool_cursor,
+                                                   LigmaCursorModifier    *modifier);
 
-static void     gimp_tool_polygon_change_complete (GimpToolPolygon       *polygon);
+static void     ligma_tool_polygon_change_complete (LigmaToolPolygon       *polygon);
 
-static gint   gimp_tool_polygon_get_segment_index (GimpToolPolygon       *polygon,
-                                                   const GimpCoords      *coords);
+static gint   ligma_tool_polygon_get_segment_index (LigmaToolPolygon       *polygon,
+                                                   const LigmaCoords      *coords);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPolygon, gimp_tool_polygon,
-                            GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolPolygon, ligma_tool_polygon,
+                            LIGMA_TYPE_TOOL_WIDGET)
 
-#define parent_class gimp_tool_polygon_parent_class
+#define parent_class ligma_tool_polygon_parent_class
 
 static guint polygon_signals[LAST_SIGNAL] = { 0, };
 
-static const GimpVector2 vector2_zero = { 0.0, 0.0 };
+static const LigmaVector2 vector2_zero = { 0.0, 0.0 };
 
 
 static void
-gimp_tool_polygon_class_init (GimpToolPolygonClass *klass)
+ligma_tool_polygon_class_init (LigmaToolPolygonClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_polygon_constructed;
-  object_class->finalize        = gimp_tool_polygon_finalize;
-  object_class->set_property    = gimp_tool_polygon_set_property;
-  object_class->get_property    = gimp_tool_polygon_get_property;
+  object_class->constructed     = ligma_tool_polygon_constructed;
+  object_class->finalize        = ligma_tool_polygon_finalize;
+  object_class->set_property    = ligma_tool_polygon_set_property;
+  object_class->get_property    = ligma_tool_polygon_get_property;
 
-  widget_class->changed         = gimp_tool_polygon_changed;
-  widget_class->button_press    = gimp_tool_polygon_button_press;
-  widget_class->button_release  = gimp_tool_polygon_button_release;
-  widget_class->motion          = gimp_tool_polygon_motion;
-  widget_class->hit             = gimp_tool_polygon_hit;
-  widget_class->hover           = gimp_tool_polygon_hover;
-  widget_class->leave_notify    = gimp_tool_polygon_leave_notify;
-  widget_class->key_press       = gimp_tool_polygon_key_press;
-  widget_class->motion_modifier = gimp_tool_polygon_motion_modifier;
-  widget_class->hover_modifier  = gimp_tool_polygon_hover_modifier;
-  widget_class->get_cursor      = gimp_tool_polygon_get_cursor;
+  widget_class->changed         = ligma_tool_polygon_changed;
+  widget_class->button_press    = ligma_tool_polygon_button_press;
+  widget_class->button_release  = ligma_tool_polygon_button_release;
+  widget_class->motion          = ligma_tool_polygon_motion;
+  widget_class->hit             = ligma_tool_polygon_hit;
+  widget_class->hover           = ligma_tool_polygon_hover;
+  widget_class->leave_notify    = ligma_tool_polygon_leave_notify;
+  widget_class->key_press       = ligma_tool_polygon_key_press;
+  widget_class->motion_modifier = ligma_tool_polygon_motion_modifier;
+  widget_class->hover_modifier  = ligma_tool_polygon_hover_modifier;
+  widget_class->get_cursor      = ligma_tool_polygon_get_cursor;
 
   polygon_signals[CHANGE_COMPLETE] =
     g_signal_new ("change-complete",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolPolygonClass, change_complete),
+                  G_STRUCT_OFFSET (LigmaToolPolygonClass, change_complete),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 
 static void
-gimp_tool_polygon_init (GimpToolPolygon *polygon)
+ligma_tool_polygon_init (LigmaToolPolygon *polygon)
 {
-  polygon->private = gimp_tool_polygon_get_instance_private (polygon);
+  polygon->private = ligma_tool_polygon_get_instance_private (polygon);
 
   polygon->private->grabbed_segment_index = INVALID_INDEX;
   polygon->private->last_click_time       = NO_CLICK_TIME_AVAILABLE;
 }
 
 static void
-gimp_tool_polygon_constructed (GObject *object)
+ligma_tool_polygon_constructed (GObject *object)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (object);
-  GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolPolygonPrivate *private = polygon->private;
-  GimpCanvasGroup        *stroke_group;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (object);
+  LigmaToolWidget         *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolPolygonPrivate *private = polygon->private;
+  LigmaCanvasGroup        *stroke_group;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  stroke_group = gimp_tool_widget_add_stroke_group (widget);
+  stroke_group = ligma_tool_widget_add_stroke_group (widget);
 
-  gimp_tool_widget_push_group (widget, stroke_group);
+  ligma_tool_widget_push_group (widget, stroke_group);
 
-  private->polygon = gimp_tool_widget_add_polygon (widget, NULL,
+  private->polygon = ligma_tool_widget_add_polygon (widget, NULL,
                                                    NULL, 0, FALSE);
 
-  private->pending_line = gimp_tool_widget_add_line (widget, 0, 0, 0, 0);
-  private->closing_line = gimp_tool_widget_add_line (widget, 0, 0, 0, 0);
+  private->pending_line = ligma_tool_widget_add_line (widget, 0, 0, 0, 0);
+  private->closing_line = ligma_tool_widget_add_line (widget, 0, 0, 0, 0);
 
-  gimp_tool_widget_pop_group (widget);
+  ligma_tool_widget_pop_group (widget);
 
   private->handles = g_ptr_array_new ();
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
 static void
-gimp_tool_polygon_finalize (GObject *object)
+ligma_tool_polygon_finalize (GObject *object)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (object);
-  GimpToolPolygonPrivate *private = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (object);
+  LigmaToolPolygonPrivate *private = polygon->private;
 
   g_free (private->points);
   g_free (private->segment_indices);
@@ -293,7 +293,7 @@ gimp_tool_polygon_finalize (GObject *object)
 }
 
 static void
-gimp_tool_polygon_set_property (GObject      *object,
+ligma_tool_polygon_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
@@ -307,7 +307,7 @@ gimp_tool_polygon_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_polygon_get_property (GObject    *object,
+ligma_tool_polygon_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
@@ -321,13 +321,13 @@ gimp_tool_polygon_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_polygon_get_segment (GimpToolPolygon  *polygon,
-                               GimpVector2     **points,
+ligma_tool_polygon_get_segment (LigmaToolPolygon  *polygon,
+                               LigmaVector2     **points,
                                gint             *n_points,
                                gint              segment_start,
                                gint              segment_end)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   *points   = &priv->points[priv->segment_indices[segment_start]];
   *n_points = priv->segment_indices[segment_end] -
@@ -336,24 +336,24 @@ gimp_tool_polygon_get_segment (GimpToolPolygon  *polygon,
 }
 
 static void
-gimp_tool_polygon_get_segment_point (GimpToolPolygon *polygon,
+ligma_tool_polygon_get_segment_point (LigmaToolPolygon *polygon,
                                      gdouble         *start_point_x,
                                      gdouble         *start_point_y,
                                      gint             segment_index)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   *start_point_x = priv->points[priv->segment_indices[segment_index]].x;
   *start_point_y = priv->points[priv->segment_indices[segment_index]].y;
 }
 
 static gboolean
-gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
+ligma_tool_polygon_should_close (LigmaToolPolygon  *polygon,
                                 guint32           time,
-                                const GimpCoords *coords)
+                                const LigmaCoords *coords)
 {
-  GimpToolWidget         *widget       = GIMP_TOOL_WIDGET (polygon);
-  GimpToolPolygonPrivate *priv         = polygon->private;
+  LigmaToolWidget         *widget       = LIGMA_TOOL_WIDGET (polygon);
+  LigmaToolPolygonPrivate *priv         = polygon->private;
   gboolean                double_click = FALSE;
   gdouble                 dist;
 
@@ -363,7 +363,7 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
       priv->polygon_closed)
     return FALSE;
 
-  dist = gimp_canvas_item_transform_distance_square (priv->polygon,
+  dist = ligma_canvas_item_transform_distance_square (priv->polygon,
                                                      coords->x,
                                                      coords->y,
                                                      priv->points[0].x,
@@ -375,7 +375,7 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
    */
   if (time != NO_CLICK_TIME_AVAILABLE)
     {
-      GimpDisplayShell *shell    = gimp_tool_widget_get_shell (widget);
+      LigmaDisplayShell *shell    = ligma_tool_widget_get_shell (widget);
       GtkSettings      *settings = gtk_widget_get_settings (GTK_WIDGET (shell));
       gint              double_click_time;
       gint              double_click_distance;
@@ -385,7 +385,7 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
       click_time_passed = time - priv->last_click_time;
 
       dist_from_last_point =
-        gimp_canvas_item_transform_distance_square (priv->polygon,
+        ligma_canvas_item_transform_distance_square (priv->polygon,
                                                     coords->x,
                                                     coords->y,
                                                     priv->last_click_coord.x,
@@ -405,37 +405,37 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
 }
 
 static void
-gimp_tool_polygon_revert_to_last_segment (GimpToolPolygon *polygon)
+ligma_tool_polygon_revert_to_last_segment (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   priv->n_points = priv->segment_indices[priv->n_segment_indices - 1] + 1;
 }
 
 static void
-gimp_tool_polygon_remove_last_segment (GimpToolPolygon *polygon)
+ligma_tool_polygon_remove_last_segment (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   if (priv->polygon_closed)
     {
       priv->polygon_closed = FALSE;
 
-      gimp_tool_polygon_changed (GIMP_TOOL_WIDGET (polygon));
+      ligma_tool_polygon_changed (LIGMA_TOOL_WIDGET (polygon));
 
       return;
     }
 
   if (priv->n_segment_indices > 0)
     {
-      GimpCanvasItem *handle;
+      LigmaCanvasItem *handle;
 
       priv->n_segment_indices--;
 
       handle = g_ptr_array_index (priv->handles,
                                   priv->n_segment_indices);
 
-      gimp_tool_widget_remove_item (GIMP_TOOL_WIDGET (polygon), handle);
+      ligma_tool_widget_remove_item (LIGMA_TOOL_WIDGET (polygon), handle);
       g_ptr_array_remove (priv->handles, handle);
     }
 
@@ -446,30 +446,30 @@ gimp_tool_polygon_remove_last_segment (GimpToolPolygon *polygon)
       priv->n_points              = 0;
       priv->n_segment_indices     = 0;
 
-      gimp_tool_widget_response (GIMP_TOOL_WIDGET (polygon),
-                                 GIMP_TOOL_WIDGET_RESPONSE_CANCEL);
+      ligma_tool_widget_response (LIGMA_TOOL_WIDGET (polygon),
+                                 LIGMA_TOOL_WIDGET_RESPONSE_CANCEL);
     }
   else
     {
-      gimp_tool_polygon_revert_to_last_segment (polygon);
+      ligma_tool_polygon_revert_to_last_segment (polygon);
 
-      gimp_tool_polygon_changed (GIMP_TOOL_WIDGET (polygon));
+      ligma_tool_polygon_changed (LIGMA_TOOL_WIDGET (polygon));
     }
 }
 
 static void
-gimp_tool_polygon_add_point (GimpToolPolygon *polygon,
+ligma_tool_polygon_add_point (LigmaToolPolygon *polygon,
                              gdouble          x,
                              gdouble          y)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   if (priv->n_points >= priv->max_n_points)
     {
       priv->max_n_points += N_ITEMS_PER_ALLOC;
 
       priv->points = g_realloc (priv->points,
-                                sizeof (GimpVector2) * priv->max_n_points);
+                                sizeof (LigmaVector2) * priv->max_n_points);
     }
 
   priv->points[priv->n_points].x = x;
@@ -479,51 +479,51 @@ gimp_tool_polygon_add_point (GimpToolPolygon *polygon,
 }
 
 static void
-gimp_tool_polygon_add_segment_index (GimpToolPolygon *polygon,
+ligma_tool_polygon_add_segment_index (LigmaToolPolygon *polygon,
                                      gint             index)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   if (priv->n_segment_indices >= priv->max_n_segment_indices)
     {
       priv->max_n_segment_indices += N_ITEMS_PER_ALLOC;
 
       priv->segment_indices = g_realloc (priv->segment_indices,
-                                         sizeof (GimpVector2) *
+                                         sizeof (LigmaVector2) *
                                          priv->max_n_segment_indices);
     }
 
   priv->segment_indices[priv->n_segment_indices] = index;
 
   g_ptr_array_add (priv->handles,
-                   gimp_tool_widget_add_handle (GIMP_TOOL_WIDGET (polygon),
-                                                GIMP_HANDLE_CROSS,
+                   ligma_tool_widget_add_handle (LIGMA_TOOL_WIDGET (polygon),
+                                                LIGMA_HANDLE_CROSS,
                                                 0, 0,
-                                                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                GIMP_HANDLE_ANCHOR_CENTER));
+                                                LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                LIGMA_HANDLE_ANCHOR_CENTER));
 
   priv->n_segment_indices++;
 }
 
 static gboolean
-gimp_tool_polygon_is_point_grabbed (GimpToolPolygon *polygon)
+ligma_tool_polygon_is_point_grabbed (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
   return priv->grabbed_segment_index != INVALID_INDEX;
 }
 
 static void
-gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
-                               GimpVector2       *dest_points,
-                               GimpVector2        dest_start_target,
-                               GimpVector2        dest_end_target,
-                               const GimpVector2 *source_points,
+ligma_tool_polygon_fit_segment (LigmaToolPolygon   *polygon,
+                               LigmaVector2       *dest_points,
+                               LigmaVector2        dest_start_target,
+                               LigmaVector2        dest_end_target,
+                               const LigmaVector2 *source_points,
                                gint               n_points)
 {
-  GimpVector2 origo_translation_offset;
-  GimpVector2 untranslation_offset;
+  LigmaVector2 origo_translation_offset;
+  LigmaVector2 untranslation_offset;
   gdouble     rotation;
   gdouble     scale;
 
@@ -545,12 +545,12 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
     }
 
   /* Copy from source to dest; we work on the dest data */
-  memcpy (dest_points, source_points, sizeof (GimpVector2) * n_points);
+  memcpy (dest_points, source_points, sizeof (LigmaVector2) * n_points);
 
   /* Transform the destination end point */
   {
-    GimpVector2 *dest_end;
-    GimpVector2  origo_translated_end_target;
+    LigmaVector2 *dest_end;
+    LigmaVector2  origo_translated_end_target;
     gdouble      target_rotation;
     gdouble      current_rotation;
     gdouble      target_length;
@@ -559,15 +559,15 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
     dest_end = &dest_points[n_points - 1];
 
     /* Transate to origin */
-    gimp_vector2_sub (&origo_translation_offset,
+    ligma_vector2_sub (&origo_translation_offset,
                       &vector2_zero,
                       &dest_points[0]);
-    gimp_vector2_add (dest_end,
+    ligma_vector2_add (dest_end,
                       dest_end,
                       &origo_translation_offset);
 
     /* Calculate origo_translated_end_target */
-    gimp_vector2_sub (&origo_translated_end_target,
+    ligma_vector2_sub (&origo_translated_end_target,
                       &dest_end_target,
                       &dest_start_target);
 
@@ -578,22 +578,22 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
                               vector2_zero.x - dest_end->x);
     rotation         = current_rotation - target_rotation;
 
-    gimp_vector2_rotate (dest_end, rotation);
+    ligma_vector2_rotate (dest_end, rotation);
 
 
     /* Scale */
-    target_length  = gimp_vector2_length (&origo_translated_end_target);
-    current_length = gimp_vector2_length (dest_end);
+    target_length  = ligma_vector2_length (&origo_translated_end_target);
+    current_length = ligma_vector2_length (dest_end);
     scale          = target_length / current_length;
 
-    gimp_vector2_mul (dest_end, scale);
+    ligma_vector2_mul (dest_end, scale);
 
 
     /* Untranslate */
-    gimp_vector2_sub (&untranslation_offset,
+    ligma_vector2_sub (&untranslation_offset,
                       &dest_end_target,
                       dest_end);
-    gimp_vector2_add (dest_end,
+    ligma_vector2_add (dest_end,
                       dest_end,
                       &untranslation_offset);
   }
@@ -605,20 +605,20 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
     for (i = 0; i < n_points - 1; i++)
       {
         /* Translate */
-        gimp_vector2_add (&dest_points[i],
+        ligma_vector2_add (&dest_points[i],
                           &origo_translation_offset,
                           &dest_points[i]);
 
         /* Rotate */
-        gimp_vector2_rotate (&dest_points[i],
+        ligma_vector2_rotate (&dest_points[i],
                              rotation);
 
         /* Scale */
-        gimp_vector2_mul (&dest_points[i],
+        ligma_vector2_mul (&dest_points[i],
                           scale);
 
         /* Untranslate */
-        gimp_vector2_add (&dest_points[i],
+        ligma_vector2_add (&dest_points[i],
                           &dest_points[i],
                           &untranslation_offset);
       }
@@ -626,22 +626,22 @@ gimp_tool_polygon_fit_segment (GimpToolPolygon   *polygon,
 }
 
 static void
-gimp_tool_polygon_move_segment_vertex_to (GimpToolPolygon *polygon,
+ligma_tool_polygon_move_segment_vertex_to (LigmaToolPolygon *polygon,
                                           gint             segment_index,
                                           gdouble          new_x,
                                           gdouble          new_y)
 {
-  GimpToolPolygonPrivate *priv         = polygon->private;
-  GimpVector2             cursor_point = { new_x, new_y };
-  GimpVector2            *dest;
-  GimpVector2            *dest_start_target;
-  GimpVector2            *dest_end_target;
+  LigmaToolPolygonPrivate *priv         = polygon->private;
+  LigmaVector2             cursor_point = { new_x, new_y };
+  LigmaVector2            *dest;
+  LigmaVector2            *dest_start_target;
+  LigmaVector2            *dest_end_target;
   gint                    n_points;
 
   /* Handle the segment before the grabbed point */
   if (segment_index > 0)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &dest,
                                      &n_points,
                                      priv->grabbed_segment_index - 1,
@@ -650,7 +650,7 @@ gimp_tool_polygon_move_segment_vertex_to (GimpToolPolygon *polygon,
       dest_start_target = &dest[0];
       dest_end_target   = &cursor_point;
 
-      gimp_tool_polygon_fit_segment (polygon,
+      ligma_tool_polygon_fit_segment (polygon,
                                      dest,
                                      *dest_start_target,
                                      *dest_end_target,
@@ -661,7 +661,7 @@ gimp_tool_polygon_move_segment_vertex_to (GimpToolPolygon *polygon,
   /* Handle the segment after the grabbed point */
   if (segment_index < priv->n_segment_indices - 1)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &dest,
                                      &n_points,
                                      priv->grabbed_segment_index,
@@ -670,7 +670,7 @@ gimp_tool_polygon_move_segment_vertex_to (GimpToolPolygon *polygon,
       dest_start_target = &cursor_point;
       dest_end_target   = &dest[n_points - 1];
 
-      gimp_tool_polygon_fit_segment (polygon,
+      ligma_tool_polygon_fit_segment (polygon,
                                      dest,
                                      *dest_start_target,
                                      *dest_end_target,
@@ -688,23 +688,23 @@ gimp_tool_polygon_move_segment_vertex_to (GimpToolPolygon *polygon,
 }
 
 static void
-gimp_tool_polygon_revert_to_saved_state (GimpToolPolygon *polygon)
+ligma_tool_polygon_revert_to_saved_state (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
-  GimpVector2            *dest;
+  LigmaToolPolygonPrivate *priv = polygon->private;
+  LigmaVector2            *dest;
   gint                    n_points;
 
   /* Without a point grab we have no sensible information to fall back
    * on, bail out
    */
-  if (! gimp_tool_polygon_is_point_grabbed (polygon))
+  if (! ligma_tool_polygon_is_point_grabbed (polygon))
     {
       return;
     }
 
   if (priv->grabbed_segment_index > 0)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &dest,
                                      &n_points,
                                      priv->grabbed_segment_index - 1,
@@ -712,12 +712,12 @@ gimp_tool_polygon_revert_to_saved_state (GimpToolPolygon *polygon)
 
       memcpy (dest,
               priv->saved_points_lower_segment,
-              sizeof (GimpVector2) * n_points);
+              sizeof (LigmaVector2) * n_points);
     }
 
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &dest,
                                      &n_points,
                                      priv->grabbed_segment_index,
@@ -725,7 +725,7 @@ gimp_tool_polygon_revert_to_saved_state (GimpToolPolygon *polygon)
 
       memcpy (dest,
               priv->saved_points_higher_segment,
-              sizeof (GimpVector2) * n_points);
+              sizeof (LigmaVector2) * n_points);
     }
 
   if (priv->grabbed_segment_index == 0 &&
@@ -736,15 +736,15 @@ gimp_tool_polygon_revert_to_saved_state (GimpToolPolygon *polygon)
 }
 
 static void
-gimp_tool_polygon_prepare_for_move (GimpToolPolygon *polygon)
+ligma_tool_polygon_prepare_for_move (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
-  GimpVector2            *source;
+  LigmaToolPolygonPrivate *priv = polygon->private;
+  LigmaVector2            *source;
   gint                    n_points;
 
   if (priv->grabbed_segment_index > 0)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &source,
                                      &n_points,
                                      priv->grabbed_segment_index - 1,
@@ -756,17 +756,17 @@ gimp_tool_polygon_prepare_for_move (GimpToolPolygon *polygon)
 
           priv->saved_points_lower_segment =
             g_realloc (priv->saved_points_lower_segment,
-                       sizeof (GimpVector2) * n_points);
+                       sizeof (LigmaVector2) * n_points);
         }
 
       memcpy (priv->saved_points_lower_segment,
               source,
-              sizeof (GimpVector2) * n_points);
+              sizeof (LigmaVector2) * n_points);
     }
 
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
-      gimp_tool_polygon_get_segment (polygon,
+      ligma_tool_polygon_get_segment (polygon,
                                      &source,
                                      &n_points,
                                      priv->grabbed_segment_index,
@@ -778,12 +778,12 @@ gimp_tool_polygon_prepare_for_move (GimpToolPolygon *polygon)
 
           priv->saved_points_higher_segment =
             g_realloc (priv->saved_points_higher_segment,
-                       sizeof (GimpVector2) * n_points);
+                       sizeof (LigmaVector2) * n_points);
         }
 
       memcpy (priv->saved_points_higher_segment,
               source,
-              sizeof (GimpVector2) * n_points);
+              sizeof (LigmaVector2) * n_points);
     }
 
   /* A special-case when there only is one point */
@@ -794,7 +794,7 @@ gimp_tool_polygon_prepare_for_move (GimpToolPolygon *polygon)
         {
           priv->max_n_saved_points_lower_segment = 1;
 
-          priv->saved_points_lower_segment = g_new0 (GimpVector2, 1);
+          priv->saved_points_lower_segment = g_new0 (LigmaVector2, 1);
         }
 
       *priv->saved_points_lower_segment = priv->points[0];
@@ -802,13 +802,13 @@ gimp_tool_polygon_prepare_for_move (GimpToolPolygon *polygon)
 }
 
 static void
-gimp_tool_polygon_update_motion (GimpToolPolygon *polygon,
+ligma_tool_polygon_update_motion (LigmaToolPolygon *polygon,
                                  gdouble          new_x,
                                  gdouble          new_y)
 {
-  GimpToolPolygonPrivate *priv = polygon->private;
+  LigmaToolPolygonPrivate *priv = polygon->private;
 
-  if (gimp_tool_polygon_is_point_grabbed (polygon))
+  if (ligma_tool_polygon_is_point_grabbed (polygon))
     {
       priv->polygon_modified = TRUE;
 
@@ -832,21 +832,21 @@ gimp_tool_polygon_update_motion (GimpToolPolygon *polygon,
               segment_index = priv->grabbed_segment_index - 1;
             }
 
-          gimp_tool_polygon_get_segment_point (polygon,
+          ligma_tool_polygon_get_segment_point (polygon,
                                                &start_point_x,
                                                &start_point_y,
                                                segment_index);
 
-          gimp_display_shell_constrain_line (
-            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (polygon)),
+          ligma_display_shell_constrain_line (
+            ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (polygon)),
             start_point_x,
             start_point_y,
             &new_x,
             &new_y,
-            GIMP_CONSTRAIN_LINE_15_DEGREES);
+            LIGMA_CONSTRAIN_LINE_15_DEGREES);
         }
 
-      gimp_tool_polygon_move_segment_vertex_to (polygon,
+      ligma_tool_polygon_move_segment_vertex_to (polygon,
                                                 priv->grabbed_segment_index,
                                                 new_x,
                                                 new_y);
@@ -865,25 +865,25 @@ gimp_tool_polygon_update_motion (GimpToolPolygon *polygon,
       /* Don't show the pending point while we are adding points */
       priv->show_pending_point = FALSE;
 
-      gimp_tool_polygon_add_point (polygon, new_x, new_y);
+      ligma_tool_polygon_add_point (polygon, new_x, new_y);
     }
 }
 
 static void
-gimp_tool_polygon_status_update (GimpToolPolygon  *polygon,
-                                 const GimpCoords *coords,
+ligma_tool_polygon_status_update (LigmaToolPolygon  *polygon,
+                                 const LigmaCoords *coords,
                                  gboolean          proximity)
 {
-  GimpToolWidget         *widget = GIMP_TOOL_WIDGET (polygon);
-  GimpToolPolygonPrivate *priv   = polygon->private;
+  LigmaToolWidget         *widget = LIGMA_TOOL_WIDGET (polygon);
+  LigmaToolPolygonPrivate *priv   = polygon->private;
 
   if (proximity)
     {
       const gchar *status_text = NULL;
 
-      if (gimp_tool_polygon_is_point_grabbed (polygon))
+      if (ligma_tool_polygon_is_point_grabbed (polygon))
         {
-          if (gimp_tool_polygon_should_close (polygon,
+          if (ligma_tool_polygon_should_close (polygon,
                                               NO_CLICK_TIME_AVAILABLE,
                                               coords))
             {
@@ -909,59 +909,59 @@ gimp_tool_polygon_status_update (GimpToolPolygon  *polygon,
 
       if (status_text)
         {
-          gimp_tool_widget_set_status (widget, status_text);
+          ligma_tool_widget_set_status (widget, status_text);
         }
     }
   else
     {
-      gimp_tool_widget_set_status (widget, NULL);
+      ligma_tool_widget_set_status (widget, NULL);
     }
 }
 
 static void
-gimp_tool_polygon_changed (GimpToolWidget *widget)
+ligma_tool_polygon_changed (LigmaToolWidget *widget)
 {
-  GimpToolPolygon        *polygon               = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *private               = polygon->private;
+  LigmaToolPolygon        *polygon               = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *private               = polygon->private;
   gboolean                hovering_first_point  = FALSE;
   gboolean                handles_wants_to_show = FALSE;
-  GimpCoords              coords                = { private->last_coords.x,
+  LigmaCoords              coords                = { private->last_coords.x,
                                                     private->last_coords.y,
                                                     /* pad with 0 */ };
   gint                    i;
 
-  gimp_canvas_polygon_set_points (private->polygon,
+  ligma_canvas_polygon_set_points (private->polygon,
                                   private->points, private->n_points);
 
   if (private->show_pending_point)
     {
-      GimpVector2 last = private->points[private->n_points - 1];
+      LigmaVector2 last = private->points[private->n_points - 1];
 
-      gimp_canvas_line_set (private->pending_line,
+      ligma_canvas_line_set (private->pending_line,
                             last.x,
                             last.y,
                             private->pending_point.x,
                             private->pending_point.y);
     }
 
-  gimp_canvas_item_set_visible (private->pending_line,
+  ligma_canvas_item_set_visible (private->pending_line,
                                 private->show_pending_point);
 
   if (private->polygon_closed)
     {
-      GimpVector2 first = private->points[0];
-      GimpVector2 last  = private->points[private->n_points - 1];
+      LigmaVector2 first = private->points[0];
+      LigmaVector2 last  = private->points[private->n_points - 1];
 
-      gimp_canvas_line_set (private->closing_line,
+      ligma_canvas_line_set (private->closing_line,
                             first.x, first.y,
                             last.x,  last.y);
     }
 
-  gimp_canvas_item_set_visible (private->closing_line,
+  ligma_canvas_item_set_visible (private->closing_line,
                                 private->polygon_closed);
 
   hovering_first_point =
-    gimp_tool_polygon_should_close (polygon,
+    ligma_tool_polygon_should_close (polygon,
                                     NO_CLICK_TIME_AVAILABLE,
                                     &coords);
 
@@ -974,8 +974,8 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
 
   for (i = 0; i < private->n_segment_indices; i++)
     {
-      GimpCanvasItem *handle;
-      GimpVector2    *point;
+      LigmaCanvasItem *handle;
+      LigmaVector2    *point;
 
       handle = g_ptr_array_index (private->handles, i);
       point  = &private->points[private->segment_indices[i]];
@@ -992,10 +992,10 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
            ! (private->button_down || hovering_first_point)))
         {
           gdouble         dist;
-          GimpHandleType  handle_type = -1;
+          LigmaHandleType  handle_type = -1;
 
           dist =
-            gimp_canvas_item_transform_distance_square (handle,
+            ligma_canvas_item_transform_distance_square (handle,
                                                         private->last_coords.x,
                                                         private->last_coords.y,
                                                         point->x,
@@ -1005,78 +1005,78 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
            * close, draw an outline
            */
           if (dist < POINT_GRAB_THRESHOLD_SQ)
-            handle_type = GIMP_HANDLE_FILLED_CIRCLE;
+            handle_type = LIGMA_HANDLE_FILLED_CIRCLE;
           else if (dist < POINT_SHOW_THRESHOLD_SQ)
-            handle_type = GIMP_HANDLE_CIRCLE;
+            handle_type = LIGMA_HANDLE_CIRCLE;
 
           if (handle_type != -1)
             {
               gint size;
 
-              gimp_canvas_item_begin_change (handle);
+              ligma_canvas_item_begin_change (handle);
 
-              gimp_canvas_handle_set_position (handle, point->x, point->y);
+              ligma_canvas_handle_set_position (handle, point->x, point->y);
 
               g_object_set (handle,
                             "type", handle_type,
                             NULL);
 
-              size = gimp_canvas_handle_calc_size (handle,
+              size = ligma_canvas_handle_calc_size (handle,
                                                    private->last_coords.x,
                                                    private->last_coords.y,
-                                                   GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                   2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE);
+                                                   LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                                                   2 * LIGMA_CANVAS_HANDLE_SIZE_CIRCLE);
               if (FALSE)
-                gimp_canvas_handle_set_size (handle, size, size);
+                ligma_canvas_handle_set_size (handle, size, size);
 
               if (dist < POINT_GRAB_THRESHOLD_SQ)
-                gimp_canvas_item_set_highlight (handle, TRUE);
+                ligma_canvas_item_set_highlight (handle, TRUE);
               else
-                gimp_canvas_item_set_highlight (handle, FALSE);
+                ligma_canvas_item_set_highlight (handle, FALSE);
 
-              gimp_canvas_item_set_visible (handle, TRUE);
+              ligma_canvas_item_set_visible (handle, TRUE);
 
-              gimp_canvas_item_end_change (handle);
+              ligma_canvas_item_end_change (handle);
             }
           else
             {
-              gimp_canvas_item_set_visible (handle, FALSE);
+              ligma_canvas_item_set_visible (handle, FALSE);
             }
         }
       else
         {
-          gimp_canvas_item_set_visible (handle, FALSE);
+          ligma_canvas_item_set_visible (handle, FALSE);
        }
     }
 }
 
 static gboolean
-gimp_tool_polygon_button_press (GimpToolWidget      *widget,
-                                const GimpCoords    *coords,
+ligma_tool_polygon_button_press (LigmaToolWidget      *widget,
+                                const LigmaCoords    *coords,
                                 guint32              time,
                                 GdkModifierType      state,
-                                GimpButtonPressType  press_type)
+                                LigmaButtonPressType  press_type)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
-  if (gimp_tool_polygon_is_point_grabbed (polygon))
+  if (ligma_tool_polygon_is_point_grabbed (polygon))
     {
-      gimp_tool_polygon_prepare_for_move (polygon);
+      ligma_tool_polygon_prepare_for_move (polygon);
     }
   else if (priv->polygon_closed)
     {
-      if (press_type == GIMP_BUTTON_PRESS_DOUBLE &&
-          gimp_canvas_item_hit (priv->polygon, coords->x, coords->y))
+      if (press_type == LIGMA_BUTTON_PRESS_DOUBLE &&
+          ligma_canvas_item_hit (priv->polygon, coords->x, coords->y))
         {
-          gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+          ligma_tool_widget_response (widget, LIGMA_TOOL_WIDGET_RESPONSE_CONFIRM);
         }
 
       return 0;
     }
   else
     {
-      GimpVector2 point_to_add;
+      LigmaVector2 point_to_add;
 
       /* Note that we add the pending point (unless it is the first
        * point we add) because the pending point is setup correctly
@@ -1097,28 +1097,28 @@ gimp_tool_polygon_button_press (GimpToolWidget      *widget,
        * new point. For a free segment, this will be the first point
        * of the free segment.
        */
-      gimp_tool_polygon_add_point (polygon,
+      ligma_tool_polygon_add_point (polygon,
                                    point_to_add.x,
                                    point_to_add.y);
-      gimp_tool_polygon_add_segment_index (polygon, priv->n_points - 1);
+      ligma_tool_polygon_add_segment_index (polygon, priv->n_points - 1);
     }
 
   priv->button_down = TRUE;
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 
   return 1;
 }
 
 static void
-gimp_tool_polygon_button_release (GimpToolWidget        *widget,
-                                  const GimpCoords      *coords,
+ligma_tool_polygon_button_release (LigmaToolWidget        *widget,
+                                  const LigmaCoords      *coords,
                                   guint32                time,
                                   GdkModifierType        state,
-                                  GimpButtonReleaseType  release_type)
+                                  LigmaButtonReleaseType  release_type)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
   g_object_ref (widget);
 
@@ -1126,62 +1126,62 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
 
   switch (release_type)
     {
-    case GIMP_BUTTON_RELEASE_CLICK:
-    case GIMP_BUTTON_RELEASE_NO_MOTION:
+    case LIGMA_BUTTON_RELEASE_CLICK:
+    case LIGMA_BUTTON_RELEASE_NO_MOTION:
       /* If a click was made, we don't consider the polygon modified */
       priv->polygon_modified = FALSE;
 
       /* First finish of the line segment if no point was grabbed */
-      if (! gimp_tool_polygon_is_point_grabbed (polygon))
+      if (! ligma_tool_polygon_is_point_grabbed (polygon))
         {
           /* Revert any free segment points that might have been added */
-          gimp_tool_polygon_revert_to_last_segment (polygon);
+          ligma_tool_polygon_revert_to_last_segment (polygon);
         }
 
       /* After the segments are up to date and we have handled
        * double-click, see if it's committing time
        */
-      if (gimp_tool_polygon_should_close (polygon, time, coords))
+      if (ligma_tool_polygon_should_close (polygon, time, coords))
         {
           /* We can get a click notification even though the end point
            * has been moved a few pixels. Since a move will change the
            * free selection, revert it before doing the commit.
            */
-          gimp_tool_polygon_revert_to_saved_state (polygon);
+          ligma_tool_polygon_revert_to_saved_state (polygon);
 
           priv->polygon_closed = TRUE;
 
-          gimp_tool_polygon_change_complete (polygon);
+          ligma_tool_polygon_change_complete (polygon);
         }
 
       priv->last_click_time  = time;
       priv->last_click_coord = *coords;
       break;
 
-    case GIMP_BUTTON_RELEASE_NORMAL:
+    case LIGMA_BUTTON_RELEASE_NORMAL:
       /* First finish of the free segment if no point was grabbed */
-      if (! gimp_tool_polygon_is_point_grabbed (polygon))
+      if (! ligma_tool_polygon_is_point_grabbed (polygon))
         {
           /* The points are all setup, just make a segment */
-          gimp_tool_polygon_add_segment_index (polygon, priv->n_points - 1);
+          ligma_tool_polygon_add_segment_index (polygon, priv->n_points - 1);
         }
 
       /* After the segments are up to date, see if it's committing time */
-      if (gimp_tool_polygon_should_close (polygon,
+      if (ligma_tool_polygon_should_close (polygon,
                                           NO_CLICK_TIME_AVAILABLE,
                                           coords))
         {
           priv->polygon_closed = TRUE;
         }
 
-      gimp_tool_polygon_change_complete (polygon);
+      ligma_tool_polygon_change_complete (polygon);
       break;
 
-    case GIMP_BUTTON_RELEASE_CANCEL:
-      if (gimp_tool_polygon_is_point_grabbed (polygon))
-        gimp_tool_polygon_revert_to_saved_state (polygon);
+    case LIGMA_BUTTON_RELEASE_CANCEL:
+      if (ligma_tool_polygon_is_point_grabbed (polygon))
+        ligma_tool_polygon_revert_to_saved_state (polygon);
       else
-        gimp_tool_polygon_remove_last_segment (polygon);
+        ligma_tool_polygon_remove_last_segment (polygon);
       break;
 
     default:
@@ -1191,69 +1191,69 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
   /* Reset */
   priv->polygon_modified = FALSE;
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 
   g_object_unref (widget);
 }
 
 static void
-gimp_tool_polygon_motion (GimpToolWidget   *widget,
-                          const GimpCoords *coords,
+ligma_tool_polygon_motion (LigmaToolWidget   *widget,
+                          const LigmaCoords *coords,
                           guint32           time,
                           GdkModifierType   state)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
   priv->last_coords.x = coords->x;
   priv->last_coords.y = coords->y;
 
-  gimp_tool_polygon_update_motion (polygon,
+  ligma_tool_polygon_update_motion (polygon,
                                    coords->x,
                                    coords->y);
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
-static GimpHit
-gimp_tool_polygon_hit (GimpToolWidget   *widget,
-                       const GimpCoords *coords,
+static LigmaHit
+ligma_tool_polygon_hit (LigmaToolWidget   *widget,
+                       const LigmaCoords *coords,
                        GdkModifierType   state,
                        gboolean          proximity)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
   if ((priv->n_points > 0 && ! priv->polygon_closed) ||
-      gimp_tool_polygon_get_segment_index (polygon, coords) != INVALID_INDEX)
+      ligma_tool_polygon_get_segment_index (polygon, coords) != INVALID_INDEX)
     {
-      return GIMP_HIT_DIRECT;
+      return LIGMA_HIT_DIRECT;
     }
   else if (priv->polygon_closed &&
-           gimp_canvas_item_hit (priv->polygon, coords->x, coords->y))
+           ligma_canvas_item_hit (priv->polygon, coords->x, coords->y))
     {
-      return GIMP_HIT_INDIRECT;
+      return LIGMA_HIT_INDIRECT;
     }
 
-  return GIMP_HIT_NONE;
+  return LIGMA_HIT_NONE;
 }
 
 static void
-gimp_tool_polygon_hover (GimpToolWidget   *widget,
-                         const GimpCoords *coords,
+ligma_tool_polygon_hover (LigmaToolWidget   *widget,
+                         const LigmaCoords *coords,
                          GdkModifierType   state,
                          gboolean          proximity)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
   gboolean                hovering_first_point;
 
-  priv->grabbed_segment_index = gimp_tool_polygon_get_segment_index (polygon,
+  priv->grabbed_segment_index = ligma_tool_polygon_get_segment_index (polygon,
                                                                      coords);
   priv->hover                 = TRUE;
 
   hovering_first_point =
-    gimp_tool_polygon_should_close (polygon,
+    ligma_tool_polygon_should_close (polygon,
                                     NO_CLICK_TIME_AVAILABLE,
                                     coords);
 
@@ -1262,7 +1262,7 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
 
   if (priv->n_points == 0  ||
       priv->polygon_closed ||
-      (gimp_tool_polygon_is_point_grabbed (polygon) &&
+      (ligma_tool_polygon_is_point_grabbed (polygon) &&
        ! hovering_first_point) ||
       ! proximity)
     {
@@ -1287,72 +1287,72 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
               gdouble start_point_y;
 
               /*  the last point is the line's start point  */
-              gimp_tool_polygon_get_segment_point (polygon,
+              ligma_tool_polygon_get_segment_point (polygon,
                                                    &start_point_x,
                                                    &start_point_y,
                                                    priv->n_segment_indices - 1);
 
-              gimp_display_shell_constrain_line (
-                gimp_tool_widget_get_shell (widget),
+              ligma_display_shell_constrain_line (
+                ligma_tool_widget_get_shell (widget),
                 start_point_x, start_point_y,
                 &priv->pending_point.x,
                 &priv->pending_point.y,
-                GIMP_CONSTRAIN_LINE_15_DEGREES);
+                LIGMA_CONSTRAIN_LINE_15_DEGREES);
             }
         }
     }
 
-  gimp_tool_polygon_status_update (polygon, coords, proximity);
+  ligma_tool_polygon_status_update (polygon, coords, proximity);
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
 static void
-gimp_tool_polygon_leave_notify (GimpToolWidget *widget)
+ligma_tool_polygon_leave_notify (LigmaToolWidget *widget)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
   priv->grabbed_segment_index = INVALID_INDEX;
   priv->hover                 = FALSE;
   priv->show_pending_point    = FALSE;
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
 static gboolean
-gimp_tool_polygon_key_press (GimpToolWidget *widget,
+ligma_tool_polygon_key_press (LigmaToolWidget *widget,
                              GdkEventKey    *kevent)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
-      gimp_tool_polygon_remove_last_segment (polygon);
+      ligma_tool_polygon_remove_last_segment (polygon);
 
       if (priv->n_segment_indices > 0)
-        gimp_tool_polygon_change_complete (polygon);
+        ligma_tool_polygon_change_complete (polygon);
       return TRUE;
 
     default:
       break;
     }
 
-  return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
+  return LIGMA_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
 }
 
 static void
-gimp_tool_polygon_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_polygon_motion_modifier (LigmaToolWidget  *widget,
                                    GdkModifierType  key,
                                    gboolean         press,
                                    GdkModifierType  state)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
-  priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
+  priv->constrain_angle = ((state & ligma_get_constrain_behavior_mask ()) ?
                            TRUE : FALSE);
 
   /* If we didn't came here due to a mouse release, immediately update
@@ -1360,48 +1360,48 @@ gimp_tool_polygon_motion_modifier (GimpToolWidget  *widget,
    */
   if (state & GDK_BUTTON1_MASK)
     {
-      gimp_tool_polygon_update_motion (polygon,
+      ligma_tool_polygon_update_motion (polygon,
                                        priv->last_coords.x,
                                        priv->last_coords.y);
     }
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
 static void
-gimp_tool_polygon_hover_modifier (GimpToolWidget  *widget,
+ligma_tool_polygon_hover_modifier (LigmaToolWidget  *widget,
                                   GdkModifierType  key,
                                   gboolean         press,
                                   GdkModifierType  state)
 {
-  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
-  GimpToolPolygonPrivate *priv    = polygon->private;
+  LigmaToolPolygon        *polygon = LIGMA_TOOL_POLYGON (widget);
+  LigmaToolPolygonPrivate *priv    = polygon->private;
 
-  priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
+  priv->constrain_angle = ((state & ligma_get_constrain_behavior_mask ()) ?
                            TRUE : FALSE);
 
-  priv->suppress_handles = ((state & gimp_get_extend_selection_mask ()) ?
+  priv->suppress_handles = ((state & ligma_get_extend_selection_mask ()) ?
                            TRUE : FALSE);
 
-  gimp_tool_polygon_changed (widget);
+  ligma_tool_polygon_changed (widget);
 }
 
 static gboolean
-gimp_tool_polygon_get_cursor (GimpToolWidget     *widget,
-                              const GimpCoords   *coords,
+ligma_tool_polygon_get_cursor (LigmaToolWidget     *widget,
+                              const LigmaCoords   *coords,
                               GdkModifierType     state,
-                              GimpCursorType     *cursor,
-                              GimpToolCursorType *tool_cursor,
-                              GimpCursorModifier *modifier)
+                              LigmaCursorType     *cursor,
+                              LigmaToolCursorType *tool_cursor,
+                              LigmaCursorModifier *modifier)
 {
-  GimpToolPolygon *polygon = GIMP_TOOL_POLYGON (widget);
+  LigmaToolPolygon *polygon = LIGMA_TOOL_POLYGON (widget);
 
-  if (gimp_tool_polygon_is_point_grabbed (polygon) &&
-      ! gimp_tool_polygon_should_close (polygon,
+  if (ligma_tool_polygon_is_point_grabbed (polygon) &&
+      ! ligma_tool_polygon_should_close (polygon,
                                         NO_CLICK_TIME_AVAILABLE,
                                         coords))
     {
-      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
 
       return TRUE;
     }
@@ -1410,16 +1410,16 @@ gimp_tool_polygon_get_cursor (GimpToolWidget     *widget,
 }
 
 static void
-gimp_tool_polygon_change_complete (GimpToolPolygon *polygon)
+ligma_tool_polygon_change_complete (LigmaToolPolygon *polygon)
 {
   g_signal_emit (polygon, polygon_signals[CHANGE_COMPLETE], 0);
 }
 
 static gint
-gimp_tool_polygon_get_segment_index (GimpToolPolygon  *polygon,
-                                     const GimpCoords *coords)
+ligma_tool_polygon_get_segment_index (LigmaToolPolygon  *polygon,
+                                     const LigmaCoords *coords)
 {
-  GimpToolPolygonPrivate *priv          = polygon->private;
+  LigmaToolPolygonPrivate *priv          = polygon->private;
   gint                    segment_index = INVALID_INDEX;
 
   if (! priv->suppress_handles)
@@ -1430,11 +1430,11 @@ gimp_tool_polygon_get_segment_index (GimpToolPolygon  *polygon,
       for (i = 0; i < priv->n_segment_indices; i++)
         {
           gdouble      dist;
-          GimpVector2 *point;
+          LigmaVector2 *point;
 
           point = &priv->points[priv->segment_indices[i]];
 
-          dist = gimp_canvas_item_transform_distance_square (priv->polygon,
+          dist = ligma_canvas_item_transform_distance_square (priv->polygon,
                                                              coords->x,
                                                              coords->y,
                                                              point->x,
@@ -1455,22 +1455,22 @@ gimp_tool_polygon_get_segment_index (GimpToolPolygon  *polygon,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_polygon_new (GimpDisplayShell *shell)
+LigmaToolWidget *
+ligma_tool_polygon_new (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_POLYGON,
+  return g_object_new (LIGMA_TYPE_TOOL_POLYGON,
                        "shell", shell,
                        NULL);
 }
 
 gboolean
-gimp_tool_polygon_is_closed (GimpToolPolygon *polygon)
+ligma_tool_polygon_is_closed (LigmaToolPolygon *polygon)
 {
-  GimpToolPolygonPrivate *private;
+  LigmaToolPolygonPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_POLYGON (polygon), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_POLYGON (polygon), FALSE);
 
   private = polygon->private;
 
@@ -1478,13 +1478,13 @@ gimp_tool_polygon_is_closed (GimpToolPolygon *polygon)
 }
 
 void
-gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
-                              const GimpVector2 **points,
+ligma_tool_polygon_get_points (LigmaToolPolygon    *polygon,
+                              const LigmaVector2 **points,
                               gint               *n_points)
 {
-  GimpToolPolygonPrivate *private;
+  LigmaToolPolygonPrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_POLYGON (polygon));
+  g_return_if_fail (LIGMA_IS_TOOL_POLYGON (polygon));
 
   private = polygon->private;
 

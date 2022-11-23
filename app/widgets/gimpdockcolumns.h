@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockcolumns.h
+ * ligmadockcolumns.h
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,63 +18,63 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_COLUMNS_H__
-#define __GIMP_DOCK_COLUMNS_H__
+#ifndef __LIGMA_DOCK_COLUMNS_H__
+#define __LIGMA_DOCK_COLUMNS_H__
 
 
-#define GIMP_TYPE_DOCK_COLUMNS            (gimp_dock_columns_get_type ())
-#define GIMP_DOCK_COLUMNS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCK_COLUMNS, GimpDockColumns))
-#define GIMP_DOCK_COLUMNS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCK_COLUMNS, GimpDockColumnsClass))
-#define GIMP_IS_DOCK_COLUMNS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCK_COLUMNS))
-#define GIMP_IS_DOCK_COLUMNS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCK_COLUMNS))
-#define GIMP_DOCK_COLUMNS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK_COLUMNS, GimpDockColumnsClass))
+#define LIGMA_TYPE_DOCK_COLUMNS            (ligma_dock_columns_get_type ())
+#define LIGMA_DOCK_COLUMNS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCK_COLUMNS, LigmaDockColumns))
+#define LIGMA_DOCK_COLUMNS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCK_COLUMNS, LigmaDockColumnsClass))
+#define LIGMA_IS_DOCK_COLUMNS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCK_COLUMNS))
+#define LIGMA_IS_DOCK_COLUMNS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCK_COLUMNS))
+#define LIGMA_DOCK_COLUMNS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DOCK_COLUMNS, LigmaDockColumnsClass))
 
 
-typedef struct _GimpDockColumnsClass    GimpDockColumnsClass;
-typedef struct _GimpDockColumnsPrivate  GimpDockColumnsPrivate;
+typedef struct _LigmaDockColumnsClass    LigmaDockColumnsClass;
+typedef struct _LigmaDockColumnsPrivate  LigmaDockColumnsPrivate;
 
 /**
- * GimpDockColumns:
+ * LigmaDockColumns:
  *
- * A widget containing GimpDocks so that dockables are arranged in
+ * A widget containing LigmaDocks so that dockables are arranged in
  * columns.
  */
-struct _GimpDockColumns
+struct _LigmaDockColumns
 {
   GtkBox parent_instance;
 
-  GimpDockColumnsPrivate *p;
+  LigmaDockColumnsPrivate *p;
 };
 
-struct _GimpDockColumnsClass
+struct _LigmaDockColumnsClass
 {
   GtkBoxClass parent_class;
 
-  void (* dock_added)   (GimpDockColumns *dock_columns,
-                         GimpDock        *dock);
-  void (* dock_removed) (GimpDockColumns *dock_columns,
-                         GimpDock        *dock);
+  void (* dock_added)   (LigmaDockColumns *dock_columns,
+                         LigmaDock        *dock);
+  void (* dock_removed) (LigmaDockColumns *dock_columns,
+                         LigmaDock        *dock);
 };
 
 
-GType               gimp_dock_columns_get_type           (void) G_GNUC_CONST;
-GtkWidget         * gimp_dock_columns_new                (GimpContext       *context,
-                                                          GimpDialogFactory *dialog_factory,
-                                                          GimpUIManager     *ui_manager);
-void                gimp_dock_columns_add_dock           (GimpDockColumns   *dock_columns,
-                                                          GimpDock          *dock,
+GType               ligma_dock_columns_get_type           (void) G_GNUC_CONST;
+GtkWidget         * ligma_dock_columns_new                (LigmaContext       *context,
+                                                          LigmaDialogFactory *dialog_factory,
+                                                          LigmaUIManager     *ui_manager);
+void                ligma_dock_columns_add_dock           (LigmaDockColumns   *dock_columns,
+                                                          LigmaDock          *dock,
                                                           gint               index);
-void                gimp_dock_columns_prepare_dockbook   (GimpDockColumns   *dock_columns,
+void                ligma_dock_columns_prepare_dockbook   (LigmaDockColumns   *dock_columns,
                                                           gint               dock_index,
                                                           GtkWidget        **dockbook_p);
-void                gimp_dock_columns_remove_dock        (GimpDockColumns   *dock_columns,
-                                                          GimpDock          *dock);
-GList             * gimp_dock_columns_get_docks          (GimpDockColumns   *dock_columns);
-GimpContext       * gimp_dock_columns_get_context        (GimpDockColumns   *dock_columns);
-void                gimp_dock_columns_set_context        (GimpDockColumns   *dock_columns,
-                                                          GimpContext       *context);
-GimpDialogFactory * gimp_dock_columns_get_dialog_factory (GimpDockColumns   *dock_columns);
-GimpUIManager     * gimp_dock_columns_get_ui_manager     (GimpDockColumns   *dock_columns);
+void                ligma_dock_columns_remove_dock        (LigmaDockColumns   *dock_columns,
+                                                          LigmaDock          *dock);
+GList             * ligma_dock_columns_get_docks          (LigmaDockColumns   *dock_columns);
+LigmaContext       * ligma_dock_columns_get_context        (LigmaDockColumns   *dock_columns);
+void                ligma_dock_columns_set_context        (LigmaDockColumns   *dock_columns,
+                                                          LigmaContext       *context);
+LigmaDialogFactory * ligma_dock_columns_get_dialog_factory (LigmaDockColumns   *dock_columns);
+LigmaUIManager     * ligma_dock_columns_get_ui_manager     (LigmaDockColumns   *dock_columns);
 
 
-#endif /* __GIMP_DOCK_COLUMNS_H__ */
+#endif /* __LIGMA_DOCK_COLUMNS_H__ */

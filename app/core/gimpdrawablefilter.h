@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILTER_H__
-#define __GIMP_DRAWABLE_FILTER_H__
+#ifndef __LIGMA_DRAWABLE_FILTER_H__
+#define __LIGMA_DRAWABLE_FILTER_H__
 
 
-#include "gimpfilter.h"
+#include "ligmafilter.h"
 
 
-#define GIMP_TYPE_DRAWABLE_FILTER            (gimp_drawable_filter_get_type ())
-#define GIMP_DRAWABLE_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_FILTER, GimpDrawableFilter))
-#define GIMP_DRAWABLE_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_FILTER, GimpDrawableFilterClass))
-#define GIMP_IS_DRAWABLE_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_FILTER))
-#define GIMP_IS_DRAWABLE_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_FILTER))
-#define GIMP_DRAWABLE_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_FILTER, GimpDrawableFilterClass))
+#define LIGMA_TYPE_DRAWABLE_FILTER            (ligma_drawable_filter_get_type ())
+#define LIGMA_DRAWABLE_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DRAWABLE_FILTER, LigmaDrawableFilter))
+#define LIGMA_DRAWABLE_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DRAWABLE_FILTER, LigmaDrawableFilterClass))
+#define LIGMA_IS_DRAWABLE_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DRAWABLE_FILTER))
+#define LIGMA_IS_DRAWABLE_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DRAWABLE_FILTER))
+#define LIGMA_DRAWABLE_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DRAWABLE_FILTER, LigmaDrawableFilterClass))
 
 
-typedef struct _GimpDrawableFilterClass  GimpDrawableFilterClass;
+typedef struct _LigmaDrawableFilterClass  LigmaDrawableFilterClass;
 
-struct _GimpDrawableFilterClass
+struct _LigmaDrawableFilterClass
 {
-  GimpFilterClass  parent_class;
+  LigmaFilterClass  parent_class;
 
-  void (* flush) (GimpDrawableFilter *filter);
+  void (* flush) (LigmaDrawableFilter *filter);
 };
 
 
@@ -47,59 +47,59 @@ struct _GimpDrawableFilterClass
  *  remove the live filter from the drawable.
  */
 
-GType      gimp_drawable_filter_get_type       (void) G_GNUC_CONST;
+GType      ligma_drawable_filter_get_type       (void) G_GNUC_CONST;
 
-GimpDrawableFilter *
-           gimp_drawable_filter_new            (GimpDrawable        *drawable,
+LigmaDrawableFilter *
+           ligma_drawable_filter_new            (LigmaDrawable        *drawable,
                                                 const gchar         *undo_desc,
                                                 GeglNode            *operation,
                                                 const gchar         *icon_name);
 
-GimpDrawable *
-           gimp_drawable_filter_get_drawable   (GimpDrawableFilter  *filter);
-GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter  *filter);
+LigmaDrawable *
+           ligma_drawable_filter_get_drawable   (LigmaDrawableFilter  *filter);
+GeglNode * ligma_drawable_filter_get_operation  (LigmaDrawableFilter  *filter);
 
-void       gimp_drawable_filter_set_clip       (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_clip       (LigmaDrawableFilter  *filter,
                                                 gboolean             clip);
-void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
-                                                GimpFilterRegion     region);
-void       gimp_drawable_filter_set_crop       (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_region     (LigmaDrawableFilter  *filter,
+                                                LigmaFilterRegion     region);
+void       ligma_drawable_filter_set_crop       (LigmaDrawableFilter  *filter,
                                                 const GeglRectangle *rect,
                                                 gboolean             update);
-void       gimp_drawable_filter_set_preview    (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_preview    (LigmaDrawableFilter  *filter,
                                                 gboolean             enabled);
-void       gimp_drawable_filter_set_preview_split
-                                               (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_preview_split
+                                               (LigmaDrawableFilter  *filter,
                                                 gboolean             enabled,
-                                                GimpAlignmentType    alignment,
+                                                LigmaAlignmentType    alignment,
                                                 gint                 split_position);
-void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_opacity    (LigmaDrawableFilter  *filter,
                                                 gdouble              opacity);
-void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,
-                                                GimpLayerMode        paint_mode,
-                                                GimpLayerColorSpace  blend_space,
-                                                GimpLayerColorSpace  composite_space,
-                                                GimpLayerCompositeMode composite_mode);
-void       gimp_drawable_filter_set_add_alpha  (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_mode       (LigmaDrawableFilter  *filter,
+                                                LigmaLayerMode        paint_mode,
+                                                LigmaLayerColorSpace  blend_space,
+                                                LigmaLayerColorSpace  composite_space,
+                                                LigmaLayerCompositeMode composite_mode);
+void       ligma_drawable_filter_set_add_alpha  (LigmaDrawableFilter  *filter,
                                                 gboolean             add_alpha);
 
-void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_gamma_hack (LigmaDrawableFilter  *filter,
                                                 gboolean             gamma_hack);
 
-void       gimp_drawable_filter_set_override_constraints
-                                               (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_set_override_constraints
+                                               (LigmaDrawableFilter  *filter,
                                                 gboolean             override_constraints);
 
 const Babl *
-           gimp_drawable_filter_get_format     (GimpDrawableFilter  *filter);
+           ligma_drawable_filter_get_format     (LigmaDrawableFilter  *filter);
 
-void       gimp_drawable_filter_apply          (GimpDrawableFilter  *filter,
+void       ligma_drawable_filter_apply          (LigmaDrawableFilter  *filter,
                                                 const GeglRectangle *area);
 
-gboolean   gimp_drawable_filter_commit         (GimpDrawableFilter  *filter,
-                                                GimpProgress        *progress,
+gboolean   ligma_drawable_filter_commit         (LigmaDrawableFilter  *filter,
+                                                LigmaProgress        *progress,
                                                 gboolean             cancellable);
-void       gimp_drawable_filter_abort          (GimpDrawableFilter  *filter);
+void       ligma_drawable_filter_abort          (LigmaDrawableFilter  *filter);
 
 
-#endif /* __GIMP_DRAWABLE_FILTER_H__ */
+#endif /* __LIGMA_DRAWABLE_FILTER_H__ */

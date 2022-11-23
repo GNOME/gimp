@@ -30,7 +30,7 @@
  * Any suggestions, bug-reports or patches are welcome.
  *
  * This plug-in interfaces to the TWAIN support library in order
- * to capture images from TWAIN devices directly into GIMP images.
+ * to capture images from TWAIN devices directly into LIGMA images.
  * The plug-in is capable of acquiring the following type of
  * images:
  * - B/W (1 bit images translated to grayscale B/W)
@@ -65,7 +65,7 @@
 
 #include <glib/gstdio.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 #include "tw_dump.h"
 #include "tw_func.h"
@@ -198,7 +198,7 @@ dumpPostTransferCallback(int pendingCount, void *clientData)
 
   /* Tell the user */
   sprintf(buffer, "Image dumped to file %s\n", DUMP_FILE);
-  gimp_message(buffer);
+  ligma_message(buffer);
 
   /* Post a message to close up the application */
   twainQuitApplication ();

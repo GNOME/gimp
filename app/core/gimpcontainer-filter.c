@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcontainer-filter.c
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * ligmacontainer-filter.c
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,66 +26,66 @@
 
 #include "core-types.h"
 
-#include "gimpcontainer.h"
-#include "gimpcontainer-filter.h"
-#include "gimplist.h"
+#include "ligmacontainer.h"
+#include "ligmacontainer-filter.h"
+#include "ligmalist.h"
 
 
 typedef struct
 {
-  GimpObjectFilterFunc   filter;
-  GimpContainer         *container;
+  LigmaObjectFilterFunc   filter;
+  LigmaContainer         *container;
   gpointer               user_data;
-} GimpContainerFilterContext;
+} LigmaContainerFilterContext;
 
 
 static void
-gimp_container_filter_foreach_func (GimpObject                 *object,
-                                    GimpContainerFilterContext *context)
+ligma_container_filter_foreach_func (LigmaObject                 *object,
+                                    LigmaContainerFilterContext *context)
 {
   if (context->filter (object, context->user_data))
-    gimp_container_add (context->container, object);
+    ligma_container_add (context->container, object);
 }
 
 /**
- * gimp_container_filter:
- * @container: a #GimpContainer to filter
- * @filter: a #GimpObjectFilterFunc
+ * ligma_container_filter:
+ * @container: a #LigmaContainer to filter
+ * @filter: a #LigmaObjectFilterFunc
  * @user_data: a pointer passed to @filter
  *
  * Calls the supplied @filter function on each object in @container.
  * A return value of %TRUE is interpreted as a match.
  *
- * Returns: a weak #GimpContainer filled with matching objects.
+ * Returns: a weak #LigmaContainer filled with matching objects.
  **/
-GimpContainer *
-gimp_container_filter (GimpContainer        *container,
-                       GimpObjectFilterFunc  filter,
+LigmaContainer *
+ligma_container_filter (LigmaContainer        *container,
+                       LigmaObjectFilterFunc  filter,
                        gpointer              user_data)
 {
-  GimpContainer              *result;
-  GimpContainerFilterContext  context;
+  LigmaContainer              *result;
+  LigmaContainerFilterContext  context;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (filter != NULL, NULL);
 
   result =
     g_object_new (G_TYPE_FROM_INSTANCE (container),
-                  "children-type", gimp_container_get_children_type (container),
-                  "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                  "children-type", ligma_container_get_children_type (container),
+                  "policy",        LIGMA_CONTAINER_POLICY_WEAK,
                   NULL);
 
   context.filter    = filter;
   context.container = result;
   context.user_data = user_data;
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_container_filter_foreach_func,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_container_filter_foreach_func,
                           &context);
 
   /*  This is somewhat ugly, but it keeps lists in the same order.  */
-  if (GIMP_IS_LIST (result))
-    gimp_list_reverse (GIMP_LIST (result));
+  if (LIGMA_IS_LIST (result))
+    ligma_list_reverse (LIGMA_LIST (result));
 
 
   return result;
@@ -93,32 +93,32 @@ gimp_container_filter (GimpContainer        *container,
 
 
 static gboolean
-gimp_object_filter_by_name (GimpObject   *object,
+ligma_object_filter_by_name (LigmaObject   *object,
                             const GRegex *regex)
 {
-  return g_regex_match (regex, gimp_object_get_name (object), 0, NULL);
+  return g_regex_match (regex, ligma_object_get_name (object), 0, NULL);
 }
 
 /**
- * gimp_container_filter_by_name:
- * @container: a #GimpContainer to filter
+ * ligma_container_filter_by_name:
+ * @container: a #LigmaContainer to filter
  * @regexp: a regular expression (as a %NULL-terminated string)
  * @error: error location to report errors or %NULL
  *
  * This function performs a case-insensitive regular expression search
- * on the names of the GimpObjects in @container.
+ * on the names of the LigmaObjects in @container.
  *
- * Returns: a weak #GimpContainer filled with matching objects.
+ * Returns: a weak #LigmaContainer filled with matching objects.
  **/
-GimpContainer *
-gimp_container_filter_by_name (GimpContainer  *container,
+LigmaContainer *
+ligma_container_filter_by_name (LigmaContainer  *container,
                                const gchar    *regexp,
                                GError        **error)
 {
-  GimpContainer *result;
+  LigmaContainer *result;
   GRegex        *regex;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (regexp != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -129,8 +129,8 @@ gimp_container_filter_by_name (GimpContainer  *container,
     return NULL;
 
   result =
-    gimp_container_filter (container,
-                           (GimpObjectFilterFunc) gimp_object_filter_by_name,
+    ligma_container_filter (container,
+                           (LigmaObjectFilterFunc) ligma_object_filter_by_name,
                            regex);
 
   g_regex_unref (regex);
@@ -140,22 +140,22 @@ gimp_container_filter_by_name (GimpContainer  *container,
 
 
 gchar **
-gimp_container_get_filtered_name_array (GimpContainer *container,
+ligma_container_get_filtered_name_array (LigmaContainer *container,
                                         const gchar   *regexp)
 {
-  GimpContainer *weak;
+  LigmaContainer *weak;
   GError        *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
 
   if (regexp == NULL || strlen (regexp) == 0)
-    return (gimp_container_get_name_array (container));
+    return (ligma_container_get_name_array (container));
 
-  weak = gimp_container_filter_by_name (container, regexp, &error);
+  weak = ligma_container_filter_by_name (container, regexp, &error);
 
   if (weak)
     {
-      gchar **retval = gimp_container_get_name_array (weak);
+      gchar **retval = ligma_container_get_name_array (weak);
 
       g_object_unref (weak);
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include "actions-types.h"
 
-#include "widgets/gimpdataeditor.h"
+#include "widgets/ligmadataeditor.h"
 
 #include "data-editor-commands.h"
 
@@ -30,14 +30,14 @@
 /*  public functions */
 
 void
-data_editor_edit_active_cmd_callback (GimpAction *action,
+data_editor_edit_active_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (data);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (data);
   gboolean        edit_active;
 
   edit_active = g_variant_get_boolean (value);
 
-  gimp_data_editor_set_edit_active (editor, edit_active);
+  ligma_data_editor_set_edit_active (editor, edit_active);
 }

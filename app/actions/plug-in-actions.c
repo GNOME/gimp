@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,85 +22,85 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-help-domain.h"
-#include "plug-in/gimppluginmanager-menu-branch.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginmanager-help-domain.h"
+#include "plug-in/ligmapluginmanager-menu-branch.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpactionimpl.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaactionimpl.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "plug-in-actions.h"
 #include "plug-in-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     plug_in_actions_menu_branch_added    (GimpPlugInManager   *manager,
+static void     plug_in_actions_menu_branch_added    (LigmaPlugInManager   *manager,
                                                       GFile               *file,
                                                       const gchar         *menu_path,
                                                       const gchar         *menu_label,
-                                                      GimpActionGroup     *group);
-static void     plug_in_actions_register_procedure   (GimpPDB             *pdb,
-                                                      GimpProcedure       *procedure,
-                                                      GimpActionGroup     *group);
-static void     plug_in_actions_unregister_procedure (GimpPDB             *pdb,
-                                                      GimpProcedure       *procedure,
-                                                      GimpActionGroup     *group);
-static void     plug_in_actions_menu_path_added      (GimpPlugInProcedure *proc,
+                                                      LigmaActionGroup     *group);
+static void     plug_in_actions_register_procedure   (LigmaPDB             *pdb,
+                                                      LigmaProcedure       *procedure,
+                                                      LigmaActionGroup     *group);
+static void     plug_in_actions_unregister_procedure (LigmaPDB             *pdb,
+                                                      LigmaProcedure       *procedure,
+                                                      LigmaActionGroup     *group);
+static void     plug_in_actions_menu_path_added      (LigmaPlugInProcedure *proc,
                                                       const gchar         *menu_path,
-                                                      GimpActionGroup     *group);
-static void     plug_in_actions_add_proc             (GimpActionGroup     *group,
-                                                      GimpPlugInProcedure *proc);
+                                                      LigmaActionGroup     *group);
+static void     plug_in_actions_add_proc             (LigmaActionGroup     *group,
+                                                      LigmaPlugInProcedure *proc);
 
-static void     plug_in_actions_build_path           (GimpActionGroup     *group,
+static void     plug_in_actions_build_path           (LigmaActionGroup     *group,
                                                       const gchar         *translated);
 
 
 /*  private variables  */
 
-static const GimpActionEntry plug_in_actions[] =
+static const LigmaActionEntry plug_in_actions[] =
 {
-  { "plug-in-reset-all", GIMP_ICON_RESET,
+  { "plug-in-reset-all", LIGMA_ICON_RESET,
     NC_("plug-in-action", "Reset all _Filters"), NULL,
     NC_("plug-in-action", "Reset all plug-ins to their default settings"),
     plug_in_reset_all_cmd_callback,
-    GIMP_HELP_FILTER_RESET_ALL }
+    LIGMA_HELP_FILTER_RESET_ALL }
 };
 
 
 /*  public functions  */
 
 void
-plug_in_actions_setup (GimpActionGroup *group)
+plug_in_actions_setup (LigmaActionGroup *group)
 {
-  GimpPlugInManager *manager = group->gimp->plug_in_manager;
+  LigmaPlugInManager *manager = group->ligma->plug_in_manager;
   GSList            *list;
 
-  gimp_action_group_add_actions (group, "plug-in-action",
+  ligma_action_group_add_actions (group, "plug-in-action",
                                  plug_in_actions,
                                  G_N_ELEMENTS (plug_in_actions));
 
-  for (list = gimp_plug_in_manager_get_menu_branches (manager);
+  for (list = ligma_plug_in_manager_get_menu_branches (manager);
        list;
        list = g_slist_next (list))
     {
-      GimpPlugInMenuBranch *branch = list->data;
+      LigmaPlugInMenuBranch *branch = list->data;
 
       plug_in_actions_menu_branch_added (manager,
                                          branch->file,
@@ -118,55 +118,55 @@ plug_in_actions_setup (GimpActionGroup *group)
        list;
        list = g_slist_next (list))
     {
-      GimpPlugInProcedure *plug_in_proc = list->data;
+      LigmaPlugInProcedure *plug_in_proc = list->data;
 
       if (plug_in_proc->file)
-        plug_in_actions_register_procedure (group->gimp->pdb,
-                                            GIMP_PROCEDURE (plug_in_proc),
+        plug_in_actions_register_procedure (group->ligma->pdb,
+                                            LIGMA_PROCEDURE (plug_in_proc),
                                             group);
     }
 
-  g_signal_connect_object (group->gimp->pdb, "register-procedure",
+  g_signal_connect_object (group->ligma->pdb, "register-procedure",
                            G_CALLBACK (plug_in_actions_register_procedure),
                            group, 0);
-  g_signal_connect_object (group->gimp->pdb, "unregister-procedure",
+  g_signal_connect_object (group->ligma->pdb, "unregister-procedure",
                            G_CALLBACK (plug_in_actions_unregister_procedure),
                            group, 0);
 }
 
 void
-plug_in_actions_update (GimpActionGroup *group,
+plug_in_actions_update (LigmaActionGroup *group,
                         gpointer         data)
 {
-  GimpImage         *image    = action_data_get_image (data);
-  GimpPlugInManager *manager  = group->gimp->plug_in_manager;
+  LigmaImage         *image    = action_data_get_image (data);
+  LigmaPlugInManager *manager  = group->ligma->plug_in_manager;
   GSList            *list;
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
 
       if (proc->menu_label  &&
           ! proc->file_proc &&
           proc->image_types_val)
         {
-          GimpProcedure *procedure = GIMP_PROCEDURE (proc);
+          LigmaProcedure *procedure = LIGMA_PROCEDURE (proc);
           gboolean       sensitive;
           const gchar   *tooltip;
           const gchar   *reason;
 
-          sensitive = gimp_procedure_get_sensitive (procedure,
-                                                    GIMP_OBJECT (image),
+          sensitive = ligma_procedure_get_sensitive (procedure,
+                                                    LIGMA_OBJECT (image),
                                                     &reason);
 
-          gimp_action_group_set_action_sensitive (group,
-                                                  gimp_object_get_name (proc),
+          ligma_action_group_set_action_sensitive (group,
+                                                  ligma_object_get_name (proc),
                                                   sensitive, reason);
 
-          tooltip = gimp_procedure_get_blurb (procedure);
+          tooltip = ligma_procedure_get_blurb (procedure);
           if (tooltip)
-            gimp_action_group_set_action_tooltip (group,
-                                                  gimp_object_get_name (proc),
+            ligma_action_group_set_action_tooltip (group,
+                                                  ligma_object_get_name (proc),
                                                   tooltip);
         }
     }
@@ -176,11 +176,11 @@ plug_in_actions_update (GimpActionGroup *group,
 /*  private functions  */
 
 static void
-plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
+plug_in_actions_menu_branch_added (LigmaPlugInManager *manager,
                                    GFile             *file,
                                    const gchar       *menu_path,
                                    const gchar       *menu_label,
-                                   GimpActionGroup   *group)
+                                   LigmaActionGroup   *group)
 {
   gchar *full;
 
@@ -191,13 +191,13 @@ plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
 }
 
 static void
-plug_in_actions_register_procedure (GimpPDB         *pdb,
-                                    GimpProcedure   *procedure,
-                                    GimpActionGroup *group)
+plug_in_actions_register_procedure (LigmaPDB         *pdb,
+                                    LigmaProcedure   *procedure,
+                                    LigmaActionGroup *group)
 {
-  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+  if (LIGMA_IS_PLUG_IN_PROCEDURE (procedure))
     {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+      LigmaPlugInProcedure *plug_in_proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
 
       g_signal_connect_object (plug_in_proc, "menu-path-added",
                                G_CALLBACK (plug_in_actions_menu_path_added),
@@ -208,7 +208,7 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
         {
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (procedure));
+                   ligma_object_get_name (procedure));
 #endif
 
           plug_in_actions_add_proc (group, plug_in_proc);
@@ -217,13 +217,13 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
 }
 
 static void
-plug_in_actions_unregister_procedure (GimpPDB         *pdb,
-                                      GimpProcedure   *procedure,
-                                      GimpActionGroup *group)
+plug_in_actions_unregister_procedure (LigmaPDB         *pdb,
+                                      LigmaProcedure   *procedure,
+                                      LigmaActionGroup *group)
 {
-  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+  if (LIGMA_IS_PLUG_IN_PROCEDURE (procedure))
     {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+      LigmaPlugInProcedure *plug_in_proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
 
       g_signal_handlers_disconnect_by_func (plug_in_proc,
                                             plug_in_actions_menu_path_added,
@@ -232,51 +232,51 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
       if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
         {
-          GimpAction *action;
+          LigmaAction *action;
 
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (procedure));
+                   ligma_object_get_name (procedure));
 #endif
 
-          action = gimp_action_group_get_action (group,
-                                                 gimp_object_get_name (procedure));
+          action = ligma_action_group_get_action (group,
+                                                 ligma_object_get_name (procedure));
 
           if (action)
-            gimp_action_group_remove_action (group, action);
+            ligma_action_group_remove_action (group, action);
         }
     }
 }
 
 static void
-plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
+plug_in_actions_menu_path_added (LigmaPlugInProcedure *plug_in_proc,
                                  const gchar         *menu_path,
-                                 GimpActionGroup     *group)
+                                 LigmaActionGroup     *group)
 {
 #if 0
   g_print ("%s: %s (%s)\n", G_STRFUNC,
-           gimp_object_get_name (plug_in_proc), menu_path);
+           ligma_object_get_name (plug_in_proc), menu_path);
 #endif
 
   plug_in_actions_build_path (group, menu_path);
 }
 
 static void
-plug_in_actions_add_proc (GimpActionGroup     *group,
-                          GimpPlugInProcedure *proc)
+plug_in_actions_add_proc (LigmaActionGroup     *group,
+                          LigmaPlugInProcedure *proc)
 {
-  GimpProcedureActionEntry  entry;
+  LigmaProcedureActionEntry  entry;
   GList                    *list;
 
-  entry.name        = gimp_object_get_name (proc);
-  entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
-  entry.label       = gimp_procedure_get_menu_label (GIMP_PROCEDURE (proc));
+  entry.name        = ligma_object_get_name (proc);
+  entry.icon_name   = ligma_viewable_get_icon_name (LIGMA_VIEWABLE (proc));
+  entry.label       = ligma_procedure_get_menu_label (LIGMA_PROCEDURE (proc));
   entry.accelerator = NULL;
-  entry.tooltip     = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
-  entry.procedure   = GIMP_PROCEDURE (proc);
-  entry.help_id     = gimp_procedure_get_help_id (GIMP_PROCEDURE (proc));
+  entry.tooltip     = ligma_procedure_get_blurb (LIGMA_PROCEDURE (proc));
+  entry.procedure   = LIGMA_PROCEDURE (proc);
+  entry.help_id     = ligma_procedure_get_help_id (LIGMA_PROCEDURE (proc));
 
-  gimp_action_group_add_procedure_actions (group, &entry, 1,
+  ligma_action_group_add_procedure_actions (group, &entry, 1,
                                            plug_in_run_cmd_callback);
 
   for (list = proc->menu_paths; list; list = g_list_next (list))
@@ -288,30 +288,30 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
   if (proc->image_types_val)
     {
-      GimpContext  *context  = gimp_get_user_context (group->gimp);
-      GimpImage    *image    = gimp_context_get_image (context);
+      LigmaContext  *context  = ligma_get_user_context (group->ligma);
+      LigmaImage    *image    = ligma_context_get_image (context);
       gboolean      sensitive;
       const gchar  *tooltip;
       const gchar  *reason;
 
-      sensitive = gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
-                                                GIMP_OBJECT (image),
+      sensitive = ligma_procedure_get_sensitive (LIGMA_PROCEDURE (proc),
+                                                LIGMA_OBJECT (image),
                                                 &reason);
 
-      gimp_action_group_set_action_sensitive (group,
-                                              gimp_object_get_name (proc),
+      ligma_action_group_set_action_sensitive (group,
+                                              ligma_object_get_name (proc),
                                               sensitive, reason);
 
-      tooltip = gimp_procedure_get_blurb (GIMP_PROCEDURE (proc));
+      tooltip = ligma_procedure_get_blurb (LIGMA_PROCEDURE (proc));
       if (tooltip)
-        gimp_action_group_set_action_tooltip (group,
-                                              gimp_object_get_name (proc),
+        ligma_action_group_set_action_tooltip (group,
+                                              ligma_object_get_name (proc),
                                               tooltip);
     }
 }
 
 static void
-plug_in_actions_build_path (GimpActionGroup *group,
+plug_in_actions_build_path (LigmaActionGroup *group,
                             const gchar     *path_translated)
 {
   GHashTable *path_table;
@@ -336,7 +336,7 @@ plug_in_actions_build_path (GimpActionGroup *group,
 
   if (p2 && ! g_hash_table_lookup (path_table, copy_translated))
     {
-      GimpAction *action;
+      LigmaAction *action;
       gchar      *label;
 
       label = p2 + 1;
@@ -346,8 +346,8 @@ plug_in_actions_build_path (GimpActionGroup *group,
                copy_translated, label);
 #endif
 
-      action = gimp_action_impl_new (copy_translated, label, NULL, NULL, NULL);
-      gimp_action_group_add_action (group, action);
+      action = ligma_action_impl_new (copy_translated, label, NULL, NULL, NULL);
+      ligma_action_group_add_action (group, action);
       g_object_unref (action);
 
       g_hash_table_insert (path_table, g_strdup (copy_translated), action);

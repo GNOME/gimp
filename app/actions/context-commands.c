@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,104 +22,104 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrushgenerated.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmabrushgenerated.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmalist.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmatoolinfo.h"
 
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimppaletteeditor.h"
-#include "widgets/gimpcolormapeditor.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmapaletteeditor.h"
+#include "widgets/ligmacolormapeditor.h"
 
 #include "actions.h"
 #include "context-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     context_select_object    (GimpActionSelectType  select_type,
-                                          GimpContext          *context,
-                                          GimpContainer        *container);
-static gint     context_paint_mode_index (GimpLayerMode         paint_mode,
-                                          const GimpLayerMode  *modes,
+static void     context_select_object    (LigmaActionSelectType  select_type,
+                                          LigmaContext          *context,
+                                          LigmaContainer        *container);
+static gint     context_paint_mode_index (LigmaLayerMode         paint_mode,
+                                          const LigmaLayerMode  *modes,
                                           gint                  n_modes);
 
-static void     context_select_color     (GimpActionSelectType  select_type,
-                                          GimpRGB              *color,
+static void     context_select_color     (LigmaActionSelectType  select_type,
+                                          LigmaRGB              *color,
                                           gboolean              use_colormap,
                                           gboolean              use_palette);
 
 static gint     context_get_color_index  (gboolean              use_colormap,
                                           gboolean              use_palette,
-                                          const GimpRGB        *color);
+                                          const LigmaRGB        *color);
 static gint     context_max_color_index  (gboolean              use_colormap,
                                           gboolean              use_palette);
 static gboolean context_set_color_index  (gint                  index,
                                           gboolean              use_colormap,
                                           gboolean              use_palette,
-                                          GimpRGB              *color);
+                                          LigmaRGB              *color);
 
-static GimpPaletteEditor  * context_get_palette_editor  (void);
-static GimpColormapEditor * context_get_colormap_editor (void);
+static LigmaPaletteEditor  * context_get_palette_editor  (void);
+static LigmaColormapEditor * context_get_colormap_editor (void);
 
 
 /*  public functions  */
 
 void
-context_colors_default_cmd_callback (GimpAction *action,
+context_colors_default_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
+  LigmaContext *context;
   return_if_no_context (context, data);
 
-  gimp_context_set_default_colors (context);
+  ligma_context_set_default_colors (context);
 }
 
 void
-context_colors_swap_cmd_callback (GimpAction *action,
+context_colors_swap_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext *context;
+  LigmaContext *context;
   return_if_no_context (context, data);
 
-  gimp_context_swap_colors (context);
+  ligma_context_swap_colors (context);
 }
 
 #define SELECT_COLOR_CMD_CALLBACK(name, fgbg, use_colormap, use_palette) \
 void \
-context_##name##_##fgbg##ground_cmd_callback (GimpAction *action, \
+context_##name##_##fgbg##ground_cmd_callback (LigmaAction *action, \
                                               GVariant   *value, \
                                               gpointer    data) \
 { \
-  GimpContext          *context; \
-  GimpRGB               color; \
-  GimpActionSelectType  select_type; \
+  LigmaContext          *context; \
+  LigmaRGB               color; \
+  LigmaActionSelectType  select_type; \
   return_if_no_context (context, data); \
   \
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value); \
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value); \
   \
-  gimp_context_get_##fgbg##ground (context, &color); \
+  ligma_context_get_##fgbg##ground (context, &color); \
   context_select_color (select_type, &color, \
                         use_colormap, use_palette); \
-  gimp_context_set_##fgbg##ground (context, &color); \
+  ligma_context_set_##fgbg##ground (context, &color); \
 }
 
 SELECT_COLOR_CMD_CALLBACK (palette,  fore, FALSE, TRUE)
@@ -130,278 +130,278 @@ SELECT_COLOR_CMD_CALLBACK (swatch,   fore, TRUE,  TRUE)
 SELECT_COLOR_CMD_CALLBACK (swatch,   back, TRUE,  TRUE)
 
 void
-context_foreground_red_cmd_callback (GimpAction *action,
+context_foreground_red_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
+  ligma_context_get_foreground (context, &color);
   color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_foreground_green_cmd_callback (GimpAction *action,
+context_foreground_green_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
+  ligma_context_get_foreground (context, &color);
   color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_foreground_blue_cmd_callback (GimpAction *action,
+context_foreground_blue_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
+  ligma_context_get_foreground (context, &color);
   color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_background_red_cmd_callback (GimpAction *action,
+context_background_red_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
+  ligma_context_get_background (context, &color);
   color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_background_green_cmd_callback (GimpAction *action,
+context_background_green_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
+  ligma_context_get_background (context, &color);
   color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_background_blue_cmd_callback (GimpAction *action,
+context_background_blue_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
+  ligma_context_get_background (context, &color);
   color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_foreground_hue_cmd_callback (GimpAction *action,
+context_foreground_hue_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_foreground (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_foreground_saturation_cmd_callback (GimpAction *action,
+context_foreground_saturation_cmd_callback (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_foreground (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_foreground_value_cmd_callback (GimpAction *action,
+context_foreground_value_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_foreground (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_foreground (context, &color);
 }
 
 void
-context_background_hue_cmd_callback (GimpAction *action,
+context_background_hue_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_background (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_background_saturation_cmd_callback (GimpAction *action,
+context_background_saturation_cmd_callback (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_background (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_background_value_cmd_callback (GimpAction *action,
+context_background_value_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext          *context;
-  GimpRGB               color;
-  GimpHSV               hsv;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaRGB               color;
+  LigmaHSV               hsv;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  ligma_context_get_background (context, &color);
+  ligma_rgb_to_hsv (&color, &hsv);
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
+  ligma_context_set_background (context, &color);
 }
 
 void
-context_opacity_cmd_callback (GimpAction *action,
+context_opacity_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpContext          *context;
-  GimpToolInfo         *tool_info;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaToolInfo         *tool_info;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  tool_info = gimp_context_get_tool (context);
+  tool_info = ligma_context_get_tool (context);
 
-  if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
+  if (tool_info && LIGMA_IS_TOOL_OPTIONS (tool_info->tool_options))
     {
       action_select_property (select_type,
                               action_data_get_display (data),
@@ -412,25 +412,25 @@ context_opacity_cmd_callback (GimpAction *action,
 }
 
 void
-context_paint_mode_cmd_callback (GimpAction *action,
+context_paint_mode_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpContext          *context;
-  GimpToolInfo         *tool_info;
-  GimpLayerMode        *modes;
+  LigmaContext          *context;
+  LigmaToolInfo         *tool_info;
+  LigmaLayerMode        *modes;
   gint                  n_modes;
-  GimpLayerMode         paint_mode;
+  LigmaLayerMode         paint_mode;
   gint                  index;
-  GimpActionSelectType  select_type;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  paint_mode = gimp_context_get_paint_mode (context);
+  paint_mode = ligma_context_get_paint_mode (context);
 
-  modes = gimp_layer_mode_get_context_array (paint_mode,
-                                             GIMP_LAYER_MODE_CONTEXT_PAINT,
+  modes = ligma_layer_mode_get_context_array (paint_mode,
+                                             LIGMA_LAYER_MODE_CONTEXT_PAINT,
                                              &n_modes);
   index = context_paint_mode_index (paint_mode, modes, n_modes);
   index = action_select_value (select_type,
@@ -439,16 +439,16 @@ context_paint_mode_cmd_callback (GimpAction *action,
   paint_mode = modes[index];
   g_free (modes);
 
-  gimp_context_set_paint_mode (context, paint_mode);
+  ligma_context_set_paint_mode (context, paint_mode);
 
-  tool_info = gimp_context_get_tool (context);
+  tool_info = ligma_context_get_tool (context);
 
-  if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
+  if (tool_info && LIGMA_IS_TOOL_OPTIONS (tool_info->tool_options))
     {
-      GimpDisplay *display;
+      LigmaDisplay *display;
       const char  *value_desc;
 
-      gimp_enum_get_value (GIMP_TYPE_LAYER_MODE, paint_mode,
+      ligma_enum_get_value (LIGMA_TYPE_LAYER_MODE, paint_mode,
                            NULL, NULL, &value_desc, NULL);
 
       display = action_data_get_display (data);
@@ -462,115 +462,115 @@ context_paint_mode_cmd_callback (GimpAction *action,
 }
 
 void
-context_tool_select_cmd_callback (GimpAction *action,
+context_tool_select_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
-                         context, context->gimp->tool_info_list);
+                         context, context->ligma->tool_info_list);
 }
 
 void
-context_brush_select_cmd_callback (GimpAction *action,
+context_brush_select_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
                          context,
-                         gimp_data_factory_get_container (context->gimp->brush_factory));
+                         ligma_data_factory_get_container (context->ligma->brush_factory));
 }
 
 void
-context_pattern_select_cmd_callback (GimpAction *action,
+context_pattern_select_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
                          context,
-                         gimp_data_factory_get_container (context->gimp->pattern_factory));
+                         ligma_data_factory_get_container (context->ligma->pattern_factory));
 }
 
 void
-context_palette_select_cmd_callback (GimpAction *action,
+context_palette_select_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
                          context,
-                         gimp_data_factory_get_container (context->gimp->palette_factory));
+                         ligma_data_factory_get_container (context->ligma->palette_factory));
 }
 
 void
-context_gradient_select_cmd_callback (GimpAction *action,
+context_gradient_select_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
                          context,
-                         gimp_data_factory_get_container (context->gimp->gradient_factory));
+                         ligma_data_factory_get_container (context->ligma->gradient_factory));
 }
 
 void
-context_font_select_cmd_callback (GimpAction *action,
+context_font_select_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext          *context;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
   context_select_object (select_type,
                          context,
-                         gimp_data_factory_get_container (context->gimp->font_factory));
+                         ligma_data_factory_get_container (context->ligma->font_factory));
 }
 
 void
-context_brush_spacing_cmd_callback (GimpAction *action,
+context_brush_spacing_cmd_callback (LigmaAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH (brush) && gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH (brush) && ligma_data_is_writable (LIGMA_DATA (brush)))
     {
       action_select_property (select_type,
                               action_data_get_display (data),
@@ -581,29 +581,29 @@ context_brush_spacing_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_shape_cmd_callback (GimpAction *action,
+context_brush_shape_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext             *context;
-  GimpBrush               *brush;
-  GimpBrushGeneratedShape  shape;
+  LigmaContext             *context;
+  LigmaBrush               *brush;
+  LigmaBrushGeneratedShape  shape;
   return_if_no_context (context, data);
 
-  shape = (GimpBrushGeneratedShape) g_variant_get_int32 (value);
+  shape = (LigmaBrushGeneratedShape) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      GimpDisplay        *display;
+      LigmaBrushGenerated *generated = LIGMA_BRUSH_GENERATED (brush);
+      LigmaDisplay        *display;
       const char         *value_desc;
 
-      gimp_brush_generated_set_shape (generated, shape);
+      ligma_brush_generated_set_shape (generated, shape);
 
-      gimp_enum_get_value (GIMP_TYPE_BRUSH_GENERATED_SHAPE, shape,
+      ligma_enum_get_value (LIGMA_TYPE_BRUSH_GENERATED_SHAPE, shape,
                            NULL, NULL, &value_desc, NULL);
       display = action_data_get_display (data);
 
@@ -616,28 +616,28 @@ context_brush_shape_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_radius_cmd_callback (GimpAction *action,
+context_brush_radius_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      GimpDisplay        *display;
+      LigmaBrushGenerated *generated = LIGMA_BRUSH_GENERATED (brush);
+      LigmaDisplay        *display;
       gdouble             radius;
       gdouble             min_radius;
 
-      radius = gimp_brush_generated_get_radius (generated);
+      radius = ligma_brush_generated_get_radius (generated);
 
       /* If the user uses a high precision radius adjustment command
        * then we allow a minimum radius of 0.1 px, otherwise we set the
@@ -647,10 +647,10 @@ context_brush_radius_cmd_callback (GimpAction *action,
        */
       switch (select_type)
         {
-        case GIMP_ACTION_SELECT_SMALL_PREVIOUS:
-        case GIMP_ACTION_SELECT_SMALL_NEXT:
-        case GIMP_ACTION_SELECT_PERCENT_PREVIOUS:
-        case GIMP_ACTION_SELECT_PERCENT_NEXT:
+        case LIGMA_ACTION_SELECT_SMALL_PREVIOUS:
+        case LIGMA_ACTION_SELECT_SMALL_NEXT:
+        case LIGMA_ACTION_SELECT_PERCENT_PREVIOUS:
+        case LIGMA_ACTION_SELECT_PERCENT_NEXT:
           min_radius = 0.1;
           break;
 
@@ -666,7 +666,7 @@ context_brush_radius_cmd_callback (GimpAction *action,
                                     radius,
                                     min_radius, 4000.0, min_radius,
                                     0.1, 1.0, 10.0, 0.05, FALSE);
-      gimp_brush_generated_set_radius (generated, radius);
+      ligma_brush_generated_set_radius (generated, radius);
 
       display = action_data_get_display (data);
 
@@ -679,21 +679,21 @@ context_brush_radius_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_spikes_cmd_callback (GimpAction *action,
+context_brush_spikes_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
       action_select_property (select_type,
                               action_data_get_display (data),
@@ -704,21 +704,21 @@ context_brush_spikes_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_hardness_cmd_callback (GimpAction *action,
+context_brush_hardness_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
       action_select_property (select_type,
                               action_data_get_display (data),
@@ -729,21 +729,21 @@ context_brush_hardness_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_aspect_cmd_callback (GimpAction *action,
+context_brush_aspect_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
       action_select_property (select_type,
                               action_data_get_display (data),
@@ -754,31 +754,31 @@ context_brush_aspect_cmd_callback (GimpAction *action,
 }
 
 void
-context_brush_angle_cmd_callback (GimpAction *action,
+context_brush_angle_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext          *context;
-  GimpBrush            *brush;
-  GimpActionSelectType  select_type;
+  LigmaContext          *context;
+  LigmaBrush            *brush;
+  LigmaActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (LigmaActionSelectType) g_variant_get_int32 (value);
 
-  brush = gimp_context_get_brush (context);
+  brush = ligma_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) &&
-      gimp_data_is_writable (GIMP_DATA (brush)))
+  if (LIGMA_IS_BRUSH_GENERATED (brush) &&
+      ligma_data_is_writable (LIGMA_DATA (brush)))
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      GimpDisplay        *display;
+      LigmaBrushGenerated *generated = LIGMA_BRUSH_GENERATED (brush);
+      LigmaDisplay        *display;
       gdouble             angle;
 
-      angle = gimp_brush_generated_get_angle (generated);
+      angle = ligma_brush_generated_get_angle (generated);
 
-      if (select_type == GIMP_ACTION_SELECT_FIRST)
+      if (select_type == LIGMA_ACTION_SELECT_FIRST)
         angle = 0.0;
-      else if (select_type == GIMP_ACTION_SELECT_LAST)
+      else if (select_type == LIGMA_ACTION_SELECT_LAST)
         angle = 90.0;
       else
         angle = action_select_value (select_type,
@@ -786,7 +786,7 @@ context_brush_angle_cmd_callback (GimpAction *action,
                                      0.0, 180.0, 0.0,
                                      0.1, 1.0, 15.0, 0.1, TRUE);
 
-      gimp_brush_generated_set_angle (generated, angle);
+      ligma_brush_generated_set_angle (generated, angle);
 
       display = action_data_get_display (data);
 
@@ -799,26 +799,26 @@ context_brush_angle_cmd_callback (GimpAction *action,
 }
 
 void
-context_toggle_dynamics_cmd_callback (GimpAction *action,
+context_toggle_dynamics_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext   *context;
-  GimpPaintInfo *paint_info;
+  LigmaContext   *context;
+  LigmaPaintInfo *paint_info;
   gboolean       enabled;
 
   return_if_no_context (context, data);
 
-  paint_info = gimp_context_get_paint_info (context);
+  paint_info = ligma_context_get_paint_info (context);
   if (paint_info)
     {
-      GimpPaintOptions *paint_options;
-      GimpDisplay      *display;
+      LigmaPaintOptions *paint_options;
+      LigmaDisplay      *display;
 
       paint_options = paint_info->paint_options;
-      enabled = gimp_paint_options_are_dynamics_enabled (paint_options);
+      enabled = ligma_paint_options_are_dynamics_enabled (paint_options);
 
-      gimp_paint_options_enable_dynamics (paint_options, ! enabled);
+      ligma_paint_options_enable_dynamics (paint_options, ! enabled);
 
       display = action_data_get_display (data);
 
@@ -835,27 +835,27 @@ context_toggle_dynamics_cmd_callback (GimpAction *action,
 /*  private functions  */
 
 static void
-context_select_object (GimpActionSelectType  select_type,
-                       GimpContext          *context,
-                       GimpContainer        *container)
+context_select_object (LigmaActionSelectType  select_type,
+                       LigmaContext          *context,
+                       LigmaContainer        *container)
 {
-  GimpObject *current;
+  LigmaObject *current;
 
   current =
-    gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (container));
+    ligma_context_get_by_type (context,
+                              ligma_container_get_children_type (container));
 
   current = action_select_object (select_type, container, current);
 
   if (current)
-    gimp_context_set_by_type (context,
-                              gimp_container_get_children_type (container),
+    ligma_context_set_by_type (context,
+                              ligma_container_get_children_type (container),
                               current);
 }
 
 static gint
-context_paint_mode_index (GimpLayerMode        paint_mode,
-                          const GimpLayerMode *modes,
+context_paint_mode_index (LigmaLayerMode        paint_mode,
+                          const LigmaLayerMode *modes,
                           gint                 n_modes)
 {
   gint i = 0;
@@ -867,8 +867,8 @@ context_paint_mode_index (GimpLayerMode        paint_mode,
 }
 
 static void
-context_select_color (GimpActionSelectType  select_type,
-                      GimpRGB              *color,
+context_select_color (LigmaActionSelectType  select_type,
+                      LigmaRGB              *color,
                       gboolean              use_colormap,
                       gboolean              use_palette)
 {
@@ -889,15 +889,15 @@ context_select_color (GimpActionSelectType  select_type,
 static gint
 context_get_color_index (gboolean       use_colormap,
                          gboolean       use_palette,
-                         const GimpRGB *color)
+                         const LigmaRGB *color)
 {
   if (use_colormap)
     {
-      GimpColormapEditor *editor = context_get_colormap_editor ();
+      LigmaColormapEditor *editor = context_get_colormap_editor ();
 
       if (editor)
         {
-          gint index = gimp_colormap_editor_get_index (editor, color);
+          gint index = ligma_colormap_editor_get_index (editor, color);
 
           if (index != -1)
             return index;
@@ -906,11 +906,11 @@ context_get_color_index (gboolean       use_colormap,
 
   if (use_palette)
     {
-      GimpPaletteEditor *editor = context_get_palette_editor ();
+      LigmaPaletteEditor *editor = context_get_palette_editor ();
 
       if (editor)
         {
-          gint index = gimp_palette_editor_get_index (editor, color);
+          gint index = ligma_palette_editor_get_index (editor, color);
 
           if (index != -1)
             return index;
@@ -926,11 +926,11 @@ context_max_color_index (gboolean use_colormap,
 {
   if (use_colormap)
     {
-      GimpColormapEditor *editor = context_get_colormap_editor ();
+      LigmaColormapEditor *editor = context_get_colormap_editor ();
 
       if (editor)
         {
-          gint index = gimp_colormap_editor_max_index (editor);
+          gint index = ligma_colormap_editor_max_index (editor);
 
           if (index != -1)
             return index;
@@ -939,11 +939,11 @@ context_max_color_index (gboolean use_colormap,
 
   if (use_palette)
     {
-      GimpPaletteEditor *editor = context_get_palette_editor ();
+      LigmaPaletteEditor *editor = context_get_palette_editor ();
 
       if (editor)
         {
-          gint index = gimp_palette_editor_max_index (editor);
+          gint index = ligma_palette_editor_max_index (editor);
 
           if (index != -1)
             return index;
@@ -957,53 +957,53 @@ static gboolean
 context_set_color_index (gint      index,
                          gboolean  use_colormap,
                          gboolean  use_palette,
-                         GimpRGB  *color)
+                         LigmaRGB  *color)
 {
   if (use_colormap)
     {
-      GimpColormapEditor *editor = context_get_colormap_editor ();
+      LigmaColormapEditor *editor = context_get_colormap_editor ();
 
-      if (editor && gimp_colormap_editor_set_index (editor, index, color))
+      if (editor && ligma_colormap_editor_set_index (editor, index, color))
         return TRUE;
     }
 
   if (use_palette)
     {
-      GimpPaletteEditor *editor = context_get_palette_editor ();
+      LigmaPaletteEditor *editor = context_get_palette_editor ();
 
-      if (editor && gimp_palette_editor_set_index (editor, index, color))
+      if (editor && ligma_palette_editor_set_index (editor, index, color))
         return TRUE;
     }
 
   return FALSE;
 }
 
-static GimpPaletteEditor *
+static LigmaPaletteEditor *
 context_get_palette_editor (void)
 {
   GtkWidget *widget;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (ligma_dialog_factory_get_singleton ()), NULL);
 
-  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                            "gimp-palette-editor");
+  widget = ligma_dialog_factory_find_widget (ligma_dialog_factory_get_singleton (),
+                                            "ligma-palette-editor");
   if (widget)
-    return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
+    return LIGMA_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
 
   return NULL;
 }
 
-static GimpColormapEditor *
+static LigmaColormapEditor *
 context_get_colormap_editor (void)
 {
   GtkWidget *widget;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (ligma_dialog_factory_get_singleton ()), NULL);
 
-  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                            "gimp-indexed-palette");
+  widget = ligma_dialog_factory_find_widget (ligma_dialog_factory_get_singleton (),
+                                            "ligma-indexed-palette");
   if (widget)
-    return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
+    return LIGMA_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
 
   return NULL;
 }

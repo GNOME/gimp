@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __XCF_LOAD_H__
 
 
-GimpImage * xcf_load_image (Gimp     *gimp,
+LigmaImage * xcf_load_image (Ligma     *ligma,
                             XcfInfo  *info,
                             GError  **error);
 

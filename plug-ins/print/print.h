@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #define EMBED_PAGE_SETUP 1
 #endif
 
-#define GIMP_PLUGIN_PRINT_ERROR gimp_plugin_print_error_quark ()
+#define LIGMA_PLUGIN_PRINT_ERROR ligma_plugin_print_error_quark ()
 
 typedef enum
 {
-  GIMP_PLUGIN_PRINT_ERROR_FAILED
-} GimpPluginPrintError;
+  LIGMA_PLUGIN_PRINT_ERROR_FAILED
+} LigmaPluginPrintError;
 
-GQuark gimp_plugin_print_error_quark (void);
+GQuark ligma_plugin_print_error_quark (void);
 
 typedef enum
 {
@@ -39,14 +39,14 @@ typedef enum
 
 typedef struct
 {
-  GimpImage          *image;
-  GimpDrawable       *drawable;
-  GimpUnit            unit;
+  LigmaImage          *image;
+  LigmaDrawable       *drawable;
+  LigmaUnit            unit;
   gdouble             xres;
   gdouble             yres;
   gdouble             min_xres;
   gdouble             min_yres;
-  GimpUnit            image_unit;
+  LigmaUnit            image_unit;
   gdouble             offset_x;
   gdouble             offset_y;
   PrintCenterMode     center;

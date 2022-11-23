@@ -1,11 +1,11 @@
-## GIMP's Operating System Support
+## LIGMA's Operating System Support
 
-GIMP is available on a wide range of operating systems.
+LIGMA is available on a wide range of operating systems.
 As a general rule, we should stop supporting a platform as soon as the
 publisher stops supporting it, or if it is nearly not used anymore.
 
 There is no accurate rule though, and it also mostly depends on what the
-developers maintaining GIMP for this platform will decide.
+developers maintaining LIGMA for this platform will decide.
 
 ### GNU/Linux, *BSD…
 

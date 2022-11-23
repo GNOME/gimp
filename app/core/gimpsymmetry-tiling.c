@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry-tiling.c
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry-tiling.c
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,18 +26,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpitem.h"
-#include "gimpsymmetry-tiling.h"
+#include "ligma.h"
+#include "ligmadrawable.h"
+#include "ligmaimage.h"
+#include "ligmaitem.h"
+#include "ligmasymmetry-tiling.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* Using same epsilon as in GLIB. */
@@ -57,135 +57,135 @@ enum
 
 /* Local function prototypes */
 
-static void       gimp_tiling_constructed        (GObject      *object);
-static void       gimp_tiling_finalize           (GObject      *object);
-static void       gimp_tiling_set_property       (GObject      *object,
+static void       ligma_tiling_constructed        (GObject      *object);
+static void       ligma_tiling_finalize           (GObject      *object);
+static void       ligma_tiling_set_property       (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
                                                   GParamSpec   *pspec);
-static void       gimp_tiling_get_property       (GObject      *object,
+static void       ligma_tiling_get_property       (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
-static void       gimp_tiling_update_strokes     (GimpSymmetry *tiling,
-                                                  GimpDrawable *drawable,
-                                                  GimpCoords   *origin);
-static void    gimp_tiling_image_size_changed_cb (GimpImage    *image,
+static void       ligma_tiling_update_strokes     (LigmaSymmetry *tiling,
+                                                  LigmaDrawable *drawable,
+                                                  LigmaCoords   *origin);
+static void    ligma_tiling_image_size_changed_cb (LigmaImage    *image,
                                                   gint          previous_origin_x,
                                                   gint          previous_origin_y,
                                                   gint          previous_width,
                                                   gint          previous_height,
-                                                  GimpSymmetry *sym);
+                                                  LigmaSymmetry *sym);
 
 
-G_DEFINE_TYPE (GimpTiling, gimp_tiling, GIMP_TYPE_SYMMETRY)
+G_DEFINE_TYPE (LigmaTiling, ligma_tiling, LIGMA_TYPE_SYMMETRY)
 
-#define parent_class gimp_tiling_parent_class
+#define parent_class ligma_tiling_parent_class
 
 
 static void
-gimp_tiling_class_init (GimpTilingClass *klass)
+ligma_tiling_class_init (LigmaTilingClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
+  LigmaSymmetryClass *symmetry_class = LIGMA_SYMMETRY_CLASS (klass);
   GParamSpec        *pspec;
 
-  object_class->constructed       = gimp_tiling_constructed;
-  object_class->finalize          = gimp_tiling_finalize;
-  object_class->set_property      = gimp_tiling_set_property;
-  object_class->get_property      = gimp_tiling_get_property;
+  object_class->constructed       = ligma_tiling_constructed;
+  object_class->finalize          = ligma_tiling_finalize;
+  object_class->set_property      = ligma_tiling_set_property;
+  object_class->get_property      = ligma_tiling_get_property;
 
   symmetry_class->label           = _("Tiling");
-  symmetry_class->update_strokes  = gimp_tiling_update_strokes;
+  symmetry_class->update_strokes  = ligma_tiling_update_strokes;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_X,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_X,
                            "interval-x",
                            _("Interval X"),
                            _("Interval on the X axis (pixels)"),
                            0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_SYMMETRY_PARAM_GUI);
 
   pspec = g_object_class_find_property (object_class, "interval-x");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
   gegl_param_spec_set_property_key (pspec, "axis", "x");
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_Y,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_Y,
                            "interval-y",
                            _("Interval Y"),
                            _("Interval on the Y axis (pixels)"),
                            0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_SYMMETRY_PARAM_GUI);
 
   pspec = g_object_class_find_property (object_class, "interval-y");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
   gegl_param_spec_set_property_key (pspec, "axis", "y");
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SHIFT,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SHIFT,
                            "shift",
                            _("Shift"),
                            _("X-shift between lines (pixels)"),
                            0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_SYMMETRY_PARAM_GUI);
 
   pspec = g_object_class_find_property (object_class, "shift");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
   gegl_param_spec_set_property_key (pspec, "axis", "x");
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_MAX_X,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_MAX_X,
                         "max-x",
                         _("Max strokes X"),
                         _("Maximum number of strokes on the X axis"),
                         0, 100, 0,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_SYMMETRY_PARAM_GUI);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_MAX_Y,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_MAX_Y,
                         "max-y",
                         _("Max strokes Y"),
                         _("Maximum number of strokes on the Y axis"),
                         0, 100, 0,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_SYMMETRY_PARAM_GUI);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_SYMMETRY_PARAM_GUI);
 }
 
 static void
-gimp_tiling_init (GimpTiling *tiling)
+ligma_tiling_init (LigmaTiling *tiling)
 {
 }
 
 static void
-gimp_tiling_constructed (GObject *object)
+ligma_tiling_constructed (GObject *object)
 {
-  GimpSymmetry *sym    = GIMP_SYMMETRY (object);
-  GimpTiling   *tiling = GIMP_TILING (object);
+  LigmaSymmetry *sym    = LIGMA_SYMMETRY (object);
+  LigmaTiling   *tiling = LIGMA_TILING (object);
 
   g_signal_connect_object (sym->image, "size-changed-detailed",
-                           G_CALLBACK (gimp_tiling_image_size_changed_cb),
+                           G_CALLBACK (ligma_tiling_image_size_changed_cb),
                            sym, 0);
 
   /* Set reasonable defaults. */
-  tiling->interval_x = gimp_image_get_width (sym->image) / 2;
-  tiling->interval_y = gimp_image_get_height (sym->image) / 2;
+  tiling->interval_x = ligma_image_get_width (sym->image) / 2;
+  tiling->interval_y = ligma_image_get_height (sym->image) / 2;
 }
 
 static void
-gimp_tiling_finalize (GObject *object)
+ligma_tiling_finalize (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_tiling_set_property (GObject      *object,
+ligma_tiling_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpTiling   *tiling = GIMP_TILING (object);
-  GimpSymmetry *sym    = GIMP_SYMMETRY (tiling);
+  LigmaTiling   *tiling = LIGMA_TILING (object);
+  LigmaSymmetry *sym    = LIGMA_SYMMETRY (tiling);
 
   switch (property_id)
     {
@@ -194,7 +194,7 @@ gimp_tiling_set_property (GObject      *object,
         {
           gdouble new_x = g_value_get_double (value);
 
-          if (new_x < gimp_image_get_width (sym->image))
+          if (new_x < ligma_image_get_width (sym->image))
             {
               tiling->interval_x = new_x;
 
@@ -207,7 +207,7 @@ gimp_tiling_set_property (GObject      *object,
                   g_object_set_property (G_OBJECT (object), "shift", &val);
                 }
               if (sym->drawable)
-                gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
+                ligma_tiling_update_strokes (sym, sym->drawable, sym->origin);
             }
         }
       break;
@@ -216,7 +216,7 @@ gimp_tiling_set_property (GObject      *object,
         {
           gdouble new_y = g_value_get_double (value);
 
-          if (new_y < gimp_image_get_height (sym->image))
+          if (new_y < ligma_image_get_height (sym->image))
             {
               tiling->interval_y = new_y;
 
@@ -229,7 +229,7 @@ gimp_tiling_set_property (GObject      *object,
                   g_object_set_property (G_OBJECT (object), "shift", &val);
                 }
               if (sym->drawable)
-                gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
+                ligma_tiling_update_strokes (sym, sym->drawable, sym->origin);
             }
         }
       break;
@@ -243,7 +243,7 @@ gimp_tiling_set_property (GObject      *object,
             {
               tiling->shift = new_shift;
               if (sym->drawable)
-                gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
+                ligma_tiling_update_strokes (sym, sym->drawable, sym->origin);
             }
         }
       break;
@@ -251,13 +251,13 @@ gimp_tiling_set_property (GObject      *object,
     case PROP_MAX_X:
       tiling->max_x = g_value_get_int (value);
       if (sym->drawable)
-        gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
+        ligma_tiling_update_strokes (sym, sym->drawable, sym->origin);
       break;
 
     case PROP_MAX_Y:
       tiling->max_y = g_value_get_int (value);
       if (sym->drawable)
-        gimp_tiling_update_strokes (sym, sym->drawable, sym->origin);
+        ligma_tiling_update_strokes (sym, sym->drawable, sym->origin);
       break;
 
     default:
@@ -267,12 +267,12 @@ gimp_tiling_set_property (GObject      *object,
 }
 
 static void
-gimp_tiling_get_property (GObject    *object,
+ligma_tiling_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpTiling *tiling = GIMP_TILING (object);
+  LigmaTiling *tiling = LIGMA_TILING (object);
 
   switch (property_id)
     {
@@ -298,13 +298,13 @@ gimp_tiling_get_property (GObject    *object,
 }
 
 static void
-gimp_tiling_update_strokes (GimpSymmetry *sym,
-                            GimpDrawable *drawable,
-                            GimpCoords   *origin)
+ligma_tiling_update_strokes (LigmaSymmetry *sym,
+                            LigmaDrawable *drawable,
+                            LigmaCoords   *origin)
 {
-  GimpTiling *tiling  = GIMP_TILING (sym);
+  LigmaTiling *tiling  = LIGMA_TILING (sym);
   GList      *strokes = NULL;
-  GimpCoords *coords;
+  LigmaCoords *coords;
   gdouble     width;
   gdouble     height;
   gdouble     startx = origin->x;
@@ -317,8 +317,8 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
 
-  width  = gimp_item_get_width (GIMP_ITEM (drawable));
-  height = gimp_item_get_height (GIMP_ITEM (drawable));
+  width  = ligma_item_get_width (LIGMA_ITEM (drawable));
+  height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
   if (sym->stateful)
     {
@@ -368,7 +368,7 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
         {
           for (j = 0, y = starty; j < y_count; j++)
             {
-              coords = g_memdup2 (origin, sizeof (GimpCoords));
+              coords = g_memdup2 (origin, sizeof (LigmaCoords));
               coords->x = x;
               coords->y = y;
               strokes = g_list_prepend (strokes, coords);
@@ -403,7 +403,7 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
               if (tiling->max_x && x_count >= tiling->max_x)
                 break;
 
-              coords = g_memdup2 (origin, sizeof (GimpCoords));
+              coords = g_memdup2 (origin, sizeof (LigmaCoords));
               coords->x = x;
               coords->y = y;
               strokes = g_list_prepend (strokes, coords);
@@ -428,15 +428,15 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
 }
 
 static void
-gimp_tiling_image_size_changed_cb (GimpImage    *image,
+ligma_tiling_image_size_changed_cb (LigmaImage    *image,
                                    gint          previous_origin_x,
                                    gint          previous_origin_y,
                                    gint          previous_width,
                                    gint          previous_height,
-                                   GimpSymmetry *sym)
+                                   LigmaSymmetry *sym)
 {
-  if (previous_width  != gimp_image_get_width  (image) ||
-      previous_height != gimp_image_get_height (image))
+  if (previous_width  != ligma_image_get_width  (image) ||
+      previous_height != ligma_image_get_height (image))
     {
       g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }

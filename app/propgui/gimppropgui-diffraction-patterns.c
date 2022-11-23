@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-diffraction-patterns.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-diffraction-patterns.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,27 +24,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-diffraction-patterns.h"
-#include "gimppropgui-generic.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-diffraction-patterns.h"
+#include "ligmapropgui-generic.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GtkWidget *
-_gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
+_ligma_prop_gui_new_diffraction_patterns (GObject                  *config,
                                          GParamSpec              **param_specs,
                                          guint                     n_param_specs,
                                          GeglRectangle            *area,
-                                         GimpContext              *context,
-                                         GimpCreatePickerFunc      create_picker_func,
-                                         GimpCreateControllerFunc  create_controller_func,
+                                         LigmaContext              *context,
+                                         LigmaCreatePickerFunc      create_picker_func,
+                                         LigmaCreateControllerFunc  create_controller_func,
                                          gpointer                  creator)
 {
   GtkWidget *notebook;
@@ -53,11 +53,11 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   notebook = gtk_notebook_new ();
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 0, 3,
                                      area, context,
                                      create_picker_func,
@@ -67,7 +67,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Frequencies")));
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 3, 3,
                                      area, context,
                                      create_picker_func,
@@ -77,7 +77,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Contours")));
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 6, 3,
                                      area, context,
                                      create_picker_func,
@@ -87,7 +87,7 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Sharp Edges")));
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 9, 3,
                                      area, context,
                                      create_picker_func,

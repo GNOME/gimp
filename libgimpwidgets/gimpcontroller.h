@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontroller.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontroller.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#error GimpController is unstable API under construction
+#ifndef LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#error LigmaController is unstable API under construction
 #endif
 
-#ifndef __GIMP_CONTROLLER_H__
-#define __GIMP_CONTROLLER_H__
+#ifndef __LIGMA_CONTROLLER_H__
+#define __LIGMA_CONTROLLER_H__
 
 G_BEGIN_DECLS
 
@@ -32,113 +32,113 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpControllerEventType:
- * @GIMP_CONTROLLER_EVENT_TRIGGER: the event is a simple trigger
- * @GIMP_CONTROLLER_EVENT_VALUE:   the event carries a double value
+ * LigmaControllerEventType:
+ * @LIGMA_CONTROLLER_EVENT_TRIGGER: the event is a simple trigger
+ * @LIGMA_CONTROLLER_EVENT_VALUE:   the event carries a double value
  *
- * Event types for #GimpController.
+ * Event types for #LigmaController.
  **/
 typedef enum
 {
-  GIMP_CONTROLLER_EVENT_TRIGGER,
-  GIMP_CONTROLLER_EVENT_VALUE
-} GimpControllerEventType;
+  LIGMA_CONTROLLER_EVENT_TRIGGER,
+  LIGMA_CONTROLLER_EVENT_VALUE
+} LigmaControllerEventType;
 
 
-typedef struct _GimpControllerEventAny     GimpControllerEventAny;
-typedef struct _GimpControllerEventTrigger GimpControllerEventTrigger;
-typedef struct _GimpControllerEventValue   GimpControllerEventValue;
-typedef union  _GimpControllerEvent        GimpControllerEvent;
+typedef struct _LigmaControllerEventAny     LigmaControllerEventAny;
+typedef struct _LigmaControllerEventTrigger LigmaControllerEventTrigger;
+typedef struct _LigmaControllerEventValue   LigmaControllerEventValue;
+typedef union  _LigmaControllerEvent        LigmaControllerEvent;
 
 /**
- * GimpControllerEventAny:
- * @type:     The event's #GimpControllerEventType
- * @source:   The event's source #GimpController
+ * LigmaControllerEventAny:
+ * @type:     The event's #LigmaControllerEventType
+ * @source:   The event's source #LigmaController
  * @event_id: The event's ID
  *
  * Generic controller event. Every event has these three members at the
  * beginning of its struct
  **/
-struct _GimpControllerEventAny
+struct _LigmaControllerEventAny
 {
-  GimpControllerEventType  type;
-  GimpController          *source;
+  LigmaControllerEventType  type;
+  LigmaController          *source;
   gint                     event_id;
 };
 
 /**
- * GimpControllerEventTrigger:
- * @type:     The event's #GimpControllerEventType
- * @source:   The event's source #GimpController
+ * LigmaControllerEventTrigger:
+ * @type:     The event's #LigmaControllerEventType
+ * @source:   The event's source #LigmaController
  * @event_id: The event's ID
  *
  * Trigger controller event.
  **/
-struct _GimpControllerEventTrigger
+struct _LigmaControllerEventTrigger
 {
-  GimpControllerEventType  type;
-  GimpController          *source;
+  LigmaControllerEventType  type;
+  LigmaController          *source;
   gint                     event_id;
 };
 
 /**
- * GimpControllerEventValue:
- * @type:     The event's #GimpControllerEventType
- * @source:   The event's source #GimpController
+ * LigmaControllerEventValue:
+ * @type:     The event's #LigmaControllerEventType
+ * @source:   The event's source #LigmaController
  * @event_id: The event's ID
  * @value:    The event's value
  *
  * Value controller event.
  **/
-struct _GimpControllerEventValue
+struct _LigmaControllerEventValue
 {
-  GimpControllerEventType  type;
-  GimpController          *source;
+  LigmaControllerEventType  type;
+  LigmaController          *source;
   gint                     event_id;
   GValue                   value;
 };
 
 /**
- * GimpControllerEvent:
+ * LigmaControllerEvent:
  * @type:    The event type
- * @any:     GimpControllerEventAny
- * @trigger: GimpControllerEventTrigger
- * @value:   GimpControllerEventValue
+ * @any:     LigmaControllerEventAny
+ * @trigger: LigmaControllerEventTrigger
+ * @value:   LigmaControllerEventValue
  *
  * A union to hjold all event event types
  **/
-union _GimpControllerEvent
+union _LigmaControllerEvent
 {
-  GimpControllerEventType    type;
-  GimpControllerEventAny     any;
-  GimpControllerEventTrigger trigger;
-  GimpControllerEventValue   value;
+  LigmaControllerEventType    type;
+  LigmaControllerEventAny     any;
+  LigmaControllerEventTrigger trigger;
+  LigmaControllerEventValue   value;
 };
 
 
-#define GIMP_TYPE_CONTROLLER            (gimp_controller_get_type ())
-#define GIMP_CONTROLLER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER, GimpController))
-#define GIMP_CONTROLLER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER, GimpControllerClass))
-#define GIMP_IS_CONTROLLER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTROLLER))
-#define GIMP_IS_CONTROLLER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTROLLER))
-#define GIMP_CONTROLLER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTROLLER, GimpControllerClass))
+#define LIGMA_TYPE_CONTROLLER            (ligma_controller_get_type ())
+#define LIGMA_CONTROLLER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTROLLER, LigmaController))
+#define LIGMA_CONTROLLER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTROLLER, LigmaControllerClass))
+#define LIGMA_IS_CONTROLLER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTROLLER))
+#define LIGMA_IS_CONTROLLER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTROLLER))
+#define LIGMA_CONTROLLER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTROLLER, LigmaControllerClass))
 
 
-typedef struct _GimpControllerPrivate GimpControllerPrivate;
-typedef struct _GimpControllerClass   GimpControllerClass;
+typedef struct _LigmaControllerPrivate LigmaControllerPrivate;
+typedef struct _LigmaControllerClass   LigmaControllerClass;
 
-struct _GimpController
+struct _LigmaController
 {
   GObject                parent_instance;
 
-  GimpControllerPrivate *priv;
+  LigmaControllerPrivate *priv;
 
   /* FIXME MOVE TO PRIVATE */
   gchar    *name;
   gchar    *state;
 };
 
-struct _GimpControllerClass
+struct _LigmaControllerClass
 {
   GObjectClass  parent_class;
 
@@ -148,44 +148,44 @@ struct _GimpControllerClass
   const gchar  *icon_name;
 
   /*  virtual functions  */
-  gint          (* get_n_events)    (GimpController            *controller);
-  const gchar * (* get_event_name)  (GimpController            *controller,
+  gint          (* get_n_events)    (LigmaController            *controller);
+  const gchar * (* get_event_name)  (LigmaController            *controller,
                                      gint                       event_id);
-  const gchar * (* get_event_blurb) (GimpController            *controller,
+  const gchar * (* get_event_blurb) (LigmaController            *controller,
                                      gint                       event_id);
 
   /*  signals  */
-  gboolean      (* event)           (GimpController            *controller,
-                                     const GimpControllerEvent *event);
+  gboolean      (* event)           (LigmaController            *controller,
+                                     const LigmaControllerEvent *event);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType            gimp_controller_get_type        (void) G_GNUC_CONST;
-GimpController * gimp_controller_new             (GType           controller_type);
+GType            ligma_controller_get_type        (void) G_GNUC_CONST;
+LigmaController * ligma_controller_new             (GType           controller_type);
 
-gint             gimp_controller_get_n_events    (GimpController *controller);
-const gchar    * gimp_controller_get_event_name  (GimpController *controller,
+gint             ligma_controller_get_n_events    (LigmaController *controller);
+const gchar    * ligma_controller_get_event_name  (LigmaController *controller,
                                                   gint            event_id);
-const gchar    * gimp_controller_get_event_blurb (GimpController *controller,
+const gchar    * ligma_controller_get_event_blurb (LigmaController *controller,
                                                   gint            event_id);
 
 
 /*  protected  */
 
-gboolean         gimp_controller_event (GimpController            *controller,
-                                        const GimpControllerEvent *event);
+gboolean         ligma_controller_event (LigmaController            *controller,
+                                        const LigmaControllerEvent *event);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CONTROLLER_H__ */
+#endif /* __LIGMA_CONTROLLER_H__ */

@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextTool
- * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ * LigmaTextTool
+ * Copyright (C) 2002-2010  Sven Neumann <sven@ligma.org>
  *                          Daniel Eddeland <danedde@svn.gnome.org>
- *                          Michael Natterer <mitch@gimp.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,111 +26,111 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatoolinfo.h"
 
-#include "text/gimptext.h"
-#include "text/gimptextlayout.h"
+#include "text/ligmatext.h"
+#include "text/ligmatextlayout.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimpoverlaybox.h"
-#include "widgets/gimpoverlayframe.h"
-#include "widgets/gimptextbuffer.h"
-#include "widgets/gimptexteditor.h"
-#include "widgets/gimptextproxy.h"
-#include "widgets/gimptextstyleeditor.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmaoverlaybox.h"
+#include "widgets/ligmaoverlayframe.h"
+#include "widgets/ligmatextbuffer.h"
+#include "widgets/ligmatexteditor.h"
+#include "widgets/ligmatextproxy.h"
+#include "widgets/ligmatextstyleeditor.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-transform.h"
 
-#include "gimptextoptions.h"
-#include "gimptexttool.h"
-#include "gimptexttool-editor.h"
+#include "ligmatextoptions.h"
+#include "ligmatexttool.h"
+#include "ligmatexttool-editor.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     gimp_text_tool_ensure_proxy       (GimpTextTool    *text_tool);
-static void     gimp_text_tool_move_cursor        (GimpTextTool    *text_tool,
+static void     ligma_text_tool_ensure_proxy       (LigmaTextTool    *text_tool);
+static void     ligma_text_tool_move_cursor        (LigmaTextTool    *text_tool,
                                                    GtkMovementStep  step,
                                                    gint             count,
                                                    gboolean         extend_selection);
-static void     gimp_text_tool_insert_at_cursor   (GimpTextTool    *text_tool,
+static void     ligma_text_tool_insert_at_cursor   (LigmaTextTool    *text_tool,
                                                    const gchar     *str);
-static void     gimp_text_tool_delete_from_cursor (GimpTextTool    *text_tool,
+static void     ligma_text_tool_delete_from_cursor (LigmaTextTool    *text_tool,
                                                    GtkDeleteType    type,
                                                    gint             count);
-static void     gimp_text_tool_backspace          (GimpTextTool    *text_tool);
-static void     gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
-static void     gimp_text_tool_select_all         (GimpTextTool    *text_tool,
+static void     ligma_text_tool_backspace          (LigmaTextTool    *text_tool);
+static void     ligma_text_tool_toggle_overwrite   (LigmaTextTool    *text_tool);
+static void     ligma_text_tool_select_all         (LigmaTextTool    *text_tool,
                                                    gboolean         select);
-static void     gimp_text_tool_change_size        (GimpTextTool    *text_tool,
+static void     ligma_text_tool_change_size        (LigmaTextTool    *text_tool,
                                                    gdouble          amount);
-static void     gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
+static void     ligma_text_tool_change_baseline    (LigmaTextTool    *text_tool,
                                                    gdouble          amount);
-static void     gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
+static void     ligma_text_tool_change_kerning     (LigmaTextTool    *text_tool,
                                                    gdouble          amount);
 
-static void     gimp_text_tool_options_notify     (GimpTextOptions *options,
+static void     ligma_text_tool_options_notify     (LigmaTextOptions *options,
                                                    GParamSpec      *pspec,
-                                                   GimpTextTool    *text_tool);
-static void     gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
-static void     gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
-                                                   GimpTextTool    *text_tool);
-static void     gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
+                                                   LigmaTextTool    *text_tool);
+static void     ligma_text_tool_editor_dialog      (LigmaTextTool    *text_tool);
+static void     ligma_text_tool_editor_destroy     (GtkWidget       *dialog,
+                                                   LigmaTextTool    *text_tool);
+static void     ligma_text_tool_enter_text         (LigmaTextTool    *text_tool,
                                                    const gchar     *str);
-static void     gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
+static void     ligma_text_tool_xy_to_iter         (LigmaTextTool    *text_tool,
                                                    gdouble          x,
                                                    gdouble          y,
                                                    GtkTextIter     *iter);
 
-static void     gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
-                                                   GimpTextTool    *text_tool);
-static void     gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
-                                                   GimpTextTool    *text_tool);
-static void     gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
-                                                   GimpTextTool    *text_tool);
-static void     gimp_text_tool_im_commit          (GtkIMContext    *context,
+static void     ligma_text_tool_im_preedit_start   (GtkIMContext    *context,
+                                                   LigmaTextTool    *text_tool);
+static void     ligma_text_tool_im_preedit_end     (GtkIMContext    *context,
+                                                   LigmaTextTool    *text_tool);
+static void     ligma_text_tool_im_preedit_changed (GtkIMContext    *context,
+                                                   LigmaTextTool    *text_tool);
+static void     ligma_text_tool_im_commit          (GtkIMContext    *context,
                                                    const gchar     *str,
-                                                   GimpTextTool    *text_tool);
-static gboolean gimp_text_tool_im_retrieve_surrounding
+                                                   LigmaTextTool    *text_tool);
+static gboolean ligma_text_tool_im_retrieve_surrounding
                                                   (GtkIMContext    *context,
-                                                   GimpTextTool    *text_tool);
-static gboolean gimp_text_tool_im_delete_surrounding
+                                                   LigmaTextTool    *text_tool);
+static gboolean ligma_text_tool_im_delete_surrounding
                                                   (GtkIMContext    *context,
                                                    gint             offset,
                                                    gint             n_chars,
-                                                   GimpTextTool    *text_tool);
+                                                   LigmaTextTool    *text_tool);
 
-static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
+static void     ligma_text_tool_im_delete_preedit  (LigmaTextTool    *text_tool);
 
-static void     gimp_text_tool_editor_copy_selection_to_clipboard
-                                                  (GimpTextTool    *text_tool);
+static void     ligma_text_tool_editor_copy_selection_to_clipboard
+                                                  (LigmaTextTool    *text_tool);
 
-static void   gimp_text_tool_fix_position         (GimpTextTool    *text_tool,
+static void   ligma_text_tool_fix_position         (LigmaTextTool    *text_tool,
                                                    gdouble         *x,
                                                    gdouble         *y);
 
-static void   gimp_text_tool_convert_gdkkeyevent  (GimpTextTool    *text_tool,
+static void   ligma_text_tool_convert_gdkkeyevent  (LigmaTextTool    *text_tool,
                                                    GdkEventKey     *kevent);
 
 
 /*  public functions  */
 
 void
-gimp_text_tool_editor_init (GimpTextTool *text_tool)
+ligma_text_tool_editor_init (LigmaTextTool *text_tool)
 {
   text_tool->im_context     = gtk_im_multicontext_new ();
   text_tool->needs_im_reset = FALSE;
@@ -141,27 +141,27 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->x_pos          = -1;
 
   g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_im_preedit_start),
+                    G_CALLBACK (ligma_text_tool_im_preedit_start),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-end",
-                    G_CALLBACK (gimp_text_tool_im_preedit_end),
+                    G_CALLBACK (ligma_text_tool_im_preedit_end),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-changed",
-                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
+                    G_CALLBACK (ligma_text_tool_im_preedit_changed),
                     text_tool);
   g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_im_commit),
+                    G_CALLBACK (ligma_text_tool_im_commit),
                     text_tool);
   g_signal_connect (text_tool->im_context, "retrieve-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
+                    G_CALLBACK (ligma_text_tool_im_retrieve_surrounding),
                     text_tool);
   g_signal_connect (text_tool->im_context, "delete-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
+                    G_CALLBACK (ligma_text_tool_im_delete_surrounding),
                     text_tool);
 }
 
 void
-gimp_text_tool_editor_finalize (GimpTextTool *text_tool)
+ligma_text_tool_editor_finalize (LigmaTextTool *text_tool)
 {
   if (text_tool->im_context)
     {
@@ -171,50 +171,50 @@ gimp_text_tool_editor_finalize (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_editor_start (GimpTextTool *text_tool)
+ligma_text_tool_editor_start (LigmaTextTool *text_tool)
 {
-  GimpTool         *tool    = GIMP_TOOL (text_tool);
-  GimpTextOptions  *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
-  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool    = LIGMA_TOOL (text_tool);
+  LigmaTextOptions  *options = LIGMA_TEXT_TOOL_GET_OPTIONS (text_tool);
+  LigmaDisplayShell *shell   = ligma_display_get_shell (tool->display);
 
   gtk_im_context_set_client_window (text_tool->im_context,
                                     gtk_widget_get_window (shell->canvas));
 
   text_tool->needs_im_reset = TRUE;
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   gtk_im_context_focus_in (text_tool->im_context);
 
   if (options->use_editor)
-    gimp_text_tool_editor_dialog (text_tool);
+    ligma_text_tool_editor_dialog (text_tool);
 
   g_signal_connect (options, "notify::use-editor",
-                    G_CALLBACK (gimp_text_tool_options_notify),
+                    G_CALLBACK (ligma_text_tool_options_notify),
                     text_tool);
 
   if (! text_tool->style_overlay)
     {
-      Gimp          *gimp = GIMP_CONTEXT (options)->gimp;
-      GimpContainer *fonts;
+      Ligma          *ligma = LIGMA_CONTEXT (options)->ligma;
+      LigmaContainer *fonts;
       gdouble        xres = 1.0;
       gdouble        yres = 1.0;
 
-      text_tool->style_overlay = gimp_overlay_frame_new ();
+      text_tool->style_overlay = ligma_overlay_frame_new ();
       gtk_container_set_border_width (GTK_CONTAINER (text_tool->style_overlay),
                                       4);
-      gimp_display_shell_add_overlay (shell,
+      ligma_display_shell_add_overlay (shell,
                                       text_tool->style_overlay,
                                       0, 0,
-                                      GIMP_HANDLE_ANCHOR_CENTER, 0, 0);
-      gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
+                                      LIGMA_HANDLE_ANCHOR_CENTER, 0, 0);
+      ligma_overlay_box_set_child_opacity (LIGMA_OVERLAY_BOX (shell->canvas),
                                           text_tool->style_overlay, 0.85);
 
       if (text_tool->image)
-        gimp_image_get_resolution (text_tool->image, &xres, &yres);
+        ligma_image_get_resolution (text_tool->image, &xres, &yres);
 
-      fonts = gimp_data_factory_get_container (gimp->font_factory);
+      fonts = ligma_data_factory_get_container (ligma->font_factory);
 
-      text_tool->style_editor = gimp_text_style_editor_new (gimp,
+      text_tool->style_editor = ligma_text_style_editor_new (ligma,
                                                             text_tool->proxy,
                                                             text_tool->buffer,
                                                             fonts,
@@ -224,17 +224,17 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       gtk_widget_show (text_tool->style_editor);
     }
 
-  gimp_text_tool_editor_position (text_tool);
+  ligma_text_tool_editor_position (text_tool);
   gtk_widget_show (text_tool->style_overlay);
 }
 
 void
-gimp_text_tool_editor_position (GimpTextTool *text_tool)
+ligma_text_tool_editor_position (LigmaTextTool *text_tool)
 {
   if (text_tool->style_overlay)
     {
-      GimpTool         *tool    = GIMP_TOOL (text_tool);
-      GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+      LigmaTool         *tool    = LIGMA_TOOL (text_tool);
+      LigmaDisplayShell *shell   = ligma_display_get_shell (tool->display);
       GtkRequisition    requisition;
       gdouble           x, y;
 
@@ -246,16 +246,16 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
                     "y1", &y,
                     NULL);
 
-      gimp_display_shell_move_overlay (shell,
+      ligma_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
                                        x, y,
-                                       GIMP_HANDLE_ANCHOR_SOUTH_WEST, 4, 12);
+                                       LIGMA_HANDLE_ANCHOR_SOUTH_WEST, 4, 12);
 
       if (text_tool->image)
         {
           gdouble xres, yres;
 
-          gimp_image_get_resolution (text_tool->image, &xres, &yres);
+          ligma_image_get_resolution (text_tool->image, &xres, &yres);
 
           g_object_set (text_tool->style_editor,
                         "resolution-x", xres,
@@ -266,9 +266,9 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_editor_halt (GimpTextTool *text_tool)
+ligma_text_tool_editor_halt (LigmaTextTool *text_tool)
 {
-  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+  LigmaTextOptions *options = LIGMA_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   if (text_tool->style_overlay)
     {
@@ -278,13 +278,13 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
     }
 
   g_signal_handlers_disconnect_by_func (options,
-                                        gimp_text_tool_options_notify,
+                                        ligma_text_tool_options_notify,
                                         text_tool);
 
   if (text_tool->editor_dialog)
     {
       g_signal_handlers_disconnect_by_func (text_tool->editor_dialog,
-                                            gimp_text_tool_editor_destroy,
+                                            ligma_text_tool_editor_destroy,
                                             text_tool);
       gtk_widget_destroy (text_tool->editor_dialog);
     }
@@ -297,7 +297,7 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
     }
 
   text_tool->needs_im_reset = TRUE;
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   gtk_im_context_focus_out (text_tool->im_context);
 
@@ -305,16 +305,16 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
+ligma_text_tool_editor_button_press (LigmaTextTool        *text_tool,
                                     gdouble              x,
                                     gdouble              y,
-                                    GimpButtonPressType  press_type)
+                                    LigmaButtonPressType  press_type)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
 
-  gimp_text_tool_xy_to_iter (text_tool, x, y, &cursor);
+  ligma_text_tool_xy_to_iter (text_tool, x, y, &cursor);
 
   selection = cursor;
 
@@ -326,13 +326,13 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
     {
       GtkTextIter start, end;
 
-    case GIMP_BUTTON_PRESS_NORMAL:
+    case LIGMA_BUTTON_PRESS_NORMAL:
       if (gtk_text_buffer_get_selection_bounds (buffer, &start, &end) ||
           gtk_text_iter_compare (&start, &cursor))
         gtk_text_buffer_place_cursor (buffer, &cursor);
       break;
 
-    case GIMP_BUTTON_PRESS_DOUBLE:
+    case LIGMA_BUTTON_PRESS_DOUBLE:
       text_tool->select_words = TRUE;
 
       if (! gtk_text_iter_starts_word (&cursor))
@@ -345,7 +345,7 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
       gtk_text_buffer_select_range (buffer, &cursor, &selection);
       break;
 
-    case GIMP_BUTTON_PRESS_TRIPLE:
+    case LIGMA_BUTTON_PRESS_TRIPLE:
       text_tool->select_lines = TRUE;
 
       gtk_text_iter_set_line_offset (&cursor, 0);
@@ -357,13 +357,13 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 }
 
 void
-gimp_text_tool_editor_button_release (GimpTextTool *text_tool)
+ligma_text_tool_editor_button_release (LigmaTextTool *text_tool)
 {
-  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
+  ligma_text_tool_editor_copy_selection_to_clipboard (text_tool);
 }
 
 void
-gimp_text_tool_editor_motion (GimpTextTool *text_tool,
+ligma_text_tool_editor_motion (LigmaTextTool *text_tool,
                               gdouble       x,
                               gdouble       y)
 {
@@ -378,7 +378,7 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
   gtk_text_buffer_get_iter_at_mark (buffer, &old_selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
 
-  gimp_text_tool_xy_to_iter (text_tool, x, y, &cursor);
+  ligma_text_tool_xy_to_iter (text_tool, x, y, &cursor);
   selection = text_tool->select_start_iter;
 
   if (text_tool->select_words ||
@@ -428,20 +428,20 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
   if (! gtk_text_iter_equal (&cursor,    &old_cursor) ||
       ! gtk_text_iter_equal (&selection, &old_selection))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+      ligma_draw_tool_pause (LIGMA_DRAW_TOOL (text_tool));
 
       gtk_text_buffer_select_range (buffer, &cursor, &selection);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+      ligma_draw_tool_resume (LIGMA_DRAW_TOOL (text_tool));
     }
 }
 
 gboolean
-gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
+ligma_text_tool_editor_key_press (LigmaTextTool *text_tool,
                                  GdkEventKey  *kevent)
 {
-  GimpTool         *tool   = GIMP_TOOL (text_tool);
-  GimpDisplayShell *shell  = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool   = LIGMA_TOOL (text_tool);
+  LigmaDisplayShell *shell  = ligma_display_get_shell (tool->display);
   GtkTextBuffer    *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter       cursor;
   GtkTextIter       selection;
@@ -474,14 +474,14 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
       return TRUE;
     }
 
-  gimp_text_tool_convert_gdkkeyevent (text_tool, kevent);
+  ligma_text_tool_convert_gdkkeyevent (text_tool, kevent);
 
-  gimp_text_tool_ensure_proxy (text_tool);
+  ligma_text_tool_ensure_proxy (text_tool);
 
   if (gtk_bindings_activate_event (G_OBJECT (text_tool->proxy_text_view),
                                    kevent))
     {
-      GIMP_LOG (TEXT_EDITING, "binding handled event");
+      LIGMA_LOG (TEXT_EDITING, "binding handled event");
 
       return TRUE;
     }
@@ -496,20 +496,20 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      gimp_text_tool_reset_im_context (text_tool);
-      gimp_text_tool_enter_text (text_tool, "\n");
+      ligma_text_tool_reset_im_context (text_tool);
+      ligma_text_tool_enter_text (text_tool, "\n");
       break;
 
     case GDK_KEY_Tab:
     case GDK_KEY_KP_Tab:
     case GDK_KEY_ISO_Left_Tab:
-      gimp_text_tool_reset_im_context (text_tool);
-      gimp_text_tool_enter_text (text_tool, "\t");
+      ligma_text_tool_reset_im_context (text_tool);
+      ligma_text_tool_enter_text (text_tool, "\t");
       break;
 
     case GDK_KEY_Escape:
-      gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
-                         GIMP_TOOL (text_tool)->display);
+      ligma_tool_control (LIGMA_TOOL (text_tool), LIGMA_TOOL_ACTION_HALT,
+                         LIGMA_TOOL (text_tool)->display);
       break;
 
     default:
@@ -522,7 +522,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
 }
 
 gboolean
-gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
+ligma_text_tool_editor_key_release (LigmaTextTool *text_tool,
                                    GdkEventKey  *kevent)
 {
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
@@ -532,14 +532,14 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
       return TRUE;
     }
 
-  gimp_text_tool_convert_gdkkeyevent (text_tool, kevent);
+  ligma_text_tool_convert_gdkkeyevent (text_tool, kevent);
 
-  gimp_text_tool_ensure_proxy (text_tool);
+  ligma_text_tool_ensure_proxy (text_tool);
 
   if (gtk_bindings_activate_event (G_OBJECT (text_tool->proxy_text_view),
                                    kevent))
     {
-      GIMP_LOG (TEXT_EDITING, "binding handled event");
+      LIGMA_LOG (TEXT_EDITING, "binding handled event");
 
       return TRUE;
     }
@@ -548,7 +548,7 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
 }
 
 void
-gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
+ligma_text_tool_reset_im_context (LigmaTextTool *text_tool)
 {
   if (text_tool->needs_im_reset)
     {
@@ -558,16 +558,16 @@ gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
+ligma_text_tool_abort_im_context (LigmaTextTool *text_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (text_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool  = LIGMA_TOOL (text_tool);
+  LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
 
   text_tool->needs_im_reset = TRUE;
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   /* Making sure preedit text is removed. */
-  gimp_text_tool_im_delete_preedit (text_tool);
+  ligma_text_tool_im_delete_preedit (text_tool);
 
   /* the following lines seem to be the only way of really getting
    * rid of any ongoing preedit state, please somebody tell me
@@ -583,27 +583,27 @@ gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
                                     gtk_widget_get_window (shell->canvas));
   gtk_im_context_focus_in (text_tool->im_context);
   g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_im_preedit_start),
+                    G_CALLBACK (ligma_text_tool_im_preedit_start),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-end",
-                    G_CALLBACK (gimp_text_tool_im_preedit_end),
+                    G_CALLBACK (ligma_text_tool_im_preedit_end),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-changed",
-                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
+                    G_CALLBACK (ligma_text_tool_im_preedit_changed),
                     text_tool);
   g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_im_commit),
+                    G_CALLBACK (ligma_text_tool_im_commit),
                     text_tool);
   g_signal_connect (text_tool->im_context, "retrieve-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
+                    G_CALLBACK (ligma_text_tool_im_retrieve_surrounding),
                     text_tool);
   g_signal_connect (text_tool->im_context, "delete-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
+                    G_CALLBACK (ligma_text_tool_im_delete_surrounding),
                     text_tool);
 }
 
 void
-gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
+ligma_text_tool_editor_get_cursor_rect (LigmaTextTool   *text_tool,
                                        gboolean        overwrite,
                                        PangoRectangle *cursor_rect)
 {
@@ -615,21 +615,21 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   GtkTextIter    cursor;
   gint           cursor_index;
 
-  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (LIGMA_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (cursor_rect != NULL);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
-  cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer, &cursor,
+  cursor_index = ligma_text_buffer_get_iter_index (text_tool->buffer, &cursor,
                                                   TRUE);
 
-  gimp_text_tool_ensure_layout (text_tool);
+  ligma_text_tool_ensure_layout (text_tool);
 
-  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+  layout = ligma_text_layout_get_pango_layout (text_tool->layout);
 
   context = pango_layout_get_context (layout);
 
-  gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
+  ligma_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
 
   if (overwrite)
     {
@@ -645,23 +645,23 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
  else
     pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
 
-  gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
+  ligma_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
-  switch (gimp_text_tool_get_direction (text_tool))
+  switch (ligma_text_tool_get_direction (text_tool))
     {
-    case GIMP_TEXT_DIRECTION_LTR:
-    case GIMP_TEXT_DIRECTION_RTL:
+    case LIGMA_TEXT_DIRECTION_LTR:
+    case LIGMA_TEXT_DIRECTION_RTL:
       cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
       cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + offset_y;
       cursor_rect->width  = PANGO_PIXELS (cursor_rect->width);
       cursor_rect->height = PANGO_PIXELS (cursor_rect->height);
       break;
-    case GIMP_TEXT_DIRECTION_TTB_RTL:
-    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
       {
       gint temp, width, height;
 
-      gimp_text_layout_get_size (text_tool->layout, &width, &height);
+      ligma_text_layout_get_size (text_tool->layout, &width, &height);
 
       temp                = cursor_rect->x;
       cursor_rect->x      = width - PANGO_PIXELS (cursor_rect->y) + offset_x;
@@ -672,12 +672,12 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
       cursor_rect->height = PANGO_PIXELS (temp);
       }
       break;
-    case GIMP_TEXT_DIRECTION_TTB_LTR:
-    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       {
       gint temp, width, height;
 
-      gimp_text_layout_get_size (text_tool->layout, &width, &height);
+      ligma_text_layout_get_size (text_tool->layout, &width, &height);
 
       temp                = cursor_rect->x;
       cursor_rect->x      = PANGO_PIXELS (cursor_rect->y) + offset_x;
@@ -692,18 +692,18 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 }
 
 void
-gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
+ligma_text_tool_editor_update_im_cursor (LigmaTextTool *text_tool)
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
   PangoRectangle    rect = { 0, };
   gdouble           off_x, off_y;
 
-  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (LIGMA_IS_TEXT_TOOL (text_tool));
 
-  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+  shell = ligma_display_get_shell (LIGMA_TOOL (text_tool)->display);
 
   if (text_tool->text)
-    gimp_text_tool_editor_get_cursor_rect (text_tool,
+    ligma_text_tool_editor_get_cursor_rect (text_tool,
                                            text_tool->overwrite_mode,
                                            &rect);
 
@@ -715,7 +715,7 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
   rect.x += off_x;
   rect.y += off_y;
 
-  gimp_display_shell_transform_xy (shell, rect.x, rect.y, &rect.x, &rect.y);
+  ligma_display_shell_transform_xy (shell, rect.x, rect.y, &rect.x, &rect.y);
 
   gtk_im_context_set_cursor_location (text_tool->im_context,
                                       (GdkRectangle *) &rect);
@@ -725,10 +725,10 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
 /*  private functions  */
 
 static void
-gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
+ligma_text_tool_ensure_proxy (LigmaTextTool *text_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (text_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool  = LIGMA_TOOL (text_tool);
+  LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
 
   if (text_tool->offscreen_window &&
       gtk_widget_get_screen (text_tool->offscreen_window) !=
@@ -746,52 +746,52 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
       gtk_widget_show (text_tool->offscreen_window);
 
-      text_tool->proxy_text_view = gimp_text_proxy_new ();
+      text_tool->proxy_text_view = ligma_text_proxy_new ();
       gtk_container_add (GTK_CONTAINER (text_tool->offscreen_window),
                          text_tool->proxy_text_view);
       gtk_widget_show (text_tool->proxy_text_view);
 
       g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
-                                G_CALLBACK (gimp_text_tool_move_cursor),
+                                G_CALLBACK (ligma_text_tool_move_cursor),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "insert-at-cursor",
-                                G_CALLBACK (gimp_text_tool_insert_at_cursor),
+                                G_CALLBACK (ligma_text_tool_insert_at_cursor),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
-                                G_CALLBACK (gimp_text_tool_delete_from_cursor),
+                                G_CALLBACK (ligma_text_tool_delete_from_cursor),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
-                                G_CALLBACK (gimp_text_tool_backspace),
+                                G_CALLBACK (ligma_text_tool_backspace),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "cut-clipboard",
-                                G_CALLBACK (gimp_text_tool_cut_clipboard),
+                                G_CALLBACK (ligma_text_tool_cut_clipboard),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "copy-clipboard",
-                                G_CALLBACK (gimp_text_tool_copy_clipboard),
+                                G_CALLBACK (ligma_text_tool_copy_clipboard),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "paste-clipboard",
-                                G_CALLBACK (gimp_text_tool_paste_clipboard),
+                                G_CALLBACK (ligma_text_tool_paste_clipboard),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "toggle-overwrite",
-                                G_CALLBACK (gimp_text_tool_toggle_overwrite),
+                                G_CALLBACK (ligma_text_tool_toggle_overwrite),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "select-all",
-                                G_CALLBACK (gimp_text_tool_select_all),
+                                G_CALLBACK (ligma_text_tool_select_all),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "change-size",
-                                G_CALLBACK (gimp_text_tool_change_size),
+                                G_CALLBACK (ligma_text_tool_change_size),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "change-baseline",
-                                G_CALLBACK (gimp_text_tool_change_baseline),
+                                G_CALLBACK (ligma_text_tool_change_baseline),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "change-kerning",
-                                G_CALLBACK (gimp_text_tool_change_kerning),
+                                G_CALLBACK (ligma_text_tool_change_kerning),
                                 text_tool);
     }
 }
 
 static void
-gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
+ligma_text_tool_move_cursor (LigmaTextTool    *text_tool,
                             GtkMovementStep  step,
                             gint             count,
                             gboolean         extend_selection)
@@ -810,9 +810,9 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
        * This could result in crashes. See bug 751333.
        * Therefore we apply them first.
        */
-      gimp_text_tool_apply (text_tool, TRUE);
+      ligma_text_tool_apply (text_tool, TRUE);
     }
-  GIMP_LOG (TEXT_EDITING, "%s count = %d, select = %s",
+  LIGMA_LOG (TEXT_EDITING, "%s count = %d, select = %s",
             g_enum_get_value (g_type_class_ref (GTK_TYPE_MOVEMENT_STEP),
                               step)->value_name,
             count,
@@ -861,10 +861,10 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
           PangoLayout *layout;
           const gchar *text;
 
-          if (! gimp_text_tool_ensure_layout (text_tool))
+          if (! ligma_text_tool_ensure_layout (text_tool))
             break;
 
-          layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+          layout = ligma_text_layout_get_pango_layout (text_tool->layout);
           text = pango_layout_get_text (layout);
 
           while (count != 0)
@@ -874,7 +874,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
               gint trailing = 0;
               gint new_index;
 
-              index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+              index = ligma_text_buffer_get_iter_index (text_tool->buffer,
                                                        &cursor, TRUE);
 
               if (count > 0)
@@ -913,7 +913,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
               else
                 break;
 
-              gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+              ligma_text_buffer_get_iter_at_index (text_tool->buffer,
                                                   &cursor, index, TRUE);
               gtk_text_iter_forward_chars (&cursor, trailing);
             }
@@ -947,13 +947,13 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         gtk_text_buffer_get_bounds (buffer, &start, &end);
 
-        cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+        cursor_index = ligma_text_buffer_get_iter_index (text_tool->buffer,
                                                         &cursor, TRUE);
 
-        if (! gimp_text_tool_ensure_layout (text_tool))
+        if (! ligma_text_tool_ensure_layout (text_tool))
           break;
 
-        layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+        layout = ligma_text_layout_get_pango_layout (text_tool->layout);
 
         pango_layout_index_to_line_x (layout, cursor_index, FALSE,
                                       &line, &x_pos);
@@ -1000,7 +1000,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
                                       &cursor_index, &trailing);
 
-        gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
+        ligma_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
                                             cursor_index, TRUE);
 
         while (trailing--)
@@ -1050,21 +1050,21 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
   text_tool->x_pos = x_pos;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (text_tool));
 
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   gtk_text_buffer_select_range (buffer, &cursor, sel_start);
-  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
+  ligma_text_tool_editor_copy_selection_to_clipboard (text_tool);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (text_tool));
 }
 
 static void
-gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
+ligma_text_tool_insert_at_cursor (LigmaTextTool *text_tool,
                                  const gchar  *str)
 {
-  gimp_text_buffer_insert (text_tool->buffer, str);
+  ligma_text_buffer_insert (text_tool->buffer, str);
 }
 
 static gboolean
@@ -1099,7 +1099,7 @@ find_whitepace_region (const GtkTextIter *center,
 }
 
 static void
-gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
+ligma_text_tool_delete_from_cursor (LigmaTextTool  *text_tool,
                                    GtkDeleteType  type,
                                    gint           count)
 {
@@ -1107,12 +1107,12 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
   GtkTextIter    cursor;
   GtkTextIter    end;
 
-  GIMP_LOG (TEXT_EDITING, "%s count = %d",
+  LIGMA_LOG (TEXT_EDITING, "%s count = %d",
             g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
                               type)->value_name,
             count);
 
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
@@ -1190,11 +1190,11 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
 }
 
 static void
-gimp_text_tool_backspace (GimpTextTool *text_tool)
+ligma_text_tool_backspace (LigmaTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
-  gimp_text_tool_reset_im_context (text_tool);
+  ligma_text_tool_reset_im_context (text_tool);
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -1212,22 +1212,22 @@ gimp_text_tool_backspace (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_toggle_overwrite (GimpTextTool *text_tool)
+ligma_text_tool_toggle_overwrite (LigmaTextTool *text_tool)
 {
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (text_tool));
 
   text_tool->overwrite_mode = ! text_tool->overwrite_mode;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (text_tool));
 }
 
 static void
-gimp_text_tool_select_all (GimpTextTool *text_tool,
+ligma_text_tool_select_all (LigmaTextTool *text_tool,
                            gboolean      select)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (text_tool));
 
   if (select)
     {
@@ -1245,11 +1245,11 @@ gimp_text_tool_select_all (GimpTextTool *text_tool,
       gtk_text_buffer_move_mark_by_name (buffer, "selection_bound", &cursor);
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (text_tool));
 }
 
 static void
-gimp_text_tool_change_size (GimpTextTool *text_tool,
+ligma_text_tool_change_size (LigmaTextTool *text_tool,
                             gdouble       amount)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -1262,12 +1262,12 @@ gimp_text_tool_change_size (GimpTextTool *text_tool,
     }
 
   gtk_text_iter_order (&start, &end);
-  gimp_text_buffer_change_size (text_tool->buffer, &start, &end,
+  ligma_text_buffer_change_size (text_tool->buffer, &start, &end,
                                 amount * PANGO_SCALE);
 }
 
 static void
-gimp_text_tool_change_baseline (GimpTextTool *text_tool,
+ligma_text_tool_change_baseline (LigmaTextTool *text_tool,
                                 gdouble       amount)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -1282,12 +1282,12 @@ gimp_text_tool_change_baseline (GimpTextTool *text_tool,
     }
 
   gtk_text_iter_order (&start, &end);
-  gimp_text_buffer_change_baseline (text_tool->buffer, &start, &end,
+  ligma_text_buffer_change_baseline (text_tool->buffer, &start, &end,
                                     amount * PANGO_SCALE);
 }
 
 static void
-gimp_text_tool_change_kerning (GimpTextTool *text_tool,
+ligma_text_tool_change_kerning (LigmaTextTool *text_tool,
                                gdouble       amount)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -1303,14 +1303,14 @@ gimp_text_tool_change_kerning (GimpTextTool *text_tool,
     }
 
   gtk_text_iter_order (&start, &end);
-  gimp_text_buffer_change_kerning (text_tool->buffer, &start, &end,
+  ligma_text_buffer_change_kerning (text_tool->buffer, &start, &end,
                                    amount * PANGO_SCALE);
 }
 
 static void
-gimp_text_tool_options_notify (GimpTextOptions *options,
+ligma_text_tool_options_notify (LigmaTextOptions *options,
                                GParamSpec      *pspec,
-                               GimpTextTool    *text_tool)
+                               LigmaTextTool    *text_tool)
 {
   const gchar *param_name = g_param_spec_get_name (pspec);
 
@@ -1318,7 +1318,7 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
     {
       if (options->use_editor)
         {
-          gimp_text_tool_editor_dialog (text_tool);
+          ligma_text_tool_editor_dialog (text_tool);
         }
       else
         {
@@ -1329,13 +1329,13 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
 }
 
 static void
-gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
+ligma_text_tool_editor_dialog (LigmaTextTool *text_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (text_tool);
-  GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
-  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
-  GimpImageWindow   *image_window;
-  GimpDialogFactory *dialog_factory;
+  LigmaTool          *tool    = LIGMA_TOOL (text_tool);
+  LigmaTextOptions   *options = LIGMA_TEXT_TOOL_GET_OPTIONS (text_tool);
+  LigmaDisplayShell  *shell   = ligma_display_get_shell (tool->display);
+  LigmaImageWindow   *image_window;
+  LigmaDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
   gdouble            xres    = 1.0;
   gdouble            yres    = 1.0;
@@ -1346,39 +1346,39 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       return;
     }
 
-  image_window   = gimp_display_shell_get_window (shell);
-  dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+  image_window   = ligma_display_shell_get_window (shell);
+  dialog_factory = ligma_dock_container_get_dialog_factory (LIGMA_DOCK_CONTAINER (image_window));
 
   if (text_tool->image)
-    gimp_image_get_resolution (text_tool->image, &xres, &yres);
+    ligma_image_get_resolution (text_tool->image, &xres, &yres);
 
   text_tool->editor_dialog =
-    gimp_text_options_editor_new (parent, tool->tool_info->gimp, options,
-                                  gimp_dialog_factory_get_menu_factory (dialog_factory),
-                                  _("GIMP Text Editor"),
+    ligma_text_options_editor_new (parent, tool->tool_info->ligma, options,
+                                  ligma_dialog_factory_get_menu_factory (dialog_factory),
+                                  _("LIGMA Text Editor"),
                                   text_tool->proxy, text_tool->buffer,
                                   xres, yres);
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
                              (gpointer) &text_tool->editor_dialog);
 
-  gimp_dialog_factory_add_foreign (dialog_factory,
-                                   "gimp-text-tool-dialog",
+  ligma_dialog_factory_add_foreign (dialog_factory,
+                                   "ligma-text-tool-dialog",
                                    text_tool->editor_dialog,
-                                   gimp_widget_get_monitor (GTK_WIDGET (image_window)));
+                                   ligma_widget_get_monitor (GTK_WIDGET (image_window)));
 
   g_signal_connect (text_tool->editor_dialog, "destroy",
-                    G_CALLBACK (gimp_text_tool_editor_destroy),
+                    G_CALLBACK (ligma_text_tool_editor_destroy),
                     text_tool);
 
   gtk_widget_show (text_tool->editor_dialog);
 }
 
 static void
-gimp_text_tool_editor_destroy (GtkWidget    *dialog,
-                               GimpTextTool *text_tool)
+ligma_text_tool_editor_destroy (GtkWidget    *dialog,
+                               LigmaTextTool *text_tool)
 {
-  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+  LigmaTextOptions *options = LIGMA_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   g_object_set (options,
                 "use-editor", FALSE,
@@ -1386,7 +1386,7 @@ gimp_text_tool_editor_destroy (GtkWidget    *dialog,
 }
 
 static void
-gimp_text_tool_enter_text (GimpTextTool *text_tool,
+ligma_text_tool_enter_text (LigmaTextTool *text_tool,
                            const gchar  *str)
 {
   GtkTextBuffer *buffer      = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -1399,10 +1399,10 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
   gtk_text_buffer_begin_user_action (buffer);
 
   if (had_selection && text_tool->style_editor)
-    insert_tags = gimp_text_style_editor_list_tags (GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor),
+    insert_tags = ligma_text_style_editor_list_tags (LIGMA_TEXT_STYLE_EDITOR (text_tool->style_editor),
                                                     &remove_tags);
 
-  gimp_text_tool_delete_selection (text_tool);
+  ligma_text_tool_delete_selection (text_tool);
 
   if (! had_selection && text_tool->overwrite_mode && strcmp (str, "\n"))
     {
@@ -1412,20 +1412,20 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
                                         gtk_text_buffer_get_insert (buffer));
 
       if (! gtk_text_iter_ends_line (&cursor))
-        gimp_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
+        ligma_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
     }
 
   if (had_selection && text_tool->style_editor)
-    gimp_text_buffer_set_insert_tags (text_tool->buffer,
+    ligma_text_buffer_set_insert_tags (text_tool->buffer,
                                       insert_tags, remove_tags);
 
-  gimp_text_buffer_insert (text_tool->buffer, str);
+  ligma_text_buffer_insert (text_tool->buffer, str);
 
   gtk_text_buffer_end_user_action (buffer);
 }
 
 static void
-gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
+ligma_text_tool_xy_to_iter (LigmaTextTool *text_tool,
                            gdouble       x,
                            gdouble       y,
                            GtkTextIter  *iter)
@@ -1436,63 +1436,63 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
   gint         index;
   gint         trailing;
 
-  gimp_text_tool_ensure_layout (text_tool);
+  ligma_text_tool_ensure_layout (text_tool);
 
-  gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
+  ligma_text_layout_untransform_point (text_tool->layout, &x, &y);
 
-  gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
+  ligma_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
   x -= offset_x;
   y -= offset_y;
 
-  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+  layout = ligma_text_layout_get_pango_layout (text_tool->layout);
 
-  gimp_text_tool_fix_position (text_tool, &x, &y);
+  ligma_text_tool_fix_position (text_tool, &x, &y);
 
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
                             y * PANGO_SCALE,
                             &index, &trailing);
 
-  gimp_text_buffer_get_iter_at_index (text_tool->buffer, iter, index, TRUE);
+  ligma_text_buffer_get_iter_at_index (text_tool->buffer, iter, index, TRUE);
 
   if (trailing)
     gtk_text_iter_forward_char (iter);
 }
 
 static void
-gimp_text_tool_im_preedit_start (GtkIMContext *context,
-                                 GimpTextTool *text_tool)
+ligma_text_tool_im_preedit_start (GtkIMContext *context,
+                                 LigmaTextTool *text_tool)
 {
-  GIMP_LOG (TEXT_EDITING, "preedit start");
+  LIGMA_LOG (TEXT_EDITING, "preedit start");
 
   text_tool->preedit_active = TRUE;
 }
 
 static void
-gimp_text_tool_im_preedit_end (GtkIMContext *context,
-                               GimpTextTool *text_tool)
+ligma_text_tool_im_preedit_end (GtkIMContext *context,
+                               LigmaTextTool *text_tool)
 {
-  gimp_text_tool_delete_selection (text_tool);
+  ligma_text_tool_delete_selection (text_tool);
 
   text_tool->preedit_active = FALSE;
 
-  GIMP_LOG (TEXT_EDITING, "preedit end");
+  LIGMA_LOG (TEXT_EDITING, "preedit end");
 }
 
 static void
-gimp_text_tool_im_preedit_changed (GtkIMContext *context,
-                                   GimpTextTool *text_tool)
+ligma_text_tool_im_preedit_changed (GtkIMContext *context,
+                                   LigmaTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoAttrList *attrs;
 
-  GIMP_LOG (TEXT_EDITING, "preedit changed");
+  LIGMA_LOG (TEXT_EDITING, "preedit changed");
 
   gtk_text_buffer_begin_user_action (buffer);
 
-  gimp_text_tool_im_delete_preedit (text_tool);
+  ligma_text_tool_im_delete_preedit (text_tool);
 
-  gimp_text_tool_delete_selection (text_tool);
+  ligma_text_tool_delete_selection (text_tool);
 
   gtk_im_context_get_preedit_string (context,
                                      &text_tool->preedit_string, &attrs,
@@ -1577,7 +1577,7 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                         case PANGO_ATTR_FOREGROUND:
                             {
                               PangoAttrColor *color_attr = (PangoAttrColor *) attr;
-                              GimpRGB         color;
+                              LigmaRGB         color;
 
                               color.r = (gdouble) color_attr->color.red / 65535.0;
                               color.g = (gdouble) color_attr->color.green / 65535.0;
@@ -1585,13 +1585,13 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 
                               if (attr->klass->type == PANGO_ATTR_BACKGROUND)
                                 {
-                                  gimp_text_buffer_set_preedit_bg_color (text_tool->buffer,
+                                  ligma_text_buffer_set_preedit_bg_color (text_tool->buffer,
                                                                          &start, &end,
                                                                          &color);
                                 }
                               else
                                 {
-                                  gimp_text_buffer_set_preedit_color (text_tool->buffer,
+                                  ligma_text_buffer_set_preedit_color (text_tool->buffer,
                                                                       &start, &end,
                                                                       &color);
                                 }
@@ -1633,30 +1633,30 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
 }
 
 static void
-gimp_text_tool_im_commit (GtkIMContext *context,
+ligma_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
-                          GimpTextTool *text_tool)
+                          LigmaTextTool *text_tool)
 {
   gboolean preedit_active = text_tool->preedit_active;
 
-  gimp_text_tool_im_delete_preedit (text_tool);
+  ligma_text_tool_im_delete_preedit (text_tool);
 
   /* Some IMEs would emit a preedit-commit before preedit-end.
    * To keep undo consistency, we fake and end then immediate restart of
    * preediting.
    */
   if (preedit_active)
-    gimp_text_tool_im_preedit_end (context, text_tool);
+    ligma_text_tool_im_preedit_end (context, text_tool);
 
-  gimp_text_tool_enter_text (text_tool, str);
+  ligma_text_tool_enter_text (text_tool, str);
 
   if (preedit_active)
-    gimp_text_tool_im_preedit_start (context, text_tool);
+    ligma_text_tool_im_preedit_start (context, text_tool);
 }
 
 static gboolean
-gimp_text_tool_im_retrieve_surrounding (GtkIMContext *context,
-                                        GimpTextTool *text_tool)
+ligma_text_tool_im_retrieve_surrounding (GtkIMContext *context,
+                                        LigmaTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start;
@@ -1680,10 +1680,10 @@ gimp_text_tool_im_retrieve_surrounding (GtkIMContext *context,
 }
 
 static gboolean
-gimp_text_tool_im_delete_surrounding (GtkIMContext *context,
+ligma_text_tool_im_delete_surrounding (GtkIMContext *context,
                                       gint          offset,
                                       gint          n_chars,
-                                      GimpTextTool *text_tool)
+                                      LigmaTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start;
@@ -1702,7 +1702,7 @@ gimp_text_tool_im_delete_surrounding (GtkIMContext *context,
 }
 
 static void
-gimp_text_tool_im_delete_preedit (GimpTextTool *text_tool)
+ligma_text_tool_im_delete_preedit (LigmaTextTool *text_tool)
 {
   if (text_tool->preedit_string)
     {
@@ -1730,15 +1730,15 @@ gimp_text_tool_im_delete_preedit (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_editor_copy_selection_to_clipboard (GimpTextTool *text_tool)
+ligma_text_tool_editor_copy_selection_to_clipboard (LigmaTextTool *text_tool)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
   if (! text_tool->editor_dialog &&
       gtk_text_buffer_get_has_selection (buffer))
     {
-      GimpTool         *tool  = GIMP_TOOL (text_tool);
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      LigmaTool         *tool  = LIGMA_TOOL (text_tool);
+      LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
       GtkClipboard     *clipboard;
 
       clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
@@ -1749,26 +1749,26 @@ gimp_text_tool_editor_copy_selection_to_clipboard (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_fix_position (GimpTextTool *text_tool,
+ligma_text_tool_fix_position (LigmaTextTool *text_tool,
                              gdouble      *x,
                              gdouble      *y)
 {
   gint temp, width, height;
 
-  gimp_text_layout_get_size (text_tool->layout, &width, &height);
-  switch (gimp_text_tool_get_direction(text_tool))
+  ligma_text_layout_get_size (text_tool->layout, &width, &height);
+  switch (ligma_text_tool_get_direction(text_tool))
     {
-      case GIMP_TEXT_DIRECTION_RTL:
-      case GIMP_TEXT_DIRECTION_LTR:
+      case LIGMA_TEXT_DIRECTION_RTL:
+      case LIGMA_TEXT_DIRECTION_LTR:
       break;
-      case GIMP_TEXT_DIRECTION_TTB_RTL:
-      case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      case LIGMA_TEXT_DIRECTION_TTB_RTL:
+      case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
       temp = width - *x;
       *x = *y;
       *y = temp;
       break;
-      case GIMP_TEXT_DIRECTION_TTB_LTR:
-      case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      case LIGMA_TEXT_DIRECTION_TTB_LTR:
+      case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       temp = *x;
       *x = height - *y;
       *y = temp;
@@ -1777,17 +1777,17 @@ gimp_text_tool_fix_position (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_convert_gdkkeyevent (GimpTextTool *text_tool,
+ligma_text_tool_convert_gdkkeyevent (LigmaTextTool *text_tool,
                                     GdkEventKey  *kevent)
 {
-  switch (gimp_text_tool_get_direction (text_tool))
+  switch (ligma_text_tool_get_direction (text_tool))
     {
-    case GIMP_TEXT_DIRECTION_LTR:
-    case GIMP_TEXT_DIRECTION_RTL:
+    case LIGMA_TEXT_DIRECTION_LTR:
+    case LIGMA_TEXT_DIRECTION_RTL:
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_RTL:
-    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
 #ifdef _WIN32
       switch (kevent->keyval)
         {
@@ -1830,8 +1830,8 @@ gimp_text_tool_convert_gdkkeyevent (GimpTextTool *text_tool,
         }
 #endif
       break;
-    case GIMP_TEXT_DIRECTION_TTB_LTR:
-    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
 #ifdef _WIN32
       switch (kevent->keyval)
         {

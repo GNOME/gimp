@@ -6,22 +6,22 @@ else
 libm = -lm
 endif
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+include $(top_srcdir)/build/windows/ligmarc-plug-ins.rule
 pagecurl_RC = pagecurl.rc.o
 endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins/pagecurl
+libexecdir = $(ligmaplugindir)/plug-ins/pagecurl
 
 libexec_PROGRAMS = pagecurl
 
@@ -41,13 +41,13 @@ AM_CPPFLAGS = \
 
 LDADD = \
 	$(libm)			\
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpmath)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmaconfig)	\
+	$(libligma)		\
+	$(libligmacolor)		\
+	$(libligmamath)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -79,7 +79,7 @@ pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/pagecurl-icons">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/pagecurl-icons">' >> $@; \
 	  for image in $(PAGECURL_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \

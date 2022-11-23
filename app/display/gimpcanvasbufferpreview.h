@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasbufferpreview.h
+ * ligmacanvasbufferpreview.h
  * Copyright (C) 2013 Marek Dvoroznak <dvoromar@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_BUFFER_PREVIEW_H__
-#define __GIMP_CANVAS_BUFFER_PREVIEW_H__
+#ifndef __LIGMA_CANVAS_BUFFER_PREVIEW_H__
+#define __LIGMA_CANVAS_BUFFER_PREVIEW_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_BUFFER_PREVIEW            (gimp_canvas_buffer_preview_get_type ())
-#define GIMP_CANVAS_BUFFER_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_BUFFER_PREVIEW, GimpCanvasBufferPreview))
-#define GIMP_CANVAS_BUFFER_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_BUFFER_PREVIEW, GimpCanvasBufferPreviewClass))
-#define GIMP_IS_CANVAS_BUFFER_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_BUFFER_PREVIEW))
-#define GIMP_IS_CANVAS_BUFFER_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_BUFFER_PREVIEW))
-#define GIMP_CANVAS_BUFFER_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_BUFFER_PREVIEW, GimpCanvasBufferPreviewClass))
+#define LIGMA_TYPE_CANVAS_BUFFER_PREVIEW            (ligma_canvas_buffer_preview_get_type ())
+#define LIGMA_CANVAS_BUFFER_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_BUFFER_PREVIEW, LigmaCanvasBufferPreview))
+#define LIGMA_CANVAS_BUFFER_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_BUFFER_PREVIEW, LigmaCanvasBufferPreviewClass))
+#define LIGMA_IS_CANVAS_BUFFER_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_BUFFER_PREVIEW))
+#define LIGMA_IS_CANVAS_BUFFER_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_BUFFER_PREVIEW))
+#define LIGMA_CANVAS_BUFFER_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_BUFFER_PREVIEW, LigmaCanvasBufferPreviewClass))
 
 
-typedef struct _GimpCanvasBufferPreview      GimpCanvasBufferPreview;
-typedef struct _GimpCanvasBufferPreviewClass GimpCanvasBufferPreviewClass;
+typedef struct _LigmaCanvasBufferPreview      LigmaCanvasBufferPreview;
+typedef struct _LigmaCanvasBufferPreviewClass LigmaCanvasBufferPreviewClass;
 
-struct _GimpCanvasBufferPreview
+struct _LigmaCanvasBufferPreview
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasBufferPreviewClass
+struct _LigmaCanvasBufferPreviewClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_buffer_preview_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_buffer_preview_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_buffer_preview_new      (GimpDisplayShell  *shell,
+LigmaCanvasItem * ligma_canvas_buffer_preview_new      (LigmaDisplayShell  *shell,
                                                       GeglBuffer        *buffer);
 
 
-#endif /* __GIMP_CANVAS_BUFFER_PREVIEW_H__ */
+#endif /* __LIGMA_CANVAS_BUFFER_PREVIEW_H__ */

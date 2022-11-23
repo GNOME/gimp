@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2005 Peter Mattis and Spencer Kimball
  *
- * gimpgimprc.h
+ * ligmaligmarc.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,21 +18,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_GIMPRC_H__
-#define __GIMP_GIMPRC_H__
+#ifndef __LIGMA_LIGMARC_H__
+#define __LIGMA_LIGMARC_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-GimpColorConfig * gimp_get_color_configuration (void);
+LigmaColorConfig * ligma_get_color_configuration (void);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_GIMPRC_H__ */
+#endif /* __LIGMA_LIGMARC_H__ */

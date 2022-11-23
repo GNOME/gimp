@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /* Mathematical Utilities */
@@ -124,7 +124,7 @@ parsepath (void)
   if (parsepath_cached_path)
     return parsepath_cached_path;
 
-  path = gimp_gimprc_query ("gimpressionist-path");
+  path = ligma_ligmarc_query ("ligmaressionist-path");
   if (path)
     {
       rc_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
@@ -132,25 +132,25 @@ parsepath (void)
     }
   else
     {
-      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
-      gchar *full_path = gimp_config_build_data_path ("gimpressionist");
+      GFile *ligmarc    = ligma_directory_file ("ligmarc", NULL);
+      gchar *full_path = ligma_config_build_data_path ("ligmaressionist");
       gchar *esc_path  = g_strescape (full_path, NULL);
 
-      g_message (_("No %s in gimprc:\n"
+      g_message (_("No %s in ligmarc:\n"
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
                  "gflare-path", "gflare-path",
-                 esc_path, gimp_file_get_utf8_name (gimprc));
+                 esc_path, ligma_file_get_utf8_name (ligmarc));
 
-      g_object_unref (gimprc);
+      g_object_unref (ligmarc);
       g_free (esc_path);
 
-      rc_path = gimp_config_path_expand (full_path, TRUE, NULL);
+      rc_path = ligma_config_path_expand (full_path, TRUE, NULL);
       g_free (full_path);
     }
 
-  parsepath_cached_path = gimp_path_parse (rc_path, 256, FALSE, NULL);
+  parsepath_cached_path = ligma_path_parse (rc_path, 256, FALSE, NULL);
 
   g_free (rc_path);
 
@@ -402,7 +402,7 @@ create_radio_button (GtkWidget    *box,
 
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (callback), GINT_TO_POINTER (orient_type));
-  gimp_help_set_help_data (tmpw, help_string, NULL);
+  ligma_help_set_help_data (tmpw, help_string, NULL);
 
   *radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw));
 
@@ -410,15 +410,15 @@ create_radio_button (GtkWidget    *box,
 }
 
 void
-gimpressionist_scale_entry_update_double (GimpLabelSpin *entry,
+ligmaressionist_scale_entry_update_double (LigmaLabelSpin *entry,
                                           gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }
 
 void
-gimpressionist_scale_entry_update_int (GimpLabelSpin *entry,
+ligmaressionist_scale_entry_update_int (LigmaLabelSpin *entry,
                                        gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }

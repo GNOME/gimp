@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_id_is_valid {
     $blurb = 'Returns TRUE if the image ID is valid.';
@@ -39,7 +39,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  valid = (gimp_image_get_by_id (gimp, image_id) != NULL);
+  valid = (ligma_image_get_by_id (ligma, image_id) != NULL);
 }
 CODE
     );
@@ -49,7 +49,7 @@ sub get_images {
     $blurb = 'Returns the list of images currently open.';
 
     $help = <<'HELP';
-This procedure returns the list of images currently open in GIMP.
+This procedure returns the list of images currently open in LIGMA.
 HELP
 
     &std_pdb_misc;
@@ -66,7 +66,7 @@ HELP
     %invoke = (
         code => <<CODE
 {
-  GList *list = gimp_get_image_iter (gimp);
+  GList *list = ligma_get_image_iter (ligma);
 
   num_images = g_list_length (list);
 
@@ -74,7 +74,7 @@ HELP
     {
       gint i;
 
-      images = g_new (GimpImage *, num_images);
+      images = g_new (LigmaImage *, num_images);
 
       for (i = 0; i < num_images; i++, list = g_list_next (list))
         images[i] = g_object_ref (list->data);
@@ -90,25 +90,25 @@ sub image_new {
     $help = <<'HELP';
 Creates a new image, undisplayed, with the specified extents and
 type. A layer should be created and added before this image is
-displayed, or subsequent calls to gimp_display_new() with this image
+displayed, or subsequent calls to ligma_display_new() with this image
 as an argument will fail. Layers can be created using the
-gimp_layer_new() commands. They can be added to an image using the
-gimp_image_insert_layer() command.
+ligma_layer_new() commands. They can be added to an image using the
+ligma_image_insert_layer() command.
 
 
 If your image's type if INDEXED, a colormap must also be added with
-gimp_image_set_colormap(). An indexed image without a colormap will
+ligma_image_set_colormap(). An indexed image without a colormap will
 output unexpected colors.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-        { name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The width of the image' },
-        { name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The height of the image' },
-        { name => 'type', type => 'enum GimpImageBaseType',
+        { name => 'type', type => 'enum LigmaImageBaseType',
           desc => 'The type of image' }
     );
 
@@ -120,8 +120,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  image = gimp_create_image (gimp, width, height, type,
-                             GIMP_PRECISION_U8_NON_LINEAR, FALSE);
+  image = ligma_create_image (ligma, width, height, type,
+                             LIGMA_PRECISION_U8_NON_LINEAR, FALSE);
 
   if (! image)
     success = FALSE;
@@ -136,20 +136,20 @@ sub image_new_with_precision {
     $help = <<'HELP';
 Creates a new image, undisplayed with the specified extents, type and
 precision. Indexed images can only be created at
-GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
+LIGMA_PRECISION_U8_NON_LINEAR precision. See ligma_image_new() for
 further details.
 HELP
 
     &mitch_pdb_misc('2012', '2.10');
 
     @inargs = (
-        { name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The width of the image' },
-        { name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The height of the image' },
-        { name => 'type', type => 'enum GimpImageBaseType',
+        { name => 'type', type => 'enum LigmaImageBaseType',
           desc => 'The type of image' },
-        { name => 'precision', type => 'enum GimpPrecision',
+        { name => 'precision', type => 'enum LigmaPrecision',
           desc => 'The precision' }
     );
 
@@ -161,9 +161,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_babl_is_valid (type, precision))
+  if (ligma_babl_is_valid (type, precision))
     {
-      image = gimp_create_image (gimp, width, height, type,
+      image = ligma_create_image (ligma, width, height, type,
                                  precision, FALSE);
       if (! image)
         success = FALSE;
@@ -197,10 +197,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-duplicate.h") ],
+        headers => [ qw("core/ligmaimage-duplicate.h") ],
         code => <<'CODE'
 {
-  new_image = gimp_image_duplicate (image);
+  new_image = ligma_image_duplicate (image);
 
   if (! new_image)
     success = FALSE;
@@ -230,7 +230,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_image_get_display_count (image) == 0)
+  if (ligma_image_get_display_count (image) == 0)
     g_object_unref (image);
   else
     success = FALSE;
@@ -249,8 +249,8 @@ The order of layers is from topmost to bottommost.
 Note that this is not the full list of layers, but only the root layers,
 i.e. layers with no parents themselves. If you need all layers, it is up
 to you to verify that any of these layers is a group layer with
-gimp_item_is_group() and to obtain its children with
-gimp_item_get_children() (possibly recursively checking if these have
+ligma_item_is_group() and to obtain its children with
+ligma_item_get_children() (possibly recursively checking if these have
 children too).
 HELP
 
@@ -273,7 +273,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_layer_iter (image);
+  GList *list = ligma_image_get_layer_iter (image);
 
   num_layers = g_list_length (list);
 
@@ -281,7 +281,7 @@ HELP
     {
       gint i;
 
-      layers = g_new (GimpLayer *, num_layers);
+      layers = g_new (LigmaLayer *, num_layers);
 
       for (i = 0; i < num_layers; i++, list = g_list_next (list))
         layers[i] = g_object_ref (list->data);
@@ -320,7 +320,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_channel_iter (image);
+  GList *list = ligma_image_get_channel_iter (image);
 
   num_channels = g_list_length (list);
 
@@ -328,7 +328,7 @@ HELP
     {
       gint i;
 
-      channels = g_new (GimpChannel *, num_channels);
+      channels = g_new (LigmaChannel *, num_channels);
 
       for (i = 0; i < num_channels; i++, list = g_list_next (list))
         channels[i] = g_object_ref (list->data);
@@ -364,7 +364,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_vectors_iter (image);
+  GList *list = ligma_image_get_vectors_iter (image);
 
   num_vectors = g_list_length (list);
 
@@ -372,7 +372,7 @@ HELP
     {
       gint i;
 
-      vectors = g_new (GimpVectors *, num_vectors);
+      vectors = g_new (LigmaVectors *, num_vectors);
 
       for (i = 0; i < num_vectors; i++, list = g_list_next (list))
         vectors[i] = g_object_ref (list->data);
@@ -402,7 +402,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_unset_selected_channels (image);
+  ligma_image_unset_selected_channels (image);
 }
 CODE
     );
@@ -462,7 +462,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-pick-color.h" "core/gimppickable.h") ],
+        headers => [ qw("core/ligmaimage-pick-color.h" "core/ligmapickable.h") ],
         code => <<'CODE'
 {
   gint i;
@@ -476,7 +476,7 @@ HELP
       else
         {
           for (i = 0; i < num_drawables; i++)
-            if (gimp_item_get_image (GIMP_ITEM (drawables[i])) != image)
+            if (ligma_item_get_image (LIGMA_ITEM (drawables[i])) != image)
               {
                 success = FALSE;
                 break;
@@ -496,17 +496,17 @@ HELP
 
       for (i = 0; i < num_drawables; i++)
         {
-          GimpPickable *pickable = (GimpPickable *) drawables[i];
+          LigmaPickable *pickable = (LigmaPickable *) drawables[i];
 
           drawable_list = g_list_prepend (drawable_list, pickable);
           if (! sample_merged)
-            gimp_pickable_flush (pickable);
+            ligma_pickable_flush (pickable);
         }
 
       if (sample_merged)
-        gimp_pickable_flush (GIMP_PICKABLE (image));
+        ligma_pickable_flush (LIGMA_PICKABLE (image));
 
-      success = gimp_image_pick_color (image,
+      success = ligma_image_pick_color (image,
                                        drawable_list,
                                        (gint) x, (gint) y,
                                        FALSE,
@@ -552,10 +552,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-pick-item.h") ],
+        headers => [ qw("core/ligmaimage-pick-item.h") ],
         code => <<'CODE'
 {
-  layer = gimp_image_pick_layer (image, x, y, NULL);
+  layer = ligma_image_pick_layer (image, x, y, NULL);
 }
 CODE
     );
@@ -588,8 +588,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error))
-    position = gimp_item_get_index (item);
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error))
+    position = ligma_item_get_index (item);
   else
     success = FALSE;
 }
@@ -617,8 +617,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error))
-    success = gimp_image_raise_item (image, item, error);
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error))
+    success = ligma_image_raise_item (image, item, error);
   else
     success = FALSE;
 }
@@ -646,8 +646,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error))
-    success = gimp_image_lower_item (image, item, error);
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error))
+    success = ligma_image_lower_item (image, item, error);
   else
     success = FALSE;
 }
@@ -677,8 +677,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error))
-    success = gimp_image_raise_item_to_top (image, item);
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error))
+    success = ligma_image_raise_item_to_top (image, item);
   else
     success = FALSE;
 }
@@ -708,8 +708,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error))
-    success = gimp_image_lower_item_to_bottom (image, item);
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error))
+    success = ligma_image_lower_item_to_bottom (image, item);
   else
     success = FALSE;
 }
@@ -740,13 +740,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_in_tree (item, image, 0, error) &&
+  if (ligma_pdb_item_is_in_tree (item, image, 0, error) &&
       (parent == NULL ||
-       (gimp_pdb_item_is_in_same_tree (item, parent, image, error) &&
-        gimp_pdb_item_is_group (parent, error) &&
-        gimp_pdb_item_is_not_ancestor (item, parent, error))))
+       (ligma_pdb_item_is_in_same_tree (item, parent, image, error) &&
+        ligma_pdb_item_is_group (parent, error) &&
+        ligma_pdb_item_is_not_ancestor (item, parent, error))))
     {
-      success = gimp_image_reorder_item (image, item, parent, position,
+      success = ligma_image_reorder_item (image, item, parent, position,
                                          TRUE, NULL);
     }
   else
@@ -774,7 +774,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'merge_type',
-          type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
+          type => 'enum LigmaMergeType (no LIGMA_FLATTEN_IMAGE)',
           desc => 'The type of merge' }
     );
 
@@ -784,12 +784,12 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-merge.h") ],
+        headers => [ qw("core/ligmaimage-merge.h") ],
         code => <<'CODE'
 {
   GList *layers;
 
-  layers = gimp_image_merge_visible_layers (image, context, merge_type,
+  layers = ligma_image_merge_visible_layers (image, context, merge_type,
                                             FALSE, FALSE, progress);
 
   if (layers)
@@ -826,7 +826,7 @@ HELP
         { name => 'merge_layer', type => 'layer',
           desc => 'The layer to merge down from' },
         { name => 'merge_type',
-          type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
+          type => 'enum LigmaMergeType (no LIGMA_FLATTEN_IMAGE)',
           desc => 'The type of merge' }
     );
 
@@ -836,15 +836,15 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-merge.h") ],
+        headers => [ qw("core/ligmaimage-merge.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, 0, error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (merge_layer), image, 0, error))
     {
       GList *merge_layers = g_list_prepend (NULL, merge_layer);
       GList *layers;
 
-      layers = gimp_image_merge_down (image, merge_layers, context,
+      layers = ligma_image_merge_down (image, merge_layers, context,
                                       merge_type, progress, error);
       g_list_free (merge_layers);
 
@@ -885,14 +885,14 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpgrouplayer.h" "core/gimpimage-merge.h") ],
+        headers => [ qw("core/ligmagrouplayer.h" "core/ligmaimage-merge.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer_group), image, 0, error) &&
-      gimp_pdb_item_is_group (GIMP_ITEM (layer_group), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer_group), image, 0, error) &&
+      ligma_pdb_item_is_group (LIGMA_ITEM (layer_group), error))
     {
-      layer = gimp_image_merge_group_layer (image,
-                                            GIMP_GROUP_LAYER (layer_group));
+      layer = ligma_image_merge_group_layer (image,
+                                            LIGMA_GROUP_LAYER (layer_group));
 
       if (! layer)
         success = FALSE;
@@ -928,10 +928,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-merge.h") ],
+        headers => [ qw("core/ligmaimage-merge.h") ],
         code => <<'CODE'
 {
-  layer = gimp_image_flatten (image, context,
+  layer = ligma_image_flatten (image, context,
                               progress, error);
 
   if (! layer)
@@ -947,7 +947,7 @@ sub image_insert_layer {
     $help = <<'HELP';
 This procedure adds the specified layer to the image at the given
 position. If the specified parent is a valid layer group (See
-gimp_item_is_group() and gimp_layer_group_new()) then the layer is
+ligma_item_is_group() and ligma_layer_group_new()) then the layer is
 added inside the group. If the parent is 0, the layer is added inside
 the main stack, outside of any group. The position argument specifies
 the location of the layer inside the stack (or the group, if a valid
@@ -973,22 +973,22 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
-      gimp_pdb_image_is_base_type (image,
-                                   gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
+  if (ligma_pdb_item_is_floating (LIGMA_ITEM (layer), image, error) &&
+      ligma_pdb_image_is_base_type (image,
+                                   ligma_drawable_get_base_type (LIGMA_DRAWABLE (layer)),
                                    error) &&
       (parent == NULL ||
-       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
-        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+       (ligma_pdb_item_is_in_tree (LIGMA_ITEM (parent), image, 0, error) &&
+        ligma_pdb_item_is_group (LIGMA_ITEM (parent), error))))
     {
       if (position == -1 && parent == NULL)
-        parent = GIMP_IMAGE_ACTIVE_PARENT;
+        parent = LIGMA_IMAGE_ACTIVE_PARENT;
 
       /* see layer-new */
-      if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
-        gimp_layer_fix_format_space (layer, TRUE, FALSE);
+      if (ligma_drawable_is_gray (LIGMA_DRAWABLE (layer)))
+        ligma_layer_fix_format_space (layer, TRUE, FALSE);
 
-      success = gimp_image_add_layer (image, layer,
+      success = ligma_image_add_layer (image, layer,
                                       parent, MAX (position, -1), TRUE);
     }
   else
@@ -1021,8 +1021,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, 0, error))
-    gimp_image_remove_layer (image, layer, TRUE, NULL);
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), image, 0, error))
+    ligma_image_remove_layer (image, layer, TRUE, NULL);
   else
     success = FALSE;
 }
@@ -1040,8 +1040,8 @@ layers.  This can significantly improve performance while applying
 changes affecting the layer list.
 
 
-Each call to gimp_image_freeze_layers() should be matched by a
-corresponding call to gimp_image_thaw_layers(), undoing its
+Each call to ligma_image_freeze_layers() should be matched by a
+corresponding call to ligma_image_thaw_layers(), undoing its
 effects.
 HELP
 
@@ -1055,14 +1055,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_layers (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_layers (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_layers_freeze (plug_in, image);
+    success = ligma_plug_in_cleanup_layers_freeze (plug_in, image);
 
   if (success)
-    gimp_container_freeze (container);
+    ligma_container_freeze (container);
 }
 CODE
     );
@@ -1077,7 +1077,7 @@ updates to the Layers dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_layers().
+ligma_image_freeze_layers().
 HELP
 
     &ell_pdb_misc('2018', '2.10.2');
@@ -1090,17 +1090,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_layers (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_layers (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_layers_thaw (plug_in, image);
+    success = ligma_plug_in_cleanup_layers_thaw (plug_in, image);
 
   if (success)
-    success = gimp_container_frozen (container);
+    success = ligma_container_frozen (container);
 
   if (success)
-    gimp_container_thaw (container);
+    ligma_container_thaw (container);
 }
 CODE
     );
@@ -1133,15 +1133,15 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error) &&
+  if (ligma_pdb_item_is_floating (LIGMA_ITEM (channel), image, error) &&
       (parent == NULL ||
-       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
-        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+       (ligma_pdb_item_is_in_tree (LIGMA_ITEM (parent), image, 0, error) &&
+        ligma_pdb_item_is_group (LIGMA_ITEM (parent), error))))
     {
       if (position == -1 && parent == NULL)
-        parent = GIMP_IMAGE_ACTIVE_PARENT;
+        parent = LIGMA_IMAGE_ACTIVE_PARENT;
 
-      success = gimp_image_add_channel (image, channel,
+      success = ligma_image_add_channel (image, channel,
                                         parent, MAX (position, -1), TRUE);
     }
   else
@@ -1172,8 +1172,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, 0, error))
-    gimp_image_remove_channel (image, channel, TRUE, NULL);
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (channel), image, 0, error))
+    ligma_image_remove_channel (image, channel, TRUE, NULL);
   else
     success = FALSE;
 }
@@ -1193,8 +1193,8 @@ channels.  This can significantly improve performance while applying
 changes affecting the channel list.
 
 
-Each call to gimp_image_freeze_channels() should be matched by a
-corresponding call to gimp_image_thaw_channels(), undoing its
+Each call to ligma_image_freeze_channels() should be matched by a
+corresponding call to ligma_image_thaw_channels(), undoing its
 effects.
 HELP
 
@@ -1206,14 +1206,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_channels (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_channels (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_channels_freeze (plug_in, image);
+    success = ligma_plug_in_cleanup_channels_freeze (plug_in, image);
 
   if (success)
-    gimp_container_freeze (container);
+    ligma_container_freeze (container);
 }
 CODE
     );
@@ -1230,7 +1230,7 @@ updates to the Channels dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_channels().
+ligma_image_freeze_channels().
 HELP
 
     @inargs = (
@@ -1241,17 +1241,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_channels (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_channels (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_channels_thaw (plug_in, image);
+    success = ligma_plug_in_cleanup_channels_thaw (plug_in, image);
 
   if (success)
-    success = gimp_container_frozen (container);
+    success = ligma_container_frozen (container);
 
   if (success)
-    gimp_container_thaw (container);
+    ligma_container_thaw (container);
 }
 CODE
     );
@@ -1284,15 +1284,15 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+  if (ligma_pdb_item_is_floating (LIGMA_ITEM (vectors), image, error) &&
       (parent == NULL ||
-       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
-        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+       (ligma_pdb_item_is_in_tree (LIGMA_ITEM (parent), image, 0, error) &&
+        ligma_pdb_item_is_group (LIGMA_ITEM (parent), error))))
     {
       if (position == -1 && parent == NULL)
-        parent = GIMP_IMAGE_ACTIVE_PARENT;
+        parent = LIGMA_IMAGE_ACTIVE_PARENT;
 
-      success = gimp_image_add_vectors (image, vectors,
+      success = ligma_image_add_vectors (image, vectors,
                                         parent, MAX (position, -1), TRUE);
     }
   else
@@ -1323,8 +1323,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, 0, error))
-    gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (vectors), image, 0, error))
+    ligma_image_remove_vectors (image, vectors, TRUE, NULL);
   else
     success = FALSE;
 }
@@ -1344,8 +1344,8 @@ vectors.  This can significantly improve performance while applying
 changes affecting the vectors list.
 
 
-Each call to gimp_image_freeze_vectors() should be matched by a
-corresponding call to gimp_image_thaw_vectors(), undoing its
+Each call to ligma_image_freeze_vectors() should be matched by a
+corresponding call to ligma_image_thaw_vectors(), undoing its
 effects.
 HELP
 
@@ -1357,14 +1357,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_vectors (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_vectors (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+    success = ligma_plug_in_cleanup_vectors_freeze (plug_in, image);
 
   if (success)
-    gimp_container_freeze (container);
+    ligma_container_freeze (container);
 }
 CODE
     );
@@ -1381,7 +1381,7 @@ updates to the Paths dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_vectors().
+ligma_image_freeze_vectors().
 HELP
 
     @inargs = (
@@ -1392,17 +1392,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
-  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-  GimpContainer *container = gimp_image_get_vectors (image);
+  LigmaPlugIn    *plug_in   = ligma->plug_in_manager->current_plug_in;
+  LigmaContainer *container = ligma_image_get_vectors (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+    success = ligma_plug_in_cleanup_vectors_thaw (plug_in, image);
 
   if (success)
-    success = gimp_container_frozen (container);
+    success = ligma_container_frozen (container);
 
   if (success)
-    gimp_container_thaw (container);
+    ligma_container_thaw (container);
 }
 CODE
     );
@@ -1424,14 +1424,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'base_type', type => 'enum GimpImageBaseType',
+        { name => 'base_type', type => 'enum LigmaImageBaseType',
           desc => "The image's base type" }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  base_type = gimp_image_get_base_type (image);
+  base_type = ligma_image_get_base_type (image);
 }
 CODE
     );
@@ -1452,14 +1452,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'precision', type => 'enum GimpPrecision',
+        { name => 'precision', type => 'enum LigmaPrecision',
           desc => "The image's precision" }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  precision = gimp_image_get_precision (image);
+  precision = ligma_image_get_precision (image);
 }
 CODE
     );
@@ -1477,15 +1477,15 @@ sub image_get_default_new_layer_mode {
     );
 
     @outargs = (
-	{ name => 'mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+	{ name => 'mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
 	  desc => 'The layer mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  mode = gimp_image_get_default_new_layer_mode (image);
+  mode = ligma_image_get_default_new_layer_mode (image);
 }
 CODE
     );
@@ -1518,11 +1518,11 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-colormap.h") ],
+        headers => [ qw("core/ligmaimage-colormap.h") ],
         code => <<'CODE'
 {
-  num_bytes = 3 * gimp_image_get_colormap_size (image);
-  colormap = gimp_image_get_colormap (image);
+  num_bytes = 3 * ligma_image_get_colormap_size (image);
+  colormap = ligma_image_get_colormap (image);
 }
 CODE
     );
@@ -1552,10 +1552,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-colormap.h") ],
+        headers => [ qw("core/ligmaimage-colormap.h") ],
         code => <<'CODE'
 {
-  gimp_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
+  ligma_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
 }
 CODE
     );
@@ -1582,10 +1582,10 @@ sub image_get_metadata {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMetadata *metadata = gimp_image_get_metadata (image);
+  LigmaMetadata *metadata = ligma_image_get_metadata (image);
 
   if (metadata)
-    metadata_string = gimp_metadata_serialize (metadata);
+    metadata_string = ligma_metadata_serialize (metadata);
 }
 CODE
     );
@@ -1609,9 +1609,9 @@ sub image_set_metadata {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
+  LigmaMetadata *metadata = ligma_metadata_deserialize (metadata_string);
 
-  gimp_image_set_metadata (image, metadata, TRUE);
+  ligma_image_set_metadata (image, metadata, TRUE);
 
   if (metadata)
     g_object_unref (metadata);
@@ -1642,7 +1642,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_clean_all (image);
+  ligma_image_clean_all (image);
 }
 CODE
     );
@@ -1654,7 +1654,7 @@ sub image_is_dirty {
     $help = <<'HELP';
 This procedure checks the specified image's dirty count to see if it
 needs to be saved. Note that saving the image does not automatically
-set the dirty count to 0, you need to call gimp_image_clean_all() after
+set the dirty count to 0, you need to call ligma_image_clean_all() after
 calling a save procedure to make the image clean.
 HELP
 
@@ -1673,7 +1673,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  dirty = gimp_image_is_dirty (image);
+  dirty = ligma_image_is_dirty (image);
 }
 CODE
     );
@@ -1702,7 +1702,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  floating_sel = gimp_image_get_floating_selection (image);
+  floating_sel = ligma_image_get_floating_selection (image);
 }
 CODE
     );
@@ -1731,10 +1731,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
+  LigmaLayer *floating_sel = ligma_image_get_floating_selection (image);
 
   if (floating_sel)
-    drawable = gimp_layer_get_floating_sel_drawable (floating_sel);
+    drawable = ligma_layer_get_floating_sel_drawable (floating_sel);
   else
     drawable = NULL;
 }
@@ -1765,7 +1765,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  width = gimp_image_get_width (image);
+  width = ligma_image_get_width (image);
 }
 CODE
     );
@@ -1794,7 +1794,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  height = gimp_image_get_height (image);
+  height = ligma_image_get_height (image);
 }
 CODE
     );
@@ -1826,7 +1826,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_selected_layers (image);
+  GList *list = ligma_image_get_selected_layers (image);
 
   num_layers = g_list_length (list);
 
@@ -1834,7 +1834,7 @@ HELP
     {
       gint i;
 
-      layers = g_new (GimpLayer *, num_layers);
+      layers = g_new (LigmaLayer *, num_layers);
 
       for (i = 0; i < num_layers; i++, list = g_list_next (list))
         layers[i] = g_object_ref (list->data);
@@ -1875,9 +1875,9 @@ HELP
 
   for (i = 0; i < num_layers; i++)
     selected_layers = g_list_prepend (selected_layers,
-                                      GIMP_LAYER (layers[i]));
+                                      LIGMA_LAYER (layers[i]));
 
-  gimp_image_set_selected_layers (image, selected_layers);
+  ligma_image_set_selected_layers (image, selected_layers);
   g_list_free (selected_layers);
 }
 CODE
@@ -1910,7 +1910,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_selected_channels (image);
+  GList *list = ligma_image_get_selected_channels (image);
 
   num_channels = g_list_length (list);
 
@@ -1918,7 +1918,7 @@ HELP
     {
       gint i;
 
-      channels = g_new (GimpChannel *, num_channels);
+      channels = g_new (LigmaChannel *, num_channels);
 
       for (i = 0; i < num_channels; i++, list = g_list_next (list))
         channels[i] = g_object_ref (list->data);
@@ -1959,9 +1959,9 @@ HELP
 
   for (i = 0; i < num_channels; i++)
     selected_channels = g_list_prepend (selected_channels,
-                                        GIMP_CHANNEL (channels[i]));
+                                        LIGMA_CHANNEL (channels[i]));
 
-  gimp_image_set_selected_channels (image, selected_channels);
+  ligma_image_set_selected_channels (image, selected_channels);
   g_list_free (selected_channels);
 }
 CODE
@@ -1994,7 +1994,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_selected_vectors (image);
+  GList *list = ligma_image_get_selected_vectors (image);
 
   num_vectors = g_list_length (list);
 
@@ -2002,7 +2002,7 @@ HELP
     {
       gint i;
 
-      vectors = g_new (GimpVectors *, num_vectors);
+      vectors = g_new (LigmaVectors *, num_vectors);
 
       for (i = 0; i < num_vectors; i++, list = g_list_next (list))
         vectors[i] = g_object_ref (list->data);
@@ -2040,9 +2040,9 @@ HELP
 
   for (i = 0; i < num_vectors; i++)
     selected_vectors = g_list_prepend (selected_vectors,
-                                       GIMP_LAYER (vectors[i]));
+                                       LIGMA_LAYER (vectors[i]));
 
-  gimp_image_set_selected_vectors (image, selected_vectors);
+  ligma_image_set_selected_vectors (image, selected_vectors);
   g_list_free (selected_vectors);
 }
 CODE
@@ -2079,7 +2079,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GList *list = gimp_image_get_selected_drawables (image);
+  GList *list = ligma_image_get_selected_drawables (image);
 
   num_drawables = g_list_length (list);
 
@@ -2087,7 +2087,7 @@ HELP
     {
       gint i;
 
-      drawables = g_new (GimpItem *, num_drawables);
+      drawables = g_new (LigmaItem *, num_drawables);
 
       for (i = 0; i < num_drawables; i++, list = g_list_next (list))
         drawables[i] = g_object_ref (list->data);
@@ -2120,7 +2120,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  selection = GIMP_SELECTION (gimp_image_get_mask (image));
+  selection = LIGMA_SELECTION (ligma_image_get_mask (image));
 
   if (! selection)
     success = FALSE;
@@ -2144,7 +2144,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'component', type => 'enum GimpChannelType',
+        { name => 'component', type => 'enum LigmaChannelType',
           desc => 'The image component' }
     );
 
@@ -2156,15 +2156,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_CHANNEL_GRAY)
-    success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_CHANNEL_INDEXED)
-    success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
+  if (component == LIGMA_CHANNEL_GRAY)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_GRAY, error);
+  else if (component == LIGMA_CHANNEL_INDEXED)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_INDEXED, error);
   else
-    success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
+    success = ligma_pdb_image_is_base_type (image, LIGMA_RGB, error);
 
   if (success)
-    active = gimp_image_get_component_active (image, component);
+    active = ligma_image_get_component_active (image, component);
 }
 CODE
     );
@@ -2185,7 +2185,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'component', type => 'enum GimpChannelType',
+        { name => 'component', type => 'enum LigmaChannelType',
           desc => 'The image component' },
         { name => 'active', type => 'boolean',
           desc => 'Component is active' }
@@ -2194,15 +2194,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_CHANNEL_GRAY)
-    success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_CHANNEL_INDEXED)
-    success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
+  if (component == LIGMA_CHANNEL_GRAY)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_GRAY, error);
+  else if (component == LIGMA_CHANNEL_INDEXED)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_INDEXED, error);
   else
-    success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
+    success = ligma_pdb_image_is_base_type (image, LIGMA_RGB, error);
 
   if (success)
-    gimp_image_set_component_active (image, component, active);
+    ligma_image_set_component_active (image, component, active);
 }
 CODE
     );
@@ -2223,7 +2223,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'component', type => 'enum GimpChannelType',
+        { name => 'component', type => 'enum LigmaChannelType',
           desc => 'The image component' }
     );
 
@@ -2235,15 +2235,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_CHANNEL_GRAY)
-    success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_CHANNEL_INDEXED)
-    success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
+  if (component == LIGMA_CHANNEL_GRAY)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_GRAY, error);
+  else if (component == LIGMA_CHANNEL_INDEXED)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_INDEXED, error);
   else
-    success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
+    success = ligma_pdb_image_is_base_type (image, LIGMA_RGB, error);
 
   if (success)
-    visible = gimp_image_get_component_visible (image, component);
+    visible = ligma_image_get_component_visible (image, component);
 }
 CODE
     );
@@ -2264,7 +2264,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'component', type => 'enum GimpChannelType',
+        { name => 'component', type => 'enum LigmaChannelType',
           desc => 'The image component' },
         { name => 'visible', type => 'boolean',
           desc => 'Component is visible' }
@@ -2273,15 +2273,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_CHANNEL_GRAY)
-    success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_CHANNEL_INDEXED)
-    success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
+  if (component == LIGMA_CHANNEL_GRAY)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_GRAY, error);
+  else if (component == LIGMA_CHANNEL_INDEXED)
+    success = ligma_pdb_image_is_base_type (image, LIGMA_INDEXED, error);
   else
-    success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
+    success = ligma_pdb_image_is_base_type (image, LIGMA_RGB, error);
 
   if (success)
-    gimp_image_set_component_visible (image, component, visible);
+    ligma_image_set_component_visible (image, component, visible);
 }
 CODE
     );
@@ -2294,10 +2294,10 @@ sub image_get_file {
 This procedure returns the file associated with the specified image.
 The image has a file only if it was loaded or imported from a file or
 has since been saved or exported. Otherwise, this function returns
-%NULL.  See also gimp-image-get-imported-file to get the
-current file if it was imported from a non-GIMP file format and not
-yet saved, or gimp-image-get-exported-file if the image has been
-exported to a non-GIMP file format.
+%NULL.  See also ligma-image-get-imported-file to get the
+current file if it was imported from a non-LIGMA file format and not
+yet saved, or ligma-image-get-exported-file if the image has been
+exported to a non-LIGMA file format.
 HELP
 
     &neo_pdb_misc('2009', '2.8');
@@ -2315,7 +2315,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_image_get_any_file (image);
+  file = ligma_image_get_any_file (image);
 }
 CODE
     );
@@ -2340,7 +2340,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 }
 CODE
     );
@@ -2354,7 +2354,7 @@ This procedure returns the XCF file associated with the image. If
 there is no such file, this procedure returns %NULL.
 HELP
 
-    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $author = 'Eric Grivel <ligma@lumenssolutions.com>';
     $copyright = 'Eric Grivel';
     $date = '2011';
     $since = '2.8';
@@ -2372,7 +2372,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_image_get_file (image);
+  file = ligma_image_get_file (image);
 }
 CODE
     );
@@ -2383,12 +2383,12 @@ sub image_get_imported_file {
 
     $help = <<'HELP';
 This procedure returns the file associated with the specified image
-if the image was imported from a non-native Gimp format. If the
-image was not imported, or has since been saved in the native Gimp
+if the image was imported from a non-native Ligma format. If the
+image was not imported, or has since been saved in the native Ligma
 format, this procedure returns %NULL.
 HELP
 
-    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $author = 'Eric Grivel <ligma@lumenssolutions.com>';
     $copyright = 'Eric Grivel';
     $date = '2011';
     $since = '2.8';
@@ -2406,7 +2406,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_image_get_imported_file (image);
+  file = ligma_image_get_imported_file (image);
 }
 CODE
     );
@@ -2417,11 +2417,11 @@ sub image_get_exported_file {
 
     $help = <<'HELP';
 This procedure returns the file associated with the specified image
-if the image was exported a non-native GIMP format. If the
+if the image was exported a non-native LIGMA format. If the
 image was not exported, this procedure returns %NULL.
 HELP
 
-    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $author = 'Eric Grivel <ligma@lumenssolutions.com>';
     $copyright = 'Eric Grivel';
     $date = '2011';
     $since = '2.8';
@@ -2439,7 +2439,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_image_get_exported_file (image);
+  file = ligma_image_get_exported_file (image);
 }
 CODE
     );
@@ -2472,7 +2472,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  name = g_strdup (gimp_image_get_display_name (image));
+  name = g_strdup (ligma_image_get_display_name (image));
 }
 CODE
     );
@@ -2503,7 +2503,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_get_resolution (image, &xresolution, &yresolution);
+  ligma_image_get_resolution (image, &xresolution, &yresolution);
 }
 CODE
     );
@@ -2533,19 +2533,19 @@ HELP
         code => <<'CODE'
 {
   if (! isfinite (xresolution) ||
-      xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+      xresolution < LIGMA_MIN_RESOLUTION || xresolution > LIGMA_MAX_RESOLUTION ||
       ! isfinite (yresolution) ||
-      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+      yresolution < LIGMA_MIN_RESOLUTION || yresolution > LIGMA_MAX_RESOLUTION)
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR,
-                           GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error_literal (error, LIGMA_PDB_ERROR,
+                           LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                            _("Image resolution is out of bounds, "
                              "using the default resolution instead."));
       success = FALSE;
     }
   else
     {
-      gimp_image_set_resolution (image, xresolution, yresolution);
+      ligma_image_set_resolution (image, xresolution, yresolution);
     }
 }
 CODE
@@ -2557,7 +2557,7 @@ sub image_get_unit {
 
     $help = <<'HELP';
 This procedure returns the specified image's unit. This value is
-independent of any of the layers in this image. See the gimp_unit_*()
+independent of any of the layers in this image. See the ligma_unit_*()
 procedure definitions for the valid range of unit IDs and a
 description of the unit system.
 HELP
@@ -2577,7 +2577,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  unit = gimp_image_get_unit (image);
+  unit = ligma_image_get_unit (image);
 }
 CODE
     );
@@ -2589,7 +2589,7 @@ sub image_set_unit {
     $help = <<'HELP';
 This procedure sets the specified image's unit. No scaling or resizing
 is performed. This value is independent of any of the layers in this
-image. See the gimp_unit_*() procedure definitions for the valid range
+image. See the ligma_unit_*() procedure definitions for the valid range
 of unit IDs and a description of the unit system.
 HELP
 
@@ -2598,14 +2598,14 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'unit', type => 'unit (min GIMP_UNIT_INCH)',
+        { name => 'unit', type => 'unit (min LIGMA_UNIT_INCH)',
           desc => 'The new image unit' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_unit (image, unit);
+  ligma_image_set_unit (image, unit);
 }
 CODE
     );
@@ -2635,7 +2635,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  tattoo_state = gimp_image_get_tattoo_state (image);
+  tattoo_state = ligma_image_get_tattoo_state (image);
 }
 CODE
     );
@@ -2670,7 +2670,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_tattoo_state (image, tattoo_state);
+  ligma_image_set_tattoo_state (image, tattoo_state);
 }
 CODE
     );
@@ -2700,7 +2700,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  layer = gimp_image_get_layer_by_tattoo (image, tattoo);
+  layer = ligma_image_get_layer_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2730,7 +2730,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  channel = gimp_image_get_channel_by_tattoo (image, tattoo);
+  channel = ligma_image_get_channel_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2761,7 +2761,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
+  vectors = ligma_image_get_vectors_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2791,7 +2791,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  layer = gimp_image_get_layer_by_name (image, name);
+  layer = ligma_image_get_layer_by_name (image, name);
 }
 CODE
     );
@@ -2821,7 +2821,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  channel = gimp_image_get_channel_by_name (image, name);
+  channel = ligma_image_get_channel_by_name (image, name);
 }
 CODE
     );
@@ -2852,7 +2852,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (image, name);
+  vectors = ligma_image_get_vectors_by_name (image, name);
 }
 CODE
     );
@@ -2877,8 +2877,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_image_parasite_validate (image, parasite, error))
-    gimp_image_parasite_attach (image, parasite, TRUE);
+  if (ligma_image_parasite_validate (image, parasite, error))
+    ligma_image_parasite_attach (image, parasite, TRUE);
   else
     success = FALSE;
 }
@@ -2905,7 +2905,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_parasite_detach (image, name, TRUE);
+  ligma_image_parasite_detach (image, name, TRUE);
 }
 CODE
     );
@@ -2935,7 +2935,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  parasite = gimp_parasite_copy (gimp_image_parasite_find (image, name));
+  parasite = ligma_parasite_copy (ligma_image_parasite_find (image, name));
 
   if (! parasite)
     success = FALSE;
@@ -2948,8 +2948,8 @@ sub image_get_parasite_list {
     $blurb = 'List all parasites.';
     $help = <<'HELP';
 Returns a list of the names of all currently attached parasites.
-These names can later be used to get the actual #GimpParasite with
-gimp_image_get_parasite() when needed.
+These names can later be used to get the actual #LigmaParasite with
+ligma_image_get_parasite() when needed.
 HELP
 
     &marc_pdb_misc('1999', '2.8');
@@ -2967,7 +2967,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  parasites = gimp_image_parasite_list (image);
+  parasites = ligma_image_parasite_list (image);
 }
 CODE
     );
@@ -3012,35 +3012,35 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpTempBuf *buf;
+  LigmaTempBuf *buf;
   gint         dwidth, dheight;
 
-  gimp_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+  ligma_assert (LIGMA_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
   /* Adjust the width/height ratio */
-  dwidth  = gimp_image_get_width  (image);
-  dheight = gimp_image_get_height (image);
+  dwidth  = ligma_image_get_width  (image);
+  dheight = ligma_image_get_height (image);
 
   if (dwidth > dheight)
     height = MAX (1, (width * dheight) / dwidth);
   else
     width  = MAX (1, (height * dwidth) / dheight);
 
-  gimp_pickable_flush (GIMP_PICKABLE (image));
+  ligma_pickable_flush (LIGMA_PICKABLE (image));
 
-  buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
+  buf = ligma_viewable_get_new_preview (LIGMA_VIEWABLE (image), context,
                                        width, height);
 
   if (buf)
     {
-      actual_width         = gimp_temp_buf_get_width  (buf);
-      actual_height        = gimp_temp_buf_get_height (buf);
-      bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-      thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-      thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+      actual_width         = ligma_temp_buf_get_width  (buf);
+      actual_height        = ligma_temp_buf_get_height (buf);
+      bpp                  = babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (buf));
+      thumbnail_data_count = ligma_temp_buf_get_data_size (buf);
+      thumbnail_data       = g_memdup2 (ligma_temp_buf_get_data (buf),
                                         thumbnail_data_count);
 
-      gimp_temp_buf_unref (buf);
+      ligma_temp_buf_unref (buf);
     }
   else
     success = FALSE;
@@ -3053,7 +3053,7 @@ sub image_policy_rotate {
     $blurb = 'Execute the "Orientation" metadata policy.';
     $help = <<'HELP';
 Process the image according to the rotation policy as set in Preferences.
-If GIMP is running as a GUI and interactive is TRUE, a dialog may be
+If LIGMA is running as a GUI and interactive is TRUE, a dialog may be
 presented to the user depending on the set policy. Otherwise, if the
 policy does not mandate the action to perform, the image will be rotated
 following the Orientation metadata.
@@ -3081,7 +3081,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_import_rotation_metadata (image, context, progress, interactive);
+  ligma_image_import_rotation_metadata (image, context, progress, interactive);
 }
 CODE
     );
@@ -3093,7 +3093,7 @@ sub image_policy_color_profile {
 Process the image according to the color profile policy as set in
 Preferences.
 
-If GIMP is running as a GUI and interactive is TRUE, a dialog may be
+If LIGMA is running as a GUI and interactive is TRUE, a dialog may be
 presented to the user depending on the policy. Otherwise, if the policy
 does not mandate the conversion to perform, the conversion to the
 preferred RGB or grayscale profile will happen, defaulting to built-in
@@ -3101,7 +3101,7 @@ profiles if no preferred profiles were set in `Preferences`.
 
 This function should be used only if you want to follow user settings.
 If you intend to convert to a specific profile, call preferably
-gimp_image_convert_color_profile(). And if you wish to leave whatever
+ligma_image_convert_color_profile(). And if you wish to leave whatever
 profile an image has, do not call any of these functions.
 
 Finally it is unnecessary to call this function in a format load
@@ -3122,30 +3122,30 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_import_color_profile (image, context, progress, interactive);
+  ligma_image_import_color_profile (image, context, progress, interactive);
 }
 CODE
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "libgimpbase/gimpbase.h"
-              "gegl/gimp-babl.h"
-              "core/gimp.h"
-              "core/gimpcontainer.h"
-              "core/gimpimage-color-profile.h"
-              "core/gimpimage-metadata.h"
-              "core/gimpimage-rotate.h"
-              "core/gimpprogress.h"
-              "core/gimptempbuf.h"
+@headers = qw("libligmamath/ligmamath.h"
+              "libligmabase/ligmabase.h"
+              "gegl/ligma-babl.h"
+              "core/ligma.h"
+              "core/ligmacontainer.h"
+              "core/ligmaimage-color-profile.h"
+              "core/ligmaimage-metadata.h"
+              "core/ligmaimage-rotate.h"
+              "core/ligmaprogress.h"
+              "core/ligmatempbuf.h"
               "file/file-utils.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimpplugin-cleanup.h"
-              "plug-in/gimppluginmanager.h"
-              "gimppdbcontext.h"
-              "gimppdberror.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmaplugin-cleanup.h"
+              "plug-in/ligmapluginmanager.h"
+              "ligmapdbcontext.h"
+              "ligmapdberror.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(image_id_is_valid
             get_images
@@ -3210,7 +3210,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image';
-$doc_title = 'gimpimage';
+$doc_title = 'ligmaimage';
 $doc_short_desc = 'Operations on complete images.';
 $doc_long_desc = 'Operations on complete images: creation, resizing/rescaling, and operations involving multiple layers.';
 

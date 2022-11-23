@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpConfigWriter
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaConfigWriter
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,30 +31,30 @@
 #include <gio/gunixoutputstream.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpconfigtypes.h"
+#include "ligmaconfigtypes.h"
 
-#include "gimpconfigwriter.h"
-#include "gimpconfig-iface.h"
-#include "gimpconfig-error.h"
-#include "gimpconfig-serialize.h"
-#include "gimpconfig-utils.h"
+#include "ligmaconfigwriter.h"
+#include "ligmaconfig-iface.h"
+#include "ligmaconfig-error.h"
+#include "ligmaconfig-serialize.h"
+#include "ligmaconfig-utils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpconfigwriter
- * @title: GimpConfigWriter
+ * SECTION: ligmaconfigwriter
+ * @title: LigmaConfigWriter
  * @short_description: Functions for writing config info to a file for
- *                     libgimpconfig.
+ *                     libligmaconfig.
  *
- * Functions for writing config info to a file for libgimpconfig.
+ * Functions for writing config info to a file for libligmaconfig.
  **/
 
 
-struct _GimpConfigWriter
+struct _LigmaConfigWriter
 {
   gint           ref_count;
   gboolean       finished;
@@ -69,17 +69,17 @@ struct _GimpConfigWriter
 };
 
 
-G_DEFINE_BOXED_TYPE (GimpConfigWriter, gimp_config_writer,
-                     gimp_config_writer_ref, gimp_config_writer_unref)
+G_DEFINE_BOXED_TYPE (LigmaConfigWriter, ligma_config_writer,
+                     ligma_config_writer_ref, ligma_config_writer_unref)
 
 
-static inline void  gimp_config_writer_flush        (GimpConfigWriter  *writer);
-static inline void  gimp_config_writer_newline      (GimpConfigWriter  *writer);
-static gboolean     gimp_config_writer_close_output (GimpConfigWriter  *writer,
+static inline void  ligma_config_writer_flush        (LigmaConfigWriter  *writer);
+static inline void  ligma_config_writer_newline      (LigmaConfigWriter  *writer);
+static gboolean     ligma_config_writer_close_output (LigmaConfigWriter  *writer,
                                                      GError           **error);
 
 static inline void
-gimp_config_writer_flush (GimpConfigWriter *writer)
+ligma_config_writer_flush (LigmaConfigWriter *writer)
 {
   GError *error = NULL;
 
@@ -91,10 +91,10 @@ gimp_config_writer_flush (GimpConfigWriter *writer)
                                    writer->buffer->len,
                                    NULL, NULL, &error))
     {
-      g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+      g_set_error (&writer->error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_WRITE,
                    _("Error writing to '%s': %s"),
                    writer->file ?
-                   gimp_file_get_utf8_name (writer->file) : "output stream",
+                   ligma_file_get_utf8_name (writer->file) : "output stream",
                    error->message);
       g_clear_error (&error);
     }
@@ -103,7 +103,7 @@ gimp_config_writer_flush (GimpConfigWriter *writer)
 }
 
 static inline void
-gimp_config_writer_newline (GimpConfigWriter *writer)
+ligma_config_writer_newline (LigmaConfigWriter *writer)
 {
   gint i;
 
@@ -117,28 +117,28 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
 }
 
 /**
- * gimp_config_writer_new_from_file:
+ * ligma_config_writer_new_from_file:
  * @file: a #GFile
  * @atomic: if %TRUE the file is written atomically
  * @header: text to include as comment at the top of the file
  * @error: return location for errors
  *
- * Creates a new #GimpConfigWriter and sets it up to write to
+ * Creates a new #LigmaConfigWriter and sets it up to write to
  * @file. If @atomic is %TRUE, a temporary file is used to avoid
  * possible race conditions. The temporary file is then moved to @file
  * when the writer is closed.
  *
- * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #LigmaConfigWriter or %NULL in case of an error
  *
  * Since: 2.10
  **/
-GimpConfigWriter *
-gimp_config_writer_new_from_file (GFile        *file,
+LigmaConfigWriter *
+ligma_config_writer_new_from_file (GFile        *file,
                                   gboolean      atomic,
                                   const gchar  *header,
                                   GError      **error)
 {
-  GimpConfigWriter *writer;
+  LigmaConfigWriter *writer;
   GOutputStream    *output;
   GFile            *dir;
 
@@ -151,8 +151,8 @@ gimp_config_writer_new_from_file (GFile        *file,
       if (! g_file_make_directory_with_parents (dir, NULL, error))
         g_prefix_error (error,
                         _("Could not create directory '%s' for '%s': "),
-                        gimp_file_get_utf8_name (dir),
-                        gimp_file_get_utf8_name (file));
+                        ligma_file_get_utf8_name (dir),
+                        ligma_file_get_utf8_name (file));
     }
   g_object_unref (dir);
 
@@ -167,7 +167,7 @@ gimp_config_writer_new_from_file (GFile        *file,
       if (! output)
         g_prefix_error (error,
                         _("Could not create temporary file for '%s': "),
-                        gimp_file_get_utf8_name (file));
+                        ligma_file_get_utf8_name (file));
     }
   else
     {
@@ -180,7 +180,7 @@ gimp_config_writer_new_from_file (GFile        *file,
   if (! output)
     return NULL;
 
-  writer = g_slice_new0 (GimpConfigWriter);
+  writer = g_slice_new0 (LigmaConfigWriter);
 
   writer->ref_count = 1;
   writer->output    = output;
@@ -189,37 +189,37 @@ gimp_config_writer_new_from_file (GFile        *file,
 
   if (header)
     {
-      gimp_config_writer_comment (writer, header);
-      gimp_config_writer_linefeed (writer);
+      ligma_config_writer_comment (writer, header);
+      ligma_config_writer_linefeed (writer);
     }
 
   return writer;
 }
 
 /**
- * gimp_config_writer_new_from_stream:
+ * ligma_config_writer_new_from_stream:
  * @output: a #GOutputStream
  * @header: text to include as comment at the top of the file
  * @error: return location for errors
  *
- * Creates a new #GimpConfigWriter and sets it up to write to
+ * Creates a new #LigmaConfigWriter and sets it up to write to
  * @output.
  *
- * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #LigmaConfigWriter or %NULL in case of an error
  *
  * Since: 2.10
  **/
-GimpConfigWriter *
-gimp_config_writer_new_from_stream (GOutputStream  *output,
+LigmaConfigWriter *
+ligma_config_writer_new_from_stream (GOutputStream  *output,
                                     const gchar    *header,
                                     GError        **error)
 {
-  GimpConfigWriter *writer;
+  LigmaConfigWriter *writer;
 
   g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  writer = g_slice_new0 (GimpConfigWriter);
+  writer = g_slice_new0 (LigmaConfigWriter);
 
   writer->ref_count = 1;
   writer->output    = g_object_ref (output);
@@ -227,29 +227,29 @@ gimp_config_writer_new_from_stream (GOutputStream  *output,
 
   if (header)
     {
-      gimp_config_writer_comment (writer, header);
-      gimp_config_writer_linefeed (writer);
+      ligma_config_writer_comment (writer, header);
+      ligma_config_writer_linefeed (writer);
     }
 
   return writer;
 }
 
 /**
- * gimp_config_writer_new_from_fd:
+ * ligma_config_writer_new_from_fd:
  * @fd:
  *
- * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #LigmaConfigWriter or %NULL in case of an error
  *
  * Since: 2.4
  **/
-GimpConfigWriter *
-gimp_config_writer_new_from_fd (gint fd)
+LigmaConfigWriter *
+ligma_config_writer_new_from_fd (gint fd)
 {
-  GimpConfigWriter *writer;
+  LigmaConfigWriter *writer;
 
   g_return_val_if_fail (fd > 0, NULL);
 
-  writer = g_slice_new0 (GimpConfigWriter);
+  writer = g_slice_new0 (LigmaConfigWriter);
 
   writer->ref_count = 1;
 
@@ -265,21 +265,21 @@ gimp_config_writer_new_from_fd (gint fd)
 }
 
 /**
- * gimp_config_writer_new_from_string:
+ * ligma_config_writer_new_from_string:
  * @string:
  *
- * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #LigmaConfigWriter or %NULL in case of an error
  *
  * Since: 2.4
  **/
-GimpConfigWriter *
-gimp_config_writer_new_from_string (GString *string)
+LigmaConfigWriter *
+ligma_config_writer_new_from_string (GString *string)
 {
-  GimpConfigWriter *writer;
+  LigmaConfigWriter *writer;
 
   g_return_val_if_fail (string != NULL, NULL);
 
-  writer = g_slice_new0 (GimpConfigWriter);
+  writer = g_slice_new0 (LigmaConfigWriter);
 
   writer->ref_count = 1;
   writer->buffer    = string;
@@ -288,17 +288,17 @@ gimp_config_writer_new_from_string (GString *string)
 }
 
 /**
- * gimp_config_writer_ref:
- * @writer: #GimpConfigWriter to ref
+ * ligma_config_writer_ref:
+ * @writer: #LigmaConfigWriter to ref
  *
- * Adds a reference to a #GimpConfigWriter.
+ * Adds a reference to a #LigmaConfigWriter.
  *
  * Returns: the same @writer.
  *
  * Since: 3.0
  */
-GimpConfigWriter *
-gimp_config_writer_ref (GimpConfigWriter *writer)
+LigmaConfigWriter *
+ligma_config_writer_ref (LigmaConfigWriter *writer)
 {
   g_return_val_if_fail (writer != NULL, NULL);
 
@@ -308,19 +308,19 @@ gimp_config_writer_ref (GimpConfigWriter *writer)
 }
 
 /**
- * gimp_config_writer_unref:
- * @writer: #GimpConfigWriter to unref
+ * ligma_config_writer_unref:
+ * @writer: #LigmaConfigWriter to unref
  *
- * Unref a #GimpConfigWriter. If the reference count drops to zero, the
+ * Unref a #LigmaConfigWriter. If the reference count drops to zero, the
  * writer is freed.
  *
  * Note that at least one of the references has to be dropped using
- * gimp_config_writer_finish().
+ * ligma_config_writer_finish().
  *
  * Since: 3.0
  */
 void
-gimp_config_writer_unref (GimpConfigWriter *writer)
+ligma_config_writer_unref (LigmaConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
 
@@ -333,9 +333,9 @@ gimp_config_writer_unref (GimpConfigWriter *writer)
           GError *error = NULL;
 
           g_printerr ("%s: dropping last reference via unref(), you should "
-                      "call gimp_config_writer_finish()\n", G_STRFUNC);
+                      "call ligma_config_writer_finish()\n", G_STRFUNC);
 
-          if (! gimp_config_writer_finish (writer, NULL, &error))
+          if (! ligma_config_writer_finish (writer, NULL, &error))
             {
               g_printerr ("%s: error on finishing writer: %s\n",
                           G_STRFUNC, error->message);
@@ -343,19 +343,19 @@ gimp_config_writer_unref (GimpConfigWriter *writer)
         }
       else
         {
-          g_slice_free (GimpConfigWriter, writer);
+          g_slice_free (LigmaConfigWriter, writer);
         }
     }
 }
 
 /**
- * gimp_config_writer_comment_mode:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_comment_mode:
+ * @writer: a #LigmaConfigWriter
  * @enable: %TRUE to enable comment mode, %FALSE to disable it
  *
  * This function toggles whether the @writer should create commented
  * or uncommented output. This feature is used to generate the
- * system-wide installed gimprc that documents the default settings.
+ * system-wide installed ligmarc that documents the default settings.
  *
  * Since comments have to start at the beginning of a line, this
  * function will insert a newline if necessary.
@@ -363,7 +363,7 @@ gimp_config_writer_unref (GimpConfigWriter *writer)
  * Since: 2.4
  **/
 void
-gimp_config_writer_comment_mode (GimpConfigWriter *writer,
+ligma_config_writer_comment_mode (LigmaConfigWriter *writer,
                                  gboolean          enable)
 {
   g_return_if_fail (writer != NULL);
@@ -384,24 +384,24 @@ gimp_config_writer_comment_mode (GimpConfigWriter *writer,
      if (writer->buffer->len == 0)
        g_string_append_len (writer->buffer, "# ", 2);
      else
-       gimp_config_writer_newline (writer);
+       ligma_config_writer_newline (writer);
     }
 }
 
 
 /**
- * gimp_config_writer_open:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_open:
+ * @writer: a #LigmaConfigWriter
  * @name: name of the element to open
  *
  * This function writes the opening parenthesis followed by @name.
  * It also increases the indentation level and sets a mark that
- * can be used by gimp_config_writer_revert().
+ * can be used by ligma_config_writer_revert().
  *
  * Since: 2.4
  **/
 void
-gimp_config_writer_open (GimpConfigWriter *writer,
+ligma_config_writer_open (LigmaConfigWriter *writer,
                          const gchar      *name)
 {
   g_return_if_fail (writer != NULL);
@@ -415,7 +415,7 @@ gimp_config_writer_open (GimpConfigWriter *writer,
   writer->marker = writer->buffer->len;
 
   if (writer->depth > 0)
-    gimp_config_writer_newline (writer);
+    ligma_config_writer_newline (writer);
 
   writer->depth++;
 
@@ -423,8 +423,8 @@ gimp_config_writer_open (GimpConfigWriter *writer,
 }
 
 /**
- * gimp_config_writer_print:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_print:
+ * @writer: a #LigmaConfigWriter
  * @string: a string to write
  * @len: number of bytes from @string or -1 if @string is NUL-terminated.
  *
@@ -434,7 +434,7 @@ gimp_config_writer_open (GimpConfigWriter *writer,
  * Since: 2.4
  **/
 void
-gimp_config_writer_print (GimpConfigWriter  *writer,
+ligma_config_writer_print (LigmaConfigWriter  *writer,
                           const gchar       *string,
                           gint               len)
 {
@@ -456,17 +456,17 @@ gimp_config_writer_print (GimpConfigWriter  *writer,
 }
 
 /**
- * gimp_config_writer_printf: (skip)
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_printf: (skip)
+ * @writer: a #LigmaConfigWriter
  * @format: a format string as described for g_strdup_printf().
  * @...: list of arguments according to @format
  *
- * A printf-like function for #GimpConfigWriter.
+ * A printf-like function for #LigmaConfigWriter.
  *
  * Since: 2.4
  **/
 void
-gimp_config_writer_printf (GimpConfigWriter *writer,
+ligma_config_writer_printf (LigmaConfigWriter *writer,
                            const gchar      *format,
                            ...)
 {
@@ -491,8 +491,8 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
 }
 
 /**
- * gimp_config_writer_string:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_string:
+ * @writer: a #LigmaConfigWriter
  * @string: a NUL-terminated string
  *
  * Writes a string value to @writer. The @string is quoted and special
@@ -501,7 +501,7 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
  * Since: 2.4
  **/
 void
-gimp_config_writer_string (GimpConfigWriter *writer,
+ligma_config_writer_string (LigmaConfigWriter *writer,
                            const gchar      *string)
 {
   g_return_if_fail (writer != NULL);
@@ -511,12 +511,12 @@ gimp_config_writer_string (GimpConfigWriter *writer,
     return;
 
   g_string_append_c (writer->buffer, ' ');
-  gimp_config_string_append_escaped (writer->buffer, string);
+  ligma_config_string_append_escaped (writer->buffer, string);
 }
 
 /**
- * gimp_config_writer_identifier:
- * @writer:     a #GimpConfigWriter
+ * ligma_config_writer_identifier:
+ * @writer:     a #LigmaConfigWriter
  * @identifier: a NUL-terminated string
  *
  * Writes an identifier to @writer. The @string is *not* quoted and special
@@ -525,7 +525,7 @@ gimp_config_writer_string (GimpConfigWriter *writer,
  * Since: 2.4
  **/
 void
-gimp_config_writer_identifier (GimpConfigWriter *writer,
+ligma_config_writer_identifier (LigmaConfigWriter *writer,
                                const gchar      *identifier)
 {
   g_return_if_fail (writer != NULL);
@@ -540,15 +540,15 @@ gimp_config_writer_identifier (GimpConfigWriter *writer,
 
 
 /**
- * gimp_config_writer_data:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_data:
+ * @writer: a #LigmaConfigWriter
  * @length:
  * @data:
  *
  * Since: 2.4
  **/
 void
-gimp_config_writer_data (GimpConfigWriter *writer,
+ligma_config_writer_data (LigmaConfigWriter *writer,
                          gint              length,
                          const guint8     *data)
 {
@@ -576,17 +576,17 @@ gimp_config_writer_data (GimpConfigWriter *writer,
 }
 
 /**
- * gimp_config_writer_revert:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_revert:
+ * @writer: a #LigmaConfigWriter
  *
  * Reverts all changes to @writer that were done since the last call
- * to gimp_config_writer_open(). This can only work if you didn't call
- * gimp_config_writer_close() yet.
+ * to ligma_config_writer_open(). This can only work if you didn't call
+ * ligma_config_writer_close() yet.
  *
  * Since: 2.4
  **/
 void
-gimp_config_writer_revert (GimpConfigWriter *writer)
+ligma_config_writer_revert (LigmaConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
   g_return_if_fail (writer->finished == FALSE);
@@ -604,15 +604,15 @@ gimp_config_writer_revert (GimpConfigWriter *writer)
 }
 
 /**
- * gimp_config_writer_close:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_close:
+ * @writer: a #LigmaConfigWriter
  *
- * Closes an element opened with gimp_config_writer_open().
+ * Closes an element opened with ligma_config_writer_open().
  *
  * Since: 2.4
  **/
 void
-gimp_config_writer_close (GimpConfigWriter *writer)
+ligma_config_writer_close (LigmaConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
   g_return_if_fail (writer->finished == FALSE);
@@ -628,13 +628,13 @@ gimp_config_writer_close (GimpConfigWriter *writer)
     {
       g_string_append_c (writer->buffer, '\n');
 
-      gimp_config_writer_flush (writer);
+      ligma_config_writer_flush (writer);
     }
 }
 
 /**
- * gimp_config_writer_finish:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_finish:
+ * @writer: a #LigmaConfigWriter
  * @footer: text to include as comment at the bottom of the file
  * @error: return location for possible errors
  *
@@ -642,8 +642,8 @@ gimp_config_writer_close (GimpConfigWriter *writer)
  * afterwards.  It closes all open elements, appends an optional
  * comment and releases all resources allocated by @writer.
  *
- * Using any function except gimp_config_writer_ref() or
- * gimp_config_writer_unref() after this function is forbidden
+ * Using any function except ligma_config_writer_ref() or
+ * ligma_config_writer_unref() after this function is forbidden
  * and will trigger warnings.
  *
  * Returns: %TRUE if everything could be successfully written,
@@ -652,7 +652,7 @@ gimp_config_writer_close (GimpConfigWriter *writer)
  * Since: 2.4
  **/
 gboolean
-gimp_config_writer_finish (GimpConfigWriter  *writer,
+ligma_config_writer_finish (LigmaConfigWriter  *writer,
                            const gchar       *footer,
                            GError           **error)
 {
@@ -664,23 +664,23 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
 
   if (writer->depth < 0)
     {
-      g_warning ("gimp_config_writer_finish: depth < 0 !!");
+      g_warning ("ligma_config_writer_finish: depth < 0 !!");
     }
   else
     {
       while (writer->depth)
-        gimp_config_writer_close (writer);
+        ligma_config_writer_close (writer);
     }
 
   if (footer)
     {
-      gimp_config_writer_linefeed (writer);
-      gimp_config_writer_comment (writer, footer);
+      ligma_config_writer_linefeed (writer);
+      ligma_config_writer_comment (writer, footer);
     }
 
   if (writer->output)
     {
-      success = gimp_config_writer_close_output (writer, error);
+      success = ligma_config_writer_close_output (writer, error);
 
       g_clear_object (&writer->file);
 
@@ -700,13 +700,13 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
 
   writer->finished = TRUE;
 
-  gimp_config_writer_unref (writer);
+  ligma_config_writer_unref (writer);
 
   return success;
 }
 
 void
-gimp_config_writer_linefeed (GimpConfigWriter *writer)
+ligma_config_writer_linefeed (LigmaConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
   g_return_if_fail (writer->finished == FALSE);
@@ -721,23 +721,23 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
       if (! g_output_stream_write_all (writer->output, "\n", 1,
                                        NULL, NULL, &error))
         {
-          g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+          g_set_error (&writer->error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_WRITE,
                        _("Error writing to '%s': %s"),
                        writer->file ?
-                       gimp_file_get_utf8_name (writer->file) : "output stream",
+                       ligma_file_get_utf8_name (writer->file) : "output stream",
                        error->message);
           g_clear_error (&error);
         }
     }
   else
     {
-      gimp_config_writer_newline (writer);
+      ligma_config_writer_newline (writer);
     }
 }
 
 /**
- * gimp_config_writer_comment:
- * @writer: a #GimpConfigWriter
+ * ligma_config_writer_comment:
+ * @writer: a #LigmaConfigWriter
  * @comment: the comment to write (ASCII only)
  *
  * Appends the @comment to @str and inserts linebreaks and hash-marks to
@@ -747,7 +747,7 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
  * Since: 2.4
  **/
 void
-gimp_config_writer_comment (GimpConfigWriter *writer,
+ligma_config_writer_comment (LigmaConfigWriter *writer,
                             const gchar      *comment)
 {
   const gchar *s;
@@ -768,7 +768,7 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
     return;
 
   comment_mode = writer->comment;
-  gimp_config_writer_comment_mode (writer, TRUE);
+  ligma_config_writer_comment_mode (writer, TRUE);
 
   len = strlen (comment);
 
@@ -793,20 +793,20 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
       len     -= i;
 
       if (len > 0)
-        gimp_config_writer_newline (writer);
+        ligma_config_writer_newline (writer);
     }
 
-  gimp_config_writer_comment_mode (writer, comment_mode);
-  gimp_config_writer_newline (writer);
+  ligma_config_writer_comment_mode (writer, comment_mode);
+  ligma_config_writer_newline (writer);
 
   if (writer->depth == 0)
-    gimp_config_writer_flush (writer);
+    ligma_config_writer_flush (writer);
 
 #undef LINE_LENGTH
 }
 
 static gboolean
-gimp_config_writer_close_output (GimpConfigWriter  *writer,
+ligma_config_writer_close_output (LigmaConfigWriter  *writer,
                                  GError           **error)
 {
   g_return_val_if_fail (writer->output != NULL, FALSE);
@@ -831,9 +831,9 @@ gimp_config_writer_close_output (GimpConfigWriter  *writer,
 
       if (! g_output_stream_close (writer->output, NULL, &my_error))
         {
-          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+          g_set_error (error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_WRITE,
                        _("Error writing '%s': %s"),
-                       gimp_file_get_utf8_name (writer->file),
+                       ligma_file_get_utf8_name (writer->file),
                        my_error->message);
           g_clear_error (&my_error);
 

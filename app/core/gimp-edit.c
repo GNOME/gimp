@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,63 +21,63 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-edit.h"
-#include "gimpbuffer.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-edit.h"
-#include "gimpgrouplayer.h"
-#include "gimpimage.h"
-#include "gimpimage-duplicate.h"
-#include "gimpimage-merge.h"
-#include "gimpimage-new.h"
-#include "gimpimage-undo.h"
-#include "gimplayer-floating-selection.h"
-#include "gimplayer-new.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
-#include "gimppickable.h"
-#include "gimpselection.h"
+#include "ligma.h"
+#include "ligma-edit.h"
+#include "ligmabuffer.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-edit.h"
+#include "ligmagrouplayer.h"
+#include "ligmaimage.h"
+#include "ligmaimage-duplicate.h"
+#include "ligmaimage-merge.h"
+#include "ligmaimage-new.h"
+#include "ligmaimage-undo.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmalayer-new.h"
+#include "ligmalayermask.h"
+#include "ligmalist.h"
+#include "ligmapickable.h"
+#include "ligmaselection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function protypes  */
 
-static GimpBuffer   * gimp_edit_extract            (GimpImage     *image,
+static LigmaBuffer   * ligma_edit_extract            (LigmaImage     *image,
                                                     GList         *pickables,
-                                                    GimpContext   *context,
+                                                    LigmaContext   *context,
                                                     gboolean       cut_pixels,
                                                     GError       **error);
-static GimpDrawable * gimp_edit_paste_get_top_item (GList         *drawables);
+static LigmaDrawable * ligma_edit_paste_get_top_item (GList         *drawables);
 
 
 /*  public functions  */
 
-GimpObject *
-gimp_edit_cut (GimpImage     *image,
+LigmaObject *
+ligma_edit_cut (LigmaImage     *image,
                GList         *drawables,
-               GimpContext   *context,
+               LigmaContext   *context,
                GError       **error)
 {
   GList    *iter;
   gboolean  cut_layers = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
+  if (ligma_channel_is_empty (ligma_image_get_mask (image)))
     {
       cut_layers = TRUE;
 
       for (iter = drawables; iter; iter = iter->next)
-        if (! GIMP_IS_LAYER (iter->data))
+        if (! LIGMA_IS_LAYER (iter->data))
           {
             cut_layers = FALSE;
             break;
@@ -87,7 +87,7 @@ gimp_edit_cut (GimpImage     *image,
   if (cut_layers)
     {
       GList     *remove = NULL;
-      GimpImage *clip_image;
+      LigmaImage *clip_image;
       gchar     *undo_label;
 
       /* Let's work on a copy because we will edit the list to remove
@@ -103,7 +103,7 @@ gimp_edit_cut (GimpImage     *image,
               if (iter2 == iter)
                 continue;
 
-              if (gimp_viewable_is_ancestor (iter2->data, iter->data))
+              if (ligma_viewable_is_ancestor (iter2->data, iter->data))
                 {
                   /* When cutting a layer group, all its children come
                    * with anyway.
@@ -119,66 +119,66 @@ gimp_edit_cut (GimpImage     *image,
       g_list_free (remove);
 
       /* Now copy all layers into the clipboard image. */
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, TRUE);
-      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
-      gimp_set_clipboard_image (image->gimp, clip_image);
+      clip_image = ligma_image_new_from_drawables (image->ligma, drawables, FALSE, TRUE);
+      ligma_container_remove (image->ligma->images, LIGMA_OBJECT (clip_image));
+      ligma_set_clipboard_image (image->ligma, clip_image);
       g_object_unref (clip_image);
 
       undo_label = g_strdup_printf (ngettext ("Cut Layer", "Cut %d Layers",
                                               g_list_length (drawables)),
                                     g_list_length (drawables));
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_CUT,
                                    undo_label);
       g_free (undo_label);
 
       /* Remove layers from source image. */
       for (iter = drawables; iter; iter = iter->next)
-        gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
+        ligma_image_remove_layer (image, LIGMA_LAYER (iter->data),
                                  TRUE, NULL);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
       g_list_free (drawables);
 
-      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+      return LIGMA_OBJECT (ligma_get_clipboard_image (image->ligma));
     }
   else
     {
-      GimpBuffer *buffer;
+      LigmaBuffer *buffer;
 
-      buffer = gimp_edit_extract (image, drawables, context, TRUE, error);
+      buffer = ligma_edit_extract (image, drawables, context, TRUE, error);
 
       if (buffer)
         {
-          gimp_set_clipboard_buffer (image->gimp, buffer);
+          ligma_set_clipboard_buffer (image->ligma, buffer);
           g_object_unref (buffer);
 
-          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+          return LIGMA_OBJECT (ligma_get_clipboard_buffer (image->ligma));
         }
     }
 
   return NULL;
 }
 
-GimpObject *
-gimp_edit_copy (GimpImage     *image,
+LigmaObject *
+ligma_edit_copy (LigmaImage     *image,
                 GList         *drawables,
-                GimpContext   *context,
+                LigmaContext   *context,
                 GError       **error)
 {
   GList    *iter;
   gboolean  drawables_are_layers = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawables != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (iter->data), NULL);
 
-      if (! GIMP_IS_LAYER (iter->data))
+      if (! LIGMA_IS_LAYER (iter->data))
         drawables_are_layers = FALSE;
     }
 
@@ -191,34 +191,34 @@ gimp_edit_copy (GimpImage     *image,
        * It allows us to save the whole layer with all pixels as stored,
        * not the rendered version of it.
        */
-      GimpImage   *clip_image;
-      GimpChannel *clip_selection;
+      LigmaImage   *clip_image;
+      LigmaChannel *clip_selection;
 
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
-      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
-      gimp_set_clipboard_image (image->gimp, clip_image);
+      clip_image = ligma_image_new_from_drawables (image->ligma, drawables, TRUE, TRUE);
+      ligma_container_remove (image->ligma->images, LIGMA_OBJECT (clip_image));
+      ligma_set_clipboard_image (image->ligma, clip_image);
       g_object_unref (clip_image);
 
-      clip_selection = gimp_image_get_mask (clip_image);
-      if (! gimp_channel_is_empty (clip_selection))
+      clip_selection = ligma_image_get_mask (clip_image);
+      if (! ligma_channel_is_empty (clip_selection))
         {
           GList         *all_items;
           GeglRectangle  selection_bounds;
 
-          gimp_item_bounds (GIMP_ITEM (clip_selection),
+          ligma_item_bounds (LIGMA_ITEM (clip_selection),
                             &selection_bounds.x, &selection_bounds.y,
                             &selection_bounds.width, &selection_bounds.height);
 
           /* Invert the selection. */
-          gimp_channel_invert (clip_selection, FALSE);
-          all_items = gimp_image_get_layer_list (clip_image);
+          ligma_channel_invert (clip_selection, FALSE);
+          all_items = ligma_image_get_layer_list (clip_image);
 
           for (iter = all_items; iter; iter = g_list_next (iter))
             {
               gint item_x;
               gint item_y;
 
-              gimp_item_get_offset (GIMP_ITEM (iter->data), &item_x, &item_y);
+              ligma_item_get_offset (LIGMA_ITEM (iter->data), &item_x, &item_y);
 
               /* Even if the original layer may not have an alpha channel, the
                * selected data must always have one. First because a selection
@@ -228,83 +228,83 @@ gimp_edit_copy (GimpImage     *image,
                * we will clear, if we hadn't added an alpha channel, we'd end up
                * with background color all over the place.
                */
-              gimp_layer_add_alpha (GIMP_LAYER (iter->data));
-              gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+              ligma_layer_add_alpha (LIGMA_LAYER (iter->data));
+              ligma_drawable_edit_clear (LIGMA_DRAWABLE (iter->data), context);
 
               /* Finally shrink the copied layer to selection bounds. */
-              gimp_item_resize (iter->data, context, GIMP_FILL_TRANSPARENT,
+              ligma_item_resize (iter->data, context, LIGMA_FILL_TRANSPARENT,
                                 selection_bounds.width, selection_bounds.height,
                                 item_x - selection_bounds.x, item_y - selection_bounds.y);
             }
           g_list_free (all_items);
         }
       /* Remove selection from the clipboard image. */
-      gimp_channel_clear (clip_selection, NULL, FALSE);
+      ligma_channel_clear (clip_selection, NULL, FALSE);
 
-      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+      return LIGMA_OBJECT (ligma_get_clipboard_image (image->ligma));
     }
   else
     {
-      GimpBuffer *buffer;
+      LigmaBuffer *buffer;
 
-      buffer = gimp_edit_extract (image, drawables, context, FALSE, error);
+      buffer = ligma_edit_extract (image, drawables, context, FALSE, error);
 
       if (buffer)
         {
-          gimp_set_clipboard_buffer (image->gimp, buffer);
+          ligma_set_clipboard_buffer (image->ligma, buffer);
           g_object_unref (buffer);
 
-          return GIMP_OBJECT (gimp_get_clipboard_buffer (image->gimp));
+          return LIGMA_OBJECT (ligma_get_clipboard_buffer (image->ligma));
         }
     }
 
   return NULL;
 }
 
-GimpBuffer *
-gimp_edit_copy_visible (GimpImage    *image,
-                        GimpContext  *context,
+LigmaBuffer *
+ligma_edit_copy_visible (LigmaImage    *image,
+                        LigmaContext  *context,
                         GError      **error)
 {
-  GimpBuffer *buffer;
+  LigmaBuffer *buffer;
   GList      *pickables;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   pickables = g_list_prepend (NULL, image);
-  buffer = gimp_edit_extract (image, pickables, context, FALSE, error);
+  buffer = ligma_edit_extract (image, pickables, context, FALSE, error);
   g_list_free (pickables);
 
   if (buffer)
     {
-      gimp_set_clipboard_buffer (image->gimp, buffer);
+      ligma_set_clipboard_buffer (image->ligma, buffer);
       g_object_unref (buffer);
 
-      return gimp_get_clipboard_buffer (image->gimp);
+      return ligma_get_clipboard_buffer (image->ligma);
     }
 
   return NULL;
 }
 
 static gboolean
-gimp_edit_paste_is_in_place (GimpPasteType paste_type)
+ligma_edit_paste_is_in_place (LigmaPasteType paste_type)
 {
   switch (paste_type)
     {
-    case GIMP_PASTE_TYPE_FLOATING:
-    case GIMP_PASTE_TYPE_FLOATING_INTO:
-    case GIMP_PASTE_TYPE_NEW_LAYER:
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_FLOATING:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO:
+    case LIGMA_PASTE_TYPE_NEW_LAYER:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
       return FALSE;
 
-    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
       return TRUE;
     }
 
@@ -312,26 +312,26 @@ gimp_edit_paste_is_in_place (GimpPasteType paste_type)
 }
 
 static gboolean
-gimp_edit_paste_is_floating (GimpPasteType  paste_type,
-                             GimpDrawable  *drawable)
+ligma_edit_paste_is_floating (LigmaPasteType  paste_type,
+                             LigmaDrawable  *drawable)
 {
   switch (paste_type)
     {
-    case GIMP_PASTE_TYPE_FLOATING:
-    case GIMP_PASTE_TYPE_FLOATING_INTO:
-    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO:
+    case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
       return TRUE;
 
-    case GIMP_PASTE_TYPE_NEW_LAYER:
-    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_LAYER:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE:
       return FALSE;
 
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
-      if (GIMP_IS_LAYER_MASK (drawable))
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+      if (LIGMA_IS_LAYER_MASK (drawable))
         return TRUE;
       else
         return FALSE;
@@ -341,41 +341,41 @@ gimp_edit_paste_is_floating (GimpPasteType  paste_type,
 }
 
 static GList *
-gimp_edit_paste_get_tagged_layers (GimpImage         *image,
+ligma_edit_paste_get_tagged_layers (LigmaImage         *image,
                                    GList             *layers,
                                    GList             *returned_layers,
                                    const Babl        *floating_format,
-                                   GimpImageBaseType  base_type,
-                                   GimpPrecision      precision,
-                                   GimpPasteType      paste_type)
+                                   LigmaImageBaseType  base_type,
+                                   LigmaPrecision      precision,
+                                   LigmaPasteType      paste_type)
 {
   GList *iter;
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
       GType      layer_type;
       gboolean   copied = TRUE;
 
       switch (paste_type)
         {
-        case GIMP_PASTE_TYPE_FLOATING:
-        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-        case GIMP_PASTE_TYPE_FLOATING_INTO:
-        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-          /*  when pasting as floating make sure gimp_item_convert()
+        case LIGMA_PASTE_TYPE_FLOATING:
+        case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+          /*  when pasting as floating make sure ligma_item_convert()
            *  will turn group layers into normal layers, otherwise use
            *  the same layer type so e.g. text information gets
            *  preserved. See issue #2667.
            */
-          if (GIMP_IS_GROUP_LAYER (iter->data))
-            layer_type = GIMP_TYPE_LAYER;
+          if (LIGMA_IS_GROUP_LAYER (iter->data))
+            layer_type = LIGMA_TYPE_LAYER;
           else
             layer_type = G_TYPE_FROM_INSTANCE (iter->data);
           break;
 
-        case GIMP_PASTE_TYPE_NEW_LAYER:
-        case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+        case LIGMA_PASTE_TYPE_NEW_LAYER:
+        case LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE:
           layer_type = G_TYPE_FROM_INSTANCE (iter->data);
           break;
 
@@ -383,31 +383,31 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
           g_return_val_if_reached (NULL);
         }
 
-      if (GIMP_IS_GROUP_LAYER (iter->data))
+      if (LIGMA_IS_GROUP_LAYER (iter->data))
         copied = (gboolean) GPOINTER_TO_INT (g_object_get_data (G_OBJECT (iter->data),
-                                                                "gimp-image-copied-layer"));
+                                                                "ligma-image-copied-layer"));
       if (copied)
         {
-          layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
+          layer = LIGMA_LAYER (ligma_item_convert (LIGMA_ITEM (iter->data),
                                                  image, layer_type));
           returned_layers = g_list_prepend (returned_layers, layer);
 
           switch (paste_type)
             {
-            case GIMP_PASTE_TYPE_FLOATING:
-            case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-            case GIMP_PASTE_TYPE_FLOATING_INTO:
-            case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+            case LIGMA_PASTE_TYPE_FLOATING:
+            case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+            case LIGMA_PASTE_TYPE_FLOATING_INTO:
+            case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
               /*  when pasting as floating selection, get rid of the layer mask,
                *  and make sure the layer has the right format
                */
-              if (gimp_layer_get_mask (iter->data))
-                gimp_layer_apply_mask (iter->data, GIMP_MASK_DISCARD, FALSE);
+              if (ligma_layer_get_mask (iter->data))
+                ligma_layer_apply_mask (iter->data, LIGMA_MASK_DISCARD, FALSE);
 
-              if (gimp_drawable_get_format (GIMP_DRAWABLE (iter->data)) !=
+              if (ligma_drawable_get_format (LIGMA_DRAWABLE (iter->data)) !=
                   floating_format)
                 {
-                  gimp_drawable_convert_type (GIMP_DRAWABLE (iter->data), image,
+                  ligma_drawable_convert_type (LIGMA_DRAWABLE (iter->data), image,
                                               base_type, precision,
                                               TRUE, NULL, NULL,
                                               GEGL_DITHER_NONE, GEGL_DITHER_NONE,
@@ -421,11 +421,11 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
         }
       else
         {
-          GimpContainer *container;
+          LigmaContainer *container;
 
-          container = gimp_viewable_get_children (iter->data);
-          returned_layers = gimp_edit_paste_get_tagged_layers (image,
-                                                               GIMP_LIST (container)->queue->head,
+          container = ligma_viewable_get_children (iter->data);
+          returned_layers = ligma_edit_paste_get_tagged_layers (image,
+                                                               LIGMA_LIST (container)->queue->head,
                                                                returned_layers,
                                                                floating_format,
                                                                base_type, precision, paste_type);
@@ -436,10 +436,10 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
 }
 
 static GList *
-gimp_edit_paste_get_layers (GimpImage     *image,
+ligma_edit_paste_get_layers (LigmaImage     *image,
                             GList         *drawables,
-                            GimpObject    *paste,
-                            GimpPasteType *paste_type)
+                            LigmaObject    *paste,
+                            LigmaPasteType *paste_type)
 {
   GList      *layers = NULL;
   const Babl *floating_format;
@@ -448,50 +448,50 @@ gimp_edit_paste_get_layers (GimpImage     *image,
    *  floating selection
    */
   if (g_list_length (drawables) != 1               ||
-      gimp_viewable_get_children (drawables->data) ||
-      gimp_item_is_content_locked (drawables->data, NULL))
+      ligma_viewable_get_children (drawables->data) ||
+      ligma_item_is_content_locked (drawables->data, NULL))
     {
-      if (gimp_edit_paste_is_in_place (*paste_type))
-        *paste_type = GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
+      if (ligma_edit_paste_is_in_place (*paste_type))
+        *paste_type = LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE;
       else
-        *paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+        *paste_type = LIGMA_PASTE_TYPE_NEW_LAYER;
     }
 
   /*  floating pastes always have the pasted-to drawable's format with
    *  alpha; if drawable == NULL, user is pasting into an empty image
    */
-  if (drawables && gimp_edit_paste_is_floating (*paste_type, drawables->data))
-    floating_format = gimp_drawable_get_format_with_alpha (drawables->data);
+  if (drawables && ligma_edit_paste_is_floating (*paste_type, drawables->data))
+    floating_format = ligma_drawable_get_format_with_alpha (drawables->data);
   else
-    floating_format = gimp_image_get_layer_format (image, TRUE);
+    floating_format = ligma_image_get_layer_format (image, TRUE);
 
-  if (GIMP_IS_IMAGE (paste))
+  if (LIGMA_IS_IMAGE (paste))
     {
-      layers = gimp_image_get_layer_iter (GIMP_IMAGE (paste));
+      layers = ligma_image_get_layer_iter (LIGMA_IMAGE (paste));
 
       if (g_list_length (layers) > 1)
         {
-          if (gimp_edit_paste_is_in_place (*paste_type))
-            *paste_type = GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
+          if (ligma_edit_paste_is_in_place (*paste_type))
+            *paste_type = LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE;
           else
-            *paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+            *paste_type = LIGMA_PASTE_TYPE_NEW_LAYER;
         }
 
-      layers = gimp_edit_paste_get_tagged_layers (image, layers, NULL, floating_format,
-                                                  gimp_drawable_get_base_type (drawables->data),
-                                                  gimp_drawable_get_precision (drawables->data),
+      layers = ligma_edit_paste_get_tagged_layers (image, layers, NULL, floating_format,
+                                                  ligma_drawable_get_base_type (drawables->data),
+                                                  ligma_drawable_get_precision (drawables->data),
                                                   *paste_type);
       layers = g_list_reverse (layers);
     }
-  else if (GIMP_IS_BUFFER (paste))
+  else if (LIGMA_IS_BUFFER (paste))
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
 
-      layer = gimp_layer_new_from_buffer (GIMP_BUFFER (paste), image,
+      layer = ligma_layer_new_from_buffer (LIGMA_BUFFER (paste), image,
                                           floating_format,
                                           _("Pasted Layer"),
-                                          GIMP_OPACITY_OPAQUE,
-                                          gimp_image_get_default_new_layer_mode (image));
+                                          LIGMA_OPACITY_OPAQUE,
+                                          ligma_image_get_default_new_layer_mode (image));
 
       layers = g_list_prepend (layers, layer);
     }
@@ -500,7 +500,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
 }
 
 static void
-gimp_edit_paste_get_viewport_offset (GimpImage *image,
+ligma_edit_paste_get_viewport_offset (LigmaImage *image,
                                      GList     *drawables,
                                      GList     *pasted_layers,
                                      gint       viewport_x,
@@ -525,13 +525,13 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
   gint     y2             = G_MININT;
   gboolean clamp_to_image = TRUE;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (pasted_layers != NULL);
   g_return_if_fail (offset_x != NULL);
   g_return_if_fail (offset_y != NULL);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  image_width  = ligma_image_get_width  (image);
+  image_height = ligma_image_get_height (image);
 
   for (iter = pasted_layers; iter; iter = iter->next)
     {
@@ -540,10 +540,10 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
       gint layer_width;
       gint layer_height;
 
-      g_return_if_fail (GIMP_IS_VIEWABLE (iter->data));
+      g_return_if_fail (LIGMA_IS_VIEWABLE (iter->data));
 
-      gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
-      gimp_viewable_get_size (iter->data, &layer_width, &layer_height);
+      ligma_item_get_offset (LIGMA_ITEM (iter->data), &layer_off_x, &layer_off_y);
+      ligma_viewable_get_size (iter->data, &layer_width, &layer_height);
 
       x1 = MIN (layer_off_x, x1);
       y1 = MIN (layer_off_y, y1);
@@ -583,14 +583,14 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
       gint     paste_height;
       gboolean have_mask;
 
-      have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      have_mask = ! ligma_channel_is_empty (ligma_image_get_mask (image));
 
       for (iter = drawables; iter; iter = iter->next)
         {
-          GimpContainer *children;
+          LigmaContainer *children;
 
-          children = gimp_viewable_get_children (iter->data);
-          if (! children || gimp_container_get_n_children (children) > 0)
+          children = ligma_viewable_get_children (iter->data);
+          if (! children || ligma_container_get_n_children (children) > 0)
             {
               empty_target = FALSE;
               break;
@@ -602,7 +602,7 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
           /* treat empty layer groups as image-sized, use the selection
            * as target
            */
-          gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+          ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                             &target_x, &target_y,
                             &target_width, &target_height);
         }
@@ -622,9 +622,9 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
               gint mask_width;
               gint mask_height;
 
-              gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
+              ligma_item_get_offset (LIGMA_ITEM (iter->data), &layer_off_x, &layer_off_y);
               /* This is the bounds relatively to the drawable. */
-              gimp_item_mask_intersect (GIMP_ITEM (iter->data),
+              ligma_item_mask_intersect (LIGMA_ITEM (iter->data),
                                         &mask_off_x, &mask_off_y,
                                         &mask_width, &mask_height);
 
@@ -648,7 +648,7 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
            source_height < target_height) &&
 
           /* and the viewport intersects with the target */
-          gimp_rectangle_intersect (viewport_x, viewport_y,
+          ligma_rectangle_intersect (viewport_x, viewport_y,
                                     viewport_width, viewport_height,
                                     target_x, target_x,
                                     target_width, target_height,
@@ -703,10 +703,10 @@ gimp_edit_paste_get_viewport_offset (GimpImage *image,
 }
 
 static GList *
-gimp_edit_paste_paste (GimpImage     *image,
+ligma_edit_paste_paste (LigmaImage     *image,
                        GList         *drawables,
                        GList         *layers,
-                       GimpPasteType  paste_type,
+                       LigmaPasteType  paste_type,
                        gboolean       use_offset,
                        gint           layers_bbox_x,
                        gint           layers_bbox_y,
@@ -715,89 +715,89 @@ gimp_edit_paste_paste (GimpImage     *image,
 {
   GList *iter;
 
-  g_return_val_if_fail (paste_type > GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE ||
+  g_return_val_if_fail (paste_type > LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE ||
                         g_list_length (drawables) == 1, NULL);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
 
   for (iter = layers; iter; iter = iter->next)
     {
       /* Layers for in-place paste are already translated. */
       if (use_offset)
-        gimp_item_translate (GIMP_ITEM (iter->data),
+        ligma_item_translate (LIGMA_ITEM (iter->data),
                              offset_x - layers_bbox_x,
                              offset_y - layers_bbox_y, FALSE);
 
       switch (paste_type)
         {
-        case GIMP_PASTE_TYPE_FLOATING:
-        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+        case LIGMA_PASTE_TYPE_FLOATING:
+        case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
           /*  if there is a selection mask clear it - this might not
            *  always be desired, but in general, it seems like the correct
            *  behavior
            */
-          if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-            gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+          if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
+            ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
 
           /* fall thru */
 
-        case GIMP_PASTE_TYPE_FLOATING_INTO:
-        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
           floating_sel_attach (iter->data, drawables->data);
           break;
 
-        case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
-        case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
-          if (g_list_length (drawables) == 1 && GIMP_IS_LAYER_MASK (drawables->data))
+        case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+        case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+          if (g_list_length (drawables) == 1 && LIGMA_IS_LAYER_MASK (drawables->data))
             {
-              if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-                gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+              if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
+                ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
               floating_sel_attach (iter->data, drawables->data);
               break;
             }
 
           /* fall thru if not a layer mask */
 
-        case GIMP_PASTE_TYPE_NEW_LAYER:
-        case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+        case LIGMA_PASTE_TYPE_NEW_LAYER:
+        case LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE:
             {
-              GimpLayer *parent   = NULL;
+              LigmaLayer *parent   = NULL;
               gint       position = 0;
 
               /*  always add on top of a passed layer, where we would attach
                *  a floating selection
                */
-              if (g_list_length (drawables) > 0 && GIMP_IS_LAYER (drawables->data))
+              if (g_list_length (drawables) > 0 && LIGMA_IS_LAYER (drawables->data))
                 {
-                  GimpDrawable *top_drawable;
+                  LigmaDrawable *top_drawable;
 
-                  top_drawable = gimp_edit_paste_get_top_item (drawables);
-                  parent   = gimp_layer_get_parent (GIMP_LAYER (top_drawable));
-                  position = gimp_item_get_index (GIMP_ITEM (top_drawable));
+                  top_drawable = ligma_edit_paste_get_top_item (drawables);
+                  parent   = ligma_layer_get_parent (LIGMA_LAYER (top_drawable));
+                  position = ligma_item_get_index (LIGMA_ITEM (top_drawable));
                 }
 
-              gimp_image_add_layer (image, iter->data, parent, position, TRUE);
+              ligma_image_add_layer (image, iter->data, parent, position, TRUE);
             }
           break;
 
-        case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
-        case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+        case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+        case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
           g_return_val_if_reached (NULL);
         }
     }
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return layers;
 }
 
 GList *
-gimp_edit_paste (GimpImage     *image,
+ligma_edit_paste (LigmaImage     *image,
                  GList         *drawables,
-                 GimpObject    *paste,
-                 GimpPasteType  paste_type,
-                 GimpContext   *context,
+                 LigmaObject    *paste,
+                 LigmaPasteType  paste_type,
+                 LigmaContext   *context,
                  gboolean       merged,
                  gint           viewport_x,
                  gint           viewport_y,
@@ -811,45 +811,45 @@ gimp_edit_paste (GimpImage     *image,
   gint      offset_y      = 0;
   gint      offset_x      = 0;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (paste) || LIGMA_IS_BUFFER (paste), NULL);
 
   for (GList *iter = drawables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), NULL);
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (iter->data)), NULL);
     }
 
-  if (merged && GIMP_IS_IMAGE (paste))
+  if (merged && LIGMA_IS_IMAGE (paste))
     {
-      GimpImage *tmp_image;
+      LigmaImage *tmp_image;
 
-      tmp_image = gimp_image_duplicate (GIMP_IMAGE (paste));
-      gimp_container_remove (image->gimp->images, GIMP_OBJECT (tmp_image));
-      gimp_image_merge_visible_layers (tmp_image, context, GIMP_EXPAND_AS_NECESSARY,
+      tmp_image = ligma_image_duplicate (LIGMA_IMAGE (paste));
+      ligma_container_remove (image->ligma->images, LIGMA_OBJECT (tmp_image));
+      ligma_image_merge_visible_layers (tmp_image, context, LIGMA_EXPAND_AS_NECESSARY,
                                        FALSE, FALSE, NULL);
-      layers = g_list_copy (gimp_image_get_layer_iter (tmp_image));
+      layers = g_list_copy (ligma_image_get_layer_iter (tmp_image));
 
       /* The merge process should ensure that we get a single non-group and
        * no-mask layer.
        */
       g_return_val_if_fail (g_list_length (layers) == 1, NULL);
 
-      layers->data = gimp_item_convert (GIMP_ITEM (layers->data), image,
+      layers->data = ligma_item_convert (LIGMA_ITEM (layers->data), image,
                                         G_TYPE_FROM_INSTANCE (layers->data));
 
       switch (paste_type)
         {
-        case GIMP_PASTE_TYPE_FLOATING:
-        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-        case GIMP_PASTE_TYPE_FLOATING_INTO:
-        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-          if (gimp_drawable_get_format (GIMP_DRAWABLE (layers->data)) !=
-              gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layers->data)))
+        case LIGMA_PASTE_TYPE_FLOATING:
+        case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO:
+        case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+          if (ligma_drawable_get_format (LIGMA_DRAWABLE (layers->data)) !=
+              ligma_drawable_get_format_with_alpha (LIGMA_DRAWABLE (layers->data)))
             {
-              gimp_drawable_convert_type (GIMP_DRAWABLE (layers->data), image,
-                                          gimp_drawable_get_base_type (layers->data),
-                                          gimp_drawable_get_precision (layers->data),
+              ligma_drawable_convert_type (LIGMA_DRAWABLE (layers->data), image,
+                                          ligma_drawable_get_base_type (layers->data),
+                                          ligma_drawable_get_precision (layers->data),
                                           TRUE, NULL, NULL,
                                           GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                           FALSE, NULL);
@@ -863,17 +863,17 @@ gimp_edit_paste (GimpImage     *image,
     }
   else
     {
-      layers = gimp_edit_paste_get_layers (image, drawables, paste, &paste_type);
+      layers = ligma_edit_paste_get_layers (image, drawables, paste, &paste_type);
     }
 
   if (! layers)
     return NULL;
 
-  if (gimp_edit_paste_is_in_place (paste_type))
+  if (ligma_edit_paste_is_in_place (paste_type))
     {
-      if (GIMP_IS_BUFFER (paste))
+      if (LIGMA_IS_BUFFER (paste))
         {
-          GimpBuffer *buffer = GIMP_BUFFER (paste);
+          LigmaBuffer *buffer = LIGMA_BUFFER (paste);
 
           use_offset = TRUE;
           offset_x   = buffer->offset_x;
@@ -883,7 +883,7 @@ gimp_edit_paste (GimpImage     *image,
   else
     {
       use_offset = TRUE;
-      gimp_edit_paste_get_viewport_offset (image, drawables, layers,
+      ligma_edit_paste_get_viewport_offset (image, drawables, layers,
                                            viewport_x,
                                            viewport_y,
                                            viewport_width,
@@ -894,113 +894,113 @@ gimp_edit_paste (GimpImage     *image,
                                            &offset_y);
     }
 
-  return gimp_edit_paste_paste (image, drawables, layers, paste_type,
+  return ligma_edit_paste_paste (image, drawables, layers, paste_type,
                                 use_offset, layers_bbox_x, layers_bbox_y,
                                 offset_x, offset_y);
 }
 
-GimpImage *
-gimp_edit_paste_as_new_image (Gimp       *gimp,
-                              GimpObject *paste)
+LigmaImage *
+ligma_edit_paste_as_new_image (Ligma       *ligma,
+                              LigmaObject *paste)
 {
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (paste) || LIGMA_IS_BUFFER (paste), NULL);
 
-  if (GIMP_IS_IMAGE (paste))
+  if (LIGMA_IS_IMAGE (paste))
     {
-      image = gimp_image_duplicate (GIMP_IMAGE (paste));
+      image = ligma_image_duplicate (LIGMA_IMAGE (paste));
     }
-  else if (GIMP_IS_BUFFER (paste))
+  else if (LIGMA_IS_BUFFER (paste))
     {
-      image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
+      image = ligma_image_new_from_buffer (ligma, LIGMA_BUFFER (paste));
     }
 
   return image;
 }
 
 const gchar *
-gimp_edit_named_cut (GimpImage     *image,
+ligma_edit_named_cut (LigmaImage     *image,
                      const gchar   *name,
                      GList         *drawables,
-                     GimpContext   *context,
+                     LigmaContext   *context,
                      GError       **error)
 {
-  GimpBuffer *buffer;
+  LigmaBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, drawables, context, TRUE, error);
+  buffer = ligma_edit_extract (image, drawables, context, TRUE, error);
 
   if (buffer)
     {
-      gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
+      ligma_object_set_name (LIGMA_OBJECT (buffer), name);
+      ligma_container_add (image->ligma->named_buffers, LIGMA_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (buffer);
+      return ligma_object_get_name (buffer);
     }
 
   return NULL;
 }
 
 const gchar *
-gimp_edit_named_copy (GimpImage     *image,
+ligma_edit_named_copy (LigmaImage     *image,
                       const gchar   *name,
                       GList         *drawables,
-                      GimpContext   *context,
+                      LigmaContext   *context,
                       GError       **error)
 {
-  GimpBuffer *buffer;
+  LigmaBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, drawables, context, FALSE, error);
+  buffer = ligma_edit_extract (image, drawables, context, FALSE, error);
 
   if (buffer)
     {
-      gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
+      ligma_object_set_name (LIGMA_OBJECT (buffer), name);
+      ligma_container_add (image->ligma->named_buffers, LIGMA_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (buffer);
+      return ligma_object_get_name (buffer);
     }
 
   return NULL;
 }
 
 const gchar *
-gimp_edit_named_copy_visible (GimpImage    *image,
+ligma_edit_named_copy_visible (LigmaImage    *image,
                               const gchar  *name,
-                              GimpContext  *context,
+                              LigmaContext  *context,
                               GError      **error)
 {
-  GimpBuffer *buffer;
+  LigmaBuffer *buffer;
   GList      *pickables;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   pickables = g_list_prepend (NULL, image);
-  buffer = gimp_edit_extract (image, pickables, context, FALSE, error);
+  buffer = ligma_edit_extract (image, pickables, context, FALSE, error);
   g_list_free (pickables);
 
   if (buffer)
     {
-      gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
+      ligma_object_set_name (LIGMA_OBJECT (buffer), name);
+      ligma_container_add (image->ligma->named_buffers, LIGMA_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (buffer);
+      return ligma_object_get_name (buffer);
     }
 
   return NULL;
@@ -1010,7 +1010,7 @@ gimp_edit_named_copy_visible (GimpImage    *image,
 /*  private functions  */
 
 /**
- * gimp_edit_extract:
+ * ligma_edit_extract:
  * @image:
  * @pickables:
  * @context:
@@ -1019,20 +1019,20 @@ gimp_edit_named_copy_visible (GimpImage    *image,
  *
  * Extracts the selected part of @image from the list of @pickables.
  * If @cut_pixels is %TRUE, and there is only one pickable input, and if
- * this pickable is a #GimpDrawable, then the selected pixels will be
+ * this pickable is a #LigmaDrawable, then the selected pixels will be
  * effectively erased from the input pickable.
  * Otherwise @cut_pixels has no additional effect.
  * Note that all @pickables must belong to the same @image.
  *
- * Returns: a #GimpBuffer of the selected part of @image as if only the
+ * Returns: a #LigmaBuffer of the selected part of @image as if only the
  * selected @pickables were present (composited according to their
  * properties, unless there is only one pickable, in which case direct
  * pixel information is used without composition).
  */
-static GimpBuffer *
-gimp_edit_extract (GimpImage     *image,
+static LigmaBuffer *
+ligma_edit_extract (LigmaImage     *image,
                    GList         *pickables,
-                   GimpContext   *context,
+                   LigmaContext   *context,
                    gboolean       cut_pixels,
                    GError       **error)
 {
@@ -1043,62 +1043,62 @@ gimp_edit_extract (GimpImage     *image,
   g_return_val_if_fail (g_list_length (pickables) > 0, NULL);
 
   if (g_list_length (pickables) > 1 ||
-      ! GIMP_IS_DRAWABLE (pickables->data))
+      ! LIGMA_IS_DRAWABLE (pickables->data))
     cut_pixels = FALSE;
 
   if (cut_pixels)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_CUT,
                                  C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
-  buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+  buffer = ligma_selection_extract (LIGMA_SELECTION (ligma_image_get_mask (image)),
                                    pickables, context,
                                    cut_pixels, FALSE, FALSE,
                                    &offset_x, &offset_y, error);
 
   if (cut_pixels)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 
   if (buffer)
     {
-      GimpBuffer *gimp_buffer;
+      LigmaBuffer *ligma_buffer;
       gdouble     res_x;
       gdouble     res_y;
 
-      gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
+      ligma_buffer = ligma_buffer_new (buffer, _("Global Buffer"),
                                      offset_x, offset_y, FALSE);
       g_object_unref (buffer);
 
-      gimp_image_get_resolution (image, &res_x, &res_y);
-      gimp_buffer_set_resolution (gimp_buffer, res_x, res_y);
-      gimp_buffer_set_unit (gimp_buffer, gimp_image_get_unit (image));
+      ligma_image_get_resolution (image, &res_x, &res_y);
+      ligma_buffer_set_resolution (ligma_buffer, res_x, res_y);
+      ligma_buffer_set_unit (ligma_buffer, ligma_image_get_unit (image));
 
-      if (GIMP_IS_COLOR_MANAGED (pickables->data))
+      if (LIGMA_IS_COLOR_MANAGED (pickables->data))
         {
-          GimpColorProfile *profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickables->data));
+          LigmaColorProfile *profile =
+            ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (pickables->data));
 
           if (profile)
-            gimp_buffer_set_color_profile (gimp_buffer, profile);
+            ligma_buffer_set_color_profile (ligma_buffer, profile);
         }
 
-      return gimp_buffer;
+      return ligma_buffer;
     }
 
   return NULL;
 }
 
 /* Return the visually top item. */
-static GimpDrawable *
-gimp_edit_paste_get_top_item (GList *drawables)
+static LigmaDrawable *
+ligma_edit_paste_get_top_item (GList *drawables)
 {
   GList        *iter;
-  GimpDrawable *top      = NULL;
+  LigmaDrawable *top      = NULL;
   GList        *top_path = NULL;
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      GList *path = gimp_item_get_path (iter->data);
+      GList *path = ligma_item_get_path (iter->data);
 
       if (top == NULL)
         {

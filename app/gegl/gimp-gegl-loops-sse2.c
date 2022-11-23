@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-loops-sse2.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-loops-sse2.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-gegl-loops-sse2.h"
+#include "ligma-gegl-loops-sse2.h"
 
 
 #if COMPILE_SSE2_INTRINISICS
@@ -36,11 +36,11 @@
 #include <emmintrin.h>
 
 
-/* helper function of gimp_gegl_smudge_with_paint_process_sse2()
+/* helper function of ligma_gegl_smudge_with_paint_process_sse2()
  * src and dest can be the same address
  */
 static inline void
-gimp_gegl_smudge_with_paint_blend_sse2 (const gfloat *src1,
+ligma_gegl_smudge_with_paint_blend_sse2 (const gfloat *src1,
                                         gfloat        src1_rate,
                                         const gfloat *src2,
                                         gfloat        src2_rate,
@@ -83,13 +83,13 @@ gimp_gegl_smudge_with_paint_blend_sse2 (const gfloat *src1,
   dest[3] = result_alpha;
 }
 
-/* helper function of gimp_gegl_smudge_with_paint()
+/* helper function of ligma_gegl_smudge_with_paint()
  *
  * note that it's the caller's responsibility to verify that the buffers are
  * properly aligned
  */
 void
-gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
+ligma_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
                                           const gfloat *canvas,
                                           gfloat       *paint,
                                           gint          count,
@@ -102,7 +102,7 @@ gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
   while (count--)
     {
       /* blend accum_buffer and canvas_buffer to accum_buffer */
-      gimp_gegl_smudge_with_paint_blend_sse2 (accum, rate, canvas, 1 - rate,
+      ligma_gegl_smudge_with_paint_blend_sse2 (accum, rate, canvas, 1 - rate,
                                               accum, no_erasing);
 
       /* blend accum_buffer and brush color/pixmap to paint_buffer */
@@ -114,7 +114,7 @@ gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
         {
           const gfloat *src1 = brush_color ? brush_color : paint;
 
-          gimp_gegl_smudge_with_paint_blend_sse2 (src1, flow, accum, 1 - flow,
+          ligma_gegl_smudge_with_paint_blend_sse2 (src1, flow, accum, 1 - flow,
                                                   paint, no_erasing);
         }
 

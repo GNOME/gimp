@@ -1,11 +1,11 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Plugin to convert a selection to a path.
  *
- * Copyright (C) 1999 Andy Thomas  alt@gimp.org
+ * Copyright (C) 1999 Andy Thomas  alt@ligma.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  */
 
 #include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 guchar          sel_pixel_value       (gint, gint);
 gint            sel_pixel_is_white    (gint, gint);

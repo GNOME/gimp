@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimpsmudgeoptions.h"
+#include "ligmasmudgeoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SMUDGE_DEFAULT_RATE       50.0
@@ -45,69 +45,69 @@ enum
 };
 
 
-static void   gimp_smudge_options_set_property (GObject      *object,
+static void   ligma_smudge_options_set_property (GObject      *object,
                                                 guint         property_id,
                                                 const GValue *value,
                                                 GParamSpec   *pspec);
-static void   gimp_smudge_options_get_property (GObject      *object,
+static void   ligma_smudge_options_get_property (GObject      *object,
                                                 guint         property_id,
                                                 GValue       *value,
                                                 GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpSmudgeOptions, gimp_smudge_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaSmudgeOptions, ligma_smudge_options,
+               LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
+ligma_smudge_options_class_init (LigmaSmudgeOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_smudge_options_set_property;
-  object_class->get_property = gimp_smudge_options_get_property;
+  object_class->set_property = ligma_smudge_options_set_property;
+  object_class->get_property = ligma_smudge_options_get_property;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
                            "rate",
                            C_("smudge-tool", "Rate"),
                            _("The strength of smudging"),
                            0.0, 100.0, SMUDGE_DEFAULT_RATE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
                            "flow",
                            C_("smudge-tool", "Flow"),
                            _("The amount of brush color to blend"),
                            0.0, 100.0, SMUDGE_DEFAULT_FLOW,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING,
                             "no-erasing",
                             C_("smudge-tool", "No erasing effect"),
                             _("Never decrease alpha of existing pixels"),
                             SMUDGE_DEFAULT_NO_ERASING,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_smudge_options_init (GimpSmudgeOptions *options)
+ligma_smudge_options_init (LigmaSmudgeOptions *options)
 {
 }
 
 static void
-gimp_smudge_options_set_property (GObject      *object,
+ligma_smudge_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (object);
+  LigmaSmudgeOptions *options = LIGMA_SMUDGE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -131,12 +131,12 @@ gimp_smudge_options_set_property (GObject      *object,
 }
 
 static void
-gimp_smudge_options_get_property (GObject    *object,
+ligma_smudge_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (object);
+  LigmaSmudgeOptions *options = LIGMA_SMUDGE_OPTIONS (object);
 
   switch (property_id)
     {

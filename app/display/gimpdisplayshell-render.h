@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,33 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
-#define __GIMP_DISPLAY_SHELL_RENDER_H__
+#ifndef __LIGMA_DISPLAY_SHELL_RENDER_H__
+#define __LIGMA_DISPLAY_SHELL_RENDER_H__
 
 
-void     gimp_display_shell_render_set_scale       (GimpDisplayShell *shell,
+void     ligma_display_shell_render_set_scale       (LigmaDisplayShell *shell,
                                                     gint              scale);
 
-void     gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell);
-void     gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,
+void     ligma_display_shell_render_invalidate_full (LigmaDisplayShell *shell);
+void     ligma_display_shell_render_invalidate_area (LigmaDisplayShell *shell,
                                                     gint              x,
                                                     gint              y,
                                                     gint              width,
                                                     gint              height);
 
-void     gimp_display_shell_render_validate_area   (GimpDisplayShell *shell,
+void     ligma_display_shell_render_validate_area   (LigmaDisplayShell *shell,
                                                     gint              x,
                                                     gint              y,
                                                     gint              width,
                                                     gint              height);
 
-gboolean gimp_display_shell_render_is_valid        (GimpDisplayShell *shell,
+gboolean ligma_display_shell_render_is_valid        (LigmaDisplayShell *shell,
                                                     gint              x,
                                                     gint              y,
                                                     gint              width,
                                                     gint              height);
 
-void     gimp_display_shell_render                 (GimpDisplayShell *shell,
+void     ligma_display_shell_render                 (LigmaDisplayShell *shell,
                                                     cairo_t          *cr,
                                                     gint              x,
                                                     gint              y,
@@ -50,4 +50,4 @@ void     gimp_display_shell_render                 (GimpDisplayShell *shell,
                                                     gdouble           scale);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_RENDER_H__  */

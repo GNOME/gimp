@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpconfig-path.c
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * ligmaconfig-path.c
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,34 +26,34 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpconfig-error.h"
-#include "gimpconfig-path.h"
+#include "ligmaconfig-error.h"
+#include "ligmaconfig-path.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpconfig-path
- * @title: GimpConfig-path
- * @short_description: File path utilities for libgimpconfig.
+ * SECTION: ligmaconfig-path
+ * @title: LigmaConfig-path
+ * @short_description: File path utilities for libligmaconfig.
  *
- * File path utilities for libgimpconfig.
+ * File path utilities for libligmaconfig.
  **/
 
 
 /**
- * gimp_config_path_get_type:
+ * ligma_config_path_get_type:
  *
  * Reveals the object type
  *
- * Returns: the #GType for a GimpConfigPath string property
+ * Returns: the #GType for a LigmaConfigPath string property
  *
  * Since: 2.4
  **/
 GType
-gimp_config_path_get_type (void)
+ligma_config_path_get_type (void)
 {
   static GType path_type = 0;
 
@@ -61,7 +61,7 @@ gimp_config_path_get_type (void)
     {
       const GTypeInfo type_info = { 0, };
 
-      path_type = g_type_register_static (G_TYPE_STRING, "GimpConfigPath",
+      path_type = g_type_register_static (G_TYPE_STRING, "LigmaConfigPath",
                                           &type_info, 0);
     }
 
@@ -70,24 +70,24 @@ gimp_config_path_get_type (void)
 
 
 /*
- * GIMP_TYPE_PARAM_CONFIG_PATH
+ * LIGMA_TYPE_PARAM_CONFIG_PATH
  */
 
-#define GIMP_PARAM_SPEC_CONFIG_PATH(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CONFIG_PATH, GimpParamSpecConfigPath))
+#define LIGMA_PARAM_SPEC_CONFIG_PATH(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), LIGMA_TYPE_PARAM_CONFIG_PATH, LigmaParamSpecConfigPath))
 
-typedef struct _GimpParamSpecConfigPath GimpParamSpecConfigPath;
+typedef struct _LigmaParamSpecConfigPath LigmaParamSpecConfigPath;
 
-struct _GimpParamSpecConfigPath
+struct _LigmaParamSpecConfigPath
 {
   GParamSpecString    parent_instance;
 
-  GimpConfigPathType  type;
+  LigmaConfigPathType  type;
 };
 
-static void  gimp_param_config_path_class_init (GParamSpecClass *class);
+static void  ligma_param_config_path_class_init (GParamSpecClass *class);
 
 /**
- * gimp_param_config_path_get_type:
+ * ligma_param_config_path_get_type:
  *
  * Reveals the object type
  *
@@ -96,7 +96,7 @@ static void  gimp_param_config_path_class_init (GParamSpecClass *class);
  * Since: 2.4
  **/
 GType
-gimp_param_config_path_get_type (void)
+ligma_param_config_path_get_type (void)
 {
   static GType spec_type = 0;
 
@@ -106,14 +106,14 @@ gimp_param_config_path_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_config_path_class_init,
+        (GClassInitFunc) ligma_param_config_path_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecConfigPath),
+        sizeof (LigmaParamSpecConfigPath),
         0, NULL, NULL
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_STRING,
-                                          "GimpParamConfigPath",
+                                          "LigmaParamConfigPath",
                                           &type_info, 0);
     }
 
@@ -121,17 +121,17 @@ gimp_param_config_path_get_type (void)
 }
 
 static void
-gimp_param_config_path_class_init (GParamSpecClass *class)
+ligma_param_config_path_class_init (GParamSpecClass *class)
 {
-  class->value_type = GIMP_TYPE_CONFIG_PATH;
+  class->value_type = LIGMA_TYPE_CONFIG_PATH;
 }
 
 /**
- * gimp_param_spec_config_path:
+ * ligma_param_spec_config_path:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
  * @blurb:         Brief description of param.
- * @type:          a #GimpConfigPathType value.
+ * @type:          a #LigmaConfigPathType value.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *
@@ -144,173 +144,173 @@ gimp_param_config_path_class_init (GParamSpecClass *class)
  * Since: 2.4
  **/
 GParamSpec *
-gimp_param_spec_config_path (const gchar        *name,
+ligma_param_spec_config_path (const gchar        *name,
                              const gchar        *nick,
                              const gchar        *blurb,
-                             GimpConfigPathType  type,
+                             LigmaConfigPathType  type,
                              const gchar        *default_value,
                              GParamFlags         flags)
 {
   GParamSpecString *pspec;
 
-  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_CONFIG_PATH,
+  pspec = g_param_spec_internal (LIGMA_TYPE_PARAM_CONFIG_PATH,
                                  name, nick, blurb, flags);
 
   pspec->default_value = g_strdup (default_value);
 
-  GIMP_PARAM_SPEC_CONFIG_PATH (pspec)->type = type;
+  LIGMA_PARAM_SPEC_CONFIG_PATH (pspec)->type = type;
 
   return G_PARAM_SPEC (pspec);
 }
 
 /**
- * gimp_param_spec_config_path_type:
+ * ligma_param_spec_config_path_type:
  * @pspec:         A #GParamSpec for a path param
  *
  * Tells whether the path param encodes a filename,
  * dir name, or list of file or dir names.
  *
- * Returns: a #GimpConfigPathType value
+ * Returns: a #LigmaConfigPathType value
  *
  * Since: 2.4
  **/
-GimpConfigPathType
-gimp_param_spec_config_path_type (GParamSpec *pspec)
+LigmaConfigPathType
+ligma_param_spec_config_path_type (GParamSpec *pspec)
 {
-  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec), 0);
+  g_return_val_if_fail (LIGMA_IS_PARAM_SPEC_CONFIG_PATH (pspec), 0);
 
-  return GIMP_PARAM_SPEC_CONFIG_PATH (pspec)->type;
+  return LIGMA_PARAM_SPEC_CONFIG_PATH (pspec)->type;
 }
 
 
 /*
- * GimpConfig path utilities
+ * LigmaConfig path utilities
  */
 
-static gchar        * gimp_config_path_expand_only   (const gchar  *path,
+static gchar        * ligma_config_path_expand_only   (const gchar  *path,
                                                       GError      **error) G_GNUC_MALLOC;
-static inline gchar * gimp_config_path_extract_token (const gchar **str);
-static gchar        * gimp_config_path_unexpand_only (const gchar  *path) G_GNUC_MALLOC;
+static inline gchar * ligma_config_path_extract_token (const gchar **str);
+static gchar        * ligma_config_path_unexpand_only (const gchar  *path) G_GNUC_MALLOC;
 
 
 /**
- * gimp_config_build_data_path:
+ * ligma_config_build_data_path:
  * @name: directory name (in UTF-8 encoding)
  *
- * Creates a search path as it is used in the gimprc file.  The path
- * returned by gimp_config_build_data_path() includes a directory
- * below the user's gimp directory and one in the system-wide data
+ * Creates a search path as it is used in the ligmarc file.  The path
+ * returned by ligma_config_build_data_path() includes a directory
+ * below the user's ligma directory and one in the system-wide data
  * directory.
  *
- * Note that you cannot use this path directly with gimp_path_parse().
- * As it is in the gimprc notation, you first need to expand and
- * recode it using gimp_config_path_expand().
+ * Note that you cannot use this path directly with ligma_path_parse().
+ * As it is in the ligmarc notation, you first need to expand and
+ * recode it using ligma_config_path_expand().
  *
  * Returns: a newly allocated string
  *
  * Since: 2.4
  **/
 gchar *
-gimp_config_build_data_path (const gchar *name)
+ligma_config_build_data_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
+  return g_strconcat ("${ligma_dir}", G_DIR_SEPARATOR_S, name,
                       G_SEARCHPATH_SEPARATOR_S,
-                      "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
+                      "${ligma_data_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
 }
 
 /**
- * gimp_config_build_plug_in_path:
+ * ligma_config_build_plug_in_path:
  * @name: directory name (in UTF-8 encoding)
  *
- * Creates a search path as it is used in the gimprc file.  The path
- * returned by gimp_config_build_plug_in_path() includes a directory
- * below the user's gimp directory and one in the system-wide plug-in
+ * Creates a search path as it is used in the ligmarc file.  The path
+ * returned by ligma_config_build_plug_in_path() includes a directory
+ * below the user's ligma directory and one in the system-wide plug-in
  * directory.
  *
- * Note that you cannot use this path directly with gimp_path_parse().
- * As it is in the gimprc notation, you first need to expand and
- * recode it using gimp_config_path_expand().
+ * Note that you cannot use this path directly with ligma_path_parse().
+ * As it is in the ligmarc notation, you first need to expand and
+ * recode it using ligma_config_path_expand().
  *
  * Returns: a newly allocated string
  *
  * Since: 2.4
  **/
 gchar *
-gimp_config_build_plug_in_path (const gchar *name)
+ligma_config_build_plug_in_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
+  return g_strconcat ("${ligma_dir}", G_DIR_SEPARATOR_S, name,
                       G_SEARCHPATH_SEPARATOR_S,
-                      "${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name,
+                      "${ligma_plug_in_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
 }
 
 /**
- * gimp_config_build_writable_path:
+ * ligma_config_build_writable_path:
  * @name: directory name (in UTF-8 encoding)
  *
- * Creates a search path as it is used in the gimprc file.  The path
- * returned by gimp_config_build_writable_path() is just the writable
- * parts of the search path constructed by gimp_config_build_data_path().
+ * Creates a search path as it is used in the ligmarc file.  The path
+ * returned by ligma_config_build_writable_path() is just the writable
+ * parts of the search path constructed by ligma_config_build_data_path().
  *
- * Note that you cannot use this path directly with gimp_path_parse().
- * As it is in the gimprc notation, you first need to expand and
- * recode it using gimp_config_path_expand().
+ * Note that you cannot use this path directly with ligma_path_parse().
+ * As it is in the ligmarc notation, you first need to expand and
+ * recode it using ligma_config_path_expand().
  *
  * Returns: a newly allocated string
  *
  * Since: 2.4
  **/
 gchar *
-gimp_config_build_writable_path (const gchar *name)
+ligma_config_build_writable_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
+  return g_strconcat ("${ligma_dir}", G_DIR_SEPARATOR_S, name, NULL);
 }
 
 /**
- * gimp_config_build_system_path:
+ * ligma_config_build_system_path:
  * @name: directory name (in UTF-8 encoding)
  *
- * Creates a search path as it is used in the gimprc file.  The path
- * returned by gimp_config_build_system_path() is just the read-only
- * parts of the search path constructed by gimp_config_build_plug_in_path().
+ * Creates a search path as it is used in the ligmarc file.  The path
+ * returned by ligma_config_build_system_path() is just the read-only
+ * parts of the search path constructed by ligma_config_build_plug_in_path().
  *
- * Note that you cannot use this path directly with gimp_path_parse().
- * As it is in the gimprc notation, you first need to expand and
- * recode it using gimp_config_path_expand().
+ * Note that you cannot use this path directly with ligma_path_parse().
+ * As it is in the ligmarc notation, you first need to expand and
+ * recode it using ligma_config_path_expand().
  *
  * Returns: a newly allocated string
  *
  * Since: 2.10.6
  **/
 gchar *
-gimp_config_build_system_path (const gchar *name)
+ligma_config_build_system_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name, NULL);
+  return g_strconcat ("${ligma_plug_in_dir}", G_DIR_SEPARATOR_S, name, NULL);
 }
 
 /**
- * gimp_config_path_expand:
+ * ligma_config_path_expand:
  * @path:   a NUL-terminated string in UTF-8 encoding
  * @recode: whether to convert to the filesystem's encoding
  * @error:  return location for errors
  *
- * Paths as stored in gimprc and other config files have to be treated
+ * Paths as stored in ligmarc and other config files have to be treated
  * special.  The string may contain special identifiers such as for
- * example ${gimp_dir} that have to be substituted before use. Also
+ * example ${ligma_dir} that have to be substituted before use. Also
  * the user's filesystem may be in a different encoding than UTF-8
- * (which is what is used for the gimprc). This function does the
+ * (which is what is used for the ligmarc). This function does the
  * variable substitution for you and can also attempt to convert to
  * the filesystem encoding.
  *
- * To reverse the expansion, use gimp_config_path_unexpand().
+ * To reverse the expansion, use ligma_config_path_unexpand().
  *
  * Returns: a newly allocated NUL-terminated string
  *
  * Since: 2.4
  **/
 gchar *
-gimp_config_path_expand (const gchar  *path,
+ligma_config_path_expand (const gchar  *path,
                          gboolean      recode,
                          GError      **error)
 {
@@ -320,7 +320,7 @@ gimp_config_path_expand (const gchar  *path,
   if (recode)
     {
       gchar *retval;
-      gchar *expanded = gimp_config_path_expand_only (path, error);
+      gchar *expanded = ligma_config_path_expand_only (path, error);
 
       if (! expanded)
         return NULL;
@@ -332,23 +332,23 @@ gimp_config_path_expand (const gchar  *path,
       return retval;
     }
 
-  return gimp_config_path_expand_only (path, error);
+  return ligma_config_path_expand_only (path, error);
 }
 
 /**
- * gimp_config_path_expand_to_files:
+ * ligma_config_path_expand_to_files:
  * @path:  a NUL-terminated string in UTF-8 encoding
  * @error: return location for errors
  *
- * Paths as stored in the gimprc have to be treated special. The
+ * Paths as stored in the ligmarc have to be treated special. The
  * string may contain special identifiers such as for example
- * ${gimp_dir} that have to be substituted before use. Also the user's
+ * ${ligma_dir} that have to be substituted before use. Also the user's
  * filesystem may be in a different encoding than UTF-8 (which is what
- * is used for the gimprc).
+ * is used for the ligmarc).
  *
- * This function runs @path through gimp_config_path_expand() and
- * gimp_path_parse(), then turns the filenames returned by
- * gimp_path_parse() into GFile using g_file_new_for_path().
+ * This function runs @path through ligma_config_path_expand() and
+ * ligma_path_parse(), then turns the filenames returned by
+ * ligma_path_parse() into GFile using g_file_new_for_path().
  *
  * Returns: (element-type GFile) (transfer full):
                  a #GList of newly allocated #GFile objects.
@@ -356,7 +356,7 @@ gimp_config_path_expand (const gchar  *path,
  * Since: 2.10
  **/
 GList *
-gimp_config_path_expand_to_files (const gchar  *path,
+ligma_config_path_expand_to_files (const gchar  *path,
                                   GError      **error)
 {
   GList *files;
@@ -366,12 +366,12 @@ gimp_config_path_expand_to_files (const gchar  *path,
   g_return_val_if_fail (path != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  expanded = gimp_config_path_expand (path, TRUE, error);
+  expanded = ligma_config_path_expand (path, TRUE, error);
 
   if (! expanded)
     return NULL;
 
-  files = gimp_path_parse (expanded, 256, FALSE, NULL);
+  files = ligma_path_parse (expanded, 256, FALSE, NULL);
 
   g_free (expanded);
 
@@ -387,16 +387,16 @@ gimp_config_path_expand_to_files (const gchar  *path,
 }
 
 /**
- * gimp_config_path_unexpand:
+ * ligma_config_path_unexpand:
  * @path:   a NUL-terminated string
  * @recode: whether @path is in filesystem encoding or UTF-8
  * @error:  return location for errors
  *
- * The inverse operation of gimp_config_path_expand()
+ * The inverse operation of ligma_config_path_expand()
  *
  * This function takes a @path and tries to substitute the first
  * elements by well-known special identifiers such as for example
- * ${gimp_dir}. The unexpanded path can then be stored in gimprc and
+ * ${ligma_dir}. The unexpanded path can then be stored in ligmarc and
  * other config files.
  *
  * If @recode is %TRUE then @path is in local filesystem encoding,
@@ -407,7 +407,7 @@ gimp_config_path_expand_to_files (const gchar  *path,
  * Since: 2.10
  **/
 gchar *
-gimp_config_path_unexpand (const gchar  *path,
+ligma_config_path_unexpand (const gchar  *path,
                            gboolean      recode,
                            GError      **error)
 {
@@ -422,25 +422,25 @@ gimp_config_path_unexpand (const gchar  *path,
       if (! utf8)
         return NULL;
 
-      retval = gimp_config_path_unexpand_only (utf8);
+      retval = ligma_config_path_unexpand_only (utf8);
 
       g_free (utf8);
 
       return retval;
     }
 
-  return gimp_config_path_unexpand_only (path);
+  return ligma_config_path_unexpand_only (path);
 }
 
 /**
- * gimp_file_new_for_config_path:
+ * ligma_file_new_for_config_path:
  * @path:   a NUL-terminated string in UTF-8 encoding
  * @error:  return location for errors
  *
- * Expands @path using gimp_config_path_expand() and returns a #GFile
+ * Expands @path using ligma_config_path_expand() and returns a #GFile
  * for the expanded path.
  *
- * To reverse the expansion, use gimp_file_get_config_path().
+ * To reverse the expansion, use ligma_file_get_config_path().
  *
  * Returns: (nullable) (transfer full): a newly allocated #GFile,
  *          or %NULL if the expansion failed.
@@ -448,7 +448,7 @@ gimp_config_path_unexpand (const gchar  *path,
  * Since: 2.10
  **/
 GFile *
-gimp_file_new_for_config_path (const gchar  *path,
+ligma_file_new_for_config_path (const gchar  *path,
                                GError      **error)
 {
   GFile *file = NULL;
@@ -457,7 +457,7 @@ gimp_file_new_for_config_path (const gchar  *path,
   g_return_val_if_fail (path != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  expanded = gimp_config_path_expand (path, TRUE, error);
+  expanded = ligma_config_path_expand (path, TRUE, error);
 
   if (expanded)
     {
@@ -469,14 +469,14 @@ gimp_file_new_for_config_path (const gchar  *path,
 }
 
 /**
- * gimp_file_get_config_path:
+ * ligma_file_get_config_path:
  * @file:   a #GFile
  * @error:  return location for errors
  *
- * Unexpands @file's path using gimp_config_path_unexpand() and
+ * Unexpands @file's path using ligma_config_path_unexpand() and
  * returns the unexpanded path.
  *
- * The inverse operation of gimp_file_new_for_config_path().
+ * The inverse operation of ligma_file_new_for_config_path().
  *
  * Returns: a newly allocated NUL-terminated UTF-8 string, or %NULL if
  *               unexpanding failed.
@@ -484,7 +484,7 @@ gimp_file_new_for_config_path (const gchar  *path,
  * Since: 2.10
  **/
 gchar *
-gimp_file_get_config_path (GFile   *file,
+ligma_file_get_config_path (GFile   *file,
                            GError **error)
 {
   gchar *unexpanded = NULL;
@@ -497,7 +497,7 @@ gimp_file_get_config_path (GFile   *file,
 
   if (path)
     {
-      unexpanded = gimp_config_path_unexpand (path, TRUE, error);
+      unexpanded = ligma_config_path_unexpand (path, TRUE, error);
       g_free (path);
     }
   else
@@ -515,7 +515,7 @@ gimp_file_get_config_path (GFile   *file,
 #define SUBSTS_ALLOC 4
 
 static gchar *
-gimp_config_path_expand_only (const gchar  *path,
+ligma_config_path_expand_only (const gchar  *path,
                               GError      **error)
 {
   const gchar *home;
@@ -532,7 +532,7 @@ gimp_config_path_expand_only (const gchar  *path,
 
   home = g_get_home_dir ();
   if (home)
-    home = gimp_filename_to_utf8 (home);
+    home = ligma_filename_to_utf8 (home);
 
   p = path;
 
@@ -543,7 +543,7 @@ gimp_config_path_expand_only (const gchar  *path,
           length += strlen (home);
           p += 1;
         }
-      else if ((token = gimp_config_path_extract_token (&p)) != NULL)
+      else if ((token = ligma_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             if (strcmp (substs[2*i], token) == 0)
@@ -557,27 +557,27 @@ gimp_config_path_expand_only (const gchar  *path,
             {
               s = NULL;
 
-              if (strcmp (token, "gimp_dir") == 0)
-                s = gimp_directory ();
-              else if (strcmp (token, "gimp_data_dir") == 0)
-                s = gimp_data_directory ();
-              else if (strcmp (token, "gimp_plug_in_dir") == 0 ||
-                       strcmp (token, "gimp_plugin_dir") == 0)
-                s = gimp_plug_in_directory ();
-              else if (strcmp (token, "gimp_sysconf_dir") == 0)
-                s = gimp_sysconf_directory ();
-              else if (strcmp (token, "gimp_installation_dir") == 0)
-                s = gimp_installation_directory ();
-              else if (strcmp (token, "gimp_cache_dir") == 0)
-                s = gimp_cache_directory ();
-              else if (strcmp (token, "gimp_temp_dir") == 0)
-                s = gimp_temp_directory ();
+              if (strcmp (token, "ligma_dir") == 0)
+                s = ligma_directory ();
+              else if (strcmp (token, "ligma_data_dir") == 0)
+                s = ligma_data_directory ();
+              else if (strcmp (token, "ligma_plug_in_dir") == 0 ||
+                       strcmp (token, "ligma_plugin_dir") == 0)
+                s = ligma_plug_in_directory ();
+              else if (strcmp (token, "ligma_sysconf_dir") == 0)
+                s = ligma_sysconf_directory ();
+              else if (strcmp (token, "ligma_installation_dir") == 0)
+                s = ligma_installation_directory ();
+              else if (strcmp (token, "ligma_cache_dir") == 0)
+                s = ligma_cache_directory ();
+              else if (strcmp (token, "ligma_temp_dir") == 0)
+                s = ligma_temp_directory ();
 
               if (!s)
                 s = g_getenv (token);
 
 #ifdef G_OS_WIN32
-              /* The default user gimprc on Windows references
+              /* The default user ligmarc on Windows references
                * ${TEMP}, but not all Windows installations have that
                * environment variable, even if it should be kinda
                * standard. So special-case it.
@@ -589,7 +589,7 @@ gimp_config_path_expand_only (const gchar  *path,
 
           if (!s)
             {
-              g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+              g_set_error (error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
                            _("Cannot expand ${%s}"), token);
               g_free (token);
               goto cleanup;
@@ -599,7 +599,7 @@ gimp_config_path_expand_only (const gchar  *path,
             substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
 
           substs[2*n_substs]     = token;
-          substs[2*n_substs + 1] = (gchar *) gimp_filename_to_utf8 (s);
+          substs[2*n_substs + 1] = (gchar *) ligma_filename_to_utf8 (s);
 
           length += strlen (substs[2*n_substs + 1]);
 
@@ -629,7 +629,7 @@ gimp_config_path_expand_only (const gchar  *path,
           n += strlen (home);
           p += 1;
         }
-      else if ((token = gimp_config_path_extract_token (&p)) != NULL)
+      else if ((token = ligma_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             {
@@ -666,7 +666,7 @@ gimp_config_path_expand_only (const gchar  *path,
 }
 
 static inline gchar *
-gimp_config_path_extract_token (const gchar **str)
+ligma_config_path_extract_token (const gchar **str)
 {
   const gchar *p;
   gchar       *token;
@@ -690,7 +690,7 @@ gimp_config_path_extract_token (const gchar **str)
 }
 
 static gchar *
-gimp_config_path_unexpand_only (const gchar *path)
+ligma_config_path_unexpand_only (const gchar *path)
 {
   const struct
   {
@@ -699,20 +699,20 @@ gimp_config_path_unexpand_only (const gchar *path)
   }
   identifiers[] =
   {
-    { "${gimp_plug_in_dir}",      gimp_plug_in_directory () },
-    { "${gimp_data_dir}",         gimp_data_directory () },
-    { "${gimp_sysconf_dir}",      gimp_sysconf_directory () },
-    { "${gimp_installation_dir}", gimp_installation_directory () },
-    { "${gimp_cache_dir}",        gimp_cache_directory () },
-    { "${gimp_temp_dir}",         gimp_temp_directory () },
-    { "${gimp_dir}",              gimp_directory () }
+    { "${ligma_plug_in_dir}",      ligma_plug_in_directory () },
+    { "${ligma_data_dir}",         ligma_data_directory () },
+    { "${ligma_sysconf_dir}",      ligma_sysconf_directory () },
+    { "${ligma_installation_dir}", ligma_installation_directory () },
+    { "${ligma_cache_dir}",        ligma_cache_directory () },
+    { "${ligma_temp_dir}",         ligma_temp_directory () },
+    { "${ligma_dir}",              ligma_directory () }
   };
 
   GList *files;
   GList *list;
   gchar *unexpanded;
 
-  files = gimp_path_parse (path, 256, FALSE, NULL);
+  files = ligma_path_parse (path, 256, FALSE, NULL);
 
   for (list = files; list; list = g_list_next (list))
     {
@@ -735,9 +735,9 @@ gimp_config_path_unexpand_only (const gchar *path)
         }
     }
 
-  unexpanded = gimp_path_to_str (files);
+  unexpanded = ligma_path_to_str (files);
 
-  gimp_path_free (files);
+  ligma_path_free (files);
 
   return unexpanded;
 }

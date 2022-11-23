@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpunit_pdb.c
+ * ligmaunit_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,11 +24,11 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
-#include "gimpunit_pdb.h"
+#include "ligma.h"
+#include "ligmaunit_pdb.h"
 
 /**
- * _gimp_unit_get_number_of_units:
+ * _ligma_unit_get_number_of_units:
  *
  * Returns the number of units.
  *
@@ -37,62 +37,62 @@
  * Returns: The number of units.
  **/
 gint
-_gimp_unit_get_number_of_units (void)
+_ligma_unit_get_number_of_units (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint num_units = GIMP_UNIT_END;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  gint num_units = LIGMA_UNIT_END;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-number-of-units",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-number-of-units",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_units = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    num_units = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return num_units;
 }
 
 /**
- * _gimp_unit_get_number_of_built_in_units:
+ * _ligma_unit_get_number_of_built_in_units:
  *
  * Returns the number of built-in units.
  *
- * This procedure returns the number of defined units built-in to GIMP.
+ * This procedure returns the number of defined units built-in to LIGMA.
  *
  * Returns: The number of built-in units.
  **/
 gint
-_gimp_unit_get_number_of_built_in_units (void)
+_ligma_unit_get_number_of_built_in_units (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint num_units = GIMP_UNIT_END;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  gint num_units = LIGMA_UNIT_END;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-number-of-built-in-units",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-number-of-built-in-units",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_units = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    num_units = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return num_units;
 }
 
 /**
- * _gimp_unit_new:
+ * _ligma_unit_new:
  * @identifier: The new unit's identifier.
  * @factor: The new unit's factor.
  * @digits: The new unit's digits.
@@ -105,13 +105,13 @@ _gimp_unit_get_number_of_built_in_units (void)
  *
  * This procedure creates a new unit and returns it's integer ID. Note
  * that the new unit will have it's deletion flag set to TRUE, so you
- * will have to set it to FALSE with gimp_unit_set_deletion_flag() to
+ * will have to set it to FALSE with ligma_unit_set_deletion_flag() to
  * make it persistent.
  *
  * Returns: (transfer none): The new unit's ID.
  **/
-GimpUnit
-_gimp_unit_new (const gchar *identifier,
+LigmaUnit
+_ligma_unit_new (const gchar *identifier,
                 gdouble      factor,
                 gint         digits,
                 const gchar *symbol,
@@ -119,11 +119,11 @@ _gimp_unit_new (const gchar *identifier,
                 const gchar *singular,
                 const gchar *plural)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_INCH;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaUnit unit_id = LIGMA_UNIT_INCH;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, identifier,
                                           G_TYPE_DOUBLE, factor,
                                           G_TYPE_INT, digits,
@@ -133,95 +133,95 @@ _gimp_unit_new (const gchar *identifier,
                                           G_TYPE_STRING, plural,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit_id = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    unit_id = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return unit_id;
 }
 
 /**
- * _gimp_unit_get_deletion_flag:
+ * _ligma_unit_get_deletion_flag:
  * @unit_id: The unit's integer ID.
  *
  * Returns the deletion flag of the unit.
  *
  * This procedure returns the deletion flag of the unit. If this value
  * is TRUE the unit's definition will not be saved in the user's unitrc
- * file on gimp exit.
+ * file on ligma exit.
  *
  * Returns: The unit's deletion flag.
  **/
 gboolean
-_gimp_unit_get_deletion_flag (GimpUnit unit_id)
+_ligma_unit_get_deletion_flag (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean deletion_flag = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-deletion-flag",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-deletion-flag",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    deletion_flag = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    deletion_flag = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return deletion_flag;
 }
 
 /**
- * _gimp_unit_set_deletion_flag:
+ * _ligma_unit_set_deletion_flag:
  * @unit_id: The unit's integer ID.
  * @deletion_flag: The new deletion flag of the unit.
  *
  * Sets the deletion flag of a unit.
  *
  * This procedure sets the unit's deletion flag. If the deletion flag
- * of a unit is TRUE on gimp exit, this unit's definition will not be
+ * of a unit is TRUE on ligma exit, this unit's definition will not be
  * saved in the user's unitrc.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_unit_set_deletion_flag (GimpUnit unit_id,
+_ligma_unit_set_deletion_flag (LigmaUnit unit_id,
                               gboolean deletion_flag)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_BOOLEAN, deletion_flag,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-set-deletion-flag",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-set-deletion-flag",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_unit_get_identifier:
+ * _ligma_unit_get_identifier:
  * @unit_id: The unit's integer ID.
  *
  * Returns the textual identifier of the unit.
@@ -234,31 +234,31 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_unit_get_identifier (GimpUnit unit_id)
+_ligma_unit_get_identifier (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *identifier = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-identifier",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-identifier",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    identifier = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    identifier = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return identifier;
 }
 
 /**
- * _gimp_unit_get_factor:
+ * _ligma_unit_get_factor:
  * @unit_id: The unit's integer ID.
  *
  * Returns the factor of the unit.
@@ -270,31 +270,31 @@ _gimp_unit_get_identifier (GimpUnit unit_id)
  * Returns: The unit's factor.
  **/
 gdouble
-_gimp_unit_get_factor (GimpUnit unit_id)
+_ligma_unit_get_factor (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble factor = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-factor",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-factor",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    factor = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    factor = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return factor;
 }
 
 /**
- * _gimp_unit_get_digits:
+ * _ligma_unit_get_digits:
  * @unit_id: The unit's integer ID.
  *
  * Returns the number of digits of the unit.
@@ -307,31 +307,31 @@ _gimp_unit_get_factor (GimpUnit unit_id)
  * Returns: The unit's number of digits.
  **/
 gint
-_gimp_unit_get_digits (GimpUnit unit_id)
+_ligma_unit_get_digits (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint digits = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-digits",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-digits",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    digits = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    digits = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return digits;
 }
 
 /**
- * _gimp_unit_get_symbol:
+ * _ligma_unit_get_symbol:
  * @unit_id: The unit's integer ID.
  *
  * Returns the symbol of the unit.
@@ -342,31 +342,31 @@ _gimp_unit_get_digits (GimpUnit unit_id)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_unit_get_symbol (GimpUnit unit_id)
+_ligma_unit_get_symbol (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *symbol = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-symbol",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-symbol",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    symbol = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    symbol = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return symbol;
 }
 
 /**
- * _gimp_unit_get_abbreviation:
+ * _ligma_unit_get_abbreviation:
  * @unit_id: The unit's integer ID.
  *
  * Returns the abbreviation of the unit.
@@ -378,31 +378,31 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_unit_get_abbreviation (GimpUnit unit_id)
+_ligma_unit_get_abbreviation (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *abbreviation = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-abbreviation",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-abbreviation",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    abbreviation = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    abbreviation = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return abbreviation;
 }
 
 /**
- * _gimp_unit_get_singular:
+ * _ligma_unit_get_singular:
  * @unit_id: The unit's integer ID.
  *
  * Returns the singular form of the unit.
@@ -413,31 +413,31 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_unit_get_singular (GimpUnit unit_id)
+_ligma_unit_get_singular (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *singular = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-singular",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-singular",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    singular = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    singular = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return singular;
 }
 
 /**
- * _gimp_unit_get_plural:
+ * _ligma_unit_get_plural:
  * @unit_id: The unit's integer ID.
  *
  * Returns the plural form of the unit.
@@ -448,25 +448,25 @@ _gimp_unit_get_singular (GimpUnit unit_id)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_unit_get_plural (GimpUnit unit_id)
+_ligma_unit_get_plural (LigmaUnit unit_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *plural = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, unit_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-unit-get-plural",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-unit-get-plural",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    plural = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    plural = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return plural;
 }

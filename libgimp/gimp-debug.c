@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp-debug.c
+ * ligma-debug.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@
 #include <glib.h>
 
 #ifndef G_OS_WIN32
-#include "libgimpbase/gimpsignal.h"
+#include "libligmabase/ligmasignal.h"
 
 #else
 
@@ -54,49 +54,49 @@
 #  undef RGB
 #endif
 
-#include "gimp.h"
-#include "gimp-debug.h"
+#include "ligma.h"
+#include "ligma-debug.h"
 
 static GLogLevelFlags create_log_level_flags        (void);
-static void           make_visible_libgimp_messages (void);
+static void           make_visible_libligma_messages (void);
 
-static void   gimp_message_func (const gchar    *log_domain,
+static void   ligma_message_func (const gchar    *log_domain,
                                  GLogLevelFlags  log_level,
                                  const gchar    *message,
                                  gpointer        data);
-static void   gimp_fatal_func   (const gchar    *log_domain,
+static void   ligma_fatal_func   (const gchar    *log_domain,
                                  GLogLevelFlags  flags,
                                  const gchar    *message,
                                  gpointer        data);
 
 
 
-static const GDebugKey gimp_debug_keys[] =
+static const GDebugKey ligma_debug_keys[] =
 {
-  { "pid",            GIMP_DEBUG_PID            },
-  { "fatal-warnings", GIMP_DEBUG_FATAL_WARNINGS },
-  { "fatal-criticals", GIMP_DEBUG_FATAL_CRITICALS },
-  { "fw",             GIMP_DEBUG_FATAL_WARNINGS },
-  { "query",          GIMP_DEBUG_QUERY          },
-  { "init",           GIMP_DEBUG_INIT           },
-  { "run",            GIMP_DEBUG_RUN            },
-  { "quit",           GIMP_DEBUG_QUIT           }
+  { "pid",            LIGMA_DEBUG_PID            },
+  { "fatal-warnings", LIGMA_DEBUG_FATAL_WARNINGS },
+  { "fatal-criticals", LIGMA_DEBUG_FATAL_CRITICALS },
+  { "fw",             LIGMA_DEBUG_FATAL_WARNINGS },
+  { "query",          LIGMA_DEBUG_QUERY          },
+  { "init",           LIGMA_DEBUG_INIT           },
+  { "run",            LIGMA_DEBUG_RUN            },
+  { "quit",           LIGMA_DEBUG_QUIT           }
 };
 
-/* Set by gimp_debug_configure() to partial parameterize gimp_fatal_handler(). */
-static GimpStackTraceMode  _stack_trace_mode   = GIMP_STACK_TRACE_NEVER;
-/* Set by _gimp_debug_init(). Exported by _gimp_get_debug_flags() */
-static guint               _gimp_debug_flags   = 0;
+/* Set by ligma_debug_configure() to partial parameterize ligma_fatal_handler(). */
+static LigmaStackTraceMode  _stack_trace_mode   = LIGMA_STACK_TRACE_NEVER;
+/* Set by _ligma_debug_init(). Exported by _ligma_get_debug_flags() */
+static guint               _ligma_debug_flags   = 0;
 
 
 /*
- * Set _gimp_debug_flags, from env var GIMP_PLUGIN_DEBUG if it exists.
- * Also ensure GLib default handler prints all log messages for domain LibGimp.
+ * Set _ligma_debug_flags, from env var LIGMA_PLUGIN_DEBUG if it exists.
+ * Also ensure GLib default handler prints all log messages for domain LibLigma.
  */
 void
-_gimp_debug_init (const gchar *basename)
+_ligma_debug_init (const gchar *basename)
 {
-  const gchar *env_string = g_getenv ("GIMP_PLUGIN_DEBUG");
+  const gchar *env_string = g_getenv ("LIGMA_PLUGIN_DEBUG");
   const gchar *debug_options;
   gint         plugin_name_len;
   gboolean     is_debug_name_match_basename;
@@ -119,43 +119,43 @@ _gimp_debug_init (const gchar *basename)
 
   if (is_debug_name_match_basename && debug_options)
     {
-      _gimp_debug_flags =
+      _ligma_debug_flags =
         g_parse_debug_string (debug_options + 1,
-                              gimp_debug_keys,
-                              G_N_ELEMENTS (gimp_debug_keys));
+                              ligma_debug_keys,
+                              G_N_ELEMENTS (ligma_debug_keys));
     }
-  /* Else assert _gimp_debug_flags==0 .
+  /* Else assert _ligma_debug_flags==0 .
    * Only ERROR will be fatal, and fatal handler installed
    * (to print according to stack-trace-mode)
    */
 
-  make_visible_libgimp_messages();
+  make_visible_libligma_messages();
 }
 
 
 guint
-_gimp_get_debug_flags (void)
+_ligma_get_debug_flags (void)
 {
-  return _gimp_debug_flags;
+  return _ligma_debug_flags;
 }
 
 
 /*
- * Configure GLib logging according to GIMP_PLUGIN_DEBUG
+ * Configure GLib logging according to LIGMA_PLUGIN_DEBUG
  */
 void
-_gimp_debug_configure (GimpStackTraceMode stack_trace_mode)
+_ligma_debug_configure (LigmaStackTraceMode stack_trace_mode)
 {
-  const gchar * const gimp_log_domains[] =
+  const gchar * const ligma_log_domains[] =
   {
-    "LibGimp",
-    "LibGimpBase",
-    "LibGimpColor",
-    "LibGimpConfig",
-    "LibGimpMath",
-    "LibGimpModule",
-    "LibGimpThumb",
-    "LibGimpWidgets"
+    "LibLigma",
+    "LibLigmaBase",
+    "LibLigmaColor",
+    "LibLigmaConfig",
+    "LibLigmaMath",
+    "LibLigmaModule",
+    "LibLigmaThumb",
+    "LibLigmaWidgets"
   };
   const gchar * const glib_log_domains[] =
   {
@@ -168,23 +168,23 @@ _gimp_debug_configure (GimpStackTraceMode stack_trace_mode)
 
   _stack_trace_mode = stack_trace_mode;
 
-  /* Set handler for Gimp domains, for MESSAGE level.
+  /* Set handler for Ligma domains, for MESSAGE level.
    * i.e. from g_message(), but not from g_info() (rarely used?).
    */
-  for (i = 0; i < G_N_ELEMENTS (gimp_log_domains); i++)
-    g_log_set_handler (gimp_log_domains[i],
+  for (i = 0; i < G_N_ELEMENTS (ligma_log_domains); i++)
+    g_log_set_handler (ligma_log_domains[i],
                        G_LOG_LEVEL_MESSAGE,
-                       gimp_message_func,
+                       ligma_message_func,
                        NULL);
 
   /*  Also set handler for "" i.e. app domain. */
   g_log_set_handler (NULL,
                      G_LOG_LEVEL_MESSAGE,
-                     gimp_message_func,
+                     ligma_message_func,
                      NULL);
 
   /* Make fatal a subset of log levels (ERROR is always fatal)
-   * as specified by GIMP_PLUGIN_DEBUG now in _gimp_debug_flags
+   * as specified by LIGMA_PLUGIN_DEBUG now in _ligma_debug_flags
    */
   fatal_mask = create_log_level_flags();
 
@@ -195,18 +195,18 @@ _gimp_debug_configure (GimpStackTraceMode stack_trace_mode)
   /* For the null i.e. "" i.e. app i.e. plugin domain */
   g_log_set_handler (NULL,
                      fatal_mask,
-                     gimp_fatal_func,
+                     ligma_fatal_func,
                      NULL);
 
-  for (i = 0; i < G_N_ELEMENTS (gimp_log_domains); i++)
-    g_log_set_handler (gimp_log_domains[i],
+  for (i = 0; i < G_N_ELEMENTS (ligma_log_domains); i++)
+    g_log_set_handler (ligma_log_domains[i],
                        fatal_mask,
-                       gimp_fatal_func,
+                       ligma_fatal_func,
                        NULL);
   for (i = 0; i < G_N_ELEMENTS (glib_log_domains); i++)
     g_log_set_handler (glib_log_domains[i],
                       fatal_mask,
-                      gimp_fatal_func,
+                      ligma_fatal_func,
                       NULL);
 }
 
@@ -216,7 +216,7 @@ _gimp_debug_configure (GimpStackTraceMode stack_trace_mode)
  * Suspend i.e. pause the plugin process.
  */
 void
-_gimp_debug_stop (void)
+_ligma_debug_stop (void)
 {
 #ifndef G_OS_WIN32
 
@@ -271,38 +271,38 @@ _gimp_debug_stop (void)
 /*  private functions  */
 
 /*
- * Append domain LibGimp to env var G_MESSAGES_DEBUG.
+ * Append domain LibLigma to env var G_MESSAGES_DEBUG.
  * Per GLib docs, that makes default handler print all levels of log messages,
- * from domain LibGimp.
+ * from domain LibLigma.
 
- * We may yet install non-default handler gimp_fatal_func(), for some levels,
+ * We may yet install non-default handler ligma_fatal_func(), for some levels,
  * which prints the message and also may generate stack trace.
  *
- * This does not depend on GIMP_PLUGIN_DEBUG or any plugin names therein.
- * This does not affect the Gimp app, whose environment is distinct.
+ * This does not depend on LIGMA_PLUGIN_DEBUG or any plugin names therein.
+ * This does not affect the Ligma app, whose environment is distinct.
  * This does not make a plugin's own logged messages visible,
  * since the plugin is in a distinct domain.
  */
 static void
-make_visible_libgimp_messages (void)
+make_visible_libligma_messages (void)
 {
   const gchar *debug_messages = g_getenv ("G_MESSAGES_DEBUG");
 
   if (debug_messages)
     {
-      gchar *tmp = g_strconcat (debug_messages, ",LibGimp", NULL);
+      gchar *tmp = g_strconcat (debug_messages, ",LibLigma", NULL);
       g_setenv ("G_MESSAGES_DEBUG", tmp, TRUE);
       g_free (tmp);
     }
   else
     {
-      g_setenv ("G_MESSAGES_DEBUG", "LibGimp", TRUE);
+      g_setenv ("G_MESSAGES_DEBUG", "LibLigma", TRUE);
     }
 }
 
 
 /* Create GLogLevelFlags for fatal,
- * from current fatal flags and from GIMP_PLUGIN_DEBUG env var.
+ * from current fatal flags and from LIGMA_PLUGIN_DEBUG env var.
  */
 static GLogLevelFlags
 create_log_level_flags(void)
@@ -315,14 +315,14 @@ create_log_level_flags(void)
    */
 
   /* Ensure ERROR remains fatal.
-   * Even if GIMP_PLUGIN_DEBUG is not defined, or defined "=run"
+   * Even if LIGMA_PLUGIN_DEBUG is not defined, or defined "=run"
    * we install fatal handler for ERROR for all plugins.
    */
   result |= G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL;
 
-  if (_gimp_debug_flags & GIMP_DEBUG_FATAL_WARNINGS)
+  if (_ligma_debug_flags & LIGMA_DEBUG_FATAL_WARNINGS)
     result |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-  if (_gimp_debug_flags & GIMP_DEBUG_FATAL_CRITICALS)
+  if (_ligma_debug_flags & LIGMA_DEBUG_FATAL_CRITICALS)
     result |= G_LOG_LEVEL_CRITICAL;
   return result;
 }
@@ -333,12 +333,12 @@ create_log_level_flags(void)
  * Signature is GLogFunc
  */
 static void
-gimp_message_func (const gchar    *log_domain,
+ligma_message_func (const gchar    *log_domain,
                    GLogLevelFlags  log_level,
                    const gchar    *message,
                    gpointer        data)
 {
-  gimp_message (message);
+  ligma_message (message);
 }
 
 
@@ -347,7 +347,7 @@ gimp_message_func (const gchar    *log_domain,
  * Signature is GLogFunc
  */
 static void
-gimp_fatal_func (const gchar    *log_domain,
+ligma_fatal_func (const gchar    *log_domain,
                  GLogLevelFlags  flags,
                  const gchar    *message,
                  gpointer        data)
@@ -370,7 +370,7 @@ gimp_fatal_func (const gchar    *log_domain,
       break;
     }
 
-  /* Earlier, gimp.c g_set_prgname to short basename; progname is full path. */
+  /* Earlier, ligma.c g_set_prgname to short basename; progname is full path. */
 
   /*
    * Print message canonical to what GLib's default handler would.
@@ -384,34 +384,34 @@ gimp_fatal_func (const gchar    *log_domain,
 #ifndef G_OS_WIN32
   switch (_stack_trace_mode)
     {
-    case GIMP_STACK_TRACE_NEVER:
+    case LIGMA_STACK_TRACE_NEVER:
       break;
 
-    case GIMP_STACK_TRACE_QUERY:
+    case LIGMA_STACK_TRACE_QUERY:
         {
           sigset_t sigset;
 
           sigemptyset (&sigset);
           sigprocmask (SIG_SETMASK, &sigset, NULL);
-          gimp_stack_trace_query (log_domain);
+          ligma_stack_trace_query (log_domain);
         }
       break;
 
-    case GIMP_STACK_TRACE_ALWAYS:
+    case LIGMA_STACK_TRACE_ALWAYS:
         {
           sigset_t sigset;
 
           sigemptyset (&sigset);
           sigprocmask (SIG_SETMASK, &sigset, NULL);
-          gimp_stack_trace_print (log_domain, stdout, NULL);
+          ligma_stack_trace_print (log_domain, stdout, NULL);
         }
       break;
     }
 #endif /* ! G_OS_WIN32 */
 
-  /* Do not end with gimp_quit().
+  /* Do not end with ligma_quit().
    * We want the plug-in to continue its normal crash course, otherwise
-   * we won't get the "Plug-in crashed" error in GIMP.
+   * we won't get the "Plug-in crashed" error in LIGMA.
    */
   exit (EXIT_FAILURE);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCUMENT_LIST_H__
-#define __GIMP_DOCUMENT_LIST_H__
+#ifndef __LIGMA_DOCUMENT_LIST_H__
+#define __LIGMA_DOCUMENT_LIST_H__
 
-#include "core/gimplist.h"
-
-
-#define GIMP_TYPE_DOCUMENT_LIST           (gimp_document_list_get_type ())
-#define GIMP_DOCUMENT_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCUMENT_LIST, GimpDocumentList))
-#define GIMP_DOCUMENT_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCUMENT_LIST, GimpDocumentListClass))
-#define GIMP_IS_DOCUMENT_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCUMENT_LIST))
-#define GIMP_IS_DOCUMENT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCUMENT_LIST))
+#include "core/ligmalist.h"
 
 
-typedef struct _GimpDocumentListClass GimpDocumentListClass;
+#define LIGMA_TYPE_DOCUMENT_LIST           (ligma_document_list_get_type ())
+#define LIGMA_DOCUMENT_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCUMENT_LIST, LigmaDocumentList))
+#define LIGMA_DOCUMENT_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCUMENT_LIST, LigmaDocumentListClass))
+#define LIGMA_IS_DOCUMENT_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCUMENT_LIST))
+#define LIGMA_IS_DOCUMENT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCUMENT_LIST))
 
-struct _GimpDocumentList
+
+typedef struct _LigmaDocumentListClass LigmaDocumentListClass;
+
+struct _LigmaDocumentList
 {
-  GimpList  parent_instance;
+  LigmaList  parent_instance;
 
-  Gimp     *gimp;
+  Ligma     *ligma;
 };
 
-struct _GimpDocumentListClass
+struct _LigmaDocumentListClass
 {
-  GimpListClass  parent_class;
+  LigmaListClass  parent_class;
 };
 
 
-GType           gimp_document_list_get_type (void) G_GNUC_CONST;
-GimpContainer * gimp_document_list_new      (Gimp             *gimp);
+GType           ligma_document_list_get_type (void) G_GNUC_CONST;
+LigmaContainer * ligma_document_list_new      (Ligma             *ligma);
 
-GimpImagefile * gimp_document_list_add_file (GimpDocumentList *document_list,
+LigmaImagefile * ligma_document_list_add_file (LigmaDocumentList *document_list,
                                              GFile            *file,
                                              const gchar      *mime_type);
 
 
-#endif  /*  __GIMP_DOCUMENT_LIST_H__  */
+#endif  /*  __LIGMA_DOCUMENT_LIST_H__  */

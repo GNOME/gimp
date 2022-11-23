@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,13 +55,13 @@ locales_parse (const gchar *help_locales)
 
   /*  if the list doesn't contain the default domain yet, append it  */
   for (list = locales; list; list = list->next)
-    if (strcmp ((const gchar *) list->data, GIMP_HELP_DEFAULT_LOCALE) == 0)
+    if (strcmp ((const gchar *) list->data, LIGMA_HELP_DEFAULT_LOCALE) == 0)
       break;
 
   if (! list)
-    locales = g_list_append (locales, g_strdup (GIMP_HELP_DEFAULT_LOCALE));
+    locales = g_list_append (locales, g_strdup (LIGMA_HELP_DEFAULT_LOCALE));
 
-#ifdef GIMP_HELP_DEBUG
+#ifdef LIGMA_HELP_DEBUG
   g_printerr ("help: locales: ");
   for (list = locales; list; list = list->next)
     g_printerr ("%s ", (const gchar *) list->data);

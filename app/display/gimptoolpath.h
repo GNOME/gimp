@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolpath.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolpath.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,60 +18,60 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PATH_H__
-#define __GIMP_TOOL_PATH_H__
+#ifndef __LIGMA_TOOL_PATH_H__
+#define __LIGMA_TOOL_PATH_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-#define GIMP_TYPE_TOOL_PATH            (gimp_tool_path_get_type ())
-#define GIMP_TOOL_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_PATH, GimpToolPath))
-#define GIMP_TOOL_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_PATH, GimpToolPathClass))
-#define GIMP_IS_TOOL_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_PATH))
-#define GIMP_IS_TOOL_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_PATH))
-#define GIMP_TOOL_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PATH, GimpToolPathClass))
+#define LIGMA_TYPE_TOOL_PATH            (ligma_tool_path_get_type ())
+#define LIGMA_TOOL_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_PATH, LigmaToolPath))
+#define LIGMA_TOOL_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_PATH, LigmaToolPathClass))
+#define LIGMA_IS_TOOL_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_PATH))
+#define LIGMA_IS_TOOL_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_PATH))
+#define LIGMA_TOOL_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_PATH, LigmaToolPathClass))
 
 
-typedef struct _GimpToolPath        GimpToolPath;
-typedef struct _GimpToolPathPrivate GimpToolPathPrivate;
-typedef struct _GimpToolPathClass   GimpToolPathClass;
+typedef struct _LigmaToolPath        LigmaToolPath;
+typedef struct _LigmaToolPathPrivate LigmaToolPathPrivate;
+typedef struct _LigmaToolPathClass   LigmaToolPathClass;
 
-struct _GimpToolPath
+struct _LigmaToolPath
 {
-  GimpToolWidget       parent_instance;
+  LigmaToolWidget       parent_instance;
 
-  GimpToolPathPrivate *private;
+  LigmaToolPathPrivate *private;
 };
 
-struct _GimpToolPathClass
+struct _LigmaToolPathClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 
-  void (* begin_change) (GimpToolPath    *path,
+  void (* begin_change) (LigmaToolPath    *path,
                          const gchar     *desc);
-  void (* end_change)   (GimpToolPath    *path,
+  void (* end_change)   (LigmaToolPath    *path,
                          gboolean         success);
-  void (* activate)     (GimpToolPath    *path,
+  void (* activate)     (LigmaToolPath    *path,
                          GdkModifierType  state);
 };
 
 
-GType            gimp_tool_path_get_type    (void) G_GNUC_CONST;
+GType            ligma_tool_path_get_type    (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_path_new         (GimpDisplayShell *shell);
+LigmaToolWidget * ligma_tool_path_new         (LigmaDisplayShell *shell);
 
-void             gimp_tool_path_set_vectors (GimpToolPath     *path,
-                                             GimpVectors      *vectors);
+void             ligma_tool_path_set_vectors (LigmaToolPath     *path,
+                                             LigmaVectors      *vectors);
 
-void             gimp_tool_path_get_popup_state (GimpToolPath *path,
+void             ligma_tool_path_get_popup_state (LigmaToolPath *path,
                                                  gboolean     *on_handle,
                                                  gboolean     *on_curve);
 
-void             gimp_tool_path_delete_anchor  (GimpToolPath *path);
-void             gimp_tool_path_shift_start    (GimpToolPath *path);
-void             gimp_tool_path_insert_anchor  (GimpToolPath *path);
-void             gimp_tool_path_delete_segment (GimpToolPath *path);
-void             gimp_tool_path_reverse_stroke (GimpToolPath *path);
+void             ligma_tool_path_delete_anchor  (LigmaToolPath *path);
+void             ligma_tool_path_shift_start    (LigmaToolPath *path);
+void             ligma_tool_path_insert_anchor  (LigmaToolPath *path);
+void             ligma_tool_path_delete_segment (LigmaToolPath *path);
+void             ligma_tool_path_reverse_stroke (LigmaToolPath *path);
 
-#endif /* __GIMP_TOOL_PATH_H__ */
+#endif /* __LIGMA_TOOL_PATH_H__ */

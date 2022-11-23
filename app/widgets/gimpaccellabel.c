@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaccellabel.c
+ * ligmaaccellabel.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,12 +23,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimpaccellabel.h"
+#include "ligmaaction.h"
+#include "ligmaaccellabel.h"
 
 
 enum
@@ -38,84 +38,84 @@ enum
 };
 
 
-struct _GimpAccelLabelPrivate
+struct _LigmaAccelLabelPrivate
 {
-  GimpAction *action;
+  LigmaAction *action;
 };
 
 
 /*  local function prototypes  */
 
-static void   gimp_accel_label_dispose       (GObject             *object);
-static void   gimp_accel_label_set_property  (GObject             *object,
+static void   ligma_accel_label_dispose       (GObject             *object);
+static void   ligma_accel_label_set_property  (GObject             *object,
                                               guint                property_id,
                                               const GValue        *value,
                                               GParamSpec          *pspec);
-static void   gimp_accel_label_get_property  (GObject             *object,
+static void   ligma_accel_label_get_property  (GObject             *object,
                                               guint                property_id,
                                               GValue              *value,
                                               GParamSpec          *pspec);
 
-static void   gimp_accel_label_accel_changed (GtkAccelGroup       *accel_group,
+static void   ligma_accel_label_accel_changed (GtkAccelGroup       *accel_group,
                                               guint                keyval,
                                               GdkModifierType      modifier,
                                               GClosure            *accel_closure,
-                                              GimpAccelLabel      *accel_label);
+                                              LigmaAccelLabel      *accel_label);
 
-static void   gimp_accel_label_update        (GimpAccelLabel      *accel_label);
+static void   ligma_accel_label_update        (LigmaAccelLabel      *accel_label);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpAccelLabel, gimp_accel_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaAccelLabel, ligma_accel_label, GTK_TYPE_LABEL)
 
-#define parent_class gimp_accel_label_parent_class
+#define parent_class ligma_accel_label_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_accel_label_class_init (GimpAccelLabelClass *klass)
+ligma_accel_label_class_init (LigmaAccelLabelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose      = gimp_accel_label_dispose;
-  object_class->get_property = gimp_accel_label_get_property;
-  object_class->set_property = gimp_accel_label_set_property;
+  object_class->dispose      = ligma_accel_label_dispose;
+  object_class->get_property = ligma_accel_label_get_property;
+  object_class->set_property = ligma_accel_label_set_property;
 
   g_object_class_install_property (object_class, PROP_ACTION,
                                    g_param_spec_object ("action",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_ACTION,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_ACTION,
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_accel_label_init (GimpAccelLabel *accel_label)
+ligma_accel_label_init (LigmaAccelLabel *accel_label)
 {
-  accel_label->priv = gimp_accel_label_get_instance_private (accel_label);
+  accel_label->priv = ligma_accel_label_get_instance_private (accel_label);
 }
 
 static void
-gimp_accel_label_dispose (GObject *object)
+ligma_accel_label_dispose (GObject *object)
 {
-  GimpAccelLabel *accel_label = GIMP_ACCEL_LABEL (object);
+  LigmaAccelLabel *accel_label = LIGMA_ACCEL_LABEL (object);
 
-  gimp_accel_label_set_action (accel_label, NULL);
+  ligma_accel_label_set_action (accel_label, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_accel_label_set_property (GObject      *object,
+ligma_accel_label_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpAccelLabel *accel_label = GIMP_ACCEL_LABEL (object);
+  LigmaAccelLabel *accel_label = LIGMA_ACCEL_LABEL (object);
 
   switch (property_id)
     {
     case PROP_ACTION:
-      gimp_accel_label_set_action (accel_label, g_value_get_object (value));
+      ligma_accel_label_set_action (accel_label, g_value_get_object (value));
       break;
 
     default:
@@ -125,12 +125,12 @@ gimp_accel_label_set_property (GObject      *object,
 }
 
 static void
-gimp_accel_label_get_property (GObject    *object,
+ligma_accel_label_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpAccelLabel *accel_label = GIMP_ACCEL_LABEL (object);
+  LigmaAccelLabel *accel_label = LIGMA_ACCEL_LABEL (object);
 
   switch (property_id)
     {
@@ -145,21 +145,21 @@ gimp_accel_label_get_property (GObject    *object,
 }
 
 static void
-gimp_accel_label_accel_changed (GtkAccelGroup   *accel_group,
+ligma_accel_label_accel_changed (GtkAccelGroup   *accel_group,
                                 guint            keyval,
                                 GdkModifierType  modifier,
                                 GClosure        *accel_closure,
-                                GimpAccelLabel  *accel_label)
+                                LigmaAccelLabel  *accel_label)
 {
   if (accel_closure ==
-      gimp_action_get_accel_closure (accel_label->priv->action))
+      ligma_action_get_accel_closure (accel_label->priv->action))
     {
-      gimp_accel_label_update (accel_label);
+      ligma_accel_label_update (accel_label);
     }
 }
 
 static gboolean
-gimp_accel_label_update_accel_find_func (GtkAccelKey *key,
+ligma_accel_label_update_accel_find_func (GtkAccelKey *key,
                                          GClosure    *closure,
                                          gpointer     data)
 {
@@ -167,7 +167,7 @@ gimp_accel_label_update_accel_find_func (GtkAccelKey *key,
 }
 
 static void
-gimp_accel_label_update (GimpAccelLabel *accel_label)
+ligma_accel_label_update (LigmaAccelLabel *accel_label)
 {
   GClosure      *accel_closure;
   GtkAccelGroup *accel_group;
@@ -178,7 +178,7 @@ gimp_accel_label_update (GimpAccelLabel *accel_label)
   if (! accel_label->priv->action)
     return;
 
-  accel_closure = gimp_action_get_accel_closure (accel_label->priv->action);
+  accel_closure = ligma_action_get_accel_closure (accel_label->priv->action);
 
   if (! accel_closure)
     return;
@@ -189,7 +189,7 @@ gimp_accel_label_update (GimpAccelLabel *accel_label)
     return;
 
   accel_key = gtk_accel_group_find (accel_group,
-                                    gimp_accel_label_update_accel_find_func,
+                                    ligma_accel_label_update_accel_find_func,
                                     accel_closure);
 
   if (accel_key            &&
@@ -211,21 +211,21 @@ gimp_accel_label_update (GimpAccelLabel *accel_label)
 /*  public functions  */
 
 GtkWidget *
-gimp_accel_label_new (GimpAction *action)
+ligma_accel_label_new (LigmaAction *action)
 {
-  g_return_val_if_fail (action == NULL || GIMP_IS_ACTION (action), NULL);
+  g_return_val_if_fail (action == NULL || LIGMA_IS_ACTION (action), NULL);
 
-  return g_object_new (GIMP_TYPE_ACCEL_LABEL,
+  return g_object_new (LIGMA_TYPE_ACCEL_LABEL,
                        "action", action,
                        NULL);
 }
 
 void
-gimp_accel_label_set_action (GimpAccelLabel *accel_label,
-                             GimpAction     *action)
+ligma_accel_label_set_action (LigmaAccelLabel *accel_label,
+                             LigmaAction     *action)
 {
-  g_return_if_fail (GIMP_IS_ACCEL_LABEL (accel_label));
-  g_return_if_fail (action == NULL || GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACCEL_LABEL (accel_label));
+  g_return_if_fail (action == NULL || LIGMA_IS_ACTION (action));
 
   if (action != accel_label->priv->action)
     {
@@ -233,7 +233,7 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
         {
           GClosure *accel_closure;
 
-          accel_closure = gimp_action_get_accel_closure (
+          accel_closure = ligma_action_get_accel_closure (
             accel_label->priv->action);
 
           if (accel_closure)
@@ -244,7 +244,7 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
 
               g_signal_handlers_disconnect_by_func (
                 accel_group,
-                gimp_accel_label_accel_changed,
+                ligma_accel_label_accel_changed,
                 accel_label);
             }
         }
@@ -255,7 +255,7 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
         {
           GClosure *accel_closure;
 
-          accel_closure = gimp_action_get_accel_closure (
+          accel_closure = ligma_action_get_accel_closure (
             accel_label->priv->action);
 
           if (accel_closure)
@@ -265,21 +265,21 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
               accel_group = gtk_accel_group_from_accel_closure (accel_closure);
 
               g_signal_connect (accel_group, "accel-changed",
-                                G_CALLBACK (gimp_accel_label_accel_changed),
+                                G_CALLBACK (ligma_accel_label_accel_changed),
                                 accel_label);
             }
         }
 
-      gimp_accel_label_update (accel_label);
+      ligma_accel_label_update (accel_label);
 
       g_object_notify (G_OBJECT (accel_label), "action");
     }
 }
 
-GimpAction *
-gimp_accel_label_get_action (GimpAccelLabel *accel_label)
+LigmaAction *
+ligma_accel_label_get_action (LigmaAccelLabel *accel_label)
 {
-  g_return_val_if_fail (GIMP_IS_ACCEL_LABEL (accel_label), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACCEL_LABEL (accel_label), NULL);
 
   return accel_label->priv->action;
 }

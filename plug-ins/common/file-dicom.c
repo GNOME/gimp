@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * PNM reading and writing code Copyright (C) 1996 Erik Nygren
  *
@@ -29,16 +29,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-dicom-load"
 #define SAVE_PROC      "file-dicom-save"
 #define PLUG_IN_BINARY "file-dicom"
-#define PLUG_IN_ROLE   "gimp-file-dicom"
+#define PLUG_IN_ROLE   "ligma-file-dicom"
 
 
 /* A lot of Dicom images are wrongly encoded. By guessing the endian
@@ -67,12 +67,12 @@ typedef struct _DicomClass DicomClass;
 
 struct _Dicom
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _DicomClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -81,29 +81,29 @@ struct _DicomClass
 
 GType                   dicom_get_type         (void) G_GNUC_CONST;
 
-static GList          * dicom_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * dicom_create_procedure (GimpPlugIn           *plug_in,
+static GList          * dicom_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * dicom_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * dicom_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
+static LigmaValueArray * dicom_load             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
-static GimpValueArray * dicom_save             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * dicom_save             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
+                                                LigmaDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
-static GimpImage      * load_image             (GFile                *file,
+static LigmaImage      * load_image             (GFile                *file,
                                                 GError              **error);
 static gboolean         save_image             (GFile                *file,
-                                                GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                LigmaImage            *image,
+                                                LigmaDrawable         *drawable,
                                                 GError              **error);
 static void             dicom_loader           (guint8               *pix_buf,
                                                 DicomInfo            *info,
@@ -126,16 +126,16 @@ static gboolean         write_group_to_file    (FILE                 *dicom,
                                                 GByteArray           *group_stream);
 
 
-G_DEFINE_TYPE (Dicom, dicom, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Dicom, dicom, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DICOM_TYPE)
+LIGMA_MAIN (DICOM_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 dicom_class_init (DicomClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = dicom_query_procedures;
   plug_in_class->create_procedure = dicom_create_procedure;
@@ -148,7 +148,7 @@ dicom_init (Dicom *dicom)
 }
 
 static GList *
-dicom_query_procedures (GimpPlugIn *plug_in)
+dicom_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -158,21 +158,21 @@ dicom_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-dicom_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+dicom_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            dicom_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("DICOM image"));
+      ligma_procedure_set_menu_label (procedure, _("DICOM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of the dicom file format",
                                         "Load a file in the DICOM standard "
                                         "format. The standard is defined at "
@@ -181,31 +181,31 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
                                         "images with uncompressed pixel "
                                         "sections.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dov Grobgeld",
                                       "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                                       "2003");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-dcm");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "dcm,dicom");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "128,string,DICM");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            dicom_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY");
 
-      gimp_procedure_set_menu_label (procedure,
+      ligma_procedure_set_menu_label (procedure,
                                      _("Digital Imaging and Communications in "
                                        "Medicine image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Save file in the DICOM file format",
                                         "Save an image in the medical "
                                         "standard DICOM image formats. "
@@ -217,29 +217,29 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
                                         "tags are filled with default dummy "
                                         "values.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dov Grobgeld",
                                       "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                                       "2003");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-dcm");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "dcm,dicom");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-dicom_load (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
+static LigmaValueArray *
+dicom_load (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
             GFile                *file,
-            const GimpValueArray *args,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -247,47 +247,47 @@ dicom_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-dicom_save (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
+static LigmaValueArray *
+dicom_save (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
+            LigmaImage            *image,
             gint                  n_drawables,
-            GimpDrawable        **drawables,
+            LigmaDrawable        **drawables,
             GFile                *file,
-            const GimpValueArray *args,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export = LIGMA_EXPORT_CANCEL;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-      export = gimp_export_image (&image, &n_drawables, &drawables, "DICOM",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "DICOM",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -300,32 +300,32 @@ dicom_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("Dicom format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0],
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /**
  * add_parasites_to_image:
- * @data:      pointer to a GimpParasite to be attached to the image
+ * @data:      pointer to a LigmaParasite to be attached to the image
  *             specified by @user_data.
  * @user_data: pointer to the image_ID to which parasite @data should
  *             be added.
@@ -336,19 +336,19 @@ static void
 add_parasites_to_image (gpointer data,
                         gpointer user_data)
 {
-  GimpParasite *parasite = data;
-  GimpImage    *image    = user_data;
+  LigmaParasite *parasite = data;
+  LigmaImage    *image    = user_data;
 
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
-  GimpImage  *image = NULL;
-  GimpLayer  *layer;
+  LigmaImage  *image = NULL;
+  LigmaLayer  *layer;
   GeglBuffer *buffer;
   GSList     *elements          = NULL;
   FILE       *dicom;
@@ -366,8 +366,8 @@ load_image (GFile   *file,
   gboolean    implicit_encoding = FALSE;
   gboolean    big_endian        = FALSE;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   dicom = g_fopen (g_file_peek_path (file), "rb");
 
@@ -375,7 +375,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -390,7 +390,7 @@ load_image (GFile   *file,
     {
       g_message ("'%s' is a PAPYRUS DICOM file.\n"
                  "This plug-in does not support this type yet.",
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
       g_free (dicominfo);
       fclose (dicom);
       return NULL;
@@ -401,7 +401,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a DICOM file."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       g_free (dicominfo);
       fclose (dicom);
       return NULL;
@@ -521,8 +521,8 @@ load_image (GFile   *file,
       if (element_length >= (G_MAXUINT - 6))
         {
           g_message ("'%s' seems to have an incorrect value field length.",
-                     gimp_file_get_utf8_name (file));
-          gimp_quit ();
+                     ligma_file_get_utf8_name (file));
+          ligma_quit ();
         }
 
       /* Read contents. Allocate a bit more to make room for casts to int
@@ -571,9 +571,9 @@ load_image (GFile   *file,
                 }
               else
                 {
-                  g_debug ("Transfer syntax %s is not supported by GIMP.", (gchar *) value);
-                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                              _("Transfer syntax %s is not supported by GIMP."),
+                  g_debug ("Transfer syntax %s is not supported by LIGMA.", (gchar *) value);
+                  g_set_error (error, LIGMA_PLUG_IN_ERROR, 0,
+                              _("Transfer syntax %s is not supported by LIGMA."),
                               (gchar *) value);
                   g_free (dicominfo);
                   fclose (dicom);
@@ -627,8 +627,8 @@ load_image (GFile   *file,
                 }
               if (! supported)
                 {
-                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                               _("%s is not supported by GIMP in combination "
+                  g_set_error (error, LIGMA_PLUG_IN_ERROR, 0,
+                               _("%s is not supported by LIGMA in combination "
                                  "with samples per pixel: %d"),
                                (gchar *) value, samples_per_pixel);
                   g_free (dicominfo);
@@ -679,14 +679,14 @@ load_image (GFile   *file,
       else
         {
           /* save this element to a parasite for later writing */
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
           gchar         pname[255];
 
-          /* all elements are retrievable using gimp_get_parasite_list() */
+          /* all elements are retrievable using ligma_get_parasite_list() */
           g_snprintf (pname, sizeof (pname),
                       "dcm/%04x-%04x-%s", group_word, element_word, value_rep);
-          if ((parasite = gimp_parasite_new (pname,
-                                             GIMP_PARASITE_PERSISTENT,
+          if ((parasite = ligma_parasite_new (pname,
+                                             LIGMA_PARASITE_PERSISTENT,
                                              element_length, value)))
             {
               /*
@@ -707,23 +707,23 @@ load_image (GFile   *file,
 
   if ((bpp != 8) && (bpp != 16))
     {
-      g_message ("'%s' has a bpp of %d which GIMP cannot handle.",
-                 gimp_file_get_utf8_name (file), bpp);
-      gimp_quit ();
+      g_message ("'%s' has a bpp of %d which LIGMA cannot handle.",
+                 ligma_file_get_utf8_name (file), bpp);
+      ligma_quit ();
     }
 
-  if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
+  if ((width > LIGMA_MAX_IMAGE_SIZE) || (height > LIGMA_MAX_IMAGE_SIZE))
     {
-      g_message ("'%s' has a larger image size (%d x %d) than GIMP can handle.",
-                 gimp_file_get_utf8_name (file), width, height);
-      gimp_quit ();
+      g_message ("'%s' has a larger image size (%d x %d) than LIGMA can handle.",
+                 ligma_file_get_utf8_name (file), width, height);
+      ligma_quit ();
     }
 
   if (samples_per_pixel > 3)
     {
-      g_message ("'%s' has samples per pixel of %d which GIMP cannot handle.",
-                 gimp_file_get_utf8_name (file), samples_per_pixel);
-      gimp_quit ();
+      g_message ("'%s' has samples per pixel of %d which LIGMA cannot handle.",
+                 ligma_file_get_utf8_name (file), samples_per_pixel);
+      ligma_quit ();
     }
 
   dicominfo->width  = width;
@@ -738,20 +738,20 @@ load_image (GFile   *file,
 
   /* Create a new image of the proper size and associate the filename with it.
    */
-  image = gimp_image_new (dicominfo->width, dicominfo->height,
+  image = ligma_image_new (dicominfo->width, dicominfo->height,
                           (dicominfo->samples_per_pixel >= 3 ?
-                           GIMP_RGB : GIMP_GRAY));
-  gimp_image_set_file (image, file);
+                           LIGMA_RGB : LIGMA_GRAY));
+  ligma_image_set_file (image, file);
 
-  layer = gimp_layer_new (image, _("Background"),
+  layer = ligma_layer_new (image, _("Background"),
                           dicominfo->width, dicominfo->height,
                           (dicominfo->samples_per_pixel >= 3 ?
-                           GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
+                           LIGMA_RGB_IMAGE : LIGMA_GRAY_IMAGE),
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
 #if GUESS_ENDIAN
   if (bpp == 16)
@@ -806,7 +806,7 @@ dicom_loader (guint8     *pix_buffer,
         buf16[pix_idx] = g_ntohs (GUINT16_SWAP_LE_BE  (buf16[pix_idx])) >> shift;
     }
 
-  data = g_malloc (gimp_tile_height () * width * samples_per_pixel);
+  data = g_malloc (ligma_tile_height () * width * samples_per_pixel);
 
   for (row_idx = 0; row_idx < height; )
     {
@@ -817,7 +817,7 @@ dicom_loader (guint8     *pix_buffer,
       gint    i;
 
       start = row_idx;
-      end   = row_idx + gimp_tile_height ();
+      end   = row_idx + ligma_tile_height ();
       end   = MIN (end, height);
 
       scanlines = end - start;
@@ -937,12 +937,12 @@ dicom_loader (guint8     *pix_buffer,
 
       row_idx += scanlines;
 
-      gimp_progress_update ((gdouble) row_idx / (gdouble) height);
+      ligma_progress_update ((gdouble) row_idx / (gdouble) height);
     }
 
   g_free (data);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 
@@ -1217,13 +1217,13 @@ dicom_element_find_by_num (GSList  *head,
  * Returns: a GSList of all known dicom elements
 **/
 static GSList *
-dicom_get_elements_list (GimpImage *image)
+dicom_get_elements_list (LigmaImage *image)
 {
   GSList        *elements = NULL;
-  GimpParasite  *parasite;
+  LigmaParasite  *parasite;
   gchar        **parasites = NULL;
 
-  parasites = gimp_image_get_parasite_list (image);
+  parasites = ligma_image_get_parasite_list (image);
 
   if (parasites)
     {
@@ -1236,7 +1236,7 @@ dicom_get_elements_list (GimpImage *image)
         {
           if (strncmp (parasites[i], "dcm", 3) == 0)
             {
-              parasite = gimp_image_get_parasite (image, parasites[i]);
+              parasite = ligma_image_get_parasite (image, parasites[i]);
 
               if (parasite)
                 {
@@ -1302,7 +1302,7 @@ dicom_get_elements_list (GimpImage *image)
                       const guint8 *val;
                       guint32       len;
 
-                      val = (const guint8 *) gimp_parasite_get_data (parasite, &len);
+                      val = (const guint8 *) ligma_parasite_get_data (parasite, &len);
 
                       /* and add the dicom element, asking to have
                          it's value copied for later garbage collection */
@@ -1312,7 +1312,7 @@ dicom_get_elements_list (GimpImage *image)
                                                          value_rep, len, val);
                     }
 
-                  gimp_parasite_free (parasite);
+                  ligma_parasite_free (parasite);
                 }
             }
         }
@@ -1325,7 +1325,7 @@ dicom_get_elements_list (GimpImage *image)
 }
 
 /**
- * dicom_remove_gimp_specified_elements:
+ * dicom_remove_ligma_specified_elements:
  * @elements:  GSList to remove elements from
  * @samples_per_pixel: samples per pixel of the image to be written.
  *                     if set to %3 the planar configuration for color images
@@ -1336,7 +1336,7 @@ dicom_get_elements_list (GimpImage *image)
  * Returns: the new head of @elements
 **/
 static GSList *
-dicom_remove_gimp_specified_elements (GSList *elements,
+dicom_remove_ligma_specified_elements (GSList *elements,
                                       gint samples_per_pixel)
 {
   DICOMELEMENT remove[] = {
@@ -1410,7 +1410,7 @@ dicom_ensure_required_elements_present (GSList *elements,
       strlen ("1.2.840.10008.1.2.1"), (guint8 *) "1.2.840.10008.1.2.1"},
     /* 0002, 0013 - Implementation version name */
     { 0x0002, 0x0013, "SH",
-      strlen ("GIMP Dicom Plugin 1.0"), (guint8 *) "GIMP Dicom Plugin 1.0" },
+      strlen ("LIGMA Dicom Plugin 1.0"), (guint8 *) "LIGMA Dicom Plugin 1.0" },
     /* Identifying group */
     /* ImageType */
     { 0x0008, 0x0008, "CS",
@@ -1493,12 +1493,12 @@ dicom_ensure_required_elements_present (GSList *elements,
  */
 static gboolean
 save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
+            LigmaImage    *image,
+            LigmaDrawable *drawable,
             GError      **error)
 {
   FILE          *dicom;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   GeglBuffer    *buffer;
   const Babl    *format;
   gint           width;
@@ -1516,10 +1516,10 @@ save_image (GFile        *file,
   guint16        eight = 8;
   guchar        *src = NULL;
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
   /*  Make sure we're not saving an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       g_message (_("Cannot save images with alpha channel."));
       return FALSE;
@@ -1527,13 +1527,13 @@ save_image (GFile        *file,
 
   switch (drawable_type)
     {
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       samples_per_pixel = 1;
       photometric_interp = "MONOCHROME2";
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
       samples_per_pixel = 3;
       photometric_interp = "RGB";
@@ -1557,11 +1557,11 @@ save_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -1591,7 +1591,7 @@ save_image (GFile        *file,
   /*
    * Set value of custom elements
    */
-  elements = dicom_remove_gimp_specified_elements (elements,samples_per_pixel);
+  elements = dicom_remove_ligma_specified_elements (elements,samples_per_pixel);
 
   /* Image presentation group */
   group = 0x0028;

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@
 #include "text/text-enums.h"
 
 
-typedef struct _GimpFont        GimpFont;
-typedef struct _GimpFontFactory GimpFontFactory;
-typedef struct _GimpFontList    GimpFontList;
-typedef struct _GimpText        GimpText;
-typedef struct _GimpTextLayer   GimpTextLayer;
-typedef struct _GimpTextLayout  GimpTextLayout;
-typedef struct _GimpTextUndo    GimpTextUndo;
+typedef struct _LigmaFont        LigmaFont;
+typedef struct _LigmaFontFactory LigmaFontFactory;
+typedef struct _LigmaFontList    LigmaFontList;
+typedef struct _LigmaText        LigmaText;
+typedef struct _LigmaTextLayer   LigmaTextLayer;
+typedef struct _LigmaTextLayout  LigmaTextLayout;
+typedef struct _LigmaTextUndo    LigmaTextUndo;
 
 
 #endif /* __TEXT_TYPES_H__ */

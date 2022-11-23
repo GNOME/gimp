@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * stdplugins-intl.h
@@ -30,7 +30,7 @@
 
 #define DEFINE_STD_SET_I18N                                          \
 static gboolean                                                      \
-set_i18n (GimpPlugIn   *plug_in,                                     \
+set_i18n (LigmaPlugIn   *plug_in,                                     \
           const gchar  *procedure_name,                              \
           gchar       **gettext_domain,                              \
           gchar       **catalog_dir)                                 \

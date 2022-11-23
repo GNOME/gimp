@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationfillsource.h
+ * ligmaoperationfillsource.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_FILL_SOURCE_H__
-#define __GIMP_OPERATION_FILL_SOURCE_H__
+#ifndef __LIGMA_OPERATION_FILL_SOURCE_H__
+#define __LIGMA_OPERATION_FILL_SOURCE_H__
 
 
-#define GIMP_TYPE_OPERATION_FILL_SOURCE            (gimp_operation_fill_source_get_type ())
-#define GIMP_OPERATION_FILL_SOURCE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_FILL_SOURCE, GimpOperationFillSource))
-#define GIMP_OPERATION_FILL_SOURCE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_FILL_SOURCE, GimpOperationFillSourceClass))
-#define GIMP_IS_OPERATION_FILL_SOURCE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_FILL_SOURCE))
-#define GIMP_IS_OPERATION_FILL_SOURCE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_FILL_SOURCE))
-#define GIMP_OPERATION_FILL_SOURCE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_FILL_SOURCE, GimpOperationFillSourceClass))
+#define LIGMA_TYPE_OPERATION_FILL_SOURCE            (ligma_operation_fill_source_get_type ())
+#define LIGMA_OPERATION_FILL_SOURCE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_FILL_SOURCE, LigmaOperationFillSource))
+#define LIGMA_OPERATION_FILL_SOURCE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_FILL_SOURCE, LigmaOperationFillSourceClass))
+#define LIGMA_IS_OPERATION_FILL_SOURCE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_FILL_SOURCE))
+#define LIGMA_IS_OPERATION_FILL_SOURCE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_FILL_SOURCE))
+#define LIGMA_OPERATION_FILL_SOURCE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_FILL_SOURCE, LigmaOperationFillSourceClass))
 
 
-typedef struct _GimpOperationFillSource      GimpOperationFillSource;
-typedef struct _GimpOperationFillSourceClass GimpOperationFillSourceClass;
+typedef struct _LigmaOperationFillSource      LigmaOperationFillSource;
+typedef struct _LigmaOperationFillSourceClass LigmaOperationFillSourceClass;
 
-struct _GimpOperationFillSource
+struct _LigmaOperationFillSource
 {
   GeglOperationSource  parent_instance;
 
-  GimpFillOptions     *options;
-  GimpDrawable        *drawable;
+  LigmaFillOptions     *options;
+  LigmaDrawable        *drawable;
   gint                 pattern_offset_x;
   gint                 pattern_offset_y;
 };
 
-struct _GimpOperationFillSourceClass
+struct _LigmaOperationFillSourceClass
 {
   GeglOperationSourceClass  parent_class;
 };
 
 
-GType   gimp_operation_fill_source_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_fill_source_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_FILL_SOURCE_H__ */
+#endif /* __LIGMA_OPERATION_FILL_SOURCE_H__ */

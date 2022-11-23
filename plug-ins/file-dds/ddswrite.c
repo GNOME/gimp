@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -30,10 +30,10 @@
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include <libgimp/stdplugins-intl.h>
+#include <libligma/stdplugins-intl.h>
 
 #include "ddswrite.h"
 #include "dds.h"
@@ -45,12 +45,12 @@
 
 
 static gboolean   write_image (FILE          *fp,
-                               GimpImage     *image,
-                               GimpDrawable  *drawable,
+                               LigmaImage     *image,
+                               LigmaDrawable  *drawable,
                                GObject       *config);
-static gboolean   save_dialog (GimpImage     *image,
-                               GimpDrawable  *drawable,
-                               GimpProcedure *procedure,
+static gboolean   save_dialog (LigmaImage     *image,
+                               LigmaDrawable  *drawable,
+                               LigmaProcedure *procedure,
                                GObject       *config);
 
 
@@ -78,7 +78,7 @@ static const char *cubemap_face_names[4][6] =
   }
 };
 
-static GimpLayer *cubemap_faces[6];
+static LigmaLayer *cubemap_faces[6];
 static gboolean   is_cubemap            = FALSE;
 static gboolean   is_volume             = FALSE;
 static gboolean   is_array              = FALSE;
@@ -128,7 +128,7 @@ static struct
 
 
 static gboolean
-check_mipmaps (GimpImage *image,
+check_mipmaps (LigmaImage *image,
                gint       savetype)
 {
   GList         *layers;
@@ -142,7 +142,7 @@ check_mipmaps (GimpImage *image,
   gint           min_surfaces = 1;
   gint           max_surfaces = 1;
   gboolean       valid        = TRUE;
-  GimpImageType  type;
+  LigmaImageType  type;
 
   /* not handling volume maps for the moment... */
   if (savetype == DDS_SAVE_VOLUMEMAP)
@@ -159,23 +159,23 @@ check_mipmaps (GimpImage *image,
       max_surfaces = INT_MAX;
     }
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_get_width (image);
-  h = gimp_image_get_height (image);
+  w = ligma_image_get_width (image);
+  h = ligma_image_get_height (image);
 
   num_mipmaps = get_num_mipmaps (w, h);
 
-  type = gimp_drawable_type (layers->data);
+  type = ligma_drawable_type (layers->data);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      if (type != gimp_drawable_type (list->data))
+      if (type != ligma_drawable_type (list->data))
         return 0;
 
-      if ((gimp_drawable_get_width  (list->data) == w) &&
-          (gimp_drawable_get_height (list->data) == h))
+      if ((ligma_drawable_get_width  (list->data) == w) &&
+          (ligma_drawable_get_height (list->data) == h))
         ++num_surfaces;
     }
 
@@ -186,10 +186,10 @@ check_mipmaps (GimpImage *image,
 
   for (i = 0; valid && i < num_layers; i += num_mipmaps)
     {
-      GimpDrawable *drawable = g_list_nth_data (layers, i);
+      LigmaDrawable *drawable = g_list_nth_data (layers, i);
 
-      if ((gimp_drawable_get_width  (drawable) != w) ||
-          (gimp_drawable_get_height (drawable) != h))
+      if ((ligma_drawable_get_width  (drawable) != w) ||
+          (ligma_drawable_get_height (drawable) != h))
         {
           valid = FALSE;
           break;
@@ -203,8 +203,8 @@ check_mipmaps (GimpImage *image,
           miph = h >> j;
           if (mipw < 1) mipw = 1;
           if (miph < 1) miph = 1;
-          if ((gimp_drawable_get_width  (drawable) != mipw) ||
-              (gimp_drawable_get_height (drawable) != miph))
+          if ((ligma_drawable_get_width  (drawable) != mipw) ||
+              (ligma_drawable_get_height (drawable) != miph))
             {
               valid = FALSE;
               break;
@@ -216,7 +216,7 @@ check_mipmaps (GimpImage *image,
 }
 
 static gboolean
-check_cubemap (GimpImage *image)
+check_cubemap (LigmaImage *image)
 {
   GList         *layers;
   GList         *list;
@@ -225,9 +225,9 @@ check_cubemap (GimpImage *image)
   gint           i, j, k;
   gint           w, h;
   gchar         *layer_name;
-  GimpImageType  type;
+  LigmaImageType  type;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
   if (num_layers < 6)
@@ -245,20 +245,20 @@ check_cubemap (GimpImage *image)
         cubemap_faces[i] = NULL;
 
       /* find the mipmap level 0 layers */
-      w = gimp_image_get_width (image);
-      h = gimp_image_get_height (image);
+      w = ligma_image_get_width (image);
+      h = ligma_image_get_height (image);
 
       for (i = 0, list = layers;
            i < num_layers;
            ++i, list = g_list_next (list))
         {
-          GimpDrawable *drawable = list->data;
+          LigmaDrawable *drawable = list->data;
 
-          if ((gimp_drawable_get_width  (drawable) != w) ||
-              (gimp_drawable_get_height (drawable) != h))
+          if ((ligma_drawable_get_width  (drawable) != w) ||
+              (ligma_drawable_get_height (drawable) != h))
             continue;
 
-          layer_name = (char *) gimp_item_get_name (GIMP_ITEM (drawable));
+          layer_name = (char *) ligma_item_get_name (LIGMA_ITEM (drawable));
           for (j = 0; j < 6; ++j)
             {
               for (k = 0; k < 4; ++k)
@@ -267,7 +267,7 @@ check_cubemap (GimpImage *image)
                     {
                       if (cubemap_faces[j] == NULL)
                         {
-                          cubemap_faces[j] = GIMP_LAYER (drawable);
+                          cubemap_faces[j] = LIGMA_LAYER (drawable);
                           break;
                         }
                     }
@@ -288,10 +288,10 @@ check_cubemap (GimpImage *image)
       /* make sure they are all the same type */
       if (cubemap)
         {
-          type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
+          type = ligma_drawable_type (LIGMA_DRAWABLE (cubemap_faces[0]));
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if (gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[i])) != type)
+              if (ligma_drawable_type (LIGMA_DRAWABLE (cubemap_faces[i])) != type)
                 cubemap = FALSE;
             }
         }
@@ -307,9 +307,9 @@ check_cubemap (GimpImage *image)
            i < 6;
            ++i, list = g_list_next (layers))
         {
-          GimpLayer *layer = list->data;
+          LigmaLayer *layer = list->data;
 
-          layer_name = (gchar *) gimp_item_get_name (GIMP_ITEM (layer));
+          layer_name = (gchar *) ligma_item_get_name (LIGMA_ITEM (layer));
 
           for (j = 0; j < 6; ++j)
             {
@@ -340,13 +340,13 @@ check_cubemap (GimpImage *image)
       /* make sure they are all the same size */
       if (cubemap)
         {
-          w = gimp_drawable_get_width (GIMP_DRAWABLE (cubemap_faces[0]));
-          h = gimp_drawable_get_height (GIMP_DRAWABLE (cubemap_faces[0]));
+          w = ligma_drawable_get_width (LIGMA_DRAWABLE (cubemap_faces[0]));
+          h = ligma_drawable_get_height (LIGMA_DRAWABLE (cubemap_faces[0]));
 
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if ((gimp_drawable_get_width  (GIMP_DRAWABLE (cubemap_faces[i])) != w) ||
-                  (gimp_drawable_get_height (GIMP_DRAWABLE (cubemap_faces[i])) != h))
+              if ((ligma_drawable_get_width  (LIGMA_DRAWABLE (cubemap_faces[i])) != w) ||
+                  (ligma_drawable_get_height (LIGMA_DRAWABLE (cubemap_faces[i])) != h))
                 cubemap = FALSE;
             }
         }
@@ -354,10 +354,10 @@ check_cubemap (GimpImage *image)
       /* make sure they are all the same type */
       if (cubemap)
         {
-          type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
+          type = ligma_drawable_type (LIGMA_DRAWABLE (cubemap_faces[0]));
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if (gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[i])) != type)
+              if (ligma_drawable_type (LIGMA_DRAWABLE (cubemap_faces[i])) != type)
                 cubemap = FALSE;
             }
         }
@@ -367,7 +367,7 @@ check_cubemap (GimpImage *image)
 }
 
 static gboolean
-check_volume (GimpImage *image)
+check_volume (LigmaImage *image)
 {
   GList         *layers;
   GList         *list;
@@ -375,9 +375,9 @@ check_volume (GimpImage *image)
   gboolean       volume = FALSE;
   gint           i;
   gint           w, h;
-  GimpImageType  type;
+  LigmaImageType  type;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
   if (num_layers > 1)
@@ -385,28 +385,28 @@ check_volume (GimpImage *image)
       volume = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_get_width  (layers->data);
-      h = gimp_drawable_get_height (layers->data);
+      w = ligma_drawable_get_width  (layers->data);
+      h = ligma_drawable_get_height (layers->data);
 
       for (i = 1, list = layers->next;
            i < num_layers && volume;
            ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_get_width  (list->data) != w) ||
-              (gimp_drawable_get_height (list->data) != h))
+          if ((ligma_drawable_get_width  (list->data) != w) ||
+              (ligma_drawable_get_height (list->data) != h))
             volume = FALSE;
         }
 
       if (volume)
         {
           /* make sure all layers are the same type */
-          type = gimp_drawable_type (layers->data);
+          type = ligma_drawable_type (layers->data);
 
           for (i = 1, list = layers->next;
                i < num_layers && volume;
                ++i, list = g_list_next (list))
             {
-              if (gimp_drawable_type (list->data) != type)
+              if (ligma_drawable_type (list->data) != type)
                 volume = FALSE;
             }
         }
@@ -416,19 +416,19 @@ check_volume (GimpImage *image)
 }
 
 static gboolean
-check_array (GimpImage *image)
+check_array (LigmaImage *image)
 {
   GList         *layers;
   gint           num_layers;
   gboolean       array = FALSE;
   gint           i;
   gint           w, h;
-  GimpImageType  type;
+  LigmaImageType  type;
 
   if (check_mipmaps (image, DDS_SAVE_ARRAY))
     return 1;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
   if (num_layers > 1)
@@ -438,28 +438,28 @@ check_array (GimpImage *image)
       array = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_get_width  (layers->data);
-      h = gimp_drawable_get_height (layers->data);
+      w = ligma_drawable_get_width  (layers->data);
+      h = ligma_drawable_get_height (layers->data);
 
       for (i = 1, list = g_list_next (layers);
            i < num_layers && array;
            ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_get_width  (list->data)  != w) ||
-              (gimp_drawable_get_height (list->data) != h))
+          if ((ligma_drawable_get_width  (list->data)  != w) ||
+              (ligma_drawable_get_height (list->data) != h))
             array = FALSE;
         }
 
       if (array)
         {
           /* make sure all layers are the same type */
-          type = gimp_drawable_type (layers->data);
+          type = ligma_drawable_type (layers->data);
 
           for (i = 1, list = g_list_next (layers);
                i < num_layers;
                ++i, list = g_list_next (list))
             {
-              if (gimp_drawable_type (list->data) != type)
+              if (ligma_drawable_type (list->data) != type)
                 {
                   array = FALSE;
                   break;
@@ -474,7 +474,7 @@ check_array (GimpImage *image)
 }
 
 static int
-get_array_size (GimpImage *image)
+get_array_size (LigmaImage *image)
 {
   GList *layers;
   GList *list;
@@ -483,18 +483,18 @@ get_array_size (GimpImage *image)
   gint   w, h;
   gint   elements = 0;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_get_width (image);
-  h = gimp_image_get_height (image);
+  w = ligma_image_get_width (image);
+  h = ligma_image_get_height (image);
 
   for (i = 0, list = layers;
        i < num_layers;
        ++i, list = g_list_next (list))
     {
-      if ((gimp_drawable_get_width  (list->data) == w) &&
-          (gimp_drawable_get_height (list->data) == h))
+      if ((ligma_drawable_get_width  (list->data) == w) &&
+          (ligma_drawable_get_height (list->data) == h))
         {
           elements++;
         }
@@ -505,12 +505,12 @@ get_array_size (GimpImage *image)
   return elements;
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 write_dds (GFile         *file,
-           GimpImage     *image,
-           GimpDrawable  *drawable,
+           LigmaImage     *image,
+           LigmaDrawable  *drawable,
            gboolean       interactive,
-           GimpProcedure *procedure,
+           LigmaProcedure *procedure,
            GObject       *config,
            gboolean       is_duplicate_image)
 {
@@ -539,34 +539,34 @@ write_dds (GFile         *file,
         mipmaps = DDS_MIPMAP_NONE;
 
       if (! save_dialog (image, drawable, procedure, config))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
   else
     {
       if (savetype == DDS_SAVE_CUBEMAP && ! is_cubemap)
         {
           g_message ("DDS: Cannot save image as cube map");
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (savetype == DDS_SAVE_VOLUMEMAP && ! is_volume)
         {
           g_message ("DDS: Cannot save image as volume map");
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (savetype == DDS_SAVE_VOLUMEMAP &&
           compression != DDS_COMPRESS_NONE)
         {
           g_message ("DDS: Cannot save volume map with compression");
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (mipmaps == DDS_MIPMAP_EXISTING &&
           ! is_mipmap_chain_valid)
         {
           g_message ("DDS: Cannot save with existing mipmaps as the mipmap chain is incomplete");
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
@@ -575,23 +575,23 @@ write_dds (GFile         *file,
   if (! fp)
     {
       g_message ("Error opening %s", g_file_peek_path (file));
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_progress_init_printf ("Saving %s:", gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf ("Saving %s:", ligma_file_get_utf8_name (file));
 
   /* If destructive changes are going to happen to the image,
    * make sure we send a duplicate of it to write_image()
    */
   if (! is_duplicate_image)
     {
-      GimpImage  *duplicate_image = gimp_image_duplicate (image);
-      GimpItem  **drawables;
+      LigmaImage  *duplicate_image = ligma_image_duplicate (image);
+      LigmaItem  **drawables;
       gint        n_drawables;
 
-      drawables = gimp_image_get_selected_drawables (duplicate_image, &n_drawables);
-      rc = write_image (fp, duplicate_image, GIMP_DRAWABLE (drawables[0]), config);
-      gimp_image_delete (duplicate_image);
+      drawables = ligma_image_get_selected_drawables (duplicate_image, &n_drawables);
+      rc = write_image (fp, duplicate_image, LIGMA_DRAWABLE (drawables[0]), config);
+      ligma_image_delete (duplicate_image);
       g_free (drawables);
     }
   else
@@ -601,7 +601,7 @@ write_dds (GFile         *file,
 
   fclose (fp);
 
-  return rc ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
+  return rc ? LIGMA_PDB_SUCCESS : LIGMA_PDB_EXECUTION_ERROR;
 }
 
 static void
@@ -783,8 +783,8 @@ get_mipmap_chain (unsigned char *dst,
                   int            w,
                   int            h,
                   int            bpp,
-                  GimpImage     *image,
-                  GimpDrawable  *drawable)
+                  LigmaImage     *image,
+                  LigmaDrawable  *drawable)
 {
   GList      *layers;
   GList      *list;
@@ -805,7 +805,7 @@ get_mipmap_chain (unsigned char *dst,
   else
     format = babl_format ("R'G'B'A u8");
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
   for (i = 0, list = layers;
@@ -826,7 +826,7 @@ get_mipmap_chain (unsigned char *dst,
 
   while (get_next_mipmap_dimensions (&mipw, &miph, w, h))
     {
-      buffer = gimp_drawable_get_buffer (g_list_nth_data (layers, ++idx));
+      buffer = ligma_drawable_get_buffer (g_list_nth_data (layers, ++idx));
 
       if ((gegl_buffer_get_width (buffer)  != mipw) ||
           (gegl_buffer_get_height (buffer) != miph))
@@ -851,8 +851,8 @@ get_mipmap_chain (unsigned char *dst,
 
 static void
 write_layer (FILE         *fp,
-             GimpImage    *image,
-             GimpDrawable *drawable,
+             LigmaImage    *image,
+             LigmaDrawable *drawable,
              GObject      *config,
              int           w,
              int           h,
@@ -862,8 +862,8 @@ write_layer (FILE         *fp,
 {
   GeglBuffer        *buffer;
   const Babl        *format;
-  GimpImageBaseType  basetype;
-  GimpImageType      type;
+  LigmaImageBaseType  basetype;
+  LigmaImageType      type;
   guchar            *src;
   guchar            *dst;
   guchar            *fmtdst;
@@ -888,15 +888,15 @@ write_layer (FILE         *fp,
                 "perceptual-metric",  &perceptual_metric,
                 NULL);
 
-  basetype = gimp_image_get_base_type (image);
-  type = gimp_drawable_type (drawable);
+  basetype = ligma_image_get_base_type (image);
+  type = ligma_drawable_type (drawable);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   src = g_malloc (w * h * bpp);
 
-  if (basetype == GIMP_INDEXED)
-    format = gimp_drawable_get_format (drawable);
+  if (basetype == LIGMA_INDEXED)
+    format = ligma_drawable_get_format (drawable);
   else if (bpp == 1)
     format = babl_format ("Y' u8");
   else if (bpp == 2)
@@ -909,11 +909,11 @@ write_layer (FILE         *fp,
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  if (basetype == GIMP_INDEXED)
+  if (basetype == LIGMA_INDEXED)
     {
-      palette = gimp_image_get_colormap (image, &colors);
+      palette = ligma_image_get_colormap (image, &colors);
 
-      if (type == GIMP_INDEXEDA_IMAGE)
+      if (type == LIGMA_INDEXEDA_IMAGE)
         {
           tmp = g_malloc (w * h);
           for (i = 0; i < w * h; ++i)
@@ -1011,7 +1011,7 @@ write_layer (FILE         *fp,
         {
           /* pre-convert indexed images to RGB for better quality mipmaps
              if a pixel format conversion is requested */
-          if (pixel_format > DDS_FORMAT_DEFAULT && basetype == GIMP_INDEXED)
+          if (pixel_format > DDS_FORMAT_DEFAULT && basetype == LIGMA_INDEXED)
             {
               fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps, DDS_COMPRESS_NONE);
               fmtdst = g_malloc (fmtsize);
@@ -1107,7 +1107,7 @@ write_layer (FILE         *fp,
 
       dst = g_malloc (size);
 
-      if (basetype == GIMP_INDEXED)
+      if (basetype == LIGMA_INDEXED)
         {
           fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
@@ -1180,7 +1180,7 @@ write_layer (FILE         *fp,
 
 static void
 write_volume_mipmaps (FILE      *fp,
-                      GimpImage *image,
+                      LigmaImage *image,
                       GObject   *config,
                       GList     *layers,
                       int        w,
@@ -1202,7 +1202,7 @@ write_volume_mipmaps (FILE      *fp,
   guchar            *palette = 0;
   GeglBuffer        *buffer;
   const Babl        *format;
-  GimpImageBaseType  type;
+  LigmaImageBaseType  type;
   gint               compression;
   gint               pixel_format;
   gint               mipmap_filter;
@@ -1221,7 +1221,7 @@ write_volume_mipmaps (FILE      *fp,
                 "gamma",              &gamma,
                 NULL);
 
-  type = gimp_image_get_base_type (image);
+  type = ligma_image_get_base_type (image);
 
   if (compression != DDS_COMPRESS_NONE)
     return;
@@ -1237,22 +1237,22 @@ write_volume_mipmaps (FILE      *fp,
   else
     format = babl_format ("R'G'B'A u8");
 
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-    palette = gimp_image_get_colormap (image, &colors);
+  if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
+    palette = ligma_image_get_colormap (image, &colors);
 
   offset = 0;
   for (i = 0, list = layers;
        i < d;
        ++i, list = g_list_next (list))
     {
-      buffer = gimp_drawable_get_buffer (list->data);
+      buffer = ligma_drawable_get_buffer (list->data);
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format,
                        src + offset, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       offset += (w * h * bpp);
       g_object_unref (buffer);
     }
 
-  if (gimp_drawable_type (layers->data) == GIMP_INDEXEDA_IMAGE)
+  if (ligma_drawable_type (layers->data) == LIGMA_INDEXEDA_IMAGE)
     {
       tmp = g_malloc (w * h * d);
       for (i = 0; i < w * h * d; ++i)
@@ -1269,7 +1269,7 @@ write_volume_mipmaps (FILE      *fp,
 
   /* pre-convert indexed images to RGB for better mipmaps if a
      pixel format conversion is requested */
-  if (pixel_format > DDS_FORMAT_DEFAULT && type == GIMP_INDEXED)
+  if (pixel_format > DDS_FORMAT_DEFAULT && type == LIGMA_INDEXED)
     {
       size = get_volume_mipmapped_size (w, h, d, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
@@ -1318,12 +1318,12 @@ write_volume_mipmaps (FILE      *fp,
 
 static gboolean
 write_image (FILE         *fp,
-             GimpImage    *image,
-             GimpDrawable *drawable,
+             LigmaImage    *image,
+             LigmaDrawable *drawable,
              GObject      *config)
 {
-  GimpImageType      drawable_type;
-  GimpImageBaseType  basetype;
+  LigmaImageType      drawable_type;
+  LigmaImageBaseType  basetype;
   gint               i, w, h;
   gint               bpp = 0;
   gint               fmtbpp = 0;
@@ -1360,9 +1360,9 @@ write_image (FILE         *fp,
                 NULL);
 
   if (flip_export)
-    gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
+    ligma_image_flip (image, LIGMA_ORIENTATION_VERTICAL);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   num_layers = g_list_length (layers);
 
   if (mipmaps == DDS_MIPMAP_EXISTING)
@@ -1370,26 +1370,26 @@ write_image (FILE         *fp,
 
   if (savetype == DDS_SAVE_SELECTED_LAYER)
     {
-      w = gimp_drawable_get_width (drawable);
-      h = gimp_drawable_get_height (drawable);
+      w = ligma_drawable_get_width (drawable);
+      h = ligma_drawable_get_height (drawable);
     }
   else
     {
-      w = gimp_image_get_width (image);
-      h = gimp_image_get_height (image);
+      w = ligma_image_get_width (image);
+      h = ligma_image_get_height (image);
     }
 
-  basetype = gimp_image_get_base_type (image);
-  drawable_type = gimp_drawable_type (drawable);
+  basetype = ligma_image_get_base_type (image);
+  drawable_type = ligma_drawable_type (drawable);
 
   switch (drawable_type)
     {
-    case GIMP_RGB_IMAGE:      bpp = 3; break;
-    case GIMP_RGBA_IMAGE:     bpp = 4; break;
-    case GIMP_GRAY_IMAGE:     bpp = 1; break;
-    case GIMP_GRAYA_IMAGE:    bpp = 2; break;
-    case GIMP_INDEXED_IMAGE:  bpp = 1; break;
-    case GIMP_INDEXEDA_IMAGE: bpp = 2; break;
+    case LIGMA_RGB_IMAGE:      bpp = 3; break;
+    case LIGMA_RGBA_IMAGE:     bpp = 4; break;
+    case LIGMA_GRAY_IMAGE:     bpp = 1; break;
+    case LIGMA_GRAYA_IMAGE:    bpp = 2; break;
+    case LIGMA_INDEXED_IMAGE:  bpp = 1; break;
+    case LIGMA_INDEXEDA_IMAGE: bpp = 2; break;
     default:
                               break;
     }
@@ -1413,7 +1413,7 @@ write_image (FILE         *fp,
     }
   else if (bpp == 1)
     {
-      if (basetype == GIMP_INDEXED)
+      if (basetype == LIGMA_INDEXED)
         {
           fmtbpp = 1;
           has_alpha = 0;
@@ -1430,7 +1430,7 @@ write_image (FILE         *fp,
     }
   else if (bpp == 2)
     {
-      if (basetype == GIMP_INDEXED)
+      if (basetype == LIGMA_INDEXED)
         {
           fmtbpp = 1;
           has_alpha = 0;
@@ -1542,12 +1542,12 @@ write_image (FILE         *fp,
         {
           if (bpp == 1)
             {
-              if (basetype == GIMP_INDEXED)
+              if (basetype == LIGMA_INDEXED)
                 pflags |= DDPF_PALETTEINDEXED8;
               else
                 pflags |= DDPF_LUMINANCE;
             }
-          else if ((bpp == 2) && (basetype == GIMP_INDEXED))
+          else if ((bpp == 2) && (basetype == LIGMA_INDEXED))
             {
               pflags |= DDPF_PALETTEINDEXED8;
             }
@@ -1565,7 +1565,7 @@ write_image (FILE         *fp,
       PUTL32 (hdr + 80, pflags);
 
       /*
-       * write extra fourcc info - this is special to GIMP DDS. When the image
+       * write extra fourcc info - this is special to LIGMA DDS. When the image
        * is read by the plugin, we can detect the added information to decode
        * the pixels
        */
@@ -1642,7 +1642,7 @@ write_image (FILE         *fp,
       PUTL32 (hdr + 20, size); /* linear size */
 
       /*
-       * write extra fourcc info - this is special to GIMP DDS. When the image
+       * write extra fourcc info - this is special to LIGMA DDS. When the image
        * is read by the plugin, we can detect the added information to decode
        * the pixels
        */
@@ -1687,11 +1687,11 @@ write_image (FILE         *fp,
     fwrite (hdr10, DDS_HEADERSIZE_DX10, 1, fp);
 
   /* write palette for indexed images */
-  if ((basetype == GIMP_INDEXED) &&
+  if ((basetype == LIGMA_INDEXED) &&
       (pixel_format == DDS_FORMAT_DEFAULT) &&
       (compression == DDS_COMPRESS_NONE))
     {
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = ligma_image_get_colormap (image, &colors);
 
       for (i = 0; i < colors; ++i)
         {
@@ -1710,10 +1710,10 @@ write_image (FILE         *fp,
     {
       for (i = 0; i < 6; ++i)
         {
-          write_layer (fp, image, GIMP_DRAWABLE (cubemap_faces[i]), config,
+          write_layer (fp, image, LIGMA_DRAWABLE (cubemap_faces[i]), config,
                        w, h, bpp, fmtbpp,
                        num_mipmaps);
-          gimp_progress_update ((float)(i + 1) / 6.0);
+          ligma_progress_update ((float)(i + 1) / 6.0);
         }
     }
   else if (savetype == DDS_SAVE_VOLUMEMAP)
@@ -1724,7 +1724,7 @@ write_image (FILE         *fp,
         {
           write_layer (fp, image, list->data, config,
                        w, h, bpp, fmtbpp, 1);
-          gimp_progress_update ((float)i / (float)num_layers);
+          ligma_progress_update ((float)i / (float)num_layers);
         }
 
       if (num_mipmaps > 1)
@@ -1737,26 +1737,26 @@ write_image (FILE         *fp,
            i < num_layers;
            ++i, list = g_list_next (layers))
         {
-          if ((gimp_drawable_get_width  (list->data) == w) &&
-              (gimp_drawable_get_height (list->data) == h))
+          if ((ligma_drawable_get_width  (list->data) == w) &&
+              (ligma_drawable_get_height (list->data) == h))
             {
               write_layer (fp, image, list->data, config,
                            w, h, bpp, fmtbpp, num_mipmaps);
             }
 
-          gimp_progress_update ((float)i / (float)num_layers);
+          ligma_progress_update ((float)i / (float)num_layers);
         }
     }
   else
     {
       if (savetype == DDS_SAVE_VISIBLE_LAYERS)
-        drawable = GIMP_DRAWABLE (gimp_image_merge_visible_layers (image,
-                                                                   GIMP_CLIP_TO_IMAGE));
+        drawable = LIGMA_DRAWABLE (ligma_image_merge_visible_layers (image,
+                                                                   LIGMA_CLIP_TO_IMAGE));
       write_layer (fp, image, drawable, config,
                    w, h, bpp, fmtbpp, num_mipmaps);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return TRUE;
 }
@@ -1770,12 +1770,12 @@ combo_sensitivity_func (gint     value,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (data));
 
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
+  if (ligma_int_store_lookup_by_value (model, value, &iter))
     {
       gpointer insensitive;
 
       gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_USER_DATA, &insensitive,
+                          LIGMA_INT_STORE_USER_DATA, &insensitive,
                           -1);
 
       return ! GPOINTER_TO_INT (insensitive);
@@ -1794,10 +1794,10 @@ combo_set_item_sensitive (GtkWidget *widget,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
 
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
+  if (ligma_int_store_lookup_by_value (model, value, &iter))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA,
+                          LIGMA_INT_STORE_USER_DATA,
                           ! GINT_TO_POINTER (sensitive),
                           -1);
     }
@@ -1806,7 +1806,7 @@ combo_set_item_sensitive (GtkWidget *widget,
 static void
 config_notify (GObject          *config,
                const GParamSpec *pspec,
-               GimpImage        *image)
+               LigmaImage        *image)
 {
   if (! strcmp (pspec->name, "compression-format"))
     {
@@ -1901,10 +1901,10 @@ config_notify (GObject          *config,
     }
   else if (! strcmp (pspec->name, "transparent-color"))
     {
-      GimpImageBaseType base_type;
+      LigmaImageBaseType base_type;
       gboolean          transparent_color;
 
-      base_type = gimp_image_get_base_type (image);
+      base_type = ligma_image_get_base_type (image);
 
       g_object_get (config,
                     "transparent-color", &transparent_color,
@@ -1913,7 +1913,7 @@ config_notify (GObject          *config,
       if (transparent_spin)
         gtk_widget_set_sensitive (transparent_spin,
                                   transparent_color &&
-                                  base_type == GIMP_INDEXED);
+                                  base_type == LIGMA_INDEXED);
     }
   else if (! strcmp (pspec->name, "gamma-correct"))
     {
@@ -1959,9 +1959,9 @@ config_notify (GObject          *config,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpDrawable  *drawable,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaDrawable  *drawable,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
@@ -1979,8 +1979,8 @@ save_dialog (GimpImage     *image,
                   "save-type", DDS_SAVE_SELECTED_LAYER,
                   NULL);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as DDS"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
@@ -1997,7 +1997,7 @@ save_dialog (GimpImage     *image,
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  store = gimp_int_store_new ("None",                  DDS_COMPRESS_NONE,
+  store = ligma_int_store_new ("None",                  DDS_COMPRESS_NONE,
                               "BC1 / DXT1",            DDS_COMPRESS_BC1,
                               "BC2 / DXT3",            DDS_COMPRESS_BC2,
                               "BC3 / DXT5",            DDS_COMPRESS_BC3,
@@ -2009,18 +2009,18 @@ save_dialog (GimpImage     *image,
                               "YCoCg (DXT5)",          DDS_COMPRESS_YCOCG,
                               "YCoCg scaled (DXT5)",   DDS_COMPRESS_YCOCGS,
                               NULL);
-  compress_opt = gimp_prop_int_combo_box_new (config, "compression-format",
-                                              GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  compress_opt = ligma_prop_int_combo_box_new (config, "compression-format",
+                                              LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Compression:"),
                             0.0, 0.5,
                             compress_opt, 1);
 
-  pm_check = gimp_prop_check_button_new (config, "perceptual-metric",
+  pm_check = ligma_prop_check_button_new (config, "perceptual-metric",
                                          _("Use _perceptual error metric"));
   gtk_grid_attach (GTK_GRID (grid), pm_check, 1, 1, 1, 1);
 
-  store = gimp_int_store_new ("Default", DDS_FORMAT_DEFAULT,
+  store = ligma_int_store_new ("Default", DDS_FORMAT_DEFAULT,
                               "RGB8",    DDS_FORMAT_RGB8,
                               "RGBA8",   DDS_FORMAT_RGBA8,
                               "BGR8",    DDS_FORMAT_BGR8,
@@ -2036,27 +2036,27 @@ save_dialog (GimpImage     *image,
                               "AExp",    DDS_FORMAT_AEXP,
                               "YCoCg",   DDS_FORMAT_YCOCG,
                               NULL);
-  format_opt = gimp_prop_int_combo_box_new (config, "format",
-                                            GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  format_opt = ligma_prop_int_combo_box_new (config, "format",
+                                            LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Format:"),
                             0.0, 0.5,
                             format_opt, 1);
 
-  store = gimp_int_store_new (_("Selected layer"),         DDS_SAVE_SELECTED_LAYER,
+  store = ligma_int_store_new (_("Selected layer"),         DDS_SAVE_SELECTED_LAYER,
                               _("All visible layers"),     DDS_SAVE_VISIBLE_LAYERS,
                               _("As cube map"),            DDS_SAVE_CUBEMAP,
                               _("As volume map"),          DDS_SAVE_VOLUMEMAP,
                               _("As texture array"),       DDS_SAVE_ARRAY,
                               NULL);
-  opt = gimp_prop_int_combo_box_new (config, "save-type",
-                                     GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  opt = ligma_prop_int_combo_box_new (config, "save-type",
+                                     LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("_Save:"),
                             0.0, 0.5,
                             opt, 1);
 
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (opt),
+  ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (opt),
                                       combo_sensitivity_func,
                                       opt, NULL);
 
@@ -2064,22 +2064,22 @@ save_dialog (GimpImage     *image,
   combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
   combo_set_item_sensitive (opt, DDS_SAVE_ARRAY,     is_array);
 
-  flip_check = gimp_prop_check_button_new (config, "flip-image",
+  flip_check = ligma_prop_check_button_new (config, "flip-image",
                                            _("Flip image _vertically on export"));
   gtk_grid_attach (GTK_GRID (grid), flip_check, 1, 4, 1, 1);
 
-  store = gimp_int_store_new (_("No mipmaps"),           DDS_MIPMAP_NONE,
+  store = ligma_int_store_new (_("No mipmaps"),           DDS_MIPMAP_NONE,
                               _("Generate mipmaps"),     DDS_MIPMAP_GENERATE,
                               _("Use existing mipmaps"), DDS_MIPMAP_EXISTING,
                               NULL);
-  mipmap_opt = gimp_prop_int_combo_box_new (config, "mipmaps",
-                                            GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+  mipmap_opt = ligma_prop_int_combo_box_new (config, "mipmaps",
+                                            LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 5,
                             _("_Mipmaps:"),
                             0.0, 0.5,
                             mipmap_opt, 1);
 
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (mipmap_opt),
+  ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (mipmap_opt),
                                       combo_sensitivity_func,
                                       mipmap_opt, NULL);
 
@@ -2092,16 +2092,16 @@ save_dialog (GimpImage     *image,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  check = gimp_prop_check_button_new (config, "transparent-color",
+  check = ligma_prop_check_button_new (config, "transparent-color",
                                       _("Transparent index:"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
-  transparent_spin = gimp_prop_spin_button_new (config, "transparent-index",
+  transparent_spin = ligma_prop_spin_button_new (config, "transparent-index",
                                                 1, 8, 0);
   gtk_box_pack_start (GTK_BOX (hbox), transparent_spin, TRUE, TRUE, 0);
 
-  frame = gimp_frame_new (_("Mipmap Options"));
+  frame = ligma_frame_new (_("Mipmap Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2111,7 +2111,7 @@ save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  store = gimp_int_store_new ("Default",   DDS_MIPMAP_FILTER_DEFAULT,
+  store = ligma_int_store_new ("Default",   DDS_MIPMAP_FILTER_DEFAULT,
                               "Nearest",   DDS_MIPMAP_FILTER_NEAREST,
                               "Box",       DDS_MIPMAP_FILTER_BOX,
                               "Triangle",  DDS_MIPMAP_FILTER_TRIANGLE,
@@ -2121,48 +2121,48 @@ save_dialog (GimpImage     *image,
                               "Lanczos",   DDS_MIPMAP_FILTER_LANCZOS,
                               "Kaiser",    DDS_MIPMAP_FILTER_KAISER,
                               NULL);
-  mipmap_filter_opt = gimp_prop_int_combo_box_new (config, "mipmap-filter",
-                                                   GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  mipmap_filter_opt = ligma_prop_int_combo_box_new (config, "mipmap-filter",
+                                                   LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("F_ilter:"),
                             0.0, 0.5,
                             mipmap_filter_opt, 1);
 
-  store = gimp_int_store_new ("Default", DDS_MIPMAP_WRAP_DEFAULT,
+  store = ligma_int_store_new ("Default", DDS_MIPMAP_WRAP_DEFAULT,
                               "Mirror",  DDS_MIPMAP_WRAP_MIRROR,
                               "Repeat",  DDS_MIPMAP_WRAP_REPEAT,
                               "Clamp",   DDS_MIPMAP_WRAP_CLAMP,
                               NULL);
-  mipmap_wrap_opt = gimp_prop_int_combo_box_new (config, "mipmap-wrap",
-                                                 GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  mipmap_wrap_opt = ligma_prop_int_combo_box_new (config, "mipmap-wrap",
+                                                 LIGMA_INT_STORE (store));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Wrap mode:"),
                             0.0, 0.5,
                             mipmap_wrap_opt, 1);
 
-  gamma_check = gimp_prop_check_button_new (config, "gamma-correct",
+  gamma_check = ligma_prop_check_button_new (config, "gamma-correct",
                                             _("Appl_y gamma correction"));
   gtk_grid_attach (GTK_GRID (grid), gamma_check, 1, 2, 1, 1);
 
-  srgb_check = gimp_prop_check_button_new (config, "srgb",
+  srgb_check = ligma_prop_check_button_new (config, "srgb",
                                            _("Use s_RGB colorspace"));
   gtk_grid_attach (GTK_GRID (grid), srgb_check, 1, 3, 1, 1);
 
-  gamma_spin = gimp_prop_spin_button_new (config, "gamma",
+  gamma_spin = ligma_prop_spin_button_new (config, "gamma",
                                           0.1, 0.5, 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             _("_Gamma:"), 0.0, 0.5,
                             gamma_spin, 1);
 
   alpha_coverage_check =
-    gimp_prop_check_button_new (config, "preserve-alpha-coverage",
+    ligma_prop_check_button_new (config, "preserve-alpha-coverage",
                                 _("Preserve alpha _test coverage"));
   gtk_grid_attach (GTK_GRID (grid), alpha_coverage_check, 1, 5, 1, 1);
 
   alpha_test_threshold_spin =
-    gimp_prop_spin_button_new (config, "alpha-test-threshold",
+    ligma_prop_spin_button_new (config, "alpha-test-threshold",
                                0.01, 0.1, 2);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 6,
                             _("_Alpha test threshold:"), 0.0, 0.5,
                             alpha_test_threshold_spin, 1);
 
@@ -2192,7 +2192,7 @@ save_dialog (GimpImage     *image,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   g_signal_handlers_disconnect_by_func (config,
                                         config_notify,

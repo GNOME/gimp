@@ -1,6 +1,6 @@
-# translation of gimp-python to Kinyarwanda.
+# translation of ligma-python to Kinyarwanda.
 # Copyright (C) 2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp-python package.
+# This file is distributed under the same license as the ligma-python package.
 # Steve Murphy <murf@e-tools.com>, 2005
 # Steve performed initial rough translation from compendium built from translations provided by the following translators:
 # Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
@@ -13,8 +13,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2006-09-13 21:07+0200\n"
 "PO-Revision-Date: 2005-03-31 20:55-0700\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
@@ -24,19 +24,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:43
 msgid "Python Console"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:75
 #, fuzzy
 msgid "_Browse..."
 msgstr "Gushakisha..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-msgid "Gimp-Python Console"
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:217
+msgid "Ligma-Python Console"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:218
 msgid "Interactive Python Development"
 msgstr ""

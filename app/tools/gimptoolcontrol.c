@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,27 +22,27 @@
 
 #include "tools-types.h"
 
-#include "gimptoolcontrol.h"
+#include "ligmatoolcontrol.h"
 
 
-static void gimp_tool_control_finalize (GObject *object);
+static void ligma_tool_control_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpToolControl, gimp_tool_control, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaToolControl, ligma_tool_control, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_tool_control_parent_class
+#define parent_class ligma_tool_control_parent_class
 
 
 static void
-gimp_tool_control_class_init (GimpToolControlClass *klass)
+ligma_tool_control_class_init (LigmaToolControlClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_tool_control_finalize;
+  object_class->finalize = ligma_tool_control_finalize;
 }
 
 static void
-gimp_tool_control_init (GimpToolControl *control)
+ligma_tool_control_init (LigmaToolControl *control)
 {
   control->active                 = FALSE;
   control->paused_count           = 0;
@@ -51,9 +51,9 @@ gimp_tool_control_init (GimpToolControl *control)
   control->scroll_lock            = FALSE;
   control->handle_empty_image     = FALSE;
 
-  control->dirty_mask             = GIMP_DIRTY_NONE;
-  control->dirty_action           = GIMP_TOOL_ACTION_HALT;
-  control->motion_mode            = GIMP_MOTION_MODE_COMPRESS;
+  control->dirty_mask             = LIGMA_DIRTY_NONE;
+  control->dirty_action           = LIGMA_TOOL_ACTION_HALT;
+  control->motion_mode            = LIGMA_MOTION_MODE_COMPRESS;
 
   control->auto_snap_to           = TRUE;
   control->snap_offset_x          = 0;
@@ -61,7 +61,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->snap_width             = 0;
   control->snap_height            = 0;
 
-  control->precision              = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
+  control->precision              = LIGMA_CURSOR_PRECISION_PIXEL_CENTER;
 
   control->toggled                = FALSE;
 
@@ -70,11 +70,11 @@ gimp_tool_control_init (GimpToolControl *control)
   control->wants_triple_click     = FALSE;
   control->wants_all_key_events   = FALSE;
 
-  control->active_modifiers       = GIMP_TOOL_ACTIVE_MODIFIERS_OFF;
+  control->active_modifiers       = LIGMA_TOOL_ACTIVE_MODIFIERS_OFF;
 
-  control->cursor                 = GIMP_CURSOR_MOUSE;
-  control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
-  control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
+  control->cursor                 = LIGMA_CURSOR_MOUSE;
+  control->tool_cursor            = LIGMA_TOOL_CURSOR_NONE;
+  control->cursor_modifier        = LIGMA_CURSOR_MODIFIER_NONE;
 
   control->toggle_cursor          = -1;
   control->toggle_tool_cursor     = -1;
@@ -82,9 +82,9 @@ gimp_tool_control_init (GimpToolControl *control)
 }
 
 static void
-gimp_tool_control_finalize (GObject *object)
+ligma_tool_control_finalize (GObject *object)
 {
-  GimpToolControl *control = GIMP_TOOL_CONTROL (object);
+  LigmaToolControl *control = LIGMA_TOOL_CONTROL (object);
 
   g_slist_free (control->preserve_stack);
 
@@ -107,78 +107,78 @@ gimp_tool_control_finalize (GObject *object)
 /*  public functions  */
 
 void
-gimp_tool_control_activate (GimpToolControl *control)
+ligma_tool_control_activate (LigmaToolControl *control)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
   g_return_if_fail (control->active == FALSE);
 
   control->active = TRUE;
 }
 
 void
-gimp_tool_control_halt (GimpToolControl *control)
+ligma_tool_control_halt (LigmaToolControl *control)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
   g_return_if_fail (control->active == TRUE);
 
   control->active = FALSE;
 }
 
 gboolean
-gimp_tool_control_is_active (GimpToolControl *control)
+ligma_tool_control_is_active (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->active;
 }
 
 void
-gimp_tool_control_pause (GimpToolControl *control)
+ligma_tool_control_pause (LigmaToolControl *control)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->paused_count++;
 }
 
 void
-gimp_tool_control_resume (GimpToolControl *control)
+ligma_tool_control_resume (LigmaToolControl *control)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
   g_return_if_fail (control->paused_count > 0);
 
   control->paused_count--;
 }
 
 gboolean
-gimp_tool_control_is_paused (GimpToolControl *control)
+ligma_tool_control_is_paused (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->paused_count > 0;
 }
 
 void
-gimp_tool_control_set_preserve (GimpToolControl *control,
+ligma_tool_control_set_preserve (LigmaToolControl *control,
                                 gboolean         preserve)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->preserve = preserve ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_preserve (GimpToolControl *control)
+ligma_tool_control_get_preserve (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->preserve;
 }
 
 void
-gimp_tool_control_push_preserve (GimpToolControl *control,
+ligma_tool_control_push_preserve (LigmaToolControl *control,
                                  gboolean         preserve)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->preserve_stack =
     g_slist_prepend (control->preserve_stack,
@@ -188,9 +188,9 @@ gimp_tool_control_push_preserve (GimpToolControl *control,
 }
 
 void
-gimp_tool_control_pop_preserve (GimpToolControl *control)
+ligma_tool_control_pop_preserve (LigmaToolControl *control)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
   g_return_if_fail (control->preserve_stack != NULL);
 
   control->preserve = GPOINTER_TO_INT (control->preserve_stack->data);
@@ -200,201 +200,201 @@ gimp_tool_control_pop_preserve (GimpToolControl *control)
 }
 
 void
-gimp_tool_control_set_scroll_lock (GimpToolControl *control,
+ligma_tool_control_set_scroll_lock (LigmaToolControl *control,
                                    gboolean         scroll_lock)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->scroll_lock = scroll_lock ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_scroll_lock (GimpToolControl *control)
+ligma_tool_control_get_scroll_lock (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->scroll_lock;
 }
 
 void
-gimp_tool_control_set_handle_empty_image (GimpToolControl *control,
+ligma_tool_control_set_handle_empty_image (LigmaToolControl *control,
                                           gboolean         handle_empty)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->handle_empty_image = handle_empty ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_handle_empty_image (GimpToolControl *control)
+ligma_tool_control_get_handle_empty_image (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->handle_empty_image;
 }
 
 void
-gimp_tool_control_set_dirty_mask (GimpToolControl *control,
-                                  GimpDirtyMask    dirty_mask)
+ligma_tool_control_set_dirty_mask (LigmaToolControl *control,
+                                  LigmaDirtyMask    dirty_mask)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->dirty_mask = dirty_mask;
 }
 
-GimpDirtyMask
-gimp_tool_control_get_dirty_mask (GimpToolControl *control)
+LigmaDirtyMask
+ligma_tool_control_get_dirty_mask (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_DIRTY_NONE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), LIGMA_DIRTY_NONE);
 
   return control->dirty_mask;
 }
 
 void
-gimp_tool_control_set_dirty_action (GimpToolControl *control,
-                                    GimpToolAction  action)
+ligma_tool_control_set_dirty_action (LigmaToolControl *control,
+                                    LigmaToolAction  action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->dirty_action = action;
 }
 
-GimpToolAction
-gimp_tool_control_get_dirty_action (GimpToolControl *control)
+LigmaToolAction
+ligma_tool_control_get_dirty_action (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_TOOL_ACTION_HALT);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), LIGMA_TOOL_ACTION_HALT);
 
   return control->dirty_action;
 }
 
 void
-gimp_tool_control_set_motion_mode (GimpToolControl *control,
-                                   GimpMotionMode   motion_mode)
+ligma_tool_control_set_motion_mode (LigmaToolControl *control,
+                                   LigmaMotionMode   motion_mode)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->motion_mode = motion_mode;
 }
 
-GimpMotionMode
-gimp_tool_control_get_motion_mode (GimpToolControl *control)
+LigmaMotionMode
+ligma_tool_control_get_motion_mode (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_MOTION_MODE_EXACT);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), LIGMA_MOTION_MODE_EXACT);
 
   return control->motion_mode;
 }
 
 void
-gimp_tool_control_set_snap_to (GimpToolControl *control,
+ligma_tool_control_set_snap_to (LigmaToolControl *control,
                                gboolean         snap_to)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->auto_snap_to = snap_to ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_snap_to (GimpToolControl *control)
+ligma_tool_control_get_snap_to (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->auto_snap_to;
 }
 
 void
-gimp_tool_control_set_wants_click (GimpToolControl *control,
+ligma_tool_control_set_wants_click (LigmaToolControl *control,
                                    gboolean         wants_click)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->wants_click = wants_click ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_wants_click (GimpToolControl *control)
+ligma_tool_control_get_wants_click (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_click;
 }
 
 void
-gimp_tool_control_set_wants_double_click (GimpToolControl *control,
+ligma_tool_control_set_wants_double_click (LigmaToolControl *control,
                                           gboolean         wants_double_click)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->wants_double_click = wants_double_click ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_wants_double_click (GimpToolControl *control)
+ligma_tool_control_get_wants_double_click (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_double_click;
 }
 
 void
-gimp_tool_control_set_wants_triple_click (GimpToolControl *control,
+ligma_tool_control_set_wants_triple_click (LigmaToolControl *control,
                                           gboolean         wants_triple_click)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->wants_triple_click = wants_triple_click ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_wants_triple_click (GimpToolControl *control)
+ligma_tool_control_get_wants_triple_click (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_triple_click;
 }
 
 void
-gimp_tool_control_set_wants_all_key_events (GimpToolControl *control,
+ligma_tool_control_set_wants_all_key_events (LigmaToolControl *control,
                                             gboolean         wants_key_events)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->wants_all_key_events = wants_key_events ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_wants_all_key_events (GimpToolControl *control)
+ligma_tool_control_get_wants_all_key_events (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_all_key_events;
 }
 
 void
-gimp_tool_control_set_active_modifiers (GimpToolControl         *control,
-                                        GimpToolActiveModifiers  active_modifiers)
+ligma_tool_control_set_active_modifiers (LigmaToolControl         *control,
+                                        LigmaToolActiveModifiers  active_modifiers)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->active_modifiers = active_modifiers;
 }
 
-GimpToolActiveModifiers
-gimp_tool_control_get_active_modifiers (GimpToolControl *control)
+LigmaToolActiveModifiers
+ligma_tool_control_get_active_modifiers (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control),
-                        GIMP_TOOL_ACTIVE_MODIFIERS_OFF);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control),
+                        LIGMA_TOOL_ACTIVE_MODIFIERS_OFF);
 
   return control->active_modifiers;
 }
 
 void
-gimp_tool_control_set_snap_offsets (GimpToolControl *control,
+ligma_tool_control_set_snap_offsets (LigmaToolControl *control,
                                     gint             offset_x,
                                     gint             offset_y,
                                     gint             width,
                                     gint             height)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->snap_offset_x = offset_x;
   control->snap_offset_y = offset_y;
@@ -403,13 +403,13 @@ gimp_tool_control_set_snap_offsets (GimpToolControl *control,
 }
 
 void
-gimp_tool_control_get_snap_offsets (GimpToolControl *control,
+ligma_tool_control_get_snap_offsets (LigmaToolControl *control,
                                     gint            *offset_x,
                                     gint            *offset_y,
                                     gint            *width,
                                     gint            *height)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (offset_x) *offset_x = control->snap_offset_x;
   if (offset_y) *offset_y = control->snap_offset_y;
@@ -418,98 +418,98 @@ gimp_tool_control_get_snap_offsets (GimpToolControl *control,
 }
 
 void
-gimp_tool_control_set_precision (GimpToolControl     *control,
-                                 GimpCursorPrecision  precision)
+ligma_tool_control_set_precision (LigmaToolControl     *control,
+                                 LigmaCursorPrecision  precision)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->precision = precision;
 }
 
-GimpCursorPrecision
-gimp_tool_control_get_precision (GimpToolControl *control)
+LigmaCursorPrecision
+ligma_tool_control_get_precision (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control),
-                        GIMP_CURSOR_PRECISION_PIXEL_CENTER);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control),
+                        LIGMA_CURSOR_PRECISION_PIXEL_CENTER);
 
   return control->precision;
 }
 
 void
-gimp_tool_control_set_toggled (GimpToolControl *control,
+ligma_tool_control_set_toggled (LigmaToolControl *control,
                                gboolean         toggled)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->toggled = toggled ? TRUE : FALSE;
 }
 
 gboolean
-gimp_tool_control_get_toggled (GimpToolControl *control)
+ligma_tool_control_get_toggled (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   return control->toggled;
 }
 
 void
-gimp_tool_control_set_cursor (GimpToolControl *control,
-                              GimpCursorType   cursor)
+ligma_tool_control_set_cursor (LigmaToolControl *control,
+                              LigmaCursorType   cursor)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->cursor = cursor;
 }
 
 void
-gimp_tool_control_set_tool_cursor (GimpToolControl    *control,
-                                   GimpToolCursorType  cursor)
+ligma_tool_control_set_tool_cursor (LigmaToolControl    *control,
+                                   LigmaToolCursorType  cursor)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->tool_cursor = cursor;
 }
 
 void
-gimp_tool_control_set_cursor_modifier (GimpToolControl    *control,
-                                       GimpCursorModifier  modifier)
+ligma_tool_control_set_cursor_modifier (LigmaToolControl    *control,
+                                       LigmaCursorModifier  modifier)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->cursor_modifier = modifier;
 }
 
 void
-gimp_tool_control_set_toggle_cursor (GimpToolControl *control,
-                                     GimpCursorType   cursor)
+ligma_tool_control_set_toggle_cursor (LigmaToolControl *control,
+                                     LigmaCursorType   cursor)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->toggle_cursor = cursor;
 }
 
 void
-gimp_tool_control_set_toggle_tool_cursor (GimpToolControl    *control,
-                                          GimpToolCursorType  cursor)
+ligma_tool_control_set_toggle_tool_cursor (LigmaToolControl    *control,
+                                          LigmaToolCursorType  cursor)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->toggle_tool_cursor = cursor;
 }
 
 void
-gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
-                                              GimpCursorModifier  modifier)
+ligma_tool_control_set_toggle_cursor_modifier (LigmaToolControl    *control,
+                                              LigmaCursorModifier  modifier)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   control->toggle_cursor_modifier = modifier;
 }
 
-GimpCursorType
-gimp_tool_control_get_cursor (GimpToolControl *control)
+LigmaCursorType
+ligma_tool_control_get_cursor (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   if (control->toggled && control->toggle_cursor != -1)
     return control->toggle_cursor;
@@ -517,10 +517,10 @@ gimp_tool_control_get_cursor (GimpToolControl *control)
   return control->cursor;
 }
 
-GimpToolCursorType
-gimp_tool_control_get_tool_cursor (GimpToolControl *control)
+LigmaToolCursorType
+ligma_tool_control_get_tool_cursor (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   if (control->toggled && control->toggle_tool_cursor != -1)
     return control->toggle_tool_cursor;
@@ -528,10 +528,10 @@ gimp_tool_control_get_tool_cursor (GimpToolControl *control)
   return control->tool_cursor;
 }
 
-GimpCursorModifier
-gimp_tool_control_get_cursor_modifier (GimpToolControl *control)
+LigmaCursorModifier
+ligma_tool_control_get_cursor_modifier (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), FALSE);
 
   if (control->toggled && control->toggle_cursor_modifier != -1)
     return control->toggle_cursor_modifier;
@@ -540,10 +540,10 @@ gimp_tool_control_get_cursor_modifier (GimpToolControl *control)
 }
 
 void
-gimp_tool_control_set_action_opacity (GimpToolControl *control,
+ligma_tool_control_set_action_opacity (LigmaToolControl *control,
                                       const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_opacity)
     {
@@ -553,18 +553,18 @@ gimp_tool_control_set_action_opacity (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_opacity (GimpToolControl *control)
+ligma_tool_control_get_action_opacity (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_opacity;
 }
 
 void
-gimp_tool_control_set_action_size (GimpToolControl *control,
+ligma_tool_control_set_action_size (LigmaToolControl *control,
                                    const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_size)
     {
@@ -574,18 +574,18 @@ gimp_tool_control_set_action_size (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_size (GimpToolControl *control)
+ligma_tool_control_get_action_size (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_size;
 }
 
 void
-gimp_tool_control_set_action_aspect (GimpToolControl *control,
+ligma_tool_control_set_action_aspect (LigmaToolControl *control,
                                      const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_aspect)
     {
@@ -595,18 +595,18 @@ gimp_tool_control_set_action_aspect (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_aspect (GimpToolControl *control)
+ligma_tool_control_get_action_aspect (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_aspect;
 }
 
 void
-gimp_tool_control_set_action_angle (GimpToolControl *control,
+ligma_tool_control_set_action_angle (LigmaToolControl *control,
                                     const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_angle)
     {
@@ -616,18 +616,18 @@ gimp_tool_control_set_action_angle (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_angle (GimpToolControl *control)
+ligma_tool_control_get_action_angle (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_angle;
 }
 
 void
-gimp_tool_control_set_action_spacing (GimpToolControl *control,
+ligma_tool_control_set_action_spacing (LigmaToolControl *control,
                                       const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_spacing)
     {
@@ -637,18 +637,18 @@ gimp_tool_control_set_action_spacing (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_spacing (GimpToolControl *control)
+ligma_tool_control_get_action_spacing (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_spacing;
 }
 
 void
-gimp_tool_control_set_action_hardness (GimpToolControl *control,
+ligma_tool_control_set_action_hardness (LigmaToolControl *control,
                                        const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_hardness)
     {
@@ -658,18 +658,18 @@ gimp_tool_control_set_action_hardness (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_hardness (GimpToolControl *control)
+ligma_tool_control_get_action_hardness (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_hardness;
 }
 
 void
-gimp_tool_control_set_action_force (GimpToolControl *control,
+ligma_tool_control_set_action_force (LigmaToolControl *control,
                                       const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_force)
     {
@@ -679,18 +679,18 @@ gimp_tool_control_set_action_force (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_force (GimpToolControl *control)
+ligma_tool_control_get_action_force (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_force;
 }
 
 void
-gimp_tool_control_set_action_object_1 (GimpToolControl *control,
+ligma_tool_control_set_action_object_1 (LigmaToolControl *control,
                                        const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_object_1)
     {
@@ -700,18 +700,18 @@ gimp_tool_control_set_action_object_1 (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_object_1 (GimpToolControl *control)
+ligma_tool_control_get_action_object_1 (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_object_1;
 }
 
 void
-gimp_tool_control_set_action_object_2 (GimpToolControl *control,
+ligma_tool_control_set_action_object_2 (LigmaToolControl *control,
                                        const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_object_2)
     {
@@ -721,18 +721,18 @@ gimp_tool_control_set_action_object_2 (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_object_2 (GimpToolControl *control)
+ligma_tool_control_get_action_object_2 (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_object_2;
 }
 
 void
-gimp_tool_control_set_action_pixel_size (GimpToolControl *control,
+ligma_tool_control_set_action_pixel_size (LigmaToolControl *control,
                                          const gchar     *action)
 {
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (LIGMA_IS_TOOL_CONTROL (control));
 
   if (action != control->action_pixel_size)
     {
@@ -742,9 +742,9 @@ gimp_tool_control_set_action_pixel_size (GimpToolControl *control,
 }
 
 const gchar *
-gimp_tool_control_get_action_pixel_size (GimpToolControl *control)
+ligma_tool_control_get_action_pixel_size (LigmaToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_pixel_size;
 }

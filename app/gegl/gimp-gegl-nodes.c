@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-nodes.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-nodes.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 
 #include <gegl.h>
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimp-gegl-nodes.h"
-#include "gimp-gegl-utils.h"
+#include "ligma-gegl-nodes.h"
+#include "ligma-gegl-utils.h"
 
 
 GeglNode *
-gimp_gegl_create_flatten_node (const GimpRGB       *background,
+ligma_gegl_create_flatten_node (const LigmaRGB       *background,
                                const Babl          *space,
-                               GimpLayerColorSpace  composite_space)
+                               LigmaLayerColorSpace  composite_space)
 {
   GeglNode  *node;
   GeglNode  *input;
@@ -43,8 +43,8 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   GeglColor *c;
 
   g_return_val_if_fail (background != NULL, NULL);
-  g_return_val_if_fail (composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR ||
-                        composite_space == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+  g_return_val_if_fail (composite_space == LIGMA_LAYER_COLOR_SPACE_RGB_LINEAR ||
+                        composite_space == LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
                         NULL);
 
   node = gegl_node_new ();
@@ -52,29 +52,29 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  c = gimp_gegl_color_new (background, space);
+  c = ligma_gegl_color_new (background, space);
   color = gegl_node_new_child (node,
                                "operation", "gegl:color",
                                "value",     c,
-                               "format",    gimp_layer_mode_get_format (
-                                              GIMP_LAYER_MODE_NORMAL,
-                                              GIMP_LAYER_COLOR_SPACE_AUTO,
+                               "format",    ligma_layer_mode_get_format (
+                                              LIGMA_LAYER_MODE_NORMAL,
+                                              LIGMA_LAYER_COLOR_SPACE_AUTO,
                                               composite_space,
-                                              GIMP_LAYER_COMPOSITE_AUTO,
+                                              LIGMA_LAYER_COMPOSITE_AUTO,
                                               NULL),
                                NULL);
   g_object_unref (c);
 
-  gimp_gegl_node_set_underlying_operation (node, color);
+  ligma_gegl_node_set_underlying_operation (node, color);
 
   mode = gegl_node_new_child (node,
-                              "operation", "gimp:normal",
+                              "operation", "ligma:normal",
                               NULL);
-  gimp_gegl_mode_node_set_mode (mode,
-                                GIMP_LAYER_MODE_NORMAL,
-                                GIMP_LAYER_COLOR_SPACE_AUTO,
+  ligma_gegl_mode_node_set_mode (mode,
+                                LIGMA_LAYER_MODE_NORMAL,
+                                LIGMA_LAYER_COLOR_SPACE_AUTO,
                                 composite_space,
-                                GIMP_LAYER_COMPOSITE_AUTO);
+                                LIGMA_LAYER_COMPOSITE_AUTO);
 
   gegl_node_connect_to (input,  "output",
                         mode,   "aux");
@@ -87,7 +87,7 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
 }
 
 GeglNode *
-gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
+ligma_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                      gint        mask_offset_x,
                                      gint        mask_offset_y,
                                      gdouble     opacity)
@@ -110,9 +110,9 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                       "value",     opacity,
                                       NULL);
 
-  gimp_gegl_node_set_underlying_operation (node, opacity_node);
+  ligma_gegl_node_set_underlying_operation (node, opacity_node);
 
-  mask_source = gimp_gegl_add_buffer_source (node, mask,
+  mask_source = ligma_gegl_add_buffer_source (node, mask,
                                              mask_offset_x,
                                              mask_offset_y);
 
@@ -127,7 +127,7 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
 }
 
 GeglNode *
-gimp_gegl_create_transform_node (const GimpMatrix3 *matrix)
+ligma_gegl_create_transform_node (const LigmaMatrix3 *matrix)
 {
   GeglNode *node;
 
@@ -137,13 +137,13 @@ gimp_gegl_create_transform_node (const GimpMatrix3 *matrix)
                               "operation", "gegl:transform",
                               NULL);
 
-  gimp_gegl_node_set_matrix (node, matrix);
+  ligma_gegl_node_set_matrix (node, matrix);
 
   return node;
 }
 
 GeglNode *
-gimp_gegl_add_buffer_source (GeglNode   *parent,
+ligma_gegl_add_buffer_source (GeglNode   *parent,
                              GeglBuffer *buffer,
                              gint        offset_x,
                              gint        offset_y)
@@ -177,24 +177,24 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
 }
 
 void
-gimp_gegl_mode_node_set_mode (GeglNode               *node,
-                              GimpLayerMode           mode,
-                              GimpLayerColorSpace     blend_space,
-                              GimpLayerColorSpace     composite_space,
-                              GimpLayerCompositeMode  composite_mode)
+ligma_gegl_mode_node_set_mode (GeglNode               *node,
+                              LigmaLayerMode           mode,
+                              LigmaLayerColorSpace     blend_space,
+                              LigmaLayerColorSpace     composite_space,
+                              LigmaLayerCompositeMode  composite_mode)
 {
   gdouble opacity;
 
   g_return_if_fail (GEGL_IS_NODE (node));
 
-  if (blend_space == GIMP_LAYER_COLOR_SPACE_AUTO)
-    blend_space = gimp_layer_mode_get_blend_space (mode);
+  if (blend_space == LIGMA_LAYER_COLOR_SPACE_AUTO)
+    blend_space = ligma_layer_mode_get_blend_space (mode);
 
-  if (composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
-    composite_space = gimp_layer_mode_get_composite_space (mode);
+  if (composite_space == LIGMA_LAYER_COLOR_SPACE_AUTO)
+    composite_space = ligma_layer_mode_get_composite_space (mode);
 
-  if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
-    composite_mode = gimp_layer_mode_get_composite_mode (mode);
+  if (composite_mode == LIGMA_LAYER_COMPOSITE_AUTO)
+    composite_mode = ligma_layer_mode_get_composite_mode (mode);
 
   gegl_node_get (node,
                  "opacity", &opacity,
@@ -204,7 +204,7 @@ gimp_gegl_mode_node_set_mode (GeglNode               *node,
    * all its properties
    */
   gegl_node_set (node,
-                 "operation",       gimp_layer_mode_get_operation_name (mode),
+                 "operation",       ligma_layer_mode_get_operation_name (mode),
                  "layer-mode",      mode,
                  "opacity",         opacity,
                  "blend-space",     blend_space,
@@ -214,7 +214,7 @@ gimp_gegl_mode_node_set_mode (GeglNode               *node,
 }
 
 void
-gimp_gegl_mode_node_set_opacity (GeglNode *node,
+ligma_gegl_mode_node_set_opacity (GeglNode *node,
                                  gdouble   opacity)
 {
   g_return_if_fail (GEGL_IS_NODE (node));
@@ -225,8 +225,8 @@ gimp_gegl_mode_node_set_opacity (GeglNode *node,
 }
 
 void
-gimp_gegl_node_set_matrix (GeglNode          *node,
-                           const GimpMatrix3 *matrix)
+ligma_gegl_node_set_matrix (GeglNode          *node,
+                           const LigmaMatrix3 *matrix)
 {
   gchar *matrix_string;
 
@@ -243,8 +243,8 @@ gimp_gegl_node_set_matrix (GeglNode          *node,
 }
 
 void
-gimp_gegl_node_set_color (GeglNode      *node,
-                          const GimpRGB *color,
+ligma_gegl_node_set_color (GeglNode      *node,
+                          const LigmaRGB *color,
                           const Babl    *space)
 {
   GeglColor *gegl_color;
@@ -252,7 +252,7 @@ gimp_gegl_node_set_color (GeglNode      *node,
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (color != NULL);
 
-  gegl_color = gimp_gegl_color_new (color, space);
+  gegl_color = ligma_gegl_color_new (color, space);
 
   gegl_node_set (node,
                  "value", gegl_color,

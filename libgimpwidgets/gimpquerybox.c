@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpquerybox.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * ligmaquerybox.c
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,19 +24,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpquerybox
- * @title: GimpQueryBox
+ * SECTION: ligmaquerybox
+ * @title: LigmaQueryBox
  * @short_description: Some simple dialogs to enter a single int,
  *                     double, string or boolean value.
- * @see_also: #GimpSizeEntry, #GimpUnitMenu
+ * @see_also: #LigmaSizeEntry, #LigmaUnitMenu
  *
  * These functions provide simple dialogs for entering a single
  * string, integer, double, boolean or pixel size value.
@@ -73,7 +73,7 @@ struct _QueryBox
 
 static QueryBox * create_query_box             (const gchar   *title,
                                                 GtkWidget     *parent,
-                                                GimpHelpFunc   help_func,
+                                                LigmaHelpFunc   help_func,
                                                 const gchar   *help_id,
                                                 GCallback      response_callback,
                                                 const gchar   *icon_name,
@@ -114,7 +114,7 @@ static void       query_box_cancel_callback    (QueryBox      *query_box);
 static QueryBox *
 create_query_box (const gchar   *title,
                   GtkWidget     *parent,
-                  GimpHelpFunc   help_func,
+                  LigmaHelpFunc   help_func,
                   const gchar   *help_id,
                   GCallback      response_callback,
                   const gchar   *icon_name,
@@ -139,7 +139,7 @@ create_query_box (const gchar   *title,
 
   query_box = g_slice_new0 (QueryBox);
 
-  query_box->qbox = gimp_dialog_new (title, "gimp-query-box",
+  query_box->qbox = ligma_dialog_new (title, "ligma-query-box",
                                      parent, 0,
                                      help_func, help_id,
 
@@ -148,7 +148,7 @@ create_query_box (const gchar   *title,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -195,7 +195,7 @@ create_query_box (const gchar   *title,
 
   query_box->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
-  g_object_set_data (G_OBJECT (query_box->qbox), "gimp-query-box-vbox",
+  g_object_set_data (G_OBJECT (query_box->qbox), "ligma-query-box-vbox",
                      query_box->vbox);
 
   if (hbox)
@@ -234,7 +234,7 @@ create_query_box (const gchar   *title,
 }
 
 /**
- * gimp_query_string_box:
+ * ligma_query_string_box:
  * @title:        The query box dialog's title.
  * @parent:       The dialog's parent widget.
  * @help_func:    (scope async): The help function to show this dialog's help page.
@@ -252,15 +252,15 @@ create_query_box (const gchar   *title,
  * Returns: (transfer full): A pointer to the new #GtkDialog.
  **/
 GtkWidget *
-gimp_query_string_box (const gchar             *title,
+ligma_query_string_box (const gchar             *title,
                        GtkWidget               *parent,
-                       GimpHelpFunc             help_func,
+                       LigmaHelpFunc             help_func,
                        const gchar             *help_id,
                        const gchar             *message,
                        const gchar             *initial,
                        GObject                 *object,
                        const gchar             *signal,
-                       GimpQueryStringCallback  callback,
+                       LigmaQueryStringCallback  callback,
                        gpointer                 data,
                        GDestroyNotify           data_destroy)
 {
@@ -292,7 +292,7 @@ gimp_query_string_box (const gchar             *title,
 }
 
 /**
- * gimp_query_int_box:
+ * ligma_query_int_box:
  * @title:        The query box dialog's title.
  * @parent:       The dialog's parent widget.
  * @help_func:    (scope async): The help function to show this dialog's help page.
@@ -312,9 +312,9 @@ gimp_query_string_box (const gchar             *title,
  * Returns: (transfer full): A pointer to the new #GtkDialog.
  **/
 GtkWidget *
-gimp_query_int_box (const gchar          *title,
+ligma_query_int_box (const gchar          *title,
                     GtkWidget            *parent,
-                    GimpHelpFunc          help_func,
+                    LigmaHelpFunc          help_func,
                     const gchar          *help_id,
                     const gchar          *message,
                     gint                  initial,
@@ -322,7 +322,7 @@ gimp_query_int_box (const gchar          *title,
                     gint                  upper,
                     GObject              *object,
                     const gchar          *signal,
-                    GimpQueryIntCallback  callback,
+                    LigmaQueryIntCallback  callback,
                     gpointer              data,
                     GDestroyNotify        data_destroy)
 {
@@ -343,7 +343,7 @@ gimp_query_int_box (const gchar          *title,
     return NULL;
 
   adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
@@ -356,7 +356,7 @@ gimp_query_int_box (const gchar          *title,
 }
 
 /**
- * gimp_query_double_box:
+ * ligma_query_double_box:
  * @title:       The query box dialog's title.
  * @parent:      The dialog's parent widget.
  * @help_func:   (scope async): The help function to show this dialog's help page.
@@ -377,9 +377,9 @@ gimp_query_int_box (const gchar          *title,
  * Returns: (transfer full): A pointer to the new #GtkDialog.
  **/
 GtkWidget *
-gimp_query_double_box (const gchar             *title,
+ligma_query_double_box (const gchar             *title,
                        GtkWidget               *parent,
-                       GimpHelpFunc             help_func,
+                       LigmaHelpFunc             help_func,
                        const gchar             *help_id,
                        const gchar             *message,
                        gdouble                  initial,
@@ -388,7 +388,7 @@ gimp_query_double_box (const gchar             *title,
                        gint                     digits,
                        GObject                 *object,
                        const gchar             *signal,
-                       GimpQueryDoubleCallback  callback,
+                       LigmaQueryDoubleCallback  callback,
                        gpointer                 data,
                        GDestroyNotify           data_destroy)
 {
@@ -409,7 +409,7 @@ gimp_query_double_box (const gchar             *title,
     return NULL;
 
   adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
@@ -422,7 +422,7 @@ gimp_query_double_box (const gchar             *title,
 }
 
 /**
- * gimp_query_size_box:
+ * ligma_query_size_box:
  * @title:        The query box dialog's title.
  * @parent:       The dialog's parent widget.
  * @help_func:    (scope async): The help function to show this dialog's help page.
@@ -431,12 +431,12 @@ gimp_query_double_box (const gchar             *title,
  * @initial:      The initial value.
  * @lower:        The lower boundary of the range of possible values.
  * @upper:        The upper boundray of the range of possible values.
- * @digits:       The number of decimal digits the #GimpSizeEntry provide in
+ * @digits:       The number of decimal digits the #LigmaSizeEntry provide in
  *                "pixel" mode.
- * @unit:         The unit initially shown by the #GimpUnitMenu.
+ * @unit:         The unit initially shown by the #LigmaUnitMenu.
  * @resolution:   The resolution (in dpi) which will be used for pixel/unit
  *                calculations.
- * @dot_for_dot:  %TRUE if the #GimpUnitMenu's initial unit should be "pixels".
+ * @dot_for_dot:  %TRUE if the #LigmaUnitMenu's initial unit should be "pixels".
  * @object:       The object this query box is associated with.
  * @signal:       The object's signal which will cause the query box
  *                to be closed.
@@ -445,26 +445,26 @@ gimp_query_double_box (const gchar             *title,
  * @data_destroy: Destroy function for @data.
  *
  * Creates a new #GtkDialog that queries the user for a size using a
- * #GimpSizeEntry.
+ * #LigmaSizeEntry.
  *
  * Returns: (transfer full): A pointer to the new #GtkDialog.
  **/
 GtkWidget *
-gimp_query_size_box (const gchar           *title,
+ligma_query_size_box (const gchar           *title,
                      GtkWidget             *parent,
-                     GimpHelpFunc           help_func,
+                     LigmaHelpFunc           help_func,
                      const gchar           *help_id,
                      const gchar           *message,
                      gdouble                initial,
                      gdouble                lower,
                      gdouble                upper,
                      gint                   digits,
-                     GimpUnit               unit,
+                     LigmaUnit               unit,
                      gdouble                resolution,
                      gboolean               dot_for_dot,
                      GObject               *object,
                      const gchar           *signal,
-                     GimpQuerySizeCallback  callback,
+                     LigmaQuerySizeCallback  callback,
                      gpointer               data,
                      GDestroyNotify         data_destroy)
 {
@@ -484,22 +484,22 @@ gimp_query_size_box (const gchar           *title,
   if (! query_box)
     return NULL;
 
-  sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 12,
-                                   GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  sizeentry = ligma_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 12,
+                                   LIGMA_SIZE_ENTRY_UPDATE_SIZE);
   if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+    ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (sizeentry), LIGMA_UNIT_PIXEL);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (sizeentry), 0,
                                   resolution, FALSE);
-  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, digits);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+  ligma_size_entry_set_refval_digits (LIGMA_SIZE_ENTRY (sizeentry), 0, digits);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (sizeentry), 0,
                                          lower, upper);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, initial);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (sizeentry), 0, initial);
 
-  spinbutton = gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry), 0);
+  spinbutton = ligma_size_entry_get_help_widget (LIGMA_SIZE_ENTRY (sizeentry), 0);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
 
   gtk_box_pack_start (GTK_BOX (query_box->vbox), sizeentry, FALSE, FALSE, 0);
-  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (sizeentry));
+  ligma_size_entry_grab_focus (LIGMA_SIZE_ENTRY (sizeentry));
   gtk_widget_show (sizeentry);
 
   query_box->entry = sizeentry;
@@ -508,7 +508,7 @@ gimp_query_size_box (const gchar           *title,
 }
 
 /**
- * gimp_query_boolean_box:
+ * ligma_query_boolean_box:
  * @title:        The query box dialog's title.
  * @parent:       The dialog's parent widget.
  * @help_func:    (scope async): The help function to show this dialog's help page.
@@ -531,9 +531,9 @@ gimp_query_size_box (const gchar           *title,
  * Returns: (transfer full): A pointer to the new #GtkDialog.
  **/
 GtkWidget *
-gimp_query_boolean_box (const gchar              *title,
+ligma_query_boolean_box (const gchar              *title,
                         GtkWidget                *parent,
-                        GimpHelpFunc              help_func,
+                        LigmaHelpFunc              help_func,
                         const gchar              *help_id,
                         const gchar              *icon_name,
                         const gchar              *message,
@@ -541,7 +541,7 @@ gimp_query_boolean_box (const gchar              *title,
                         const gchar              *false_button,
                         GObject                  *object,
                         const gchar              *signal,
-                        GimpQueryBooleanCallback  callback,
+                        LigmaQueryBooleanCallback  callback,
                         gpointer                  data,
                         GDestroyNotify            data_destroy)
 {
@@ -615,7 +615,7 @@ string_query_box_response (GtkWidget *widget,
 
   /*  Call the user defined callback  */
   if (response_id == GTK_RESPONSE_OK)
-    (* (GimpQueryStringCallback) query_box->callback) (query_box->qbox,
+    (* (LigmaQueryStringCallback) query_box->callback) (query_box->qbox,
                                                        string,
                                                        query_box->callback_data);
 
@@ -636,7 +636,7 @@ int_query_box_response (GtkWidget *widget,
 
   /*  Call the user defined callback  */
   if (response_id == GTK_RESPONSE_OK)
-    (* (GimpQueryIntCallback) query_box->callback) (query_box->qbox,
+    (* (LigmaQueryIntCallback) query_box->callback) (query_box->qbox,
                                                     value,
                                                     query_box->callback_data);
 
@@ -657,7 +657,7 @@ double_query_box_response (GtkWidget *widget,
 
   /*  Call the user defined callback  */
   if (response_id == GTK_RESPONSE_OK)
-    (* (GimpQueryDoubleCallback) query_box->callback) (query_box->qbox,
+    (* (LigmaQueryDoubleCallback) query_box->callback) (query_box->qbox,
                                                        value,
                                                        query_box->callback_data);
 
@@ -670,17 +670,17 @@ size_query_box_response (GtkWidget *widget,
                          QueryBox  *query_box)
 {
   gdouble  size;
-  GimpUnit unit;
+  LigmaUnit unit;
 
   query_box_disconnect (query_box);
 
   /*  Get the sizeentry data  */
-  size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (query_box->entry), 0);
-  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (query_box->entry));
+  size = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (query_box->entry), 0);
+  unit = ligma_size_entry_get_unit (LIGMA_SIZE_ENTRY (query_box->entry));
 
   /*  Call the user defined callback  */
   if (response_id == GTK_RESPONSE_OK)
-    (* (GimpQuerySizeCallback) query_box->callback) (query_box->qbox,
+    (* (LigmaQuerySizeCallback) query_box->callback) (query_box->qbox,
                                                      size,
                                                      unit,
                                                      query_box->callback_data);
@@ -696,7 +696,7 @@ boolean_query_box_response (GtkWidget *widget,
   query_box_disconnect (query_box);
 
   /*  Call the user defined callback  */
-  (* (GimpQueryBooleanCallback) query_box->callback) (query_box->qbox,
+  (* (LigmaQueryBooleanCallback) query_box->callback) (query_box->qbox,
                                                       (response_id ==
                                                        GTK_RESPONSE_OK),
                                                       query_box->callback_data);

@@ -3,7 +3,7 @@
 /.deps
 /.libs
 /*.lo
-/gimpdbusservice-generated.c
-/gimpdbusservice-generated.h
+/ligmadbusservice-generated.c
+/ligmadbusservice-generated.h
 /libappgui.a
 /libappgui.la

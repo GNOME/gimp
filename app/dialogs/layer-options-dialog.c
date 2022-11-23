@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,46 +20,46 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable-filters.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable-filters.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
 
-#include "text/gimptext.h"
-#include "text/gimptextlayer.h"
+#include "text/ligmatext.h"
+#include "text/ligmatextlayer.h"
 
-#include "widgets/gimpcontainertreeview.h"
-#include "widgets/gimplayermodebox.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmacontainertreeview.h"
+#include "widgets/ligmalayermodebox.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "item-options-dialog.h"
 #include "layer-options-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _LayerOptionsDialog LayerOptionsDialog;
 
 struct _LayerOptionsDialog
 {
-  GimpLayer                *layer;
-  GimpLayerMode             mode;
-  GimpLayerColorSpace       blend_space;
-  GimpLayerColorSpace       composite_space;
-  GimpLayerCompositeMode    composite_mode;
+  LigmaLayer                *layer;
+  LigmaLayerMode             mode;
+  LigmaLayerColorSpace       blend_space;
+  LigmaLayerColorSpace       composite_space;
+  LigmaLayerCompositeMode    composite_mode;
   gdouble                   opacity;
-  GimpFillType              fill_type;
+  LigmaFillType              fill_type;
   gboolean                  lock_alpha;
   gboolean                  rename_text_layers;
-  GimpLayerOptionsCallback  callback;
+  LigmaLayerOptionsCallback  callback;
   gpointer                  user_data;
 
   GtkWidget                *mode_box;
@@ -75,12 +75,12 @@ struct _LayerOptionsDialog
 
 static void   layer_options_dialog_free           (LayerOptionsDialog *private);
 static void   layer_options_dialog_callback       (GtkWidget          *dialog,
-                                                   GimpImage          *image,
-                                                   GimpItem           *item,
-                                                   GimpContext        *context,
+                                                   LigmaImage          *image,
+                                                   LigmaItem           *item,
+                                                   LigmaContext        *context,
                                                    const gchar        *item_name,
                                                    gboolean            item_visible,
-                                                   GimpColorTag        item_color_tag,
+                                                   LigmaColorTag        item_color_tag,
                                                    gboolean            item_lock_content,
                                                    gboolean            item_lock_position,
                                                    gpointer            user_data);
@@ -96,9 +96,9 @@ static void   layer_options_dialog_rename_toggled (GtkWidget          *widget,
 /*  public functions  */
 
 GtkWidget *
-layer_options_dialog_new (GimpImage                *image,
-                          GimpLayer                *layer,
-                          GimpContext              *context,
+layer_options_dialog_new (LigmaImage                *image,
+                          LigmaLayer                *layer,
+                          LigmaContext              *context,
                           GtkWidget                *parent,
                           const gchar              *title,
                           const gchar              *role,
@@ -106,18 +106,18 @@ layer_options_dialog_new (GimpImage                *image,
                           const gchar              *desc,
                           const gchar              *help_id,
                           const gchar              *layer_name,
-                          GimpLayerMode             layer_mode,
-                          GimpLayerColorSpace       layer_blend_space,
-                          GimpLayerColorSpace       layer_composite_space,
-                          GimpLayerCompositeMode    layer_composite_mode,
+                          LigmaLayerMode             layer_mode,
+                          LigmaLayerColorSpace       layer_blend_space,
+                          LigmaLayerColorSpace       layer_composite_space,
+                          LigmaLayerCompositeMode    layer_composite_mode,
                           gdouble                   layer_opacity,
-                          GimpFillType              layer_fill_type,
+                          LigmaFillType              layer_fill_type,
                           gboolean                  layer_visible,
-                          GimpColorTag              layer_color_tag,
+                          LigmaColorTag              layer_color_tag,
                           gboolean                  layer_lock_content,
                           gboolean                  layer_lock_position,
                           gboolean                  layer_lock_alpha,
-                          GimpLayerOptionsCallback  callback,
+                          LigmaLayerOptionsCallback  callback,
                           gpointer                  user_data)
 {
   LayerOptionsDialog   *private;
@@ -130,14 +130,14 @@ layer_options_dialog_new (GimpImage                *image,
   GtkAdjustment        *adjustment;
   GtkWidget            *spinbutton;
   GtkWidget            *button;
-  GimpLayerModeContext  mode_context;
+  LigmaLayerModeContext  mode_context;
   gdouble               xres;
   gdouble               yres;
   gint                  row = 0;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (layer == NULL || LIGMA_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   private = g_slice_new0 (LayerOptionsDialog);
@@ -154,14 +154,14 @@ layer_options_dialog_new (GimpImage                *image,
   private->callback           = callback;
   private->user_data          = user_data;
 
-  if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
-    private->rename_text_layers = GIMP_TEXT_LAYER (layer)->auto_rename;
+  if (layer && ligma_item_is_text_layer (LIGMA_ITEM (layer)))
+    private->rename_text_layers = LIGMA_TEXT_LAYER (layer)->auto_rename;
 
-  dialog = item_options_dialog_new (image, GIMP_ITEM (layer), context,
+  dialog = item_options_dialog_new (image, LIGMA_ITEM (layer), context,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     _("Layer _name:"),
-                                    GIMP_ICON_TOOL_PAINTBRUSH,
+                                    LIGMA_ICON_TOOL_PAINTBRUSH,
                                     _("Lock _pixels"),
                                     _("Lock position and _size"),
                                     layer_name,
@@ -175,14 +175,14 @@ layer_options_dialog_new (GimpImage                *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) layer_options_dialog_free, private);
 
-  if (! layer || gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
-    mode_context = GIMP_LAYER_MODE_CONTEXT_LAYER;
+  if (! layer || ligma_viewable_get_children (LIGMA_VIEWABLE (layer)) == NULL)
+    mode_context = LIGMA_LAYER_MODE_CONTEXT_LAYER;
   else
-    mode_context = GIMP_LAYER_MODE_CONTEXT_GROUP;
+    mode_context = LIGMA_LAYER_MODE_CONTEXT_GROUP;
 
-  private->mode_box = gimp_layer_mode_box_new (mode_context);
+  private->mode_box = ligma_layer_mode_box_new (mode_context);
   item_options_dialog_add_widget (dialog, _("_Mode:"), private->mode_box);
-  gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (private->mode_box),
+  ligma_layer_mode_box_set_mode (LIGMA_LAYER_MODE_BOX (private->mode_box),
                                 private->mode);
 
   g_signal_connect (private->mode_box, "notify::layer-mode",
@@ -190,40 +190,40 @@ layer_options_dialog_new (GimpImage                *image,
                     private);
 
   space_model =
-    gimp_enum_store_new_with_range (GIMP_TYPE_LAYER_COLOR_SPACE,
-                                    GIMP_LAYER_COLOR_SPACE_AUTO,
-                                    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+    ligma_enum_store_new_with_range (LIGMA_TYPE_LAYER_COLOR_SPACE,
+                                    LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                    LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
 
   private->blend_space_combo = combo =
-    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));
+    ligma_enum_combo_box_new_with_model (LIGMA_ENUM_STORE (space_model));
   item_options_dialog_add_widget (dialog, _("_Blend space:"), combo);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                       "gimp-layer-color-space");
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_enum_combo_box_set_icon_prefix (LIGMA_ENUM_COMBO_BOX (combo),
+                                       "ligma-layer-color-space");
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               private->blend_space,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &private->blend_space, NULL);
 
   private->composite_space_combo = combo =
-    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));
+    ligma_enum_combo_box_new_with_model (LIGMA_ENUM_STORE (space_model));
   item_options_dialog_add_widget (dialog, _("Compos_ite space:"), combo);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                       "gimp-layer-color-space");
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_enum_combo_box_set_icon_prefix (LIGMA_ENUM_COMBO_BOX (combo),
+                                       "ligma-layer-color-space");
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               private->composite_space,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &private->composite_space, NULL);
 
   g_object_unref (space_model);
 
   private->composite_mode_combo = combo =
-    gimp_enum_combo_box_new (GIMP_TYPE_LAYER_COMPOSITE_MODE);
+    ligma_enum_combo_box_new (LIGMA_TYPE_LAYER_COMPOSITE_MODE);
   item_options_dialog_add_widget (dialog, _("Composite mo_de:"), combo);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                       "gimp-layer-composite");
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_enum_combo_box_set_icon_prefix (LIGMA_ENUM_COMBO_BOX (combo),
+                                       "ligma-layer-composite");
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               private->composite_mode,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &private->composite_mode, NULL);
 
   /*  set the sensitivity of above 3 menus  */
@@ -231,16 +231,16 @@ layer_options_dialog_new (GimpImage                *image,
 
   adjustment = gtk_adjustment_new (private->opacity, 0.0, 100.0,
                                    1.0, 10.0, 0.0);
-  scale = gimp_spin_scale_new (adjustment, NULL, 1);
+  scale = ligma_spin_scale_new (adjustment, NULL, 1);
   item_options_dialog_add_widget (dialog, _("_Opacity:"), scale);
 
   g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &private->opacity);
 
   grid = item_options_dialog_get_grid (dialog, &row);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   if (! layer)
     {
@@ -257,15 +257,15 @@ layer_options_dialog_new (GimpImage                *image,
 
       /*  The size sizeentry  */
       adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-      spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
+      spinbutton = ligma_spin_button_new (adjustment, 1.0, 2);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-      private->size_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+      private->size_se = ligma_size_entry_new (1, LIGMA_UNIT_PIXEL, "%a",
                                               TRUE, TRUE, FALSE, 10,
-                                              GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                                              LIGMA_SIZE_ENTRY_UPDATE_SIZE);
 
-      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
+      ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->size_se),
                                  GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_grid_attach (GTK_GRID (private->size_se), spinbutton, 1, 0, 1, 1);
       gtk_widget_show (spinbutton);
@@ -273,30 +273,30 @@ layer_options_dialog_new (GimpImage                *image,
       gtk_grid_attach (GTK_GRID (grid), private->size_se, 1, row, 1, 2);
       gtk_widget_show (private->size_se);
 
-      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se),
-                                GIMP_UNIT_PIXEL);
+      ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (private->size_se),
+                                LIGMA_UNIT_PIXEL);
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 0,
                                       xres, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 1,
                                       yres, FALSE);
 
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
+      ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->size_se), 0,
+                                             LIGMA_MIN_IMAGE_SIZE,
+                                             LIGMA_MAX_IMAGE_SIZE);
+      ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->size_se), 1,
+                                             LIGMA_MIN_IMAGE_SIZE,
+                                             LIGMA_MAX_IMAGE_SIZE);
 
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                0, gimp_image_get_width  (image));
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                0, gimp_image_get_height (image));
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (private->size_se), 0,
+                                0, ligma_image_get_width  (image));
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (private->size_se), 1,
+                                0, ligma_image_get_height (image));
 
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                  gimp_image_get_width  (image));
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                  gimp_image_get_height (image));
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->size_se), 0,
+                                  ligma_image_get_width  (image));
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->size_se), 1,
+                                  ligma_image_get_height (image));
 
       row += 2;
     }
@@ -314,15 +314,15 @@ layer_options_dialog_new (GimpImage                *image,
 
   /*  The offset sizeentry  */
   adjustment = gtk_adjustment_new (0, 1, 1, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-  private->offset_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  private->offset_se = ligma_size_entry_new (1, LIGMA_UNIT_PIXEL, "%a",
                                             TRUE, TRUE, FALSE, 10,
-                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                                            LIGMA_SIZE_ENTRY_UPDATE_SIZE);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->offset_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
@@ -330,37 +330,37 @@ layer_options_dialog_new (GimpImage                *image,
   gtk_grid_attach (GTK_GRID (grid), private->offset_se, 1, row, 1, 2);
   gtk_widget_show (private->offset_se);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
-                            GIMP_UNIT_PIXEL);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (private->offset_se),
+                            LIGMA_UNIT_PIXEL);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->offset_se), 0,
                                   xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->offset_se), 1,
                                   yres, FALSE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                                         -GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                                         -GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->offset_se), 0,
+                                         -LIGMA_MAX_IMAGE_SIZE,
+                                         LIGMA_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->offset_se), 1,
+                                         -LIGMA_MAX_IMAGE_SIZE,
+                                         LIGMA_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                            0, gimp_image_get_width  (image));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                            0, gimp_image_get_height (image));
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (private->offset_se), 0,
+                            0, ligma_image_get_width  (image));
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (private->offset_se), 1,
+                            0, ligma_image_get_height (image));
 
   if (layer)
     {
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                                  gimp_item_get_offset_x (GIMP_ITEM (layer)));
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                                  gimp_item_get_offset_y (GIMP_ITEM (layer)));
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset_se), 0,
+                                  ligma_item_get_offset_x (LIGMA_ITEM (layer)));
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset_se), 1,
+                                  ligma_item_get_offset_y (LIGMA_ITEM (layer)));
     }
   else
     {
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset_se), 0, 0);
+      ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset_se), 1, 0);
     }
 
   row += 2;
@@ -368,13 +368,13 @@ layer_options_dialog_new (GimpImage                *image,
   if (! layer)
     {
       /*  The fill type  */
-      combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+      combo = ligma_enum_combo_box_new (LIGMA_TYPE_FILL_TYPE);
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                 _("_Fill with:"), 0.0, 0.5,
                                 combo, 1);
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->fill_type,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->fill_type, NULL);
     }
 
@@ -382,17 +382,17 @@ layer_options_dialog_new (GimpImage                *image,
     {
       GtkWidget     *left_vbox = item_options_dialog_get_vbox (dialog);
       GtkWidget     *frame;
-      GimpContainer *filters;
+      LigmaContainer *filters;
       GtkWidget     *view;
 
-      frame = gimp_frame_new (_("Active Filters"));
+      frame = ligma_frame_new (_("Active Filters"));
       gtk_box_pack_start (GTK_BOX (left_vbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+      filters = ligma_drawable_get_filters (LIGMA_DRAWABLE (layer));
 
-      view = gimp_container_tree_view_new (filters, context,
-                                           GIMP_VIEW_SIZE_SMALL, 0);
+      view = ligma_container_tree_view_new (filters, context,
+                                           LIGMA_VIEW_SIZE_SMALL, 0);
       gtk_container_add (GTK_CONTAINER (frame), view);
       gtk_widget_show (view);
     }
@@ -411,24 +411,24 @@ layer_options_dialog_new (GimpImage                *image,
                           G_BINDING_INVERT_BOOLEAN);
 
   button = item_options_dialog_add_switch (dialog,
-                                           GIMP_ICON_TRANSPARENCY,
+                                           LIGMA_ICON_TRANSPARENCY,
                                            _("Lock _alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_alpha);
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &private->lock_alpha);
 
   /*  For text layers add a toggle to control "auto-rename"  */
-  if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
+  if (layer && ligma_item_is_text_layer (LIGMA_ITEM (layer)))
     {
       button = item_options_dialog_add_switch (dialog,
-                                               GIMP_ICON_TOOL_TEXT,
+                                               LIGMA_ICON_TOOL_TEXT,
                                                _("Set name from _text"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                     private->rename_text_layers);
       g_signal_connect (button, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &private->rename_text_layers);
 
       g_signal_connect (button, "toggled",
@@ -450,12 +450,12 @@ layer_options_dialog_free (LayerOptionsDialog *private)
 
 static void
 layer_options_dialog_callback (GtkWidget    *dialog,
-                               GimpImage    *image,
-                               GimpItem     *item,
-                               GimpContext  *context,
+                               LigmaImage    *image,
+                               LigmaItem     *item,
+                               LigmaContext  *context,
                                const gchar  *item_name,
                                gboolean      item_visible,
-                               GimpColorTag  item_color_tag,
+                               LigmaColorTag  item_color_tag,
                                gboolean      item_lock_content,
                                gboolean      item_lock_position,
                                gpointer      user_data)
@@ -469,23 +469,23 @@ layer_options_dialog_callback (GtkWidget    *dialog,
   if (private->size_se)
     {
       width =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se),
+        RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (private->size_se),
                                           0));
       height =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se),
+        RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (private->size_se),
                                           1));
     }
 
   offset_x =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (private->offset_se),
                                       0));
   offset_y =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (private->offset_se),
                                       1));
 
   private->callback (dialog,
                      image,
-                     GIMP_LAYER (item),
+                     LIGMA_LAYER (item),
                      context,
                      item_name,
                      private->mode,
@@ -512,13 +512,13 @@ layer_options_dialog_update_mode_sensitivity (LayerOptionsDialog *private)
 {
   gboolean mutable;
 
-  mutable = gimp_layer_mode_is_blend_space_mutable (private->mode);
+  mutable = ligma_layer_mode_is_blend_space_mutable (private->mode);
   gtk_widget_set_sensitive (private->blend_space_combo, mutable);
 
-  mutable = gimp_layer_mode_is_composite_space_mutable (private->mode);
+  mutable = ligma_layer_mode_is_composite_space_mutable (private->mode);
   gtk_widget_set_sensitive (private->composite_space_combo, mutable);
 
-  mutable = gimp_layer_mode_is_composite_mode_mutable (private->mode);
+  mutable = ligma_layer_mode_is_composite_mode_mutable (private->mode);
   gtk_widget_set_sensitive (private->composite_mode_combo, mutable);
 }
 
@@ -527,14 +527,14 @@ layer_options_dialog_mode_notify (GtkWidget          *widget,
                                   const GParamSpec   *pspec,
                                   LayerOptionsDialog *private)
 {
-  private->mode = gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (widget));
+  private->mode = ligma_layer_mode_box_get_mode (LIGMA_LAYER_MODE_BOX (widget));
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->blend_space_combo),
-                                 GIMP_LAYER_COLOR_SPACE_AUTO);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->composite_space_combo),
-                                 GIMP_LAYER_COLOR_SPACE_AUTO);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->composite_mode_combo),
-                                 GIMP_LAYER_COMPOSITE_AUTO);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->blend_space_combo),
+                                 LIGMA_LAYER_COLOR_SPACE_AUTO);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->composite_space_combo),
+                                 LIGMA_LAYER_COLOR_SPACE_AUTO);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->composite_mode_combo),
+                                 LIGMA_LAYER_COMPOSITE_AUTO);
 
   layer_options_dialog_update_mode_sensitivity (private);
 }
@@ -544,16 +544,16 @@ layer_options_dialog_rename_toggled (GtkWidget          *widget,
                                      LayerOptionsDialog *private)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
-      gimp_item_is_text_layer (GIMP_ITEM (private->layer)))
+      ligma_item_is_text_layer (LIGMA_ITEM (private->layer)))
     {
-      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (private->layer);
-      GimpText      *text       = gimp_text_layer_get_text (text_layer);
+      LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (private->layer);
+      LigmaText      *text       = ligma_text_layer_get_text (text_layer);
 
       if (text && text->text)
         {
           GtkWidget *dialog;
           GtkWidget *name_entry;
-          gchar     *name = gimp_utf8_strtrim (text->text, 30);
+          gchar     *name = ligma_utf8_strtrim (text->text, 30);
 
           dialog = gtk_widget_get_toplevel (widget);
 

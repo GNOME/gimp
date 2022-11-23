@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpplugindebug.h
+ * ligmaplugindebug.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_DEBUG_H__
-#define __GIMP_PLUG_IN_DEBUG_H__
+#ifndef __LIGMA_PLUG_IN_DEBUG_H__
+#define __LIGMA_PLUG_IN_DEBUG_H__
 
 
 typedef enum
 {
-  GIMP_DEBUG_WRAP_QUERY = 1 << 0,
-  GIMP_DEBUG_WRAP_INIT  = 1 << 1,
-  GIMP_DEBUG_WRAP_RUN   = 1 << 2,
+  LIGMA_DEBUG_WRAP_QUERY = 1 << 0,
+  LIGMA_DEBUG_WRAP_INIT  = 1 << 1,
+  LIGMA_DEBUG_WRAP_RUN   = 1 << 2,
 
-  GIMP_DEBUG_WRAP_DEFAULT = GIMP_DEBUG_WRAP_RUN
-} GimpDebugWrapFlag;
+  LIGMA_DEBUG_WRAP_DEFAULT = LIGMA_DEBUG_WRAP_RUN
+} LigmaDebugWrapFlag;
 
 
-GimpPlugInDebug  * gimp_plug_in_debug_new  (void);
-void               gimp_plug_in_debug_free (GimpPlugInDebug    *debug);
+LigmaPlugInDebug  * ligma_plug_in_debug_new  (void);
+void               ligma_plug_in_debug_free (LigmaPlugInDebug    *debug);
 
-gchar           ** gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
+gchar           ** ligma_plug_in_debug_argv (LigmaPlugInDebug    *debug,
                                             const gchar        *name,
-                                            GimpDebugWrapFlag   flag,
+                                            LigmaDebugWrapFlag   flag,
                                             const gchar       **args);
 
 
-#endif /* __GIMP_PLUG_IN_DEBUG_H__ */
+#endif /* __LIGMA_PLUG_IN_DEBUG_H__ */

@@ -1,9 +1,9 @@
-/* Lighting Effects 0.2.2 -- image filter plug-in for GIMP
+/* Lighting Effects 0.2.2 -- image filter plug-in for LIGMA
  *
  * Copyright (C) 1996-98 Tom Bech
  * Copyright (C) 1996-98 Federico Mena Quintero
  *
- * E-mail: tomb@gimp.org (Tom) or quartic@gimp.org (Federico)
+ * E-mail: tomb@ligma.org (Tom) or quartic@ligma.org (Federico)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "lighting-apply.h"
 #include "lighting-image.h"
@@ -32,7 +32,7 @@
 #include "lighting-shade.h"
 #include "lighting-ui.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 LightingValues mapvals;
@@ -43,12 +43,12 @@ typedef struct _LightingClass LightingClass;
 
 struct _Lighting
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _LightingClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -57,32 +57,32 @@ struct _LightingClass
 
 GType                   lighting_get_type         (void) G_GNUC_CONST;
 
-static GList          * lighting_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * lighting_create_procedure (GimpPlugIn           *plug_in,
+static GList          * lighting_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * lighting_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * lighting_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * lighting_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
 static void             set_default_settings      (void);
 static void             check_drawables           (void);
 
 
-G_DEFINE_TYPE (Lighting, lighting, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Lighting, lighting, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (LIGHTING_TYPE)
+LIGMA_MAIN (LIGHTING_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 lighting_class_init (LightingClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = lighting_query_procedures;
   plug_in_class->create_procedure = lighting_create_procedure;
@@ -95,166 +95,166 @@ lighting_init (Lighting *lighting)
 }
 
 static GList *
-lighting_query_procedures (GimpPlugIn *plug_in)
+lighting_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-lighting_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+lighting_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
+      LigmaRGB white = { 1.0, 1.0, 1.0, 1.0 };
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             lighting_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Lighting Effects..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Lighting Effects..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Light and Shadow/Light");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Apply various lighting effects "
                                           "to an image"),
                                         "No help yet",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Tom Bech & Federico Mena Quintero",
                                       "Version 0.2.0, March 15 1998");
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "bump-drawable",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "bump-drawable",
                               "Bump drawable",
                               "Bumpmap drawable (set to NULL if disabled)",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "env-drawable",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "env-drawable",
                               "Env drawable",
                               "Environmentmap drawable (set to NULL if disabled",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "do-bumpmap",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "do-bumpmap",
                              "Do bumpmap",
                              "Enable bumpmapping",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "do-envmap",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "do-envmap",
                              "Do envmap",
                              "Enable envmapping",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "bumpmap-type",
+      LIGMA_PROC_ARG_INT (procedure, "bumpmap-type",
                          "Bumpmap type",
                          "Type of mapping (0=linear, 1=log, 2=sinusoidal, "
                          "3=spherical)",
                          0, 2, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "light-type",
+      LIGMA_PROC_ARG_INT (procedure, "light-type",
                          "Light type",
                          "Type of lightsource (0=point, 1=directional, "
                          "3=spot, 4=none)",
                          0 ,4, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "light-color",
+      LIGMA_PROC_ARG_RGB (procedure, "light-color",
                          "Light color",
                          "Light source color",
                          TRUE, &white,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-x",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-position-x",
                             "Light position X",
                             "Light source position (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-y",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-position-y",
                             "Light position Y",
                             "Light source position (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-z",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-position-z",
                             "Light position Z",
                             "Light source position (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-x",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-direction-x",
                             "Light direction X",
                             "Light source direction (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-y",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-direction-y",
                             "Light direction Y",
                             "Light source direction (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-z",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "light-direction-z",
                             "Light direction Z",
                             "Light source direction (x,y,z)",
                             -G_MAXDOUBLE, G_MAXDOUBLE, 1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
                             "Ambient intensity",
                             "Material ambient intensity",
                             0, 1, 0.2,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
                             "Diffuse intensity",
                             "Material diffuse intensity",
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
                             "Diffuse reflectivity",
                             "Material diffuse reflectivity",
                             0, 1, 0.4,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
                             "Specular reflectivity",
                             "Material specular reflectivity",
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "highlight",
                             "Highlight",
                             "Material highlight (note, it's exponential)",
                             0, G_MAXDOUBLE, 27.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "antialiasing",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "antialiasing",
                              "Antialiasing",
                              "Apply antialiasing",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "new-image",
                              "New image",
                              "Create a new image",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-background",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "transparent-background",
                              "Transparent background",
                              "Make background transparent",
                              FALSE,
@@ -273,34 +273,34 @@ set_default_settings (void)
   mapvals.light_selected = 0;
   mapvals.light_isolated = FALSE;
 
-  gimp_vector3_set (&mapvals.viewpoint,   0.5, 0.5, 0.25);
-  gimp_vector3_set (&mapvals.planenormal, 0.0, 0.0, 1.0);
+  ligma_vector3_set (&mapvals.viewpoint,   0.5, 0.5, 0.25);
+  ligma_vector3_set (&mapvals.planenormal, 0.0, 0.0, 1.0);
 
-  gimp_vector3_set (&mapvals.lightsource[0].position,  -1.0, -1.0, 1.0);
-  gimp_vector3_set (&mapvals.lightsource[0].direction, -1.0, -1.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[0].position,  -1.0, -1.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[0].direction, -1.0, -1.0, 1.0);
 
-  gimp_rgba_set (&mapvals.lightsource[0].color, 1.0, 1.0, 1.0, 1.0);
+  ligma_rgba_set (&mapvals.lightsource[0].color, 1.0, 1.0, 1.0, 1.0);
   mapvals.lightsource[0].intensity = 1.0;
   mapvals.lightsource[0].type      = POINT_LIGHT;
   mapvals.lightsource[0].active    = TRUE;
 
   /* init lights 2 and 3 pos to upper left and below */
-  gimp_vector3_set (&mapvals.lightsource[1].position,   2.0, -1.0, 1.0);
-  gimp_vector3_set (&mapvals.lightsource[1].direction,  1.0, -1.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[1].position,   2.0, -1.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[1].direction,  1.0, -1.0, 1.0);
 
-  gimp_vector3_set (&mapvals.lightsource[2].position,   1.0,  2.0, 1.0);
-  gimp_vector3_set (&mapvals.lightsource[2].direction,  0.0,  1.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[2].position,   1.0,  2.0, 1.0);
+  ligma_vector3_set (&mapvals.lightsource[2].direction,  0.0,  1.0, 1.0);
 
   /* init any remaining lights to directly overhead */
   for (k = 3; k < NUM_LIGHTS; k++)
     {
-      gimp_vector3_set (&mapvals.lightsource[k].position,   0.0,  0.0, 1.0);
-      gimp_vector3_set (&mapvals.lightsource[k].direction,  0.0,  0.0, 1.0);
+      ligma_vector3_set (&mapvals.lightsource[k].position,   0.0,  0.0, 1.0);
+      ligma_vector3_set (&mapvals.lightsource[k].direction,  0.0,  0.0, 1.0);
     }
 
   for (k = 1; k < NUM_LIGHTS; k++)
     {
-      gimp_rgba_set (&mapvals.lightsource[k].color, 1.0, 1.0, 1.0, 1.0);
+      ligma_rgba_set (&mapvals.lightsource[k].color, 1.0, 1.0, 1.0, 1.0);
       mapvals.lightsource[k].intensity = 1.0;
       mapvals.lightsource[k].type      = NO_LIGHT;
       mapvals.lightsource[k].active    = TRUE;
@@ -337,24 +337,24 @@ set_default_settings (void)
 static void
 check_drawables (void)
 {
-  GimpDrawable *drawable;
-  GimpDrawable *map;
+  LigmaDrawable *drawable;
+  LigmaDrawable *map;
 
   if (mapvals.bump_mapped)
     {
-      if (! gimp_item_id_is_drawable (mapvals.bumpmap_id))
+      if (! ligma_item_id_is_drawable (mapvals.bumpmap_id))
         {
           mapvals.bump_mapped = FALSE;
           mapvals.bumpmap_id  = -1;
         }
       else
         {
-          drawable = gimp_drawable_get_by_id (mapvals.drawable_id);
-          map      = gimp_drawable_get_by_id (mapvals.bumpmap_id);
+          drawable = ligma_drawable_get_by_id (mapvals.drawable_id);
+          map      = ligma_drawable_get_by_id (mapvals.bumpmap_id);
 
-          if (gimp_drawable_is_indexed (map) ||
-              (gimp_drawable_get_width  (drawable) != gimp_drawable_get_width  (map)) ||
-              (gimp_drawable_get_height (drawable) != gimp_drawable_get_height (map)))
+          if (ligma_drawable_is_indexed (map) ||
+              (ligma_drawable_get_width  (drawable) != ligma_drawable_get_width  (map)) ||
+              (ligma_drawable_get_height (drawable) != ligma_drawable_get_height (map)))
             {
               mapvals.bump_mapped = FALSE;
               mapvals.bumpmap_id  = -1;
@@ -364,17 +364,17 @@ check_drawables (void)
 
   if (mapvals.env_mapped)
     {
-      if (! gimp_item_id_is_drawable (mapvals.envmap_id))
+      if (! ligma_item_id_is_drawable (mapvals.envmap_id))
         {
           mapvals.env_mapped = FALSE;
           mapvals.envmap_id  = -1;
         }
       else
         {
-          map = gimp_drawable_get_by_id (mapvals.envmap_id);
+          map = ligma_drawable_get_by_id (mapvals.envmap_id);
 
-          if (gimp_drawable_is_gray   (map) ||
-              gimp_drawable_has_alpha (map))
+          if (ligma_drawable_is_gray   (map) ||
+              ligma_drawable_has_alpha (map))
             {
               mapvals.env_mapped = FALSE;
               mapvals.envmap_id  = -1;
@@ -383,16 +383,16 @@ check_drawables (void)
     }
 }
 
-static GimpValueArray *
-lighting_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+lighting_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -400,12 +400,12 @@ lighting_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -415,60 +415,60 @@ lighting_run (GimpProcedure        *procedure,
 
   set_default_settings ();
 
-  gimp_get_data (PLUG_IN_PROC, &mapvals);
+  ligma_get_data (PLUG_IN_PROC, &mapvals);
 
-  mapvals.drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
+  mapvals.drawable_id = ligma_item_get_id (LIGMA_ITEM (drawable));
 
   check_drawables ();
 
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
+        case LIGMA_RUN_INTERACTIVE:
           if (! main_dialog (drawable))
             {
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_CANCEL,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_CANCEL,
                                                        NULL);
             }
 
           compute_image ();
 
-          gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (LightingValues));
-          gimp_displays_flush ();
+          ligma_set_data (PLUG_IN_PROC, &mapvals, sizeof (LightingValues));
+          ligma_displays_flush ();
           break;
 
-        case GIMP_RUN_WITH_LAST_VALS:
+        case LIGMA_RUN_WITH_LAST_VALS:
           if (image_setup (drawable, FALSE))
             compute_image ();
-          gimp_displays_flush ();
+          ligma_displays_flush ();
           break;
 
-        case GIMP_RUN_NONINTERACTIVE:
-          mapvals.bumpmap_id             = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
-          mapvals.envmap_id              = GIMP_VALUES_GET_DRAWABLE_ID (args, 1);
-          mapvals.bump_mapped                = GIMP_VALUES_GET_BOOLEAN (args, 2);
-          mapvals.env_mapped                 = GIMP_VALUES_GET_BOOLEAN (args, 3);
-          mapvals.bumpmaptype                = GIMP_VALUES_GET_INT     (args, 4);
-          mapvals.lightsource[0].type        = GIMP_VALUES_GET_INT     (args, 5);
+        case LIGMA_RUN_NONINTERACTIVE:
+          mapvals.bumpmap_id             = LIGMA_VALUES_GET_DRAWABLE_ID (args, 0);
+          mapvals.envmap_id              = LIGMA_VALUES_GET_DRAWABLE_ID (args, 1);
+          mapvals.bump_mapped                = LIGMA_VALUES_GET_BOOLEAN (args, 2);
+          mapvals.env_mapped                 = LIGMA_VALUES_GET_BOOLEAN (args, 3);
+          mapvals.bumpmaptype                = LIGMA_VALUES_GET_INT     (args, 4);
+          mapvals.lightsource[0].type        = LIGMA_VALUES_GET_INT     (args, 5);
 
-          GIMP_VALUES_GET_RGB (args, 6, &mapvals.lightsource[0].color);
+          LIGMA_VALUES_GET_RGB (args, 6, &mapvals.lightsource[0].color);
 
-          mapvals.lightsource[0].position.x  = GIMP_VALUES_GET_DOUBLE  (args, 7);
-          mapvals.lightsource[0].position.y  = GIMP_VALUES_GET_DOUBLE  (args, 8);
-          mapvals.lightsource[0].position.z  = GIMP_VALUES_GET_DOUBLE  (args, 9);
-          mapvals.lightsource[0].direction.x = GIMP_VALUES_GET_DOUBLE  (args, 10);
-          mapvals.lightsource[0].direction.y = GIMP_VALUES_GET_DOUBLE  (args, 11);
-          mapvals.lightsource[0].direction.z = GIMP_VALUES_GET_DOUBLE  (args, 12);
-          mapvals.material.ambient_int       = GIMP_VALUES_GET_DOUBLE  (args, 13);
-          mapvals.material.diffuse_int       = GIMP_VALUES_GET_DOUBLE  (args, 14);
-          mapvals.material.diffuse_ref       = GIMP_VALUES_GET_DOUBLE  (args, 15);
-          mapvals.material.specular_ref      = GIMP_VALUES_GET_DOUBLE  (args, 16);
-          mapvals.material.highlight         = GIMP_VALUES_GET_DOUBLE  (args, 17);
-          mapvals.antialiasing               = GIMP_VALUES_GET_BOOLEAN (args, 18);
-          mapvals.create_new_image           = GIMP_VALUES_GET_BOOLEAN (args, 19);
-          mapvals.transparent_background     = GIMP_VALUES_GET_BOOLEAN (args, 20);
+          mapvals.lightsource[0].position.x  = LIGMA_VALUES_GET_DOUBLE  (args, 7);
+          mapvals.lightsource[0].position.y  = LIGMA_VALUES_GET_DOUBLE  (args, 8);
+          mapvals.lightsource[0].position.z  = LIGMA_VALUES_GET_DOUBLE  (args, 9);
+          mapvals.lightsource[0].direction.x = LIGMA_VALUES_GET_DOUBLE  (args, 10);
+          mapvals.lightsource[0].direction.y = LIGMA_VALUES_GET_DOUBLE  (args, 11);
+          mapvals.lightsource[0].direction.z = LIGMA_VALUES_GET_DOUBLE  (args, 12);
+          mapvals.material.ambient_int       = LIGMA_VALUES_GET_DOUBLE  (args, 13);
+          mapvals.material.diffuse_int       = LIGMA_VALUES_GET_DOUBLE  (args, 14);
+          mapvals.material.diffuse_ref       = LIGMA_VALUES_GET_DOUBLE  (args, 15);
+          mapvals.material.specular_ref      = LIGMA_VALUES_GET_DOUBLE  (args, 16);
+          mapvals.material.highlight         = LIGMA_VALUES_GET_DOUBLE  (args, 17);
+          mapvals.antialiasing               = LIGMA_VALUES_GET_BOOLEAN (args, 18);
+          mapvals.create_new_image           = LIGMA_VALUES_GET_BOOLEAN (args, 19);
+          mapvals.transparent_background     = LIGMA_VALUES_GET_BOOLEAN (args, 20);
 
           check_drawables ();
           if (image_setup (drawable, FALSE))
@@ -479,13 +479,13 @@ lighting_run (GimpProcedure        *procedure,
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
   g_free (xpostab);
   g_free (ypostab);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }

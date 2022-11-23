@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptooleditor.h
- * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ * ligmatooleditor.h
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@ligma.org>
  *                         Stephen Griffiths <scgmk5@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,45 +19,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_EDITOR_H__
-#define __GIMP_TOOL_EDITOR_H__
+#ifndef __LIGMA_TOOL_EDITOR_H__
+#define __LIGMA_TOOL_EDITOR_H__
 
 
-#include "gimpcontainertreeview.h"
+#include "ligmacontainertreeview.h"
 
 
-#define GIMP_TYPE_TOOL_EDITOR            (gimp_tool_editor_get_type ())
-#define GIMP_TOOL_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_EDITOR, GimpToolEditor))
-#define GIMP_TOOL_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_EDITOR, GimpToolEditorClass))
-#define GIMP_IS_TOOL_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_EDITOR))
-#define GIMP_IS_TOOL_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_EDITOR))
-#define GIMP_TOOL_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_EDITOR, GimpToolEditorClass))
+#define LIGMA_TYPE_TOOL_EDITOR            (ligma_tool_editor_get_type ())
+#define LIGMA_TOOL_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_EDITOR, LigmaToolEditor))
+#define LIGMA_TOOL_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_EDITOR, LigmaToolEditorClass))
+#define LIGMA_IS_TOOL_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_EDITOR))
+#define LIGMA_IS_TOOL_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_EDITOR))
+#define LIGMA_TOOL_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_EDITOR, LigmaToolEditorClass))
 
 
-typedef struct _GimpToolEditorPrivate GimpToolEditorPrivate;
-typedef struct _GimpToolEditorClass   GimpToolEditorClass;
+typedef struct _LigmaToolEditorPrivate LigmaToolEditorPrivate;
+typedef struct _LigmaToolEditorClass   LigmaToolEditorClass;
 
-struct _GimpToolEditor
+struct _LigmaToolEditor
 {
-  GimpContainerTreeView  parent_instance;
+  LigmaContainerTreeView  parent_instance;
 
-  GimpToolEditorPrivate *priv;
+  LigmaToolEditorPrivate *priv;
 };
 
-struct _GimpToolEditorClass
+struct _LigmaToolEditorClass
 {
-  GimpContainerTreeViewClass  parent_class;
+  LigmaContainerTreeViewClass  parent_class;
 };
 
 
-GType       gimp_tool_editor_get_type       (void) G_GNUC_CONST;
+GType       ligma_tool_editor_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_editor_new            (GimpContainer  *container,
-                                             GimpContext    *context,
+GtkWidget * ligma_tool_editor_new            (LigmaContainer  *container,
+                                             LigmaContext    *context,
                                              gint            view_size,
                                              gint            view_border_width);
 
-void        gimp_tool_editor_revert_changes (GimpToolEditor *tool_editor);
+void        ligma_tool_editor_revert_changes (LigmaToolEditor *tool_editor);
 
 
-#endif  /*  __GIMP_TOOL_EDITOR_H__  */
+#endif  /*  __LIGMA_TOOL_EDITOR_H__  */

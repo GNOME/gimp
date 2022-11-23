@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpiconpicker.c
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmaiconpicker.c
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *               2012 Daniel Sabo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,47 +24,47 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimpcontext.h"
-#include "core/gimptemplate.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmalist.h"
+#include "core/ligmacontext.h"
+#include "core/ligmatemplate.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcontainerpopup.h"
-#include "gimpiconpicker.h"
-#include "gimpview.h"
-#include "gimpviewablebutton.h"
+#include "ligmacontainerpopup.h"
+#include "ligmaiconpicker.h"
+#include "ligmaview.h"
+#include "ligmaviewablebutton.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_ICON_NAME,
   PROP_ICON_PIXBUF
 };
 
 
-typedef struct _GimpIconPickerPrivate GimpIconPickerPrivate;
+typedef struct _LigmaIconPickerPrivate LigmaIconPickerPrivate;
 
-struct _GimpIconPickerPrivate
+struct _LigmaIconPickerPrivate
 {
-  Gimp          *gimp;
+  Ligma          *ligma;
 
   gchar         *icon_name;
   GdkPixbuf     *icon_pixbuf;
 
-  GimpViewable  *preview;
+  LigmaViewable  *preview;
 
-  GimpContainer *icon_name_container;
-  GimpContext   *icon_name_context;
-  GimpObject    *null_template_object;
+  LigmaContainer *icon_name_container;
+  LigmaContext   *icon_name_context;
+  LigmaObject    *null_template_object;
 
   GtkWidget     *right_click_menu;
   GtkWidget     *menu_item_file_icon;
@@ -74,93 +74,93 @@ struct _GimpIconPickerPrivate
 };
 
 #define GET_PRIVATE(picker) \
-        ((GimpIconPickerPrivate *) gimp_icon_picker_get_instance_private ((GimpIconPicker *) (picker)))
+        ((LigmaIconPickerPrivate *) ligma_icon_picker_get_instance_private ((LigmaIconPicker *) (picker)))
 
 
-static void    gimp_icon_picker_constructed     (GObject        *object);
-static void    gimp_icon_picker_finalize        (GObject        *object);
-static void    gimp_icon_picker_set_property    (GObject        *object,
+static void    ligma_icon_picker_constructed     (GObject        *object);
+static void    ligma_icon_picker_finalize        (GObject        *object);
+static void    ligma_icon_picker_set_property    (GObject        *object,
                                                  guint           property_id,
                                                  const GValue   *value,
                                                  GParamSpec     *pspec);
-static void    gimp_icon_picker_get_property    (GObject        *object,
+static void    ligma_icon_picker_get_property    (GObject        *object,
                                                  guint           property_id,
                                                  GValue         *value,
                                                  GParamSpec     *pspec);
 
-static void    gimp_icon_picker_icon_changed    (GimpContext    *context,
-                                                 GimpTemplate   *template,
-                                                 GimpIconPicker *picker);
-static void    gimp_icon_picker_clicked         (GtkWidget      *widget,
+static void    ligma_icon_picker_icon_changed    (LigmaContext    *context,
+                                                 LigmaTemplate   *template,
+                                                 LigmaIconPicker *picker);
+static void    ligma_icon_picker_clicked         (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
 
-static void    gimp_icon_picker_menu_from_file  (GtkWidget      *widget,
+static void    ligma_icon_picker_menu_from_file  (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-static void    gimp_icon_picker_menu_from_name  (GtkWidget      *widget,
+static void    ligma_icon_picker_menu_from_name  (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-static void    gimp_icon_picker_menu_paste      (GtkWidget      *widget,
+static void    ligma_icon_picker_menu_paste      (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-static void    gimp_icon_picker_menu_copy       (GtkWidget      *widget,
+static void    ligma_icon_picker_menu_copy       (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaIconPicker, ligma_icon_picker, GTK_TYPE_BOX)
 
-#define parent_class gimp_icon_picker_parent_class
+#define parent_class ligma_icon_picker_parent_class
 
 
 static void
-gimp_icon_picker_class_init (GimpIconPickerClass *klass)
+ligma_icon_picker_class_init (LigmaIconPickerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_icon_picker_constructed;
-  object_class->finalize     = gimp_icon_picker_finalize;
-  object_class->set_property = gimp_icon_picker_set_property;
-  object_class->get_property = gimp_icon_picker_get_property;
+  object_class->constructed  = ligma_icon_picker_constructed;
+  object_class->finalize     = ligma_icon_picker_finalize;
+  object_class->set_property = ligma_icon_picker_set_property;
+  object_class->get_property = ligma_icon_picker_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name", NULL, NULL,
-                                                        "gimp-toilet-paper",
-                                                        GIMP_PARAM_READWRITE |
+                                                        "ligma-toilet-paper",
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ICON_PIXBUF,
                                    g_param_spec_object ("icon-pixbuf", NULL, NULL,
                                                         GDK_TYPE_PIXBUF,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_icon_picker_init (GimpIconPicker *picker)
+ligma_icon_picker_init (LigmaIconPicker *picker)
 {
-  GimpIconPickerPrivate *private = GET_PRIVATE (picker);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (picker);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (picker),
                                   GTK_ORIENTATION_HORIZONTAL);
 
-  private->preview = g_object_new (GIMP_TYPE_VIEWABLE,
+  private->preview = g_object_new (LIGMA_TYPE_VIEWABLE,
                                    "icon-name",   private->icon_name,
                                    "icon-pixbuf", private->icon_pixbuf,
                                    NULL);
 }
 
 static void
-gimp_icon_picker_constructed (GObject *object)
+ligma_icon_picker_constructed (GObject *object)
 {
-  GimpIconPicker         *picker  = GIMP_ICON_PICKER (object);
-  GimpIconPickerPrivate  *private = GET_PRIVATE (object);
+  LigmaIconPicker         *picker  = LIGMA_ICON_PICKER (object);
+  LigmaIconPickerPrivate  *private = GET_PRIVATE (object);
   GtkWidget              *button;
   GtkWidget              *viewable_view;
   GList                  *icon_list;
@@ -168,14 +168,14 @@ gimp_icon_picker_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (private->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (private->ligma));
 
   /* Set up the icon picker */
-  private->icon_name_container = gimp_list_new (GIMP_TYPE_TEMPLATE, FALSE);
-  private->icon_name_context = gimp_context_new (private->gimp, "foo", NULL);
+  private->icon_name_container = ligma_list_new (LIGMA_TYPE_TEMPLATE, FALSE);
+  private->icon_name_context = ligma_context_new (private->ligma, "foo", NULL);
 
   g_signal_connect (private->icon_name_context, "template-changed",
-                    G_CALLBACK (gimp_icon_picker_icon_changed),
+                    G_CALLBACK (ligma_icon_picker_icon_changed),
                     picker);
 
   icon_list = gtk_icon_theme_list_icons (gtk_icon_theme_get_default (), NULL);
@@ -185,31 +185,31 @@ gimp_icon_picker_constructed (GObject *object)
 
   for (list = icon_list; list; list = g_list_next (list))
     {
-      GimpObject *object = g_object_new (GIMP_TYPE_TEMPLATE,
+      LigmaObject *object = g_object_new (LIGMA_TYPE_TEMPLATE,
                                          "name",      list->data,
                                          "icon-name", list->data,
                                          NULL);
 
-      gimp_container_add (private->icon_name_container, object);
+      ligma_container_add (private->icon_name_container, object);
       g_object_unref (object);
 
       if (private->icon_name && strcmp (list->data, private->icon_name) == 0)
-        gimp_context_set_template (private->icon_name_context,
-                                   GIMP_TEMPLATE (object));
+        ligma_context_set_template (private->icon_name_context,
+                                   LIGMA_TEMPLATE (object));
     }
 
   /* An extra template object, use to make all icons clickable when a
    * pixbuf icon is set.
    */
-  private->null_template_object = g_object_new (GIMP_TYPE_TEMPLATE,
+  private->null_template_object = g_object_new (LIGMA_TYPE_TEMPLATE,
                                                 "name",      "",
                                                 "icon-name", "",
                                                 NULL);
 
   if (private->icon_pixbuf)
     {
-      gimp_context_set_template (private->icon_name_context,
-                                 GIMP_TEMPLATE (private->null_template_object));
+      ligma_context_set_template (private->icon_name_context,
+                                 LIGMA_TEMPLATE (private->null_template_object));
     }
 
   g_list_free_full (icon_list, (GDestroyNotify) g_free);
@@ -221,13 +221,13 @@ gimp_icon_picker_constructed (GObject *object)
   gtk_widget_show (button);
 
   g_signal_connect (button, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_clicked),
+                    G_CALLBACK (ligma_icon_picker_clicked),
                     object);
 
 
-  viewable_view = gimp_view_new (private->icon_name_context,
+  viewable_view = ligma_view_new (private->icon_name_context,
                                  private->preview,
-                                 GIMP_VIEW_SIZE_SMALL,
+                                 LIGMA_VIEW_SIZE_SMALL,
                                  0,
                                  FALSE);
   gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (viewable_view));
@@ -243,7 +243,7 @@ gimp_icon_picker_constructed (GObject *object)
                          GTK_WIDGET (private->menu_item_file_icon));
 
   g_signal_connect (private->menu_item_file_icon, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_from_file),
+                    G_CALLBACK (ligma_icon_picker_menu_from_file),
                     object);
 
   private->menu_item_name_icon =
@@ -252,7 +252,7 @@ gimp_icon_picker_constructed (GObject *object)
                          GTK_WIDGET (private->menu_item_name_icon));
 
   g_signal_connect (private->menu_item_name_icon, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_from_name),
+                    G_CALLBACK (ligma_icon_picker_menu_from_name),
                     object);
 
   private->menu_item_copy =
@@ -261,7 +261,7 @@ gimp_icon_picker_constructed (GObject *object)
                          GTK_WIDGET (private->menu_item_copy));
 
   g_signal_connect (private->menu_item_copy, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_copy),
+                    G_CALLBACK (ligma_icon_picker_menu_copy),
                     object);
 
   private->menu_item_paste =
@@ -270,16 +270,16 @@ gimp_icon_picker_constructed (GObject *object)
                          GTK_WIDGET (private->menu_item_paste));
 
   g_signal_connect (private->menu_item_paste, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_paste),
+                    G_CALLBACK (ligma_icon_picker_menu_paste),
                     object);
 
   gtk_widget_show_all (GTK_WIDGET (private->right_click_menu));
 }
 
 static void
-gimp_icon_picker_finalize (GObject *object)
+ligma_icon_picker_finalize (GObject *object)
 {
-  GimpIconPickerPrivate *private = GET_PRIVATE (object);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->icon_name, g_free);
 
@@ -293,26 +293,26 @@ gimp_icon_picker_finalize (GObject *object)
 }
 
 static void
-gimp_icon_picker_set_property (GObject      *object,
+ligma_icon_picker_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpIconPickerPrivate *private = GET_PRIVATE (object);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value); /* don't ref */
       break;
 
     case PROP_ICON_NAME:
-      gimp_icon_picker_set_icon_name (GIMP_ICON_PICKER (object),
+      ligma_icon_picker_set_icon_name (LIGMA_ICON_PICKER (object),
                                       g_value_get_string (value));
       break;
 
     case PROP_ICON_PIXBUF:
-      gimp_icon_picker_set_icon_pixbuf (GIMP_ICON_PICKER (object),
+      ligma_icon_picker_set_icon_pixbuf (LIGMA_ICON_PICKER (object),
                                         g_value_get_object (value));
       break;
 
@@ -323,17 +323,17 @@ gimp_icon_picker_set_property (GObject      *object,
 }
 
 static void
-gimp_icon_picker_get_property (GObject    *object,
+ligma_icon_picker_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpIconPickerPrivate *private = GET_PRIVATE (object);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
 
     case PROP_ICON_NAME:
@@ -351,30 +351,30 @@ gimp_icon_picker_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_icon_picker_new (Gimp *gimp)
+ligma_icon_picker_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_ICON_PICKER,
-                       "gimp", gimp,
+  return g_object_new (LIGMA_TYPE_ICON_PICKER,
+                       "ligma", ligma,
                        NULL);
 }
 
 const gchar *
-gimp_icon_picker_get_icon_name (GimpIconPicker *picker)
+ligma_icon_picker_get_icon_name (LigmaIconPicker *picker)
 {
-  g_return_val_if_fail (GIMP_IS_ICON_PICKER (picker), NULL);
+  g_return_val_if_fail (LIGMA_IS_ICON_PICKER (picker), NULL);
 
   return GET_PRIVATE (picker)->icon_name;
 }
 
 void
-gimp_icon_picker_set_icon_name (GimpIconPicker *picker,
+ligma_icon_picker_set_icon_name (LigmaIconPicker *picker,
                                 const gchar    *icon_name)
 {
-  GimpIconPickerPrivate *private;
+  LigmaIconPickerPrivate *private;
 
-  g_return_if_fail (GIMP_IS_ICON_PICKER (picker));
+  g_return_if_fail (LIGMA_IS_ICON_PICKER (picker));
   g_return_if_fail (icon_name != NULL);
 
   private = GET_PRIVATE (picker);
@@ -384,14 +384,14 @@ gimp_icon_picker_set_icon_name (GimpIconPicker *picker,
 
   if (private->icon_name_container)
     {
-      GimpObject *object;
+      LigmaObject *object;
 
-      object = gimp_container_get_child_by_name (private->icon_name_container,
+      object = ligma_container_get_child_by_name (private->icon_name_container,
                                                  icon_name);
 
       if (object)
-        gimp_context_set_template (private->icon_name_context,
-                                   GIMP_TEMPLATE (object));
+        ligma_context_set_template (private->icon_name_context,
+                                   LIGMA_TEMPLATE (object));
     }
 
   g_object_set (private->preview,
@@ -402,20 +402,20 @@ gimp_icon_picker_set_icon_name (GimpIconPicker *picker,
 }
 
 GdkPixbuf  *
-gimp_icon_picker_get_icon_pixbuf (GimpIconPicker *picker)
+ligma_icon_picker_get_icon_pixbuf (LigmaIconPicker *picker)
 {
-  g_return_val_if_fail (GIMP_IS_ICON_PICKER (picker), NULL);
+  g_return_val_if_fail (LIGMA_IS_ICON_PICKER (picker), NULL);
 
   return GET_PRIVATE (picker)->icon_pixbuf;
 }
 
 void
-gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
+ligma_icon_picker_set_icon_pixbuf (LigmaIconPicker *picker,
                                   GdkPixbuf      *value)
 {
-  GimpIconPickerPrivate *private;
+  LigmaIconPickerPrivate *private;
 
-  g_return_if_fail (GIMP_IS_ICON_PICKER (picker));
+  g_return_if_fail (LIGMA_IS_ICON_PICKER (picker));
   g_return_if_fail (value == NULL || GDK_IS_PIXBUF (value));
 
   private = GET_PRIVATE (picker);
@@ -429,19 +429,19 @@ gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
     {
       g_object_ref (private->icon_pixbuf);
 
-      gimp_context_set_template (private->icon_name_context,
-                                 GIMP_TEMPLATE (private->null_template_object));
+      ligma_context_set_template (private->icon_name_context,
+                                 LIGMA_TEMPLATE (private->null_template_object));
     }
   else
     {
-      GimpObject *object;
+      LigmaObject *object;
 
-      object = gimp_container_get_child_by_name (private->icon_name_container,
+      object = ligma_container_get_child_by_name (private->icon_name_container,
                                                  private->icon_name);
 
       if (object)
-        gimp_context_set_template (private->icon_name_context,
-                                   GIMP_TEMPLATE (object));
+        ligma_context_set_template (private->icon_name_context,
+                                   LIGMA_TEMPLATE (object));
     }
 
   g_object_set (private->preview,
@@ -455,25 +455,25 @@ gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
 /*  private functions  */
 
 static void
-gimp_icon_picker_icon_changed (GimpContext    *context,
-                               GimpTemplate   *template,
-                               GimpIconPicker *picker)
+ligma_icon_picker_icon_changed (LigmaContext    *context,
+                               LigmaTemplate   *template,
+                               LigmaIconPicker *picker)
 {
-  GimpIconPickerPrivate *private = GET_PRIVATE (picker);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (picker);
 
-  if (GIMP_OBJECT (template) != private->null_template_object)
+  if (LIGMA_OBJECT (template) != private->null_template_object)
     {
-      gimp_icon_picker_set_icon_pixbuf (picker, NULL);
-      gimp_icon_picker_set_icon_name (picker, gimp_object_get_name (template));
+      ligma_icon_picker_set_icon_pixbuf (picker, NULL);
+      ligma_icon_picker_set_icon_name (picker, ligma_object_get_name (template));
     }
 }
 
 static void
-gimp_icon_picker_menu_from_file (GtkWidget      *widget,
+ligma_icon_picker_menu_from_file (GtkWidget      *widget,
                                  GdkEventButton *event,
                                  gpointer        object)
 {
-  GimpIconPicker *picker = GIMP_ICON_PICKER (object);
+  LigmaIconPicker *picker = LIGMA_ICON_PICKER (object);
   GtkWidget      *dialog;
   GtkFileFilter  *filter;
 
@@ -501,7 +501,7 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
 
       if (icon_pixbuf)
         {
-          gimp_icon_picker_set_icon_pixbuf (picker, icon_pixbuf);
+          ligma_icon_picker_set_icon_pixbuf (picker, icon_pixbuf);
           g_object_unref (icon_pixbuf);
         }
 
@@ -512,12 +512,12 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
 }
 
 static void
-gimp_icon_picker_menu_copy (GtkWidget      *widget,
+ligma_icon_picker_menu_copy (GtkWidget      *widget,
                             GdkEventButton *event,
                             gpointer        object)
 {
-  GimpIconPicker        *picker    = GIMP_ICON_PICKER (object);
-  GimpIconPickerPrivate *private   = GET_PRIVATE (picker);
+  LigmaIconPicker        *picker    = LIGMA_ICON_PICKER (object);
+  LigmaIconPickerPrivate *private   = GET_PRIVATE (picker);
   GtkClipboard          *clipboard = NULL;
 
   clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (widget),
@@ -530,11 +530,11 @@ gimp_icon_picker_menu_copy (GtkWidget      *widget,
 }
 
 static void
-gimp_icon_picker_menu_paste (GtkWidget      *widget,
+ligma_icon_picker_menu_paste (GtkWidget      *widget,
                              GdkEventButton *event,
                              gpointer        object)
 {
-  GimpIconPicker *picker           = GIMP_ICON_PICKER (object);
+  LigmaIconPicker *picker           = LIGMA_ICON_PICKER (object);
   GtkClipboard   *clipboard        = NULL;
   GdkPixbuf      *clipboard_pixbuf = NULL;
 
@@ -545,18 +545,18 @@ gimp_icon_picker_menu_paste (GtkWidget      *widget,
 
   if (clipboard_pixbuf)
     {
-      gimp_icon_picker_set_icon_pixbuf (picker, clipboard_pixbuf);
+      ligma_icon_picker_set_icon_pixbuf (picker, clipboard_pixbuf);
       g_object_unref (clipboard_pixbuf);
     }
 }
 
 static void
-gimp_icon_picker_clicked (GtkWidget      *widget,
+ligma_icon_picker_clicked (GtkWidget      *widget,
                           GdkEventButton *event,
                           gpointer        object)
 {
-  GimpIconPicker        *picker    = GIMP_ICON_PICKER (object);
-  GimpIconPickerPrivate *private   = GET_PRIVATE (picker);
+  LigmaIconPicker        *picker    = LIGMA_ICON_PICKER (object);
+  LigmaIconPickerPrivate *private   = GET_PRIVATE (picker);
   GtkClipboard          *clipboard = NULL;
 
   clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (widget),
@@ -580,28 +580,28 @@ gimp_icon_picker_clicked (GtkWidget      *widget,
 }
 
 static void
-gimp_icon_picker_menu_from_name (GtkWidget      *widget,
+ligma_icon_picker_menu_from_name (GtkWidget      *widget,
                                  GdkEventButton *event,
                                  gpointer        object)
 {
-  GimpIconPicker        *picker  = GIMP_ICON_PICKER (object);
-  GimpIconPickerPrivate *private = GET_PRIVATE (picker);
+  LigmaIconPicker        *picker  = LIGMA_ICON_PICKER (object);
+  LigmaIconPickerPrivate *private = GET_PRIVATE (picker);
   GtkWidget             *popup;
 
   /* FIXME: Right clicking on this popup can cause a crash */
-  popup = gimp_container_popup_new (private->icon_name_container,
+  popup = ligma_container_popup_new (private->icon_name_container,
                                     private->icon_name_context,
-                                    GIMP_VIEW_TYPE_LIST,
-                                    GIMP_VIEW_SIZE_SMALL,
-                                    GIMP_VIEW_SIZE_SMALL,
+                                    LIGMA_VIEW_TYPE_LIST,
+                                    LIGMA_VIEW_SIZE_SMALL,
+                                    LIGMA_VIEW_SIZE_SMALL,
                                     0,
                                     NULL,
                                     NULL,
                                     NULL,
                                     NULL);
 
-  gimp_container_popup_set_view_type (GIMP_CONTAINER_POPUP (popup),
-                                      GIMP_VIEW_TYPE_GRID);
+  ligma_container_popup_set_view_type (LIGMA_CONTAINER_POPUP (popup),
+                                      LIGMA_VIEW_TYPE_GRID);
 
-  gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (picker));
+  ligma_popup_show (LIGMA_POPUP (popup), GTK_WIDGET (picker));
 }

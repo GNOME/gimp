@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,49 +15,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EDIT_H__
-#define __GIMP_EDIT_H__
+#ifndef __LIGMA_EDIT_H__
+#define __LIGMA_EDIT_H__
 
 
-GimpObject  * gimp_edit_cut                (GimpImage       *image,
+LigmaObject  * ligma_edit_cut                (LigmaImage       *image,
                                             GList           *drawables,
-                                            GimpContext     *context,
+                                            LigmaContext     *context,
                                             GError         **error);
-GimpObject  * gimp_edit_copy               (GimpImage       *image,
+LigmaObject  * ligma_edit_copy               (LigmaImage       *image,
                                             GList           *drawables,
-                                            GimpContext     *context,
+                                            LigmaContext     *context,
                                             GError         **error);
-GimpBuffer  * gimp_edit_copy_visible       (GimpImage       *image,
-                                            GimpContext     *context,
+LigmaBuffer  * ligma_edit_copy_visible       (LigmaImage       *image,
+                                            LigmaContext     *context,
                                             GError         **error);
 
-GList       * gimp_edit_paste              (GimpImage       *image,
+GList       * ligma_edit_paste              (LigmaImage       *image,
                                             GList           *drawables,
-                                            GimpObject      *paste,
-                                            GimpPasteType    paste_type,
-                                            GimpContext     *context,
+                                            LigmaObject      *paste,
+                                            LigmaPasteType    paste_type,
+                                            LigmaContext     *context,
                                             gboolean         merged,
                                             gint             viewport_x,
                                             gint             viewport_y,
                                             gint             viewport_width,
                                             gint             viewport_height);
-GimpImage   * gimp_edit_paste_as_new_image (Gimp            *gimp,
-                                            GimpObject      *paste);
+LigmaImage   * ligma_edit_paste_as_new_image (Ligma            *ligma,
+                                            LigmaObject      *paste);
 
-const gchar * gimp_edit_named_cut          (GimpImage       *image,
+const gchar * ligma_edit_named_cut          (LigmaImage       *image,
                                             const gchar     *name,
                                             GList           *drawables,
-                                            GimpContext     *context,
+                                            LigmaContext     *context,
                                             GError         **error);
-const gchar * gimp_edit_named_copy         (GimpImage       *image,
+const gchar * ligma_edit_named_copy         (LigmaImage       *image,
                                             const gchar     *name,
                                             GList           *drawables,
-                                            GimpContext     *context,
+                                            LigmaContext     *context,
                                             GError         **error);
-const gchar * gimp_edit_named_copy_visible (GimpImage       *image,
+const gchar * ligma_edit_named_copy_visible (LigmaImage       *image,
                                             const gchar     *name,
-                                            GimpContext     *context,
+                                            LigmaContext     *context,
                                             GError         **error);
 
 
-#endif  /*  __GIMP_EDIT_H__  */
+#endif  /*  __LIGMA_EDIT_H__  */

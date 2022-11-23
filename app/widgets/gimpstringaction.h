@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpstringaction.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmastringaction.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STRING_ACTION_H__
-#define __GIMP_STRING_ACTION_H__
+#ifndef __LIGMA_STRING_ACTION_H__
+#define __LIGMA_STRING_ACTION_H__
 
 
-#include "gimpactionimpl.h"
+#include "ligmaactionimpl.h"
 
 
-#define GIMP_TYPE_STRING_ACTION            (gimp_string_action_get_type ())
-#define GIMP_STRING_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STRING_ACTION, GimpStringAction))
-#define GIMP_STRING_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STRING_ACTION, GimpStringActionClass))
-#define GIMP_IS_STRING_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STRING_ACTION))
-#define GIMP_IS_STRING_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_STRING_ACTION))
-#define GIMP_STRING_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_STRING_ACTION, GimpStringActionClass))
+#define LIGMA_TYPE_STRING_ACTION            (ligma_string_action_get_type ())
+#define LIGMA_STRING_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_STRING_ACTION, LigmaStringAction))
+#define LIGMA_STRING_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_STRING_ACTION, LigmaStringActionClass))
+#define LIGMA_IS_STRING_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_STRING_ACTION))
+#define LIGMA_IS_STRING_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), LIGMA_TYPE_STRING_ACTION))
+#define LIGMA_STRING_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), LIGMA_TYPE_STRING_ACTION, LigmaStringActionClass))
 
 
-typedef struct _GimpStringActionClass GimpStringActionClass;
+typedef struct _LigmaStringActionClass LigmaStringActionClass;
 
-struct _GimpStringAction
+struct _LigmaStringAction
 {
-  GimpActionImpl  parent_instance;
+  LigmaActionImpl  parent_instance;
 
   gchar          *value;
 };
 
-struct _GimpStringActionClass
+struct _LigmaStringActionClass
 {
-  GimpActionImplClass parent_class;
+  LigmaActionImplClass parent_class;
 };
 
 
-GType              gimp_string_action_get_type (void) G_GNUC_CONST;
+GType              ligma_string_action_get_type (void) G_GNUC_CONST;
 
-GimpStringAction * gimp_string_action_new      (const gchar *name,
+LigmaStringAction * ligma_string_action_new      (const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
@@ -58,4 +58,4 @@ GimpStringAction * gimp_string_action_new      (const gchar *name,
                                                 const gchar *value);
 
 
-#endif  /* __GIMP_STRING_ACTION_H__ */
+#endif  /* __LIGMA_STRING_ACTION_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,16 +17,16 @@
 
 /* Original plug-in coded by Tim Newsome.
  *
- * Changed to make use of real-life units by Sven Neumann <sven@gimp.org>.
+ * Changed to make use of real-life units by Sven Neumann <sven@ligma.org>.
  *
  * The interface code is heavily commented in the hope that it will
  * help other plug-in developers to adapt their plug-ins to make use
- * of the gimp_size_entry functionality.
+ * of the ligma_size_entry functionality.
  *
- * Note: There is a convenience constructor called gimp_coordinetes_new ()
+ * Note: There is a convenience constructor called ligma_coordinetes_new ()
  *       which simplifies the task of setting up a standard X,Y sizeentry.
  *
- * For more info and bugs see libgimp/gimpsizeentry.h and libgimp/gimpwidgets.h
+ * For more info and bugs see libligma/ligmasizeentry.h and libligma/ligmawidgets.h
  *
  * May 2000 tim copperfield [timecop@japan.co.jp]
  * http://www.ne.jp/asahi/linux/timecop
@@ -40,15 +40,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC        "plug-in-grid"
 #define PLUG_IN_BINARY      "grid"
-#define PLUG_IN_ROLE        "gimp-grid"
+#define PLUG_IN_ROLE        "ligma-grid"
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55
 
@@ -58,15 +58,15 @@ typedef struct
   gint    hwidth;
   gint    hspace;
   gint    hoffset;
-  GimpRGB hcolor;
+  LigmaRGB hcolor;
   gint    vwidth;
   gint    vspace;
   gint    voffset;
-  GimpRGB vcolor;
+  LigmaRGB vcolor;
   gint    iwidth;
   gint    ispace;
   gint    ioffset;
-  GimpRGB icolor;
+  LigmaRGB icolor;
 } Config;
 
 
@@ -75,12 +75,12 @@ typedef struct _GridClass GridClass;
 
 struct _Grid
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _GridClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -89,31 +89,31 @@ struct _GridClass
 
 GType                   grid_get_type         (void) G_GNUC_CONST;
 
-static GList          * grid_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * grid_create_procedure (GimpPlugIn           *plug_in,
+static GList          * grid_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * grid_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * grid_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * grid_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static guchar           best_cmap_match       (const guchar         *cmap,
                                                gint                  ncolors,
-                                               const GimpRGB        *color);
-static void             grid                  (GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               GimpPreview          *preview);
-static gint             dialog                (GimpImage            *image,
-                                               GimpDrawable         *drawable);
+                                               const LigmaRGB        *color);
+static void             grid                  (LigmaImage            *image,
+                                               LigmaDrawable         *drawable,
+                                               LigmaPreview          *preview);
+static gint             dialog                (LigmaImage            *image,
+                                               LigmaDrawable         *drawable);
 
 
-G_DEFINE_TYPE (Grid, grid, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Grid, grid, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GRID_TYPE)
+LIGMA_MAIN (GRID_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -134,7 +134,7 @@ static Config grid_cfg =
 static void
 grid_class_init (GridClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = grid_query_procedures;
   plug_in_class->create_procedure = grid_create_procedure;
@@ -147,112 +147,112 @@ grid_init (Grid *grid)
 }
 
 static GList *
-grid_query_procedures (GimpPlugIn *plug_in)
+grid_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-grid_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+grid_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      const GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+      const LigmaRGB black = { 0.0, 0.0, 0.0, 1.0 };
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             grid_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Grid (legacy)..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Grid (legacy)..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Draw a grid on the image"),
                                         "Draws a grid using the specified "
                                         "colors. The grid origin is the "
                                         "upper left corner.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tim Newsome",
                                       "Tim Newsome, Sven Neumann, "
                                       "Tom Rathborne, TC",
                                       "1997 - 2000");
 
-      GIMP_PROC_ARG_INT (procedure, "hwidth",
+      LIGMA_PROC_ARG_INT (procedure, "hwidth",
                          "H width",
                          "Horizontal width",
-                         0, GIMP_MAX_IMAGE_SIZE, 1,
+                         0, LIGMA_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hspace",
+      LIGMA_PROC_ARG_INT (procedure, "hspace",
                          "H space",
                          "Horizontal spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 16,
+                         1, LIGMA_MAX_IMAGE_SIZE, 16,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hoffset",
+      LIGMA_PROC_ARG_INT (procedure, "hoffset",
                          "H offset",
                          "Horizontal offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 8,
+                         0, LIGMA_MAX_IMAGE_SIZE, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "hcolor",
+      LIGMA_PROC_ARG_RGB (procedure, "hcolor",
                          "H color",
                          "Horizontal color",
                          TRUE, &black,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vwidth",
+      LIGMA_PROC_ARG_INT (procedure, "vwidth",
                          "V width",
                          "Vertical width",
-                         0, GIMP_MAX_IMAGE_SIZE, 1,
+                         0, LIGMA_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vspace",
+      LIGMA_PROC_ARG_INT (procedure, "vspace",
                          "V space",
                          "Vertical spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 16,
+                         1, LIGMA_MAX_IMAGE_SIZE, 16,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "voffset",
+      LIGMA_PROC_ARG_INT (procedure, "voffset",
                          "V offset",
                          "Vertical offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 8,
+                         0, LIGMA_MAX_IMAGE_SIZE, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "vcolor",
+      LIGMA_PROC_ARG_RGB (procedure, "vcolor",
                          "V color",
                          "Vertical color",
                          TRUE, &black,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "iwidth",
+      LIGMA_PROC_ARG_INT (procedure, "iwidth",
                          "I width",
                          "Intersection width",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "ispace",
+      LIGMA_PROC_ARG_INT (procedure, "ispace",
                          "I space",
                          "Intersection spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 2,
+                         1, LIGMA_MAX_IMAGE_SIZE, 2,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "ioffset",
+      LIGMA_PROC_ARG_INT (procedure, "ioffset",
                          "I offset",
                          "Intersection offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 6,
+                         0, LIGMA_MAX_IMAGE_SIZE, 6,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "icolor",
+      LIGMA_PROC_ARG_RGB (procedure, "icolor",
                          "I color",
                          "Intersection color",
                          TRUE, &black,
@@ -262,16 +262,16 @@ grid_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-grid_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+grid_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -279,12 +279,12 @@ grid_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -292,52 +292,52 @@ grid_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+  if (run_mode == LIGMA_RUN_NONINTERACTIVE)
     {
-      grid_cfg.hwidth  = GIMP_VALUES_GET_INT (args, 0);
-      grid_cfg.hspace  = GIMP_VALUES_GET_INT (args, 1);
-      grid_cfg.hoffset = GIMP_VALUES_GET_INT (args, 2);
-      GIMP_VALUES_GET_RGB (args, 3, &grid_cfg.hcolor);
+      grid_cfg.hwidth  = LIGMA_VALUES_GET_INT (args, 0);
+      grid_cfg.hspace  = LIGMA_VALUES_GET_INT (args, 1);
+      grid_cfg.hoffset = LIGMA_VALUES_GET_INT (args, 2);
+      LIGMA_VALUES_GET_RGB (args, 3, &grid_cfg.hcolor);
 
-      grid_cfg.vwidth  = GIMP_VALUES_GET_INT (args, 4);
-      grid_cfg.vspace  = GIMP_VALUES_GET_INT (args, 5);
-      grid_cfg.voffset = GIMP_VALUES_GET_INT (args, 6);
-      GIMP_VALUES_GET_RGB (args, 7, &grid_cfg.vcolor);
+      grid_cfg.vwidth  = LIGMA_VALUES_GET_INT (args, 4);
+      grid_cfg.vspace  = LIGMA_VALUES_GET_INT (args, 5);
+      grid_cfg.voffset = LIGMA_VALUES_GET_INT (args, 6);
+      LIGMA_VALUES_GET_RGB (args, 7, &grid_cfg.vcolor);
 
-      grid_cfg.iwidth  = GIMP_VALUES_GET_INT (args, 8);
-      grid_cfg.ispace  = GIMP_VALUES_GET_INT (args, 9);
-      grid_cfg.ioffset = GIMP_VALUES_GET_INT (args, 10);
-      GIMP_VALUES_GET_RGB (args, 11, &grid_cfg.icolor);
+      grid_cfg.iwidth  = LIGMA_VALUES_GET_INT (args, 8);
+      grid_cfg.ispace  = LIGMA_VALUES_GET_INT (args, 9);
+      grid_cfg.ioffset = LIGMA_VALUES_GET_INT (args, 10);
+      LIGMA_VALUES_GET_RGB (args, 11, &grid_cfg.icolor);
     }
   else
     {
-      gimp_context_get_foreground (&grid_cfg.hcolor);
+      ligma_context_get_foreground (&grid_cfg.hcolor);
       grid_cfg.vcolor = grid_cfg.icolor = grid_cfg.hcolor;
 
-      gimp_get_data (PLUG_IN_PROC, &grid_cfg);
+      ligma_get_data (PLUG_IN_PROC, &grid_cfg);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! dialog (image, drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
     }
 
-  gimp_progress_init (_("Drawing grid"));
+  ligma_progress_init (_("Drawing grid"));
 
   grid (image, drawable, NULL);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 
@@ -346,14 +346,14 @@ grid_run (GimpProcedure        *procedure,
 static guchar
 best_cmap_match (const guchar  *cmap,
                  gint           ncolors,
-                 const GimpRGB *color)
+                 const LigmaRGB *color)
 {
   guchar cmap_index = 0;
   gint   max = MAXDIFF;
   gint   i, diff, sum;
   guchar r, g, b;
 
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  ligma_rgb_get_uchar (color, &r, &g, &b);
 
   for (i = 0; i < ncolors; i++)
     {
@@ -409,9 +409,9 @@ pix_composite (guchar   *p1,
 }
 
 static void
-grid (GimpImage    *image,
-      GimpDrawable *drawable,
-      GimpPreview  *preview)
+grid (LigmaImage    *image,
+      LigmaDrawable *drawable,
+      LigmaPreview  *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -430,18 +430,18 @@ grid (GimpImage    *image,
   guchar     *cmap;
   gint        ncolors;
 
-  gimp_rgba_get_uchar (&grid_cfg.hcolor,
+  ligma_rgba_get_uchar (&grid_cfg.hcolor,
                        hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
-  gimp_rgba_get_uchar (&grid_cfg.vcolor,
+  ligma_rgba_get_uchar (&grid_cfg.vcolor,
                        vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
-  gimp_rgba_get_uchar (&grid_cfg.icolor,
+  ligma_rgba_get_uchar (&grid_cfg.icolor,
                        icolor, icolor + 1, icolor + 2, icolor + 3);
 
-  alpha = gimp_drawable_has_alpha (drawable);
+  alpha = ligma_drawable_has_alpha (drawable);
 
-  switch (gimp_image_get_base_type (image))
+  switch (ligma_image_get_base_type (image))
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       blend = TRUE;
 
       if (alpha)
@@ -450,10 +450,10 @@ grid (GimpImage    *image,
         format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_GRAY:
-      hcolor[0] = gimp_rgb_luminance_uchar (&grid_cfg.hcolor);
-      vcolor[0] = gimp_rgb_luminance_uchar (&grid_cfg.vcolor);
-      icolor[0] = gimp_rgb_luminance_uchar (&grid_cfg.icolor);
+    case LIGMA_GRAY:
+      hcolor[0] = ligma_rgb_luminance_uchar (&grid_cfg.hcolor);
+      vcolor[0] = ligma_rgb_luminance_uchar (&grid_cfg.vcolor);
+      icolor[0] = ligma_rgb_luminance_uchar (&grid_cfg.icolor);
       blend = TRUE;
 
       if (alpha)
@@ -462,8 +462,8 @@ grid (GimpImage    *image,
         format = babl_format ("Y' u8");
       break;
 
-    case GIMP_INDEXED:
-      cmap = gimp_image_get_colormap (image, &ncolors);
+    case LIGMA_INDEXED:
+      cmap = ligma_image_get_colormap (image, &ncolors);
 
       hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
       vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
@@ -472,7 +472,7 @@ grid (GimpImage    *image,
       g_free (cmap);
       blend = FALSE;
 
-      format = gimp_drawable_get_format (drawable);
+      format = ligma_drawable_get_format (drawable);
       break;
 
     default:
@@ -484,8 +484,8 @@ grid (GimpImage    *image,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &sx1, &sy1);
-      gimp_preview_get_size (preview, &sx2, &sy2);
+      ligma_preview_get_position (preview, &sx1, &sy1);
+      ligma_preview_get_size (preview, &sx2, &sy2);
 
       buffer = g_new (guchar, bytes * sx2 * sy2);
 
@@ -496,17 +496,17 @@ grid (GimpImage    *image,
     {
       gint w, h;
 
-      if (! gimp_drawable_mask_intersect (drawable,
+      if (! ligma_drawable_mask_intersect (drawable,
                                           &sx1, &sy1, &w, &h))
         return;
 
       sx2 = sx1 + w;
       sy2 = sy1 + h;
 
-      dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+      dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
     }
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   dest = g_new (guchar, (sx2 - sx1) * bytes);
 
@@ -600,7 +600,7 @@ grid (GimpImage    *image,
                            GEGL_AUTO_ROWSTRIDE);
 
           if (y % 16 == 0)
-            gimp_progress_update ((gdouble) y / (gdouble) (sy2 - sy1));
+            ligma_progress_update ((gdouble) y / (gdouble) (sy2 - sy1));
         }
     }
 
@@ -610,17 +610,17 @@ grid (GimpImage    *image,
 
   if (preview)
     {
-      gimp_preview_draw_buffer (preview, buffer, bytes * (sx2 - sx1));
+      ligma_preview_draw_buffer (preview, buffer, bytes * (sx2 - sx1));
       g_free (buffer);
     }
   else
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
       g_object_unref (dest_buffer);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable,
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable,
                             sx1, sy1, sx2 - sx1, sy2 - sy1);
     }
 }
@@ -639,38 +639,38 @@ update_values (void)
   entry = g_object_get_data (G_OBJECT (main_dialog), "width");
 
   grid_cfg.hwidth =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 0));
   grid_cfg.vwidth =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 1));
   grid_cfg.iwidth =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 2));
 
   entry = g_object_get_data (G_OBJECT (main_dialog), "space");
 
   grid_cfg.hspace =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 0));
   grid_cfg.vspace =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 1));
   grid_cfg.ispace =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 2));
 
   entry = g_object_get_data (G_OBJECT (main_dialog), "offset");
 
   grid_cfg.hoffset =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 0));
   grid_cfg.voffset =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 1));
   grid_cfg.ioffset =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
+    RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (entry), 2));
 }
 
 static void
-update_preview (GimpPreview  *preview,
-                GimpDrawable  *drawable)
+update_preview (LigmaPreview  *preview,
+                LigmaDrawable  *drawable)
 {
   update_values ();
 
-  grid (gimp_item_get_image (GIMP_ITEM (drawable)),
+  grid (ligma_item_get_image (LIGMA_ITEM (drawable)),
         drawable, preview);
 }
 
@@ -683,20 +683,20 @@ entry_callback (GtkWidget *widget,
   gdouble new_x;
   gdouble new_y;
 
-  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+  new_x = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 0);
+  new_y = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 1);
 
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
+  if (ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (data)))
     {
       if (new_x != x)
         {
           y = new_y = x = new_x;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
+          ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (widget), 1, y);
         }
       if (new_y != y)
         {
           x = new_x = y = new_y;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
+          ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (widget), 0, x);
         }
     }
   else
@@ -710,25 +710,25 @@ static void
 color_callback (GtkWidget *widget,
                 gpointer   data)
 {
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
+  if (ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (data)))
     {
-      GimpRGB  color;
+      LigmaRGB  color;
 
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
+      ligma_color_button_get_color (LIGMA_COLOR_BUTTON (widget), &color);
 
       if (widget == vcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button), &color);
+        ligma_color_button_set_color (LIGMA_COLOR_BUTTON (hcolor_button), &color);
       else if (widget == hcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button), &color);
+        ligma_color_button_set_color (LIGMA_COLOR_BUTTON (vcolor_button), &color);
     }
 }
 
 
 static gint
-dialog (GimpImage    *image,
-        GimpDrawable *drawable)
+dialog (LigmaImage    *image,
+        LigmaDrawable *drawable)
 {
-  GimpColorConfig *config;
+  LigmaColorConfig *config;
   GtkWidget       *dlg;
   GtkWidget       *main_vbox;
   GtkWidget       *vbox;
@@ -740,7 +740,7 @@ dialog (GimpImage    *image,
   GtkWidget       *space;
   GtkWidget       *offset;
   GtkWidget       *chain_button;
-  GimpUnit         unit;
+  LigmaUnit         unit;
   gint             d_width;
   gint             d_height;
   gdouble          xres;
@@ -749,30 +749,30 @@ dialog (GimpImage    *image,
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  d_width  = gimp_drawable_get_width  (drawable);
-  d_height = gimp_drawable_get_height (drawable);
+  d_width  = ligma_drawable_get_width  (drawable);
+  d_height = ligma_drawable_get_height (drawable);
 
-  main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
+  main_dialog = dlg = ligma_dialog_new (_("Grid"), PLUG_IN_ROLE,
                                        NULL, 0,
-                                       gimp_standard_help_func, PLUG_IN_PROC,
+                                       ligma_standard_help_func, PLUG_IN_PROC,
 
                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
                                        _("_OK"),     GTK_RESPONSE_OK,
 
                                        NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  ligma_window_set_transient (GTK_WINDOW (dlg));
 
   /*  Get the image resolution and unit  */
-  gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
+  ligma_image_get_resolution (image, &xres, &yres);
+  unit = ligma_image_get_unit (image);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -780,7 +780,7 @@ dialog (GimpImage    *image,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -793,55 +793,55 @@ dialog (GimpImage    *image,
   gtk_widget_show (vbox);
 
   /*  The width entries  */
-  width = gimp_size_entry_new (3,                            /*  number_of_fields  */
+  width = ligma_size_entry_new (3,                            /*  number_of_fields  */
                                unit,                         /*  unit              */
                                "%a",                         /*  unit_format       */
                                TRUE,                         /*  menu_show_pixels  */
                                TRUE,                         /*  menu_show_percent */
                                FALSE,                        /*  show_refval       */
                                SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+                               LIGMA_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
 
   gtk_box_pack_start (GTK_BOX (vbox), width, FALSE, FALSE, 0);
   gtk_widget_show (width);
 
   /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), GIMP_UNIT_PIXEL);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (width), LIGMA_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 2, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (width), 0, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (width), 1, yres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (width), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (width), 0, 0.0, d_height);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (width), 1, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (width), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 0, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (width), 0, 0.0,
                                          d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (width), 1, 0.0,
                                          d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (width), 2, 0.0,
                                          MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (width), 6);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 0, grid_cfg.hwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 1, grid_cfg.vwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 2, grid_cfg.iwidth);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (width), 0, grid_cfg.hwidth);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (width), 1, grid_cfg.vwidth);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (width), 2, grid_cfg.iwidth);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal\nLines"),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (width), _("Horizontal\nLines"),
                                 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical\nLines"),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (width), _("Vertical\nLines"),
                                 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (width), _("Intersection"),
                                 0, 3, 0.0);
 
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width:"),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (width), _("Width:"),
                                         1, 0, 0.0);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -849,9 +849,9 @@ dialog (GimpImage    *image,
   g_object_unref (group);
 
   /*  put a chain_button under the size_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  chain_button = ligma_chain_button_new (LIGMA_CHAIN_BOTTOM);
   if (grid_cfg.hwidth == grid_cfg.vwidth)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain_button), TRUE);
   gtk_grid_attach (GTK_GRID (width), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
@@ -862,57 +862,57 @@ dialog (GimpImage    *image,
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect_swapped (width, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /*  The spacing entries  */
-  space = gimp_size_entry_new (3,                            /*  number_of_fields  */
+  space = ligma_size_entry_new (3,                            /*  number_of_fields  */
                                unit,                         /*  unit              */
                                "%a",                         /*  unit_format       */
                                TRUE,                         /*  menu_show_pixels  */
                                TRUE,                         /*  menu_show_percent */
                                FALSE,                        /*  show_refval       */
                                SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+                               LIGMA_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
   gtk_box_pack_start (GTK_BOX (vbox), space, FALSE, FALSE, 0);
   gtk_widget_show (space);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), GIMP_UNIT_PIXEL);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (space), LIGMA_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (space), 0, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (space), 1, yres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (space), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (space), 0, 0.0, d_height);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (space), 1, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (space), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (space), 0, 1.0,
                                          d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (space), 1, 1.0,
                                          d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (space), 2, 0.0,
                                          MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (space), 6);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 0, grid_cfg.hspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 1, grid_cfg.vspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 2, grid_cfg.ispace);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (space), 0, grid_cfg.hspace);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (space), 1, grid_cfg.vspace);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (space), 2, grid_cfg.ispace);
 
   /*  attach labels  */
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing:"),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (space), _("Spacing:"),
                                         1, 0, 0.0);
   gtk_size_group_add_widget (group, label);
 
   /*  put a chain_button under the spacing_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  chain_button = ligma_chain_button_new (LIGMA_CHAIN_BOTTOM);
   if (grid_cfg.hspace == grid_cfg.vspace)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain_button), TRUE);
   gtk_grid_attach (GTK_GRID (space), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
@@ -927,57 +927,57 @@ dialog (GimpImage    *image,
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect_swapped (space, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /*  The offset entries  */
-  offset = gimp_size_entry_new (3,                            /*  number_of_fields  */
+  offset = ligma_size_entry_new (3,                            /*  number_of_fields  */
                                 unit,                         /*  unit              */
                                 "%a",                         /*  unit_format       */
                                 TRUE,                         /*  menu_show_pixels  */
                                 TRUE,                         /*  menu_show_percent */
                                 FALSE,                        /*  show_refval       */
                                 SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+                                LIGMA_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
   gtk_box_pack_start (GTK_BOX (vbox), offset, FALSE, FALSE, 0);
   gtk_widget_show (offset);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), GIMP_UNIT_PIXEL);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (offset), LIGMA_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 1, yres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (offset), 0, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (offset), 1, yres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (offset), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, d_height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, d_width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (offset), 0, 0.0, d_height);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (offset), 1, 0.0, d_width);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (offset), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (offset), 0, 0.0,
                                          d_height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (offset), 1, 0.0,
                                          d_width);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (offset), 2, 0.0,
                                          MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (offset), 6);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, grid_cfg.hoffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 1, grid_cfg.voffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 2, grid_cfg.ioffset);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (offset), 0, grid_cfg.hoffset);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (offset), 1, grid_cfg.voffset);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (offset), 2, grid_cfg.ioffset);
 
   /*  attach labels  */
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset:"),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (offset), _("Offset:"),
                                         1, 0, 0.0);
   gtk_size_group_add_widget (group, label);
 
   /*  put a chain_button under the offset_entries  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  chain_button = ligma_chain_button_new (LIGMA_CHAIN_BOTTOM);
   if (grid_cfg.hoffset == grid_cfg.voffset)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
@@ -992,77 +992,77 @@ dialog (GimpImage    *image,
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect_swapped (offset, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /*  put a chain_button under the color_buttons  */
-  chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (gimp_rgba_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) < 0.0001)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
+  chain_button = ligma_chain_button_new (LIGMA_CHAIN_BOTTOM);
+  if (ligma_rgba_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) < 0.0001)
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), chain_button, 1, 4, 2, 1);
   gtk_widget_show (chain_button);
 
   /*  attach color selectors  */
-  hcolor_button = gimp_color_button_new (_("Horizontal Color"),
+  hcolor_button = ligma_color_button_new (_("Horizontal Color"),
                                          COLOR_BUTTON_WIDTH, 16,
                                          &grid_cfg.hcolor,
-                                         GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (hcolor_button), TRUE);
+                                         LIGMA_COLOR_AREA_SMALL_CHECKS);
+  ligma_color_button_set_update (LIGMA_COLOR_BUTTON (hcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), hcolor_button, 1, 3, 1, 1);
   gtk_widget_show (hcolor_button);
 
-  config = gimp_get_color_configuration ();
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (hcolor_button),
+  config = ligma_get_color_configuration ();
+  ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (hcolor_button),
                                       config);
 
   g_signal_connect (hcolor_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
+                    G_CALLBACK (ligma_color_button_get_color),
                     &grid_cfg.hcolor);
   g_signal_connect (hcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     chain_button);
   g_signal_connect_swapped (hcolor_button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
-  vcolor_button = gimp_color_button_new (_("Vertical Color"),
+  vcolor_button = ligma_color_button_new (_("Vertical Color"),
                                          COLOR_BUTTON_WIDTH, 16,
                                          &grid_cfg.vcolor,
-                                         GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (vcolor_button), TRUE);
+                                         LIGMA_COLOR_AREA_SMALL_CHECKS);
+  ligma_color_button_set_update (LIGMA_COLOR_BUTTON (vcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), vcolor_button, 2, 3, 1, 1);
   gtk_widget_show (vcolor_button);
 
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (vcolor_button),
+  ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (vcolor_button),
                                       config);
 
   g_signal_connect (vcolor_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
+                    G_CALLBACK (ligma_color_button_get_color),
                     &grid_cfg.vcolor);
   g_signal_connect (vcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     chain_button);
   g_signal_connect_swapped (vcolor_button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
-  button = gimp_color_button_new (_("Intersection Color"),
+  button = ligma_color_button_new (_("Intersection Color"),
                                   COLOR_BUTTON_WIDTH, 16,
                                   &grid_cfg.icolor,
-                                  GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
+                                  LIGMA_COLOR_AREA_SMALL_CHECKS);
+  ligma_color_button_set_update (LIGMA_COLOR_BUTTON (button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), button, 3, 3, 1, 1);
   gtk_widget_show (button);
 
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button),
+  ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (button),
                                       config);
   g_object_unref (config);
 
   g_signal_connect (button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
+                    G_CALLBACK (ligma_color_button_get_color),
                     &grid_cfg.icolor);
   g_signal_connect_swapped (button, "color-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (dlg);
@@ -1071,7 +1071,7 @@ dialog (GimpImage    *image,
   g_object_set_data (G_OBJECT (dlg), "space",  space);
   g_object_set_data (G_OBJECT (dlg), "offset", offset);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     update_values ();

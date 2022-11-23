@@ -1,12 +1,12 @@
-# Occitan translation for gimp.
+# Occitan translation for ligma.
 # Copyright (C) 2011 Listed translators
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Cédric Valmary (Tot en òc) <cvalmary@yahoo.fr>, 2015.
 # Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-10-11 14:42+0000\n"
 "PO-Revision-Date: 2016-10-16 14:18+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "Arredondit"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "Fosc"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Major improvement to support polygonal segments
@@ -23,30 +23,30 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-floating-selection.h"
+#include "core/ligmachannel.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-floating-selection.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolpolygon.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolpolygon.h"
 
-#include "gimppolygonselecttool.h"
-#include "gimpselectionoptions.h"
-#include "gimptoolcontrol.h"
+#include "ligmapolygonselecttool.h"
+#include "ligmaselectionoptions.h"
+#include "ligmatoolcontrol.h"
 
 
-struct _GimpPolygonSelectToolPrivate
+struct _LigmaPolygonSelectToolPrivate
 {
-  GimpToolWidget *widget;
-  GimpToolWidget *grab_widget;
+  LigmaToolWidget *widget;
+  LigmaToolWidget *grab_widget;
 
   gboolean        pending_response;
   gint            pending_response_id;
@@ -55,113 +55,113 @@ struct _GimpPolygonSelectToolPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_polygon_select_tool_finalize                (GObject               *object);
+static void       ligma_polygon_select_tool_finalize                (GObject               *object);
 
-static void       gimp_polygon_select_tool_control                 (GimpTool              *tool,
-                                                                    GimpToolAction         action,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_button_press            (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
+static void       ligma_polygon_select_tool_control                 (LigmaTool              *tool,
+                                                                    LigmaToolAction         action,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_button_press            (LigmaTool              *tool,
+                                                                    const LigmaCoords      *coords,
                                                                     guint32                time,
                                                                     GdkModifierType        state,
-                                                                    GimpButtonPressType    press_type,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_button_release          (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
+                                                                    LigmaButtonPressType    press_type,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_button_release          (LigmaTool              *tool,
+                                                                    const LigmaCoords      *coords,
                                                                     guint32                time,
                                                                     GdkModifierType        state,
-                                                                    GimpButtonReleaseType  release_type,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_motion                  (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
+                                                                    LigmaButtonReleaseType  release_type,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_motion                  (LigmaTool              *tool,
+                                                                    const LigmaCoords      *coords,
                                                                     guint32                time,
                                                                     GdkModifierType        state,
-                                                                    GimpDisplay           *display);
-static gboolean   gimp_polygon_select_tool_key_press               (GimpTool              *tool,
+                                                                    LigmaDisplay           *display);
+static gboolean   ligma_polygon_select_tool_key_press               (LigmaTool              *tool,
                                                                     GdkEventKey           *kevent,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_modifier_key            (GimpTool              *tool,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_modifier_key            (LigmaTool              *tool,
                                                                     GdkModifierType        key,
                                                                     gboolean               press,
                                                                     GdkModifierType        state,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_oper_update             (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_oper_update             (LigmaTool              *tool,
+                                                                    const LigmaCoords      *coords,
                                                                     GdkModifierType        state,
                                                                     gboolean               proximity,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_cursor_update           (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
+                                                                    LigmaDisplay           *display);
+static void       ligma_polygon_select_tool_cursor_update           (LigmaTool              *tool,
+                                                                    const LigmaCoords      *coords,
                                                                     GdkModifierType        state,
-                                                                    GimpDisplay           *display);
+                                                                    LigmaDisplay           *display);
 
-static void       gimp_polygon_select_tool_real_confirm            (GimpPolygonSelectTool *poly_sel,
-                                                                    GimpDisplay           *display);
+static void       ligma_polygon_select_tool_real_confirm            (LigmaPolygonSelectTool *poly_sel,
+                                                                    LigmaDisplay           *display);
 
-static void       gimp_polygon_select_tool_polygon_change_complete (GimpToolWidget        *polygon,
-                                                                    GimpPolygonSelectTool *poly_sel);
-static void       gimp_polygon_select_tool_polygon_response        (GimpToolWidget        *polygon,
+static void       ligma_polygon_select_tool_polygon_change_complete (LigmaToolWidget        *polygon,
+                                                                    LigmaPolygonSelectTool *poly_sel);
+static void       ligma_polygon_select_tool_polygon_response        (LigmaToolWidget        *polygon,
                                                                     gint                   response_id,
-                                                                    GimpPolygonSelectTool *poly_sel);
+                                                                    LigmaPolygonSelectTool *poly_sel);
 
-static void       gimp_polygon_select_tool_start                   (GimpPolygonSelectTool *poly_sel,
-                                                                    GimpDisplay           *display);
+static void       ligma_polygon_select_tool_start                   (LigmaPolygonSelectTool *poly_sel,
+                                                                    LigmaDisplay           *display);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPolygonSelectTool, gimp_polygon_select_tool,
-                            GIMP_TYPE_SELECTION_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPolygonSelectTool, ligma_polygon_select_tool,
+                            LIGMA_TYPE_SELECTION_TOOL)
 
-#define parent_class gimp_polygon_select_tool_parent_class
+#define parent_class ligma_polygon_select_tool_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_polygon_select_tool_class_init (GimpPolygonSelectToolClass *klass)
+ligma_polygon_select_tool_class_init (LigmaPolygonSelectToolClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class   = LIGMA_TOOL_CLASS (klass);
 
-  object_class->finalize     = gimp_polygon_select_tool_finalize;
+  object_class->finalize     = ligma_polygon_select_tool_finalize;
 
-  tool_class->control        = gimp_polygon_select_tool_control;
-  tool_class->button_press   = gimp_polygon_select_tool_button_press;
-  tool_class->button_release = gimp_polygon_select_tool_button_release;
-  tool_class->motion         = gimp_polygon_select_tool_motion;
-  tool_class->key_press      = gimp_polygon_select_tool_key_press;
-  tool_class->modifier_key   = gimp_polygon_select_tool_modifier_key;
-  tool_class->oper_update    = gimp_polygon_select_tool_oper_update;
-  tool_class->cursor_update  = gimp_polygon_select_tool_cursor_update;
+  tool_class->control        = ligma_polygon_select_tool_control;
+  tool_class->button_press   = ligma_polygon_select_tool_button_press;
+  tool_class->button_release = ligma_polygon_select_tool_button_release;
+  tool_class->motion         = ligma_polygon_select_tool_motion;
+  tool_class->key_press      = ligma_polygon_select_tool_key_press;
+  tool_class->modifier_key   = ligma_polygon_select_tool_modifier_key;
+  tool_class->oper_update    = ligma_polygon_select_tool_oper_update;
+  tool_class->cursor_update  = ligma_polygon_select_tool_cursor_update;
 
   klass->change_complete     = NULL;
-  klass->confirm             = gimp_polygon_select_tool_real_confirm;
+  klass->confirm             = ligma_polygon_select_tool_real_confirm;
 }
 
 static void
-gimp_polygon_select_tool_init (GimpPolygonSelectTool *poly_sel)
+ligma_polygon_select_tool_init (LigmaPolygonSelectTool *poly_sel)
 {
-  GimpTool          *tool     = GIMP_TOOL (poly_sel);
-  GimpSelectionTool *sel_tool = GIMP_SELECTION_TOOL (tool);
+  LigmaTool          *tool     = LIGMA_TOOL (poly_sel);
+  LigmaSelectionTool *sel_tool = LIGMA_SELECTION_TOOL (tool);
 
-  poly_sel->priv = gimp_polygon_select_tool_get_instance_private (poly_sel);
+  poly_sel->priv = ligma_polygon_select_tool_get_instance_private (poly_sel);
 
-  gimp_tool_control_set_motion_mode        (tool->control,
-                                            GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_wants_click        (tool->control, TRUE);
-  gimp_tool_control_set_wants_double_click (tool->control, TRUE);
-  gimp_tool_control_set_active_modifiers   (tool->control,
-                                            GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
-  gimp_tool_control_set_precision          (tool->control,
-                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
+  ligma_tool_control_set_motion_mode        (tool->control,
+                                            LIGMA_MOTION_MODE_EXACT);
+  ligma_tool_control_set_wants_click        (tool->control, TRUE);
+  ligma_tool_control_set_wants_double_click (tool->control, TRUE);
+  ligma_tool_control_set_active_modifiers   (tool->control,
+                                            LIGMA_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  ligma_tool_control_set_precision          (tool->control,
+                                            LIGMA_CURSOR_PRECISION_SUBPIXEL);
 
   sel_tool->allow_move = FALSE;
 }
 
 static void
-gimp_polygon_select_tool_finalize (GObject *object)
+ligma_polygon_select_tool_finalize (GObject *object)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (object);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (object);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   g_clear_object (&priv->widget);
 
@@ -169,93 +169,93 @@ gimp_polygon_select_tool_finalize (GObject *object)
 }
 
 static void
-gimp_polygon_select_tool_control (GimpTool       *tool,
-                                  GimpToolAction  action,
-                                  GimpDisplay    *display)
+ligma_polygon_select_tool_control (LigmaTool       *tool,
+                                  LigmaToolAction  action,
+                                  LigmaDisplay    *display)
 {
-  GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectTool *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_polygon_select_tool_halt (poly_sel);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_polygon_select_tool_halt (poly_sel);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
+    case LIGMA_TOOL_ACTION_COMMIT:
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_polygon_select_tool_button_press (GimpTool            *tool,
-                                       const GimpCoords    *coords,
+ligma_polygon_select_tool_button_press (LigmaTool            *tool,
+                                       const LigmaCoords    *coords,
                                        guint32              time,
                                        GdkModifierType      state,
-                                       GimpButtonPressType  press_type,
-                                       GimpDisplay         *display)
+                                       LigmaButtonPressType  press_type,
+                                       LigmaDisplay         *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   if (tool->display && tool->display != display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, tool->display);
 
   if (! priv->widget) /* not tool->display, we have a subclass */
     {
       /* First of all handle delegation to the selection mask edit logic
        * if appropriate.
        */
-      if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
+      if (ligma_selection_tool_start_edit (LIGMA_SELECTION_TOOL (poly_sel),
                                           display, coords))
         {
           return;
         }
 
-      gimp_polygon_select_tool_start (poly_sel, display);
+      ligma_polygon_select_tool_start (poly_sel, display);
 
-      gimp_tool_widget_hover (priv->widget, coords, state, TRUE);
+      ligma_tool_widget_hover (priv->widget, coords, state, TRUE);
     }
 
-  if (gimp_tool_widget_button_press (priv->widget, coords, time, state,
+  if (ligma_tool_widget_button_press (priv->widget, coords, time, state,
                                      press_type))
     {
       priv->grab_widget = priv->widget;
     }
 
-  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
-    gimp_tool_control_activate (tool->control);
+  if (press_type == LIGMA_BUTTON_PRESS_NORMAL)
+    ligma_tool_control_activate (tool->control);
 }
 
 static void
-gimp_polygon_select_tool_button_release (GimpTool              *tool,
-                                         const GimpCoords      *coords,
+ligma_polygon_select_tool_button_release (LigmaTool              *tool,
+                                         const LigmaCoords      *coords,
                                          guint32                time,
                                          GdkModifierType        state,
-                                         GimpButtonReleaseType  release_type,
-                                         GimpDisplay           *display)
+                                         LigmaButtonReleaseType  release_type,
+                                         LigmaDisplay           *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
-  GimpImage                    *image    = gimp_display_get_image (display);
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaImage                    *image    = ligma_display_get_image (display);
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
   switch (release_type)
     {
-    case GIMP_BUTTON_RELEASE_CLICK:
-    case GIMP_BUTTON_RELEASE_NO_MOTION:
+    case LIGMA_BUTTON_RELEASE_CLICK:
+    case LIGMA_BUTTON_RELEASE_NO_MOTION:
       /*  If there is a floating selection, anchor it  */
-      if (gimp_image_get_floating_selection (image))
+      if (ligma_image_get_floating_selection (image))
         {
-          floating_sel_anchor (gimp_image_get_floating_selection (image));
+          floating_sel_anchor (ligma_image_get_floating_selection (image));
 
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, display);
 
           return;
         }
@@ -265,7 +265,7 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
     default:
       if (priv->grab_widget)
         {
-          gimp_tool_widget_button_release (priv->grab_widget,
+          ligma_tool_widget_button_release (priv->grab_widget,
                                            coords, time, state, release_type);
           priv->grab_widget = NULL;
         }
@@ -273,7 +273,7 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
 
   if (priv->pending_response)
     {
-      gimp_polygon_select_tool_polygon_response (priv->widget,
+      ligma_polygon_select_tool_polygon_response (priv->widget,
                                                  priv->pending_response_id,
                                                  poly_sel);
 
@@ -282,157 +282,157 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_polygon_select_tool_motion (GimpTool         *tool,
-                                 const GimpCoords *coords,
+ligma_polygon_select_tool_motion (LigmaTool         *tool,
+                                 const LigmaCoords *coords,
                                  guint32           time,
                                  GdkModifierType   state,
-                                 GimpDisplay      *display)
+                                 LigmaDisplay      *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   if (priv->grab_widget)
     {
-      gimp_tool_widget_motion (priv->grab_widget, coords, time, state);
+      ligma_tool_widget_motion (priv->grab_widget, coords, time, state);
     }
 }
 
 static gboolean
-gimp_polygon_select_tool_key_press (GimpTool    *tool,
+ligma_polygon_select_tool_key_press (LigmaTool    *tool,
                                     GdkEventKey *kevent,
-                                    GimpDisplay *display)
+                                    LigmaDisplay *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   if (priv->widget && display == tool->display)
     {
-      return gimp_tool_widget_key_press (priv->widget, kevent);
+      return ligma_tool_widget_key_press (priv->widget, kevent);
     }
 
   return FALSE;
 }
 
 static void
-gimp_polygon_select_tool_modifier_key (GimpTool        *tool,
+ligma_polygon_select_tool_modifier_key (LigmaTool        *tool,
                                        GdkModifierType  key,
                                        gboolean         press,
                                        GdkModifierType  state,
-                                       GimpDisplay     *display)
+                                       LigmaDisplay     *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_hover_modifier (priv->widget, key, press, state);
+      ligma_tool_widget_hover_modifier (priv->widget, key, press, state);
 
-      /* let GimpSelectTool handle alt+<mod> */
+      /* let LigmaSelectTool handle alt+<mod> */
       if (! (state & GDK_MOD1_MASK))
         {
           /* otherwise, shift/ctrl are handled by the widget */
-          state &= ~(gimp_get_extend_selection_mask () |
-                     gimp_get_modify_selection_mask ());
+          state &= ~(ligma_get_extend_selection_mask () |
+                     ligma_get_modify_selection_mask ());
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+  LIGMA_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
 }
 
 static void
-gimp_polygon_select_tool_oper_update (GimpTool         *tool,
-                                      const GimpCoords *coords,
+ligma_polygon_select_tool_oper_update (LigmaTool         *tool,
+                                      const LigmaCoords *coords,
                                       GdkModifierType   state,
                                       gboolean          proximity,
-                                      GimpDisplay      *display)
+                                      LigmaDisplay      *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
   if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
+      ligma_tool_widget_hover (priv->widget, coords, state, proximity);
 
-      /* let GimpSelectTool handle alt+<mod> */
+      /* let LigmaSelectTool handle alt+<mod> */
       if (! (state & GDK_MOD1_MASK))
         {
           /* otherwise, shift/ctrl are handled by the widget */
-          state &= ~(gimp_get_extend_selection_mask () |
-                     gimp_get_modify_selection_mask ());
+          state &= ~(ligma_get_extend_selection_mask () |
+                     ligma_get_modify_selection_mask ());
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+  LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 }
 
 static void
-gimp_polygon_select_tool_cursor_update (GimpTool         *tool,
-                                        const GimpCoords *coords,
+ligma_polygon_select_tool_cursor_update (LigmaTool         *tool,
+                                        const LigmaCoords *coords,
                                         GdkModifierType   state,
-                                        GimpDisplay      *display)
+                                        LigmaDisplay      *display)
 {
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
-  GimpCursorModifier            modifier = GIMP_CURSOR_MODIFIER_NONE;
+  LigmaPolygonSelectTool        *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  LigmaCursorModifier            modifier = LIGMA_CURSOR_MODIFIER_NONE;
 
   if (tool->display)
     {
       if (priv->widget && display == tool->display)
         {
-          gimp_tool_widget_get_cursor (priv->widget, coords, state,
+          ligma_tool_widget_get_cursor (priv->widget, coords, state,
                                        NULL, NULL, &modifier);
 
-          /* let GimpSelectTool handle alt+<mod> */
+          /* let LigmaSelectTool handle alt+<mod> */
           if (! (state & GDK_MOD1_MASK))
             {
               /* otherwise, shift/ctrl are handled by the widget */
-              state &= ~(gimp_get_extend_selection_mask () |
-                         gimp_get_modify_selection_mask ());
+              state &= ~(ligma_get_extend_selection_mask () |
+                         ligma_get_modify_selection_mask ());
             }
         }
 
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
+      ligma_tool_set_cursor (tool, display,
+                            ligma_tool_control_get_cursor (tool->control),
+                            ligma_tool_control_get_tool_cursor (tool->control),
                             modifier);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+  LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
 }
 
 static void
-gimp_polygon_select_tool_real_confirm (GimpPolygonSelectTool *poly_sel,
-                                       GimpDisplay           *display)
+ligma_polygon_select_tool_real_confirm (LigmaPolygonSelectTool *poly_sel,
+                                       LigmaDisplay           *display)
 {
-  gimp_tool_control (GIMP_TOOL (poly_sel), GIMP_TOOL_ACTION_COMMIT, display);
+  ligma_tool_control (LIGMA_TOOL (poly_sel), LIGMA_TOOL_ACTION_COMMIT, display);
 }
 
 static void
-gimp_polygon_select_tool_polygon_change_complete (GimpToolWidget        *polygon,
-                                                  GimpPolygonSelectTool *poly_sel)
+ligma_polygon_select_tool_polygon_change_complete (LigmaToolWidget        *polygon,
+                                                  LigmaPolygonSelectTool *poly_sel)
 {
-  if (GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->change_complete)
+  if (LIGMA_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->change_complete)
     {
-      GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->change_complete (
-        poly_sel, GIMP_TOOL (poly_sel)->display);
+      LIGMA_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->change_complete (
+        poly_sel, LIGMA_TOOL (poly_sel)->display);
     }
 }
 
 static void
-gimp_polygon_select_tool_polygon_response (GimpToolWidget        *polygon,
+ligma_polygon_select_tool_polygon_response (LigmaToolWidget        *polygon,
                                            gint                   response_id,
-                                           GimpPolygonSelectTool *poly_sel)
+                                           LigmaPolygonSelectTool *poly_sel)
 {
-  GimpTool                     *tool = GIMP_TOOL (poly_sel);
-  GimpPolygonSelectToolPrivate *priv = poly_sel->priv;
+  LigmaTool                     *tool = LIGMA_TOOL (poly_sel);
+  LigmaPolygonSelectToolPrivate *priv = poly_sel->priv;
 
   /* if we're in the middle of a click, defer the response to the
    * button_release() event
    */
-  if (gimp_tool_control_is_active (tool->control))
+  if (ligma_tool_control_is_active (tool->control))
     {
       priv->pending_response    = TRUE;
       priv->pending_response_id = response_id;
@@ -442,81 +442,81 @@ gimp_polygon_select_tool_polygon_response (GimpToolWidget        *polygon,
 
   switch (response_id)
     {
-    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
-      /*  don't gimp_tool_control(COMMIT) here because we don't always
+    case LIGMA_TOOL_WIDGET_RESPONSE_CONFIRM:
+      /*  don't ligma_tool_control(COMMIT) here because we don't always
        *  want to HALT the tool after committing because we have a
        *  subclass, we do that in the default implementation of
        *  confirm().
        */
-      if (GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->confirm)
+      if (LIGMA_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->confirm)
         {
-          GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->confirm (
+          LIGMA_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel)->confirm (
             poly_sel, tool->display);
         }
       break;
 
-    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+    case LIGMA_TOOL_WIDGET_RESPONSE_CANCEL:
+      ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
       break;
     }
 }
 
 static void
-gimp_polygon_select_tool_start (GimpPolygonSelectTool *poly_sel,
-                                GimpDisplay           *display)
+ligma_polygon_select_tool_start (LigmaPolygonSelectTool *poly_sel,
+                                LigmaDisplay           *display)
 {
-  GimpTool                     *tool  = GIMP_TOOL (poly_sel);
-  GimpPolygonSelectToolPrivate *priv  = poly_sel->priv;
-  GimpDisplayShell             *shell = gimp_display_get_shell (display);
+  LigmaTool                     *tool  = LIGMA_TOOL (poly_sel);
+  LigmaPolygonSelectToolPrivate *priv  = poly_sel->priv;
+  LigmaDisplayShell             *shell = ligma_display_get_shell (display);
 
   tool->display = display;
 
-  priv->widget = gimp_tool_polygon_new (shell);
+  priv->widget = ligma_tool_polygon_new (shell);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), priv->widget);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), priv->widget);
 
   g_signal_connect (priv->widget, "change-complete",
-                    G_CALLBACK (gimp_polygon_select_tool_polygon_change_complete),
+                    G_CALLBACK (ligma_polygon_select_tool_polygon_change_complete),
                     poly_sel);
   g_signal_connect (priv->widget, "response",
-                    G_CALLBACK (gimp_polygon_select_tool_polygon_response),
+                    G_CALLBACK (ligma_polygon_select_tool_polygon_response),
                     poly_sel);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+  ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
 }
 
 
 /*  public functions  */
 
 gboolean
-gimp_polygon_select_tool_is_closed (GimpPolygonSelectTool *poly_sel)
+ligma_polygon_select_tool_is_closed (LigmaPolygonSelectTool *poly_sel)
 {
-  GimpPolygonSelectToolPrivate *priv;
+  LigmaPolygonSelectToolPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_POLYGON_SELECT_TOOL (poly_sel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_POLYGON_SELECT_TOOL (poly_sel), FALSE);
 
   priv = poly_sel->priv;
 
   if (priv->widget)
-    return gimp_tool_polygon_is_closed (GIMP_TOOL_POLYGON (priv->widget));
+    return ligma_tool_polygon_is_closed (LIGMA_TOOL_POLYGON (priv->widget));
 
   return FALSE;
 }
 
 void
-gimp_polygon_select_tool_get_points (GimpPolygonSelectTool  *poly_sel,
-                                     const GimpVector2     **points,
+ligma_polygon_select_tool_get_points (LigmaPolygonSelectTool  *poly_sel,
+                                     const LigmaVector2     **points,
                                      gint                   *n_points)
 {
-  GimpPolygonSelectToolPrivate *priv;
+  LigmaPolygonSelectToolPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_POLYGON_SELECT_TOOL (poly_sel));
+  g_return_if_fail (LIGMA_IS_POLYGON_SELECT_TOOL (poly_sel));
 
   priv = poly_sel->priv;
 
   if (priv->widget)
     {
-      gimp_tool_polygon_get_points (GIMP_TOOL_POLYGON (priv->widget),
+      ligma_tool_polygon_get_points (LIGMA_TOOL_POLYGON (priv->widget),
                                     points, n_points);
     }
   else
@@ -530,11 +530,11 @@ gimp_polygon_select_tool_get_points (GimpPolygonSelectTool  *poly_sel,
 /*  protected functions  */
 
 gboolean
-gimp_polygon_select_tool_is_grabbed (GimpPolygonSelectTool *poly_sel)
+ligma_polygon_select_tool_is_grabbed (LigmaPolygonSelectTool *poly_sel)
 {
-  GimpPolygonSelectToolPrivate *priv;
+  LigmaPolygonSelectToolPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_POLYGON_SELECT_TOOL (poly_sel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_POLYGON_SELECT_TOOL (poly_sel), FALSE);
 
   priv = poly_sel->priv;
 
@@ -542,14 +542,14 @@ gimp_polygon_select_tool_is_grabbed (GimpPolygonSelectTool *poly_sel)
 }
 
 void
-gimp_polygon_select_tool_halt (GimpPolygonSelectTool *poly_sel)
+ligma_polygon_select_tool_halt (LigmaPolygonSelectTool *poly_sel)
 {
-  GimpPolygonSelectToolPrivate *priv;
+  LigmaPolygonSelectToolPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_POLYGON_SELECT_TOOL (poly_sel));
+  g_return_if_fail (LIGMA_IS_POLYGON_SELECT_TOOL (poly_sel));
 
   priv = poly_sel->priv;
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (poly_sel), NULL);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (poly_sel), NULL);
   g_clear_object (&priv->widget);
 }

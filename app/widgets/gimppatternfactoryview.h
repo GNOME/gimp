@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppatternfactoryview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmapatternfactoryview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_FACTORY_VIEW_H__
-#define __GIMP_PATTERN_FACTORY_VIEW_H__
+#ifndef __LIGMA_PATTERN_FACTORY_VIEW_H__
+#define __LIGMA_PATTERN_FACTORY_VIEW_H__
 
-#include "gimpdatafactoryview.h"
-
-
-#define GIMP_TYPE_PATTERN_FACTORY_VIEW            (gimp_pattern_factory_view_get_type ())
-#define GIMP_PATTERN_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN_FACTORY_VIEW, GimpPatternFactoryView))
-#define GIMP_PATTERN_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN_FACTORY_VIEW, GimpPatternFactoryViewClass))
-#define GIMP_IS_PATTERN_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATTERN_FACTORY_VIEW))
-#define GIMP_IS_PATTERN_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN_FACTORY_VIEW))
-#define GIMP_PATTERN_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATTERN_FACTORY_VIEW, GimpPatternFactoryViewClass))
+#include "ligmadatafactoryview.h"
 
 
-typedef struct _GimpPatternFactoryViewClass  GimpPatternFactoryViewClass;
+#define LIGMA_TYPE_PATTERN_FACTORY_VIEW            (ligma_pattern_factory_view_get_type ())
+#define LIGMA_PATTERN_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PATTERN_FACTORY_VIEW, LigmaPatternFactoryView))
+#define LIGMA_PATTERN_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PATTERN_FACTORY_VIEW, LigmaPatternFactoryViewClass))
+#define LIGMA_IS_PATTERN_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PATTERN_FACTORY_VIEW))
+#define LIGMA_IS_PATTERN_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PATTERN_FACTORY_VIEW))
+#define LIGMA_PATTERN_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PATTERN_FACTORY_VIEW, LigmaPatternFactoryViewClass))
 
-struct _GimpPatternFactoryView
+
+typedef struct _LigmaPatternFactoryViewClass  LigmaPatternFactoryViewClass;
+
+struct _LigmaPatternFactoryView
 {
-  GimpDataFactoryView  parent_instance;
+  LigmaDataFactoryView  parent_instance;
 };
 
-struct _GimpPatternFactoryViewClass
+struct _LigmaPatternFactoryViewClass
 {
-  GimpDataFactoryViewClass  parent_class;
+  LigmaDataFactoryViewClass  parent_class;
 };
 
 
-GType       gimp_pattern_factory_view_get_type (void) G_GNUC_CONST;
+GType       ligma_pattern_factory_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_pattern_factory_view_new      (GimpViewType     view_type,
-                                                GimpDataFactory *factory,
-                                                GimpContext     *context,
+GtkWidget * ligma_pattern_factory_view_new      (LigmaViewType     view_type,
+                                                LigmaDataFactory *factory,
+                                                LigmaContext     *context,
                                                 gint             view_size,
                                                 gint             view_border_width,
-                                                GimpMenuFactory *menu_factory);
+                                                LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_PATTERN_FACTORY_VIEW_H__  */
+#endif  /*  __LIGMA_PATTERN_FACTORY_VIEW_H__  */

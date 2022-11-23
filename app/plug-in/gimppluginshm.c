@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginhsm.c
+ * ligmapluginhsm.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,19 +64,19 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimp-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimppluginshm.h"
+#include "ligmapluginshm.h"
 
-#include "gimp-log.h"
+#include "ligma-log.h"
 
 
-#define TILE_MAP_SIZE (GIMP_PLUG_IN_TILE_WIDTH * GIMP_PLUG_IN_TILE_HEIGHT * 32)
+#define TILE_MAP_SIZE (LIGMA_PLUG_IN_TILE_WIDTH * LIGMA_PLUG_IN_TILE_HEIGHT * 32)
 
 #define ERRMSG_SHM_DISABLE "Disabling shared memory tile transport"
 
 
-struct _GimpPlugInShm
+struct _LigmaPlugInShm
 {
   gint    shm_id;
   guchar *shm_addr;
@@ -87,15 +87,15 @@ struct _GimpPlugInShm
 };
 
 
-GimpPlugInShm *
-gimp_plug_in_shm_new (void)
+LigmaPlugInShm *
+ligma_plug_in_shm_new (void)
 {
   /* allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
    */
 
-  GimpPlugInShm *shm = g_slice_new0 (GimpPlugInShm);
+  LigmaPlugInShm *shm = g_slice_new0 (LigmaPlugInShm);
 
   shm->shm_id = -1;
 
@@ -140,7 +140,7 @@ gimp_plug_in_shm_new (void)
     pid = GetCurrentProcessId ();
 
     /* From the id, derive the file map name */
-    g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
+    g_snprintf (fileMapName, sizeof (fileMapName), "LIGMA%d.SHM", pid);
 
     /* Create the file mapping into paging space */
     shm->shm_handle = CreateFileMapping (INVALID_HANDLE_VALUE, NULL,
@@ -182,10 +182,10 @@ gimp_plug_in_shm_new (void)
     gint  shm_fd;
 
     /* Our shared memory id will be our process ID */
-    pid = gimp_get_pid ();
+    pid = ligma_get_pid ();
 
     /* From the id, derive the file map name */
-    g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d", pid);
+    g_snprintf (shm_handle, sizeof (shm_handle), "/ligma-shm-%d", pid);
 
     /* Create the file mapping into paging space */
     shm_fd = shm_open (shm_handle, O_RDWR | O_CREAT, 0600);
@@ -233,19 +233,19 @@ gimp_plug_in_shm_new (void)
 
   if (shm->shm_id == -1)
     {
-      g_slice_free (GimpPlugInShm, shm);
+      g_slice_free (LigmaPlugInShm, shm);
       shm = NULL;
     }
   else
     {
-      GIMP_LOG (SHM, "attached shared memory segment ID = %d", shm->shm_id);
+      LIGMA_LOG (SHM, "attached shared memory segment ID = %d", shm->shm_id);
     }
 
   return shm;
 }
 
 void
-gimp_plug_in_shm_free (GimpPlugInShm *shm)
+ligma_plug_in_shm_free (LigmaPlugInShm *shm)
 {
   g_return_if_fail (shm != NULL);
 
@@ -271,21 +271,21 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
 
       munmap (shm->shm_addr, TILE_MAP_SIZE);
 
-      g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d",
+      g_snprintf (shm_handle, sizeof (shm_handle), "/ligma-shm-%d",
                   shm->shm_id);
 
       shm_unlink (shm_handle);
 
 #endif
 
-      GIMP_LOG (SHM, "detached shared memory segment ID = %d", shm->shm_id);
+      LIGMA_LOG (SHM, "detached shared memory segment ID = %d", shm->shm_id);
     }
 
-  g_slice_free (GimpPlugInShm, shm);
+  g_slice_free (LigmaPlugInShm, shm);
 }
 
 gint
-gimp_plug_in_shm_get_id (GimpPlugInShm *shm)
+ligma_plug_in_shm_get_id (LigmaPlugInShm *shm)
 {
   g_return_val_if_fail (shm != NULL, -1);
 
@@ -293,7 +293,7 @@ gimp_plug_in_shm_get_id (GimpPlugInShm *shm)
 }
 
 guchar *
-gimp_plug_in_shm_get_addr (GimpPlugInShm *shm)
+ligma_plug_in_shm_get_addr (LigmaPlugInShm *shm)
 {
   g_return_val_if_fail (shm != NULL, NULL);
 

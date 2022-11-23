@@ -15,7 +15,7 @@
    id="svg2"
    viewBox="0 0 16.000002 16"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-wilber-outline.svg">
+   sodipodi:docname="ligma-wilber-outline.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -43,13 +43,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -282,7 +282,7 @@
      transform="translate(8.5513503,-168.92371)"
      id="stock">
     <g
-       id="gimp-wilber-outline"
+       id="ligma-wilber-outline"
        transform="translate(-8.5513504,-867.43848)">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:0;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.41550624;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -292,10 +292,10 @@
          x="0.20775318"
          y="1036.5699" />
       <g
-         id="gimp-wilber-outline-48-0"
+         id="ligma-wilber-outline-48-0"
          transform="matrix(0.33333332,0,0,0.33333332,-189.32694,951.40202)">
         <g
-           id="gimp-wilber-outline-0"
+           id="ligma-wilber-outline-0"
            transform="matrix(1.0168554,0,0,1.0168554,568.37098,254.31365)">
           <path
              d="m 38.186133,7.5788897 -0.730048,0.870295 c -0.784724,0.935712 -1.513445,2.6838343 -3.339013,4.4763523 -1.817887,1.784976 -4.670276,3.580108 -9.54443,4.386058 -0.779276,-0.434974 -1.6325,-0.737581 -2.528276,-0.739654 l -0.0019,0 c -1.148136,0.0015 -2.241735,0.416312 -3.152658,1.1066 -5.631342,-0.45573 -8.072805,-5.425417 -8.072805,-5.425417 l -0.885665,-1.82128 -0.2266996,9.730784 0.040345,0.09798 c 0,0 0.1734855,0.85898 -0.1805913,1.915417 C 8.5893674,21.012103 7.4343688,20.122009 6.2176732,19.707309 4.8248196,19.232566 3.3645735,19.306057 2.2427486,20.114599 1.1206227,20.92373 0.58917607,22.287108 0.6001384,23.75908 c 0.0109621,1.471973 0.5459782,3.081826 1.5868959,4.524383 l 0.00192,0 c 1.6419687,2.270972 4.1343785,3.536298 6.3091603,3.095023 2.8550434,2.066264 6.8072054,3.977119 10.9699464,4.824087 4.135668,0.84146 8.467851,0.606616 12.007385,-1.613792 0.997133,0.476215 2.078667,0.924531 3.183398,1.296797 0.0041,0.01646 7.24e-4,0.02721 0.0058,0.04419 l 0.151773,0.509113 0.61862,-0.234384 0.07493,0.073 3.429309,1.239163 c 0.242463,1.136006 0.695061,1.889845 1.98458,2.445664 2.44012,1.051759 4.203546,1.792462 4.203546,1.792462 l 0.391921,0.126798 -0.124877,-0.610936 C 44.800215,39.253537 44.787403,38.54216 44.091885,37.167004 43.744124,36.479427 43.511118,35.910451 42.9142,35.520553 c -0.596918,-0.389898 -1.221272,-0.540639 -1.949999,-0.464927 -0.428885,0.04456 -0.62224,0.06456 -0.981724,0.316995 L 37.67898,33.883705 c 0.03516,0.04741 0.07399,0.09074 0.101823,0.144089 l -0.170985,-0.188276 0.06916,0.04419 C 37.507174,33.652109 37.258379,33.494983 36.97579,33.43223 l 0.04034,0.0269 -0.151774,-0.04995 c -0.0208,-0.0027 -0.04047,-0.0099 -0.06148,-0.01153 l -0.0019,-0.0077 0.0634,0.01921 c 0.03785,0.0049 0.07445,0.01484 0.11143,0.02305 l -0.08069,-0.04995 -0.0999,-0.0096 -0.222857,-0.718522 -0.501428,0.313152 C 35.513217,32.600898 34.95004,32.273308 34.386037,31.970211 37.886139,27.794934 39.728573,20.570927 38.320616,8.7085437 Z"

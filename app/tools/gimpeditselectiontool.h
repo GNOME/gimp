@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,36 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EDIT_SELECTION_TOOL_H__
-#define __GIMP_EDIT_SELECTION_TOOL_H__
+#ifndef __LIGMA_EDIT_SELECTION_TOOL_H__
+#define __LIGMA_EDIT_SELECTION_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_EDIT_SELECTION_TOOL            (gimp_edit_selection_tool_get_type ())
-#define GIMP_EDIT_SELECTION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EDIT_SELECTION_TOOL, GimpEditSelectionTool))
-#define GIMP_EDIT_SELECTION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL, GimpEditSelectionToolClass))
-#define GIMP_IS_EDIT_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EDIT_SELECTION_TOOL))
-#define GIMP_IS_EDIT_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL))
+#define LIGMA_TYPE_EDIT_SELECTION_TOOL            (ligma_edit_selection_tool_get_type ())
+#define LIGMA_EDIT_SELECTION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_EDIT_SELECTION_TOOL, LigmaEditSelectionTool))
+#define LIGMA_EDIT_SELECTION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_EDIT_SELECTION_TOOL, LigmaEditSelectionToolClass))
+#define LIGMA_IS_EDIT_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_EDIT_SELECTION_TOOL))
+#define LIGMA_IS_EDIT_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_EDIT_SELECTION_TOOL))
 
 
-GType      gimp_edit_selection_tool_get_type  (void) G_GNUC_CONST;
+GType      ligma_edit_selection_tool_get_type  (void) G_GNUC_CONST;
 
-void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
-                                               GimpDisplay       *display,
-                                               const GimpCoords  *coords,
-                                               GimpTranslateMode  edit_mode,
+void       ligma_edit_selection_tool_start     (LigmaTool          *parent_tool,
+                                               LigmaDisplay       *display,
+                                               const LigmaCoords  *coords,
+                                               LigmaTranslateMode  edit_mode,
                                                gboolean           propagate_release);
 
-gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,
+gboolean   ligma_edit_selection_tool_key_press (LigmaTool          *tool,
                                                GdkEventKey       *kevent,
-                                               GimpDisplay       *display);
-gboolean   gimp_edit_selection_tool_translate (GimpTool          *tool,
+                                               LigmaDisplay       *display);
+gboolean   ligma_edit_selection_tool_translate (LigmaTool          *tool,
                                                GdkEventKey       *kevent,
-                                               GimpTransformType  translate_type,
-                                               GimpDisplay       *display,
+                                               LigmaTransformType  translate_type,
+                                               LigmaDisplay       *display,
                                                GtkWidget        **type_box);
 
 
-#endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */
+#endif  /*  __LIGMA_EDIT_SELECTION_TOOL_H__  */

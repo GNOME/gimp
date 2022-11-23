@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,87 +27,87 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpbrushgenerated.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptempbuf.h"
-#include "gegl/gimp-babl-compat.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmabrushgenerated.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatempbuf.h"
+#include "gegl/ligma-babl-compat.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-brush_new_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+brush_new_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpData *data = gimp_data_factory_data_new (gimp->brush_factory,
+      LigmaData *data = ligma_data_factory_data_new (ligma->brush_factory,
                                                    context, name);
 
       if (data)
-        actual_name = g_strdup (gimp_object_get_name (data));
+        actual_name = g_strdup (ligma_object_get_name (data));
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_duplicate_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+brush_duplicate_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gchar *copy_name = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
-          GimpBrush *brush_copy = (GimpBrush *)
-            gimp_data_factory_data_duplicate (gimp->brush_factory,
-                                              GIMP_DATA (brush));
+          LigmaBrush *brush_copy = (LigmaBrush *)
+            ligma_data_factory_data_duplicate (ligma->brush_factory,
+                                              LIGMA_DATA (brush));
 
           if (brush_copy)
-            copy_name = g_strdup (gimp_object_get_name (brush_copy));
+            copy_name = g_strdup (ligma_object_get_name (brush_copy));
           else
             success = FALSE;
         }
@@ -115,190 +115,190 @@ brush_duplicate_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), copy_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), copy_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_is_generated_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+brush_is_generated_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gboolean generated = FALSE;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        generated = GIMP_IS_BRUSH_GENERATED (brush);
+        generated = LIGMA_IS_BRUSH_GENERATED (brush);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), generated);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), generated);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_rename_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+brush_rename_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   const gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  new_name = g_value_get_string (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  new_name = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_RENAME, error);
 
       if (brush)
         {
-          gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-          actual_name = g_strdup (gimp_object_get_name (brush));
+          ligma_object_set_name (LIGMA_OBJECT (brush), new_name);
+          actual_name = g_strdup (ligma_object_get_name (brush));
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_delete_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+brush_delete_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
-      if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
-        success = gimp_data_factory_data_delete (gimp->brush_factory,
-                                                 GIMP_DATA (brush),
+      if (brush && ligma_data_is_deletable (LIGMA_DATA (brush)))
+        success = ligma_data_factory_data_delete (ligma->brush_factory,
+                                                 LIGMA_DATA (brush),
                                                  TRUE, error);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-brush_is_editable_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+brush_is_editable_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gboolean editable = FALSE;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        editable = gimp_data_is_writable (GIMP_DATA (brush));
+        editable = ligma_data_is_writable (LIGMA_DATA (brush));
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), editable);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), editable);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_info_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_info_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint width = 0;
   gint height = 0;
   gint mask_bpp = 0;
   gint color_bpp = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
-          GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-          GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+          LigmaTempBuf *mask   = ligma_brush_get_mask (brush);
+          LigmaTempBuf *pixmap = ligma_brush_get_pixmap (brush);
           const Babl  *format;
 
-          format = gimp_babl_compat_u8_mask_format (
-            gimp_temp_buf_get_format (mask));
+          format = ligma_babl_compat_u8_mask_format (
+            ligma_temp_buf_get_format (mask));
 
-          width    = gimp_brush_get_width  (brush);
-          height   = gimp_brush_get_height (brush);
+          width    = ligma_brush_get_width  (brush);
+          height   = ligma_brush_get_height (brush);
           mask_bpp = babl_format_get_bytes_per_pixel (format);
 
           if (pixmap)
             {
-              format = gimp_babl_compat_u8_format (
-                gimp_temp_buf_get_format (pixmap));
+              format = ligma_babl_compat_u8_format (
+                ligma_temp_buf_get_format (pixmap));
 
               color_bpp = babl_format_get_bytes_per_pixel (format);
             }
@@ -307,30 +307,30 @@ brush_get_info_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), mask_bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), color_bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), mask_bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), color_bpp);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_pixels_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_pixels_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint width = 0;
   gint height = 0;
@@ -341,1339 +341,1339 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
   gint num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
-          GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-          GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+          LigmaTempBuf *mask   = ligma_brush_get_mask (brush);
+          LigmaTempBuf *pixmap = ligma_brush_get_pixmap (brush);
           const Babl  *format;
           gpointer     data;
 
-          format = gimp_babl_compat_u8_mask_format (
-            gimp_temp_buf_get_format (mask));
-          data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
+          format = ligma_babl_compat_u8_mask_format (
+            ligma_temp_buf_get_format (mask));
+          data   = ligma_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
 
-          width          = gimp_temp_buf_get_width  (mask);
-          height         = gimp_temp_buf_get_height (mask);
+          width          = ligma_temp_buf_get_width  (mask);
+          height         = ligma_temp_buf_get_height (mask);
           mask_bpp       = babl_format_get_bytes_per_pixel (format);
-          num_mask_bytes = gimp_temp_buf_get_height (mask) *
-                           gimp_temp_buf_get_width  (mask) * mask_bpp;
+          num_mask_bytes = ligma_temp_buf_get_height (mask) *
+                           ligma_temp_buf_get_width  (mask) * mask_bpp;
           mask_bytes     = g_memdup2 (data, num_mask_bytes);
 
-          gimp_temp_buf_unlock (mask, data);
+          ligma_temp_buf_unlock (mask, data);
 
           if (pixmap)
             {
-              format = gimp_babl_compat_u8_format (
-                gimp_temp_buf_get_format (pixmap));
-              data   = gimp_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
+              format = ligma_babl_compat_u8_format (
+                ligma_temp_buf_get_format (pixmap));
+              data   = ligma_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
 
               color_bpp       = babl_format_get_bytes_per_pixel (format);
-              num_color_bytes = gimp_temp_buf_get_height (pixmap) *
-                                gimp_temp_buf_get_width  (pixmap) *
+              num_color_bytes = ligma_temp_buf_get_height (pixmap) *
+                                ligma_temp_buf_get_width  (pixmap) *
                                 color_bpp;
               color_bytes     = g_memdup2 (data, num_color_bytes);
 
-              gimp_temp_buf_unlock (pixmap, data);
+              ligma_temp_buf_unlock (pixmap, data);
             }
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), mask_bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), num_mask_bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), mask_bytes, num_mask_bytes);
-      g_value_set_int (gimp_value_array_index (return_vals, 6), color_bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 7), num_color_bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 8), color_bytes, num_color_bytes);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), mask_bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), num_mask_bytes);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 5), mask_bytes, num_mask_bytes);
+      g_value_set_int (ligma_value_array_index (return_vals, 6), color_bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 7), num_color_bytes);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 8), color_bytes, num_color_bytes);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_spacing_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_spacing_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint spacing = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        spacing = gimp_brush_get_spacing (brush);
+        spacing = ligma_brush_get_spacing (brush);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), spacing);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), spacing);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_spacing_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_spacing_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint spacing;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  spacing = g_value_get_int (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  spacing = g_value_get_int (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
-        gimp_brush_set_spacing (brush, spacing);
+        ligma_brush_set_spacing (brush, spacing);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-brush_get_shape_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_shape_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint shape = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        shape = GIMP_BRUSH_GENERATED (brush)->shape;
+        shape = LIGMA_BRUSH_GENERATED (brush)->shape;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), shape);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), shape);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_shape_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_shape_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint shape_in;
   gint shape_out = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  shape_in = g_value_get_enum (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  shape_in = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_shape (LIGMA_BRUSH_GENERATED (brush),
                                           shape_in);
-          shape_out = GIMP_BRUSH_GENERATED (brush)->shape;
+          shape_out = LIGMA_BRUSH_GENERATED (brush)->shape;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), shape_out);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), shape_out);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_radius_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_radius_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble radius = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        radius = GIMP_BRUSH_GENERATED (brush)->radius;
+        radius = LIGMA_BRUSH_GENERATED (brush)->radius;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), radius);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), radius);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_radius_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_radius_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble radius_in;
   gdouble radius_out = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  radius_in = g_value_get_double (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  radius_in = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_radius (LIGMA_BRUSH_GENERATED (brush),
                                            radius_in);
-          radius_out = GIMP_BRUSH_GENERATED (brush)->radius;
+          radius_out = LIGMA_BRUSH_GENERATED (brush)->radius;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), radius_out);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), radius_out);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_spikes_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_spikes_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint spikes = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
+        spikes = LIGMA_BRUSH_GENERATED (brush)->spikes;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), spikes);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), spikes);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_spikes_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_spikes_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint spikes_in;
   gint spikes_out = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  spikes_in = g_value_get_int (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  spikes_in = g_value_get_int (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_spikes (LIGMA_BRUSH_GENERATED (brush),
                                            spikes_in);
-          spikes_out = GIMP_BRUSH_GENERATED (brush)->spikes;
+          spikes_out = LIGMA_BRUSH_GENERATED (brush)->spikes;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), spikes_out);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), spikes_out);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_hardness_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_hardness_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble hardness = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
+        hardness = LIGMA_BRUSH_GENERATED (brush)->hardness;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), hardness);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), hardness);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_hardness_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_hardness_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble hardness_in;
   gdouble hardness_out = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  hardness_in = g_value_get_double (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  hardness_in = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_hardness (LIGMA_BRUSH_GENERATED (brush),
                                              hardness_in);
-          hardness_out = GIMP_BRUSH_GENERATED (brush)->hardness;
+          hardness_out = LIGMA_BRUSH_GENERATED (brush)->hardness;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), hardness_out);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), hardness_out);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble aspect_ratio = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+        aspect_ratio = LIGMA_BRUSH_GENERATED (brush)->aspect_ratio;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), aspect_ratio);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), aspect_ratio);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_aspect_ratio_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_aspect_ratio_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble aspect_ratio_in;
   gdouble aspect_ratio_out = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  aspect_ratio_in = g_value_get_double (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  aspect_ratio_in = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_aspect_ratio (LIGMA_BRUSH_GENERATED (brush),
                                                  aspect_ratio_in);
-          aspect_ratio_out = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+          aspect_ratio_out = LIGMA_BRUSH_GENERATED (brush)->aspect_ratio;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), aspect_ratio_out);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), aspect_ratio_out);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_get_angle_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+brush_get_angle_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble angle = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
-        angle = GIMP_BRUSH_GENERATED (brush)->angle;
+        angle = LIGMA_BRUSH_GENERATED (brush)->angle;
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GimpValueArray *
-brush_set_angle_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+brush_set_angle_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gdouble angle_in;
   gdouble angle_out = 0.0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
-  angle_in = g_value_get_double (gimp_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
+  angle_in = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+      LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
-          gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
+          ligma_brush_generated_set_angle (LIGMA_BRUSH_GENERATED (brush),
                                           angle_in);
-          angle_out = GIMP_BRUSH_GENERATED (brush)->angle;
+          angle_out = LIGMA_BRUSH_GENERATED (brush)->angle;
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), angle_out);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), angle_out);
 
   return return_vals;
 }
 
 void
-register_brush_procs (GimpPDB *pdb)
+register_brush_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-brush-new
+   * ligma-brush-new
    */
-  procedure = gimp_procedure_new (brush_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-new");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_new_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-new");
+  ligma_procedure_set_static_help (procedure,
                                   "Creates a new brush.",
                                   "This procedure creates a new, uninitialized brush.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The requested name of the new brush",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("actual-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new brush name.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-duplicate
+   * ligma-brush-duplicate
    */
-  procedure = gimp_procedure_new (brush_duplicate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-duplicate");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_duplicate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-duplicate");
+  ligma_procedure_set_static_help (procedure,
                                   "Duplicates a brush.",
                                   "This procedure creates an identical brush by a different name.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("copy-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("copy-name",
                                                            "copy name",
                                                            "The name of the brush's copy.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-is-generated
+   * ligma-brush-is-generated
    */
-  procedure = gimp_procedure_new (brush_is_generated_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-is-generated");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_is_generated_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-is-generated");
+  ligma_procedure_set_static_help (procedure,
                                   "Tests if brush is generated.",
                                   "Returns TRUE if this brush is parametric, FALSE for other types.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("generated",
                                                          "generated",
                                                          "TRUE if the brush is generated",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-rename
+   * ligma-brush-rename
    */
-  procedure = gimp_procedure_new (brush_rename_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-rename");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_rename_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-rename");
+  ligma_procedure_set_static_help (procedure,
                                   "Renames a brush.",
                                   "This procedure renames a brush.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("new-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("new-name",
                                                        "new name",
                                                        "The new name of the brush",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("actual-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new name of the brush.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-delete
+   * ligma-brush-delete
    */
-  procedure = gimp_procedure_new (brush_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-delete");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_delete_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-delete");
+  ligma_procedure_set_static_help (procedure,
                                   "Deletes a brush.",
                                   "This procedure deletes a brush.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-is-editable
+   * ligma-brush-is-editable
    */
-  procedure = gimp_procedure_new (brush_is_editable_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-is-editable");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_is_editable_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-is-editable");
+  ligma_procedure_set_static_help (procedure,
                                   "Tests if brush can be edited.",
                                   "Returns TRUE if you have permission to change the brush.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("editable",
                                                          "editable",
                                                          "TRUE if the brush can be edited",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-info
+   * ligma-brush-get-info
    */
-  procedure = gimp_procedure_new (brush_get_info_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-info");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_info_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-info");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieves information about the specified brush.",
                                   "This procedure retrieves information about the specified brush: brush extents (width and height), color depth and mask depth.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The brush width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The brush height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("mask-bpp",
                                                      "mask bpp",
                                                      "The brush mask bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("color-bpp",
                                                      "color bpp",
                                                      "The brush color bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-pixels
+   * ligma-brush-get-pixels
    */
-  procedure = gimp_procedure_new (brush_get_pixels_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-pixels");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_pixels_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-pixels");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieves information about the specified brush.",
                                   "This procedure retrieves information about the specified brush. This includes the brush extents (width and height) and its pixels data.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The brush width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The brush height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("mask-bpp",
                                                      "mask bpp",
                                                      "The brush mask bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-mask-bytes",
                                                      "num mask bytes",
                                                      "Length of brush mask data",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("mask-bytes",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("mask-bytes",
                                                                 "mask bytes",
                                                                 "The brush mask data",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("color-bpp",
                                                      "color bpp",
                                                      "The brush color bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-color-bytes",
                                                      "num color bytes",
                                                      "Length of brush color data",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("color-bytes",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("color-bytes",
                                                                 "color bytes",
                                                                 "The brush color data",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-spacing
+   * ligma-brush-get-spacing
    */
-  procedure = gimp_procedure_new (brush_get_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the brush spacing.",
                                   "This procedure returns the spacing setting for the specified brush. The return value is an integer between 0 and 1000 which represents percentage of the maximum of the width and height of the mask.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("spacing",
                                                      "spacing",
                                                      "The brush spacing",
                                                      0, 1000, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-spacing
+   * ligma-brush-set-spacing
    */
-  procedure = gimp_procedure_new (brush_set_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the brush spacing.",
                                   "This procedure modifies the spacing setting for the specified brush. The value should be a integer between 0 and 1000.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
                                                  "spacing",
                                                  "The brush spacing",
                                                  0, 1000, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-shape
+   * ligma-brush-get-shape
    */
-  procedure = gimp_procedure_new (brush_get_shape_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-shape");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_shape_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-shape");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the shape of a generated brush.",
-                                  "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+                                  "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE), Square (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond (LIGMA_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("shape",
                                                       "shape",
                                                       "The brush shape",
-                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                      GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      LIGMA_BRUSH_GENERATED_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-shape
+   * ligma-brush-set-shape
    */
-  procedure = gimp_procedure_new (brush_set_shape_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-shape");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_shape_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-shape");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the shape of a generated brush.",
-                                  "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+                                  "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE), Square (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond (LIGMA_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("shape-in",
                                                   "shape in",
                                                   "The brush shape",
-                                                  GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                  GIMP_BRUSH_GENERATED_CIRCLE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                  LIGMA_TYPE_BRUSH_GENERATED_SHAPE,
+                                                  LIGMA_BRUSH_GENERATED_CIRCLE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("shape-out",
                                                       "shape out",
                                                       "The brush shape actually assigned",
-                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                      GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      LIGMA_BRUSH_GENERATED_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-radius
+   * ligma-brush-get-radius
    */
-  procedure = gimp_procedure_new (brush_get_radius_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-radius");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_radius_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-radius");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the radius of a generated brush.",
                                   "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("radius",
                                                         "radius",
                                                         "The radius of the brush in pixels",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-radius
+   * ligma-brush-set-radius
    */
-  procedure = gimp_procedure_new (brush_set_radius_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-radius");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_radius_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-radius");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the radius of a generated brush.",
                                   "This procedure sets the radius for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius-in",
                                                     "radius in",
                                                     "The desired brush radius in pixel",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("radius-out",
                                                         "radius out",
                                                         "The brush radius actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-spikes
+   * ligma-brush-get-spikes
    */
-  procedure = gimp_procedure_new (brush_get_spikes_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-spikes");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_spikes_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-spikes");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the number of spikes for a generated brush.",
                                   "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("spikes",
                                                      "spikes",
                                                      "The number of spikes on the brush.",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-spikes
+   * ligma-brush-set-spikes
    */
-  procedure = gimp_procedure_new (brush_set_spikes_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-spikes");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_spikes_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-spikes");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the number of spikes for a generated brush.",
                                   "This procedure sets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("spikes-in",
                                                  "spikes in",
                                                  "The desired number of spikes",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("spikes-out",
                                                      "spikes out",
                                                      "The number of spikes actually assigned",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-hardness
+   * ligma-brush-get-hardness
    */
-  procedure = gimp_procedure_new (brush_get_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-hardness");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_hardness_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-hardness");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the hardness of a generated brush.",
                                   "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge, as a float between 0.0 and 1.0. If called for any other type of brush, the function does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
                                                         "hardness",
                                                         "The hardness of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-hardness
+   * ligma-brush-set-hardness
    */
-  procedure = gimp_procedure_new (brush_set_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-hardness");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_hardness_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-hardness");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the hardness of a generated brush.",
                                   "This procedure sets the hardness for a generated brush. If called for any other type of brush, it does not succeed. The value should be a float between 0.0 and 1.0.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness-in",
                                                     "hardness in",
                                                     "The desired brush hardness",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness-out",
                                                         "hardness out",
                                                         "The brush hardness actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-aspect-ratio
+   * ligma-brush-get-aspect-ratio
    */
-  procedure = gimp_procedure_new (brush_get_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the aspect ratio of a generated brush.",
                                   "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed. The return value is a float between 0.0 and 1000.0.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect-ratio",
                                                         "aspect ratio",
                                                         "The aspect ratio of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-aspect-ratio
+   * ligma-brush-set-aspect-ratio
    */
-  procedure = gimp_procedure_new (brush_set_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-aspect-ratio");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_aspect_ratio_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-aspect-ratio");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the aspect ratio of a generated brush.",
                                   "This procedure sets the aspect ratio for a generated brush. If called for any other type of brush, it does not succeed. The value should be a float between 0.0 and 1000.0.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect-ratio-in",
                                                     "aspect ratio in",
                                                     "The desired brush aspect ratio",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect-ratio-out",
                                                         "aspect ratio out",
                                                         "The brush aspect ratio actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-angle
+   * ligma-brush-get-angle
    */
-  procedure = gimp_procedure_new (brush_get_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-get-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_get_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-get-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the rotation angle of a generated brush.",
                                   "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
                                                         "The rotation angle of the brush in degree.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-set-angle
+   * ligma-brush-set-angle
    */
-  procedure = gimp_procedure_new (brush_set_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-set-angle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (brush_set_angle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-brush-set-angle");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the rotation angle of a generated brush.",
                                   "This procedure sets the rotation angle for a generated brush. If called for any other type of brush, it does not succeed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                          "Bill Skaggs",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle-in",
                                                     "angle in",
                                                     "The desired brush rotation angle in degree",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle-out",
                                                         "angle out",
                                                         "The brush rotation angle actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

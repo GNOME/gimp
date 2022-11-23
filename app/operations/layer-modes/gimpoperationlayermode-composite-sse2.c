@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlayermode-composite-sse2.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
- *               2017 Øyvind Kolås <pippin@gimp.org>
+ * ligmaoperationlayermode-composite-sse2.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
+ *               2017 Øyvind Kolås <pippin@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationlayermode-composite.h"
+#include "ligmaoperationlayermode-composite.h"
 
 
 #if COMPILE_SSE2_INTRINISICS
@@ -45,7 +45,7 @@
 
 
 void
-gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat *in,
+ligma_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat *in,
                                                            const gfloat *layer,
                                                            const gfloat *comp,
                                                            const gfloat *mask,
@@ -57,7 +57,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat *in,
        ((uintptr_t)comp) |
        ((uintptr_t)out)   ) & 0x0F)
     {
-      gimp_operation_layer_mode_composite_clip_to_backdrop (in, layer, comp,
+      ligma_operation_layer_mode_composite_clip_to_backdrop (in, layer, comp,
                                                             mask, opacity, out,
                                                             samples);
     }

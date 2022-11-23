@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimptemplate.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmatemplate.h"
 
-#include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsizebox.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
+#include "widgets/ligmacontainercombobox.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasizebox.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmawidgets-constructors.h"
 
 #include "resize-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -51,23 +51,23 @@ typedef struct _ResizeDialog ResizeDialog;
 
 struct _ResizeDialog
 {
-  GimpViewable       *viewable;
-  GimpContext        *context;
-  GimpContext        *parent_context;
-  GimpFillType        fill_type;
-  GimpItemSet         layer_set;
+  LigmaViewable       *viewable;
+  LigmaContext        *context;
+  LigmaContext        *parent_context;
+  LigmaFillType        fill_type;
+  LigmaItemSet         layer_set;
   gboolean            resize_text_layers;
-  GimpResizeCallback  callback;
+  LigmaResizeCallback  callback;
   gpointer            user_data;
 
   gdouble             old_xres;
   gdouble             old_yres;
-  GimpUnit            old_res_unit;
+  LigmaUnit            old_res_unit;
   gint                old_width;
   gint                old_height;
-  GimpUnit            old_unit;
-  GimpFillType        old_fill_type;
-  GimpItemSet         old_layer_set;
+  LigmaUnit            old_unit;
+  LigmaFillType        old_fill_type;
+  LigmaItemSet         old_layer_set;
   gboolean            old_resize_text_layers;
 
   GtkWidget          *box;
@@ -80,7 +80,7 @@ struct _ResizeDialog
   GtkWidget          *ppi_box;
   GtkWidget          *ppi_image;
   GtkWidget          *ppi_template;
-  GimpTemplate       *template;
+  LigmaTemplate       *template;
 };
 
 
@@ -92,7 +92,7 @@ static void   resize_dialog_response (GtkWidget    *dialog,
                                       ResizeDialog *private);
 static void   resize_dialog_reset    (ResizeDialog *private);
 
-static void   size_notify            (GimpSizeBox  *box,
+static void   size_notify            (LigmaSizeBox  *box,
                                       GParamSpec   *pspec,
                                       ResizeDialog *private);
 static void   offset_update          (GtkWidget    *widget,
@@ -104,8 +104,8 @@ static void   offsets_changed        (GtkWidget    *area,
 static void   offset_center_clicked  (GtkWidget    *widget,
                                       ResizeDialog *private);
 
-static void   template_changed       (GimpContext  *context,
-                                      GimpTemplate *template,
+static void   template_changed       (LigmaContext  *context,
+                                      LigmaTemplate *template,
                                       ResizeDialog *private);
 
 static void   reset_template_clicked (GtkWidget    *button,
@@ -116,18 +116,18 @@ static void   ppi_select_toggled     (GtkWidget    *radio,
 /*  public function  */
 
 GtkWidget *
-resize_dialog_new (GimpViewable       *viewable,
-                   GimpContext        *context,
+resize_dialog_new (LigmaViewable       *viewable,
+                   LigmaContext        *context,
                    const gchar        *title,
                    const gchar        *role,
                    GtkWidget          *parent,
-                   GimpHelpFunc        help_func,
+                   LigmaHelpFunc        help_func,
                    const gchar        *help_id,
-                   GimpUnit            unit,
-                   GimpFillType        fill_type,
-                   GimpItemSet         layer_set,
+                   LigmaUnit            unit,
+                   LigmaFillType        fill_type,
+                   LigmaItemSet         layer_set,
                    gboolean            resize_text_layers,
-                   GimpResizeCallback  callback,
+                   LigmaResizeCallback  callback,
                    gpointer            user_data)
 {
   ResizeDialog  *private;
@@ -150,34 +150,34 @@ resize_dialog_new (GimpViewable       *viewable,
   GtkAdjustment *adjustment;
   GdkPixbuf     *pixbuf;
   GtkSizeGroup  *size_group   = NULL;
-  GimpImage     *image        = NULL;
+  LigmaImage     *image        = NULL;
   const gchar   *size_title   = NULL;
   const gchar   *layers_title = NULL;
   gint           width, height;
   gdouble        xres, yres;
 
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  if (GIMP_IS_IMAGE (viewable))
+  if (LIGMA_IS_IMAGE (viewable))
     {
-      image = GIMP_IMAGE (viewable);
+      image = LIGMA_IMAGE (viewable);
 
-      width  = gimp_image_get_width (image);
-      height = gimp_image_get_height (image);
+      width  = ligma_image_get_width (image);
+      height = ligma_image_get_height (image);
 
       size_title   = _("Canvas Size");
       layers_title = _("Layers");
     }
-  else if (GIMP_IS_ITEM (viewable))
+  else if (LIGMA_IS_ITEM (viewable))
     {
-      GimpItem *item = GIMP_ITEM (viewable);
+      LigmaItem *item = LIGMA_ITEM (viewable);
 
-      image = gimp_item_get_image (item);
+      image = ligma_item_get_image (item);
 
-      width  = gimp_item_get_width  (item);
-      height = gimp_item_get_height (item);
+      width  = ligma_item_get_width  (item);
+      height = ligma_item_get_height (item);
 
       size_title   = _("Layer Size");
       layers_title = _("Fill With");
@@ -190,15 +190,15 @@ resize_dialog_new (GimpViewable       *viewable,
   private = g_slice_new0 (ResizeDialog);
 
   private->parent_context = context;
-  private->context        = gimp_context_new (context->gimp,
+  private->context        = ligma_context_new (context->ligma,
                                               "resize-dialog",
                                               context);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   private->old_xres     = xres;
   private->old_yres     = yres;
-  private->old_res_unit = gimp_image_get_unit (image);
+  private->old_res_unit = ligma_image_get_unit (image);
 
   private->viewable           = viewable;
   private->fill_type          = fill_type;
@@ -214,10 +214,10 @@ resize_dialog_new (GimpViewable       *viewable,
   private->old_layer_set          = private->layer_set;
   private->old_resize_text_layers = private->resize_text_layers;
 
-  gimp_context_set_template (private->context, NULL);
+  ligma_context_set_template (private->context, NULL);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, viewable), context,
-                                     title, role, GIMP_ICON_OBJECT_RESIZE, title,
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, viewable), context,
+                                     title, role, LIGMA_ICON_OBJECT_RESIZE, title,
                                      parent,
                                      help_func, help_id,
 
@@ -227,7 +227,7 @@ resize_dialog_new (GimpViewable       *viewable,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -257,8 +257,8 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  template_selector = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
-                                    "container",         context->gimp->templates,
+  template_selector = g_object_new (LIGMA_TYPE_CONTAINER_COMBO_BOX,
+                                    "container",         context->ligma->templates,
                                     "context",           private->context,
                                     "view-size",         16,
                                     "view-border-width", 0,
@@ -277,10 +277,10 @@ resize_dialog_new (GimpViewable       *viewable,
                     private);
 
   /* reset template button */
-  button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
+  button = ligma_icon_button_new (LIGMA_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
+                                LIGMA_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -289,7 +289,7 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (reset_template_clicked),
                     private);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Reset the template selection"),
                            NULL);
 
@@ -356,12 +356,12 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (center_right_vbox);
 
   /* size select frame */
-  frame = gimp_frame_new (size_title);
+  frame = ligma_frame_new (size_title);
   gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* size box */
-  private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
+  private->box = g_object_new (LIGMA_TYPE_SIZE_BOX,
                                "width",           width,
                                "height",          height,
                                "unit",            unit,
@@ -374,7 +374,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (private->box);
 
   /* offset frame */
-  frame = gimp_frame_new (_("Offset"));
+  frame = ligma_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -384,32 +384,32 @@ resize_dialog_new (GimpViewable       *viewable,
 
   /*  the offset sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-  private->offset = entry = gimp_size_entry_new (1, unit, "%p",
+  private->offset = entry = ligma_size_entry_new (1, unit, "%p",
                                                  TRUE, FALSE, FALSE, SB_WIDTH,
-                                                 GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+                                                 LIGMA_SIZE_ENTRY_UPDATE_SIZE);
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (entry), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                 _("_X:"), 0, 0, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),_("_Y:"), 1, 0, 0.0);
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),_("_Y:"), 1, 0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0, xres, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1, yres, FALSE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0, 0, 0);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 1, 0, 0);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 0, 0, 0);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 1, 0, 0);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, 0);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, 0);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0, 0);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 1, 0);
 
   g_signal_connect (entry, "value-changed",
                     G_CALLBACK (offset_update),
@@ -421,16 +421,16 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_box_pack_start (GTK_BOX (center_right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  private->area = gimp_offset_area_new (width, height);
+  private->area = ligma_offset_area_new (width, height);
   gtk_container_add (GTK_CONTAINER (frame), private->area);
   gtk_widget_show (private->area);
 
-  gimp_viewable_get_preview_size (viewable, 200, TRUE, TRUE, &width, &height);
-  pixbuf = gimp_viewable_get_pixbuf (viewable, context,
+  ligma_viewable_get_preview_size (viewable, 200, TRUE, TRUE, &width, &height);
+  pixbuf = ligma_viewable_get_pixbuf (viewable, context,
                                      width, height);
 
   if (pixbuf)
-    gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);
+    ligma_offset_area_set_pixbuf (LIGMA_OFFSET_AREA (private->area), pixbuf);
 
   g_signal_connect (private->area, "offsets-changed",
                     G_CALLBACK (offsets_changed),
@@ -449,7 +449,7 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offset_center_clicked),
                     private);
 
-  frame = gimp_frame_new (layers_title);
+  frame = ligma_frame_new (layers_title);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -457,7 +457,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  if (GIMP_IS_IMAGE (viewable))
+  if (LIGMA_IS_IMAGE (viewable))
     {
       GtkWidget *label;
 
@@ -475,15 +475,15 @@ resize_dialog_new (GimpViewable       *viewable,
       gtk_size_group_add_widget (size_group, label);
 
       private->layer_set_combo = combo =
-        gimp_enum_combo_box_new (GIMP_TYPE_ITEM_SET);
+        ligma_enum_combo_box_new (LIGMA_TYPE_ITEM_SET);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->layer_set,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->layer_set, NULL);
     }
 
@@ -492,16 +492,16 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (hbox);
 
   private->fill_type_combo = combo =
-    gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
+    ligma_enum_combo_box_new (LIGMA_TYPE_FILL_TYPE);
   gtk_box_pack_end (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               private->fill_type,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &private->fill_type, NULL);
 
-  if (GIMP_IS_IMAGE (viewable))
+  if (LIGMA_IS_IMAGE (viewable))
     {
       GtkWidget *label;
 
@@ -522,10 +522,10 @@ resize_dialog_new (GimpViewable       *viewable,
       gtk_widget_show (button);
 
       g_signal_connect (button, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &private->resize_text_layers);
 
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                _("Resizing text layers will make them uneditable"),
                                NULL);
 
@@ -551,13 +551,13 @@ resize_dialog_response (GtkWidget    *dialog,
                         gint          response_id,
                         ResizeDialog *private)
 {
-  GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
-  GimpUnit       unit;
+  LigmaSizeEntry *entry = LIGMA_SIZE_ENTRY (private->offset);
+  LigmaUnit       unit;
   gint           width;
   gint           height;
   gdouble        xres;
   gdouble        yres;
-  GimpUnit       res_unit;
+  LigmaUnit       res_unit;
 
   switch (response_id)
     {
@@ -581,8 +581,8 @@ resize_dialog_response (GtkWidget    *dialog,
                          width,
                          height,
                          unit,
-                         gimp_size_entry_get_refval (entry, 0),
-                         gimp_size_entry_get_refval (entry, 1),
+                         ligma_size_entry_get_refval (entry, 0),
+                         ligma_size_entry_get_refval (entry, 1),
                          xres,
                          yres,
                          res_unit,
@@ -615,36 +615,36 @@ resize_dialog_reset (ResizeDialog *private)
                 NULL);
 
   if (private->layer_set_combo)
-    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->layer_set_combo),
+    ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->layer_set_combo),
                                    private->old_layer_set);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->fill_type_combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->fill_type_combo),
                                  private->old_fill_type);
 
   if (private->text_layers_button)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->text_layers_button),
                                   private->old_resize_text_layers);
 
-  gimp_context_set_template (private->context, NULL);
+  ligma_context_set_template (private->context, NULL);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset),
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (private->offset),
                             private->old_unit);
 }
 
 static void
-size_notify (GimpSizeBox  *box,
+size_notify (LigmaSizeBox  *box,
              GParamSpec   *pspec,
              ResizeDialog *private)
 {
   gint  diff_x = box->width  - private->old_width;
   gint  diff_y = box->height - private->old_height;
 
-  gimp_offset_area_set_size (GIMP_OFFSET_AREA (private->area),
+  ligma_offset_area_set_size (LIGMA_OFFSET_AREA (private->area),
                              box->width, box->height);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset), 0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->offset), 0,
                                          MIN (0, diff_x), MAX (0, diff_x));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset), 1,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (private->offset), 1,
                                          MIN (0, diff_y), MAX (0, diff_y));
 }
 
@@ -652,7 +652,7 @@ static gint
 resize_bound_off_x (ResizeDialog *private,
                     gint          offset_x)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
+  LigmaSizeBox *box = LIGMA_SIZE_BOX (private->box);
 
   if (private->old_width <= box->width)
     return CLAMP (offset_x, 0, (box->width - private->old_width));
@@ -664,7 +664,7 @@ static gint
 resize_bound_off_y (ResizeDialog *private,
                     gint          off_y)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
+  LigmaSizeBox *box = LIGMA_SIZE_BOX (private->box);
 
   if (private->old_height <= box->height)
     return CLAMP (off_y, 0, (box->height - private->old_height));
@@ -676,16 +676,16 @@ static void
 offset_update (GtkWidget    *widget,
                ResizeDialog *private)
 {
-  GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
+  LigmaSizeEntry *entry = LIGMA_SIZE_ENTRY (private->offset);
   gint           off_x;
   gint           off_y;
 
   off_x = resize_bound_off_x (private,
-                              RINT (gimp_size_entry_get_refval (entry, 0)));
+                              RINT (ligma_size_entry_get_refval (entry, 0)));
   off_y = resize_bound_off_y (private,
-                              RINT (gimp_size_entry_get_refval (entry, 1)));
+                              RINT (ligma_size_entry_get_refval (entry, 1)));
 
-  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->area), off_x, off_y);
+  ligma_offset_area_set_offsets (LIGMA_OFFSET_AREA (private->area), off_x, off_y);
 }
 
 static void
@@ -694,33 +694,33 @@ offsets_changed (GtkWidget    *area,
                  gint          off_y,
                  ResizeDialog *private)
 {
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 0, off_x);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset), 0, off_x);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset), 1, off_y);
 }
 
 static void
 offset_center_clicked (GtkWidget    *widget,
                        ResizeDialog *private)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
+  LigmaSizeBox *box = LIGMA_SIZE_BOX (private->box);
   gint         off_x;
   gint         off_y;
 
   off_x = resize_bound_off_x (private, (box->width  - private->old_width)  / 2);
   off_y = resize_bound_off_y (private, (box->height - private->old_height) / 2);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 0, off_x);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset), 0, off_x);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (private->offset), 1, off_y);
 
   g_signal_emit_by_name (private->offset, "value-changed", 0);
 }
 
 static void
-template_changed (GimpContext  *context,
-                  GimpTemplate *template,
+template_changed (LigmaContext  *context,
+                  LigmaTemplate *template,
                   ResizeDialog *private)
 {
-  GimpUnit unit = private->old_unit;
+  LigmaUnit unit = private->old_unit;
 
   private->template = template;
 
@@ -731,20 +731,20 @@ template_changed (GimpContext  *context,
     {
       gdouble  xres;
       gdouble  yres;
-      GimpUnit res_unit;
+      LigmaUnit res_unit;
       gboolean resolution_mismatch;
 
-      unit     = gimp_template_get_unit            (template);
-      xres     = gimp_template_get_resolution_x    (template);
-      yres     = gimp_template_get_resolution_y    (template);
-      res_unit = gimp_template_get_resolution_unit (template);
+      unit     = ligma_template_get_unit            (template);
+      xres     = ligma_template_get_resolution_x    (template);
+      yres     = ligma_template_get_resolution_y    (template);
+      res_unit = ligma_template_get_resolution_unit (template);
 
       resolution_mismatch = xres     != private->old_xres ||
                             yres     != private->old_yres ||
                             res_unit != private->old_res_unit;
 
       if (resolution_mismatch &&
-          unit != GIMP_UNIT_PIXEL)
+          unit != LIGMA_UNIT_PIXEL)
         {
           gchar *text;
 
@@ -767,7 +767,7 @@ template_changed (GimpContext  *context,
 
   ppi_select_toggled (NULL, private);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset), unit);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (private->offset), unit);
 }
 
 static void
@@ -776,10 +776,10 @@ ppi_select_toggled (GtkWidget    *radio,
 {
   gint             width;
   gint             height;
-  GimpUnit         unit;
+  LigmaUnit         unit;
   gdouble          xres;
   gdouble          yres;
-  GimpUnit         res_unit;
+  LigmaUnit         res_unit;
   GtkToggleButton *image_button;
   gboolean         use_image_ppi;
 
@@ -795,16 +795,16 @@ ppi_select_toggled (GtkWidget    *radio,
 
   if (private->template != NULL)
     {
-      width    = gimp_template_get_width           (private->template);
-      height   = gimp_template_get_height          (private->template);
-      unit     = gimp_template_get_unit            (private->template);
-      xres     = gimp_template_get_resolution_x    (private->template);
-      yres     = gimp_template_get_resolution_y    (private->template);
-      res_unit = gimp_template_get_resolution_unit (private->template);
+      width    = ligma_template_get_width           (private->template);
+      height   = ligma_template_get_height          (private->template);
+      unit     = ligma_template_get_unit            (private->template);
+      xres     = ligma_template_get_resolution_x    (private->template);
+      yres     = ligma_template_get_resolution_y    (private->template);
+      res_unit = ligma_template_get_resolution_unit (private->template);
     }
 
   if (private->template != NULL &&
-      unit != GIMP_UNIT_PIXEL)
+      unit != LIGMA_UNIT_PIXEL)
     {
       if (use_image_ppi)
         {
@@ -841,5 +841,5 @@ static void
 reset_template_clicked (GtkWidget    *button,
                         ResizeDialog *private)
 {
-  gimp_context_set_template (private->context, NULL);
+  ligma_context_set_template (private->context, NULL);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,15 +17,15 @@
 
 /*
  * gbr plug-in version 1.00
- * Loads/exports version 2 GIMP .gbr files, by Tim Newsome <drz@frody.bloke.com>
+ * Loads/exports version 2 LIGMA .gbr files, by Tim Newsome <drz@frody.bloke.com>
  * Some bits stolen from the .99.7 source tree.
  *
  * Added in GBR version 1 support after learning that there wasn't a
  * tool to read them.
- * July 6, 1998 by Seth Burgess <sjburges@gimp.org>
+ * July 6, 1998 by Seth Burgess <sjburges@ligma.org>
  *
  * Dec 17, 2000
- * Load and save GIMP brushes in GRAY or RGBA.  jtl + neo
+ * Load and save LIGMA brushes in GRAY or RGBA.  jtl + neo
  *
  *
  * TODO: Give some better error reporting on not opening files/bad headers
@@ -34,10 +34,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-gbr-save"
@@ -49,12 +49,12 @@ typedef struct _GbrClass GbrClass;
 
 struct _Gbr
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _GbrClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -63,33 +63,33 @@ struct _GbrClass
 
 GType                   gbr_get_type         (void) G_GNUC_CONST;
 
-static GList          * gbr_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * gbr_create_procedure (GimpPlugIn           *plug_in,
+static GList          * gbr_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * gbr_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * gbr_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaProcedure        *procedure,
                                               GObject              *config);
 
 
-G_DEFINE_TYPE (Gbr, gbr, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Gbr, gbr, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GBR_TYPE)
+LIGMA_MAIN (GBR_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 gbr_class_init (GbrClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = gbr_query_procedures;
   plug_in_class->create_procedure = gbr_create_procedure;
@@ -102,82 +102,82 @@ gbr_init (Gbr *gbr)
 }
 
 static GList *
-gbr_query_procedures (GimpPlugIn *plug_in)
+gbr_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-gbr_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+gbr_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            gbr_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("GIMP brush"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("LIGMA brush"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the GIMP brush "
+      ligma_procedure_set_documentation (procedure,
+                                        "Exports files in the LIGMA brush "
                                         "file format",
-                                        "Exports files in the GIMP brush "
+                                        "Exports files in the LIGMA brush "
                                         "file format",
                                         SAVE_PROC);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",
                                       "1997-2000");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/x-gimp-gbr");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
+                                          "image/x-ligma-gbr");
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "gbr");
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      GIMP_PROC_ARG_INT (procedure, "spacing",
+      LIGMA_PROC_ARG_INT (procedure, "spacing",
                          "Spacing",
                          "Spacing of the brush",
                          1, 1000, 10,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "description",
+      LIGMA_PROC_ARG_STRING (procedure, "description",
                             "Description",
                             "Short description of the brush",
-                            "GIMP Brush",
-                            GIMP_PARAM_READWRITE);
+                            "LIGMA Brush",
+                            LIGMA_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-gbr_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+gbr_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   gchar               *description;
   GError              *error  = NULL;
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "description", &description,
@@ -185,7 +185,7 @@ gbr_save (GimpProcedure        *procedure,
 
   if (! description || ! strlen (description))
     {
-      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+      gchar *name = g_path_get_basename (ligma_file_get_utf8_name (file));
 
       if (g_str_has_suffix (name, ".gbr"))
         name[strlen (name) - 4] = '\0';
@@ -202,19 +202,19 @@ gbr_save (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "GBR",
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "GBR",
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -227,20 +227,20 @@ gbr_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("GBR format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpValueArray *save_retvals;
+      LigmaValueArray *save_retvals;
       gint            spacing;
 
       g_object_get (config,
@@ -249,11 +249,11 @@ gbr_save (GimpProcedure        *procedure,
                     NULL);
 
       save_retvals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
+        ligma_pdb_run_procedure (ligma_get_pdb (),
                                 "file-gbr-save-internal",
-                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,    image,
-                                GIMP_TYPE_DRAWABLE, drawables[0],
+                                LIGMA_TYPE_RUN_MODE, LIGMA_RUN_NONINTERACTIVE,
+                                LIGMA_TYPE_IMAGE,    image,
+                                LIGMA_TYPE_DRAWABLE, drawables[0],
                                 G_TYPE_FILE,        file,
                                 G_TYPE_INT,         spacing,
                                 G_TYPE_STRING,      description,
@@ -261,33 +261,33 @@ gbr_save (GimpProcedure        *procedure,
 
       g_free (description);
 
-      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
+      if (LIGMA_VALUES_GET_ENUM (save_retvals, 0) != LIGMA_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
                        "Running procedure 'file-gbr-save-internal' "
                        "failed: %s",
-                       gimp_pdb_get_last_error (gimp_get_pdb ()));
+                       ligma_pdb_get_last_error (ligma_get_pdb ()));
 
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
-      gimp_value_array_unref (save_retvals);
+      ligma_value_array_unref (save_retvals);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -296,8 +296,8 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *scale;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as Brush"));
 
   /* The main grid */
@@ -309,23 +309,23 @@ save_dialog (GimpProcedure *procedure,
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  entry = gimp_prop_entry_new (config, "description", 256);
+  entry = ligma_prop_entry_new (config, "description", 256);
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Description:"), 1.0, 0.5,
                             entry, 2);
 
-  scale = gimp_prop_scale_entry_new (config, "spacing",
+  scale = ligma_prop_scale_entry_new (config, "spacing",
                                      NULL, 1.0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  gtk_widget_hide (ligma_labeled_get_label (LIGMA_LABELED (scale)));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Spacing:"), 0.0, 0.5, scale, 4);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

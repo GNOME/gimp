@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,45 +20,45 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpdialogconfig.h"
+#include "config/ligmadialogconfig.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
 #include "core/core-enums.h"
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-convert-indexed.h"
-#include "core/gimpimage-convert-precision.h"
-#include "core/gimpimage-convert-type.h"
-#include "core/gimpimage-crop.h"
-#include "core/gimpimage-duplicate.h"
-#include "core/gimpimage-flip.h"
-#include "core/gimpimage-merge.h"
-#include "core/gimpimage-resize.h"
-#include "core/gimpimage-rotate.h"
-#include "core/gimpimage-scale.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpitem.h"
-#include "core/gimppickable.h"
-#include "core/gimppickable-auto-shrink.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-convert-indexed.h"
+#include "core/ligmaimage-convert-precision.h"
+#include "core/ligmaimage-convert-type.h"
+#include "core/ligmaimage-crop.h"
+#include "core/ligmaimage-duplicate.h"
+#include "core/ligmaimage-flip.h"
+#include "core/ligmaimage-merge.h"
+#include "core/ligmaimage-resize.h"
+#include "core/ligmaimage-rotate.h"
+#include "core/ligmaimage-scale.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaitem.h"
+#include "core/ligmapickable.h"
+#include "core/ligmapickable-auto-shrink.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/color-profile-dialog.h"
@@ -75,109 +75,109 @@
 #include "actions.h"
 #include "image-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
 static void   image_convert_rgb_callback       (GtkWidget                *dialog,
-                                                GimpImage                *image,
-                                                GimpColorProfile         *new_profile,
+                                                LigmaImage                *image,
+                                                LigmaColorProfile         *new_profile,
                                                 GFile                    *new_file,
-                                                GimpColorRenderingIntent  intent,
+                                                LigmaColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_convert_gray_callback      (GtkWidget                *dialog,
-                                                GimpImage                *image,
-                                                GimpColorProfile         *new_profile,
+                                                LigmaImage                *image,
+                                                LigmaColorProfile         *new_profile,
                                                 GFile                    *new_file,
-                                                GimpColorRenderingIntent  intent,
+                                                LigmaColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_convert_indexed_callback   (GtkWidget              *dialog,
-                                                GimpImage              *image,
-                                                GimpConvertPaletteType  palette_type,
+                                                LigmaImage              *image,
+                                                LigmaConvertPaletteType  palette_type,
                                                 gint                    max_colors,
                                                 gboolean                remove_duplicates,
-                                                GimpConvertDitherType   dither_type,
+                                                LigmaConvertDitherType   dither_type,
                                                 gboolean                dither_alpha,
                                                 gboolean                dither_text_layers,
-                                                GimpPalette            *custom_palette,
+                                                LigmaPalette            *custom_palette,
                                                 gpointer                user_data);
 
 static void   image_convert_precision_callback (GtkWidget              *dialog,
-                                                GimpImage              *image,
-                                                GimpPrecision           precision,
+                                                LigmaImage              *image,
+                                                LigmaPrecision           precision,
                                                 GeglDitherMethod        layer_dither_method,
                                                 GeglDitherMethod        text_layer_dither_method,
                                                 GeglDitherMethod        mask_dither_method,
                                                 gpointer                user_data);
 
 static void   image_profile_assign_callback    (GtkWidget                *dialog,
-                                                GimpImage                *image,
-                                                GimpColorProfile         *new_profile,
+                                                LigmaImage                *image,
+                                                LigmaColorProfile         *new_profile,
                                                 GFile                    *new_file,
-                                                GimpColorRenderingIntent  intent,
+                                                LigmaColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_profile_convert_callback   (GtkWidget                *dialog,
-                                                GimpImage                *image,
-                                                GimpColorProfile         *new_profile,
+                                                LigmaImage                *image,
+                                                LigmaColorProfile         *new_profile,
                                                 GFile                    *new_file,
-                                                GimpColorRenderingIntent  intent,
+                                                LigmaColorRenderingIntent  intent,
                                                 gboolean                  bpc,
                                                 gpointer                  user_data);
 
 static void   image_resize_callback            (GtkWidget              *dialog,
-                                                GimpViewable           *viewable,
-                                                GimpContext            *context,
+                                                LigmaViewable           *viewable,
+                                                LigmaContext            *context,
                                                 gint                    width,
                                                 gint                    height,
-                                                GimpUnit                unit,
+                                                LigmaUnit                unit,
                                                 gint                    offset_x,
                                                 gint                    offset_y,
                                                 gdouble                 xres,
                                                 gdouble                 yres,
-                                                GimpUnit                res_unit,
-                                                GimpFillType            fill_type,
-                                                GimpItemSet             layer_set,
+                                                LigmaUnit                res_unit,
+                                                LigmaFillType            fill_type,
+                                                LigmaItemSet             layer_set,
                                                 gboolean                resize_text_layers,
                                                 gpointer                user_data);
 
 static void   image_print_size_callback        (GtkWidget              *dialog,
-                                                GimpImage              *image,
+                                                LigmaImage              *image,
                                                 gdouble                 xresolution,
                                                 gdouble                 yresolution,
-                                                GimpUnit                resolution_unit,
+                                                LigmaUnit                resolution_unit,
                                                 gpointer                user_data);
 
 static void   image_scale_callback             (GtkWidget              *dialog,
-                                                GimpViewable           *viewable,
+                                                LigmaViewable           *viewable,
                                                 gint                    width,
                                                 gint                    height,
-                                                GimpUnit                unit,
-                                                GimpInterpolationType   interpolation,
+                                                LigmaUnit                unit,
+                                                LigmaInterpolationType   interpolation,
                                                 gdouble                 xresolution,
                                                 gdouble                 yresolution,
-                                                GimpUnit                resolution_unit,
+                                                LigmaUnit                resolution_unit,
                                                 gpointer                user_data);
 
 static void   image_merge_layers_callback      (GtkWidget              *dialog,
-                                                GimpImage              *image,
-                                                GimpContext            *context,
-                                                GimpMergeType           merge_type,
+                                                LigmaImage              *image,
+                                                LigmaContext            *context,
+                                                LigmaMergeType           merge_type,
                                                 gboolean                merge_active_group,
                                                 gboolean                discard_invisible,
                                                 gpointer                user_data);
 
 static void   image_softproof_profile_callback  (GtkWidget                *dialog,
-                                                 GimpImage                *image,
-                                                 GimpColorProfile         *new_profile,
+                                                 LigmaImage                *image,
+                                                 LigmaColorProfile         *new_profile,
                                                  GFile                    *new_file,
-                                                 GimpColorRenderingIntent  intent,
+                                                 LigmaColorRenderingIntent  intent,
                                                  gboolean                  bpc,
                                                  gpointer                  user_data);
 
@@ -185,16 +185,16 @@ static void   image_softproof_profile_callback  (GtkWidget                *dialo
 
 /*  private variables  */
 
-static GimpUnit               image_resize_unit  = GIMP_UNIT_PIXEL;
-static GimpUnit               image_scale_unit   = GIMP_UNIT_PIXEL;
-static GimpInterpolationType  image_scale_interp = -1;
-static GimpPalette           *image_convert_indexed_custom_palette = NULL;
+static LigmaUnit               image_resize_unit  = LIGMA_UNIT_PIXEL;
+static LigmaUnit               image_scale_unit   = LIGMA_UNIT_PIXEL;
+static LigmaInterpolationType  image_scale_interp = -1;
+static LigmaPalette           *image_convert_indexed_custom_palette = NULL;
 
 
 /*  public functions  */
 
 void
-image_new_cmd_callback (GimpAction *action,
+image_new_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
@@ -202,15 +202,15 @@ image_new_cmd_callback (GimpAction *action,
   GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                           gimp_widget_get_monitor (widget),
+  dialog = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                           ligma_widget_get_monitor (widget),
                                            NULL /*ui_manager*/,
                                            widget,
-                                           "gimp-image-new-dialog", -1, FALSE);
+                                           "ligma-image-new-dialog", -1, FALSE);
 
   if (dialog)
     {
-      GimpImage *image = action_data_get_image (data);
+      LigmaImage *image = action_data_get_image (data);
 
       image_new_dialog_set (dialog, image, NULL);
 
@@ -219,50 +219,50 @@ image_new_cmd_callback (GimpAction *action,
 }
 
 void
-image_duplicate_cmd_callback (GimpAction *action,
+image_duplicate_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpDisplayShell *shell;
-  GimpImage        *new_image;
+  LigmaDisplay      *display;
+  LigmaImage        *image;
+  LigmaDisplayShell *shell;
+  LigmaImage        *new_image;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
-  shell = gimp_display_get_shell (display);
+  image = ligma_display_get_image (display);
+  shell = ligma_display_get_shell (display);
 
-  new_image = gimp_image_duplicate (image);
+  new_image = ligma_image_duplicate (image);
 
-  gimp_create_display (new_image->gimp, new_image, shell->unit,
-                       gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell))));
+  ligma_create_display (new_image->ligma, new_image, shell->unit,
+                       ligma_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (ligma_widget_get_monitor (GTK_WIDGET (shell))));
 
   g_object_unref (new_image);
 }
 
 void
-image_convert_base_type_cmd_callback (GimpAction *action,
+image_convert_base_type_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpImage         *image;
-  GimpDisplay       *display;
+  LigmaImage         *image;
+  LigmaDisplay       *display;
   GtkWidget         *widget;
-  GimpDialogConfig  *config;
+  LigmaDialogConfig  *config;
   GtkWidget         *dialog;
-  GimpImageBaseType  base_type;
+  LigmaImageBaseType  base_type;
   GError            *error = NULL;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  base_type = (GimpImageBaseType) g_variant_get_int32 (value);
+  base_type = (LigmaImageBaseType) g_variant_get_int32 (value);
 
-  if (base_type == gimp_image_get_base_type (image))
+  if (base_type == ligma_image_get_base_type (image))
     return;
 
-#define CONVERT_TYPE_DIALOG_KEY "gimp-convert-type-dialog"
+#define CONVERT_TYPE_DIALOG_KEY "ligma-convert-type-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), CONVERT_TYPE_DIALOG_KEY);
 
@@ -272,31 +272,31 @@ image_convert_base_type_cmd_callback (GimpAction *action,
       dialog = NULL;
     }
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
   switch (base_type)
     {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      if (gimp_image_get_color_profile (image))
+    case LIGMA_RGB:
+    case LIGMA_GRAY:
+      if (ligma_image_get_color_profile (image))
         {
           ColorProfileDialogType    dialog_type;
-          GimpColorProfileCallback  callback;
-          GimpColorProfile         *current_profile;
-          GimpColorProfile         *default_profile;
-          GimpTRCType               trc;
+          LigmaColorProfileCallback  callback;
+          LigmaColorProfile         *current_profile;
+          LigmaColorProfile         *default_profile;
+          LigmaTRCType               trc;
 
           current_profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+            ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
-          trc = gimp_babl_trc (gimp_image_get_precision (image));
+          trc = ligma_babl_trc (ligma_image_get_precision (image));
 
-          if (base_type == GIMP_RGB)
+          if (base_type == LIGMA_RGB)
             {
               dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_RGB;
               callback    = image_convert_rgb_callback;
 
-              default_profile = gimp_babl_get_builtin_color_profile (GIMP_RGB,
+              default_profile = ligma_babl_get_builtin_color_profile (LIGMA_RGB,
                                                                      trc);
             }
           else
@@ -304,7 +304,7 @@ image_convert_base_type_cmd_callback (GimpAction *action,
               dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY;
               callback    = image_convert_gray_callback;
 
-              default_profile = gimp_babl_get_builtin_color_profile (GIMP_GRAY,
+              default_profile = ligma_babl_get_builtin_color_profile (LIGMA_GRAY,
                                                                      trc);
             }
 
@@ -318,16 +318,16 @@ image_convert_base_type_cmd_callback (GimpAction *action,
                                              callback,
                                              display);
         }
-      else if (! gimp_image_convert_type (image, base_type, NULL, NULL, &error))
+      else if (! ligma_image_convert_type (image, base_type, NULL, NULL, &error))
         {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (image->ligma,
+                                G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                                 error->message);
           g_clear_error (&error);
         }
       break;
 
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       dialog = convert_indexed_dialog_new (image,
                                            action_data_get_context (data),
                                            widget,
@@ -353,30 +353,30 @@ image_convert_base_type_cmd_callback (GimpAction *action,
   /*  always flush, also when only the indexed dialog was shown, so
    *  the menu items get updated back to the current image type
    */
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_convert_precision_cmd_callback (GimpAction *action,
+image_convert_precision_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpImage         *image;
-  GimpDisplay       *display;
+  LigmaImage         *image;
+  LigmaDisplay       *display;
   GtkWidget         *widget;
-  GimpDialogConfig  *config;
+  LigmaDialogConfig  *config;
   GtkWidget         *dialog;
-  GimpComponentType  component_type;
+  LigmaComponentType  component_type;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  component_type = (GimpComponentType) g_variant_get_int32 (value);
+  component_type = (LigmaComponentType) g_variant_get_int32 (value);
 
-  if (component_type == gimp_image_get_component_type (image))
+  if (component_type == ligma_image_get_component_type (image))
     return;
 
-#define CONVERT_PRECISION_DIALOG_KEY "gimp-convert-precision-dialog"
+#define CONVERT_PRECISION_DIALOG_KEY "ligma-convert-precision-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), CONVERT_PRECISION_DIALOG_KEY);
 
@@ -386,7 +386,7 @@ image_convert_precision_cmd_callback (GimpAction *action,
       dialog = NULL;
     }
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
   dialog = convert_precision_dialog_new (image,
                                          action_data_get_context (data),
@@ -404,80 +404,80 @@ image_convert_precision_cmd_callback (GimpAction *action,
   gtk_window_present (GTK_WINDOW (dialog));
 
   /*  see comment above  */
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_convert_trc_cmd_callback (GimpAction *action,
+image_convert_trc_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage     *image;
-  GimpDisplay   *display;
-  GimpTRCType    trc_type;
-  GimpPrecision  precision;
+  LigmaImage     *image;
+  LigmaDisplay   *display;
+  LigmaTRCType    trc_type;
+  LigmaPrecision  precision;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  trc_type = (GimpTRCType) g_variant_get_int32 (value);
+  trc_type = (LigmaTRCType) g_variant_get_int32 (value);
 
-  if (trc_type == gimp_babl_format_get_trc (gimp_image_get_layer_format (image,
+  if (trc_type == ligma_babl_format_get_trc (ligma_image_get_layer_format (image,
                                                                          FALSE)))
     return;
 
-  precision = gimp_babl_precision (gimp_image_get_component_type (image),
+  precision = ligma_babl_precision (ligma_image_get_component_type (image),
                                    trc_type);
 
-  gimp_image_convert_precision (image, precision,
+  ligma_image_convert_precision (image, precision,
                                 GEGL_DITHER_NONE,
                                 GEGL_DITHER_NONE,
                                 GEGL_DITHER_NONE,
-                                GIMP_PROGRESS (display));
-  gimp_image_flush (image);
+                                LIGMA_PROGRESS (display));
+  ligma_image_flush (image);
 }
 
 void
-image_color_profile_use_srgb_cmd_callback (GimpAction *action,
+image_color_profile_use_srgb_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gboolean   use_srgb;
   return_if_no_image (image, data);
 
   use_srgb = g_variant_get_boolean (value);
 
-  if (use_srgb != gimp_image_get_use_srgb_profile (image, NULL))
+  if (use_srgb != ligma_image_get_use_srgb_profile (image, NULL))
     {
-      gimp_image_set_use_srgb_profile (image, use_srgb);
-      gimp_image_flush (image);
+      ligma_image_set_use_srgb_profile (image, use_srgb);
+      ligma_image_flush (image);
     }
 }
 
 void
-image_color_profile_assign_cmd_callback (GimpAction *action,
+image_color_profile_assign_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-#define PROFILE_ASSIGN_DIALOG_KEY "gimp-profile-assign-dialog"
+#define PROFILE_ASSIGN_DIALOG_KEY "ligma-profile-assign-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), PROFILE_ASSIGN_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpColorProfile *current_profile;
-      GimpColorProfile *default_profile;
+      LigmaColorProfile *current_profile;
+      LigmaColorProfile *default_profile;
 
-      current_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
-      default_profile = gimp_image_get_builtin_color_profile (image);
+      current_profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
+      default_profile = ligma_image_get_builtin_color_profile (image);
 
       dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
                                          image,
@@ -497,30 +497,30 @@ image_color_profile_assign_cmd_callback (GimpAction *action,
 }
 
 void
-image_color_profile_convert_cmd_callback (GimpAction *action,
+image_color_profile_convert_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-#define PROFILE_CONVERT_DIALOG_KEY "gimp-profile-convert-dialog"
+#define PROFILE_CONVERT_DIALOG_KEY "ligma-profile-convert-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), PROFILE_CONVERT_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-      GimpColorProfile *current_profile;
-      GimpColorProfile *default_profile;
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
+      LigmaColorProfile *current_profile;
+      LigmaColorProfile *default_profile;
 
-      current_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
-      default_profile = gimp_image_get_builtin_color_profile (image);
+      current_profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
+      default_profile = ligma_image_get_builtin_color_profile (image);
 
       dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
                                          image,
@@ -541,38 +541,38 @@ image_color_profile_convert_cmd_callback (GimpAction *action,
 }
 
 void
-image_color_profile_discard_cmd_callback (GimpAction *action,
+image_color_profile_discard_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   return_if_no_image (image, data);
 
-  gimp_image_assign_color_profile (image, NULL, NULL, NULL);
-  gimp_image_flush (image);
+  ligma_image_assign_color_profile (image, NULL, NULL, NULL);
+  ligma_image_flush (image);
 }
 
 static void
 image_profile_save_dialog_response (GtkWidget *dialog,
                                     gint       response_id,
-                                    GimpImage *image)
+                                    LigmaImage *image)
 {
   if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
       GFile            *file;
       GError           *error = NULL;
 
-      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
       file    = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
       if (! file)
         return;
 
-      if (! gimp_color_profile_save_to_file (profile, file, &error))
+      if (! ligma_color_profile_save_to_file (profile, file, &error))
         {
-          gimp_message (image->gimp, NULL,
-                        GIMP_MESSAGE_WARNING,
+          ligma_message (image->ligma, NULL,
+                        LIGMA_MESSAGE_WARNING,
                         _("Saving color profile failed: %s"),
                         error->message);
           g_clear_error (&error);
@@ -587,41 +587,41 @@ image_profile_save_dialog_response (GtkWidget *dialog,
 }
 
 void
-image_color_profile_save_cmd_callback (GimpAction *action,
+image_color_profile_save_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-#define PROFILE_SAVE_DIALOG_KEY "gimp-profile-save-dialog"
+#define PROFILE_SAVE_DIALOG_KEY "ligma-profile-save-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), PROFILE_SAVE_DIALOG_KEY);
 
   if (! dialog)
     {
       GtkWindow        *toplevel;
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
       gchar            *basename;
 
       toplevel = GTK_WINDOW (gtk_widget_get_toplevel (widget));
-      profile  = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      profile  = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
       dialog =
-        gimp_color_profile_chooser_dialog_new (_("Save Color Profile"),
+        ligma_color_profile_chooser_dialog_new (_("Save Color Profile"),
                                                toplevel,
                                                GTK_FILE_CHOOSER_ACTION_SAVE);
 
-      gimp_color_profile_chooser_dialog_connect_path (dialog,
-                                                      G_OBJECT (image->gimp->config),
+      ligma_color_profile_chooser_dialog_connect_path (dialog,
+                                                      G_OBJECT (image->ligma->config),
                                                       "color-profile-path");
 
-      basename = g_strconcat (gimp_color_profile_get_label (profile),
+      basename = g_strconcat (ligma_color_profile_get_label (profile),
                               ".icc", NULL);
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
       g_free (basename);
@@ -637,36 +637,36 @@ image_color_profile_save_cmd_callback (GimpAction *action,
 }
 
 void
-image_resize_cmd_callback (GimpAction *action,
+image_resize_cmd_callback (LigmaAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   GtkWidget   *widget;
-  GimpDisplay *display;
+  LigmaDisplay *display;
   GtkWidget   *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
 
-#define RESIZE_DIALOG_KEY "gimp-resize-dialog"
+#define RESIZE_DIALOG_KEY "ligma-resize-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), RESIZE_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
-      if (image_resize_unit != GIMP_UNIT_PERCENT)
-        image_resize_unit = gimp_display_get_shell (display)->unit;
+      if (image_resize_unit != LIGMA_UNIT_PERCENT)
+        image_resize_unit = ligma_display_get_shell (display)->unit;
 
-      dialog = resize_dialog_new (GIMP_VIEWABLE (image),
+      dialog = resize_dialog_new (LIGMA_VIEWABLE (image),
                                   action_data_get_context (data),
                                   _("Set Image Canvas Size"),
-                                  "gimp-image-resize",
+                                  "ligma-image-resize",
                                   widget,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_RESIZE,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_IMAGE_RESIZE,
                                   image_resize_unit,
                                   config->image_resize_fill_type,
                                   config->image_resize_layer_set,
@@ -681,70 +681,70 @@ image_resize_cmd_callback (GimpAction *action,
 }
 
 void
-image_resize_to_layers_cmd_callback (GimpAction *action,
+image_resize_to_layers_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpDisplay  *display;
-  GimpImage    *image;
-  GimpProgress *progress;
+  LigmaDisplay  *display;
+  LigmaImage    *image;
+  LigmaProgress *progress;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                   _("Resizing"));
 
-  gimp_image_resize_to_layers (image,
+  ligma_image_resize_to_layers (image,
                                action_data_get_context (data),
                                NULL, NULL, NULL, NULL, progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_resize_to_selection_cmd_callback (GimpAction *action,
+image_resize_to_selection_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpDisplay  *display;
-  GimpImage    *image;
-  GimpProgress *progress;
+  LigmaDisplay  *display;
+  LigmaImage    *image;
+  LigmaProgress *progress;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                   _("Resizing"));
 
-  gimp_image_resize_to_selection (image,
+  ligma_image_resize_to_selection (image,
                                   action_data_get_context (data),
                                   progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_print_size_cmd_callback (GimpAction *action,
+image_print_size_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-#define PRINT_SIZE_DIALOG_KEY "gimp-print-size-dialog"
+#define PRINT_SIZE_DIALOG_KEY "ligma-print-size-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), PRINT_SIZE_DIALOG_KEY);
 
@@ -753,10 +753,10 @@ image_print_size_cmd_callback (GimpAction *action,
       dialog = print_size_dialog_new (image,
                                       action_data_get_context (data),
                                       _("Set Image Print Resolution"),
-                                      "gimp-image-print-size",
+                                      "ligma-image-print-size",
                                       widget,
-                                      gimp_standard_help_func,
-                                      GIMP_HELP_IMAGE_PRINT_SIZE,
+                                      ligma_standard_help_func,
+                                      LIGMA_HELP_IMAGE_PRINT_SIZE,
                                       image_print_size_callback,
                                       NULL);
 
@@ -767,30 +767,30 @@ image_print_size_cmd_callback (GimpAction *action,
 }
 
 void
-image_scale_cmd_callback (GimpAction *action,
+image_scale_cmd_callback (LigmaAction *action,
                           GVariant   *value,
                           gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-#define SCALE_DIALOG_KEY "gimp-scale-dialog"
+#define SCALE_DIALOG_KEY "ligma-scale-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), SCALE_DIALOG_KEY);
 
   if (! dialog)
     {
-      if (image_scale_unit != GIMP_UNIT_PERCENT)
-        image_scale_unit = gimp_display_get_shell (display)->unit;
+      if (image_scale_unit != LIGMA_UNIT_PERCENT)
+        image_scale_unit = ligma_display_get_shell (display)->unit;
 
       if (image_scale_interp == -1)
-        image_scale_interp = display->gimp->config->interpolation_type;
+        image_scale_interp = display->ligma->config->interpolation_type;
 
       dialog = image_scale_dialog_new (image,
                                        action_data_get_context (data),
@@ -807,121 +807,121 @@ image_scale_cmd_callback (GimpAction *action,
 }
 
 void
-image_flip_cmd_callback (GimpAction *action,
+image_flip_cmd_callback (LigmaAction *action,
                          GVariant   *value,
                          gpointer    data)
 {
-  GimpDisplay         *display;
-  GimpImage           *image;
-  GimpProgress        *progress;
-  GimpOrientationType  orientation;
+  LigmaDisplay         *display;
+  LigmaImage           *image;
+  LigmaProgress        *progress;
+  LigmaOrientationType  orientation;
   return_if_no_display (display, data);
 
-  orientation = (GimpOrientationType) g_variant_get_int32 (value);
+  orientation = (LigmaOrientationType) g_variant_get_int32 (value);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                   _("Flipping"));
 
-  gimp_image_flip (image, action_data_get_context (data),
+  ligma_image_flip (image, action_data_get_context (data),
                    orientation, progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_rotate_cmd_callback (GimpAction *action,
+image_rotate_cmd_callback (LigmaAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpImage        *image;
-  GimpProgress     *progress;
-  GimpRotationType  rotation;
+  LigmaDisplay      *display;
+  LigmaImage        *image;
+  LigmaProgress     *progress;
+  LigmaRotationType  rotation;
   return_if_no_display (display, data);
 
-  rotation = (GimpRotationType) g_variant_get_int32 (value);
+  rotation = (LigmaRotationType) g_variant_get_int32 (value);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                   _("Rotating"));
 
-  gimp_image_rotate (image, action_data_get_context (data),
+  ligma_image_rotate (image, action_data_get_context (data),
                      rotation, progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_crop_to_selection_cmd_callback (GimpAction *action,
+image_crop_to_selection_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   gint       x, y;
   gint       width, height;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+  if (! ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                           &x, &y, &width, &height))
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             _("Cannot crop because the current selection "
                               "is empty."));
       return;
     }
 
-  gimp_image_crop (image,
-                   action_data_get_context (data), GIMP_FILL_TRANSPARENT,
+  ligma_image_crop (image,
+                   action_data_get_context (data), LIGMA_FILL_TRANSPARENT,
                    x, y, width, height, TRUE);
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_crop_to_content_cmd_callback (GimpAction *action,
+image_crop_to_content_cmd_callback (LigmaAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   gint       x, y;
   gint       width, height;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
+  switch (ligma_pickable_auto_shrink (LIGMA_PICKABLE (image),
                                      0, 0,
-                                     gimp_image_get_width  (image),
-                                     gimp_image_get_height (image),
+                                     ligma_image_get_width  (image),
+                                     ligma_image_get_height (image),
                                      &x, &y, &width, &height))
     {
-    case GIMP_AUTO_SHRINK_SHRINK:
-      gimp_image_crop (image,
-                       action_data_get_context (data), GIMP_FILL_TRANSPARENT,
+    case LIGMA_AUTO_SHRINK_SHRINK:
+      ligma_image_crop (image,
+                       action_data_get_context (data), LIGMA_FILL_TRANSPARENT,
                        x, y, width, height, TRUE);
-      gimp_image_flush (image);
+      ligma_image_flush (image);
       break;
 
-    case GIMP_AUTO_SHRINK_EMPTY:
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+    case LIGMA_AUTO_SHRINK_EMPTY:
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_INFO,
                             _("Cannot crop because the image has no content."));
       break;
 
-    case GIMP_AUTO_SHRINK_UNSHRINKABLE:
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+    case LIGMA_AUTO_SHRINK_UNSHRINKABLE:
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_INFO,
                             _("Cannot crop because the image is already "
                               "cropped to its content."));
       break;
@@ -929,25 +929,25 @@ image_crop_to_content_cmd_callback (GimpAction *action,
 }
 
 void
-image_merge_layers_cmd_callback (GimpAction *action,
+image_merge_layers_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
   GtkWidget   *dialog;
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   GtkWidget   *widget;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-#define MERGE_LAYERS_DIALOG_KEY "gimp-merge-layers-dialog"
+#define MERGE_LAYERS_DIALOG_KEY "ligma-merge-layers-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), MERGE_LAYERS_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
       dialog = image_merge_layers_dialog_new (image,
                                               action_data_get_context (data),
@@ -965,17 +965,17 @@ image_merge_layers_cmd_callback (GimpAction *action,
 }
 
 void
-image_merge_layers_last_vals_cmd_callback (GimpAction *action,
+image_merge_layers_last_vals_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data)
 {
-  GimpImage        *image;
-  GimpDisplay      *display;
-  GimpDialogConfig *config;
+  LigmaImage        *image;
+  LigmaDisplay      *display;
+  LigmaDialogConfig *config;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
   image_merge_layers_callback (NULL,
                                image,
@@ -987,50 +987,50 @@ image_merge_layers_last_vals_cmd_callback (GimpAction *action,
 }
 
 void
-image_flatten_image_cmd_callback (GimpAction *action,
+image_flatten_image_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   GtkWidget   *widget;
   GError      *error = NULL;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_image_flatten (image, action_data_get_context (data),
-                            GIMP_PROGRESS (display), &error))
+  if (! ligma_image_flatten (image, action_data_get_context (data),
+                            LIGMA_PROGRESS (display), &error))
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
       return;
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 void
-image_configure_grid_cmd_callback (GimpAction *action,
+image_configure_grid_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-#define GRID_DIALOG_KEY "gimp-grid-dialog"
+#define GRID_DIALOG_KEY "ligma-grid-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), GRID_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
       dialog = grid_dialog_new (image,
                                 action_data_get_context (data),
@@ -1043,24 +1043,24 @@ image_configure_grid_cmd_callback (GimpAction *action,
 }
 
 void
-image_properties_cmd_callback (GimpAction *action,
+image_properties_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-#define PROPERTIES_DIALOG_KEY "gimp-image-properties-dialog"
+#define PROPERTIES_DIALOG_KEY "ligma-image-properties-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), PROPERTIES_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
       dialog = image_properties_dialog_new (image,
                                             action_data_get_context (data),
@@ -1077,95 +1077,95 @@ image_properties_cmd_callback (GimpAction *action,
 
 static void
 image_convert_rgb_callback (GtkWidget                *dialog,
-                            GimpImage                *image,
-                            GimpColorProfile         *new_profile,
+                            LigmaImage                *image,
+                            LigmaColorProfile         *new_profile,
                             GFile                    *new_file,
-                            GimpColorRenderingIntent  intent,
+                            LigmaColorRenderingIntent  intent,
                             gboolean                  bpc,
                             gpointer                  user_data)
 {
-  GimpProgress *progress = user_data;
+  LigmaProgress *progress = user_data;
   GError       *error    = NULL;
 
-  progress = gimp_progress_start (progress, FALSE,
+  progress = ligma_progress_start (progress, FALSE,
                                   _("Converting to RGB (%s)"),
-                                  gimp_color_profile_get_label (new_profile));
+                                  ligma_color_profile_get_label (new_profile));
 
-  if (! gimp_image_convert_type (image, GIMP_RGB, new_profile,
+  if (! ligma_image_convert_type (image, LIGMA_RGB, new_profile,
                                  progress, &error))
     {
-      gimp_message (image->gimp, G_OBJECT (dialog),
-                    GIMP_MESSAGE_ERROR,
+      ligma_message (image->ligma, G_OBJECT (dialog),
+                    LIGMA_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
 
       return;
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
  gtk_widget_destroy (dialog);
 }
 
 static void
 image_convert_gray_callback (GtkWidget                *dialog,
-                             GimpImage                *image,
-                             GimpColorProfile         *new_profile,
+                             LigmaImage                *image,
+                             LigmaColorProfile         *new_profile,
                              GFile                    *new_file,
-                             GimpColorRenderingIntent  intent,
+                             LigmaColorRenderingIntent  intent,
                              gboolean                  bpc,
                              gpointer                  user_data)
 {
-  GimpProgress *progress = user_data;
+  LigmaProgress *progress = user_data;
   GError       *error    = NULL;
 
-  progress = gimp_progress_start (progress, FALSE,
+  progress = ligma_progress_start (progress, FALSE,
                                   _("Converting to grayscale (%s)"),
-                                  gimp_color_profile_get_label (new_profile));
+                                  ligma_color_profile_get_label (new_profile));
 
-  if (! gimp_image_convert_type (image, GIMP_GRAY, new_profile,
+  if (! ligma_image_convert_type (image, LIGMA_GRAY, new_profile,
                                  progress, &error))
     {
-      gimp_message (image->gimp, G_OBJECT (dialog),
-                    GIMP_MESSAGE_ERROR,
+      ligma_message (image->ligma, G_OBJECT (dialog),
+                    LIGMA_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
 
       return;
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 image_convert_indexed_callback (GtkWidget              *dialog,
-                                GimpImage              *image,
-                                GimpConvertPaletteType  palette_type,
+                                LigmaImage              *image,
+                                LigmaConvertPaletteType  palette_type,
                                 gint                    max_colors,
                                 gboolean                remove_duplicates,
-                                GimpConvertDitherType   dither_type,
+                                LigmaConvertDitherType   dither_type,
                                 gboolean                dither_alpha,
                                 gboolean                dither_text_layers,
-                                GimpPalette            *custom_palette,
+                                LigmaPalette            *custom_palette,
                                 gpointer                user_data)
 {
-  GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GimpDisplay      *display = user_data;
-  GimpProgress     *progress;
+  LigmaDialogConfig *config  = LIGMA_DIALOG_CONFIG (image->ligma->config);
+  LigmaDisplay      *display = user_data;
+  LigmaProgress     *progress;
   GError           *error   = NULL;
 
   g_object_set (config,
@@ -1187,10 +1187,10 @@ image_convert_indexed_callback (GtkWidget              *dialog,
     g_object_add_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
                                (gpointer) &image_convert_indexed_custom_palette);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                   _("Converting to indexed colors"));
 
-  if (! gimp_image_convert_indexed (image,
+  if (! ligma_image_convert_indexed (image,
                                     config->image_convert_indexed_palette_type,
                                     config->image_convert_indexed_max_colors,
                                     config->image_convert_indexed_remove_duplicates,
@@ -1201,35 +1201,35 @@ image_convert_indexed_callback (GtkWidget              *dialog,
                                     progress,
                                     &error))
     {
-      gimp_message_literal (image->gimp, G_OBJECT (display),
-                            GIMP_MESSAGE_WARNING, error->message);
+      ligma_message_literal (image->ligma, G_OBJECT (display),
+                            LIGMA_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
 
       return;
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 image_convert_precision_callback (GtkWidget        *dialog,
-                                  GimpImage        *image,
-                                  GimpPrecision     precision,
+                                  LigmaImage        *image,
+                                  LigmaPrecision     precision,
                                   GeglDitherMethod  layer_dither_method,
                                   GeglDitherMethod  text_layer_dither_method,
                                   GeglDitherMethod  channel_dither_method,
                                   gpointer          user_data)
 {
-  GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GimpProgress     *progress = user_data;
+  LigmaDialogConfig *config   = LIGMA_DIALOG_CONFIG (image->ligma->config);
+  LigmaProgress     *progress = user_data;
   const gchar      *enum_desc;
   const Babl       *old_format;
   const Babl       *new_format;
@@ -1249,12 +1249,12 @@ image_convert_precision_callback (GtkWidget        *dialog,
    *  because the dialog leaves the passed dither methods untouched if
    *  dithering is disabled and passes the original values to the
    *  callback, in order not to change the values saved in
-   *  GimpDialogConfig.
+   *  LigmaDialogConfig.
    */
 
   /* random formats with the right precision */
-  old_format = gimp_image_get_layer_format (image, FALSE);
-  new_format = gimp_babl_format (GIMP_RGB, precision, FALSE, NULL);
+  old_format = ligma_image_get_layer_format (image, FALSE);
+  new_format = ligma_babl_format (LIGMA_RGB, precision, FALSE, NULL);
 
   old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
               babl_format_get_n_components (old_format));
@@ -1272,14 +1272,14 @@ image_convert_precision_callback (GtkWidget        *dialog,
       channel_dither_method    = GEGL_DITHER_NONE;
     }
 
-  gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+  ligma_enum_get_value (LIGMA_TYPE_PRECISION, precision,
                        NULL, NULL, &enum_desc, NULL);
 
-  progress = gimp_progress_start (progress, FALSE,
+  progress = ligma_progress_start (progress, FALSE,
                                   _("Converting image to %s"),
                                   enum_desc);
 
-  gimp_image_convert_precision (image,
+  ligma_image_convert_precision (image,
                                 precision,
                                 layer_dither_method,
                                 text_layer_dither_method,
@@ -1287,50 +1287,50 @@ image_convert_precision_callback (GtkWidget        *dialog,
                                 progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 image_profile_assign_callback (GtkWidget                *dialog,
-                               GimpImage                *image,
-                               GimpColorProfile         *new_profile,
+                               LigmaImage                *image,
+                               LigmaColorProfile         *new_profile,
                                GFile                    *new_file,
-                               GimpColorRenderingIntent  intent,
+                               LigmaColorRenderingIntent  intent,
                                gboolean                  bpc,
                                gpointer                  user_data)
 {
   GError *error = NULL;
 
-  if (! gimp_image_assign_color_profile (image, new_profile, NULL, &error))
+  if (! ligma_image_assign_color_profile (image, new_profile, NULL, &error))
     {
-      gimp_message (image->gimp, G_OBJECT (dialog),
-                    GIMP_MESSAGE_ERROR,
+      ligma_message (image->ligma, G_OBJECT (dialog),
+                    LIGMA_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
 
       return;
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 image_profile_convert_callback (GtkWidget                *dialog,
-                                GimpImage                *image,
-                                GimpColorProfile         *new_profile,
+                                LigmaImage                *image,
+                                LigmaColorProfile         *new_profile,
                                 GFile                    *new_file,
-                                GimpColorRenderingIntent  intent,
+                                LigmaColorRenderingIntent  intent,
                                 gboolean                  bpc,
                                 gpointer                  user_data)
 {
-  GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GimpProgress     *progress = user_data;
+  LigmaDialogConfig *config   = LIGMA_DIALOG_CONFIG (image->ligma->config);
+  LigmaProgress     *progress = user_data;
   GError           *error    = NULL;
 
   g_object_set (config,
@@ -1338,63 +1338,63 @@ image_profile_convert_callback (GtkWidget                *dialog,
                 "image-convert-profile-black-point-compensation", bpc,
                 NULL);
 
-  progress = gimp_progress_start (progress, FALSE,
+  progress = ligma_progress_start (progress, FALSE,
                                   _("Converting to '%s'"),
-                                  gimp_color_profile_get_label (new_profile));
+                                  ligma_color_profile_get_label (new_profile));
 
-  if (! gimp_image_convert_color_profile (image, new_profile,
+  if (! ligma_image_convert_color_profile (image, new_profile,
                                           config->image_convert_profile_intent,
                                           config->image_convert_profile_bpc,
                                           progress, &error))
     {
-      gimp_message (image->gimp, G_OBJECT (dialog),
-                    GIMP_MESSAGE_ERROR,
+      ligma_message (image->ligma, G_OBJECT (dialog),
+                    LIGMA_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
 
       return;
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 image_resize_callback (GtkWidget    *dialog,
-                       GimpViewable *viewable,
-                       GimpContext  *context,
+                       LigmaViewable *viewable,
+                       LigmaContext  *context,
                        gint          width,
                        gint          height,
-                       GimpUnit      unit,
+                       LigmaUnit      unit,
                        gint          offset_x,
                        gint          offset_y,
                        gdouble       xres,
                        gdouble       yres,
-                       GimpUnit      res_unit,
-                       GimpFillType  fill_type,
-                       GimpItemSet   layer_set,
+                       LigmaUnit      res_unit,
+                       LigmaFillType  fill_type,
+                       LigmaItemSet   layer_set,
                        gboolean      resize_text_layers,
                        gpointer      user_data)
 {
-  GimpDisplay *display = user_data;
+  LigmaDisplay *display = user_data;
 
   image_resize_unit = unit;
 
   if (width > 0 && height > 0)
     {
-      GimpImage        *image  = GIMP_IMAGE (viewable);
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-      GimpProgress     *progress;
+      LigmaImage        *image  = LIGMA_IMAGE (viewable);
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
+      LigmaProgress     *progress;
       gdouble           old_xres;
       gdouble           old_yres;
-      GimpUnit          old_res_unit;
+      LigmaUnit          old_res_unit;
       gboolean          update_resolution;
 
       g_object_set (config,
@@ -1405,15 +1405,15 @@ image_resize_callback (GtkWidget    *dialog,
 
       gtk_widget_destroy (dialog);
 
-      if (width  == gimp_image_get_width  (image) &&
-          height == gimp_image_get_height (image))
+      if (width  == ligma_image_get_width  (image) &&
+          height == ligma_image_get_height (image))
         return;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+      progress = ligma_progress_start (LIGMA_PROGRESS (display), FALSE,
                                       _("Resizing"));
 
-      gimp_image_get_resolution (image, &old_xres, &old_yres);
-      old_res_unit = gimp_image_get_unit (image);
+      ligma_image_get_resolution (image, &old_xres, &old_yres);
+      old_res_unit = ligma_image_get_unit (image);
 
       update_resolution = xres     != old_xres ||
                           yres     != old_yres ||
@@ -1421,14 +1421,14 @@ image_resize_callback (GtkWidget    *dialog,
 
       if (update_resolution)
         {
-          gimp_image_undo_group_start (image,
-                                       GIMP_UNDO_GROUP_IMAGE_SCALE,
+          ligma_image_undo_group_start (image,
+                                       LIGMA_UNDO_GROUP_IMAGE_SCALE,
                                        _("Change Canvas Size"));
-          gimp_image_set_resolution (image, xres, yres);
-          gimp_image_set_unit (image, res_unit);
+          ligma_image_set_resolution (image, xres, yres);
+          ligma_image_set_unit (image, res_unit);
         }
 
-      gimp_image_resize_with_layers (image,
+      ligma_image_resize_with_layers (image,
                                      context, fill_type,
                                      width, height,
                                      offset_x, offset_y,
@@ -1437,12 +1437,12 @@ image_resize_callback (GtkWidget    *dialog,
                                      progress);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
 
       if (update_resolution)
-        gimp_image_undo_group_end (image);
+        ligma_image_undo_group_end (image);
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
@@ -1453,10 +1453,10 @@ image_resize_callback (GtkWidget    *dialog,
 
 static void
 image_print_size_callback (GtkWidget *dialog,
-                           GimpImage *image,
+                           LigmaImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution,
-                           GimpUnit   resolution_unit,
+                           LigmaUnit   resolution_unit,
                            gpointer   data)
 {
   gdouble xres;
@@ -1464,78 +1464,78 @@ image_print_size_callback (GtkWidget *dialog,
 
   gtk_widget_destroy (dialog);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   if (xresolution     == xres &&
       yresolution     == yres &&
-      resolution_unit == gimp_image_get_unit (image))
+      resolution_unit == ligma_image_get_unit (image))
     return;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_SCALE,
                                _("Change Print Size"));
 
-  gimp_image_set_resolution (image, xresolution, yresolution);
-  gimp_image_set_unit (image, resolution_unit);
+  ligma_image_set_resolution (image, xresolution, yresolution);
+  ligma_image_set_unit (image, resolution_unit);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 static void
 image_scale_callback (GtkWidget              *dialog,
-                      GimpViewable           *viewable,
+                      LigmaViewable           *viewable,
                       gint                    width,
                       gint                    height,
-                      GimpUnit                unit,
-                      GimpInterpolationType   interpolation,
+                      LigmaUnit                unit,
+                      LigmaInterpolationType   interpolation,
                       gdouble                 xresolution,
                       gdouble                 yresolution,
-                      GimpUnit                resolution_unit,
+                      LigmaUnit                resolution_unit,
                       gpointer                user_data)
 {
-  GimpProgress *progress = user_data;
-  GimpImage    *image    = GIMP_IMAGE (viewable);
+  LigmaProgress *progress = user_data;
+  LigmaImage    *image    = LIGMA_IMAGE (viewable);
   gdouble       xres;
   gdouble       yres;
 
   image_scale_unit   = unit;
   image_scale_interp = interpolation;
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   if (width > 0 && height > 0)
     {
       gtk_widget_destroy (dialog);
 
-      if (width           == gimp_image_get_width  (image) &&
-          height          == gimp_image_get_height (image) &&
+      if (width           == ligma_image_get_width  (image) &&
+          height          == ligma_image_get_height (image) &&
           xresolution     == xres                          &&
           yresolution     == yres                          &&
-          resolution_unit == gimp_image_get_unit (image))
+          resolution_unit == ligma_image_get_unit (image))
         return;
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_SCALE,
                                    _("Scale Image"));
 
-      gimp_image_set_resolution (image, xresolution, yresolution);
-      gimp_image_set_unit (image, resolution_unit);
+      ligma_image_set_resolution (image, xresolution, yresolution);
+      ligma_image_set_unit (image, resolution_unit);
 
-      if (width  != gimp_image_get_width  (image) ||
-          height != gimp_image_get_height (image))
+      if (width  != ligma_image_get_width  (image) ||
+          height != ligma_image_get_height (image))
         {
-          progress = gimp_progress_start (progress, FALSE,
+          progress = ligma_progress_start (progress, FALSE,
                                           _("Scaling"));
 
-          gimp_image_scale (image, width, height, interpolation, progress);
+          ligma_image_scale (image, width, height, interpolation, progress);
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
@@ -1546,15 +1546,15 @@ image_scale_callback (GtkWidget              *dialog,
 
 static void
 image_merge_layers_callback (GtkWidget     *dialog,
-                             GimpImage     *image,
-                             GimpContext   *context,
-                             GimpMergeType  merge_type,
+                             LigmaImage     *image,
+                             LigmaContext   *context,
+                             LigmaMergeType  merge_type,
                              gboolean       merge_active_group,
                              gboolean       discard_invisible,
                              gpointer       user_data)
 {
-  GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GimpDisplay      *display = user_data;
+  LigmaDialogConfig *config  = LIGMA_DIALOG_CONFIG (image->ligma->config);
+  LigmaDisplay      *display = user_data;
 
   g_object_set (config,
                 "layer-merge-type",              merge_type,
@@ -1562,38 +1562,38 @@ image_merge_layers_callback (GtkWidget     *dialog,
                 "layer-merge-discard-invisible", discard_invisible,
                 NULL);
 
-  gimp_image_merge_visible_layers (image,
+  ligma_image_merge_visible_layers (image,
                                    context,
                                    config->layer_merge_type,
                                    config->layer_merge_active_group_only,
                                    config->layer_merge_discard_invisible,
-                                   GIMP_PROGRESS (display));
+                                   LIGMA_PROGRESS (display));
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   g_clear_pointer (&dialog, gtk_widget_destroy);
 }
 
 void
-image_softproof_profile_cmd_callback (GimpAction *action,
+image_softproof_profile_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpImage        *image;
-  GimpDisplayShell *shell;
+  LigmaImage        *image;
+  LigmaDisplayShell *shell;
   GtkWidget        *dialog;
   return_if_no_image (image, data);
   return_if_no_shell (shell, data);
 
-#define SOFTPROOF_PROFILE_DIALOG_KEY "gimp-softproof-profile-dialog"
+#define SOFTPROOF_PROFILE_DIALOG_KEY "ligma-softproof-profile-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (shell), SOFTPROOF_PROFILE_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpColorProfile *current_profile;
+      LigmaColorProfile *current_profile;
 
-      current_profile = gimp_image_get_simulation_profile (image);
+      current_profile = ligma_image_get_simulation_profile (image);
 
       dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE,
                                          image,
@@ -1614,60 +1614,60 @@ image_softproof_profile_cmd_callback (GimpAction *action,
 
 static void
 image_softproof_profile_callback (GtkWidget                *dialog,
-                                  GimpImage                *image,
-                                  GimpColorProfile         *new_profile,
+                                  LigmaImage                *image,
+                                  LigmaColorProfile         *new_profile,
                                   GFile                    *new_file,
-                                  GimpColorRenderingIntent  intent,
+                                  LigmaColorRenderingIntent  intent,
                                   gboolean                  bpc,
                                   gpointer                  user_data)
 {
-  GimpDisplayShell *shell = user_data;
+  LigmaDisplayShell *shell = user_data;
 
   /* Update image's simulation profile */
-  gimp_image_set_simulation_profile (image, new_profile);
-  gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (shell));
+  ligma_image_set_simulation_profile (image, new_profile);
+  ligma_color_managed_simulation_profile_changed (LIGMA_COLOR_MANAGED (shell));
 
   gtk_widget_destroy (dialog);
 }
 
 void
-image_softproof_intent_cmd_callback (GimpAction *action,
+image_softproof_intent_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpImage                 *image;
-  GimpDisplayShell          *shell;
-  GimpColorRenderingIntent   intent;
+  LigmaImage                 *image;
+  LigmaDisplayShell          *shell;
+  LigmaColorRenderingIntent   intent;
   return_if_no_image (image, data);
   return_if_no_shell (shell, data);
 
-  intent = (GimpColorRenderingIntent) g_variant_get_int32 (value);
+  intent = (LigmaColorRenderingIntent) g_variant_get_int32 (value);
 
-  if (intent != gimp_image_get_simulation_intent (image))
+  if (intent != ligma_image_get_simulation_intent (image))
     {
-      gimp_image_set_simulation_intent (image, intent);
+      ligma_image_set_simulation_intent (image, intent);
       shell->color_config_set = TRUE;
-      gimp_color_managed_simulation_intent_changed (GIMP_COLOR_MANAGED (shell));
+      ligma_color_managed_simulation_intent_changed (LIGMA_COLOR_MANAGED (shell));
     }
 }
 
 void
-image_softproof_bpc_cmd_callback (GimpAction *action,
+image_softproof_bpc_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpImage                 *image;
-  GimpDisplayShell          *shell;
+  LigmaImage                 *image;
+  LigmaDisplayShell          *shell;
   gboolean                   bpc;
   return_if_no_image (image, data);
   return_if_no_shell (shell, data);
 
   bpc = g_variant_get_boolean (value);
 
-  if (bpc != gimp_image_get_simulation_bpc (image))
+  if (bpc != ligma_image_get_simulation_bpc (image))
     {
-      gimp_image_set_simulation_bpc (image, bpc);
+      ligma_image_set_simulation_bpc (image, bpc);
       shell->color_config_set = TRUE;
-      gimp_color_managed_simulation_bpc_changed (GIMP_COLOR_MANAGED (shell));
+      ligma_color_managed_simulation_bpc_changed (LIGMA_COLOR_MANAGED (shell));
     }
 }

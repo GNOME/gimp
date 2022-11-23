@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
 
-#include "gimpcolorframe.h"
+#include "ligmacolorframe.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RGBA_EPSILON 1e-6
@@ -45,7 +45,7 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_MODE,
   PROP_HAS_NUMBER,
   PROP_NUMBER,
@@ -57,99 +57,99 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_color_frame_dispose             (GObject        *object);
-static void       gimp_color_frame_finalize            (GObject        *object);
-static void       gimp_color_frame_get_property        (GObject        *object,
+static void       ligma_color_frame_dispose             (GObject        *object);
+static void       ligma_color_frame_finalize            (GObject        *object);
+static void       ligma_color_frame_get_property        (GObject        *object,
                                                         guint           property_id,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
-static void       gimp_color_frame_set_property        (GObject        *object,
+static void       ligma_color_frame_set_property        (GObject        *object,
                                                         guint           property_id,
                                                         const GValue   *value,
                                                         GParamSpec     *pspec);
 
-static void       gimp_color_frame_style_updated       (GtkWidget      *widget);
-static gboolean   gimp_color_frame_draw                (GtkWidget      *widget,
+static void       ligma_color_frame_style_updated       (GtkWidget      *widget);
+static gboolean   ligma_color_frame_draw                (GtkWidget      *widget,
                                                         cairo_t        *cr);
 
-static void       gimp_color_frame_combo_callback      (GtkWidget      *widget,
-                                                        GimpColorFrame *frame);
-static void       gimp_color_frame_update              (GimpColorFrame *frame);
+static void       ligma_color_frame_combo_callback      (GtkWidget      *widget,
+                                                        LigmaColorFrame *frame);
+static void       ligma_color_frame_update              (LigmaColorFrame *frame);
 
-static void       gimp_color_frame_image_changed       (GimpColorFrame *frame,
-                                                        GimpImage      *image,
-                                                        GimpContext    *context);
+static void       ligma_color_frame_image_changed       (LigmaColorFrame *frame,
+                                                        LigmaImage      *image,
+                                                        LigmaContext    *context);
 
-static void       gimp_color_frame_update_simulation   (GimpImage        *image,
-                                                        GimpColorFrame   *frame);
+static void       ligma_color_frame_update_simulation   (LigmaImage        *image,
+                                                        LigmaColorFrame   *frame);
 
-G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
+G_DEFINE_TYPE (LigmaColorFrame, ligma_color_frame, LIGMA_TYPE_FRAME)
 
-#define parent_class gimp_color_frame_parent_class
+#define parent_class ligma_color_frame_parent_class
 
 
 static void
-gimp_color_frame_class_init (GimpColorFrameClass *klass)
+ligma_color_frame_class_init (LigmaColorFrameClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose       = gimp_color_frame_dispose;
-  object_class->finalize      = gimp_color_frame_finalize;
-  object_class->get_property  = gimp_color_frame_get_property;
-  object_class->set_property  = gimp_color_frame_set_property;
+  object_class->dispose       = ligma_color_frame_dispose;
+  object_class->finalize      = ligma_color_frame_finalize;
+  object_class->get_property  = ligma_color_frame_get_property;
+  object_class->set_property  = ligma_color_frame_set_property;
 
-  widget_class->style_updated = gimp_color_frame_style_updated;
-  widget_class->draw          = gimp_color_frame_draw;
+  widget_class->style_updated = ligma_color_frame_style_updated;
+  widget_class->draw          = ligma_color_frame_draw;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_COLOR_PICK_MODE,
-                                                      GIMP_COLOR_PICK_MODE_PIXEL,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_COLOR_PICK_MODE,
+                                                      LIGMA_COLOR_PICK_MODE_PIXEL,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_NUMBER,
                                    g_param_spec_boolean ("has-number",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_NUMBER,
                                    g_param_spec_int ("number",
                                                      NULL, NULL,
                                                      0, 256, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_COLOR_AREA,
                                    g_param_spec_boolean ("has-color-area",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_COORDS,
                                    g_param_spec_boolean ("has-coords",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ELLIPSIZE,
                                    g_param_spec_enum ("ellipsize",
                                                       NULL, NULL,
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_color_frame_init (GimpColorFrame *frame)
+ligma_color_frame_init (LigmaColorFrame *frame)
 {
   GtkListStore *store;
   GtkWidget    *vbox;
@@ -160,28 +160,28 @@ gimp_color_frame_init (GimpColorFrame *frame)
   frame->sample_valid  = FALSE;
   frame->sample_format = babl_format ("R'G'B' u8");
 
-  gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&frame->color, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
 
   /* create the store manually so the values have a nice order */
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_COLOR_PICK_MODE,
-                                           GIMP_COLOR_PICK_MODE_LAST + 1,
-                                           GIMP_COLOR_PICK_MODE_PIXEL,
-                                           GIMP_COLOR_PICK_MODE_RGB_PERCENT,
-                                           GIMP_COLOR_PICK_MODE_RGB_U8,
-                                           GIMP_COLOR_PICK_MODE_HSV,
-                                           GIMP_COLOR_PICK_MODE_LCH,
-                                           GIMP_COLOR_PICK_MODE_LAB,
-                                           GIMP_COLOR_PICK_MODE_XYY,
-                                           GIMP_COLOR_PICK_MODE_YUV,
-                                           GIMP_COLOR_PICK_MODE_CMYK);
-  frame->combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  store = ligma_enum_store_new_with_values (LIGMA_TYPE_COLOR_PICK_MODE,
+                                           LIGMA_COLOR_PICK_MODE_LAST + 1,
+                                           LIGMA_COLOR_PICK_MODE_PIXEL,
+                                           LIGMA_COLOR_PICK_MODE_RGB_PERCENT,
+                                           LIGMA_COLOR_PICK_MODE_RGB_U8,
+                                           LIGMA_COLOR_PICK_MODE_HSV,
+                                           LIGMA_COLOR_PICK_MODE_LCH,
+                                           LIGMA_COLOR_PICK_MODE_LAB,
+                                           LIGMA_COLOR_PICK_MODE_XYY,
+                                           LIGMA_COLOR_PICK_MODE_YUV,
+                                           LIGMA_COLOR_PICK_MODE_CMYK);
+  frame->combo = ligma_enum_combo_box_new_with_model (LIGMA_ENUM_STORE (store));
   g_object_unref (store);
 
   gtk_frame_set_label_widget (GTK_FRAME (frame), frame->combo);
   gtk_widget_show (frame->combo);
 
   g_signal_connect (frame->combo, "changed",
-                    G_CALLBACK (gimp_color_frame_combo_callback),
+                    G_CALLBACK (ligma_color_frame_combo_callback),
                     frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -189,9 +189,9 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_widget_show (vbox);
 
   frame->color_area =
-    g_object_new (GIMP_TYPE_COLOR_AREA,
+    g_object_new (LIGMA_TYPE_COLOR_AREA,
                   "color",          &frame->color,
-                  "type",           GIMP_COLOR_AREA_SMALL_CHECKS,
+                  "type",           LIGMA_COLOR_AREA_SMALL_CHECKS,
                   "drag-mask",      GDK_BUTTON1_MASK,
                   "draw-border",    TRUE,
                   "height-request", 20,
@@ -203,7 +203,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
+  for (i = 0; i < LIGMA_COLOR_FRAME_ROWS; i++)
     {
       GtkWidget *hbox;
 
@@ -257,29 +257,29 @@ gimp_color_frame_init (GimpColorFrame *frame)
 }
 
 static void
-gimp_color_frame_dispose (GObject *object)
+ligma_color_frame_dispose (GObject *object)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (object);
 
-  if (frame->gimp)
+  if (frame->ligma)
     {
-      g_signal_handlers_disconnect_by_func (gimp_get_user_context (frame->gimp),
-                                            gimp_color_frame_image_changed,
+      g_signal_handlers_disconnect_by_func (ligma_get_user_context (frame->ligma),
+                                            ligma_color_frame_image_changed,
                                             frame);
-      frame->gimp = NULL;
+      frame->ligma = NULL;
     }
 
-  gimp_color_frame_set_image (frame, NULL);
+  ligma_color_frame_set_image (frame, NULL);
 
-  gimp_color_frame_set_color_config (frame, NULL);
+  ligma_color_frame_set_color_config (frame, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_color_frame_finalize (GObject *object)
+ligma_color_frame_finalize (GObject *object)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (object);
 
   g_clear_object (&frame->number_layout);
 
@@ -287,17 +287,17 @@ gimp_color_frame_finalize (GObject *object)
 }
 
 static void
-gimp_color_frame_get_property (GObject    *object,
+ligma_color_frame_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, frame->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, frame->ligma);
       break;
 
     case PROP_MODE:
@@ -331,53 +331,53 @@ gimp_color_frame_get_property (GObject    *object,
 }
 
 static void
-gimp_color_frame_set_property (GObject      *object,
+ligma_color_frame_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
-  GimpContext    *context;
-  GimpImage      *image;
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (object);
+  LigmaContext    *context;
+  LigmaImage      *image;
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      frame->gimp = g_value_get_object (value);
-      if (frame->gimp)
+    case PROP_LIGMA:
+      frame->ligma = g_value_get_object (value);
+      if (frame->ligma)
         {
-          context = gimp_get_user_context (frame->gimp);
-          image   = gimp_context_get_image (context);
+          context = ligma_get_user_context (frame->ligma);
+          image   = ligma_context_get_image (context);
 
           g_signal_connect_swapped (context, "image-changed",
-                                    G_CALLBACK (gimp_color_frame_image_changed),
+                                    G_CALLBACK (ligma_color_frame_image_changed),
                                     frame);
-          gimp_color_frame_image_changed (frame, image, context);
+          ligma_color_frame_image_changed (frame, image, context);
         }
       break;
 
     case PROP_MODE:
-      gimp_color_frame_set_mode (frame, g_value_get_enum (value));
+      ligma_color_frame_set_mode (frame, g_value_get_enum (value));
       break;
 
     case PROP_ELLIPSIZE:
-      gimp_color_frame_set_ellipsize (frame, g_value_get_enum (value));
+      ligma_color_frame_set_ellipsize (frame, g_value_get_enum (value));
       break;
 
     case PROP_HAS_NUMBER:
-      gimp_color_frame_set_has_number (frame, g_value_get_boolean (value));
+      ligma_color_frame_set_has_number (frame, g_value_get_boolean (value));
       break;
 
     case PROP_NUMBER:
-      gimp_color_frame_set_number (frame, g_value_get_int (value));
+      ligma_color_frame_set_number (frame, g_value_get_int (value));
       break;
 
     case PROP_HAS_COLOR_AREA:
-      gimp_color_frame_set_has_color_area (frame, g_value_get_boolean (value));
+      ligma_color_frame_set_has_color_area (frame, g_value_get_boolean (value));
       break;
 
     case PROP_HAS_COORDS:
-      gimp_color_frame_set_has_coords (frame, g_value_get_boolean (value));
+      ligma_color_frame_set_has_coords (frame, g_value_get_boolean (value));
       break;
 
     default:
@@ -387,9 +387,9 @@ gimp_color_frame_set_property (GObject      *object,
 }
 
 static void
-gimp_color_frame_style_updated (GtkWidget *widget)
+ligma_color_frame_style_updated (GtkWidget *widget)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (widget);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -397,10 +397,10 @@ gimp_color_frame_style_updated (GtkWidget *widget)
 }
 
 static gboolean
-gimp_color_frame_draw (GtkWidget *widget,
+ligma_color_frame_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
+  LigmaColorFrame *frame = LIGMA_COLOR_FRAME (widget);
 
   if (frame->has_number)
     {
@@ -468,52 +468,52 @@ gimp_color_frame_draw (GtkWidget *widget,
 /*  public functions  */
 
 /**
- * gimp_color_frame_new:
- * @gimp: A #Gimp object.
+ * ligma_color_frame_new:
+ * @ligma: A #Ligma object.
  *
- * Creates a new #GimpColorFrame widget.
+ * Creates a new #LigmaColorFrame widget.
  *
- * Returns: The new #GimpColorFrame widget.
+ * Returns: The new #LigmaColorFrame widget.
  **/
 GtkWidget *
-gimp_color_frame_new (Gimp *gimp)
+ligma_color_frame_new (Ligma *ligma)
 {
-  return g_object_new (GIMP_TYPE_COLOR_FRAME,
-                       "gimp", gimp,
+  return g_object_new (LIGMA_TYPE_COLOR_FRAME,
+                       "ligma", ligma,
                        NULL);
 }
 
 
 /**
- * gimp_color_frame_set_mode:
- * @frame: The #GimpColorFrame.
+ * ligma_color_frame_set_mode:
+ * @frame: The #LigmaColorFrame.
  * @mode:  The new @mode.
  *
- * Sets the #GimpColorFrame's color pick @mode. Calling this function
+ * Sets the #LigmaColorFrame's color pick @mode. Calling this function
  * does the same as selecting the @mode from the frame's #GtkComboBox.
  **/
 void
-gimp_color_frame_set_mode (GimpColorFrame    *frame,
-                           GimpColorPickMode  mode)
+ligma_color_frame_set_mode (LigmaColorFrame    *frame,
+                           LigmaColorPickMode  mode)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->combo), mode);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (frame->combo), mode);
 }
 
 void
-gimp_color_frame_set_ellipsize (GimpColorFrame     *frame,
+ligma_color_frame_set_ellipsize (LigmaColorFrame     *frame,
                                 PangoEllipsizeMode  ellipsize)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (ellipsize != frame->ellipsize)
     {
       frame->ellipsize = ellipsize;
 
-      for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
+      for (i = 0; i < LIGMA_COLOR_FRAME_ROWS; i++)
         {
           if (frame->value_labels[i])
             gtk_label_set_ellipsize (GTK_LABEL (frame->value_labels[i]),
@@ -523,10 +523,10 @@ gimp_color_frame_set_ellipsize (GimpColorFrame     *frame,
 }
 
 void
-gimp_color_frame_set_has_number (GimpColorFrame *frame,
+ligma_color_frame_set_has_number (LigmaColorFrame *frame,
                                  gboolean        has_number)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (has_number != frame->has_number)
     {
@@ -539,10 +539,10 @@ gimp_color_frame_set_has_number (GimpColorFrame *frame,
 }
 
 void
-gimp_color_frame_set_number (GimpColorFrame *frame,
+ligma_color_frame_set_number (LigmaColorFrame *frame,
                              gint            number)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (number != frame->number)
     {
@@ -555,10 +555,10 @@ gimp_color_frame_set_number (GimpColorFrame *frame,
 }
 
 void
-gimp_color_frame_set_has_color_area (GimpColorFrame *frame,
+ligma_color_frame_set_has_color_area (LigmaColorFrame *frame,
                                      gboolean        has_color_area)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (has_color_area != frame->has_color_area)
     {
@@ -571,10 +571,10 @@ gimp_color_frame_set_has_color_area (GimpColorFrame *frame,
 }
 
 void
-gimp_color_frame_set_has_coords (GimpColorFrame *frame,
+ligma_color_frame_set_has_coords (LigmaColorFrame *frame,
                                  gboolean        has_coords)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (has_coords != frame->has_coords)
     {
@@ -588,30 +588,30 @@ gimp_color_frame_set_has_coords (GimpColorFrame *frame,
 }
 
 /**
- * gimp_color_frame_set_color:
- * @frame:          The #GimpColorFrame.
+ * ligma_color_frame_set_color:
+ * @frame:          The #LigmaColorFrame.
  * @sample_average: The set @color is the result of averaging
- * @sample_format:  The format of the #GimpDrawable or #GimpImage the @color
+ * @sample_format:  The format of the #LigmaDrawable or #LigmaImage the @color
  *                  was picked from.
  * @pixel:          The raw pixel in @sample_format.
  * @color:          The @color to set.
  * @x:              X position where the color was picked.
  * @y:              Y position where the color was picked.
  *
- * Sets the color sample to display in the #GimpColorFrame. if
+ * Sets the color sample to display in the #LigmaColorFrame. if
  * @sample_average is %TRUE, @pixel represents the sample at the
  * center of the average area and will not be displayed.
  **/
 void
-gimp_color_frame_set_color (GimpColorFrame *frame,
+ligma_color_frame_set_color (LigmaColorFrame *frame,
                             gboolean        sample_average,
                             const Babl     *sample_format,
                             gpointer        pixel,
-                            const GimpRGB  *color,
+                            const LigmaRGB  *color,
                             gint            x,
                             gint            y)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
   g_return_if_fail (color != NULL);
 
   if (frame->sample_valid                     &&
@@ -619,7 +619,7 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
       frame->sample_format  == sample_format  &&
       frame->x              == x              &&
       frame->y              == y              &&
-      gimp_rgba_distance (&frame->color, color) < RGBA_EPSILON)
+      ligma_rgba_distance (&frame->color, color) < RGBA_EPSILON)
     {
       frame->color = *color;
       return;
@@ -634,38 +634,38 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
 
   memcpy (frame->pixel, pixel, babl_format_get_bytes_per_pixel (sample_format));
 
-  gimp_color_frame_update (frame);
+  ligma_color_frame_update (frame);
 }
 
 /**
- * gimp_color_frame_set_invalid:
- * @frame: The #GimpColorFrame.
+ * ligma_color_frame_set_invalid:
+ * @frame: The #LigmaColorFrame.
  *
- * Tells the #GimpColorFrame that the current sample is invalid. All labels
+ * Tells the #LigmaColorFrame that the current sample is invalid. All labels
  * visible for the current color space will show "n/a" (not available).
  *
  * There is no special API for setting the frame to "valid" again because
- * this happens automatically when calling gimp_color_frame_set_color().
+ * this happens automatically when calling ligma_color_frame_set_color().
  **/
 void
-gimp_color_frame_set_invalid (GimpColorFrame *frame)
+ligma_color_frame_set_invalid (LigmaColorFrame *frame)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (! frame->sample_valid)
     return;
 
   frame->sample_valid = FALSE;
 
-  gimp_color_frame_update (frame);
+  ligma_color_frame_update (frame);
 }
 
 void
-gimp_color_frame_set_color_config (GimpColorFrame  *frame,
-                                   GimpColorConfig *config)
+ligma_color_frame_set_color_config (LigmaColorFrame  *frame,
+                                   LigmaColorConfig *config)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
   if (config != frame->config)
     {
@@ -673,7 +673,7 @@ gimp_color_frame_set_color_config (GimpColorFrame  *frame,
         {
           g_object_unref (frame->config);
 
-          gimp_color_frame_update (frame);
+          ligma_color_frame_update (frame);
         }
 
       frame->config = config;
@@ -681,24 +681,24 @@ gimp_color_frame_set_color_config (GimpColorFrame  *frame,
       if (frame->config)
           g_object_ref (frame->config);
 
-      gimp_color_area_set_color_config (GIMP_COLOR_AREA (frame->color_area),
+      ligma_color_area_set_color_config (LIGMA_COLOR_AREA (frame->color_area),
                                         config);
     }
 }
 
 void
-gimp_color_frame_set_image (GimpColorFrame *frame,
-                            GimpImage      *image)
+ligma_color_frame_set_image (LigmaColorFrame *frame,
+                            LigmaImage      *image)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
   if (image != frame->image)
     {
       if (frame->image)
         {
           g_signal_handlers_disconnect_by_func (frame->image,
-                                                gimp_color_frame_update_simulation,
+                                                ligma_color_frame_update_simulation,
                                                 frame);
           g_object_unref (frame->image);
         }
@@ -711,44 +711,44 @@ gimp_color_frame_set_image (GimpColorFrame *frame,
       g_object_ref (frame->image);
 
       g_signal_connect (frame->image, "simulation-profile-changed",
-                        G_CALLBACK (gimp_color_frame_update_simulation),
+                        G_CALLBACK (ligma_color_frame_update_simulation),
                         frame);
       g_signal_connect (frame->image, "simulation-intent-changed",
-                        G_CALLBACK (gimp_color_frame_update_simulation),
+                        G_CALLBACK (ligma_color_frame_update_simulation),
                         frame);
 
-      gimp_color_frame_update_simulation (frame->image, frame);
+      ligma_color_frame_update_simulation (frame->image, frame);
     }
 }
 
 /*  private functions  */
 
 static void
-gimp_color_frame_combo_callback (GtkWidget      *widget,
-                                 GimpColorFrame *frame)
+ligma_color_frame_combo_callback (GtkWidget      *widget,
+                                 LigmaColorFrame *frame)
 {
   gint value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value))
     {
       frame->pick_mode = value;
-      gimp_color_frame_update (frame);
+      ligma_color_frame_update (frame);
 
       g_object_notify (G_OBJECT (frame), "mode");
     }
 }
 
 static void
-gimp_color_frame_update (GimpColorFrame *frame)
+ligma_color_frame_update (LigmaColorFrame *frame)
 {
-  const gchar      *names[GIMP_COLOR_FRAME_ROWS]   = { NULL, };
+  const gchar      *names[LIGMA_COLOR_FRAME_ROWS]   = { NULL, };
   gchar           **values                         = NULL;
-  const gchar      *tooltip[GIMP_COLOR_FRAME_ROWS] = { NULL, };
+  const gchar      *tooltip[LIGMA_COLOR_FRAME_ROWS] = { NULL, };
   gboolean          has_alpha;
-  GimpColorProfile *color_profile                  = NULL;
+  LigmaColorProfile *color_profile                  = NULL;
   gint              i;
 
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   has_alpha = babl_format_has_alpha (frame->sample_format);
 
@@ -756,7 +756,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
     {
       gchar str[16];
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
+      ligma_color_area_set_color (LIGMA_COLOR_AREA (frame->color_area),
                                  &frame->color);
 
       g_snprintf (str, sizeof (str), "%d", frame->x);
@@ -775,14 +775,14 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
   switch (frame->pick_mode)
     {
-    case GIMP_COLOR_PICK_MODE_PIXEL:
+    case LIGMA_COLOR_PICK_MODE_PIXEL:
       {
-        GimpImageBaseType  base_type;
-        GimpTRCType        trc;
+        LigmaImageBaseType  base_type;
+        LigmaTRCType        trc;
         const Babl        *space;
 
-        base_type = gimp_babl_format_get_base_type (frame->sample_format);
-        trc       = gimp_babl_format_get_trc (frame->sample_format);
+        base_type = ligma_babl_format_get_base_type (frame->sample_format);
+        trc       = ligma_babl_format_get_trc (frame->sample_format);
         space     = babl_format_get_space (frame->sample_format);
 
         if (frame->sample_valid)
@@ -790,13 +790,13 @@ gimp_color_frame_update (GimpColorFrame *frame)
             const Babl *print_format = NULL;
             guchar      print_pixel[32];
 
-            switch (gimp_babl_format_get_precision (frame->sample_format))
+            switch (ligma_babl_format_get_precision (frame->sample_format))
               {
-              case GIMP_PRECISION_U8_NON_LINEAR:
+              case LIGMA_PRECISION_U8_NON_LINEAR:
                 if (babl_format_is_palette (frame->sample_format))
                   {
-                    print_format = gimp_babl_format (GIMP_RGB,
-                                                     GIMP_PRECISION_U8_NON_LINEAR,
+                    print_format = ligma_babl_format (LIGMA_RGB,
+                                                     LIGMA_PRECISION_U8_NON_LINEAR,
                                                      has_alpha,
                                                      space);
                     break;
@@ -807,12 +807,12 @@ gimp_color_frame_update (GimpColorFrame *frame)
                 print_format = frame->sample_format;
                 break;
 
-              case GIMP_PRECISION_HALF_LINEAR:
-              case GIMP_PRECISION_HALF_NON_LINEAR:
-              case GIMP_PRECISION_HALF_PERCEPTUAL:
+              case LIGMA_PRECISION_HALF_LINEAR:
+              case LIGMA_PRECISION_HALF_NON_LINEAR:
+              case LIGMA_PRECISION_HALF_PERCEPTUAL:
                 print_format =
-                  gimp_babl_format (base_type,
-                                    gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                  ligma_babl_format (base_type,
+                                    ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
                                                          trc),
                                     has_alpha,
                                     space);
@@ -821,11 +821,11 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
             if (frame->sample_average)
               {
-                /* FIXME: this is broken: can't use the averaged sRGB GimpRGB
+                /* FIXME: this is broken: can't use the averaged sRGB LigmaRGB
                  * value for displaying pixel values when color management
                  * is enabled
                  */
-                gimp_rgba_get_pixel (&frame->color, print_format, print_pixel);
+                ligma_rgba_get_pixel (&frame->color, print_format, print_pixel);
               }
             else
               {
@@ -833,10 +833,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
                               frame->pixel, print_pixel, 1);
               }
 
-            values = gimp_babl_print_pixel (print_format, print_pixel);
+            values = ligma_babl_print_pixel (print_format, print_pixel);
           }
 
-        if (base_type == GIMP_GRAY)
+        if (base_type == LIGMA_GRAY)
           {
             /* TRANSLATORS: V for Value (grayscale) */
             names[0] = C_("Grayscale", "V:");
@@ -884,8 +884,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
       }
       break;
 
-    case GIMP_COLOR_PICK_MODE_RGB_PERCENT:
-    case GIMP_COLOR_PICK_MODE_RGB_U8:
+    case LIGMA_COLOR_PICK_MODE_RGB_PERCENT:
+    case LIGMA_COLOR_PICK_MODE_RGB_U8:
       /* TRANSLATORS: R for Red (RGB) */
       names[0] = C_("RGB", "R:");
       /* TRANSLATORS: G for Green (RGB) */
@@ -906,9 +906,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           values = g_new0 (gchar *, 6);
 
-          gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
+          ligma_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
 
-          if (frame->pick_mode == GIMP_COLOR_PICK_MODE_RGB_PERCENT)
+          if (frame->pick_mode == LIGMA_COLOR_PICK_MODE_RGB_PERCENT)
             {
               values[0] = g_strdup_printf ("%.01f %%", frame->color.r * 100.0);
               values[1] = g_strdup_printf ("%.01f %%", frame->color.g * 100.0);
@@ -927,7 +927,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_HSV:
+    case LIGMA_COLOR_PICK_MODE_HSV:
       /* TRANSLATORS: H for Hue (HSV color space) */
       names[0] = C_("HSV color space", "H:");
       /* TRANSLATORS: S for Saturation (HSV color space) */
@@ -941,9 +941,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
       if (frame->sample_valid)
         {
-          GimpHSV hsv;
+          LigmaHSV hsv;
 
-          gimp_rgb_to_hsv (&frame->color, &hsv);
+          ligma_rgb_to_hsv (&frame->color, &hsv);
           hsv.a = frame->color.a;
 
           values = g_new0 (gchar *, 5);
@@ -955,7 +955,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_LCH:
+    case LIGMA_COLOR_PICK_MODE_LCH:
       /* TRANSLATORS: L for Lightness (LCH color space) */
       names[0] = C_("LCH color space", "L*:");
       /* TRANSLATORS: C for Chroma (LCH color space) */
@@ -987,7 +987,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_LAB:
+    case LIGMA_COLOR_PICK_MODE_LAB:
       /* TRANSLATORS: L* for Lightness (Lab color space) */
       names[0] = C_("Lab color space", "L*:");
       /* TRANSLATORS: a* color channel in Lab color space */
@@ -1019,7 +1019,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_XYY:
+    case LIGMA_COLOR_PICK_MODE_XYY:
       /* TRANSLATORS: x from xyY color space */
       names[0] = C_("xyY color space", "x:");
       /* TRANSLATORS: y from xyY color space */
@@ -1051,7 +1051,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_YUV:
+    case LIGMA_COLOR_PICK_MODE_YUV:
       /* TRANSLATORS: Y from Yu'v' color space */
       names[0] = C_("Yu'v' color space", "Y:");
       /* TRANSLATORS: u' from Yu'v' color space */
@@ -1083,7 +1083,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_PICK_MODE_CMYK:
+    case LIGMA_COLOR_PICK_MODE_CMYK:
       {
         const Babl *space = NULL;
 
@@ -1095,10 +1095,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
         color_profile = frame->view_profile;
 
         if (! color_profile && frame->config)
-          color_profile = gimp_color_config_get_cmyk_color_profile (frame->config,
+          color_profile = ligma_color_config_get_cmyk_color_profile (frame->config,
                                                                     NULL);
         if (color_profile)
-          space = gimp_color_profile_get_space (color_profile,
+          space = ligma_color_profile_get_space (color_profile,
                                                 frame->simulation_intent,
                                                 NULL);
 
@@ -1140,7 +1140,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
               values[4] = g_strdup_printf ("%.01f %%", frame->color.a * 100.0);
             if (color_profile)
               {
-                profile_label = gimp_color_profile_get_label (color_profile);
+                profile_label = ligma_color_profile_get_label (color_profile);
                 values[5] = g_strdup_printf (_("%s"), profile_label);
                 tooltip[5] = g_strdup_printf (_("%s"), profile_label);
               }
@@ -1149,7 +1149,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
     }
 
-  for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
+  for (i = 0; i < LIGMA_COLOR_FRAME_ROWS; i++)
     {
       if (names[i])
         {
@@ -1175,29 +1175,29 @@ gimp_color_frame_update (GimpColorFrame *frame)
 }
 
 static void
-gimp_color_frame_image_changed (GimpColorFrame *frame,
-                                GimpImage      *image,
-                                GimpContext    *context)
+ligma_color_frame_image_changed (LigmaColorFrame *frame,
+                                LigmaImage      *image,
+                                LigmaContext    *context)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
   if (image == frame->image)
     return;
 
-  gimp_color_frame_set_image (frame, image);
+  ligma_color_frame_set_image (frame, image);
 }
 
 static void
-gimp_color_frame_update_simulation (GimpImage      *image,
-                                    GimpColorFrame *frame)
+ligma_color_frame_update_simulation (LigmaImage      *image,
+                                    LigmaColorFrame *frame)
 {
-  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (LIGMA_IS_COLOR_FRAME (frame));
 
-  if (image && GIMP_IS_COLOR_FRAME (frame))
+  if (image && LIGMA_IS_COLOR_FRAME (frame))
     {
-      frame->view_profile = gimp_image_get_simulation_profile (image);
-      frame->simulation_intent = gimp_image_get_simulation_intent (image);
+      frame->view_profile = ligma_image_get_simulation_profile (image);
+      frame->simulation_intent = ligma_image_get_simulation_intent (image);
 
-      gimp_color_frame_update (frame);
+      ligma_color_frame_update (frame);
     }
 }

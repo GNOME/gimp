@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#   Gimp-Python - allows the writing of Gimp plugins in Python.
+#   Ligma-Python - allows the writing of Ligma plugins in Python.
 #   Copyright (C) 1997  James Henstridge <james@daa.com.au>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,10 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-gi.require_version('GimpUi', '3.0')
-from gi.repository import Gimp
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import Ligma
+from gi.repository import LigmaUi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -29,11 +29,11 @@ from gi.repository import GLib
 
 import sys
 import pyconsole
-#import gimpshelf, gimpui, pyconsole
+#import ligmashelf, ligmaui, pyconsole
 
 import gettext
-textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+textdomain = "ligma30-python"
+gettext.bindtextdomain(textdomain, Ligma.locale_directory())
 gettext.textdomain(textdomain)
 _ = gettext.gettext
 
@@ -42,7 +42,7 @@ PROC_NAME = 'python-fu-console'
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
 def run(procedure, args, data):
-    GimpUi.init ("python-console.py")
+    LigmaUi.init ("python-console.py")
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
@@ -50,7 +50,7 @@ def run(procedure, args, data):
                  'cairo': gi.repository.cairo,
                  'Gdk': gi.repository.Gdk,
                  'Gegl': gi.repository.Gegl,
-                 'Gimp': gi.repository.Gimp,
+                 'Ligma': gi.repository.Ligma,
                  'Gio': gi.repository.Gio,
                  'Gtk': gi.repository.Gtk,
                  'GdkPixbuf': gi.repository.GdkPixbuf,
@@ -58,21 +58,21 @@ def run(procedure, args, data):
                  'GObject': gi.repository.GObject,
                  'Pango': gi.repository.Pango }
 
-    class GimpConsole(pyconsole.Console):
+    class LigmaConsole(pyconsole.Console):
         def __init__(self, quit_func=None):
-            banner = ('GIMP %s Python Console\nPython %s\n' %
-                      (Gimp.version(), sys.version))
+            banner = ('LIGMA %s Python Console\nPython %s\n' %
+                      (Ligma.version(), sys.version))
             pyconsole.Console.__init__(self,
                                        locals=namespace, banner=banner,
                                        quit_func=quit_func)
         def _commit(self):
             pyconsole.Console._commit(self)
-            Gimp.displays_flush()
+            Ligma.displays_flush()
 
-    class ConsoleDialog(GimpUi.Dialog):
+    class ConsoleDialog(LigmaUi.Dialog):
         def __init__(self):
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            GimpUi.Dialog.__init__(self, use_header_bar=use_header_bar)
+            LigmaUi.Dialog.__init__(self, use_header_bar=use_header_bar)
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
@@ -82,13 +82,13 @@ def run(procedure, args, data):
             Gtk.Dialog.add_button(self, "_Close", Gtk.ResponseType.CLOSE)
 
             Gtk.Widget.set_name (self, PROC_NAME)
-            GimpUi.Dialog.set_alternative_button_order_from_array(self,
+            LigmaUi.Dialog.set_alternative_button_order_from_array(self,
                                                                 [ Gtk.ResponseType.CLOSE,
                                                                   RESPONSE_BROWSE,
                                                                   RESPONSE_CLEAR,
                                                                   Gtk.ResponseType.OK ])
 
-            self.cons = GimpConsole(quit_func=lambda: Gtk.main_quit())
+            self.cons = LigmaConsole(quit_func=lambda: Gtk.main_quit())
 
             self.style_set (None, None)
 
@@ -150,13 +150,13 @@ def run(procedure, args, data):
             that the user can figure out how to edit the template.
 
             The code will run in the environment of the console/browser,
-            which is not the GIMP v2 GimpFu environment
-            but the GIMP v3 PyGObject introspected environment.
+            which is not the LIGMA v2 LigmaFu environment
+            but the LIGMA v3 PyGObject introspected environment.
 
-            If ever GimpFu module is resurrected, and Python console imports it,
+            If ever LigmaFu module is resurrected, and Python console imports it,
             then revert this code to its v2 form.
             '''
-            proc = Gimp.get_pdb().lookup_procedure(proc_name)
+            proc = Ligma.get_pdb().lookup_procedure(proc_name)
             if proc is None:
                 return None
 
@@ -177,14 +177,14 @@ def run(procedure, args, data):
 
             '''
             Cat prefix of str for a call to procedure name
-            Prefix like: Gimp.get_pdb().run_procedure('<foo>',
+            Prefix like: Ligma.get_pdb().run_procedure('<foo>',
             Note:
              - proc name is quoted, run_procedure wants a string.
              - proc name has hyphens. Not a Python name. Matches name in PDB.
              - trailing comma, another arg to follow:
                run_procedure takes two args: string name, and GValueArray of args
             '''
-            cmd += f"Gimp.get_pdb().run_procedure('{proc_name}', "
+            cmd += f"Ligma.get_pdb().run_procedure('{proc_name}', "
 
             '''
             Assemble argument string.
@@ -200,7 +200,7 @@ def run(procedure, args, data):
 
             '''
             Special handling for run mode.
-            GIMP v2: GimpFu had different handling for run mode.
+            LIGMA v2: LigmaFu had different handling for run mode.
             Insure run mode interactive, i.e. called procedure may open a GUI.
 
             This assumes that procedures use the same formal name for runmode arg.
@@ -208,10 +208,10 @@ def run(procedure, args, data):
             E.G. See formal signature of file-gex-load
 
             There is no other way to distinguish the run mode formal argument,
-            as its formal type is GimpParamEnum, a generic enum.
+            as its formal type is LigmaParamEnum, a generic enum.
             '''
             if len(param_specs) > 0 and param_specs[0].name == 'run-mode':
-                cmd += 'Gimp.RunMode.INTERACTIVE, '
+                cmd += 'Ligma.RunMode.INTERACTIVE, '
                 param_specs = param_specs[1:]
             # else doesn't take a run mode arg
 
@@ -253,14 +253,14 @@ def run(procedure, args, data):
         def browse(self):
             if not self.browse_dlg:
                 use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-                dlg = GimpUi.ProcBrowserDialog(use_header_bar=use_header_bar)
+                dlg = LigmaUi.ProcBrowserDialog(use_header_bar=use_header_bar)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
                 Gtk.Dialog.add_button(dlg, "Apply", Gtk.ResponseType.APPLY)
                 Gtk.Dialog.add_button(dlg, "Close", Gtk.ResponseType.CLOSE)
 
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
+                LigmaUi.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.CLOSE,
                                                                       Gtk.ResponseType.APPLY ])
 
@@ -282,7 +282,7 @@ def run(procedure, args, data):
                 try:
                     logfile = open(filename, 'w')
                 except IOError as e:
-                    Gimp.message(_("Could not open '%s' for writing: %s") %
+                    Ligma.message(_("Could not open '%s' for writing: %s") %
                                  (filename, e.strerror))
                     return
 
@@ -297,7 +297,7 @@ def run(procedure, args, data):
                     logfile.write(log)
                     logfile.close()
                 except IOError as e:
-                    Gimp.message(_("Could not write to '%s': %s") %
+                    Ligma.message(_("Could not write to '%s': %s") %
                                  (filename, e.strerror))
                     return
 
@@ -311,7 +311,7 @@ def run(procedure, args, data):
                 Gtk.Dialog.add_button(dlg, "_Cancel", Gtk.ResponseType.CANCEL)
                 Gtk.Dialog.add_button(dlg, "_Save", Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
+                LigmaUi.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.OK,
                                                                       Gtk.ResponseType.CANCEL ])
 
@@ -327,12 +327,12 @@ def run(procedure, args, data):
 
     ConsoleDialog().run()
 
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
-class PythonConsole (Gimp.PlugIn):
+class PythonConsole (Ligma.PlugIn):
     ## Properties: parameters ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
+    @GObject.Property(type=Ligma.RunMode,
+                      default=Ligma.RunMode.NONINTERACTIVE,
                       nick=_("Run mode"), blurb=_("The run mode"))
     def run_mode(self):
         """Read-write integer property."""
@@ -342,20 +342,20 @@ class PythonConsole (Gimp.PlugIn):
     def run_mode(self, runmode):
         self.runmode = runmode
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, name):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ PROC_NAME ]
 
     def do_create_procedure(self, name):
         if name == PROC_NAME:
-            procedure = Gimp.Procedure.new(self, name,
-                                           Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.Procedure.new(self, name,
+                                           Ligma.PDBProcType.PLUGIN,
                                            run, None)
             procedure.set_menu_label(_("Python _Console"))
-            procedure.set_documentation(_("Interactive GIMP Python interpreter"),
+            procedure.set_documentation(_("Interactive LIGMA Python interpreter"),
                                         _("Type in commands and see results"),
                                         "")
             procedure.set_attribution("James Henstridge",
@@ -367,4 +367,4 @@ class PythonConsole (Gimp.PlugIn):
             return procedure
         return None
 
-Gimp.main(PythonConsole.__gtype__, sys.argv)
+Ligma.main(PythonConsole.__gtype__, sys.argv)

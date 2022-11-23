@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1999 Adrian Likins and Tor Lillqvist
  *
@@ -22,25 +22,25 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpbrush-load.h"
-#include "gimpbrush-private.h"
-#include "gimpbrushpipe.h"
-#include "gimpbrushpipe-load.h"
+#include "ligmabrush-load.h"
+#include "ligmabrush-private.h"
+#include "ligmabrushpipe.h"
+#include "ligmabrushpipe-load.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GList *
-gimp_brush_pipe_load (GimpContext   *context,
+ligma_brush_pipe_load (LigmaContext   *context,
                       GFile         *file,
                       GInputStream  *input,
                       GError       **error)
 {
-  GimpBrushPipe *pipe      = NULL;
+  LigmaBrushPipe *pipe      = NULL;
   gint           n_brushes = 0;
   GString       *buffer;
   gchar         *paramstring;
@@ -66,13 +66,13 @@ gimp_brush_pipe_load (GimpContext   *context,
   if (buffer->len > 0 && buffer->len < 1024)
     {
       gchar *utf8 =
-        gimp_any_to_utf8 (buffer->str, buffer->len,
+        ligma_any_to_utf8 (buffer->str, buffer->len,
                           _("Invalid UTF-8 string in brush file '%s'."),
-                          gimp_file_get_utf8_name (file));
+                          ligma_file_get_utf8_name (file));
 
-      pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
+      pipe = g_object_new (LIGMA_TYPE_BRUSH_PIPE,
                            "name",      utf8,
-                           "mime-type", "image/x-gimp-gih",
+                           "mime-type", "image/x-ligma-gih",
                            NULL);
 
       g_free (utf8);
@@ -82,10 +82,10 @@ gimp_brush_pipe_load (GimpContext   *context,
 
   if (! pipe)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -106,10 +106,10 @@ gimp_brush_pipe_load (GimpContext   *context,
 
   if (n_brushes < 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
@@ -118,11 +118,11 @@ gimp_brush_pipe_load (GimpContext   *context,
   while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
 
-  pipe->brushes = g_new0 (GimpBrush *, n_brushes);
+  pipe->brushes = g_new0 (LigmaBrush *, n_brushes);
 
   while (pipe->n_brushes < n_brushes)
     {
-      pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
+      pipe->brushes[pipe->n_brushes] = ligma_brush_load_brush (context,
                                                               file, input,
                                                               error);
 
@@ -136,12 +136,12 @@ gimp_brush_pipe_load (GimpContext   *context,
       pipe->n_brushes++;
     }
 
-  if (! gimp_brush_pipe_set_params (pipe, paramstring))
+  if (! ligma_brush_pipe_set_params (pipe, paramstring))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Inconsistent parameters."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
@@ -153,11 +153,11 @@ gimp_brush_pipe_load (GimpContext   *context,
   pipe->current = pipe->brushes[0];
 
   /*  just to satisfy the code that relies on this crap  */
-  GIMP_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
-  GIMP_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
-  GIMP_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
-  GIMP_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
-  GIMP_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
+  LIGMA_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
+  LIGMA_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
+  LIGMA_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
+  LIGMA_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
+  LIGMA_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
 
   return g_list_prepend (NULL, pipe);
 }

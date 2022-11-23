@@ -1,4 +1,4 @@
-# Simplified Chinese translation of gimp-script-fu.
+# Simplified Chinese translation of ligma-script-fu.
 # Copyright (C) 2008-2009 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-01-31 04:20+0000\n"
 "PO-Revision-Date: 2022-01-31 17:52+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
@@ -38,8 +38,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "远程操作 Script-Fu 的服务器"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "GIMP 在线(_G)"
+msgid "_LIGMA Online"
+msgstr "LIGMA 在线(_G)"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -78,8 +78,8 @@ msgid "_Beveled Pattern"
 msgstr "卷边的图案(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
@@ -803,88 +803,88 @@ msgstr "阴影权重（%）"
 msgid "Flatten image"
 msgstr "平整图像"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "使用路径(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "到用户手册的书签"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "为 Web 准备图像(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "使用数码相机照片(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "创建、打开及保存文件(_F)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "基本概念(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "如何使用对话框(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "绘制简单对象(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "创建并使用选区(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "主站(_M)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "到 GIMP 网站的书签"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "到 LIGMA 网站的书签"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "开发者网站(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "开发路线(_R)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "到 GIMP 开发路线的书签"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "到 LIGMA 开发路线的书签"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "维基(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "到 GIMP 维基的书签"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "到 LIGMA 维基的书签"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "缺陷报告和特性需求(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "到 GIMP 缺陷追踪系统的书签"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "到 LIGMA 缺陷追踪系统的书签"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "用户手册网站(_U)"
 
@@ -1586,8 +1586,8 @@ msgstr "投影 Y 偏移"
 #~ msgid "Rendering Spyro"
 #~ msgstr "正在渲染 Spyro"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "_Spyroligma..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
@@ -2401,11 +2401,11 @@ msgstr "投影 Y 偏移"
 #~ msgid "Autocrop"
 #~ msgstr "自动剪裁"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅大标题的图像"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
+#~ msgstr "用 ligma.org 的页面主题创建一幅大标题的图像"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅小标题的图像"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
+#~ msgstr "用 ligma.org 的页面主题创建一幅小标题的图像"
 
 #~ msgid "Dark color"
 #~ msgstr "深颜色"
@@ -2432,23 +2432,23 @@ msgstr "投影 Y 偏移"
 #~ msgstr "小标题(_S)..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签标题的图像"
+#~ msgstr "用 ligma.org 的页面主题创建一幅管状按钮标签标题的图像"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签的图像"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
+#~ msgstr "用 ligma.org 的页面主题创建一幅管状按钮标签的图像"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅二级的管状按钮标签的图像"
+#~ msgstr "用 ligma.org 的页面主题创建一幅二级的管状按钮标签的图像"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
-#~ msgstr "用 gimp.org 的页面主题创建一幅三级的管状按钮标签的图像"
+#~ msgstr "用 ligma.org 的页面主题创建一幅三级的管状按钮标签的图像"
 
 #~ msgid "T_ube Sub-Button Label..."
 #~ msgstr "管状子按钮标签(_U)..."

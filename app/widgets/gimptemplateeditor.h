@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptemplateeditor.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmatemplateeditor.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATE_EDITOR_H__
-#define __GIMP_TEMPLATE_EDITOR_H__
+#ifndef __LIGMA_TEMPLATE_EDITOR_H__
+#define __LIGMA_TEMPLATE_EDITOR_H__
 
 
-#define GIMP_TYPE_TEMPLATE_EDITOR            (gimp_template_editor_get_type ())
-#define GIMP_TEMPLATE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE_EDITOR, GimpTemplateEditor))
-#define GIMP_TEMPLATE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE_EDITOR, GimpTemplateEditorClass))
-#define GIMP_IS_TEMPLATE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEMPLATE_EDITOR))
-#define GIMP_IS_TEMPLATE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEMPLATE_EDITOR))
-#define GIMP_TEMPLATE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEMPLATE_EDITOR, GimpTemplateEditorClass))
+#define LIGMA_TYPE_TEMPLATE_EDITOR            (ligma_template_editor_get_type ())
+#define LIGMA_TEMPLATE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEMPLATE_EDITOR, LigmaTemplateEditor))
+#define LIGMA_TEMPLATE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEMPLATE_EDITOR, LigmaTemplateEditorClass))
+#define LIGMA_IS_TEMPLATE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEMPLATE_EDITOR))
+#define LIGMA_IS_TEMPLATE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEMPLATE_EDITOR))
+#define LIGMA_TEMPLATE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEMPLATE_EDITOR, LigmaTemplateEditorClass))
 
 
-typedef struct _GimpTemplateEditorClass GimpTemplateEditorClass;
+typedef struct _LigmaTemplateEditorClass LigmaTemplateEditorClass;
 
-struct _GimpTemplateEditor
+struct _LigmaTemplateEditor
 {
   GtkBox  parent_instance;
 };
 
-struct _GimpTemplateEditorClass
+struct _LigmaTemplateEditorClass
 {
   GtkBoxClass   parent_class;
 };
 
 
-GType          gimp_template_editor_get_type      (void) G_GNUC_CONST;
+GType          ligma_template_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_template_editor_new           (GimpTemplate       *template,
-                                                   Gimp               *gimp,
+GtkWidget    * ligma_template_editor_new           (LigmaTemplate       *template,
+                                                   Ligma               *ligma,
                                                    gboolean            edit_template);
 
-GimpTemplate * gimp_template_editor_get_template  (GimpTemplateEditor *editor);
+LigmaTemplate * ligma_template_editor_get_template  (LigmaTemplateEditor *editor);
 
-void           gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
+void           ligma_template_editor_show_advanced (LigmaTemplateEditor *editor,
                                                    gboolean            expanded);
-GtkWidget    * gimp_template_editor_get_size_se   (GimpTemplateEditor *editor);
-GtkWidget    * gimp_template_editor_get_resolution_se
-                                                  (GimpTemplateEditor *editor);
-GtkWidget    * gimp_template_editor_get_resolution_chain
-                                                  (GimpTemplateEditor *editor);
+GtkWidget    * ligma_template_editor_get_size_se   (LigmaTemplateEditor *editor);
+GtkWidget    * ligma_template_editor_get_resolution_se
+                                                  (LigmaTemplateEditor *editor);
+GtkWidget    * ligma_template_editor_get_resolution_chain
+                                                  (LigmaTemplateEditor *editor);
 
 
-#endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */
+#endif  /*  __LIGMA_TEMPLATE_EDITOR_H__  */

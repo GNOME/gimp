@@ -1,46 +1,46 @@
 
-libgimpmath_sources_introspectable = files(
-  'gimpmatrix.c',
-  'gimpvector.c',
+libligmamath_sources_introspectable = files(
+  'ligmamatrix.c',
+  'ligmavector.c',
 )
 
-libgimpmath_sources = [
-  libgimpmath_sources_introspectable,
+libligmamath_sources = [
+  libligmamath_sources_introspectable,
 ]
 
-libgimpmath_headers_introspectable = files(
-  'gimpmathtypes.h',
-  'gimpmatrix.h',
-  'gimpvector.h',
+libligmamath_headers_introspectable = files(
+  'ligmamathtypes.h',
+  'ligmamatrix.h',
+  'ligmavector.h',
 )
 
-libgimpmath_headers = [
-  libgimpmath_headers_introspectable,
-  'gimpmath.h',
+libligmamath_headers = [
+  libligmamath_headers_introspectable,
+  'ligmamath.h',
 ]
 
-libgimpmath_introspectable = [
-  libgimpmath_sources_introspectable,
-  libgimpmath_headers_introspectable,
+libligmamath_introspectable = [
+  libligmamath_sources_introspectable,
+  libligmamath_headers_introspectable,
 ]
 
 
-libgimpmath = library('gimpmath-' + gimp_api_version,
-  libgimpmath_sources,
+libligmamath = library('ligmamath-' + ligma_api_version,
+  libligmamath_sources,
   include_directories: rootInclude,
   dependencies: [
     glib, gobject, math,
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpMath"', '-DGIMP_MATH_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="LibLigmaMath"', '-DLIGMA_MATH_COMPILATION', ],
   link_with: [
-    libgimpbase,
+    libligmabase,
   ],
-  vs_module_defs: 'gimpmath.def',
+  vs_module_defs: 'ligmamath.def',
   install: true,
   version: so_version,
 )
 
 install_headers(
-  libgimpmath_headers,
-  subdir: gimp_api_name / 'libgimpmath',
+  libligmamath_headers,
+  subdir: ligma_api_name / 'libligmamath',
 )

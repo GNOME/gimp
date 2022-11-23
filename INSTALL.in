@@ -1,16 +1,16 @@
 ---------------------------------------
-Installation instructions for GIMP @GIMP_APP_VERSION@
+Installation instructions for LIGMA @LIGMA_APP_VERSION@
 ---------------------------------------
 
-There are some basic steps to building and installing GIMP.
+There are some basic steps to building and installing LIGMA.
 
-GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP @GIMP_APP_VERSION@. Since libgimp* libraries
-and data are all versionned anyway, it is possible to keep your older GIMP 2.x
-installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
+LIGMA @LIGMA_APP_VERSION@ replaces earlier LIGMA 2.x versions. It is advised that you
+uninstall them before installing LIGMA @LIGMA_APP_VERSION@. Since libligma* libraries
+and data are all versionned anyway, it is possible to keep your older LIGMA 2.x
+installation in parallel to LIGMA @LIGMA_APP_VERSION@ on a same prefix.
 
-GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2.x version.
-Plug-ins and scripts written for GIMP 2.8, 2.6 or earlier GIMP 2.x
+LIGMA @LIGMA_APP_VERSION@ is not backward compatible with LIGMA 2.x version.
+Plug-ins and scripts written for LIGMA 2.8, 2.6 or earlier LIGMA 2.x
 versions will not work because the API changed.
 
 The most important part is to make sure the requirements for a build
@@ -27,7 +27,7 @@ header files installed.
   ******************************************************************
 
 
-  1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
+  1. You need to have installed a recent version of pkg-config (>= @LIGMA_PKGCONFIG_VERSION@) available
      from https://www.freedesktop.org/software/pkgconfig/.
      The compatible pkgconf utility would also work.
 
@@ -49,7 +49,7 @@ header files installed.
      GIR data is when cross-compiling because of the difficulty to make cross-tools
      for GObject Introspection.
      Nevertheless if you have working GIR cross-tools, you can force the expected
-     behaviour with GIMP's meson option -Dcan-crosscompile-gir=true
+     behaviour with LIGMA's meson option -Dcan-crosscompile-gir=true
 
      Optional:
 
@@ -66,7 +66,7 @@ header files installed.
        the `dot` tool from graphviz is available (runtime dependency).
 
   4. You need to have installed GTK version @GTK_REQUIRED_VERSION@ or newer.
-     GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
+     LIGMA also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
      (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
      from https://download.gnome.org/sources/.
 
@@ -75,9 +75,9 @@ header files installed.
 
   6. We require PangoCairo, a Pango backend using Cairo. Make sure you
      have Cairo, FreeType2 and fontconfig installed before you compile
-     Pango. GIMP depends on freetype2 being newer than version @FREETYPE2_REQUIRED_VERSION@
+     Pango. LIGMA depends on freetype2 being newer than version @FREETYPE2_REQUIRED_VERSION@
      and fontconfig @FONTCONFIG_REQUIRED_VERSION@ or newer. Older versions are known to have
-     bugs that seriously affect the stability of GIMP.
+     bugs that seriously affect the stability of LIGMA.
 
      On Windows, we recommend fontconfig 2.13.95 (or over) where support
      of fonts in user directory (Windows 1809 feature) appeared.
@@ -90,7 +90,7 @@ header files installed.
   7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
+  8. For metadata access LIGMA requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
      It is hosted at: https://wiki.gnome.org/Projects/gexiv2
 
   9. libpng, libjpeg, libtiff, librsvg and lcms are hard dependencies
@@ -100,11 +100,11 @@ header files installed.
      versions are in Rust which is not buildable on all platforms. Yet
      SVG support was deemed too important to be considered "optional"
      for a decent graphics activity. Nevertheless a packager really
-     intent to have GIMP running on an architecture with no Rust support
+     intent to have LIGMA running on an architecture with no Rust support
      could still:
 
      1) easily patch out the file-svg plug-in from build system;
-     2) build GIMP with -Dvector-icons=false. Ironically librsvg is
+     2) build LIGMA with -Dvector-icons=false. Ironically librsvg is
      needed at build time for this option, in order to create PNG
      variants of icons (making librsvg unneeded at runtime). So all it
      takes is to have a build machine with librsvg to create the PNG
@@ -125,7 +125,7 @@ header files installed.
      from a tarball or from your favorite package manager.
 
      In particular, do NOT install tags or release tarballs versioned
-     "v2.y.z". GIMP depends on the version 1 of libmypaint and is
+     "v2.y.z". LIGMA depends on the version 1 of libmypaint and is
      incompatible with the version 2 (which is still experimental anyway
      and has no stable release at time of writing).
 
@@ -136,8 +136,8 @@ header files installed.
      If installing from repository, install from branch "v1.3.x" or the
      last tag "v1.y.z" (e.g. "v1.3.1" at time of writing).
      In particular do NOT install from `master` branch which installs
-     brushes incompatible with GIMP (the `master` branch and v2 brushes
-     are targeted to software using recent libmypaint which GIMP wasn't
+     brushes incompatible with LIGMA (the `master` branch and v2 brushes
+     are targeted to software using recent libmypaint which LIGMA wasn't
      ported to yet).
 
      Also this is a data packages and therefore it will install the
@@ -146,7 +146,7 @@ header files installed.
      have to make sure your $PKG_CONFIG_PATH environment variable also
      lists `$PREFIX/share/pkgconfig/`.
 
- 12. GIMP uses GLib's GIO library to handle file URIs and any I/O in
+ 12. LIGMA uses GLib's GIO library to handle file URIs and any I/O in
      general, transparently, regardless where the file is stored, i.e.
      locally, remotely, with which scheme, and so on. GIO in turn
      supports various backends through modules. We don't know all the
@@ -168,7 +168,7 @@ header files installed.
         https://gitlab.gnome.org/GNOME/glib-networking
 
      Of course there might be more modules providing support of more
-     storage backends. Ideally GIMP would have support to load from any
+     storage backends. Ideally LIGMA would have support to load from any
      backend so packaging together with more GIO modules or recommending
      them in a package manager would be ideal. In any case, installing
      the ones for HTTP and HTTPS seems like the minimum nowadays.
@@ -193,15 +193,15 @@ header files installed.
      GdkPixbuf, GEGL, GIO, GLib, GObject and GTK.
 
  16. Windows builds can now generate backtrace logs upon a crash.
-     The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
+     The logs will be available in: %APPDATA%\LIGMA\@LIGMA_APP_VERSION@\CrashLog\
      The feature depends on Dr.MinGW's ExcHndl library:
 
         https://github.com/jrfonseca/drmingw
 
- 17. Configure GIMP by running `meson _build`. You may want to pass some
+ 17. Configure LIGMA by running `meson _build`. You may want to pass some
      options to it, see below.
 
-     Note that we now recommend officially to build GIMP with `meson`
+     Note that we now recommend officially to build LIGMA with `meson`
      instead of `autotools` (`configure` script, make, etc.).
      The autotools build scripts are left alive a bit longer in the git
      repository , so that we can revert the recommendation in case big
@@ -209,12 +209,12 @@ header files installed.
      So if you encounter issues with the meson build, now is the time to
      report them!
 
- 18. Build GIMP by running `ninja -C _build'.
+ 18. Build LIGMA by running `ninja -C _build'.
 
- 19. Install GIMP by running `ninja -C _build install'. In order to
-     avoid clashes with other versions of GIMP, we install a binary
-     called gimp-@GIMP_APP_VERSION@. By default there's also a link created so that
-     you can type 'gimp' to start gimp-@GIMP_APP_VERSION@.
+ 19. Install LIGMA by running `ninja -C _build install'. In order to
+     avoid clashes with other versions of LIGMA, we install a binary
+     called ligma-@LIGMA_APP_VERSION@. By default there's also a link created so that
+     you can type 'ligma' to start ligma-@LIGMA_APP_VERSION@.
 
  20. Summary of required packages and what version you need:
 
@@ -286,28 +286,28 @@ header files installed.
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
-might be used to build and install GIMP. The actual configuration,
+might be used to build and install LIGMA. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvf gimp-@GIMP_VERSION@.tar.xz   # unpack the sources
-  % cd gimp-@GIMP_VERSION@               # change to the toplevel directory
+  % tar xvf ligma-@LIGMA_VERSION@.tar.xz   # unpack the sources
+  % cd ligma-@LIGMA_VERSION@               # change to the toplevel directory
   % meson _build                  # `configure' step
-  % ninja -C _build               # build GIMP
-  % ninja -C _build install       # install GIMP
+  % ninja -C _build               # build LIGMA
+  % ninja -C _build install       # install LIGMA
 
 
-The `configure' step examines your system, and adapts GIMP to run on
+The `configure' step examines your system, and adapts LIGMA to run on
 it. The script has many options, some of which are described in the
 generic instructions included at the end of this file. All of the
 options can be listed using the command `meson configure' if you
 successfully configured already, or by reading the file `meson_options.txt`.
-There are several special options the GIMP configure script recognizes.
+There are several special options the LIGMA configure script recognizes.
 These are:
 
   -Dvector-icons=false  This option installs raster icons instead of
      vector icons.
 
-  -Drelocatable-bundle=yes  This option forces GIMP to search some
+  -Drelocatable-bundle=yes  This option forces LIGMA to search some
      resources (e.g. MyPaint brushes or libwmf fonts) relatively to the
      running prefix, rather than using build-time paths.
 
@@ -316,10 +316,10 @@ These are:
      checking to be disabled. NOTE: This option is intended primarily as
      a convenience for developers.
 
-  -Dgimpdir=DIR.  This option changes the default directory GIMP uses to
-     search for its configuration files from ~/.config/GIMP/@GIMP_APP_VERSION@ (the
-     directory .config/GIMP/@GIMP_APP_VERSION@ in the user's home directory) to
-     ~/.config/DIR/@GIMP_APP_VERSION@.
+  -Dligmadir=DIR.  This option changes the default directory LIGMA uses to
+     search for its configuration files from ~/.config/LIGMA/@LIGMA_APP_VERSION@ (the
+     directory .config/LIGMA/@LIGMA_APP_VERSION@ in the user's home directory) to
+     ~/.config/DIR/@LIGMA_APP_VERSION@.
      If DIR is an absolute path, the directory will be changed to DIR.
 
   -Dshmem-type=[none|sysv|posix|win32|auto].  This option allows you to
@@ -355,28 +355,28 @@ These are:
   -Dlinux-input=disabled  If you don't want to compile the Linux Input
      controller module, you can use the -Dlinux-input=disabled option.
 
-  -Dgi-docgen=enabled|disabled  This option controls whether the libgimp
+  -Dgi-docgen=enabled|disabled  This option controls whether the libligma
      C API references will be created using gi-docgen.
 
-  -Dg-ir-doc=true  This option controls whether the libgimp API
+  -Dg-ir-doc=true  This option controls whether the libligma API
      references for some binding languages will be created using
      g-ir-doc-tool and yelp-build.
 
   -Denable-multiproc=false This option allows you to disable support for
      multiple processors. It is enabled by default.
 
-  -Dwith-sendmail[=PATH] This option is used to tell GIMP to send email
+  -Dwith-sendmail[=PATH] This option is used to tell LIGMA to send email
      through sendmail instead of xdg-email. You can optionally indicate
      where to find the sendmail command. Otherwise sendmail will simply
      be searched in your $PATH at runtime.
 
   -Denable-default-bin=false  Use this option if you don't want to make
-     gimp-@GIMP_APP_VERSION@ the default GIMP installation. Otherwise a link called
-     gimp pointing to the gimp-@GIMP_APP_VERSION@ executable will be installed.
+     ligma-@LIGMA_APP_VERSION@ the default LIGMA installation. Otherwise a link called
+     ligma pointing to the ligma-@LIGMA_APP_VERSION@ executable will be installed.
 
   -Denable-console-bin=false  Use this option if you don't want the
-     gimp-console binary to be built in addition to the standard binary.
-     gimp-console is useful for command-line batch mode or as a server.
+     ligma-console binary to be built in addition to the standard binary.
+     ligma-console is useful for command-line batch mode or as a server.
 
   -Dpython=false  If for some reason you don't want to install the
      Python plug-ins, you can use -Dpython=false.
@@ -397,15 +397,15 @@ Additionally meson supports a wide range of common built-in options. See
 documentation: https://mesonbuild.com/Builtin-options.html
 
 The `ninja' command builds several things:
- - A bunch of public libraries in the directories starting with 'libgimp'.
+ - A bunch of public libraries in the directories starting with 'libligma'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-@GIMP_APP_VERSION@' in `app'.
+ - The main LIGMA program 'ligma-@LIGMA_APP_VERSION@' in `app'.
 
-The `ninja install' command installs the GIMP header files associated
-with the libgimp libraries, the plug-ins, some data files and the GIMP
+The `ninja install' command installs the LIGMA header files associated
+with the libligma libraries, the plug-ins, some data files and the LIGMA
 executable. After running `ninja install' and assuming the build process
-was successful you should be able to run `gimp'.
+was successful you should be able to run `ligma'.
 
 
 When configure fails
@@ -427,7 +427,7 @@ several reasons why this might fail:
   gtk+-3.0.pc to the environment variable PKG_CONFIG_PATH before running
   configure.
 
-* Libraries you installed are not found when you attempt to start GIMP.
+* Libraries you installed are not found when you attempt to start LIGMA.
   The details of how to fix this problem will depend on the system:
 
   On Linux and other systems using ELF libraries, add the directory to
@@ -463,7 +463,7 @@ This may help diagnose problems.
 When meson configure fails on plug-ins
 ======================================
 
-There are some GIMP plug-ins that need additional third-party libraries
+There are some LIGMA plug-ins that need additional third-party libraries
 installed on your system. For example to compile the plug-ins that load
 and save JPEG, PNG or TIFF files you need the related libraries and header
 files installed, otherwise you'll get a message that plug-in xyz will not

@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -23,10 +23,10 @@
 #ifndef _IMAP_PREVIEW_H
 #define _IMAP_PREVIEW_H
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 typedef struct {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   GtkWidget    *window;
   GtkWidget    *preview;
   GtkWidget    *hruler;
@@ -39,7 +39,7 @@ typedef struct {
    GdkCursorType cursor;
 } Preview_t;
 
-Preview_t *make_preview(GimpDrawable *drawable);
+Preview_t *make_preview(LigmaDrawable *drawable);
 void preview_redraw(void);
 
 void preview_unset_tmp_obj (Object_t *obj);

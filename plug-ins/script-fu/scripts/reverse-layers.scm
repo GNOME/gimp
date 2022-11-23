@@ -16,25 +16,25 @@
 
 (define (script-fu-reverse-layers img drawable)
   (let* (
-        (layers (gimp-image-get-layers img))
+        (layers (ligma-image-get-layers img))
         (num-layers (car layers))
         (layer-array (cadr layers))
         (i (- num-layers 1))
         )
 
-    (gimp-image-undo-group-start img)
+    (ligma-image-undo-group-start img)
 
     (while (>= i 0)
            (let ((layer (aref layer-array i)))
-             (if (= (car (gimp-layer-is-floating-sel layer)) FALSE)
-                 (gimp-image-lower-item-to-bottom img layer))
+             (if (= (car (ligma-layer-is-floating-sel layer)) FALSE)
+                 (ligma-image-lower-item-to-bottom img layer))
            )
 
            (set! i (- i 1))
     )
 
-    (gimp-image-undo-group-end img)
-    (gimp-displays-flush)
+    (ligma-image-undo-group-end img)
+    (ligma-displays-flush)
   )
 )
 

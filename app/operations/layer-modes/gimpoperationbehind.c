@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationbehind.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationbehind.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationbehind.h"
+#include "ligmaoperationbehind.h"
 
 
 
-static gboolean   gimp_operation_behind_process (GeglOperation       *op,
+static gboolean   ligma_operation_behind_process (GeglOperation       *op,
                                                  void                *in,
                                                  void                *layer,
                                                  void                *mask,
@@ -39,31 +39,31 @@ static gboolean   gimp_operation_behind_process (GeglOperation       *op,
                                                  gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationBehind, gimp_operation_behind,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationBehind, ligma_operation_behind,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_behind_class_init (GimpOperationBehindClass *klass)
+ligma_operation_behind_class_init (LigmaOperationBehindClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:behind",
-                                 "description", "GIMP behind mode operation",
+                                 "name",        "ligma:behind",
+                                 "description", "LIGMA behind mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_behind_process;
+  layer_mode_class->process = ligma_operation_behind_process;
 }
 
 static void
-gimp_operation_behind_init (GimpOperationBehind *self)
+ligma_operation_behind_init (LigmaOperationBehind *self)
 {
 }
 
 static gboolean
-gimp_operation_behind_process (GeglOperation       *op,
+ligma_operation_behind_process (GeglOperation       *op,
                                void                *in_p,
                                void                *layer_p,
                                void                *mask_p,
@@ -72,7 +72,7 @@ gimp_operation_behind_process (GeglOperation       *op,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -82,8 +82,8 @@ gimp_operation_behind_process (GeglOperation       *op,
 
   switch (layer_mode->composite_mode)
     {
-    case GIMP_LAYER_COMPOSITE_UNION:
-    case GIMP_LAYER_COMPOSITE_AUTO:
+    case LIGMA_LAYER_COMPOSITE_UNION:
+    case LIGMA_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
           gfloat src1_alpha = in[ALPHA];
@@ -125,7 +125,7 @@ gimp_operation_behind_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
       while (samples--)
         {
           gfloat src1_alpha = in[ALPHA];
@@ -153,7 +153,7 @@ gimp_operation_behind_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
           gfloat src1_alpha = in[ALPHA];
@@ -192,7 +192,7 @@ gimp_operation_behind_process (GeglOperation       *op,
         }
       break;
 
-      case GIMP_LAYER_COMPOSITE_INTERSECTION:
+      case LIGMA_LAYER_COMPOSITE_INTERSECTION:
       while (samples--)
         {
           gfloat src1_alpha = in[ALPHA];

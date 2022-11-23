@@ -1,12 +1,12 @@
-# Malay Translation of Gimp-tips HEAD.
+# Malay Translation of Ligma-tips HEAD.
 # Copyright (C) 2003 MIMOS Open Source Developement Group
 # This file is distributed under the same license as the PACKAGE package.
 # MIMOS Open Source Development Group <opensource@mimos.my>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-tips HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma-tips HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
 "PO-Revision-Date: 2020-07-03 06:24+0800\n"
 "Last-Translator: abuyop <abuyop@gmail.com>\n"
@@ -17,26 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Anda boleh mendapatkan bantuan peka-konteks bagi kebanyakan fitur-fitur GIMP "
+"Anda boleh mendapatkan bantuan peka-konteks bagi kebanyakan fitur-fitur LIGMA "
 "dengan menekan kekunci F1 pada bila-bila masa. Tindakan ini juga berkesan "
 "melalui menu."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP menggunakan lapisan-lapisan yang dapat mengurus imej anda. Anggap ia "
+"LIGMA menggunakan lapisan-lapisan yang dapat mengurus imej anda. Anggap ia "
 "sebagai sebuah tindanan slaid atau penapis, seperti memandang sebuah "
 "gabungan kandungan imej tersebut."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -44,19 +44,19 @@ msgstr ""
 "Anda boleh membuat banyak operasi lapisan dengan mengklik-kanan pada label "
 "teks sesebuah lapisan di dalam dialog Lapisan."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Ketika menyimpan sebuah imej, gunakan XCF, iaitu format fail tabii GIMP "
+"Ketika menyimpan sebuah imej, gunakan XCF, iaitu format fail tabii LIGMA "
 "(sambungan fail <tt>.xcf</tt>). Cara ini dapat mengekalkan lapisan-lapisan "
 "dan segala aspek kerja yang masih dijalankan. Setelah projek selesai, anda "
 "boleh mengeksportnya sebagai JPEG, PNG, GIF, dan lain-lain."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -66,7 +66,7 @@ msgstr ""
 "sesetengah kes, anda perlu menggabungkan semua lapisan (Imej→Ratakan Imej) "
 "jika anda mahu pemalam berfungsi pada keseluruhan imej."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -77,7 +77,7 @@ msgstr ""
 "boleh menambah satu saluran-alfa menerusi Lapisan→Kelutsinaran→Tambah "
 "Saluran Alfa."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -89,7 +89,7 @@ msgstr ""
 "(Imej→Mod→RGB), tambah satu saluran-alfa (Lapisan→Kelutsinaran→Tambah "
 "Saluran Alfa) atau meratakannya (Imej→Ratakan Imej)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -102,17 +102,17 @@ msgstr ""
 "tetingkap boleh dikonfigur untuk mengabaikan kekunci <tt>Alt</tt> atau guna "
 "kekunci <tt>Super</tt> (iaitu \"logo Windows\") sebagai ganti."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Anda boleh seret dan lepas banyak benda di dalam GIMP. Contohnya, menyeret "
+"Anda boleh seret dan lepas banyak benda di dalam LIGMA. Contohnya, menyeret "
 "satu warna dari kotak alat atau dari satu palet warna dan lepaskannya ke "
 "dalam satu imej akan mengisi pemilihan semasa dengan warna tersebut."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -120,7 +120,7 @@ msgstr ""
 "Anda boleh menggunakan butang tengah tetikus untuk melata di sekitar imej "
 "(atau cara lain, tahan <tt>Spacebar</tt> ketika anda menggerakkan tetikus)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -131,7 +131,7 @@ msgstr ""
 "Anda boleh membuang garisan panduan ini dengan menyeretnya keluar daripada "
 "imej dengan alat Alih."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -140,7 +140,7 @@ msgstr ""
 "dalam kotak alatan. Ini akan mewujudkan imej baru yang hanya mengandungi "
 "lapisan tersebut."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -152,18 +152,18 @@ msgstr ""
 "&quot;Lapisan Baharu&quot; atau &quot;Tambat Lapisan&quot;  dalam dialog "
 "Lapisan, atau guna menu untuk membuat perkara yang sama."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP menyokong pemampatan gzip secara layang. Hanya tambah <tt>.gz</tt> "
+"LIGMA menyokong pemampatan gzip secara layang. Hanya tambah <tt>.gz</tt> "
 "(atau <tt>.bz2</tt>, jika bzip2 telah dipasang) pada nama fail dan imej anda "
 "akan disimpan secara termampat. Sudah tentu, memuatkan imej mampat juga "
 "boleh dijalankan."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -174,7 +174,7 @@ msgstr ""
 "Penggunaan <tt>Ctrl</tt> sebelum membuat pemilihan ditolak daripada yang ada "
 "sekarang."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -185,7 +185,7 @@ msgstr ""
 "Banyak lagi bentuk kompleks boleh dilukis dengan alat Laluan atau "
 "Penapis→Render-→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -195,7 +195,7 @@ msgstr ""
 "digunakan dengan tetapan semasa mereka. Anda boleh menggunakan Berus cat "
 "dalam mod gradien ataupun dengan alat Pemadam atau Comot."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -205,7 +205,7 @@ msgstr ""
 "Laluan. Dialog Laluan membolehkan anda mengendalikan berbilang laluan dan "
 "menukarkannya kepada pemilihan."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -217,7 +217,7 @@ msgstr ""
 "pemilihan anda dengan mengecat dalam imej dan klik pada butang tersebut "
 "sekali lagi untuk menukarkannya kembali kepada pemilihan biasa."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -229,13 +229,13 @@ msgstr ""
 "Dengan menggunakan butang dalam dialog Saluran, anda boleh togol ketampakan "
 "saluran baharu ini atau tukarkannya menjadi satu pemilihan."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -243,11 +243,11 @@ msgstr ""
 "dialog Keutamaan, anda boleh mengumpuk semula kekunci pintasan. Dengan "
 "timbulkan menu tersebut, pilih satu item menu, dan menekan gabungan kekunci "
 "yang dikehendaki. Jika &quot;Simpan Pintasan Papan Kekunci &quot; "
-"dibenarkan, pengikatan kekunci akan disimpan ketika anda keluar dari GIMP. "
+"dibenarkan, pengikatan kekunci akan disimpan ketika anda keluar dari LIGMA. "
 "Anda patut lumpuhkan &quot;Pintasan Papan Kekunci Dinamik&quot; selepas itu, "
 "untuk menghindari terumpuk/umpuk semula pintasan secara tidak sengaja."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -256,7 +256,7 @@ msgstr ""
 "tt> dalam tetingkap imej untuk menogol ketampakan kotak alat dan lain-lain "
 "dialog yang ada."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -265,7 +265,7 @@ msgstr ""
 "semua lapisan kecuali yang dikehendaki. <tt>Shift</tt>-klik sekali lagi "
 "untuk menunjukkan semua lapisan."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -275,7 +275,7 @@ msgstr ""
 "dapat menogol kesan topeng lapisan. <tt>Alt</tt>-klik pada pratonton topeng "
 "lapisan di dalam dialog Lapisan menogol pandangan topeng secara terus."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -284,7 +284,7 @@ msgstr ""
 "lapisan dalam sesebuah imej (jika pengurus tetingkap anda tidak menyekat "
 "kekunci tersebut...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -296,7 +296,7 @@ msgstr ""
 "dengan alat penitis yang menetapkan warna latar belakang bukannya warna "
 "latar hadapan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -304,7 +304,7 @@ msgstr ""
 "<tt>Ctrl</tt>-seret dengan alat Putar akan mengekang putaran kepada sudut 15 "
 "darjah."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -318,7 +318,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-#~ msgstr "<big>Selamat Datang ke GIMP !</big>"
+#~ msgstr "<big>Selamat Datang ke LIGMA !</big>"
 
 #~ msgid ""
 #~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationfillsource.c
+ * ligmaoperationfillsource.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,10 +26,10 @@
 
 #include "operations-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpfilloptions.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmafilloptions.h"
 
-#include "gimpoperationfillsource.h"
+#include "ligmaoperationfillsource.h"
 
 
 enum
@@ -42,66 +42,66 @@ enum
 };
 
 
-static void            gimp_operation_fill_source_dispose          (GObject              *object);
-static void            gimp_operation_fill_source_get_property     (GObject              *object,
+static void            ligma_operation_fill_source_dispose          (GObject              *object);
+static void            ligma_operation_fill_source_get_property     (GObject              *object,
                                                                     guint                 property_id,
                                                                     GValue               *value,
                                                                     GParamSpec           *pspec);
-static void            gimp_operation_fill_source_set_property     (GObject              *object,
+static void            ligma_operation_fill_source_set_property     (GObject              *object,
                                                                     guint                 property_id,
                                                                     const GValue         *value,
                                                                     GParamSpec           *pspec);
 
-static GeglRectangle   gimp_operation_fill_source_get_bounding_box (GeglOperation        *operation);
-static void            gimp_operation_fill_source_prepare          (GeglOperation        *operation);
-static gboolean        gimp_operation_fill_source_process          (GeglOperation        *operation,
+static GeglRectangle   ligma_operation_fill_source_get_bounding_box (GeglOperation        *operation);
+static void            ligma_operation_fill_source_prepare          (GeglOperation        *operation);
+static gboolean        ligma_operation_fill_source_process          (GeglOperation        *operation,
                                                                     GeglOperationContext *context,
                                                                     const gchar          *output_pad,
                                                                     const GeglRectangle  *result,
                                                                     gint                  level);
 
 
-G_DEFINE_TYPE (GimpOperationFillSource, gimp_operation_fill_source,
+G_DEFINE_TYPE (LigmaOperationFillSource, ligma_operation_fill_source,
                GEGL_TYPE_OPERATION_SOURCE)
 
-#define parent_class gimp_operation_fill_source_parent_class
+#define parent_class ligma_operation_fill_source_parent_class
 
 
 static void
-gimp_operation_fill_source_class_init (GimpOperationFillSourceClass *klass)
+ligma_operation_fill_source_class_init (LigmaOperationFillSourceClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass *operation_class = GEGL_OPERATION_CLASS (klass);
 
-  object_class->dispose             = gimp_operation_fill_source_dispose;
-  object_class->set_property        = gimp_operation_fill_source_set_property;
-  object_class->get_property        = gimp_operation_fill_source_get_property;
+  object_class->dispose             = ligma_operation_fill_source_dispose;
+  object_class->set_property        = ligma_operation_fill_source_set_property;
+  object_class->get_property        = ligma_operation_fill_source_get_property;
 
-  operation_class->get_bounding_box = gimp_operation_fill_source_get_bounding_box;
-  operation_class->prepare          = gimp_operation_fill_source_prepare;
-  operation_class->process          = gimp_operation_fill_source_process;
+  operation_class->get_bounding_box = ligma_operation_fill_source_get_bounding_box;
+  operation_class->prepare          = ligma_operation_fill_source_prepare;
+  operation_class->process          = ligma_operation_fill_source_process;
 
   operation_class->threaded         = FALSE;
   operation_class->cache_policy     = GEGL_CACHE_POLICY_NEVER;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:fill-source",
-                                 "categories",  "gimp",
-                                 "description", "GIMP Fill Source operation",
+                                 "name",        "ligma:fill-source",
+                                 "categories",  "ligma",
+                                 "description", "LIGMA Fill Source operation",
                                  NULL);
 
   g_object_class_install_property (object_class, PROP_OPTIONS,
                                    g_param_spec_object ("options",
                                                         "Options",
                                                         "Fill options",
-                                                        GIMP_TYPE_FILL_OPTIONS,
+                                                        LIGMA_TYPE_FILL_OPTIONS,
                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_object ("drawable",
                                                         "Drawable",
                                                         "Fill drawable",
-                                                        GIMP_TYPE_DRAWABLE,
+                                                        LIGMA_TYPE_DRAWABLE,
                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PATTERN_OFFSET_X,
@@ -122,14 +122,14 @@ gimp_operation_fill_source_class_init (GimpOperationFillSourceClass *klass)
 }
 
 static void
-gimp_operation_fill_source_init (GimpOperationFillSource *self)
+ligma_operation_fill_source_init (LigmaOperationFillSource *self)
 {
 }
 
 static void
-gimp_operation_fill_source_dispose (GObject *object)
+ligma_operation_fill_source_dispose (GObject *object)
 {
-  GimpOperationFillSource *fill_source = GIMP_OPERATION_FILL_SOURCE (object);
+  LigmaOperationFillSource *fill_source = LIGMA_OPERATION_FILL_SOURCE (object);
 
   g_clear_object (&fill_source->options);
   g_clear_object (&fill_source->drawable);
@@ -138,12 +138,12 @@ gimp_operation_fill_source_dispose (GObject *object)
 }
 
 static void
-gimp_operation_fill_source_get_property (GObject    *object,
+ligma_operation_fill_source_get_property (GObject    *object,
                                          guint       property_id,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpOperationFillSource *fill_source = GIMP_OPERATION_FILL_SOURCE (object);
+  LigmaOperationFillSource *fill_source = LIGMA_OPERATION_FILL_SOURCE (object);
 
   switch (property_id)
     {
@@ -170,12 +170,12 @@ gimp_operation_fill_source_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_fill_source_set_property (GObject      *object,
+ligma_operation_fill_source_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpOperationFillSource *fill_source = GIMP_OPERATION_FILL_SOURCE (object);
+  LigmaOperationFillSource *fill_source = LIGMA_OPERATION_FILL_SOURCE (object);
 
   switch (property_id)
     {
@@ -202,20 +202,20 @@ gimp_operation_fill_source_set_property (GObject      *object,
 }
 
 static GeglRectangle
-gimp_operation_fill_source_get_bounding_box (GeglOperation *operation)
+ligma_operation_fill_source_get_bounding_box (GeglOperation *operation)
 {
   return gegl_rectangle_infinite_plane ();
 }
 
 static void
-gimp_operation_fill_source_prepare (GeglOperation *operation)
+ligma_operation_fill_source_prepare (GeglOperation *operation)
 {
-  GimpOperationFillSource *fill_source = GIMP_OPERATION_FILL_SOURCE (operation);
+  LigmaOperationFillSource *fill_source = LIGMA_OPERATION_FILL_SOURCE (operation);
   const Babl              *format      = NULL;
 
   if (fill_source->options && fill_source->drawable)
     {
-      format = gimp_fill_options_get_format (fill_source->options,
+      format = ligma_fill_options_get_format (fill_source->options,
                                              fill_source->drawable);
     }
 
@@ -223,13 +223,13 @@ gimp_operation_fill_source_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_fill_source_process (GeglOperation        *operation,
+ligma_operation_fill_source_process (GeglOperation        *operation,
                                     GeglOperationContext *context,
                                     const gchar          *output_pad,
                                     const GeglRectangle  *result,
                                     gint                  level)
 {
-  GimpOperationFillSource *fill_source = GIMP_OPERATION_FILL_SOURCE (operation);
+  LigmaOperationFillSource *fill_source = LIGMA_OPERATION_FILL_SOURCE (operation);
 
   if (fill_source->options && fill_source->drawable)
     {
@@ -238,10 +238,10 @@ gimp_operation_fill_source_process (GeglOperation        *operation,
 
       gegl_rectangle_align_to_buffer (
         &rect, result,
-        gimp_drawable_get_buffer (fill_source->drawable),
+        ligma_drawable_get_buffer (fill_source->drawable),
         GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
-      buffer = gimp_fill_options_create_buffer (fill_source->options,
+      buffer = ligma_fill_options_create_buffer (fill_source->options,
                                                 fill_source->drawable,
                                                 &rect,
                                                 fill_source->pattern_offset_x,

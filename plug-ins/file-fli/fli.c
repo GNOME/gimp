@@ -19,7 +19,7 @@
 
 /*
  * This code can be used to read and write FLI movies. It is currently
- * only used for the GIMP fli plug-in, but it can be used for other
+ * only used for the LIGMA fli plug-in, but it can be used for other
  * programs, too.
  */
 
@@ -27,11 +27,11 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "fli.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /*
  * To avoid endian-problems I wrote these functions:
@@ -197,7 +197,7 @@ fli_read_header (FILE          *f,
 
 if (actual_size != fli_header->filesize && actual_size >= 0)
   {
-    /* Older versions of GIMP or other apps may incorrectly finish chunks on
+    /* Older versions of LIGMA or other apps may incorrectly finish chunks on
      * an odd length, but write filesize as if that last byte was written.
      * Don't fail on off-by-one file size. */
     if (actual_size + 1 != fli_header->filesize)
@@ -279,7 +279,7 @@ fli_write_header (FILE          *f,
         }
       else
         {
-          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+          g_set_error (error, LIGMA_PLUG_IN_ERROR, 0,
                        _("Invalid header: unrecognized magic number!"));
           return FALSE;
         }
@@ -472,7 +472,7 @@ fli_write_frame (FILE          *f,
         }
       else
         {
-          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+          g_set_error (error, LIGMA_PLUG_IN_ERROR, 0,
                        _("Invalid header: magic number is wrong!"));
           return FALSE;
         }

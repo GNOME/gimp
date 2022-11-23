@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppickable.h
- * Copyright (C) 2004  Michael Natterer <mitch@gimp.org>
+ * ligmapickable.h
+ * Copyright (C) 2004  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,86 +18,86 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_H__
-#define __GIMP_PICKABLE_H__
+#ifndef __LIGMA_PICKABLE_H__
+#define __LIGMA_PICKABLE_H__
 
 
-#define GIMP_TYPE_PICKABLE (gimp_pickable_get_type ())
-G_DECLARE_INTERFACE (GimpPickable, gimp_pickable, GIMP, PICKABLE, GObject)
+#define LIGMA_TYPE_PICKABLE (ligma_pickable_get_type ())
+G_DECLARE_INTERFACE (LigmaPickable, ligma_pickable, LIGMA, PICKABLE, GObject)
 
-struct _GimpPickableInterface
+struct _LigmaPickableInterface
 {
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  void            (* flush)                 (GimpPickable        *pickable);
-  GimpImage     * (* get_image)             (GimpPickable        *pickable);
-  const Babl    * (* get_format)            (GimpPickable        *pickable);
-  const Babl    * (* get_format_with_alpha) (GimpPickable        *pickable);
-  GeglBuffer    * (* get_buffer)            (GimpPickable        *pickable);
-  gboolean        (* get_pixel_at)          (GimpPickable        *pickable,
+  void            (* flush)                 (LigmaPickable        *pickable);
+  LigmaImage     * (* get_image)             (LigmaPickable        *pickable);
+  const Babl    * (* get_format)            (LigmaPickable        *pickable);
+  const Babl    * (* get_format_with_alpha) (LigmaPickable        *pickable);
+  GeglBuffer    * (* get_buffer)            (LigmaPickable        *pickable);
+  gboolean        (* get_pixel_at)          (LigmaPickable        *pickable,
                                              gint                 x,
                                              gint                 y,
                                              const Babl          *format,
                                              gpointer             pixel);
-  gdouble         (* get_opacity_at)        (GimpPickable        *pickable,
+  gdouble         (* get_opacity_at)        (LigmaPickable        *pickable,
                                              gint                 x,
                                              gint                 y);
-  void            (* get_pixel_average)     (GimpPickable        *pickable,
+  void            (* get_pixel_average)     (LigmaPickable        *pickable,
                                              const GeglRectangle *rect,
                                              const Babl          *format,
                                              gpointer             pixel);
-  void            (* pixel_to_srgb)         (GimpPickable        *pickable,
+  void            (* pixel_to_srgb)         (LigmaPickable        *pickable,
                                              const Babl          *format,
                                              gpointer             pixel,
-                                             GimpRGB             *color);
-  void            (* srgb_to_pixel)         (GimpPickable        *pickable,
-                                             const GimpRGB       *color,
+                                             LigmaRGB             *color);
+  void            (* srgb_to_pixel)         (LigmaPickable        *pickable,
+                                             const LigmaRGB       *color,
                                              const Babl          *format,
                                              gpointer             pixel);
 };
 
 
-void            gimp_pickable_flush                 (GimpPickable        *pickable);
-GimpImage     * gimp_pickable_get_image             (GimpPickable        *pickable);
-const Babl    * gimp_pickable_get_format            (GimpPickable        *pickable);
-const Babl    * gimp_pickable_get_format_with_alpha (GimpPickable        *pickable);
-GeglBuffer    * gimp_pickable_get_buffer            (GimpPickable        *pickable);
-gboolean        gimp_pickable_get_pixel_at          (GimpPickable        *pickable,
+void            ligma_pickable_flush                 (LigmaPickable        *pickable);
+LigmaImage     * ligma_pickable_get_image             (LigmaPickable        *pickable);
+const Babl    * ligma_pickable_get_format            (LigmaPickable        *pickable);
+const Babl    * ligma_pickable_get_format_with_alpha (LigmaPickable        *pickable);
+GeglBuffer    * ligma_pickable_get_buffer            (LigmaPickable        *pickable);
+gboolean        ligma_pickable_get_pixel_at          (LigmaPickable        *pickable,
                                                      gint                 x,
                                                      gint                 y,
                                                      const Babl          *format,
                                                      gpointer             pixel);
-gboolean        gimp_pickable_get_color_at          (GimpPickable        *pickable,
+gboolean        ligma_pickable_get_color_at          (LigmaPickable        *pickable,
                                                      gint                 x,
                                                      gint                 y,
-                                                     GimpRGB             *color);
-gdouble         gimp_pickable_get_opacity_at        (GimpPickable        *pickable,
+                                                     LigmaRGB             *color);
+gdouble         ligma_pickable_get_opacity_at        (LigmaPickable        *pickable,
                                                      gint                 x,
                                                      gint                 y);
-void            gimp_pickable_get_pixel_average     (GimpPickable        *pickable,
+void            ligma_pickable_get_pixel_average     (LigmaPickable        *pickable,
                                                      const GeglRectangle *rect,
                                                      const Babl          *format,
                                                      gpointer             pixel);
-void            gimp_pickable_pixel_to_srgb         (GimpPickable        *pickable,
+void            ligma_pickable_pixel_to_srgb         (LigmaPickable        *pickable,
                                                      const Babl          *format,
                                                      gpointer             pixel,
-                                                     GimpRGB             *color);
-void            gimp_pickable_srgb_to_pixel         (GimpPickable        *pickable,
-                                                     const GimpRGB       *color,
+                                                     LigmaRGB             *color);
+void            ligma_pickable_srgb_to_pixel         (LigmaPickable        *pickable,
+                                                     const LigmaRGB       *color,
                                                      const Babl          *format,
                                                      gpointer             pixel);
-void            gimp_pickable_srgb_to_image_color   (GimpPickable        *pickable,
-                                                     const GimpRGB       *color,
-                                                     GimpRGB             *image_color);
+void            ligma_pickable_srgb_to_image_color   (LigmaPickable        *pickable,
+                                                     const LigmaRGB       *color,
+                                                     LigmaRGB             *image_color);
 
-gboolean        gimp_pickable_pick_color            (GimpPickable        *pickable,
+gboolean        ligma_pickable_pick_color            (LigmaPickable        *pickable,
                                                      gint                 x,
                                                      gint                 y,
                                                      gboolean             sample_average,
                                                      gdouble              average_radius,
                                                      gpointer             pixel,
-                                                     GimpRGB             *color);
+                                                     LigmaRGB             *color);
 
 
-#endif  /* __GIMP_PICKABLE_H__ */
+#endif  /* __LIGMA_PICKABLE_H__ */

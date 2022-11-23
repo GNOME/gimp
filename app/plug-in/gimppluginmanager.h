@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager.h
+ * ligmapluginmanager.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_H__
-#define __GIMP_PLUG_IN_MANAGER_H__
+#ifndef __LIGMA_PLUG_IN_MANAGER_H__
+#define __LIGMA_PLUG_IN_MANAGER_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_PLUG_IN_MANAGER            (gimp_plug_in_manager_get_type ())
-#define GIMP_PLUG_IN_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PLUG_IN_MANAGER, GimpPlugInManager))
-#define GIMP_PLUG_IN_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PLUG_IN_MANAGER, GimpPlugInManagerClass))
-#define GIMP_IS_PLUG_IN_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PLUG_IN_MANAGER))
-#define GIMP_IS_PLUG_IN_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PLUG_IN_MANAGER))
+#define LIGMA_TYPE_PLUG_IN_MANAGER            (ligma_plug_in_manager_get_type ())
+#define LIGMA_PLUG_IN_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PLUG_IN_MANAGER, LigmaPlugInManager))
+#define LIGMA_PLUG_IN_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PLUG_IN_MANAGER, LigmaPlugInManagerClass))
+#define LIGMA_IS_PLUG_IN_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PLUG_IN_MANAGER))
+#define LIGMA_IS_PLUG_IN_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PLUG_IN_MANAGER))
 
 
-typedef struct _GimpPlugInManagerClass GimpPlugInManagerClass;
+typedef struct _LigmaPlugInManagerClass LigmaPlugInManagerClass;
 
-struct _GimpPlugInManager
+struct _LigmaPlugInManager
 {
-  GimpObject         parent_instance;
+  LigmaObject         parent_instance;
 
-  Gimp              *gimp;
+  Ligma              *ligma;
 
   GSList            *plug_in_defs;
   gboolean           write_pluginrc;
@@ -58,65 +58,65 @@ struct _GimpPlugInManager
   GSList            *menu_branches;
   GSList            *help_domains;
 
-  GimpPlugIn        *current_plug_in;
+  LigmaPlugIn        *current_plug_in;
   GSList            *open_plug_ins;
   GSList            *plug_in_stack;
 
-  GimpPlugInShm     *shm;
-  GimpInterpreterDB *interpreter_db;
-  GimpEnvironTable  *environ_table;
-  GimpPlugInDebug   *debug;
+  LigmaPlugInShm     *shm;
+  LigmaInterpreterDB *interpreter_db;
+  LigmaEnvironTable  *environ_table;
+  LigmaPlugInDebug   *debug;
   GList             *data_list;
 };
 
-struct _GimpPlugInManagerClass
+struct _LigmaPlugInManagerClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void (* plug_in_opened)    (GimpPlugInManager *manager,
-                              GimpPlugIn        *plug_in);
-  void (* plug_in_closed)    (GimpPlugInManager *manager,
-                              GimpPlugIn        *plug_in);
+  void (* plug_in_opened)    (LigmaPlugInManager *manager,
+                              LigmaPlugIn        *plug_in);
+  void (* plug_in_closed)    (LigmaPlugInManager *manager,
+                              LigmaPlugIn        *plug_in);
 
-  void (* menu_branch_added) (GimpPlugInManager *manager,
+  void (* menu_branch_added) (LigmaPlugInManager *manager,
                               GFile             *file,
                               const gchar       *menu_path,
                               const gchar       *menu_label);
 };
 
 
-GType               gimp_plug_in_manager_get_type (void) G_GNUC_CONST;
+GType               ligma_plug_in_manager_get_type (void) G_GNUC_CONST;
 
-GimpPlugInManager * gimp_plug_in_manager_new      (Gimp                *gimp);
+LigmaPlugInManager * ligma_plug_in_manager_new      (Ligma                *ligma);
 
-void    gimp_plug_in_manager_initialize           (GimpPlugInManager   *manager,
-                                                   GimpInitStatusFunc   status_callback);
-void    gimp_plug_in_manager_exit                 (GimpPlugInManager   *manager);
+void    ligma_plug_in_manager_initialize           (LigmaPlugInManager   *manager,
+                                                   LigmaInitStatusFunc   status_callback);
+void    ligma_plug_in_manager_exit                 (LigmaPlugInManager   *manager);
 
 /* Register a plug-in. This function is public for file load-save
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void    gimp_plug_in_manager_add_procedure        (GimpPlugInManager   *manager,
-                                                   GimpPlugInProcedure *procedure);
+void    ligma_plug_in_manager_add_procedure        (LigmaPlugInManager   *manager,
+                                                   LigmaPlugInProcedure *procedure);
 
-void    gimp_plug_in_manager_add_batch_procedure  (GimpPlugInManager      *manager,
-                                                   GimpPlugInProcedure    *proc);
-GSList * gimp_plug_in_manager_get_batch_procedures (GimpPlugInManager      *manager);
+void    ligma_plug_in_manager_add_batch_procedure  (LigmaPlugInManager      *manager,
+                                                   LigmaPlugInProcedure    *proc);
+GSList * ligma_plug_in_manager_get_batch_procedures (LigmaPlugInManager      *manager);
 
-void    gimp_plug_in_manager_add_temp_proc        (GimpPlugInManager      *manager,
-                                                   GimpTemporaryProcedure *procedure);
-void    gimp_plug_in_manager_remove_temp_proc     (GimpPlugInManager      *manager,
-                                                   GimpTemporaryProcedure *procedure);
+void    ligma_plug_in_manager_add_temp_proc        (LigmaPlugInManager      *manager,
+                                                   LigmaTemporaryProcedure *procedure);
+void    ligma_plug_in_manager_remove_temp_proc     (LigmaPlugInManager      *manager,
+                                                   LigmaTemporaryProcedure *procedure);
 
-void    gimp_plug_in_manager_add_open_plug_in     (GimpPlugInManager   *manager,
-                                                   GimpPlugIn          *plug_in);
-void    gimp_plug_in_manager_remove_open_plug_in  (GimpPlugInManager   *manager,
-                                                   GimpPlugIn          *plug_in);
+void    ligma_plug_in_manager_add_open_plug_in     (LigmaPlugInManager   *manager,
+                                                   LigmaPlugIn          *plug_in);
+void    ligma_plug_in_manager_remove_open_plug_in  (LigmaPlugInManager   *manager,
+                                                   LigmaPlugIn          *plug_in);
 
-void    gimp_plug_in_manager_plug_in_push         (GimpPlugInManager   *manager,
-                                                   GimpPlugIn          *plug_in);
-void    gimp_plug_in_manager_plug_in_pop          (GimpPlugInManager   *manager);
+void    ligma_plug_in_manager_plug_in_push         (LigmaPlugInManager   *manager,
+                                                   LigmaPlugIn          *plug_in);
+void    ligma_plug_in_manager_plug_in_pop          (LigmaPlugInManager   *manager);
 
 
-#endif  /* __GIMP_PLUG_IN_MANAGER_H__ */
+#endif  /* __LIGMA_PLUG_IN_MANAGER_H__ */

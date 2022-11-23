@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-prefs-display.svg">
+   sodipodi:docname="ligma-prefs-display.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -158,7 +158,7 @@
      id="preferences">
     <g
        transform="translate(224.16263,215.46232)"
-       id="gimp-prefs-display">
+       id="ligma-prefs-display">
       <path
          style="fill:url(#linearGradient8270);fill-opacity:1;stroke:none"
          d="M -3.8125,-38 C -4.46695,-38 -5,-37.47791 -5,-36.8125 l 0,7.625 C -5,-28.52209 -4.46695,-28 -3.8125,-28 l 7.5625,0 5.9375,0 c 0.633474,0 1.279835,-0.365187 1.3125,-1 l 0,0 -0.0625,-4 0.0625,-4 0,0 c -0.03266,-0.634813 -0.679026,-1 -1.3125,-1 L 3.75,-38 Z m 1,1 5.8125,0 5.65625,0 C 9.3107,-37 10,-36.66541 10,-36 l 0,6 c 0,0.66541 -0.6893,1 -1.34375,1 L 3,-29 -2.8125,-29 C -3.46695,-29 -4,-29.52209 -4,-30.1875 l 0,-5.625 C -4,-36.47791 -3.46695,-37 -2.8125,-37 Z"

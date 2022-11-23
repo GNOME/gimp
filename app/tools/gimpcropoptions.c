@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,126 +20,126 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimprectangleoptions.h"
-#include "gimpcropoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmarectangleoptions.h"
+#include "ligmacropoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
-  PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
+  PROP_LAYER_ONLY = LIGMA_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_ALLOW_GROWING,
   PROP_FILL_TYPE,
   PROP_DELETE_PIXELS
 };
 
 
-static void   gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
+static void   ligma_crop_options_rectangle_options_iface_init (LigmaRectangleOptionsInterface *iface);
 
-static void   gimp_crop_options_set_property (GObject      *object,
+static void   ligma_crop_options_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void   gimp_crop_options_get_property (GObject      *object,
+static void   ligma_crop_options_get_property (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpCropOptions, gimp_crop_options,
-                         GIMP_TYPE_TOOL_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                gimp_crop_options_rectangle_options_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaCropOptions, ligma_crop_options,
+                         LIGMA_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_RECTANGLE_OPTIONS,
+                                                ligma_crop_options_rectangle_options_iface_init))
 
 
 static void
-gimp_crop_options_class_init (GimpCropOptionsClass *klass)
+ligma_crop_options_class_init (LigmaCropOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_crop_options_set_property;
-  object_class->get_property = gimp_crop_options_get_property;
+  object_class->set_property = ligma_crop_options_set_property;
+  object_class->get_property = ligma_crop_options_get_property;
 
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop and the Rectangle Select tools.
    */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
-                            GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
+                            LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
                             "highlight",
                             _("Highlight"),
                             _("Dim everything outside selection"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class,
-                           GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class,
+                           LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
                            "highlight-opacity",
                            _("Highlight opacity"),
                            _("How much to dim everything outside selection"),
                            0.0, 1.0, 0.5,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                             "layer-only",
                             _("Selected layers only"),
                             _("Crop only currently selected layers"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DELETE_PIXELS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DELETE_PIXELS,
                             "delete-pixels",
                             _("Delete cropped pixels"),
                             _("Discard non-locked layer data that falls out of the crop region"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
                             "allow-growing",
                             _("Allow growing"),
                             _("Allow resizing canvas by dragging cropping frame "
                               "beyond image boundary"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
                          "fill-type",
                          _("Fill with"),
                          _("How to fill new areas created by 'Allow growing'"),
-                         GIMP_TYPE_FILL_TYPE,
-                         GIMP_FILL_TRANSPARENT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_TYPE,
+                         LIGMA_FILL_TRANSPARENT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  gimp_rectangle_options_install_properties (object_class);
+  ligma_rectangle_options_install_properties (object_class);
 }
 
 static void
-gimp_crop_options_init (GimpCropOptions *options)
+ligma_crop_options_init (LigmaCropOptions *options)
 {
 }
 
 static void
-gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
+ligma_crop_options_rectangle_options_iface_init (LigmaRectangleOptionsInterface *iface)
 {
 }
 
 static void
-gimp_crop_options_set_property (GObject      *object,
+ligma_crop_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
+  LigmaCropOptions *options = LIGMA_CROP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -160,18 +160,18 @@ gimp_crop_options_set_property (GObject      *object,
       break;
 
     default:
-      gimp_rectangle_options_set_property (object, property_id, value, pspec);
+      ligma_rectangle_options_set_property (object, property_id, value, pspec);
       break;
     }
 }
 
 static void
-gimp_crop_options_get_property (GObject    *object,
+ligma_crop_options_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
+  LigmaCropOptions *options = LIGMA_CROP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -192,16 +192,16 @@ gimp_crop_options_get_property (GObject    *object,
       break;
 
     default:
-      gimp_rectangle_options_get_property (object, property_id, value, pspec);
+      ligma_rectangle_options_get_property (object, property_id, value, pspec);
       break;
     }
 }
 
 GtkWidget *
-gimp_crop_options_gui (GimpToolOptions *tool_options)
+ligma_crop_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
   GtkWidget *button;
   GtkWidget *button2;
@@ -209,11 +209,11 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GtkWidget *frame;
 
   /*  layer toggle  */
-  button = gimp_prop_check_button_new (config, "layer-only", NULL);
+  button = ligma_prop_check_button_new (config, "layer-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  delete pixels toggle  */
-  button2 = gimp_prop_check_button_new (config, "delete-pixels", NULL);
+  button2 = ligma_prop_check_button_new (config, "delete-pixels", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button2, FALSE, FALSE, 0);
 
   g_object_bind_property (G_OBJECT (config),  "layer-only",
@@ -222,16 +222,16 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
                           G_BINDING_INVERT_BOOLEAN);
 
   /*  fill type combo  */
-  combo = gimp_prop_enum_combo_box_new (config, "fill-type", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill with"));
+  combo = ligma_prop_enum_combo_box_new (config, "fill-type", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Fill with"));
 
   /*  allow growing toggle/frame  */
-  frame = gimp_prop_expanding_frame_new (config, "allow-growing", NULL,
+  frame = ligma_prop_expanding_frame_new (config, "allow-growing", NULL,
                                          combo, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   /*  rectangle options  */
-  vbox_rectangle = gimp_rectangle_options_gui (tool_options);
+  vbox_rectangle = ligma_rectangle_options_gui (tool_options);
   gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
   gtk_widget_show (vbox_rectangle);
 

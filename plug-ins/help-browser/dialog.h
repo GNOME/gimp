@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help Browser
- * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
+ * The LIGMA Help Browser
+ * Copyright (C) 1999-2003 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
  *
  * dialog.h
  *
@@ -26,19 +26,19 @@
 
 #include <gtk/gtk.h>
 
-#define GIMP_TYPE_HELP_BROWSER_DIALOG (gimp_help_browser_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog,
-                      GIMP, HELP_BROWSER_DIALOG,
+#define LIGMA_TYPE_HELP_BROWSER_DIALOG (ligma_help_browser_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaHelpBrowserDialog, ligma_help_browser_dialog,
+                      LIGMA, HELP_BROWSER_DIALOG,
                       GtkApplicationWindow)
 
-GimpHelpBrowserDialog * gimp_help_browser_dialog_new         (const char   *plug_in_binary,
+LigmaHelpBrowserDialog * ligma_help_browser_dialog_new         (const char   *plug_in_binary,
                                                               GApplication *app);
 
-void                    gimp_help_browser_dialog_load        (GimpHelpBrowserDialog *self,
+void                    ligma_help_browser_dialog_load        (LigmaHelpBrowserDialog *self,
                                                               const char            *uri);
 
-void                    gimp_help_browser_dialog_make_index  (GimpHelpBrowserDialog *self,
-                                                              GimpHelpDomain        *domain,
-                                                              GimpHelpLocale        *locale);
+void                    ligma_help_browser_dialog_make_index  (LigmaHelpBrowserDialog *self,
+                                                              LigmaHelpDomain        *domain,
+                                                              LigmaHelpLocale        *locale);
 
 #endif /* ! __DIALOG_H__ */

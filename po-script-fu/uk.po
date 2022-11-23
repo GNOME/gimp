@@ -5,8 +5,8 @@
 # Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu-2.0.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu-2.0.0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-11-12 21:38+0000\n"
 "PO-Revision-Date: 2022-11-14 01:00+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
@@ -28,8 +28,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Інтерактивна консоль розробки на скриптфу"
 
 #: plug-ins/script-fu/script-fu.c:310
-msgid "_GIMP Online"
-msgstr "GIMP у _Інтернет"
+msgid "_LIGMA Online"
+msgstr "LIGMA у _Інтернет"
 
 #: plug-ins/script-fu/script-fu.c:311
 msgid "_User Manual"
@@ -68,8 +68,8 @@ msgid "_Beveled Pattern"
 msgstr "_Шаблон зі скосами"
 
 #: plug-ins/script-fu/script-fu.c:332
-msgid "_Classic.Gimp.Org"
-msgstr "_Класичний Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Класичний Ligma.Org"
 
 #: plug-ins/script-fu/script-fu.c:335
 msgid "Alpha to _Logo"
@@ -809,88 +809,88 @@ msgstr "Розмір тіні (%)"
 msgid "Flatten image"
 msgstr "Звести зображення"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Використання контурів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/ligma-online.scm:60
+#: plug-ins/script-fu/scripts/ligma-online.scm:73
+#: plug-ins/script-fu/scripts/ligma-online.scm:86
+#: plug-ins/script-fu/scripts/ligma-online.scm:99
+#: plug-ins/script-fu/scripts/ligma-online.scm:112
+#: plug-ins/script-fu/scripts/ligma-online.scm:125
+#: plug-ins/script-fu/scripts/ligma-online.scm:138
+#: plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Посилання на посібник користувача"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "Пі_дготовка зображений до публікації у Інтернет"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "Робота з цифровими _фотографіями"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Створення, відкривання та зберігання _файлів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "Основні _концепції"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Як використовувати _діалоги"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "_Малювання простих об'єктів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Зберегти та використати _вибране"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Головна веб-сторінка"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Закладка на сайт GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:191
+#: plug-ins/script-fu/scripts/ligma-online.scm:204
+#: plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Закладка на сайт LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "_Веб-сторінка розробників"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Плани щодо розробки"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Закладка для сторінки планів щодо розробки GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Закладка для сторінки планів щодо розробки LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Вікі"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Закладка для сторінки вікі GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Закладка для сторінки вікі LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "З_віти щодо вад та запити щодо нових можливостей"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Закладка для сторінки системи стеження за вадами у LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "_Сайт з посібником користувача"
 
@@ -1615,7 +1615,7 @@ msgstr "Зсув тіні вздовж Y"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Візуалізація спірографа"
 
-#~ msgid "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
 #~ msgstr "_Спірограф…"
 
 #~ msgid ""

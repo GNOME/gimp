@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcoloreditor.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacoloreditor.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_EDITOR_H__
-#define __GIMP_COLOR_EDITOR_H__
+#ifndef __LIGMA_COLOR_EDITOR_H__
+#define __LIGMA_COLOR_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "ligmaeditor.h"
 
 
-#define GIMP_TYPE_COLOR_EDITOR            (gimp_color_editor_get_type ())
-#define GIMP_COLOR_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_EDITOR, GimpColorEditor))
-#define GIMP_COLOR_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_EDITOR, GimpColorEditorClass))
-#define GIMP_IS_COLOR_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_EDITOR))
-#define GIMP_IS_COLOR_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_EDITOR))
-#define GIMP_COLOR_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_EDITOR, GimpColorEditorClass))
+#define LIGMA_TYPE_COLOR_EDITOR            (ligma_color_editor_get_type ())
+#define LIGMA_COLOR_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_EDITOR, LigmaColorEditor))
+#define LIGMA_COLOR_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_EDITOR, LigmaColorEditorClass))
+#define LIGMA_IS_COLOR_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_EDITOR))
+#define LIGMA_IS_COLOR_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_EDITOR))
+#define LIGMA_COLOR_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_EDITOR, LigmaColorEditorClass))
 
 
-typedef struct _GimpColorEditorClass GimpColorEditorClass;
+typedef struct _LigmaColorEditorClass LigmaColorEditorClass;
 
-struct _GimpColorEditor
+struct _LigmaColorEditor
 {
-  GimpEditor   parent_instance;
+  LigmaEditor   parent_instance;
 
-  GimpContext *context;
+  LigmaContext *context;
   gboolean     edit_bg;
 
   GtkWidget   *hbox;
@@ -48,15 +48,15 @@ struct _GimpColorEditor
   GtkWidget   *hex_entry;
 };
 
-struct _GimpColorEditorClass
+struct _LigmaColorEditorClass
 {
-  GimpEditorClass  parent_class;
+  LigmaEditorClass  parent_class;
 };
 
 
-GType       gimp_color_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_color_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_editor_new      (GimpContext *context);
+GtkWidget * ligma_color_editor_new      (LigmaContext *context);
 
 
-#endif /* __GIMP_COLOR_EDITOR_H__ */
+#endif /* __LIGMA_COLOR_EDITOR_H__ */

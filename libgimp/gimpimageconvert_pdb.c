@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimageconvert_pdb.c
+ * ligmaimageconvert_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimageconvert
- * @title: gimpimageconvert
+ * SECTION: ligmaimageconvert
+ * @title: ligmaimageconvert
  * @short_description: Conversions between RGB, indexed, and grayscale modes.
  *
  * Conversions between RGB, indexed, and grayscale modes.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_convert_rgb:
+ * ligma_image_convert_rgb:
  * @image: The image.
  *
  * Convert specified image to RGB color
@@ -50,30 +50,30 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_rgb (GimpImage *image)
+ligma_image_convert_rgb (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-rgb",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-rgb",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_convert_grayscale:
+ * ligma_image_convert_grayscale:
  * @image: The image.
  *
  * Convert specified image to grayscale
@@ -84,37 +84,37 @@ gimp_image_convert_rgb (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_grayscale (GimpImage *image)
+ligma_image_convert_grayscale (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-grayscale",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-grayscale",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_convert_indexed:
+ * ligma_image_convert_indexed:
  * @image: The image.
  * @dither_type: The dither type to use.
  * @palette_type: The type of palette to use.
- * @num_cols: The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
+ * @num_cols: The number of colors to quantize to, ignored unless (palette_type == LIGMA_CONVERT_PALETTE_GENERATE).
  * @alpha_dither: Dither transparency to fake partial opacity.
- * @remove_unused: Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
- * @palette: The name of the custom palette to use, ignored unless (palette_type == GIMP_CONVERT_PALETTE_CUSTOM).
+ * @remove_unused: Remove unused or duplicate color entries from final palette, ignored if (palette_type == LIGMA_CONVERT_PALETTE_GENERATE).
+ * @palette: The name of the custom palette to use, ignored unless (palette_type == LIGMA_CONVERT_PALETTE_CUSTOM).
  *
  * Convert specified image to and Indexed image
  *
@@ -125,7 +125,7 @@ gimp_image_convert_grayscale (GimpImage *image)
  * colors in the image. A type of '1' means to re-use the previous
  * palette (not currently implemented). A type of '2' means to use the
  * so-called WWW-optimized palette. Type '3' means to use only black
- * and white colors. A type of '4' means to use a palette from the gimp
+ * and white colors. A type of '4' means to use a palette from the ligma
  * palettes directories. The 'dither type' specifies what kind of
  * dithering to use. '0' means no dithering, '1' means standard
  * Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error
@@ -135,42 +135,42 @@ gimp_image_convert_grayscale (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_indexed (GimpImage              *image,
-                            GimpConvertDitherType   dither_type,
-                            GimpConvertPaletteType  palette_type,
+ligma_image_convert_indexed (LigmaImage              *image,
+                            LigmaConvertDitherType   dither_type,
+                            LigmaConvertPaletteType  palette_type,
                             gint                    num_cols,
                             gboolean                alpha_dither,
                             gboolean                remove_unused,
                             const gchar            *palette)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
-                                          GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CONVERT_DITHER_TYPE, dither_type,
+                                          LIGMA_TYPE_CONVERT_PALETTE_TYPE, palette_type,
                                           G_TYPE_INT, num_cols,
                                           G_TYPE_BOOLEAN, alpha_dither,
                                           G_TYPE_BOOLEAN, remove_unused,
                                           G_TYPE_STRING, palette,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-indexed",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-indexed",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_convert_set_dither_matrix:
+ * ligma_image_convert_set_dither_matrix:
  * @width: Width of the matrix (0 to reset to default matrix).
  * @height: Height of the matrix (0 to reset to default matrix).
  * @matrix_length: The length of 'matrix'.
@@ -186,37 +186,37 @@ gimp_image_convert_indexed (GimpImage              *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_convert_set_dither_matrix (gint          width,
+ligma_image_convert_set_dither_matrix (gint          width,
                                       gint          height,
                                       gint          matrix_length,
                                       const guint8 *matrix)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_INT, matrix_length,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 3), matrix, matrix_length);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-set-dither-matrix",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-set-dither-matrix",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_convert_precision:
+ * ligma_image_convert_precision:
  * @image: The image.
  * @precision: The new precision.
  *
@@ -224,33 +224,33 @@ gimp_image_convert_set_dither_matrix (gint          width,
  *
  * This procedure converts the image to the specified precision. Note
  * that indexed images cannot be converted and are always in
- * GIMP_PRECISION_U8.
+ * LIGMA_PRECISION_U8.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_precision (GimpImage     *image,
-                              GimpPrecision  precision)
+ligma_image_convert_precision (LigmaImage     *image,
+                              LigmaPrecision  precision)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_PRECISION, precision,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-precision",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-precision",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

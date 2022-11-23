@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton-xdg.c
+ * ligmapickbutton-xdg.c
  * Copyright (C) 2021 Niels De Graef <nielsdegraef@gmail.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -23,18 +23,18 @@
 #include <gdk/gdkx.h>
 #endif
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-default.h"
-#include "gimppickbutton-xdg.h"
+#include "ligmawidgetstypes.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-default.h"
+#include "ligmapickbutton-xdg.h"
 
-#include "libgimp/libgimp-intl.h"
-#include "libgimp/gimpui.h"
+#include "libligma/libligma-intl.h"
+#include "libligma/ligmaui.h"
 
 gboolean
-_gimp_pick_button_xdg_available (void)
+_ligma_pick_button_xdg_available (void)
 {
   gboolean    ret     = TRUE;
   GDBusProxy *proxy   = NULL;
@@ -79,7 +79,7 @@ pick_color_xdg_dbus_signal (GDBusProxy      *proxy,
                             gchar           *sender_name,
                             gchar           *signal_name,
                             GVariant        *parameters,
-                            GimpPickButton  *button)
+                            LigmaPickButton  *button)
 {
   if (g_strcmp0 (signal_name, "Response") == 0)
     {
@@ -98,7 +98,7 @@ pick_color_xdg_dbus_signal (GDBusProxy      *proxy,
        */
       if (response == 0)
         {
-          GimpRGB color;
+          LigmaRGB color;
 
           if (g_variant_lookup (results, "color", "(ddd)", &color.r, &color.g, &color.b))
             {
@@ -112,9 +112,9 @@ pick_color_xdg_dbus_signal (GDBusProxy      *proxy,
     }
 }
 
-/* entry point to this file, called from gimppickbutton.c */
+/* entry point to this file, called from ligmapickbutton.c */
 void
-_gimp_pick_button_xdg_pick (GimpPickButton *button)
+_ligma_pick_button_xdg_pick (LigmaPickButton *button)
 {
   GDBusProxy *proxy         = NULL;
   GVariant   *retval        = NULL;

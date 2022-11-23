@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,37 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PREVIEW_H__
-#define __GIMP_IMAGE_PREVIEW_H__
+#ifndef __LIGMA_IMAGE_PREVIEW_H__
+#define __LIGMA_IMAGE_PREVIEW_H__
 
 
-const Babl  * gimp_image_get_preview_format (GimpImage    *image);
+const Babl  * ligma_image_get_preview_format (LigmaImage    *image);
 
 
 /*
- *  virtual functions of GimpImage -- don't call directly
+ *  virtual functions of LigmaImage -- don't call directly
  */
 
-void          gimp_image_get_preview_size   (GimpViewable *viewable,
+void          ligma_image_get_preview_size   (LigmaViewable *viewable,
                                              gint          size,
                                              gboolean      is_popup,
                                              gboolean      dot_for_dot,
                                              gint         *width,
                                              gint         *height);
-gboolean      gimp_image_get_popup_size     (GimpViewable *viewable,
+gboolean      ligma_image_get_popup_size     (LigmaViewable *viewable,
                                              gint          width,
                                              gint          height,
                                              gboolean      dot_for_dot,
                                              gint         *popup_width,
                                              gint         *popup_height);
-GimpTempBuf * gimp_image_get_new_preview    (GimpViewable *viewable,
-                                             GimpContext  *context,
+LigmaTempBuf * ligma_image_get_new_preview    (LigmaViewable *viewable,
+                                             LigmaContext  *context,
                                              gint          width,
                                              gint          height);
-GdkPixbuf   * gimp_image_get_new_pixbuf     (GimpViewable *viewable,
-                                             GimpContext  *context,
+GdkPixbuf   * ligma_image_get_new_pixbuf     (LigmaViewable *viewable,
+                                             LigmaContext  *context,
                                              gint          width,
                                              gint          height);
 
 
-#endif /* __GIMP_IMAGE_PREVIEW_H__ */
+#endif /* __LIGMA_IMAGE_PREVIEW_H__ */

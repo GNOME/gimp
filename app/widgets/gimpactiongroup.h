@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactiongroup.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaactiongroup.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,75 +18,75 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_GROUP_H__
-#define __GIMP_ACTION_GROUP_H__
+#ifndef __LIGMA_ACTION_GROUP_H__
+#define __LIGMA_ACTION_GROUP_H__
 
 
-#define GIMP_TYPE_ACTION_GROUP              (gimp_action_group_get_type ())
-#define GIMP_ACTION_GROUP(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_GROUP, GimpActionGroup))
-#define GIMP_ACTION_GROUP_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), GIMP_TYPE_ACTION_GROUP, GimpActionGroupClass))
-#define GIMP_IS_ACTION_GROUP(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION_GROUP))
-#define GIMP_IS_ACTION_GROUP_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), GIMP_TYPE_ACTION_GROUP))
-#define GIMP_ACTION_GROUP_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), GIMP_TYPE_ACTION_GROUP, GimpActionGroupClass))
+#define LIGMA_TYPE_ACTION_GROUP              (ligma_action_group_get_type ())
+#define LIGMA_ACTION_GROUP(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ACTION_GROUP, LigmaActionGroup))
+#define LIGMA_ACTION_GROUP_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), LIGMA_TYPE_ACTION_GROUP, LigmaActionGroupClass))
+#define LIGMA_IS_ACTION_GROUP(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ACTION_GROUP))
+#define LIGMA_IS_ACTION_GROUP_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), LIGMA_TYPE_ACTION_GROUP))
+#define LIGMA_ACTION_GROUP_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), LIGMA_TYPE_ACTION_GROUP, LigmaActionGroupClass))
 
 
-typedef struct _GimpActionGroupClass GimpActionGroupClass;
+typedef struct _LigmaActionGroupClass LigmaActionGroupClass;
 
-struct _GimpActionGroup
+struct _LigmaActionGroup
 {
   GtkActionGroup             parent_instance;
 
-  Gimp                      *gimp;
+  Ligma                      *ligma;
   gchar                     *label;
   gchar                     *icon_name;
 
   gpointer                   user_data;
 
-  GimpActionGroupUpdateFunc  update_func;
+  LigmaActionGroupUpdateFunc  update_func;
 };
 
-struct _GimpActionGroupClass
+struct _LigmaActionGroupClass
 {
   GtkActionGroupClass  parent_class;
 
   GHashTable          *groups;
 
   /* signals */
-  void (* action_added) (GimpActionGroup *group,
-                         GimpAction      *action);
+  void (* action_added) (LigmaActionGroup *group,
+                         LigmaAction      *action);
 };
 
 
-typedef void (* GimpActionCallback) (GimpAction *action,
+typedef void (* LigmaActionCallback) (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data);
 
-struct _GimpActionEntry
+struct _LigmaActionEntry
 {
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
   const gchar        *accelerator;
   const gchar        *tooltip;
-  GimpActionCallback  callback;
+  LigmaActionCallback  callback;
 
   const gchar        *help_id;
 };
 
-struct _GimpToggleActionEntry
+struct _LigmaToggleActionEntry
 {
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
   const gchar        *accelerator;
   const gchar        *tooltip;
-  GimpActionCallback  callback;
+  LigmaActionCallback  callback;
   gboolean            is_active;
 
   const gchar *help_id;
 };
 
-struct _GimpRadioActionEntry
+struct _LigmaRadioActionEntry
 {
   const gchar *name;
   const gchar *icon_name;
@@ -98,7 +98,7 @@ struct _GimpRadioActionEntry
   const gchar *help_id;
 };
 
-struct _GimpEnumActionEntry
+struct _LigmaEnumActionEntry
 {
   const gchar *name;
   const gchar *icon_name;
@@ -111,7 +111,7 @@ struct _GimpEnumActionEntry
   const gchar *help_id;
 };
 
-struct _GimpStringActionEntry
+struct _LigmaStringActionEntry
 {
   const gchar *name;
   const gchar *icon_name;
@@ -123,7 +123,7 @@ struct _GimpStringActionEntry
   const gchar *help_id;
 };
 
-struct _GimpDoubleActionEntry
+struct _LigmaDoubleActionEntry
 {
   const gchar   *name;
   const gchar   *icon_name;
@@ -135,125 +135,125 @@ struct _GimpDoubleActionEntry
   const gchar   *help_id;
 };
 
-struct _GimpProcedureActionEntry
+struct _LigmaProcedureActionEntry
 {
   const gchar   *name;
   const gchar   *icon_name;
   const gchar   *label;
   const gchar   *accelerator;
   const gchar   *tooltip;
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   const gchar   *help_id;
 };
 
 
-GType            gimp_action_group_get_type   (void) G_GNUC_CONST;
+GType            ligma_action_group_get_type   (void) G_GNUC_CONST;
 
-GimpActionGroup *gimp_action_group_new        (Gimp                  *gimp,
+LigmaActionGroup *ligma_action_group_new        (Ligma                  *ligma,
                                                const gchar           *name,
                                                const gchar           *label,
                                                const gchar           *icon_name,
                                                gpointer               user_data,
-                                               GimpActionGroupUpdateFunc update_func);
+                                               LigmaActionGroupUpdateFunc update_func);
 
-GList *gimp_action_groups_from_name           (const gchar           *name);
+GList *ligma_action_groups_from_name           (const gchar           *name);
 
-const gchar * gimp_action_group_get_name       (GimpActionGroup       *group);
+const gchar * ligma_action_group_get_name       (LigmaActionGroup       *group);
 
-void  gimp_action_group_add_action            (GimpActionGroup *action_group,
-                                               GimpAction      *action);
-void  gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
-                                               GimpAction      *action,
+void  ligma_action_group_add_action            (LigmaActionGroup *action_group,
+                                               LigmaAction      *action);
+void  ligma_action_group_add_action_with_accel (LigmaActionGroup *action_group,
+                                               LigmaAction      *action,
                                                const gchar     *accelerator);
-void  gimp_action_group_remove_action         (GimpActionGroup *action_group,
-                                               GimpAction      *action);
+void  ligma_action_group_remove_action         (LigmaActionGroup *action_group,
+                                               LigmaAction      *action);
 
-GimpAction  * gimp_action_group_get_action     (GimpActionGroup       *group,
+LigmaAction  * ligma_action_group_get_action     (LigmaActionGroup       *group,
                                                 const gchar           *action_name);
-GList       * gimp_action_group_list_actions   (GimpActionGroup       *group);
+GList       * ligma_action_group_list_actions   (LigmaActionGroup       *group);
 
-void   gimp_action_group_update               (GimpActionGroup       *group,
+void   ligma_action_group_update               (LigmaActionGroup       *group,
                                                gpointer               update_data);
 
-void   gimp_action_group_add_actions          (GimpActionGroup             *group,
+void   ligma_action_group_add_actions          (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpActionEntry       *entries,
+                                               const LigmaActionEntry       *entries,
                                                guint                        n_entries);
-void   gimp_action_group_add_toggle_actions   (GimpActionGroup             *group,
+void   ligma_action_group_add_toggle_actions   (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpToggleActionEntry *entries,
+                                               const LigmaToggleActionEntry *entries,
                                                guint                        n_entries);
-GSList *gimp_action_group_add_radio_actions   (GimpActionGroup             *group,
+GSList *ligma_action_group_add_radio_actions   (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpRadioActionEntry  *entries,
+                                               const LigmaRadioActionEntry  *entries,
                                                guint                        n_entries,
                                                GSList                      *radio_group,
                                                gint                         value,
-                                               GimpActionCallback           callback);
-void   gimp_action_group_add_enum_actions     (GimpActionGroup             *group,
+                                               LigmaActionCallback           callback);
+void   ligma_action_group_add_enum_actions     (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpEnumActionEntry   *entries,
+                                               const LigmaEnumActionEntry   *entries,
                                                guint                        n_entries,
-                                               GimpActionCallback           callback);
-void   gimp_action_group_add_string_actions   (GimpActionGroup             *group,
+                                               LigmaActionCallback           callback);
+void   ligma_action_group_add_string_actions   (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpStringActionEntry *entries,
+                                               const LigmaStringActionEntry *entries,
                                                guint                        n_entries,
-                                               GimpActionCallback           callback);
-void   gimp_action_group_add_double_actions   (GimpActionGroup             *group,
+                                               LigmaActionCallback           callback);
+void   ligma_action_group_add_double_actions   (LigmaActionGroup             *group,
                                                const gchar                 *msg_context,
-                                               const GimpDoubleActionEntry *entries,
+                                               const LigmaDoubleActionEntry *entries,
                                                guint                        n_entries,
-                                               GimpActionCallback           callback);
-void   gimp_action_group_add_procedure_actions(GimpActionGroup             *group,
-                                               const GimpProcedureActionEntry *entries,
+                                               LigmaActionCallback           callback);
+void   ligma_action_group_add_procedure_actions(LigmaActionGroup             *group,
+                                               const LigmaProcedureActionEntry *entries,
                                                guint                        n_entries,
-                                               GimpActionCallback           callback);
+                                               LigmaActionCallback           callback);
 
-void   gimp_action_group_remove_action_and_accel (GimpActionGroup          *group,
-                                                  GimpAction               *action);
+void   ligma_action_group_remove_action_and_accel (LigmaActionGroup          *group,
+                                                  LigmaAction               *action);
 
-void          gimp_action_group_activate_action       (GimpActionGroup *group,
+void          ligma_action_group_activate_action       (LigmaActionGroup *group,
                                                        const gchar     *action_name);
-void          gimp_action_group_set_action_visible    (GimpActionGroup *group,
+void          ligma_action_group_set_action_visible    (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         visible);
-void          gimp_action_group_set_action_sensitive  (GimpActionGroup *group,
+void          ligma_action_group_set_action_sensitive  (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         sensitive,
                                                        const gchar     *reason);
-void          gimp_action_group_set_action_active     (GimpActionGroup *group,
+void          ligma_action_group_set_action_active     (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         active);
-void          gimp_action_group_set_action_label      (GimpActionGroup *group,
+void          ligma_action_group_set_action_label      (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        const gchar     *label);
-void          gimp_action_group_set_action_pixbuf     (GimpActionGroup *group,
+void          ligma_action_group_set_action_pixbuf     (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        GdkPixbuf       *pixbuf);
-void          gimp_action_group_set_action_tooltip    (GimpActionGroup *group,
+void          ligma_action_group_set_action_tooltip    (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        const gchar     *tooltip);
-const gchar * gimp_action_group_get_action_tooltip    (GimpActionGroup *group,
+const gchar * ligma_action_group_get_action_tooltip    (LigmaActionGroup *group,
                                                        const gchar     *action_name);
-void          gimp_action_group_set_action_context    (GimpActionGroup *group,
+void          ligma_action_group_set_action_context    (LigmaActionGroup *group,
                                                        const gchar     *action_name,
-                                                       GimpContext     *context);
-void          gimp_action_group_set_action_color      (GimpActionGroup *group,
+                                                       LigmaContext     *context);
+void          ligma_action_group_set_action_color      (LigmaActionGroup *group,
                                                        const gchar     *action_name,
-                                                       const GimpRGB   *color,
+                                                       const LigmaRGB   *color,
                                                        gboolean         set_label);
-void          gimp_action_group_set_action_viewable   (GimpActionGroup *group,
+void          ligma_action_group_set_action_viewable   (LigmaActionGroup *group,
                                                        const gchar     *action_name,
-                                                       GimpViewable    *viewable);
-void          gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
+                                                       LigmaViewable    *viewable);
+void          ligma_action_group_set_action_hide_empty (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         hide_empty);
-void   gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
+void   ligma_action_group_set_action_always_show_image (LigmaActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         always_show_image);
 
 
 
-#endif  /* __GIMP_ACTION_GROUP_H__ */
+#endif  /* __LIGMA_ACTION_GROUP_H__ */

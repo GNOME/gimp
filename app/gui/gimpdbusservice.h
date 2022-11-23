@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDBusService
- * Copyright (C) 2007, 2008 Sven Neumann <sven@gimp.org>
- * Copyright (C) 2013       Michael Natterer <mitch@gimp.org>
+ * LigmaDBusService
+ * Copyright (C) 2007, 2008 Sven Neumann <sven@ligma.org>
+ * Copyright (C) 2013       Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,51 +19,51 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DBUS_SERVICE_H__
-#define __GIMP_DBUS_SERVICE_H__
+#ifndef __LIGMA_DBUS_SERVICE_H__
+#define __LIGMA_DBUS_SERVICE_H__
 
 
-#include "gimpdbusservice-generated.h"
+#include "ligmadbusservice-generated.h"
 
-/* service name and path should really be org.gimp.GIMP and
- * /org/gimp/GIMP and only the interface be called UI.
+/* service name and path should really be org.ligma.LIGMA and
+ * /org/ligma/LIGMA and only the interface be called UI.
  */
-#define GIMP_DBUS_SERVICE_NAME   "org.gimp.GIMP.UI"
-#define GIMP_DBUS_SERVICE_PATH   "/org/gimp/GIMP/UI"
-#define GIMP_DBUS_INTERFACE_NAME "org.gimp.GIMP.UI"
-#define GIMP_DBUS_INTERFACE_PATH "/org/gimp/GIMP/UI"
+#define LIGMA_DBUS_SERVICE_NAME   "org.ligma.LIGMA.UI"
+#define LIGMA_DBUS_SERVICE_PATH   "/org/ligma/LIGMA/UI"
+#define LIGMA_DBUS_INTERFACE_NAME "org.ligma.LIGMA.UI"
+#define LIGMA_DBUS_INTERFACE_PATH "/org/ligma/LIGMA/UI"
 
 
-#define GIMP_TYPE_DBUS_SERVICE            (gimp_dbus_service_get_type ())
-#define GIMP_DBUS_SERVICE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DBUS_SERVICE, GimpDBusService))
-#define GIMP_DBUS_SERVICE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DBUS_SERVICE, GimpDBusServiceClass))
-#define GIMP_IS_DBUS_SERVICE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DBUS_SERVICE))
-#define GIMP_IS_DBUS_SERVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DBUS_SERVICE))
-#define GIMP_DBUS_SERVICE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DBUS_SERVICE, GimpDBusServiceClass))
+#define LIGMA_TYPE_DBUS_SERVICE            (ligma_dbus_service_get_type ())
+#define LIGMA_DBUS_SERVICE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DBUS_SERVICE, LigmaDBusService))
+#define LIGMA_DBUS_SERVICE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DBUS_SERVICE, LigmaDBusServiceClass))
+#define LIGMA_IS_DBUS_SERVICE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DBUS_SERVICE))
+#define LIGMA_IS_DBUS_SERVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DBUS_SERVICE))
+#define LIGMA_DBUS_SERVICE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DBUS_SERVICE, LigmaDBusServiceClass))
 
 
-typedef struct _GimpDBusService      GimpDBusService;
-typedef struct _GimpDBusServiceClass GimpDBusServiceClass;
+typedef struct _LigmaDBusService      LigmaDBusService;
+typedef struct _LigmaDBusServiceClass LigmaDBusServiceClass;
 
-struct _GimpDBusService
+struct _LigmaDBusService
 {
-  GimpDBusServiceUISkeleton  parent_instance;
+  LigmaDBusServiceUISkeleton  parent_instance;
 
-  Gimp     *gimp;
+  Ligma     *ligma;
   GQueue   *queue;
   GSource  *source;
   gboolean  timeout_source;
 };
 
-struct _GimpDBusServiceClass
+struct _LigmaDBusServiceClass
 {
-  GimpDBusServiceUISkeletonClass  parent_class;
+  LigmaDBusServiceUISkeletonClass  parent_class;
 };
 
 
-GType     gimp_dbus_service_get_type (void) G_GNUC_CONST;
+GType     ligma_dbus_service_get_type (void) G_GNUC_CONST;
 
-GObject * gimp_dbus_service_new      (Gimp *gimp);
+GObject * ligma_dbus_service_new      (Ligma *ligma);
 
 
-#endif /* __GIMP_DBUS_SERVICE_H__ */
+#endif /* __LIGMA_DBUS_SERVICE_H__ */

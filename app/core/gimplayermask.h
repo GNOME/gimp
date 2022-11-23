@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,47 +15,47 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MASK_H__
-#define __GIMP_LAYER_MASK_H__
+#ifndef __LIGMA_LAYER_MASK_H__
+#define __LIGMA_LAYER_MASK_H__
 
 
-#include "gimpchannel.h"
+#include "ligmachannel.h"
 
 
-#define GIMP_TYPE_LAYER_MASK            (gimp_layer_mask_get_type ())
-#define GIMP_LAYER_MASK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMask))
-#define GIMP_LAYER_MASK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
-#define GIMP_IS_LAYER_MASK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
-#define GIMP_IS_LAYER_MASK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
-#define GIMP_LAYER_MASK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
+#define LIGMA_TYPE_LAYER_MASK            (ligma_layer_mask_get_type ())
+#define LIGMA_LAYER_MASK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LAYER_MASK, LigmaLayerMask))
+#define LIGMA_LAYER_MASK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LAYER_MASK, LigmaLayerMaskClass))
+#define LIGMA_IS_LAYER_MASK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LAYER_MASK))
+#define LIGMA_IS_LAYER_MASK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LAYER_MASK))
+#define LIGMA_LAYER_MASK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LAYER_MASK, LigmaLayerMaskClass))
 
 
-typedef struct _GimpLayerMaskClass  GimpLayerMaskClass;
+typedef struct _LigmaLayerMaskClass  LigmaLayerMaskClass;
 
-struct _GimpLayerMask
+struct _LigmaLayerMask
 {
-  GimpChannel  parent_instance;
+  LigmaChannel  parent_instance;
 
-  GimpLayer   *layer;
+  LigmaLayer   *layer;
 };
 
-struct _GimpLayerMaskClass
+struct _LigmaLayerMaskClass
 {
-  GimpChannelClass  parent_class;
+  LigmaChannelClass  parent_class;
 };
 
 
-GType           gimp_layer_mask_get_type  (void) G_GNUC_CONST;
+GType           ligma_layer_mask_get_type  (void) G_GNUC_CONST;
 
-GimpLayerMask * gimp_layer_mask_new       (GimpImage     *image,
+LigmaLayerMask * ligma_layer_mask_new       (LigmaImage     *image,
                                            gint           width,
                                            gint           height,
                                            const gchar   *name,
-                                           const GimpRGB *color);
+                                           const LigmaRGB *color);
 
-void            gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
-                                           GimpLayer     *layer);
-GimpLayer     * gimp_layer_mask_get_layer (GimpLayerMask *layer_mask);
+void            ligma_layer_mask_set_layer (LigmaLayerMask *layer_mask,
+                                           LigmaLayer     *layer);
+LigmaLayer     * ligma_layer_mask_get_layer (LigmaLayerMask *layer_mask);
 
 
-#endif /* __GIMP_LAYER_MASK_H__ */
+#endif /* __LIGMA_LAYER_MASK_H__ */

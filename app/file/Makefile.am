@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-File\"	\
+	-DG_LOG_DOMAIN=\"Ligma-File\"	\
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
@@ -23,4 +23,4 @@ libappfile_a_SOURCES = \
 	file-save.h	\
 	file-utils.c	\
 	file-utils.h	\
-	gimp-file.h
+	ligma-file.h

@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include "imap_about.h"
 #include "imap_circle.h"
@@ -39,7 +39,7 @@
 #include "imap_settings.h"
 #include "imap_source.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static Menu_t _menu;
 static GtkUIManager *ui_manager;
@@ -144,41 +144,41 @@ static const GtkActionEntry entries[] =
 {
   { "FileMenu", NULL,
     N_("_File") },
-  { "Open", GIMP_ICON_DOCUMENT_OPEN,
+  { "Open", LIGMA_ICON_DOCUMENT_OPEN,
     N_("_Open..."), NULL, N_("Open"),
     do_file_open_dialog},
-  { "Save", GIMP_ICON_DOCUMENT_SAVE,
+  { "Save", LIGMA_ICON_DOCUMENT_SAVE,
     N_("_Save..."), NULL, N_("Save"),
     save},
-  { "SaveAs", GIMP_ICON_DOCUMENT_SAVE_AS,
+  { "SaveAs", LIGMA_ICON_DOCUMENT_SAVE_AS,
     N_("Save _As..."), "<shift><control>S", NULL,
     do_file_save_as_dialog},
-  { "Close", GIMP_ICON_CLOSE, N_("_Close"), "<primary>w", NULL, do_close},
-  { "Quit", GIMP_ICON_APPLICATION_EXIT,
+  { "Close", LIGMA_ICON_CLOSE, N_("_Close"), "<primary>w", NULL, do_close},
+  { "Quit", LIGMA_ICON_APPLICATION_EXIT,
     N_("_Quit"), "<primary>q", NULL, do_quit},
 
   { "EditMenu", NULL, N_("_Edit") },
-  { "Undo", GIMP_ICON_EDIT_UNDO,
+  { "Undo", LIGMA_ICON_EDIT_UNDO,
     N_("_Undo"), NULL, N_("Undo"), do_undo},
-  { "Redo", GIMP_ICON_EDIT_REDO,
+  { "Redo", LIGMA_ICON_EDIT_REDO,
     N_("_Redo"), NULL, N_("Redo"), do_redo},
-  { "Cut", GIMP_ICON_EDIT_CUT,
+  { "Cut", LIGMA_ICON_EDIT_CUT,
     N_("Cu_t"), "<primary>x", N_("Cut"), do_cut},
-  { "Copy", GIMP_ICON_EDIT_COPY,
+  { "Copy", LIGMA_ICON_EDIT_COPY,
     N_("_Copy"), "<primary>c", N_("Copy"), do_copy},
-  { "Paste", GIMP_ICON_EDIT_PASTE,
+  { "Paste", LIGMA_ICON_EDIT_PASTE,
     N_("_Paste"), "<primary>v", N_("Paste"), do_paste},
-  { "Clear", GIMP_ICON_EDIT_DELETE,
+  { "Clear", LIGMA_ICON_EDIT_DELETE,
     N_("_Delete"), NULL, N_("Delete"), do_clear},
   { "SelectAll", NULL,
     N_("Select _All"), "<primary>A", NULL, do_select_all},
   { "DeselectAll", NULL,
     N_("D_eselect All"), "<shift><primary>A", NULL,
     do_deselect_all},
-  { "EditAreaInfo", GIMP_ICON_EDIT
+  { "EditAreaInfo", LIGMA_ICON_EDIT
     , N_("Edit Area _Info..."), NULL,
     N_("Edit selected area info"), do_edit_selected_shape},
-  { "Preferences", GIMP_ICON_PREFERENCES_SYSTEM,
+  { "Preferences", LIGMA_ICON_PREFERENCES_SYSTEM,
     N_("_Preferences"), NULL, N_("Preferences"),
     do_preferences_dialog},
   { "MoveToFront", IMAP_TO_FRONT, "", NULL, N_("Move Area to Front"),
@@ -186,33 +186,33 @@ static const GtkActionEntry entries[] =
   { "SendToBack", IMAP_TO_BACK, "", NULL, N_("Move Area to Bottom"),
     do_send_to_back},
   { "DeleteArea", NULL, N_("Delete Area"), NULL, NULL, NULL},
-  { "MoveUp", GIMP_ICON_GO_UP, N_("Move Up"), NULL, NULL, NULL},
-  { "MoveDown", GIMP_ICON_GO_DOWN, N_("Move Down"), NULL, NULL, NULL},
+  { "MoveUp", LIGMA_ICON_GO_UP, N_("Move Up"), NULL, NULL, NULL},
+  { "MoveDown", LIGMA_ICON_GO_DOWN, N_("Move Down"), NULL, NULL, NULL},
 
   { "InsertPoint", NULL, N_("Insert Point"), NULL, NULL, polygon_insert_point},
   { "DeletePoint", NULL, N_("Delete Point"), NULL, NULL, polygon_delete_point},
 
   { "ViewMenu", NULL, N_("_View") },
   { "Source", NULL, N_("Source..."), NULL, NULL, do_source_dialog},
-  { "ZoomIn", GIMP_ICON_ZOOM_IN, N_("Zoom _In"), "plus", N_("Zoom in"), do_zoom_in},
-  { "ZoomOut", GIMP_ICON_ZOOM_OUT, N_("Zoom _Out"), "minus", N_("Zoom out"), do_zoom_out},
+  { "ZoomIn", LIGMA_ICON_ZOOM_IN, N_("Zoom _In"), "plus", N_("Zoom in"), do_zoom_in},
+  { "ZoomOut", LIGMA_ICON_ZOOM_OUT, N_("Zoom _Out"), "minus", N_("Zoom out"), do_zoom_out},
   { "ZoomToMenu", NULL, N_("_Zoom To") },
 
   { "MappingMenu", NULL, N_("_Mapping") },
-  { "EditMapInfo", GIMP_ICON_DIALOG_INFORMATION, N_("Edit Map Info..."), NULL,
+  { "EditMapInfo", LIGMA_ICON_DIALOG_INFORMATION, N_("Edit Map Info..."), NULL,
     N_("Edit Map Info"), do_settings_dialog},
 
   { "ToolsMenu", NULL, N_("_Tools") },
   { "GridSettings", NULL, N_("Grid Settings..."), NULL, NULL,
     do_grid_settings_dialog},
-  { "UseGimpGuides", NULL, N_("Use GIMP Guides..."), NULL, NULL,
-    do_use_gimp_guides_dialog},
+  { "UseLigmaGuides", NULL, N_("Use LIGMA Guides..."), NULL, NULL,
+    do_use_ligma_guides_dialog},
   { "CreateGuides", NULL, N_("Create Guides..."), NULL, NULL,
     do_create_guides_dialog},
 
   { "HelpMenu", NULL, N_("_Help") },
-  { "Contents", GIMP_ICON_HELP, N_("_Contents"), NULL, NULL, imap_help},
-  { "About", GIMP_ICON_HELP_ABOUT, N_("_About"), NULL, NULL, do_about_dialog},
+  { "Contents", LIGMA_ICON_HELP, N_("_Contents"), NULL, NULL, imap_help},
+  { "About", LIGMA_ICON_HELP_ABOUT, N_("_About"), NULL, NULL, do_about_dialog},
 
   { "ZoomMenu", NULL, N_("_Zoom") },
 };
@@ -220,7 +220,7 @@ static const GtkActionEntry entries[] =
 /* Toggle items */
 static const GtkToggleActionEntry toggle_entries[] = {
   { "AreaList", NULL, N_("Area List"), NULL, NULL, NULL, TRUE },
-  { "Grid", GIMP_ICON_GRID, N_("_Grid"), NULL, N_("Grid"), toggle_grid, FALSE }
+  { "Grid", LIGMA_ICON_GRID, N_("_Grid"), NULL, N_("Grid"), toggle_grid, FALSE }
 };
 
 static const GtkRadioActionEntry color_entries[] = {
@@ -229,7 +229,7 @@ static const GtkRadioActionEntry color_entries[] = {
 };
 
 static const GtkRadioActionEntry mapping_entries[] = {
-  { "Arrow", GIMP_ICON_CURSOR, N_("Arrow"), NULL,
+  { "Arrow", LIGMA_ICON_CURSOR, N_("Arrow"), NULL,
     N_("Select existing area"), 0},
   { "Rectangle", IMAP_RECTANGLE, N_("Rectangle"), NULL,
     N_("Define Rectangle area"), 1},
@@ -308,7 +308,7 @@ static const gchar ui_description[] =
 "      <menuitem action='Grid'/>"
 "      <menuitem action='GridSettings'/>"
 "      <separator/>"
-"      <menuitem action='UseGimpGuides'/>"
+"      <menuitem action='UseLigmaGuides'/>"
 "      <menuitem action='CreateGuides'/>"
 "    </menu>"
 "    <menu action='HelpMenu'>"

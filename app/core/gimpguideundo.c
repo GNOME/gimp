@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,94 +22,94 @@
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimpimage-guides.h"
-#include "gimpguide.h"
-#include "gimpguideundo.h"
+#include "ligmaimage.h"
+#include "ligmaimage-guides.h"
+#include "ligmaguide.h"
+#include "ligmaguideundo.h"
 
 
-static void   gimp_guide_undo_constructed  (GObject            *object);
+static void   ligma_guide_undo_constructed  (GObject            *object);
 
-static void   gimp_guide_undo_pop          (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode,
-                                            GimpUndoAccumulator *accum);
+static void   ligma_guide_undo_pop          (LigmaUndo            *undo,
+                                            LigmaUndoMode         undo_mode,
+                                            LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpGuideUndo, gimp_guide_undo,
-               GIMP_TYPE_AUX_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaGuideUndo, ligma_guide_undo,
+               LIGMA_TYPE_AUX_ITEM_UNDO)
 
-#define parent_class gimp_guide_undo_parent_class
+#define parent_class ligma_guide_undo_parent_class
 
 
 static void
-gimp_guide_undo_class_init (GimpGuideUndoClass *klass)
+ligma_guide_undo_class_init (LigmaGuideUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_guide_undo_constructed;
+  object_class->constructed = ligma_guide_undo_constructed;
 
-  undo_class->pop           = gimp_guide_undo_pop;
+  undo_class->pop           = ligma_guide_undo_pop;
 }
 
 static void
-gimp_guide_undo_init (GimpGuideUndo *undo)
+ligma_guide_undo_init (LigmaGuideUndo *undo)
 {
 }
 
 static void
-gimp_guide_undo_constructed (GObject *object)
+ligma_guide_undo_constructed (GObject *object)
 {
-  GimpGuideUndo *guide_undo = GIMP_GUIDE_UNDO (object);
-  GimpGuide     *guide;
+  LigmaGuideUndo *guide_undo = LIGMA_GUIDE_UNDO (object);
+  LigmaGuide     *guide;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  guide = GIMP_GUIDE (GIMP_AUX_ITEM_UNDO (object)->aux_item);
+  guide = LIGMA_GUIDE (LIGMA_AUX_ITEM_UNDO (object)->aux_item);
 
-  gimp_assert (GIMP_IS_GUIDE (guide));
+  ligma_assert (LIGMA_IS_GUIDE (guide));
 
-  guide_undo->orientation = gimp_guide_get_orientation (guide);
-  guide_undo->position    = gimp_guide_get_position (guide);
+  guide_undo->orientation = ligma_guide_get_orientation (guide);
+  guide_undo->position    = ligma_guide_get_position (guide);
 }
 
 static void
-gimp_guide_undo_pop (GimpUndo              *undo,
-                     GimpUndoMode           undo_mode,
-                     GimpUndoAccumulator   *accum)
+ligma_guide_undo_pop (LigmaUndo              *undo,
+                     LigmaUndoMode           undo_mode,
+                     LigmaUndoAccumulator   *accum)
 {
-  GimpGuideUndo       *guide_undo = GIMP_GUIDE_UNDO (undo);
-  GimpGuide           *guide;
-  GimpOrientationType  orientation;
+  LigmaGuideUndo       *guide_undo = LIGMA_GUIDE_UNDO (undo);
+  LigmaGuide           *guide;
+  LigmaOrientationType  orientation;
   gint                 position;
   gboolean             moved = FALSE;
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  guide = GIMP_GUIDE (GIMP_AUX_ITEM_UNDO (undo)->aux_item);
+  guide = LIGMA_GUIDE (LIGMA_AUX_ITEM_UNDO (undo)->aux_item);
 
-  orientation = gimp_guide_get_orientation (guide);
-  position    = gimp_guide_get_position (guide);
+  orientation = ligma_guide_get_orientation (guide);
+  position    = ligma_guide_get_position (guide);
 
-  if (position == GIMP_GUIDE_POSITION_UNDEFINED)
+  if (position == LIGMA_GUIDE_POSITION_UNDEFINED)
     {
-      gimp_image_add_guide (undo->image, guide, guide_undo->position);
+      ligma_image_add_guide (undo->image, guide, guide_undo->position);
     }
-  else if (guide_undo->position == GIMP_GUIDE_POSITION_UNDEFINED)
+  else if (guide_undo->position == LIGMA_GUIDE_POSITION_UNDEFINED)
     {
-      gimp_image_remove_guide (undo->image, guide, FALSE);
+      ligma_image_remove_guide (undo->image, guide, FALSE);
     }
   else
     {
-      gimp_guide_set_position (guide, guide_undo->position);
+      ligma_guide_set_position (guide, guide_undo->position);
 
       moved = TRUE;
     }
 
-  gimp_guide_set_orientation (guide, guide_undo->orientation);
+  ligma_guide_set_orientation (guide, guide_undo->orientation);
 
   if (moved || guide_undo->orientation != orientation)
-    gimp_image_guide_moved (undo->image, guide);
+    ligma_image_guide_moved (undo->image, guide);
 
   guide_undo->position    = position;
   guide_undo->orientation = orientation;

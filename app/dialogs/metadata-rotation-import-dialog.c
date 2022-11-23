@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata-rotation-import-dialog.h
@@ -24,58 +24,58 @@
 #include <gexiv2/gexiv2.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-metadata.h"
-#include "core/gimppickable.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-metadata.h"
+#include "core/ligmapickable.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmawidgets-constructors.h"
 
 #include "metadata-rotation-import-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpMetadataRotationPolicy   gimp_image_metadata_rotate_dialog (GimpImage         *image,
-                                                                       GimpContext       *context,
+static LigmaMetadataRotationPolicy   ligma_image_metadata_rotate_dialog (LigmaImage         *image,
+                                                                       LigmaContext       *context,
                                                                        GExiv2Orientation  orientation,
                                                                        gboolean          *dont_ask);
-static GdkPixbuf                  * gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
+static GdkPixbuf                  * ligma_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
                                                                        GExiv2Orientation  orientation);
 
 
 /*  public functions  */
 
-GimpMetadataRotationPolicy
-metadata_rotation_import_dialog_run (GimpImage   *image,
-                                     GimpContext *context,
+LigmaMetadataRotationPolicy
+metadata_rotation_import_dialog_run (LigmaImage   *image,
+                                     LigmaContext *context,
                                      GtkWidget   *parent,
                                      gboolean    *dont_ask)
 {
-  GimpMetadata      *metadata;
+  LigmaMetadata      *metadata;
   GExiv2Orientation  orientation;
 
-  metadata    = gimp_image_get_metadata (image);
+  metadata    = ligma_image_get_metadata (image);
   orientation = gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata));
 
   if (orientation <= GEXIV2_ORIENTATION_NORMAL ||
       orientation >  GEXIV2_ORIENTATION_MAX)
-    return GIMP_METADATA_ROTATION_POLICY_KEEP;
+    return LIGMA_METADATA_ROTATION_POLICY_KEEP;
 
-  return gimp_image_metadata_rotate_dialog (image, context, orientation, dont_ask);
+  return ligma_image_metadata_rotate_dialog (image, context, orientation, dont_ask);
 }
 
-static GimpMetadataRotationPolicy
-gimp_image_metadata_rotate_dialog (GimpImage         *image,
-                                   GimpContext       *context,
+static LigmaMetadataRotationPolicy
+ligma_image_metadata_rotate_dialog (LigmaImage         *image,
+                                   LigmaContext       *context,
                                    GExiv2Orientation  orientation,
                                    gboolean          *dont_ask)
 {
@@ -92,10 +92,10 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gint         height;
   gint         response;
 
-  name = gimp_image_get_display_name (image);
+  name = ligma_image_get_display_name (image);
   title = g_strdup_printf (_("Rotate %s?"), name);
 
-  dialog = gimp_dialog_new (title, "gimp-metadata-rotate-dialog",
+  dialog = ligma_dialog_new (title, "ligma-metadata-rotate-dialog",
                             NULL, 0, NULL, NULL,
 
                             _("_Keep Original"), GTK_RESPONSE_CANCEL,
@@ -105,7 +105,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
 
   g_free (title);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -119,8 +119,8 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gtk_widget_show (main_vbox);
 
   scale_factor = gtk_widget_get_scale_factor (main_vbox);
-  width        = gimp_image_get_width  (image);
-  height       = gimp_image_get_height (image);
+  width        = ligma_image_get_width  (image);
+  height       = ligma_image_get_height (image);
 
 #define MAX_THUMBNAIL_SIZE (128 * scale_factor)
   if (width > MAX_THUMBNAIL_SIZE || height > MAX_THUMBNAIL_SIZE)
@@ -140,8 +140,8 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
         }
     }
 
-  gimp_pickable_flush (GIMP_PICKABLE (image));
-  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image), context,
+  ligma_pickable_flush (LIGMA_PICKABLE (image));
+  pixbuf = ligma_viewable_get_pixbuf (LIGMA_VIEWABLE (image), context,
                                      width, height);
   if (pixbuf)
     {
@@ -160,7 +160,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
 
       label = gtk_label_new (_("Original"));
       gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -175,13 +175,13 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
       gtk_widget_show (vbox);
 
       label = gtk_label_new (_("Rotated"));
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      rotated = gimp_image_metadata_rotate_pixbuf (pixbuf, orientation);
+      rotated = ligma_image_metadata_rotate_pixbuf (pixbuf, orientation);
 
       image = gtk_image_new_from_pixbuf (rotated);
       g_object_unref (rotated);
@@ -198,7 +198,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
                         "xalign",  0.0,
                         "yalign",  0.5,
                         NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
@@ -220,16 +220,16 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
   gtk_widget_show (toggle);
 
-  response  = gimp_dialog_run (GIMP_DIALOG (dialog));
+  response  = ligma_dialog_run (LIGMA_DIALOG (dialog));
   *dont_ask = (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
 
   gtk_widget_destroy (dialog);
 
-  return (response == GTK_RESPONSE_OK) ? GIMP_METADATA_ROTATION_POLICY_ROTATE : GIMP_COLOR_PROFILE_POLICY_KEEP;
+  return (response == GTK_RESPONSE_OK) ? LIGMA_METADATA_ROTATION_POLICY_ROTATE : LIGMA_COLOR_PROFILE_POLICY_KEEP;
 }
 
 static GdkPixbuf *
-gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
+ligma_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
                                    GExiv2Orientation  orientation)
 {
   GdkPixbuf *rotated = NULL;

@@ -1,8 +1,8 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
-; gimp-online.scm
-; Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+; ligma-online.scm
+; Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -17,261 +17,261 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-(define (gimp-online-docs-web-site)
-  (plug-in-web-browser "https://docs.gimp.org/")
+(define (ligma-online-docs-web-site)
+  (plug-in-web-browser "https://docs.ligma.org/")
 )
 
-(define (gimp-help-concepts-usage)
-  (gimp-help "" "gimp-concepts-usage")
+(define (ligma-help-concepts-usage)
+  (ligma-help "" "ligma-concepts-usage")
 )
 
-(define (gimp-help-using-docks)
-  (gimp-help "" "gimp-concepts-docks")
+(define (ligma-help-using-docks)
+  (ligma-help "" "ligma-concepts-docks")
 )
 
-(define (gimp-help-using-simpleobjects)
-  (gimp-help "" "gimp-using-simpleobjects")
+(define (ligma-help-using-simpleobjects)
+  (ligma-help "" "ligma-using-simpleobjects")
 )
 
-(define (gimp-help-using-selections)
-  (gimp-help "" "gimp-using-selections")
+(define (ligma-help-using-selections)
+  (ligma-help "" "ligma-using-selections")
 )
 
-(define (gimp-help-using-fileformats)
-  (gimp-help "" "gimp-using-fileformats")
+(define (ligma-help-using-fileformats)
+  (ligma-help "" "ligma-using-fileformats")
 )
 
-(define (gimp-help-using-photography)
-  (gimp-help "" "gimp-using-photography")
+(define (ligma-help-using-photography)
+  (ligma-help "" "ligma-using-photography")
 )
 
-(define (gimp-help-using-web)
-  (gimp-help "" "gimp-using-web")
+(define (ligma-help-using-web)
+  (ligma-help "" "ligma-using-web")
 )
 
-(define (gimp-help-concepts-paths)
-  (gimp-help "" "gimp-concepts-paths")
+(define (ligma-help-concepts-paths)
+  (ligma-help "" "ligma-concepts-paths")
 )
 
 
 ; shortcuts to help topics
-(script-fu-register "gimp-help-concepts-paths"
+(script-fu-register "ligma-help-concepts-paths"
    _"Using _Paths"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-concepts-paths"
+(script-fu-menu-register "ligma-help-concepts-paths"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-web"
+(script-fu-register "ligma-help-using-web"
    _"_Preparing your Images for the Web"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-web"
+(script-fu-menu-register "ligma-help-using-web"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-photography"
+(script-fu-register "ligma-help-using-photography"
    _"_Working with Digital Camera Photos"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-photography"
+(script-fu-menu-register "ligma-help-using-photography"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-fileformats"
+(script-fu-register "ligma-help-using-fileformats"
    _"Create, Open and Save _Files"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-fileformats"
+(script-fu-menu-register "ligma-help-using-fileformats"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-concepts-usage"
+(script-fu-register "ligma-help-concepts-usage"
    _"_Basic Concepts"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-concepts-usage"
+(script-fu-menu-register "ligma-help-concepts-usage"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-docks"
+(script-fu-register "ligma-help-using-docks"
    _"How to Use _Dialogs"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-docks"
+(script-fu-menu-register "ligma-help-using-docks"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-simpleobjects"
+(script-fu-register "ligma-help-using-simpleobjects"
    _"Drawing _Simple Objects"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-simpleobjects"
+(script-fu-menu-register "ligma-help-using-simpleobjects"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-using-selections"
+(script-fu-register "ligma-help-using-selections"
    _"Create and Use _Selections"
    _"Bookmark to the user manual"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-simpleobjects"
+(script-fu-menu-register "ligma-help-using-simpleobjects"
 			 "<Image>/Help/User Manual")
 
 
-;; Links to GIMP related web sites
+;; Links to LIGMA related web sites
 
-(define (gimp-online-main-web-site)
-  (plug-in-web-browser "https://www.gimp.org/")
+(define (ligma-online-main-web-site)
+  (plug-in-web-browser "https://www.ligma.org/")
 )
 
-(define (gimp-online-developer-web-site)
-  (plug-in-web-browser "https://developer.gimp.org/")
+(define (ligma-online-developer-web-site)
+  (plug-in-web-browser "https://developer.ligma.org/")
 )
 
-(define (gimp-online-roadmap)
-  (plug-in-web-browser "https://wiki.gimp.org/wiki/Roadmap")
+(define (ligma-online-roadmap)
+  (plug-in-web-browser "https://wiki.ligma.org/wiki/Roadmap")
 )
 
-(define (gimp-online-wiki)
-  (plug-in-web-browser "https://wiki.gimp.org/wiki/Main_Page")
+(define (ligma-online-wiki)
+  (plug-in-web-browser "https://wiki.ligma.org/wiki/Main_Page")
 )
 
-(define (gimp-online-bugs-features)
-  (plug-in-web-browser "https://gitlab.gnome.org/GNOME/gimp/issues")
+(define (ligma-online-bugs-features)
+  (plug-in-web-browser "https://gitlab.gnome.org/GNOME/ligma/issues")
 )
 
-; (define (gimp-online-plug-in-web-site)
-;   (plug-in-web-browser "https://registry.gimp.org/")
+; (define (ligma-online-plug-in-web-site)
+;   (plug-in-web-browser "https://registry.ligma.org/")
 ; )
 
 
-(script-fu-register "gimp-online-main-web-site"
+(script-fu-register "ligma-online-main-web-site"
    _"_Main Web Site"
-   _"Bookmark to the GIMP web site"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "Henrik Brix Andersen <brix@gimp.org>"
+   _"Bookmark to the LIGMA web site"
+    "Henrik Brix Andersen <brix@ligma.org>"
+    "Henrik Brix Andersen <brix@ligma.org>"
     "2003"
     ""
 )
 
-(script-fu-menu-register "gimp-online-main-web-site"
-                         "<Image>/Help/GIMP Online")
+(script-fu-menu-register "ligma-online-main-web-site"
+                         "<Image>/Help/LIGMA Online")
 
 
-(script-fu-register "gimp-online-developer-web-site"
+(script-fu-register "ligma-online-developer-web-site"
    _"_Developer Web Site"
-   _"Bookmark to the GIMP web site"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "Henrik Brix Andersen <brix@gimp.org>"
+   _"Bookmark to the LIGMA web site"
+    "Henrik Brix Andersen <brix@ligma.org>"
+    "Henrik Brix Andersen <brix@ligma.org>"
     "2003"
     ""
 )
 
-(script-fu-menu-register "gimp-online-developer-web-site"
-                         "<Image>/Help/GIMP Online")
+(script-fu-menu-register "ligma-online-developer-web-site"
+                         "<Image>/Help/LIGMA Online")
 
 
-(script-fu-register "gimp-online-roadmap"
+(script-fu-register "ligma-online-roadmap"
    _"_Roadmap"
-   _"Bookmark to the roadmap of GIMP"
+   _"Bookmark to the roadmap of LIGMA"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "2018"
     ""
 )
 
-(script-fu-menu-register "gimp-online-roadmap"
-                         "<Image>/Help/GIMP Online")
+(script-fu-menu-register "ligma-online-roadmap"
+                         "<Image>/Help/LIGMA Online")
 
 
-(script-fu-register "gimp-online-wiki"
+(script-fu-register "ligma-online-wiki"
    _"_Wiki"
-   _"Bookmark to the wiki of GIMP"
+   _"Bookmark to the wiki of LIGMA"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "2018"
     ""
 )
 
-(script-fu-menu-register "gimp-online-wiki"
-                         "<Image>/Help/GIMP Online")
+(script-fu-menu-register "ligma-online-wiki"
+                         "<Image>/Help/LIGMA Online")
 
 
-(script-fu-register "gimp-online-bugs-features"
+(script-fu-register "ligma-online-bugs-features"
    _"_Bug Reports and Feature Requests"
-   _"Bookmark to the bug tracker of GIMP"
+   _"Bookmark to the bug tracker of LIGMA"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "2018"
     ""
 )
 
-(script-fu-menu-register "gimp-online-bugs-features"
+(script-fu-menu-register "ligma-online-bugs-features"
                          "<Image>/Help")
 
 
-(script-fu-register "gimp-online-docs-web-site"
+(script-fu-register "ligma-online-docs-web-site"
    _"_User Manual Web Site"
-   _"Bookmark to the GIMP web site"
-    "Roman Joost <romanofski@gimp.org>"
-    "Roman Joost <romanofski@gimp.org>"
+   _"Bookmark to the LIGMA web site"
+    "Roman Joost <romanofski@ligma.org>"
+    "Roman Joost <romanofski@ligma.org>"
     "2006"
     ""
 )
 
-(script-fu-menu-register "gimp-online-docs-web-site"
-                         "<Image>/Help/GIMP Online")
+(script-fu-menu-register "ligma-online-docs-web-site"
+                         "<Image>/Help/LIGMA Online")
 
 
-; (script-fu-register "gimp-online-plug-in-web-site"
+; (script-fu-register "ligma-online-plug-in-web-site"
 ;    _"Plug-in _Registry"
-;    _"Bookmark to the GIMP web site"
-;     "Henrik Brix Andersen <brix@gimp.org>"
-;     "Henrik Brix Andersen <brix@gimp.org>"
+;    _"Bookmark to the LIGMA web site"
+;     "Henrik Brix Andersen <brix@ligma.org>"
+;     "Henrik Brix Andersen <brix@ligma.org>"
 ;     "2003"
 ;     ""
 ; )
 
-; (script-fu-menu-register "gimp-online-plug-in-web-site"
-;                          "<Image>/Help/GIMP Online")
+; (script-fu-menu-register "ligma-online-plug-in-web-site"
+;                          "<Image>/Help/LIGMA Online")

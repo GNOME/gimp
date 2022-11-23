@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * controller_midi.c
- * Copyright (C) 2004-2007 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,14 +38,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#include "libgimpwidgets/gimpcontroller.h"
+#define LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "libligmawidgets/ligmacontroller.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 typedef struct
@@ -75,7 +75,7 @@ typedef struct _ControllerMidiClass ControllerMidiClass;
 
 struct _ControllerMidi
 {
-  GimpController  parent_instance;
+  LigmaController  parent_instance;
 
   gchar          *device;
   gint            midi_channel;
@@ -100,7 +100,7 @@ struct _ControllerMidi
 
 struct _ControllerMidiClass
 {
-  GimpControllerClass  parent_class;
+  LigmaControllerClass  parent_class;
 };
 
 
@@ -116,10 +116,10 @@ static void          midi_get_property        (GObject        *object,
                                                GValue         *value,
                                                GParamSpec     *pspec);
 
-static gint          midi_get_n_events        (GimpController *controller);
-static const gchar * midi_get_event_name      (GimpController *controller,
+static gint          midi_get_n_events        (LigmaController *controller);
+static const gchar * midi_get_event_name      (LigmaController *controller,
                                                gint            event_id);
-static const gchar * midi_get_event_blurb     (GimpController *controller,
+static const gchar * midi_get_event_blurb     (LigmaController *controller,
                                                gint            event_id);
 
 static gboolean      midi_set_device          (ControllerMidi *controller,
@@ -158,11 +158,11 @@ struct _GAlsaSource
 };
 #endif /* HAVE_ALSA */
 
-static const GimpModuleInfo midi_info =
+static const LigmaModuleInfo midi_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("MIDI event controller"),
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@ligma.org>",
   "v0.2",
   "(c) 2004-2007, released under the GPL",
   "2004-2007"
@@ -170,19 +170,19 @@ static const GimpModuleInfo midi_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (ControllerMidi, controller_midi,
-                       GIMP_TYPE_CONTROLLER)
+                       LIGMA_TYPE_CONTROLLER)
 
 static MidiEvent midi_events[128 + 128 + 128];
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &midi_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   controller_midi_register_type (module);
 
@@ -192,7 +192,7 @@ gimp_module_register (GTypeModule *module)
 static void
 controller_midi_class_init (ControllerMidiClass *klass)
 {
-  GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
+  LigmaControllerClass *controller_class = LIGMA_CONTROLLER_CLASS (klass);
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   gchar               *blurb;
 
@@ -212,7 +212,7 @@ controller_midi_class_init (ControllerMidiClass *klass)
                                                         _("Device:"),
                                                         blurb,
                                                         NULL,
-                                                        GIMP_CONFIG_PARAM_FLAGS));
+                                                        LIGMA_CONFIG_PARAM_FLAGS));
 
   g_free (blurb);
 
@@ -221,11 +221,11 @@ controller_midi_class_init (ControllerMidiClass *klass)
                                                      _("Channel:"),
                                                      _("The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."),
                                                      -1, 15, -1,
-                                                     GIMP_CONFIG_PARAM_FLAGS));
+                                                     LIGMA_CONFIG_PARAM_FLAGS));
 
   controller_class->name            = _("MIDI");
-  controller_class->help_id         = "gimp-controller-midi";
-  controller_class->icon_name       = GIMP_ICON_CONTROLLER_MIDI;
+  controller_class->help_id         = "ligma-controller-midi";
+  controller_class->icon_name       = LIGMA_ICON_CONTROLLER_MIDI;
 
   controller_class->get_n_events    = midi_get_n_events;
   controller_class->get_event_name  = midi_get_event_name;
@@ -313,13 +313,13 @@ midi_get_property (GObject    *object,
 }
 
 static gint
-midi_get_n_events (GimpController *controller)
+midi_get_n_events (LigmaController *controller)
 {
   return 128 + 128 + 128;
 }
 
 static const gchar *
-midi_get_event_name (GimpController *controller,
+midi_get_event_name (LigmaController *controller,
                      gint            event_id)
 {
   if (event_id < (128 + 128 + 128))
@@ -344,7 +344,7 @@ midi_get_event_name (GimpController *controller,
 }
 
 static const gchar *
-midi_get_event_blurb (GimpController *controller,
+midi_get_event_blurb (LigmaController *controller,
                       gint            event_id)
 {
   if (event_id <= 383)
@@ -423,9 +423,9 @@ midi_set_device (ControllerMidi *midi,
                               SND_SEQ_OPEN_INPUT, 0);
           if (ret >= 0)
             {
-              snd_seq_set_client_name (midi->sequencer, _("GIMP"));
+              snd_seq_set_client_name (midi->sequencer, _("LIGMA"));
               ret = snd_seq_create_simple_port (midi->sequencer,
-                                                _("GIMP MIDI Input Controller"),
+                                                _("LIGMA MIDI Input Controller"),
                                                 SND_SEQ_PORT_CAP_WRITE |
                                                 SND_SEQ_PORT_CAP_SUBS_WRITE,
                                                 SND_SEQ_PORT_TYPE_APPLICATION);
@@ -518,16 +518,16 @@ midi_event (ControllerMidi *midi,
       midi->midi_channel == -1 ||
       channel == midi->midi_channel)
     {
-      GimpControllerEvent event = { 0, };
+      LigmaControllerEvent event = { 0, };
 
-      event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
-      event.any.source   = GIMP_CONTROLLER (midi);
+      event.any.type     = LIGMA_CONTROLLER_EVENT_VALUE;
+      event.any.source   = LIGMA_CONTROLLER (midi);
       event.any.event_id = event_id;
 
       g_value_init (&event.value.value, G_TYPE_DOUBLE);
       g_value_set_double (&event.value.value, value);
 
-      gimp_controller_event (GIMP_CONTROLLER (midi), &event);
+      ligma_controller_event (LIGMA_CONTROLLER (midi), &event);
 
       g_value_unset (&event.value.value);
     }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,33 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_PRIVATE_H__
-#define __GIMP_BRUSH_PRIVATE_H__
+#ifndef __LIGMA_BRUSH_PRIVATE_H__
+#define __LIGMA_BRUSH_PRIVATE_H__
 
 
-struct _GimpBrushPrivate
+struct _LigmaBrushPrivate
 {
-  GimpTempBuf     *mask;           /*  the actual mask                    */
-  GimpTempBuf     *blurred_mask;    /*  blurred actual mask cached          */
-  GimpTempBuf     *pixmap;         /*  optional pixmap data               */
-  GimpTempBuf     *blurred_pixmap;  /*  optional pixmap data blurred cache  */
+  LigmaTempBuf     *mask;           /*  the actual mask                    */
+  LigmaTempBuf     *blurred_mask;    /*  blurred actual mask cached          */
+  LigmaTempBuf     *pixmap;         /*  optional pixmap data               */
+  LigmaTempBuf     *blurred_pixmap;  /*  optional pixmap data blurred cache  */
 
   gdouble          blur_hardness;
 
   gint             n_horz_mipmaps;
   gint             n_vert_mipmaps;
-  GimpTempBuf    **mask_mipmaps;
-  GimpTempBuf    **pixmap_mipmaps;
+  LigmaTempBuf    **mask_mipmaps;
+  LigmaTempBuf    **pixmap_mipmaps;
 
   gint             spacing;    /*  brush's spacing                */
-  GimpVector2      x_axis;     /*  for calculating brush spacing  */
-  GimpVector2      y_axis;     /*  for calculating brush spacing  */
+  LigmaVector2      x_axis;     /*  for calculating brush spacing  */
+  LigmaVector2      y_axis;     /*  for calculating brush spacing  */
 
   gint             use_count;  /*  for keeping the caches alive   */
-  GimpBrushCache  *mask_cache;
-  GimpBrushCache  *pixmap_cache;
-  GimpBrushCache  *boundary_cache;
+  LigmaBrushCache  *mask_cache;
+  LigmaBrushCache  *pixmap_cache;
+  LigmaBrushCache  *boundary_cache;
 };
 
 
-#endif /* __GIMP_BRUSH_PRIVATE_H__ */
+#endif /* __LIGMA_BRUSH_PRIVATE_H__ */

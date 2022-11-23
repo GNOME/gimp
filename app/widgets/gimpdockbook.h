@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockbook.h
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * ligmadockbook.h
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,75 +18,75 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKBOOK_H__
-#define __GIMP_DOCKBOOK_H__
+#ifndef __LIGMA_DOCKBOOK_H__
+#define __LIGMA_DOCKBOOK_H__
 
 
-#define GIMP_TYPE_DOCKBOOK            (gimp_dockbook_get_type ())
-#define GIMP_DOCKBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbook))
-#define GIMP_DOCKBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))
-#define GIMP_IS_DOCKBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKBOOK))
-#define GIMP_IS_DOCKBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKBOOK))
-#define GIMP_DOCKBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))
+#define LIGMA_TYPE_DOCKBOOK            (ligma_dockbook_get_type ())
+#define LIGMA_DOCKBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCKBOOK, LigmaDockbook))
+#define LIGMA_DOCKBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCKBOOK, LigmaDockbookClass))
+#define LIGMA_IS_DOCKBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCKBOOK))
+#define LIGMA_IS_DOCKBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCKBOOK))
+#define LIGMA_DOCKBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DOCKBOOK, LigmaDockbookClass))
 
 
-typedef void (* GimpDockbookDragCallback) (GdkDragContext *context,
+typedef void (* LigmaDockbookDragCallback) (GdkDragContext *context,
                                            gboolean        begin,
                                            gpointer        data);
 
 
-typedef struct _GimpDockbookClass    GimpDockbookClass;
-typedef struct _GimpDockbookPrivate  GimpDockbookPrivate;
+typedef struct _LigmaDockbookClass    LigmaDockbookClass;
+typedef struct _LigmaDockbookPrivate  LigmaDockbookPrivate;
 
 /**
- * GimpDockbook:
+ * LigmaDockbook:
  *
- * Holds GimpDockables which are presented on different tabs using
+ * Holds LigmaDockables which are presented on different tabs using
  * GtkNotebook.
  */
-struct _GimpDockbook
+struct _LigmaDockbook
 {
   GtkNotebook parent_instance;
 
-  GimpDockbookPrivate *p;
+  LigmaDockbookPrivate *p;
 };
 
-struct _GimpDockbookClass
+struct _LigmaDockbookClass
 {
   GtkNotebookClass parent_class;
 
-  void (* dockable_added)     (GimpDockbook *dockbook,
-                               GimpDockable *dockable);
-  void (* dockable_removed)   (GimpDockbook *dockbook,
-                               GimpDockable *dockable);
-  void (* dockable_reordered) (GimpDockbook *dockbook,
-                               GimpDockable *dockable);
+  void (* dockable_added)     (LigmaDockbook *dockbook,
+                               LigmaDockable *dockable);
+  void (* dockable_removed)   (LigmaDockbook *dockbook,
+                               LigmaDockable *dockable);
+  void (* dockable_reordered) (LigmaDockbook *dockbook,
+                               LigmaDockable *dockable);
 };
 
 
-GType           gimp_dockbook_get_type                (void) G_GNUC_CONST;
-GtkWidget     * gimp_dockbook_new                     (GimpMenuFactory          *menu_factory);
+GType           ligma_dockbook_get_type                (void) G_GNUC_CONST;
+GtkWidget     * ligma_dockbook_new                     (LigmaMenuFactory          *menu_factory);
 
-void            gimp_dockbook_set_dock                (GimpDockbook             *dockbook,
-                                                       GimpDock                 *dock);
-GimpDock      * gimp_dockbook_get_dock                (GimpDockbook             *dockbook);
+void            ligma_dockbook_set_dock                (LigmaDockbook             *dockbook,
+                                                       LigmaDock                 *dock);
+LigmaDock      * ligma_dockbook_get_dock                (LigmaDockbook             *dockbook);
 
-GimpUIManager * gimp_dockbook_get_ui_manager          (GimpDockbook             *dockbook);
+LigmaUIManager * ligma_dockbook_get_ui_manager          (LigmaDockbook             *dockbook);
 
-GtkWidget     * gimp_dockbook_add_from_dialog_factory (GimpDockbook             *dockbook,
+GtkWidget     * ligma_dockbook_add_from_dialog_factory (LigmaDockbook             *dockbook,
                                                        const gchar              *identifiers);
 
-void            gimp_dockbook_update_with_context     (GimpDockbook             *dockbook,
-                                                       GimpContext              *context);
-GtkWidget    *  gimp_dockbook_create_tab_widget       (GimpDockbook             *dockbook,
-                                                       GimpDockable             *dockable);
-void            gimp_dockbook_set_drag_handler        (GimpDockbook             *dockbook,
-                                                       GimpPanedBox             *drag_handler);
+void            ligma_dockbook_update_with_context     (LigmaDockbook             *dockbook,
+                                                       LigmaContext              *context);
+GtkWidget    *  ligma_dockbook_create_tab_widget       (LigmaDockbook             *dockbook,
+                                                       LigmaDockable             *dockable);
+void            ligma_dockbook_set_drag_handler        (LigmaDockbook             *dockbook,
+                                                       LigmaPanedBox             *drag_handler);
 
-void            gimp_dockbook_add_drag_callback       (GimpDockbookDragCallback  callback,
+void            ligma_dockbook_add_drag_callback       (LigmaDockbookDragCallback  callback,
                                                        gpointer                  data);
-void            gimp_dockbook_remove_drag_callback    (GimpDockbookDragCallback  callback,
+void            ligma_dockbook_remove_drag_callback    (LigmaDockbookDragCallback  callback,
                                                        gpointer                  data);
 
 
-#endif /* __GIMP_DOCKBOOK_H__ */
+#endif /* __LIGMA_DOCKBOOK_H__ */

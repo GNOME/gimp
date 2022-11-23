@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl.h
- * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ * ligma-gegl.h
+ * Copyright (C) 2007 Øyvind Kolås <pippin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_H__
-#define __GIMP_GEGL_H__
+#ifndef __LIGMA_GEGL_H__
+#define __LIGMA_GEGL_H__
 
 
-void   gimp_gegl_init (Gimp *gimp);
-void   gimp_gegl_exit (Gimp *gimp);
+void   ligma_gegl_init (Ligma *ligma);
+void   ligma_gegl_exit (Ligma *ligma);
 
 
-#endif /* __GIMP_GEGL_H__ */
+#endif /* __LIGMA_GEGL_H__ */

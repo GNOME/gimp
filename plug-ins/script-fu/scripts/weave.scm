@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Weave script --- make an image look as if it were woven
@@ -29,17 +29,17 @@
                         height
                         dest-x
                         dest-y)
-  (gimp-image-select-rectangle img CHANNEL-OP-REPLACE x1 y1 width height)
-  (gimp-edit-copy 1 (vector drawable))
+  (ligma-image-select-rectangle img CHANNEL-OP-REPLACE x1 y1 width height)
+  (ligma-edit-copy 1 (vector drawable))
   (let* (
-         (pasted (gimp-edit-paste drawable FALSE))
+         (pasted (ligma-edit-paste drawable FALSE))
          (num-pasted (car pasted))
          (floating-sel (aref (cadr pasted) (- num-pasted 1)))
         )
-   (gimp-layer-set-offsets floating-sel dest-x dest-y)
-   (gimp-floating-sel-anchor floating-sel)
+   (ligma-layer-set-offsets floating-sel dest-x dest-y)
+   (ligma-floating-sel-anchor floating-sel)
   )
-  (gimp-selection-none img))
+  (ligma-selection-none img))
 
 ; Creates a single weaving tile
 
@@ -49,30 +49,30 @@
                            shadow-depth)
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
          (darkness (* 255 (/ (- 100 shadow-darkness) 100)))
-         (img (car (gimp-image-new tile-size tile-size RGB)))
-         (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
+         (img (car (ligma-image-new tile-size tile-size RGB)))
+         (drawable (car (ligma-layer-new img tile-size tile-size RGB-IMAGE
                                         "Weave tile" 100 LAYER-MODE-NORMAL))))
 
-    (gimp-image-undo-disable img)
-    (gimp-image-insert-layer img drawable 0 0)
+    (ligma-image-undo-disable img)
+    (ligma-image-insert-layer img drawable 0 0)
 
-    (gimp-context-set-background '(0 0 0))
-    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
+    (ligma-context-set-background '(0 0 0))
+    (ligma-drawable-edit-fill drawable FILL-BACKGROUND)
 
     ; Create main horizontal ribbon
 
-    (gimp-context-set-foreground '(255 255 255))
-    (gimp-context-set-background (list darkness darkness darkness))
+    (ligma-context-set-foreground '(255 255 255))
+    (ligma-context-set-background (list darkness darkness darkness))
 
-    (gimp-image-select-rectangle img
+    (ligma-image-select-rectangle img
                                  CHANNEL-OP-REPLACE
                                  0
                                  ribbon-spacing
                                  (+ (* 2 ribbon-spacing) ribbon-width)
                                  ribbon-width)
 
-    (gimp-context-set-gradient-fg-bg-rgb)
-    (gimp-drawable-edit-gradient-fill drawable
+    (ligma-context-set-gradient-fg-bg-rgb)
+    (ligma-drawable-edit-gradient-fill drawable
 				      GRADIENT-BILINEAR (- 100 shadow-depth)
 				      FALSE 0 0
 				      TRUE
@@ -81,14 +81,14 @@
 
     ; Create main vertical ribbon
 
-    (gimp-image-select-rectangle img
+    (ligma-image-select-rectangle img
                                  CHANNEL-OP-REPLACE
                                  (+ (* 2 ribbon-spacing) ribbon-width)
                                  0
                                  ribbon-width
                                  (+ (* 2 ribbon-spacing) ribbon-width))
 
-    (gimp-drawable-edit-gradient-fill drawable
+    (ligma-drawable-edit-gradient-fill drawable
 				      GRADIENT-BILINEAR (- 100 shadow-depth)
 				      FALSE 0 0
 				      TRUE
@@ -137,7 +137,7 @@
 
     ; Done
 
-    (gimp-image-undo-enable img)
+    (ligma-image-undo-enable img)
     (list img drawable)))
 
 ; Creates a complete weaving mask
@@ -153,7 +153,7 @@
          (tile-img (car tile))
          (tile-layer (cadr tile))
           (weaving (plug-in-tile RUN-NONINTERACTIVE tile-img 1 (vector tile-layer) width height TRUE)))
-    (gimp-image-delete tile-img)
+    (ligma-image-delete tile-img)
     weaving))
 
 ; Creates a single tile for masking
@@ -173,24 +173,24 @@
                           r3-width
                           r3-height)
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
-         (img (car (gimp-image-new tile-size tile-size RGB)))
-         (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
+         (img (car (ligma-image-new tile-size tile-size RGB)))
+         (drawable (car (ligma-layer-new img tile-size tile-size RGB-IMAGE
                                         "Mask" 100 LAYER-MODE-NORMAL))))
-    (gimp-image-undo-disable img)
-    (gimp-image-insert-layer img drawable 0 0)
+    (ligma-image-undo-disable img)
+    (ligma-image-insert-layer img drawable 0 0)
 
-    (gimp-context-set-background '(0 0 0))
-    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
+    (ligma-context-set-background '(0 0 0))
+    (ligma-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE r1-x1 r1-y1 r1-width r1-height)
-    (gimp-image-select-rectangle img CHANNEL-OP-ADD r2-x1 r2-y1 r2-width r2-height)
-    (gimp-image-select-rectangle img CHANNEL-OP-ADD r3-x1 r3-y1 r3-width r3-height)
+    (ligma-image-select-rectangle img CHANNEL-OP-REPLACE r1-x1 r1-y1 r1-width r1-height)
+    (ligma-image-select-rectangle img CHANNEL-OP-ADD r2-x1 r2-y1 r2-width r2-height)
+    (ligma-image-select-rectangle img CHANNEL-OP-ADD r3-x1 r3-y1 r3-width r3-height)
 
-    (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
-    (gimp-selection-none img)
+    (ligma-context-set-background '(255 255 255))
+    (ligma-drawable-edit-fill drawable FILL-BACKGROUND)
+    (ligma-selection-none img)
 
-    (gimp-image-undo-enable img)
+    (ligma-image-undo-enable img)
 
     (list img drawable)))
 
@@ -220,7 +220,7 @@
          (tile-layer (cadr tile))
          (mask (plug-in-tile RUN-NONINTERACTIVE tile-img 1 (vector tile-layer) final-width final-height
                              TRUE)))
-    (gimp-image-delete tile-img)
+    (ligma-image-delete tile-img)
     mask))
 
 ; Creates the mask for horizontal ribbons
@@ -277,12 +277,12 @@
                               length
                               density
                               orientation)
-  (let* ((drawable (car (gimp-layer-new img width height RGBA-IMAGE
+  (let* ((drawable (car (ligma-layer-new img width height RGBA-IMAGE
                                         "Threads" 100 LAYER-MODE-NORMAL)))
          (dense (/ density 100.0)))
-    (gimp-image-insert-layer img drawable 0 -1)
-    (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
+    (ligma-image-insert-layer img drawable 0 -1)
+    (ligma-context-set-background '(255 255 255))
+    (ligma-drawable-edit-fill drawable FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     (cond ((eq? orientation 'horizontal)
@@ -308,11 +308,11 @@
 
          (h-layer (create-threads-layer w-img width height thread-length
                                         thread-density 'horizontal))
-         (h-mask (car (gimp-layer-create-mask h-layer ADD-MASK-WHITE)))
+         (h-mask (car (ligma-layer-create-mask h-layer ADD-MASK-WHITE)))
 
          (v-layer (create-threads-layer w-img width height thread-length
                                         thread-density 'vertical))
-         (v-mask (car (gimp-layer-create-mask v-layer ADD-MASK-WHITE)))
+         (v-mask (car (ligma-layer-create-mask v-layer ADD-MASK-WHITE)))
 
          (hmask (create-horizontal-mask ribbon-width ribbon-spacing
                                         width height))
@@ -323,39 +323,39 @@
          (vm-img (car vmask))
          (vm-layer (cadr vmask)))
 
-    (gimp-layer-add-mask h-layer h-mask)
-    (gimp-selection-all hm-img)
-    (gimp-edit-copy 1 (vector hm-layer))
-    (gimp-image-delete hm-img)
+    (ligma-layer-add-mask h-layer h-mask)
+    (ligma-selection-all hm-img)
+    (ligma-edit-copy 1 (vector hm-layer))
+    (ligma-image-delete hm-img)
     (let* (
-           (pasted (gimp-edit-paste h-mask FALSE))
+           (pasted (ligma-edit-paste h-mask FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-     (gimp-floating-sel-anchor floating-sel)
+     (ligma-floating-sel-anchor floating-sel)
     )
-    (gimp-layer-set-opacity h-layer thread-intensity)
-    (gimp-layer-set-mode h-layer LAYER-MODE-MULTIPLY)
+    (ligma-layer-set-opacity h-layer thread-intensity)
+    (ligma-layer-set-mode h-layer LAYER-MODE-MULTIPLY)
 
-    (gimp-layer-add-mask v-layer v-mask)
-    (gimp-selection-all vm-img)
-    (gimp-edit-copy 1 (vector vm-layer))
-    (gimp-image-delete vm-img)
+    (ligma-layer-add-mask v-layer v-mask)
+    (ligma-selection-all vm-img)
+    (ligma-edit-copy 1 (vector vm-layer))
+    (ligma-image-delete vm-img)
     (let* (
-           (pasted (gimp-edit-paste v-mask FALSE))
+           (pasted (ligma-edit-paste v-mask FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-     (gimp-floating-sel-anchor floating-sel)
+     (ligma-floating-sel-anchor floating-sel)
     )
-    (gimp-layer-set-opacity v-layer thread-intensity)
-    (gimp-layer-set-mode v-layer LAYER-MODE-MULTIPLY)
+    (ligma-layer-set-opacity v-layer thread-intensity)
+    (ligma-layer-set-mode v-layer LAYER-MODE-MULTIPLY)
 
     ; Uncomment this if you want to keep the weaving mask image
-    ; (gimp-display-new (car (gimp-image-duplicate w-img)))
+    ; (ligma-display-new (car (ligma-image-duplicate w-img)))
 
     (list w-img
-          (car (gimp-image-flatten w-img)))))
+          (car (ligma-image-flatten w-img)))))
 
 ; The main weave function
 
@@ -368,14 +368,14 @@
                          thread-length
                          thread-density
                          thread-intensity)
-  (gimp-context-push)
-  (gimp-image-undo-group-start img)
+  (ligma-context-push)
+  (ligma-image-undo-group-start img)
 
   (let* (
-        (d-img (car (gimp-item-get-image drawable)))
-        (d-width (car (gimp-drawable-get-width drawable)))
-        (d-height (car (gimp-drawable-get-height drawable)))
-        (d-offsets (gimp-drawable-get-offsets drawable))
+        (d-img (car (ligma-item-get-image drawable)))
+        (d-width (car (ligma-drawable-get-width drawable)))
+        (d-height (car (ligma-drawable-get-height drawable)))
+        (d-offsets (ligma-drawable-get-offsets drawable))
 
         (weaving (create-complete-weave d-width
                                         d-height
@@ -390,28 +390,28 @@
         (w-layer (cadr weaving))
         )
 
-    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
-    (gimp-context-set-opacity 100.0)
-    (gimp-context-set-feather FALSE)
+    (ligma-context-set-paint-mode LAYER-MODE-NORMAL)
+    (ligma-context-set-opacity 100.0)
+    (ligma-context-set-feather FALSE)
 
-    (gimp-selection-all w-img)
-    (gimp-edit-copy 1 (vector w-layer))
-    (gimp-image-delete w-img)
+    (ligma-selection-all w-img)
+    (ligma-edit-copy 1 (vector w-layer))
+    (ligma-image-delete w-img)
     (let* (
-           (pasted (gimp-edit-paste drawable FALSE))
+           (pasted (ligma-edit-paste drawable FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-          (gimp-layer-set-offsets floating-sel
+          (ligma-layer-set-offsets floating-sel
                                   (car d-offsets)
                                   (cadr d-offsets))
-          (gimp-layer-set-mode floating-sel LAYER-MODE-MULTIPLY)
-          (gimp-floating-sel-to-layer floating-sel)
+          (ligma-layer-set-mode floating-sel LAYER-MODE-MULTIPLY)
+          (ligma-floating-sel-to-layer floating-sel)
     )
   )
-  (gimp-context-pop)
-  (gimp-image-undo-group-end img)
-  (gimp-displays-flush)
+  (ligma-context-pop)
+  (ligma-image-undo-group-end img)
+  (ligma-displays-flush)
 )
 
 (script-fu-register "script-fu-weave"

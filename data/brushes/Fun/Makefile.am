@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/brushes/Fun
+## Makefile.am for ligma/data/brushes/Fun
 
-brushfundatadir = $(gimpdatadir)/brushes/Fun
+brushfundatadir = $(ligmadatadir)/brushes/Fun
 
 brushfundata_DATA = \
 	GEGL-goat.gih		\

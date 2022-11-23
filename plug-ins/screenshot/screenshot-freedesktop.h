@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,9 +23,9 @@ gboolean               screenshot_freedesktop_available        (void);
 
 ScreenshotCapabilities screenshot_freedesktop_get_capabilities (void);
 
-GimpPDBStatusType      screenshot_freedesktop_shoot            (ScreenshotValues  *shootvals,
+LigmaPDBStatusType      screenshot_freedesktop_shoot            (ScreenshotValues  *shootvals,
                                                                 GdkMonitor        *monitor,
-                                                                GimpImage        **image,
+                                                                LigmaImage        **image,
                                                                 GError           **error);
 
 

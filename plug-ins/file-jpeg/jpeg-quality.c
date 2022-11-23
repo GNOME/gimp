@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * jpeg-quality.c
- * Copyright (C) 2007 Raphaël Quinet <raphael@gimp.org>
+ * Copyright (C) 2007 Raphaël Quinet <raphael@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

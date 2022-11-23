@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/tool-presets/Sketch
+## Makefile.am for ligma/data/tool-presets/Sketch
 
-toolpresetssketchdatadir = $(gimpdatadir)/tool-presets/Sketch
+toolpresetssketchdatadir = $(ligmadatadir)/tool-presets/Sketch
 
 toolpresetssketchdata_DATA = \
 	Blue-Pen.gtp		\

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Symbolic
+iconsdir = $(ligmadatadir)/icons/Symbolic
 
 icons_DATA = \
 	index.theme
@@ -67,7 +67,7 @@ endif
 
 EXTRA_DIST = \
 	$(icons_DATA)		\
-	64/gimp-frame.png	\
-	64/gimp-texture.png	\
+	64/ligma-frame.png	\
+	64/ligma-texture.png	\
 	$(scalable_images)	\
 	symbolic-scalable.svg

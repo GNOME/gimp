@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimplayer.c
+ * ligmalayer.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,25 +22,25 @@
 
 #include <string.h>
 
-#include "gimp.h"
+#include "ligma.h"
 
 
-static GimpLayer * gimp_layer_real_copy (GimpLayer *layer);
+static LigmaLayer * ligma_layer_real_copy (LigmaLayer *layer);
 
 
-G_DEFINE_TYPE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE)
+G_DEFINE_TYPE (LigmaLayer, ligma_layer, LIGMA_TYPE_DRAWABLE)
 
-#define parent_class gimp_layer_parent_class
+#define parent_class ligma_layer_parent_class
 
 
 static void
-gimp_layer_class_init (GimpLayerClass *klass)
+ligma_layer_class_init (LigmaLayerClass *klass)
 {
-  klass->copy = gimp_layer_real_copy;
+  klass->copy = ligma_layer_real_copy;
 }
 
 static void
-gimp_layer_init (GimpLayer *layer)
+ligma_layer_init (LigmaLayer *layer)
 {
 }
 
@@ -48,33 +48,33 @@ gimp_layer_init (GimpLayer *layer)
 /* Public API. */
 
 /**
- * gimp_layer_get_by_id:
+ * ligma_layer_get_by_id:
  * @layer_id: The layer id.
  *
- * Returns a #GimpLayer representing @layer_id. This function calls
- * gimp_item_get_by_id() and returns the item if it is layer or %NULL
+ * Returns a #LigmaLayer representing @layer_id. This function calls
+ * ligma_item_get_by_id() and returns the item if it is layer or %NULL
  * otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpLayer for @layer_id or
+ * Returns: (nullable) (transfer none): a #LigmaLayer for @layer_id or
  *          %NULL if @layer_id does not represent a valid layer. The
- *          object belongs to libgimp and you must not modify or unref
+ *          object belongs to libligma and you must not modify or unref
  *          it.
  *
  * Since: 3.0
  **/
-GimpLayer *
-gimp_layer_get_by_id (gint32 layer_id)
+LigmaLayer *
+ligma_layer_get_by_id (gint32 layer_id)
 {
-  GimpItem *item = gimp_item_get_by_id (layer_id);
+  LigmaItem *item = ligma_item_get_by_id (layer_id);
 
-  if (GIMP_IS_LAYER (item))
-    return (GimpLayer *) item;
+  if (LIGMA_IS_LAYER (item))
+    return (LigmaLayer *) item;
 
   return NULL;
 }
 
 /**
- * gimp_layer_new:
+ * ligma_layer_new:
  * @image:   The image to which to add the layer.
  * @name:    The layer name.
  * @width:   The layer width.
@@ -88,25 +88,25 @@ gimp_layer_get_by_id (gint32 layer_id)
  * This procedure creates a new layer with the specified width, height,
  * and type. Name, opacity, and mode are also supplied parameters. The
  * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the gimp_image_insert_layer()
+ * automatic. Add the new layer with the ligma_image_insert_layer()
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
  * Returns: (transfer none): The newly created layer.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  *
  * Since: 3.0
  */
-GimpLayer *
-gimp_layer_new (GimpImage     *image,
+LigmaLayer *
+ligma_layer_new (LigmaImage     *image,
                 const gchar   *name,
                 gint           width,
                 gint           height,
-                GimpImageType  type,
+                LigmaImageType  type,
                 gdouble        opacity,
-                GimpLayerMode  mode)
+                LigmaLayerMode  mode)
 {
-  return _gimp_layer_new (image,
+  return _ligma_layer_new (image,
                           width,
                           height,
                           type,
@@ -116,7 +116,7 @@ gimp_layer_new (GimpImage     *image,
 }
 
 /**
- * gimp_layer_copy:
+ * ligma_layer_copy:
  * @layer: The layer to copy.
  *
  * Copy a layer.
@@ -126,18 +126,18 @@ gimp_layer_new (GimpImage     *image,
  * should not be subsequently added to any other image.
  *
  * Returns: (transfer none): The newly copied layer.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  *
  * Since: 3.0
  */
-GimpLayer *
-gimp_layer_copy (GimpLayer *layer)
+LigmaLayer *
+ligma_layer_copy (LigmaLayer *layer)
 {
-  return GIMP_LAYER_GET_CLASS (layer)->copy (layer);
+  return LIGMA_LAYER_GET_CLASS (layer)->copy (layer);
 }
 
 /**
- * gimp_layer_new_from_pixbuf:
+ * ligma_layer_new_from_pixbuf:
  * @image:          The RGB image to which to add the layer.
  * @name:           The layer name.
  * @pixbuf:         A GdkPixbuf.
@@ -149,29 +149,29 @@ gimp_layer_copy (GimpLayer *layer)
  * Create a new layer from a %GdkPixbuf.
  *
  * This procedure creates a new layer from the given %GdkPixbuf.  The
- * image has to be an RGB image and just like with gimp_layer_new()
+ * image has to be an RGB image and just like with ligma_layer_new()
  * you will still need to add the layer to it.
  *
  * If you pass @progress_end > @progress_start to this function,
- * gimp_progress_update() will be called for. You have to call
- * gimp_progress_init() beforehand then.
+ * ligma_progress_update() will be called for. You have to call
+ * ligma_progress_init() beforehand then.
  *
  * Returns: (transfer none): The newly created layer.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  *
  * Since: 2.2
  */
-GimpLayer *
-gimp_layer_new_from_pixbuf (GimpImage     *image,
+LigmaLayer *
+ligma_layer_new_from_pixbuf (LigmaImage     *image,
                             const gchar   *name,
                             GdkPixbuf     *pixbuf,
                             gdouble        opacity,
-                            GimpLayerMode  mode,
+                            LigmaLayerMode  mode,
                             gdouble        progress_start,
                             gdouble        progress_end)
 {
   GeglBuffer *dest_buffer;
-  GimpLayer  *layer;
+  LigmaLayer  *layer;
   gint        width;
   gint        height;
   gint        bpp;
@@ -179,15 +179,15 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
-  if (gimp_image_get_base_type (image) != GIMP_RGB)
+  if (ligma_image_get_base_type (image) != LIGMA_RGB)
     {
-      g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
+      g_warning ("ligma_layer_new_from_pixbuf() needs an RGB image");
       return NULL;
     }
 
   if (gdk_pixbuf_get_colorspace (pixbuf) != GDK_COLORSPACE_RGB)
     {
-      g_warning ("gimp_layer_new_from_pixbuf() assumes that GdkPixbuf is RGB");
+      g_warning ("ligma_layer_new_from_pixbuf() assumes that GdkPixbuf is RGB");
       return NULL;
     }
 
@@ -195,30 +195,30 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
   height = gdk_pixbuf_get_height (pixbuf);
   bpp    = gdk_pixbuf_get_n_channels (pixbuf);
 
-  layer = gimp_layer_new (image, name, width, height,
-                          bpp == 3 ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
+  layer = ligma_layer_new (image, name, width, height,
+                          bpp == 3 ? LIGMA_RGB_IMAGE : LIGMA_RGBA_IMAGE,
                           opacity, mode);
 
   if (! layer)
     return NULL;
 
-  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  dest_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                   gimp_pixbuf_get_format (pixbuf),
+                   ligma_pixbuf_get_format (pixbuf),
                    gdk_pixbuf_get_pixels (pixbuf),
                    gdk_pixbuf_get_rowstride (pixbuf));
 
   g_object_unref (dest_buffer);
 
   if (range > 0.0)
-    gimp_progress_update (progress_end);
+    ligma_progress_update (progress_end);
 
   return layer;
 }
 
 /**
- * gimp_layer_new_from_surface:
+ * ligma_layer_new_from_surface:
  * @image:           The RGB image to which to add the layer.
  * @name:            The layer name.
  * @surface:         A Cairo image surface.
@@ -229,19 +229,19 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  *
  * This procedure creates a new layer from the given
  * #cairo_surface_t. The image has to be an RGB image and just like
- * with gimp_layer_new() you will still need to add the layer to it.
+ * with ligma_layer_new() you will still need to add the layer to it.
  *
  * If you pass @progress_end > @progress_start to this function,
- * gimp_progress_update() will be called for. You have to call
- * gimp_progress_init() beforehand then.
+ * ligma_progress_update() will be called for. You have to call
+ * ligma_progress_init() beforehand then.
  *
  * Returns: (transfer none): The newly created layer.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  *
  * Since: 2.8
  */
-GimpLayer *
-gimp_layer_new_from_surface (GimpImage            *image,
+LigmaLayer *
+ligma_layer_new_from_surface (LigmaImage            *image,
                              const gchar          *name,
                              cairo_surface_t      *surface,
                              gdouble               progress_start,
@@ -249,7 +249,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *dest_buffer;
-  GimpLayer     *layer;
+  LigmaLayer     *layer;
   gint           width;
   gint           height;
   cairo_format_t format;
@@ -259,9 +259,9 @@ gimp_layer_new_from_surface (GimpImage            *image,
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, NULL);
 
-  if (gimp_image_get_base_type (image) != GIMP_RGB)
+  if (ligma_image_get_base_type (image) != LIGMA_RGB)
     {
-      g_warning ("gimp_layer_new_from_surface() needs an RGB image");
+      g_warning ("ligma_layer_new_from_surface() needs an RGB image");
       return NULL;
     }
 
@@ -272,21 +272,21 @@ gimp_layer_new_from_surface (GimpImage            *image,
   if (format != CAIRO_FORMAT_ARGB32 &&
       format != CAIRO_FORMAT_RGB24)
     {
-      g_warning ("gimp_layer_new_from_surface() assumes that surface is RGB");
+      g_warning ("ligma_layer_new_from_surface() assumes that surface is RGB");
       return NULL;
     }
 
-  layer = gimp_layer_new (image, name, width, height,
+  layer = ligma_layer_new (image, name, width, height,
                           format == CAIRO_FORMAT_RGB24 ?
-                          GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
+                          LIGMA_RGB_IMAGE : LIGMA_RGBA_IMAGE,
                           100.0,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
   if (layer == NULL)
     return NULL;
 
-  src_buffer = gimp_cairo_surface_create_buffer (surface);
-  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  src_buffer = ligma_cairo_surface_create_buffer (surface);
+  dest_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
@@ -295,7 +295,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
   g_object_unref (dest_buffer);
 
   if (range > 0.0)
-    gimp_progress_update (progress_end);
+    ligma_progress_update (progress_end);
 
   return layer;
 }
@@ -303,8 +303,8 @@ gimp_layer_new_from_surface (GimpImage            *image,
 
 /*  private functions  */
 
-static GimpLayer *
-gimp_layer_real_copy (GimpLayer *layer)
+static LigmaLayer *
+ligma_layer_real_copy (LigmaLayer *layer)
 {
-  return _gimp_layer_copy (layer, FALSE);
+  return _ligma_layer_copy (layer, FALSE);
 }

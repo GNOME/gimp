@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprofilestore-private.h
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * ligmaprofilestore-private.h
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,39 +19,39 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
-#define __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
+#ifndef __LIGMA_COLOR_PROFILE_STORE_PRIVATE_H__
+#define __LIGMA_COLOR_PROFILE_STORE_PRIVATE_H__
 
 
 typedef enum
 {
-  GIMP_COLOR_PROFILE_STORE_ITEM_FILE,
-  GIMP_COLOR_PROFILE_STORE_ITEM_SEPARATOR_TOP,
-  GIMP_COLOR_PROFILE_STORE_ITEM_SEPARATOR_BOTTOM,
-  GIMP_COLOR_PROFILE_STORE_ITEM_DIALOG
-} GimpColorProfileStoreItemType;
+  LIGMA_COLOR_PROFILE_STORE_ITEM_FILE,
+  LIGMA_COLOR_PROFILE_STORE_ITEM_SEPARATOR_TOP,
+  LIGMA_COLOR_PROFILE_STORE_ITEM_SEPARATOR_BOTTOM,
+  LIGMA_COLOR_PROFILE_STORE_ITEM_DIALOG
+} LigmaColorProfileStoreItemType;
 
 typedef enum
 {
-  GIMP_COLOR_PROFILE_STORE_ITEM_TYPE,
-  GIMP_COLOR_PROFILE_STORE_LABEL,
-  GIMP_COLOR_PROFILE_STORE_FILE,
-  GIMP_COLOR_PROFILE_STORE_INDEX
-} GimpColorProfileStoreColumns;
+  LIGMA_COLOR_PROFILE_STORE_ITEM_TYPE,
+  LIGMA_COLOR_PROFILE_STORE_LABEL,
+  LIGMA_COLOR_PROFILE_STORE_FILE,
+  LIGMA_COLOR_PROFILE_STORE_INDEX
+} LigmaColorProfileStoreColumns;
 
 
-G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_add     (GimpColorProfileStore *store,
+G_GNUC_INTERNAL gboolean  _ligma_color_profile_store_history_add     (LigmaColorProfileStore *store,
                                                                      GFile                 *file,
                                                                      const gchar           *label,
                                                                      GtkTreeIter           *iter);
 
-G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_find_profile
-                                                                    (GimpColorProfileStore *store,
-                                                                     GimpColorProfile      *profile,
+G_GNUC_INTERNAL gboolean  _ligma_color_profile_store_history_find_profile
+                                                                    (LigmaColorProfileStore *store,
+                                                                     LigmaColorProfile      *profile,
                                                                      GtkTreeIter           *iter);
 
-G_GNUC_INTERNAL void      _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
+G_GNUC_INTERNAL void      _ligma_color_profile_store_history_reorder (LigmaColorProfileStore *store,
                                                                      GtkTreeIter           *iter);
 
 
-#endif  /* __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__ */
+#endif  /* __LIGMA_COLOR_PROFILE_STORE_PRIVATE_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,37 +21,37 @@
 
 #include "core-types.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-header.h"
-#include "gimpbrush-save.h"
-#include "gimptempbuf.h"
+#include "ligmabrush.h"
+#include "ligmabrush-header.h"
+#include "ligmabrush-save.h"
+#include "ligmatempbuf.h"
 
 
 gboolean
-gimp_brush_save (GimpData       *data,
+ligma_brush_save (LigmaData       *data,
                  GOutputStream  *output,
                  GError        **error)
 {
-  GimpBrush       *brush  = GIMP_BRUSH (data);
-  GimpTempBuf     *mask   = gimp_brush_get_mask (brush);
-  GimpTempBuf     *pixmap = gimp_brush_get_pixmap (brush);
-  GimpBrushHeader  header;
+  LigmaBrush       *brush  = LIGMA_BRUSH (data);
+  LigmaTempBuf     *mask   = ligma_brush_get_mask (brush);
+  LigmaTempBuf     *pixmap = ligma_brush_get_pixmap (brush);
+  LigmaBrushHeader  header;
   const gchar     *name;
   gint             width;
   gint             height;
 
-  name   = gimp_object_get_name (brush);
-  width  = gimp_temp_buf_get_width  (mask);
-  height = gimp_temp_buf_get_height (mask);
+  name   = ligma_object_get_name (brush);
+  width  = ligma_temp_buf_get_width  (mask);
+  height = ligma_temp_buf_get_height (mask);
 
-  header.header_size  = g_htonl (sizeof (GimpBrushHeader) +
+  header.header_size  = g_htonl (sizeof (LigmaBrushHeader) +
                                  strlen (name) + 1);
   header.version      = g_htonl (2);
   header.width        = g_htonl (width);
   header.height       = g_htonl (height);
   header.bytes        = g_htonl (pixmap ? 4 : 1);
-  header.magic_number = g_htonl (GIMP_BRUSH_MAGIC);
-  header.spacing      = g_htonl (gimp_brush_get_spacing (brush));
+  header.magic_number = g_htonl (LIGMA_BRUSH_MAGIC);
+  header.spacing      = g_htonl (ligma_brush_get_spacing (brush));
 
   if (! g_output_stream_write_all (output, &header, sizeof (header),
                                    NULL, NULL, error))
@@ -69,8 +69,8 @@ gimp_brush_save (GimpData       *data,
     {
       gsize   size = width * height * 4;
       guchar *data = g_malloc (size);
-      guchar *p    = gimp_temp_buf_get_data (pixmap);
-      guchar *m    = gimp_temp_buf_get_data (mask);
+      guchar *p    = ligma_temp_buf_get_data (pixmap);
+      guchar *m    = ligma_temp_buf_get_data (mask);
       guchar *d    = data;
       gint    i;
 
@@ -95,8 +95,8 @@ gimp_brush_save (GimpData       *data,
   else
     {
       if (! g_output_stream_write_all (output,
-                                       gimp_temp_buf_get_data (mask),
-                                       gimp_temp_buf_get_data_size (mask),
+                                       ligma_temp_buf_get_data (mask),
+                                       ligma_temp_buf_get_data_size (mask),
                                        NULL, NULL, error))
         {
           return FALSE;

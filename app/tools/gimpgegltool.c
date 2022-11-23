@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,19 +23,19 @@
 #include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpfilteroptions.h"
-#include "gimpgegltool.h"
+#include "ligmafilteroptions.h"
+#include "ligmagegltool.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -49,82 +49,82 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_gegl_tool_control           (GimpTool       *tool,
-                                                GimpToolAction  action,
-                                                GimpDisplay    *display);
+static void   ligma_gegl_tool_control           (LigmaTool       *tool,
+                                                LigmaToolAction  action,
+                                                LigmaDisplay    *display);
 
-static void   gimp_gegl_tool_dialog            (GimpFilterTool *filter_tool);
+static void   ligma_gegl_tool_dialog            (LigmaFilterTool *filter_tool);
 
-static void   gimp_gegl_tool_halt              (GimpGeglTool   *gegl_tool);
+static void   ligma_gegl_tool_halt              (LigmaGeglTool   *gegl_tool);
 
-static void   gimp_gegl_tool_operation_changed (GtkWidget      *widget,
-                                                GimpGeglTool   *gegl_tool);
+static void   ligma_gegl_tool_operation_changed (GtkWidget      *widget,
+                                                LigmaGeglTool   *gegl_tool);
 
 
-G_DEFINE_TYPE (GimpGeglTool, gimp_gegl_tool, GIMP_TYPE_OPERATION_TOOL)
+G_DEFINE_TYPE (LigmaGeglTool, ligma_gegl_tool, LIGMA_TYPE_OPERATION_TOOL)
 
-#define parent_class gimp_gegl_tool_parent_class
+#define parent_class ligma_gegl_tool_parent_class
 
 
 void
-gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
+ligma_gegl_tool_register (LigmaToolRegisterCallback  callback,
                          gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_GEGL_TOOL,
-                GIMP_TYPE_FILTER_OPTIONS,
-                gimp_color_options_gui,
+  (* callback) (LIGMA_TYPE_GEGL_TOOL,
+                LIGMA_TYPE_FILTER_OPTIONS,
+                ligma_color_options_gui,
                 0,
-                "gimp-gegl-tool",
+                "ligma-gegl-tool",
                 _("GEGL Operation"),
                 _("Run an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
-                NULL, GIMP_HELP_TOOL_GEGL,
-                GIMP_ICON_GEGL,
+                NULL, LIGMA_HELP_TOOL_GEGL,
+                LIGMA_ICON_GEGL,
                 data);
 }
 
 static void
-gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
+ligma_gegl_tool_class_init (LigmaGeglToolClass *klass)
 {
-  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
-  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
+  LigmaToolClass       *tool_class        = LIGMA_TOOL_CLASS (klass);
+  LigmaFilterToolClass *filter_tool_class = LIGMA_FILTER_TOOL_CLASS (klass);
 
-  tool_class->control       = gimp_gegl_tool_control;
+  tool_class->control       = ligma_gegl_tool_control;
 
-  filter_tool_class->dialog = gimp_gegl_tool_dialog;
+  filter_tool_class->dialog = ligma_gegl_tool_dialog;
 }
 
 static void
-gimp_gegl_tool_init (GimpGeglTool *tool)
+ligma_gegl_tool_init (LigmaGeglTool *tool)
 {
 }
 
 static void
-gimp_gegl_tool_control (GimpTool       *tool,
-                        GimpToolAction  action,
-                        GimpDisplay    *display)
+ligma_gegl_tool_control (LigmaTool       *tool,
+                        LigmaToolAction  action,
+                        LigmaDisplay    *display)
 {
-  GimpGeglTool *gegl_tool = GIMP_GEGL_TOOL (tool);
+  LigmaGeglTool *gegl_tool = LIGMA_GEGL_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_gegl_tool_halt (gegl_tool);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_gegl_tool_halt (gegl_tool);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
+    case LIGMA_TOOL_ACTION_COMMIT:
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gboolean
-gimp_gegl_tool_operation_blacklisted (const gchar *name,
+ligma_gegl_tool_operation_blacklisted (const gchar *name,
                                       const gchar *categories_str)
 {
   static const gchar * const category_blacklist[] =
@@ -267,10 +267,10 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:convert-format", /* pointless */
     "gegl:ditto", /* pointless */
     "gegl:fill-path",
-    "gegl:gray", /* we use gimp's op */
+    "gegl:gray", /* we use ligma's op */
     "gegl:hstack", /* pointless */
     "gegl:introspect", /* pointless */
-    "gegl:layer", /* we use gimp's ops */
+    "gegl:layer", /* we use ligma's ops */
     "gegl:lcms-from-profile", /* not usable here */
     "gegl:linear-gradient", /* we use the blend tool */
     "gegl:map-absolute", /* pointless */
@@ -279,12 +279,12 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:matting-levin", /* used in the foreground select tool */
     "gegl:opacity", /* poinless */
     "gegl:path",
-    "gegl:posterize", /* we use gimp's op */
+    "gegl:posterize", /* we use ligma's op */
     "gegl:radial-gradient", /* we use the blend tool */
     "gegl:rectangle", /* pointless */
     "gegl:seamless-clone", /* used in the seamless clone tool */
-    "gegl:text", /* we use gimp's text rendering */
-    "gegl:threshold", /* we use gimp's op */
+    "gegl:text", /* we use ligma's text rendering */
+    "gegl:threshold", /* we use ligma's op */
     "gegl:tile", /* pointless */
     "gegl:unpremul", /* pointless */
     "gegl:vector-stroke",
@@ -298,10 +298,10 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     return TRUE;
 
   /* use this flag to include all ops for testing */
-  if (g_getenv ("GIMP_TESTING_NO_GEGL_BLACKLIST"))
+  if (g_getenv ("LIGMA_TESTING_NO_GEGL_BLACKLIST"))
     return FALSE;
 
-  if (g_str_has_prefix (name, "gimp"))
+  if (g_str_has_prefix (name, "ligma"))
     return TRUE;
 
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
@@ -336,7 +336,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
 /* Builds a GList of the class structures of all subtypes of type.
  */
 static GList *
-gimp_get_subtype_classes (GType  type,
+ligma_get_subtype_classes (GType  type,
                           GList *classes)
 {
   GeglOperationClass *klass;
@@ -353,11 +353,11 @@ gimp_get_subtype_classes (GType  type,
 
   categories = gegl_operation_class_get_key (klass, "categories");
 
-  if (! gimp_gegl_tool_operation_blacklisted (klass->name, categories))
+  if (! ligma_gegl_tool_operation_blacklisted (klass->name, categories))
     classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)
-    classes = gimp_get_subtype_classes (ops[i], classes);
+    classes = ligma_get_subtype_classes (ops[i], classes);
 
   if (ops)
     g_free (ops);
@@ -366,7 +366,7 @@ gimp_get_subtype_classes (GType  type,
 }
 
 static gint
-gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
+ligma_gegl_tool_compare_operation_names (GeglOperationClass *a,
                                         GeglOperationClass *b)
 {
   const gchar *name_a = gegl_operation_class_get_key (a, "title");
@@ -379,15 +379,15 @@ gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
 }
 
 static GList *
-gimp_get_geglopclasses (void)
+ligma_get_geglopclasses (void)
 {
   GList *opclasses;
 
-  opclasses = gimp_get_subtype_classes (GEGL_TYPE_OPERATION, NULL);
+  opclasses = ligma_get_subtype_classes (GEGL_TYPE_OPERATION, NULL);
 
   opclasses = g_list_sort (opclasses,
                            (GCompareFunc)
-                           gimp_gegl_tool_compare_operation_names);
+                           ligma_gegl_tool_compare_operation_names);
 
   return opclasses;
 }
@@ -398,10 +398,10 @@ gimp_get_geglopclasses (void)
 /*****************/
 
 static void
-gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
+ligma_gegl_tool_dialog (LigmaFilterTool *filter_tool)
 {
-  GimpGeglTool      *tool   = GIMP_GEGL_TOOL (filter_tool);
-  GimpOperationTool *o_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaGeglTool      *tool   = LIGMA_GEGL_TOOL (filter_tool);
+  LigmaOperationTool *o_tool = LIGMA_OPERATION_TOOL (filter_tool);
   GtkListStore      *store;
   GtkCellRenderer   *cell;
   GtkWidget         *main_vbox;
@@ -412,12 +412,12 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   GList             *opclasses;
   GList             *iter;
 
-  GIMP_FILTER_TOOL_CLASS (parent_class)->dialog (filter_tool);
+  LIGMA_FILTER_TOOL_CLASS (parent_class)->dialog (filter_tool);
 
   options_box = g_weak_ref_get (&o_tool->options_box_ref);
   g_return_if_fail (options_box);
 
-  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
+  main_vbox = ligma_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  The operation combo box  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -428,7 +428,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
-  opclasses = gimp_get_geglopclasses ();
+  opclasses = ligma_get_geglopclasses ();
 
   for (iter = opclasses; iter; iter = iter->next)
     {
@@ -439,7 +439,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
       gchar              *label;
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
-        icon_name = GIMP_ICON_GEGL;
+        icon_name = LIGMA_ICON_GEGL;
 
       if (g_str_has_prefix (op_name, "gegl:"))
         op_name += strlen ("gegl:");
@@ -481,7 +481,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
                                  "text", COLUMN_LABEL);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_gegl_tool_operation_changed),
+                    G_CALLBACK (ligma_gegl_tool_operation_changed),
                     tool);
 
   tool->operation_combo = combo;
@@ -495,7 +495,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
 
   /*  The options vbox  */
   options_gui = gtk_label_new (_("Select an operation from the list above"));
-  gimp_label_set_attributes (GTK_LABEL (options_gui),
+  ligma_label_set_attributes (GTK_LABEL (options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   g_object_set (options_gui,
@@ -509,17 +509,17 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
 }
 
 static void
-gimp_gegl_tool_halt (GimpGeglTool *gegl_tool)
+ligma_gegl_tool_halt (LigmaGeglTool *gegl_tool)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (gegl_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (gegl_tool);
 
-  gimp_operation_tool_set_operation (op_tool, NULL,
+  ligma_operation_tool_set_operation (op_tool, NULL,
                                      NULL, NULL, NULL, NULL, NULL);
 }
 
 static void
-gimp_gegl_tool_operation_changed (GtkWidget    *widget,
-                                  GimpGeglTool *tool)
+ligma_gegl_tool_operation_changed (GtkWidget    *widget,
+                                  LigmaGeglTool *tool)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -550,13 +550,13 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
           gtk_widget_hide (tool->description_label);
         }
 
-      gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),
+      ligma_operation_tool_set_operation (LIGMA_OPERATION_TOOL (tool),
                                          operation,
                                          _("GEGL Operation"),
                                          _("GEGL Operation"),
                                          NULL,
-                                         GIMP_ICON_GEGL,
-                                         GIMP_HELP_TOOL_GEGL);
+                                         LIGMA_ICON_GEGL,
+                                         LIGMA_HELP_TOOL_GEGL);
       g_free (operation);
     }
 }

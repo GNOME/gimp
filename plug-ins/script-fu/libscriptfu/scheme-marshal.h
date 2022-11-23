@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 pointer       get_drawable_from_script         (scheme        *sc,
                                                 pointer        a,
                                                 gint           id,
-                                                GimpDrawable **drawable_handle);
+                                                LigmaDrawable **drawable_handle);
 
 pointer       marshal_ID_to_drawable           (scheme   *sc,
                                                 pointer   a,

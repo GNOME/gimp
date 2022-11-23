@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-newsprint.c
- * Copyright (C) 2019  Michael Natterer <mitch@gimp.org>
+ * ligmapropgui-newsprint.c
+ * Copyright (C) 2019  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-newsprint.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-newsprint.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef enum
@@ -123,13 +123,13 @@ static const gchar *angle_props[] =
 /*  public functions  */
 
 GtkWidget *
-_gimp_prop_gui_new_newsprint (GObject                  *config,
+_ligma_prop_gui_new_newsprint (GObject                  *config,
                               GParamSpec              **param_specs,
                               guint                     n_param_specs,
                               GeglRectangle            *area,
-                              GimpContext              *context,
-                              GimpCreatePickerFunc      create_picker_func,
-                              GimpCreateControllerFunc  create_controller_func,
+                              LigmaContext              *context,
+                              LigmaCreatePickerFunc      create_picker_func,
+                              LigmaCreateControllerFunc  create_controller_func,
                               gpointer                  creator)
 {
   Newsprint *np;
@@ -146,7 +146,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   np = g_new0 (Newsprint, 1);
 
@@ -157,7 +157,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   g_object_set_data_full (G_OBJECT (main_vbox), "newsprint", np,
                           (GDestroyNotify) g_free);
 
-  frame = gimp_frame_new (_("Channels"));
+  frame = ligma_frame_new (_("Channels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -165,7 +165,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  combo = _gimp_prop_gui_new_generic (config,
+  combo = _ligma_prop_gui_new_generic (config,
                                       param_specs + 0, 1,
                                       area,
                                       context,
@@ -200,7 +200,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
       gtk_notebook_append_page (GTK_NOTEBOOK (np->notebook),
                                 pages[i], labels[i]);
 
-      widget = gimp_prop_widget_new_from_pspec (config,
+      widget = ligma_prop_widget_new_from_pspec (config,
                                                 param_specs[1 + 3 * i],
                                                 area, context,
                                                 create_picker_func,
@@ -218,7 +218,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
       else
         remaining = 2;
 
-      widget = _gimp_prop_gui_new_generic (config,
+      widget = _ligma_prop_gui_new_generic (config,
                                            param_specs + 2 + 3 * i, remaining,
                                            area, context,
                                            create_picker_func,
@@ -259,11 +259,11 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                     G_CALLBACK (newsprint_lock_angles_toggled),
                     np);
 
-  frame = gimp_frame_new (_("Quality"));
+  frame = ligma_frame_new (_("Quality"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 14, 1,
                                      area,
                                      context,
@@ -273,11 +273,11 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  frame = gimp_frame_new (_("Effects"));
+  frame = ligma_frame_new (_("Effects"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs + 15, 3,
                                      area,
                                      context,

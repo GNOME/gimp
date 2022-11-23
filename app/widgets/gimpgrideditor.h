@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGridEditor
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGridEditor
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRID_EDITOR_H__
-#define __GIMP_GRID_EDITOR_H__
+#ifndef __LIGMA_GRID_EDITOR_H__
+#define __LIGMA_GRID_EDITOR_H__
 
 
-#define GIMP_TYPE_GRID_EDITOR            (gimp_grid_editor_get_type ())
-#define GIMP_GRID_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRID_EDITOR, GimpGridEditor))
-#define GIMP_GRID_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRID_EDITOR, GimpGridEditorClass))
-#define GIMP_IS_GRID_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRID_EDITOR))
-#define GIMP_IS_GRID_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRID_EDITOR))
-#define GIMP_GRID_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRID_EDITOR, GimpGridEditorClass))
+#define LIGMA_TYPE_GRID_EDITOR            (ligma_grid_editor_get_type ())
+#define LIGMA_GRID_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRID_EDITOR, LigmaGridEditor))
+#define LIGMA_GRID_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRID_EDITOR, LigmaGridEditorClass))
+#define LIGMA_IS_GRID_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRID_EDITOR))
+#define LIGMA_IS_GRID_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRID_EDITOR))
+#define LIGMA_GRID_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRID_EDITOR, LigmaGridEditorClass))
 
 
-typedef struct _GimpGridEditorClass GimpGridEditorClass;
+typedef struct _LigmaGridEditorClass LigmaGridEditorClass;
 
-struct _GimpGridEditor
+struct _LigmaGridEditor
 {
   GtkBox       parent_instance;
 
-  GimpGrid    *grid;
-  GimpContext *context;
+  LigmaGrid    *grid;
+  LigmaContext *context;
   gdouble      xresolution;
   gdouble      yresolution;
 };
 
-struct _GimpGridEditorClass
+struct _LigmaGridEditorClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_grid_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_grid_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_grid_editor_new      (GimpGrid    *grid,
-                                       GimpContext *context,
+GtkWidget * ligma_grid_editor_new      (LigmaGrid    *grid,
+                                       LigmaContext *context,
                                        gdouble      xresolution,
                                        gdouble      yresolution);
 
 
-#endif /*  __GIMP_GRID_EDITOR_H__  */
+#endif /*  __LIGMA_GRID_EDITOR_H__  */

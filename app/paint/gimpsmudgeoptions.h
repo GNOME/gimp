@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SMUDGE_OPTIONS_H__
-#define __GIMP_SMUDGE_OPTIONS_H__
+#ifndef __LIGMA_SMUDGE_OPTIONS_H__
+#define __LIGMA_SMUDGE_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_SMUDGE_OPTIONS            (gimp_smudge_options_get_type ())
-#define GIMP_SMUDGE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SMUDGE_OPTIONS, GimpSmudgeOptions))
-#define GIMP_SMUDGE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SMUDGE_OPTIONS, GimpSmudgeOptionsClass))
-#define GIMP_IS_SMUDGE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SMUDGE_OPTIONS))
-#define GIMP_IS_SMUDGE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SMUDGE_OPTIONS))
-#define GIMP_SMUDGE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SMUDGE_OPTIONS, GimpSmudgeOptionsClass))
+#define LIGMA_TYPE_SMUDGE_OPTIONS            (ligma_smudge_options_get_type ())
+#define LIGMA_SMUDGE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SMUDGE_OPTIONS, LigmaSmudgeOptions))
+#define LIGMA_SMUDGE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SMUDGE_OPTIONS, LigmaSmudgeOptionsClass))
+#define LIGMA_IS_SMUDGE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SMUDGE_OPTIONS))
+#define LIGMA_IS_SMUDGE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SMUDGE_OPTIONS))
+#define LIGMA_SMUDGE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SMUDGE_OPTIONS, LigmaSmudgeOptionsClass))
 
 
-typedef struct _GimpSmudgeOptionsClass GimpSmudgeOptionsClass;
+typedef struct _LigmaSmudgeOptionsClass LigmaSmudgeOptionsClass;
 
-struct _GimpSmudgeOptions
+struct _LigmaSmudgeOptions
 {
-  GimpPaintOptions  parent_instance;
+  LigmaPaintOptions  parent_instance;
 
   gdouble           rate;
   gdouble           flow;
@@ -42,13 +42,13 @@ struct _GimpSmudgeOptions
   gboolean          sample_merged;
 };
 
-struct _GimpSmudgeOptionsClass
+struct _LigmaSmudgeOptionsClass
 {
-  GimpPaintOptionsClass  parent_class;
+  LigmaPaintOptionsClass  parent_class;
 };
 
 
-GType   gimp_smudge_options_get_type (void) G_GNUC_CONST;
+GType   ligma_smudge_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SMUDGE_OPTIONS_H__  */
+#endif  /*  __LIGMA_SMUDGE_OPTIONS_H__  */

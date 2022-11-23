@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorselector.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolorselector.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on:
  * Colour selector module
@@ -23,12 +23,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_SELECTOR_H__
-#define __GIMP_COLOR_SELECTOR_H__
+#ifndef __LIGMA_COLOR_SELECTOR_H__
+#define __LIGMA_COLOR_SELECTOR_H__
 
 G_BEGIN_DECLS
 
@@ -36,50 +36,50 @@ G_BEGIN_DECLS
 
 
 /**
- * GIMP_COLOR_SELECTOR_SIZE:
+ * LIGMA_COLOR_SELECTOR_SIZE:
  *
- * The suggested size for a color area in a #GimpColorSelector
+ * The suggested size for a color area in a #LigmaColorSelector
  * implementation.
  **/
-#define GIMP_COLOR_SELECTOR_SIZE     150
+#define LIGMA_COLOR_SELECTOR_SIZE     150
 
 /**
- * GIMP_COLOR_SELECTOR_BAR_SIZE:
+ * LIGMA_COLOR_SELECTOR_BAR_SIZE:
  *
- * The suggested width for a color bar in a #GimpColorSelector
+ * The suggested width for a color bar in a #LigmaColorSelector
  * implementation.
  **/
-#define GIMP_COLOR_SELECTOR_BAR_SIZE 15
+#define LIGMA_COLOR_SELECTOR_BAR_SIZE 15
 
 
-#define GIMP_TYPE_COLOR_SELECTOR            (gimp_color_selector_get_type ())
-#define GIMP_COLOR_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelector))
-#define GIMP_COLOR_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelectorClass))
-#define GIMP_IS_COLOR_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECTOR))
-#define GIMP_IS_COLOR_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECTOR))
-#define GIMP_COLOR_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelectorClass))
+#define LIGMA_TYPE_COLOR_SELECTOR            (ligma_color_selector_get_type ())
+#define LIGMA_COLOR_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_SELECTOR, LigmaColorSelector))
+#define LIGMA_COLOR_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_SELECTOR, LigmaColorSelectorClass))
+#define LIGMA_IS_COLOR_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_SELECTOR))
+#define LIGMA_IS_COLOR_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_SELECTOR))
+#define LIGMA_COLOR_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_SELECTOR, LigmaColorSelectorClass))
 
-typedef struct _GimpColorSelectorPrivate GimpColorSelectorPrivate;
-typedef struct _GimpColorSelectorClass   GimpColorSelectorClass;
+typedef struct _LigmaColorSelectorPrivate LigmaColorSelectorPrivate;
+typedef struct _LigmaColorSelectorClass   LigmaColorSelectorClass;
 
-struct _GimpColorSelector
+struct _LigmaColorSelector
 {
   GtkBox                    parent_instance;
 
-  GimpColorSelectorPrivate *priv;
+  LigmaColorSelectorPrivate *priv;
 
   /* FIXME MOVE TO PRIVATE */
   gboolean                  toggles_visible;
   gboolean                  toggles_sensitive;
   gboolean                  show_alpha;
 
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
+  LigmaRGB                   rgb;
+  LigmaHSV                   hsv;
 
-  GimpColorSelectorChannel  channel;
+  LigmaColorSelectorChannel  channel;
 };
 
-struct _GimpColorSelectorClass
+struct _LigmaColorSelectorClass
 {
   GtkBoxClass  parent_class;
 
@@ -88,100 +88,100 @@ struct _GimpColorSelectorClass
   const gchar *icon_name;
 
   /*  virtual functions  */
-  void (* set_toggles_visible)   (GimpColorSelector        *selector,
+  void (* set_toggles_visible)   (LigmaColorSelector        *selector,
                                   gboolean                  visible);
-  void (* set_toggles_sensitive) (GimpColorSelector        *selector,
+  void (* set_toggles_sensitive) (LigmaColorSelector        *selector,
                                   gboolean                  sensitive);
-  void (* set_show_alpha)        (GimpColorSelector        *selector,
+  void (* set_show_alpha)        (LigmaColorSelector        *selector,
                                   gboolean                  show_alpha);
-  void (* set_color)             (GimpColorSelector        *selector,
-                                  const GimpRGB            *rgb,
-                                  const GimpHSV            *hsv);
-  void (* set_channel)           (GimpColorSelector        *selector,
-                                  GimpColorSelectorChannel  channel);
-  void (* set_model_visible)     (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model,
+  void (* set_color)             (LigmaColorSelector        *selector,
+                                  const LigmaRGB            *rgb,
+                                  const LigmaHSV            *hsv);
+  void (* set_channel)           (LigmaColorSelector        *selector,
+                                  LigmaColorSelectorChannel  channel);
+  void (* set_model_visible)     (LigmaColorSelector        *selector,
+                                  LigmaColorSelectorModel    model,
                                   gboolean                  visible);
-  void (* set_config)            (GimpColorSelector        *selector,
-                                  GimpColorConfig          *config);
+  void (* set_config)            (LigmaColorSelector        *selector,
+                                  LigmaColorConfig          *config);
 
-  void (* set_simulation)        (GimpColorSelector        *selector,
-                                  GimpColorProfile         *profile,
-                                  GimpColorRenderingIntent  intent,
+  void (* set_simulation)        (LigmaColorSelector        *selector,
+                                  LigmaColorProfile         *profile,
+                                  LigmaColorRenderingIntent  intent,
                                   gboolean                  bpc);
 
   /*  signals  */
-  void (* color_changed)         (GimpColorSelector        *selector,
-                                  const GimpRGB            *rgb,
-                                  const GimpHSV            *hsv);
-  void (* channel_changed)       (GimpColorSelector        *selector,
-                                  GimpColorSelectorChannel  channel);
-  void (* model_visible_changed) (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model,
+  void (* color_changed)         (LigmaColorSelector        *selector,
+                                  const LigmaRGB            *rgb,
+                                  const LigmaHSV            *hsv);
+  void (* channel_changed)       (LigmaColorSelector        *selector,
+                                  LigmaColorSelectorChannel  channel);
+  void (* model_visible_changed) (LigmaColorSelector        *selector,
+                                  LigmaColorSelectorModel    model,
                                   gboolean                  visible);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_selector_get_type         (void) G_GNUC_CONST;
-GtkWidget * gimp_color_selector_new              (GType              selector_type,
-                                                  const GimpRGB     *rgb,
-                                                  const GimpHSV     *hsv,
-                                                  GimpColorSelectorChannel  channel);
+GType       ligma_color_selector_get_type         (void) G_GNUC_CONST;
+GtkWidget * ligma_color_selector_new              (GType              selector_type,
+                                                  const LigmaRGB     *rgb,
+                                                  const LigmaHSV     *hsv,
+                                                  LigmaColorSelectorChannel  channel);
 
-void     gimp_color_selector_set_toggles_visible   (GimpColorSelector *selector,
+void     ligma_color_selector_set_toggles_visible   (LigmaColorSelector *selector,
                                                     gboolean           visible);
-gboolean gimp_color_selector_get_toggles_visible   (GimpColorSelector *selector);
+gboolean ligma_color_selector_get_toggles_visible   (LigmaColorSelector *selector);
 
-void     gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
+void     ligma_color_selector_set_toggles_sensitive (LigmaColorSelector *selector,
                                                     gboolean           sensitive);
-gboolean gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector);
+gboolean ligma_color_selector_get_toggles_sensitive (LigmaColorSelector *selector);
 
-void     gimp_color_selector_set_show_alpha        (GimpColorSelector *selector,
+void     ligma_color_selector_set_show_alpha        (LigmaColorSelector *selector,
                                                     gboolean           show_alpha);
-gboolean gimp_color_selector_get_show_alpha        (GimpColorSelector *selector);
+gboolean ligma_color_selector_get_show_alpha        (LigmaColorSelector *selector);
 
-void     gimp_color_selector_set_color             (GimpColorSelector *selector,
-                                                    const GimpRGB     *rgb,
-                                                    const GimpHSV     *hsv);
-void     gimp_color_selector_get_color             (GimpColorSelector *selector,
-                                                    GimpRGB           *rgb,
-                                                    GimpHSV           *hsv);
+void     ligma_color_selector_set_color             (LigmaColorSelector *selector,
+                                                    const LigmaRGB     *rgb,
+                                                    const LigmaHSV     *hsv);
+void     ligma_color_selector_get_color             (LigmaColorSelector *selector,
+                                                    LigmaRGB           *rgb,
+                                                    LigmaHSV           *hsv);
 
-void     gimp_color_selector_set_channel           (GimpColorSelector *selector,
-                                                    GimpColorSelectorChannel  channel);
-GimpColorSelectorChannel
-         gimp_color_selector_get_channel           (GimpColorSelector *selector);
+void     ligma_color_selector_set_channel           (LigmaColorSelector *selector,
+                                                    LigmaColorSelectorChannel  channel);
+LigmaColorSelectorChannel
+         ligma_color_selector_get_channel           (LigmaColorSelector *selector);
 
-void     gimp_color_selector_set_model_visible     (GimpColorSelector *selector,
-                                                    GimpColorSelectorModel model,
+void     ligma_color_selector_set_model_visible     (LigmaColorSelector *selector,
+                                                    LigmaColorSelectorModel model,
                                                     gboolean           visible);
-gboolean gimp_color_selector_get_model_visible     (GimpColorSelector *selector,
-                                                    GimpColorSelectorModel model);
+gboolean ligma_color_selector_get_model_visible     (LigmaColorSelector *selector,
+                                                    LigmaColorSelectorModel model);
 
-void     gimp_color_selector_emit_color_changed         (GimpColorSelector *selector);
-void     gimp_color_selector_emit_channel_changed       (GimpColorSelector *selector);
-void     gimp_color_selector_emit_model_visible_changed (GimpColorSelector *selector,
-                                                         GimpColorSelectorModel model);
+void     ligma_color_selector_emit_color_changed         (LigmaColorSelector *selector);
+void     ligma_color_selector_emit_channel_changed       (LigmaColorSelector *selector);
+void     ligma_color_selector_emit_model_visible_changed (LigmaColorSelector *selector,
+                                                         LigmaColorSelectorModel model);
 
-void     gimp_color_selector_set_config            (GimpColorSelector *selector,
-                                                    GimpColorConfig   *config);
+void     ligma_color_selector_set_config            (LigmaColorSelector *selector,
+                                                    LigmaColorConfig   *config);
 
-void     gimp_color_selector_set_simulation        (GimpColorSelector *selector,
-                                                    GimpColorProfile  *profile,
-                                                    GimpColorRenderingIntent intent,
+void     ligma_color_selector_set_simulation        (LigmaColorSelector *selector,
+                                                    LigmaColorProfile  *profile,
+                                                    LigmaColorRenderingIntent intent,
                                                     gboolean           bpc);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_SELECTOR_H__ */
+#endif /* __LIGMA_COLOR_SELECTOR_H__ */

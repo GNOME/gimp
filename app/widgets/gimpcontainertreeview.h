@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainertreeview.h
- * Copyright (C) 2003-2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontainertreeview.h
+ * Copyright (C) 2003-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_VIEW_H__
-#define __GIMP_CONTAINER_TREE_VIEW_H__
+#ifndef __LIGMA_CONTAINER_TREE_VIEW_H__
+#define __LIGMA_CONTAINER_TREE_VIEW_H__
 
 
-#include "gimpcontainerbox.h"
+#include "ligmacontainerbox.h"
 
 
-#define GIMP_TYPE_CONTAINER_TREE_VIEW            (gimp_container_tree_view_get_type ())
-#define GIMP_CONTAINER_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_TREE_VIEW, GimpContainerTreeView))
-#define GIMP_CONTAINER_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_TREE_VIEW, GimpContainerTreeViewClass))
-#define GIMP_IS_CONTAINER_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_TREE_VIEW))
-#define GIMP_IS_CONTAINER_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_TREE_VIEW))
-#define GIMP_CONTAINER_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_TREE_VIEW, GimpContainerTreeViewClass))
+#define LIGMA_TYPE_CONTAINER_TREE_VIEW            (ligma_container_tree_view_get_type ())
+#define LIGMA_CONTAINER_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTAINER_TREE_VIEW, LigmaContainerTreeView))
+#define LIGMA_CONTAINER_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTAINER_TREE_VIEW, LigmaContainerTreeViewClass))
+#define LIGMA_IS_CONTAINER_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTAINER_TREE_VIEW))
+#define LIGMA_IS_CONTAINER_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTAINER_TREE_VIEW))
+#define LIGMA_CONTAINER_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTAINER_TREE_VIEW, LigmaContainerTreeViewClass))
 
 
-typedef struct _GimpContainerTreeViewClass   GimpContainerTreeViewClass;
-typedef struct _GimpContainerTreeViewPrivate GimpContainerTreeViewPrivate;
+typedef struct _LigmaContainerTreeViewClass   LigmaContainerTreeViewClass;
+typedef struct _LigmaContainerTreeViewPrivate LigmaContainerTreeViewPrivate;
 
-struct _GimpContainerTreeView
+struct _LigmaContainerTreeView
 {
-  GimpContainerBox              parent_instance;
+  LigmaContainerBox              parent_instance;
 
   GtkTreeModel                 *model;
   gint                          n_model_columns;
@@ -49,94 +49,94 @@ struct _GimpContainerTreeView
   GtkTreeViewColumn            *main_column;
   GtkCellRenderer              *renderer_cell;
 
-  Gimp                         *dnd_gimp; /* eek */
+  Ligma                         *dnd_ligma; /* eek */
 
-  GimpContainerTreeViewPrivate *priv;
+  LigmaContainerTreeViewPrivate *priv;
 };
 
-struct _GimpContainerTreeViewClass
+struct _LigmaContainerTreeViewClass
 {
-  GimpContainerBoxClass  parent_class;
+  LigmaContainerBoxClass  parent_class;
 
   /* signals */
 
-  void     (* edit_name)      (GimpContainerTreeView   *tree_view);
+  void     (* edit_name)      (LigmaContainerTreeView   *tree_view);
 
   /* virtual functions */
 
-  gboolean (* drop_possible)  (GimpContainerTreeView   *tree_view,
-                               GimpDndType              src_type,
+  gboolean (* drop_possible)  (LigmaContainerTreeView   *tree_view,
+                               LigmaDndType              src_type,
                                GList                   *src_viewables,
-                               GimpViewable            *dest_viewable,
+                               LigmaViewable            *dest_viewable,
                                GtkTreePath             *drop_path,
                                GtkTreeViewDropPosition  drop_pos,
                                GtkTreeViewDropPosition *return_drop_pos,
                                GdkDragAction           *return_drag_action);
-  void     (* drop_viewables) (GimpContainerTreeView   *tree_view,
+  void     (* drop_viewables) (LigmaContainerTreeView   *tree_view,
                                GList                   *src_viewables,
-                               GimpViewable            *dest_viewable,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-  void     (* drop_color)     (GimpContainerTreeView   *tree_view,
-                               const GimpRGB           *src_color,
-                               GimpViewable            *dest_viewable,
+  void     (* drop_color)     (LigmaContainerTreeView   *tree_view,
+                               const LigmaRGB           *src_color,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-  void     (* drop_uri_list)  (GimpContainerTreeView   *tree_view,
+  void     (* drop_uri_list)  (LigmaContainerTreeView   *tree_view,
                                GList                   *uri_list,
-                               GimpViewable            *dest_viewable,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-  void     (* drop_svg)       (GimpContainerTreeView   *tree_view,
+  void     (* drop_svg)       (LigmaContainerTreeView   *tree_view,
                                const gchar             *svg_data,
                                gsize                    svg_data_length,
-                               GimpViewable            *dest_viewable,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-  void     (* drop_component) (GimpContainerTreeView   *tree_view,
-                               GimpImage               *image,
-                               GimpChannelType          component,
-                               GimpViewable            *dest_viewable,
+  void     (* drop_component) (LigmaContainerTreeView   *tree_view,
+                               LigmaImage               *image,
+                               LigmaChannelType          component,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-  void     (* drop_pixbuf)    (GimpContainerTreeView   *tree_view,
+  void     (* drop_pixbuf)    (LigmaContainerTreeView   *tree_view,
                                GdkPixbuf               *pixbuf,
-                               GimpViewable            *dest_viewable,
+                               LigmaViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
 };
 
 
-GType       gimp_container_tree_view_get_type (void) G_GNUC_CONST;
+GType       ligma_container_tree_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
-                                               GimpContext   *context,
+GtkWidget * ligma_container_tree_view_new      (LigmaContainer *container,
+                                               LigmaContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
 
 GtkCellRenderer *
-            gimp_container_tree_view_get_name_cell
-                                              (GimpContainerTreeView *tree_view);
+            ligma_container_tree_view_get_name_cell
+                                              (LigmaContainerTreeView *tree_view);
 
-void        gimp_container_tree_view_set_main_column_title
-                                              (GimpContainerTreeView *tree_view,
+void        ligma_container_tree_view_set_main_column_title
+                                              (LigmaContainerTreeView *tree_view,
                                                const gchar           *title);
 
-void        gimp_container_tree_view_add_toggle_cell
-                                              (GimpContainerTreeView *tree_view,
+void        ligma_container_tree_view_add_toggle_cell
+                                              (LigmaContainerTreeView *tree_view,
                                                GtkCellRenderer       *cell);
 
-void        gimp_container_tree_view_add_renderer_cell
-                                              (GimpContainerTreeView *tree_view,
+void        ligma_container_tree_view_add_renderer_cell
+                                              (LigmaContainerTreeView *tree_view,
                                                GtkCellRenderer       *cell,
                                                gint                   column_number);
 
-void        gimp_container_tree_view_set_dnd_drop_to_empty
-                                              (GimpContainerTreeView *tree_view,
+void        ligma_container_tree_view_set_dnd_drop_to_empty
+                                              (LigmaContainerTreeView *tree_view,
                                                gboolean               dnd_drop_to_emtpy);
-void        gimp_container_tree_view_connect_name_edited
-                                              (GimpContainerTreeView *tree_view,
+void        ligma_container_tree_view_connect_name_edited
+                                              (LigmaContainerTreeView *tree_view,
                                                GCallback              callback,
                                                gpointer               data);
-gboolean    gimp_container_tree_view_name_edited
+gboolean    ligma_container_tree_view_name_edited
                                               (GtkCellRendererText   *cell,
                                                const gchar           *path_str,
                                                const gchar           *new_name,
-                                               GimpContainerTreeView *tree_view);
+                                               LigmaContainerTreeView *tree_view);
 
 
-#endif  /*  __GIMP_CONTAINER_TREE_VIEW_H__  */
+#endif  /*  __LIGMA_CONTAINER_TREE_VIEW_H__  */

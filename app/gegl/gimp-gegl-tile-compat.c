@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-tile-compat.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-tile-compat.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,27 +22,27 @@
 
 #include <gegl.h>
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-gegl-tile-compat.h"
+#include "ligma-gegl-tile-compat.h"
 
 
 gint
-gimp_gegl_buffer_get_n_tile_rows (GeglBuffer *buffer,
+ligma_gegl_buffer_get_n_tile_rows (GeglBuffer *buffer,
                                   gint        tile_height)
 {
   return (gegl_buffer_get_height (buffer) + tile_height - 1) / tile_height;
 }
 
 gint
-gimp_gegl_buffer_get_n_tile_cols (GeglBuffer *buffer,
+ligma_gegl_buffer_get_n_tile_cols (GeglBuffer *buffer,
                                   gint        tile_width)
 {
   return (gegl_buffer_get_width (buffer) + tile_width - 1) / tile_width;
 }
 
 gboolean
-gimp_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
+ligma_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
                                 gint           tile_width,
                                 gint           tile_height,
                                 gint           tile_num,
@@ -53,8 +53,8 @@ gimp_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
   gint tile_row;
   gint tile_column;
 
-  n_tile_rows    = gimp_gegl_buffer_get_n_tile_rows (buffer, tile_height);
-  n_tile_columns = gimp_gegl_buffer_get_n_tile_cols (buffer, tile_width);
+  n_tile_rows    = ligma_gegl_buffer_get_n_tile_rows (buffer, tile_height);
+  n_tile_columns = ligma_gegl_buffer_get_n_tile_cols (buffer, tile_width);
 
   if (tile_num > n_tile_rows * n_tile_columns - 1)
     return FALSE;

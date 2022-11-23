@@ -1,10 +1,10 @@
 
-                        How to do a GIMP release
+                        How to do a LIGMA release
                       ----------------------------
-                  a check-list for doing a GIMP release
+                  a check-list for doing a LIGMA release
 
  ( ) Make sure we have a <release> tag inside
-     desktop/org.gimp.GIMP.appdata.xml.in.in for this upcoming
+     desktop/org.ligma.LIGMA.appdata.xml.in.in for this upcoming
      version, with type="development" for development or RC releases
      (set type="stable", or just no type for stable releases).
 
@@ -17,13 +17,13 @@
      localizable). So it is better to prepare the description text as
      early as possible.
 
- ( ) Announce a string freeze on the GIMP Developer mailing list.
+ ( ) Announce a string freeze on the LIGMA Developer mailing list.
 
      Mention that a release is planned, what branch will be frozen, and
      how long the string freeze is going to last. Plan for a couple of
      weeks at least. No translatable strings must be touched during
      this time. An example announcement message is:
-     https://mail.gnome.org/archives/gimp-developer-list/2016-October/msg00004.html
+     https://mail.gnome.org/archives/ligma-developer-list/2016-October/msg00004.html
 
      This rule is important for stable releases but can be more lax for
      unstable releases.
@@ -43,28 +43,28 @@
  ( ) Freeze the repository a few days before release, except for
      absolute obvious bug fixes. Ask packagers to make a test package
      based on current HEAD of the release branch. Post links to these
-     test packages on a bug report titled "GIMP X.Y.Z release testing".
+     test packages on a bug report titled "LIGMA X.Y.Z release testing".
      Propose all willing testers to try these packages.
 
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
 
  ( ) Check that you have working ssh access to master.gnome.org and
-     that you are a member of the gimpftpadmin group. If not, ask
+     that you are a member of the ligmaftpadmin group. If not, ask
      Michael Natterer, Michael Schumacher or Jehan for assistance.
 
- ( ) Check that download.gimp.org has enough space to upload the
+ ( ) Check that download.ligma.org has enough space to upload the
      release and to place it into the download area. If not, make
      place or ask Michael Natterer, Michael Schumacher or Jehan to do
      that.
 
- ( ) Check that you have admin access to https://gitlab.gnome.org/GNOME/gimp/
-     and commit access to the gimp-web module, or that someone can do
+ ( ) Check that you have admin access to https://gitlab.gnome.org/GNOME/ligma/
+     and commit access to the ligma-web module, or that someone can do
      the changes for you.
 
  ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
      INSTALL need to be updated, as well as any release notes on
-     gimp.org.
+     ligma.org.
 
  ( ) Does the splash screen need to be changed?
 
@@ -81,21 +81,21 @@
          must be adapted.
 
  ( ) Make sure that changes which would deserve some tour get the
-     appropriate "demo" attribute in desktop/org.gimp.GIMP.appdata.xml.in
+     appropriate "demo" attribute in desktop/org.ligma.LIGMA.appdata.xml.in
      as documented in README.md.
 
  ( ) If ever the actual release date evolved and is different from the
      planned date, update the "date" in the <release> tag of the appdata
-     in: desktop/org.gimp.GIMP.appdata.xml.in
+     in: desktop/org.ligma.LIGMA.appdata.xml.in
 
  ( ) Check that our Continuous Integration builds are working fine for
-     the branch we plan to release: https://gitlab.gnome.org/GNOME/gimp/-/pipelines
+     the branch we plan to release: https://gitlab.gnome.org/GNOME/ligma/-/pipelines
      Check that all jobs are successful because we should not release
      with code known not to build in some conditions.
 
      The following procedure allows to simulate a release:
 
-     [ ] Go to https://gitlab.gnome.org/GNOME/gimp/-/pipelines
+     [ ] Go to https://gitlab.gnome.org/GNOME/ligma/-/pipelines
 
      [ ] Click the "Run pipeline" button.
 
@@ -104,11 +104,11 @@
          tag, which is characteristical of a release).
 
      [ ] The following jobs should be triggered:
-         build-image deps-debian       gimp-distcheck-debian                        sources-autotools
-                                       gimp-meson-debian                            sources-meson
+         build-image deps-debian       ligma-distcheck-debian                        sources-autotools
+                                       ligma-meson-debian                            sources-meson
                                                                                     dev-docs
-                     deps-win32-native gimp-win32-native     packaging-win32-native
-                     deps-win64-native gimp-win64-native     packaging-win64-native win-installer-nightly
+                     deps-win32-native ligma-win32-native     packaging-win32-native
+                     deps-win64-native ligma-win64-native     packaging-win64-native win-installer-nightly
 
      [ ] Check in particular:
          * the job `win-installer-nightly` should contain a working
@@ -134,9 +134,9 @@
      release you are about to make. Releases always have even micro
      numbers.
 
-     [ ] In configure.ac, modify gimp_micro_version accordingly.
+     [ ] In configure.ac, modify ligma_micro_version accordingly.
 
-     [ ] In configure.ac, modify gimp_interface_age accordingly.
+     [ ] In configure.ac, modify ligma_interface_age accordingly.
 
  ( ) Bump the version in project() of meson.build identically as the
      version set in configure.ac.
@@ -146,8 +146,8 @@
      again. Make sure of it.
 
  ( ) Tag the release (don't forget to push the tag)
-       git tag -s GIMP_2_x_y
-       git push origin GIMP_2_x_y
+       git tag -s LIGMA_2_x_y
+       git push origin LIGMA_2_x_y
 
      All release tags are signed in order for the authenticity and
      origin of the release to be publicly verified.
@@ -156,10 +156,10 @@
      Once it is done, you will find a tarball, a Windows installer,
      SHA256 and SHA512 checksum files on the artifacts of the job
      `sources` and `win-installer-nightly`.
-     Direct links, for instance for the GIMP_2_99_6 tag, would be:
+     Direct links, for instance for the LIGMA_2_99_6 tag, would be:
 
-     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=sources
-     https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/GIMP_2_99_6/browse/?job=win-installer-nightly
+     https://gitlab.gnome.org/GNOME/ligma/-/jobs/artifacts/LIGMA_2_99_6/browse/?job=sources
+     https://gitlab.gnome.org/GNOME/ligma/-/jobs/artifacts/LIGMA_2_99_6/browse/?job=win-installer-nightly
 
  ( ) Ask the Windows installer maintainers to test the installer then to
      sign it if all looks fine.
@@ -167,11 +167,11 @@
  ( ) Publish dist tarballs:
 
      [ ] Upload the 3 files (tar.bz2 tarball and 2 checksums) to
-         /gimp_ftp/incoming/ on master.gnome.org (do not upload to your
+         /ligma_ftp/incoming/ on master.gnome.org (do not upload to your
          home first as it would mess up some SELinux flags).
 
      [ ] Copy the tarball to its final destination in the download
-         area (/gimp_ftp/pub/gimp/). Really use "cp" not "mv" or
+         area (/ligma_ftp/pub/ligma/). Really use "cp" not "mv" or
          SELinux will make the uploaded file unreadable to the web
          server unless some obscure status bit is toggled.
 
@@ -185,7 +185,7 @@
          on the download server.
 
      [ ] Change permissions of the new files to make them writable by
-         the 'gimpftpadmin' group. This will allow other members of
+         the 'ligmaftpadmin' group. This will allow other members of
          this group to correct mistakes and to update the
          0.0_LATEST-IS- file next time.
 
@@ -193,15 +193,15 @@
      to the next odd micro and commit this change. GIT versions always
      have odd micro numbers.
 
-     [ ] In configure.ac, modify gimp_micro_version accordingly.
+     [ ] In configure.ac, modify ligma_micro_version accordingly.
 
-     [ ] In configure.ac, modify gimp_interface_age accordingly.
+     [ ] In configure.ac, modify ligma_interface_age accordingly.
 
  ( ) Bump the version number in meson.build to the same value as in
      configure.ac.
 
- ( ) Add the next version milestone on GIMP's Gitlab:
-     https://gitlab.gnome.org/GNOME/gimp/-/milestones
+ ( ) Add the next version milestone on LIGMA's Gitlab:
+     https://gitlab.gnome.org/GNOME/ligma/-/milestones
 
      Note: we don't close immediately the milestone of the just-released
      version as we may still assign some reports to it, but older
@@ -212,10 +212,10 @@
      source tarballs. The checksum files will probably have to be
      regenerated after the installer's signature.
 
- ( ) Check out or update the 'gimp-web' module, check out its testing
+ ( ) Check out or update the 'ligma-web' module, check out its testing
      branch.
 
-     [ ] Update the file 'content/gimp_versions.json' adding the
+     [ ] Update the file 'content/ligma_versions.json' adding the
          version, release date, tarball name and its SHA256 and SHA512
          hashes under "STABLE" for stable releases or "DEVELOPMENT" for
          dev releases, as well as for any already available packages.
@@ -223,14 +223,14 @@
 
      [ ] Create a news items for the release in content/news/
 
-     [ ] Run `make authors.md` in GIMP repository. This will generate
+     [ ] Run `make authors.md` in LIGMA repository. This will generate
          the file `authors.md`. Move it to ./content/about/authors.md on
-         the 'gimp-web' module and commit it.
+         the 'ligma-web' module and commit it.
 
      [ ] Commit and push the changes to the `testing` branch, the web
          server should then update itself soon (it checks for updates
          every 5 minutes).
-         Go to https://testing.gimp.org to verify the changes.
+         Go to https://testing.ligma.org to verify the changes.
 
      [ ] Do not merge to `master` branch yet. We usually wait for a few
          packages to be available (often at least the Flatpak and
@@ -239,15 +239,15 @@
 
      [ ] For binary packages, we also usually publish web torrent files
          with the `tools/download/mt` tool. Here is an example of
-         command as run for the revision 2 of GIMP 2.10.24 installer:
+         command as run for the revision 2 of LIGMA 2.10.24 installer:
 
-           $ tools/downloads/mt -c "GIMP 2.10.24 Installer for Microsoft Windows - 32 and 64 Bit - Update 2: custom GTK fixes for drag&drop issues with certain screen grabbers (issue #1082), tiny SVG icons (issue #1563) and pasting images from some other applications (issue #3481)" -p "v2.10/windows" -m "./tools/downloads/downloads.http.txt" gimp-2.10.24-setup-2.exe
+           $ tools/downloads/mt -c "LIGMA 2.10.24 Installer for Microsoft Windows - 32 and 64 Bit - Update 2: custom GTK fixes for drag&drop issues with certain screen grabbers (issue #1082), tiny SVG icons (issue #1563) and pasting images from some other applications (issue #3481)" -p "v2.10/windows" -m "./tools/downloads/downloads.http.txt" ligma-2.10.24-setup-2.exe
 
      [ ] Check regularly that most (ideally all) mirrors synced the new
          files. The following commands allows to query all mirrors:
 
-           $ tools/downloads/update-mirrors.py --ssh-user $SSH_USER # where $SSH_USER is your user on download.gimp.org server.
-           $ tools/downloads/gimp-check-mirrors.py https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.24-setup-2.exe
+           $ tools/downloads/update-mirrors.py --ssh-user $SSH_USER # where $SSH_USER is your user on download.ligma.org server.
+           $ tools/downloads/ligma-check-mirrors.py https://download.ligma.org/mirror/pub/ligma/v2.10/windows/ligma-2.10.24-setup-2.exe
 
          We want to hold the news a bit because if we publish without
          binary installers, everyone desperately search for them; and if
@@ -256,7 +256,7 @@
 
  ( ) When confident about the installers availability, if this is a
      stable release, create a new package on the Microsoft Partner
-     Center so that GIMP becomes available on the Microsoft Store:
+     Center so that LIGMA becomes available on the Microsoft Store:
      https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview
 
      The URL to provide is the mirror URL, not the direct URL.
@@ -264,15 +264,15 @@
      Current people with admin access to this platform:
      irc:ender/@jernejs and irc:Jehan/@Jehan.
 
- ( ) Announce the release on gimp.org and send a release announcement to
-     the gimp-user and gimp-developer mailing lists.
+ ( ) Announce the release on ligma.org and send a release announcement to
+     the ligma-user and ligma-developer mailing lists.
 
-     [ ] Check out the gimp-web master branch and merge or cherry-pick
+     [ ] Check out the ligma-web master branch and merge or cherry-pick
          the changes you did in the testing branch.
 
      [ ] Push the changes, the web server should then update itself
          soon (it checks for updates every 15 minutes).
-         Go to https://www.gimp.org to verify the changes.
+         Go to https://www.ligma.org to verify the changes.
 
      [ ] Due to the tendency of news sites to front-run release
          articles even before actual announcements appear, publish
@@ -284,7 +284,7 @@
 Optional: debug the source tarball
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The source tarball is now created by the `gimp-distcheck-debian` CI job.
+The source tarball is now created by the `ligma-distcheck-debian` CI job.
 Nevertheless in case it were to fail, and you need to debug or
 exceptionally create your own local tarball for publishing, here would
 be the manual version:
@@ -294,13 +294,13 @@ be the manual version:
      🛈 These instructions are left for information purpose and so that
      maintainers remember the way to test locally that distribution
      tarball creation works fine. Nevertheless this is already what the
-     continuous integration does (jobs `gimp-distcheck-debian` and
+     continuous integration does (jobs `ligma-distcheck-debian` and
      `sources` in particular) from a clean slate. So as we check the CI
      success, this step is now unecessary. Moreover we should now always
      publish the tarball prepared by the CI, not by a local build, for
      purpose of process transparency.
 
-     [ ] Start with a checkout of the GIMP tree. Make sure the
+     [ ] Start with a checkout of the LIGMA tree. Make sure the
          checkout is up to date, clean from uncommitted changes.
 
      [ ] Run 'git clean -x -d -f' (Warning: you will lose any files

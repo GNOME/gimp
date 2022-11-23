@@ -15,8 +15,8 @@
    width="24"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-text-dir-ttb-rtl-symbolic.svg"
-   inkscape:export-filename="../24/gimp-text-dir-ttb-ltr.png"
+   sodipodi:docname="ligma-text-dir-ttb-rtl-symbolic.svg"
+   inkscape:export-filename="../24/ligma-text-dir-ttb-ltr.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <sodipodi:namedview
@@ -53,7 +53,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>

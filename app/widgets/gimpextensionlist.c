@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpextensionlist.c
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextensionlist.c
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,16 +23,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpextension.h"
-#include "core/gimpextensionmanager.h"
+#include "core/ligmaextension.h"
+#include "core/ligmaextensionmanager.h"
 
-#include "gimpextensionlist.h"
+#include "ligmaextensionlist.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -42,141 +42,141 @@ enum
 
 typedef enum
 {
-  GIMP_EXT_LIST_USER,
-  GIMP_EXT_LIST_SYSTEM,
-  GIMP_EXT_LIST_SEARCH,
-} GimpExtensionListContents;
+  LIGMA_EXT_LIST_USER,
+  LIGMA_EXT_LIST_SYSTEM,
+  LIGMA_EXT_LIST_SEARCH,
+} LigmaExtensionListContents;
 
-struct _GimpExtensionListPrivate
+struct _LigmaExtensionListPrivate
 {
-  GimpExtensionManager      *manager;
+  LigmaExtensionManager      *manager;
 
-  GimpExtensionListContents  contents;
+  LigmaExtensionListContents  contents;
 };
 
-static void gimp_extension_list_set            (GimpExtensionList *list,
+static void ligma_extension_list_set            (LigmaExtensionList *list,
                                                 const GList       *extensions,
                                                 gboolean           is_system);
 
-static void gimp_extension_list_ext_installed  (GimpExtensionManager *manager,
-                                                GimpExtension        *extension,
+static void ligma_extension_list_ext_installed  (LigmaExtensionManager *manager,
+                                                LigmaExtension        *extension,
                                                 gboolean              is_system_ext,
-                                                GimpExtensionList    *list);
-static void gimp_extension_list_ext_removed    (GimpExtensionManager *manager,
+                                                LigmaExtensionList    *list);
+static void ligma_extension_list_ext_removed    (LigmaExtensionManager *manager,
                                                 gchar                *extension_id,
-                                                GimpExtensionList    *list);
+                                                LigmaExtensionList    *list);
 
-static void gimp_extension_list_delete_clicked (GtkButton            *delbutton,
-                                                GimpExtensionList    *list);
-static void gimp_extension_switch_active       (GObject              *onoff,
+static void ligma_extension_list_delete_clicked (GtkButton            *delbutton,
+                                                LigmaExtensionList    *list);
+static void ligma_extension_switch_active       (GObject              *onoff,
                                                 GParamSpec           *spec,
                                                 gpointer              extension);
-static void gimp_extension_row_activated       (GtkListBox           *box,
+static void ligma_extension_row_activated       (GtkListBox           *box,
                                                 GtkListBoxRow        *row,
                                                 gpointer              user_data);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpExtensionList, gimp_extension_list,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaExtensionList, ligma_extension_list,
                             GTK_TYPE_LIST_BOX)
 
-#define parent_class gimp_extension_list_parent_class
+#define parent_class ligma_extension_list_parent_class
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
 static void
-gimp_extension_list_class_init (GimpExtensionListClass *klass)
+ligma_extension_list_class_init (LigmaExtensionListClass *klass)
 {
   signals[EXTENSION_ACTIVATED] =
     g_signal_new ("extension-activated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpExtensionListClass, extension_activated),
+                  G_STRUCT_OFFSET (LigmaExtensionListClass, extension_activated),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_OBJECT);
+                  LIGMA_TYPE_OBJECT);
 }
 
 static void
-gimp_extension_list_init (GimpExtensionList *list)
+ligma_extension_list_init (LigmaExtensionList *list)
 {
   gtk_list_box_set_selection_mode (GTK_LIST_BOX (list),
                                    GTK_SELECTION_SINGLE);
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list),
                                              FALSE);
-  list->p = gimp_extension_list_get_instance_private (list);
+  list->p = ligma_extension_list_get_instance_private (list);
 }
 
 static void
-gimp_extension_list_disable (GtkWidget *row,
+ligma_extension_list_disable (GtkWidget *row,
                              gchar     *extension_id)
 {
-  GimpExtension *extension;
+  LigmaExtension *extension;
   GtkWidget     *outframe = gtk_bin_get_child (GTK_BIN (row));
 
   extension = g_object_get_data (G_OBJECT (outframe), "extension");
   g_return_if_fail (extension);
 
-  if (g_strcmp0 (gimp_object_get_name (extension), extension_id) == 0)
+  if (g_strcmp0 (ligma_object_get_name (extension), extension_id) == 0)
     {
       GtkWidget *button = gtk_frame_get_label_widget (GTK_FRAME (outframe));
       GtkWidget *image  = gtk_bin_get_child (GTK_BIN (button));
 
       gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (outframe)), FALSE);
 
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_EDIT_UNDO,
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), LIGMA_ICON_EDIT_UNDO,
                                     GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
     }
 }
 
 GtkWidget *
-gimp_extension_list_new (GimpExtensionManager *manager)
+ligma_extension_list_new (LigmaExtensionManager *manager)
 {
-  GimpExtensionList *list;
+  LigmaExtensionList *list;
 
-  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager), NULL);
 
-  list = g_object_new (GIMP_TYPE_EXTENSION_LIST, NULL);
+  list = g_object_new (LIGMA_TYPE_EXTENSION_LIST, NULL);
   list->p->manager  = manager;
 
   g_signal_connect (manager, "extension-installed",
-                    G_CALLBACK (gimp_extension_list_ext_installed),
+                    G_CALLBACK (ligma_extension_list_ext_installed),
                     list);
   g_signal_connect (manager, "extension-removed",
-                    G_CALLBACK (gimp_extension_list_ext_removed),
+                    G_CALLBACK (ligma_extension_list_ext_removed),
                     list);
 
   return GTK_WIDGET (list);
 }
 
 void
-gimp_extension_list_show_system (GimpExtensionList *list)
+ligma_extension_list_show_system (LigmaExtensionList *list)
 {
-  list->p->contents = GIMP_EXT_LIST_SYSTEM;
-  gimp_extension_list_set (list,
-                           gimp_extension_manager_get_system_extensions (list->p->manager),
+  list->p->contents = LIGMA_EXT_LIST_SYSTEM;
+  ligma_extension_list_set (list,
+                           ligma_extension_manager_get_system_extensions (list->p->manager),
                            TRUE);
 }
 
 void
-gimp_extension_list_show_user (GimpExtensionList *list)
+ligma_extension_list_show_user (LigmaExtensionList *list)
 {
-  list->p->contents = GIMP_EXT_LIST_USER;
-  gimp_extension_list_set (list,
-                           gimp_extension_manager_get_user_extensions (list->p->manager),
+  list->p->contents = LIGMA_EXT_LIST_USER;
+  ligma_extension_list_set (list,
+                           ligma_extension_manager_get_user_extensions (list->p->manager),
                            FALSE);
 }
 
 void
-gimp_extension_list_show_search (GimpExtensionList *list,
+ligma_extension_list_show_search (LigmaExtensionList *list,
                                  const gchar       *search_terms)
 {
-  list->p->contents = GIMP_EXT_LIST_SEARCH;
+  list->p->contents = LIGMA_EXT_LIST_SEARCH;
   /* TODO */
-  gimp_extension_list_set (list, NULL, FALSE);
+  ligma_extension_list_set (list, NULL, FALSE);
 }
 
 static void
-gimp_extension_list_set (GimpExtensionList *list,
+ligma_extension_list_set (LigmaExtensionList *list,
                          const GList       *extensions,
                          gboolean           is_system)
 {
@@ -188,23 +188,23 @@ gimp_extension_list_set (GimpExtensionList *list,
 
   for (; iter; iter = iter->next)
     {
-      GimpExtension *extension = iter->data;
+      LigmaExtension *extension = iter->data;
 
-      gimp_extension_list_ext_installed (list->p->manager, extension,
+      ligma_extension_list_ext_installed (list->p->manager, extension,
                                          is_system, list);
     }
   gtk_container_foreach (GTK_CONTAINER (list),
                          (GtkCallback) gtk_list_box_row_set_activatable,
                          GUINT_TO_POINTER (TRUE));
   g_signal_connect (list, "row-activated",
-                    G_CALLBACK (gimp_extension_row_activated), NULL);
+                    G_CALLBACK (ligma_extension_row_activated), NULL);
 }
 
 static void
-gimp_extension_list_ext_installed (GimpExtensionManager *manager,
-                                   GimpExtension        *extension,
+ligma_extension_list_ext_installed (LigmaExtensionManager *manager,
+                                   LigmaExtension        *extension,
                                    gboolean              is_system_ext,
-                                   GimpExtensionList    *list)
+                                   LigmaExtensionList    *list)
 {
   GList     *rows;
   GList     *iter;
@@ -214,16 +214,16 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   GtkWidget *onoff;
   GtkWidget *image;
 
-  if (list->p->contents == GIMP_EXT_LIST_SEARCH                  ||
-      (list->p->contents == GIMP_EXT_LIST_USER && is_system_ext) ||
-      (list->p->contents == GIMP_EXT_LIST_SYSTEM && ! is_system_ext))
+  if (list->p->contents == LIGMA_EXT_LIST_SEARCH                  ||
+      (list->p->contents == LIGMA_EXT_LIST_USER && is_system_ext) ||
+      (list->p->contents == LIGMA_EXT_LIST_SYSTEM && ! is_system_ext))
     return;
 
   /* Check if extension already listed (i.e. removed then reinstalled). */
   rows = gtk_container_get_children (GTK_CONTAINER (list));
   for (iter = rows; iter; iter = iter->next)
     {
-      GimpExtension *row_ext;
+      LigmaExtension *row_ext;
       GtkWidget     *outframe = gtk_bin_get_child (GTK_BIN (iter->data));
 
       row_ext = g_object_get_data (G_OBJECT (outframe), "extension");
@@ -236,7 +236,7 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
           image  = gtk_bin_get_child (GTK_BIN (button));
           gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (outframe)), TRUE);
 
-          gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_EDIT_DELETE,
+          gtk_image_set_from_icon_name (GTK_IMAGE (image), LIGMA_ICON_EDIT_DELETE,
                                         GTK_ICON_SIZE_MENU);
           gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
 
@@ -246,7 +246,7 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
     }
   g_list_free (rows);
 
-  outframe = gtk_frame_new (gimp_extension_get_name (extension));
+  outframe = gtk_frame_new (ligma_extension_get_name (extension));
   gtk_container_add (GTK_CONTAINER (list), outframe);
   g_object_set_data (G_OBJECT (outframe), "extension", extension);
   gtk_widget_show (outframe);
@@ -264,25 +264,25 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   gtk_widget_set_halign (onoff, GTK_ALIGN_CENTER);
   gtk_widget_set_valign (onoff, GTK_ALIGN_CENTER);
   gtk_switch_set_active (GTK_SWITCH (onoff),
-                         gimp_extension_manager_is_running (list->p->manager,
+                         ligma_extension_manager_is_running (list->p->manager,
                                                             extension));
   gtk_widget_set_sensitive (onoff,
-                            gimp_extension_manager_can_run (list->p->manager,
+                            ligma_extension_manager_can_run (list->p->manager,
                                                             extension));
   g_signal_connect (onoff, "notify::active",
-                    G_CALLBACK (gimp_extension_switch_active), extension);
+                    G_CALLBACK (ligma_extension_switch_active), extension);
   gtk_grid_attach (GTK_GRID (grid), onoff, 0, 0, 1, 1);
   gtk_widget_show (onoff);
 
   /* Short description. */
-  if (gimp_extension_get_comment (extension))
+  if (ligma_extension_get_comment (extension))
     {
       GtkWidget     *desc = gtk_text_view_new ();
       GtkTextBuffer *buffer;
 
       buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (desc));
       gtk_text_buffer_set_text (buffer,
-                                gimp_extension_get_comment (extension),
+                                ligma_extension_get_comment (extension),
                                 -1);
       gtk_text_view_set_editable (GTK_TEXT_VIEW (desc), FALSE);
       gtk_widget_set_vexpand (desc, TRUE);
@@ -301,10 +301,10 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
       delbutton = gtk_button_new ();
       g_object_set_data (G_OBJECT (delbutton), "extension", extension);
       g_signal_connect (delbutton, "clicked",
-                        G_CALLBACK (gimp_extension_list_delete_clicked),
+                        G_CALLBACK (ligma_extension_list_delete_clicked),
                         list);
       gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
-      image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_EDIT_DELETE,
                                             GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
       gtk_widget_set_vexpand (delbutton, FALSE);
@@ -319,30 +319,30 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
 }
 
 static void
-gimp_extension_list_ext_removed (GimpExtensionManager *manager,
+ligma_extension_list_ext_removed (LigmaExtensionManager *manager,
                                  gchar                *extension_id,
-                                 GimpExtensionList    *list)
+                                 LigmaExtensionList    *list)
 {
   gtk_container_foreach (GTK_CONTAINER (list),
-                         (GtkCallback) gimp_extension_list_disable,
+                         (GtkCallback) ligma_extension_list_disable,
                          extension_id);
 }
 
 static void
-gimp_extension_list_delete_clicked (GtkButton         *delbutton,
-                                    GimpExtensionList *list)
+ligma_extension_list_delete_clicked (GtkButton         *delbutton,
+                                    LigmaExtensionList *list)
 {
-  GimpExtensionManager *manager = list->p->manager;
-  GimpExtension        *extension;
+  LigmaExtensionManager *manager = list->p->manager;
+  LigmaExtension        *extension;
   GError               *error = NULL;
 
   extension = g_object_get_data (G_OBJECT (delbutton), "extension");
   g_return_if_fail (extension);
 
-  if (gimp_extension_manager_is_removed (manager, extension))
-    gimp_extension_manager_undo_remove (manager, extension, &error);
+  if (ligma_extension_manager_is_removed (manager, extension))
+    ligma_extension_manager_undo_remove (manager, extension, &error);
   else
-    gimp_extension_manager_remove (manager, extension, &error);
+    ligma_extension_manager_remove (manager, extension, &error);
 
   if (error)
     {
@@ -352,38 +352,38 @@ gimp_extension_list_delete_clicked (GtkButton         *delbutton,
 }
 
 static void
-gimp_extension_switch_active (GObject    *onoff,
+ligma_extension_switch_active (GObject    *onoff,
                               GParamSpec *pspec,
                               gpointer    extension)
 {
-  GimpExtension *ext = (GimpExtension *) extension;
+  LigmaExtension *ext = (LigmaExtension *) extension;
 
   if (gtk_switch_get_active (GTK_SWITCH (onoff)))
     {
       GError *error = NULL;
 
-      gimp_extension_run (ext, &error);
+      ligma_extension_run (ext, &error);
       if (error)
         {
           g_signal_handlers_block_by_func (onoff,
-                                           G_CALLBACK (gimp_extension_switch_active),
+                                           G_CALLBACK (ligma_extension_switch_active),
                                            extension);
           gtk_switch_set_active (GTK_SWITCH (onoff), FALSE);
           g_signal_handlers_unblock_by_func (onoff,
-                                             G_CALLBACK (gimp_extension_switch_active),
+                                             G_CALLBACK (ligma_extension_switch_active),
                                              extension);
           g_printerr ("Extension '%s' failed to run: %s\n",
-                      gimp_object_get_name (ext),
+                      ligma_object_get_name (ext),
                       error->message);
           g_error_free (error);
         }
     }
   else
-    gimp_extension_stop (ext);
+    ligma_extension_stop (ext);
 }
 
 static void
-gimp_extension_row_activated (GtkListBox    *box,
+ligma_extension_row_activated (GtkListBox    *box,
                               GtkListBoxRow *row,
                               gpointer       user_data)
 {

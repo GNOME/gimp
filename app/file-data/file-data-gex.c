@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 2019 Jehan
  *
@@ -27,30 +27,30 @@
 #include <glib.h>
 #include <zlib.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpbrush-load.h"
-#include "core/gimpbrush-private.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpextension.h"
-#include "core/gimpextensionmanager.h"
-#include "core/gimpextension-error.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-new.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptempbuf.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmabrush-load.h"
+#include "core/ligmabrush-private.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaextension.h"
+#include "core/ligmaextensionmanager.h"
+#include "core/ligmaextension-error.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatempbuf.h"
+#include "core/ligma-utils.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmaprocedure.h"
 
 #include "file-data-gex.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
@@ -142,8 +142,8 @@ file_gex_validate_path (const gchar  *path,
 
   if (g_path_is_absolute (path) || g_strcmp0 (dirname, "/") == 0)
     {
-      *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                            _("Absolute path are forbidden in GIMP extension '%s': %s"),
+      *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                            _("Absolute path are forbidden in LIGMA extension '%s': %s"),
                             file_name, path);
       g_free (dirname);
       return FALSE;
@@ -153,8 +153,8 @@ file_gex_validate_path (const gchar  *path,
     {
       if (first)
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                _("File not allowed in root of GIMP extension '%s': %s"),
+          *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                _("File not allowed in root of LIGMA extension '%s': %s"),
                                 file_name, path);
           valid = FALSE;
         }
@@ -164,8 +164,8 @@ file_gex_validate_path (const gchar  *path,
             {
               if (g_strcmp0 (path, *plugin_id) != 0)
                 {
-                  *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                        _("File not in GIMP extension '%s' folder id '%s': %s"),
+                  *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                        _("File not in LIGMA extension '%s' folder id '%s': %s"),
                                         file_name, *plugin_id, path);
                   valid = FALSE;
                 }
@@ -239,7 +239,7 @@ file_gex_validate (GFile   *file,
 
               while (archive_read_next_header (a, &entry) == ARCHIVE_OK &&
                      file_gex_validate_path (archive_entry_pathname (entry),
-                                             gimp_file_get_utf8_name (file),
+                                             ligma_file_get_utf8_name (file),
                                              TRUE, &plugin_id, error))
                 {
                   if (plugin_id && ! appdata_path)
@@ -260,9 +260,9 @@ file_gex_validate (GFile   *file,
 
                               if (r == ARCHIVE_FATAL)
                                 {
-                                  *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                        _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                        gimp_file_get_utf8_name (file),
+                                  *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                                        _("Fatal error when uncompressing LIGMA extension '%s': %s"),
+                                                        ligma_file_get_utf8_name (file),
                                                         archive_error_string (a));
                                   g_string_free (appstring, TRUE);
                                   break;
@@ -295,18 +295,18 @@ file_gex_validate (GFile   *file,
                         }
                       else if (g_strcmp0 (as_app_get_id (*appstream), plugin_id) != 0)
                         {
-                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("GIMP extension '%s' directory (%s) different from AppStream id: %s"),
-                                                gimp_file_get_utf8_name (file),
+                          *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                                _("LIGMA extension '%s' directory (%s) different from AppStream id: %s"),
+                                                ligma_file_get_utf8_name (file),
                                                 plugin_id, as_app_get_id (*appstream));
                           g_clear_object (appstream);
                         }
                     }
                   else
                     {
-                      *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                            _("GIMP extension '%s' requires an AppStream file: %s"),
-                                            gimp_file_get_utf8_name (file),
+                      *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                            _("LIGMA extension '%s' requires an AppStream file: %s"),
+                                            ligma_file_get_utf8_name (file),
                                             appdata_path);
                     }
                 }
@@ -319,9 +319,9 @@ file_gex_validate (GFile   *file,
             }
           else
             {
-              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                    _("Invalid GIMP extension '%s': %s"),
-                                    gimp_file_get_utf8_name (file),
+              *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                    _("Invalid LIGMA extension '%s': %s"),
+                                    ligma_file_get_utf8_name (file),
                                     archive_error_string (a));
             }
 
@@ -332,7 +332,7 @@ file_gex_validate (GFile   *file,
         }
       else
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+          *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
                                 "%s: archive_read_new() failed.", G_STRFUNC);
         }
 
@@ -341,7 +341,7 @@ file_gex_validate (GFile   *file,
   else
     {
       g_prefix_error (error, _("Could not open '%s' for reading: "),
-                      gimp_file_get_utf8_name (file));
+                      ligma_file_get_utf8_name (file));
     }
 
   return success;
@@ -353,7 +353,7 @@ file_gex_decompress (GFile   *file,
                      GError **error)
 {
   GInputStream *input;
-  GFile        *ext_dir = gimp_directory_file ("extensions", NULL);
+  GFile        *ext_dir = ligma_directory_file ("extensions", NULL);
   gchar        *plugin_dir = NULL;
   gboolean      success = FALSE;
 
@@ -392,7 +392,7 @@ file_gex_decompress (GFile   *file,
                      /* Re-validate just in case the archive got swapped
                       * between validation and decompression. */
                      file_gex_validate_path (archive_entry_pathname (entry),
-                                             gimp_file_get_utf8_name (file),
+                                             ligma_file_get_utf8_name (file),
                                              TRUE, &plugin_id, error))
                 {
                   gchar       *path;
@@ -407,9 +407,9 @@ file_gex_decompress (GFile   *file,
                   r = archive_write_header (ext, entry);
                   if (r < ARCHIVE_WARN)
                     {
-                      *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                            _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                            gimp_file_get_utf8_name (file),
+                      *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                            _("Fatal error when uncompressing LIGMA extension '%s': %s"),
+                                            ligma_file_get_utf8_name (file),
                                             archive_error_string (ext));
                       break;
                     }
@@ -425,9 +425,9 @@ file_gex_decompress (GFile   *file,
                             }
                           else if (r < ARCHIVE_WARN)
                             {
-                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                    gimp_file_get_utf8_name (file),
+                              *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing LIGMA extension '%s': %s"),
+                                                    ligma_file_get_utf8_name (file),
                                                     archive_error_string (a));
                               break;
                             }
@@ -435,16 +435,16 @@ file_gex_decompress (GFile   *file,
                           r = archive_write_data_block (ext, buffer, size, offset);
                           if (r == ARCHIVE_WARN)
                             {
-                              g_printerr (_("Warning when uncompressing GIMP extension '%s': %s\n"),
-                                          gimp_file_get_utf8_name (file),
+                              g_printerr (_("Warning when uncompressing LIGMA extension '%s': %s\n"),
+                                          ligma_file_get_utf8_name (file),
                                           archive_error_string (ext));
                               break;
                             }
                           else if (r < ARCHIVE_OK)
                             {
-                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                    gimp_file_get_utf8_name (file),
+                              *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing LIGMA extension '%s': %s"),
+                                                    ligma_file_get_utf8_name (file),
                                                     archive_error_string (ext));
                               break;
                             }
@@ -456,9 +456,9 @@ file_gex_decompress (GFile   *file,
                   r = archive_write_finish_entry (ext);
                   if (r < ARCHIVE_OK)
                     {
-                      *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                            _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                            gimp_file_get_utf8_name (file),
+                      *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                            _("Fatal error when uncompressing LIGMA extension '%s': %s"),
+                                            ligma_file_get_utf8_name (file),
                                             archive_error_string (ext));
                       break;
                     }
@@ -466,9 +466,9 @@ file_gex_decompress (GFile   *file,
             }
           else
             {
-              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                    _("Invalid GIMP extension '%s': %s"),
-                                    gimp_file_get_utf8_name (file),
+              *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
+                                    _("Invalid LIGMA extension '%s': %s"),
+                                    ligma_file_get_utf8_name (file),
                                     archive_error_string (a));
             }
 
@@ -482,7 +482,7 @@ file_gex_decompress (GFile   *file,
         }
       else
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+          *error = g_error_new (LIGMA_EXTENSION_ERROR, LIGMA_EXTENSION_FAILED,
                                 "%s: archive_read_new() failed.", G_STRFUNC);
         }
 
@@ -491,7 +491,7 @@ file_gex_decompress (GFile   *file,
   else
     {
       g_prefix_error (error, _("Could not open '%s' for reading: "),
-                      gimp_file_get_utf8_name (file));
+                      ligma_file_get_utf8_name (file));
     }
 
   if (success)
@@ -504,23 +504,23 @@ file_gex_decompress (GFile   *file,
 
 /*  public functions  */
 
-GimpValueArray *
-file_gex_load_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+LigmaValueArray *
+file_gex_load_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   GFile          *file;
   gchar          *ext_dir = NULL;
   AsApp          *appdata = NULL;
   gboolean        success = FALSE;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   success = file_gex_validate (file, &appdata, error);
   if (success)
@@ -529,11 +529,11 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 
   if (ext_dir)
     {
-      GimpExtension *extension;
+      LigmaExtension *extension;
       GError        *rm_error = NULL;
 
-      extension = gimp_extension_new (ext_dir, TRUE);
-      success   = gimp_extension_manager_install (gimp->extension_manager,
+      extension = ligma_extension_new (ext_dir, TRUE);
+      success   = ligma_extension_manager_install (ligma->extension_manager,
                                                   extension, error);
 
       if (! success)
@@ -544,7 +544,7 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 
           file = g_file_new_for_path (ext_dir);
 
-          if (! gimp_file_delete_recursive (file, &rm_error))
+          if (! ligma_file_delete_recursive (file, &rm_error))
             {
               g_warning ("%s: %s\n", G_STRFUNC, rm_error->message);
               g_error_free (rm_error);
@@ -560,9 +560,9 @@ file_gex_load_invoker (GimpProcedure         *procedure,
       success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }

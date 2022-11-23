@@ -1,10 +1,10 @@
-/* Dark variant for the Default theme for GIMP 3.0 */
+/* Dark variant for the Default theme for LIGMA 3.0 */
 
 /* Hint for debugging themes:
  * first enable the GTK inspector with
    gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
- * then (after restarting GIMP) call it up with ctrl+shift+i
- * or from GIMP's UI: File > Debug > Start GtkInspector
+ * then (after restarting LIGMA) call it up with ctrl+shift+i
+ * or from LIGMA's UI: File > Debug > Start GtkInspector
  */
 
 /* Basic foreground, background and border colors. */

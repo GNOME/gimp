@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpchainbutton.h
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
+ * ligmachainbutton.h
+ * Copyright (C) 1999-2000 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,72 +22,72 @@
 /*
  * This implements a widget derived from GtkGrid that visualizes
  * it's state with two different pixmaps showing a closed and a
- * broken chain. It's intended to be used with the GimpSizeEntry
+ * broken chain. It's intended to be used with the LigmaSizeEntry
  * widget. The usage is quite similar to the one the GtkToggleButton
  * provides.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CHAIN_BUTTON_H__
-#define __GIMP_CHAIN_BUTTON_H__
+#ifndef __LIGMA_CHAIN_BUTTON_H__
+#define __LIGMA_CHAIN_BUTTON_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
-#define GIMP_CHAIN_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
-#define GIMP_CHAIN_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
-#define GIMP_IS_CHAIN_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
-#define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
-#define GIMP_CHAIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
+#define LIGMA_TYPE_CHAIN_BUTTON            (ligma_chain_button_get_type ())
+#define LIGMA_CHAIN_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CHAIN_BUTTON, LigmaChainButton))
+#define LIGMA_CHAIN_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CHAIN_BUTTON, LigmaChainButtonClass))
+#define LIGMA_IS_CHAIN_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CHAIN_BUTTON))
+#define LIGMA_IS_CHAIN_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CHAIN_BUTTON))
+#define LIGMA_CHAIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CHAIN_BUTTON, LigmaChainButtonClass))
 
 
-typedef struct _GimpChainButtonPrivate GimpChainButtonPrivate;
-typedef struct _GimpChainButtonClass   GimpChainButtonClass;
+typedef struct _LigmaChainButtonPrivate LigmaChainButtonPrivate;
+typedef struct _LigmaChainButtonClass   LigmaChainButtonClass;
 
-struct _GimpChainButton
+struct _LigmaChainButton
 {
   GtkGrid                 parent_instance;
 
-  GimpChainButtonPrivate *priv;
+  LigmaChainButtonPrivate *priv;
 };
 
-struct _GimpChainButtonClass
+struct _LigmaChainButtonClass
 {
   GtkGridClass  parent_class;
 
-  void (* toggled)  (GimpChainButton *button);
+  void (* toggled)  (LigmaChainButton *button);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType         gimp_chain_button_get_type      (void) G_GNUC_CONST;
+GType         ligma_chain_button_get_type      (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_chain_button_new           (GimpChainPosition  position);
+GtkWidget   * ligma_chain_button_new           (LigmaChainPosition  position);
 
-void          gimp_chain_button_set_icon_size (GimpChainButton   *button,
+void          ligma_chain_button_set_icon_size (LigmaChainButton   *button,
                                                GtkIconSize        size);
-GtkIconSize   gimp_chain_button_get_icon_size (GimpChainButton   *button);
+GtkIconSize   ligma_chain_button_get_icon_size (LigmaChainButton   *button);
 
-void          gimp_chain_button_set_active    (GimpChainButton   *button,
+void          ligma_chain_button_set_active    (LigmaChainButton   *button,
                                                gboolean           active);
-gboolean      gimp_chain_button_get_active    (GimpChainButton   *button);
+gboolean      ligma_chain_button_get_active    (LigmaChainButton   *button);
 
-GtkWidget   * gimp_chain_button_get_button    (GimpChainButton   *button);
+GtkWidget   * ligma_chain_button_get_button    (LigmaChainButton   *button);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CHAIN_BUTTON_H__ */
+#endif /* __LIGMA_CHAIN_BUTTON_H__ */

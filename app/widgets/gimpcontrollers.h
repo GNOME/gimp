@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontrollers.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollers.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLERS_H__
-#define __GIMP_CONTROLLERS_H__
+#ifndef __LIGMA_CONTROLLERS_H__
+#define __LIGMA_CONTROLLERS_H__
 
 
-void             gimp_controllers_init           (Gimp          *gimp);
-void             gimp_controllers_exit           (Gimp          *gimp);
+void             ligma_controllers_init           (Ligma          *ligma);
+void             ligma_controllers_exit           (Ligma          *ligma);
 
-void             gimp_controllers_restore        (Gimp          *gimp,
-                                                  GimpUIManager *ui_manager);
-void             gimp_controllers_save           (Gimp          *gimp);
+void             ligma_controllers_restore        (Ligma          *ligma,
+                                                  LigmaUIManager *ui_manager);
+void             ligma_controllers_save           (Ligma          *ligma);
 
-GimpContainer  * gimp_controllers_get_list       (Gimp          *gimp);
-GimpUIManager  * gimp_controllers_get_ui_manager (Gimp          *gimp);
-GimpController * gimp_controllers_get_wheel      (Gimp          *gimp);
-GimpController * gimp_controllers_get_keyboard   (Gimp          *gimp);
+LigmaContainer  * ligma_controllers_get_list       (Ligma          *ligma);
+LigmaUIManager  * ligma_controllers_get_ui_manager (Ligma          *ligma);
+LigmaController * ligma_controllers_get_wheel      (Ligma          *ligma);
+LigmaController * ligma_controllers_get_keyboard   (Ligma          *ligma);
 
 
-#endif /* __GIMP_CONTROLLERS_H__ */
+#endif /* __LIGMA_CONTROLLERS_H__ */

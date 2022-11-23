@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "placement.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define NUM_PLACE_RADIO 2
@@ -41,7 +41,7 @@ place_restore (void)
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_center),
                                 pcvals.placement_center);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (brush_density_adjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (brush_density_adjust),
                              pcvals.brush_density);
 }
 
@@ -69,8 +69,8 @@ create_placementpage (GtkNotebook *notebook)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Placement"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Placement"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &pcvals.place_type, NULL, 0,
 
                                     _("Randomly"),
@@ -83,11 +83,11 @@ create_placementpage (GtkNotebook *notebook)
 
                                     NULL);
 
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (placement_radio[PLACEMENT_TYPE_RANDOM],
      _("Place strokes randomly around the image"),
      NULL);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (placement_radio[PLACEMENT_TYPE_EVEN_DIST],
      _("The strokes are evenly distributed across the image"),
      NULL);
@@ -103,19 +103,19 @@ create_placementpage (GtkNotebook *notebook)
 
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.placement_center);
 
   brush_density_adjust =
-    gimp_scale_entry_new (_("Stroke _density:"), pcvals.brush_density, 1.0, 50.0, 0);
-  gimp_help_set_help_data (brush_density_adjust,
+    ligma_scale_entry_new (_("Stroke _density:"), pcvals.brush_density, 1.0, 50.0, 0);
+  ligma_help_set_help_data (brush_density_adjust,
                            _("The relative density of the brush strokes"),
                            NULL);
   g_signal_connect (brush_density_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.brush_density);
   gtk_box_pack_start (GTK_BOX (vbox), brush_density_adjust, FALSE, FALSE, 6);
   gtk_widget_show (brush_density_adjust);

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub channel_new {
     $blurb = 'Create a new channel.';
@@ -24,7 +24,7 @@ This procedure creates a new channel with the specified width, height,
 name, opacity and color.
 
 The new channel still needs to be added to the image, as this is not
-automatic. Add the new channel with gimp_image_insert_channel(). Other
+automatic. Add the new channel with ligma_image_insert_channel(). Other
 attributes, such as channel visibility, should be set with explicit
 procedure calls.
 
@@ -38,9 +38,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
-	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'The channel width' },
-	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'The channel height' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
@@ -59,10 +59,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpRGB rgb_color = color;
+  LigmaRGB rgb_color = color;
 
   rgb_color.a = opacity / 100.0;
-  channel = gimp_channel_new (image, width, height, name, &rgb_color);
+  channel = ligma_channel_new (image, width, height, name, &rgb_color);
 
   if (! channel)
     success = FALSE;
@@ -78,7 +78,7 @@ sub channel_copy {
 This procedure copies the specified channel and returns the copy.
 
 The new channel still needs to be added to the image, as this is not
-automatic. Add the new channel with gimp_image_insert_channel().
+automatic. Add the new channel with ligma_image_insert_channel().
 HELP
 
     &std_pdb_misc;
@@ -96,15 +96,15 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *image  = gimp_item_get_image (GIMP_ITEM (channel));
-  gint       width  = gimp_image_get_width  (image);
-  gint       height = gimp_image_get_height (image);
+  LigmaImage *image  = ligma_item_get_image (LIGMA_ITEM (channel));
+  gint       width  = ligma_image_get_width  (image);
+  gint       height = ligma_image_get_height (image);
 
-  if (gimp_item_get_width  (GIMP_ITEM (channel)) == width &&
-      gimp_item_get_height (GIMP_ITEM (channel)) == height)
+  if (ligma_item_get_width  (LIGMA_ITEM (channel)) == width &&
+      ligma_item_get_height (LIGMA_ITEM (channel)) == height)
     {
-      channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                                        GIMP_TYPE_CHANNEL));
+      channel_copy = LIGMA_CHANNEL (ligma_item_duplicate (LIGMA_ITEM (channel),
+                                                        LIGMA_TYPE_CHANNEL));
 
       if (! channel_copy)
         success = FALSE;
@@ -131,7 +131,7 @@ HELP
 	  desc => 'The channel1' },
 	{ name => 'channel2', type => 'channel',
 	  desc => 'The channel2' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
+	{ name => 'operation', type => 'enum LigmaChannelOps',
 	  desc => 'The selection operation' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of
@@ -142,13 +142,13 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpchannel-combine.h" "gimp-intl.h") ],
+        headers => [ qw("core/ligmachannel-combine.h" "ligma-intl.h") ],
         code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (channel1)))
-    gimp_channel_push_undo (channel1, _("Combine Masks"));
+  if (ligma_item_is_attached (LIGMA_ITEM (channel1)))
+    ligma_channel_push_undo (channel1, _("Combine Masks"));
 
-  gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
+  ligma_channel_combine_mask (channel1, channel2, operation, offx, offy);
 }
 CODE
     );
@@ -161,7 +161,7 @@ sub channel_new_from_component {
 This procedure creates a new channel from a color component.
 
 The new channel still needs to be added to the image, as this is not
-automatic. Add the new channel with gimp_image_insert_channel(). Other
+automatic. Add the new channel with ligma_image_insert_channel(). Other
 attributes, such as channel visibility, should be set with explicit
 procedure calls.
 HELP
@@ -171,7 +171,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
-	{ name => 'component', type => 'enum GimpChannelType',
+	{ name => 'component', type => 'enum LigmaChannelType',
 	  desc => 'The image component' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
@@ -185,12 +185,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_get_component_format (image, component) != NULL)
-    channel = gimp_channel_new_from_component (image,
+  if (ligma_image_get_component_format (image, component) != NULL)
+    channel = ligma_channel_new_from_component (image,
                                                component, name, NULL);
 
   if (channel)
-    gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+    ligma_item_set_visible (LIGMA_ITEM (channel), FALSE, FALSE);
   else
     success = FALSE;
 }
@@ -222,7 +222,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  show_masked = gimp_channel_get_show_masked (channel);
+  show_masked = ligma_channel_get_show_masked (channel);
 }
 CODE
     );
@@ -249,7 +249,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_set_show_masked (channel, show_masked);
+  ligma_channel_set_show_masked (channel, show_masked);
 }
 CODE
     );
@@ -277,7 +277,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  opacity = gimp_channel_get_opacity (channel) * 100;
+  opacity = ligma_channel_get_opacity (channel) * 100;
 }
 CODE
     );
@@ -302,7 +302,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
+  ligma_channel_set_opacity (channel, opacity / 100.0, TRUE);
 }
 CODE
     );
@@ -330,8 +330,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_get_color (channel, &color);
-  gimp_rgb_set_alpha (&color, 1.0);
+  ligma_channel_get_color (channel, &color);
+  ligma_rgb_set_alpha (&color, 1.0);
 }
 CODE
     );
@@ -356,17 +356,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpRGB rgb_color = color;
+  LigmaRGB rgb_color = color;
 
   rgb_color.a = channel->color.a;
-  gimp_channel_set_color (channel, &rgb_color, TRUE);
+  ligma_channel_set_color (channel, &rgb_color, TRUE);
 }
 CODE
     );
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h");
+@headers = qw("libligmabase/ligmabase.h");
 
 @procs = qw(channel_new
             channel_new_from_component
@@ -379,7 +379,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';
-$doc_title = 'gimpchannel';
+$doc_title = 'ligmachannel';
 $doc_short_desc = 'Functions for manipulating channels.';
 $doc_long_desc = 'Functions for manipulating channels.';
 

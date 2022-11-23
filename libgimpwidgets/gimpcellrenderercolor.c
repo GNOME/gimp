@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcellrenderercolor.c
- * Copyright (C) 2004,2007  Sven Neuman <sven1@gimp.org>
+ * ligmacellrenderercolor.c
+ * Copyright (C) 2004,2007  Sven Neuman <sven1@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,21 +24,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcairo-utils.h"
-#include "gimpcellrenderercolor.h"
+#include "ligmacairo-utils.h"
+#include "ligmacellrenderercolor.h"
 
 
 /**
- * SECTION: gimpcellrenderercolor
- * @title: GimpCellRendererColor
- * @short_description: A #GtkCellRenderer to display a #GimpRGB color.
+ * SECTION: ligmacellrenderercolor
+ * @title: LigmaCellRendererColor
+ * @short_description: A #GtkCellRenderer to display a #LigmaRGB color.
  *
- * A #GtkCellRenderer to display a #GimpRGB color.
+ * A #GtkCellRenderer to display a #LigmaRGB color.
  **/
 
 
@@ -54,33 +54,33 @@ enum
 };
 
 
-struct _GimpCellRendererColorPrivate
+struct _LigmaCellRendererColorPrivate
 {
-  GimpRGB     color;
+  LigmaRGB     color;
   gboolean    opaque;
   GtkIconSize size;
   gint        border;
 };
 
-#define GET_PRIVATE(obj) (((GimpCellRendererColor *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaCellRendererColor *) (obj))->priv)
 
 
-static void gimp_cell_renderer_color_get_property (GObject            *object,
+static void ligma_cell_renderer_color_get_property (GObject            *object,
                                                    guint               param_id,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
-static void gimp_cell_renderer_color_set_property (GObject            *object,
+static void ligma_cell_renderer_color_set_property (GObject            *object,
                                                    guint               param_id,
                                                    const GValue       *value,
                                                    GParamSpec         *pspec);
-static void gimp_cell_renderer_color_get_size     (GtkCellRenderer    *cell,
+static void ligma_cell_renderer_color_get_size     (GtkCellRenderer    *cell,
                                                    GtkWidget          *widget,
                                                    const GdkRectangle *rectangle,
                                                    gint               *x_offset,
                                                    gint               *y_offset,
                                                    gint               *width,
                                                    gint               *height);
-static void gimp_cell_renderer_color_render       (GtkCellRenderer    *cell,
+static void ligma_cell_renderer_color_render       (GtkCellRenderer    *cell,
                                                    cairo_t            *cr,
                                                    GtkWidget          *widget,
                                                    const GdkRectangle *background_area,
@@ -89,37 +89,37 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer    *cell,
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCellRendererColor, gimp_cell_renderer_color,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCellRendererColor, ligma_cell_renderer_color,
                             GTK_TYPE_CELL_RENDERER)
 
-#define parent_class gimp_cell_renderer_color_parent_class
+#define parent_class ligma_cell_renderer_color_parent_class
 
 
 static void
-gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
+ligma_cell_renderer_color_class_init (LigmaCellRendererColorClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
-  object_class->get_property = gimp_cell_renderer_color_get_property;
-  object_class->set_property = gimp_cell_renderer_color_set_property;
+  object_class->get_property = ligma_cell_renderer_color_get_property;
+  object_class->set_property = ligma_cell_renderer_color_set_property;
 
-  cell_class->get_size       = gimp_cell_renderer_color_get_size;
-  cell_class->render         = gimp_cell_renderer_color_render;
+  cell_class->get_size       = ligma_cell_renderer_color_get_size;
+  cell_class->render         = ligma_cell_renderer_color_render;
 
   g_object_class_install_property (object_class, PROP_COLOR,
                                    g_param_spec_boxed ("color",
                                                        "Color",
                                                        "The displayed color",
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_TYPE_RGB,
+                                                       LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OPAQUE,
                                    g_param_spec_boolean ("opaque",
                                                          "Opaque",
                                                          "Whether to show transparency",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SIZE,
@@ -128,25 +128,25 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                                      "The cell's size",
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_cell_renderer_color_init (GimpCellRendererColor *cell)
+ligma_cell_renderer_color_init (LigmaCellRendererColor *cell)
 {
-  cell->priv = gimp_cell_renderer_color_get_instance_private (cell);
+  cell->priv = ligma_cell_renderer_color_get_instance_private (cell);
 
-  gimp_rgba_set (&cell->priv->color, 0.0, 0.0, 0.0, 1.0);
+  ligma_rgba_set (&cell->priv->color, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void
-gimp_cell_renderer_color_get_property (GObject    *object,
+ligma_cell_renderer_color_get_property (GObject    *object,
                                        guint       param_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (object);
+  LigmaCellRendererColorPrivate *private = GET_PRIVATE (object);
 
   switch (param_id)
     {
@@ -166,13 +166,13 @@ gimp_cell_renderer_color_get_property (GObject    *object,
 }
 
 static void
-gimp_cell_renderer_color_set_property (GObject      *object,
+ligma_cell_renderer_color_set_property (GObject      *object,
                                        guint         param_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (object);
-  GimpRGB                      *color;
+  LigmaCellRendererColorPrivate *private = GET_PRIVATE (object);
+  LigmaRGB                      *color;
 
   switch (param_id)
     {
@@ -193,7 +193,7 @@ gimp_cell_renderer_color_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
+ligma_cell_renderer_color_get_size (GtkCellRenderer    *cell,
                                    GtkWidget          *widget,
                                    const GdkRectangle *cell_area,
                                    gint               *x_offset,
@@ -201,7 +201,7 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
                                    gint               *width,
                                    gint               *height)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (cell);
+  LigmaCellRendererColorPrivate *private = GET_PRIVATE (cell);
   gint                          calc_width;
   gint                          calc_height;
   gfloat                        xalign;
@@ -243,19 +243,19 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
 }
 
 static void
-gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
+ligma_cell_renderer_color_render (GtkCellRenderer      *cell,
                                  cairo_t              *cr,
                                  GtkWidget            *widget,
                                  const GdkRectangle   *background_area,
                                  const GdkRectangle   *cell_area,
                                  GtkCellRendererState  flags)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (cell);
+  LigmaCellRendererColorPrivate *private = GET_PRIVATE (cell);
   GdkRectangle                  rect;
   gint                          xpad;
   gint                          ypad;
 
-  gimp_cell_renderer_color_get_size (cell, widget, cell_area,
+  ligma_cell_renderer_color_get_size (cell, widget, cell_area,
                                      &rect.x,
                                      &rect.y,
                                      &rect.width,
@@ -278,7 +278,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 1, rect.y + 1,
                        rect.width - 2, rect.height - 2);
 
-      gimp_cairo_set_source_rgb (cr, &private->color);
+      ligma_cairo_set_source_rgb (cr, &private->color);
       cairo_fill (cr);
 
       if (! private->opaque && private->color.a < 1.0)
@@ -290,15 +290,15 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
           cairo_line_to (cr, rect.x + rect.width - 1, rect.y + 1);
           cairo_close_path (cr);
 
-          pattern = gimp_cairo_checkerboard_create (cr,
-                                                    GIMP_CHECK_SIZE_SM,
+          pattern = ligma_cairo_checkerboard_create (cr,
+                                                    LIGMA_CHECK_SIZE_SM,
                                                     NULL, NULL);
           cairo_set_source (cr, pattern);
           cairo_pattern_destroy (pattern);
 
           cairo_fill_preserve (cr);
 
-          gimp_cairo_set_source_rgba (cr, &private->color);
+          ligma_cairo_set_source_rgba (cr, &private->color);
           cairo_fill (cr);
         }
 
@@ -317,16 +317,16 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 }
 
 /**
- * gimp_cell_renderer_color_new:
+ * ligma_cell_renderer_color_new:
  *
  * Creates a #GtkCellRenderer that displays a color.
  *
- * Returns: a new #GimpCellRendererColor
+ * Returns: a new #LigmaCellRendererColor
  *
  * Since: 2.2
  **/
 GtkCellRenderer *
-gimp_cell_renderer_color_new (void)
+ligma_cell_renderer_color_new (void)
 {
-  return g_object_new (GIMP_TYPE_CELL_RENDERER_COLOR, NULL);
+  return g_object_new (LIGMA_TYPE_CELL_RENDERER_COLOR, NULL);
 }

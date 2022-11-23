@@ -1,12 +1,12 @@
 #ifndef __LIGHTING_SHADE_H__
 #define __LIGHTING_SHADE_H__
 
-typedef GimpRGB (* get_ray_func) (GimpVector3 *vector);
+typedef LigmaRGB (* get_ray_func) (LigmaVector3 *vector);
 
-GimpRGB get_ray_color                 (GimpVector3 *position);
-GimpRGB get_ray_color_no_bilinear     (GimpVector3 *position);
-GimpRGB get_ray_color_ref             (GimpVector3 *position);
-GimpRGB get_ray_color_no_bilinear_ref (GimpVector3 *position);
+LigmaRGB get_ray_color                 (LigmaVector3 *position);
+LigmaRGB get_ray_color_no_bilinear     (LigmaVector3 *position);
+LigmaRGB get_ray_color_ref             (LigmaVector3 *position);
+LigmaRGB get_ray_color_no_bilinear_ref (LigmaVector3 *position);
 
 void    precompute_init               (gint         w,
 				       gint         h);

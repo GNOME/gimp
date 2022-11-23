@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: GIMP UI
-Description: GIMP User Interface Library
-Version: @GIMP_REAL_VERSION@
-Requires: gimp-@GIMP_PKGCONFIG_VERSION@ >= @GIMP_APP_VERSION@ gtk+-3.0 >= @GTK_REQUIRED_VERSION@
-Libs: -L${libdir} -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimpmodule-@GIMP_API_VERSION@
-Cflags: -I${includedir}/gimp-@GIMP_API_VERSION@
+Name: LIGMA UI
+Description: LIGMA User Interface Library
+Version: @LIGMA_REAL_VERSION@
+Requires: ligma-@LIGMA_PKGCONFIG_VERSION@ >= @LIGMA_APP_VERSION@ gtk+-3.0 >= @GTK_REQUIRED_VERSION@
+Libs: -L${libdir} -lligmaui-@LIGMA_API_VERSION@ -lligmawidgets-@LIGMA_API_VERSION@ -lligmamodule-@LIGMA_API_VERSION@
+Cflags: -I${includedir}/ligma-@LIGMA_API_VERSION@

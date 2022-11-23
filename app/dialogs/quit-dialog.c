@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,55 +22,55 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplay-foreach.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmaimagewindow.h"
 
-#include "widgets/gimpcellrendererbutton.h"
-#include "widgets/gimpcontainertreestore.h"
-#include "widgets/gimpcontainertreeview.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdnd.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpviewrenderer.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmacellrendererbutton.h"
+#include "widgets/ligmacontainertreestore.h"
+#include "widgets/ligmacontainertreeview.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmadnd.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmaviewrenderer.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "quit-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _QuitDialog QuitDialog;
 
 struct _QuitDialog
 {
-  Gimp                  *gimp;
-  GimpContainer         *images;
-  GimpContext           *context;
+  Ligma                  *ligma;
+  LigmaContainer         *images;
+  LigmaContext           *context;
 
   gboolean               do_quit;
 
   GtkWidget             *dialog;
-  GimpContainerTreeView *tree_view;
+  LigmaContainerTreeView *tree_view;
   GtkTreeViewColumn     *save_column;
   GtkWidget             *ok_button;
-  GimpMessageBox        *box;
+  LigmaMessageBox        *box;
   GtkWidget             *lost_label;
   GtkWidget             *hint_label;
 
@@ -79,7 +79,7 @@ struct _QuitDialog
 };
 
 
-static GtkWidget * quit_close_all_dialog_new               (Gimp              *gimp,
+static GtkWidget * quit_close_all_dialog_new               (Ligma              *ligma,
                                                             gboolean           do_quit);
 static void        quit_close_all_dialog_free              (QuitDialog        *private);
 static void        quit_close_all_dialog_response          (GtkWidget         *dialog,
@@ -91,10 +91,10 @@ static void        quit_close_all_dialog_accel_marshal     (GClosure          *c
                                                             const GValue      *param_values,
                                                             gpointer           invocation_hint,
                                                             gpointer           marshal_data);
-static void        quit_close_all_dialog_container_changed (GimpContainer     *images,
-                                                            GimpObject        *image,
+static void        quit_close_all_dialog_container_changed (LigmaContainer     *images,
+                                                            LigmaObject        *image,
                                                             QuitDialog        *private);
-static gboolean    quit_close_all_dialog_images_selected   (GimpContainerView *view,
+static gboolean    quit_close_all_dialog_images_selected   (LigmaContainerView *view,
                                                             GList             *images,
                                                             GList             *paths,
                                                             QuitDialog        *private);
@@ -119,27 +119,27 @@ static gboolean    quit_close_all_idle                     (QuitDialog        *p
 /*  public functions  */
 
 GtkWidget *
-quit_dialog_new (Gimp *gimp)
+quit_dialog_new (Ligma *ligma)
 {
-  return quit_close_all_dialog_new (gimp, TRUE);
+  return quit_close_all_dialog_new (ligma, TRUE);
 }
 
 GtkWidget *
-close_all_dialog_new (Gimp *gimp)
+close_all_dialog_new (Ligma *ligma)
 {
-  return quit_close_all_dialog_new (gimp, FALSE);
+  return quit_close_all_dialog_new (ligma, FALSE);
 }
 
 
 /*  private functions  */
 
 static GtkWidget *
-quit_close_all_dialog_new (Gimp     *gimp,
+quit_close_all_dialog_new (Ligma     *ligma,
                            gboolean  do_quit)
 {
   QuitDialog            *private;
   GtkWidget             *view;
-  GimpContainerTreeView *tree_view;
+  LigmaContainerTreeView *tree_view;
   GtkTreeViewColumn     *column;
   GtkCellRenderer       *renderer;
   GtkWidget             *dnd_widget;
@@ -148,25 +148,25 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gint                   rows;
   gint                   view_size;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   private = g_slice_new0 (QuitDialog);
 
-  private->gimp    = gimp;
+  private->ligma    = ligma;
   private->do_quit = do_quit;
-  private->images  = gimp_displays_get_dirty_images (gimp);
-  private->context = gimp_context_new (gimp, "close-all-dialog",
-                                       gimp_get_user_context (gimp));
+  private->images  = ligma_displays_get_dirty_images (ligma);
+  private->context = ligma_context_new (ligma, "close-all-dialog",
+                                       ligma_get_user_context (ligma));
 
   g_return_val_if_fail (private->images != NULL, NULL);
 
   private->dialog =
-    gimp_message_dialog_new (do_quit ? _("Quit GIMP") : _("Close All Images"),
-                             GIMP_ICON_DIALOG_WARNING,
+    ligma_message_dialog_new (do_quit ? _("Quit LIGMA") : _("Close All Images"),
+                             LIGMA_ICON_DIALOG_WARNING,
                              NULL, 0,
-                             gimp_standard_help_func,
+                             ligma_standard_help_func,
                              do_quit ?
-                             GIMP_HELP_FILE_QUIT : GIMP_HELP_FILE_CLOSE_ALL,
+                             LIGMA_HELP_FILE_QUIT : LIGMA_HELP_FILE_CLOSE_ALL,
 
                              _("_Cancel"), GTK_RESPONSE_CANCEL,
 
@@ -175,7 +175,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   private->ok_button = gtk_dialog_add_button (GTK_DIALOG (private->dialog),
                                               "", GTK_RESPONSE_OK);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (private->dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (private->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -200,29 +200,29 @@ quit_close_all_dialog_new (Gimp     *gimp,
                            private->accel_key, private->accel_mods,
                            0, closure);
 
-  private->box = GIMP_MESSAGE_DIALOG (private->dialog)->box;
+  private->box = LIGMA_MESSAGE_DIALOG (private->dialog)->box;
 
-  view_size = gimp->config->layer_preview_size;
-  rows      = CLAMP (gimp_container_get_n_children (private->images), 3, 6);
+  view_size = ligma->config->layer_preview_size;
+  rows      = CLAMP (ligma_container_get_n_children (private->images), 3, 6);
 
-  view = gimp_container_tree_view_new (private->images, private->context,
+  view = ligma_container_tree_view_new (private->images, private->context,
                                        view_size, 1);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (view),
                                        -1,
                                        rows * (view_size + 2));
 
-  private->tree_view = tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  private->tree_view = tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
 
   gtk_tree_view_column_set_expand (tree_view->main_column, TRUE);
 
-  renderer = gimp_container_tree_view_get_name_cell (tree_view);
+  renderer = ligma_container_tree_view_get_name_cell (tree_view);
   gtk_tree_view_column_set_cell_data_func (tree_view->main_column,
                                            renderer,
                                            quit_close_all_dialog_name_cell_func,
                                            NULL, NULL);
 
   private->save_column = column = gtk_tree_view_column_new ();
-  renderer = gimp_cell_renderer_button_new ();
+  renderer = ligma_cell_renderer_button_new ();
   g_object_set (renderer,
                 "icon-name", "document-save",
                 NULL);
@@ -230,7 +230,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_tree_view_column_set_attributes (column, renderer, NULL);
 
   gtk_tree_view_append_column (tree_view->view, column);
-  gimp_container_tree_view_add_toggle_cell (tree_view, renderer);
+  ligma_container_tree_view_add_toggle_cell (tree_view, renderer);
 
   g_signal_connect (renderer, "clicked",
                     G_CALLBACK (quit_close_all_dialog_save_clicked),
@@ -243,9 +243,9 @@ quit_close_all_dialog_new (Gimp     *gimp,
                     G_CALLBACK (quit_close_all_dialog_images_selected),
                     private);
 
-  dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
-  gimp_dnd_xds_source_add (dnd_widget,
-                           (GimpDndDragViewableFunc) gimp_dnd_get_drag_viewable,
+  dnd_widget = ligma_container_view_get_dnd_widget (LIGMA_CONTAINER_VIEW (view));
+  ligma_dnd_xds_source_add (dnd_widget,
+                           (LigmaDndDragViewableFunc) ligma_dnd_get_drag_viewable,
                            NULL);
 
   g_signal_connect (tree_view->view, "query-tooltip",
@@ -253,7 +253,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                     private);
 
   if (do_quit)
-    private->lost_label = gtk_label_new (_("If you quit GIMP now, "
+    private->lost_label = gtk_label_new (_("If you quit LIGMA now, "
                                            "these changes will be lost."));
   else
     private->lost_label = gtk_label_new (_("If you close these images now, "
@@ -298,7 +298,7 @@ quit_close_all_dialog_response (GtkWidget  *dialog,
                                 gint        response_id,
                                 QuitDialog *private)
 {
-  Gimp     *gimp    = private->gimp;
+  Ligma     *ligma    = private->ligma;
   gboolean  do_quit = private->do_quit;
 
   gtk_widget_destroy (dialog);
@@ -308,9 +308,9 @@ quit_close_all_dialog_response (GtkWidget  *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       if (do_quit)
-        gimp_exit (gimp, TRUE);
+        ligma_exit (ligma, TRUE);
       else
-        gimp_displays_close (gimp);
+        ligma_displays_close (ligma);
     }
 }
 
@@ -329,11 +329,11 @@ quit_close_all_dialog_accel_marshal (GClosure     *closure,
 }
 
 static void
-quit_close_all_dialog_container_changed (GimpContainer *images,
-                                         GimpObject    *image,
+quit_close_all_dialog_container_changed (LigmaContainer *images,
+                                         LigmaObject    *image,
                                          QuitDialog    *private)
 {
-  gint   num_images = gimp_container_get_n_children (images);
+  gint   num_images = ligma_container_get_n_children (images);
   gchar *accel_string;
   gchar *hint;
   gchar *markup;
@@ -341,7 +341,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
   accel_string = gtk_accelerator_get_label (private->accel_key,
                                             private->accel_mods);
 
-  gimp_message_box_set_primary_text (private->box,
+  ligma_message_box_set_primary_text (private->box,
                                      /* TRANSLATORS: unless your language
                                         msgstr[0] applies to 1 only (as
                                         in English), replace "one" with %d. */
@@ -417,7 +417,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
 }
 
 static gboolean
-quit_close_all_dialog_images_selected (GimpContainerView *view,
+quit_close_all_dialog_images_selected (LigmaContainerView *view,
                                        GList             *images,
                                        GList             *paths,
                                        QuitDialog        *private)
@@ -429,18 +429,18 @@ quit_close_all_dialog_images_selected (GimpContainerView *view,
 
   if (images)
     {
-      GimpImage *image = images->data;
+      LigmaImage *image = images->data;
       GList     *list;
 
-      for (list = gimp_get_display_iter (private->gimp);
+      for (list = ligma_get_display_iter (private->ligma);
            list;
            list = g_list_next (list))
         {
-          GimpDisplay *display = list->data;
+          LigmaDisplay *display = list->data;
 
-          if (gimp_display_get_image (display) == image)
+          if (ligma_display_get_image (display) == image)
             {
-              gimp_display_shell_present (gimp_display_get_shell (display));
+              ligma_display_shell_present (ligma_display_get_shell (display));
 
               /* We only want to update the active shell. Give back keyboard
                * focus to the quit dialog after this.
@@ -460,18 +460,18 @@ quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
                                       GtkTreeIter       *iter,
                                       gpointer           data)
 {
-  GimpViewRenderer *renderer;
-  GimpImage        *image;
+  LigmaViewRenderer *renderer;
+  LigmaImage        *image;
   gchar            *name;
 
   gtk_tree_model_get (tree_model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,     &name,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME,     &name,
                       -1);
 
-  image = GIMP_IMAGE (renderer->viewable);
+  image = LIGMA_IMAGE (renderer->viewable);
 
-  if (gimp_image_is_export_dirty (image))
+  if (ligma_image_is_export_dirty (image))
     {
       g_object_set (cell,
                     "markup", NULL,
@@ -487,11 +487,11 @@ quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
       gchar       *exported;
       gchar       *markup;
 
-      file = gimp_image_get_exported_file (image);
+      file = ligma_image_get_exported_file (image);
       if (! file)
-        file = gimp_image_get_imported_file (image);
+        file = ligma_image_get_imported_file (image);
 
-      filename = gimp_file_get_utf8_name (file);
+      filename = ligma_file_get_utf8_name (file);
 
       escaped_name     = g_markup_escape_text (name, -1);
       escaped_filename = g_markup_escape_text (filename, -1);
@@ -526,47 +526,47 @@ quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
 
   if (gtk_tree_model_get_iter (private->tree_view->model, &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpImage        *image;
+      LigmaViewRenderer *renderer;
+      LigmaImage        *image;
       GList            *list;
 
       gtk_tree_model_get (private->tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
-      image = GIMP_IMAGE (renderer->viewable);
+      image = LIGMA_IMAGE (renderer->viewable);
       g_object_unref (renderer);
 
-      for (list = gimp_get_display_iter (private->gimp);
+      for (list = ligma_get_display_iter (private->ligma);
            list;
            list = g_list_next (list))
         {
-          GimpDisplay *display = list->data;
+          LigmaDisplay *display = list->data;
 
-          if (gimp_display_get_image (display) == image)
+          if (ligma_display_get_image (display) == image)
             {
-              GimpDisplayShell *shell  = gimp_display_get_shell (display);
-              GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+              LigmaDisplayShell *shell  = ligma_display_get_shell (display);
+              LigmaImageWindow  *window = ligma_display_shell_get_window (shell);
 
               if (window)
                 {
-                  GimpUIManager *manager;
+                  LigmaUIManager *manager;
 
-                  manager = gimp_image_window_get_ui_manager (window);
+                  manager = ligma_image_window_get_ui_manager (window);
 
-                  gimp_display_shell_present (shell);
+                  ligma_display_shell_present (shell);
                   /* Make sure the quit dialog kept keyboard focus when
                    * the save dialog will exit. */
                   gtk_window_present (GTK_WINDOW (private->dialog));
 
                   if (state & GDK_SHIFT_MASK)
                     {
-                      gimp_ui_manager_activate_action (manager, "file",
+                      ligma_ui_manager_activate_action (manager, "file",
                                                        "file-save-as");
                     }
                   else
                     {
-                      gimp_ui_manager_activate_action (manager, "file",
+                      ligma_ui_manager_activate_action (manager, "file",
                                                        "file-save");
                     }
                 }
@@ -602,7 +602,7 @@ quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
       if (column == private->save_column)
         {
           gchar *tip = g_strconcat (_("Save this image"), "\n<b>",
-                                    gimp_get_mod_string (GDK_SHIFT_MASK),
+                                    ligma_get_mod_string (GDK_SHIFT_MASK),
                                     "</b>  ", _("Save as"),
                                     NULL);
 

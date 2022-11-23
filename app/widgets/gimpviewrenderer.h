@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderer.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrenderer.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_H__
-#define __GIMP_VIEW_RENDERER_H__
+#ifndef __LIGMA_VIEW_RENDERER_H__
+#define __LIGMA_VIEW_RENDERER_H__
 
 
-#define GIMP_VIEW_MAX_BORDER_WIDTH 16
+#define LIGMA_VIEW_MAX_BORDER_WIDTH 16
 
 
-#define GIMP_TYPE_VIEW_RENDERER            (gimp_view_renderer_get_type ())
-#define GIMP_VIEW_RENDERER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER, GimpViewRenderer))
-#define GIMP_VIEW_RENDERER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER, GimpViewRendererClass))
-#define GIMP_IS_VIEW_RENDERER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER))
-#define GIMP_IS_VIEW_RENDERER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER))
-#define GIMP_VIEW_RENDERER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER, GimpViewRendererClass))
+#define LIGMA_TYPE_VIEW_RENDERER            (ligma_view_renderer_get_type ())
+#define LIGMA_VIEW_RENDERER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW_RENDERER, LigmaViewRenderer))
+#define LIGMA_VIEW_RENDERER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW_RENDERER, LigmaViewRendererClass))
+#define LIGMA_IS_VIEW_RENDERER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW_RENDERER))
+#define LIGMA_IS_VIEW_RENDERER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW_RENDERER))
+#define LIGMA_VIEW_RENDERER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW_RENDERER, LigmaViewRendererClass))
 
 
-typedef struct _GimpViewRendererPrivate GimpViewRendererPrivate;
-typedef struct _GimpViewRendererClass   GimpViewRendererClass;
+typedef struct _LigmaViewRendererPrivate LigmaViewRendererPrivate;
+typedef struct _LigmaViewRendererClass   LigmaViewRendererClass;
 
-struct _GimpViewRenderer
+struct _LigmaViewRenderer
 {
   GObject             parent_instance;
 
-  GimpContext        *context;
+  LigmaContext        *context;
 
   GType               viewable_type;
-  GimpViewable       *viewable;
+  LigmaViewable       *viewable;
 
   gint                width;
   gint                height;
@@ -51,8 +51,8 @@ struct _GimpViewRenderer
   guint               dot_for_dot : 1;
   guint               is_popup    : 1;
 
-  GimpViewBorderType  border_type;
-  GimpRGB             border_color;
+  LigmaViewBorderType  border_type;
+  LigmaRGB             border_color;
 
   /*< protected >*/
   cairo_surface_t    *surface;
@@ -60,10 +60,10 @@ struct _GimpViewRenderer
   gint                size;
 
   /*< private >*/
-  GimpViewRendererPrivate *priv;
+  LigmaViewRendererPrivate *priv;
 };
 
-struct _GimpViewRendererClass
+struct _LigmaViewRendererClass
 {
   GObjectClass   parent_class;
 
@@ -74,64 +74,64 @@ struct _GimpViewRendererClass
   gint           frame_top;
 
   /*  signals  */
-  void (* update)      (GimpViewRenderer *renderer);
+  void (* update)      (LigmaViewRenderer *renderer);
 
   /*  virtual functions  */
-  void (* set_context) (GimpViewRenderer *renderer,
-                        GimpContext      *context);
-  void (* invalidate)  (GimpViewRenderer *renderer);
-  void (* draw)        (GimpViewRenderer *renderer,
+  void (* set_context) (LigmaViewRenderer *renderer,
+                        LigmaContext      *context);
+  void (* invalidate)  (LigmaViewRenderer *renderer);
+  void (* draw)        (LigmaViewRenderer *renderer,
                         GtkWidget        *widget,
                         cairo_t          *cr,
                         gint              available_width,
                         gint              available_height);
-  void (* render)      (GimpViewRenderer *renderer,
+  void (* render)      (LigmaViewRenderer *renderer,
                         GtkWidget        *widget);
 };
 
 
-GType              gimp_view_renderer_get_type (void) G_GNUC_CONST;
+GType              ligma_view_renderer_get_type (void) G_GNUC_CONST;
 
-GimpViewRenderer * gimp_view_renderer_new      (GimpContext *context,
+LigmaViewRenderer * ligma_view_renderer_new      (LigmaContext *context,
                                                 GType        viewable_type,
                                                 gint         size,
                                                 gint         border_width,
                                                 gboolean     is_popup);
-GimpViewRenderer * gimp_view_renderer_new_full (GimpContext *context,
+LigmaViewRenderer * ligma_view_renderer_new_full (LigmaContext *context,
                                                 GType        viewable_type,
                                                 gint         width,
                                                 gint         height,
                                                 gint         border_width,
                                                 gboolean     is_popup);
 
-void   gimp_view_renderer_set_context      (GimpViewRenderer   *renderer,
-                                            GimpContext        *context);
-void   gimp_view_renderer_set_viewable     (GimpViewRenderer   *renderer,
-                                            GimpViewable       *viewable);
-void   gimp_view_renderer_set_size         (GimpViewRenderer   *renderer,
+void   ligma_view_renderer_set_context      (LigmaViewRenderer   *renderer,
+                                            LigmaContext        *context);
+void   ligma_view_renderer_set_viewable     (LigmaViewRenderer   *renderer,
+                                            LigmaViewable       *viewable);
+void   ligma_view_renderer_set_size         (LigmaViewRenderer   *renderer,
                                             gint                size,
                                             gint                border_width);
-void   gimp_view_renderer_set_size_full    (GimpViewRenderer   *renderer,
+void   ligma_view_renderer_set_size_full    (LigmaViewRenderer   *renderer,
                                             gint                width,
                                             gint                height,
                                             gint                border_width);
-void   gimp_view_renderer_set_dot_for_dot  (GimpViewRenderer   *renderer,
+void   ligma_view_renderer_set_dot_for_dot  (LigmaViewRenderer   *renderer,
                                             gboolean            dot_for_dot);
-void   gimp_view_renderer_set_border_type  (GimpViewRenderer   *renderer,
-                                            GimpViewBorderType  border_type);
-void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
-                                            const GimpRGB      *border_color);
-void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
+void   ligma_view_renderer_set_border_type  (LigmaViewRenderer   *renderer,
+                                            LigmaViewBorderType  border_type);
+void   ligma_view_renderer_set_border_color (LigmaViewRenderer   *renderer,
+                                            const LigmaRGB      *border_color);
+void   ligma_view_renderer_set_background   (LigmaViewRenderer   *renderer,
                                             const gchar        *icon_name);
-void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
-                                            GimpColorConfig    *color_config);
+void   ligma_view_renderer_set_color_config (LigmaViewRenderer   *renderer,
+                                            LigmaColorConfig    *color_config);
 
-void   gimp_view_renderer_invalidate       (GimpViewRenderer   *renderer);
-void   gimp_view_renderer_update           (GimpViewRenderer   *renderer);
-void   gimp_view_renderer_update_idle      (GimpViewRenderer   *renderer);
-void   gimp_view_renderer_remove_idle      (GimpViewRenderer   *renderer);
+void   ligma_view_renderer_invalidate       (LigmaViewRenderer   *renderer);
+void   ligma_view_renderer_update           (LigmaViewRenderer   *renderer);
+void   ligma_view_renderer_update_idle      (LigmaViewRenderer   *renderer);
+void   ligma_view_renderer_remove_idle      (LigmaViewRenderer   *renderer);
 
-void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
+void   ligma_view_renderer_draw             (LigmaViewRenderer   *renderer,
                                             GtkWidget          *widget,
                                             cairo_t            *cr,
                                             gint                available_width,
@@ -139,29 +139,29 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 
 /*  protected  */
 
-void   gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
+void   ligma_view_renderer_render_temp_buf_simple (LigmaViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  GimpTempBuf      *temp_buf);
-void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
+                                                  LigmaTempBuf      *temp_buf);
+void   ligma_view_renderer_render_temp_buf        (LigmaViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  GimpTempBuf      *temp_buf,
+                                                  LigmaTempBuf      *temp_buf,
                                                   gint              temp_buf_x,
                                                   gint              temp_buf_y,
                                                   gint              channel,
-                                                  GimpViewBG        inside_bg,
-                                                  GimpViewBG        outside_bg);
-void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
+                                                  LigmaViewBG        inside_bg,
+                                                  LigmaViewBG        outside_bg);
+void   ligma_view_renderer_render_pixbuf          (LigmaViewRenderer *renderer,
                                                   GtkWidget        *widget,
                                                   GdkPixbuf        *pixbuf);
-void   gimp_view_renderer_render_icon            (GimpViewRenderer *renderer,
+void   ligma_view_renderer_render_icon            (LigmaViewRenderer *renderer,
                                                   GtkWidget        *widget,
                                                   const gchar      *icon_name);
-GimpColorTransform *
-       gimp_view_renderer_get_color_transform    (GimpViewRenderer *renderer,
+LigmaColorTransform *
+       ligma_view_renderer_get_color_transform    (LigmaViewRenderer *renderer,
                                                   GtkWidget        *widget,
                                                   const Babl       *src_format,
                                                   const Babl       *dest_format);
-void   gimp_view_renderer_free_color_transform   (GimpViewRenderer *renderer);
+void   ligma_view_renderer_free_color_transform   (LigmaViewRenderer *renderer);
 
 
-#endif /* __GIMP_VIEW_RENDERER_H__ */
+#endif /* __LIGMA_VIEW_RENDERER_H__ */

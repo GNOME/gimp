@@ -15,7 +15,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-histogram.svg">
+   sodipodi:docname="ligma-histogram.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -77,11 +77,11 @@
      transform="translate(0,-1036.3622)">
     <g
        transform="matrix(0.97080594,0,0,1.3585977,-1.8838482,-374.95352)"
-       id="gimp-histogram"
+       id="ligma-histogram"
        style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <g
-         inkscape:label="gimp-histogram"
-         id="gimp-histogram-4"
+         inkscape:label="ligma-histogram"
+         id="ligma-histogram-4"
          transform="translate(-161.0002,437.3622)"
          style="fill:#729fcf;stroke:#555753;stroke-width:0.42121589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
         <g

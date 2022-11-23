@@ -6,7 +6,7 @@
 
 ==========================================================================
 
-  GFlare is a plug-in for GIMP.  The name "GFlare" is short for
+  GFlare is a plug-in for LIGMA.  The name "GFlare" is short for
 "Gradient Flare".  It renders lense flare effect using custom
 gradients.  The basic idea is suggested by Marcelo Malheiros,
 originally based on a 3DStudio MAX plug-in called LenZFX:
@@ -19,12 +19,12 @@ INSTALL:
 2) Type "make install".
 
 3) Type "make install-data" if needed. (It copies sample gradients and
-   gflares under ~/.gimp)
+   gflares under ~/.ligma)
 
-3) Add new entry to ~/.gimp/gimprc as
-     (gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
+3) Add new entry to ~/.ligma/ligmarc as
+     (gflare-path "${ligma_dir}/gflares:${ligma_data_dir}/gflares")
 
-3) Run GIMP. The menu path is <Image>/Filters/Effects/GFlare.
+3) Run LIGMA. The menu path is <Image>/Filters/Effects/GFlare.
 
 
 HOW TO USE IT:
@@ -92,7 +92,7 @@ gradients whose names end with _101, _102 etc. are mine.
 
   A fair proportion of this code was taken from:
 
-  GIMP - The GNU Image Manipulation Program
+  LIGMA - The GNU Image Manipulation Program
   Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
   Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero

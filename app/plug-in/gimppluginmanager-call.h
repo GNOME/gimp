@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager-call.h
+ * ligmapluginmanager-call.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,43 +17,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_CALL_H__
-#define __GIMP_PLUG_IN_MANAGER_CALL_H__
+#ifndef __LIGMA_PLUG_IN_MANAGER_CALL_H__
+#define __LIGMA_PLUG_IN_MANAGER_CALL_H__
 
-#ifndef __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
-#error Do not use gimp_plug_in_manager_call_run*(), use gimp_procedure_execute*() instead.
+#ifndef __YES_I_NEED_LIGMA_PLUG_IN_MANAGER_CALL__
+#error Do not use ligma_plug_in_manager_call_run*(), use ligma_procedure_execute*() instead.
 #endif
 
 
 /*  Call the plug-in's query() function
  */
-void             gimp_plug_in_manager_call_query    (GimpPlugInManager      *manager,
-                                                     GimpContext            *context,
-                                                     GimpPlugInDef          *plug_in_def);
+void             ligma_plug_in_manager_call_query    (LigmaPlugInManager      *manager,
+                                                     LigmaContext            *context,
+                                                     LigmaPlugInDef          *plug_in_def);
 
 /*  Call the plug-in's init() function
  */
-void             gimp_plug_in_manager_call_init     (GimpPlugInManager      *manager,
-                                                     GimpContext            *context,
-                                                     GimpPlugInDef          *plug_in_def);
+void             ligma_plug_in_manager_call_init     (LigmaPlugInManager      *manager,
+                                                     LigmaContext            *context,
+                                                     LigmaPlugInDef          *plug_in_def);
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-GimpValueArray * gimp_plug_in_manager_call_run      (GimpPlugInManager      *manager,
-                                                     GimpContext            *context,
-                                                     GimpProgress           *progress,
-                                                     GimpPlugInProcedure    *procedure,
-                                                     GimpValueArray         *args,
+LigmaValueArray * ligma_plug_in_manager_call_run      (LigmaPlugInManager      *manager,
+                                                     LigmaContext            *context,
+                                                     LigmaProgress           *progress,
+                                                     LigmaPlugInProcedure    *procedure,
+                                                     LigmaValueArray         *args,
                                                      gboolean                synchronous,
-                                                     GimpDisplay            *display);
+                                                     LigmaDisplay            *display);
 
 /*  Run a temp plug-in proc as if it were a procedure database procedure
  */
-GimpValueArray * gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
-                                                     GimpContext            *context,
-                                                     GimpProgress           *progress,
-                                                     GimpTemporaryProcedure *procedure,
-                                                     GimpValueArray         *args);
+LigmaValueArray * ligma_plug_in_manager_call_run_temp (LigmaPlugInManager      *manager,
+                                                     LigmaContext            *context,
+                                                     LigmaProgress           *progress,
+                                                     LigmaTemporaryProcedure *procedure,
+                                                     LigmaValueArray         *args);
 
 
-#endif /* __GIMP_PLUG_IN_MANAGER_CALL_H__ */
+#endif /* __LIGMA_PLUG_IN_MANAGER_CALL_H__ */

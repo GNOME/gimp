@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <locatingRules>
-  <locatingRule name="GimpTags" pattern="*.xml">
-    <documentRule localName="tags" target="gimp-tags.its"/>
+  <locatingRule name="LigmaTags" pattern="*.xml">
+    <documentRule localName="tags" target="ligma-tags.its"/>
   </locatingRule>
 </locatingRules>

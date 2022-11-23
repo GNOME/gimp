@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrightnesscontrastconfig.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmabrightnesscontrastconfig.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimpbrightnesscontrastconfig.h"
-#include "gimplevelsconfig.h"
+#include "ligmabrightnesscontrastconfig.h"
+#include "ligmalevelsconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -42,48 +42,48 @@ enum
 };
 
 
-static void     gimp_brightness_contrast_config_iface_init   (GimpConfigInterface *iface);
+static void     ligma_brightness_contrast_config_iface_init   (LigmaConfigInterface *iface);
 
-static void     gimp_brightness_contrast_config_get_property (GObject      *object,
+static void     ligma_brightness_contrast_config_get_property (GObject      *object,
                                                               guint         property_id,
                                                               GValue       *value,
                                                               GParamSpec   *pspec);
-static void     gimp_brightness_contrast_config_set_property (GObject      *object,
+static void     ligma_brightness_contrast_config_set_property (GObject      *object,
                                                               guint         property_id,
                                                               const GValue *value,
                                                               GParamSpec   *pspec);
 
-static gboolean gimp_brightness_contrast_config_equal        (GimpConfig   *a,
-                                                              GimpConfig   *b);
+static gboolean ligma_brightness_contrast_config_equal        (LigmaConfig   *a,
+                                                              LigmaConfig   *b);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
-                         gimp_brightness_contrast_config,
-                         GIMP_TYPE_OPERATION_SETTINGS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_brightness_contrast_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaBrightnessContrastConfig,
+                         ligma_brightness_contrast_config,
+                         LIGMA_TYPE_OPERATION_SETTINGS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_brightness_contrast_config_iface_init))
 
-#define parent_class gimp_brightness_contrast_config_parent_class
+#define parent_class ligma_brightness_contrast_config_parent_class
 
 
 static void
-gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *klass)
+ligma_brightness_contrast_config_class_init (LigmaBrightnessContrastConfigClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->set_property        = gimp_brightness_contrast_config_set_property;
-  object_class->get_property        = gimp_brightness_contrast_config_get_property;
+  object_class->set_property        = ligma_brightness_contrast_config_set_property;
+  object_class->get_property        = ligma_brightness_contrast_config_get_property;
 
-  viewable_class->default_icon_name = "gimp-tool-brightness-contrast";
+  viewable_class->default_icon_name = "ligma-tool-brightness-contrast";
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
                            "brightness",
                            _("Brightness"),
                            _("Brightness"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
                            "contrast",
                            _("Contrast"),
                            _("Contrast"),
@@ -91,23 +91,23 @@ gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *k
 }
 
 static void
-gimp_brightness_contrast_config_iface_init (GimpConfigInterface *iface)
+ligma_brightness_contrast_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->equal = gimp_brightness_contrast_config_equal;
+  iface->equal = ligma_brightness_contrast_config_equal;
 }
 
 static void
-gimp_brightness_contrast_config_init (GimpBrightnessContrastConfig *self)
+ligma_brightness_contrast_config_init (LigmaBrightnessContrastConfig *self)
 {
 }
 
 static void
-gimp_brightness_contrast_config_get_property (GObject    *object,
+ligma_brightness_contrast_config_get_property (GObject    *object,
                                               guint       property_id,
                                               GValue     *value,
                                               GParamSpec *pspec)
 {
-  GimpBrightnessContrastConfig *self = GIMP_BRIGHTNESS_CONTRAST_CONFIG (object);
+  LigmaBrightnessContrastConfig *self = LIGMA_BRIGHTNESS_CONTRAST_CONFIG (object);
 
   switch (property_id)
     {
@@ -126,12 +126,12 @@ gimp_brightness_contrast_config_get_property (GObject    *object,
 }
 
 static void
-gimp_brightness_contrast_config_set_property (GObject      *object,
+ligma_brightness_contrast_config_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec)
 {
-  GimpBrightnessContrastConfig *self = GIMP_BRIGHTNESS_CONTRAST_CONFIG (object);
+  LigmaBrightnessContrastConfig *self = LIGMA_BRIGHTNESS_CONTRAST_CONFIG (object);
 
   switch (property_id)
     {
@@ -150,13 +150,13 @@ gimp_brightness_contrast_config_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_brightness_contrast_config_equal (GimpConfig *a,
-                                       GimpConfig *b)
+ligma_brightness_contrast_config_equal (LigmaConfig *a,
+                                       LigmaConfig *b)
 {
-  GimpBrightnessContrastConfig *config_a = GIMP_BRIGHTNESS_CONTRAST_CONFIG (a);
-  GimpBrightnessContrastConfig *config_b = GIMP_BRIGHTNESS_CONTRAST_CONFIG (b);
+  LigmaBrightnessContrastConfig *config_a = LIGMA_BRIGHTNESS_CONTRAST_CONFIG (a);
+  LigmaBrightnessContrastConfig *config_b = LIGMA_BRIGHTNESS_CONTRAST_CONFIG (b);
 
-  if (! gimp_operation_settings_config_equal_base (a, b) ||
+  if (! ligma_operation_settings_config_equal_base (a, b) ||
       config_a->brightness != config_b->brightness       ||
       config_a->contrast   != config_b->contrast)
     {
@@ -169,20 +169,20 @@ gimp_brightness_contrast_config_equal (GimpConfig *a,
 
 /*  public functions  */
 
-GimpLevelsConfig *
-gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config)
+LigmaLevelsConfig *
+ligma_brightness_contrast_config_to_levels_config (LigmaBrightnessContrastConfig *config)
 {
-  GimpLevelsConfig *levels;
+  LigmaLevelsConfig *levels;
   gdouble           brightness;
   gdouble           slant;
   gdouble           value;
 
-  g_return_val_if_fail (GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRIGHTNESS_CONTRAST_CONFIG (config), NULL);
 
-  levels = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+  levels = g_object_new (LIGMA_TYPE_LEVELS_CONFIG, NULL);
 
-  gimp_operation_settings_config_copy_base (GIMP_CONFIG (config),
-                                            GIMP_CONFIG (levels),
+  ligma_operation_settings_config_copy_base (LIGMA_CONFIG (config),
+                                            LIGMA_CONFIG (levels),
                                             0);
 
   brightness = config->brightness / 2.0;
@@ -199,11 +199,11 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
           /* this slightly convoluted math follows by inverting the
            * calculation of the brightness/contrast LUT in base/lut-funcs.h */
 
-          levels->low_input[GIMP_HISTOGRAM_VALUE] =
+          levels->low_input[LIGMA_HISTOGRAM_VALUE] =
             (- brightness * slant + 0.5 * slant - 0.5) / (slant - brightness * slant);
         }
 
-      levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
+      levels->low_output[LIGMA_HISTOGRAM_VALUE] = value;
 
       value = 0.5 * slant + 0.5;
 
@@ -211,11 +211,11 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
         {
           value = 1.0;
 
-          levels->high_input[GIMP_HISTOGRAM_VALUE] =
+          levels->high_input[LIGMA_HISTOGRAM_VALUE] =
             (- brightness * slant + 0.5 * slant + 0.5) / (slant - brightness * slant);
         }
 
-      levels->high_output[GIMP_HISTOGRAM_VALUE] = value;
+      levels->high_output[LIGMA_HISTOGRAM_VALUE] = value;
     }
   else
     {
@@ -225,11 +225,11 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
         {
           value = 0.0;
 
-          levels->low_input[GIMP_HISTOGRAM_VALUE] =
+          levels->low_input[LIGMA_HISTOGRAM_VALUE] =
             (0.5 * slant - 0.5) / (slant + brightness * slant);
         }
 
-      levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
+      levels->low_output[LIGMA_HISTOGRAM_VALUE] = value;
 
       value = slant * brightness + slant * 0.5 + 0.5;
 
@@ -237,11 +237,11 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
         {
           value = 1.0;
 
-          levels->high_input[GIMP_HISTOGRAM_VALUE] =
+          levels->high_input[LIGMA_HISTOGRAM_VALUE] =
             (0.5 * slant + 0.5) / (slant + brightness * slant);
         }
 
-      levels->high_output[GIMP_HISTOGRAM_VALUE] = value;
+      levels->high_output[LIGMA_HISTOGRAM_VALUE] = value;
     }
 
   return levels;

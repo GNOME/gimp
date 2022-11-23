@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-load.c
+ * ligmabrush-load.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +22,21 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-header.h"
-#include "gimpbrush-load.h"
-#include "gimpbrush-private.h"
-#include "gimppattern-header.h"
-#include "gimptempbuf.h"
+#include "ligmabrush.h"
+#include "ligmabrush-header.h"
+#include "ligmabrush-load.h"
+#include "ligmabrush-private.h"
+#include "ligmapattern-header.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 /* stuff from abr2gbr Copyright (C) 2001 Marco Lamberto <lm@sunnyspot.org>  */
-/* the above is GPL  see http://the.sunnyspot.org/gimp/  */
+/* the above is GPL  see http://the.sunnyspot.org/ligma/  */
 
 typedef struct _AbrHeader               AbrHeader;
 typedef struct _AbrBrushHeader          AbrBrushHeader;
@@ -68,20 +68,20 @@ struct _AbrSampledBrushHeader
 
 /*  local function prototypes  */
 
-static GList     * gimp_brush_load_abr_v12       (GDataInputStream  *input,
+static GList     * ligma_brush_load_abr_v12       (GDataInputStream  *input,
                                                   AbrHeader         *abr_hdr,
                                                   GFile             *file,
                                                   GError           **error);
-static GList     * gimp_brush_load_abr_v6        (GDataInputStream  *input,
+static GList     * ligma_brush_load_abr_v6        (GDataInputStream  *input,
                                                   AbrHeader         *abr_hdr,
                                                   GFile             *file,
                                                   GError           **error);
-static GimpBrush * gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
+static LigmaBrush * ligma_brush_load_abr_brush_v12 (GDataInputStream  *input,
                                                   AbrHeader         *abr_hdr,
                                                   gint               index,
                                                   GFile             *file,
                                                   GError           **error);
-static GimpBrush * gimp_brush_load_abr_brush_v6  (GDataInputStream  *input,
+static LigmaBrush * ligma_brush_load_abr_brush_v6  (GDataInputStream  *input,
                                                   AbrHeader         *abr_hdr,
                                                   gint32             max_offset,
                                                   gint               index,
@@ -111,33 +111,33 @@ static gboolean    abr_rle_decode                (GDataInputStream  *input,
 /*  public functions  */
 
 GList *
-gimp_brush_load (GimpContext   *context,
+ligma_brush_load (LigmaContext   *context,
                  GFile         *file,
                  GInputStream  *input,
                  GError       **error)
 {
-  GimpBrush *brush;
+  LigmaBrush *brush;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  brush = gimp_brush_load_brush (context, file, input, error);
+  brush = ligma_brush_load_brush (context, file, input, error);
   if (! brush)
     return NULL;
 
   return g_list_prepend (NULL, brush);
 }
 
-GimpBrush *
-gimp_brush_load_brush (GimpContext   *context,
+LigmaBrush *
+ligma_brush_load_brush (LigmaContext   *context,
                        GFile         *file,
                        GInputStream  *input,
                        GError       **error)
 {
-  GimpBrush       *brush;
+  LigmaBrush       *brush;
   gsize            bn_size;
-  GimpBrushHeader  header;
+  LigmaBrushHeader  header;
   gchar           *name = NULL;
   guchar          *mask;
   gsize            bytes_read;
@@ -169,30 +169,30 @@ gimp_brush_load_brush (GimpContext   *context,
 
   if (header.width == 0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: Width = 0."));
       return NULL;
     }
 
   if (header.height == 0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: Height = 0."));
       return NULL;
     }
 
   if (header.bytes == 0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: Bytes = 0."));
       return NULL;
     }
 
-  if (header.width  > GIMP_BRUSH_MAX_SIZE ||
-      header.height > GIMP_BRUSH_MAX_SIZE ||
+  if (header.width  > LIGMA_BRUSH_MAX_SIZE ||
+      header.height > LIGMA_BRUSH_MAX_SIZE ||
       G_MAXSIZE / header.width / header.height / MAX (4, header.bytes) < 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: %dx%d over max size."),
                    header.width, header.height);
       return NULL;
@@ -218,7 +218,7 @@ gimp_brush_load_brush (GimpContext   *context,
         }
       else
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Fatal parse error in brush file: Unknown depth %d."),
                        header.bytes);
           return NULL;
@@ -226,19 +226,19 @@ gimp_brush_load_brush (GimpContext   *context,
       /*  fallthrough  */
 
     case 2:
-      if (header.magic_number == GIMP_BRUSH_MAGIC)
+      if (header.magic_number == LIGMA_BRUSH_MAGIC)
         break;
 
     default:
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: Unknown version %d."),
                    header.version);
       return NULL;
     }
 
-  if (header.header_size < sizeof (GimpBrushHeader))
+  if (header.header_size < sizeof (LigmaBrushHeader))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Unsupported brush format"));
       return NULL;
     }
@@ -248,12 +248,12 @@ gimp_brush_load_brush (GimpContext   *context,
     {
       gchar *utf8;
 
-      if (bn_size > GIMP_BRUSH_MAX_NAME)
+      if (bn_size > LIGMA_BRUSH_MAX_NAME)
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Invalid header data in '%s': "
                          "Brush name is too long: %lu"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        (gulong) bn_size);
           return NULL;
         }
@@ -268,9 +268,9 @@ gimp_brush_load_brush (GimpContext   *context,
           return NULL;
         }
 
-      utf8 = gimp_any_to_utf8 (name, bn_size - 1,
+      utf8 = ligma_any_to_utf8 (name, bn_size - 1,
                                _("Invalid UTF-8 string in brush file '%s'."),
-                               gimp_file_get_utf8_name (file));
+                               ligma_file_get_utf8_name (file));
       g_free (name);
       name = utf8;
     }
@@ -278,16 +278,16 @@ gimp_brush_load_brush (GimpContext   *context,
   if (! name)
     name = g_strdup (_("Unnamed"));
 
-  brush = g_object_new (GIMP_TYPE_BRUSH,
+  brush = g_object_new (LIGMA_TYPE_BRUSH,
                         "name",      name,
-                        "mime-type", "image/x-gimp-gbr",
+                        "mime-type", "image/x-ligma-gbr",
                         NULL);
   g_free (name);
 
-  brush->priv->mask = gimp_temp_buf_new (header.width, header.height,
+  brush->priv->mask = ligma_temp_buf_new (header.width, header.height,
                                          babl_format ("Y u8"));
 
-  mask = gimp_temp_buf_get_data (brush->priv->mask);
+  mask = ligma_temp_buf_get_data (brush->priv->mask);
   size = header.width * header.height * header.bytes;
 
   switch (header.bytes)
@@ -302,14 +302,14 @@ gimp_brush_load_brush (GimpContext   *context,
        */
       if (success)
         {
-          GimpPatternHeader ph;
+          LigmaPatternHeader ph;
           goffset           rewind;
 
           rewind = g_seekable_tell (G_SEEKABLE (input));
 
-          if (g_input_stream_read_all (input, &ph, sizeof (GimpPatternHeader),
+          if (g_input_stream_read_all (input, &ph, sizeof (LigmaPatternHeader),
                                        &bytes_read, NULL, NULL) &&
-              bytes_read == sizeof (GimpPatternHeader))
+              bytes_read == sizeof (LigmaPatternHeader))
             {
               /*  rearrange the bytes in each unsigned int  */
               ph.header_size  = g_ntohl (ph.header_size);
@@ -319,28 +319,28 @@ gimp_brush_load_brush (GimpContext   *context,
               ph.bytes        = g_ntohl (ph.bytes);
               ph.magic_number = g_ntohl (ph.magic_number);
 
-              if (ph.magic_number == GIMP_PATTERN_MAGIC        &&
+              if (ph.magic_number == LIGMA_PATTERN_MAGIC        &&
                   ph.version      == 1                         &&
-                  ph.header_size  > sizeof (GimpPatternHeader) &&
+                  ph.header_size  > sizeof (LigmaPatternHeader) &&
                   ph.bytes        == 3                         &&
                   ph.width        == header.width              &&
                   ph.height       == header.height             &&
                   g_input_stream_skip (input,
                                        ph.header_size -
-                                       sizeof (GimpPatternHeader),
+                                       sizeof (LigmaPatternHeader),
                                        NULL, NULL) ==
-                  ph.header_size - sizeof (GimpPatternHeader))
+                  ph.header_size - sizeof (LigmaPatternHeader))
                 {
                   guchar *pixmap;
                   gssize  pixmap_size;
 
                   brush->priv->pixmap =
-                    gimp_temp_buf_new (header.width, header.height,
+                    ligma_temp_buf_new (header.width, header.height,
                                        babl_format ("R'G'B' u8"));
 
-                  pixmap = gimp_temp_buf_get_data (brush->priv->pixmap);
+                  pixmap = ligma_temp_buf_get_data (brush->priv->pixmap);
 
-                  pixmap_size = gimp_temp_buf_get_data_size (brush->priv->pixmap);
+                  pixmap_size = ligma_temp_buf_get_data_size (brush->priv->pixmap);
 
                   success = (g_input_stream_read_all (input, pixmap,
                                                       pixmap_size,
@@ -405,9 +405,9 @@ gimp_brush_load_brush (GimpContext   *context,
         guchar *pixmap;
         guchar  buf[8 * 1024];
 
-        brush->priv->pixmap = gimp_temp_buf_new (header.width, header.height,
+        brush->priv->pixmap = ligma_temp_buf_new (header.width, header.height,
                                                  babl_format ("R'G'B' u8"));
-        pixmap = gimp_temp_buf_get_data (brush->priv->pixmap);
+        pixmap = ligma_temp_buf_get_data (brush->priv->pixmap);
 
         for (i = 0; success && i < size;)
           {
@@ -438,10 +438,10 @@ gimp_brush_load_brush (GimpContext   *context,
 
     default:
       g_object_unref (brush);
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file:\n"
                      "Unsupported brush depth %d\n"
-                     "GIMP brushes must be GRAY or RGBA."),
+                     "LIGMA brushes must be GRAY or RGBA."),
                    header.bytes);
       return NULL;
     }
@@ -462,7 +462,7 @@ gimp_brush_load_brush (GimpContext   *context,
 }
 
 GList *
-gimp_brush_load_abr (GimpContext   *context,
+ligma_brush_load_abr (LigmaContext   *context,
                      GFile         *file,
                      GInputStream  *input,
                      GError       **error)
@@ -496,13 +496,13 @@ gimp_brush_load_abr (GimpContext   *context,
         {
         case 1:
         case 2:
-          brush_list = gimp_brush_load_abr_v12 (data_input, &abr_hdr,
+          brush_list = ligma_brush_load_abr_v12 (data_input, &abr_hdr,
                                                 file, &my_error);
           break;
 
         case 10:
         case 6:
-          brush_list = gimp_brush_load_abr_v6 (data_input, &abr_hdr,
+          brush_list = ligma_brush_load_abr_v6 (data_input, &abr_hdr,
                                                file, &my_error);
           break;
         }
@@ -515,7 +515,7 @@ gimp_brush_load_abr (GimpContext   *context,
   if (! brush_list)
     {
       if (! my_error)
-        g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        g_set_error (&my_error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                      _("Unable to decode abr format version %d."),
                      abr_hdr.version);
     }
@@ -530,7 +530,7 @@ gimp_brush_load_abr (GimpContext   *context,
 /*  private functions  */
 
 static GList *
-gimp_brush_load_abr_v12 (GDataInputStream  *input,
+ligma_brush_load_abr_v12 (GDataInputStream  *input,
                          AbrHeader         *abr_hdr,
                          GFile             *file,
                          GError           **error)
@@ -540,10 +540,10 @@ gimp_brush_load_abr_v12 (GDataInputStream  *input,
 
   for (i = 0; i < abr_hdr->count; i++)
     {
-      GimpBrush *brush;
+      LigmaBrush *brush;
       GError    *my_error = NULL;
 
-      brush = gimp_brush_load_abr_brush_v12 (input, abr_hdr, i,
+      brush = ligma_brush_load_abr_brush_v12 (input, abr_hdr, i,
                                              file, &my_error);
 
       /*  a NULL brush without an error means an unsupported brush
@@ -565,7 +565,7 @@ gimp_brush_load_abr_v12 (GDataInputStream  *input,
 }
 
 static GList *
-gimp_brush_load_abr_v6 (GDataInputStream  *input,
+ligma_brush_load_abr_v6 (GDataInputStream  *input,
                         AbrHeader         *abr_hdr,
                         GFile             *file,
                         GError           **error)
@@ -587,10 +587,10 @@ gimp_brush_load_abr_v6 (GDataInputStream  *input,
 
   while (g_seekable_tell (G_SEEKABLE (input)) < sample_section_end)
     {
-      GimpBrush *brush;
+      LigmaBrush *brush;
       GError    *my_error = NULL;
 
-      brush = gimp_brush_load_abr_brush_v6 (input, abr_hdr, sample_section_end,
+      brush = ligma_brush_load_abr_brush_v6 (input, abr_hdr, sample_section_end,
                                             i, file, &my_error);
 
       /*  a NULL brush without an error means an unsupported brush
@@ -613,14 +613,14 @@ gimp_brush_load_abr_v6 (GDataInputStream  *input,
   return brush_list;
 }
 
-static GimpBrush *
-gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
+static LigmaBrush *
+ligma_brush_load_abr_brush_v12 (GDataInputStream  *input,
                                AbrHeader         *abr_hdr,
                                gint               index,
                                GFile             *file,
                                GError           **error)
 {
-  GimpBrush      *brush = NULL;
+  LigmaBrush      *brush = NULL;
   AbrBrushHeader  abr_brush_hdr;
 
   abr_brush_hdr.type = abr_read_short (input, error);
@@ -633,7 +633,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
 
   if (abr_brush_hdr.size < 0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "Brush size value corrupt."));
       return NULL;
@@ -720,7 +720,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
             bytes  < 1 || bytes  > 1     ||
             G_MAXSIZE / width / height / bytes < 1)
           {
-            g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+            g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                          _("Fatal parse error in brush file: "
                            "Brush dimensions out of range."));
             break;
@@ -732,13 +732,13 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
           {
             /* FIXME: support wide brushes */
 
-            g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+            g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                          _("Fatal parse error in brush file: "
                            "Wide brushes are not supported."));
             break;
           }
 
-        tmp = g_path_get_basename (gimp_file_get_utf8_name (file));
+        tmp = g_path_get_basename (ligma_file_get_utf8_name (file));
         if (! sample_name)
           {
             /* build name from filename and index */
@@ -752,7 +752,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
           }
         g_free (tmp);
 
-        brush = g_object_new (GIMP_TYPE_BRUSH,
+        brush = g_object_new (LIGMA_TYPE_BRUSH,
                               "name",      name,
                               /*  FIXME: MIME type!!  */
                               "mime-type", "application/x-photoshop-abr",
@@ -765,10 +765,10 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
         brush->priv->x_axis.y = 0.0;
         brush->priv->y_axis.x = 0.0;
         brush->priv->y_axis.y = height / 2.0;
-        brush->priv->mask     = gimp_temp_buf_new (width, height,
+        brush->priv->mask     = ligma_temp_buf_new (width, height,
                                                    babl_format ("Y u8"));
 
-        mask = gimp_temp_buf_get_data (brush->priv->mask);
+        mask = ligma_temp_buf_get_data (brush->priv->mask);
         size = width * height * bytes;
 
         compress = abr_read_char (input, error);
@@ -820,15 +820,15 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
   return brush;
 }
 
-static GimpBrush *
-gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
+static LigmaBrush *
+ligma_brush_load_abr_brush_v6 (GDataInputStream  *input,
                               AbrHeader         *abr_hdr,
                               gint32             max_offset,
                               gint               index,
                               GFile             *file,
                               GError           **error)
 {
-  GimpBrush *brush = NULL;
+  LigmaBrush *brush = NULL;
   guchar    *mask;
 
   gint32     brush_size;
@@ -852,7 +852,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
 
   if (brush_size < 0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "Brush size value corrupt."));
       return NULL;
@@ -910,7 +910,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
       depth  < 1 || depth  > 1     ||
       G_MAXSIZE / width / height / depth < 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "Brush dimensions out of range."));
       return NULL;
@@ -918,17 +918,17 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
 
   if (compress < 0 || compress > 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "Unknown compression method."));
       return NULL;
     }
 
-  tmp = g_path_get_basename (gimp_file_get_utf8_name (file));
+  tmp = g_path_get_basename (ligma_file_get_utf8_name (file));
   name = g_strdup_printf ("%s-%03d", tmp, index);
   g_free (tmp);
 
-  brush = g_object_new (GIMP_TYPE_BRUSH,
+  brush = g_object_new (LIGMA_TYPE_BRUSH,
                         "name",      name,
                         /*  FIXME: MIME type!!  */
                         "mime-type", "application/x-photoshop-abr",
@@ -941,10 +941,10 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
   brush->priv->x_axis.y = 0.0;
   brush->priv->y_axis.x = 0.0;
   brush->priv->y_axis.y = height / 2.0;
-  brush->priv->mask     = gimp_temp_buf_new (width, height,
+  brush->priv->mask     = ligma_temp_buf_new (width, height,
                                              babl_format ("Y u8"));
 
-  mask = gimp_temp_buf_get_data (brush->priv->mask);
+  mask = ligma_temp_buf_get_data (brush->priv->mask);
 
   /* data decoding */
   if (! compress)
@@ -1055,7 +1055,7 @@ abr_supported (AbrHeader  *abr_hdr,
       if (abr_hdr->count == 1 || abr_hdr->count == 2)
         return TRUE;
 
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "Unable to decode abr format version %d."),
 
@@ -1205,7 +1205,7 @@ err:
   g_clear_pointer (&cscanline_len, gegl_scratch_free);
   if (error && ! *error)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
                      "RLE compressed brush data corrupt."));
     }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,63 +27,63 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "text-types.h"
 
-#include "core/gimperror.h"
+#include "core/ligmaerror.h"
 
-#include "gimptext.h"
-#include "gimptext-parasite.h"
-#include "gimptext-xlfd.h"
+#include "ligmatext.h"
+#include "ligmatext-parasite.h"
+#include "ligmatext-xlfd.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /****************************************/
-/*  The native GimpTextLayer parasite.  */
+/*  The native LigmaTextLayer parasite.  */
 /****************************************/
 
 const gchar *
-gimp_text_parasite_name (void)
+ligma_text_parasite_name (void)
 {
-  return "gimp-text-layer";
+  return "ligma-text-layer";
 }
 
-GimpParasite *
-gimp_text_to_parasite (GimpText *text)
+LigmaParasite *
+ligma_text_to_parasite (LigmaText *text)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT (text), NULL);
 
-  return gimp_config_serialize_to_parasite (GIMP_CONFIG (text),
-                                            gimp_text_parasite_name (),
-                                            GIMP_PARASITE_PERSISTENT,
+  return ligma_config_serialize_to_parasite (LIGMA_CONFIG (text),
+                                            ligma_text_parasite_name (),
+                                            LIGMA_PARASITE_PERSISTENT,
                                             NULL);
 }
 
-GimpText *
-gimp_text_from_parasite (const GimpParasite  *parasite,
-                         Gimp                *gimp,
+LigmaText *
+ligma_text_from_parasite (const LigmaParasite  *parasite,
+                         Ligma                *ligma,
                          GError             **error)
 {
-  GimpText *text;
+  LigmaText *text;
   gchar    *parasite_data;
   guint32   parasite_data_size;
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
-                                gimp_text_parasite_name ()) == 0, NULL);
+  g_return_val_if_fail (strcmp (ligma_parasite_get_name (parasite),
+                                ligma_text_parasite_name ()) == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  text = g_object_new (GIMP_TYPE_TEXT, "gimp", gimp, NULL);
+  text = g_object_new (LIGMA_TYPE_TEXT, "ligma", ligma, NULL);
 
-  parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+  parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_data_size);
   if (parasite_data)
     {
       parasite_data = g_strndup (parasite_data, parasite_data_size);
-      gimp_config_deserialize_parasite (GIMP_CONFIG (text),
+      ligma_config_deserialize_parasite (LIGMA_CONFIG (text),
                                         parasite,
                                         NULL,
                                         error);
@@ -91,7 +91,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
     }
   else
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Empty text parasite"));
     }
 
@@ -105,7 +105,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
 /****************************************************************/
 
 const gchar *
-gimp_text_gdyntext_parasite_name (void)
+ligma_text_gdyntext_parasite_name (void)
 {
   return "plug_in_gdyntext/data";
 }
@@ -123,27 +123,27 @@ enum
   NUM_PARAMS
 };
 
-GimpText *
-gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
+LigmaText *
+ligma_text_from_gdyntext_parasite (const LigmaParasite *parasite)
 {
-  GimpText               *retval = NULL;
-  GimpTextJustification   justify;
+  LigmaText               *retval = NULL;
+  LigmaTextJustification   justify;
   gchar                  *str;
   gchar                  *text = NULL;
   gchar                 **params;
   guint32                 parasite_data_size;
   gboolean                antialias;
   gdouble                 spacing;
-  GimpRGB                 rgb;
+  LigmaRGB                 rgb;
   glong                   color;
   gint                    i;
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
-                                gimp_text_gdyntext_parasite_name ()) == 0,
+  g_return_val_if_fail (strcmp (ligma_parasite_get_name (parasite),
+                                ligma_text_gdyntext_parasite_name ()) == 0,
                         NULL);
 
-  str = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+  str = (gchar *) ligma_parasite_get_data (parasite, &parasite_data_size);
   str = g_strndup (str, parasite_data_size);
   g_return_val_if_fail (str != NULL, NULL);
 
@@ -161,7 +161,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
 
   if (! g_utf8_validate (text, -1, NULL))
     {
-      gchar *tmp = gimp_any_to_utf8 (text, -1, NULL);
+      gchar *tmp = ligma_any_to_utf8 (text, -1, NULL);
 
       g_free (text);
       text = tmp;
@@ -172,17 +172,17 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   switch (atoi (params[ALIGNMENT]))
     {
     default:
-    case 0:  justify = GIMP_TEXT_JUSTIFY_LEFT;   break;
-    case 1:  justify = GIMP_TEXT_JUSTIFY_CENTER; break;
-    case 2:  justify = GIMP_TEXT_JUSTIFY_RIGHT;  break;
+    case 0:  justify = LIGMA_TEXT_JUSTIFY_LEFT;   break;
+    case 1:  justify = LIGMA_TEXT_JUSTIFY_CENTER; break;
+    case 2:  justify = LIGMA_TEXT_JUSTIFY_RIGHT;  break;
     }
 
   spacing = g_strtod (params[LINE_SPACING], NULL);
 
   color = strtol (params[COLOR], NULL, 16);
-  gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
+  ligma_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
 
-  retval = g_object_new (GIMP_TYPE_TEXT,
+  retval = g_object_new (LIGMA_TYPE_TEXT,
                          "text",         text,
                          "antialias",    antialias,
                          "justify",      justify,
@@ -190,7 +190,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
                          "color",        &rgb,
                          NULL);
 
-  gimp_text_set_font_from_xlfd (GIMP_TEXT (retval), params[XLFD]);
+  ligma_text_set_font_from_xlfd (LIGMA_TEXT (retval), params[XLFD]);
 
  cleanup:
   g_free (str);

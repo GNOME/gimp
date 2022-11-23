@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmapickbutton.c
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on gtk+/gtk/gtkcolorsel.c
  *
@@ -26,34 +26,34 @@
 #include <gdk/gdkx.h>
 #endif
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcairo-utils.h"
-#include "gimphelpui.h"
-#include "gimpicons.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-private.h"
+#include "ligmacairo-utils.h"
+#include "ligmahelpui.h"
+#include "ligmaicons.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-private.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 #if defined (GDK_WINDOWING_QUARTZ)
-#include "gimppickbutton-quartz.h"
+#include "ligmapickbutton-quartz.h"
 #elif defined (GDK_WINDOWING_WIN32)
-#include "gimppickbutton-win32.h"
+#include "ligmapickbutton-win32.h"
 #else
-#include "gimppickbutton-default.h"
-#include "gimppickbutton-kwin.h"
-#include "gimppickbutton-xdg.h"
+#include "ligmapickbutton-default.h"
+#include "ligmapickbutton-kwin.h"
+#include "ligmapickbutton-xdg.h"
 #endif
 
 /**
- * SECTION: gimppickbutton
- * @title: GimpPickButton
+ * SECTION: ligmapickbutton
+ * @title: LigmaPickButton
  * @short_description: Widget to pick a color from screen.
  *
- * #GimpPickButton is a specialized button. When clicked, it changes
+ * #LigmaPickButton is a specialized button. When clicked, it changes
  * the cursor to a color-picker pipette and allows the user to pick a
  * color from any point on the screen.
  **/
@@ -66,28 +66,28 @@ enum
 };
 
 
-static void       gimp_pick_button_dispose         (GObject        *object);
+static void       ligma_pick_button_dispose         (GObject        *object);
 
-static void       gimp_pick_button_clicked         (GtkButton      *button);
+static void       ligma_pick_button_clicked         (GtkButton      *button);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPickButton, ligma_pick_button, GTK_TYPE_BUTTON)
 
-#define parent_class gimp_pick_button_parent_class
+#define parent_class ligma_pick_button_parent_class
 
 static guint pick_button_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_pick_button_class_init (GimpPickButtonClass* klass)
+ligma_pick_button_class_init (LigmaPickButtonClass* klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   /**
-   * GimpPickButton::color-picked:
-   * @gimppickbutton: the object which received the signal.
-   * @color: pointer to a #GimpRGB structure that holds the picked color
+   * LigmaPickButton::color-picked:
+   * @ligmapickbutton: the object which received the signal.
+   * @color: pointer to a #LigmaRGB structure that holds the picked color
    *
    * This signal is emitted when the user has picked a color.
    **/
@@ -95,40 +95,40 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
     g_signal_new ("color-picked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
+                  G_STRUCT_OFFSET (LigmaPickButtonClass, color_picked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_RGB);
+                  LIGMA_TYPE_RGB);
 
-  object_class->dispose = gimp_pick_button_dispose;
+  object_class->dispose = ligma_pick_button_dispose;
 
-  button_class->clicked = gimp_pick_button_clicked;
+  button_class->clicked = ligma_pick_button_clicked;
 
   klass->color_picked   = NULL;
 }
 
 static void
-gimp_pick_button_init (GimpPickButton *button)
+ligma_pick_button_init (LigmaPickButton *button)
 {
   GtkWidget *image;
 
-  button->priv = gimp_pick_button_get_instance_private (button);
+  button->priv = ligma_pick_button_get_instance_private (button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (GTK_WIDGET (button),
+  ligma_help_set_help_data (GTK_WIDGET (button),
                            _("Click the eyedropper, then click a color "
                              "anywhere on your screen to select that color."),
                            NULL);
 }
 
 static void
-gimp_pick_button_dispose (GObject *object)
+ligma_pick_button_dispose (GObject *object)
 {
-  GimpPickButton *button = GIMP_PICK_BUTTON (object);
+  LigmaPickButton *button = LIGMA_PICK_BUTTON (object);
 
   if (button->priv->cursor)
     {
@@ -146,16 +146,16 @@ gimp_pick_button_dispose (GObject *object)
 }
 
 static void
-gimp_pick_button_clicked (GtkButton *button)
+ligma_pick_button_clicked (GtkButton *button)
 {
 #if defined (GDK_WINDOWING_QUARTZ)
-  _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
+  _ligma_pick_button_quartz_pick (LIGMA_PICK_BUTTON (button));
 #elif defined (GDK_WINDOWING_WIN32)
-  _gimp_pick_button_win32_pick (GIMP_PICK_BUTTON (button));
+  _ligma_pick_button_win32_pick (LIGMA_PICK_BUTTON (button));
 #else
 #ifdef GDK_WINDOWING_X11
   /* It's a bit weird as we use the default pick code both in first and
-   * last cases. It's because when running GIMP on X11 in particular,
+   * last cases. It's because when running LIGMA on X11 in particular,
    * the portals don't return color space information. So the returned
    * color is in the display space, not in the current image space and
    * we have no way to convert the data back (well if running on X11, we
@@ -165,15 +165,15 @@ gimp_pick_button_clicked (GtkButton *button)
    * See: https://github.com/flatpak/xdg-desktop-portal/issues/862
    */
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+    _ligma_pick_button_default_pick (LIGMA_PICK_BUTTON (button));
   else
 #endif
-  if (_gimp_pick_button_xdg_available ())
-    _gimp_pick_button_xdg_pick (GIMP_PICK_BUTTON (button));
-  else if (_gimp_pick_button_kwin_available ())
-    _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
+  if (_ligma_pick_button_xdg_available ())
+    _ligma_pick_button_xdg_pick (LIGMA_PICK_BUTTON (button));
+  else if (_ligma_pick_button_kwin_available ())
+    _ligma_pick_button_kwin_pick (LIGMA_PICK_BUTTON (button));
   else
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+    _ligma_pick_button_default_pick (LIGMA_PICK_BUTTON (button));
 #endif
 }
 
@@ -181,14 +181,14 @@ gimp_pick_button_clicked (GtkButton *button)
 /*  public functions  */
 
 /**
- * gimp_pick_button_new:
+ * ligma_pick_button_new:
  *
- * Creates a new #GimpPickButton widget.
+ * Creates a new #LigmaPickButton widget.
  *
- * Returns: A new #GimpPickButton widget.
+ * Returns: A new #LigmaPickButton widget.
  **/
 GtkWidget *
-gimp_pick_button_new (void)
+ligma_pick_button_new (void)
 {
-  return g_object_new (GIMP_TYPE_PICK_BUTTON, NULL);
+  return g_object_new (LIGMA_TYPE_PICK_BUTTON, NULL);
 }

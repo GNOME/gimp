@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationequalize.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationequalize.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_EQUALIZE_H__
-#define __GIMP_OPERATION_EQUALIZE_H__
+#ifndef __LIGMA_OPERATION_EQUALIZE_H__
+#define __LIGMA_OPERATION_EQUALIZE_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_EQUALIZE            (gimp_operation_equalize_get_type ())
-#define GIMP_OPERATION_EQUALIZE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_EQUALIZE, GimpOperationEqualize))
-#define GIMP_OPERATION_EQUALIZE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_EQUALIZE, GimpOperationEqualizeClass))
-#define GIMP_IS_OPERATION_EQUALIZE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_EQUALIZE))
-#define GIMP_IS_OPERATION_EQUALIZE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_EQUALIZE))
-#define GIMP_OPERATION_EQUALIZE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_EQUALIZE, GimpOperationEqualizeClass))
+#define LIGMA_TYPE_OPERATION_EQUALIZE            (ligma_operation_equalize_get_type ())
+#define LIGMA_OPERATION_EQUALIZE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_EQUALIZE, LigmaOperationEqualize))
+#define LIGMA_OPERATION_EQUALIZE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_EQUALIZE, LigmaOperationEqualizeClass))
+#define LIGMA_IS_OPERATION_EQUALIZE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_EQUALIZE))
+#define LIGMA_IS_OPERATION_EQUALIZE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_EQUALIZE))
+#define LIGMA_OPERATION_EQUALIZE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_EQUALIZE, LigmaOperationEqualizeClass))
 
 
-typedef struct _GimpOperationEqualize      GimpOperationEqualize;
-typedef struct _GimpOperationEqualizeClass GimpOperationEqualizeClass;
+typedef struct _LigmaOperationEqualize      LigmaOperationEqualize;
+typedef struct _LigmaOperationEqualizeClass LigmaOperationEqualizeClass;
 
-struct _GimpOperationEqualize
+struct _LigmaOperationEqualize
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 
-  GimpHistogram            *histogram;
+  LigmaHistogram            *histogram;
   gdouble                  *values;
   gint                      n_bins;
 };
 
-struct _GimpOperationEqualizeClass
+struct _LigmaOperationEqualizeClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_equalize_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_equalize_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_EQUALIZE_H__ */
+#endif /* __LIGMA_OPERATION_EQUALIZE_H__ */

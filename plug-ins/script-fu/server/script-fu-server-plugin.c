@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "script-fu-server.h"
 
@@ -28,34 +28,34 @@
 
 
 #define SCRIPT_FU_SERVER_TYPE (script_fu_server_get_type ())
-G_DECLARE_FINAL_TYPE (ScriptFuServer, script_fu_server, SCRIPT, FU_SERVER, GimpPlugIn)
+G_DECLARE_FINAL_TYPE (ScriptFuServer, script_fu_server, SCRIPT, FU_SERVER, LigmaPlugIn)
 
 struct _ScriptFuServer
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
-static GList          * script_fu_server_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * script_fu_server_create_procedure (GimpPlugIn           *plug_in,
+static GList          * script_fu_server_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * script_fu_server_create_procedure (LigmaPlugIn           *plug_in,
                                                            const gchar          *name);
 
-static GimpValueArray * script_fu_server_outer_run        (GimpProcedure        *procedure,
-                                                           const GimpValueArray *args,
+static LigmaValueArray * script_fu_server_outer_run        (LigmaProcedure        *procedure,
+                                                           const LigmaValueArray *args,
                                                            gpointer              run_data);
-static void             script_fu_server_run_init         (GimpProcedure        *procedure,
-                                                           GimpRunMode           run_mode);
+static void             script_fu_server_run_init         (LigmaProcedure        *procedure,
+                                                           LigmaRunMode           run_mode);
 
 
-G_DEFINE_TYPE (ScriptFuServer, script_fu_server, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (ScriptFuServer, script_fu_server, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SCRIPT_FU_SERVER_TYPE)
+LIGMA_MAIN (SCRIPT_FU_SERVER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 script_fu_server_class_init (ScriptFuServerClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = script_fu_server_query_procedures;
   plug_in_class->create_procedure = script_fu_server_create_procedure;
@@ -68,7 +68,7 @@ script_fu_server_init (ScriptFuServer *script_fu_server)
 }
 
 static GList *
-script_fu_server_query_procedures (GimpPlugIn *plug_in)
+script_fu_server_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -77,60 +77,60 @@ script_fu_server_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-script_fu_server_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+script_fu_server_create_procedure (LigmaPlugIn  *plug_in,
                                    const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   /* The run func script_fu_server_outer_run is defined in this source file. */
-  procedure = gimp_procedure_new (plug_in, name,
-                                  GIMP_PDB_PROC_TYPE_PLUGIN,
+  procedure = ligma_procedure_new (plug_in, name,
+                                  LIGMA_PDB_PROC_TYPE_PLUGIN,
                                   script_fu_server_outer_run, NULL, NULL);
 
-  gimp_procedure_set_menu_label (procedure, _("_Start Server..."));
-  gimp_procedure_add_menu_path (procedure,
+  ligma_procedure_set_menu_label (procedure, _("_Start Server..."));
+  ligma_procedure_add_menu_path (procedure,
                                 "<Image>/Filters/Development/Script-Fu");
 
-  gimp_procedure_set_documentation (procedure,
+  ligma_procedure_set_documentation (procedure,
                                     _("Server for remote Script-Fu "
                                       "operation"),
                                     "Provides a server for remote "
                                     "script-fu operation. NOTE that for "
                                     "security reasons this procedure's "
                                     "API was changed in an incompatible "
-                                    "way since GIMP 2.8.12. You now have "
+                                    "way since LIGMA 2.8.12. You now have "
                                     "to pass the IP to listen on as "
                                     "first parameter. Calling this "
                                     "procedure with the old API will "
                                     "fail on purpose.",
                                     name);
-  gimp_procedure_set_attribution (procedure,
+  ligma_procedure_set_attribution (procedure,
                                   "Spencer Kimball & Peter Mattis",
                                   "Spencer Kimball & Peter Mattis",
                                   "1997");
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+  LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                       "Run mode",
                       "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_INTERACTIVE,
+                      LIGMA_TYPE_RUN_MODE,
+                      LIGMA_RUN_INTERACTIVE,
                       G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "ip",
+  LIGMA_PROC_ARG_STRING (procedure, "ip",
                         "IP",
                         "The IP on which to listen for requests",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "port",
+  LIGMA_PROC_ARG_INT (procedure, "port",
                      "Port",
                      "The port on which to listen for requests",
                      0, G_MAXINT, 0,
                      G_PARAM_READWRITE);
 
-  /* FUTURE: GIMP_PROC_ARG_FILE, but little benefit, need change script-fu-server.c */
-  GIMP_PROC_ARG_STRING (procedure, "logfile",
+  /* FUTURE: LIGMA_PROC_ARG_FILE, but little benefit, need change script-fu-server.c */
+  LIGMA_PROC_ARG_STRING (procedure, "logfile",
                         "Log File",
                         "The file to log activity to",
                         NULL,
@@ -143,19 +143,19 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
 /*
  * Test cases:
  *
- * Normal starting is from GIMP GUI: "Filters>Development>Script-Fu>Start server...""
+ * Normal starting is from LIGMA GUI: "Filters>Development>Script-Fu>Start server...""
  * Expect a dialog to enter IP, etc.
  * Expect a console msg: "ScriptFu server: initialized and listening...""
  *
  * Does not have settings.  After the above,
  * Expect "Filters>Repeat Last" and "Reshow Last" to be disabled (greyed out)
  *
- * Execute the server from headless GIMP:
- * gimp -i --batch-interpreter='plug-in-script-fu-eval'
- " -c '(plug-in-script-fu-server 1 "127.0.0.1" 10008 "/tmp/gimp-log")'
+ * Execute the server from headless LIGMA:
+ * ligma -i --batch-interpreter='plug-in-script-fu-eval'
+ " -c '(plug-in-script-fu-server 1 "127.0.0.1" 10008 "/tmp/ligma-log")'
  *
  * Execute the binary from command line fails with:
- * "script-fu-server is a GIMP plug-in and must be run by GIMP to be used"
+ * "script-fu-server is a LIGMA plug-in and must be run by LIGMA to be used"
  *
  * The PDB procedure plug-in-script-fu-server CAN be called from another procedure
  * (but shouldn't be.)
@@ -173,33 +173,33 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
  * Its logging defaults to stdout, but optionally to a file.
  * The server logs errors in interpretation of the stream from the client.
  *
- * A client may quit the server by eval "(gimp-quit)"
+ * A client may quit the server by eval "(ligma-quit)"
  * Otherwise, the server blocks on IO from the client.
  *
  * A server that dies leaves the client with a broken connection,
  * but does not affect extension-script-fu.
  *
- * A server is a child process of a GIMP process.
+ * A server is a child process of a LIGMA process.
  * Quitting or killing the parent process also kills the server.
  */
-static GimpValueArray *
-script_fu_server_outer_run (GimpProcedure        *procedure,
-                            const GimpValueArray *args,
+static LigmaValueArray *
+script_fu_server_outer_run (LigmaProcedure        *procedure,
+                            const LigmaValueArray *args,
                             gpointer              run_data)
 {
-  GimpValueArray *return_vals = NULL;
+  LigmaValueArray *return_vals = NULL;
 
-  if (gimp_value_array_length (args) > 0)
-    script_fu_server_run_init (procedure, GIMP_VALUES_GET_ENUM (args, 0));
+  if (ligma_value_array_length (args) > 0)
+    script_fu_server_run_init (procedure, LIGMA_VALUES_GET_ENUM (args, 0));
   else
-    script_fu_server_run_init (procedure, GIMP_RUN_NONINTERACTIVE);
+    script_fu_server_run_init (procedure, LIGMA_RUN_NONINTERACTIVE);
 
   /* Remind any users watching the console. */
   g_debug ("Starting. Further logging by server might be to a log file.");
 
   /*
    * Call the inner run func, defined in script-fu-server.c
-   * !!! This does not return unless a client evals "(gimp-quit)"
+   * !!! This does not return unless a client evals "(ligma-quit)"
    */
   return_vals = script_fu_server_run (procedure, args);
 
@@ -222,8 +222,8 @@ script_fu_server_outer_run (GimpProcedure        *procedure,
  * We do load initialization and compatibility scripts.
  */
 static void
-script_fu_server_run_init (GimpProcedure *procedure,
-                           GimpRunMode    run_mode)
+script_fu_server_run_init (LigmaProcedure *procedure,
+                           LigmaRunMode    run_mode)
 {
   GList *path;
 

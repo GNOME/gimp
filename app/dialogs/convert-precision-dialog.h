@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,23 +27,23 @@
 #define CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS 8
 
 
-typedef void (* GimpConvertPrecisionCallback) (GtkWidget        *dialog,
-                                               GimpImage        *image,
-                                               GimpPrecision     precision,
+typedef void (* LigmaConvertPrecisionCallback) (GtkWidget        *dialog,
+                                               LigmaImage        *image,
+                                               LigmaPrecision     precision,
                                                GeglDitherMethod  layer_dither_method,
                                                GeglDitherMethod  text_layer_dither_method,
                                                GeglDitherMethod  channel_dither_method,
                                                gpointer          user_data);
 
 
-GtkWidget * convert_precision_dialog_new (GimpImage                    *image,
-                                          GimpContext                  *context,
+GtkWidget * convert_precision_dialog_new (LigmaImage                    *image,
+                                          LigmaContext                  *context,
                                           GtkWidget                    *parent,
-                                          GimpComponentType             component_type,
+                                          LigmaComponentType             component_type,
                                           GeglDitherMethod              layer_dither_method,
                                           GeglDitherMethod              text_layer_dither_method,
                                           GeglDitherMethod              channel_dither_method,
-                                          GimpConvertPrecisionCallback  callback,
+                                          LigmaConvertPrecisionCallback  callback,
                                           gpointer                      user_data);
 
 

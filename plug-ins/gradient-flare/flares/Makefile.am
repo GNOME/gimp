@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-flaredir = $(gimpdatadir)/gflare
+flaredir = $(ligmadatadir)/gflare
 
 flare_DATA = \
 	Bright_Star		\

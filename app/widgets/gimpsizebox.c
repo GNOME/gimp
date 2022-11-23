@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsizebox.c
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmasizebox.c
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpsizebox.h"
+#include "ligmasizebox.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SB_WIDTH 8
@@ -53,109 +53,109 @@ enum
 };
 
 
-#define GIMP_SIZE_BOX_GET_PRIVATE(obj) ((GimpSizeBoxPrivate *) gimp_size_box_get_instance_private ((GimpSizeBox *) (obj)))
+#define LIGMA_SIZE_BOX_GET_PRIVATE(obj) ((LigmaSizeBoxPrivate *) ligma_size_box_get_instance_private ((LigmaSizeBox *) (obj)))
 
-typedef struct _GimpSizeBoxPrivate GimpSizeBoxPrivate;
+typedef struct _LigmaSizeBoxPrivate LigmaSizeBoxPrivate;
 
-struct _GimpSizeBoxPrivate
+struct _LigmaSizeBoxPrivate
 {
-  GimpSizeEntry   *size_entry;
-  GimpChainButton *size_chain;
+  LigmaSizeEntry   *size_entry;
+  LigmaChainButton *size_chain;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
 };
 
 
-static void   gimp_size_box_constructed       (GObject         *object);
-static void   gimp_size_box_dispose           (GObject         *object);
-static void   gimp_size_box_set_property      (GObject         *object,
+static void   ligma_size_box_constructed       (GObject         *object);
+static void   ligma_size_box_dispose           (GObject         *object);
+static void   ligma_size_box_set_property      (GObject         *object,
                                                guint            property_id,
                                                const GValue    *value,
                                                GParamSpec      *pspec);
-static void   gimp_size_box_get_property      (GObject         *object,
+static void   ligma_size_box_get_property      (GObject         *object,
                                                guint            property_id,
                                                GValue          *value,
                                                GParamSpec      *pspec);
 
-static void   gimp_size_box_update_size       (GimpSizeBox     *box);
-static void   gimp_size_box_update_resolution (GimpSizeBox     *box);
-static void   gimp_size_box_chain_toggled     (GimpChainButton *button,
-                                               GimpSizeBox     *box);
+static void   ligma_size_box_update_size       (LigmaSizeBox     *box);
+static void   ligma_size_box_update_resolution (LigmaSizeBox     *box);
+static void   ligma_size_box_chain_toggled     (LigmaChainButton *button,
+                                               LigmaSizeBox     *box);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSizeBox, ligma_size_box, GTK_TYPE_BOX)
 
-#define parent_class gimp_size_box_parent_class
+#define parent_class ligma_size_box_parent_class
 
 
 static void
-gimp_size_box_class_init (GimpSizeBoxClass *klass)
+ligma_size_box_class_init (LigmaSizeBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_size_box_constructed;
-  object_class->dispose      = gimp_size_box_dispose;
-  object_class->set_property = gimp_size_box_set_property;
-  object_class->get_property = gimp_size_box_get_property;
+  object_class->constructed  = ligma_size_box_constructed;
+  object_class->dispose      = ligma_size_box_dispose;
+  object_class->set_property = ligma_size_box_set_property;
+  object_class->get_property = ligma_size_box_get_property;
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
-                                                     GIMP_MIN_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     LIGMA_MIN_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      256,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
-                                                     GIMP_MIN_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     LIGMA_MIN_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      256,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_UNIT,
-                                   gimp_param_spec_unit ("unit", NULL, NULL,
+                                   ligma_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, TRUE,
-                                                         GIMP_UNIT_PIXEL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_UNIT_PIXEL,
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_XRESOLUTION,
                                    g_param_spec_double ("xresolution",
                                                         NULL, NULL,
-                                                        GIMP_MIN_RESOLUTION,
-                                                        GIMP_MAX_RESOLUTION,
+                                                        LIGMA_MIN_RESOLUTION,
+                                                        LIGMA_MAX_RESOLUTION,
                                                         72.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_YRESOLUTION,
                                    g_param_spec_double ("yresolution",
                                                         NULL, NULL,
-                                                        GIMP_MIN_RESOLUTION,
-                                                        GIMP_MAX_RESOLUTION,
+                                                        LIGMA_MIN_RESOLUTION,
+                                                        LIGMA_MAX_RESOLUTION,
                                                         72.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_RESOLUTION_UNIT,
-                                   gimp_param_spec_unit ("resolution-unit",
+                                   ligma_param_spec_unit ("resolution-unit",
                                                          NULL, NULL,
                                                          FALSE, FALSE,
-                                                         GIMP_UNIT_INCH,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_UNIT_INCH,
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_KEEP_ASPECT,
                                    g_param_spec_boolean ("keep-aspect",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_EDIT_RESOLUTION,
                                    g_param_spec_boolean ("edit-resolution",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_size_box_init (GimpSizeBox *box)
+ligma_size_box_init (LigmaSizeBox *box)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_VERTICAL);
@@ -166,10 +166,10 @@ gimp_size_box_init (GimpSizeBox *box)
 }
 
 static void
-gimp_size_box_constructed (GObject *object)
+ligma_size_box_constructed (GObject *object)
 {
-  GimpSizeBox        *box  = GIMP_SIZE_BOX (object);
-  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  LigmaSizeBox        *box  = LIGMA_SIZE_BOX (object);
+  LigmaSizeBoxPrivate *priv = LIGMA_SIZE_BOX_GET_PRIVATE (box);
   GtkWidget          *vbox;
   GtkWidget          *entry;
   GtkWidget          *hbox;
@@ -183,29 +183,29 @@ gimp_size_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_coordinates_new (box->unit, "%p",
+  entry = ligma_coordinates_new (box->unit, "%p",
                                 TRUE, TRUE, SB_WIDTH,
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                LIGMA_SIZE_ENTRY_UPDATE_SIZE,
                                 TRUE, TRUE,
                                 _("_Width:"),
                                 box->width, box->xresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
                                 0, box->width,
                                 _("H_eight:"),
                                 box->height, box->yresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
                                 0, box->height);
 
-  priv->size_entry = GIMP_SIZE_ENTRY (entry);
-  priv->size_chain = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
+  priv->size_entry = LIGMA_SIZE_ENTRY (entry);
+  priv->size_chain = LIGMA_COORDINATES_CHAINBUTTON (LIGMA_SIZE_ENTRY (entry));
 
   /*
-   * let gimp_prop_coordinates_callback know how to interpret the chainbutton
+   * let ligma_prop_coordinates_callback know how to interpret the chainbutton
    */
   g_object_set_data (G_OBJECT (priv->size_chain),
                      "constrains-ratio", GINT_TO_POINTER (TRUE));
 
-  gimp_prop_coordinates_connect (G_OBJECT (box),
+  ligma_prop_coordinates_connect (G_OBJECT (box),
                                  "width", "height",
                                  "unit",
                                  entry, NULL,
@@ -213,7 +213,7 @@ gimp_size_box_constructed (GObject *object)
                                  box->yresolution);
 
   g_signal_connect (priv->size_chain, "toggled",
-                    G_CALLBACK (gimp_size_box_chain_toggled),
+                    G_CALLBACK (ligma_size_box_chain_toggled),
                     box);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
@@ -230,7 +230,7 @@ gimp_size_box_constructed (GObject *object)
   gtk_widget_show (vbox);
 
   label = gtk_label_new (NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -248,11 +248,11 @@ gimp_size_box_constructed (GObject *object)
       gtk_widget_show (hbox);
 
       chain_active = ABS (box->xresolution -
-                          box->yresolution) < GIMP_MIN_RESOLUTION;
+                          box->yresolution) < LIGMA_MIN_RESOLUTION;
 
-      entry = gimp_coordinates_new (box->resolution_unit, _("pixels/%a"),
+      entry = ligma_coordinates_new (box->resolution_unit, _("pixels/%a"),
                                     FALSE, FALSE, SB_WIDTH,
-                                    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
+                                    LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION,
                                     chain_active, FALSE,
                                     _("_X resolution:"),
                                     box->xresolution, 1.0,
@@ -271,7 +271,7 @@ gimp_size_box_constructed (GObject *object)
           gtk_size_group_add_widget (box->size_group, list->data);
       g_list_free (children);
 
-      gimp_prop_coordinates_connect (G_OBJECT (box),
+      ligma_prop_coordinates_connect (G_OBJECT (box),
                                      "xresolution", "yresolution",
                                      "resolution-unit",
                                      entry, NULL,
@@ -280,7 +280,7 @@ gimp_size_box_constructed (GObject *object)
   else
     {
       label = gtk_label_new (NULL);
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -290,14 +290,14 @@ gimp_size_box_constructed (GObject *object)
       priv->res_label = label;
     }
 
-  gimp_size_box_update_size (box);
-  gimp_size_box_update_resolution (box);
+  ligma_size_box_update_size (box);
+  ligma_size_box_update_resolution (box);
 }
 
 static void
-gimp_size_box_dispose (GObject *object)
+ligma_size_box_dispose (GObject *object)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (object);
+  LigmaSizeBox *box = LIGMA_SIZE_BOX (object);
 
   if (box->size_group)
     {
@@ -309,24 +309,24 @@ gimp_size_box_dispose (GObject *object)
 }
 
 static void
-gimp_size_box_set_property (GObject      *object,
+ligma_size_box_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpSizeBox        *box  = GIMP_SIZE_BOX (object);
-  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  LigmaSizeBox        *box  = LIGMA_SIZE_BOX (object);
+  LigmaSizeBoxPrivate *priv = LIGMA_SIZE_BOX_GET_PRIVATE (box);
 
   switch (property_id)
     {
     case PROP_WIDTH:
       box->width = g_value_get_int (value);
-      gimp_size_box_update_size (box);
+      ligma_size_box_update_size (box);
       break;
 
     case PROP_HEIGHT:
       box->height = g_value_get_int (value);
-      gimp_size_box_update_size (box);
+      ligma_size_box_update_size (box);
       break;
 
     case PROP_UNIT:
@@ -336,17 +336,17 @@ gimp_size_box_set_property (GObject      *object,
     case PROP_XRESOLUTION:
       box->xresolution = g_value_get_double (value);
       if (priv->size_entry)
-        gimp_size_entry_set_resolution (priv->size_entry, 0,
+        ligma_size_entry_set_resolution (priv->size_entry, 0,
                                         box->xresolution, TRUE);
-      gimp_size_box_update_resolution (box);
+      ligma_size_box_update_resolution (box);
       break;
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
       if (priv->size_entry)
-        gimp_size_entry_set_resolution (priv->size_entry, 1,
+        ligma_size_entry_set_resolution (priv->size_entry, 1,
                                         box->yresolution, TRUE);
-      gimp_size_box_update_resolution (box);
+      ligma_size_box_update_resolution (box);
       break;
 
     case PROP_RESOLUTION_UNIT:
@@ -355,7 +355,7 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_KEEP_ASPECT:
       if (priv->size_chain)
-        gimp_chain_button_set_active (priv->size_chain,
+        ligma_chain_button_set_active (priv->size_chain,
                                       g_value_get_boolean (value));
       break;
 
@@ -370,13 +370,13 @@ gimp_size_box_set_property (GObject      *object,
 }
 
 static void
-gimp_size_box_get_property (GObject    *object,
+ligma_size_box_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpSizeBox        *box  = GIMP_SIZE_BOX (object);
-  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  LigmaSizeBox        *box  = LIGMA_SIZE_BOX (object);
+  LigmaSizeBoxPrivate *priv = LIGMA_SIZE_BOX_GET_PRIVATE (box);
 
   switch (property_id)
     {
@@ -406,7 +406,7 @@ gimp_size_box_get_property (GObject    *object,
 
     case PROP_KEEP_ASPECT:
       g_value_set_boolean (value,
-                           gimp_chain_button_get_active (priv->size_chain));
+                           ligma_chain_button_get_active (priv->size_chain));
       break;
 
     case PROP_EDIT_RESOLUTION:
@@ -420,9 +420,9 @@ gimp_size_box_get_property (GObject    *object,
 }
 
 static void
-gimp_size_box_update_size (GimpSizeBox *box)
+ligma_size_box_update_size (LigmaSizeBox *box)
 {
-  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  LigmaSizeBoxPrivate *priv = LIGMA_SIZE_BOX_GET_PRIVATE (box);
 
   if (priv->pixel_label)
     {
@@ -435,14 +435,14 @@ gimp_size_box_update_size (GimpSizeBox *box)
 }
 
 static void
-gimp_size_box_update_resolution (GimpSizeBox *box)
+ligma_size_box_update_resolution (LigmaSizeBox *box)
 {
-  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  LigmaSizeBoxPrivate *priv = LIGMA_SIZE_BOX_GET_PRIVATE (box);
 
   if (priv->size_entry)
     {
-      gimp_size_entry_set_refval (priv->size_entry, 0, box->width);
-      gimp_size_entry_set_refval (priv->size_entry, 1, box->height);
+      ligma_size_entry_set_refval (priv->size_entry, 0, box->width);
+      ligma_size_entry_set_refval (priv->size_entry, 1, box->height);
     }
 
   if (priv->res_label)
@@ -462,10 +462,10 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
 }
 
 static void
-gimp_size_box_chain_toggled (GimpChainButton *button,
-                             GimpSizeBox     *box)
+ligma_size_box_chain_toggled (LigmaChainButton *button,
+                             LigmaSizeBox     *box)
 {
   g_object_set (box,
-                "keep-aspect", gimp_chain_button_get_active (button),
+                "keep-aspect", ligma_chain_button_get_active (button),
                 NULL);
 }

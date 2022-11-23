@@ -25,20 +25,20 @@ munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+include $(top_srcdir)/build/windows/ligmarc-plug-ins.rule
 script_fu_interpreter_RC = script-fu-interpreter.rc.o
 endif
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la $(libm)
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la $(libm)
 
 # link to libscriptfu
-libgimp_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libgimp-scriptfu-$(GIMP_API_VERSION).la
+libligma_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libligma-scriptfu-$(LIGMA_API_VERSION).la
 
 # include srcdir parent to find libscriptfu include files
 AM_CPPFLAGS = \
@@ -63,25 +63,25 @@ AM_LDFLAGS = \
 
 # interpreter is-a plugin but is-a bin_PROGRAM
 # i.e. installs to usual place of executables e.g. /usr/bin so shebangs find it.
-bin_PROGRAMS = gimp-script-fu-interpreter-@GIMP_API_VERSION@
+bin_PROGRAMS = ligma-script-fu-interpreter-@LIGMA_API_VERSION@
 
-gimp_script_fu_interpreter_@GIMP_API_VERSION@_SOURCES = \
+ligma_script_fu_interpreter_@LIGMA_API_VERSION@_SOURCES = \
 	script-fu-interpreter.c       \
 	script-fu-interpreter.h       \
 	script-fu-interpreter-plugin.c
 
-# link with libgimp-scriptfu
-# link with the usual gimp suspects
+# link with libligma-scriptfu
+# link with the usual ligma suspects
 
-gimp_script_fu_interpreter_@GIMP_API_VERSION@_LDADD = \
-	$(libgimp_scriptfu)  \
-	$(libgimpmath)       \
-	$(libgimp)           \
-	$(libgimpbase)       \
-	$(libgimpui)         \
-	$(libgimpwidgets)    \
-	$(libgimpconfig)     \
-	$(libgimpcolor)      \
+ligma_script_fu_interpreter_@LIGMA_API_VERSION@_LDADD = \
+	$(libligma_scriptfu)  \
+	$(libligmamath)       \
+	$(libligma)           \
+	$(libligmabase)       \
+	$(libligmaui)         \
+	$(libligmawidgets)    \
+	$(libligmaconfig)     \
+	$(libligmacolor)      \
 	$(GTK_LIBS)          \
 	$(GTK_MAC_INTEGRATION_LIBS) \
 	$(RT_LIBS)           \
@@ -92,11 +92,11 @@ gimp_script_fu_interpreter_@GIMP_API_VERSION@_LDADD = \
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-script-fu-interpreter$(EXEEXT) \
-	&& $(LN_S) gimp-script-fu-interpreter-$(GIMP_APP_VERSION)$(EXEEXT) gimp-script-fu-interpreter$(EXEEXT)
+	&& rm -f ligma-script-fu-interpreter$(EXEEXT) \
+	&& $(LN_S) ligma-script-fu-interpreter-$(LIGMA_APP_VERSION)$(EXEEXT) ligma-script-fu-interpreter$(EXEEXT)
 endif
 
 uninstall-local:
 if DEFAULT_BINARY
-	rm -f $(DESTDIR)$(bindir)/gimp-script-fu-interpreter$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/ligma-script-fu-interpreter$(EXEEXT)
 endif

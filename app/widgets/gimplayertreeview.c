@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplayertreeview.c
- * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ * ligmalayertreeview.c
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,52 +25,52 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
 #if 0
-/* For mask features in gimp_layer_tree_view_layer_clicked() */
-#include "config/gimpdialogconfig.h"
+/* For mask features in ligma_layer_tree_view_layer_clicked() */
+#include "config/ligmadialogconfig.h"
 #endif
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
-#include "core/gimpimage.h"
-#include "core/gimpitemlist.h"
-#include "core/gimpitemundo.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-floating-selection.h"
-#include "core/gimplayer-new.h"
-#include "core/gimplayermask.h"
-#include "core/gimptreehandler.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage-undo-push.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitemlist.h"
+#include "core/ligmaitemundo.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-floating-selection.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmatreehandler.h"
 
-#include "text/gimptextlayer.h"
+#include "text/ligmatextlayer.h"
 
 #include "file/file-open.h"
 
-#include "gimpactiongroup.h"
-#include "gimpcellrendererviewable.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpdnd.h"
-#include "gimphelp-ids.h"
-#include "gimplayermodebox.h"
-#include "gimplayertreeview.h"
-#include "gimpuimanager.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaactiongroup.h"
+#include "ligmacellrendererviewable.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmadnd.h"
+#include "ligmahelp-ids.h"
+#include "ligmalayermodebox.h"
+#include "ligmalayertreeview.h"
+#include "ligmauimanager.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-struct _GimpLayerTreeViewPrivate
+struct _LigmaLayerTreeViewPrivate
 {
   GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
@@ -82,7 +82,7 @@ struct _GimpLayerTreeViewPrivate
   GtkWidget       *link_list;
   GtkWidget       *link_entry;
   GtkWidget       *link_search_entry;
-  GimpItemList    *link_pattern_set;
+  LigmaItemList    *link_pattern_set;
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
@@ -92,163 +92,163 @@ struct _GimpLayerTreeViewPrivate
   PangoAttrList   *italic_attrs;
   PangoAttrList   *bold_attrs;
 
-  GimpTreeHandler *mode_changed_handler;
-  GimpTreeHandler *opacity_changed_handler;
-  GimpTreeHandler *mask_changed_handler;
-  GimpTreeHandler *alpha_changed_handler;
+  LigmaTreeHandler *mode_changed_handler;
+  LigmaTreeHandler *opacity_changed_handler;
+  LigmaTreeHandler *mask_changed_handler;
+  LigmaTreeHandler *alpha_changed_handler;
 };
 
 
-static void       gimp_layer_tree_view_view_iface_init            (GimpContainerViewInterface *iface);
+static void       ligma_layer_tree_view_view_iface_init            (LigmaContainerViewInterface *iface);
 
-static void       gimp_layer_tree_view_constructed                (GObject                    *object);
-static void       gimp_layer_tree_view_finalize                   (GObject                    *object);
+static void       ligma_layer_tree_view_constructed                (GObject                    *object);
+static void       ligma_layer_tree_view_finalize                   (GObject                    *object);
 
-static void       gimp_layer_tree_view_style_updated              (GtkWidget                  *widget);
+static void       ligma_layer_tree_view_style_updated              (GtkWidget                  *widget);
 
-static void       gimp_layer_tree_view_set_container              (GimpContainerView          *view,
-                                                                   GimpContainer              *container);
-static void       gimp_layer_tree_view_set_context                (GimpContainerView          *view,
-                                                                   GimpContext                *context);
-static gpointer   gimp_layer_tree_view_insert_item                (GimpContainerView          *view,
-                                                                   GimpViewable               *viewable,
+static void       ligma_layer_tree_view_set_container              (LigmaContainerView          *view,
+                                                                   LigmaContainer              *container);
+static void       ligma_layer_tree_view_set_context                (LigmaContainerView          *view,
+                                                                   LigmaContext                *context);
+static gpointer   ligma_layer_tree_view_insert_item                (LigmaContainerView          *view,
+                                                                   LigmaViewable               *viewable,
                                                                    gpointer                    parent_insert_data,
                                                                    gint                        index);
-static gboolean   gimp_layer_tree_view_select_items               (GimpContainerView          *view,
+static gboolean   ligma_layer_tree_view_select_items               (LigmaContainerView          *view,
                                                                    GList                      *items,
                                                                    GList                      *paths);
-static void       gimp_layer_tree_view_set_view_size              (GimpContainerView          *view);
-static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainerTreeView      *view,
-                                                                   GimpDndType                 src_type,
+static void       ligma_layer_tree_view_set_view_size              (LigmaContainerView          *view);
+static gboolean   ligma_layer_tree_view_drop_possible              (LigmaContainerTreeView      *view,
+                                                                   LigmaDndType                 src_type,
                                                                    GList                      *src_viewables,
-                                                                   GimpViewable               *dest_viewable,
+                                                                   LigmaViewable               *dest_viewable,
                                                                    GtkTreePath                *drop_path,
                                                                    GtkTreeViewDropPosition     drop_pos,
                                                                    GtkTreeViewDropPosition    *return_drop_pos,
                                                                    GdkDragAction              *return_drag_action);
-static void       gimp_layer_tree_view_drop_color                 (GimpContainerTreeView      *view,
-                                                                   const GimpRGB              *color,
-                                                                   GimpViewable               *dest_viewable,
+static void       ligma_layer_tree_view_drop_color                 (LigmaContainerTreeView      *view,
+                                                                   const LigmaRGB              *color,
+                                                                   LigmaViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
-static void       gimp_layer_tree_view_drop_uri_list              (GimpContainerTreeView      *view,
+static void       ligma_layer_tree_view_drop_uri_list              (LigmaContainerTreeView      *view,
                                                                    GList                      *uri_list,
-                                                                   GimpViewable               *dest_viewable,
+                                                                   LigmaViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
-static void       gimp_layer_tree_view_drop_component             (GimpContainerTreeView      *tree_view,
-                                                                   GimpImage                  *image,
-                                                                   GimpChannelType             component,
-                                                                   GimpViewable               *dest_viewable,
+static void       ligma_layer_tree_view_drop_component             (LigmaContainerTreeView      *tree_view,
+                                                                   LigmaImage                  *image,
+                                                                   LigmaChannelType             component,
+                                                                   LigmaViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
-static void       gimp_layer_tree_view_drop_pixbuf                (GimpContainerTreeView      *tree_view,
+static void       ligma_layer_tree_view_drop_pixbuf                (LigmaContainerTreeView      *tree_view,
                                                                    GdkPixbuf                  *pixbuf,
-                                                                   GimpViewable               *dest_viewable,
+                                                                   LigmaViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
-static void       gimp_layer_tree_view_set_image                  (GimpItemTreeView           *view,
-                                                                   GimpImage                  *image);
-static GimpItem * gimp_layer_tree_view_item_new                   (GimpImage                  *image);
-static void       gimp_layer_tree_view_floating_selection_changed (GimpImage                  *image,
-                                                                   GimpLayerTreeView          *view);
+static void       ligma_layer_tree_view_set_image                  (LigmaItemTreeView           *view,
+                                                                   LigmaImage                  *image);
+static LigmaItem * ligma_layer_tree_view_item_new                   (LigmaImage                  *image);
+static void       ligma_layer_tree_view_floating_selection_changed (LigmaImage                  *image,
+                                                                   LigmaLayerTreeView          *view);
 
-static void       gimp_layer_tree_view_layer_links_changed        (GimpImage                  *image,
-                                                                   GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_link_clicked               (GtkWidget                  *box,
+static void       ligma_layer_tree_view_layer_links_changed        (LigmaImage                  *image,
+                                                                   LigmaLayerTreeView          *view);
+static gboolean   ligma_layer_tree_view_link_clicked               (GtkWidget                  *box,
                                                                    GdkEvent                   *event,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_link_popover_shown         (GtkPopover                 *popover,
-                                                                   GimpLayerTreeView          *view);
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_link_popover_shown         (GtkPopover                 *popover,
+                                                                   LigmaLayerTreeView          *view);
 
-static gboolean   gimp_layer_tree_view_search_key_release         (GtkWidget                  *widget,
+static gboolean   ligma_layer_tree_view_search_key_release         (GtkWidget                  *widget,
                                                                    GdkEventKey                *event,
-                                                                   GimpLayerTreeView          *view);
+                                                                   LigmaLayerTreeView          *view);
 
-static void       gimp_layer_tree_view_new_link_exit              (GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_new_link_clicked           (GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_unlink_clicked             (GtkWidget                  *widget,
+static void       ligma_layer_tree_view_new_link_exit              (LigmaLayerTreeView          *view);
+static gboolean   ligma_layer_tree_view_new_link_clicked           (LigmaLayerTreeView          *view);
+static gboolean   ligma_layer_tree_view_unlink_clicked             (GtkWidget                  *widget,
                                                                    GdkEvent                   *event,
-                                                                   GimpLayerTreeView          *view);
+                                                                   LigmaLayerTreeView          *view);
 
-static void       gimp_layer_tree_view_layer_mode_box_callback    (GtkWidget                  *widget,
+static void       ligma_layer_tree_view_layer_mode_box_callback    (GtkWidget                  *widget,
                                                                    const GParamSpec           *pspec,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_opacity_scale_changed      (GtkAdjustment              *adj,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer                  *layer,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_update_options             (GimpLayerTreeView          *view,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_opacity_scale_changed      (GtkAdjustment              *adj,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_layer_signal_handler       (LigmaLayer                  *layer,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_update_options             (LigmaLayerTreeView          *view,
                                                                    GList                      *layers);
-static void       gimp_layer_tree_view_update_menu                (GimpLayerTreeView          *view,
+static void       ligma_layer_tree_view_update_menu                (LigmaLayerTreeView          *view,
                                                                    GList                      *layers);
-static void       gimp_layer_tree_view_update_highlight           (GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_mask_update                (GimpLayerTreeView          *view,
+static void       ligma_layer_tree_view_update_highlight           (LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_mask_update                (LigmaLayerTreeView          *view,
                                                                    GtkTreeIter                *iter,
-                                                                   GimpLayer                  *layer);
-static void       gimp_layer_tree_view_mask_changed               (GimpLayer                  *layer,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_renderer_update            (GimpViewRenderer           *renderer,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_update_borders             (GimpLayerTreeView          *view,
+                                                                   LigmaLayer                  *layer);
+static void       ligma_layer_tree_view_mask_changed               (LigmaLayer                  *layer,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_renderer_update            (LigmaViewRenderer           *renderer,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_update_borders             (LigmaLayerTreeView          *view,
                                                                    GtkTreeIter                *iter);
-static void       gimp_layer_tree_view_mask_callback              (GimpLayer                  *mask,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_layer_clicked              (GimpCellRendererViewable   *cell,
+static void       ligma_layer_tree_view_mask_callback              (LigmaLayer                  *mask,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_layer_clicked              (LigmaCellRendererViewable   *cell,
                                                                    const gchar                *path,
                                                                    GdkModifierType             state,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_mask_clicked               (GimpCellRendererViewable   *cell,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_mask_clicked               (LigmaCellRendererViewable   *cell,
                                                                    const gchar                *path,
                                                                    GdkModifierType             state,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_alpha_update               (GimpLayerTreeView          *view,
+                                                                   LigmaLayerTreeView          *view);
+static void       ligma_layer_tree_view_alpha_update               (LigmaLayerTreeView          *view,
                                                                    GtkTreeIter                *iter,
-                                                                   GimpLayer                  *layer);
-static void       gimp_layer_tree_view_alpha_changed              (GimpLayer                  *layer,
-                                                                   GimpLayerTreeView          *view);
+                                                                   LigmaLayer                  *layer);
+static void       ligma_layer_tree_view_alpha_changed              (LigmaLayer                  *layer,
+                                                                   LigmaLayerTreeView          *view);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
-                         GIMP_TYPE_DRAWABLE_TREE_VIEW,
-                         G_ADD_PRIVATE (GimpLayerTreeView)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_layer_tree_view_view_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaLayerTreeView, ligma_layer_tree_view,
+                         LIGMA_TYPE_DRAWABLE_TREE_VIEW,
+                         G_ADD_PRIVATE (LigmaLayerTreeView)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_layer_tree_view_view_iface_init))
 
-#define parent_class gimp_layer_tree_view_parent_class
+#define parent_class ligma_layer_tree_view_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static LigmaContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
-gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
+ligma_layer_tree_view_class_init (LigmaLayerTreeViewClass *klass)
 {
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
-  GimpContainerTreeViewClass *tree_view_class;
-  GimpItemTreeViewClass      *item_view_class;
+  LigmaContainerTreeViewClass *tree_view_class;
+  LigmaItemTreeViewClass      *item_view_class;
   GtkWidgetClass             *widget_class;
 
   widget_class    = GTK_WIDGET_CLASS (klass);
-  tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
-  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  tree_view_class = LIGMA_CONTAINER_TREE_VIEW_CLASS (klass);
+  item_view_class = LIGMA_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed = gimp_layer_tree_view_constructed;
-  object_class->finalize    = gimp_layer_tree_view_finalize;
+  object_class->constructed = ligma_layer_tree_view_constructed;
+  object_class->finalize    = ligma_layer_tree_view_finalize;
 
-  widget_class->style_updated      = gimp_layer_tree_view_style_updated;
+  widget_class->style_updated      = ligma_layer_tree_view_style_updated;
 
-  tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
-  tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
-  tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
-  tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
-  tree_view_class->drop_pixbuf     = gimp_layer_tree_view_drop_pixbuf;
+  tree_view_class->drop_possible   = ligma_layer_tree_view_drop_possible;
+  tree_view_class->drop_color      = ligma_layer_tree_view_drop_color;
+  tree_view_class->drop_uri_list   = ligma_layer_tree_view_drop_uri_list;
+  tree_view_class->drop_component  = ligma_layer_tree_view_drop_component;
+  tree_view_class->drop_pixbuf     = ligma_layer_tree_view_drop_pixbuf;
 
-  item_view_class->item_type       = GIMP_TYPE_LAYER;
+  item_view_class->item_type       = LIGMA_TYPE_LAYER;
   item_view_class->signal_name     = "selected-layers-changed";
 
-  item_view_class->set_image       = gimp_layer_tree_view_set_image;
-  item_view_class->get_container   = gimp_image_get_layers;
-  item_view_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_layers;
-  item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
-  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
-  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
-  item_view_class->new_item        = gimp_layer_tree_view_item_new;
+  item_view_class->set_image       = ligma_layer_tree_view_set_image;
+  item_view_class->get_container   = ligma_image_get_layers;
+  item_view_class->get_selected_items = (LigmaGetItemsFunc) ligma_image_get_selected_layers;
+  item_view_class->set_selected_items = (LigmaSetItemsFunc) ligma_image_set_selected_layers;
+  item_view_class->add_item        = (LigmaAddItemFunc) ligma_image_add_layer;
+  item_view_class->remove_item     = (LigmaRemoveItemFunc) ligma_image_remove_layer;
+  item_view_class->new_item        = ligma_layer_tree_view_item_new;
 
   item_view_class->action_group          = "layers";
   item_view_class->activate_action       = "layers-edit";
@@ -260,73 +260,73 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->lower_bottom_action   = "layers-lower-to-bottom";
   item_view_class->duplicate_action      = "layers-duplicate";
   item_view_class->delete_action         = "layers-delete";
-  item_view_class->lock_content_help_id  = GIMP_HELP_LAYER_LOCK_PIXELS;
-  item_view_class->lock_position_help_id = GIMP_HELP_LAYER_LOCK_POSITION;
+  item_view_class->lock_content_help_id  = LIGMA_HELP_LAYER_LOCK_PIXELS;
+  item_view_class->lock_position_help_id = LIGMA_HELP_LAYER_LOCK_POSITION;
 }
 
 static void
-gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+ligma_layer_tree_view_view_iface_init (LigmaContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container = gimp_layer_tree_view_set_container;
-  iface->set_context   = gimp_layer_tree_view_set_context;
-  iface->insert_item   = gimp_layer_tree_view_insert_item;
-  iface->select_items  = gimp_layer_tree_view_select_items;
-  iface->set_view_size = gimp_layer_tree_view_set_view_size;
+  iface->set_container = ligma_layer_tree_view_set_container;
+  iface->set_context   = ligma_layer_tree_view_set_context;
+  iface->insert_item   = ligma_layer_tree_view_insert_item;
+  iface->select_items  = ligma_layer_tree_view_select_items;
+  iface->set_view_size = ligma_layer_tree_view_set_view_size;
 
   iface->model_is_tree = TRUE;
 }
 
 static void
-gimp_layer_tree_view_init (GimpLayerTreeView *view)
+ligma_layer_tree_view_init (LigmaLayerTreeView *view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkWidget             *scale;
   PangoAttribute        *attr;
 
-  view->priv = gimp_layer_tree_view_get_instance_private (view);
+  view->priv = ligma_layer_tree_view_get_instance_private (view);
 
   view->priv->link_pattern_set = NULL;
 
   view->priv->model_column_mask =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
-                                           GIMP_TYPE_VIEW_RENDERER);
+                                           LIGMA_TYPE_VIEW_RENDERER);
 
   view->priv->model_column_mask_visible =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
   /*  Paint mode menu  */
 
-  view->priv->layer_mode_box = gimp_layer_mode_box_new (GIMP_LAYER_MODE_CONTEXT_LAYER);
-  gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+  view->priv->layer_mode_box = ligma_layer_mode_box_new (LIGMA_LAYER_MODE_CONTEXT_LAYER);
+  ligma_layer_mode_box_set_label (LIGMA_LAYER_MODE_BOX (view->priv->layer_mode_box),
                                  _("Mode"));
-  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view), NULL,
+  ligma_item_tree_view_add_options (LIGMA_ITEM_TREE_VIEW (view), NULL,
                                    view->priv->layer_mode_box);
 
   g_signal_connect (view->priv->layer_mode_box, "notify::layer-mode",
-                    G_CALLBACK (gimp_layer_tree_view_layer_mode_box_callback),
+                    G_CALLBACK (ligma_layer_tree_view_layer_mode_box_callback),
                     view);
 
-  gimp_help_set_help_data (view->priv->layer_mode_box, NULL,
-                           GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU);
+  ligma_help_set_help_data (view->priv->layer_mode_box, NULL,
+                           LIGMA_HELP_LAYER_DIALOG_PAINT_MODE_MENU);
 
   /*  Opacity scale  */
 
   view->priv->opacity_adjustment = gtk_adjustment_new (100.0, 0.0, 100.0,
                                                        1.0, 10.0, 0.0);
-  scale = gimp_spin_scale_new (view->priv->opacity_adjustment, _("Opacity"), 1);
-  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
-  gimp_help_set_help_data (scale, NULL,
-                           GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE);
-  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
+  scale = ligma_spin_scale_new (view->priv->opacity_adjustment, _("Opacity"), 1);
+  ligma_spin_scale_set_constrain_drag (LIGMA_SPIN_SCALE (scale), TRUE);
+  ligma_help_set_help_data (scale, NULL,
+                           LIGMA_HELP_LAYER_DIALOG_OPACITY_SCALE);
+  ligma_item_tree_view_add_options (LIGMA_ITEM_TREE_VIEW (view),
                                    NULL, scale);
 
   g_signal_connect (view->priv->opacity_adjustment, "value-changed",
-                    G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
+                    G_CALLBACK (ligma_layer_tree_view_opacity_scale_changed),
                     view);
 
   view->priv->italic_attrs = pango_attr_list_new ();
@@ -343,10 +343,10 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 }
 
 static void
-gimp_layer_tree_view_constructed (GObject *object)
+ligma_layer_tree_view_constructed (GObject *object)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (object);
-  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (object);
+  LigmaContainerTreeView *tree_view  = LIGMA_CONTAINER_TREE_VIEW (object);
+  LigmaLayerTreeView     *layer_view = LIGMA_LAYER_TREE_VIEW (object);
   GtkWidget             *button;
   GtkWidget             *placeholder;
   GtkWidget             *grid;
@@ -355,7 +355,7 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  layer_view->priv->mask_cell = gimp_cell_renderer_viewable_new ();
+  layer_view->priv->mask_cell = ligma_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
                                    layer_view->priv->mask_cell,
                                    FALSE);
@@ -367,43 +367,43 @@ gimp_layer_tree_view_constructed (GObject *object)
                                        layer_view->priv->model_column_mask_visible,
                                        NULL);
 
-  gimp_container_tree_view_add_renderer_cell (tree_view,
+  ligma_container_tree_view_add_renderer_cell (tree_view,
                                               layer_view->priv->mask_cell,
                                               layer_view->priv->model_column_mask);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
-                    G_CALLBACK (gimp_layer_tree_view_layer_clicked),
+                    G_CALLBACK (ligma_layer_tree_view_layer_clicked),
                     layer_view);
   g_signal_connect (layer_view->priv->mask_cell, "clicked",
-                    G_CALLBACK (gimp_layer_tree_view_mask_clicked),
+                    G_CALLBACK (ligma_layer_tree_view_mask_clicked),
                     layer_view);
 
-  gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
+  ligma_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), LIGMA_TYPE_CHANNEL,
                                NULL, tree_view);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), LIGMA_TYPE_LAYER_MASK,
                                NULL, tree_view);
-  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
+  ligma_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
-  gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
+  ligma_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (layer_view), "layers",
                                           "layers-new-group", NULL);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+  gtk_box_reorder_child (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                          button, 1);
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
   layer_view->priv->anchor_button = button;
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
-                                  GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                                  LIGMA_TYPE_LAYER);
+  gtk_box_reorder_child (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                          button, 5);
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (layer_view), "layers",
                                           "layers-merge-down-button",
                                           "layers-merge-group",
                                           GDK_SHIFT_MASK,
@@ -413,26 +413,26 @@ gimp_layer_tree_view_constructed (GObject *object)
                                           GDK_CONTROL_MASK |
                                           GDK_SHIFT_MASK,
                                           NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
-                                  GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                                  LIGMA_TYPE_LAYER);
+  gtk_box_reorder_child (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                          button, 6);
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (layer_view), "layers",
                                           "layers-mask-add-button",
                                           "layers-mask-add-last-values",
-                                          gimp_get_extend_selection_mask (),
+                                          ligma_get_extend_selection_mask (),
                                           "layers-mask-delete",
-                                          gimp_get_modify_selection_mask (),
+                                          ligma_get_modify_selection_mask (),
                                           "layers-mask-apply",
-                                          gimp_get_extend_selection_mask () |
-                                          gimp_get_modify_selection_mask (),
+                                          ligma_get_extend_selection_mask () |
+                                          ligma_get_modify_selection_mask (),
                                           NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
-                                  GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                                  LIGMA_TYPE_LAYER);
+  gtk_box_reorder_child (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                          button, 7);
 
   /* Link popover menu. */
@@ -444,15 +444,15 @@ gimp_layer_tree_view_constructed (GObject *object)
                         "button-icon-size", &button_size,
                         NULL);
   gtk_button_set_image (GTK_BUTTON (layer_view->priv->link_button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_LINKED,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_LINKED,
                                                       button_size));
-  gtk_box_pack_start (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+  gtk_box_pack_start (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                       layer_view->priv->link_button, TRUE, TRUE, 0);
   gtk_widget_show (layer_view->priv->link_button);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (layer_view->priv->link_button),
-                                  GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                                  LIGMA_TYPE_LAYER);
+  gtk_box_reorder_child (ligma_editor_get_button_box (LIGMA_EDITOR (layer_view)),
                          layer_view->priv->link_button, 8);
 
   layer_view->priv->link_popover = gtk_popover_new (layer_view->priv->link_button);
@@ -462,7 +462,7 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   g_signal_connect (layer_view->priv->link_popover,
                     "show",
-                    G_CALLBACK (gimp_layer_tree_view_link_popover_shown),
+                    G_CALLBACK (ligma_layer_tree_view_link_popover_shown),
                     layer_view);
 
   grid = gtk_grid_new ();
@@ -478,7 +478,7 @@ gimp_layer_tree_view_constructed (GObject *object)
   gtk_widget_show (layer_view->priv->link_search_entry);
   g_signal_connect (layer_view->priv->link_search_entry,
                     "key-release-event",
-                    G_CALLBACK (gimp_layer_tree_view_search_key_release),
+                    G_CALLBACK (ligma_layer_tree_view_search_key_release),
                     layer_view);
 
   /* Link popover: existing links. */
@@ -511,13 +511,13 @@ gimp_layer_tree_view_constructed (GObject *object)
                    0, 2, 1, 1);
   gtk_widget_show (layer_view->priv->link_entry);
 
-  button = gtk_button_new_from_icon_name (GIMP_ICON_LIST_ADD, button_size);
+  button = gtk_button_new_from_icon_name (LIGMA_ICON_LIST_ADD, button_size);
   gtk_grid_attach (GTK_GRID (grid),
                    button,
                    1, 2, 1, 1);
   g_signal_connect_swapped (button,
                             "clicked",
-                            G_CALLBACK (gimp_layer_tree_view_new_link_clicked),
+                            G_CALLBACK (ligma_layer_tree_view_new_link_clicked),
                             layer_view);
   gtk_widget_show (button);
   layer_view->priv->new_link_button = button;
@@ -527,7 +527,7 @@ gimp_layer_tree_view_constructed (GObject *object)
    */
   g_signal_connect_swapped (layer_view->priv->link_entry,
                             "activate",
-                            G_CALLBACK (gimp_layer_tree_view_new_link_exit),
+                            G_CALLBACK (ligma_layer_tree_view_new_link_exit),
                             layer_view);
 
   gtk_container_add (GTK_CONTAINER (layer_view->priv->link_popover), grid);
@@ -535,26 +535,26 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   /*  Lock alpha toggle  */
 
-  gimp_item_tree_view_add_lock (GIMP_ITEM_TREE_VIEW (tree_view),
-                                GIMP_ICON_LOCK_ALPHA,
-                                (GimpIsLockedFunc) gimp_layer_get_lock_alpha,
-                                (GimpCanLockFunc)  gimp_layer_can_lock_alpha,
-                                (GimpSetLockFunc)  gimp_layer_set_lock_alpha,
-                                (GimpUndoLockPush) gimp_image_undo_push_layer_lock_alpha,
+  ligma_item_tree_view_add_lock (LIGMA_ITEM_TREE_VIEW (tree_view),
+                                LIGMA_ICON_LOCK_ALPHA,
+                                (LigmaIsLockedFunc) ligma_layer_get_lock_alpha,
+                                (LigmaCanLockFunc)  ligma_layer_can_lock_alpha,
+                                (LigmaSetLockFunc)  ligma_layer_set_lock_alpha,
+                                (LigmaUndoLockPush) ligma_image_undo_push_layer_lock_alpha,
                                 "lock-alpha-changed",
-                                GIMP_UNDO_LAYER_LOCK_ALPHA,
-                                GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
+                                LIGMA_UNDO_LAYER_LOCK_ALPHA,
+                                LIGMA_UNDO_GROUP_LAYER_LOCK_ALPHA,
                                 _("Lock alpha channel"),
                                 _("Unlock alpha channel"),
                                 _("Set Item Exclusive Alpha Channel lock"),
                                 _("Lock alpha channel"),
-                                GIMP_HELP_LAYER_LOCK_ALPHA);
+                                LIGMA_HELP_LAYER_LOCK_ALPHA);
 }
 
 static void
-gimp_layer_tree_view_finalize (GObject *object)
+ligma_layer_tree_view_finalize (GObject *object)
 {
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (object);
+  LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (object);
 
   if (layer_view->priv->italic_attrs)
     {
@@ -572,12 +572,12 @@ gimp_layer_tree_view_finalize (GObject *object)
 }
 
 
-/*  GimpWidget methods  */
+/*  LigmaWidget methods  */
 
 static void
-gimp_layer_tree_view_style_updated (GtkWidget *widget)
+ligma_layer_tree_view_style_updated (GtkWidget *widget)
 {
-  GimpLayerTreeView *view = GIMP_LAYER_TREE_VIEW (widget);
+  LigmaLayerTreeView *view = LIGMA_LAYER_TREE_VIEW (widget);
   GtkWidget         *image;
   const gchar       *old_icon_name;
   GtkReliefStyle     button_relief;
@@ -616,29 +616,29 @@ gimp_layer_tree_view_style_updated (GtkWidget *widget)
     }
 }
 
-/*  GimpContainerView methods  */
+/*  LigmaContainerView methods  */
 
 static void
-gimp_layer_tree_view_set_container (GimpContainerView *view,
-                                    GimpContainer     *container)
+ligma_layer_tree_view_set_container (LigmaContainerView *view,
+                                    LigmaContainer     *container)
 {
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GimpContainer     *old_container;
+  LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (view);
+  LigmaContainer     *old_container;
 
-  old_container = gimp_container_view_get_container (view);
+  old_container = ligma_container_view_get_container (view);
 
   if (old_container)
     {
-      gimp_tree_handler_disconnect (layer_view->priv->mode_changed_handler);
+      ligma_tree_handler_disconnect (layer_view->priv->mode_changed_handler);
       layer_view->priv->mode_changed_handler = NULL;
 
-      gimp_tree_handler_disconnect (layer_view->priv->opacity_changed_handler);
+      ligma_tree_handler_disconnect (layer_view->priv->opacity_changed_handler);
       layer_view->priv->opacity_changed_handler = NULL;
 
-      gimp_tree_handler_disconnect (layer_view->priv->mask_changed_handler);
+      ligma_tree_handler_disconnect (layer_view->priv->mask_changed_handler);
       layer_view->priv->mask_changed_handler = NULL;
 
-      gimp_tree_handler_disconnect (layer_view->priv->alpha_changed_handler);
+      ligma_tree_handler_disconnect (layer_view->priv->alpha_changed_handler);
       layer_view->priv->alpha_changed_handler = NULL;
     }
 
@@ -647,23 +647,23 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
   if (container)
     {
       layer_view->priv->mode_changed_handler =
-        gimp_tree_handler_connect (container, "mode-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+        ligma_tree_handler_connect (container, "mode-changed",
+                                   G_CALLBACK (ligma_layer_tree_view_layer_signal_handler),
                                    view);
 
       layer_view->priv->opacity_changed_handler =
-        gimp_tree_handler_connect (container, "opacity-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+        ligma_tree_handler_connect (container, "opacity-changed",
+                                   G_CALLBACK (ligma_layer_tree_view_layer_signal_handler),
                                    view);
 
       layer_view->priv->mask_changed_handler =
-        gimp_tree_handler_connect (container, "mask-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_mask_changed),
+        ligma_tree_handler_connect (container, "mask-changed",
+                                   G_CALLBACK (ligma_layer_tree_view_mask_changed),
                                    view);
 
       layer_view->priv->alpha_changed_handler =
-        gimp_tree_handler_connect (container, "alpha-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_alpha_changed),
+        ligma_tree_handler_connect (container, "alpha-changed",
+                                   G_CALLBACK (ligma_layer_tree_view_alpha_changed),
                                    view);
     }
 }
@@ -671,17 +671,17 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
 typedef struct
 {
   gint         mask_column;
-  GimpContext *context;
+  LigmaContext *context;
 } SetContextForeachData;
 
 static gboolean
-gimp_layer_tree_view_set_context_foreach (GtkTreeModel *model,
+ligma_layer_tree_view_set_context_foreach (GtkTreeModel *model,
                                           GtkTreePath  *path,
                                           GtkTreeIter  *iter,
                                           gpointer      data)
 {
   SetContextForeachData *context_data = data;
-  GimpViewRenderer      *renderer;
+  LigmaViewRenderer      *renderer;
 
   gtk_tree_model_get (model, iter,
                       context_data->mask_column, &renderer,
@@ -689,7 +689,7 @@ gimp_layer_tree_view_set_context_foreach (GtkTreeModel *model,
 
   if (renderer)
     {
-      gimp_view_renderer_set_context (renderer, context_data->context);
+      ligma_view_renderer_set_context (renderer, context_data->context);
 
       g_object_unref (renderer);
     }
@@ -698,19 +698,19 @@ gimp_layer_tree_view_set_context_foreach (GtkTreeModel *model,
 }
 
 static void
-gimp_layer_tree_view_set_context (GimpContainerView *view,
-                                  GimpContext       *context)
+ligma_layer_tree_view_set_context (LigmaContainerView *view,
+                                  LigmaContext       *context)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GimpContext           *old_context;
+  LigmaContainerTreeView *tree_view  = LIGMA_CONTAINER_TREE_VIEW (view);
+  LigmaLayerTreeView     *layer_view = LIGMA_LAYER_TREE_VIEW (view);
+  LigmaContext           *old_context;
 
-  old_context = gimp_container_view_get_context (view);
+  old_context = ligma_container_view_get_context (view);
 
   if (old_context)
     {
-      g_signal_handlers_disconnect_by_func (old_context->gimp->config,
-                                            G_CALLBACK (gimp_layer_tree_view_style_updated),
+      g_signal_handlers_disconnect_by_func (old_context->ligma->config,
+                                            G_CALLBACK (ligma_layer_tree_view_style_updated),
                                             view);
     }
 
@@ -718,17 +718,17 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
 
   if (context)
     {
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::theme",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               G_CALLBACK (ligma_layer_tree_view_style_updated),
                                view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::override-theme-icon-size",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               G_CALLBACK (ligma_layer_tree_view_style_updated),
                                view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::custom-icon-size",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               G_CALLBACK (ligma_layer_tree_view_style_updated),
                                view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
 
@@ -738,51 +738,51 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
                                              context };
 
       gtk_tree_model_foreach (tree_view->model,
-                              gimp_layer_tree_view_set_context_foreach,
+                              ligma_layer_tree_view_set_context_foreach,
                               &context_data);
     }
 }
 
 static gpointer
-gimp_layer_tree_view_insert_item (GimpContainerView *view,
-                                  GimpViewable      *viewable,
+ligma_layer_tree_view_insert_item (LigmaContainerView *view,
+                                  LigmaViewable      *viewable,
                                   gpointer           parent_insert_data,
                                   gint               index)
 {
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GimpLayer         *layer;
+  LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (view);
+  LigmaLayer         *layer;
   GtkTreeIter       *iter;
 
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
 
-  layer = GIMP_LAYER (viewable);
+  layer = LIGMA_LAYER (viewable);
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
+  if (! ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)))
+    ligma_layer_tree_view_alpha_update (layer_view, iter, layer);
 
-  gimp_layer_tree_view_mask_update (layer_view, iter, layer);
+  ligma_layer_tree_view_mask_update (layer_view, iter, layer);
 
-  if (GIMP_IS_LAYER (viewable) && gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
+  if (LIGMA_IS_LAYER (viewable) && ligma_layer_is_floating_sel (LIGMA_LAYER (viewable)))
     {
-      GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-      GimpLayer             *floating  = GIMP_LAYER (viewable);
-      GimpDrawable          *drawable  = gimp_layer_get_floating_sel_drawable (floating);
+      LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
+      LigmaLayer             *floating  = LIGMA_LAYER (viewable);
+      LigmaDrawable          *drawable  = ligma_layer_get_floating_sel_drawable (floating);
 
-      if (GIMP_IS_LAYER_MASK (drawable))
+      if (LIGMA_IS_LAYER_MASK (drawable))
         {
           /* Display floating mask in the mask column. */
-          GimpViewRenderer *renderer  = NULL;
+          LigmaViewRenderer *renderer  = NULL;
 
           gtk_tree_model_get (GTK_TREE_MODEL (tree_view->model), iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                              LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                               -1);
           if (renderer)
             {
               gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                                   layer_view->priv->model_column_mask,         renderer,
                                   layer_view->priv->model_column_mask_visible, TRUE,
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,   NULL,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER,   NULL,
                                   -1);
               g_object_unref (renderer);
             }
@@ -793,12 +793,12 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
 }
 
 static gboolean
-gimp_layer_tree_view_select_items (GimpContainerView *view,
+ligma_layer_tree_view_select_items (LigmaContainerView *view,
                                    GList             *items,
                                    GList             *paths)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view  = LIGMA_CONTAINER_TREE_VIEW (view);
+  LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (view);
   GList             *layers = items;
   GList             *path   = paths;
   gboolean           success;
@@ -814,21 +814,21 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
               GtkTreeIter iter;
 
               gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
-              gimp_layer_tree_view_update_borders (layer_view, &iter);
+              ligma_layer_tree_view_update_borders (layer_view, &iter);
             }
-          gimp_layer_tree_view_update_options (layer_view, items);
-          gimp_layer_tree_view_update_menu (layer_view, items);
+          ligma_layer_tree_view_update_options (layer_view, items);
+          ligma_layer_tree_view_update_menu (layer_view, items);
         }
     }
 
   if (! success)
     {
-      GimpEditor *editor = GIMP_EDITOR (view);
+      LigmaEditor *editor = LIGMA_EDITOR (view);
 
       /* currently, select_items() only ever fails when there is a floating
        * selection, which can be committed/canceled through the editor buttons.
        */
-      gimp_widget_blink (GTK_WIDGET (gimp_editor_get_button_box (editor)));
+      ligma_widget_blink (GTK_WIDGET (ligma_editor_get_button_box (editor)));
     }
 
   return success;
@@ -842,13 +842,13 @@ typedef struct
 } SetSizeForeachData;
 
 static gboolean
-gimp_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
+ligma_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
                                             GtkTreePath  *path,
                                             GtkTreeIter  *iter,
                                             gpointer      data)
 {
   SetSizeForeachData *size_data = data;
-  GimpViewRenderer   *renderer;
+  LigmaViewRenderer   *renderer;
 
   gtk_tree_model_get (model, iter,
                       size_data->mask_column, &renderer,
@@ -856,7 +856,7 @@ gimp_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
 
   if (renderer)
     {
-      gimp_view_renderer_set_size (renderer,
+      ligma_view_renderer_set_size (renderer,
                                    size_data->view_size,
                                    size_data->border_width);
 
@@ -867,22 +867,22 @@ gimp_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
 }
 
 static void
-gimp_layer_tree_view_set_view_size (GimpContainerView *view)
+ligma_layer_tree_view_set_view_size (LigmaContainerView *view)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view  = LIGMA_CONTAINER_TREE_VIEW (view);
 
   if (tree_view->model)
     {
-      GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
+      LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (view);
       SetSizeForeachData size_data;
 
       size_data.mask_column = layer_view->priv->model_column_mask;
 
       size_data.view_size =
-        gimp_container_view_get_view_size (view, &size_data.border_width);
+        ligma_container_view_get_view_size (view, &size_data.border_width);
 
       gtk_tree_model_foreach (tree_view->model,
-                              gimp_layer_tree_view_set_view_size_foreach,
+                              ligma_layer_tree_view_set_view_size_foreach,
                               &size_data);
     }
 
@@ -890,13 +890,13 @@ gimp_layer_tree_view_set_view_size (GimpContainerView *view)
 }
 
 
-/*  GimpContainerTreeView methods  */
+/*  LigmaContainerTreeView methods  */
 
 static gboolean
-gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
-                                    GimpDndType              src_type,
+ligma_layer_tree_view_drop_possible (LigmaContainerTreeView   *tree_view,
+                                    LigmaDndType              src_type,
                                     GList                   *src_viewables,
-                                    GimpViewable            *dest_viewable,
+                                    LigmaViewable            *dest_viewable,
                                     GtkTreePath             *drop_path,
                                     GtkTreeViewDropPosition  drop_pos,
                                     GtkTreeViewDropPosition *return_drop_pos,
@@ -905,20 +905,20 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
   /* If we are dropping a new layer, check if the destination image
    * has a floating selection.
    */
-  if  (src_type == GIMP_DND_TYPE_URI_LIST     ||
-       src_type == GIMP_DND_TYPE_TEXT_PLAIN   ||
-       src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
-       src_type == GIMP_DND_TYPE_COMPONENT    ||
-       src_type == GIMP_DND_TYPE_PIXBUF       ||
+  if  (src_type == LIGMA_DND_TYPE_URI_LIST     ||
+       src_type == LIGMA_DND_TYPE_TEXT_PLAIN   ||
+       src_type == LIGMA_DND_TYPE_NETSCAPE_URL ||
+       src_type == LIGMA_DND_TYPE_COMPONENT    ||
+       src_type == LIGMA_DND_TYPE_PIXBUF       ||
        g_list_length (src_viewables) > 0)
     {
-      GimpImage *dest_image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (tree_view));
+      LigmaImage *dest_image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (tree_view));
 
-      if (gimp_image_get_floating_selection (dest_image))
+      if (ligma_image_get_floating_selection (dest_image))
         return FALSE;
     }
 
-  return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+  return LIGMA_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
                                                                        src_type,
                                                                        src_viewables,
                                                                        dest_viewable,
@@ -929,41 +929,41 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 }
 
 static void
-gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
-                                 const GimpRGB           *color,
-                                 GimpViewable            *dest_viewable,
+ligma_layer_tree_view_drop_color (LigmaContainerTreeView   *view,
+                                 const LigmaRGB           *color,
+                                 LigmaViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {
-  if (gimp_item_is_text_layer (GIMP_ITEM (dest_viewable)))
+  if (ligma_item_is_text_layer (LIGMA_ITEM (dest_viewable)))
     {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (dest_viewable), NULL,
+      ligma_text_layer_set (LIGMA_TEXT_LAYER (dest_viewable), NULL,
                            "color", color,
                            NULL);
-      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
+      ligma_image_flush (ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view)));
       return;
     }
 
-  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_color (view, color,
+  LIGMA_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_color (view, color,
                                                              dest_viewable,
                                                              drop_pos);
 }
 
 static void
-gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
+ligma_layer_tree_view_drop_uri_list (LigmaContainerTreeView   *view,
                                     GList                   *uri_list,
-                                    GimpViewable            *dest_viewable,
+                                    LigmaViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView  *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpContainerView *cont_view = GIMP_CONTAINER_VIEW (view);
-  GimpImage         *image     = gimp_item_tree_view_get_image (item_view);
-  GimpLayer         *parent;
+  LigmaItemTreeView  *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaContainerView *cont_view = LIGMA_CONTAINER_VIEW (view);
+  LigmaImage         *image     = ligma_item_tree_view_get_image (item_view);
+  LigmaLayer         *parent;
   gint               index;
   GList             *list;
 
-  index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+  index = ligma_item_tree_view_get_drop_index (item_view, dest_viewable,
                                               drop_pos,
-                                              (GimpViewable **) &parent);
+                                              (LigmaViewable **) &parent);
 
   g_object_ref (image);
 
@@ -972,199 +972,199 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
       const gchar       *uri   = list->data;
       GFile             *file  = g_file_new_for_uri (uri);
       GList             *new_layers;
-      GimpPDBStatusType  status;
+      LigmaPDBStatusType  status;
       GError            *error = NULL;
 
-      new_layers = file_open_layers (image->gimp,
-                                     gimp_container_view_get_context (cont_view),
+      new_layers = file_open_layers (image->ligma,
+                                     ligma_container_view_get_context (cont_view),
                                      NULL,
                                      image, FALSE,
-                                     file, GIMP_RUN_INTERACTIVE, NULL,
+                                     file, LIGMA_RUN_INTERACTIVE, NULL,
                                      &status, &error);
 
       if (new_layers)
         {
-          gimp_image_add_layers (image, new_layers, parent, index,
+          ligma_image_add_layers (image, new_layers, parent, index,
                                  0, 0,
-                                 gimp_image_get_width (image),
-                                 gimp_image_get_height (image),
+                                 ligma_image_get_width (image),
+                                 ligma_image_get_height (image),
                                  _("Drop layers"));
 
           index += g_list_length (new_layers);
 
           g_list_free (new_layers);
         }
-      else if (status != GIMP_PDB_CANCEL)
+      else if (status != LIGMA_PDB_CANCEL)
         {
-          gimp_message (image->gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
+          ligma_message (image->ligma, G_OBJECT (view), LIGMA_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
+                        ligma_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
 
       g_object_unref (file);
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   g_object_unref (image);
 }
 
 static void
-gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
-                                     GimpImage               *src_image,
-                                     GimpChannelType          component,
-                                     GimpViewable            *dest_viewable,
+ligma_layer_tree_view_drop_component (LigmaContainerTreeView   *tree_view,
+                                     LigmaImage               *src_image,
+                                     LigmaChannelType          component,
+                                     LigmaViewable            *dest_viewable,
                                      GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
-  GimpChannel      *channel;
-  GimpItem         *new_item;
-  GimpLayer        *parent;
+  LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (tree_view);
+  LigmaImage        *image     = ligma_item_tree_view_get_image (item_view);
+  LigmaChannel      *channel;
+  LigmaItem         *new_item;
+  LigmaLayer        *parent;
   gint              index;
   const gchar      *desc;
 
-  index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+  index = ligma_item_tree_view_get_drop_index (item_view, dest_viewable,
                                               drop_pos,
-                                              (GimpViewable **) &parent);
+                                              (LigmaViewable **) &parent);
 
-  channel = gimp_channel_new_from_component (src_image, component, NULL, NULL);
+  channel = ligma_channel_new_from_component (src_image, component, NULL, NULL);
 
-  new_item = gimp_item_convert (GIMP_ITEM (channel), image,
-                                GIMP_TYPE_LAYER);
+  new_item = ligma_item_convert (LIGMA_ITEM (channel), image,
+                                LIGMA_TYPE_LAYER);
 
   g_object_unref (channel);
 
-  gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+  ligma_enum_get_value (LIGMA_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
-  gimp_object_take_name (GIMP_OBJECT (new_item),
+  ligma_object_take_name (LIGMA_OBJECT (new_item),
                          g_strdup_printf (_("%s Channel Copy"), desc));
 
-  gimp_image_add_layer (image, GIMP_LAYER (new_item), parent, index, TRUE);
+  ligma_image_add_layer (image, LIGMA_LAYER (new_item), parent, index, TRUE);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 static void
-gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
+ligma_layer_tree_view_drop_pixbuf (LigmaContainerTreeView   *tree_view,
                                   GdkPixbuf               *pixbuf,
-                                  GimpViewable            *dest_viewable,
+                                  LigmaViewable            *dest_viewable,
                                   GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
-  GimpLayer        *new_layer;
-  GimpLayer        *parent;
+  LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (tree_view);
+  LigmaImage        *image     = ligma_item_tree_view_get_image (item_view);
+  LigmaLayer        *new_layer;
+  LigmaLayer        *parent;
   gint              index;
 
-  index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+  index = ligma_item_tree_view_get_drop_index (item_view, dest_viewable,
                                               drop_pos,
-                                              (GimpViewable **) &parent);
+                                              (LigmaViewable **) &parent);
 
   new_layer =
-    gimp_layer_new_from_pixbuf (pixbuf, image,
-                                gimp_image_get_layer_format (image, TRUE),
+    ligma_layer_new_from_pixbuf (pixbuf, image,
+                                ligma_image_get_layer_format (image, TRUE),
                                 _("Dropped Buffer"),
-                                GIMP_OPACITY_OPAQUE,
-                                gimp_image_get_default_new_layer_mode (image));
+                                LIGMA_OPACITY_OPAQUE,
+                                ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_add_layer (image, new_layer, parent, index, TRUE);
+  ligma_image_add_layer (image, new_layer, parent, index, TRUE);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 
-/*  GimpItemTreeView methods  */
+/*  LigmaItemTreeView methods  */
 
 static void
-gimp_layer_tree_view_set_image (GimpItemTreeView *view,
-                                GimpImage        *image)
+ligma_layer_tree_view_set_image (LigmaItemTreeView *view,
+                                LigmaImage        *image)
 {
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
+  LigmaLayerTreeView *layer_view = LIGMA_LAYER_TREE_VIEW (view);
 
-  if (gimp_item_tree_view_get_image (view))
+  if (ligma_item_tree_view_get_image (view))
     {
-      g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
-                                            gimp_layer_tree_view_floating_selection_changed,
+      g_signal_handlers_disconnect_by_func (ligma_item_tree_view_get_image (view),
+                                            ligma_layer_tree_view_floating_selection_changed,
                                             view);
-      g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
-                                            G_CALLBACK (gimp_layer_tree_view_layer_links_changed),
+      g_signal_handlers_disconnect_by_func (ligma_item_tree_view_get_image (view),
+                                            G_CALLBACK (ligma_layer_tree_view_layer_links_changed),
                                             view);
     }
 
-  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
+  LIGMA_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
 
-  if (gimp_item_tree_view_get_image (view))
+  if (ligma_item_tree_view_get_image (view))
     {
-      g_signal_connect (gimp_item_tree_view_get_image (view),
+      g_signal_connect (ligma_item_tree_view_get_image (view),
                         "floating-selection-changed",
-                        G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
+                        G_CALLBACK (ligma_layer_tree_view_floating_selection_changed),
                         view);
-      g_signal_connect (gimp_item_tree_view_get_image (view),
+      g_signal_connect (ligma_item_tree_view_get_image (view),
                         "layer-sets-changed",
-                        G_CALLBACK (gimp_layer_tree_view_layer_links_changed),
+                        G_CALLBACK (ligma_layer_tree_view_layer_links_changed),
                         view);
 
-      /* call gimp_layer_tree_view_floating_selection_changed() now, to update
+      /* call ligma_layer_tree_view_floating_selection_changed() now, to update
        * the floating selection's row attributes.
        */
-      gimp_layer_tree_view_floating_selection_changed (
-        gimp_item_tree_view_get_image (view),
+      ligma_layer_tree_view_floating_selection_changed (
+        ligma_item_tree_view_get_image (view),
         layer_view);
     }
   /* Call this even with no image, allowing to empty the link list. */
-  gimp_layer_tree_view_layer_links_changed (gimp_item_tree_view_get_image (view),
+  ligma_layer_tree_view_layer_links_changed (ligma_item_tree_view_get_image (view),
                                             layer_view);
 
-  gimp_layer_tree_view_update_highlight (layer_view);
+  ligma_layer_tree_view_update_highlight (layer_view);
 }
 
-static GimpItem *
-gimp_layer_tree_view_item_new (GimpImage *image)
+static LigmaItem *
+ligma_layer_tree_view_item_new (LigmaImage *image)
 {
-  GimpLayer *new_layer;
+  LigmaLayer *new_layer;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  new_layer = gimp_layer_new (image,
-                              gimp_image_get_width (image),
-                              gimp_image_get_height (image),
-                              gimp_image_get_layer_format (image, TRUE),
+  new_layer = ligma_layer_new (image,
+                              ligma_image_get_width (image),
+                              ligma_image_get_height (image),
+                              ligma_image_get_layer_format (image, TRUE),
                               NULL,
-                              GIMP_OPACITY_OPAQUE,
-                              gimp_image_get_default_new_layer_mode (image));
+                              LIGMA_OPACITY_OPAQUE,
+                              ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_add_layer (image, new_layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  ligma_image_add_layer (image, new_layer,
+                        LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  return GIMP_ITEM (new_layer);
+  return LIGMA_ITEM (new_layer);
 }
 
 
 /*  callbacks  */
 
 static void
-gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
-                                                 GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_floating_selection_changed (LigmaImage         *image,
+                                                 LigmaLayerTreeView *layer_view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GimpContainerView     *view      = GIMP_CONTAINER_VIEW (layer_view);
-  GimpLayer             *floating_sel;
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (layer_view);
+  LigmaContainerView     *view      = LIGMA_CONTAINER_VIEW (layer_view);
+  LigmaLayer             *floating_sel;
   GtkTreeIter           *iter;
 
-  floating_sel = gimp_image_get_floating_selection (image);
+  floating_sel = ligma_image_get_floating_selection (image);
 
   if (floating_sel)
     {
-      iter = gimp_container_view_lookup (view, (GimpViewable *) floating_sel);
+      iter = ligma_container_view_lookup (view, (LigmaViewable *) floating_sel);
 
       if (iter)
         gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                            GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
+                            LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
                             layer_view->priv->italic_attrs,
                             -1);
     }
@@ -1173,18 +1173,18 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
       GList *all_layers;
       GList *list;
 
-      all_layers = gimp_image_get_layer_list (image);
+      all_layers = ligma_image_get_layer_list (image);
 
       for (list = all_layers; list; list = g_list_next (list))
         {
-          GimpDrawable *drawable = list->data;
+          LigmaDrawable *drawable = list->data;
 
-          iter = gimp_container_view_lookup (view, (GimpViewable *) drawable);
+          iter = ligma_container_view_lookup (view, (LigmaViewable *) drawable);
 
           if (iter)
             gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                                GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
-                                gimp_drawable_has_alpha (drawable) ?
+                                LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
+                                ligma_drawable_has_alpha (drawable) ?
                                 NULL : layer_view->priv->bold_attrs,
                                 -1);
         }
@@ -1192,12 +1192,12 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
       g_list_free (all_layers);
     }
 
-  gimp_layer_tree_view_update_highlight (layer_view);
+  ligma_layer_tree_view_update_highlight (layer_view);
 }
 
 static void
-gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
-                                          GimpLayerTreeView *view)
+ligma_layer_tree_view_layer_links_changed (LigmaImage         *image,
+                                          LigmaLayerTreeView *view)
 {
   GtkWidget    *grid;
   GtkWidget    *label;
@@ -1214,26 +1214,26 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
   if (! image)
     return;
 
-  links = gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER);
+  links = ligma_image_get_stored_item_sets (image, LIGMA_TYPE_LAYER);
 
   label_size = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
   for (iter = links; iter; iter = iter->next)
     {
-      GimpSelectMethod method;
+      LigmaSelectMethod method;
 
       grid = gtk_grid_new ();
 
-      label = gtk_label_new (gimp_object_get_name (iter->data));
+      label = gtk_label_new (ligma_object_get_name (iter->data));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      if (gimp_item_list_is_pattern (iter->data, &method))
+      if (ligma_item_list_is_pattern (iter->data, &method))
         {
           gchar         *display_name;
           PangoAttrList *attrs;
 
           display_name = g_strdup_printf ("<small>[%s]</small> %s",
-                                          method == GIMP_SELECT_PLAIN_TEXT ? _("search") :
-                                          (method == GIMP_SELECT_GLOB_PATTERN ? _("glob") : _("regexp")),
-                                          gimp_object_get_name (iter->data));
+                                          method == LIGMA_SELECT_PLAIN_TEXT ? _("search") :
+                                          (method == LIGMA_SELECT_GLOB_PATTERN ? _("glob") : _("regexp")),
+                                          ligma_object_get_name (iter->data));
           gtk_label_set_markup (GTK_LABEL (label), display_name);
           g_free (display_name);
 
@@ -1258,12 +1258,12 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
       gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
       g_object_set_data (G_OBJECT (event_box), "link-set", iter->data);
       g_signal_connect (event_box, "button-release-event",
-                        G_CALLBACK (gimp_layer_tree_view_unlink_clicked),
+                        G_CALLBACK (ligma_layer_tree_view_unlink_clicked),
                         view);
       gtk_grid_attach (GTK_GRID (grid), event_box, 2, 0, 1, 1);
       gtk_widget_show (event_box);
 
-      icon = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE, GTK_ICON_SIZE_MENU);
+      icon = gtk_image_new_from_icon_name (LIGMA_ICON_EDIT_DELETE, GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (icon), 10);
       gtk_container_add (GTK_CONTAINER (event_box), icon);
       gtk_widget_show (icon);
@@ -1285,7 +1285,7 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
 
       g_signal_connect (event_box,
                         "button-release-event",
-                        G_CALLBACK (gimp_layer_tree_view_link_clicked),
+                        G_CALLBACK (ligma_layer_tree_view_link_clicked),
                         view);
 
       gtk_widget_show (grid);
@@ -1295,28 +1295,28 @@ gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
 }
 
 static gboolean
-gimp_layer_tree_view_link_clicked (GtkWidget         *box,
+ligma_layer_tree_view_link_clicked (GtkWidget         *box,
                                    GdkEvent          *event,
-                                   GimpLayerTreeView *view)
+                                   LigmaLayerTreeView *view)
 {
-  GimpImage       *image;
+  LigmaImage       *image;
   GdkEventButton  *bevent = (GdkEventButton *) event;
   GdkModifierType  modifiers;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GTK_IS_EVENT_BOX (box), FALSE);
 
-  modifiers = bevent->state & gimp_get_all_modifiers_mask ();
+  modifiers = bevent->state & ligma_get_all_modifiers_mask ();
   if (modifiers == GDK_SHIFT_MASK)
-    gimp_image_add_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
+    ligma_image_add_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
   else if (modifiers == GDK_CONTROL_MASK)
-    gimp_image_remove_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
+    ligma_image_remove_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
   else if (modifiers == (GDK_CONTROL_MASK | GDK_SHIFT_MASK))
-    gimp_image_intersect_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
+    ligma_image_intersect_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
   else
-    gimp_image_select_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
+    ligma_image_select_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
 
   gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
   /* TODO: if clicking on pattern link, fill in the pattern field? */
@@ -1325,13 +1325,13 @@ gimp_layer_tree_view_link_clicked (GtkWidget         *box,
 }
 
 static void
-gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
-                                         GimpLayerTreeView *view)
+ligma_layer_tree_view_link_popover_shown (GtkPopover    *popover,
+                                         LigmaLayerTreeView *view)
 {
-  GimpImage        *image;
-  GimpSelectMethod  pattern_syntax;
+  LigmaImage        *image;
+  LigmaSelectMethod  pattern_syntax;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
 
   if (! image)
     {
@@ -1342,24 +1342,24 @@ gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
       return;
     }
 
-  g_object_get (image->gimp->config,
+  g_object_get (image->ligma->config,
                 "items-select-method", &pattern_syntax,
                 NULL);
   switch (pattern_syntax)
     {
-    case GIMP_SELECT_PLAIN_TEXT:
+    case LIGMA_SELECT_PLAIN_TEXT:
       gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by text search"));
       gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Text search"));
       break;
-    case GIMP_SELECT_GLOB_PATTERN:
+    case LIGMA_SELECT_GLOB_PATTERN:
       gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by glob patterns"));
       gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
                                       _("Glob pattern search"));
       break;
-    case GIMP_SELECT_REGEX_PATTERN:
+    case LIGMA_SELECT_REGEX_PATTERN:
       gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                    _("Select layers by regular expressions"));
       gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
@@ -1369,13 +1369,13 @@ gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
 }
 
 static gboolean
-gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
+ligma_layer_tree_view_search_key_release (GtkWidget         *widget,
                                          GdkEventKey       *event,
-                                         GimpLayerTreeView *view)
+                                         LigmaLayerTreeView *view)
 {
-  GimpImage        *image;
+  LigmaImage        *image;
   const gchar      *pattern;
-  GimpSelectMethod  pattern_syntax;
+  LigmaSelectMethod  pattern_syntax;
 
   if (event->keyval == GDK_KEY_Escape   ||
       event->keyval == GDK_KEY_Return   ||
@@ -1384,7 +1384,7 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
     {
       if (event->state & GDK_SHIFT_MASK)
         {
-          if (gimp_layer_tree_view_new_link_clicked (view))
+          if (ligma_layer_tree_view_new_link_clicked (view))
             gtk_widget_hide (view->priv->link_popover);
         }
       else
@@ -1397,13 +1397,13 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
   gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
                             NULL);
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
   g_clear_object (&view->priv->link_pattern_set);
 
   if (! image)
     return TRUE;
 
-  g_object_get (image->gimp->config,
+  g_object_get (image->ligma->config,
                 "items-select-method", &pattern_syntax,
                 NULL);
   pattern = gtk_entry_get_text (GTK_ENTRY (view->priv->link_search_entry));
@@ -1415,11 +1415,11 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
       gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
       gtk_widget_set_sensitive (view->priv->link_entry, FALSE);
 
-      view->priv->link_pattern_set = gimp_item_list_pattern_new (image,
-                                                                 GIMP_TYPE_LAYER,
+      view->priv->link_pattern_set = ligma_item_list_pattern_new (image,
+                                                                 LIGMA_TYPE_LAYER,
                                                                  pattern_syntax,
                                                                  pattern);
-      items = gimp_item_list_get_items (view->priv->link_pattern_set, &error);
+      items = ligma_item_list_get_items (view->priv->link_pattern_set, &error);
       if (error)
         {
           /* Invalid regular expression. */
@@ -1431,7 +1431,7 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
                                      error->message);
           gtk_widget_set_tooltip_text (view->priv->link_search_entry,
                                        tooltip);
-          gimp_image_set_selected_layers (image, NULL);
+          ligma_image_set_selected_layers (image, NULL);
           gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
                                     attrs);
           g_free (tooltip);
@@ -1443,12 +1443,12 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
       else if (items == NULL)
         {
           /* Pattern does not match any results. */
-          gimp_image_set_selected_layers (image, NULL);
-          gimp_widget_blink (view->priv->link_search_entry);
+          ligma_image_set_selected_layers (image, NULL);
+          ligma_widget_blink (view->priv->link_search_entry);
         }
       else
         {
-          gimp_image_set_selected_layers (image, items);
+          ligma_image_set_selected_layers (image, items);
           g_list_free (items);
         }
     }
@@ -1461,19 +1461,19 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
 }
 
 static void
-gimp_layer_tree_view_new_link_exit (GimpLayerTreeView *view)
+ligma_layer_tree_view_new_link_exit (LigmaLayerTreeView *view)
 {
-  if (gimp_layer_tree_view_new_link_clicked (view))
+  if (ligma_layer_tree_view_new_link_clicked (view))
     gtk_widget_hide (view->priv->link_popover);
 }
 
 static gboolean
-gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
+ligma_layer_tree_view_new_link_clicked (LigmaLayerTreeView *view)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   const gchar *name;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
 
   if (! image)
     return TRUE;
@@ -1481,12 +1481,12 @@ gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
   name = gtk_entry_get_text (GTK_ENTRY (view->priv->link_entry));
   if (name && strlen (name) > 0)
     {
-      GimpItemList *set;
+      LigmaItemList *set;
 
-      set = gimp_item_list_named_new (image, GIMP_TYPE_LAYER, name, NULL);
+      set = ligma_item_list_named_new (image, LIGMA_TYPE_LAYER, name, NULL);
       if (set)
         {
-          gimp_image_store_item_set (image, set);
+          ligma_image_store_item_set (image, set);
           gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
         }
       else
@@ -1497,14 +1497,14 @@ gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
     }
   else if (view->priv->link_pattern_set != NULL)
     {
-      gimp_image_store_item_set (image, view->priv->link_pattern_set);
+      ligma_image_store_item_set (image, view->priv->link_pattern_set);
       view->priv->link_pattern_set = NULL;
       gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
     }
   else
     {
-      gimp_widget_blink (view->priv->link_entry);
-      gimp_widget_blink (view->priv->link_search_entry);
+      ligma_widget_blink (view->priv->link_entry);
+      ligma_widget_blink (view->priv->link_search_entry);
 
       return FALSE;
     }
@@ -1513,17 +1513,17 @@ gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
 }
 
 static gboolean
-gimp_layer_tree_view_unlink_clicked (GtkWidget         *widget,
+ligma_layer_tree_view_unlink_clicked (GtkWidget         *widget,
                                      GdkEvent          *event,
-                                     GimpLayerTreeView *view)
+                                     LigmaLayerTreeView *view)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  gimp_image_unlink_item_set (image,
+  ligma_image_unlink_item_set (image,
                               g_object_get_data (G_OBJECT (widget),
                                                  "link-set"));
 
@@ -1535,41 +1535,41 @@ gimp_layer_tree_view_unlink_clicked (GtkWidget         *widget,
 
 #define BLOCK() \
         g_signal_handlers_block_by_func (layer, \
-        gimp_layer_tree_view_layer_signal_handler, view)
+        ligma_layer_tree_view_layer_signal_handler, view)
 
 #define UNBLOCK() \
         g_signal_handlers_unblock_by_func (layer, \
-        gimp_layer_tree_view_layer_signal_handler, view)
+        ligma_layer_tree_view_layer_signal_handler, view)
 
 
 static void
-gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
+ligma_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
                                               const GParamSpec  *pspec,
-                                              GimpLayerTreeView *view)
+                                              LigmaLayerTreeView *view)
 {
-  GimpImage     *image;
+  LigmaImage     *image;
   GList         *layers    = NULL;
   GList         *iter;
-  GimpUndo      *undo;
+  LigmaUndo      *undo;
   gboolean       push_undo = TRUE;
   gint           n_layers  = 0;
-  GimpLayerMode  mode;
+  LigmaLayerMode  mode;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  mode  = gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (widget));
-  undo  = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                        GIMP_UNDO_LAYER_MODE);
+  image = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
+  mode  = ligma_layer_mode_box_get_mode (LIGMA_LAYER_MODE_BOX (widget));
+  undo  = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                        LIGMA_UNDO_LAYER_MODE);
 
   if (image)
-    layers = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+    layers = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_layer_get_mode (iter->data) != mode)
+      if (ligma_layer_get_mode (iter->data) != mode)
         {
           n_layers++;
 
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
+          if (undo && LIGMA_ITEM_UNDO (undo)->item == LIGMA_ITEM (iter->data))
             push_undo = FALSE;
         }
     }
@@ -1579,55 +1579,55 @@ gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
       /*  Don't compress mode undos with more than 1 layer changed. */
       push_undo = TRUE;
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_LAYER_OPACITY,
                                    _("Set layers mode"));
     }
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = iter->data;
+      LigmaLayer *layer = iter->data;
 
-      if (gimp_layer_get_mode (layer) != mode)
+      if (ligma_layer_get_mode (layer) != mode)
         {
           BLOCK();
-          gimp_layer_set_mode (layer, (GimpLayerMode) mode, push_undo);
+          ligma_layer_set_mode (layer, (LigmaLayerMode) mode, push_undo);
           UNBLOCK();
         }
     }
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   if (! push_undo)
-    gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
+    ligma_undo_refresh_preview (undo, ligma_container_view_get_context (LIGMA_CONTAINER_VIEW (view)));
 
   if (n_layers > 1)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 static void
-gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
-                                            GimpLayerTreeView *view)
+ligma_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
+                                            LigmaLayerTreeView *view)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GList     *layers;
   GList     *iter;
-  GimpUndo  *undo;
+  LigmaUndo  *undo;
   gboolean   push_undo = TRUE;
   gint       n_layers = 0;
   gdouble    opacity;
 
-  image   = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  layers  = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
-  undo    = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                          GIMP_UNDO_LAYER_OPACITY);
+  image   = ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view));
+  layers  = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  undo    = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                          LIGMA_UNDO_LAYER_OPACITY);
   opacity = gtk_adjustment_get_value (adjustment) / 100.0;
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_layer_get_opacity (iter->data) != opacity)
+      if (ligma_layer_get_opacity (iter->data) != opacity)
         {
           n_layers++;
 
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
+          if (undo && LIGMA_ITEM_UNDO (undo)->item == LIGMA_ITEM (iter->data))
             push_undo = FALSE;
         }
     }
@@ -1636,28 +1636,28 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
       /*  Don't compress opacity undos with more than 1 layer changed. */
       push_undo = TRUE;
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_LAYER_OPACITY,
                                    _("Set layers opacity"));
     }
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = iter->data;
+      LigmaLayer *layer = iter->data;
 
-      if (gimp_layer_get_opacity (layer) != opacity)
+      if (ligma_layer_get_opacity (layer) != opacity)
         {
           BLOCK();
-          gimp_layer_set_opacity (layer, opacity, push_undo);
+          ligma_layer_set_opacity (layer, opacity, push_undo);
           UNBLOCK();
         }
     }
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   if (! push_undo)
-    gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
+    ligma_undo_refresh_preview (undo, ligma_container_view_get_context (LIGMA_CONTAINER_VIEW (view)));
 
   if (n_layers > 1)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 #undef BLOCK
@@ -1665,17 +1665,17 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
 
 static void
-gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
-                                           GimpLayerTreeView *view)
+ligma_layer_tree_view_layer_signal_handler (LigmaLayer         *layer,
+                                           LigmaLayerTreeView *view)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (view);
   GList            *selected_layers;
 
   selected_layers =
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (gimp_item_tree_view_get_image (item_view));
+    LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (ligma_item_tree_view_get_image (item_view));
 
   if (g_list_find (selected_layers, layer))
-    gimp_layer_tree_view_update_options (view, selected_layers);
+    ligma_layer_tree_view_update_options (view, selected_layers);
 }
 
 
@@ -1686,12 +1686,12 @@ gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
         g_signal_handlers_unblock_by_func ((object), (function), view)
 
 static void
-gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
+ligma_layer_tree_view_update_options (LigmaLayerTreeView *view,
                                      GList             *layers)
 {
   GList                *iter;
-  GimpLayerMode         mode = GIMP_LAYER_MODE_SEPARATOR;
-  GimpLayerModeContext  context = 0;
+  LigmaLayerMode         mode = LIGMA_LAYER_MODE_SEPARATOR;
+  LigmaLayerModeContext  context = 0;
   /*gboolean              inconsistent_opacity    = FALSE;*/
   gboolean              inconsistent_mode       = FALSE;
   gdouble               opacity = -1.0;
@@ -1700,57 +1700,57 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
     {
 #if 0
       if (opacity != -1.0 &&
-          opacity != gimp_layer_get_opacity (iter->data))
+          opacity != ligma_layer_get_opacity (iter->data))
         /* We don't really have a way to show an inconsistent
-         * GimpSpinScale. This is currently unused.
+         * LigmaSpinScale. This is currently unused.
          */
         inconsistent_opacity = TRUE;
 #endif
 
-      opacity = gimp_layer_get_opacity (iter->data);
+      opacity = ligma_layer_get_opacity (iter->data);
 
-      if (gimp_viewable_get_children (iter->data))
-        context |= GIMP_LAYER_MODE_CONTEXT_GROUP;
+      if (ligma_viewable_get_children (iter->data))
+        context |= LIGMA_LAYER_MODE_CONTEXT_GROUP;
       else
-        context |= GIMP_LAYER_MODE_CONTEXT_LAYER;
+        context |= LIGMA_LAYER_MODE_CONTEXT_LAYER;
 
-      if (mode != GIMP_LAYER_MODE_SEPARATOR &&
-          mode != gimp_layer_get_mode (iter->data))
+      if (mode != LIGMA_LAYER_MODE_SEPARATOR &&
+          mode != ligma_layer_get_mode (iter->data))
         inconsistent_mode = TRUE;
 
-      mode = gimp_layer_get_mode (iter->data);
+      mode = ligma_layer_get_mode (iter->data);
     }
   if (opacity == -1.0)
     opacity = 1.0;
 
   if (inconsistent_mode)
-    mode = GIMP_LAYER_MODE_SEPARATOR;
+    mode = LIGMA_LAYER_MODE_SEPARATOR;
 
   if (! context)
-    context = GIMP_LAYER_MODE_CONTEXT_LAYER;
+    context = LIGMA_LAYER_MODE_CONTEXT_LAYER;
 
   BLOCK (view->priv->layer_mode_box,
-         gimp_layer_tree_view_layer_mode_box_callback);
+         ligma_layer_tree_view_layer_mode_box_callback);
 
-  gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+  ligma_layer_mode_box_set_context (LIGMA_LAYER_MODE_BOX (view->priv->layer_mode_box),
                                    context);
-  gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+  ligma_layer_mode_box_set_mode (LIGMA_LAYER_MODE_BOX (view->priv->layer_mode_box),
                                 mode);
 
   UNBLOCK (view->priv->layer_mode_box,
-           gimp_layer_tree_view_layer_mode_box_callback);
+           ligma_layer_tree_view_layer_mode_box_callback);
 
   if (opacity * 100.0 !=
       gtk_adjustment_get_value (view->priv->opacity_adjustment))
     {
       BLOCK (view->priv->opacity_adjustment,
-             gimp_layer_tree_view_opacity_scale_changed);
+             ligma_layer_tree_view_opacity_scale_changed);
 
       gtk_adjustment_set_value (view->priv->opacity_adjustment,
                                 opacity * 100.0);
 
       UNBLOCK (view->priv->opacity_adjustment,
-               gimp_layer_tree_view_opacity_scale_changed);
+               ligma_layer_tree_view_opacity_scale_changed);
     }
 }
 
@@ -1759,67 +1759,67 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 
 
 static void
-gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
+ligma_layer_tree_view_update_menu (LigmaLayerTreeView *layer_view,
                                   GList             *layers)
 {
-  GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
-  GimpActionGroup *group;
+  LigmaUIManager   *ui_manager = ligma_editor_get_ui_manager (LIGMA_EDITOR (layer_view));
+  LigmaActionGroup *group;
   GList           *iter;
   gboolean         have_masks         = FALSE;
   gboolean         all_masks_shown    = TRUE;
   gboolean         all_masks_disabled = TRUE;
 
-  group = gimp_ui_manager_get_action_group (ui_manager, "layers");
+  group = ligma_ui_manager_get_action_group (ui_manager, "layers");
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_layer_get_mask (iter->data))
+      if (ligma_layer_get_mask (iter->data))
         {
           have_masks = TRUE;
-          if (! gimp_layer_get_show_mask (iter->data))
+          if (! ligma_layer_get_show_mask (iter->data))
             all_masks_shown = FALSE;
-          if (gimp_layer_get_apply_mask (iter->data))
+          if (ligma_layer_get_apply_mask (iter->data))
             all_masks_disabled = FALSE;
         }
     }
 
-  gimp_action_group_set_action_active (group, "layers-mask-show",
+  ligma_action_group_set_action_active (group, "layers-mask-show",
                                        have_masks && all_masks_shown);
-  gimp_action_group_set_action_active (group, "layers-mask-disable",
+  ligma_action_group_set_action_active (group, "layers-mask-disable",
                                        have_masks && all_masks_disabled);
 
   /* Only one layer mask at a time can be edited. */
-  gimp_action_group_set_action_active (group, "layers-mask-edit",
+  ligma_action_group_set_action_active (group, "layers-mask-edit",
                                        g_list_length (layers) == 1 &&
-                                       gimp_layer_get_mask (layers->data) &&
-                                       gimp_layer_get_edit_mask (layers->data));
+                                       ligma_layer_get_mask (layers->data) &&
+                                       ligma_layer_get_edit_mask (layers->data));
 }
 
 static void
-gimp_layer_tree_view_update_highlight (GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_update_highlight (LigmaLayerTreeView *layer_view)
 {
-  GimpItemTreeView *item_view    = GIMP_ITEM_TREE_VIEW (layer_view);
-  GimpImage        *image        = gimp_item_tree_view_get_image (item_view);
-  GimpLayer        *floating_sel = NULL;
+  LigmaItemTreeView *item_view    = LIGMA_ITEM_TREE_VIEW (layer_view);
+  LigmaImage        *image        = ligma_item_tree_view_get_image (item_view);
+  LigmaLayer        *floating_sel = NULL;
   GtkReliefStyle    default_relief;
 
   if (image)
-    floating_sel = gimp_image_get_floating_selection (image);
+    floating_sel = ligma_image_get_floating_selection (image);
 
   gtk_widget_style_get (GTK_WIDGET (layer_view),
                         "button-relief", &default_relief,
                         NULL);
 
-  gimp_button_set_suggested (gimp_item_tree_view_get_new_button (item_view),
+  ligma_button_set_suggested (ligma_item_tree_view_get_new_button (item_view),
                              floating_sel &&
-                             ! GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (floating_sel)),
+                             ! LIGMA_IS_CHANNEL (ligma_layer_get_floating_sel_drawable (floating_sel)),
                              default_relief);
 
-  gimp_button_set_destructive (gimp_item_tree_view_get_delete_button (item_view),
+  ligma_button_set_destructive (ligma_item_tree_view_get_delete_button (item_view),
                                floating_sel != NULL,
                                default_relief);
 
-  gimp_button_set_suggested (layer_view->priv->anchor_button,
+  ligma_button_set_suggested (layer_view->priv->anchor_button,
                              floating_sel != NULL,
                              default_relief);
 }
@@ -1828,17 +1828,17 @@ gimp_layer_tree_view_update_highlight (GimpLayerTreeView *layer_view)
 /*  Layer Mask callbacks  */
 
 static void
-gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
+ligma_layer_tree_view_mask_update (LigmaLayerTreeView *layer_view,
                                   GtkTreeIter       *iter,
-                                  GimpLayer         *layer)
+                                  LigmaLayer         *layer)
 {
-  GimpContainerView     *view         = GIMP_CONTAINER_VIEW (layer_view);
-  GimpContainerTreeView *tree_view    = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GimpLayerMask         *mask;
-  GimpViewRenderer      *renderer     = NULL;
+  LigmaContainerView     *view         = LIGMA_CONTAINER_VIEW (layer_view);
+  LigmaContainerTreeView *tree_view    = LIGMA_CONTAINER_TREE_VIEW (layer_view);
+  LigmaLayerMask         *mask;
+  LigmaViewRenderer      *renderer     = NULL;
   gboolean               mask_visible = FALSE;
 
-  mask = gimp_layer_get_mask (layer);
+  mask = ligma_layer_get_mask (layer);
 
   if (mask)
     {
@@ -1846,21 +1846,21 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
       gint      view_size;
       gint      border_width;
 
-      view_size = gimp_container_view_get_view_size (view, &border_width);
+      view_size = ligma_container_view_get_view_size (view, &border_width);
 
       mask_visible = TRUE;
 
-      renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
+      renderer = ligma_view_renderer_new (ligma_container_view_get_context (view),
                                          G_TYPE_FROM_INSTANCE (mask),
                                          view_size, border_width,
                                          FALSE);
-      gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (mask));
+      ligma_view_renderer_set_viewable (renderer, LIGMA_VIEWABLE (mask));
 
       g_signal_connect (renderer, "update",
-                        G_CALLBACK (gimp_layer_tree_view_renderer_update),
+                        G_CALLBACK (ligma_layer_tree_view_renderer_update),
                         layer_view);
 
-      closure = g_cclosure_new (G_CALLBACK (gimp_layer_tree_view_mask_callback),
+      closure = g_cclosure_new (G_CALLBACK (ligma_layer_tree_view_mask_callback),
                                 layer_view, NULL);
       g_object_watch_closure (G_OBJECT (renderer), closure);
       g_signal_connect_closure (layer, "apply-mask-changed", closure, FALSE);
@@ -1873,41 +1873,41 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
                       layer_view->priv->model_column_mask_visible, mask_visible,
                       -1);
 
-  gimp_layer_tree_view_update_borders (layer_view, iter);
+  ligma_layer_tree_view_update_borders (layer_view, iter);
 
   if (renderer)
     {
-      gimp_view_renderer_remove_idle (renderer);
+      ligma_view_renderer_remove_idle (renderer);
       g_object_unref (renderer);
     }
 }
 
 static void
-gimp_layer_tree_view_mask_changed (GimpLayer         *layer,
-                                   GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_mask_changed (LigmaLayer         *layer,
+                                   LigmaLayerTreeView *layer_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (layer_view);
+  LigmaContainerView *view = LIGMA_CONTAINER_VIEW (layer_view);
   GtkTreeIter       *iter;
 
-  iter = gimp_container_view_lookup (view, GIMP_VIEWABLE (layer));
+  iter = ligma_container_view_lookup (view, LIGMA_VIEWABLE (layer));
 
   if (iter)
-    gimp_layer_tree_view_mask_update (layer_view, iter, layer);
+    ligma_layer_tree_view_mask_update (layer_view, iter, layer);
 }
 
 static void
-gimp_layer_tree_view_renderer_update (GimpViewRenderer  *renderer,
-                                      GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_renderer_update (LigmaViewRenderer  *renderer,
+                                      LigmaLayerTreeView *layer_view)
 {
-  GimpContainerView     *view      = GIMP_CONTAINER_VIEW (layer_view);
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GimpLayerMask         *mask;
+  LigmaContainerView     *view      = LIGMA_CONTAINER_VIEW (layer_view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (layer_view);
+  LigmaLayerMask         *mask;
   GtkTreeIter           *iter;
 
-  mask = GIMP_LAYER_MASK (renderer->viewable);
+  mask = LIGMA_LAYER_MASK (renderer->viewable);
 
-  iter = gimp_container_view_lookup (view, (GimpViewable *)
-                                     gimp_layer_mask_get_layer (mask));
+  iter = ligma_container_view_lookup (view, (LigmaViewable *)
+                                     ligma_layer_mask_get_layer (mask));
 
   if (iter)
     {
@@ -1922,64 +1922,64 @@ gimp_layer_tree_view_renderer_update (GimpViewRenderer  *renderer,
 }
 
 static void
-gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
+ligma_layer_tree_view_update_borders (LigmaLayerTreeView *layer_view,
                                      GtkTreeIter       *iter)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GimpViewRenderer      *layer_renderer;
-  GimpViewRenderer      *mask_renderer;
-  GimpLayer             *layer      = NULL;
-  GimpLayerMask         *mask       = NULL;
-  GimpViewBorderType     layer_type = GIMP_VIEW_BORDER_BLACK;
+  LigmaContainerTreeView *tree_view  = LIGMA_CONTAINER_TREE_VIEW (layer_view);
+  LigmaViewRenderer      *layer_renderer;
+  LigmaViewRenderer      *mask_renderer;
+  LigmaLayer             *layer      = NULL;
+  LigmaLayerMask         *mask       = NULL;
+  LigmaViewBorderType     layer_type = LIGMA_VIEW_BORDER_BLACK;
 
   gtk_tree_model_get (tree_view->model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
                       layer_view->priv->model_column_mask,       &mask_renderer,
                       -1);
 
   if (layer_renderer)
-    layer = GIMP_LAYER (layer_renderer->viewable);
-  else if (mask_renderer && GIMP_IS_LAYER (mask_renderer->viewable))
+    layer = LIGMA_LAYER (layer_renderer->viewable);
+  else if (mask_renderer && LIGMA_IS_LAYER (mask_renderer->viewable))
     /* This happens when floating masks are displayed (in the mask column).
      * In such a case, the mask_renderer will actually be a layer renderer
      * showing the floating mask.
      */
-    layer = GIMP_LAYER (mask_renderer->viewable);
+    layer = LIGMA_LAYER (mask_renderer->viewable);
 
   g_return_if_fail (layer != NULL);
 
-  if (mask_renderer && GIMP_IS_LAYER_MASK (mask_renderer->viewable))
-    mask = GIMP_LAYER_MASK (mask_renderer->viewable);
+  if (mask_renderer && LIGMA_IS_LAYER_MASK (mask_renderer->viewable))
+    mask = LIGMA_LAYER_MASK (mask_renderer->viewable);
 
-  if (! mask || (mask && ! gimp_layer_get_edit_mask (layer)))
-    layer_type = GIMP_VIEW_BORDER_WHITE;
+  if (! mask || (mask && ! ligma_layer_get_edit_mask (layer)))
+    layer_type = LIGMA_VIEW_BORDER_WHITE;
 
   if (layer_renderer)
-    gimp_view_renderer_set_border_type (layer_renderer, layer_type);
+    ligma_view_renderer_set_border_type (layer_renderer, layer_type);
 
   if (mask)
     {
-      GimpViewBorderType mask_color = GIMP_VIEW_BORDER_BLACK;
+      LigmaViewBorderType mask_color = LIGMA_VIEW_BORDER_BLACK;
 
-      if (gimp_layer_get_show_mask (layer))
+      if (ligma_layer_get_show_mask (layer))
         {
-          mask_color = GIMP_VIEW_BORDER_GREEN;
+          mask_color = LIGMA_VIEW_BORDER_GREEN;
         }
-      else if (! gimp_layer_get_apply_mask (layer))
+      else if (! ligma_layer_get_apply_mask (layer))
         {
-          mask_color = GIMP_VIEW_BORDER_RED;
+          mask_color = LIGMA_VIEW_BORDER_RED;
         }
-      else if (gimp_layer_get_edit_mask (layer))
+      else if (ligma_layer_get_edit_mask (layer))
         {
-          mask_color = GIMP_VIEW_BORDER_WHITE;
+          mask_color = LIGMA_VIEW_BORDER_WHITE;
         }
 
-      gimp_view_renderer_set_border_type (mask_renderer, mask_color);
+      ligma_view_renderer_set_border_type (mask_renderer, mask_color);
     }
   else if (mask_renderer)
     {
       /* Floating mask. */
-      gimp_view_renderer_set_border_type (mask_renderer, GIMP_VIEW_BORDER_WHITE);
+      ligma_view_renderer_set_border_type (mask_renderer, LIGMA_VIEW_BORDER_WHITE);
     }
 
   if (layer_renderer)
@@ -1990,57 +1990,57 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
 }
 
 static void
-gimp_layer_tree_view_mask_callback (GimpLayer         *layer,
-                                    GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_mask_callback (LigmaLayer         *layer,
+                                    LigmaLayerTreeView *layer_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (layer_view);
+  LigmaContainerView *view = LIGMA_CONTAINER_VIEW (layer_view);
   GtkTreeIter       *iter;
 
-  iter = gimp_container_view_lookup (view, (GimpViewable *) layer);
+  iter = ligma_container_view_lookup (view, (LigmaViewable *) layer);
 
-  gimp_layer_tree_view_update_borders (layer_view, iter);
+  ligma_layer_tree_view_update_borders (layer_view, iter);
 }
 
 static void
-gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
+ligma_layer_tree_view_layer_clicked (LigmaCellRendererViewable *cell,
                                     const gchar              *path_str,
                                     GdkModifierType           state,
-                                    GimpLayerTreeView        *layer_view)
+                                    LigmaLayerTreeView        *layer_view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (layer_view);
   GtkTreePath           *path      = gtk_tree_path_new_from_string (path_str);
   GtkTreeIter            iter;
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpUIManager    *ui_manager;
-      GimpActionGroup  *group;
-      GimpViewRenderer *renderer;
+      LigmaUIManager    *ui_manager;
+      LigmaActionGroup  *group;
+      LigmaViewRenderer *renderer;
 
-      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
-      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
+      ui_manager = ligma_editor_get_ui_manager (LIGMA_EDITOR (tree_view));
+      group      = ligma_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       if (renderer)
         {
-          GimpLayer       *layer     = GIMP_LAYER (renderer->viewable);
-          GimpLayerMask   *mask      = gimp_layer_get_mask (layer);
-          GdkModifierType  modifiers = (state & gimp_get_all_modifiers_mask ());
+          LigmaLayer       *layer     = LIGMA_LAYER (renderer->viewable);
+          LigmaLayerMask   *mask      = ligma_layer_get_mask (layer);
+          GdkModifierType  modifiers = (state & ligma_get_all_modifiers_mask ());
 
 #if 0
 /* This feature has been removed because it clashes with the
  * multi-selection (Shift/Ctrl are reserved), and we can't move it to
  * Alt+ because then it would clash with the alpha-to-selection features
- * (cf. gimp_item_tree_view_item_pre_clicked()).
+ * (cf. ligma_item_tree_view_item_pre_clicked()).
  * Just macro-ing them out for now, just in case, but I don't think
  * there is a chance to revive them as there is no infinite modifiers.
  */
-          GimpImage       *image;
+          LigmaImage       *image;
 
-          image = gimp_item_get_image (GIMP_ITEM (layer));
+          image = ligma_item_get_image (LIGMA_ITEM (layer));
 
           if ((modifiers & GDK_MOD1_MASK))
             {
@@ -2049,27 +2049,27 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                * the clicked layer, not on selected layers.
                *
                * Note: Alt-click is already reserved for Alpha to
-               * selection in GimpItemTreeView.
+               * selection in LigmaItemTreeView.
                */
               if (modifiers == (GDK_MOD1_MASK | GDK_SHIFT_MASK))
                 {
                   /* Alt-Shift-click adds a layer mask with last values */
-                  GimpDialogConfig *config;
-                  GimpChannel      *channel = NULL;
+                  LigmaDialogConfig *config;
+                  LigmaChannel      *channel = NULL;
 
                   if (! mask)
                     {
-                      config = GIMP_DIALOG_CONFIG (image->gimp->config);
+                      config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
-                      if (config->layer_add_mask_type == GIMP_ADD_MASK_CHANNEL)
+                      if (config->layer_add_mask_type == LIGMA_ADD_MASK_CHANNEL)
                         {
-                          channel = gimp_image_get_active_channel (image);
+                          channel = ligma_image_get_active_channel (image);
 
                           if (! channel)
                             {
-                              GimpContainer *channels = gimp_image_get_channels (image);
+                              LigmaContainer *channels = ligma_image_get_channels (image);
 
-                              channel = GIMP_CHANNEL (gimp_container_get_first_child (channels));
+                              channel = LIGMA_CHANNEL (ligma_container_get_first_child (channels));
                             }
 
                           if (! channel)
@@ -2080,17 +2080,17 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                             }
                         }
 
-                      if (config->layer_add_mask_type != GIMP_ADD_MASK_CHANNEL || channel)
+                      if (config->layer_add_mask_type != LIGMA_ADD_MASK_CHANNEL || channel)
                         {
-                          mask = gimp_layer_create_mask (layer,
+                          mask = ligma_layer_create_mask (layer,
                                                          config->layer_add_mask_type,
                                                          channel);
 
                           if (config->layer_add_mask_invert)
-                            gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+                            ligma_channel_invert (LIGMA_CHANNEL (mask), FALSE);
 
-                          gimp_layer_add_mask (layer, mask, TRUE, NULL);
-                          gimp_image_flush (image);
+                          ligma_layer_add_mask (layer, mask, TRUE, NULL);
+                          ligma_image_flush (image);
                         }
                     }
                 }
@@ -2099,8 +2099,8 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                   /* Alt-Control-click removes a layer mask */
                   if (mask)
                     {
-                      gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, TRUE);
-                      gimp_image_flush (image);
+                      ligma_layer_apply_mask (layer, LIGMA_MASK_DISCARD, TRUE);
+                      ligma_image_flush (image);
                     }
                 }
               else if (modifiers == (GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK))
@@ -2108,19 +2108,19 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                   /* Alt-Shift-Control-click applies a layer mask */
                   if (mask)
                     {
-                      gimp_layer_apply_mask (layer, GIMP_MASK_APPLY, TRUE);
-                      gimp_image_flush (image);
+                      ligma_layer_apply_mask (layer, LIGMA_MASK_APPLY, TRUE);
+                      ligma_image_flush (image);
                     }
                 }
             }
           else
 #endif
-          if (! modifiers && mask && gimp_layer_get_edit_mask (layer))
+          if (! modifiers && mask && ligma_layer_get_edit_mask (layer))
             {
               /* Simple clicks (without modifiers) activate the layer */
 
               if (mask)
-                gimp_action_group_set_action_active (group,
+                ligma_action_group_set_action_active (group,
                                                      "layers-mask-edit", FALSE);
             }
 
@@ -2132,12 +2132,12 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 }
 
 static void
-gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
+ligma_layer_tree_view_mask_clicked (LigmaCellRendererViewable *cell,
                                    const gchar              *path_str,
                                    GdkModifierType           state,
-                                   GimpLayerTreeView        *layer_view)
+                                   LigmaLayerTreeView        *layer_view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (layer_view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
 
@@ -2145,45 +2145,45 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpUIManager    *ui_manager;
-      GimpActionGroup  *group;
+      LigmaViewRenderer *renderer;
+      LigmaUIManager    *ui_manager;
+      LigmaActionGroup  *group;
 
-      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
-      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
+      ui_manager = ligma_editor_get_ui_manager (LIGMA_EDITOR (tree_view));
+      group      = ligma_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       if (renderer)
         {
-          GimpLayer       *layer     = GIMP_LAYER (renderer->viewable);
-          GdkModifierType  modifiers = gimp_get_all_modifiers_mask ();
+          LigmaLayer       *layer     = LIGMA_LAYER (renderer->viewable);
+          GdkModifierType  modifiers = ligma_get_all_modifiers_mask ();
 
           if ((state & GDK_MOD1_MASK))
             {
-              GimpImage *image;
+              LigmaImage *image;
 
-              image = gimp_item_get_image (GIMP_ITEM (layer));
+              image = ligma_item_get_image (LIGMA_ITEM (layer));
 
               if ((state & modifiers) == GDK_MOD1_MASK)
                 {
                   /* Alt-click shows/hides a layer mask */
-                  gimp_layer_set_show_mask (layer, ! gimp_layer_get_show_mask (layer), TRUE);
-                  gimp_image_flush (image);
+                  ligma_layer_set_show_mask (layer, ! ligma_layer_get_show_mask (layer), TRUE);
+                  ligma_image_flush (image);
                 }
               if ((state & modifiers) == (GDK_MOD1_MASK | GDK_CONTROL_MASK))
                 {
                   /* Alt-Control-click enables/disables a layer mask */
-                  gimp_layer_set_apply_mask (layer, ! gimp_layer_get_apply_mask (layer), TRUE);
-                  gimp_image_flush (image);
+                  ligma_layer_set_apply_mask (layer, ! ligma_layer_get_apply_mask (layer), TRUE);
+                  ligma_image_flush (image);
                 }
             }
-          else if (! gimp_layer_get_edit_mask (layer))
+          else if (! ligma_layer_get_edit_mask (layer))
             {
               /* Simple click selects the mask for edition. */
-              gimp_action_group_set_action_active (group,
+              ligma_action_group_set_action_active (group,
                                                    "layers-mask-edit", TRUE);
             }
 
@@ -2195,41 +2195,41 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
 }
 
 
-/*  GimpDrawable alpha callbacks  */
+/*  LigmaDrawable alpha callbacks  */
 
 static void
-gimp_layer_tree_view_alpha_update (GimpLayerTreeView *view,
+ligma_layer_tree_view_alpha_update (LigmaLayerTreeView *view,
                                    GtkTreeIter       *iter,
-                                   GimpLayer         *layer)
+                                   LigmaLayer         *layer)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
-                      gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ?
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
+                      ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)) ?
                       NULL : view->priv->bold_attrs,
                       -1);
 }
 
 static void
-gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
-                                    GimpLayerTreeView *layer_view)
+ligma_layer_tree_view_alpha_changed (LigmaLayer         *layer,
+                                    LigmaLayerTreeView *layer_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (layer_view);
+  LigmaContainerView *view = LIGMA_CONTAINER_VIEW (layer_view);
   GtkTreeIter       *iter;
 
-  iter = gimp_container_view_lookup (view, (GimpViewable *) layer);
+  iter = ligma_container_view_lookup (view, (LigmaViewable *) layer);
 
   if (iter)
     {
-      GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+      LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (view);
 
-      gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
+      ligma_layer_tree_view_alpha_update (layer_view, iter, layer);
 
       /*  update button states  */
-      if (g_list_find (gimp_image_get_selected_layers (gimp_item_tree_view_get_image (item_view)),
+      if (g_list_find (ligma_image_get_selected_layers (ligma_item_tree_view_get_image (item_view)),
                        layer))
-        gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view),
-                                          gimp_image_get_selected_layers (gimp_item_tree_view_get_image (item_view)));
+        ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (view),
+                                          ligma_image_get_selected_layers (ligma_item_tree_view_get_image (item_view)));
     }
 }

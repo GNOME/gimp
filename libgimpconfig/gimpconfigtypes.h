@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,21 +19,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_TYPES_H__
-#define __GIMP_CONFIG_TYPES_H__
+#ifndef __LIGMA_CONFIG_TYPES_H__
+#define __LIGMA_CONFIG_TYPES_H__
 
 
-#include <libgimpbase/gimpbasetypes.h>
+#include <libligmabase/ligmabasetypes.h>
 
 
-typedef struct _GimpConfig        GimpConfig; /* dummy typedef */
-typedef struct _GimpConfigWriter  GimpConfigWriter;
-typedef gchar *                   GimpConfigPath; /* to satisfy docs */
-typedef struct _GScanner          GimpScanner;
+typedef struct _LigmaConfig        LigmaConfig; /* dummy typedef */
+typedef struct _LigmaConfigWriter  LigmaConfigWriter;
+typedef gchar *                   LigmaConfigPath; /* to satisfy docs */
+typedef struct _GScanner          LigmaScanner;
 
-typedef struct _GimpColorConfig   GimpColorConfig;
+typedef struct _LigmaColorConfig   LigmaColorConfig;
 
-#include <libgimpconfig/gimpconfigenums.h>
+#include <libligmaconfig/ligmaconfigenums.h>
 
 
-#endif  /* __GIMP_CONFIG_TYPES_H__ */
+#endif  /* __LIGMA_CONFIG_TYPES_H__ */

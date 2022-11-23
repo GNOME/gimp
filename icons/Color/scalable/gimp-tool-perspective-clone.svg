@@ -16,7 +16,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-perspective-clone.svg">
+   sodipodi:docname="ligma-tool-perspective-clone.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -156,7 +156,7 @@
        id="g4069">
       <g
          transform="matrix(1.0636285,0,0,1.2239686,3.4934589,1038.9468)"
-         id="gimp-tool-shear"
+         id="ligma-tool-shear"
          style="display:inline">
         <path
            sodipodi:nodetypes="ccccc"

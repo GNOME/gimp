@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,41 +21,41 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-gradient.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmachannel.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-gradient.h"
+#include "ligmagradient.h"
+#include "ligmaimage.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-gimp_drawable_gradient (GimpDrawable                *drawable,
-                        GimpContext                 *context,
-                        GimpGradient                *gradient,
+ligma_drawable_gradient (LigmaDrawable                *drawable,
+                        LigmaContext                 *context,
+                        LigmaGradient                *gradient,
                         GeglDistanceMetric           metric,
-                        GimpLayerMode                paint_mode,
-                        GimpGradientType             gradient_type,
+                        LigmaLayerMode                paint_mode,
+                        LigmaGradientType             gradient_type,
                         gdouble                      opacity,
                         gdouble                      offset,
-                        GimpRepeatMode               repeat,
+                        LigmaRepeatMode               repeat,
                         gboolean                     reverse,
-                        GimpGradientBlendColorSpace  blend_color_space,
+                        LigmaGradientBlendColorSpace  blend_color_space,
                         gboolean                     supersample,
                         gint                         max_depth,
                         gdouble                      threshold,
@@ -64,47 +64,47 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
                         gdouble                      starty,
                         gdouble                      endx,
                         gdouble                      endy,
-                        GimpProgress                *progress)
+                        LigmaProgress                *progress)
 {
-  GimpImage  *image;
+  LigmaImage  *image;
   GeglBuffer *buffer;
   GeglBuffer *shapeburst = NULL;
   GeglNode   *render;
   gint        x, y, width, height;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height))
     return;
 
-  gimp_set_busy (image->gimp);
+  ligma_set_busy (image->ligma);
 
   /*  Always create an alpha temp buf (for generality) */
   buffer = gegl_buffer_new (GEGL_RECTANGLE (x, y, width, height),
-                            gimp_drawable_get_format_with_alpha (drawable));
+                            ligma_drawable_get_format_with_alpha (drawable));
 
-  if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
-      gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
+  if (gradient_type >= LIGMA_GRADIENT_SHAPEBURST_ANGULAR &&
+      gradient_type <= LIGMA_GRADIENT_SHAPEBURST_DIMPLED)
     {
       shapeburst =
-        gimp_drawable_gradient_shapeburst_distmap (drawable, metric,
+        ligma_drawable_gradient_shapeburst_distmap (drawable, metric,
                                                    GEGL_RECTANGLE (x, y, width, height),
                                                    progress);
     }
 
-  gimp_drawable_gradient_adjust_coords (drawable,
+  ligma_drawable_gradient_adjust_coords (drawable,
                                         gradient_type,
                                         GEGL_RECTANGLE (x, y, width, height),
                                         &startx, &starty, &endx, &endy);
 
   render = gegl_node_new_child (NULL,
-                                "operation",                  "gimp:gradient",
+                                "operation",                  "ligma:gradient",
                                 "context",                    context,
                                 "gradient",                   gradient,
                                 "start-x",                    startx,
@@ -122,7 +122,7 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
                                 "dither",                     dither,
                                 NULL);
 
-  gimp_gegl_apply_operation (shapeburst, progress, C_("undo-type", "Gradient"),
+  ligma_gegl_apply_operation (shapeburst, progress, C_("undo-type", "Gradient"),
                              render,
                              buffer, GEGL_RECTANGLE (x, y, width, height),
                              FALSE);
@@ -132,39 +132,39 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
   if (shapeburst)
     g_object_unref (shapeburst);
 
-  gimp_drawable_apply_buffer (drawable, buffer,
+  ligma_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (x, y, width, height),
                               TRUE, C_("undo-type", "Gradient"),
                               opacity, paint_mode,
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              gimp_layer_mode_get_paint_composite_mode (paint_mode),
+                              LIGMA_LAYER_COLOR_SPACE_AUTO,
+                              LIGMA_LAYER_COLOR_SPACE_AUTO,
+                              ligma_layer_mode_get_paint_composite_mode (paint_mode),
                               NULL, x, y);
 
-  gimp_drawable_update (drawable, x, y, width, height);
+  ligma_drawable_update (drawable, x, y, width, height);
 
   g_object_unref (buffer);
 
-  gimp_unset_busy (image->gimp);
+  ligma_unset_busy (image->ligma);
 }
 
 GeglBuffer *
-gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
+ligma_drawable_gradient_shapeburst_distmap (LigmaDrawable        *drawable,
                                            GeglDistanceMetric   metric,
                                            const GeglRectangle *region,
-                                           GimpProgress        *progress)
+                                           LigmaProgress        *progress)
 {
-  GimpChannel *mask;
-  GimpImage   *image;
+  LigmaChannel *mask;
+  LigmaImage   *image;
   GeglBuffer  *dist_buffer;
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (region, babl_format ("Y float"));
@@ -172,27 +172,27 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
   /*  allocate the selection mask copy  */
   temp_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
-  mask = gimp_image_get_mask (image);
+  mask = ligma_image_get_mask (image);
 
   /*  If the image mask is not empty, use it as the shape burst source  */
-  if (! gimp_channel_is_empty (mask))
+  if (! ligma_channel_is_empty (mask))
     {
       gint x, y, width, height;
       gint off_x, off_y;
 
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       /*  copy the mask to the temp mask  */
-      gimp_gegl_buffer_copy (
-        gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+      ligma_gegl_buffer_copy (
+        ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask)),
         GEGL_RECTANGLE (x + off_x, y + off_y, width, height),
         GEGL_ABYSS_NONE, temp_buffer, region);
     }
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         {
           const Babl *component_format;
 
@@ -200,7 +200,7 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
 
           /*  extract the alpha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
-          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), region,
+          ligma_gegl_buffer_copy (ligma_drawable_get_buffer (drawable), region,
                                  GEGL_ABYSS_NONE,
                                  temp_buffer, region);
           gegl_buffer_set_format (temp_buffer, NULL);
@@ -222,10 +222,10 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
                                     NULL);
 
   if (progress)
-    gimp_gegl_progress_connect (shapeburst, progress,
+    ligma_gegl_progress_connect (shapeburst, progress,
                                 _("Calculating distance map"));
 
-  gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
+  ligma_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,
                              dist_buffer, region, FALSE);
 
@@ -237,15 +237,15 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
 }
 
 void
-gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
-                                      GimpGradientType     gradient_type,
+ligma_drawable_gradient_adjust_coords (LigmaDrawable        *drawable,
+                                      LigmaGradientType     gradient_type,
                                       const GeglRectangle *region,
                                       gdouble             *startx,
                                       gdouble             *starty,
                                       gdouble             *endx,
                                       gdouble             *endy)
 {
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
   g_return_if_fail (region != NULL);
   g_return_if_fail (startx != NULL);
   g_return_if_fail (starty != NULL);
@@ -254,7 +254,7 @@ gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
 
   /* we potentially adjust the gradient coordinates according to the gradient
    * type, so that in cases where the gradient span is not related to the
-   * segment length, the gradient cache (in GimpOperationGradient) is big
+   * segment length, the gradient cache (in LigmaOperationGradient) is big
    * enough not to produce banding.
    */
 
@@ -264,11 +264,11 @@ gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
      * direction, whose length is the circumference of the largest circle
      * centered at the origin, passing through one of the regions's vertices.
      */
-    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
-    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
+    case LIGMA_GRADIENT_CONICAL_SYMMETRIC:
+    case LIGMA_GRADIENT_CONICAL_ASYMMETRIC:
       {
         gdouble     r = 0.0;
-        GimpVector2 v;
+        LigmaVector2 v;
 
         r = MAX (r, hypot (region->x - *startx,
                            region->y - *starty));
@@ -282,12 +282,12 @@ gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
         /* symmetric conical gradients only span half a revolution, and
          * therefore require only half the cache size.
          */
-        if (gradient_type == GIMP_GRADIENT_CONICAL_SYMMETRIC)
+        if (gradient_type == LIGMA_GRADIENT_CONICAL_SYMMETRIC)
           r /= 2.0;
 
-        gimp_vector2_set (&v, *endx - *startx, *endy - *starty);
-        gimp_vector2_normalize (&v);
-        gimp_vector2_mul (&v, 2.0 * G_PI * r);
+        ligma_vector2_set (&v, *endx - *startx, *endy - *starty);
+        ligma_vector2_normalize (&v);
+        ligma_vector2_mul (&v, 2.0 * G_PI * r);
 
         *endx = *startx + v.x;
         *endy = *starty + v.y;
@@ -298,9 +298,9 @@ gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
      * regions's diagonal, which is the largest possible distance between two
      * points in the region.
      */
-    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
-    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
-    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
+    case LIGMA_GRADIENT_SHAPEBURST_ANGULAR:
+    case LIGMA_GRADIENT_SHAPEBURST_SPHERICAL:
+    case LIGMA_GRADIENT_SHAPEBURST_DIMPLED:
       *startx = region->x;
       *starty = region->y;
       *endx   = region->x + region->width;

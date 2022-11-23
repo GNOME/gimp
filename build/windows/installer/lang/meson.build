@@ -62,15 +62,15 @@ foreach language : languages
     lang_check = 'value[lang(\'@0@\')]'.format(lang_code)
   endif
 
-  gimp_ms_installer_lang_xsl = configure_file(
-    input: 'gimp-ms-installer-config.xsl.in',
-    output: 'gimp-ms-installer-config-@0@.xsl'.format(lang_code),
+  ligma_ms_installer_lang_xsl = configure_file(
+    input: 'ligma-ms-installer-config.xsl.in',
+    output: 'ligma-ms-installer-config-@0@.xsl'.format(lang_code),
     configuration: { 'LANG_CHECK': lang_check },
   )
 
   nobom_setup_isl = '@0@-nobom.setup.isl'.format(lang_code)
   nobom_setup_isl_tmp = custom_target(nobom_setup_isl,
-    input : [ ms_installer_config_xml, gimp_ms_installer_lang_xsl  ],
+    input : [ ms_installer_config_xml, ligma_ms_installer_lang_xsl  ],
     output: nobom_setup_isl,
     command: [
       xsltproc,
@@ -126,6 +126,6 @@ endforeach
 test('windows-installer-langs',
   find_program('test-installer-langs.sh'),
   env: [
-    'GIMP_TESTING_ABS_TOP_SRCDIR=' + meson.project_source_root(),
+    'LIGMA_TESTING_ABS_TOP_SRCDIR=' + meson.project_source_root(),
   ],
   suite: 'build')

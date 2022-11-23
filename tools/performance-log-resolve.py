@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-resolve.py -- Resolve GIMP performance log backtrace symbols
+performance-log-resolve.py -- Resolve LIGMA performance log backtrace symbols
 Copyright (C) 2018  Ell
 
 This program is free software: you can redistribute it and/or modify

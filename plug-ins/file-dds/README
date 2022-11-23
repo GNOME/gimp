@@ -1,9 +1,9 @@
-DDS plugin for The GIMP
+DDS plugin for The LIGMA
 (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
 with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
 ==========================================
 
-This is a plugin for GIMP version 2.4.x. It allows you to load and save
+This is a plugin for LIGMA version 2.4.x. It allows you to load and save
 images in Direct Draw Surface (DDS) format.
 
 Features

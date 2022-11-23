@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpuiconfigurer.h
+ * ligmauiconfigurer.h
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_CONFIGURER_H__
-#define __GIMP_UI_CONFIGURER_H__
+#ifndef __LIGMA_UI_CONFIGURER_H__
+#define __LIGMA_UI_CONFIGURER_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_UI_CONFIGURER              (gimp_ui_configurer_get_type ())
-#define GIMP_UI_CONFIGURER(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UI_CONFIGURER, GimpUIConfigurer))
-#define GIMP_UI_CONFIGURER_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), GIMP_TYPE_UI_CONFIGURER, GimpUIConfigurerClass))
-#define GIMP_IS_UI_CONFIGURER(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UI_CONFIGURER))
-#define GIMP_IS_UI_CONFIGURER_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), GIMP_TYPE_UI_CONFIGURER))
-#define GIMP_UI_CONFIGURER_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), GIMP_TYPE_UI_CONFIGURER, GimpUIConfigurerClass))
+#define LIGMA_TYPE_UI_CONFIGURER              (ligma_ui_configurer_get_type ())
+#define LIGMA_UI_CONFIGURER(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UI_CONFIGURER, LigmaUIConfigurer))
+#define LIGMA_UI_CONFIGURER_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), LIGMA_TYPE_UI_CONFIGURER, LigmaUIConfigurerClass))
+#define LIGMA_IS_UI_CONFIGURER(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UI_CONFIGURER))
+#define LIGMA_IS_UI_CONFIGURER_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), LIGMA_TYPE_UI_CONFIGURER))
+#define LIGMA_UI_CONFIGURER_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), LIGMA_TYPE_UI_CONFIGURER, LigmaUIConfigurerClass))
 
 
-typedef struct _GimpUIConfigurerClass   GimpUIConfigurerClass;
-typedef struct _GimpUIConfigurerPrivate GimpUIConfigurerPrivate;
+typedef struct _LigmaUIConfigurerClass   LigmaUIConfigurerClass;
+typedef struct _LigmaUIConfigurerPrivate LigmaUIConfigurerPrivate;
 
-struct _GimpUIConfigurer
+struct _LigmaUIConfigurer
 {
-  GimpObject parent_instance;
+  LigmaObject parent_instance;
 
-  GimpUIConfigurerPrivate *p;
+  LigmaUIConfigurerPrivate *p;
 };
 
-struct _GimpUIConfigurerClass
+struct _LigmaUIConfigurerClass
 {
-  GimpObjectClass parent_class;
+  LigmaObjectClass parent_class;
 };
 
 
-GType         gimp_ui_configurer_get_type  (void) G_GNUC_CONST;
-void          gimp_ui_configurer_configure (GimpUIConfigurer *ui_configurer,
+GType         ligma_ui_configurer_get_type  (void) G_GNUC_CONST;
+void          ligma_ui_configurer_configure (LigmaUIConfigurer *ui_configurer,
                                             gboolean          single_window_mode);
 
 
-#endif  /* __GIMP_UI_CONFIGURER_H__ */
+#endif  /* __LIGMA_UI_CONFIGURER_H__ */

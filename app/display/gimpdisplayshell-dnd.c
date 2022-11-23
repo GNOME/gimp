@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,89 +22,89 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-edit.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpdrawable-edit.h"
-#include "core/gimpfilloptions.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-new.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-new.h"
-#include "core/gimplayermask.h"
-#include "core/gimppattern.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligma-edit.h"
+#include "core/ligmabuffer.h"
+#include "core/ligmadrawable-edit.h"
+#include "core/ligmafilloptions.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-new.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmapattern.h"
+#include "core/ligmaprogress.h"
 
 #include "file/file-open.h"
 
-#include "text/gimptext.h"
-#include "text/gimptextlayer.h"
+#include "text/ligmatext.h"
+#include "text/ligmatextlayer.h"
 
-#include "vectors/gimpvectors.h"
-#include "vectors/gimpvectors-import.h"
+#include "vectors/ligmavectors.h"
+#include "vectors/ligmavectors-import.h"
 
-#include "widgets/gimpdnd.h"
+#include "widgets/ligmadnd.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-dnd.h"
-#include "gimpdisplayshell-transform.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-dnd.h"
+#include "ligmadisplayshell-transform.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_display_shell_drop_drawable  (GtkWidget       *widget,
+static void   ligma_display_shell_drop_drawable  (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 GimpViewable    *viewable,
+                                                 LigmaViewable    *viewable,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_vectors   (GtkWidget       *widget,
+static void   ligma_display_shell_drop_vectors   (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 GimpViewable    *viewable,
+                                                 LigmaViewable    *viewable,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_svg       (GtkWidget       *widget,
+static void   ligma_display_shell_drop_svg       (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
                                                  const guchar    *svg_data,
                                                  gsize            svg_data_length,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_pattern   (GtkWidget       *widget,
+static void   ligma_display_shell_drop_pattern   (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 GimpViewable    *viewable,
+                                                 LigmaViewable    *viewable,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_color     (GtkWidget       *widget,
+static void   ligma_display_shell_drop_color     (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 const GimpRGB   *color,
+                                                 const LigmaRGB   *color,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_buffer    (GtkWidget       *widget,
+static void   ligma_display_shell_drop_buffer    (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 GimpViewable    *viewable,
+                                                 LigmaViewable    *viewable,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_uri_list  (GtkWidget       *widget,
+static void   ligma_display_shell_drop_uri_list  (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
                                                  GList           *uri_list,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_component (GtkWidget       *widget,
+static void   ligma_display_shell_drop_component (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 GimpImage       *image,
-                                                 GimpChannelType  component,
+                                                 LigmaImage       *image,
+                                                 LigmaChannelType  component,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_pixbuf    (GtkWidget       *widget,
+static void   ligma_display_shell_drop_pixbuf    (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
                                                  GdkPixbuf       *pixbuf,
@@ -114,42 +114,42 @@ static void   gimp_display_shell_drop_pixbuf    (GtkWidget       *widget,
 /*  public functions  */
 
 void
-gimp_display_shell_dnd_init (GimpDisplayShell *shell)
+ligma_display_shell_dnd_init (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_LAYER,
-                               gimp_display_shell_drop_drawable,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_LAYER,
+                               ligma_display_shell_drop_drawable,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_LAYER_MASK,
-                               gimp_display_shell_drop_drawable,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_LAYER_MASK,
+                               ligma_display_shell_drop_drawable,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_CHANNEL,
-                               gimp_display_shell_drop_drawable,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_CHANNEL,
+                               ligma_display_shell_drop_drawable,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_VECTORS,
-                               gimp_display_shell_drop_vectors,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_VECTORS,
+                               ligma_display_shell_drop_vectors,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_PATTERN,
-                               gimp_display_shell_drop_pattern,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_PATTERN,
+                               ligma_display_shell_drop_pattern,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_BUFFER,
-                               gimp_display_shell_drop_buffer,
+  ligma_dnd_viewable_dest_add  (shell->canvas, LIGMA_TYPE_BUFFER,
+                               ligma_display_shell_drop_buffer,
                                shell);
-  gimp_dnd_color_dest_add     (shell->canvas,
-                               gimp_display_shell_drop_color,
+  ligma_dnd_color_dest_add     (shell->canvas,
+                               ligma_display_shell_drop_color,
                                shell);
-  gimp_dnd_component_dest_add (shell->canvas,
-                               gimp_display_shell_drop_component,
+  ligma_dnd_component_dest_add (shell->canvas,
+                               ligma_display_shell_drop_component,
                                shell);
-  gimp_dnd_uri_list_dest_add  (shell->canvas,
-                               gimp_display_shell_drop_uri_list,
+  ligma_dnd_uri_list_dest_add  (shell->canvas,
+                               ligma_display_shell_drop_uri_list,
                                shell);
-  gimp_dnd_svg_dest_add       (shell->canvas,
-                               gimp_display_shell_drop_svg,
+  ligma_dnd_svg_dest_add       (shell->canvas,
+                               ligma_display_shell_drop_svg,
                                shell);
-  gimp_dnd_pixbuf_dest_add    (shell->canvas,
-                               gimp_display_shell_drop_pixbuf,
+  ligma_dnd_pixbuf_dest_add    (shell->canvas,
+                               ligma_display_shell_drop_pixbuf,
                                shell);
 }
 
@@ -160,357 +160,357 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
  * Position the dropped item in the middle of the viewport.
  */
 static void
-gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
-                                      GimpImage        *image,
-                                      GimpItem         *item)
+ligma_display_shell_dnd_position_item (LigmaDisplayShell *shell,
+                                      LigmaImage        *image,
+                                      LigmaItem         *item)
 {
-  gint item_width  = gimp_item_get_width  (item);
-  gint item_height = gimp_item_get_height (item);
+  gint item_width  = ligma_item_get_width  (item);
+  gint item_height = ligma_item_get_height (item);
   gint off_x, off_y;
 
-  if (item_width  >= gimp_image_get_width  (image) &&
-      item_height >= gimp_image_get_height (image))
+  if (item_width  >= ligma_image_get_width  (image) &&
+      item_height >= ligma_image_get_height (image))
     {
-      off_x = (gimp_image_get_width  (image) - item_width)  / 2;
-      off_y = (gimp_image_get_height (image) - item_height) / 2;
+      off_x = (ligma_image_get_width  (image) - item_width)  / 2;
+      off_y = (ligma_image_get_height (image) - item_height) / 2;
     }
   else
     {
       gint x, y;
       gint width, height;
 
-      gimp_display_shell_untransform_viewport (
+      ligma_display_shell_untransform_viewport (
         shell,
-        ! gimp_display_shell_get_infinite_canvas (shell),
+        ! ligma_display_shell_get_infinite_canvas (shell),
         &x, &y, &width, &height);
 
       off_x = x + (width  - item_width)  / 2;
       off_y = y + (height - item_height) / 2;
     }
 
-  gimp_item_translate (item,
-                       off_x - gimp_item_get_offset_x (item),
-                       off_y - gimp_item_get_offset_y (item),
+  ligma_item_translate (item,
+                       off_x - ligma_item_get_offset_x (item),
+                       off_y - ligma_item_get_offset_y (item),
                        FALSE);
 }
 
 static void
-gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
-                              GimpImage        *image)
+ligma_display_shell_dnd_flush (LigmaDisplayShell *shell,
+                              LigmaImage        *image)
 {
-  gimp_display_shell_present (shell);
+  ligma_display_shell_present (shell);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
-  gimp_context_set_display (gimp_get_user_context (shell->display->gimp),
+  ligma_context_set_display (ligma_get_user_context (shell->display->ligma),
                             shell->display);
 }
 
 static void
-gimp_display_shell_drop_drawable (GtkWidget    *widget,
+ligma_display_shell_drop_drawable (GtkWidget    *widget,
                                   gint          x,
                                   gint          y,
-                                  GimpViewable *viewable,
+                                  LigmaViewable *viewable,
                                   gpointer      data)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image     = gimp_display_get_image (shell->display);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image     = ligma_display_get_image (shell->display);
   GType             new_type;
-  GimpItem         *new_item;
+  LigmaItem         *new_item;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     {
-      image = gimp_image_new_from_drawable (shell->display->gimp,
-                                            GIMP_DRAWABLE (viewable));
-      gimp_create_display (shell->display->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      image = ligma_image_new_from_drawable (shell->display->ligma,
+                                            LIGMA_DRAWABLE (viewable));
+      ligma_create_display (shell->display->ligma, image, LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;
     }
 
-  if (GIMP_IS_LAYER (viewable))
+  if (LIGMA_IS_LAYER (viewable))
     new_type = G_TYPE_FROM_INSTANCE (viewable);
   else
-    new_type = GIMP_TYPE_LAYER;
+    new_type = LIGMA_TYPE_LAYER;
 
-  new_item = gimp_item_convert (GIMP_ITEM (viewable), image, new_type);
+  new_item = ligma_item_convert (LIGMA_ITEM (viewable), image, new_type);
 
   if (new_item)
     {
-      GimpLayer *new_layer = GIMP_LAYER (new_item);
+      LigmaLayer *new_layer = LIGMA_LAYER (new_item);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, image, new_item);
+      ligma_display_shell_dnd_position_item (shell, image, new_item);
 
-      gimp_item_set_visible (new_item, TRUE, FALSE);
+      ligma_item_set_visible (new_item, TRUE, FALSE);
 
-      gimp_image_add_layer (image, new_layer,
-                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      ligma_image_add_layer (image, new_layer,
+                            LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_display_shell_dnd_flush (shell, image);
+      ligma_display_shell_dnd_flush (shell, image);
     }
 }
 
 static void
-gimp_display_shell_drop_vectors (GtkWidget    *widget,
+ligma_display_shell_drop_vectors (GtkWidget    *widget,
                                  gint          x,
                                  gint          y,
-                                 GimpViewable *viewable,
+                                 LigmaViewable *viewable,
                                  gpointer      data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = gimp_display_get_image (shell->display);
-  GimpItem         *new_item;
+  LigmaDisplayShell *shell = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image = ligma_display_get_image (shell->display);
+  LigmaItem         *new_item;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     return;
 
-  new_item = gimp_item_convert (GIMP_ITEM (viewable),
+  new_item = ligma_item_convert (LIGMA_ITEM (viewable),
                                 image, G_TYPE_FROM_INSTANCE (viewable));
 
   if (new_item)
     {
-      GimpVectors *new_vectors = GIMP_VECTORS (new_item);
+      LigmaVectors *new_vectors = LIGMA_VECTORS (new_item);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Path"));
 
-      gimp_image_add_vectors (image, new_vectors,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      ligma_image_add_vectors (image, new_vectors,
+                              LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_display_shell_dnd_flush (shell, image);
+      ligma_display_shell_dnd_flush (shell, image);
     }
 }
 
 static void
-gimp_display_shell_drop_svg (GtkWidget     *widget,
+ligma_display_shell_drop_svg (GtkWidget     *widget,
                              gint           x,
                              gint           y,
                              const guchar  *svg_data,
                              gsize          svg_data_len,
                              gpointer       data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = gimp_display_get_image (shell->display);
+  LigmaDisplayShell *shell = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image = ligma_display_get_image (shell->display);
   GError           *error  = NULL;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     return;
 
-  if (! gimp_vectors_import_buffer (image,
+  if (! ligma_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
                                     TRUE, FALSE,
-                                    GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                    LIGMA_IMAGE_ACTIVE_PARENT, -1,
                                     NULL, &error))
     {
-      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                            GIMP_MESSAGE_ERROR,
+      ligma_message_literal (shell->display->ligma, G_OBJECT (shell->display),
+                            LIGMA_MESSAGE_ERROR,
                             error->message);
       g_clear_error (&error);
     }
   else
     {
-      gimp_display_shell_dnd_flush (shell, image);
+      ligma_display_shell_dnd_flush (shell, image);
     }
 }
 
 static void
-gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
-                             GimpFillOptions  *options,
+ligma_display_shell_dnd_fill (LigmaDisplayShell *shell,
+                             LigmaFillOptions  *options,
                              const gchar      *undo_desc)
 {
-  GimpImage    *image = gimp_display_get_image (shell->display);
+  LigmaImage    *image = ligma_display_get_image (shell->display);
   GList        *drawables;
   GList        *iter;
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     return;
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if (! drawables)
     return;
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      if (gimp_viewable_get_children (iter->data))
+      if (ligma_viewable_get_children (iter->data))
         {
-          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                                GIMP_MESSAGE_ERROR,
+          ligma_message_literal (shell->display->ligma, G_OBJECT (shell->display),
+                                LIGMA_MESSAGE_ERROR,
                                 _("Cannot modify the pixels of layer groups."));
           g_list_free (drawables);
           return;
         }
 
-      if (gimp_item_is_content_locked (iter->data, NULL))
+      if (ligma_item_is_content_locked (iter->data, NULL))
         {
-          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                                GIMP_MESSAGE_ERROR,
+          ligma_message_literal (shell->display->ligma, G_OBJECT (shell->display),
+                                LIGMA_MESSAGE_ERROR,
                                 _("A selected layer's pixels are locked."));
           g_list_free (drawables);
           return;
         }
     }
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT, undo_desc);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_PAINT, undo_desc);
 
   for (iter = drawables; iter; iter = iter->next)
     {
       /* FIXME: there should be a virtual method for this that the
-       *        GimpTextLayer can override.
+       *        LigmaTextLayer can override.
        */
-      if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID &&
-          gimp_item_is_text_layer (iter->data))
+      if (ligma_fill_options_get_style (options) == LIGMA_FILL_STYLE_SOLID &&
+          ligma_item_is_text_layer (iter->data))
         {
-          GimpRGB color;
+          LigmaRGB color;
 
-          gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+          ligma_context_get_foreground (LIGMA_CONTEXT (options), &color);
 
-          gimp_text_layer_set (iter->data, NULL,
+          ligma_text_layer_set (iter->data, NULL,
                                "color", &color,
                                NULL);
         }
       else
         {
-          gimp_drawable_edit_fill (iter->data, options, undo_desc);
+          ligma_drawable_edit_fill (iter->data, options, undo_desc);
         }
     }
 
   g_list_free (drawables);
-  gimp_image_undo_group_end (image);
-  gimp_display_shell_dnd_flush (shell, image);
+  ligma_image_undo_group_end (image);
+  ligma_display_shell_dnd_flush (shell, image);
 }
 
 static void
-gimp_display_shell_drop_pattern (GtkWidget    *widget,
+ligma_display_shell_drop_pattern (GtkWidget    *widget,
                                  gint          x,
                                  gint          y,
-                                 GimpViewable *viewable,
+                                 LigmaViewable *viewable,
                                  gpointer      data)
 {
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp,
+  LigmaDisplayShell *shell   = LIGMA_DISPLAY_SHELL (data);
+  LigmaFillOptions  *options = ligma_fill_options_new (shell->display->ligma,
                                                      NULL, FALSE);
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-  gimp_context_set_pattern (GIMP_CONTEXT (options), GIMP_PATTERN (viewable));
+  ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_PATTERN);
+  ligma_context_set_pattern (LIGMA_CONTEXT (options), LIGMA_PATTERN (viewable));
 
-  gimp_display_shell_dnd_fill (shell, options,
+  ligma_display_shell_dnd_fill (shell, options,
                                C_("undo-type", "Drop pattern to layer"));
 
   g_object_unref (options);
 }
 
 static void
-gimp_display_shell_drop_color (GtkWidget     *widget,
+ligma_display_shell_drop_color (GtkWidget     *widget,
                                gint           x,
                                gint           y,
-                               const GimpRGB *color,
+                               const LigmaRGB *color,
                                gpointer       data)
 {
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp,
+  LigmaDisplayShell *shell   = LIGMA_DISPLAY_SHELL (data);
+  LigmaFillOptions  *options = ligma_fill_options_new (shell->display->ligma,
                                                      NULL, FALSE);
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
-  gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+  ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_SOLID);
+  ligma_context_set_foreground (LIGMA_CONTEXT (options), color);
 
-  gimp_display_shell_dnd_fill (shell, options,
+  ligma_display_shell_dnd_fill (shell, options,
                                C_("undo-type", "Drop color to layer"));
 
   g_object_unref (options);
 }
 
 static void
-gimp_display_shell_drop_buffer (GtkWidget    *widget,
+ligma_display_shell_drop_buffer (GtkWidget    *widget,
                                 gint          drop_x,
                                 gint          drop_y,
-                                GimpViewable *viewable,
+                                LigmaViewable *viewable,
                                 gpointer      data)
 {
-  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image    = gimp_display_get_image (shell->display);
-  GimpContext      *context;
+  LigmaDisplayShell *shell    = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image    = ligma_display_get_image (shell->display);
+  LigmaContext      *context;
   GList            *drawables;
-  GimpBuffer       *buffer;
-  GimpPasteType     paste_type;
+  LigmaBuffer       *buffer;
+  LigmaPasteType     paste_type;
   gint              x, y, width, height;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     {
-      image = gimp_image_new_from_buffer (shell->display->gimp,
-                                          GIMP_BUFFER (viewable));
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      image = ligma_image_new_from_buffer (shell->display->ligma,
+                                          LIGMA_BUFFER (viewable));
+      ligma_create_display (image->ligma, image, LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;
     }
 
-  paste_type = GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING;
-  drawables  = gimp_image_get_selected_drawables (image);
-  context    = gimp_get_user_context (shell->display->gimp);
-  buffer     = GIMP_BUFFER (viewable);
+  paste_type = LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING;
+  drawables  = ligma_image_get_selected_drawables (image);
+  context    = ligma_get_user_context (shell->display->ligma);
+  buffer     = LIGMA_BUFFER (viewable);
 
-  gimp_display_shell_untransform_viewport (
+  ligma_display_shell_untransform_viewport (
     shell,
-    ! gimp_display_shell_get_infinite_canvas (shell),
+    ! ligma_display_shell_get_infinite_canvas (shell),
     &x, &y, &width, &height);
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  g_list_free (gimp_edit_paste (image, drawables, GIMP_OBJECT (buffer),
+  g_list_free (ligma_edit_paste (image, drawables, LIGMA_OBJECT (buffer),
                                 paste_type, context, FALSE,
                                 x, y, width, height));
 
   g_list_free (drawables);
-  gimp_display_shell_dnd_flush (shell, image);
+  ligma_display_shell_dnd_flush (shell, image);
 }
 
 static void
-gimp_display_shell_drop_uri_list (GtkWidget *widget,
+ligma_display_shell_drop_uri_list (GtkWidget *widget,
                                   gint       x,
                                   gint       y,
                                   GList     *uri_list,
                                   gpointer   data)
 {
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image;
-  GimpContext      *context;
+  LigmaDisplayShell *shell   = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image;
+  LigmaContext      *context;
   GList            *list;
   gboolean          open_as_layers;
 
@@ -520,10 +520,10 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   if (! shell->display)
     return;
 
-  image = gimp_display_get_image (shell->display);
-  context = gimp_get_user_context (shell->display->gimp);
+  image = ligma_display_get_image (shell->display);
+  context = ligma_get_user_context (shell->display->ligma);
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
   open_as_layers = (image != NULL);
 
@@ -533,13 +533,13 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       GFile             *file  = g_file_new_for_uri (list->data);
-      GimpPDBStatusType  status;
+      LigmaPDBStatusType  status;
       GError            *error = NULL;
       gboolean           warn  = FALSE;
 
       if (! shell->display)
         {
-          /* It seems as if GIMP is being torn down for quitting. Bail out. */
+          /* It seems as if LIGMA is being torn down for quitting. Bail out. */
           g_object_unref (file);
           g_clear_object (&image);
           return;
@@ -549,67 +549,67 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         {
           GList *new_layers;
 
-          new_layers = file_open_layers (shell->display->gimp, context,
-                                         GIMP_PROGRESS (shell->display),
+          new_layers = file_open_layers (shell->display->ligma, context,
+                                         LIGMA_PROGRESS (shell->display),
                                          image, FALSE,
-                                         file, GIMP_RUN_INTERACTIVE, NULL,
+                                         file, LIGMA_RUN_INTERACTIVE, NULL,
                                          &status, &error);
 
           if (new_layers)
             {
               gint x      = 0;
               gint y      = 0;
-              gint width  = gimp_image_get_width  (image);
-              gint height = gimp_image_get_height (image);
+              gint width  = ligma_image_get_width  (image);
+              gint height = ligma_image_get_height (image);
 
-              if (gimp_display_get_image (shell->display))
+              if (ligma_display_get_image (shell->display))
                 {
-                  gimp_display_shell_untransform_viewport (
+                  ligma_display_shell_untransform_viewport (
                     shell,
-                    ! gimp_display_shell_get_infinite_canvas (shell),
+                    ! ligma_display_shell_get_infinite_canvas (shell),
                     &x, &y, &width, &height);
                 }
 
-              gimp_image_add_layers (image, new_layers,
-                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
+              ligma_image_add_layers (image, new_layers,
+                                     LIGMA_IMAGE_ACTIVE_PARENT, -1,
                                      x, y, width, height,
                                      _("Drop layers"));
 
               g_list_free (new_layers);
             }
-          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+          else if (status != LIGMA_PDB_CANCEL && status != LIGMA_PDB_SUCCESS)
             {
               warn = TRUE;
             }
         }
-      else if (gimp_display_get_image (shell->display))
+      else if (ligma_display_get_image (shell->display))
         {
           /*  open any subsequent images in a new display  */
-          GimpImage *new_image;
+          LigmaImage *new_image;
 
-          new_image = file_open_with_display (shell->display->gimp, context,
+          new_image = file_open_with_display (shell->display->ligma, context,
                                               NULL,
                                               file, FALSE,
-                                              G_OBJECT (gimp_widget_get_monitor (widget)),
+                                              G_OBJECT (ligma_widget_get_monitor (widget)),
                                               &status, &error);
 
-          if (! new_image && status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+          if (! new_image && status != LIGMA_PDB_CANCEL && status != LIGMA_PDB_SUCCESS)
             warn = TRUE;
         }
       else
         {
           /*  open the first image in the empty display  */
-          image = file_open_with_display (shell->display->gimp, context,
-                                          GIMP_PROGRESS (shell->display),
+          image = file_open_with_display (shell->display->ligma, context,
+                                          LIGMA_PROGRESS (shell->display),
                                           file, FALSE,
-                                          G_OBJECT (gimp_widget_get_monitor (widget)),
+                                          G_OBJECT (ligma_widget_get_monitor (widget)),
                                           &status, &error);
 
           if (image)
             {
               g_object_ref (image);
             }
-          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+          else if (status != LIGMA_PDB_CANCEL && status != LIGMA_PDB_SUCCESS)
             {
               warn = TRUE;
             }
@@ -621,10 +621,10 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
        */
       if (warn && shell->display)
         {
-          gimp_message (shell->display->gimp, G_OBJECT (shell->display),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (shell->display->ligma, G_OBJECT (shell->display),
+                        LIGMA_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
+                        ligma_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
 
@@ -632,93 +632,93 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
     }
 
   if (image)
-    gimp_display_shell_dnd_flush (shell, image);
+    ligma_display_shell_dnd_flush (shell, image);
 
   g_clear_object (&image);
 }
 
 static void
-gimp_display_shell_drop_component (GtkWidget       *widget,
+ligma_display_shell_drop_component (GtkWidget       *widget,
                                    gint             x,
                                    gint             y,
-                                   GimpImage       *image,
-                                   GimpChannelType  component,
+                                   LigmaImage       *image,
+                                   LigmaChannelType  component,
                                    gpointer         data)
 {
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *dest_image = gimp_display_get_image (shell->display);
-  GimpChannel      *channel;
-  GimpItem         *new_item;
+  LigmaDisplayShell *shell      = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *dest_image = ligma_display_get_image (shell->display);
+  LigmaChannel      *channel;
+  LigmaItem         *new_item;
   const gchar      *desc;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! dest_image)
     {
-      dest_image = gimp_image_new_from_component (image->gimp,
+      dest_image = ligma_image_new_from_component (image->ligma,
                                                   image, component);
-      gimp_create_display (dest_image->gimp, dest_image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      ligma_create_display (dest_image->ligma, dest_image, LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (dest_image);
 
       return;
     }
 
-  channel = gimp_channel_new_from_component (image, component, NULL, NULL);
+  channel = ligma_channel_new_from_component (image, component, NULL, NULL);
 
-  new_item = gimp_item_convert (GIMP_ITEM (channel),
-                                dest_image, GIMP_TYPE_LAYER);
+  new_item = ligma_item_convert (LIGMA_ITEM (channel),
+                                dest_image, LIGMA_TYPE_LAYER);
   g_object_unref (channel);
 
   if (new_item)
     {
-      GimpLayer *new_layer = GIMP_LAYER (new_item);
+      LigmaLayer *new_layer = LIGMA_LAYER (new_item);
 
-      gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+      ligma_enum_get_value (LIGMA_TYPE_CHANNEL_TYPE, component,
                            NULL, NULL, &desc, NULL);
-      gimp_object_take_name (GIMP_OBJECT (new_layer),
+      ligma_object_take_name (LIGMA_OBJECT (new_layer),
                              g_strdup_printf (_("%s Channel Copy"), desc));
 
-      gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
+      ligma_image_undo_group_start (dest_image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, image, new_item);
+      ligma_display_shell_dnd_position_item (shell, image, new_item);
 
-      gimp_image_add_layer (dest_image, new_layer,
-                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      ligma_image_add_layer (dest_image, new_layer,
+                            LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-      gimp_image_undo_group_end (dest_image);
+      ligma_image_undo_group_end (dest_image);
 
-      gimp_display_shell_dnd_flush (shell, dest_image);
+      ligma_display_shell_dnd_flush (shell, dest_image);
     }
 }
 
 static void
-gimp_display_shell_drop_pixbuf (GtkWidget *widget,
+ligma_display_shell_drop_pixbuf (GtkWidget *widget,
                                 gint       x,
                                 gint       y,
                                 GdkPixbuf *pixbuf,
                                 gpointer   data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = gimp_display_get_image (shell->display);
-  GimpLayer        *new_layer;
+  LigmaDisplayShell *shell = LIGMA_DISPLAY_SHELL (data);
+  LigmaImage        *image = ligma_display_get_image (shell->display);
+  LigmaLayer        *new_layer;
   gboolean          has_alpha = FALSE;
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
-  if (shell->display->gimp->busy)
+  if (shell->display->ligma->busy)
     return;
 
   if (! image)
     {
-      image = gimp_image_new_from_pixbuf (shell->display->gimp, pixbuf,
+      image = ligma_image_new_from_pixbuf (shell->display->ligma, pixbuf,
                                           _("Dropped Buffer"));
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      ligma_create_display (image->ligma, image, LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;
@@ -731,26 +731,26 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
     }
 
   new_layer =
-    gimp_layer_new_from_pixbuf (pixbuf, image,
-                                gimp_image_get_layer_format (image, has_alpha),
+    ligma_layer_new_from_pixbuf (pixbuf, image,
+                                ligma_image_get_layer_format (image, has_alpha),
                                 _("Dropped Buffer"),
-                                GIMP_OPACITY_OPAQUE,
-                                gimp_image_get_default_new_layer_mode (image));
+                                LIGMA_OPACITY_OPAQUE,
+                                ligma_image_get_default_new_layer_mode (image));
 
   if (new_layer)
     {
-      GimpItem *new_item = GIMP_ITEM (new_layer);
+      LigmaItem *new_item = LIGMA_ITEM (new_layer);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, image, new_item);
+      ligma_display_shell_dnd_position_item (shell, image, new_item);
 
-      gimp_image_add_layer (image, new_layer,
-                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      ligma_image_add_layer (image, new_layer,
+                            LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_display_shell_dnd_flush (shell, image);
+      ligma_display_shell_dnd_flush (shell, image);
     }
 }

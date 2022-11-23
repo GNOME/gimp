@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Stone
+## Makefile.am for ligma/data/patterns/Stone
 
-patternsstonedatadir = $(gimpdatadir)/patterns/Stone
+patternsstonedatadir = $(ligmadatadir)/patterns/Stone
 
 patternsstonedata_DATA = \
 	Craters.pat		\

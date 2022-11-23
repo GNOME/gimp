@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub patterns_refresh {
     $blurb = 'Refresh current patterns. This function always succeeds.';
@@ -29,7 +29,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_data_factory_data_refresh (gimp->pattern_factory, context);
+  ligma_data_factory_data_refresh (ligma->pattern_factory, context);
 }
 CODE
     );
@@ -39,8 +39,8 @@ sub patterns_get_list {
     $blurb = 'Retrieve a complete listing of the available patterns.';
 
     $help = <<'HELP';
-This procedure returns a complete listing of available GIMP patterns. Each name
-returned can be used as input to the gimp_context_set_pattern().
+This procedure returns a complete listing of available LIGMA patterns. Each name
+returned can be used as input to the ligma_context_set_pattern().
 HELP
 
     &std_pdb_misc;
@@ -56,10 +56,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpcontainer-filter.h") ],
+        headers => [ qw("core/ligmacontainer-filter.h") ],
 	code => <<'CODE'
 {
-  pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
+  pattern_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->pattern_factory),
                                                          filter);
 }
 CODE
@@ -68,12 +68,12 @@ CODE
 
 
 @headers = qw(<string.h>
-              "core/gimp.h"
-              "core/gimpcontext.h"
-              "core/gimpdatafactory.h"
-              "core/gimppattern.h"
-              "core/gimptempbuf.h"
-              "gimppdb-utils.h");
+              "core/ligma.h"
+              "core/ligmacontext.h"
+              "core/ligmadatafactory.h"
+              "core/ligmapattern.h"
+              "core/ligmatempbuf.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(patterns_refresh
             patterns_get_list);
@@ -81,7 +81,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Patterns';
-$doc_title = 'gimppatterns';
+$doc_title = 'ligmapatterns';
 $doc_short_desc = 'Functions relating to patterns.';
 $doc_long_desc = 'Functions relating to patterns.';
 

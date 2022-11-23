@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppaletteview.h
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmapaletteview.h
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,59 +18,59 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_VIEW_H__
-#define __GIMP_PALETTE_VIEW_H__
+#ifndef __LIGMA_PALETTE_VIEW_H__
+#define __LIGMA_PALETTE_VIEW_H__
 
-#include "gimpview.h"
-
-
-#define GIMP_TYPE_PALETTE_VIEW            (gimp_palette_view_get_type ())
-#define GIMP_PALETTE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_VIEW, GimpPaletteView))
-#define GIMP_PALETTE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_VIEW, GimpPaletteViewClass))
-#define GIMP_IS_PALETTE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PALETTE_VIEW))
-#define GIMP_IS_PALETTE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_VIEW))
-#define GIMP_PALETTE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE_VIEW, GimpPaletteViewClass))
+#include "ligmaview.h"
 
 
-typedef struct _GimpPaletteViewClass  GimpPaletteViewClass;
+#define LIGMA_TYPE_PALETTE_VIEW            (ligma_palette_view_get_type ())
+#define LIGMA_PALETTE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PALETTE_VIEW, LigmaPaletteView))
+#define LIGMA_PALETTE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PALETTE_VIEW, LigmaPaletteViewClass))
+#define LIGMA_IS_PALETTE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_PALETTE_VIEW))
+#define LIGMA_IS_PALETTE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PALETTE_VIEW))
+#define LIGMA_PALETTE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PALETTE_VIEW, LigmaPaletteViewClass))
 
-struct _GimpPaletteView
+
+typedef struct _LigmaPaletteViewClass  LigmaPaletteViewClass;
+
+struct _LigmaPaletteView
 {
-  GimpView          parent_instance;
+  LigmaView          parent_instance;
 
-  GimpPaletteEntry *selected;
-  GimpPaletteEntry *dnd_entry;
+  LigmaPaletteEntry *selected;
+  LigmaPaletteEntry *dnd_entry;
 };
 
-struct _GimpPaletteViewClass
+struct _LigmaPaletteViewClass
 {
-  GimpViewClass  parent_class;
+  LigmaViewClass  parent_class;
 
-  void (* entry_clicked)   (GimpPaletteView  *view,
-                            GimpPaletteEntry *entry,
+  void (* entry_clicked)   (LigmaPaletteView  *view,
+                            LigmaPaletteEntry *entry,
                             GdkModifierType   state);
-  void (* entry_selected)  (GimpPaletteView  *view,
-                            GimpPaletteEntry *entry);
-  void (* entry_activated) (GimpPaletteView  *view,
-                            GimpPaletteEntry *entry);
-  void (* entry_context)   (GimpPaletteView  *view,
-                            GimpPaletteEntry *entry);
-  void (* color_dropped)   (GimpPaletteView  *view,
-                            GimpPaletteEntry *entry,
-                            const GimpRGB    *color);
+  void (* entry_selected)  (LigmaPaletteView  *view,
+                            LigmaPaletteEntry *entry);
+  void (* entry_activated) (LigmaPaletteView  *view,
+                            LigmaPaletteEntry *entry);
+  void (* entry_context)   (LigmaPaletteView  *view,
+                            LigmaPaletteEntry *entry);
+  void (* color_dropped)   (LigmaPaletteView  *view,
+                            LigmaPaletteEntry *entry,
+                            const LigmaRGB    *color);
 };
 
 
-GType   gimp_palette_view_get_type     (void) G_GNUC_CONST;
+GType   ligma_palette_view_get_type     (void) G_GNUC_CONST;
 
-void    gimp_palette_view_select_entry (GimpPaletteView  *view,
-                                        GimpPaletteEntry *entry);
+void    ligma_palette_view_select_entry (LigmaPaletteView  *view,
+                                        LigmaPaletteEntry *entry);
 
-GimpPaletteEntry * gimp_palette_view_get_selected_entry (GimpPaletteView *view);
+LigmaPaletteEntry * ligma_palette_view_get_selected_entry (LigmaPaletteView *view);
 
-void               gimp_palette_view_get_entry_rect     (GimpPaletteView  *view,
-                                                         GimpPaletteEntry *entry,
+void               ligma_palette_view_get_entry_rect     (LigmaPaletteView  *view,
+                                                         LigmaPaletteEntry *entry,
                                                          GdkRectangle     *rect);
 
 
-#endif /* __GIMP_PALETTE_VIEW_H__ */
+#endif /* __LIGMA_PALETTE_VIEW_H__ */

@@ -1,12 +1,12 @@
-# Indonesian translation for the GIMP Windows installer.
-# Copyright (C) 2018 GIMP's COPYRIGHT HOLDER
-# This file is distributed under the same license as the GIMP package.
+# Indonesian translation for the LIGMA Windows installer.
+# Copyright (C) 2018 LIGMA's COPYRIGHT HOLDER
+# This file is distributed under the same license as the LIGMA package.
 # Rofiquzzaki <babisayabundar@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP Windows Installer\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA Windows Installer\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2021-09-28 11:27+0700\n"
 "Last-Translator: Rofiquzzaki <babisayabundar@gmail.com>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 40.0\n"
 "X-DL-Team: id\n"
-"X-DL-Module: gimp\n"
+"X-DL-Module: ligma\n"
 "X-DL-Branch: master\n"
 "X-DL-Domain: po-windows-installer\n"
 "X-DL-State: Translating\n"
@@ -28,14 +28,14 @@ msgid "License Agreement"
 msgstr "Perjanjian Lisensi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Setup yang dibuat oleh Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "Setup yang dibuat oleh Jernej Simonèiè, jernej-ligma@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
 msgstr ""
-"Versi GIMP ini memerlukan Windows 7, atau versi Windows yang lebih baru."
+"Versi LIGMA ini memerlukan Windows 7, atau versi Windows yang lebih baru."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -43,20 +43,20 @@ msgstr "Versi pengembangan"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Ini adalah versi pengembangan GIMP dimana beberapa fitur mungkin tidak "
-"selesai, atau mungkin tidak stabil.%nVersi GIMP ini tidak dimaksudkan untuk "
+"Ini adalah versi pengembangan LIGMA dimana beberapa fitur mungkin tidak "
+"selesai, atau mungkin tidak stabil.%nVersi LIGMA ini tidak dimaksudkan untuk "
 "pekerjaan sehari-hari karena mungkin tidak stabil, dan Anda bisa kehilangan "
 "pekerjaan Anda.%nJika Anda mengalami masalah, pertama verifikasi bahwa "
 "mereka belum selesai di GIT sebelum menghubungi pengembang atau "
-"melaporkannya di bugzilla GIMP:%n_https://gitlab.gnome.org/GNOME/gimp/issues"
+"melaporkannya di bugzilla LIGMA:%n_https://gitlab.gnome.org/GNOME/ligma/issues"
 "%n%nApakah Anda ingin melanjutkan pemasangan?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
@@ -70,8 +70,8 @@ msgstr "Keluar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "Versi GIMP ini membutuhkan prosesor yang mendukung instruksi SSE."
+"This version of LIGMA requires a processor that supports SSE instructions."
+msgstr "Versi LIGMA ini membutuhkan prosesor yang mendukung instruksi SSE."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -80,13 +80,13 @@ msgstr "Tampilkan pengaturan masalah"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
 "Setup telah mendeteksi bahwa Windows Anda tidak berjalan dalam mode tampilan "
 "32 bit per piksel. Hal ini telah diketahui menyebabkan masalah stabilitas "
-"dengan GIMP, jadi disarankan untuk mengubah tampilan kedalaman warna menjadi "
+"dengan LIGMA, jadi disarankan untuk mengubah tampilan kedalaman warna menjadi "
 "32BPP sebelum melanjutkan."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
@@ -95,11 +95,11 @@ msgstr "&Keluar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP sekarang siap untuk dipasang. Klik tombol pasang sekarang untuk "
+"LIGMA sekarang siap untuk dipasang. Klik tombol pasang sekarang untuk "
 "memasang menggunakan pengaturan bawaan, atau klik tombol Sesuaikan jika Anda "
 "ingin memiliki kontrol lebih terhadap apa yang terpasang."
 
@@ -128,12 +128,12 @@ msgid "Description"
 msgstr "Deskripsi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP dan semua pengaya bawaan"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA dan semua pengaya bawaan"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -141,17 +141,17 @@ msgstr "Pustaka run-time"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
 msgstr ""
-"Pustaka run-time yang digunakan oleh GIMP, termasuk lingkungan GTK+ Run-time"
+"Pustaka run-time yang digunakan oleh LIGMA, termasuk lingkungan GTK+ Run-time"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "Simbol awakutu"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
-msgstr "Masukkan informasi untuk membantu mengawakutu GIMP"
+msgid "Include information to help with debugging LIGMA"
+msgstr "Masukkan informasi untuk membantu mengawakutu LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 #, fuzzy
@@ -159,8 +159,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "mesin MS-Windows untuk GTK+"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Windows Asli mencari GIMP"
+msgid "Native Windows look for LIGMA"
+msgstr "Windows Asli mencari LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -180,9 +180,9 @@ msgid "Python scripting"
 msgstr "scripting Python"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
 msgstr ""
-"Memungkinkan Anda untuk menggunakan pengaya GIMP yang ditulis dengan bahasa "
+"Memungkinkan Anda untuk menggunakan pengaya LIGMA yang ditulis dengan bahasa "
 "scripting Python."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
@@ -190,9 +190,9 @@ msgid "Lua scripting"
 msgstr "scripting Lua"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
 msgstr ""
-"Memungkinkan Anda untuk menggunakan pengaya GIMP yang ditulis dengan bahasa "
+"Memungkinkan Anda untuk menggunakan pengaya LIGMA yang ditulis dengan bahasa "
 "scripting Lua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
@@ -208,8 +208,8 @@ msgid "PostScript support"
 msgstr "Dukungan PostScript"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "Izinkan GIMP memuat berkas PostScript"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "Izinkan LIGMA memuat berkas PostScript"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -236,16 +236,16 @@ msgid "Create a &Quick Launch icon"
 msgstr "Buat ikon &Peluncuran Cepat"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "Hapus versi GIMP sebelumnya"
+msgid "Remove previous LIGMA version"
+msgstr "Hapus versi LIGMA sebelumnya"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"Terjadi masalah saat memperbarui lingkungan GIMP di %1. Jika Anda mengalami "
-"kesalahan saat memuat pengaya, coba copot pemasangan dan pasang ulang GIMP."
+"Terjadi masalah saat memperbarui lingkungan LIGMA di %1. Jika Anda mengalami "
+"kesalahan saat memuat pengaya, coba copot pemasangan dan pasang ulang LIGMA."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
@@ -264,12 +264,12 @@ msgid "There was an error updating %1."
 msgstr "Terjadi kesalahan saat memutakhirkan %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Ada kesalahan saat memutakhirkan berkas konfigurasi GIMP %1."
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "Ada kesalahan saat memutakhirkan berkas konfigurasi LIGMA %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "Sunting dengan GIMP"
+msgid "Edit with LIGMA"
+msgstr "Sunting dengan LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -280,15 +280,15 @@ msgid "Extensions:"
 msgstr "Ekstensi:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Pilih jenis berkas yang ingin Anda kaitkan dengan GIMP"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "Pilih jenis berkas yang ingin Anda kaitkan dengan LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"Ini akan membuat berkas terpilih terbuka di GIMP saat Anda mengklik dua kali "
+"Ini akan membuat berkas terpilih terbuka di LIGMA saat Anda mengklik dua kali "
 "di Explorer."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
@@ -304,47 +304,47 @@ msgid "Select &Unused"
 msgstr "Pilih &Tidak Digunakan"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "Jenis berkas untuk diasosiasikan dengan GIMP:"
+msgid "File types to associate with LIGMA:"
+msgstr "Jenis berkas untuk diasosiasikan dengan LIGMA:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "Melepaskan versi GIMP sebelumnya:"
+msgid "Removing previous version of LIGMA:"
+msgstr "Melepaskan versi LIGMA sebelumnya:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 tidak dapat dipasang di atas versi GIMP yang Anda pasang saat ini, "
-"dan penghapusan otomatis versi lama telah gagal.%n%nHapus versi GIMP "
+"LIGMA %1 tidak dapat dipasang di atas versi LIGMA yang Anda pasang saat ini, "
+"dan penghapusan otomatis versi lama telah gagal.%n%nHapus versi LIGMA "
 "sebelumnya sebelum memasang versi ini di %2, atau pilih pemasangan Khusus, "
 "dan pilih folder instalasi yang berbeda.%n%nThe Setup sekarang akan keluar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 tidak dapat dipasang di atas versi GIMP yang Anda pasang saat ini, "
+"LIGMA %1 tidak dapat dipasang di atas versi LIGMA yang Anda pasang saat ini, "
 "dan Setup tidak dapat menentukan cara menghapus versi lama secara otomatis.%n"
-"%nHapus versi GIMP sebelumnya dan add-on sendiri sebelum memasang versi ini "
+"%nHapus versi LIGMA sebelumnya dan add-on sendiri sebelum memasang versi ini "
 "di %2, atau pilih Pemasangan kustom, dan pilih folder instalasi yang berbeda."
 "%n%nThe Setup sekarang akan keluar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"Versi GIMP sebelumnya telah berhasil dihapus, namun Windows harus dinyalakan "
+"Versi LIGMA sebelumnya telah berhasil dihapus, namun Windows harus dinyalakan "
 "ulang sebelum Setup dapat dilanjutkan.%n%nSetelah menyalakan ulang komputer "
 "Anda, Setup akan berlanjut saat administrator masuk."
 
@@ -357,8 +357,8 @@ msgid "Cleaning up old files..."
 msgstr "Membersihkan berkas lama..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Ingat: GIMP adalah Perangkat Lunak Bebas.%n%nHarap kunjungi"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "Ingat: LIGMA adalah Perangkat Lunak Bebas.%n%nHarap kunjungi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -369,24 +369,24 @@ msgid "Setting up file associations..."
 msgstr "Menyiapkan kumpulan berkas..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Menyiapkan lingkungan untuk ekstensi Python GIMP ..."
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "Menyiapkan lingkungan untuk ekstensi Python LIGMA ..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Menyiapkan sikat MyPaint ..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "Menyiapkan lingkungan GIMP ..."
+msgid "Setting up LIGMA environment..."
+msgstr "Menyiapkan lingkungan LIGMA ..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Menyiapkan konfigurasi GIMP untuk dukungan plug-in 32-bit ..."
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "Menyiapkan konfigurasi LIGMA untuk dukungan plug-in 32-bit ..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "Luncurkan GIMP"
+msgid "Launch LIGMA"
+msgstr "Luncurkan LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -398,7 +398,7 @@ msgstr "Kesalahan internal (%1)."
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"GIMP tidak muncul untuk dipasang di direktori yang dipilih. Lanjutkan saja?"
+"LIGMA tidak muncul untuk dipasang di direktori yang dipilih. Lanjutkan saja?"

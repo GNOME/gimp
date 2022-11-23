@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsaveproceduredialog.c
+ * ligmasaveproceduredialog.c
  * Copyright (C) 2020 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,57 +23,57 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
-#include "gimpui.h"
+#include "ligma.h"
+#include "ligmaui.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
-struct _GimpSaveProcedureDialogPrivate
+struct _LigmaSaveProcedureDialogPrivate
 {
   GList     *additional_metadata;
-  GimpImage *image;
+  LigmaImage *image;
 
   GThread   *metadata_thread;
   GMutex     metadata_thread_mutex;
 };
 
 
-static void   gimp_save_procedure_dialog_finalize  (GObject             *object);
+static void   ligma_save_procedure_dialog_finalize  (GObject             *object);
 
-static void   gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
-                                                    GimpProcedure       *procedure,
-                                                    GimpProcedureConfig *config,
+static void   ligma_save_procedure_dialog_fill_list (LigmaProcedureDialog *dialog,
+                                                    LigmaProcedure       *procedure,
+                                                    LigmaProcedureConfig *config,
                                                     GList               *properties);
 
-static gpointer gimp_save_procedure_dialog_edit_metadata_thread   (gpointer                 data);
-static gboolean gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
-                                                                   GimpSaveProcedureDialog *dialog);
+static gpointer ligma_save_procedure_dialog_edit_metadata_thread   (gpointer                 data);
+static gboolean ligma_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
+                                                                   LigmaSaveProcedureDialog *dialog);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSaveProcedureDialog, gimp_save_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSaveProcedureDialog, ligma_save_procedure_dialog, LIGMA_TYPE_PROCEDURE_DIALOG)
 
-#define parent_class gimp_save_procedure_dialog_parent_class
+#define parent_class ligma_save_procedure_dialog_parent_class
 
 static void
-gimp_save_procedure_dialog_class_init (GimpSaveProcedureDialogClass *klass)
+ligma_save_procedure_dialog_class_init (LigmaSaveProcedureDialogClass *klass)
 {
   GObjectClass             *object_class;
-  GimpProcedureDialogClass *proc_dialog_class;
+  LigmaProcedureDialogClass *proc_dialog_class;
 
   object_class      = G_OBJECT_CLASS (klass);
-  proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
+  proc_dialog_class = LIGMA_PROCEDURE_DIALOG_CLASS (klass);
 
-  object_class->finalize       = gimp_save_procedure_dialog_finalize;
-  proc_dialog_class->fill_list = gimp_save_procedure_dialog_fill_list;
+  object_class->finalize       = ligma_save_procedure_dialog_finalize;
+  proc_dialog_class->fill_list = ligma_save_procedure_dialog_fill_list;
 }
 
 static void
-gimp_save_procedure_dialog_init (GimpSaveProcedureDialog *dialog)
+ligma_save_procedure_dialog_init (LigmaSaveProcedureDialog *dialog)
 {
-  dialog->priv = gimp_save_procedure_dialog_get_instance_private (dialog);
+  dialog->priv = ligma_save_procedure_dialog_get_instance_private (dialog);
 
   dialog->priv->additional_metadata = NULL;
   dialog->priv->image               = NULL;
@@ -82,9 +82,9 @@ gimp_save_procedure_dialog_init (GimpSaveProcedureDialog *dialog)
 }
 
 static void
-gimp_save_procedure_dialog_finalize (GObject *object)
+ligma_save_procedure_dialog_finalize (GObject *object)
 {
-  GimpSaveProcedureDialog *dialog = GIMP_SAVE_PROCEDURE_DIALOG (object);
+  LigmaSaveProcedureDialog *dialog = LIGMA_SAVE_PROCEDURE_DIALOG (object);
 
   g_list_free_full (dialog->priv->additional_metadata, g_free);
   g_clear_pointer (&dialog->priv->metadata_thread, g_thread_unref);
@@ -94,38 +94,38 @@ gimp_save_procedure_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
-                                      GimpProcedure       *procedure,
-                                      GimpProcedureConfig *config,
+ligma_save_procedure_dialog_fill_list (LigmaProcedureDialog *dialog,
+                                      LigmaProcedure       *procedure,
+                                      LigmaProcedureConfig *config,
                                       GList               *properties)
 {
-  GimpSaveProcedureDialog *save_dialog;
-  GimpSaveProcedure       *save_procedure;
+  LigmaSaveProcedureDialog *save_dialog;
+  LigmaSaveProcedure       *save_procedure;
   GtkWidget               *content_area;
   GList                   *properties2 = NULL;
   GList                   *iter;
 
-  save_dialog    = GIMP_SAVE_PROCEDURE_DIALOG (dialog);
-  save_procedure = GIMP_SAVE_PROCEDURE (procedure);
+  save_dialog    = LIGMA_SAVE_PROCEDURE_DIALOG (dialog);
+  save_procedure = LIGMA_SAVE_PROCEDURE (procedure);
   content_area   = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
   for (iter = properties; iter; iter = iter->next)
     {
       gchar *propname = iter->data;
 
-      if ((gimp_save_procedure_get_support_exif (save_procedure) &&
+      if ((ligma_save_procedure_get_support_exif (save_procedure) &&
            g_strcmp0 (propname, "save-exif") == 0)                 ||
-          (gimp_save_procedure_get_support_iptc (save_procedure) &&
+          (ligma_save_procedure_get_support_iptc (save_procedure) &&
            g_strcmp0 (propname, "save-iptc") == 0)                 ||
-          (gimp_save_procedure_get_support_xmp (save_procedure) &&
+          (ligma_save_procedure_get_support_xmp (save_procedure) &&
            g_strcmp0 (propname, "save-xmp") == 0)                  ||
-          (gimp_save_procedure_get_support_profile (save_procedure) &&
+          (ligma_save_procedure_get_support_profile (save_procedure) &&
            g_strcmp0 (propname, "save-color-profile") == 0)        ||
-          (gimp_save_procedure_get_support_thumbnail (save_procedure) &&
+          (ligma_save_procedure_get_support_thumbnail (save_procedure) &&
            g_strcmp0 (propname, "save-thumbnail") == 0)            ||
-          (gimp_save_procedure_get_support_comment (save_procedure) &&
+          (ligma_save_procedure_get_support_comment (save_procedure) &&
            (g_strcmp0 (propname, "save-comment") == 0 ||
-            g_strcmp0 (propname, "gimp-comment") == 0))            ||
+            g_strcmp0 (propname, "ligma-comment") == 0))            ||
           g_list_find (save_dialog->priv->additional_metadata, propname))
         /* Ignoring the standards and custom metadata. */
         continue;
@@ -133,17 +133,17 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       properties2 = g_list_prepend (properties2, propname);
     }
   properties2 = g_list_reverse (properties2);
-  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
+  LIGMA_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
   g_list_free (properties2);
 
 
-  if (gimp_save_procedure_get_support_exif      (save_procedure) ||
-      gimp_save_procedure_get_support_iptc      (save_procedure) ||
-      gimp_save_procedure_get_support_xmp       (save_procedure) ||
-      gimp_save_procedure_get_support_profile   (save_procedure) ||
-      gimp_save_procedure_get_support_thumbnail (save_procedure) ||
+  if (ligma_save_procedure_get_support_exif      (save_procedure) ||
+      ligma_save_procedure_get_support_iptc      (save_procedure) ||
+      ligma_save_procedure_get_support_xmp       (save_procedure) ||
+      ligma_save_procedure_get_support_profile   (save_procedure) ||
+      ligma_save_procedure_get_support_thumbnail (save_procedure) ||
       g_list_length (save_dialog->priv->additional_metadata) > 0 ||
-      gimp_save_procedure_get_support_comment   (save_procedure))
+      ligma_save_procedure_get_support_comment   (save_procedure))
     {
       GtkWidget      *frame;
       GtkWidget      *frame_title;
@@ -157,7 +157,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       gint            left = 0;
       gint            top  = 0;
 
-      frame = gimp_frame_new (NULL);
+      frame = ligma_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
       /* Metadata frame title: a label and an edit link. */
@@ -175,7 +175,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       link = gtk_link_button_new_with_label (_("Edit Metadata"), _("(edit)"));
       gtk_link_button_set_visited (GTK_LINK_BUTTON (link), FALSE);
       g_signal_connect (link, "activate-link",
-                        G_CALLBACK (gimp_save_procedure_dialog_activate_edit_metadata),
+                        G_CALLBACK (ligma_save_procedure_dialog_activate_edit_metadata),
                         dialog);
       gtk_box_pack_start (GTK_BOX (frame_title), link, FALSE, FALSE, 0);
       gtk_widget_show (link);
@@ -191,16 +191,16 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       gtk_widget_show (grid);
 
       /* Line for 3 metadata formats: Exif, IPTC, XMP. */
-      n_metadata = gimp_save_procedure_get_support_exif (save_procedure) +
-                   gimp_save_procedure_get_support_iptc (save_procedure) +
-                   gimp_save_procedure_get_support_xmp  (save_procedure);
+      n_metadata = ligma_save_procedure_get_support_exif (save_procedure) +
+                   ligma_save_procedure_get_support_iptc (save_procedure) +
+                   ligma_save_procedure_get_support_xmp  (save_procedure);
       n_metadata = MAX (n_metadata,
-                        gimp_save_procedure_get_support_profile (save_procedure) +
-                        gimp_save_procedure_get_support_thumbnail (save_procedure));
+                        ligma_save_procedure_get_support_profile (save_procedure) +
+                        ligma_save_procedure_get_support_thumbnail (save_procedure));
 
-      if (gimp_save_procedure_get_support_exif (save_procedure))
+      if (ligma_save_procedure_get_support_exif (save_procedure))
         {
-          widget = gimp_prop_check_button_new (G_OBJECT (config),
+          widget = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-exif", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
@@ -208,9 +208,9 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           top   = 1;
           gtk_widget_show (widget);
         }
-      if (gimp_save_procedure_get_support_iptc (save_procedure))
+      if (ligma_save_procedure_get_support_iptc (save_procedure))
         {
-          widget = gimp_prop_check_button_new (G_OBJECT (config),
+          widget = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-iptc", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
@@ -218,9 +218,9 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           top   = 1;
           gtk_widget_show (widget);
         }
-      if (gimp_save_procedure_get_support_xmp (save_procedure))
+      if (ligma_save_procedure_get_support_xmp (save_procedure))
         {
-          widget = gimp_prop_check_button_new (G_OBJECT (config),
+          widget = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-xmp", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, 0, 6 / n_metadata, 1);
@@ -232,18 +232,18 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       /* Line for specific metadata: profile, thumbnail. */
       left = 0;
 
-      if (gimp_save_procedure_get_support_profile (save_procedure))
+      if (ligma_save_procedure_get_support_profile (save_procedure))
         {
-          widget = gimp_prop_check_button_new (G_OBJECT (config),
+          widget = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-color-profile", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
           gtk_widget_show (widget);
         }
-      if (gimp_save_procedure_get_support_thumbnail (save_procedure))
+      if (ligma_save_procedure_get_support_thumbnail (save_procedure))
         {
-          widget = gimp_prop_check_button_new (G_OBJECT (config),
+          widget = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-thumbnail", NULL);
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
@@ -257,7 +257,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       left = 0;
       for (iter = save_dialog->priv->additional_metadata; iter; iter = iter->next)
         {
-          widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
+          widget = ligma_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
           g_object_ref (widget);
           gtk_grid_attach (GTK_GRID (grid), widget, left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
@@ -272,7 +272,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       top++;
 
       /* Last line for comment field. */
-      if (gimp_save_procedure_get_support_comment (save_procedure))
+      if (ligma_save_procedure_get_support_comment (save_procedure))
         {
           GtkTextBuffer *buffer;
           const gchar   *tooltip;
@@ -282,16 +282,16 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           GtkWidget     *scrolled_window;
 
           pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                "gimp-comment");
+                                                "ligma-comment");
 
-          frame2 = gimp_frame_new (NULL);
-          title  = gimp_prop_check_button_new (G_OBJECT (config),
+          frame2 = ligma_frame_new (NULL);
+          title  = ligma_prop_check_button_new (G_OBJECT (config),
                                                "save-comment", NULL);
           gtk_frame_set_label_widget (GTK_FRAME (frame2), title);
           gtk_widget_show (title);
 
-          buffer = gimp_prop_text_buffer_new (G_OBJECT (config),
-                                              "gimp-comment", -1);
+          buffer = ligma_prop_text_buffer_new (G_OBJECT (config),
+                                              "ligma-comment", -1);
           widget = gtk_text_view_new_with_buffer (buffer);
           gtk_text_view_set_top_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (widget), 3);
@@ -301,7 +301,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 
           tooltip = g_param_spec_get_blurb (pspec);
           if (tooltip)
-            gimp_help_set_help_data (widget, tooltip, NULL);
+            ligma_help_set_help_data (widget, tooltip, NULL);
 
           scrolled_window = gtk_scrolled_window_new (NULL, NULL);
           gtk_widget_set_size_request (scrolled_window, -1, 100);
@@ -326,13 +326,13 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 }
 
 static gpointer
-gimp_save_procedure_dialog_edit_metadata_thread (gpointer data)
+ligma_save_procedure_dialog_edit_metadata_thread (gpointer data)
 {
-  GimpSaveProcedureDialog *dialog = data;
+  LigmaSaveProcedureDialog *dialog = data;
 
-  gimp_pdb_run_procedure (gimp_get_pdb (),    "plug-in-metadata-editor",
-                          GIMP_TYPE_RUN_MODE, GIMP_RUN_INTERACTIVE,
-                          GIMP_TYPE_IMAGE,    dialog->priv->image,
+  ligma_pdb_run_procedure (ligma_get_pdb (),    "plug-in-metadata-editor",
+                          LIGMA_TYPE_RUN_MODE, LIGMA_RUN_INTERACTIVE,
+                          LIGMA_TYPE_IMAGE,    dialog->priv->image,
                           G_TYPE_NONE);
 
   g_mutex_lock (&dialog->priv->metadata_thread_mutex);
@@ -344,8 +344,8 @@ gimp_save_procedure_dialog_edit_metadata_thread (gpointer data)
 }
 
 static gboolean
-gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
-                                                   GimpSaveProcedureDialog *dialog)
+ligma_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link,
+                                                   LigmaSaveProcedureDialog *dialog)
 {
   gtk_link_button_set_visited (link, TRUE);
 
@@ -354,7 +354,7 @@ gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link
   if (! dialog->priv->metadata_thread)
     /* Only run if not already running. */
     dialog->priv->metadata_thread = g_thread_try_new ("Edit Metadata",
-                                                      gimp_save_procedure_dialog_edit_metadata_thread,
+                                                      ligma_save_procedure_dialog_edit_metadata_thread,
                                                       dialog, NULL);
 
   g_mutex_unlock (&dialog->priv->metadata_thread_mutex);
@@ -368,9 +368,9 @@ gimp_save_procedure_dialog_activate_edit_metadata (GtkLinkButton           *link
 
 
 GtkWidget *
-gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
-                                GimpProcedureConfig *config,
-                                GimpImage           *image)
+ligma_save_procedure_dialog_new (LigmaSaveProcedure   *procedure,
+                                LigmaProcedureConfig *config,
+                                LigmaImage           *image)
 {
   GtkWidget   *dialog;
   gchar       *title;
@@ -378,46 +378,46 @@ gimp_save_procedure_dialog_new (GimpSaveProcedure   *procedure,
   const gchar *help_id;
   gboolean     use_header_bar;
 
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
-  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
-                        GIMP_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_SAVE_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (ligma_procedure_config_get_procedure (config) ==
+                        LIGMA_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  format_name = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
+  format_name = ligma_file_procedure_get_format_name (LIGMA_FILE_PROCEDURE (procedure));
   if (! format_name)
     {
       g_critical ("%s: no format name set on file procedure '%s'. "
-                  "Set one with gimp_file_procedure_set_format_name()",
+                  "Set one with ligma_file_procedure_set_format_name()",
                   G_STRFUNC,
-                  gimp_procedure_get_name (GIMP_PROCEDURE (procedure)));
+                  ligma_procedure_get_name (LIGMA_PROCEDURE (procedure)));
       return NULL;
     }
   /* TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG". */
   title = g_strdup_printf (_("Export Image as %s"), format_name);
 
-  help_id = gimp_procedure_get_help_id (GIMP_PROCEDURE (procedure));
+  help_id = ligma_procedure_get_help_id (LIGMA_PROCEDURE (procedure));
 
   g_object_get (gtk_settings_get_default (),
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
-  dialog = g_object_new (GIMP_TYPE_SAVE_PROCEDURE_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_SAVE_PROCEDURE_DIALOG,
                          "procedure",      procedure,
                          "config",         config,
                          "title",          title,
-                         "help-func",      gimp_standard_help_func,
+                         "help-func",      ligma_standard_help_func,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
-  GIMP_SAVE_PROCEDURE_DIALOG (dialog)->priv->image = image;
+  LIGMA_SAVE_PROCEDURE_DIALOG (dialog)->priv->image = image;
   g_free (title);
 
   return dialog;
 }
 
 void
-gimp_save_procedure_dialog_add_metadata (GimpSaveProcedureDialog *dialog,
+ligma_save_procedure_dialog_add_metadata (LigmaSaveProcedureDialog *dialog,
                                          const gchar             *property)
 {
   if (! g_list_find (dialog->priv->additional_metadata, property))

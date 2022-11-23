@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationthreshold.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationthreshold.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationthreshold.h"
+#include "ligmaoperationthreshold.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,16 +44,16 @@ enum
 };
 
 
-static void     gimp_operation_threshold_get_property (GObject      *object,
+static void     ligma_operation_threshold_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
-static void     gimp_operation_threshold_set_property (GObject      *object,
+static void     ligma_operation_threshold_set_property (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
 
-static gboolean gimp_operation_threshold_process (GeglOperation       *operation,
+static gboolean ligma_operation_threshold_process (GeglOperation       *operation,
                                                   void                *in_buf,
                                                   void                *out_buf,
                                                   glong                samples,
@@ -61,65 +61,65 @@ static gboolean gimp_operation_threshold_process (GeglOperation       *operation
                                                   gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationThreshold, gimp_operation_threshold,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationThreshold, ligma_operation_threshold,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_threshold_parent_class
+#define parent_class ligma_operation_threshold_parent_class
 
 
 static void
-gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
+ligma_operation_threshold_class_init (LigmaOperationThresholdClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_threshold_set_property;
-  object_class->get_property = gimp_operation_threshold_get_property;
+  object_class->set_property = ligma_operation_threshold_set_property;
+  object_class->get_property = ligma_operation_threshold_get_property;
 
-  point_class->process       = gimp_operation_threshold_process;
+  point_class->process       = ligma_operation_threshold_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:threshold",
+                                 "name",        "ligma:threshold",
                                  "categories",  "color",
                                  "description", _("Reduce image to two colors using a threshold"),
                                  NULL);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
                          _("Channel"),
                          NULL,
-                         GIMP_TYPE_HISTOGRAM_CHANNEL,
-                         GIMP_HISTOGRAM_VALUE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_HISTOGRAM_CHANNEL,
+                         LIGMA_HISTOGRAM_VALUE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LOW,
                            "low",
                            _("Low threshold"),
                            NULL,
                            0.0, 1.0, 0.5,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HIGH,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_HIGH,
                            "high",
                            _("High threshold"),
                            NULL,
                            0.0, 1.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_operation_threshold_init (GimpOperationThreshold *self)
+ligma_operation_threshold_init (LigmaOperationThreshold *self)
 {
 }
 
 static void
-gimp_operation_threshold_get_property (GObject    *object,
+ligma_operation_threshold_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpOperationThreshold *self = GIMP_OPERATION_THRESHOLD (object);
+  LigmaOperationThreshold *self = LIGMA_OPERATION_THRESHOLD (object);
 
   switch (property_id)
     {
@@ -142,12 +142,12 @@ gimp_operation_threshold_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_threshold_set_property (GObject      *object,
+ligma_operation_threshold_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpOperationThreshold *self = GIMP_OPERATION_THRESHOLD (object);
+  LigmaOperationThreshold *self = LIGMA_OPERATION_THRESHOLD (object);
 
   switch (property_id)
     {
@@ -170,14 +170,14 @@ gimp_operation_threshold_set_property (GObject      *object,
 }
 
  static gboolean
-gimp_operation_threshold_process (GeglOperation       *operation,
+ligma_operation_threshold_process (GeglOperation       *operation,
                                   void                *in_buf,
                                   void                *out_buf,
                                   glong                samples,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  GimpOperationThreshold *threshold = GIMP_OPERATION_THRESHOLD (operation);
+  LigmaOperationThreshold *threshold = LIGMA_OPERATION_THRESHOLD (operation);
   gfloat                 *src       = in_buf;
   gfloat                 *dest      = out_buf;
 
@@ -187,34 +187,34 @@ gimp_operation_threshold_process (GeglOperation       *operation,
 
       switch (threshold->channel)
         {
-        case GIMP_HISTOGRAM_VALUE:
+        case LIGMA_HISTOGRAM_VALUE:
           value = MAX (src[RED], src[GREEN]);
           value = MAX (value, src[BLUE]);
           break;
 
-        case GIMP_HISTOGRAM_RED:
+        case LIGMA_HISTOGRAM_RED:
           value = src[RED];
           break;
 
-        case GIMP_HISTOGRAM_GREEN:
+        case LIGMA_HISTOGRAM_GREEN:
           value = src[GREEN];
           break;
 
-        case GIMP_HISTOGRAM_BLUE:
+        case LIGMA_HISTOGRAM_BLUE:
           value = src[BLUE];
           break;
 
-        case GIMP_HISTOGRAM_ALPHA:
+        case LIGMA_HISTOGRAM_ALPHA:
           value = src[ALPHA];
           break;
 
-        case GIMP_HISTOGRAM_RGB:
+        case LIGMA_HISTOGRAM_RGB:
           value = MIN (src[RED], src[GREEN]);
           value = MIN (value, src[BLUE]);
           break;
 
-        case GIMP_HISTOGRAM_LUMINANCE:
-          value = GIMP_RGB_LUMINANCE (src[RED], src[GREEN], src[BLUE]);
+        case LIGMA_HISTOGRAM_LUMINANCE:
+          value = LIGMA_RGB_LUMINANCE (src[RED], src[GREEN], src[BLUE]);
           break;
         }
 

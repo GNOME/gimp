@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * color_dialog module (C) 1998 Austin Donnelly <austin@greenend.org.uk>
@@ -22,34 +22,34 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-palettes.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimpmarshal.h"
-#include "core/gimppalettemru.h"
-#include "core/gimpprojection.h"
+#include "core/ligma.h"
+#include "core/ligma-palettes.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-colormap.h"
+#include "core/ligmamarshal.h"
+#include "core/ligmapalettemru.h"
+#include "core/ligmaprojection.h"
 
-#include "gimpactiongroup.h"
-#include "gimpcolordialog.h"
-#include "gimpcolorhistory.h"
-#include "gimpcolormapselection.h"
-#include "gimpdialogfactory.h"
-#include "gimphelp-ids.h"
-#include "gimpwidgets-constructors.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaactiongroup.h"
+#include "ligmacolordialog.h"
+#include "ligmacolorhistory.h"
+#include "ligmacolormapselection.h"
+#include "ligmadialogfactory.h"
+#include "ligmahelp-ids.h"
+#include "ligmawidgets-constructors.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET   1
@@ -68,91 +68,91 @@ enum
   PROP_USER_CONTEXT_AWARE
 };
 
-static void   gimp_color_dialog_constructed      (GObject            *object);
-static void   gimp_color_dialog_finalize         (GObject            *object);
-static void   gimp_color_dialog_set_property     (GObject            *object,
+static void   ligma_color_dialog_constructed      (GObject            *object);
+static void   ligma_color_dialog_finalize         (GObject            *object);
+static void   ligma_color_dialog_set_property     (GObject            *object,
                                                   guint               property_id,
                                                   const GValue       *value,
                                                   GParamSpec         *pspec);
-static void   gimp_color_dialog_get_property     (GObject            *object,
+static void   ligma_color_dialog_get_property     (GObject            *object,
                                                   guint               property_id,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static void   gimp_color_dialog_response         (GtkDialog          *dialog,
+static void   ligma_color_dialog_response         (GtkDialog          *dialog,
                                                   gint                response_id);
 
-static void   gimp_color_dialog_help_func        (const gchar        *help_id,
+static void   ligma_color_dialog_help_func        (const gchar        *help_id,
                                                   gpointer            help_data);
 
-static void   gimp_color_dialog_colormap_clicked (GimpColorDialog    *dialog,
-                                                  GimpPaletteEntry   *entry,
+static void   ligma_color_dialog_colormap_clicked (LigmaColorDialog    *dialog,
+                                                  LigmaPaletteEntry   *entry,
                                                   GdkModifierType     state);
 static void
-        gimp_color_dialog_colormap_edit_activate (GimpColorDialog    *dialog);
+        ligma_color_dialog_colormap_edit_activate (LigmaColorDialog    *dialog);
 static void
-        gimp_color_dialog_colormap_add_activate  (GimpColorDialog    *dialog);
+        ligma_color_dialog_colormap_add_activate  (LigmaColorDialog    *dialog);
 
-static void   gimp_color_dialog_color_changed    (GimpColorSelection *selection,
-                                                  GimpColorDialog    *dialog);
+static void   ligma_color_dialog_color_changed    (LigmaColorSelection *selection,
+                                                  LigmaColorDialog    *dialog);
 
-static void   gimp_color_history_add_clicked     (GtkWidget          *widget,
-                                                  GimpColorDialog    *dialog);
+static void   ligma_color_history_add_clicked     (GtkWidget          *widget,
+                                                  LigmaColorDialog    *dialog);
 
-static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
-                                                  const GimpRGB      *rgb,
-                                                  GimpColorDialog    *dialog);
+static void   ligma_color_dialog_history_selected (LigmaColorHistory   *history,
+                                                  const LigmaRGB      *rgb,
+                                                  LigmaColorDialog    *dialog);
 
-static void   gimp_color_dialog_image_changed    (GimpContext        *context,
-                                                  GimpImage          *image,
-                                                  GimpColorDialog    *dialog);
-static void   gimp_color_dialog_update_simulation(GimpImage          *image,
-                                                  GimpColorDialog    *dialog);
-static void   gimp_color_dialog_update           (GimpColorDialog    *dialog);
-static void   gimp_color_dialog_show             (GimpColorDialog    *dialog);
-static void   gimp_color_dialog_hide             (GimpColorDialog    *dialog);
+static void   ligma_color_dialog_image_changed    (LigmaContext        *context,
+                                                  LigmaImage          *image,
+                                                  LigmaColorDialog    *dialog);
+static void   ligma_color_dialog_update_simulation(LigmaImage          *image,
+                                                  LigmaColorDialog    *dialog);
+static void   ligma_color_dialog_update           (LigmaColorDialog    *dialog);
+static void   ligma_color_dialog_show             (LigmaColorDialog    *dialog);
+static void   ligma_color_dialog_hide             (LigmaColorDialog    *dialog);
 
 
-G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
+G_DEFINE_TYPE (LigmaColorDialog, ligma_color_dialog, LIGMA_TYPE_VIEWABLE_DIALOG)
 
-#define parent_class gimp_color_dialog_parent_class
+#define parent_class ligma_color_dialog_parent_class
 
 static guint color_dialog_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_color_dialog_class_init (GimpColorDialogClass *klass)
+ligma_color_dialog_class_init (LigmaColorDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->constructed  = gimp_color_dialog_constructed;
-  object_class->finalize     = gimp_color_dialog_finalize;
-  object_class->set_property = gimp_color_dialog_set_property;
-  object_class->get_property = gimp_color_dialog_get_property;
+  object_class->constructed  = ligma_color_dialog_constructed;
+  object_class->finalize     = ligma_color_dialog_finalize;
+  object_class->set_property = ligma_color_dialog_set_property;
+  object_class->get_property = ligma_color_dialog_get_property;
 
-  dialog_class->response     = gimp_color_dialog_response;
+  dialog_class->response     = ligma_color_dialog_response;
 
   color_dialog_signals[UPDATE] =
     g_signal_new ("update",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpColorDialogClass, update),
+                  G_STRUCT_OFFSET (LigmaColorDialogClass, update),
                   NULL, NULL,
-                  gimp_marshal_VOID__BOXED_ENUM,
+                  ligma_marshal_VOID__BOXED_ENUM,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_RGB,
-                  GIMP_TYPE_COLOR_DIALOG_STATE);
+                  LIGMA_TYPE_RGB,
+                  LIGMA_TYPE_COLOR_DIALOG_STATE);
 
   g_object_class_install_property (object_class, PROP_USER_CONTEXT_AWARE,
                                    g_param_spec_boolean ("user-context-aware",
                                                         NULL, NULL, FALSE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_color_dialog_init (GimpColorDialog *dialog)
+ligma_color_dialog_init (LigmaColorDialog *dialog)
 {
   dialog->stack = gtk_stack_new ();
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
@@ -161,10 +161,10 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
 }
 
 static void
-gimp_color_dialog_constructed (GObject *object)
+ligma_color_dialog_constructed (GObject *object)
 {
-  GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (object);
+  LigmaColorDialog    *dialog          = LIGMA_COLOR_DIALOG (object);
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (object);
   GtkWidget          *hbox;
   GtkWidget          *history;
   GtkWidget          *button;
@@ -173,22 +173,22 @@ gimp_color_dialog_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /** Tab: colormap selection. **/
-  dialog->colormap_selection = gimp_colormap_selection_new (viewable_dialog->context->gimp->user_context);
+  dialog->colormap_selection = ligma_colormap_selection_new (viewable_dialog->context->ligma->user_context);
   gtk_stack_add_named (GTK_STACK (dialog->stack),
                        dialog->colormap_selection, "colormap");
   g_signal_connect_swapped (dialog->colormap_selection, "color-clicked",
-                            G_CALLBACK (gimp_color_dialog_colormap_clicked),
+                            G_CALLBACK (ligma_color_dialog_colormap_clicked),
                             dialog);
   g_signal_connect_swapped (dialog->colormap_selection, "color-activated",
-                            G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
+                            G_CALLBACK (ligma_color_dialog_colormap_edit_activate),
                             dialog);
   gtk_widget_show (dialog->colormap_selection);
 
   /* Edit color button */
-  button = gimp_button_new ();
+  button = ligma_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), FALSE);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT, GTK_ICON_SIZE_LARGE_TOOLBAR);
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_EDIT, GTK_ICON_SIZE_LARGE_TOOLBAR);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -197,93 +197,93 @@ gimp_color_dialog_constructed (GObject *object)
    * the action, but the group is only registered when the Colormap
    * dockable is opened.
    */
-  gimp_help_set_help_data_with_markup (button,
+  ligma_help_set_help_data_with_markup (button,
                                        NC_("colormap-action", "Edit this color"),
-                                       GIMP_HELP_INDEXED_PALETTE_EDIT);
+                                       LIGMA_HELP_INDEXED_PALETTE_EDIT);
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
+                            G_CALLBACK (ligma_color_dialog_colormap_edit_activate),
                             dialog);
   gtk_widget_show (button);
-  gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+  gtk_box_pack_start (GTK_BOX (LIGMA_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
                       FALSE, FALSE, 0);
 
   /* Add Color button */
-  button = gimp_button_new ();
+  button = ligma_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), FALSE);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD, GTK_ICON_SIZE_LARGE_TOOLBAR);
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_LIST_ADD, GTK_ICON_SIZE_LARGE_TOOLBAR);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data_with_markup (button,
+  ligma_help_set_help_data_with_markup (button,
                                        NC_("colormap-action", "Add current foreground color"),
-                                       GIMP_HELP_INDEXED_PALETTE_ADD);
+                                       LIGMA_HELP_INDEXED_PALETTE_ADD);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_color_dialog_colormap_add_activate),
+                            G_CALLBACK (ligma_color_dialog_colormap_add_activate),
                             dialog);
   gtk_widget_show (button);
-  gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+  gtk_box_pack_start (GTK_BOX (LIGMA_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
                       FALSE, FALSE, 0);
 
   /** Tab: color selection. **/
-  dialog->selection = gimp_color_selection_new ();
+  dialog->selection = ligma_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
   gtk_stack_add_named (GTK_STACK (dialog->stack), dialog->selection, "color");
   gtk_widget_show (dialog->selection);
 
   g_signal_connect (dialog->selection, "color-changed",
-                    G_CALLBACK (gimp_color_dialog_color_changed),
+                    G_CALLBACK (ligma_color_dialog_color_changed),
                     dialog);
 
   /* Color history box. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_pack_end (GTK_BOX (gimp_color_selection_get_right_vbox (GIMP_COLOR_SELECTION (dialog->selection))),
+  gtk_box_pack_end (GTK_BOX (ligma_color_selection_get_right_vbox (LIGMA_COLOR_SELECTION (dialog->selection))),
                     hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Button for adding to color history. */
-  button = gimp_icon_button_new (GIMP_ICON_LIST_ADD, NULL);
+  button = ligma_icon_button_new (LIGMA_ICON_LIST_ADD, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button), FALSE, FALSE, 0);
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Add the current color to the color history"),
                            NULL);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_color_history_add_clicked),
+                    G_CALLBACK (ligma_color_history_add_clicked),
                     dialog);
 
   /* Color history table. */
-  history = gimp_color_history_new (viewable_dialog->context, 12);
+  history = ligma_color_history_new (viewable_dialog->context, 12);
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (history), TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (history));
 
   g_signal_connect (history, "color-selected",
-                    G_CALLBACK (gimp_color_dialog_history_selected),
+                    G_CALLBACK (ligma_color_dialog_history_selected),
                     dialog);
 
   g_signal_connect (dialog, "show",
-                    G_CALLBACK (gimp_color_dialog_show),
+                    G_CALLBACK (ligma_color_dialog_show),
                     NULL);
   g_signal_connect (dialog, "hide",
-                    G_CALLBACK (gimp_color_dialog_hide),
+                    G_CALLBACK (ligma_color_dialog_hide),
                     NULL);
-  gimp_color_dialog_show (dialog);
+  ligma_color_dialog_show (dialog);
 }
 
 static void
-gimp_color_dialog_finalize (GObject *object)
+ligma_color_dialog_finalize (GObject *object)
 {
-  GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  LigmaColorDialog    *dialog          = LIGMA_COLOR_DIALOG (object);
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
 
   if (dialog->user_context_aware && viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
 
       g_signal_handlers_disconnect_by_func (user_context,
-                                            G_CALLBACK (gimp_color_dialog_image_changed),
+                                            G_CALLBACK (ligma_color_dialog_image_changed),
                                             dialog);
     }
 
@@ -291,12 +291,12 @@ gimp_color_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_color_dialog_set_property (GObject      *object,
+ligma_color_dialog_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpColorDialog *dialog = GIMP_COLOR_DIALOG (object);
+  LigmaColorDialog *dialog = LIGMA_COLOR_DIALOG (object);
 
   switch (property_id)
     {
@@ -311,12 +311,12 @@ gimp_color_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_color_dialog_get_property (GObject    *object,
+ligma_color_dialog_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpColorDialog *dialog = GIMP_COLOR_DIALOG (object);
+  LigmaColorDialog *dialog = LIGMA_COLOR_DIALOG (object);
 
   switch (property_id)
     {
@@ -331,78 +331,78 @@ gimp_color_dialog_get_property (GObject    *object,
 }
 
 static void
-gimp_color_dialog_response (GtkDialog *gtk_dialog,
+ligma_color_dialog_response (GtkDialog *gtk_dialog,
                             gint       response_id)
 {
-  GimpColorDialog       *dialog          = GIMP_COLOR_DIALOG (gtk_dialog);
-  GimpViewableDialog    *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
-  GimpImage             *image           = NULL;
-  GimpColormapSelection *colormap_selection;
+  LigmaColorDialog       *dialog          = LIGMA_COLOR_DIALOG (gtk_dialog);
+  LigmaViewableDialog    *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
+  LigmaImage             *image           = NULL;
+  LigmaColormapSelection *colormap_selection;
   gint                   col_index;
-  GimpRGB                color;
+  LigmaRGB                color;
 
-  colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
-  col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
+  colormap_selection = LIGMA_COLORMAP_SELECTION (dialog->colormap_selection);
+  col_index = ligma_colormap_selection_get_index (colormap_selection, NULL);
 
   if (dialog->colormap_editing && viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
 
-      image = gimp_context_get_image (user_context);
+      image = ligma_context_get_image (user_context);
     }
 
   switch (response_id)
     {
     case RESPONSE_RESET:
-      gimp_color_selection_reset (GIMP_COLOR_SELECTION (dialog->selection));
+      ligma_color_selection_reset (LIGMA_COLOR_SELECTION (dialog->selection));
       break;
 
     case GTK_RESPONSE_OK:
-      gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
+      ligma_color_selection_get_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                       &color);
 
       if (dialog->colormap_editing && image)
         {
-          GimpRGB old_color;
+          LigmaRGB old_color;
 
           dialog->colormap_editing = FALSE;
 
           /* Restore old color for undo */
-          gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
-          gimp_image_set_colormap_entry (image, col_index, &old_color, FALSE);
-          gimp_image_set_colormap_entry (image, col_index, &color, TRUE);
-          gimp_image_flush (image);
+          ligma_color_selection_get_old_color (LIGMA_COLOR_SELECTION (dialog->selection), &old_color);
+          ligma_image_set_colormap_entry (image, col_index, &old_color, FALSE);
+          ligma_image_set_colormap_entry (image, col_index, &color, TRUE);
+          ligma_image_flush (image);
 
           gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                         &color, GIMP_COLOR_DIALOG_UPDATE);
+                         &color, LIGMA_COLOR_DIALOG_UPDATE);
         }
       else
         {
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                         &color, GIMP_COLOR_DIALOG_OK);
+                         &color, LIGMA_COLOR_DIALOG_OK);
         }
       break;
 
     default:
-      gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection),
+      ligma_color_selection_get_old_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                           &color);
 
       if (dialog->colormap_editing && image)
         {
           dialog->colormap_editing = FALSE;
 
-          gimp_image_set_colormap_entry (image, col_index, &color, FALSE);
-          gimp_projection_flush (gimp_image_get_projection (image));
+          ligma_image_set_colormap_entry (image, col_index, &color, FALSE);
+          ligma_projection_flush (ligma_image_get_projection (image));
 
           gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                         &color, GIMP_COLOR_DIALOG_UPDATE);
+                         &color, LIGMA_COLOR_DIALOG_UPDATE);
         }
       else
         {
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                         &color, GIMP_COLOR_DIALOG_CANCEL);
+                         &color, LIGMA_COLOR_DIALOG_CANCEL);
         }
       break;
     }
@@ -412,43 +412,43 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 /*  public functions  */
 
 GtkWidget *
-gimp_color_dialog_new (GimpViewable      *viewable,
-                       GimpContext       *context,
+ligma_color_dialog_new (LigmaViewable      *viewable,
+                       LigmaContext       *context,
                        gboolean           user_context_aware,
                        const gchar       *title,
                        const gchar       *icon_name,
                        const gchar       *desc,
                        GtkWidget         *parent,
-                       GimpDialogFactory *dialog_factory,
+                       LigmaDialogFactory *dialog_factory,
                        const gchar       *dialog_identifier,
-                       const GimpRGB     *color,
+                       const LigmaRGB     *color,
                        gboolean           wants_updates,
                        gboolean           show_alpha)
 {
-  GimpColorDialog *dialog;
+  LigmaColorDialog *dialog;
   const gchar     *role;
   gboolean         use_header_bar;
 
-  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (viewable == NULL || LIGMA_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
-                        GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+                        LIGMA_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (dialog_factory == NULL || dialog_identifier != NULL,
                         NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
+  role = dialog_identifier ? dialog_identifier : "ligma-color-selector";
 
   g_object_get (gtk_settings_get_default (),
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
-  dialog = g_object_new (GIMP_TYPE_COLOR_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_COLOR_DIALOG,
                          "title",              title,
                          "role",               role,
-                         "help-func",          gimp_color_dialog_help_func,
-                         "help-id",            GIMP_HELP_COLOR_DIALOG,
+                         "help-func",          ligma_color_dialog_help_func,
+                         "help-id",            LIGMA_HELP_COLOR_DIALOG,
                          "icon-name",          icon_name,
                          "description",        desc,
                          "context",            context,
@@ -457,7 +457,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "use-header-bar",     use_header_bar,
                          NULL);
 
-  gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
+  ligma_dialog_add_buttons (LIGMA_DIALOG (dialog),
 
                            _("_Reset"),  RESPONSE_RESET,
                            _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -465,7 +465,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
                            NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             RESPONSE_RESET,
                                             GTK_RESPONSE_OK,
                                             GTK_RESPONSE_CANCEL,
@@ -473,14 +473,14 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (viewable)
     {
-      gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (dialog),
+      ligma_viewable_dialog_set_viewables (LIGMA_VIEWABLE_DIALOG (dialog),
                                           g_list_prepend (NULL, viewable), context);
     }
   else
     {
       GtkWidget *parent;
 
-      parent = gtk_widget_get_parent (GIMP_VIEWABLE_DIALOG (dialog)->icon);
+      parent = gtk_widget_get_parent (LIGMA_VIEWABLE_DIALOG (dialog)->icon);
       parent = gtk_widget_get_parent (parent);
 
       gtk_widget_hide (parent);
@@ -490,60 +490,60 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (dialog_factory)
     {
-      gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
+      ligma_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
                                        GTK_WIDGET (dialog),
-                                       gimp_widget_get_monitor (parent));
+                                       ligma_widget_get_monitor (parent));
     }
 
-  gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_show_alpha (LIGMA_COLOR_SELECTION (dialog->selection),
                                        show_alpha);
 
-  g_object_set_data (G_OBJECT (context->gimp->config->color_management),
-                     "gimp-context", context);
+  g_object_set_data (G_OBJECT (context->ligma->config->color_management),
+                     "ligma-context", context);
 
-  gimp_color_selection_set_config (GIMP_COLOR_SELECTION (dialog->selection),
-                                   context->gimp->config->color_management);
+  ligma_color_selection_set_config (LIGMA_COLOR_SELECTION (dialog->selection),
+                                   context->ligma->config->color_management);
 
-  g_object_set_data (G_OBJECT (context->gimp->config->color_management),
-                     "gimp-context", NULL);
+  g_object_set_data (G_OBJECT (context->ligma->config->color_management),
+                     "ligma-context", NULL);
 
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                   color);
-  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_old_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                       color);
 
   return GTK_WIDGET (dialog);
 }
 
 void
-gimp_color_dialog_set_color (GimpColorDialog *dialog,
-                             const GimpRGB   *color)
+ligma_color_dialog_set_color (LigmaColorDialog *dialog,
+                             const LigmaRGB   *color)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_COLOR_DIALOG (dialog));
   g_return_if_fail (color != NULL);
 
   g_signal_handlers_block_by_func (dialog->selection,
-                                   gimp_color_dialog_color_changed,
+                                   ligma_color_dialog_color_changed,
                                    dialog);
 
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                   color);
-  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_old_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                       color);
 
   g_signal_handlers_unblock_by_func (dialog->selection,
-                                     gimp_color_dialog_color_changed,
+                                     ligma_color_dialog_color_changed,
                                      dialog);
 }
 
 void
-gimp_color_dialog_get_color (GimpColorDialog *dialog,
-                             GimpRGB         *color)
+ligma_color_dialog_get_color (LigmaColorDialog *dialog,
+                             LigmaRGB         *color)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_COLOR_DIALOG (dialog));
   g_return_if_fail (color != NULL);
 
-  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_get_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                   color);
 }
 
@@ -551,121 +551,121 @@ gimp_color_dialog_get_color (GimpColorDialog *dialog,
 /*  private functions  */
 
 static void
-gimp_color_dialog_help_func (const gchar *help_id,
+ligma_color_dialog_help_func (const gchar *help_id,
                              gpointer     help_data)
 {
-  GimpColorDialog   *dialog = GIMP_COLOR_DIALOG (help_data);
-  GimpColorNotebook *notebook;
-  GimpColorSelector *current;
+  LigmaColorDialog   *dialog = LIGMA_COLOR_DIALOG (help_data);
+  LigmaColorNotebook *notebook;
+  LigmaColorSelector *current;
 
   notebook =
-    GIMP_COLOR_NOTEBOOK (gimp_color_selection_get_notebook (GIMP_COLOR_SELECTION (dialog->selection)));
+    LIGMA_COLOR_NOTEBOOK (ligma_color_selection_get_notebook (LIGMA_COLOR_SELECTION (dialog->selection)));
 
-  current = gimp_color_notebook_get_current_selector (notebook);
+  current = ligma_color_notebook_get_current_selector (notebook);
 
-  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (current)->help_id;
+  help_id = LIGMA_COLOR_SELECTOR_GET_CLASS (current)->help_id;
 
-  gimp_standard_help_func (help_id, NULL);
+  ligma_standard_help_func (help_id, NULL);
 }
 
 static void
-gimp_color_dialog_colormap_clicked (GimpColorDialog  *dialog,
-                                    GimpPaletteEntry *entry,
+ligma_color_dialog_colormap_clicked (LigmaColorDialog  *dialog,
+                                    LigmaPaletteEntry *entry,
                                     GdkModifierType   state)
 {
-  gimp_color_dialog_set_color (dialog, &entry->color);
+  ligma_color_dialog_set_color (dialog, &entry->color);
 
   if (dialog->wants_updates)
     {
       g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                     &entry->color, GIMP_COLOR_DIALOG_UPDATE);
+                     &entry->color, LIGMA_COLOR_DIALOG_UPDATE);
     }
 }
 
 static void
-gimp_color_dialog_colormap_edit_activate (GimpColorDialog *dialog)
+ligma_color_dialog_colormap_edit_activate (LigmaColorDialog *dialog)
 {
-  GimpColormapSelection *colormap_selection;
-  GimpRGB                color;
+  LigmaColormapSelection *colormap_selection;
+  LigmaRGB                color;
   gint                   col_index;
 
   dialog->colormap_editing = TRUE;
 
-  colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
-  col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
-  gimp_image_get_colormap_entry (dialog->active_image, col_index, &color);
-  gimp_color_dialog_set_color (dialog, &color);
+  colormap_selection = LIGMA_COLORMAP_SELECTION (dialog->colormap_selection);
+  col_index = ligma_colormap_selection_get_index (colormap_selection, NULL);
+  ligma_image_get_colormap_entry (dialog->active_image, col_index, &color);
+  ligma_color_dialog_set_color (dialog, &color);
 
   gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
 }
 
 static void
-gimp_color_dialog_colormap_add_activate (GimpColorDialog *dialog)
+ligma_color_dialog_colormap_add_activate (LigmaColorDialog *dialog)
 {
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
 
   if (dialog->active_image &&
-      gimp_image_get_colormap_size (dialog->active_image) < 256 &&
+      ligma_image_get_colormap_size (dialog->active_image) < 256 &&
       viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
-      GimpRGB      color;
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
+      LigmaRGB      color;
 
-      gimp_context_get_foreground (user_context, &color);
+      ligma_context_get_foreground (user_context, &color);
 
-      gimp_image_add_colormap_entry (dialog->active_image, &color);
-      gimp_image_flush (dialog->active_image);
+      ligma_image_add_colormap_entry (dialog->active_image, &color);
+      ligma_image_flush (dialog->active_image);
     }
 }
 
 static void
-gimp_color_dialog_color_changed (GimpColorSelection *selection,
-                                 GimpColorDialog    *dialog)
+ligma_color_dialog_color_changed (LigmaColorSelection *selection,
+                                 LigmaColorDialog    *dialog)
 {
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
-  GimpRGB             color;
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
+  LigmaRGB             color;
 
-  gimp_color_selection_get_color (selection, &color);
+  ligma_color_selection_get_color (selection, &color);
 
   if (dialog->colormap_editing && viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
-      GimpImage   *image;
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
+      LigmaImage   *image;
 
-      image = gimp_context_get_image (user_context);
+      image = ligma_context_get_image (user_context);
       if (image)
         {
-          GimpColormapSelection *colormap_selection;
+          LigmaColormapSelection *colormap_selection;
           gboolean               push_undo = FALSE;
           gint                   col_index;
 
-          colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
-          col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
+          colormap_selection = LIGMA_COLORMAP_SELECTION (dialog->colormap_selection);
+          col_index = ligma_colormap_selection_get_index (colormap_selection, NULL);
           if (push_undo)
             {
-              GimpRGB old_color;
+              LigmaRGB old_color;
 
-              gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+              ligma_color_selection_get_old_color (LIGMA_COLOR_SELECTION (dialog->selection), &old_color);
 
               /* Restore old color for undo */
-              gimp_image_set_colormap_entry (image, col_index, &old_color,
+              ligma_image_set_colormap_entry (image, col_index, &old_color,
                                              FALSE);
             }
 
-          gimp_image_set_colormap_entry (image, col_index, &color,
+          ligma_image_set_colormap_entry (image, col_index, &color,
                                          push_undo);
 
           if (push_undo)
-            gimp_image_flush (image);
+            ligma_image_flush (image);
           else
-            gimp_projection_flush (gimp_image_get_projection (image));
+            ligma_projection_flush (ligma_image_get_projection (image));
         }
     }
 
   if (dialog->wants_updates)
     {
       g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                     &color, GIMP_COLOR_DIALOG_UPDATE);
+                     &color, LIGMA_COLOR_DIALOG_UPDATE);
     }
 }
 
@@ -673,38 +673,38 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
 /* History-adding button callback */
 
 static void
-gimp_color_history_add_clicked (GtkWidget       *widget,
-                                GimpColorDialog *dialog)
+ligma_color_history_add_clicked (GtkWidget       *widget,
+                                LigmaColorDialog *dialog)
 {
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
-  GimpPalette        *history;
-  GimpRGB             color;
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
+  LigmaPalette        *history;
+  LigmaRGB             color;
 
-  history = gimp_palettes_get_color_history (viewable_dialog->context->gimp);
+  history = ligma_palettes_get_color_history (viewable_dialog->context->ligma);
 
-  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_get_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                   &color);
 
-  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), &color);
+  ligma_palette_mru_add (LIGMA_PALETTE_MRU (history), &color);
 }
 
 /* Color history callback  */
 
 static void
-gimp_color_dialog_history_selected (GimpColorHistory *history,
-                                    const GimpRGB    *rgb,
-                                    GimpColorDialog  *dialog)
+ligma_color_dialog_history_selected (LigmaColorHistory *history,
+                                    const LigmaRGB    *rgb,
+                                    LigmaColorDialog  *dialog)
 {
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+  ligma_color_selection_set_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                   rgb);
 }
 
 /* Context-related callbacks */
 
 static void
-gimp_color_dialog_image_changed (GimpContext     *context,
-                                 GimpImage       *image,
-                                 GimpColorDialog *dialog)
+ligma_color_dialog_image_changed (LigmaContext     *context,
+                                 LigmaImage       *image,
+                                 LigmaColorDialog *dialog)
 {
   if (dialog->active_image != image)
     {
@@ -713,10 +713,10 @@ gimp_color_dialog_image_changed (GimpContext     *context,
           g_object_remove_weak_pointer (G_OBJECT (dialog->active_image),
                                         (gpointer) &dialog->active_image);
           g_signal_handlers_disconnect_by_func (dialog->active_image,
-                                                G_CALLBACK (gimp_color_dialog_update),
+                                                G_CALLBACK (ligma_color_dialog_update),
                                                 dialog);
           g_signal_handlers_disconnect_by_func (dialog->active_image,
-                                                gimp_color_dialog_update_simulation,
+                                                ligma_color_dialog_update_simulation,
                                                 dialog);
         }
       dialog->active_image = image;
@@ -725,69 +725,69 @@ gimp_color_dialog_image_changed (GimpContext     *context,
           g_object_add_weak_pointer (G_OBJECT (dialog->active_image),
                                      (gpointer) &dialog->active_image);
           g_signal_connect_swapped (image, "notify::base-type",
-                                    G_CALLBACK (gimp_color_dialog_update),
+                                    G_CALLBACK (ligma_color_dialog_update),
                                     dialog);
           g_signal_connect (image, "simulation-profile-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            G_CALLBACK (ligma_color_dialog_update_simulation),
                             dialog);
           g_signal_connect (image, "simulation-intent-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            G_CALLBACK (ligma_color_dialog_update_simulation),
                             dialog);
           g_signal_connect (image, "simulation-bpc-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            G_CALLBACK (ligma_color_dialog_update_simulation),
                             dialog);
 
-          gimp_color_dialog_update_simulation (image, dialog);
+          ligma_color_dialog_update_simulation (image, dialog);
         }
-      gimp_color_dialog_update (dialog);
+      ligma_color_dialog_update (dialog);
     }
 }
 
 static void
-gimp_color_dialog_update_simulation (GimpImage       *image,
-                                     GimpColorDialog *dialog)
+ligma_color_dialog_update_simulation (LigmaImage       *image,
+                                     LigmaColorDialog *dialog)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_COLOR_DIALOG (dialog));
 
-  if (image && GIMP_IS_COLOR_DIALOG (dialog))
+  if (image && LIGMA_IS_COLOR_DIALOG (dialog))
     {
-      gimp_color_selection_set_simulation (GIMP_COLOR_SELECTION (dialog->selection),
-                                           gimp_image_get_simulation_profile (image),
-                                           gimp_image_get_simulation_intent (image),
-                                           gimp_image_get_simulation_bpc (image));
+      ligma_color_selection_set_simulation (LIGMA_COLOR_SELECTION (dialog->selection),
+                                           ligma_image_get_simulation_profile (image),
+                                           ligma_image_get_simulation_intent (image),
+                                           ligma_image_get_simulation_bpc (image));
     }
 }
 
 
 static void
-gimp_color_dialog_update (GimpColorDialog *dialog)
+ligma_color_dialog_update (LigmaColorDialog *dialog)
 {
   if (dialog->active_image &&
-      gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
+      ligma_image_get_base_type (dialog->active_image) == LIGMA_INDEXED)
     gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
   else
     gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
 }
 
 static void
-gimp_color_dialog_show (GimpColorDialog *dialog)
+ligma_color_dialog_show (LigmaColorDialog *dialog)
 {
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
 
   dialog->colormap_editing = FALSE;
 
   if (dialog->user_context_aware && viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
-      GimpImage   *image        = gimp_context_get_image (user_context);
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
+      LigmaImage   *image        = ligma_context_get_image (user_context);
 
       g_signal_connect (user_context, "image-changed",
-                        G_CALLBACK (gimp_color_dialog_image_changed),
+                        G_CALLBACK (ligma_color_dialog_image_changed),
                         dialog);
 
-      gimp_color_dialog_image_changed (viewable_dialog->context,
+      ligma_color_dialog_image_changed (viewable_dialog->context,
                                        image, dialog);
-      gimp_color_dialog_update (dialog);
+      ligma_color_dialog_update (dialog);
     }
   else
     {
@@ -796,15 +796,15 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
 }
 
 static void
-gimp_color_dialog_hide (GimpColorDialog *dialog)
+ligma_color_dialog_hide (LigmaColorDialog *dialog)
 {
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  LigmaViewableDialog *viewable_dialog = LIGMA_VIEWABLE_DIALOG (dialog);
 
   if (dialog->user_context_aware && viewable_dialog->context)
     {
-      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      LigmaContext *user_context = viewable_dialog->context->ligma->user_context;
       g_signal_handlers_disconnect_by_func (user_context,
-                                            G_CALLBACK (gimp_color_dialog_image_changed),
+                                            G_CALLBACK (ligma_color_dialog_image_changed),
                                             dialog);
     }
 }

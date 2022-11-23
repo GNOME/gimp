@@ -1,4 +1,4 @@
 /Makefile
 /Makefile.in
-/gimp-color-picker-cursors.gresource.xml
-/gimp-tool-cursors.gresource.xml
+/ligma-color-picker-cursors.gresource.xml
+/ligma-tool-cursors.gresource.xml

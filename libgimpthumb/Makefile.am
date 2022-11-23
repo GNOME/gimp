@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -14,43 +14,43 @@ framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
-gimpthumb_def = gimpthumb.def
-libgimpthumb_export_symbols = -export-symbols $(srcdir)/gimpthumb.def
+ligmathumb_def = ligmathumb.def
+libligmathumb_export_symbols = -export-symbols $(srcdir)/ligmathumb.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpthumb-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimpthumb.def $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligmathumb-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligmathumb.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/gimpthumb.def
+	-rm $(DESTDIR)$(libdir)/libligmathumb-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/ligmathumb.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpthumb-$(GIMP_API_VERSION).lib
+noinst_DATA = ligmathumb-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpthumb-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligmathumb-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpthumb-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligmathumb-$(LIGMA_API_VERSION).lib
 
-gimpthumb-@GIMP_API_VERSION@.lib: gimpthumb.def
-	lib -name:libgimpthumb-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpthumb.def -out:$@
+ligmathumb-@LIGMA_API_VERSION@.lib: ligmathumb.def
+	lib -name:libligmathumb-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligmathumb.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpthumbincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpthumb
+libligmathumbincludedir = $(includedir)/ligma-$(LIGMA_API_VERSION)/libligmathumb
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpThumb\"	\
-	-DGIMP_THUMB_COMPILATION	\
+	-DG_LOG_DOMAIN=\"LibLigmaThumb\"	\
+	-DLIGMA_THUMB_COMPILATION	\
 	-I$(top_srcdir)			\
 	$(GDK_PIXBUF_CFLAGS)		\
 	$(GIO_CFLAGS)			\
@@ -66,41 +66,41 @@ AM_LDFLAGS = \
 	$(xnone)
 
 EXTRA_DIST = \
-	gimpthumb.def
+	ligmathumb.def
 
-lib_LTLIBRARIES = libgimpthumb-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligmathumb-@LIGMA_API_VERSION@.la
 
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimpthumb/Makefile.gi
+include $(top_srcdir)/libligmathumb/Makefile.gi
 
-libgimpthumb_@GIMP_API_VERSION@_la_SOURCES = \
-	gimpthumb.h		\
-	gimpthumb-enums.c	\
-	$(libgimpthumb_introspectable)
+libligmathumb_@LIGMA_API_VERSION@_la_SOURCES = \
+	ligmathumb.h		\
+	ligmathumb-enums.c	\
+	$(libligmathumb_introspectable)
 
-libgimpthumbinclude_HEADERS = \
-	gimpthumb.h		\
-	$(libgimpthumb_introspectable_headers)
+libligmathumbinclude_HEADERS = \
+	ligmathumb.h		\
+	$(libligmathumb_introspectable_headers)
 
-libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligmathumb_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimpbase)				\
-	$(libgimpthumb_export_symbols)		\
+	$(libligmabase)				\
+	$(libligmathumb_export_symbols)		\
 	$(framework_cocoa)			\
 	$(xnone)
 
-libgimpthumb_@GIMP_API_VERSION@_la_LIBADD = \
+libligmathumb_@LIGMA_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
 	$(GIO_LIBS)
 
 
-noinst_PROGRAMS = gimp-thumbnail-list
+noinst_PROGRAMS = ligma-thumbnail-list
 
-gimp_thumbnail_list_SOURCES = gimp-thumbnail-list.c
+ligma_thumbnail_list_SOURCES = ligma-thumbnail-list.c
 
-gimp_thumbnail_list_LDADD = \
-	libgimpthumb-$(GIMP_API_VERSION).la \
+ligma_thumbnail_list_LDADD = \
+	libligmathumb-$(LIGMA_API_VERSION).la \
 	$(GDK_PIXBUF_LIBS) \
 	$(GIO_LIBS)
 
@@ -117,9 +117,9 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 gen_sources = xgen-tec
 CLEANFILES = $(gen_sources)
 
-gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpthumb-enums.h\"" \
+ligmathumb-enums.c: $(srcdir)/ligmathumb-enums.h $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"ligmathumb-enums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \

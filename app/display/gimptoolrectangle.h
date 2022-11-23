@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolrectangle.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolrectangle.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
- * Based on GimpRectangleTool
+ * Based on LigmaRectangleTool
  * Copyright (C) 2007 Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,104 +21,104 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_RECTANGLE_H__
-#define __GIMP_TOOL_RECTANGLE_H__
+#ifndef __LIGMA_TOOL_RECTANGLE_H__
+#define __LIGMA_TOOL_RECTANGLE_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
 typedef enum
 {
-  GIMP_TOOL_RECTANGLE_DEAD,
-  GIMP_TOOL_RECTANGLE_CREATING,
-  GIMP_TOOL_RECTANGLE_MOVING,
-  GIMP_TOOL_RECTANGLE_RESIZING_UPPER_LEFT,
-  GIMP_TOOL_RECTANGLE_RESIZING_UPPER_RIGHT,
-  GIMP_TOOL_RECTANGLE_RESIZING_LOWER_LEFT,
-  GIMP_TOOL_RECTANGLE_RESIZING_LOWER_RIGHT,
-  GIMP_TOOL_RECTANGLE_RESIZING_LEFT,
-  GIMP_TOOL_RECTANGLE_RESIZING_RIGHT,
-  GIMP_TOOL_RECTANGLE_RESIZING_TOP,
-  GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM,
-  GIMP_TOOL_RECTANGLE_AUTO_SHRINK,
-  GIMP_TOOL_RECTANGLE_EXECUTING,
-  GIMP_N_TOOL_RECTANGLE_FUNCTIONS
-} GimpRectangleFunction;
+  LIGMA_TOOL_RECTANGLE_DEAD,
+  LIGMA_TOOL_RECTANGLE_CREATING,
+  LIGMA_TOOL_RECTANGLE_MOVING,
+  LIGMA_TOOL_RECTANGLE_RESIZING_UPPER_LEFT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_UPPER_RIGHT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_LOWER_LEFT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_LOWER_RIGHT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_LEFT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_RIGHT,
+  LIGMA_TOOL_RECTANGLE_RESIZING_TOP,
+  LIGMA_TOOL_RECTANGLE_RESIZING_BOTTOM,
+  LIGMA_TOOL_RECTANGLE_AUTO_SHRINK,
+  LIGMA_TOOL_RECTANGLE_EXECUTING,
+  LIGMA_N_TOOL_RECTANGLE_FUNCTIONS
+} LigmaRectangleFunction;
 
 
-#define GIMP_TYPE_TOOL_RECTANGLE            (gimp_tool_rectangle_get_type ())
-#define GIMP_TOOL_RECTANGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_RECTANGLE, GimpToolRectangle))
-#define GIMP_TOOL_RECTANGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_RECTANGLE, GimpToolRectangleClass))
-#define GIMP_IS_TOOL_RECTANGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_RECTANGLE))
-#define GIMP_IS_TOOL_RECTANGLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_RECTANGLE))
-#define GIMP_TOOL_RECTANGLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_RECTANGLE, GimpToolRectangleClass))
+#define LIGMA_TYPE_TOOL_RECTANGLE            (ligma_tool_rectangle_get_type ())
+#define LIGMA_TOOL_RECTANGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_RECTANGLE, LigmaToolRectangle))
+#define LIGMA_TOOL_RECTANGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_RECTANGLE, LigmaToolRectangleClass))
+#define LIGMA_IS_TOOL_RECTANGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_RECTANGLE))
+#define LIGMA_IS_TOOL_RECTANGLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_RECTANGLE))
+#define LIGMA_TOOL_RECTANGLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_RECTANGLE, LigmaToolRectangleClass))
 
 
-typedef struct _GimpToolRectangle        GimpToolRectangle;
-typedef struct _GimpToolRectanglePrivate GimpToolRectanglePrivate;
-typedef struct _GimpToolRectangleClass   GimpToolRectangleClass;
+typedef struct _LigmaToolRectangle        LigmaToolRectangle;
+typedef struct _LigmaToolRectanglePrivate LigmaToolRectanglePrivate;
+typedef struct _LigmaToolRectangleClass   LigmaToolRectangleClass;
 
-struct _GimpToolRectangle
+struct _LigmaToolRectangle
 {
-  GimpToolWidget            parent_instance;
+  LigmaToolWidget            parent_instance;
 
-  GimpToolRectanglePrivate *private;
+  LigmaToolRectanglePrivate *private;
 };
 
-struct _GimpToolRectangleClass
+struct _LigmaToolRectangleClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 
   /*  signals  */
 
-  gboolean (* change_complete) (GimpToolRectangle *rectangle);
+  gboolean (* change_complete) (LigmaToolRectangle *rectangle);
 };
 
 
-GType    gimp_tool_rectangle_get_type         (void) G_GNUC_CONST;
+GType    ligma_tool_rectangle_get_type         (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_rectangle_new      (GimpDisplayShell       *shell);
+LigmaToolWidget * ligma_tool_rectangle_new      (LigmaDisplayShell       *shell);
 
-GimpRectangleFunction
-         gimp_tool_rectangle_get_function     (GimpToolRectangle      *rectangle);
-void     gimp_tool_rectangle_set_function     (GimpToolRectangle      *rectangle,
-                                               GimpRectangleFunction   function);
+LigmaRectangleFunction
+         ligma_tool_rectangle_get_function     (LigmaToolRectangle      *rectangle);
+void     ligma_tool_rectangle_set_function     (LigmaToolRectangle      *rectangle,
+                                               LigmaRectangleFunction   function);
 
-void     gimp_tool_rectangle_set_constraint   (GimpToolRectangle      *rectangle,
-                                               GimpRectangleConstraint constraint);
-GimpRectangleConstraint
-         gimp_tool_rectangle_get_constraint   (GimpToolRectangle      *rectangle);
+void     ligma_tool_rectangle_set_constraint   (LigmaToolRectangle      *rectangle,
+                                               LigmaRectangleConstraint constraint);
+LigmaRectangleConstraint
+         ligma_tool_rectangle_get_constraint   (LigmaToolRectangle      *rectangle);
 
-void     gimp_tool_rectangle_get_public_rect  (GimpToolRectangle      *rectangle,
+void     ligma_tool_rectangle_get_public_rect  (LigmaToolRectangle      *rectangle,
                                                gdouble                *pub_x1,
                                                gdouble                *pub_y1,
                                                gdouble                *pub_x2,
                                                gdouble                *pub_y2);
 
-void     gimp_tool_rectangle_pending_size_set (GimpToolRectangle      *rectangle,
+void     ligma_tool_rectangle_pending_size_set (LigmaToolRectangle      *rectangle,
                                                GObject                *object,
                                                const gchar            *width_property,
                                                const gchar            *height_property);
 
-void     gimp_tool_rectangle_constraint_size_set
-                                              (GimpToolRectangle      *rectangle,
+void     ligma_tool_rectangle_constraint_size_set
+                                              (LigmaToolRectangle      *rectangle,
                                                GObject                *object,
                                                const gchar            *width_property,
                                                const gchar            *height_property);
 
-gboolean gimp_tool_rectangle_rectangle_is_first
-                                              (GimpToolRectangle      *rectangle);
-gboolean gimp_tool_rectangle_rectangle_is_new (GimpToolRectangle      *rectangle);
-gboolean gimp_tool_rectangle_point_in_rectangle
-                                              (GimpToolRectangle      *rectangle,
+gboolean ligma_tool_rectangle_rectangle_is_first
+                                              (LigmaToolRectangle      *rectangle);
+gboolean ligma_tool_rectangle_rectangle_is_new (LigmaToolRectangle      *rectangle);
+gboolean ligma_tool_rectangle_point_in_rectangle
+                                              (LigmaToolRectangle      *rectangle,
                                                gdouble                 x,
                                                gdouble                 y);
 
-void     gimp_tool_rectangle_frame_item       (GimpToolRectangle      *rectangle,
-                                               GimpItem               *item);
-void     gimp_tool_rectangle_auto_shrink      (GimpToolRectangle      *rectrectangle,
+void     ligma_tool_rectangle_frame_item       (LigmaToolRectangle      *rectangle,
+                                               LigmaItem               *item);
+void     ligma_tool_rectangle_auto_shrink      (LigmaToolRectangle      *rectrectangle,
                                                gboolean                shrink_merged);
 
 
-#endif /* __GIMP_TOOL_RECTANGLE_H__ */
+#endif /* __LIGMA_TOOL_RECTANGLE_H__ */

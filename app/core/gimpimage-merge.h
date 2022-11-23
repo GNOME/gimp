@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,32 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_MERGE_H__
-#define __GIMP_IMAGE_MERGE_H__
+#ifndef __LIGMA_IMAGE_MERGE_H__
+#define __LIGMA_IMAGE_MERGE_H__
 
 
-GList       * gimp_image_merge_visible_layers  (GimpImage      *image,
-                                                GimpContext    *context,
-                                                GimpMergeType   merge_type,
+GList       * ligma_image_merge_visible_layers  (LigmaImage      *image,
+                                                LigmaContext    *context,
+                                                LigmaMergeType   merge_type,
                                                 gboolean        merge_active_group,
                                                 gboolean        discard_invisible,
-                                                GimpProgress   *progress);
-GList       * gimp_image_merge_down            (GimpImage      *image,
+                                                LigmaProgress   *progress);
+GList       * ligma_image_merge_down            (LigmaImage      *image,
                                                 GList          *layers,
-                                                GimpContext    *context,
-                                                GimpMergeType   merge_type,
-                                                GimpProgress   *progress,
+                                                LigmaContext    *context,
+                                                LigmaMergeType   merge_type,
+                                                LigmaProgress   *progress,
                                                 GError        **error);
-GimpLayer   * gimp_image_merge_group_layer     (GimpImage      *image,
-                                                GimpGroupLayer *group);
+LigmaLayer   * ligma_image_merge_group_layer     (LigmaImage      *image,
+                                                LigmaGroupLayer *group);
 
-GimpLayer   * gimp_image_flatten               (GimpImage      *image,
-                                                GimpContext    *context,
-                                                GimpProgress   *progress,
-                                                GError        **error);
-
-GimpVectors * gimp_image_merge_visible_vectors (GimpImage      *image,
+LigmaLayer   * ligma_image_flatten               (LigmaImage      *image,
+                                                LigmaContext    *context,
+                                                LigmaProgress   *progress,
                                                 GError        **error);
 
+LigmaVectors * ligma_image_merge_visible_vectors (LigmaImage      *image,
+                                                GError        **error);
 
-#endif /* __GIMP_IMAGE_MERGE_H__ */
+
+#endif /* __LIGMA_IMAGE_MERGE_H__ */

@@ -1,6 +1,6 @@
 #!/usr/bin/env gjs
 
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * hello-world.js
@@ -22,10 +22,10 @@
 
 const System = imports.system
 
-imports.gi.versions.Gimp = '3.0';
-const Gimp = imports.gi.Gimp;
-imports.gi.versions.GimpUi = '3.0';
-const GimpUi = imports.gi.GimpUi;
+imports.gi.versions.Ligma = '3.0';
+const Ligma = imports.gi.Ligma;
+imports.gi.versions.LigmaUi = '3.0';
+const LigmaUi = imports.gi.LigmaUi;
 imports.gi.versions.Gegl = '0.4';
 const Gegl = imports.gi.Gegl;
 imports.gi.versions.Gtk = '3.0';
@@ -42,26 +42,26 @@ const Gio = imports.gi.Gio;
  */
 ARGV.unshift(System.programInvocationName);
 
-let url = "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-gjs.js";
+let url = "https://gitlab.gnome.org/GNOME/ligma/blob/master/extensions/goat-exercises/goat-exercise-gjs.js";
 
 function _(message) { return GLib.dgettext(null, message); }
 
 var Goat = GObject.registerClass({
     GTypeName: 'Goat',
-}, class Goat extends Gimp.PlugIn {
+}, class Goat extends Ligma.PlugIn {
 
     vfunc_query_procedures() {
         return ["plug-in-goat-exercise-gjs"];
     }
 
     vfunc_create_procedure(name) {
-        let procedure = Gimp.ImageProcedure.new(this, name, Gimp.PDBProcType.PLUGIN, this.run);
+        let procedure = Ligma.ImageProcedure.new(this, name, Ligma.PDBProcType.PLUGIN, this.run);
 
         procedure.set_image_types("*");
-        procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
+        procedure.set_sensitivity_mask(Ligma.ProcedureSensitivityMask.DRAWABLE);
 
         procedure.set_menu_label(_("Exercise a JavaScript goat"));
-        procedure.set_icon_name(GimpUi.ICON_GEGL);
+        procedure.set_icon_name(LigmaUi.ICON_GEGL);
         procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
 
         procedure.set_documentation(_("Exercise a goat in the JavaScript language (GJS)"),
@@ -77,16 +77,16 @@ var Goat = GObject.registerClass({
 
         if (drawables.length != 1) {
             let msg = `Procedure '${procedure.get_name()}' only works with one drawable.`;
-            let error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), 0, msg);
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error)
+            let error = GLib.Error.new_literal(Ligma.PlugIn.error_quark(), 0, msg);
+            return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR, error)
         }
 
         let drawable = drawables[0];
 
-        if (run_mode == Gimp.RunMode.INTERACTIVE) {
-            GimpUi.init("goat-exercise-gjs");
+        if (run_mode == Ligma.RunMode.INTERACTIVE) {
+            LigmaUi.init("goat-exercise-gjs");
             /* TODO: help function and ID. */
-            let dialog = new GimpUi.Dialog({
+            let dialog = new LigmaUi.Dialog({
               title: _("Exercise a goat (JavaScript)"),
               role: "goat-exercise-JavaScript",
               use_header_bar: true,
@@ -148,7 +148,7 @@ var Goat = GObject.registerClass({
                 }
                 else { /* CANCEL, CLOSE, DELETE_EVENT */
                     dialog.destroy();
-                    return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, null)
+                    return procedure.new_return_values(Ligma.PDBStatusType.CANCEL, null)
                 }
             }
         }
@@ -179,11 +179,11 @@ var Goat = GObject.registerClass({
 
             drawable.merge_shadow(true);
             drawable.update(x, y, width, height);
-            Gimp.displays_flush();
+            Ligma.displays_flush();
         }
 
-        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, null);
+        return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, null);
     }
 });
 
-Gimp.main(Goat.$gtype, ARGV);
+Ligma.main(Goat.$gtype, ARGV);

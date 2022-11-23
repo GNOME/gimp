@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -21,37 +21,37 @@
 #include <babl/babl.h>
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimpcolorspace.h"
-#include "gimprgb.h"
-#include "gimphsv.h"
+#include "ligmacolorspace.h"
+#include "ligmargb.h"
+#include "ligmahsv.h"
 
 
 
 /**
- * SECTION: gimpcolorspace
- * @title: GimpColorSpace
+ * SECTION: ligmacolorspace
+ * @title: LigmaColorSpace
  * @short_description: Utility functions which convert colors between
  *                     different color models.
  *
  * When programming pixel data manipulation functions you will often
  * use algorithms operating on a color model different from the one
- * GIMP uses.  This file provides utility functions to convert colors
+ * LIGMA uses.  This file provides utility functions to convert colors
  * between different color spaces.
  **/
 
 
-#define GIMP_HSL_UNDEFINED -1.0
+#define LIGMA_HSL_UNDEFINED -1.0
 
 
-/*  GimpRGB functions  */
+/*  LigmaRGB functions  */
 
 
 /**
- * gimp_rgb_to_hsv:
+ * ligma_rgb_to_hsv:
  * @rgb: A color value in the RGB colorspace
  * @hsv: (out caller-allocates): The value converted to the HSV colorspace
  *
@@ -59,16 +59,16 @@
  * Value) colorspace.
  **/
 void
-gimp_rgb_to_hsv (const GimpRGB *rgb,
-                 GimpHSV       *hsv)
+ligma_rgb_to_hsv (const LigmaRGB *rgb,
+                 LigmaHSV       *hsv)
 {
   gdouble max, min, delta;
 
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
-  max = gimp_rgb_max (rgb);
-  min = gimp_rgb_min (rgb);
+  max = ligma_rgb_max (rgb);
+  min = ligma_rgb_min (rgb);
 
   hsv->v = max;
   delta = max - min;
@@ -104,15 +104,15 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
 }
 
 /**
- * gimp_hsv_to_rgb:
+ * ligma_hsv_to_rgb:
  * @hsv: A color value in the HSV colorspace
  * @rgb: (out caller-allocates): The returned RGB value.
  *
  * Converts a color value from HSV to RGB colorspace
  **/
 void
-gimp_hsv_to_rgb (const GimpHSV *hsv,
-                 GimpRGB       *rgb)
+ligma_hsv_to_rgb (const LigmaHSV *hsv,
+                 LigmaRGB       *rgb)
 {
   gint    i;
   gdouble f, w, q, t;
@@ -183,7 +183,7 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
 
 
 /**
- * gimp_rgb_to_hsl:
+ * ligma_rgb_to_hsl:
  * @rgb: A color value in the RGB colorspace
  * @hsl: (out caller-allocates): The value converted to HSL
  *
@@ -191,23 +191,23 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
  * color value.
  **/
 void
-gimp_rgb_to_hsl (const GimpRGB *rgb,
-                 GimpHSL       *hsl)
+ligma_rgb_to_hsl (const LigmaRGB *rgb,
+                 LigmaHSL       *hsl)
 {
   gdouble max, min, delta;
 
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsl != NULL);
 
-  max = gimp_rgb_max (rgb);
-  min = gimp_rgb_min (rgb);
+  max = ligma_rgb_max (rgb);
+  min = ligma_rgb_min (rgb);
 
   hsl->l = (max + min) / 2.0;
 
   if (max == min)
     {
       hsl->s = 0.0;
-      hsl->h = GIMP_HSL_UNDEFINED;
+      hsl->h = LIGMA_HSL_UNDEFINED;
     }
   else
     {
@@ -244,7 +244,7 @@ gimp_rgb_to_hsl (const GimpRGB *rgb,
 }
 
 static inline gdouble
-gimp_hsl_value (gdouble n1,
+ligma_hsl_value (gdouble n1,
                 gdouble n2,
                 gdouble hue)
 {
@@ -269,7 +269,7 @@ gimp_hsl_value (gdouble n1,
 
 
 /**
- * gimp_hsl_to_rgb:
+ * ligma_hsl_to_rgb:
  * @hsl: A color value in the HSL colorspace
  * @rgb: (out caller-allocates): The value converted to a value
  *       in the RGB colorspace
@@ -277,8 +277,8 @@ gimp_hsl_value (gdouble n1,
  * Convert a HSL color value to an RGB color value.
  **/
 void
-gimp_hsl_to_rgb (const GimpHSL *hsl,
-                 GimpRGB       *rgb)
+ligma_hsl_to_rgb (const LigmaHSL *hsl,
+                 LigmaRGB       *rgb)
 {
   g_return_if_fail (hsl != NULL);
   g_return_if_fail (rgb != NULL);
@@ -301,9 +301,9 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
 
       m1 = 2.0 * hsl->l - m2;
 
-      rgb->r = gimp_hsl_value (m1, m2, hsl->h * 6.0 + 2.0);
-      rgb->g = gimp_hsl_value (m1, m2, hsl->h * 6.0);
-      rgb->b = gimp_hsl_value (m1, m2, hsl->h * 6.0 - 2.0);
+      rgb->r = ligma_hsl_value (m1, m2, hsl->h * 6.0 + 2.0);
+      rgb->g = ligma_hsl_value (m1, m2, hsl->h * 6.0);
+      rgb->b = ligma_hsl_value (m1, m2, hsl->h * 6.0 - 2.0);
     }
 
   rgb->a = hsl->a;
@@ -311,7 +311,7 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
 
 
 /**
- * gimp_rgb_to_cmyk:
+ * ligma_rgb_to_cmyk:
  * @rgb: A value in the RGB colorspace
  * @pullout: A scaling value (0-1) indicating how much black should be
  *           pulled out
@@ -325,9 +325,9 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
  * A value of 1 causes the maximum amount of black to be pulled out.
  **/
 void
-gimp_rgb_to_cmyk (const GimpRGB  *rgb,
+ligma_rgb_to_cmyk (const LigmaRGB  *rgb,
                   gdouble         pullout,
-                  GimpCMYK       *cmyk)
+                  LigmaCMYK       *cmyk)
 {
   gdouble c, m, y, k;
 
@@ -363,7 +363,7 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
 }
 
 /**
- * gimp_cmyk_to_rgb:
+ * ligma_cmyk_to_rgb:
  * @cmyk: A color value in the CMYK colorspace
  * @rgb: (out caller-allocates): The value converted to the RGB colorspace
  *
@@ -371,8 +371,8 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
  * colorspace, without taking color profiles into account.
  **/
 void
-gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
-                  GimpRGB        *rgb)
+ligma_cmyk_to_rgb (const LigmaCMYK *cmyk,
+                  LigmaRGB        *rgb)
 {
   gdouble c, m, y, k;
 

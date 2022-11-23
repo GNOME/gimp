@@ -1,11 +1,11 @@
-# Introspectable sources for libgimpmath
+# Introspectable sources for libligmamath
 #
-libgimpmath_introspectable_headers = \
-	../libgimpmath/gimpmathtypes.h	\
-	../libgimpmath/gimpmatrix.h		\
-	../libgimpmath/gimpvector.h
+libligmamath_introspectable_headers = \
+	../libligmamath/ligmamathtypes.h	\
+	../libligmamath/ligmamatrix.h		\
+	../libligmamath/ligmavector.h
 
-libgimpmath_introspectable = \
-	../libgimpmath/gimpmatrix.c		\
-	../libgimpmath/gimpvector.c		\
-	$(libgimpmath_introspectable_headers)
+libligmamath_introspectable = \
+	../libligmamath/ligmamatrix.c		\
+	../libligmamath/ligmavector.c		\
+	$(libligmamath_introspectable_headers)

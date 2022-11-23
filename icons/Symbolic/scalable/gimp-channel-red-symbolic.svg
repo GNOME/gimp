@@ -9,7 +9,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="gimp-channel-red-symbolic.svg"
+   sodipodi:docname="ligma-channel-red-symbolic.svg"
    inkscape:version="1.1-dev (a78b094061, 2020-01-04)"
    version="1.1"
    width="16.054918"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -149,7 +149,7 @@
      transform="translate(-137.5414,65.270673)">
     <g
        transform="translate(137.5414,-1101.6917)"
-       id="gimp-channel-red">
+       id="ligma-channel-red">
       <path
          id="path2063"
          d="M 0.52734375 1036.4219 A 0.52751273 0.52751273 0 0 0 0 1036.9492 L 0 1051.9492 A 0.52751273 0.52751273 0 0 0 0.52734375 1052.4766 L 15.527344 1052.4766 A 0.52751273 0.52751273 0 0 0 16.054688 1051.9492 L 16.054688 1036.9492 A 0.52751273 0.52751273 0 0 0 15.527344 1036.4219 L 0.52734375 1036.4219 z M 1.0546875 1037.4766 L 15 1037.4766 L 15 1051.4219 L 1.0546875 1051.4219 L 1.0546875 1037.4766 z "

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2011-12-02 21:39+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: /tmp/gimp-2.7.1/po-script-fu/\n"
+"X-Poedit-Basepath: /tmp/ligma-2.7.1/po-script-fu/\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -34,8 +34,8 @@ msgid "_Start Server..."
 msgstr "_Выканаць паслужнік…"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
-msgstr "_GIMP у Сеціве"
+msgid "_LIGMA Online"
+msgstr "_LIGMA у Сеціве"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
@@ -74,8 +74,8 @@ msgid "_Beveled Pattern"
 msgstr "_Скошаны ўзор"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
-msgstr "_Клясычны.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Клясычны.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
@@ -283,7 +283,7 @@ msgid "Delta value on color"
 msgstr "Розьнасьць яркасьці колера"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "Рамка"
 
@@ -625,7 +625,7 @@ msgstr "Радыюс размыцьця"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "Колер"
 
@@ -762,69 +762,69 @@ msgstr "Вага ценю (%)"
 msgid "Flatten image"
 msgstr "Сплюшчыць відарыс"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Як выкарыстоўваць _шляхі"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Закладка ў кіраўніцтве карыстальніка"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Падрыхтоўка відарысаў для Сеціва"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Праца са здымкамі зь лічбавай камэры"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Як стварыць, адкрыць ці захаваць _файл"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Асноўныя паняцьці"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Як выкарыстоўваць _дыялёґі"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Як рысаваць _простыя аб'екты"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Як стварыць й выкарыстоўваць вылучэньне"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "_Галоўная пляцоўка"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
-msgstr "Закладка на пляцоўку GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
+msgstr "Закладка на пляцоўку LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "_Пляцоўка распрацоўнікаў"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr "Пляцоўка _дапаможнікаў"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "_Рэестар дадаткаў"
 
@@ -952,7 +952,7 @@ msgid "Roughness"
 msgstr "Шурпатасьць"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "Ґрадыент"
 
@@ -1369,125 +1369,125 @@ msgstr "Празрыстая асноведзь"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Індэксаваць у «n» колераў (0 — пакінуць у RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr "Пабудова сьпіра"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
 msgstr "_Сьпіраґімп…"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "Дадаць сьпіроґрафы, эпітрахоіды й фіґуры Лісажу да бягучага пласта"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "Тып"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "Сьпірограф"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "Эпітрахоіда"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "Лісажу"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "Форма"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "Акружнасьць"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "Трохкутнік"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "Пяцікутнік"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "Шасьцікутнік"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "Шматкутнік: 7 бакоў"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "Шматкутнік: 8 бакоў"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "Шматкутнік: 9 бакоў"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "Шматкутнік: 10 бакоў"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "Вонкавыя зубы"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "Нутраныя зубы"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "Палі (у піксэлях)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 msgid "Hole ratio"
 msgstr "Каэфіцыент дзірак"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "Пачатковы кут"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "Прылада"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "Аловак"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "Пэндзаль"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "Распыляльнік"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "Спосаб фарбаваньня"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "Суцэльны колер"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "Ґрадыент: паўтараць зубец пілы"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "Ґрадыент: паўтараць трохкутнік"
 
@@ -2410,14 +2410,14 @@ msgstr "Зрух падаючаца ценю па Y"
 #~ msgid "Autocrop"
 #~ msgstr "Аўтаабразаньне"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі gimp."
+#~ "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі ligma."
 #~ "org"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
+#~ "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі ligma.org"
 
 #~ msgid "Dark color"
 #~ msgstr "Цёмны колер"
@@ -2444,31 +2444,31 @@ msgstr "Зрух падаючаца ценю па Y"
 #~ msgstr "_Малы загаловак…"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
 #~ "Стварыць відарыс з загалоўкам для цыліндрычных кнопак, ужываючы тэму "
-#~ "пляцоўкі gimp.org"
+#~ "пляцоўкі ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі, ужываючы тэму "
-#~ "пляцоўкі gimp.org"
+#~ "пляцоўкі ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі другога ўзроўню, "
-#~ "ужываючы тэму пляцоўкі gimp.org"
+#~ "ужываючы тэму пляцоўкі ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі трэцяга ўзроўню, "
-#~ "ужываючы тэму пляцоўкі gimp.org"
+#~ "ужываючы тэму пляцоўкі ligma.org"
 
 #~ msgid "T_ube Sub-Button Label..."
 #~ msgstr "Ц_ыліндрычная падкнопка…"

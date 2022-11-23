@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/brushes/Splatters
+## Makefile.am for ligma/data/brushes/Splatters
 
-brushsplattersdatadir = $(gimpdatadir)/brushes/Splatters
+brushsplattersdatadir = $(ligmadatadir)/brushes/Splatters
 
 brushsplattersdata_DATA = \
 	Grunge-01.gih	\

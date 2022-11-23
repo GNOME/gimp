@@ -1,7 +1,7 @@
 /*
  * GFLI 1.3
  *
- * A gimp plug-in to read and write FLI and FLC movies.
+ * A ligma plug-in to read and write FLI and FLC movies.
  *
  * Copyright (C) 1998 Jens Ch. Restemeier <jchrr@hrz.uni-bielefeld.de>
  *
@@ -56,19 +56,19 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "fli.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-fli-load"
 #define SAVE_PROC      "file-fli-save"
 #define INFO_PROC      "file-fli-info"
 #define PLUG_IN_BINARY "file-fli"
-#define PLUG_IN_ROLE   "gimp-file-fli"
+#define PLUG_IN_ROLE   "ligma-file-fli"
 
 
 typedef struct _Fli      Fli;
@@ -76,12 +76,12 @@ typedef struct _FliClass FliClass;
 
 struct _Fli
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _FliClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -90,40 +90,40 @@ struct _FliClass
 
 GType                   fli_get_type         (void) G_GNUC_CONST;
 
-static GList          * fli_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * fli_create_procedure (GimpPlugIn           *plug_in,
+static GList          * fli_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * fli_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * fli_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * fli_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * fli_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * fli_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * fli_info             (GimpProcedure        *procedure,
-                                              const GimpValueArray *args,
+static LigmaValueArray * fli_info             (LigmaProcedure        *procedure,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GObject              *config,
                                               GError              **error);
 static gboolean         load_dialog          (GFile                *file,
-                                              GimpProcedure        *procedure,
+                                              LigmaProcedure        *procedure,
                                               GObject              *config);
 
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
+                                              LigmaImage            *image,
                                               GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (GimpImage            *image,
-                                              GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaImage            *image,
+                                              LigmaProcedure        *procedure,
                                               GObject              *config);
 
 static gboolean         get_info             (GFile                *file,
@@ -133,16 +133,16 @@ static gboolean         get_info             (GFile                *file,
                                               GError              **error);
 
 
-G_DEFINE_TYPE (Fli, fli, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Fli, fli, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (FLI_TYPE)
+LIGMA_MAIN (FLI_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 fli_class_init (FliClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = fli_query_procedures;
   plug_in_class->create_procedure = fli_create_procedure;
@@ -155,7 +155,7 @@ fli_init (Fli *fli)
 }
 
 static GList *
-fli_query_procedures (GimpPlugIn *plug_in)
+fli_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -166,42 +166,42 @@ fli_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-fli_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+fli_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            fli_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
+      ligma_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load FLI-movies",
                                         "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jens Ch. Restemeier",
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-flic");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "fli,flc");
 
-      GIMP_PROC_ARG_INT (procedure, "from-frame",
+      LIGMA_PROC_ARG_INT (procedure, "from-frame",
                          "From frame",
                          "Load beginning from this frame",
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "to-frame",
+      LIGMA_PROC_ARG_INT (procedure, "to-frame",
                          "To frame",
                          "End loading with this frame",
                          -1, G_MAXINT, -1,
@@ -209,36 +209,36 @@ fli_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            fli_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED, GRAY");
+      ligma_procedure_set_image_types (procedure, "INDEXED, GRAY");
 
-      gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
+      ligma_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Export FLI-movies",
                                         "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jens Ch. Restemeier",
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-flic");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "fli,flc");
 
-      GIMP_PROC_ARG_INT (procedure, "from-frame",
+      LIGMA_PROC_ARG_INT (procedure, "from-frame",
                          "_From:",
                          "Export beginning from this frame",
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "to-frame",
+      LIGMA_PROC_ARG_INT (procedure, "to-frame",
                          "_To:",
                          "End exporting with this frame "
                          "(or -1 for all frames)",
@@ -247,38 +247,38 @@ fli_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, INFO_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       fli_info, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Get information about a Fli movie",
                                         "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jens Ch. Restemeier",
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      GIMP_PROC_ARG_FILE (procedure, "file",
+      LIGMA_PROC_ARG_FILE (procedure, "file",
                           "File",
                           "The local file to get info about",
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "width",
+      LIGMA_PROC_VAL_INT (procedure, "width",
                          "Width",
                          "Width of one frame",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "height",
+      LIGMA_PROC_VAL_INT (procedure, "height",
                          "Height",
                          "Height of one frame",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "frames",
+      LIGMA_PROC_VAL_INT (procedure, "frames",
                          "Frames",
                          "Number of frames",
                          0, G_MAXINT, 0,
@@ -288,28 +288,28 @@ fli_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-fli_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+fli_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image;
+  LigmaProcedureConfig *config;
+  LigmaValueArray      *return_vals;
+  LigmaImage           *image;
   GError              *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, NULL, run_mode, args);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! load_dialog (file, procedure, G_OBJECT (config)))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
     }
 
@@ -317,57 +317,57 @@ fli_load (GimpProcedure        *procedure,
                       &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  ligma_procedure_config_end_run (config, LIGMA_PDB_SUCCESS);
   g_object_unref (config);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-fli_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+fli_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "FLI",
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "FLI",
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA   |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYERS);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -375,62 +375,62 @@ fli_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpValueArray *
-fli_info (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+static LigmaValueArray *
+fli_info (LigmaProcedure        *procedure,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   GFile          *file;
   gint32          width;
   gint32          height;
   gint32          frames;
   GError         *error = NULL;
 
-  file = GIMP_VALUES_GET_FILE (args, 0);
+  file = LIGMA_VALUES_GET_FILE (args, 0);
 
   if (! get_info (file, &width, &height, &frames,
                   &error))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                error);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_INT (return_vals, 1, width);
-  GIMP_VALUES_SET_INT (return_vals, 2, height);
-  GIMP_VALUES_SET_INT (return_vals, 3, frames);
+  LIGMA_VALUES_SET_INT (return_vals, 1, width);
+  LIGMA_VALUES_SET_INT (return_vals, 2, height);
+  LIGMA_VALUES_SET_INT (return_vals, 3, frames);
 
   return return_vals;
 }
@@ -456,7 +456,7 @@ get_info (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -477,15 +477,15 @@ get_info (GFile   *file,
 /*
  * load fli animation and store as framestack
  */
-static GimpImage *
+static LigmaImage *
 load_image (GFile    *file,
             GObject  *config,
             GError  **error)
 {
   FILE         *fp;
   GeglBuffer   *buffer;
-  GimpImage    *image;
-  GimpLayer    *layer;
+  LigmaImage    *image;
+  LigmaLayer    *layer;
   guchar       *fb, *ofb, *fb_x;
   guchar        cm[768], ocm[768];
   s_fli_header  fli_header;
@@ -498,8 +498,8 @@ load_image (GFile    *file,
                 "to-frame",   &to_frame,
                 NULL);
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file) ,"rb");
 
@@ -507,7 +507,7 @@ load_image (GFile    *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -558,8 +558,8 @@ load_image (GFile    *file,
       to_frame = fli_header.frames;
     }
 
-  image = gimp_image_new (fli_header.width, fli_header.height, GIMP_INDEXED);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new (fli_header.width, fli_header.height, LIGMA_INDEXED);
+  ligma_image_set_file (image, file);
 
   fb  = g_malloc (fli_header.width * fli_header.height);
   ofb = g_malloc (fli_header.width * fli_header.height);
@@ -588,11 +588,11 @@ load_image (GFile    *file,
 
       g_debug ("Loading frame %d", cnt);
 
-      layer = gimp_layer_new (image, name_buf,
+      layer = ligma_layer_new (image, name_buf,
                               fli_header.width, fli_header.height,
-                              GIMP_INDEXED_IMAGE,
+                              LIGMA_INDEXED_IMAGE,
                               100,
-                              gimp_image_get_default_new_layer_mode (image));
+                              ligma_image_get_default_new_layer_mode (image));
       g_free (name_buf);
 
       if (! fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm, error))
@@ -601,7 +601,7 @@ load_image (GFile    *file,
            * this fatal, unless it's the first frame. */
           if (error && *error)
             {
-              gimp_item_delete (GIMP_ITEM(layer));
+              ligma_item_delete (LIGMA_ITEM(layer));
               if (cnt > from_frame)
                 {
                   g_warning ("Failed to read frame %d. Possibly corrupt animation.\n%s",
@@ -610,7 +610,7 @@ load_image (GFile    *file,
                 }
               else
                 {
-                  gimp_image_delete (image);
+                  ligma_image_delete (image);
                   g_prefix_error (error, _("Failed to read frame %d. Possibly corrupt animation.\n"), cnt);
                   fclose (fp);
                   g_free (fb);
@@ -622,7 +622,7 @@ load_image (GFile    *file,
           break;
         }
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0,
                                                fli_header.width,
@@ -632,9 +632,9 @@ load_image (GFile    *file,
       g_object_unref (buffer);
 
       if (cnt > 0)
-        gimp_layer_add_alpha (layer);
+        ligma_layer_add_alpha (layer);
 
-      gimp_image_insert_layer (image, layer, NULL, 0);
+      ligma_image_insert_layer (image, layer, NULL, 0);
 
       if (cnt < to_frame)
         {
@@ -643,17 +643,17 @@ load_image (GFile    *file,
         }
 
       if (to_frame > from_frame)
-        gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
+        ligma_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
-  gimp_image_set_colormap (image, cm, 256);
+  ligma_image_set_colormap (image, cm, 256);
 
   fclose (fp);
 
   g_free (fb);
   g_free (ofb);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
@@ -667,7 +667,7 @@ load_image (GFile    *file,
  */
 static gboolean
 save_image (GFile      *file,
-            GimpImage  *image,
+            LigmaImage  *image,
             GObject    *config,
             GError    **error)
 {
@@ -685,7 +685,7 @@ save_image (GFile      *file,
   guchar       *src_row;
   guchar       *fb, *ofb;
   guchar        cm[768];
-  GimpRGB       background;
+  LigmaRGB       background;
   s_fli_header  fli_header;
   gint          cnt;
   gint          from_frame;
@@ -697,7 +697,7 @@ save_image (GFile      *file,
                 "to-frame",   &to_frame,
                 NULL);
 
-  framelist = gimp_image_list_layers (image);
+  framelist = ligma_image_list_layers (image);
   framelist = g_list_reverse (framelist);
   n_frames  = g_list_length (framelist);
 
@@ -730,24 +730,24 @@ save_image (GFile      *file,
       to_frame = n_frames;
     }
 
-  gimp_context_get_background (&background);
-  gimp_rgb_get_uchar (&background, &red, &green, &blue);
+  ligma_context_get_background (&background);
+  ligma_rgb_get_uchar (&background, &red, &green, &blue);
 
-  switch (gimp_image_get_base_type (image))
+  switch (ligma_image_get_base_type (image))
     {
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       /* build grayscale palette */
       for (i = 0; i < 256; i++)
         {
           cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
         }
-      bg = GIMP_RGB_LUMINANCE (red, green, blue) + 0.5;
+      bg = LIGMA_RGB_LUMINANCE (red, green, blue) + 0.5;
       break;
 
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       max = MAXDIFF;
       bg = 0;
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = ligma_image_get_colormap (image, &colors);
       for (i = 0; i < MIN (colors, 256); i++)
         {
           cm[i*3+0] = cmap[i*3+0];
@@ -776,21 +776,21 @@ save_image (GFile      *file,
     default:
       /* Not translating this, since we should never get this error, unless
        * someone messed up setting supported image types. */
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (error, LIGMA_PLUG_IN_ERROR, 0,
                    "Exporting of RGB images is not supported!");
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /*
    * First build the fli header.
    */
   fli_header.filesize = 0;  /* will be fixed when writing the header */
   fli_header.frames   = 0;  /* will be fixed during the write */
-  fli_header.width    = gimp_image_get_width (image);
-  fli_header.height   = gimp_image_get_height (image);
+  fli_header.width    = ligma_image_get_width (image);
+  fli_header.height   = ligma_image_get_height (image);
 
   if ((fli_header.width == 320) && (fli_header.height == 200))
     {
@@ -806,7 +806,7 @@ save_image (GFile      *file,
   fli_header.created  = 0;  /* program ID. not necessary... */
   fli_header.updated  = 0;  /* date in MS-DOS format. ignore...*/
   fli_header.aspect_x = 1;  /* aspect ratio. Will be added as soon.. */
-  fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
+  fli_header.aspect_y = 1;  /* ... as LIGMA supports it. */
   fli_header.oframe1  = fli_header.oframe2 = 0; /* will be fixed during the write */
 
   fp = g_fopen (g_file_peek_path (file) , "wb");
@@ -815,7 +815,7 @@ save_image (GFile      *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
   fseek (fp, 128, SEEK_SET);
@@ -833,17 +833,17 @@ save_image (GFile      *file,
        iter && cnt <= to_frame;
        iter = g_list_next (iter), cnt++)
     {
-      GimpDrawable *drawable = iter->data;
+      LigmaDrawable *drawable = iter->data;
       GeglBuffer   *buffer;
       const Babl   *format = NULL;
 
-      buffer = gimp_drawable_get_buffer (drawable);
+      buffer = ligma_drawable_get_buffer (drawable);
 
       g_debug ("Writing frame: %d", cnt);
 
-      if (gimp_drawable_is_gray (drawable))
+      if (ligma_drawable_is_gray (drawable))
         {
-          if (gimp_drawable_has_alpha (drawable))
+          if (ligma_drawable_has_alpha (drawable))
             format = babl_format ("Y' u8");
           else
             format = babl_format ("Y'A u8");
@@ -856,7 +856,7 @@ save_image (GFile      *file,
       cols = gegl_buffer_get_width  (buffer);
       rows = gegl_buffer_get_height (buffer);
 
-      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+      ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       bytes = babl_format_get_bytes_per_pixel (format);
 
@@ -899,7 +899,7 @@ save_image (GFile      *file,
       if (cnt < to_frame)
         memcpy (ofb, fb, fli_header.width * fli_header.height);
 
-      gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
+      ligma_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
   /*
@@ -913,7 +913,7 @@ save_image (GFile      *file,
   g_free (ofb);
   g_list_free (framelist);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return write_ok;
 }
@@ -923,7 +923,7 @@ save_image (GFile      *file,
  */
 static gboolean
 load_dialog (GFile         *file,
-             GimpProcedure *procedure,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -939,10 +939,10 @@ load_dialog (GFile         *file,
                 "to-frame",   n_frames,
                 NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Open FLIC Animation"));
 
   grid = gtk_grid_new ();
@@ -958,21 +958,21 @@ load_dialog (GFile         *file,
    * But for now you can set a start- and a end-frame:
    */
 
-  spinbutton = gimp_prop_spin_button_new (config, "from-frame",
+  spinbutton = ligma_prop_spin_button_new (config, "from-frame",
                                           1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "_From:"), 0.0, 0.5,
                             spinbutton, 1);
 
-  spinbutton = gimp_prop_spin_button_new (config, "to-frame",
+  spinbutton = ligma_prop_spin_button_new (config, "to-frame",
                                           1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "_To:"), 0.0, 0.5,
                             spinbutton, 1);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -980,34 +980,34 @@ load_dialog (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   gint       n_frames;
   gboolean   run;
 
-  g_free (gimp_image_get_layers (image, &n_frames));
+  g_free (ligma_image_get_layers (image, &n_frames));
 
   g_object_set (config,
                 "from-frame", 1,
                 "to-frame",   n_frames,
                 NULL);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as FLI Animation"));
   /*
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog), NULL);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

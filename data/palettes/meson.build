@@ -43,5 +43,5 @@ palettes = files(
 )
 
 install_data(palettes,
-  install_dir: gimpdatadir / 'palettes',
+  install_dir: ligmadatadir / 'palettes',
 )

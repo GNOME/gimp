@@ -1,4 +1,4 @@
-# Gimp tiny-fu finnish translation
+# Ligma tiny-fu finnish translation
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Ilkka Tuohela <hile@iki.fi>, 2006.
 # Mikko Paananen, 2004.
@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2013-01-27 18:51+0200\n"
 "Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"
@@ -35,8 +35,8 @@ msgid "_Start Server..."
 msgstr "Käynnistä palvelin..."
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
-msgstr "_GIMP verkossa"
+msgid "_LIGMA Online"
+msgstr "_LIGMA verkossa"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
@@ -75,8 +75,8 @@ msgid "_Beveled Pattern"
 msgstr "_Viistokuvio"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
@@ -291,7 +291,7 @@ msgid "Delta value on color"
 msgstr "Värin muutosarvo"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "Kehys"
 
@@ -636,7 +636,7 @@ msgstr "Pehmennyksen säde"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "Väri"
 
@@ -774,69 +774,69 @@ msgstr "Varjon vahvuus (%)"
 msgid "Flatten image"
 msgstr "Yhdistä kuva"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Polkujen _käyttö"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "Kuvien _valmistelu verkkokäyttöön"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "Työskentely _digikameran kuvien kanssa"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Luo, avaa ja tallenna _tiedostoja"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Peruskäsitteet"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Kuinka käyttää _ohjausikkunoita"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Yksinkertaisten _kuvien piirto"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Luo ja käytä _valintoja"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "Web-sivusto"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "Kehittäjien sivusto"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr "_Käyttöohjeen www-sivusto"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "Liitännäisrekisteri"
 
@@ -962,7 +962,7 @@ msgid "Roughness"
 msgstr "Epätasaisuus"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "Väriliuku"
 
@@ -1369,126 +1369,126 @@ msgstr "Läpinäkyvä tausta"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indeksi n:ksi väriksi (0 = säilytä RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
 msgstr "Spirograafi..."
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Lisää spirograafeja, epitrosoideja ja Lissajoun käyriä nykyiseen tasoon"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "Spirograafi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "Epitrosoidi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "Lissajou"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "Muoto"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "Ympyrä"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "Kolmio"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "Neliö"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "Pentagoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "Heksagoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "7-sivuinen polygoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "8-sivuinen polygoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "9-sivuinen polygoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "10-sivuinen polygoni"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "Ulkohammastus"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "Sisähammastus"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "Marginaali (pikseliä)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 msgid "Hole ratio"
 msgstr "Reiän suhde"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "Alkukulma"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "Työkalu"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "Kynä"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "Sivellin"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "Ruisku"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "Värimetodi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "Yhtenäinen väri"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "Väriliuku: toistuva saha-aalto"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "Väriliuku: toistuva kolmio"
 

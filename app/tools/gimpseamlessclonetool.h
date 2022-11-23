@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpseamlessclonetool.h
+ * ligmaseamlessclonetool.h
  * Copyright (C) 2011 Barak Itkin <lightningismyname@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,29 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SEAMLESS_CLONE_TOOL_H__
-#define __GIMP_SEAMLESS_CLONE_TOOL_H__
+#ifndef __LIGMA_SEAMLESS_CLONE_TOOL_H__
+#define __LIGMA_SEAMLESS_CLONE_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_SEAMLESS_CLONE_TOOL            (gimp_seamless_clone_tool_get_type ())
-#define GIMP_SEAMLESS_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SEAMLESS_CLONE_TOOL, GimpSeamlessCloneTool))
-#define GIMP_SEAMLESS_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SEAMLESS_CLONE_TOOL, GimpSeamlessCloneToolClass))
-#define GIMP_IS_SEAMLESS_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SEAMLESS_CLONE_TOOL))
-#define GIMP_IS_SEAMLESS_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SEAMLESS_CLONE_TOOL))
-#define GIMP_SEAMLESS_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SEAMLESS_CLONE_TOOL, GimpSeamlessCloneToolClass))
+#define LIGMA_TYPE_SEAMLESS_CLONE_TOOL            (ligma_seamless_clone_tool_get_type ())
+#define LIGMA_SEAMLESS_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SEAMLESS_CLONE_TOOL, LigmaSeamlessCloneTool))
+#define LIGMA_SEAMLESS_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SEAMLESS_CLONE_TOOL, LigmaSeamlessCloneToolClass))
+#define LIGMA_IS_SEAMLESS_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SEAMLESS_CLONE_TOOL))
+#define LIGMA_IS_SEAMLESS_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SEAMLESS_CLONE_TOOL))
+#define LIGMA_SEAMLESS_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SEAMLESS_CLONE_TOOL, LigmaSeamlessCloneToolClass))
 
-#define GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS(t)  (GIMP_SEAMLESS_CLONE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_SEAMLESS_CLONE_TOOL_GET_OPTIONS(t)  (LIGMA_SEAMLESS_CLONE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpSeamlessCloneTool      GimpSeamlessCloneTool;
-typedef struct _GimpSeamlessCloneToolClass GimpSeamlessCloneToolClass;
+typedef struct _LigmaSeamlessCloneTool      LigmaSeamlessCloneTool;
+typedef struct _LigmaSeamlessCloneToolClass LigmaSeamlessCloneToolClass;
 
-struct _GimpSeamlessCloneTool
+struct _LigmaSeamlessCloneTool
 {
-  GimpDrawTool    parent_instance;
+  LigmaDrawTool    parent_instance;
 
   GeglBuffer     *paste;         /* A buffer containing the original
                                   * paste that will be used in the
@@ -55,7 +55,7 @@ struct _GimpSeamlessCloneTool
   gint            tool_state;     /* The current state in the tool's
                                    * state machine */
 
-  GimpDrawableFilter *filter;     /* The filter object which renders
+  LigmaDrawableFilter *filter;     /* The filter object which renders
                                    * the live preview, and commits it
                                    * when at the end */
 
@@ -71,16 +71,16 @@ struct _GimpSeamlessCloneTool
                                    * the xoff and yoff values */
 };
 
-struct _GimpSeamlessCloneToolClass
+struct _LigmaSeamlessCloneToolClass
 {
-  GimpDrawToolClass parent_class;
+  LigmaDrawToolClass parent_class;
 };
 
 
-void    gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_seamless_clone_tool_register (LigmaToolRegisterCallback  callback,
                                            gpointer                  data);
 
-GType   gimp_seamless_clone_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_seamless_clone_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SEAMLESS_CLONE_TOOL_H__  */
+#endif  /*  __LIGMA_SEAMLESS_CLONE_TOOL_H__  */

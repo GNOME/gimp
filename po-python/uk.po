@@ -5,8 +5,8 @@
 # Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-05 00:01+0000\n"
 "PO-Revision-Date: 2022-06-05 11:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
@@ -492,8 +492,8 @@ msgid "Python _Console"
 msgstr "_Консоль Python"
 
 #: ../plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Інтерактивна інтерпретатор Python у GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Інтерактивна інтерпретатор Python у LIGMA"
 
 #: ../plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -848,7 +848,7 @@ msgstr ""
 "шарі або зберегти як контур"
 
 #: ../plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr "Спіроґімп"
 
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
@@ -958,7 +958,7 @@ msgstr ""
 " ділянці."
 
 #: ../plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr "Спіроґімп…"
 
 #~| msgid "Fog color"

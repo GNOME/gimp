@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,26 +21,26 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpbezierdesc.h"
-#include "gimpbrush.h"
-#include "gimpbrush-boundary.h"
-#include "gimpbrush-load.h"
-#include "gimpbrush-mipmap.h"
-#include "gimpbrush-private.h"
-#include "gimpbrush-save.h"
-#include "gimpbrush-transform.h"
-#include "gimpbrushcache.h"
-#include "gimpbrushgenerated.h"
-#include "gimpbrushpipe.h"
-#include "gimptagged.h"
-#include "gimptempbuf.h"
+#include "ligmabezierdesc.h"
+#include "ligmabrush.h"
+#include "ligmabrush-boundary.h"
+#include "ligmabrush-load.h"
+#include "ligmabrush-mipmap.h"
+#include "ligmabrush-private.h"
+#include "ligmabrush-save.h"
+#include "ligmabrush-transform.h"
+#include "ligmabrushcache.h"
+#include "ligmabrushgenerated.h"
+#include "ligmabrushpipe.h"
+#include "ligmatagged.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -56,118 +56,118 @@ enum
 };
 
 
-static void          gimp_brush_tagged_iface_init     (GimpTaggedInterface  *iface);
+static void          ligma_brush_tagged_iface_init     (LigmaTaggedInterface  *iface);
 
-static void          gimp_brush_finalize              (GObject              *object);
-static void          gimp_brush_set_property          (GObject              *object,
+static void          ligma_brush_finalize              (GObject              *object);
+static void          ligma_brush_set_property          (GObject              *object,
                                                        guint                 property_id,
                                                        const GValue         *value,
                                                        GParamSpec           *pspec);
-static void          gimp_brush_get_property          (GObject              *object,
+static void          ligma_brush_get_property          (GObject              *object,
                                                        guint                 property_id,
                                                        GValue               *value,
                                                        GParamSpec           *pspec);
 
-static gint64        gimp_brush_get_memsize           (GimpObject           *object,
+static gint64        ligma_brush_get_memsize           (LigmaObject           *object,
                                                        gint64               *gui_size);
 
-static gboolean      gimp_brush_get_size              (GimpViewable         *viewable,
+static gboolean      ligma_brush_get_size              (LigmaViewable         *viewable,
                                                        gint                 *width,
                                                        gint                 *height);
-static GimpTempBuf * gimp_brush_get_new_preview       (GimpViewable         *viewable,
-                                                       GimpContext          *context,
+static LigmaTempBuf * ligma_brush_get_new_preview       (LigmaViewable         *viewable,
+                                                       LigmaContext          *context,
                                                        gint                  width,
                                                        gint                  height);
-static gchar       * gimp_brush_get_description       (GimpViewable         *viewable,
+static gchar       * ligma_brush_get_description       (LigmaViewable         *viewable,
                                                        gchar               **tooltip);
 
-static void          gimp_brush_dirty                 (GimpData             *data);
-static const gchar * gimp_brush_get_extension         (GimpData             *data);
-static void          gimp_brush_copy                  (GimpData             *data,
-                                                       GimpData             *src_data);
+static void          ligma_brush_dirty                 (LigmaData             *data);
+static const gchar * ligma_brush_get_extension         (LigmaData             *data);
+static void          ligma_brush_copy                  (LigmaData             *data,
+                                                       LigmaData             *src_data);
 
-static void          gimp_brush_real_begin_use        (GimpBrush            *brush);
-static void          gimp_brush_real_end_use          (GimpBrush            *brush);
-static GimpBrush   * gimp_brush_real_select_brush     (GimpBrush            *brush,
-                                                       const GimpCoords     *last_coords,
-                                                       const GimpCoords     *current_coords);
-static gboolean      gimp_brush_real_want_null_motion (GimpBrush            *brush,
-                                                       const GimpCoords     *last_coords,
-                                                       const GimpCoords     *current_coords);
+static void          ligma_brush_real_begin_use        (LigmaBrush            *brush);
+static void          ligma_brush_real_end_use          (LigmaBrush            *brush);
+static LigmaBrush   * ligma_brush_real_select_brush     (LigmaBrush            *brush,
+                                                       const LigmaCoords     *last_coords,
+                                                       const LigmaCoords     *current_coords);
+static gboolean      ligma_brush_real_want_null_motion (LigmaBrush            *brush,
+                                                       const LigmaCoords     *last_coords,
+                                                       const LigmaCoords     *current_coords);
 
-static gchar       * gimp_brush_get_checksum          (GimpTagged           *tagged);
+static gchar       * ligma_brush_get_checksum          (LigmaTagged           *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
-                         G_ADD_PRIVATE (GimpBrush)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_brush_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaBrush, ligma_brush, LIGMA_TYPE_DATA,
+                         G_ADD_PRIVATE (LigmaBrush)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_brush_tagged_iface_init))
 
-#define parent_class gimp_brush_parent_class
+#define parent_class ligma_brush_parent_class
 
 static guint brush_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_brush_class_init (GimpBrushClass *klass)
+ligma_brush_class_init (LigmaBrushClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
 
   brush_signals[SPACING_CHANGED] =
     g_signal_new ("spacing-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
+                  G_STRUCT_OFFSET (LigmaBrushClass, spacing_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize            = gimp_brush_finalize;
-  object_class->get_property        = gimp_brush_get_property;
-  object_class->set_property        = gimp_brush_set_property;
+  object_class->finalize            = ligma_brush_finalize;
+  object_class->get_property        = ligma_brush_get_property;
+  object_class->set_property        = ligma_brush_set_property;
 
-  gimp_object_class->get_memsize    = gimp_brush_get_memsize;
+  ligma_object_class->get_memsize    = ligma_brush_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-paintbrush";
-  viewable_class->get_size          = gimp_brush_get_size;
-  viewable_class->get_new_preview   = gimp_brush_get_new_preview;
-  viewable_class->get_description   = gimp_brush_get_description;
+  viewable_class->default_icon_name = "ligma-tool-paintbrush";
+  viewable_class->get_size          = ligma_brush_get_size;
+  viewable_class->get_new_preview   = ligma_brush_get_new_preview;
+  viewable_class->get_description   = ligma_brush_get_description;
 
-  data_class->dirty                 = gimp_brush_dirty;
-  data_class->save                  = gimp_brush_save;
-  data_class->get_extension         = gimp_brush_get_extension;
-  data_class->copy                  = gimp_brush_copy;
+  data_class->dirty                 = ligma_brush_dirty;
+  data_class->save                  = ligma_brush_save;
+  data_class->get_extension         = ligma_brush_get_extension;
+  data_class->copy                  = ligma_brush_copy;
 
-  klass->begin_use                  = gimp_brush_real_begin_use;
-  klass->end_use                    = gimp_brush_real_end_use;
-  klass->select_brush               = gimp_brush_real_select_brush;
-  klass->want_null_motion           = gimp_brush_real_want_null_motion;
-  klass->transform_size             = gimp_brush_real_transform_size;
-  klass->transform_mask             = gimp_brush_real_transform_mask;
-  klass->transform_pixmap           = gimp_brush_real_transform_pixmap;
-  klass->transform_boundary         = gimp_brush_real_transform_boundary;
+  klass->begin_use                  = ligma_brush_real_begin_use;
+  klass->end_use                    = ligma_brush_real_end_use;
+  klass->select_brush               = ligma_brush_real_select_brush;
+  klass->want_null_motion           = ligma_brush_real_want_null_motion;
+  klass->transform_size             = ligma_brush_real_transform_size;
+  klass->transform_mask             = ligma_brush_real_transform_mask;
+  klass->transform_pixmap           = ligma_brush_real_transform_pixmap;
+  klass->transform_boundary         = ligma_brush_real_transform_boundary;
   klass->spacing_changed            = NULL;
 
   g_object_class_install_property (object_class, PROP_SPACING,
                                    g_param_spec_double ("spacing", NULL,
                                                         _("Brush Spacing"),
                                                         1.0, 5000.0, 20.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_brush_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_brush_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->get_checksum = gimp_brush_get_checksum;
+  iface->get_checksum = ligma_brush_get_checksum;
 }
 
 static void
-gimp_brush_init (GimpBrush *brush)
+ligma_brush_init (LigmaBrush *brush)
 {
-  brush->priv = gimp_brush_get_instance_private (brush);
+  brush->priv = ligma_brush_get_instance_private (brush);
 
   brush->priv->spacing  = 20;
   brush->priv->x_axis.x = 15.0;
@@ -179,16 +179,16 @@ gimp_brush_init (GimpBrush *brush)
 }
 
 static void
-gimp_brush_finalize (GObject *object)
+ligma_brush_finalize (GObject *object)
 {
-  GimpBrush *brush = GIMP_BRUSH (object);
+  LigmaBrush *brush = LIGMA_BRUSH (object);
 
-  g_clear_pointer (&brush->priv->mask,          gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->pixmap,        gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->mask,          ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->pixmap,        ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, ligma_temp_buf_unref);
 
-  gimp_brush_mipmap_clear (brush);
+  ligma_brush_mipmap_clear (brush);
 
   g_clear_object (&brush->priv->mask_cache);
   g_clear_object (&brush->priv->pixmap_cache);
@@ -198,17 +198,17 @@ gimp_brush_finalize (GObject *object)
 }
 
 static void
-gimp_brush_set_property (GObject      *object,
+ligma_brush_set_property (GObject      *object,
                          guint         property_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpBrush *brush = GIMP_BRUSH (object);
+  LigmaBrush *brush = LIGMA_BRUSH (object);
 
   switch (property_id)
     {
     case PROP_SPACING:
-      gimp_brush_set_spacing (brush, g_value_get_double (value));
+      ligma_brush_set_spacing (brush, g_value_get_double (value));
       break;
 
     default:
@@ -218,17 +218,17 @@ gimp_brush_set_property (GObject      *object,
 }
 
 static void
-gimp_brush_get_property (GObject    *object,
+ligma_brush_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpBrush *brush = GIMP_BRUSH (object);
+  LigmaBrush *brush = LIGMA_BRUSH (object);
 
   switch (property_id)
     {
     case PROP_SPACING:
-      g_value_set_double (value, gimp_brush_get_spacing (brush));
+      g_value_set_double (value, ligma_brush_get_spacing (brush));
       break;
 
     default:
@@ -238,44 +238,44 @@ gimp_brush_get_property (GObject    *object,
 }
 
 static gint64
-gimp_brush_get_memsize (GimpObject *object,
+ligma_brush_get_memsize (LigmaObject *object,
                         gint64     *gui_size)
 {
-  GimpBrush *brush   = GIMP_BRUSH (object);
+  LigmaBrush *brush   = LIGMA_BRUSH (object);
   gint64     memsize = 0;
 
-  memsize += gimp_temp_buf_get_memsize (brush->priv->mask);
-  memsize += gimp_temp_buf_get_memsize (brush->priv->pixmap);
+  memsize += ligma_temp_buf_get_memsize (brush->priv->mask);
+  memsize += ligma_temp_buf_get_memsize (brush->priv->pixmap);
 
-  memsize += gimp_brush_mipmap_get_memsize (brush);
+  memsize += ligma_brush_mipmap_get_memsize (brush);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_brush_get_size (GimpViewable *viewable,
+ligma_brush_get_size (LigmaViewable *viewable,
                      gint         *width,
                      gint         *height)
 {
-  GimpBrush *brush = GIMP_BRUSH (viewable);
+  LigmaBrush *brush = LIGMA_BRUSH (viewable);
 
-  *width  = gimp_temp_buf_get_width  (brush->priv->mask);
-  *height = gimp_temp_buf_get_height (brush->priv->mask);
+  *width  = ligma_temp_buf_get_width  (brush->priv->mask);
+  *height = ligma_temp_buf_get_height (brush->priv->mask);
 
   return TRUE;
 }
 
-static GimpTempBuf *
-gimp_brush_get_new_preview (GimpViewable *viewable,
-                            GimpContext  *context,
+static LigmaTempBuf *
+ligma_brush_get_new_preview (LigmaViewable *viewable,
+                            LigmaContext  *context,
                             gint          width,
                             gint          height)
 {
-  GimpBrush         *brush       = GIMP_BRUSH (viewable);
-  const GimpTempBuf *mask_buf    = brush->priv->mask;
-  const GimpTempBuf *pixmap_buf  = brush->priv->pixmap;
-  GimpTempBuf       *return_buf  = NULL;
+  LigmaBrush         *brush       = LIGMA_BRUSH (viewable);
+  const LigmaTempBuf *mask_buf    = brush->priv->mask;
+  const LigmaTempBuf *pixmap_buf  = brush->priv->pixmap;
+  LigmaTempBuf       *return_buf  = NULL;
   gint               mask_width;
   gint               mask_height;
   guchar            *mask_data;
@@ -284,8 +284,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   gint               x, y;
   gboolean           scaled = FALSE;
 
-  mask_width  = gimp_temp_buf_get_width  (mask_buf);
-  mask_height = gimp_temp_buf_get_height (mask_buf);
+  mask_width  = ligma_temp_buf_get_width  (mask_buf);
+  mask_height = ligma_temp_buf_get_height (mask_buf);
 
   if (mask_width > width || mask_height > height)
     {
@@ -295,56 +295,56 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
       if (scale != 1.0)
         {
-          gimp_brush_begin_use (brush);
+          ligma_brush_begin_use (brush);
 
-          if (GIMP_IS_BRUSH_GENERATED (brush))
+          if (LIGMA_IS_BRUSH_GENERATED (brush))
             {
-               GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
+               LigmaBrushGenerated *gen_brush = LIGMA_BRUSH_GENERATED (brush);
 
-               mask_buf = gimp_brush_transform_mask (brush, scale,
-                                                     (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
-                                                     gimp_brush_generated_get_angle (gen_brush) / 360.0,
+               mask_buf = ligma_brush_transform_mask (brush, scale,
+                                                     (ligma_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
+                                                     ligma_brush_generated_get_angle (gen_brush) / 360.0,
                                                      FALSE,
-                                                     gimp_brush_generated_get_hardness (gen_brush));
+                                                     ligma_brush_generated_get_hardness (gen_brush));
             }
           else
-            mask_buf = gimp_brush_transform_mask (brush, scale,
+            mask_buf = ligma_brush_transform_mask (brush, scale,
                                                   0.0, 0.0, FALSE, 1.0);
 
           if (! mask_buf)
             {
-              mask_buf = gimp_temp_buf_new (1, 1, babl_format ("Y u8"));
-              gimp_temp_buf_data_clear ((GimpTempBuf *) mask_buf);
+              mask_buf = ligma_temp_buf_new (1, 1, babl_format ("Y u8"));
+              ligma_temp_buf_data_clear ((LigmaTempBuf *) mask_buf);
             }
           else
             {
-              gimp_temp_buf_ref ((GimpTempBuf *) mask_buf);
+              ligma_temp_buf_ref ((LigmaTempBuf *) mask_buf);
             }
 
           if (pixmap_buf)
-            pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
+            pixmap_buf = ligma_brush_transform_pixmap (brush, scale,
                                                       0.0, 0.0, FALSE, 1.0);
 
-          mask_width  = gimp_temp_buf_get_width  (mask_buf);
-          mask_height = gimp_temp_buf_get_height (mask_buf);
+          mask_width  = ligma_temp_buf_get_width  (mask_buf);
+          mask_height = ligma_temp_buf_get_height (mask_buf);
 
           scaled = TRUE;
         }
     }
 
-  return_buf = gimp_temp_buf_new (mask_width, mask_height,
+  return_buf = ligma_temp_buf_new (mask_width, mask_height,
                                   babl_format ("R'G'B'A u8"));
 
-  mask = mask_data = gimp_temp_buf_lock (mask_buf, babl_format ("Y u8"),
+  mask = mask_data = ligma_temp_buf_lock (mask_buf, babl_format ("Y u8"),
                                          GEGL_ACCESS_READ);
-  buf  = gimp_temp_buf_get_data (return_buf);
+  buf  = ligma_temp_buf_get_data (return_buf);
 
   if (pixmap_buf)
     {
       guchar *pixmap_data;
       guchar *pixmap;
 
-      pixmap = pixmap_data = gimp_temp_buf_lock (pixmap_buf,
+      pixmap = pixmap_data = ligma_temp_buf_lock (pixmap_buf,
                                                  babl_format ("R'G'B' u8"),
                                                  GEGL_ACCESS_READ);
 
@@ -359,7 +359,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             }
         }
 
-      gimp_temp_buf_unlock (pixmap_buf, pixmap_data);
+      ligma_temp_buf_unlock (pixmap_buf, pixmap_data);
     }
   else
     {
@@ -375,124 +375,124 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  gimp_temp_buf_unlock (mask_buf, mask_data);
+  ligma_temp_buf_unlock (mask_buf, mask_data);
 
   if (scaled)
     {
-      gimp_temp_buf_unref ((GimpTempBuf *) mask_buf);
+      ligma_temp_buf_unref ((LigmaTempBuf *) mask_buf);
 
-      gimp_brush_end_use (brush);
+      ligma_brush_end_use (brush);
     }
 
   return return_buf;
 }
 
 static gchar *
-gimp_brush_get_description (GimpViewable  *viewable,
+ligma_brush_get_description (LigmaViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpBrush *brush = GIMP_BRUSH (viewable);
+  LigmaBrush *brush = LIGMA_BRUSH (viewable);
 
   return g_strdup_printf ("%s (%d × %d)",
-                          gimp_object_get_name (brush),
-                          gimp_temp_buf_get_width  (brush->priv->mask),
-                          gimp_temp_buf_get_height (brush->priv->mask));
+                          ligma_object_get_name (brush),
+                          ligma_temp_buf_get_width  (brush->priv->mask),
+                          ligma_temp_buf_get_height (brush->priv->mask));
 }
 
 static void
-gimp_brush_dirty (GimpData *data)
+ligma_brush_dirty (LigmaData *data)
 {
-  GimpBrush *brush = GIMP_BRUSH (data);
+  LigmaBrush *brush = LIGMA_BRUSH (data);
 
   if (brush->priv->mask_cache)
-    gimp_brush_cache_clear (brush->priv->mask_cache);
+    ligma_brush_cache_clear (brush->priv->mask_cache);
 
   if (brush->priv->pixmap_cache)
-    gimp_brush_cache_clear (brush->priv->pixmap_cache);
+    ligma_brush_cache_clear (brush->priv->pixmap_cache);
 
   if (brush->priv->boundary_cache)
-    gimp_brush_cache_clear (brush->priv->boundary_cache);
+    ligma_brush_cache_clear (brush->priv->boundary_cache);
 
-  gimp_brush_mipmap_clear (brush);
+  ligma_brush_mipmap_clear (brush);
 
-  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, ligma_temp_buf_unref);
 
-  GIMP_DATA_CLASS (parent_class)->dirty (data);
+  LIGMA_DATA_CLASS (parent_class)->dirty (data);
 }
 
 static const gchar *
-gimp_brush_get_extension (GimpData *data)
+ligma_brush_get_extension (LigmaData *data)
 {
-  return GIMP_BRUSH_FILE_EXTENSION;
+  return LIGMA_BRUSH_FILE_EXTENSION;
 }
 
 static void
-gimp_brush_copy (GimpData *data,
-                 GimpData *src_data)
+ligma_brush_copy (LigmaData *data,
+                 LigmaData *src_data)
 {
-  GimpBrush *brush     = GIMP_BRUSH (data);
-  GimpBrush *src_brush = GIMP_BRUSH (src_data);
+  LigmaBrush *brush     = LIGMA_BRUSH (data);
+  LigmaBrush *src_brush = LIGMA_BRUSH (src_data);
 
-  g_clear_pointer (&brush->priv->mask, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->mask, ligma_temp_buf_unref);
   if (src_brush->priv->mask)
-    brush->priv->mask = gimp_temp_buf_copy (src_brush->priv->mask);
+    brush->priv->mask = ligma_temp_buf_copy (src_brush->priv->mask);
 
-  g_clear_pointer (&brush->priv->pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->pixmap, ligma_temp_buf_unref);
   if (src_brush->priv->pixmap)
-    brush->priv->pixmap = gimp_temp_buf_copy (src_brush->priv->pixmap);
+    brush->priv->pixmap = ligma_temp_buf_copy (src_brush->priv->pixmap);
 
   brush->priv->spacing = src_brush->priv->spacing;
   brush->priv->x_axis  = src_brush->priv->x_axis;
   brush->priv->y_axis  = src_brush->priv->y_axis;
 
-  gimp_data_dirty (data);
+  ligma_data_dirty (data);
 }
 
 static void
-gimp_brush_real_begin_use (GimpBrush *brush)
+ligma_brush_real_begin_use (LigmaBrush *brush)
 {
   brush->priv->mask_cache =
-    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_unref, 'M', 'm');
+    ligma_brush_cache_new ((GDestroyNotify) ligma_temp_buf_unref, 'M', 'm');
 
   brush->priv->pixmap_cache =
-    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_unref, 'P', 'p');
+    ligma_brush_cache_new ((GDestroyNotify) ligma_temp_buf_unref, 'P', 'p');
 
   brush->priv->boundary_cache =
-    gimp_brush_cache_new ((GDestroyNotify) gimp_bezier_desc_free, 'B', 'b');
+    ligma_brush_cache_new ((GDestroyNotify) ligma_bezier_desc_free, 'B', 'b');
 }
 
 static void
-gimp_brush_real_end_use (GimpBrush *brush)
+ligma_brush_real_end_use (LigmaBrush *brush)
 {
   g_clear_object (&brush->priv->mask_cache);
   g_clear_object (&brush->priv->pixmap_cache);
   g_clear_object (&brush->priv->boundary_cache);
 
-  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, ligma_temp_buf_unref);
 }
 
-static GimpBrush *
-gimp_brush_real_select_brush (GimpBrush        *brush,
-                              const GimpCoords *last_coords,
-                              const GimpCoords *current_coords)
+static LigmaBrush *
+ligma_brush_real_select_brush (LigmaBrush        *brush,
+                              const LigmaCoords *last_coords,
+                              const LigmaCoords *current_coords)
 {
   return brush;
 }
 
 static gboolean
-gimp_brush_real_want_null_motion (GimpBrush        *brush,
-                                  const GimpCoords *last_coords,
-                                  const GimpCoords *current_coords)
+ligma_brush_real_want_null_motion (LigmaBrush        *brush,
+                                  const LigmaCoords *last_coords,
+                                  const LigmaCoords *current_coords)
 {
   return TRUE;
 }
 
 static gchar *
-gimp_brush_get_checksum (GimpTagged *tagged)
+ligma_brush_get_checksum (LigmaTagged *tagged)
 {
-  GimpBrush *brush           = GIMP_BRUSH (tagged);
+  LigmaBrush *brush           = LIGMA_BRUSH (tagged);
   gchar     *checksum_string = NULL;
 
   if (brush->priv->mask)
@@ -500,12 +500,12 @@ gimp_brush_get_checksum (GimpTagged *tagged)
       GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
 
       g_checksum_update (checksum,
-                         gimp_temp_buf_get_data (brush->priv->mask),
-                         gimp_temp_buf_get_data_size (brush->priv->mask));
+                         ligma_temp_buf_get_data (brush->priv->mask),
+                         ligma_temp_buf_get_data_size (brush->priv->mask));
       if (brush->priv->pixmap)
         g_checksum_update (checksum,
-                           gimp_temp_buf_get_data (brush->priv->pixmap),
-                           gimp_temp_buf_get_data_size (brush->priv->pixmap));
+                           ligma_temp_buf_get_data (brush->priv->pixmap),
+                           ligma_temp_buf_get_data_size (brush->priv->pixmap));
       g_checksum_update (checksum,
                          (const guchar *) &brush->priv->spacing,
                          sizeof (brush->priv->spacing));
@@ -526,28 +526,28 @@ gimp_brush_get_checksum (GimpTagged *tagged)
 
 /*  public functions  */
 
-GimpData *
-gimp_brush_new (GimpContext *context,
+LigmaData *
+ligma_brush_new (LigmaContext *context,
                 const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return gimp_brush_generated_new (name,
-                                   GIMP_BRUSH_GENERATED_CIRCLE,
+  return ligma_brush_generated_new (name,
+                                   LIGMA_BRUSH_GENERATED_CIRCLE,
                                    5.0, 2, 0.5, 1.0, 0.0);
 }
 
-GimpData *
-gimp_brush_get_standard (GimpContext *context)
+LigmaData *
+ligma_brush_get_standard (LigmaContext *context)
 {
-  static GimpData *standard_brush = NULL;
+  static LigmaData *standard_brush = NULL;
 
   if (! standard_brush)
     {
-      standard_brush = gimp_brush_new (context, "Standard");
+      standard_brush = ligma_brush_new (context, "Standard");
 
-      gimp_data_clean (standard_brush);
-      gimp_data_make_internal (standard_brush, "gimp-brush-standard");
+      ligma_data_clean (standard_brush);
+      ligma_data_make_internal (standard_brush, "ligma-brush-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_brush),
                                  (gpointer *) &standard_brush);
@@ -557,58 +557,58 @@ gimp_brush_get_standard (GimpContext *context)
 }
 
 void
-gimp_brush_begin_use (GimpBrush *brush)
+ligma_brush_begin_use (LigmaBrush *brush)
 {
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_BRUSH (brush));
 
   brush->priv->use_count++;
 
   if (brush->priv->use_count == 1)
-    GIMP_BRUSH_GET_CLASS (brush)->begin_use (brush);
+    LIGMA_BRUSH_GET_CLASS (brush)->begin_use (brush);
 }
 
 void
-gimp_brush_end_use (GimpBrush *brush)
+ligma_brush_end_use (LigmaBrush *brush)
 {
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_BRUSH (brush));
   g_return_if_fail (brush->priv->use_count > 0);
 
   brush->priv->use_count--;
 
   if (brush->priv->use_count == 0)
-    GIMP_BRUSH_GET_CLASS (brush)->end_use (brush);
+    LIGMA_BRUSH_GET_CLASS (brush)->end_use (brush);
 }
 
-GimpBrush *
-gimp_brush_select_brush (GimpBrush        *brush,
-                         const GimpCoords *last_coords,
-                         const GimpCoords *current_coords)
+LigmaBrush *
+ligma_brush_select_brush (LigmaBrush        *brush,
+                         const LigmaCoords *last_coords,
+                         const LigmaCoords *current_coords)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (last_coords != NULL, NULL);
   g_return_val_if_fail (current_coords != NULL, NULL);
 
-  return GIMP_BRUSH_GET_CLASS (brush)->select_brush (brush,
+  return LIGMA_BRUSH_GET_CLASS (brush)->select_brush (brush,
                                                      last_coords,
                                                      current_coords);
 }
 
 gboolean
-gimp_brush_want_null_motion (GimpBrush        *brush,
-                             const GimpCoords *last_coords,
-                             const GimpCoords *current_coords)
+ligma_brush_want_null_motion (LigmaBrush        *brush,
+                             const LigmaCoords *last_coords,
+                             const LigmaCoords *current_coords)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), FALSE);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), FALSE);
   g_return_val_if_fail (last_coords != NULL, FALSE);
   g_return_val_if_fail (current_coords != NULL, FALSE);
 
-  return GIMP_BRUSH_GET_CLASS (brush)->want_null_motion (brush,
+  return LIGMA_BRUSH_GET_CLASS (brush)->want_null_motion (brush,
                                                          last_coords,
                                                          current_coords);
 }
 
 void
-gimp_brush_transform_size (GimpBrush     *brush,
+ligma_brush_transform_size (LigmaBrush     *brush,
                            gdouble        scale,
                            gdouble        aspect_ratio,
                            gdouble        angle,
@@ -616,7 +616,7 @@ gimp_brush_transform_size (GimpBrush     *brush,
                            gint          *width,
                            gint          *height)
 {
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_BRUSH (brush));
   g_return_if_fail (scale > 0.0);
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
@@ -625,38 +625,38 @@ gimp_brush_transform_size (GimpBrush     *brush,
       aspect_ratio      == 0.0 &&
       fmod (angle, 0.5) == 0.0)
     {
-      *width  = gimp_temp_buf_get_width  (brush->priv->mask);
-      *height = gimp_temp_buf_get_height (brush->priv->mask);
+      *width  = ligma_temp_buf_get_width  (brush->priv->mask);
+      *height = ligma_temp_buf_get_height (brush->priv->mask);
 
       return;
     }
 
-  GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush,
+  LIGMA_BRUSH_GET_CLASS (brush)->transform_size (brush,
                                                 scale, aspect_ratio, angle, reflect,
                                                 width, height);
 }
 
-const GimpTempBuf *
-gimp_brush_transform_mask (GimpBrush *brush,
+const LigmaTempBuf *
+ligma_brush_transform_mask (LigmaBrush *brush,
                            gdouble    scale,
                            gdouble    aspect_ratio,
                            gdouble    angle,
                            gboolean   reflect,
                            gdouble    hardness)
 {
-  const GimpTempBuf *mask;
+  const LigmaTempBuf *mask;
   gint               width;
   gint               height;
   gdouble            effective_hardness = hardness;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
 
-  gimp_brush_transform_size (brush,
+  ligma_brush_transform_size (brush,
                              scale, aspect_ratio, angle, reflect,
                              &width, &height);
 
-  mask = gimp_brush_cache_get (brush->priv->mask_cache,
+  mask = ligma_brush_cache_get (brush->priv->mask_cache,
                                width, height,
                                scale, aspect_ratio, angle, reflect, hardness);
 
@@ -668,11 +668,11 @@ gimp_brush_transform_mask (GimpBrush *brush,
        * It also makes hardnes dynamics not work for these brushes.
        * This is intentional. Confoliving for each stamp is too expensive.*/
       if (! brush->priv->blurred_mask &&
-          ! GIMP_IS_BRUSH_GENERATED(brush) &&
-          ! GIMP_IS_BRUSH_PIPE(brush) && /*Can't cache pipes. Sanely anyway*/
+          ! LIGMA_IS_BRUSH_GENERATED(brush) &&
+          ! LIGMA_IS_BRUSH_PIPE(brush) && /*Can't cache pipes. Sanely anyway*/
           hardness < 1.0)
         {
-           brush->priv->blurred_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+           brush->priv->blurred_mask = LIGMA_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                              1.0,
                                                              0.0,
                                                              0.0,
@@ -687,14 +687,14 @@ gimp_brush_transform_mask (GimpBrush *brush,
         }
 #endif
 
-      mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+      mask = LIGMA_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                            scale,
                                                            aspect_ratio,
                                                            angle,
                                                            reflect,
                                                            effective_hardness);
 
-      gimp_brush_cache_add (brush->priv->mask_cache,
+      ligma_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
                             width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
@@ -703,28 +703,28 @@ gimp_brush_transform_mask (GimpBrush *brush,
   return mask;
 }
 
-const GimpTempBuf *
-gimp_brush_transform_pixmap (GimpBrush *brush,
+const LigmaTempBuf *
+ligma_brush_transform_pixmap (LigmaBrush *brush,
                              gdouble    scale,
                              gdouble    aspect_ratio,
                              gdouble    angle,
                              gboolean   reflect,
                              gdouble    hardness)
 {
-  const GimpTempBuf *pixmap;
+  const LigmaTempBuf *pixmap;
   gint               width;
   gint               height;
   gdouble            effective_hardness = hardness;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (brush->priv->pixmap != NULL, NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
 
-  gimp_brush_transform_size (brush,
+  ligma_brush_transform_size (brush,
                              scale, aspect_ratio, angle, reflect,
                              &width, &height);
 
-  pixmap = gimp_brush_cache_get (brush->priv->pixmap_cache,
+  pixmap = ligma_brush_cache_get (brush->priv->pixmap_cache,
                                  width, height,
                                  scale, aspect_ratio, angle, reflect, hardness);
 
@@ -732,11 +732,11 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
     {
 #if 0
      if (! brush->priv->blurred_pixmap &&
-         ! GIMP_IS_BRUSH_GENERATED(brush) &&
-         ! GIMP_IS_BRUSH_PIPE(brush) /*Can't cache pipes. Sanely anyway*/
+         ! LIGMA_IS_BRUSH_GENERATED(brush) &&
+         ! LIGMA_IS_BRUSH_PIPE(brush) /*Can't cache pipes. Sanely anyway*/
          && hardness < 1.0)
       {
-         brush->priv->blurred_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
+         brush->priv->blurred_pixmap = LIGMA_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                   1.0,
                                                                   0.0,
                                                                   0.0,
@@ -750,14 +750,14 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
       }
 #endif
 
-      pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
+      pixmap = LIGMA_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                scale,
                                                                aspect_ratio,
                                                                angle,
                                                                reflect,
                                                                effective_hardness);
 
-      gimp_brush_cache_add (brush->priv->pixmap_cache,
+      ligma_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
                             width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
@@ -766,8 +766,8 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
   return pixmap;
 }
 
-const GimpBezierDesc *
-gimp_brush_transform_boundary (GimpBrush *brush,
+const LigmaBezierDesc *
+ligma_brush_transform_boundary (LigmaBrush *brush,
                                gdouble    scale,
                                gdouble    aspect_ratio,
                                gdouble    angle,
@@ -776,24 +776,24 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                                gint      *width,
                                gint      *height)
 {
-  const GimpBezierDesc *boundary;
+  const LigmaBezierDesc *boundary;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
   g_return_val_if_fail (width != NULL, NULL);
   g_return_val_if_fail (height != NULL, NULL);
 
-  gimp_brush_transform_size (brush,
+  ligma_brush_transform_size (brush,
                              scale, aspect_ratio, angle, reflect,
                              width, height);
 
-  boundary = gimp_brush_cache_get (brush->priv->boundary_cache,
+  boundary = ligma_brush_cache_get (brush->priv->boundary_cache,
                                    *width, *height,
                                    scale, aspect_ratio, angle, reflect, hardness);
 
   if (! boundary)
     {
-      boundary = GIMP_BRUSH_GET_CLASS (brush)->transform_boundary (brush,
+      boundary = LIGMA_BRUSH_GET_CLASS (brush)->transform_boundary (brush,
                                                                    scale,
                                                                    aspect_ratio,
                                                                    angle,
@@ -809,7 +809,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
        *         properly implemented
        */
       if (boundary)
-        gimp_brush_cache_add (brush->priv->boundary_cache,
+        ligma_brush_cache_add (brush->priv->boundary_cache,
                               (gpointer) boundary,
                               *width, *height,
                               scale, aspect_ratio, angle, reflect, hardness);
@@ -818,11 +818,11 @@ gimp_brush_transform_boundary (GimpBrush *brush,
   return boundary;
 }
 
-GimpTempBuf *
-gimp_brush_get_mask (GimpBrush *brush)
+LigmaTempBuf *
+ligma_brush_get_mask (LigmaBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
 
   if (brush->priv->blurred_mask)
     {
@@ -831,11 +831,11 @@ gimp_brush_get_mask (GimpBrush *brush)
   return brush->priv->mask;
 }
 
-GimpTempBuf *
-gimp_brush_get_pixmap (GimpBrush *brush)
+LigmaTempBuf *
+ligma_brush_get_pixmap (LigmaBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
 
   if(brush->priv->blurred_pixmap)
     {
@@ -845,72 +845,72 @@ gimp_brush_get_pixmap (GimpBrush *brush)
 }
 
 void
-gimp_brush_flush_blur_caches (GimpBrush *brush)
+ligma_brush_flush_blur_caches (LigmaBrush *brush)
 {
 #if 0
-  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, ligma_temp_buf_unref);
 
   if (brush->priv->mask_cache)
-    gimp_brush_cache_clear (brush->priv->mask_cache);
+    ligma_brush_cache_clear (brush->priv->mask_cache);
 
   if (brush->priv->pixmap_cache)
-    gimp_brush_cache_clear (brush->priv->pixmap_cache);
+    ligma_brush_cache_clear (brush->priv->pixmap_cache);
 
   if (brush->priv->boundary_cache)
-    gimp_brush_cache_clear (brush->priv->boundary_cache);
+    ligma_brush_cache_clear (brush->priv->boundary_cache);
 #endif
 }
 
 gdouble
-gimp_brush_get_blur_hardness (GimpBrush *brush)
+ligma_brush_get_blur_hardness (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), 0);
 
   return brush->priv->blur_hardness;
 }
 
 gint
-gimp_brush_get_width (GimpBrush *brush)
+ligma_brush_get_width (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), 0);
 
   if (brush->priv->blurred_mask)
-    return gimp_temp_buf_get_width (brush->priv->blurred_mask);
+    return ligma_temp_buf_get_width (brush->priv->blurred_mask);
 
   if (brush->priv->blurred_pixmap)
-    return gimp_temp_buf_get_width (brush->priv->blurred_pixmap);
+    return ligma_temp_buf_get_width (brush->priv->blurred_pixmap);
 
-  return gimp_temp_buf_get_width (brush->priv->mask);
+  return ligma_temp_buf_get_width (brush->priv->mask);
 }
 
 gint
-gimp_brush_get_height (GimpBrush *brush)
+ligma_brush_get_height (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), 0);
 
   if (brush->priv->blurred_mask)
-    return gimp_temp_buf_get_height (brush->priv->blurred_mask);
+    return ligma_temp_buf_get_height (brush->priv->blurred_mask);
 
   if (brush->priv->blurred_pixmap)
-    return gimp_temp_buf_get_height (brush->priv->blurred_pixmap);
+    return ligma_temp_buf_get_height (brush->priv->blurred_pixmap);
 
-  return gimp_temp_buf_get_height (brush->priv->mask);
+  return ligma_temp_buf_get_height (brush->priv->mask);
 }
 
 gint
-gimp_brush_get_spacing (GimpBrush *brush)
+ligma_brush_get_spacing (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), 0);
 
   return brush->priv->spacing;
 }
 
 void
-gimp_brush_set_spacing (GimpBrush *brush,
+ligma_brush_set_spacing (LigmaBrush *brush,
                         gint       spacing)
 {
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_BRUSH (brush));
 
   if (brush->priv->spacing != spacing)
     {
@@ -921,20 +921,20 @@ gimp_brush_set_spacing (GimpBrush *brush,
     }
 }
 
-static const GimpVector2 fail = { 0.0, 0.0 };
+static const LigmaVector2 fail = { 0.0, 0.0 };
 
-GimpVector2
-gimp_brush_get_x_axis (GimpBrush *brush)
+LigmaVector2
+ligma_brush_get_x_axis (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), fail);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), fail);
 
   return brush->priv->x_axis;
 }
 
-GimpVector2
-gimp_brush_get_y_axis (GimpBrush *brush)
+LigmaVector2
+ligma_brush_get_y_axis (LigmaBrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), fail);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), fail);
 
   return brush->priv->y_axis;
 }

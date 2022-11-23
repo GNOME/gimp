@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -24,12 +24,12 @@
 
 #include <glib.h>
 
-#include "gimpsignal.h"
+#include "ligmasignal.h"
 
 
 /**
- * SECTION: gimpsignal
- * @title: gimpsignal
+ * SECTION: ligmasignal
+ * @title: ligmasignal
  * @short_description: Portable signal handling.
  * @see_also: signal(2), signal(5 or 7), sigaction(2).
  *
@@ -40,7 +40,7 @@
 /* Courtesy of Austin Donnelly 06-04-2000 to address bug #2742 */
 
 /**
- * gimp_signal_private: (skip)
+ * ligma_signal_private: (skip)
  * @signum: Selects signal to be handled see man 5 signal (or man 7 signal)
  * @handler: Handler that maps to signum. Invoked by O/S.
  *           Handler gets signal that caused invocation. Corresponds
@@ -62,11 +62,11 @@
  * exactly what we want. [austin 06.04.2000]
  *
  * Returns: A reference to the signal handling function which was
- *          active before the call to gimp_signal_private().
+ *          active before the call to ligma_signal_private().
  */
-GimpSignalHandlerFunc
-gimp_signal_private (gint                   signum,
-                     GimpSignalHandlerFunc  handler,
+LigmaSignalHandlerFunc
+ligma_signal_private (gint                   signum,
+                     LigmaSignalHandlerFunc  handler,
                      gint                   flags)
 {
 #ifndef G_OS_WIN32
@@ -80,7 +80,7 @@ gimp_signal_private (gint                   signum,
    *  the other.  Caveat programmer!
    */
 
-  /*  Passing gimp_signal_private a gimp_sighandler of NULL is not
+  /*  Passing ligma_signal_private a ligma_sighandler of NULL is not
    *  an error, and generally results in the action for that signal
    *  being set to SIG_DFL (default behavior).  Many OSes define
    *  SIG_DFL as (void (*)()0, so setting sa_handler to NULL is
@@ -100,7 +100,7 @@ gimp_signal_private (gint                   signum,
   if (ret < 0)
     g_error ("unable to set handler for signal %d\n", signum);
 
-  return (GimpSignalHandlerFunc) osa.sa_handler;
+  return (LigmaSignalHandlerFunc) osa.sa_handler;
 #else
   return NULL;                  /* Or g_error()? Should all calls to
                                  * this function really be inside

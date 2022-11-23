@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontext.h
+ * ligmacontext.h
  * Copyright (C) 1999-2010 Michael Natterer
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTEXT_H__
-#define __GIMP_CONTEXT_H__
+#ifndef __LIGMA_CONTEXT_H__
+#define __LIGMA_CONTEXT_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
-#define GIMP_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
-#define GIMP_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
-#define GIMP_IS_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTEXT))
-#define GIMP_IS_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
-#define GIMP_CONTEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS (obj, GIMP_TYPE_CONTEXT, GimpContextClass))
+#define LIGMA_TYPE_CONTEXT            (ligma_context_get_type ())
+#define LIGMA_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTEXT, LigmaContext))
+#define LIGMA_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST (klass, LIGMA_TYPE_CONTEXT, LigmaContextClass))
+#define LIGMA_IS_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTEXT))
+#define LIGMA_IS_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTEXT))
+#define LIGMA_CONTEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS (obj, LIGMA_TYPE_CONTEXT, LigmaContextClass))
 
 
-typedef struct _GimpContextClass GimpContextClass;
+typedef struct _LigmaContextClass LigmaContextClass;
 
 /**
- * GimpContext:
+ * LigmaContext:
  *
  * Holds state such as the active image, active display, active brush,
  * active foreground and background color, and so on. There can many
@@ -44,325 +44,325 @@ typedef struct _GimpContextClass GimpContextClass;
  * interacts with but there can also be contexts for docks and for
  * plug-ins.
  */
-struct _GimpContext
+struct _LigmaContext
 {
-  GimpViewable          parent_instance;
+  LigmaViewable          parent_instance;
 
-  Gimp                 *gimp;
+  Ligma                 *ligma;
 
-  GimpContext          *parent;
+  LigmaContext          *parent;
 
   guint32               defined_props;
   guint32               serialize_props;
 
-  GimpImage            *image;
-  GimpDisplay          *display;
+  LigmaImage            *image;
+  LigmaDisplay          *display;
 
-  GimpToolInfo         *tool_info;
+  LigmaToolInfo         *tool_info;
   gchar                *tool_name;
 
-  GimpPaintInfo        *paint_info;
+  LigmaPaintInfo        *paint_info;
   gchar                *paint_name;
 
-  GimpRGB               foreground;
-  GimpRGB               background;
+  LigmaRGB               foreground;
+  LigmaRGB               background;
 
   gdouble               opacity;
-  GimpLayerMode         paint_mode;
+  LigmaLayerMode         paint_mode;
 
-  GimpBrush            *brush;
+  LigmaBrush            *brush;
   gchar                *brush_name;
 
-  GimpDynamics         *dynamics;
+  LigmaDynamics         *dynamics;
   gchar                *dynamics_name;
 
-  GimpMybrush          *mybrush;
+  LigmaMybrush          *mybrush;
   gchar                *mybrush_name;
 
-  GimpPattern          *pattern;
+  LigmaPattern          *pattern;
   gchar                *pattern_name;
 
-  GimpGradient         *gradient;
+  LigmaGradient         *gradient;
   gchar                *gradient_name;
 
-  GimpPalette          *palette;
+  LigmaPalette          *palette;
   gchar                *palette_name;
 
-  GimpFont             *font;
+  LigmaFont             *font;
   gchar                *font_name;
 
-  GimpToolPreset       *tool_preset;
+  LigmaToolPreset       *tool_preset;
   gchar                *tool_preset_name;
 
-  GimpBuffer           *buffer;
+  LigmaBuffer           *buffer;
   gchar                *buffer_name;
 
-  GimpImagefile        *imagefile;
+  LigmaImagefile        *imagefile;
   gchar                *imagefile_name;
 
-  GimpTemplate         *template;
+  LigmaTemplate         *template;
   gchar                *template_name;
 
-  GimpLineArt          *line_art;
+  LigmaLineArt          *line_art;
   guint                 line_art_timeout_id;
 };
 
-struct _GimpContextClass
+struct _LigmaContextClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
-  void (* image_changed)      (GimpContext          *context,
-                               GimpImage            *image);
-  void (* display_changed)    (GimpContext          *context,
-                               GimpDisplay          *display);
+  void (* image_changed)      (LigmaContext          *context,
+                               LigmaImage            *image);
+  void (* display_changed)    (LigmaContext          *context,
+                               LigmaDisplay          *display);
 
-  void (* tool_changed)       (GimpContext          *context,
-                               GimpToolInfo         *tool_info);
-  void (* paint_info_changed) (GimpContext          *context,
-                               GimpPaintInfo        *paint_info);
+  void (* tool_changed)       (LigmaContext          *context,
+                               LigmaToolInfo         *tool_info);
+  void (* paint_info_changed) (LigmaContext          *context,
+                               LigmaPaintInfo        *paint_info);
 
-  void (* foreground_changed) (GimpContext          *context,
-                               GimpRGB              *color);
-  void (* background_changed) (GimpContext          *context,
-                               GimpRGB              *color);
-  void (* opacity_changed)    (GimpContext          *context,
+  void (* foreground_changed) (LigmaContext          *context,
+                               LigmaRGB              *color);
+  void (* background_changed) (LigmaContext          *context,
+                               LigmaRGB              *color);
+  void (* opacity_changed)    (LigmaContext          *context,
                                gdouble               opacity);
-  void (* paint_mode_changed) (GimpContext          *context,
-                               GimpLayerMode         paint_mode);
-  void (* brush_changed)      (GimpContext          *context,
-                               GimpBrush            *brush);
-  void (* dynamics_changed)   (GimpContext          *context,
-                               GimpDynamics         *dynamics);
-  void (* mybrush_changed)    (GimpContext          *context,
-                               GimpMybrush          *brush);
-  void (* pattern_changed)    (GimpContext          *context,
-                               GimpPattern          *pattern);
-  void (* gradient_changed)   (GimpContext          *context,
-                               GimpGradient         *gradient);
-  void (* palette_changed)    (GimpContext          *context,
-                               GimpPalette          *palette);
-  void (* font_changed)       (GimpContext          *context,
-                               GimpFont             *font);
-  void (* tool_preset_changed)(GimpContext          *context,
-                               GimpToolPreset       *tool_preset);
-  void (* buffer_changed)     (GimpContext          *context,
-                               GimpBuffer           *buffer);
-  void (* imagefile_changed)  (GimpContext          *context,
-                               GimpImagefile        *imagefile);
-  void (* template_changed)   (GimpContext          *context,
-                               GimpTemplate         *template);
+  void (* paint_mode_changed) (LigmaContext          *context,
+                               LigmaLayerMode         paint_mode);
+  void (* brush_changed)      (LigmaContext          *context,
+                               LigmaBrush            *brush);
+  void (* dynamics_changed)   (LigmaContext          *context,
+                               LigmaDynamics         *dynamics);
+  void (* mybrush_changed)    (LigmaContext          *context,
+                               LigmaMybrush          *brush);
+  void (* pattern_changed)    (LigmaContext          *context,
+                               LigmaPattern          *pattern);
+  void (* gradient_changed)   (LigmaContext          *context,
+                               LigmaGradient         *gradient);
+  void (* palette_changed)    (LigmaContext          *context,
+                               LigmaPalette          *palette);
+  void (* font_changed)       (LigmaContext          *context,
+                               LigmaFont             *font);
+  void (* tool_preset_changed)(LigmaContext          *context,
+                               LigmaToolPreset       *tool_preset);
+  void (* buffer_changed)     (LigmaContext          *context,
+                               LigmaBuffer           *buffer);
+  void (* imagefile_changed)  (LigmaContext          *context,
+                               LigmaImagefile        *imagefile);
+  void (* template_changed)   (LigmaContext          *context,
+                               LigmaTemplate         *template);
 
-  void (* prop_name_changed)  (GimpContext          *context,
-                               GimpContextPropType   prop);
+  void (* prop_name_changed)  (LigmaContext          *context,
+                               LigmaContextPropType   prop);
 };
 
 
-GType         gimp_context_get_type          (void) G_GNUC_CONST;
+GType         ligma_context_get_type          (void) G_GNUC_CONST;
 
-GimpContext * gimp_context_new               (Gimp                *gimp,
+LigmaContext * ligma_context_new               (Ligma                *ligma,
                                               const gchar         *name,
-                                              GimpContext         *template);
+                                              LigmaContext         *template);
 
-GimpContext * gimp_context_get_parent        (GimpContext         *context);
-void          gimp_context_set_parent        (GimpContext         *context,
-                                              GimpContext         *parent);
+LigmaContext * ligma_context_get_parent        (LigmaContext         *context);
+void          ligma_context_set_parent        (LigmaContext         *context,
+                                              LigmaContext         *parent);
 
 /*  define / undefinine context properties
  *
  *  the value of an undefined property will be taken from the parent context.
  */
-void          gimp_context_define_property   (GimpContext         *context,
-                                              GimpContextPropType  prop,
+void          ligma_context_define_property   (LigmaContext         *context,
+                                              LigmaContextPropType  prop,
                                               gboolean             defined);
 
-gboolean      gimp_context_property_defined  (GimpContext         *context,
-                                              GimpContextPropType  prop);
+gboolean      ligma_context_property_defined  (LigmaContext         *context,
+                                              LigmaContextPropType  prop);
 
-void          gimp_context_define_properties (GimpContext         *context,
-                                              GimpContextPropMask  props_mask,
+void          ligma_context_define_properties (LigmaContext         *context,
+                                              LigmaContextPropMask  props_mask,
                                               gboolean             defined);
 
 
 /*  specify which context properties will be serialized
  */
-void   gimp_context_set_serialize_properties (GimpContext         *context,
-                                              GimpContextPropMask  props_mask);
+void   ligma_context_set_serialize_properties (LigmaContext         *context,
+                                              LigmaContextPropMask  props_mask);
 
-GimpContextPropMask
-       gimp_context_get_serialize_properties (GimpContext         *context);
+LigmaContextPropMask
+       ligma_context_get_serialize_properties (LigmaContext         *context);
 
 
 /*  copying context properties
  */
-void          gimp_context_copy_property     (GimpContext         *src,
-                                              GimpContext         *dest,
-                                              GimpContextPropType  prop);
+void          ligma_context_copy_property     (LigmaContext         *src,
+                                              LigmaContext         *dest,
+                                              LigmaContextPropType  prop);
 
-void          gimp_context_copy_properties   (GimpContext         *src,
-                                              GimpContext         *dest,
-                                              GimpContextPropMask  props_mask);
+void          ligma_context_copy_properties   (LigmaContext         *src,
+                                              LigmaContext         *dest,
+                                              LigmaContextPropMask  props_mask);
 
 
 /*  manipulate by GType  */
-GimpContextPropType   gimp_context_type_to_property    (GType     type);
-const gchar         * gimp_context_type_to_prop_name   (GType     type);
-const gchar         * gimp_context_type_to_signal_name (GType     type);
+LigmaContextPropType   ligma_context_type_to_property    (GType     type);
+const gchar         * ligma_context_type_to_prop_name   (GType     type);
+const gchar         * ligma_context_type_to_signal_name (GType     type);
 
-GimpObject     * gimp_context_get_by_type         (GimpContext     *context,
+LigmaObject     * ligma_context_get_by_type         (LigmaContext     *context,
                                                    GType            type);
-void             gimp_context_set_by_type         (GimpContext     *context,
+void             ligma_context_set_by_type         (LigmaContext     *context,
                                                    GType            type,
-                                                   GimpObject      *object);
-void             gimp_context_changed_by_type     (GimpContext     *context,
+                                                   LigmaObject      *object);
+void             ligma_context_changed_by_type     (LigmaContext     *context,
                                                    GType            type);
 
 
 /*  image  */
-GimpImage      * gimp_context_get_image           (GimpContext     *context);
-void             gimp_context_set_image           (GimpContext     *context,
-                                                   GimpImage       *image);
-void             gimp_context_image_changed       (GimpContext     *context);
+LigmaImage      * ligma_context_get_image           (LigmaContext     *context);
+void             ligma_context_set_image           (LigmaContext     *context,
+                                                   LigmaImage       *image);
+void             ligma_context_image_changed       (LigmaContext     *context);
 
 
 /*  display  */
-GimpDisplay    * gimp_context_get_display         (GimpContext     *context);
-void             gimp_context_set_display         (GimpContext     *context,
-                                                   GimpDisplay     *display);
-void             gimp_context_display_changed     (GimpContext     *context);
+LigmaDisplay    * ligma_context_get_display         (LigmaContext     *context);
+void             ligma_context_set_display         (LigmaContext     *context,
+                                                   LigmaDisplay     *display);
+void             ligma_context_display_changed     (LigmaContext     *context);
 
 
 /*  tool  */
-GimpToolInfo   * gimp_context_get_tool            (GimpContext     *context);
-void             gimp_context_set_tool            (GimpContext     *context,
-                                                   GimpToolInfo    *tool_info);
-void             gimp_context_tool_changed        (GimpContext     *context);
+LigmaToolInfo   * ligma_context_get_tool            (LigmaContext     *context);
+void             ligma_context_set_tool            (LigmaContext     *context,
+                                                   LigmaToolInfo    *tool_info);
+void             ligma_context_tool_changed        (LigmaContext     *context);
 
 
 /*  paint info  */
-GimpPaintInfo  * gimp_context_get_paint_info      (GimpContext     *context);
-void             gimp_context_set_paint_info      (GimpContext     *context,
-                                                   GimpPaintInfo   *paint_info);
-void             gimp_context_paint_info_changed  (GimpContext     *context);
+LigmaPaintInfo  * ligma_context_get_paint_info      (LigmaContext     *context);
+void             ligma_context_set_paint_info      (LigmaContext     *context,
+                                                   LigmaPaintInfo   *paint_info);
+void             ligma_context_paint_info_changed  (LigmaContext     *context);
 
 
 /*  foreground color  */
-void             gimp_context_get_foreground       (GimpContext     *context,
-                                                    GimpRGB         *color);
-void             gimp_context_set_foreground       (GimpContext     *context,
-                                                    const GimpRGB   *color);
-void             gimp_context_foreground_changed   (GimpContext     *context);
+void             ligma_context_get_foreground       (LigmaContext     *context,
+                                                    LigmaRGB         *color);
+void             ligma_context_set_foreground       (LigmaContext     *context,
+                                                    const LigmaRGB   *color);
+void             ligma_context_foreground_changed   (LigmaContext     *context);
 
 
 /*  background color  */
-void             gimp_context_get_background       (GimpContext     *context,
-                                                    GimpRGB         *color);
-void             gimp_context_set_background       (GimpContext     *context,
-                                                    const GimpRGB   *color);
-void             gimp_context_background_changed   (GimpContext     *context);
+void             ligma_context_get_background       (LigmaContext     *context,
+                                                    LigmaRGB         *color);
+void             ligma_context_set_background       (LigmaContext     *context,
+                                                    const LigmaRGB   *color);
+void             ligma_context_background_changed   (LigmaContext     *context);
 
 
 /*  color utility functions  */
-void             gimp_context_set_default_colors  (GimpContext     *context);
-void             gimp_context_swap_colors         (GimpContext     *context);
+void             ligma_context_set_default_colors  (LigmaContext     *context);
+void             ligma_context_swap_colors         (LigmaContext     *context);
 
 
 /*  opacity  */
-gdouble          gimp_context_get_opacity         (GimpContext     *context);
-void             gimp_context_set_opacity         (GimpContext     *context,
+gdouble          ligma_context_get_opacity         (LigmaContext     *context);
+void             ligma_context_set_opacity         (LigmaContext     *context,
                                                    gdouble          opacity);
-void             gimp_context_opacity_changed     (GimpContext     *context);
+void             ligma_context_opacity_changed     (LigmaContext     *context);
 
 
 /*  paint mode  */
-GimpLayerMode    gimp_context_get_paint_mode      (GimpContext     *context);
-void             gimp_context_set_paint_mode      (GimpContext     *context,
-                                                   GimpLayerMode    paint_mode);
-void             gimp_context_paint_mode_changed  (GimpContext     *context);
+LigmaLayerMode    ligma_context_get_paint_mode      (LigmaContext     *context);
+void             ligma_context_set_paint_mode      (LigmaContext     *context,
+                                                   LigmaLayerMode    paint_mode);
+void             ligma_context_paint_mode_changed  (LigmaContext     *context);
 
 
 /*  brush  */
-GimpBrush      * gimp_context_get_brush           (GimpContext     *context);
-void             gimp_context_set_brush           (GimpContext     *context,
-                                                   GimpBrush       *brush);
-void             gimp_context_brush_changed       (GimpContext     *context);
+LigmaBrush      * ligma_context_get_brush           (LigmaContext     *context);
+void             ligma_context_set_brush           (LigmaContext     *context,
+                                                   LigmaBrush       *brush);
+void             ligma_context_brush_changed       (LigmaContext     *context);
 
 
 /*  dynamics  */
-GimpDynamics   * gimp_context_get_dynamics        (GimpContext     *context);
-void             gimp_context_set_dynamics        (GimpContext     *context,
-                                                   GimpDynamics    *dynamics);
-void             gimp_context_dynamics_changed    (GimpContext     *context);
+LigmaDynamics   * ligma_context_get_dynamics        (LigmaContext     *context);
+void             ligma_context_set_dynamics        (LigmaContext     *context,
+                                                   LigmaDynamics    *dynamics);
+void             ligma_context_dynamics_changed    (LigmaContext     *context);
 
 
 /*  mybrush  */
-GimpMybrush    * gimp_context_get_mybrush         (GimpContext     *context);
-void             gimp_context_set_mybrush         (GimpContext     *context,
-                                                   GimpMybrush     *brush);
-void             gimp_context_mybrush_changed     (GimpContext     *context);
+LigmaMybrush    * ligma_context_get_mybrush         (LigmaContext     *context);
+void             ligma_context_set_mybrush         (LigmaContext     *context,
+                                                   LigmaMybrush     *brush);
+void             ligma_context_mybrush_changed     (LigmaContext     *context);
 
 
 /*  pattern  */
-GimpPattern    * gimp_context_get_pattern         (GimpContext     *context);
-void             gimp_context_set_pattern         (GimpContext     *context,
-                                                   GimpPattern     *pattern);
-void             gimp_context_pattern_changed     (GimpContext     *context);
+LigmaPattern    * ligma_context_get_pattern         (LigmaContext     *context);
+void             ligma_context_set_pattern         (LigmaContext     *context,
+                                                   LigmaPattern     *pattern);
+void             ligma_context_pattern_changed     (LigmaContext     *context);
 
 
 /*  gradient  */
-GimpGradient   * gimp_context_get_gradient        (GimpContext     *context);
-void             gimp_context_set_gradient        (GimpContext     *context,
-                                                   GimpGradient    *gradient);
-void             gimp_context_gradient_changed    (GimpContext     *context);
+LigmaGradient   * ligma_context_get_gradient        (LigmaContext     *context);
+void             ligma_context_set_gradient        (LigmaContext     *context,
+                                                   LigmaGradient    *gradient);
+void             ligma_context_gradient_changed    (LigmaContext     *context);
 
 
 /*  palette  */
-GimpPalette    * gimp_context_get_palette         (GimpContext     *context);
-void             gimp_context_set_palette         (GimpContext     *context,
-                                                   GimpPalette     *palette);
-void             gimp_context_palette_changed     (GimpContext     *context);
+LigmaPalette    * ligma_context_get_palette         (LigmaContext     *context);
+void             ligma_context_set_palette         (LigmaContext     *context,
+                                                   LigmaPalette     *palette);
+void             ligma_context_palette_changed     (LigmaContext     *context);
 
 
 /*  font  */
-GimpFont       * gimp_context_get_font            (GimpContext     *context);
-void             gimp_context_set_font            (GimpContext     *context,
-                                                   GimpFont        *font);
-const gchar    * gimp_context_get_font_name       (GimpContext     *context);
-void             gimp_context_set_font_name       (GimpContext     *context,
+LigmaFont       * ligma_context_get_font            (LigmaContext     *context);
+void             ligma_context_set_font            (LigmaContext     *context,
+                                                   LigmaFont        *font);
+const gchar    * ligma_context_get_font_name       (LigmaContext     *context);
+void             ligma_context_set_font_name       (LigmaContext     *context,
                                                    const gchar     *name);
-void             gimp_context_font_changed        (GimpContext     *context);
+void             ligma_context_font_changed        (LigmaContext     *context);
 
 
 /*  tool_preset  */
-GimpToolPreset * gimp_context_get_tool_preset     (GimpContext     *context);
-void             gimp_context_set_tool_preset     (GimpContext     *context,
-                                                   GimpToolPreset  *tool_preset);
-void             gimp_context_tool_preset_changed (GimpContext     *context);
+LigmaToolPreset * ligma_context_get_tool_preset     (LigmaContext     *context);
+void             ligma_context_set_tool_preset     (LigmaContext     *context,
+                                                   LigmaToolPreset  *tool_preset);
+void             ligma_context_tool_preset_changed (LigmaContext     *context);
 
 
 /*  buffer  */
-GimpBuffer     * gimp_context_get_buffer          (GimpContext     *context);
-void             gimp_context_set_buffer          (GimpContext     *context,
-                                                   GimpBuffer      *palette);
-void             gimp_context_buffer_changed      (GimpContext     *context);
+LigmaBuffer     * ligma_context_get_buffer          (LigmaContext     *context);
+void             ligma_context_set_buffer          (LigmaContext     *context,
+                                                   LigmaBuffer      *palette);
+void             ligma_context_buffer_changed      (LigmaContext     *context);
 
 
 /*  imagefile  */
-GimpImagefile  * gimp_context_get_imagefile       (GimpContext     *context);
-void             gimp_context_set_imagefile       (GimpContext     *context,
-                                                   GimpImagefile   *imagefile);
-void             gimp_context_imagefile_changed   (GimpContext     *context);
+LigmaImagefile  * ligma_context_get_imagefile       (LigmaContext     *context);
+void             ligma_context_set_imagefile       (LigmaContext     *context,
+                                                   LigmaImagefile   *imagefile);
+void             ligma_context_imagefile_changed   (LigmaContext     *context);
 
 
 /*  template  */
-GimpTemplate   * gimp_context_get_template        (GimpContext     *context);
-void             gimp_context_set_template        (GimpContext     *context,
-                                                   GimpTemplate    *template);
-void             gimp_context_template_changed    (GimpContext     *context);
+LigmaTemplate   * ligma_context_get_template        (LigmaContext     *context);
+void             ligma_context_set_template        (LigmaContext     *context,
+                                                   LigmaTemplate    *template);
+void             ligma_context_template_changed    (LigmaContext     *context);
 
 /*  line art  */
-GimpLineArt    * gimp_context_take_line_art       (GimpContext     *context);
-void             gimp_context_store_line_art      (GimpContext     *context,
-                                                   GimpLineArt     *line_art);
+LigmaLineArt    * ligma_context_take_line_art       (LigmaContext     *context);
+void             ligma_context_store_line_art      (LigmaContext     *context,
+                                                   LigmaLineArt     *line_art);
 
 
-#endif /* __GIMP_CONTEXT_H__ */
+#endif /* __LIGMA_CONTEXT_H__ */

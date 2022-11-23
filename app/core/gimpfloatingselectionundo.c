@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,60 +22,60 @@
 
 #include "core-types.h"
 
-#include "gimpdrawable-floating-selection.h"
-#include "gimpfloatingselectionundo.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayer-floating-selection.h"
+#include "ligmadrawable-floating-selection.h"
+#include "ligmafloatingselectionundo.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayer-floating-selection.h"
 
 
-static void   gimp_floating_selection_undo_constructed (GObject             *object);
+static void   ligma_floating_selection_undo_constructed (GObject             *object);
 
-static void   gimp_floating_selection_undo_pop         (GimpUndo            *undo,
-                                                        GimpUndoMode         undo_mode,
-                                                        GimpUndoAccumulator *accum);
+static void   ligma_floating_selection_undo_pop         (LigmaUndo            *undo,
+                                                        LigmaUndoMode         undo_mode,
+                                                        LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpFloatingSelectionUndo, gimp_floating_selection_undo,
-               GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaFloatingSelectionUndo, ligma_floating_selection_undo,
+               LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_floating_selection_undo_parent_class
+#define parent_class ligma_floating_selection_undo_parent_class
 
 
 static void
-gimp_floating_selection_undo_class_init (GimpFloatingSelectionUndoClass *klass)
+ligma_floating_selection_undo_class_init (LigmaFloatingSelectionUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_floating_selection_undo_constructed;
+  object_class->constructed = ligma_floating_selection_undo_constructed;
 
-  undo_class->pop           = gimp_floating_selection_undo_pop;
+  undo_class->pop           = ligma_floating_selection_undo_pop;
 }
 
 static void
-gimp_floating_selection_undo_init (GimpFloatingSelectionUndo *undo)
+ligma_floating_selection_undo_init (LigmaFloatingSelectionUndo *undo)
 {
 }
 
 static void
-gimp_floating_selection_undo_constructed (GObject *object)
+ligma_floating_selection_undo_constructed (GObject *object)
 {
-  GimpFloatingSelectionUndo *floating_sel_undo;
-  GimpLayer                 *layer;
+  LigmaFloatingSelectionUndo *floating_sel_undo;
+  LigmaLayer                 *layer;
 
-  floating_sel_undo = GIMP_FLOATING_SELECTION_UNDO (object);
+  floating_sel_undo = LIGMA_FLOATING_SELECTION_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_LAYER (LIGMA_ITEM_UNDO (object)->item));
 
-  layer = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
+  layer = LIGMA_LAYER (LIGMA_ITEM_UNDO (object)->item);
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_FS_TO_LAYER:
-      floating_sel_undo->drawable = gimp_layer_get_floating_sel_drawable (layer);
+    case LIGMA_UNDO_FS_TO_LAYER:
+      floating_sel_undo->drawable = ligma_layer_get_floating_sel_drawable (layer);
       break;
 
     default:
@@ -84,53 +84,53 @@ gimp_floating_selection_undo_constructed (GObject *object)
 }
 
 static void
-gimp_floating_selection_undo_pop (GimpUndo            *undo,
-                                  GimpUndoMode         undo_mode,
-                                  GimpUndoAccumulator *accum)
+ligma_floating_selection_undo_pop (LigmaUndo            *undo,
+                                  LigmaUndoMode         undo_mode,
+                                  LigmaUndoAccumulator *accum)
 {
-  GimpFloatingSelectionUndo *floating_sel_undo;
-  GimpLayer                 *floating_layer;
+  LigmaFloatingSelectionUndo *floating_sel_undo;
+  LigmaLayer                 *floating_layer;
 
-  floating_sel_undo = GIMP_FLOATING_SELECTION_UNDO (undo);
-  floating_layer    = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  floating_sel_undo = LIGMA_FLOATING_SELECTION_UNDO (undo);
+  floating_layer    = LIGMA_LAYER (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_FS_TO_LAYER:
-      if (undo_mode == GIMP_UNDO_MODE_UNDO)
+    case LIGMA_UNDO_FS_TO_LAYER:
+      if (undo_mode == LIGMA_UNDO_MODE_UNDO)
         {
           GList *layers;
 
           /*  Update the preview for the floating selection  */
-          gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
+          ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (floating_layer));
 
-          gimp_layer_set_floating_sel_drawable (floating_layer,
+          ligma_layer_set_floating_sel_drawable (floating_layer,
                                                 floating_sel_undo->drawable);
           layers = g_list_prepend (NULL, floating_layer);
-          gimp_image_set_selected_layers (undo->image, layers);
+          ligma_image_set_selected_layers (undo->image, layers);
           g_list_free (layers);
 
-          gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer),
+          ligma_drawable_attach_floating_sel (ligma_layer_get_floating_sel_drawable (floating_layer),
                                              floating_layer);
         }
       else
         {
-          gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer));
-          gimp_layer_set_floating_sel_drawable (floating_layer, NULL);
+          ligma_drawable_detach_floating_sel (ligma_layer_get_floating_sel_drawable (floating_layer));
+          ligma_layer_set_floating_sel_drawable (floating_layer, NULL);
         }
 
       /* When the floating selection is converted to/from a normal
        * layer it does something resembling a name change, so emit the
        * "name-changed" signal
        */
-      gimp_object_name_changed (GIMP_OBJECT (floating_layer));
+      ligma_object_name_changed (LIGMA_OBJECT (floating_layer));
 
-      gimp_drawable_update (GIMP_DRAWABLE (floating_layer),
+      ligma_drawable_update (LIGMA_DRAWABLE (floating_layer),
                             0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (floating_layer)),
-                            gimp_item_get_height (GIMP_ITEM (floating_layer)));
+                            ligma_item_get_width  (LIGMA_ITEM (floating_layer)),
+                            ligma_item_get_height (LIGMA_ITEM (floating_layer)));
       break;
 
     default:

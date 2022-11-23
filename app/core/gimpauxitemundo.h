@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AUX_ITEM_UNDO_H__
-#define __GIMP_AUX_ITEM_UNDO_H__
+#ifndef __LIGMA_AUX_ITEM_UNDO_H__
+#define __LIGMA_AUX_ITEM_UNDO_H__
 
 
-#include "gimpundo.h"
+#include "ligmaundo.h"
 
 
-#define GIMP_TYPE_AUX_ITEM_UNDO            (gimp_aux_item_undo_get_type ())
-#define GIMP_AUX_ITEM_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AUX_ITEM_UNDO, GimpAuxItemUndo))
-#define GIMP_AUX_ITEM_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AUX_ITEM_UNDO, GimpAuxItemUndoClass))
-#define GIMP_IS_AUX_ITEM_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AUX_ITEM_UNDO))
-#define GIMP_IS_AUX_ITEM_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AUX_ITEM_UNDO))
-#define GIMP_AUX_ITEM_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AUX_ITEM_UNDO, GimpAuxItemUndoClass))
+#define LIGMA_TYPE_AUX_ITEM_UNDO            (ligma_aux_item_undo_get_type ())
+#define LIGMA_AUX_ITEM_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_AUX_ITEM_UNDO, LigmaAuxItemUndo))
+#define LIGMA_AUX_ITEM_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_AUX_ITEM_UNDO, LigmaAuxItemUndoClass))
+#define LIGMA_IS_AUX_ITEM_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_AUX_ITEM_UNDO))
+#define LIGMA_IS_AUX_ITEM_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_AUX_ITEM_UNDO))
+#define LIGMA_AUX_ITEM_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_AUX_ITEM_UNDO, LigmaAuxItemUndoClass))
 
 
-typedef struct _GimpAuxItemUndo      GimpAuxItemUndo;
-typedef struct _GimpAuxItemUndoClass GimpAuxItemUndoClass;
+typedef struct _LigmaAuxItemUndo      LigmaAuxItemUndo;
+typedef struct _LigmaAuxItemUndoClass LigmaAuxItemUndoClass;
 
-struct _GimpAuxItemUndo
+struct _LigmaAuxItemUndo
 {
-  GimpUndo     parent_instance;
+  LigmaUndo     parent_instance;
 
-  GimpAuxItem *aux_item;
+  LigmaAuxItem *aux_item;
 };
 
-struct _GimpAuxItemUndoClass
+struct _LigmaAuxItemUndoClass
 {
-  GimpUndoClass  parent_class;
+  LigmaUndoClass  parent_class;
 };
 
 
-GType   gimp_aux_item_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_aux_item_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_AUX_ITEM_UNDO_H__ */
+#endif /* __LIGMA_AUX_ITEM_UNDO_H__ */

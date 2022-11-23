@@ -1,8 +1,8 @@
-# Turkish translation for GIMP
+# Turkish translation for LIGMA
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2002-2022 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 #
 # Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
@@ -14,8 +14,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP python master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA python master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-16 19:22+0000\n"
 "PO-Revision-Date: 2022-08-21 21:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
@@ -493,8 +493,8 @@ msgid "Python _Console"
 msgstr "Python _Uçbirimi"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Etkileşimli GIMP Python yorumlayıcısı"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Etkileşimli LIGMA Python yorumlayıcısı"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -841,8 +841,8 @@ msgstr ""
 "kaydetmeyi seç"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 # Menü ipucu olduğu için cümle sonunda nokta bulunmaması gerekiyor
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
@@ -944,10 +944,10 @@ msgstr ""
 "boyutu ve konumu geçerli seçime bağlıdır."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."
 
-# Hata raporlandı: https://gitlab.gnome.org/GNOME/gimp/-/issues/8498
+# Hata raporlandı: https://gitlab.gnome.org/GNOME/ligma/-/issues/8498
 #, fuzzy
 #~ msgid "palette_from_gradient (gradient, number, segment_colors) -> None"
 #~ msgstr "Not: Hata raporu çözülene kadar çevirmeyin!"

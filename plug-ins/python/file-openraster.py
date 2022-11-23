@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# GIMP Plug-in for the OpenRaster file format
+# LIGMA Plug-in for the OpenRaster file format
 # http://create.freedesktop.org/wiki/OpenRaster
 
 # Copyright (C) 2009 by Jon Nordby <jononor@gmail.com>
@@ -14,8 +14,8 @@
 # http://gitorious.org/mypaint/mypaint/blobs/edd84bcc1e091d0d56aa6d26637aa8a925987b6a/lib/document.py
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 from gi.repository import GObject
@@ -28,95 +28,95 @@ import xml.etree.ElementTree as ET
 NESTED_STACK_END = object()
 
 layermodes_map = {
-    "svg:src-over":     Gimp.LayerMode.NORMAL,
-    "svg:multiply":     Gimp.LayerMode.MULTIPLY,
-    "svg:screen":       Gimp.LayerMode.SCREEN,
-    "svg:overlay":      Gimp.LayerMode.OVERLAY,
-    "svg:darken":       Gimp.LayerMode.DARKEN_ONLY,
-    "svg:lighten":      Gimp.LayerMode.LIGHTEN_ONLY,
-    "svg:color-dodge":  Gimp.LayerMode.DODGE,
-    "svg:color-burn":   Gimp.LayerMode.BURN,
-    "svg:hard-light":   Gimp.LayerMode.HARDLIGHT,
-    "svg:soft-light":   Gimp.LayerMode.SOFTLIGHT,
-    "svg:difference":   Gimp.LayerMode.DIFFERENCE,
-    "svg:color":        Gimp.LayerMode.HSL_COLOR,
-    "svg:luminosity":   Gimp.LayerMode.HSV_VALUE,
-    "svg:hue":          Gimp.LayerMode.HSV_HUE,
-    "svg:saturation":   Gimp.LayerMode.HSV_SATURATION,
-    "svg:plus":         Gimp.LayerMode.ADDITION,
+    "svg:src-over":     Ligma.LayerMode.NORMAL,
+    "svg:multiply":     Ligma.LayerMode.MULTIPLY,
+    "svg:screen":       Ligma.LayerMode.SCREEN,
+    "svg:overlay":      Ligma.LayerMode.OVERLAY,
+    "svg:darken":       Ligma.LayerMode.DARKEN_ONLY,
+    "svg:lighten":      Ligma.LayerMode.LIGHTEN_ONLY,
+    "svg:color-dodge":  Ligma.LayerMode.DODGE,
+    "svg:color-burn":   Ligma.LayerMode.BURN,
+    "svg:hard-light":   Ligma.LayerMode.HARDLIGHT,
+    "svg:soft-light":   Ligma.LayerMode.SOFTLIGHT,
+    "svg:difference":   Ligma.LayerMode.DIFFERENCE,
+    "svg:color":        Ligma.LayerMode.HSL_COLOR,
+    "svg:luminosity":   Ligma.LayerMode.HSV_VALUE,
+    "svg:hue":          Ligma.LayerMode.HSV_HUE,
+    "svg:saturation":   Ligma.LayerMode.HSV_SATURATION,
+    "svg:plus":         Ligma.LayerMode.ADDITION,
 }
 
-# There are less svg blending ops than we have GIMP blend modes.
+# There are less svg blending ops than we have LIGMA blend modes.
 # We are going to map them as closely as possible.
-gimp_layermodes_map = {
-    Gimp.LayerMode.NORMAL:                  "svg:src-over",
-    Gimp.LayerMode.NORMAL_LEGACY:           "svg:src-over",
-    Gimp.LayerMode.MULTIPLY:                "svg:multiply",
-    Gimp.LayerMode.MULTIPLY_LEGACY:         "svg:multiply",
-    Gimp.LayerMode.SCREEN:                  "svg:screen",
-    Gimp.LayerMode.SCREEN_LEGACY:           "svg:screen",
-    Gimp.LayerMode.OVERLAY:                 "svg:overlay",
-    Gimp.LayerMode.OVERLAY_LEGACY:          "svg:overlay",
-    Gimp.LayerMode.DARKEN_ONLY:             "svg:darken",
-    Gimp.LayerMode.DARKEN_ONLY_LEGACY:      "svg:darken",
-    Gimp.LayerMode.LIGHTEN_ONLY:            "svg:lighten",
-    Gimp.LayerMode.LIGHTEN_ONLY_LEGACY:     "svg:lighten",
-    Gimp.LayerMode.DODGE:                   "svg:color-dodge",
-    Gimp.LayerMode.DODGE_LEGACY:            "svg:color-dodge",
-    Gimp.LayerMode.BURN:                    "svg:color-burn",
-    Gimp.LayerMode.BURN_LEGACY:             "svg:color-burn",
-    Gimp.LayerMode.HARDLIGHT:               "svg:hard-light",
-    Gimp.LayerMode.HARDLIGHT_LEGACY:        "svg:hard-light",
-    Gimp.LayerMode.SOFTLIGHT:               "svg:soft-light",
-    Gimp.LayerMode.SOFTLIGHT_LEGACY:        "svg:soft-light",
-    Gimp.LayerMode.DIFFERENCE:              "svg:difference",
-    Gimp.LayerMode.DIFFERENCE_LEGACY:       "svg:difference",
-    Gimp.LayerMode.HSL_COLOR:               "svg:color",
-    Gimp.LayerMode.HSL_COLOR_LEGACY:        "svg:color",
-    Gimp.LayerMode.HSV_VALUE:               "svg:luminosity",
-    Gimp.LayerMode.HSV_VALUE_LEGACY:        "svg:luminosity",
-    Gimp.LayerMode.HSV_HUE:                 "svg:hue",
-    Gimp.LayerMode.HSV_HUE_LEGACY:          "svg:hue",
-    Gimp.LayerMode.HSV_SATURATION:          "svg:saturation",
-    Gimp.LayerMode.HSV_SATURATION_LEGACY:   "svg:saturation",
-    Gimp.LayerMode.ADDITION:                "svg:plus",
-    Gimp.LayerMode.ADDITION_LEGACY:         "svg:plus",
+ligma_layermodes_map = {
+    Ligma.LayerMode.NORMAL:                  "svg:src-over",
+    Ligma.LayerMode.NORMAL_LEGACY:           "svg:src-over",
+    Ligma.LayerMode.MULTIPLY:                "svg:multiply",
+    Ligma.LayerMode.MULTIPLY_LEGACY:         "svg:multiply",
+    Ligma.LayerMode.SCREEN:                  "svg:screen",
+    Ligma.LayerMode.SCREEN_LEGACY:           "svg:screen",
+    Ligma.LayerMode.OVERLAY:                 "svg:overlay",
+    Ligma.LayerMode.OVERLAY_LEGACY:          "svg:overlay",
+    Ligma.LayerMode.DARKEN_ONLY:             "svg:darken",
+    Ligma.LayerMode.DARKEN_ONLY_LEGACY:      "svg:darken",
+    Ligma.LayerMode.LIGHTEN_ONLY:            "svg:lighten",
+    Ligma.LayerMode.LIGHTEN_ONLY_LEGACY:     "svg:lighten",
+    Ligma.LayerMode.DODGE:                   "svg:color-dodge",
+    Ligma.LayerMode.DODGE_LEGACY:            "svg:color-dodge",
+    Ligma.LayerMode.BURN:                    "svg:color-burn",
+    Ligma.LayerMode.BURN_LEGACY:             "svg:color-burn",
+    Ligma.LayerMode.HARDLIGHT:               "svg:hard-light",
+    Ligma.LayerMode.HARDLIGHT_LEGACY:        "svg:hard-light",
+    Ligma.LayerMode.SOFTLIGHT:               "svg:soft-light",
+    Ligma.LayerMode.SOFTLIGHT_LEGACY:        "svg:soft-light",
+    Ligma.LayerMode.DIFFERENCE:              "svg:difference",
+    Ligma.LayerMode.DIFFERENCE_LEGACY:       "svg:difference",
+    Ligma.LayerMode.HSL_COLOR:               "svg:color",
+    Ligma.LayerMode.HSL_COLOR_LEGACY:        "svg:color",
+    Ligma.LayerMode.HSV_VALUE:               "svg:luminosity",
+    Ligma.LayerMode.HSV_VALUE_LEGACY:        "svg:luminosity",
+    Ligma.LayerMode.HSV_HUE:                 "svg:hue",
+    Ligma.LayerMode.HSV_HUE_LEGACY:          "svg:hue",
+    Ligma.LayerMode.HSV_SATURATION:          "svg:saturation",
+    Ligma.LayerMode.HSV_SATURATION_LEGACY:   "svg:saturation",
+    Ligma.LayerMode.ADDITION:                "svg:plus",
+    Ligma.LayerMode.ADDITION_LEGACY:         "svg:plus",
 
     # FIXME Determine the closest available layer mode
     #       Alternatively we could add additional modes
-    #       e.g. something like "gimp:dissolve", this
+    #       e.g. something like "ligma:dissolve", this
     #       is what Krita seems to do too
-    Gimp.LayerMode.DISSOLVE:                "svg:src-over",
-    Gimp.LayerMode.DIVIDE:                  "svg:src-over",
-    Gimp.LayerMode.DIVIDE_LEGACY:           "svg:src-over",
-    Gimp.LayerMode.BEHIND:                  "svg:src-over",
-    Gimp.LayerMode.BEHIND_LEGACY:           "svg:src-over",
-    Gimp.LayerMode.GRAIN_EXTRACT:           "svg:src-over",
-    Gimp.LayerMode.GRAIN_EXTRACT_LEGACY:    "svg:src-over",
-    Gimp.LayerMode.GRAIN_MERGE:             "svg:src-over",
-    Gimp.LayerMode.GRAIN_MERGE_LEGACY:      "svg:src-over",
-    Gimp.LayerMode.COLOR_ERASE:             "svg:src-over",
-    Gimp.LayerMode.COLOR_ERASE_LEGACY:      "svg:src-over",
-    Gimp.LayerMode.LCH_HUE:                 "svg:src-over",
-    Gimp.LayerMode.LCH_CHROMA:              "svg:src-over",
-    Gimp.LayerMode.LCH_COLOR:               "svg:src-over",
-    Gimp.LayerMode.LCH_LIGHTNESS:           "svg:src-over",
-    Gimp.LayerMode.SUBTRACT:                "svg:src-over",
-    Gimp.LayerMode.SUBTRACT_LEGACY:         "svg:src-over",
-    Gimp.LayerMode.VIVID_LIGHT:             "svg:src-over",
-    Gimp.LayerMode.PIN_LIGHT:               "svg:src-over",
-    Gimp.LayerMode.LINEAR_LIGHT:            "svg:src-over",
-    Gimp.LayerMode.HARD_MIX:                "svg:src-over",
-    Gimp.LayerMode.EXCLUSION:               "svg:src-over",
-    Gimp.LayerMode.LINEAR_BURN:             "svg:src-over",
-    Gimp.LayerMode.LUMA_DARKEN_ONLY:        "svg:src-over",
-    Gimp.LayerMode.LUMA_LIGHTEN_ONLY:       "svg:src-over",
-    Gimp.LayerMode.LUMINANCE:               "svg:src-over",
-    Gimp.LayerMode.COLOR_ERASE:             "svg:src-over",
-    Gimp.LayerMode.ERASE:                   "svg:src-over",
-    Gimp.LayerMode.MERGE:                   "svg:src-over",
-    Gimp.LayerMode.SPLIT:                   "svg:src-over",
-    Gimp.LayerMode.PASS_THROUGH:            "svg:src-over",
+    Ligma.LayerMode.DISSOLVE:                "svg:src-over",
+    Ligma.LayerMode.DIVIDE:                  "svg:src-over",
+    Ligma.LayerMode.DIVIDE_LEGACY:           "svg:src-over",
+    Ligma.LayerMode.BEHIND:                  "svg:src-over",
+    Ligma.LayerMode.BEHIND_LEGACY:           "svg:src-over",
+    Ligma.LayerMode.GRAIN_EXTRACT:           "svg:src-over",
+    Ligma.LayerMode.GRAIN_EXTRACT_LEGACY:    "svg:src-over",
+    Ligma.LayerMode.GRAIN_MERGE:             "svg:src-over",
+    Ligma.LayerMode.GRAIN_MERGE_LEGACY:      "svg:src-over",
+    Ligma.LayerMode.COLOR_ERASE:             "svg:src-over",
+    Ligma.LayerMode.COLOR_ERASE_LEGACY:      "svg:src-over",
+    Ligma.LayerMode.LCH_HUE:                 "svg:src-over",
+    Ligma.LayerMode.LCH_CHROMA:              "svg:src-over",
+    Ligma.LayerMode.LCH_COLOR:               "svg:src-over",
+    Ligma.LayerMode.LCH_LIGHTNESS:           "svg:src-over",
+    Ligma.LayerMode.SUBTRACT:                "svg:src-over",
+    Ligma.LayerMode.SUBTRACT_LEGACY:         "svg:src-over",
+    Ligma.LayerMode.VIVID_LIGHT:             "svg:src-over",
+    Ligma.LayerMode.PIN_LIGHT:               "svg:src-over",
+    Ligma.LayerMode.LINEAR_LIGHT:            "svg:src-over",
+    Ligma.LayerMode.HARD_MIX:                "svg:src-over",
+    Ligma.LayerMode.EXCLUSION:               "svg:src-over",
+    Ligma.LayerMode.LINEAR_BURN:             "svg:src-over",
+    Ligma.LayerMode.LUMA_DARKEN_ONLY:        "svg:src-over",
+    Ligma.LayerMode.LUMA_LIGHTEN_ONLY:       "svg:src-over",
+    Ligma.LayerMode.LUMINANCE:               "svg:src-over",
+    Ligma.LayerMode.COLOR_ERASE:             "svg:src-over",
+    Ligma.LayerMode.ERASE:                   "svg:src-over",
+    Ligma.LayerMode.MERGE:                   "svg:src-over",
+    Ligma.LayerMode.SPLIT:                   "svg:src-over",
+    Ligma.LayerMode.PASS_THROUGH:            "svg:src-over",
 }
 
 def reverse_map(mapping):
@@ -140,7 +140,7 @@ def get_layer_attributes(layer):
     opac = float(a.get('opacity', '1.0'))
     visible = a.get('visibility', 'visible') != 'hidden'
     m = a.get('composite-op', 'svg:src-over')
-    layer_mode = layermodes_map.get(m, Gimp.LayerMode.NORMAL)
+    layer_mode = layermodes_map.get(m, Ligma.LayerMode.NORMAL)
 
     return path, name, x, y, opac, visible, layer_mode
 
@@ -150,12 +150,12 @@ def get_group_layer_attributes(layer):
     opac = float(a.get('opacity', '1.0'))
     visible = a.get('visibility', 'visible') != 'hidden'
     m = a.get('composite-op', 'svg:src-over')
-    layer_mode = layermodes_map.get(m, Gimp.LayerMode.NORMAL)
+    layer_mode = layermodes_map.get(m, Ligma.LayerMode.NORMAL)
 
     return name, 0, 0, opac, visible, layer_mode
 
 def thumbnail_ora(procedure, file, thumb_size, args, data):
-    tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
+    tempdir = tempfile.mkdtemp('ligma-plugin-file-openraster')
     orafile = zipfile.ZipFile(file.peek_path())
     stack, w, h = get_image_attributes(orafile)
 
@@ -165,23 +165,23 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
         fid.write(orafile.read('Thumbnails/thumbnail.png'))
 
     thumb_file = Gio.file_new_for_path(tmp)
-    result = Gimp.get_pdb().run_procedure('file-png-load', [
-        GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
+    result = Ligma.get_pdb().run_procedure('file-png-load', [
+        GObject.Value(Ligma.RunMode, Ligma.RunMode.NONINTERACTIVE),
         GObject.Value(Gio.File, thumb_file),
     ])
     os.remove(tmp)
     os.rmdir(tempdir)
 
-    if (result.index(0) == Gimp.PDBStatusType.SUCCESS):
+    if (result.index(0) == Ligma.PDBStatusType.SUCCESS):
         img = result.index(1)
         # TODO: scaling
 
-        return Gimp.ValueArray.new_from_values([
-            GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
-            GObject.Value(Gimp.Image, img),
+        return Ligma.ValueArray.new_from_values([
+            GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.SUCCESS),
+            GObject.Value(Ligma.Image, img),
             GObject.Value(GObject.TYPE_INT, w),
             GObject.Value(GObject.TYPE_INT, h),
-            GObject.Value(Gimp.ImageType, Gimp.ImageType.RGB_IMAGE),
+            GObject.Value(Ligma.ImageType, Ligma.ImageType.RGB_IMAGE),
             GObject.Value(GObject.TYPE_INT, 1)
         ])
     else:
@@ -198,8 +198,8 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         zi.external_attr = int("100644", 8) << 16
         zfile.writestr(zi, data)
 
-    Gimp.progress_init("Exporting openraster image")
-    tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
+    Ligma.progress_init("Exporting openraster image")
+    tempdir = tempfile.mkdtemp('ligma-plugin-file-openraster')
 
     # use .tmpsave extension, so we don't overwrite a valid file if
     # there is an exception
@@ -218,11 +218,11 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         tmp = os.path.join(tempdir, 'tmp.png')
         interlace, compression = 0, 2
 
-        Gimp.get_pdb().run_procedure('file-png-save', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, image),
+        Ligma.get_pdb().run_procedure('file-png-save', [
+            GObject.Value(Ligma.RunMode, Ligma.RunMode.NONINTERACTIVE),
+            GObject.Value(Ligma.Image, image),
             GObject.Value(GObject.TYPE_INT, 1),
-            GObject.Value(Gimp.ObjectArray, Gimp.ObjectArray.new(Gimp.Drawable, [drawable], False)),
+            GObject.Value(Ligma.ObjectArray, Ligma.ObjectArray.new(Ligma.Drawable, [drawable], False)),
             GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             GObject.Value(GObject.TYPE_BOOLEAN, interlace),
             GObject.Value(GObject.TYPE_INT, compression),
@@ -240,30 +240,30 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         else:
             print("Error removing ", tmp)
 
-    def add_layer(parent, x, y, opac, gimp_layer, path, visible=True):
-        store_layer(image, gimp_layer, path)
+    def add_layer(parent, x, y, opac, ligma_layer, path, visible=True):
+        store_layer(image, ligma_layer, path)
         # create layer attributes
         layer = ET.Element('layer')
         parent.append(layer)
         a = layer.attrib
         a['src'] = path
-        a['name'] = gimp_layer.get_name()
+        a['name'] = ligma_layer.get_name()
         a['x'] = str(x)
         a['y'] = str(y)
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
-        a['composite-op'] = gimp_layermodes_map.get(gimp_layer.get_mode(), 'svg:src-over')
+        a['composite-op'] = ligma_layermodes_map.get(ligma_layer.get_mode(), 'svg:src-over')
         return layer
 
-    def add_group_layer(parent, opac, gimp_layer, visible=True):
+    def add_group_layer(parent, opac, ligma_layer, visible=True):
         # create layer attributes
         group_layer = ET.Element('stack')
         parent.append(group_layer)
         a = group_layer.attrib
-        a['name'] = gimp_layer.get_name()
+        a['name'] = ligma_layer.get_name()
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
-        a['composite-op'] = gimp_layermodes_map.get(gimp_layer.get_mode(), 'svg:src-over')
+        a['composite-op'] = ligma_layermodes_map.get(ligma_layer.get_mode(), 'svg:src-over')
         return group_layer
 
 
@@ -312,11 +312,11 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
             add_layer(parent, x, y, opac, lay, path_name, lay.get_visible())
 
         if (i > prev_lay):
-            Gimp.progress_update(i/lay_cnt)
+            Ligma.progress_update(i/lay_cnt)
 
     # save mergedimage
     thumb = image.duplicate()
-    thumb_layer = thumb.merge_visible_layers (Gimp.MergeType.CLIP_TO_IMAGE)
+    thumb_layer = thumb.merge_visible_layers (Ligma.MergeType.CLIP_TO_IMAGE)
     store_layer (thumb, thumb_layer, 'mergedimage.png')
 
     # save thumbnail
@@ -328,8 +328,8 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         else:
             w, h = max(w*256/h, 1), 256
         thumb_layer.scale(w, h, False)
-    if thumb.get_precision() != Gimp.Precision.U8_GAMMA:
-        thumb.convert_precision (Gimp.Precision.U8_GAMMA)
+    if thumb.get_precision() != Ligma.Precision.U8_GAMMA:
+        thumb.convert_precision (Ligma.Precision.U8_GAMMA)
     store_layer(thumb, thumb_layer, 'Thumbnails/thumbnail.png')
     thumb.delete()
 
@@ -344,20 +344,20 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, dat
         os.remove(file.peek_path()) # win32 needs that
     os.rename(file.peek_path() + '.tmpsave', file.peek_path())
 
-    Gimp.progress_end()
+    Ligma.progress_end()
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
+    return Ligma.ValueArray.new_from_values([
+        GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.SUCCESS)
     ])
 
 def load_ora(procedure, run_mode, file, args, data):
-    tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
+    tempdir = tempfile.mkdtemp('ligma-plugin-file-openraster')
     orafile = zipfile.ZipFile(file.peek_path())
     stack, w, h = get_image_attributes(orafile)
 
-    Gimp.progress_init("Loading openraster image")
+    Ligma.progress_init("Loading openraster image")
 
-    img = Gimp.Image.new(w, h, Gimp.ImageBaseType.RGB)
+    img = Ligma.Image.new(w, h, Ligma.ImageBaseType.RGB)
     img.set_file (file)
 
     def get_layers(root):
@@ -386,7 +386,7 @@ def load_ora(procedure, run_mode, file, args, data):
 
         if item.tag == 'stack':
             name, x, y, opac, visible, layer_mode = get_group_layer_attributes(item)
-            gimp_layer = Gimp.Layer.group_new(img)
+            ligma_layer = Ligma.Layer.group_new(img)
 
         else:
             path, name, x, y, opac, visible, layer_mode = get_layer_attributes(item)
@@ -398,7 +398,7 @@ def load_ora(procedure, run_mode, file, args, data):
                 n = os.path.basename(path)
                 name = os.path.splitext(n)[0]
 
-            # create temp file. Needed because gimp cannot load files from inside a zip file
+            # create temp file. Needed because ligma cannot load files from inside a zip file
             tmp = os.path.join(tempdir, 'tmp.png')
             with open(tmp, 'wb') as fid:
                 try:
@@ -410,24 +410,24 @@ def load_ora(procedure, run_mode, file, args, data):
                 fid.write(data)
 
             # import layer, set attributes and add to image
-            result = gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
-                GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-                GObject.Value(Gimp.Image, img),
+            result = ligma_layer = Ligma.get_pdb().run_procedure('ligma-file-load-layer', [
+                GObject.Value(Ligma.RunMode, Ligma.RunMode.NONINTERACTIVE),
+                GObject.Value(Ligma.Image, img),
                 GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
             ])
-            if (result.index(0) == Gimp.PDBStatusType.SUCCESS):
-                gimp_layer = gimp_layer.index(1)
+            if (result.index(0) == Ligma.PDBStatusType.SUCCESS):
+                ligma_layer = ligma_layer.index(1)
                 os.remove(tmp)
             else:
                 print("Error loading layer from openraster image.")
 
-        gimp_layer.set_name(name)
-        gimp_layer.set_mode(layer_mode)
-        gimp_layer.set_offsets(x, y)  # move to correct position
-        gimp_layer.set_opacity(opac * 100)  # a float between 0 and 100
-        gimp_layer.set_visible(visible)
+        ligma_layer.set_name(name)
+        ligma_layer.set_mode(layer_mode)
+        ligma_layer.set_offsets(x, y)  # move to correct position
+        ligma_layer.set_opacity(opac * 100)  # a float between 0 and 100
+        ligma_layer.set_visible(visible)
 
-        img.insert_layer(gimp_layer,
+        img.insert_layer(ligma_layer,
                          parent_groups[-1][0] if parent_groups else None,
                          parent_groups[-1][1] if parent_groups else layer_no)
         if parent_groups:
@@ -435,26 +435,26 @@ def load_ora(procedure, run_mode, file, args, data):
         else:
             layer_no += 1
 
-        if gimp_layer.is_group():
-            parent_groups.append([gimp_layer, 0])
+        if ligma_layer.is_group():
+            parent_groups.append([ligma_layer, 0])
 
         if (layer_no > prev_lay):
-            Gimp.progress_update(layer_no/lay_cnt)
+            Ligma.progress_update(layer_no/lay_cnt)
 
-    Gimp.progress_end()
+    Ligma.progress_end()
 
     os.rmdir(tempdir)
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
-        GObject.Value(Gimp.Image, img),
+    return Ligma.ValueArray.new_from_values([
+        GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.SUCCESS),
+        GObject.Value(Ligma.Image, img),
     ])
 
 
-class FileOpenRaster (Gimp.PlugIn):
-    ## GimpPlugIn virtual methods ##
+class FileOpenRaster (Ligma.PlugIn):
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ 'file-openraster-load-thumb',
@@ -463,8 +463,8 @@ class FileOpenRaster (Gimp.PlugIn):
 
     def do_create_procedure(self, name):
         if name == 'file-openraster-save':
-            procedure = Gimp.SaveProcedure.new(self, name,
-                                               Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.SaveProcedure.new(self, name,
+                                               Ligma.PDBProcType.PLUGIN,
                                                save_ora, None)
             procedure.set_image_types("*");
             procedure.set_documentation ('save an OpenRaster (.ora) file',
@@ -473,8 +473,8 @@ class FileOpenRaster (Gimp.PlugIn):
             procedure.set_menu_label('OpenRaster')
             procedure.set_extensions ("ora");
         elif name == 'file-openraster-load':
-            procedure = Gimp.LoadProcedure.new (self, name,
-                                                Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.LoadProcedure.new (self, name,
+                                                Ligma.PDBProcType.PLUGIN,
                                                 load_ora, None)
             procedure.set_menu_label('OpenRaster')
             procedure.set_documentation ('load an OpenRaster (.ora) file',
@@ -484,8 +484,8 @@ class FileOpenRaster (Gimp.PlugIn):
             procedure.set_extensions ("ora");
             procedure.set_thumbnail_loader ('file-openraster-load-thumb');
         else: # 'file-openraster-load-thumb'
-            procedure = Gimp.ThumbnailProcedure.new (self, name,
-                                                     Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.ThumbnailProcedure.new (self, name,
+                                                     Ligma.PDBProcType.PLUGIN,
                                                      thumbnail_ora, None)
             procedure.set_documentation ('loads a thumbnail from an OpenRaster (.ora) file',
                                          'loads a thumbnail from an OpenRaster (.ora) file',
@@ -495,4 +495,4 @@ class FileOpenRaster (Gimp.PlugIn):
                                   '2009') #year
         return procedure
 
-Gimp.main(FileOpenRaster.__gtype__, sys.argv)
+Ligma.main(FileOpenRaster.__gtype__, sys.argv)

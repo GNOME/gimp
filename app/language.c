@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -744,7 +744,7 @@ language_init (const gchar *language)
 #endif
 
   /*  We already set the locale according to the environment, so just
-   *  return early if no language is set in gimprc.
+   *  return early if no language is set in ligmarc.
    */
   if (! language || strlen (language) == 0)
     {
@@ -779,9 +779,9 @@ language_get_system_lang_id (void)
 
   /* In macOS, the user sets a list of prefered languages and the
    * software respects this preference order. I.e. that just storing the
-   * top-prefered lang would not be enough. What if GIMP didn't have
+   * top-prefered lang would not be enough. What if LIGMA didn't have
    * translations for it, then it would fallback to the second lang. If
-   * this second lang changed, GIMP localization would change but we
+   * this second lang changed, LIGMA localization would change but we
    * would not be aware of it. Instead, let's use the whole list as our
    * language identifier. If this list changes in any way, we consider
    * the lang may have potentially changed.

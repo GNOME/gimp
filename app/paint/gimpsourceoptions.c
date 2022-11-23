@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-new.h"
-#include "core/gimpitem.h"
-#include "core/gimppickable.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-new.h"
+#include "core/ligmaitem.h"
+#include "core/ligmapickable.h"
 
-#include "gimpsourceoptions.h"
+#include "ligmasourceoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -48,100 +48,100 @@ enum
 };
 
 
-static void   gimp_source_options_finalize     (GObject           *object);
-static void   gimp_source_options_set_property (GObject           *object,
+static void   ligma_source_options_finalize     (GObject           *object);
+static void   ligma_source_options_set_property (GObject           *object,
                                                 guint              property_id,
                                                 const GValue      *value,
                                                 GParamSpec        *pspec);
-static void   gimp_source_options_get_property (GObject           *object,
+static void   ligma_source_options_get_property (GObject           *object,
                                                 guint              property_id,
                                                 GValue            *value,
                                                 GParamSpec        *pspec);
 
 static void
-         gimp_source_options_set_src_drawables (GimpSourceOptions *options,
+         ligma_source_options_set_src_drawables (LigmaSourceOptions *options,
                                                 GList             *drawables);
 static void
-      gimp_source_options_src_drawable_removed (GimpDrawable      *drawable,
-                                                GimpSourceOptions *options);
-static void  gimp_source_options_make_pickable (GimpSourceOptions *options);
+      ligma_source_options_src_drawable_removed (LigmaDrawable      *drawable,
+                                                LigmaSourceOptions *options);
+static void  ligma_source_options_make_pickable (LigmaSourceOptions *options);
 
 
-G_DEFINE_TYPE (GimpSourceOptions, gimp_source_options, GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaSourceOptions, ligma_source_options, LIGMA_TYPE_PAINT_OPTIONS)
 
-#define parent_class gimp_source_options_parent_class
+#define parent_class ligma_source_options_parent_class
 
 
 static void
-gimp_source_options_class_init (GimpSourceOptionsClass *klass)
+ligma_source_options_class_init (LigmaSourceOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_source_options_finalize;
-  object_class->set_property = gimp_source_options_set_property;
-  object_class->get_property = gimp_source_options_get_property;
+  object_class->finalize     = ligma_source_options_finalize;
+  object_class->set_property = ligma_source_options_set_property;
+  object_class->get_property = ligma_source_options_get_property;
 
   g_object_class_install_property (object_class, PROP_SRC_DRAWABLES,
                                    g_param_spec_pointer ("src-drawables",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SRC_X,
                                    g_param_spec_int ("src-x",
                                                      NULL, NULL,
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SRC_Y,
                                    g_param_spec_int ("src-y",
                                                      NULL, NULL,
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_MODE,
                          "align-mode",
                          _("Alignment"),
                          NULL,
-                         GIMP_TYPE_SOURCE_ALIGN_MODE,
-                         GIMP_SOURCE_ALIGN_NO,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_SOURCE_ALIGN_MODE,
+                         LIGMA_SOURCE_ALIGN_NO,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_source_options_init (GimpSourceOptions *options)
+ligma_source_options_init (LigmaSourceOptions *options)
 {
   options->src_drawables = NULL;
 }
 
 static void
-gimp_source_options_finalize (GObject *object)
+ligma_source_options_finalize (GObject *object)
 {
-  GimpSourceOptions *options = GIMP_SOURCE_OPTIONS (object);
+  LigmaSourceOptions *options = LIGMA_SOURCE_OPTIONS (object);
 
-  gimp_source_options_set_src_drawables (options, NULL);
+  ligma_source_options_set_src_drawables (options, NULL);
   g_clear_object (&options->src_image);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_source_options_set_property (GObject      *object,
+ligma_source_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpSourceOptions *options = GIMP_SOURCE_OPTIONS (object);
+  LigmaSourceOptions *options = LIGMA_SOURCE_OPTIONS (object);
 
   switch (property_id)
     {
     case PROP_SRC_DRAWABLES:
-      gimp_source_options_set_src_drawables (options,
+      ligma_source_options_set_src_drawables (options,
                                              g_value_get_pointer (value));
       break;
     case PROP_SRC_X:
@@ -163,12 +163,12 @@ gimp_source_options_set_property (GObject      *object,
 }
 
 static void
-gimp_source_options_get_property (GObject    *object,
+ligma_source_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpSourceOptions *options = GIMP_SOURCE_OPTIONS (object);
+  LigmaSourceOptions *options = LIGMA_SOURCE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -194,10 +194,10 @@ gimp_source_options_get_property (GObject    *object,
 }
 
 static void
-gimp_source_options_set_src_drawables (GimpSourceOptions *options,
+ligma_source_options_set_src_drawables (LigmaSourceOptions *options,
                                        GList             *drawables)
 {
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
   GList     *iter;
 
   if (g_list_length (options->src_drawables) == g_list_length (drawables))
@@ -217,16 +217,16 @@ gimp_source_options_set_src_drawables (GimpSourceOptions *options,
     {
       /* Make sure all drawables are from the same image. */
       if (image == NULL)
-        image = gimp_item_get_image (GIMP_ITEM (iter->data));
+        image = ligma_item_get_image (LIGMA_ITEM (iter->data));
       else
-        g_return_if_fail (image == gimp_item_get_image (GIMP_ITEM (iter->data)));
+        g_return_if_fail (image == ligma_item_get_image (LIGMA_ITEM (iter->data)));
     }
 
   if (options->src_drawables)
     {
       for (GList *iter = options->src_drawables; iter; iter = iter->next)
         g_signal_handlers_disconnect_by_func (iter->data,
-                                              gimp_source_options_src_drawable_removed,
+                                              ligma_source_options_src_drawable_removed,
                                               options);
 
       g_list_free (options->src_drawables);
@@ -238,39 +238,39 @@ gimp_source_options_set_src_drawables (GimpSourceOptions *options,
     {
       for (GList *iter = options->src_drawables; iter; iter = iter->next)
         g_signal_connect (iter->data, "removed",
-                          G_CALLBACK (gimp_source_options_src_drawable_removed),
+                          G_CALLBACK (ligma_source_options_src_drawable_removed),
                           options);
     }
 
-  gimp_source_options_make_pickable (options);
+  ligma_source_options_make_pickable (options);
   g_object_notify (G_OBJECT (options), "src-drawables");
 }
 
 static void
-gimp_source_options_src_drawable_removed (GimpDrawable      *drawable,
-                                          GimpSourceOptions *options)
+ligma_source_options_src_drawable_removed (LigmaDrawable      *drawable,
+                                          LigmaSourceOptions *options)
 {
   options->src_drawables = g_list_remove (options->src_drawables, drawable);
 
   g_signal_handlers_disconnect_by_func (drawable,
-                                        gimp_source_options_src_drawable_removed,
+                                        ligma_source_options_src_drawable_removed,
                                         options);
 
-  gimp_source_options_make_pickable (options);
+  ligma_source_options_make_pickable (options);
   g_object_notify (G_OBJECT (options), "src-drawables");
 }
 
 static void
-gimp_source_options_make_pickable (GimpSourceOptions *options)
+ligma_source_options_make_pickable (LigmaSourceOptions *options)
 {
   g_clear_object (&options->src_image);
   options->src_pickable = NULL;
 
   if (options->src_drawables)
     {
-      GimpImage *image;
+      LigmaImage *image;
 
-      image = gimp_item_get_image (GIMP_ITEM (options->src_drawables->data));
+      image = ligma_item_get_image (LIGMA_ITEM (options->src_drawables->data));
 
       if (g_list_length (options->src_drawables) > 1)
         {
@@ -278,16 +278,16 @@ gimp_source_options_make_pickable (GimpSourceOptions *options)
            * their own in the image. Some kind of sample_merged limited
            * to these drawables.
            */
-          options->src_image = gimp_image_new_from_drawables (image->gimp, options->src_drawables,
+          options->src_image = ligma_image_new_from_drawables (image->ligma, options->src_drawables,
                                                               FALSE, FALSE);
-          gimp_container_remove (image->gimp->images, GIMP_OBJECT (options->src_image));
+          ligma_container_remove (image->ligma->images, LIGMA_OBJECT (options->src_image));
 
-          options->src_pickable = GIMP_PICKABLE (options->src_image);
-          gimp_pickable_flush (options->src_pickable);
+          options->src_pickable = LIGMA_PICKABLE (options->src_image);
+          ligma_pickable_flush (options->src_pickable);
         }
       else
         {
-          options->src_pickable = GIMP_PICKABLE (options->src_drawables->data);
+          options->src_pickable = LIGMA_PICKABLE (options->src_drawables->data);
         }
     }
 }

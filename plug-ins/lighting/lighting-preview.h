@@ -1,4 +1,4 @@
-/* Lighting Effects - A plug-in for GIMP
+/* Lighting Effects - A plug-in for LIGMA
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

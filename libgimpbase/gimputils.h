@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,73 +16,73 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_UTILS_H__
-#define __GIMP_UTILS_H__
+#ifndef __LIGMA_UTILS_H__
+#define __LIGMA_UTILS_H__
 
 G_BEGIN_DECLS
 
 
-gchar               * gimp_utf8_strtrim              (const gchar       *str,
+gchar               * ligma_utf8_strtrim              (const gchar       *str,
                                                       gint               max_chars) G_GNUC_MALLOC;
-gchar               * gimp_any_to_utf8               (const gchar       *str,
+gchar               * ligma_any_to_utf8               (const gchar       *str,
                                                       gssize             len,
                                                       const gchar       *warning_format,
                                                       ...) G_GNUC_PRINTF (3, 4) G_GNUC_MALLOC;
-const gchar         * gimp_filename_to_utf8          (const gchar       *filename);
+const gchar         * ligma_filename_to_utf8          (const gchar       *filename);
 
-const gchar         * gimp_file_get_utf8_name        (GFile             *file);
-gboolean              gimp_file_has_extension        (GFile             *file,
+const gchar         * ligma_file_get_utf8_name        (GFile             *file);
+gboolean              ligma_file_has_extension        (GFile             *file,
                                                       const gchar       *extension);
-gboolean              gimp_file_show_in_file_manager (GFile             *file,
+gboolean              ligma_file_show_in_file_manager (GFile             *file,
                                                       GError           **error);
 
-gchar               * gimp_strip_uline               (const gchar       *str) G_GNUC_MALLOC;
-gchar               * gimp_escape_uline              (const gchar       *str) G_GNUC_MALLOC;
+gchar               * ligma_strip_uline               (const gchar       *str) G_GNUC_MALLOC;
+gchar               * ligma_escape_uline              (const gchar       *str) G_GNUC_MALLOC;
 
-gboolean              gimp_is_canonical_identifier   (const gchar       *identifier);
-gchar               * gimp_canonicalize_identifier   (const gchar       *identifier) G_GNUC_MALLOC;
+gboolean              ligma_is_canonical_identifier   (const gchar       *identifier);
+gchar               * ligma_canonicalize_identifier   (const gchar       *identifier) G_GNUC_MALLOC;
 
-const GimpEnumDesc  * gimp_enum_get_desc             (GEnumClass        *enum_class,
+const LigmaEnumDesc  * ligma_enum_get_desc             (GEnumClass        *enum_class,
                                                       gint               value);
-gboolean              gimp_enum_get_value            (GType              enum_type,
+gboolean              ligma_enum_get_value            (GType              enum_type,
                                                       gint               value,
                                                       const gchar      **value_name,
                                                       const gchar      **value_nick,
                                                       const gchar      **value_desc,
                                                       const gchar      **value_help);
-const gchar         * gimp_enum_value_get_desc       (GEnumClass        *enum_class,
+const gchar         * ligma_enum_value_get_desc       (GEnumClass        *enum_class,
                                                       const GEnumValue  *enum_value);
-const gchar         * gimp_enum_value_get_help       (GEnumClass        *enum_class,
+const gchar         * ligma_enum_value_get_help       (GEnumClass        *enum_class,
                                                       const GEnumValue  *enum_value);
-const gchar         * gimp_enum_value_get_abbrev     (GEnumClass        *enum_class,
+const gchar         * ligma_enum_value_get_abbrev     (GEnumClass        *enum_class,
                                                       const GEnumValue  *enum_value);
 
-const GimpFlagsDesc * gimp_flags_get_first_desc      (GFlagsClass       *flags_class,
+const LigmaFlagsDesc * ligma_flags_get_first_desc      (GFlagsClass       *flags_class,
                                                       guint              value);
-gboolean              gimp_flags_get_first_value     (GType              flags_type,
+gboolean              ligma_flags_get_first_value     (GType              flags_type,
                                                       guint              value,
                                                       const gchar      **value_name,
                                                       const gchar      **value_nick,
                                                       const gchar      **value_desc,
                                                       const gchar      **value_help);
-const gchar         * gimp_flags_value_get_desc      (GFlagsClass       *flags_class,
+const gchar         * ligma_flags_value_get_desc      (GFlagsClass       *flags_class,
                                                       const GFlagsValue *flags_value);
-const gchar         * gimp_flags_value_get_help      (GFlagsClass       *flags_class,
+const gchar         * ligma_flags_value_get_help      (GFlagsClass       *flags_class,
                                                       const GFlagsValue *flags_value);
-const gchar         * gimp_flags_value_get_abbrev    (GFlagsClass       *flags_class,
+const gchar         * ligma_flags_value_get_abbrev    (GFlagsClass       *flags_class,
                                                       const GFlagsValue *flags_value);
 
-gboolean              gimp_stack_trace_available     (gboolean           optimal);
-gboolean              gimp_stack_trace_print         (const gchar       *prog_name,
+gboolean              ligma_stack_trace_available     (gboolean           optimal);
+gboolean              ligma_stack_trace_print         (const gchar       *prog_name,
                                                       gpointer           stream,
                                                       gchar            **trace);
-void                  gimp_stack_trace_query         (const gchar       *prog_name);
+void                  ligma_stack_trace_query         (const gchar       *prog_name);
 
-void                  gimp_range_estimate_settings   (gdouble            lower,
+void                  ligma_range_estimate_settings   (gdouble            lower,
                                                       gdouble            upper,
                                                       gdouble           *step,
                                                       gdouble           *page,
@@ -91,4 +91,4 @@ void                  gimp_range_estimate_settings   (gdouble            lower,
 
 G_END_DECLS
 
-#endif  /* __GIMP_UTILS_H__ */
+#endif  /* __LIGMA_UTILS_H__ */

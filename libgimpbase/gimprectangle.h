@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,19 +16,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_RECTANGLE_H__
-#define __GIMP_RECTANGLE_H__
+#ifndef __LIGMA_RECTANGLE_H__
+#define __LIGMA_RECTANGLE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-gboolean  gimp_rectangle_intersect (gint  x1,
+gboolean  ligma_rectangle_intersect (gint  x1,
                                     gint  y1,
                                     gint  width1,
                                     gint  height1,
@@ -41,7 +41,7 @@ gboolean  gimp_rectangle_intersect (gint  x1,
                                     gint *dest_width,
                                     gint *dest_height);
 
-void      gimp_rectangle_union     (gint  x1,
+void      ligma_rectangle_union     (gint  x1,
                                     gint  y1,
                                     gint  width1,
                                     gint  height1,
@@ -57,4 +57,4 @@ void      gimp_rectangle_union     (gint  x1,
 
 G_END_DECLS
 
-#endif  /* __GIMP_RECTANGLE_H__ */
+#endif  /* __LIGMA_RECTANGLE_H__ */

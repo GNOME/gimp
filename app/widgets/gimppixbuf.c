@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppixbuf.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmapixbuf.c
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,26 +26,26 @@
 
 #include "widgets-types.h"
 
-#include "gimppixbuf.h"
+#include "ligmapixbuf.h"
 
 
 /*  local function prototypes  */
 
-static gint   gimp_pixbuf_format_compare (GdkPixbufFormat *a,
+static gint   ligma_pixbuf_format_compare (GdkPixbufFormat *a,
                                           GdkPixbufFormat *b);
 
 
 /*  public functions  */
 
 GSList *
-gimp_pixbuf_get_formats (void)
+ligma_pixbuf_get_formats (void)
 {
   return g_slist_sort (gdk_pixbuf_get_formats (),
-                       (GCompareFunc) gimp_pixbuf_format_compare);
+                       (GCompareFunc) ligma_pixbuf_format_compare);
 }
 
 void
-gimp_pixbuf_targets_add (GtkTargetList *target_list,
+ligma_pixbuf_targets_add (GtkTargetList *target_list,
                          guint          info,
                          gboolean       writable)
 {
@@ -54,7 +54,7 @@ gimp_pixbuf_targets_add (GtkTargetList *target_list,
 
   g_return_if_fail (target_list != NULL);
 
-  formats = gimp_pixbuf_get_formats ();
+  formats = ligma_pixbuf_get_formats ();
 
   for (list = formats; list; list = g_slist_next (list))
     {
@@ -85,14 +85,14 @@ gimp_pixbuf_targets_add (GtkTargetList *target_list,
 }
 
 void
-gimp_pixbuf_targets_remove (GtkTargetList *target_list)
+ligma_pixbuf_targets_remove (GtkTargetList *target_list)
 {
   GSList *formats;
   GSList *list;
 
   g_return_if_fail (target_list != NULL);
 
-  formats = gimp_pixbuf_get_formats ();
+  formats = ligma_pixbuf_get_formats ();
 
   for (list = formats; list; list = g_slist_next (list))
     {
@@ -118,7 +118,7 @@ gimp_pixbuf_targets_remove (GtkTargetList *target_list)
 /*  private functions  */
 
 static gint
-gimp_pixbuf_format_compare (GdkPixbufFormat *a,
+ligma_pixbuf_format_compare (GdkPixbufFormat *a,
                             GdkPixbufFormat *b)
 {
   gchar *a_name = gdk_pixbuf_format_get_name (a);

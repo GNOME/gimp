@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "imap_ui_grid.h"
 
@@ -48,7 +48,7 @@ create_spin_button_in_grid (GtkWidget *grid,
                             gint       max)
 {
    GtkAdjustment *adj = gtk_adjustment_new (value, min, max, 1, 10, 0);
-   GtkWidget *button = gimp_spin_button_new (adj, 1, 0);
+   GtkWidget *button = ligma_spin_button_new (adj, 1, 0);
 
    gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
    if (label)

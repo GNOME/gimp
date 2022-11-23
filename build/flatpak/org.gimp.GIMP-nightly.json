@@ -1,13 +1,13 @@
 {
-    "app-id": "org.gimp.GIMP",
+    "app-id": "org.ligma.LIGMA",
     "branch": "master",
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
-    "command": "gimp-2.99",
+    "command": "ligma-2.99",
     "separate-locales": false,
-    "rename-desktop-file": "gimp.desktop",
-    "rename-icon": "gimp",
+    "rename-desktop-file": "ligma.desktop",
+    "rename-icon": "ligma",
     "copy-icon": true,
     "finish-args": [
         "--share=ipc",
@@ -16,7 +16,7 @@
         "--socket=wayland",
         "--device=dri",
         "--filesystem=host",
-        "--filesystem=xdg-config/GIMP",
+        "--filesystem=xdg-config/LIGMA",
         "--filesystem=xdg-config/gtk-3.0",
         "--filesystem=/tmp",
         "--filesystem=xdg-run/gvfs",
@@ -830,28 +830,28 @@
             ]
         },
         {
-            "name": "gimp",
+            "name": "ligma",
             "config-opts": [
                 "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
-                "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
+                "-Dbuild-id=org.ligma.LIGMA.flatpak.nightly",
                 "-Dcheck-update=no"
             ],
             "cleanup": [
-                "/bin/gimptool-2.99",
-                "/bin/gimp-console-2.99"
+                "/bin/ligmatool-2.99",
+                "/bin/ligma-console-2.99"
             ],
             "buildsystem": "meson",
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gimp.git",
+                    "url": "https://gitlab.gnome.org/GNOME/ligma.git",
                     "branch": "master"
                 },
                 {
                     "type": "shell",
                     "commands": [
-                        "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
+                        "xsltproc -o desktop/org.ligma.LIGMA.appdata.xml.in.in build/flatpak/remove-future-appdata-release.xslt desktop/org.ligma.LIGMA.appdata.xml.in.in"
                     ]
                 }
             ]

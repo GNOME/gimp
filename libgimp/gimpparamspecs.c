@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpparamspecs.c
+ * ligmaparamspecs.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,12 +23,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /*  include the implementation, they are shared between app/ and
- *  libgimp/ but need different headers.
+ *  libligma/ but need different headers.
  */
-#include "gimpparamspecs-body.c"
+#include "ligmaparamspecs-body.c"

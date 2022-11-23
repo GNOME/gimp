@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,29 +20,29 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
-#include "gimpimage-item-list.h"
-#include "gimpimage-undo.h"
-#include "gimpitem.h"
-#include "gimplayer.h"
-#include "gimpobjectqueue.h"
-#include "gimpprogress.h"
+#include "ligmachannel.h"
+#include "ligmacontext.h"
+#include "ligmaimage.h"
+#include "ligmaimage-item-list.h"
+#include "ligmaimage-undo.h"
+#include "ligmaitem.h"
+#include "ligmalayer.h"
+#include "ligmaobjectqueue.h"
+#include "ligmaprogress.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 gboolean
-gimp_image_item_list_bounds (GimpImage *image,
+ligma_image_item_list_bounds (LigmaImage *image,
                              GList     *list,
                              gint      *x,
                              gint      *y,
@@ -52,7 +52,7 @@ gimp_image_item_list_bounds (GimpImage *image,
   GList    *l;
   gboolean  bounds = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (x != 0, FALSE);
   g_return_val_if_fail (y != 0, FALSE);
   g_return_val_if_fail (width != 0, FALSE);
@@ -60,19 +60,19 @@ gimp_image_item_list_bounds (GimpImage *image,
 
   for (l = list; l; l = g_list_next (l))
     {
-      GimpItem *item = l->data;
+      LigmaItem *item = l->data;
       gint      tmp_x, tmp_y;
       gint      tmp_w, tmp_h;
 
-      if (gimp_item_bounds (item, &tmp_x, &tmp_y, &tmp_w, &tmp_h))
+      if (ligma_item_bounds (item, &tmp_x, &tmp_y, &tmp_w, &tmp_h))
         {
           gint off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
 
           if (bounds)
             {
-              gimp_rectangle_union (*x, *y, *width, *height,
+              ligma_rectangle_union (*x, *y, *width, *height,
                                     tmp_x + off_x, tmp_y + off_y,
                                     tmp_w, tmp_h,
                                     x, y, width, height);
@@ -93,21 +93,21 @@ gimp_image_item_list_bounds (GimpImage *image,
     {
       *x      = 0;
       *y      = 0;
-      *width  = gimp_image_get_width  (image);
-      *height = gimp_image_get_height (image);
+      *width  = ligma_image_get_width  (image);
+      *height = ligma_image_get_height (image);
     }
 
   return bounds;
 }
 
 void
-gimp_image_item_list_translate (GimpImage *image,
+ligma_image_item_list_translate (LigmaImage *image,
                                 GList     *list,
                                 gint       offset_x,
                                 gint       offset_y,
                                 gboolean   push_undo)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   if (list)
     {
@@ -117,39 +117,39 @@ gimp_image_item_list_translate (GimpImage *image,
         {
           if (push_undo)
             {
-              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+              ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_DISPLACE,
                                            C_("undo-type", "Translate Items"));
             }
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_transform (GIMP_ITEM (l->data), push_undo);
+            ligma_item_start_transform (LIGMA_ITEM (l->data), push_undo);
         }
 
       for (l = list; l; l = g_list_next (l))
-        gimp_item_translate (GIMP_ITEM (l->data),
+        ligma_item_translate (LIGMA_ITEM (l->data),
                              offset_x, offset_y, push_undo);
 
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_transform (GIMP_ITEM (l->data), push_undo);
+            ligma_item_end_transform (LIGMA_ITEM (l->data), push_undo);
 
           if (push_undo)
-            gimp_image_undo_group_end (image);
+            ligma_image_undo_group_end (image);
         }
     }
 }
 
 void
-gimp_image_item_list_flip (GimpImage           *image,
+ligma_image_item_list_flip (LigmaImage           *image,
                            GList               *list,
-                           GimpContext         *context,
-                           GimpOrientationType  flip_type,
+                           LigmaContext         *context,
+                           LigmaOrientationType  flip_type,
                            gdouble              axis,
-                           GimpTransformResize  expected_clip_result)
+                           LigmaTransformResize  expected_clip_result)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
   if (list)
     {
@@ -157,44 +157,44 @@ gimp_image_item_list_flip (GimpImage           *image,
 
       if (list->next)
         {
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TRANSFORM,
                                        C_("undo-type", "Flip Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_start_transform (LIGMA_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
         {
-          GimpItem *item = l->data;
+          LigmaItem *item = l->data;
 
-          gimp_item_flip (item, context,
+          ligma_item_flip (item, context,
                           flip_type, axis,
-                          gimp_item_get_clip (item, expected_clip_result) !=
-                          GIMP_TRANSFORM_RESIZE_ADJUST);
+                          ligma_item_get_clip (item, expected_clip_result) !=
+                          LIGMA_TRANSFORM_RESIZE_ADJUST);
         }
 
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_end_transform (LIGMA_ITEM (l->data), TRUE);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
     }
 }
 
 void
-gimp_image_item_list_rotate (GimpImage        *image,
+ligma_image_item_list_rotate (LigmaImage        *image,
                              GList            *list,
-                             GimpContext      *context,
-                             GimpRotationType  rotate_type,
+                             LigmaContext      *context,
+                             LigmaRotationType  rotate_type,
                              gdouble           center_x,
                              gdouble           center_y,
                              gboolean          clip_result)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
   if (list)
     {
@@ -202,88 +202,88 @@ gimp_image_item_list_rotate (GimpImage        *image,
 
       if (list->next)
         {
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TRANSFORM,
                                        C_("undo-type", "Rotate Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_start_transform (LIGMA_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
         {
-          GimpItem *item = l->data;
+          LigmaItem *item = l->data;
 
-          gimp_item_rotate (item, context,
+          ligma_item_rotate (item, context,
                             rotate_type, center_x, center_y,
-                            gimp_item_get_clip (item, clip_result));
+                            ligma_item_get_clip (item, clip_result));
         }
 
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_end_transform (LIGMA_ITEM (l->data), TRUE);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
     }
 }
 
 void
-gimp_image_item_list_transform (GimpImage              *image,
+ligma_image_item_list_transform (LigmaImage              *image,
                                 GList                  *list,
-                                GimpContext            *context,
-                                const GimpMatrix3      *matrix,
-                                GimpTransformDirection  direction,
-                                GimpInterpolationType   interpolation_type,
-                                GimpTransformResize     clip_result,
-                                GimpProgress           *progress)
+                                LigmaContext            *context,
+                                const LigmaMatrix3      *matrix,
+                                LigmaTransformDirection  direction,
+                                LigmaInterpolationType   interpolation_type,
+                                LigmaTransformResize     clip_result,
+                                LigmaProgress           *progress)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
   if (list)
     {
-      GimpObjectQueue *queue = NULL;
+      LigmaObjectQueue *queue = NULL;
       GList           *l;
 
       if (progress)
         {
-          queue    = gimp_object_queue_new (progress);
-          progress = GIMP_PROGRESS (queue);
+          queue    = ligma_object_queue_new (progress);
+          progress = LIGMA_PROGRESS (queue);
 
-          gimp_object_queue_push_list (queue, list);
+          ligma_object_queue_push_list (queue, list);
         }
 
       if (list->next)
         {
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TRANSFORM,
                                        C_("undo-type", "Transform Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_start_transform (LIGMA_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
         {
-          GimpItem *item = l->data;
+          LigmaItem *item = l->data;
 
           if (queue)
-            gimp_object_queue_pop (queue);
+            ligma_object_queue_pop (queue);
 
-          gimp_item_transform (item, context,
+          ligma_item_transform (item, context,
                                matrix, direction,
                                interpolation_type,
-                               gimp_item_get_clip (item, clip_result),
+                               ligma_item_get_clip (item, clip_result),
                                progress);
         }
 
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
+            ligma_item_end_transform (LIGMA_ITEM (l->data), TRUE);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
 
       g_clear_object (&queue);
@@ -291,66 +291,66 @@ gimp_image_item_list_transform (GimpImage              *image,
 }
 
 /**
- * gimp_image_item_list_get_list:
+ * ligma_image_item_list_get_list:
  * @image:   An @image.
  * @type:    Which type of items to return.
  * @set:     Set the returned items are part of.
  *
- * This function returns a #GList of #GimpItem<!-- -->s for which the
+ * This function returns a #GList of #LigmaItem<!-- -->s for which the
  * @type and @set criterions match.
  *
  * Returns: The list of items.
  **/
 GList *
-gimp_image_item_list_get_list (GimpImage        *image,
-                               GimpItemTypeMask  type,
-                               GimpItemSet       set)
+ligma_image_item_list_get_list (LigmaImage        *image,
+                               LigmaItemTypeMask  type,
+                               LigmaItemSet       set)
 {
   GList *all_items;
   GList *list;
   GList *return_list = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  if (type & GIMP_ITEM_TYPE_LAYERS)
+  if (type & LIGMA_ITEM_TYPE_LAYERS)
     {
-      all_items = gimp_image_get_layer_list (image);
+      all_items = ligma_image_get_layer_list (image);
 
       for (list = all_items; list; list = g_list_next (list))
         {
-          GimpItem *item = list->data;
+          LigmaItem *item = list->data;
 
-          if (gimp_item_is_in_set (item, set))
+          if (ligma_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
       g_list_free (all_items);
     }
 
-  if (type & GIMP_ITEM_TYPE_CHANNELS)
+  if (type & LIGMA_ITEM_TYPE_CHANNELS)
     {
-      all_items = gimp_image_get_channel_list (image);
+      all_items = ligma_image_get_channel_list (image);
 
       for (list = all_items; list; list = g_list_next (list))
         {
-          GimpItem *item = list->data;
+          LigmaItem *item = list->data;
 
-          if (gimp_item_is_in_set (item, set))
+          if (ligma_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
       g_list_free (all_items);
     }
 
-  if (type & GIMP_ITEM_TYPE_VECTORS)
+  if (type & LIGMA_ITEM_TYPE_VECTORS)
     {
-      all_items = gimp_image_get_vectors_list (image);
+      all_items = ligma_image_get_vectors_list (image);
 
       for (list = all_items; list; list = g_list_next (list))
         {
-          GimpItem *item = list->data;
+          LigmaItem *item = list->data;
 
-          if (gimp_item_is_in_set (item, set))
+          if (ligma_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
@@ -361,19 +361,19 @@ gimp_image_item_list_get_list (GimpImage        *image,
 }
 
 static GList *
-gimp_image_item_list_remove_children (GList          *list,
-                                      const GimpItem *parent)
+ligma_image_item_list_remove_children (GList          *list,
+                                      const LigmaItem *parent)
 {
   GList *l = list;
 
   while (l)
     {
-      GimpItem *item = l->data;
+      LigmaItem *item = l->data;
 
       l = g_list_next (l);
 
-      if (gimp_viewable_is_ancestor (GIMP_VIEWABLE (parent),
-                                     GIMP_VIEWABLE (item)))
+      if (ligma_viewable_is_ancestor (LIGMA_VIEWABLE (parent),
+                                     LIGMA_VIEWABLE (item)))
         {
           list = g_list_remove (list, item);
         }
@@ -383,9 +383,9 @@ gimp_image_item_list_remove_children (GList          *list,
 }
 
 /**
- * gimp_image_item_list_filter:
+ * ligma_image_item_list_filter:
  * @image:
- * @items: the original list of #GimpItem-s.
+ * @items: the original list of #LigmaItem-s.
  *
  * Filter @list by modifying it directly (so the original list should
  * not be used anymore, only its result), removing all children items
@@ -395,7 +395,7 @@ gimp_image_item_list_remove_children (GList          *list,
  *          @list have been removed.
  */
 GList *
-gimp_image_item_list_filter (GList *list)
+ligma_image_item_list_filter (GList *list)
 {
   GList *l;
 
@@ -404,10 +404,10 @@ gimp_image_item_list_filter (GList *list)
 
   for (l = list; l; l = g_list_next (l))
     {
-      GimpItem *item = l->data;
+      LigmaItem *item = l->data;
       GList    *next;
 
-      next = gimp_image_item_list_remove_children (g_list_next (l), item);
+      next = ligma_image_item_list_remove_children (g_list_next (l), item);
 
       l->next = next;
       if (next)

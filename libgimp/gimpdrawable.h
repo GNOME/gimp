@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpdrawable.h
+ * ligmadrawable.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,60 +18,60 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DRAWABLE_H__
-#define __GIMP_DRAWABLE_H__
+#ifndef __LIGMA_DRAWABLE_H__
+#define __LIGMA_DRAWABLE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#include <libgimp/gimpitem.h>
+#include <libligma/ligmaitem.h>
 
 
-#define GIMP_TYPE_DRAWABLE (gimp_drawable_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpDrawable, gimp_drawable, GIMP, DRAWABLE, GimpItem)
+#define LIGMA_TYPE_DRAWABLE (ligma_drawable_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaDrawable, ligma_drawable, LIGMA, DRAWABLE, LigmaItem)
 
 
-struct _GimpDrawableClass
+struct _LigmaDrawableClass
 {
-  GimpItemClass parent_class;
+  LigmaItemClass parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
+  void (*_ligma_reserved9) (void);
 };
 
 
-GimpDrawable * gimp_drawable_get_by_id              (gint32        drawable_id);
+LigmaDrawable * ligma_drawable_get_by_id              (gint32        drawable_id);
 
-GeglBuffer   * gimp_drawable_get_buffer             (GimpDrawable  *drawable);
-GeglBuffer   * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable);
+GeglBuffer   * ligma_drawable_get_buffer             (LigmaDrawable  *drawable);
+GeglBuffer   * ligma_drawable_get_shadow_buffer      (LigmaDrawable  *drawable);
 
-const Babl   * gimp_drawable_get_format             (GimpDrawable  *drawable);
-const Babl   * gimp_drawable_get_thumbnail_format   (GimpDrawable  *drawable);
+const Babl   * ligma_drawable_get_format             (LigmaDrawable  *drawable);
+const Babl   * ligma_drawable_get_thumbnail_format   (LigmaDrawable  *drawable);
 
-guchar       * gimp_drawable_get_thumbnail_data     (GimpDrawable  *drawable,
+guchar       * ligma_drawable_get_thumbnail_data     (LigmaDrawable  *drawable,
                                                      gint          *width,
                                                      gint          *height,
                                                      gint          *bpp);
-GdkPixbuf    * gimp_drawable_get_thumbnail          (GimpDrawable  *drawable,
+GdkPixbuf    * ligma_drawable_get_thumbnail          (LigmaDrawable  *drawable,
                                                      gint           width,
                                                      gint           height,
-                                                     GimpPixbufTransparency alpha);
+                                                     LigmaPixbufTransparency alpha);
 
-guchar       * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
+guchar       * ligma_drawable_get_sub_thumbnail_data (LigmaDrawable  *drawable,
                                                      gint           src_x,
                                                      gint           src_y,
                                                      gint           src_width,
@@ -79,16 +79,16 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
                                                      gint          *dest_width,
                                                      gint          *dest_height,
                                                      gint          *bpp);
-GdkPixbuf    * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
+GdkPixbuf    * ligma_drawable_get_sub_thumbnail      (LigmaDrawable  *drawable,
                                                      gint           src_x,
                                                      gint           src_y,
                                                      gint           src_width,
                                                      gint           src_height,
                                                      gint           dest_width,
                                                      gint           dest_height,
-                                                     GimpPixbufTransparency alpha);
+                                                     LigmaPixbufTransparency alpha);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_DRAWABLE_H__ */
+#endif /* __LIGMA_DRAWABLE_H__ */

@@ -1,4 +1,4 @@
-# Vietnamese translation for Gimp Plug-ins.
+# Vietnamese translation for Ligma Plug-ins.
 # Copyright © 2006 Gnome i18n Project for Vietnamese.
 # Trinh Minh Thanh <tmthanh@yahoo.com>, 2003.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plugins HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plugins HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-12-27 01:39+0000\n"
 "PO-Revision-Date: 2011-12-27 10:00+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
@@ -427,8 +427,8 @@ msgid "Optimizing animation"
 msgstr "Đang tối ưu hóa hoạt cảnh"
 
 #: ../plug-ins/common/animation-play.c:169
-msgid "Preview a GIMP layer-based animation"
-msgstr "Xem thử hoạt cảnh dựa vào các lớp GIMP"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "Xem thử hoạt cảnh dựa vào các lớp LIGMA"
 
 #: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
@@ -623,7 +623,7 @@ msgstr "_Dọc"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1306
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -1036,8 +1036,8 @@ msgstr "Tải thiết lập bộ hoà kênh"
 #: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
-#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
+#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-ligma.c:459
+#: ../plug-ins/file-fli/fli-ligma.c:496 ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
 #: ../plug-ins/file-jpeg/jpeg-load.c:889 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
@@ -1046,8 +1046,8 @@ msgstr "Tải thiết lập bộ hoà kênh"
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:926
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1076,7 +1076,7 @@ msgstr "Lưu thiết lập bộ hoà kênh"
 #: ../plug-ins/common/file-xmc.c:1455 ../plug-ins/common/file-xwd.c:619
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-ligma.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
@@ -1111,7 +1111,7 @@ msgid "Checkerboard"
 msgstr "Bàn cờ"
 
 #: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1162
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Cỡ:"
 
@@ -1315,8 +1315,8 @@ msgstr "Ngẫu nhiên từ hạt (được chia sẻ)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "Sắc màu"
 
@@ -1327,8 +1327,8 @@ msgstr "Độ bão hòa"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "Giá trị"
 
@@ -2239,8 +2239,8 @@ msgstr "Uốn đường cong"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1262
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:171
 msgid "Preview"
 msgstr "Xem thử"
@@ -2826,7 +2826,7 @@ msgstr "_Bán kính 1:"
 msgid "R_adius 2:"
 msgstr "Bán _kính 2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "Đả_o"
 
@@ -3033,7 +3033,7 @@ msgstr "Thêm bảng chọn KISS"
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-fli/fli-ligma.c:501 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
 #, c-format
@@ -3061,7 +3061,7 @@ msgstr "Độ sâu bit không được hỗ trợ (%d)."
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-ligma.c:718 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
 #: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
@@ -3169,8 +3169,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Không thể hoạt động với kiểu ảnh lạ."
 
 #: ../plug-ins/common/file-gbr.c:154 ../plug-ins/common/file-gbr.c:175
-msgid "GIMP brush"
-msgstr "Bút vẽ GIMP"
+msgid "LIGMA brush"
+msgstr "Bút vẽ LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:399 ../plug-ins/common/file-pat.c:418
 #, c-format
@@ -3183,8 +3183,8 @@ msgstr "Định dạng bút vẽ không hỗ trợ"
 
 #: ../plug-ins/common/file-gbr.c:447
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Gặp lỗi trong tập tin bút vẽ GIMP « %s »"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Gặp lỗi trong tập tin bút vẽ LIGMA « %s »"
 
 #: ../plug-ins/common/file-gbr.c:455
 #, c-format
@@ -3198,7 +3198,7 @@ msgid "Unnamed"
 msgstr "Không tên"
 
 #: ../plug-ins/common/file-gbr.c:653
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
 msgstr "Mọi bút vẽ có kiểu hoặc GRAYSCALE (mức xám) hoặc RGBA"
 
 #: ../plug-ins/common/file-gbr.c:770
@@ -3211,7 +3211,7 @@ msgid "Spacing:"
 msgstr "Khoảng cách:"
 
 #: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:888
-#: ../plug-ins/common/file-pat.c:568 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:568 ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "Mô tả:"
 
@@ -3348,16 +3348,16 @@ msgid "The default comment is limited to %d characters."
 msgstr "Chú thích mặc định có giới hạn là %d ký tự."
 
 #: ../plug-ins/common/file-gih.c:209 ../plug-ins/common/file-gih.c:230
-msgid "GIMP brush (animated)"
-msgstr "Bút vẽ GIMP (hoạt cảnh)"
+msgid "LIGMA brush (animated)"
+msgstr "Bút vẽ LIGMA (hoạt cảnh)"
 
 #: ../plug-ins/common/file-gih.c:480
-msgid "Error in GIMP brush pipe file."
-msgstr "Gặp lỗi trong tập tin bút vẽ động GIMP."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Gặp lỗi trong tập tin bút vẽ động LIGMA."
 
 #: ../plug-ins/common/file-gih.c:546
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Tập tin bút vẽ GIMP hình như bị hỏng."
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Tập tin bút vẽ LIGMA hình như bị hỏng."
 
 #: ../plug-ins/common/file-gih.c:696
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3734,8 +3734,8 @@ msgid "MNG animation"
 msgstr "Hoạt cảnh MNG"
 
 #: ../plug-ins/common/file-pat.c:123 ../plug-ins/common/file-pat.c:145
-msgid "GIMP pattern"
-msgstr "Mẫu GIMP"
+msgid "LIGMA pattern"
+msgstr "Mẫu LIGMA"
 
 #: ../plug-ins/common/file-pat.c:378
 #, c-format
@@ -4032,16 +4032,16 @@ msgid "Invalid X resolution."
 msgstr "Độ phân giải không hợp lệ."
 
 #: ../plug-ins/common/file-pnm.c:555
-msgid "Image width is larger than GIMP can handle."
-msgstr "Chiều rộng bức ảnh lớn hơn khả năng xử lý của GIMP."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Chiều rộng bức ảnh lớn hơn khả năng xử lý của LIGMA."
 
 #: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Độ phân giải Y không hợp lệ."
 
 #: ../plug-ins/common/file-pnm.c:564
-msgid "Image height is larger than GIMP can handle."
-msgstr "Chiều cao bức ảnh lớn hơn khả năng xử lý của GIMP."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Chiều cao bức ảnh lớn hơn khả năng xử lý của LIGMA."
 
 #: ../plug-ins/common/file-pnm.c:574
 msgid "Unsupported maximum value."
@@ -4095,12 +4095,12 @@ msgstr "PostScript không thể quản lý ảnh có kênh anpha"
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
 "Gặp lỗi khi khởi chạy Ghostscript. Hãy kiểm tra xem Ghostscript đã được cài "
-"đặt và (nếu cần thiết) dùng biến môi trường GS_PROG để báo GIMP biết địa "
+"đặt và (nếu cần thiết) dùng biến môi trường GS_PROG để báo LIGMA biết địa "
 "điểm của nó.\n"
 "(%s)"
 
@@ -4165,8 +4165,8 @@ msgid "B/W"
 msgstr "Đen/trắng"
 
 #: ../plug-ins/common/file-ps.c:3235 ../plug-ins/common/file-xpm.c:479
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Màu"
@@ -4406,10 +4406,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s'\n"
-"Chiều rộng bức ảnh lớn hơn khả năng xử lý của GIMP"
+"Chiều rộng bức ảnh lớn hơn khả năng xử lý của LIGMA"
 
 #: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
 #: ../plug-ins/common/file-xwd.c:508
@@ -4426,10 +4426,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s'\n"
-"Chiều cao bức ảnh lớn hơn khả năng xử lý của GIMP"
+"Chiều cao bức ảnh lớn hơn khả năng xử lý của LIGMA"
 
 #: ../plug-ins/common/file-sunras.c:520
 msgid "This image depth is not supported"
@@ -4530,8 +4530,8 @@ msgstr "Nhậ_p đường dẫn"
 
 #: ../plug-ins/common/file-svg.c:944
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "Nhập yếu tố đường dẫn của SVG để dùng chung với công cụ đường dẫn GIMP"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "Nhập yếu tố đường dẫn của SVG để dùng chung với công cụ đường dẫn LIGMA"
 
 #: ../plug-ins/common/file-svg.c:952
 msgid "Merge imported paths"
@@ -4605,12 +4605,12 @@ msgstr "Kênh TIFF"
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "Cảnh báo:\n"
-"Ảnh đang tải có 16 bit trên mỗi kênh. GIMP có thể quản lý chỉ 8 bit, do đó "
+"Ảnh đang tải có 16 bit trên mỗi kênh. LIGMA có thể quản lý chỉ 8 bit, do đó "
 "nó sẽ được chuyển đổi cho bạn. Tuy nhiên, thông tin sẽ bị mất do việc chuyển "
 "đổi này."
 
@@ -7381,7 +7381,7 @@ msgid "Use the background color"
 msgstr "Dùng màu nền"
 
 #: ../plug-ins/common/sphere-designer.c:293
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Đặc"
 
@@ -7477,7 +7477,7 @@ msgstr "Hộp thoại chọn màu"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Tỷ lệ:"
@@ -7771,10 +7771,10 @@ msgstr "Đã lưu"
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Một lời định nghĩa đơn vị sẽ được lưu trước khi GIMP thoát chỉ nếu cột này "
+"Một lời định nghĩa đơn vị sẽ được lưu trước khi LIGMA thoát chỉ nếu cột này "
 "đã được chọn thôi."
 
 #: ../plug-ins/common/unit-editor.c:96
@@ -7783,9 +7783,9 @@ msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Chuỗi này dùng để nhận diện một đợn vi trong các tập tin cấu hình GIMP."
+"Chuỗi này dùng để nhận diện một đợn vi trong các tập tin cấu hình LIGMA."
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
@@ -7854,8 +7854,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "Tạo một đơn vị mới bằng đơn vị đang chọn là biểu mẫu"
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "Tạo hay sửa đổi đơn vị dùng trong GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Tạo hay sửa đổi đơn vị dùng trong LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -8547,7 +8547,7 @@ msgstr "Cả _hai"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Giá trị cao hơn hạn chế hiệu ứng ở vùng ảnh nhỏ hơn"
 
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "Độ _mạnh:"
 
@@ -8615,11 +8615,11 @@ msgstr "Đừ_ng ghi thông tin không gian màu"
 #: ../plug-ins/file-bmp/bmp-write.c:885
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Enabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Enabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Một vài ứng dụng không thể đọc tập tin ảnh BMP có chứa thông tin không gian "
-"màu. GIMP mặc định ghi thông tin không gian màu. Bật tùy chọn này để GIMP "
+"màu. LIGMA mặc định ghi thông tin không gian màu. Bật tùy chọn này để LIGMA "
 "không ghi thông tin không gian màu vào tập tin."
 
 #. Advanced Options
@@ -8694,34 +8694,34 @@ msgctxt "composing"
 msgid "None"
 msgstr "Không có"
 
-#: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
+#: ../plug-ins/file-fli/fli-ligma.c:166 ../plug-ins/file-fli/fli-ligma.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "Hoạt cảnh FLIC AutoDesk"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-ligma.c:561
 #, c-format
 msgid "Frame (%i)"
 msgstr "Khung (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-ligma.c:714
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Tiếc là chương trình này chỉ lưu được các ảnh phụ lục và màu xám."
 
-#: ../plug-ins/file-fli/fli-gimp.c:847
+#: ../plug-ins/file-fli/fli-ligma.c:847
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Tải ngăn nhớ khung"
 
-#: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
+#: ../plug-ins/file-fli/fli-ligma.c:876 ../plug-ins/file-fli/fli-ligma.c:932
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Từ:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-ligma.c:885 ../plug-ins/file-fli/fli-ligma.c:941
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Đến:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:915
+#: ../plug-ins/file-fli/fli-ligma.c:915
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8794,8 +8794,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "Tùy theo dữ liệu EXIF, ảnh này đã xoay."
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:426
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Bạn có muốn trình GIMP xoay lại nó thành hướng chuẩn không?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "Bạn có muốn trình LIGMA xoay lại nó thành hướng chuẩn không?"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
@@ -9045,8 +9045,8 @@ msgstr ""
 "lưu không hỗ trợ nó nên dùng chế độ chuẩn thay thế."
 
 #: ../plug-ins/file-psd/psd-save.c:634
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Lỗi : không thể chuyển đổi kiểu ảnh cơ bản GIMP sang chế độ PSD"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Lỗi : không thể chuyển đổi kiểu ảnh cơ bản LIGMA sang chế độ PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1622
 #, c-format
@@ -9206,8 +9206,8 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
-msgstr "Ảnh XJT đã nén của GIMP"
+msgid "LIGMA compressed XJT image"
+msgstr "Ảnh XJT đã nén của LIGMA"
 
 #: ../plug-ins/file-xjt/xjt.c:733
 #, c-format
@@ -9319,8 +9319,8 @@ msgstr "_Ngẫu nhiên hóa"
 msgid "Same"
 msgstr "Trùng"
 
-#: ../plug-ins/flame/flame.c:746 ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:746 ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "Ngẫu nhiên"
 
@@ -9470,16 +9470,16 @@ msgid "C_amera"
 msgstr "Má_y ảnh"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Không có %s trong tập tin tài nguyên « gimprc »:\n"
+"Không có %s trong tập tin tài nguyên « ligmarc »:\n"
 "bạn cần phải thêm một mục nhập như\n"
 "(%s \"%s\")\n"
 "vào tập tin %s của bạn."
@@ -10019,7 +10019,7 @@ msgid "Max undo:"
 msgstr "Hủy bước tối đa:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1305
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Trong suốt"
 
@@ -10113,7 +10113,7 @@ msgid "Left"
 msgstr "Trái"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1738
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Hướng:"
 
@@ -10173,294 +10173,294 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Gặp lỗi khi cố mở tập tin tạm thời « %s » để tải bộ bám: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:243
+#: ../plug-ins/ligmaressionist/brush.c:243
 msgid "Can only save drawables!"
 msgstr "Có thể lưu chỉ điều vẽ được."
 
-#: ../plug-ins/gimpressionist/brush.c:248
+#: ../plug-ins/ligmaressionist/brush.c:248
 msgid "Save Brush"
 msgstr "Lưu bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:503
+#: ../plug-ins/ligmaressionist/brush.c:503
 msgid "_Brush"
 msgstr "_Bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:540
+#: ../plug-ins/ligmaressionist/brush.c:540
 msgid "Gamma:"
 msgstr "Gamma (γ):"
 
-#: ../plug-ins/gimpressionist/brush.c:558
+#: ../plug-ins/ligmaressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Thay đổi gamma (độ sáng) của bút vẽ đã chọn"
 
-#: ../plug-ins/gimpressionist/brush.c:566
+#: ../plug-ins/ligmaressionist/brush.c:566
 msgid "Select:"
 msgstr "Chọn:"
 
-#: ../plug-ins/gimpressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/brush.c:595
 msgid "Aspect ratio:"
 msgstr "Tỷ lệ hình thể:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Ghi rõ tỷ lệ hình thể của bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:608
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:608
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "Đắp khắc nổi:"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Ghi rõ lượng làm nổi cần áp dụng vào ảnh (theo phần trăm)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Mà_u"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Trung bình dưới bút _vẽ"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "_Tâm của bút vẽ"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Màu được tính từ trùng bình của tất cả các điểm ảnh dưới bút vẽ"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Lấy mẫu của màu trong điểm ảnh trong tâm của bút vẽ"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "Ồ_n màu:"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "Thêm ồn ngẫu nhiên vào màu"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3530
 msgid "_General"
 msgstr "Chun_g"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Giữ gốc"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Giữ lại ảnh gốc làm nền"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Từ giấy"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Sao chép hoạ tiết của giấy đã chọn làm nền"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Nền màu đặc"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Dùng nền trong suốt; chỉ những nét đã sơn sẽ hiển thị"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Sơn các cạnh"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Chọn nếu cần nét đến cạnh ảnh"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
+#: ../plug-ins/ligmaressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Lát được"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Chọn nếu ảnh kết quả có thể lát không có đường nối"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Bóng thả"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Thêm hiệu ứng bóng vào mỗi nét bút vẽ"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "Cạnh tối hơn:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Độ tối cần thêm vào các cạnh của mỗi nét bút  vẽ"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "Bóng tối hơn:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Độ tối cần thêm vào bóng thả"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "Độ sâu bóng:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Độ sâu của bóng thả, tức là, khoảng cách giữa nó và đối tượng"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "Mờ bóng:"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "Độ mờ cần thêm vào bóng thả"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "Ngưỡng lệch:"
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "Giá trị thôi cho việc chọn thích nghị"
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "Thực hiện nhiều thao tác nghệ thuật khác nhau"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
-msgstr "Trường phái ấn tượng _GIMP..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
+msgstr "Trường phái ấn tượng _LIGMA..."
 
-#: ../plug-ins/gimpressionist/gimp.c:164
+#: ../plug-ins/ligmaressionist/ligma.c:164
 msgid "The selection does not intersect the active layer or mask."
 msgstr "Vùng chọn không giao với lớp hiện tại hoặc mặt nạ."
 
-#: ../plug-ins/gimpressionist/gimp.c:391
+#: ../plug-ins/ligmaressionist/ligma.c:391
 msgid "Painting"
 msgstr "Đang sơn"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "Trường phái ấn tượng GIMP"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "Trường phái ấn tượng LIGMA"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "_Hướng"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "Phía hướng:"
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Số phía hướng (tức là bút vẽ) cần dùng"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "Góc đầu:"
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr "Góc đầu của bút vẽ đầu cần tạo"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "Độ dài góc:"
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr "Độ dài góc của bút vẽ đầu cần tạo"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Cho phép giá trị (độ sáng) của vùng quyết định phía hướng của nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "Bán kính"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Khoảng cách từ tâm ảnh thì quyết định phía hướng của nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "Chọn phía hướng ngẫu nhiên cho mỗi nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "Toả tròn"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Cho phép phía hướng từ tâm quyết định phía hướng của nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "Đang chảy"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Các nét theo mẫu « chảy »"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Sắc màu của vùng quyết định phía hướng của nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "Thích nghị"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Sẽ chọn phía hướng khớp ảnh gốc một cách gần nhất"
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "Tự chọn"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "Tự ghi rõ hướng nét"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr "Mở bộ sửa đổi ánh xạ hướng"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Bộ Sửa đổi Ánh xạ Hướng"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Véc-tơ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:564
+#: ../plug-ins/ligmaressionist/orientmap.c:564
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10470,288 +10470,288 @@ msgstr ""
 "Nhắp-phải \ttrỏ nó đến con chuột\n"
 "Nhắp-giữa \tthêm véc-tơ mới."
 
-#: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/ligmaressionist/orientmap.c:588
+#: ../plug-ins/ligmaressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
 msgstr "Điều chỉnh độ sáng của ô xem thử"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "Chọn véc-tơ trước"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "Chọn véc-tơ kế"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "Thê_m"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "Thêm véc-tơ mới"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "Buộc _kết thúc"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "Xóa bỏ véc-tơ đã chọn"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "Kiểu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "Chuẩ_n"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "_Gió cuộn"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "Gió cuộn_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "Gió cuộn_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Chế độ Voronoi làm cho chỉ véc-tơ gần nhất điểm đã cho có tác động nào"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "_Góc:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
 msgstr "Thay đổi góc của véc-tơ đã chọn"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 msgid "Ang_le offset:"
 msgstr "_Hiệu góc:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr "Thêm hiệu số vào mọi véc-tơ bằng góc đã chọn"
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
 msgstr "Thay đổi độ mạnh của véc-tơ đã chọn"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 msgid "S_trength exp.:"
 msgstr "_Mũ độ mạnh:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Thay đổi số mũ của độ mạnh"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "Giấ_y"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 msgid "Inverts the Papers texture"
 msgstr "Đảo hoạ tiết của Giấy"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "_Phủ"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Áp dụng giấy như có (chưa làm nổi nó)"
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Ghi rõ tỷ lệ của hoạ tiết (theo phần trăm của tập tin gốc)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Để _chỗ"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Để chỗ"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Ngẫu nhiên"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Phân phối đều đều"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Để nét một cách ngẫu nhiên chung quanh ảnh"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Những nét được phân phối đều đều qua trên ảnh"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Giữa lại"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Tập trung các nét bút vẽ ở quanh tâm ảnh"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "_Mật độ nét:"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "Mật độ tương đối của các nét bút vẽ"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Lỗi lưu tập tin PPM « %s »: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "Lưu điều hiện thời"
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
-msgstr "Mặc định trường phái ấn tượng GIMP"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
+msgstr "Mặc định trường phái ấn tượng LIGMA"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr "Định _sẵn"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "Lưu điều hiện thời..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "Lưu thiết lập hiện thời vào tập tin đã xác định"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr "Đọc định sẵn đã chọn vào bộ nhớ"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "Xóa bỏ định sẵn đã chọn"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr "Đọc lại thư mục các định sẵn"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1182
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
 msgstr "_Cập nhật"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Cập nhật cửa sổ Xem thử"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Hoàn nguyên ảnh gốc"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Cỡ"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "Số kích cỡ bút vẽ cần dùng"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "Cỡ tối thiểu:"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "Bút vẽ nhỏ nhất cần tạo"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "Cỡ tối đa:"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "Bút vẽ lớn nhất cần tạo"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "Kích thước phụ thuộc vào:"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Cho phép giá trị (độ sáng) của vùng quyết định kích cỡ của nét"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Khoảng cách từ tâm ảnh quyết định kích cỡ của nét"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "Chọn kích cỡ ngẫu nhiên cho mỗi nét"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Cho phép phía hướng từ tâm quyết định kích cỡ của nét"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Sắc thái của vùng quyết định kích cỡ của nét"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Se chọn kích cỡ bút vẽ mà khớp ảnh gốc một cách gần nhất"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "Tự ghi rõ kích cỡ nét"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "Mở Bộ Sửa đổi Ánh xạ Kích cỡ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/ligmaressionist/sizemap.c:397
 msgid "Size Map Editor"
 msgstr "Bộ Sửa đổi Ánh xạ Kích cỡ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/ligmaressionist/sizemap.c:426
 msgid "Smvectors"
 msgstr "Smvectors"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/ligmaressionist/sizemap.c:436
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10761,39 +10761,39 @@ msgstr ""
 "Nhắp-phải\ttrỏ nó vào con chuột\n"
 "Nhắp giữa\tthêm một smvector mới."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/ligmaressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "Chọn smvector trước"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/ligmaressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "Chọn smvector kế"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/ligmaressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "Thêm smvector mới"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/ligmaressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "Xóa bỏ smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/ligmaressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "Thay đổi góc của smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "Độ _mạnh:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/ligmaressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "Thay đổi độ mạnh của smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "Mũ độ mạn_h:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/ligmaressionist/sizemap.c:548
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -11159,8 +11159,8 @@ msgstr "_Sáng rực thứ hai"
 
 #: ../plug-ins/help-browser/dialog.c:184
 #: ../plug-ins/help-browser/dialog.c:1110
-msgid "GIMP Help Browser"
-msgstr "Bộ duyệt trợ giúp GIMP"
+msgid "LIGMA Help Browser"
+msgstr "Bộ duyệt trợ giúp LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:559
 msgid "Go back one page"
@@ -11215,8 +11215,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Ẩn hiện thanh bên"
 
 #: ../plug-ins/help-browser/dialog.c:651
-msgid "Visit the GIMP documentation website"
-msgstr "Ghé thăm nơi Mạng tài liệu hướng dẫn GIMP nhé"
+msgid "Visit the LIGMA documentation website"
+msgstr "Ghé thăm nơi Mạng tài liệu hướng dẫn LIGMA nhé"
 
 #: ../plug-ins/help-browser/dialog.c:1151
 msgid "Find:"
@@ -11232,38 +11232,38 @@ msgctxt "search"
 msgid "_Next"
 msgstr "_Kế"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Không tìm thấy trang trợ giúp của '%s'."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "Không tìm thấy tài liệu sử dụng GIMP."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "Không tìm thấy tài liệu sử dụng LIGMA."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 "Hãy cài đặt gói trợ giúp thêm, hoặc dùng sổ hướng dẫn trực tuyến tại <http://"
-"docs.gimp.org/>."
+"docs.ligma.org/>."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Có lẽ bạn bị thiếu cơ chế GIO và cần phải cài đặt GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "không biết ID trợ giúp « %s »"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Đang nạp chỉ mục từ '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11490,7 +11490,7 @@ msgid "Clear"
 msgstr "Xóa"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Tạo"
 
@@ -11515,41 +11515,41 @@ msgid "Edit Object"
 msgstr "Sửa đối tượng"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "Dùng Nét Dẫn GIMP"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "Dùng Nét Dẫn LIGMA"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "X_en kẽ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "_Hết"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Thêm nét dẫn nữa"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "Viền t_rái"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "Viền _phải"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "Viền _trên"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Viền _dưới"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "URL cơ _bản:"
 
@@ -11979,8 +11979,8 @@ msgid "Grid Settings..."
 msgstr "Thiết lập lưới..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "Dùng nét dẫn GIMP..."
+msgid "Use LIGMA Guides..."
+msgstr "Dùng nét dẫn LIGMA..."
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."
@@ -13192,14 +13192,14 @@ msgstr "Chưa bắt dữ liệu"
 #~ msgid "Save as Brush"
 #~ msgstr "Lưu dạng bút vẽ"
 
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "Nhóm phát triển GIMP nói Chào mừng bạn!"
+#~ msgid "A big hello from the LIGMA team!"
+#~ msgstr "Nhóm phát triển LIGMA nói Chào mừng bạn!"
 
 #~ msgid "Gee Slime"
 #~ msgstr "Nhớt Gee"
 
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "Cám ơn bạn chọn dùng trình GIMP"
+#~ msgid "Thank You for Choosing LIGMA"
+#~ msgstr "Cám ơn bạn chọn dùng trình LIGMA"
 
 #~ msgid "A less obsolete creation by %s"
 #~ msgstr "Một bản tạo ít cũ hơn của %s"
@@ -13389,11 +13389,11 @@ msgstr "Chưa bắt dữ liệu"
 #~ msgid "Size:"
 #~ msgstr "Cỡ:"
 
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "Không tìm thấy những tập tin trợ giúp GIMP"
+#~ msgid "The LIGMA help files are not found."
+#~ msgstr "Không tìm thấy những tập tin trợ giúp LIGMA"
 
-#~ msgid "There is a problem with the GIMP help files."
-#~ msgstr "Gặp lỗi với những tập tin trợ giúp GIMP."
+#~ msgid "There is a problem with the LIGMA help files."
+#~ msgstr "Gặp lỗi với những tập tin trợ giúp LIGMA."
 
 #~ msgid "Please check your installation."
 #~ msgstr "Hãy kiểm tra bản cài đặt."

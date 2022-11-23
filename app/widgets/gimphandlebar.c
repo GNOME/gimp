@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "gimphandlebar.h"
+#include "ligmahandlebar.h"
 
 
 enum
@@ -36,58 +36,58 @@ enum
 
 /*  local function prototypes  */
 
-static void      gimp_handle_bar_set_property       (GObject        *object,
+static void      ligma_handle_bar_set_property       (GObject        *object,
                                                      guint           property_id,
                                                      const GValue   *value,
                                                      GParamSpec     *pspec);
-static void      gimp_handle_bar_get_property       (GObject        *object,
+static void      ligma_handle_bar_get_property       (GObject        *object,
                                                      guint           property_id,
                                                      GValue         *value,
                                                      GParamSpec     *pspec);
 
-static gboolean  gimp_handle_bar_draw               (GtkWidget      *widget,
+static gboolean  ligma_handle_bar_draw               (GtkWidget      *widget,
                                                      cairo_t        *cr);
-static gboolean  gimp_handle_bar_button_press       (GtkWidget      *widget,
+static gboolean  ligma_handle_bar_button_press       (GtkWidget      *widget,
                                                      GdkEventButton *bevent);
-static gboolean  gimp_handle_bar_button_release     (GtkWidget      *widget,
+static gboolean  ligma_handle_bar_button_release     (GtkWidget      *widget,
                                                      GdkEventButton *bevent);
-static gboolean  gimp_handle_bar_motion_notify      (GtkWidget      *widget,
+static gboolean  ligma_handle_bar_motion_notify      (GtkWidget      *widget,
                                                      GdkEventMotion *mevent);
 
-static void      gimp_handle_bar_adjustment_changed (GtkAdjustment  *adjustment,
-                                                     GimpHandleBar  *bar);
+static void      ligma_handle_bar_adjustment_changed (GtkAdjustment  *adjustment,
+                                                     LigmaHandleBar  *bar);
 
 
-G_DEFINE_TYPE (GimpHandleBar, gimp_handle_bar, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE (LigmaHandleBar, ligma_handle_bar, GTK_TYPE_EVENT_BOX)
 
-#define parent_class gimp_handle_bar_parent_class
+#define parent_class ligma_handle_bar_parent_class
 
 
 static void
-gimp_handle_bar_class_init (GimpHandleBarClass *klass)
+ligma_handle_bar_class_init (LigmaHandleBarClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property         = gimp_handle_bar_set_property;
-  object_class->get_property         = gimp_handle_bar_get_property;
+  object_class->set_property         = ligma_handle_bar_set_property;
+  object_class->get_property         = ligma_handle_bar_get_property;
 
-  widget_class->draw                 = gimp_handle_bar_draw;
-  widget_class->button_press_event   = gimp_handle_bar_button_press;
-  widget_class->button_release_event = gimp_handle_bar_button_release;
-  widget_class->motion_notify_event  = gimp_handle_bar_motion_notify;
+  widget_class->draw                 = ligma_handle_bar_draw;
+  widget_class->button_press_event   = ligma_handle_bar_button_press;
+  widget_class->button_release_event = ligma_handle_bar_button_release;
+  widget_class->motion_notify_event  = ligma_handle_bar_motion_notify;
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation",
                                                       NULL, NULL,
                                                       GTK_TYPE_ORIENTATION,
                                                       GTK_ORIENTATION_HORIZONTAL,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_handle_bar_init (GimpHandleBar *bar)
+ligma_handle_bar_init (LigmaHandleBar *bar)
 {
   gtk_widget_add_events (GTK_WIDGET (bar),
                          GDK_BUTTON_PRESS_MASK   |
@@ -104,12 +104,12 @@ gimp_handle_bar_init (GimpHandleBar *bar)
 }
 
 static void
-gimp_handle_bar_set_property (GObject      *object,
+ligma_handle_bar_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpHandleBar *bar = GIMP_HANDLE_BAR (object);
+  LigmaHandleBar *bar = LIGMA_HANDLE_BAR (object);
 
   switch (property_id)
     {
@@ -124,12 +124,12 @@ gimp_handle_bar_set_property (GObject      *object,
 }
 
 static void
-gimp_handle_bar_get_property (GObject    *object,
+ligma_handle_bar_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpHandleBar *bar = GIMP_HANDLE_BAR (object);
+  LigmaHandleBar *bar = LIGMA_HANDLE_BAR (object);
 
   switch (property_id)
     {
@@ -144,10 +144,10 @@ gimp_handle_bar_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_handle_bar_draw (GtkWidget *widget,
+ligma_handle_bar_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GimpHandleBar *bar = GIMP_HANDLE_BAR (widget);
+  LigmaHandleBar *bar = LIGMA_HANDLE_BAR (widget);
   GtkAllocation  allocation;
   gint           x, y;
   gint           width, height;
@@ -206,10 +206,10 @@ gimp_handle_bar_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_handle_bar_button_press (GtkWidget      *widget,
+ligma_handle_bar_button_press (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpHandleBar *bar= GIMP_HANDLE_BAR (widget);
+  LigmaHandleBar *bar= LIGMA_HANDLE_BAR (widget);
   GtkAllocation  allocation;
   gint           border;
   gint           width;
@@ -252,17 +252,17 @@ gimp_handle_bar_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_handle_bar_button_release (GtkWidget      *widget,
+ligma_handle_bar_button_release (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
   return TRUE;
 }
 
 static gboolean
-gimp_handle_bar_motion_notify (GtkWidget      *widget,
+ligma_handle_bar_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
-  GimpHandleBar *bar    = GIMP_HANDLE_BAR (widget);
+  LigmaHandleBar *bar    = LIGMA_HANDLE_BAR (widget);
   GtkAllocation  allocation;
   gint           border;
   gint           width;
@@ -292,28 +292,28 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
 /*  public functions  */
 
 /**
- * gimp_handle_bar_new:
+ * ligma_handle_bar_new:
  * @orientation: whether the bar should be oriented horizontally or
  *               vertically
  *
- * Creates a new #GimpHandleBar widget.
+ * Creates a new #LigmaHandleBar widget.
  *
- * Returns: The new #GimpHandleBar widget.
+ * Returns: The new #LigmaHandleBar widget.
  **/
 GtkWidget *
-gimp_handle_bar_new (GtkOrientation  orientation)
+ligma_handle_bar_new (GtkOrientation  orientation)
 {
-  return g_object_new (GIMP_TYPE_HANDLE_BAR,
+  return g_object_new (LIGMA_TYPE_HANDLE_BAR,
                        "orientation", orientation,
                        NULL);
 }
 
 void
-gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
+ligma_handle_bar_set_adjustment (LigmaHandleBar  *bar,
                                 gint            handle_no,
                                 GtkAdjustment  *adjustment)
 {
-  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+  g_return_if_fail (LIGMA_IS_HANDLE_BAR (bar));
   g_return_if_fail (handle_no >= 0 && handle_no <= 2);
   g_return_if_fail (adjustment == NULL || GTK_IS_ADJUSTMENT (adjustment));
 
@@ -323,7 +323,7 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
   if (bar->slider_adj[handle_no])
     {
       g_signal_handlers_disconnect_by_func (bar->slider_adj[handle_no],
-                                            gimp_handle_bar_adjustment_changed,
+                                            ligma_handle_bar_adjustment_changed,
                                             bar);
 
       g_object_unref (bar->slider_adj[handle_no]);
@@ -336,22 +336,22 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
       g_object_ref (bar->slider_adj[handle_no]);
 
       g_signal_connect (bar->slider_adj[handle_no], "value-changed",
-                        G_CALLBACK (gimp_handle_bar_adjustment_changed),
+                        G_CALLBACK (ligma_handle_bar_adjustment_changed),
                         bar);
       g_signal_connect (bar->slider_adj[handle_no], "changed",
-                        G_CALLBACK (gimp_handle_bar_adjustment_changed),
+                        G_CALLBACK (ligma_handle_bar_adjustment_changed),
                         bar);
     }
 
-  gimp_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
+  ligma_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
 }
 
 void
-gimp_handle_bar_set_limits (GimpHandleBar *bar,
+ligma_handle_bar_set_limits (LigmaHandleBar *bar,
                             gdouble        lower,
                             gdouble        upper)
 {
-  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+  g_return_if_fail (LIGMA_IS_HANDLE_BAR (bar));
 
   bar->limits_set = TRUE;
   bar->lower      = lower;
@@ -361,23 +361,23 @@ gimp_handle_bar_set_limits (GimpHandleBar *bar,
 }
 
 void
-gimp_handle_bar_unset_limits (GimpHandleBar *bar)
+ligma_handle_bar_unset_limits (LigmaHandleBar *bar)
 {
-  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+  g_return_if_fail (LIGMA_IS_HANDLE_BAR (bar));
 
   bar->limits_set = FALSE;
   bar->lower      = 0.0;
   bar->upper      = 1.0;
 
-  gimp_handle_bar_adjustment_changed (NULL, bar);
+  ligma_handle_bar_adjustment_changed (NULL, bar);
 }
 
 gboolean
-gimp_handle_bar_get_limits (GimpHandleBar *bar,
+ligma_handle_bar_get_limits (LigmaHandleBar *bar,
                             gdouble       *lower,
                             gdouble       *upper)
 {
-  g_return_val_if_fail (GIMP_IS_HANDLE_BAR (bar), FALSE);
+  g_return_val_if_fail (LIGMA_IS_HANDLE_BAR (bar), FALSE);
 
   if (lower) *lower = bar->lower;
   if (upper) *upper = bar->upper;
@@ -386,12 +386,12 @@ gimp_handle_bar_get_limits (GimpHandleBar *bar,
 }
 
 void
-gimp_handle_bar_connect_events (GimpHandleBar *bar,
+ligma_handle_bar_connect_events (LigmaHandleBar *bar,
                                 GtkWidget     *event_source)
 {
   GtkWidgetClass *widget_class;
 
-  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+  g_return_if_fail (LIGMA_IS_HANDLE_BAR (bar));
   g_return_if_fail (GTK_IS_WIDGET (event_source));
 
   widget_class = GTK_WIDGET_GET_CLASS (bar);
@@ -413,8 +413,8 @@ gimp_handle_bar_connect_events (GimpHandleBar *bar,
 /*  private functions  */
 
 static void
-gimp_handle_bar_adjustment_changed (GtkAdjustment *adjustment,
-                                    GimpHandleBar *bar)
+ligma_handle_bar_adjustment_changed (GtkAdjustment *adjustment,
+                                    LigmaHandleBar *bar)
 {
   if (! bar->limits_set)
     {

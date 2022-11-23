@@ -11,7 +11,7 @@ SUBDIRS = \
 	cursors			\
 	themes			\
 	po			\
-	po-libgimp		\
+	po-libligma		\
 	po-plug-ins		\
 	po-python		\
 	po-script-fu		\
@@ -20,22 +20,22 @@ SUBDIRS = \
 	data			\
 	desktop			\
 	menus			\
-	libgimpbase		\
+	libligmabase		\
 	tools			\
 	$(PDB)			\
 	icons			\
-	libgimpcolor		\
-	libgimpmath		\
-	libgimpconfig		\
-	libgimpmodule		\
-	libgimpthumb		\
-	libgimpwidgets		\
-	libgimp			\
+	libligmacolor		\
+	libligmamath		\
+	libligmaconfig		\
+	libligmamodule		\
+	libligmathumb		\
+	libligmawidgets		\
+	libligma			\
 	app			\
 	app-tools		\
-	$(GIMP_MODULES)		\
-	$(GIMP_PLUGINS)		\
-	$(GIMP_EXTENSIONS)	\
+	$(LIGMA_MODULES)		\
+	$(LIGMA_PLUGINS)		\
+	$(LIGMA_EXTENSIONS)	\
 	etc			\
 	devel-docs		\
 	docs			\
@@ -43,9 +43,9 @@ SUBDIRS = \
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
-	gimp-@GIMP_PKGCONFIG_VERSION@.pc	\
-	gimpthumb-@GIMP_PKGCONFIG_VERSION@.pc	\
-	gimpui-@GIMP_PKGCONFIG_VERSION@.pc
+	ligma-@LIGMA_PKGCONFIG_VERSION@.pc	\
+	ligmathumb-@LIGMA_PKGCONFIG_VERSION@.pc	\
+	ligmaui-@LIGMA_PKGCONFIG_VERSION@.pc
 
 
 AUTHORS: authors.xml authors.xsl
@@ -53,9 +53,9 @@ if HAVE_XSLTPROC
 	$(XSLTPROC) -o $(@) $(top_srcdir)/authors.xsl $< || rm -f $(@)
 endif
 
-authors.md: authors.xml authors4gimp-web.xsl
+authors.md: authors.xml authors4ligma-web.xsl
 if HAVE_XSLTPROC
-	$(XSLTPROC) --stringparam today "`date --iso-8601=seconds`" -o $(@) $(top_srcdir)/authors4gimp-web.xsl $< || rm -f $(@)
+	$(XSLTPROC) --stringparam today "`date --iso-8601=seconds`" -o $(@) $(top_srcdir)/authors4ligma-web.xsl $< || rm -f $(@)
 endif
 
 EXTRA_DIST = \
@@ -152,9 +152,9 @@ git-version.h: update-git-version-header
 	if test -n "$$git_version"; then \
 	  echo "#ifndef __GIT_VERSION_H__" > "$@.tmp"; \
 	  echo "#define __GIT_VERSION_H__" >> "$@.tmp"; \
-	  echo "#define GIMP_GIT_VERSION \"$$git_version\"" >> "$@.tmp"; \
-	  echo "#define GIMP_GIT_VERSION_ABBREV \"$$git_version_abbrev\"" >> "$@.tmp"; \
-	  echo "#define GIMP_GIT_LAST_COMMIT_YEAR \"$$git_last_commit_year\"" >> "$@.tmp"; \
+	  echo "#define LIGMA_GIT_VERSION \"$$git_version\"" >> "$@.tmp"; \
+	  echo "#define LIGMA_GIT_VERSION_ABBREV \"$$git_version_abbrev\"" >> "$@.tmp"; \
+	  echo "#define LIGMA_GIT_LAST_COMMIT_YEAR \"$$git_last_commit_year\"" >> "$@.tmp"; \
 	  echo "#endif /* __GIT_VERSION_H__ */" >> "$@.tmp"; \
 	fi
 	@if ( test -f "$@.tmp" && test -f "$@" && cmp "$@.tmp" "$@" > /dev/null ); then \

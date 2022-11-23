@@ -11,7 +11,7 @@ foreach icon : source_icons
       gtk_encode_symbolic_svg, '-o', '@OUTDIR@', '@INPUT@', icons_dir
     ],
     install: true,
-    install_dir: gimpiconsdir / theme / icons_dir / 'apps',
+    install_dir: ligmaiconsdir / theme / icons_dir / 'apps',
   )
 
 endforeach

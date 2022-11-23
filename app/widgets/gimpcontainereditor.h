@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainereditor.h
- * Copyright (C) 2001-2011 Michael Natterer <mitch@gimp.org>
+ * ligmacontainereditor.h
+ * Copyright (C) 2001-2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,50 +18,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_EDITOR_H__
-#define __GIMP_CONTAINER_EDITOR_H__
+#ifndef __LIGMA_CONTAINER_EDITOR_H__
+#define __LIGMA_CONTAINER_EDITOR_H__
 
 
-#define GIMP_TYPE_CONTAINER_EDITOR            (gimp_container_editor_get_type ())
-#define GIMP_CONTAINER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditor))
-#define GIMP_CONTAINER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
-#define GIMP_IS_CONTAINER_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_EDITOR))
-#define GIMP_IS_CONTAINER_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_EDITOR))
-#define GIMP_CONTAINER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
+#define LIGMA_TYPE_CONTAINER_EDITOR            (ligma_container_editor_get_type ())
+#define LIGMA_CONTAINER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTAINER_EDITOR, LigmaContainerEditor))
+#define LIGMA_CONTAINER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTAINER_EDITOR, LigmaContainerEditorClass))
+#define LIGMA_IS_CONTAINER_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTAINER_EDITOR))
+#define LIGMA_IS_CONTAINER_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTAINER_EDITOR))
+#define LIGMA_CONTAINER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTAINER_EDITOR, LigmaContainerEditorClass))
 
 
-typedef struct _GimpContainerEditorPrivate GimpContainerEditorPrivate;
-typedef struct _GimpContainerEditorClass   GimpContainerEditorClass;
+typedef struct _LigmaContainerEditorPrivate LigmaContainerEditorPrivate;
+typedef struct _LigmaContainerEditorClass   LigmaContainerEditorClass;
 
-struct _GimpContainerEditor
+struct _LigmaContainerEditor
 {
   GtkBox             parent_instance;
 
-  GimpContainerView *view;
+  LigmaContainerView *view;
 
-  GimpContainerEditorPrivate *priv;
+  LigmaContainerEditorPrivate *priv;
 };
 
-struct _GimpContainerEditorClass
+struct _LigmaContainerEditorClass
 {
   GtkBoxClass  parent_class;
 
-  void (* select_item)   (GimpContainerEditor *editor,
-                          GimpViewable        *object);
-  void (* activate_item) (GimpContainerEditor *editor,
-                          GimpViewable        *object);
+  void (* select_item)   (LigmaContainerEditor *editor,
+                          LigmaViewable        *object);
+  void (* activate_item) (LigmaContainerEditor *editor,
+                          LigmaViewable        *object);
 };
 
 
-GType            gimp_container_editor_get_type           (void) G_GNUC_CONST;
+GType            ligma_container_editor_get_type           (void) G_GNUC_CONST;
 
-GtkSelectionMode gimp_container_editor_get_selection_mode (GimpContainerEditor *editor);
-void             gimp_container_editor_set_selection_mode (GimpContainerEditor *editor,
+GtkSelectionMode ligma_container_editor_get_selection_mode (LigmaContainerEditor *editor);
+void             ligma_container_editor_set_selection_mode (LigmaContainerEditor *editor,
                                                            GtkSelectionMode     mode);
 
-void             gimp_container_editor_bind_to_async_set  (GimpContainerEditor *editor,
-                                                           GimpAsyncSet        *async_set,
+void             ligma_container_editor_bind_to_async_set  (LigmaContainerEditor *editor,
+                                                           LigmaAsyncSet        *async_set,
                                                            const gchar         *message);
 
 
-#endif  /*  __GIMP_CONTAINER_EDITOR_H__  */
+#endif  /*  __LIGMA_CONTAINER_EDITOR_H__  */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,43 +15,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONVOLVE_TOOL_H__
-#define __GIMP_CONVOLVE_TOOL_H__
+#ifndef __LIGMA_CONVOLVE_TOOL_H__
+#define __LIGMA_CONVOLVE_TOOL_H__
 
 
-#include "gimpbrushtool.h"
+#include "ligmabrushtool.h"
 
 
-#define GIMP_TYPE_CONVOLVE_TOOL            (gimp_convolve_tool_get_type ())
-#define GIMP_CONVOLVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveTool))
-#define GIMP_CONVOLVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
-#define GIMP_IS_CONVOLVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONVOLVE_TOOL))
-#define GIMP_IS_CONVOLVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONVOLVE_TOOL))
-#define GIMP_CONVOLVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
+#define LIGMA_TYPE_CONVOLVE_TOOL            (ligma_convolve_tool_get_type ())
+#define LIGMA_CONVOLVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONVOLVE_TOOL, LigmaConvolveTool))
+#define LIGMA_CONVOLVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONVOLVE_TOOL, LigmaConvolveToolClass))
+#define LIGMA_IS_CONVOLVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONVOLVE_TOOL))
+#define LIGMA_IS_CONVOLVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONVOLVE_TOOL))
+#define LIGMA_CONVOLVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONVOLVE_TOOL, LigmaConvolveToolClass))
 
-#define GIMP_CONVOLVE_TOOL_GET_OPTIONS(t)  (GIMP_CONVOLVE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_CONVOLVE_TOOL_GET_OPTIONS(t)  (LIGMA_CONVOLVE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpConvolveTool      GimpConvolveTool;
-typedef struct _GimpConvolveToolClass GimpConvolveToolClass;
+typedef struct _LigmaConvolveTool      LigmaConvolveTool;
+typedef struct _LigmaConvolveToolClass LigmaConvolveToolClass;
 
-struct _GimpConvolveTool
+struct _LigmaConvolveTool
 {
-  GimpBrushTool parent_instance;
+  LigmaBrushTool parent_instance;
 
   gboolean      toggled;
 };
 
-struct _GimpConvolveToolClass
+struct _LigmaConvolveToolClass
 {
-  GimpBrushToolClass parent_class;
+  LigmaBrushToolClass parent_class;
 };
 
 
-void    gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_convolve_tool_register (LigmaToolRegisterCallback  callback,
                                      gpointer                  data);
 
-GType   gimp_convolve_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_convolve_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CONVOLVE_TOOL_H__  */
+#endif  /*  __LIGMA_CONVOLVE_TOOL_H__  */

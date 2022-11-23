@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -24,15 +24,15 @@
 
 
 gboolean   save_layer     (GFile         *file,
-                           GimpImage     *image,
-                           GimpDrawable  *drawable,
+                           LigmaImage     *image,
+                           LigmaDrawable  *drawable,
                            GObject       *config,
                            GError       **error);
 
 gboolean   save_animation (GFile         *file,
-                           GimpImage     *image,
+                           LigmaImage     *image,
                            gint           n_drawables,
-                           GimpDrawable **drawables,
+                           LigmaDrawable **drawables,
                            GObject       *config,
                            GError       **error);
 

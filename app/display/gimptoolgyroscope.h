@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolgyroscope.h
+ * ligmatoolgyroscope.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_GYROSCOPE_H__
-#define __GIMP_TOOL_GYROSCOPE_H__
+#ifndef __LIGMA_TOOL_GYROSCOPE_H__
+#define __LIGMA_TOOL_GYROSCOPE_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-#define GIMP_TYPE_TOOL_GYROSCOPE            (gimp_tool_gyroscope_get_type ())
-#define GIMP_TOOL_GYROSCOPE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_GYROSCOPE, GimpToolGyroscope))
-#define GIMP_TOOL_GYROSCOPE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_GYROSCOPE, GimpToolGyroscopeClass))
-#define GIMP_IS_TOOL_GYROSCOPE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_GYROSCOPE))
-#define GIMP_IS_TOOL_GYROSCOPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_GYROSCOPE))
-#define GIMP_TOOL_GYROSCOPE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_GYROSCOPE, GimpToolGyroscopeClass))
+#define LIGMA_TYPE_TOOL_GYROSCOPE            (ligma_tool_gyroscope_get_type ())
+#define LIGMA_TOOL_GYROSCOPE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_GYROSCOPE, LigmaToolGyroscope))
+#define LIGMA_TOOL_GYROSCOPE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_GYROSCOPE, LigmaToolGyroscopeClass))
+#define LIGMA_IS_TOOL_GYROSCOPE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_GYROSCOPE))
+#define LIGMA_IS_TOOL_GYROSCOPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_GYROSCOPE))
+#define LIGMA_TOOL_GYROSCOPE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_GYROSCOPE, LigmaToolGyroscopeClass))
 
 
-typedef struct _GimpToolGyroscope        GimpToolGyroscope;
-typedef struct _GimpToolGyroscopePrivate GimpToolGyroscopePrivate;
-typedef struct _GimpToolGyroscopeClass   GimpToolGyroscopeClass;
+typedef struct _LigmaToolGyroscope        LigmaToolGyroscope;
+typedef struct _LigmaToolGyroscopePrivate LigmaToolGyroscopePrivate;
+typedef struct _LigmaToolGyroscopeClass   LigmaToolGyroscopeClass;
 
-struct _GimpToolGyroscope
+struct _LigmaToolGyroscope
 {
-  GimpToolWidget            parent_instance;
+  LigmaToolWidget            parent_instance;
 
-  GimpToolGyroscopePrivate *private;
+  LigmaToolGyroscopePrivate *private;
 };
 
-struct _GimpToolGyroscopeClass
+struct _LigmaToolGyroscopeClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 };
 
 
-GType            gimp_tool_gyroscope_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_gyroscope_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_gyroscope_new      (GimpDisplayShell *shell);
+LigmaToolWidget * ligma_tool_gyroscope_new      (LigmaDisplayShell *shell);
 
 
-#endif /* __GIMP_TOOL_GYROSCOPE_H__ */
+#endif /* __LIGMA_TOOL_GYROSCOPE_H__ */

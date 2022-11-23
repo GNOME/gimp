@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,40 +22,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-#include "core/gimpprogress.h"
-#include "core/gimptemplate.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmatemplate.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
 #include "file/file-open.h"
 #include "file/file-save.h"
-#include "file/gimp-file.h"
+#include "file/ligma-file.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpclipboard.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpexportdialog.h"
-#include "widgets/gimpfiledialog.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpopendialog.h"
-#include "widgets/gimpsavedialog.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaclipboard.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmaexportdialog.h"
+#include "widgets/ligmafiledialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmaopendialog.h"
+#include "widgets/ligmasavedialog.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplay-foreach.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/file-save-dialog.h"
@@ -63,28 +63,28 @@
 #include "actions.h"
 #include "file-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void        file_open_dialog_show        (Gimp         *gimp,
+static void        file_open_dialog_show        (Ligma         *ligma,
                                                  GtkWidget    *parent,
                                                  const gchar  *title,
-                                                 GimpImage    *image,
+                                                 LigmaImage    *image,
                                                  GFile        *file,
                                                  gboolean      open_as_layers);
-static GtkWidget * file_save_dialog_show        (Gimp         *gimp,
-                                                 GimpImage    *image,
+static GtkWidget * file_save_dialog_show        (Ligma         *ligma,
+                                                 LigmaImage    *image,
                                                  GtkWidget    *parent,
                                                  const gchar  *title,
                                                  gboolean      save_a_copy,
                                                  gboolean      close_after_saving,
-                                                 GimpDisplay  *display);
-static GtkWidget * file_export_dialog_show      (Gimp         *gimp,
-                                                 GimpImage    *image,
+                                                 LigmaDisplay  *display);
+static GtkWidget * file_export_dialog_show      (Ligma         *ligma,
+                                                 LigmaImage    *image,
                                                  GtkWidget    *parent,
-                                                 GimpDisplay  *display);
+                                                 LigmaDisplay  *display);
 static void        file_save_dialog_response    (GtkWidget    *dialog,
                                                  gint          response_id,
                                                  gpointer      data);
@@ -96,7 +96,7 @@ static void        file_new_template_callback   (GtkWidget    *widget,
                                                  gpointer      data);
 static void        file_revert_confirm_response (GtkWidget    *dialog,
                                                  gint          response_id,
-                                                 GimpDisplay  *display);
+                                                 LigmaDisplay  *display);
 
 
 
@@ -104,89 +104,89 @@ static void        file_revert_confirm_response (GtkWidget    *dialog,
 
 
 void
-file_open_cmd_callback (GimpAction *action,
+file_open_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  Gimp        *gimp;
+  Ligma        *ligma;
   GtkWidget   *widget;
-  GimpImage   *image;
-  return_if_no_gimp (gimp, data);
+  LigmaImage   *image;
+  return_if_no_ligma (ligma, data);
   return_if_no_widget (widget, data);
 
   image = action_data_get_image (data);
 
-  file_open_dialog_show (gimp, widget,
+  file_open_dialog_show (ligma, widget,
                          _("Open Image"),
                          image, NULL, FALSE);
 }
 
 void
-file_open_as_layers_cmd_callback (GimpAction *action,
+file_open_as_layers_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  Gimp        *gimp;
+  Ligma        *ligma;
   GtkWidget   *widget;
-  GimpDisplay *display;
-  GimpImage   *image = NULL;
-  return_if_no_gimp (gimp, data);
+  LigmaDisplay *display;
+  LigmaImage   *image = NULL;
+  return_if_no_ligma (ligma, data);
   return_if_no_widget (widget, data);
 
   display = action_data_get_display (data);
 
   if (display)
-    image = gimp_display_get_image (display);
+    image = ligma_display_get_image (display);
 
-  file_open_dialog_show (gimp, widget,
+  file_open_dialog_show (ligma, widget,
                          _("Open Image as Layers"),
                          image, NULL, TRUE);
 }
 
 void
-file_open_location_cmd_callback (GimpAction *action,
+file_open_location_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                  gimp_widget_get_monitor (widget),
+  ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                  ligma_widget_get_monitor (widget),
                                   NULL /*ui_manager*/,
                                   widget,
-                                  "gimp-file-open-location-dialog", -1, TRUE);
+                                  "ligma-file-open-location-dialog", -1, TRUE);
 }
 
 void
-file_open_recent_cmd_callback (GimpAction *action,
+file_open_recent_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  Gimp          *gimp;
-  GimpImagefile *imagefile;
+  Ligma          *ligma;
+  LigmaImagefile *imagefile;
   gint           index;
   gint           num_entries;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
 
   index = g_variant_get_int32 (value);
 
-  num_entries = gimp_container_get_n_children (gimp->documents);
+  num_entries = ligma_container_get_n_children (ligma->documents);
 
   if (index >= num_entries)
     return;
 
-  imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_index (gimp->documents, index);
+  imagefile = (LigmaImagefile *)
+    ligma_container_get_child_by_index (ligma->documents, index);
 
   if (imagefile)
     {
       GFile             *file;
-      GimpDisplay       *display;
+      LigmaDisplay       *display;
       GtkWidget         *widget;
-      GimpProgress      *progress;
-      GimpImage         *image;
-      GimpPDBStatusType  status;
+      LigmaProgress      *progress;
+      LigmaImage         *image;
+      LigmaPDBStatusType  status;
       GError            *error = NULL;
       return_if_no_display (display, data);
       return_if_no_widget (widget, data);
@@ -194,22 +194,22 @@ file_open_recent_cmd_callback (GimpAction *action,
       g_object_ref (display);
       g_object_ref (imagefile);
 
-      file = gimp_imagefile_get_file (imagefile);
+      file = ligma_imagefile_get_file (imagefile);
 
-      progress = gimp_display_get_image (display) ?
-                 NULL : GIMP_PROGRESS (display);
+      progress = ligma_display_get_image (display) ?
+                 NULL : LIGMA_PROGRESS (display);
 
-      image = file_open_with_display (gimp, action_data_get_context (data),
+      image = file_open_with_display (ligma, action_data_get_context (data),
                                       progress,
                                       file, FALSE,
-                                      G_OBJECT (gimp_widget_get_monitor (widget)),
+                                      G_OBJECT (ligma_widget_get_monitor (widget)),
                                       &status, &error);
 
-      if (! image && status != GIMP_PDB_CANCEL)
+      if (! image && status != LIGMA_PDB_CANCEL)
         {
-          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+          ligma_message (ligma, G_OBJECT (display), LIGMA_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
+                        ligma_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
 
@@ -219,27 +219,27 @@ file_open_recent_cmd_callback (GimpAction *action,
 }
 
 void
-file_save_cmd_callback (GimpAction *action,
+file_save_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  Gimp         *gimp;
-  GimpDisplay  *display;
-  GimpImage    *image;
+  Ligma         *ligma;
+  LigmaDisplay  *display;
+  LigmaImage    *image;
   GList        *drawables;
   GtkWidget    *widget;
-  GimpSaveMode  save_mode;
+  LigmaSaveMode  save_mode;
   GFile        *file  = NULL;
   gboolean      saved = FALSE;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  save_mode = (GimpSaveMode) g_variant_get_int32 (value);
+  save_mode = (LigmaSaveMode) g_variant_get_int32 (value);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
   if (! drawables)
     {
       g_list_free (drawables);
@@ -247,35 +247,35 @@ file_save_cmd_callback (GimpAction *action,
     }
   g_list_free (drawables);
 
-  file = gimp_image_get_file (image);
+  file = ligma_image_get_file (image);
 
   switch (save_mode)
     {
-    case GIMP_SAVE_MODE_SAVE:
-    case GIMP_SAVE_MODE_SAVE_AND_CLOSE:
+    case LIGMA_SAVE_MODE_SAVE:
+    case LIGMA_SAVE_MODE_SAVE_AND_CLOSE:
       /*  Only save if the image has been modified, or if it is new.  */
-      if ((gimp_image_is_dirty (image) ||
-           ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag) ||
+      if ((ligma_image_is_dirty (image) ||
+           ! LIGMA_GUI_CONFIG (image->ligma->config)->trust_dirty_flag) ||
           file == NULL)
         {
-          GimpPlugInProcedure *save_proc = gimp_image_get_save_proc (image);
+          LigmaPlugInProcedure *save_proc = ligma_image_get_save_proc (image);
 
           if (file && ! save_proc)
             {
               save_proc =
-                gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                          GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                          LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                                                           file, NULL);
             }
 
           if (file && save_proc)
             {
-              saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
-                                                   gimp, image, file,
+              saved = file_save_dialog_save_image (LIGMA_PROGRESS (display),
+                                                   ligma, image, file,
                                                    save_proc,
-                                                   GIMP_RUN_WITH_LAST_VALS,
+                                                   LIGMA_RUN_WITH_LAST_VALS,
                                                    TRUE, FALSE, FALSE,
-                                                   gimp_image_get_xcf_compression (image),
+                                                   ligma_image_get_xcf_compression (image),
                                                    TRUE);
               break;
             }
@@ -284,53 +284,53 @@ file_save_cmd_callback (GimpAction *action,
         }
       else
         {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (display), GIMP_MESSAGE_INFO,
+          ligma_message_literal (image->ligma,
+                                G_OBJECT (display), LIGMA_MESSAGE_INFO,
                                 _("No changes need to be saved"));
           saved = TRUE;
           break;
         }
 
-    case GIMP_SAVE_MODE_SAVE_AS:
-      file_save_dialog_show (gimp, image, widget,
+    case LIGMA_SAVE_MODE_SAVE_AS:
+      file_save_dialog_show (ligma, image, widget,
                              _("Save Image"), FALSE,
-                             save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE, display);
+                             save_mode == LIGMA_SAVE_MODE_SAVE_AND_CLOSE, display);
       break;
 
-    case GIMP_SAVE_MODE_SAVE_A_COPY:
-      file_save_dialog_show (gimp, image, widget,
+    case LIGMA_SAVE_MODE_SAVE_A_COPY:
+      file_save_dialog_show (ligma, image, widget,
                              _("Save a Copy of the Image"), TRUE,
                              FALSE, display);
       break;
 
-    case GIMP_SAVE_MODE_EXPORT_AS:
-      file_export_dialog_show (gimp, image, widget, display);
+    case LIGMA_SAVE_MODE_EXPORT_AS:
+      file_export_dialog_show (ligma, image, widget, display);
       break;
 
-    case GIMP_SAVE_MODE_EXPORT:
-    case GIMP_SAVE_MODE_OVERWRITE:
+    case LIGMA_SAVE_MODE_EXPORT:
+    case LIGMA_SAVE_MODE_OVERWRITE:
       {
         GFile               *file        = NULL;
-        GimpPlugInProcedure *export_proc = NULL;
+        LigmaPlugInProcedure *export_proc = NULL;
         gboolean             overwrite   = FALSE;
 
-        if (save_mode == GIMP_SAVE_MODE_EXPORT)
+        if (save_mode == LIGMA_SAVE_MODE_EXPORT)
           {
-            file        = gimp_image_get_exported_file (image);
-            export_proc = gimp_image_get_export_proc (image);
+            file        = ligma_image_get_exported_file (image);
+            export_proc = ligma_image_get_export_proc (image);
 
             if (! file)
               {
                 /* Behave as if Export As... was invoked */
-                file_export_dialog_show (gimp, image, widget, display);
+                file_export_dialog_show (ligma, image, widget, display);
                 break;
               }
 
             overwrite = FALSE;
           }
-        else if (save_mode == GIMP_SAVE_MODE_OVERWRITE)
+        else if (save_mode == LIGMA_SAVE_MODE_OVERWRITE)
           {
-            file = gimp_image_get_imported_file (image);
+            file = ligma_image_get_imported_file (image);
 
             overwrite = TRUE;
           }
@@ -338,17 +338,17 @@ file_save_cmd_callback (GimpAction *action,
         if (file && ! export_proc)
           {
             export_proc =
-              gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+              ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                         file, NULL);
           }
 
         if (file && export_proc)
           {
-            saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
-                                                 gimp, image, file,
+            saved = file_save_dialog_save_image (LIGMA_PROGRESS (display),
+                                                 ligma, image, file,
                                                  export_proc,
-                                                 GIMP_RUN_WITH_LAST_VALS,
+                                                 LIGMA_RUN_WITH_LAST_VALS,
                                                  FALSE,
                                                  overwrite, ! overwrite,
                                                  FALSE, TRUE);
@@ -357,30 +357,30 @@ file_save_cmd_callback (GimpAction *action,
       break;
     }
 
-  if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
+  if (save_mode == LIGMA_SAVE_MODE_SAVE_AND_CLOSE &&
       saved &&
-      ! gimp_image_is_dirty (image))
+      ! ligma_image_is_dirty (image))
     {
-      gimp_display_close (display);
+      ligma_display_close (display);
     }
 }
 
 void
-file_create_template_cmd_callback (GimpAction *action,
+file_create_template_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  dialog = gimp_query_string_box (_("Create New Template"),
-                                  GTK_WIDGET (gimp_display_get_shell (display)),
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_FILE_CREATE_TEMPLATE,
+  dialog = ligma_query_string_box (_("Create New Template"),
+                                  GTK_WIDGET (ligma_display_get_shell (display)),
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_FILE_CREATE_TEMPLATE,
                                   _("Enter a name for this template"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
@@ -390,50 +390,50 @@ file_create_template_cmd_callback (GimpAction *action,
 }
 
 void
-file_revert_cmd_callback (GimpAction *action,
+file_revert_cmd_callback (LigmaAction *action,
                           GVariant   *value,
                           gpointer    data)
 {
-  GimpDisplay *display;
-  GimpImage   *image;
+  LigmaDisplay *display;
+  LigmaImage   *image;
   GtkWidget   *dialog;
   GFile       *file;
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  file = gimp_image_get_file (image);
+  file = ligma_image_get_file (image);
 
   if (! file)
-    file = gimp_image_get_imported_file (image);
+    file = ligma_image_get_imported_file (image);
 
   if (! file)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (display), GIMP_MESSAGE_ERROR,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (display), LIGMA_MESSAGE_ERROR,
                             _("Revert failed. "
                               "No file name associated with this image."));
       return;
     }
 
-#define REVERT_DIALOG_KEY "gimp-revert-confirm-dialog"
+#define REVERT_DIALOG_KEY "ligma-revert-confirm-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), REVERT_DIALOG_KEY);
 
   if (! dialog)
     {
       dialog =
-        gimp_message_dialog_new (_("Revert Image"), GIMP_ICON_DOCUMENT_REVERT,
-                                 GTK_WIDGET (gimp_display_get_shell (display)),
+        ligma_message_dialog_new (_("Revert Image"), LIGMA_ICON_DOCUMENT_REVERT,
+                                 GTK_WIDGET (ligma_display_get_shell (display)),
                                  0,
-                                 gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
+                                 ligma_standard_help_func, LIGMA_HELP_FILE_REVERT,
 
                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
                                  _("_Revert"), GTK_RESPONSE_OK,
 
                                  NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -446,12 +446,12 @@ file_revert_cmd_callback (GimpAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         display);
 
-      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+      ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                          _("Revert '%s' to '%s'?"),
-                                         gimp_image_get_display_name (image),
-                                         gimp_file_get_utf8_name (file));
+                                         ligma_image_get_display_name (image),
+                                         ligma_file_get_utf8_name (file));
 
-      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+      ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                  _("By reverting the image to the state saved "
                                    "on disk, you will lose all changes, "
                                    "including all undo information."));
@@ -463,77 +463,77 @@ file_revert_cmd_callback (GimpAction *action,
 }
 
 void
-file_close_all_cmd_callback (GimpAction *action,
+file_close_all_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  Gimp *gimp;
-  return_if_no_gimp (gimp, data);
+  Ligma *ligma;
+  return_if_no_ligma (ligma, data);
 
-  if (! gimp_displays_dirty (gimp))
+  if (! ligma_displays_dirty (ligma))
     {
-      gimp_displays_close (gimp);
+      ligma_displays_close (ligma);
     }
   else
     {
       GtkWidget *widget;
       return_if_no_widget (widget, data);
 
-      gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                        gimp_widget_get_monitor (widget),
+      ligma_dialog_factory_dialog_raise (ligma_dialog_factory_get_singleton (),
+                                        ligma_widget_get_monitor (widget),
                                         widget,
-                                        "gimp-close-all-dialog", -1);
+                                        "ligma-close-all-dialog", -1);
     }
 }
 
 void
-file_copy_location_cmd_callback (GimpAction *action,
+file_copy_location_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  Gimp         *gimp;
-  GimpDisplay  *display;
-  GimpImage    *image;
+  Ligma         *ligma;
+  LigmaDisplay  *display;
+  LigmaImage    *image;
   GFile        *file;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  file = gimp_image_get_any_file (image);
+  file = ligma_image_get_any_file (image);
 
   if (file)
     {
       gchar *uri = g_file_get_uri (file);
 
-      gimp_clipboard_set_text (gimp, uri);
+      ligma_clipboard_set_text (ligma, uri);
       g_free (uri);
     }
 }
 
 void
-file_show_in_file_manager_cmd_callback (GimpAction *action,
+file_show_in_file_manager_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  Gimp         *gimp;
-  GimpDisplay  *display;
-  GimpImage    *image;
+  Ligma         *ligma;
+  LigmaDisplay  *display;
+  LigmaImage    *image;
   GFile        *file;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  file = gimp_image_get_any_file (image);
+  file = ligma_image_get_any_file (image);
 
   if (file)
     {
       GError *error = NULL;
 
-      if (! gimp_file_show_in_file_manager (file, &error))
+      if (! ligma_file_show_in_file_manager (file, &error))
         {
-          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+          ligma_message (ligma, G_OBJECT (display), LIGMA_MESSAGE_ERROR,
                         _("Can't show file in file manager: %s"),
                         error->message);
           g_clear_error (&error);
@@ -542,22 +542,22 @@ file_show_in_file_manager_cmd_callback (GimpAction *action,
 }
 
 void
-file_quit_cmd_callback (GimpAction *action,
+file_quit_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  Gimp *gimp;
-  return_if_no_gimp (gimp, data);
+  Ligma *ligma;
+  return_if_no_ligma (ligma, data);
 
-  gimp_exit (gimp, FALSE);
+  ligma_exit (ligma, FALSE);
 }
 
 void
-file_file_open_dialog (Gimp      *gimp,
+file_file_open_dialog (Ligma      *ligma,
                        GFile     *file,
                        GtkWidget *parent)
 {
-  file_open_dialog_show (gimp, parent,
+  file_open_dialog_show (ligma, parent,
                          _("Open Image"),
                          NULL, file, FALSE);
 }
@@ -566,43 +566,43 @@ file_file_open_dialog (Gimp      *gimp,
 /*  private functions  */
 
 static void
-file_open_dialog_show (Gimp        *gimp,
+file_open_dialog_show (Ligma        *ligma,
                        GtkWidget   *parent,
                        const gchar *title,
-                       GimpImage   *image,
+                       LigmaImage   *image,
                        GFile       *file,
                        gboolean     open_as_layers)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                           gimp_widget_get_monitor (parent),
+  dialog = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                           ligma_widget_get_monitor (parent),
                                            NULL /*ui_manager*/,
                                            parent,
-                                           "gimp-file-open-dialog", -1, FALSE);
+                                           "ligma-file-open-dialog", -1, FALSE);
 
   if (dialog)
     {
       if (! file && image)
-        file = gimp_image_get_file (image);
+        file = ligma_image_get_file (image);
 
       if (! file)
-        file = g_object_get_data (G_OBJECT (gimp),
-                                  GIMP_FILE_OPEN_LAST_FILE_KEY);
+        file = g_object_get_data (G_OBJECT (ligma),
+                                  LIGMA_FILE_OPEN_LAST_FILE_KEY);
 
       if (file)
         {
           gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
         }
-      else if (gimp->default_folder)
+      else if (ligma->default_folder)
         {
           gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                                    gimp->default_folder, NULL);
+                                                    ligma->default_folder, NULL);
         }
 
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-      gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (dialog),
+      ligma_open_dialog_set_image (LIGMA_OPEN_DIALOG (dialog),
                                   image, open_as_layers);
 
       gtk_window_set_transient_for (GTK_WINDOW (dialog),
@@ -613,27 +613,27 @@ file_open_dialog_show (Gimp        *gimp,
 }
 
 static GtkWidget *
-file_save_dialog_show (Gimp        *gimp,
-                       GimpImage   *image,
+file_save_dialog_show (Ligma        *ligma,
+                       LigmaImage   *image,
                        GtkWidget   *parent,
                        const gchar *title,
                        gboolean     save_a_copy,
                        gboolean     close_after_saving,
-                       GimpDisplay *display)
+                       LigmaDisplay *display)
 {
   GtkWidget *dialog;
 
-#define SAVE_DIALOG_KEY "gimp-file-save-dialog"
+#define SAVE_DIALOG_KEY "ligma-file-save-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), SAVE_DIALOG_KEY);
 
   if (! dialog)
     {
-      dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                               gimp_widget_get_monitor (parent),
+      dialog = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                               ligma_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
                                                parent,
-                                               "gimp-file-save-dialog",
+                                               "ligma-file-save-dialog",
                                                -1, FALSE);
 
       if (dialog)
@@ -656,9 +656,9 @@ file_save_dialog_show (Gimp        *gimp,
     {
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-      gimp_save_dialog_set_image (GIMP_SAVE_DIALOG (dialog),
+      ligma_save_dialog_set_image (LIGMA_SAVE_DIALOG (dialog),
                                   image, save_a_copy,
-                                  close_after_saving, GIMP_OBJECT (display));
+                                  close_after_saving, LIGMA_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -673,7 +673,7 @@ file_save_dialog_response (GtkWidget *dialog,
 {
   if (response_id == FILE_SAVE_RESPONSE_OTHER_DIALOG)
     {
-      GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
+      LigmaFileDialog *file_dialog = LIGMA_FILE_DIALOG (dialog);
       GtkWindow      *parent;
       GtkWidget      *other;
       GFile          *file;
@@ -682,12 +682,12 @@ file_save_dialog_response (GtkWidget *dialog,
 
       parent   = gtk_window_get_transient_for (GTK_WINDOW (dialog));
       file     = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
-      folder   = g_path_get_dirname (gimp_file_get_utf8_name (file));
-      basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      folder   = g_path_get_dirname (ligma_file_get_utf8_name (file));
+      basename = g_path_get_basename (ligma_file_get_utf8_name (file));
       g_object_unref (file);
 
-      other = file_export_dialog_show (GIMP_FILE_DIALOG (file_dialog)->image->gimp,
-                                       GIMP_FILE_DIALOG (file_dialog)->image,
+      other = file_export_dialog_show (LIGMA_FILE_DIALOG (file_dialog)->image->ligma,
+                                       LIGMA_FILE_DIALOG (file_dialog)->image,
                                        GTK_WIDGET (parent), NULL);
 
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (other), folder);
@@ -699,24 +699,24 @@ file_save_dialog_response (GtkWidget *dialog,
 }
 
 static GtkWidget *
-file_export_dialog_show (Gimp        *gimp,
-                         GimpImage   *image,
+file_export_dialog_show (Ligma        *ligma,
+                         LigmaImage   *image,
                          GtkWidget   *parent,
-                         GimpDisplay *display)
+                         LigmaDisplay *display)
 {
   GtkWidget *dialog;
 
-#define EXPORT_DIALOG_KEY "gimp-file-export-dialog"
+#define EXPORT_DIALOG_KEY "ligma-file-export-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
 
   if (! dialog)
     {
-      dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                               gimp_widget_get_monitor (parent),
+      dialog = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                               ligma_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
                                                parent,
-                                               "gimp-file-export-dialog",
+                                               "ligma-file-export-dialog",
                                                -1, FALSE);
 
       if (dialog)
@@ -737,8 +737,8 @@ file_export_dialog_show (Gimp        *gimp,
 
   if (dialog)
     {
-      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog), image,
-                                    GIMP_OBJECT (display));
+      ligma_export_dialog_set_image (LIGMA_EXPORT_DIALOG (dialog), image,
+                                    LIGMA_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -753,7 +753,7 @@ file_export_dialog_response (GtkWidget *dialog,
 {
   if (response_id == FILE_SAVE_RESPONSE_OTHER_DIALOG)
     {
-      GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
+      LigmaFileDialog *file_dialog = LIGMA_FILE_DIALOG (dialog);
       GtkWindow      *parent;
       GtkWidget      *other;
       GFile          *file;
@@ -762,12 +762,12 @@ file_export_dialog_response (GtkWidget *dialog,
 
       parent   = gtk_window_get_transient_for (GTK_WINDOW (dialog));
       file     = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
-      folder   = g_path_get_dirname (gimp_file_get_utf8_name (file));
-      basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      folder   = g_path_get_dirname (ligma_file_get_utf8_name (file));
+      basename = g_path_get_basename (ligma_file_get_utf8_name (file));
       g_object_unref (file);
 
-      other = file_save_dialog_show (GIMP_FILE_DIALOG (file_dialog)->image->gimp,
-                                     GIMP_FILE_DIALOG (file_dialog)->image,
+      other = file_save_dialog_show (LIGMA_FILE_DIALOG (file_dialog)->image->ligma,
+                                     LIGMA_FILE_DIALOG (file_dialog)->image,
                                      GTK_WIDGET (parent),
                                      _("Save Image"),
                                      FALSE, FALSE, NULL);
@@ -785,61 +785,61 @@ file_new_template_callback (GtkWidget   *widget,
                             const gchar *name,
                             gpointer     data)
 {
-  GimpTemplate *template;
-  GimpImage    *image;
+  LigmaTemplate *template;
+  LigmaImage    *image;
 
-  image = (GimpImage *) data;
+  image = (LigmaImage *) data;
 
   if (! (name && strlen (name)))
     name = _("(Unnamed Template)");
 
-  template = gimp_template_new (name);
-  gimp_template_set_from_image (template, image);
-  gimp_container_add (image->gimp->templates, GIMP_OBJECT (template));
+  template = ligma_template_new (name);
+  ligma_template_set_from_image (template, image);
+  ligma_container_add (image->ligma->templates, LIGMA_OBJECT (template));
   g_object_unref (template);
 }
 
 static void
 file_revert_confirm_response (GtkWidget   *dialog,
                               gint         response_id,
-                              GimpDisplay *display)
+                              LigmaDisplay *display)
 {
-  GimpImage *old_image = gimp_display_get_image (display);
+  LigmaImage *old_image = ligma_display_get_image (display);
 
   gtk_widget_destroy (dialog);
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      Gimp              *gimp = old_image->gimp;
-      GimpImage         *new_image;
+      Ligma              *ligma = old_image->ligma;
+      LigmaImage         *new_image;
       GFile             *file;
-      GimpPDBStatusType  status;
+      LigmaPDBStatusType  status;
       GError            *error = NULL;
 
-      file = gimp_image_get_file (old_image);
+      file = ligma_image_get_file (old_image);
 
       if (! file)
-        file = gimp_image_get_imported_file (old_image);
+        file = ligma_image_get_imported_file (old_image);
 
-      new_image = file_open_image (gimp, gimp_get_user_context (gimp),
-                                   GIMP_PROGRESS (display),
+      new_image = file_open_image (ligma, ligma_get_user_context (ligma),
+                                   LIGMA_PROGRESS (display),
                                    file, FALSE, NULL,
-                                   GIMP_RUN_INTERACTIVE,
+                                   LIGMA_RUN_INTERACTIVE,
                                    &status, NULL, &error);
 
       if (new_image)
         {
-          gimp_displays_reconnect (gimp, old_image, new_image);
-          gimp_image_flush (new_image);
+          ligma_displays_reconnect (ligma, old_image, new_image);
+          ligma_image_flush (new_image);
 
           /*  the displays own the image now  */
           g_object_unref (new_image);
         }
-      else if (status != GIMP_PDB_CANCEL)
+      else if (status != LIGMA_PDB_CANCEL)
         {
-          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+          ligma_message (ligma, G_OBJECT (display), LIGMA_MESSAGE_ERROR,
                         _("Reverting to '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
+                        ligma_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
     }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpidtable.h
+ * ligmaidtable.h
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,51 +18,51 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ID_TABLE_H__
-#define __GIMP_ID_TABLE_H__
+#ifndef __LIGMA_ID_TABLE_H__
+#define __LIGMA_ID_TABLE_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_ID_TABLE            (gimp_id_table_get_type ())
-#define GIMP_ID_TABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ID_TABLE, GimpIdTable))
-#define GIMP_ID_TABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ID_TABLE, GimpIdTableClass))
-#define GIMP_IS_ID_TABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ID_TABLE))
-#define GIMP_IS_ID_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ID_TABLE))
-#define GIMP_ID_TABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ID_TABLE, GimpIdTableClass))
+#define LIGMA_TYPE_ID_TABLE            (ligma_id_table_get_type ())
+#define LIGMA_ID_TABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ID_TABLE, LigmaIdTable))
+#define LIGMA_ID_TABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ID_TABLE, LigmaIdTableClass))
+#define LIGMA_IS_ID_TABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ID_TABLE))
+#define LIGMA_IS_ID_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ID_TABLE))
+#define LIGMA_ID_TABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ID_TABLE, LigmaIdTableClass))
 
 
-typedef struct _GimpIdTableClass   GimpIdTableClass;
-typedef struct _GimpIdTablePrivate GimpIdTablePrivate;
+typedef struct _LigmaIdTableClass   LigmaIdTableClass;
+typedef struct _LigmaIdTablePrivate LigmaIdTablePrivate;
 
-struct _GimpIdTable
+struct _LigmaIdTable
 {
-  GimpObject          parent_instance;
+  LigmaObject          parent_instance;
 
-  GimpIdTablePrivate *priv;
+  LigmaIdTablePrivate *priv;
 };
 
-struct _GimpIdTableClass
+struct _LigmaIdTableClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType          gimp_id_table_get_type       (void) G_GNUC_CONST;
-GimpIdTable *  gimp_id_table_new            (void);
-gint           gimp_id_table_insert         (GimpIdTable *id_table,
+GType          ligma_id_table_get_type       (void) G_GNUC_CONST;
+LigmaIdTable *  ligma_id_table_new            (void);
+gint           ligma_id_table_insert         (LigmaIdTable *id_table,
                                              gpointer     data);
-gint           gimp_id_table_insert_with_id (GimpIdTable *id_table,
+gint           ligma_id_table_insert_with_id (LigmaIdTable *id_table,
                                              gint         id,
                                              gpointer     data);
-void           gimp_id_table_replace        (GimpIdTable *id_table,
+void           ligma_id_table_replace        (LigmaIdTable *id_table,
                                              gint         id,
                                              gpointer     data);
-gpointer       gimp_id_table_lookup         (GimpIdTable *id_table,
+gpointer       ligma_id_table_lookup         (LigmaIdTable *id_table,
                                              gint         id);
-gboolean       gimp_id_table_remove         (GimpIdTable *id_table,
+gboolean       ligma_id_table_remove         (LigmaIdTable *id_table,
                                              gint         id);
 
 
-#endif  /*  __GIMP_ID_TABLE_H__  */
+#endif  /*  __LIGMA_ID_TABLE_H__  */

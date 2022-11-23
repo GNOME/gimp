@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -57,34 +57,34 @@ typedef enum
 /* This enum is local to ScriptFu
  * but the notion is general to other plugins.
  *
- * A GimpImageProcedure has drawable  arity > 1.
- * A GimpProcedure often does not take any drawables, i.e. arity zero.
- * Some GimpProcedure may take drawables i.e. arity > 0,
+ * A LigmaImageProcedure has drawable  arity > 1.
+ * A LigmaProcedure often does not take any drawables, i.e. arity zero.
+ * Some LigmaProcedure may take drawables i.e. arity > 0,
  * but the procedure's menu item is always sensitive,
  * and the drawable can be chosen in the plugin's dialog.
  *
  * Script author does not use SF-NO-DRAWABLE, for now.
  *
- * Scripts of class GimpProcedure are declared by script-fu-register.
+ * Scripts of class LigmaProcedure are declared by script-fu-register.
  * Their GUI is handled by ScriptFu, script-fu-interface.c
  * An author does not declare drawable_arity.
  *
- * Scripts of class GimpImageProcedure are declared by script-fu-register-filter.
- * Their GUI is handled by libgimpui, GimpProcedureDialog.
+ * Scripts of class LigmaImageProcedure are declared by script-fu-register-filter.
+ * Their GUI is handled by libligmaui, LigmaProcedureDialog.
  * Their drawable_arity is declared by the author of the script.
  *
- * For backward compatibility, GIMP deprecates but allows PDB procedures
+ * For backward compatibility, LIGMA deprecates but allows PDB procedures
  * to take a single drawable, and sets their sensitivity automatically.
  * Their drawable_arity is inferred by ScriptFu.
  * FUTURE insist that an author use script-fu-register-filter (not script-fu-register)
- * for GimpImageProcedure taking image and one or more drawables.
+ * for LigmaImageProcedure taking image and one or more drawables.
  */
 typedef enum
 {
-  SF_NO_DRAWABLE = 0,       /* GimpProcedure. */
-  SF_ONE_DRAWABLE,          /* GimpImageProcedure, but only process one layer */
-  SF_ONE_OR_MORE_DRAWABLE,  /* GimpImageProcedure, multilayer capable */
-  SF_TWO_OR_MORE_DRAWABLE,  /* GimpImageProcedure, requires at least two drawables. */
+  SF_NO_DRAWABLE = 0,       /* LigmaProcedure. */
+  SF_ONE_DRAWABLE,          /* LigmaImageProcedure, but only process one layer */
+  SF_ONE_OR_MORE_DRAWABLE,  /* LigmaImageProcedure, multilayer capable */
+  SF_TWO_OR_MORE_DRAWABLE,  /* LigmaImageProcedure, requires at least two drawables. */
 } SFDrawableArity;
 
 #endif /*  __SCRIPT_FU_ENUMS__  */

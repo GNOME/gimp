@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.8\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-05-06 16:49+0000\n"
 "PO-Revision-Date: 2012-06-06 11:00+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "X-Poedit-Country: NORWAY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "rund"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "mjuk"
 

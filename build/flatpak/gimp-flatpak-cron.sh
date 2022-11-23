@@ -45,11 +45,11 @@ if test "$?" -ne "0"; then
   exit 1
 fi
 
-LOGFILE="${LOGDIR}/gimp-flatpak-cron.log"
-echo "Flatpak cron for GIMP started at `date --rfc-2822`." > $LOGFILE
+LOGFILE="${LOGDIR}/ligma-flatpak-cron.log"
+echo "Flatpak cron for LIGMA started at `date --rfc-2822`." > $LOGFILE
 
 print_log() {
-  echo "[GIMP-FLATPAK-CRON] (`date --rfc-2822`) $1" >> $LOGFILE
+  echo "[LIGMA-FLATPAK-CRON] (`date --rfc-2822`) $1" >> $LOGFILE
 }
 
 mkdir "$BUILDBASE"
@@ -63,7 +63,7 @@ flatpak_build_branch() {
   ARCH=$1
   BRANCH=$2
   FORCE=$3
-  BUILDLOG="${LOGDIR}/gimp-flatpak-build-${ARCH}-${BRANCH}.log"
+  BUILDLOG="${LOGDIR}/ligma-flatpak-build-${ARCH}-${BRANCH}.log"
   INSTALLDIR="${BUILDDIR}/${ARCH}/${BRANCH}"
 
   mkdir -p ${INSTALLDIR}
@@ -81,7 +81,7 @@ flatpak_build_branch() {
   print_log "Building $BRANCH/$ARCH with options: $BUILD_OPTIONS $SKIP"
   flatpak-builder $SKIP $BUILD_OPTIONS --arch="$ARCH" \
                   --state-dir="${STATEDIR}" \
-                  "${INSTALLDIR}" org.gimp.GIMP-$BRANCH.json \
+                  "${INSTALLDIR}" org.ligma.LIGMA-$BRANCH.json \
                   > "${BUILDLOG}" 2>&1
   ret="$?"
   print_log "Flatpak $BRANCH/$ARCH successfully built in ${INSTALLDIR}"
@@ -90,7 +90,7 @@ flatpak_build_branch() {
     flatpak-builder --export-only --gpg-sign="$GPGKEY" --repo="$REPO" \
                     --state-dir="${STATEDIR}" \
                     --arch="$ARCH" "${INSTALLDIR}" \
-                    org.gimp.GIMP-$BRANCH.json \
+                    org.ligma.LIGMA-$BRANCH.json \
                     >> "${BUILDLOG}" 2>&1
     ret="$?"
     if test $ret -eq 0; then

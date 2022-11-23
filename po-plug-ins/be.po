@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.7\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.7\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-02-20 23:00+0300\n"
 "PO-Revision-Date: 2012-02-20 23:00+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: /tmp/gimp-2.7.1/po\n"
+"X-Poedit-Basepath: /tmp/ligma-2.7.1/po\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -420,8 +420,8 @@ msgid "Optimizing animation"
 msgstr "Аптымізаваньне анімацыі"
 
 #: ../plug-ins/common/animation-play.c:169
-msgid "Preview a GIMP layer-based animation"
-msgstr "Прагляд анімацыі з пластоў GIMP"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "Прагляд анімацыі з пластоў LIGMA"
 
 #: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
@@ -616,7 +616,7 @@ msgstr "Па _вэртыкалі"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -1025,8 +1025,8 @@ msgstr "Загрузіць настройкі мікшэра каналаў"
 #: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
-#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
+#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-ligma.c:459
+#: ../plug-ins/file-fli/fli-ligma.c:496 ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
 #: ../plug-ins/file-jpeg/jpeg-load.c:889 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
@@ -1035,8 +1035,8 @@ msgstr "Загрузіць настройкі мікшэра каналаў"
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:926
-#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1061,7 +1061,7 @@ msgstr "Захаваць настройкі мікшэра каналаў"
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-ligma.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
@@ -1096,7 +1096,7 @@ msgid "Checkerboard"
 msgstr "Шахматная дошка"
 
 #: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1162
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Памер:"
 
@@ -1299,8 +1299,8 @@ msgstr "Адвольнае зь ліку (супольнае)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "Адценьне"
 
@@ -1311,8 +1311,8 @@ msgstr "Насычанасьць"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "Яркасьць"
 
@@ -2232,8 +2232,8 @@ msgstr "Скрыўленьне крывымі"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1262
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Агляд"
@@ -2820,7 +2820,7 @@ msgstr "Радыюс _1:"
 msgid "R_adius 2:"
 msgstr "Радыюс _2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "_Інвэртаваць"
 
@@ -3027,7 +3027,7 @@ msgstr "Загрузіць палітру KISS"
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-fli/fli-ligma.c:501 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
 #, c-format
@@ -3055,7 +3055,7 @@ msgstr "Глыбіня бітаў (%d) не падтрымліваецца!"
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-ligma.c:718 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
 #: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
@@ -3146,8 +3146,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Немагчыма працаваць зь відарысам невядомага тыпу."
 
 #: ../plug-ins/common/file-gbr.c:154 ../plug-ins/common/file-gbr.c:175
-msgid "GIMP brush"
-msgstr "Пэндзаль GIMP"
+msgid "LIGMA brush"
+msgstr "Пэндзаль LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:399 ../plug-ins/common/file-pat.c:418
 #, c-format
@@ -3161,7 +3161,7 @@ msgstr "Фармат пэндзля не падтрымліваецца"
 
 #: ../plug-ins/common/file-gbr.c:447
 #, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr "Памылка ў файле з пэндзлем «%s»"
 
 #: ../plug-ins/common/file-gbr.c:455
@@ -3176,8 +3176,8 @@ msgid "Unnamed"
 msgstr "Безназоўны"
 
 #: ../plug-ins/common/file-gbr.c:653
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Пэндзлі GIMP або ШЭРЫЯ, або RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "Пэндзлі LIGMA або ШЭРЫЯ, або RGBA"
 
 #: ../plug-ins/common/file-gbr.c:770
 msgid "Brush"
@@ -3189,7 +3189,7 @@ msgid "Spacing:"
 msgstr "Інтэрвал:"
 
 #: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:888
-#: ../plug-ins/common/file-pat.c:568 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:568 ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "Апісаньне:"
 
@@ -3329,16 +3329,16 @@ msgid "The default comment is limited to %d characters."
 msgstr "Прадвызначаны камэнтар абмежаваны %d знакамі."
 
 #: ../plug-ins/common/file-gih.c:209 ../plug-ins/common/file-gih.c:230
-msgid "GIMP brush (animated)"
-msgstr "Анімаваны пэндзаль GIMP"
+msgid "LIGMA brush (animated)"
+msgstr "Анімаваны пэндзаль LIGMA"
 
 #: ../plug-ins/common/file-gih.c:480
-msgid "Error in GIMP brush pipe file."
-msgstr "Памылка ў файле з пасьлядоўнасьцю пэндзляў GIMP."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Памылка ў файле з пасьлядоўнасьцю пэндзляў LIGMA."
 
 #: ../plug-ins/common/file-gih.c:546
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Файл з пэндзлем GIMP, падаецца пашкоджаным!"
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Файл з пэндзлем LIGMA, падаецца пашкоджаным!"
 
 #: ../plug-ins/common/file-gih.c:696
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3593,7 +3593,7 @@ msgstr "Складнік %d відарыса «%s» ня мае адначасо
 msgid ""
 "Image component %d of image '%s' is signed. This is currently not supported."
 msgstr ""
-"Складнік %d відарыса «%s» мае знак, гэта пакуль не падтрымліваецца GIMP."
+"Складнік %d відарыса «%s» мае знак, гэта пакуль не падтрымліваецца LIGMA."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3716,8 +3716,8 @@ msgid "MNG animation"
 msgstr "Анімацыя MNG"
 
 #: ../plug-ins/common/file-pat.c:123 ../plug-ins/common/file-pat.c:145
-msgid "GIMP pattern"
-msgstr "Узор GIMP"
+msgid "LIGMA pattern"
+msgstr "Узор LIGMA"
 
 #: ../plug-ins/common/file-pat.c:378
 #, c-format
@@ -4035,16 +4035,16 @@ msgid "Invalid X resolution."
 msgstr "Недапушчальнае разрозьненьне па X."
 
 #: ../plug-ins/common/file-pnm.c:555
-msgid "Image width is larger than GIMP can handle."
-msgstr "Шырыня відарыса большая, чым GIMP можа апрацаваць."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Шырыня відарыса большая, чым LIGMA можа апрацаваць."
 
 #: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Недапшчальнае разрозьненьне па Y."
 
 #: ../plug-ins/common/file-pnm.c:564
-msgid "Image height is larger than GIMP can handle."
-msgstr "Вышыня відарыса большая, чым GIMP можа апрацаваць."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Вышыня відарыса большая, чым LIGMA можа апрацаваць."
 
 #: ../plug-ins/common/file-pnm.c:574
 msgid "Unsupported maximum value."
@@ -4154,8 +4154,8 @@ msgid "B/W"
 msgstr "Ч/Б"
 
 #: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Каляровы"
@@ -4393,10 +4393,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Шырыня відарыса большая, чым GIMP можа апрацаваць"
+"Шырыня відарыса большая, чым LIGMA можа апрацаваць"
 
 #: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
 #: ../plug-ins/common/file-xwd.c:508
@@ -4413,10 +4413,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Вышыня відарыса большая, чым GIMP можа апрацаваць"
+"Вышыня відарыса большая, чым LIGMA можа апрацаваць"
 
 #: ../plug-ins/common/file-sunras.c:520
 msgid "This image depth is not supported"
@@ -4515,7 +4515,7 @@ msgstr "Імпартаваць _шляхі"
 
 #: ../plug-ins/common/file-svg.c:944
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 "Імпартаваць элемэнты шляхоў SVG, каб зь імі могла працаваць прылада «Шлях»"
 
@@ -4591,12 +4591,12 @@ msgstr "Канал TIFF"
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "Перасьцярога:\n"
-"Відарыс, які ты загружаеш, мае 16 бітаў на канал. GIMP можа апрацоўваць 8 "
+"Відарыс, які ты загружаеш, мае 16 бітаў на канал. LIGMA можа апрацоўваць 8 "
 "біт, таму ён будзе ператвораны. З-за гэтага ператварэньня пэўныя зьвесткі "
 "будуць страчаныя."
 
@@ -7365,7 +7365,7 @@ msgid "Use the background color"
 msgstr "Ужываць колер асноведзі"
 
 #: ../plug-ins/common/sphere-designer.c:293
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Суцэльны"
 
@@ -7461,7 +7461,7 @@ msgstr "Дыялёґ выбару колера"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Памер:"
@@ -7756,10 +7756,10 @@ msgstr "Захаваны"
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Азначэньне адзінкі будзе захавана перад выхадам з GIMP, калі ў гэтай калёнцы "
+"Азначэньне адзінкі будзе захавана перад выхадам з LIGMA, калі ў гэтай калёнцы "
 "задзейнічана."
 
 #: ../plug-ins/common/unit-editor.c:96
@@ -7768,10 +7768,10 @@ msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 "Гэты радок быдзе выкарыстоўвацца для вызначэньня адзінкі ў файле з "
-"настаўленьнямі GIMP."
+"настаўленьнямі LIGMA."
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
@@ -7840,8 +7840,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "Стварыць новую адзінку, ужываючы вылучаную як шаблён"
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "Стварыць або зьмяніць адзінкі, якія выкарыстоўваюцца ў GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Стварыць або зьмяніць адзінкі, якія выкарыстоўваюцца ў LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -8534,7 +8534,7 @@ msgstr "_Абодва"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Большыя значэньні абмяжоўваюць эфэкт да меншых абласьцей відарыса"
 
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "_Сіла:"
 
@@ -8601,12 +8601,12 @@ msgstr "_Не запісваць зьвесткі аб прасторы коле
 #: ../plug-ins/file-bmp/bmp-write.c:886
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Enabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Enabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Некаторыя праґрамы ня могуць чытаць відарысы BMP, якія ўтрымліваюць зьвесткі "
-"аб прасторы колераў. GIMP зазвычай запісвае гэтыя зьвесткі. Калі "
-"задзейнічаць гэты выбор, то GIMP ня будзе пісаць у файл зьвесткі аб прасторы "
+"аб прасторы колераў. LIGMA зазвычай запісвае гэтыя зьвесткі. Калі "
+"задзейнічаць гэты выбор, то LIGMA ня будзе пісаць у файл зьвесткі аб прасторы "
 "колераў."
 
 #. Advanced Options
@@ -8696,34 +8696,34 @@ msgctxt "composing"
 msgid "None"
 msgstr "Няма"
 
-#: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
+#: ../plug-ins/file-fli/fli-ligma.c:166 ../plug-ins/file-fli/fli-ligma.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "Анімацыя AutoDesk FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-ligma.c:561
 #, c-format
 msgid "Frame (%i)"
 msgstr "Кадр (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-ligma.c:714
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Нажаль магчыма захоўваць толькі індэксаваныя й шэрыя відарысы."
 
-#: ../plug-ins/file-fli/fli-gimp.c:847
+#: ../plug-ins/file-fli/fli-ligma.c:847
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Загрузка стосу кадраў"
 
-#: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
+#: ../plug-ins/file-fli/fli-ligma.c:876 ../plug-ins/file-fli/fli-ligma.c:932
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Ад:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-ligma.c:885 ../plug-ins/file-fli/fli-ligma.c:941
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Да:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:915
+#: ../plug-ins/file-fli/fli-ligma.c:915
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8796,8 +8796,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "У адпаведнасьці з даньнямі EXIF, відарыс павернуты"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:426
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Ці жадаеш каб GIMP павернуў яго да стандартнага напрамку?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "Ці жадаеш каб LIGMA павернуў яго да стандартнага напрамку?"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
@@ -9049,8 +9049,8 @@ msgstr ""
 "захоўваньня не падтрымліваюць такога, выкарыстаны нармальны рэжым."
 
 #: ../plug-ins/file-psd/psd-save.c:634
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Памылка: немагчыма ператварыць асноўны тып відарыса GIMP у рэжым PSD"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Памылка: немагчыма ператварыць асноўны тып відарыса LIGMA у рэжым PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1622
 #, c-format
@@ -9212,8 +9212,8 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
-msgstr "Сціснуты відарыс XJT GIMP"
+msgid "LIGMA compressed XJT image"
+msgstr "Сціснуты відарыс XJT LIGMA"
 
 #: ../plug-ins/file-xjt/xjt.c:733
 #, c-format
@@ -9325,8 +9325,8 @@ msgstr "_Перамяшаць"
 msgid "Same"
 msgstr "Такі самы"
 
-#: ../plug-ins/flame/flame.c:746 ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:746 ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "Выпадковае"
 
@@ -9475,16 +9475,16 @@ msgid "C_amera"
 msgstr "_Камэра"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Няма %s у gimprc:\n"
+"Няма %s у ligmarc:\n"
 "Трэба дадаць запіс кшталту\n"
 "(%s \"%s\")\n"
 "у твой файл %s."
@@ -10019,7 +10019,7 @@ msgid "Max undo:"
 msgstr "Адменаў:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Празрыстая"
 
@@ -10115,7 +10115,7 @@ msgid "Left"
 msgstr "Налева"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1753
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Напрамак:"
 
@@ -10176,296 +10176,296 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Памылка адкрыцьця часовага файла «%s» для загрузкі паразіта: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:243
+#: ../plug-ins/ligmaressionist/brush.c:243
 msgid "Can only save drawables!"
 msgstr "Можна захоўваць толькі аб'екты рысаваньня!"
 
-#: ../plug-ins/gimpressionist/brush.c:248
+#: ../plug-ins/ligmaressionist/brush.c:248
 msgid "Save Brush"
 msgstr "Захаваць пэндзаль"
 
-#: ../plug-ins/gimpressionist/brush.c:503
+#: ../plug-ins/ligmaressionist/brush.c:503
 msgid "_Brush"
 msgstr "_Пэндзаль"
 
-#: ../plug-ins/gimpressionist/brush.c:540
+#: ../plug-ins/ligmaressionist/brush.c:540
 msgid "Gamma:"
 msgstr "Ґама:"
 
-#: ../plug-ins/gimpressionist/brush.c:558
+#: ../plug-ins/ligmaressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Зьмяняе ґаму (яркасьць) выбранага пэндзля"
 
-#: ../plug-ins/gimpressionist/brush.c:566
+#: ../plug-ins/ligmaressionist/brush.c:566
 msgid "Select:"
 msgstr "Выбар:"
 
-#: ../plug-ins/gimpressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/brush.c:595
 msgid "Aspect ratio:"
 msgstr "Прапорцыі:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Вызначае суадносіны бакоў пэндзля"
 
-#: ../plug-ins/gimpressionist/brush.c:608
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:608
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "Рэльефнасьць:"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 "Вызначае узровень выпукласьці, які трэба дадаць да відарыса (у адсотках)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "_Колер"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "_Сярэдні пад пэндзлем"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "_Сярэдзіна пэндзля"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Колер узяты як сярэдняе ўсіх піксэляў пад пэндзлем"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Вібірае колер піксэля, разьмешчанага ў сярэдзіне пэндзля"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "_Шум колера:"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "Дадае адвольны шум да колера"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3530
 msgid "_General"
 msgstr "_Асноўныя"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Пакінуць спачатны"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Пакінуць спачатны відарыс як асноведзь"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "З паперы"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Скапіяваць тэкстуру выбранай паперы як асноведзь"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Суцэльна пафарбаваная асноведзь"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Ужыць празрытую асноведзь. Будуць бачныя толькі нарысаваныя промні"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Маляваць на краях"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Выбірае ці разьмесьціць мазкі на краях відарыса"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
+#: ../plug-ins/ligmaressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Прыдатны для замошчваньня"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 "Выбірае, ці будзе выніковы відарыс прыдатным для бясшоўнага замошчваньня"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Падаючы цень"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Дадае эфэкт ценю да кожнага мазка пэндзлем"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "Зацямненьне краю:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "На колькі «зачарніць» краі кожнага мазка пэндзлем"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "Зацямненьне ценю:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "На колькі «зачарніць» падаючы цень"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "Глыбіня ценю:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Глыбіня падаючага ценю, г.зн. як далёка ад аб'екту мусіць ён быць"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "Размыцьцё ценю:"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "На колькі размыць падаючы цень"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "Парог адхіленьня:"
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "Дапаможнае значэньне для адаптыўных вылучэньняў"
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "Выконвае розныя мастакоўскія дзеяньні"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
 msgstr "_Ґімпрэсіяніст…"
 
-#: ../plug-ins/gimpressionist/gimp.c:164
+#: ../plug-ins/ligmaressionist/ligma.c:164
 msgid "The selection does not intersect the active layer or mask."
 msgstr "Вылучэньне не перасякае актыўны пласт ці маску."
 
-#: ../plug-ins/gimpressionist/gimp.c:391
+#: ../plug-ins/ligmaressionist/ligma.c:391
 msgid "Painting"
 msgstr "Маляваньне"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
 msgstr "Ґімпрэсіяніст"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "_Арыентацыя"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "Напрамкі:"
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Колькі напрамкаў (г.зн. пэндзляў) выкарыстаць"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "Пачатковы вугал:"
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr "Пачатковы вугал першага створанага пэндзля"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "Хорда вугла:"
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr "Дыяпазон вуглоў першага створанага пэндзля"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Няхай яркасьць вобласьці вызначае напрамак мазкоў"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "Радыюс"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Адлегласьць ад сярэдзіны відарыса вызначае напрамак мазкоў"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "Выбірае адвольны напрамак кожнага мазка"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "Радыяльны"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Няхай адлегласьць ад сярэдзіны відарыса вызначае напрамак мазкоў"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "Мяккі"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Мазкі ідуць за «плыўным» узорам"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Адценьне вобласьці вызначае напрамак мазка"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "Адаптыўны"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Выбраны напрамак, які найлепш адпавядае спачатнаму відарысу"
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "Ручны"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "Вызначыць уручную напрамак мазкоў"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr "Адкрые рэдактар мапы напрамкаў"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Рэдактар мапы напрамку"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Вэктары"
 
-#: ../plug-ins/gimpressionist/orientmap.c:564
+#: ../plug-ins/ligmaressionist/orientmap.c:564
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10473,289 +10473,289 @@ msgstr ""
 "Поле вэктараў. Пстрычка левай: пасунуць выбраны вэктар, пстрычка правай: "
 "павернуць у напрамку мышы, пстрычка сярэдняй: дадаць новы вэктар."
 
-#: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/ligmaressionist/orientmap.c:588
+#: ../plug-ins/ligmaressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
 msgstr "Рэгуляваць яркасьць агляду"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "Выбраць папярэдні вэктар"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "Выбраць наступны вэктар"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "_Дадаць"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "Дадаць новы вэктар"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "_Забіць"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "Выдаліць выбраны вэктар"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "Тып"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "_Нармальны"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "_Вір"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "Вір_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "Вір_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "_Вараной"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 "У рэжыме «Вараной» мае ўплыў толькі найбліжэйшы да дадзенага пункту вэктар"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "_Вугал:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
 msgstr "Зьмяніць вугал выбранага вэктара"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 msgid "Ang_le offset:"
 msgstr "Зрух _вугла:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr "Зрушыць усе вэктары з дадзеным вуглом"
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
 msgstr "Зьмяніць сілу выбранага вэктара"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 msgid "S_trength exp.:"
 msgstr "_Ступень сілы:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Зьмяніць паказьнік ступені сілы"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "_Папера"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 msgid "Inverts the Papers texture"
 msgstr "Інвэртуе ґазэтную тэкстуру"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "_Перакрываньне"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Ужывае паперу як яна ёсьць (без рэльефу)"
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Вызначае памер тэкстуры (у адсотках ад спачатнага файла)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "_Разьмяшчэньне"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Разьмяшчэньне"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Адвольна"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Раўнамерна разьмеркаваныя"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Адвольна разьмесьціць мазкі па ўсім відарысе"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Мазкі пароўну разьмеркаваныя па ўсім відарысе"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Цэнтраваны"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Сфакусаваць мазкі пэндзля вакол сярэдзіны відарыса"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "_Гушчыня мазкоў:"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "Адносная гушчыня мазкоў пэндзля"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Не ўдалося захаваць файл PPM «%s»: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "Захаваць бягучы"
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
 msgstr "Прадвызначаныя Ґімпрэсіяніста"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr "_Наборы"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "Захаваць бягучы…"
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "Захаваць бягучыя выборы ў вызначаны файл"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr "Чытае выбраны набор у памяць"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "Выдаляе выбраны набор"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr "Перачытаць тэчку набораў"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1182
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
 msgstr "_Абнавіць"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Асьвяжыць вакно агляду"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Вернуцца да пачатковага відарыса"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Памер"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr "Варыянтаў памеру:"
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "Колькі памераў пэндзляў выкарыстаць"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "Найменшы памер:"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "Які найменшы пэндзаль ствараць"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "Найбольшы памер:"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "Які найбольшы пэндзаль ствараць"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "Памер залежыць ад:"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Няхай яркасьць вобласьці вызначае памер мазка"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Адлегласьць ад сярэдзіны відарыса вызначае памер мазка"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "Выбірае адвольны памер кожнага мазка"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Няхай напрамак ад сярэдзіны вызначае памер мазка"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Адценьне вобласьці вызначае памер мазка"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Выбраны памер пэндзля, які найлепш адпавядае спачатнаму відарысу"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "Уручную вызначыць памер мазка"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "Адкрые рэдактар мапы памераў"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/ligmaressionist/sizemap.c:397
 msgid "Size Map Editor"
 msgstr "Рэдактар мапы памеру"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/ligmaressionist/sizemap.c:426
 msgid "Smvectors"
 msgstr "Мп-вэктары"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/ligmaressionist/sizemap.c:436
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10763,39 +10763,39 @@ msgstr ""
 "Поле мп-вэктараў. Пстрычка левай: пасунуць выбраны мп-вэктар, пстрычка "
 "правай: павернуць у напрамку мышы, пстрычка сярэдняй: дадаць новы мп-вэктар."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/ligmaressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "Выбраць папярэдні мп-вэктар"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/ligmaressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "Выбраць наступны мп-вэктар"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/ligmaressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "Дадаць новы мп-вэктар"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/ligmaressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "Выдаліць выбраны мп-вэктар"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/ligmaressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "Зьмяніць вугал выбранага мп-вэктара"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "_Сіла:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/ligmaressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "Зьмяніць сілу выбранага мп-вэктара"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "_Ступень сілы:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/ligmaressionist/sizemap.c:548
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -11158,8 +11158,8 @@ msgstr "_Другасныя ўспышкі"
 
 #: ../plug-ins/help-browser/dialog.c:184
 #: ../plug-ins/help-browser/dialog.c:1133
-msgid "GIMP Help Browser"
-msgstr "Гартач дапамогі GIMP"
+msgid "LIGMA Help Browser"
+msgstr "Гартач дапамогі LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:582
 msgid "Go back one page"
@@ -11214,8 +11214,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Пераключыць бачнасьць бакавой панэлі"
 
 #: ../plug-ins/help-browser/dialog.c:674
-msgid "Visit the GIMP documentation website"
-msgstr "Наведаць старонку дакумэнтацыі GIMP"
+msgid "Visit the LIGMA documentation website"
+msgstr "Наведаць старонку дакумэнтацыі LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
@@ -11231,39 +11231,39 @@ msgctxt "search"
 msgid "_Next"
 msgstr "_Наступная"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Старонкі дапамогі для «%s» не ў наяўнасьці."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "Кіраўніцтва карыстальніка GIMP не ў наяўнасьці."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "Кіраўніцтва карыстальніка LIGMA не ў наяўнасьці."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 "Калі ласка, усталюй дадатковы пакунак з дапамогай, або карыстайся сеціўным "
-"кіраўніцтвам карыстальніка па адрасе http://docs.gimp.org/."
+"кіраўніцтвам карыстальніка па адрасе http://docs.ligma.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 "Магчыма, у цябе адсутнічаюць модулі працы з GIO, і трэба ўсталяваць GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Невядомы азначнік дапамогі %s"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Загрузка пераліку з «%s»"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11490,7 +11490,7 @@ msgid "Clear"
 msgstr "Ачысьціць"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Стварыць"
 
@@ -11515,41 +11515,41 @@ msgid "Edit Object"
 msgstr "Зьмяніць аб'ект"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "Ужываць накіроўныя GIMP"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "Ужываць накіроўныя LIGMA"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "_Альтэрнатыўныя"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "_Усе"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Дадаць дадатковы накіроўныя"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "_Левая мяжа"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "_Правая мяжа"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "_Верхняя мяжа"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "_Ніжняя мяжа"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "Базавы _URL:"
 
@@ -11980,8 +11980,8 @@ msgid "Grid Settings..."
 msgstr "Настройкі сеткі…"
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "Ужываць накіроўныя GIMP…"
+msgid "Use LIGMA Guides..."
+msgstr "Ужываць накіроўныя LIGMA…"
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."

@@ -1,6 +1,6 @@
-# libgimp's Portuguese Translation
-# Copyright © 2002, 2004, 2010 gimp
-# Distributed under the same licence as the gimp package
+# libligma's Portuguese Translation
+# Copyright © 2002, 2004, 2010 ligma
+# Distributed under the same licence as the ligma package
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2004.
 # Fernando Correia <fcorreia.mail@gmail.com>, 2010.
 # Pedro Barreira <almufadado@gmail.com>, 2010.
@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-21 17:07+0000\n"
 "PO-Revision-Date: 2022-06-22 13:01+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
@@ -26,93 +26,93 @@ msgstr ""
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:178
+#: ../libligma/ligmabrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "Seleção de pincel"
 
-#: ../libgimp/gimpbrushselectbutton.c:887
-#: ../libgimp/gimppatternselectbutton.c:674
+#: ../libligma/ligmabrushselectbutton.c:887
+#: ../libligma/ligmapatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Navegar..."
 
-#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
+#: ../libligma/ligmaexport.c:332 ../libligma/ligmaexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "O complemento “%s” não consegue manipular camadas"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
+#: ../libligma/ligmaexport.c:333 ../libligma/ligmaexport.c:342
+#: ../libligma/ligmaexport.c:351 ../libligma/ligmaexport.c:369
 msgid "Merge Visible Layers"
 msgstr "Unir camadas visíveis"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libligma/ligmaexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "O complemento “%s” não consegue manipular desvios, tamanho ou opacidade de "
 "camadas"
 
-#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
+#: ../libligma/ligmaexport.c:350 ../libligma/ligmaexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "O complemento “%s” só consegue manipular camadas como fotogramas de animação"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
+#: ../libligma/ligmaexport.c:351 ../libligma/ligmaexport.c:360
 msgid "Save as Animation"
 msgstr "Guardar como animação"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
-#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
+#: ../libligma/ligmaexport.c:360 ../libligma/ligmaexport.c:369
+#: ../libligma/ligmaexport.c:378 ../libligma/ligmaexport.c:387
 msgid "Flatten Image"
 msgstr "Achatar imagem"
 
-#: ../libgimp/gimpexport.c:377
+#: ../libligma/ligmaexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "O complemento “%s” não consegue manipular transparência"
 
-#: ../libgimp/gimpexport.c:386
+#: ../libligma/ligmaexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "O complemento %s não consegue manipular a transparência"
 
-#: ../libgimp/gimpexport.c:395
+#: ../libligma/ligmaexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "O complemento “%s” não consegue manipular máscaras de camada"
 
-#: ../libgimp/gimpexport.c:396
+#: ../libligma/ligmaexport.c:396
 msgid "Apply Layer Masks"
 msgstr "Aplicar máscaras de camada"
 
-#: ../libgimp/gimpexport.c:404
+#: ../libligma/ligmaexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "O complemento “%s” só consegue manipular imagens RGB"
 
-#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
-#: ../libgimp/gimpexport.c:452
+#: ../libligma/ligmaexport.c:405 ../libligma/ligmaexport.c:443
+#: ../libligma/ligmaexport.c:452
 msgid "Convert to RGB"
 msgstr "Converter para RGB"
 
-#: ../libgimp/gimpexport.c:413
+#: ../libligma/ligmaexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "O complemento “%s” só consegue manipular imagens em tons de cinzento"
 
-#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
-#: ../libgimp/gimpexport.c:464
+#: ../libligma/ligmaexport.c:414 ../libligma/ligmaexport.c:443
+#: ../libligma/ligmaexport.c:464
 msgid "Convert to Grayscale"
 msgstr "Converter para tons de cinzento"
 
-#: ../libgimp/gimpexport.c:422
+#: ../libligma/ligmaexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "O complemento “%s” só consegue manipular imagens indexadas"
 
-#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
-#: ../libgimp/gimpexport.c:462
+#: ../libligma/ligmaexport.c:423 ../libligma/ligmaexport.c:452
+#: ../libligma/ligmaexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -120,14 +120,14 @@ msgstr ""
 "Converter para indexada usando configurações predefinidas\n"
 "(faça-o manualmente para afinar o resultado)"
 
-#: ../libgimp/gimpexport.c:432
+#: ../libligma/ligmaexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "O complemento “%s” só consegue manipular imagens mapas de bit (bitmap) "
 "indexados (duas cores)"
 
-#: ../libgimp/gimpexport.c:433
+#: ../libligma/ligmaexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -135,80 +135,80 @@ msgstr ""
 "Converter em indexada usando configurações predefinidas de mapas de bits\n"
 "(faça-o manualmente para afinar o resultado)"
 
-#: ../libgimp/gimpexport.c:442
+#: ../libligma/ligmaexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
 "O complemento “%s” só consegue manipular imagens RGB ou em tons de cinzento"
 
-#: ../libgimp/gimpexport.c:451
+#: ../libligma/ligmaexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "O complemento “%s” só consegue manipular imagens RGB ou indexadas"
 
-#: ../libgimp/gimpexport.c:461
+#: ../libligma/ligmaexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "O complemento “%s” só consegue manipular imagens em tons de cinzentos ou "
 "indexadas"
 
-#: ../libgimp/gimpexport.c:472
+#: ../libligma/ligmaexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "O complemento “%s” necessita de um canal alfa"
 
-#: ../libgimp/gimpexport.c:473
+#: ../libligma/ligmaexport.c:473
 msgid "Add Alpha Channel"
 msgstr "Adicionar canal alfa"
 
-#: ../libgimp/gimpexport.c:481
+#: ../libligma/ligmaexport.c:481
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "O complemento %s precisa de cortar as camadas nos limites da imagem"
 
-#: ../libgimp/gimpexport.c:482
+#: ../libligma/ligmaexport.c:482
 msgid "Crop Layers"
 msgstr "Recortar camadas"
 
-#: ../libgimp/gimpexport.c:482
+#: ../libligma/ligmaexport.c:482
 msgid "Resize Image to Layers"
 msgstr "Redimensionar imagem às camadas"
 
-#: ../libgimp/gimpexport.c:541
+#: ../libligma/ligmaexport.c:541
 msgid "Confirm Save"
 msgstr "Confirmar guardar"
 
-#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:303
-#: ../libgimpwidgets/gimpcolorbutton.c:553
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: ../libgimpwidgets/gimpfileentry.c:466 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
-#: ../libgimpwidgets/gimpquerybox.c:479
+#: ../libligma/ligmaexport.c:546 ../libligma/ligmaexport.c:628
+#: ../libligma/ligmaexport.c:1199 ../libligma/ligmaproceduredialog.c:303
+#: ../libligmawidgets/ligmacolorbutton.c:553
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:173
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:183
+#: ../libligmawidgets/ligmafileentry.c:466 ../libligmawidgets/ligmaquerybox.c:274
+#: ../libligmawidgets/ligmaquerybox.c:337 ../libligmawidgets/ligmaquerybox.c:403
+#: ../libligmawidgets/ligmaquerybox.c:479
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../libgimp/gimpexport.c:547
+#: ../libligma/ligmaexport.c:547
 msgid "C_onfirm"
 msgstr "C_onfirmar"
 
-#: ../libgimp/gimpexport.c:623
+#: ../libligma/ligmaexport.c:623
 msgid "Export File"
 msgstr "Exportar ficheiro"
 
-#: ../libgimp/gimpexport.c:627
+#: ../libligma/ligmaexport.c:627
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:275
+#: ../libligma/ligmaexport.c:629 ../libligma/ligmaexport.c:1200
+#: ../libligma/ligmaproceduredialog.c:275
 msgid "_Export"
 msgstr "_Exportar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:659
+#: ../libligma/ligmaexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -218,11 +218,11 @@ msgstr ""
 "seguintes razões:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:733
+#: ../libligma/ligmaexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "A conversão de exportação não irá alterar a sua imagem original."
 
-#: ../libgimp/gimpexport.c:853
+#: ../libligma/ligmaexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -231,7 +231,7 @@ msgstr ""
 "Está prestes a guardar uma máscara de camada como %s.\n"
 "Isto não irá guardar as camadas visíveis."
 
-#: ../libgimp/gimpexport.c:859
+#: ../libligma/ligmaexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -242,149 +242,149 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
+#: ../libligma/ligmaexport.c:1193 ../libligma/ligmasaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportar a imagem como %s"
 
-#: ../libgimp/gimpfontselectbutton.c:137
+#: ../libligma/ligmafontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Seleção de tipo de letra"
 
-#: ../libgimp/gimpgradientselectbutton.c:155
+#: ../libligma/ligmagradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Seleção de gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:306
+#: ../libligma/ligmaimagemetadata.c:306
 msgid "Background"
 msgstr "Fundo"
 
-#: ../libgimp/gimpimagemetadata-save.c:654 ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
+#: ../libligma/ligmaimagemetadata-save.c:654 ../modules/controller-midi.c:426
+msgid "LIGMA"
+msgstr "LIGMA"
 
-#: ../libgimp/gimppaletteselectbutton.c:136
+#: ../libligma/ligmapaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Seleção de paleta"
 
-#: ../libgimp/gimppatternselectbutton.c:165
+#: ../libligma/ligmapatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Seleção de textura"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:552
+#: ../libligma/ligmapdb.c:552
 msgid "success"
 msgstr "sucesso"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:556
+#: ../libligma/ligmapdb.c:556
 msgid "execution error"
 msgstr "erro de execução"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:560
+#: ../libligma/ligmapdb.c:560
 msgid "calling error"
 msgstr "erro de chamada"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:564
+#: ../libligma/ligmapdb.c:564
 msgid "cancelled"
 msgstr "cancelado"
 
-#: ../libgimp/gimpprocbrowserdialog.c:162
+#: ../libligma/ligmaprocbrowserdialog.c:162
 msgid "by name"
 msgstr "por nome"
 
-#: ../libgimp/gimpprocbrowserdialog.c:163
+#: ../libligma/ligmaprocbrowserdialog.c:163
 msgid "by description"
 msgstr "por descrição"
 
-#: ../libgimp/gimpprocbrowserdialog.c:164
+#: ../libligma/ligmaprocbrowserdialog.c:164
 msgid "by help"
 msgstr "por ajuda"
 
-#: ../libgimp/gimpprocbrowserdialog.c:165
+#: ../libligma/ligmaprocbrowserdialog.c:165
 msgid "by authors"
 msgstr "por autores"
 
-#: ../libgimp/gimpprocbrowserdialog.c:166
+#: ../libligma/ligmaprocbrowserdialog.c:166
 msgid "by copyright"
 msgstr "por direitos de autor"
 
-#: ../libgimp/gimpprocbrowserdialog.c:167
+#: ../libligma/ligmaprocbrowserdialog.c:167
 msgid "by date"
 msgstr "por data"
 
-#: ../libgimp/gimpprocbrowserdialog.c:168
+#: ../libligma/ligmaprocbrowserdialog.c:168
 msgid "by type"
 msgstr "por tipo"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:369
-#: ../libgimp/gimpprocbrowserdialog.c:527 ../libgimpwidgets/gimpbrowser.c:168
+#: ../libligma/ligmaprocbrowserdialog.c:369
+#: ../libligma/ligmaprocbrowserdialog.c:527 ../libligmawidgets/ligmabrowser.c:168
 msgid "No matches"
 msgstr "Sem resultados"
 
-#: ../libgimp/gimpprocbrowserdialog.c:372
+#: ../libligma/ligmaprocbrowserdialog.c:372
 msgid "Search term invalid or incomplete"
 msgstr "Termo de pesquisa inválido ou incompleto"
 
-#: ../libgimp/gimpprocbrowserdialog.c:381
+#: ../libligma/ligmaprocbrowserdialog.c:381
 msgid "Searching"
 msgstr "A pesquisar"
 
-#: ../libgimp/gimpprocbrowserdialog.c:393
+#: ../libligma/ligmaprocbrowserdialog.c:393
 msgid "Searching by name"
 msgstr "A pesquisar por nome"
 
-#: ../libgimp/gimpprocbrowserdialog.c:414
+#: ../libligma/ligmaprocbrowserdialog.c:414
 msgid "Searching by description"
 msgstr "A pesquisar por descrição"
 
-#: ../libgimp/gimpprocbrowserdialog.c:422
+#: ../libligma/ligmaprocbrowserdialog.c:422
 msgid "Searching by help"
 msgstr "A pesquisar por ajuda"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
+#: ../libligma/ligmaprocbrowserdialog.c:430
 msgid "Searching by authors"
 msgstr "Pesquisar por autores"
 
-#: ../libgimp/gimpprocbrowserdialog.c:438
+#: ../libligma/ligmaprocbrowserdialog.c:438
 msgid "Searching by copyright"
 msgstr "A pesquisar por direitos de autor"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: ../libligma/ligmaprocbrowserdialog.c:446
 msgid "Searching by date"
 msgstr "A pesquisar por data"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libligma/ligmaprocbrowserdialog.c:454
 msgid "Searching by type"
 msgstr "A pesquisar por tipo"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libligma/ligmaprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedimento"
 msgstr[1] "%d procedimentos"
 
-#: ../libgimp/gimpprocbrowserdialog.c:476
+#: ../libligma/ligmaprocbrowserdialog.c:476
 msgid "No matches for your query"
 msgstr "Sem resultados para a sua consulta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:480
+#: ../libligma/ligmaprocbrowserdialog.c:480
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedimento encontrado"
 msgstr[1] "%d procedimentos encontrados"
 
-#: ../libgimp/gimpprocedure.c:1906
+#: ../libligma/ligmaprocedure.c:1906
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "O procedimento \"%s\" não devolveu nenhum valor"
 
-#: ../libgimp/gimpprocedure.c:1997
+#: ../libligma/ligmaprocedure.c:1997
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -393,7 +393,7 @@ msgstr ""
 "O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor \"%s"
 "\" (n°%d). Esperado %s, obtido %s."
 
-#: ../libgimp/gimpprocedure.c:2009
+#: ../libligma/ligmaprocedure.c:2009
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -402,7 +402,7 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
 "argumento \"%s\" (n°%d). Esperado %s, obtido %s."
 
-#: ../libgimp/gimpprocedure.c:2044
+#: ../libligma/ligmaprocedure.c:2044
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -411,7 +411,7 @@ msgstr ""
 "O procedimento \"%s\" devolveu \"%s\" como valor de retorno \"%s\" (nº %d, "
 "tipo %s). Este valor está fora dos limites permitidos."
 
-#: ../libgimp/gimpprocedure.c:2058
+#: ../libligma/ligmaprocedure.c:2058
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -420,14 +420,14 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
 "\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
-#: ../libgimp/gimpprocedure.c:2102
+#: ../libligma/ligmaprocedure.c:2102
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "O procedimento \"%s\" devolveu uma expressão UTF-8 inválida para o argumento "
 "“%s”."
 
-#: ../libgimp/gimpprocedure.c:2112
+#: ../libligma/ligmaprocedure.c:2112
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -436,1284 +436,1284 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com uma expressão UTF-8 inválida para o "
 "argumento “%s”."
 
-#: ../libgimp/gimpproceduredialog.c:273
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: ../libligma/ligmaproceduredialog.c:273
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../libgimp/gimpproceduredialog.c:277 ../libgimpwidgets/gimpcolorbutton.c:554
-#: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
-#: ../libgimpwidgets/gimpquerybox.c:479
+#: ../libligma/ligmaproceduredialog.c:277 ../libligmawidgets/ligmacolorbutton.c:554
+#: ../libligmawidgets/ligmafileentry.c:467 ../libligmawidgets/ligmaquerybox.c:274
+#: ../libligmawidgets/ligmaquerybox.c:337 ../libligmawidgets/ligmaquerybox.c:403
+#: ../libligmawidgets/ligmaquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimp/gimpproceduredialog.c:285 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libligma/ligmaproceduredialog.c:285 ../libligmawidgets/ligmacolorbutton.c:552
 msgid "_Reset"
 msgstr "_Repor"
 
-#: ../libgimp/gimpproceduredialog.c:337
+#: ../libligma/ligmaproceduredialog.c:337
 msgid "_Load Saved Settings"
 msgstr "Carregar definições guardadas"
 
-#: ../libgimp/gimpproceduredialog.c:338
+#: ../libligma/ligmaproceduredialog.c:338
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Carregar definições guardadas com o botão “Guardar definições”"
 
-#: ../libgimp/gimpproceduredialog.c:350
+#: ../libligma/ligmaproceduredialog.c:350
 msgid "_Save Settings"
 msgstr "_Guardar definições"
 
-#: ../libgimp/gimpproceduredialog.c:351
+#: ../libligma/ligmaproceduredialog.c:351
 msgid "Store current settings for later reuse"
 msgstr "Armazenar as definições atuais para usar mais tarde"
 
-#: ../libgimp/gimpproceduredialog.c:1948
+#: ../libligma/ligmaproceduredialog.c:1948
 msgid "Reset to _Initial Values"
 msgstr "Repor definições _iniciais"
 
-#: ../libgimp/gimpproceduredialog.c:1957
+#: ../libligma/ligmaproceduredialog.c:1957
 msgid "Reset to _Factory Defaults"
 msgstr "Repor definições de _fábrica"
 
-#: ../libgimp/gimpprocview.c:176
+#: ../libligma/ligmaprocview.c:176
 msgid "Image types:"
 msgstr "Tipos de imagem:"
 
-#: ../libgimp/gimpprocview.c:179
+#: ../libligma/ligmaprocview.c:179
 msgid "Menu label:"
 msgstr "Etiqueta do menu:"
 
-#: ../libgimp/gimpprocview.c:187
+#: ../libligma/ligmaprocview.c:187
 msgid "Menu path:"
 msgstr "Caminho do menu:"
 
-#: ../libgimp/gimpprocview.c:202
+#: ../libligma/ligmaprocview.c:202
 msgid "Parameters"
 msgstr "Parâmetros"
 
-#: ../libgimp/gimpprocview.c:216
+#: ../libligma/ligmaprocview.c:216
 msgid "Return Values"
 msgstr "Valores de retorno"
 
-#: ../libgimp/gimpprocview.c:231
+#: ../libligma/ligmaprocview.c:231
 msgid "Additional Information"
 msgstr "Informação adicional"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libligma/ligmaprocview.c:263
 msgid "Authors:"
 msgstr "Autores:"
 
-#: ../libgimp/gimpprocview.c:266
+#: ../libligma/ligmaprocview.c:266
 msgid "Date:"
 msgstr "Data:"
 
-#: ../libgimp/gimpprocview.c:269
+#: ../libligma/ligmaprocview.c:269
 msgid "Copyright:"
 msgstr "Direitos de autor:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:166
+#: ../libligma/ligmasaveproceduredialog.c:166
 msgid "Metadata"
 msgstr "Metadados"
 
-#: ../libgimp/gimpsaveproceduredialog.c:175
+#: ../libligma/ligmasaveproceduredialog.c:175
 msgid "Edit Metadata"
 msgstr "Editar metadados"
 
-#: ../libgimp/gimpsaveproceduredialog.c:175
+#: ../libligma/ligmasaveproceduredialog.c:175
 msgid "(edit)"
 msgstr "(editar)"
 
-#: ../libgimp/gimpunitcache.c:54
+#: ../libligma/ligmaunitcache.c:54
 msgid "percent"
 msgstr "porcento"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Branco (opacidade total)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Preto (transparência total)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Canal _alfa da camada"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Transferir o canal alfa da camada"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Seleção"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "_Cópia em tons de cinzento da camada"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libligmabase/ligmabaseenums.c:34
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "Cana_l"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libligmabase/ligmabaseenums.c:64
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Círculo"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Quadrado"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Diamante"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libligmabase/ligmabaseenums.c:96
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Sem ponta"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libligmabase/ligmabaseenums.c:97
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Redondo"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libligmabase/ligmabaseenums.c:98
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Quadrado"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libligmabase/ligmabaseenums.c:129
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Adicionar à seleção atual"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libligmabase/ligmabaseenums.c:130
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Subtrair da seleção atual"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libligmabase/ligmabaseenums.c:131
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Substituir a seleção atual"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libligmabase/ligmabaseenums.c:132
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Intersetar com a seleção atual"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libligmabase/ligmabaseenums.c:165
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Vermelho"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libligmabase/ligmabaseenums.c:166
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libligmabase/ligmabaseenums.c:167
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpbase/gimpbaseenums.c:168
+#: ../libligmabase/ligmabaseenums.c:168
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:169
+#: ../libligmabase/ligmabaseenums.c:169
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indexado"
 
-#: ../libgimpbase/gimpbaseenums.c:170
+#: ../libligmabase/ligmabaseenums.c:170
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:200
+#: ../libligmabase/ligmabaseenums.c:200
 msgctxt "check-size"
 msgid "Small"
 msgstr "Pequeno"
 
-#: ../libgimpbase/gimpbaseenums.c:201
+#: ../libligmabase/ligmabaseenums.c:201
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Médio"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libligmabase/ligmabaseenums.c:202
 msgctxt "check-size"
 msgid "Large"
 msgstr "Grande"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libligmabase/ligmabaseenums.c:236
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Padrão de xadrez claro"
 
-#: ../libgimpbase/gimpbaseenums.c:237
+#: ../libligmabase/ligmabaseenums.c:237
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Padrão de xadrez cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:238
+#: ../libligmabase/ligmabaseenums.c:238
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Padrão de xadrez escuro"
 
-#: ../libgimpbase/gimpbaseenums.c:239
+#: ../libligmabase/ligmabaseenums.c:239
 msgctxt "check-type"
 msgid "White only"
 msgstr "Só branco"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: ../libligmabase/ligmabaseenums.c:240
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Só cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:241
+#: ../libligmabase/ligmabaseenums.c:241
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Só preto"
 
-#: ../libgimpbase/gimpbaseenums.c:242
+#: ../libligmabase/ligmabaseenums.c:242
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Padrão de xadrez personalizado"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libligmabase/ligmabaseenums.c:271
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Imagem"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libligmabase/ligmabaseenums.c:272
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Textura"
 
-#: ../libgimpbase/gimpbaseenums.c:308
+#: ../libligmabase/ligmabaseenums.c:308
 msgctxt "color-tag"
 msgid "None"
 msgstr "Nenhuma"
 
-#: ../libgimpbase/gimpbaseenums.c:309
+#: ../libligmabase/ligmabaseenums.c:309
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpbase/gimpbaseenums.c:310
+#: ../libligmabase/ligmabaseenums.c:310
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:311
+#: ../libligmabase/ligmabaseenums.c:311
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: ../libgimpbase/gimpbaseenums.c:312
+#: ../libligmabase/ligmabaseenums.c:312
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Laranja"
 
-#: ../libgimpbase/gimpbaseenums.c:313
+#: ../libligmabase/ligmabaseenums.c:313
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Castanho"
 
-#: ../libgimpbase/gimpbaseenums.c:314
+#: ../libligmabase/ligmabaseenums.c:314
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Vermelho"
 
-#: ../libgimpbase/gimpbaseenums.c:315
+#: ../libligmabase/ligmabaseenums.c:315
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Violeta"
 
-#: ../libgimpbase/gimpbaseenums.c:316
+#: ../libligmabase/ligmabaseenums.c:316
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:349
+#: ../libligmabase/ligmabaseenums.c:349
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "Inteiro de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:350
+#: ../libligmabase/ligmabaseenums.c:350
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "Inteiro de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:351
+#: ../libligmabase/ligmabaseenums.c:351
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "Inteiro de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:352
+#: ../libligmabase/ligmabaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "Vírgula flutuante de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:353
+#: ../libligmabase/ligmabaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "Vírgula flutuante de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:354
+#: ../libligmabase/ligmabaseenums.c:354
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "Vírgula flutuante de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:385
+#: ../libligmabase/ligmabaseenums.c:385
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Gerar paleta ótima"
 
-#: ../libgimpbase/gimpbaseenums.c:386
+#: ../libligmabase/ligmabaseenums.c:386
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Usar paleta otimizada para Web"
 
-#: ../libgimpbase/gimpbaseenums.c:387
+#: ../libligmabase/ligmabaseenums.c:387
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Usar paleta a preto e branco (1 bit)"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libligmabase/ligmabaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Usar paleta personalizada"
 
-#: ../libgimpbase/gimpbaseenums.c:417
+#: ../libligmabase/ligmabaseenums.c:417
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Desfocar"
 
-#: ../libgimpbase/gimpbaseenums.c:418
+#: ../libligmabase/ligmabaseenums.c:418
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Focar"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: ../libligmabase/ligmabaseenums.c:450
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Luminosidade (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: ../libligmabase/ligmabaseenums.c:451
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: ../libligmabase/ligmabaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Média (intensidade HSI)"
 
-#: ../libgimpbase/gimpbaseenums.c:453
+#: ../libligmabase/ligmabaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Luminância"
 
-#: ../libgimpbase/gimpbaseenums.c:454
+#: ../libligmabase/ligmabaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Valor (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:483
+#: ../libligmabase/ligmabaseenums.c:483
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Subexposição (clarear)"
 
-#: ../libgimpbase/gimpbaseenums.c:484
+#: ../libligmabase/ligmabaseenums.c:484
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Sobreexposição (escurecer)"
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: ../libligmabase/ligmabaseenums.c:516
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Cor de 1º plano"
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: ../libligmabase/ligmabaseenums.c:517
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Cor de fundo"
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: ../libligmabase/ligmabaseenums.c:518
 msgctxt "fill-type"
 msgid "White"
 msgstr "Branco"
 
-#: ../libgimpbase/gimpbaseenums.c:519
+#: ../libligmabase/ligmabaseenums.c:519
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Transparência"
 
-#: ../libgimpbase/gimpbaseenums.c:520
+#: ../libligmabase/ligmabaseenums.c:520
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Textura"
 
-#: ../libgimpbase/gimpbaseenums.c:578
+#: ../libligmabase/ligmabaseenums.c:578
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "RGB percetual"
 
-#: ../libgimpbase/gimpbaseenums.c:579
+#: ../libligmabase/ligmabaseenums.c:579
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "RGB linear"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libligmabase/ligmabaseenums.c:580
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE Lab"
 
-#: ../libgimpbase/gimpbaseenums.c:610
+#: ../libligmabase/ligmabaseenums.c:610
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:611
+#: ../libligmabase/ligmabaseenums.c:611
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (matiz à esquerda)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:614
+#: ../libligmabase/ligmabaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (à esquerda)"
 
-#: ../libgimpbase/gimpbaseenums.c:615
+#: ../libligmabase/ligmabaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (matiz à direita)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:618
+#: ../libligmabase/ligmabaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (à direita)"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libligmabase/ligmabaseenums.c:651
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Linear"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libligmabase/ligmabaseenums.c:652
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Curvado"
 
-#: ../libgimpbase/gimpbaseenums.c:653
+#: ../libligmabase/ligmabaseenums.c:653
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libligmabase/ligmabaseenums.c:654
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Esférico (a aumentar)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:657
+#: ../libligmabase/ligmabaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Esférico (aum.)"
 
-#: ../libgimpbase/gimpbaseenums.c:658
+#: ../libligmabase/ligmabaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Esférico (a diminuir)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:661
+#: ../libligmabase/ligmabaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Esférico (dim.)"
 
-#: ../libgimpbase/gimpbaseenums.c:662
+#: ../libligmabase/ligmabaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Passo"
 
-#: ../libgimpbase/gimpbaseenums.c:700
+#: ../libligmabase/ligmabaseenums.c:700
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Linear"
 
-#: ../libgimpbase/gimpbaseenums.c:701
+#: ../libligmabase/ligmabaseenums.c:701
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bilinear"
 
-#: ../libgimpbase/gimpbaseenums.c:702
+#: ../libligmabase/ligmabaseenums.c:702
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:703
+#: ../libligmabase/ligmabaseenums.c:703
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Quadrado"
 
-#: ../libgimpbase/gimpbaseenums.c:704
+#: ../libligmabase/ligmabaseenums.c:704
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Cónico (simétrico)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:707
+#: ../libligmabase/ligmabaseenums.c:707
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Cónico (simétrico)"
 
-#: ../libgimpbase/gimpbaseenums.c:708
+#: ../libligmabase/ligmabaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Cónico (assimétrico)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libligmabase/ligmabaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Cónico (assimétrico)"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libligmabase/ligmabaseenums.c:712
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Margens (angular)"
 
-#: ../libgimpbase/gimpbaseenums.c:713
+#: ../libligmabase/ligmabaseenums.c:713
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Margens (esférico)"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libligmabase/ligmabaseenums.c:714
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Margens (com covas)"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libligmabase/ligmabaseenums.c:715
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Espiral (à direita)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:718
+#: ../libligmabase/ligmabaseenums.c:718
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Espiral (à direita)"
 
-#: ../libgimpbase/gimpbaseenums.c:719
+#: ../libligmabase/ligmabaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Espiral (à esquerda)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:722
+#: ../libligmabase/ligmabaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Espiral (à esquerda)"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libligmabase/ligmabaseenums.c:754
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Interseções (pontos)"
 
-#: ../libgimpbase/gimpbaseenums.c:755
+#: ../libligmabase/ligmabaseenums.c:755
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Interseções (miras)"
 
-#: ../libgimpbase/gimpbaseenums.c:756
+#: ../libligmabase/ligmabaseenums.c:756
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Tracejado"
 
-#: ../libgimpbase/gimpbaseenums.c:757
+#: ../libligmabase/ligmabaseenums.c:757
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Tracejado duplo"
 
-#: ../libgimpbase/gimpbaseenums.c:758
+#: ../libligmabase/ligmabaseenums.c:758
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Sólido"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: ../libligmabase/ligmabaseenums.c:828
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Nome do ícone"
 
-#: ../libgimpbase/gimpbaseenums.c:829
+#: ../libligmabase/ligmabaseenums.c:829
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:830
+#: ../libligmabase/ligmabaseenums.c:830
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Ficheiro de imagem"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libligmabase/ligmabaseenums.c:860
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Cor RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:861
+#: ../libligmabase/ligmabaseenums.c:861
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Tons de cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:862
+#: ../libligmabase/ligmabaseenums.c:862
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Cor indexada"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libligmabase/ligmabaseenums.c:895
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libligmabase/ligmabaseenums.c:896
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:897
+#: ../libligmabase/ligmabaseenums.c:897
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Tons de cinzento"
 
-#: ../libgimpbase/gimpbaseenums.c:898
+#: ../libligmabase/ligmabaseenums.c:898
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Tons de cinzentos-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:899
+#: ../libligmabase/ligmabaseenums.c:899
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indexado"
 
-#: ../libgimpbase/gimpbaseenums.c:900
+#: ../libligmabase/ligmabaseenums.c:900
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indexado-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:930
+#: ../libligmabase/ligmabaseenums.c:930
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Círculo"
 
-#: ../libgimpbase/gimpbaseenums.c:931
+#: ../libligmabase/ligmabaseenums.c:931
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Quadrado"
 
-#: ../libgimpbase/gimpbaseenums.c:932
+#: ../libligmabase/ligmabaseenums.c:932
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Diamante"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: ../libligmabase/ligmabaseenums.c:964
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Nenhuma"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: ../libligmabase/ligmabaseenums.c:965
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Linear (qualidade média, velocidade média)"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: ../libligmabase/ligmabaseenums.c:966
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Cúbico (qualidade alta, muito lento, bom para aumentos)"
 
-#: ../libgimpbase/gimpbaseenums.c:967
+#: ../libligmabase/ligmabaseenums.c:967
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr ""
 "NoHalo (qualidade alta, para redução até metade do tamanho ou aumentos)"
 
-#: ../libgimpbase/gimpbaseenums.c:968
+#: ../libligmabase/ligmabaseenums.c:968
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo (qualidade alta, para redução pequena)"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: ../libligmabase/ligmabaseenums.c:998
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Meia-esquadria"
 
-#: ../libgimpbase/gimpbaseenums.c:999
+#: ../libligmabase/ligmabaseenums.c:999
 msgctxt "join-style"
 msgid "Round"
 msgstr "Redondo"
 
-#: ../libgimpbase/gimpbaseenums.c:1000
+#: ../libligmabase/ligmabaseenums.c:1000
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Biselado"
 
-#: ../libgimpbase/gimpbaseenums.c:1061
+#: ../libligmabase/ligmabaseenums.c:1061
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Expandir conforme necessário"
 
-#: ../libgimpbase/gimpbaseenums.c:1062
+#: ../libligmabase/ligmabaseenums.c:1062
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Ajustar à imagem"
 
-#: ../libgimpbase/gimpbaseenums.c:1063
+#: ../libligmabase/ligmabaseenums.c:1063
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "Ajustar à camada do fundo"
 
-#: ../libgimpbase/gimpbaseenums.c:1064
+#: ../libligmabase/ligmabaseenums.c:1064
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Achatar"
 
-#: ../libgimpbase/gimpbaseenums.c:1158
+#: ../libligmabase/ligmabaseenums.c:1158
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../libgimpbase/gimpbaseenums.c:1159
+#: ../libligmabase/ligmabaseenums.c:1159
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Vertical"
 
-#: ../libgimpbase/gimpbaseenums.c:1160
+#: ../libligmabase/ligmabaseenums.c:1160
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Desconhecida"
 
-#: ../libgimpbase/gimpbaseenums.c:1189
+#: ../libligmabase/ligmabaseenums.c:1189
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Constante"
 
-#: ../libgimpbase/gimpbaseenums.c:1190
+#: ../libligmabase/ligmabaseenums.c:1190
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:1251
+#: ../libligmabase/ligmabaseenums.c:1251
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
-msgstr "Procedimento interno GIMP"
+msgid "Internal LIGMA procedure"
+msgstr "Procedimento interno LIGMA"
 
-#: ../libgimpbase/gimpbaseenums.c:1252
+#: ../libligmabase/ligmabaseenums.c:1252
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
-msgstr "Complemento do GIMP"
+msgid "LIGMA Plug-In"
+msgstr "Complemento do LIGMA"
 
-#: ../libgimpbase/gimpbaseenums.c:1253
+#: ../libligmabase/ligmabaseenums.c:1253
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "Extensão interna GIMP"
+msgid "LIGMA Extension"
+msgstr "Extensão interna LIGMA"
 
-#: ../libgimpbase/gimpbaseenums.c:1254
+#: ../libligmabase/ligmabaseenums.c:1254
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Procedimento temporário"
 
-#: ../libgimpbase/gimpbaseenums.c:1341
+#: ../libligmabase/ligmabaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "Inteiro linear de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1342
+#: ../libligmabase/ligmabaseenums.c:1342
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "Inteiro não linear de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1343
+#: ../libligmabase/ligmabaseenums.c:1343
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "Inteiro percetual de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1344
+#: ../libligmabase/ligmabaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "Inteiro linear de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1345
+#: ../libligmabase/ligmabaseenums.c:1345
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "Inteiro não linear de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1346
+#: ../libligmabase/ligmabaseenums.c:1346
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "Inteiro percetual de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1347
+#: ../libligmabase/ligmabaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "Inteiro linear de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1348
+#: ../libligmabase/ligmabaseenums.c:1348
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "Inteiro não linear de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1349
+#: ../libligmabase/ligmabaseenums.c:1349
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "Inteiro percetual de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1350
+#: ../libligmabase/ligmabaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "Vírgula flutuante linear de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1351
+#: ../libligmabase/ligmabaseenums.c:1351
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "Vírgula flutuante não linear de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1352
+#: ../libligmabase/ligmabaseenums.c:1352
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "Vírgula flutuante percetual de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1353
+#: ../libligmabase/ligmabaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "Vírgula flutuante linear de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1354
+#: ../libligmabase/ligmabaseenums.c:1354
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "Vírgula flutuante não linear de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1355
+#: ../libligmabase/ligmabaseenums.c:1355
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "Vírgula flutuante percetual de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1356
+#: ../libligmabase/ligmabaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "Vírgula flutuante linear de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1357
+#: ../libligmabase/ligmabaseenums.c:1357
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "Vírgula flutuante não linear de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1358
+#: ../libligmabase/ligmabaseenums.c:1358
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "Vírgula flutuante percetual de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libligmabase/ligmabaseenums.c:1469
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Nenhuma (estendida)"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libligmabase/ligmabaseenums.c:1470
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Onda em ziguezague"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libligmabase/ligmabaseenums.c:1471
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Onda triangular"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libligmabase/ligmabaseenums.c:1472
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Truncar"
 
-#: ../libgimpbase/gimpbaseenums.c:1534
+#: ../libligmabase/ligmabaseenums.c:1534
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Executar interativamente"
 
-#: ../libgimpbase/gimpbaseenums.c:1535
+#: ../libligmabase/ligmabaseenums.c:1535
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Executar não interativamente"
 
-#: ../libgimpbase/gimpbaseenums.c:1536
+#: ../libligmabase/ligmabaseenums.c:1536
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Executar com os últimos parâmetros"
 
-#: ../libgimpbase/gimpbaseenums.c:1574
+#: ../libligmabase/ligmabaseenums.c:1574
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Combinado"
 
-#: ../libgimpbase/gimpbaseenums.c:1575
+#: ../libligmabase/ligmabaseenums.c:1575
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Vermelho"
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: ../libligmabase/ligmabaseenums.c:1576
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:1577
+#: ../libligmabase/ligmabaseenums.c:1577
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpbase/gimpbaseenums.c:1578
+#: ../libligmabase/ligmabaseenums.c:1578
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Matiz HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1579
+#: ../libligmabase/ligmabaseenums.c:1579
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Saturação HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1580
+#: ../libligmabase/ligmabaseenums.c:1580
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Valor HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1581
+#: ../libligmabase/ligmabaseenums.c:1581
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Luminosidade LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1582
+#: ../libligmabase/ligmabaseenums.c:1582
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Croma LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1583
+#: ../libligmabase/ligmabaseenums.c:1583
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Matiz LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1584
+#: ../libligmabase/ligmabaseenums.c:1584
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1613
+#: ../libligmabase/ligmabaseenums.c:1613
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Píxeis"
 
-#: ../libgimpbase/gimpbaseenums.c:1614
+#: ../libligmabase/ligmabaseenums.c:1614
 msgctxt "size-type"
 msgid "Points"
 msgstr "Pontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1675
+#: ../libligmabase/ligmabaseenums.c:1675
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Traçar linha"
 
-#: ../libgimpbase/gimpbaseenums.c:1676
+#: ../libligmabase/ligmabaseenums.c:1676
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Traçar com uma ferramenta de pintura"
 
-#: ../libgimpbase/gimpbaseenums.c:1709
+#: ../libligmabase/ligmabaseenums.c:1709
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Da esquerda para a direita"
 
-#: ../libgimpbase/gimpbaseenums.c:1710
+#: ../libligmabase/ligmabaseenums.c:1710
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Da direita para a esquerda"
 
-#: ../libgimpbase/gimpbaseenums.c:1711
+#: ../libligmabase/ligmabaseenums.c:1711
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Vertical, da direita para a esquerda (orientação misturada)"
 
-#: ../libgimpbase/gimpbaseenums.c:1712
+#: ../libligmabase/ligmabaseenums.c:1712
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Vertical, da direita para a esquerda (orientação ao alto)"
 
-#: ../libgimpbase/gimpbaseenums.c:1713
+#: ../libligmabase/ligmabaseenums.c:1713
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Vertical, da esquerda para a direita (orientação misturada)"
 
-#: ../libgimpbase/gimpbaseenums.c:1714
+#: ../libligmabase/ligmabaseenums.c:1714
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Vertical, da esquerda para a direita (orientação ao alto)"
 
-#: ../libgimpbase/gimpbaseenums.c:1745
+#: ../libligmabase/ligmabaseenums.c:1745
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Nenhum"
 
-#: ../libgimpbase/gimpbaseenums.c:1746
+#: ../libligmabase/ligmabaseenums.c:1746
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ligeiro"
 
-#: ../libgimpbase/gimpbaseenums.c:1747
+#: ../libligmabase/ligmabaseenums.c:1747
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Médio"
 
-#: ../libgimpbase/gimpbaseenums.c:1748
+#: ../libligmabase/ligmabaseenums.c:1748
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Total"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libligmabase/ligmabaseenums.c:1779
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Justificado à esquerda"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libligmabase/ligmabaseenums.c:1780
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Justificado à direita"
 
-#: ../libgimpbase/gimpbaseenums.c:1781
+#: ../libligmabase/ligmabaseenums.c:1781
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centrado"
 
-#: ../libgimpbase/gimpbaseenums.c:1782
+#: ../libligmabase/ligmabaseenums.c:1782
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Cheio"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libligmabase/ligmabaseenums.c:1812
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sombras"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libligmabase/ligmabaseenums.c:1813
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tons médios"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libligmabase/ligmabaseenums.c:1814
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Altas luzes"
 
-#: ../libgimpbase/gimpbaseenums.c:1843
+#: ../libligmabase/ligmabaseenums.c:1843
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal"
 
-#: ../libgimpbase/gimpbaseenums.c:1844
+#: ../libligmabase/ligmabaseenums.c:1844
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Inverso"
 
-#: ../libgimpbase/gimpbaseenums.c:1875
+#: ../libligmabase/ligmabaseenums.c:1875
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajustar"
 
-#: ../libgimpbase/gimpbaseenums.c:1876
+#: ../libligmabase/ligmabaseenums.c:1876
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Recortar"
 
-#: ../libgimpbase/gimpbaseenums.c:1877
+#: ../libligmabase/ligmabaseenums.c:1877
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Recortar para o resultado"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libligmabase/ligmabaseenums.c:1878
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Recortar com proporção"
 
-#: ../libgimpbase/gimpmetadata.c:1072
+#: ../libligmabase/ligmametadata.c:1072
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Pode carregar metadados só de ficheiros locais"
 
-#: ../libgimpbase/gimpmetadata.c:1128
+#: ../libligmabase/ligmametadata.c:1128
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Pode guardar metadados só de ficheiros locais"
 
-#: ../libgimpbase/gimpmetadata.c:1176
+#: ../libligmabase/ligmametadata.c:1176
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Tamanho dos dados Exif inválido."
 
-#: ../libgimpbase/gimpmetadata.c:1205
+#: ../libligmabase/ligmametadata.c:1205
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Falha ao processar os dados EXIF."
 
-#: ../libgimpbase/gimpmetadata.c:1255
+#: ../libligmabase/ligmametadata.c:1255
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Falha ao processar os dados IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1303
+#: ../libligmabase/ligmametadata.c:1303
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Falha ao processar os dados XMP."
 
-#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
+#: ../libligmabase/ligmautils.c:219 ../libligmabase/ligmautils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(expressão UTF-8 inválida)"
 
-#: ../libgimpbase/gimputils.c:394
+#: ../libligmabase/ligmautils.c:394
 msgid "File path is NULL"
 msgstr "Caminho do ficheiro é NULL"
 
-#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
+#: ../libligmabase/ligmautils.c:403 ../libligmabase/ligmautils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 "Erro ao converter nome do ficheiro em UTF-8 para caracteres alargados (mais "
 "de 8 bits)"
 
-#: ../libgimpbase/gimputils.c:422
+#: ../libligmabase/ligmautils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() falhou"
 
-#: ../libgimpbase/gimputils.c:459
+#: ../libligmabase/ligmautils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Não é possível converter \"%s\" num NSURL válido."
 
-#: ../libgimpbase/gimputils.c:487
+#: ../libligmabase/ligmautils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "A conexão a org.freedesktop.FileManager1 falhou: "
 
-#: ../libgimpbase/gimputils.c:511
+#: ../libligmabase/ligmautils.c:511
 msgid "Calling ShowItems failed: "
 msgstr "Chamada a “ShowItems” falhou: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:258
+#: ../libligmacolor/ligmacolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" não parece ser um perfil de cor ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:304
+#: ../libligmacolor/ligmacolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Os dados não parecem ser um perfil de cor ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:361
+#: ../libligmacolor/ligmacolorprofile.c:361
 msgid "Could not save color profile to memory"
 msgstr "Não foi possível guardar o perfil de cor na memória"
 
-#: ../libgimpcolor/gimpcolorprofile.c:578
+#: ../libligmacolor/ligmacolorprofile.c:578
 msgid "(unnamed profile)"
 msgstr "(perfil sem nome)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:620
+#: ../libligmacolor/ligmacolorprofile.c:620
 #, c-format
 msgid "Model: %s"
 msgstr "Modelo: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:629
+#: ../libligmacolor/ligmacolorprofile.c:629
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Fabricante: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:638
+#: ../libligmacolor/ligmacolorprofile.c:638
 #, c-format
 msgid "Copyright: %s"
 msgstr "Direitos de autor: %s"
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: ../libligmaconfig/ligmaconfigenums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Sem gestão de cores"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: ../libligmaconfig/ligmaconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Monitor com gestão de cores"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: ../libligmaconfig/ligmaconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "Prova de cor no monitor"
 
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: ../libligmaconfig/ligmaconfigenums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Percetual"
 
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: ../libligmaconfig/ligmaconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Colorimétrico relativo"
 
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: ../libligmaconfig/ligmaconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Saturação"
 
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: ../libligmaconfig/ligmaconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Colorimétrico absoluto"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr "Como as imagens são apresentadas no ecrã."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libligmaconfig/ligmacolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "O perfil de cor do seu monitor principa."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libligmaconfig/ligmacolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Quando ativo, o GIMP tenta usar o perfil de cores do monitor usado pelo "
+"Quando ativo, o LIGMA tenta usar o perfil de cores do monitor usado pelo "
 "sistema de janelas. O perfil de configuração do monitor só será usado como "
 "último recurso."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libligmaconfig/ligmacolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1721,7 +1721,7 @@ msgstr ""
 "O perfil de cor de espaço de trabalho RGB preferido. Será apresentado junto "
 "ao perfil RGB interno quando for possível escolher um perfil de cor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:67
+#: ../libligmaconfig/ligmacolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
@@ -1730,11 +1730,11 @@ msgstr ""
 "apresentado junto ao perfil em tons de cinzento interno quando for possível "
 "escolher um perfil de cor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libligmaconfig/ligmacolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "O perfil de cores CMYK usado para converter entre RGB e CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libligmaconfig/ligmacolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1744,7 +1744,7 @@ msgstr ""
 "sua imagem para outro espaço de cor, incluindo prova de cor no monitor para "
 "uma impressora ou outro perfil de dispositivo de saída."
 
-#: ../libgimpconfig/gimpcolorconfig.c:79
+#: ../libligmaconfig/ligmacolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1757,21 +1757,21 @@ msgstr ""
 "monitores são matriz), escolher intenção percetual dá-lhe realmente o "
 "colorimétrico relativo."
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: ../libligmaconfig/ligmacolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 "Use compensação de ponto preto (a não ser que tenha uma boa razão para não o "
 "fazer)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:90
+#: ../libligmaconfig/ligmacolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
 "Quando desativado, a imagem pode ser apresentada com melhor qualidade mas à "
 "custa da velocidade mais lenta."
 
-#: ../libgimpconfig/gimpcolorconfig.c:94
+#: ../libligmaconfig/ligmacolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1781,21 +1781,21 @@ msgstr ""
 "dispositivo de simulação de saída (normalmente o monitor). Experimente-os "
 "todos e escolha o que lhe parecer melhor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:99
+#: ../libligmaconfig/ligmacolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr ""
 "Experimente com e sem compensação de ponto preto e escolha o que lhe parecer "
 "melhor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:103
+#: ../libligmaconfig/ligmacolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 "Quando desativado, a prova de cor no monitor pode ser apresentada com melhor "
 "qualidade mas à custa da velocidade mais lenta."
 
-#: ../libgimpconfig/gimpcolorconfig.c:107
+#: ../libligmaconfig/ligmacolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
@@ -1803,191 +1803,191 @@ msgstr ""
 "Quando ativado, a prova de cor no monitor irá assinalar as cores que não "
 "podem ser representadas no espaço de cores de destino."
 
-#: ../libgimpconfig/gimpcolorconfig.c:111
+#: ../libligmaconfig/ligmacolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Cor a usar para assinalar as cores que estão fora da gama."
 
-#: ../libgimpconfig/gimpcolorconfig.c:210
+#: ../libligmaconfig/ligmacolorconfig.c:210
 msgid "Mode of operation"
 msgstr "Modo de operação"
 
-#: ../libgimpconfig/gimpcolorconfig.c:218
+#: ../libligmaconfig/ligmacolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Perfil RGB preferido"
 
-#: ../libgimpconfig/gimpcolorconfig.c:225
+#: ../libligmaconfig/ligmacolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Perfil de tons de cinzento preferido"
 
-#: ../libgimpconfig/gimpcolorconfig.c:232
+#: ../libligmaconfig/ligmacolorconfig.c:232
 msgid "CMYK profile"
 msgstr "Perfil CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:239
+#: ../libligmaconfig/ligmacolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Perfil de monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:246
+#: ../libligmaconfig/ligmacolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Utilizar o perfil de monitor do sistema"
 
-#: ../libgimpconfig/gimpcolorconfig.c:253
+#: ../libligmaconfig/ligmacolorconfig.c:253
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulação para prova de cor no monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:260
+#: ../libligmaconfig/ligmacolorconfig.c:260
 msgid "Display rendering intent"
 msgstr "Mostrar a intenção de visualização"
 
-#: ../libgimpconfig/gimpcolorconfig.c:268
+#: ../libligmaconfig/ligmacolorconfig.c:268
 msgid "Use black point compensation for the display"
 msgstr "Utilizar compensação de ponto preto para o ecrã"
 
-#: ../libgimpconfig/gimpcolorconfig.c:275
+#: ../libligmaconfig/ligmacolorconfig.c:275
 msgid "Optimize display color transformations"
 msgstr "Optimizar as transformações de cor do ecrã"
 
-#: ../libgimpconfig/gimpcolorconfig.c:282
+#: ../libligmaconfig/ligmacolorconfig.c:282
 msgid "Soft-proofing rendering intent"
 msgstr "Intenção de visualização da prova de cor no monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:290
+#: ../libligmaconfig/ligmacolorconfig.c:290
 msgid "Use black point compensation for soft-proofing"
 msgstr "Utilizar compensação de ponto preto para a prova de cor no monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:297
+#: ../libligmaconfig/ligmacolorconfig.c:297
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimizar as transformações de cor da prova de cor no monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:304
+#: ../libligmaconfig/ligmacolorconfig.c:304
 msgid "Mark out of gamut colors"
 msgstr "Assinalar cores fora da gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:311
+#: ../libligmaconfig/ligmacolorconfig.c:311
 msgid "Out of gamut warning color"
 msgstr "Cor de aviso de fora de gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:661
-#: ../libgimpconfig/gimpcolorconfig.c:854
+#: ../libligmaconfig/ligmacolorconfig.c:661
+#: ../libligmaconfig/ligmacolorconfig.c:854
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "O perfil de cor \"%s\" não é para espaço de cor RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:705
-#: ../libgimpconfig/gimpcolorconfig.c:904
+#: ../libligmaconfig/ligmacolorconfig.c:705
+#: ../libligmaconfig/ligmacolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "O perfil de cor \"%s\" não é para espaço de cor GRAY."
 
-#: ../libgimpconfig/gimpcolorconfig.c:749
-#: ../libgimpconfig/gimpcolorconfig.c:954
+#: ../libligmaconfig/ligmacolorconfig.c:749
+#: ../libligmaconfig/ligmacolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "O perfil de cor \"%s\" não é para espaço de cor CMYK."
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:116
+#: ../libligmaconfig/ligmaconfig-deserialize.c:116
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "valor do token %s não é uma expressão UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:480
+#: ../libligmaconfig/ligmaconfig-deserialize.c:480
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "esperado \"sim\" ou \"não\" para o token booleano %s, obtido \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:595
+#: ../libligmaconfig/ligmaconfig-deserialize.c:595
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valor \"%s\" inválido para o token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: ../libligmaconfig/ligmaconfig-deserialize.c:610
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valor \"%ld\" inválido para o token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:679
+#: ../libligmaconfig/ligmaconfig-deserialize.c:679
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "ao processar o token \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:664
-#: ../libgimpconfig/gimpconfig-iface.c:677 ../libgimpconfig/gimpscanner.c:774
-#: ../libgimpconfig/gimpscanner.c:856
-#: ../libgimpwidgets/gimpcolorprofilestore.c:682
+#: ../libligmaconfig/ligmaconfig-iface.c:664
+#: ../libligmaconfig/ligmaconfig-iface.c:677 ../libligmaconfig/ligmascanner.c:774
+#: ../libligmaconfig/ligmascanner.c:856
+#: ../libligmawidgets/ligmacolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "erro fatal de processamento"
 
-#: ../libgimpconfig/gimpconfig-path.c:506
+#: ../libligmaconfig/ligmaconfig-path.c:506
 msgid "File has no path representation"
 msgstr "O ficheiro não tem representação de caminho"
 
-#: ../libgimpconfig/gimpconfig-path.c:593
+#: ../libligmaconfig/ligmaconfig-path.c:593
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Não é possível expandir ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:95
-#: ../libgimpconfig/gimpconfigwriter.c:725
+#: ../libligmaconfig/ligmaconfigwriter.c:95
+#: ../libligmaconfig/ligmaconfigwriter.c:725
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Erro ao escrever em \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:153
+#: ../libligmaconfig/ligmaconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Não foi possível criar o diretório “%s” para “%s”: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:169
+#: ../libligmaconfig/ligmaconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Não foi possível criar o ficheiro temporário para \"%s\": "
 
-#: ../libgimpconfig/gimpconfigwriter.c:835
+#: ../libligmaconfig/ligmaconfigwriter.c:835
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Erro ao escrever em \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:422
+#: ../libligmaconfig/ligmascanner.c:422
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "expressão UTF-8 inválida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:649
+#: ../libligmaconfig/ligmascanner.c:649
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "esperado \"sim\" ou \"não\" para o token booleano, obtido \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:883
+#: ../libligmaconfig/ligmascanner.c:883
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Erro ao processar \"%s\" na linha %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:172 ../libgimpmodule/gimpmodule.c:190
-#: ../libgimpmodule/gimpmodule.c:451 ../libgimpmodule/gimpmodule.c:474
-#: ../libgimpmodule/gimpmodule.c:524
+#: ../libligmamodule/ligmamodule.c:172 ../libligmamodule/ligmamodule.c:190
+#: ../libligmamodule/ligmamodule.c:451 ../libligmamodule/ligmamodule.c:474
+#: ../libligmamodule/ligmamodule.c:524
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Erro ao carregamento o módulo \"%s\": %s"
 
-#: ../libgimpmodule/gimpmoduledb.c:500
+#: ../libligmamodule/ligmamoduledb.c:500
 msgid "Module error"
 msgstr "Erro no módulo"
 
-#: ../libgimpmodule/gimpmoduledb.c:501
+#: ../libligmamodule/ligmamoduledb.c:501
 msgid "Loaded"
 msgstr "Carregado"
 
-#: ../libgimpmodule/gimpmoduledb.c:502
+#: ../libligmamodule/ligmamoduledb.c:502
 msgid "Load failed"
 msgstr "Falha ao carregar"
 
-#: ../libgimpmodule/gimpmoduledb.c:503
+#: ../libligmamodule/ligmamoduledb.c:503
 msgid "Not loaded"
 msgstr "Não carregado"
 
-#: ../libgimpthumb/gimpthumb-utils.c:153
+#: ../libligmathumb/ligmathumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
@@ -1996,42 +1996,42 @@ msgstr ""
 "Não é possível determinar uma pasta de miniaturas válida.\n"
 "As miniaturas serão guardadas na pasta de ficheiros temporários (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#: ../libligmathumb/ligmathumb-utils.c:299 ../libligmathumb/ligmathumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Falha ao criar a pasta \"%s\" para as miniaturas."
 
-#: ../libgimpthumb/gimpthumbnail.c:481
+#: ../libligmathumb/ligmathumbnail.c:481
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "A miniatura não contém a etiqueta Thumb::URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:878
+#: ../libligmathumb/ligmathumbnail.c:878
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Não foi possível criar a miniatura de \"%s\": %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:141
+#: ../libligmawidgets/ligmabrowser.c:141
 msgid "_Search:"
 msgstr "_Pesquisar:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:152
+#: ../libligmawidgets/ligmacolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "Cor de 1º _plano"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:156
+#: ../libligmawidgets/ligmacolorbutton.c:156
 msgid "_Background Color"
 msgstr "Cor de _fundo"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:160
+#: ../libligmawidgets/ligmacolorbutton.c:160
 msgid "Blac_k"
 msgstr "_Preto"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:164
+#: ../libligmawidgets/ligmacolorbutton.c:164
 msgid "_White"
 msgstr "_Branco"
 
-#: ../libgimpwidgets/gimpcolorhexentry.c:134
+#: ../libligmawidgets/ligmacolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2039,225 +2039,225 @@ msgstr ""
 "Notação de cor hexadecimal como a usada em HTML e CSS. Esta entrada também "
 "aceita nomes de cores CSS."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:108
 msgid "All files (*.*)"
 msgstr "Todos os ficheiros (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:113
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Perfil de cor ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:174
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: ../libgimpwidgets/gimppatheditor.c:267
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:346
+#: ../libligmawidgets/ligmapatheditor.c:267
 msgid "Folder"
 msgstr "Pasta"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:351
 msgid "Not a regular file."
 msgstr "Não é um ficheiro normal."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:158
+#: ../libligmawidgets/ligmacolorprofilestore.c:158
 msgid "Select color profile from disk..."
 msgstr "Selecionar perfil de cor do disco..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:287
+#: ../libligmawidgets/ligmacolorprofilestore.c:287
 msgctxt "profile"
 msgid "None"
 msgstr "Nenhum"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:168
+#: ../libligmawidgets/ligmacolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Fabricante: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:180
+#: ../libligmawidgets/ligmacolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Direitos de autor: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libligmawidgets/ligmacolorscales.c:205
 msgid "Scales"
 msgstr "Escalas"
 
-#: ../libgimpwidgets/gimpcolorscales.c:434
+#: ../libligmawidgets/ligmacolorscales.c:434
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:436
+#: ../libligmawidgets/ligmacolorscales.c:436
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:457
+#: ../libligmawidgets/ligmacolorscales.c:457
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:459
+#: ../libligmawidgets/ligmacolorscales.c:459
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpcolorselection.c:247
+#: ../libligmawidgets/ligmacolorselection.c:247
 msgid "Current:"
 msgstr "Atual:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:256
+#: ../libligmawidgets/ligmacolorselection.c:256
 msgid "Old:"
 msgstr "Antigo:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:343
+#: ../libligmawidgets/ligmacolorselection.c:343
 msgid "HTML _notation:"
 msgstr "_Notação HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:167
+#: ../libligmawidgets/ligmafileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Mostrar localização do ficheiro no gestor de ficheiros"
 
-#: ../libgimpwidgets/gimpfileentry.c:238
+#: ../libligmawidgets/ligmafileentry.c:238
 msgid "Open a file selector to browse your folders"
 msgstr "Abre um seletor de ficheiros para navegar pelas pastas"
 
-#: ../libgimpwidgets/gimpfileentry.c:239
+#: ../libligmawidgets/ligmafileentry.c:239
 msgid "Open a file selector to browse your files"
 msgstr "Abre um seletor de ficheiros para navegar pelos ficheiros"
 
-#: ../libgimpwidgets/gimpfileentry.c:251
+#: ../libligmawidgets/ligmafileentry.c:251
 msgid "Indicates whether or not the folder exists"
 msgstr "Indica se a pasta existe ou não"
 
-#: ../libgimpwidgets/gimpfileentry.c:252
+#: ../libligmawidgets/ligmafileentry.c:252
 msgid "Indicates whether or not the file exists"
 msgstr "Indica se o ficheiro existe ou não"
 
-#: ../libgimpwidgets/gimpfileentry.c:428
+#: ../libligmawidgets/ligmafileentry.c:428
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Não é possível mostrar o ficheiro no gestor de ficheiros: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:455
+#: ../libligmawidgets/ligmafileentry.c:455
 msgid "Select Folder"
 msgstr "Selecionar pasta"
 
-#: ../libgimpwidgets/gimpfileentry.c:457
+#: ../libligmawidgets/ligmafileentry.c:457
 msgid "Select File"
 msgstr "Selecionar ficheiro"
 
-#: ../libgimpwidgets/gimphelpui.c:384
+#: ../libligmawidgets/ligmahelpui.c:384
 msgid "Press F1 for more help"
 msgstr "Carregue na tecla [F1] para obter mais ajuda"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimpwidgets/gimpintstore.c:255
+#: ../libligmawidgets/ligmaintstore.c:255
 msgid "(Empty)"
 msgstr "(vazio)"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:252
+#: ../libligmawidgets/ligmamemsizeentry.c:252
 msgid "Kibibyte"
 msgstr "Quibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:253
+#: ../libligmawidgets/ligmamemsizeentry.c:253
 msgid "Mebibyte"
 msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:254
+#: ../libligmawidgets/ligmamemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:283
-#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libligmawidgets/ligmapageselector.c:283
+#: ../libligmawidgets/ligmapageselector.c:1079
 msgid "Nothing selected"
 msgstr "Nada selecionado"
 
-#: ../libgimpwidgets/gimppageselector.c:301
+#: ../libligmawidgets/ligmapageselector.c:301
 msgid "Select _All"
 msgstr "Selecionar _tudo"
 
-#: ../libgimpwidgets/gimppageselector.c:321
+#: ../libligmawidgets/ligmapageselector.c:321
 msgid "Select _range:"
 msgstr "Selecionar _intervalo:"
 
-#: ../libgimpwidgets/gimppageselector.c:333
+#: ../libligmawidgets/ligmapageselector.c:333
 msgid "Open _pages as"
 msgstr "Abrir _páginas como"
 
-#: ../libgimpwidgets/gimppageselector.c:461
-#: ../libgimpwidgets/gimppageselector.c:659
+#: ../libligmawidgets/ligmapageselector.c:461
+#: ../libligmawidgets/ligmapageselector.c:659
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1084
+#: ../libligmawidgets/ligmapageselector.c:1084
 msgid "One page selected"
 msgstr "Uma página selecionada"
 
-#: ../libgimpwidgets/gimppageselector.c:1091
-#: ../libgimpwidgets/gimppageselector.c:1095
+#: ../libligmawidgets/ligmapageselector.c:1091
+#: ../libligmawidgets/ligmapageselector.c:1095
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d página selecionada"
 msgstr[1] "Todas as %d páginas selecionadas"
 
-#: ../libgimpwidgets/gimppatheditor.c:178
+#: ../libligmawidgets/ligmapatheditor.c:178
 msgid "Add a new folder"
 msgstr "Adiciona uma nova pasta"
 
-#: ../libgimpwidgets/gimppatheditor.c:196
+#: ../libligmawidgets/ligmapatheditor.c:196
 msgid "Move the selected folder up"
 msgstr "Mover a pasta selecionada para cima"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: ../libligmawidgets/ligmapatheditor.c:214
 msgid "Move the selected folder down"
 msgstr "Mover a pasta selecionada para baixo"
 
-#: ../libgimpwidgets/gimppatheditor.c:232
+#: ../libligmawidgets/ligmapatheditor.c:232
 msgid "Remove the selected folder from the list"
 msgstr "Remover a pasta selecionada da lista"
 
-#: ../libgimpwidgets/gimppatheditor.c:258
+#: ../libligmawidgets/ligmapatheditor.c:258
 msgid "Writable"
 msgstr "Gravável"
 
-#: ../libgimpwidgets/gimppickbutton.c:116
+#: ../libligmawidgets/ligmapickbutton.c:116
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Clique na pipeta e depois em qualquer local do ecrã dentro da janela do GIMP "
+"Clique na pipeta e depois em qualquer local do ecrã dentro da janela do LIGMA "
 "para obter a cor nesse local."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:288
+#: ../libligmawidgets/ligmapreview.c:288
 msgid "_Preview"
 msgstr "_Pré-visualização"
 
-#: ../libgimpwidgets/gimppreviewarea.c:146
+#: ../libligmawidgets/ligmapreviewarea.c:146
 msgid "Check Size"
 msgstr "Tamanho do padrão"
 
-#: ../libgimpwidgets/gimppreviewarea.c:154
+#: ../libligmawidgets/ligmapreviewarea.c:154
 msgid "Check Style"
 msgstr "Estilo do padrão"
 
-#: ../libgimpwidgets/gimppreviewarea.c:162
+#: ../libligmawidgets/ligmapreviewarea.c:162
 msgid "Custom Checks Color 1"
 msgstr "Verificações personalizadas Cor 1"
 
-#: ../libgimpwidgets/gimppreviewarea.c:169
+#: ../libligmawidgets/ligmapreviewarea.c:169
 msgid "Custom Checks Color 2"
 msgstr "Verificações personalizadas Cor 2"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2444
+#: ../libligmawidgets/ligmapropwidgets.c:2444
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Este campo de entrada de texto está limitado a %d carácter."
 msgstr[1] "Este campo de entrada de texto está limitado a %d caracteres."
 
-#: ../libgimpwidgets/gimpwidgets.c:259
+#: ../libligmawidgets/ligmawidgets.c:259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2265,182 +2265,182 @@ msgstr ""
 "Use este valor para a semente de geração de número aleatório - isto permite "
 "repetir uma dada operação \"aleatória\""
 
-#: ../libgimpwidgets/gimpwidgets.c:263
+#: ../libligmawidgets/ligmawidgets.c:263
 msgid "_New Seed"
 msgstr "_Nova semente"
 
-#: ../libgimpwidgets/gimpwidgets.c:279
+#: ../libligmawidgets/ligmawidgets.c:279
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Semear a geração de número aleatório com um número gerado aleatoriamente"
 
-#: ../libgimpwidgets/gimpwidgets.c:283
+#: ../libligmawidgets/ligmawidgets.c:283
 msgid "_Randomize"
 msgstr "_Gerar aleatório"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libligmawidgets/ligmawidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Desativado"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libligmawidgets/ligmawidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ecrã"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:52
+#: ../libligmawidgets/ligmawidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Janela"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmawidgets/ligmawidgetsenums.c:24
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Quadrado"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Retrato"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Paisagem"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "HSV Hue"
 msgstr "Matiz HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 msgid "HSV Saturation"
 msgstr "Saturação HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgid "HSV Value"
 msgstr "Valor HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgid "Red"
 msgstr "Vermelho"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr "_L"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 msgid "LCh Lightness"
 msgstr "Luminosidade LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 msgid "LCh Chroma"
 msgstr "Croma LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_h"
 msgstr "_h"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 msgid "LCh Hue"
 msgstr "Matiz LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libligmawidgets/ligmawidgetsenums.c:168
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libligmawidgets/ligmawidgetsenums.c:168
 msgid "RGB color model"
 msgstr "Modelo de cor RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libligmawidgets/ligmawidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libligmawidgets/ligmawidgetsenums.c:169
 msgid "CIE LCh color model"
 msgstr "Modelo de cores CIE LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libligmawidgets/ligmawidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libligmawidgets/ligmawidgetsenums.c:170
 msgid "HSV color model"
 msgstr "Modelo de cor HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#: ../libligmawidgets/ligmawidgetsenums.c:231
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Camadas"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#: ../libligmawidgets/ligmawidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Imagens"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#: ../libligmawidgets/ligmawidgetsenums.c:293
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#: ../libligmawidgets/ligmawidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Reduzir"
@@ -2849,8 +2849,8 @@ msgid "MIDI Events"
 msgstr "Eventos MIDI"
 
 #: ../modules/controller-midi.c:428
-msgid "GIMP MIDI Input Controller"
-msgstr "Controlador de entrada MIDI do GIMP"
+msgid "LIGMA MIDI Input Controller"
+msgstr "Controlador de entrada MIDI do LIGMA"
 
 #: ../modules/display-filter-aces-rrt.c:84
 msgid ""

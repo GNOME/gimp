@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AIRBRUSH_OPTIONS_H__
-#define __GIMP_AIRBRUSH_OPTIONS_H__
+#ifndef __LIGMA_AIRBRUSH_OPTIONS_H__
+#define __LIGMA_AIRBRUSH_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_AIRBRUSH_OPTIONS            (gimp_airbrush_options_get_type ())
-#define GIMP_AIRBRUSH_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AIRBRUSH_OPTIONS, GimpAirbrushOptions))
-#define GIMP_AIRBRUSH_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH_OPTIONS, GimpAirbrushOptionsClass))
-#define GIMP_IS_AIRBRUSH_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AIRBRUSH_OPTIONS))
-#define GIMP_IS_AIRBRUSH_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH_OPTIONS))
-#define GIMP_AIRBRUSH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH_OPTIONS, GimpAirbrushOptionsClass))
+#define LIGMA_TYPE_AIRBRUSH_OPTIONS            (ligma_airbrush_options_get_type ())
+#define LIGMA_AIRBRUSH_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_AIRBRUSH_OPTIONS, LigmaAirbrushOptions))
+#define LIGMA_AIRBRUSH_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_AIRBRUSH_OPTIONS, LigmaAirbrushOptionsClass))
+#define LIGMA_IS_AIRBRUSH_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_AIRBRUSH_OPTIONS))
+#define LIGMA_IS_AIRBRUSH_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_AIRBRUSH_OPTIONS))
+#define LIGMA_AIRBRUSH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_AIRBRUSH_OPTIONS, LigmaAirbrushOptionsClass))
 
 
-typedef struct _GimpAirbrushOptionsClass GimpAirbrushOptionsClass;
+typedef struct _LigmaAirbrushOptionsClass LigmaAirbrushOptionsClass;
 
-struct _GimpAirbrushOptions
+struct _LigmaAirbrushOptions
 {
-  GimpPaintOptions  parent_instance;
+  LigmaPaintOptions  parent_instance;
 
   gdouble           rate;
   gboolean          motion_only;
   gdouble           flow;
 };
 
-struct _GimpAirbrushOptionsClass
+struct _LigmaAirbrushOptionsClass
 {
-  GimpPaintOptionsClass  parent_class;
+  LigmaPaintOptionsClass  parent_class;
 };
 
 
-GType   gimp_airbrush_options_get_type (void) G_GNUC_CONST;
+GType   ligma_airbrush_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_AIRBRUSH_OPTIONS_H__  */
+#endif  /*  __LIGMA_AIRBRUSH_OPTIONS_H__  */

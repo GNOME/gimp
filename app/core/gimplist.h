@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimplist.h
- * Copyright (C) 2001-2016 Michael Natterer <mitch@gimp.org>
+ * ligmalist.h
+ * Copyright (C) 2001-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LIST_H__
-#define __GIMP_LIST_H__
+#ifndef __LIGMA_LIST_H__
+#define __LIGMA_LIST_H__
 
 
-#include "gimpcontainer.h"
+#include "ligmacontainer.h"
 
 
-#define GIMP_TYPE_LIST            (gimp_list_get_type ())
-#define GIMP_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LIST, GimpList))
-#define GIMP_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LIST, GimpListClass))
-#define GIMP_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LIST))
-#define GIMP_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LIST))
-#define GIMP_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LIST, GimpListClass))
+#define LIGMA_TYPE_LIST            (ligma_list_get_type ())
+#define LIGMA_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LIST, LigmaList))
+#define LIGMA_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LIST, LigmaListClass))
+#define LIGMA_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LIST))
+#define LIGMA_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LIST))
+#define LIGMA_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LIST, LigmaListClass))
 
 
-typedef struct _GimpListClass GimpListClass;
+typedef struct _LigmaListClass LigmaListClass;
 
-struct _GimpList
+struct _LigmaList
 {
-  GimpContainer  parent_instance;
+  LigmaContainer  parent_instance;
 
   GQueue        *queue;
   gboolean       unique_names;
@@ -45,26 +45,26 @@ struct _GimpList
   gboolean       append;
 };
 
-struct _GimpListClass
+struct _LigmaListClass
 {
-  GimpContainerClass  parent_class;
+  LigmaContainerClass  parent_class;
 };
 
 
-GType           gimp_list_get_type      (void) G_GNUC_CONST;
+GType           ligma_list_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_list_new           (GType         children_type,
+LigmaContainer * ligma_list_new           (GType         children_type,
                                          gboolean      unique_names);
-GimpContainer * gimp_list_new_weak      (GType         children_type,
+LigmaContainer * ligma_list_new_weak      (GType         children_type,
                                          gboolean      unique_names);
 
-void            gimp_list_reverse       (GimpList     *list);
-void            gimp_list_set_sort_func (GimpList     *list,
+void            ligma_list_reverse       (LigmaList     *list);
+void            ligma_list_set_sort_func (LigmaList     *list,
                                          GCompareFunc  sort_func);
-GCompareFunc    gimp_list_get_sort_func (GimpList     *list);
-void            gimp_list_sort          (GimpList     *list,
+GCompareFunc    ligma_list_get_sort_func (LigmaList     *list);
+void            ligma_list_sort          (LigmaList     *list,
                                          GCompareFunc  sort_func);
-void            gimp_list_sort_by_name  (GimpList     *list);
+void            ligma_list_sort_by_name  (LigmaList     *list);
 
 
-#endif  /* __GIMP_LIST_H__ */
+#endif  /* __LIGMA_LIST_H__ */

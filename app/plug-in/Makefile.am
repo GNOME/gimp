@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Plug-In\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Plug-In\"	\
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
@@ -18,53 +18,53 @@ libappplug_in_a_SOURCES = \
 	plug-in-enums.h 			\
 	plug-in-types.h 			\
 	\
-	gimpenvirontable.c			\
-	gimpenvirontable.h			\
-	gimpgpparams.c				\
-	gimpinterpreterdb.c			\
-	gimpinterpreterdb.h			\
-	gimpplugindebug.c			\
-	gimpplugindebug.h			\
-	gimpplugin.c				\
-	gimpplugin.h				\
-	gimpplugin-cleanup.c			\
-	gimpplugin-cleanup.h			\
-	gimpplugin-context.c			\
-	gimpplugin-context.h			\
-	gimpplugin-message.c			\
-	gimpplugin-message.h			\
-	gimpplugin-proc.c			\
-	gimpplugin-proc.h			\
-	gimpplugin-progress.c			\
-	gimpplugin-progress.h			\
-	gimpplugindef.c				\
-	gimpplugindef.h				\
-	gimppluginerror.c 			\
-	gimppluginerror.h 			\
-	gimppluginmanager.c			\
-	gimppluginmanager.h			\
-	gimppluginmanager-call.c		\
-	gimppluginmanager-call.h		\
-	gimppluginmanager-data.c		\
-	gimppluginmanager-data.h		\
-	gimppluginmanager-file.c		\
-	gimppluginmanager-file.h		\
-	gimppluginmanager-help-domain.c		\
-	gimppluginmanager-help-domain.h		\
-	gimppluginmanager-menu-branch.c		\
-	gimppluginmanager-menu-branch.h		\
-	gimppluginmanager-query.c		\
-	gimppluginmanager-query.h		\
-	gimppluginmanager-restore.c		\
-	gimppluginmanager-restore.h		\
-	gimppluginprocedure.c			\
-	gimppluginprocedure.h			\
-	gimppluginprocframe.c			\
-	gimppluginprocframe.h			\
-	gimppluginshm.c				\
-	gimppluginshm.h				\
-	gimptemporaryprocedure.c		\
-	gimptemporaryprocedure.h		\
+	ligmaenvirontable.c			\
+	ligmaenvirontable.h			\
+	ligmagpparams.c				\
+	ligmainterpreterdb.c			\
+	ligmainterpreterdb.h			\
+	ligmaplugindebug.c			\
+	ligmaplugindebug.h			\
+	ligmaplugin.c				\
+	ligmaplugin.h				\
+	ligmaplugin-cleanup.c			\
+	ligmaplugin-cleanup.h			\
+	ligmaplugin-context.c			\
+	ligmaplugin-context.h			\
+	ligmaplugin-message.c			\
+	ligmaplugin-message.h			\
+	ligmaplugin-proc.c			\
+	ligmaplugin-proc.h			\
+	ligmaplugin-progress.c			\
+	ligmaplugin-progress.h			\
+	ligmaplugindef.c				\
+	ligmaplugindef.h				\
+	ligmapluginerror.c 			\
+	ligmapluginerror.h 			\
+	ligmapluginmanager.c			\
+	ligmapluginmanager.h			\
+	ligmapluginmanager-call.c		\
+	ligmapluginmanager-call.h		\
+	ligmapluginmanager-data.c		\
+	ligmapluginmanager-data.h		\
+	ligmapluginmanager-file.c		\
+	ligmapluginmanager-file.h		\
+	ligmapluginmanager-help-domain.c		\
+	ligmapluginmanager-help-domain.h		\
+	ligmapluginmanager-menu-branch.c		\
+	ligmapluginmanager-menu-branch.h		\
+	ligmapluginmanager-query.c		\
+	ligmapluginmanager-query.h		\
+	ligmapluginmanager-restore.c		\
+	ligmapluginmanager-restore.h		\
+	ligmapluginprocedure.c			\
+	ligmapluginprocedure.h			\
+	ligmapluginprocframe.c			\
+	ligmapluginprocframe.h			\
+	ligmapluginshm.c				\
+	ligmapluginshm.h				\
+	ligmatemporaryprocedure.c		\
+	ligmatemporaryprocedure.h		\
 	\
 	plug-in-menu-path.c			\
 	plug-in-menu-path.h			\
@@ -78,16 +78,16 @@ libappplug_in_a_SOURCES = \
 gen_sources = stamp-plug-in-enums.h xgen-pec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
-xgen-pec: $(srcdir)/plug-in-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"stamp-plug-in-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"plug-in-enums.h\"\n#include \"gimp-intl.h\"" \
+xgen-pec: $(srcdir)/plug-in-enums.h $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"stamp-plug-in-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libligmabase/ligmabase.h\"\n#include \"plug-in-enums.h\"\n#include \"ligma-intl.h\"" \
 		--fprod "\n/* enumerations from \"@basename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > $@
 
 stamp-plug-in-enums.h: xgen-pec

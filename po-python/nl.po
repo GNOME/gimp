@@ -1,4 +1,4 @@
-# Dutch translation of the GIMP's python strings.
+# Dutch translation of the LIGMA's python strings.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Branko Collin <collin@xs4all.nl>, 2001-2004.
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005.
@@ -9,8 +9,8 @@
 # render         renderen/tekenen
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA 2.0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-02-17 22:15+0000\n"
 "PO-Revision-Date: 2022-03-29 17:41+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
@@ -427,8 +427,8 @@ msgid "Python _Console"
 msgstr "Python-opdra_chtregel"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interactieve GIMP-Python- interpreteerder"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interactieve LIGMA-Python- interpreteerder"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -784,8 +784,8 @@ msgstr ""
 "opslaan als nieuw pad"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spirogimp"
+msgid "Spyroligma"
+msgstr "Spiroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -812,8 +812,8 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Even geduld, het patroon wordt opgebouwd"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spirogimp…"
+msgid "Spyroligma..."
+msgstr "Spiroligma…"
 
 #~ msgid "Fog _color"
 #~ msgstr "Mist_kleur"
@@ -958,5 +958,5 @@ msgstr "Spirogimp…"
 #~ msgstr "Blauw of waarde"
 
 #, fuzzy
-#~ msgid "Gimp-Python Console"
+#~ msgid "Ligma-Python Console"
 #~ msgstr "Python Console"

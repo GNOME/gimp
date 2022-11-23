@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpshortcutbutton.h
+ * ligmashortcutbutton.h
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,53 +18,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SHORTCUT_BUTTON_H__
-#define __GIMP_SHORTCUT_BUTTON_H__
+#ifndef __LIGMA_SHORTCUT_BUTTON_H__
+#define __LIGMA_SHORTCUT_BUTTON_H__
 
 
-#define GIMP_TYPE_SHORTCUT_BUTTON            (gimp_shortcut_button_get_type ())
-#define GIMP_SHORTCUT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SHORTCUT_BUTTON, GimpShortcutButton))
-#define GIMP_SHORTCUT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SHORTCUT_BUTTON, GimpShortcutButtonClass))
-#define GIMP_IS_SHORTCUT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SHORTCUT_BUTTON))
-#define GIMP_IS_SHORTCUT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SHORTCUT_BUTTON))
-#define GIMP_SHORTCUT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SHORTCUT_BUTTON, GimpShortcutButtonClass))
+#define LIGMA_TYPE_SHORTCUT_BUTTON            (ligma_shortcut_button_get_type ())
+#define LIGMA_SHORTCUT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SHORTCUT_BUTTON, LigmaShortcutButton))
+#define LIGMA_SHORTCUT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SHORTCUT_BUTTON, LigmaShortcutButtonClass))
+#define LIGMA_IS_SHORTCUT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SHORTCUT_BUTTON))
+#define LIGMA_IS_SHORTCUT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SHORTCUT_BUTTON))
+#define LIGMA_SHORTCUT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SHORTCUT_BUTTON, LigmaShortcutButtonClass))
 
 
-typedef struct _GimpShortcutButtonPrivate GimpShortcutButtonPrivate;
-typedef struct _GimpShortcutButtonClass   GimpShortcutButtonClass;
+typedef struct _LigmaShortcutButtonPrivate LigmaShortcutButtonPrivate;
+typedef struct _LigmaShortcutButtonClass   LigmaShortcutButtonClass;
 
-struct _GimpShortcutButton
+struct _LigmaShortcutButton
 {
   GtkToggleButton            parent_instance;
 
-  GimpShortcutButtonPrivate *priv;
+  LigmaShortcutButtonPrivate *priv;
 };
 
-struct _GimpShortcutButtonClass
+struct _LigmaShortcutButtonClass
 {
   GtkToggleButtonClass       parent_class;
 
-  void                    (* accelerator_changed)    (GimpShortcutButton *button,
+  void                    (* accelerator_changed)    (LigmaShortcutButton *button,
                                                       const gchar        *previous_accelerator);
 };
 
 
-GType          gimp_shortcut_button_get_type         (void) G_GNUC_CONST;
+GType          ligma_shortcut_button_get_type         (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_shortcut_button_new              (const gchar        *accelerator);
+GtkWidget    * ligma_shortcut_button_new              (const gchar        *accelerator);
 
-gchar        * gimp_shortcut_button_get_accelerator  (GimpShortcutButton  *button);
-void           gimp_shortcut_button_get_keys         (GimpShortcutButton  *button,
+gchar        * ligma_shortcut_button_get_accelerator  (LigmaShortcutButton  *button);
+void           ligma_shortcut_button_get_keys         (LigmaShortcutButton  *button,
                                                       guint               *keyval,
                                                       GdkModifierType     *modifiers);
-void           gimp_shortcut_button_set_accelerator  (GimpShortcutButton  *button,
+void           ligma_shortcut_button_set_accelerator  (LigmaShortcutButton  *button,
                                                       const gchar         *accelerator,
                                                       guint                keyval,
                                                       GdkModifierType      modifiers);
 
-void           gimp_shortcut_button_accepts_modifier (GimpShortcutButton *button,
+void           ligma_shortcut_button_accepts_modifier (LigmaShortcutButton *button,
                                                       gboolean            only,
                                                       gboolean            unique);
 
 
-#endif /* __GIMP_SHORTCUT_BUTTON_H__ */
+#endif /* __LIGMA_SHORTCUT_BUTTON_H__ */

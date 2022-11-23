@@ -16,8 +16,8 @@
 /*.files
 /*.includes
 /ChangeLog
-/Gimp-3.0.gir
-/Gimp-3.0.typelib
+/Ligma-3.0.gir
+/Ligma-3.0.typelib
 /INSTALL
 /Makefile
 /Makefile.in
@@ -38,10 +38,10 @@
 /cscope.files
 /cscope.out
 /depcomp
-/gimp-3.0.pc
-/gimp-zip
-/gimpthumb-3.0.pc
-/gimpui-3.0.pc
+/ligma-3.0.pc
+/ligma-zip
+/ligmathumb-3.0.pc
+/ligmaui-3.0.pc
 /git-version.h
 /gtk-doc.make
 /install-sh

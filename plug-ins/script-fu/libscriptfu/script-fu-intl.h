@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * script-fu-intl.h
@@ -30,7 +30,7 @@
 
 #define DEFINE_STD_SET_I18N                                          \
 static gboolean                                                      \
-set_i18n (GimpPlugIn   *plug_in,                                     \
+set_i18n (LigmaPlugIn   *plug_in,                                     \
           const gchar  *procedure_name,                              \
           gchar       **gettext_domain,                              \
           gchar       **catalog_dir)                                 \

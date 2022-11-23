@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextBuffer-serialize
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextBuffer-serialize
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * inspired by
  * gtktextbufferserialize.h
@@ -22,21 +22,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_BUFFER_SERIALIZE_H__
-#define __GIMP_TEXT_BUFFER_SERIALIZE_H__
+#ifndef __LIGMA_TEXT_BUFFER_SERIALIZE_H__
+#define __LIGMA_TEXT_BUFFER_SERIALIZE_H__
 
 
 #define WORD_JOINER        "\342\201\240"
 #define WORD_JOINER_LENGTH 3
 
 
-guint8   * gimp_text_buffer_serialize        (GtkTextBuffer     *register_buffer,
+guint8   * ligma_text_buffer_serialize        (GtkTextBuffer     *register_buffer,
                                               GtkTextBuffer     *content_buffer,
                                               const GtkTextIter *start,
                                               const GtkTextIter *end,
                                               gsize             *length,
                                               gpointer           user_data);
-gboolean   gimp_text_buffer_deserialize      (GtkTextBuffer     *register_buffer,
+gboolean   ligma_text_buffer_deserialize      (GtkTextBuffer     *register_buffer,
                                               GtkTextBuffer     *content_buffer,
                                               GtkTextIter       *iter,
                                               const guint8      *data,
@@ -45,11 +45,11 @@ gboolean   gimp_text_buffer_deserialize      (GtkTextBuffer     *register_buffer
                                               gpointer           user_data,
                                               GError           **error);
 
-void       gimp_text_buffer_pre_serialize    (GimpTextBuffer    *buffer,
+void       ligma_text_buffer_pre_serialize    (LigmaTextBuffer    *buffer,
                                               GtkTextBuffer     *content);
-void       gimp_text_buffer_post_deserialize (GimpTextBuffer    *buffer,
+void       ligma_text_buffer_post_deserialize (LigmaTextBuffer    *buffer,
                                               GtkTextBuffer     *content);
 
 
 
-#endif /* __GIMP_TEXT_BUFFER_SERIALIZE_H__ */
+#endif /* __LIGMA_TEXT_BUFFER_SERIALIZE_H__ */

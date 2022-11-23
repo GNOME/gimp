@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "psd.h"
 #include "psd-load.h"
 #include "psd-save.h"
 #include "psd-thumb-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 typedef struct _Psd      Psd;
@@ -38,12 +38,12 @@ typedef struct _PsdClass PsdClass;
 
 struct _Psd
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PsdClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -52,40 +52,40 @@ struct _PsdClass
 
 GType                   psd_get_type         (void) G_GNUC_CONST;
 
-static GList          * psd_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * psd_create_procedure (GimpPlugIn           *plug_in,
+static GList          * psd_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * psd_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * psd_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * psd_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * psd_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * psd_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * psd_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * psd_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 
-G_DEFINE_TYPE (Psd, psd, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Psd, psd, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PSD_TYPE)
+LIGMA_MAIN (PSD_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 psd_class_init (PsdClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = psd_query_procedures;
   plug_in_class->create_procedure = psd_create_procedure;
@@ -98,7 +98,7 @@ psd_init (Psd *psd)
 }
 
 static GList *
-psd_query_procedures (GimpPlugIn *plug_in)
+psd_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -110,127 +110,127 @@ psd_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-psd_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+psd_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            psd_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
+      ligma_procedure_set_menu_label (procedure, _("Photoshop image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
                                         "PSD and PSB file formats",
                                         "This plug-in loads images in Adobe "
                                         "Photoshop (TM) native PSD and PSB format.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "John Marshall",
                                       "John Marshall",
                                       "2007");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-psd");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "psd, psb");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,8BPS");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_MERGED_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            psd_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Photoshop image (merged)"));
+      ligma_procedure_set_menu_label (procedure, _("Photoshop image (merged)"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
                                         "PSD and PSB file formats",
                                         "This plug-in loads the merged image "
                                         "data in Adobe Photoshop (TM) native "
                                         "PSD and PSB format.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Ell",
                                       "Ell",
                                       "2018");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-psd");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "psd, psb");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,8BPS");
-      gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), +1);
+      ligma_file_procedure_set_priority (LIGMA_FILE_PROCEDURE (procedure), +1);
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 psd_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads thumbnails from the "
                                         "Photoshop PSD file format",
                                         "This plug-in loads thumbnail images "
                                         "from Adobe Photoshop (TM) native "
                                         "PSD format files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "John Marshall",
                                       "John Marshall",
                                       "2007");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            psd_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
+      ligma_procedure_set_menu_label (procedure, _("Photoshop image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in the Photoshop(tm) "
                                         "PSD file format",
                                         "This filter saves files of Adobe "
                                         "Photoshop(tm) native PSD format. "
                                         "These files may be of any image type "
-                                        "supported by GIMP, with or without "
+                                        "supported by LIGMA, with or without "
                                         "layers, layer masks, aux channels "
                                         "and guides.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Monigotes",
                                       "Monigotes",
                                       "2000");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-psd");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "psd");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "cmyk",
                              "Export as _CMYK",
                              "Export a CMYK PSD image using the soft-proofing color profile",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "duotone",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "duotone",
                              "Export as _Duotone",
                              "Export as a Duotone PSD file if Duotone color space information "
                              "was attached to the image when originally imported.",
@@ -241,94 +241,94 @@ psd_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-psd_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+psd_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
-  GimpImage      *image;
-  GimpMetadata   *metadata;
-  GimpParasite   *parasite = NULL;
+  LigmaImage      *image;
+  LigmaMetadata   *metadata;
+  LigmaParasite   *parasite = NULL;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       break;
     default:
       break;
     }
 
   image = load_image (file,
-                      strcmp (gimp_procedure_get_name (procedure),
+                      strcmp (ligma_procedure_get_name (procedure),
                               LOAD_MERGED_PROC) == 0,
                       &resolution_loaded,
                       &profile_loaded,
                       &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
   /* If image was Duotone, notify user of compatibility */
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
-      parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+      parasite = ligma_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
       if (parasite)
         {
           load_dialog ();
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
     }
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/x-psd",
+  metadata = ligma_image_metadata_load_prepare (image, "image/x-psd",
                                                file, NULL);
   if (metadata)
     {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+      LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
       if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+        flags &= ~LIGMA_METADATA_LOAD_RESOLUTION;
 
       if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+        flags &= ~LIGMA_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image, "image/x-psd",
+      ligma_image_metadata_load_finish (image, "image/x-psd",
                                        metadata, flags);
 
       g_object_unref (metadata);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-psd_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+psd_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width  = 0;
   gint            height = 0;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -336,61 +336,61 @@ psd_load_thumb (GimpProcedure        *procedure,
   image = load_thumbnail_image (file, &width, &height, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
 
-static GimpValueArray *
-psd_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+psd_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig   *config;
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpMetadata          *metadata;
-  GimpExportReturn       export = GIMP_EXPORT_IGNORE;
+  LigmaProcedureConfig   *config;
+  LigmaPDBStatusType      status = LIGMA_PDB_SUCCESS;
+  LigmaMetadata          *metadata;
+  LigmaExportReturn       export = LIGMA_EXPORT_IGNORE;
   GError                *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  metadata = ligma_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/x-psd");
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PSD",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS  |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PSD",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA   |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYERS  |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYER_MASKS);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -398,31 +398,31 @@ psd_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure, G_OBJECT (config)))
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL,
                                                  NULL);
     }
 
   if (save_image (file, image, G_OBJECT (config), &error))
     {
       if (metadata)
-        gimp_metadata_set_bits_per_sample (metadata, 8);
+        ligma_metadata_set_bits_per_sample (metadata, 8);
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }

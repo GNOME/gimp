@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphelp.c
- * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * ligmahelp.c
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,44 +26,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
+#include "core/ligma-utils.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligmaprocedure.h"
 
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager-help-domain.h"
-#include "plug-in/gimptemporaryprocedure.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmapluginmanager-help-domain.h"
+#include "plug-in/ligmatemporaryprocedure.h"
 
-#include "gimphelp.h"
-#include "gimphelp-ids.h"
-#include "gimplanguagecombobox.h"
-#include "gimplanguagestore-parser.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
-#include "gimpmessagedialog.h"
-#include "gimpwidgets-utils.h"
+#include "ligmahelp.h"
+#include "ligmahelp-ids.h"
+#include "ligmalanguagecombobox.h"
+#include "ligmalanguagestore-parser.h"
+#include "ligmamessagebox.h"
+#include "ligmamessagedialog.h"
+#include "ligmamessagedialog.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
-typedef struct _GimpIdleHelp GimpIdleHelp;
+typedef struct _LigmaIdleHelp LigmaIdleHelp;
 
-struct _GimpIdleHelp
+struct _LigmaIdleHelp
 {
-  Gimp         *gimp;
-  GimpProgress *progress;
+  Ligma         *ligma;
+  LigmaProgress *progress;
   gchar        *help_domain;
   gchar        *help_locales;
   gchar        *help_id;
@@ -74,104 +74,104 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gboolean   gimp_idle_help          (GimpIdleHelp  *idle_help);
-static void       gimp_idle_help_free     (GimpIdleHelp  *idle_help);
+static gboolean   ligma_idle_help          (LigmaIdleHelp  *idle_help);
+static void       ligma_idle_help_free     (LigmaIdleHelp  *idle_help);
 
-static gboolean   gimp_help_browser       (Gimp          *gimp,
-                                           GimpProgress  *progress);
-static void       gimp_help_browser_error (Gimp          *gimp,
-                                           GimpProgress  *progress,
+static gboolean   ligma_help_browser       (Ligma          *ligma,
+                                           LigmaProgress  *progress);
+static void       ligma_help_browser_error (Ligma          *ligma,
+                                           LigmaProgress  *progress,
                                            const gchar   *title,
                                            const gchar   *primary,
                                            const gchar   *text);
 
-static void       gimp_help_call          (Gimp          *gimp,
-                                           GimpProgress  *progress,
+static void       ligma_help_call          (Ligma          *ligma,
+                                           LigmaProgress  *progress,
                                            const gchar   *procedure_name,
                                            const gchar   *help_domain,
                                            const gchar   *help_locales,
                                            const gchar   *help_id);
 
-static void       gimp_help_get_help_domains         (Gimp    *gimp,
+static void       ligma_help_get_help_domains         (Ligma    *ligma,
                                                       gchar ***domain_names,
                                                       gchar ***domain_uris);
-static gchar    * gimp_help_get_default_domain_uri   (Gimp    *gimp);
-static gchar    * gimp_help_get_locales              (Gimp    *gimp);
+static gchar    * ligma_help_get_default_domain_uri   (Ligma    *ligma);
+static gchar    * ligma_help_get_locales              (Ligma    *ligma);
 
-static GFile    * gimp_help_get_user_manual_basedir  (void);
+static GFile    * ligma_help_get_user_manual_basedir  (void);
 
-static void       gimp_help_query_alt_user_manual    (GimpIdleHelp *idle_help);
+static void       ligma_help_query_alt_user_manual    (LigmaIdleHelp *idle_help);
 
-static void       gimp_help_language_combo_changed   (GtkComboBox  *combo,
-                                                      GimpIdleHelp *idle_help);
+static void       ligma_help_language_combo_changed   (GtkComboBox  *combo,
+                                                      LigmaIdleHelp *idle_help);
 
 /*  public functions  */
 
 void
-gimp_help_show (Gimp         *gimp,
-                GimpProgress *progress,
+ligma_help_show (Ligma         *ligma,
+                LigmaProgress *progress,
                 const gchar  *help_domain,
                 const gchar  *help_id)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
   if (config->use_help)
     {
-      GimpIdleHelp *idle_help = g_slice_new0 (GimpIdleHelp);
+      LigmaIdleHelp *idle_help = g_slice_new0 (LigmaIdleHelp);
 
-      idle_help->gimp     = gimp;
+      idle_help->ligma     = ligma;
       idle_help->progress = progress;
 
       if (help_domain && strlen (help_domain))
         idle_help->help_domain = g_strdup (help_domain);
 
-      idle_help->help_locales = gimp_help_get_locales (gimp);
+      idle_help->help_locales = ligma_help_get_locales (ligma);
 
       if (help_id && strlen (help_id))
         idle_help->help_id = g_strdup (help_id);
 
-      GIMP_LOG (HELP, "request for help-id '%s' from help-domain '%s'",
+      LIGMA_LOG (HELP, "request for help-id '%s' from help-domain '%s'",
                 help_id     ? help_id      : "(null)",
                 help_domain ? help_domain  : "(null)");
 
-      g_idle_add ((GSourceFunc) gimp_idle_help, idle_help);
+      g_idle_add ((GSourceFunc) ligma_idle_help, idle_help);
     }
 }
 
 gboolean
-gimp_help_browser_is_installed (Gimp *gimp)
+ligma_help_browser_is_installed (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  if (gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-browser"))
+  if (ligma_pdb_lookup_procedure (ligma->pdb, "extension-ligma-help-browser"))
     return TRUE;
 
   return FALSE;
 }
 
 gboolean
-gimp_help_user_manual_is_installed (Gimp *gimp)
+ligma_help_user_manual_is_installed (Ligma *ligma)
 {
   GFile    *basedir;
   gboolean  found = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  /*  if GIMP2_HELP_URI is set, assume that the manual can be found there  */
-  if (g_getenv ("GIMP2_HELP_URI"))
+  /*  if LIGMA2_HELP_URI is set, assume that the manual can be found there  */
+  if (g_getenv ("LIGMA2_HELP_URI"))
     return TRUE;
 
-  basedir = gimp_help_get_user_manual_basedir ();
+  basedir = ligma_help_get_user_manual_basedir ();
 
   if (g_file_query_file_type (basedir, G_FILE_QUERY_INFO_NONE, NULL) ==
       G_FILE_TYPE_DIRECTORY)
     {
-      gchar       *locales = gimp_help_get_locales (gimp);
+      gchar       *locales = ligma_help_get_locales (ligma);
       const gchar *s       = locales;
       const gchar *p;
 
@@ -179,7 +179,7 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
         {
           gchar *locale = g_strndup (s, p - s);
           GFile *file1  = g_file_get_child (basedir, locale);
-          GFile *file2  = g_file_get_child (file1, "gimp-help.xml");
+          GFile *file2  = g_file_get_child (file1, "ligma-help.xml");
 
           found = (g_file_query_file_type (file2, G_FILE_QUERY_INFO_NONE,
                                            NULL) == G_FILE_TYPE_REGULAR);
@@ -196,7 +196,7 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
       if (! found)
         {
           GFile *file1  = g_file_get_child (basedir, "en");
-          GFile *file2  = g_file_get_child (file1, "gimp-help.xml");
+          GFile *file2  = g_file_get_child (file1, "ligma-help.xml");
 
           found = (g_file_query_file_type (file2, G_FILE_QUERY_INFO_NONE,
                                            NULL) == G_FILE_TYPE_REGULAR);
@@ -212,32 +212,32 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
 }
 
 void
-gimp_help_user_manual_changed (Gimp *gimp)
+ligma_help_user_manual_changed (Ligma *ligma)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   /*  Check if a help parser is running  */
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb, "extension-ligma-help-temp");
 
-  if (GIMP_IS_TEMPORARY_PROCEDURE (procedure))
+  if (LIGMA_IS_TEMPORARY_PROCEDURE (procedure))
     {
-      gimp_plug_in_close (GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in, TRUE);
+      ligma_plug_in_close (LIGMA_TEMPORARY_PROCEDURE (procedure)->plug_in, TRUE);
     }
 }
 
 GList *
-gimp_help_get_installed_languages (void)
+ligma_help_get_installed_languages (void)
 {
   GList *manuals = NULL;
   GFile *basedir;
 
-  /*  if GIMP2_HELP_URI is set, assume that the manual can be found there  */
-  if (g_getenv ("GIMP2_HELP_URI"))
-    basedir = g_file_new_for_uri (g_getenv ("GIMP2_HELP_URI"));
+  /*  if LIGMA2_HELP_URI is set, assume that the manual can be found there  */
+  if (g_getenv ("LIGMA2_HELP_URI"))
+    basedir = g_file_new_for_uri (g_getenv ("LIGMA2_HELP_URI"));
   else
-    basedir = gimp_help_get_user_manual_basedir ();
+    basedir = ligma_help_get_user_manual_basedir ();
 
   if (g_file_query_file_type (basedir, G_FILE_QUERY_INFO_NONE, NULL) ==
       G_FILE_TYPE_DIRECTORY)
@@ -263,7 +263,7 @@ gimp_help_get_installed_languages (void)
                   GFile *file;
 
                   locale_dir = g_file_enumerator_get_child (enumerator, info);
-                  file  = g_file_get_child (locale_dir, "gimp-help.xml");
+                  file  = g_file_get_child (locale_dir, "ligma-help.xml");
                   if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE,
                                               NULL) == G_FILE_TYPE_REGULAR)
                     {
@@ -286,64 +286,64 @@ gimp_help_get_installed_languages (void)
 /*  private functions  */
 
 static gboolean
-gimp_idle_help (GimpIdleHelp *idle_help)
+ligma_idle_help (LigmaIdleHelp *idle_help)
 {
-  GimpGuiConfig *config         = GIMP_GUI_CONFIG (idle_help->gimp->config);
+  LigmaGuiConfig *config         = LIGMA_GUI_CONFIG (idle_help->ligma->config);
   const gchar   *procedure_name = NULL;
 
   if (! idle_help->help_domain       &&
       ! config->user_manual_online   &&
-      ! gimp_help_user_manual_is_installed (idle_help->gimp))
+      ! ligma_help_user_manual_is_installed (idle_help->ligma))
     {
       /*  The user manual is not installed locally, propose alternative
        *  manuals (other installed languages or online version).
        */
-      gimp_help_query_alt_user_manual (idle_help);
+      ligma_help_query_alt_user_manual (idle_help);
 
       return FALSE;
     }
 
-  if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
+  if (config->help_browser == LIGMA_HELP_BROWSER_LIGMA)
     {
-      if (gimp_help_browser (idle_help->gimp, idle_help->progress))
-        procedure_name = "extension-gimp-help-browser-temp";
+      if (ligma_help_browser (idle_help->ligma, idle_help->progress))
+        procedure_name = "extension-ligma-help-browser-temp";
     }
 
-  if (config->help_browser == GIMP_HELP_BROWSER_WEB_BROWSER)
+  if (config->help_browser == LIGMA_HELP_BROWSER_WEB_BROWSER)
     {
       /*  FIXME: should check for procedure availability  */
       procedure_name = "plug-in-web-browser";
     }
 
   if (procedure_name)
-    gimp_help_call (idle_help->gimp,
+    ligma_help_call (idle_help->ligma,
                     idle_help->progress,
                     procedure_name,
                     idle_help->help_domain,
                     idle_help->help_locales,
                     idle_help->help_id);
 
-  gimp_idle_help_free (idle_help);
+  ligma_idle_help_free (idle_help);
 
   return FALSE;
 }
 
 static void
-gimp_idle_help_free (GimpIdleHelp *idle_help)
+ligma_idle_help_free (LigmaIdleHelp *idle_help)
 {
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
 
-  g_slice_free (GimpIdleHelp, idle_help);
+  g_slice_free (LigmaIdleHelp, idle_help);
 }
 
 static gboolean
-gimp_help_browser (Gimp         *gimp,
-                   GimpProgress *progress)
+ligma_help_browser (Ligma         *ligma,
+                   LigmaProgress *progress)
 {
   static gboolean  busy = FALSE;
-  GimpProcedure   *procedure;
+  LigmaProcedure   *procedure;
 
   if (busy)
     return TRUE;
@@ -351,25 +351,25 @@ gimp_help_browser (Gimp         *gimp,
   busy = TRUE;
 
   /*  Check if a help browser is already running  */
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb,
-                                         "extension-gimp-help-browser-temp");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb,
+                                         "extension-ligma-help-browser-temp");
 
   if (! procedure)
     {
-      GimpValueArray *args         = NULL;
+      LigmaValueArray *args         = NULL;
       gchar         **help_domains = NULL;
       gchar         **help_uris    = NULL;
       GError         *error        = NULL;
 
-      procedure = gimp_pdb_lookup_procedure (gimp->pdb,
-                                             "extension-gimp-help-browser");
+      procedure = ligma_pdb_lookup_procedure (ligma->pdb,
+                                             "extension-ligma-help-browser");
 
       if (! procedure)
         {
-          gimp_help_browser_error (gimp, progress,
+          ligma_help_browser_error (ligma, progress,
                                    _("Help browser is missing"),
-                                   _("The GIMP help browser is not available."),
-                                   _("The GIMP help browser plug-in appears "
+                                   _("The LIGMA help browser is not available."),
+                                   _("The LIGMA help browser plug-in appears "
                                      "to be missing from your installation. "
                                      "You may instead use the web browser "
                                      "for reading the help pages."));
@@ -378,38 +378,38 @@ gimp_help_browser (Gimp         *gimp,
           return FALSE;
         }
 
-      gimp_help_get_help_domains (gimp, &help_domains, &help_uris);
+      ligma_help_get_help_domains (ligma, &help_domains, &help_uris);
 
-      args = gimp_procedure_get_arguments (procedure);
-      gimp_value_array_truncate (args, 3);
+      args = ligma_procedure_get_arguments (procedure);
+      ligma_value_array_truncate (args, 3);
 
-      g_value_set_enum (gimp_value_array_index (args, 0), GIMP_RUN_INTERACTIVE);
-      g_value_take_boxed (gimp_value_array_index (args, 1), help_domains);
-      g_value_take_boxed (gimp_value_array_index (args, 2), help_uris);
+      g_value_set_enum (ligma_value_array_index (args, 0), LIGMA_RUN_INTERACTIVE);
+      g_value_take_boxed (ligma_value_array_index (args, 1), help_domains);
+      g_value_take_boxed (ligma_value_array_index (args, 2), help_uris);
 
-      gimp_procedure_execute_async (procedure, gimp,
-                                    gimp_get_user_context (gimp),
+      ligma_procedure_execute_async (procedure, ligma,
+                                    ligma_get_user_context (ligma),
                                     NULL, args, NULL, &error);
 
-      gimp_value_array_unref (args);
+      ligma_value_array_unref (args);
 
       if (error)
         {
-          gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+          ligma_message_literal (ligma, G_OBJECT (progress), LIGMA_MESSAGE_ERROR,
                                 error->message);
           g_error_free (error);
         }
      }
 
   /*  Check if the help browser started properly  */
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb,
-                                         "extension-gimp-help-browser-temp");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb,
+                                         "extension-ligma-help-browser-temp");
 
   if (! procedure)
     {
-      gimp_help_browser_error (gimp, progress,
+      ligma_help_browser_error (ligma, progress,
                                _("Help browser doesn't start"),
-                               _("Could not start the GIMP help browser "
+                               _("Could not start the LIGMA help browser "
                                  "plug-in."),
                                _("You may instead use the web browser "
                                  "for reading the help pages."));
@@ -424,15 +424,15 @@ gimp_help_browser (Gimp         *gimp,
 }
 
 static void
-gimp_help_browser_error (Gimp         *gimp,
-                         GimpProgress *progress,
+ligma_help_browser_error (Ligma         *ligma,
+                         LigmaProgress *progress,
                          const gchar  *title,
                          const gchar  *primary,
                          const gchar  *text)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_message_dialog_new (title, GIMP_ICON_HELP_USER_MANUAL,
+  dialog = ligma_message_dialog_new (title, LIGMA_ICON_HELP_USER_MANUAL,
                                     NULL, 0,
                                     NULL, NULL,
 
@@ -441,27 +441,27 @@ gimp_help_browser_error (Gimp         *gimp,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   if (progress)
     {
-      guint32 window_id = gimp_progress_get_window_id (progress);
+      guint32 window_id = ligma_progress_get_window_id (progress);
 
       if (window_id)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
+        ligma_window_set_transient_for (GTK_WINDOW (dialog), window_id);
     }
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      "%s", primary);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, "%s", text);
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box, "%s", text);
 
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      g_object_set (gimp->config,
-                    "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+      g_object_set (ligma->config,
+                    "help-browser", LIGMA_HELP_BROWSER_WEB_BROWSER,
                     NULL);
     }
 
@@ -469,30 +469,30 @@ gimp_help_browser_error (Gimp         *gimp,
 }
 
 static void
-gimp_help_call (Gimp         *gimp,
-                GimpProgress *progress,
+ligma_help_call (Ligma         *ligma,
+                LigmaProgress *progress,
                 const gchar  *procedure_name,
                 const gchar  *help_domain,
                 const gchar  *help_locales,
                 const gchar  *help_id)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*  Special case the help browser  */
-  if (! strcmp (procedure_name, "extension-gimp-help-browser-temp"))
+  if (! strcmp (procedure_name, "extension-ligma-help-browser-temp"))
     {
-      GimpValueArray *return_vals;
+      LigmaValueArray *return_vals;
       GError         *error = NULL;
 
-      GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
+      LIGMA_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
                 help_domain  ? help_domain  : "(null)",
                 help_locales ? help_locales : "(null)",
                 help_id      ? help_id      : "(null)");
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                            gimp_get_user_context (gimp),
+        ligma_pdb_execute_procedure_by_name (ligma->pdb,
+                                            ligma_get_user_context (ligma),
                                             progress, &error,
                                             procedure_name,
                                             G_TYPE_STRING, help_domain,
@@ -500,11 +500,11 @@ gimp_help_call (Gimp         *gimp,
                                             G_TYPE_STRING, help_id,
                                             G_TYPE_NONE);
 
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
 
       if (error)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
 
@@ -512,79 +512,79 @@ gimp_help_call (Gimp         *gimp,
     }
 
   /*  Check if a help parser is already running  */
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb, "extension-ligma-help-temp");
 
   if (! procedure)
     {
-      GimpValueArray  *args         = NULL;
+      LigmaValueArray  *args         = NULL;
       gchar          **help_domains = NULL;
       gchar          **help_uris    = NULL;
       GError          *error        = NULL;
 
-      procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help");
+      procedure = ligma_pdb_lookup_procedure (ligma->pdb, "extension-ligma-help");
 
       if (! procedure)
         /*  FIXME: error msg  */
         return;
 
-      gimp_help_get_help_domains (gimp, &help_domains, &help_uris);
+      ligma_help_get_help_domains (ligma, &help_domains, &help_uris);
 
-      args = gimp_procedure_get_arguments (procedure);
-      gimp_value_array_truncate (args, 2);
+      args = ligma_procedure_get_arguments (procedure);
+      ligma_value_array_truncate (args, 2);
 
-      g_value_take_boxed (gimp_value_array_index (args, 0), help_domains);
-      g_value_take_boxed (gimp_value_array_index (args, 1), help_uris);
+      g_value_take_boxed (ligma_value_array_index (args, 0), help_domains);
+      g_value_take_boxed (ligma_value_array_index (args, 1), help_uris);
 
-      gimp_procedure_execute_async (procedure, gimp,
-                                    gimp_get_user_context (gimp), progress,
+      ligma_procedure_execute_async (procedure, ligma,
+                                    ligma_get_user_context (ligma), progress,
                                     args, NULL, &error);
 
-      gimp_value_array_unref (args);
+      ligma_value_array_unref (args);
 
       if (error)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
     }
 
   /*  Check if the help parser started properly  */
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb, "extension-ligma-help-temp");
 
   if (procedure)
     {
-      GimpValueArray *return_vals;
+      LigmaValueArray *return_vals;
       GError         *error = NULL;
 
-      GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
+      LIGMA_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
                 help_domain  ? help_domain  : "(null)",
                 help_locales ? help_locales : "(null)",
                 help_id      ? help_id      : "(null)");
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                            gimp_get_user_context (gimp),
+        ligma_pdb_execute_procedure_by_name (ligma->pdb,
+                                            ligma_get_user_context (ligma),
                                             progress, &error,
-                                            "extension-gimp-help-temp",
+                                            "extension-ligma-help-temp",
                                             G_TYPE_STRING, procedure_name,
                                             G_TYPE_STRING, help_domain,
                                             G_TYPE_STRING, help_locales,
                                             G_TYPE_STRING, help_id,
                                             G_TYPE_NONE);
 
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
 
       if (error)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
     }
 }
 
 static void
-gimp_help_get_help_domains (Gimp    *gimp,
+ligma_help_get_help_domains (Ligma    *ligma,
                             gchar ***domain_names,
                             gchar ***domain_uris)
 {
@@ -592,15 +592,15 @@ gimp_help_get_help_domains (Gimp    *gimp,
   gchar **plug_in_uris    = NULL;
   gint    i, n_domains;
 
-  n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
+  n_domains = ligma_plug_in_manager_get_help_domains (ligma->plug_in_manager,
                                                      &plug_in_domains,
                                                      &plug_in_uris);
 
   *domain_names = g_new0 (gchar *, n_domains + 2);
   *domain_uris  = g_new0 (gchar *, n_domains + 2);
 
-  (*domain_names)[0] = g_strdup ("https://www.gimp.org/help");
-  (*domain_uris)[0]  = gimp_help_get_default_domain_uri (gimp);
+  (*domain_names)[0] = g_strdup ("https://www.ligma.org/help");
+  (*domain_uris)[0]  = ligma_help_get_default_domain_uri (ligma);
 
   for (i = 0; i < n_domains; i++)
     {
@@ -613,19 +613,19 @@ gimp_help_get_help_domains (Gimp    *gimp,
 }
 
 static gchar *
-gimp_help_get_default_domain_uri (Gimp *gimp)
+ligma_help_get_default_domain_uri (Ligma *ligma)
 {
-  GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+  LigmaGuiConfig *config = LIGMA_GUI_CONFIG (ligma->config);
   GFile         *dir;
   gchar         *uri;
 
-  if (g_getenv ("GIMP2_HELP_URI"))
-    return g_strdup (g_getenv ("GIMP2_HELP_URI"));
+  if (g_getenv ("LIGMA2_HELP_URI"))
+    return g_strdup (g_getenv ("LIGMA2_HELP_URI"));
 
   if (config->user_manual_online)
     return g_strdup (config->user_manual_online_uri);
 
-  dir = gimp_help_get_user_manual_basedir ();
+  dir = ligma_help_get_user_manual_basedir ();
   uri = g_file_get_uri (dir);
   g_object_unref (dir);
 
@@ -633,9 +633,9 @@ gimp_help_get_default_domain_uri (Gimp *gimp)
 }
 
 static gchar *
-gimp_help_get_locales (Gimp *gimp)
+ligma_help_get_locales (Ligma *ligma)
 {
-  GimpGuiConfig  *config = GIMP_GUI_CONFIG (gimp->config);
+  LigmaGuiConfig  *config = LIGMA_GUI_CONFIG (ligma->config);
   gchar         **names;
   gchar          *locales      = NULL;
   GList          *locales_list = NULL;
@@ -730,27 +730,27 @@ gimp_help_get_locales (Gimp *gimp)
 }
 
 static GFile *
-gimp_help_get_user_manual_basedir (void)
+ligma_help_get_user_manual_basedir (void)
 {
-  return gimp_data_directory_file ("help", NULL);
+  return ligma_data_directory_file ("help", NULL);
 }
 
 static void
-gimp_help_query_online_response (GtkWidget    *dialog,
+ligma_help_query_online_response (GtkWidget    *dialog,
                                  gint          response,
-                                 GimpIdleHelp *idle_help)
+                                 LigmaIdleHelp *idle_help)
 {
   gtk_widget_destroy (dialog);
 
   if (response == GTK_RESPONSE_ACCEPT)
     {
-      g_object_set (idle_help->gimp->config,
+      g_object_set (idle_help->ligma->config,
                     "user-manual-online", TRUE,
                     NULL);
     }
   if (response != GTK_RESPONSE_YES)
     {
-      g_object_set (idle_help->gimp->config,
+      g_object_set (idle_help->ligma->config,
                     "help-locales", "",
                     NULL);
     }
@@ -758,23 +758,23 @@ gimp_help_query_online_response (GtkWidget    *dialog,
   if (response == GTK_RESPONSE_ACCEPT ||
       response == GTK_RESPONSE_YES)
     {
-      gimp_help_show (idle_help->gimp,
+      ligma_help_show (idle_help->ligma,
                       idle_help->progress,
                       idle_help->help_domain,
                       idle_help->help_id);
     }
 
-  gimp_idle_help_free (idle_help);
+  ligma_idle_help_free (idle_help);
 }
 
 static void
-gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
+ligma_help_query_alt_user_manual (LigmaIdleHelp *idle_help)
 {
   GtkWidget *dialog;
   GList     *manuals;
 
-  dialog = gimp_message_dialog_new (_("GIMP user manual is missing"),
-                                    GIMP_ICON_HELP_USER_MANUAL,
+  dialog = ligma_message_dialog_new (_("LIGMA user manual is missing"),
+                                    LIGMA_ICON_HELP_USER_MANUAL,
                                     NULL, 0, NULL, NULL,
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     NULL);
@@ -782,18 +782,18 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
 
   if (idle_help->progress)
     {
-      guint32 window_id = gimp_progress_get_window_id (idle_help->progress);
+      guint32 window_id = ligma_progress_get_window_id (idle_help->progress);
 
       if (window_id)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
+        ligma_window_set_transient_for (GTK_WINDOW (dialog), window_id);
     }
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("The GIMP user manual is not installed "
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
+                                     _("The LIGMA user manual is not installed "
                                        "in your language."));
 
   /* Add a list of available manuals instead, if any. */
-  manuals = gimp_help_get_installed_languages ();
+  manuals = ligma_help_get_installed_languages ();
   if (manuals != NULL)
     {
       GtkWidget *lang_combo;
@@ -803,25 +803,25 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
                              _("Read Selected _Language"),
                              GTK_RESPONSE_YES);
       /* And a dropdown list of available manuals. */
-      lang_combo = gimp_language_combo_box_new (TRUE,
+      lang_combo = ligma_language_combo_box_new (TRUE,
                                                 _("Available manuals..."));
       gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), 0);
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, FALSE);
       g_signal_connect (lang_combo, "changed",
-                        G_CALLBACK (gimp_help_language_combo_changed),
+                        G_CALLBACK (ligma_help_language_combo_changed),
                         idle_help);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           lang_combo, TRUE, TRUE, 0);
       gtk_widget_show (lang_combo);
 
-      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+      ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                  _("You may either select a manual in another "
                                    "language or read the online version."));
     }
   else
     {
-      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+      ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                  _("You may either install the additional help "
                                    "package or change your preferences to use "
                                    "the online version."));
@@ -831,7 +831,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
   if (manuals != NULL)
     {
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_ACCEPT,
                                                GTK_RESPONSE_YES,
                                                GTK_RESPONSE_CANCEL,
@@ -840,25 +840,25 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
     }
   else
     {
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_ACCEPT,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
     }
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gimp_help_query_online_response),
+                    G_CALLBACK (ligma_help_query_online_response),
                     idle_help);
   gtk_widget_show (dialog);
 }
 
 static void
-gimp_help_language_combo_changed (GtkComboBox  *combo,
-                                  GimpIdleHelp *idle_help)
+ligma_help_language_combo_changed (GtkComboBox  *combo,
+                                  LigmaIdleHelp *idle_help)
 {
   gchar *help_locales = NULL;
   gchar *code;
 
-  code = gimp_language_combo_box_get_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+  code = ligma_language_combo_box_get_code (LIGMA_LANGUAGE_COMBO_BOX (combo));
   if (code && g_strcmp0 ("", code) != 0)
     {
       help_locales = g_strdup_printf ("%s:", code);
@@ -870,7 +870,7 @@ gimp_help_language_combo_changed (GtkComboBox  *combo,
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, FALSE);
     }
-  g_object_set (idle_help->gimp->config,
+  g_object_set (idle_help->ligma->config,
                 "help-locales", help_locales? help_locales : "",
                 NULL);
 

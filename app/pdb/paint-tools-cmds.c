@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,43 +25,43 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimpparamspecs.h"
-#include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintcore.h"
-#include "paint/gimppaintoptions.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmaparamspecs.h"
+#include "paint/ligmapaintcore-stroke.h"
+#include "paint/ligmapaintcore.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+static const LigmaCoords default_coords = LIGMA_COORDS_DEFAULT_VALUES;
 
 static gboolean
-paint_tools_stroke (Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpPaintOptions  *options,
-                    GimpDrawable      *drawable,
+paint_tools_stroke (Ligma              *ligma,
+                    LigmaContext       *context,
+                    LigmaPaintOptions  *options,
+                    LigmaDrawable      *drawable,
                     gint               n_strokes,
                     const gdouble     *strokes,
                     GError           **error,
                     const gchar       *first_property_name,
                     ...)
 {
-  GimpPaintCore *core;
-  GimpCoords    *coords;
+  LigmaPaintCore *core;
+  LigmaCoords    *coords;
   gboolean       retval;
   gint           i;
   va_list        args;
@@ -71,17 +71,17 @@ paint_tools_stroke (Gimp              *gimp,
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
    */
-  gimp_context_define_properties (GIMP_CONTEXT (options),
-                                  GIMP_CONTEXT_PROP_MASK_PAINT,
+  ligma_context_define_properties (LIGMA_CONTEXT (options),
+                                  LIGMA_CONTEXT_PROP_MASK_PAINT,
                                   FALSE);
-  gimp_context_set_parent (GIMP_CONTEXT (options), context);
+  ligma_context_set_parent (LIGMA_CONTEXT (options), context);
 
   va_start (args, first_property_name);
-  core = GIMP_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
+  core = LIGMA_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
                                                first_property_name, args));
   va_end (args);
 
-  coords = g_new (GimpCoords, n_strokes);
+  coords = g_new (LigmaCoords, n_strokes);
 
   for (i = 0; i < n_strokes; i++)
     {
@@ -90,7 +90,7 @@ paint_tools_stroke (Gimp              *gimp,
       coords[i].y = strokes[2 * i + 1];
     }
 
-  retval = gimp_paint_core_stroke (core, drawable, options,
+  retval = ligma_paint_core_stroke (core, drawable, options,
                                    coords, n_strokes, TRUE,
                                    error);
 
@@ -102,43 +102,43 @@ paint_tools_stroke (Gimp              *gimp,
   return retval;
 }
 
-static GimpValueArray *
-airbrush_invoker (GimpProcedure         *procedure,
-                  Gimp                  *gimp,
-                  GimpContext           *context,
-                  GimpProgress          *progress,
-                  const GimpValueArray  *args,
+static LigmaValueArray *
+airbrush_invoker (LigmaProcedure         *procedure,
+                  Ligma                  *ligma,
+                  LigmaContext           *context,
+                  LigmaProgress          *progress,
+                  const LigmaValueArray  *args,
                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble pressure;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  pressure = g_value_get_double (gimp_value_array_index (args, 1));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  pressure = g_value_get_double (ligma_value_array_index (args, 1));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 2));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-airbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-airbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "pressure", pressure,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -147,41 +147,41 @@ airbrush_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-airbrush_default_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+airbrush_default_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-airbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-airbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -190,49 +190,49 @@ airbrush_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-clone_invoker (GimpProcedure         *procedure,
-               Gimp                  *gimp,
-               GimpContext           *context,
-               GimpProgress          *progress,
-               const GimpValueArray  *args,
+static LigmaValueArray *
+clone_invoker (LigmaProcedure         *procedure,
+               Ligma                  *ligma,
+               LigmaContext           *context,
+               LigmaProgress          *progress,
+               const LigmaValueArray  *args,
                GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpDrawable *src_drawable;
+  LigmaDrawable *drawable;
+  LigmaDrawable *src_drawable;
   gint clone_type;
   gdouble src_x;
   gdouble src_y;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  src_drawable = g_value_get_object (gimp_value_array_index (args, 1));
-  clone_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  src_x = g_value_get_double (gimp_value_array_index (args, 3));
-  src_y = g_value_get_double (gimp_value_array_index (args, 4));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 5));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  src_drawable = g_value_get_object (ligma_value_array_index (args, 1));
+  clone_type = g_value_get_enum (ligma_value_array_index (args, 2));
+  src_x = g_value_get_double (ligma_value_array_index (args, 3));
+  src_y = g_value_get_double (ligma_value_array_index (args, 4));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 5));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-clone");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-clone");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GList *src_drawables;
 
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
           src_drawables = g_list_prepend (NULL, src_drawable);
 
           g_object_set (options,
@@ -240,7 +240,7 @@ clone_invoker (GimpProcedure         *procedure,
                         "src-drawables", src_drawables,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         "src-x",     (gint) floor (src_x),
@@ -252,41 +252,41 @@ clone_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-clone_default_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+clone_default_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-clone");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-clone");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -295,50 +295,50 @@ clone_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-convolve_invoker (GimpProcedure         *procedure,
-                  Gimp                  *gimp,
-                  GimpContext           *context,
-                  GimpProgress          *progress,
-                  const GimpValueArray  *args,
+static LigmaValueArray *
+convolve_invoker (LigmaProcedure         *procedure,
+                  Ligma                  *ligma,
+                  LigmaContext           *context,
+                  LigmaProgress          *progress,
+                  const LigmaValueArray  *args,
                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble pressure;
   gint convolve_type;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  pressure = g_value_get_double (gimp_value_array_index (args, 1));
-  convolve_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 3));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  pressure = g_value_get_double (ligma_value_array_index (args, 1));
+  convolve_type = g_value_get_enum (ligma_value_array_index (args, 2));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 3));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-convolve");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-convolve");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "type", convolve_type,
                         "rate", pressure,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -347,41 +347,41 @@ convolve_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-convolve_default_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+convolve_default_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-convolve");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-convolve");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -390,45 +390,45 @@ convolve_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-dodgeburn_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+dodgeburn_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble exposure;
   gint dodgeburn_type;
   gint dodgeburn_mode;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  exposure = g_value_get_double (gimp_value_array_index (args, 1));
-  dodgeburn_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  dodgeburn_mode = g_value_get_enum (gimp_value_array_index (args, 3));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 4));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  exposure = g_value_get_double (ligma_value_array_index (args, 1));
+  dodgeburn_type = g_value_get_enum (ligma_value_array_index (args, 2));
+  dodgeburn_mode = g_value_get_enum (ligma_value_array_index (args, 3));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 4));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-dodge-burn");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-dodge-burn");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "type",     dodgeburn_type,
@@ -436,7 +436,7 @@ dodgeburn_invoker (GimpProcedure         *procedure,
                         "exposure", exposure,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -445,41 +445,41 @@ dodgeburn_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-dodgeburn_default_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+dodgeburn_default_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-dodge-burn");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-dodge-burn");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -488,50 +488,50 @@ dodgeburn_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-eraser_invoker (GimpProcedure         *procedure,
-                Gimp                  *gimp,
-                GimpContext           *context,
-                GimpProgress          *progress,
-                const GimpValueArray  *args,
+static LigmaValueArray *
+eraser_invoker (LigmaProcedure         *procedure,
+                Ligma                  *ligma,
+                LigmaContext           *context,
+                LigmaProgress          *progress,
+                const LigmaValueArray  *args,
                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
   gint hardness;
   gint method;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
-  hardness = g_value_get_enum (gimp_value_array_index (args, 3));
-  method = g_value_get_enum (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
+  hardness = g_value_get_enum (ligma_value_array_index (args, 3));
+  method = g_value_get_enum (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-eraser");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-eraser");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "application-mode", method,
                         "hard",             hardness,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -540,41 +540,41 @@ eraser_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-eraser_default_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+eraser_default_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-eraser");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-eraser");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -583,54 +583,54 @@ eraser_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-heal_invoker (GimpProcedure         *procedure,
-              Gimp                  *gimp,
-              GimpContext           *context,
-              GimpProgress          *progress,
-              const GimpValueArray  *args,
+static LigmaValueArray *
+heal_invoker (LigmaProcedure         *procedure,
+              Ligma                  *ligma,
+              LigmaContext           *context,
+              LigmaProgress          *progress,
+              const LigmaValueArray  *args,
               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpDrawable *src_drawable;
+  LigmaDrawable *drawable;
+  LigmaDrawable *src_drawable;
   gdouble src_x;
   gdouble src_y;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  src_drawable = g_value_get_object (gimp_value_array_index (args, 1));
-  src_x = g_value_get_double (gimp_value_array_index (args, 2));
-  src_y = g_value_get_double (gimp_value_array_index (args, 3));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 4));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  src_drawable = g_value_get_object (ligma_value_array_index (args, 1));
+  src_x = g_value_get_double (ligma_value_array_index (args, 2));
+  src_y = g_value_get_double (ligma_value_array_index (args, 3));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 4));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-heal");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-heal");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GList *src_drawables;
 
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
           src_drawables = g_list_prepend (NULL, src_drawable);
 
           g_object_set (options,
                         "src-drawables", src_drawables,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         "src-x",     (gint) floor (src_x),
@@ -642,41 +642,41 @@ heal_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-heal_default_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+heal_default_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-heal");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-heal");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -685,48 +685,48 @@ heal_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-paintbrush_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+paintbrush_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble fade_out;
   gint num_strokes;
   const gdouble *strokes;
   gint method;
   gdouble gradient_length;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  fade_out = g_value_get_double (gimp_value_array_index (args, 1));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
-  method = g_value_get_enum (gimp_value_array_index (args, 4));
-  gradient_length = g_value_get_double (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  fade_out = g_value_get_double (ligma_value_array_index (args, 1));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 2));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 3));
+  method = g_value_get_enum (ligma_value_array_index (args, 4));
+  gradient_length = g_value_get_double (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-paintbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpDynamics *pdb_dynamics  = GIMP_DYNAMICS (gimp_dynamics_new (context, "pdb"));
-          GimpDynamics *user_dynamics = gimp_context_get_dynamics (context);
+          LigmaDynamics *pdb_dynamics  = LIGMA_DYNAMICS (ligma_dynamics_new (context, "pdb"));
+          LigmaDynamics *user_dynamics = ligma_context_get_dynamics (context);
 
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "application-mode", method,
@@ -735,9 +735,9 @@ paintbrush_invoker (GimpProcedure         *procedure,
 
           if (fade_out > 0)
             {
-               GimpDynamicsOutput *opacity_output =
-                 gimp_dynamics_get_output (pdb_dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_OPACITY);
+               LigmaDynamicsOutput *opacity_output =
+                 ligma_dynamics_get_output (pdb_dynamics,
+                                           LIGMA_DYNAMICS_OUTPUT_OPACITY);
 
                g_object_set (opacity_output,
                              "use-fade", TRUE,
@@ -746,23 +746,23 @@ paintbrush_invoker (GimpProcedure         *procedure,
 
           if (gradient_length > 0)
             {
-              GimpDynamicsOutput *color_output =
-                gimp_dynamics_get_output (pdb_dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_COLOR);
+              LigmaDynamicsOutput *color_output =
+                ligma_dynamics_get_output (pdb_dynamics,
+                                          LIGMA_DYNAMICS_OUTPUT_COLOR);
 
               g_object_set (color_output,
                             "use-fade", TRUE,
                             NULL);
             }
 
-          gimp_context_set_dynamics (context, pdb_dynamics);
+          ligma_context_set_dynamics (context, pdb_dynamics);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
 
-          gimp_context_set_dynamics (context, user_dynamics);
+          ligma_context_set_dynamics (context, user_dynamics);
 
           g_object_unref (pdb_dynamics);
         }
@@ -770,41 +770,41 @@ paintbrush_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-paintbrush_default_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+paintbrush_default_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-paintbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -813,41 +813,41 @@ paintbrush_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-pencil_invoker (GimpProcedure         *procedure,
-                Gimp                  *gimp,
-                GimpContext           *context,
-                GimpProgress          *progress,
-                const GimpValueArray  *args,
+static LigmaValueArray *
+pencil_invoker (LigmaProcedure         *procedure,
+                Ligma                  *ligma,
+                LigmaContext           *context,
+                LigmaProgress          *progress,
+                const LigmaValueArray  *args,
                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-pencil");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-pencil");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -856,47 +856,47 @@ pencil_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-smudge_invoker (GimpProcedure         *procedure,
-                Gimp                  *gimp,
-                GimpContext           *context,
-                GimpProgress          *progress,
-                const GimpValueArray  *args,
+static LigmaValueArray *
+smudge_invoker (LigmaProcedure         *procedure,
+                Ligma                  *ligma,
+                LigmaContext           *context,
+                LigmaProgress          *progress,
+                const LigmaValueArray  *args,
                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble pressure;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  pressure = g_value_get_double (gimp_value_array_index (args, 1));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  pressure = g_value_get_double (ligma_value_array_index (args, 1));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 2));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-smudge");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-smudge");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
           g_object_set (options,
                         "rate", pressure,
                         NULL);
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -905,41 +905,41 @@ smudge_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-smudge_default_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+smudge_default_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint num_strokes;
   const gdouble *strokes;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  num_strokes = g_value_get_int (ligma_value_array_index (args, 1));
+  strokes = ligma_value_get_float_array (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-smudge");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-smudge");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          options = gimp_config_duplicate (GIMP_CONFIG (options));
+          options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-          success = paint_tools_stroke (gimp, context, options, drawable,
+          success = paint_tools_stroke (ligma, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
                                         NULL);
@@ -948,711 +948,711 @@ smudge_default_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_paint_tools_procs (GimpPDB *pdb)
+register_paint_tools_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-airbrush
+   * ligma-airbrush
    */
-  procedure = gimp_procedure_new (airbrush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-airbrush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (airbrush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-airbrush");
+  ligma_procedure_set_static_help (procedure,
                                   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
                                   "This tool simulates the use of an airbrush. Paint pressure represents the relative intensity of the paint application. High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
                                                     "The pressure of the airbrush strokes",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-airbrush-default
+   * ligma-airbrush-default
    */
-  procedure = gimp_procedure_new (airbrush_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-airbrush-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (airbrush_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-airbrush-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
-                                  "This tool simulates the use of an airbrush. It is similar to 'gimp-airbrush' except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
+                                  "This tool simulates the use of an airbrush. It is similar to 'ligma-airbrush' except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-clone
+   * ligma-clone
    */
-  procedure = gimp_procedure_new (clone_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-clone");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (clone_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-clone");
+  ligma_procedure_set_static_help (procedure,
                                   "Clone from the source to the dest drawable using the current brush",
                                   "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored. Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern. For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("src-drawable",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("src-drawable",
                                                          "src drawable",
                                                          "The source drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("clone-type",
                                                   "clone type",
                                                   "The type of clone",
-                                                  GIMP_TYPE_CLONE_TYPE,
-                                                  GIMP_CLONE_IMAGE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CLONE_TYPE,
+                                                  LIGMA_CLONE_IMAGE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("src-x",
                                                     "src x",
                                                     "The x coordinate in the source image",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("src-y",
                                                     "src y",
                                                     "The y coordinate in the source image",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-clone-default
+   * ligma-clone-default
    */
-  procedure = gimp_procedure_new (clone_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-clone-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (clone_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-clone-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Clone from the source to the dest drawable using the current brush",
-                                  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'gimp-clone' function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'ligma-clone' function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-convolve
+   * ligma-convolve
    */
-  procedure = gimp_procedure_new (convolve_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-convolve");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (convolve_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-convolve");
+  ligma_procedure_set_static_help (procedure,
                                   "Convolve (Blur, Sharpen) using the current brush.",
                                   "This tool convolves the specified drawable with either a sharpening or blurring kernel. The pressure parameter controls the magnitude of the operation. Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
                                                     "The pressure",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("convolve-type",
                                                   "convolve type",
                                                   "Convolve type",
-                                                  GIMP_TYPE_CONVOLVE_TYPE,
-                                                  GIMP_CONVOLVE_BLUR,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CONVOLVE_TYPE,
+                                                  LIGMA_CONVOLVE_BLUR,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-convolve-default
+   * ligma-convolve-default
    */
-  procedure = gimp_procedure_new (convolve_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-convolve-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (convolve_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-convolve-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Convolve (Blur, Sharpen) using the current brush.",
-                                  "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the 'gimp-convolve' function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                  "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the 'ligma-convolve' function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-dodgeburn
+   * ligma-dodgeburn
    */
-  procedure = gimp_procedure_new (dodgeburn_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-dodgeburn");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (dodgeburn_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-dodgeburn");
+  ligma_procedure_set_static_help (procedure,
                                   "Dodgeburn image with varying exposure.",
                                   "Dodgeburn. More details here later.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("exposure",
                                                     "exposure",
                                                     "The exposure of the strokes",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-type",
                                                   "dodgeburn type",
                                                   "The type either dodge or burn",
-                                                  GIMP_TYPE_DODGE_BURN_TYPE,
-                                                  GIMP_DODGE_BURN_TYPE_DODGE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_DODGE_BURN_TYPE,
+                                                  LIGMA_DODGE_BURN_TYPE_DODGE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-mode",
                                                   "dodgeburn mode",
                                                   "The mode",
-                                                  GIMP_TYPE_TRANSFER_MODE,
-                                                  GIMP_TRANSFER_SHADOWS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_TRANSFER_MODE,
+                                                  LIGMA_TRANSFER_SHADOWS,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-dodgeburn-default
+   * ligma-dodgeburn-default
    */
-  procedure = gimp_procedure_new (dodgeburn_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-dodgeburn-default");
-  gimp_procedure_set_static_help (procedure,
-                                  "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn() function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
+  procedure = ligma_procedure_new (dodgeburn_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-dodgeburn-default");
+  ligma_procedure_set_static_help (procedure,
+                                  "Dodgeburn image with varying exposure. This is the same as the ligma_dodgeburn() function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
                                   "Dodgeburn. More details here later.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-eraser
+   * ligma-eraser
    */
-  procedure = gimp_procedure_new (eraser_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-eraser");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (eraser_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-eraser");
+  ligma_procedure_set_static_help (procedure,
                                   "Erase using the current brush.",
                                   "This tool erases using the current brush mask. If the specified drawable contains an alpha channel, then the erased pixels will become transparent. Otherwise, the eraser tool replaces the contents of the drawable with the background color. Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("hardness",
                                                   "hardness",
                                                   "How to apply the brush",
-                                                  GIMP_TYPE_BRUSH_APPLICATION_MODE,
-                                                  GIMP_BRUSH_HARD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_BRUSH_APPLICATION_MODE,
+                                                  LIGMA_BRUSH_HARD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("method",
                                                   "method",
                                                   "The paint method to use",
-                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
-                                                  GIMP_PAINT_CONSTANT,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_PAINT_APPLICATION_MODE,
+                                                  LIGMA_PAINT_CONSTANT,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-eraser-default
+   * ligma-eraser-default
    */
-  procedure = gimp_procedure_new (eraser_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-eraser-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (eraser_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-eraser-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Erase using the current brush.",
-                                  "This tool erases using the current brush mask. This function performs exactly the same as the 'gimp-eraser' function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                  "This tool erases using the current brush mask. This function performs exactly the same as the 'ligma-eraser' function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-heal
+   * ligma-heal
    */
-  procedure = gimp_procedure_new (heal_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-heal");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (heal_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-heal");
+  ligma_procedure_set_static_help (procedure,
                                   "Heal from the source to the dest drawable using the current brush",
                                   "This tool heals the source drawable starting at the specified source coordinates to the dest drawable. For image healing, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The healing tool is capable of transforming between any image types except RGB->Indexed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Kevin Sookocheff",
                                          "Kevin Sookocheff",
                                          "2006");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("src-drawable",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("src-drawable",
                                                          "src drawable",
                                                          "The source drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("src-x",
                                                     "src x",
                                                     "The x coordinate in the source image",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("src-y",
                                                     "src y",
                                                     "The y coordinate in the source image",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-heal-default
+   * ligma-heal-default
    */
-  procedure = gimp_procedure_new (heal_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-heal-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (heal_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-heal-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Heal from the source to the dest drawable using the current brush",
-                                  "This tool heals from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'gimp-heal' function except that the tools arguments are obtained from the healing option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                  "This tool heals from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'ligma-heal' function except that the tools arguments are obtained from the healing option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Kevin Sookocheff",
                                          "Kevin Sookocheff",
                                          "2006");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-paintbrush
+   * ligma-paintbrush
    */
-  procedure = gimp_procedure_new (paintbrush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-paintbrush");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (paintbrush_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-paintbrush");
+  ligma_procedure_set_static_help (procedure,
                                   "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
                                   "This tool is the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The 'fade-out' parameter is measured in pixels and allows the brush stroke to linearly fall off. The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade-out value, the pressure will approach zero. The gradient-length is the distance to spread the gradient over. It is measured in pixels. If the gradient-length is 0, no gradient is used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("fade-out",
                                                     "fade out",
                                                     "Fade out parameter",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("method",
                                                   "method",
                                                   "The paint method to use",
-                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
-                                                  GIMP_PAINT_CONSTANT,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_PAINT_APPLICATION_MODE,
+                                                  LIGMA_PAINT_CONSTANT,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("gradient-length",
                                                     "gradient length",
                                                     "Length of gradient to draw",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-paintbrush-default
+   * ligma-paintbrush-default
    */
-  procedure = gimp_procedure_new (paintbrush_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-paintbrush-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (paintbrush_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-paintbrush-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
                                   "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The 'fade-out' parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade-out value, the pressure will approach zero. The gradient-length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient-length is 0, no gradient is used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-pencil
+   * ligma-pencil
    */
-  procedure = gimp_procedure_new (pencil_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-pencil");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (pencil_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-pencil");
+  ligma_procedure_set_static_help (procedure,
                                   "Paint in the current brush without sub-pixel sampling.",
                                   "This tool is the standard pencil. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The brush mask is treated as though it contains only black and white values. Any value below half is treated as black; any above half, as white.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-smudge
+   * ligma-smudge
    */
-  procedure = gimp_procedure_new (smudge_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-smudge");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (smudge_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-smudge");
+  ligma_procedure_set_static_help (procedure,
                                   "Smudge image with varying pressure.",
                                   "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
                                                     "The pressure of the smudge strokes",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-smudge-default
+   * ligma-smudge-default
    */
-  procedure = gimp_procedure_new (smudge_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-smudge-default");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (smudge_default_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-smudge-default");
+  ligma_procedure_set_static_help (procedure,
                                   "Smudge image with varying pressure.",
-                                  "This tool simulates a smudge using the current brush. It behaves exactly the same as 'gimp-smudge' except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
+                                  "This tool simulates a smudge using the current brush. It behaves exactly the same as 'ligma-smudge' except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-strokes",
                                                  "num strokes",
                                                  "Number of stroke control points (count each coordinate as 2 points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("strokes",
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpitemcombobox.c
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
- * Copyright (C) 2006 Simon Budig <simon@gimp.org>
+ * ligmaitemcombobox.c
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
+ * Copyright (C) 2006 Simon Budig <simon@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,18 +28,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpuitypes.h"
-#include "gimpitemcombobox.h"
-#include "gimppixbuf.h"
+#include "ligmauitypes.h"
+#include "ligmaitemcombobox.h"
+#include "ligmapixbuf.h"
 
 
 /**
- * SECTION: gimpitemcombobox
- * @title: GimpItemComboBox
+ * SECTION: ligmaitemcombobox
+ * @title: LigmaItemComboBox
  * @short_description: Widgets providing popup menus of items.
  *
  * Widgets providing popup menus of items (layers, channels,
@@ -51,76 +51,76 @@
 #define WIDTH_REQUEST  200
 
 
-#define GET_PRIVATE(obj) (g_object_get_data (G_OBJECT (obj), "gimp-item-combo-box-private"))
+#define GET_PRIVATE(obj) (g_object_get_data (G_OBJECT (obj), "ligma-item-combo-box-private"))
 
 
-typedef struct _GimpItemComboBoxPrivate   GimpItemComboBoxPrivate;
+typedef struct _LigmaItemComboBoxPrivate   LigmaItemComboBoxPrivate;
 
-struct _GimpItemComboBoxPrivate
+struct _LigmaItemComboBoxPrivate
 {
-  GimpItemConstraintFunc  constraint;
+  LigmaItemConstraintFunc  constraint;
   gpointer                data;
 };
 
-typedef struct _GimpDrawableComboBoxClass GimpDrawableComboBoxClass;
-typedef struct _GimpChannelComboBoxClass  GimpChannelComboBoxClass;
-typedef struct _GimpLayerComboBoxClass    GimpLayerComboBoxClass;
-typedef struct _GimpVectorsComboBoxClass  GimpVectorsComboBoxClass;
+typedef struct _LigmaDrawableComboBoxClass LigmaDrawableComboBoxClass;
+typedef struct _LigmaChannelComboBoxClass  LigmaChannelComboBoxClass;
+typedef struct _LigmaLayerComboBoxClass    LigmaLayerComboBoxClass;
+typedef struct _LigmaVectorsComboBoxClass  LigmaVectorsComboBoxClass;
 
-struct _GimpDrawableComboBox
+struct _LigmaDrawableComboBox
 {
-  GimpIntComboBox  parent_instance;
+  LigmaIntComboBox  parent_instance;
 };
 
-struct _GimpDrawableComboBoxClass
+struct _LigmaDrawableComboBoxClass
 {
-  GimpIntComboBoxClass  parent_class;
+  LigmaIntComboBoxClass  parent_class;
 };
 
-struct _GimpChannelComboBox
+struct _LigmaChannelComboBox
 {
-  GimpIntComboBox  parent_instance;
+  LigmaIntComboBox  parent_instance;
 };
 
-struct _GimpChannelComboBoxClass
+struct _LigmaChannelComboBoxClass
 {
-  GimpIntComboBoxClass  parent_class;
+  LigmaIntComboBoxClass  parent_class;
 };
 
-struct _GimpLayerComboBox
+struct _LigmaLayerComboBox
 {
-  GimpIntComboBox  parent_instance;
+  LigmaIntComboBox  parent_instance;
 };
 
-struct _GimpLayerComboBoxClass
+struct _LigmaLayerComboBoxClass
 {
-  GimpIntComboBoxClass  parent_class;
+  LigmaIntComboBoxClass  parent_class;
 };
 
-struct _GimpVectorsComboBox
+struct _LigmaVectorsComboBox
 {
-  GimpIntComboBox  parent_instance;
+  LigmaIntComboBox  parent_instance;
 };
 
-struct _GimpVectorsComboBoxClass
+struct _LigmaVectorsComboBoxClass
 {
-  GimpIntComboBoxClass  parent_class;
+  LigmaIntComboBoxClass  parent_class;
 };
 
 
-static GtkWidget * gimp_item_combo_box_new (GType                       type,
-                                            GimpItemConstraintFunc      constraint,
+static GtkWidget * ligma_item_combo_box_new (GType                       type,
+                                            LigmaItemConstraintFunc      constraint,
                                             gpointer                    data,
                                             GDestroyNotify              data_destroy);
 
-static void  gimp_item_combo_box_populate  (GimpIntComboBox            *combo_box);
-static void  gimp_item_combo_box_model_add (GimpIntComboBox            *combo_box,
+static void  ligma_item_combo_box_populate  (LigmaIntComboBox            *combo_box);
+static void  ligma_item_combo_box_model_add (LigmaIntComboBox            *combo_box,
                                             GtkListStore               *store,
-                                            GimpImage                  *image,
+                                            LigmaImage                  *image,
                                             GList                      *items,
                                             gint                        tree_level);
 
-static void  gimp_item_combo_box_drag_data_received (GtkWidget         *widget,
+static void  ligma_item_combo_box_drag_data_received (GtkWidget         *widget,
                                                      GdkDragContext    *context,
                                                      gint               x,
                                                      gint               y,
@@ -128,30 +128,30 @@ static void  gimp_item_combo_box_drag_data_received (GtkWidget         *widget,
                                                      guint              info,
                                                      guint              time);
 
-static void  gimp_item_combo_box_changed   (GimpIntComboBox *combo_box);
+static void  ligma_item_combo_box_changed   (LigmaIntComboBox *combo_box);
 
 
 static const GtkTargetEntry targets[] =
 {
-  { "application/x-gimp-channel-id", 0 },
-  { "application/x-gimp-layer-id",   0 },
-  { "application/x-gimp-vectors-id", 0 }
+  { "application/x-ligma-channel-id", 0 },
+  { "application/x-ligma-layer-id",   0 },
+  { "application/x-ligma-vectors-id", 0 }
 };
 
 
-G_DEFINE_TYPE (GimpDrawableComboBox, gimp_drawable_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (LigmaDrawableComboBox, ligma_drawable_combo_box,
+               LIGMA_TYPE_INT_COMBO_BOX)
 
 static void
-gimp_drawable_combo_box_class_init (GimpDrawableComboBoxClass *klass)
+ligma_drawable_combo_box_class_init (LigmaDrawableComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
+  widget_class->drag_data_received = ligma_item_combo_box_drag_data_received;
 }
 
 static void
-gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
+ligma_drawable_combo_box_init (LigmaDrawableComboBox *combo_box)
 {
   gtk_drag_dest_set (GTK_WIDGET (combo_box),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -160,54 +160,54 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
                      targets, 2,
                      GDK_ACTION_COPY);
 
-  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
-                          g_new0 (GimpItemComboBoxPrivate, 1),
+  g_object_set_data_full (G_OBJECT (combo_box), "ligma-item-combo-box-private",
+                          g_new0 (LigmaItemComboBoxPrivate, 1),
                           (GDestroyNotify) g_free);
 }
 
 /**
- * gimp_drawable_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
+ * ligma_drawable_combo_box_new:
+ * @constraint: (nullable):       A #LigmaItemConstraintFunc or %NULL
  * @data: (closure constraint):   A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
- * Creates a new #GimpIntComboBox filled with all currently opened
+ * Creates a new #LigmaIntComboBox filled with all currently opened
  * drawables. If a @constraint function is specified, it is called for
  * each drawable and only if the function returns %TRUE, the drawable
  * is added to the combobox.
  *
- * You should use gimp_int_combo_box_connect() to initialize and connect
- * the combo.  Use gimp_int_combo_box_set_active() to get the active
- * drawable ID and gimp_int_combo_box_get_active() to retrieve the ID
+ * You should use ligma_int_combo_box_connect() to initialize and connect
+ * the combo.  Use ligma_int_combo_box_set_active() to get the active
+ * drawable ID and ligma_int_combo_box_get_active() to retrieve the ID
  * of the selected drawable.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_drawable_combo_box_new (GimpItemConstraintFunc constraint,
+ligma_drawable_combo_box_new (LigmaItemConstraintFunc constraint,
                              gpointer               data,
                              GDestroyNotify         data_destroy)
 {
-  return gimp_item_combo_box_new (GIMP_TYPE_DRAWABLE_COMBO_BOX,
+  return ligma_item_combo_box_new (LIGMA_TYPE_DRAWABLE_COMBO_BOX,
                                   constraint, data, data_destroy);
 }
 
 
-G_DEFINE_TYPE (GimpChannelComboBox, gimp_channel_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (LigmaChannelComboBox, ligma_channel_combo_box,
+               LIGMA_TYPE_INT_COMBO_BOX)
 
 static void
-gimp_channel_combo_box_class_init (GimpChannelComboBoxClass *klass)
+ligma_channel_combo_box_class_init (LigmaChannelComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
+  widget_class->drag_data_received = ligma_item_combo_box_drag_data_received;
 }
 
 static void
-gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
+ligma_channel_combo_box_init (LigmaChannelComboBox *combo_box)
 {
   gtk_drag_dest_set (GTK_WIDGET (combo_box),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -216,47 +216,47 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
                      targets, 1,
                      GDK_ACTION_COPY);
 
-  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
-                          g_new0 (GimpItemComboBoxPrivate, 1),
+  g_object_set_data_full (G_OBJECT (combo_box), "ligma-item-combo-box-private",
+                          g_new0 (LigmaItemComboBoxPrivate, 1),
                           (GDestroyNotify) g_free);
 }
 
 /**
- * gimp_channel_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
+ * ligma_channel_combo_box_new:
+ * @constraint: (nullable):       A #LigmaItemConstraintFunc or %NULL
  * @data: (closure constraint):   A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * channels. See gimp_drawable_combo_box_new() for more information.
+ * Creates a new #LigmaIntComboBox filled with all currently opened
+ * channels. See ligma_drawable_combo_box_new() for more information.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_channel_combo_box_new (GimpItemConstraintFunc constraint,
+ligma_channel_combo_box_new (LigmaItemConstraintFunc constraint,
                             gpointer               data,
                             GDestroyNotify         data_destroy)
 {
-  return gimp_item_combo_box_new (GIMP_TYPE_CHANNEL_COMBO_BOX,
+  return ligma_item_combo_box_new (LIGMA_TYPE_CHANNEL_COMBO_BOX,
                                   constraint, data, data_destroy);
 }
 
 
-G_DEFINE_TYPE (GimpLayerComboBox, gimp_layer_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (LigmaLayerComboBox, ligma_layer_combo_box,
+               LIGMA_TYPE_INT_COMBO_BOX)
 
 static void
-gimp_layer_combo_box_class_init (GimpLayerComboBoxClass *klass)
+ligma_layer_combo_box_class_init (LigmaLayerComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
+  widget_class->drag_data_received = ligma_item_combo_box_drag_data_received;
 }
 
 static void
-gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
+ligma_layer_combo_box_init (LigmaLayerComboBox *combo_box)
 {
   gtk_drag_dest_set (GTK_WIDGET (combo_box),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -265,47 +265,47 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
                      targets + 1, 1,
                      GDK_ACTION_COPY);
 
-  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
-                          g_new0 (GimpItemComboBoxPrivate, 1),
+  g_object_set_data_full (G_OBJECT (combo_box), "ligma-item-combo-box-private",
+                          g_new0 (LigmaItemComboBoxPrivate, 1),
                           (GDestroyNotify) g_free);
 }
 
 /**
- * gimp_layer_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
+ * ligma_layer_combo_box_new:
+ * @constraint: (nullable):       A #LigmaItemConstraintFunc or %NULL
  * @data: (closure constraint):   A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * layers. See gimp_drawable_combo_box_new() for more information.
+ * Creates a new #LigmaIntComboBox filled with all currently opened
+ * layers. See ligma_drawable_combo_box_new() for more information.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_layer_combo_box_new (GimpItemConstraintFunc constraint,
+ligma_layer_combo_box_new (LigmaItemConstraintFunc constraint,
                           gpointer               data,
                           GDestroyNotify         data_destroy)
 {
-  return gimp_item_combo_box_new (GIMP_TYPE_LAYER_COMBO_BOX,
+  return ligma_item_combo_box_new (LIGMA_TYPE_LAYER_COMBO_BOX,
                                   constraint, data, data_destroy);
 }
 
 
-G_DEFINE_TYPE (GimpVectorsComboBox, gimp_vectors_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (LigmaVectorsComboBox, ligma_vectors_combo_box,
+               LIGMA_TYPE_INT_COMBO_BOX)
 
 static void
-gimp_vectors_combo_box_class_init (GimpVectorsComboBoxClass *klass)
+ligma_vectors_combo_box_class_init (LigmaVectorsComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
+  widget_class->drag_data_received = ligma_item_combo_box_drag_data_received;
 }
 
 static void
-gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
+ligma_vectors_combo_box_init (LigmaVectorsComboBox *combo_box)
 {
   gtk_drag_dest_set (GTK_WIDGET (combo_box),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -314,50 +314,50 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
                      targets + 2, 1,
                      GDK_ACTION_COPY);
 
-  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
-                          g_new0 (GimpItemComboBoxPrivate, 1),
+  g_object_set_data_full (G_OBJECT (combo_box), "ligma-item-combo-box-private",
+                          g_new0 (LigmaItemComboBoxPrivate, 1),
                           (GDestroyNotify) g_free);
 }
 
 
 /**
- * gimp_vectors_combo_box_new:
- * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
+ * ligma_vectors_combo_box_new:
+ * @constraint: (nullable):       A #LigmaItemConstraintFunc or %NULL
  * @data: (closure constraint):   A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
- * Creates a new #GimpIntComboBox filled with all currently opened
+ * Creates a new #LigmaIntComboBox filled with all currently opened
  * vectors objects. If a @constraint function is specified, it is called for
  * each vectors object and only if the function returns %TRUE, the vectors
  * object is added to the combobox.
  *
- * You should use gimp_int_combo_box_connect() to initialize and connect
- * the combo.  Use gimp_int_combo_box_set_active() to set the active
- * vectors ID and gimp_int_combo_box_get_active() to retrieve the ID
+ * You should use ligma_int_combo_box_connect() to initialize and connect
+ * the combo.  Use ligma_int_combo_box_set_active() to set the active
+ * vectors ID and ligma_int_combo_box_get_active() to retrieve the ID
  * of the selected vectors object.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_vectors_combo_box_new (GimpItemConstraintFunc constraint,
+ligma_vectors_combo_box_new (LigmaItemConstraintFunc constraint,
                             gpointer               data,
                             GDestroyNotify         data_destroy)
 {
-  return gimp_item_combo_box_new (GIMP_TYPE_VECTORS_COMBO_BOX,
+  return ligma_item_combo_box_new (LIGMA_TYPE_VECTORS_COMBO_BOX,
                                   constraint, data, data_destroy);
 }
 
 
 static GtkWidget *
-gimp_item_combo_box_new (GType                  type,
-                         GimpItemConstraintFunc constraint,
+ligma_item_combo_box_new (GType                  type,
+                         LigmaItemConstraintFunc constraint,
                          gpointer               data,
                          GDestroyNotify         data_destroy)
 {
-  GimpIntComboBox         *combo_box;
-  GimpItemComboBoxPrivate *private;
+  LigmaIntComboBox         *combo_box;
+  LigmaItemComboBoxPrivate *private;
 
   combo_box = g_object_new (type,
                             "width-request", WIDTH_REQUEST,
@@ -372,17 +372,17 @@ gimp_item_combo_box_new (GType                  type,
   if (data_destroy)
     g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy, data);
 
-  gimp_item_combo_box_populate (combo_box);
+  ligma_item_combo_box_populate (combo_box);
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_item_combo_box_changed),
+                    G_CALLBACK (ligma_item_combo_box_changed),
                     NULL);
 
   return GTK_WIDGET (combo_box);
 }
 
 static void
-gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
+ligma_item_combo_box_populate (LigmaIntComboBox *combo_box)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -391,35 +391,35 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  images = gimp_list_images ();
+  images = ligma_list_images ();
 
   for (list = images; list; list = g_list_next (list))
     {
-      GimpImage *image = list->data;
+      LigmaImage *image = list->data;
       GList     *items;
 
-      if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
-          GIMP_IS_LAYER_COMBO_BOX (combo_box))
+      if (LIGMA_IS_DRAWABLE_COMBO_BOX (combo_box) ||
+          LIGMA_IS_LAYER_COMBO_BOX (combo_box))
         {
-          items = gimp_image_list_layers (image);
-          gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
+          items = ligma_image_list_layers (image);
+          ligma_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
         }
 
-      if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
-          GIMP_IS_CHANNEL_COMBO_BOX (combo_box))
+      if (LIGMA_IS_DRAWABLE_COMBO_BOX (combo_box) ||
+          LIGMA_IS_CHANNEL_COMBO_BOX (combo_box))
         {
-          items = gimp_image_list_channels (image);
-          gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
+          items = ligma_image_list_channels (image);
+          ligma_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
         }
 
-      if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
+      if (LIGMA_IS_VECTORS_COMBO_BOX (combo_box))
         {
-          items = gimp_image_list_vectors (image);
-          gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
+          items = ligma_image_list_vectors (image);
+          ligma_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
         }
@@ -432,13 +432,13 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 }
 
 static void
-gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
+ligma_item_combo_box_model_add (LigmaIntComboBox *combo_box,
                                GtkListStore    *store,
-                               GimpImage       *image,
+                               LigmaImage       *image,
                                GList           *items,
                                gint             tree_level)
 {
-  GimpItemComboBoxPrivate *private = GET_PRIVATE (combo_box);
+  LigmaItemComboBoxPrivate *private = GET_PRIVATE (combo_box);
   GtkTreeIter              iter;
   GList                   *list;
   gchar                   *indent;
@@ -457,37 +457,37 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 
   for (list = items; list; list = g_list_next (list))
     {
-      GimpItem *item    = list->data;
-      gint32    item_id = gimp_item_get_id (item);
+      LigmaItem *item    = list->data;
+      gint32    item_id = ligma_item_get_id (item);
 
       if (! private->constraint ||
           private->constraint (image, item, private->data))
         {
-          gchar     *image_name = gimp_image_get_name (image);
-          gchar     *item_name  = gimp_item_get_name (item);
+          gchar     *image_name = ligma_image_get_name (image);
+          gchar     *item_name  = ligma_item_get_name (item);
           gchar     *label;
           GdkPixbuf *thumb;
 
           label = g_strdup_printf ("%s%s-%d / %s-%d",
                                    indent, image_name,
-                                   gimp_image_get_id (image),
+                                   ligma_image_get_id (image),
                                    item_name, item_id);
 
           g_free (item_name);
           g_free (image_name);
 
-          if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
+          if (LIGMA_IS_VECTORS_COMBO_BOX (combo_box))
             thumb = NULL;
           else
-            thumb = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (item),
+            thumb = ligma_drawable_get_thumbnail (LIGMA_DRAWABLE (item),
                                                  THUMBNAIL_SIZE, THUMBNAIL_SIZE,
-                                                 GIMP_PIXBUF_SMALL_CHECKS);
+                                                 LIGMA_PIXBUF_SMALL_CHECKS);
 
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
-                              GIMP_INT_STORE_VALUE,  item_id,
-                              GIMP_INT_STORE_LABEL,  label,
-                              GIMP_INT_STORE_PIXBUF, thumb,
+                              LIGMA_INT_STORE_VALUE,  item_id,
+                              LIGMA_INT_STORE_LABEL,  label,
+                              LIGMA_INT_STORE_PIXBUF, thumb,
                               -1);
 
           if (thumb)
@@ -496,12 +496,12 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           g_free (label);
         }
 
-      if (gimp_item_is_group (item))
+      if (ligma_item_is_group (item))
         {
           GList *children;
 
-          children = gimp_item_list_children (item);
-          gimp_item_combo_box_model_add (combo_box, store,
+          children = ligma_item_list_children (item);
+          ligma_item_combo_box_model_add (combo_box, store,
                                          image, children,
                                          tree_level + 1);
           g_list_free (children);
@@ -512,7 +512,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 }
 
 static void
-gimp_item_combo_box_drag_data_received (GtkWidget        *widget,
+ligma_item_combo_box_drag_data_received (GtkWidget        *widget,
                                         GdkDragContext   *context,
                                         gint              x,
                                         gint              y,
@@ -538,9 +538,9 @@ gimp_item_combo_box_drag_data_received (GtkWidget        *widget,
       gint ID;
 
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
-          pid == gimp_getpid ())
+          pid == ligma_getpid ())
         {
-          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
+          ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (widget), ID);
         }
     }
 
@@ -548,7 +548,7 @@ gimp_item_combo_box_drag_data_received (GtkWidget        *widget,
 }
 
 static gboolean
-gimp_item_combo_box_remove_items (GtkTreeModel *model,
+ligma_item_combo_box_remove_items (GtkTreeModel *model,
                                   GtkTreePath  *path,
                                   GtkTreeIter  *iter,
                                   gpointer      data)
@@ -557,7 +557,7 @@ gimp_item_combo_box_remove_items (GtkTreeModel *model,
   GList **remove = data;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_INT_STORE_VALUE, &item_ID,
+                      LIGMA_INT_STORE_VALUE, &item_ID,
                       -1);
 
   if (item_ID > 0)
@@ -567,13 +567,13 @@ gimp_item_combo_box_remove_items (GtkTreeModel *model,
 }
 
 static void
-gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
+ligma_item_combo_box_changed (LigmaIntComboBox *combo_box)
 {
   gint item_ID;
 
-  if (gimp_int_combo_box_get_active (combo_box, &item_ID))
+  if (ligma_int_combo_box_get_active (combo_box, &item_ID))
     {
-      if (item_ID > 0 && ! gimp_item_get_by_id (item_ID))
+      if (item_ID > 0 && ! ligma_item_get_by_id (item_ID))
         {
           GtkTreeModel *model;
           GList        *remove = NULL;
@@ -584,7 +584,7 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
           g_signal_stop_emission_by_name (combo_box, "changed");
 
           gtk_tree_model_foreach (model,
-                                  gimp_item_combo_box_remove_items,
+                                  ligma_item_combo_box_remove_items,
                                   &remove);
 
           for (list = remove; list; list = g_list_next (list))
@@ -592,7 +592,7 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
 
           g_list_free_full (remove, (GDestroyNotify) g_free);
 
-          gimp_item_combo_box_populate (combo_box);
+          ligma_item_combo_box_populate (combo_box);
         }
     }
 }

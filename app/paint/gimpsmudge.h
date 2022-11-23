@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SMUDGE_H__
-#define __GIMP_SMUDGE_H__
+#ifndef __LIGMA_SMUDGE_H__
+#define __LIGMA_SMUDGE_H__
 
 
-#include "gimpbrushcore.h"
+#include "ligmabrushcore.h"
 
 
-#define GIMP_TYPE_SMUDGE            (gimp_smudge_get_type ())
-#define GIMP_SMUDGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SMUDGE, GimpSmudge))
-#define GIMP_SMUDGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SMUDGE, GimpSmudgeClass))
-#define GIMP_IS_SMUDGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SMUDGE))
-#define GIMP_IS_SMUDGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SMUDGE))
-#define GIMP_SMUDGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SMUDGE, GimpSmudgeClass))
+#define LIGMA_TYPE_SMUDGE            (ligma_smudge_get_type ())
+#define LIGMA_SMUDGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SMUDGE, LigmaSmudge))
+#define LIGMA_SMUDGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SMUDGE, LigmaSmudgeClass))
+#define LIGMA_IS_SMUDGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SMUDGE))
+#define LIGMA_IS_SMUDGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SMUDGE))
+#define LIGMA_SMUDGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SMUDGE, LigmaSmudgeClass))
 
 
-typedef struct _GimpSmudgeClass GimpSmudgeClass;
+typedef struct _LigmaSmudgeClass LigmaSmudgeClass;
 
-struct _GimpSmudge
+struct _LigmaSmudge
 {
-  GimpBrushCore  parent_instance;
+  LigmaBrushCore  parent_instance;
 
   gboolean       initialized;
   GList         *accum_buffers;
 };
 
-struct _GimpSmudgeClass
+struct _LigmaSmudgeClass
 {
-  GimpBrushCoreClass  parent_class;
+  LigmaBrushCoreClass  parent_class;
 };
 
 
-void    gimp_smudge_register (Gimp                      *gimp,
-                              GimpPaintRegisterCallback  callback);
+void    ligma_smudge_register (Ligma                      *ligma,
+                              LigmaPaintRegisterCallback  callback);
 
-GType   gimp_smudge_get_type (void) G_GNUC_CONST;
+GType   ligma_smudge_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SMUDGE_H__  */
+#endif  /*  __LIGMA_SMUDGE_H__  */

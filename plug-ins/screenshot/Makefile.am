@@ -1,12 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
@@ -23,13 +23,13 @@ AM_CPPFLAGS = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpmath)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmaconfig)	\
+	$(libligma)		\
+	$(libligmacolor)		\
+	$(libligmamath)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(SCREENSHOT_LIBS)	\
@@ -37,7 +37,7 @@ LDADD = \
 	$(INTLLIBS)		\
 	$(screenshot_RC)
 
-libexecdir = $(gimpplugindir)/plug-ins/screenshot
+libexecdir = $(ligmaplugindir)/plug-ins/screenshot
 
 libexec_PROGRAMS = screenshot
 

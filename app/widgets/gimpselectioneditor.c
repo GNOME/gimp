@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,94 +20,94 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-pick-color.h"
-#include "core/gimpselection.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-pick-color.h"
+#include "core/ligmaselection.h"
+#include "core/ligmatoolinfo.h"
 
 /* FIXME: #include "tools/tools-types.h" */
 #include "tools/tools-types.h"
-#include "tools/gimpregionselectoptions.h"
+#include "tools/ligmaregionselectoptions.h"
 
-#include "gimpselectioneditor.h"
-#include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimpmenufactory.h"
-#include "gimpview.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaselectioneditor.h"
+#include "ligmadnd.h"
+#include "ligmadocked.h"
+#include "ligmamenufactory.h"
+#include "ligmaview.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void  gimp_selection_editor_docked_iface_init (GimpDockedInterface *iface);
+static void  ligma_selection_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void   gimp_selection_editor_constructed    (GObject             *object);
+static void   ligma_selection_editor_constructed    (GObject             *object);
 
-static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
-                                                    GimpImage           *image);
+static void   ligma_selection_editor_set_image      (LigmaImageEditor     *editor,
+                                                    LigmaImage           *image);
 
-static void   gimp_selection_editor_set_context    (GimpDocked          *docked,
-                                                    GimpContext         *context);
+static void   ligma_selection_editor_set_context    (LigmaDocked          *docked,
+                                                    LigmaContext         *context);
 
-static gboolean gimp_selection_view_button_press   (GtkWidget           *widget,
+static gboolean ligma_selection_view_button_press   (GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
-                                                    GimpSelectionEditor *editor);
-static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
+                                                    LigmaSelectionEditor *editor);
+static void   ligma_selection_editor_drop_color     (GtkWidget           *widget,
                                                     gint                 x,
                                                     gint                 y,
-                                                    const GimpRGB       *color,
+                                                    const LigmaRGB       *color,
                                                     gpointer             data);
 
-static void   gimp_selection_editor_mask_changed   (GimpImage           *image,
-                                                    GimpSelectionEditor *editor);
+static void   ligma_selection_editor_mask_changed   (LigmaImage           *image,
+                                                    LigmaSelectionEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpSelectionEditor, gimp_selection_editor,
-                         GIMP_TYPE_IMAGE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_selection_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaSelectionEditor, ligma_selection_editor,
+                         LIGMA_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_selection_editor_docked_iface_init))
 
-#define parent_class gimp_selection_editor_parent_class
+#define parent_class ligma_selection_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_selection_editor_class_init (GimpSelectionEditorClass *klass)
+ligma_selection_editor_class_init (LigmaSelectionEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
-  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  LigmaImageEditorClass *image_editor_class = LIGMA_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->constructed     = gimp_selection_editor_constructed;
+  object_class->constructed     = ligma_selection_editor_constructed;
 
-  image_editor_class->set_image = gimp_selection_editor_set_image;
+  image_editor_class->set_image = ligma_selection_editor_set_image;
 }
 
 static void
-gimp_selection_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_selection_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_context = gimp_selection_editor_set_context;
+  iface->set_context = ligma_selection_editor_set_context;
 }
 
 static void
-gimp_selection_editor_init (GimpSelectionEditor *editor)
+ligma_selection_editor_init (LigmaSelectionEditor *editor)
 {
   GtkWidget *frame;
 
@@ -116,62 +116,62 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (NULL,
-                                         GIMP_TYPE_VIEW,
-                                         GIMP_TYPE_SELECTION,
-                                         GIMP_VIEW_SIZE_HUGE,
+  editor->view = ligma_view_new_by_types (NULL,
+                                         LIGMA_TYPE_VIEW,
+                                         LIGMA_TYPE_SELECTION,
+                                         LIGMA_VIEW_SIZE_HUGE,
                                          0, TRUE);
-  gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                     GIMP_ICON_TEXTURE);
+  ligma_view_renderer_set_background (LIGMA_VIEW (editor->view)->renderer,
+                                     LIGMA_ICON_TEXTURE);
   gtk_widget_set_size_request (editor->view,
-                               GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE);
-  gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
+                               LIGMA_VIEW_SIZE_HUGE, LIGMA_VIEW_SIZE_HUGE);
+  ligma_view_set_expand (LIGMA_VIEW (editor->view), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
   gtk_widget_show (editor->view);
 
   g_signal_connect (editor->view, "button-press-event",
-                    G_CALLBACK (gimp_selection_view_button_press),
+                    G_CALLBACK (ligma_selection_view_button_press),
                     editor);
 
-  gimp_dnd_color_dest_add (editor->view,
-                           gimp_selection_editor_drop_color,
+  ligma_dnd_color_dest_add (editor->view,
+                           ligma_selection_editor_drop_color,
                            editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
 
 static void
-gimp_selection_editor_constructed (GObject *object)
+ligma_selection_editor_constructed (GObject *object)
 {
-  GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (object);
+  LigmaSelectionEditor *editor = LIGMA_SELECTION_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->all_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "select",
                                    "select-all", NULL);
 
   editor->none_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "select",
                                    "select-none", NULL);
 
   editor->invert_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "select",
                                    "select-invert", NULL);
 
   editor->save_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "select",
                                    "select-save", NULL);
 
   editor->path_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "vectors",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "vectors",
                                    "vectors-selection-to-vectors",
                                    "vectors-selection-to-vectors-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
 
   editor->stroke_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor), "select",
                                    "select-stroke",
                                    "select-stroke-last-values",
                                    GDK_SHIFT_MASK,
@@ -179,44 +179,44 @@ gimp_selection_editor_constructed (GObject *object)
 }
 
 static void
-gimp_selection_editor_set_image (GimpImageEditor *image_editor,
-                                 GimpImage       *image)
+ligma_selection_editor_set_image (LigmaImageEditor *image_editor,
+                                 LigmaImage       *image)
 {
-  GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (image_editor);
+  LigmaSelectionEditor *editor = LIGMA_SELECTION_EDITOR (image_editor);
 
   if (image_editor->image)
     {
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_selection_editor_mask_changed,
+                                            ligma_selection_editor_mask_changed,
                                             editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
+  LIGMA_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
   if (image)
     {
       g_signal_connect (image, "mask-changed",
-                        G_CALLBACK (gimp_selection_editor_mask_changed),
+                        G_CALLBACK (ligma_selection_editor_mask_changed),
                         editor);
 
-      gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (gimp_image_get_mask (image)));
+      ligma_view_set_viewable (LIGMA_VIEW (editor->view),
+                              LIGMA_VIEWABLE (ligma_image_get_mask (image)));
     }
   else
     {
-      gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
+      ligma_view_set_viewable (LIGMA_VIEW (editor->view), NULL);
     }
 }
 
 static void
-gimp_selection_editor_set_context (GimpDocked  *docked,
-                                   GimpContext *context)
+ligma_selection_editor_set_context (LigmaDocked  *docked,
+                                   LigmaContext *context)
 {
-  GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (docked);
+  LigmaSelectionEditor *editor = LIGMA_SELECTION_EDITOR (docked);
 
   parent_docked_iface->set_context (docked, context);
 
-  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+  ligma_view_renderer_set_context (LIGMA_VIEW (editor->view)->renderer,
                                   context);
 }
 
@@ -224,11 +224,11 @@ gimp_selection_editor_set_context (GimpDocked  *docked,
 /*  public functions  */
 
 GtkWidget *
-gimp_selection_editor_new (GimpMenuFactory *menu_factory)
+ligma_selection_editor_new (LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  return g_object_new (GIMP_TYPE_SELECTION_EDITOR,
+  return g_object_new (LIGMA_TYPE_SELECTION_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<Selection>",
                        "ui-path",         "/selection-popup",
@@ -236,51 +236,51 @@ gimp_selection_editor_new (GimpMenuFactory *menu_factory)
 }
 
 static gboolean
-gimp_selection_view_button_press (GtkWidget           *widget,
+ligma_selection_view_button_press (GtkWidget           *widget,
                                   GdkEventButton      *bevent,
-                                  GimpSelectionEditor *editor)
+                                  LigmaSelectionEditor *editor)
 {
-  GimpImageEditor         *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GimpViewRenderer        *renderer;
-  GimpToolInfo            *tool_info;
-  GimpSelectionOptions    *sel_options;
-  GimpRegionSelectOptions *options;
-  GimpChannelOps           operation;
+  LigmaImageEditor         *image_editor = LIGMA_IMAGE_EDITOR (editor);
+  LigmaViewRenderer        *renderer;
+  LigmaToolInfo            *tool_info;
+  LigmaSelectionOptions    *sel_options;
+  LigmaRegionSelectOptions *options;
+  LigmaChannelOps           operation;
   GList                   *drawables;
   gint                     x, y;
-  GimpRGB                  color;
+  LigmaRGB                  color;
 
   if (! image_editor->image)
     return TRUE;
 
-  renderer = GIMP_VIEW (editor->view)->renderer;
+  renderer = LIGMA_VIEW (editor->view)->renderer;
 
-  tool_info = gimp_get_tool_info (image_editor->image->gimp,
-                                  "gimp-by-color-select-tool");
+  tool_info = ligma_get_tool_info (image_editor->image->ligma,
+                                  "ligma-by-color-select-tool");
 
   if (! tool_info)
     return TRUE;
 
-  sel_options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
-  options     = GIMP_REGION_SELECT_OPTIONS (tool_info->tool_options);
+  sel_options = LIGMA_SELECTION_OPTIONS (tool_info->tool_options);
+  options     = LIGMA_REGION_SELECT_OPTIONS (tool_info->tool_options);
 
-  drawables = gimp_image_get_selected_drawables (image_editor->image);
+  drawables = ligma_image_get_selected_drawables (image_editor->image);
 
   if (! drawables)
     return TRUE;
 
-  operation = gimp_modifiers_to_channel_op (bevent->state);
+  operation = ligma_modifiers_to_channel_op (bevent->state);
 
-  x = gimp_image_get_width  (image_editor->image) * bevent->x / renderer->width;
-  y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;
+  x = ligma_image_get_width  (image_editor->image) * bevent->x / renderer->width;
+  y = ligma_image_get_height (image_editor->image) * bevent->y / renderer->height;
 
-  if (gimp_image_pick_color (image_editor->image, drawables, x, y,
+  if (ligma_image_pick_color (image_editor->image, drawables, x, y,
                              FALSE, options->sample_merged,
                              FALSE, 0.0,
                              NULL,
                              NULL, &color))
     {
-      gimp_channel_select_by_color (gimp_image_get_mask (image_editor->image),
+      ligma_channel_select_by_color (ligma_image_get_mask (image_editor->image),
                                     drawables,
                                     options->sample_merged,
                                     &color,
@@ -292,7 +292,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
                                     sel_options->feather,
                                     sel_options->feather_radius,
                                     sel_options->feather_radius);
-      gimp_image_flush (image_editor->image);
+      ligma_image_flush (image_editor->image);
     }
   g_list_free (drawables);
 
@@ -300,35 +300,35 @@ gimp_selection_view_button_press (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_drop_color (GtkWidget     *widget,
+ligma_selection_editor_drop_color (GtkWidget     *widget,
                                   gint           x,
                                   gint           y,
-                                  const GimpRGB *color,
+                                  const LigmaRGB *color,
                                   gpointer       data)
 {
-  GimpImageEditor         *editor = GIMP_IMAGE_EDITOR (data);
-  GimpToolInfo            *tool_info;
-  GimpSelectionOptions    *sel_options;
-  GimpRegionSelectOptions *options;
+  LigmaImageEditor         *editor = LIGMA_IMAGE_EDITOR (data);
+  LigmaToolInfo            *tool_info;
+  LigmaSelectionOptions    *sel_options;
+  LigmaRegionSelectOptions *options;
   GList                   *drawables;
 
   if (! editor->image)
     return;
 
-  tool_info = gimp_get_tool_info (editor->image->gimp,
-                                  "gimp-by-color-select-tool");
+  tool_info = ligma_get_tool_info (editor->image->ligma,
+                                  "ligma-by-color-select-tool");
   if (! tool_info)
     return;
 
-  sel_options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
-  options     = GIMP_REGION_SELECT_OPTIONS (tool_info->tool_options);
+  sel_options = LIGMA_SELECTION_OPTIONS (tool_info->tool_options);
+  options     = LIGMA_REGION_SELECT_OPTIONS (tool_info->tool_options);
 
-  drawables = gimp_image_get_selected_drawables (editor->image);
+  drawables = ligma_image_get_selected_drawables (editor->image);
 
   if (! drawables)
     return;
 
-  gimp_channel_select_by_color (gimp_image_get_mask (editor->image),
+  ligma_channel_select_by_color (ligma_image_get_mask (editor->image),
                                 drawables,
                                 options->sample_merged,
                                 color,
@@ -340,13 +340,13 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                 sel_options->feather,
                                 sel_options->feather_radius,
                                 sel_options->feather_radius);
-  gimp_image_flush (editor->image);
+  ligma_image_flush (editor->image);
   g_list_free (drawables);
 }
 
 static void
-gimp_selection_editor_mask_changed (GimpImage           *image,
-                                    GimpSelectionEditor *editor)
+ligma_selection_editor_mask_changed (LigmaImage           *image,
+                                    LigmaSelectionEditor *editor)
 {
-  gimp_view_renderer_invalidate (GIMP_VIEW (editor->view)->renderer);
+  ligma_view_renderer_invalidate (LIGMA_VIEW (editor->view)->renderer);
 }

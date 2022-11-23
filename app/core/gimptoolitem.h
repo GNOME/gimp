@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolitem.h
+ * ligmatoolitem.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,53 +18,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_ITEM_H__
-#define __GIMP_TOOL_ITEM_H__
+#ifndef __LIGMA_TOOL_ITEM_H__
+#define __LIGMA_TOOL_ITEM_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_TOOL_ITEM            (gimp_tool_item_get_type ())
-#define GIMP_TOOL_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_ITEM, GimpToolItem))
-#define GIMP_TOOL_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_ITEM, GimpToolItemClass))
-#define GIMP_IS_TOOL_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_ITEM))
-#define GIMP_IS_TOOL_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_ITEM))
-#define GIMP_TOOL_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_ITEM, GimpToolItemClass))
+#define LIGMA_TYPE_TOOL_ITEM            (ligma_tool_item_get_type ())
+#define LIGMA_TOOL_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_ITEM, LigmaToolItem))
+#define LIGMA_TOOL_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_ITEM, LigmaToolItemClass))
+#define LIGMA_IS_TOOL_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_ITEM))
+#define LIGMA_IS_TOOL_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_ITEM))
+#define LIGMA_TOOL_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_ITEM, LigmaToolItemClass))
 
 
-typedef struct _GimpToolItemPrivate GimpToolItemPrivate;
-typedef struct _GimpToolItemClass   GimpToolItemClass;
+typedef struct _LigmaToolItemPrivate LigmaToolItemPrivate;
+typedef struct _LigmaToolItemClass   LigmaToolItemClass;
 
-struct _GimpToolItem
+struct _LigmaToolItem
 {
-  GimpViewable         parent_instance;
+  LigmaViewable         parent_instance;
 
-  GimpToolItemPrivate *priv;
+  LigmaToolItemPrivate *priv;
 };
 
-struct _GimpToolItemClass
+struct _LigmaToolItemClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
   /*  signals  */
-  void (* visible_changed) (GimpToolItem *tool_item);
-  void (* shown_changed)   (GimpToolItem *tool_item);
+  void (* visible_changed) (LigmaToolItem *tool_item);
+  void (* shown_changed)   (LigmaToolItem *tool_item);
 };
 
 
-GType      gimp_tool_item_get_type      (void) G_GNUC_CONST;
+GType      ligma_tool_item_get_type      (void) G_GNUC_CONST;
                                         
-void       gimp_tool_item_set_visible   (GimpToolItem *tool_item,
+void       ligma_tool_item_set_visible   (LigmaToolItem *tool_item,
                                          gboolean      visible);
-gboolean   gimp_tool_item_get_visible   (GimpToolItem *tool_item);
+gboolean   ligma_tool_item_get_visible   (LigmaToolItem *tool_item);
                                         
-gboolean   gimp_tool_item_get_shown     (GimpToolItem *tool_item);
+gboolean   ligma_tool_item_get_shown     (LigmaToolItem *tool_item);
 
 
 /*  protected  */
 
-void       gimp_tool_item_shown_changed (GimpToolItem *tool_item);
+void       ligma_tool_item_shown_changed (LigmaToolItem *tool_item);
 
 
-#endif  /*  __GIMP_TOOL_ITEM_H__  */
+#endif  /*  __LIGMA_TOOL_ITEM_H__  */

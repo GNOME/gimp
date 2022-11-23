@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcolortransform.h
- * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
+ * ligmacolortransform.h
+ * Copyright (C) 2014  Michael Natterer <mitch@ligma.org>
  *                     Elle Stone <ellestone@ninedegreesbelow.com>
  *
  * This library is free software: you can redistribute it and/or
@@ -20,12 +20,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_TRANSFORM_H__
-#define __GIMP_COLOR_TRANSFORM_H__
+#ifndef __LIGMA_COLOR_TRANSFORM_H__
+#define __LIGMA_COLOR_TRANSFORM_H__
 
 G_BEGIN_DECLS
 
@@ -33,99 +33,99 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpColorTransformFlags:
- * @GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE: optimize for accuracy rather
+ * LigmaColorTransformFlags:
+ * @LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE: optimize for accuracy rather
  *   than for speed
- * @GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK: mark out of gamut colors in the
+ * @LIGMA_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK: mark out of gamut colors in the
  *   transform result
- * @GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION: do black point
+ * @LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION: do black point
  *   compensation
  *
- * Flags for modifying #GimpColorTransform's behavior.
+ * Flags for modifying #LigmaColorTransform's behavior.
  **/
 typedef enum
 {
-  GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE               = 0x0100,
-  GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK              = 0x1000,
-  GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION = 0x2000,
-} GimpColorTransformFlags;
+  LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE               = 0x0100,
+  LIGMA_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK              = 0x1000,
+  LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION = 0x2000,
+} LigmaColorTransformFlags;
 
 
-#define GIMP_TYPE_COLOR_TRANSFORM            (gimp_color_transform_get_type ())
-#define GIMP_COLOR_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransform))
-#define GIMP_COLOR_TRANSFORM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransformClass))
-#define GIMP_IS_COLOR_TRANSFORM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_TRANSFORM))
-#define GIMP_IS_COLOR_TRANSFORM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_TRANSFORM))
-#define GIMP_COLOR_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransformClass))
+#define LIGMA_TYPE_COLOR_TRANSFORM            (ligma_color_transform_get_type ())
+#define LIGMA_COLOR_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_TRANSFORM, LigmaColorTransform))
+#define LIGMA_COLOR_TRANSFORM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_TRANSFORM, LigmaColorTransformClass))
+#define LIGMA_IS_COLOR_TRANSFORM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_TRANSFORM))
+#define LIGMA_IS_COLOR_TRANSFORM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_TRANSFORM))
+#define LIGMA_COLOR_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_TRANSFORM, LigmaColorTransformClass))
 
 
-typedef struct _GimpColorTransformPrivate GimpColorTransformPrivate;
-typedef struct _GimpColorTransformClass   GimpColorTransformClass;
+typedef struct _LigmaColorTransformPrivate LigmaColorTransformPrivate;
+typedef struct _LigmaColorTransformClass   LigmaColorTransformClass;
 
-struct _GimpColorTransform
+struct _LigmaColorTransform
 {
   GObject                    parent_instance;
 
-  GimpColorTransformPrivate *priv;
+  LigmaColorTransformPrivate *priv;
 };
 
-struct _GimpColorTransformClass
+struct _LigmaColorTransformClass
 {
   GObjectClass  parent_class;
 
   /* signals */
-  void (* progress) (GimpColorTransform *transform,
+  void (* progress) (LigmaColorTransform *transform,
                      gdouble             fraction);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType   gimp_color_transform_get_type (void) G_GNUC_CONST;
+GType   ligma_color_transform_get_type (void) G_GNUC_CONST;
 
-GimpColorTransform *
-        gimp_color_transform_new              (GimpColorProfile         *src_profile,
+LigmaColorTransform *
+        ligma_color_transform_new              (LigmaColorProfile         *src_profile,
                                                const Babl               *src_format,
-                                               GimpColorProfile         *dest_profile,
+                                               LigmaColorProfile         *dest_profile,
                                                const Babl               *dest_format,
-                                               GimpColorRenderingIntent  rendering_intent,
-                                               GimpColorTransformFlags   flags);
+                                               LigmaColorRenderingIntent  rendering_intent,
+                                               LigmaColorTransformFlags   flags);
 
-GimpColorTransform *
-        gimp_color_transform_new_proofing     (GimpColorProfile         *src_profile,
+LigmaColorTransform *
+        ligma_color_transform_new_proofing     (LigmaColorProfile         *src_profile,
                                                const Babl               *src_format,
-                                               GimpColorProfile         *dest_profile,
+                                               LigmaColorProfile         *dest_profile,
                                                const Babl               *dest_format,
-                                               GimpColorProfile         *proof_profile,
-                                               GimpColorRenderingIntent  proof_intent,
-                                               GimpColorRenderingIntent  display_intent,
-                                               GimpColorTransformFlags   flags);
+                                               LigmaColorProfile         *proof_profile,
+                                               LigmaColorRenderingIntent  proof_intent,
+                                               LigmaColorRenderingIntent  display_intent,
+                                               LigmaColorTransformFlags   flags);
 
-void    gimp_color_transform_process_pixels   (GimpColorTransform       *transform,
+void    ligma_color_transform_process_pixels   (LigmaColorTransform       *transform,
                                                const Babl               *src_format,
                                                gconstpointer             src_pixels,
                                                const Babl               *dest_format,
                                                gpointer                  dest_pixels,
                                                gsize                     length);
 
-void    gimp_color_transform_process_buffer   (GimpColorTransform       *transform,
+void    ligma_color_transform_process_buffer   (LigmaColorTransform       *transform,
                                                GeglBuffer               *src_buffer,
                                                const GeglRectangle      *src_rect,
                                                GeglBuffer               *dest_buffer,
                                                const GeglRectangle      *dest_rect);
 
-gboolean gimp_color_transform_can_gegl_copy   (GimpColorProfile         *src_profile,
-                                               GimpColorProfile         *dest_profile);
+gboolean ligma_color_transform_can_gegl_copy   (LigmaColorProfile         *src_profile,
+                                               LigmaColorProfile         *dest_profile);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_TRANSFORM_H__ */
+#endif  /* __LIGMA_COLOR_TRANSFORM_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,157 +24,157 @@
  */
 
 /**
- * GimpBucketFillArea:
- * @GIMP_BUCKET_FILL_SELECTION:      Fill whole selection
- * @GIMP_BUCKET_FILL_SIMILAR_COLORS: Fill similar colors
- * @GIMP_BUCKET_FILL_LINE_ART:       Fill by line art detection
+ * LigmaBucketFillArea:
+ * @LIGMA_BUCKET_FILL_SELECTION:      Fill whole selection
+ * @LIGMA_BUCKET_FILL_SIMILAR_COLORS: Fill similar colors
+ * @LIGMA_BUCKET_FILL_LINE_ART:       Fill by line art detection
  *
  * Bucket fill area.
  */
-#define GIMP_TYPE_BUCKET_FILL_AREA (gimp_bucket_fill_area_get_type ())
+#define LIGMA_TYPE_BUCKET_FILL_AREA (ligma_bucket_fill_area_get_type ())
 
-GType gimp_bucket_fill_area_get_type (void) G_GNUC_CONST;
+GType ligma_bucket_fill_area_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_BUCKET_FILL_SELECTION,       /*< desc="Fill whole selection" >*/
-  GIMP_BUCKET_FILL_SIMILAR_COLORS,  /*< desc="Fill similar colors" >*/
-  GIMP_BUCKET_FILL_LINE_ART         /*< desc="Fill by line art detection" >*/
-} GimpBucketFillArea;
+  LIGMA_BUCKET_FILL_SELECTION,       /*< desc="Fill whole selection" >*/
+  LIGMA_BUCKET_FILL_SIMILAR_COLORS,  /*< desc="Fill similar colors" >*/
+  LIGMA_BUCKET_FILL_LINE_ART         /*< desc="Fill by line art detection" >*/
+} LigmaBucketFillArea;
 
 
 /**
- * GimpLineArtSource:
- * @GIMP_LINE_ART_SOURCE_SAMPLE_MERGED: All visible layers
- * @GIMP_LINE_ART_SOURCE_ACTIVE_LAYER:  Active layer
- * @GIMP_LINE_ART_SOURCE_LOWER_LAYER:   Layer below the active one
- * @GIMP_LINE_ART_SOURCE_UPPER_LAYER:   Layer above the active one
+ * LigmaLineArtSource:
+ * @LIGMA_LINE_ART_SOURCE_SAMPLE_MERGED: All visible layers
+ * @LIGMA_LINE_ART_SOURCE_ACTIVE_LAYER:  Active layer
+ * @LIGMA_LINE_ART_SOURCE_LOWER_LAYER:   Layer below the active one
+ * @LIGMA_LINE_ART_SOURCE_UPPER_LAYER:   Layer above the active one
  *
  * Bucket fill area.
  */
-#define GIMP_TYPE_LINE_ART_SOURCE (gimp_line_art_source_get_type ())
+#define LIGMA_TYPE_LINE_ART_SOURCE (ligma_line_art_source_get_type ())
 
-GType gimp_line_art_source_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_LINE_ART_SOURCE_SAMPLE_MERGED, /*< desc="All visible layers" >*/
-  GIMP_LINE_ART_SOURCE_ACTIVE_LAYER,  /*< desc="Selected layer" >*/
-  GIMP_LINE_ART_SOURCE_LOWER_LAYER,   /*< desc="Layer below the selected one" >*/
-  GIMP_LINE_ART_SOURCE_UPPER_LAYER    /*< desc="Layer above the selected one" >*/
-} GimpLineArtSource;
-
-
-#define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
-
-GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;
+GType ligma_line_art_source_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RECT_SELECT_MODE_FREE,        /*< desc="Free select"        >*/
-  GIMP_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed size"         >*/
-  GIMP_RECT_SELECT_MODE_FIXED_RATIO  /*< desc="Fixed aspect ratio" >*/
-} GimpRectSelectMode;
+  LIGMA_LINE_ART_SOURCE_SAMPLE_MERGED, /*< desc="All visible layers" >*/
+  LIGMA_LINE_ART_SOURCE_ACTIVE_LAYER,  /*< desc="Selected layer" >*/
+  LIGMA_LINE_ART_SOURCE_LOWER_LAYER,   /*< desc="Layer below the selected one" >*/
+  LIGMA_LINE_ART_SOURCE_UPPER_LAYER    /*< desc="Layer above the selected one" >*/
+} LigmaLineArtSource;
 
 
-#define GIMP_TYPE_TRANSFORM_TYPE (gimp_transform_type_get_type ())
+#define LIGMA_TYPE_RECT_SELECT_MODE (ligma_rect_select_mode_get_type ())
 
-GType gimp_transform_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Layer"     >*/
-  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Selection" >*/
-  GIMP_TRANSFORM_TYPE_PATH,      /*< desc="Path"      >*/
-  GIMP_TRANSFORM_TYPE_IMAGE      /*< desc="Image"     >*/
-} GimpTransformType;
-
-
-#define GIMP_TYPE_TOOL_ACTION (gimp_tool_action_get_type ())
-
-GType gimp_tool_action_get_type (void) G_GNUC_CONST;
+GType ligma_rect_select_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TOOL_ACTION_PAUSE,
-  GIMP_TOOL_ACTION_RESUME,
-  GIMP_TOOL_ACTION_HALT,
-  GIMP_TOOL_ACTION_COMMIT
-} GimpToolAction;
+  LIGMA_RECT_SELECT_MODE_FREE,        /*< desc="Free select"        >*/
+  LIGMA_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed size"         >*/
+  LIGMA_RECT_SELECT_MODE_FIXED_RATIO  /*< desc="Fixed aspect ratio" >*/
+} LigmaRectSelectMode;
 
 
-#define GIMP_TYPE_TOOL_ACTIVE_MODIFIERS (gimp_tool_active_modifiers_get_type ())
+#define LIGMA_TYPE_TRANSFORM_TYPE (ligma_transform_type_get_type ())
 
-GType gimp_tool_active_modifiers_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TOOL_ACTIVE_MODIFIERS_OFF,
-  GIMP_TOOL_ACTIVE_MODIFIERS_SAME,
-  GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE,
-} GimpToolActiveModifiers;
-
-
-#define GIMP_TYPE_MATTING_DRAW_MODE (gimp_matting_draw_mode_get_type ())
-
-GType gimp_matting_draw_mode_get_type (void) G_GNUC_CONST;
+GType ligma_transform_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
- GIMP_MATTING_DRAW_MODE_FOREGROUND,   /*< desc="Draw foreground" >*/
- GIMP_MATTING_DRAW_MODE_BACKGROUND,   /*< desc="Draw background" >*/
- GIMP_MATTING_DRAW_MODE_UNKNOWN,      /*< desc="Draw unknown" >*/
-} GimpMattingDrawMode;
+  LIGMA_TRANSFORM_TYPE_LAYER,     /*< desc="Layer"     >*/
+  LIGMA_TRANSFORM_TYPE_SELECTION, /*< desc="Selection" >*/
+  LIGMA_TRANSFORM_TYPE_PATH,      /*< desc="Path"      >*/
+  LIGMA_TRANSFORM_TYPE_IMAGE      /*< desc="Image"     >*/
+} LigmaTransformType;
 
 
-#define GIMP_TYPE_MATTING_PREVIEW_MODE (gimp_matting_preview_mode_get_type ())
+#define LIGMA_TYPE_TOOL_ACTION (ligma_tool_action_get_type ())
 
-GType gimp_matting_preview_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
- GIMP_MATTING_PREVIEW_MODE_ON_COLOR,        /*< desc="Color" >*/
- GIMP_MATTING_PREVIEW_MODE_GRAYSCALE,       /*< desc="Grayscale" >*/
-} GimpMattingPreviewMode;
-
-
-#define GIMP_TYPE_TRANSFORM_3D_LENS_MODE (gimp_transform_3d_lens_mode_get_type ())
-
-GType gimp_transform_3d_lens_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum /*< lowercase_name=gimp_transform_3d_lens_mode >*/
-{
-  GIMP_TRANSFORM_3D_LENS_MODE_FOCAL_LENGTH, /*< desc="Focal length" >*/
-  GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE,    /*< desc="Field of view (relative to image)", abbrev="FOV (image)" >*/
-  GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM,     /*< desc="Field of view (relative to item)", abbrev="FOV (item)" >*/
-} Gimp3DTransformLensMode;
-
-
-#define GIMP_TYPE_WARP_BEHAVIOR (gimp_warp_behavior_get_type ())
-
-GType gimp_warp_behavior_get_type (void) G_GNUC_CONST;
+GType ligma_tool_action_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_WARP_BEHAVIOR_MOVE,      /*< desc="Move pixels" >*/
-  GIMP_WARP_BEHAVIOR_GROW,      /*< desc="Grow area" >*/
-  GIMP_WARP_BEHAVIOR_SHRINK,    /*< desc="Shrink area" >*/
-  GIMP_WARP_BEHAVIOR_SWIRL_CW,  /*< desc="Swirl clockwise" >*/
-  GIMP_WARP_BEHAVIOR_SWIRL_CCW, /*< desc="Swirl counter-clockwise" >*/
-  GIMP_WARP_BEHAVIOR_ERASE,     /*< desc="Erase warping" >*/
-  GIMP_WARP_BEHAVIOR_SMOOTH     /*< desc="Smooth warping" >*/
-} GimpWarpBehavior;
+  LIGMA_TOOL_ACTION_PAUSE,
+  LIGMA_TOOL_ACTION_RESUME,
+  LIGMA_TOOL_ACTION_HALT,
+  LIGMA_TOOL_ACTION_COMMIT
+} LigmaToolAction;
 
 
-#define GIMP_TYPE_PAINT_SELECT_MODE (gimp_paint_select_mode_get_type ())
+#define LIGMA_TYPE_TOOL_ACTIVE_MODIFIERS (ligma_tool_active_modifiers_get_type ())
 
-GType gimp_paint_select_mode_get_type (void) G_GNUC_CONST;
+GType ligma_tool_active_modifiers_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PAINT_SELECT_MODE_ADD,      /*< desc="Add to selection" >*/
-  GIMP_PAINT_SELECT_MODE_SUBTRACT, /*< desc="Subtract from selection" >*/
-} GimpPaintSelectMode;
+  LIGMA_TOOL_ACTIVE_MODIFIERS_OFF,
+  LIGMA_TOOL_ACTIVE_MODIFIERS_SAME,
+  LIGMA_TOOL_ACTIVE_MODIFIERS_SEPARATE,
+} LigmaToolActiveModifiers;
+
+
+#define LIGMA_TYPE_MATTING_DRAW_MODE (ligma_matting_draw_mode_get_type ())
+
+GType ligma_matting_draw_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+ LIGMA_MATTING_DRAW_MODE_FOREGROUND,   /*< desc="Draw foreground" >*/
+ LIGMA_MATTING_DRAW_MODE_BACKGROUND,   /*< desc="Draw background" >*/
+ LIGMA_MATTING_DRAW_MODE_UNKNOWN,      /*< desc="Draw unknown" >*/
+} LigmaMattingDrawMode;
+
+
+#define LIGMA_TYPE_MATTING_PREVIEW_MODE (ligma_matting_preview_mode_get_type ())
+
+GType ligma_matting_preview_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+ LIGMA_MATTING_PREVIEW_MODE_ON_COLOR,        /*< desc="Color" >*/
+ LIGMA_MATTING_PREVIEW_MODE_GRAYSCALE,       /*< desc="Grayscale" >*/
+} LigmaMattingPreviewMode;
+
+
+#define LIGMA_TYPE_TRANSFORM_3D_LENS_MODE (ligma_transform_3d_lens_mode_get_type ())
+
+GType ligma_transform_3d_lens_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< lowercase_name=ligma_transform_3d_lens_mode >*/
+{
+  LIGMA_TRANSFORM_3D_LENS_MODE_FOCAL_LENGTH, /*< desc="Focal length" >*/
+  LIGMA_TRANSFORM_3D_LENS_MODE_FOV_IMAGE,    /*< desc="Field of view (relative to image)", abbrev="FOV (image)" >*/
+  LIGMA_TRANSFORM_3D_LENS_MODE_FOV_ITEM,     /*< desc="Field of view (relative to item)", abbrev="FOV (item)" >*/
+} Ligma3DTransformLensMode;
+
+
+#define LIGMA_TYPE_WARP_BEHAVIOR (ligma_warp_behavior_get_type ())
+
+GType ligma_warp_behavior_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_WARP_BEHAVIOR_MOVE,      /*< desc="Move pixels" >*/
+  LIGMA_WARP_BEHAVIOR_GROW,      /*< desc="Grow area" >*/
+  LIGMA_WARP_BEHAVIOR_SHRINK,    /*< desc="Shrink area" >*/
+  LIGMA_WARP_BEHAVIOR_SWIRL_CW,  /*< desc="Swirl clockwise" >*/
+  LIGMA_WARP_BEHAVIOR_SWIRL_CCW, /*< desc="Swirl counter-clockwise" >*/
+  LIGMA_WARP_BEHAVIOR_ERASE,     /*< desc="Erase warping" >*/
+  LIGMA_WARP_BEHAVIOR_SMOOTH     /*< desc="Smooth warping" >*/
+} LigmaWarpBehavior;
+
+
+#define LIGMA_TYPE_PAINT_SELECT_MODE (ligma_paint_select_mode_get_type ())
+
+GType ligma_paint_select_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_PAINT_SELECT_MODE_ADD,      /*< desc="Add to selection" >*/
+  LIGMA_PAINT_SELECT_MODE_SUBTRACT, /*< desc="Subtract from selection" >*/
+} LigmaPaintSelectMode;
 
 /*
  * non-registered enums; register them if needed
@@ -189,25 +189,25 @@ typedef enum /*< skip >*/
   SELECTION_ANCHOR
 } SelectFunction;
 
-/*  Modes of GimpEditSelectionTool  */
+/*  Modes of LigmaEditSelectionTool  */
 typedef enum /*< skip >*/
 {
-  GIMP_TRANSLATE_MODE_VECTORS,
-  GIMP_TRANSLATE_MODE_CHANNEL,
-  GIMP_TRANSLATE_MODE_LAYER_MASK,
-  GIMP_TRANSLATE_MODE_MASK,
-  GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
-  GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
-  GIMP_TRANSLATE_MODE_LAYER,
-  GIMP_TRANSLATE_MODE_FLOATING_SEL
-} GimpTranslateMode;
+  LIGMA_TRANSLATE_MODE_VECTORS,
+  LIGMA_TRANSLATE_MODE_CHANNEL,
+  LIGMA_TRANSLATE_MODE_LAYER_MASK,
+  LIGMA_TRANSLATE_MODE_MASK,
+  LIGMA_TRANSLATE_MODE_MASK_TO_LAYER,
+  LIGMA_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
+  LIGMA_TRANSLATE_MODE_LAYER,
+  LIGMA_TRANSLATE_MODE_FLOATING_SEL
+} LigmaTranslateMode;
 
 /*  Motion event report modes  */
 typedef enum /*< skip >*/
 {
-  GIMP_MOTION_MODE_EXACT,
-  GIMP_MOTION_MODE_COMPRESS
-} GimpMotionMode;
+  LIGMA_MOTION_MODE_EXACT,
+  LIGMA_MOTION_MODE_COMPRESS
+} LigmaMotionMode;
 
 
 #endif /* __TOOLS_ENUMS_H__ */

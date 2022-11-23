@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * module-dialog.c
- * (C) 1999 Austin Donnelly <austin@gimp.org>
- * (C) 2008 Sven Neumann <sven@gimp.org>
+ * (C) 1999 Austin Donnelly <austin@ligma.org>
+ * (C) 2008 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-modules.h"
+#include "core/ligma.h"
+#include "core/ligma-modules.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "module-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_REFRESH  1
@@ -64,9 +64,9 @@ typedef struct _ModuleDialog ModuleDialog;
 
 struct _ModuleDialog
 {
-  Gimp         *gimp;
+  Ligma         *ligma;
 
-  GimpModule   *selected;
+  LigmaModule   *selected;
   GtkListStore *list;
 
   GtkWidget    *hint;
@@ -91,14 +91,14 @@ static void   dialog_enabled_toggled  (GtkCellRendererToggle *celltoggle,
                                        ModuleDialog          *private);
 static void   make_list_item          (gpointer               data,
                                        gpointer               user_data);
-static void   dialog_info_add         (GimpModuleDB          *db,
-                                       GimpModule            *module,
+static void   dialog_info_add         (LigmaModuleDB          *db,
+                                       LigmaModule            *module,
                                        ModuleDialog          *private);
-static void   dialog_info_remove      (GimpModuleDB          *db,
-                                       GimpModule            *module,
+static void   dialog_info_remove      (LigmaModuleDB          *db,
+                                       LigmaModule            *module,
                                        ModuleDialog          *private);
-static void   dialog_info_update      (GimpModuleDB          *db,
-                                       GimpModule            *module,
+static void   dialog_info_update      (LigmaModuleDB          *db,
+                                       LigmaModule            *module,
                                        ModuleDialog          *private);
 static void   dialog_info_init        (ModuleDialog          *private,
                                        GtkWidget             *grid);
@@ -107,7 +107,7 @@ static void   dialog_info_init        (ModuleDialog          *private,
 /*  public functions  */
 
 GtkWidget *
-module_dialog_new (Gimp *gimp)
+module_dialog_new (Ligma *ligma)
 {
   ModuleDialog      *private;
   GtkWidget         *dialog;
@@ -120,22 +120,22 @@ module_dialog_new (Gimp *gimp)
   GtkTreeViewColumn *col;
   GtkCellRenderer   *rend;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   private = g_slice_new0 (ModuleDialog);
 
-  private->gimp = gimp;
+  private->ligma = ligma;
 
-  dialog = gimp_dialog_new (_("Module Manager"),
-                            "gimp-modules", NULL, 0,
-                            gimp_standard_help_func, GIMP_HELP_MODULE_DIALOG,
+  dialog = ligma_dialog_new (_("Module Manager"),
+                            "ligma-modules", NULL, 0,
+                            ligma_standard_help_func, LIGMA_HELP_MODULE_DIALOG,
 
                             _("_Refresh"), RESPONSE_REFRESH,
                             _("_Close"),   GTK_RESPONSE_CLOSE,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_CLOSE,
                                            RESPONSE_REFRESH,
                                            -1);
@@ -150,11 +150,11 @@ module_dialog_new (Gimp *gimp)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  private->hint = gimp_hint_box_new (_("You will have to restart GIMP "
+  private->hint = ligma_hint_box_new (_("You will have to restart LIGMA "
                                        "for the changes to take effect."));
   gtk_box_pack_start (GTK_BOX (vbox), private->hint, FALSE, FALSE, 0);
 
-  if (gimp->write_modulerc)
+  if (ligma->write_modulerc)
     gtk_widget_show (private->hint);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
@@ -170,13 +170,13 @@ module_dialog_new (Gimp *gimp)
   private->list = gtk_list_store_new (N_COLUMNS,
                                       G_TYPE_STRING,
                                       G_TYPE_BOOLEAN,
-                                      GIMP_TYPE_MODULE);
+                                      LIGMA_TYPE_MODULE);
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->list));
   g_object_unref (private->list);
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
-  g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
+  g_list_foreach (ligma_module_db_get_modules (ligma->module_db),
                   make_list_item, private);
 
   rend = gtk_cell_renderer_toggle_new ();
@@ -208,7 +208,7 @@ module_dialog_new (Gimp *gimp)
   private->error_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), private->error_box, FALSE, FALSE, 0);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_WARNING,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DIALOG_WARNING,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (private->error_box), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
@@ -221,7 +221,7 @@ module_dialog_new (Gimp *gimp)
 
   dialog_info_init (private, private->grid);
 
-  dialog_info_update (gimp->module_db, private->selected, private);
+  dialog_info_update (ligma->module_db, private->selected, private);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -232,16 +232,16 @@ module_dialog_new (Gimp *gimp)
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (private->list), &iter))
     gtk_tree_selection_select_iter (sel, &iter);
 
-  /* hook the GimpModuleDB signals so we can refresh the display
+  /* hook the LigmaModuleDB signals so we can refresh the display
    * appropriately.
    */
-  g_signal_connect (gimp->module_db, "add",
+  g_signal_connect (ligma->module_db, "add",
                     G_CALLBACK (dialog_info_add),
                     private);
-  g_signal_connect (gimp->module_db, "remove",
+  g_signal_connect (ligma->module_db, "remove",
                     G_CALLBACK (dialog_info_remove),
                     private);
-  g_signal_connect (gimp->module_db, "module-modified",
+  g_signal_connect (ligma->module_db, "module-modified",
                     G_CALLBACK (dialog_info_update),
                     private);
 
@@ -261,7 +261,7 @@ dialog_response (GtkWidget    *widget,
                  ModuleDialog *private)
 {
   if (response_id == RESPONSE_REFRESH)
-    gimp_modules_refresh (private->gimp);
+    ligma_modules_refresh (private->ligma);
   else
     gtk_widget_destroy (widget);
 }
@@ -270,13 +270,13 @@ static void
 dialog_destroy_callback (GtkWidget    *widget,
                          ModuleDialog *private)
 {
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
+  g_signal_handlers_disconnect_by_func (private->ligma->module_db,
                                         dialog_info_add,
                                         private);
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
+  g_signal_handlers_disconnect_by_func (private->ligma->module_db,
                                         dialog_info_remove,
                                         private);
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
+  g_signal_handlers_disconnect_by_func (private->ligma->module_db,
                                         dialog_info_update,
                                         private);
 
@@ -291,7 +291,7 @@ dialog_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
-      GimpModule *module;
+      LigmaModule *module;
 
       gtk_tree_model_get (GTK_TREE_MODEL (private->list), &iter,
                           COLUMN_MODULE, &module, -1);
@@ -304,7 +304,7 @@ dialog_select_callback (GtkTreeSelection *sel,
 
       private->selected = module;
 
-      dialog_info_update (private->gimp->module_db, private->selected, private);
+      dialog_info_update (private->ligma->module_db, private->selected, private);
     }
 }
 
@@ -315,7 +315,7 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
 {
   GtkTreePath *path;
   GtkTreeIter  iter;
-  GimpModule  *module = NULL;
+  LigmaModule  *module = NULL;
 
   path = gtk_tree_path_new_from_string (path_string);
 
@@ -333,10 +333,10 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
 
   if (module)
     {
-      gimp_module_set_auto_load (module, ! gimp_module_get_auto_load (module));
+      ligma_module_set_auto_load (module, ! ligma_module_get_auto_load (module));
       g_object_unref (module);
 
-      private->gimp->write_modulerc = TRUE;
+      private->ligma->write_modulerc = TRUE;
       gtk_widget_show (private->hint);
    }
 }
@@ -344,16 +344,16 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
 static void
 dialog_list_item_update (ModuleDialog *private,
                          GtkTreeIter  *iter,
-                         GimpModule   *module)
+                         LigmaModule   *module)
 {
-  const GimpModuleInfo *info = gimp_module_get_info (module);
-  GFile                *file = gimp_module_get_file (module);
+  const LigmaModuleInfo *info = ligma_module_get_info (module);
+  GFile                *file = ligma_module_get_file (module);
 
   gtk_list_store_set (private->list, iter,
                       COLUMN_NAME,   (info ?
                                       gettext (info->purpose) :
-                                      gimp_file_get_utf8_name (file)),
-                      COLUMN_ENABLED, gimp_module_get_auto_load (module),
+                                      ligma_file_get_utf8_name (file)),
+                      COLUMN_ENABLED, ligma_module_get_auto_load (module),
                       COLUMN_MODULE,  module,
                       -1);
 }
@@ -362,7 +362,7 @@ static void
 make_list_item (gpointer data,
                 gpointer user_data)
 {
-  GimpModule   *module = data;
+  LigmaModule   *module = data;
   ModuleDialog *private = user_data;
   GtkTreeIter   iter;
 
@@ -375,16 +375,16 @@ make_list_item (gpointer data,
 }
 
 static void
-dialog_info_add (GimpModuleDB *db,
-                 GimpModule   *module,
+dialog_info_add (LigmaModuleDB *db,
+                 LigmaModule   *module,
                  ModuleDialog *private)
 {
   make_list_item (module, private);
 }
 
 static void
-dialog_info_remove (GimpModuleDB *db,
-                    GimpModule   *module,
+dialog_info_remove (LigmaModuleDB *db,
+                    LigmaModule   *module,
                     ModuleDialog *private)
 {
   GtkTreeIter  iter;
@@ -396,7 +396,7 @@ dialog_info_remove (GimpModuleDB *db,
 
   do
     {
-      GimpModule  *this;
+      LigmaModule  *this;
 
       gtk_tree_model_get (GTK_TREE_MODEL (private->list), &iter,
                           COLUMN_MODULE, &this,
@@ -418,12 +418,12 @@ dialog_info_remove (GimpModuleDB *db,
 }
 
 static void
-dialog_info_update (GimpModuleDB *db,
-                    GimpModule   *module,
+dialog_info_update (LigmaModuleDB *db,
+                    LigmaModule   *module,
                     ModuleDialog *private)
 {
   GtkTreeModel         *model = GTK_TREE_MODEL (private->list);
-  const GimpModuleInfo *info;
+  const LigmaModuleInfo *info;
   GtkTreeIter           iter;
   const gchar          *text[N_INFOS] = { NULL, };
   const gchar          *location      = NULL;
@@ -435,7 +435,7 @@ dialog_info_update (GimpModuleDB *db,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      GimpModule *this;
+      LigmaModule *this;
 
       gtk_tree_model_get (model, &iter,
                           COLUMN_MODULE, &this,
@@ -465,10 +465,10 @@ dialog_info_update (GimpModuleDB *db,
       return;
     }
 
-  if (gimp_module_is_on_disk (module))
-    location = gimp_file_get_utf8_name (gimp_module_get_file (module));
+  if (ligma_module_is_on_disk (module))
+    location = ligma_file_get_utf8_name (ligma_module_get_file (module));
 
-  info = gimp_module_get_info (module);
+  info = ligma_module_get_info (module);
 
   if (info)
     {
@@ -476,12 +476,12 @@ dialog_info_update (GimpModuleDB *db,
       text[INFO_VERSION]   = info->version;
       text[INFO_DATE]      = info->date;
       text[INFO_COPYRIGHT] = info->copyright;
-      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
+      text[INFO_LOCATION]  = ligma_module_is_on_disk (module) ?
                              location : _("Only in memory");
     }
   else
     {
-      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
+      text[INFO_LOCATION]  = ligma_module_is_on_disk (module) ?
                              location : _("No longer available");
     }
 
@@ -490,10 +490,10 @@ dialog_info_update (GimpModuleDB *db,
                         text[i] ? text[i] : "--");
 
   /* Show errors */
-  show_error = (gimp_module_get_state (module) == GIMP_MODULE_STATE_ERROR &&
-                gimp_module_get_last_error (module));
+  show_error = (ligma_module_get_state (module) == LIGMA_MODULE_STATE_ERROR &&
+                ligma_module_get_last_error (module));
   gtk_label_set_text (GTK_LABEL (private->error_label),
-                      show_error ? gimp_module_get_last_error (module) : NULL);
+                      show_error ? ligma_module_get_last_error (module) : NULL);
   gtk_widget_set_visible (private->error_box, show_error);
 }
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Multiple-image Network Graphics (MNG) plug-in
@@ -87,15 +87,15 @@
 
 #include <libmng.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-mng-save"
 #define PLUG_IN_BINARY "file-mng"
-#define PLUG_IN_ROLE   "gimp-file-mng"
+#define PLUG_IN_ROLE   "ligma-file-mng"
 #define SCALE_WIDTH    125
 
 enum
@@ -139,12 +139,12 @@ typedef struct _MngClass MngClass;
 
 struct _Mng
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _MngClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -153,17 +153,17 @@ struct _MngClass
 
 GType                   mng_get_type             (void) G_GNUC_CONST;
 
-static GList          * mng_query_procedures     (GimpPlugIn           *plug_in);
-static GimpProcedure  * mng_create_procedure     (GimpPlugIn           *plug_in,
+static GList          * mng_query_procedures     (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * mng_create_procedure     (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * mng_save                 (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * mng_save                 (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
+                                                  LigmaDrawable        **drawables,
                                                   GFile                *file,
-                                                  const GimpValueArray *args,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static mng_ptr  MNG_DECL  myalloc       (mng_size_t  size);
@@ -192,24 +192,24 @@ static gboolean  ia_has_transparent_pixels           (guchar      *pixels,
 static gboolean  respin_cmap     (png_structp       png_ptr,
                                   png_infop         png_info_ptr,
                                   guchar           *remap,
-                                  GimpImage        *image,
+                                  LigmaImage        *image,
                                   GeglBuffer       *buffer,
                                   int              *bit_depth);
 
 static gboolean  mng_save_image  (GFile            *file,
-                                  GimpImage        *image,
+                                  LigmaImage        *image,
                                   gint              n_drawables,
-                                  GimpDrawable    **drawables,
+                                  LigmaDrawable    **drawables,
                                   GObject          *config,
                                   GError          **error);
-static gboolean  mng_save_dialog (GimpImage        *image,
-                                  GimpProcedure    *procedure,
+static gboolean  mng_save_dialog (LigmaImage        *image,
+                                  LigmaProcedure    *procedure,
                                   GObject          *config);
 
 
-G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Mng, mng, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (MNG_TYPE)
+LIGMA_MAIN (MNG_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -219,7 +219,7 @@ static struct mng_globals_t mngg;
 static void
 mng_class_init (MngClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = mng_query_procedures;
   plug_in_class->create_procedure = mng_create_procedure;
@@ -232,28 +232,28 @@ mng_init (Mng *mng)
 }
 
 static GList *
-mng_query_procedures (GimpPlugIn *plug_in)
+mng_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-mng_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+mng_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            mng_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("MNG animation"));
+      ligma_procedure_set_menu_label (procedure, _("MNG animation"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves images in the MNG file format",
                                         "This plug-in saves images in the "
                                         "Multiple-image Network Graphics (MNG) "
@@ -261,55 +261,55 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                         "replacement for animated GIFs, and "
                                         "more.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "November 19, 2002");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-mng");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "mng");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "interlaced",
                              "Interlaced",
                              "Use interlacing",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "png-compression",
+      LIGMA_PROC_ARG_INT (procedure, "png-compression",
                          "PNG Compression",
                          _("PNG compression level, choose a high compression "
                            "level for small file size"),
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-quality",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "jpeg-quality",
                             "JPEG Quality",
                             "JPEG quality factor",
                             0, 1, 0.75,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-smoothing",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "jpeg-smoothing",
                             "JPEG Smoothing",
                             "JPEG smoothing factor",
                             0, 1, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "loop",
                              "Loop",
                              "(ANIMATED MNG) Loop infinitely",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
+      LIGMA_PROC_ARG_INT (procedure, "default-delay",
                          "Default delay",
                          "(ANIMATED MNG) Default delay between frames in "
                          "milliseconds",
                          1, G_MAXINT, 100,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-chunks",
+      LIGMA_PROC_ARG_INT (procedure, "default-chunks",
                          "Default chunks",
                          "(ANIMATED MNG) Default chunks type "
                          "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
@@ -317,32 +317,32 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                          0, 3, CHUNKS_PNG_D,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-dispose",
+      LIGMA_PROC_ARG_INT (procedure, "default-dispose",
                          "Default dispose",
                          "(ANIMATED MNG) Default dispose type "
                          "(0 = combine; 1 = replace)",
                          0, 1, DISPOSE_COMBINE,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "bkgd",
                              "bKGD",
                              "Write bKGd (background color) chunk",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "gama",
                              "gAMA",
                              "Write gAMA (gamma) chunk",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "phys",
                              "pHYs",
                              "Write pHYs (image resolution) chunk",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "time",
                              "tIME",
                              "Write tIME (creation time) chunk",
                              TRUE,
@@ -352,69 +352,69 @@ mng_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-mng_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+mng_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_IGNORE;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_IGNORE;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
+  if (run_mode == LIGMA_RUN_INTERACTIVE ||
+      run_mode == LIGMA_RUN_WITH_LAST_VALS)
     {
-      gimp_ui_init (PLUG_IN_BINARY);
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "MNG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "MNG",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA   |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYERS);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! mng_save_dialog (image, procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! mng_save_image (file, image, n_drawables, drawables,
                             G_OBJECT (config), &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 
@@ -646,7 +646,7 @@ static gboolean
 respin_cmap (png_structp  pp,
              png_infop    info,
              guchar      *remap,
-             GimpImage   *image,
+             LigmaImage   *image,
              GeglBuffer  *buffer,
              int         *bit_depth)
 {
@@ -658,7 +658,7 @@ respin_cmap (png_structp  pp,
   gint           transparent;
   gint           cols, rows;
 
-  before = gimp_image_get_colormap (image, &colors);
+  before = ligma_image_get_colormap (image, &colors);
 
   /* Make sure there is something in the colormap */
   if (colors == 0)
@@ -776,9 +776,9 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 
 static gboolean
 mng_save_image (GFile         *file,
-                GimpImage     *image,
+                LigmaImage     *image,
                 gint           n_drawables,
-                GimpDrawable **drawables,
+                LigmaDrawable **drawables,
                 GObject       *config,
                 GError       **error)
 {
@@ -789,7 +789,7 @@ mng_save_image (GFile         *file,
   struct tm      *gmt;
 
   gint            num_layers;
-  GimpLayer     **layers;
+  LigmaLayer     **layers;
 
   struct mnglib_userdata_t *userdata;
   mng_handle      handle;
@@ -824,7 +824,7 @@ mng_save_image (GFile         *file,
                 "time",            &config_time,
                 NULL);
 
-  layers = gimp_image_get_layers (image, &num_layers);
+  layers = ligma_image_get_layers (image, &num_layers);
 
   if (num_layers < 1)
     return FALSE;
@@ -834,8 +834,8 @@ mng_save_image (GFile         *file,
   else
     mng_ticks_per_second = 0;
 
-  rows = gimp_image_get_height (image);
-  cols = gimp_image_get_width  (image);
+  rows = ligma_image_get_height (image);
+  cols = ligma_image_get_width  (image);
 
   mng_simplicity_profile = (MNG_SIMPLICITY_VALID |
                             MNG_SIMPLICITY_SIMPLEFEATURES |
@@ -847,7 +847,7 @@ mng_save_image (GFile         *file,
 
   for (i = 0; i < num_layers; i++)
     {
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[i])))
+      if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (layers[i])))
         {
           /* internal transparency exists */
           mng_simplicity_profile |= MNG_SIMPLICITY_TRANSPARENCY;
@@ -872,7 +872,7 @@ mng_save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       goto err;
     }
 
@@ -908,7 +908,7 @@ mng_save_image (GFile         *file,
   if ((num_layers > 1) && (config_loop))
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])),
+        parse_ms_tag_from_layer_name (ligma_item_get_name (LIGMA_ITEM (layers[0])),
                                       config_default_delay);
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
@@ -922,7 +922,7 @@ mng_save_image (GFile         *file,
   else
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])),
+        parse_ms_tag_from_layer_name (ligma_item_get_name (LIGMA_ITEM (layers[0])),
                                       config_default_delay);
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
@@ -939,7 +939,7 @@ mng_save_image (GFile         *file,
 
   if (mng_putchunk_text (handle,
                          strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE,
-                         18, "Created using GIMP") != MNG_NOERROR)
+                         18, "Created using LIGMA") != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
       goto err3;
@@ -950,11 +950,11 @@ mng_save_image (GFile         *file,
   /* how do we get this to work? */
   if (config_bkgd)
     {
-      GimpRGB bgcolor;
+      LigmaRGB bgcolor;
       guchar red, green, blue;
 
-      gimp_context_get_background (&bgcolor);
-      gimp_rgb_get_uchar (&bgcolor, &red, &green, &blue);
+      ligma_context_get_background (&bgcolor);
+      ligma_rgb_get_uchar (&bgcolor, &red, &green, &blue);
 
       if (mng_putchunk_back (handle, red, green, blue,
                              MNG_BACKGROUNDCOLOR_MANDATORY,
@@ -965,7 +965,7 @@ mng_save_image (GFile         *file,
         }
 
       if (mng_putchunk_bkgd (handle, MNG_FALSE, 2, 0,
-                             gimp_rgb_luminance_uchar (&bgcolor),
+                             ligma_rgb_luminance_uchar (&bgcolor),
                              red, green, blue) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_bkgd() in mng_save_image()");
@@ -990,7 +990,7 @@ mng_save_image (GFile         *file,
   /* how do we get this to work? */
   if (config_phys)
     {
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
       if (mng_putchunk_phyg (handle, MNG_FALSE,
                              (mng_uint32) (xres * 39.37),
@@ -1025,12 +1025,12 @@ mng_save_image (GFile         *file,
         }
     }
 
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+  if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
     {
       guchar *palette;
       gint    numcolors;
 
-      palette = gimp_image_get_colormap (image, &numcolors);
+      palette = ligma_image_get_colormap (image, &numcolors);
 
       if ((numcolors != 0) &&
           (mng_putchunk_plte_wrapper (handle, numcolors,
@@ -1043,7 +1043,7 @@ mng_save_image (GFile         *file,
 
   for (i = (num_layers - 1); i >= 0; i--)
     {
-      GimpImageType   layer_drawable_type;
+      LigmaImageType   layer_drawable_type;
       GeglBuffer     *layer_buffer;
       gint            layer_offset_x, layer_offset_y;
       gint            layer_rows, layer_cols;
@@ -1072,16 +1072,16 @@ mng_save_image (GFile         *file,
       int             color_type;
       int             bit_depth;
 
-      layer_name          = gimp_item_get_name (GIMP_ITEM (layers[i]));
+      layer_name          = ligma_item_get_name (LIGMA_ITEM (layers[i]));
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name,
                                                                config_default_chunks);
-      layer_drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layers[i]));
+      layer_drawable_type = ligma_drawable_type (LIGMA_DRAWABLE (layers[i]));
 
-      layer_buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layers[i]));
+      layer_buffer        = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layers[i]));
       layer_cols          = gegl_buffer_get_width  (layer_buffer);
       layer_rows          = gegl_buffer_get_height (layer_buffer);
 
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (layers[i]),
+      ligma_drawable_get_offsets (LIGMA_DRAWABLE (layers[i]),
                              &layer_offset_x, &layer_offset_y);
       layer_has_unique_palette = TRUE;
 
@@ -1090,32 +1090,32 @@ mng_save_image (GFile         *file,
 
       switch (layer_drawable_type)
         {
-        case GIMP_RGB_IMAGE:
+        case LIGMA_RGB_IMAGE:
           layer_format        = babl_format ("R'G'B' u8");
           layer_mng_colortype = MNG_COLORTYPE_RGB;
           break;
-        case GIMP_RGBA_IMAGE:
+        case LIGMA_RGBA_IMAGE:
           layer_format        = babl_format ("R'G'B'A u8");
           layer_mng_colortype = MNG_COLORTYPE_RGBA;
           break;
-        case GIMP_GRAY_IMAGE:
+        case LIGMA_GRAY_IMAGE:
           layer_format        = babl_format ("Y' u8");
           layer_mng_colortype = MNG_COLORTYPE_GRAY;
           break;
-        case GIMP_GRAYA_IMAGE:
+        case LIGMA_GRAYA_IMAGE:
           layer_format        = babl_format ("Y'A u8");
           layer_mng_colortype = MNG_COLORTYPE_GRAYA;
           break;
-        case GIMP_INDEXED_IMAGE:
+        case LIGMA_INDEXED_IMAGE:
           layer_format        = gegl_buffer_get_format (layer_buffer);
           layer_mng_colortype = MNG_COLORTYPE_INDEXED;
           break;
-        case GIMP_INDEXEDA_IMAGE:
+        case LIGMA_INDEXEDA_IMAGE:
           layer_format        = gegl_buffer_get_format (layer_buffer);
           layer_mng_colortype = MNG_COLORTYPE_INDEXED | MNG_COLORTYPE_GRAYA;
           break;
         default:
-          g_warning ("Unsupported GimpImageType in mng_save_image()");
+          g_warning ("Unsupported LigmaImageType in mng_save_image()");
           goto err3;
         }
 
@@ -1209,9 +1209,9 @@ mng_save_image (GFile         *file,
             }
         }
 
-      if ((temp_file = gimp_temp_file ("mng")) == NULL)
+      if ((temp_file = ligma_temp_file ("mng")) == NULL)
         {
-          g_warning ("gimp_temp_file() failed in mng_save_image()");
+          g_warning ("ligma_temp_file() failed in mng_save_image()");
           goto err3;
         }
 
@@ -1219,7 +1219,7 @@ mng_save_image (GFile         *file,
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for writing: %s"),
-                       gimp_file_get_utf8_name (temp_file),
+                       ligma_file_get_utf8_name (temp_file),
                        g_strerror (errno));
           g_file_delete (temp_file, NULL, NULL);
           goto err3;
@@ -1261,33 +1261,33 @@ mng_save_image (GFile         *file,
 
       switch (layer_drawable_type)
         {
-        case GIMP_RGB_IMAGE:
+        case LIGMA_RGB_IMAGE:
           color_type = PNG_COLOR_TYPE_RGB;
           break;
 
-        case GIMP_RGBA_IMAGE:
+        case LIGMA_RGBA_IMAGE:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           break;
 
-        case GIMP_GRAY_IMAGE:
+        case LIGMA_GRAY_IMAGE:
           color_type = PNG_COLOR_TYPE_GRAY;
           break;
 
-        case GIMP_GRAYA_IMAGE:
+        case LIGMA_GRAYA_IMAGE:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           break;
 
-        case GIMP_INDEXED_IMAGE:
+        case LIGMA_INDEXED_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
 
           mngg.has_plte = TRUE;
           mngg.palette  = (png_colorp)
-            gimp_image_get_colormap (image, &mngg.num_palette);
+            ligma_image_get_colormap (image, &mngg.num_palette);
 
           bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;
 
-        case GIMP_INDEXEDA_IMAGE:
+        case LIGMA_INDEXEDA_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
 
           layer_has_unique_palette =
@@ -1337,7 +1337,7 @@ mng_save_image (GFile         *file,
           (bit_depth < 8))
         png_set_packing (pp);
 
-      tile_height = gimp_tile_height ();
+      tile_height = ligma_tile_height ();
       layer_pixel = g_new (guchar, tile_height * layer_cols * layer_bpp);
       layer_pixels = g_new (guchar *, tile_height);
 
@@ -1403,7 +1403,7 @@ mng_save_image (GFile         *file,
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (temp_file),
+                       ligma_file_get_utf8_name (temp_file),
                        g_strerror (errno));
           g_file_delete (temp_file, NULL, NULL);
           goto err3;
@@ -1568,8 +1568,8 @@ mng_save_image (GFile         *file,
 /* The interactive dialog. */
 
 static gboolean
-mng_save_dialog (GimpImage     *image,
-                 GimpProcedure *procedure,
+mng_save_dialog (LigmaImage     *image,
+                 LigmaProcedure *procedure,
                  GObject       *config)
 {
   GtkWidget    *dialog;
@@ -1587,8 +1587,8 @@ mng_save_dialog (GimpImage     *image,
   gint          num_layers;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as MNG"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -1597,7 +1597,7 @@ mng_save_dialog (GimpImage     *image,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("MNG Options"));
+  frame = ligma_frame_new (_("MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1605,27 +1605,27 @@ mng_save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gimp_prop_check_button_new (config, "interlaced",
+  toggle = ligma_prop_check_button_new (config, "interlaced",
                                        _("_Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  toggle = gimp_prop_check_button_new (config, "bkgd",
+  toggle = ligma_prop_check_button_new (config, "bkgd",
                                        _("Save _background color"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   gtk_widget_set_sensitive (toggle, FALSE);
 
-  toggle = gimp_prop_check_button_new (config, "gama",
+  toggle = ligma_prop_check_button_new (config, "gama",
                                        _("Save _gamma"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  toggle = gimp_prop_check_button_new (config, "phys",
+  toggle = ligma_prop_check_button_new (config, "phys",
                                        _("Save resolution"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   gtk_widget_set_sensitive (toggle, FALSE);
 
-  toggle = gimp_prop_check_button_new (config, "time",
+  toggle = ligma_prop_check_button_new (config, "time",
                                        _("Save creation _time"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
@@ -1635,69 +1635,69 @@ mng_save_dialog (GimpImage     *image,
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  g_free (gimp_image_get_layers (image, &num_layers));
+  g_free (ligma_image_get_layers (image, &num_layers));
 
   if (num_layers == 1)
-    store = gimp_int_store_new (_("PNG"), CHUNKS_PNG_D,
+    store = ligma_int_store_new (_("PNG"), CHUNKS_PNG_D,
                                 _("JNG"), CHUNKS_JNG_D,
                                 NULL);
   else
-    store = gimp_int_store_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
+    store = ligma_int_store_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
                                 _("JNG + delta PNG"), CHUNKS_JNG_D,
                                 _("All PNG"),         CHUNKS_PNG,
                                 _("All JNG"),         CHUNKS_JNG,
                                 NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "default-chunks",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "default-chunks",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
 
   gtk_widget_set_sensitive (combo, FALSE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Default chunks type:"), 0.0, 0.5,
                             combo, 1);
 
-  store = gimp_int_store_new (_("Combine"), DISPOSE_COMBINE,
+  store = ligma_int_store_new (_("Combine"), DISPOSE_COMBINE,
                               _("Replace"), DISPOSE_REPLACE,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "default-dispose",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "default-dispose",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Default _frame disposal:"), 0.0, 0.5,
                             combo, 1);
 
-  scale = gimp_prop_hscale_new (config, "png-compression",
+  scale = ligma_prop_hscale_new (config, "png-compression",
                                 1.0, 1.0, 0);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_PNG compression level:"), 0.0, 0.9,
                             scale, 1);
 
-  scale = gimp_prop_hscale_new (config, "jpeg-quality",
+  scale = ligma_prop_hscale_new (config, "jpeg-quality",
                                 0.01, 0.01, 2);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_widget_set_sensitive (scale, FALSE);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("JPEG compression quality:"), 0.0, 0.9,
                             scale, 1);
 
-  scale = gimp_prop_hscale_new (config, "jpeg-smoothing",
+  scale = ligma_prop_hscale_new (config, "jpeg-smoothing",
                                 0.01, 0.01, 2);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_widget_set_sensitive (scale, FALSE);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             _("JPEG smoothing factor:"), 0.0, 0.9,
                             scale, 1);
 
-  frame = gimp_frame_new (_("Animated MNG Options"));
+  frame = ligma_frame_new (_("Animated MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1705,7 +1705,7 @@ mng_save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gimp_prop_check_button_new (config, "loop",
+  toggle = ligma_prop_check_button_new (config, "loop",
                                        _("_Loop"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
@@ -1717,7 +1717,7 @@ mng_save_dialog (GimpImage     *image,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_prop_spin_button_new (config, "default-delay",
+  spinbutton = ligma_prop_spin_button_new (config, "default-delay",
                                           10, 100, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -1728,7 +1728,7 @@ mng_save_dialog (GimpImage     *image,
   if (num_layers <= 1)
     {
       gtk_widget_set_sensitive (frame, FALSE);
-      gimp_help_set_help_data (frame,
+      ligma_help_set_help_data (frame,
                                _("These options are only available when "
                                  "the exported image has more than one "
                                  "layer. The image you are exporting only has "
@@ -1738,7 +1738,7 @@ mng_save_dialog (GimpImage     *image,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

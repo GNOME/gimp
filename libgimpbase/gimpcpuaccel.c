@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -17,7 +17,7 @@
  */
 
 /*
- * x86 bits Copyright (C) Manish Singh <yosh@gimp.org>
+ * x86 bits Copyright (C) Manish Singh <yosh@ligma.org>
  */
 
 /*
@@ -35,41 +35,41 @@
 
 #include <glib.h>
 
-#include "gimpcpuaccel.h"
+#include "ligmacpuaccel.h"
 
 
 /**
- * SECTION: gimpcpuaccel
- * @title: gimpcpuaccel
+ * SECTION: ligmacpuaccel
+ * @title: ligmacpuaccel
  * @short_description: Functions to query and configure CPU acceleration.
  *
  * Functions to query and configure CPU acceleration.
  **/
 
 
-static GimpCpuAccelFlags  cpu_accel (void) G_GNUC_CONST;
+static LigmaCpuAccelFlags  cpu_accel (void) G_GNUC_CONST;
 
 
 static gboolean  use_cpu_accel = TRUE;
 
 
 /**
- * gimp_cpu_accel_get_support:
+ * ligma_cpu_accel_get_support:
  *
  * Query for CPU acceleration support.
  *
- * Returns: #GimpCpuAccelFlags as supported by the CPU.
+ * Returns: #LigmaCpuAccelFlags as supported by the CPU.
  *
  * Since: 2.4
  */
-GimpCpuAccelFlags
-gimp_cpu_accel_get_support (void)
+LigmaCpuAccelFlags
+ligma_cpu_accel_get_support (void)
 {
-  return use_cpu_accel ? cpu_accel () : GIMP_CPU_ACCEL_NONE;
+  return use_cpu_accel ? cpu_accel () : LIGMA_CPU_ACCEL_NONE;
 }
 
 /**
- * gimp_cpu_accel_set_use:
+ * ligma_cpu_accel_set_use:
  * @use:  whether to use CPU acceleration features or not
  *
  * This function is for internal use only.
@@ -77,7 +77,7 @@ gimp_cpu_accel_get_support (void)
  * Since: 2.4
  */
 void
-gimp_cpu_accel_set_use (gboolean use)
+ligma_cpu_accel_set_use (gboolean use)
 {
   use_cpu_accel = use ? TRUE : FALSE;
 }
@@ -243,29 +243,29 @@ arch_accel_intel (void)
     if ((edx & ARCH_X86_INTEL_FEATURE_MMX) == 0)
       return 0;
 
-    caps = GIMP_CPU_ACCEL_X86_MMX;
+    caps = LIGMA_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_INTEL_FEATURE_XMM)
-      caps |= GIMP_CPU_ACCEL_X86_SSE | GIMP_CPU_ACCEL_X86_MMXEXT;
+      caps |= LIGMA_CPU_ACCEL_X86_SSE | LIGMA_CPU_ACCEL_X86_MMXEXT;
 
     if (edx & ARCH_X86_INTEL_FEATURE_XMM2)
-      caps |= GIMP_CPU_ACCEL_X86_SSE2;
+      caps |= LIGMA_CPU_ACCEL_X86_SSE2;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_PNI)
-      caps |= GIMP_CPU_ACCEL_X86_SSE3;
+      caps |= LIGMA_CPU_ACCEL_X86_SSE3;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_SSSE3)
-      caps |= GIMP_CPU_ACCEL_X86_SSSE3;
+      caps |= LIGMA_CPU_ACCEL_X86_SSSE3;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_SSE4_1)
-      caps |= GIMP_CPU_ACCEL_X86_SSE4_1;
+      caps |= LIGMA_CPU_ACCEL_X86_SSE4_1;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_SSE4_2)
-      caps |= GIMP_CPU_ACCEL_X86_SSE4_2;
+      caps |= LIGMA_CPU_ACCEL_X86_SSE4_2;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_AVX)
-      caps |= GIMP_CPU_ACCEL_X86_AVX;
+      caps |= LIGMA_CPU_ACCEL_X86_AVX;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -293,10 +293,10 @@ arch_accel_amd (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_AMD_FEATURE_3DNOW)
-      caps |= GIMP_CPU_ACCEL_X86_3DNOW;
+      caps |= LIGMA_CPU_ACCEL_X86_3DNOW;
 
     if (edx & ARCH_X86_AMD_FEATURE_MMXEXT)
-      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
+      caps |= LIGMA_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -323,14 +323,14 @@ arch_accel_centaur (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_CENTAUR_FEATURE_MMX)
-      caps |= GIMP_CPU_ACCEL_X86_MMX;
+      caps |= LIGMA_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_CENTAUR_FEATURE_3DNOW)
-      caps |= GIMP_CPU_ACCEL_X86_3DNOW;
+      caps |= LIGMA_CPU_ACCEL_X86_3DNOW;
 
     if (edx & ARCH_X86_CENTAUR_FEATURE_MMXEXT)
-      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
+      caps |= LIGMA_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -357,11 +357,11 @@ arch_accel_cyrix (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_CYRIX_FEATURE_MMX)
-      caps |= GIMP_CPU_ACCEL_X86_MMX;
+      caps |= LIGMA_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_CYRIX_FEATURE_MMXEXT)
-      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
+      caps |= LIGMA_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -431,8 +431,8 @@ arch_accel (void)
     }
 
 #ifdef USE_SSE
-  if ((caps & GIMP_CPU_ACCEL_X86_SSE) && !arch_accel_sse_os_support ())
-    caps &= ~(GIMP_CPU_ACCEL_X86_SSE | GIMP_CPU_ACCEL_X86_SSE2);
+  if ((caps & LIGMA_CPU_ACCEL_X86_SSE) && !arch_accel_sse_os_support ())
+    caps &= ~(LIGMA_CPU_ACCEL_X86_SSE | LIGMA_CPU_ACCEL_X86_SSE2);
 #endif
 
   return caps;
@@ -460,7 +460,7 @@ arch_accel (void)
   err = sysctl (sels, 2, &has_vu, &length, NULL, 0);
 
   if (err == 0 && has_vu)
-    return GIMP_CPU_ACCEL_PPC_ALTIVEC;
+    return LIGMA_CPU_ACCEL_PPC_ALTIVEC;
 
   return 0;
 }
@@ -505,14 +505,14 @@ arch_accel (void)
 
   signal (SIGILL, SIG_DFL);
 
-  return GIMP_CPU_ACCEL_PPC_ALTIVEC;
+  return LIGMA_CPU_ACCEL_PPC_ALTIVEC;
 }
 #endif /* __GNUC__ */
 
 #endif /* ARCH_PPC && USE_ALTIVEC */
 
 
-static GimpCpuAccelFlags
+static LigmaCpuAccelFlags
 cpu_accel (void)
 {
 #ifdef HAVE_ACCEL
@@ -523,9 +523,9 @@ cpu_accel (void)
 
   accel = arch_accel ();
 
-  return (GimpCpuAccelFlags) accel;
+  return (LigmaCpuAccelFlags) accel;
 
 #else /* !HAVE_ACCEL */
-  return GIMP_CPU_ACCEL_NONE;
+  return LIGMA_CPU_ACCEL_NONE;
 #endif
 }

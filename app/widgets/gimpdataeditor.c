@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdataeditor.c
- * Copyright (C) 2002-2004 Michael Natterer <mitch@gimp.org>
+ * ligmadataeditor.c
+ * Copyright (C) 2002-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,24 +26,24 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdata.h"
-#include "core/gimpdatafactory.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadata.h"
+#include "core/ligmadatafactory.h"
 
-#include "gimpdataeditor.h"
-#include "gimpdocked.h"
-#include "gimpmenufactory.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpuimanager.h"
+#include "ligmadataeditor.h"
+#include "ligmadocked.h"
+#include "ligmamenufactory.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmauimanager.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_MINIMAL_HEIGHT 96
@@ -58,92 +58,92 @@ enum
 };
 
 
-static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *iface);
+static void       ligma_data_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void       gimp_data_editor_constructed       (GObject        *object);
-static void       gimp_data_editor_dispose           (GObject        *object);
-static void       gimp_data_editor_set_property      (GObject        *object,
+static void       ligma_data_editor_constructed       (GObject        *object);
+static void       ligma_data_editor_dispose           (GObject        *object);
+static void       ligma_data_editor_set_property      (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
                                                       GParamSpec     *pspec);
-static void       gimp_data_editor_get_property      (GObject        *object,
+static void       ligma_data_editor_get_property      (GObject        *object,
                                                       guint           property_id,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
 
-static void       gimp_data_editor_style_updated     (GtkWidget      *widget);
+static void       ligma_data_editor_style_updated     (GtkWidget      *widget);
 
-static void       gimp_data_editor_set_context       (GimpDocked     *docked,
-                                                      GimpContext    *context);
-static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
+static void       ligma_data_editor_set_context       (LigmaDocked     *docked,
+                                                      LigmaContext    *context);
+static void       ligma_data_editor_set_aux_info      (LigmaDocked     *docked,
                                                       GList          *aux_info);
-static GList    * gimp_data_editor_get_aux_info      (GimpDocked     *docked);
-static gchar    * gimp_data_editor_get_title         (GimpDocked     *docked);
+static GList    * ligma_data_editor_get_aux_info      (LigmaDocked     *docked);
+static gchar    * ligma_data_editor_get_title         (LigmaDocked     *docked);
 
-static void       gimp_data_editor_real_set_data     (GimpDataEditor *editor,
-                                                      GimpData       *data);
+static void       ligma_data_editor_real_set_data     (LigmaDataEditor *editor,
+                                                      LigmaData       *data);
 
-static void       gimp_data_editor_data_changed      (GimpContext    *context,
-                                                      GimpData       *data,
-                                                      GimpDataEditor *editor);
-static gboolean   gimp_data_editor_name_key_press    (GtkWidget      *widget,
+static void       ligma_data_editor_data_changed      (LigmaContext    *context,
+                                                      LigmaData       *data,
+                                                      LigmaDataEditor *editor);
+static gboolean   ligma_data_editor_name_key_press    (GtkWidget      *widget,
                                                       GdkEventKey    *kevent,
-                                                      GimpDataEditor *editor);
-static void       gimp_data_editor_name_activate     (GtkWidget      *widget,
-                                                      GimpDataEditor *editor);
-static gboolean   gimp_data_editor_name_focus_out    (GtkWidget      *widget,
+                                                      LigmaDataEditor *editor);
+static void       ligma_data_editor_name_activate     (GtkWidget      *widget,
+                                                      LigmaDataEditor *editor);
+static gboolean   ligma_data_editor_name_focus_out    (GtkWidget      *widget,
                                                       GdkEvent       *event,
-                                                      GimpDataEditor *editor);
+                                                      LigmaDataEditor *editor);
 
-static void       gimp_data_editor_data_name_changed (GimpObject     *object,
-                                                      GimpDataEditor *editor);
+static void       ligma_data_editor_data_name_changed (LigmaObject     *object,
+                                                      LigmaDataEditor *editor);
 
-static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
+static void       ligma_data_editor_save_dirty        (LigmaDataEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDataEditor, gimp_data_editor, GIMP_TYPE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_data_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDataEditor, ligma_data_editor, LIGMA_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_data_editor_docked_iface_init))
 
-#define parent_class gimp_data_editor_parent_class
+#define parent_class ligma_data_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_data_editor_class_init (GimpDataEditorClass *klass)
+ligma_data_editor_class_init (LigmaDataEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed   = gimp_data_editor_constructed;
-  object_class->set_property  = gimp_data_editor_set_property;
-  object_class->get_property  = gimp_data_editor_get_property;
-  object_class->dispose       = gimp_data_editor_dispose;
+  object_class->constructed   = ligma_data_editor_constructed;
+  object_class->set_property  = ligma_data_editor_set_property;
+  object_class->get_property  = ligma_data_editor_get_property;
+  object_class->dispose       = ligma_data_editor_dispose;
 
-  widget_class->style_updated = gimp_data_editor_style_updated;
+  widget_class->style_updated = ligma_data_editor_style_updated;
 
-  klass->set_data             = gimp_data_editor_real_set_data;
+  klass->set_data             = ligma_data_editor_real_set_data;
 
   g_object_class_install_property (object_class, PROP_DATA_FACTORY,
                                    g_param_spec_object ("data-factory",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DATA_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DATA_FACTORY,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_object ("data",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DATA,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_DATA,
+                                                        LIGMA_PARAM_READWRITE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("minimal-height",
@@ -151,25 +151,25 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
                                                              32,
                                                              G_MAXINT,
                                                              DEFAULT_MINIMAL_HEIGHT,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_data_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_data_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_context  = gimp_data_editor_set_context;
-  iface->set_aux_info = gimp_data_editor_set_aux_info;
-  iface->get_aux_info = gimp_data_editor_get_aux_info;
-  iface->get_title    = gimp_data_editor_get_title;
+  iface->set_context  = ligma_data_editor_set_context;
+  iface->set_aux_info = ligma_data_editor_set_aux_info;
+  iface->get_aux_info = ligma_data_editor_get_aux_info;
+  iface->get_title    = ligma_data_editor_get_title;
 }
 
 static void
-gimp_data_editor_init (GimpDataEditor *editor)
+ligma_data_editor_init (LigmaDataEditor *editor)
 {
   editor->data_factory  = NULL;
   editor->context       = NULL;
@@ -183,54 +183,54 @@ gimp_data_editor_init (GimpDataEditor *editor)
   gtk_editable_set_editable (GTK_EDITABLE (editor->name_entry), FALSE);
 
   g_signal_connect (editor->name_entry, "key-press-event",
-                    G_CALLBACK (gimp_data_editor_name_key_press),
+                    G_CALLBACK (ligma_data_editor_name_key_press),
                     editor);
   g_signal_connect (editor->name_entry, "activate",
-                    G_CALLBACK (gimp_data_editor_name_activate),
+                    G_CALLBACK (ligma_data_editor_name_activate),
                     editor);
   g_signal_connect (editor->name_entry, "focus-out-event",
-                    G_CALLBACK (gimp_data_editor_name_focus_out),
+                    G_CALLBACK (ligma_data_editor_name_focus_out),
                     editor);
 }
 
 static void
-gimp_data_editor_constructed (GObject *object)
+ligma_data_editor_constructed (GObject *object)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
-  gimp_assert (GIMP_IS_CONTEXT (editor->context));
+  ligma_assert (LIGMA_IS_DATA_FACTORY (editor->data_factory));
+  ligma_assert (LIGMA_IS_CONTEXT (editor->context));
 
-  gimp_data_editor_set_edit_active (editor, TRUE);
+  ligma_data_editor_set_edit_active (editor, TRUE);
 }
 
 static void
-gimp_data_editor_dispose (GObject *object)
+ligma_data_editor_dispose (GObject *object)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (object);
 
   if (editor->data)
     {
       /* Save dirty data before we clear out */
-      gimp_data_editor_save_dirty (editor);
-      gimp_data_editor_set_data (editor, NULL);
+      ligma_data_editor_save_dirty (editor);
+      ligma_data_editor_set_data (editor, NULL);
     }
 
   if (editor->context)
-    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+    ligma_docked_set_context (LIGMA_DOCKED (editor), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_data_editor_set_property (GObject      *object,
+ligma_data_editor_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (object);
 
   switch (property_id)
     {
@@ -238,11 +238,11 @@ gimp_data_editor_set_property (GObject      *object,
       editor->data_factory = g_value_get_object (value);
       break;
     case PROP_CONTEXT:
-      gimp_docked_set_context (GIMP_DOCKED (object),
+      ligma_docked_set_context (LIGMA_DOCKED (object),
                                g_value_get_object (value));
       break;
     case PROP_DATA:
-      gimp_data_editor_set_data (editor, g_value_get_object (value));
+      ligma_data_editor_set_data (editor, g_value_get_object (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -251,12 +251,12 @@ gimp_data_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_data_editor_get_property (GObject    *object,
+ligma_data_editor_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (object);
 
   switch (property_id)
     {
@@ -276,9 +276,9 @@ gimp_data_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_data_editor_style_updated (GtkWidget *widget)
+ligma_data_editor_style_updated (GtkWidget *widget)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (widget);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (widget);
   gint            minimal_height;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -292,10 +292,10 @@ gimp_data_editor_style_updated (GtkWidget *widget)
 }
 
 static void
-gimp_data_editor_set_context (GimpDocked  *docked,
-                              GimpContext *context)
+ligma_data_editor_set_context (LigmaDocked  *docked,
+                              LigmaContext *context)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (docked);
 
   if (context == editor->context)
     return;
@@ -306,7 +306,7 @@ gimp_data_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_data_editor_data_changed,
+                                            ligma_data_editor_data_changed,
                                             editor);
 
       g_object_unref (editor->context);
@@ -317,19 +317,19 @@ gimp_data_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     {
       GType     data_type;
-      GimpData *data;
+      LigmaData *data;
 
       g_object_ref (editor->context);
 
-      data_type = gimp_data_factory_get_data_type (editor->data_factory);
-      data = GIMP_DATA (gimp_context_get_by_type (editor->context, data_type));
+      data_type = ligma_data_factory_get_data_type (editor->data_factory);
+      data = LIGMA_DATA (ligma_context_get_by_type (editor->context, data_type));
 
       g_signal_connect (editor->context,
-                        gimp_context_type_to_signal_name (data_type),
-                        G_CALLBACK (gimp_data_editor_data_changed),
+                        ligma_context_type_to_signal_name (data_type),
+                        G_CALLBACK (ligma_data_editor_data_changed),
                         editor);
 
-      gimp_data_editor_data_changed (editor->context, data, editor);
+      ligma_data_editor_data_changed (editor->context, data, editor);
     }
 }
 
@@ -337,17 +337,17 @@ gimp_data_editor_set_context (GimpDocked  *docked,
 #define AUX_INFO_CURRENT_DATA "current-data"
 
 static void
-gimp_data_editor_set_aux_info (GimpDocked *docked,
+ligma_data_editor_set_aux_info (LigmaDocked *docked,
                                GList      *aux_info)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
+  LigmaDataEditor *editor = LIGMA_DATA_EDITOR (docked);
   GList          *list;
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
 
       if (! strcmp (aux->name, AUX_INFO_EDIT_ACTIVE))
         {
@@ -355,35 +355,35 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
 
           edit_active = ! g_ascii_strcasecmp (aux->value, "true");
 
-          gimp_data_editor_set_edit_active (editor, edit_active);
+          ligma_data_editor_set_edit_active (editor, edit_active);
         }
       else if (! strcmp (aux->name, AUX_INFO_CURRENT_DATA))
         {
           if (! editor->edit_active)
             {
-              GimpData *data;
+              LigmaData *data;
 
-              data = (GimpData *)
-                gimp_container_get_child_by_name (gimp_data_factory_get_container (editor->data_factory),
+              data = (LigmaData *)
+                ligma_container_get_child_by_name (ligma_data_factory_get_container (editor->data_factory),
                                                   aux->value);
 
               if (data)
-                gimp_data_editor_set_data (editor, data);
+                ligma_data_editor_set_data (editor, data);
             }
         }
     }
 }
 
 static GList *
-gimp_data_editor_get_aux_info (GimpDocked *docked)
+ligma_data_editor_get_aux_info (LigmaDocked *docked)
 {
-  GimpDataEditor     *editor = GIMP_DATA_EDITOR (docked);
+  LigmaDataEditor     *editor = LIGMA_DATA_EDITOR (docked);
   GList              *aux_info;
-  GimpSessionInfoAux *aux;
+  LigmaSessionInfoAux *aux;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
-  aux = gimp_session_info_aux_new (AUX_INFO_EDIT_ACTIVE,
+  aux = ligma_session_info_aux_new (AUX_INFO_EDIT_ACTIVE,
                                    editor->edit_active ? "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
@@ -391,9 +391,9 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
     {
       const gchar *value;
 
-      value = gimp_object_get_name (editor->data);
+      value = ligma_object_get_name (editor->data);
 
-      aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_DATA, value);
+      aux = ligma_session_info_aux_new (AUX_INFO_CURRENT_DATA, value);
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -401,10 +401,10 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
 }
 
 static gchar *
-gimp_data_editor_get_title (GimpDocked *docked)
+ligma_data_editor_get_title (LigmaDocked *docked)
 {
-  GimpDataEditor      *editor       = GIMP_DATA_EDITOR (docked);
-  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_GET_CLASS (editor);
+  LigmaDataEditor      *editor       = LIGMA_DATA_EDITOR (docked);
+  LigmaDataEditorClass *editor_class = LIGMA_DATA_EDITOR_GET_CLASS (editor);
 
   if (editor->data_editable)
     return g_strdup (editor_class->title);
@@ -413,17 +413,17 @@ gimp_data_editor_get_title (GimpDocked *docked)
 }
 
 static void
-gimp_data_editor_real_set_data (GimpDataEditor *editor,
-                                GimpData       *data)
+ligma_data_editor_real_set_data (LigmaDataEditor *editor,
+                                LigmaData       *data)
 {
   gboolean editable;
 
   if (editor->data)
     {
-      gimp_data_editor_save_dirty (editor);
+      ligma_data_editor_save_dirty (editor);
 
       g_signal_handlers_disconnect_by_func (editor->data,
-                                            gimp_data_editor_data_name_changed,
+                                            ligma_data_editor_data_name_changed,
                                             editor);
 
       g_object_unref (editor->data);
@@ -436,11 +436,11 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
       g_object_ref (editor->data);
 
       g_signal_connect (editor->data, "name-changed",
-                        G_CALLBACK (gimp_data_editor_data_name_changed),
+                        G_CALLBACK (ligma_data_editor_data_name_changed),
                         editor);
 
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                          gimp_object_get_name (editor->data));
+                          ligma_object_get_name (editor->data));
     }
   else
     {
@@ -450,53 +450,53 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
   gtk_editable_set_editable (
     GTK_EDITABLE (editor->name_entry),
     editor->data &&
-    gimp_viewable_is_name_editable (GIMP_VIEWABLE (editor->data)));
+    ligma_viewable_is_name_editable (LIGMA_VIEWABLE (editor->data)));
 
-  editable = (editor->data && gimp_data_is_writable (editor->data));
+  editable = (editor->data && ligma_data_is_writable (editor->data));
 
   if (editor->data_editable != editable)
     {
       editor->data_editable = editable;
 
-      gimp_docked_title_changed (GIMP_DOCKED (editor));
+      ligma_docked_title_changed (LIGMA_DOCKED (editor));
     }
 }
 
 void
-gimp_data_editor_set_data (GimpDataEditor *editor,
-                           GimpData       *data)
+ligma_data_editor_set_data (LigmaDataEditor *editor,
+                           LigmaData       *data)
 {
-  g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
-  g_return_if_fail (data == NULL || GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA_EDITOR (editor));
+  g_return_if_fail (data == NULL || LIGMA_IS_DATA (data));
   g_return_if_fail (data == NULL ||
                     g_type_is_a (G_TYPE_FROM_INSTANCE (data),
-                                 gimp_data_factory_get_data_type (editor->data_factory)));
+                                 ligma_data_factory_get_data_type (editor->data_factory)));
 
   if (editor->data != data)
     {
-      GIMP_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);
+      LIGMA_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);
 
       g_object_notify (G_OBJECT (editor), "data");
 
-      if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-        gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                                gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+      if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+        ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                                ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
     }
 }
 
-GimpData *
-gimp_data_editor_get_data (GimpDataEditor *editor)
+LigmaData *
+ligma_data_editor_get_data (LigmaDataEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA_EDITOR (editor), NULL);
 
   return editor->data;
 }
 
 void
-gimp_data_editor_set_edit_active (GimpDataEditor *editor,
+ligma_data_editor_set_edit_active (LigmaDataEditor *editor,
                                   gboolean        edit_active)
 {
-  g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_DATA_EDITOR (editor));
 
   if (editor->edit_active != edit_active)
     {
@@ -505,21 +505,21 @@ gimp_data_editor_set_edit_active (GimpDataEditor *editor,
       if (editor->edit_active && editor->context)
         {
           GType     data_type;
-          GimpData *data;
+          LigmaData *data;
 
-          data_type = gimp_data_factory_get_data_type (editor->data_factory);
-          data = GIMP_DATA (gimp_context_get_by_type (editor->context,
+          data_type = ligma_data_factory_get_data_type (editor->data_factory);
+          data = LIGMA_DATA (ligma_context_get_by_type (editor->context,
                                                       data_type));
 
-          gimp_data_editor_set_data (editor, data);
+          ligma_data_editor_set_data (editor, data);
         }
     }
 }
 
 gboolean
-gimp_data_editor_get_edit_active (GimpDataEditor *editor)
+ligma_data_editor_get_edit_active (LigmaDataEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA_EDITOR (editor), FALSE);
 
   return editor->edit_active;
 }
@@ -528,23 +528,23 @@ gimp_data_editor_get_edit_active (GimpDataEditor *editor)
 /*  private functions  */
 
 static void
-gimp_data_editor_data_changed (GimpContext    *context,
-                               GimpData       *data,
-                               GimpDataEditor *editor)
+ligma_data_editor_data_changed (LigmaContext    *context,
+                               LigmaData       *data,
+                               LigmaDataEditor *editor)
 {
   if (editor->edit_active)
-    gimp_data_editor_set_data (editor, data);
+    ligma_data_editor_set_data (editor, data);
 }
 
 static gboolean
-gimp_data_editor_name_key_press (GtkWidget      *widget,
+ligma_data_editor_name_key_press (GtkWidget      *widget,
                                  GdkEventKey    *kevent,
-                                 GimpDataEditor *editor)
+                                 LigmaDataEditor *editor)
 {
   if (kevent->keyval == GDK_KEY_Escape)
     {
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                          gimp_object_get_name (editor->data));
+                          ligma_object_get_name (editor->data));
       return TRUE;
     }
 
@@ -552,8 +552,8 @@ gimp_data_editor_name_key_press (GtkWidget      *widget,
 }
 
 static void
-gimp_data_editor_name_activate (GtkWidget      *widget,
-                                GimpDataEditor *editor)
+ligma_data_editor_name_activate (GtkWidget      *widget,
+                                LigmaDataEditor *editor)
 {
   if (editor->data)
     {
@@ -563,54 +563,54 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
       new_name = g_strstrip (new_name);
 
       if (strlen (new_name) &&
-          g_strcmp0 (new_name, gimp_object_get_name (editor->data)))
+          g_strcmp0 (new_name, ligma_object_get_name (editor->data)))
         {
-          gimp_object_take_name (GIMP_OBJECT (editor->data), new_name);
+          ligma_object_take_name (LIGMA_OBJECT (editor->data), new_name);
         }
       else
         {
           gtk_entry_set_text (GTK_ENTRY (widget),
-                              gimp_object_get_name (editor->data));
+                              ligma_object_get_name (editor->data));
           g_free (new_name);
         }
     }
 }
 
 static gboolean
-gimp_data_editor_name_focus_out (GtkWidget      *widget,
+ligma_data_editor_name_focus_out (GtkWidget      *widget,
                                  GdkEvent       *event,
-                                 GimpDataEditor *editor)
+                                 LigmaDataEditor *editor)
 {
-  gimp_data_editor_name_activate (widget, editor);
+  ligma_data_editor_name_activate (widget, editor);
 
   return FALSE;
 }
 
 static void
-gimp_data_editor_data_name_changed (GimpObject     *object,
-                                    GimpDataEditor *editor)
+ligma_data_editor_data_name_changed (LigmaObject     *object,
+                                    LigmaDataEditor *editor)
 {
   gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                      gimp_object_get_name (object));
+                      ligma_object_get_name (object));
 }
 
 static void
-gimp_data_editor_save_dirty (GimpDataEditor *editor)
+ligma_data_editor_save_dirty (LigmaDataEditor *editor)
 {
-  GimpData *data = editor->data;
+  LigmaData *data = editor->data;
 
   if (data                      &&
-      gimp_data_is_dirty (data) &&
-      gimp_data_is_writable (data))
+      ligma_data_is_dirty (data) &&
+      ligma_data_is_writable (data))
     {
       GError *error = NULL;
 
-      if (! gimp_data_factory_data_save_single (editor->data_factory, data,
+      if (! ligma_data_factory_data_save_single (editor->data_factory, data,
                                                 &error))
         {
-          gimp_message_literal (gimp_data_factory_get_gimp (editor->data_factory),
+          ligma_message_literal (ligma_data_factory_get_ligma (editor->data_factory),
                                 G_OBJECT (editor),
-                                GIMP_MESSAGE_ERROR,
+                                LIGMA_MESSAGE_ERROR,
                                 error->message);
           g_clear_error (&error);
         }

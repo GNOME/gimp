@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "color.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define NUMCOLORRADIO 2
@@ -39,7 +39,7 @@ color_restore (void)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (colorradio[pcvals.color_type]), TRUE);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (colornoiseadjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (colornoiseadjust),
                              pcvals.color_noise);
 }
 
@@ -62,8 +62,8 @@ create_colorpage (GtkNotebook *notebook)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Color"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Color"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &pcvals.color_type, NULL, 0,
 
                                     _("A_verage under brush"),
@@ -73,23 +73,23 @@ create_colorpage (GtkNotebook *notebook)
 
                                     NULL);
 
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (colorradio[COLOR_TYPE_AVERAGE],
      _("Color is computed from the average of all pixels under the brush"),
      NULL);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (colorradio[COLOR_TYPE_CENTER],
      _("Samples the color from the pixel in the center of the brush"), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   colornoiseadjust =
-    gimp_scale_entry_new (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
-  gimp_help_set_help_data (colornoiseadjust,
+    ligma_scale_entry_new (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
+  ligma_help_set_help_data (colornoiseadjust,
                            _("Adds random noise to the color"),
                            NULL);
   g_signal_connect (colornoiseadjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.color_noise);
   gtk_box_pack_start (GTK_BOX (vbox), colornoiseadjust, FALSE, FALSE, 6);
   gtk_widget_show (colornoiseadjust);

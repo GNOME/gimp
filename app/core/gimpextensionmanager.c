@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimpextensionmanager.c
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextensionmanager.c
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,29 +25,29 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimpextension.h"
-#include "gimpextension-error.h"
-#include "gimpobject.h"
-#include "gimpmarshal.h"
-#include "gimp-utils.h"
+#include "ligma.h"
+#include "ligmaextension.h"
+#include "ligmaextension-error.h"
+#include "ligmaobject.h"
+#include "ligmamarshal.h"
+#include "ligma-utils.h"
 
-#include "gimpextensionmanager.h"
+#include "ligmaextensionmanager.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_BRUSH_PATHS,
   PROP_DYNAMICS_PATHS,
   PROP_MYPAINT_BRUSH_PATHS,
@@ -67,9 +67,9 @@ enum
   LAST_SIGNAL
 };
 
-struct _GimpExtensionManagerPrivate
+struct _LigmaExtensionManagerPrivate
 {
-  Gimp       *gimp;
+  Ligma       *ligma;
 
   /* Installed system (read-only) extensions. */
   GList      *sys_extensions;
@@ -94,146 +94,146 @@ struct _GimpExtensionManagerPrivate
   GList      *plug_in_paths;
 };
 
-static void     gimp_extension_manager_config_iface_init   (GimpConfigInterface  *iface);
-static gboolean gimp_extension_manager_serialize           (GimpConfig           *config,
-                                                            GimpConfigWriter     *writer,
+static void     ligma_extension_manager_config_iface_init   (LigmaConfigInterface  *iface);
+static gboolean ligma_extension_manager_serialize           (LigmaConfig           *config,
+                                                            LigmaConfigWriter     *writer,
                                                             gpointer              data);
-static gboolean gimp_extension_manager_deserialize         (GimpConfig           *config,
+static gboolean ligma_extension_manager_deserialize         (LigmaConfig           *config,
                                                             GScanner             *scanner,
                                                             gint                  nest_level,
                                                             gpointer              data);
 
-static void     gimp_extension_manager_finalize            (GObject              *object);
-static void     gimp_extension_manager_set_property        (GObject              *object,
+static void     ligma_extension_manager_finalize            (GObject              *object);
+static void     ligma_extension_manager_set_property        (GObject              *object,
                                                             guint                 property_id,
                                                             const GValue         *value,
                                                             GParamSpec           *pspec);
-static void     gimp_extension_manager_get_property        (GObject              *object,
+static void     ligma_extension_manager_get_property        (GObject              *object,
                                                             guint                 property_id,
                                                             GValue               *value,
                                                             GParamSpec           *pspec);
 
-static void     gimp_extension_manager_serialize_extension (GimpExtensionManager *manager,
-                                                            GimpExtension        *extension,
-                                                            GimpConfigWriter     *writer);
+static void     ligma_extension_manager_serialize_extension (LigmaExtensionManager *manager,
+                                                            LigmaExtension        *extension,
+                                                            LigmaConfigWriter     *writer);
 
-static void     gimp_extension_manager_refresh             (GimpExtensionManager *manager);
-static void     gimp_extension_manager_search_directory    (GimpExtensionManager *manager,
+static void     ligma_extension_manager_refresh             (LigmaExtensionManager *manager);
+static void     ligma_extension_manager_search_directory    (LigmaExtensionManager *manager,
                                                             GFile                *directory,
                                                             gboolean              system_dir);
 
-static void     gimp_extension_manager_extension_running   (GimpExtension        *extension,
+static void     ligma_extension_manager_extension_running   (LigmaExtension        *extension,
                                                             GParamSpec           *pspec,
-                                                            GimpExtensionManager *manager);
+                                                            LigmaExtensionManager *manager);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager,
-                         GIMP_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpExtensionManager)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_extension_manager_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaExtensionManager, ligma_extension_manager,
+                         LIGMA_TYPE_OBJECT,
+                         G_ADD_PRIVATE (LigmaExtensionManager)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_extension_manager_config_iface_init))
 
-#define parent_class gimp_extension_manager_parent_class
+#define parent_class ligma_extension_manager_parent_class
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
 static void
-gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
+ligma_extension_manager_class_init (LigmaExtensionManagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_extension_manager_finalize;
-  object_class->set_property = gimp_extension_manager_set_property;
-  object_class->get_property = gimp_extension_manager_get_property;
+  object_class->finalize     = ligma_extension_manager_finalize;
+  object_class->set_property = ligma_extension_manager_set_property;
+  object_class->get_property = ligma_extension_manager_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_BRUSH_PATHS,
                                    g_param_spec_pointer ("brush-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_DYNAMICS_PATHS,
                                    g_param_spec_pointer ("dynamics-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MYPAINT_BRUSH_PATHS,
                                    g_param_spec_pointer ("mypaint-brush-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_PATTERN_PATHS,
                                    g_param_spec_pointer ("pattern-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_GRADIENT_PATHS,
                                    g_param_spec_pointer ("gradient-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_PALETTE_PATHS,
                                    g_param_spec_pointer ("palette-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_TOOL_PRESET_PATHS,
                                    g_param_spec_pointer ("tool-preset-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SPLASH_PATHS,
                                    g_param_spec_pointer ("splash-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_THEME_PATHS,
                                    g_param_spec_pointer ("theme-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_PLUG_IN_PATHS,
                                    g_param_spec_pointer ("plug-in-paths",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   signals[EXTENSION_INSTALLED] =
     g_signal_new ("extension-installed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpExtensionManagerClass, extension_installed),
+                  G_STRUCT_OFFSET (LigmaExtensionManagerClass, extension_installed),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_BOOLEAN,
+                  ligma_marshal_VOID__OBJECT_BOOLEAN,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_EXTENSION,
+                  LIGMA_TYPE_EXTENSION,
                   G_TYPE_BOOLEAN);
   signals[EXTENSION_REMOVED] =
     g_signal_new ("extension-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpExtensionManagerClass, extension_removed),
+                  G_STRUCT_OFFSET (LigmaExtensionManagerClass, extension_removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 }
 
 static void
-gimp_extension_manager_init (GimpExtensionManager *manager)
+ligma_extension_manager_init (LigmaExtensionManager *manager)
 {
-  manager->p = gimp_extension_manager_get_instance_private (manager);
+  manager->p = ligma_extension_manager_get_instance_private (manager);
   manager->p->extensions     = NULL;
   manager->p->sys_extensions = NULL;
 }
 
 static void
-gimp_extension_manager_config_iface_init (GimpConfigInterface *iface)
+ligma_extension_manager_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_extension_manager_serialize;
-  iface->deserialize = gimp_extension_manager_deserialize;
+  iface->serialize   = ligma_extension_manager_serialize;
+  iface->deserialize = ligma_extension_manager_deserialize;
 }
 
 static gboolean
-gimp_extension_manager_serialize (GimpConfig       *config,
-                                  GimpConfigWriter *writer,
+ligma_extension_manager_serialize (LigmaConfig       *config,
+                                  LigmaConfigWriter *writer,
                                   gpointer          data G_GNUC_UNUSED)
 {
-  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (config);
+  LigmaExtensionManager *manager = LIGMA_EXTENSION_MANAGER (config);
   GList                *iter;
 
   /* TODO: another information we will want to add will be the last
@@ -241,25 +241,25 @@ gimp_extension_manager_serialize (GimpConfig       *config,
    * updates while not doing it too often.
    */
   for (iter = manager->p->extensions; iter; iter = iter->next)
-    gimp_extension_manager_serialize_extension (manager, iter->data, writer);
+    ligma_extension_manager_serialize_extension (manager, iter->data, writer);
   for (iter = manager->p->sys_extensions; iter; iter = iter->next)
     {
       if (g_list_find_custom (manager->p->extensions, iter->data,
-                              (GCompareFunc) gimp_extension_cmp))
+                              (GCompareFunc) ligma_extension_cmp))
         continue;
-      gimp_extension_manager_serialize_extension (manager, iter->data, writer);
+      ligma_extension_manager_serialize_extension (manager, iter->data, writer);
     }
 
   return TRUE;
 }
 
 static gboolean
-gimp_extension_manager_deserialize (GimpConfig *config,
+ligma_extension_manager_deserialize (LigmaConfig *config,
                                     GScanner   *scanner,
                                     gint        nest_level,
                                     gpointer    data)
 {
-  GimpExtensionManager  *manager  = GIMP_EXTENSION_MANAGER (config);
+  LigmaExtensionManager  *manager  = LIGMA_EXTENSION_MANAGER (config);
   GList                **processed = (GList**) data;
   GTokenType             token;
 
@@ -291,19 +291,19 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                 return FALSE;
               }
 
-            if (! g_type_is_a (type, GIMP_TYPE_EXTENSION))
+            if (! g_type_is_a (type, LIGMA_TYPE_EXTENSION))
               {
                 g_scanner_error (scanner,
                                  "'%s' is not a subclass of '%s'",
                                  scanner->value.v_identifier,
-                                 g_type_name (GIMP_TYPE_EXTENSION));
+                                 g_type_name (LIGMA_TYPE_EXTENSION));
                 return FALSE;
               }
 
-            if (! gimp_scanner_parse_string (scanner, &name))
+            if (! ligma_scanner_parse_string (scanner, &name))
               {
                 g_scanner_error (scanner,
-                                 "Expected extension id not found after GimpExtension.");
+                                 "Expected extension id not found after LigmaExtension.");
                 return FALSE;
               }
 
@@ -316,45 +316,45 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                 return FALSE;
               }
 
-            if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
+            if (! ligma_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
               {
                 g_scanner_error (scanner,
                                  "Left paren expected after extension ID.");
                 g_free (name);
                 return FALSE;
               }
-            if (! gimp_scanner_parse_identifier (scanner, "active"))
+            if (! ligma_scanner_parse_identifier (scanner, "active"))
               {
                 g_scanner_error (scanner,
                                  "Expected identifier \"active\" after extension ID.");
                 g_free (name);
                 return FALSE;
               }
-            if (gimp_scanner_parse_boolean (scanner, &is_active))
+            if (ligma_scanner_parse_boolean (scanner, &is_active))
               {
                 if (is_active)
                   {
                     GList *list;
 
                     list = g_list_find_custom (manager->p->extensions, name,
-                                               (GCompareFunc) gimp_extension_id_cmp);
+                                               (GCompareFunc) ligma_extension_id_cmp);
                     if (! list)
                       list = g_list_find_custom (manager->p->sys_extensions, name,
-                                                 (GCompareFunc) gimp_extension_id_cmp);
+                                                 (GCompareFunc) ligma_extension_id_cmp);
                     if (list)
                       {
                         GError *error = NULL;
 
-                        if (gimp_extension_run (list->data, &error))
+                        if (ligma_extension_run (list->data, &error))
                           {
                             g_hash_table_insert (manager->p->running_extensions,
-                                                 (gpointer) gimp_object_get_name (list->data),
+                                                 (gpointer) ligma_object_get_name (list->data),
                                                  list->data);
                           }
                         else
                           {
                             g_printerr ("Extension '%s' failed to run: %s\n",
-                                        gimp_object_get_name (list->data),
+                                        ligma_object_get_name (list->data),
                                         error->message);
                             g_error_free (error);
                           }
@@ -374,7 +374,7 @@ gimp_extension_manager_deserialize (GimpConfig *config,
                 return FALSE;
               }
 
-            if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+            if (! ligma_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
               {
                 g_scanner_error (scanner,
                                  "Right paren expected after \"active\" identifier.");
@@ -393,15 +393,15 @@ gimp_extension_manager_deserialize (GimpConfig *config,
         }
     }
 
-  return gimp_config_deserialize_return (scanner, token, nest_level);
+  return ligma_config_deserialize_return (scanner, token, nest_level);
 }
 
 static void
-gimp_extension_manager_finalize (GObject *object)
+ligma_extension_manager_finalize (GObject *object)
 {
   GList *iter;
 
-  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (object);
+  LigmaExtensionManager *manager = LIGMA_EXTENSION_MANAGER (object);
 
   g_list_free_full (manager->p->sys_extensions, g_object_unref);
   g_list_free_full (manager->p->extensions, g_object_unref);
@@ -413,8 +413,8 @@ gimp_extension_manager_finalize (GObject *object)
       GError *error = NULL;
       GFile  *file;
 
-      file = g_file_new_for_path (gimp_extension_get_path (iter->data));
-      if (! gimp_file_delete_recursive (file, &error))
+      file = g_file_new_for_path (ligma_extension_get_path (iter->data));
+      if (! ligma_file_delete_recursive (file, &error))
         g_warning ("%s: %s\n", G_STRFUNC, error->message);
       g_object_unref (file);
     }
@@ -424,17 +424,17 @@ gimp_extension_manager_finalize (GObject *object)
 }
 
 static void
-gimp_extension_manager_set_property (GObject      *object,
+ligma_extension_manager_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (object);
+  LigmaExtensionManager *manager = LIGMA_EXTENSION_MANAGER (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      manager->p->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      manager->p->ligma = g_value_get_object (value);
       break;
     case PROP_BRUSH_PATHS:
       manager->p->brush_paths = g_value_get_pointer (value);
@@ -474,17 +474,17 @@ gimp_extension_manager_set_property (GObject      *object,
 }
 
 static void
-gimp_extension_manager_get_property (GObject      *object,
+ligma_extension_manager_get_property (GObject      *object,
                                      guint         property_id,
                                      GValue       *value,
                                      GParamSpec   *pspec)
 {
-  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (object);
+  LigmaExtensionManager *manager = LIGMA_EXTENSION_MANAGER (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, manager->p->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, manager->p->ligma);
       break;
     case PROP_BRUSH_PATHS:
       g_value_set_pointer (value, manager->p->brush_paths);
@@ -525,20 +525,20 @@ gimp_extension_manager_get_property (GObject      *object,
 
 /* Public functions. */
 
-GimpExtensionManager *
-gimp_extension_manager_new (Gimp *gimp)
+LigmaExtensionManager *
+ligma_extension_manager_new (Ligma *ligma)
 {
-  GimpExtensionManager *manager;
+  LigmaExtensionManager *manager;
 
-  manager = g_object_new (GIMP_TYPE_EXTENSION_MANAGER,
-                          "gimp", gimp,
+  manager = g_object_new (LIGMA_TYPE_EXTENSION_MANAGER,
+                          "ligma", ligma,
                           NULL);
 
   return manager;
 }
 
 void
-gimp_extension_manager_initialize (GimpExtensionManager *manager)
+ligma_extension_manager_initialize (LigmaExtensionManager *manager)
 {
   GFile  *file;
   GError *error = NULL;
@@ -547,22 +547,22 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
   GList  *list;
   GList  *processed_ids;
 
-  g_return_if_fail (GIMP_IS_EXTENSION_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager));
 
   /* List user-installed extensions. */
-  path_str = gimp_config_build_writable_path ("extensions");
-  path = gimp_config_path_expand_to_files (path_str, NULL);
+  path_str = ligma_config_build_writable_path ("extensions");
+  path = ligma_config_path_expand_to_files (path_str, NULL);
   g_free (path_str);
   for (list = path; list; list = g_list_next (list))
-    gimp_extension_manager_search_directory (manager, list->data, FALSE);
+    ligma_extension_manager_search_directory (manager, list->data, FALSE);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /* List system extensions. */
-  path_str = gimp_config_build_system_path ("extensions");
-  path = gimp_config_path_expand_to_files (path_str, NULL);
+  path_str = ligma_config_build_system_path ("extensions");
+  path = ligma_config_path_expand_to_files (path_str, NULL);
   g_free (path_str);
   for (list = path; list; list = g_list_next (list))
-    gimp_extension_manager_search_directory (manager, list->data, TRUE);
+    ligma_extension_manager_search_directory (manager, list->data, TRUE);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /* Actually load the extensions. */
@@ -570,20 +570,20 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
     g_hash_table_unref (manager->p->running_extensions);
   manager->p->running_extensions = g_hash_table_new (g_str_hash, g_str_equal);
 
-  file = gimp_directory_file ("extensionrc", NULL);
+  file = ligma_directory_file ("extensionrc", NULL);
 
   processed_ids = NULL;
   if (g_file_query_exists (file, NULL))
     {
-      if (manager->p->gimp->be_verbose)
-        g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+      if (manager->p->ligma->be_verbose)
+        g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-      gimp_config_deserialize_file (GIMP_CONFIG (manager),
+      ligma_config_deserialize_file (LIGMA_CONFIG (manager),
                                     file, &processed_ids, &error);
       if (error)
         {
           g_printerr ("Failed to parse '%s': %s\n",
-                      gimp_file_get_utf8_name (file),
+                      ligma_file_get_utf8_name (file),
                       error->message);
           g_error_free (error);
         }
@@ -599,71 +599,71 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
        * set in extensionrc.
        */
       if (! g_list_find_custom (processed_ids,
-                                gimp_object_get_name (list->data),
+                                ligma_object_get_name (list->data),
                                 (GCompareFunc) g_strcmp0))
         processed_ids = g_list_prepend (processed_ids,
-                                        g_strdup (gimp_object_get_name (list->data)));
+                                        g_strdup (ligma_object_get_name (list->data)));
       g_signal_connect (list->data, "notify::running",
-                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        G_CALLBACK (ligma_extension_manager_extension_running),
                         manager);
     }
   for (list = manager->p->sys_extensions; list; list = g_list_next (list))
     {
       /* Unlike user-installed extensions, system extensions are loaded
        * by default if they were not set in the extensionrc (so that new
-       * extensions installed with GIMP updates get loaded) and if they
+       * extensions installed with LIGMA updates get loaded) and if they
        * were not overridden by a user-installed extension (same ID).
        */
       if (! g_list_find_custom (processed_ids,
-                                gimp_object_get_name (list->data),
+                                ligma_object_get_name (list->data),
                                 (GCompareFunc) g_strcmp0))
 
         {
           error = NULL;
-          if (gimp_extension_run (list->data, &error))
+          if (ligma_extension_run (list->data, &error))
             {
               g_hash_table_insert (manager->p->running_extensions,
-                                   (gpointer) gimp_object_get_name (list->data),
+                                   (gpointer) ligma_object_get_name (list->data),
                                    list->data);
             }
           else
             {
               g_printerr ("Extension '%s' failed to run: %s\n",
-                          gimp_object_get_name (list->data),
+                          ligma_object_get_name (list->data),
                           error->message);
               g_error_free (error);
             }
         }
       g_signal_connect (list->data, "notify::running",
-                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        G_CALLBACK (ligma_extension_manager_extension_running),
                         manager);
     }
 
-  gimp_extension_manager_refresh (manager);
+  ligma_extension_manager_refresh (manager);
   g_list_free_full (processed_ids, g_free);
 }
 
 void
-gimp_extension_manager_exit (GimpExtensionManager *manager)
+ligma_extension_manager_exit (LigmaExtensionManager *manager)
 {
   GFile  *file;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_EXTENSION_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager));
 
-  file = gimp_directory_file ("extensionrc", NULL);
+  file = ligma_directory_file ("extensionrc", NULL);
 
-  if (manager->p->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (manager->p->ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager),
+  if (! ligma_config_serialize_to_file (LIGMA_CONFIG (manager),
                                        file,
-                                       "GIMP extensionrc",
+                                       "LIGMA extensionrc",
                                        "end of extensionrc",
                                        NULL,
                                        &error))
     {
-      gimp_message_literal (manager->p->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (manager->p->ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
@@ -671,52 +671,52 @@ gimp_extension_manager_exit (GimpExtensionManager *manager)
 }
 
 const GList *
-gimp_extension_manager_get_system_extensions (GimpExtensionManager *manager)
+ligma_extension_manager_get_system_extensions (LigmaExtensionManager *manager)
 {
   return manager->p->sys_extensions;
 }
 
 const GList *
-gimp_extension_manager_get_user_extensions (GimpExtensionManager *manager)
+ligma_extension_manager_get_user_extensions (LigmaExtensionManager *manager)
 {
   return manager->p->extensions;
 }
 
 /**
- * gimp_extension_manager_is_running:
+ * ligma_extension_manager_is_running:
  * @extension:
  *
  * Returns: %TRUE if @extension is ON.
  */
 gboolean
-gimp_extension_manager_is_running (GimpExtensionManager *manager,
-                                   GimpExtension        *extension)
+ligma_extension_manager_is_running (LigmaExtensionManager *manager,
+                                   LigmaExtension        *extension)
 {
-  GimpExtension *ext;
+  LigmaExtension *ext;
 
   ext = g_hash_table_lookup (manager->p->running_extensions,
-                             gimp_object_get_name (extension));
+                             ligma_object_get_name (extension));
 
   return (ext && ext == extension);
 }
 
 /**
- * gimp_extension_manager_can_run:
+ * ligma_extension_manager_can_run:
  * @extension:
  *
  * Returns: %TRUE is @extension can be run.
  */
 gboolean
-gimp_extension_manager_can_run (GimpExtensionManager *manager,
-                                GimpExtension        *extension)
+ligma_extension_manager_can_run (LigmaExtensionManager *manager,
+                                LigmaExtension        *extension)
 {
   /* System extension overridden by another extension. */
   if (g_list_find (manager->p->sys_extensions, extension) &&
       g_list_find_custom (manager->p->extensions, extension,
-                          (GCompareFunc) gimp_extension_cmp))
+                          (GCompareFunc) ligma_extension_cmp))
     return FALSE;
 
-  /* TODO: should return FALSE if required GIMP version or other
+  /* TODO: should return FALSE if required LIGMA version or other
    * requirements are not filled as well.
    */
 
@@ -724,32 +724,32 @@ gimp_extension_manager_can_run (GimpExtensionManager *manager,
 }
 
 /**
- * gimp_extension_manager_is_removed:
+ * ligma_extension_manager_is_removed:
  * @manager:
  * @extension:
  *
  * Returns: %TRUE is @extension was installed and has been removed
- * (hence gimp_extension_manager_undo_remove() can be used on it).
+ * (hence ligma_extension_manager_undo_remove() can be used on it).
  */
 gboolean
-gimp_extension_manager_is_removed (GimpExtensionManager *manager,
-                                   GimpExtension        *extension)
+ligma_extension_manager_is_removed (LigmaExtensionManager *manager,
+                                   LigmaExtension        *extension)
 {
   GList *iter;
 
-  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension), FALSE);
 
   iter = manager->p->uninstalled_extensions;
   for (; iter; iter = iter->next)
-    if (gimp_extension_cmp (iter->data, extension) == 0)
+    if (ligma_extension_cmp (iter->data, extension) == 0)
       break;
 
   return (iter != NULL);
 }
 
 /**
- * gimp_extension_manager_install:
+ * ligma_extension_manager_install:
  * @manager:
  * @extension:
  * @error:
@@ -759,18 +759,18 @@ gimp_extension_manager_is_removed (GimpExtensionManager *manager,
  * emit a signal for GUI update.
  */
 gboolean
-gimp_extension_manager_install (GimpExtensionManager *manager,
-                                GimpExtension        *extension,
+ligma_extension_manager_install (LigmaExtensionManager *manager,
+                                LigmaExtension        *extension,
                                 GError              **error)
 {
   gboolean success = FALSE;
 
-  if ((success = gimp_extension_load (extension, error)))
+  if ((success = ligma_extension_load (extension, error)))
     {
       manager->p->extensions = g_list_prepend (manager->p->extensions,
                                                extension);
       g_signal_connect (extension, "notify::running",
-                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        G_CALLBACK (ligma_extension_manager_extension_running),
                         manager);
       g_signal_emit (manager, signals[EXTENSION_INSTALLED], 0, extension, FALSE);
     }
@@ -779,71 +779,71 @@ gimp_extension_manager_install (GimpExtensionManager *manager,
 }
 
 /**
- * gimp_extension_manager_remove:
+ * ligma_extension_manager_remove:
  * @manager:
  * @extension:
  * @error:
  *
  * Uninstall @extension. Technically this only move the object to a
- * temporary list. The extension folder will be really deleted when GIMP
+ * temporary list. The extension folder will be really deleted when LIGMA
  * will stop.
  * This allows to undo a deletion for as long as the session runs.
  */
 gboolean
-gimp_extension_manager_remove (GimpExtensionManager  *manager,
-                               GimpExtension         *extension,
+ligma_extension_manager_remove (LigmaExtensionManager  *manager,
+                               LigmaExtension         *extension,
                                GError               **error)
 {
   GList *iter;
 
-  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension), FALSE);
 
-  iter = (GList *) gimp_extension_manager_get_system_extensions (manager);
+  iter = (GList *) ligma_extension_manager_get_system_extensions (manager);
   for (; iter; iter = iter->next)
     if (iter->data == extension)
       {
         /* System extensions cannot be uninstalled. */
         if (error)
-          *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                GIMP_EXTENSION_FAILED,
+          *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                LIGMA_EXTENSION_FAILED,
                                 _("System extensions cannot be uninstalled."));
         return FALSE;
       }
 
-  iter = (GList *) gimp_extension_manager_get_user_extensions (manager);
+  iter = (GList *) ligma_extension_manager_get_user_extensions (manager);
   for (; iter; iter = iter->next)
-    if (gimp_extension_cmp (iter->data, extension) == 0)
+    if (ligma_extension_cmp (iter->data, extension) == 0)
       break;
 
   /* The extension has to be in the extension list. */
   g_return_val_if_fail (iter != NULL, FALSE);
 
-  gimp_extension_stop (extension);
+  ligma_extension_stop (extension);
 
   manager->p->extensions = g_list_remove_link (manager->p->extensions,
                                                iter);
   manager->p->uninstalled_extensions = g_list_concat (manager->p->uninstalled_extensions,
                                                       iter);
   g_signal_emit (manager, signals[EXTENSION_REMOVED], 0,
-                 gimp_object_get_name (extension));
+                 ligma_object_get_name (extension));
 
   return TRUE;
 }
 
 gboolean
-gimp_extension_manager_undo_remove (GimpExtensionManager *manager,
-                                    GimpExtension        *extension,
+ligma_extension_manager_undo_remove (LigmaExtensionManager *manager,
+                                    LigmaExtension        *extension,
                                     GError              **error)
 {
   GList *iter;
 
-  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension), FALSE);
 
   iter = manager->p->uninstalled_extensions;
   for (; iter; iter = iter->next)
-    if (gimp_extension_cmp (iter->data, extension) == 0)
+    if (ligma_extension_cmp (iter->data, extension) == 0)
       break;
 
   /* The extension has to be in the uninstalled extension list. */
@@ -851,7 +851,7 @@ gimp_extension_manager_undo_remove (GimpExtensionManager *manager,
 
   manager->p->uninstalled_extensions = g_list_remove (manager->p->uninstalled_extensions,
                                                       extension);
-  gimp_extension_manager_install (manager, extension, error);
+  ligma_extension_manager_install (manager, extension, error);
 
   return TRUE;
 }
@@ -859,37 +859,37 @@ gimp_extension_manager_undo_remove (GimpExtensionManager *manager,
 /* Private functions. */
 
 static void
-gimp_extension_manager_serialize_extension (GimpExtensionManager *manager,
-                                            GimpExtension        *extension,
-                                            GimpConfigWriter     *writer)
+ligma_extension_manager_serialize_extension (LigmaExtensionManager *manager,
+                                            LigmaExtension        *extension,
+                                            LigmaConfigWriter     *writer)
 {
-  const gchar *name = gimp_object_get_name (extension);
+  const gchar *name = ligma_object_get_name (extension);
 
   g_return_if_fail (name != NULL);
 
-  gimp_config_writer_open (writer, g_type_name (G_TYPE_FROM_INSTANCE (extension)));
-  gimp_config_writer_string (writer, name);
+  ligma_config_writer_open (writer, g_type_name (G_TYPE_FROM_INSTANCE (extension)));
+  ligma_config_writer_string (writer, name);
 
   /* The extensionrc does not need to save any information about an
    * extension. This is all saved in the metadata. The only thing we
    * care to store is the state of extensions, i.e. which one is loaded
    * or not (since you can install an extension but leave it unloaded),
    * named by its unique ID.
-   * As a consequence, GimpExtension does not need to implement
-   * GimpConfigInterface.
+   * As a consequence, LigmaExtension does not need to implement
+   * LigmaConfigInterface.
    */
-  gimp_config_writer_open (writer, "active");
+  ligma_config_writer_open (writer, "active");
   if (g_hash_table_contains (manager->p->running_extensions, name))
-    gimp_config_writer_identifier (writer, "yes");
+    ligma_config_writer_identifier (writer, "yes");
   else
-    gimp_config_writer_identifier (writer, "no");
-  gimp_config_writer_close (writer);
+    ligma_config_writer_identifier (writer, "no");
+  ligma_config_writer_close (writer);
 
-  gimp_config_writer_close (writer);
+  ligma_config_writer_close (writer);
 }
 
 static void
-gimp_extension_manager_refresh (GimpExtensionManager *manager)
+ligma_extension_manager_refresh (LigmaExtensionManager *manager)
 {
   GHashTableIter iter;
   gpointer       key;
@@ -908,46 +908,46 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   g_hash_table_iter_init (&iter, manager->p->running_extensions);
   while (g_hash_table_iter_next (&iter, &key, &value))
     {
-      GimpExtension *extension = value;
+      LigmaExtension *extension = value;
       GList         *new_paths;
 
-      new_paths = g_list_copy_deep (gimp_extension_get_brush_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_brush_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       brush_paths = g_list_concat (brush_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_dynamics_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_dynamics_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       dynamics_paths = g_list_concat (dynamics_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_mypaint_brush_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_mypaint_brush_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       mypaint_brush_paths = g_list_concat (mypaint_brush_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_pattern_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_pattern_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       pattern_paths = g_list_concat (pattern_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_gradient_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_gradient_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       gradient_paths = g_list_concat (gradient_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_palette_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_palette_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       palette_paths = g_list_concat (palette_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_tool_preset_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_tool_preset_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       tool_preset_paths = g_list_concat (tool_preset_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_splash_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_splash_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       splash_paths = g_list_concat (splash_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_theme_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_theme_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       theme_paths = g_list_concat (theme_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_plug_in_paths (extension),
+      new_paths = g_list_copy_deep (ligma_extension_get_plug_in_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       plug_in_paths = g_list_concat (plug_in_paths, new_paths);
     }
@@ -967,7 +967,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
 }
 
 static void
-gimp_extension_manager_search_directory (GimpExtensionManager *manager,
+ligma_extension_manager_search_directory (LigmaExtensionManager *manager,
                                          GFile                *directory,
                                          gboolean              system_dir)
 {
@@ -999,13 +999,13 @@ gimp_extension_manager_search_directory (GimpExtensionManager *manager,
                                       G_FILE_QUERY_INFO_NONE,
                                       NULL) == G_FILE_TYPE_DIRECTORY)
             {
-              GimpExtension *extension;
+              LigmaExtension *extension;
               GError        *error = NULL;
 
-              extension = gimp_extension_new (g_file_peek_path (subdir),
+              extension = ligma_extension_new (g_file_peek_path (subdir),
                                               ! system_dir);
 
-              if (gimp_extension_load (extension, &error))
+              if (ligma_extension_load (extension, &error))
                 {
                   if (system_dir)
                     manager->p->sys_extensions = g_list_prepend (manager->p->sys_extensions,
@@ -1040,9 +1040,9 @@ gimp_extension_manager_search_directory (GimpExtensionManager *manager,
 }
 
 static void
-gimp_extension_manager_extension_running (GimpExtension        *extension,
+ligma_extension_manager_extension_running (LigmaExtension        *extension,
                                           GParamSpec           *pspec,
-                                          GimpExtensionManager *manager)
+                                          LigmaExtensionManager *manager)
 {
   gboolean running;
 
@@ -1051,11 +1051,11 @@ gimp_extension_manager_extension_running (GimpExtension        *extension,
                 NULL);
   if (running)
     g_hash_table_insert (manager->p->running_extensions,
-                         (gpointer) gimp_object_get_name (extension),
+                         (gpointer) ligma_object_get_name (extension),
                          extension);
   else
     g_hash_table_remove (manager->p->running_extensions,
-                         (gpointer) gimp_object_get_name (extension));
+                         (gpointer) ligma_object_get_name (extension));
 
-  gimp_extension_manager_refresh (manager);
+  ligma_extension_manager_refresh (manager);
 }

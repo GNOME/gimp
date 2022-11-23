@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppixbuf.h
- * Copyright (C) 2012  Michael Natterer <mitch@gimp.org>
+ * ligmapixbuf.h
+ * Copyright (C) 2012  Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,25 +19,25 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PIXBUF_H__
-#define __GIMP_PIXBUF_H__
+#ifndef __LIGMA_PIXBUF_H__
+#define __LIGMA_PIXBUF_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-const Babl * gimp_pixbuf_get_format      (GdkPixbuf *pixbuf);
-GeglBuffer * gimp_pixbuf_create_buffer   (GdkPixbuf *pixbuf);
+const Babl * ligma_pixbuf_get_format      (GdkPixbuf *pixbuf);
+GeglBuffer * ligma_pixbuf_create_buffer   (GdkPixbuf *pixbuf);
 
-guint8     * gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
+guint8     * ligma_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
                                           gsize     *length);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_PIXBUF_H__ */
+#endif  /* __LIGMA_PIXBUF_H__ */

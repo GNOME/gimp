@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,44 +22,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-scale.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-scale.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
 
 #include "scale-dialog.h"
 
 #include "image-scale-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct
 {
   GtkWidget             *dialog;
 
-  GimpImage             *image;
+  LigmaImage             *image;
 
   gint                   width;
   gint                   height;
-  GimpUnit               unit;
-  GimpInterpolationType  interpolation;
+  LigmaUnit               unit;
+  LigmaInterpolationType  interpolation;
   gdouble                xresolution;
   gdouble                yresolution;
-  GimpUnit               resolution_unit;
+  LigmaUnit               resolution_unit;
 
-  GimpScaleCallback      callback;
+  LigmaScaleCallback      callback;
   gpointer               user_data;
 } ImageScaleDialog;
 
@@ -68,14 +68,14 @@ typedef struct
 
 static void        image_scale_dialog_free      (ImageScaleDialog      *private);
 static void        image_scale_callback         (GtkWidget             *widget,
-                                                 GimpViewable          *viewable,
+                                                 LigmaViewable          *viewable,
                                                  gint                   width,
                                                  gint                   height,
-                                                 GimpUnit               unit,
-                                                 GimpInterpolationType  interpolation,
+                                                 LigmaUnit               unit,
+                                                 LigmaInterpolationType  interpolation,
                                                  gdouble                xresolution,
                                                  gdouble                yresolution,
-                                                 GimpUnit               resolution_unit,
+                                                 LigmaUnit               resolution_unit,
                                                  gpointer               data);
 
 static GtkWidget * image_scale_confirm_dialog   (ImageScaleDialog      *private);
@@ -91,18 +91,18 @@ static void        image_scale_confirm_response (GtkWidget             *widget,
 /*  public functions  */
 
 GtkWidget *
-image_scale_dialog_new (GimpImage             *image,
-                        GimpContext           *context,
+image_scale_dialog_new (LigmaImage             *image,
+                        LigmaContext           *context,
                         GtkWidget             *parent,
-                        GimpUnit               unit,
-                        GimpInterpolationType  interpolation,
-                        GimpScaleCallback      callback,
+                        LigmaUnit               unit,
+                        LigmaInterpolationType  interpolation,
+                        LigmaScaleCallback      callback,
                         gpointer               user_data)
 {
   ImageScaleDialog *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   private = g_slice_new0 (ImageScaleDialog);
@@ -111,12 +111,12 @@ image_scale_dialog_new (GimpImage             *image,
   private->callback  = callback;
   private->user_data = user_data;
 
-  private->dialog = scale_dialog_new (GIMP_VIEWABLE (image), context,
+  private->dialog = scale_dialog_new (LIGMA_VIEWABLE (image), context,
                                       C_("dialog-title", "Scale Image"),
-                                      "gimp-image-scale",
+                                      "ligma-image-scale",
                                       parent,
-                                      gimp_standard_help_func,
-                                      GIMP_HELP_IMAGE_SCALE,
+                                      ligma_standard_help_func,
+                                      LIGMA_HELP_IMAGE_SCALE,
                                       unit,
                                       interpolation,
                                       image_scale_callback,
@@ -139,19 +139,19 @@ image_scale_dialog_free (ImageScaleDialog *private)
 
 static void
 image_scale_callback (GtkWidget             *widget,
-                      GimpViewable          *viewable,
+                      LigmaViewable          *viewable,
                       gint                   width,
                       gint                   height,
-                      GimpUnit               unit,
-                      GimpInterpolationType  interpolation,
+                      LigmaUnit               unit,
+                      LigmaInterpolationType  interpolation,
                       gdouble                xresolution,
                       gdouble                yresolution,
-                      GimpUnit               resolution_unit,
+                      LigmaUnit               resolution_unit,
                       gpointer               data)
 {
   ImageScaleDialog        *private = data;
-  GimpImage               *image   = GIMP_IMAGE (viewable);
-  GimpImageScaleCheckType  scale_check;
+  LigmaImage               *image   = LIGMA_IMAGE (viewable);
+  LigmaImageScaleCheckType  scale_check;
   gint64                   max_memsize;
   gint64                   new_memsize;
 
@@ -165,24 +165,24 @@ image_scale_callback (GtkWidget             *widget,
 
   gtk_widget_set_sensitive (widget, FALSE);
 
-  max_memsize = GIMP_GUI_CONFIG (image->gimp->config)->max_new_image_size;
+  max_memsize = LIGMA_GUI_CONFIG (image->ligma->config)->max_new_image_size;
 
-  scale_check = gimp_image_scale_check (image,
+  scale_check = ligma_image_scale_check (image,
                                         width, height, max_memsize,
                                         &new_memsize);
   switch (scale_check)
     {
-    case GIMP_IMAGE_SCALE_TOO_BIG:
+    case LIGMA_IMAGE_SCALE_TOO_BIG:
       image_scale_confirm_large (private, new_memsize, max_memsize);
       break;
 
-    case GIMP_IMAGE_SCALE_TOO_SMALL:
+    case LIGMA_IMAGE_SCALE_TOO_SMALL:
       image_scale_confirm_small (private);
       break;
 
-    case GIMP_IMAGE_SCALE_OK:
+    case LIGMA_IMAGE_SCALE_OK:
       private->callback (private->dialog,
-                         GIMP_VIEWABLE (private->image),
+                         LIGMA_VIEWABLE (private->image),
                          private->width,
                          private->height,
                          private->unit,
@@ -200,19 +200,19 @@ image_scale_confirm_dialog (ImageScaleDialog *private)
 {
   GtkWidget *widget;
 
-  widget = gimp_message_dialog_new (_("Confirm Scaling"),
-                                    GIMP_ICON_DIALOG_WARNING,
+  widget = ligma_message_dialog_new (_("Confirm Scaling"),
+                                    LIGMA_ICON_DIALOG_WARNING,
                                     private->dialog,
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func,
-                                    GIMP_HELP_IMAGE_SCALE_WARNING,
+                                    ligma_standard_help_func,
+                                    LIGMA_HELP_IMAGE_SCALE_WARNING,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("_Scale"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (widget),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (widget),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -233,13 +233,13 @@ image_scale_confirm_large (ImageScaleDialog *private,
   gchar     *size;
 
   size = g_format_size (new_memsize);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (widget)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (widget)->box,
                                      _("You are trying to create an image "
                                        "with a size of %s."), size);
   g_free (size);
 
   size = g_format_size (max_memsize);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (widget)->box,
                              _("Scaling the image to the chosen size will "
                                "make it use more memory than what is "
                                "configured as \"Maximum Image Size\" in the "
@@ -254,11 +254,11 @@ image_scale_confirm_small (ImageScaleDialog *private)
 {
   GtkWidget *widget = image_scale_confirm_dialog (private);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (widget)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (widget)->box,
                                      _("Scaling the image to the chosen size "
                                        "will shrink some layers completely "
                                        "away."));
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (widget)->box,
                              _("Is this what you want to do?"));
 
   gtk_widget_show (widget);
@@ -274,7 +274,7 @@ image_scale_confirm_response (GtkWidget        *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       private->callback (private->dialog,
-                         GIMP_VIEWABLE (private->image),
+                         LIGMA_VIEWABLE (private->image),
                          private->width,
                          private->height,
                          private->unit,

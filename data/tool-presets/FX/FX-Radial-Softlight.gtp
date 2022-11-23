@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-gradient")
+(icon-name "ligma-tool-gradient")
 (name "FX Radial Softlight")
-(tool-options "GimpGradientOptions"
-    (tool "gimp-gradient-tool")
+(tool-options "LigmaGradientOptions"
+    (tool "ligma-gradient-tool")
     (foreground (color-rgb 0.102075 0.183901 0.594317))
     (paint-mode softlight)
     (gradient "FG to Transparent")
@@ -18,4 +18,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

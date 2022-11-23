@@ -44,18 +44,18 @@
 <path fill="none" stroke="black" d="M291.696,-813.943C294.516,-805.916 297.859,-796.402 300.964,-787.565"/>
 <polygon fill="black" stroke="black" points="304.314,-788.587 304.327,-777.992 297.71,-786.267 304.314,-788.587"/>
 </g>
-<!-- libgimpcolor -->
-<g id="node6" class="node"><title>libgimpcolor</title>
+<!-- libligmacolor -->
+<g id="node6" class="node"><title>libligmacolor</title>
 <ellipse fill="#ff7256" stroke="black" cx="418" cy="-167" rx="61.0181" ry="19.0919"/>
-<text text-anchor="middle" x="418" y="-163.9" font-family="Times Roman,serif" font-size="14.00">libgimpcolor</text>
+<text text-anchor="middle" x="418" y="-163.9" font-family="Times Roman,serif" font-size="14.00">libligmacolor</text>
 </g>
-<!-- libgimpmath -->
-<g id="node7" class="node"><title>libgimpmath</title>
+<!-- libligmamath -->
+<g id="node7" class="node"><title>libligmamath</title>
 <ellipse fill="#ff7256" stroke="black" cx="418" cy="-93" rx="61.0181" ry="19.0919"/>
-<text text-anchor="middle" x="418" y="-89.9" font-family="Times Roman,serif" font-size="14.00">libgimpmath</text>
+<text text-anchor="middle" x="418" y="-89.9" font-family="Times Roman,serif" font-size="14.00">libligmamath</text>
 </g>
-<!-- libgimpcolor&#45;&gt;libgimpmath -->
-<g id="edge6" class="edge"><title>libgimpcolor&#45;&gt;libgimpmath</title>
+<!-- libligmacolor&#45;&gt;libligmamath -->
+<g id="edge6" class="edge"><title>libligmacolor&#45;&gt;libligmamath</title>
 <path fill="none" stroke="black" d="M418,-147.943C418,-140.149 418,-130.954 418,-122.338"/>
 <polygon fill="black" stroke="black" points="421.5,-122.249 418,-112.249 414.5,-122.249 421.5,-122.249"/>
 </g>
@@ -64,8 +64,8 @@
 <ellipse fill="lightblue" stroke="black" cx="418" cy="-19" rx="31.8198" ry="19.0919"/>
 <text text-anchor="middle" x="418" y="-15.9" font-family="Times Roman,serif" font-size="14.00">GLib</text>
 </g>
-<!-- libgimpmath&#45;&gt;GLib -->
-<g id="edge8" class="edge"><title>libgimpmath&#45;&gt;GLib</title>
+<!-- libligmamath&#45;&gt;GLib -->
+<g id="edge8" class="edge"><title>libligmamath&#45;&gt;GLib</title>
 <path fill="none" stroke="black" d="M418,-73.9432C418,-66.1493 418,-56.9538 418,-48.3381"/>
 <polygon fill="black" stroke="black" points="421.5,-48.2494 418,-38.2495 414.5,-48.2495 421.5,-48.2494"/>
 </g>
@@ -124,13 +124,13 @@
 <path fill="none" stroke="black" d="M203.41,-597.081C179.101,-585.246 144.017,-568.166 117.466,-555.24"/>
 <polygon fill="black" stroke="black" points="118.985,-552.087 108.462,-550.856 115.921,-558.381 118.985,-552.087"/>
 </g>
-<!-- libgimpmodule -->
-<g id="node23" class="node"><title>libgimpmodule</title>
+<!-- libligmamodule -->
+<g id="node23" class="node"><title>libligmamodule</title>
 <ellipse fill="#ff7256" stroke="black" cx="413" cy="-537" rx="70.9184" ry="19.0919"/>
-<text text-anchor="middle" x="413" y="-533.9" font-family="Times Roman,serif" font-size="14.00">libgimpmodule</text>
+<text text-anchor="middle" x="413" y="-533.9" font-family="Times Roman,serif" font-size="14.00">libligmamodule</text>
 </g>
-<!-- app/pdb&#45;&gt;libgimpmodule -->
-<g id="edge20" class="edge"><title>app/pdb&#45;&gt;libgimpmodule</title>
+<!-- app/pdb&#45;&gt;libligmamodule -->
+<g id="edge20" class="edge"><title>app/pdb&#45;&gt;libligmamodule</title>
 <path fill="none" stroke="black" d="M263.528,-598.11C291.34,-586.739 332.313,-569.988 364.331,-556.898"/>
 <polygon fill="black" stroke="black" points="366.024,-559.987 373.955,-552.963 363.375,-553.508 366.024,-559.987"/>
 </g>
@@ -154,23 +154,23 @@
 <path fill="none" stroke="black" d="M80,-556.158C80,-584.37 80,-638.75 80,-685 80,-833 80,-833 80,-833 80,-875.187 84.7969,-886.276 99,-926 102.309,-935.256 106.934,-944.886 111.519,-953.453"/>
 <polygon fill="black" stroke="black" points="108.498,-955.223 116.415,-962.264 114.617,-951.823 108.498,-955.223"/>
 </g>
-<!-- libgimpthumb -->
-<g id="node34" class="node"><title>libgimpthumb</title>
+<!-- libligmathumb -->
+<g id="node34" class="node"><title>libligmathumb</title>
 <ellipse fill="#ff7256" stroke="black" cx="67" cy="-389" rx="67.1751" ry="19.0919"/>
-<text text-anchor="middle" x="67" y="-385.9" font-family="Times Roman,serif" font-size="14.00">libgimpthumb</text>
+<text text-anchor="middle" x="67" y="-385.9" font-family="Times Roman,serif" font-size="14.00">libligmathumb</text>
 </g>
-<!-- app/file&#45;&gt;libgimpthumb -->
-<g id="edge34" class="edge"><title>app/file&#45;&gt;libgimpthumb</title>
+<!-- app/file&#45;&gt;libligmathumb -->
+<g id="edge34" class="edge"><title>app/file&#45;&gt;libligmathumb</title>
 <path fill="none" stroke="black" d="M78.3271,-517.955C76.1162,-492.784 72.1982,-448.18 69.5998,-418.598"/>
 <polygon fill="black" stroke="black" points="73.0694,-418.098 68.7078,-408.442 66.0963,-418.71 73.0694,-418.098"/>
 </g>
-<!-- libgimpbase -->
-<g id="node29" class="node"><title>libgimpbase</title>
+<!-- libligmabase -->
+<g id="node29" class="node"><title>libligmabase</title>
 <ellipse fill="#ff7256" stroke="black" cx="418" cy="-241" rx="58.1882" ry="19.0919"/>
-<text text-anchor="middle" x="418" y="-237.9" font-family="Times Roman,serif" font-size="14.00">libgimpbase</text>
+<text text-anchor="middle" x="418" y="-237.9" font-family="Times Roman,serif" font-size="14.00">libligmabase</text>
 </g>
-<!-- libgimpmodule&#45;&gt;libgimpbase -->
-<g id="edge36" class="edge"><title>libgimpmodule&#45;&gt;libgimpbase</title>
+<!-- libligmamodule&#45;&gt;libligmabase -->
+<g id="edge36" class="edge"><title>libligmamodule&#45;&gt;libligmabase</title>
 <path fill="none" stroke="black" d="M413.328,-517.579C414.183,-466.967 416.483,-330.777 417.503,-270.452"/>
 <polygon fill="black" stroke="black" points="421.008,-270.166 417.677,-260.108 414.009,-270.048 421.008,-270.166"/>
 </g>
@@ -194,23 +194,23 @@
 <path fill="none" stroke="black" d="M267.91,-518.708C260.905,-509.613 252.323,-498.471 244.679,-488.549"/>
 <polygon fill="black" stroke="black" points="247.41,-486.359 238.535,-480.572 241.865,-490.63 247.41,-486.359"/>
 </g>
-<!-- libgimpbase&#45;&gt;libgimpcolor -->
-<g id="edge28" class="edge"><title>libgimpbase&#45;&gt;libgimpcolor</title>
+<!-- libligmabase&#45;&gt;libligmacolor -->
+<g id="edge28" class="edge"><title>libligmabase&#45;&gt;libligmacolor</title>
 <path fill="none" stroke="black" d="M418,-221.943C418,-214.149 418,-204.954 418,-196.338"/>
 <polygon fill="black" stroke="black" points="421.5,-196.249 418,-186.249 414.5,-196.249 421.5,-196.249"/>
 </g>
-<!-- libgimpconfig -->
-<g id="node31" class="node"><title>libgimpconfig</title>
+<!-- libligmaconfig -->
+<g id="node31" class="node"><title>libligmaconfig</title>
 <ellipse fill="#ff7256" stroke="black" cx="512" cy="-315" rx="65.9683" ry="19.0919"/>
-<text text-anchor="middle" x="512" y="-311.9" font-family="Times Roman,serif" font-size="14.00">libgimpconfig</text>
+<text text-anchor="middle" x="512" y="-311.9" font-family="Times Roman,serif" font-size="14.00">libligmaconfig</text>
 </g>
-<!-- libgimpconfig&#45;&gt;libgimpbase -->
-<g id="edge30" class="edge"><title>libgimpconfig&#45;&gt;libgimpbase</title>
+<!-- libligmaconfig&#45;&gt;libligmabase -->
+<g id="edge30" class="edge"><title>libligmaconfig&#45;&gt;libligmabase</title>
 <path fill="none" stroke="black" d="M489.245,-297.087C477.006,-287.452 461.747,-275.439 448.493,-265.005"/>
 <polygon fill="black" stroke="black" points="450.568,-262.184 440.545,-258.748 446.238,-267.684 450.568,-262.184"/>
 </g>
-<!-- libgimpthumb&#45;&gt;libgimpbase -->
-<g id="edge38" class="edge"><title>libgimpthumb&#45;&gt;libgimpbase</title>
+<!-- libligmathumb&#45;&gt;libligmabase -->
+<g id="edge38" class="edge"><title>libligmathumb&#45;&gt;libligmabase</title>
 <path fill="none" stroke="black" d="M72.6671,-369.993C80.1177,-348.474 95.3615,-314.069 121,-296 157.281,-270.43 275.454,-254.627 351.346,-246.855"/>
 <polygon fill="black" stroke="black" points="352.16,-250.291 361.761,-245.811 351.462,-243.326 352.16,-250.291"/>
 </g>
@@ -264,13 +264,13 @@
 <path fill="none" stroke="black" d="M755.485,-517.943C755.274,-510.149 755.026,-500.954 754.793,-492.338"/>
 <polygon fill="black" stroke="black" points="758.289,-492.151 754.52,-482.249 751.292,-492.34 758.289,-492.151"/>
 </g>
-<!-- libgimpwidgets -->
-<g id="node46" class="node"><title>libgimpwidgets</title>
+<!-- libligmawidgets -->
+<g id="node46" class="node"><title>libligmawidgets</title>
 <ellipse fill="#ff7256" stroke="black" cx="573" cy="-537" rx="70.9184" ry="19.0919"/>
-<text text-anchor="middle" x="573" y="-533.9" font-family="Times Roman,serif" font-size="14.00">libgimpwidgets</text>
+<text text-anchor="middle" x="573" y="-533.9" font-family="Times Roman,serif" font-size="14.00">libligmawidgets</text>
 </g>
-<!-- libgimpwidgets&#45;&gt;libgimpconfig -->
-<g id="edge46" class="edge"><title>libgimpwidgets&#45;&gt;libgimpconfig</title>
+<!-- libligmawidgets&#45;&gt;libligmaconfig -->
+<g id="edge46" class="edge"><title>libligmawidgets&#45;&gt;libligmaconfig</title>
 <path fill="none" stroke="black" d="M554.592,-518.249C545.949,-508.295 536.384,-495.374 531,-482 512.661,-436.447 510.223,-378.617 510.704,-344.337"/>
 <polygon fill="black" stroke="black" points="514.209,-344.16 510.947,-334.08 507.211,-343.994 514.209,-344.16"/>
 </g>
@@ -279,8 +279,8 @@
 <ellipse fill="lightblue" stroke="black" cx="577" cy="-463" rx="36.977" ry="19.0919"/>
 <text text-anchor="middle" x="577" y="-459.9" font-family="Times Roman,serif" font-size="14.00">GTK</text>
 </g>
-<!-- libgimpwidgets&#45;&gt;GTK+ -->
-<g id="edge48" class="edge"><title>libgimpwidgets&#45;&gt;GTK+</title>
+<!-- libligmawidgets&#45;&gt;GTK+ -->
+<g id="edge48" class="edge"><title>libligmawidgets&#45;&gt;GTK+</title>
 <path fill="none" stroke="black" d="M574.03,-517.943C574.451,-510.149 574.948,-500.954 575.414,-492.338"/>
 <polygon fill="black" stroke="black" points="578.915,-492.424 575.959,-482.249 571.925,-492.046 578.915,-492.424"/>
 </g>
@@ -319,8 +319,8 @@
 <path fill="none" stroke="black" d="M665.953,-742.943C682.076,-732.569 703.289,-718.918 721.076,-707.473"/>
 <polygon fill="black" stroke="black" points="722.979,-710.41 729.495,-702.055 719.191,-704.524 722.979,-710.41"/>
 </g>
-<!-- app/tools&#45;&gt;libgimpwidgets -->
-<g id="edge72" class="edge"><title>app/tools&#45;&gt;libgimpwidgets</title>
+<!-- app/tools&#45;&gt;libligmawidgets -->
+<g id="edge72" class="edge"><title>app/tools&#45;&gt;libligmawidgets</title>
 <path fill="none" stroke="black" d="M638.418,-739.973C633.758,-708.448 622.562,-643.73 603,-592 599.525,-582.81 594.767,-573.258 590.065,-564.744"/>
 <polygon fill="black" stroke="black" points="593.052,-562.918 585.047,-555.978 586.977,-566.395 593.052,-562.918"/>
 </g>
@@ -344,8 +344,8 @@
 <path fill="none" stroke="black" d="M339,-369.943C339,-362.149 339,-352.954 339,-344.338"/>
 <polygon fill="black" stroke="black" points="342.5,-344.249 339,-334.249 335.5,-344.249 342.5,-344.249"/>
 </g>
-<!-- app/paint&#45;&gt;libgimpconfig -->
-<g id="edge62" class="edge"><title>app/paint&#45;&gt;libgimpconfig</title>
+<!-- app/paint&#45;&gt;libligmaconfig -->
+<g id="edge62" class="edge"><title>app/paint&#45;&gt;libligmaconfig</title>
 <path fill="none" stroke="black" d="M371.54,-375.081C398.124,-363.71 436.03,-347.496 465.765,-334.777"/>
 <polygon fill="black" stroke="black" points="467.29,-337.931 475.108,-330.781 464.537,-331.495 467.29,-337.931"/>
 </g>
@@ -364,18 +364,18 @@
 <path fill="none" stroke="black" d="M192.538,-334.205C181.067,-362.03 162,-415.437 162,-463 162,-759 162,-759 162,-759 162,-800.375 167.49,-847.969 171.594,-877.768"/>
 <polygon fill="black" stroke="black" points="168.161,-878.487 173.031,-887.896 175.092,-877.504 168.161,-878.487"/>
 </g>
-<!-- libgimp -->
-<g id="node72" class="node"><title>libgimp</title>
+<!-- libligma -->
+<g id="node72" class="node"><title>libligma</title>
 <ellipse fill="#ff7256" stroke="black" cx="553" cy="-611" rx="41.2167" ry="19.0919"/>
-<text text-anchor="middle" x="553" y="-607.9" font-family="Times Roman,serif" font-size="14.00">libgimp</text>
+<text text-anchor="middle" x="553" y="-607.9" font-family="Times Roman,serif" font-size="14.00">libligma</text>
 </g>
-<!-- libgimp&#45;&gt;libgimpmodule -->
-<g id="edge80" class="edge"><title>libgimp&#45;&gt;libgimpmodule</title>
+<!-- libligma&#45;&gt;libligmamodule -->
+<g id="edge80" class="edge"><title>libligma&#45;&gt;libligmamodule</title>
 <path fill="none" stroke="black" d="M525.674,-596.556C505.302,-585.788 477.131,-570.898 454.054,-558.7"/>
 <polygon fill="black" stroke="black" points="455.641,-555.58 445.164,-554.001 452.369,-561.768 455.641,-555.58"/>
 </g>
-<!-- libgimp&#45;&gt;libgimpwidgets -->
-<g id="edge82" class="edge"><title>libgimp&#45;&gt;libgimpwidgets</title>
+<!-- libligma&#45;&gt;libligmawidgets -->
+<g id="edge82" class="edge"><title>libligma&#45;&gt;libligmawidgets</title>
 <path fill="none" stroke="black" d="M558.15,-591.943C560.297,-584.002 562.836,-574.606 565.203,-565.851"/>
 <polygon fill="black" stroke="black" points="568.637,-566.559 567.867,-555.992 561.879,-564.733 568.637,-566.559"/>
 </g>

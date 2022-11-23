@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprofilestore.h
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * ligmaprofilestore.h
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,58 +19,58 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_PROFILE_STORE_H__
-#define __GIMP_COLOR_PROFILE_STORE_H__
+#ifndef __LIGMA_COLOR_PROFILE_STORE_H__
+#define __LIGMA_COLOR_PROFILE_STORE_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_PROFILE_STORE            (gimp_color_profile_store_get_type ())
-#define GIMP_COLOR_PROFILE_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE_STORE, GimpColorProfileStore))
-#define GIMP_COLOR_PROFILE_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE_STORE, GimpColorProfileStoreClass))
-#define GIMP_IS_COLOR_PROFILE_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE_STORE))
-#define GIMP_IS_COLOR_PROFILE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE_STORE))
-#define GIMP_COLOR_PROFILE_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_STORE, GimpColorProfileStoreClass))
+#define LIGMA_TYPE_COLOR_PROFILE_STORE            (ligma_color_profile_store_get_type ())
+#define LIGMA_COLOR_PROFILE_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_PROFILE_STORE, LigmaColorProfileStore))
+#define LIGMA_COLOR_PROFILE_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_PROFILE_STORE, LigmaColorProfileStoreClass))
+#define LIGMA_IS_COLOR_PROFILE_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_PROFILE_STORE))
+#define LIGMA_IS_COLOR_PROFILE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_PROFILE_STORE))
+#define LIGMA_COLOR_PROFILE_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_PROFILE_STORE, LigmaColorProfileStoreClass))
 
 
-typedef struct _GimpColorProfileStorePrivate GimpColorProfileStorePrivate;
-typedef struct _GimpColorProfileStoreClass   GimpColorProfileStoreClass;
+typedef struct _LigmaColorProfileStorePrivate LigmaColorProfileStorePrivate;
+typedef struct _LigmaColorProfileStoreClass   LigmaColorProfileStoreClass;
 
-struct _GimpColorProfileStore
+struct _LigmaColorProfileStore
 {
   GtkListStore                  parent_instance;
 
-  GimpColorProfileStorePrivate *priv;
+  LigmaColorProfileStorePrivate *priv;
 };
 
-struct _GimpColorProfileStoreClass
+struct _LigmaColorProfileStoreClass
 {
   GtkListStoreClass  parent_class;
 
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_color_profile_store_get_type (void) G_GNUC_CONST;
+GType          ligma_color_profile_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_color_profile_store_new      (GFile                 *history);
+GtkListStore * ligma_color_profile_store_new      (GFile                 *history);
 
-void           gimp_color_profile_store_add_file (GimpColorProfileStore *store,
+void           ligma_color_profile_store_add_file (LigmaColorProfileStore *store,
                                                   GFile                 *file,
                                                   const gchar           *label);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_PROFILE_STORE_H__ */
+#endif  /* __LIGMA_COLOR_PROFILE_STORE_H__ */

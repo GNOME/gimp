@@ -1,12 +1,12 @@
-# Breton translation for gimp
+# Breton translation for ligma
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Alan Monfort <alan.monfort@free.fr>, 2007-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-03-10 17:30+0000\n"
 "PO-Revision-Date: 2012-04-06 23:03+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
@@ -431,8 +431,8 @@ msgid "Optimizing animation"
 msgstr "O wellekaat ar bliverezh"
 
 #: ../plug-ins/common/animation-play.c:169
-msgid "Preview a GIMP layer-based animation"
-msgstr "Alberz ur bliverezh GIMP diazezet war treuzfollennoù"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "Alberz ur bliverezh LIGMA diazezet war treuzfollennoù"
 
 #: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
@@ -650,7 +650,7 @@ msgstr "A-_serzh"
 #: ../plug-ins/file-psd/psd-load.c:1637
 #: ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
@@ -1119,8 +1119,8 @@ msgstr "Kargañ an arventennoù evit ar mesker sanelloù"
 #: ../plug-ins/file-bmp/bmp-read.c:153
 #: ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358
-#: ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496
+#: ../plug-ins/file-fli/fli-ligma.c:459
+#: ../plug-ins/file-fli/fli-ligma.c:496
 #: ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729
 #: ../plug-ins/file-jpeg/jpeg-load.c:117
@@ -1134,8 +1134,8 @@ msgstr "Kargañ an arventennoù evit ar mesker sanelloù"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
 #: ../plug-ins/gfig/gfig.c:433
-#: ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1174,7 +1174,7 @@ msgstr "Enrollañ an arventennoù evit ar mesker sanelloù"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306
 #: ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750
+#: ../plug-ins/file-fli/fli-ligma.c:750
 #: ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332
 #: ../plug-ins/file-psd/psd-save.c:1652
@@ -1214,7 +1214,7 @@ msgstr "Damer"
 
 #: ../plug-ins/common/checkerboard.c:413
 #: ../plug-ins/common/file-xmc.c:1162
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Ment :"
 
@@ -1419,8 +1419,8 @@ msgstr "Dargouezhek, diouzh un hadenn (rannet)"
 #: ../plug-ins/common/cml-explorer.c:300
 #: ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "Arliv"
 
@@ -1433,8 +1433,8 @@ msgstr "Peurvec'hiañ"
 #: ../plug-ins/common/cml-explorer.c:302
 #: ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "Gwerzh"
 
@@ -2356,8 +2356,8 @@ msgstr "Krommaat..."
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1262
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Alberz"
@@ -2978,7 +2978,7 @@ msgid "R_adius 2:"
 msgstr "Skin _2 :"
 
 #: ../plug-ins/common/edge-dog.c:373
-#: ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "Tug_inañ"
 
@@ -3208,7 +3208,7 @@ msgstr "Kargañ ul livaoueg KISS"
 #: ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158
 #: ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:501
+#: ../plug-ins/file-fli/fli-ligma.c:501
 #: ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123
 #: ../plug-ins/file-psd/psd-load.c:135
@@ -3249,7 +3249,7 @@ msgstr "Donder bit anskor (%d) !"
 #: ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317
 #: ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:718
+#: ../plug-ins/file-fli/fli-ligma.c:718
 #: ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:289
 #: ../plug-ins/file-psd/psd-save.c:1657
@@ -3348,8 +3348,8 @@ msgstr "N'haller ket gwerediñ war rizhioù skeudennoù dianav."
 
 #: ../plug-ins/common/file-gbr.c:154
 #: ../plug-ins/common/file-gbr.c:175
-msgid "GIMP brush"
-msgstr "Broust GIMP"
+msgid "LIGMA brush"
+msgstr "Broust LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:399
 #: ../plug-ins/common/file-pat.c:418
@@ -3364,8 +3364,8 @@ msgstr "Mentrezh broust anskor"
 
 #: ../plug-ins/common/file-gbr.c:447
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Fazi e restr broust GIMP '%s'"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Fazi e restr broust LIGMA '%s'"
 
 #: ../plug-ins/common/file-gbr.c:455
 #, c-format
@@ -3380,8 +3380,8 @@ msgid "Unnamed"
 msgstr "Dizanv"
 
 #: ../plug-ins/common/file-gbr.c:653
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Pe LIVEOÙ LOUEDOÙ pe RGGA ez eo broustoù GIMP"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "Pe LIVEOÙ LOUEDOÙ pe RGGA ez eo broustoù LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:770
 msgid "Brush"
@@ -3396,7 +3396,7 @@ msgstr "Esaouiñ :"
 #: ../plug-ins/common/file-gbr.c:795
 #: ../plug-ins/common/file-gih.c:888
 #: ../plug-ins/common/file-pat.c:568
-#: ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "Deskrivadur :"
 
@@ -3510,16 +3510,16 @@ msgstr "Bevennet eo an askellenn dre ziouer ouzh %d arouezennoù."
 
 #: ../plug-ins/common/file-gih.c:209
 #: ../plug-ins/common/file-gih.c:230
-msgid "GIMP brush (animated)"
-msgstr "Broust GIMP (fiñv)"
+msgid "LIGMA brush (animated)"
+msgstr "Broust LIGMA (fiñv)"
 
 #: ../plug-ins/common/file-gih.c:480
-msgid "Error in GIMP brush pipe file."
-msgstr "Fazi e restr ar broustoù fiñv GIMP."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Fazi e restr ar broustoù fiñv LIGMA."
 
 #: ../plug-ins/common/file-gih.c:546
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Kontron e hañval bezañ restr broust GIMP."
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Kontron e hañval bezañ restr broust LIGMA."
 
 #: ../plug-ins/common/file-gih.c:696
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3739,7 +3739,7 @@ msgstr "Mankout a ra hstep ha vstep da barzh skeudenn %d ar skeudenn '%s'."
 #: ../plug-ins/common/file-jp2-load.c:343
 #, c-format
 msgid "Image component %d of image '%s' is signed. This is currently not supported."
-msgstr "Sinet eo parzh skeudenn %d ar skeudenn '%s' . N'eo ket skoret gant GIMP."
+msgstr "Sinet eo parzh skeudenn %d ar skeudenn '%s' . N'eo ket skoret gant LIGMA."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3863,8 +3863,8 @@ msgstr "Bliverezh MNG"
 
 #: ../plug-ins/common/file-pat.c:123
 #: ../plug-ins/common/file-pat.c:145
-msgid "GIMP pattern"
-msgstr "Goustur GIMP"
+msgid "LIGMA pattern"
+msgstr "Goustur LIGMA"
 
 #: ../plug-ins/common/file-pat.c:378
 #, c-format
@@ -4190,16 +4190,16 @@ msgid "Invalid X resolution."
 msgstr "Diarunusted X didalvoudek."
 
 #: ../plug-ins/common/file-pnm.c:555
-msgid "Image width is larger than GIMP can handle."
-msgstr "Brasoc'h eo led ar skeudenn eget ar pezh a vez dornataet gant GIMP."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Brasoc'h eo led ar skeudenn eget ar pezh a vez dornataet gant LIGMA."
 
 #: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Diarunusted Y didalvoudek."
 
 #: ../plug-ins/common/file-pnm.c:564
-msgid "Image height is larger than GIMP can handle."
-msgstr "Brasoc'h eo sav ar skeudenn eget pezh a vez dornataet gant GIMP."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Brasoc'h eo sav ar skeudenn eget pezh a vez dornataet gant LIGMA."
 
 #: ../plug-ins/common/file-pnm.c:574
 msgid "Unsupported maximum value."
@@ -4320,8 +4320,8 @@ msgstr "G/D"
 
 #: ../plug-ins/common/file-ps.c:3097
 #: ../plug-ins/common/file-xpm.c:479
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Liv"
@@ -4566,10 +4566,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s' :\n"
-"brasoc'h eo led ar skeudenn eget pezh a vez dornataet gant GIMP"
+"brasoc'h eo led ar skeudenn eget pezh a vez dornataet gant LIGMA"
 
 #: ../plug-ins/common/file-sunras.c:473
 #: ../plug-ins/common/file-xbm.c:841
@@ -4588,10 +4588,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s'\n"
-"Brasoc'h eo sav ar skeudenn eget ar pezh a vez dornataet gant GIMP."
+"Brasoc'h eo sav ar skeudenn eget ar pezh a vez dornataet gant LIGMA."
 
 #: ../plug-ins/common/file-sunras.c:520
 msgid "This image depth is not supported"
@@ -4701,8 +4701,8 @@ msgid "Import _paths"
 msgstr "Enporzhiañ an _treugoù"
 
 #: ../plug-ins/common/file-svg.c:944
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "Enporzhiañ elfennoù an treug eus an SVG a-benn ma vo arveret gant benveg treugoù GIMP"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "Enporzhiañ elfennoù an treug eus an SVG a-benn ma vo arveret gant benveg treugoù LIGMA"
 
 #: ../plug-ins/common/file-svg.c:952
 msgid "Merge imported paths"
@@ -4777,10 +4777,10 @@ msgstr "Sanell TIFF"
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
 msgstr ""
 "Evezh :\n"
-"16 eizhbit dre sanell zo d'ar skeudenn emaoc'h o kargañ. 8 eizhbit hepken a vez dornataet gant GIMP, amdroet e vo evideoc'h. Kollet e vo stlennoù zo en abeg d'an amdreiñ-mañ."
+"16 eizhbit dre sanell zo d'ar skeudenn emaoc'h o kargañ. 8 eizhbit hepken a vez dornataet gant LIGMA, amdroet e vo evideoc'h. Kollet e vo stlennoù zo en abeg d'an amdreiñ-mañ."
 
 #: ../plug-ins/common/file-tiff-save.c:888
 msgid ""
@@ -7564,7 +7564,7 @@ msgid "Use the background color"
 msgstr "Arverañ liv an drekva"
 
 #: ../plug-ins/common/sphere-designer.c:293
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Unvan"
 
@@ -7663,7 +7663,7 @@ msgstr "Boestad emziviz Diuzañ ul liv"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Skeul :"
@@ -7959,16 +7959,16 @@ msgid "Saved"
 msgstr "Enrollet"
 
 #: ../plug-ins/common/unit-editor.c:94
-msgid "A unit definition will only be saved before GIMP exits if this column is checked."
-msgstr "Enrollet e vo un despizadur unanenn pa vo kuitaet GIMP mar bez kevasket ar bann-mañ hepken."
+msgid "A unit definition will only be saved before LIGMA exits if this column is checked."
+msgstr "Enrollet e vo un despizadur unanenn pa vo kuitaet LIGMA mar bez kevasket ar bann-mañ hepken."
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid "ID"
 msgstr "Hennader (ID)"
 
 #: ../plug-ins/common/unit-editor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
-msgstr "Arveret e vo an hedad-mañ evit hennadiñ un unanenn e restroù kefluniañ GIMP."
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "Arveret e vo an hedad-mañ evit hennadiñ un unanenn e restroù kefluniañ LIGMA."
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
@@ -8027,8 +8027,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "Krouiñ un unanenn nevez gant an unanenn vremanel evel skouer"
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "Krouiñ pe gemmañ an unanennoù arveret e GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Krouiñ pe gemmañ an unanennoù arveret e LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -8724,7 +8724,7 @@ msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Strishaet eo an efed ouzh maezioù bihanoc'h ar skeudenn gant gwerzhioù bras"
 
 #: ../plug-ins/common/wind.c:1025
-#: ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "_Kreñvder :"
 
@@ -8799,8 +8799,8 @@ msgid "_Do not write color space information"
 msgstr "Arabat skrivañ titouroù a-fet livventerezh"
 
 #: ../plug-ins/file-bmp/bmp-write.c:886
-msgid "Some applications can not read BMP images that include color space information. GIMP writes color space information by default. Enabling this option will cause GIMP to not write color space information to the file."
-msgstr "Arloadoù zo n'int ket barrek da lenn skeudennoù mod BMP, enno titouroù a-fet livventerezh. Titouroù a-fet livventerezh dre ziouer a skriv GIMP. Mar bez gweredekaet an dibarzh-mañ ne skrivo ket GIMP titouroù a-fet livventerezh er restr."
+msgid "Some applications can not read BMP images that include color space information. LIGMA writes color space information by default. Enabling this option will cause LIGMA to not write color space information to the file."
+msgstr "Arloadoù zo n'int ket barrek da lenn skeudennoù mod BMP, enno titouroù a-fet livventerezh. Titouroù a-fet livventerezh dre ziouer a skriv LIGMA. Mar bez gweredekaet an dibarzh-mañ ne skrivo ket LIGMA titouroù a-fet livventerezh er restr."
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-write.c:902
@@ -8893,37 +8893,37 @@ msgctxt "composing"
 msgid "None"
 msgstr "Tra ebet"
 
-#: ../plug-ins/file-fli/fli-gimp.c:166
-#: ../plug-ins/file-fli/fli-gimp.c:186
+#: ../plug-ins/file-fli/fli-ligma.c:166
+#: ../plug-ins/file-fli/fli-ligma.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "Bliverezh Autodesk FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-ligma.c:561
 #, c-format
 msgid "Frame (%i)"
 msgstr "Skeudenn (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-ligma.c:714
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Digarez, skeudennoù o livioù ibiliet pe dre liveoù louedoù a vez enrollet ganin nemetken."
 
-#: ../plug-ins/file-fli/fli-gimp.c:847
+#: ../plug-ins/file-fli/fli-ligma.c:847
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Kargañ ar bern treuzfollennoù"
 
-#: ../plug-ins/file-fli/fli-gimp.c:876
-#: ../plug-ins/file-fli/fli-gimp.c:932
+#: ../plug-ins/file-fli/fli-ligma.c:876
+#: ../plug-ins/file-fli/fli-ligma.c:932
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Diouzh :"
 
-#: ../plug-ins/file-fli/fli-gimp.c:885
-#: ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-ligma.c:885
+#: ../plug-ins/file-fli/fli-ligma.c:941
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Da :"
 
-#: ../plug-ins/file-fli/fli-gimp.c:915
+#: ../plug-ins/file-fli/fli-ligma.c:915
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8994,8 +8994,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "Hervez ar roadennoù EXIF ez eo c'hwelet ar skeudenn-mañ."
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:426
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Fellout a ra deoc'h ma vo c'hwelet gant GIMP gant ar reteradur skoueriek ?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "Fellout a ra deoc'h ma vo c'hwelet gant LIGMA gant ar reteradur skoueriek ?"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
@@ -9241,8 +9241,8 @@ msgid "Unable to save layer with mode '%s'.  Either the PSD file format or the s
 msgstr "N'haller ket enrollañ an dreuzfollenn he mod '%s'. Ar mentrezh restr PSD pe an enlugellad enrollañ ne skor ket an dra-se, grit gant ar mod reizh kentoc'h."
 
 #: ../plug-ins/file-psd/psd-save.c:634
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Fazi : n'haller ket amdreiñ ar rizh skeudenn diazez mod GIMP da vod PSD"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Fazi : n'haller ket amdreiñ ar rizh skeudenn diazez mod LIGMA da vod PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1622
 #, c-format
@@ -9398,8 +9398,8 @@ msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:485
 #: ../plug-ins/file-xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
-msgstr "Skeudenn bet koazhet GIMP XJT"
+msgid "LIGMA compressed XJT image"
+msgstr "Skeudenn bet koazhet LIGMA XJT"
 
 #: ../plug-ins/file-xjt/xjt.c:733
 #, c-format
@@ -9514,8 +9514,8 @@ msgid "Same"
 msgstr "Arstalek"
 
 #: ../plug-ins/flame/flame.c:746
-#: ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "Dargouezhek"
 
@@ -9667,16 +9667,16 @@ msgstr "K_amera"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
 #: ../plug-ins/gfig/gfig-dialog.c:275
-#: ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"%s ebet e gimprc :\n"
+"%s ebet e ligmarc :\n"
 "Ouzhpennit un enankad evel\n"
 "(%s \"%s\")\n"
 "d'ho restr %s."
@@ -10213,7 +10213,7 @@ msgid "Max undo:"
 msgstr "Uc'heg a zisoberioù :"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Boull"
 
@@ -10307,7 +10307,7 @@ msgid "Left"
 msgstr "Kleiz"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1753
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Reteradur :"
 
@@ -10365,292 +10365,292 @@ msgstr "Fazi e-pad ma oa oc'h enrollañ al lun evel arvevad : n'haller ket staga
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Fazi e-pad ma oa o klask digeriñ ar restr padennek '%s' evit kargañ an arvevad : %s"
 
-#: ../plug-ins/gimpressionist/brush.c:243
+#: ../plug-ins/ligmaressionist/brush.c:243
 msgid "Can only save drawables!"
 msgstr "Barrek eo da enrollañ tresadurioù nemetken !"
 
-#: ../plug-ins/gimpressionist/brush.c:248
+#: ../plug-ins/ligmaressionist/brush.c:248
 msgid "Save Brush"
 msgstr "Enrollañ ar broust"
 
-#: ../plug-ins/gimpressionist/brush.c:503
+#: ../plug-ins/ligmaressionist/brush.c:503
 msgid "_Brush"
 msgstr "_Broust"
 
-#: ../plug-ins/gimpressionist/brush.c:540
+#: ../plug-ins/ligmaressionist/brush.c:540
 msgid "Gamma:"
 msgstr "Gamma :"
 
-#: ../plug-ins/gimpressionist/brush.c:558
+#: ../plug-ins/ligmaressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Kemmañ a ra gamma (lintr) ar broust bet diuzet"
 
-#: ../plug-ins/gimpressionist/brush.c:566
+#: ../plug-ins/ligmaressionist/brush.c:566
 msgid "Select:"
 msgstr "Diuzañ :"
 
-#: ../plug-ins/gimpressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/brush.c:595
 msgid "Aspect ratio:"
 msgstr "Argement an neuz :"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Erspizañ ar ra kenfeur hed/led ar broust"
 
-#: ../plug-ins/gimpressionist/brush.c:608
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:608
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "Torosennadur :"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Erspizañ a ra kreñvder ar c'hoagennañ da arloañ war ar skeudenn (e dregantad)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "_Liv"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Keitad dindan ar _broust"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "Kr_eiz ar broust"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Riñvet eo al liv diwar keitad an holl bikselioù dindan ar broust"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Standilhonañ a ra al liv diwar ar piksel a zo e kreiz ar broust"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "Trou_z al liv :"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "Ouzhpennañ a ra un trouz dargouezhek d'al liv"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3530
 msgid "_General"
 msgstr "_Hollek"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Mirout an hini orinel"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Mirout ar skeudenn orinel evel drekva"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Diwar ar paper"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Eilañ gwiadezh ar paper diuzet evel drekva"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Drekva e liv unvan"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Arverañ un drekva treuzwelus ; an tresadurioù pentet a vo hewel hepken"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Pentañ ar riblennoù"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Da ziuzañ mar fell deoc'h lakaat tresadurioù a-hed da hed riblennoù ar skeudenn"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 #: ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Marellus"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Da ziuzañ mar bez ret d'ar skeudenn diwezhel bezañ unneuz"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Disheol bannet"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Ouzhpennañ a ra un efed da bep a dresadurioù broust"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "Teñvalaat ar riblennoù :"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Kreñvder an teñvalaat war riblennoù da bep a dresadurioù broust"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "Teñvalder an disheol :"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Kreñvder teñvalaat an disheol bannet"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "Donder an disheol :"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Donder an disheol bannet, da lavarout eo hed etre an disheol hag an ergorenn"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "Ruzed an disheol :"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "Kreñvder ruzed an disheol bannet"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "Gwehin diroudañ :"
 
 # bof
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "Ur werzh skodenn evit an diuzadoù azasus"
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "Sevel a ra gwezhiadurioù arzhel liesseurt"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
-msgstr "_GIMPresionour..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAresionour..."
 
-#: ../plug-ins/gimpressionist/gimp.c:164
+#: ../plug-ins/ligmaressionist/ligma.c:164
 msgid "The selection does not intersect the active layer or mask."
 msgstr "Ne genskej ket an diuzad gant an dreuzfollenn pe ar maskl oberiant."
 
-#: ../plug-ins/gimpressionist/gimp.c:391
+#: ../plug-ins/ligmaressionist/ligma.c:391
 msgid "Painting"
 msgstr "O pentañ"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPresionour"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAresionour"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "Re_teradur"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "Roudoù :"
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "An niver a roudoù (d.l.e. broustoù) da arverañ"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "Korn deraouiñ :"
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr "Korn deraouiñ ar broust kentañ da grouiñ"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "Etremez korn :"
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr "Etremez korn ar broust kentañ da grouiñ"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid "Let the value (brightness) of the region determine the direction of the stroke"
 msgstr "Leuskel gwerzh (lintr) ar maez, despizañ roud an tresadur"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "Skin"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid "The distance from the center of the image determines the direction of the stroke"
 msgstr "An hed diouzh kreiz ar skeudenn a zespiz roud an tresadur"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "Diuzañ a ra ur roud dargouezhek eus pep tresadur"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "Skinek"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Leuskel ar roud diouzh ar c'hreiz, despizañ roud an tresadur"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "Lanv"
 
 # bof
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Heñvel ouzh ur goustur lanv eo an tresadurioù"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Despizet eo roud an tresadur gant arliv ar maez"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "Azasus"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Diuzet eo ar roud o klotañ ar gwellañ gant ar skeudenn orinel"
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "Dre zorn"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "Erspizañ dre zorn reteradur an tresadur"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr "Digeriñ a ra an embanner kartenn reterañ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Embanner kartenn reterañ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Sturiadelloù"
 
-#: ../plug-ins/gimpressionist/orientmap.c:564
+#: ../plug-ins/ligmaressionist/orientmap.c:564
 msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
 msgstr ""
 "Maezienn ar sturiadell :\n"
@@ -10658,284 +10658,284 @@ msgstr ""
 "* <klikañ a-zehou> evit he sturiañ etrezek al logodenn\n"
 "* <klikañ e-kreiz> evit kengeidañ ur sturiadell nevez."
 
-#: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/ligmaressionist/orientmap.c:588
+#: ../plug-ins/ligmaressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
 msgstr "Kengeidañ lintr an alberz"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "Diuzañ ar sturiadell gent"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "Diuzañ ar sturiadell war-lerc'h"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "Ou_zhpennañ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "Ouzhpennañ ur sturiadell nevez"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "Lazhañ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "Dilemel ar sturiadell bet diuzet"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "Rizh"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "_Reizh"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "Vorte_ks"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "Vorteks_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "Vorteks_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid "Voronoi-mode makes only the vector closest to the given point have any influence"
 msgstr "Gant ar mod Voronoi ez eus ul levezon gant ar sturiadell dostañ hepken ouzh ar bikenn lavaret"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "Korn :"
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
 msgstr "Kemmañ korn ar sturiadell diuzet"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 msgid "Ang_le offset:"
 msgstr "_Linkañ ar c'horn :"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr "Linkañ an holl sturiadelloù gant ur c'horn lavaret"
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
 msgstr "Kemmañ kreñvder ar sturiadell diuzet"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 msgid "S_trength exp.:"
 msgstr "Mac'h_er kreñvder :"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Kemmañ mac'her ar c'hreñvder"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "P_apier"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 msgid "Inverts the Papers texture"
 msgstr "Tuginañ a ra gwiadezh ar paperioù"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "Go_urloañ"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Arloañ a ra ar gwiadezh evel m'emañ (hep koagennañ)"
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Erspizañ a ra skeul ar gwiadezh (e dregantad eus ar restr orinel)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Lec'hi_adur"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Lec'hiadur"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Dargouezhek"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Dasparzhet unvan"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Lec'hiañ dargouezhek an tresadurioù tro dro d'ar skeudenn"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Dasparzhet unvan eo an tresadurioù tro dro d'ar skeudenn"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Kreizet"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Stiañ tresadurioù ar broust tro dro da greiz ar skeudenn"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "_Douester an tresa_dur :"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "Douester daveel tresadurioù ar broust"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "C'hwitadenn war enrollañ ar restr PPM '%s' : %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "Enrollañ ar gwerzhioù bremanel"
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
-msgstr "Gwerzhioù dre ziouer GIMPresionour"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
+msgstr "Gwerzhioù dre ziouer LIGMAresionour"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr "_Ragarventennoù"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "Enrollañ ar gwerzhioù bremanel..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "Enrollañ an arventennoù bremanel er restr bet erspizet"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr "Lenn a ra ar ragarventennoù diuzet er vemor"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "Dilemel a ra ar ragarventennoù diuzet"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr "Adlenn teuliad ar ragarventennoù"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1182
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
 msgstr "Hi_zivaat"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Azbevaat prenestr an alberz"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Distreiñ betek ar skeudenn orinel"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Ment"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr "Adstumoù ar vent :"
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "An niver a ventoù ar broustoù da arverañ"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "Ment izek :"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "Ar broust bihanañ da grouiñ"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "Ment uc'hek :"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "Ar broust brasañ da grouiñ"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "Ar vent zo e dalc'h eus :"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Leuskel gwerzh (lintr) ar maez da zespizañ ment an tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "An hed diouzh kreiz ar skeudenn a zespiz ment an tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "Diuzañ a ra ur vent dargouezhek evit pep tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Leuskel ar roud diouzh ar c'hreiz da zespizañ ment an tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Arliv ar maez a zespiz ment an tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Ment ar broust o klotañ ar gwellañ gant ar skeudenn orinel zo diuzet"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "Erspizañ dre zorn ment an tresadur"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "Digeriñ a ra embanner kartenn ar mentoù"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/ligmaressionist/sizemap.c:397
 msgid "Size Map Editor"
 msgstr "Embanner kartenn ar mentoù"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/ligmaressionist/sizemap.c:426
 msgid "Smvectors"
 msgstr "Sturiadelloù"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/ligmaressionist/sizemap.c:436
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 "Maezienn ar sturiadell :\n"
@@ -10943,39 +10943,39 @@ msgstr ""
 "* <klikañ a-zehou> evit he sturiañ etrezek al logodenn\n"
 "* <klikañ e-kreiz> evit kengeidañ ur sturiadell nevez."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/ligmaressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "Diuzañ ar sturiadell gent"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/ligmaressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "Diuzañ ar sturiadell war-lerc'h"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/ligmaressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "Ouzhpennañ ur sturiadell nevez"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/ligmaressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "Dilemel ar sturiadell bet diuzet"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/ligmaressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "Kemmañ korn ar sturiadell bet diuzet"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "K_reñvder :"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/ligmaressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "Kemmañ kreñvder ar sturiadell diuzet"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "Mac'her ar stu_riadell :"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/ligmaressionist/sizemap.c:548
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr "Gant ar mod Voronoi ez eus ul levezon gant ar sturiadell dostañ hepken ouzh ar bikenn lavaret"
 
@@ -11336,8 +11336,8 @@ msgstr "Strinkelladurioù eilvedel"
 
 #: ../plug-ins/help-browser/dialog.c:184
 #: ../plug-ins/help-browser/dialog.c:1133
-msgid "GIMP Help Browser"
-msgstr "Merdeer skoazellañ GIMP"
+msgid "LIGMA Help Browser"
+msgstr "Merdeer skoazellañ LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:582
 msgid "Go back one page"
@@ -11392,8 +11392,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "(Diw)Gweredekaat heweluster ar varrenn du"
 
 #: ../plug-ins/help-browser/dialog.c:674
-msgid "Visit the GIMP documentation website"
-msgstr "Mont da lec'hienn deuliaduriñ GIMP"
+msgid "Visit the LIGMA documentation website"
+msgstr "Mont da lec'hienn deuliaduriñ LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
@@ -11409,34 +11409,34 @@ msgctxt "search"
 msgid "_Next"
 msgstr "War-lec'h"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "N'eo ket hegerz ar pajennadoù skoazellañ evit '%s\"."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "N'eo ket hegerz dornlev an arveriad evit GIMP."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "N'eo ket hegerz dornlev an arveriad evit LIGMA."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
-msgid "Please install the additional help package or use the online user manual at http://docs.gimp.org/."
-msgstr "Mar plij, staliit ar pakad skoazellañ ouzhpenn pe arverit dornlevr an arveriad enlinenn war http://docs.gimp.org/."
+#: ../plug-ins/help/ligmahelpdomain.c:187
+msgid "Please install the additional help package or use the online user manual at http://docs.ligma.org/."
+msgstr "Mar plij, staliit ar pakad skoazellañ ouzhpenn pe arverit dornlevr an arveriad enlinenn war http://docs.ligma.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Marteze e vank deoc'h kewerieroù GIO ha ret e vo staliañ GCFS ?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hennader (ID) skoazellañ '%s' dianav"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "O kargañ an ibil diouzh '%s\""
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11664,7 +11664,7 @@ msgid "Clear"
 msgstr "Skarzhañ"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Krouiñ"
 
@@ -11689,41 +11689,41 @@ msgid "Edit Object"
 msgstr "Embann an ergorenn"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "Arverañ dealfoù GIMP"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "Arverañ dealfoù LIGMA"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Dazeilañ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "Pep t_ra"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Ouzhpennañ dealfoù all"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "Riblenn a-gl_eiz"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "_Riblenn a-zehou"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "Riblenn _uhel"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Riblenn i_zel"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "URL _diazez :"
 
@@ -12147,8 +12147,8 @@ msgid "Grid Settings..."
 msgstr "Arventennoù ar gael..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "Arverañ dealfoù GIMP..."
+msgid "Use LIGMA Guides..."
+msgstr "Arverañ dealfoù LIGMA..."
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."
@@ -13246,12 +13246,12 @@ msgstr "Roadenn ebet bet paket"
 #~ msgstr "Ascii"
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
+#~ "if necessary - use the environment variable GS_PROG to tell LIGMA about "
 #~ "its location.\n"
 #~ "(%s)"
 #~ msgstr ""
 #~ "Fazi e-pad loc'hadur Ghostscript. Bezit sur emañ Ghostscript staliet ha - "
-#~ "mar bez ret - arverañ an argemmenn endro GS_PROG evit lavarout da GIMP a-"
+#~ "mar bez ret - arverañ an argemmenn endro GS_PROG evit lavarout da LIGMA a-"
 #~ "zivout e lec'hiadur.\n"
 #~ "(%s)"
 #~ msgid "The width of frame %d of '%s' is too big for X cursor."
@@ -13292,12 +13292,12 @@ msgstr "Roadenn ebet bet paket"
 #~ msgstr "Ment :"
 #~ msgid "Save _gamma"
 #~ msgstr "Enrollañ ar _gamma"
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "Demat ha goulloù deoc'h a-berzh pare GIMP !"
+#~ msgid "A big hello from the LIGMA team!"
+#~ msgstr "Demat ha goulloù deoc'h a-berzh pare LIGMA !"
 #~ msgid "Gee Zoom"
 #~ msgstr "Zoum Feiz"
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "Trugarez da vezañ dibabet GIMP"
+#~ msgid "Thank You for Choosing LIGMA"
+#~ msgstr "Trugarez da vezañ dibabet LIGMA"
 #~ msgid "An obsolete creation by %s"
 #~ msgstr "Ur grouidigezh diamzeriet gant %s"
 #~ msgid "Gee Slime"
@@ -13397,9 +13397,9 @@ msgstr "Roadenn ebet bet paket"
 #~ msgid "Save as XJT"
 #~ msgstr "Enrollañ e XJT"
 #~ msgid ""
-#~ "Please make sure gimp-help-en is installed, or the appropriate gimp-help "
+#~ "Please make sure ligma-help-en is installed, or the appropriate ligma-help "
 #~ "package for your language."
 #~ msgstr ""
-#~ "Bezit sur emañ staliet gimp-help-en pe ar pakad skoazellañ evit gimp en "
+#~ "Bezit sur emañ staliet ligma-help-en pe ar pakad skoazellañ evit ligma en "
 #~ "ho yezh."
 

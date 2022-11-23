@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,71 +20,71 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "paint/gimpclone.h"
-#include "paint/gimpcloneoptions.h"
+#include "paint/ligmaclone.h"
+#include "paint/ligmacloneoptions.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
+#include "display/ligmadisplay.h"
 
-#include "gimpclonetool.h"
-#include "gimpcloneoptions-gui.h"
-#include "gimptoolcontrol.h"
+#include "ligmaclonetool.h"
+#include "ligmacloneoptions-gui.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
-
-
-static gboolean   gimp_clone_tool_is_alpha_only (GimpPaintTool *paint_tool,
-                                                 GimpDrawable  *drawable);
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_SOURCE_TOOL)
+static gboolean   ligma_clone_tool_is_alpha_only (LigmaPaintTool *paint_tool,
+                                                 LigmaDrawable  *drawable);
 
-#define parent_class gimp_clone_tool_parent_class
+
+G_DEFINE_TYPE (LigmaCloneTool, ligma_clone_tool, LIGMA_TYPE_SOURCE_TOOL)
+
+#define parent_class ligma_clone_tool_parent_class
 
 
 void
-gimp_clone_tool_register (GimpToolRegisterCallback  callback,
+ligma_clone_tool_register (LigmaToolRegisterCallback  callback,
                           gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_CLONE_TOOL,
-                GIMP_TYPE_CLONE_OPTIONS,
-                gimp_clone_options_gui,
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_PROP_MASK_PATTERN,
-                "gimp-clone-tool",
+  (* callback) (LIGMA_TYPE_CLONE_TOOL,
+                LIGMA_TYPE_CLONE_OPTIONS,
+                ligma_clone_options_gui,
+                LIGMA_PAINT_OPTIONS_CONTEXT_MASK |
+                LIGMA_CONTEXT_PROP_MASK_PATTERN,
+                "ligma-clone-tool",
                 _("Clone"),
                 _("Clone Tool: Selectively copy from an image or pattern, using a brush"),
                 N_("_Clone"), "C",
-                NULL, GIMP_HELP_TOOL_CLONE,
-                GIMP_ICON_TOOL_CLONE,
+                NULL, LIGMA_HELP_TOOL_CLONE,
+                LIGMA_ICON_TOOL_CLONE,
                 data);
 }
 
 static void
-gimp_clone_tool_class_init (GimpCloneToolClass *klass)
+ligma_clone_tool_class_init (LigmaCloneToolClass *klass)
 {
-  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+  LigmaPaintToolClass *paint_tool_class = LIGMA_PAINT_TOOL_CLASS (klass);
 
-  paint_tool_class->is_alpha_only = gimp_clone_tool_is_alpha_only;
+  paint_tool_class->is_alpha_only = ligma_clone_tool_is_alpha_only;
 }
 
 static void
-gimp_clone_tool_init (GimpCloneTool *clone)
+ligma_clone_tool_init (LigmaCloneTool *clone)
 {
-  GimpTool       *tool        = GIMP_TOOL (clone);
-  GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
-  GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
+  LigmaTool       *tool        = LIGMA_TOOL (clone);
+  LigmaPaintTool  *paint_tool  = LIGMA_PAINT_TOOL (tool);
+  LigmaSourceTool *source_tool = LIGMA_SOURCE_TOOL (tool);
 
-  gimp_tool_control_set_tool_cursor     (tool->control,
-                                         GIMP_TOOL_CURSOR_CLONE);
-  gimp_tool_control_set_action_object_2 (tool->control,
+  ligma_tool_control_set_tool_cursor     (tool->control,
+                                         LIGMA_TOOL_CURSOR_CLONE);
+  ligma_tool_control_set_action_object_2 (tool->control,
                                          "context/context-pattern-select-set");
 
   paint_tool->status      = _("Click to clone");
@@ -97,12 +97,12 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 }
 
 static gboolean
-gimp_clone_tool_is_alpha_only (GimpPaintTool *paint_tool,
-                               GimpDrawable  *drawable)
+ligma_clone_tool_is_alpha_only (LigmaPaintTool *paint_tool,
+                               LigmaDrawable  *drawable)
 {
-  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
-  GimpContext      *context       = GIMP_CONTEXT (paint_options);
-  GimpLayerMode     paint_mode    = gimp_context_get_paint_mode (context);
+  LigmaPaintOptions *paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  LigmaContext      *context       = LIGMA_CONTEXT (paint_options);
+  LigmaLayerMode     paint_mode    = ligma_context_get_paint_mode (context);
 
-  return gimp_layer_mode_is_alpha_only (paint_mode);
+  return ligma_layer_mode_is_alpha_only (paint_mode);
 }

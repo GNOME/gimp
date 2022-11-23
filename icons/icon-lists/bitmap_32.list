@@ -1,20 +1,20 @@
-gimp-channel-alpha
-gimp-channel-blue
-gimp-channel-gray
-gimp-channel-green
-gimp-channel-indexed
-gimp-channel-red
-gimp-channel
+ligma-channel-alpha
+ligma-channel-blue
+ligma-channel-gray
+ligma-channel-green
+ligma-channel-indexed
+ligma-channel-red
+ligma-channel
 # In data/tool-presets/FX/Glow-Lights.gtp preset icon, which can be
-# viewed in "Tool Presets" list/grid as GIMP_VIEW_SIZE_MEDIUM.
-gimp-color-triangle
-gimp-floating-selection
-gimp-image
-gimp-layer-mask
-gimp-layer
-gimp-text-layer
-gimp-user-manual
-gimp-wilber
+# viewed in "Tool Presets" list/grid as LIGMA_VIEW_SIZE_MEDIUM.
+ligma-color-triangle
+ligma-floating-selection
+ligma-image
+ligma-layer-mask
+ligma-layer
+ligma-text-layer
+ligma-user-manual
+ligma-wilber
 
-# GIMP_ICON_PALETTE used for Palettes dialog as GIMP_VIEW_SIZE_MEDIUM
+# LIGMA_ICON_PALETTE used for Palettes dialog as LIGMA_VIEW_SIZE_MEDIUM
 gtk-select-color

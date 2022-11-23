@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -26,8 +26,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligma/ligma.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "imap_commands.h"
 #include "imap_default_dialog.h"
@@ -35,13 +35,13 @@
 #include "imap_rectangle.h"
 #include "imap_ui_grid.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 typedef struct {
   DefaultDialog_t      *dialog;
 
   ObjectList_t         *list;
-  GimpDrawable         *drawable;
+  LigmaDrawable         *drawable;
 
   GtkWidget            *alternate;
   GtkWidget            *all;
@@ -50,7 +50,7 @@ typedef struct {
   GtkWidget            *upper_border;
   GtkWidget            *lower_border;
   GtkWidget            *url;
-} GimpGuidesDialog_t;
+} LigmaGuidesDialog_t;
 
 static gint
 guide_sort_func(gconstpointer a, gconstpointer b)
@@ -59,15 +59,15 @@ guide_sort_func(gconstpointer a, gconstpointer b)
 }
 
 static void
-gimp_guides_ok_cb(gpointer data)
+ligma_guides_ok_cb(gpointer data)
 {
-   GimpGuidesDialog_t *param = (GimpGuidesDialog_t*) data;
+   LigmaGuidesDialog_t *param = (LigmaGuidesDialog_t*) data;
    gint  guide_num;
    GSList *hguides, *hg;
    GSList *vguides, *vg;
    gboolean all;
    const gchar *url;
-   GimpImage *image = gimp_item_get_image (GIMP_ITEM (param->drawable));
+   LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (param->drawable));
 
    /* First get some dialog values */
 
@@ -80,7 +80,7 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->right_border)))
       vguides = g_slist_append(vguides,
-                               GINT_TO_POINTER(gimp_image_get_width(image)));
+                               GINT_TO_POINTER(ligma_image_get_width(image)));
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->upper_border)))
       hguides = g_slist_append(NULL, GINT_TO_POINTER(0));
@@ -89,31 +89,31 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->lower_border)))
       hguides = g_slist_append(hguides,
-                               GINT_TO_POINTER(gimp_image_get_height(image)));
+                               GINT_TO_POINTER(ligma_image_get_height(image)));
 
    url = gtk_entry_get_text(GTK_ENTRY(param->url));
 
-   /* Next get all the GIMP guides */
+   /* Next get all the LIGMA guides */
 
-   guide_num = gimp_image_find_next_guide(image, 0);
+   guide_num = ligma_image_find_next_guide(image, 0);
 
    while (guide_num > 0) {
-      gint position = gimp_image_get_guide_position(image, guide_num);
+      gint position = ligma_image_get_guide_position(image, guide_num);
 
-      if (gimp_image_get_guide_orientation(image, guide_num)
-          == GIMP_ORIENTATION_HORIZONTAL) {
+      if (ligma_image_get_guide_orientation(image, guide_num)
+          == LIGMA_ORIENTATION_HORIZONTAL) {
          hguides = g_slist_insert_sorted(hguides, GINT_TO_POINTER(position),
                                          guide_sort_func);
-      } else {                  /* GIMP_ORIENTATION_VERTICAL */
+      } else {                  /* LIGMA_ORIENTATION_VERTICAL */
          vguides = g_slist_insert_sorted(vguides, GINT_TO_POINTER(position),
                                          guide_sort_func);
       }
-      guide_num = gimp_image_find_next_guide(image, guide_num);
+      guide_num = ligma_image_find_next_guide(image, guide_num);
    }
 
    /* Create the areas */
 
-   subcommand_start(_("Use Gimp Guides"));
+   subcommand_start(_("Use Ligma Guides"));
 
    for (hg = hguides; hg && hg->next;
         hg = (all) ? hg->next : hg->next->next) {
@@ -135,19 +135,19 @@ gimp_guides_ok_cb(gpointer data)
    preview_redraw();
 }
 
-static GimpGuidesDialog_t*
-make_gimp_guides_dialog(void)
+static LigmaGuidesDialog_t*
+make_ligma_guides_dialog(void)
 {
-   GimpGuidesDialog_t *data = g_new(GimpGuidesDialog_t, 1);
+   LigmaGuidesDialog_t *data = g_new(LigmaGuidesDialog_t, 1);
    DefaultDialog_t *dialog;
    GtkWidget *grid, *frame, *hbox, *vbox;
    GtkWidget *label;
 
-   dialog = data->dialog = make_default_dialog(_("Use Gimp Guides"));
-   default_dialog_set_ok_cb(dialog, gimp_guides_ok_cb, data);
+   dialog = data->dialog = make_default_dialog(_("Use Ligma Guides"));
+   default_dialog_set_ok_cb(dialog, ligma_guides_ok_cb, data);
    grid = default_dialog_add_grid (dialog);
 
-   frame = gimp_frame_new(_("Create"));
+   frame = ligma_frame_new(_("Create"));
    gtk_widget_show(frame);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 1, 1);
 
@@ -165,7 +165,7 @@ make_gimp_guides_dialog(void)
    gtk_box_pack_start(GTK_BOX(hbox), data->all, FALSE, FALSE, 0);
    gtk_widget_show(data->all);
 
-   frame = gimp_frame_new(_("Add Additional Guides"));
+   frame = ligma_frame_new(_("Add Additional Guides"));
    gtk_widget_show(frame);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 1, 1, 1);
 
@@ -207,32 +207,32 @@ make_gimp_guides_dialog(void)
 }
 
 static void
-init_gimp_guides_dialog (GimpGuidesDialog_t *dialog,
+init_ligma_guides_dialog (LigmaGuidesDialog_t *dialog,
                          ObjectList_t *list,
-                         GimpDrawable *drawable)
+                         LigmaDrawable *drawable)
 {
    dialog->list = list;
    dialog->drawable = drawable;
 }
 
 static void
-do_create_gimp_guides_dialog (ObjectList_t *list,
-                              GimpDrawable *drawable)
+do_create_ligma_guides_dialog (ObjectList_t *list,
+                              LigmaDrawable *drawable)
 {
-   static GimpGuidesDialog_t *dialog;
+   static LigmaGuidesDialog_t *dialog;
 
    if (!dialog)
-      dialog = make_gimp_guides_dialog();
+      dialog = make_ligma_guides_dialog();
 
-   init_gimp_guides_dialog(dialog, list, drawable);
+   init_ligma_guides_dialog(dialog, list, drawable);
    default_dialog_show(dialog->dialog);
 }
 
-static CmdExecuteValue_t gimp_guides_command_execute(Command_t *parent);
+static CmdExecuteValue_t ligma_guides_command_execute(Command_t *parent);
 
-static CommandClass_t gimp_guides_command_class = {
+static CommandClass_t ligma_guides_command_class = {
    NULL,                        /* guides_command_destruct */
-   gimp_guides_command_execute,
+   ligma_guides_command_execute,
    NULL,                        /* guides_command_undo */
    NULL                         /* guides_command_redo */
 };
@@ -240,24 +240,24 @@ static CommandClass_t gimp_guides_command_class = {
 typedef struct {
   Command_t parent;
   ObjectList_t *list;
-  GimpDrawable *drawable;
-} GimpGuidesCommand_t;
+  LigmaDrawable *drawable;
+} LigmaGuidesCommand_t;
 
 Command_t*
-gimp_guides_command_new (ObjectList_t *list,
-                         GimpDrawable *drawable)
+ligma_guides_command_new (ObjectList_t *list,
+                         LigmaDrawable *drawable)
 {
-   GimpGuidesCommand_t *command = g_new(GimpGuidesCommand_t, 1);
+   LigmaGuidesCommand_t *command = g_new(LigmaGuidesCommand_t, 1);
    command->list = list;
    command->drawable = drawable;
-   return command_init(&command->parent, _("Use Gimp Guides"),
-                       &gimp_guides_command_class);
+   return command_init(&command->parent, _("Use Ligma Guides"),
+                       &ligma_guides_command_class);
 }
 
 static CmdExecuteValue_t
-gimp_guides_command_execute(Command_t *parent)
+ligma_guides_command_execute(Command_t *parent)
 {
-   GimpGuidesCommand_t *command = (GimpGuidesCommand_t*) parent;
-   do_create_gimp_guides_dialog(command->list, command->drawable);
+   LigmaGuidesCommand_t *command = (LigmaGuidesCommand_t*) parent;
+   do_create_ligma_guides_dialog(command->list, command->drawable);
    return CMD_DESTRUCT;
 }

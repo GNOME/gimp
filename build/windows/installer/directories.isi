@@ -20,20 +20,20 @@
 #define DIR64 "x86_64-w64-mingw32"
 #endif
 
-#ifndef GIMP_DIR
-	#define GIMP_DIR "N:\gimp\output\" + VER_DIR
+#ifndef LIGMA_DIR
+	#define LIGMA_DIR "N:\ligma\output\" + VER_DIR
 #endif
 #ifndef DEPS_DIR
-	#define DEPS_DIR "N:\gimp\deps"
+	#define DEPS_DIR "N:\ligma\deps"
 #endif
 
-//32-bit GIMP base directory (result of make install)
-#ifndef GIMP_DIR32
-	#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+//32-bit LIGMA base directory (result of make install)
+#ifndef LIGMA_DIR32
+	#define LIGMA_DIR32 LIGMA_DIR + "\" + DIR32
 #endif
-//64-bit GIMP base directory (result of make install)
-#ifndef GIMP_DIR64
-	#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+//64-bit LIGMA base directory (result of make install)
+#ifndef LIGMA_DIR64
+	#define LIGMA_DIR64 LIGMA_DIR + "\" + DIR64
 #endif
 
 #ifndef DDIR32

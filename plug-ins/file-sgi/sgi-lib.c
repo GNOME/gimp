@@ -36,7 +36,7 @@
  *
  *   $Log$
  *   Revision 1.9  2005/03/04 13:23:31  neo
- *   2005-03-04  Sven Neumann  <sven@gimp.org>
+ *   2005-03-04  Sven Neumann  <sven@ligma.org>
  *
  *      * plug-ins/FractalExplorer
  *      * plug-ins/Lighting
@@ -48,7 +48,7 @@
  *      * plug-ins/gfig
  *      * plug-ins/gflare
  *      * plug-ins/gfli
- *      * plug-ins/gimpressionist
+ *      * plug-ins/ligmaressionist
  *      * plug-ins/ifscompose
  *      * plug-ins/jpeg
  *      * plug-ins/maze
@@ -64,7 +64,7 @@
  *      minor fixes to filename handling here and there.
  *
  *   Revision 1.8  2003/04/07 11:59:33  neo
- *   2003-04-07  Sven Neumann  <sven@gimp.org>
+ *   2003-04-07  Sven Neumann  <sven@ligma.org>
  *
  *      * plug-ins/sgi/sgi.h
  *      * plug-ins/sgi/sgilib.c: applied a patch from marek@aki.cz that

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpspinbutton.c
+ * ligmaspinbutton.c
  * Copyright (C) 2018 Ell
  *
  * This library is free software: you can redistribute it and/or
@@ -27,19 +27,19 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpspinbutton.h"
+#include "ligmaspinbutton.h"
 
 
 /**
- * SECTION: gimpspinbutton
- * @title: GimpSpinButton
+ * SECTION: ligmaspinbutton
+ * @title: LigmaSpinButton
  * @short_description: A #GtkSpinButton with a some tweaked functionality.
  *
- * #GimpSpinButton is a drop-in replacement for #GtkSpinButton, with the
+ * #LigmaSpinButton is a drop-in replacement for #GtkSpinButton, with the
  * following changes:
  *
  *   - When the spin-button loses focus, its adjustment value is only
@@ -55,7 +55,7 @@
 #define MAX_DIGITS 20
 
 
-struct _GimpSpinButtonPrivate
+struct _LigmaSpinButtonPrivate
 {
   gboolean changed;
 };
@@ -63,57 +63,57 @@ struct _GimpSpinButtonPrivate
 
 /*  local function prototypes  */
 
-static gboolean   gimp_spin_button_scroll    (GtkWidget      *widget,
+static gboolean   ligma_spin_button_scroll    (GtkWidget      *widget,
                                               GdkEventScroll *event);
-static gboolean   gimp_spin_button_key_press (GtkWidget      *widget,
+static gboolean   ligma_spin_button_key_press (GtkWidget      *widget,
                                               GdkEventKey    *event);
-static gboolean   gimp_spin_button_focus_in  (GtkWidget      *widget,
+static gboolean   ligma_spin_button_focus_in  (GtkWidget      *widget,
                                               GdkEventFocus  *event);
-static gboolean   gimp_spin_button_focus_out (GtkWidget      *widget,
+static gboolean   ligma_spin_button_focus_out (GtkWidget      *widget,
                                               GdkEventFocus  *event);
 
-static gint       gimp_spin_button_input     (GtkSpinButton  *spin_button,
+static gint       ligma_spin_button_input     (GtkSpinButton  *spin_button,
                                               gdouble        *new_value);
 
-static void       gimp_spin_button_changed   (GtkEditable    *editable,
+static void       ligma_spin_button_changed   (GtkEditable    *editable,
                                               gpointer        data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinButton, gimp_spin_button,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSpinButton, ligma_spin_button,
                             GTK_TYPE_SPIN_BUTTON)
 
-#define parent_class gimp_spin_button_parent_class
+#define parent_class ligma_spin_button_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_spin_button_class_init (GimpSpinButtonClass *klass)
+ligma_spin_button_class_init (LigmaSpinButtonClass *klass)
 {
   GtkWidgetClass     *widget_class      = GTK_WIDGET_CLASS (klass);
   GtkSpinButtonClass *spin_button_class = GTK_SPIN_BUTTON_CLASS (klass);
 
-  widget_class->scroll_event    = gimp_spin_button_scroll;
-  widget_class->key_press_event = gimp_spin_button_key_press;
-  widget_class->focus_in_event  = gimp_spin_button_focus_in;
-  widget_class->focus_out_event = gimp_spin_button_focus_out;
+  widget_class->scroll_event    = ligma_spin_button_scroll;
+  widget_class->key_press_event = ligma_spin_button_key_press;
+  widget_class->focus_in_event  = ligma_spin_button_focus_in;
+  widget_class->focus_out_event = ligma_spin_button_focus_out;
 
-  spin_button_class->input      = gimp_spin_button_input;
+  spin_button_class->input      = ligma_spin_button_input;
 }
 
 static void
-gimp_spin_button_init (GimpSpinButton *spin_button)
+ligma_spin_button_init (LigmaSpinButton *spin_button)
 {
-  spin_button->priv = gimp_spin_button_get_instance_private (spin_button);
+  spin_button->priv = ligma_spin_button_get_instance_private (spin_button);
 
   g_signal_connect (spin_button, "changed",
-                    G_CALLBACK (gimp_spin_button_changed),
+                    G_CALLBACK (ligma_spin_button_changed),
                     NULL);
 }
 
 static gboolean
-gimp_spin_button_scroll (GtkWidget      *widget,
+ligma_spin_button_scroll (GtkWidget      *widget,
                          GdkEventScroll *event)
 {
   if (event->direction == GDK_SCROLL_UP ||
@@ -159,7 +159,7 @@ gimp_spin_button_scroll (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_spin_button_key_press (GtkWidget   *widget,
+ligma_spin_button_key_press (GtkWidget   *widget,
                             GdkEventKey *event)
 {
   switch (event->keyval)
@@ -205,10 +205,10 @@ gimp_spin_button_key_press (GtkWidget   *widget,
 }
 
 static gboolean
-gimp_spin_button_focus_in (GtkWidget     *widget,
+ligma_spin_button_focus_in (GtkWidget     *widget,
                            GdkEventFocus *event)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (widget);
+  LigmaSpinButton *spin_button = LIGMA_SPIN_BUTTON (widget);
 
   spin_button->priv->changed = FALSE;
 
@@ -216,10 +216,10 @@ gimp_spin_button_focus_in (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_spin_button_focus_out (GtkWidget     *widget,
+ligma_spin_button_focus_out (GtkWidget     *widget,
                             GdkEventFocus *event)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (widget);
+  LigmaSpinButton *spin_button = LIGMA_SPIN_BUTTON (widget);
   gboolean        editable;
   gboolean        result;
 
@@ -237,7 +237,7 @@ gimp_spin_button_focus_out (GtkWidget     *widget,
 }
 
 static gint
-gimp_spin_button_input (GtkSpinButton *spin_button,
+ligma_spin_button_input (GtkSpinButton *spin_button,
                         gdouble       *new_value)
 {
   if (gtk_spin_button_get_wrap (spin_button))
@@ -282,10 +282,10 @@ gimp_spin_button_input (GtkSpinButton *spin_button,
 }
 
 static void
-gimp_spin_button_changed (GtkEditable *editable,
+ligma_spin_button_changed (GtkEditable *editable,
                           gpointer     data)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (editable);
+  LigmaSpinButton *spin_button = LIGMA_SPIN_BUTTON (editable);
 
   spin_button->priv->changed = TRUE;
 }
@@ -295,7 +295,7 @@ gimp_spin_button_changed (GtkEditable *editable,
 
 
 /**
- * gimp_spin_button_new:
+ * ligma_spin_button_new:
  * @adjustment: (allow-none): the #GtkAdjustment object that this spin
  *                            button should use, or %NULL
  * @climb_rate:               specifies by how much the rate of change in the
@@ -303,14 +303,14 @@ gimp_spin_button_changed (GtkEditable *editable,
  *                            down an up/down button or arrow key
  * @digits:                   the number of decimal places to display
  *
- * Creates a new #GimpSpinButton.
+ * Creates a new #LigmaSpinButton.
  *
  * Returns: The new spin button as a #GtkWidget
  *
  * Since: 2.10.10
  */
 GtkWidget *
-gimp_spin_button_new (GtkAdjustment *adjustment,
+ligma_spin_button_new (GtkAdjustment *adjustment,
                       gdouble        climb_rate,
                       guint          digits)
 {
@@ -319,7 +319,7 @@ gimp_spin_button_new (GtkAdjustment *adjustment,
   g_return_val_if_fail (adjustment == NULL || GTK_IS_ADJUSTMENT (adjustment),
                         NULL);
 
-  spin_button = g_object_new (GIMP_TYPE_SPIN_BUTTON, NULL);
+  spin_button = g_object_new (LIGMA_TYPE_SPIN_BUTTON, NULL);
 
   gtk_spin_button_configure (GTK_SPIN_BUTTON (spin_button),
                              adjustment, climb_rate, digits);
@@ -328,13 +328,13 @@ gimp_spin_button_new (GtkAdjustment *adjustment,
 }
 
 /**
- * gimp_spin_button_new_with_range:
+ * ligma_spin_button_new_with_range:
  * @min:  Minimum allowable value
  * @max:  Maximum allowable value
  * @step: Increment added or subtracted by spinning the widget
  *
  * This is a convenience constructor that allows creation of a numeric
- * #GimpSpinButton without manually creating an adjustment.  The value is
+ * #LigmaSpinButton without manually creating an adjustment.  The value is
  * initially set to the minimum value and a page increment of 10 * @step
  * is the default.  The precision of the spin button is equivalent to the
  * precision of @step.
@@ -348,7 +348,7 @@ gimp_spin_button_new (GtkAdjustment *adjustment,
  * Since: 2.10.10
  */
 GtkWidget *
-gimp_spin_button_new_with_range (gdouble min,
+ligma_spin_button_new_with_range (gdouble min,
                                  gdouble max,
                                  gdouble step)
 {
@@ -359,7 +359,7 @@ gimp_spin_button_new_with_range (gdouble min,
   g_return_val_if_fail (min <= max, NULL);
   g_return_val_if_fail (step != 0.0, NULL);
 
-  spin_button = g_object_new (GIMP_TYPE_SPIN_BUTTON, NULL);
+  spin_button = g_object_new (LIGMA_TYPE_SPIN_BUTTON, NULL);
 
   adjustment = gtk_adjustment_new (min, min, max, step, 10.0 * step, 0.0);
 

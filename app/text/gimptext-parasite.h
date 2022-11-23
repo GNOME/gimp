@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_PARASITE_H__
-#define __GIMP_TEXT_PARASITE_H__
+#ifndef __LIGMA_TEXT_PARASITE_H__
+#define __LIGMA_TEXT_PARASITE_H__
 
 
-const gchar  * gimp_text_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_text_to_parasite            (GimpText      *text);
-GimpText     * gimp_text_from_parasite          (const GimpParasite  *parasite,
-                                                 Gimp                *gimp,
+const gchar  * ligma_text_parasite_name          (void) G_GNUC_CONST;
+LigmaParasite * ligma_text_to_parasite            (LigmaText      *text);
+LigmaText     * ligma_text_from_parasite          (const LigmaParasite  *parasite,
+                                                 Ligma                *ligma,
                                                  GError             **error);
 
-const gchar  * gimp_text_gdyntext_parasite_name (void) G_GNUC_CONST;
-GimpText     * gimp_text_from_gdyntext_parasite (const GimpParasite  *parasite);
+const gchar  * ligma_text_gdyntext_parasite_name (void) G_GNUC_CONST;
+LigmaText     * ligma_text_from_gdyntext_parasite (const LigmaParasite  *parasite);
 
 
-#endif /* __GIMP_TEXT_PARASITE_H__ */
+#endif /* __LIGMA_TEXT_PARASITE_H__ */

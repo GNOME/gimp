@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,43 +15,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE__UNDO_H__
-#define __GIMP_IMAGE__UNDO_H__
+#ifndef __LIGMA_IMAGE__UNDO_H__
+#define __LIGMA_IMAGE__UNDO_H__
 
 
-gboolean        gimp_image_undo_is_enabled      (GimpImage     *image);
-gboolean        gimp_image_undo_enable          (GimpImage     *image);
-gboolean        gimp_image_undo_disable         (GimpImage     *image);
-gboolean        gimp_image_undo_freeze          (GimpImage     *image);
-gboolean        gimp_image_undo_thaw            (GimpImage     *image);
+gboolean        ligma_image_undo_is_enabled      (LigmaImage     *image);
+gboolean        ligma_image_undo_enable          (LigmaImage     *image);
+gboolean        ligma_image_undo_disable         (LigmaImage     *image);
+gboolean        ligma_image_undo_freeze          (LigmaImage     *image);
+gboolean        ligma_image_undo_thaw            (LigmaImage     *image);
 
-gboolean        gimp_image_undo                 (GimpImage     *image);
-gboolean        gimp_image_redo                 (GimpImage     *image);
+gboolean        ligma_image_undo                 (LigmaImage     *image);
+gboolean        ligma_image_redo                 (LigmaImage     *image);
 
-gboolean        gimp_image_strong_undo          (GimpImage     *image);
-gboolean        gimp_image_strong_redo          (GimpImage     *image);
+gboolean        ligma_image_strong_undo          (LigmaImage     *image);
+gboolean        ligma_image_strong_redo          (LigmaImage     *image);
 
-GimpUndoStack * gimp_image_get_undo_stack       (GimpImage     *image);
-GimpUndoStack * gimp_image_get_redo_stack       (GimpImage     *image);
+LigmaUndoStack * ligma_image_get_undo_stack       (LigmaImage     *image);
+LigmaUndoStack * ligma_image_get_redo_stack       (LigmaImage     *image);
 
-void            gimp_image_undo_free            (GimpImage     *image);
+void            ligma_image_undo_free            (LigmaImage     *image);
 
-gint            gimp_image_get_undo_group_count (GimpImage     *image);
-gboolean        gimp_image_undo_group_start     (GimpImage     *image,
-                                                 GimpUndoType   undo_type,
+gint            ligma_image_get_undo_group_count (LigmaImage     *image);
+gboolean        ligma_image_undo_group_start     (LigmaImage     *image,
+                                                 LigmaUndoType   undo_type,
                                                  const gchar   *name);
-gboolean        gimp_image_undo_group_end       (GimpImage     *image);
+gboolean        ligma_image_undo_group_end       (LigmaImage     *image);
 
-GimpUndo      * gimp_image_undo_push            (GimpImage     *image,
+LigmaUndo      * ligma_image_undo_push            (LigmaImage     *image,
                                                  GType          object_type,
-                                                 GimpUndoType   undo_type,
+                                                 LigmaUndoType   undo_type,
                                                  const gchar   *name,
-                                                 GimpDirtyMask  dirty_mask,
+                                                 LigmaDirtyMask  dirty_mask,
                                                  ...) G_GNUC_NULL_TERMINATED;
 
-GimpUndo      * gimp_image_undo_can_compress    (GimpImage     *image,
+LigmaUndo      * ligma_image_undo_can_compress    (LigmaImage     *image,
                                                  GType          object_type,
-                                                 GimpUndoType   undo_type);
+                                                 LigmaUndoType   undo_type);
 
 
-#endif /* __GIMP_IMAGE__UNDO_H__ */
+#endif /* __LIGMA_IMAGE__UNDO_H__ */

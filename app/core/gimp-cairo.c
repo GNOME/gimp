@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-cairo.c
- * Copyright (C) 2010-2012  Michael Natterer <mitch@gimp.org>
+ * ligma-cairo.c
+ * Copyright (C) 2010-2012  Michael Natterer <mitch@ligma.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -27,12 +27,12 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimp-cairo.h"
+#include "ligma-cairo.h"
 
 
 #define REV (2.0 * G_PI)
@@ -42,8 +42,8 @@ static cairo_user_data_key_t surface_data_key = { 0, };
 
 
 cairo_pattern_t *
-gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
-                                   const GimpRGB *bg,
+ligma_cairo_pattern_create_stipple (const LigmaRGB *fg,
+                                   const LigmaRGB *bg,
                                    gint           index,
                                    gdouble        offset_x,
                                    gdouble        offset_y)
@@ -61,8 +61,8 @@ gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
 
   data = g_malloc (8 * 8 * 4);
 
-  gimp_rgba_get_uchar (fg, &fg_r, &fg_g, &fg_b, &fg_a);
-  gimp_rgba_get_uchar (bg, &bg_r, &bg_g, &bg_b, &bg_a);
+  ligma_rgba_get_uchar (fg, &fg_r, &fg_g, &fg_b, &fg_a);
+  ligma_rgba_get_uchar (bg, &bg_r, &bg_g, &bg_b, &bg_a);
 
   d = data;
 
@@ -71,9 +71,9 @@ gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
       for (x = 0; x < 8; x++)
         {
           if ((x + y + index) % 8 >= 4)
-            GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
+            LIGMA_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
           else
-            GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
+            LIGMA_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
 
           d += 4;
         }
@@ -104,7 +104,7 @@ gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
 }
 
 void
-gimp_cairo_arc (cairo_t *cr,
+ligma_cairo_arc (cairo_t *cr,
                 gdouble  center_x,
                 gdouble  center_y,
                 gdouble  radius,
@@ -128,7 +128,7 @@ gimp_cairo_arc (cairo_t *cr,
 }
 
 void
-gimp_cairo_rounded_rectangle (cairo_t *cr,
+ligma_cairo_rounded_rectangle (cairo_t *cr,
                               gdouble  x,
                               gdouble  y,
                               gdouble  width,
@@ -192,8 +192,8 @@ gimp_cairo_rounded_rectangle (cairo_t *cr,
 }
 
 void
-gimp_cairo_segments (cairo_t     *cr,
-                     GimpSegment *segs,
+ligma_cairo_segments (cairo_t     *cr,
+                     LigmaSegment *segs,
                      gint         n_segs)
 {
   gint i;

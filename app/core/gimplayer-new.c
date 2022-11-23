@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,60 +21,60 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimpbuffer.h"
-#include "gimpimage.h"
-#include "gimpimage-color-profile.h"
-#include "gimplayer.h"
-#include "gimplayer-new.h"
+#include "ligmabuffer.h"
+#include "ligmaimage.h"
+#include "ligmaimage-color-profile.h"
+#include "ligmalayer.h"
+#include "ligmalayer-new.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_layer_new_convert_buffer (GimpLayer         *layer,
+static void   ligma_layer_new_convert_buffer (LigmaLayer         *layer,
                                              GeglBuffer        *src_buffer,
-                                             GimpColorProfile  *src_profile,
+                                             LigmaColorProfile  *src_profile,
                                              GError           **error);
 
 
 /*  public functions  */
 
-GimpLayer *
-gimp_layer_new (GimpImage     *image,
+LigmaLayer *
+ligma_layer_new (LigmaImage     *image,
                 gint           width,
                 gint           height,
                 const Babl    *format,
                 const gchar   *name,
                 gdouble        opacity,
-                GimpLayerMode  mode)
+                LigmaLayerMode  mode)
 {
-  GimpLayer *layer;
+  LigmaLayer *layer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  layer = GIMP_LAYER (gimp_drawable_new (GIMP_TYPE_LAYER,
+  layer = LIGMA_LAYER (ligma_drawable_new (LIGMA_TYPE_LAYER,
                                          image, name,
                                          0, 0, width, height,
                                          format));
 
-  gimp_layer_set_opacity (layer, opacity, FALSE);
-  gimp_layer_set_mode (layer, mode, FALSE);
+  ligma_layer_set_opacity (layer, opacity, FALSE);
+  ligma_layer_set_mode (layer, mode, FALSE);
 
   return layer;
 }
 
 /**
- * gimp_layer_new_from_buffer:
+ * ligma_layer_new_from_buffer:
  * @buffer:     The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.
  * @format:     The #Babl format of the new layer.
@@ -88,26 +88,26 @@ gimp_layer_new (GimpImage     *image,
  *
  * Returns: The new layer.
  **/
-GimpLayer *
-gimp_layer_new_from_buffer (GimpBuffer    *buffer,
-                            GimpImage     *dest_image,
+LigmaLayer *
+ligma_layer_new_from_buffer (LigmaBuffer    *buffer,
+                            LigmaImage     *dest_image,
                             const Babl    *format,
                             const gchar   *name,
                             gdouble        opacity,
-                            GimpLayerMode  mode)
+                            LigmaLayerMode  mode)
 {
-  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (LIGMA_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  return gimp_layer_new_from_gegl_buffer (gimp_buffer_get_buffer (buffer),
+  return ligma_layer_new_from_gegl_buffer (ligma_buffer_get_buffer (buffer),
                                           dest_image, format,
                                           name, opacity, mode,
-                                          gimp_buffer_get_color_profile (buffer));
+                                          ligma_buffer_get_color_profile (buffer));
 }
 
 /**
- * gimp_layer_new_from_gegl_buffer:
+ * ligma_layer_new_from_gegl_buffer:
  * @buffer:     The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.
  * @format:     The #Babl format of the new layer.
@@ -121,44 +121,44 @@ gimp_layer_new_from_buffer (GimpBuffer    *buffer,
  *
  * Returns: The new layer.
  **/
-GimpLayer *
-gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
-                                 GimpImage        *dest_image,
+LigmaLayer *
+ligma_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
+                                 LigmaImage        *dest_image,
                                  const Babl       *format,
                                  const gchar      *name,
                                  gdouble           opacity,
-                                 GimpLayerMode     mode,
-                                 GimpColorProfile *buffer_profile)
+                                 LigmaLayerMode     mode,
+                                 LigmaColorProfile *buffer_profile)
 {
-  GimpLayer           *layer;
+  LigmaLayer           *layer;
   const GeglRectangle *extent;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (buffer_profile == NULL ||
-                        GIMP_IS_COLOR_PROFILE (buffer_profile), NULL);
+                        LIGMA_IS_COLOR_PROFILE (buffer_profile), NULL);
 
   extent = gegl_buffer_get_extent (buffer);
 
   /*  do *not* use the buffer's format because this function gets
    *  buffers of any format passed, and converts them
    */
-  layer = gimp_layer_new (dest_image,
+  layer = ligma_layer_new (dest_image,
                           extent->width, extent->height,
                           format,
                           name, opacity, mode);
 
   if (extent->x != 0 || extent->y != 0)
-    gimp_item_translate (GIMP_ITEM (layer), extent->x, extent->y, FALSE);
+    ligma_item_translate (LIGMA_ITEM (layer), extent->x, extent->y, FALSE);
 
-  gimp_layer_new_convert_buffer (layer, buffer, buffer_profile, NULL);
+  ligma_layer_new_convert_buffer (layer, buffer, buffer_profile, NULL);
 
   return layer;
 }
 
 /**
- * gimp_layer_new_from_pixbuf:
+ * ligma_layer_new_from_pixbuf:
  * @pixbuf:     The pixbuf to make the new layer from.
  * @dest_image: The image the new layer will be added to.
  * @format:     The #Babl format of the new layer.
@@ -172,40 +172,40 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
  *
  * Returns: The new layer.
  **/
-GimpLayer *
-gimp_layer_new_from_pixbuf (GdkPixbuf     *pixbuf,
-                            GimpImage     *dest_image,
+LigmaLayer *
+ligma_layer_new_from_pixbuf (GdkPixbuf     *pixbuf,
+                            LigmaImage     *dest_image,
                             const Babl    *format,
                             const gchar   *name,
                             gdouble        opacity,
-                            GimpLayerMode  mode)
+                            LigmaLayerMode  mode)
 {
-  GimpLayer        *layer;
+  LigmaLayer        *layer;
   GeglBuffer       *buffer;
   guint8           *icc_data;
   gsize             icc_len;
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  layer = gimp_layer_new (dest_image,
+  layer = ligma_layer_new (dest_image,
                           gdk_pixbuf_get_width  (pixbuf),
                           gdk_pixbuf_get_height (pixbuf),
                           format, name, opacity, mode);
 
-  buffer = gimp_pixbuf_create_buffer (pixbuf);
+  buffer = ligma_pixbuf_create_buffer (pixbuf);
 
-  icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
+  icc_data = ligma_pixbuf_get_icc_profile (pixbuf, &icc_len);
   if (icc_data)
     {
-      profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_len,
+      profile = ligma_color_profile_new_from_icc_profile (icc_data, icc_len,
                                                          NULL);
       g_free (icc_data);
     }
 
-  gimp_layer_new_convert_buffer (layer, buffer, profile, NULL);
+  ligma_layer_new_convert_buffer (layer, buffer, profile, NULL);
 
   if (profile)
     g_object_unref (profile);
@@ -219,20 +219,20 @@ gimp_layer_new_from_pixbuf (GdkPixbuf     *pixbuf,
 /*  private functions  */
 
 static void
-gimp_layer_new_convert_buffer (GimpLayer         *layer,
+ligma_layer_new_convert_buffer (LigmaLayer         *layer,
                                GeglBuffer        *src_buffer,
-                               GimpColorProfile  *src_profile,
+                               LigmaColorProfile  *src_profile,
                                GError           **error)
 {
-  GimpDrawable     *drawable    = GIMP_DRAWABLE (layer);
-  GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
-  GimpColorProfile *dest_profile;
+  LigmaDrawable     *drawable    = LIGMA_DRAWABLE (layer);
+  GeglBuffer       *dest_buffer = ligma_drawable_get_buffer (drawable);
+  LigmaColorProfile *dest_profile;
 
   if (! src_profile)
     {
       const Babl *src_format = gegl_buffer_get_format (src_buffer);
 
-      src_profile = gimp_babl_format_get_color_profile (src_format);
+      src_profile = ligma_babl_format_get_color_profile (src_format);
     }
   else
     {
@@ -240,11 +240,11 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
     }
 
   dest_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+    ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (layer));
 
-  gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+  ligma_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                    dest_buffer, NULL, dest_profile,
-                                   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                   LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                    TRUE, NULL);
 
   g_object_unref (src_profile);

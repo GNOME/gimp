@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,56 +15,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_LIST_H__
-#define __GIMP_ITEM_LIST_H__
+#ifndef __LIGMA_ITEM_LIST_H__
+#define __LIGMA_ITEM_LIST_H__
 
 
-#define GIMP_TYPE_ITEM_LIST            (gimp_item_list_get_type ())
-#define GIMP_ITEM_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_LIST, GimpItemList))
-#define GIMP_ITEM_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_LIST, GimpItemListClass))
-#define GIMP_IS_ITEM_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_LIST))
-#define GIMP_IS_ITEM_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_LIST))
-#define GIMP_ITEM_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_LIST, GimpItemListClass))
+#define LIGMA_TYPE_ITEM_LIST            (ligma_item_list_get_type ())
+#define LIGMA_ITEM_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ITEM_LIST, LigmaItemList))
+#define LIGMA_ITEM_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ITEM_LIST, LigmaItemListClass))
+#define LIGMA_IS_ITEM_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ITEM_LIST))
+#define LIGMA_IS_ITEM_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ITEM_LIST))
+#define LIGMA_ITEM_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ITEM_LIST, LigmaItemListClass))
 
 
-typedef struct _GimpItemListClass   GimpItemListClass;
-typedef struct _GimpItemListPrivate GimpItemListPrivate;
+typedef struct _LigmaItemListClass   LigmaItemListClass;
+typedef struct _LigmaItemListPrivate LigmaItemListPrivate;
 
-struct _GimpItemList
+struct _LigmaItemList
 {
-  GimpObject          parent_instance;
+  LigmaObject          parent_instance;
 
-  GimpItemListPrivate *p;
+  LigmaItemListPrivate *p;
 };
 
-struct _GimpItemListClass
+struct _LigmaItemListClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   /*  signals  */
-  void  (* empty) (GimpItemList *set);
+  void  (* empty) (LigmaItemList *set);
 };
 
 
-GType          gimp_item_list_get_type  (void) G_GNUC_CONST;
+GType          ligma_item_list_get_type  (void) G_GNUC_CONST;
 
-GimpItemList  * gimp_item_list_named_new    (GimpImage        *image,
+LigmaItemList  * ligma_item_list_named_new    (LigmaImage        *image,
                                              GType             item_type,
                                              const gchar      *name,
                                              GList            *items);
 
-GimpItemList  * gimp_item_list_pattern_new  (GimpImage        *image,
+LigmaItemList  * ligma_item_list_pattern_new  (LigmaImage        *image,
                                              GType             item_type,
-                                             GimpSelectMethod  pattern_syntax,
+                                             LigmaSelectMethod  pattern_syntax,
                                              const gchar      *pattern);
 
-GType          gimp_item_list_get_item_type (GimpItemList     *set);
-GList        * gimp_item_list_get_items     (GimpItemList     *set,
+GType          ligma_item_list_get_item_type (LigmaItemList     *set);
+GList        * ligma_item_list_get_items     (LigmaItemList     *set,
                                              GError          **error);
-gboolean       gimp_item_list_is_pattern    (GimpItemList     *set,
-                                             GimpSelectMethod *pattern_syntax);
+gboolean       ligma_item_list_is_pattern    (LigmaItemList     *set,
+                                             LigmaSelectMethod *pattern_syntax);
 
-void           gimp_item_list_add           (GimpItemList     *set,
-                                             GimpItem         *item);
+void           ligma_item_list_add           (LigmaItemList     *set,
+                                             LigmaItem         *item);
 
-#endif /* __GIMP_ITEM_LIST_H__ */
+#endif /* __LIGMA_ITEM_LIST_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 #define __DOCK_COMMANDS_H__
 
 
-void   dock_toggle_image_menu_cmd_callback (GimpAction *action,
+void   dock_toggle_image_menu_cmd_callback (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-void   dock_toggle_auto_cmd_callback       (GimpAction *action,
+void   dock_toggle_auto_cmd_callback       (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
 

@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8778"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="gimp-attach.svg">
+   sodipodi:docname="ligma-attach.svg">
   <defs
      id="defs8772" />
   <sodipodi:namedview
@@ -60,9 +60,9 @@
     <g
        transform="matrix(0.26458333,0,0,0.26458333,-92.415193,119.31341)"
        style="display:inline"
-       id="gimp-attach-12"
-       inkscape:label="gimp-attach-12"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Color/12/gimp-attach.png"
+       id="ligma-attach-12"
+       inkscape:label="ligma-attach-12"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Color/12/ligma-attach.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
       <g
@@ -84,7 +84,7 @@
       <rect
          inkscape:export-ydpi="95.916092"
          inkscape:export-xdpi="95.916092"
-         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/LIGMA-icon-attach_detach/attach12.png"
          y="176.99995"
          x="609.00006"
          height="12"

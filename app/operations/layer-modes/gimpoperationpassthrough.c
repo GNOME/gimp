@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationpassthrough.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationpassthrough.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,22 +25,22 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationpassthrough.h"
+#include "ligmaoperationpassthrough.h"
 
 
-G_DEFINE_TYPE (GimpOperationPassThrough, gimp_operation_pass_through,
-               GIMP_TYPE_OPERATION_REPLACE)
+G_DEFINE_TYPE (LigmaOperationPassThrough, ligma_operation_pass_through,
+               LIGMA_TYPE_OPERATION_REPLACE)
 
 
 static void
-gimp_operation_pass_through_class_init (GimpOperationPassThroughClass *klass)
+ligma_operation_pass_through_class_init (LigmaOperationPassThroughClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:pass-through",
-                                 "description", "GIMP pass through mode operation",
+                                 "name",        "ligma:pass-through",
+                                 "description", "LIGMA pass through mode operation",
                                  NULL);
 
   /* don't use REPLACE mode's specialized get_affected_region(); PASS_THROUGH
@@ -50,6 +50,6 @@ gimp_operation_pass_through_class_init (GimpOperationPassThroughClass *klass)
 }
 
 static void
-gimp_operation_pass_through_init (GimpOperationPassThrough *self)
+ligma_operation_pass_through_init (LigmaOperationPassThrough *self)
 {
 }

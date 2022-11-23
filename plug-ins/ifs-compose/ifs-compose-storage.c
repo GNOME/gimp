@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * IfsCompose is a interface for creating IFS fractals by
@@ -24,7 +24,7 @@
 
 #include <gdk/gdk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "ifs-compose.h"
 
@@ -90,7 +90,7 @@ static struct
 
 static GTokenType
 ifsvals_parse_color (GScanner *scanner,
-		     GimpRGB  *result)
+		     LigmaRGB  *result)
 {
   GTokenType token;
 
@@ -320,7 +320,7 @@ ifsvals_parse (GScanner         *scanner,
   GTokenType      token, expected_token;
   AffElement     *el;
   IfsComposeVals  new_vals;
-  GimpRGB         color;
+  LigmaRGB         color;
 
   GList *el_list = NULL;
   GList *tmp_list;

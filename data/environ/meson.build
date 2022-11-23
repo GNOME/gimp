@@ -1,5 +1,5 @@
 install_data(
   'default.env',
   'python.env',
-  install_dir: gimpplugindir / 'environ',
+  install_dir: ligmaplugindir / 'environ',
 )

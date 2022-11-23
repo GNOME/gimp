@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ typedef struct _PrintPreviewClass  PrintPreviewClass;
 GType       print_preview_get_type              (void) G_GNUC_CONST;
 
 GtkWidget * print_preview_new                   (GtkPageSetup *page,
-                                                 GimpDrawable *drawable);
+                                                 LigmaDrawable *drawable);
 
 void        print_preview_set_image_dpi         (PrintPreview *preview,
                                                  gdouble       xres,

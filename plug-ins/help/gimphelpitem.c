@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 
 /*  This code is written so that it can also be compiled standalone.
- *  It shouldn't depend on libgimp.
+ *  It shouldn't depend on libligma.
  */
 
 #include "config.h"
@@ -30,26 +30,26 @@
 
 #include <glib.h>
 
-#include "gimphelptypes.h"
+#include "ligmahelptypes.h"
 
-#include "gimphelpitem.h"
+#include "ligmahelpitem.h"
 
 #ifdef DISABLE_NLS
 #define _(String)  (String)
 #else
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 #endif
 
 
 /*  public functions  */
 
-GimpHelpItem *
-gimp_help_item_new (const gchar *ref,
+LigmaHelpItem *
+ligma_help_item_new (const gchar *ref,
                     const gchar *title,
                     const gchar *sort,
                     const gchar *parent)
 {
-  GimpHelpItem *item = g_slice_new0 (GimpHelpItem);
+  LigmaHelpItem *item = g_slice_new0 (LigmaHelpItem);
 
   item->ref    = g_strdup (ref);
   item->title  = g_strdup (title);
@@ -60,7 +60,7 @@ gimp_help_item_new (const gchar *ref,
 }
 
 void
-gimp_help_item_free (GimpHelpItem *item)
+ligma_help_item_free (LigmaHelpItem *item)
 {
   g_free (item->ref);
   g_free (item->title);
@@ -69,5 +69,5 @@ gimp_help_item_free (GimpHelpItem *item)
 
   g_list_free (item->children);
 
-  g_slice_free (GimpHelpItem, item);
+  g_slice_free (LigmaHelpItem, item);
 }

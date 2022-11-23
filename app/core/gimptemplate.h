@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimptemplate.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmatemplate.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,84 +18,84 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATE_H__
-#define __GIMP_TEMPLATE_H__
+#ifndef __LIGMA_TEMPLATE_H__
+#define __LIGMA_TEMPLATE_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TEMPLATE_PARAM_COPY_FIRST (1 << (8 + G_PARAM_USER_SHIFT))
+#define LIGMA_TEMPLATE_PARAM_COPY_FIRST (1 << (8 + G_PARAM_USER_SHIFT))
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
 /* Uncommon ratio, with at least one odd value, to encourage testing
- * GIMP with unusual numbers.
- * It also has to be a higher resolution, to push GIMP a little further
+ * LIGMA with unusual numbers.
+ * It also has to be a higher resolution, to push LIGMA a little further
  * in tests. */
-#define GIMP_DEFAULT_IMAGE_WIDTH   2001
-#define GIMP_DEFAULT_IMAGE_HEIGHT  1984
+#define LIGMA_DEFAULT_IMAGE_WIDTH   2001
+#define LIGMA_DEFAULT_IMAGE_HEIGHT  1984
 #else
 /* 1366x768 is the most common screen resolution in 2016.
  * 1920x1080 is the second most common.
- * Since GIMP targets advanced graphics artists, let's go for the
+ * Since LIGMA targets advanced graphics artists, let's go for the
  * highest common dimension.
  */
-#define GIMP_DEFAULT_IMAGE_WIDTH   1920
-#define GIMP_DEFAULT_IMAGE_HEIGHT  1080
+#define LIGMA_DEFAULT_IMAGE_WIDTH   1920
+#define LIGMA_DEFAULT_IMAGE_HEIGHT  1080
 #endif
 
 
-#define GIMP_TYPE_TEMPLATE            (gimp_template_get_type ())
-#define GIMP_TEMPLATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE, GimpTemplate))
-#define GIMP_TEMPLATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE, GimpTemplateClass))
-#define GIMP_IS_TEMPLATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEMPLATE))
-#define GIMP_IS_TEMPLATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEMPLATE))
-#define GIMP_TEMPLATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEMPLATE, GimpTemplateClass))
+#define LIGMA_TYPE_TEMPLATE            (ligma_template_get_type ())
+#define LIGMA_TEMPLATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEMPLATE, LigmaTemplate))
+#define LIGMA_TEMPLATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEMPLATE, LigmaTemplateClass))
+#define LIGMA_IS_TEMPLATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEMPLATE))
+#define LIGMA_IS_TEMPLATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEMPLATE))
+#define LIGMA_TEMPLATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEMPLATE, LigmaTemplateClass))
 
 
-typedef struct _GimpTemplateClass GimpTemplateClass;
+typedef struct _LigmaTemplateClass LigmaTemplateClass;
 
-struct _GimpTemplate
+struct _LigmaTemplate
 {
-  GimpViewable  parent_instance;
+  LigmaViewable  parent_instance;
 };
 
-struct _GimpTemplateClass
+struct _LigmaTemplateClass
 {
-  GimpViewableClass  parent_instance;
+  LigmaViewableClass  parent_instance;
 };
 
 
-GType               gimp_template_get_type            (void) G_GNUC_CONST;
+GType               ligma_template_get_type            (void) G_GNUC_CONST;
 
-GimpTemplate      * gimp_template_new                 (const gchar  *name);
+LigmaTemplate      * ligma_template_new                 (const gchar  *name);
 
-void                gimp_template_set_from_image      (GimpTemplate *template,
-                                                       GimpImage    *image);
+void                ligma_template_set_from_image      (LigmaTemplate *template,
+                                                       LigmaImage    *image);
 
-gint                gimp_template_get_width           (GimpTemplate *template);
-gint                gimp_template_get_height          (GimpTemplate *template);
-GimpUnit            gimp_template_get_unit            (GimpTemplate *template);
+gint                ligma_template_get_width           (LigmaTemplate *template);
+gint                ligma_template_get_height          (LigmaTemplate *template);
+LigmaUnit            ligma_template_get_unit            (LigmaTemplate *template);
 
-gdouble             gimp_template_get_resolution_x    (GimpTemplate *template);
-gdouble             gimp_template_get_resolution_y    (GimpTemplate *template);
-GimpUnit            gimp_template_get_resolution_unit (GimpTemplate *template);
+gdouble             ligma_template_get_resolution_x    (LigmaTemplate *template);
+gdouble             ligma_template_get_resolution_y    (LigmaTemplate *template);
+LigmaUnit            ligma_template_get_resolution_unit (LigmaTemplate *template);
 
-GimpImageBaseType   gimp_template_get_base_type       (GimpTemplate *template);
-GimpPrecision       gimp_template_get_precision       (GimpTemplate *template);
+LigmaImageBaseType   ligma_template_get_base_type       (LigmaTemplate *template);
+LigmaPrecision       ligma_template_get_precision       (LigmaTemplate *template);
 
-GimpColorProfile  * gimp_template_get_color_profile   (GimpTemplate *template);
-GimpColorProfile  * gimp_template_get_simulation_profile
-                                                      (GimpTemplate *template);
-GimpColorRenderingIntent gimp_template_get_simulation_intent
-                                                      (GimpTemplate *template);
-gboolean            gimp_template_get_simulation_bpc  (GimpTemplate *template);
+LigmaColorProfile  * ligma_template_get_color_profile   (LigmaTemplate *template);
+LigmaColorProfile  * ligma_template_get_simulation_profile
+                                                      (LigmaTemplate *template);
+LigmaColorRenderingIntent ligma_template_get_simulation_intent
+                                                      (LigmaTemplate *template);
+gboolean            ligma_template_get_simulation_bpc  (LigmaTemplate *template);
 
-GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
+LigmaFillType        ligma_template_get_fill_type       (LigmaTemplate *template);
 
-const gchar       * gimp_template_get_comment         (GimpTemplate *template);
+const gchar       * ligma_template_get_comment         (LigmaTemplate *template);
 
-guint64             gimp_template_get_initial_size    (GimpTemplate *template);
+guint64             ligma_template_get_initial_size    (LigmaTemplate *template);
 
 
-#endif /* __GIMP_TEMPLATE__ */
+#endif /* __LIGMA_TEMPLATE__ */

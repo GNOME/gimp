@@ -15,7 +15,7 @@ Changes (post 0.3.1):
            -Wall and -ansi.
 -> 1.1.0   Added box object and changed PDB interface accordingly; this will unfortunately
            break old scripts. The transparency code should be a little saner now.
--> 1.2.0   Added cylinder object. Fixed a few things, thanks to Yosh <yosh@gimp.org> and
+-> 1.2.0   Added cylinder object. Fixed a few things, thanks to Yosh <yosh@ligma.org> and
            Pedro <pkaempf@master.echo.ch> for pointing them out to me.
      
 

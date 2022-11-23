@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpvectors_pdb.c
+ * ligmavectors_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpvectors
- * @title: gimpvectors
+ * SECTION: ligmavectors
+ * @title: ligmavectors
  * @short_description: Functions for querying and manipulating vectors.
  *
  * Functions for querying and manipulating vectors.
@@ -37,88 +37,88 @@
 
 
 /**
- * gimp_vectors_new:
+ * ligma_vectors_new:
  * @image: The image.
  * @name: the name of the new vector object.
  *
  * Creates a new empty vectors object.
  *
  * Creates a new empty vectors object. The vectors object needs to be
- * added to the image using gimp_image_insert_vectors().
+ * added to the image using ligma_image_insert_vectors().
  *
  * Returns: (transfer none):
  *          the current vector object, 0 if no vector exists in the image.
  *
  * Since: 2.4
  **/
-GimpVectors *
-gimp_vectors_new (GimpImage   *image,
+LigmaVectors *
+ligma_vectors_new (LigmaImage   *image,
                   const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors *vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors = LIGMA_VALUES_GET_VECTORS (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_vectors_new_from_text_layer:
+ * ligma_vectors_new_from_text_layer:
  * @image: The image.
  * @layer: The text layer.
  *
  * Creates a new vectors object from a text layer.
  *
  * Creates a new vectors object from a text layer. The vectors object
- * needs to be added to the image using gimp_image_insert_vectors().
+ * needs to be added to the image using ligma_image_insert_vectors().
  *
  * Returns: (transfer none): The vectors of the text layer.
  *
  * Since: 2.6
  **/
-GimpVectors *
-gimp_vectors_new_from_text_layer (GimpImage *image,
-                                  GimpLayer *layer)
+LigmaVectors *
+ligma_vectors_new_from_text_layer (LigmaImage *image,
+                                  LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors *vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-new-from-text-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-new-from-text-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors = LIGMA_VALUES_GET_VECTORS (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_vectors_copy:
+ * ligma_vectors_copy:
  * @vectors: The vectors object to copy.
  *
  * Copy a vectors object.
@@ -130,32 +130,32 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
  *
  * Since: 2.6
  **/
-GimpVectors *
-gimp_vectors_copy (GimpVectors *vectors)
+LigmaVectors *
+ligma_vectors_copy (LigmaVectors *vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors *vectors_copy = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors *vectors_copy = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-copy",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-copy",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors_copy = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors_copy = LIGMA_VALUES_GET_VECTORS (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors_copy;
 }
 
 /**
- * gimp_vectors_get_strokes:
+ * ligma_vectors_get_strokes:
  * @vectors: The vectors object.
  * @num_strokes: (out): The number of strokes returned.
  *
@@ -171,37 +171,37 @@ gimp_vectors_copy (GimpVectors *vectors)
  * Since: 2.4
  **/
 gint *
-gimp_vectors_get_strokes (GimpVectors *vectors,
+ligma_vectors_get_strokes (LigmaVectors *vectors,
                           gint        *num_strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint *stroke_ids = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-get-strokes",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-get-strokes",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_strokes = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_strokes = GIMP_VALUES_GET_INT (return_vals, 1);
-      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      *num_strokes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      stroke_ids = LIGMA_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return stroke_ids;
 }
 
 /**
- * gimp_vectors_stroke_get_length:
+ * ligma_vectors_stroke_get_length:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @precision: The precision used for approximating straight portions of the stroke.
@@ -215,35 +215,35 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
  * Since: 2.4
  **/
 gdouble
-gimp_vectors_stroke_get_length (GimpVectors *vectors,
+ligma_vectors_stroke_get_length (LigmaVectors *vectors,
                                 gint         stroke_id,
                                 gdouble      precision)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble length = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-get-length",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-get-length",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    length = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    length = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return length;
 }
 
 /**
- * gimp_vectors_stroke_get_point_at_dist:
+ * ligma_vectors_stroke_get_point_at_dist:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @dist: The given distance.
@@ -267,7 +267,7 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
+ligma_vectors_stroke_get_point_at_dist (LigmaVectors *vectors,
                                        gint         stroke_id,
                                        gdouble      dist,
                                        gdouble      precision,
@@ -276,44 +276,44 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
                                        gdouble     *slope,
                                        gboolean    *valid)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, dist,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-get-point-at-dist",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-get-point-at-dist",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *x_point = 0.0;
   *y_point = 0.0;
   *slope = 0.0;
   *valid = FALSE;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *x_point = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *y_point = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
-      *slope = GIMP_VALUES_GET_DOUBLE (return_vals, 3);
-      *valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 4);
+      *x_point = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *y_point = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
+      *slope = LIGMA_VALUES_GET_DOUBLE (return_vals, 3);
+      *valid = LIGMA_VALUES_GET_BOOLEAN (return_vals, 4);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_remove_stroke:
+ * ligma_vectors_remove_stroke:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  *
@@ -326,32 +326,32 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_remove_stroke (GimpVectors *vectors,
+ligma_vectors_remove_stroke (LigmaVectors *vectors,
                             gint         stroke_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-remove-stroke",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-remove-stroke",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_close:
+ * ligma_vectors_stroke_close:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  *
@@ -364,32 +364,32 @@ gimp_vectors_remove_stroke (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_close (GimpVectors *vectors,
+ligma_vectors_stroke_close (LigmaVectors *vectors,
                            gint         stroke_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-close",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-close",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_reverse:
+ * ligma_vectors_stroke_reverse:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  *
@@ -402,32 +402,32 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
  * Since: 3.0
  **/
 gboolean
-gimp_vectors_stroke_reverse (GimpVectors *vectors,
+ligma_vectors_stroke_reverse (LigmaVectors *vectors,
                              gint         stroke_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-reverse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-reverse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_translate:
+ * ligma_vectors_stroke_translate:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @off_x: Offset in x direction.
@@ -442,36 +442,36 @@ gimp_vectors_stroke_reverse (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_translate (GimpVectors *vectors,
+ligma_vectors_stroke_translate (LigmaVectors *vectors,
                                gint         stroke_id,
                                gdouble      off_x,
                                gdouble      off_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, off_x,
                                           G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-translate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-translate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_scale:
+ * ligma_vectors_stroke_scale:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @scale_x: Scale factor in x direction.
@@ -486,36 +486,36 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_scale (GimpVectors *vectors,
+ligma_vectors_stroke_scale (LigmaVectors *vectors,
                            gint         stroke_id,
                            gdouble      scale_x,
                            gdouble      scale_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, scale_x,
                                           G_TYPE_DOUBLE, scale_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-scale",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-scale",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_rotate:
+ * ligma_vectors_stroke_rotate:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @center_x: X coordinate of the rotation center.
@@ -531,38 +531,38 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_rotate (GimpVectors *vectors,
+ligma_vectors_stroke_rotate (LigmaVectors *vectors,
                             gint         stroke_id,
                             gdouble      center_x,
                             gdouble      center_y,
                             gdouble      angle)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-rotate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-rotate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_flip:
+ * ligma_vectors_stroke_flip:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @flip_type: Flip orientation, either vertical or horizontal.
@@ -577,36 +577,36 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_flip (GimpVectors         *vectors,
+ligma_vectors_stroke_flip (LigmaVectors         *vectors,
                           gint                 stroke_id,
-                          GimpOrientationType  flip_type,
+                          LigmaOrientationType  flip_type,
                           gdouble              axis)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
-                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
+                                          LIGMA_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-flip",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-flip",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_flip_free:
+ * ligma_vectors_stroke_flip_free:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @x1: X coordinate of the first point of the flipping axis.
@@ -625,19 +625,19 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_flip_free (GimpVectors *vectors,
+ligma_vectors_stroke_flip_free (LigmaVectors *vectors,
                                gint         stroke_id,
                                gdouble      x1,
                                gdouble      y1,
                                gdouble      x2,
                                gdouble      y2)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
@@ -645,20 +645,20 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-flip-free",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-flip-free",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_stroke_get_points:
+ * ligma_vectors_stroke_get_points:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @num_points: (out): The number of floats returned.
@@ -668,54 +668,54 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
  * returns the control points of a stroke.
  *
  * returns the control points of a stroke. The interpretation of the
- * coordinates returned depends on the type of the stroke. For Gimp 2.4
+ * coordinates returned depends on the type of the stroke. For Ligma 2.4
  * this is always a bezier stroke, where the coordinates are the
  * control points.
  *
- * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * Returns: type of the stroke (always LIGMA_VECTORS_STROKE_TYPE_BEZIER for now).
  *
  * Since: 2.4
  **/
-GimpVectorsStrokeType
-gimp_vectors_stroke_get_points (GimpVectors  *vectors,
+LigmaVectorsStrokeType
+ligma_vectors_stroke_get_points (LigmaVectors  *vectors,
                                 gint          stroke_id,
                                 gint         *num_points,
                                 gdouble     **controlpoints,
                                 gboolean     *closed)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectorsStrokeType type = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectorsStrokeType type = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-get-points",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-get-points",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_points = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      type = GIMP_VALUES_GET_ENUM (return_vals, 1);
-      *num_points = GIMP_VALUES_GET_INT (return_vals, 2);
-      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 3);
-      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 4);
+      type = LIGMA_VALUES_GET_ENUM (return_vals, 1);
+      *num_points = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *controlpoints = LIGMA_VALUES_DUP_FLOAT_ARRAY (return_vals, 3);
+      *closed = LIGMA_VALUES_GET_BOOLEAN (return_vals, 4);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return type;
 }
 
 /**
- * gimp_vectors_stroke_new_from_points:
+ * ligma_vectors_stroke_new_from_points:
  * @vectors: The vectors object.
- * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * @type: type of the stroke (always LIGMA_VECTORS_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
  * @controlpoints: (array length=num_points) (element-type gdouble): List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
@@ -724,7 +724,7 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
  *
  * Adds a stroke of a given type to the vectors object. The coordinates
  * of the control points can be specified. For now only strokes of the
- * type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control
+ * type LIGMA_VECTORS_STROKE_TYPE_BEZIER are supported. The control
  * points are specified as a pair of float values for the x- and
  * y-coordinate. The Bezier stroke type needs a multiple of three
  * control points. Each Bezier segment endpoint (anchor, A) has two
@@ -736,40 +736,40 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
  * Since: 2.4
  **/
 gint
-gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
-                                     GimpVectorsStrokeType  type,
+ligma_vectors_stroke_new_from_points (LigmaVectors           *vectors,
+                                     LigmaVectorsStrokeType  type,
                                      gint                   num_points,
                                      const gdouble         *controlpoints,
                                      gboolean               closed)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
-                                          GIMP_TYPE_VECTORS_STROKE_TYPE, type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
+                                          LIGMA_TYPE_VECTORS_STROKE_TYPE, type,
                                           G_TYPE_INT, num_points,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, closed,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), controlpoints, num_points);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), controlpoints, num_points);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-new-from-points",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-new-from-points",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    stroke_id = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return stroke_id;
 }
 
 /**
- * gimp_vectors_stroke_interpolate:
+ * ligma_vectors_stroke_interpolate:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @precision: The precision used for the approximation.
@@ -787,43 +787,43 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
  * Since: 2.4
  **/
 gdouble *
-gimp_vectors_stroke_interpolate (GimpVectors *vectors,
+ligma_vectors_stroke_interpolate (LigmaVectors *vectors,
                                  gint         stroke_id,
                                  gdouble      precision,
                                  gint        *num_coords,
                                  gboolean    *closed)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble *coords = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-stroke-interpolate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-stroke-interpolate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_coords = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_coords = GIMP_VALUES_GET_INT (return_vals, 1);
-      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
-      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
+      *num_coords = LIGMA_VALUES_GET_INT (return_vals, 1);
+      coords = LIGMA_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
+      *closed = LIGMA_VALUES_GET_BOOLEAN (return_vals, 3);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return coords;
 }
 
 /**
- * gimp_vectors_bezier_stroke_new_moveto:
+ * ligma_vectors_bezier_stroke_new_moveto:
  * @vectors: The vectors object.
  * @x0: The x-coordinate of the moveto.
  * @y0: The y-coordinate of the moveto.
@@ -837,35 +837,35 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
  * Since: 2.4
  **/
 gint
-gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
+ligma_vectors_bezier_stroke_new_moveto (LigmaVectors *vectors,
                                        gdouble      x0,
                                        gdouble      y0)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-bezier-stroke-new-moveto",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-bezier-stroke-new-moveto",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    stroke_id = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return stroke_id;
 }
 
 /**
- * gimp_vectors_bezier_stroke_lineto:
+ * ligma_vectors_bezier_stroke_lineto:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the lineto.
@@ -880,36 +880,36 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
+ligma_vectors_bezier_stroke_lineto (LigmaVectors *vectors,
                                    gint         stroke_id,
                                    gdouble      x0,
                                    gdouble      y0)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-bezier-stroke-lineto",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-bezier-stroke-lineto",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_bezier_stroke_conicto:
+ * ligma_vectors_bezier_stroke_conicto:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the control point.
@@ -928,19 +928,19 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
+ligma_vectors_bezier_stroke_conicto (LigmaVectors *vectors,
                                     gint         stroke_id,
                                     gdouble      x0,
                                     gdouble      y0,
                                     gdouble      x1,
                                     gdouble      y1)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -948,20 +948,20 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-bezier-stroke-conicto",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-bezier-stroke-conicto",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_bezier_stroke_cubicto:
+ * ligma_vectors_bezier_stroke_cubicto:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the first control point.
@@ -980,7 +980,7 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
+ligma_vectors_bezier_stroke_cubicto (LigmaVectors *vectors,
                                     gint         stroke_id,
                                     gdouble      x0,
                                     gdouble      y0,
@@ -989,12 +989,12 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
                                     gdouble      x2,
                                     gdouble      y2)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -1004,20 +1004,20 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-bezier-stroke-cubicto",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-bezier-stroke-cubicto",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_bezier_stroke_new_ellipse:
+ * ligma_vectors_bezier_stroke_new_ellipse:
  * @vectors: The vectors object.
  * @x0: The x-coordinate of the center.
  * @y0: The y-coordinate of the center.
@@ -1034,19 +1034,19 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gint
-gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
+ligma_vectors_bezier_stroke_new_ellipse (LigmaVectors *vectors,
                                         gdouble      x0,
                                         gdouble      y0,
                                         gdouble      radius_x,
                                         gdouble      radius_y,
                                         gdouble      angle)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, radius_x,
@@ -1054,27 +1054,27 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-bezier-stroke-new-ellipse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-bezier-stroke-new-ellipse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    stroke_id = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return stroke_id;
 }
 
 /**
- * gimp_vectors_import_from_file:
+ * ligma_vectors_import_from_file:
  * @image: The image.
  * @file: The SVG file to import.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: (out): The number of newly created vectors.
- * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
+ * @vectors: (out) (array length=num_vectors) (element-type LigmaVectors) (transfer container): The list of newly created vectors.
  *
  * Import paths from an SVG file.
  *
@@ -1086,109 +1086,109 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_file (GimpImage     *image,
+ligma_vectors_import_from_file (LigmaImage     *image,
                                GFile         *file,
                                gboolean       merge,
                                gboolean       scale,
                                gint          *num_vectors,
-                               GimpVectors ***vectors)
+                               LigmaVectors ***vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-import-from-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-import-from-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_vectors = 0;
   *vectors = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_vectors = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_import_from_string:
+ * ligma_vectors_import_from_string:
  * @image: The image.
  * @string: A string that must be a complete and valid SVG document.
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: (out): The number of newly created vectors.
- * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
+ * @vectors: (out) (array length=num_vectors) (element-type LigmaVectors) (transfer container): The list of newly created vectors.
  *
  * Import paths from an SVG string.
  *
- * This procedure works like gimp_vectors_import_from_file() but takes
+ * This procedure works like ligma_vectors_import_from_file() but takes
  * a string rather than reading the SVG from a file. This allows you to
- * write scripts that generate SVG and feed it to GIMP.
+ * write scripts that generate SVG and feed it to LIGMA.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_string (GimpImage     *image,
+ligma_vectors_import_from_string (LigmaImage     *image,
                                  const gchar   *string,
                                  gint           length,
                                  gboolean       merge,
                                  gboolean       scale,
                                  gint          *num_vectors,
-                                 GimpVectors ***vectors)
+                                 LigmaVectors ***vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, string,
                                           G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-import-from-string",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-import-from-string",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_vectors = 0;
   *vectors = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_vectors = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_export_to_file:
+ * ligma_vectors_export_to_file:
  * @image: The image.
  * @file: The SVG file to create.
  * @vectors: The vectors object to be saved, or 0 for all in the image.
@@ -1197,7 +1197,7 @@ gimp_vectors_import_from_string (GimpImage     *image,
  *
  * This procedure creates an SVG file to save a Vectors object, that
  * is, a path. The resulting file can be edited using a vector graphics
- * application, or later reloaded into GIMP. If you pass 0 as the
+ * application, or later reloaded into LIGMA. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
  *
  * Returns: TRUE on success.
@@ -1205,40 +1205,40 @@ gimp_vectors_import_from_string (GimpImage     *image,
  * Since: 2.6
  **/
 gboolean
-gimp_vectors_export_to_file (GimpImage   *image,
+ligma_vectors_export_to_file (LigmaImage   *image,
                              GFile       *file,
-                             GimpVectors *vectors)
+                             LigmaVectors *vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-export-to-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-export-to-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_vectors_export_to_string:
+ * ligma_vectors_export_to_string:
  * @image: The image.
  * @vectors: The vectors object to save, or 0 for all in the image.
  *
  * Save a path as an SVG string.
  *
- * This procedure works like gimp_vectors_export_to_file() but creates
+ * This procedure works like ligma_vectors_export_to_file() but creates
  * a string rather than a file. The contents are a NUL-terminated
  * string that holds a complete XML document. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
@@ -1250,27 +1250,27 @@ gimp_vectors_export_to_file (GimpImage   *image,
  * Since: 2.6
  **/
 gchar *
-gimp_vectors_export_to_string (GimpImage   *image,
-                               GimpVectors *vectors)
+ligma_vectors_export_to_string (LigmaImage   *image,
+                               LigmaVectors *vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *string = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-vectors-export-to-string",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-vectors-export-to-string",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    string = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    string = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return string;
 }

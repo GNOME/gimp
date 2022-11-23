@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsamplepointeditor.c
- * Copyright (C) 2005-2016 Michael Natterer <mitch@gimp.org>
+ * ligmasamplepointeditor.c
+ * Copyright (C) 2005-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,25 +23,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-pick-color.h"
-#include "core/gimpimage-sample-points.h"
-#include "core/gimpsamplepoint.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-pick-color.h"
+#include "core/ligmaimage-sample-points.h"
+#include "core/ligmasamplepoint.h"
 
-#include "gimpcolorframe.h"
-#include "gimpmenufactory.h"
-#include "gimpsamplepointeditor.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacolorframe.h"
+#include "ligmamenufactory.h"
+#include "ligmasamplepointeditor.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -51,78 +51,78 @@ enum
 };
 
 
-static void   gimp_sample_point_editor_constructed    (GObject               *object);
-static void   gimp_sample_point_editor_dispose        (GObject               *object);
-static void   gimp_sample_point_editor_set_property   (GObject               *object,
+static void   ligma_sample_point_editor_constructed    (GObject               *object);
+static void   ligma_sample_point_editor_dispose        (GObject               *object);
+static void   ligma_sample_point_editor_set_property   (GObject               *object,
                                                        guint                  property_id,
                                                        const GValue          *value,
                                                        GParamSpec            *pspec);
-static void   gimp_sample_point_editor_get_property   (GObject               *object,
+static void   ligma_sample_point_editor_get_property   (GObject               *object,
                                                        guint                  property_id,
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-static void   gimp_sample_point_editor_style_updated  (GtkWidget             *widget);
-static void   gimp_sample_point_editor_set_image      (GimpImageEditor       *editor,
-                                                       GimpImage             *image);
+static void   ligma_sample_point_editor_style_updated  (GtkWidget             *widget);
+static void   ligma_sample_point_editor_set_image      (LigmaImageEditor       *editor,
+                                                       LigmaImage             *image);
 
-static void   gimp_sample_point_editor_point_added    (GimpImage             *image,
-                                                       GimpSamplePoint       *sample_point,
-                                                       GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_point_removed  (GimpImage             *image,
-                                                       GimpSamplePoint       *sample_point,
-                                                       GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_point_moved    (GimpImage             *image,
-                                                       GimpSamplePoint       *sample_point,
-                                                       GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_proj_update    (GimpImage             *image,
+static void   ligma_sample_point_editor_point_added    (LigmaImage             *image,
+                                                       LigmaSamplePoint       *sample_point,
+                                                       LigmaSamplePointEditor *editor);
+static void   ligma_sample_point_editor_point_removed  (LigmaImage             *image,
+                                                       LigmaSamplePoint       *sample_point,
+                                                       LigmaSamplePointEditor *editor);
+static void   ligma_sample_point_editor_point_moved    (LigmaImage             *image,
+                                                       LigmaSamplePoint       *sample_point,
+                                                       LigmaSamplePointEditor *editor);
+static void   ligma_sample_point_editor_proj_update    (LigmaImage             *image,
                                                        gboolean               now,
                                                        gint                   x,
                                                        gint                   y,
                                                        gint                   width,
                                                        gint                   height,
-                                                       GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_dirty          (GimpSamplePointEditor *editor,
+                                                       LigmaSamplePointEditor *editor);
+static void   ligma_sample_point_editor_points_changed (LigmaSamplePointEditor *editor);
+static void   ligma_sample_point_editor_dirty          (LigmaSamplePointEditor *editor,
                                                        gint                   index);
-static gboolean gimp_sample_point_editor_update       (GimpSamplePointEditor *editor);
-static void     gimp_sample_point_editor_mode_notify  (GimpColorFrame        *frame,
+static gboolean ligma_sample_point_editor_update       (LigmaSamplePointEditor *editor);
+static void     ligma_sample_point_editor_mode_notify  (LigmaColorFrame        *frame,
                                                        const GParamSpec      *pspec,
-                                                       GimpSamplePointEditor *editor);
+                                                       LigmaSamplePointEditor *editor);
 
 
-G_DEFINE_TYPE (GimpSamplePointEditor, gimp_sample_point_editor,
-               GIMP_TYPE_IMAGE_EDITOR)
+G_DEFINE_TYPE (LigmaSamplePointEditor, ligma_sample_point_editor,
+               LIGMA_TYPE_IMAGE_EDITOR)
 
-#define parent_class gimp_sample_point_editor_parent_class
+#define parent_class ligma_sample_point_editor_parent_class
 
 
 static void
-gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
+ligma_sample_point_editor_class_init (LigmaSamplePointEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
-  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  LigmaImageEditorClass *image_editor_class = LIGMA_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->constructed     = gimp_sample_point_editor_constructed;
-  object_class->dispose         = gimp_sample_point_editor_dispose;
-  object_class->get_property    = gimp_sample_point_editor_get_property;
-  object_class->set_property    = gimp_sample_point_editor_set_property;
+  object_class->constructed     = ligma_sample_point_editor_constructed;
+  object_class->dispose         = ligma_sample_point_editor_dispose;
+  object_class->get_property    = ligma_sample_point_editor_get_property;
+  object_class->set_property    = ligma_sample_point_editor_set_property;
 
-  widget_class->style_updated   = gimp_sample_point_editor_style_updated;
+  widget_class->style_updated   = ligma_sample_point_editor_style_updated;
 
-  image_editor_class->set_image = gimp_sample_point_editor_set_image;
+  image_editor_class->set_image = ligma_sample_point_editor_set_image;
 
   g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
                                    g_param_spec_boolean ("sample-merged",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
+ligma_sample_point_editor_init (LigmaSamplePointEditor *editor)
 {
   GtkWidget *scrolled_window;
   GtkWidget *viewport;
@@ -153,14 +153,14 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);
 
-  editor->empty_icon = gtk_image_new_from_icon_name (GIMP_ICON_SAMPLE_POINT,
+  editor->empty_icon = gtk_image_new_from_icon_name (LIGMA_ICON_SAMPLE_POINT,
                                                      GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (vbox), editor->empty_icon, TRUE, TRUE, 0);
   gtk_widget_show (editor->empty_icon);
 
   editor->empty_label = gtk_label_new (_("This image\nhas no\nsample points"));
   gtk_label_set_justify (GTK_LABEL (editor->empty_label), GTK_JUSTIFY_CENTER);
-  gimp_label_set_attributes (GTK_LABEL (editor->empty_label),
+  ligma_label_set_attributes (GTK_LABEL (editor->empty_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), editor->empty_label, TRUE, TRUE, 0);
@@ -173,15 +173,15 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
 }
 
 static void
-gimp_sample_point_editor_constructed (GObject *object)
+ligma_sample_point_editor_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
-gimp_sample_point_editor_dispose (GObject *object)
+ligma_sample_point_editor_dispose (GObject *object)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (object);
 
   g_clear_pointer (&editor->color_frames, g_free);
 
@@ -195,17 +195,17 @@ gimp_sample_point_editor_dispose (GObject *object)
 }
 
 static void
-gimp_sample_point_editor_set_property (GObject      *object,
+ligma_sample_point_editor_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (object);
 
   switch (property_id)
     {
     case PROP_SAMPLE_MERGED:
-      gimp_sample_point_editor_set_sample_merged (editor,
+      ligma_sample_point_editor_set_sample_merged (editor,
                                                   g_value_get_boolean (value));
       break;
 
@@ -216,12 +216,12 @@ gimp_sample_point_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_sample_point_editor_get_property (GObject    *object,
+ligma_sample_point_editor_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (object);
 
   switch (property_id)
     {
@@ -236,9 +236,9 @@ gimp_sample_point_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_sample_point_editor_style_updated (GtkWidget *widget)
+ligma_sample_point_editor_style_updated (GtkWidget *widget)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (widget);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (widget);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -256,62 +256,62 @@ gimp_sample_point_editor_style_updated (GtkWidget *widget)
 }
 
 static void
-gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
-                                    GimpImage       *image)
+ligma_sample_point_editor_set_image (LigmaImageEditor *image_editor,
+                                    LigmaImage       *image)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (image_editor);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (image_editor);
 
   if (image_editor->image)
     {
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_sample_point_editor_point_added,
+                                            ligma_sample_point_editor_point_added,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_sample_point_editor_point_removed,
+                                            ligma_sample_point_editor_point_removed,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_sample_point_editor_point_moved,
+                                            ligma_sample_point_editor_point_moved,
                                             editor);
 
-      g_signal_handlers_disconnect_by_func (gimp_image_get_projection (image_editor->image),
-                                            gimp_sample_point_editor_proj_update,
+      g_signal_handlers_disconnect_by_func (ligma_image_get_projection (image_editor->image),
+                                            ligma_sample_point_editor_proj_update,
                                             editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
+  LIGMA_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
   if (image)
     {
       g_signal_connect (image, "sample-point-added",
-                        G_CALLBACK (gimp_sample_point_editor_point_added),
+                        G_CALLBACK (ligma_sample_point_editor_point_added),
                         editor);
       g_signal_connect (image, "sample-point-removed",
-                        G_CALLBACK (gimp_sample_point_editor_point_removed),
+                        G_CALLBACK (ligma_sample_point_editor_point_removed),
                         editor);
       g_signal_connect (image, "sample-point-moved",
-                        G_CALLBACK (gimp_sample_point_editor_point_moved),
+                        G_CALLBACK (ligma_sample_point_editor_point_moved),
                         editor);
 
-      g_signal_connect (gimp_image_get_projection (image), "update",
-                        G_CALLBACK (gimp_sample_point_editor_proj_update),
+      g_signal_connect (ligma_image_get_projection (image), "update",
+                        G_CALLBACK (ligma_sample_point_editor_proj_update),
                         editor);
     }
 
   gtk_widget_set_visible (editor->empty_icon,
                           image_editor->image == NULL);
 
-  gimp_sample_point_editor_points_changed (editor);
+  ligma_sample_point_editor_points_changed (editor);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_sample_point_editor_new (GimpMenuFactory *menu_factory)
+ligma_sample_point_editor_new (LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  return g_object_new (GIMP_TYPE_SAMPLE_POINT_EDITOR,
+  return g_object_new (LIGMA_TYPE_SAMPLE_POINT_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<SamplePoints>",
                        "ui-path",         "/sample-points-popup",
@@ -319,10 +319,10 @@ gimp_sample_point_editor_new (GimpMenuFactory *menu_factory)
 }
 
 void
-gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
+ligma_sample_point_editor_set_sample_merged (LigmaSamplePointEditor *editor,
                                             gboolean               sample_merged)
 {
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT_EDITOR (editor));
 
   sample_merged = sample_merged ? TRUE : FALSE;
 
@@ -330,16 +330,16 @@ gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
     {
       editor->sample_merged = sample_merged;
 
-      gimp_sample_point_editor_dirty (editor, -1);
+      ligma_sample_point_editor_dirty (editor, -1);
 
       g_object_notify (G_OBJECT (editor), "sample-merged");
     }
 }
 
 gboolean
-gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor)
+ligma_sample_point_editor_get_sample_merged (LigmaSamplePointEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT_EDITOR (editor), FALSE);
+  g_return_val_if_fail (LIGMA_IS_SAMPLE_POINT_EDITOR (editor), FALSE);
 
   return editor->sample_merged;
 }
@@ -347,47 +347,47 @@ gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor)
 /*  private functions  */
 
 static void
-gimp_sample_point_editor_point_added (GimpImage             *image,
-                                      GimpSamplePoint       *sample_point,
-                                      GimpSamplePointEditor *editor)
+ligma_sample_point_editor_point_added (LigmaImage             *image,
+                                      LigmaSamplePoint       *sample_point,
+                                      LigmaSamplePointEditor *editor)
 {
-  gimp_sample_point_editor_points_changed (editor);
+  ligma_sample_point_editor_points_changed (editor);
 }
 
 static void
-gimp_sample_point_editor_point_removed (GimpImage             *image,
-                                        GimpSamplePoint       *sample_point,
-                                        GimpSamplePointEditor *editor)
+ligma_sample_point_editor_point_removed (LigmaImage             *image,
+                                        LigmaSamplePoint       *sample_point,
+                                        LigmaSamplePointEditor *editor)
 {
-  gimp_sample_point_editor_points_changed (editor);
+  ligma_sample_point_editor_points_changed (editor);
 }
 
 static void
-gimp_sample_point_editor_point_moved (GimpImage             *image,
-                                      GimpSamplePoint       *sample_point,
-                                      GimpSamplePointEditor *editor)
+ligma_sample_point_editor_point_moved (LigmaImage             *image,
+                                      LigmaSamplePoint       *sample_point,
+                                      LigmaSamplePointEditor *editor)
 {
-  gint i = g_list_index (gimp_image_get_sample_points (image), sample_point);
+  gint i = g_list_index (ligma_image_get_sample_points (image), sample_point);
 
-  gimp_sample_point_editor_dirty (editor, i);
+  ligma_sample_point_editor_dirty (editor, i);
 }
 
 static void
-gimp_sample_point_editor_proj_update (GimpImage             *image,
+ligma_sample_point_editor_proj_update (LigmaImage             *image,
                                       gboolean               now,
                                       gint                   x,
                                       gint                   y,
                                       gint                   width,
                                       gint                   height,
-                                      GimpSamplePointEditor *editor)
+                                      LigmaSamplePointEditor *editor)
 {
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  LigmaImageEditor *image_editor = LIGMA_IMAGE_EDITOR (editor);
   GList           *sample_points;
   gint             n_points     = 0;
   GList           *list;
   gint             i;
 
-  sample_points = gimp_image_get_sample_points (image_editor->image);
+  sample_points = ligma_image_get_sample_points (image_editor->image);
 
   n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
 
@@ -395,31 +395,31 @@ gimp_sample_point_editor_proj_update (GimpImage             *image,
        i < n_points;
        i++, list = g_list_next (list))
     {
-      GimpSamplePoint *sample_point = list->data;
+      LigmaSamplePoint *sample_point = list->data;
       gint             sp_x;
       gint             sp_y;
 
-      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
+      ligma_sample_point_get_position (sample_point, &sp_x, &sp_y);
 
       if (sp_x >= x && sp_x < (x + width) &&
           sp_y >= y && sp_y < (y + height))
         {
-          gimp_sample_point_editor_dirty (editor, i);
+          ligma_sample_point_editor_dirty (editor, i);
         }
     }
 }
 
 static void
-gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
+ligma_sample_point_editor_points_changed (LigmaSamplePointEditor *editor)
 {
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  LigmaImageEditor *image_editor = LIGMA_IMAGE_EDITOR (editor);
   GList           *sample_points;
   gint             n_points     = 0;
   gint             i;
 
   if (image_editor->image)
     {
-      sample_points = gimp_image_get_sample_points (image_editor->image);
+      sample_points = ligma_image_get_sample_points (image_editor->image);
       n_points = g_list_length (sample_points);
     }
 
@@ -428,7 +428,7 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
 
   /*  Keep that many color frames around so they remember their color
    *  model. Let's hope nobody uses more and notices they get reset to
-   *  "pixel". See https://gitlab.gnome.org/GNOME/gimp/issues/1805
+   *  "pixel". See https://gitlab.gnome.org/GNOME/ligma/issues/1805
    */
 #define RANDOM_MAGIC 16
 
@@ -448,9 +448,9 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
     }
   else if (n_points > editor->n_color_frames)
     {
-      GimpColorConfig *config;
+      LigmaColorConfig *config;
 
-      config = image_editor->image->gimp->config->color_management;
+      config = image_editor->image->ligma->config->color_management;
 
       editor->color_frames = g_renew (GtkWidget *, editor->color_frames,
                                       n_points);
@@ -461,9 +461,9 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
           gint column = i % 2;
 
           editor->color_frames[i] =
-            g_object_new (GIMP_TYPE_COLOR_FRAME,
-                          "gimp",           GIMP (image_editor->image->gimp),
-                          "mode",           GIMP_COLOR_PICK_MODE_PIXEL,
+            g_object_new (LIGMA_TYPE_COLOR_FRAME,
+                          "ligma",           LIGMA (image_editor->image->ligma),
+                          "mode",           LIGMA_COLOR_PICK_MODE_PIXEL,
                           "has-number",     TRUE,
                           "number",         i + 1,
                           "has-color-area", TRUE,
@@ -471,14 +471,14 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
                           "hexpand",        TRUE,
                           NULL);
 
-          gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (editor->color_frames[i]),
+          ligma_color_frame_set_color_config (LIGMA_COLOR_FRAME (editor->color_frames[i]),
                                              config);
 
           gtk_grid_attach (GTK_GRID (editor->grid), editor->color_frames[i],
                            column, row, 1, 1);
 
           g_signal_connect_object (editor->color_frames[i], "notify::mode",
-                                   G_CALLBACK (gimp_sample_point_editor_mode_notify),
+                                   G_CALLBACK (ligma_sample_point_editor_mode_notify),
                                    editor, 0);
 
           g_object_set_data (G_OBJECT (editor->color_frames[i]),
@@ -494,11 +494,11 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
     }
 
   if (n_points > 0)
-    gimp_sample_point_editor_dirty (editor, -1);
+    ligma_sample_point_editor_dirty (editor, -1);
 }
 
 static void
-gimp_sample_point_editor_dirty (GimpSamplePointEditor *editor,
+ligma_sample_point_editor_dirty (LigmaSamplePointEditor *editor,
                                 gint                   index)
 {
   if (index >= 0)
@@ -519,14 +519,14 @@ gimp_sample_point_editor_dirty (GimpSamplePointEditor *editor,
     g_source_remove (editor->dirty_idle_id);
 
   editor->dirty_idle_id =
-    g_idle_add ((GSourceFunc) gimp_sample_point_editor_update,
+    g_idle_add ((GSourceFunc) ligma_sample_point_editor_update,
                 editor);
 }
 
 static gboolean
-gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
+ligma_sample_point_editor_update (LigmaSamplePointEditor *editor)
 {
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  LigmaImageEditor *image_editor = LIGMA_IMAGE_EDITOR (editor);
   GList           *sample_points;
   gint             n_points;
   GList           *list;
@@ -537,7 +537,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
   if (! image_editor->image)
     return FALSE;
 
-  sample_points = gimp_image_get_sample_points (image_editor->image);
+  sample_points = ligma_image_get_sample_points (image_editor->image);
 
   n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
 
@@ -545,25 +545,25 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
        i < n_points;
        i++, list = g_list_next (list))
     {
-      GimpColorFrame *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+      LigmaColorFrame *color_frame = LIGMA_COLOR_FRAME (editor->color_frames[i]);
 
       if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_frame),
                                               "dirty")))
         {
-          GimpSamplePoint   *sample_point = list->data;
+          LigmaSamplePoint   *sample_point = list->data;
           const Babl        *format;
           gdouble            pixel[4];
-          GimpRGB            color;
-          GimpColorPickMode  pick_mode;
+          LigmaRGB            color;
+          LigmaColorPickMode  pick_mode;
           gint               x;
           gint               y;
 
           g_object_set_data (G_OBJECT (color_frame),
                              "dirty", GINT_TO_POINTER (FALSE));
 
-          gimp_sample_point_get_position (sample_point, &x, &y);
+          ligma_sample_point_get_position (sample_point, &x, &y);
 
-          if (gimp_image_pick_color (image_editor->image, NULL,
+          if (ligma_image_pick_color (image_editor->image, NULL,
                                      x, y,
                                      FALSE,
                                      editor->sample_merged,
@@ -572,18 +572,18 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      pixel,
                                      &color))
             {
-              gimp_color_frame_set_color (color_frame, FALSE,
+              ligma_color_frame_set_color (color_frame, FALSE,
                                           format, pixel, &color,
                                           x, y);
             }
           else
             {
-              gimp_color_frame_set_invalid (color_frame);
+              ligma_color_frame_set_invalid (color_frame);
             }
 
-          pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+          pick_mode = ligma_sample_point_get_pick_mode (sample_point);
 
-          gimp_color_frame_set_mode (color_frame, pick_mode);
+          ligma_color_frame_set_mode (color_frame, pick_mode);
         }
     }
 
@@ -591,17 +591,17 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 }
 
 static void
-gimp_sample_point_editor_mode_notify (GimpColorFrame        *frame,
+ligma_sample_point_editor_mode_notify (LigmaColorFrame        *frame,
                                       const GParamSpec      *pspec,
-                                      GimpSamplePointEditor *editor)
+                                      LigmaSamplePointEditor *editor)
 {
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  LigmaImageEditor *image_editor = LIGMA_IMAGE_EDITOR (editor);
   GList           *sample_points;
   gint             n_points;
   GList           *list;
   gint             i;
 
-  sample_points = gimp_image_get_sample_points (image_editor->image);
+  sample_points = ligma_image_get_sample_points (image_editor->image);
 
   n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
 
@@ -609,15 +609,15 @@ gimp_sample_point_editor_mode_notify (GimpColorFrame        *frame,
        i < n_points;
        i++, list = g_list_next (list))
     {
-      if (GIMP_COLOR_FRAME (editor->color_frames[i]) == frame)
+      if (LIGMA_COLOR_FRAME (editor->color_frames[i]) == frame)
         {
-          GimpSamplePoint   *sample_point = list->data;
-          GimpColorPickMode  pick_mode;
+          LigmaSamplePoint   *sample_point = list->data;
+          LigmaColorPickMode  pick_mode;
 
           g_object_get (frame, "mode", &pick_mode, NULL);
 
-          if (pick_mode != gimp_sample_point_get_pick_mode (sample_point))
-            gimp_image_set_sample_point_pick_mode (image_editor->image,
+          if (pick_mode != ligma_sample_point_get_pick_mode (sample_point))
+            ligma_image_set_sample_point_pick_mode (image_editor->image,
                                                    sample_point,
                                                    pick_mode,
                                                    TRUE);

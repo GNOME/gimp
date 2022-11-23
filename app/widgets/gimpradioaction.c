@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpradioaction.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
- * Copyright (C) 2008 Sven Neumann <sven@gimp.org>
+ * ligmaradioaction.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
+ * Copyright (C) 2008 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,61 +24,61 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimpradioaction.h"
+#include "ligmaaction.h"
+#include "ligmaradioaction.h"
 
 
-static void   gimp_radio_action_connect_proxy (GtkAction      *action,
+static void   ligma_radio_action_connect_proxy (GtkAction      *action,
                                                GtkWidget      *proxy);
 
-static void   gimp_radio_action_changed       (GtkRadioAction *action,
+static void   ligma_radio_action_changed       (GtkRadioAction *action,
                                                GtkRadioAction *current);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
+G_DEFINE_TYPE_WITH_CODE (LigmaRadioAction, ligma_radio_action,
                          GTK_TYPE_RADIO_ACTION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_ACTION, NULL))
 
-#define parent_class gimp_radio_action_parent_class
+#define parent_class ligma_radio_action_parent_class
 
 
 static void
-gimp_radio_action_class_init (GimpRadioActionClass *klass)
+ligma_radio_action_class_init (LigmaRadioActionClass *klass)
 {
   GtkActionClass      *action_class = GTK_ACTION_CLASS (klass);
   GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
 
-  action_class->connect_proxy = gimp_radio_action_connect_proxy;
+  action_class->connect_proxy = ligma_radio_action_connect_proxy;
 
-  radio_class->changed        = gimp_radio_action_changed;
+  radio_class->changed        = ligma_radio_action_changed;
 }
 
 static void
-gimp_radio_action_init (GimpRadioAction *action)
+ligma_radio_action_init (LigmaRadioAction *action)
 {
-  gimp_action_init (GIMP_ACTION (action));
+  ligma_action_init (LIGMA_ACTION (action));
 }
 
 static void
-gimp_radio_action_connect_proxy (GtkAction *action,
+ligma_radio_action_connect_proxy (GtkAction *action,
                                  GtkWidget *proxy)
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  ligma_action_set_proxy (LIGMA_ACTION (action), proxy);
 }
 
 static void
-gimp_radio_action_changed (GtkRadioAction *action,
+ligma_radio_action_changed (GtkRadioAction *action,
                            GtkRadioAction *current)
 {
   gint value = gtk_radio_action_get_current_value (action);
 
-  gimp_action_emit_change_state (GIMP_ACTION (action),
+  ligma_action_emit_change_state (LIGMA_ACTION (action),
                                  g_variant_new_int32 (value));
 }
 
@@ -86,7 +86,7 @@ gimp_radio_action_changed (GtkRadioAction *action,
 /*  public functions  */
 
 GtkRadioAction *
-gimp_radio_action_new (const gchar *name,
+ligma_radio_action_new (const gchar *name,
                        const gchar *label,
                        const gchar *tooltip,
                        const gchar *icon_name,
@@ -95,7 +95,7 @@ gimp_radio_action_new (const gchar *name,
 {
   GtkRadioAction *action;
 
-  action = g_object_new (GIMP_TYPE_RADIO_ACTION,
+  action = g_object_new (LIGMA_TYPE_RADIO_ACTION,
                          "name",      name,
                          "label",     label,
                          "tooltip",   tooltip,
@@ -103,7 +103,7 @@ gimp_radio_action_new (const gchar *name,
                          "value",     value,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  ligma_action_set_help_id (LIGMA_ACTION (action), help_id);
 
   return action;
 }

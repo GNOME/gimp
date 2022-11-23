@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,29 +27,29 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pango.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "text-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-memsize.h"
-#include "core/gimp-utils.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdashpattern.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpstrokeoptions.h"
-#include "core/gimppattern.h"
+#include "core/ligma.h"
+#include "core/ligma-memsize.h"
+#include "core/ligma-utils.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadashpattern.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmastrokeoptions.h"
+#include "core/ligmapattern.h"
 
-#include "gimptext.h"
+#include "ligmatext.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_TEXT,
   PROP_MARKUP,
   PROP_FONT,
@@ -96,52 +96,52 @@ enum
   LAST_SIGNAL
 };
 
-static void     gimp_text_config_iface_init           (GimpConfigInterface *iface);
-static gboolean gimp_text_serialize_property          (GimpConfig       *config,
+static void     ligma_text_config_iface_init           (LigmaConfigInterface *iface);
+static gboolean ligma_text_serialize_property          (LigmaConfig       *config,
                                                        guint             property_id,
                                                        const GValue     *value,
                                                        GParamSpec       *pspec,
-                                                       GimpConfigWriter *writer);
-static gboolean gimp_text_deserialize_property        (GimpConfig       *config,
+                                                       LigmaConfigWriter *writer);
+static gboolean ligma_text_deserialize_property        (LigmaConfig       *config,
                                                        guint             property_id,
                                                        GValue           *value,
                                                        GParamSpec       *pspec,
                                                        GScanner         *scanner,
                                                        GTokenType       *expected);
 
-static void     gimp_text_finalize                    (GObject      *object);
-static void     gimp_text_get_property                (GObject      *object,
+static void     ligma_text_finalize                    (GObject      *object);
+static void     ligma_text_get_property                (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
-static void     gimp_text_set_property                (GObject      *object,
+static void     ligma_text_set_property                (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-static void     gimp_text_dispatch_properties_changed (GObject      *object,
+static void     ligma_text_dispatch_properties_changed (GObject      *object,
                                                        guint         n_pspecs,
                                                        GParamSpec  **pspecs);
-static gint64   gimp_text_get_memsize                 (GimpObject   *object,
+static gint64   ligma_text_get_memsize                 (LigmaObject   *object,
                                                        gint64       *gui_size);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpText, gimp_text, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_text_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaText, ligma_text, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_text_config_iface_init))
 
-#define parent_class gimp_text_parent_class
+#define parent_class ligma_text_parent_class
 
 static guint text_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_text_class_init (GimpTextClass *klass)
+ligma_text_class_init (LigmaTextClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpRGB          black;
-  GimpRGB          gray;
-  GimpMatrix2      identity;
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaRGB          black;
+  LigmaRGB          gray;
+  LigmaMatrix2      identity;
   gchar           *language;
   GParamSpec      *array_spec;
 
@@ -149,269 +149,269 @@ gimp_text_class_init (GimpTextClass *klass)
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpTextClass, changed),
+                  G_STRUCT_OFFSET (LigmaTextClass, changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize                    = gimp_text_finalize;
-  object_class->get_property                = gimp_text_get_property;
-  object_class->set_property                = gimp_text_set_property;
-  object_class->dispatch_properties_changed = gimp_text_dispatch_properties_changed;
+  object_class->finalize                    = ligma_text_finalize;
+  object_class->get_property                = ligma_text_get_property;
+  object_class->set_property                = ligma_text_set_property;
+  object_class->dispatch_properties_changed = ligma_text_dispatch_properties_changed;
 
-  gimp_object_class->get_memsize            = gimp_text_get_memsize;
+  ligma_object_class->get_memsize            = ligma_text_get_memsize;
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&gray, 0.75, 0.75, 0.75, GIMP_OPACITY_OPAQUE);
-  gimp_matrix2_identity (&identity);
+  ligma_rgba_set (&black, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
+  ligma_rgba_set (&gray, 0.75, 0.75, 0.75, LIGMA_OPACITY_OPAQUE);
+  ligma_matrix2_identity (&identity);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_TEXT,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_TEXT,
                            "text",
                            NULL, NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_MARKUP,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_MARKUP,
                            "markup",
                            NULL, NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_FONT,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_FONT,
                            "font",
                            NULL, NULL,
                            "Sans-serif",
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                            "font-size",
                            NULL, NULL,
                            0.0, 8192.0, 24.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   /*  We use the name "font-size-unit" for backward compatibility.
    *  The unit is also used for other sizes in the text object.
    */
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
                          "font-size-unit",
                          NULL, NULL,
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         TRUE, FALSE, LIGMA_UNIT_PIXEL,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                             "antialias",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HINT_STYLE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_HINT_STYLE,
                          "hint-style",
                          NULL, NULL,
-                         GIMP_TYPE_TEXT_HINT_STYLE,
-                         GIMP_TEXT_HINT_STYLE_MEDIUM,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_DEFAULTS);
+                         LIGMA_TYPE_TEXT_HINT_STYLE,
+                         LIGMA_TEXT_HINT_STYLE_MEDIUM,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_KERNING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_KERNING,
                             "kerning",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_DEFAULTS);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  language = gimp_get_default_language (NULL);
+  language = ligma_get_default_language (NULL);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_LANGUAGE,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_LANGUAGE,
                            "language",
                            NULL, NULL,
                            language,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   g_free (language);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BASE_DIR,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BASE_DIR,
                          "base-direction",
                          NULL, NULL,
-                         GIMP_TYPE_TEXT_DIRECTION,
-                         GIMP_TEXT_DIRECTION_LTR,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TEXT_DIRECTION,
+                         LIGMA_TEXT_DIRECTION_LTR,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_COLOR,
                         "color",
                         NULL, NULL,
                         FALSE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE,
                          "outline",
                          NULL, NULL,
-                         GIMP_TYPE_TEXT_OUTLINE,
-                         GIMP_TEXT_OUTLINE_NONE,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_DEFAULTS);
+                         LIGMA_TYPE_TEXT_OUTLINE,
+                         LIGMA_TEXT_OUTLINE_NONE,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_JUSTIFICATION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                          "justify",
                          NULL, NULL,
-                         GIMP_TYPE_TEXT_JUSTIFICATION,
-                         GIMP_TEXT_JUSTIFY_LEFT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TEXT_JUSTIFICATION,
+                         LIGMA_TEXT_JUSTIFY_LEFT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INDENTATION,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_INDENTATION,
                            "indent",
                            NULL, NULL,
                            -8192.0, 8192.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
                            "line-spacing",
                            NULL, NULL,
                            -8192.0, 8192.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
                            "letter-spacing",
                            NULL, NULL,
                            -8192.0, 8192.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BOX_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BOX_MODE,
                          "box-mode",
                          NULL, NULL,
-                         GIMP_TYPE_TEXT_BOX_MODE,
-                         GIMP_TEXT_BOX_DYNAMIC,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TEXT_BOX_MODE,
+                         LIGMA_TEXT_BOX_DYNAMIC,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
                            "box-width",
                            NULL, NULL,
-                           0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           0.0, LIGMA_MAX_IMAGE_SIZE, 0.0,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
                            "box-height",
                            NULL, NULL,
-                           0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           0.0, LIGMA_MAX_IMAGE_SIZE, 0.0,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_BOX_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_BOX_UNIT,
                          "box-unit",
                          NULL, NULL,
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         TRUE, FALSE, LIGMA_UNIT_PIXEL,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
+  LIGMA_CONFIG_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                             "transformation",
                             NULL, NULL,
                             &identity,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_DEFAULTS);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_X,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_X,
                            "offset-x",
                            NULL, NULL,
                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
                            "offset-y",
                            NULL, NULL,
                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
   /*  border does only exist to implement the old text API  */
   g_object_class_install_property (object_class, PROP_BORDER,
                                    g_param_spec_int ("border", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                     0, LIGMA_MAX_IMAGE_SIZE, 0,
                                                      G_PARAM_CONSTRUCT |
-                                                     GIMP_PARAM_WRITABLE));
+                                                     LIGMA_PARAM_WRITABLE));
 
-   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
+   LIGMA_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
                           "outline-style", NULL, NULL,
-                          GIMP_TYPE_FILL_STYLE,
-                          GIMP_FILL_STYLE_SOLID,
-                          GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
+                          LIGMA_TYPE_FILL_STYLE,
+                          LIGMA_FILL_STYLE_SOLID,
+                          LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
                             "outline-pattern", NULL, NULL,
-                            GIMP_TYPE_PATTERN,
-                            GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
+                            LIGMA_TYPE_PATTERN,
+                            LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
                          "outline-foreground", NULL, NULL,
                          FALSE, &gray,
-                         GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
+                         LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
                             "outline-width", NULL, NULL,
                             0.0, 8192.0, 4.0,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_DEFAULTS);
-   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_DEFAULTS);
+   LIGMA_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
                           "outline-cap-style", NULL, NULL,
-                          GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
-                          GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_JOIN_STYLE,
+                          LIGMA_TYPE_CAP_STYLE, LIGMA_CAP_BUTT,
+                          LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_JOIN_STYLE,
                           "outline-join-style", NULL, NULL,
-                          GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
-                          GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_MITER_LIMIT,
+                          LIGMA_TYPE_JOIN_STYLE, LIGMA_JOIN_MITER,
+                          LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_MITER_LIMIT,
                             "outline-miter-limit",
                             NULL, NULL,
                             0.0, 100.0, 10.0,
-                            GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
+                            LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
                              "outline-antialias", NULL, NULL,
                              TRUE,
-                             GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_DASH_OFFSET,
+                             LIGMA_PARAM_STATIC_STRINGS);
+   LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_DASH_OFFSET,
                             "outline-dash-offset", NULL, NULL,
                             0.0, 2000.0, 0.0,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
    array_spec = g_param_spec_double ("outline-dash-length", NULL, NULL,
-                                     0.0, 2000.0, 1.0, GIMP_PARAM_READWRITE);
+                                     0.0, 2000.0, 1.0, LIGMA_PARAM_READWRITE);
    g_object_class_install_property (object_class, PROP_OUTLINE_DASH_INFO,
-                                    gimp_param_spec_value_array ("outline-dash-info",
+                                    ligma_param_spec_value_array ("outline-dash-info",
                                                                  NULL, NULL,
                                                                  array_spec,
-                                                                 GIMP_PARAM_STATIC_STRINGS |
-                                                                 GIMP_CONFIG_PARAM_FLAGS));
+                                                                 LIGMA_PARAM_STATIC_STRINGS |
+                                                                 LIGMA_CONFIG_PARAM_FLAGS));
 
   /*  the old hinting options have been replaced by 'hint-style'  */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HINTING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_HINTING,
                             "hinting",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
 }
 
 static void
-gimp_text_init (GimpText *text)
+ligma_text_init (LigmaText *text)
 {
 }
 
 static void
-gimp_text_config_iface_init (GimpConfigInterface *iface)
+ligma_text_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize_property   = gimp_text_serialize_property;
-  iface->deserialize_property = gimp_text_deserialize_property;
+  iface->serialize_property   = ligma_text_serialize_property;
+  iface->deserialize_property = ligma_text_deserialize_property;
 }
 
 static void
-gimp_text_finalize (GObject *object)
+ligma_text_finalize (GObject *object)
 {
-  GimpText *text = GIMP_TEXT (object);
+  LigmaText *text = LIGMA_TEXT (object);
 
   g_clear_pointer (&text->text,     g_free);
   g_clear_pointer (&text->markup,   g_free);
@@ -422,12 +422,12 @@ gimp_text_finalize (GObject *object)
 }
 
 static void
-gimp_text_get_property (GObject      *object,
+ligma_text_get_property (GObject      *object,
                         guint         property_id,
                         GValue       *value,
                         GParamSpec   *pspec)
 {
-  GimpText *text = GIMP_TEXT (object);
+  LigmaText *text = LIGMA_TEXT (object);
 
   switch (property_id)
     {
@@ -529,18 +529,18 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_OUTLINE_DASH_INFO:
       {
-        GimpValueArray *value_array;
+        LigmaValueArray *value_array;
 
-        value_array = gimp_dash_pattern_to_value_array (text->outline_dash_info);
+        value_array = ligma_dash_pattern_to_value_array (text->outline_dash_info);
         g_value_take_boxed (value, value_array);
       }
       break;
     case PROP_HINTING:
       g_value_set_boolean (value,
-                           text->hint_style != GIMP_TEXT_HINT_STYLE_NONE);
+                           text->hint_style != LIGMA_TEXT_HINT_STYLE_NONE);
       break;
-    case PROP_GIMP:
-      g_value_set_object (value, text->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, text->ligma);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -549,14 +549,14 @@ gimp_text_get_property (GObject      *object,
 }
 
 static void
-gimp_text_set_property (GObject      *object,
+ligma_text_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpText    *text = GIMP_TEXT (object);
-  GimpRGB     *color;
-  GimpMatrix2 *matrix;
+  LigmaText    *text = LIGMA_TEXT (object);
+  LigmaRGB     *color;
+  LigmaMatrix2 *matrix;
 
   switch (property_id)
     {
@@ -671,7 +671,7 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_OUTLINE_PATTERN:
       {
-        GimpPattern *pattern = g_value_get_object (value);
+        LigmaPattern *pattern = g_value_get_object (value);
 
         if (text->outline_pattern != pattern)
           {
@@ -702,8 +702,8 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_OUTLINE_DASH_INFO:
       {
-        GimpValueArray *value_array = g_value_get_boxed (value);
-        text->outline_dash_info = gimp_dash_pattern_from_value_array (value_array);
+        LigmaValueArray *value_array = g_value_get_boxed (value);
+        text->outline_dash_info = ligma_dash_pattern_from_value_array (value_array);
       }
       break;
     case PROP_BORDER:
@@ -712,14 +712,14 @@ gimp_text_set_property (GObject      *object,
     case PROP_HINTING:
       /* interpret "hinting" only if "hint-style" has its default
        * value, so we don't overwrite a serialized new hint-style with
-       * a compat "hinting" that is only there for old GIMP versions
+       * a compat "hinting" that is only there for old LIGMA versions
        */
-      if (text->hint_style == GIMP_TEXT_HINT_STYLE_MEDIUM)
+      if (text->hint_style == LIGMA_TEXT_HINT_STYLE_MEDIUM)
         text->hint_style = (g_value_get_boolean (value) ?
-                            GIMP_TEXT_HINT_STYLE_MEDIUM :
-                            GIMP_TEXT_HINT_STYLE_NONE);
+                            LIGMA_TEXT_HINT_STYLE_MEDIUM :
+                            LIGMA_TEXT_HINT_STYLE_NONE);
       break;
-    case PROP_GIMP:
+    case PROP_LIGMA:
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -728,7 +728,7 @@ gimp_text_set_property (GObject      *object,
 }
 
 static void
-gimp_text_dispatch_properties_changed (GObject     *object,
+ligma_text_dispatch_properties_changed (GObject     *object,
                                        guint        n_pspecs,
                                        GParamSpec **pspecs)
 {
@@ -739,26 +739,26 @@ gimp_text_dispatch_properties_changed (GObject     *object,
 }
 
 static gint64
-gimp_text_get_memsize (GimpObject *object,
+ligma_text_get_memsize (LigmaObject *object,
                        gint64     *gui_size)
 {
-  GimpText *text    = GIMP_TEXT (object);
+  LigmaText *text    = LIGMA_TEXT (object);
   gint64    memsize = 0;
 
-  memsize += gimp_string_get_memsize (text->text);
-  memsize += gimp_string_get_memsize (text->markup);
-  memsize += gimp_string_get_memsize (text->font);
-  memsize += gimp_string_get_memsize (text->language);
+  memsize += ligma_string_get_memsize (text->text);
+  memsize += ligma_string_get_memsize (text->markup);
+  memsize += ligma_string_get_memsize (text->font);
+  memsize += ligma_string_get_memsize (text->language);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 void
-gimp_text_get_transformation (GimpText    *text,
-                              GimpMatrix3 *matrix)
+ligma_text_get_transformation (LigmaText    *text,
+                              LigmaMatrix3 *matrix)
 {
-  g_return_if_fail (GIMP_IS_TEXT (text));
+  g_return_if_fail (LIGMA_IS_TEXT (text));
   g_return_if_fail (matrix != NULL);
 
   matrix->coeff[0][0] = text->transformation.coeff[0][0];
@@ -775,24 +775,24 @@ gimp_text_get_transformation (GimpText    *text,
 }
 
 static gboolean
-gimp_text_serialize_property (GimpConfig       *config,
+ligma_text_serialize_property (LigmaConfig       *config,
                               guint             property_id,
                               const GValue     *value,
                               GParamSpec       *pspec,
-                              GimpConfigWriter *writer)
+                              LigmaConfigWriter *writer)
 {
   if (property_id == PROP_OUTLINE_PATTERN)
     {
-      GimpObject *serialize_obj = g_value_get_object (value);
+      LigmaObject *serialize_obj = g_value_get_object (value);
 
-      gimp_config_writer_open (writer, pspec->name);
+      ligma_config_writer_open (writer, pspec->name);
 
       if (serialize_obj)
-        gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
+        ligma_config_writer_string (writer, ligma_object_get_name (serialize_obj));
       else
-        gimp_config_writer_print (writer, "NULL", 4);
+        ligma_config_writer_print (writer, "NULL", 4);
 
-      gimp_config_writer_close (writer);
+      ligma_config_writer_close (writer);
 
       return TRUE;
     }
@@ -801,7 +801,7 @@ gimp_text_serialize_property (GimpConfig       *config,
 }
 
 static gboolean
-gimp_text_deserialize_property (GimpConfig *object,
+ligma_text_deserialize_property (LigmaConfig *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec,
@@ -812,22 +812,22 @@ gimp_text_deserialize_property (GimpConfig *object,
     {
       gchar *object_name;
 
-      if (gimp_scanner_parse_identifier (scanner, "NULL"))
+      if (ligma_scanner_parse_identifier (scanner, "NULL"))
         {
           g_value_set_object (value, NULL);
         }
-      else if (gimp_scanner_parse_string (scanner, &object_name))
+      else if (ligma_scanner_parse_string (scanner, &object_name))
         {
-          GimpText      *text = GIMP_TEXT (object);
-          GimpContainer *container;
-          GimpObject    *deserialize_obj;
+          LigmaText      *text = LIGMA_TEXT (object);
+          LigmaContainer *container;
+          LigmaObject    *deserialize_obj;
 
           if (! object_name)
             object_name = g_strdup ("");
 
-          container = gimp_data_factory_get_container (text->gimp->pattern_factory);
+          container = ligma_data_factory_get_container (text->ligma->pattern_factory);
 
-          deserialize_obj = gimp_container_get_child_by_name (container,
+          deserialize_obj = ligma_container_get_child_by_name (container,
                                                               object_name);
 
           g_value_set_object (value, deserialize_obj);
@@ -843,7 +843,7 @@ gimp_text_deserialize_property (GimpConfig *object,
     }
   else if (property_id == PROP_OUTLINE_DASH_INFO)
     {
-      if (gimp_scanner_parse_identifier (scanner, "NULL"))
+      if (ligma_scanner_parse_identifier (scanner, "NULL"))
         {
           g_value_take_boxed (value, NULL);
           return TRUE;

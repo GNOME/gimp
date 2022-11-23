@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-layer-modes.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
- *                    Øyvind Kolås <pippin@gimp.org>
+ * ligma-layer-modes.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
+ *                    Øyvind Kolås <pippin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,57 +19,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MODES_H__
-#define __GIMP_LAYER_MODES_H__
+#ifndef __LIGMA_LAYER_MODES_H__
+#define __LIGMA_LAYER_MODES_H__
 
 
-void                       gimp_layer_modes_init                      (void);
-void                       gimp_layer_modes_exit                      (void);
+void                       ligma_layer_modes_init                      (void);
+void                       ligma_layer_modes_exit                      (void);
 
-gboolean                   gimp_layer_mode_is_legacy                  (GimpLayerMode           mode);
+gboolean                   ligma_layer_mode_is_legacy                  (LigmaLayerMode           mode);
 
-gboolean                   gimp_layer_mode_is_blend_space_mutable     (GimpLayerMode           mode);
-gboolean                   gimp_layer_mode_is_composite_space_mutable (GimpLayerMode           mode);
-gboolean                   gimp_layer_mode_is_composite_mode_mutable  (GimpLayerMode           mode);
+gboolean                   ligma_layer_mode_is_blend_space_mutable     (LigmaLayerMode           mode);
+gboolean                   ligma_layer_mode_is_composite_space_mutable (LigmaLayerMode           mode);
+gboolean                   ligma_layer_mode_is_composite_mode_mutable  (LigmaLayerMode           mode);
 
-gboolean                   gimp_layer_mode_is_subtractive             (GimpLayerMode           mode);
-gboolean                   gimp_layer_mode_is_alpha_only              (GimpLayerMode           mode);
-gboolean                   gimp_layer_mode_is_trivial                 (GimpLayerMode           mode);
+gboolean                   ligma_layer_mode_is_subtractive             (LigmaLayerMode           mode);
+gboolean                   ligma_layer_mode_is_alpha_only              (LigmaLayerMode           mode);
+gboolean                   ligma_layer_mode_is_trivial                 (LigmaLayerMode           mode);
 
-GimpLayerColorSpace        gimp_layer_mode_get_blend_space            (GimpLayerMode           mode);
-GimpLayerColorSpace        gimp_layer_mode_get_composite_space        (GimpLayerMode           mode);
-GimpLayerCompositeMode     gimp_layer_mode_get_composite_mode         (GimpLayerMode           mode);
-GimpLayerCompositeMode     gimp_layer_mode_get_paint_composite_mode   (GimpLayerMode           mode);
+LigmaLayerColorSpace        ligma_layer_mode_get_blend_space            (LigmaLayerMode           mode);
+LigmaLayerColorSpace        ligma_layer_mode_get_composite_space        (LigmaLayerMode           mode);
+LigmaLayerCompositeMode     ligma_layer_mode_get_composite_mode         (LigmaLayerMode           mode);
+LigmaLayerCompositeMode     ligma_layer_mode_get_paint_composite_mode   (LigmaLayerMode           mode);
 
-const gchar              * gimp_layer_mode_get_operation_name         (GimpLayerMode           mode);
-GeglOperation            * gimp_layer_mode_get_operation              (GimpLayerMode           mode);
+const gchar              * ligma_layer_mode_get_operation_name         (LigmaLayerMode           mode);
+GeglOperation            * ligma_layer_mode_get_operation              (LigmaLayerMode           mode);
 
-GimpLayerModeFunc          gimp_layer_mode_get_function               (GimpLayerMode           mode);
-GimpLayerModeBlendFunc     gimp_layer_mode_get_blend_function         (GimpLayerMode           mode);
+LigmaLayerModeFunc          ligma_layer_mode_get_function               (LigmaLayerMode           mode);
+LigmaLayerModeBlendFunc     ligma_layer_mode_get_blend_function         (LigmaLayerMode           mode);
 
-GimpLayerModeContext       gimp_layer_mode_get_context                (GimpLayerMode           mode);
+LigmaLayerModeContext       ligma_layer_mode_get_context                (LigmaLayerMode           mode);
 
-GimpLayerMode            * gimp_layer_mode_get_context_array          (GimpLayerMode           mode,
-                                                                       GimpLayerModeContext    context,
+LigmaLayerMode            * ligma_layer_mode_get_context_array          (LigmaLayerMode           mode,
+                                                                       LigmaLayerModeContext    context,
                                                                        gint                   *n_modes);
 
-GimpLayerModeGroup         gimp_layer_mode_get_group                  (GimpLayerMode           mode);
+LigmaLayerModeGroup         ligma_layer_mode_get_group                  (LigmaLayerMode           mode);
 
-const GimpLayerMode      * gimp_layer_mode_get_group_array            (GimpLayerModeGroup      group,
+const LigmaLayerMode      * ligma_layer_mode_get_group_array            (LigmaLayerModeGroup      group,
                                                                        gint                   *n_modes);
 
-gboolean                   gimp_layer_mode_get_for_group              (GimpLayerMode           old_mode,
-                                                                       GimpLayerModeGroup      new_group,
-                                                                       GimpLayerMode          *new_mode);
+gboolean                   ligma_layer_mode_get_for_group              (LigmaLayerMode           old_mode,
+                                                                       LigmaLayerModeGroup      new_group,
+                                                                       LigmaLayerMode          *new_mode);
 
-const Babl               * gimp_layer_mode_get_format                 (GimpLayerMode           mode,
-                                                                       GimpLayerColorSpace     blend_space,
-                                                                       GimpLayerColorSpace     composite_space,
-                                                                       GimpLayerCompositeMode  composite_mode,
+const Babl               * ligma_layer_mode_get_format                 (LigmaLayerMode           mode,
+                                                                       LigmaLayerColorSpace     blend_space,
+                                                                       LigmaLayerColorSpace     composite_space,
+                                                                       LigmaLayerCompositeMode  composite_mode,
                                                                        const Babl             *preferred_format);
 
-GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
-                                                                       GimpLayerCompositeMode  composite_mode);
+LigmaLayerCompositeRegion   ligma_layer_mode_get_included_region        (LigmaLayerMode           mode,
+                                                                       LigmaLayerCompositeMode  composite_mode);
 
 
-#endif /* __GIMP_LAYER_MODES_H__ */
+#endif /* __LIGMA_LAYER_MODES_H__ */

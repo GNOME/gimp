@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,17 +22,17 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 extern "C"
 {
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-babl.h"
-#include "gimp-gegl-loops.h"
-#include "gimp-gegl-mask-combine.h"
+#include "ligma-babl.h"
+#include "ligma-gegl-loops.h"
+#include "ligma-gegl-mask-combine.h"
 
 
 #define EPSILON 1e-6
@@ -42,8 +42,8 @@ extern "C"
 
 
 gboolean
-gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
-                             GimpChannelOps  op,
+ligma_gegl_mask_combine_rect (GeglBuffer     *mask,
+                             LigmaChannelOps  op,
                              gint            x,
                              gint            y,
                              gint            w,
@@ -63,16 +63,16 @@ gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
 
   switch (op)
     {
-    case GIMP_CHANNEL_OP_REPLACE:
-    case GIMP_CHANNEL_OP_ADD:
+    case LIGMA_CHANNEL_OP_REPLACE:
+    case LIGMA_CHANNEL_OP_ADD:
       value = 1.0f;
       break;
 
-    case GIMP_CHANNEL_OP_SUBTRACT:
+    case LIGMA_CHANNEL_OP_SUBTRACT:
       value = 0.0f;
       break;
 
-    case GIMP_CHANNEL_OP_INTERSECT:
+    case LIGMA_CHANNEL_OP_INTERSECT:
       return TRUE;
     }
 
@@ -83,21 +83,21 @@ gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
 }
 
 gboolean
-gimp_gegl_mask_combine_ellipse (GeglBuffer     *mask,
-                                GimpChannelOps  op,
+ligma_gegl_mask_combine_ellipse (GeglBuffer     *mask,
+                                LigmaChannelOps  op,
                                 gint            x,
                                 gint            y,
                                 gint            w,
                                 gint            h,
                                 gboolean        antialias)
 {
-  return gimp_gegl_mask_combine_ellipse_rect (mask, op, x, y, w, h,
+  return ligma_gegl_mask_combine_ellipse_rect (mask, op, x, y, w, h,
                                               w / 2.0, h / 2.0, antialias);
 }
 
 gboolean
-gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
-                                     GimpChannelOps  op,
+ligma_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
+                                     LigmaChannelOps  op,
                                      gint            x,
                                      gint            y,
                                      gint            w,
@@ -121,7 +121,7 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
   g_return_val_if_fail (GEGL_IS_BUFFER (mask), FALSE);
 
   if (rx <= EPSILON || ry <= EPSILON)
-    return gimp_gegl_mask_combine_rect (mask, op, x, y, w, h);
+    return ligma_gegl_mask_combine_rect (mask, op, x, y, w, h);
 
   left   = x;
   right  = x + w;
@@ -145,8 +145,8 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
 
   if (antialias)
     {
-      format = gimp_babl_format_change_component_type (
-        format, GIMP_COMPONENT_TYPE_FLOAT);
+      format = ligma_babl_format_change_component_type (
+        format, LIGMA_COMPONENT_TYPE_FLOAT);
     }
 
   bpp = babl_format_get_bytes_per_pixel (format);
@@ -313,13 +313,13 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
   {
     switch (op)
       {
-      case GIMP_CHANNEL_OP_REPLACE:
-      case GIMP_CHANNEL_OP_INTERSECT:
+      case LIGMA_CHANNEL_OP_REPLACE:
+      case LIGMA_CHANNEL_OP_INTERSECT:
         memset (dest, 0, bpp * n);
         break;
 
-      case GIMP_CHANNEL_OP_ADD:
-      case GIMP_CHANNEL_OP_SUBTRACT:
+      case LIGMA_CHANNEL_OP_ADD:
+      case LIGMA_CHANNEL_OP_SUBTRACT:
         break;
       }
 
@@ -331,16 +331,16 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
   {
     switch (op)
       {
-      case GIMP_CHANNEL_OP_REPLACE:
-      case GIMP_CHANNEL_OP_ADD:
+      case LIGMA_CHANNEL_OP_REPLACE:
+      case LIGMA_CHANNEL_OP_ADD:
         gegl_memset_pattern (dest, one, bpp, n);
         break;
 
-      case GIMP_CHANNEL_OP_SUBTRACT:
+      case LIGMA_CHANNEL_OP_SUBTRACT:
         memset (dest, 0, bpp * n);
         break;
 
-      case GIMP_CHANNEL_OP_INTERSECT:
+      case LIGMA_CHANNEL_OP_INTERSECT:
         break;
       }
 
@@ -354,19 +354,19 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
 
     switch (op)
       {
-      case GIMP_CHANNEL_OP_REPLACE:
+      case LIGMA_CHANNEL_OP_REPLACE:
         *p = value;
         break;
 
-      case GIMP_CHANNEL_OP_ADD:
+      case LIGMA_CHANNEL_OP_ADD:
         *p = MIN (*p + value, 1.0);
         break;
 
-      case GIMP_CHANNEL_OP_SUBTRACT:
+      case LIGMA_CHANNEL_OP_SUBTRACT:
         *p = MAX (*p - value, 0.0);
         break;
 
-      case GIMP_CHANNEL_OP_INTERSECT:
+      case LIGMA_CHANNEL_OP_INTERSECT:
         *p = MIN (*p, value);
         break;
       }
@@ -382,7 +382,7 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
 
       iter = gegl_buffer_iterator_new (
         mask, area, 0, format,
-        op == GIMP_CHANNEL_OP_REPLACE ? GEGL_ACCESS_WRITE :
+        op == LIGMA_CHANNEL_OP_REPLACE ? GEGL_ACCESS_WRITE :
                                         GEGL_ACCESS_READWRITE,
         GEGL_ABYSS_NONE, 1);
 
@@ -500,9 +500,9 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
 }
 
 gboolean
-gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
+ligma_gegl_mask_combine_buffer (GeglBuffer     *mask,
                                GeglBuffer     *add_on,
-                               GimpChannelOps  op,
+                               LigmaChannelOps  op,
                                gint            off_x,
                                gint            off_y)
 {
@@ -532,20 +532,20 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
   mask_format   = gegl_buffer_get_format (mask);
   add_on_format = gegl_buffer_get_format (add_on);
 
-  if (op == GIMP_CHANNEL_OP_REPLACE                                          &&
-      (gimp_babl_is_bounded (gimp_babl_format_get_precision (add_on_format)) ||
-       gimp_babl_is_bounded (gimp_babl_format_get_precision (mask_format))))
+  if (op == LIGMA_CHANNEL_OP_REPLACE                                          &&
+      (ligma_babl_is_bounded (ligma_babl_format_get_precision (add_on_format)) ||
+       ligma_babl_is_bounded (ligma_babl_format_get_precision (mask_format))))
     {
       /*  See below: this additional hack is only needed for the
-       *  gimp-channel-combine-masks procedure, it's the only place that
+       *  ligma-channel-combine-masks procedure, it's the only place that
        *  allows to combine arbitrary channels with each other.
        */
       gegl_buffer_set_format (
         add_on,
-        gimp_babl_format_change_trc (
-          add_on_format, gimp_babl_format_get_trc (mask_format)));
+        ligma_babl_format_change_trc (
+          add_on_format, ligma_babl_format_get_trc (mask_format)));
 
-      gimp_gegl_buffer_copy (add_on, &add_on_rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (add_on, &add_on_rect, GEGL_ABYSS_NONE,
                              mask,   &mask_rect);
 
       gegl_buffer_set_format (add_on, NULL);
@@ -563,11 +563,11 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
    *
    *  See https://bugzilla.gnome.org/show_bug.cgi?id=791519
    */
-  mask_format = gimp_babl_format_change_component_type (
-    mask_format, GIMP_COMPONENT_TYPE_FLOAT);
+  mask_format = ligma_babl_format_change_component_type (
+    mask_format, LIGMA_COMPONENT_TYPE_FLOAT);
 
-  add_on_format = gimp_babl_format_change_component_type (
-    add_on_format, GIMP_COMPONENT_TYPE_FLOAT);
+  add_on_format = ligma_babl_format_change_component_type (
+    add_on_format, LIGMA_COMPONENT_TYPE_FLOAT);
 
   gegl_parallel_distribute_area (
     &mask_rect, PIXELS_PER_THREAD,
@@ -582,7 +582,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
       iter = gegl_buffer_iterator_new (mask, mask_area, 0,
                                        mask_format,
-                                       op == GIMP_CHANNEL_OP_REPLACE ?
+                                       op == LIGMA_CHANNEL_OP_REPLACE ?
                                          GEGL_ACCESS_WRITE :
                                          GEGL_ACCESS_READWRITE,
                                        GEGL_ABYSS_NONE, 2);
@@ -613,7 +613,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
       switch (op)
         {
-        case GIMP_CHANNEL_OP_REPLACE:
+        case LIGMA_CHANNEL_OP_REPLACE:
           process ([] (const gfloat *mask,
                        const gfloat *add_on)
                    {
@@ -621,7 +621,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
                    });
           break;
 
-        case GIMP_CHANNEL_OP_ADD:
+        case LIGMA_CHANNEL_OP_ADD:
           process ([] (const gfloat *mask,
                        const gfloat *add_on)
                    {
@@ -629,7 +629,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
                    });
           break;
 
-        case GIMP_CHANNEL_OP_SUBTRACT:
+        case LIGMA_CHANNEL_OP_SUBTRACT:
           process ([] (const gfloat *mask,
                        const gfloat *add_on)
                    {
@@ -637,7 +637,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
                    });
           break;
 
-        case GIMP_CHANNEL_OP_INTERSECT:
+        case LIGMA_CHANNEL_OP_INTERSECT:
           process ([] (const gfloat *mask,
                        const gfloat *add_on)
                    {

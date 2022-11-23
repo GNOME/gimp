@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_QUERY_H__
-#define __GIMP_PDB_QUERY_H__
+#ifndef __LIGMA_PDB_QUERY_H__
+#define __LIGMA_PDB_QUERY_H__
 
 
-gboolean   gimp_pdb_dump  (GimpPDB       *pdb,
+gboolean   ligma_pdb_dump  (LigmaPDB       *pdb,
                            GFile         *file,
                            GError       **error);
-gboolean   gimp_pdb_query (GimpPDB       *pdb,
+gboolean   ligma_pdb_query (LigmaPDB       *pdb,
                            const gchar   *name,
                            const gchar   *blurb,
                            const gchar   *help,
@@ -34,4 +34,4 @@ gboolean   gimp_pdb_query (GimpPDB       *pdb,
                            GError       **error);
 
 
-#endif /* __GIMP_PDB_QUERY_H__ */
+#endif /* __LIGMA_PDB_QUERY_H__ */

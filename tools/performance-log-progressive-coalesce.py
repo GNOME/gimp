@@ -2,7 +2,7 @@
 
 """
 performance-log-progressive-coalesce.py -- Coalesce address-maps in progressive
-GIMP performance logs
+LIGMA performance logs
 Copyright (C) 2020  Ell
 
 This program is free software: you can redistribute it and/or modify

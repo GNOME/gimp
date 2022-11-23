@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -101,15 +101,15 @@ typedef struct _XcfInfo  XcfInfo;
 
 struct _XcfInfo
 {
-  Gimp               *gimp;
-  GimpProgress       *progress;
+  Ligma               *ligma;
+  LigmaProgress       *progress;
   GInputStream       *input;
   GOutputStream      *output;
   GSeekable          *seekable;
   goffset             cp;
   gint                bytes_per_offset;
   GFile              *file;
-  GimpTattoo          tattoo_state;
+  LigmaTattoo          tattoo_state;
   GList              *selected_layers;
   GList              *selected_channels;
   GList              *selected_vectors;
@@ -125,8 +125,8 @@ struct _XcfInfo
   GList              *layer_sets;
   GList              *channel_sets;
 
-  GimpDrawable       *floating_sel_drawable;
-  GimpLayer          *floating_sel;
+  LigmaDrawable       *floating_sel_drawable;
+  LigmaLayer          *floating_sel;
   goffset             floating_sel_offset;
   XcfCompressionType  compression;
   gint                file_version;

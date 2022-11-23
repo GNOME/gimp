@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdesaturate.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationdesaturate.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_DESATURATE_H__
-#define __GIMP_OPERATION_DESATURATE_H__
+#ifndef __LIGMA_OPERATION_DESATURATE_H__
+#define __LIGMA_OPERATION_DESATURATE_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_DESATURATE            (gimp_operation_desaturate_get_type ())
-#define GIMP_OPERATION_DESATURATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturate))
-#define GIMP_OPERATION_DESATURATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
-#define GIMP_IS_OPERATION_DESATURATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_DESATURATE))
-#define GIMP_IS_OPERATION_DESATURATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DESATURATE))
-#define GIMP_OPERATION_DESATURATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
+#define LIGMA_TYPE_OPERATION_DESATURATE            (ligma_operation_desaturate_get_type ())
+#define LIGMA_OPERATION_DESATURATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_DESATURATE, LigmaOperationDesaturate))
+#define LIGMA_OPERATION_DESATURATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_DESATURATE, LigmaOperationDesaturateClass))
+#define LIGMA_IS_OPERATION_DESATURATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_DESATURATE))
+#define LIGMA_IS_OPERATION_DESATURATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_DESATURATE))
+#define LIGMA_OPERATION_DESATURATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_DESATURATE, LigmaOperationDesaturateClass))
 
 
-typedef struct _GimpOperationDesaturate      GimpOperationDesaturate;
-typedef struct _GimpOperationDesaturateClass GimpOperationDesaturateClass;
+typedef struct _LigmaOperationDesaturate      LigmaOperationDesaturate;
+typedef struct _LigmaOperationDesaturateClass LigmaOperationDesaturateClass;
 
-struct _GimpOperationDesaturate
+struct _LigmaOperationDesaturate
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 
-  GimpDesaturateMode        mode;
+  LigmaDesaturateMode        mode;
 };
 
-struct _GimpOperationDesaturateClass
+struct _LigmaOperationDesaturateClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_desaturate_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_desaturate_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_DESATURATE_H__ */
+#endif /* __LIGMA_OPERATION_DESATURATE_H__ */

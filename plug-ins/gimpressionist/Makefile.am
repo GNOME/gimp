@@ -6,23 +6,23 @@ else
 libm = -lm
 endif
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
 
 SUBDIRS = Brushes Paper Presets
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
-gimpressionist_RC = gimpressionist.rc.o
+include $(top_srcdir)/build/windows/ligmarc-plug-ins.rule
+ligmaressionist_RC = ligmaressionist.rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"	\
+	-DDEFAULTPATH=\""~/$(ligmadir)/ligmaressionist:$(ligmadatadir)/ligmaressionist"\"	\
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)	\
@@ -31,20 +31,20 @@ AM_CPPFLAGS = \
 AM_LDFLAGS = $(mwindows)
 
 
-libexecdir = $(gimpplugindir)/plug-ins/gimpressionist
+libexecdir = $(ligmaplugindir)/plug-ins/ligmaressionist
 
-libexec_PROGRAMS = gimpressionist
+libexec_PROGRAMS = ligmaressionist
 
-gimpressionist_SOURCES = \
+ligmaressionist_SOURCES = \
 	brush.c			\
 	brush.h			\
 	color.c			\
 	color.h			\
 	general.c		\
 	general.h		\
-	gimp.c			\
-	gimpressionist.c	\
-	gimpressionist.h	\
+	ligma.c			\
+	ligmaressionist.c	\
+	ligmaressionist.h	\
 	globals.c		\
 	infile.h        	\
 	orientation.h		\
@@ -71,17 +71,17 @@ gimpressionist_SOURCES = \
 
 LDADD = \
 	$(libm)			\
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpmath)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmaconfig)	\
+	$(libligma)		\
+	$(libligmacolor)		\
+	$(libligmamath)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
-	$(gimpressionist_RC)
+	$(ligmaressionist_RC)
 
 EXTRA_DIST = README

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationmerge.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationmerge.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,36 +19,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_MERGE_H__
-#define __GIMP_OPERATION_MERGE_H__
+#ifndef __LIGMA_OPERATION_MERGE_H__
+#define __LIGMA_OPERATION_MERGE_H__
 
 
-#include "gimpoperationlayermode.h"
+#include "ligmaoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_MERGE            (gimp_operation_merge_get_type ())
-#define GIMP_OPERATION_MERGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_MERGE, GimpOperationMerge))
-#define GIMP_OPERATION_MERGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_MERGE, GimpOperationMergeClass))
-#define GIMP_IS_OPERATION_MERGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_MERGE))
-#define GIMP_IS_OPERATION_MERGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_MERGE))
-#define GIMP_OPERATION_MERGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_MERGE, GimpOperationMergeClass))
+#define LIGMA_TYPE_OPERATION_MERGE            (ligma_operation_merge_get_type ())
+#define LIGMA_OPERATION_MERGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_MERGE, LigmaOperationMerge))
+#define LIGMA_OPERATION_MERGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_MERGE, LigmaOperationMergeClass))
+#define LIGMA_IS_OPERATION_MERGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_MERGE))
+#define LIGMA_IS_OPERATION_MERGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_MERGE))
+#define LIGMA_OPERATION_MERGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_MERGE, LigmaOperationMergeClass))
 
 
-typedef struct _GimpOperationMerge      GimpOperationMerge;
-typedef struct _GimpOperationMergeClass GimpOperationMergeClass;
+typedef struct _LigmaOperationMerge      LigmaOperationMerge;
+typedef struct _LigmaOperationMergeClass LigmaOperationMergeClass;
 
-struct _GimpOperationMerge
+struct _LigmaOperationMerge
 {
-  GimpOperationLayerMode  parent_instance;
+  LigmaOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationMergeClass
+struct _LigmaOperationMergeClass
 {
-  GimpOperationLayerModeClass  parent_class;
+  LigmaOperationLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_merge_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_merge_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_MERGE_H__ */
+#endif /* __LIGMA_OPERATION_MERGE_H__ */

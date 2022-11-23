@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationsettings.c
+ * ligmaoperationsettings.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawablefilter.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadrawablefilter.h"
 
-#include "gimpoperationsettings.h"
+#include "ligmaoperationsettings.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -48,80 +48,80 @@ enum
 };
 
 
-static void   gimp_operation_settings_get_property (GObject      *object,
+static void   ligma_operation_settings_get_property (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
-static void   gimp_operation_settings_set_property (GObject      *object,
+static void   ligma_operation_settings_set_property (GObject      *object,
                                                     guint         property_id,
                                                     const GValue *value,
                                                     GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpOperationSettings, gimp_operation_settings,
-               GIMP_TYPE_SETTINGS)
+G_DEFINE_TYPE (LigmaOperationSettings, ligma_operation_settings,
+               LIGMA_TYPE_SETTINGS)
 
-#define parent_class gimp_operation_settings_parent_class
+#define parent_class ligma_operation_settings_parent_class
 
 
 static void
-gimp_operation_settings_class_init (GimpOperationSettingsClass *klass)
+ligma_operation_settings_class_init (LigmaOperationSettingsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_operation_settings_set_property;
-  object_class->get_property = gimp_operation_settings_get_property;
+  object_class->set_property = ligma_operation_settings_set_property;
+  object_class->get_property = ligma_operation_settings_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLIP,
-                         "gimp-clip",
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CLIP,
+                         "ligma-clip",
                          _("Clipping"),
                          _("How to clip"),
-                         GIMP_TYPE_TRANSFORM_RESIZE,
-                         GIMP_TRANSFORM_RESIZE_ADJUST,
-                         GIMP_CONFIG_PARAM_DEFAULTS);
+                         LIGMA_TYPE_TRANSFORM_RESIZE,
+                         LIGMA_TRANSFORM_RESIZE_ADJUST,
+                         LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_REGION,
-                         "gimp-region",
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_REGION,
+                         "ligma-region",
                          NULL, NULL,
-                         GIMP_TYPE_FILTER_REGION,
-                         GIMP_FILTER_REGION_SELECTION,
-                         GIMP_CONFIG_PARAM_DEFAULTS);
+                         LIGMA_TYPE_FILTER_REGION,
+                         LIGMA_FILTER_REGION_SELECTION,
+                         LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
-                         "gimp-mode",
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+                         "ligma-mode",
                          _("Mode"),
                          NULL,
-                         GIMP_TYPE_LAYER_MODE,
-                         GIMP_LAYER_MODE_REPLACE,
-                         GIMP_CONFIG_PARAM_DEFAULTS);
+                         LIGMA_TYPE_LAYER_MODE,
+                         LIGMA_LAYER_MODE_REPLACE,
+                         LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OPACITY,
-                           "gimp-opacity",
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OPACITY,
+                           "ligma-opacity",
                            _("Opacity"),
                            NULL,
                            0.0, 1.0, 1.0,
-                           GIMP_CONFIG_PARAM_DEFAULTS);
+                           LIGMA_CONFIG_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GAMMA_HACK,
-                            "gimp-gamma-hack",
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_GAMMA_HACK,
+                            "ligma-gamma-hack",
                             "Gamma hack (temp hack, please ignore)",
                             NULL,
                             FALSE,
-                            GIMP_CONFIG_PARAM_DEFAULTS);
+                            LIGMA_CONFIG_PARAM_DEFAULTS);
 }
 
 static void
-gimp_operation_settings_init (GimpOperationSettings *settings)
+ligma_operation_settings_init (LigmaOperationSettings *settings)
 {
 }
 
 static void
-gimp_operation_settings_get_property (GObject    *object,
+ligma_operation_settings_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpOperationSettings *settings = GIMP_OPERATION_SETTINGS (object);
+  LigmaOperationSettings *settings = LIGMA_OPERATION_SETTINGS (object);
 
   switch (property_id)
     {
@@ -152,12 +152,12 @@ gimp_operation_settings_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_settings_set_property (GObject      *object,
+ligma_operation_settings_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpOperationSettings *settings = GIMP_OPERATION_SETTINGS (object);
+  LigmaOperationSettings *settings = LIGMA_OPERATION_SETTINGS (object);
 
   switch (property_id)
     {
@@ -191,26 +191,26 @@ gimp_operation_settings_set_property (GObject      *object,
 /*  public functions  */
 
 void
-gimp_operation_settings_sync_drawable_filter (GimpOperationSettings *settings,
-                                              GimpDrawableFilter    *filter)
+ligma_operation_settings_sync_drawable_filter (LigmaOperationSettings *settings,
+                                              LigmaDrawableFilter    *filter)
 {
   gboolean clip;
 
-  g_return_if_fail (GIMP_IS_OPERATION_SETTINGS (settings));
-  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+  g_return_if_fail (LIGMA_IS_OPERATION_SETTINGS (settings));
+  g_return_if_fail (LIGMA_IS_DRAWABLE_FILTER (filter));
 
-  clip = settings->clip == GIMP_TRANSFORM_RESIZE_CLIP ||
-         ! babl_format_has_alpha (gimp_drawable_filter_get_format (filter));
+  clip = settings->clip == LIGMA_TRANSFORM_RESIZE_CLIP ||
+         ! babl_format_has_alpha (ligma_drawable_filter_get_format (filter));
 
-  gimp_drawable_filter_set_region     (filter, settings->region);
-  gimp_drawable_filter_set_clip       (filter, clip);
-  gimp_drawable_filter_set_mode       (filter,
+  ligma_drawable_filter_set_region     (filter, settings->region);
+  ligma_drawable_filter_set_clip       (filter, clip);
+  ligma_drawable_filter_set_mode       (filter,
                                        settings->mode,
-                                       GIMP_LAYER_COLOR_SPACE_AUTO,
-                                       GIMP_LAYER_COLOR_SPACE_AUTO,
-                                       GIMP_LAYER_COMPOSITE_AUTO);
-  gimp_drawable_filter_set_opacity    (filter, settings->opacity);
-  gimp_drawable_filter_set_gamma_hack (filter, settings->gamma_hack);
+                                       LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                       LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                       LIGMA_LAYER_COMPOSITE_AUTO);
+  ligma_drawable_filter_set_opacity    (filter, settings->opacity);
+  ligma_drawable_filter_set_gamma_hack (filter, settings->gamma_hack);
 }
 
 
@@ -219,23 +219,23 @@ gimp_operation_settings_sync_drawable_filter (GimpOperationSettings *settings,
 static const gchar * const base_properties[] =
 {
   "time",
-  "gimp-clip",
-  "gimp-region",
-  "gimp-mode",
-  "gimp-opacity",
-  "gimp-gamma-hack"
+  "ligma-clip",
+  "ligma-region",
+  "ligma-mode",
+  "ligma-opacity",
+  "ligma-gamma-hack"
 };
 
 gboolean
-gimp_operation_settings_config_serialize_base (GimpConfig       *config,
-                                               GimpConfigWriter *writer,
+ligma_operation_settings_config_serialize_base (LigmaConfig       *config,
+                                               LigmaConfigWriter *writer,
                                                gpointer          data)
 {
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (base_properties); i++)
     {
-      if (! gimp_config_serialize_property_by_name (config,
+      if (! ligma_config_serialize_property_by_name (config,
                                                     base_properties[i],
                                                     writer))
         {
@@ -247,11 +247,11 @@ gimp_operation_settings_config_serialize_base (GimpConfig       *config,
 }
 
 gboolean
-gimp_operation_settings_config_equal_base (GimpConfig *a,
-                                           GimpConfig *b)
+ligma_operation_settings_config_equal_base (LigmaConfig *a,
+                                           LigmaConfig *b)
 {
-  GimpOperationSettings *settings_a = GIMP_OPERATION_SETTINGS (a);
-  GimpOperationSettings *settings_b = GIMP_OPERATION_SETTINGS (b);
+  LigmaOperationSettings *settings_a = LIGMA_OPERATION_SETTINGS (a);
+  LigmaOperationSettings *settings_b = LIGMA_OPERATION_SETTINGS (b);
 
   return settings_a->clip       == settings_b->clip    &&
          settings_a->region     == settings_b->region  &&
@@ -261,21 +261,21 @@ gimp_operation_settings_config_equal_base (GimpConfig *a,
 }
 
 void
-gimp_operation_settings_config_reset_base (GimpConfig *config)
+ligma_operation_settings_config_reset_base (LigmaConfig *config)
 {
   gint i;
 
   g_object_freeze_notify (G_OBJECT (config));
 
   for (i = 0; i < G_N_ELEMENTS (base_properties); i++)
-    gimp_config_reset_property (G_OBJECT (config), base_properties[i]);
+    ligma_config_reset_property (G_OBJECT (config), base_properties[i]);
 
   g_object_thaw_notify (G_OBJECT (config));
 }
 
 gboolean
-gimp_operation_settings_config_copy_base (GimpConfig  *src,
-                                          GimpConfig  *dest,
+ligma_operation_settings_config_copy_base (LigmaConfig  *src,
+                                          LigmaConfig  *dest,
                                           GParamFlags  flags)
 {
   gint i;

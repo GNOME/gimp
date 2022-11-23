@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimputils.c
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * ligmautils.c
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -62,28 +62,28 @@
 
 #endif /* G_OS_WIN32 */
 
-#include "gimpbasetypes.h"
-#include "gimputils.h"
+#include "ligmabasetypes.h"
+#include "ligmautils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimputils
- * @title: gimputils
+ * SECTION: ligmautils
+ * @title: ligmautils
  * @short_description: Utilities of general interest
  *
  * Utilities of general interest
  **/
 
-static gboolean gimp_utils_generic_available (const gchar *program,
+static gboolean ligma_utils_generic_available (const gchar *program,
                                               gint         major,
                                               gint         minor);
-static gboolean gimp_utils_gdb_available     (gint         major,
+static gboolean ligma_utils_gdb_available     (gint         major,
                                               gint         minor);
 
 /**
- * gimp_utf8_strtrim:
+ * ligma_utf8_strtrim:
  * @str: (nullable): an UTF-8 encoded string (or %NULL)
  * @max_chars: the maximum number of characters before the string get
  * trimmed
@@ -96,7 +96,7 @@ static gboolean gimp_utils_gdb_available     (gint         major,
  * using g_free() when it is not needed any longer.
  **/
 gchar *
-gimp_utf8_strtrim (const gchar *str,
+ligma_utf8_strtrim (const gchar *str,
                    gint         max_chars)
 {
   /* FIXME: should we make this translatable? */
@@ -151,7 +151,7 @@ gimp_utf8_strtrim (const gchar *str,
 }
 
 /**
- * gimp_any_to_utf8: (skip)
+ * ligma_any_to_utf8: (skip)
  * @str: (array length=len): The string to be converted to UTF-8.
  * @len:            The length of the string, or -1 if the string
  *                  is nul-terminated.
@@ -175,7 +175,7 @@ gimp_utf8_strtrim (const gchar *str,
  * Returns: The UTF-8 string as described above.
  **/
 gchar *
-gimp_any_to_utf8 (const gchar  *str,
+ligma_any_to_utf8 (const gchar  *str,
                   gssize        len,
                   const gchar  *warning_format,
                   ...)
@@ -229,13 +229,13 @@ gimp_any_to_utf8 (const gchar  *str,
 }
 
 /**
- * gimp_filename_to_utf8:
+ * ligma_filename_to_utf8:
  * @filename: The filename to be converted to UTF-8.
  *
  * Convert a filename in the filesystem's encoding to UTF-8
  * temporarily.  The return value is a pointer to a string that is
  * guaranteed to be valid only during the current iteration of the
- * main loop or until the next call to gimp_filename_to_utf8().
+ * main loop or until the next call to ligma_filename_to_utf8().
  *
  * The only purpose of this function is to provide an easy way to pass
  * a filename in the filesystem encoding to a function that expects an
@@ -245,7 +245,7 @@ gimp_any_to_utf8 (const gchar  *str,
  *               This string must not be changed or freed.
  **/
 const gchar *
-gimp_filename_to_utf8 (const gchar *filename)
+ligma_filename_to_utf8 (const gchar *filename)
 {
   /* Simpleminded implementation, but at least allocates just one copy
    * of each translation. Could check if already UTF-8, and if so
@@ -275,16 +275,16 @@ gimp_filename_to_utf8 (const gchar *filename)
 }
 
 /**
- * gimp_file_get_utf8_name:
+ * ligma_file_get_utf8_name:
  * @file: a #GFile
  *
- * This function works like gimp_filename_to_utf8() and returns
+ * This function works like ligma_filename_to_utf8() and returns
  * a UTF-8 encoded string that does not need to be freed.
  *
  * It converts a #GFile's path or uri to UTF-8 temporarily.  The
  * return value is a pointer to a string that is guaranteed to be
  * valid only during the current iteration of the main loop or until
- * the next call to gimp_file_get_utf8_name().
+ * the next call to ligma_file_get_utf8_name().
  *
  * The only purpose of this function is to provide an easy way to pass
  * a #GFile's name to a function that expects an UTF-8 encoded string.
@@ -297,7 +297,7 @@ gimp_filename_to_utf8 (const gchar *filename)
  *               This string must not be changed or freed.
  **/
 const gchar *
-gimp_file_get_utf8_name (GFile *file)
+ligma_file_get_utf8_name (GFile *file)
 {
   gchar *name;
 
@@ -305,14 +305,14 @@ gimp_file_get_utf8_name (GFile *file)
 
   name = g_file_get_parse_name (file);
 
-  g_object_set_data_full (G_OBJECT (file), "gimp-parse-name", name,
+  g_object_set_data_full (G_OBJECT (file), "ligma-parse-name", name,
                           (GDestroyNotify) g_free);
 
   return name;
 }
 
 /**
- * gimp_file_has_extension:
+ * ligma_file_has_extension:
  * @file:      a #GFile
  * @extension: an ASCII extension
  *
@@ -326,7 +326,7 @@ gimp_file_get_utf8_name (GFile *file)
  *               %FALSE otherwise.
  **/
 gboolean
-gimp_file_has_extension (GFile       *file,
+ligma_file_has_extension (GFile       *file,
                          const gchar *extension)
 {
   gchar    *uri;
@@ -354,7 +354,7 @@ gimp_file_has_extension (GFile       *file,
 }
 
 /**
- * gimp_file_show_in_file_manager:
+ * ligma_file_show_in_file_manager:
  * @file:  a #GFile
  * @error: return location for a #GError
  *
@@ -366,7 +366,7 @@ gimp_file_has_extension (GFile       *file,
  *               is set.
  **/
 gboolean
-gimp_file_show_in_file_manager (GFile   *file,
+ligma_file_show_in_file_manager (GFile   *file,
                                 GError **error)
 {
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -521,7 +521,7 @@ gimp_file_show_in_file_manager (GFile   *file,
 }
 
 /**
- * gimp_strip_uline:
+ * ligma_strip_uline:
  * @str: (nullable): underline infested string (or %NULL)
  *
  * This function returns a copy of @str stripped of underline
@@ -537,7 +537,7 @@ gimp_file_show_in_file_manager (GFile   *file,
  *               freed using g_free() when it is not needed any longer.
  **/
 gchar *
-gimp_strip_uline (const gchar *str)
+ligma_strip_uline (const gchar *str)
 {
   gchar    *escaped;
   gchar    *p;
@@ -585,7 +585,7 @@ gimp_strip_uline (const gchar *str)
 }
 
 /**
- * gimp_escape_uline:
+ * ligma_escape_uline:
  * @str: (nullable): Underline infested string (or %NULL)
  *
  * This function returns a copy of @str with all underline converted
@@ -599,7 +599,7 @@ gimp_strip_uline (const gchar *str)
  * Since: 2.2
  **/
 gchar *
-gimp_escape_uline (const gchar *str)
+ligma_escape_uline (const gchar *str)
 {
   gchar *escaped;
   gchar *p;
@@ -628,7 +628,7 @@ gimp_escape_uline (const gchar *str)
 }
 
 /**
- * gimp_is_canonical_identifier:
+ * ligma_is_canonical_identifier:
  * @identifier: The identifier string to check.
  *
  * Checks if @identifier is canonical and non-%NULL.
@@ -642,7 +642,7 @@ gimp_escape_uline (const gchar *str)
  * Since: 3.0
  **/
 gboolean
-gimp_is_canonical_identifier (const gchar *identifier)
+ligma_is_canonical_identifier (const gchar *identifier)
 {
   if (identifier)
     {
@@ -668,7 +668,7 @@ gimp_is_canonical_identifier (const gchar *identifier)
 }
 
 /**
- * gimp_canonicalize_identifier:
+ * ligma_canonicalize_identifier:
  * @identifier: The identifier string to canonicalize.
  *
  * Turns any input string into a canonicalized string.
@@ -684,7 +684,7 @@ gimp_is_canonical_identifier (const gchar *identifier)
  * Since: 2.4
  **/
 gchar *
-gimp_canonicalize_identifier (const gchar *identifier)
+ligma_canonicalize_identifier (const gchar *identifier)
 {
   gchar *canonicalized = NULL;
 
@@ -712,26 +712,26 @@ gimp_canonicalize_identifier (const gchar *identifier)
 }
 
 /**
- * gimp_enum_get_desc:
+ * ligma_enum_get_desc:
  * @enum_class: a #GEnumClass
  * @value:      a value from @enum_class
  *
- * Retrieves #GimpEnumDesc associated with the given value, or %NULL.
+ * Retrieves #LigmaEnumDesc associated with the given value, or %NULL.
  *
- * Returns: (nullable): the value's #GimpEnumDesc.
+ * Returns: (nullable): the value's #LigmaEnumDesc.
  *
  * Since: 2.2
  **/
-const GimpEnumDesc *
-gimp_enum_get_desc (GEnumClass *enum_class,
+const LigmaEnumDesc *
+ligma_enum_get_desc (GEnumClass *enum_class,
                     gint        value)
 {
-  const GimpEnumDesc *value_desc;
+  const LigmaEnumDesc *value_desc;
 
   g_return_val_if_fail (G_IS_ENUM_CLASS (enum_class), NULL);
 
   value_desc =
-    gimp_enum_get_value_descriptions (G_TYPE_FROM_CLASS (enum_class));
+    ligma_enum_get_value_descriptions (G_TYPE_FROM_CLASS (enum_class));
 
   if (value_desc)
     {
@@ -748,7 +748,7 @@ gimp_enum_get_desc (GEnumClass *enum_class,
 }
 
 /**
- * gimp_enum_get_value:
+ * ligma_enum_get_value:
  * @enum_type:  the #GType of a registered enum
  * @value:      an integer value
  * @value_name: (out) (optional): return location for the value's name, or %NULL
@@ -768,7 +768,7 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * Since: 2.2
  **/
 gboolean
-gimp_enum_get_value (GType         enum_type,
+ligma_enum_get_value (GType         enum_type,
                      gint          value,
                      const gchar **value_name,
                      const gchar **value_nick,
@@ -794,9 +794,9 @@ gimp_enum_get_value (GType         enum_type,
 
       if (value_desc || value_help)
         {
-          const GimpEnumDesc *enum_desc;
+          const LigmaEnumDesc *enum_desc;
 
-          enum_desc = gimp_enum_get_desc (enum_class, value);
+          enum_desc = ligma_enum_get_desc (enum_class, value);
 
           if (value_desc)
             {
@@ -804,15 +804,15 @@ gimp_enum_get_value (GType         enum_type,
                 {
                   const gchar *context;
 
-                  context = gimp_type_get_translation_context (enum_type);
+                  context = ligma_type_get_translation_context (enum_type);
 
                   if (context)  /*  the new way, using NC_()    */
-                    *value_desc = g_dpgettext2 (gimp_type_get_translation_domain (enum_type),
+                    *value_desc = g_dpgettext2 (ligma_type_get_translation_domain (enum_type),
                                                 context,
                                                 enum_desc->value_desc);
                   else          /*  for backward compatibility  */
                     *value_desc = g_strip_context (enum_desc->value_desc,
-                                                   dgettext (gimp_type_get_translation_domain (enum_type),
+                                                   dgettext (ligma_type_get_translation_domain (enum_type),
                                                              enum_desc->value_desc));
                 }
               else
@@ -824,7 +824,7 @@ gimp_enum_get_value (GType         enum_type,
           if (value_help)
             {
               *value_help = ((enum_desc && enum_desc->value_help) ?
-                             dgettext (gimp_type_get_translation_domain (enum_type),
+                             dgettext (ligma_type_get_translation_domain (enum_type),
                                        enum_desc->value_help) :
                              NULL);
             }
@@ -839,7 +839,7 @@ gimp_enum_get_value (GType         enum_type,
 }
 
 /**
- * gimp_enum_value_get_desc:
+ * ligma_enum_value_get_desc:
  * @enum_class: a #GEnumClass
  * @enum_value: a #GEnumValue from @enum_class
  *
@@ -850,27 +850,27 @@ gimp_enum_get_value (GType         enum_type,
  * Since: 2.2
  **/
 const gchar *
-gimp_enum_value_get_desc (GEnumClass       *enum_class,
+ligma_enum_value_get_desc (GEnumClass       *enum_class,
                           const GEnumValue *enum_value)
 {
   GType               type = G_TYPE_FROM_CLASS (enum_class);
-  const GimpEnumDesc *enum_desc;
+  const LigmaEnumDesc *enum_desc;
 
-  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+  enum_desc = ligma_enum_get_desc (enum_class, enum_value->value);
 
   if (enum_desc && enum_desc->value_desc)
     {
       const gchar *context;
 
-      context = gimp_type_get_translation_context (type);
+      context = ligma_type_get_translation_context (type);
 
       if (context)  /*  the new way, using NC_()    */
-        return g_dpgettext2 (gimp_type_get_translation_domain (type),
+        return g_dpgettext2 (ligma_type_get_translation_domain (type),
                              context,
                              enum_desc->value_desc);
       else          /*  for backward compatibility  */
         return g_strip_context (enum_desc->value_desc,
-                                dgettext (gimp_type_get_translation_domain (type),
+                                dgettext (ligma_type_get_translation_domain (type),
                                           enum_desc->value_desc));
     }
 
@@ -878,7 +878,7 @@ gimp_enum_value_get_desc (GEnumClass       *enum_class,
 }
 
 /**
- * gimp_enum_value_get_help:
+ * ligma_enum_value_get_help:
  * @enum_class: a #GEnumClass
  * @enum_value: a #GEnumValue from @enum_class
  *
@@ -889,23 +889,23 @@ gimp_enum_value_get_desc (GEnumClass       *enum_class,
  * Since: 2.2
  **/
 const gchar *
-gimp_enum_value_get_help (GEnumClass       *enum_class,
+ligma_enum_value_get_help (GEnumClass       *enum_class,
                           const GEnumValue *enum_value)
 {
   GType               type = G_TYPE_FROM_CLASS (enum_class);
-  const GimpEnumDesc *enum_desc;
+  const LigmaEnumDesc *enum_desc;
 
-  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+  enum_desc = ligma_enum_get_desc (enum_class, enum_value->value);
 
   if (enum_desc && enum_desc->value_help)
-    return dgettext (gimp_type_get_translation_domain (type),
+    return dgettext (ligma_type_get_translation_domain (type),
                      enum_desc->value_help);
 
   return NULL;
 }
 
 /**
- * gimp_enum_value_get_abbrev:
+ * ligma_enum_value_get_abbrev:
  * @enum_class: a #GEnumClass
  * @enum_value: a #GEnumValue from @enum_class
  *
@@ -916,20 +916,20 @@ gimp_enum_value_get_help (GEnumClass       *enum_class,
  * Since: 2.10
  **/
 const gchar *
-gimp_enum_value_get_abbrev (GEnumClass       *enum_class,
+ligma_enum_value_get_abbrev (GEnumClass       *enum_class,
                             const GEnumValue *enum_value)
 {
   GType               type = G_TYPE_FROM_CLASS (enum_class);
-  const GimpEnumDesc *enum_desc;
+  const LigmaEnumDesc *enum_desc;
 
-  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+  enum_desc = ligma_enum_get_desc (enum_class, enum_value->value);
 
   if (enum_desc                              &&
       enum_desc[1].value == enum_desc->value &&
       enum_desc[1].value_desc)
     {
-      return g_dpgettext2 (gimp_type_get_translation_domain (type),
-                           gimp_type_get_translation_context (type),
+      return g_dpgettext2 (ligma_type_get_translation_domain (type),
+                           ligma_type_get_translation_context (type),
                            enum_desc[1].value_desc);
     }
 
@@ -937,26 +937,26 @@ gimp_enum_value_get_abbrev (GEnumClass       *enum_class,
 }
 
 /**
- * gimp_flags_get_first_desc:
+ * ligma_flags_get_first_desc:
  * @flags_class: a #GFlagsClass
  * @value:       a value from @flags_class
  *
- * Retrieves the first #GimpFlagsDesc that matches the given value, or %NULL.
+ * Retrieves the first #LigmaFlagsDesc that matches the given value, or %NULL.
  *
- * Returns: (nullable): the value's #GimpFlagsDesc.
+ * Returns: (nullable): the value's #LigmaFlagsDesc.
  *
  * Since: 2.2
  **/
-const GimpFlagsDesc *
-gimp_flags_get_first_desc (GFlagsClass *flags_class,
+const LigmaFlagsDesc *
+ligma_flags_get_first_desc (GFlagsClass *flags_class,
                            guint        value)
 {
-  const GimpFlagsDesc *value_desc;
+  const LigmaFlagsDesc *value_desc;
 
   g_return_val_if_fail (G_IS_FLAGS_CLASS (flags_class), NULL);
 
   value_desc =
-    gimp_flags_get_value_descriptions (G_TYPE_FROM_CLASS (flags_class));
+    ligma_flags_get_value_descriptions (G_TYPE_FROM_CLASS (flags_class));
 
   if (value_desc)
     {
@@ -973,7 +973,7 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
 }
 
 /**
- * gimp_flags_get_first_value:
+ * ligma_flags_get_first_value:
  * @flags_type: the #GType of registered flags
  * @value:      an integer value
  * @value_name: (out) (optional): return location for the value's name, or %NULL
@@ -993,7 +993,7 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * Since: 2.2
  **/
 gboolean
-gimp_flags_get_first_value (GType         flags_type,
+ligma_flags_get_first_value (GType         flags_type,
                             guint         value,
                             const gchar **value_name,
                             const gchar **value_nick,
@@ -1018,19 +1018,19 @@ gimp_flags_get_first_value (GType         flags_type,
 
       if (value_desc || value_help)
         {
-          const GimpFlagsDesc *flags_desc;
+          const LigmaFlagsDesc *flags_desc;
 
-          flags_desc = gimp_flags_get_first_desc (flags_class, value);
+          flags_desc = ligma_flags_get_first_desc (flags_class, value);
 
           if (value_desc)
             *value_desc = ((flags_desc && flags_desc->value_desc) ?
-                           dgettext (gimp_type_get_translation_domain (flags_type),
+                           dgettext (ligma_type_get_translation_domain (flags_type),
                                      flags_desc->value_desc) :
                            NULL);
 
           if (value_help)
             *value_help = ((flags_desc && flags_desc->value_desc) ?
-                           dgettext (gimp_type_get_translation_domain (flags_type),
+                           dgettext (ligma_type_get_translation_domain (flags_type),
                                      flags_desc->value_help) :
                            NULL);
         }
@@ -1042,7 +1042,7 @@ gimp_flags_get_first_value (GType         flags_type,
 }
 
 /**
- * gimp_flags_value_get_desc:
+ * ligma_flags_value_get_desc:
  * @flags_class: a #GFlagsClass
  * @flags_value: a #GFlagsValue from @flags_class
  *
@@ -1053,27 +1053,27 @@ gimp_flags_get_first_value (GType         flags_type,
  * Since: 2.2
  **/
 const gchar *
-gimp_flags_value_get_desc (GFlagsClass       *flags_class,
+ligma_flags_value_get_desc (GFlagsClass       *flags_class,
                            const GFlagsValue *flags_value)
 {
   GType                type = G_TYPE_FROM_CLASS (flags_class);
-  const GimpFlagsDesc *flags_desc;
+  const LigmaFlagsDesc *flags_desc;
 
-  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+  flags_desc = ligma_flags_get_first_desc (flags_class, flags_value->value);
 
   if (flags_desc->value_desc)
     {
       const gchar *context;
 
-      context = gimp_type_get_translation_context (type);
+      context = ligma_type_get_translation_context (type);
 
       if (context)  /*  the new way, using NC_()    */
-        return g_dpgettext2 (gimp_type_get_translation_domain (type),
+        return g_dpgettext2 (ligma_type_get_translation_domain (type),
                              context,
                              flags_desc->value_desc);
       else          /*  for backward compatibility  */
         return g_strip_context (flags_desc->value_desc,
-                                dgettext (gimp_type_get_translation_domain (type),
+                                dgettext (ligma_type_get_translation_domain (type),
                                           flags_desc->value_desc));
     }
 
@@ -1081,7 +1081,7 @@ gimp_flags_value_get_desc (GFlagsClass       *flags_class,
 }
 
 /**
- * gimp_flags_value_get_help:
+ * ligma_flags_value_get_help:
  * @flags_class: a #GFlagsClass
  * @flags_value: a #GFlagsValue from @flags_class
  *
@@ -1092,23 +1092,23 @@ gimp_flags_value_get_desc (GFlagsClass       *flags_class,
  * Since: 2.2
  **/
 const gchar *
-gimp_flags_value_get_help (GFlagsClass       *flags_class,
+ligma_flags_value_get_help (GFlagsClass       *flags_class,
                            const GFlagsValue *flags_value)
 {
   GType                type = G_TYPE_FROM_CLASS (flags_class);
-  const GimpFlagsDesc *flags_desc;
+  const LigmaFlagsDesc *flags_desc;
 
-  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+  flags_desc = ligma_flags_get_first_desc (flags_class, flags_value->value);
 
   if (flags_desc->value_help)
-    return dgettext (gimp_type_get_translation_domain (type),
+    return dgettext (ligma_type_get_translation_domain (type),
                      flags_desc->value_help);
 
   return NULL;
 }
 
 /**
- * gimp_flags_value_get_abbrev:
+ * ligma_flags_value_get_abbrev:
  * @flags_class: a #GFlagsClass
  * @flags_value: a #GFlagsValue from @flags_class
  *
@@ -1119,20 +1119,20 @@ gimp_flags_value_get_help (GFlagsClass       *flags_class,
  * Since: 2.10
  **/
 const gchar *
-gimp_flags_value_get_abbrev (GFlagsClass       *flags_class,
+ligma_flags_value_get_abbrev (GFlagsClass       *flags_class,
                              const GFlagsValue *flags_value)
 {
   GType                type = G_TYPE_FROM_CLASS (flags_class);
-  const GimpFlagsDesc *flags_desc;
+  const LigmaFlagsDesc *flags_desc;
 
-  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+  flags_desc = ligma_flags_get_first_desc (flags_class, flags_value->value);
 
   if (flags_desc                               &&
       flags_desc[1].value == flags_desc->value &&
       flags_desc[1].value_desc)
     {
-      return g_dpgettext2 (gimp_type_get_translation_domain (type),
-                           gimp_type_get_translation_context (type),
+      return g_dpgettext2 (ligma_type_get_translation_domain (type),
+                           ligma_type_get_translation_context (type),
                            flags_desc[1].value_desc);
     }
 
@@ -1140,7 +1140,7 @@ gimp_flags_value_get_abbrev (GFlagsClass       *flags_class,
 }
 
 /**
- * gimp_stack_trace_available:
+ * ligma_stack_trace_available:
  * @optimal: whether we get optimal traces.
  *
  * Returns %TRUE if we have dependencies to generate backtraces. If
@@ -1152,20 +1152,20 @@ gimp_flags_value_get_abbrev (GFlagsClass       *flags_class,
  *
  * Note: this function is not crash-safe, i.e. you should not try to use
  * it in a callback when the program is already crashing. In such a
- * case, call gimp_stack_trace_print() or gimp_stack_trace_query()
+ * case, call ligma_stack_trace_print() or ligma_stack_trace_query()
  * directly.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_stack_trace_available (gboolean optimal)
+ligma_stack_trace_available (gboolean optimal)
 {
 #ifndef G_OS_WIN32
   gchar    *lld_path = NULL;
   gboolean  has_lldb = FALSE;
 
   /* Similarly to gdb, we could check for lldb by calling:
-   * gimp_utils_generic_available ("lldb", major, minor).
+   * ligma_utils_generic_available ("lldb", major, minor).
    * We don't do so on purpose because on macOS, when lldb is absent, it
    * triggers a popup asking to install Xcode. So instead, we just
    * search for the executable in path.
@@ -1180,7 +1180,7 @@ gimp_stack_trace_available (gboolean optimal)
       g_free (lld_path);
     }
 
-  if (gimp_utils_gdb_available (7, 0) || has_lldb)
+  if (ligma_utils_gdb_available (7, 0) || has_lldb)
     return TRUE;
 #ifdef HAVE_EXECINFO_H
   if (! optimal)
@@ -1195,7 +1195,7 @@ gimp_stack_trace_available (gboolean optimal)
 }
 
 /**
- * gimp_stack_trace_print:
+ * ligma_stack_trace_print:
  * @prog_name: the program to attach to.
  * @stream: a FILE* stream.
  * @trace: (out) (optional): location to store a newly allocated string of
@@ -1224,7 +1224,7 @@ gimp_stack_trace_available (gboolean optimal)
  * Since: 2.10
  **/
 gboolean
-gimp_stack_trace_print (const gchar   *prog_name,
+ligma_stack_trace_print (const gchar   *prog_name,
                         gpointer      stream,
                         gchar       **trace)
 {
@@ -1233,7 +1233,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
   /* This works only on UNIX systems. */
 #ifndef G_OS_WIN32
   GString *gtrace = NULL;
-  gchar    gimp_pid[16];
+  gchar    ligma_pid[16];
   gchar    buffer[256];
   ssize_t  read_n;
   int      sync_fd[2];
@@ -1256,7 +1256,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
   thr_self (&tid);
 #endif
 
-  g_snprintf (gimp_pid, 16, "%u", (guint) pid);
+  g_snprintf (ligma_pid, 16, "%u", (guint) pid);
 
   if (pipe (sync_fd) == -1)
     {
@@ -1279,7 +1279,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
                          "-ex", "info threads",
                          /* We used to be able to ask for the full
                           * backtrace of all threads, but a bug,
-                          * possibly in gdb, could lock the whole GIMP
+                          * possibly in gdb, could lock the whole LIGMA
                           * process. So for now, let's just have a
                           * backtrace of the main process (most bugs
                           * happen here anyway).
@@ -1292,7 +1292,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
       if (prog_name == NULL)
         args[6] = "-p";
 
-      args[7] = gimp_pid;
+      args[7] = ligma_pid;
 
       /* Wait until the parent enabled us to ptrace it. */
       {
@@ -1314,7 +1314,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
        * program, at least on FreeBSD where GDB 6.1 is apparently
        * installed by default on the stable release at day of writing.
        * See bug 793514. */
-      if (! gimp_utils_gdb_available (7, 0) ||
+      if (! ligma_utils_gdb_available (7, 0) ||
           execvp (args[0], args) == -1)
         {
           /* LLDB as alternative if the GDB call failed or if it was in
@@ -1326,7 +1326,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
                                    "--one-line-on-crash", "bt",
                                    "--one-line-on-crash", "quit", NULL };
 
-          args_lldb[2] = gimp_pid;
+          args_lldb[2] = ligma_pid;
 
           execvp (args_lldb[0], args_lldb);
         }
@@ -1482,7 +1482,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
 }
 
 /**
- * gimp_stack_trace_query:
+ * ligma_stack_trace_query:
  * @prog_name: the program to attach to.
  *
  * This is mostly the same as g_on_error_query() except that we use our
@@ -1493,7 +1493,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
  * Since: 2.10
  **/
 void
-gimp_stack_trace_query (const gchar *prog_name)
+ligma_stack_trace_query (const gchar *prog_name)
 {
 #ifndef G_OS_WIN32
   gchar buf[16];
@@ -1521,7 +1521,7 @@ gimp_stack_trace_query (const gchar *prog_name)
   else if ((buf[0] == 'S' || buf[0] == 's')
            && buf[1] == '\n')
     {
-      if (! gimp_stack_trace_print (prog_name, stdout, NULL))
+      if (! ligma_stack_trace_print (prog_name, stdout, NULL))
         g_fprintf (stderr, "%s\n", "Stack trace not available on your system.");
       goto retry;
     }
@@ -1531,7 +1531,7 @@ gimp_stack_trace_query (const gchar *prog_name)
 }
 
 /**
- * gimp_range_estimate_settings:
+ * ligma_range_estimate_settings:
  * @lower: the lower value.
  * @upper: the higher value.
  * @step: (out) (optional): the proposed step increment.
@@ -1554,7 +1554,7 @@ gimp_stack_trace_query (const gchar *prog_name)
  * function.
  */
 void
-gimp_range_estimate_settings (gdouble  lower,
+ligma_range_estimate_settings (gdouble  lower,
                               gdouble  upper,
                               gdouble *step,
                               gdouble *page,
@@ -1637,7 +1637,7 @@ gimp_range_estimate_settings (gdouble  lower,
 /* Private functions. */
 
 static gboolean
-gimp_utils_generic_available (const gchar *program,
+ligma_utils_generic_available (const gchar *program,
                               gint         major,
                               gint         minor)
 {
@@ -1753,8 +1753,8 @@ gimp_utils_generic_available (const gchar *program,
 }
 
 static gboolean
-gimp_utils_gdb_available (gint major,
+ligma_utils_gdb_available (gint major,
                           gint minor)
 {
-  return gimp_utils_generic_available ("gdb", major, minor);
+  return ligma_utils_generic_available ("gdb", major, minor);
 }

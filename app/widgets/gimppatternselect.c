@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppatternselect.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapatternselect.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,73 +23,73 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gegl/gimp-babl-compat.h"
+#include "gegl/ligma-babl-compat.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppattern.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapattern.h"
+#include "core/ligmatempbuf.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "gimpcontainerbox.h"
-#include "gimppatternfactoryview.h"
-#include "gimppatternselect.h"
+#include "ligmacontainerbox.h"
+#include "ligmapatternfactoryview.h"
+#include "ligmapatternselect.h"
 
 
-static void             gimp_pattern_select_constructed  (GObject        *object);
+static void             ligma_pattern_select_constructed  (GObject        *object);
 
-static GimpValueArray * gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
-                                                          GimpObject     *object,
+static LigmaValueArray * ligma_pattern_select_run_callback (LigmaPdbDialog  *dialog,
+                                                          LigmaObject     *object,
                                                           gboolean        closing,
                                                           GError        **error);
 
 
-G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG)
+G_DEFINE_TYPE (LigmaPatternSelect, ligma_pattern_select, LIGMA_TYPE_PDB_DIALOG)
 
-#define parent_class gimp_pattern_select_parent_class
+#define parent_class ligma_pattern_select_parent_class
 
 
 static void
-gimp_pattern_select_class_init (GimpPatternSelectClass *klass)
+ligma_pattern_select_class_init (LigmaPatternSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
-  GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
+  LigmaPdbDialogClass *pdb_class    = LIGMA_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructed = gimp_pattern_select_constructed;
+  object_class->constructed = ligma_pattern_select_constructed;
 
-  pdb_class->run_callback   = gimp_pattern_select_run_callback;
+  pdb_class->run_callback   = ligma_pattern_select_run_callback;
 }
 
 static void
-gimp_pattern_select_init (GimpPatternSelect *select)
+ligma_pattern_select_init (LigmaPatternSelect *select)
 {
 }
 
 static void
-gimp_pattern_select_constructed (GObject *object)
+ligma_pattern_select_constructed (GObject *object)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+  LigmaPdbDialog *dialog = LIGMA_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view =
-    gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_GRID,
-                                   dialog->context->gimp->pattern_factory,
+    ligma_pattern_factory_view_new (LIGMA_VIEW_TYPE_GRID,
+                                   dialog->context->ligma->pattern_factory,
                                    dialog->context,
-                                   GIMP_VIEW_SIZE_MEDIUM, 1,
+                                   LIGMA_VIEW_SIZE_MEDIUM, 1,
                                    dialog->menu_factory);
 
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
-                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2),
-                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2));
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (LIGMA_CONTAINER_EDITOR (dialog->view)->view),
+                                       6 * (LIGMA_VIEW_SIZE_MEDIUM + 2),
+                                       6 * (LIGMA_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
 
@@ -98,45 +98,45 @@ gimp_pattern_select_constructed (GObject *object)
   gtk_widget_show (dialog->view);
 }
 
-static GimpValueArray *
-gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
-                                  GimpObject     *object,
+static LigmaValueArray *
+ligma_pattern_select_run_callback (LigmaPdbDialog  *dialog,
+                                  LigmaObject     *object,
                                   gboolean        closing,
                                   GError        **error)
 {
-  GimpPattern    *pattern = GIMP_PATTERN (object);
+  LigmaPattern    *pattern = LIGMA_PATTERN (object);
   const Babl     *format;
   gpointer        data;
-  GimpArray      *array;
-  GimpValueArray *return_vals;
+  LigmaArray      *array;
+  LigmaValueArray *return_vals;
 
-  format = gimp_babl_compat_u8_format (
-    gimp_temp_buf_get_format (pattern->mask));
-  data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+  format = ligma_babl_compat_u8_format (
+    ligma_temp_buf_get_format (pattern->mask));
+  data   = ligma_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
 
-  array = gimp_array_new (data,
-                          gimp_temp_buf_get_width         (pattern->mask) *
-                          gimp_temp_buf_get_height        (pattern->mask) *
+  array = ligma_array_new (data,
+                          ligma_temp_buf_get_width         (pattern->mask) *
+                          ligma_temp_buf_get_height        (pattern->mask) *
                           babl_format_get_bytes_per_pixel (format),
                           TRUE);
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name (dialog->pdb,
+    ligma_pdb_execute_procedure_by_name (dialog->pdb,
                                         dialog->caller_context,
                                         NULL, error,
                                         dialog->callback_name,
-                                        G_TYPE_STRING,         gimp_object_get_name (object),
-                                        G_TYPE_INT,            gimp_temp_buf_get_width  (pattern->mask),
-                                        G_TYPE_INT,            gimp_temp_buf_get_height (pattern->mask),
-                                        G_TYPE_INT,            babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask)),
+                                        G_TYPE_STRING,         ligma_object_get_name (object),
+                                        G_TYPE_INT,            ligma_temp_buf_get_width  (pattern->mask),
+                                        G_TYPE_INT,            ligma_temp_buf_get_height (pattern->mask),
+                                        G_TYPE_INT,            babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (pattern->mask)),
                                         G_TYPE_INT,            array->length,
-                                        GIMP_TYPE_UINT8_ARRAY, array->data,
+                                        LIGMA_TYPE_UINT8_ARRAY, array->data,
                                         G_TYPE_BOOLEAN,        closing,
                                         G_TYPE_NONE);
 
-  gimp_array_free (array);
+  ligma_array_free (array);
 
-  gimp_temp_buf_unlock (pattern->mask, data);
+  ligma_temp_buf_unlock (pattern->mask, data);
 
   return return_vals;
 }

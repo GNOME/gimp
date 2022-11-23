@@ -5,13 +5,13 @@ CLEANFILES = $(EXTRA_PROGRAMS)
 
 $(TESTS): output-dir
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligmathumb = $(top_builddir)/libligmathumb/libligmathumb-$(LIGMA_API_VERSION).la
 
 if OS_WIN32
 else
@@ -29,10 +29,10 @@ AM_CPPFLAGS = \
 AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type
+	-Wl,-u,$(SYMPREFIX)ligma_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_prop_undo_get_type
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
@@ -51,12 +51,12 @@ LDADD = \
 	$(top_builddir)/app/libapp.a				\
 	$(top_builddir)/app/gegl/libappgegl.a			\
 	$(top_builddir)/app/operations/libappoperations.a	\
-	$(libgimpconfig)					\
-	$(libgimpmath)						\
-	$(libgimpthumb)						\
-	$(libgimpcolor)						\
-	$(libgimpmodule)					\
-	$(libgimpbase)						\
+	$(libligmaconfig)					\
+	$(libligmamath)						\
+	$(libligmathumb)						\
+	$(libligmacolor)						\
+	$(libligmamodule)					\
+	$(libligmabase)						\
 	$(GDK_PIXBUF_LIBS)					\
 	$(PANGOCAIRO_LIBS)					\
 	$(GEGL_LIBS)						\

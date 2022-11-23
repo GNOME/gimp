@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcircle.h
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmacircle.h
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * Based on code from the color-rotate plug-in
  * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
@@ -22,45 +22,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CIRCLE_H__
-#define __GIMP_CIRCLE_H__
+#ifndef __LIGMA_CIRCLE_H__
+#define __LIGMA_CIRCLE_H__
 
 
-#define GIMP_TYPE_CIRCLE            (gimp_circle_get_type ())
-#define GIMP_CIRCLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CIRCLE, GimpCircle))
-#define GIMP_CIRCLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CIRCLE, GimpCircleClass))
-#define GIMP_IS_CIRCLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_CIRCLE))
-#define GIMP_IS_CIRCLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CIRCLE))
-#define GIMP_CIRCLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CIRCLE, GimpCircleClass))
+#define LIGMA_TYPE_CIRCLE            (ligma_circle_get_type ())
+#define LIGMA_CIRCLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CIRCLE, LigmaCircle))
+#define LIGMA_CIRCLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CIRCLE, LigmaCircleClass))
+#define LIGMA_IS_CIRCLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_CIRCLE))
+#define LIGMA_IS_CIRCLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CIRCLE))
+#define LIGMA_CIRCLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CIRCLE, LigmaCircleClass))
 
 
-typedef struct _GimpCirclePrivate GimpCirclePrivate;
-typedef struct _GimpCircleClass   GimpCircleClass;
+typedef struct _LigmaCirclePrivate LigmaCirclePrivate;
+typedef struct _LigmaCircleClass   LigmaCircleClass;
 
-struct _GimpCircle
+struct _LigmaCircle
 {
   GtkWidget          parent_instance;
 
-  GimpCirclePrivate *priv;
+  LigmaCirclePrivate *priv;
 };
 
-struct _GimpCircleClass
+struct _LigmaCircleClass
 {
   GtkWidgetClass  parent_class;
 
-  void (* reset_target) (GimpCircle *circle);
+  void (* reset_target) (LigmaCircle *circle);
 };
 
 
-GType          gimp_circle_get_type                (void) G_GNUC_CONST;
+GType          ligma_circle_get_type                (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_circle_new                     (void);
+GtkWidget    * ligma_circle_new                     (void);
 
-gboolean       _gimp_circle_has_grab               (GimpCircle *circle);
-gdouble        _gimp_circle_get_angle_and_distance (GimpCircle *circle,
+gboolean       _ligma_circle_has_grab               (LigmaCircle *circle);
+gdouble        _ligma_circle_get_angle_and_distance (LigmaCircle *circle,
                                                     gdouble     event_x,
                                                     gdouble     event_y,
                                                     gdouble    *distance);
 
 
-#endif /* __GIMP_CIRCLE_H__ */
+#endif /* __LIGMA_CIRCLE_H__ */

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbusybox.h
+ * ligmabusybox.h
  * Copyright (C) 2018 Ell
  *
  * This library is free software: you can redistribute it and/or
@@ -19,58 +19,58 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BUSY_BOX_H__
-#define __GIMP_BUSY_BOX_H__
+#ifndef __LIGMA_BUSY_BOX_H__
+#define __LIGMA_BUSY_BOX_H__
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_BUSY_BOX            (gimp_busy_box_get_type ())
-#define GIMP_BUSY_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUSY_BOX, GimpBusyBox))
-#define GIMP_BUSY_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUSY_BOX, GimpBusyBoxClass))
-#define GIMP_IS_BUSY_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUSY_BOX))
-#define GIMP_IS_BUSY_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUSY_BOX))
-#define GIMP_BUSY_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUSY_BOX, GimpBusyBoxClass))
+#define LIGMA_TYPE_BUSY_BOX            (ligma_busy_box_get_type ())
+#define LIGMA_BUSY_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUSY_BOX, LigmaBusyBox))
+#define LIGMA_BUSY_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUSY_BOX, LigmaBusyBoxClass))
+#define LIGMA_IS_BUSY_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUSY_BOX))
+#define LIGMA_IS_BUSY_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUSY_BOX))
+#define LIGMA_BUSY_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUSY_BOX, LigmaBusyBoxClass))
 
 
-typedef struct _GimpBusyBoxPrivate  GimpBusyBoxPrivate;
-typedef struct _GimpBusyBoxClass    GimpBusyBoxClass;
+typedef struct _LigmaBusyBoxPrivate  LigmaBusyBoxPrivate;
+typedef struct _LigmaBusyBoxClass    LigmaBusyBoxClass;
 
-struct _GimpBusyBox
+struct _LigmaBusyBox
 {
   GtkBox              parent_instance;
 
-  GimpBusyBoxPrivate *priv;
+  LigmaBusyBoxPrivate *priv;
 };
 
-struct _GimpBusyBoxClass
+struct _LigmaBusyBoxClass
 {
   GtkBoxClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType         gimp_busy_box_get_type    (void) G_GNUC_CONST;
+GType         ligma_busy_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_busy_box_new         (const gchar *message);
+GtkWidget   * ligma_busy_box_new         (const gchar *message);
 
-void          gimp_busy_box_set_message (GimpBusyBox *box,
+void          ligma_busy_box_set_message (LigmaBusyBox *box,
                                          const gchar *message);
-const gchar * gimp_busy_box_get_message (GimpBusyBox *box);
+const gchar * ligma_busy_box_get_message (LigmaBusyBox *box);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_BUSY_BOX_H__ */
+#endif /* __LIGMA_BUSY_BOX_H__ */

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This is a wrapper to the tools/gimp-mkenums perl script which:
+# This is a wrapper to the tools/ligma-mkenums perl script which:
 # * sets a few common values;
 # * updates the ${filebase}enums.c directly in the source directory in
 #   order for it to be versionned.
@@ -30,16 +30,16 @@ postincludes="$7"
 dtail="$8"
 
 if [ -z "$dtail" ]; then
-  dtail="    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n"
+  dtail="    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n"
 fi
 
-$PERL $top_srcdir/tools/gimp-mkenums \
+$PERL $top_srcdir/tools/ligma-mkenums \
 	--fhead "#include \"stamp-${filebase}enums.h\"\n#include \"config.h\"\n$preincludes#include \"${filebase}enums.h\"\n$postincludes" \
 	--fprod "\n/* enumerations from \"@basename@\" */" \
 	--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 	--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 	--vtail "    { 0, NULL, NULL }\n  };\n" \
-	--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+	--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 	--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
 	--dtail "$dtail" \
 	"$srcdir/${filebase}enums.h" > "$builddir/${filebase}enums-tmp.c"

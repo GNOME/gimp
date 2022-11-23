@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,114 +20,114 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimperrorconsole.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaerrorconsole.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "error-console-actions.h"
 #include "error-console-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry error_console_actions[] =
+static const LigmaActionEntry error_console_actions[] =
 {
-  { "error-console-popup", GIMP_ICON_DIALOG_WARNING,
+  { "error-console-popup", LIGMA_ICON_DIALOG_WARNING,
     NC_("error-console-action", "Error Console Menu"), NULL, NULL, NULL,
-    GIMP_HELP_ERRORS_DIALOG },
+    LIGMA_HELP_ERRORS_DIALOG },
 
-  { "error-console-clear", GIMP_ICON_EDIT_CLEAR,
+  { "error-console-clear", LIGMA_ICON_EDIT_CLEAR,
     NC_("error-console-action", "_Clear"), NULL,
     NC_("error-console-action", "Clear error console"),
     error_console_clear_cmd_callback,
-    GIMP_HELP_ERRORS_CLEAR },
+    LIGMA_HELP_ERRORS_CLEAR },
 
   { "error-console-select-all", NULL,
     NC_("error-console-action", "Select _All"), "",
     NC_("error-console-action", "Select all error messages"),
     error_console_select_all_cmd_callback,
-    GIMP_HELP_ERRORS_SELECT_ALL },
+    LIGMA_HELP_ERRORS_SELECT_ALL },
 
   { "error-console-highlight", NULL,
     NC_("error-console-action", "_Highlight"), NULL, NULL, NULL,
-    GIMP_HELP_ERRORS_HIGHLIGHT }
+    LIGMA_HELP_ERRORS_HIGHLIGHT }
 };
 
-static const GimpEnumActionEntry error_console_save_actions[] =
+static const LigmaEnumActionEntry error_console_save_actions[] =
 {
-  { "error-console-save-all", GIMP_ICON_DOCUMENT_SAVE_AS,
+  { "error-console-save-all", LIGMA_ICON_DOCUMENT_SAVE_AS,
     NC_("error-console-action", "_Save Error Log to File..."), NULL,
     NC_("error-console-action", "Write all error messages to a file"),
     FALSE, FALSE,
-    GIMP_HELP_ERRORS_SAVE },
+    LIGMA_HELP_ERRORS_SAVE },
 
-  { "error-console-save-selection", GIMP_ICON_DOCUMENT_SAVE_AS,
+  { "error-console-save-selection", LIGMA_ICON_DOCUMENT_SAVE_AS,
     NC_("error-console-action", "Save S_election to File..."), NULL,
     NC_("error-console-action", "Write the selected error messages to a file"),
     TRUE, FALSE,
-    GIMP_HELP_ERRORS_SAVE }
+    LIGMA_HELP_ERRORS_SAVE }
 };
 
-static const GimpToggleActionEntry error_console_highlight_actions[] =
+static const LigmaToggleActionEntry error_console_highlight_actions[] =
 {
   { "error-console-highlight-error", NULL,
     NC_("error-console-action", "_Errors"), NULL,
     NC_("error-console-action", "Highlight error console on errors"),
     error_console_highlight_error_cmd_callback,
     FALSE,
-    GIMP_HELP_ERRORS_HIGHLIGHT },
+    LIGMA_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-warning", NULL,
     NC_("error-console-action", "_Warnings"), NULL,
     NC_("error-console-action", "Highlight error console on warnings"),
     error_console_highlight_warning_cmd_callback,
     FALSE,
-    GIMP_HELP_ERRORS_HIGHLIGHT },
+    LIGMA_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-info", NULL,
     NC_("error-console-action", "_Messages"), NULL,
     NC_("error-console-action", "Highlight error console on messages"),
     error_console_highlight_info_cmd_callback,
     FALSE,
-    GIMP_HELP_ERRORS_HIGHLIGHT }
+    LIGMA_HELP_ERRORS_HIGHLIGHT }
 };
 
 
 void
-error_console_actions_setup (GimpActionGroup *group)
+error_console_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "error-console-action",
+  ligma_action_group_add_actions (group, "error-console-action",
                                  error_console_actions,
                                  G_N_ELEMENTS (error_console_actions));
 
-  gimp_action_group_add_enum_actions (group, "error-console-action",
+  ligma_action_group_add_enum_actions (group, "error-console-action",
                                       error_console_save_actions,
                                       G_N_ELEMENTS (error_console_save_actions),
                                       error_console_save_cmd_callback);
 
-  gimp_action_group_add_toggle_actions (group, "error-console-action",
+  ligma_action_group_add_toggle_actions (group, "error-console-action",
                                         error_console_highlight_actions,
                                         G_N_ELEMENTS (error_console_highlight_actions));
 }
 
 void
-error_console_actions_update (GimpActionGroup *group,
+error_console_actions_update (LigmaActionGroup *group,
                               gpointer         data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   gboolean          selection;
 
   selection = gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                                     NULL, NULL);
 
 #define SET_ACTIVE(action,condition)                                           \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("error-console-clear",          TRUE);
   SET_SENSITIVE ("error-console-select-all",     TRUE);
@@ -137,15 +137,15 @@ error_console_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("error-console-highlight-error", TRUE);
   SET_ACTIVE ("error-console-highlight-error",
-              console->highlight[GIMP_MESSAGE_ERROR]);
+              console->highlight[LIGMA_MESSAGE_ERROR]);
 
   SET_SENSITIVE ("error-console-highlight-warning", TRUE);
   SET_ACTIVE ("error-console-highlight-warning",
-              console->highlight[GIMP_MESSAGE_WARNING]);
+              console->highlight[LIGMA_MESSAGE_WARNING]);
 
   SET_SENSITIVE ("error-console-highlight-info", TRUE);
   SET_ACTIVE ("error-console-highlight-info",
-              console->highlight[GIMP_MESSAGE_INFO]);
+              console->highlight[LIGMA_MESSAGE_INFO]);
 
 #undef SET_ACTIVE
 #undef SET_SENSITIVE

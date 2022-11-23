@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-11-08 20:54+0000\n"
 "PO-Revision-Date: 2021-11-17 22:52+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
@@ -45,7 +45,7 @@ msgstr "Vingrini kazu C valodā"
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
 #: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398
-#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/ligmaressionist/ligma.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
 #: ../plug-ins/ifs-compose/ifs-compose.c:416
 #: ../plug-ins/imagemap/imap_main.c:199
@@ -99,11 +99,11 @@ msgstr "Vingrini kazu (C)"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1268
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
-#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2516
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/gradient-flare/gradient-flare.c:3478
@@ -195,10 +195,10 @@ msgstr "Vingrini kazu (Python 3)"
 #: ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2517
 #: ../plug-ins/gradient-flare/gradient-flare.c:3479
 #: ../plug-ins/ifs-compose/ifs-compose.c:810
@@ -215,16 +215,16 @@ msgstr "_Labi"
 msgid "Exercise a goat (Vala)"
 msgstr "Vingrini kazu (Vala)"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:1
 #| msgid "Goat-e_xercise"
 msgid "Goat Exercises"
 msgstr "Kazas vingrojumi"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
 msgstr "Oficiālie demo spraudņi"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
@@ -432,7 +432,7 @@ msgstr "_Vertikāls"
 #: ../plug-ins/file-psd/psd-load.c:2311 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
-#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:660
 msgid "Background"
@@ -507,7 +507,7 @@ msgid "Checkerboard"
 msgstr "Dambretes galdiņš"
 
 #: ../plug-ins/common/checkerboard.c:555
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "Izmēr_s:"
 
@@ -710,8 +710,8 @@ msgstr "Nejaušie no sēklas (koplietots)"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:201
-#: ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "Tonis"
 
@@ -722,8 +722,8 @@ msgstr "Piesātinājums"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
 #: ../plug-ins/common/decompose.c:203
-#: ../plug-ins/gimpressionist/orientation.c:148
-#: ../plug-ins/gimpressionist/size.c:155
+#: ../plug-ins/ligmaressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/size.c:155
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Vērtība"
@@ -789,7 +789,7 @@ msgstr "_Atvērt"
 #: ../plug-ins/flame/flame.c:1111
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:807
 #: ../plug-ins/ifs-compose/ifs-compose.c:2563
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
@@ -985,7 +985,7 @@ msgstr "Saglabāt CML pārlūka parametrus"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1099
+#: ../plug-ins/file-fli/fli-ligma.c:777 ../plug-ins/file-ico/ico-save.c:1099
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1813
 #: ../plug-ins/file-tiff/file-tiff-save.c:1022
 #: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
@@ -1020,7 +1020,7 @@ msgstr "Ielādēt CML pārlūka parametrus"
 #: ../plug-ins/common/file-xwd.c:481 ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
-#: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
+#: ../plug-ins/file-fli/fli-ligma.c:457 ../plug-ins/file-fli/fli-ligma.c:504
 #: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
 #: ../plug-ins/file-psd/psd-load.c:144 ../plug-ins/file-psd/psd-load.c:149
@@ -1029,8 +1029,8 @@ msgstr "Ielādēt CML pārlūka parametrus"
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
-#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1110,7 +1110,7 @@ msgstr "Pārkārtot krāsu karti"
 #: ../plug-ins/common/sphere-designer.c:2629
 #: ../plug-ins/common/tile-small.c:524
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:808
 #: ../plug-ins/selection-to-path/selection-to-path.c:411
 msgid "_Reset"
@@ -1460,8 +1460,8 @@ msgstr "Liekšana ar līknēm"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1253
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Priekšskatījums"
@@ -1944,7 +1944,7 @@ msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
-#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
+#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-ligma.c:496
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:157
 #: ../plug-ins/file-raw/file-darktable.c:415
@@ -2027,7 +2027,7 @@ msgstr "“%s” — EOF (datnes beigas) kļūda, lasot paletes datus"
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
-#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
+#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-ligma.c:744
 #: ../plug-ins/file-ico/ico-save.c:1091 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1775 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1012
@@ -2141,8 +2141,8 @@ msgstr "“%s” nav DICOM datne."
 
 #: ../plug-ins/common/file-dicom.c:575
 #, c-format
-msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "GIMP neatbalsta pārsūtīšanas sintaksi %s."
+msgid "Transfer syntax %s is not supported by LIGMA."
+msgstr "LIGMA neatbalsta pārsūtīšanas sintaksi %s."
 
 #: ../plug-ins/common/file-dicom.c:1468
 msgid "Cannot save images with alpha channel."
@@ -2155,8 +2155,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Nevar darboties ar nezināmiem attēlu veidiem."
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "GIMP ota"
+msgid "LIGMA brush"
+msgstr "LIGMA ota"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, c-format
@@ -2376,8 +2376,8 @@ msgstr ""
 "Attēlam, ko mēģināt eksportēt, ir tikai viens slānis."
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "GIMP ota (animēta)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA ota (animēta)"
 
 #: ../plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
@@ -3049,8 +3049,8 @@ msgstr ""
 "kā viens slānis. Attēlam, ko eksportējat, ir tikai viens slānis."
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "GIMP raksts"
+msgid "LIGMA pattern"
+msgstr "LIGMA raksts"
 
 #: ../plug-ins/common/file-pat.c:270
 #| msgid "Export metadata"
@@ -3526,16 +3526,16 @@ msgid "Invalid X resolution."
 msgstr "Nederīga X izšķirtspēja."
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "Attēla platums ir lielāks, nekā GIMP var pavilkt."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Attēla platums ir lielāks, nekā LIGMA var pavilkt."
 
 #: ../plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "Nederīga Y izšķirtspēja."
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "Attēla augstums ir lielāks, nekā GIMP var pavilkt."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Attēla augstums ir lielāks, nekā LIGMA var pavilkt."
 
 #: ../plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3642,8 +3642,8 @@ msgid "Gray"
 msgstr "Pelēks"
 
 #: ../plug-ins/common/file-ps.c:3681 ../plug-ins/common/file-xpm.c:507
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Krāsa"
@@ -4172,10 +4172,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "“%s”:\n"
-"Attēla platums ir lielāks, nekā GIMP var pavilkt"
+"Attēla platums ir lielāks, nekā LIGMA var pavilkt"
 
 #: ../plug-ins/common/file-sunras.c:537 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:566
@@ -4192,10 +4192,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "“%s”:\n"
-"Attēla augstums ir lielāks, nekā GIMP var pavilkt"
+"Attēla augstums ir lielāks, nekā LIGMA var pavilkt"
 
 #: ../plug-ins/common/file-sunras.c:581
 msgid "This image depth is not supported"
@@ -4304,8 +4304,8 @@ msgstr "Im_portēt ceļus"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "Importēt SVG ceļu elementus, lai tos varētu lietot ar GIMP ceļu rīku"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "Importēt SVG ceļu elementus, lai tos varētu lietot ar LIGMA ceļu rīku"
 
 #: ../plug-ins/common/file-svg.c:891
 msgid "Merge imported paths"
@@ -5357,9 +5357,9 @@ msgstr "Iegūt parauga krā_sas"
 #: ../plug-ins/common/sample-colorize.c:1415
 #: ../plug-ins/common/tile-small.c:628
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Pielietot"
@@ -5599,7 +5599,7 @@ msgid "Use the background color"
 msgstr "Lietot fona krāsu"
 
 #: ../plug-ins/common/sphere-designer.c:335
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Vienlaidus"
 
@@ -5687,7 +5687,7 @@ msgstr "D_ublēt"
 #: ../plug-ins/common/sphere-designer.c:2749
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1235
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/ifs-compose/ifs-compose.c:1077
@@ -5724,7 +5724,7 @@ msgstr "Krāsu izvēles dialoglodziņš"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2831
-#: ../plug-ins/gimpressionist/paper.c:191
+#: ../plug-ins/ligmaressionist/paper.c:191
 #: ../plug-ins/ifs-compose/ifs-compose.c:586
 msgid "Scale:"
 msgstr "Mērogs:"
@@ -5874,10 +5874,10 @@ msgstr "Saglabāts"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Mērvienības definīcija pirms GIMP iziešanas tiks saglabāta tikai tad, ja šī "
+"Mērvienības definīcija pirms LIGMA iziešanas tiks saglabāta tikai tad, ja šī "
 "kolonna ir atzīmēta."
 
 #: ../plug-ins/common/unit-editor.c:113
@@ -5886,9 +5886,9 @@ msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Šī virkne tiks izmantota, lai identificētu mērvienību GIMP konfigurācijas "
+"Šī virkne tiks izmantota, lai identificētu mērvienību LIGMA konfigurācijas "
 "datnēs."
 
 #: ../plug-ins/common/unit-editor.c:115
@@ -5962,8 +5962,8 @@ msgid "U_nits"
 msgstr "Mēr_vienības"
 
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
-msgstr "Izveidot vai mainīt GIMP mērvienības "
+msgid "Create or alter units used in LIGMA"
+msgstr "Izveidot vai mainīt LIGMA mērvienības "
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "Add a New Unit"
@@ -6013,7 +6013,7 @@ msgstr "Mērvienību redaktors"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Atsvaidzināt"
 
@@ -6453,17 +6453,17 @@ msgstr "_Rakstīt krāstelpas informāciju"
 #: ../plug-ins/file-bmp/bmp-save.c:1016
 #| msgid ""
 #| "Some applications can not read BMP images that include color space "
-#| "information. GIMP writes color space information by default. Enabling "
-#| "this option will cause GIMP to not write color space information to the "
+#| "information. LIGMA writes color space information by default. Enabling "
+#| "this option will cause LIGMA to not write color space information to the "
 #| "file."
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Dažas lietotnes nevar nolasīt BMP attēlus, kas iekļauj krāstelpas "
-"informāciju. GIMP pēc noklusējuma raksta krāstelpas informāciju. Šīs opcijas "
-"izslēgšana liks GIMP nerakstīt krāstelpas informāciju datnē."
+"informāciju. LIGMA pēc noklusējuma raksta krāstelpas informāciju. Šīs opcijas "
+"izslēgšana liks LIGMA nerakstīt krāstelpas informāciju datnē."
 
 #. RGB Encoding Pptions
 #: ../plug-ins/file-bmp/bmp-save.c:1025
@@ -6737,35 +6737,35 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_Neko"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animācija"
 
-#: ../plug-ins/file-fli/fli-gimp.c:579
+#: ../plug-ins/file-fli/fli-ligma.c:579
 #, c-format
 msgid "Frame (%i)"
 msgstr "Kadrs (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:740
+#: ../plug-ins/file-fli/fli-ligma.c:740
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Diemžēl var eksportēt tikai INDEXED un GRAY attēlus."
 
-#: ../plug-ins/file-fli/fli-gimp.c:901
+#: ../plug-ins/file-fli/fli-ligma.c:901
 #| msgid "AutoDesk FLIC animation"
 msgid "Open FLIC Animation"
 msgstr "Atvērt FLIC animāciju"
 
-#: ../plug-ins/file-fli/fli-gimp.c:919
+#: ../plug-ins/file-fli/fli-ligma.c:919
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_No:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:925
+#: ../plug-ins/file-fli/fli-ligma.c:925
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Kam:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:955
+#: ../plug-ins/file-fli/fli-ligma.c:955
 #| msgid "AutoDesk FLIC animation"
 msgid "Export Image as FLI Animation"
 msgstr "Eksportēt attēlu kā FLI animāciju"
@@ -7034,8 +7034,8 @@ msgid "Failed to decompress data"
 msgstr "Neizdevās atspiest datus"
 
 #: ../plug-ins/file-psd/psd-save.c:481
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Kļūda — nevar pārveidot GIMP pamata attēla tipu uz PSD režīmu"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Kļūda — nevar pārveidot LIGMA pamata attēla tipu uz PSD režīmu"
 
 #: ../plug-ins/file-psd/psd-save.c:1768
 #, c-format
@@ -7178,7 +7178,7 @@ msgstr "Neapstrādāta Arriflex ARI datne"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -7186,7 +7186,7 @@ msgid ""
 msgstr ""
 "Nav uzinstalēts neapstrādāto attēlu ielādētājs, lai atvērtu “%s” datnes.\n"
 "\n"
-"GIMP pašlaik atbalsta šos neapstrādāto attēlu ielādētājus:\n"
+"LIGMA pašlaik atbalsta šos neapstrādāto attēlu ielādētājus:\n"
 "- darktable (http://www.darktable.org/), vismaz 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), vismaz 5.2\n"
 "\n"
@@ -7728,8 +7728,8 @@ msgstr "_Sajaukt"
 msgid "Same"
 msgstr "Tas pats"
 
-#: ../plug-ins/flame/flame.c:808 ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/flame/flame.c:808 ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "Nejaušs"
 
@@ -7861,8 +7861,8 @@ msgstr "Saglabāt liesmu"
 msgid "Flame"
 msgstr "Liesma"
 
-#: ../plug-ins/flame/flame.c:1095 ../plug-ins/gimpressionist/orientation.c:190
-#: ../plug-ins/gimpressionist/size.c:199
+#: ../plug-ins/flame/flame.c:1095 ../plug-ins/ligmaressionist/orientation.c:190
+#: ../plug-ins/ligmaressionist/size.c:199
 #: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -7921,16 +7921,16 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:997
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Nav %s iekš gimprc:\n"
+"Nav %s iekš ligmarc:\n"
 "Datnei %s jāpievieno apmēram šāds\n"
 "(%s “%s”)\n"
 "ieraksts."
@@ -8537,7 +8537,7 @@ msgstr "Nogludināšana"
 msgid "Max undo:"
 msgstr "Maks. atsaukšanas:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Caurspīdīgs"
 
@@ -8638,7 +8638,7 @@ msgid "Left"
 msgstr "Kreisā"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1746
-#: ../plug-ins/gimpressionist/orientation.c:140
+#: ../plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Virziens:"
 
@@ -8695,295 +8695,295 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Kļūda, mēģinot atvērt pagaidu datni “%s” trokšņa ielādēšanai — %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Var saglabāt tikai uzzīmējamos!"
 
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Saglabāt otu"
 
-#: ../plug-ins/gimpressionist/brush.c:522
+#: ../plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "_Ota"
 
-#: ../plug-ins/gimpressionist/brush.c:559
+#: ../plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../plug-ins/gimpressionist/brush.c:577
+#: ../plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Maina gammu (gaišumu) izvēlētajai otai"
 
-#: ../plug-ins/gimpressionist/brush.c:585
+#: ../plug-ins/ligmaressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:621
 msgid "Select:"
 msgstr "Izvēlēties:"
 
-#: ../plug-ins/gimpressionist/brush.c:601
+#: ../plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "S_aglabāt kā"
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "Izmēru attiecība:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Norāda otas izmēru attiecību"
 
-#: ../plug-ins/gimpressionist/brush.c:626
-#: ../plug-ins/gimpressionist/paper.c:202
+#: ../plug-ins/ligmaressionist/brush.c:626
+#: ../plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "Reljefs:"
 
-#: ../plug-ins/gimpressionist/brush.c:628
-#: ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:628
+#: ../plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Norāda, kādu gofrēšanas apjomu veikt attēlam (procentos)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Krā_sa"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "_Vidējais zem otas"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "_Otas vidus"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Krāsu aprēķina, no visu pikseļu vidējā zem otas"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Ņem krāsu no pikseļa, kas atrodas zem otas centra"
 
-#: ../plug-ins/gimpressionist/color.c:87
+#: ../plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "Krāsas troks_nis:"
 
-#: ../plug-ins/gimpressionist/color.c:89
+#: ../plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Krāsai pievieno nejaušu troksni"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "_General"
 msgstr "Vispārī_gi"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Paturēt oriģinālu"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Paturēt sākotnējo attēlu kā fonu"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "No papīra"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopēt izvēlētā papīra tekstūru kā fonu"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Vienkrāsains fons"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Izmantot caurspīdīgu fonu; būs redzami tikai otas vilkumi"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Krāsot malas"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Izvēlas, vai novietot vilkumus līdz pašām attēla malām"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "Flīzējams"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Izvēlas, vai iegūtajam attēlam vajadzētu būt vienlaidus flīzējamam"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Krītošā ēna"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Pievienot ēnas efektu katram otas vilcienam"
 
-#: ../plug-ins/gimpressionist/general.c:238
+#: ../plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "Malu apēnošana:"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Cik ļoti apēnot katra otas vilkuma malu"
 
-#: ../plug-ins/gimpressionist/general.c:246
+#: ../plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "Ēnu apēnošana:"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Cik daudz “apēnot” krītošo ēnu"
 
-#: ../plug-ins/gimpressionist/general.c:255
+#: ../plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "Ēnas dziļums:"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "Krītošās ēnas dziļums, tas ir, cik tālu no objekta tai vajadzētu atrasties"
 
-#: ../plug-ins/gimpressionist/general.c:263
+#: ../plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "Ēnu aizmiglošana:"
 
-#: ../plug-ins/gimpressionist/general.c:265
+#: ../plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "Cik daudz aizmiglot krītošo ēnu"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "Novirzes slieksnis:"
 
-#: ../plug-ins/gimpressionist/general.c:273
+#: ../plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "Adaptīvās izvēles glābšanas vērtība"
 
-#: ../plug-ins/gimpressionist/gimp.c:119
-msgid "_GIMPressionist..."
-msgstr "_GIMPresionists..."
+#: ../plug-ins/ligmaressionist/ligma.c:119
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAresionists..."
 
-#: ../plug-ins/gimpressionist/gimp.c:123
+#: ../plug-ins/ligmaressionist/ligma.c:123
 msgid "Performs various artistic operations"
 msgstr "Veic dažādas mākslinieciskas darbības"
 
-#: ../plug-ins/gimpressionist/gimp.c:448
+#: ../plug-ins/ligmaressionist/ligma.c:448
 msgid "Painting"
 msgstr "Glezno"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPresionists"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAresionists"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "Or_ientācija"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "Virzieni:"
 
-#: ../plug-ins/gimpressionist/orientation.c:102
+#: ../plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Virzienu (t.i. otu) skaits, ko izmantot"
 
-#: ../plug-ins/gimpressionist/orientation.c:111
+#: ../plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "Sākuma leņķis:"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "Pirmās veidojamās otas sākuma leņķis"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "Leņķa garums:"
 
-#: ../plug-ins/gimpressionist/orientation.c:124
+#: ../plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "Pirmās veidojamās otas leņķa garums"
 
-#: ../plug-ins/gimpressionist/orientation.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Ļaut apgabala vērtībai (gaišums) noteikt vilkuma virzienu"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "Rādiuss"
 
-#: ../plug-ins/gimpressionist/orientation.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Attālums no attēla vidus nosaka vilkuma virzienu"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "Izvēlas nejaušu virzienu katram vilkumam"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "Radiāls"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Ļaut virzienam no vidus noteikt vilkuma virzienu"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "Plūst"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
-#: ../plug-ins/gimpressionist/size.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Vilkums seko plūšanas rakstam"
 
-#: ../plug-ins/gimpressionist/orientation.c:173
+#: ../plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Apgabala tonis noteikts vilkuma virzienu"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "Adaptīvs"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Izvēlēts virziens, kas visvairāk atbilst sākotnējam attēlam"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "Pašrocīgs"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "Pašrocīgi noteikt vilkuma virzienu"
 
-#: ../plug-ins/gimpressionist/orientation.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "Atver virzienu kartes redaktoru"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Virzienu kartes redaktors"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Vektori"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -8992,300 +8992,300 @@ msgstr ""
 "klikšķis, lai norādītu to uz peles pusi; vidējais klikšķis, lai pievienotu "
 "jaunu vektoru."
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Mainīt priekšskatījuma gaišumu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Izvēlēties iepriekšējo vektoru"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Izvēlēties nākamo vektoru"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "Pie_vienot"
 
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Pievienot jaunu vektoru"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "Li_kvidēt"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Dzēst izvēlēto vektoru"
 
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Tips"
 
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normāls"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "Virp_x"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "Virpulis_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "Virpulis_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Voronoi režīmā tikai tuvākajam vektoram ir kaut kāda ietekme"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "L_eņķis:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "Maina izvēlētā vektora leņķi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:678
+#: ../plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "_Leņķa nobīde:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr "Nobīda visus vektorus ar doto leņķi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:688
+#: ../plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "_Stiprums:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "Mainīt izvēlētā vektora stiprumu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:699
+#: ../plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "S_tipruma eksponente:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "Maina eksponentes stiprumu"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "P_apīrs"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "_Invertēt"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Invertē papīra tekstūru"
 
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "_Pārklāt"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Uzlikt papīru kāds tas ir (bez gofrēšanas)"
 
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Norāda tekstūras mērogu (procentos no oriģinālās datnes)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "N_ovietojums"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Novietojums"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Nejauši"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Vienmērīgi izvietots"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Pa attēlu novieto nejaušus vilkumus "
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Vilkumi ir vienmērīgi izvietoti pa attēlu"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Vidū"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokusēt otas vilkumus ap attēla vidu"
 
-#: ../plug-ins/gimpressionist/placement.c:113
+#: ../plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "Vilkuma _blīvums:"
 
-#: ../plug-ins/gimpressionist/placement.c:115
+#: ../plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "Otu vilkumu relatīvais blīvums"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Neizdevās saglabāt PPM datni “%s” — %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Saglabāt pašreizējo"
 
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Apraksts:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Gimpresionista noklusējumi"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaresionista noklusējumi"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Priekšiestatījumi"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Saglabāt pašreizējo..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Saglabāt šos iestatījumus norādītajā datnē"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Ielasa izvēlēto priekšiestatījumu atmiņā"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Dzēš izvēlēto priekšiestatījumu"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Atkārtoti nolasa priekšiestatījumu mapi"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511
 #: ../plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "Atja_unināt"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Atsvaidzināt priekšskatījuma logu"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Atgriezties atpakaļ pie sākotnējā attēla"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "Izmēr_s"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "Izmēra varianti:"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "Izmantojamo otu izmēru skaits"
 
-#: ../plug-ins/gimpressionist/size.c:118
+#: ../plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "Minimālais izmērs:"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "Mazākā izveidojamā ota"
 
-#: ../plug-ins/gimpressionist/size.c:129
+#: ../plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "Maksimālais izmērs:"
 
-#: ../plug-ins/gimpressionist/size.c:131
+#: ../plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "Lielākā izveidojamā ota"
 
-#: ../plug-ins/gimpressionist/size.c:147
+#: ../plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "Izmērs ir atkarīgs no:"
 
-#: ../plug-ins/gimpressionist/size.c:156
+#: ../plug-ins/ligmaressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Ļaut apgabala vērtībai (gaišums) noteikt vilkuma izmēru"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Attālums no attēla vidus nosaka vilkuma izmēru"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "Izvēlas nejaušu izmēru katram vilkumam"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Ļaut virzienam no vidus noteikt vilkuma izmēru"
 
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Apgabala tonis noteikts vilkuma izmēru"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Izvēlēts otas izmērs, kas visvairāk atbilst sākotnējam attēlam"
 
-#: ../plug-ins/gimpressionist/size.c:193
+#: ../plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "Pašrocīgi noteikt vilkuma izmēru"
 
-#: ../plug-ins/gimpressionist/size.c:204
+#: ../plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "Atver izmēru kartes redaktoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Izmēru kartes redaktoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Smvektori"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9294,39 +9294,39 @@ msgstr ""
 "labais klikšķis, lai norādītu to uz peles pusi; vidējais klikšķis, lai "
 "pievienotu jaunu smvektoru."
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Izvēlēties iepriekšējo smvektoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Izvēlēties nākamo smvektoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Pievienot jaunu smvektoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Dzēst izvēlēto smvektoru"
 
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "Maina izvēlētā smvektora leņķi"
 
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "S_tiprums:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "Maina izvēlētā smvektora stiprumu"
 
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "Stip_ruma eksponente:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:546
+#: ../plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10052,8 +10052,8 @@ msgid "_Second Flares"
 msgstr "Otrai_s PA"
 
 #: ../plug-ins/help-browser/dialog.c:177 ../plug-ins/help-browser/dialog.c:1104
-msgid "GIMP Help Browser"
-msgstr "GIMP palīdzības pārlūks"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA palīdzības pārlūks"
 
 #: ../plug-ins/help-browser/dialog.c:542
 msgid "Go back one page"
@@ -10108,8 +10108,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Pārslēgt sānu joslas redzamību"
 
 #: ../plug-ins/help-browser/dialog.c:634
-msgid "Visit the GIMP documentation website"
-msgstr "Apmeklēt GIMP dokumentācijas tīmekļa vietni"
+msgid "Visit the LIGMA documentation website"
+msgstr "Apmeklēt LIGMA dokumentācijas tīmekļa vietni"
 
 #: ../plug-ins/help-browser/dialog.c:1146
 msgid "Find:"
@@ -10130,14 +10130,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "_Aizvērt"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "“%s” palīdzības lapas nav pieejamas."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "GIMP lietotāja rokasgrāmata nav pieejama."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMA lietotāja rokasgrāmata nav pieejama."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -10145,29 +10145,29 @@ msgstr "GIMP lietotāja rokasgrāmata nav pieejama."
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"https://docs.ligma.org/"
 msgstr ""
 "Lūdzu, instalējiet papildu palīdzības pakotnes, vai izmantojiet tiešsaistes "
-"rokasgrāmatu adresē https://docs.gimp.org/"
+"rokasgrāmatu adresē https://docs.ligma.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Iespējams, ka trūkst GIO aizmugure, un ka jāinstalē GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Nezināms palīdzības ID “%s”"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Ielādē rādītāju no “%s”"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10393,7 +10393,7 @@ msgid "Clear"
 msgstr "Attīrīt"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Izveidot"
 
@@ -10418,41 +10418,41 @@ msgid "Edit Object"
 msgstr "Rediģēt objektu"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Lietot Gimp palīglīnijas"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Lietot Ligma palīglīnijas"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Ka_tru otro"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "_Visas"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Pievienot papildu palīglīniju"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "Kr_eisā mala"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "Labā _mala"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "A_ugšējā mala"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Apakšē_jā mala"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Bāzes URL:"
 
@@ -10898,8 +10898,8 @@ msgid "Grid Settings..."
 msgstr "Režģa iestatījumi..."
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "Lietot GIMP palīglīnijas..."
+msgid "Use LIGMA Guides..."
+msgstr "Lietot LIGMA palīglīnijas..."
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
@@ -12544,8 +12544,8 @@ msgstr "_Skeneris/kamera..."
 msgid "Transferring data from scanner/camera"
 msgstr "Pārsūta datus no skenera vai kameras"
 
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "Priekšsaktīt uz slāņiem balstītu GIMP animāciju"
+#~ msgid "Preview a LIGMA layer-based animation"
+#~ msgstr "Priekšsaktīt uz slāņiem balstītu LIGMA animāciju"
 
 #~ msgid "_Playback..."
 #~ msgstr "_Atskaņot..."
@@ -13456,8 +13456,8 @@ msgstr "Pārsūta datus no skenera vai kameras"
 #~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
 #~ msgstr "“%s” ir nederīgi galveņu dati — otas nosaukums ir pārāk garš: %lu"
 
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "Kļūda GIMP otas datnē “%s”"
+#~ msgid "Error in LIGMA brush file '%s'"
+#~ msgstr "Kļūda LIGMA otas datnē “%s”"
 
 #~ msgid "Invalid UTF-8 string in brush file '%s'."
 #~ msgstr "Nederīga UTF-8 rinda otas datnē “%s”."
@@ -13465,8 +13465,8 @@ msgstr "Pārsūta datus no skenera vai kameras"
 #~ msgid "Brush name is too long: %lu"
 #~ msgstr "Otas nosaukums ir pārāk garš: %lu"
 
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "Izskatās, ka GIMP otu datne ir bojāta."
+#~ msgid "LIGMA brush file appears to be corrupted."
+#~ msgstr "Izskatās, ka LIGMA otu datne ir bojāta."
 
 #~| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 #~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,46 +19,46 @@
 #define __PLUG_IN_ENUMS_H__
 
 
-#define GIMP_TYPE_PLUG_IN_IMAGE_TYPE (gimp_plug_in_image_type_get_type ())
+#define LIGMA_TYPE_PLUG_IN_IMAGE_TYPE (ligma_plug_in_image_type_get_type ())
 
-GType gimp_plug_in_image_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PLUG_IN_RGB_IMAGE      = 1 << 0,
-  GIMP_PLUG_IN_GRAY_IMAGE     = 1 << 1,
-  GIMP_PLUG_IN_INDEXED_IMAGE  = 1 << 2,
-  GIMP_PLUG_IN_RGBA_IMAGE     = 1 << 3,
-  GIMP_PLUG_IN_GRAYA_IMAGE    = 1 << 4,
-  GIMP_PLUG_IN_INDEXEDA_IMAGE = 1 << 5
-} GimpPlugInImageType;
-
-
-#define GIMP_TYPE_PLUG_CALL_MODE (gimp_plug_in_call_mode_get_type ())
-
-GType gimp_plug_in_call_mode_get_type (void) G_GNUC_CONST;
+GType ligma_plug_in_image_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PLUG_IN_CALL_NONE,
-  GIMP_PLUG_IN_CALL_RUN,
-  GIMP_PLUG_IN_CALL_QUERY,
-  GIMP_PLUG_IN_CALL_INIT
-} GimpPlugInCallMode;
+  LIGMA_PLUG_IN_RGB_IMAGE      = 1 << 0,
+  LIGMA_PLUG_IN_GRAY_IMAGE     = 1 << 1,
+  LIGMA_PLUG_IN_INDEXED_IMAGE  = 1 << 2,
+  LIGMA_PLUG_IN_RGBA_IMAGE     = 1 << 3,
+  LIGMA_PLUG_IN_GRAYA_IMAGE    = 1 << 4,
+  LIGMA_PLUG_IN_INDEXEDA_IMAGE = 1 << 5
+} LigmaPlugInImageType;
 
 
-#define GIMP_TYPE_FILE_PROCEDURE_GROUP (gimp_file_procedure_group_get_type ())
+#define LIGMA_TYPE_PLUG_CALL_MODE (ligma_plug_in_call_mode_get_type ())
 
-GType gimp_file_procedure_group_get_type (void) G_GNUC_CONST;
+GType ligma_plug_in_call_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FILE_PROCEDURE_GROUP_NONE,
-  GIMP_FILE_PROCEDURE_GROUP_ANY,
-  GIMP_FILE_PROCEDURE_GROUP_OPEN,
-  GIMP_FILE_PROCEDURE_GROUP_SAVE,
-  GIMP_FILE_PROCEDURE_GROUP_EXPORT
-} GimpFileProcedureGroup;
+  LIGMA_PLUG_IN_CALL_NONE,
+  LIGMA_PLUG_IN_CALL_RUN,
+  LIGMA_PLUG_IN_CALL_QUERY,
+  LIGMA_PLUG_IN_CALL_INIT
+} LigmaPlugInCallMode;
+
+
+#define LIGMA_TYPE_FILE_PROCEDURE_GROUP (ligma_file_procedure_group_get_type ())
+
+GType ligma_file_procedure_group_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_FILE_PROCEDURE_GROUP_NONE,
+  LIGMA_FILE_PROCEDURE_GROUP_ANY,
+  LIGMA_FILE_PROCEDURE_GROUP_OPEN,
+  LIGMA_FILE_PROCEDURE_GROUP_SAVE,
+  LIGMA_FILE_PROCEDURE_GROUP_EXPORT
+} LigmaFileProcedureGroup;
 
 
 #endif /* __PLUG_IN_ENUMS_H__ */

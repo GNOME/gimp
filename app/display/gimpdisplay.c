@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,38 +20,38 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 #include "tools/tools-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpdialogfactory.h"
+#include "widgets/ligmadialogfactory.h"
 
-#include "tools/gimptool.h"
+#include "tools/ligmatool.h"
 #include "tools/tool_manager.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplay-handlers.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-scrollbars.h"
-#include "gimpdisplayshell-title.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpimagewindow.h"
+#include "ligmadisplay.h"
+#include "ligmadisplay-handlers.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-expose.h"
+#include "ligmadisplayshell-handlers.h"
+#include "ligmadisplayshell-render.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-scrollbars.h"
+#include "ligmadisplayshell-title.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmaimagewindow.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define PAINT_AREA_CHUNK_WIDTH  32
@@ -66,9 +66,9 @@ enum
 };
 
 
-struct _GimpDisplayImplPrivate
+struct _LigmaDisplayImplPrivate
 {
-  GimpImage      *image;        /*  pointer to the associated image     */
+  LigmaImage      *image;        /*  pointer to the associated image     */
   gint            instance;     /*  the instance # of this display as
                                  *  taken from the image at creation    */
 
@@ -81,103 +81,103 @@ struct _GimpDisplayImplPrivate
 
 /*  local function prototypes  */
 
-static void     gimp_display_progress_iface_init  (GimpProgressInterface *iface);
+static void     ligma_display_progress_iface_init  (LigmaProgressInterface *iface);
 
-static void     gimp_display_set_property           (GObject             *object,
+static void     ligma_display_set_property           (GObject             *object,
                                                      guint                property_id,
                                                      const GValue        *value,
                                                      GParamSpec          *pspec);
-static void     gimp_display_get_property           (GObject             *object,
+static void     ligma_display_get_property           (GObject             *object,
                                                      guint                property_id,
                                                      GValue              *value,
                                                      GParamSpec          *pspec);
 
-static gboolean gimp_display_impl_present           (GimpDisplay         *display);
-static gboolean gimp_display_impl_grab_focus        (GimpDisplay         *display);
+static gboolean ligma_display_impl_present           (LigmaDisplay         *display);
+static gboolean ligma_display_impl_grab_focus        (LigmaDisplay         *display);
 
-static GimpProgress * gimp_display_progress_start   (GimpProgress        *progress,
+static LigmaProgress * ligma_display_progress_start   (LigmaProgress        *progress,
                                                      gboolean             cancellable,
                                                      const gchar         *message);
-static void     gimp_display_progress_end           (GimpProgress        *progress);
-static gboolean gimp_display_progress_is_active     (GimpProgress        *progress);
-static void     gimp_display_progress_set_text      (GimpProgress        *progress,
+static void     ligma_display_progress_end           (LigmaProgress        *progress);
+static gboolean ligma_display_progress_is_active     (LigmaProgress        *progress);
+static void     ligma_display_progress_set_text      (LigmaProgress        *progress,
                                                      const gchar         *message);
-static void     gimp_display_progress_set_value     (GimpProgress        *progress,
+static void     ligma_display_progress_set_value     (LigmaProgress        *progress,
                                                      gdouble              percentage);
-static gdouble  gimp_display_progress_get_value     (GimpProgress        *progress);
-static void     gimp_display_progress_pulse         (GimpProgress        *progress);
-static guint32  gimp_display_progress_get_window_id (GimpProgress        *progress);
-static gboolean gimp_display_progress_message       (GimpProgress        *progress,
-                                                     Gimp                *gimp,
-                                                     GimpMessageSeverity  severity,
+static gdouble  ligma_display_progress_get_value     (LigmaProgress        *progress);
+static void     ligma_display_progress_pulse         (LigmaProgress        *progress);
+static guint32  ligma_display_progress_get_window_id (LigmaProgress        *progress);
+static gboolean ligma_display_progress_message       (LigmaProgress        *progress,
+                                                     Ligma                *ligma,
+                                                     LigmaMessageSeverity  severity,
                                                      const gchar         *domain,
                                                      const gchar         *message);
-static void     gimp_display_progress_canceled      (GimpProgress        *progress,
-                                                     GimpDisplay         *display);
+static void     ligma_display_progress_canceled      (LigmaProgress        *progress,
+                                                     LigmaDisplay         *display);
 
-static void     gimp_display_flush_update_region    (GimpDisplay         *display);
-static void     gimp_display_paint_area             (GimpDisplay         *display,
+static void     ligma_display_flush_update_region    (LigmaDisplay         *display);
+static void     ligma_display_paint_area             (LigmaDisplay         *display,
                                                      gint                 x,
                                                      gint                 y,
                                                      gint                 w,
                                                      gint                 h);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayImpl, gimp_display_impl, GIMP_TYPE_DISPLAY,
-                         G_ADD_PRIVATE (GimpDisplayImpl)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_display_progress_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDisplayImpl, ligma_display_impl, LIGMA_TYPE_DISPLAY,
+                         G_ADD_PRIVATE (LigmaDisplayImpl)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROGRESS,
+                                                ligma_display_progress_iface_init))
 
-#define parent_class gimp_display_impl_parent_class
+#define parent_class ligma_display_impl_parent_class
 
 
 static void
-gimp_display_impl_class_init (GimpDisplayImplClass *klass)
+ligma_display_impl_class_init (LigmaDisplayImplClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpDisplayClass *display_class = GIMP_DISPLAY_CLASS (klass);
+  LigmaDisplayClass *display_class = LIGMA_DISPLAY_CLASS (klass);
 
-  object_class->set_property = gimp_display_set_property;
-  object_class->get_property = gimp_display_get_property;
+  object_class->set_property = ligma_display_set_property;
+  object_class->get_property = ligma_display_get_property;
 
-  display_class->present     = gimp_display_impl_present;
-  display_class->grab_focus  = gimp_display_impl_grab_focus;
+  display_class->present     = ligma_display_impl_present;
+  display_class->grab_focus  = ligma_display_impl_grab_focus;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DISPLAY_SHELL,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_TYPE_DISPLAY_SHELL,
+                                                        LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_display_impl_init (GimpDisplayImpl *display)
+ligma_display_impl_init (LigmaDisplayImpl *display)
 {
-  display->priv = gimp_display_impl_get_instance_private (display);
+  display->priv = ligma_display_impl_get_instance_private (display);
 }
 
 static void
-gimp_display_progress_iface_init (GimpProgressInterface *iface)
+ligma_display_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start         = gimp_display_progress_start;
-  iface->end           = gimp_display_progress_end;
-  iface->is_active     = gimp_display_progress_is_active;
-  iface->set_text      = gimp_display_progress_set_text;
-  iface->set_value     = gimp_display_progress_set_value;
-  iface->get_value     = gimp_display_progress_get_value;
-  iface->pulse         = gimp_display_progress_pulse;
-  iface->get_window_id = gimp_display_progress_get_window_id;
-  iface->message       = gimp_display_progress_message;
+  iface->start         = ligma_display_progress_start;
+  iface->end           = ligma_display_progress_end;
+  iface->is_active     = ligma_display_progress_is_active;
+  iface->set_text      = ligma_display_progress_set_text;
+  iface->set_value     = ligma_display_progress_set_value;
+  iface->get_value     = ligma_display_progress_get_value;
+  iface->pulse         = ligma_display_progress_pulse;
+  iface->get_window_id = ligma_display_progress_get_window_id;
+  iface->message       = ligma_display_progress_message;
 }
 
 static void
-gimp_display_set_property (GObject      *object,
+ligma_display_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
@@ -191,12 +191,12 @@ gimp_display_set_property (GObject      *object,
 }
 
 static void
-gimp_display_get_property (GObject    *object,
+ligma_display_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (object);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (object);
 
   switch (property_id)
     {
@@ -215,26 +215,26 @@ gimp_display_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_display_impl_present (GimpDisplay *display)
+ligma_display_impl_present (LigmaDisplay *display)
 {
-  gimp_display_shell_present (gimp_display_get_shell (display));
+  ligma_display_shell_present (ligma_display_get_shell (display));
 
   return TRUE;
 }
 
 static gboolean
-gimp_display_impl_grab_focus (GimpDisplay *display)
+ligma_display_impl_grab_focus (LigmaDisplay *display)
 {
-  GimpDisplayImpl *display_impl = GIMP_DISPLAY_IMPL (display);
+  LigmaDisplayImpl *display_impl = LIGMA_DISPLAY_IMPL (display);
 
-  if (display_impl->priv->shell && gimp_display_get_image (display))
+  if (display_impl->priv->shell && ligma_display_get_image (display))
     {
-      GimpImageWindow *image_window;
+      LigmaImageWindow *image_window;
 
-      image_window = gimp_display_shell_get_window (gimp_display_get_shell (display));
+      image_window = ligma_display_shell_get_window (ligma_display_get_shell (display));
 
-      gimp_display_present (display);
-      gtk_widget_grab_focus (gimp_window_get_primary_focus_widget (GIMP_WINDOW (image_window)));
+      ligma_display_present (display);
+      gtk_widget_grab_focus (ligma_window_get_primary_focus_widget (LIGMA_WINDOW (image_window)));
 
       return TRUE;
     }
@@ -242,15 +242,15 @@ gimp_display_impl_grab_focus (GimpDisplay *display)
   return FALSE;
 }
 
-static GimpProgress *
-gimp_display_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_display_progress_start (LigmaProgress *progress,
                              gboolean      cancellable,
                              const gchar  *message)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_start (GIMP_PROGRESS (display->priv->shell),
+    return ligma_progress_start (LIGMA_PROGRESS (display->priv->shell),
                                 cancellable,
                                 "%s", message);
 
@@ -258,245 +258,245 @@ gimp_display_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_display_progress_end (GimpProgress *progress)
+ligma_display_progress_end (LigmaProgress *progress)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    gimp_progress_end (GIMP_PROGRESS (display->priv->shell));
+    ligma_progress_end (LIGMA_PROGRESS (display->priv->shell));
 }
 
 static gboolean
-gimp_display_progress_is_active (GimpProgress *progress)
+ligma_display_progress_is_active (LigmaProgress *progress)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_is_active (GIMP_PROGRESS (display->priv->shell));
+    return ligma_progress_is_active (LIGMA_PROGRESS (display->priv->shell));
 
   return FALSE;
 }
 
 static void
-gimp_display_progress_set_text (GimpProgress *progress,
+ligma_display_progress_set_text (LigmaProgress *progress,
                                 const gchar  *message)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    gimp_progress_set_text_literal (GIMP_PROGRESS (display->priv->shell),
+    ligma_progress_set_text_literal (LIGMA_PROGRESS (display->priv->shell),
                                     message);
 }
 
 static void
-gimp_display_progress_set_value (GimpProgress *progress,
+ligma_display_progress_set_value (LigmaProgress *progress,
                                  gdouble       percentage)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    gimp_progress_set_value (GIMP_PROGRESS (display->priv->shell),
+    ligma_progress_set_value (LIGMA_PROGRESS (display->priv->shell),
                              percentage);
 }
 
 static gdouble
-gimp_display_progress_get_value (GimpProgress *progress)
+ligma_display_progress_get_value (LigmaProgress *progress)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_get_value (GIMP_PROGRESS (display->priv->shell));
+    return ligma_progress_get_value (LIGMA_PROGRESS (display->priv->shell));
 
   return 0.0;
 }
 
 static void
-gimp_display_progress_pulse (GimpProgress *progress)
+ligma_display_progress_pulse (LigmaProgress *progress)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    gimp_progress_pulse (GIMP_PROGRESS (display->priv->shell));
+    ligma_progress_pulse (LIGMA_PROGRESS (display->priv->shell));
 }
 
 static guint32
-gimp_display_progress_get_window_id (GimpProgress *progress)
+ligma_display_progress_get_window_id (LigmaProgress *progress)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_get_window_id (GIMP_PROGRESS (display->priv->shell));
+    return ligma_progress_get_window_id (LIGMA_PROGRESS (display->priv->shell));
 
   return 0;
 }
 
 static gboolean
-gimp_display_progress_message (GimpProgress        *progress,
-                               Gimp                *gimp,
-                               GimpMessageSeverity  severity,
+ligma_display_progress_message (LigmaProgress        *progress,
+                               Ligma                *ligma,
+                               LigmaMessageSeverity  severity,
                                const gchar         *domain,
                                const gchar         *message)
 {
-  GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
+  LigmaDisplayImpl *display = LIGMA_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_message (GIMP_PROGRESS (display->priv->shell), gimp,
+    return ligma_progress_message (LIGMA_PROGRESS (display->priv->shell), ligma,
                                   severity, domain, message);
 
   return FALSE;
 }
 
 static void
-gimp_display_progress_canceled (GimpProgress *progress,
-                                GimpDisplay  *display)
+ligma_display_progress_canceled (LigmaProgress *progress,
+                                LigmaDisplay  *display)
 {
-  gimp_progress_cancel (GIMP_PROGRESS (display));
+  ligma_progress_cancel (LIGMA_PROGRESS (display));
 }
 
 
 /*  public functions  */
 
-GimpDisplay *
-gimp_display_new (Gimp              *gimp,
-                  GimpImage         *image,
-                  GimpUnit           unit,
+LigmaDisplay *
+ligma_display_new (Ligma              *ligma,
+                  LigmaImage         *image,
+                  LigmaUnit           unit,
                   gdouble            scale,
-                  GimpUIManager     *popup_manager,
-                  GimpDialogFactory *dialog_factory,
+                  LigmaUIManager     *popup_manager,
+                  LigmaDialogFactory *dialog_factory,
                   GdkMonitor        *monitor)
 {
-  GimpDisplay            *display;
-  GimpDisplayImplPrivate *private;
-  GimpImageWindow        *window = NULL;
-  GimpDisplayShell       *shell;
+  LigmaDisplay            *display;
+  LigmaDisplayImplPrivate *private;
+  LigmaImageWindow        *window = NULL;
+  LigmaDisplayShell       *shell;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (image == NULL || LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
   /*  If there isn't an interface, never create a display  */
-  if (gimp->no_interface)
+  if (ligma->no_interface)
     return NULL;
 
-  display = g_object_new (GIMP_TYPE_DISPLAY_IMPL,
-                          "gimp", gimp,
+  display = g_object_new (LIGMA_TYPE_DISPLAY_IMPL,
+                          "ligma", ligma,
                           NULL);
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
   /*  refs the image  */
   if (image)
-    gimp_display_set_image (display, image);
+    ligma_display_set_image (display, image);
 
   /*  get an image window  */
-  if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
+  if (LIGMA_GUI_CONFIG (display->config)->single_window_mode)
     {
-      GimpDisplay *active_display;
+      LigmaDisplay *active_display;
 
-      active_display = gimp_context_get_display (gimp_get_user_context (gimp));
+      active_display = ligma_context_get_display (ligma_get_user_context (ligma));
 
       if (! active_display)
         {
           active_display =
-            GIMP_DISPLAY (gimp_container_get_first_child (gimp->displays));
+            LIGMA_DISPLAY (ligma_container_get_first_child (ligma->displays));
         }
 
       if (active_display)
         {
-          GimpDisplayShell *shell = gimp_display_get_shell (active_display);
+          LigmaDisplayShell *shell = ligma_display_get_shell (active_display);
 
-          window = gimp_display_shell_get_window (shell);
+          window = ligma_display_shell_get_window (shell);
         }
     }
 
   if (! window)
     {
-      window = gimp_image_window_new (gimp,
+      window = ligma_image_window_new (ligma,
                                       private->image,
                                       dialog_factory,
                                       monitor);
     }
 
   /*  create the shell for the image  */
-  private->shell = gimp_display_shell_new (display, unit, scale,
+  private->shell = ligma_display_shell_new (display, unit, scale,
                                            popup_manager,
                                            monitor);
 
-  shell = gimp_display_get_shell (display);
+  shell = ligma_display_get_shell (display);
 
-  gimp_display_update_bounding_box (display);
+  ligma_display_update_bounding_box (display);
 
-  gimp_image_window_add_shell (window, shell);
-  gimp_display_shell_present (shell);
+  ligma_image_window_add_shell (window, shell);
+  ligma_display_shell_present (shell);
 
   /* make sure the docks are visible, in case all other image windows
    * are iconified, see bug #686544.
    */
-  gimp_dialog_factory_show_with_display (dialog_factory);
+  ligma_dialog_factory_show_with_display (dialog_factory);
 
-  g_signal_connect (gimp_display_shell_get_statusbar (shell), "cancel",
-                    G_CALLBACK (gimp_display_progress_canceled),
+  g_signal_connect (ligma_display_shell_get_statusbar (shell), "cancel",
+                    G_CALLBACK (ligma_display_progress_canceled),
                     display);
 
   /* add the display to the list */
-  gimp_container_add (gimp->displays, GIMP_OBJECT (display));
+  ligma_container_add (ligma->displays, LIGMA_OBJECT (display));
 
   return display;
 }
 
 /**
- * gimp_display_delete:
+ * ligma_display_delete:
  * @display:
  *
  * Closes the display and removes it from the display list. You should
- * not call this function directly, use gimp_display_close() instead.
+ * not call this function directly, use ligma_display_close() instead.
  */
 void
-gimp_display_delete (GimpDisplay *display)
+ligma_display_delete (LigmaDisplay *display)
 {
-  GimpDisplayImplPrivate *private;
-  GimpTool               *active_tool;
+  LigmaDisplayImplPrivate *private;
+  LigmaTool               *active_tool;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
   /* remove the display from the list */
-  gimp_container_remove (display->gimp->displays, GIMP_OBJECT (display));
+  ligma_container_remove (display->ligma->displays, LIGMA_OBJECT (display));
 
   /*  unrefs the image  */
-  gimp_display_set_image (display, NULL);
+  ligma_display_set_image (display, NULL);
 
-  active_tool = tool_manager_get_active (display->gimp);
+  active_tool = tool_manager_get_active (display->ligma);
 
   if (active_tool && active_tool->focus_display == display)
-    tool_manager_focus_display_active (display->gimp, NULL);
+    tool_manager_focus_display_active (display->ligma, NULL);
 
   if (private->shell)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (display);
-      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+      LigmaDisplayShell *shell  = ligma_display_get_shell (display);
+      LigmaImageWindow  *window = ligma_display_shell_get_window (shell);
 
       /*  set private->shell to NULL *before* destroying the shell.
-       *  all callbacks in gimpdisplayshell-callbacks.c will check
+       *  all callbacks in ligmadisplayshell-callbacks.c will check
        *  this pointer and do nothing if the shell is in destruction.
        */
       private->shell = NULL;
 
       if (window)
         {
-          if (gimp_image_window_get_n_shells (window) > 1)
+          if (ligma_image_window_get_n_shells (window) > 1)
             {
               g_object_ref (shell);
 
-              gimp_image_window_remove_shell (window, shell);
+              ligma_image_window_remove_shell (window, shell);
               gtk_widget_destroy (GTK_WIDGET (shell));
 
               g_object_unref (shell);
             }
           else
             {
-              gimp_image_window_destroy (window);
+              ligma_image_window_destroy (window);
             }
         }
       else
@@ -509,79 +509,79 @@ gimp_display_delete (GimpDisplay *display)
 }
 
 /**
- * gimp_display_close:
+ * ligma_display_close:
  * @display:
  *
  * Closes the display. If this is the last display, it will remain
  * open, but without an image.
  */
 void
-gimp_display_close (GimpDisplay *display)
+ligma_display_close (LigmaDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  if (gimp_container_get_n_children (display->gimp->displays) > 1)
+  if (ligma_container_get_n_children (display->ligma->displays) > 1)
     {
-      gimp_display_delete (display);
+      ligma_display_delete (display);
     }
   else
     {
-      gimp_display_empty (display);
+      ligma_display_empty (display);
     }
 }
 
 /**
- * gimp_display_get_action_name:
+ * ligma_display_get_action_name:
  * @display:
  *
  * Returns: The action name for the given display. The action name
  * depends on the display ID. The result must be freed with g_free().
  **/
 gchar *
-gimp_display_get_action_name (GimpDisplay *display)
+ligma_display_get_action_name (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
   return g_strdup_printf ("windows-display-%04d",
-                          gimp_display_get_id (display));
+                          ligma_display_get_id (display));
 }
 
-GimpImage *
-gimp_display_get_image (GimpDisplay *display)
+LigmaImage *
+ligma_display_get_image (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
-  return GIMP_DISPLAY_IMPL (display)->priv->image;
+  return LIGMA_DISPLAY_IMPL (display)->priv->image;
 }
 
 void
-gimp_display_set_image (GimpDisplay *display,
-                        GimpImage   *image)
+ligma_display_set_image (LigmaDisplay *display,
+                        LigmaImage   *image)
 {
-  GimpDisplayImplPrivate *private;
-  GimpImage              *old_image = NULL;
-  GimpDisplayShell       *shell;
+  LigmaDisplayImplPrivate *private;
+  LigmaImage              *old_image = NULL;
+  LigmaDisplayShell       *shell;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
-  shell = gimp_display_get_shell (display);
+  shell = ligma_display_get_shell (display);
 
   if (private->image)
     {
       /*  stop any active tool  */
-      tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
+      tool_manager_control_active (display->ligma, LIGMA_TOOL_ACTION_HALT,
                                    display);
 
-      gimp_display_shell_disconnect (shell);
+      ligma_display_shell_disconnect (shell);
 
-      gimp_display_disconnect (display);
+      ligma_display_disconnect (display);
 
       g_clear_pointer (&private->update_region, cairo_region_destroy);
 
-      gimp_image_dec_display_count (private->image);
+      ligma_image_dec_display_count (private->image);
 
       /*  set private->image before unrefing because there may be code
        *  that listens for image removals and then iterates the
@@ -606,31 +606,31 @@ gimp_display_set_image (GimpDisplay *display,
 
       g_object_ref (image);
 
-      private->instance = gimp_image_get_instance_count (image);
-      gimp_image_inc_instance_count (image);
+      private->instance = ligma_image_get_instance_count (image);
+      ligma_image_inc_instance_count (image);
 
-      gimp_image_inc_display_count (image);
+      ligma_image_inc_display_count (image);
 
-      gimp_display_connect (display);
+      ligma_display_connect (display);
 
       if (shell)
-        gimp_display_shell_connect (shell);
+        ligma_display_shell_connect (shell);
     }
 
   if (old_image)
     g_object_unref (old_image);
 
-  gimp_display_update_bounding_box (display);
+  ligma_display_update_bounding_box (display);
 
   if (shell)
     {
       if (image)
         {
-          gimp_display_shell_reconnect (shell);
+          ligma_display_shell_reconnect (shell);
         }
       else
         {
-          gimp_display_shell_title_update (shell);
+          ligma_display_shell_title_update (shell);
         }
     }
 
@@ -639,82 +639,82 @@ gimp_display_set_image (GimpDisplay *display,
 }
 
 gint
-gimp_display_get_instance (GimpDisplay *display)
+ligma_display_get_instance (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), 0);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), 0);
 
-  return GIMP_DISPLAY_IMPL (display)->priv->instance;
+  return LIGMA_DISPLAY_IMPL (display)->priv->instance;
 }
 
-GimpDisplayShell *
-gimp_display_get_shell (GimpDisplay *display)
+LigmaDisplayShell *
+ligma_display_get_shell (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
-  return GIMP_DISPLAY_SHELL (GIMP_DISPLAY_IMPL (display)->priv->shell);
+  return LIGMA_DISPLAY_SHELL (LIGMA_DISPLAY_IMPL (display)->priv->shell);
 }
 
 void
-gimp_display_empty (GimpDisplay *display)
+ligma_display_empty (LigmaDisplay *display)
 {
-  GimpDisplayImplPrivate *private;
+  LigmaDisplayImplPrivate *private;
   GList                 *iter;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
-  g_return_if_fail (GIMP_IS_IMAGE (private->image));
+  g_return_if_fail (LIGMA_IS_IMAGE (private->image));
 
-  for (iter = display->gimp->context_list; iter; iter = g_list_next (iter))
+  for (iter = display->ligma->context_list; iter; iter = g_list_next (iter))
     {
-      GimpContext *context = iter->data;
+      LigmaContext *context = iter->data;
 
-      if (gimp_context_get_display (context) == display)
-        gimp_context_set_image (context, NULL);
+      if (ligma_context_get_display (context) == display)
+        ligma_context_set_image (context, NULL);
     }
 
-  gimp_display_set_image (display, NULL);
+  ligma_display_set_image (display, NULL);
 
-  gimp_display_shell_empty (gimp_display_get_shell (display));
+  ligma_display_shell_empty (ligma_display_get_shell (display));
 }
 
 void
-gimp_display_fill (GimpDisplay *display,
-                   GimpImage   *image,
-                   GimpUnit     unit,
+ligma_display_fill (LigmaDisplay *display,
+                   LigmaImage   *image,
+                   LigmaUnit     unit,
                    gdouble      scale)
 {
-  GimpDisplayImplPrivate *private;
+  LigmaDisplayImplPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
   g_return_if_fail (private->image == NULL);
 
-  gimp_display_set_image (display, image);
+  ligma_display_set_image (display, image);
 
-  gimp_display_shell_fill (gimp_display_get_shell (display),
+  ligma_display_shell_fill (ligma_display_get_shell (display),
                            image, unit, scale);
 }
 
 void
-gimp_display_update_bounding_box (GimpDisplay *display)
+ligma_display_update_bounding_box (LigmaDisplay *display)
 {
-  GimpDisplayImplPrivate *private;
-  GimpDisplayShell       *shell;
+  LigmaDisplayImplPrivate *private;
+  LigmaDisplayShell       *shell;
   GeglRectangle           bounding_box = {};
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
-  shell   = gimp_display_get_shell (display);
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
+  shell   = ligma_display_get_shell (display);
 
   if (shell)
     {
-      bounding_box = gimp_display_shell_get_bounding_box (shell);
+      bounding_box = ligma_display_shell_get_bounding_box (shell);
 
       if (! gegl_rectangle_equal (&bounding_box, &private->bounding_box))
         {
@@ -728,15 +728,15 @@ gimp_display_update_bounding_box (GimpDisplay *display)
 
           for (i = 0; i < n_diff_rects; i++)
             {
-              gimp_display_paint_area (display,
+              ligma_display_paint_area (display,
                                        diff_rects[i].x,     diff_rects[i].y,
                                        diff_rects[i].width, diff_rects[i].height);
             }
 
           private->bounding_box = bounding_box;
 
-          gimp_display_shell_scroll_clamp_and_update (shell);
-          gimp_display_shell_scrollbars_update (shell);
+          ligma_display_shell_scroll_clamp_and_update (shell);
+          ligma_display_shell_scrollbars_update (shell);
         }
     }
   else
@@ -746,22 +746,22 @@ gimp_display_update_bounding_box (GimpDisplay *display)
 }
 
 void
-gimp_display_update_area (GimpDisplay *display,
+ligma_display_update_area (LigmaDisplay *display,
                           gboolean     now,
                           gint         x,
                           gint         y,
                           gint         w,
                           gint         h)
 {
-  GimpDisplayImplPrivate *private;
+  LigmaDisplayImplPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  private = GIMP_DISPLAY_IMPL (display)->priv;
+  private = LIGMA_DISPLAY_IMPL (display)->priv;
 
   if (now)
     {
-      gimp_display_paint_area (display, x, y, w, h);
+      ligma_display_paint_area (display, x, y, w, h);
     }
   else
     {
@@ -769,8 +769,8 @@ gimp_display_update_area (GimpDisplay *display,
       gint                  image_width;
       gint                  image_height;
 
-      image_width  = gimp_image_get_width  (private->image);
-      image_height = gimp_image_get_height (private->image);
+      image_width  = ligma_image_get_width  (private->image);
+      image_height = ligma_image_get_height (private->image);
 
       rect.x      = CLAMP (x,     0, image_width);
       rect.y      = CLAMP (y,     0, image_height);
@@ -785,37 +785,37 @@ gimp_display_update_area (GimpDisplay *display,
 }
 
 void
-gimp_display_flush (GimpDisplay *display)
+ligma_display_flush (LigmaDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
   /* FIXME: we can end up being called during shell construction if "show all"
    * is enabled by default, in which case the shell's display pointer is still
    * NULL
    */
-  if (gimp_display_get_shell (display))
+  if (ligma_display_get_shell (display))
     {
-      gimp_display_flush_update_region (display);
+      ligma_display_flush_update_region (display);
 
-      gimp_display_shell_flush (gimp_display_get_shell (display));
+      ligma_display_shell_flush (ligma_display_get_shell (display));
     }
 }
 
 void
-gimp_display_flush_now (GimpDisplay *display)
+ligma_display_flush_now (LigmaDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  gimp_display_flush_update_region (display);
+  ligma_display_flush_update_region (display);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_display_flush_update_region (GimpDisplay *display)
+ligma_display_flush_update_region (LigmaDisplay *display)
 {
-  GimpDisplayImplPrivate *private = GIMP_DISPLAY_IMPL (display)->priv;
+  LigmaDisplayImplPrivate *private = LIGMA_DISPLAY_IMPL (display)->priv;
 
   if (private->update_region)
     {
@@ -829,7 +829,7 @@ gimp_display_flush_update_region (GimpDisplay *display)
           cairo_region_get_rectangle (private->update_region,
                                       i, &rect);
 
-          gimp_display_paint_area (display,
+          ligma_display_paint_area (display,
                                    rect.x,
                                    rect.y,
                                    rect.width,
@@ -841,14 +841,14 @@ gimp_display_flush_update_region (GimpDisplay *display)
 }
 
 static void
-gimp_display_paint_area (GimpDisplay *display,
+ligma_display_paint_area (LigmaDisplay *display,
                          gint         x,
                          gint         y,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayImplPrivate *private = GIMP_DISPLAY_IMPL (display)->priv;
-  GimpDisplayShell       *shell   = gimp_display_get_shell (display);
+  LigmaDisplayImplPrivate *private = LIGMA_DISPLAY_IMPL (display)->priv;
+  LigmaDisplayShell       *shell   = ligma_display_get_shell (display);
   GeglRectangle           rect;
   gint                    x1, y1, x2, y2;
   gdouble                 x1_f, y1_f, x2_f, y2_f;
@@ -861,7 +861,7 @@ gimp_display_paint_area (GimpDisplay *display,
     }
 
   /*  display the area  */
-  gimp_display_shell_transform_bounds (shell,
+  ligma_display_shell_transform_bounds (shell,
                                        rect.x,
                                        rect.y,
                                        rect.x + rect.width,
@@ -887,7 +887,7 @@ gimp_display_paint_area (GimpDisplay *display,
   x2 = ceil  ((gdouble) x2 / PAINT_AREA_CHUNK_WIDTH)  * PAINT_AREA_CHUNK_WIDTH;
   y2 = ceil  ((gdouble) y2 / PAINT_AREA_CHUNK_HEIGHT) * PAINT_AREA_CHUNK_HEIGHT;
 
-  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
+  ligma_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
 
-  gimp_display_shell_render_invalidate_area (shell, x1, y1, x2 - x1, y2 - y1);
+  ligma_display_shell_render_invalidate_area (shell, x1, y1, x2 - x1, y2 - y1);
 }

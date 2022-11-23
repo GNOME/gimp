@@ -10,37 +10,37 @@
  * more information and how to use this.
  */
 
-#ifndef __GIMP_RELOC_H__
-#define __GIMP_RELOC_H__
+#ifndef __LIGMA_RELOC_H__
+#define __LIGMA_RELOC_H__
 
 G_BEGIN_DECLS
 
 
-/* These error codes can be returned from _gimp_reloc_init() or
- * _gimp_reloc_init_lib().
+/* These error codes can be returned from _ligma_reloc_init() or
+ * _ligma_reloc_init_lib().
  */
 
 typedef enum
 {
   /** Cannot allocate memory. */
-  GIMP_RELOC_INIT_ERROR_NOMEM,
+  LIGMA_RELOC_INIT_ERROR_NOMEM,
   /** Unable to open /proc/self/maps; see errno for details. */
-  GIMP_RELOC_INIT_ERROR_OPEN_MAPS,
+  LIGMA_RELOC_INIT_ERROR_OPEN_MAPS,
   /** Unable to read from /proc/self/maps; see errno for details. */
-  GIMP_RELOC_INIT_ERROR_READ_MAPS,
+  LIGMA_RELOC_INIT_ERROR_READ_MAPS,
   /** The file format of /proc/self/maps is invalid; kernel bug? */
-  GIMP_RELOC_INIT_ERROR_INVALID_MAPS,
+  LIGMA_RELOC_INIT_ERROR_INVALID_MAPS,
   /** BinReloc is disabled (the ENABLE_BINRELOC macro is not defined). */
-  GIMP_RELOC_INIT_ERROR_DISABLED
-} GimpBinrelocInitError;
+  LIGMA_RELOC_INIT_ERROR_DISABLED
+} LigmaBinrelocInitError;
 
 
-G_GNUC_INTERNAL gboolean _gimp_reloc_init        (GError **error);
-G_GNUC_INTERNAL gboolean _gimp_reloc_init_lib    (GError **error);
+G_GNUC_INTERNAL gboolean _ligma_reloc_init        (GError **error);
+G_GNUC_INTERNAL gboolean _ligma_reloc_init_lib    (GError **error);
 
-G_GNUC_INTERNAL gchar  * _gimp_reloc_find_prefix (const gchar *default_prefix);
+G_GNUC_INTERNAL gchar  * _ligma_reloc_find_prefix (const gchar *default_prefix);
 
 
 G_END_DECLS
 
-#endif /* _GIMPRELOC_H_ */
+#endif /* _LIGMARELOC_H_ */

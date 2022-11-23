@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptemporaryprocedure.c
+ * ligmatemporaryprocedure.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,135 +22,135 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpplugin.h"
-#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
-#include "gimppluginmanager-call.h"
-#include "gimptemporaryprocedure.h"
+#include "ligmaplugin.h"
+#define __YES_I_NEED_LIGMA_PLUG_IN_MANAGER_CALL__
+#include "ligmapluginmanager-call.h"
+#include "ligmatemporaryprocedure.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void             gimp_temporary_procedure_finalize (GObject        *object);
+static void             ligma_temporary_procedure_finalize (GObject        *object);
 
-static GimpValueArray * gimp_temporary_procedure_execute  (GimpProcedure  *procedure,
-                                                           Gimp           *gimp,
-                                                           GimpContext    *context,
-                                                           GimpProgress   *progress,
-                                                           GimpValueArray *args,
+static LigmaValueArray * ligma_temporary_procedure_execute  (LigmaProcedure  *procedure,
+                                                           Ligma           *ligma,
+                                                           LigmaContext    *context,
+                                                           LigmaProgress   *progress,
+                                                           LigmaValueArray *args,
                                                            GError        **error);
-static void        gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
-                                                           Gimp           *gimp,
-                                                           GimpContext    *context,
-                                                           GimpProgress   *progress,
-                                                           GimpValueArray *args,
-                                                           GimpDisplay    *display);
+static void        ligma_temporary_procedure_execute_async (LigmaProcedure  *procedure,
+                                                           Ligma           *ligma,
+                                                           LigmaContext    *context,
+                                                           LigmaProgress   *progress,
+                                                           LigmaValueArray *args,
+                                                           LigmaDisplay    *display);
 
-static GFile     * gimp_temporary_procedure_get_file      (GimpPlugInProcedure *procedure);
+static GFile     * ligma_temporary_procedure_get_file      (LigmaPlugInProcedure *procedure);
 
 
-G_DEFINE_TYPE (GimpTemporaryProcedure, gimp_temporary_procedure,
-               GIMP_TYPE_PLUG_IN_PROCEDURE)
+G_DEFINE_TYPE (LigmaTemporaryProcedure, ligma_temporary_procedure,
+               LIGMA_TYPE_PLUG_IN_PROCEDURE)
 
-#define parent_class gimp_temporary_procedure_parent_class
+#define parent_class ligma_temporary_procedure_parent_class
 
 
 static void
-gimp_temporary_procedure_class_init (GimpTemporaryProcedureClass *klass)
+ligma_temporary_procedure_class_init (LigmaTemporaryProcedureClass *klass)
 {
   GObjectClass             *object_class = G_OBJECT_CLASS (klass);
-  GimpProcedureClass       *proc_class   = GIMP_PROCEDURE_CLASS (klass);
-  GimpPlugInProcedureClass *plug_class   = GIMP_PLUG_IN_PROCEDURE_CLASS (klass);
+  LigmaProcedureClass       *proc_class   = LIGMA_PROCEDURE_CLASS (klass);
+  LigmaPlugInProcedureClass *plug_class   = LIGMA_PLUG_IN_PROCEDURE_CLASS (klass);
 
-  object_class->finalize    = gimp_temporary_procedure_finalize;
+  object_class->finalize    = ligma_temporary_procedure_finalize;
 
-  proc_class->execute       = gimp_temporary_procedure_execute;
-  proc_class->execute_async = gimp_temporary_procedure_execute_async;
+  proc_class->execute       = ligma_temporary_procedure_execute;
+  proc_class->execute_async = ligma_temporary_procedure_execute_async;
 
-  plug_class->get_file      = gimp_temporary_procedure_get_file;
+  plug_class->get_file      = ligma_temporary_procedure_get_file;
 }
 
 static void
-gimp_temporary_procedure_init (GimpTemporaryProcedure *proc)
+ligma_temporary_procedure_init (LigmaTemporaryProcedure *proc)
 {
-  GIMP_PROCEDURE (proc)->proc_type = GIMP_PDB_PROC_TYPE_TEMPORARY;
+  LIGMA_PROCEDURE (proc)->proc_type = LIGMA_PDB_PROC_TYPE_TEMPORARY;
 }
 
 static void
-gimp_temporary_procedure_finalize (GObject *object)
+ligma_temporary_procedure_finalize (GObject *object)
 {
-  /* GimpTemporaryProcedure *proc = GIMP_TEMPORARY_PROCEDURE (object); */
+  /* LigmaTemporaryProcedure *proc = LIGMA_TEMPORARY_PROCEDURE (object); */
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static GimpValueArray *
-gimp_temporary_procedure_execute (GimpProcedure   *procedure,
-                                  Gimp            *gimp,
-                                  GimpContext     *context,
-                                  GimpProgress    *progress,
-                                  GimpValueArray  *args,
+static LigmaValueArray *
+ligma_temporary_procedure_execute (LigmaProcedure   *procedure,
+                                  Ligma            *ligma,
+                                  LigmaContext     *context,
+                                  LigmaProgress    *progress,
+                                  LigmaValueArray  *args,
                                   GError         **error)
 {
-  return gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
+  return ligma_plug_in_manager_call_run_temp (ligma->plug_in_manager,
                                              context, progress,
-                                             GIMP_TEMPORARY_PROCEDURE (procedure),
+                                             LIGMA_TEMPORARY_PROCEDURE (procedure),
                                              args);
 }
 
 static void
-gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
-                                        Gimp           *gimp,
-                                        GimpContext    *context,
-                                        GimpProgress   *progress,
-                                        GimpValueArray *args,
-                                        GimpDisplay    *display)
+ligma_temporary_procedure_execute_async (LigmaProcedure  *procedure,
+                                        Ligma           *ligma,
+                                        LigmaContext    *context,
+                                        LigmaProgress   *progress,
+                                        LigmaValueArray *args,
+                                        LigmaDisplay    *display)
 {
-  GimpTemporaryProcedure *temp_procedure = GIMP_TEMPORARY_PROCEDURE (procedure);
-  GimpValueArray         *return_vals;
+  LigmaTemporaryProcedure *temp_procedure = LIGMA_TEMPORARY_PROCEDURE (procedure);
+  LigmaValueArray         *return_vals;
 
-  return_vals = gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
+  return_vals = ligma_plug_in_manager_call_run_temp (ligma->plug_in_manager,
                                                     context, progress,
                                                     temp_procedure,
                                                     args);
 
   if (return_vals)
     {
-      GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+      LigmaPlugInProcedure *proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
 
-      gimp_plug_in_procedure_handle_return_values (proc,
-                                                   gimp, progress,
+      ligma_plug_in_procedure_handle_return_values (proc,
+                                                   ligma, progress,
                                                    return_vals);
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
     }
 }
 
 static GFile *
-gimp_temporary_procedure_get_file (GimpPlugInProcedure *procedure)
+ligma_temporary_procedure_get_file (LigmaPlugInProcedure *procedure)
 {
-  return GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in->file;
+  return LIGMA_TEMPORARY_PROCEDURE (procedure)->plug_in->file;
 }
 
 
 /*  public functions  */
 
-GimpProcedure *
-gimp_temporary_procedure_new (GimpPlugIn *plug_in)
+LigmaProcedure *
+ligma_temporary_procedure_new (LigmaPlugIn *plug_in)
 {
-  GimpTemporaryProcedure *proc;
+  LigmaTemporaryProcedure *proc;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
-  proc = g_object_new (GIMP_TYPE_TEMPORARY_PROCEDURE, NULL);
+  proc = g_object_new (LIGMA_TYPE_TEMPORARY_PROCEDURE, NULL);
 
   proc->plug_in = plug_in;
 
-  GIMP_PLUG_IN_PROCEDURE (proc)->file = g_file_new_for_path ("none");
+  LIGMA_PLUG_IN_PROCEDURE (proc)->file = g_file_new_for_path ("none");
 
-  return GIMP_PROCEDURE (proc);
+  return LIGMA_PROCEDURE (proc);
 }

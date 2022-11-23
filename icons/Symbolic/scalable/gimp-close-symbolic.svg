@@ -15,7 +15,7 @@
    width="12.010503"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-close-symbolic.svg">
+   sodipodi:docname="ligma-close-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -170,8 +170,8 @@
   <g
      style="display:inline"
      transform="matrix(1.0008752,0,0,1,0,-1040.3622)"
-     id="gimp-close"
-     inkscape:label="gimp-close-12">
+     id="ligma-close"
+     inkscape:label="ligma-close-12">
     <rect
        y="1040.8237"
        x="0.46153846"

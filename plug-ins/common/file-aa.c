@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * ASCII.
  * NOTE: This plugin *requires* aalib 1.2 or later. Earlier versions will
  * not work.
- * Code copied from all over the GIMP source.
+ * Code copied from all over the LIGMA source.
  * Tim Newsome <nuisance@cmu.edu>
  */
 
@@ -31,10 +31,10 @@
 
 #include <aalib.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-aa-save"
@@ -46,12 +46,12 @@ typedef struct _AsciiClass AsciiClass;
 
 struct _Ascii
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _AsciiClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -60,40 +60,40 @@ struct _AsciiClass
 
 GType                   ascii_get_type         (void) G_GNUC_CONST;
 
-static GList          * ascii_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ascii_create_procedure (GimpPlugIn           *plug_in,
+static GList          * ascii_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * ascii_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * ascii_save             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * ascii_save             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
+                                                LigmaDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
 static gboolean         save_aa                (GFile                *file,
-                                                GimpDrawable         *drawable,
+                                                LigmaDrawable         *drawable,
                                                 GObject              *config,
                                                 GError              **error);
-static void             gimp2aa                (GimpDrawable         *drawable,
+static void             ligma2aa                (LigmaDrawable         *drawable,
                                                 aa_context           *context);
 
-static gboolean         save_dialog            (GimpProcedure        *procedure,
+static gboolean         save_dialog            (LigmaProcedure        *procedure,
                                                 GObject              *config);
 
 
-G_DEFINE_TYPE (Ascii, ascii, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Ascii, ascii, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (ASCII_TYPE)
+LIGMA_MAIN (ASCII_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 ascii_class_init (AsciiClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = ascii_query_procedures;
   plug_in_class->create_procedure = ascii_create_procedure;
@@ -106,49 +106,49 @@ ascii_init (Ascii *ascii)
 }
 
 static GList *
-ascii_query_procedures (GimpPlugIn *plug_in)
+ascii_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-ascii_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+ascii_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
       gint i;
 
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ascii_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("ASCII art"));
+      ligma_procedure_set_menu_label (procedure, _("ASCII art"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves grayscale image in various "
                                         "text formats",
                                         "This plug-in uses aalib to save "
                                         "grayscale image as ascii art into "
                                         "a variety of text formats",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tim Newsome <nuisance@cmu.edu>",
                                       "Tim Newsome <nuisance@cmu.edu>",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "text/plain");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "txt,ansi,text");
 
       for (i = 0; aa_formats[i]; i++);
 
-      GIMP_PROC_ARG_INT (procedure, "file-type",
+      LIGMA_PROC_ARG_INT (procedure, "file-type",
                          "File type",
                          "File type to use",
                          0, i, 0,
@@ -158,41 +158,41 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-ascii_save (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
+static LigmaValueArray *
+ascii_save (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
+            LigmaImage            *image,
             gint                  n_drawables,
-            GimpDrawable        **drawables,
+            LigmaDrawable        **drawables,
             GFile                *file,
-            const GimpValueArray *args,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "AA",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "AA",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -205,40 +205,40 @@ ascii_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("ASCII art does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_aa (file, drawables[0], G_OBJECT (config), &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
 save_aa (GFile         *file,
-         GimpDrawable  *drawable,
+         LigmaDrawable  *drawable,
          GObject       *config,
          GError       **error)
 {
@@ -253,8 +253,8 @@ save_aa (GFile         *file,
 
   memcpy (&format, aa_formats[output_type], sizeof (aa_format));
 
-  format.width  = gimp_drawable_get_width  (drawable) / 2;
-  format.height = gimp_drawable_get_height (drawable) / 2;
+  format.width  = ligma_drawable_get_width  (drawable) / 2;
+  format.height = ligma_drawable_get_height (drawable) / 2;
 
   /* Get a libaa context which will save its output to filename. */
   savedata.name   = g_file_get_path (file);
@@ -264,7 +264,7 @@ save_aa (GFile         *file,
   if (! context)
     return FALSE;
 
-  gimp2aa (drawable, context);
+  ligma2aa (drawable, context);
 
   aa_flush (context);
   aa_close (context);
@@ -273,7 +273,7 @@ save_aa (GFile         *file,
 }
 
 static void
-gimp2aa (GimpDrawable *drawable,
+ligma2aa (LigmaDrawable *drawable,
          aa_context   *context)
 {
   GeglBuffer      *buffer;
@@ -286,28 +286,28 @@ gimp2aa (GimpDrawable *drawable,
   guchar          *buf;
   guchar          *p;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = aa_imgwidth  (context);
   height = aa_imgheight (context);
 
-  switch (gimp_drawable_type (drawable))
+  switch (ligma_drawable_type (drawable))
     {
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
-    case GIMP_RGB_IMAGE:
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_RGB_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_RGBA_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       break;
 
@@ -341,13 +341,13 @@ gimp2aa (GimpDrawable *drawable,
         case 3:  /* RGB */
           for (x = 0, p = buf; x < width; x++, p += 3)
             aa_putpixel (context, x, y,
-                         GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5);
+                         LIGMA_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5);
           break;
 
         case 4:  /* RGBA, blend over black */
           for (x = 0, p = buf; x < width; x++, p += 4)
             aa_putpixel (context, x, y,
-                         ((guchar) (GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5)
+                         ((guchar) (LIGMA_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5)
                           * (p[3] + 1)) >> 8);
           break;
 
@@ -369,7 +369,7 @@ gimp2aa (GimpDrawable *drawable,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
@@ -380,13 +380,13 @@ save_dialog (GimpProcedure *procedure,
   gint          i;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as Text"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -394,21 +394,21 @@ save_dialog (GimpProcedure *procedure,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+  store = g_object_new (LIGMA_TYPE_INT_STORE, NULL);
 
   for (i = 0; aa_formats[i]; i++)
     gtk_list_store_insert_with_values (store, NULL, -1,
-                                       GIMP_INT_STORE_VALUE, i,
-                                       GIMP_INT_STORE_LABEL, aa_formats[i]->formatname,
+                                       LIGMA_INT_STORE_VALUE, i,
+                                       LIGMA_INT_STORE_LABEL, aa_formats[i]->formatname,
                                        -1);
 
-  combo = gimp_prop_int_combo_box_new (config, "file-type",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "file-type",
+                                       LIGMA_INT_STORE (store));
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

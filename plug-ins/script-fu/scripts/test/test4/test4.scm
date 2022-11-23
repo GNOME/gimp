@@ -1,4 +1,4 @@
-#!/usr/bin/env gimp-script-fu-interpreter-3.0
+#!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 ; Test a .scm file that does not call script-fu-menu-register
 ; The menu will NOT default.
@@ -10,12 +10,12 @@
 ;    Executable, in its own directory: plug-ins/test1/test4.scm is executable
 
 (define (script-fu-test4)
-  (gimp-message "Hello script-fu-test4")
+  (ligma-message "Hello script-fu-test4")
 )
 
 (script-fu-register "script-fu-test4"
   "Test SF interpreter 4"
-  "Just gives a message from Gimp"
+  "Just gives a message from Ligma"
   "lkk"
   "lkk"
   "2022"

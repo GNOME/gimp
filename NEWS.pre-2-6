@@ -3,11 +3,11 @@
                          Development Branch
                    ------------------------------
 
-This is the unstable development branch of GIMP.  Here we are working
-towards the next stable release, which will be GIMP 2.6.
+This is the unstable development branch of LIGMA.  Here we are working
+towards the next stable release, which will be LIGMA 2.6.
 
 
-Changes in GIMP 2.6.0
+Changes in LIGMA 2.6.0
 =====================
 
  - further improved error reporting and parameter checks for some procedures
@@ -29,7 +29,7 @@ Contributors:
 
 
 
-Changes in GIMP 2.5.4
+Changes in LIGMA 2.5.4
 =====================
 
  - improved look and feel of the Navigation dialog and navigation popups
@@ -38,8 +38,8 @@ Changes in GIMP 2.5.4
  - moved the "Use GEGL" checkbox to the Debug menu
  - optimized the new scaling code
  - various fixes to the Python bindings
- - added Python bindings for most GIMP widgets to the gimpui module
- - merged GimpHRuler and GimpVRuler classes into GimpRuler
+ - added Python bindings for most LIGMA widgets to the ligmaui module
+ - merged LigmaHRuler and LigmaVRuler classes into LigmaRuler
  - added Search entry to the Keyboard Shortcuts and Input Controller
    configuration dialogs
  - allow to drop images (in addition to URIs) on the empty image window
@@ -56,7 +56,7 @@ Contributors:
 
 
  
-Changes in GIMP 2.5.3
+Changes in LIGMA 2.5.3
 =====================
 
  - some fixes for the 64-bit Windows platform
@@ -70,10 +70,10 @@ Changes in GIMP 2.5.3
  - added "Paste as new layer" to Edit menu
  - added "New from visible" to the Layer menu allowing to create a new
    layer from the image projection
- - added new procedure	'gimp-layer-new-from-visible'.
+ - added new procedure	'ligma-layer-new-from-visible'.
  - renamed all file plug-in executables to a have a file prefix
  - changed the HSV color selector to use the GtkHSV widget
- - changed the default for the 'trust-dirty-flag' gimprc property
+ - changed the default for the 'trust-dirty-flag' ligmarc property
  - dropped the "Starburst" logo script
  - improved the behavior of the zoom button in the upper right corner of
    the image window
@@ -93,7 +93,7 @@ Contributors:
 
 
 
-Changes in GIMP 2.5.2
+Changes in LIGMA 2.5.2
 =====================
 
  - final touches on the combined Freehand/Polygon Select tool
@@ -103,11 +103,11 @@ Changes in GIMP 2.5.2
  - mark the center of rectangles/bounding rectangles during moves
  - added dialog to query for using the online user manual
  - allow to map dynamics to hardness for the Eraser tool
- - provide gimp-remote functionality on Windows
- - disable the build and install of the gimp-remote tool by default
+ - provide ligma-remote functionality on Windows
+ - disable the build and install of the ligma-remote tool by default
  - allow to scroll beyond the image borders
  - added new PDB data type for transferring color arrays
- - added new PDB function gimp-palette-get-colors
+ - added new PDB function ligma-palette-get-colors
  - added text search to the Help Browser plug-in
  - bug fixes and code cleanup
 
@@ -119,7 +119,7 @@ Contributors:
   Jakub Steiner
 
 
-Changes in GIMP 2.5.1
+Changes in LIGMA 2.5.1
 =====================
 
  - further improvements to the status bar
@@ -146,7 +146,7 @@ Changes in GIMP 2.5.1
  - allow to lock dockables
  - made Desaturate into a tool with preview in the image window
  - ported translation contexts to msgctxt
- - added GimpRuler widgets, an improved version of GtkRuler
+ - added LigmaRuler widgets, an improved version of GtkRuler
  - moving the selection mask now commits a pending rectangle selection
  - added keyboard shortcut for resetting the brush scale (Backslash)
  - ported the Help Browser plug-in to WebKit
@@ -163,7 +163,7 @@ Contributors:
 
 
 
-Changes in GIMP 2.5.0
+Changes in LIGMA 2.5.0
 =====================
 
 Core:
@@ -173,7 +173,7 @@ Core:
  - optimized image rendering by using pre-multiplied alpha
  - use new GLib features such as GRegex
  - use new GTK+ features such as the new GtkTooltip API
- - much improved GimpCurve object
+ - much improved LigmaCurve object
  - cleaner and smaller tool options
  - enable brush scaling for the Smudge tool
  - added debugging framework that can be enabled at run-time
@@ -227,7 +227,7 @@ Script-Fu:
 PDB:
 
  - added new text layer API
- - added gimp-vectors-export-to-file and gimp-vectors-export-to-string
+ - added ligma-vectors-export-to-file and ligma-vectors-export-to-string
  - added procedure to test for existence of a procedure in the PDB
  - improved error handling for procedures
 
@@ -236,14 +236,14 @@ Libraries:
 
  - added some Cairo utilities
  - allow to use markup in tooltips
- - libgimpthumb doesn't any longer depend on other GIMP libraries
+ - libligmathumb doesn't any longer depend on other LIGMA libraries
 
 
 Miscellaneous:
 
- - use the gimptool program on Unix, too, instead of the gimptool script
+ - use the ligmatool program on Unix, too, instead of the ligmatool script
  - create the list of supported MIME types at compile-time
- - gimp shows library versions when called with '--version --verbose'
+ - ligma shows library versions when called with '--version --verbose'
 
 
 Contributors:

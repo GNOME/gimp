@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Destripe filter
@@ -25,15 +25,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC    "plug-in-destripe"
 #define PLUG_IN_BINARY  "destripe"
-#define PLUG_IN_ROLE    "gimp-destripe"
+#define PLUG_IN_ROLE    "ligma-destripe"
 #define PLUG_IN_VERSION "0.2"
 #define MAX_AVG         100
 
@@ -51,12 +51,12 @@ typedef struct _DestripeClass DestripeClass;
 
 struct _Destripe
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _DestripeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -65,31 +65,31 @@ struct _DestripeClass
 
 GType                   destripe_get_type         (void) G_GNUC_CONST;
 
-static GList          * destripe_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * destripe_create_procedure (GimpPlugIn           *plug_in,
+static GList          * destripe_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * destripe_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * destripe_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * destripe_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static void             destripe                  (GimpDrawable         *drawable,
-                                                   GimpPreview          *preview);
-static void             destripe_preview          (GimpDrawable         *drawable,
-                                                   GimpPreview          *preview);
+static void             destripe                  (LigmaDrawable         *drawable,
+                                                   LigmaPreview          *preview);
+static void             destripe_preview          (LigmaDrawable         *drawable,
+                                                   LigmaPreview          *preview);
 
-static gboolean         destripe_dialog           (GimpDrawable         *drawable);
-static void       destripe_scale_entry_update_int (GimpLabelSpin        *entry,
+static gboolean         destripe_dialog           (LigmaDrawable         *drawable);
+static void       destripe_scale_entry_update_int (LigmaLabelSpin        *entry,
                                                    gint                 *value);
 
 
-G_DEFINE_TYPE (Destripe, destripe, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Destripe, destripe, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DESTRIPE_TYPE)
+LIGMA_MAIN (DESTRIPE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -104,7 +104,7 @@ static DestripeValues vals =
 static void
 destripe_class_init (DestripeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = destripe_query_procedures;
   plug_in_class->create_procedure = destripe_create_procedure;
@@ -117,42 +117,42 @@ destripe_init (Destripe *destripe)
 }
 
 static GList *
-destripe_query_procedures (GimpPlugIn *plug_in)
+destripe_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-destripe_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+destripe_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             destripe_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("Des_tripe..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Tone Mapping");
+      ligma_procedure_set_menu_label (procedure, _("Des_tripe..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Tone Mapping");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Remove vertical stripe artifacts "
                                           "from the image"),
                                         "This plug-in tries to remove vertical "
                                         "stripes from an image.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Marc Lehmann <pcg@goof.com>",
                                       "Marc Lehmann <pcg@goof.com>",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_INT (procedure, "avg-width",
+      LIGMA_PROC_ARG_INT (procedure, "avg-width",
                          "Avg width",
                          "Averaging filter width",
                          2, MAX_AVG, 36,
@@ -162,16 +162,16 @@ destripe_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-destripe_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+destripe_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -179,12 +179,12 @@ destripe_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -194,50 +194,50 @@ destripe_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &vals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &vals);
 
       if (! destripe_dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      vals.avg_width = GIMP_VALUES_GET_INT (args, 0);
+    case LIGMA_RUN_NONINTERACTIVE:
+      vals.avg_width = LIGMA_VALUES_GET_INT (args, 0);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS :
-      gimp_get_data (PLUG_IN_PROC, &vals);
+    case LIGMA_RUN_WITH_LAST_VALS :
+      ligma_get_data (PLUG_IN_PROC, &vals);
       break;
     };
 
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb  (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
       destripe (drawable, NULL);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
-destripe (GimpDrawable *drawable,
-          GimpPreview *preview)
+destripe (LigmaDrawable *drawable,
+          LigmaPreview *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -248,7 +248,7 @@ destripe (GimpDrawable *drawable,
   gint        width, height;
   gint        bpp;
   glong      *hist, *corr;        /* "histogram" data */
-  gint        tile_width = gimp_tile_width ();
+  gint        tile_width = ligma_tile_width ();
   gint        i, x, y, ox, cols;
 
   progress     = 0.0;
@@ -256,14 +256,14 @@ destripe (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
+      ligma_preview_get_position (preview, &x1, &y1);
+      ligma_preview_get_size (preview, &width, &height);
     }
   else
     {
-      gimp_progress_init (_("Destriping"));
+      ligma_progress_init (_("Destriping"));
 
-      if (! gimp_drawable_mask_intersect (drawable,
+      if (! ligma_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         {
           return;
@@ -275,16 +275,16 @@ destripe (GimpDrawable *drawable,
 
   x2 = x1 + width;
 
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -296,8 +296,8 @@ destripe (GimpDrawable *drawable,
    * Setup for filter...
    */
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   hist = g_new (long, width * bpp);
   corr = g_new (long, width * bpp);
@@ -331,7 +331,7 @@ destripe (GimpDrawable *drawable,
         }
 
       if (! preview)
-        gimp_progress_update (progress += progress_inc);
+        ligma_progress_update (progress += progress_inc);
     }
 
   /*
@@ -391,7 +391,7 @@ destripe (GimpDrawable *drawable,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (! preview)
-        gimp_progress_update (progress += progress_inc);
+        ligma_progress_update (progress += progress_inc);
 
       for (y = 0; y < height; y++)
         {
@@ -421,7 +421,7 @@ destripe (GimpDrawable *drawable,
                        GEGL_AUTO_ROWSTRIDE);
 
       if (! preview)
-        gimp_progress_update (progress += progress_inc);
+        ligma_progress_update (progress += progress_inc);
     }
 
   g_free (src_rows);
@@ -436,7 +436,7 @@ destripe (GimpDrawable *drawable,
                        format, buffer,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
+      ligma_preview_draw_buffer (LIGMA_PREVIEW (preview),
                                 buffer, width * bpp);
 
       g_free (buffer);
@@ -446,10 +446,10 @@ destripe (GimpDrawable *drawable,
     {
       g_object_unref (dest_buffer);
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable,
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable,
                             x1, y1, width, height);
     }
 
@@ -458,15 +458,15 @@ destripe (GimpDrawable *drawable,
 }
 
 static void
-destripe_preview (GimpDrawable *drawable,
-                  GimpPreview *preview)
+destripe_preview (LigmaDrawable *drawable,
+                  LigmaPreview *preview)
 {
   destripe (drawable, preview);
 }
 
 
 static gboolean
-destripe_dialog (GimpDrawable *drawable)
+destripe_dialog (LigmaDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -475,23 +475,23 @@ destripe_dialog (GimpDrawable *drawable)
   GtkWidget     *button;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Destripe"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Destripe"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -499,7 +499,7 @@ destripe_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -507,12 +507,12 @@ destripe_dialog (GimpDrawable *drawable)
                             G_CALLBACK (destripe_preview),
                             drawable);
 
-  scale = gimp_scale_entry_new (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
+  scale = ligma_scale_entry_new (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (destripe_scale_entry_update_int),
                     &vals.avg_width);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
   gtk_widget_show (scale);
@@ -523,15 +523,15 @@ destripe_dialog (GimpDrawable *drawable)
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &vals.histogram);
   g_signal_connect_swapped (button, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -539,8 +539,8 @@ destripe_dialog (GimpDrawable *drawable)
 }
 
 static void
-destripe_scale_entry_update_int (GimpLabelSpin *entry,
+destripe_scale_entry_update_int (LigmaLabelSpin *entry,
                                  gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }

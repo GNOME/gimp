@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationpassthrough.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationpassthrough.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,36 +19,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_PASS_THROUGH_H__
-#define __GIMP_OPERATION_PASS_THROUGH_H__
+#ifndef __LIGMA_OPERATION_PASS_THROUGH_H__
+#define __LIGMA_OPERATION_PASS_THROUGH_H__
 
 
-#include "gimpoperationreplace.h"
+#include "ligmaoperationreplace.h"
 
 
-#define GIMP_TYPE_OPERATION_PASS_THROUGH            (gimp_operation_pass_through_get_type ())
-#define GIMP_OPERATION_PASS_THROUGH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_PASS_THROUGH, GimpOperationPassThrough))
-#define GIMP_OPERATION_PASS_THROUGH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_PASS_THROUGH, GimpOperationPassThroughClass))
-#define GIMP_IS_OPERATION_PASS_THROUGH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_PASS_THROUGH))
-#define GIMP_IS_OPERATION_PASS_THROUGH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_PASS_THROUGH))
-#define GIMP_OPERATION_PASS_THROUGH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_PASS_THROUGH, GimpOperationPassThroughClass))
+#define LIGMA_TYPE_OPERATION_PASS_THROUGH            (ligma_operation_pass_through_get_type ())
+#define LIGMA_OPERATION_PASS_THROUGH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_PASS_THROUGH, LigmaOperationPassThrough))
+#define LIGMA_OPERATION_PASS_THROUGH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_PASS_THROUGH, LigmaOperationPassThroughClass))
+#define LIGMA_IS_OPERATION_PASS_THROUGH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_PASS_THROUGH))
+#define LIGMA_IS_OPERATION_PASS_THROUGH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_PASS_THROUGH))
+#define LIGMA_OPERATION_PASS_THROUGH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_PASS_THROUGH, LigmaOperationPassThroughClass))
 
 
-typedef struct _GimpOperationPassThrough      GimpOperationPassThrough;
-typedef struct _GimpOperationPassThroughClass GimpOperationPassThroughClass;
+typedef struct _LigmaOperationPassThrough      LigmaOperationPassThrough;
+typedef struct _LigmaOperationPassThroughClass LigmaOperationPassThroughClass;
 
-struct _GimpOperationPassThrough
+struct _LigmaOperationPassThrough
 {
-  GimpOperationReplace parent_instance;
+  LigmaOperationReplace parent_instance;
 };
 
-struct _GimpOperationPassThroughClass
+struct _LigmaOperationPassThroughClass
 {
-  GimpOperationReplaceClass parent_class;
+  LigmaOperationReplaceClass parent_class;
 };
 
 
-GType   gimp_operation_pass_through_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_pass_through_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_PASS_THROUGH_H__ */
+#endif /* __LIGMA_OPERATION_PASS_THROUGH_H__ */

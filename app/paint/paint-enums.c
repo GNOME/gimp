@@ -1,28 +1,28 @@
 
-/* Generated data (by gimp-mkenums) */
+/* Generated data (by ligma-mkenums) */
 
 #include "stamp-paint-enums.h"
 #include "config.h"
 #include <gio/gio.h>
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 #include "paint-enums.h"
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 /* enumerations from "paint-enums.h" */
 GType
-gimp_brush_application_mode_get_type (void)
+ligma_brush_application_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_BRUSH_HARD, "GIMP_BRUSH_HARD", "hard" },
-    { GIMP_BRUSH_SOFT, "GIMP_BRUSH_SOFT", "soft" },
+    { LIGMA_BRUSH_HARD, "LIGMA_BRUSH_HARD", "hard" },
+    { LIGMA_BRUSH_SOFT, "LIGMA_BRUSH_SOFT", "soft" },
     { 0, NULL, NULL }
   };
 
-  static const GimpEnumDesc descs[] =
+  static const LigmaEnumDesc descs[] =
   {
-    { GIMP_BRUSH_HARD, "GIMP_BRUSH_HARD", NULL },
-    { GIMP_BRUSH_SOFT, "GIMP_BRUSH_SOFT", NULL },
+    { LIGMA_BRUSH_HARD, "LIGMA_BRUSH_HARD", NULL },
+    { LIGMA_BRUSH_SOFT, "LIGMA_BRUSH_SOFT", NULL },
     { 0, NULL, NULL }
   };
 
@@ -30,28 +30,28 @@ gimp_brush_application_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpBrushApplicationMode", values);
-      gimp_type_set_translation_context (type, "brush-application-mode");
-      gimp_enum_set_value_descriptions (type, descs);
+      type = g_enum_register_static ("LigmaBrushApplicationMode", values);
+      ligma_type_set_translation_context (type, "brush-application-mode");
+      ligma_enum_set_value_descriptions (type, descs);
     }
 
   return type;
 }
 
 GType
-gimp_perspective_clone_mode_get_type (void)
+ligma_perspective_clone_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, "GIMP_PERSPECTIVE_CLONE_MODE_ADJUST", "adjust" },
-    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, "GIMP_PERSPECTIVE_CLONE_MODE_PAINT", "paint" },
+    { LIGMA_PERSPECTIVE_CLONE_MODE_ADJUST, "LIGMA_PERSPECTIVE_CLONE_MODE_ADJUST", "adjust" },
+    { LIGMA_PERSPECTIVE_CLONE_MODE_PAINT, "LIGMA_PERSPECTIVE_CLONE_MODE_PAINT", "paint" },
     { 0, NULL, NULL }
   };
 
-  static const GimpEnumDesc descs[] =
+  static const LigmaEnumDesc descs[] =
   {
-    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, NC_("perspective-clone-mode", "Modify Perspective"), NULL },
-    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, NC_("perspective-clone-mode", "Perspective Clone"), NULL },
+    { LIGMA_PERSPECTIVE_CLONE_MODE_ADJUST, NC_("perspective-clone-mode", "Modify Perspective"), NULL },
+    { LIGMA_PERSPECTIVE_CLONE_MODE_PAINT, NC_("perspective-clone-mode", "Perspective Clone"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -59,32 +59,32 @@ gimp_perspective_clone_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpPerspectiveCloneMode", values);
-      gimp_type_set_translation_context (type, "perspective-clone-mode");
-      gimp_enum_set_value_descriptions (type, descs);
+      type = g_enum_register_static ("LigmaPerspectiveCloneMode", values);
+      ligma_type_set_translation_context (type, "perspective-clone-mode");
+      ligma_enum_set_value_descriptions (type, descs);
     }
 
   return type;
 }
 
 GType
-gimp_source_align_mode_get_type (void)
+ligma_source_align_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_SOURCE_ALIGN_NO, "GIMP_SOURCE_ALIGN_NO", "no" },
-    { GIMP_SOURCE_ALIGN_YES, "GIMP_SOURCE_ALIGN_YES", "yes" },
-    { GIMP_SOURCE_ALIGN_REGISTERED, "GIMP_SOURCE_ALIGN_REGISTERED", "registered" },
-    { GIMP_SOURCE_ALIGN_FIXED, "GIMP_SOURCE_ALIGN_FIXED", "fixed" },
+    { LIGMA_SOURCE_ALIGN_NO, "LIGMA_SOURCE_ALIGN_NO", "no" },
+    { LIGMA_SOURCE_ALIGN_YES, "LIGMA_SOURCE_ALIGN_YES", "yes" },
+    { LIGMA_SOURCE_ALIGN_REGISTERED, "LIGMA_SOURCE_ALIGN_REGISTERED", "registered" },
+    { LIGMA_SOURCE_ALIGN_FIXED, "LIGMA_SOURCE_ALIGN_FIXED", "fixed" },
     { 0, NULL, NULL }
   };
 
-  static const GimpEnumDesc descs[] =
+  static const LigmaEnumDesc descs[] =
   {
-    { GIMP_SOURCE_ALIGN_NO, NC_("source-align-mode", "None"), NULL },
-    { GIMP_SOURCE_ALIGN_YES, NC_("source-align-mode", "Aligned"), NULL },
-    { GIMP_SOURCE_ALIGN_REGISTERED, NC_("source-align-mode", "Registered"), NULL },
-    { GIMP_SOURCE_ALIGN_FIXED, NC_("source-align-mode", "Fixed"), NULL },
+    { LIGMA_SOURCE_ALIGN_NO, NC_("source-align-mode", "None"), NULL },
+    { LIGMA_SOURCE_ALIGN_YES, NC_("source-align-mode", "Aligned"), NULL },
+    { LIGMA_SOURCE_ALIGN_REGISTERED, NC_("source-align-mode", "Registered"), NULL },
+    { LIGMA_SOURCE_ALIGN_FIXED, NC_("source-align-mode", "Fixed"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -92,9 +92,9 @@ gimp_source_align_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpSourceAlignMode", values);
-      gimp_type_set_translation_context (type, "source-align-mode");
-      gimp_enum_set_value_descriptions (type, descs);
+      type = g_enum_register_static ("LigmaSourceAlignMode", values);
+      ligma_type_set_translation_context (type, "source-align-mode");
+      ligma_enum_set_value_descriptions (type, descs);
     }
 
   return type;

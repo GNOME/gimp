@@ -1,6 +1,6 @@
-# translation of gimp-libgimp to Kinyarwanda.
+# translation of ligma-libligma to Kinyarwanda.
 # Copyright (C) 2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp-libgimp package.
+# This file is distributed under the same license as the ligma-libligma package.
 # Steve Murphy <murf@e-tools.com>, 2005
 # Steve performed initial rough translation from compendium built from translations provided by the following translators:
 # Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
@@ -13,8 +13,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2005-04-01 13:03-0700\n"
 "PO-Revision-Date: 2005-03-31 20:55-0700\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
@@ -24,135 +24,135 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:140
+#: libligma/ligmabrushmenu.c:140
 msgid "Brush Selection"
 msgstr ""
 
-#: libgimp/gimpbrushmenu.c:180 libgimp/gimppatternmenu.c:165
+#: libligma/ligmabrushmenu.c:180 libligma/ligmapatternmenu.c:165
 #, fuzzy
 msgid "_Browse..."
 msgstr "Gushakisha..."
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
+#: libligma/ligmaexport.c:215 libligma/ligmaexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr ""
 
-#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
+#: libligma/ligmaexport.c:216 libligma/ligmaexport.c:225 libligma/ligmaexport.c:234
 msgid "Merge Visible Layers"
 msgstr ""
 
-#: libgimp/gimpexport.c:224
+#: libligma/ligmaexport.c:224
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%sAkugara Ingano Cyangwa"
 
-#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
+#: libligma/ligmaexport.c:233 libligma/ligmaexport.c:242
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%sNka Iyega Amakadiri"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: libligma/ligmaexport.c:234 libligma/ligmaexport.c:243
 #, fuzzy
 msgid "Save as Animation"
 msgstr "Kubika Nka"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
+#: libligma/ligmaexport.c:243 libligma/ligmaexport.c:252 libligma/ligmaexport.c:261
 msgid "Flatten Image"
 msgstr ""
 
-#: libgimp/gimpexport.c:260
+#: libligma/ligmaexport.c:260
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
 msgstr "%sIbonerana"
 
-#: libgimp/gimpexport.c:269
+#: libligma/ligmaexport.c:269
 #, fuzzy, c-format
 msgid "%s can't handle layer masks"
 msgstr "%sAkugara"
 
-#: libgimp/gimpexport.c:270
+#: libligma/ligmaexport.c:270
 msgid "Apply Layer Masks"
 msgstr ""
 
-#: libgimp/gimpexport.c:278
+#: libligma/ligmaexport.c:278
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
 msgstr "%sIshusho"
 
-#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
+#: libligma/ligmaexport.c:279 libligma/ligmaexport.c:317 libligma/ligmaexport.c:326
 #, fuzzy
 msgid "Convert to RGB"
 msgstr "Kuri"
 
-#: libgimp/gimpexport.c:287
+#: libligma/ligmaexport.c:287
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%sIngano y'ubwijime Ishusho"
 
-#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
+#: libligma/ligmaexport.c:288 libligma/ligmaexport.c:317 libligma/ligmaexport.c:338
 #, fuzzy
 msgid "Convert to Grayscale"
 msgstr "Kuri"
 
-#: libgimp/gimpexport.c:296
+#: libligma/ligmaexport.c:296
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
 msgstr "%sIshusho"
 
-#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
+#: libligma/ligmaexport.c:297 libligma/ligmaexport.c:326 libligma/ligmaexport.c:336
 #, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr "Kuri ikoresha Mburabuzi Kuri i Igisubizo"
 
-#: libgimp/gimpexport.c:306
+#: libligma/ligmaexport.c:306
 #, fuzzy, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr "%sBitimapu Ibara Ishusho"
 
-#: libgimp/gimpexport.c:307
+#: libligma/ligmaexport.c:307
 #, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr "Kuri ikoresha Bitimapu Mburabuzi Kuri i Igisubizo"
 
-#: libgimp/gimpexport.c:316
+#: libligma/ligmaexport.c:316
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%sCyangwa Ingano y'ubwijime Ishusho"
 
-#: libgimp/gimpexport.c:325
+#: libligma/ligmaexport.c:325
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%sCyangwa Ishusho"
 
-#: libgimp/gimpexport.c:335
+#: libligma/ligmaexport.c:335
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%sIngano y'ubwijime Cyangwa Ishusho"
 
-#: libgimp/gimpexport.c:346
+#: libligma/ligmaexport.c:346
 #, fuzzy, c-format
 msgid "%s needs an alpha channel"
 msgstr "%sAlufa"
 
-#: libgimp/gimpexport.c:347
+#: libligma/ligmaexport.c:347
 msgid "Add Alpha Channel"
 msgstr ""
 
-#: libgimp/gimpexport.c:381
+#: libligma/ligmaexport.c:381
 #, fuzzy
 msgid "Confirm Save"
 msgstr "Kubika"
 
-#: libgimp/gimpexport.c:387
+#: libligma/ligmaexport.c:387
 msgid "Confirm"
 msgstr "Emeza"
 
-#: libgimp/gimpexport.c:459
+#: libligma/ligmaexport.c:459
 #, fuzzy
 msgid "Export File"
 msgstr "Idosiye"
@@ -161,20 +161,20 @@ msgstr "Idosiye"
 # setup2/source\ui\dialog\dialog.src:DLG_INSERTDISKDLG.2.text
 # #-#-#-#-#  setup2.pot (PACKAGE VERSION)  #-#-#-#-#
 # setup2/source\ui\dialog\querydlg.src:RID_EXECERROR_DLG.BTN_QUERY_IGNORE.text
-#: libgimp/gimpexport.c:463
+#: libligma/ligmaexport.c:463
 #, fuzzy
 msgid "_Ignore"
 msgstr "Kwirengagiza"
 
 # filter/source\pdf\impdialog.src:RID_PDF_EXPORT_DLG.BT_OK.text
 # filter/source\xsltdialog\xmlfiltertestdialog.src:DLG_XML_FILTER_TEST_DIALOG.FL_EXPORT.text
-#: libgimp/gimpexport.c:465
+#: libligma/ligmaexport.c:465
 #, fuzzy
 msgid "_Export"
 msgstr "Kohereza"
 
 #. the headline
-#: libgimp/gimpexport.c:493
+#: libligma/ligmaexport.c:493
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -182,157 +182,157 @@ msgid ""
 msgstr "Ishusho Mbere Nka kugirango i"
 
 #. the footline
-#: libgimp/gimpexport.c:564
+#: libligma/ligmaexport.c:564
 #, fuzzy
 msgid "The export conversion won't modify your original image."
 msgstr "Kohereza Ihindurangero Guhindura Umwimerere Ishusho"
 
-#: libgimp/gimpexport.c:664
+#: libligma/ligmaexport.c:664
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr "Ibyerekeye Kuri Kubika a Akugara Nka OYA Kubika i Kigaragara"
 
-#: libgimp/gimpexport.c:670
+#: libligma/ligmaexport.c:670
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr "Ibyerekeye Kuri Kubika a Ihitamo Nka OYA Kubika i Kigaragara"
 
-#: libgimp/gimpfontmenu.c:100
+#: libligma/ligmafontmenu.c:100
 msgid "Font Selection"
 msgstr ""
 
-#: libgimp/gimpgradientmenu.c:115
+#: libligma/ligmagradientmenu.c:115
 msgid "Gradient Selection"
 msgstr ""
 
-#: libgimp/gimpmenu.c:450 libgimpwidgets/gimpintstore.c:181
+#: libligma/ligmamenu.c:450 libligmawidgets/ligmaintstore.c:181
 msgid "(Empty)"
 msgstr "(Kirimo ubusa)"
 
-#: libgimp/gimppalettemenu.c:102
+#: libligma/ligmapalettemenu.c:102
 msgid "Palette Selection"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:125
+#: libligma/ligmapatternmenu.c:125
 msgid "Pattern Selection"
 msgstr ""
 
-#: libgimp/gimpunitcache.c:57
+#: libligma/ligmaunitcache.c:57
 msgid "percent"
 msgstr "ku ijana"
 
-#: libgimpbase/gimpbaseenums.c:26
+#: libligmabase/ligmabaseenums.c:26
 msgid "_White (full opacity)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:27
+#: libligmabase/ligmabaseenums.c:27
 #, fuzzy
 msgid "_Black (full transparency)"
 msgstr "Ibonerana"
 
-#: libgimpbase/gimpbaseenums.c:28
+#: libligmabase/ligmabaseenums.c:28
 #, fuzzy
 msgid "Layer's _alpha channel"
 msgstr "Alufa"
 
-#: libgimpbase/gimpbaseenums.c:29
+#: libligmabase/ligmabaseenums.c:29
 #, fuzzy
 msgid "_Transfer layer's alpha channel"
 msgstr "Alufa"
 
 # filter/source\pdf\impdialog.src:RID_PDF_EXPORT_DLG.RB_SELECTION.text
-#: libgimpbase/gimpbaseenums.c:30
+#: libligmabase/ligmabaseenums.c:30
 #, fuzzy
 msgid "_Selection"
 msgstr "Ihitamo"
 
-#: libgimpbase/gimpbaseenums.c:31
+#: libligmabase/ligmabaseenums.c:31
 #, fuzzy
 msgid "_Grayscale copy of layer"
 msgstr "Gukoporora Bya Akugara"
 
-#: libgimpbase/gimpbaseenums.c:61
+#: libligmabase/ligmabaseenums.c:61
 #, fuzzy
 msgid "FG to BG (RGB)"
 msgstr "Kuri"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libligmabase/ligmabaseenums.c:62
 #, fuzzy
 msgid "FG to BG (HSV)"
 msgstr "Kuri"
 
-#: libgimpbase/gimpbaseenums.c:63
+#: libligmabase/ligmabaseenums.c:63
 #, fuzzy
 msgid "FG to transparent"
 msgstr "Kuri Bibonerana"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libligmabase/ligmabaseenums.c:64
 #, fuzzy
 msgid "Custom gradient"
 msgstr "Kugena Ikizamuko"
 
-#: libgimpbase/gimpbaseenums.c:93
+#: libligmabase/ligmabaseenums.c:93
 #, fuzzy
 msgid "FG color fill"
 msgstr "Ibara Kuzuza"
 
-#: libgimpbase/gimpbaseenums.c:94
+#: libligmabase/ligmabaseenums.c:94
 #, fuzzy
 msgid "BG color fill"
 msgstr "Ibara Kuzuza"
 
-#: libgimpbase/gimpbaseenums.c:95
+#: libligmabase/ligmabaseenums.c:95
 #, fuzzy
 msgid "Pattern fill"
 msgstr "Kuzuza"
 
-#: libgimpbase/gimpbaseenums.c:125
+#: libligmabase/ligmabaseenums.c:125
 #, fuzzy
 msgid "Add to the current selection"
 msgstr "Kuri i KIGEZWEHO Ihitamo"
 
-#: libgimpbase/gimpbaseenums.c:126
+#: libligmabase/ligmabaseenums.c:126
 #, fuzzy
 msgid "Subtract from the current selection"
 msgstr "Bivuye i KIGEZWEHO Ihitamo"
 
-#: libgimpbase/gimpbaseenums.c:127
+#: libligmabase/ligmabaseenums.c:127
 #, fuzzy
 msgid "Replace the current selection"
 msgstr "i KIGEZWEHO Ihitamo"
 
-#: libgimpbase/gimpbaseenums.c:128
+#: libligmabase/ligmabaseenums.c:128
 #, fuzzy
 msgid "Intersect with the current selection"
 msgstr "Na: i KIGEZWEHO Ihitamo"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RGB.Red.text
-#: libgimpbase/gimpbaseenums.c:160 libgimpwidgets/gimpcolorscales.c:168
-#: libgimpwidgets/gimpcolorselect.c:352
+#: libligmabase/ligmabaseenums.c:160 libligmawidgets/ligmacolorscales.c:168
+#: libligmawidgets/ligmacolorselect.c:352
 msgid "Red"
 msgstr "Umutuku"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RGB.Green.text
-#: libgimpbase/gimpbaseenums.c:161 libgimpwidgets/gimpcolorscales.c:169
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libligmabase/ligmabaseenums.c:161 libligmawidgets/ligmacolorscales.c:169
+#: libligmawidgets/ligmacolorselect.c:353
 msgid "Green"
 msgstr "Icyatsi"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RGB.Blue.text
-#: libgimpbase/gimpbaseenums.c:162 libgimpwidgets/gimpcolorscales.c:170
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libligmabase/ligmabaseenums.c:162 libligmawidgets/ligmacolorscales.c:170
+#: libligmawidgets/ligmacolorselect.c:354
 msgid "Blue"
 msgstr "Ubururu"
 
-#: libgimpbase/gimpbaseenums.c:163
+#: libligmabase/ligmabaseenums.c:163
 msgid "Gray"
 msgstr "Ikigina"
 
-#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:436
+#: libligmabase/ligmabaseenums.c:164 libligmabase/ligmabaseenums.c:436
 msgid "Indexed"
 msgstr ""
 
@@ -342,64 +342,64 @@ msgstr ""
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_TRIM_MEAN.4.text
 # #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_WEIBULL.4.text
-#: libgimpbase/gimpbaseenums.c:165 libgimpwidgets/gimpcolorscales.c:171
-#: libgimpwidgets/gimpcolorselect.c:355
+#: libligmabase/ligmabaseenums.c:165 libligmawidgets/ligmacolorscales.c:171
+#: libligmawidgets/ligmacolorselect.c:355
 msgid "Alpha"
 msgstr "Alufa"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....View.Window.Flag..02.text
-#: libgimpbase/gimpbaseenums.c:194
+#: libligmabase/ligmabaseenums.c:194
 msgid "Small"
 msgstr "Gitoya"
 
-#: libgimpbase/gimpbaseenums.c:195
+#: libligmabase/ligmabaseenums.c:195
 msgid "Medium"
 msgstr "Hagati"
 
 # offmgr/source\offapp\dialog\optgdlg.src:OFA_TP_VIEW.LB_BIG.3.text
-#: libgimpbase/gimpbaseenums.c:196
+#: libligmabase/ligmabaseenums.c:196
 msgid "Large"
 msgstr "Binini"
 
-#: libgimpbase/gimpbaseenums.c:228
+#: libligmabase/ligmabaseenums.c:228
 msgid "Light Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:229
+#: libligmabase/ligmabaseenums.c:229
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:230
+#: libligmabase/ligmabaseenums.c:230
 msgid "Dark Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:231
+#: libligmabase/ligmabaseenums.c:231
 msgid "White Only"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:232
+#: libligmabase/ligmabaseenums.c:232
 msgid "Gray Only"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:233
+#: libligmabase/ligmabaseenums.c:233
 msgid "Black Only"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:261
+#: libligmabase/ligmabaseenums.c:261
 #, fuzzy
 msgid "Image source"
 msgstr "Inkomoko"
 
-#: libgimpbase/gimpbaseenums.c:262
+#: libligmabase/ligmabaseenums.c:262
 #, fuzzy
 msgid "Pattern source"
 msgstr "Inkomoko"
 
-#: libgimpbase/gimpbaseenums.c:290
+#: libligmabase/ligmabaseenums.c:290
 msgid "Dodge"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:291
+#: libligmabase/ligmabaseenums.c:291
 msgid "Burn"
 msgstr ""
 
@@ -407,11 +407,11 @@ msgstr ""
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_TRANSPARENCE.LB_TRGR_GRADIENT_TYPES.1.text
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_GRADIENT.LB_GRADIENT_TYPES.1.text
-#: libgimpbase/gimpbaseenums.c:328 libgimpbase/gimpbaseenums.c:468
+#: libligmabase/ligmabaseenums.c:328 libligmabase/ligmabaseenums.c:468
 msgid "Linear"
 msgstr "Kurikiramurongo"
 
-#: libgimpbase/gimpbaseenums.c:329
+#: libligmabase/ligmabaseenums.c:329
 #, fuzzy
 msgid "Bi-linear"
 msgstr "By'umurongo"
@@ -420,7 +420,7 @@ msgstr "By'umurongo"
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_TRANSPARENCE.LB_TRGR_GRADIENT_TYPES.3.text
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_GRADIENT.LB_GRADIENT_TYPES.3.text
-#: libgimpbase/gimpbaseenums.c:330
+#: libligmabase/ligmabaseenums.c:330
 msgid "Radial"
 msgstr "Nyakarambararo"
 
@@ -436,53 +436,53 @@ msgstr "Nyakarambararo"
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_GRADIENT.LB_GRADIENT_TYPES.5.text
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/source\svdraw\svdstr.src:STR_ObjNameSingulQUAD.text
-#: libgimpbase/gimpbaseenums.c:331
+#: libligmabase/ligmabaseenums.c:331
 msgid "Square"
 msgstr "kare"
 
-#: libgimpbase/gimpbaseenums.c:332
+#: libligmabase/ligmabaseenums.c:332
 msgid "Conical (sym)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:333
+#: libligmabase/ligmabaseenums.c:333
 msgid "Conical (asym)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:334
+#: libligmabase/ligmabaseenums.c:334
 msgid "Shaped (angular)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:335
+#: libligmabase/ligmabaseenums.c:335
 #, fuzzy
 msgid "Shaped (spherical)"
 msgstr "Cy'umubumbe"
 
-#: libgimpbase/gimpbaseenums.c:336
+#: libligmabase/ligmabaseenums.c:336
 msgid "Shaped (dimpled)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:337
+#: libligmabase/ligmabaseenums.c:337
 msgid "Spiral (cw)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:338
+#: libligmabase/ligmabaseenums.c:338
 msgid "Spiral (ccw)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:367
+#: libligmabase/ligmabaseenums.c:367
 msgid "Stock ID"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:368
+#: libligmabase/ligmabaseenums.c:368
 msgid "Inline pixbuf"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:369
+#: libligmabase/ligmabaseenums.c:369
 #, fuzzy
 msgid "Image file"
 msgstr "IDOSIYE"
 
-#: libgimpbase/gimpbaseenums.c:398
+#: libligmabase/ligmabaseenums.c:398
 #, fuzzy
 msgid "RGB color"
 msgstr "Ibara"
@@ -497,106 +497,106 @@ msgstr "Ibara"
 # officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Misc.Preview..868.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Print.Other.Quality..1.text
-#: libgimpbase/gimpbaseenums.c:399 libgimpbase/gimpbaseenums.c:434
+#: libligmabase/ligmabaseenums.c:399 libligmabase/ligmabaseenums.c:434
 msgid "Grayscale"
 msgstr "Igipimokigina"
 
-#: libgimpbase/gimpbaseenums.c:400
+#: libligmabase/ligmabaseenums.c:400
 #, fuzzy
 msgid "Indexed color"
 msgstr "Ibara"
 
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_COLOR.LB_COLORMODEL.1.text
-#: libgimpbase/gimpbaseenums.c:432
+#: libligmabase/ligmabaseenums.c:432
 msgid "RGB"
 msgstr "UmutukuIcyatsiUbururu"
 
-#: libgimpbase/gimpbaseenums.c:433
+#: libligmabase/ligmabaseenums.c:433
 #, fuzzy
 msgid "RGB-alpha"
 msgstr "Alufa"
 
-#: libgimpbase/gimpbaseenums.c:435
+#: libligmabase/ligmabaseenums.c:435
 #, fuzzy
 msgid "Grayscale-alpha"
 msgstr "Alufa"
 
-#: libgimpbase/gimpbaseenums.c:437
+#: libligmabase/ligmabaseenums.c:437
 #, fuzzy
 msgid "Indexed-alpha"
 msgstr "Alufa"
 
-#: libgimpbase/gimpbaseenums.c:467
+#: libligmabase/ligmabaseenums.c:467
 msgid "None (Fastest)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:469
+#: libligmabase/ligmabaseenums.c:469
 msgid "Cubic"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:470
+#: libligmabase/ligmabaseenums.c:470
 msgid "Lanczos (Best)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:498
+#: libligmabase/ligmabaseenums.c:498
 msgid "Constant"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:499
+#: libligmabase/ligmabaseenums.c:499
 msgid "Incremental"
 msgstr ""
 
 # goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.RB_COMPRESSION_NONE.text
-#: libgimpbase/gimpbaseenums.c:528
+#: libligmabase/ligmabaseenums.c:528
 msgid "None"
 msgstr "Nta na kimwe"
 
-#: libgimpbase/gimpbaseenums.c:529
+#: libligmabase/ligmabaseenums.c:529
 #, fuzzy
 msgid "Sawtooth wave"
 msgstr "UMUVUMBA"
 
-#: libgimpbase/gimpbaseenums.c:530
+#: libligmabase/ligmabaseenums.c:530
 #, fuzzy
 msgid "Triangular wave"
 msgstr "UMUVUMBA"
 
 # offmgr/source\offapp\dialog\optgdlg.src:OFA_TP_VIEW.FT_POINTLIMIT_UNIT.text
-#: libgimpbase/gimpbaseenums.c:558
+#: libligmabase/ligmabaseenums.c:558
 msgid "Pixels"
 msgstr "Pigiseli"
 
 # 4705
-#: libgimpbase/gimpbaseenums.c:559
+#: libligmabase/ligmabaseenums.c:559
 msgid "Points"
 msgstr "utubago"
 
-#: libgimpbase/gimpbaseenums.c:588
+#: libligmabase/ligmabaseenums.c:588
 msgid "Shadows"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:589
+#: libligmabase/ligmabaseenums.c:589
 msgid "Midtones"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:590
+#: libligmabase/ligmabaseenums.c:590
 msgid "Highlights"
 msgstr "Amahitamogaragaza"
 
-#: libgimpbase/gimpbaseenums.c:618
+#: libligmabase/ligmabaseenums.c:618
 msgid "Forward (traditional)"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:619
+#: libligmabase/ligmabaseenums.c:619
 msgid "Backward (corrective)"
 msgstr ""
 
-#: libgimpbase/gimpmemsize.c:177
+#: libligmabase/ligmamemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr ""
 
-#: libgimpbase/gimpmemsize.c:182
+#: libligmabase/ligmamemsize.c:182
 #, fuzzy, c-format
 msgid "%.2f KB"
 msgstr ""
@@ -609,7 +609,7 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:186
+#: libligmabase/ligmamemsize.c:186
 #, fuzzy, c-format
 msgid "%.1f KB"
 msgstr ""
@@ -622,12 +622,12 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:190
+#: libligmabase/ligmamemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: libgimpbase/gimpmemsize.c:197
+#: libligmabase/ligmamemsize.c:197
 #, fuzzy, c-format
 msgid "%.2f MB"
 msgstr ""
@@ -640,7 +640,7 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:201
+#: libligmabase/ligmamemsize.c:201
 #, fuzzy, c-format
 msgid "%.1f MB"
 msgstr ""
@@ -653,12 +653,12 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:205
+#: libligmabase/ligmamemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr ""
 
-#: libgimpbase/gimpmemsize.c:212
+#: libligmabase/ligmamemsize.c:212
 #, fuzzy, c-format
 msgid "%.2f GB"
 msgstr ""
@@ -671,7 +671,7 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:216
+#: libligmabase/ligmamemsize.c:216
 #, fuzzy, c-format
 msgid "%.1f GB"
 msgstr ""
@@ -684,220 +684,220 @@ msgstr ""
 "X- Generator: KBabel 1. 0\n"
 "."
 
-#: libgimpbase/gimpmemsize.c:220
+#: libligmabase/ligmamemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
+#: libligmabase/ligmautils.c:169 libligmabase/ligmautils.c:174
 #, fuzzy
 msgid "(invalid UTF-8 string)"
 msgstr "(Sibyo 8 Ikurikiranyanyuguti"
 
-#: libgimpconfig/gimpcolorconfig.c:40
+#: libligmaconfig/ligmacolorconfig.c:40
 #, fuzzy
 msgid "Mode of operation for color management."
 msgstr "Bya kugirango Ibara"
 
-#: libgimpconfig/gimpcolorconfig.c:42
+#: libligmaconfig/ligmacolorconfig.c:42
 #, fuzzy
 msgid "Sets the color profile for the display."
 msgstr "i Ibara Ibijyana kugirango i Kugaragaza"
 
-#: libgimpconfig/gimpcolorconfig.c:44
+#: libligmaconfig/ligmacolorconfig.c:44
 #, fuzzy
 msgid "Sets default RGB workspace color profile."
 msgstr "Mburabuzi Umwanya- nkenerwa Ibara Ibijyana"
 
-#: libgimpconfig/gimpcolorconfig.c:46
+#: libligmaconfig/ligmacolorconfig.c:46
 #, fuzzy
 msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
 msgstr "i Ibara Ibijyana Kuri GUHINDURA hagati Na"
 
-#: libgimpconfig/gimpcolorconfig.c:48
+#: libligmaconfig/ligmacolorconfig.c:48
 #, fuzzy
 msgid "Sets the color profile used when printing."
 msgstr "i Ibara Ibijyana Ryari: Icapa..."
 
-#: libgimpconfig/gimpcolorconfig.c:50
+#: libligmaconfig/ligmacolorconfig.c:50
 #, fuzzy
 msgid "Sets how colors are mapped for your display."
 msgstr "Amabara kugirango Kugaragaza"
 
-#: libgimpconfig/gimpcolorconfig.c:52
+#: libligmaconfig/ligmacolorconfig.c:52
 #, fuzzy
 msgid "Sets how colors are converted from workspace to simulation device."
 msgstr "Amabara Bivuye Umwanya- nkenerwa Kuri APAREYE"
 
-#: libgimpconfig/gimpcolorconfig-enums.c:24
+#: libligmaconfig/ligmacolorconfig-enums.c:24
 #, fuzzy
 msgid "No color management"
 msgstr "Ibara"
 
-#: libgimpconfig/gimpcolorconfig-enums.c:25
+#: libligmaconfig/ligmacolorconfig-enums.c:25
 #, fuzzy
 msgid "Color managed display"
 msgstr "Kugaragaza"
 
-#: libgimpconfig/gimpcolorconfig-enums.c:26
+#: libligmaconfig/ligmacolorconfig-enums.c:26
 msgid "Print simulation"
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig-enums.c:56 modules/cdisplay_proof.c:55
+#: libligmaconfig/ligmacolorconfig-enums.c:56 modules/cdisplay_proof.c:55
 msgid "Perceptual"
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig-enums.c:57 modules/cdisplay_proof.c:56
+#: libligmaconfig/ligmacolorconfig-enums.c:57 modules/cdisplay_proof.c:56
 msgid "Relative Colorimetric"
 msgstr ""
 
 # 5287
-#: libgimpconfig/gimpcolorconfig-enums.c:58
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:350
+#: libligmaconfig/ligmacolorconfig-enums.c:58
+#: libligmawidgets/ligmacolorscales.c:166 libligmawidgets/ligmacolorselect.c:350
 #: modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Ubwuzurane"
 
-#: libgimpconfig/gimpcolorconfig-enums.c:59 modules/cdisplay_proof.c:58
+#: libligmaconfig/ligmacolorconfig-enums.c:59 modules/cdisplay_proof.c:58
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig-enums.c:88
+#: libligmaconfig/ligmacolorconfig-enums.c:88
 msgid "Ask"
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig-enums.c:89
+#: libligmaconfig/ligmacolorconfig-enums.c:89
 #, fuzzy
 msgid "Use embedded profile"
 msgstr "Gitsindiye Ibijyana"
 
-#: libgimpconfig/gimpcolorconfig-enums.c:90
+#: libligmaconfig/ligmacolorconfig-enums.c:90
 #, fuzzy
 msgid "Convert to RGB workspace"
 msgstr "Kuri Umwanya- nkenerwa"
 
-#: libgimpconfig/gimpconfig-deserialize.c:95
+#: libligmaconfig/ligmaconfig-deserialize.c:95
 #, fuzzy, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Agaciro kugirango ni OYA a Byemewe 8 Ikurikiranyanyuguti"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:423
+#: libligmaconfig/ligmaconfig-deserialize.c:423
 #, fuzzy, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "Ikitezwe: Cyangwa kugirango Icyungo"
 
-#: libgimpconfig/gimpconfig-deserialize.c:497
+#: libligmaconfig/ligmaconfig-deserialize.c:497
 #, fuzzy, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "Sibyo Agaciro kugirango"
 
-#: libgimpconfig/gimpconfig-deserialize.c:512
+#: libligmaconfig/ligmaconfig-deserialize.c:512
 #, fuzzy, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "Sibyo Agaciro kugirango"
 
-#: libgimpconfig/gimpconfig-deserialize.c:581
+#: libligmaconfig/ligmaconfig-deserialize.c:581
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-iface.c:454 libgimpconfig/gimpconfig-iface.c:467
-#: libgimpconfig/gimpscanner.c:515 libgimpconfig/gimpscanner.c:596
+#: libligmaconfig/ligmaconfig-iface.c:454 libligmaconfig/ligmaconfig-iface.c:467
+#: libligmaconfig/ligmascanner.c:515 libligmaconfig/ligmascanner.c:596
 #, fuzzy
 msgid "fatal parse error"
 msgstr "Ikosa"
 
-#: libgimpconfig/gimpconfig-path.c:349
+#: libligmaconfig/ligmaconfig-path.c:349
 #, fuzzy, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kwagura"
 
-#: libgimpconfig/gimpconfigwriter.c:135
+#: libligmaconfig/ligmaconfigwriter.c:135
 #, fuzzy, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "OYA Kurema By'igihe gito IDOSIYE kugirango"
 
-#: libgimpconfig/gimpconfigwriter.c:148
+#: libligmaconfig/ligmaconfigwriter.c:148
 #, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "OYA Gufungura kugirango"
 
-#: libgimpconfig/gimpconfigwriter.c:667
+#: libligmaconfig/ligmaconfigwriter.c:667
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr "Kuri By'igihe gito IDOSIYE kugirango Umwimerere IDOSIYE OYA"
 
-#: libgimpconfig/gimpconfigwriter.c:675
+#: libligmaconfig/ligmaconfigwriter.c:675
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr "Kuri By'igihe gito IDOSIYE kugirango IDOSIYE Byaremwe"
 
-#: libgimpconfig/gimpconfigwriter.c:686
+#: libligmaconfig/ligmaconfigwriter.c:686
 #, fuzzy, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Kuri"
 
-#: libgimpconfig/gimpconfigwriter.c:704
+#: libligmaconfig/ligmaconfigwriter.c:704
 #, fuzzy, c-format
 msgid "Could not create '%s': %s"
 msgstr "OYA Kurema"
 
-#: libgimpconfig/gimpscanner.c:102
+#: libligmaconfig/ligmascanner.c:102
 #, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "OYA Gufungura kugirango"
 
-#: libgimpconfig/gimpscanner.c:272
+#: libligmaconfig/ligmascanner.c:272
 #, fuzzy
 msgid "invalid UTF-8 string"
 msgstr "Sibyo 8 Ikurikiranyanyuguti"
 
-#: libgimpconfig/gimpscanner.c:623
+#: libligmaconfig/ligmascanner.c:623
 #, fuzzy, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "in Umurongo"
 
-#: libgimpmodule/gimpmodule.c:180
+#: libligmamodule/ligmamodule.c:180
 #, fuzzy, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Modire"
 
-#: libgimpmodule/gimpmodule.c:197 libgimpmodule/gimpmodule.c:216
-#: libgimpmodule/gimpmodule.c:330 libgimpmodule/gimpmodule.c:358
-#: libgimpmodule/gimpmodule.c:482
+#: libligmamodule/ligmamodule.c:197 libligmamodule/ligmamodule.c:216
+#: libligmamodule/ligmamodule.c:330 libligmamodule/ligmamodule.c:358
+#: libligmamodule/ligmamodule.c:482
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Ibirimo Ikosa"
 
-#: libgimpmodule/gimpmodule.c:286
+#: libligmamodule/ligmamodule.c:286
 #, fuzzy, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Modire"
 
-#: libgimpmodule/gimpmodule.c:426
+#: libligmamodule/ligmamodule.c:426
 #, fuzzy
 msgid "Module error"
 msgstr "Ikosa"
 
-#: libgimpmodule/gimpmodule.c:427
+#: libligmamodule/ligmamodule.c:427
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:428
+#: libligmamodule/ligmamodule.c:428
 #, fuzzy
 msgid "Load failed"
 msgstr "Byanze"
 
-#: libgimpmodule/gimpmodule.c:429
+#: libligmamodule/ligmamodule.c:429
 msgid "Not loaded"
 msgstr ""
 
-#: libgimpthumb/gimpthumb-utils.c:125
+#: libligmathumb/ligmathumb-utils.c:125
 #, fuzzy, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -906,43 +906,43 @@ msgstr ""
 "a Byemewe Ku Ntangiriro bushyinguro in i Ububiko kugirango By'igihe gito "
 "Idosiye"
 
-#: libgimpthumb/gimpthumb-utils.c:249 libgimpthumb/gimpthumb-utils.c:317
+#: libligmathumb/ligmathumb-utils.c:249 libligmathumb/ligmathumb-utils.c:317
 #, fuzzy, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kuri Kurema Ububiko"
 
-#: libgimpthumb/gimpthumbnail.c:919
+#: libligmathumb/ligmathumbnail.c:919
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "OYA Kurema kugirango"
 
 # svx/source\dialog\tabarea.src:RID_SVXPAGE_BITMAP.FT_COLOR.text
-#: libgimpwidgets/gimpcolorbutton.c:99
+#: libligmawidgets/ligmacolorbutton.c:99
 #, fuzzy
 msgid "_Foreground Color"
 msgstr "Ibara rya mbugambanza"
 
-#: libgimpwidgets/gimpcolorbutton.c:103
+#: libligmawidgets/ligmacolorbutton.c:103
 #, fuzzy
 msgid "_Background Color"
 msgstr "Ibara rya mbuganyuma"
 
 # officecfg/registry\schema\org\openoffice\Office\Math.xcs:....FontFormat.Weight..10.text
-#: libgimpwidgets/gimpcolorbutton.c:107
+#: libligmawidgets/ligmacolorbutton.c:107
 #, fuzzy
 msgid "Blac_k"
 msgstr "umukara"
 
-#: libgimpwidgets/gimpcolorbutton.c:111
+#: libligmawidgets/ligmacolorbutton.c:111
 #, fuzzy
 msgid "_White"
 msgstr "Umweru"
 
-#: libgimpwidgets/gimpcolorscales.c:133
+#: libligmawidgets/ligmacolorscales.c:133
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:155 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_H"
 msgstr "h"
@@ -953,102 +953,102 @@ msgstr "h"
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_KUM_ZINS_Z.8.text
 # #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_VBD.8.text
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:156 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_S"
 msgstr "S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:157 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_V"
 msgstr "v"
 
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_NEG_BINOM_VERT.4.text
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:158 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_R"
 msgstr "R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:159 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_G"
 msgstr "G"
 
 # sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_B.text
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:345
+#: libligmawidgets/ligmacolorscales.c:160 libligmawidgets/ligmacolorselect.c:345
 #, fuzzy
 msgid "_B"
 msgstr "B"
 
 # sw/source\ui\index\cnttab.src:TP_TOX_ENTRY.WIN_TOKEN.STR_TOKEN_AUTHORITY.text
-#: libgimpwidgets/gimpcolorscales.c:161
+#: libligmawidgets/ligmacolorscales.c:161
 #, fuzzy
 msgid "_A"
 msgstr "A"
 
 # svtools/source\dialogs\colrdlg.src:DLG_COLOR.FT_HUE.text
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:349
+#: libligmawidgets/ligmacolorscales.c:165 libligmawidgets/ligmacolorselect.c:349
 #, fuzzy
 msgid "Hue"
 msgstr "Ibara"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:351
+#: libligmawidgets/ligmacolorscales.c:167 libligmawidgets/ligmacolorselect.c:351
 msgid "Value"
 msgstr "Agaciro"
 
-#: libgimpwidgets/gimpcolorscales.c:243
+#: libligmawidgets/ligmacolorscales.c:243
 #, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Ibara Nka in Na"
 
-#: libgimpwidgets/gimpcolorscales.c:248
+#: libligmawidgets/ligmacolorscales.c:248
 msgid "HTML _Notation:"
 msgstr ""
 
 # sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_CURRENT.text
-#: libgimpwidgets/gimpcolorselection.c:203
+#: libligmawidgets/ligmacolorselection.c:203
 #, fuzzy
 msgid "Current:"
 msgstr "KIGEZWEHO"
 
 # 4388
-#: libgimpwidgets/gimpcolorselection.c:225
+#: libligmawidgets/ligmacolorselection.c:225
 #, fuzzy
 msgid "Old:"
 msgstr "ki/ bishaje"
 
-#: libgimpwidgets/gimpfileentry.c:351
+#: libligmawidgets/ligmafileentry.c:351
 msgid "Select Folder"
 msgstr ""
 
 # wizards/source\euro\euro.src:MESSAGES_+_2.text
-#: libgimpwidgets/gimpfileentry.c:353
+#: libligmawidgets/ligmafileentry.c:353
 #, fuzzy
 msgid "Select File"
 msgstr "Guhitamo idosiye"
 
-#: libgimpwidgets/gimpmemsizeentry.c:232
+#: libligmawidgets/ligmamemsizeentry.c:232
 msgid "Kilobytes"
 msgstr ""
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libligmawidgets/ligmamemsizeentry.c:233
 msgid "Megabytes"
 msgstr ""
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libligmawidgets/ligmamemsizeentry.c:234
 msgid "Gigabytes"
 msgstr ""
 
-#: libgimpwidgets/gimppatheditor.c:243
+#: libligmawidgets/ligmapatheditor.c:243
 msgid "Writable"
 msgstr ""
 
 # sfx2/source\explorer\explorer.src:STR_SFX_FOLDER.text
-#: libgimpwidgets/gimppatheditor.c:252
+#: libligmawidgets/ligmapatheditor.c:252
 msgid "Folder"
 msgstr "Ububiko"
 
-#: libgimpwidgets/gimppickbutton.c:138
+#: libligmawidgets/ligmapickbutton.c:138
 #, fuzzy
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -1057,37 +1057,37 @@ msgstr ""
 "i Mugushagisho Hanyuma Kanda a Ibara Aho ariho hose ku Mugaragaza Kuri "
 "Guhitamo Ibara"
 
-#: libgimpwidgets/gimppreviewarea.c:126
+#: libligmawidgets/ligmapreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:133
+#: libligmawidgets/ligmapreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:240
+#: libligmawidgets/ligmapreview.c:240
 #, fuzzy
 msgid "_Preview"
 msgstr "Igaragazambere"
 
-#: libgimpwidgets/gimppropwidgets.c:1728
+#: libligmawidgets/ligmapropwidgets.c:1728
 #, fuzzy, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Umwandiko Iyinjiza Umwanya ni Kuri Inyuguti"
 
 # officecfg/registry\schema\org\openoffice\Office\Calc.xcs:....Content.Display.Anchor.text
-#: libgimpwidgets/gimpstock.c:113
+#: libligmawidgets/ligmastock.c:113
 msgid "Anchor"
 msgstr "Agafashi"
 
 # officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....Column.Align..1.text
-#: libgimpwidgets/gimpstock.c:114
+#: libligmawidgets/ligmastock.c:114
 #, fuzzy
 msgid "C_enter"
 msgstr "hagati"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libligmawidgets/ligmastock.c:115
 #, fuzzy
 msgid "_Duplicate"
 msgstr "Gusubiramo"
@@ -1102,32 +1102,32 @@ msgstr "Gusubiramo"
 # basctl/source\basicide\moduldlg.src:RID_TP_MODULS.RID_PB_EDIT.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_EDIT.text
-#: libgimpwidgets/gimpstock.c:116
+#: libligmawidgets/ligmastock.c:116
 #, fuzzy
 msgid "_Edit"
 msgstr "Guhindura"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libligmawidgets/ligmastock.c:117
 msgid "Linked"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:118
+#: libligmawidgets/ligmastock.c:118
 #, fuzzy
 msgid "Paste as New"
 msgstr "Nka"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libligmawidgets/ligmastock.c:119
 msgid "Paste Into"
 msgstr ""
 
 # offmgr/source\offapp\dialog\optgdlg.src:OFA_TP_MISC.PB_HELPAGENT_RESET.text
-#: libgimpwidgets/gimpstock.c:120
+#: libligmawidgets/ligmastock.c:120
 #, fuzzy
 msgid "_Reset"
 msgstr "Kugarura"
 
 # 6488
-#: libgimpwidgets/gimpstock.c:121
+#: libligmawidgets/ligmastock.c:121
 msgid "Visible"
 msgstr "kigaragara"
 
@@ -1135,60 +1135,60 @@ msgstr "kigaragara"
 # svtools/source\control\ctrlbox.src:STR_SVT_COLLATE_STROKE.text
 # #-#-#-#-#  svtools.pot (PACKAGE VERSION)  #-#-#-#-#
 # svtools/source\control\ctrlbox.src:STR_SVT_INDEXENTRY_STROKE.text
-#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
+#: libligmawidgets/ligmastock.c:154 libligmawidgets/ligmastock.c:158
 #, fuzzy
 msgid "_Stroke"
 msgstr "Akarongo"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libligmawidgets/ligmastock.c:170
 msgid "L_etter Spacing"
 msgstr ""
 
 # sc/source\ui\drawfunc\objdraw.src:MN_TEXT_ATTR.RID_MN_FORMAT_LINESPACE.text
-#: libgimpwidgets/gimpstock.c:171
+#: libligmawidgets/ligmastock.c:171
 #, fuzzy
 msgid "L_ine Spacing"
 msgstr "Itandukanyamirongo"
 
 # starmath/source\smres.src:RID_TOOLBOXWINDOW.6.RID_SIZEXY.text
-#: libgimpwidgets/gimpstock.c:187
+#: libligmawidgets/ligmastock.c:187
 #, fuzzy
 msgid "_Resize"
 msgstr "Kuringaniza"
 
-#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
+#: libligmawidgets/ligmastock.c:188 libligmawidgets/ligmastock.c:292
 #, fuzzy
 msgid "_Scale"
 msgstr "Gupima"
 
-#: libgimpwidgets/gimpstock.c:271
+#: libligmawidgets/ligmastock.c:271
 msgid "Crop"
 msgstr "Gukataho"
 
-#: libgimpwidgets/gimpstock.c:288
+#: libligmawidgets/ligmastock.c:288
 #, fuzzy
 msgid "_Transform"
 msgstr "Guhindura"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libligmawidgets/ligmastock.c:291
 #, fuzzy
 msgid "_Rotate"
 msgstr "Kuzengurutsa"
 
-#: libgimpwidgets/gimpstock.c:293
+#: libligmawidgets/ligmastock.c:293
 msgid "_Shear"
 msgstr ""
 
 # sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_FUNCTIONLIST_MORE.text
-#: libgimpwidgets/gimpunitmenu.c:302
+#: libligmawidgets/ligmaunitmenu.c:302
 msgid "More..."
 msgstr "Birenzeho..."
 
-#: libgimpwidgets/gimpunitmenu.c:612
+#: libligmawidgets/ligmaunitmenu.c:612
 msgid "Unit Selection"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libligmawidgets/ligmaunitmenu.c:660
 #, fuzzy
 msgid "Unit"
 msgstr "Igice:"
@@ -1197,27 +1197,27 @@ msgstr "Igice:"
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_GDA.10.text
 # #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_VBD.12.text
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libligmawidgets/ligmaunitmenu.c:664
 msgid "Factor"
 msgstr "Umubarwa"
 
-#: libgimpwidgets/gimpwidgets.c:1001
+#: libligmawidgets/ligmawidgets.c:1001
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr "iyi Agaciro kugirango Umubare iyi Kuri Gusubiramo a"
 
-#: libgimpwidgets/gimpwidgets.c:1005
+#: libligmawidgets/ligmawidgets.c:1005
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1018
+#: libligmawidgets/ligmawidgets.c:1018
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr "Umubare Na: a Umubare"
 
-#: libgimpwidgets/gimpwidgets.c:1022
+#: libligmawidgets/ligmawidgets.c:1022
 msgid "_Randomize"
 msgstr ""
 

@@ -1,4 +1,4 @@
-# Romanian GIMP translation
+# Romanian LIGMA translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 # Nandor Licker <lickernandor AT yahoo DOT com>, 2010-2011.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-10-25 21:27+0000\n"
 "PO-Revision-Date: 2020-11-04 14:43+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
@@ -37,8 +37,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Server pentru operare Script-Fu de la distanță"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "_GIMP Online"
+msgid "_LIGMA Online"
+msgstr "_LIGMA Online"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -77,8 +77,8 @@ msgid "_Beveled Pattern"
 msgstr "Model _teșit"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
@@ -841,88 +841,88 @@ msgstr "Ponderea umbrei (%)"
 msgid "Flatten image"
 msgstr "Aplatizează imaginea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Folosirea traseelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Semn de carte către manualul de utilizare"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Prepararea imaginilor pentru web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Lucrul cu camere foto digitale"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Crearea, deschiderea și salvarea _fișierelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "Concepte de _bază"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Cum se utilizează _dialogurile"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Desenarea obiectelor _simple"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Crearea și utilizarea _selecțiilor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "Site-ul _web principal"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Semn de carte către site-ul web GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Semn de carte către site-ul web LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Site-ul web pentru _dezvoltatori"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "Foaie de pa_rcurs"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Semn de carte către foaia de parcurs GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Semn de carte către foaia de parcurs LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Semn de carte către wikiul GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Semn de carte către wikiul LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Rapoarte de erori și solicitări de caracteristici"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Semn de carte către urmăritorul de erori GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Semn de carte către urmăritorul de erori LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "Site-ul web al manualului de _utilizare"
 
@@ -1648,12 +1648,12 @@ msgstr "Decalajul Y al umbrei detașate"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Randare Spirograf"
 
-#~ msgid "_Spyrogimp (older script-fu version)..."
-#~ msgstr "_Spyrogimp (versiune script-fu mai veche)..."
+#~ msgid "_Spyroligma (older script-fu version)..."
+#~ msgstr "_Spyroligma (versiune script-fu mai veche)..."
 
-#~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+#~ msgid "This procedure is deprecated! Use 'plug-in-spyroligma' instead."
 #~ msgstr ""
-#~ "Această procedură este învechită! Folosiți „plug-in-spyrogimp” în loc."
+#~ "Această procedură este învechită! Folosiți „plug-in-spyroligma” în loc."
 
 #~ msgid "Type"
 #~ msgstr "Tip"

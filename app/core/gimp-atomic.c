@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-atomic.c
+ * ligma-atomic.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,17 +25,17 @@
 
 #include "core-types.h"
 
-#include "gimp-atomic.h"
+#include "ligma-atomic.h"
 
 
 /*  GSList  */
 
 
-static GSList gimp_atomic_slist_sentinel;
+static GSList ligma_atomic_slist_sentinel;
 
 
 void
-gimp_atomic_slist_push_head (GSList   * volatile *list,
+ligma_atomic_slist_push_head (GSList   * volatile *list,
                              gpointer             data)
 {
   GSList *old_head;
@@ -53,7 +53,7 @@ gimp_atomic_slist_push_head (GSList   * volatile *list,
         {
           old_head = g_atomic_pointer_get (list);
         }
-      while (old_head == &gimp_atomic_slist_sentinel);
+      while (old_head == &ligma_atomic_slist_sentinel);
 
       new_head->next = old_head;
     }
@@ -61,7 +61,7 @@ gimp_atomic_slist_push_head (GSList   * volatile *list,
 }
 
 gpointer
-gimp_atomic_slist_pop_head (GSList * volatile *list)
+ligma_atomic_slist_pop_head (GSList * volatile *list)
 {
   GSList   *old_head;
   GSList   *new_head;
@@ -75,14 +75,14 @@ gimp_atomic_slist_pop_head (GSList * volatile *list)
         {
           old_head = g_atomic_pointer_get (list);
         }
-      while (old_head == &gimp_atomic_slist_sentinel);
+      while (old_head == &ligma_atomic_slist_sentinel);
 
       if (! old_head)
         return NULL;
     }
   while (! g_atomic_pointer_compare_and_exchange (list,
                                                   old_head,
-                                                  &gimp_atomic_slist_sentinel));
+                                                  &ligma_atomic_slist_sentinel));
 
   new_head = old_head->next;
   data     = old_head->data;

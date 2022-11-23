@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
- * gimp-filter-history.c
+ * ligma-filter-history.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,122 +24,122 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimp-filter-history.h"
+#include "ligma.h"
+#include "ligma-filter-history.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmaprocedure.h"
 
 
 /*  local function prototypes  */
 
-static gint   gimp_filter_history_compare (GimpProcedure *proc1,
-                                           GimpProcedure *proc2);
+static gint   ligma_filter_history_compare (LigmaProcedure *proc1,
+                                           LigmaProcedure *proc2);
 
 
 /*  public functions  */
 
 gint
-gimp_filter_history_size (Gimp *gimp)
+ligma_filter_history_size (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), 0);
 
-  return MAX (1, gimp->config->filter_history_size);
+  return MAX (1, ligma->config->filter_history_size);
 }
 
 gint
-gimp_filter_history_length (Gimp *gimp)
+ligma_filter_history_length (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), 0);
 
-  return g_list_length (gimp->filter_history);
+  return g_list_length (ligma->filter_history);
 }
 
-GimpProcedure *
-gimp_filter_history_nth (Gimp  *gimp,
+LigmaProcedure *
+ligma_filter_history_nth (Ligma  *ligma,
                          gint   n)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_list_nth_data (gimp->filter_history, n);
+  return g_list_nth_data (ligma->filter_history, n);
 }
 
 void
-gimp_filter_history_add (Gimp          *gimp,
-                         GimpProcedure *procedure)
+ligma_filter_history_add (Ligma          *ligma,
+                         LigmaProcedure *procedure)
 {
   GList *link;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_PROCEDURE (procedure));
 
   /* return early if the procedure is already at the top */
-  if (gimp->filter_history &&
-      gimp_filter_history_compare (gimp->filter_history->data, procedure) == 0)
+  if (ligma->filter_history &&
+      ligma_filter_history_compare (ligma->filter_history->data, procedure) == 0)
     return;
 
   /* ref new first then unref old, they might be the same */
   g_object_ref (procedure);
 
-  link = g_list_find_custom (gimp->filter_history, procedure,
-                             (GCompareFunc) gimp_filter_history_compare);
+  link = g_list_find_custom (ligma->filter_history, procedure,
+                             (GCompareFunc) ligma_filter_history_compare);
 
   if (link)
     {
       g_object_unref (link->data);
-      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+      ligma->filter_history = g_list_delete_link (ligma->filter_history, link);
     }
 
-  gimp->filter_history = g_list_prepend (gimp->filter_history, procedure);
+  ligma->filter_history = g_list_prepend (ligma->filter_history, procedure);
 
-  link = g_list_nth (gimp->filter_history, gimp_filter_history_size (gimp));
+  link = g_list_nth (ligma->filter_history, ligma_filter_history_size (ligma));
 
   if (link)
     {
       g_object_unref (link->data);
-      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+      ligma->filter_history = g_list_delete_link (ligma->filter_history, link);
     }
 
-  gimp_filter_history_changed (gimp);
+  ligma_filter_history_changed (ligma);
 }
 
 void
-gimp_filter_history_remove (Gimp          *gimp,
-                            GimpProcedure *procedure)
+ligma_filter_history_remove (Ligma          *ligma,
+                            LigmaProcedure *procedure)
 {
   GList *link;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_PROCEDURE (procedure));
 
-  link = g_list_find_custom (gimp->filter_history, procedure,
-                             (GCompareFunc) gimp_filter_history_compare);
+  link = g_list_find_custom (ligma->filter_history, procedure,
+                             (GCompareFunc) ligma_filter_history_compare);
 
   if (link)
     {
       g_object_unref (link->data);
-      gimp->filter_history = g_list_delete_link (gimp->filter_history, link);
+      ligma->filter_history = g_list_delete_link (ligma->filter_history, link);
 
-      gimp_filter_history_changed (gimp);
+      ligma_filter_history_changed (ligma);
     }
 }
 
 void
-gimp_filter_history_clear (Gimp *gimp)
+ligma_filter_history_clear (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->filter_history)
+  if (ligma->filter_history)
     {
-      g_list_free_full (gimp->filter_history, (GDestroyNotify) g_object_unref);
-      gimp->filter_history = NULL;
+      g_list_free_full (ligma->filter_history, (GDestroyNotify) g_object_unref);
+      ligma->filter_history = NULL;
 
-      gimp_filter_history_changed (gimp);
+      ligma_filter_history_changed (ligma);
     }
 }
 
@@ -147,14 +147,14 @@ gimp_filter_history_clear (Gimp *gimp)
 /*  private functions  */
 
 static gint
-gimp_filter_history_compare (GimpProcedure *proc1,
-                             GimpProcedure *proc2)
+ligma_filter_history_compare (LigmaProcedure *proc1,
+                             LigmaProcedure *proc2)
 {
   /*  the procedures can have the same name, but could still be two
    *  different filters using the same operation, so also compare
    *  their menu labels
    */
-  return (gimp_procedure_name_compare (proc1, proc2) ||
-          strcmp (gimp_procedure_get_menu_label (proc1),
-                  gimp_procedure_get_menu_label (proc2)));
+  return (ligma_procedure_name_compare (proc1, proc2) ||
+          strcmp (ligma_procedure_get_menu_label (proc1),
+                  ligma_procedure_get_menu_label (proc2)));
 }

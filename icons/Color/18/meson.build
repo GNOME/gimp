@@ -11,7 +11,7 @@ foreach icon : source_icons
       colorsvg2png, '@INPUT@', '@OUTPUT@', size,
     ],
     install: true,
-    install_dir: gimpiconsdir / theme / icons_dir / 'apps',
+    install_dir: ligmaiconsdir / theme / icons_dir / 'apps',
   )
 endforeach
 

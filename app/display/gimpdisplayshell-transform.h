@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,47 +15,47 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_TRANSFORM_H__
-#define __GIMP_DISPLAY_SHELL_TRANSFORM_H__
+#ifndef __LIGMA_DISPLAY_SHELL_TRANSFORM_H__
+#define __LIGMA_DISPLAY_SHELL_TRANSFORM_H__
 
 
 /*  zoom: functions to transform from image space to unrotated display
  *  space and back, taking into account scroll offset and scale
  */
 
-void  gimp_display_shell_zoom_coords                   (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *image_coords,
-                                                        GimpCoords         *display_coords);
-void  gimp_display_shell_unzoom_coords                 (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *display_coords,
-                                                        GimpCoords         *image_coords);
+void  ligma_display_shell_zoom_coords                   (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *image_coords,
+                                                        LigmaCoords         *display_coords);
+void  ligma_display_shell_unzoom_coords                 (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *display_coords,
+                                                        LigmaCoords         *image_coords);
 
-void  gimp_display_shell_zoom_xy                       (GimpDisplayShell   *shell,
+void  ligma_display_shell_zoom_xy                       (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gint               *nx,
                                                         gint               *ny);
-void  gimp_display_shell_unzoom_xy                     (GimpDisplayShell   *shell,
+void  ligma_display_shell_unzoom_xy                     (LigmaDisplayShell   *shell,
                                                         gint                x,
                                                         gint                y,
                                                         gint               *nx,
                                                         gint               *ny,
                                                         gboolean            round);
 
-void  gimp_display_shell_zoom_xy_f                     (GimpDisplayShell   *shell,
+void  ligma_display_shell_zoom_xy_f                     (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
-void  gimp_display_shell_unzoom_xy_f                   (GimpDisplayShell   *shell,
+void  ligma_display_shell_unzoom_xy_f                   (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
 
-void  gimp_display_shell_zoom_segments                 (GimpDisplayShell   *shell,
-                                                        const GimpBoundSeg *src_segs,
-                                                        GimpSegment        *dest_segs,
+void  ligma_display_shell_zoom_segments                 (LigmaDisplayShell   *shell,
+                                                        const LigmaBoundSeg *src_segs,
+                                                        LigmaSegment        *dest_segs,
                                                         gint                n_segs,
                                                         gdouble             offset_x,
                                                         gdouble             offset_y);
@@ -65,36 +65,36 @@ void  gimp_display_shell_zoom_segments                 (GimpDisplayShell   *shel
  *  zoomed display space to rotated and flipped display space and back
  */
 
-void  gimp_display_shell_rotate_coords                 (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *image_coords,
-                                                        GimpCoords         *display_coords);
-void  gimp_display_shell_unrotate_coords               (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *display_coords,
-                                                        GimpCoords         *image_coords);
+void  ligma_display_shell_rotate_coords                 (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *image_coords,
+                                                        LigmaCoords         *display_coords);
+void  ligma_display_shell_unrotate_coords               (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *display_coords,
+                                                        LigmaCoords         *image_coords);
 
-void  gimp_display_shell_rotate_xy                     (GimpDisplayShell   *shell,
+void  ligma_display_shell_rotate_xy                     (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gint               *nx,
                                                         gint               *ny);
-void  gimp_display_shell_unrotate_xy                   (GimpDisplayShell   *shell,
+void  ligma_display_shell_unrotate_xy                   (LigmaDisplayShell   *shell,
                                                         gint                x,
                                                         gint                y,
                                                         gint               *nx,
                                                         gint               *ny);
 
-void  gimp_display_shell_rotate_xy_f                   (GimpDisplayShell   *shell,
+void  ligma_display_shell_rotate_xy_f                   (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
-void  gimp_display_shell_unrotate_xy_f                 (GimpDisplayShell   *shell,
+void  ligma_display_shell_unrotate_xy_f                 (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
 
-void  gimp_display_shell_rotate_bounds                 (GimpDisplayShell   *shell,
+void  ligma_display_shell_rotate_bounds                 (LigmaDisplayShell   *shell,
                                                         gdouble             x1,
                                                         gdouble             y1,
                                                         gdouble             x2,
@@ -103,7 +103,7 @@ void  gimp_display_shell_rotate_bounds                 (GimpDisplayShell   *shel
                                                         gdouble            *ny1,
                                                         gdouble            *nx2,
                                                         gdouble            *ny2);
-void  gimp_display_shell_unrotate_bounds               (GimpDisplayShell   *shell,
+void  ligma_display_shell_unrotate_bounds               (LigmaDisplayShell   *shell,
                                                         gdouble             x1,
                                                         gdouble             y1,
                                                         gdouble             x2,
@@ -119,37 +119,37 @@ void  gimp_display_shell_unrotate_bounds               (GimpDisplayShell   *shel
  *  rotation and flipping
  */
 
-void  gimp_display_shell_transform_coords              (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *image_coords,
-                                                        GimpCoords         *display_coords);
-void  gimp_display_shell_untransform_coords            (GimpDisplayShell   *shell,
-                                                        const GimpCoords   *display_coords,
-                                                        GimpCoords         *image_coords);
+void  ligma_display_shell_transform_coords              (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *image_coords,
+                                                        LigmaCoords         *display_coords);
+void  ligma_display_shell_untransform_coords            (LigmaDisplayShell   *shell,
+                                                        const LigmaCoords   *display_coords,
+                                                        LigmaCoords         *image_coords);
 
-void  gimp_display_shell_transform_xy                  (GimpDisplayShell   *shell,
+void  ligma_display_shell_transform_xy                  (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gint               *nx,
                                                         gint               *ny);
-void  gimp_display_shell_untransform_xy                (GimpDisplayShell   *shell,
+void  ligma_display_shell_untransform_xy                (LigmaDisplayShell   *shell,
                                                         gint                x,
                                                         gint                y,
                                                         gint               *nx,
                                                         gint               *ny,
                                                         gboolean            round);
 
-void  gimp_display_shell_transform_xy_f                (GimpDisplayShell   *shell,
+void  ligma_display_shell_transform_xy_f                (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
-void  gimp_display_shell_untransform_xy_f              (GimpDisplayShell   *shell,
+void  ligma_display_shell_untransform_xy_f              (LigmaDisplayShell   *shell,
                                                         gdouble             x,
                                                         gdouble             y,
                                                         gdouble            *nx,
                                                         gdouble            *ny);
 
-void  gimp_display_shell_transform_bounds              (GimpDisplayShell   *shell,
+void  ligma_display_shell_transform_bounds              (LigmaDisplayShell   *shell,
                                                         gdouble             x1,
                                                         gdouble             y1,
                                                         gdouble             x2,
@@ -158,7 +158,7 @@ void  gimp_display_shell_transform_bounds              (GimpDisplayShell   *shel
                                                         gdouble            *ny1,
                                                         gdouble            *nx2,
                                                         gdouble            *ny2);
-void  gimp_display_shell_untransform_bounds            (GimpDisplayShell   *shell,
+void  ligma_display_shell_untransform_bounds            (LigmaDisplayShell   *shell,
                                                         gdouble             x1,
                                                         gdouble             y1,
                                                         gdouble             x2,
@@ -168,7 +168,7 @@ void  gimp_display_shell_untransform_bounds            (GimpDisplayShell   *shel
                                                         gdouble            *nx2,
                                                         gdouble            *ny2);
 
-void  gimp_display_shell_transform_bounds_with_scale   (GimpDisplayShell   *shell,
+void  ligma_display_shell_transform_bounds_with_scale   (LigmaDisplayShell   *shell,
                                                         gdouble             scale,
                                                         gdouble             x1,
                                                         gdouble             y1,
@@ -178,7 +178,7 @@ void  gimp_display_shell_transform_bounds_with_scale   (GimpDisplayShell   *shel
                                                         gdouble            *ny1,
                                                         gdouble            *nx2,
                                                         gdouble            *ny2);
-void  gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell   *shell,
+void  ligma_display_shell_untransform_bounds_with_scale (LigmaDisplayShell   *shell,
                                                         gdouble             scale,
                                                         gdouble             x1,
                                                         gdouble             y1,
@@ -189,7 +189,7 @@ void  gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell   *shel
                                                         gdouble            *nx2,
                                                         gdouble            *ny2);
 
-void  gimp_display_shell_untransform_viewport          (GimpDisplayShell   *shell,
+void  ligma_display_shell_untransform_viewport          (LigmaDisplayShell   *shell,
                                                         gboolean            clip,
                                                         gint               *x,
                                                         gint               *y,
@@ -197,4 +197,4 @@ void  gimp_display_shell_untransform_viewport          (GimpDisplayShell   *shel
                                                         gint               *height);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_TRANSFORM_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_TRANSFORM_H__ */

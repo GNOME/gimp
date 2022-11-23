@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpview.h
- * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
+ * ligmaview.h
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_H__
-#define __GIMP_VIEW_H__
+#ifndef __LIGMA_VIEW_H__
+#define __LIGMA_VIEW_H__
 
 
-#define GIMP_TYPE_VIEW            (gimp_view_get_type ())
-#define GIMP_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW, GimpView))
-#define GIMP_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW, GimpViewClass))
-#define GIMP_IS_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW))
-#define GIMP_IS_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW))
-#define GIMP_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW, GimpViewClass))
+#define LIGMA_TYPE_VIEW            (ligma_view_get_type ())
+#define LIGMA_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW, LigmaView))
+#define LIGMA_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW, LigmaViewClass))
+#define LIGMA_IS_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW))
+#define LIGMA_IS_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW))
+#define LIGMA_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW, LigmaViewClass))
 
 
-typedef struct _GimpViewClass  GimpViewClass;
+typedef struct _LigmaViewClass  LigmaViewClass;
 
-struct _GimpView
+struct _LigmaView
 {
   GtkWidget         parent_instance;
 
   GdkWindow        *event_window;
 
-  GimpViewable     *viewable;
-  GimpViewRenderer *renderer;
+  LigmaViewable     *viewable;
+  LigmaViewRenderer *renderer;
 
   guint             clickable : 1;
   guint             eat_button_events : 1;
@@ -52,43 +52,43 @@ struct _GimpView
   GdkModifierType   press_state;
 };
 
-struct _GimpViewClass
+struct _LigmaViewClass
 {
   GtkWidgetClass  parent_class;
 
   /*  signals  */
-  void        (* set_viewable)   (GimpView        *view,
-                                  GimpViewable    *old_viewable,
-                                  GimpViewable    *new_viewable);
-  void        (* clicked)        (GimpView        *view,
+  void        (* set_viewable)   (LigmaView        *view,
+                                  LigmaViewable    *old_viewable,
+                                  LigmaViewable    *new_viewable);
+  void        (* clicked)        (LigmaView        *view,
                                   GdkModifierType  modifier_state);
-  void        (* double_clicked) (GimpView        *view);
-  void        (* context)        (GimpView        *view);
+  void        (* double_clicked) (LigmaView        *view);
+  void        (* context)        (LigmaView        *view);
 };
 
 
-GType          gimp_view_get_type          (void) G_GNUC_CONST;
+GType          ligma_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_view_new               (GimpContext   *context,
-                                            GimpViewable  *viewable,
+GtkWidget    * ligma_view_new               (LigmaContext   *context,
+                                            LigmaViewable  *viewable,
                                             gint           size,
                                             gint           border_width,
                                             gboolean       is_popup);
-GtkWidget    * gimp_view_new_full          (GimpContext   *context,
-                                            GimpViewable  *viewable,
+GtkWidget    * ligma_view_new_full          (LigmaContext   *context,
+                                            LigmaViewable  *viewable,
                                             gint           width,
                                             gint           height,
                                             gint           border_width,
                                             gboolean       is_popup,
                                             gboolean       clickable,
                                             gboolean       show_popup);
-GtkWidget    * gimp_view_new_by_types      (GimpContext   *context,
+GtkWidget    * ligma_view_new_by_types      (LigmaContext   *context,
                                             GType          view_type,
                                             GType          viewable_type,
                                             gint           size,
                                             gint           border_width,
                                             gboolean       is_popup);
-GtkWidget    * gimp_view_new_full_by_types (GimpContext   *context,
+GtkWidget    * ligma_view_new_full_by_types (LigmaContext   *context,
                                             GType          view_type,
                                             GType          viewable_type,
                                             gint           width,
@@ -98,11 +98,11 @@ GtkWidget    * gimp_view_new_full_by_types (GimpContext   *context,
                                             gboolean       clickable,
                                             gboolean       show_popup);
 
-GimpViewable * gimp_view_get_viewable      (GimpView      *view);
-void           gimp_view_set_viewable      (GimpView      *view,
-                                            GimpViewable  *viewable);
-void           gimp_view_set_expand        (GimpView      *view,
+LigmaViewable * ligma_view_get_viewable      (LigmaView      *view);
+void           ligma_view_set_viewable      (LigmaView      *view,
+                                            LigmaViewable  *viewable);
+void           ligma_view_set_expand        (LigmaView      *view,
                                             gboolean       expand);
 
 
-#endif /* __GIMP_VIEW_H__ */
+#endif /* __LIGMA_VIEW_H__ */

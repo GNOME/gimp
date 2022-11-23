@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmotionbuffer.h
+ * ligmamotionbuffer.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MOTION_BUFFER_H__
-#define __GIMP_MOTION_BUFFER_H__
+#ifndef __LIGMA_MOTION_BUFFER_H__
+#define __LIGMA_MOTION_BUFFER_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_MOTION_BUFFER            (gimp_motion_buffer_get_type ())
-#define GIMP_MOTION_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MOTION_BUFFER, GimpMotionBuffer))
-#define GIMP_MOTION_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MOTION_BUFFER, GimpMotionBufferClass))
-#define GIMP_IS_MOTION_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MOTION_BUFFER))
-#define GIMP_IS_MOTION_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MOTION_BUFFER))
-#define GIMP_MOTION_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MOTION_BUFFER, GimpMotionBufferClass))
+#define LIGMA_TYPE_MOTION_BUFFER            (ligma_motion_buffer_get_type ())
+#define LIGMA_MOTION_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MOTION_BUFFER, LigmaMotionBuffer))
+#define LIGMA_MOTION_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MOTION_BUFFER, LigmaMotionBufferClass))
+#define LIGMA_IS_MOTION_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MOTION_BUFFER))
+#define LIGMA_IS_MOTION_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MOTION_BUFFER))
+#define LIGMA_MOTION_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MOTION_BUFFER, LigmaMotionBufferClass))
 
 
-typedef struct _GimpMotionBufferClass GimpMotionBufferClass;
+typedef struct _LigmaMotionBufferClass LigmaMotionBufferClass;
 
-struct _GimpMotionBuffer
+struct _LigmaMotionBuffer
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 
   guint32     last_read_motion_time;
 
@@ -46,7 +46,7 @@ struct _GimpMotionBuffer
   gdouble     last_motion_delta_y;
   gdouble     last_motion_distance;
 
-  GimpCoords  last_coords;      /* last motion event                   */
+  LigmaCoords  last_coords;      /* last motion event                   */
 
   GArray     *event_history;
   GArray     *event_queue;
@@ -58,42 +58,42 @@ struct _GimpMotionBuffer
   GdkModifierType    last_active_state;
 };
 
-struct _GimpMotionBufferClass
+struct _LigmaMotionBufferClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void (* stroke) (GimpMotionBuffer *buffer,
-                   const GimpCoords *coords,
+  void (* stroke) (LigmaMotionBuffer *buffer,
+                   const LigmaCoords *coords,
                    guint32           time,
                    GdkModifierType   state);
-  void (* hover)  (GimpMotionBuffer *buffer,
-                   const GimpCoords *coords,
+  void (* hover)  (LigmaMotionBuffer *buffer,
+                   const LigmaCoords *coords,
                    GdkModifierType   state,
                    gboolean          proximity);
 };
 
 
-GType              gimp_motion_buffer_get_type     (void) G_GNUC_CONST;
+GType              ligma_motion_buffer_get_type     (void) G_GNUC_CONST;
 
-GimpMotionBuffer * gimp_motion_buffer_new          (void);
+LigmaMotionBuffer * ligma_motion_buffer_new          (void);
 
-void       gimp_motion_buffer_begin_stroke         (GimpMotionBuffer *buffer,
+void       ligma_motion_buffer_begin_stroke         (LigmaMotionBuffer *buffer,
                                                     guint32           time,
-                                                    GimpCoords       *last_motion);
-void       gimp_motion_buffer_end_stroke           (GimpMotionBuffer *buffer);
+                                                    LigmaCoords       *last_motion);
+void       ligma_motion_buffer_end_stroke           (LigmaMotionBuffer *buffer);
 
-gboolean   gimp_motion_buffer_motion_event         (GimpMotionBuffer *buffer,
-                                                    GimpCoords       *coords,
+gboolean   ligma_motion_buffer_motion_event         (LigmaMotionBuffer *buffer,
+                                                    LigmaCoords       *coords,
                                                     guint32           time,
                                                     gboolean          event_fill);
-guint32    gimp_motion_buffer_get_last_motion_time (GimpMotionBuffer *buffer);
+guint32    ligma_motion_buffer_get_last_motion_time (LigmaMotionBuffer *buffer);
 
-void       gimp_motion_buffer_request_stroke       (GimpMotionBuffer *buffer,
+void       ligma_motion_buffer_request_stroke       (LigmaMotionBuffer *buffer,
                                                     GdkModifierType   state,
                                                     guint32           time);
-void       gimp_motion_buffer_request_hover        (GimpMotionBuffer *buffer,
+void       ligma_motion_buffer_request_hover        (LigmaMotionBuffer *buffer,
                                                     GdkModifierType   state,
                                                     gboolean          proximity);
 
 
-#endif /* __GIMP_MOTION_BUFFER_H__ */
+#endif /* __LIGMA_MOTION_BUFFER_H__ */

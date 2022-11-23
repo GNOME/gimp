@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcolorize.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcolorize.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,14 +24,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationcolorize.h"
+#include "ligmaoperationcolorize.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,16 +44,16 @@ enum
 };
 
 
-static void     gimp_operation_colorize_get_property (GObject      *object,
+static void     ligma_operation_colorize_get_property (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
                                                       GParamSpec   *pspec);
-static void     gimp_operation_colorize_set_property (GObject      *object,
+static void     ligma_operation_colorize_set_property (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
                                                       GParamSpec   *pspec);
 
-static gboolean gimp_operation_colorize_process (GeglOperation       *operation,
+static gboolean ligma_operation_colorize_process (GeglOperation       *operation,
                                                  void                *in_buf,
                                                  void                *out_buf,
                                                  glong                samples,
@@ -61,56 +61,56 @@ static gboolean gimp_operation_colorize_process (GeglOperation       *operation,
                                                  gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationColorize, gimp_operation_colorize,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationColorize, ligma_operation_colorize,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_colorize_parent_class
+#define parent_class ligma_operation_colorize_parent_class
 
 
 static void
-gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
+ligma_operation_colorize_class_init (LigmaOperationColorizeClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
-  GimpHSL                        hsl;
-  GimpRGB                        rgb;
+  LigmaHSL                        hsl;
+  LigmaRGB                        rgb;
 
-  object_class->set_property   = gimp_operation_colorize_set_property;
-  object_class->get_property   = gimp_operation_colorize_get_property;
+  object_class->set_property   = ligma_operation_colorize_set_property;
+  object_class->get_property   = ligma_operation_colorize_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:colorize",
+                                 "name",        "ligma:colorize",
                                  "categories",  "color",
                                  "description", _("Colorize the image"),
                                  NULL);
 
-  point_class->process = gimp_operation_colorize_process;
+  point_class->process = ligma_operation_colorize_process;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
                            "hue",
                            _("Hue"),
                            _("Hue"),
                            0.0, 1.0, 0.5, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
                            "saturation",
                            _("Saturation"),
                            _("Saturation"),
                            0.0, 1.0, 0.5, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
                            "lightness",
                            _("Lightness"),
                            _("Lightness"),
                            -1.0, 1.0, 0.0, 0);
 
-  gimp_hsl_set (&hsl, 0.5, 0.5, 0.5);
-  gimp_hsl_set_alpha (&hsl, 1.0);
-  gimp_hsl_to_rgb (&hsl, &rgb);
+  ligma_hsl_set (&hsl, 0.5, 0.5, 0.5);
+  ligma_hsl_set_alpha (&hsl, 1.0);
+  ligma_hsl_to_rgb (&hsl, &rgb);
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color",
+                                   ligma_param_spec_rgb ("color",
                                                         _("Color"),
                                                         _("Color"),
                                                         FALSE, &rgb,
@@ -118,17 +118,17 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
 }
 
 static void
-gimp_operation_colorize_init (GimpOperationColorize *self)
+ligma_operation_colorize_init (LigmaOperationColorize *self)
 {
 }
 
 static void
-gimp_operation_colorize_get_property (GObject    *object,
+ligma_operation_colorize_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpOperationColorize *self = GIMP_OPERATION_COLORIZE (object);
+  LigmaOperationColorize *self = LIGMA_OPERATION_COLORIZE (object);
 
   switch (property_id)
     {
@@ -146,16 +146,16 @@ gimp_operation_colorize_get_property (GObject    *object,
 
     case PROP_COLOR:
       {
-        GimpHSL hsl;
-        GimpRGB rgb;
+        LigmaHSL hsl;
+        LigmaRGB rgb;
 
-        gimp_hsl_set (&hsl,
+        ligma_hsl_set (&hsl,
                       self->hue,
                       self->saturation,
                       (self->lightness + 1.0) / 2.0);
-        gimp_hsl_set_alpha (&hsl, 1.0);
-        gimp_hsl_to_rgb (&hsl, &rgb);
-        gimp_value_set_rgb (value, &rgb);
+        ligma_hsl_set_alpha (&hsl, 1.0);
+        ligma_hsl_to_rgb (&hsl, &rgb);
+        ligma_value_set_rgb (value, &rgb);
       }
       break;
 
@@ -166,12 +166,12 @@ gimp_operation_colorize_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_colorize_set_property (GObject      *object,
+ligma_operation_colorize_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpOperationColorize *self = GIMP_OPERATION_COLORIZE (object);
+  LigmaOperationColorize *self = LIGMA_OPERATION_COLORIZE (object);
 
   switch (property_id)
     {
@@ -192,11 +192,11 @@ gimp_operation_colorize_set_property (GObject      *object,
 
     case PROP_COLOR:
       {
-        GimpRGB rgb;
-        GimpHSL hsl;
+        LigmaRGB rgb;
+        LigmaHSL hsl;
 
-        gimp_value_get_rgb (value, &rgb);
-        gimp_rgb_to_hsl (&rgb, &hsl);
+        ligma_value_get_rgb (value, &rgb);
+        ligma_rgb_to_hsl (&rgb, &hsl);
 
         if (hsl.h == -1)
           hsl.h = self->hue;
@@ -219,25 +219,25 @@ gimp_operation_colorize_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_operation_colorize_process (GeglOperation       *operation,
+ligma_operation_colorize_process (GeglOperation       *operation,
                                  void                *in_buf,
                                  void                *out_buf,
                                  glong                samples,
                                  const GeglRectangle *roi,
                                  gint                 level)
 {
-  GimpOperationColorize *colorize  = GIMP_OPERATION_COLORIZE (operation);
+  LigmaOperationColorize *colorize  = LIGMA_OPERATION_COLORIZE (operation);
   gfloat                *src    = in_buf;
   gfloat                *dest   = out_buf;
-  GimpHSL                hsl;
+  LigmaHSL                hsl;
 
   hsl.h = colorize->hue;
   hsl.s = colorize->saturation;
 
   while (samples--)
     {
-      GimpRGB rgb;
-      gfloat  lum = GIMP_RGB_LUMINANCE (src[RED],
+      LigmaRGB rgb;
+      gfloat  lum = LIGMA_RGB_LUMINANCE (src[RED],
                                         src[GREEN],
                                         src[BLUE]);
 
@@ -254,7 +254,7 @@ gimp_operation_colorize_process (GeglOperation       *operation,
 
       hsl.l = lum;
 
-      gimp_hsl_to_rgb (&hsl, &rgb);
+      ligma_hsl_to_rgb (&hsl, &rgb);
 
       /*  the code in base/colorize.c would multiply r,b,g with lum,
        *  but this is a bug since it should multiply with 255. We

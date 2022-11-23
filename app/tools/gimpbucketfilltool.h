@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,44 +15,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_BUCKET_FILL_TOOL_H__
-#define  __GIMP_BUCKET_FILL_TOOL_H__
+#ifndef  __LIGMA_BUCKET_FILL_TOOL_H__
+#define  __LIGMA_BUCKET_FILL_TOOL_H__
 
 
-#include "gimpcolortool.h"
+#include "ligmacolortool.h"
 
 
-#define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())
-#define GIMP_BUCKET_FILL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillTool))
-#define GIMP_BUCKET_FILL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
-#define GIMP_IS_BUCKET_FILL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUCKET_FILL_TOOL))
-#define GIMP_IS_BUCKET_FILL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUCKET_FILL_TOOL))
-#define GIMP_BUCKET_FILL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
+#define LIGMA_TYPE_BUCKET_FILL_TOOL            (ligma_bucket_fill_tool_get_type ())
+#define LIGMA_BUCKET_FILL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUCKET_FILL_TOOL, LigmaBucketFillTool))
+#define LIGMA_BUCKET_FILL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUCKET_FILL_TOOL, LigmaBucketFillToolClass))
+#define LIGMA_IS_BUCKET_FILL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUCKET_FILL_TOOL))
+#define LIGMA_IS_BUCKET_FILL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUCKET_FILL_TOOL))
+#define LIGMA_BUCKET_FILL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUCKET_FILL_TOOL, LigmaBucketFillToolClass))
 
-#define GIMP_BUCKET_FILL_TOOL_GET_OPTIONS(t)  (GIMP_BUCKET_FILL_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_BUCKET_FILL_TOOL_GET_OPTIONS(t)  (LIGMA_BUCKET_FILL_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpBucketFillTool      GimpBucketFillTool;
-typedef struct _GimpBucketFillToolClass GimpBucketFillToolClass;
-typedef struct _GimpBucketFillToolPrivate GimpBucketFillToolPrivate;
+typedef struct _LigmaBucketFillTool      LigmaBucketFillTool;
+typedef struct _LigmaBucketFillToolClass LigmaBucketFillToolClass;
+typedef struct _LigmaBucketFillToolPrivate LigmaBucketFillToolPrivate;
 
-struct _GimpBucketFillTool
+struct _LigmaBucketFillTool
 {
-  GimpColorTool              parent_instance;
+  LigmaColorTool              parent_instance;
 
-  GimpBucketFillToolPrivate *priv;
+  LigmaBucketFillToolPrivate *priv;
 };
 
-struct _GimpBucketFillToolClass
+struct _LigmaBucketFillToolClass
 {
-  GimpColorToolClass  parent_class;
+  LigmaColorToolClass  parent_class;
 };
 
 
-void    gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_bucket_fill_tool_register (LigmaToolRegisterCallback  callback,
                                         gpointer                  data);
 
-GType   gimp_bucket_fill_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_bucket_fill_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_BUCKET_FILL_TOOL_H__  */
+#endif  /*  __LIGMA_BUCKET_FILL_TOOL_H__  */

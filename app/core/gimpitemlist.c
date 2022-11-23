@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,22 +23,22 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimpitem.h"
-#include "gimpitemlist.h"
-#include "gimplayer.h"
-#include "gimpmarshal.h"
+#include "ligma.h"
+#include "ligmachannel.h"
+#include "ligmaimage.h"
+#include "ligmaitem.h"
+#include "ligmaitemlist.h"
+#include "ligmalayer.h"
+#include "ligmamarshal.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -59,14 +59,14 @@ enum
 };
 
 
-typedef struct _GimpItemListPrivate GimpItemListPrivate;
+typedef struct _LigmaItemListPrivate LigmaItemListPrivate;
 
-struct _GimpItemListPrivate
+struct _LigmaItemListPrivate
 {
-  GimpImage        *image;
+  LigmaImage        *image;
 
   gboolean          is_pattern;    /* Whether a named fixed set or a pattern-search. */
-  GimpSelectMethod  select_method; /* Pattern format if is_pattern is TRUE           */
+  LigmaSelectMethod  select_method; /* Pattern format if is_pattern is TRUE           */
 
   GList            *items;         /* Fixed item list if is_pattern is TRUE.         */
   GList            *deleted_items; /* Removed item list kept for undoes.             */
@@ -76,182 +76,182 @@ struct _GimpItemListPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_item_list_constructed         (GObject        *object);
-static void       gimp_item_list_dispose             (GObject        *object);
-static void       gimp_item_list_finalize            (GObject        *object);
-static void       gimp_item_list_set_property        (GObject        *object,
+static void       ligma_item_list_constructed         (GObject        *object);
+static void       ligma_item_list_dispose             (GObject        *object);
+static void       ligma_item_list_finalize            (GObject        *object);
+static void       ligma_item_list_set_property        (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
                                                       GParamSpec     *pspec);
-static void       gimp_item_list_get_property        (GObject        *object,
+static void       ligma_item_list_get_property        (GObject        *object,
                                                       guint           property_id,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
 
-static void       gimp_item_list_item_add            (GimpContainer  *container,
-                                                      GimpObject     *object,
-                                                      GimpItemList   *set);
-static void       gimp_item_list_item_remove         (GimpContainer  *container,
-                                                      GimpObject     *object,
-                                                      GimpItemList   *set);
+static void       ligma_item_list_item_add            (LigmaContainer  *container,
+                                                      LigmaObject     *object,
+                                                      LigmaItemList   *set);
+static void       ligma_item_list_item_remove         (LigmaContainer  *container,
+                                                      LigmaObject     *object,
+                                                      LigmaItemList   *set);
 
-static GList *    gimp_item_list_get_items_by_substr (GimpItemList   *set,
+static GList *    ligma_item_list_get_items_by_substr (LigmaItemList   *set,
                                                       const gchar    *pattern,
                                                       GError        **error);
-static GList *    gimp_item_list_get_items_by_glob   (GimpItemList   *set,
+static GList *    ligma_item_list_get_items_by_glob   (LigmaItemList   *set,
                                                       const gchar    *pattern,
                                                       GError        **error);
-static GList *    gimp_item_list_get_items_by_regexp (GimpItemList   *set,
+static GList *    ligma_item_list_get_items_by_regexp (LigmaItemList   *set,
                                                       const gchar    *pattern,
                                                       GError        **error);
-static void       gimp_item_list_clean_deleted_items (GimpItemList   *set,
-                                                      GimpItem       *searched,
+static void       ligma_item_list_clean_deleted_items (LigmaItemList   *set,
+                                                      LigmaItem       *searched,
                                                       gboolean       *found);
-static void       gimp_item_list_free_deleted_item   (GWeakRef       *item);
+static void       ligma_item_list_free_deleted_item   (GWeakRef       *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpItemList, gimp_item_list, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaItemList, ligma_item_list, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_item_list_parent_class
+#define parent_class ligma_item_list_parent_class
 
-static guint       gimp_item_list_signals[LAST_SIGNAL] = { 0 };
-static GParamSpec *gimp_item_list_props[N_PROPS]       = { NULL, };
+static guint       ligma_item_list_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *ligma_item_list_props[N_PROPS]       = { NULL, };
 
 static void
-gimp_item_list_class_init (GimpItemListClass *klass)
+ligma_item_list_class_init (LigmaItemListClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   /**
-   * GimpItemList::empty:
+   * LigmaItemList::empty:
    *
    * Sent when the item set changed and would return an empty set of
    * items.
    */
-  gimp_item_list_signals[EMPTY] =
+  ligma_item_list_signals[EMPTY] =
     g_signal_new ("empty",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpItemListClass, empty),
+                  G_STRUCT_OFFSET (LigmaItemListClass, empty),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed       = gimp_item_list_constructed;
-  object_class->dispose           = gimp_item_list_dispose;
-  object_class->finalize          = gimp_item_list_finalize;
-  object_class->set_property      = gimp_item_list_set_property;
-  object_class->get_property      = gimp_item_list_get_property;
+  object_class->constructed       = ligma_item_list_constructed;
+  object_class->dispose           = ligma_item_list_dispose;
+  object_class->finalize          = ligma_item_list_finalize;
+  object_class->set_property      = ligma_item_list_set_property;
+  object_class->get_property      = ligma_item_list_get_property;
 
-  gimp_item_list_props[PROP_IMAGE]         = g_param_spec_object ("image", NULL, NULL,
-                                                                 GIMP_TYPE_IMAGE,
-                                                                 GIMP_PARAM_READWRITE |
+  ligma_item_list_props[PROP_IMAGE]         = g_param_spec_object ("image", NULL, NULL,
+                                                                 LIGMA_TYPE_IMAGE,
+                                                                 LIGMA_PARAM_READWRITE |
                                                                  G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_IS_PATTERN]    = g_param_spec_boolean ("is-pattern", NULL, NULL,
+  ligma_item_list_props[PROP_IS_PATTERN]    = g_param_spec_boolean ("is-pattern", NULL, NULL,
                                                                    FALSE,
-                                                                   GIMP_PARAM_READWRITE |
+                                                                   LIGMA_PARAM_READWRITE |
                                                                    G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_SELECT_METHOD] = g_param_spec_enum ("select-method", NULL, NULL,
-                                                                GIMP_TYPE_SELECT_METHOD,
-                                                                GIMP_SELECT_PLAIN_TEXT,
-                                                                GIMP_PARAM_READWRITE |
+  ligma_item_list_props[PROP_SELECT_METHOD] = g_param_spec_enum ("select-method", NULL, NULL,
+                                                                LIGMA_TYPE_SELECT_METHOD,
+                                                                LIGMA_SELECT_PLAIN_TEXT,
+                                                                LIGMA_PARAM_READWRITE |
                                                                 G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_ITEMS]         = g_param_spec_pointer ("items",
+  ligma_item_list_props[PROP_ITEMS]         = g_param_spec_pointer ("items",
                                                                    NULL, NULL,
-                                                                   GIMP_PARAM_READWRITE |
+                                                                   LIGMA_PARAM_READWRITE |
                                                                    G_PARAM_CONSTRUCT_ONLY);
-  gimp_item_list_props[PROP_ITEM_TYPE]     = g_param_spec_gtype ("item-type",
+  ligma_item_list_props[PROP_ITEM_TYPE]     = g_param_spec_gtype ("item-type",
                                                                  NULL, NULL,
                                                                  G_TYPE_NONE,
-                                                                 GIMP_PARAM_READWRITE |
+                                                                 LIGMA_PARAM_READWRITE |
                                                                  G_PARAM_CONSTRUCT_ONLY);
 
-  g_object_class_install_properties (object_class, N_PROPS, gimp_item_list_props);
+  g_object_class_install_properties (object_class, N_PROPS, ligma_item_list_props);
 }
 
 static void
-gimp_item_list_init (GimpItemList *set)
+ligma_item_list_init (LigmaItemList *set)
 {
-  set->p = gimp_item_list_get_instance_private (set);
+  set->p = ligma_item_list_get_instance_private (set);
 
   set->p->items         = NULL;
-  set->p->select_method = GIMP_SELECT_PLAIN_TEXT;
+  set->p->select_method = LIGMA_SELECT_PLAIN_TEXT;
   set->p->is_pattern    = FALSE;
 }
 
 static void
-gimp_item_list_constructed (GObject *object)
+ligma_item_list_constructed (GObject *object)
 {
-  GimpItemList *set = GIMP_ITEM_LIST (object);
+  LigmaItemList *set = LIGMA_ITEM_LIST (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_IMAGE (set->p->image));
-  gimp_assert (set->p->item_type == GIMP_TYPE_LAYER   ||
-               set->p->item_type == GIMP_TYPE_VECTORS ||
-               set->p->item_type == GIMP_TYPE_CHANNEL);
+  ligma_assert (LIGMA_IS_IMAGE (set->p->image));
+  ligma_assert (set->p->item_type == LIGMA_TYPE_LAYER   ||
+               set->p->item_type == LIGMA_TYPE_VECTORS ||
+               set->p->item_type == LIGMA_TYPE_CHANNEL);
 
   if (! set->p->is_pattern)
     {
-      GimpContainer *container;
+      LigmaContainer *container;
 
-      if (set->p->item_type == GIMP_TYPE_LAYER)
-        container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_VECTORS)
-        container = gimp_image_get_vectors (set->p->image);
+      if (set->p->item_type == LIGMA_TYPE_LAYER)
+        container = ligma_image_get_layers (set->p->image);
+      else if (set->p->item_type == LIGMA_TYPE_VECTORS)
+        container = ligma_image_get_vectors (set->p->image);
       else
-        container = gimp_image_get_channels (set->p->image);
+        container = ligma_image_get_channels (set->p->image);
       g_signal_connect (container, "remove",
-                        G_CALLBACK (gimp_item_list_item_remove),
+                        G_CALLBACK (ligma_item_list_item_remove),
                         set);
       g_signal_connect (container, "add",
-                        G_CALLBACK (gimp_item_list_item_add),
+                        G_CALLBACK (ligma_item_list_item_add),
                         set);
     }
 }
 
 static void
-gimp_item_list_dispose (GObject *object)
+ligma_item_list_dispose (GObject *object)
 {
-  GimpItemList *set = GIMP_ITEM_LIST (object);
+  LigmaItemList *set = LIGMA_ITEM_LIST (object);
 
   if (! set->p->is_pattern)
     {
-      GimpContainer *container;
+      LigmaContainer *container;
 
-      if (set->p->item_type == GIMP_TYPE_LAYER)
-        container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_VECTORS)
-        container = gimp_image_get_vectors (set->p->image);
+      if (set->p->item_type == LIGMA_TYPE_LAYER)
+        container = ligma_image_get_layers (set->p->image);
+      else if (set->p->item_type == LIGMA_TYPE_VECTORS)
+        container = ligma_image_get_vectors (set->p->image);
       else
-        container = gimp_image_get_channels (set->p->image);
+        container = ligma_image_get_channels (set->p->image);
       g_signal_handlers_disconnect_by_func (container,
-                                            G_CALLBACK (gimp_item_list_item_remove),
+                                            G_CALLBACK (ligma_item_list_item_remove),
                                             set);
       g_signal_handlers_disconnect_by_func (container,
-                                            G_CALLBACK (gimp_item_list_item_add),
+                                            G_CALLBACK (ligma_item_list_item_add),
                                             set);
     }
 }
 
 static void
-gimp_item_list_finalize (GObject *object)
+ligma_item_list_finalize (GObject *object)
 {
-  GimpItemList *set = GIMP_ITEM_LIST (object);
+  LigmaItemList *set = LIGMA_ITEM_LIST (object);
 
   g_list_free (set->p->items);
   g_list_free_full (set->p->deleted_items,
-                    (GDestroyNotify) gimp_item_list_free_deleted_item);
+                    (GDestroyNotify) ligma_item_list_free_deleted_item);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_item_list_set_property (GObject      *object,
+ligma_item_list_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpItemList *set = GIMP_ITEM_LIST (object);
+  LigmaItemList *set = LIGMA_ITEM_LIST (object);
 
   switch (property_id)
     {
@@ -278,12 +278,12 @@ gimp_item_list_set_property (GObject      *object,
 }
 
 static void
-gimp_item_list_get_property (GObject    *object,
+ligma_item_list_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpItemList *set = GIMP_ITEM_LIST (object);
+  LigmaItemList *set = LIGMA_ITEM_LIST (object);
 
   switch (property_id)
     {
@@ -314,9 +314,9 @@ gimp_item_list_get_property (GObject    *object,
 
 
 /**
- * gimp_item_list_named_new:
- * @image:     The new item_list's #GimpImage.
- * @item_type: The type of #GimpItem in the list.
+ * ligma_item_list_named_new:
+ * @image:     The new item_list's #LigmaImage.
+ * @item_type: The type of #LigmaItem in the list.
  * @name:      The name to assign the item list.
  * @items:     The items in the list.
  *
@@ -327,38 +327,38 @@ gimp_item_list_get_property (GObject    *object,
  * If @items is %NULL, the current item selection of type @item_type in
  * @image is used. If this selection is empty, then %NULL is returned.
  *
- * Returns: The newly created #GimpItemList of %NULL if it corresponds
+ * Returns: The newly created #LigmaItemList of %NULL if it corresponds
  *          to no items.
  */
-GimpItemList *
-gimp_item_list_named_new (GimpImage   *image,
+LigmaItemList *
+ligma_item_list_named_new (LigmaImage   *image,
                           GType        item_type,
                           const gchar *name,
                           GList       *items)
 {
-  GimpItemList *set;
+  LigmaItemList *set;
   GList        *iter;
 
-  g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (g_type_is_a (item_type, LIGMA_TYPE_ITEM), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   for (iter = items; iter; iter = iter->next)
     g_return_val_if_fail (g_type_is_a (G_OBJECT_TYPE (iter->data), item_type), NULL);
 
   if (! items)
     {
-      if (item_type == GIMP_TYPE_LAYER)
-        items = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        items = gimp_image_get_selected_vectors (image);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        items = gimp_image_get_selected_channels (image);
+      if (item_type == LIGMA_TYPE_LAYER)
+        items = ligma_image_get_selected_layers (image);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        items = ligma_image_get_selected_vectors (image);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        items = ligma_image_get_selected_channels (image);
 
       if (! items)
         return NULL;
     }
 
-  set = g_object_new (GIMP_TYPE_ITEM_LIST,
+  set = g_object_new (LIGMA_TYPE_ITEM_LIST,
                       "image",      image,
                       "name",       name,
                       "is-pattern", FALSE,
@@ -370,29 +370,29 @@ gimp_item_list_named_new (GimpImage   *image,
 }
 
 /**
- * gimp_item_list_pattern_new:
- * @image:     The new item_list's #GimpImage.
- * @item_type: The type of #GimpItem in the list.
+ * ligma_item_list_pattern_new:
+ * @image:     The new item_list's #LigmaImage.
+ * @item_type: The type of #LigmaItem in the list.
  * @pattern_syntax: type of patterns we are handling.
  * @pattern:   The pattern generating the contents of the list.
  *
  * Create a list of items generated from a pattern. It cannot be edited.
  *
- * Returns: The newly created #GimpItemList.
+ * Returns: The newly created #LigmaItemList.
  */
-GimpItemList *
-gimp_item_list_pattern_new (GimpImage        *image,
+LigmaItemList *
+ligma_item_list_pattern_new (LigmaImage        *image,
                             GType             item_type,
-                            GimpSelectMethod  pattern_syntax,
+                            LigmaSelectMethod  pattern_syntax,
                             const gchar      *pattern)
 {
-  GimpItemList *set;
+  LigmaItemList *set;
 
-  g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (g_type_is_a (item_type, LIGMA_TYPE_ITEM), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   /* TODO: check pattern first and fail if invalid. */
-  set = g_object_new (GIMP_TYPE_ITEM_LIST,
+  set = g_object_new (LIGMA_TYPE_ITEM_LIST,
                       "image",          image,
                       "name",           pattern,
                       "is-pattern",     TRUE,
@@ -404,46 +404,46 @@ gimp_item_list_pattern_new (GimpImage        *image,
 }
 
 GType
-gimp_item_list_get_item_type (GimpItemList *set)
+ligma_item_list_get_item_type (LigmaItemList *set)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), FALSE);
 
   return set->p->item_type;
 }
 
 /**
- * gimp_item_list_get_items:
+ * ligma_item_list_get_items:
  * @set:
  *
  * Returns: (transfer container): The unordered list of items
  *          represented by @set to be freed with g_list_free().
  */
 GList *
-gimp_item_list_get_items (GimpItemList  *set,
+ligma_item_list_get_items (LigmaItemList  *set,
                           GError       **error)
 {
   GList *items = NULL;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (set->p->is_pattern)
     {
       switch (set->p->select_method)
         {
-        case GIMP_SELECT_PLAIN_TEXT:
-          items = gimp_item_list_get_items_by_substr (set,
-                                                      gimp_object_get_name (set),
+        case LIGMA_SELECT_PLAIN_TEXT:
+          items = ligma_item_list_get_items_by_substr (set,
+                                                      ligma_object_get_name (set),
                                                       error);
           break;
-        case GIMP_SELECT_GLOB_PATTERN:
-          items = gimp_item_list_get_items_by_glob (set,
-                                                    gimp_object_get_name (set),
+        case LIGMA_SELECT_GLOB_PATTERN:
+          items = ligma_item_list_get_items_by_glob (set,
+                                                    ligma_object_get_name (set),
                                                     error);
           break;
-        case GIMP_SELECT_REGEX_PATTERN:
-          items = gimp_item_list_get_items_by_regexp (set,
-                                                      gimp_object_get_name (set),
+        case LIGMA_SELECT_REGEX_PATTERN:
+          items = ligma_item_list_get_items_by_regexp (set,
+                                                      ligma_object_get_name (set),
                                                       error);
           break;
         }
@@ -457,8 +457,8 @@ gimp_item_list_get_items (GimpItemList  *set,
 }
 
 /**
- * gimp_item_list_is_pattern:
- * @set:            The #GimpItemList.
+ * ligma_item_list_is_pattern:
+ * @set:            The #LigmaItemList.
  * @pattern_syntax: The type of patterns @set handles.
  *
  * Indicate if @set is a pattern list. If the returned value is %TRUE,
@@ -468,10 +468,10 @@ gimp_item_list_get_items (GimpItemList  *set,
  *          list.
  */
 gboolean
-gimp_item_list_is_pattern (GimpItemList      *set,
-                           GimpSelectMethod  *pattern_syntax)
+ligma_item_list_is_pattern (LigmaItemList      *set,
+                           LigmaSelectMethod  *pattern_syntax)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), FALSE);
 
   if (set->p->is_pattern && pattern_syntax)
     *pattern_syntax = set->p->select_method;
@@ -480,18 +480,18 @@ gimp_item_list_is_pattern (GimpItemList      *set,
 }
 
 /**
- * gimp_item_list_is_pattern:
- * @set:  The #GimpItemList.
- * @item: #GimpItem to add to @set.
+ * ligma_item_list_is_pattern:
+ * @set:  The #LigmaItemList.
+ * @item: #LigmaItem to add to @set.
  *
  * Add @item to the named list @set whose item type must also agree.
  */
 void
-gimp_item_list_add (GimpItemList *set,
-                    GimpItem     *item)
+ligma_item_list_add (LigmaItemList *set,
+                    LigmaItem     *item)
 {
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
-  g_return_if_fail (! gimp_item_list_is_pattern (set, NULL));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
+  g_return_if_fail (! ligma_item_list_is_pattern (set, NULL));
   g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (item), set->p->item_type));
 
   set->p->items = g_list_prepend (set->p->items, item);
@@ -502,13 +502,13 @@ gimp_item_list_add (GimpItemList *set,
 
 
 static void
-gimp_item_list_item_add (GimpContainer  *container,
-                         GimpObject     *object,
-                         GimpItemList   *set)
+ligma_item_list_item_add (LigmaContainer  *container,
+                         LigmaObject     *object,
+                         LigmaItemList   *set)
 {
   gboolean found = FALSE;
 
-  gimp_item_list_clean_deleted_items (set, GIMP_ITEM (object), &found);
+  ligma_item_list_clean_deleted_items (set, LIGMA_ITEM (object), &found);
 
   if (found)
     {
@@ -520,9 +520,9 @@ gimp_item_list_item_add (GimpContainer  *container,
 }
 
 static void
-gimp_item_list_item_remove (GimpContainer  *container,
-                            GimpObject     *object,
-                            GimpItemList   *set)
+ligma_item_list_item_remove (LigmaContainer  *container,
+                            LigmaObject     *object,
+                            LigmaItemList   *set)
 {
   GWeakRef *deleted_item = g_slice_new (GWeakRef);
 
@@ -538,7 +538,7 @@ gimp_item_list_item_remove (GimpContainer  *container,
 }
 
 /*
- * @gimp_item_list_get_items_by_substr:
+ * @ligma_item_list_get_items_by_substr:
  * @image:
  * @pattern:
  * @error: unused #GError.
@@ -551,7 +551,7 @@ gimp_item_list_item_remove (GimpContainer  *container,
  *          selected items stay the same), %FALSE otherwise.
  */
 static GList *
-gimp_item_list_get_items_by_substr (GimpItemList  *set,
+ligma_item_list_get_items_by_substr (LigmaItemList  *set,
                                     const gchar   *pattern,
                                     GError       **error)
 {
@@ -559,19 +559,19 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
   GList  *match = NULL;
   GList  *iter;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
   if (pattern == NULL)
     return NULL;
 
-  if (set->p->item_type == GIMP_TYPE_LAYER)
+  if (set->p->item_type == LIGMA_TYPE_LAYER)
     {
-      items = gimp_image_get_layer_list (set->p->image);
+      items = ligma_image_get_layer_list (set->p->image);
     }
   else
     {
-      g_critical ("%s: only list of GimpLayer supported for now.",
+      g_critical ("%s: only list of LigmaLayer supported for now.",
                   G_STRFUNC);
       return NULL;
     }
@@ -579,7 +579,7 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
   for (iter = items; iter; iter = iter->next)
     {
       if (g_str_match_string (pattern,
-                              gimp_object_get_name (iter->data),
+                              ligma_object_get_name (iter->data),
                               TRUE))
         match = g_list_prepend (match, iter->data);
     }
@@ -588,7 +588,7 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
 }
 
 /*
- * @gimp_item_list_get_items_by_glob:
+ * @ligma_item_list_get_items_by_glob:
  * @image:
  * @pattern:
  * @error: unused #GError.
@@ -600,7 +600,7 @@ gimp_item_list_get_items_by_substr (GimpItemList  *set,
  *          selected items stay the same), %FALSE otherwise.
  */
 static GList *
-gimp_item_list_get_items_by_glob (GimpItemList  *set,
+ligma_item_list_get_items_by_glob (LigmaItemList  *set,
                                   const gchar   *pattern,
                                   GError       **error)
 {
@@ -609,19 +609,19 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
   GList        *iter;
   GPatternSpec *spec;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
   if (pattern == NULL)
     return NULL;
 
-  if (set->p->item_type == GIMP_TYPE_LAYER)
+  if (set->p->item_type == LIGMA_TYPE_LAYER)
     {
-      items = gimp_image_get_layer_list (set->p->image);
+      items = ligma_image_get_layer_list (set->p->image);
     }
   else
     {
-      g_critical ("%s: only list of GimpLayer supported for now.",
+      g_critical ("%s: only list of LigmaLayer supported for now.",
                   G_STRFUNC);
       return NULL;
     }
@@ -630,7 +630,7 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
   for (iter = items; iter; iter = iter->next)
     {
       if (g_pattern_match_string (spec,
-                                  gimp_object_get_name (iter->data)))
+                                  ligma_object_get_name (iter->data)))
         match = g_list_prepend (match, iter->data);
     }
   g_pattern_spec_free (spec);
@@ -639,7 +639,7 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
 }
 
 /*
- * @gimp_item_list_get_items_by_regexp:
+ * @ligma_item_list_get_items_by_regexp:
  * @image:
  * @pattern:
  * @error:
@@ -653,7 +653,7 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
  *          @error will be filled with the appropriate error).
  */
 static GList *
-gimp_item_list_get_items_by_regexp (GimpItemList  *set,
+ligma_item_list_get_items_by_regexp (LigmaItemList  *set,
                                     const gchar   *pattern,
                                     GError       **error)
 {
@@ -662,7 +662,7 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
   GList  *iter;
   GRegex *regex;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_LIST (set), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_LIST (set), FALSE);
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
@@ -671,13 +671,13 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
   if (regex == NULL)
     return NULL;
 
-  if (set->p->item_type == GIMP_TYPE_LAYER)
+  if (set->p->item_type == LIGMA_TYPE_LAYER)
     {
-      items = gimp_image_get_layer_list (set->p->image);
+      items = ligma_image_get_layer_list (set->p->image);
     }
   else
     {
-      g_critical ("%s: only list of GimpLayer supported for now.",
+      g_critical ("%s: only list of LigmaLayer supported for now.",
                   G_STRFUNC);
       return NULL;
     }
@@ -685,7 +685,7 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
   for (iter = items; iter; iter = iter->next)
     {
       if (g_regex_match (regex,
-                         gimp_object_get_name (iter->data),
+                         ligma_object_get_name (iter->data),
                          0, NULL))
         match = g_list_prepend (match, iter->data);
     }
@@ -703,18 +703,18 @@ gimp_item_list_get_items_by_regexp (GimpItemList  *set,
  * with @found set to %FALSE initially.
  */
 static void
-gimp_item_list_clean_deleted_items (GimpItemList *set,
-                                    GimpItem     *searched,
+ligma_item_list_clean_deleted_items (LigmaItemList *set,
+                                    LigmaItem     *searched,
                                     gboolean     *found)
 {
   GList *iter;
 
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
   g_return_if_fail (! searched || (found && *found == FALSE));
 
   for (iter = set->p->deleted_items; iter; iter = iter->next)
     {
-      GimpItem *item = g_weak_ref_get (iter->data);
+      LigmaItem *item = g_weak_ref_get (iter->data);
 
       if (item == NULL)
         {
@@ -737,13 +737,13 @@ gimp_item_list_clean_deleted_items (GimpItemList *set,
     }
 
   if (iter)
-    gimp_item_list_clean_deleted_items (set,
+    ligma_item_list_clean_deleted_items (set,
                                         (found && *found) ? NULL : searched,
                                         found);
 }
 
 static void
-gimp_item_list_free_deleted_item (GWeakRef *item)
+ligma_item_list_free_deleted_item (GWeakRef *item)
 {
   g_weak_ref_clear (item);
 

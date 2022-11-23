@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * modifiers.h
@@ -22,14 +22,14 @@
 #define __MODIFIERS_H__
 
 
-void       modifiers_init    (Gimp       *gimp);
-void       modifiers_exit    (Gimp       *gimp);
+void       modifiers_init    (Ligma       *ligma);
+void       modifiers_exit    (Ligma       *ligma);
 
-void       modifiers_restore (Gimp       *gimp);
-void       modifiers_save    (Gimp       *gimp,
+void       modifiers_restore (Ligma       *ligma);
+void       modifiers_save    (Ligma       *ligma,
                               gboolean    always_save);
 
-gboolean   modifiers_clear   (Gimp       *gimp,
+gboolean   modifiers_clear   (Ligma       *ligma,
                               GError    **error);
 
 

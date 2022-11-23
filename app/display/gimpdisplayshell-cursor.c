@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,44 +22,44 @@
 
 #include "display-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpcursor.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimpsessioninfo.h"
+#include "widgets/ligmacursor.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmasessioninfo.h"
 
-#include "gimpcanvascursor.h"
-#include "gimpdisplay.h"
-#include "gimpcursorview.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-cursor.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpstatusbar.h"
+#include "ligmacanvascursor.h"
+#include "ligmadisplay.h"
+#include "ligmacursorview.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-cursor.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmastatusbar.h"
 
 
-static void  gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
-                                                 GimpCursorType      cursor_type,
-                                                 GimpToolCursorType  tool_cursor,
-                                                 GimpCursorModifier  modifier,
+static void  ligma_display_shell_real_set_cursor (LigmaDisplayShell   *shell,
+                                                 LigmaCursorType      cursor_type,
+                                                 LigmaToolCursorType  tool_cursor,
+                                                 LigmaCursorModifier  modifier,
                                                  gboolean            always_install);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
-                               GimpCursorType      cursor_type,
-                               GimpToolCursorType  tool_cursor,
-                               GimpCursorModifier  modifier)
+ligma_display_shell_set_cursor (LigmaDisplayShell   *shell,
+                               LigmaCursorType      cursor_type,
+                               LigmaToolCursorType  tool_cursor,
+                               LigmaCursorModifier  modifier)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->using_override_cursor)
     {
-      gimp_display_shell_real_set_cursor (shell,
+      ligma_display_shell_real_set_cursor (shell,
                                           cursor_type,
                                           tool_cursor,
                                           modifier,
@@ -68,22 +68,22 @@ gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
 }
 
 void
-gimp_display_shell_unset_cursor (GimpDisplayShell *shell)
+ligma_display_shell_unset_cursor (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->using_override_cursor)
     {
-      gimp_display_shell_real_set_cursor (shell,
-                                          (GimpCursorType) -1, 0, 0, FALSE);
+      ligma_display_shell_real_set_cursor (shell,
+                                          (LigmaCursorType) -1, 0, 0, FALSE);
     }
 }
 
 void
-gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
-                                        GimpCursorType    cursor_type)
+ligma_display_shell_set_override_cursor (LigmaDisplayShell *shell,
+                                        LigmaCursorType    cursor_type)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->using_override_cursor ||
       (shell->using_override_cursor &&
@@ -92,24 +92,24 @@ gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
       shell->override_cursor       = cursor_type;
       shell->using_override_cursor = TRUE;
 
-      gimp_cursor_set (shell->canvas,
+      ligma_cursor_set (shell->canvas,
                        shell->cursor_handedness,
                        cursor_type,
-                       GIMP_TOOL_CURSOR_NONE,
-                       GIMP_CURSOR_MODIFIER_NONE);
+                       LIGMA_TOOL_CURSOR_NONE,
+                       LIGMA_CURSOR_MODIFIER_NONE);
     }
 }
 
 void
-gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
+ligma_display_shell_unset_override_cursor (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->using_override_cursor)
     {
       shell->using_override_cursor = FALSE;
 
-      gimp_display_shell_real_set_cursor (shell,
+      ligma_display_shell_real_set_cursor (shell,
                                           shell->current_cursor,
                                           shell->tool_cursor,
                                           shell->cursor_modifier,
@@ -118,53 +118,53 @@ gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
-                                           GimpCursorPrecision  precision,
+ligma_display_shell_update_software_cursor (LigmaDisplayShell    *shell,
+                                           LigmaCursorPrecision  precision,
                                            gint                 display_x,
                                            gint                 display_y,
                                            gdouble              image_x,
                                            gdouble              image_y)
 {
-  GimpImageWindow   *image_window;
-  GimpDialogFactory *factory;
-  GimpStatusbar     *statusbar;
+  LigmaImageWindow   *image_window;
+  LigmaDialogFactory *factory;
+  LigmaStatusbar     *statusbar;
   GtkWidget         *widget;
-  GimpImage         *image;
+  LigmaImage         *image;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (shell->draw_cursor &&
       shell->proximity   &&
       display_x >= 0     &&
       display_y >= 0)
     {
-      gimp_canvas_item_begin_change (shell->cursor);
+      ligma_canvas_item_begin_change (shell->cursor);
 
-      gimp_canvas_cursor_set (shell->cursor,
+      ligma_canvas_cursor_set (shell->cursor,
                               display_x,
                               display_y);
-      gimp_canvas_item_set_visible (shell->cursor, TRUE);
+      ligma_canvas_item_set_visible (shell->cursor, TRUE);
 
-      gimp_canvas_item_end_change (shell->cursor);
+      ligma_canvas_item_end_change (shell->cursor);
     }
   else
     {
-      gimp_canvas_item_set_visible (shell->cursor, FALSE);
+      ligma_canvas_item_set_visible (shell->cursor, FALSE);
     }
 
   /*  use the passed image_coords for the statusbar because they are
    *  possibly snapped...
    */
-  statusbar = gimp_display_shell_get_statusbar (shell);
+  statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
+  ligma_statusbar_update_cursor (statusbar, precision, image_x, image_y);
 
-  image_window = gimp_display_shell_get_window (shell);
-  factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+  image_window = ligma_display_shell_get_window (shell);
+  factory = ligma_dock_container_get_dialog_factory (LIGMA_DOCK_CONTAINER (image_window));
 
-  widget = gimp_dialog_factory_find_widget (factory, "gimp-cursor-view");
+  widget = ligma_dialog_factory_find_widget (factory, "ligma-cursor-view");
 
   if (widget)
     {
@@ -177,10 +177,10 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 
           /*  ...but use the unsnapped display_coords for the info window  */
           if (display_x >= 0 && display_y >= 0)
-            gimp_display_shell_untransform_xy (shell, display_x, display_y,
+            ligma_display_shell_untransform_xy (shell, display_x, display_y,
                                                &t_x, &t_y, FALSE);
 
-          gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
+          ligma_cursor_view_update_cursor (LIGMA_CURSOR_VIEW (cursor_view),
                                           image, shell->unit,
                                           t_x, t_y);
         }
@@ -188,32 +188,32 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 }
 
 void
-gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
+ligma_display_shell_clear_software_cursor (LigmaDisplayShell *shell)
 {
-  GimpImageWindow   *image_window;
-  GimpDialogFactory *factory;
-  GimpStatusbar     *statusbar;
+  LigmaImageWindow   *image_window;
+  LigmaDialogFactory *factory;
+  LigmaStatusbar     *statusbar;
   GtkWidget         *widget;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_canvas_item_set_visible (shell->cursor, FALSE);
+  ligma_canvas_item_set_visible (shell->cursor, FALSE);
 
-  statusbar = gimp_display_shell_get_statusbar (shell);
+  statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_statusbar_clear_cursor (statusbar);
+  ligma_statusbar_clear_cursor (statusbar);
 
-  image_window = gimp_display_shell_get_window (shell);
-  factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+  image_window = ligma_display_shell_get_window (shell);
+  factory = ligma_dock_container_get_dialog_factory (LIGMA_DOCK_CONTAINER (image_window));
 
-  widget = gimp_dialog_factory_find_widget (factory, "gimp-cursor-view");
+  widget = ligma_dialog_factory_find_widget (factory, "ligma-cursor-view");
 
   if (widget)
     {
       GtkWidget *cursor_view = gtk_bin_get_child (GTK_BIN (widget));
 
       if (cursor_view)
-        gimp_cursor_view_clear_cursor (GIMP_CURSOR_VIEW (cursor_view));
+        ligma_cursor_view_clear_cursor (LIGMA_CURSOR_VIEW (cursor_view));
     }
 }
 
@@ -221,17 +221,17 @@ gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 /*  private functions  */
 
 static void
-gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
-                                    GimpCursorType      cursor_type,
-                                    GimpToolCursorType  tool_cursor,
-                                    GimpCursorModifier  modifier,
+ligma_display_shell_real_set_cursor (LigmaDisplayShell   *shell,
+                                    LigmaCursorType      cursor_type,
+                                    LigmaToolCursorType  tool_cursor,
+                                    LigmaCursorModifier  modifier,
                                     gboolean            always_install)
 {
-  GimpHandedness cursor_handedness;
+  LigmaHandedness cursor_handedness;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  if (cursor_type == (GimpCursorType) -1)
+  if (cursor_type == (LigmaCursorType) -1)
     {
       shell->current_cursor = cursor_type;
 
@@ -241,42 +241,42 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
       return;
     }
 
-  if (cursor_type != GIMP_CURSOR_NONE &&
-      cursor_type != GIMP_CURSOR_BAD  &&
-      cursor_type != GIMP_CURSOR_SINGLE_DOT)
+  if (cursor_type != LIGMA_CURSOR_NONE &&
+      cursor_type != LIGMA_CURSOR_BAD  &&
+      cursor_type != LIGMA_CURSOR_SINGLE_DOT)
     {
       switch (shell->display->config->cursor_mode)
         {
-        case GIMP_CURSOR_MODE_TOOL_ICON:
+        case LIGMA_CURSOR_MODE_TOOL_ICON:
           break;
 
-        case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-          if (cursor_type < GIMP_CURSOR_CORNER_TOP ||
-              cursor_type > GIMP_CURSOR_SIDE_TOP_LEFT)
+        case LIGMA_CURSOR_MODE_TOOL_CROSSHAIR:
+          if (cursor_type < LIGMA_CURSOR_CORNER_TOP ||
+              cursor_type > LIGMA_CURSOR_SIDE_TOP_LEFT)
             {
               /* the corner and side cursors count as crosshair, so leave
                * them and override everything else
                */
-              cursor_type = GIMP_CURSOR_CROSSHAIR_SMALL;
+              cursor_type = LIGMA_CURSOR_CROSSHAIR_SMALL;
             }
           break;
 
-        case GIMP_CURSOR_MODE_CROSSHAIR:
-          cursor_type = GIMP_CURSOR_CROSSHAIR;
-          tool_cursor = GIMP_TOOL_CURSOR_NONE;
+        case LIGMA_CURSOR_MODE_CROSSHAIR:
+          cursor_type = LIGMA_CURSOR_CROSSHAIR;
+          tool_cursor = LIGMA_TOOL_CURSOR_NONE;
 
-          if (modifier != GIMP_CURSOR_MODIFIER_BAD)
+          if (modifier != LIGMA_CURSOR_MODIFIER_BAD)
             {
               /* the bad modifier is always shown */
-              modifier = GIMP_CURSOR_MODIFIER_NONE;
+              modifier = LIGMA_CURSOR_MODIFIER_NONE;
             }
           break;
         }
     }
 
-  cursor_type = gimp_cursor_rotate (cursor_type, shell->rotate_angle);
+  cursor_type = ligma_cursor_rotate (cursor_type, shell->rotate_angle);
 
-  cursor_handedness = GIMP_GUI_CONFIG (shell->display->config)->cursor_handedness;
+  cursor_handedness = LIGMA_GUI_CONFIG (shell->display->config)->cursor_handedness;
 
   if (shell->cursor_handedness != cursor_handedness ||
       shell->current_cursor    != cursor_type       ||
@@ -289,7 +289,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
       shell->tool_cursor       = tool_cursor;
       shell->cursor_modifier   = modifier;
 
-      gimp_cursor_set (shell->canvas,
+      ligma_cursor_set (shell->canvas,
                        cursor_handedness,
                        cursor_type, tool_cursor, modifier);
     }

@@ -1,12 +1,12 @@
 .deps
 .libs
-/gimpdir-output
+/ligmadir-output
 Makefile
 Makefile.in
-libgimpapptestutils.a
+libligmaapptestutils.a
 test-core*
-test-gimpidtable*
-test-gimptilebackendtilemanager*
+test-ligmaidtable*
+test-ligmatilebackendtilemanager*
 test-layer-grouping*
 test-save-and-export*
 test-session-2-8-compatibility-multi-window*
@@ -18,4 +18,4 @@ test-window-management*
 test-xcf*
 /*.trs
 /*.log
-/gimp-test-icon-theme
+/ligma-test-icon-theme

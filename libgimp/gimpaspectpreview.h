@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpaspectpreview.h
+ * ligmaaspectpreview.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ASPECT_PREVIEW_H__
-#define __GIMP_ASPECT_PREVIEW_H__
+#ifndef __LIGMA_ASPECT_PREVIEW_H__
+#define __LIGMA_ASPECT_PREVIEW_H__
 
 G_BEGIN_DECLS
 
@@ -31,45 +31,45 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_ASPECT_PREVIEW            (gimp_aspect_preview_get_type ())
-#define GIMP_ASPECT_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ASPECT_PREVIEW, GimpAspectPreview))
-#define GIMP_ASPECT_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ASPECT_PREVIEW, GimpAspectPreviewClass))
-#define GIMP_IS_ASPECT_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ASPECT_PREVIEW))
-#define GIMP_IS_ASPECT_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ASPECT_PREVIEW))
-#define GIMP_ASPECT_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ASPECT_PREVIEW, GimpAspectPreviewClass))
+#define LIGMA_TYPE_ASPECT_PREVIEW            (ligma_aspect_preview_get_type ())
+#define LIGMA_ASPECT_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ASPECT_PREVIEW, LigmaAspectPreview))
+#define LIGMA_ASPECT_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ASPECT_PREVIEW, LigmaAspectPreviewClass))
+#define LIGMA_IS_ASPECT_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ASPECT_PREVIEW))
+#define LIGMA_IS_ASPECT_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ASPECT_PREVIEW))
+#define LIGMA_ASPECT_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ASPECT_PREVIEW, LigmaAspectPreviewClass))
 
 
-typedef struct _GimpAspectPreviewPrivate GimpAspectPreviewPrivate;
-typedef struct _GimpAspectPreviewClass   GimpAspectPreviewClass;
+typedef struct _LigmaAspectPreviewPrivate LigmaAspectPreviewPrivate;
+typedef struct _LigmaAspectPreviewClass   LigmaAspectPreviewClass;
 
-struct _GimpAspectPreview
+struct _LigmaAspectPreview
 {
-  GimpPreview               parent_instance;
+  LigmaPreview               parent_instance;
 
-  GimpAspectPreviewPrivate *priv;
+  LigmaAspectPreviewPrivate *priv;
 };
 
-struct _GimpAspectPreviewClass
+struct _LigmaAspectPreviewClass
 {
-  GimpPreviewClass  parent_class;
+  LigmaPreviewClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_aspect_preview_get_type             (void) G_GNUC_CONST;
+GType       ligma_aspect_preview_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * gimp_aspect_preview_new_from_drawable (GimpDrawable *drawable);
+GtkWidget * ligma_aspect_preview_new_from_drawable (LigmaDrawable *drawable);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_ASPECT_PREVIEW_H__ */
+#endif /* __LIGMA_ASPECT_PREVIEW_H__ */

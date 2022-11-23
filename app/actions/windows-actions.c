@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,72 +21,72 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpdisplayconfig.h"
-#include "config/gimpguiconfig.h"
+#include "config/ligmadisplayconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimplist.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalist.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
 
 #include "dialogs/dialogs.h"
 
 #include "windows-actions.h"
 #include "windows-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void  windows_actions_display_add               (GimpContainer     *container,
-                                                        GimpDisplay       *display,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_display_remove            (GimpContainer     *container,
-                                                        GimpDisplay       *display,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_display_reorder           (GimpContainer     *container,
-                                                        GimpDisplay       *display,
+static void  windows_actions_display_add               (LigmaContainer     *container,
+                                                        LigmaDisplay       *display,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_display_remove            (LigmaContainer     *container,
+                                                        LigmaDisplay       *display,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_display_reorder           (LigmaContainer     *container,
+                                                        LigmaDisplay       *display,
                                                         gint               position,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_image_notify              (GimpDisplay       *display,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_image_notify              (LigmaDisplay       *display,
                                                         const GParamSpec  *unused,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_title_notify              (GimpDisplayShell  *shell,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_title_notify              (LigmaDisplayShell  *shell,
                                                         const GParamSpec  *unused,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_update_display_accels     (GimpActionGroup   *group);
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_update_display_accels     (LigmaActionGroup   *group);
 
-static void  windows_actions_dock_window_added         (GimpDialogFactory *factory,
-                                                        GimpDockWindow    *dock_window,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_dock_window_removed       (GimpDialogFactory *factory,
-                                                        GimpDockWindow    *dock_window,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_dock_window_notify        (GimpDockWindow    *dock,
+static void  windows_actions_dock_window_added         (LigmaDialogFactory *factory,
+                                                        LigmaDockWindow    *dock_window,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_dock_window_removed       (LigmaDialogFactory *factory,
+                                                        LigmaDockWindow    *dock_window,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_dock_window_notify        (LigmaDockWindow    *dock,
                                                         const GParamSpec  *pspec,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_recent_add                (GimpContainer     *container,
-                                                        GimpSessionInfo   *info,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_recent_remove             (GimpContainer     *container,
-                                                        GimpSessionInfo   *info,
-                                                        GimpActionGroup   *group);
-static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *config,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_recent_add                (LigmaContainer     *container,
+                                                        LigmaSessionInfo   *info,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_recent_remove             (LigmaContainer     *container,
+                                                        LigmaSessionInfo   *info,
+                                                        LigmaActionGroup   *group);
+static void  windows_actions_single_window_mode_notify (LigmaDisplayConfig *config,
                                                         GParamSpec        *pspec,
-                                                        GimpActionGroup   *group);
+                                                        LigmaActionGroup   *group);
 
 
 /* The only reason we have "Tab" in the action entries below is to
@@ -96,7 +96,7 @@ static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *confi
  * gtk_accelerator_valid() returns FALSE for GDK_tab.
  */
 
-static const GimpActionEntry windows_actions[] =
+static const LigmaActionEntry windows_actions[] =
 {
   { "windows-menu",         NULL, NC_("windows-action",
                                       "_Windows")               },
@@ -121,108 +121,108 @@ static const GimpActionEntry windows_actions[] =
                                              "_Tabs Position")   },
 };
 
-static const GimpToggleActionEntry windows_toggle_actions[] =
+static const LigmaToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
     NC_("windows-action", "_Hide Docks"), "Tab",
     NC_("windows-action", "When enabled, docks and other dialogs are hidden, leaving only image windows."),
     windows_hide_docks_cmd_callback,
     FALSE,
-    GIMP_HELP_WINDOWS_HIDE_DOCKS },
+    LIGMA_HELP_WINDOWS_HIDE_DOCKS },
 
   { "windows-show-tabs", NULL,
     NC_("windows-action", "_Show Tabs"), NULL,
     NC_("windows-action", "When enabled, the image tabs bar is shown."),
     windows_show_tabs_cmd_callback,
     FALSE,
-    GIMP_HELP_WINDOWS_SHOW_TABS },
+    LIGMA_HELP_WINDOWS_SHOW_TABS },
 
   { "windows-use-single-window-mode", NULL,
     NC_("windows-action", "Single-Window _Mode"), NULL,
-    NC_("windows-action", "When enabled, GIMP is in a single-window mode."),
+    NC_("windows-action", "When enabled, LIGMA is in a single-window mode."),
     windows_use_single_window_mode_cmd_callback,
     FALSE,
-    GIMP_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE }
+    LIGMA_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE }
 };
 
-static const GimpRadioActionEntry windows_tabs_position_actions[] =
+static const LigmaRadioActionEntry windows_tabs_position_actions[] =
 {
-  { "windows-tabs-position-top", GIMP_ICON_GO_TOP,
+  { "windows-tabs-position-top", LIGMA_ICON_GO_TOP,
     NC_("windows-tabs-position-action", "_Top"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the top"),
-    GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
+    LIGMA_POSITION_TOP, LIGMA_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-bottom", GIMP_ICON_GO_BOTTOM,
+  { "windows-tabs-position-bottom", LIGMA_ICON_GO_BOTTOM,
     NC_("windows-tabs-position-action", "_Bottom"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
-    GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
+    LIGMA_POSITION_BOTTOM, LIGMA_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-left", GIMP_ICON_GO_FIRST,
+  { "windows-tabs-position-left", LIGMA_ICON_GO_FIRST,
     NC_("windows-tabs-position-action", "_Left"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the left"),
-    GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
+    LIGMA_POSITION_LEFT, LIGMA_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-right", GIMP_ICON_GO_LAST,
+  { "windows-tabs-position-right", LIGMA_ICON_GO_LAST,
     NC_("windows-tabs-position-action", "_Right"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the right"),
-    GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
+    LIGMA_POSITION_RIGHT, LIGMA_HELP_WINDOWS_TABS_POSITION },
 };
 
 void
-windows_actions_setup (GimpActionGroup *group)
+windows_actions_setup (LigmaActionGroup *group)
 {
   GList *list;
 
-  gimp_action_group_add_actions (group, "windows-action",
+  ligma_action_group_add_actions (group, "windows-action",
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
 
-  gimp_action_group_add_toggle_actions (group, "windows-action",
+  ligma_action_group_add_toggle_actions (group, "windows-action",
                                         windows_toggle_actions,
                                         G_N_ELEMENTS (windows_toggle_actions));
 
-  gimp_action_group_add_radio_actions (group, "windows-tabs-position-action",
+  ligma_action_group_add_radio_actions (group, "windows-tabs-position-action",
                                        windows_tabs_position_actions,
                                        G_N_ELEMENTS (windows_tabs_position_actions),
                                        NULL, 0,
                                        windows_set_tabs_position_cmd_callback);
 
-  gimp_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
+  ligma_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
 
-  g_signal_connect_object (group->gimp->displays, "add",
+  g_signal_connect_object (group->ligma->displays, "add",
                            G_CALLBACK (windows_actions_display_add),
                            group, 0);
-  g_signal_connect_object (group->gimp->displays, "remove",
+  g_signal_connect_object (group->ligma->displays, "remove",
                            G_CALLBACK (windows_actions_display_remove),
                            group, 0);
-  g_signal_connect_object (group->gimp->displays, "reorder",
+  g_signal_connect_object (group->ligma->displays, "reorder",
                            G_CALLBACK (windows_actions_display_reorder),
                            group, 0);
 
-  for (list = gimp_get_display_iter (group->gimp);
+  for (list = ligma_get_display_iter (group->ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
+      LigmaDisplay *display = list->data;
 
-      windows_actions_display_add (group->gimp->displays, display, group);
+      windows_actions_display_add (group->ligma->displays, display, group);
     }
 
-  g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-added",
+  g_signal_connect_object (ligma_dialog_factory_get_singleton (), "dock-window-added",
                            G_CALLBACK (windows_actions_dock_window_added),
                            group, 0);
-  g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-removed",
+  g_signal_connect_object (ligma_dialog_factory_get_singleton (), "dock-window-removed",
                            G_CALLBACK (windows_actions_dock_window_removed),
                            group, 0);
 
-  for (list = gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ());
+  for (list = ligma_dialog_factory_get_open_dialogs (ligma_dialog_factory_get_singleton ());
        list;
        list = g_list_next (list))
     {
-      GimpDockWindow *dock_window = list->data;
+      LigmaDockWindow *dock_window = list->data;
 
-      if (GIMP_IS_DOCK_WINDOW (dock_window))
-        windows_actions_dock_window_added (gimp_dialog_factory_get_singleton (),
+      if (LIGMA_IS_DOCK_WINDOW (dock_window))
+        windows_actions_dock_window_added (ligma_dialog_factory_get_singleton (),
                                            dock_window,
                                            group);
     }
@@ -234,29 +234,29 @@ windows_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (windows_actions_recent_remove),
                            group, 0);
 
-  for (list = GIMP_LIST (global_recent_docks)->queue->head;
+  for (list = LIGMA_LIST (global_recent_docks)->queue->head;
        list;
        list = g_list_next (list))
     {
-      GimpSessionInfo *info = list->data;
+      LigmaSessionInfo *info = list->data;
 
       windows_actions_recent_add (global_recent_docks, info, group);
     }
 
-  g_signal_connect_object (group->gimp->config, "notify::single-window-mode",
+  g_signal_connect_object (group->ligma->config, "notify::single-window-mode",
                            G_CALLBACK (windows_actions_single_window_mode_notify),
                            group, 0);
 }
 
 void
-windows_actions_update (GimpActionGroup *group,
+windows_actions_update (LigmaActionGroup *group,
                         gpointer         data)
 {
-  GimpGuiConfig *config = GIMP_GUI_CONFIG (group->gimp->config);
+  LigmaGuiConfig *config = LIGMA_GUI_CONFIG (group->ligma->config);
   const gchar   *action = NULL;
 
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
   SET_ACTIVE ("windows-hide-docks", config->hide_docks);
@@ -264,16 +264,16 @@ windows_actions_update (GimpActionGroup *group,
 
   switch (config->tabs_position)
     {
-    case GIMP_POSITION_TOP:
+    case LIGMA_POSITION_TOP:
       action = "windows-tabs-position-top";
       break;
-    case GIMP_POSITION_BOTTOM:
+    case LIGMA_POSITION_BOTTOM:
       action = "windows-tabs-position-bottom";
       break;
-    case GIMP_POSITION_LEFT:
+    case LIGMA_POSITION_LEFT:
       action = "windows-tabs-position-left";
       break;
-    case GIMP_POSITION_RIGHT:
+    case LIGMA_POSITION_RIGHT:
       action = "windows-tabs-position-right";
       break;
     default:
@@ -281,31 +281,31 @@ windows_actions_update (GimpActionGroup *group,
       break;
     }
 
-  gimp_action_group_set_action_active (group, action, TRUE);
-  gimp_action_group_set_action_sensitive (group, "windows-tab-position", config->single_window_mode,
+  ligma_action_group_set_action_active (group, action, TRUE);
+  ligma_action_group_set_action_sensitive (group, "windows-tab-position", config->single_window_mode,
                                           _("Single-window mode disabled"));
-  gimp_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode,
+  ligma_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode,
                                           _("Single-window mode disabled"));
 
 #undef SET_ACTIVE
 }
 
 gchar *
-windows_actions_dock_window_to_action_name (GimpDockWindow *dock_window)
+windows_actions_dock_window_to_action_name (LigmaDockWindow *dock_window)
 {
   return g_strdup_printf ("windows-dock-%04d",
-                          gimp_dock_window_get_id (dock_window));
+                          ligma_dock_window_get_id (dock_window));
 }
 
 
 /*  private functions  */
 
 static void
-windows_actions_display_add (GimpContainer   *container,
-                             GimpDisplay     *display,
-                             GimpActionGroup *group)
+windows_actions_display_add (LigmaContainer   *container,
+                             LigmaDisplay     *display,
+                             LigmaActionGroup *group)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
+  LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
   g_signal_connect_object (display, "notify::image",
                            G_CALLBACK (windows_actions_image_notify),
@@ -319,12 +319,12 @@ windows_actions_display_add (GimpContainer   *container,
 }
 
 static void
-windows_actions_display_remove (GimpContainer   *container,
-                                GimpDisplay     *display,
-                                GimpActionGroup *group)
+windows_actions_display_remove (LigmaContainer   *container,
+                                LigmaDisplay     *display,
+                                LigmaActionGroup *group)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GimpAction       *action;
+  LigmaDisplayShell *shell = ligma_display_get_shell (display);
+  LigmaAction       *action;
   gchar            *action_name;
 
   if (shell)
@@ -332,53 +332,53 @@ windows_actions_display_remove (GimpContainer   *container,
                                           windows_actions_title_notify,
                                           group);
 
-  action_name = gimp_display_get_action_name (display);
-  action = gimp_action_group_get_action (group, action_name);
+  action_name = ligma_display_get_action_name (display);
+  action = ligma_action_group_get_action (group, action_name);
   g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action_and_accel (group, action);
+    ligma_action_group_remove_action_and_accel (group, action);
 
   windows_actions_update_display_accels (group);
 }
 
 static void
-windows_actions_display_reorder (GimpContainer   *container,
-                                 GimpDisplay     *display,
+windows_actions_display_reorder (LigmaContainer   *container,
+                                 LigmaDisplay     *display,
                                  gint             new_index,
-                                 GimpActionGroup *group)
+                                 LigmaActionGroup *group)
 {
   windows_actions_update_display_accels (group);
 }
 
 static void
-windows_actions_image_notify (GimpDisplay      *display,
+windows_actions_image_notify (LigmaDisplay      *display,
                               const GParamSpec *unused,
-                              GimpActionGroup  *group)
+                              LigmaActionGroup  *group)
 {
-  GimpImage  *image = gimp_display_get_image (display);
-  GimpAction *action;
+  LigmaImage  *image = ligma_display_get_image (display);
+  LigmaAction *action;
   gchar      *action_name;
 
-  action_name = gimp_display_get_action_name (display);
+  action_name = ligma_display_get_action_name (display);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
-      GimpActionEntry entry;
+      LigmaActionEntry entry;
 
       entry.name        = action_name;
-      entry.icon_name   = GIMP_ICON_IMAGE;
+      entry.icon_name   = LIGMA_ICON_IMAGE;
       entry.label       = "";
       entry.accelerator = NULL;
       entry.tooltip     = NULL;
       entry.callback    = windows_show_display_cmd_callback;
       entry.help_id     = NULL;
 
-      gimp_action_group_add_actions (group, NULL, &entry, 1);
+      ligma_action_group_add_actions (group, NULL, &entry, 1);
 
-      action = gimp_action_group_get_action (group, action_name);
+      action = ligma_action_group_get_action (group, action_name);
 
       g_object_set_data (G_OBJECT (action), "display", display);
     }
@@ -391,20 +391,20 @@ windows_actions_image_notify (GimpDisplay      *display,
       gchar       *escaped;
       gchar       *title;
 
-      display_name = gimp_image_get_display_name (image);
-      escaped = gimp_escape_uline (display_name);
+      display_name = ligma_image_get_display_name (image);
+      escaped = ligma_escape_uline (display_name);
 
       title = g_strdup_printf ("%s-%d.%d", escaped,
-                               gimp_image_get_id (image),
-                               gimp_display_get_instance (display));
+                               ligma_image_get_id (image),
+                               ligma_display_get_instance (display));
       g_free (escaped);
 
       g_object_set (action,
                     "visible",  TRUE,
                     "label",    title,
-                    "tooltip",  gimp_image_get_display_path (image),
+                    "tooltip",  ligma_image_get_display_path (image),
                     "viewable", image,
-                    "context",  gimp_get_user_context (group->gimp),
+                    "context",  ligma_get_user_context (group->ligma),
                     NULL);
 
       g_free (title);
@@ -421,33 +421,33 @@ windows_actions_image_notify (GimpDisplay      *display,
 }
 
 static void
-windows_actions_title_notify (GimpDisplayShell *shell,
+windows_actions_title_notify (LigmaDisplayShell *shell,
                               const GParamSpec *unused,
-                              GimpActionGroup  *group)
+                              LigmaActionGroup  *group)
 {
   windows_actions_image_notify (shell->display, NULL, group);
 }
 
 static void
-windows_actions_update_display_accels (GimpActionGroup *group)
+windows_actions_update_display_accels (LigmaActionGroup *group)
 {
   GList *list;
   gint   i;
 
-  for (list = gimp_get_display_iter (group->gimp), i = 0;
+  for (list = ligma_get_display_iter (group->ligma), i = 0;
        list && i < 10;
        list = g_list_next (list), i++)
     {
-      GimpDisplay *display = list->data;
-      GimpAction  *action;
+      LigmaDisplay *display = list->data;
+      LigmaAction  *action;
       gchar       *action_name;
 
-      if (! gimp_display_get_image (display))
+      if (! ligma_display_get_image (display))
         break;
 
-      action_name = gimp_display_get_action_name (display);
+      action_name = ligma_display_get_action_name (display);
 
-      action = gimp_action_group_get_action (group, action_name);
+      action = ligma_action_group_get_action (group, action_name);
       g_free (action_name);
 
       if (action)
@@ -455,7 +455,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           const gchar *accel_path;
           guint        accel_key;
 
-          accel_path = gimp_action_get_accel_path (action);
+          accel_path = ligma_action_get_accel_path (action);
 
           if (i < 9)
             accel_key = GDK_KEY_1 + i;
@@ -470,12 +470,12 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 }
 
 static void
-windows_actions_dock_window_added (GimpDialogFactory *factory,
-                                   GimpDockWindow    *dock_window,
-                                   GimpActionGroup   *group)
+windows_actions_dock_window_added (LigmaDialogFactory *factory,
+                                   LigmaDockWindow    *dock_window,
+                                   LigmaActionGroup   *group)
 {
-  GimpAction      *action;
-  GimpActionEntry  entry;
+  LigmaAction      *action;
+  LigmaActionEntry  entry;
   gchar           *action_name = windows_actions_dock_window_to_action_name (dock_window);
 
   entry.name        = action_name;
@@ -484,11 +484,11 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
   entry.accelerator = NULL;
   entry.tooltip     = NULL;
   entry.callback    = windows_show_dock_cmd_callback;
-  entry.help_id     = GIMP_HELP_WINDOWS_SHOW_DOCK;
+  entry.help_id     = LIGMA_HELP_WINDOWS_SHOW_DOCK;
 
-  gimp_action_group_add_actions (group, NULL, &entry, 1);
+  ligma_action_group_add_actions (group, NULL, &entry, 1);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   g_object_set (action,
                 "ellipsize", PANGO_ELLIPSIZE_END,
@@ -507,31 +507,31 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
 }
 
 static void
-windows_actions_dock_window_removed (GimpDialogFactory *factory,
-                                     GimpDockWindow    *dock_window,
-                                     GimpActionGroup   *group)
+windows_actions_dock_window_removed (LigmaDialogFactory *factory,
+                                     LigmaDockWindow    *dock_window,
+                                     LigmaActionGroup   *group)
 {
-  GimpAction *action;
+  LigmaAction *action;
   gchar      *action_name;
 
   action_name = windows_actions_dock_window_to_action_name (dock_window);
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
   g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action_and_accel (group, action);
+    ligma_action_group_remove_action_and_accel (group, action);
 }
 
 static void
-windows_actions_dock_window_notify (GimpDockWindow   *dock_window,
+windows_actions_dock_window_notify (LigmaDockWindow   *dock_window,
                                     const GParamSpec *pspec,
-                                    GimpActionGroup  *group)
+                                    LigmaActionGroup  *group)
 {
-  GimpAction *action;
+  LigmaAction *action;
   gchar      *action_name;
 
   action_name = windows_actions_dock_window_to_action_name (dock_window);
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
   g_free (action_name);
 
   if (action)
@@ -542,12 +542,12 @@ windows_actions_dock_window_notify (GimpDockWindow   *dock_window,
 }
 
 static void
-windows_actions_recent_add (GimpContainer   *container,
-                            GimpSessionInfo *info,
-                            GimpActionGroup *group)
+windows_actions_recent_add (LigmaContainer   *container,
+                            LigmaSessionInfo *info,
+                            LigmaActionGroup *group)
 {
-  GimpAction      *action;
-  GimpActionEntry  entry;
+  LigmaAction      *action;
+  LigmaActionEntry  entry;
   gint             info_id;
   static gint      info_id_counter = 1;
   gchar           *action_name;
@@ -567,15 +567,15 @@ windows_actions_recent_add (GimpContainer   *container,
 
   entry.name        = action_name;
   entry.icon_name   = NULL;
-  entry.label       = gimp_object_get_name (info);
+  entry.label       = ligma_object_get_name (info);
   entry.accelerator = NULL;
-  entry.tooltip     = gimp_object_get_name (info);
+  entry.tooltip     = ligma_object_get_name (info);
   entry.callback    = windows_open_recent_cmd_callback;
-  entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;
+  entry.help_id     = LIGMA_HELP_WINDOWS_OPEN_RECENT_DOCK;
 
-  gimp_action_group_add_actions (group, NULL, &entry, 1);
+  ligma_action_group_add_actions (group, NULL, &entry, 1);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   g_object_set (action,
                 "ellipsize",       PANGO_ELLIPSIZE_END,
@@ -588,11 +588,11 @@ windows_actions_recent_add (GimpContainer   *container,
 }
 
 static void
-windows_actions_recent_remove (GimpContainer   *container,
-                               GimpSessionInfo *info,
-                               GimpActionGroup *group)
+windows_actions_recent_remove (LigmaContainer   *container,
+                               LigmaSessionInfo *info,
+                               LigmaActionGroup *group)
 {
-  GimpAction *action;
+  LigmaAction *action;
   gint        info_id;
   gchar      *action_name;
 
@@ -600,19 +600,19 @@ windows_actions_recent_remove (GimpContainer   *container,
                                                 "recent-action-id"));
 
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
   g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action_and_accel (group, action);
+    ligma_action_group_remove_action_and_accel (group, action);
 }
 
 static void
-windows_actions_single_window_mode_notify (GimpDisplayConfig *config,
+windows_actions_single_window_mode_notify (LigmaDisplayConfig *config,
                                            GParamSpec        *pspec,
-                                           GimpActionGroup   *group)
+                                           LigmaActionGroup   *group)
 {
-  gimp_action_group_set_action_active (group,
+  ligma_action_group_set_action_active (group,
                                        "windows-use-single-window-mode",
-                                       GIMP_GUI_CONFIG (config)->single_window_mode);
+                                       LIGMA_GUI_CONFIG (config)->single_window_mode);
 }

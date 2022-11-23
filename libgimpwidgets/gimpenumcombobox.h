@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumcombobox.h
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaenumcombobox.h
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,59 +19,59 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ENUM_COMBO_BOX_H__
-#define __GIMP_ENUM_COMBO_BOX_H__
+#ifndef __LIGMA_ENUM_COMBO_BOX_H__
+#define __LIGMA_ENUM_COMBO_BOX_H__
 
-#include <libgimpwidgets/gimpintcombobox.h>
+#include <libligmawidgets/ligmaintcombobox.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_ENUM_COMBO_BOX            (gimp_enum_combo_box_get_type ())
-#define GIMP_ENUM_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBox))
-#define GIMP_ENUM_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBoxClass))
-#define GIMP_IS_ENUM_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ENUM_COMBO_BOX))
-#define GIMP_IS_ENUM_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ENUM_COMBO_BOX))
-#define GIMP_ENUM_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBoxClass))
+#define LIGMA_TYPE_ENUM_COMBO_BOX            (ligma_enum_combo_box_get_type ())
+#define LIGMA_ENUM_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ENUM_COMBO_BOX, LigmaEnumComboBox))
+#define LIGMA_ENUM_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ENUM_COMBO_BOX, LigmaEnumComboBoxClass))
+#define LIGMA_IS_ENUM_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ENUM_COMBO_BOX))
+#define LIGMA_IS_ENUM_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ENUM_COMBO_BOX))
+#define LIGMA_ENUM_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ENUM_COMBO_BOX, LigmaEnumComboBoxClass))
 
 
-typedef struct _GimpEnumComboBoxPrivate GimpEnumComboBoxPrivate;
-typedef struct _GimpEnumComboBoxClass   GimpEnumComboBoxClass;
+typedef struct _LigmaEnumComboBoxPrivate LigmaEnumComboBoxPrivate;
+typedef struct _LigmaEnumComboBoxClass   LigmaEnumComboBoxClass;
 
-struct _GimpEnumComboBox
+struct _LigmaEnumComboBox
 {
-  GimpIntComboBox          parent_instance;
+  LigmaIntComboBox          parent_instance;
 
-  GimpEnumComboBoxPrivate *priv;
+  LigmaEnumComboBoxPrivate *priv;
 };
 
-struct _GimpEnumComboBoxClass
+struct _LigmaEnumComboBoxClass
 {
-  GimpIntComboBoxClass  parent_class;
+  LigmaIntComboBoxClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
+GType       ligma_enum_combo_box_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
-GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
+GtkWidget * ligma_enum_combo_box_new              (GType             enum_type);
+GtkWidget * ligma_enum_combo_box_new_with_model   (LigmaEnumStore    *enum_store);
 
-void        gimp_enum_combo_box_set_icon_prefix  (GimpEnumComboBox *combo_box,
+void        ligma_enum_combo_box_set_icon_prefix  (LigmaEnumComboBox *combo_box,
                                                   const gchar      *icon_prefix);
 
 G_END_DECLS
 
-#endif  /* __GIMP_ENUM_COMBO_BOX_H__ */
+#endif  /* __LIGMA_ENUM_COMBO_BOX_H__ */

@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-themedatadir = $(gimpdatadir)/themes/Default
+themedatadir = $(ligmadatadir)/themes/Default
 
-themedata_DATA = gimp.css gimp-dark.css common.css
+themedata_DATA = ligma.css ligma-dark.css common.css
 
 EXTRA_DIST = $(themedata_DATA)

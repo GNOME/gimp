@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1999 Manish Singh
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,31 +20,31 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-filter.h"
-#include "gimpdisplayshell-profile.h"
-#include "gimpdisplayshell-render.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-expose.h"
+#include "ligmadisplayshell-filter.h"
+#include "ligmadisplayshell-profile.h"
+#include "ligmadisplayshell-render.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_display_shell_filter_changed (GimpColorDisplayStack *stack,
-                                                 GimpDisplayShell      *shell);
+static void   ligma_display_shell_filter_changed (LigmaColorDisplayStack *stack,
+                                                 LigmaDisplayShell      *shell);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_filter_set (GimpDisplayShell      *shell,
-                               GimpColorDisplayStack *stack)
+ligma_display_shell_filter_set (LigmaDisplayShell      *shell,
+                               LigmaColorDisplayStack *stack)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (stack == NULL || GIMP_IS_COLOR_DISPLAY_STACK (stack));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (stack == NULL || LIGMA_IS_COLOR_DISPLAY_STACK (stack));
 
   if (stack == shell->filter_stack)
     return;
@@ -52,7 +52,7 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
   if (shell->filter_stack)
     {
       g_signal_handlers_disconnect_by_func (shell->filter_stack,
-                                            gimp_display_shell_filter_changed,
+                                            ligma_display_shell_filter_changed,
                                             shell);
     }
 
@@ -61,28 +61,28 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
   if (shell->filter_stack)
     {
       g_signal_connect (shell->filter_stack, "changed",
-                        G_CALLBACK (gimp_display_shell_filter_changed),
+                        G_CALLBACK (ligma_display_shell_filter_changed),
                         shell);
     }
 
-  gimp_display_shell_filter_changed (NULL, shell);
+  ligma_display_shell_filter_changed (NULL, shell);
 }
 
 gboolean
-gimp_display_shell_has_filter (GimpDisplayShell *shell)
+ligma_display_shell_has_filter (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   if (shell->filter_stack)
     {
       GList *filters;
       GList *iter;
 
-      filters = gimp_color_display_stack_get_filters (shell->filter_stack);
+      filters = ligma_color_display_stack_get_filters (shell->filter_stack);
 
       for (iter = filters; iter; iter = g_list_next (iter))
         {
-          if (gimp_color_display_get_enabled (GIMP_COLOR_DISPLAY (iter->data)))
+          if (ligma_color_display_get_enabled (LIGMA_COLOR_DISPLAY (iter->data)))
             return TRUE;
         }
     }
@@ -94,13 +94,13 @@ gimp_display_shell_has_filter (GimpDisplayShell *shell)
 /*  private functions  */
 
 static gboolean
-gimp_display_shell_filter_changed_idle (gpointer data)
+ligma_display_shell_filter_changed_idle (gpointer data)
 {
-  GimpDisplayShell *shell = data;
+  LigmaDisplayShell *shell = data;
 
-  gimp_display_shell_profile_update (shell);
-  gimp_display_shell_expose_full (shell);
-  gimp_display_shell_render_invalidate_full (shell);
+  ligma_display_shell_profile_update (shell);
+  ligma_display_shell_expose_full (shell);
+  ligma_display_shell_render_invalidate_full (shell);
 
   shell->filter_idle_id = 0;
 
@@ -108,14 +108,14 @@ gimp_display_shell_filter_changed_idle (gpointer data)
 }
 
 static void
-gimp_display_shell_filter_changed (GimpColorDisplayStack *stack,
-                                   GimpDisplayShell      *shell)
+ligma_display_shell_filter_changed (LigmaColorDisplayStack *stack,
+                                   LigmaDisplayShell      *shell)
 {
   if (shell->filter_idle_id)
     g_source_remove (shell->filter_idle_id);
 
   shell->filter_idle_id =
     g_idle_add_full (G_PRIORITY_LOW,
-                     gimp_display_shell_filter_changed_idle,
+                     ligma_display_shell_filter_changed_idle,
                      shell, NULL);
 }

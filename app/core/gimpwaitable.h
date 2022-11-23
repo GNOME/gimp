@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpwaitable.h
+ * ligmawaitable.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WAITABLE_H__
-#define __GIMP_WAITABLE_H__
+#ifndef __LIGMA_WAITABLE_H__
+#define __LIGMA_WAITABLE_H__
 
 
-#define GIMP_TYPE_WAITABLE (gimp_waitable_get_type ())
-G_DECLARE_INTERFACE (GimpWaitable, gimp_waitable, GIMP, WAITABLE, GObject)
+#define LIGMA_TYPE_WAITABLE (ligma_waitable_get_type ())
+G_DECLARE_INTERFACE (LigmaWaitable, ligma_waitable, LIGMA, WAITABLE, GObject)
 
 
-struct _GimpWaitableInterface
+struct _LigmaWaitableInterface
 {
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  void       (* wait)       (GimpWaitable *waitable);
-  gboolean   (* try_wait)   (GimpWaitable *waitable);
-  gboolean   (* wait_until) (GimpWaitable *waitable,
+  void       (* wait)       (LigmaWaitable *waitable);
+  gboolean   (* try_wait)   (LigmaWaitable *waitable);
+  gboolean   (* wait_until) (LigmaWaitable *waitable,
                              gint64        end_time);
 };
 
 
-void       gimp_waitable_wait       (GimpWaitable *waitable);
-gboolean   gimp_waitable_try_wait   (GimpWaitable *waitable);
-gboolean   gimp_waitable_wait_until (GimpWaitable *waitable,
+void       ligma_waitable_wait       (LigmaWaitable *waitable);
+gboolean   ligma_waitable_try_wait   (LigmaWaitable *waitable);
+gboolean   ligma_waitable_wait_until (LigmaWaitable *waitable,
                                      gint64        end_time);
-gboolean   gimp_waitable_wait_for   (GimpWaitable *waitable,
+gboolean   ligma_waitable_wait_for   (LigmaWaitable *waitable,
                                      gint64        wait_duration);
 
 
-#endif  /* __GIMP_WAITABLE_H__ */
+#endif  /* __LIGMA_WAITABLE_H__ */

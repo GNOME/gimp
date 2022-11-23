@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -22,12 +22,12 @@
 
 #include "config.h"
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include "imap_browse.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static const GtkTargetEntry target_table[] =
@@ -83,7 +83,7 @@ browse_cb (GtkWidget      *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -144,7 +144,7 @@ browse_widget_new (const gchar *name)
    gtk_widget_show (browse->file);
 
    browse->button = button = gtk_button_new ();
-   icon = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_OPEN,
+   icon = gtk_image_new_from_icon_name (LIGMA_ICON_DOCUMENT_OPEN,
                                         GTK_ICON_SIZE_BUTTON);
    gtk_container_add (GTK_CONTAINER (button), icon);
    gtk_widget_show (icon);

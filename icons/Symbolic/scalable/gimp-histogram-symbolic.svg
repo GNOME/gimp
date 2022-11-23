@@ -15,7 +15,7 @@
    width="16.000002"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-histogram.svg">
+   sodipodi:docname="ligma-histogram.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -84,12 +84,12 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-histogram"
+       id="ligma-histogram"
        transform="translate(83.801825,-920.35693)">
       <g
          transform="translate(-161.0002,437.3622)"
          style="display:inline"
-         id="gimp-histogram-6">
+         id="ligma-histogram-6">
         <g
            id="g3970-0"
            transform="translate(0,5)">

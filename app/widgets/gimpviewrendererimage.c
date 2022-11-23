@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererimage.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererimage.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,66 +23,66 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimageproxy.h"
-#include "core/gimptempbuf.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimageproxy.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpviewrendererimage.h"
+#include "ligmaviewrendererimage.h"
 
 
-static void   gimp_view_renderer_image_render (GimpViewRenderer *renderer,
+static void   ligma_view_renderer_image_render (LigmaViewRenderer *renderer,
                                                GtkWidget        *widget);
 
 
-G_DEFINE_TYPE (GimpViewRendererImage, gimp_view_renderer_image,
-               GIMP_TYPE_VIEW_RENDERER)
+G_DEFINE_TYPE (LigmaViewRendererImage, ligma_view_renderer_image,
+               LIGMA_TYPE_VIEW_RENDERER)
 
-#define parent_class gimp_view_renderer_image_parent_class
+#define parent_class ligma_view_renderer_image_parent_class
 
 
 static void
-gimp_view_renderer_image_class_init (GimpViewRendererImageClass *klass)
+ligma_view_renderer_image_class_init (LigmaViewRendererImageClass *klass)
 {
-  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  LigmaViewRendererClass *renderer_class = LIGMA_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->render = gimp_view_renderer_image_render;
+  renderer_class->render = ligma_view_renderer_image_render;
 }
 
 static void
-gimp_view_renderer_image_init (GimpViewRendererImage *renderer)
+ligma_view_renderer_image_init (LigmaViewRendererImage *renderer)
 {
   renderer->channel = -1;
 }
 
 static void
-gimp_view_renderer_image_render (GimpViewRenderer *renderer,
+ligma_view_renderer_image_render (LigmaViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
-  GimpImage             *image;
+  LigmaViewRendererImage *rendererimage = LIGMA_VIEW_RENDERER_IMAGE (renderer);
+  LigmaImage             *image;
   const gchar           *icon_name;
   gint                   width;
   gint                   height;
 
-  if (GIMP_IS_IMAGE (renderer->viewable))
+  if (LIGMA_IS_IMAGE (renderer->viewable))
     {
-      image = GIMP_IMAGE (renderer->viewable);
+      image = LIGMA_IMAGE (renderer->viewable);
     }
-  else if (GIMP_IS_IMAGE_PROXY (renderer->viewable))
+  else if (LIGMA_IS_IMAGE_PROXY (renderer->viewable))
     {
-      image = gimp_image_proxy_get_image (
-        GIMP_IMAGE_PROXY (renderer->viewable));
+      image = ligma_image_proxy_get_image (
+        LIGMA_IMAGE_PROXY (renderer->viewable));
     }
   else
     {
       g_return_if_reached ();
     }
 
-  gimp_viewable_get_size (renderer->viewable, &width, &height);
+  ligma_viewable_get_size (renderer->viewable, &width, &height);
 
   /* The conditions checked here are mostly a hack to hide the fact that
    * we are creating the channel preview from the image preview and turning
@@ -90,18 +90,18 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
    * preview all black. See bug #459518 for details.
    */
   if (rendererimage->channel == -1 ||
-      (gimp_image_get_component_visible (image, rendererimage->channel)))
+      (ligma_image_get_component_visible (image, rendererimage->channel)))
     {
       gint         view_width;
       gint         view_height;
       gdouble      xres;
       gdouble      yres;
       gboolean     scaling_up;
-      GimpTempBuf *render_buf = NULL;
+      LigmaTempBuf *render_buf = NULL;
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      gimp_viewable_calc_preview_size (width,
+      ligma_viewable_calc_preview_size (width,
                                        height,
                                        renderer->width,
                                        renderer->height,
@@ -114,22 +114,22 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       if (scaling_up)
         {
-          GimpTempBuf *temp_buf;
+          LigmaTempBuf *temp_buf;
 
-          temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+          temp_buf = ligma_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
                                                     width, height);
 
           if (temp_buf)
             {
-              render_buf = gimp_temp_buf_scale (temp_buf,
+              render_buf = ligma_temp_buf_scale (temp_buf,
                                                 view_width, view_height);
-              gimp_temp_buf_unref (temp_buf);
+              ligma_temp_buf_unref (temp_buf);
             }
         }
       else
         {
-          render_buf = gimp_viewable_get_new_preview (renderer->viewable,
+          render_buf = ligma_viewable_get_new_preview (renderer->viewable,
                                                       renderer->context,
                                                       view_width,
                                                       view_height);
@@ -144,11 +144,11 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
           /*  xresolution != yresolution */
           if (view_width > renderer->width || view_height > renderer->height)
             {
-              GimpTempBuf *temp_buf;
+              LigmaTempBuf *temp_buf;
 
-              temp_buf = gimp_temp_buf_scale (render_buf,
+              temp_buf = ligma_temp_buf_scale (render_buf,
                                               renderer->width, renderer->height);
-              gimp_temp_buf_unref (render_buf);
+              ligma_temp_buf_unref (render_buf);
               render_buf = temp_buf;
             }
 
@@ -160,14 +160,14 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
           if (rendererimage->channel != -1)
             component_index =
-              gimp_image_get_component_index (image, rendererimage->channel);
+              ligma_image_get_component_index (image, rendererimage->channel);
 
-          gimp_view_renderer_render_temp_buf (renderer, widget, render_buf,
+          ligma_view_renderer_render_temp_buf (renderer, widget, render_buf,
                                               render_buf_x, render_buf_y,
                                               component_index,
-                                              GIMP_VIEW_BG_CHECKS,
-                                              GIMP_VIEW_BG_WHITE);
-          gimp_temp_buf_unref (render_buf);
+                                              LIGMA_VIEW_BG_CHECKS,
+                                              LIGMA_VIEW_BG_WHITE);
+          ligma_temp_buf_unref (render_buf);
 
           return;
         }
@@ -175,17 +175,17 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
   switch (rendererimage->channel)
     {
-    case GIMP_CHANNEL_RED:     icon_name = GIMP_ICON_CHANNEL_RED;     break;
-    case GIMP_CHANNEL_GREEN:   icon_name = GIMP_ICON_CHANNEL_GREEN;   break;
-    case GIMP_CHANNEL_BLUE:    icon_name = GIMP_ICON_CHANNEL_BLUE;    break;
-    case GIMP_CHANNEL_GRAY:    icon_name = GIMP_ICON_CHANNEL_GRAY;    break;
-    case GIMP_CHANNEL_INDEXED: icon_name = GIMP_ICON_CHANNEL_INDEXED; break;
-    case GIMP_CHANNEL_ALPHA:   icon_name = GIMP_ICON_CHANNEL_ALPHA;   break;
+    case LIGMA_CHANNEL_RED:     icon_name = LIGMA_ICON_CHANNEL_RED;     break;
+    case LIGMA_CHANNEL_GREEN:   icon_name = LIGMA_ICON_CHANNEL_GREEN;   break;
+    case LIGMA_CHANNEL_BLUE:    icon_name = LIGMA_ICON_CHANNEL_BLUE;    break;
+    case LIGMA_CHANNEL_GRAY:    icon_name = LIGMA_ICON_CHANNEL_GRAY;    break;
+    case LIGMA_CHANNEL_INDEXED: icon_name = LIGMA_ICON_CHANNEL_INDEXED; break;
+    case LIGMA_CHANNEL_ALPHA:   icon_name = LIGMA_ICON_CHANNEL_ALPHA;   break;
 
     default:
-      icon_name = gimp_viewable_get_icon_name (renderer->viewable);
+      icon_name = ligma_viewable_get_icon_name (renderer->viewable);
       break;
     }
 
-  gimp_view_renderer_render_icon (renderer, widget, icon_name);
+  ligma_view_renderer_render_icon (renderer, widget, icon_name);
 }

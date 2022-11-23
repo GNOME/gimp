@@ -6,11 +6,11 @@ SUBDIRS = \
 	$(installer)
 
 EXTRA_DIST = \
-	gimprc.rule		\
-	gimprc-plug-ins.rule	\
-	gimp.rc			\
-	gimp-plug-ins.rc	\
-	gimp.manifest		\
+	ligmarc.rule		\
+	ligmarc-plug-ins.rule	\
+	ligma.rc			\
+	ligma-plug-ins.rc	\
+	ligma.manifest		\
 	fileicon.ico		\
 	plug-ins.ico		\
 	wilber.ico

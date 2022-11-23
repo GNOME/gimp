@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGeglConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaGeglConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core/core-types.h" /* eek */
 
-#include "gimprc-blurbs.h"
-#include "gimpgeglconfig.h"
+#include "ligmarc-blurbs.h"
+#include "ligmageglconfig.h"
 
-#include "core/gimp-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimp-debug.h"
+#include "ligma-debug.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_DEFAULT_SWAP_COMPRESSION "fast"
+#define LIGMA_DEFAULT_SWAP_COMPRESSION "fast"
 
-#define GIMP_MAX_MEM_PROCESS          (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
+#define LIGMA_MAX_MEM_PROCESS          (MIN (G_MAXSIZE, LIGMA_MAX_MEMSIZE))
 
 
 enum
@@ -58,25 +58,25 @@ enum
 };
 
 
-static void   gimp_gegl_config_constructed  (GObject             *object);
-static void   gimp_gegl_config_finalize     (GObject             *object);
-static void   gimp_gegl_config_set_property (GObject             *object,
+static void   ligma_gegl_config_constructed  (GObject             *object);
+static void   ligma_gegl_config_finalize     (GObject             *object);
+static void   ligma_gegl_config_set_property (GObject             *object,
                                              guint                property_id,
                                              const GValue        *value,
                                              GParamSpec          *pspec);
-static void   gimp_gegl_config_get_property (GObject             *object,
+static void   ligma_gegl_config_get_property (GObject             *object,
                                              guint                property_id,
                                              GValue              *value,
                                              GParamSpec          *pspec);
 
 
-G_DEFINE_TYPE (GimpGeglConfig, gimp_gegl_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaGeglConfig, ligma_gegl_config, G_TYPE_OBJECT)
 
-#define parent_class gimp_gegl_config_parent_class
+#define parent_class ligma_gegl_config_parent_class
 
 
 static void
-gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
+ligma_gegl_config_class_init (LigmaGeglConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gint          n_threads;
@@ -85,35 +85,35 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructed  = gimp_gegl_config_constructed;
-  object_class->finalize     = gimp_gegl_config_finalize;
-  object_class->set_property = gimp_gegl_config_set_property;
-  object_class->get_property = gimp_gegl_config_get_property;
+  object_class->constructed  = ligma_gegl_config_constructed;
+  object_class->finalize     = ligma_gegl_config_finalize;
+  object_class->set_property = ligma_gegl_config_set_property;
+  object_class->get_property = ligma_gegl_config_get_property;
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_TEMP_PATH,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_TEMP_PATH,
                          "temp-path",
                          "Temp path",
                          TEMP_PATH_BLURB,
-                         GIMP_CONFIG_PATH_DIR,
-                         "${gimp_temp_dir}",
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         LIGMA_CONFIG_PATH_DIR,
+                         "${ligma_temp_dir}",
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_SWAP_PATH,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_SWAP_PATH,
                          "swap-path",
                          "Swap path",
                          SWAP_PATH_BLURB,
-                         GIMP_CONFIG_PATH_DIR,
-                         "${gimp_cache_dir}",
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         LIGMA_CONFIG_PATH_DIR,
+                         "${ligma_cache_dir}",
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_SWAP_COMPRESSION,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_SWAP_COMPRESSION,
                            "swap-compression",
                            "Swap compression",
                             SWAP_COMPRESSION_BLURB,
-                           GIMP_DEFAULT_SWAP_COMPRESSION,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_DEFAULT_SWAP_COMPRESSION,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   n_threads = g_get_num_processors ();
 
@@ -123,81 +123,81 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   n_threads = MIN (n_threads, max_n_threads);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_NUM_PROCESSORS,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_NUM_PROCESSORS,
                         "num-processors",
                         "Number of threads to use",
                         NUM_PROCESSORS_BLURB,
                         1, max_n_threads, n_threads,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  memory_size = gimp_get_physical_memory_size ();
+  memory_size = ligma_get_physical_memory_size ();
 
   /* limit to the amount one process can handle */
-  memory_size = MIN (GIMP_MAX_MEM_PROCESS, memory_size);
+  memory_size = MIN (LIGMA_MAX_MEM_PROCESS, memory_size);
 
   if (memory_size > 0)
     memory_size = memory_size / 2; /* half the memory */
   else
     memory_size = 1 << 30; /* 1GB */
 
-  GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
+  LIGMA_CONFIG_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                             "tile-cache-size",
                             "Tile cache size",
                             TILE_CACHE_SIZE_BLURB,
-                            0, GIMP_MAX_MEM_PROCESS,
+                            0, LIGMA_MAX_MEM_PROCESS,
                             memory_size,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_CONFIRM);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_CONFIRM);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_OPENCL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_OPENCL,
                             "use-opencl",
                             "Use OpenCL",
                             USE_OPENCL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                             "stingy-memory-use",
                             NULL, NULL,
                             FALSE,
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_CONFIG_PARAM_IGNORE);
 }
 
 static void
-gimp_gegl_config_init (GimpGeglConfig *config)
+ligma_gegl_config_init (LigmaGeglConfig *config)
 {
 }
 
 static void
-gimp_gegl_config_constructed (GObject *object)
+ligma_gegl_config_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_debug_add_instance (object, G_OBJECT_GET_CLASS (object));
+  ligma_debug_add_instance (object, G_OBJECT_GET_CLASS (object));
 }
 
 static void
-gimp_gegl_config_finalize (GObject *object)
+ligma_gegl_config_finalize (GObject *object)
 {
-  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
+  LigmaGeglConfig *gegl_config = LIGMA_GEGL_CONFIG (object);
 
   g_free (gegl_config->temp_path);
   g_free (gegl_config->swap_path);
   g_free (gegl_config->swap_compression);
 
-  gimp_debug_remove_instance (object);
+  ligma_debug_remove_instance (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_gegl_config_set_property (GObject      *object,
+ligma_gegl_config_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
+  LigmaGeglConfig *gegl_config = LIGMA_GEGL_CONFIG (object);
 
   switch (property_id)
     {
@@ -234,12 +234,12 @@ gimp_gegl_config_set_property (GObject      *object,
 }
 
 static void
-gimp_gegl_config_get_property (GObject    *object,
+ligma_gegl_config_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
+  LigmaGeglConfig *gegl_config = LIGMA_GEGL_CONFIG (object);
 
   switch (property_id)
     {

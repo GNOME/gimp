@@ -13,8 +13,8 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "map-object-main.h"
 #include "map-object-preview.h"
@@ -23,17 +23,17 @@
 #include "map-object-image.h"
 
 
-GimpImage    *image;
+LigmaImage    *image;
 
-GimpDrawable *input_drawable;
-GimpDrawable *output_drawable;
+LigmaDrawable *input_drawable;
+LigmaDrawable *output_drawable;
 GeglBuffer   *source_buffer;
 GeglBuffer   *dest_buffer;
 
-GimpDrawable *box_drawables[6];
+LigmaDrawable *box_drawables[6];
 GeglBuffer   *box_buffers[6];
 
-GimpDrawable *cylinder_drawables[2];
+LigmaDrawable *cylinder_drawables[2];
 GeglBuffer   *cylinder_buffers[2];
 
 guchar          *preview_rgb_data = NULL;
@@ -42,7 +42,7 @@ cairo_surface_t *preview_surface = NULL;
 
 glong    maxcounter, old_depth, max_depth;
 gint     width, height;
-GimpRGB  background;
+LigmaRGB  background;
 
 gint border_x, border_y, border_w, border_h;
 
@@ -50,11 +50,11 @@ gint border_x, border_y, border_w, border_h;
 /* Implementation */
 /******************/
 
-GimpRGB
+LigmaRGB
 peek (gint x,
       gint y)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
   gegl_buffer_sample (source_buffer, x, y, NULL,
                       &color, babl_format ("R'G'B'A double"),
@@ -66,12 +66,12 @@ peek (gint x,
   return color;
 }
 
-static GimpRGB
+static LigmaRGB
 peek_box_image (gint image,
                 gint x,
                 gint y)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
   gegl_buffer_sample (box_buffers[image], x, y, NULL,
                       &color, babl_format ("R'G'B'A double"),
@@ -83,12 +83,12 @@ peek_box_image (gint image,
   return color;
 }
 
-static GimpRGB
+static LigmaRGB
 peek_cylinder_image (gint image,
                      gint x,
                      gint y)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
   gegl_buffer_sample (cylinder_buffers[image], x, y, NULL,
                       &color, babl_format ("R'G'B'A double"),
@@ -103,7 +103,7 @@ peek_cylinder_image (gint image,
 void
 poke (gint      x,
       gint      y,
-      GimpRGB  *color,
+      LigmaRGB  *color,
       gpointer  user_data)
 {
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
@@ -156,11 +156,11 @@ checkbounds_cylinder_image (gint image,
     return TRUE;
 }
 
-GimpVector3
+LigmaVector3
 int_to_pos (gint x,
             gint y)
 {
-  GimpVector3 pos;
+  LigmaVector3 pos;
 
   pos.x = (gdouble) x / (gdouble) width;
   pos.y = (gdouble) y / (gdouble) height;
@@ -184,13 +184,13 @@ pos_to_int (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GimpRGB
+LigmaRGB
 get_image_color (gdouble  u,
                  gdouble  v,
                  gint    *inside)
 {
   gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  LigmaRGB p[4];
 
   pos_to_int (u, v, &x1, &y1);
 
@@ -212,7 +212,7 @@ get_image_color (gdouble  u,
       p[2] = peek (x1, y2);
       p[3] = peek (x2, y2);
 
-      return gimp_bilinear_rgba (u * width, v * height, p);
+      return ligma_bilinear_rgba (u * width, v * height, p);
     }
 
   if (checkbounds (x1, y1) == FALSE)
@@ -239,17 +239,17 @@ get_image_color (gdouble  u,
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gimp_bilinear_rgba (u * width, v * height, p);
+  return ligma_bilinear_rgba (u * width, v * height, p);
 }
 
-GimpRGB
+LigmaRGB
 get_box_image_color (gint    image,
                      gdouble u,
                      gdouble v)
 {
   gint    w, h;
   gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  LigmaRGB p[4];
 
   w = gegl_buffer_get_width  (box_buffers[image]);
   h = gegl_buffer_get_height (box_buffers[image]);
@@ -271,17 +271,17 @@ get_box_image_color (gint    image,
   p[2] = peek_box_image (image, x1, y2);
   p[3] = peek_box_image (image, x2, y2);
 
-  return gimp_bilinear_rgba (u * w, v * h, p);
+  return ligma_bilinear_rgba (u * w, v * h, p);
 }
 
-GimpRGB
+LigmaRGB
 get_cylinder_image_color (gint    image,
                           gdouble u,
                           gdouble v)
 {
   gint    w, h;
   gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  LigmaRGB p[4];
 
   w = gegl_buffer_get_width  (cylinder_buffers[image]);
   h = gegl_buffer_get_height (cylinder_buffers[image]);
@@ -303,7 +303,7 @@ get_cylinder_image_color (gint    image,
   p[2] = peek_cylinder_image (image, x1, y2);
   p[3] = peek_cylinder_image (image, x2, y2);
 
-  return gimp_bilinear_rgba (u * w, v * h, p);
+  return ligma_bilinear_rgba (u * w, v * h, p);
 }
 
 /****************************************/
@@ -311,31 +311,31 @@ get_cylinder_image_color (gint    image,
 /****************************************/
 
 gint
-image_setup (GimpDrawable *drawable,
+image_setup (LigmaDrawable *drawable,
              gint          interactive)
 {
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  if (! gimp_drawable_mask_intersect (drawable, &border_x, &border_y,
+  if (! ligma_drawable_mask_intersect (drawable, &border_x, &border_y,
                                       &border_w, &border_h))
     return FALSE;
 
-  width  = gimp_drawable_get_width  (input_drawable);
-  height = gimp_drawable_get_height (input_drawable);
+  width  = ligma_drawable_get_width  (input_drawable);
+  height = ligma_drawable_get_height (input_drawable);
 
-  source_buffer = gimp_drawable_get_buffer (input_drawable);
+  source_buffer = ligma_drawable_get_buffer (input_drawable);
 
   maxcounter = (glong) width * (glong) height;
 
   if (mapvals.transparent_background == TRUE)
     {
-      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      ligma_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
     }
   else
     {
-      gimp_context_get_background (&background);
-      gimp_rgb_set_alpha (&background, 1.0);
+      ligma_context_get_background (&background);
+      ligma_rgb_set_alpha (&background, 1.0);
     }
 
   if (interactive == TRUE)

@@ -1,12 +1,12 @@
-# Finnish translation for gimp.
-# Copyright (C) 2020 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Finnish translation for ligma.
+# Copyright (C) 2020 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Jiri Grönroos <jiri.gronroos@iki.fi>, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2020-02-23 20:08+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
@@ -23,14 +23,14 @@ msgid "License Agreement"
 msgstr "Lisenssisopimus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Asennuksen on toteuttanut Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "Asennuksen on toteuttanut Jernej Simonèiè, jernej-ligma@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
 msgstr ""
-"Tämä versio GIMPistä vaatii Windows 7:n tai uudemman version Windowsista."
+"Tämä versio LIGMAistä vaatii Windows 7:n tai uudemman version Windowsista."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -38,12 +38,12 @@ msgstr "Kehitysversio"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
 
@@ -58,8 +58,8 @@ msgstr "Lopeta"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "Tämä GIMPin versio vaatii suorittimen, joka tukee SSE-käskyjä."
+"This version of LIGMA requires a processor that supports SSE instructions."
+msgstr "Tämä LIGMAin versio vaatii suorittimen, joka tukee SSE-käskyjä."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -68,7 +68,7 @@ msgstr "Ongelma näytön asetuksissa"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
@@ -79,11 +79,11 @@ msgstr "&Lopeta"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP on nyt valmis asennettavaksi. Napsauta Asenna-painiketta alapuolelta "
+"LIGMA on nyt valmis asennettavaksi. Napsauta Asenna-painiketta alapuolelta "
 "suorittaaksesi asennuksen oletusasetuksin, tai napsauta Mukauta jos haluat "
 "valita tarkemmin, mitä asennettaan."
 
@@ -112,12 +112,12 @@ msgid "Description"
 msgstr "Kuvaus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP ja kaikki oletusliitännäiset"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA ja kaikki oletusliitännäiset"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -125,17 +125,17 @@ msgstr "Suoritusaikaiset kirjastot"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
 msgstr ""
-"GIMPin käyttämät suoritusaikaiset kirjastot, mukaan lukien GTK-ympäristö"
+"LIGMAin käyttämät suoritusaikaiset kirjastot, mukaan lukien GTK-ympäristö"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "Vianjäljityssymbolit"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
-msgstr "Sisällytä tiedot, jotka auttavat GIMPin vianjäljityksessä"
+msgid "Include information to help with debugging LIGMA"
+msgstr "Sisällytä tiedot, jotka auttavat LIGMAin vianjäljityksessä"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 #, fuzzy
@@ -143,8 +143,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "MS-Windows-moottori GTK:lle"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Natiivi Windows-ulkoasu GIMPille"
+msgid "Native Windows look for LIGMA"
+msgstr "Natiivi Windows-ulkoasu LIGMAille"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -165,9 +165,9 @@ msgid "Python scripting"
 msgstr "Python-skriptaus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
 msgstr ""
-"Mahdollistaa sinun käyttävän Python-skriptauskielellä kirjoitettuja GIMP-"
+"Mahdollistaa sinun käyttävän Python-skriptauskielellä kirjoitettuja LIGMA-"
 "liitännäisiä."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
@@ -177,9 +177,9 @@ msgstr "Python-skriptaus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
 #, fuzzy
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
 msgstr ""
-"Mahdollistaa sinun käyttävän Python-skriptauskielellä kirjoitettuja GIMP-"
+"Mahdollistaa sinun käyttävän Python-skriptauskielellä kirjoitettuja LIGMA-"
 "liitännäisiä."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
@@ -195,8 +195,8 @@ msgid "PostScript support"
 msgstr "PostScript-tuki"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "Salli GIMPin ladata PostScript-tiedostoja"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "Salli LIGMAin ladata PostScript-tiedostoja"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -223,13 +223,13 @@ msgid "Create a &Quick Launch icon"
 msgstr "Luo &pikakäynnistyskuvake"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "Poista aiempi GIMP-versio"
+msgid "Remove previous LIGMA version"
+msgstr "Poista aiempi LIGMA-versio"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
@@ -249,12 +249,12 @@ msgid "There was an error updating %1."
 msgstr "Virhe päivittäessä %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Virhe päivittäessä GIMPin asetustiedostoa %1."
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "Virhe päivittäessä LIGMAin asetustiedostoa %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "Muokkaa GIMPillä"
+msgid "Edit with LIGMA"
+msgstr "Muokkaa LIGMAillä"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -265,15 +265,15 @@ msgid "Extensions:"
 msgstr "Tiedostopäätteet:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Valitse tiedostotyypit, jotka haluat sitoa GIMPiin"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "Valitse tiedostotyypit, jotka haluat sitoa LIGMAiin"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"Tämän myötä valitut tiedostot avautuvat GIMPissä, kun kaksoisnapsautat niitä "
+"Tämän myötä valitut tiedostot avautuvat LIGMAissä, kun kaksoisnapsautat niitä "
 "tiedostonhallinnassa."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
@@ -289,38 +289,38 @@ msgid "Select &Unused"
 msgstr "&Valitse käyttämättömät"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "GIMPiin sidottavat tiedostotyypit:"
+msgid "File types to associate with LIGMA:"
+msgstr "LIGMAiin sidottavat tiedostotyypit:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "Poistetaan aiempi versio GIMPistä:"
+msgid "Removing previous version of LIGMA:"
+msgstr "Poistetaan aiempi versio LIGMAistä:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"GIMPin aiempi versio poistettiin onnistuneesti, mutta Windows tulee "
+"LIGMAin aiempi versio poistettiin onnistuneesti, mutta Windows tulee "
 "käynnistää uudelleen, ennen kuin asennus voi jatkua.%n%nAsennus jatkuu "
 "tietokoneen uudelleenkäynnistymisen jälkeen seuraavan kerran, kun ylläpitäjä "
 "kirjautuu sisään."
@@ -334,8 +334,8 @@ msgid "Cleaning up old files..."
 msgstr "Siivotaan vanhoja tiedostoja..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Muistathan: GIMP on vapaa ohjelmisto.%n%nVieraile"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "Muistathan: LIGMA on vapaa ohjelmisto.%n%nVieraile"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -346,24 +346,24 @@ msgid "Setting up file associations..."
 msgstr "Asetetaan tiedostosidonnaisuuksia..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Asetetaan ympäristöä GIMPin Python-laajennukselle..."
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "Asetetaan ympäristöä LIGMAin Python-laajennukselle..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Asetetaan MyPaint-siveltimiä..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "Asetetaan GIMP-ympäristöä..."
+msgid "Setting up LIGMA environment..."
+msgstr "Asetetaan LIGMA-ympäristöä..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Asetetaan GIMP-määrityksiä 32-bittisten lisäosien tuelle..."
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "Asetetaan LIGMA-määrityksiä 32-bittisten lisäosien tuelle..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "Käynnistä GIMP"
+msgid "Launch LIGMA"
+msgstr "Käynnistä LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -375,7 +375,7 @@ msgstr "Sisäinen virhe (%1)."
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"GIMP ei vaikuta olevan asennettuna valittuun kansioon. Jatketaanko silti?"
+"LIGMA ei vaikuta olevan asennettuna valittuun kansioon. Jatketaanko silti?"

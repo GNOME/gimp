@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,53 +22,53 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "operations/gimp-operation-config.h"
-#include "operations/gimpoperationsettings.h"
+#include "operations/ligma-operation-config.h"
+#include "operations/ligmaoperationsettings.h"
 
-#include "core/gimp.h"
-#include "core/gimp-filter-history.h"
-#include "core/gimpimage.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligma-filter-history.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpaction.h"
+#include "widgets/ligmaaction.h"
 
 #include "actions.h"
 #include "filters-commands.h"
-#include "gimpgeglprocedure.h"
+#include "ligmageglprocedure.h"
 #include "procedure-commands.h"
 
 
 /*  local function prototypes  */
 
-static gchar * filters_parse_operation (Gimp          *gimp,
+static gchar * filters_parse_operation (Ligma          *ligma,
                                         const gchar   *operation_str,
                                         const gchar   *icon_name,
-                                        GimpObject   **settings);
+                                        LigmaObject   **settings);
 
-static void    filters_run_procedure   (Gimp          *gimp,
-                                        GimpDisplay   *display,
-                                        GimpProcedure *procedure,
-                                        GimpRunMode    run_mode);
+static void    filters_run_procedure   (Ligma          *ligma,
+                                        LigmaDisplay   *display,
+                                        LigmaProcedure *procedure,
+                                        LigmaRunMode    run_mode);
 
 
 /*  public functions  */
 
 void
-filters_apply_cmd_callback (GimpAction *action,
+filters_apply_cmd_callback (LigmaAction *action,
                             GVariant   *value,
                             gpointer    data)
 {
-  GimpImage     *image;
+  LigmaImage     *image;
   GList         *drawables;
   gchar         *operation;
-  GimpObject    *settings;
-  GimpProcedure *procedure;
+  LigmaObject    *settings;
+  LigmaProcedure *procedure;
   GVariant      *variant;
 
   return_if_no_drawables (image, drawables, data);
@@ -80,26 +80,26 @@ filters_apply_cmd_callback (GimpAction *action,
       return;
     }
 
-  operation = filters_parse_operation (image->gimp,
+  operation = filters_parse_operation (image->ligma,
                                        g_variant_get_string (value, NULL),
-                                       gimp_action_get_icon_name (action),
+                                       ligma_action_get_icon_name (action),
                                        &settings);
 
-  procedure = gimp_gegl_procedure_new (image->gimp,
-                                       GIMP_RUN_NONINTERACTIVE, settings,
+  procedure = ligma_gegl_procedure_new (image->ligma,
+                                       LIGMA_RUN_NONINTERACTIVE, settings,
                                        operation,
-                                       gimp_action_get_name (action),
-                                       gimp_action_get_label (action),
-                                       gimp_action_get_tooltip (action),
-                                       gimp_action_get_icon_name (action),
-                                       gimp_action_get_help_id (action));
+                                       ligma_action_get_name (action),
+                                       ligma_action_get_label (action),
+                                       ligma_action_get_tooltip (action),
+                                       ligma_action_get_icon_name (action),
+                                       ligma_action_get_help_id (action));
 
   g_free (operation);
 
   if (settings)
     g_object_unref (settings);
 
-  gimp_filter_history_add (image->gimp, procedure);
+  ligma_filter_history_add (image->ligma, procedure);
 
   variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
   g_variant_take_ref (variant);
@@ -111,13 +111,13 @@ filters_apply_cmd_callback (GimpAction *action,
 }
 
 void
-filters_apply_interactive_cmd_callback (GimpAction *action,
+filters_apply_interactive_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpImage     *image;
+  LigmaImage     *image;
   GList         *drawables;
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
   GVariant      *variant;
 
   return_if_no_drawables (image, drawables, data);
@@ -129,16 +129,16 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
       return;
     }
 
-  procedure = gimp_gegl_procedure_new (image->gimp,
-                                       GIMP_RUN_INTERACTIVE, NULL,
+  procedure = ligma_gegl_procedure_new (image->ligma,
+                                       LIGMA_RUN_INTERACTIVE, NULL,
                                        g_variant_get_string (value, NULL),
-                                       gimp_action_get_name (action),
-                                       gimp_action_get_label (action),
-                                       gimp_action_get_tooltip (action),
-                                       gimp_action_get_icon_name (action),
-                                       gimp_action_get_help_id (action));
+                                       ligma_action_get_name (action),
+                                       ligma_action_get_label (action),
+                                       ligma_action_get_tooltip (action),
+                                       ligma_action_get_icon_name (action),
+                                       ligma_action_get_help_id (action));
 
-  gimp_filter_history_add (image->gimp, procedure);
+  ligma_filter_history_add (image->ligma, procedure);
 
   variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
   g_variant_take_ref (variant);
@@ -150,53 +150,53 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
 }
 
 void
-filters_repeat_cmd_callback (GimpAction *action,
+filters_repeat_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  Gimp          *gimp;
-  GimpDisplay   *display;
-  GimpProcedure *procedure;
-  GimpRunMode    run_mode;
+  Ligma          *ligma;
+  LigmaDisplay   *display;
+  LigmaProcedure *procedure;
+  LigmaRunMode    run_mode;
 
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
 
-  run_mode = (GimpRunMode) g_variant_get_int32 (value);
+  run_mode = (LigmaRunMode) g_variant_get_int32 (value);
 
-  procedure = gimp_filter_history_nth (gimp, 0);
+  procedure = ligma_filter_history_nth (ligma, 0);
 
   if (procedure)
-    filters_run_procedure (gimp, display, procedure, run_mode);
+    filters_run_procedure (ligma, display, procedure, run_mode);
 }
 
 void
-filters_history_cmd_callback (GimpAction *action,
+filters_history_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  Gimp          *gimp;
-  GimpDisplay   *display;
-  GimpProcedure *procedure;
+  Ligma          *ligma;
+  LigmaDisplay   *display;
+  LigmaProcedure *procedure;
   gsize          hack;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
 
   hack = g_variant_get_uint64 (value);
 
   procedure = GSIZE_TO_POINTER (hack);
 
-  filters_run_procedure (gimp, display, procedure, GIMP_RUN_INTERACTIVE);
+  filters_run_procedure (ligma, display, procedure, LIGMA_RUN_INTERACTIVE);
 }
 
 
 /*  private functions  */
 
 static gchar *
-filters_parse_operation (Gimp         *gimp,
+filters_parse_operation (Ligma         *ligma,
                          const gchar  *operation_str,
                          const gchar  *icon_name,
-                         GimpObject  **settings)
+                         LigmaObject  **settings)
 {
   const gchar *newline = strchr (operation_str, '\n');
 
@@ -215,12 +215,12 @@ filters_parse_operation (Gimp         *gimp,
           GError *error = NULL;
 
           *settings =
-            g_object_new (gimp_operation_config_get_type (gimp, operation,
+            g_object_new (ligma_operation_config_get_type (ligma, operation,
                                                           icon_name,
-                                                          GIMP_TYPE_OPERATION_SETTINGS),
+                                                          LIGMA_TYPE_OPERATION_SETTINGS),
                           NULL);
 
-          if (! gimp_config_deserialize_string (GIMP_CONFIG (*settings),
+          if (! ligma_config_deserialize_string (LIGMA_CONFIG (*settings),
                                                 serialized, -1, NULL,
                                                 &error))
             {
@@ -241,20 +241,20 @@ filters_parse_operation (Gimp         *gimp,
 }
 
 static void
-filters_run_procedure (Gimp          *gimp,
-                       GimpDisplay   *display,
-                       GimpProcedure *procedure,
-                       GimpRunMode    run_mode)
+filters_run_procedure (Ligma          *ligma,
+                       LigmaDisplay   *display,
+                       LigmaProcedure *procedure,
+                       LigmaRunMode    run_mode)
 {
-  GimpObject     *settings = NULL;
-  GimpValueArray *args;
+  LigmaObject     *settings = NULL;
+  LigmaValueArray *args;
 
-  if (GIMP_IS_GEGL_PROCEDURE (procedure))
+  if (LIGMA_IS_GEGL_PROCEDURE (procedure))
     {
-      GimpGeglProcedure *gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
+      LigmaGeglProcedure *gegl_procedure = LIGMA_GEGL_PROCEDURE (procedure);
 
-      if (gegl_procedure->default_run_mode == GIMP_RUN_NONINTERACTIVE)
-        run_mode = GIMP_RUN_NONINTERACTIVE;
+      if (gegl_procedure->default_run_mode == LIGMA_RUN_NONINTERACTIVE)
+        run_mode = LIGMA_RUN_NONINTERACTIVE;
 
       settings = gegl_procedure->default_settings;
     }
@@ -265,25 +265,25 @@ filters_run_procedure (Gimp          *gimp,
     {
       gboolean success = FALSE;
 
-      if (run_mode == GIMP_RUN_NONINTERACTIVE)
+      if (run_mode == LIGMA_RUN_NONINTERACTIVE)
         {
           success =
-            procedure_commands_run_procedure (procedure, gimp,
-                                              GIMP_PROGRESS (display),
+            procedure_commands_run_procedure (procedure, ligma,
+                                              LIGMA_PROGRESS (display),
                                               args);
         }
       else
         {
           success =
-            procedure_commands_run_procedure_async (procedure, gimp,
-                                                    GIMP_PROGRESS (display),
+            procedure_commands_run_procedure_async (procedure, ligma,
+                                                    LIGMA_PROGRESS (display),
                                                     run_mode, args,
                                                     display);
         }
 
       if (success)
-        gimp_filter_history_add (gimp, procedure);
+        ligma_filter_history_add (ligma, procedure);
 
-      gimp_value_array_unref (args);
+      ligma_value_array_unref (args);
     }
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcriticaldialog.c
- * Copyright (C) 2018  Jehan <jehan@gimp.org>
+ * ligmacriticaldialog.c
+ * Copyright (C) 2018  Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 /*
  * This widget is particular that I want to be able to use it
- * internally but also from an alternate tool (gimp-debug-tool). It
+ * internally but also from an alternate tool (ligma-debug-tool). It
  * means that the implementation must stay as generic glib/GTK+ as
  * possible.
  */
@@ -41,16 +41,16 @@
 #include <windows.h>
 #endif
 
-#include "gimpcriticaldialog.h"
+#include "ligmacriticaldialog.h"
 
-#include "gimp-intl.h"
-#include "gimp-version.h"
+#include "ligma-intl.h"
+#include "ligma-version.h"
 
 
-#define GIMP_CRITICAL_RESPONSE_CLIPBOARD 1
-#define GIMP_CRITICAL_RESPONSE_URL       2
-#define GIMP_CRITICAL_RESPONSE_RESTART   3
-#define GIMP_CRITICAL_RESPONSE_DOWNLOAD  4
+#define LIGMA_CRITICAL_RESPONSE_CLIPBOARD 1
+#define LIGMA_CRITICAL_RESPONSE_URL       2
+#define LIGMA_CRITICAL_RESPONSE_RESTART   3
+#define LIGMA_CRITICAL_RESPONSE_DOWNLOAD  4
 
 #define BUTTON1_TEXT _("Copy Bug Information")
 #define BUTTON2_TEXT _("Open Bug Tracker")
@@ -62,37 +62,37 @@ enum
   PROP_RELEASE_DATE
 };
 
-static void     gimp_critical_dialog_constructed  (GObject      *object);
-static void     gimp_critical_dialog_finalize     (GObject      *object);
-static void     gimp_critical_dialog_set_property (GObject      *object,
+static void     ligma_critical_dialog_constructed  (GObject      *object);
+static void     ligma_critical_dialog_finalize     (GObject      *object);
+static void     ligma_critical_dialog_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
                                                    GParamSpec   *pspec);
-static void     gimp_critical_dialog_response     (GtkDialog    *dialog,
+static void     ligma_critical_dialog_response     (GtkDialog    *dialog,
                                                    gint          response_id);
 
-static void     gimp_critical_dialog_copy_info    (GimpCriticalDialog *dialog);
+static void     ligma_critical_dialog_copy_info    (LigmaCriticalDialog *dialog);
 static gboolean browser_open_url                  (GtkWindow    *window,
                                                    const gchar  *url,
                                                    GError      **error);
 
 
-G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (LigmaCriticalDialog, ligma_critical_dialog, GTK_TYPE_DIALOG)
 
-#define parent_class gimp_critical_dialog_parent_class
+#define parent_class ligma_critical_dialog_parent_class
 
 
 static void
-gimp_critical_dialog_class_init (GimpCriticalDialogClass *klass)
+ligma_critical_dialog_class_init (LigmaCriticalDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->constructed  = gimp_critical_dialog_constructed;
-  object_class->finalize     = gimp_critical_dialog_finalize;
-  object_class->set_property = gimp_critical_dialog_set_property;
+  object_class->constructed  = ligma_critical_dialog_constructed;
+  object_class->finalize     = ligma_critical_dialog_finalize;
+  object_class->set_property = ligma_critical_dialog_set_property;
 
-  dialog_class->response = gimp_critical_dialog_response;
+  dialog_class->response = ligma_critical_dialog_response;
 
   g_object_class_install_property (object_class, PROP_LAST_VERSION,
                                    g_param_spec_string ("last-version",
@@ -107,12 +107,12 @@ gimp_critical_dialog_class_init (GimpCriticalDialogClass *klass)
 }
 
 static void
-gimp_critical_dialog_init (GimpCriticalDialog *dialog)
+ligma_critical_dialog_init (LigmaCriticalDialog *dialog)
 {
   PangoAttrList  *attrs;
   PangoAttribute *attr;
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-critical");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-critical");
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
@@ -163,9 +163,9 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 }
 
 static void
-gimp_critical_dialog_constructed (GObject *object)
+ligma_critical_dialog_constructed (GObject *object)
 {
-  GimpCriticalDialog *dialog = GIMP_CRITICAL_DIALOG (object);
+  LigmaCriticalDialog *dialog = LIGMA_CRITICAL_DIALOG (object);
   GtkWidget          *scrolled;
   GtkTextBuffer      *buffer;
   gchar              *version;
@@ -196,18 +196,18 @@ gimp_critical_dialog_constructed (GObject *object)
 
       button = gtk_button_new_with_label (BUTTON1_TEXT);
       g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_critical_dialog_copy_info),
+                                G_CALLBACK (ligma_critical_dialog_copy_info),
                                 dialog);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                              _("Go to _Download page"), GIMP_CRITICAL_RESPONSE_DOWNLOAD,
+                              _("Go to _Download page"), LIGMA_CRITICAL_RESPONSE_DOWNLOAD,
                               _("_Close"),               GTK_RESPONSE_CLOSE,
                               NULL);
 
       /* Recommend an update. */
-      text = g_strdup_printf (_("A new version of GIMP (%s) was released on %s.\n"
+      text = g_strdup_printf (_("A new version of LIGMA (%s) was released on %s.\n"
                                 "It is recommended to update."),
                               dialog->last_version, dialog->release_date);
       gtk_label_set_text (GTK_LABEL (dialog->center_label), text);
@@ -223,8 +223,8 @@ gimp_critical_dialog_constructed (GObject *object)
       gtk_widget_show (scrolled);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                              BUTTON1_TEXT, GIMP_CRITICAL_RESPONSE_CLIPBOARD,
-                              BUTTON2_TEXT, GIMP_CRITICAL_RESPONSE_URL,
+                              BUTTON1_TEXT, LIGMA_CRITICAL_RESPONSE_CLIPBOARD,
+                              BUTTON2_TEXT, LIGMA_CRITICAL_RESPONSE_URL,
                               _("_Close"),  GTK_RESPONSE_CLOSE,
                               NULL);
 
@@ -236,7 +236,7 @@ gimp_critical_dialog_constructed (GObject *object)
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s",
-                              _("To help us improve GIMP, you can report the bug with "
+                              _("To help us improve LIGMA, you can report the bug with "
                                 "these simple steps:"),
                               _("Copy the bug information to the clipboard by clicking: "),
                               BUTTON1_TEXT,
@@ -246,8 +246,8 @@ gimp_critical_dialog_constructed (GObject *object)
                               _("Paste the clipboard text in a new bug report."),
                               _("Add relevant information in English in the bug report "
                                 "explaining what you were doing when this error occurred."),
-                              _("This error may have left GIMP in an inconsistent state. "
-                                "It is advised to save your work and restart GIMP."));
+                              _("This error may have left LIGMA in an inconsistent state. "
+                                "It is advised to save your work and restart LIGMA."));
       gtk_label_set_text (GTK_LABEL (dialog->center_label), text);
       g_free (text);
 
@@ -258,7 +258,7 @@ gimp_critical_dialog_constructed (GObject *object)
     }
 
   buffer = gtk_text_buffer_new (NULL);
-  version = gimp_version (TRUE, FALSE);
+  version = ligma_version (TRUE, FALSE);
   text = g_strdup_printf ("<!-- %s -->\n\n\n```\n%s\n```",
                           _("Copy-paste this whole debug data to report to developers"),
                           version);
@@ -274,9 +274,9 @@ gimp_critical_dialog_constructed (GObject *object)
 }
 
 static void
-gimp_critical_dialog_finalize (GObject *object)
+ligma_critical_dialog_finalize (GObject *object)
 {
-  GimpCriticalDialog *dialog = GIMP_CRITICAL_DIALOG (object);
+  LigmaCriticalDialog *dialog = LIGMA_CRITICAL_DIALOG (object);
 
   if (dialog->program)
     g_free (dialog->program);
@@ -289,12 +289,12 @@ gimp_critical_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_critical_dialog_set_property (GObject      *object,
+ligma_critical_dialog_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpCriticalDialog *dialog = GIMP_CRITICAL_DIALOG (object);
+  LigmaCriticalDialog *dialog = LIGMA_CRITICAL_DIALOG (object);
 
   switch (property_id)
     {
@@ -312,7 +312,7 @@ gimp_critical_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_critical_dialog_copy_info (GimpCriticalDialog *dialog)
+ligma_critical_dialog_copy_info (LigmaCriticalDialog *dialog)
 {
   GtkClipboard *clipboard;
 
@@ -337,7 +337,7 @@ gimp_critical_dialog_copy_info (GimpCriticalDialog *dialog)
 /* XXX This is taken straight from plug-ins/common/web-browser.c
  *
  * This really sucks but this class also needs to be called by
- * tools/gimp-debug-tool.c as a separate process and therefore cannot
+ * tools/ligma-debug-tool.c as a separate process and therefore cannot
  * make use of the PDB. Anyway shouldn't we just move this as a utils
  * function?  Why does such basic feature as opening a URL in a
  * cross-platform way need to be a plug-in?
@@ -432,25 +432,25 @@ browser_open_url (GtkWindow    *window,
 }
 
 static void
-gimp_critical_dialog_response (GtkDialog *dialog,
+ligma_critical_dialog_response (GtkDialog *dialog,
                                gint       response_id)
 {
-  GimpCriticalDialog *critical = GIMP_CRITICAL_DIALOG (dialog);
+  LigmaCriticalDialog *critical = LIGMA_CRITICAL_DIALOG (dialog);
   const gchar        *url      = NULL;
 
   switch (response_id)
     {
-    case GIMP_CRITICAL_RESPONSE_CLIPBOARD:
-      gimp_critical_dialog_copy_info (critical);
+    case LIGMA_CRITICAL_RESPONSE_CLIPBOARD:
+      ligma_critical_dialog_copy_info (critical);
       break;
 
-    case GIMP_CRITICAL_RESPONSE_DOWNLOAD:
-#ifdef GIMP_UNSTABLE
-      url = "https://www.gimp.org/downloads/devel/";
+    case LIGMA_CRITICAL_RESPONSE_DOWNLOAD:
+#ifdef LIGMA_UNSTABLE
+      url = "https://www.ligma.org/downloads/devel/";
 #else
-      url = "https://www.gimp.org/downloads/";
+      url = "https://www.ligma.org/downloads/";
 #endif
-    case GIMP_CRITICAL_RESPONSE_URL:
+    case LIGMA_CRITICAL_RESPONSE_URL:
       if (url == NULL)
         {
           gchar *temp = g_ascii_strdown (BUG_REPORT_URL, -1);
@@ -474,7 +474,7 @@ gimp_critical_dialog_response (GtkDialog *dialog,
       browser_open_url (GTK_WINDOW (dialog), url, NULL);
       break;
 
-    case GIMP_CRITICAL_RESPONSE_RESTART:
+    case LIGMA_CRITICAL_RESPONSE_RESTART:
       {
         gchar *args[2] = { critical->program , NULL };
 
@@ -502,7 +502,7 @@ gimp_critical_dialog_response (GtkDialog *dialog,
 /*  public functions  */
 
 GtkWidget *
-gimp_critical_dialog_new (const gchar *title,
+ligma_critical_dialog_new (const gchar *title,
                           const gchar *last_version,
                           gint64       release_timestamp)
 {
@@ -520,7 +520,7 @@ gimp_critical_dialog_new (const gchar *title,
       g_date_time_unref (datetime);
     }
 
-  dialog = g_object_new (GIMP_TYPE_CRITICAL_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_CRITICAL_DIALOG,
                          "title",        title,
                          "last-version", last_version,
                          "release-date", date,
@@ -531,41 +531,41 @@ gimp_critical_dialog_new (const gchar *title,
 }
 
 void
-gimp_critical_dialog_add (GtkWidget   *dialog,
+ligma_critical_dialog_add (GtkWidget   *dialog,
                           const gchar *message,
                           const gchar *trace,
                           gboolean     is_fatal,
                           const gchar *program,
                           gint         pid)
 {
-  GimpCriticalDialog *critical;
+  LigmaCriticalDialog *critical;
   GtkTextBuffer      *buffer;
   GtkTextIter         end;
   gchar              *text;
 
-  if (! GIMP_IS_CRITICAL_DIALOG (dialog) || ! message)
+  if (! LIGMA_IS_CRITICAL_DIALOG (dialog) || ! message)
     {
       /* This is a bit hackish. We usually should use
        * g_return_if_fail(). But I don't want to end up in a critical
-       * recursing loop if our code had bugs. We would crash GIMP with
+       * recursing loop if our code had bugs. We would crash LIGMA with
        * a CRITICAL which would otherwise not have necessarily ended up
        * in a crash.
        */
       return;
     }
-  critical = GIMP_CRITICAL_DIALOG (dialog);
+  critical = LIGMA_CRITICAL_DIALOG (dialog);
 
   /* The user text, which should be localized. */
   if (is_fatal)
     {
-      text = g_strdup_printf (_("GIMP crashed with a fatal error: %s"),
+      text = g_strdup_printf (_("LIGMA crashed with a fatal error: %s"),
                               message);
     }
   else if (! gtk_label_get_text (GTK_LABEL (critical->top_label)) ||
            strlen (gtk_label_get_text (GTK_LABEL (critical->top_label))) == 0)
     {
       /* First error. Let's just display it. */
-      text = g_strdup_printf (_("GIMP encountered an error: %s"),
+      text = g_strdup_printf (_("LIGMA encountered an error: %s"),
                               message);
     }
   else
@@ -573,7 +573,7 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
       /* Let's not display all errors. They will be in the bug report
        * part anyway.
        */
-      text = g_strdup_printf (_("GIMP encountered several critical errors!"));
+      text = g_strdup_printf (_("LIGMA encountered several critical errors!"));
     }
   gtk_label_set_text (GTK_LABEL (critical->top_label),
                       text);
@@ -592,7 +592,7 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s",
-                              _("To help us improve GIMP, you can report the bug with "
+                              _("To help us improve LIGMA, you can report the bug with "
                                 "these simple steps:"),
                               _("Copy the bug information to the clipboard by clicking: "),
                               BUTTON1_TEXT,
@@ -620,12 +620,12 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
   g_free (text);
 
   /* Finally when encountering a fatal message, propose one more button
-   * to restart GIMP.
+   * to restart LIGMA.
    */
   if (is_fatal)
     {
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                              _("_Restart GIMP"), GIMP_CRITICAL_RESPONSE_RESTART,
+                              _("_Restart LIGMA"), LIGMA_CRITICAL_RESPONSE_RESTART,
                               NULL);
       critical->program = g_strdup (program);
       critical->pid     = pid;

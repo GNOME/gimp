@@ -1,4 +1,4 @@
-# This is the English, British catalogue for GIMP Python.
+# This is the English, British catalogue for LIGMA Python.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Piers Cornwell <piers.cornwell@usa.net>, 2000.
 # Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-02-16 01:15+0000\n"
 "PO-Revision-Date: 2022-02-16 16:49+0000\n"
 "Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 41.0\n"
 "X-DL-Team: en_GB\n"
-"X-DL-Module: gimp\n"
+"X-DL-Module: ligma\n"
 "X-DL-Branch: master\n"
 "X-DL-Domain: po-python\n"
 "X-DL-State: Translating\n"
@@ -431,8 +431,8 @@ msgid "Python _Console"
 msgstr "Python _Console"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interactive GIMP Python interpreter"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interactive LIGMA Python interpreter"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -779,8 +779,8 @@ msgstr ""
 "path"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -807,8 +807,8 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Please wait : Rendering Pattern"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."
 
 #~ msgid "Missing exception information"
 #~ msgstr "Missing exception information"
@@ -963,5 +963,5 @@ msgstr "Spyrogimp..."
 #~ msgstr "Text"
 
 #, fuzzy
-#~ msgid "Gimp-Python Console"
+#~ msgid "Ligma-Python Console"
 #~ msgstr "Python Console"

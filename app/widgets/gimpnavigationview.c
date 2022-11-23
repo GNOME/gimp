@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpNavigationView Widget
- * Copyright (C) 2001-2002 Michael Natterer <mitch@gimp.org>
+ * LigmaNavigationView Widget
+ * Copyright (C) 2001-2002 Michael Natterer <mitch@ligma.org>
  *
  * partly based on app/nav_window
- * Copyright (C) 1999 Andy Thomas <alt@gimp.org>
+ * Copyright (C) 1999 Andy Thomas <alt@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,18 +29,18 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
+#include "core/ligmaimage.h"
+#include "core/ligmamarshal.h"
 
-#include "display/gimpcanvas-style.h"
+#include "display/ligmacanvas-style.h"
 
-#include "gimpnavigationview.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmanavigationview.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
 
 #define BORDER_WIDTH 2
@@ -55,9 +55,9 @@ enum
 };
 
 
-struct _GimpNavigationView
+struct _LigmaNavigationView
 {
-  GimpView     parent_instance;
+  LigmaView     parent_instance;
 
   /*  values in image coordinates  */
   gdouble      center_x;
@@ -91,44 +91,44 @@ struct _GimpNavigationView
 };
 
 
-static void     gimp_navigation_view_size_allocate   (GtkWidget      *widget,
+static void     ligma_navigation_view_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
-static gboolean gimp_navigation_view_draw            (GtkWidget      *widget,
+static gboolean ligma_navigation_view_draw            (GtkWidget      *widget,
                                                       cairo_t        *cr);
-static gboolean gimp_navigation_view_button_press    (GtkWidget      *widget,
+static gboolean ligma_navigation_view_button_press    (GtkWidget      *widget,
                                                       GdkEventButton *bevent);
-static gboolean gimp_navigation_view_button_release  (GtkWidget      *widget,
+static gboolean ligma_navigation_view_button_release  (GtkWidget      *widget,
                                                       GdkEventButton *bevent);
-static gboolean gimp_navigation_view_scroll          (GtkWidget      *widget,
+static gboolean ligma_navigation_view_scroll          (GtkWidget      *widget,
                                                       GdkEventScroll *sevent);
-static gboolean gimp_navigation_view_motion_notify   (GtkWidget      *widget,
+static gboolean ligma_navigation_view_motion_notify   (GtkWidget      *widget,
                                                       GdkEventMotion *mevent);
-static gboolean gimp_navigation_view_key_press       (GtkWidget      *widget,
+static gboolean ligma_navigation_view_key_press       (GtkWidget      *widget,
                                                       GdkEventKey    *kevent);
 
-static void     gimp_navigation_view_transform       (GimpNavigationView *nav_view);
-static void     gimp_navigation_view_draw_marker     (GimpNavigationView *nav_view,
+static void     ligma_navigation_view_transform       (LigmaNavigationView *nav_view);
+static void     ligma_navigation_view_draw_marker     (LigmaNavigationView *nav_view,
                                                       cairo_t            *cr);
-static void     gimp_navigation_view_move_to         (GimpNavigationView *nav_view,
+static void     ligma_navigation_view_move_to         (LigmaNavigationView *nav_view,
                                                       gint                tx,
                                                       gint                ty);
-static void     gimp_navigation_view_get_ratio       (GimpNavigationView *nav_view,
+static void     ligma_navigation_view_get_ratio       (LigmaNavigationView *nav_view,
                                                       gdouble            *ratiox,
                                                       gdouble            *ratioy);
-static gboolean gimp_navigation_view_point_in_marker (GimpNavigationView *nav_view,
+static gboolean ligma_navigation_view_point_in_marker (LigmaNavigationView *nav_view,
                                                       gint                x,
                                                       gint                y);
 
 
-G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
+G_DEFINE_TYPE (LigmaNavigationView, ligma_navigation_view, LIGMA_TYPE_VIEW)
 
-#define parent_class gimp_navigation_view_parent_class
+#define parent_class ligma_navigation_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
+ligma_navigation_view_class_init (LigmaNavigationViewClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
@@ -136,9 +136,9 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
     g_signal_new ("marker-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNavigationViewClass, marker_changed),
+                  G_STRUCT_OFFSET (LigmaNavigationViewClass, marker_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE,
+                  ligma_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE,
                   G_TYPE_NONE, 4,
                   G_TYPE_DOUBLE,
                   G_TYPE_DOUBLE,
@@ -149,33 +149,33 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
     g_signal_new ("zoom",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNavigationViewClass, zoom),
+                  G_STRUCT_OFFSET (LigmaNavigationViewClass, zoom),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM_DOUBLE,
+                  ligma_marshal_VOID__ENUM_DOUBLE,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_ZOOM_TYPE,
+                  LIGMA_TYPE_ZOOM_TYPE,
                   G_TYPE_DOUBLE);
 
   view_signals[SCROLL] =
     g_signal_new ("scroll",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNavigationViewClass, scroll),
+                  G_STRUCT_OFFSET (LigmaNavigationViewClass, scroll),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_EVENT);
 
-  widget_class->size_allocate        = gimp_navigation_view_size_allocate;
-  widget_class->draw                 = gimp_navigation_view_draw;
-  widget_class->button_press_event   = gimp_navigation_view_button_press;
-  widget_class->button_release_event = gimp_navigation_view_button_release;
-  widget_class->scroll_event         = gimp_navigation_view_scroll;
-  widget_class->motion_notify_event  = gimp_navigation_view_motion_notify;
-  widget_class->key_press_event      = gimp_navigation_view_key_press;
+  widget_class->size_allocate        = ligma_navigation_view_size_allocate;
+  widget_class->draw                 = ligma_navigation_view_draw;
+  widget_class->button_press_event   = ligma_navigation_view_button_press;
+  widget_class->button_release_event = ligma_navigation_view_button_release;
+  widget_class->scroll_event         = ligma_navigation_view_scroll;
+  widget_class->motion_notify_event  = ligma_navigation_view_motion_notify;
+  widget_class->key_press_event      = ligma_navigation_view_key_press;
 }
 
 static void
-gimp_navigation_view_init (GimpNavigationView *view)
+ligma_navigation_view_init (LigmaNavigationView *view)
 {
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
@@ -214,28 +214,28 @@ gimp_navigation_view_init (GimpNavigationView *view)
 }
 
 static void
-gimp_navigation_view_size_allocate (GtkWidget     *widget,
+ligma_navigation_view_size_allocate (GtkWidget     *widget,
                                     GtkAllocation *allocation)
 {
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (GIMP_VIEW (widget)->renderer->viewable)
-    gimp_navigation_view_transform (GIMP_NAVIGATION_VIEW (widget));
+  if (LIGMA_VIEW (widget)->renderer->viewable)
+    ligma_navigation_view_transform (LIGMA_NAVIGATION_VIEW (widget));
 }
 
 static gboolean
-gimp_navigation_view_draw (GtkWidget *widget,
+ligma_navigation_view_draw (GtkWidget *widget,
                            cairo_t   *cr)
 {
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
-  gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget), cr);
+  ligma_navigation_view_draw_marker (LIGMA_NAVIGATION_VIEW (widget), cr);
 
   return TRUE;
 }
 
 void
-gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view,
+ligma_navigation_view_grab_pointer (LigmaNavigationView *nav_view,
                                    GdkEvent           *event)
 {
   GtkWidget  *widget = GTK_WIDGET (nav_view);
@@ -250,7 +250,7 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view,
   display = gtk_widget_get_display (widget);
   cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
 
-  window = GIMP_VIEW (nav_view)->event_window;
+  window = LIGMA_VIEW (nav_view)->event_window;
 
   gdk_seat_grab (gdk_event_get_seat (event),
                  window,
@@ -261,10 +261,10 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view,
 }
 
 static gboolean
-gimp_navigation_view_button_press (GtkWidget      *widget,
+ligma_navigation_view_button_press (GtkWidget      *widget,
                                    GdkEventButton *bevent)
 {
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
+  LigmaNavigationView *nav_view = LIGMA_NAVIGATION_VIEW (widget);
   gint                tx, ty;
   GdkDisplay         *display;
 
@@ -273,18 +273,18 @@ gimp_navigation_view_button_press (GtkWidget      *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      if (! gimp_navigation_view_point_in_marker (nav_view, tx, ty))
+      if (! ligma_navigation_view_point_in_marker (nav_view, tx, ty))
         {
           GdkCursor *cursor;
 
           nav_view->motion_offset_x = 0;
           nav_view->motion_offset_y = 0;
 
-          gimp_navigation_view_move_to (nav_view, tx, ty);
+          ligma_navigation_view_move_to (nav_view, tx, ty);
 
           display = gtk_widget_get_display (widget);
           cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
-          gdk_window_set_cursor (GIMP_VIEW (widget)->event_window, cursor);
+          gdk_window_set_cursor (LIGMA_VIEW (widget)->event_window, cursor);
           g_object_unref (cursor);
         }
       else
@@ -293,17 +293,17 @@ gimp_navigation_view_button_press (GtkWidget      *widget,
           nav_view->motion_offset_y = ty - nav_view->p_center_y;
         }
 
-      gimp_navigation_view_grab_pointer (nav_view, (GdkEvent *) bevent);
+      ligma_navigation_view_grab_pointer (nav_view, (GdkEvent *) bevent);
     }
 
   return TRUE;
 }
 
 static gboolean
-gimp_navigation_view_button_release (GtkWidget      *widget,
+ligma_navigation_view_button_release (GtkWidget      *widget,
                                      GdkEventButton *bevent)
 {
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
+  LigmaNavigationView *nav_view = LIGMA_NAVIGATION_VIEW (widget);
 
   if (bevent->button == 1 && nav_view->has_grab)
     {
@@ -317,26 +317,26 @@ gimp_navigation_view_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_view_scroll (GtkWidget      *widget,
+ligma_navigation_view_scroll (GtkWidget      *widget,
                              GdkEventScroll *sevent)
 {
-  if (sevent->state & gimp_get_toggle_behavior_mask ())
+  if (sevent->state & ligma_get_toggle_behavior_mask ())
     {
       gdouble delta;
 
       switch (sevent->direction)
         {
         case GDK_SCROLL_UP:
-          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_IN, 0.0);
+          g_signal_emit (widget, view_signals[ZOOM], 0, LIGMA_ZOOM_IN, 0.0);
           break;
 
         case GDK_SCROLL_DOWN:
-          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_OUT, 0.0);
+          g_signal_emit (widget, view_signals[ZOOM], 0, LIGMA_ZOOM_OUT, 0.0);
           break;
 
         case GDK_SCROLL_SMOOTH:
           gdk_event_get_scroll_deltas ((GdkEvent *) sevent, NULL, &delta);
-          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_SMOOTH, delta);
+          g_signal_emit (widget, view_signals[ZOOM], 0, LIGMA_ZOOM_SMOOTH, delta);
           break;
 
         default:
@@ -352,11 +352,11 @@ gimp_navigation_view_scroll (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_view_motion_notify (GtkWidget      *widget,
+ligma_navigation_view_motion_notify (GtkWidget      *widget,
                                     GdkEventMotion *mevent)
 {
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
-  GimpView           *view     = GIMP_VIEW (widget);
+  LigmaNavigationView *nav_view = LIGMA_NAVIGATION_VIEW (widget);
+  LigmaView           *view     = LIGMA_VIEW (widget);
 
   if (! nav_view->has_grab)
     {
@@ -371,7 +371,7 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
           gdk_window_set_cursor (view->event_window, NULL);
           return FALSE;
         }
-      else if (gimp_navigation_view_point_in_marker (nav_view,
+      else if (ligma_navigation_view_point_in_marker (nav_view,
                                                      mevent->x, mevent->y))
         {
           cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
@@ -387,7 +387,7 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
-  gimp_navigation_view_move_to (nav_view,
+  ligma_navigation_view_move_to (nav_view,
                                 mevent->x - nav_view->motion_offset_x,
                                 mevent->y - nav_view->motion_offset_y);
 
@@ -397,10 +397,10 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_view_key_press (GtkWidget   *widget,
+ligma_navigation_view_key_press (GtkWidget   *widget,
                                 GdkEventKey *kevent)
 {
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
+  LigmaNavigationView *nav_view = LIGMA_NAVIGATION_VIEW (widget);
   gint                scroll_x = 0;
   gint                scroll_y = 0;
 
@@ -428,7 +428,7 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
 
   if (scroll_x || scroll_y)
     {
-      gimp_navigation_view_move_to (nav_view,
+      ligma_navigation_view_move_to (nav_view,
                                     nav_view->p_center_x + scroll_x,
                                     nav_view->p_center_y + scroll_y);
       return TRUE;
@@ -441,7 +441,7 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
 /*  public functions  */
 
 void
-gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
+ligma_navigation_view_set_marker (LigmaNavigationView *nav_view,
                                  gdouble             center_x,
                                  gdouble             center_y,
                                  gdouble             width,
@@ -450,11 +450,11 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
                                  gboolean            flip_vertically,
                                  gdouble             rotate_angle)
 {
-  GimpView *view;
+  LigmaView *view;
 
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
+  g_return_if_fail (LIGMA_IS_NAVIGATION_VIEW (nav_view));
 
-  view = GIMP_VIEW (nav_view);
+  view = LIGMA_VIEW (nav_view);
 
   g_return_if_fail (view->renderer->viewable);
 
@@ -466,25 +466,25 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
   nav_view->flip_vertically   = flip_vertically   ? TRUE : FALSE;
   nav_view->rotate_angle      = rotate_angle;
 
-  gimp_navigation_view_transform (nav_view);
+  ligma_navigation_view_transform (nav_view);
 
   /* Marker changed, redraw */
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 void
-gimp_navigation_view_set_canvas (GimpNavigationView *nav_view,
+ligma_navigation_view_set_canvas (LigmaNavigationView *nav_view,
                                  gboolean            visible,
                                  gdouble             x,
                                  gdouble             y,
                                  gdouble             width,
                                  gdouble             height)
 {
-  GimpView *view;
+  LigmaView *view;
 
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
+  g_return_if_fail (LIGMA_IS_NAVIGATION_VIEW (nav_view));
 
-  view = GIMP_VIEW (nav_view);
+  view = LIGMA_VIEW (nav_view);
 
   g_return_if_fail (view->renderer->viewable);
 
@@ -494,31 +494,31 @@ gimp_navigation_view_set_canvas (GimpNavigationView *nav_view,
   nav_view->canvas_width   = MAX (1.0, width);
   nav_view->canvas_height  = MAX (1.0, height);
 
-  gimp_navigation_view_transform (nav_view);
+  ligma_navigation_view_transform (nav_view);
 
   /* Marker changed, redraw */
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 void
-gimp_navigation_view_set_motion_offset (GimpNavigationView *view,
+ligma_navigation_view_set_motion_offset (LigmaNavigationView *view,
                                         gint                motion_offset_x,
                                         gint                motion_offset_y)
 {
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+  g_return_if_fail (LIGMA_IS_NAVIGATION_VIEW (view));
 
   view->motion_offset_x = motion_offset_x;
   view->motion_offset_y = motion_offset_y;
 }
 
 void
-gimp_navigation_view_get_local_marker (GimpNavigationView *view,
+ligma_navigation_view_get_local_marker (LigmaNavigationView *view,
                                        gint               *center_x,
                                        gint               *center_y,
                                        gint               *width,
                                        gint               *height)
 {
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+  g_return_if_fail (LIGMA_IS_NAVIGATION_VIEW (view));
 
   if (center_x) *center_x = view->p_center_x;
   if (center_y) *center_y = view->p_center_y;
@@ -530,11 +530,11 @@ gimp_navigation_view_get_local_marker (GimpNavigationView *view,
 /*  private functions  */
 
 static void
-gimp_navigation_view_transform (GimpNavigationView *nav_view)
+ligma_navigation_view_transform (LigmaNavigationView *nav_view)
 {
   gdouble ratiox, ratioy;
 
-  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
+  ligma_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
   nav_view->p_center_x = RINT (nav_view->center_x * ratiox);
   nav_view->p_center_y = RINT (nav_view->center_y * ratioy);
@@ -550,10 +550,10 @@ gimp_navigation_view_transform (GimpNavigationView *nav_view)
 }
 
 static void
-gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
+ligma_navigation_view_draw_marker (LigmaNavigationView *nav_view,
                                   cairo_t            *cr)
 {
-  GimpView *view = GIMP_VIEW (nav_view);
+  LigmaView *view = LIGMA_VIEW (nav_view);
 
   if (view->renderer->viewable && nav_view->width && nav_view->height)
     {
@@ -598,7 +598,7 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
                            nav_view->p_canvas_y      + 0.5,
                            nav_view->p_canvas_width  - 1.0,
                            nav_view->p_canvas_height - 1.0);
-          gimp_canvas_set_canvas_style (GTK_WIDGET (nav_view), cr, 0, 0);
+          ligma_canvas_set_canvas_style (GTK_WIDGET (nav_view), cr, 0, 0);
           cairo_stroke (cr);
           cairo_restore (cr);
         }
@@ -614,18 +614,18 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
 }
 
 static void
-gimp_navigation_view_move_to (GimpNavigationView *nav_view,
+ligma_navigation_view_move_to (LigmaNavigationView *nav_view,
                               gint                tx,
                               gint                ty)
 {
-  GimpView  *view = GIMP_VIEW (nav_view);
+  LigmaView  *view = LIGMA_VIEW (nav_view);
   gdouble    ratiox, ratioy;
   gdouble    x, y;
 
   if (! view->renderer->viewable)
     return;
 
-  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
+  ligma_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
   x = tx / ratiox;
   y = ty / ratioy;
@@ -635,22 +635,22 @@ gimp_navigation_view_move_to (GimpNavigationView *nav_view,
 }
 
 static void
-gimp_navigation_view_get_ratio (GimpNavigationView *nav_view,
+ligma_navigation_view_get_ratio (LigmaNavigationView *nav_view,
                                 gdouble            *ratiox,
                                 gdouble            *ratioy)
 {
-  GimpView  *view = GIMP_VIEW (nav_view);
+  LigmaView  *view = LIGMA_VIEW (nav_view);
   gint       width;
   gint       height;
 
-  gimp_viewable_get_size (view->renderer->viewable, &width, &height);
+  ligma_viewable_get_size (view->renderer->viewable, &width, &height);
 
   *ratiox = (gdouble) view->renderer->width  / (gdouble) width;
   *ratioy = (gdouble) view->renderer->height / (gdouble) height;
 }
 
 static gboolean
-gimp_navigation_view_point_in_marker (GimpNavigationView *nav_view,
+ligma_navigation_view_point_in_marker (LigmaNavigationView *nav_view,
                                       gint                x,
                                       gint                y)
 {

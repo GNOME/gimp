@@ -1,6 +1,6 @@
 # Performance Logs
 
-GIMP 2.10.8 and above has the ability to record *performance logs* containing
+LIGMA 2.10.8 and above has the ability to record *performance logs* containing
 detailed information about the run-time behavior of the program, helping
 locating and analyzing performance bottlenecks.
 
@@ -65,13 +65,13 @@ of the log, while increasing its size).
 
 When you're done performing the task, stop recording the log by pressing the
 *Record* button again.
-At this point, GIMP will perform any necessary final steps, which may take a
+At this point, LIGMA will perform any necessary final steps, which may take a
 while (usually, no more than a few seconds).
 At the end of this process, the log is ready.
 
 *Note:*
 In situations where you can't cleanly stop recording the log, such as
-when GIMP crashes or freezes in the middle of the process, make sure to record
+when LIGMA crashes or freezes in the middle of the process, make sure to record
 a *progressive* log, as described in [section *1.2*](#12-log-parameters).
 
 ### 1.1. Event Markers
@@ -127,9 +127,9 @@ otherwise.
   - *Progressive:*
     Whether or not to record a progressive log.
 
-    GIMP normally defers certain information to the end of the log, in order to
+    LIGMA normally defers certain information to the end of the log, in order to
     minimize the cost of recording.
-    If the log can't be cleanly finished—for example, if GIMP crashes or
+    If the log can't be cleanly finished—for example, if LIGMA crashes or
     freezes while recording the log—this information will be missing, rendering
     the log of limited use.
     In situations like these, a progressive log should be recorded; progressive
@@ -143,7 +143,7 @@ otherwise.
 ![Reporting a performance-related issue](new-performance-issue.png)
 
 When reporting a performance-related issue, use the
-[*performance* template][new-performance-issue] in GIMP's GitLab issue
+[*performance* template][new-performance-issue] in LIGMA's GitLab issue
 tracker.
 Provide a detailed description of the task you were performing, and attach a
 performance log.
@@ -174,27 +174,27 @@ information is included.
 
 Additionally, the log contains certain global information, not related to any
 sample.
-This includes GIMP version information, performance-log parameters (such as the
+This includes LIGMA version information, performance-log parameters (such as the
 sampling rate), GEGL configuration parameters (such as the tile size), and the
-values of all environment variables starting with `GIMP_`, `GEGL_`, or `BABL_`.
+values of all environment variables starting with `LIGMA_`, `GEGL_`, or `BABL_`.
 
 ## 4. Viewing Performance Logs
 
 ![Performance-log viewer](performance-log-viewer.png)
 
-The GIMP source tree includes a graphical viewer for performance logs, under
+The LIGMA source tree includes a graphical viewer for performance logs, under
 the `tools/` directory.
-The viewer is not included as part of GIMP installations, but is distributed as
+The viewer is not included as part of LIGMA installations, but is distributed as
 part of source tarballs.
 
 To view a performance log, run:
 
-    $GIMP_SRC_DIR/tools/performance-log-viewer $LOG_FILE
+    $LIGMA_SRC_DIR/tools/performance-log-viewer $LOG_FILE
 
-where `$GIMP_SRC_DIR` is the root of the GIMP source tree, and `$LOG_FILE` is
+where `$LIGMA_SRC_DIR` is the root of the LIGMA source tree, and `$LOG_FILE` is
 the log filename.
 
-Note that there is no need to build or install GIMP in order to use the log
+Note that there is no need to build or install LIGMA in order to use the log
 viewer.
 Indeed, only the files prefixed with `performance-log` in the `tools/`
 directory are actually needed.
@@ -279,16 +279,16 @@ associated with any sample, including:
     Various parameters relating to the performance log itself.
     See [section *1.2*](#12-log-parameters) for more information.
 
-  - *GIMP Version*:
-    Verbose GIMP version information, as reported by `gimp -v`.
+  - *LIGMA Version*:
+    Verbose LIGMA version information, as reported by `ligma -v`.
 
   - *Environment*:
-    A list of environment variables for the GIMP process recording the log,
-    starting with `GIMP_`, `GEGL_`, or `BABL_`.
-    These environment variables directly affect the behavior of GIMP.
+    A list of environment variables for the LIGMA process recording the log,
+    starting with `LIGMA_`, `GEGL_`, or `BABL_`.
+    These environment variables directly affect the behavior of LIGMA.
 
   - *GEGL Config*:
-    A list of all the properties of the `GeglConfig` object of the GIMP process
+    A list of all the properties of the `GeglConfig` object of the LIGMA process
     recording the log.
 
 The key/value lists are searchable by key name.
@@ -609,9 +609,9 @@ A number of sample-dependent variables and functions are provided:
     corresponding arguments of the `thread()` function, and may be used to
     limit the search to the call stacks of matching threads.
 
-    For example, the expression `function ('gimp_image_.*')` matches all
-    samples whose backtrace includes a function beginning with `gimp_image_`,
-    that is, one of the `GimpImage` functions.
+    For example, the expression `function ('ligma_image_.*')` matches all
+    samples whose backtrace includes a function beginning with `ligma_image_`,
+    that is, one of the `LigmaImage` functions.
 
 By default, the matching samples replace the current selection, but they can be
 set to *add-to*, *subtract-from*, or *intersect-with* the current selection
@@ -648,4 +648,4 @@ The following environment variables are used by the viewer:
     and line number, respectively.
     If the variable is not defined, a default text editor is used.
 
-[new-performance-issue]: https://gitlab.gnome.org/GNOME/gimp/issues/new?issuable_template=performance
+[new-performance-issue]: https://gitlab.gnome.org/GNOME/ligma/issues/new?issuable_template=performance

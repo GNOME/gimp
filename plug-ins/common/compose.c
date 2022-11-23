@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Compose plug-in (C) 1997,1999 Peter Kirchgessner
@@ -31,24 +31,24 @@
 
 /*
  * All redundant _256 versions of YCbCr* are here only for compatibility .
- * They can be dropped for GIMP 3.0
+ * They can be dropped for LIGMA 3.0
  */
 
 #include "config.h"
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define COMPOSE_PROC          "plug-in-compose"
 #define DRAWABLE_COMPOSE_PROC "plug-in-drawable-compose"
 #define RECOMPOSE_PROC        "plug-in-recompose"
 #define PLUG_IN_BINARY        "compose"
-#define PLUG_IN_ROLE          "gimp-compose"
+#define PLUG_IN_ROLE          "ligma-compose"
 
 /* Maximum number of images to compose */
 #define MAX_COMPOSE_IMAGES 4
@@ -92,7 +92,7 @@ typedef struct
   ComposeInput inputs[MAX_COMPOSE_IMAGES];  /* Image or mask value of input */
   gchar        compose_type[32];            /* type of composition */
   gboolean     do_recompose;
-  GimpLayer   *source_layer;                /* for recomposing */
+  LigmaLayer   *source_layer;                /* for recomposing */
 } ComposeVals;
 
 /* Dialog structure */
@@ -116,12 +116,12 @@ typedef struct _ComposeClass ComposeClass;
 
 struct _Compose
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _ComposeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -130,16 +130,16 @@ struct _ComposeClass
 
 GType                   compose_get_type         (void) G_GNUC_CONST;
 
-static GList          * compose_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * compose_create_procedure (GimpPlugIn           *plug_in,
+static GList          * compose_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * compose_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * compose_run              (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * compose_run              (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  LigmaDrawable        **drawables,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static void        cpn_affine_transform   (GeglBuffer      *buffer,
@@ -158,42 +158,42 @@ static void        perform_composition    (COMPOSE_DSC      curr_compose_dsc,
                                            ComposeInput    *inputs,
                                            gint             num_images);
 
-static GimpImage * compose                (const gchar     *compose_type,
+static LigmaImage * compose                (const gchar     *compose_type,
                                            ComposeInput    *inputs,
                                            gboolean         compose_by_drawable);
 
-static GimpImage * create_new_image       (GFile           *file,
+static LigmaImage * create_new_image       (GFile           *file,
                                            guint            width,
                                            guint            height,
-                                           GimpImageType    gdtype,
-                                           GimpPrecision    precision,
-                                           GimpLayer      **layer,
+                                           LigmaImageType    gdtype,
+                                           LigmaPrecision    precision,
+                                           LigmaLayer      **layer,
                                            GeglBuffer     **buffer);
 
 static gboolean    compose_dialog         (const gchar     *compose_type,
-                                           GimpDrawable    *drawable);
+                                           LigmaDrawable    *drawable);
 
-static gboolean    check_gray             (GimpImage       *image,
-                                           GimpItem        *drawable,
+static gboolean    check_gray             (LigmaImage       *image,
+                                           LigmaItem        *drawable,
                                            gpointer         data);
 
-static void        combo_callback         (GimpIntComboBox *cbox,
+static void        combo_callback         (LigmaIntComboBox *cbox,
                                            gpointer         data);
 
-static void        scale_callback         (GimpLabelSpin   *scale,
+static void        scale_callback         (LigmaLabelSpin   *scale,
                                            ComposeInput    *input);
 
 static void        check_response         (GtkWidget       *dialog,
                                            gint             response,
                                            gpointer         data);
 
-static void        type_combo_callback    (GimpIntComboBox *combo,
+static void        type_combo_callback    (LigmaIntComboBox *combo,
                                            gpointer         data);
 
 
-G_DEFINE_TYPE (Compose, compose, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Compose, compose, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (COMPOSE_TYPE)
+LIGMA_MAIN (COMPOSE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -201,10 +201,10 @@ DEFINE_STD_SET_I18N
  * All the following values have to be kept in sync with those of decompose.c
  */
 
-#define CPN_RGBA_R { "R", N_("_Red:"),   GIMP_ICON_CHANNEL_RED, 0.0, 1.0, FALSE}
-#define CPN_RGBA_G { "G", N_("_Green:"), GIMP_ICON_CHANNEL_GREEN, 0.0, 1.0, FALSE}
-#define CPN_RGBA_B { "B", N_("_Blue:"),  GIMP_ICON_CHANNEL_BLUE, 0.0, 1.0, FALSE}
-#define CPN_RGBA_A { "A", N_("_Alpha:"), GIMP_ICON_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
+#define CPN_RGBA_R { "R", N_("_Red:"),   LIGMA_ICON_CHANNEL_RED, 0.0, 1.0, FALSE}
+#define CPN_RGBA_G { "G", N_("_Green:"), LIGMA_ICON_CHANNEL_GREEN, 0.0, 1.0, FALSE}
+#define CPN_RGBA_B { "B", N_("_Blue:"),  LIGMA_ICON_CHANNEL_BLUE, 0.0, 1.0, FALSE}
+#define CPN_RGBA_A { "A", N_("_Alpha:"), LIGMA_ICON_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
 
 #define CPN_HSV_H  { "hue",        N_("_Hue:"),        NULL, 0.0, 1.0, TRUE}
 #define CPN_HSV_S  { "saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
@@ -341,7 +341,7 @@ static ComposeInterface composeint =
 static void
 compose_class_init (ComposeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = compose_query_procedures;
   plug_in_class->create_procedure = compose_create_procedure;
@@ -354,7 +354,7 @@ compose_init (Compose *compose)
 }
 
 static GList *
-compose_query_procedures (GimpPlugIn *plug_in)
+compose_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -365,11 +365,11 @@ compose_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-compose_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+compose_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
   GString       *type_desc;
   gint           i;
 
@@ -388,55 +388,55 @@ compose_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, COMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("C_ompose..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
+      ligma_procedure_set_menu_label (procedure, _("C_ompose..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create an image using multiple "
                                           "gray images as color channels"),
                                         "This function creates a new image from "
                                         "multiple gray images",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1997");
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-2",
+      LIGMA_PROC_ARG_IMAGE (procedure, "image-2",
                            "Image 2",
                            "Second input image",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-3",
+      LIGMA_PROC_ARG_IMAGE (procedure, "image-3",
                            "Image 3",
                            "Third input image",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-4",
+      LIGMA_PROC_ARG_IMAGE (procedure, "image-4",
                            "Image 4",
                            "Fourth input image",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "compose-type",
+      LIGMA_PROC_ARG_STRING (procedure, "compose-type",
                             "Compose type",
                             type_desc->str,
                             "RGB",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
                            "Output image",
                            FALSE,
@@ -444,50 +444,50 @@ compose_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, DRAWABLE_COMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Compose an image from multiple "
                                         "drawables of gray images",
                                         "This function creates a new image from "
                                         "multiple drawables of gray images",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1998");
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-2",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "drawable-2",
                               "Drawable 2",
                               "Second input drawable",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-3",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "drawable-3",
                               "Drawable 3",
                               "Third input drawable",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-4",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "drawable-4",
                               "Drawable 4",
                               "Fourth input drawable",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "compose-type",
+      LIGMA_PROC_ARG_STRING (procedure, "compose-type",
                             "Compose type",
                             type_desc->str,
                             "RGB",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
                            "Output image",
                            FALSE,
@@ -495,20 +495,20 @@ compose_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, RECOMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("R_ecompose"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
+      ligma_procedure_set_menu_label (procedure, _("R_ecompose"));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Recompose an image that was "
                                           "previously decomposed"),
                                         "This function recombines the grayscale "
@@ -517,7 +517,7 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                         "replaces the originally decomposed "
                                         "layer with the result.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Bill Skaggs",
                                       "Bill Skaggs",
                                       "2004");
@@ -528,18 +528,18 @@ compose_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-compose_run (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+compose_run (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
-             const GimpValueArray *args,
+             LigmaDrawable        **drawables,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpDrawable   *drawable = NULL;
-  const gchar    *name     = gimp_procedure_get_name (procedure);
+  LigmaValueArray *return_vals;
+  LigmaDrawable   *drawable = NULL;
+  const gchar    *name     = ligma_procedure_get_name (procedure);
   gint            compose_by_drawable;
   gint            i;
 
@@ -553,12 +553,12 @@ compose_run (GimpProcedure        *procedure,
         {
           GError *error = NULL;
 
-          g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+          g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                        _("Procedure '%s' only works with one drawable."),
                        name);
 
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CALLING_ERROR,
                                                    error);
         }
       else
@@ -569,7 +569,7 @@ compose_run (GimpProcedure        *procedure,
 
   if (! strcmp (name, RECOMPOSE_PROC))
     {
-      GimpParasite *parasite = gimp_image_get_parasite (image,
+      LigmaParasite *parasite = ligma_image_get_parasite (image,
                                                         "decompose-data");
 
       if (! parasite)
@@ -577,8 +577,8 @@ compose_run (GimpProcedure        *procedure,
           g_message (_("You can only run 'Recompose' if the active image "
                        "was originally produced by 'Decompose'."));
 
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_EXECUTION_ERROR,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_EXECUTION_ERROR,
                                                    NULL);
         }
       else
@@ -589,7 +589,7 @@ compose_run (GimpProcedure        *procedure,
           gint     input[4] = { 0, };
           gint     nret;
 
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
           nret = sscanf (parasite_data,
                          "source=%d type=%31s %d %d %d %d",
@@ -600,7 +600,7 @@ compose_run (GimpProcedure        *procedure,
                          input + 2,
                          input + 3);
 
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
           g_free (parasite_data);
 
           if (nret < 5)
@@ -608,15 +608,15 @@ compose_run (GimpProcedure        *procedure,
               g_message (_("Error scanning 'decompose-data' parasite: "
                            "too few layers found"));
 
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_EXECUTION_ERROR,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_EXECUTION_ERROR,
                                                        NULL);
             }
 
           compose_by_drawable = TRUE;
 
           composevals.do_recompose = TRUE;
-          composevals.source_layer = gimp_layer_get_by_id (source);
+          composevals.source_layer = ligma_layer_get_by_id (source);
 
           if (! composevals.source_layer)
             {
@@ -624,15 +624,15 @@ compose_run (GimpProcedure        *procedure,
                            "not found"),
                          source);
 
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_EXECUTION_ERROR,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_EXECUTION_ERROR,
                                                        NULL);
             }
 
           for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
             {
               composevals.inputs[i].is_object   = TRUE;
-              composevals.inputs[i].comp.object = gimp_drawable_get_by_id (input[i]);
+              composevals.inputs[i].comp.object = ligma_drawable_get_by_id (input[i]);
 
               /* fourth input is optional */
               if (i == 2 && nret == 5)
@@ -644,8 +644,8 @@ compose_run (GimpProcedure        *procedure,
                                "not found"),
                              i + 1, input[i]);
 
-                  return gimp_procedure_new_return_values (procedure,
-                                                           GIMP_PDB_EXECUTION_ERROR,
+                  return ligma_procedure_new_return_values (procedure,
+                                                           LIGMA_PDB_EXECUTION_ERROR,
                                                            NULL);
                 }
             }
@@ -657,58 +657,58 @@ compose_run (GimpProcedure        *procedure,
 
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
-          gimp_get_data (name, &composevals);
+        case LIGMA_RUN_INTERACTIVE:
+          ligma_get_data (name, &composevals);
 
           compose_by_drawable = TRUE;
 
           /* Get a drawable-ID of the image */
           if (! strcmp (name, COMPOSE_PROC))
             {
-              GimpLayer **layers;
+              LigmaLayer **layers;
               gint        nlayers;
 
-              layers = gimp_image_get_layers (image, &nlayers);
+              layers = ligma_image_get_layers (image, &nlayers);
 
               if (! layers)
                 {
                   g_message (_("Could not get layers for image %d"),
-                             (gint) gimp_image_get_id (image));
+                             (gint) ligma_image_get_id (image));
 
-                  return gimp_procedure_new_return_values (procedure,
-                                                           GIMP_PDB_EXECUTION_ERROR,
+                  return ligma_procedure_new_return_values (procedure,
+                                                           LIGMA_PDB_EXECUTION_ERROR,
                                                            NULL);
                 }
 
-              drawable = GIMP_DRAWABLE (layers[0]);
+              drawable = LIGMA_DRAWABLE (layers[0]);
 
               g_free (layers);
             }
 
           if (! compose_dialog (composevals.compose_type, drawable))
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CANCEL,
+            return ligma_procedure_new_return_values (procedure,
+                                                     LIGMA_PDB_CANCEL,
                                                      NULL);
           break;
 
-        case GIMP_RUN_NONINTERACTIVE:
+        case LIGMA_RUN_NONINTERACTIVE:
           if (compose_by_drawable)
             {
               composevals.inputs[0].comp.object = drawable;
-              composevals.inputs[1].comp.object = GIMP_VALUES_GET_DRAWABLE (args, 0);
-              composevals.inputs[2].comp.object = GIMP_VALUES_GET_DRAWABLE (args, 1);
-              composevals.inputs[3].comp.object = GIMP_VALUES_GET_DRAWABLE (args, 2);
+              composevals.inputs[1].comp.object = LIGMA_VALUES_GET_DRAWABLE (args, 0);
+              composevals.inputs[2].comp.object = LIGMA_VALUES_GET_DRAWABLE (args, 1);
+              composevals.inputs[3].comp.object = LIGMA_VALUES_GET_DRAWABLE (args, 2);
             }
           else
             {
               composevals.inputs[0].comp.object = image;
-              composevals.inputs[1].comp.object = GIMP_VALUES_GET_IMAGE (args, 0);
-              composevals.inputs[2].comp.object = GIMP_VALUES_GET_IMAGE (args, 1);
-              composevals.inputs[3].comp.object = GIMP_VALUES_GET_IMAGE (args, 2);
+              composevals.inputs[1].comp.object = LIGMA_VALUES_GET_IMAGE (args, 0);
+              composevals.inputs[2].comp.object = LIGMA_VALUES_GET_IMAGE (args, 1);
+              composevals.inputs[3].comp.object = LIGMA_VALUES_GET_IMAGE (args, 2);
             }
 
           g_strlcpy (composevals.compose_type,
-                     GIMP_VALUES_GET_STRING (args, 3),
+                     LIGMA_VALUES_GET_STRING (args, 3),
                      sizeof (composevals.compose_type));
 
           for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
@@ -725,8 +725,8 @@ compose_run (GimpProcedure        *procedure,
             }
           break;
 
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (name, &composevals);
+        case LIGMA_RUN_WITH_LAST_VALS:
+          ligma_get_data (name, &composevals);
 
           compose_by_drawable = TRUE;
           break;
@@ -736,39 +736,39 @@ compose_run (GimpProcedure        *procedure,
         }
     }
 
-  gimp_progress_init (_("Composing"));
+  ligma_progress_init (_("Composing"));
 
   image = compose (composevals.compose_type,
                    composevals.inputs,
                    compose_by_drawable);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              NULL);
 
   if (composevals.do_recompose)
     {
-      gimp_displays_flush ();
+      ligma_displays_flush ();
     }
   else
     {
-      gimp_image_undo_enable (image);
-      gimp_image_clean_all (image);
+      ligma_image_undo_enable (image);
+      ligma_image_clean_all (image);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_display_new (image);
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_display_new (image);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (name, &composevals, sizeof (ComposeVals));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (name, &composevals, sizeof (ComposeVals));
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
   if (strcmp (name, RECOMPOSE_PROC))
-    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+    LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -895,7 +895,7 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
             cpn_affine_transform (temp[i], cpn_dsc.range_min, cpn_dsc.range_max);
         }
 
-      gimp_progress_update ((gdouble) i / (gdouble) (num_images + 1.0));
+      ligma_progress_update ((gdouble) i / (gdouble) (num_images + 1.0));
     }
 
   dst_format = babl_format_new (babl_model (curr_compose_dsc.babl_model),
@@ -912,9 +912,9 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
   /* Gather all individual components in the dst_format buffer */
   fill_buffer_from_components (temp, dst_temp, num_images, inputs, mask_vals);
 
-  gimp_progress_update ((gdouble) num_images / (gdouble) (num_images + 1.0));
+  ligma_progress_update ((gdouble) num_images / (gdouble) (num_images + 1.0));
 
-  /* Copy back to the format GIMP wants (and perform the conversion in itself) */
+  /* Copy back to the format LIGMA wants (and perform the conversion in itself) */
   gegl_buffer_copy (dst_temp, NULL, GEGL_ABYSS_NONE, buffer_dst, NULL);
 
   for (i = 0; i< num_images; i++)
@@ -925,7 +925,7 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
 }
 
 /* Compose an image from several gray-images */
-static GimpImage *
+static LigmaImage *
 compose (const gchar  *compose_type,
          ComposeInput *inputs,
          gboolean      compose_by_drawable)
@@ -934,13 +934,13 @@ compose (const gchar  *compose_type,
   gint           num_images, compose_idx;
   gint           i, j;
   gint           num_layers;
-  GimpLayer     *layer_dst;
-  GimpImage     *image_dst;
+  LigmaLayer     *layer_dst;
+  LigmaImage     *image_dst;
   gint           first_object;
-  GimpImageType  gdtype_dst;
+  LigmaImageType  gdtype_dst;
   GeglBuffer    *buffer_src[MAX_COMPOSE_IMAGES];
   GeglBuffer    *buffer_dst;
-  GimpPrecision  precision;
+  LigmaPrecision  precision;
 
   /* Search type of composing */
   compose_idx = -1;
@@ -978,19 +978,19 @@ compose (const gchar  *compose_type,
   /* Check image sizes */
   if (compose_by_drawable)
     {
-      GimpImage *first_image = gimp_item_get_image (inputs[first_object].comp.object);
+      LigmaImage *first_image = ligma_item_get_image (inputs[first_object].comp.object);
 
-      width  = gimp_drawable_get_width  (inputs[first_object].comp.object);
-      height = gimp_drawable_get_height (inputs[first_object].comp.object);
+      width  = ligma_drawable_get_width  (inputs[first_object].comp.object);
+      height = ligma_drawable_get_height (inputs[first_object].comp.object);
 
-      precision = gimp_image_get_precision (first_image);
+      precision = ligma_image_get_precision (first_image);
 
       for (j = first_object + 1; j < num_images; j++)
         {
           if (inputs[j].is_object)
             {
-              if ((width  != gimp_drawable_get_width  (inputs[j].comp.object)) ||
-                  (height != gimp_drawable_get_height (inputs[j].comp.object)))
+              if ((width  != ligma_drawable_get_width  (inputs[j].comp.object)) ||
+                  (height != ligma_drawable_get_height (inputs[j].comp.object)))
                 {
                   g_message (_("Drawables have different size"));
                   return NULL;
@@ -1001,24 +1001,24 @@ compose (const gchar  *compose_type,
       for (j = 0; j < num_images; j++)
         {
           if (inputs[j].is_object)
-            buffer_src[j] = gimp_drawable_get_buffer (inputs[j].comp.object);
+            buffer_src[j] = ligma_drawable_get_buffer (inputs[j].comp.object);
           else
             buffer_src[j] = NULL;
         }
     }
   else    /* Compose by image */
     {
-      width  = gimp_image_get_width  (inputs[first_object].comp.object);
-      height = gimp_image_get_height (inputs[first_object].comp.object);
+      width  = ligma_image_get_width  (inputs[first_object].comp.object);
+      height = ligma_image_get_height (inputs[first_object].comp.object);
 
-      precision = gimp_image_get_precision (inputs[first_object].comp.object);
+      precision = ligma_image_get_precision (inputs[first_object].comp.object);
 
       for (j = first_object + 1; j < num_images; j++)
         {
           if (inputs[j].is_object)
             {
-              if ((width  != gimp_image_get_width  (inputs[j].comp.object)) ||
-                  (height != gimp_image_get_height (inputs[j].comp.object)))
+              if ((width  != ligma_image_get_width  (inputs[j].comp.object)) ||
+                  (height != ligma_image_get_height (inputs[j].comp.object)))
                 {
                   g_message (_("Images have different size"));
                   return NULL;
@@ -1031,10 +1031,10 @@ compose (const gchar  *compose_type,
         {
           if (inputs[j].is_object)
             {
-              GimpLayer **layers;
+              LigmaLayer **layers;
 
               /* Get first layer of image */
-              layers = gimp_image_get_layers (inputs[j].comp.object, &num_layers);
+              layers = ligma_image_get_layers (inputs[j].comp.object, &num_layers);
 
               if (! layers)
                 {
@@ -1043,7 +1043,7 @@ compose (const gchar  *compose_type,
                 }
 
               /* Get drawable for layer */
-              buffer_src[j] = gimp_drawable_get_buffer (GIMP_DRAWABLE (layers[0]));
+              buffer_src[j] = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layers[0]));
               g_free (layers);
             }
         }
@@ -1053,13 +1053,13 @@ compose (const gchar  *compose_type,
   if (composevals.do_recompose)
     {
       layer_dst  = composevals.source_layer;
-      image_dst  = gimp_item_get_image (GIMP_ITEM (layer_dst));
-      buffer_dst = gimp_drawable_get_shadow_buffer (GIMP_DRAWABLE (layer_dst));
+      image_dst  = ligma_item_get_image (LIGMA_ITEM (layer_dst));
+      buffer_dst = ligma_drawable_get_shadow_buffer (LIGMA_DRAWABLE (layer_dst));
     }
   else
     {
       gdtype_dst = ((babl_model (compose_dsc[compose_idx].babl_model) == babl_model ("RGBA")) ?
-                    GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE);
+                    LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE);
 
       image_dst = create_new_image (g_file_new_for_path (compose_dsc[compose_idx].filename),
                                     width, height, gdtype_dst, precision,
@@ -1070,8 +1070,8 @@ compose (const gchar  *compose_type,
     {
       gdouble  xres, yres;
 
-      gimp_image_get_resolution (inputs[first_object].comp.object, &xres, &yres);
-      gimp_image_set_resolution (image_dst, xres, yres);
+      ligma_image_get_resolution (inputs[first_object].comp.object, &xres, &yres);
+      ligma_image_set_resolution (image_dst, xres, yres);
     }
 
   perform_composition (compose_dsc[compose_idx],
@@ -1080,7 +1080,7 @@ compose (const gchar  *compose_type,
                        inputs,
                        num_images);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   for (j = 0; j < num_images; j++)
     {
@@ -1091,48 +1091,48 @@ compose (const gchar  *compose_type,
   g_object_unref (buffer_dst);
 
   if (composevals.do_recompose)
-    gimp_drawable_merge_shadow (GIMP_DRAWABLE (layer_dst), TRUE);
+    ligma_drawable_merge_shadow (LIGMA_DRAWABLE (layer_dst), TRUE);
 
-  gimp_drawable_update (GIMP_DRAWABLE (layer_dst), 0, 0,
-                        gimp_drawable_get_width  (GIMP_DRAWABLE (layer_dst)),
-                        gimp_drawable_get_height (GIMP_DRAWABLE (layer_dst)));
+  ligma_drawable_update (LIGMA_DRAWABLE (layer_dst), 0, 0,
+                        ligma_drawable_get_width  (LIGMA_DRAWABLE (layer_dst)),
+                        ligma_drawable_get_height (LIGMA_DRAWABLE (layer_dst)));
 
   return image_dst;
 }
 
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image */
-static GimpImage *
+static LigmaImage *
 create_new_image (GFile          *file,
                   guint           width,
                   guint           height,
-                  GimpImageType   gdtype,
-                  GimpPrecision   precision,
-                  GimpLayer     **layer,
+                  LigmaImageType   gdtype,
+                  LigmaPrecision   precision,
+                  LigmaLayer     **layer,
                   GeglBuffer    **buffer)
 {
-  GimpImage         *image;
-  GimpImageBaseType  gitype;
+  LigmaImage         *image;
+  LigmaImageBaseType  gitype;
 
-  if ((gdtype == GIMP_GRAY_IMAGE) || (gdtype == GIMP_GRAYA_IMAGE))
-    gitype = GIMP_GRAY;
-  else if ((gdtype == GIMP_INDEXED_IMAGE) || (gdtype == GIMP_INDEXEDA_IMAGE))
-    gitype = GIMP_INDEXED;
+  if ((gdtype == LIGMA_GRAY_IMAGE) || (gdtype == LIGMA_GRAYA_IMAGE))
+    gitype = LIGMA_GRAY;
+  else if ((gdtype == LIGMA_INDEXED_IMAGE) || (gdtype == LIGMA_INDEXEDA_IMAGE))
+    gitype = LIGMA_INDEXED;
   else
-    gitype = GIMP_RGB;
+    gitype = LIGMA_RGB;
 
-  image = gimp_image_new_with_precision (width, height, gitype, precision);
+  image = ligma_image_new_with_precision (width, height, gitype, precision);
 
-  gimp_image_undo_disable (image);
-  gimp_image_set_file (image, file);
+  ligma_image_undo_disable (image);
+  ligma_image_set_file (image, file);
 
-  *layer = gimp_layer_new (image, _("Background"), width, height,
+  *layer = ligma_layer_new (image, _("Background"), width, height,
                            gdtype,
                            100,
-                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, *layer, NULL, 0);
+                           ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, *layer, NULL, 0);
 
-  *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (*layer));
+  *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (*layer));
 
   return image;
 }
@@ -1140,7 +1140,7 @@ create_new_image (GFile          *file,
 
 static gboolean
 compose_dialog (const gchar  *compose_type,
-                GimpDrawable *drawable)
+                LigmaDrawable *drawable)
 {
   GtkWidget    *dialog;
   GtkWidget    *main_vbox;
@@ -1151,7 +1151,7 @@ compose_dialog (const gchar  *compose_type,
   GtkWidget    *combo;
   GtkWidget    *grid;
   GtkSizeGroup *size_group;
-  GimpLayer   **layer_list;
+  LigmaLayer   **layer_list;
   gint          nlayers;
   gint          j;
   gboolean      run;
@@ -1168,24 +1168,24 @@ compose_dialog (const gchar  *compose_type,
     }
 
   /* Save original image width/height */
-  composeint.width  = gimp_drawable_get_width  (drawable);
-  composeint.height = gimp_drawable_get_height (drawable);
+  composeint.width  = ligma_drawable_get_width  (drawable);
+  composeint.height = ligma_drawable_get_height (drawable);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  layer_list = gimp_image_get_layers (gimp_item_get_image (GIMP_ITEM (drawable)),
+  layer_list = ligma_image_get_layers (ligma_item_get_image (LIGMA_ITEM (drawable)),
                                       &nlayers);
 
-  dialog = gimp_dialog_new (_("Compose"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Compose"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, COMPOSE_PROC,
+                            ligma_standard_help_func, COMPOSE_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1194,7 +1194,7 @@ compose_dialog (const gchar  *compose_type,
                     G_CALLBACK (check_response),
                     NULL);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -1204,7 +1204,7 @@ compose_dialog (const gchar  *compose_type,
 
   /* Compose type combo */
 
-  frame = gimp_frame_new (_("Compose Channels"));
+  frame = ligma_frame_new (_("Compose Channels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1222,7 +1222,7 @@ compose_dialog (const gchar  *compose_type,
   gtk_size_group_add_widget (size_group, label);
   g_object_unref (size_group);
 
-  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo = g_object_new (LIGMA_TYPE_INT_COMBO_BOX, NULL);
   for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       gchar *label = g_strdup (gettext (compose_dsc[j].compose_type));
@@ -1232,9 +1232,9 @@ compose_dialog (const gchar  *compose_type,
         if (*l == '-' || *l == '_')
           *l = ' ';
 
-      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo),
-                                 GIMP_INT_STORE_LABEL, label,
-                                 GIMP_INT_STORE_VALUE, j,
+      ligma_int_combo_box_append (LIGMA_INT_COMBO_BOX (combo),
+                                 LIGMA_INT_STORE_LABEL, label,
+                                 LIGMA_INT_STORE_VALUE, j,
                                  -1);
       g_free (label);
     }
@@ -1246,7 +1246,7 @@ compose_dialog (const gchar  *compose_type,
 
   /* Channel representation grid */
 
-  frame = gimp_frame_new (_("Channel Representations"));
+  frame = ligma_frame_new (_("Channel Representations"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1298,15 +1298,15 @@ compose_dialog (const gchar  *compose_type,
 
       composeint.selected[j].is_object = TRUE;
 
-      combo = gimp_drawable_combo_box_new (check_gray, NULL, NULL);
+      combo = ligma_drawable_combo_box_new (check_gray, NULL, NULL);
       composeint.channel_menu[j] = combo;
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model),   &iter,
-                          GIMP_INT_STORE_VALUE,     -1,
-                          GIMP_INT_STORE_LABEL,     _("Mask value"),
-                          GIMP_INT_STORE_ICON_NAME, GIMP_ICON_CHANNEL_GRAY,
+                          LIGMA_INT_STORE_VALUE,     -1,
+                          LIGMA_INT_STORE_LABEL,     _("Mask value"),
+                          LIGMA_INT_STORE_ICON_NAME, LIGMA_ICON_CHANNEL_GRAY,
                           -1);
       gtk_grid_attach (GTK_GRID (grid), combo, 1, j, 1, 1);
                         // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -1314,7 +1314,7 @@ compose_dialog (const gchar  *compose_type,
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-      scale = gimp_color_scale_entry_new (NULL, 255.0, 0.0, 255.0, 0);
+      scale = ligma_color_scale_entry_new (NULL, 255.0, 0.0, 255.0, 0);
       gtk_grid_attach (GTK_GRID (grid), scale, 2, j, 3, 1);
       gtk_widget_show (scale);
       composeint.scales[j] = scale;
@@ -1328,8 +1328,8 @@ compose_dialog (const gchar  *compose_type,
       /* This has to be connected last otherwise it will emit before
        * combo_callback has any scale and spinbutton to work with
        */
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                  gimp_item_get_id (composeint.selected[j].comp.object),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
+                                  ligma_item_get_id (composeint.selected[j].comp.object),
                                   G_CALLBACK (combo_callback),
                                   GINT_TO_POINTER (j), NULL);
     }
@@ -1337,14 +1337,14 @@ compose_dialog (const gchar  *compose_type,
   g_free (layer_list);
 
   /* Calls the combo callback and sets icons, labels and sensitivity */
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               composeint.compose_idx,
                               G_CALLBACK (type_combo_callback),
                               NULL, NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -1372,14 +1372,14 @@ compose_dialog (const gchar  *compose_type,
 /*  Compose interface functions  */
 
 static gboolean
-check_gray (GimpImage *image,
-            GimpItem  *drawable,
+check_gray (LigmaImage *image,
+            LigmaItem  *drawable,
             gpointer   data)
 
 {
-  return ((gimp_image_get_base_type (image) == GIMP_GRAY) &&
-          (gimp_image_get_width  (image) == composeint.width) &&
-          (gimp_image_get_height (image) == composeint.height));
+  return ((ligma_image_get_base_type (image) == LIGMA_GRAY) &&
+          (ligma_image_get_width  (image) == composeint.width) &&
+          (ligma_image_get_height (image) == composeint.height));
 }
 
 static void
@@ -1430,13 +1430,13 @@ check_response (GtkWidget *dialog,
 }
 
 static void
-combo_callback (GimpIntComboBox *widget,
+combo_callback (LigmaIntComboBox *widget,
                 gpointer         data)
 {
   gint id;
   gint n;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &id);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &id);
   n = GPOINTER_TO_INT (data);
 
   if (id == -1)
@@ -1445,29 +1445,29 @@ combo_callback (GimpIntComboBox *widget,
 
       composeint.selected[n].is_object = FALSE;
       composeint.selected[n].comp.val  =
-        gimp_label_spin_get_value (GIMP_LABEL_SPIN (composeint.scales[n]));
+        ligma_label_spin_get_value (LIGMA_LABEL_SPIN (composeint.scales[n]));
     }
   else
     {
       gtk_widget_set_sensitive (composeint.scales[n], FALSE);
 
       composeint.selected[n].is_object   = TRUE;
-      composeint.selected[n].comp.object = gimp_drawable_get_by_id (id);
+      composeint.selected[n].comp.object = ligma_drawable_get_by_id (id);
     }
 }
 
 static void
-scale_callback (GimpLabelSpin *scale,
+scale_callback (LigmaLabelSpin *scale,
                 ComposeInput  *input)
 {
-  input->comp.val = gimp_label_spin_get_value (scale);
+  input->comp.val = ligma_label_spin_get_value (scale);
 }
 
 static void
-type_combo_callback (GimpIntComboBox *combo,
+type_combo_callback (LigmaIntComboBox *combo,
                      gpointer         data)
 {
-  if (gimp_int_combo_box_get_active (combo, &composeint.compose_idx))
+  if (ligma_int_combo_box_get_active (combo, &composeint.compose_idx))
     {
       gboolean combo4;
       gboolean scale4;

@@ -15,7 +15,7 @@ Note that inline code parts are marked with + signs around them.
 ////
 
 This tutorial will show you the basics of creating a new procedure and
-adding it to GIMP's PDB.
+adding it to LIGMA's PDB.
 
 Introduction
 ------------
@@ -25,14 +25,14 @@ What are PDB procedures?
 
 A *PDB procedure* is a process which is registered in the Procedure
 Data-Base. Procedures registered in the database are available to all
-the GIMP plugins/scripts.
+the LIGMA plugins/scripts.
 
 What should I want to add to the PDB?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Let's say a new feature was added to GIMP, and your plugin/script wants
+Let's say a new feature was added to LIGMA, and your plugin/script wants
 to use it. In order to do so, this function should be publicly available
-(most functions are only available to GIMP's core, and in order to
+(most functions are only available to LIGMA's core, and in order to
 expose them externally we have to add them to the PDB).
 
 
@@ -41,10 +41,10 @@ Anything I should know before continuing this tutorial?
 
 Yes. You should know
 https://en.wikipedia.org/wiki/C_%28programming_language%29[C Programming]
-(C is the language in which GIMP is coded), know a bit of
+(C is the language in which LIGMA is coded), know a bit of
 https://library.gnome.org/devel/glib/stable/[Glib] (the library which
-GIMP uses for many of it's data-structures). In addition, you should
-know enough about the GIMP core for implementing your function (this is
+LIGMA uses for many of it's data-structures). In addition, you should
+know enough about the LIGMA core for implementing your function (this is
 not a programming tutorial, this is only a technical tutorial) or at
 least have the intuition to understand enough from the code you see, to
 copy paste and modify the parts you need (In fact, this is how I made my
@@ -58,12 +58,12 @@ Since adding a function to the PDB can be tedious (you would need to
 modify 3 or more different source files), a scripting framework was
 developed to add functions to the PDB by writing them once. To see how
 function are implemented in the PDB, take a look in
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups[pdb/groups].
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups[pdb/groups].
 
 You can see many files with the .pdb suffix - these are special template
 files which include the actual source of the PDB functions. Let's take a
 quick look at one of these - text_layer_get_text in
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/text_layer.pdb[pdb/groups/text_layer.pdb].
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups/text_layer.pdb[pdb/groups/text_layer.pdb].
 
 [source,perl]
 ----
@@ -89,9 +89,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
+  if (ligma_pdb_layer_is_text_layer (layer, FALSE, error))
     {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+      g_object_get (ligma_text_layer_get_text (LIGMA_TEXT_LAYER (layer)),
                     "text", &text,
                     NULL);
     }
@@ -115,7 +115,7 @@ sub text_layer_get_text {
 ----
 
 That's the first line, declaring the name of the new PDB function (it
-will be renamed to +gimp_text_layer_get_text+ automatically), and
+will be renamed to +ligma_text_layer_get_text+ automatically), and
 opening the braces for it's content.
 
 Description of the procedure
@@ -159,7 +159,7 @@ Now, the next line is:
      &marcus_pdb_misc('2008', '2.6');
 ----
 
-If you contribute a function to the GIMP PDB, you credit yourself in the
+If you contribute a function to the LIGMA PDB, you credit yourself in the
 source code. The above line is for an author which contributed many
 functions and he now has a simple macro to credit him. For us regular
 users, if we want to specify the credit to ourself we should replace the
@@ -177,8 +177,8 @@ Replace the values of +$author+ and +$copyright+ with your own name and
 email, replace the value of +$date+ with the date in which you wrote the
 function (most functions only specify the year, so try to keep with this
 standard instead of adding a full date). And finally, replace the value
-of +$since+ with the version of GIMP which will be the first to include
-this function. For example, if GIMP 2.6 was released, and 2.8 wasn't
+of +$since+ with the version of LIGMA which will be the first to include
+this function. For example, if LIGMA 2.6 was released, and 2.8 wasn't
 released yet. then new functionality will be added in 2.8 (new
 functionality is only added inside new major version releases) and you
 should specify 2.8.
@@ -207,12 +207,12 @@ a description. The name will be used later in our code and it should be
 meaningful and be a valid name for a variable in C.
 
 The type is one of the types listed in
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/pdb.pl[pdb/pdb.pl]
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/pdb.pl[pdb/pdb.pl]
 inside the +%arg_types+ array. In
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/pdb.pl[pdb/pdb.pl]
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/pdb.pl[pdb/pdb.pl]
 you can see the corresponding C type for each of the types we specify.
 For example, +layer+ type (inside the .pdb file) becomes a variable with
-the C type of +GimpLayer *+, and +string+ becomes +gchar *+.
+the C type of +LigmaLayer *+, and +string+ becomes +gchar *+.
 
 If I want to add another input variable to the function, it'll look like this:
 
@@ -255,9 +255,9 @@ Now finally, let's take a look at the actual code:
 [source,c]
 ----
 {
-  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
+  if (ligma_pdb_layer_is_text_layer (layer, FALSE, error))
     {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+      g_object_get (ligma_text_layer_get_text (LIGMA_TEXT_LAYER (layer)),
                     "text", &text,
                     NULL);
     }
@@ -269,7 +269,7 @@ Now finally, let's take a look at the actual code:
 ----
 
 This is a simple code in C - nothing fancy. However, this code uses
-functions from inside GIMP's core (hacking on the GIMP core will be the
+functions from inside LIGMA's core (hacking on the LIGMA core will be the
 content for a different guide). The variables +text+ and +layer+, inside
 the C code, correspond to the variables we specified in the input/output
 arguments (since they have exactly the same name):
@@ -302,13 +302,13 @@ At the end of the PDB file, you should find the following segments:
 
 [source,perl]
 ----
-@headers = qw("libgimpbase/gimpbase.h"
-              "core/gimpcontext.h"
-              "text/gimptext.h"
-              "text/gimptextlayer.h"
-              "gimppdb-utils.h"
-              "gimppdberror.h"
-              "gimp-intl.h");
+@headers = qw("libligmabase/ligmabase.h"
+              "core/ligmacontext.h"
+              "text/ligmatext.h"
+              "text/ligmatextlayer.h"
+              "ligmapdb-utils.h"
+              "ligmapdberror.h"
+              "ligma-intl.h");
 
 @procs = qw(text_layer_new
             text_layer_get_text
@@ -318,7 +318,7 @@ At the end of the PDB file, you should find the following segments:
 ----
 
 Inside the +@headers+ there is a list of various header files from the
-gimp source. If your code requires a header which is not specified, add
+ligma source. If your code requires a header which is not specified, add
 it there.
 
 Inside the +@procs+ there is a list of the procedures which are exported
@@ -334,21 +334,21 @@ In some cases you would like to have arguments which have a value from
 an enum (enumeration). Instead of just declaring these as integer values
 and telling in your description which value corresponds to which number,
 this can be done automatically for you if the desired enum is one of the
-enums which are already used by GIMP.
+enums which are already used by LIGMA.
 
 To make it clearer, let's take a look at +layer_get_mode+ in
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/layer.pdb[pdb/groups/layer.pdb]:
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups/layer.pdb[pdb/groups/layer.pdb]:
 
 [source,perl]
 ----
     @outargs = (
-	{ name => 'mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'mode', type => 'enum LigmaLayerModeEffects',
 	  desc => 'The layer combination mode' }
     );
 ----
 
 If we take a look at the same procedure as it shows up in the procedure
-browser (+gimp_layer_get_mode+), we will see the following return values:
+browser (+ligma_layer_get_mode+), we will see the following return values:
 
 [options="header",cols="1,1,11"]
 |=======================================================================
@@ -367,7 +367,7 @@ ANTI-ERASE-MODE (25) }
 
 As you can see, all the values of the enum  were listed (the source file
 containing this enum is
-https://gitlab.gnome.org/GNOME/gimp/tree/master/app/base/base-enums.h[app/base/base-enums.h])
+https://gitlab.gnome.org/GNOME/ligma/tree/master/app/base/base-enums.h[app/base/base-enums.h])
 in it's description, and the type for this argument was declared as an
 integer value (reminder: enumeration values in C are actually mapped to
 numbers, unlike languages such as Java where enumeration values are
@@ -380,24 +380,24 @@ In some cases you would like to limit the range of numerical values
 passed as parameters for your PDB function. For example, the width of
 newly created images should be limited to be at least 1 (since images
 with 0 width don't make sense...) and it also should be limited to some
-maximal width (so that it won't be bigger than the maximal size GIMP
+maximal width (so that it won't be bigger than the maximal size LIGMA
 supports).
 
 We can add this sort of range limitations inside the declaration of the
 function, and by that we can make sure it won't be called with values
-out of range (GIMP will make sure the values are inside the specified
+out of range (LIGMA will make sure the values are inside the specified
 range before it calls our function). To see an example, let's take look
 at the procedure image_new from
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/image.pdb[pdb/groups/image.pdb]:
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups/image.pdb[pdb/groups/image.pdb]:
 
 [source,perl]
 ----
     @inargs = (
-    { name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+    { name => 'width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
       desc => 'The width of the image' },
-    { name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+    { name => 'height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
       desc => 'The height of the image' },
-    { name => 'type', type => 'enum GimpImageBaseType',
+    { name => 'type', type => 'enum LigmaImageBaseType',
       desc => 'The type of image' }
     );
 ----
@@ -405,18 +405,18 @@ https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/image.pdb[pdb/groups/
 As you can see, inside the +*type*+ field of the first two parameters,
 we added a limitation on the range of the parameter. The lower
 limitation is a simple number, and the upper limitation is a constant
-macro (+GIMP_MAX_IMAGE_SIZE+) defined in
-https://gitlab.gnome.org/GNOME/gimp/tree/master/libgimpbase/gimplimits.h[libgimpbase/gimplimits.h].
+macro (+LIGMA_MAX_IMAGE_SIZE+) defined in
+https://gitlab.gnome.org/GNOME/ligma/tree/master/libligmabase/ligmalimits.h[libligmabase/ligmalimits.h].
 In order to make sure this constand will indeed be defined when parsing
 this function, the file
-https://gitlab.gnome.org/GNOME/gimp/tree/master/libgimpbase/gimpbase.h[libgimpbase/gimpbase.h]
+https://gitlab.gnome.org/GNOME/ligma/tree/master/libligmabase/ligmabase.h[libligmabase/ligmabase.h]
 (which includes
-https://gitlab.gnome.org/GNOME/gimp/tree/master/libgimpbase/gimplimits.h[libgimpbase/gimplimits.h])
+https://gitlab.gnome.org/GNOME/ligma/tree/master/libligmabase/ligmalimits.h[libligmabase/ligmalimits.h])
 was added to the +@headers+ section of the pdb file.
 
 Now, if you take a look at the code part of this function you won't see
 any check that the value is indeed inside the specified range. As we
-said, GIMP takes care of this automatically for us so we don't need to
+said, LIGMA takes care of this automatically for us so we don't need to
 add the check ourselves. Inside the procedure browser, this procedure
 would show up like this:
 
@@ -435,13 +435,13 @@ function which receives an array. Array arguments are specified in a
 special way which is a bit different than the other arguments. To see
 how array arguments are specified, let's take a look at the +@outargs+
 of +vectors_stroke_get_points+ from
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/vectors.pdb[pdb/groups/vectors.pdb]:
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups/vectors.pdb[pdb/groups/vectors.pdb]:
 
 [source,perl]
 ----
     @outargs = (
-        { name => 'type', type => 'enum GimpVectorsStrokeType',
-          desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
+        { name => 'type', type => 'enum LigmaVectorsStrokeType',
+          desc => 'type of the stroke (always LIGMA_VECTORS_STROKE_TYPE_BEZIER for now).' },
         { name => 'controlpoints', type => 'floatarray',
           desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
           array => { name => 'num_points',
@@ -490,18 +490,18 @@ Summary
 Hey! Now what - how do I see my function?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Compile GIMP again from the source, and pass the flag --with-pdbgen to
+Compile LIGMA again from the source, and pass the flag --with-pdbgen to
 the configure script (or to the autogen script if using the autogen
 script).
 
 Conclusions
 ~~~~~~~~~~~
 Now that you know how a PDB function looks like, you should be able to
-add new ones of your own if GIMP needs them (ask on the development list
+add new ones of your own if LIGMA needs them (ask on the development list
 before working on a new function like this, since you need to see if the
 developers agree that it's needed!).
 
 Don't forget to include the functions inside the right files! Under
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups[pdb/groups]
+https://gitlab.gnome.org/GNOME/ligma/tree/master/pdb/groups[pdb/groups]
 you can see many files (fonts.pdb, brush.pdb, layer.pdb, etc.) - *make
 sure you add your function in the place which logically suites it!*

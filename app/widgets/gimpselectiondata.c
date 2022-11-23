@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,43 +22,43 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpbrush.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcurve.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-#include "core/gimpitem.h"
-#include "core/gimppalette.h"
-#include "core/gimppattern.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmabrush.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacurve.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmaitem.h"
+#include "core/ligmapalette.h"
+#include "core/ligmapattern.h"
+#include "core/ligmatoolinfo.h"
 
-#include "text/gimpfont.h"
+#include "text/ligmafont.h"
 
 #include "xcf/xcf.h"
 
-#include "gimpselectiondata.h"
+#include "ligmaselectiondata.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static const gchar * gimp_selection_data_get_name   (GtkSelectionData *selection,
+static const gchar * ligma_selection_data_get_name   (GtkSelectionData *selection,
                                                      const gchar      *strfunc);
-static GimpObject  * gimp_selection_data_get_object (GtkSelectionData *selection,
-                                                     GimpContainer    *container,
-                                                     GimpObject       *additional);
-static gchar       * gimp_unescape_uri_string       (const char       *escaped,
+static LigmaObject  * ligma_selection_data_get_object (GtkSelectionData *selection,
+                                                     LigmaContainer    *container,
+                                                     LigmaObject       *additional);
+static gchar       * ligma_unescape_uri_string       (const char       *escaped,
                                                      int               len,
                                                      const char       *illegal_escaped_characters,
                                                      gboolean          ascii_must_not_be_escaped);
@@ -67,7 +67,7 @@ static gchar       * gimp_unescape_uri_string       (const char       *escaped,
 /*  public functions  */
 
 void
-gimp_selection_data_set_uri_list (GtkSelectionData *selection,
+ligma_selection_data_set_uri_list (GtkSelectionData *selection,
                                   GList            *uri_list)
 {
   GList *list;
@@ -103,7 +103,7 @@ gimp_selection_data_set_uri_list (GtkSelectionData *selection,
 }
 
 GList *
-gimp_selection_data_get_uri_list (GtkSelectionData *selection)
+ligma_selection_data_get_uri_list (GtkSelectionData *selection)
 {
   GList       *crap_list = NULL;
   GList       *uri_list  = NULL;
@@ -124,7 +124,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
   data = buffer = (const gchar *) gtk_selection_data_get_data (selection);
 
-  GIMP_LOG (DND, "raw buffer >>%s<<", buffer);
+  LIGMA_LOG (DND, "raw buffer >>%s<<", buffer);
 
   {
     gchar name_buffer[1024];
@@ -167,7 +167,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
       gchar       *uri   = NULL;
       GError      *error = NULL;
 
-      GIMP_LOG (DND, "trying to convert \"%s\" to an uri", dnd_crap);
+      LIGMA_LOG (DND, "trying to convert \"%s\" to an uri", dnd_crap);
 
       filename = g_filename_from_uri (dnd_crap, &hostname, NULL);
 
@@ -218,7 +218,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
                 {
                   gchar *local_filename;
 
-                  unescaped_filename = gimp_unescape_uri_string (start, -1,
+                  unescaped_filename = ligma_unescape_uri_string (start, -1,
                                                                  "/", FALSE);
 
                   /*  check if we got a drop from an application that
@@ -279,8 +279,8 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 }
 
 void
-gimp_selection_data_set_color (GtkSelectionData *selection,
-                               const GimpRGB    *color)
+ligma_selection_data_set_color (GtkSelectionData *selection,
+                               const LigmaRGB    *color)
 {
   guint16  vals[4];
   guchar   r, g, b, a;
@@ -288,7 +288,7 @@ gimp_selection_data_set_color (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
+  ligma_rgba_get_uchar (color, &r, &g, &b, &a);
 
   vals[0] = r + (r << 8);
   vals[1] = g + (g << 8);
@@ -301,8 +301,8 @@ gimp_selection_data_set_color (GtkSelectionData *selection,
 }
 
 gboolean
-gimp_selection_data_get_color (GtkSelectionData *selection,
-                               GimpRGB          *color)
+ligma_selection_data_get_color (GtkSelectionData *selection,
+                               LigmaRGB          *color)
 {
   const guint16 *color_vals;
 
@@ -318,7 +318,7 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
 
   color_vals = (const guint16 *) gtk_selection_data_get_data (selection);
 
-  gimp_rgba_set_uchar (color,
+  ligma_rgba_set_uchar (color,
                        (guchar) (color_vals[0] >> 8),
                        (guchar) (color_vals[1] >> 8),
                        (guchar) (color_vals[2] >> 8),
@@ -328,17 +328,17 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_xcf (GtkSelectionData *selection,
-                             GimpImage        *image)
+ligma_selection_data_set_xcf (GtkSelectionData *selection,
+                             LigmaImage        *image)
 {
   GMemoryOutputStream *output;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   output = G_MEMORY_OUTPUT_STREAM (g_memory_output_stream_new_resizable ());
 
-  xcf_save_stream (image->gimp, image, G_OUTPUT_STREAM (output), NULL,
+  xcf_save_stream (image->ligma, image, G_OUTPUT_STREAM (output), NULL,
                    NULL, NULL);
 
   gtk_selection_data_set (selection,
@@ -350,17 +350,17 @@ gimp_selection_data_set_xcf (GtkSelectionData *selection,
   g_object_unref (output);
 }
 
-GimpImage *
-gimp_selection_data_get_xcf (GtkSelectionData *selection,
-                             Gimp             *gimp)
+LigmaImage *
+ligma_selection_data_get_xcf (GtkSelectionData *selection,
+                             Ligma             *ligma)
 {
   GInputStream *input;
-  GimpImage    *image;
+  LigmaImage    *image;
   gsize         length;
   const guchar *data;
   GError       *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
   length = gtk_selection_data_get_length (selection);
@@ -375,12 +375,12 @@ gimp_selection_data_get_xcf (GtkSelectionData *selection,
 
   input = g_memory_input_stream_new_from_data (data, length, NULL);
 
-  image = xcf_load_stream (gimp, input, NULL, NULL, &error);
+  image = xcf_load_stream (ligma, input, NULL, NULL, &error);
 
   if (image)
     {
       /*  don't keep clipboard images in the image list  */
-      gimp_container_remove (gimp->images, GIMP_OBJECT (image));
+      ligma_container_remove (ligma->images, LIGMA_OBJECT (image));
     }
   else
     {
@@ -394,7 +394,7 @@ gimp_selection_data_get_xcf (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_stream (GtkSelectionData *selection,
+ligma_selection_data_set_stream (GtkSelectionData *selection,
                                 const guchar     *stream,
                                 gsize             stream_length)
 {
@@ -408,7 +408,7 @@ gimp_selection_data_set_stream (GtkSelectionData *selection,
 }
 
 const guchar *
-gimp_selection_data_get_stream (GtkSelectionData *selection,
+ligma_selection_data_get_stream (GtkSelectionData *selection,
                                 gsize            *stream_length)
 {
   gint length;
@@ -430,15 +430,15 @@ gimp_selection_data_get_stream (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_curve (GtkSelectionData *selection,
-                               GimpCurve        *curve)
+ligma_selection_data_set_curve (GtkSelectionData *selection,
+                               LigmaCurve        *curve)
 {
   gchar *str;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (curve), NULL);
+  str = ligma_config_serialize_to_string (LIGMA_CONFIG (curve), NULL);
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -447,10 +447,10 @@ gimp_selection_data_set_curve (GtkSelectionData *selection,
   g_free (str);
 }
 
-GimpCurve *
-gimp_selection_data_get_curve (GtkSelectionData *selection)
+LigmaCurve *
+ligma_selection_data_get_curve (GtkSelectionData *selection)
 {
-  GimpCurve *curve;
+  LigmaCurve *curve;
   gint       length;
   GError    *error = NULL;
 
@@ -464,9 +464,9 @@ gimp_selection_data_get_curve (GtkSelectionData *selection)
       return NULL;
     }
 
-  curve = GIMP_CURVE (gimp_curve_new ("pasted curve"));
+  curve = LIGMA_CURVE (ligma_curve_new ("pasted curve"));
 
-  if (! gimp_config_deserialize_string (GIMP_CONFIG (curve),
+  if (! ligma_config_deserialize_string (LIGMA_CONFIG (curve),
                                         (const gchar *)
                                         gtk_selection_data_get_data (selection),
                                         length,
@@ -483,15 +483,15 @@ gimp_selection_data_get_curve (GtkSelectionData *selection)
 }
 
 void
-gimp_selection_data_set_image (GtkSelectionData *selection,
-                               GimpImage        *image)
+ligma_selection_data_set_image (GtkSelectionData *selection,
+                               LigmaImage        *image)
 {
   gchar *str;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_image_get_id (image));
+  str = g_strdup_printf ("%d:%d", ligma_get_pid (), ligma_image_get_id (image));
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -500,16 +500,16 @@ gimp_selection_data_set_image (GtkSelectionData *selection,
   g_free (str);
 }
 
-GimpImage *
-gimp_selection_data_get_image (GtkSelectionData *selection,
-                               Gimp             *gimp)
+LigmaImage *
+ligma_selection_data_get_image (GtkSelectionData *selection,
+                               Ligma             *ligma)
 {
   const gchar *str;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  str = gimp_selection_data_get_name (selection, G_STRFUNC);
+  str = ligma_selection_data_get_name (selection, G_STRFUNC);
 
   if (str)
     {
@@ -517,9 +517,9 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
       gint ID;
 
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
-          pid == gimp_get_pid ())
+          pid == ligma_get_pid ())
         {
-          return gimp_image_get_by_id (gimp, ID);
+          return ligma_image_get_by_id (ligma, ID);
         }
     }
 
@@ -527,16 +527,16 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_component (GtkSelectionData *selection,
-                                   GimpImage        *image,
-                                   GimpChannelType   channel)
+ligma_selection_data_set_component (GtkSelectionData *selection,
+                                   LigmaImage        *image,
+                                   LigmaChannelType   channel)
 {
   gchar *str;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d:%d", gimp_get_pid (), gimp_image_get_id (image),
+  str = g_strdup_printf ("%d:%d:%d", ligma_get_pid (), ligma_image_get_id (image),
                          (gint) channel);
 
   gtk_selection_data_set (selection,
@@ -546,20 +546,20 @@ gimp_selection_data_set_component (GtkSelectionData *selection,
   g_free (str);
 }
 
-GimpImage *
-gimp_selection_data_get_component (GtkSelectionData *selection,
-                                   Gimp             *gimp,
-                                   GimpChannelType  *channel)
+LigmaImage *
+ligma_selection_data_get_component (GtkSelectionData *selection,
+                                   Ligma             *ligma,
+                                   LigmaChannelType  *channel)
 {
   const gchar *str;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
   if (channel)
     *channel = 0;
 
-  str = gimp_selection_data_get_name (selection, G_STRFUNC);
+  str = ligma_selection_data_get_name (selection, G_STRFUNC);
 
   if (str)
     {
@@ -568,9 +568,9 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
       gint ch;
 
       if (sscanf (str, "%i:%i:%i", &pid, &ID, &ch) == 3 &&
-          pid == gimp_get_pid ())
+          pid == ligma_get_pid ())
         {
-          GimpImage *image = gimp_image_get_by_id (gimp, ID);
+          LigmaImage *image = ligma_image_get_by_id (ligma, ID);
 
           if (image && channel)
             *channel = ch;
@@ -583,15 +583,15 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_item (GtkSelectionData *selection,
-                              GimpItem         *item)
+ligma_selection_data_set_item (GtkSelectionData *selection,
+                              LigmaItem         *item)
 {
   gchar *str;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_ITEM (item));
 
-  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_item_get_id (item));
+  str = g_strdup_printf ("%d:%d", ligma_get_pid (), ligma_item_get_id (item));
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -600,16 +600,16 @@ gimp_selection_data_set_item (GtkSelectionData *selection,
   g_free (str);
 }
 
-GimpItem *
-gimp_selection_data_get_item (GtkSelectionData *selection,
-                              Gimp             *gimp)
+LigmaItem *
+ligma_selection_data_get_item (GtkSelectionData *selection,
+                              Ligma             *ligma)
 {
   const gchar *str;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  str = gimp_selection_data_get_name (selection, G_STRFUNC);
+  str = ligma_selection_data_get_name (selection, G_STRFUNC);
 
   if (str)
     {
@@ -617,9 +617,9 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
       gint ID;
 
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
-          pid == gimp_get_pid ())
+          pid == ligma_get_pid ())
         {
-          return gimp_item_get_by_id (gimp, ID);
+          return ligma_item_get_by_id (ligma, ID);
         }
     }
 
@@ -627,7 +627,7 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_item_list (GtkSelectionData *selection,
+ligma_selection_data_set_item_list (GtkSelectionData *selection,
                                    GList            *items)
 {
   GString *str;
@@ -637,12 +637,12 @@ gimp_selection_data_set_item_list (GtkSelectionData *selection,
   g_return_if_fail (items);
 
   for (iter = items; iter; iter = iter->next)
-    g_return_if_fail (GIMP_IS_ITEM (iter->data));
+    g_return_if_fail (LIGMA_IS_ITEM (iter->data));
 
   str = g_string_new (NULL);
-  g_string_printf (str, "%d", gimp_get_pid ());
+  g_string_printf (str, "%d", ligma_get_pid ());
   for (iter = items; iter; iter = iter->next)
-    g_string_append_printf (str, ":%d", gimp_item_get_id (iter->data));
+    g_string_append_printf (str, ":%d", ligma_item_get_id (iter->data));
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -652,16 +652,16 @@ gimp_selection_data_set_item_list (GtkSelectionData *selection,
 }
 
 GList *
-gimp_selection_data_get_item_list (GtkSelectionData *selection,
-                                   Gimp             *gimp)
+ligma_selection_data_get_item_list (GtkSelectionData *selection,
+                                   Ligma             *ligma)
 {
   const gchar  *str;
   GList        *items = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  str = gimp_selection_data_get_name (selection, G_STRFUNC);
+  str = ligma_selection_data_get_name (selection, G_STRFUNC);
 
   if (str)
     {
@@ -672,7 +672,7 @@ gimp_selection_data_get_item_list (GtkSelectionData *selection,
       g_return_val_if_fail (tokens[0] != NULL && tokens[1] != NULL, NULL);
 
       pid = g_ascii_strtoll (tokens[0], NULL, 10);
-      if (pid == gimp_get_pid ())
+      if (pid == ligma_get_pid ())
         {
           gint i = 1;
 
@@ -680,7 +680,7 @@ gimp_selection_data_get_item_list (GtkSelectionData *selection,
             {
               gint64 id = g_ascii_strtoll (tokens[i], NULL, 10);
 
-              items = g_list_prepend (items, gimp_item_get_by_id (gimp, id));
+              items = g_list_prepend (items, ligma_item_get_by_id (ligma, id));
               i++;
             }
           items = g_list_reverse (items);
@@ -693,21 +693,21 @@ gimp_selection_data_get_item_list (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_object (GtkSelectionData *selection,
-                                GimpObject       *object)
+ligma_selection_data_set_object (GtkSelectionData *selection,
+                                LigmaObject       *object)
 {
   const gchar *name;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (GIMP_IS_OBJECT (object));
+  g_return_if_fail (LIGMA_IS_OBJECT (object));
 
-  name = gimp_object_get_name (object);
+  name = ligma_object_get_name (object);
 
   if (name)
     {
       gchar *str;
 
-      str = g_strdup_printf ("%d:%p:%s", gimp_get_pid (), object, name);
+      str = g_strdup_printf ("%d:%p:%s", ligma_get_pid (), object, name);
 
       gtk_selection_data_set (selection,
                               gtk_selection_data_get_target (selection),
@@ -717,127 +717,127 @@ gimp_selection_data_set_object (GtkSelectionData *selection,
     }
 }
 
-GimpBrush *
-gimp_selection_data_get_brush (GtkSelectionData *selection,
-                               Gimp             *gimp)
+LigmaBrush *
+ligma_selection_data_get_brush (GtkSelectionData *selection,
+                               Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpBrush *)
-    gimp_selection_data_get_object (selection,
-                                    gimp_data_factory_get_container (gimp->brush_factory),
-                                    GIMP_OBJECT (gimp_brush_get_standard (gimp_get_user_context (gimp))));
+  return (LigmaBrush *)
+    ligma_selection_data_get_object (selection,
+                                    ligma_data_factory_get_container (ligma->brush_factory),
+                                    LIGMA_OBJECT (ligma_brush_get_standard (ligma_get_user_context (ligma))));
 }
 
-GimpPattern *
-gimp_selection_data_get_pattern (GtkSelectionData *selection,
-                                 Gimp             *gimp)
+LigmaPattern *
+ligma_selection_data_get_pattern (GtkSelectionData *selection,
+                                 Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpPattern *)
-    gimp_selection_data_get_object (selection,
-                                    gimp_data_factory_get_container (gimp->pattern_factory),
-                                    GIMP_OBJECT (gimp_pattern_get_standard (gimp_get_user_context (gimp))));
+  return (LigmaPattern *)
+    ligma_selection_data_get_object (selection,
+                                    ligma_data_factory_get_container (ligma->pattern_factory),
+                                    LIGMA_OBJECT (ligma_pattern_get_standard (ligma_get_user_context (ligma))));
 }
 
-GimpGradient *
-gimp_selection_data_get_gradient (GtkSelectionData *selection,
-                                  Gimp             *gimp)
+LigmaGradient *
+ligma_selection_data_get_gradient (GtkSelectionData *selection,
+                                  Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpGradient *)
-    gimp_selection_data_get_object (selection,
-                                    gimp_data_factory_get_container (gimp->gradient_factory),
-                                    GIMP_OBJECT (gimp_gradient_get_standard (gimp_get_user_context (gimp))));
+  return (LigmaGradient *)
+    ligma_selection_data_get_object (selection,
+                                    ligma_data_factory_get_container (ligma->gradient_factory),
+                                    LIGMA_OBJECT (ligma_gradient_get_standard (ligma_get_user_context (ligma))));
 }
 
-GimpPalette *
-gimp_selection_data_get_palette (GtkSelectionData *selection,
-                                 Gimp             *gimp)
+LigmaPalette *
+ligma_selection_data_get_palette (GtkSelectionData *selection,
+                                 Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpPalette *)
-    gimp_selection_data_get_object (selection,
-                                    gimp_data_factory_get_container (gimp->palette_factory),
-                                    GIMP_OBJECT (gimp_palette_get_standard (gimp_get_user_context (gimp))));
+  return (LigmaPalette *)
+    ligma_selection_data_get_object (selection,
+                                    ligma_data_factory_get_container (ligma->palette_factory),
+                                    LIGMA_OBJECT (ligma_palette_get_standard (ligma_get_user_context (ligma))));
 }
 
-GimpFont *
-gimp_selection_data_get_font (GtkSelectionData *selection,
-                              Gimp             *gimp)
+LigmaFont *
+ligma_selection_data_get_font (GtkSelectionData *selection,
+                              Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpFont *)
-    gimp_selection_data_get_object (selection,
-                                    gimp_data_factory_get_container (gimp->font_factory),
-                                    GIMP_OBJECT (gimp_font_get_standard ()));
+  return (LigmaFont *)
+    ligma_selection_data_get_object (selection,
+                                    ligma_data_factory_get_container (ligma->font_factory),
+                                    LIGMA_OBJECT (ligma_font_get_standard ()));
 }
 
-GimpBuffer *
-gimp_selection_data_get_buffer (GtkSelectionData *selection,
-                                Gimp             *gimp)
+LigmaBuffer *
+ligma_selection_data_get_buffer (GtkSelectionData *selection,
+                                Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpBuffer *)
-    gimp_selection_data_get_object (selection,
-                                    gimp->named_buffers,
-                                    GIMP_OBJECT (gimp_get_clipboard_buffer (gimp)));
+  return (LigmaBuffer *)
+    ligma_selection_data_get_object (selection,
+                                    ligma->named_buffers,
+                                    LIGMA_OBJECT (ligma_get_clipboard_buffer (ligma)));
 }
 
-GimpImagefile *
-gimp_selection_data_get_imagefile (GtkSelectionData *selection,
-                                   Gimp             *gimp)
+LigmaImagefile *
+ligma_selection_data_get_imagefile (GtkSelectionData *selection,
+                                   Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpImagefile *) gimp_selection_data_get_object (selection,
-                                                           gimp->documents,
+  return (LigmaImagefile *) ligma_selection_data_get_object (selection,
+                                                           ligma->documents,
                                                            NULL);
 }
 
-GimpTemplate *
-gimp_selection_data_get_template (GtkSelectionData *selection,
-                                  Gimp             *gimp)
+LigmaTemplate *
+ligma_selection_data_get_template (GtkSelectionData *selection,
+                                  Ligma             *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpTemplate *) gimp_selection_data_get_object (selection,
-                                                          gimp->templates,
+  return (LigmaTemplate *) ligma_selection_data_get_object (selection,
+                                                          ligma->templates,
                                                           NULL);
 }
 
-GimpToolItem *
-gimp_selection_data_get_tool_item (GtkSelectionData *selection,
-                                   Gimp             *gimp)
+LigmaToolItem *
+ligma_selection_data_get_tool_item (GtkSelectionData *selection,
+                                   Ligma             *ligma)
 {
-  GimpToolItem *tool_item;
+  LigmaToolItem *tool_item;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  tool_item = (GimpToolItem *)
-    gimp_selection_data_get_object (selection,
-                                    gimp->tool_info_list,
-                                    GIMP_OBJECT (gimp_tool_info_get_standard (gimp)));
+  tool_item = (LigmaToolItem *)
+    ligma_selection_data_get_object (selection,
+                                    ligma->tool_info_list,
+                                    LIGMA_OBJECT (ligma_tool_info_get_standard (ligma)));
 
   if (! tool_item)
     {
-      tool_item = (GimpToolItem *)
-        gimp_selection_data_get_object (selection,
-                                        gimp->tool_item_list,
+      tool_item = (LigmaToolItem *)
+        ligma_selection_data_get_object (selection,
+                                        ligma->tool_item_list,
                                         NULL);
     }
 
@@ -848,7 +848,7 @@ gimp_selection_data_get_tool_item (GtkSelectionData *selection,
 /*  private functions  */
 
 static const gchar *
-gimp_selection_data_get_name (GtkSelectionData *selection,
+ligma_selection_data_get_name (GtkSelectionData *selection,
                               const gchar      *strfunc)
 {
   const gchar *name;
@@ -869,19 +869,19 @@ gimp_selection_data_get_name (GtkSelectionData *selection,
       return NULL;
     }
 
-  GIMP_LOG (DND, "name = '%s'", name);
+  LIGMA_LOG (DND, "name = '%s'", name);
 
   return name;
 }
 
-static GimpObject *
-gimp_selection_data_get_object (GtkSelectionData *selection,
-                                GimpContainer    *container,
-                                GimpObject       *additional)
+static LigmaObject *
+ligma_selection_data_get_object (GtkSelectionData *selection,
+                                LigmaContainer    *container,
+                                LigmaObject       *additional)
 {
   const gchar *str;
 
-  str = gimp_selection_data_get_name (selection, G_STRFUNC);
+  str = ligma_selection_data_get_name (selection, G_STRFUNC);
 
   if (str)
     {
@@ -890,24 +890,24 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
       gint     name_offset = 0;
 
       if (sscanf (str, "%i:%p:%n", &pid, &object_addr, &name_offset) >= 2 &&
-          pid == gimp_get_pid () && name_offset > 0)
+          pid == ligma_get_pid () && name_offset > 0)
         {
           const gchar *name = str + name_offset;
 
-          GIMP_LOG (DND, "pid = %d, addr = %p, name = '%s'",
+          LIGMA_LOG (DND, "pid = %d, addr = %p, name = '%s'",
                     pid, object_addr, name);
 
           if (additional &&
-              strcmp (name, gimp_object_get_name (additional)) == 0 &&
+              strcmp (name, ligma_object_get_name (additional)) == 0 &&
               object_addr == (gpointer) additional)
             {
               return additional;
             }
           else
             {
-              GimpObject *object;
+              LigmaObject *object;
 
-              object = gimp_container_get_child_by_name (container, name);
+              object = ligma_container_get_child_by_name (container, name);
 
               if (object_addr == (gpointer) object)
                 return object;
@@ -919,7 +919,7 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
 }
 
 /*  the next two functions are straight cut'n'paste from glib/glib/gconvert.c,
- *  except that gimp_unescape_uri_string() does not try to UTF-8 validate
+ *  except that ligma_unescape_uri_string() does not try to UTF-8 validate
  *  the unescaped result.
  */
 static int
@@ -940,7 +940,7 @@ unescape_character (const char *scanner)
 }
 
 static gchar *
-gimp_unescape_uri_string (const char *escaped,
+ligma_unescape_uri_string (const char *escaped,
                           int         len,
                           const char *illegal_escaped_characters,
                           gboolean    ascii_must_not_be_escaped)
@@ -988,7 +988,7 @@ gimp_unescape_uri_string (const char *escaped,
       *out++ = c;
     }
 
-  gimp_assert (out - result <= len);
+  ligma_assert (out - result <= len);
   *out = '\0';
 
   if (in != in_end)

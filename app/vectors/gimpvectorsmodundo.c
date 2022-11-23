@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,120 +22,120 @@
 
 #include "vectors-types.h"
 
-#include "gimpvectors.h"
-#include "gimpvectorsmodundo.h"
+#include "ligmavectors.h"
+#include "ligmavectorsmodundo.h"
 
 
-static void     gimp_vectors_mod_undo_constructed (GObject             *object);
+static void     ligma_vectors_mod_undo_constructed (GObject             *object);
 
-static gint64   gimp_vectors_mod_undo_get_memsize (GimpObject          *object,
+static gint64   ligma_vectors_mod_undo_get_memsize (LigmaObject          *object,
                                                    gint64              *gui_size);
 
-static void     gimp_vectors_mod_undo_pop         (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode,
-                                                   GimpUndoAccumulator *accum);
-static void     gimp_vectors_mod_undo_free        (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode);
+static void     ligma_vectors_mod_undo_pop         (LigmaUndo            *undo,
+                                                   LigmaUndoMode         undo_mode,
+                                                   LigmaUndoAccumulator *accum);
+static void     ligma_vectors_mod_undo_free        (LigmaUndo            *undo,
+                                                   LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpVectorsModUndo, gimp_vectors_mod_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaVectorsModUndo, ligma_vectors_mod_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_vectors_mod_undo_parent_class
+#define parent_class ligma_vectors_mod_undo_parent_class
 
 
 static void
-gimp_vectors_mod_undo_class_init (GimpVectorsModUndoClass *klass)
+ligma_vectors_mod_undo_class_init (LigmaVectorsModUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_vectors_mod_undo_constructed;
+  object_class->constructed      = ligma_vectors_mod_undo_constructed;
 
-  gimp_object_class->get_memsize = gimp_vectors_mod_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_vectors_mod_undo_get_memsize;
 
-  undo_class->pop                = gimp_vectors_mod_undo_pop;
-  undo_class->free               = gimp_vectors_mod_undo_free;
+  undo_class->pop                = ligma_vectors_mod_undo_pop;
+  undo_class->free               = ligma_vectors_mod_undo_free;
 }
 
 static void
-gimp_vectors_mod_undo_init (GimpVectorsModUndo *undo)
+ligma_vectors_mod_undo_init (LigmaVectorsModUndo *undo)
 {
 }
 
 static void
-gimp_vectors_mod_undo_constructed (GObject *object)
+ligma_vectors_mod_undo_constructed (GObject *object)
 {
-  GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
-  GimpVectors        *vectors;
+  LigmaVectorsModUndo *vectors_mod_undo = LIGMA_VECTORS_MOD_UNDO (object);
+  LigmaVectors        *vectors;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_VECTORS (LIGMA_ITEM_UNDO (object)->item));
 
-  vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item);
+  vectors = LIGMA_VECTORS (LIGMA_ITEM_UNDO (object)->item);
 
   vectors_mod_undo->vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+    LIGMA_VECTORS (ligma_item_duplicate (LIGMA_ITEM (vectors),
                                        G_TYPE_FROM_INSTANCE (vectors)));
 }
 
 static gint64
-gimp_vectors_mod_undo_get_memsize (GimpObject *object,
+ligma_vectors_mod_undo_get_memsize (LigmaObject *object,
                                    gint64     *gui_size)
 {
-  GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
+  LigmaVectorsModUndo *vectors_mod_undo = LIGMA_VECTORS_MOD_UNDO (object);
   gint64              memsize          = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (vectors_mod_undo->vectors),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (vectors_mod_undo->vectors),
                                       gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_vectors_mod_undo_pop (GimpUndo            *undo,
-                           GimpUndoMode         undo_mode,
-                           GimpUndoAccumulator *accum)
+ligma_vectors_mod_undo_pop (LigmaUndo            *undo,
+                           LigmaUndoMode         undo_mode,
+                           LigmaUndoAccumulator *accum)
 {
-  GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (undo);
-  GimpVectors        *vectors          = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
-  GimpVectors        *temp;
+  LigmaVectorsModUndo *vectors_mod_undo = LIGMA_VECTORS_MOD_UNDO (undo);
+  LigmaVectors        *vectors          = LIGMA_VECTORS (LIGMA_ITEM_UNDO (undo)->item);
+  LigmaVectors        *temp;
   gint                offset_x;
   gint                offset_y;
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   temp = vectors_mod_undo->vectors;
 
   vectors_mod_undo->vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+    LIGMA_VECTORS (ligma_item_duplicate (LIGMA_ITEM (vectors),
                                        G_TYPE_FROM_INSTANCE (vectors)));
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  gimp_vectors_copy_strokes (temp, vectors);
+  ligma_vectors_copy_strokes (temp, vectors);
 
-  gimp_item_get_offset (GIMP_ITEM (temp), &offset_x, &offset_y);
-  gimp_item_set_offset (GIMP_ITEM (vectors), offset_x, offset_y);
+  ligma_item_get_offset (LIGMA_ITEM (temp), &offset_x, &offset_y);
+  ligma_item_set_offset (LIGMA_ITEM (vectors), offset_x, offset_y);
 
-  gimp_item_set_size (GIMP_ITEM (vectors),
-                      gimp_item_get_width  (GIMP_ITEM (temp)),
-                      gimp_item_get_height (GIMP_ITEM (temp)));
+  ligma_item_set_size (LIGMA_ITEM (vectors),
+                      ligma_item_get_width  (LIGMA_ITEM (temp)),
+                      ligma_item_get_height (LIGMA_ITEM (temp)));
 
   g_object_unref (temp);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_mod_undo_free (GimpUndo     *undo,
-                            GimpUndoMode  undo_mode)
+ligma_vectors_mod_undo_free (LigmaUndo     *undo,
+                            LigmaUndoMode  undo_mode)
 {
-  GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (undo);
+  LigmaVectorsModUndo *vectors_mod_undo = LIGMA_VECTORS_MOD_UNDO (undo);
 
   g_clear_object (&vectors_mod_undo->vectors);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

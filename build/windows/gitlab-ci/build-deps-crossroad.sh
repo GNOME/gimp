@@ -17,7 +17,7 @@ crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
 ninja -C _build install || exit 1
 cd ..
 
-# preparing GIMP
+# preparing LIGMA
 
 LIBMNG=
 if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then

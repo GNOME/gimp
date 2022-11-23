@@ -6,7 +6,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.1-dev (f20c49d54e, 2020-07-31)"
-   sodipodi:docname="gimp-color-space-non-linear-symbolic.svg"
+   sodipodi:docname="ligma-color-space-non-linear-symbolic.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@
      id="layer1"
      transform="translate(0,-292.76665)">
     <g
-       id="gimp-color-space-perceptual">
+       id="ligma-color-space-perceptual">
       <path
          id="rect814"
          style="color:#000000;overflow:visible;opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"

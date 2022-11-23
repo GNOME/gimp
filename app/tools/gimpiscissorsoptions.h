@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,35 +15,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ISCISSORS_OPTIONS_H__
-#define __GIMP_ISCISSORS_OPTIONS_H__
+#ifndef __LIGMA_ISCISSORS_OPTIONS_H__
+#define __LIGMA_ISCISSORS_OPTIONS_H__
 
 
-#include "gimpselectionoptions.h"
+#include "ligmaselectionoptions.h"
 
 
-#define GIMP_TYPE_ISCISSORS_OPTIONS            (gimp_iscissors_options_get_type ())
-#define GIMP_ISCISSORS_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ISCISSORS_OPTIONS, GimpIscissorsOptions))
-#define GIMP_ISCISSORS_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ISCISSORS_OPTIONS, GimpIscissorsOptionsClass))
-#define GIMP_IS_ISCISSORS_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ISCISSORS_OPTIONS))
-#define GIMP_IS_ISCISSORS_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ISCISSORS_OPTIONS))
-#define GIMP_ISCISSORS_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ISCISSORS_OPTIONS, GimpIscissorsOptionsClass))
+#define LIGMA_TYPE_ISCISSORS_OPTIONS            (ligma_iscissors_options_get_type ())
+#define LIGMA_ISCISSORS_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ISCISSORS_OPTIONS, LigmaIscissorsOptions))
+#define LIGMA_ISCISSORS_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ISCISSORS_OPTIONS, LigmaIscissorsOptionsClass))
+#define LIGMA_IS_ISCISSORS_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ISCISSORS_OPTIONS))
+#define LIGMA_IS_ISCISSORS_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ISCISSORS_OPTIONS))
+#define LIGMA_ISCISSORS_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ISCISSORS_OPTIONS, LigmaIscissorsOptionsClass))
 
 
-typedef struct _GimpIscissorsOptions GimpIscissorsOptions;
-typedef struct _GimpToolOptionsClass GimpIscissorsOptionsClass;
+typedef struct _LigmaIscissorsOptions LigmaIscissorsOptions;
+typedef struct _LigmaToolOptionsClass LigmaIscissorsOptionsClass;
 
-struct _GimpIscissorsOptions
+struct _LigmaIscissorsOptions
 {
-  GimpSelectionOptions  parent_instance;
+  LigmaSelectionOptions  parent_instance;
 
   gboolean              interactive;
 };
 
 
-GType       gimp_iscissors_options_get_type (void) G_GNUC_CONST;
+GType       ligma_iscissors_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_iscissors_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_iscissors_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_ISCISSORS_OPTIONS_H__  */
+#endif  /*  __LIGMA_ISCISSORS_OPTIONS_H__  */

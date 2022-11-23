@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,102 +20,102 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-quick-mask.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-quick-mask.h"
 
-#include "widgets/gimpcairo-wilber.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmacairo-wilber.h"
+#include "widgets/ligmauimanager.h"
 
-#include "gimpcanvasitem.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-callbacks.h"
-#include "gimpdisplayshell-draw.h"
-#include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-scrollbars.h"
-#include "gimpdisplayshell-selection.h"
-#include "gimpdisplayshell-title.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpimagewindow.h"
-#include "gimpnavigationeditor.h"
+#include "ligmacanvasitem.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-appearance.h"
+#include "ligmadisplayshell-callbacks.h"
+#include "ligmadisplayshell-draw.h"
+#include "ligmadisplayshell-render.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-scrollbars.h"
+#include "ligmadisplayshell-selection.h"
+#include "ligmadisplayshell-title.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmaimagewindow.h"
+#include "ligmanavigationeditor.h"
 
 #include "git-version.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void       gimp_display_shell_vadjustment_changed      (GtkAdjustment    *adjustment,
-                                                               GimpDisplayShell *shell);
-static void       gimp_display_shell_hadjustment_changed      (GtkAdjustment    *adjustment,
-                                                               GimpDisplayShell *shell);
-static gboolean   gimp_display_shell_vscrollbar_change_value  (GtkRange         *range,
+static void       ligma_display_shell_vadjustment_changed      (GtkAdjustment    *adjustment,
+                                                               LigmaDisplayShell *shell);
+static void       ligma_display_shell_hadjustment_changed      (GtkAdjustment    *adjustment,
+                                                               LigmaDisplayShell *shell);
+static gboolean   ligma_display_shell_vscrollbar_change_value  (GtkRange         *range,
                                                                GtkScrollType     scroll,
                                                                gdouble           value,
-                                                               GimpDisplayShell *shell);
+                                                               LigmaDisplayShell *shell);
 
-static gboolean   gimp_display_shell_hscrollbar_change_value  (GtkRange         *range,
+static gboolean   ligma_display_shell_hscrollbar_change_value  (GtkRange         *range,
                                                                GtkScrollType     scroll,
                                                                gdouble           value,
-                                                               GimpDisplayShell *shell);
+                                                               LigmaDisplayShell *shell);
 
-static void       gimp_display_shell_canvas_draw_image        (GimpDisplayShell *shell,
+static void       ligma_display_shell_canvas_draw_image        (LigmaDisplayShell *shell,
                                                                cairo_t          *cr);
-static void       gimp_display_shell_canvas_draw_drop_zone    (GimpDisplayShell *shell,
+static void       ligma_display_shell_canvas_draw_drop_zone    (LigmaDisplayShell *shell,
                                                                cairo_t          *cr);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_canvas_realize (GtkWidget        *canvas,
-                                   GimpDisplayShell *shell)
+ligma_display_shell_canvas_realize (GtkWidget        *canvas,
+                                   LigmaDisplayShell *shell)
 {
-  GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  LigmaCanvasPaddingMode  padding_mode;
+  LigmaRGB                padding_color;
   GtkAllocation          allocation;
 
   gtk_widget_grab_focus (canvas);
 
-  gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
-  gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
+  ligma_display_shell_get_padding (shell, &padding_mode, &padding_color);
+  ligma_display_shell_set_padding (shell, padding_mode, &padding_color);
 
   gtk_widget_get_allocation (canvas, &allocation);
 
-  gimp_display_shell_title_update (shell);
+  ligma_display_shell_title_update (shell);
 
   shell->disp_width  = allocation.width;
   shell->disp_height = allocation.height;
 
-  gimp_display_shell_render_set_scale (
+  ligma_display_shell_render_set_scale (
     shell,
     gdk_window_get_scale_factor (
       gtk_widget_get_window (gtk_widget_get_toplevel (canvas))));
 
   /*  set up the scrollbar observers  */
   g_signal_connect (shell->hsbdata, "value-changed",
-                    G_CALLBACK (gimp_display_shell_hadjustment_changed),
+                    G_CALLBACK (ligma_display_shell_hadjustment_changed),
                     shell);
   g_signal_connect (shell->vsbdata, "value-changed",
-                    G_CALLBACK (gimp_display_shell_vadjustment_changed),
+                    G_CALLBACK (ligma_display_shell_vadjustment_changed),
                     shell);
 
   g_signal_connect (shell->hsb, "change-value",
-                    G_CALLBACK (gimp_display_shell_hscrollbar_change_value),
+                    G_CALLBACK (ligma_display_shell_hscrollbar_change_value),
                     shell);
 
   g_signal_connect (shell->vsb, "change-value",
-                    G_CALLBACK (gimp_display_shell_vscrollbar_change_value),
+                    G_CALLBACK (ligma_display_shell_vscrollbar_change_value),
                     shell);
 
   /*  allow shrinking  */
@@ -124,17 +124,17 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
 typedef struct
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
   gint              prev_width;
   gint              prev_height;
 } TickClosure;
 
 static gboolean
-gimp_display_shell_canvas_tick (GtkWidget     *widget,
+ligma_display_shell_canvas_tick (GtkWidget     *widget,
                                 GdkFrameClock *frame_clock,
                                 TickClosure   *tick)
 {
-  GimpDisplayShell *shell = tick->shell;
+  LigmaDisplayShell *shell = tick->shell;
   GtkAllocation     allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -148,7 +148,7 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
           allocation.width  > 64 &&
           allocation.height > 64)
         {
-          gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
+          gdouble scale = ligma_zoom_model_get_factor (shell->zoom);
           gint    offset_x;
           gint    offset_y;
 
@@ -165,7 +165,7 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
           offset_x = UNSCALEX (shell, shell->offset_x);
           offset_y = UNSCALEX (shell, shell->offset_y);
 
-          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+          ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO, scale);
 
           shell->offset_x = SCALEX (shell, offset_x);
           shell->offset_y = SCALEY (shell, offset_y);
@@ -185,20 +185,20 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
           gint     sw;
           gint     sh;
 
-          gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
+          ligma_display_shell_scale_get_image_size (shell, &sw, &sh);
 
           center_horizontally = sw <= shell->disp_width;
           center_vertically   = sh <= shell->disp_height;
 
-          if (! gimp_display_shell_get_infinite_canvas (shell))
+          if (! ligma_display_shell_get_infinite_canvas (shell))
             {
-              gimp_display_shell_scroll_center_image (shell,
+              ligma_display_shell_scroll_center_image (shell,
                                                       center_horizontally,
                                                       center_vertically);
             }
           else
             {
-              gimp_display_shell_scroll_center_content (shell,
+              ligma_display_shell_scroll_center_content (shell,
                                                         center_horizontally,
                                                         center_vertically);
             }
@@ -220,25 +220,25 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
               target_offset_y = MAX (shell->offset_y, 0);
             }
 
-          gimp_display_shell_scroll_set_offset (shell,
+          ligma_display_shell_scroll_set_offset (shell,
                                                 target_offset_x,
                                                 target_offset_y);
         }
 
-      gimp_display_shell_scroll_clamp_and_update (shell);
-      gimp_display_shell_scaled (shell);
+      ligma_display_shell_scroll_clamp_and_update (shell);
+      ligma_display_shell_scaled (shell);
 
       shell->size_allocate_from_configure_event = FALSE;
     }
 
   if (shell->size_allocate_center_image)
     {
-      gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+      ligma_display_shell_scroll_center_image (shell, TRUE, TRUE);
 
       shell->size_allocate_center_image = FALSE;
     }
 
-  /* undo size request from gimp_display_shell_constructed() */
+  /* undo size request from ligma_display_shell_constructed() */
   gtk_widget_set_size_request (widget, -1, -1);
 
   g_free (tick);
@@ -247,14 +247,14 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
 }
 
 void
-gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
+ligma_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                          GtkAllocation    *allocation,
-                                         GimpDisplayShell *shell)
+                                         LigmaDisplayShell *shell)
 {
   TickClosure *tick;
 
   /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
+  if (! shell->display || ! ligma_display_get_shell (shell->display))
     return;
 
   tick = g_new0 (TickClosure, 1);
@@ -267,24 +267,24 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       shell->disp_height != allocation->height)
     {
       g_clear_pointer (&shell->render_cache, cairo_surface_destroy);
-      gimp_display_shell_render_invalidate_full (shell);
+      ligma_display_shell_render_invalidate_full (shell);
 
       shell->disp_width  = allocation->width;
       shell->disp_height = allocation->height;
     }
 
   gtk_widget_add_tick_callback (widget,
-                                (GtkTickCallback) gimp_display_shell_canvas_tick,
+                                (GtkTickCallback) ligma_display_shell_canvas_tick,
                                 tick, NULL);
 }
 
 gboolean
-gimp_display_shell_canvas_draw (GtkWidget        *widget,
+ligma_display_shell_canvas_draw (GtkWidget        *widget,
                                 cairo_t          *cr,
-                                GimpDisplayShell *shell)
+                                LigmaDisplayShell *shell)
 {
   /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
+  if (! shell->display || ! ligma_display_get_shell (shell->display))
     return TRUE;
 
   /*  we will scroll around in the next tick anyway, so we just can as
@@ -296,13 +296,13 @@ gimp_display_shell_canvas_draw (GtkWidget        *widget,
   /*  ignore events on overlays  */
   if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     {
-      if (gimp_display_get_image (shell->display))
+      if (ligma_display_get_image (shell->display))
         {
-          gimp_display_shell_canvas_draw_image (shell, cr);
+          ligma_display_shell_canvas_draw_image (shell, cr);
         }
       else
         {
-          gimp_display_shell_canvas_draw_drop_zone (shell, cr);
+          ligma_display_shell_canvas_draw_drop_zone (shell, cr);
         }
     }
 
@@ -310,11 +310,11 @@ gimp_display_shell_canvas_draw (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_origin_button_press (GtkWidget        *widget,
+ligma_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
-                                        GimpDisplayShell *shell)
+                                        LigmaDisplayShell *shell)
 {
-  if (! shell->display->gimp->busy)
+  if (! shell->display->ligma->busy)
     {
       if (event->type == GDK_BUTTON_PRESS && event->button == 1)
         {
@@ -331,22 +331,22 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
+ligma_display_shell_quick_mask_button_press (GtkWidget        *widget,
                                             GdkEventButton   *bevent,
-                                            GimpDisplayShell *shell)
+                                            LigmaDisplayShell *shell)
 {
-  if (! gimp_display_get_image (shell->display))
+  if (! ligma_display_get_image (shell->display))
     return TRUE;
 
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+      LigmaImageWindow *window = ligma_display_shell_get_window (shell);
 
       if (window)
         {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+          LigmaUIManager *manager = ligma_image_window_get_ui_manager (window);
 
-          gimp_ui_manager_ui_popup_at_widget (manager,
+          ligma_ui_manager_ui_popup_at_widget (manager,
                                               "/quick-mask-popup",
                                               widget,
                                               GDK_GRAVITY_EAST,
@@ -362,21 +362,21 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 }
 
 void
-gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
-                                       GimpDisplayShell *shell)
+ligma_display_shell_quick_mask_toggled (GtkWidget        *widget,
+                                       LigmaDisplayShell *shell)
 {
-  GimpImage *image  = gimp_display_get_image (shell->display);
+  LigmaImage *image  = ligma_display_get_image (shell->display);
   gboolean   active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
-  if (active != gimp_image_get_quick_mask_state (image))
+  if (active != ligma_image_get_quick_mask_state (image))
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+      LigmaImageWindow *window = ligma_display_shell_get_window (shell);
 
       if (window)
         {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+          LigmaUIManager *manager = ligma_image_window_get_ui_manager (window);
 
-          gimp_ui_manager_toggle_action (manager,
+          ligma_ui_manager_toggle_action (manager,
                                          "quick-mask", "quick-mask-toggle",
                                          active);
         }
@@ -384,16 +384,16 @@ gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_navigation_button_press (GtkWidget        *widget,
+ligma_display_shell_navigation_button_press (GtkWidget        *widget,
                                             GdkEventButton   *bevent,
-                                            GimpDisplayShell *shell)
+                                            LigmaDisplayShell *shell)
 {
-  if (! gimp_display_get_image (shell->display))
+  if (! ligma_display_get_image (shell->display))
     return TRUE;
 
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      gimp_navigation_editor_popup (shell, widget,
+      ligma_navigation_editor_popup (shell, widget,
                                     (GdkEvent *) bevent,
                                     bevent->x, bevent->y);
     }
@@ -405,38 +405,38 @@ gimp_display_shell_navigation_button_press (GtkWidget        *widget,
 /*  private functions  */
 
 static void
-gimp_display_shell_vadjustment_changed (GtkAdjustment    *adjustment,
-                                        GimpDisplayShell *shell)
+ligma_display_shell_vadjustment_changed (GtkAdjustment    *adjustment,
+                                        LigmaDisplayShell *shell)
 {
   /*  If we are panning with mouse, scrollbars are to be ignored or
    *  they will cause jitter in motion
    */
-  if (shell->mod_action == GIMP_MODIFIER_ACTION_NONE)
-    gimp_display_shell_scroll (shell,
+  if (shell->mod_action == LIGMA_MODIFIER_ACTION_NONE)
+    ligma_display_shell_scroll (shell,
                                0,
                                gtk_adjustment_get_value (adjustment) -
                                shell->offset_y);
 }
 
 static void
-gimp_display_shell_hadjustment_changed (GtkAdjustment    *adjustment,
-                                        GimpDisplayShell *shell)
+ligma_display_shell_hadjustment_changed (GtkAdjustment    *adjustment,
+                                        LigmaDisplayShell *shell)
 {
   /* If we are panning with mouse, scrollbars are to be ignored or
    * they will cause jitter in motion
    */
-  if (shell->mod_action == GIMP_MODIFIER_ACTION_NONE)
-    gimp_display_shell_scroll (shell,
+  if (shell->mod_action == LIGMA_MODIFIER_ACTION_NONE)
+    ligma_display_shell_scroll (shell,
                                gtk_adjustment_get_value (adjustment) -
                                shell->offset_x,
                                0);
 }
 
 static gboolean
-gimp_display_shell_hscrollbar_change_value (GtkRange         *range,
+ligma_display_shell_hscrollbar_change_value (GtkRange         *range,
                                             GtkScrollType     scroll,
                                             gdouble           value,
-                                            GimpDisplayShell *shell)
+                                            LigmaDisplayShell *shell)
 {
   if (! shell->display)
     return TRUE;
@@ -448,7 +448,7 @@ gimp_display_shell_hscrollbar_change_value (GtkRange         *range,
 
   g_object_freeze_notify (G_OBJECT (shell->hsbdata));
 
-  gimp_display_shell_scrollbars_setup_horizontal (shell, value);
+  ligma_display_shell_scrollbars_setup_horizontal (shell, value);
 
   g_object_thaw_notify (G_OBJECT (shell->hsbdata)); /* emits "changed" */
 
@@ -456,10 +456,10 @@ gimp_display_shell_hscrollbar_change_value (GtkRange         *range,
 }
 
 static gboolean
-gimp_display_shell_vscrollbar_change_value (GtkRange         *range,
+ligma_display_shell_vscrollbar_change_value (GtkRange         *range,
                                             GtkScrollType     scroll,
                                             gdouble           value,
-                                            GimpDisplayShell *shell)
+                                            LigmaDisplayShell *shell)
 {
   if (! shell->display)
     return TRUE;
@@ -471,7 +471,7 @@ gimp_display_shell_vscrollbar_change_value (GtkRange         *range,
 
   g_object_freeze_notify (G_OBJECT (shell->vsbdata));
 
-  gimp_display_shell_scrollbars_setup_vertical (shell, value);
+  ligma_display_shell_scrollbars_setup_vertical (shell, value);
 
   g_object_thaw_notify (G_OBJECT (shell->vsbdata)); /* emits "changed" */
 
@@ -479,7 +479,7 @@ gimp_display_shell_vscrollbar_change_value (GtkRange         *range,
 }
 
 static void
-gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
+ligma_display_shell_canvas_draw_image (LigmaDisplayShell *shell,
                                       cairo_t          *cr)
 {
   cairo_rectangle_list_t *clip_rectangles;
@@ -490,14 +490,14 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   gdouble                 x1, y1;
   gdouble                 x2, y2;
 
-  gimp_display_shell_scale_get_image_unrotated_bounding_box (
+  ligma_display_shell_scale_get_image_unrotated_bounding_box (
     shell,
     &image_rect.x,
     &image_rect.y,
     &image_rect.width,
     &image_rect.height);
 
-  gimp_display_shell_scale_get_image_unrotated_bounds (
+  ligma_display_shell_scale_get_image_unrotated_bounds (
     shell,
     &canvas_rect.x,
     &canvas_rect.y,
@@ -507,7 +507,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   /*  first, draw the background
    */
 
-  gimp_display_shell_draw_background (shell, cr);
+  ligma_display_shell_draw_background (shell, cr);
 
 
   /*  then, draw the exposed part of the region that is inside the
@@ -525,7 +525,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
     {
       cairo_save (cr);
 
-      if (gimp_display_shell_get_padding_in_show_all (shell))
+      if (ligma_display_shell_get_padding_in_show_all (shell))
         {
           cairo_rectangle (cr,
                            canvas_rect.x,
@@ -535,7 +535,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
           cairo_clip (cr);
         }
 
-      gimp_display_shell_draw_checkerboard (shell, cr);
+      ligma_display_shell_draw_checkerboard (shell, cr);
 
       cairo_restore (cr);
     }
@@ -547,7 +547,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                    image_rect.height);
   cairo_clip (cr);
 
-  gimp_display_shell_rotate_bounds (shell,
+  ligma_display_shell_rotate_bounds (shell,
                                     image_rect.x,
                                     image_rect.y,
                                     image_rect.x + image_rect.width,
@@ -566,7 +566,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
       if (! shell->show_all)
         {
           cairo_save (cr);
-          gimp_display_shell_draw_checkerboard (shell, cr);
+          ligma_display_shell_draw_checkerboard (shell, cr);
           cairo_restore (cr);
         }
 
@@ -586,7 +586,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 
               if (gegl_rectangle_intersect (&rect, &rect, &rotated_image_rect))
                 {
-                  gimp_display_shell_draw_image (shell, cr,
+                  ligma_display_shell_draw_image (shell, cr,
                                                  rect.x,     rect.y,
                                                  rect.width, rect.height);
                 }
@@ -607,30 +607,30 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   if (shell->rotate_transform)
     cairo_transform (cr, shell->rotate_transform);
 
-  gimp_canvas_item_draw (shell->canvas_item, cr);
+  ligma_canvas_item_draw (shell->canvas_item, cr);
 
   cairo_restore (cr);
 
-  gimp_canvas_item_draw (shell->unrotated_item, cr);
+  ligma_canvas_item_draw (shell->unrotated_item, cr);
 
   /* restart (and recalculate) the selection boundaries */
-  gimp_display_shell_selection_draw (shell, cr);
-  gimp_display_shell_selection_restart (shell);
+  ligma_display_shell_selection_draw (shell, cr);
+  ligma_display_shell_selection_restart (shell);
 }
 
 static void
-gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
+ligma_display_shell_canvas_draw_drop_zone (LigmaDisplayShell *shell,
                                           cairo_t          *cr)
 {
   cairo_save (cr);
 
-  gimp_display_shell_draw_background (shell, cr);
+  ligma_display_shell_draw_background (shell, cr);
 
-  gimp_cairo_draw_drop_wilber (shell->canvas, cr, shell->blink);
+  ligma_cairo_draw_drop_wilber (shell->canvas, cr, shell->blink);
 
   cairo_restore (cr);
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
   {
     GtkWidget       *widget  = GTK_WIDGET (shell);
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
@@ -650,7 +650,7 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
                              "<small>Please test bugs against "
                              "latest git master branch\n"
                              "before reporting them.</small>"),
-                             GIMP_GIT_VERSION_ABBREV);
+                             LIGMA_GIT_VERSION_ABBREV);
     pango_layout_set_markup (layout, msg, -1);
     g_free (msg);
     pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
@@ -674,5 +674,5 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
     g_object_unref (layout);
   }
-#endif /* GIMP_UNSTABLE */
+#endif /* LIGMA_UNSTABLE */
 }

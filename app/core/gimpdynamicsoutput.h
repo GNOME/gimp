@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,54 +15,54 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_OUTPUT_H__
-#define __GIMP_DYNAMICS_OUTPUT_H__
+#ifndef __LIGMA_DYNAMICS_OUTPUT_H__
+#define __LIGMA_DYNAMICS_OUTPUT_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_DYNAMICS_OUTPUT            (gimp_dynamics_output_get_type ())
-#define GIMP_DYNAMICS_OUTPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DYNAMICS_OUTPUT, GimpDynamicsOutput))
-#define GIMP_DYNAMICS_OUTPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DYNAMICS_OUTPUT, GimpDynamicsOutputClass))
-#define GIMP_IS_DYNAMICS_OUTPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DYNAMICS_OUTPUT))
-#define GIMP_IS_DYNAMICS_OUTPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_OUTPUT))
-#define GIMP_DYNAMICS_OUTPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_OUTPUT, GimpDynamicsOutputClass))
+#define LIGMA_TYPE_DYNAMICS_OUTPUT            (ligma_dynamics_output_get_type ())
+#define LIGMA_DYNAMICS_OUTPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT, LigmaDynamicsOutput))
+#define LIGMA_DYNAMICS_OUTPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DYNAMICS_OUTPUT, LigmaDynamicsOutputClass))
+#define LIGMA_IS_DYNAMICS_OUTPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT))
+#define LIGMA_IS_DYNAMICS_OUTPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DYNAMICS_OUTPUT))
+#define LIGMA_DYNAMICS_OUTPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT, LigmaDynamicsOutputClass))
 
 
-typedef struct _GimpDynamicsOutputClass GimpDynamicsOutputClass;
+typedef struct _LigmaDynamicsOutputClass LigmaDynamicsOutputClass;
 
-struct _GimpDynamicsOutput
+struct _LigmaDynamicsOutput
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 };
 
-struct _GimpDynamicsOutputClass
+struct _LigmaDynamicsOutputClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType                gimp_dynamics_output_get_type (void) G_GNUC_CONST;
+GType                ligma_dynamics_output_get_type (void) G_GNUC_CONST;
 
-GimpDynamicsOutput * gimp_dynamics_output_new      (const gchar            *name,
-                                                    GimpDynamicsOutputType  type);
+LigmaDynamicsOutput * ligma_dynamics_output_new      (const gchar            *name,
+                                                    LigmaDynamicsOutputType  type);
 
-gboolean   gimp_dynamics_output_is_enabled         (GimpDynamicsOutput *output);
+gboolean   ligma_dynamics_output_is_enabled         (LigmaDynamicsOutput *output);
 
-gdouble    gimp_dynamics_output_get_linear_value   (GimpDynamicsOutput *output,
-                                                    const GimpCoords   *coords,
-                                                    GimpPaintOptions   *options,
+gdouble    ligma_dynamics_output_get_linear_value   (LigmaDynamicsOutput *output,
+                                                    const LigmaCoords   *coords,
+                                                    LigmaPaintOptions   *options,
                                                     gdouble             fade_point);
 
-gdouble    gimp_dynamics_output_get_angular_value  (GimpDynamicsOutput *output,
-                                                    const GimpCoords   *coords,
-                                                    GimpPaintOptions   *options,
+gdouble    ligma_dynamics_output_get_angular_value  (LigmaDynamicsOutput *output,
+                                                    const LigmaCoords   *coords,
+                                                    LigmaPaintOptions   *options,
                                                     gdouble             fade_point);
-gdouble    gimp_dynamics_output_get_aspect_value   (GimpDynamicsOutput *output,
-                                                    const GimpCoords   *coords,
-                                                    GimpPaintOptions   *options,
+gdouble    ligma_dynamics_output_get_aspect_value   (LigmaDynamicsOutput *output,
+                                                    const LigmaCoords   *coords,
+                                                    LigmaPaintOptions   *options,
                                                     gdouble             fade_point);
 
 
-#endif  /*  __GIMP_DYNAMICS_OUTPUT_H__  */
+#endif  /*  __LIGMA_DYNAMICS_OUTPUT_H__  */

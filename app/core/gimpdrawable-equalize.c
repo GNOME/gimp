@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,49 +22,49 @@
 
 #include "core-types.h"
 
-#include "gimpdrawable.h"
-#include "gimpdrawable-equalize.h"
-#include "gimpdrawable-histogram.h"
-#include "gimpdrawable-operation.h"
-#include "gimphistogram.h"
-#include "gimpimage.h"
-#include "gimpselection.h"
+#include "ligmadrawable.h"
+#include "ligmadrawable-equalize.h"
+#include "ligmadrawable-histogram.h"
+#include "ligmadrawable-operation.h"
+#include "ligmahistogram.h"
+#include "ligmaimage.h"
+#include "ligmaselection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_drawable_equalize (GimpDrawable *drawable,
+ligma_drawable_equalize (LigmaDrawable *drawable,
                         gboolean      mask_only)
 {
-  GimpImage     *image;
-  GimpChannel   *selection;
-  GimpHistogram *histogram;
+  LigmaImage     *image;
+  LigmaChannel   *selection;
+  LigmaHistogram *histogram;
   GeglNode      *equalize;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-  selection = gimp_image_get_mask (image);
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
+  selection = ligma_image_get_mask (image);
 
-  histogram = gimp_histogram_new (FALSE);
-  gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+  histogram = ligma_histogram_new (FALSE);
+  ligma_drawable_calculate_histogram (drawable, histogram, FALSE);
 
   equalize = gegl_node_new_child (NULL,
-                                  "operation", "gimp:equalize",
+                                  "operation", "ligma:equalize",
                                   "histogram", histogram,
                                   NULL);
 
   if (! mask_only)
-    gimp_selection_suspend (GIMP_SELECTION (selection));
+    ligma_selection_suspend (LIGMA_SELECTION (selection));
 
-  gimp_drawable_apply_operation (drawable, NULL,
+  ligma_drawable_apply_operation (drawable, NULL,
                                  C_("undo-type", "Equalize"),
                                  equalize);
 
   if (! mask_only)
-    gimp_selection_resume (GIMP_SELECTION (selection));
+    ligma_selection_resume (LIGMA_SELECTION (selection));
 
   g_object_unref (equalize);
   g_object_unref (histogram);

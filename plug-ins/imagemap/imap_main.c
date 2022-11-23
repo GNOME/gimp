@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -30,8 +30,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h> /* for keyboard values */
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "imap_about.h"
 #include "imap_circle.h"
@@ -53,7 +53,7 @@
 #include "imap_statusbar.h"
 #include "imap_string.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define MAX_ZOOM_FACTOR 8
@@ -66,12 +66,12 @@ typedef struct _ImapClass ImapClass;
 
 struct _Imap
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _ImapClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -80,26 +80,26 @@ struct _ImapClass
 
 GType                   imap_get_type         (void) G_GNUC_CONST;
 
-static GList          * imap_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * imap_create_procedure (GimpPlugIn           *plug_in,
+static GList          * imap_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * imap_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * imap_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * imap_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
-static gint             dialog                (GimpDrawable         *drawable);
+static gint             dialog                (LigmaDrawable         *drawable);
 static gint             zoom_in               (void);
 static gint             zoom_out              (void);
 
 
-G_DEFINE_TYPE (Imap, imap, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Imap, imap, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (IMAP_TYPE)
+LIGMA_MAIN (IMAP_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -109,7 +109,7 @@ static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
 FALSE, TRUE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
-static GimpDrawable *_drawable;
+static LigmaDrawable *_drawable;
 static GdkCursorType _cursor = GDK_TOP_LEFT_ARROW;
 static gboolean     _show_url = TRUE;
 static gchar       *_filename = NULL;
@@ -131,7 +131,7 @@ static int      run_flag = 0;
 static void
 imap_class_init (ImapClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = imap_query_procedures;
   plug_in_class->create_procedure = imap_create_procedure;
@@ -144,35 +144,35 @@ imap_init (Imap *imap)
 }
 
 static GList *
-imap_query_procedures (GimpPlugIn *plug_in)
+imap_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-imap_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+imap_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             imap_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Image Map..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Web");
+      ligma_procedure_set_menu_label (procedure, _("_Image Map..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Web");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create a clickable imagemap"),
                                         NULL,
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Maurits Rijk",
                                       "Maurits Rijk",
                                       "1998-2005");
@@ -181,13 +181,13 @@ imap_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-imap_run (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
+static LigmaValueArray *
+imap_run (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
+         LigmaImage            *image,
          gint                  n_drawables,
-         GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         LigmaDrawable        **drawables,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
   gegl_init (NULL, NULL);
@@ -196,12 +196,12 @@ imap_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -209,24 +209,24 @@ imap_run (GimpProcedure        *procedure,
       _drawable = drawables[0];
     }
 
-  _image_name   = gimp_image_get_name (image);
-  _image_width  = gimp_image_get_width (image);
-  _image_height = gimp_image_get_height (image);
+  _image_name   = ligma_image_get_name (image);
+  _image_width  = ligma_image_get_width (image);
+  _image_height = ligma_image_get_height (image);
 
-  _map_info.color = gimp_drawable_is_rgb (_drawable);
+  _map_info.color = ligma_drawable_is_rgb (_drawable);
 
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CALLING_ERROR,
+  if (run_mode != LIGMA_RUN_INTERACTIVE)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CALLING_ERROR,
                                              NULL);
 
   if (! dialog (_drawable))
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              NULL);
 
-  return gimp_procedure_new_return_values (procedure,
-                                           GIMP_PDB_SUCCESS,
+  return ligma_procedure_new_return_values (procedure,
+                                           LIGMA_PDB_SUCCESS,
                                            NULL);
 }
 
@@ -779,9 +779,9 @@ save_as_cern(gpointer param, OutputFunc_t output)
    gchar *next_token;
 
    write_cern_comment(param, output);
-   output(param, "-:Image map file created by GIMP Image Map plug-in\n");
+   output(param, "-:Image map file created by LIGMA Image Map plug-in\n");
    write_cern_comment(param, output);
-   output(param, "-:GIMP Image Map plug-in by Maurits Rijk\n");
+   output(param, "-:LIGMA Image Map plug-in by Maurits Rijk\n");
    write_cern_comment(param, output);
    output(param, "-:Please do not edit lines starting with \"#$\"\n");
    write_cern_comment(param, output);
@@ -817,8 +817,8 @@ save_as_csim(gpointer param, OutputFunc_t output)
           _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);
    output(param,
-          "<!-- #$-:Image map file created by GIMP Image Map plug-in -->\n");
-   output(param, "<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->\n");
+          "<!-- #$-:Image map file created by LIGMA Image Map plug-in -->\n");
+   output(param, "<!-- #$-:LIGMA Image Map plug-in by Maurits Rijk -->\n");
    output(param,
           "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
    output(param, "<!-- #$VERSION:2.3 -->\n");
@@ -842,8 +842,8 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    char *p;
    gchar *description;
 
-   output(param, "#$-:Image map file created by GIMP Image Map plug-in\n");
-   output(param, "#$-:GIMP Image Map plug-in by Maurits Rijk\n");
+   output(param, "#$-:Image map file created by LIGMA Image Map plug-in\n");
+   output(param, "#$-:LIGMA Image Map plug-in by Maurits Rijk\n");
    output(param, "#$-:Please do not edit lines starting with \"#$\"\n");
    output(param, "#$VERSION:2.3\n");
    output(param, "#$TITLE:%s\n", _map_info.title);
@@ -1170,7 +1170,7 @@ data_selected(Object_t *obj, gpointer data)
 void
 imap_help (void)
 {
-  gimp_standard_help_func ("plug-in-imagemap", NULL);
+  ligma_standard_help_func ("plug-in-imagemap", NULL);
 }
 
 void
@@ -1242,9 +1242,9 @@ do_send_to_back(void)
 }
 
 void
-do_use_gimp_guides_dialog(void)
+do_use_ligma_guides_dialog(void)
 {
-  command_execute (gimp_guides_command_new (_shapes, _drawable));
+  command_execute (ligma_guides_command_new (_shapes, _drawable));
 }
 
 void
@@ -1266,14 +1266,14 @@ factory_move_down(void)
 }
 
 static gint
-dialog (GimpDrawable *drawable)
+dialog (LigmaDrawable *drawable)
 {
    GtkWidget    *dlg;
    GtkWidget    *hbox;
    GtkWidget    *main_vbox;
    GtkWidget    *tools;
 
-   gimp_ui_init (PLUG_IN_BINARY);
+   ligma_ui_init (PLUG_IN_BINARY);
 
    set_arrow_func ();
 
@@ -1283,11 +1283,11 @@ dialog (GimpDrawable *drawable)
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
 
    main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
+   ligma_help_connect (dlg, ligma_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
    gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
-   gimp_window_set_transient (GTK_WINDOW (dlg));
+   ligma_window_set_transient (GTK_WINDOW (dlg));
 
    g_signal_connect (dlg, "delete-event",
                      G_CALLBACK (close_callback), NULL);

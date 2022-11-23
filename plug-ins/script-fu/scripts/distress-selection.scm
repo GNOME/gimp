@@ -31,22 +31,22 @@
 
   (let (
        (theImage inImage)
-       (theWidth (car (gimp-image-get-width inImage)))
-       (theHeight (car (gimp-image-get-height inImage)))
+       (theWidth (car (ligma-image-get-width inImage)))
+       (theHeight (car (ligma-image-get-height inImage)))
        (theLayer 0)
-       (theMode (car (gimp-image-get-base-type inImage)))
-       (prevLayers (gimp-image-get-selected-layers inImage))
+       (theMode (car (ligma-image-get-base-type inImage)))
+       (prevLayers (ligma-image-get-selected-layers inImage))
        )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
-    (gimp-image-undo-group-start theImage)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
+    (ligma-image-undo-group-start theImage)
 
     (if (= theMode GRAY)
       (set! theMode GRAYA-IMAGE)
       (set! theMode RGBA-IMAGE)
     )
-    (set! theLayer (car (gimp-layer-new theImage
+    (set! theLayer (car (ligma-layer-new theImage
                                         theWidth
                                         theHeight
                                         theMode
@@ -54,22 +54,22 @@
                                         100
                                         LAYER-MODE-NORMAL)))
 
-    (gimp-image-insert-layer theImage theLayer 0 0)
+    (ligma-image-insert-layer theImage theLayer 0 0)
 
-    (if (= FALSE (car (gimp-selection-is-empty theImage)))
-        (gimp-drawable-edit-fill theLayer FILL-BACKGROUND)
+    (if (= FALSE (car (ligma-selection-is-empty theImage)))
+        (ligma-drawable-edit-fill theLayer FILL-BACKGROUND)
     )
 
-    (gimp-selection-invert theImage)
+    (ligma-selection-invert theImage)
 
-    (if (= FALSE (car (gimp-selection-is-empty theImage)))
-        (gimp-drawable-edit-clear theLayer)
+    (if (= FALSE (car (ligma-selection-is-empty theImage)))
+        (ligma-drawable-edit-clear theLayer)
     )
 
-    (gimp-selection-invert theImage)
-    (gimp-selection-none inImage)
+    (ligma-selection-invert theImage)
+    (ligma-selection-none inImage)
 
-    (gimp-layer-scale theLayer
+    (ligma-layer-scale theLayer
                       (/ theWidth inGranu)
                       (/ theHeight inGranu)
                       TRUE)
@@ -82,21 +82,21 @@
 
     (plug-in-gauss-iir RUN-NONINTERACTIVE
            theImage theLayer inSmooth inSmoothH inSmoothV)
-    (gimp-layer-scale theLayer theWidth theHeight TRUE)
+    (ligma-layer-scale theLayer theWidth theHeight TRUE)
     (plug-in-threshold-alpha RUN-NONINTERACTIVE theImage theLayer inThreshold)
     (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
-    (gimp-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
-    (gimp-image-remove-layer theImage theLayer)
-    (if (and (= (car (gimp-item-is-channel inDrawable)) TRUE)
-             (= (car (gimp-item-is-layer-mask inDrawable)) FALSE))
-      (gimp-image-set-active-channel theImage inDrawable)
+    (ligma-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
+    (ligma-image-remove-layer theImage theLayer)
+    (if (and (= (car (ligma-item-is-channel inDrawable)) TRUE)
+             (= (car (ligma-item-is-layer-mask inDrawable)) FALSE))
+      (ligma-image-set-active-channel theImage inDrawable)
       )
-    (gimp-image-undo-group-end theImage)
+    (ligma-image-undo-group-end theImage)
 
-    (gimp-image-set-selected-layers theImage (car prevLayers) (cadr prevLayers))
+    (ligma-image-set-selected-layers theImage (car prevLayers) (cadr prevLayers))
 
-    (gimp-displays-flush)
-    (gimp-context-pop)
+    (ligma-displays-flush)
+    (ligma-context-pop)
   )
 )
 

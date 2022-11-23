@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,77 +20,77 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp-transform-utils.h"
+#include "core/ligma-transform-utils.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolgui.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolgui.h"
 
-#include "gimpgenerictransformtool.h"
-#include "gimptoolcontrol.h"
-#include "gimptransformgridoptions.h"
+#include "ligmagenerictransformtool.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatransformgridoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static gboolean   gimp_generic_transform_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
-                                                              GimpMatrix3           *transform);
-static void       gimp_generic_transform_tool_dialog         (GimpTransformGridTool *tg_tool);
-static void       gimp_generic_transform_tool_dialog_update  (GimpTransformGridTool *tg_tool);
-static void       gimp_generic_transform_tool_prepare        (GimpTransformGridTool *tg_tool);
+static gboolean   ligma_generic_transform_tool_info_to_matrix (LigmaTransformGridTool *tg_tool,
+                                                              LigmaMatrix3           *transform);
+static void       ligma_generic_transform_tool_dialog         (LigmaTransformGridTool *tg_tool);
+static void       ligma_generic_transform_tool_dialog_update  (LigmaTransformGridTool *tg_tool);
+static void       ligma_generic_transform_tool_prepare        (LigmaTransformGridTool *tg_tool);
 
 
-G_DEFINE_TYPE (GimpGenericTransformTool, gimp_generic_transform_tool,
-               GIMP_TYPE_TRANSFORM_GRID_TOOL)
+G_DEFINE_TYPE (LigmaGenericTransformTool, ligma_generic_transform_tool,
+               LIGMA_TYPE_TRANSFORM_GRID_TOOL)
 
-#define parent_class gimp_generic_transform_tool_parent_class
+#define parent_class ligma_generic_transform_tool_parent_class
 
 
 static void
-gimp_generic_transform_tool_class_init (GimpGenericTransformToolClass *klass)
+ligma_generic_transform_tool_class_init (LigmaGenericTransformToolClass *klass)
 {
-  GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
+  LigmaTransformGridToolClass *tg_class = LIGMA_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  tg_class->info_to_matrix = gimp_generic_transform_tool_info_to_matrix;
-  tg_class->dialog         = gimp_generic_transform_tool_dialog;
-  tg_class->dialog_update  = gimp_generic_transform_tool_dialog_update;
-  tg_class->prepare        = gimp_generic_transform_tool_prepare;
+  tg_class->info_to_matrix = ligma_generic_transform_tool_info_to_matrix;
+  tg_class->dialog         = ligma_generic_transform_tool_dialog;
+  tg_class->dialog_update  = ligma_generic_transform_tool_dialog_update;
+  tg_class->prepare        = ligma_generic_transform_tool_prepare;
 }
 
 static void
-gimp_generic_transform_tool_init (GimpGenericTransformTool *unified_tool)
+ligma_generic_transform_tool_init (LigmaGenericTransformTool *unified_tool)
 {
 }
 
 static gboolean
-gimp_generic_transform_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
-                                            GimpMatrix3           *transform)
+ligma_generic_transform_tool_info_to_matrix (LigmaTransformGridTool *tg_tool,
+                                            LigmaMatrix3           *transform)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
+  LigmaGenericTransformTool *generic = LIGMA_GENERIC_TRANSFORM_TOOL (tg_tool);
 
-  if (GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points)
-    GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points (generic);
+  if (LIGMA_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points)
+    LIGMA_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points (generic);
 
-  gimp_matrix3_identity (transform);
+  ligma_matrix3_identity (transform);
 
-  return gimp_transform_matrix_generic (transform,
+  return ligma_transform_matrix_generic (transform,
                                         generic->input_points,
                                         generic->output_points);
 }
 
 static void
-gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
+ligma_generic_transform_tool_dialog (LigmaTransformGridTool *tg_tool)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
+  LigmaGenericTransformTool *generic = LIGMA_GENERIC_TRANSFORM_TOOL (tg_tool);
   GtkWidget                *frame;
   GtkWidget                *vbox;
   GtkWidget                *grid;
@@ -98,8 +98,8 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
   GtkSizeGroup             *size_group;
   gint                      x, y;
 
-  frame = gimp_frame_new (_("Transform Matrix"));
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), frame,
+  frame = ligma_frame_new (_("Transform Matrix"));
+  gtk_box_pack_start (GTK_BOX (ligma_tool_gui_get_vbox (tg_tool->gui)), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -123,7 +123,7 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
           label = generic->matrix_labels[y][x] = gtk_label_new (" ");
           gtk_label_set_xalign (GTK_LABEL (label), 1.0);
           gtk_label_set_width_chars (GTK_LABEL (label), 8);
-          gimp_label_set_attributes (GTK_LABEL (label),
+          ligma_label_set_attributes (GTK_LABEL (label),
                                      PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                      -1);
           gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
@@ -132,7 +132,7 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
     }
 
   label = generic->invalid_label = gtk_label_new (_("Invalid transform"));
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_size_group_add_widget (size_group, label);
@@ -142,13 +142,13 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
+ligma_generic_transform_tool_dialog_update (LigmaTransformGridTool *tg_tool)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
-  GimpMatrix3               transform;
+  LigmaGenericTransformTool *generic = LIGMA_GENERIC_TRANSFORM_TOOL (tg_tool);
+  LigmaMatrix3               transform;
   gboolean                  transform_valid;
 
-  transform_valid = gimp_transform_grid_tool_info_to_matrix (tg_tool,
+  transform_valid = ligma_transform_grid_tool_info_to_matrix (tg_tool,
                                                              &transform);
 
   if (transform_valid)
@@ -178,15 +178,15 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_generic_transform_tool_prepare (GimpTransformGridTool *tg_tool)
+ligma_generic_transform_tool_prepare (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool        *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaGenericTransformTool *generic = LIGMA_GENERIC_TRANSFORM_TOOL (tg_tool);
 
-  generic->input_points[0] = (GimpVector2) {tr_tool->x1, tr_tool->y1};
-  generic->input_points[1] = (GimpVector2) {tr_tool->x2, tr_tool->y1};
-  generic->input_points[2] = (GimpVector2) {tr_tool->x1, tr_tool->y2};
-  generic->input_points[3] = (GimpVector2) {tr_tool->x2, tr_tool->y2};
+  generic->input_points[0] = (LigmaVector2) {tr_tool->x1, tr_tool->y1};
+  generic->input_points[1] = (LigmaVector2) {tr_tool->x2, tr_tool->y1};
+  generic->input_points[2] = (LigmaVector2) {tr_tool->x1, tr_tool->y2};
+  generic->input_points[3] = (LigmaVector2) {tr_tool->x2, tr_tool->y2};
 
   memcpy (generic->output_points, generic->input_points,
           sizeof (generic->input_points));

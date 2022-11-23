@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTOR_OPTIONS_H__
-#define __GIMP_VECTOR_OPTIONS_H__
+#ifndef __LIGMA_VECTOR_OPTIONS_H__
+#define __LIGMA_VECTOR_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_VECTOR_OPTIONS            (gimp_vector_options_get_type ())
-#define GIMP_VECTOR_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptions))
-#define GIMP_VECTOR_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptionsClass))
-#define GIMP_IS_VECTOR_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTOR_OPTIONS))
-#define GIMP_IS_VECTOR_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTOR_OPTIONS))
-#define GIMP_VECTOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTOR_OPTIONS, GimpVectorOptionsClass))
+#define LIGMA_TYPE_VECTOR_OPTIONS            (ligma_vector_options_get_type ())
+#define LIGMA_VECTOR_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VECTOR_OPTIONS, LigmaVectorOptions))
+#define LIGMA_VECTOR_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VECTOR_OPTIONS, LigmaVectorOptionsClass))
+#define LIGMA_IS_VECTOR_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_VECTOR_OPTIONS))
+#define LIGMA_IS_VECTOR_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VECTOR_OPTIONS))
+#define LIGMA_VECTOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VECTOR_OPTIONS, LigmaVectorOptionsClass))
 
 
-typedef struct _GimpVectorOptions    GimpVectorOptions;
-typedef struct _GimpToolOptionsClass GimpVectorOptionsClass;
+typedef struct _LigmaVectorOptions    LigmaVectorOptions;
+typedef struct _LigmaToolOptionsClass LigmaVectorOptionsClass;
 
-struct _GimpVectorOptions
+struct _LigmaVectorOptions
 {
-  GimpToolOptions  parent_instance;
+  LigmaToolOptions  parent_instance;
 
-  GimpVectorMode   edit_mode;
+  LigmaVectorMode   edit_mode;
   gboolean         polygonal;
 
   /*  options gui  */
@@ -47,9 +47,9 @@ struct _GimpVectorOptions
 };
 
 
-GType       gimp_vector_options_get_type (void) G_GNUC_CONST;
+GType       ligma_vector_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_vector_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_vector_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_VECTOR_OPTIONS_H__  */
+#endif  /*  __LIGMA_VECTOR_OPTIONS_H__  */

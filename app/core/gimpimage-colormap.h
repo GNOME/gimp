@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,46 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COLORMAP_H__
-#define __GIMP_IMAGE_COLORMAP_H__
+#ifndef __LIGMA_IMAGE_COLORMAP_H__
+#define __LIGMA_IMAGE_COLORMAP_H__
 
 
-#define GIMP_IMAGE_COLORMAP_SIZE 768
+#define LIGMA_IMAGE_COLORMAP_SIZE 768
 
 
-void           gimp_image_colormap_init            (GimpImage     *image);
-void           gimp_image_colormap_dispose         (GimpImage     *image);
-void           gimp_image_colormap_free            (GimpImage     *image);
+void           ligma_image_colormap_init            (LigmaImage     *image);
+void           ligma_image_colormap_dispose         (LigmaImage     *image);
+void           ligma_image_colormap_free            (LigmaImage     *image);
 
-void           gimp_image_colormap_update_formats  (GimpImage     *image);
+void           ligma_image_colormap_update_formats  (LigmaImage     *image);
 
-const Babl   * gimp_image_colormap_get_rgb_format  (GimpImage     *image);
-const Babl   * gimp_image_colormap_get_rgba_format (GimpImage     *image);
+const Babl   * ligma_image_colormap_get_rgb_format  (LigmaImage     *image);
+const Babl   * ligma_image_colormap_get_rgba_format (LigmaImage     *image);
 
-GimpPalette  * gimp_image_get_colormap_palette     (GimpImage     *image);
-void           gimp_image_set_colormap_palette     (GimpImage     *image,
-                                                    GimpPalette   *palette,
+LigmaPalette  * ligma_image_get_colormap_palette     (LigmaImage     *image);
+void           ligma_image_set_colormap_palette     (LigmaImage     *image,
+                                                    LigmaPalette   *palette,
                                                     gboolean       push_undo);
 
-guchar *       gimp_image_get_colormap             (GimpImage     *image);
-gint           gimp_image_get_colormap_size        (GimpImage     *image);
-void           gimp_image_set_colormap             (GimpImage     *image,
+guchar *       ligma_image_get_colormap             (LigmaImage     *image);
+gint           ligma_image_get_colormap_size        (LigmaImage     *image);
+void           ligma_image_set_colormap             (LigmaImage     *image,
                                                     const guchar  *colormap,
                                                     gint           n_colors,
                                                     gboolean       push_undo);
-void           gimp_image_unset_colormap           (GimpImage     *image,
+void           ligma_image_unset_colormap           (LigmaImage     *image,
                                                     gboolean       push_undo);
 
-void           gimp_image_get_colormap_entry       (GimpImage     *image,
+void           ligma_image_get_colormap_entry       (LigmaImage     *image,
                                                     gint           color_index,
-                                                    GimpRGB       *color);
-void           gimp_image_set_colormap_entry       (GimpImage     *image,
+                                                    LigmaRGB       *color);
+void           ligma_image_set_colormap_entry       (LigmaImage     *image,
                                                     gint           color_index,
-                                                    const GimpRGB *color,
+                                                    const LigmaRGB *color,
                                                     gboolean       push_undo);
 
-void           gimp_image_add_colormap_entry       (GimpImage     *image,
-                                                    const GimpRGB *color);
+void           ligma_image_add_colormap_entry       (LigmaImage     *image,
+                                                    const LigmaRGB *color);
 
 
-#endif /* __GIMP_IMAGE_COLORMAP_H__ */
+#endif /* __LIGMA_IMAGE_COLORMAP_H__ */

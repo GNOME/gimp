@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,31 +19,31 @@
 #define __TEXT_TOOL_COMMANDS_H__
 
 
-void   text_tool_cut_cmd_callback             (GimpAction *action,
+void   text_tool_cut_cmd_callback             (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_copy_cmd_callback            (GimpAction *action,
+void   text_tool_copy_cmd_callback            (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_paste_cmd_callback           (GimpAction *action,
+void   text_tool_paste_cmd_callback           (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_delete_cmd_callback          (GimpAction *action,
+void   text_tool_delete_cmd_callback          (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_load_cmd_callback            (GimpAction *action,
+void   text_tool_load_cmd_callback            (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_clear_cmd_callback           (GimpAction *action,
+void   text_tool_clear_cmd_callback           (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_text_to_path_cmd_callback    (GimpAction *action,
+void   text_tool_text_to_path_cmd_callback    (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_text_along_path_cmd_callback (GimpAction *action,
+void   text_tool_text_along_path_cmd_callback (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   text_tool_direction_cmd_callback       (GimpAction *action,
+void   text_tool_direction_cmd_callback       (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-mipmap.h
+ * ligmabrush-mipmap.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,21 +18,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_MIPMAP_H__
-#define __GIMP_BRUSH_MIPMAP_H__
+#ifndef __LIGMA_BRUSH_MIPMAP_H__
+#define __LIGMA_BRUSH_MIPMAP_H__
 
 
-void                gimp_brush_mipmap_clear       (GimpBrush *brush);
+void                ligma_brush_mipmap_clear       (LigmaBrush *brush);
 
-const GimpTempBuf * gimp_brush_mipmap_get_mask    (GimpBrush *brush,
+const LigmaTempBuf * ligma_brush_mipmap_get_mask    (LigmaBrush *brush,
                                                    gdouble   *scale_x,
                                                    gdouble   *scale_y);
 
-const GimpTempBuf * gimp_brush_mipmap_get_pixmap  (GimpBrush *brush,
+const LigmaTempBuf * ligma_brush_mipmap_get_pixmap  (LigmaBrush *brush,
                                                    gdouble   *scale_x,
                                                    gdouble   *scale_y);
 
-gsize               gimp_brush_mipmap_get_memsize (GimpBrush *brush);
+gsize               ligma_brush_mipmap_get_memsize (LigmaBrush *brush);
 
 
-#endif  /*  __GIMP_BRUSH_MIPMAP_H__  */
+#endif  /*  __LIGMA_BRUSH_MIPMAP_H__  */

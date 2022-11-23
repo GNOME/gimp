@@ -1,13 +1,13 @@
-# Xhosa translation of gimp-std-plugins
+# Xhosa translation of ligma-std-plugins
 # Copyright (C) 2005 Canonical Ltd.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Translation by Canonical Ltd <translations@canonical.com> with thanks to
 # Translation World CC in South Africa, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plug-ins - PART1\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-std-plug-ins - PART1\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2005-04-13 16:17+0200\n"
 "PO-Revision-Date: 2005-03-22 13:05+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"
@@ -19,15 +19,15 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:542
 #: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gflare/gflare.c:889
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/ligmaressionist/utils.c:124
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Akukho %s kwi-gimprc:\n"
+"Akukho %s kwi-ligmarc:\n"
 "Kufuneka wongeze ungeniso olufana\n"
 "(%s \"%s\")\n"
 "kweyakho i- %s fayili."
@@ -35,7 +35,7 @@ msgstr ""
 #: ../plug-ins/FractalExplorer/Dialogs.c:562
 #: ../plug-ins/FractalExplorer/Dialogs.c:1672
 #: ../plug-ins/imagemap/imap_about.c:39
-#: ../plug-ins/print/gimp_main_window.c:367
+#: ../plug-ins/print/ligma_main_window.c:367
 msgid "About"
 msgstr "Malunga"
 
@@ -648,7 +648,7 @@ msgstr "Ubunzulu obukhanyayo"
 #: ../plug-ins/Lighting/lighting_ui.c:447
 #: ../plug-ins/MapObject/mapobject_ui.c:694
 #: ../plug-ins/MapObject/mapobject_ui.c:1021
-#: ../plug-ins/print/gimp_main_window.c:472
+#: ../plug-ins/print/ligma_main_window.c:472
 msgid "Position"
 msgstr "Isikhundla"
 
@@ -886,7 +886,7 @@ msgid "Lighting Effects"
 msgstr "Iziphumo zokuKhanya"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1024
-#: ../plug-ins/gimpressionist/preview.c:181
+#: ../plug-ins/ligmaressionist/preview.c:181
 #: ../plug-ins/imagemap/imap_polygon.c:514
 msgid "_Update"
 msgstr "_Hlaziya"
@@ -1118,22 +1118,22 @@ msgid "Back:"
 msgstr "Emva:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1133
-#: ../plug-ins/print/gimp_main_window.c:531
+#: ../plug-ins/print/ligma_main_window.c:531
 msgid "Top:"
 msgstr "Phezulu:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1133
-#: ../plug-ins/print/gimp_main_window.c:572
+#: ../plug-ins/print/ligma_main_window.c:572
 msgid "Bottom:"
 msgstr "Ezantsi:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1134
-#: ../plug-ins/print/gimp_main_window.c:518
+#: ../plug-ins/print/ligma_main_window.c:518
 msgid "Left:"
 msgstr "eKhohlo:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1134
-#: ../plug-ins/print/gimp_main_window.c:544
+#: ../plug-ins/print/ligma_main_window.c:544
 msgid "Right:"
 msgstr "eKunene:"
 
@@ -1171,7 +1171,7 @@ msgid "Images for the Cap Faces"
 msgstr "IMifanekiso yoBuso booNobumba abaKhulu"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1262
-#: ../plug-ins/print/gimp_main_window.c:1116
+#: ../plug-ins/print/ligma_main_window.c:1116
 msgid "Size"
 msgstr "Isayizi"
 
@@ -1293,7 +1293,7 @@ msgstr "I-bit yobunzulu engaxhaswayo (%d)!"
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
-#: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
+#: ../plug-ins/ligmaressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
 #: ../plug-ins/jpeg/jpeg-load.c:707 ../plug-ins/sgi/sgi.c:368
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
@@ -1571,7 +1571,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Ubuncinane (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/CML_explorer.c:201 ../plug-ins/common/sunras.c:1589
-#: ../plug-ins/print/gimp_main_window.c:1665
+#: ../plug-ins/print/ligma_main_window.c:1665
 msgid "Standard"
 msgstr "Semgangathweni"
 
@@ -1653,8 +1653,8 @@ msgstr "Okungenamkhethe okuvela kwi-seed (okwabelwene ngako)"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
 #: ../plug-ins/common/decompose.c:142
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:162
+#: ../plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr "i-Hue"
 
@@ -1665,8 +1665,8 @@ msgstr "Ukugcwala"
 
 #: ../plug-ins/common/CML_explorer.c:303 ../plug-ins/common/CML_explorer.c:311
 #: ../plug-ins/common/decompose.c:144
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:141
+#: ../plug-ins/ligmaressionist/orientation.c:138
+#: ../plug-ins/ligmaressionist/size.c:141 ../plug-ins/metadata/interface.c:141
 msgid "Value"
 msgstr "Ixabiso"
 
@@ -2436,7 +2436,7 @@ msgid "_Psychobilly"
 msgstr "i-_Psychobilly"
 
 #: ../plug-ins/common/checkerboard.c:368 ../plug-ins/common/papertile.c:291
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "_Size:"
 msgstr "i_Sayizi:"
 
@@ -2517,7 +2517,7 @@ msgid "Hue:"
 msgstr "i-Hue:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/common/compose.c:155 ../plug-ins/print/gimp_color_window.c:364
+#: ../plug-ins/common/compose.c:155 ../plug-ins/print/ligma_color_window.c:364
 #: ../plug-ins/rcm/rcm_dialog.c:483
 msgid "Saturation:"
 msgstr "Ukugcwala:"
@@ -2531,17 +2531,17 @@ msgid "CMY"
 msgstr "i-CMY"
 
 #: ../plug-ins/common/compose.c:161 ../plug-ins/common/compose.c:168
-#: ../plug-ins/common/fp.c:229 ../plug-ins/print/gimp_color_window.c:307
+#: ../plug-ins/common/fp.c:229 ../plug-ins/print/ligma_color_window.c:307
 msgid "Cyan:"
 msgstr "Cyan:"
 
 #: ../plug-ins/common/compose.c:162 ../plug-ins/common/compose.c:169
-#: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:326
+#: ../plug-ins/common/fp.c:231 ../plug-ins/print/ligma_color_window.c:326
 msgid "Magenta:"
 msgstr "Magenta:"
 
 #: ../plug-ins/common/compose.c:163 ../plug-ins/common/compose.c:170
-#: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:345
+#: ../plug-ins/common/fp.c:230 ../plug-ins/print/ligma_color_window.c:345
 msgid "Yellow:"
 msgstr "Tyheli:"
 
@@ -2872,8 +2872,8 @@ msgstr "Ukugoba kweGophe"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1272
-#: ../plug-ins/gimpressionist/orientmap.c:573
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/ligmaressionist/orientmap.c:573
+#: ../plug-ins/ligmaressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Ukujonga phambi kokushicilela"
 
@@ -3416,7 +3416,7 @@ msgstr "uM_akha sangqa 2:"
 msgid "_Normalize"
 msgstr "_Yenza kuqheleke"
 
-#: ../plug-ins/common/dog.c:339 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:339 ../plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Phendulela"
 
@@ -3932,8 +3932,8 @@ msgid "_RLE"
 msgstr "i-_RLE"
 
 #: ../plug-ins/common/gbr.c:129 ../plug-ins/common/gbr.c:150
-msgid "GIMP brush"
-msgstr "Ibhrashi ye-GIMP"
+msgid "LIGMA brush"
+msgstr "Ibhrashi ye-LIGMA"
 
 #: ../plug-ins/common/gbr.c:366 ../plug-ins/common/gbr.c:378
 msgid "Unsupported brush format"
@@ -3941,8 +3941,8 @@ msgstr "Ulungiselelelo lwebhrashi olungaxhaswayo"
 
 #: ../plug-ins/common/gbr.c:389
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Impazamo kwi-GIMP eyifayili yebhrashi '%s'"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Impazamo kwi-LIGMA eyifayili yebhrashi '%s'"
 
 #: ../plug-ins/common/gbr.c:397
 #, c-format
@@ -3955,8 +3955,8 @@ msgid "Unnamed"
 msgstr "Ayinikwanga gama"
 
 #: ../plug-ins/common/gbr.c:574
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Iibhrashi ze-GIMP mhlawumbi ziyi-GRAYSCALE okanye ziyi-RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "Iibhrashi ze-LIGMA mhlawumbi ziyi-GRAYSCALE okanye ziyi-RGBA"
 
 #: ../plug-ins/common/gbr.c:658
 msgid "Save as Brush"
@@ -3968,7 +3968,7 @@ msgid "Spacing:"
 msgstr "Ukuvula izithuba:"
 
 #: ../plug-ins/common/gbr.c:694 ../plug-ins/common/gih.c:907
-#: ../plug-ins/common/pat.c:525 ../plug-ins/gimpressionist/presets.c:651
+#: ../plug-ins/common/pat.c:525 ../plug-ins/ligmaressionist/presets.c:651
 msgid "Description:"
 msgstr "Inkcazo:"
 
@@ -3981,15 +3981,15 @@ msgid "GEE-SLIME"
 msgstr "i-GEE-SLIME"
 
 #: ../plug-ins/common/gee.c:156 ../plug-ins/common/gee_zoom.c:189
-msgid "Thank you for choosing GIMP"
-msgstr "Enkosi ngokukhetha i-GIMP"
+msgid "Thank you for choosing LIGMA"
+msgstr "Enkosi ngokukhetha i-LIGMA"
 
 #: ../plug-ins/common/gee.c:164
 msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"A less-obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Udalo oluphelelwe lixesha kancinane luka-Adam D. Moss / adam@gimp.org / "
+"Udalo oluphelelwe lixesha kancinane luka-Adam D. Moss / adam@ligma.org / "
 "adam@foxbox.org / 1998-2000"
 
 #: ../plug-ins/common/gee_zoom.c:122
@@ -4002,10 +4002,10 @@ msgstr "i-GEE-ZOOM"
 
 #: ../plug-ins/common/gee_zoom.c:197
 msgid ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"An obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Udalo oluphelelwe lixesha luka- Adam D. Moss / adam@gimp.org / adam@foxbox."
+"Udalo oluphelelwe lixesha luka- Adam D. Moss / adam@ligma.org / adam@foxbox."
 "org / 1998-2000"
 
 #: ../plug-ins/common/gif.c:402 ../plug-ins/common/gifload.c:141
@@ -4163,8 +4163,8 @@ msgstr ""
 "ngokuchanekileyo."
 
 #: ../plug-ins/common/gih.c:205 ../plug-ins/common/gih.c:226
-msgid "GIMP brush (animated)"
-msgstr "Ibhrashi ye-GIMP (iyalinganiswa)"
+msgid "LIGMA brush (animated)"
+msgstr "Ibhrashi ye-LIGMA (iyalinganiswa)"
 
 #: ../plug-ins/common/gih.c:319
 #, c-format
@@ -4172,12 +4172,12 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "uMaleko %s awunaso isiqhagamshelanisi se-alpha, utsityiwe"
 
 #: ../plug-ins/common/gih.c:490
-msgid "Error in GIMP brush pipe file."
-msgstr "Impazamo kwifayili yebhrashi ye-GIMP."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Impazamo kwifayili yebhrashi ye-LIGMA."
 
 #: ../plug-ins/common/gih.c:556
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Ifayili yebhrashi ye-GIMP ibonakala ngathi yonakalisiwe."
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Ifayili yebhrashi ye-LIGMA ibonakala ngathi yonakalisiwe."
 
 #: ../plug-ins/common/gih.c:702
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -4316,8 +4316,8 @@ msgstr "Ukunqamleza"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:704 ../plug-ins/common/svg.c:764
-#: ../plug-ins/common/wmf.c:547 ../plug-ins/print/gimp_main_window.c:1006
-#: ../plug-ins/print/gimp_main_window.c:1213
+#: ../plug-ins/common/wmf.c:547 ../plug-ins/print/ligma_main_window.c:1006
+#: ../plug-ins/print/ligma_main_window.c:1213
 msgid "Width:"
 msgstr "Ububanzi:"
 
@@ -4344,8 +4344,8 @@ msgid "HTML table"
 msgstr "Uluhlu lwe-HTML"
 
 #: ../plug-ins/common/gtm.c:395
-msgid "GIMP Table Magic"
-msgstr "UbuGqi boluHlu lwe-GIMP"
+msgid "LIGMA Table Magic"
+msgstr "UbuGqi boluHlu lwe-LIGMA"
 
 #: ../plug-ins/common/gtm.c:420
 msgid "Warning"
@@ -5477,8 +5477,8 @@ msgid "_Paper Tile..."
 msgstr "iThayili ye_Phepha..."
 
 #: ../plug-ins/common/pat.c:106 ../plug-ins/common/pat.c:128
-msgid "GIMP pattern"
-msgstr "Ipateni ye-GIMP"
+msgid "LIGMA pattern"
+msgstr "Ipateni ye-LIGMA"
 
 #: ../plug-ins/common/pat.c:344
 #, c-format
@@ -5842,7 +5842,7 @@ msgstr "B_eka embinsini"
 
 #. Resolution
 #: ../plug-ins/common/postscript.c:2951 ../plug-ins/common/svg.c:885
-#: ../plug-ins/common/wmf.c:668 ../plug-ins/print/gimp_main_window.c:1101
+#: ../plug-ins/common/wmf.c:668 ../plug-ins/print/ligma_main_window.c:1101
 #, fuzzy
 msgid "Resolution:"
 msgstr "Ubungakanani"
@@ -5875,9 +5875,9 @@ msgid "Gray"
 msgstr "i-_Gray:"
 
 #: ../plug-ins/common/postscript.c:3006 ../plug-ins/common/xpm.c:464
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:151
-#: ../plug-ins/print/gimp_main_window.c:1413
+#: ../plug-ins/ligmaressionist/color.c:48
+#: ../plug-ins/ligmaressionist/general.c:151
+#: ../plug-ins/print/ligma_main_window.c:1413
 #, fuzzy
 msgid "Color"
 msgstr "Umbala:"
@@ -6940,7 +6940,7 @@ msgid "Use the background color"
 msgstr "_Sebenzisa umbala wokungasemva"
 
 #: ../plug-ins/common/spheredesigner.c:274
-#: ../plug-ins/gimpressionist/general.c:147
+#: ../plug-ins/ligmaressionist/general.c:147
 #, fuzzy
 msgid "Solid"
 msgstr "u-Sobel"
@@ -7056,7 +7056,7 @@ msgstr "Umsebenzi woMbala"
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2688
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:557
 #, fuzzy
 msgid "Scale:"
@@ -7281,8 +7281,8 @@ msgid "Render Scalable Vector Graphics"
 msgstr ""
 
 #: ../plug-ins/common/svg.c:770 ../plug-ins/common/wmf.c:553
-#: ../plug-ins/print/gimp_main_window.c:1023
-#: ../plug-ins/print/gimp_main_window.c:1226
+#: ../plug-ins/print/ligma_main_window.c:1023
+#: ../plug-ins/print/ligma_main_window.c:1226
 #, fuzzy
 msgid "Height:"
 msgstr "_Ubude:"
@@ -7313,7 +7313,7 @@ msgstr ""
 
 #: ../plug-ins/common/svg.c:917
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 
 #: ../plug-ins/common/svg.c:930
@@ -7397,7 +7397,7 @@ msgstr "Iziqhagamshelanisi"
 #: ../plug-ins/common/tiff.c:907
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
@@ -7549,7 +7549,7 @@ msgstr "i-Seed:"
 
 #: ../plug-ins/common/uniteditor.c:92
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 
@@ -7559,7 +7559,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:96
@@ -7998,7 +7998,7 @@ msgstr ""
 
 #.
 #. if (display_diff_map) {
-#. gimp_display_new(new_image_id);
+#. ligma_display_new(new_image_id);
 #. }
 #.
 #. make sure layer is visible
@@ -8185,7 +8185,7 @@ msgstr "Gudil_e"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1024 ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/common/wind.c:1024 ../plug-ins/ligmaressionist/orientmap.c:675
 #, fuzzy
 msgid "_Strength:"
 msgstr "uB_ude:"
@@ -8219,7 +8219,7 @@ msgstr ""
 msgid "StartPage failed"
 msgstr ""
 
-#: ../plug-ins/common/winprint.c:427 ../plug-ins/print/print-image-gimp.c:320
+#: ../plug-ins/common/winprint.c:427 ../plug-ins/print/print-image-ligma.c:320
 #, fuzzy
 msgid "Printing..."
 msgstr "Umfanekiso we-oli..."
@@ -8277,7 +8277,7 @@ msgid "X BitMap image"
 msgstr "Umfanekiso we-Bumpm_ap:"
 
 #: ../plug-ins/common/xbm.c:239
-msgid "Created with The GIMP"
+msgid "Created with The LIGMA"
 msgstr ""
 
 #: ../plug-ins/common/xbm.c:799
@@ -8379,7 +8379,7 @@ msgstr "Umfanekiso we-PNG"
 #: ../plug-ins/common/xpm.c:349
 #, fuzzy, c-format
 msgid "Error opening file '%s'"
-msgstr "Impazamo kwi-GIMP eyifayili yebhrashi '%s'"
+msgstr "Impazamo kwi-LIGMA eyifayili yebhrashi '%s'"
 
 #: ../plug-ins/common/xpm.c:354
 msgid "XPM file invalid"
@@ -8443,49 +8443,49 @@ msgstr "Cropping..."
 msgid "Nothing to crop."
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:126
 msgid "Procedure Browser"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:130
 #: ../plug-ins/dbbrowser/plugin-browser.c:546
 msgid "Search by _Name"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:131
 #, fuzzy
 msgid "Search by _Description"
 msgstr "Inkcazo:"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:213
 #: ../plug-ins/dbbrowser/plugin-browser.c:716
 #, fuzzy
 msgid "_Search:"
 msgstr "_Qaba"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:375
 #: ../plug-ins/dbbrowser/plugin-browser.c:395
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:399
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:410
 msgid "Searching - please wait"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:417
 msgid "1 Procedure"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:419
 #, c-format
 msgid "%d Procedures"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
+#: ../plug-ins/dbbrowser/ligmaprocbrowser.c:465
 #: ../plug-ins/dbbrowser/plugin-browser.c:514
 msgid "No matches"
 msgstr ""
@@ -8496,50 +8496,50 @@ msgstr ""
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:134 ../plug-ins/gflare/gflare.c:2677
+#: ../plug-ins/dbbrowser/ligmaprocview.c:134 ../plug-ins/gflare/gflare.c:2677
 #: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
 #: ../plug-ins/gflare/gflare.c:3750
 #, fuzzy
 msgid "Parameters"
 msgstr "ii_Paramitha"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:147
+#: ../plug-ins/dbbrowser/ligmaprocview.c:147
 msgid "Return Values"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:160
+#: ../plug-ins/dbbrowser/ligmaprocview.c:160
 msgid "Additional Information"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:199
+#: ../plug-ins/dbbrowser/ligmaprocview.c:199
 #, fuzzy
 msgid "Author:"
 msgstr "i-_Azimuth:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:210
+#: ../plug-ins/dbbrowser/ligmaprocview.c:210
 #, fuzzy
 msgid "Date:"
 msgstr "Mnyamana:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:221
+#: ../plug-ins/dbbrowser/ligmaprocview.c:221
 #, fuzzy
 msgid "Copyright:"
 msgstr "_Qaqambile:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
-msgid "Internal GIMP procedure"
+#: ../plug-ins/dbbrowser/ligmaprocview.c:320
+msgid "Internal LIGMA procedure"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Plug-In"
+#: ../plug-ins/dbbrowser/ligmaprocview.c:321
+msgid "LIGMA Plug-In"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
+#: ../plug-ins/dbbrowser/ligmaprocview.c:322
 #, fuzzy
-msgid "GIMP Extension"
-msgstr "Ipateni ye-GIMP"
+msgid "LIGMA Extension"
+msgstr "Ipateni ye-LIGMA"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:323
+#: ../plug-ins/dbbrowser/ligmaprocview.c:323
 #, fuzzy
 msgid "Temporary Procedure"
 msgstr "Yexeshana"
@@ -8698,8 +8698,8 @@ msgstr "I-seed engenamkhethe"
 msgid "Same"
 msgstr "_Qaba"
 
-#: ../plug-ins/flame/flame.c:742 ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/flame/flame.c:742 ../plug-ins/ligmaressionist/orientation.c:146
+#: ../plug-ins/ligmaressionist/size.c:149
 #, fuzzy
 msgid "Random"
 msgstr "I-seed engenamkhethe"
@@ -9013,7 +9013,7 @@ msgid "Max undo:"
 msgstr "Zoba iMaphu kwi:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 #, fuzzy
 msgid "Transparent"
 msgstr "_Ze"
@@ -9114,8 +9114,8 @@ msgid "Left"
 msgstr "eKhohlo:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1658
-#: ../plug-ins/gimpressionist/orientation.c:130
-#: ../plug-ins/print/gimp_main_window.c:508
+#: ../plug-ins/ligmaressionist/orientation.c:130
+#: ../plug-ins/print/ligma_main_window.c:508
 #, fuzzy
 msgid "Orientation:"
 msgstr "Uqhelaniso"
@@ -9365,7 +9365,7 @@ msgstr "Okunokukhethwa kuko kokuDalwa koluHlu"
 msgid "Second Flares Paint Options"
 msgstr "Ekunokukhethwa kuko kwiPakethe yesiHluzi eQhubele phambili"
 
-#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:115
+#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/ligmaressionist/general.c:115
 #, fuzzy
 msgid "_General"
 msgstr "_Umthumeli:"
@@ -9487,685 +9487,685 @@ msgstr ""
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/ligmaressionist/brush.c:230
 #, fuzzy
 msgid "Can only save drawables!"
 msgstr "Inokusebenza kuphela kokunokuzotywa kuko kwe-RGB."
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/ligmaressionist/brush.c:235
 #, fuzzy
 msgid "Save Brush"
 msgstr "Gcina njengeBhrashi"
 
-#: ../plug-ins/gimpressionist/brush.c:488
+#: ../plug-ins/ligmaressionist/brush.c:488
 msgid "_Brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:525
-#: ../plug-ins/print/gimp_color_window.c:407
+#: ../plug-ins/ligmaressionist/brush.c:525
+#: ../plug-ins/print/ligma_color_window.c:407
 msgid "Gamma:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:543
+#: ../plug-ins/ligmaressionist/brush.c:543
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:551
+#: ../plug-ins/ligmaressionist/brush.c:551
 #, fuzzy
 msgid "Select:"
 msgstr "uKhetho"
 
-#: ../plug-ins/gimpressionist/brush.c:580
+#: ../plug-ins/ligmaressionist/brush.c:580
 #, fuzzy
 msgid "Aspect ratio:"
 msgstr "ukugcwala"
 
-#: ../plug-ins/gimpressionist/brush.c:584
+#: ../plug-ins/ligmaressionist/brush.c:584
 msgid "Specifies the aspect ratio of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:593
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/ligmaressionist/brush.c:593
+#: ../plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:597
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/ligmaressionist/brush.c:597
+#: ../plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/ligmaressionist/color.c:42
 #, fuzzy
 msgid "Co_lor"
 msgstr "iMi_bala"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/ligmaressionist/color.c:54
 #, fuzzy
 msgid "C_enter of brush"
 msgstr "Umbindi we-SuperNova"
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/ligmaressionist/color.c:76
 #, fuzzy
 msgid "Color _noise:"
 msgstr "Inkqubo yoMbala"
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:131
+#: ../plug-ins/ligmaressionist/general.c:131
 #, fuzzy
 msgid "Keep original"
 msgstr "_Gcina okujikelezileyo kokuqala"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/ligmaressionist/general.c:132
 msgid "Preserve the original image as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:137
+#: ../plug-ins/ligmaressionist/general.c:137
 #, fuzzy
 msgid "From paper"
 msgstr "Ukusuka kuMbala"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/ligmaressionist/general.c:138
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/ligmaressionist/general.c:148
 msgid "Solid colored background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 #, fuzzy
 msgid "Paint edges"
 msgstr "Umphetho osekunene"
 
-#: ../plug-ins/gimpressionist/general.c:189
+#: ../plug-ins/ligmaressionist/general.c:189
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:269
+#: ../plug-ins/ligmaressionist/general.c:194 ../plug-ins/maze/maze_face.c:269
 msgid "Tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:198
+#: ../plug-ins/ligmaressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:203
+#: ../plug-ins/ligmaressionist/general.c:203
 #, fuzzy
 msgid "Drop Shadow"
 msgstr "Izithunzi:"
 
-#: ../plug-ins/gimpressionist/general.c:208
+#: ../plug-ins/ligmaressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Edge darken:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:225
+#: ../plug-ins/ligmaressionist/general.c:225
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:230
+#: ../plug-ins/ligmaressionist/general.c:230
 #, fuzzy
 msgid "Shadow darken:"
 msgstr "Izithunzi:"
 
-#: ../plug-ins/gimpressionist/general.c:234
+#: ../plug-ins/ligmaressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 #, fuzzy
 msgid "Shadow depth:"
 msgstr "uBukhu_lu bobunzulu:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 #, fuzzy
 msgid "Shadow blur:"
 msgstr "Izithunzi:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to blur the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 #, fuzzy
 msgid "Deviation threshold:"
 msgstr "Umda oL_uhlaza okwengca:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:79
+#: ../plug-ins/ligmaressionist/ligma.c:79
 #, fuzzy
-msgid "_GIMPressionist..."
+msgid "_LIGMAressionist..."
 msgstr "_Inkohliso..."
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/ligmaressionist/ligma.c:350
 #, fuzzy
 msgid "Painting..."
 msgstr "Umfanekiso we-oli..."
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:117
-msgid "The GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:117
+msgid "The LIGMAressionist"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:196
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:196
 #, fuzzy
-msgid "Gimpressionist"
+msgid "Ligmaressionist"
 msgstr "Ubulunga boshwankathelo lwe-JPEG:"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:200
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:200
 #, fuzzy
 msgid "A_bout"
 msgstr "Malunga"
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/ligmaressionist/orientation.c:74
 #, fuzzy
 msgid "Or_ientation"
 msgstr "Uqhelaniso"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/ligmaressionist/orientation.c:88
 #, fuzzy
 msgid "Directions:"
 msgstr "Icala"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 #, fuzzy
 msgid "Start angle:"
 msgstr "Qala _isikhombisi:"
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/ligmaressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/ligmaressionist/orientation.c:112
 #, fuzzy
 msgid "Angle span:"
 msgstr "i-_Engile:"
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/ligmaressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/ligmaressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/ligmaressionist/orientation.c:142
+#: ../plug-ins/ligmaressionist/size.c:145
 #, fuzzy
 msgid "Radius"
 msgstr "_uMakha-sangqa:"
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/ligmaressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:150
+#: ../plug-ins/ligmaressionist/size.c:153
 #, fuzzy
 msgid "Radial"
 msgstr "_Yomakha-sangqa"
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:158
+#: ../plug-ins/ligmaressionist/size.c:161
 #, fuzzy
 msgid "Flowing"
 msgstr "_Menyezelayo:"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:166
+#: ../plug-ins/ligmaressionist/size.c:169
 #, fuzzy
 msgid "Adaptive"
 msgstr "_Okunokwenziwa kufaneleke"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:174
+#: ../plug-ins/ligmaressionist/size.c:178
 #, fuzzy
 msgid "Manual"
 msgstr "Magenta"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/ligmaressionist/orientmap.c:508
 #, fuzzy
 msgid "Orientation Map Editor"
 msgstr "Uqhelaniso"
 
-#: ../plug-ins/gimpressionist/orientmap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:536
 msgid "Vectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:548
+#: ../plug-ins/ligmaressionist/orientmap.c:548
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:571
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/ligmaressionist/orientmap.c:571
+#: ../plug-ins/ligmaressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:593
+#: ../plug-ins/ligmaressionist/orientmap.c:593
 #, fuzzy
 msgid "Select previous vector"
 msgstr "Khetha umbala kavimba okhanyayo"
 
-#: ../plug-ins/gimpressionist/orientmap.c:599
+#: ../plug-ins/ligmaressionist/orientmap.c:599
 msgid "Select next vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:601
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/ligmaressionist/orientmap.c:601
+#: ../plug-ins/ligmaressionist/sizemap.c:472
 #, fuzzy
 msgid "A_dd"
 msgstr "Q_ubele phambili"
 
-#: ../plug-ins/gimpressionist/orientmap.c:605
+#: ../plug-ins/ligmaressionist/orientmap.c:605
 msgid "Add new vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:607
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/orientmap.c:607
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "_Kill"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 #, fuzzy
 msgid "Delete selected vector"
 msgstr "Cima i-Fractal ekhethiweyo ngoku"
 
-#: ../plug-ins/gimpressionist/orientmap.c:622
+#: ../plug-ins/ligmaressionist/orientmap.c:622
 msgid "Type"
 msgstr "Uhlobo"
 
-#: ../plug-ins/gimpressionist/orientmap.c:626
+#: ../plug-ins/ligmaressionist/orientmap.c:626
 #, fuzzy
 msgid "_Normal"
 msgstr "_Yenza kuqheleke"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Vorte_x"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/ligmaressionist/orientmap.c:628
 msgid "Vortex_2"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Vortex_3"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:635
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/ligmaressionist/orientmap.c:635
+#: ../plug-ins/ligmaressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/orientmap.c:653
 #, fuzzy
 msgid "A_ngle:"
 msgstr "i-_Engile:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:657
+#: ../plug-ins/ligmaressionist/orientmap.c:657
 #, fuzzy
 msgid "Change the angle of the selected vector"
 msgstr "Tshintsha ubunzulu besiqhagamshelanisi esibomvu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:664
+#: ../plug-ins/ligmaressionist/orientmap.c:664
 #, fuzzy
 msgid "Ang_le offset:"
 msgstr "_Okungamiselwanga komNgxuma:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:679
+#: ../plug-ins/ligmaressionist/orientmap.c:679
 #, fuzzy
 msgid "Change the strength of the selected vector"
 msgstr "Tshintsha ubunzulu besiqhagamshelanisi esibomvu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 #, fuzzy
 msgid "S_trength exp.:"
 msgstr "uB_ude:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:690
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/ligmaressionist/orientmap.c:690
+#: ../plug-ins/ligmaressionist/sizemap.c:519
 #, fuzzy
 msgid "Change the exponent of the strength"
 msgstr "Tshintsha ubunzulu besiqhagamshelanisi esiluhlaza okwengca"
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/ligmaressionist/paper.c:120
 #, fuzzy
 msgid "P_aper"
 msgstr "_Phezulu"
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/ligmaressionist/paper.c:159
 #, fuzzy
 msgid "O_verlay"
 msgstr "uK_ungenana:"
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/ligmaressionist/placement.c:49
 #, fuzzy
 msgid "Pl_acement"
 msgstr "_Ukususa ubeke kwenye indawo:"
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/ligmaressionist/placement.c:55
 #, fuzzy
 msgid "Placement"
 msgstr "_Ukususa ubeke kwenye indawo:"
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/ligmaressionist/placement.c:59
 #, fuzzy
 msgid "Randomly"
 msgstr "I-seed engenamkhethe"
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:91
+#: ../plug-ins/ligmaressionist/placement.c:91
 msgid "Stroke _density:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:95
+#: ../plug-ins/ligmaressionist/placement.c:95
 msgid "The relative density of the brush strokes"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 #, fuzzy
 msgid "Centerize"
 msgstr "Mbindini"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/ligmaressionist/ppmtool.c:632
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:625
+#: ../plug-ins/ligmaressionist/presets.c:625
 #, fuzzy
 msgid "Save Current"
 msgstr "Yangoku:"
 
-#: ../plug-ins/gimpressionist/presets.c:874
-msgid "The Gimpressionist Defaults"
+#: ../plug-ins/ligmaressionist/presets.c:874
+msgid "The Ligmaressionist Defaults"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:990
+#: ../plug-ins/ligmaressionist/presets.c:990
 #, fuzzy
 msgid "_Presets"
 msgstr "ii_Paramitha"
 
-#: ../plug-ins/gimpressionist/presets.c:1005
+#: ../plug-ins/ligmaressionist/presets.c:1005
 #, fuzzy
 msgid "Save current..."
 msgstr "Gcina ixesha lokudala"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/ligmaressionist/presets.c:1010
 #, fuzzy
 msgid "Save the current settings to the specified file"
 msgstr "Gcina amagophe kwifayili"
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1044
+#: ../plug-ins/ligmaressionist/presets.c:1044
 #, fuzzy
 msgid "Deletes the selected Preset"
 msgstr "Cima i-Fractal ekhethiweyo ngoku"
 
-#: ../plug-ins/gimpressionist/presets.c:1050
+#: ../plug-ins/ligmaressionist/presets.c:1050
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/ligmaressionist/preview.c:187
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:195
+#: ../plug-ins/ligmaressionist/preview.c:195
 msgid "Revert to the original image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/repaint.c:1160
+#: ../plug-ins/ligmaressionist/repaint.c:1160
 #, fuzzy
 msgid "Update"
 msgstr "_Hlaziya"
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/ligmaressionist/size.c:77
 #, fuzzy
 msgid "_Size"
 msgstr "i_Sayizi:"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/ligmaressionist/size.c:91
 #, fuzzy
 msgid "Sizes:"
 msgstr "i_Sayizi:"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 #, fuzzy
 msgid "The number of sizes of brushes to use"
 msgstr "Inani lee-pixels kumda woluhlu."
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/ligmaressionist/size.c:103
 #, fuzzy
 msgid "Minimum size:"
 msgstr "_Ixabiso eliNcinane:"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/ligmaressionist/size.c:115
 #, fuzzy
 msgid "Maximum size:"
 msgstr "uB_ukhulu bexabiso:"
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 #, fuzzy
 msgid "Size:"
 msgstr "i_Sayizi:"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/ligmaressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/ligmaressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/ligmaressionist/sizemap.c:411
 msgid "Smvectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/ligmaressionist/sizemap.c:421
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/ligmaressionist/sizemap.c:463
 msgid "Select previous smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/ligmaressionist/sizemap.c:470
 msgid "Select next smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/ligmaressionist/sizemap.c:477
 msgid "Add new smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/ligmaressionist/sizemap.c:484
 #, fuzzy
 msgid "Delete selected smvector"
 msgstr "Cima i-Fractal ekhethiweyo ngoku"
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 #, fuzzy
 msgid "Change the angle of the selected smvector"
 msgstr "Tshintsha ubunzulu besiqhagamshelanisi esibomvu"
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/ligmaressionist/sizemap.c:504
 #, fuzzy
 msgid "S_trength:"
 msgstr "uB_ude:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 #, fuzzy
 msgid "Change the strength of the selected smvector"
 msgstr "Tshintsha ubunzulu besiqhagamshelanisi esibomvu"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 #, fuzzy
 msgid "St_rength exp.:"
 msgstr "uB_ude:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/ligmaressionist/sizemap.c:531
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
 
 #: ../plug-ins/help/domain.c:177
-msgid "The GIMP help files are not installed."
+msgid "The LIGMA help files are not installed."
 msgstr ""
 
 #: ../plug-ins/help/domain.c:179
-msgid "There is a problem with the GIMP help files."
+msgid "There is a problem with the LIGMA help files."
 msgstr ""
 
 #: ../plug-ins/help/domain.c:184
@@ -10185,7 +10185,7 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/helpbrowser/dialog.c:162
-msgid "GIMP Help browser"
+msgid "LIGMA Help browser"
 msgstr ""
 
 #: ../plug-ins/helpbrowser/dialog.c:414
@@ -10424,7 +10424,7 @@ msgid "Clear"
 msgstr "Isilinda"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 #, fuzzy
 msgid "Create"
 msgstr "Mbindini"
@@ -10451,46 +10451,46 @@ msgid "Edit Object"
 msgstr "iMaphu yokuba ibe sisiSeko"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 #, fuzzy
 msgid "Al_ternate"
 msgstr "L_inganisa"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 #, fuzzy
 msgid "L_eft Border"
 msgstr "_Umda:"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 #, fuzzy
 msgid "_Right Border"
 msgstr "Umphetho osekunene"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 #, fuzzy
 msgid "_Upper Border"
 msgstr "_Umda:"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 #, fuzzy
 msgid "Lo_wer Border"
 msgstr "_Umda:"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr ""
 
@@ -11054,7 +11054,7 @@ msgstr "i-data ye-EXIF ayiyi kuhoywa."
 
 #: ../plug-ins/jpeg/jpeg-exif.c:89
 msgid ""
-"According to the EXIF data, this image is rotated. Would you like GIMP to "
+"According to the EXIF data, this image is rotated. Would you like LIGMA to "
 "rotate it into the standard orientation?"
 msgstr ""
 
@@ -11470,73 +11470,73 @@ msgstr "_Ucutho oluzenzekelayo loMaleko"
 msgid "Page Curl..."
 msgstr "iThayili yePhepha..."
 
-#: ../plug-ins/print/gimp_color_window.c:208
+#: ../plug-ins/print/ligma_color_window.c:208
 msgid "Print Color Adjust"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:268
+#: ../plug-ins/print/ligma_color_window.c:268
 #, fuzzy
 msgid "Brightness:"
 msgstr "_Ukuqaqamba:"
 
-#: ../plug-ins/print/gimp_color_window.c:276
+#: ../plug-ins/print/ligma_color_window.c:276
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:288
+#: ../plug-ins/print/ligma_color_window.c:288
 #, fuzzy
 msgid "Contrast:"
 msgstr "Imiqolo"
 
-#: ../plug-ins/print/gimp_color_window.c:296
+#: ../plug-ins/print/ligma_color_window.c:296
 msgid "Set the contrast of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:315
+#: ../plug-ins/print/ligma_color_window.c:315
 msgid "Adjust the cyan balance of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:334
+#: ../plug-ins/print/ligma_color_window.c:334
 msgid "Adjust the magenta balance of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:353
+#: ../plug-ins/print/ligma_color_window.c:353
 msgid "Adjust the yellow balance of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:372
+#: ../plug-ins/print/ligma_color_window.c:372
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:385
+#: ../plug-ins/print/ligma_color_window.c:385
 #, fuzzy
 msgid "Density:"
 msgstr "_Ubunzulu:"
 
-#: ../plug-ins/print/gimp_color_window.c:393
+#: ../plug-ins/print/ligma_color_window.c:393
 msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:415
+#: ../plug-ins/print/ligma_color_window.c:415
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
 
-#: ../plug-ins/print/gimp_color_window.c:432
+#: ../plug-ins/print/ligma_color_window.c:432
 #, fuzzy
 msgid "Dither Algorithm:"
 msgstr "i-_Algorithm:"
 
-#: ../plug-ins/print/gimp_color_window.c:440
+#: ../plug-ins/print/ligma_color_window.c:440
 msgid ""
 "Choose the dither algorithm to be used.\n"
 "Adaptive Hybrid usually produces the best all-around quality.\n"
@@ -11549,25 +11549,25 @@ msgstr ""
 #.
 #. * Create the main dialog
 #.
-#: ../plug-ins/print/gimp_main_window.c:359
+#: ../plug-ins/print/ligma_main_window.c:359
 #, c-format
 msgid "%s -- Print v%s"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:368
+#: ../plug-ins/print/ligma_main_window.c:368
 #, fuzzy
 msgid ""
 "Save\n"
 "Settings"
 msgstr "Imimiselo"
 
-#: ../plug-ins/print/gimp_main_window.c:369
+#: ../plug-ins/print/ligma_main_window.c:369
 msgid ""
 "Print and\n"
 "Save Settings"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:446
+#: ../plug-ins/print/ligma_main_window.c:446
 msgid ""
 "Position the image on the page.\n"
 "Click and drag with the primary button to position the image.\n"
@@ -11581,182 +11581,182 @@ msgid ""
 "to its original position."
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:489
+#: ../plug-ins/print/ligma_main_window.c:489
 #, fuzzy
 msgid "Auto"
 msgstr "Malunga"
 
-#: ../plug-ins/print/gimp_main_window.c:490
+#: ../plug-ins/print/ligma_main_window.c:490
 #, fuzzy
 msgid "Portrait"
 msgstr "Ichokoza"
 
-#: ../plug-ins/print/gimp_main_window.c:491
+#: ../plug-ins/print/ligma_main_window.c:491
 msgid "Landscape"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:492
+#: ../plug-ins/print/ligma_main_window.c:492
 msgid "Upside down"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:493
+#: ../plug-ins/print/ligma_main_window.c:493
 msgid "Seascape"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:503
+#: ../plug-ins/print/ligma_main_window.c:503
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:522
+#: ../plug-ins/print/ligma_main_window.c:522
 msgid "Distance from the left of the paper to the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:535
+#: ../plug-ins/print/ligma_main_window.c:535
 msgid "Distance from the top of the paper to the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:548
+#: ../plug-ins/print/ligma_main_window.c:548
 msgid "Distance from the left of the paper to the right of the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:558
+#: ../plug-ins/print/ligma_main_window.c:558
 #, fuzzy
 msgid "Right Border:"
 msgstr "Umphetho osekunene"
 
-#: ../plug-ins/print/gimp_main_window.c:562
+#: ../plug-ins/print/ligma_main_window.c:562
 msgid "Distance from the right of the paper to the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:576
+#: ../plug-ins/print/ligma_main_window.c:576
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:586
+#: ../plug-ins/print/ligma_main_window.c:586
 #, fuzzy
 msgid "Bottom Border:"
 msgstr "Umphetho osezantsi"
 
-#: ../plug-ins/print/gimp_main_window.c:590
+#: ../plug-ins/print/ligma_main_window.c:590
 msgid "Distance from the bottom of the paper to the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:603
+#: ../plug-ins/print/ligma_main_window.c:603
 #, fuzzy
 msgid "Center:"
 msgstr "Mbindini"
 
-#: ../plug-ins/print/gimp_main_window.c:607
+#: ../plug-ins/print/ligma_main_window.c:607
 #, fuzzy
 msgid "Vertically"
 msgstr "Nkqo"
 
-#: ../plug-ins/print/gimp_main_window.c:612
+#: ../plug-ins/print/ligma_main_window.c:612
 msgid "Center the image vertically on the paper"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:618
+#: ../plug-ins/print/ligma_main_window.c:618
 msgid "Both"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:623
+#: ../plug-ins/print/ligma_main_window.c:623
 #, fuzzy
 msgid "Center the image on the paper"
 msgstr "Tshintshela umfanekiso kwi-RGB kuqala!"
 
-#: ../plug-ins/print/gimp_main_window.c:630
+#: ../plug-ins/print/ligma_main_window.c:630
 #, fuzzy
 msgid "Horizontally"
 msgstr "Tyaba"
 
-#: ../plug-ins/print/gimp_main_window.c:635
+#: ../plug-ins/print/ligma_main_window.c:635
 msgid "Center the image horizontally on the paper"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:651
+#: ../plug-ins/print/ligma_main_window.c:651
 msgid "Setup Printer"
 msgstr ""
 
 #.
 #. * Printer driver option menu.
 #.
-#: ../plug-ins/print/gimp_main_window.c:680
+#: ../plug-ins/print/ligma_main_window.c:680
 msgid "Printer Model:"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:692
+#: ../plug-ins/print/ligma_main_window.c:692
 msgid "Select your printer model"
 msgstr ""
 
 #.
 #. * PPD file.
 #.
-#: ../plug-ins/print/gimp_main_window.c:731
+#: ../plug-ins/print/ligma_main_window.c:731
 msgid "PPD File:"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:747
+#: ../plug-ins/print/ligma_main_window.c:747
 msgid "Enter the PPD filename for your printer"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:750
+#: ../plug-ins/print/ligma_main_window.c:750
 msgid "Browse"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:756
+#: ../plug-ins/print/ligma_main_window.c:756
 msgid "Choose the PPD file for your printer"
 msgstr ""
 
 #.
 #. * Print command.
 #.
-#: ../plug-ins/print/gimp_main_window.c:766
+#: ../plug-ins/print/ligma_main_window.c:766
 #, fuzzy
 msgid "Command:"
 msgstr "iNq_aku:"
 
-#: ../plug-ins/print/gimp_main_window.c:779
+#: ../plug-ins/print/ligma_main_window.c:779
 msgid ""
 "Enter the command to print to your printer. Note: Please do not remove the `-"
 "l' or `-oraw' from the command string, or printing will probably fail!"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:789
+#: ../plug-ins/print/ligma_main_window.c:789
 msgid "Choose PPD File"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:816
+#: ../plug-ins/print/ligma_main_window.c:816
 msgid "Define New Printer"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:839
-#: ../plug-ins/print/gimp_main_window.c:934
+#: ../plug-ins/print/ligma_main_window.c:839
+#: ../plug-ins/print/ligma_main_window.c:934
 #, fuzzy
 msgid "Printer name:"
 msgstr "_Igama elinesimaphambili:"
 
-#: ../plug-ins/print/gimp_main_window.c:843
+#: ../plug-ins/print/ligma_main_window.c:843
 msgid "Enter the name you wish to give this logical printer"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:856
-msgid "About Gimp-Print "
+#: ../plug-ins/print/ligma_main_window.c:856
+msgid "About Ligma-Print "
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:869
-msgid "Gimp-Print Version "
+#: ../plug-ins/print/ligma_main_window.c:869
+msgid "Ligma-Print Version "
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:869
+#: ../plug-ins/print/ligma_main_window.c:869
 msgid ""
 "\n"
 "\n"
 "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"and the rest of the Gimp-Print Development Team.\n"
+"and the rest of the Ligma-Print Development Team.\n"
 "\n"
-"Please visit our web site at http://gimp-print.sourceforge.net.\n"
+"Please visit our web site at http://ligma-print.sourceforge.net.\n"
 "\n"
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -11773,30 +11773,30 @@ msgid ""
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:917
+#: ../plug-ins/print/ligma_main_window.c:917
 #, fuzzy
 msgid "Printer Settings"
 msgstr "Imimiselo yeziBane"
 
-#: ../plug-ins/print/gimp_main_window.c:930
+#: ../plug-ins/print/ligma_main_window.c:930
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:940
+#: ../plug-ins/print/ligma_main_window.c:940
 msgid "Printer model:"
 msgstr ""
 
 #.
 #. * Setup printer button
 #.
-#: ../plug-ins/print/gimp_main_window.c:951
+#: ../plug-ins/print/ligma_main_window.c:951
 #, fuzzy
 msgid "Setup printer..."
 msgstr "Iphepha loshicilelo lwamaphepha-ndaba..."
 
-#: ../plug-ins/print/gimp_main_window.c:953
+#: ../plug-ins/print/ligma_main_window.c:953
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11805,237 +11805,237 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: ../plug-ins/print/gimp_main_window.c:968
+#: ../plug-ins/print/ligma_main_window.c:968
 #, fuzzy
 msgid "New printer..."
 msgstr "Iphepha loshicilelo lwamaphepha-ndaba..."
 
-#: ../plug-ins/print/gimp_main_window.c:970
+#: ../plug-ins/print/ligma_main_window.c:970
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:991
+#: ../plug-ins/print/ligma_main_window.c:991
 msgid "Size of paper that you wish to print to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:994
+#: ../plug-ins/print/ligma_main_window.c:994
 #, fuzzy
 msgid "Media size:"
 msgstr "_Isayizi yeMaski:"
 
-#: ../plug-ins/print/gimp_main_window.c:1003
+#: ../plug-ins/print/ligma_main_window.c:1003
 #, fuzzy
 msgid "Dimensions:"
 msgstr "Umlinganiso:"
 
-#: ../plug-ins/print/gimp_main_window.c:1017
+#: ../plug-ins/print/ligma_main_window.c:1017
 msgid "Width of the paper that you wish to print to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1034
+#: ../plug-ins/print/ligma_main_window.c:1034
 msgid "Height of the paper that you wish to print to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1050
+#: ../plug-ins/print/ligma_main_window.c:1050
 msgid "Type of media you're printing to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1053
+#: ../plug-ins/print/ligma_main_window.c:1053
 #, fuzzy
 msgid "Media type:"
 msgstr "_uHlobo lweMaphu:"
 
-#: ../plug-ins/print/gimp_main_window.c:1066
+#: ../plug-ins/print/ligma_main_window.c:1066
 msgid "Source (input slot) of media you're printing to"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1069
+#: ../plug-ins/print/ligma_main_window.c:1069
 msgid "Media source:"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1082
+#: ../plug-ins/print/ligma_main_window.c:1082
 msgid "Type of ink in the printer"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1085
+#: ../plug-ins/print/ligma_main_window.c:1085
 #, fuzzy
 msgid "Ink type:"
 msgstr "_uHlobo lweMaphu:"
 
-#: ../plug-ins/print/gimp_main_window.c:1098
+#: ../plug-ins/print/ligma_main_window.c:1098
 msgid "Resolution and quality of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1135
+#: ../plug-ins/print/ligma_main_window.c:1135
 #, fuzzy
 msgid "Scaling:"
 msgstr "Ukuvula izithuba:"
 
-#: ../plug-ins/print/gimp_main_window.c:1141
+#: ../plug-ins/print/ligma_main_window.c:1141
 #, fuzzy
 msgid "Set the scale (size) of the image"
 msgstr "Umqolo wokuqala womfanekiso"
 
-#: ../plug-ins/print/gimp_main_window.c:1166
+#: ../plug-ins/print/ligma_main_window.c:1166
 #, fuzzy
 msgid "Scale by:"
 msgstr "Umlinganiselo ka-X:"
 
-#: ../plug-ins/print/gimp_main_window.c:1171
+#: ../plug-ins/print/ligma_main_window.c:1171
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1176
+#: ../plug-ins/print/ligma_main_window.c:1176
 #, fuzzy
 msgid "Percent"
 msgstr "iPesenti _mhlophe:"
 
-#: ../plug-ins/print/gimp_main_window.c:1183
+#: ../plug-ins/print/ligma_main_window.c:1183
 msgid "Scale the print to the size of the page"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1189
+#: ../plug-ins/print/ligma_main_window.c:1189
 msgid "PPI"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1195
+#: ../plug-ins/print/ligma_main_window.c:1195
 msgid "Scale the print to the number of dots per inch"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1217
+#: ../plug-ins/print/ligma_main_window.c:1217
 msgid "Set the width of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1230
+#: ../plug-ins/print/ligma_main_window.c:1230
 msgid "Set the height of the print"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1251
+#: ../plug-ins/print/ligma_main_window.c:1251
 msgid "Units:"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1256
+#: ../plug-ins/print/ligma_main_window.c:1256
 msgid "Select the base unit of measurement for printing"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1259
+#: ../plug-ins/print/ligma_main_window.c:1259
 msgid "Inch"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1266
+#: ../plug-ins/print/ligma_main_window.c:1266
 msgid "Set the base unit of measurement to inches"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1272
+#: ../plug-ins/print/ligma_main_window.c:1272
 msgid "cm"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1278
+#: ../plug-ins/print/ligma_main_window.c:1278
 msgid "Set the base unit of measurement to centimetres"
 msgstr ""
 
 #.
 #. * The "image size" button
 #.
-#: ../plug-ins/print/gimp_main_window.c:1288
+#: ../plug-ins/print/ligma_main_window.c:1288
 msgid ""
 "Use Original\n"
 "Image Size"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1294
+#: ../plug-ins/print/ligma_main_window.c:1294
 msgid "Set the print size to the size of the image"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1317
+#: ../plug-ins/print/ligma_main_window.c:1317
 msgid "Image / Output Settings"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1331
+#: ../plug-ins/print/ligma_main_window.c:1331
 #, fuzzy
 msgid "Image type:"
 msgstr "_uHlobo lweMaphu:"
 
-#: ../plug-ins/print/gimp_main_window.c:1339
+#: ../plug-ins/print/ligma_main_window.c:1339
 msgid "Optimize the output for the type of image being printed"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1343
+#: ../plug-ins/print/ligma_main_window.c:1343
 #, fuzzy
 msgid "Line art"
 msgstr "i-Linear"
 
-#: ../plug-ins/print/gimp_main_window.c:1350
+#: ../plug-ins/print/ligma_main_window.c:1350
 msgid "Fastest and brightest color for text and line art"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1357
+#: ../plug-ins/print/ligma_main_window.c:1357
 #, fuzzy
 msgid "Solid colors"
 msgstr "Akukho mibala"
 
-#: ../plug-ins/print/gimp_main_window.c:1364
+#: ../plug-ins/print/ligma_main_window.c:1364
 msgid "Best for images dominated by regions of solid color"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1372
+#: ../plug-ins/print/ligma_main_window.c:1372
 #, fuzzy
 msgid "Photograph"
 msgstr "Isikhutshelo esenziwe ngokufota"
 
-#: ../plug-ins/print/gimp_main_window.c:1380
+#: ../plug-ins/print/ligma_main_window.c:1380
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1403
+#: ../plug-ins/print/ligma_main_window.c:1403
 #, fuzzy
 msgid "Output type:"
 msgstr "uL_wazi olukhutshiweyo lwe-LPI:"
 
-#: ../plug-ins/print/gimp_main_window.c:1410
+#: ../plug-ins/print/ligma_main_window.c:1410
 msgid "Select the desired output type"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1419
+#: ../plug-ins/print/ligma_main_window.c:1419
 #, fuzzy
 msgid "Color output"
 msgstr "Inkqubo yoMbala"
 
-#: ../plug-ins/print/gimp_main_window.c:1424
+#: ../plug-ins/print/ligma_main_window.c:1424
 msgid "Grayscale"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1431
+#: ../plug-ins/print/ligma_main_window.c:1431
 msgid "Print in shades of gray using black ink"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1438
+#: ../plug-ins/print/ligma_main_window.c:1438
 msgid "Black and white"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1445
+#: ../plug-ins/print/ligma_main_window.c:1445
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr ""
 
 #.
 #. *  Color adjust button
 #.
-#: ../plug-ins/print/gimp_main_window.c:1456
+#: ../plug-ins/print/ligma_main_window.c:1456
 msgid "Adjust output..."
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1463
+#: ../plug-ins/print/ligma_main_window.c:1463
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 
-#: ../plug-ins/print/gimp_main_window.c:1497
+#: ../plug-ins/print/ligma_main_window.c:1497
 msgid "Print to File"
 msgstr ""
 
@@ -12380,7 +12380,7 @@ msgid "No data captured"
 msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:472 ../plug-ins/xjt/xjt.c:490
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:711

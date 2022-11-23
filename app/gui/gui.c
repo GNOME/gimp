@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,51 +22,51 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
-#include "libgimpwidgets/gimpwidgets-private.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
+#include "libligmawidgets/ligmawidgets-private.h"
 
 #include "gui-types.h"
-#include "gimpapp.h"
+#include "ligmaapp.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatoolinfo.h"
 
-#include "plug-in/gimpenvirontable.h"
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/ligmaenvirontable.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpstatusbar.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplay-foreach.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmastatusbar.h"
 
-#include "tools/gimp-tools.h"
-#include "tools/gimptool.h"
+#include "tools/ligma-tools.h"
+#include "tools/ligmatool.h"
 #include "tools/tool_manager.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpaction-history.h"
-#include "widgets/gimpclipboard.h"
-#include "widgets/gimpcolorselectorpalette.h"
-#include "widgets/gimpcontrollers.h"
-#include "widgets/gimpdevices.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdnd.h"
-#include "widgets/gimprender.h"
-#include "widgets/gimphelp.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimplanguagestore-parser.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaaction-history.h"
+#include "widgets/ligmaclipboard.h"
+#include "widgets/ligmacolorselectorpalette.h"
+#include "widgets/ligmacontrollers.h"
+#include "widgets/ligmadevices.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadnd.h"
+#include "widgets/ligmarender.h"
+#include "widgets/ligmahelp.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamenufactory.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmalanguagestore-parser.h"
 
 #include "actions/actions.h"
 #include "actions/windows-commands.h"
@@ -75,7 +75,7 @@
 
 #include "dialogs/dialogs.h"
 
-#include "gimpuiconfigurer.h"
+#include "ligmauiconfigurer.h"
 #include "gui.h"
 #include "gui-unique.h"
 #include "gui-vtable.h"
@@ -101,7 +101,7 @@
 
 #endif /* GDK_WINDOWING_QUARTZ */
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
@@ -109,43 +109,43 @@
 static gchar    * gui_sanity_check              (void);
 static void       gui_help_func                 (const gchar        *help_id,
                                                  gpointer            help_data);
-static gboolean   gui_get_background_func       (GimpRGB            *color);
-static gboolean   gui_get_foreground_func       (GimpRGB            *color);
+static gboolean   gui_get_background_func       (LigmaRGB            *color);
+static gboolean   gui_get_foreground_func       (LigmaRGB            *color);
 
-static void       gui_initialize_after_callback (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
+static void       gui_initialize_after_callback (Ligma               *ligma,
+                                                 LigmaInitStatusFunc  callback);
 
-static void       gui_restore_callback          (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
-static void       gui_restore_after_callback    (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
+static void       gui_restore_callback          (Ligma               *ligma,
+                                                 LigmaInitStatusFunc  callback);
+static void       gui_restore_after_callback    (Ligma               *ligma,
+                                                 LigmaInitStatusFunc  callback);
 
-static gboolean   gui_exit_callback             (Gimp               *gimp,
+static gboolean   gui_exit_callback             (Ligma               *ligma,
                                                  gboolean            force);
-static gboolean   gui_exit_after_callback       (Gimp               *gimp,
+static gboolean   gui_exit_after_callback       (Ligma               *ligma,
                                                  gboolean            force);
 
-static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
+static void       gui_show_help_button_notify   (LigmaGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
-                                                 Gimp               *gimp);
-static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
+                                                 Ligma               *ligma);
+static void       gui_user_manual_notify        (LigmaGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
-                                                 Gimp               *gimp);
-static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
+                                                 Ligma               *ligma);
+static void       gui_single_window_mode_notify (LigmaGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
-                                                 GimpUIConfigurer   *ui_configurer);
+                                                 LigmaUIConfigurer   *ui_configurer);
 
-static void       gui_clipboard_changed         (Gimp               *gimp);
+static void       gui_clipboard_changed         (Ligma               *ligma);
 
-static void       gui_menu_show_tooltip         (GimpUIManager      *manager,
+static void       gui_menu_show_tooltip         (LigmaUIManager      *manager,
                                                  const gchar        *tooltip,
-                                                 Gimp               *gimp);
-static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
-                                                 Gimp               *gimp);
+                                                 Ligma               *ligma);
+static void       gui_menu_hide_tooltip         (LigmaUIManager      *manager,
+                                                 Ligma               *ligma);
 
-static void       gui_display_changed           (GimpContext        *context,
-                                                 GimpDisplay        *display,
-                                                 Gimp               *gimp);
+static void       gui_display_changed           (LigmaContext        *context,
+                                                 LigmaDisplay        *display,
+                                                 Ligma               *ligma);
 
 static void       gui_compare_accelerator       (gpointer            data,
                                                  const gchar        *accel_path,
@@ -162,9 +162,9 @@ static gboolean   gui_check_action_exists       (const gchar        *accel_path)
 
 /*  private variables  */
 
-static Gimp             *the_gui_gimp     = NULL;
-static GimpUIManager    *image_ui_manager = NULL;
-static GimpUIConfigurer *ui_configurer    = NULL;
+static Ligma             *the_gui_ligma     = NULL;
+static LigmaUIManager    *image_ui_manager = NULL;
+static LigmaUIConfigurer *ui_configurer    = NULL;
 static GdkMonitor       *initial_monitor  = NULL;
 
 
@@ -177,8 +177,8 @@ gui_libs_init (GOptionContext *context)
 
   g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
-  /*  make the GimpDisplay type known by name early, needed for the PDB */
-  g_type_class_ref (GIMP_TYPE_DISPLAY);
+  /*  make the LigmaDisplay type known by name early, needed for the PDB */
+  g_type_class_ref (LIGMA_TYPE_DISPLAY);
 }
 
 void
@@ -189,7 +189,7 @@ gui_abort (const gchar *abort_message)
 
   g_return_if_fail (abort_message != NULL);
 
-  dialog = gimp_dialog_new (_("GIMP Message"), "gimp-abort",
+  dialog = ligma_dialog_new (_("LIGMA Message"), "ligma-abort",
                             NULL, GTK_DIALOG_MODAL, NULL, NULL,
 
                             _("_OK"), GTK_RESPONSE_OK,
@@ -198,49 +198,49 @@ gui_abort (const gchar *abort_message)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "icon-name",    GIMP_ICON_WILBER_EEK,
+  box = g_object_new (LIGMA_TYPE_MESSAGE_BOX,
+                      "icon-name",    LIGMA_ICON_WILBER_EEK,
                       "border-width", 12,
                       NULL);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", abort_message);
+  ligma_message_box_set_text (LIGMA_MESSAGE_BOX (box), "%s", abort_message);
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
-  gimp_dialog_run (GIMP_DIALOG (dialog));
+  ligma_dialog_run (LIGMA_DIALOG (dialog));
 
   exit (EXIT_FAILURE);
 }
 
 /**
  * gui_init:
- * @gimp:
+ * @ligma:
  * @no_splash:
  * @test_base_dir: a base prefix directory.
  *
  * @test_base_dir should be set to %NULL in all our codebase except for
  * unit testing calls.
  */
-GimpInitStatusFunc
-gui_init (Gimp         *gimp,
+LigmaInitStatusFunc
+gui_init (Ligma         *ligma,
           gboolean      no_splash,
-          GimpApp      *app,
+          LigmaApp      *app,
           const gchar  *test_base_dir)
 {
-  GimpInitStatusFunc  status_callback = NULL;
+  LigmaInitStatusFunc  status_callback = NULL;
   gchar              *abort_message;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (the_gui_gimp == NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_APP (app) || app == NULL, NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (the_gui_ligma == NULL, NULL);
+  g_return_val_if_fail (LIGMA_IS_APP (app) || app == NULL, NULL);
 
   abort_message = gui_sanity_check ();
   if (abort_message)
     gui_abort (abort_message);
 
-  the_gui_gimp = gimp;
+  the_gui_ligma = ligma;
 
   /* Normally this should have been taken care of during command line
    * parsing as a post-parse hook of gtk_get_option_group(), using the
@@ -250,20 +250,20 @@ gui_init (Gimp         *gimp,
    */
   gtk_widget_set_default_direction (gtk_get_locale_direction ());
 
-  gui_unique_init (gimp);
-  gimp_language_store_parser_init ();
+  gui_unique_init (ligma);
+  ligma_language_store_parser_init ();
 
-  /*  initialize icon themes before gimp_widgets_init() so we avoid
+  /*  initialize icon themes before ligma_widgets_init() so we avoid
    *  setting the configured theme twice
    */
-  icon_themes_init (gimp);
+  icon_themes_init (ligma);
 
-  gimp_widgets_init (gui_help_func,
+  ligma_widgets_init (gui_help_func,
                      gui_get_foreground_func,
                      gui_get_background_func,
                      NULL, test_base_dir);
 
-  g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
+  g_type_class_ref (LIGMA_TYPE_COLOR_SELECT);
 
   /*  disable automatic startup notification  */
   gtk_window_set_auto_startup_notification (FALSE);
@@ -279,33 +279,33 @@ gui_init (Gimp         *gimp,
     [NSWindow setAllowsAutomaticWindowTabbing:NO];
 #endif /* GDK_WINDOWING_QUARTZ */
 
-  gimp_dnd_init (gimp);
+  ligma_dnd_init (ligma);
 
-  themes_init (gimp);
+  themes_init (ligma);
 
-  initial_monitor = gimp_get_monitor_at_pointer ();
+  initial_monitor = ligma_get_monitor_at_pointer ();
 
   if (! no_splash)
     {
-      splash_create (gimp, gimp->be_verbose, initial_monitor, app);
+      splash_create (ligma, ligma->be_verbose, initial_monitor, app);
       status_callback = splash_update;
     }
 
-  g_signal_connect_after (gimp, "initialize",
+  g_signal_connect_after (ligma, "initialize",
                           G_CALLBACK (gui_initialize_after_callback),
                           NULL);
 
-  g_signal_connect (gimp, "restore",
+  g_signal_connect (ligma, "restore",
                     G_CALLBACK (gui_restore_callback),
                     NULL);
-  g_signal_connect_after (gimp, "restore",
+  g_signal_connect_after (ligma, "restore",
                           G_CALLBACK (gui_restore_after_callback),
                           NULL);
 
-  g_signal_connect (gimp, "exit",
+  g_signal_connect (ligma, "exit",
                     G_CALLBACK (gui_exit_callback),
                     NULL);
-  g_signal_connect_after (gimp, "exit",
+  g_signal_connect_after (ligma, "exit",
                           G_CALLBACK (gui_exit_after_callback),
                           NULL);
 
@@ -328,7 +328,7 @@ gui_recover (gint n_recoveries)
   GtkWidget *box;
   gboolean   recover;
 
-  dialog = gimp_dialog_new (_("Image Recovery"), "gimp-recovery",
+  dialog = ligma_dialog_new (_("Image Recovery"), "ligma-recovery",
                             NULL, GTK_DIALOG_MODAL, NULL, NULL,
                             _("_Discard"), GTK_RESPONSE_CANCEL,
                             _("_Recover"), GTK_RESPONSE_OK,
@@ -336,15 +336,15 @@ gui_recover (gint n_recoveries)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                    GTK_RESPONSE_OK);
 
-  box = gimp_message_box_new (GIMP_ICON_WILBER_EEK);
+  box = ligma_message_box_new (LIGMA_ICON_WILBER_EEK);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
-                                     _("Eeek! It looks like GIMP recovered from a crash!"));
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_BOX (box),
+                                     _("Eeek! It looks like LIGMA recovered from a crash!"));
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+  ligma_message_box_set_text (LIGMA_MESSAGE_BOX (box),
                              /* TRANSLATORS: even if English singular form does
                               * not use %d, you can use %d for translation in
                               * any singular/plural form of your language if
@@ -357,16 +357,16 @@ gui_recover (gint n_recoveries)
                                        "Do you want to try and recover them?",
                                        n_recoveries), n_recoveries);
 
-  recover = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  recover = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
   gtk_widget_destroy (dialog);
 
   return recover;
 }
 
 GdkMonitor *
-gui_get_initial_monitor (Gimp *gimp)
+gui_get_initial_monitor (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), 0);
 
   return initial_monitor;
 }
@@ -389,10 +389,10 @@ gui_sanity_check (void)
     {
       return g_strdup_printf
         ("%s\n\n"
-         "GIMP requires GTK version %d.%d.%d or later.\n"
+         "LIGMA requires GTK version %d.%d.%d or later.\n"
          "Installed GTK version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older GTK version.\n\n"
+         "to install LIGMA with an older GTK version.\n\n"
          "Please upgrade to GTK version %d.%d.%d or later.",
          mismatch,
          GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
@@ -411,42 +411,42 @@ static void
 gui_help_func (const gchar *help_id,
                gpointer     help_data)
 {
-  g_return_if_fail (GIMP_IS_GIMP (the_gui_gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (the_gui_ligma));
 
-  gimp_help (the_gui_gimp, NULL, NULL, help_id);
+  ligma_help (the_gui_ligma, NULL, NULL, help_id);
 }
 
 static gboolean
-gui_get_foreground_func (GimpRGB *color)
+gui_get_foreground_func (LigmaRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
-  g_return_val_if_fail (GIMP_IS_GIMP (the_gui_gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (the_gui_ligma), FALSE);
 
-  gimp_context_get_foreground (gimp_get_user_context (the_gui_gimp), color);
+  ligma_context_get_foreground (ligma_get_user_context (the_gui_ligma), color);
 
   return TRUE;
 }
 
 static gboolean
-gui_get_background_func (GimpRGB *color)
+gui_get_background_func (LigmaRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
-  g_return_val_if_fail (GIMP_IS_GIMP (the_gui_gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (the_gui_ligma), FALSE);
 
-  gimp_context_get_background (gimp_get_user_context (the_gui_gimp), color);
+  ligma_context_get_background (ligma_get_user_context (the_gui_ligma), color);
 
   return TRUE;
 }
 
 static void
-gui_initialize_after_callback (Gimp               *gimp,
-                               GimpInitStatusFunc  status_callback)
+gui_initialize_after_callback (Ligma               *ligma,
+                               LigmaInitStatusFunc  status_callback)
 {
   const gchar *name = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
 #if defined (GDK_WINDOWING_X11)
@@ -461,98 +461,98 @@ gui_initialize_after_callback (Gimp               *gimp,
     {
       const gchar *display = gdk_display_get_name (gdk_display_get_default ());
 
-      gimp_environ_table_add (gimp->plug_in_manager->environ_table,
+      ligma_environ_table_add (ligma->plug_in_manager->environ_table,
                               name, display, NULL);
     }
 
-  gimp_tools_init (gimp);
+  ligma_tools_init (ligma);
 
-  gimp_context_set_tool (gimp_get_user_context (gimp),
-                         gimp_tool_info_get_standard (gimp));
+  ligma_context_set_tool (ligma_get_user_context (ligma),
+                         ligma_tool_info_get_standard (ligma));
 }
 
 static void
-gui_restore_callback (Gimp               *gimp,
-                      GimpInitStatusFunc  status_callback)
+gui_restore_callback (Ligma               *ligma,
+                      LigmaInitStatusFunc  status_callback)
 {
-  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (gimp->config);
-  GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
+  LigmaDisplayConfig *display_config = LIGMA_DISPLAY_CONFIG (ligma->config);
+  LigmaGuiConfig     *gui_config     = LIGMA_GUI_CONFIG (ligma->config);
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
-  gui_vtable_init (gimp);
+  gui_vtable_init (ligma);
 
-  gimp_dialogs_show_help_button (gui_config->use_help &&
+  ligma_dialogs_show_help_button (gui_config->use_help &&
                                  gui_config->show_help_button);
 
   g_signal_connect (gui_config, "notify::use-help",
                     G_CALLBACK (gui_show_help_button_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (gui_config, "notify::user-manual-online",
                     G_CALLBACK (gui_user_manual_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (gui_config, "notify::show-help-button",
                     G_CALLBACK (gui_show_help_button_notify),
-                    gimp);
+                    ligma);
 
-  g_signal_connect (gimp_get_user_context (gimp), "display-changed",
+  g_signal_connect (ligma_get_user_context (ligma), "display-changed",
                     G_CALLBACK (gui_display_changed),
-                    gimp);
+                    ligma);
 
   /* make sure the monitor resolution is valid */
   if (display_config->monitor_res_from_gdk               ||
-      display_config->monitor_xres < GIMP_MIN_RESOLUTION ||
-      display_config->monitor_yres < GIMP_MIN_RESOLUTION)
+      display_config->monitor_xres < LIGMA_MIN_RESOLUTION ||
+      display_config->monitor_yres < LIGMA_MIN_RESOLUTION)
     {
       gdouble xres, yres;
 
-      gimp_get_monitor_resolution (initial_monitor, &xres, &yres);
+      ligma_get_monitor_resolution (initial_monitor, &xres, &yres);
 
-      g_object_set (gimp->config,
+      g_object_set (ligma->config,
                     "monitor-xresolution",                      xres,
                     "monitor-yresolution",                      yres,
                     "monitor-resolution-from-windowing-system", TRUE,
                     NULL);
     }
 
-  actions_init (gimp);
-  menus_init (gimp, global_action_factory);
-  gimp_render_init (gimp);
+  actions_init (ligma);
+  menus_init (ligma, global_action_factory);
+  ligma_render_init (ligma);
 
-  dialogs_init (gimp, global_menu_factory);
+  dialogs_init (ligma, global_menu_factory);
 
-  gimp_clipboard_init (gimp);
-  if (gimp_get_clipboard_image (gimp))
-    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  ligma_clipboard_init (ligma);
+  if (ligma_get_clipboard_image (ligma))
+    ligma_clipboard_set_image (ligma, ligma_get_clipboard_image (ligma));
   else
-    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
+    ligma_clipboard_set_buffer (ligma, ligma_get_clipboard_buffer (ligma));
 
-  g_signal_connect (gimp, "clipboard-changed",
+  g_signal_connect (ligma, "clipboard-changed",
                     G_CALLBACK (gui_clipboard_changed),
                     NULL);
 
-  gimp_devices_init (gimp);
-  gimp_controllers_init (gimp);
-  modifiers_init (gimp);
-  session_init (gimp);
+  ligma_devices_init (ligma);
+  ligma_controllers_init (ligma);
+  modifiers_init (ligma);
+  session_init (ligma);
 
-  g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
+  g_type_class_unref (g_type_class_ref (LIGMA_TYPE_COLOR_SELECTOR_PALETTE));
 
   status_callback (NULL, _("Tool Options"), 1.0);
-  gimp_tools_restore (gimp);
+  ligma_tools_restore (ligma);
 }
 
 #ifdef GDK_WINDOWING_QUARTZ
 static void
-gui_add_to_app_menu (GimpUIManager     *ui_manager,
+gui_add_to_app_menu (LigmaUIManager     *ui_manager,
                      GtkosxApplication *osx_app,
                      const gchar       *action_path,
                      gint               index)
 {
   GtkWidget *item;
 
-  item = gimp_ui_manager_get_widget (ui_manager, action_path);
+  item = ligma_ui_manager_get_widget (ui_manager, action_path);
 
   if (GTK_IS_MENU_ITEM (item))
     gtkosx_application_insert_app_menu_item (osx_app, GTK_WIDGET (item), index);
@@ -560,34 +560,34 @@ gui_add_to_app_menu (GimpUIManager     *ui_manager,
 
 static gboolean
 gui_quartz_quit_callback (GtkosxApplication *osx_app,
-                          GimpUIManager     *ui_manager)
+                          LigmaUIManager     *ui_manager)
 {
-  gimp_ui_manager_activate_action (ui_manager, "file", "file-quit");
+  ligma_ui_manager_activate_action (ui_manager, "file", "file-quit");
 
   return TRUE;
 }
 #endif
 
 static void
-gui_restore_after_callback (Gimp               *gimp,
-                            GimpInitStatusFunc  status_callback)
+gui_restore_after_callback (Ligma               *ligma,
+                            LigmaInitStatusFunc  status_callback)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
-  GimpDisplay   *display;
+  LigmaGuiConfig *gui_config = LIGMA_GUI_CONFIG (ligma->config);
+  LigmaDisplay   *display;
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
-  gimp->message_handler = GIMP_MESSAGE_BOX;
+  ligma->message_handler = LIGMA_MESSAGE_BOX;
 
-  /*  load the recent documents after gimp_real_restore() because we
+  /*  load the recent documents after ligma_real_restore() because we
    *  need the mime-types implemented by plug-ins
    */
   status_callback (NULL, _("Documents"), 0.9);
-  gimp_recent_list_load (gimp);
+  ligma_recent_list_load (ligma);
 
   /*  enable this to always have icons everywhere  */
-  if (g_getenv ("GIMP_ICONS_LIKE_A_BOSS"))
+  if (g_getenv ("LIGMA_ICONS_LIKE_A_BOSS"))
     {
       GdkScreen *screen = gdk_screen_get_default ();
 
@@ -598,54 +598,54 @@ gui_restore_after_callback (Gimp               *gimp,
     }
 
   if (gui_config->restore_accels)
-    menus_restore (gimp);
+    menus_restore (ligma);
 
-  ui_configurer = g_object_new (GIMP_TYPE_UI_CONFIGURER,
-                                "gimp", gimp,
+  ui_configurer = g_object_new (LIGMA_TYPE_UI_CONFIGURER,
+                                "ligma", ligma,
                                 NULL);
 
-  image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
+  image_ui_manager = ligma_menu_factory_manager_new (global_menu_factory,
                                                     "<Image>",
-                                                    gimp);
-  gimp_ui_manager_update (image_ui_manager, gimp);
+                                                    ligma);
+  ligma_ui_manager_update (image_ui_manager, ligma);
 
   /* Check that every accelerator is unique. */
   gtk_accel_map_foreach_unfiltered (NULL,
                                     gui_check_unique_accelerator);
 
-  gimp_action_history_init (gimp);
+  ligma_action_history_init (ligma);
 
   g_signal_connect_object (gui_config, "notify::single-window-mode",
                            G_CALLBACK (gui_single_window_mode_notify),
                            ui_configurer, 0);
   g_signal_connect (image_ui_manager, "show-tooltip",
                     G_CALLBACK (gui_menu_show_tooltip),
-                    gimp);
+                    ligma);
   g_signal_connect (image_ui_manager, "hide-tooltip",
                     G_CALLBACK (gui_menu_hide_tooltip),
-                    gimp);
+                    ligma);
 
-  gimp_devices_restore (gimp);
-  gimp_controllers_restore (gimp, image_ui_manager);
-  modifiers_restore (gimp);
+  ligma_devices_restore (ligma);
+  ligma_controllers_restore (ligma, image_ui_manager);
+  modifiers_restore (ligma);
 
   if (status_callback == splash_update)
     splash_destroy ();
 
-  if (gimp_get_show_gui (gimp))
+  if (ligma_get_show_gui (ligma))
     {
-      GimpDisplayShell *shell;
+      LigmaDisplayShell *shell;
       GtkWidget        *toplevel;
 
       /*  create the empty display  */
-      display = GIMP_DISPLAY (gimp_create_display (gimp, NULL,
-                                                   GIMP_UNIT_PIXEL, 1.0,
+      display = LIGMA_DISPLAY (ligma_create_display (ligma, NULL,
+                                                   LIGMA_UNIT_PIXEL, 1.0,
                                                    G_OBJECT (initial_monitor)));
 
-      shell = gimp_display_get_shell (display);
+      shell = ligma_display_get_shell (display);
 
       if (gui_config->restore_session)
-        session_restore (gimp, initial_monitor);
+        session_restore (ligma, initial_monitor);
 
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
@@ -660,7 +660,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
         osx_app = gtkosx_application_get ();
 
-        menu = gimp_ui_manager_get_widget (image_ui_manager,
+        menu = ligma_ui_manager_get_widget (image_ui_manager,
                                            "/image-menubar");
         /* menu should have window parent for accelerator support */
         gtk_widget_set_parent(menu, toplevel);
@@ -669,7 +669,7 @@ gui_restore_after_callback (Gimp               *gimp,
           menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
         /* do not activate OSX menu if tests are running */
-        if (! g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+        if (! g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"))
           gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
 
         gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
@@ -697,7 +697,7 @@ gui_restore_after_callback (Gimp               *gimp,
         item = gtk_separator_menu_item_new ();
         gtkosx_application_insert_app_menu_item (osx_app, item, 8);
 
-        item = gimp_ui_manager_get_widget (image_ui_manager,
+        item = ligma_ui_manager_get_widget (image_ui_manager,
                                            "/image-menubar/File/file-quit");
         gtk_widget_hide (item);
 
@@ -721,36 +721,36 @@ gui_restore_after_callback (Gimp               *gimp,
 }
 
 static gboolean
-gui_exit_callback (Gimp     *gimp,
+gui_exit_callback (Ligma     *ligma,
                    gboolean  force)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
-  GimpTool      *active_tool;
+  LigmaGuiConfig *gui_config = LIGMA_GUI_CONFIG (ligma->config);
+  LigmaTool      *active_tool;
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  if (! force && gimp_displays_dirty (gimp))
+  if (! force && ligma_displays_dirty (ligma))
     {
-      GimpContext *context = gimp_get_user_context (gimp);
-      GimpDisplay *display = gimp_context_get_display (context);
-      GdkMonitor  *monitor = gimp_get_monitor_at_pointer ();
+      LigmaContext *context = ligma_get_user_context (ligma);
+      LigmaDisplay *display = ligma_context_get_display (context);
+      GdkMonitor  *monitor = ligma_get_monitor_at_pointer ();
       GtkWidget   *parent  = NULL;
 
       if (display)
         {
-          GimpDisplayShell *shell = gimp_display_get_shell (display);
+          LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
-          parent = GTK_WIDGET (gimp_display_shell_get_window (shell));
+          parent = GTK_WIDGET (ligma_display_shell_get_window (shell));
         }
 
-      gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                        monitor, parent, "gimp-quit-dialog", -1);
+      ligma_dialog_factory_dialog_raise (ligma_dialog_factory_get_singleton (),
+                                        monitor, parent, "ligma-quit-dialog", -1);
 
       return TRUE; /* stop exit for now */
     }
 
-  gimp->message_handler = GIMP_CONSOLE;
+  ligma->message_handler = LIGMA_CONSOLE;
 
   gui_unique_exit ();
 
@@ -759,53 +759,53 @@ gui_exit_callback (Gimp     *gimp,
    * save any alternate value instead of the main one. Make sure that
    * any modifier is reset before saving options.
    */
-  active_tool = tool_manager_get_active (gimp);
+  active_tool = tool_manager_get_active (ligma);
   if  (active_tool && active_tool->focus_display)
-    gimp_tool_set_modifier_state  (active_tool, 0, active_tool->focus_display);
+    ligma_tool_set_modifier_state  (active_tool, 0, active_tool->focus_display);
 
   if (gui_config->save_session_info)
-    session_save (gimp, FALSE);
+    session_save (ligma, FALSE);
 
   if (gui_config->save_device_status)
-    gimp_devices_save (gimp, FALSE);
+    ligma_devices_save (ligma, FALSE);
 
   if (TRUE /* gui_config->save_controllers */)
-    gimp_controllers_save (gimp);
+    ligma_controllers_save (ligma);
 
-  modifiers_save (gimp, FALSE);
+  modifiers_save (ligma, FALSE);
 
-  g_signal_handlers_disconnect_by_func (gimp_get_user_context (gimp),
+  g_signal_handlers_disconnect_by_func (ligma_get_user_context (ligma),
                                         gui_display_changed,
-                                        gimp);
+                                        ligma);
 
-  gimp_displays_delete (gimp);
+  ligma_displays_delete (ligma);
 
   if (gui_config->save_accels)
-    menus_save (gimp, FALSE);
+    menus_save (ligma, FALSE);
 
-  gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
-  gimp_tools_exit (gimp);
+  ligma_tools_save (ligma, gui_config->save_tool_options, FALSE);
+  ligma_tools_exit (ligma);
 
-  gimp_language_store_parser_clean ();
+  ligma_language_store_parser_clean ();
 
   return FALSE; /* continue exiting */
 }
 
 static gboolean
-gui_exit_after_callback (Gimp     *gimp,
+gui_exit_after_callback (Ligma     *ligma,
                          gboolean  force)
 {
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  g_signal_handlers_disconnect_by_func (gimp->config,
+  g_signal_handlers_disconnect_by_func (ligma->config,
                                         gui_show_help_button_notify,
-                                        gimp);
-  g_signal_handlers_disconnect_by_func (gimp->config,
+                                        ligma);
+  g_signal_handlers_disconnect_by_func (ligma->config,
                                         gui_user_manual_notify,
-                                        gimp);
+                                        ligma);
 
-  gimp_action_history_exit (gimp);
+  ligma_action_history_exit (ligma);
 
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
@@ -816,118 +816,118 @@ gui_exit_after_callback (Gimp     *gimp,
   /*  exit the clipboard before shutting down the GUI because it runs
    *  a whole lot of code paths. See bug #731389.
    */
-  g_signal_handlers_disconnect_by_func (gimp,
+  g_signal_handlers_disconnect_by_func (ligma,
                                         G_CALLBACK (gui_clipboard_changed),
                                         NULL);
-  gimp_clipboard_exit (gimp);
+  ligma_clipboard_exit (ligma);
 
-  session_exit (gimp);
-  menus_exit (gimp);
-  actions_exit (gimp);
-  gimp_render_exit (gimp);
+  session_exit (ligma);
+  menus_exit (ligma);
+  actions_exit (ligma);
+  ligma_render_exit (ligma);
 
-  gimp_controllers_exit (gimp);
-  modifiers_exit (gimp);
-  gimp_devices_exit (gimp);
-  dialogs_exit (gimp);
-  themes_exit (gimp);
+  ligma_controllers_exit (ligma);
+  modifiers_exit (ligma);
+  ligma_devices_exit (ligma);
+  dialogs_exit (ligma);
+  themes_exit (ligma);
 
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
+  g_type_class_unref (g_type_class_peek (LIGMA_TYPE_COLOR_SELECT));
 
   return FALSE; /* continue exiting */
 }
 
 static void
-gui_show_help_button_notify (GimpGuiConfig *gui_config,
+gui_show_help_button_notify (LigmaGuiConfig *gui_config,
                              GParamSpec    *param_spec,
-                             Gimp          *gimp)
+                             Ligma          *ligma)
 {
-  gimp_dialogs_show_help_button (gui_config->use_help &&
+  ligma_dialogs_show_help_button (gui_config->use_help &&
                                  gui_config->show_help_button);
 }
 
 static void
-gui_user_manual_notify (GimpGuiConfig *gui_config,
+gui_user_manual_notify (LigmaGuiConfig *gui_config,
                         GParamSpec    *param_spec,
-                        Gimp          *gimp)
+                        Ligma          *ligma)
 {
-  gimp_help_user_manual_changed (gimp);
+  ligma_help_user_manual_changed (ligma);
 }
 
 static void
-gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
+gui_single_window_mode_notify (LigmaGuiConfig      *gui_config,
                                GParamSpec         *pspec,
-                               GimpUIConfigurer   *ui_configurer)
+                               LigmaUIConfigurer   *ui_configurer)
 {
-  gimp_ui_configurer_configure (ui_configurer,
+  ligma_ui_configurer_configure (ui_configurer,
                                 gui_config->single_window_mode);
 }
 
 static void
-gui_clipboard_changed (Gimp *gimp)
+gui_clipboard_changed (Ligma *ligma)
 {
-  if (gimp_get_clipboard_image (gimp))
-    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  if (ligma_get_clipboard_image (ligma))
+    ligma_clipboard_set_image (ligma, ligma_get_clipboard_image (ligma));
   else
-    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
+    ligma_clipboard_set_buffer (ligma, ligma_get_clipboard_buffer (ligma));
 }
 
 static void
-gui_menu_show_tooltip (GimpUIManager *manager,
+gui_menu_show_tooltip (LigmaUIManager *manager,
                        const gchar   *tooltip,
-                       Gimp          *gimp)
+                       Ligma          *ligma)
 {
-  GimpContext *context = gimp_get_user_context (gimp);
-  GimpDisplay *display = gimp_context_get_display (context);
+  LigmaContext *context = ligma_get_user_context (ligma);
+  LigmaDisplay *display = ligma_context_get_display (context);
 
   if (display)
     {
-      GimpDisplayShell *shell     = gimp_display_get_shell (display);
-      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+      LigmaDisplayShell *shell     = ligma_display_get_shell (display);
+      LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-      gimp_statusbar_push (statusbar, "menu-tooltip",
+      ligma_statusbar_push (statusbar, "menu-tooltip",
                            NULL, "%s", tooltip);
     }
 }
 
 static void
-gui_menu_hide_tooltip (GimpUIManager *manager,
-                       Gimp          *gimp)
+gui_menu_hide_tooltip (LigmaUIManager *manager,
+                       Ligma          *ligma)
 {
-  GimpContext *context = gimp_get_user_context (gimp);
-  GimpDisplay *display = gimp_context_get_display (context);
+  LigmaContext *context = ligma_get_user_context (ligma);
+  LigmaDisplay *display = ligma_context_get_display (context);
 
   if (display)
     {
-      GimpDisplayShell *shell     = gimp_display_get_shell (display);
-      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+      LigmaDisplayShell *shell     = ligma_display_get_shell (display);
+      LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-      gimp_statusbar_pop (statusbar, "menu-tooltip");
+      ligma_statusbar_pop (statusbar, "menu-tooltip");
     }
 }
 
 static void
-gui_display_changed (GimpContext *context,
-                     GimpDisplay *display,
-                     Gimp        *gimp)
+gui_display_changed (LigmaContext *context,
+                     LigmaDisplay *display,
+                     Ligma        *ligma)
 {
   if (! display)
     {
-      GimpImage *image = gimp_context_get_image (context);
+      LigmaImage *image = ligma_context_get_image (context);
 
       if (image)
         {
           GList *list;
 
-          for (list = gimp_get_display_iter (gimp);
+          for (list = ligma_get_display_iter (ligma);
                list;
                list = g_list_next (list))
             {
-              GimpDisplay *display2 = list->data;
+              LigmaDisplay *display2 = list->data;
 
-              if (gimp_display_get_image (display2) == image)
+              if (ligma_display_get_image (display2) == image)
                 {
-                  gimp_context_set_display (context, display2);
+                  ligma_context_set_display (context, display2);
 
                   /* stop the emission of the original signal
                    * (the emission of the recursive signal is finished)
@@ -937,11 +937,11 @@ gui_display_changed (GimpContext *context,
                 }
             }
 
-          gimp_context_set_image (context, NULL);
+          ligma_context_set_image (context, NULL);
         }
     }
 
-  gimp_ui_manager_update (image_ui_manager, display);
+  ligma_ui_manager_update (image_ui_manager, display);
 }
 
 typedef struct
@@ -995,26 +995,26 @@ gui_check_unique_accelerator (gpointer         data,
 static gboolean
 gui_check_action_exists (const gchar *accel_path)
 {
-  GimpUIManager *manager;
+  LigmaUIManager *manager;
   gboolean       action_exists = FALSE;
   GList         *list;
 
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
+  manager = ligma_ui_managers_from_name ("<Image>")->data;
 
-  for (list = gimp_ui_manager_get_action_groups (manager);
+  for (list = ligma_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
-      GimpActionGroup *group   = list->data;
+      LigmaActionGroup *group   = list->data;
       GList           *actions = NULL;
       GList           *list2;
 
-      actions = gimp_action_group_list_actions (group);
+      actions = ligma_action_group_list_actions (group);
 
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
-          GimpAction  *action = list2->data;
-          const gchar *path   = gimp_action_get_accel_path (action);
+          LigmaAction  *action = list2->data;
+          const gchar *path   = ligma_action_get_accel_path (action);
 
           if (g_strcmp0 (path, accel_path) == 0)
             {

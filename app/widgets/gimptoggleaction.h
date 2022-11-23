@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoggleaction.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
- * Copyright (C) 2008 Sven Neumann <sven@gimp.org>
+ * ligmatoggleaction.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
+ * Copyright (C) 2008 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,43 +19,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOGGLE_ACTION_H__
-#define __GIMP_TOGGLE_ACTION_H__
+#ifndef __LIGMA_TOGGLE_ACTION_H__
+#define __LIGMA_TOGGLE_ACTION_H__
 
 
-#define GIMP_TYPE_TOGGLE_ACTION            (gimp_toggle_action_get_type ())
-#define GIMP_TOGGLE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleAction))
-#define GIMP_TOGGLE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
-#define GIMP_IS_TOGGLE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOGGLE_ACTION))
-#define GIMP_IS_TOGGLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_ACTION))
-#define GIMP_TOGGLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
+#define LIGMA_TYPE_TOGGLE_ACTION            (ligma_toggle_action_get_type ())
+#define LIGMA_TOGGLE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOGGLE_ACTION, LigmaToggleAction))
+#define LIGMA_TOGGLE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOGGLE_ACTION, LigmaToggleActionClass))
+#define LIGMA_IS_TOGGLE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOGGLE_ACTION))
+#define LIGMA_IS_TOGGLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), LIGMA_TYPE_ACTION))
+#define LIGMA_TOGGLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), LIGMA_TYPE_TOGGLE_ACTION, LigmaToggleActionClass))
 
 
-typedef struct _GimpToggleAction      GimpToggleAction;
-typedef struct _GimpToggleActionClass GimpToggleActionClass;
+typedef struct _LigmaToggleAction      LigmaToggleAction;
+typedef struct _LigmaToggleActionClass LigmaToggleActionClass;
 
-struct _GimpToggleAction
+struct _LigmaToggleAction
 {
   GtkToggleAction  parent_instance;
 };
 
-struct _GimpToggleActionClass
+struct _LigmaToggleActionClass
 {
   GtkToggleActionClass  parent_class;
 };
 
 
-GType             gimp_toggle_action_get_type  (void) G_GNUC_CONST;
+GType             ligma_toggle_action_get_type  (void) G_GNUC_CONST;
 
-GtkToggleAction * gimp_toggle_action_new       (const gchar *name,
+GtkToggleAction * ligma_toggle_action_new       (const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
                                                 const gchar *help_id);
 
-void              gimp_toggle_action_set_active (GimpToggleAction *action,
+void              ligma_toggle_action_set_active (LigmaToggleAction *action,
                                                  gboolean          active);
-gboolean          gimp_toggle_action_get_active (GimpToggleAction *action);
+gboolean          ligma_toggle_action_get_active (LigmaToggleAction *action);
 
 
-#endif  /* __GIMP_TOGGLE_ACTION_H__ */
+#endif  /* __LIGMA_TOGGLE_ACTION_H__ */

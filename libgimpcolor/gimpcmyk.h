@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CMYK_H__
-#define __GIMP_CMYK_H__
+#ifndef __LIGMA_CMYK_H__
+#define __LIGMA_CMYK_H__
 
 G_BEGIN_DECLS
 
@@ -30,42 +30,42 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_CMYK
+ * LIGMA_TYPE_CMYK
  */
 
-#define GIMP_TYPE_CMYK       (gimp_cmyk_get_type ())
+#define LIGMA_TYPE_CMYK       (ligma_cmyk_get_type ())
 
-GType   gimp_cmyk_get_type   (void) G_GNUC_CONST;
+GType   ligma_cmyk_get_type   (void) G_GNUC_CONST;
 
-void    gimp_cmyk_set        (GimpCMYK       *cmyk,
+void    ligma_cmyk_set        (LigmaCMYK       *cmyk,
                               gdouble         cyan,
                               gdouble         magenta,
                               gdouble         yellow,
                               gdouble         black);
-void    gimp_cmyk_set_uchar  (GimpCMYK       *cmyk,
+void    ligma_cmyk_set_uchar  (LigmaCMYK       *cmyk,
                               guchar          cyan,
                               guchar          magenta,
                               guchar          yellow,
                               guchar          black);
-void    gimp_cmyk_get_uchar  (const GimpCMYK *cmyk,
+void    ligma_cmyk_get_uchar  (const LigmaCMYK *cmyk,
                               guchar         *cyan,
                               guchar         *magenta,
                               guchar         *yellow,
                               guchar         *black);
 
-void    gimp_cmyka_set       (GimpCMYK       *cmyka,
+void    ligma_cmyka_set       (LigmaCMYK       *cmyka,
                               gdouble         cyan,
                               gdouble         magenta,
                               gdouble         yellow,
                               gdouble         black,
                               gdouble         alpha);
-void    gimp_cmyka_set_uchar (GimpCMYK       *cmyka,
+void    ligma_cmyka_set_uchar (LigmaCMYK       *cmyka,
                               guchar          cyan,
                               guchar          magenta,
                               guchar          yellow,
                               guchar          black,
                               guchar          alpha);
-void    gimp_cmyka_get_uchar (const GimpCMYK *cmyka,
+void    ligma_cmyka_get_uchar (const LigmaCMYK *cmyka,
                               guchar         *cyan,
                               guchar         *magenta,
                               guchar         *yellow,
@@ -75,4 +75,4 @@ void    gimp_cmyka_get_uchar (const GimpCMYK *cmyka,
 
 G_END_DECLS
 
-#endif  /* __GIMP_CMYK_H__ */
+#endif  /* __LIGMA_CMYK_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpeditor.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * ligmaeditor.c
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,26 +23,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpaction.h"
-#include "gimpactiongroup.h"
-#include "gimpdocked.h"
-#include "gimpeditor.h"
-#include "gimpdnd.h"
-#include "gimpmenufactory.h"
-#include "gimptoggleaction.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaaction.h"
+#include "ligmaactiongroup.h"
+#include "ligmadocked.h"
+#include "ligmaeditor.h"
+#include "ligmadnd.h"
+#include "ligmamenufactory.h"
+#include "ligmatoggleaction.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_CONTENT_SPACING  2
@@ -63,11 +63,11 @@ enum
 };
 
 
-struct _GimpEditorPrivate
+struct _LigmaEditorPrivate
 {
-  GimpMenuFactory *menu_factory;
+  LigmaMenuFactory *menu_factory;
   gchar           *menu_identifier;
-  GimpUIManager   *ui_manager;
+  LigmaUIManager   *ui_manager;
   gchar           *ui_path;
   gpointer         popup_data;
 
@@ -77,92 +77,92 @@ struct _GimpEditorPrivate
 };
 
 
-static void         gimp_editor_docked_iface_init (GimpDockedInterface *iface);
+static void         ligma_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void            gimp_editor_constructed         (GObject        *object);
-static void            gimp_editor_dispose             (GObject        *object);
-static void            gimp_editor_set_property        (GObject        *object,
+static void            ligma_editor_constructed         (GObject        *object);
+static void            ligma_editor_dispose             (GObject        *object);
+static void            ligma_editor_set_property        (GObject        *object,
                                                         guint           property_id,
                                                         const GValue   *value,
                                                         GParamSpec     *pspec);
-static void            gimp_editor_get_property        (GObject        *object,
+static void            ligma_editor_get_property        (GObject        *object,
                                                         guint           property_id,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
 
-static void            gimp_editor_style_updated       (GtkWidget      *widget);
+static void            ligma_editor_style_updated       (GtkWidget      *widget);
 
-static GimpUIManager * gimp_editor_get_menu            (GimpDocked     *docked,
+static LigmaUIManager * ligma_editor_get_menu            (LigmaDocked     *docked,
                                                         const gchar   **ui_path,
                                                         gpointer       *popup_data);
-static gboolean        gimp_editor_has_button_bar      (GimpDocked     *docked);
-static void            gimp_editor_set_show_button_bar (GimpDocked     *docked,
+static gboolean        ligma_editor_has_button_bar      (LigmaDocked     *docked);
+static void            ligma_editor_set_show_button_bar (LigmaDocked     *docked,
                                                         gboolean        show);
-static gboolean        gimp_editor_get_show_button_bar (GimpDocked     *docked);
+static gboolean        ligma_editor_get_show_button_bar (LigmaDocked     *docked);
 
-static GtkIconSize     gimp_editor_ensure_button_box   (GimpEditor     *editor,
+static GtkIconSize     ligma_editor_ensure_button_box   (LigmaEditor     *editor,
                                                         GtkReliefStyle *button_relief);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_BOX,
-                         G_ADD_PRIVATE (GimpEditor)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaEditor, ligma_editor, GTK_TYPE_BOX,
+                         G_ADD_PRIVATE (LigmaEditor)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_editor_docked_iface_init))
 
-#define parent_class gimp_editor_parent_class
+#define parent_class ligma_editor_parent_class
 
 
 static void
-gimp_editor_class_init (GimpEditorClass *klass)
+ligma_editor_class_init (LigmaEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed   = gimp_editor_constructed;
-  object_class->dispose       = gimp_editor_dispose;
-  object_class->set_property  = gimp_editor_set_property;
-  object_class->get_property  = gimp_editor_get_property;
+  object_class->constructed   = ligma_editor_constructed;
+  object_class->dispose       = ligma_editor_dispose;
+  object_class->set_property  = ligma_editor_set_property;
+  object_class->get_property  = ligma_editor_get_property;
 
-  widget_class->style_updated = gimp_editor_style_updated;
+  widget_class->style_updated = ligma_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_MENU_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_MENU_FACTORY,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MENU_IDENTIFIER,
                                    g_param_spec_string ("menu-identifier",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_UI_PATH,
                                    g_param_spec_string ("ui-path",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_POPUP_DATA,
                                    g_param_spec_pointer ("popup-data",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SHOW_NAME,
                                    g_param_spec_boolean ("show-name",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -171,7 +171,7 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_CONTENT_SPACING,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("button-spacing",
@@ -179,39 +179,39 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_BUTTON_SPACING,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("button-icon-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_BUTTON_ICON_SIZE,
-                                                              GIMP_PARAM_READABLE));
+                                                              LIGMA_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("button-relief",
                                                               NULL, NULL,
                                                               GTK_TYPE_RELIEF_STYLE,
                                                               DEFAULT_BUTTON_RELIEF,
-                                                              GIMP_PARAM_READABLE));
+                                                              LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
-  iface->get_menu            = gimp_editor_get_menu;
-  iface->has_button_bar      = gimp_editor_has_button_bar;
-  iface->set_show_button_bar = gimp_editor_set_show_button_bar;
-  iface->get_show_button_bar = gimp_editor_get_show_button_bar;
+  iface->get_menu            = ligma_editor_get_menu;
+  iface->has_button_bar      = ligma_editor_has_button_bar;
+  iface->set_show_button_bar = ligma_editor_set_show_button_bar;
+  iface->get_show_button_bar = ligma_editor_get_show_button_bar;
 }
 
 static void
-gimp_editor_init (GimpEditor *editor)
+ligma_editor_init (LigmaEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  editor->priv = gimp_editor_get_instance_private (editor);
+  editor->priv = ligma_editor_get_instance_private (editor);
 
   editor->priv->popup_data      = editor;
   editor->priv->show_button_bar = TRUE;
@@ -221,7 +221,7 @@ gimp_editor_init (GimpEditor *editor)
                                            "yalign",    0.5,
                                            "ellipsize", PANGO_ELLIPSIZE_END,
                                            NULL);
-  gimp_label_set_attributes (GTK_LABEL (editor->priv->name_label),
+  ligma_label_set_attributes (GTK_LABEL (editor->priv->name_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (editor), editor->priv->name_label,
@@ -229,9 +229,9 @@ gimp_editor_init (GimpEditor *editor)
 }
 
 static void
-gimp_editor_constructed (GObject *object)
+ligma_editor_constructed (GObject *object)
 {
-  GimpEditor *editor = GIMP_EDITOR (object);
+  LigmaEditor *editor = LIGMA_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -241,29 +241,29 @@ gimp_editor_constructed (GObject *object)
   if (editor->priv->menu_factory && editor->priv->menu_identifier)
     {
       editor->priv->ui_manager =
-        gimp_menu_factory_manager_new (editor->priv->menu_factory,
+        ligma_menu_factory_manager_new (editor->priv->menu_factory,
                                        editor->priv->menu_identifier,
                                        editor->priv->popup_data);
 
-      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+      g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                                "notify::theme",
-                               G_CALLBACK (gimp_editor_style_updated),
+                               G_CALLBACK (ligma_editor_style_updated),
                                editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+      g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                                "notify::override-theme-icon-size",
-                               G_CALLBACK (gimp_editor_style_updated),
+                               G_CALLBACK (ligma_editor_style_updated),
                                editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+      g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                                "notify::custom-icon-size",
-                               G_CALLBACK (gimp_editor_style_updated),
+                               G_CALLBACK (ligma_editor_style_updated),
                                editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
 }
 
 static void
-gimp_editor_dispose (GObject *object)
+ligma_editor_dispose (GObject *object)
 {
-  GimpEditor *editor = GIMP_EDITOR (object);
+  LigmaEditor *editor = LIGMA_EDITOR (object);
 
   g_clear_object (&editor->priv->menu_factory);
 
@@ -278,12 +278,12 @@ gimp_editor_dispose (GObject *object)
 }
 
 static void
-gimp_editor_set_property (GObject      *object,
+ligma_editor_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpEditor *editor = GIMP_EDITOR (object);
+  LigmaEditor *editor = LIGMA_EDITOR (object);
 
   switch (property_id)
     {
@@ -309,7 +309,7 @@ gimp_editor_set_property (GObject      *object,
       break;
 
     case PROP_NAME:
-      gimp_editor_set_name (editor, g_value_get_string (value));
+      ligma_editor_set_name (editor, g_value_get_string (value));
       break;
 
     default:
@@ -319,12 +319,12 @@ gimp_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_editor_get_property (GObject    *object,
+ligma_editor_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpEditor *editor = GIMP_EDITOR (object);
+  LigmaEditor *editor = LIGMA_EDITOR (object);
 
   switch (property_id)
     {
@@ -356,9 +356,9 @@ gimp_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_editor_style_updated (GtkWidget *widget)
+ligma_editor_style_updated (GtkWidget *widget)
 {
-  GimpEditor *editor = GIMP_EDITOR (widget);
+  LigmaEditor *editor = LIGMA_EDITOR (widget);
   gint        content_spacing;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -370,15 +370,15 @@ gimp_editor_style_updated (GtkWidget *widget)
   gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
 
   if (editor->priv->button_box)
-    gimp_editor_set_box_style (editor, GTK_BOX (editor->priv->button_box));
+    ligma_editor_set_box_style (editor, GTK_BOX (editor->priv->button_box));
 }
 
-static GimpUIManager *
-gimp_editor_get_menu (GimpDocked   *docked,
+static LigmaUIManager *
+ligma_editor_get_menu (LigmaDocked   *docked,
                       const gchar **ui_path,
                       gpointer     *popup_data)
 {
-  GimpEditor *editor = GIMP_EDITOR (docked);
+  LigmaEditor *editor = LIGMA_EDITOR (docked);
 
   *ui_path    = editor->priv->ui_path;
   *popup_data = editor->priv->popup_data;
@@ -388,18 +388,18 @@ gimp_editor_get_menu (GimpDocked   *docked,
 
 
 static gboolean
-gimp_editor_has_button_bar (GimpDocked *docked)
+ligma_editor_has_button_bar (LigmaDocked *docked)
 {
-  GimpEditor *editor = GIMP_EDITOR (docked);
+  LigmaEditor *editor = LIGMA_EDITOR (docked);
 
   return editor->priv->button_box != NULL;
 }
 
 static void
-gimp_editor_set_show_button_bar (GimpDocked *docked,
+ligma_editor_set_show_button_bar (LigmaDocked *docked,
                                  gboolean    show)
 {
-  GimpEditor *editor = GIMP_EDITOR (docked);
+  LigmaEditor *editor = LIGMA_EDITOR (docked);
 
   if (show != editor->priv->show_button_bar)
     {
@@ -411,28 +411,28 @@ gimp_editor_set_show_button_bar (GimpDocked *docked,
 }
 
 static gboolean
-gimp_editor_get_show_button_bar (GimpDocked *docked)
+ligma_editor_get_show_button_bar (LigmaDocked *docked)
 {
-  GimpEditor *editor = GIMP_EDITOR (docked);
+  LigmaEditor *editor = LIGMA_EDITOR (docked);
 
   return editor->priv->show_button_bar;
 }
 
 GtkWidget *
-gimp_editor_new (void)
+ligma_editor_new (void)
 {
-  return g_object_new (GIMP_TYPE_EDITOR, NULL);
+  return g_object_new (LIGMA_TYPE_EDITOR, NULL);
 }
 
 void
-gimp_editor_create_menu (GimpEditor      *editor,
-                         GimpMenuFactory *menu_factory,
+ligma_editor_create_menu (LigmaEditor      *editor,
+                         LigmaMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
                          const gchar     *ui_path,
                          gpointer         popup_data)
 {
-  g_return_if_fail (GIMP_IS_EDITOR (editor));
-  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
+  g_return_if_fail (LIGMA_IS_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory));
   g_return_if_fail (menu_identifier != NULL);
   g_return_if_fail (ui_path != NULL);
 
@@ -443,26 +443,26 @@ gimp_editor_create_menu (GimpEditor      *editor,
 
   if (editor->priv->ui_manager)
     {
-      g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
-                                            G_CALLBACK (gimp_editor_style_updated),
+      g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->ligma->config,
+                                            G_CALLBACK (ligma_editor_style_updated),
                                             editor);
       g_object_unref (editor->priv->ui_manager);
     }
 
-  editor->priv->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+  editor->priv->ui_manager = ligma_menu_factory_manager_new (menu_factory,
                                                             menu_identifier,
                                                             popup_data);
-  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+  g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                            "notify::theme",
-                           G_CALLBACK (gimp_editor_style_updated),
+                           G_CALLBACK (ligma_editor_style_updated),
                            editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+  g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                            "notify::override-theme-icon-size",
-                           G_CALLBACK (gimp_editor_style_updated),
+                           G_CALLBACK (ligma_editor_style_updated),
                            editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+  g_signal_connect_object (editor->priv->ui_manager->ligma->config,
                            "notify::custom-icon-size",
-                           G_CALLBACK (gimp_editor_style_updated),
+                           G_CALLBACK (ligma_editor_style_updated),
                            editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   if (editor->priv->ui_path)
@@ -474,15 +474,15 @@ gimp_editor_create_menu (GimpEditor      *editor,
 }
 
 gboolean
-gimp_editor_popup_menu_at_pointer (GimpEditor     *editor,
+ligma_editor_popup_menu_at_pointer (LigmaEditor     *editor,
                                    const GdkEvent *trigger_event)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), FALSE);
 
   if (editor->priv->ui_manager && editor->priv->ui_path)
     {
-      gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
-      gimp_ui_manager_ui_popup_at_pointer (editor->priv->ui_manager, editor->priv->ui_path,
+      ligma_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
+      ligma_ui_manager_ui_popup_at_pointer (editor->priv->ui_manager, editor->priv->ui_path,
                                            trigger_event, NULL, NULL);
       return TRUE;
     }
@@ -491,19 +491,19 @@ gimp_editor_popup_menu_at_pointer (GimpEditor     *editor,
 }
 
 gboolean
-gimp_editor_popup_menu_at_rect (GimpEditor         *editor,
+ligma_editor_popup_menu_at_rect (LigmaEditor         *editor,
                                 GdkWindow          *window,
                                 const GdkRectangle *rect,
                                 GdkGravity          rect_anchor,
                                 GdkGravity          menu_anchor,
                                 const GdkEvent     *trigger_event)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), FALSE);
 
   if (editor->priv->ui_manager && editor->priv->ui_path)
     {
-      gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
-      gimp_ui_manager_ui_popup_at_rect (editor->priv->ui_manager, editor->priv->ui_path,
+      ligma_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
+      ligma_ui_manager_ui_popup_at_rect (editor->priv->ui_manager, editor->priv->ui_path,
                                         window, rect, rect_anchor, menu_anchor,
                                         trigger_event, NULL, NULL);
       return TRUE;
@@ -513,7 +513,7 @@ gimp_editor_popup_menu_at_rect (GimpEditor         *editor,
 }
 
 GtkWidget *
-gimp_editor_add_button (GimpEditor  *editor,
+ligma_editor_add_button (LigmaEditor  *editor,
                         const gchar *icon_name,
                         const gchar *tooltip,
                         const gchar *help_id,
@@ -526,18 +526,18 @@ gimp_editor_add_button (GimpEditor  *editor,
   GtkIconSize     button_icon_size;
   GtkReliefStyle  button_relief;
 
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
 
-  button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
+  button_icon_size = ligma_editor_ensure_button_box (editor, &button_relief);
 
-  button = gimp_button_new ();
+  button = ligma_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   if (tooltip || help_id)
-    gimp_help_set_help_data (button, tooltip, help_id);
+    ligma_help_set_help_data (button, tooltip, help_id);
 
   if (callback)
     g_signal_connect (button, "clicked",
@@ -557,7 +557,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 }
 
 GtkWidget *
-gimp_editor_add_icon_box (GimpEditor  *editor,
+ligma_editor_add_icon_box (LigmaEditor  *editor,
                           GType        enum_type,
                           const gchar *icon_prefix,
                           GCallback    callback,
@@ -570,13 +570,13 @@ gimp_editor_add_icon_box (GimpEditor  *editor,
   GList          *children;
   GList          *list;
 
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
   g_return_val_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM), NULL);
   g_return_val_if_fail (icon_prefix != NULL, NULL);
 
-  button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
+  button_icon_size = ligma_editor_ensure_button_box (editor, &button_relief);
 
-  hbox = gimp_enum_icon_box_new (enum_type, icon_prefix, button_icon_size,
+  hbox = ligma_enum_icon_box_new (enum_type, icon_prefix, button_icon_size,
                                  callback, callback_data, NULL,
                                  &first_button);
 
@@ -609,11 +609,11 @@ gimp_editor_add_icon_box (GimpEditor  *editor,
 typedef struct
 {
   GdkModifierType  mod_mask;
-  GimpAction      *action;
+  LigmaAction      *action;
 } ExtendedAction;
 
 static void
-gimp_editor_button_extended_actions_free (GList *actions)
+ligma_editor_button_extended_actions_free (GList *actions)
 {
   GList *list;
 
@@ -624,7 +624,7 @@ gimp_editor_button_extended_actions_free (GList *actions)
 }
 
 static void
-gimp_editor_button_extended_clicked (GtkWidget       *button,
+ligma_editor_button_extended_clicked (GtkWidget       *button,
                                      GdkModifierType  mask,
                                      gpointer         data)
 {
@@ -636,22 +636,22 @@ gimp_editor_button_extended_clicked (GtkWidget       *button,
       ExtendedAction *ext = list->data;
 
       if ((ext->mod_mask & mask) == ext->mod_mask &&
-          gimp_action_get_sensitive (ext->action, NULL))
+          ligma_action_get_sensitive (ext->action, NULL))
         {
-          gimp_action_activate (ext->action);
+          ligma_action_activate (ext->action);
           break;
         }
     }
 }
 
 GtkWidget *
-gimp_editor_add_action_button (GimpEditor  *editor,
+ligma_editor_add_action_button (LigmaEditor  *editor,
                                const gchar *group_name,
                                const gchar *action_name,
                                ...)
 {
-  GimpActionGroup *group;
-  GimpAction      *action;
+  LigmaActionGroup *group;
+  LigmaAction      *action;
   GtkWidget       *button;
   GtkWidget       *old_child;
   GtkWidget       *image;
@@ -663,31 +663,31 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   GList           *extended = NULL;
   va_list          args;
 
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
   g_return_val_if_fail (action_name != NULL, NULL);
   g_return_val_if_fail (editor->priv->ui_manager != NULL, NULL);
 
-  group = gimp_ui_manager_get_action_group (editor->priv->ui_manager,
+  group = ligma_ui_manager_get_action_group (editor->priv->ui_manager,
                                             group_name);
 
   g_return_val_if_fail (group != NULL, NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   g_return_val_if_fail (action != NULL, NULL);
 
-  button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
+  button_icon_size = ligma_editor_ensure_button_box (editor, &button_relief);
 
-  if (GIMP_IS_TOGGLE_ACTION (action))
+  if (LIGMA_IS_TOGGLE_ACTION (action))
     button = gtk_toggle_button_new ();
   else
-    button = gimp_button_new ();
+    button = ligma_button_new ();
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
-  icon_name = gimp_action_get_icon_name (action);
-  tooltip   = g_strdup (gimp_action_get_tooltip (action));
-  help_id   = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+  icon_name = ligma_action_get_icon_name (action);
+  tooltip   = g_strdup (ligma_action_get_tooltip (action));
+  help_id   = g_object_get_qdata (G_OBJECT (action), LIGMA_HELP_ID);
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
@@ -714,7 +714,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
       mod_mask = va_arg (args, GdkModifierType);
 
-      action = gimp_action_group_get_action (group, action_name);
+      action = ligma_action_group_get_action (group, action_name);
 
       if (action && mod_mask)
         {
@@ -727,12 +727,12 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
           if (tooltip)
             {
-              const gchar *ext_tooltip = gimp_action_get_tooltip (action);
+              const gchar *ext_tooltip = ligma_action_get_tooltip (action);
 
               if (ext_tooltip)
                 {
                   gchar *tmp = g_strconcat (tooltip, "\n<b>",
-                                            gimp_get_mod_string (ext->mod_mask),
+                                            ligma_get_mod_string (ext->mod_mask),
                                             "</b>  ", ext_tooltip, NULL);
                   g_free (tooltip);
                   tooltip = tmp;
@@ -748,15 +748,15 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   if (extended)
     {
       g_object_set_data_full (G_OBJECT (button), "extended-actions", extended,
-                              (GDestroyNotify) gimp_editor_button_extended_actions_free);
+                              (GDestroyNotify) ligma_editor_button_extended_actions_free);
 
       g_signal_connect (button, "extended-clicked",
-                        G_CALLBACK (gimp_editor_button_extended_clicked),
+                        G_CALLBACK (ligma_editor_button_extended_clicked),
                         NULL);
     }
 
   if (tooltip || help_id)
-    gimp_help_set_help_data_with_markup (button, tooltip, help_id);
+    ligma_help_set_help_data_with_markup (button, tooltip, help_id);
 
   g_free (tooltip);
 
@@ -764,26 +764,26 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 }
 
 void
-gimp_editor_set_show_name (GimpEditor *editor,
+ligma_editor_set_show_name (LigmaEditor *editor,
                            gboolean    show)
 {
-  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_EDITOR (editor));
 
   g_object_set (editor, "show-name", show, NULL);
 }
 
 void
-gimp_editor_set_name (GimpEditor  *editor,
+ligma_editor_set_name (LigmaEditor  *editor,
                       const gchar *name)
 {
-  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_EDITOR (editor));
 
   gtk_label_set_text (GTK_LABEL (editor->priv->name_label),
                       name ? name : _("(None)"));
 }
 
 void
-gimp_editor_set_box_style (GimpEditor *editor,
+ligma_editor_set_box_style (LigmaEditor *editor,
                            GtkBox     *box)
 {
   GList          *children;
@@ -792,7 +792,7 @@ gimp_editor_set_box_style (GimpEditor *editor,
   gint            button_spacing;
   GtkReliefStyle  button_relief;
 
-  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_EDITOR (editor));
   g_return_if_fail (GTK_IS_BOX (box));
 
   gtk_widget_style_get (GTK_WIDGET (editor),
@@ -838,43 +838,43 @@ gimp_editor_set_box_style (GimpEditor *editor,
   g_list_free (children);
 }
 
-GimpUIManager *
-gimp_editor_get_ui_manager (GimpEditor *editor)
+LigmaUIManager *
+ligma_editor_get_ui_manager (LigmaEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
 
   return editor->priv->ui_manager;
 }
 
 GtkBox *
-gimp_editor_get_button_box (GimpEditor *editor)
+ligma_editor_get_button_box (LigmaEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
 
   return GTK_BOX (editor->priv->button_box);
 }
 
-GimpMenuFactory *
+LigmaMenuFactory *
 
-gimp_editor_get_menu_factory (GimpEditor *editor)
+ligma_editor_get_menu_factory (LigmaEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
 
   return editor->priv->menu_factory;
 }
 
 gpointer *
-gimp_editor_get_popup_data (GimpEditor *editor)
+ligma_editor_get_popup_data (LigmaEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
 
   return editor->priv->popup_data;
 }
 
 gchar *
-gimp_editor_get_ui_path (GimpEditor *editor)
+ligma_editor_get_ui_path (LigmaEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_EDITOR (editor), NULL);
 
   return editor->priv->ui_path;
 }
@@ -883,7 +883,7 @@ gimp_editor_get_ui_path (GimpEditor *editor)
 /*  private functions  */
 
 static GtkIconSize
-gimp_editor_ensure_button_box (GimpEditor     *editor,
+ligma_editor_ensure_button_box (LigmaEditor     *editor,
                                GtkReliefStyle *button_relief)
 {
   GtkIconSize button_icon_size;

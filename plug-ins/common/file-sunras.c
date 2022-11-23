@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * SUN raster reading and writing code Copyright (C) 1996 Peter Kirchgessner
  * (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
@@ -26,7 +26,7 @@
 
 /* Event history:
  * V 1.00, PK, 25-Jul-96: First try
- * V 1.90, PK, 15-Mar-97: Upgrade to work with GIMP V0.99
+ * V 1.90, PK, 15-Mar-97: Upgrade to work with LIGMA V0.99
  * V 1.91, PK, 05-Apr-97: Return all arguments, even in case of an error
  * V 1.92, PK, 18-May-97: Ignore EOF-error on reading image data
  * V 1.93, PK, 05-Oct-97: Parse rc file
@@ -43,16 +43,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-sunras-load"
 #define SAVE_PROC      "file-sunras-save"
 #define PLUG_IN_BINARY "file-sunras"
-#define PLUG_IN_ROLE   "gimp-file-sunras"
+#define PLUG_IN_ROLE   "ligma-file-sunras"
 
 
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);
@@ -92,12 +92,12 @@ typedef struct _SunrasClass SunrasClass;
 
 struct _Sunras
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _SunrasClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -106,55 +106,55 @@ struct _SunrasClass
 
 GType                   sunras_get_type         (void) G_GNUC_CONST;
 
-static GList          * sunras_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * sunras_create_procedure (GimpPlugIn           *plug_in,
+static GList          * sunras_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * sunras_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * sunras_load             (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
+static LigmaValueArray * sunras_load             (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
                                                  GFile                *file,
-                                                 const GimpValueArray *args,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
-static GimpValueArray * sunras_save             (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
+static LigmaValueArray * sunras_save             (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
+                                                 LigmaImage            *image,
                                                  gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
+                                                 LigmaDrawable        **drawables,
                                                  GFile                *file,
-                                                 const GimpValueArray *args,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
 
-static GimpImage      * load_image              (GFile                *file,
+static LigmaImage      * load_image              (GFile                *file,
                                                  GError              **error);
 static gboolean         save_image              (GFile                *file,
-                                                 GimpImage            *image,
-                                                 GimpDrawable         *drawable,
+                                                 LigmaImage            *image,
+                                                 LigmaDrawable         *drawable,
                                                  GObject              *config,
                                                  GError              **error);
 
-static void             set_color_table         (GimpImage            *image,
+static void             set_color_table         (LigmaImage            *image,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  const guchar         *suncolmap);
-static GimpImage      * create_new_image        (GFile                *file,
+static LigmaImage      * create_new_image        (GFile                *file,
                                                  guint                 width,
                                                  guint                 height,
-                                                 GimpImageBaseType     type,
-                                                 GimpLayer           **layer,
+                                                 LigmaImageBaseType     type,
+                                                 LigmaLayer           **layer,
                                                  GeglBuffer          **buffer);
 
-static GimpImage      * load_sun_d1             (GFile                *file,
+static LigmaImage      * load_sun_d1             (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d8             (GFile                *file,
+static LigmaImage      * load_sun_d8             (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d24            (GFile                *file,
+static LigmaImage      * load_sun_d24            (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d32            (GFile                *file,
+static LigmaImage      * load_sun_d32            (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
@@ -203,16 +203,16 @@ static void             write_sun_cols          (FILE                 *ofp,
                                                  guchar               *colormap);
 
 static gint             save_index              (FILE                *ofp,
-                                                 GimpImage           *image,
-                                                 GimpDrawable        *drawable,
+                                                 LigmaImage           *image,
+                                                 LigmaDrawable        *drawable,
                                                  gboolean             grey,
                                                  gboolean             rle);
 static gint             save_rgb                (FILE                *ofp,
-                                                 GimpImage           *image,
-                                                 GimpDrawable        *drawable,
+                                                 LigmaImage           *image,
+                                                 LigmaDrawable        *drawable,
                                                  gboolean             rle);
 
-static gboolean         save_dialog             (GimpProcedure       *procedure,
+static gboolean         save_dialog             (LigmaProcedure       *procedure,
                                                  GObject             *config);
 
 /* Portability kludge */
@@ -222,9 +222,9 @@ static int              my_fwrite               (void                *ptr,
                                                  FILE                *stream);
 
 
-G_DEFINE_TYPE (Sunras, sunras, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Sunras, sunras, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SUNRAS_TYPE)
+LIGMA_MAIN (SUNRAS_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -235,7 +235,7 @@ static RLEBUF rlebuf;
 static void
 sunras_class_init (SunrasClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = sunras_query_procedures;
   plug_in_class->create_procedure = sunras_create_procedure;
@@ -248,7 +248,7 @@ sunras_init (Sunras *sunras)
 }
 
 static GList *
-sunras_query_procedures (GimpPlugIn *plug_in)
+sunras_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -258,64 +258,64 @@ sunras_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-sunras_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+sunras_create_procedure (LigmaPlugIn  *plug_in,
                          const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            sunras_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
+      ligma_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load file of the SunRaster file format",
                                         "Load file of the SunRaster file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner",
                                       "1996");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-sun-raster");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,long,0x59a66a95");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            sunras_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
+      ligma_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Export file in the SunRaster file "
                                         "format",
                                         "SUNRAS exporting handles all image "
                                         "types except those with alpha "
                                         "channels.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner",
                                       "1996");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-sun-raster");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "rle",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "rle",
                              "RLE",
                              "Use RLE output",
                              TRUE,
@@ -325,15 +325,15 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-sunras_load (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
+static LigmaValueArray *
+sunras_load (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
              GFile                *file,
-             const GimpValueArray *args,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -341,53 +341,53 @@ sunras_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-sunras_save (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+sunras_save (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
+             LigmaDrawable        **drawables,
              GFile                *file,
-             const GimpValueArray *args,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "SUNRAS",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "SUNRAS",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -403,49 +403,49 @@ sunras_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("SUNRAS format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
-  GimpImage       *image;
+  LigmaImage       *image;
   FILE            *ifp;
   L_SUNFILEHEADER  sunhdr;
   guchar          *suncolmap = NULL;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   ifp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -453,7 +453,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -464,7 +464,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' as SUN-raster-file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -480,8 +480,8 @@ load_image (GFile   *file,
 
   if (sunhdr.l_ras_maplength > (256 * 3))
     {
-      g_message ("Map lengths greater than 256 entries are unsupported by GIMP.");
-      gimp_quit ();
+      g_message ("Map lengths greater than 256 entries are unsupported by LIGMA.");
+      ligma_quit ();
     }
 
   /* Is there a RGB colormap ? */
@@ -503,7 +503,7 @@ load_image (GFile   *file,
       if (sunhdr.l_ras_magic != RAS_MAGIC)
         {
           g_message (_("Could not read color entries from '%s'"),
-                     gimp_file_get_utf8_name (file));
+                     ligma_file_get_utf8_name (file));
           fclose (ifp);
           g_free (suncolmap);
           return NULL;
@@ -519,15 +519,15 @@ load_image (GFile   *file,
   if (sunhdr.l_ras_width <= 0)
     {
       g_message (_("'%s':\nNo image width specified"),
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
 
-  if (sunhdr.l_ras_width > GIMP_MAX_IMAGE_SIZE)
+  if (sunhdr.l_ras_width > LIGMA_MAX_IMAGE_SIZE)
     {
-      g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_message (_("'%s':\nImage width is larger than LIGMA can handle"),
+                 ligma_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -535,15 +535,15 @@ load_image (GFile   *file,
   if (sunhdr.l_ras_height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
 
-  if (sunhdr.l_ras_height > GIMP_MAX_IMAGE_SIZE)
+  if (sunhdr.l_ras_height > LIGMA_MAX_IMAGE_SIZE)
     {
-      g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_message (_("'%s':\nImage height is larger than LIGMA can handle"),
+                 ligma_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -570,7 +570,7 @@ load_image (GFile   *file,
       image = NULL;
       break;
     }
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   fclose (ifp);
 
@@ -587,24 +587,24 @@ load_image (GFile   *file,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GObject       *config,
             GError       **error)
 {
   FILE          *ofp;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   gboolean       rle;
   gboolean       retval;
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
   g_object_get (config,
                 "rle", &rle,
                 NULL);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("SUNRAS export cannot handle images with alpha channels"));
@@ -613,9 +613,9 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_GRAY_IMAGE:
-    case GIMP_RGB_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_GRAY_IMAGE:
+    case LIGMA_RGB_IMAGE:
       break;
     default:
       g_message (_("Can't operate on unknown image types"));
@@ -623,8 +623,8 @@ save_image (GFile         *file,
       break;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* Open the output file. */
   ofp = g_fopen (g_file_peek_path (file), "wb");
@@ -633,19 +633,19 @@ save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
-  if (drawable_type == GIMP_INDEXED_IMAGE)
+  if (drawable_type == LIGMA_INDEXED_IMAGE)
     {
       retval = save_index (ofp, image, drawable, FALSE, rle);
     }
-  else if (drawable_type == GIMP_GRAY_IMAGE)
+  else if (drawable_type == LIGMA_GRAY_IMAGE)
     {
       retval = save_index (ofp, image, drawable, TRUE, rle);
     }
-  else if (drawable_type == GIMP_RGB_IMAGE)
+  else if (drawable_type == LIGMA_RGB_IMAGE)
     {
       retval = save_rgb (ofp, image, drawable, rle);
     }
@@ -1015,10 +1015,10 @@ write_sun_cols (FILE            *ofp,
 }
 
 
-/* Set a GIMP colortable using the sun colormap */
+/* Set a LIGMA colortable using the sun colormap */
 
 static void
-set_color_table (GimpImage       *image,
+set_color_table (LigmaImage       *image,
                  L_SUNFILEHEADER *sunhdr,
                  const guchar    *suncolmap)
 {
@@ -1037,61 +1037,61 @@ set_color_table (GimpImage       *image,
     }
 
 #ifdef DEBUG
-  printf ("Set GIMP colortable:\n");
+  printf ("Set LIGMA colortable:\n");
   for (j = 0; j < ncols; j++)
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
             ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
-  gimp_image_set_colormap (image, ColorMap, ncols);
+  ligma_image_set_colormap (image, ColorMap, ncols);
 }
 
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
-static GimpImage *
+static LigmaImage *
 create_new_image (GFile              *file,
                   guint               width,
                   guint               height,
-                  GimpImageBaseType   type,
-                  GimpLayer         **layer,
+                  LigmaImageBaseType   type,
+                  LigmaLayer         **layer,
                   GeglBuffer        **buffer)
 {
-  GimpImage     *image;
-  GimpImageType  gdtype;
+  LigmaImage     *image;
+  LigmaImageType  gdtype;
 
   switch (type)
     {
-    case GIMP_RGB:
-      gdtype = GIMP_RGB_IMAGE;
+    case LIGMA_RGB:
+      gdtype = LIGMA_RGB_IMAGE;
       break;
-    case GIMP_GRAY:
-      gdtype = GIMP_GRAY_IMAGE;
+    case LIGMA_GRAY:
+      gdtype = LIGMA_GRAY_IMAGE;
       break;
-    case GIMP_INDEXED:
-      gdtype = GIMP_INDEXED_IMAGE;
+    case LIGMA_INDEXED:
+      gdtype = LIGMA_INDEXED_IMAGE;
       break;
     default:
       g_warning ("Unsupported image type");
       return NULL;
     }
 
-  image = gimp_image_new (width, height, type);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new (width, height, type);
+  ligma_image_set_file (image, file);
 
-  *layer = gimp_layer_new (image, _("Background"), width, height,
+  *layer = ligma_layer_new (image, _("Background"), width, height,
                            gdtype,
                            100,
-                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, *layer, NULL, 0);
+                           ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, *layer, NULL, 0);
 
-  *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (*layer));
+  *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (*layer));
 
   return image;
 }
 
 
 /* Load SUN-raster-file with depth 1 */
-static GimpImage *
+static LigmaImage *
 load_sun_d1 (GFile           *file,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
@@ -1101,8 +1101,8 @@ load_sun_d1 (GFile           *file,
   int               width, height, linepad, scan_lines, tile_height;
   int               i, j;
   guchar           *dest, *data;
-  GimpImage        *image;
-  GimpLayer        *layer;
+  LigmaImage        *image;
+  LigmaLayer        *layer;
   GeglBuffer       *buffer;
   guchar            bit2byte[256 * 8];
   L_SUNFILEHEADER   sun_bwhdr;
@@ -1113,10 +1113,10 @@ load_sun_d1 (GFile           *file,
   width = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
-  image = create_new_image (file, width, height, GIMP_INDEXED,
+  image = create_new_image (file, width, height, LIGMA_INDEXED,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width);
 
   if (suncolmap != NULL)   /* Set up the specified color map */
@@ -1173,7 +1173,7 @@ load_sun_d1 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        ligma_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -1198,7 +1198,7 @@ load_sun_d1 (GFile           *file,
 
 /* Load SUN-raster-file with depth 8 */
 
-static GimpImage *
+static LigmaImage *
 load_sun_d8 (GFile           *file,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
@@ -1209,8 +1209,8 @@ load_sun_d8 (GFile           *file,
   gint        ncols;
   int         scan_lines, tile_height;
   guchar     *dest, *data;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   GeglBuffer *buffer;
   int         err = 0;
   gboolean    rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
@@ -1238,10 +1238,10 @@ load_sun_d8 (GFile           *file,
     }
 
   image = create_new_image (file, width, height,
-                            grayscale ? GIMP_GRAY : GIMP_INDEXED,
+                            grayscale ? LIGMA_GRAY : LIGMA_INDEXED,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width);
 
   if (!grayscale)
@@ -1268,7 +1268,7 @@ load_sun_d8 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        ligma_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -1292,7 +1292,7 @@ load_sun_d8 (GFile           *file,
 
 
 /* Load SUN-raster-file with depth 24 */
-static GimpImage *
+static LigmaImage *
 load_sun_d24 (GFile            *file,
               FILE             *ifp,
               L_SUNFILEHEADER  *sunhdr,
@@ -1302,8 +1302,8 @@ load_sun_d24 (GFile            *file,
   guchar     *data;
   int         width, height, linepad, tile_height, scan_lines;
   int         i, j;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   GeglBuffer *buffer;
   int         err = 0;
   gboolean    rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
@@ -1311,10 +1311,10 @@ load_sun_d24 (GFile            *file,
   width  = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
-  image = create_new_image (file, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, LIGMA_RGB,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
   linepad = ((sunhdr->l_ras_width*3) % 2);
@@ -1334,7 +1334,7 @@ load_sun_d24 (GFile            *file,
       if (linepad)
         err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
 
-      if (sunhdr->l_ras_type == 3) /* RGB-format ? That is what GIMP wants */
+      if (sunhdr->l_ras_type == 3) /* RGB-format ? That is what LIGMA wants */
         {
           dest += width * 3;
         }
@@ -1352,7 +1352,7 @@ load_sun_d24 (GFile            *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i + 1) / (double)height);
+        ligma_progress_update ((double)(i + 1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i + 1) == height))
         {
@@ -1377,7 +1377,7 @@ load_sun_d24 (GFile            *file,
 
 /* Load SUN-raster-file with depth 32 */
 
-static GimpImage *
+static LigmaImage *
 load_sun_d32 (GFile           *file,
               FILE            *ifp,
               L_SUNFILEHEADER *sunhdr,
@@ -1387,8 +1387,8 @@ load_sun_d32 (GFile           *file,
   guchar     *data;
   int         width, height, tile_height, scan_lines;
   int         i, j;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   GeglBuffer *buffer;
   int         err = 0;
   int         cerr;
@@ -1401,10 +1401,10 @@ load_sun_d32 (GFile           *file,
 
   cerr = 0;
 
-  image = create_new_image (file, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, LIGMA_RGB,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
   if (rle)
@@ -1452,7 +1452,7 @@ load_sun_d32 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i + 1) / (double)height);
+        ligma_progress_update ((double)(i + 1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i + 1) == height))
         {
@@ -1477,8 +1477,8 @@ load_sun_d32 (GFile           *file,
 
 static gboolean
 save_index (FILE         *ofp,
-            GimpImage    *image,
-            GimpDrawable *drawable,
+            LigmaImage    *image,
+            LigmaDrawable *drawable,
             gboolean      grey,
             gboolean      rle)
 {
@@ -1497,12 +1497,12 @@ save_index (FILE         *ofp,
   const Babl     *format;
   WRITE_FUN      *write_fun;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   if (grey)
     format = babl_format ("Y' u8");
@@ -1527,7 +1527,7 @@ save_index (FILE         *ofp,
     }
   else
     {
-      cmap = gimp_image_get_colormap (image, &ncols);
+      cmap = ligma_image_get_colormap (image, &ncols);
 
       for (j = 0; j < ncols; j++)
         {
@@ -1612,7 +1612,7 @@ save_index (FILE         *ofp,
           src += width;
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double) i / (double) height);
+            ligma_progress_update ((double) i / (double) height);
         }
     }
   else   /* Color or grey-image */
@@ -1628,7 +1628,7 @@ save_index (FILE         *ofp,
           src += width;
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double) i / (double) height);
+            ligma_progress_update ((double) i / (double) height);
         }
     }
 
@@ -1656,8 +1656,8 @@ save_index (FILE         *ofp,
 
 static gboolean
 save_rgb (FILE         *ofp,
-          GimpImage    *image,
-          GimpDrawable *drawable,
+          LigmaImage    *image,
+          LigmaDrawable *drawable,
           gboolean      rle)
 {
   int              height, width, tile_height, linepad;
@@ -1667,12 +1667,12 @@ save_rgb (FILE         *ofp,
   GeglBuffer      *buffer;
   const Babl      *format;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   format = babl_format ("R'G'B' u8");
 
@@ -1728,7 +1728,7 @@ save_rgb (FILE         *ofp,
             putc (0, ofp);
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double) i / (double) height);
+            ligma_progress_update ((double) i / (double) height);
         }
     }
   else  /* Write runlength encoded */
@@ -1753,7 +1753,7 @@ save_rgb (FILE         *ofp,
             rle_putc (0, ofp);
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double) i / (double) height);
+            ligma_progress_update ((double) i / (double) height);
         }
 
       rle_endwrite (ofp);
@@ -1778,18 +1778,18 @@ save_rgb (FILE         *ofp,
 /*  Save interface functions  */
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *frame;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as SUNRAS"));
 
-  frame = gimp_prop_boolean_radio_frame_new (config, "rle",
+  frame = ligma_prop_boolean_radio_frame_new (config, "rle",
                                              _("Data Formatting"),
                                              _("_RunLength Encoded"),
                                              _("_Standard"));
@@ -1800,7 +1800,7 @@ save_dialog (GimpProcedure *procedure,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

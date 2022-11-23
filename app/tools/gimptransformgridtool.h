@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_GRID_TOOL_H__
-#define __GIMP_TRANSFORM_GRID_TOOL_H__
+#ifndef __LIGMA_TRANSFORM_GRID_TOOL_H__
+#define __LIGMA_TRANSFORM_GRID_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "ligmatransformtool.h"
 
 
 /* This is not the number of items in the enum above, but the max size
@@ -31,21 +31,21 @@
 typedef gdouble TransInfo[TRANS_INFO_SIZE];
 
 
-#define GIMP_TYPE_TRANSFORM_GRID_TOOL            (gimp_transform_grid_tool_get_type ())
-#define GIMP_TRANSFORM_GRID_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSFORM_GRID_TOOL, GimpTransformGridTool))
-#define GIMP_TRANSFORM_GRID_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_GRID_TOOL, GimpTransformGridToolClass))
-#define GIMP_IS_TRANSFORM_GRID_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_GRID_TOOL))
-#define GIMP_IS_TRANSFORM_GRID_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_GRID_TOOL))
-#define GIMP_TRANSFORM_GRID_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_GRID_TOOL, GimpTransformGridToolClass))
+#define LIGMA_TYPE_TRANSFORM_GRID_TOOL            (ligma_transform_grid_tool_get_type ())
+#define LIGMA_TRANSFORM_GRID_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRANSFORM_GRID_TOOL, LigmaTransformGridTool))
+#define LIGMA_TRANSFORM_GRID_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRANSFORM_GRID_TOOL, LigmaTransformGridToolClass))
+#define LIGMA_IS_TRANSFORM_GRID_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRANSFORM_GRID_TOOL))
+#define LIGMA_IS_TRANSFORM_GRID_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRANSFORM_GRID_TOOL))
+#define LIGMA_TRANSFORM_GRID_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRANSFORM_GRID_TOOL, LigmaTransformGridToolClass))
 
-#define GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS(t)  (GIMP_TRANSFORM_GRID_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_TRANSFORM_GRID_TOOL_GET_OPTIONS(t)  (LIGMA_TRANSFORM_GRID_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpTransformGridToolClass GimpTransformGridToolClass;
+typedef struct _LigmaTransformGridToolClass LigmaTransformGridToolClass;
 
-struct _GimpTransformGridTool
+struct _LigmaTransformGridTool
 {
-  GimpTransformTool   parent_instance;
+  LigmaTransformTool   parent_instance;
 
   TransInfo           init_trans_info;  /*  initial transformation info           */
   TransInfo           trans_infos[2];   /*  forward/backward transformation info  */
@@ -59,44 +59,44 @@ struct _GimpTransformGridTool
   GList              *hidden_objects;   /*  the objects that was hidden during
                                             the transform                         */
 
-  GimpToolWidget     *widget;
-  GimpToolWidget     *grab_widget;
+  LigmaToolWidget     *widget;
+  LigmaToolWidget     *grab_widget;
   GList              *previews;
-  GimpCanvasItem     *boundary_in;
-  GimpCanvasItem     *boundary_out;
+  LigmaCanvasItem     *boundary_in;
+  LigmaCanvasItem     *boundary_out;
   GPtrArray          *strokes;
 
   GHashTable         *filters;
   GList              *preview_drawables;
 
-  GimpToolGui        *gui;
+  LigmaToolGui        *gui;
 };
 
-struct _GimpTransformGridToolClass
+struct _LigmaTransformGridToolClass
 {
-  GimpTransformToolClass  parent_class;
+  LigmaTransformToolClass  parent_class;
 
   /*  virtual functions  */
-  gboolean         (* info_to_matrix) (GimpTransformGridTool  *tg_tool,
-                                       GimpMatrix3            *transform);
-  void             (* matrix_to_info) (GimpTransformGridTool  *tg_tool,
-                                       const GimpMatrix3      *transform);
-  void             (* apply_info)     (GimpTransformGridTool  *tg_tool,
+  gboolean         (* info_to_matrix) (LigmaTransformGridTool  *tg_tool,
+                                       LigmaMatrix3            *transform);
+  void             (* matrix_to_info) (LigmaTransformGridTool  *tg_tool,
+                                       const LigmaMatrix3      *transform);
+  void             (* apply_info)     (LigmaTransformGridTool  *tg_tool,
                                        const TransInfo         info);
-  gchar          * (* get_undo_desc)  (GimpTransformGridTool  *tg_tool);
-  void             (* dialog)         (GimpTransformGridTool  *tg_tool);
-  void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);
-  void             (* prepare)        (GimpTransformGridTool  *tg_tool);
-  void             (* readjust)       (GimpTransformGridTool  *tg_tool);
-  GimpToolWidget * (* get_widget)     (GimpTransformGridTool  *tg_tool);
-  void             (* update_widget)  (GimpTransformGridTool  *tg_tool);
-  void             (* widget_changed) (GimpTransformGridTool  *tg_tool);
-  GeglBuffer     * (* transform)      (GimpTransformGridTool  *tg_tool,
+  gchar          * (* get_undo_desc)  (LigmaTransformGridTool  *tg_tool);
+  void             (* dialog)         (LigmaTransformGridTool  *tg_tool);
+  void             (* dialog_update)  (LigmaTransformGridTool  *tg_tool);
+  void             (* prepare)        (LigmaTransformGridTool  *tg_tool);
+  void             (* readjust)       (LigmaTransformGridTool  *tg_tool);
+  LigmaToolWidget * (* get_widget)     (LigmaTransformGridTool  *tg_tool);
+  void             (* update_widget)  (LigmaTransformGridTool  *tg_tool);
+  void             (* widget_changed) (LigmaTransformGridTool  *tg_tool);
+  GeglBuffer     * (* transform)      (LigmaTransformGridTool  *tg_tool,
                                        GList                  *objects,
                                        GeglBuffer             *orig_buffer,
                                        gint                    orig_offset_x,
                                        gint                    orig_offset_y,
-                                       GimpColorProfile      **buffer_profile,
+                                       LigmaColorProfile      **buffer_profile,
                                        gint                   *new_offset_x,
                                        gint                   *new_offset_y);
 
@@ -104,15 +104,15 @@ struct _GimpTransformGridToolClass
 };
 
 
-GType      gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
+GType      ligma_transform_grid_tool_get_type           (void) G_GNUC_CONST;
 
-gboolean   gimp_transform_grid_tool_info_to_matrix     (GimpTransformGridTool *tg_tool,
-                                                        GimpMatrix3           *transform);
-void       gimp_transform_grid_tool_matrix_to_info     (GimpTransformGridTool *tg_tool,
-                                                        const GimpMatrix3     *transform);
+gboolean   ligma_transform_grid_tool_info_to_matrix     (LigmaTransformGridTool *tg_tool,
+                                                        LigmaMatrix3           *transform);
+void       ligma_transform_grid_tool_matrix_to_info     (LigmaTransformGridTool *tg_tool,
+                                                        const LigmaMatrix3     *transform);
 
-void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool,
+void       ligma_transform_grid_tool_push_internal_undo (LigmaTransformGridTool *tg_tool,
                                                         gboolean               compress);
 
 
-#endif  /*  __GIMP_TRANSFORM_GRID_TOOL_H__  */
+#endif  /*  __LIGMA_TRANSFORM_GRID_TOOL_H__  */

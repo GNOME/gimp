@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * action-search-dialog.c
@@ -24,6 +24,6 @@
 #ifndef __ACTION_SEARCH_DIALOG_H__
 #define __ACTION_SEARCH_DIALOG_H__
 
-GtkWidget * action_search_dialog_create (Gimp *gimp);
+GtkWidget * action_search_dialog_create (Ligma *ligma);
 
 #endif /* __ACTION_SEARCH_DIALOG_H__ */

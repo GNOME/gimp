@@ -13,7 +13,7 @@
    id="svg2"
    viewBox="0 0 16 16"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-prefs-playground.svg">
+   sodipodi:docname="ligma-prefs-playground.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -45,13 +45,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,7 +62,7 @@
      transform="translate(-393.41017,38.373177)"
      id="preferences">
     <g
-       id="gimp-prefs-playground"
+       id="ligma-prefs-playground"
        transform="translate(393.41017,-1074.7354)">
       <rect
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.09440226;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"

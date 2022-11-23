@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,21 +21,21 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimpimage-private.h"
-#include "gimpimage-quick-mask.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimplayer-floating-selection.h"
+#include "ligma.h"
+#include "ligmachannel.h"
+#include "ligmaimage.h"
+#include "ligmaimage-private.h"
+#include "ligmaimage-quick-mask.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmalayer.h"
+#include "ligmalayer-floating-selection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define CHANNEL_WAS_ACTIVE (0x2)
@@ -44,20 +44,20 @@
 /*  public functions  */
 
 void
-gimp_image_set_quick_mask_state (GimpImage *image,
+ligma_image_set_quick_mask_state (LigmaImage *image,
                                  gboolean   active)
 {
-  GimpImagePrivate *private;
-  GimpChannel      *selection;
-  GimpChannel      *mask;
+  LigmaImagePrivate *private;
+  LigmaChannel      *selection;
+  LigmaChannel      *mask;
   gboolean          channel_was_active;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  if (active == gimp_image_get_quick_mask_state (image))
+  if (active == ligma_image_get_quick_mask_state (image))
     return;
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   /*  Keep track of the state so that we can make the right drawable
    *  active again when deactiviting quick mask (see bug #134371).
@@ -65,7 +65,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
   if (private->quick_mask_state)
     channel_was_active = (private->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
   else
-    channel_was_active = (gimp_image_get_selected_channels (image) != NULL);
+    channel_was_active = (ligma_image_get_selected_channels (image) != NULL);
 
   /*  Set private->quick_mask_state early so we can return early when
    *  being called recursively.
@@ -75,138 +75,138 @@ gimp_image_set_quick_mask_state (GimpImage *image,
                                          CHANNEL_WAS_ACTIVE : 0)
                                : FALSE);
 
-  selection = gimp_image_get_mask (image);
-  mask      = gimp_image_get_quick_mask (image);
+  selection = ligma_image_get_mask (image);
+  mask      = ligma_image_get_quick_mask (image);
 
   if (active)
     {
       if (! mask)
         {
-          GimpLayer *floating_sel;
+          LigmaLayer *floating_sel;
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        C_("undo-type", "Enable Quick Mask"));
 
-          floating_sel = gimp_image_get_floating_selection (image);
+          floating_sel = ligma_image_get_floating_selection (image);
 
           if (floating_sel)
             floating_sel_to_layer (floating_sel, NULL);
 
-          mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                                    GIMP_TYPE_CHANNEL));
+          mask = LIGMA_CHANNEL (ligma_item_duplicate (LIGMA_ITEM (selection),
+                                                    LIGMA_TYPE_CHANNEL));
 
-          if (! gimp_channel_is_empty (selection))
-            gimp_channel_clear (selection, NULL, TRUE);
+          if (! ligma_channel_is_empty (selection))
+            ligma_channel_clear (selection, NULL, TRUE);
 
-          gimp_channel_set_color (mask, &private->quick_mask_color, FALSE);
-          gimp_item_rename (GIMP_ITEM (mask), GIMP_IMAGE_QUICK_MASK_NAME,
+          ligma_channel_set_color (mask, &private->quick_mask_color, FALSE);
+          ligma_item_rename (LIGMA_ITEM (mask), LIGMA_IMAGE_QUICK_MASK_NAME,
                             NULL);
 
           if (private->quick_mask_inverted)
-            gimp_channel_invert (mask, FALSE);
+            ligma_channel_invert (mask, FALSE);
 
-          gimp_image_add_channel (image, mask, NULL, 0, TRUE);
+          ligma_image_add_channel (image, mask, NULL, 0, TRUE);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
     }
   else
     {
       if (mask)
         {
-          GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
+          LigmaLayer *floating_sel = ligma_image_get_floating_selection (image);
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        C_("undo-type", "Disable Quick Mask"));
 
           if (private->quick_mask_inverted)
-            gimp_channel_invert (mask, TRUE);
+            ligma_channel_invert (mask, TRUE);
 
           if (floating_sel &&
-              gimp_layer_get_floating_sel_drawable (floating_sel) == GIMP_DRAWABLE (mask))
+              ligma_layer_get_floating_sel_drawable (floating_sel) == LIGMA_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
 
-          gimp_item_to_selection (GIMP_ITEM (mask),
-                                  GIMP_CHANNEL_OP_REPLACE,
+          ligma_item_to_selection (LIGMA_ITEM (mask),
+                                  LIGMA_CHANNEL_OP_REPLACE,
                                   TRUE, FALSE, 0.0, 0.0);
-          gimp_image_remove_channel (image, mask, TRUE, NULL);
+          ligma_image_remove_channel (image, mask, TRUE, NULL);
 
           if (! channel_was_active)
-            gimp_image_unset_selected_channels (image);
+            ligma_image_unset_selected_channels (image);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
     }
 
-  gimp_image_quick_mask_changed (image);
+  ligma_image_quick_mask_changed (image);
 }
 
 gboolean
-gimp_image_get_quick_mask_state (GimpImage *image)
+ligma_image_get_quick_mask_state (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_state;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->quick_mask_state;
 }
 
 void
-gimp_image_set_quick_mask_color (GimpImage     *image,
-                                 const GimpRGB *color)
+ligma_image_set_quick_mask_color (LigmaImage     *image,
+                                 const LigmaRGB *color)
 {
-  GimpChannel *quick_mask;
+  LigmaChannel *quick_mask;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = *color;
+  LIGMA_IMAGE_GET_PRIVATE (image)->quick_mask_color = *color;
 
-  quick_mask = gimp_image_get_quick_mask (image);
+  quick_mask = ligma_image_get_quick_mask (image);
   if (quick_mask)
-    gimp_channel_set_color (quick_mask, color, TRUE);
+    ligma_channel_set_color (quick_mask, color, TRUE);
 }
 
 void
-gimp_image_get_quick_mask_color (GimpImage *image,
-                                 GimpRGB   *color)
+ligma_image_get_quick_mask_color (LigmaImage *image,
+                                 LigmaRGB   *color)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  *color = GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color;
+  *color = LIGMA_IMAGE_GET_PRIVATE (image)->quick_mask_color;
 }
 
-GimpChannel *
-gimp_image_get_quick_mask (GimpImage *image)
+LigmaChannel *
+ligma_image_get_quick_mask (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return gimp_image_get_channel_by_name (image, GIMP_IMAGE_QUICK_MASK_NAME);
+  return ligma_image_get_channel_by_name (image, LIGMA_IMAGE_QUICK_MASK_NAME);
 }
 
 void
-gimp_image_quick_mask_invert (GimpImage *image)
+ligma_image_quick_mask_invert (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->quick_mask_state)
     {
-      GimpChannel *quick_mask = gimp_image_get_quick_mask (image);
+      LigmaChannel *quick_mask = ligma_image_get_quick_mask (image);
 
       if (quick_mask)
-        gimp_channel_invert (quick_mask, TRUE);
+        ligma_channel_invert (quick_mask, TRUE);
     }
 
   private->quick_mask_inverted = ! private->quick_mask_inverted;
 }
 
 gboolean
-gimp_image_get_quick_mask_inverted (GimpImage *image)
+ligma_image_get_quick_mask_inverted (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_inverted;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->quick_mask_inverted;
 }

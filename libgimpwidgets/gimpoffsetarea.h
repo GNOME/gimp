@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpoffsetarea.h
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * ligmaoffsetarea.h
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,71 +19,71 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_OFFSET_AREA_H__
-#define __GIMP_OFFSET_AREA_H__
+#ifndef __LIGMA_OFFSET_AREA_H__
+#define __LIGMA_OFFSET_AREA_H__
 
 G_BEGIN_DECLS
 
 
 /* For information look into the C source or the html documentation */
 
-#define GIMP_TYPE_OFFSET_AREA            (gimp_offset_area_get_type ())
-#define GIMP_OFFSET_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetArea))
-#define GIMP_OFFSET_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
-#define GIMP_IS_OFFSET_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
-#define GIMP_IS_OFFSET_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
-#define GIMP_OFFSET_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
+#define LIGMA_TYPE_OFFSET_AREA            (ligma_offset_area_get_type ())
+#define LIGMA_OFFSET_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OFFSET_AREA, LigmaOffsetArea))
+#define LIGMA_OFFSET_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OFFSET_AREA, LigmaOffsetAreaClass))
+#define LIGMA_IS_OFFSET_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OFFSET_AREA))
+#define LIGMA_IS_OFFSET_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OFFSET_AREA))
+#define LIGMA_OFFSET_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OFFSET_AREA, LigmaOffsetAreaClass))
 
 
-typedef struct _GimpOffsetAreaPrivate GimpOffsetAreaPrivate;
-typedef struct _GimpOffsetAreaClass   GimpOffsetAreaClass;
+typedef struct _LigmaOffsetAreaPrivate LigmaOffsetAreaPrivate;
+typedef struct _LigmaOffsetAreaClass   LigmaOffsetAreaClass;
 
-struct _GimpOffsetArea
+struct _LigmaOffsetArea
 {
   GtkDrawingArea         parent_instance;
 
-  GimpOffsetAreaPrivate *priv;
+  LigmaOffsetAreaPrivate *priv;
 };
 
-struct _GimpOffsetAreaClass
+struct _LigmaOffsetAreaClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* offsets_changed) (GimpOffsetArea *offset_area,
+  void (* offsets_changed) (LigmaOffsetArea *offset_area,
                             gint            offset_x,
                             gint            offset_y);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_offset_area_get_type    (void) G_GNUC_CONST;
+GType       ligma_offset_area_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_offset_area_new         (gint            orig_width,
+GtkWidget * ligma_offset_area_new         (gint            orig_width,
                                           gint            orig_height);
-void        gimp_offset_area_set_pixbuf  (GimpOffsetArea *offset_area,
+void        ligma_offset_area_set_pixbuf  (LigmaOffsetArea *offset_area,
                                           GdkPixbuf      *pixbuf);
 
-void        gimp_offset_area_set_size    (GimpOffsetArea *offset_area,
+void        ligma_offset_area_set_size    (LigmaOffsetArea *offset_area,
                                           gint            width,
                                           gint            height);
-void        gimp_offset_area_set_offsets (GimpOffsetArea *offset_area,
+void        ligma_offset_area_set_offsets (LigmaOffsetArea *offset_area,
                                           gint            offset_x,
                                           gint            offset_y);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_OFFSET_AREA_H__ */
+#endif /* __LIGMA_OFFSET_AREA_H__ */

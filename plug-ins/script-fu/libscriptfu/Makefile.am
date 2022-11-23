@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-# Derived from libgimp/Makefile.am and modules/Makefile.am
+# Derived from libligma/Makefile.am and modules/Makefile.am
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -25,14 +25,14 @@ exchndl = -lexchndl
 endif
 
 scriptfu_def = script-fu.def
-libgimp_scriptfu_export_symbols = -export-symbols $(srcdir)/script-fu.def
+libligma_scriptfu_export_symbols = -export-symbols $(srcdir)/script-fu.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimp-scriptfu-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligma-scriptfu-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) $(srcdir)/script-fu.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimp-scriptfu-$(GIMP_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/libligma-scriptfu-$(LIGMA_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/script-fu.def
 else
 install-libtool-import-lib:
@@ -40,16 +40,16 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimp-scriptfu-$(GIMP_API_VERSION).lib
+noinst_DATA = ligma-scriptfu-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimp-scriptfu-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligma-scriptfu-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimp-scriptfu-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligma-scriptfu-$(LIGMA_API_VERSION).lib
 
-gimp-scriptfu-@GIMP_API_VERSION@.lib: script-fu.def
-	lib -name:libgimp-scriptfu-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:script-fu.def -out:$@
+ligma-scriptfu-@LIGMA_API_VERSION@.lib: script-fu.def
+	lib -name:libligma-scriptfu-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:script-fu.def -out:$@
 
 else
 install-ms-lib:
@@ -76,7 +76,7 @@ AM_CXXFLAGS = \
 AM_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)   \
 	$(no_undefined)                    \
-	$(libgimp_scriptfu_export_symbols) \
+	$(libligma_scriptfu_export_symbols) \
 	$(mwindows)		\
 	$(framework_cocoa)	\
 	$(xnone)
@@ -87,16 +87,16 @@ SUBDIRS = tinyscheme ftx
 libtinyscheme = tinyscheme/libtinyscheme.la $(libm)
 libftx = ftx/libftx.la
 
-# FUTURE: install to private dir "lib" near other GIMP plugin executables
+# FUTURE: install to private dir "lib" near other LIGMA plugin executables
 # Not doing this because it complicates packaging
-# Instead, this library installs in same place as libgimp
-# libdir = $(gimpplugindir)/lib
+# Instead, this library installs in same place as libligma
+# libdir = $(ligmaplugindir)/lib
 
 # Declare target, this library
-lib_LTLIBRARIES = libgimp-scriptfu-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligma-scriptfu-@LIGMA_API_VERSION@.la
 
 # declare sources, independent of static versus shared
-libgimp_scriptfu_@GIMP_API_VERSION@_la_SOURCES = \
+libligma_scriptfu_@LIGMA_API_VERSION@_la_SOURCES = \
 	script-fu-types.h   \
 	script-fu-enums.h   \
 	script-fu-interface.c \
@@ -133,14 +133,14 @@ libgimp_scriptfu_@GIMP_API_VERSION@_la_SOURCES = \
 	script-fu-run-func.h \
 	script-fu-run-func.c
 
-EXTRA_libgimp_scriptfu_@GIMP_API_VERSION@_la_DEPENDENCIES = $(scriptfu_def)
+EXTRA_libligma_scriptfu_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(scriptfu_def)
 
-libgimp_scriptfu_@GIMP_API_VERSION@_la_LIBADD = \
+libligma_scriptfu_@LIGMA_API_VERSION@_la_LIBADD = \
 	$(libtinyscheme)  \
 	$(libftx)         \
 	$(exchndl)
 
-# libgimp-scriptfu depends on many other libraries, but we don't declare deps
+# libligma-scriptfu depends on many other libraries, but we don't declare deps
 # until exist more than just the script-fu executable using the lib
 
 EXTRA_DIST = \

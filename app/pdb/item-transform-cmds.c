@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,202 +25,202 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimpchannel.h"
-#include "core/gimpdrawable-transform.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmachannel.h"
+#include "core/ligmadrawable-transform.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-item_transform_translate_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_translate_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble off_x;
   gdouble off_y;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  off_x = g_value_get_double (gimp_value_array_index (args, 1));
-  off_y = g_value_get_double (gimp_value_array_index (args, 2));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  off_x = g_value_get_double (ligma_value_array_index (args, 1));
+  off_y = g_value_get_double (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (item,
-                                       GIMP_PDB_ITEM_POSITION, error))
-        gimp_item_translate (item, off_x, off_y, TRUE);
+      if (ligma_pdb_item_is_modifiable (item,
+                                       LIGMA_PDB_ITEM_POSITION, error))
+        ligma_item_translate (item, off_x, off_y, TRUE);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_flip_simple_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_flip_simple_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gint flip_type;
   gboolean auto_center;
   gdouble axis;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
-  axis = g_value_get_double (gimp_value_array_index (args, 3));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  flip_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (ligma_value_array_index (args, 2));
+  axis = g_value_get_double (ligma_value_array_index (args, 3));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
-          gimp_transform_get_flip_axis (x, y, width, height,
+          ligma_transform_get_flip_axis (x, y, width, height,
                                         flip_type, auto_center, &axis);
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_flip (GIMP_DRAWABLE (item), context,
+              drawable = ligma_drawable_transform_flip (LIGMA_DRAWABLE (item), context,
                                                        flip_type, axis,
                                                        pdb_context->transform_resize);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_flip (item, context,
+              ligma_item_flip (item, context,
                               flip_type, axis,
-                              gimp_item_get_clip (
+                              ligma_item_get_clip (
                                 item, pdb_context->transform_resize));
             }
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_flip_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_flip_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble x0;
   gdouble y0;
   gdouble x1;
   gdouble y1;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  x0 = g_value_get_double (gimp_value_array_index (args, 1));
-  y0 = g_value_get_double (gimp_value_array_index (args, 2));
-  x1 = g_value_get_double (gimp_value_array_index (args, 3));
-  y1 = g_value_get_double (gimp_value_array_index (args, 4));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  x0 = g_value_get_double (ligma_value_array_index (args, 1));
+  y0 = g_value_get_double (ligma_value_array_index (args, 2));
+  x1 = g_value_get_double (ligma_value_array_index (args, 3));
+  y1 = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity (&matrix);
-          gimp_transform_matrix_flip_free (&matrix, x0, y0, x1, y1);
+          ligma_matrix3_identity (&matrix);
+          ligma_transform_matrix_flip_free (&matrix, x0, y0, x1, y1);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Flipping"));
+            ligma_progress_start (progress, FALSE, _("Flipping"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -228,45 +228,45 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_perspective_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_perspective_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble x0;
   gdouble y0;
   gdouble x1;
@@ -276,55 +276,55 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
   gdouble x3;
   gdouble y3;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  x0 = g_value_get_double (gimp_value_array_index (args, 1));
-  y0 = g_value_get_double (gimp_value_array_index (args, 2));
-  x1 = g_value_get_double (gimp_value_array_index (args, 3));
-  y1 = g_value_get_double (gimp_value_array_index (args, 4));
-  x2 = g_value_get_double (gimp_value_array_index (args, 5));
-  y2 = g_value_get_double (gimp_value_array_index (args, 6));
-  x3 = g_value_get_double (gimp_value_array_index (args, 7));
-  y3 = g_value_get_double (gimp_value_array_index (args, 8));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  x0 = g_value_get_double (ligma_value_array_index (args, 1));
+  y0 = g_value_get_double (ligma_value_array_index (args, 2));
+  x1 = g_value_get_double (ligma_value_array_index (args, 3));
+  y1 = g_value_get_double (ligma_value_array_index (args, 4));
+  x2 = g_value_get_double (ligma_value_array_index (args, 5));
+  y2 = g_value_get_double (ligma_value_array_index (args, 6));
+  x3 = g_value_get_double (ligma_value_array_index (args, 7));
+  y3 = g_value_get_double (ligma_value_array_index (args, 8));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity (&matrix);
-          gimp_transform_matrix_perspective (&matrix,
+          ligma_matrix3_identity (&matrix);
+          ligma_transform_matrix_perspective (&matrix,
                                              x, y, width, height,
                                              x0, y0, x1, y1,
                                              x2, y2, x3, y3);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Perspective"));
+            ligma_progress_start (progress, FALSE, _("Perspective"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -332,180 +332,180 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_rotate_simple_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gint rotate_type;
   gboolean auto_center;
   gdouble center_x;
   gdouble center_y;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
-  center_x = g_value_get_double (gimp_value_array_index (args, 3));
-  center_y = g_value_get_double (gimp_value_array_index (args, 4));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  rotate_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (ligma_value_array_index (args, 2));
+  center_x = g_value_get_double (ligma_value_array_index (args, 3));
+  center_y = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
-          gimp_transform_get_rotate_center (x, y, width, height,
+          ligma_transform_get_rotate_center (x, y, width, height,
                                             auto_center, &center_x, &center_y);
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_rotate (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_rotate (LIGMA_DRAWABLE (item),
                                                          context,
                                                          rotate_type,
                                                          center_x, center_y,
                                                          pdb_context->transform_resize);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_rotate (item, context,
+              ligma_item_rotate (item, context,
                                 rotate_type,
                                 center_x, center_y,
-                                gimp_item_get_clip (
+                                ligma_item_get_clip (
                                   item, pdb_context->transform_resize));
             }
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_rotate_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_rotate_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble angle;
   gboolean auto_center;
   gdouble center_x;
   gdouble center_y;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  angle = g_value_get_double (gimp_value_array_index (args, 1));
-  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
-  center_x = g_value_get_double (gimp_value_array_index (args, 3));
-  center_y = g_value_get_double (gimp_value_array_index (args, 4));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  angle = g_value_get_double (ligma_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (ligma_value_array_index (args, 2));
+  center_x = g_value_get_double (ligma_value_array_index (args, 3));
+  center_y = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity (&matrix);
+          ligma_matrix3_identity (&matrix);
           if (auto_center)
-            gimp_transform_matrix_rotate_rect (&matrix,
+            ligma_transform_matrix_rotate_rect (&matrix,
                                                x, y, width, height, angle);
           else
-            gimp_transform_matrix_rotate_center (&matrix,
+            ligma_transform_matrix_rotate_center (&matrix,
                                                  center_x, center_y, angle);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Rotating"));
+            ligma_progress_start (progress, FALSE, _("Rotating"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -513,95 +513,95 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_scale_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_scale_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble x0;
   gdouble y0;
   gdouble x1;
   gdouble y1;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  x0 = g_value_get_double (gimp_value_array_index (args, 1));
-  y0 = g_value_get_double (gimp_value_array_index (args, 2));
-  x1 = g_value_get_double (gimp_value_array_index (args, 3));
-  y1 = g_value_get_double (gimp_value_array_index (args, 4));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  x0 = g_value_get_double (ligma_value_array_index (args, 1));
+  y0 = g_value_get_double (ligma_value_array_index (args, 2));
+  x1 = g_value_get_double (ligma_value_array_index (args, 3));
+  y1 = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = (gimp_pdb_item_is_attached (item, NULL,
-                                            GIMP_PDB_ITEM_CONTENT |
-                                            GIMP_PDB_ITEM_POSITION, error) &&
+      success = (ligma_pdb_item_is_attached (item, NULL,
+                                            LIGMA_PDB_ITEM_CONTENT |
+                                            LIGMA_PDB_ITEM_POSITION, error) &&
                  x0 < x1 && y0 < y1);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity (&matrix);
-          gimp_transform_matrix_scale (&matrix,
+          ligma_matrix3_identity (&matrix);
+          ligma_transform_matrix_scale (&matrix,
                                        x, y, width, height,
                                        x0, y0, x1 - x0, y1 - y0);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Scaling"));
+            ligma_progress_start (progress, FALSE, _("Scaling"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -609,90 +609,90 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_shear_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_shear_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gint shear_type;
   gdouble magnitude;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  shear_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  magnitude = g_value_get_double (gimp_value_array_index (args, 2));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  shear_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  magnitude = g_value_get_double (ligma_value_array_index (args, 2));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity (&matrix);
-          gimp_transform_matrix_shear (&matrix,
+          ligma_matrix3_identity (&matrix);
+          ligma_transform_matrix_shear (&matrix,
                                        x, y, width, height,
                                        shear_type, magnitude);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Shearing"));
+            ligma_progress_start (progress, FALSE, _("Shearing"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -700,45 +700,45 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_2d_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_2d_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble source_x;
   gdouble source_y;
   gdouble scale_x;
@@ -747,54 +747,54 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
   gdouble dest_x;
   gdouble dest_y;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  source_x = g_value_get_double (gimp_value_array_index (args, 1));
-  source_y = g_value_get_double (gimp_value_array_index (args, 2));
-  scale_x = g_value_get_double (gimp_value_array_index (args, 3));
-  scale_y = g_value_get_double (gimp_value_array_index (args, 4));
-  angle = g_value_get_double (gimp_value_array_index (args, 5));
-  dest_x = g_value_get_double (gimp_value_array_index (args, 6));
-  dest_y = g_value_get_double (gimp_value_array_index (args, 7));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  source_x = g_value_get_double (ligma_value_array_index (args, 1));
+  source_y = g_value_get_double (ligma_value_array_index (args, 2));
+  scale_x = g_value_get_double (ligma_value_array_index (args, 3));
+  scale_y = g_value_get_double (ligma_value_array_index (args, 4));
+  angle = g_value_get_double (ligma_value_array_index (args, 5));
+  dest_x = g_value_get_double (ligma_value_array_index (args, 6));
+  dest_y = g_value_get_double (ligma_value_array_index (args, 7));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
           /* Assemble the transformation matrix */
-          gimp_matrix3_identity  (&matrix);
-          gimp_matrix3_translate (&matrix, -source_x, -source_y);
-          gimp_matrix3_scale     (&matrix, scale_x, scale_y);
-          gimp_matrix3_rotate    (&matrix, angle);
-          gimp_matrix3_translate (&matrix, dest_x, dest_y);
+          ligma_matrix3_identity  (&matrix);
+          ligma_matrix3_translate (&matrix, -source_x, -source_y);
+          ligma_matrix3_scale     (&matrix, scale_x, scale_y);
+          ligma_matrix3_rotate    (&matrix, angle);
+          ligma_matrix3_translate (&matrix, dest_x, dest_y);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("2D Transform"));
+            ligma_progress_start (progress, FALSE, _("2D Transform"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -802,45 +802,45 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GimpValueArray *
-item_transform_matrix_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+item_transform_matrix_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpItem *item;
+  LigmaValueArray *return_vals;
+  LigmaItem *item;
   gdouble coeff_0_0;
   gdouble coeff_0_1;
   gdouble coeff_0_2;
@@ -851,35 +851,35 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
   gdouble coeff_2_1;
   gdouble coeff_2_2;
 
-  item = g_value_get_object (gimp_value_array_index (args, 0));
-  coeff_0_0 = g_value_get_double (gimp_value_array_index (args, 1));
-  coeff_0_1 = g_value_get_double (gimp_value_array_index (args, 2));
-  coeff_0_2 = g_value_get_double (gimp_value_array_index (args, 3));
-  coeff_1_0 = g_value_get_double (gimp_value_array_index (args, 4));
-  coeff_1_1 = g_value_get_double (gimp_value_array_index (args, 5));
-  coeff_1_2 = g_value_get_double (gimp_value_array_index (args, 6));
-  coeff_2_0 = g_value_get_double (gimp_value_array_index (args, 7));
-  coeff_2_1 = g_value_get_double (gimp_value_array_index (args, 8));
-  coeff_2_2 = g_value_get_double (gimp_value_array_index (args, 9));
+  item = g_value_get_object (ligma_value_array_index (args, 0));
+  coeff_0_0 = g_value_get_double (ligma_value_array_index (args, 1));
+  coeff_0_1 = g_value_get_double (ligma_value_array_index (args, 2));
+  coeff_0_2 = g_value_get_double (ligma_value_array_index (args, 3));
+  coeff_1_0 = g_value_get_double (ligma_value_array_index (args, 4));
+  coeff_1_1 = g_value_get_double (ligma_value_array_index (args, 5));
+  coeff_1_2 = g_value_get_double (ligma_value_array_index (args, 6));
+  coeff_2_0 = g_value_get_double (ligma_value_array_index (args, 7));
+  coeff_2_1 = g_value_get_double (ligma_value_array_index (args, 8));
+  coeff_2_2 = g_value_get_double (ligma_value_array_index (args, 9));
 
   if (success)
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (item, NULL,
-                                           GIMP_PDB_ITEM_CONTENT |
-                                           GIMP_PDB_ITEM_POSITION, error);
+      success = ligma_pdb_item_is_attached (item, NULL,
+                                           LIGMA_PDB_ITEM_CONTENT |
+                                           LIGMA_PDB_ITEM_POSITION, error);
 
       if (success &&
-          gimp_item_mask_intersect (item, &x, &y, &width, &height))
+          ligma_item_mask_intersect (item, &x, &y, &width, &height))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (item);
-          GimpChannel    *mask        = gimp_image_get_mask (image);
-          GimpMatrix3     matrix;
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (item);
+          LigmaChannel    *mask        = ligma_image_get_mask (image);
+          LigmaMatrix3     matrix;
           gint            off_x, off_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
           x += off_x;
           y += off_y;
 
@@ -895,16 +895,16 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
           matrix.coeff[2][2] = coeff_2_2;
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("2D Transforming"));
+            ligma_progress_start (progress, FALSE, _("2D Transforming"));
 
-          if (GIMP_IS_DRAWABLE (item)                             &&
-              item != GIMP_ITEM (mask)                            &&
-              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+          if (LIGMA_IS_DRAWABLE (item)                             &&
+              item != LIGMA_ITEM (mask)                            &&
+              ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+              ! ligma_channel_is_empty (mask))
             {
-              GimpDrawable *drawable;
+              LigmaDrawable *drawable;
 
-              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+              drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                          context, &matrix,
                                                          pdb_context->transform_direction,
                                                          pdb_context->interpolation,
@@ -912,87 +912,87 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
                                                          progress);
 
               if (drawable)
-                item = GIMP_ITEM (drawable);
+                item = LIGMA_ITEM (drawable);
               else
                 success = FALSE;
             }
           else
             {
-              gimp_item_transform (item, context, &matrix,
+              ligma_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   gimp_item_get_clip (
+                                   ligma_item_get_clip (
                                      item, pdb_context->transform_resize),
                                    progress);
             }
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
 void
-register_item_transform_procs (GimpPDB *pdb)
+register_item_transform_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-item-transform-translate
+   * ligma-item-transform-translate
    */
-  procedure = gimp_procedure_new (item_transform_translate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-translate");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_translate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-translate");
+  ligma_procedure_set_static_help (procedure,
                                   "Translate the item by the specified offsets.",
                                   "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("off-x",
                                                     "off x",
                                                     "Offset in x direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("off-y",
                                                     "off y",
                                                     "Offset in y direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The translated item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-flip-simple
+   * ligma-item-transform-flip-simple
    */
-  procedure = gimp_procedure_new (item_transform_flip_simple_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-flip-simple");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_flip_simple_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-flip-simple");
+  ligma_procedure_set_static_help (procedure,
                                   "Flip the specified item either vertically or horizontally.",
                                   "This procedure flips the specified item.\n"
                                   "\n"
@@ -1000,55 +1000,55 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "\n"
                                   "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("flip-type",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("flip-type",
                                                      "flip type",
                                                      "Type of flip",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
-                                      GIMP_ORIENTATION_UNKNOWN);
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_TYPE_ORIENTATION_TYPE,
+                                                     LIGMA_ORIENTATION_HORIZONTAL,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[1]),
+                                      LIGMA_ORIENTATION_UNKNOWN);
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("auto-center",
                                                      "auto center",
                                                      "Whether to automatically position the axis in the selection center",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("axis",
                                                     "axis",
                                                     "coord. of flip axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The flipped item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-flip
+   * ligma-item-transform-flip
    */
-  procedure = gimp_procedure_new (item_transform_flip_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-flip");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_flip_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-flip");
+  ligma_procedure_set_static_help (procedure,
                                   "Flip the specified item around a given line.",
                                   "This procedure flips the specified item.\n"
                                   "\n"
@@ -1056,58 +1056,58 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "\n"
                                   "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
                                                     "horz. coord. of one end of axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y0",
                                                     "y0",
                                                     "vert. coord. of one end of axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x1",
                                                     "x1",
                                                     "horz. coord. of other end of axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y1",
                                                     "y1",
                                                     "vert. coord. of other end of axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The flipped item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-perspective
+   * ligma-item-transform-perspective
    */
-  procedure = gimp_procedure_new (item_transform_perspective_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-perspective");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_perspective_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-perspective");
+  ligma_procedure_set_static_help (procedure,
                                   "Perform a possibly non-affine transformation on the specified item.",
                                   "This procedure performs a possibly non-affine transformation on the specified item by allowing the corners of the original bounding box to be arbitrarily remapped to any values.\n"
                                   "\n"
@@ -1118,82 +1118,82 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
                                                     "The new x coordinate of upper-left corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y0",
                                                     "y0",
                                                     "The new y coordinate of upper-left corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x1",
                                                     "x1",
                                                     "The new x coordinate of upper-right corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y1",
                                                     "y1",
                                                     "The new y coordinate of upper-right corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x2",
                                                     "x2",
                                                     "The new x coordinate of lower-left corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y2",
                                                     "y2",
                                                     "The new y coordinate of lower-left corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x3",
                                                     "x3",
                                                     "The new x coordinate of lower-right corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y3",
                                                     "y3",
                                                     "The new y coordinate of lower-right corner of original bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The transformed item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-rotate-simple
+   * ligma-item-transform-rotate-simple
    */
-  procedure = gimp_procedure_new (item_transform_rotate_simple_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-rotate-simple");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_rotate_simple_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-rotate-simple");
+  ligma_procedure_set_static_help (procedure,
                                   "Rotate the specified item about given coordinates through the specified angle.",
                                   "This function rotates the specified item.\n"
                                   "\n"
@@ -1202,59 +1202,59 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
                                                   "rotate type",
                                                   "Type of rotation",
-                                                  GIMP_TYPE_ROTATION_TYPE,
-                                                  GIMP_ROTATE_90,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_ROTATION_TYPE,
+                                                  LIGMA_ROTATE_90,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("auto-center",
                                                      "auto center",
                                                      "Whether to automatically rotate around the selection center",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-x",
                                                     "center x",
                                                     "The hor. coordinate of the center of rotation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-y",
                                                     "center y",
                                                     "The vert. coordinate of the center of rotation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The rotated item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-rotate
+   * ligma-item-transform-rotate
    */
-  procedure = gimp_procedure_new (item_transform_rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-rotate");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_rotate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-rotate");
+  ligma_procedure_set_static_help (procedure,
                                   "Rotate the specified item about given coordinates through the specified angle.",
                                   "This function rotates the specified item.\n"
                                   "\n"
@@ -1263,58 +1263,58 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "The angle of rotation (radians)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("auto-center",
                                                      "auto center",
                                                      "Whether to automatically rotate around the selection center",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-x",
                                                     "center x",
                                                     "The hor. coordinate of the center of rotation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-y",
                                                     "center y",
                                                     "The vert. coordinate of the center of rotation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The rotated item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-scale
+   * ligma-item-transform-scale
    */
-  procedure = gimp_procedure_new (item_transform_scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-scale");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_scale_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-scale");
+  ligma_procedure_set_static_help (procedure,
                                   "Scale the specified item.",
                                   "This procedure scales the specified item.\n"
                                   "\n"
@@ -1325,58 +1325,58 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
                                                     "The new x coordinate of the upper-left corner of the scaled region",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y0",
                                                     "y0",
                                                     "The new y coordinate of the upper-left corner of the scaled region",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x1",
                                                     "x1",
                                                     "The new x coordinate of the lower-right corner of the scaled region",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y1",
                                                     "y1",
                                                     "The new y coordinate of the lower-right corner of the scaled region",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The scaled item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-shear
+   * ligma-item-transform-shear
    */
-  procedure = gimp_procedure_new (item_transform_shear_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-shear");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_shear_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-shear");
+  ligma_procedure_set_static_help (procedure,
                                   "Shear the specified item about its center by the specified magnitude.",
                                   "This procedure shears the specified item.\n"
                                   "\n"
@@ -1387,49 +1387,49 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("shear-type",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("shear-type",
                                                      "shear type",
                                                      "Type of shear",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
-                                      GIMP_ORIENTATION_UNKNOWN);
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_TYPE_ORIENTATION_TYPE,
+                                                     LIGMA_ORIENTATION_HORIZONTAL,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[1]),
+                                      LIGMA_ORIENTATION_UNKNOWN);
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("magnitude",
                                                     "magnitude",
                                                     "The magnitude of the shear",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The sheared item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-2d
+   * ligma-item-transform-2d
    */
-  procedure = gimp_procedure_new (item_transform_2d_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-2d");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_2d_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-2d");
+  ligma_procedure_set_static_help (procedure,
                                   "Transform the specified item in 2d.",
                                   "This procedure transforms the specified item.\n"
                                   "\n"
@@ -1440,76 +1440,76 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("source-x",
                                                     "source x",
                                                     "X coordinate of the transformation center",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("source-y",
                                                     "source y",
                                                     "Y coordinate of the transformation center",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("scale-x",
                                                     "scale x",
                                                     "Amount to scale in x direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("scale-y",
                                                     "scale y",
                                                     "Amount to scale in y direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "The angle of rotation (radians)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("dest-x",
                                                     "dest x",
                                                     "X coordinate of where the center goes",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("dest-y",
                                                     "dest y",
                                                     "Y coordinate of where the center goes",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The transformed item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-item-transform-matrix
+   * ligma-item-transform-matrix
    */
-  procedure = gimp_procedure_new (item_transform_matrix_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-transform-matrix");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (item_transform_matrix_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-item-transform-matrix");
+  ligma_procedure_set_static_help (procedure,
                                   "Transform the specified item in 2d.",
                                   "This procedure transforms the specified item.\n"
                                   "\n"
@@ -1520,78 +1520,78 @@ register_item_transform_procs (GimpPDB *pdb)
                                   "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix.\n"
                                   "The return value will be equal to the item ID supplied as input.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-interpolation', 'ligma-context-set-transform-direction', 'ligma-context-set-transform-resize'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The affected item",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-0",
                                                     "coeff 0 0",
                                                     "coefficient (0,0) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-1",
                                                     "coeff 0 1",
                                                     "coefficient (0,1) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-2",
                                                     "coeff 0 2",
                                                     "coefficient (0,2) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-1-0",
                                                     "coeff 1 0",
                                                     "coefficient (1,0) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-1-1",
                                                     "coeff 1 1",
                                                     "coefficient (1,1) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-1-2",
                                                     "coeff 1 2",
                                                     "coefficient (1,2) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-2-0",
                                                     "coeff 2 0",
                                                     "coefficient (2,0) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-2-1",
                                                     "coeff 2 1",
                                                     "coefficient (2,1) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-2-2",
                                                     "coeff 2 2",
                                                     "coefficient (2,2) of the transformation matrix",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item ("item",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_item ("item",
                                                          "item",
                                                          "The transformed item",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

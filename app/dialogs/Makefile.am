@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"			\
+	-DG_LOG_DOMAIN=\"Ligma-Dialogs\"			\
 	-DDESKTOP_DATADIR=\""$(DESKTOP_DATADIR)"\"	\
 	-I$(top_builddir)				\
 	-I$(top_srcdir)					\
@@ -131,8 +131,8 @@ endif
 
 $(srcdir)/welcome-dialog.c: welcome-dialog-data.h welcome-dialog-data.c
 
-welcome-dialog-data.h: $(top_srcdir)/desktop/org.gimp.GIMP.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
-	$(top_srcdir)/tools/generate-welcome-dialog-data.py --header $(GIMP_VERSION) > $@
+welcome-dialog-data.h: $(top_srcdir)/desktop/org.ligma.LIGMA.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
+	$(top_srcdir)/tools/generate-welcome-dialog-data.py --header $(LIGMA_VERSION) > $@
 
-welcome-dialog-data.c: $(top_srcdir)/desktop/org.gimp.GIMP.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
-	$(top_srcdir)/tools/generate-welcome-dialog-data.py $(GIMP_VERSION) > $@
+welcome-dialog-data.c: $(top_srcdir)/desktop/org.ligma.LIGMA.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
+	$(top_srcdir)/tools/generate-welcome-dialog-data.py $(LIGMA_VERSION) > $@

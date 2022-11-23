@@ -1,12 +1,12 @@
-# Bosnian translation for gimp
+# Bosnian translation for ligma
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-01-27 21:39+0000\n"
 "PO-Revision-Date: 2015-02-04 15:20+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
@@ -424,8 +424,8 @@ msgid "Optimizing animation"
 msgstr "Optimiziranje animacije"
 
 #: ../plug-ins/common/animation-play.c:168
-msgid "Preview a GIMP layer-based animation"
-msgstr "Pregledaj slojevito baziranu GIMP animaciju"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "Pregledaj slojevito baziranu LIGMA animaciju"
 
 #: ../plug-ins/common/animation-play.c:173
 msgid "_Playback..."
@@ -620,7 +620,7 @@ msgstr "Vertikalno"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:409
 #: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -1029,8 +1029,8 @@ msgstr "Učitaj podešavanja miješanja kanala"
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xmc.c:840
 #: ../plug-ins/common/file-xwd.c:440 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:154 ../plug-ins/file-faxg3/faxg3.c:234
-#: ../plug-ins/file-fits/fits.c:355 ../plug-ins/file-fli/fli-gimp.c:460
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:649
+#: ../plug-ins/file-fits/fits.c:355 ../plug-ins/file-fli/fli-ligma.c:460
+#: ../plug-ins/file-fli/fli-ligma.c:496 ../plug-ins/file-ico/ico-load.c:649
 #: ../plug-ins/file-ico/ico-load.c:727 ../plug-ins/file-jpeg/jpeg-load.c:117
 #: ../plug-ins/file-jpeg/jpeg-load.c:890 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
@@ -1038,8 +1038,8 @@ msgstr "Učitaj podešavanja miješanja kanala"
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
-#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1063,7 +1063,7 @@ msgstr "Snimi podešavanja miješanja kanala"
 #: ../plug-ins/common/file-xmc.c:1447 ../plug-ins/common/file-xwd.c:632
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:746 ../plug-ins/file-ico/ico-save.c:1066
+#: ../plug-ins/file-fli/fli-ligma.c:746 ../plug-ins/file-ico/ico-save.c:1066
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/flame/flame.c:442
@@ -1097,7 +1097,7 @@ msgid "Checkerboard"
 msgstr "Šahovska tabla"
 
 #: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1154
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "Veličina:"
 
@@ -1300,8 +1300,8 @@ msgstr "Nasumično prema sjemenu (dijeljeno)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "Nijansa"
 
@@ -1312,8 +1312,8 @@ msgstr "Zasićenje"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "Vrijednost"
 
@@ -2176,8 +2176,8 @@ msgstr "Svinutost Krivulje"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1262
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Pregled"
@@ -2812,7 +2812,7 @@ msgstr "_Poluprečnik 1:"
 msgid "R_adius 2:"
 msgstr "P_oluprečnik 2:"
 
-#: ../plug-ins/common/edge-dog.c:371 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:371 ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "Inverzno"
 
@@ -2976,7 +2976,7 @@ msgstr "EOF ili greška prilikom čitanja zaglavlja slike"
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:742
 #: ../plug-ins/common/file-xmc.c:667 ../plug-ins/common/file-xpm.c:353
 #: ../plug-ins/common/file-xwd.c:531 ../plug-ins/file-bmp/bmp-read.c:159
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:501
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-ligma.c:501
 #: ../plug-ins/file-ico/ico-load.c:642 ../plug-ins/file-jpeg/jpeg-load.c:123
 #: ../plug-ins/file-psd/psd-load.c:135 ../plug-ins/file-sgi/sgi.c:332
 #, c-format
@@ -3056,7 +3056,7 @@ msgstr "'%s': EOF ili greška prilikom čitanja podataka palete"
 #: ../plug-ins/common/file-xbm.c:1035 ../plug-ins/common/file-xmc.c:1452
 #: ../plug-ins/common/file-xpm.c:653 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/file-bmp/bmp-write.c:336 ../plug-ins/file-fits/fits.c:478
-#: ../plug-ins/file-fli/fli-gimp.c:714 ../plug-ins/file-ico/ico-save.c:1060
+#: ../plug-ins/file-fli/fli-ligma.c:714 ../plug-ins/file-ico/ico-save.c:1060
 #: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1658
 #: ../plug-ins/file-sgi/sgi.c:585
 #, c-format
@@ -3147,8 +3147,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Ne mogu raditi sa nepoznatim tipovima slika."
 
 #: ../plug-ins/common/file-gbr.c:131 ../plug-ins/common/file-gbr.c:153
-msgid "GIMP brush"
-msgstr "Gimp četka"
+msgid "LIGMA brush"
+msgstr "Ligma četka"
 
 #: ../plug-ins/common/file-gbr.c:378 ../plug-ins/common/file-pat.c:407
 #, c-format
@@ -3161,8 +3161,8 @@ msgstr "Ne podržavam taj oblik četke"
 
 #: ../plug-ins/common/file-gbr.c:444
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Greška u datoteci sa Gimp četkama „%s“"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Greška u datoteci sa Ligma četkama „%s“"
 
 #: ../plug-ins/common/file-gbr.c:452
 #, c-format
@@ -3185,7 +3185,7 @@ msgid "Spacing:"
 msgstr "Razmak:"
 
 #: ../plug-ins/common/file-gbr.c:799 ../plug-ins/common/file-gih.c:860
-#: ../plug-ins/common/file-pat.c:606 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:606 ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "Opis:"
 
@@ -3336,8 +3336,8 @@ msgid "The default comment is limited to %d characters."
 msgstr "Podrazumijevani komentar je ograničen na %d slova."
 
 #: ../plug-ins/common/file-gih.c:190 ../plug-ins/common/file-gih.c:214
-msgid "GIMP brush (animated)"
-msgstr "Gimp četka (animirana)"
+msgid "LIGMA brush (animated)"
+msgstr "Ligma četka (animirana)"
 
 #: ../plug-ins/common/file-gih.c:829
 msgid "Brush Pipe"
@@ -3707,8 +3707,8 @@ msgid "MNG animation"
 msgstr "MNG Opcije"
 
 #: ../plug-ins/common/file-pat.c:103 ../plug-ins/common/file-pat.c:126
-msgid "GIMP pattern"
-msgstr "Gimp Mustra"
+msgid "LIGMA pattern"
+msgstr "Ligma Mustra"
 
 #: ../plug-ins/common/file-pat.c:362
 #, c-format
@@ -4032,16 +4032,16 @@ msgid "Invalid X resolution."
 msgstr "Nesipravna X rezolucija."
 
 #: ../plug-ins/common/file-pnm.c:557
-msgid "Image width is larger than GIMP can handle."
-msgstr "Slika je veća nego što GIMP može da podnese."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Slika je veća nego što LIGMA može da podnese."
 
 #: ../plug-ins/common/file-pnm.c:564
 msgid "Invalid Y resolution."
 msgstr "Nesipravna Y rezolucija."
 
 #: ../plug-ins/common/file-pnm.c:566
-msgid "Image height is larger than GIMP can handle."
-msgstr "Visina slike je veća nego što GIMP može da podnese."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Visina slike je veća nego što LIGMA može da podnese."
 
 #: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
@@ -4146,8 +4146,8 @@ msgid "B/W"
 msgstr "B/W"
 
 #: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Boja"
@@ -4413,10 +4413,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s': \n"
-"Širina slike je veća nego što GIMP može podnijeti"
+"Širina slike je veća nego što LIGMA može podnijeti"
 
 #: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
 #: ../plug-ins/common/file-xwd.c:515
@@ -4433,10 +4433,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Visina slike je veća nego što GIMP može podnijeti"
+"Visina slike je veća nego što LIGMA može podnijeti"
 
 #: ../plug-ins/common/file-sunras.c:520
 msgid "This image depth is not supported"
@@ -4536,9 +4536,9 @@ msgstr "Uvezi _putanje"
 
 #: ../plug-ins/common/file-svg.c:944
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
-"Uvezi elemente putanje za SVG, kako bi bili korišćeni u Gimp alatki za "
+"Uvezi elemente putanje za SVG, kako bi bili korišćeni u Ligma alatki za "
 "putanje"
 
 #: ../plug-ins/common/file-svg.c:952
@@ -7301,7 +7301,7 @@ msgid "Use the background color"
 msgstr "Upotrijebi boju pozadine"
 
 #: ../plug-ins/common/sphere-designer.c:293
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Jako"
 
@@ -7397,7 +7397,7 @@ msgstr "Dijalog Odabira Boje"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Vrijednost:"
@@ -7663,11 +7663,11 @@ msgstr "Snimljeno"
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 "Definicija Mjere će biti sačuvana samo ako je označeno ovo polje "
-"prijeizlaska iz GIMP-a."
+"prijeizlaska iz LIGMA-a."
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid "ID"
@@ -7675,9 +7675,9 @@ msgstr "Oznaka"
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Ovaj izraz će se koristiti za identifikaciju mjere u GIMP-ovoj datoteci s "
+"Ovaj izraz će se koristiti za identifikaciju mjere u LIGMA-ovoj datoteci s "
 "osobitostima."
 
 #: ../plug-ins/common/unit-editor.c:98
@@ -7747,8 +7747,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "Kreiraj novu jedinicu koristeći trenutno odabranu kao nacrt"
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "Kreiraj ili izmjeni jedinice korištene u GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Kreiraj ili izmjeni jedinice korištene u LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -8428,7 +8428,7 @@ msgstr "Oboje"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Veće vrijednosti smanjuju efekat na nekoliko područja slike"
 
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "Valjanost:"
 
@@ -8501,12 +8501,12 @@ msgstr "_Ne dodajite informaciju o razmaku boja"
 #: ../plug-ins/file-bmp/bmp-write.c:904
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Enabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Enabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Neke aplikacije ne mogu pročitati BMP slike koje sadrže informacije o bojnom "
-"prostoru. GIMP upisuje informaciju o bojnom prostoru po defaultu. "
-"Omogućavanje ove opcije će omogućiti GIMPu da ne piše informaciju o bojnom "
+"prostoru. LIGMA upisuje informaciju o bojnom prostoru po defaultu. "
+"Omogućavanje ove opcije će omogućiti LIGMAu da ne piše informaciju o bojnom "
 "prostoru u datoteku."
 
 #. Advanced Options
@@ -8601,34 +8601,34 @@ msgctxt "composing"
 msgid "None"
 msgstr "Nijedna"
 
-#: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
+#: ../plug-ins/file-fli/fli-ligma.c:166 ../plug-ins/file-fli/fli-ligma.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animacija"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-ligma.c:561
 #, c-format
 msgid "Frame (%i)"
 msgstr "Okvir (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:710
+#: ../plug-ins/file-fli/fli-ligma.c:710
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Žao mi je, mogu sačuvati samo indeksirane i sive slike."
 
-#: ../plug-ins/file-fli/fli-gimp.c:862
+#: ../plug-ins/file-fli/fli-ligma.c:862
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.2 - Učitavam hrpu okvira"
 
-#: ../plug-ins/file-fli/fli-gimp.c:891 ../plug-ins/file-fli/fli-gimp.c:947
+#: ../plug-ins/file-fli/fli-ligma.c:891 ../plug-ins/file-fli/fli-ligma.c:947
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Od:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:900 ../plug-ins/file-fli/fli-gimp.c:956
+#: ../plug-ins/file-fli/fli-ligma.c:900 ../plug-ins/file-fli/fli-ligma.c:956
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Do:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:930
+#: ../plug-ins/file-fli/fli-ligma.c:930
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8701,8 +8701,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "Prema EXIF podacima, ova slika je rotirana."
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:426
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Da li žečite da GIMP rotira u standardnu orijentaciju?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "Da li žečite da LIGMA rotira u standardnu orijentaciju?"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
@@ -8880,12 +8880,12 @@ msgstr "Nepodržan režim boja: %s"
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "Upozorenje:\n"
-"Slika koju učitavate ima 16 bita po kanalu. Gimp može raditi samo sa 8 bita, "
+"Slika koju učitavate ima 16 bita po kanalu. Ligma može raditi samo sa 8 bita, "
 "tako da će ovo prevesti. Informacije će biti izgubljene zbogovakvog "
 "prevođenja."
 
@@ -8964,8 +8964,8 @@ msgstr ""
 "spašavanje ne podžavaju to, korištenje normalnog moda."
 
 #: ../plug-ins/file-psd/psd-save.c:634
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Greška: Nemoguće konvertovati GIMP bazu vrste slike u PSD mod"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Greška: Nemoguće konvertovati LIGMA bazu vrste slike u PSD mod"
 
 #: ../plug-ins/file-psd/psd-save.c:1623
 #, c-format
@@ -9171,8 +9171,8 @@ msgstr "Nasumično"
 msgid "Same"
 msgstr "Isto"
 
-#: ../plug-ins/flame/flame.c:746 ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:746 ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "Nasumično"
 
@@ -9321,16 +9321,16 @@ msgid "C_amera"
 msgstr "Kamera"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Nema %s u gimprc:\n"
+"Nema %s u ligmarc:\n"
 "Treba da dodate unos nalik\n"
 "(%s \"%s\")\n"
 "u vašu datoteku %s."
@@ -9865,7 +9865,7 @@ msgid "Max undo:"
 msgstr "Max. poništavanja:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Providno"
 
@@ -9961,7 +9961,7 @@ msgid "Left"
 msgstr "Lijevo"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1753
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Orjentacija:"
 
@@ -10023,296 +10023,296 @@ msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 "Greška prilikom čitanja privremene datoteke '%s' za učitavanje parazita: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:243
+#: ../plug-ins/ligmaressionist/brush.c:243
 msgid "Can only save drawables!"
 msgstr "Mogu čuvati samo crteže!"
 
-#: ../plug-ins/gimpressionist/brush.c:248
+#: ../plug-ins/ligmaressionist/brush.c:248
 msgid "Save Brush"
 msgstr "Sačuvaj četku"
 
-#: ../plug-ins/gimpressionist/brush.c:503
+#: ../plug-ins/ligmaressionist/brush.c:503
 msgid "_Brush"
 msgstr "Četka"
 
-#: ../plug-ins/gimpressionist/brush.c:540
+#: ../plug-ins/ligmaressionist/brush.c:540
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: ../plug-ins/gimpressionist/brush.c:558
+#: ../plug-ins/ligmaressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Mijenja gamu (svjetlost) odabrane četke"
 
-#: ../plug-ins/gimpressionist/brush.c:566
+#: ../plug-ins/ligmaressionist/brush.c:566
 msgid "Select:"
 msgstr "Odaberi:"
 
-#: ../plug-ins/gimpressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/brush.c:595
 msgid "Aspect ratio:"
 msgstr "Oblik razmjere:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Određuje oblik razmjere četke"
 
-#: ../plug-ins/gimpressionist/brush.c:608
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:608
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "Reljef:"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Određuje količinu ispupčenja za primjenu na slici (procentualno)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Boja:"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Prosječno ispod četke"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "Sredina četke"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Boja se računa prema prosjeku svih tačaka ispod četke"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Uzima boju sa tačke u sredini ispod četke"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "Šum boje:"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "Dodaje nasumično šum u boju"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3530
 msgid "_General"
 msgstr "Generalno"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Zadrži original"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Zadrži Original Sliku kao pozadinu"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Iz papira"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiraj uzorak odabranog papira kao pozadinu"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Pozadina u Boji"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid ""
 "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Koristi providnu pozadinu; Samo će okviri biti vidljivi"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Oboji ivice"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Određuje da li potezi idu skroz do kraja ivice slike"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
+#: ../plug-ins/ligmaressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Rastavljivo"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Određuje da li će konačna slika biti jednostavno rastavljiva"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Napravi sjenu"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Dodaje efekat sijenke u svaki potez četkom"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "Zatamnjenje ivice:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Koliko će ivice poteza četkom biti „zatamnjene“"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "Dubina sijenke:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Koliko da „zatamnim“ kapljicu sijenke"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "Dubina sijenke:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Dubina kapljice sijenke,npr. koliko će daleko biti od objekta"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "Zamućenje sijenke:"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "Koliko zamutiti kapljicu sijenke"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "Prag devijacije:"
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "Kritična vresnost za adaptivne selekcije"
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "Pravi različite atrističke operacije"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
-msgstr "_GIMPresionista..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAresionista..."
 
-#: ../plug-ins/gimpressionist/gimp.c:162
+#: ../plug-ins/ligmaressionist/ligma.c:162
 msgid "The selection does not intersect the active layer or mask."
 msgstr "Selekcija ne presijeca aktivan nivo ili masku."
 
-#: ../plug-ins/gimpressionist/gimp.c:389
+#: ../plug-ins/ligmaressionist/ligma.c:389
 msgid "Painting"
 msgstr "Bojenje"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "Orijentacija"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "Smjerovi:"
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Broj smjerova (npr kistovi) za korištenje"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "Početni ugao:"
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr "Početni ugao prve napravljene četke"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "Luk ugla:"
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr "Opseg ugla prve napravljene četke"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Neka vrijednost (svjetlost) područja odredi smjer poteza"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "Poluprečnik"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Rastojanje od sredine slike određuje smjer poteza"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "Određuje slučajni smjer svakog poteza"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "Radijalno"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid ""
 "Let the direction from the center determine the direction of the stroke"
 msgstr "Neka smjer od sredine odredi smjer poteza"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "Tečni"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Potezi prate „tečno“ pravilo"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Nijansa područja odrećuje smjer poteza"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "Dodavanje"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Bira se smjer koji najbolje odgovara originalnoj slici"
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "Ručno"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "Ručno podesi orjentaciju okvira"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr "Otvara uređivač orjentacijske mape"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Uređivač orjentacijske mape"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Vektori"
 
-#: ../plug-ins/gimpressionist/orientmap.c:564
+#: ../plug-ins/ligmaressionist/orientmap.c:564
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10320,63 +10320,63 @@ msgstr ""
 "Vektorsko polje. Lijevi klik pomjera izabrani vektor, desni klik da okreće "
 "prema mišu, srednji klik dodaje novi vektor."
 
-#: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/ligmaressionist/orientmap.c:588
+#: ../plug-ins/ligmaressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
 msgstr "Podesi osvjetljenje pregleda"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "Odaberi prethodni vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "Odaberi sljedeći vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "Dodaj"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "Dodaj novi vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "Ubij"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "Izbriši odabrani vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "Vrsta"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "Normalno"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "_Vrtlog"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "Vrtlog _2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "Vrtlog _3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -10384,227 +10384,227 @@ msgstr ""
 "Voronoi režim uzrokuje da samo vektor najbliži odabranoj tački ima neki "
 "uticaj"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "Ugao:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
 msgstr "Promjeni ugao odabranog vektora"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 msgid "Ang_le offset:"
 msgstr "Ugaoni pomjeraj:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr "Pomjeri sve vektore sa datim uglom"
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
 msgstr "Mijenja valjanost odabranog vektora"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 msgid "S_trength exp.:"
 msgstr "Valjanost:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Promjeni eksponentu valjanosti"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "Papir"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 msgid "Inverts the Papers texture"
 msgstr "Invertira teksturu papira"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "Prekrivanje"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Prihvaća papir onakav kakav je"
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Određuje razmjeru teksture (u procentima originalne datoteke)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Smještaj"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Smještaj"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Nasumično"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Podjednako raspoređeno"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Smešta okvire nasumično oko slike"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Potezi su ravnomjerno raspoređeni preko slike"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Centralizovano"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Grupiši poteze četkom oko sredine slike"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "Čvrstina poteza:"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "Relativna gustina poteza četkom"
 
 #. 
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Ne mogu da sačuvam PPM datoteku „%s“: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "Sačuvaj tekući"
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist podrazumijevane postavke"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist podrazumijevane postavke"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr "Predlošci"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "Spasi trenutno..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "Sačuvaj tekuća podešavanja u navedenu datoteku"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr "Učitaj izabrane predloške u memoriju"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "Obriši izabrani predložak"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr "Ponovo pročitaj direktorijum sa predlošcima"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1182
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
 msgstr "Osvježi"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Osvježi prozor za pregled"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Povrat na originalnu mapu"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "Veličina:"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr "Varijante veličine:"
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "Broj veličina četki za korištenje"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "Min. veličina:"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "Najmanja četka za pravljenje"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "Maks. veličina:"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "Najveća četka za pravljenje"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "Veličina ovisi od:"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Osvjetljenje područja određuje veličinu poteza"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Udaljenost od sredine slike određuje veličinu poteza"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "Određuje nasumičnu veličinu svakog poteza"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Smjer od sredine određuje veličinu poteza"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Nijansa područja određuje veličinupoteza"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid ""
 "The brush-size that matches the original image the closest is selected"
 msgstr "Bira se veličina četke najbliža originalnoj slici"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "Ručno odredite veličinu poteza"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "Otvara urednika veličine mape"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/ligmaressionist/sizemap.c:397
 msgid "Size Map Editor"
 msgstr "Urednik veličine mape"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/ligmaressionist/sizemap.c:426
 msgid "Smvectors"
 msgstr "Sm-vektori"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/ligmaressionist/sizemap.c:436
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10612,39 +10612,39 @@ msgstr ""
 "Sm-vektorsko polje. Lijevi klik pomjera izabrani vektor, desni ga okreće "
 "prema mišu, srednji klik dodaje novi Sm-vektor."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/ligmaressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "Odaberi prethodni Sm-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/ligmaressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "Odaberi sljedeći Sm-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/ligmaressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "Dodaj novi Sm-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/ligmaressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "Briše odabrani Sm-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/ligmaressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "Mijenja ugao odabranog Sm-vektora"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "Valjanost:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/ligmaressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "Mijenja smjer odabranog Sm-vektora"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "Valjanost:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/ligmaressionist/sizemap.c:548
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -11009,8 +11009,8 @@ msgstr "Drugi odsjaj"
 
 #: ../plug-ins/help-browser/dialog.c:184
 #: ../plug-ins/help-browser/dialog.c:1133
-msgid "GIMP Help Browser"
-msgstr "GIMP Help pretraživač"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA Help pretraživač"
 
 #: ../plug-ins/help-browser/dialog.c:582
 msgid "Go back one page"
@@ -11065,8 +11065,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Uključuje ili isključuje bočnu površ"
 
 #: ../plug-ins/help-browser/dialog.c:674
-msgid "Visit the GIMP documentation website"
-msgstr "Posjeti GIMP website sa dokumentacijom"
+msgid "Visit the LIGMA documentation website"
+msgstr "Posjeti LIGMA website sa dokumentacijom"
 
 #: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
@@ -11082,38 +11082,38 @@ msgctxt "search"
 msgid "_Next"
 msgstr "_Sljedeće"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Nisu dostupne stranice pomoći za %s."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "Nisu dostupna Gimpova pomoć."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "Nisu dostupna Ligmaova pomoć."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 "Molimo vas da instalirate dodatnu pomoć paketa ili koristite korisnički  "
-"online priručnik na http://docs.gimp.org/."
+"online priručnik na http://docs.ligma.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Možda vam nedostaje GIO podrška jer nije instaliran GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "IB pomoći „%s nepoznat"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Učitavam indeks sa '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11343,7 +11343,7 @@ msgid "Clear"
 msgstr "Počisti"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Napravi"
 
@@ -11368,41 +11368,41 @@ msgid "Edit Object"
 msgstr "Uredi objekte"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "Koristi Gimp vođice"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "Koristi Ligma vođice"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Dodatni"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "Sve"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Dodaj dodatne vođice"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "L_ijeva granica"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "_Desna granica"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "_Gornja granica"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Do_nja granica"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Osnovni URL:"
 
@@ -11834,8 +11834,8 @@ msgid "Grid Settings..."
 msgstr "Podešavanja mreže..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "Koristi GIMP vodiče..."
+msgid "Use LIGMA Guides..."
+msgstr "Koristi LIGMA vodiče..."
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpimagemetadata.h
+ * ligmaimagemetadata.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,48 +18,48 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
 
-#ifndef __GIMP_IMAGE_METADATA_H__
-#define __GIMP_IMAGE_METADATA_H__
+#ifndef __LIGMA_IMAGE_METADATA_H__
+#define __LIGMA_IMAGE_METADATA_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-GimpMetadata * gimp_image_metadata_load_prepare   (GimpImage             *image,
+LigmaMetadata * ligma_image_metadata_load_prepare   (LigmaImage             *image,
                                                    const gchar           *mime_type,
                                                    GFile                 *file,
                                                    GError               **error);
-void           gimp_image_metadata_load_finish    (GimpImage             *image,
+void           ligma_image_metadata_load_finish    (LigmaImage             *image,
                                                    const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataLoadFlags  flags);
+                                                   LigmaMetadata          *metadata,
+                                                   LigmaMetadataLoadFlags  flags);
 
-GimpMetadata * gimp_image_metadata_save_prepare   (GimpImage             *image,
+LigmaMetadata * ligma_image_metadata_save_prepare   (LigmaImage             *image,
                                                    const gchar           *mime_type,
-                                                   GimpMetadataSaveFlags *suggested_flags);
-GimpMetadata * gimp_image_metadata_save_filter    (GimpImage             *image,
+                                                   LigmaMetadataSaveFlags *suggested_flags);
+LigmaMetadata * ligma_image_metadata_save_filter    (LigmaImage             *image,
                                                    const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataSaveFlags  flags,
+                                                   LigmaMetadata          *metadata,
+                                                   LigmaMetadataSaveFlags  flags,
                                                    GFile                 *file,
                                                    GError               **error);
-gboolean       gimp_image_metadata_save_finish    (GimpImage             *image,
+gboolean       ligma_image_metadata_save_finish    (LigmaImage             *image,
                                                    const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataSaveFlags  flags,
+                                                   LigmaMetadata          *metadata,
+                                                   LigmaMetadataSaveFlags  flags,
                                                    GFile                 *file,
                                                    GError               **error);
 
-GimpImage    * gimp_image_metadata_load_thumbnail (GFile                 *file,
+LigmaImage    * ligma_image_metadata_load_thumbnail (GFile                 *file,
                                                    GError               **error);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_IMAGE_METADATA_H__ */
+#endif /* __LIGMA_IMAGE_METADATA_H__ */

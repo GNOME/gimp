@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define __PSD_LOAD_H__
 
 
-GimpImage * load_image  (GFile        *file,
+LigmaImage * load_image  (GFile        *file,
                          gboolean      merged_image_only,
                          gboolean     *resolution_loaded,
                          gboolean     *profile_loaded,

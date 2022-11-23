@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define LOAD_THUMB_PROC "file-jpeg-load-thumb"
 #define SAVE_PROC       "file-jpeg-save"
 #define PLUG_IN_BINARY  "file-jpeg"
-#define PLUG_IN_ROLE    "gimp-file-jpeg"
+#define PLUG_IN_ROLE    "ligma-file-jpeg"
 
 /* headers used in some APPn markers */
 #define JPEG_APP_HEADER_EXIF "Exif\0\0"
@@ -51,11 +51,11 @@ typedef enum
   JPEG_SUBSAMPLING_1x2_1x1_1x1 = 3
 } JpegSubsampling;
 
-extern GimpImage * volatile  preview_image;
-extern GimpLayer *      preview_layer;
+extern LigmaImage * volatile  preview_image;
+extern LigmaLayer *      preview_layer;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;
-extern GimpDisplay     *display;
+extern LigmaDisplay     *display;
 extern gboolean         separate_display;
 
 

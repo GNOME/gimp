@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcolorprofile.h
- * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
+ * ligmacolorprofile.h
+ * Copyright (C) 2014  Michael Natterer <mitch@ligma.org>
  *                     Elle Stone <ellestone@ninedegreesbelow.com>
  *
  * This library is free software: you can redistribute it and/or
@@ -20,113 +20,113 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_PROFILE_H__
-#define __GIMP_COLOR_PROFILE_H__
+#ifndef __LIGMA_COLOR_PROFILE_H__
+#define __LIGMA_COLOR_PROFILE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_COLOR_PROFILE            (gimp_color_profile_get_type ())
-#define GIMP_COLOR_PROFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE, GimpColorProfile))
-#define GIMP_COLOR_PROFILE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE, GimpColorProfileClass))
-#define GIMP_IS_COLOR_PROFILE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE))
-#define GIMP_IS_COLOR_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE))
-#define GIMP_COLOR_PROFILE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE, GimpColorProfileClass))
+#define LIGMA_TYPE_COLOR_PROFILE            (ligma_color_profile_get_type ())
+#define LIGMA_COLOR_PROFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_PROFILE, LigmaColorProfile))
+#define LIGMA_COLOR_PROFILE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_PROFILE, LigmaColorProfileClass))
+#define LIGMA_IS_COLOR_PROFILE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_PROFILE))
+#define LIGMA_IS_COLOR_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_PROFILE))
+#define LIGMA_COLOR_PROFILE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_PROFILE, LigmaColorProfileClass))
 
 
-typedef struct _GimpColorProfilePrivate GimpColorProfilePrivate;
-typedef struct _GimpColorProfileClass   GimpColorProfileClass;
+typedef struct _LigmaColorProfilePrivate LigmaColorProfilePrivate;
+typedef struct _LigmaColorProfileClass   LigmaColorProfileClass;
 
-struct _GimpColorProfile
+struct _LigmaColorProfile
 {
   GObject                  parent_instance;
 
-  GimpColorProfilePrivate *priv;
+  LigmaColorProfilePrivate *priv;
 };
 
-struct _GimpColorProfileClass
+struct _LigmaColorProfileClass
 {
   GObjectClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType              gimp_color_profile_get_type              (void) G_GNUC_CONST;
+GType              ligma_color_profile_get_type              (void) G_GNUC_CONST;
 
-GimpColorProfile * gimp_color_profile_new_rgb_srgb          (void);
-GimpColorProfile * gimp_color_profile_new_rgb_srgb_linear   (void);
-GimpColorProfile * gimp_color_profile_new_rgb_adobe         (void);
+LigmaColorProfile * ligma_color_profile_new_rgb_srgb          (void);
+LigmaColorProfile * ligma_color_profile_new_rgb_srgb_linear   (void);
+LigmaColorProfile * ligma_color_profile_new_rgb_adobe         (void);
 
-GimpColorProfile * gimp_color_profile_new_d65_gray_srgb_trc (void);
-GimpColorProfile * gimp_color_profile_new_d65_gray_linear   (void);
-GimpColorProfile * gimp_color_profile_new_d50_gray_lab_trc  (void);
+LigmaColorProfile * ligma_color_profile_new_d65_gray_srgb_trc (void);
+LigmaColorProfile * ligma_color_profile_new_d65_gray_linear   (void);
+LigmaColorProfile * ligma_color_profile_new_d50_gray_lab_trc  (void);
 
-GimpColorProfile *
-       gimp_color_profile_new_srgb_trc_from_color_profile   (GimpColorProfile  *profile);
-GimpColorProfile *
-       gimp_color_profile_new_linear_from_color_profile     (GimpColorProfile  *profile);
+LigmaColorProfile *
+       ligma_color_profile_new_srgb_trc_from_color_profile   (LigmaColorProfile  *profile);
+LigmaColorProfile *
+       ligma_color_profile_new_linear_from_color_profile     (LigmaColorProfile  *profile);
 
-GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
+LigmaColorProfile * ligma_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
 
-GimpColorProfile * gimp_color_profile_new_from_icc_profile  (const guint8      *data,
+LigmaColorProfile * ligma_color_profile_new_from_icc_profile  (const guint8      *data,
                                                              gsize              length,
                                                              GError           **error);
-GimpColorProfile * gimp_color_profile_new_from_lcms_profile (gpointer           lcms_profile,
+LigmaColorProfile * ligma_color_profile_new_from_lcms_profile (gpointer           lcms_profile,
                                                              GError           **error);
 
-gboolean           gimp_color_profile_save_to_file          (GimpColorProfile  *profile,
+gboolean           ligma_color_profile_save_to_file          (LigmaColorProfile  *profile,
                                                              GFile             *file,
                                                              GError           **error);
 
-const guint8     * gimp_color_profile_get_icc_profile       (GimpColorProfile  *profile,
+const guint8     * ligma_color_profile_get_icc_profile       (LigmaColorProfile  *profile,
                                                              gsize             *length);
-gpointer           gimp_color_profile_get_lcms_profile      (GimpColorProfile  *profile);
+gpointer           ligma_color_profile_get_lcms_profile      (LigmaColorProfile  *profile);
 
-const gchar      * gimp_color_profile_get_description       (GimpColorProfile  *profile);
-const gchar      * gimp_color_profile_get_manufacturer      (GimpColorProfile  *profile);
-const gchar      * gimp_color_profile_get_model             (GimpColorProfile  *profile);
-const gchar      * gimp_color_profile_get_copyright         (GimpColorProfile  *profile);
+const gchar      * ligma_color_profile_get_description       (LigmaColorProfile  *profile);
+const gchar      * ligma_color_profile_get_manufacturer      (LigmaColorProfile  *profile);
+const gchar      * ligma_color_profile_get_model             (LigmaColorProfile  *profile);
+const gchar      * ligma_color_profile_get_copyright         (LigmaColorProfile  *profile);
 
-const gchar      * gimp_color_profile_get_label             (GimpColorProfile  *profile);
-const gchar      * gimp_color_profile_get_summary           (GimpColorProfile  *profile);
+const gchar      * ligma_color_profile_get_label             (LigmaColorProfile  *profile);
+const gchar      * ligma_color_profile_get_summary           (LigmaColorProfile  *profile);
 
-gboolean           gimp_color_profile_is_equal              (GimpColorProfile  *profile1,
-                                                             GimpColorProfile  *profile2);
+gboolean           ligma_color_profile_is_equal              (LigmaColorProfile  *profile1,
+                                                             LigmaColorProfile  *profile2);
 
-gboolean           gimp_color_profile_is_rgb                (GimpColorProfile  *profile);
-gboolean           gimp_color_profile_is_gray               (GimpColorProfile  *profile);
-gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *profile);
+gboolean           ligma_color_profile_is_rgb                (LigmaColorProfile  *profile);
+gboolean           ligma_color_profile_is_gray               (LigmaColorProfile  *profile);
+gboolean           ligma_color_profile_is_cmyk               (LigmaColorProfile  *profile);
 
-gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
+gboolean           ligma_color_profile_is_linear             (LigmaColorProfile  *profile);
 
-const Babl       * gimp_color_profile_get_space             (GimpColorProfile  *profile,
-                                                             GimpColorRenderingIntent intent,
+const Babl       * ligma_color_profile_get_space             (LigmaColorProfile  *profile,
+                                                             LigmaColorRenderingIntent intent,
                                                              GError           **error);
-const Babl       * gimp_color_profile_get_format            (GimpColorProfile  *profile,
+const Babl       * ligma_color_profile_get_format            (LigmaColorProfile  *profile,
                                                              const Babl        *format,
-                                                             GimpColorRenderingIntent intent,
+                                                             LigmaColorRenderingIntent intent,
                                                              GError           **error);
 
-const Babl       * gimp_color_profile_get_lcms_format       (const Babl        *format,
+const Babl       * ligma_color_profile_get_lcms_format       (const Babl        *format,
                                                              guint32           *lcms_format);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_PROFILE_H__ */
+#endif  /* __LIGMA_COLOR_PROFILE_H__ */

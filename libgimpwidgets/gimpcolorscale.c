@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscale.c
- * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * ligmacolorscale.c
+ * Copyright (C) 2002-2010  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,20 +27,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcairo-utils.h"
-#include "gimpcolorscale.h"
-#include "gimpwidgetsutils.h"
+#include "ligmacairo-utils.h"
+#include "ligmacolorscale.h"
+#include "ligmawidgetsutils.h"
 
 
 /**
- * SECTION: gimpcolorscale
- * @title: GimpColorScale
+ * SECTION: ligmacolorscale
+ * @title: LigmaColorScale
  * @short_description: Fancy colored sliders.
  *
  * Fancy colored sliders.
@@ -54,23 +54,23 @@ enum
 };
 
 
-typedef struct _GimpLCH  GimpLCH;
+typedef struct _LigmaLCH  LigmaLCH;
 
-struct _GimpLCH
+struct _LigmaLCH
 {
   gdouble l, c, h, a;
 };
 
 
-struct _GimpColorScalePrivate
+struct _LigmaColorScalePrivate
 {
-  GimpColorConfig          *config;
-  GimpColorTransform       *transform;
+  LigmaColorConfig          *config;
+  LigmaColorTransform       *transform;
   guchar                    oog_color[3];
 
-  GimpColorSelectorChannel  channel;
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
+  LigmaColorSelectorChannel  channel;
+  LigmaRGB                   rgb;
+  LigmaHSV                   hsv;
 
   guchar                   *buf;
   guint                     width;
@@ -80,59 +80,59 @@ struct _GimpColorScalePrivate
   gboolean                  needs_render;
 };
 
-#define GET_PRIVATE(obj) (((GimpColorScale *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaColorScale *) (obj))->priv)
 
 
-static void     gimp_color_scale_dispose             (GObject          *object);
-static void     gimp_color_scale_finalize            (GObject          *object);
-static void     gimp_color_scale_get_property        (GObject          *object,
+static void     ligma_color_scale_dispose             (GObject          *object);
+static void     ligma_color_scale_finalize            (GObject          *object);
+static void     ligma_color_scale_get_property        (GObject          *object,
                                                       guint             property_id,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
-static void     gimp_color_scale_set_property        (GObject          *object,
+static void     ligma_color_scale_set_property        (GObject          *object,
                                                       guint             property_id,
                                                       const GValue     *value,
                                                       GParamSpec       *pspec);
 
-static void     gimp_color_scale_size_allocate       (GtkWidget        *widget,
+static void     ligma_color_scale_size_allocate       (GtkWidget        *widget,
                                                       GtkAllocation    *allocation);
-static gboolean gimp_color_scale_draw                (GtkWidget        *widget,
+static gboolean ligma_color_scale_draw                (GtkWidget        *widget,
                                                       cairo_t          *cr);
 
-static void     gimp_color_scale_render              (GimpColorScale   *scale);
-static void     gimp_color_scale_render_alpha        (GimpColorScale   *scale);
+static void     ligma_color_scale_render              (LigmaColorScale   *scale);
+static void     ligma_color_scale_render_alpha        (LigmaColorScale   *scale);
 
-static void     gimp_color_scale_create_transform    (GimpColorScale   *scale);
-static void     gimp_color_scale_destroy_transform   (GimpColorScale   *scale);
-static void     gimp_color_scale_notify_config       (GimpColorConfig  *config,
+static void     ligma_color_scale_create_transform    (LigmaColorScale   *scale);
+static void     ligma_color_scale_destroy_transform   (LigmaColorScale   *scale);
+static void     ligma_color_scale_notify_config       (LigmaColorConfig  *config,
                                                       const GParamSpec *pspec,
-                                                      GimpColorScale   *scale);
+                                                      LigmaColorScale   *scale);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorScale, ligma_color_scale, GTK_TYPE_SCALE)
 
-#define parent_class gimp_color_scale_parent_class
+#define parent_class ligma_color_scale_parent_class
 
 static const Babl *fish_rgb_to_lch = NULL;
 static const Babl *fish_lch_to_rgb = NULL;
 
 
 static void
-gimp_color_scale_class_init (GimpColorScaleClass *klass)
+ligma_color_scale_class_init (LigmaColorScaleClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose       = gimp_color_scale_dispose;
-  object_class->finalize      = gimp_color_scale_finalize;
-  object_class->get_property  = gimp_color_scale_get_property;
-  object_class->set_property  = gimp_color_scale_set_property;
+  object_class->dispose       = ligma_color_scale_dispose;
+  object_class->finalize      = ligma_color_scale_finalize;
+  object_class->get_property  = ligma_color_scale_get_property;
+  object_class->set_property  = ligma_color_scale_set_property;
 
-  widget_class->size_allocate = gimp_color_scale_size_allocate;
-  widget_class->draw          = gimp_color_scale_draw;
+  widget_class->size_allocate = ligma_color_scale_size_allocate;
+  widget_class->draw          = ligma_color_scale_draw;
 
   /**
-   * GimpColorScale:channel:
+   * LigmaColorScale:channel:
    *
    * The channel which is edited by the color scale.
    *
@@ -142,12 +142,12 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
                                    g_param_spec_enum ("channel",
                                                       "Channel",
                                                       "The channel which is edited by the color scale",
-                                                      GIMP_TYPE_COLOR_SELECTOR_CHANNEL,
-                                                      GIMP_COLOR_SELECTOR_VALUE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_COLOR_SELECTOR_CHANNEL,
+                                                      LIGMA_COLOR_SELECTOR_VALUE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
+  gtk_widget_class_set_css_name (widget_class, "LigmaColorScale");
 
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
                                babl_format ("CIE LCH(ab) double"));
@@ -156,13 +156,13 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 }
 
 static void
-gimp_color_scale_init (GimpColorScale *scale)
+ligma_color_scale_init (LigmaColorScale *scale)
 {
-  GimpColorScalePrivate *priv;
+  LigmaColorScalePrivate *priv;
   GtkRange              *range = GTK_RANGE (scale);
   GtkCssProvider        *css;
 
-  scale->priv = gimp_color_scale_get_instance_private (scale);
+  scale->priv = ligma_color_scale_get_instance_private (scale);
 
   priv = scale->priv;
 
@@ -172,31 +172,31 @@ gimp_color_scale_init (GimpColorScale *scale)
   gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
-  priv->channel      = GIMP_COLOR_SELECTOR_VALUE;
+  priv->channel      = LIGMA_COLOR_SELECTOR_VALUE;
   priv->needs_render = TRUE;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (range),
                                   GTK_ORIENTATION_HORIZONTAL);
 
-  gimp_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  ligma_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
+  ligma_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  gimp_widget_track_monitor (GTK_WIDGET (scale),
-                             G_CALLBACK (gimp_color_scale_destroy_transform),
+  ligma_widget_track_monitor (GTK_WIDGET (scale),
+                             G_CALLBACK (ligma_color_scale_destroy_transform),
                              NULL, NULL);
 
   css = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (css,
-                                   "GimpColorScale {"
+                                   "LigmaColorScale {"
                                    "  padding:    2px 12px 2px 12px;"
                                    "  min-width:  24px;"
                                    "  min-height: 24px;"
                                    "}\n"
-                                   "GimpColorScale contents trough {"
+                                   "LigmaColorScale contents trough {"
                                    "  min-width:  20px;"
                                    "  min-height: 20px;"
                                    "}\n"
-                                   "GimpColorScale contents trough slider {"
+                                   "LigmaColorScale contents trough slider {"
                                    "  min-width:  12px;"
                                    "  min-height: 12px;"
                                    "  margin:     -6px -6px -6px -6px;"
@@ -209,19 +209,19 @@ gimp_color_scale_init (GimpColorScale *scale)
 }
 
 static void
-gimp_color_scale_dispose (GObject *object)
+ligma_color_scale_dispose (GObject *object)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+  LigmaColorScale *scale = LIGMA_COLOR_SCALE (object);
 
-  gimp_color_scale_set_color_config (scale, NULL);
+  ligma_color_scale_set_color_config (scale, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_color_scale_finalize (GObject *object)
+ligma_color_scale_finalize (GObject *object)
 {
-  GimpColorScalePrivate *priv = GET_PRIVATE (object);
+  LigmaColorScalePrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->buf, g_free);
   priv->width     = 0;
@@ -232,12 +232,12 @@ gimp_color_scale_finalize (GObject *object)
 }
 
 static void
-gimp_color_scale_get_property (GObject    *object,
+ligma_color_scale_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpColorScalePrivate *priv = GET_PRIVATE (object);
+  LigmaColorScalePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -252,17 +252,17 @@ gimp_color_scale_get_property (GObject    *object,
 }
 
 static void
-gimp_color_scale_set_property (GObject      *object,
+ligma_color_scale_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+  LigmaColorScale *scale = LIGMA_COLOR_SCALE (object);
 
   switch (property_id)
     {
     case PROP_CHANNEL:
-      gimp_color_scale_set_channel (scale, g_value_get_enum (value));
+      ligma_color_scale_set_channel (scale, g_value_get_enum (value));
       break;
 
     default:
@@ -272,10 +272,10 @@ gimp_color_scale_set_property (GObject      *object,
 }
 
 static void
-gimp_color_scale_size_allocate (GtkWidget     *widget,
+ligma_color_scale_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpColorScalePrivate *priv  = GET_PRIVATE (widget);
+  LigmaColorScalePrivate *priv  = GET_PRIVATE (widget);
   GtkRange              *range = GTK_RANGE (widget);
   GdkRectangle           range_rect;
 
@@ -299,11 +299,11 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_color_scale_draw (GtkWidget *widget,
+ligma_color_scale_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpColorScale        *scale     = GIMP_COLOR_SCALE (widget);
-  GimpColorScalePrivate *priv      = GET_PRIVATE (widget);
+  LigmaColorScale        *scale     = LIGMA_COLOR_SCALE (widget);
+  LigmaColorScalePrivate *priv      = GET_PRIVATE (widget);
   GtkRange              *range     = GTK_RANGE (widget);
   GtkStyleContext       *context   = gtk_widget_get_style_context (widget);
   GdkRectangle           range_rect;
@@ -325,13 +325,13 @@ gimp_color_scale_draw (GtkWidget *widget,
 
   if (priv->needs_render)
     {
-      gimp_color_scale_render (scale);
+      ligma_color_scale_render (scale);
 
       priv->needs_render = FALSE;
     }
 
   if (! priv->transform)
-    gimp_color_scale_create_transform (scale);
+    ligma_color_scale_create_transform (scale);
 
   if (priv->transform)
     {
@@ -343,7 +343,7 @@ gimp_color_scale_draw (GtkWidget *widget,
 
       for (i = 0; i < priv->height; i++)
         {
-          gimp_color_transform_process_pixels (priv->transform,
+          ligma_color_transform_process_pixels (priv->transform,
                                                format, src,
                                                format, dest,
                                                priv->width);
@@ -494,19 +494,19 @@ gimp_color_scale_draw (GtkWidget *widget,
 }
 
 /**
- * gimp_color_scale_new:
+ * ligma_color_scale_new:
  * @orientation: the scale's orientation (horizontal or vertical)
  * @channel: the scale's color channel
  *
- * Creates a new #GimpColorScale widget.
+ * Creates a new #LigmaColorScale widget.
  *
- * Returns: a new #GimpColorScale widget
+ * Returns: a new #LigmaColorScale widget
  **/
 GtkWidget *
-gimp_color_scale_new (GtkOrientation            orientation,
-                      GimpColorSelectorChannel  channel)
+ligma_color_scale_new (GtkOrientation            orientation,
+                      LigmaColorSelectorChannel  channel)
 {
-  GimpColorScale *scale = g_object_new (GIMP_TYPE_COLOR_SCALE,
+  LigmaColorScale *scale = g_object_new (LIGMA_TYPE_COLOR_SCALE,
                                         "orientation", orientation,
                                         "channel",     channel,
                                         NULL);
@@ -518,19 +518,19 @@ gimp_color_scale_new (GtkOrientation            orientation,
 }
 
 /**
- * gimp_color_scale_set_channel:
- * @scale: a #GimpColorScale widget
+ * ligma_color_scale_set_channel:
+ * @scale: a #LigmaColorScale widget
  * @channel: the new color channel
  *
  * Changes the color channel displayed by the @scale.
  **/
 void
-gimp_color_scale_set_channel (GimpColorScale           *scale,
-                              GimpColorSelectorChannel  channel)
+ligma_color_scale_set_channel (LigmaColorScale           *scale,
+                              LigmaColorSelectorChannel  channel)
 {
-  GimpColorScalePrivate *priv;
+  LigmaColorScalePrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (LIGMA_IS_COLOR_SCALE (scale));
 
   priv = GET_PRIVATE (scale);
 
@@ -546,21 +546,21 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
 }
 
 /**
- * gimp_color_scale_set_color:
- * @scale: a #GimpColorScale widget
- * @rgb: the new color as #GimpRGB
- * @hsv: the new color as #GimpHSV
+ * ligma_color_scale_set_color:
+ * @scale: a #LigmaColorScale widget
+ * @rgb: the new color as #LigmaRGB
+ * @hsv: the new color as #LigmaHSV
  *
  * Changes the color value of the @scale.
  **/
 void
-gimp_color_scale_set_color (GimpColorScale *scale,
-                            const GimpRGB  *rgb,
-                            const GimpHSV  *hsv)
+ligma_color_scale_set_color (LigmaColorScale *scale,
+                            const LigmaRGB  *rgb,
+                            const LigmaHSV  *hsv)
 {
-  GimpColorScalePrivate *priv;
+  LigmaColorScalePrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (LIGMA_IS_COLOR_SCALE (scale));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
@@ -574,22 +574,22 @@ gimp_color_scale_set_color (GimpColorScale *scale,
 }
 
 /**
- * gimp_color_scale_set_color_config:
- * @scale:  a #GimpColorScale widget.
- * @config: a #GimpColorConfig object.
+ * ligma_color_scale_set_color_config:
+ * @scale:  a #LigmaColorScale widget.
+ * @config: a #LigmaColorConfig object.
  *
  * Sets the color management configuration to use with this color scale.
  *
  * Since: 2.10
  */
 void
-gimp_color_scale_set_color_config (GimpColorScale  *scale,
-                                   GimpColorConfig *config)
+ligma_color_scale_set_color_config (LigmaColorScale  *scale,
+                                   LigmaColorConfig *config)
 {
-  GimpColorScalePrivate *priv;
+  LigmaColorScalePrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_SCALE (scale));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
   priv = GET_PRIVATE (scale);
 
@@ -598,10 +598,10 @@ gimp_color_scale_set_color_config (GimpColorScale  *scale,
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_color_scale_notify_config,
+                                                ligma_color_scale_notify_config,
                                                 scale);
 
-          gimp_color_scale_destroy_transform (scale);
+          ligma_color_scale_destroy_transform (scale);
         }
 
       g_set_object (&priv->config, config);
@@ -609,10 +609,10 @@ gimp_color_scale_set_color_config (GimpColorScale  *scale,
       if (priv->config)
         {
           g_signal_connect (priv->config, "notify",
-                            G_CALLBACK (gimp_color_scale_notify_config),
+                            G_CALLBACK (ligma_color_scale_notify_config),
                             scale);
 
-          gimp_color_scale_notify_config (priv->config, NULL, scale);
+          ligma_color_scale_notify_config (priv->config, NULL, scale);
         }
     }
 }
@@ -642,13 +642,13 @@ should_invert (GtkRange *range)
 }
 
 static void
-gimp_color_scale_render (GimpColorScale *scale)
+ligma_color_scale_render (LigmaColorScale *scale)
 {
-  GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
+  LigmaColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
-  GimpRGB                rgb;
-  GimpHSV                hsv;
-  GimpLCH                lch;
+  LigmaRGB                rgb;
+  LigmaHSV                hsv;
+  LigmaLCH                lch;
   gint                   multiplier = 1;
   guint                  x, y;
   gdouble               *channel_value = NULL; /* shut up compiler */
@@ -661,9 +661,9 @@ gimp_color_scale_render (GimpColorScale *scale)
   if ((buf = priv->buf) == NULL)
     return;
 
-  if (priv->channel == GIMP_COLOR_SELECTOR_ALPHA)
+  if (priv->channel == LIGMA_COLOR_SELECTOR_ALPHA)
     {
-      gimp_color_scale_render_alpha (scale);
+      ligma_color_scale_render_alpha (scale);
       return;
     }
 
@@ -673,37 +673,37 @@ gimp_color_scale_render (GimpColorScale *scale)
 
   switch (priv->channel)
     {
-    case GIMP_COLOR_SELECTOR_HUE:        channel_value = &hsv.h; break;
-    case GIMP_COLOR_SELECTOR_SATURATION: channel_value = &hsv.s; break;
-    case GIMP_COLOR_SELECTOR_VALUE:      channel_value = &hsv.v; break;
+    case LIGMA_COLOR_SELECTOR_HUE:        channel_value = &hsv.h; break;
+    case LIGMA_COLOR_SELECTOR_SATURATION: channel_value = &hsv.s; break;
+    case LIGMA_COLOR_SELECTOR_VALUE:      channel_value = &hsv.v; break;
 
-    case GIMP_COLOR_SELECTOR_RED:        channel_value = &rgb.r; break;
-    case GIMP_COLOR_SELECTOR_GREEN:      channel_value = &rgb.g; break;
-    case GIMP_COLOR_SELECTOR_BLUE:       channel_value = &rgb.b; break;
-    case GIMP_COLOR_SELECTOR_ALPHA:      channel_value = &rgb.a; break;
+    case LIGMA_COLOR_SELECTOR_RED:        channel_value = &rgb.r; break;
+    case LIGMA_COLOR_SELECTOR_GREEN:      channel_value = &rgb.g; break;
+    case LIGMA_COLOR_SELECTOR_BLUE:       channel_value = &rgb.b; break;
+    case LIGMA_COLOR_SELECTOR_ALPHA:      channel_value = &rgb.a; break;
 
-    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value = &lch.l; break;
-    case GIMP_COLOR_SELECTOR_LCH_CHROMA:    channel_value = &lch.c; break;
-    case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch.h; break;
+    case LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value = &lch.l; break;
+    case LIGMA_COLOR_SELECTOR_LCH_CHROMA:    channel_value = &lch.c; break;
+    case LIGMA_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch.h; break;
     }
 
   switch (priv->channel)
     {
-    case GIMP_COLOR_SELECTOR_HUE:
-    case GIMP_COLOR_SELECTOR_SATURATION:
-    case GIMP_COLOR_SELECTOR_VALUE:
+    case LIGMA_COLOR_SELECTOR_HUE:
+    case LIGMA_COLOR_SELECTOR_SATURATION:
+    case LIGMA_COLOR_SELECTOR_VALUE:
       from_hsv = TRUE;
       break;
 
-    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
+    case LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS:
       multiplier = 100;
       from_lch = TRUE;
       break;
-    case GIMP_COLOR_SELECTOR_LCH_CHROMA:
+    case LIGMA_COLOR_SELECTOR_LCH_CHROMA:
       multiplier = 200;
       from_lch = TRUE;
       break;
-    case GIMP_COLOR_SELECTOR_LCH_HUE:
+    case LIGMA_COLOR_SELECTOR_LCH_HUE:
       multiplier = 360;
       from_lch = TRUE;
       break;
@@ -728,7 +728,7 @@ gimp_color_scale_render (GimpColorScale *scale)
           *channel_value = value;
 
           if (from_hsv)
-            gimp_hsv_to_rgb (&hsv, &rgb);
+            ligma_hsv_to_rgb (&hsv, &rgb);
           else if (from_lch)
             babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
@@ -742,10 +742,10 @@ gimp_color_scale_render (GimpColorScale *scale)
             }
           else
             {
-              gimp_rgb_get_uchar (&rgb, &r, &g, &b);
+              ligma_rgb_get_uchar (&rgb, &r, &g, &b);
             }
 
-          GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
+          LIGMA_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
         }
 
       d = buf + priv->rowstride;
@@ -768,7 +768,7 @@ gimp_color_scale_render (GimpColorScale *scale)
           *channel_value = value;
 
           if (from_hsv)
-            gimp_hsv_to_rgb (&hsv, &rgb);
+            ligma_hsv_to_rgb (&hsv, &rgb);
           else if (from_lch)
             babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
@@ -782,12 +782,12 @@ gimp_color_scale_render (GimpColorScale *scale)
             }
           else
             {
-              gimp_rgb_get_uchar (&rgb, &r, &g, &b);
+              ligma_rgb_get_uchar (&rgb, &r, &g, &b);
             }
 
           for (x = 0, d = buf; x < priv->width; x++, d += 4)
             {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
+              LIGMA_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
             }
 
           buf += priv->rowstride;
@@ -797,11 +797,11 @@ gimp_color_scale_render (GimpColorScale *scale)
 }
 
 static void
-gimp_color_scale_render_alpha (GimpColorScale *scale)
+ligma_color_scale_render_alpha (LigmaColorScale *scale)
 {
-  GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
+  LigmaColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
-  GimpRGB                rgb;
+  LigmaRGB                rgb;
   gboolean               invert;
   gdouble                a;
   guint                  x, y;
@@ -822,12 +822,12 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 
         light = buf;
         /* this won't work correctly for very thin scales */
-        dark  = (priv->height > GIMP_CHECK_SIZE_SM ?
-                 buf + GIMP_CHECK_SIZE_SM * priv->rowstride : light);
+        dark  = (priv->height > LIGMA_CHECK_SIZE_SM ?
+                 buf + LIGMA_CHECK_SIZE_SM * priv->rowstride : light);
 
         for (x = 0, d = light, l = dark; x < priv->width; x++)
           {
-            if ((x % GIMP_CHECK_SIZE_SM) == 0)
+            if ((x % LIGMA_CHECK_SIZE_SM) == 0)
               {
                 guchar *t;
 
@@ -841,31 +841,31 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             if (invert)
               a = 1.0 - a;
 
-            GIMP_CAIRO_RGB24_SET_PIXEL (l,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999);
+            LIGMA_CAIRO_RGB24_SET_PIXEL (l,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.r - LIGMA_CHECK_LIGHT) * a) * 255.999,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.g - LIGMA_CHECK_LIGHT) * a) * 255.999,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.b - LIGMA_CHECK_LIGHT) * a) * 255.999);
             l += 4;
 
-            GIMP_CAIRO_RGB24_SET_PIXEL (d,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.r - GIMP_CHECK_DARK) * a) * 255.999,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.g - GIMP_CHECK_DARK) * a) * 255.999,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.b - GIMP_CHECK_DARK) * a) * 255.999);
+            LIGMA_CAIRO_RGB24_SET_PIXEL (d,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.r - LIGMA_CHECK_DARK) * a) * 255.999,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.g - LIGMA_CHECK_DARK) * a) * 255.999,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.b - LIGMA_CHECK_DARK) * a) * 255.999);
             d += 4;
           }
 
         for (y = 0, d = buf; y < priv->height; y++, d += priv->rowstride)
           {
-            if (y == 0 || y == GIMP_CHECK_SIZE_SM)
+            if (y == 0 || y == LIGMA_CHECK_SIZE_SM)
               continue;
 
-            if ((y / GIMP_CHECK_SIZE_SM) & 1)
+            if ((y / LIGMA_CHECK_SIZE_SM) & 1)
               memcpy (d, dark, priv->rowstride);
             else
               memcpy (d, light, priv->rowstride);
@@ -885,25 +885,25 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             if (invert)
               a = 1.0 - a;
 
-            GIMP_CAIRO_RGB24_SET_PIXEL (light,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999,
-                                        (GIMP_CHECK_LIGHT +
-                                         (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999);
+            LIGMA_CAIRO_RGB24_SET_PIXEL (light,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.r - LIGMA_CHECK_LIGHT) * a) * 255.999,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.g - LIGMA_CHECK_LIGHT) * a) * 255.999,
+                                        (LIGMA_CHECK_LIGHT +
+                                         (rgb.b - LIGMA_CHECK_LIGHT) * a) * 255.999);
 
-            GIMP_CAIRO_RGB24_SET_PIXEL (dark,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.r - GIMP_CHECK_DARK) * a) * 255.999,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.g - GIMP_CHECK_DARK) * a) * 255.999,
-                                        (GIMP_CHECK_DARK +
-                                         (rgb.b - GIMP_CHECK_DARK) * a) * 255.999);
+            LIGMA_CAIRO_RGB24_SET_PIXEL (dark,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.r - LIGMA_CHECK_DARK) * a) * 255.999,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.g - LIGMA_CHECK_DARK) * a) * 255.999,
+                                        (LIGMA_CHECK_DARK +
+                                         (rgb.b - LIGMA_CHECK_DARK) * a) * 255.999);
 
             for (x = 0, l = d; x < priv->width; x++, l += 4)
               {
-                if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) & 1)
+                if (((x / LIGMA_CHECK_SIZE_SM) ^ (y / LIGMA_CHECK_SIZE_SM)) & 1)
                   {
                     l[0] = light[0];
                     l[1] = light[1];
@@ -925,34 +925,34 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 }
 
 static void
-gimp_color_scale_create_transform (GimpColorScale *scale)
+ligma_color_scale_create_transform (LigmaColorScale *scale)
 {
-  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+  LigmaColorScalePrivate *priv = GET_PRIVATE (scale);
 
   if (priv->config)
     {
-      static GimpColorProfile *profile = NULL;
+      static LigmaColorProfile *profile = NULL;
 
       const Babl *format = babl_format ("cairo-RGB24");
 
       if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
+        profile = ligma_color_profile_new_rgb_srgb ();
 
-      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (scale),
+      priv->transform = ligma_widget_get_color_transform (GTK_WIDGET (scale),
                                                          priv->config,
                                                          profile,
                                                          format,
                                                          format,
                                                          NULL,
-                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                          FALSE);
     }
 }
 
 static void
-gimp_color_scale_destroy_transform (GimpColorScale *scale)
+ligma_color_scale_destroy_transform (LigmaColorScale *scale)
 {
-  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+  LigmaColorScalePrivate *priv = GET_PRIVATE (scale);
 
   if (priv->transform)
     {
@@ -964,17 +964,17 @@ gimp_color_scale_destroy_transform (GimpColorScale *scale)
 }
 
 static void
-gimp_color_scale_notify_config (GimpColorConfig  *config,
+ligma_color_scale_notify_config (LigmaColorConfig  *config,
                                 const GParamSpec *pspec,
-                                GimpColorScale   *scale)
+                                LigmaColorScale   *scale)
 {
-  GimpColorScalePrivate *priv = GET_PRIVATE (scale);
-  GimpRGB                color;
+  LigmaColorScalePrivate *priv = GET_PRIVATE (scale);
+  LigmaRGB                color;
 
-  gimp_color_scale_destroy_transform (scale);
+  ligma_color_scale_destroy_transform (scale);
 
-  gimp_color_config_get_out_of_gamut_color (config, &color);
-  gimp_rgb_get_uchar (&color,
+  ligma_color_config_get_out_of_gamut_color (config, &color);
+  ligma_rgb_get_uchar (&color,
                       priv->oog_color,
                       priv->oog_color + 1,
                       priv->oog_color + 2);

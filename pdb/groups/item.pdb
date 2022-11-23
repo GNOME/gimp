@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub item_id_is_valid {
     $blurb = 'Returns TRUE if the item ID is valid.';
@@ -39,10 +39,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  valid = (GIMP_IS_ITEM (item) &&
-           ! gimp_item_is_removed (GIMP_ITEM (item)));
+  valid = (LIGMA_IS_ITEM (item) &&
+           ! ligma_item_is_removed (LIGMA_ITEM (item)));
 }
 CODE
     );
@@ -71,10 +71,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  drawable = (GIMP_IS_DRAWABLE (item) &&
-              ! gimp_item_is_removed (item));
+  drawable = (LIGMA_IS_DRAWABLE (item) &&
+              ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -103,10 +103,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  layer = (GIMP_IS_LAYER (item) &&
-           ! gimp_item_is_removed (item));
+  layer = (LIGMA_IS_LAYER (item) &&
+           ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -134,11 +134,11 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  text_layer = (GIMP_IS_LAYER (item) &&
-                ! gimp_item_is_removed (item) &&
-                gimp_item_is_text_layer (item));
+  text_layer = (LIGMA_IS_LAYER (item) &&
+                ! ligma_item_is_removed (item) &&
+                ligma_item_is_text_layer (item));
 }
 CODE
     );
@@ -167,10 +167,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  channel = (GIMP_IS_CHANNEL (item) &&
-             ! gimp_item_is_removed (item));
+  channel = (LIGMA_IS_CHANNEL (item) &&
+             ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -199,10 +199,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  layer_mask = (GIMP_IS_LAYER_MASK (item) &&
-                ! gimp_item_is_removed (item));
+  layer_mask = (LIGMA_IS_LAYER_MASK (item) &&
+                ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -231,10 +231,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  selection = (GIMP_IS_SELECTION (item) &&
-               ! gimp_item_is_removed (item));
+  selection = (LIGMA_IS_SELECTION (item) &&
+               ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -263,10 +263,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+  LigmaItem *item = ligma_item_get_by_id (ligma, item_id);
 
-  vectors = (GIMP_IS_VECTORS (item) &&
-             ! gimp_item_is_removed (item));
+  vectors = (LIGMA_IS_VECTORS (item) &&
+             ! ligma_item_is_removed (item));
 }
 CODE
     );
@@ -293,7 +293,7 @@ sub item_get_image {
     %invoke = (
 	code => <<'CODE'
 {
-  image = gimp_item_get_image (GIMP_ITEM (item));
+  image = ligma_item_get_image (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -356,7 +356,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  group = (gimp_viewable_get_children (GIMP_VIEWABLE (item)) != NULL);
+  group = (ligma_viewable_get_children (LIGMA_VIEWABLE (item)) != NULL);
 }
 CODE
     );
@@ -384,7 +384,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parent = gimp_item_get_parent (item);
+  parent = ligma_item_get_parent (item);
 }
 CODE
     );
@@ -417,20 +417,20 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpContainer *container = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+  LigmaContainer *container = ligma_viewable_get_children (LIGMA_VIEWABLE (item));
 
   if (container)
     {
-      num_children = gimp_container_get_n_children (container);
+      num_children = ligma_container_get_n_children (container);
 
       if (num_children)
         {
           GList *list;
           gint   i;
 
-          children = g_new (GimpItem *, num_children);
+          children = g_new (LigmaItem *, num_children);
 
-          for (list = GIMP_LIST (container)->queue->head, i = 0;
+          for (list = LIGMA_LIST (container)->queue->head, i = 0;
                list;
                list = g_list_next (list), i++)
             {
@@ -468,7 +468,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  expanded = gimp_viewable_get_expanded (GIMP_VIEWABLE (item));
+  expanded = ligma_viewable_get_expanded (LIGMA_VIEWABLE (item));
 }
 CODE
     );
@@ -493,7 +493,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_viewable_set_expanded (GIMP_VIEWABLE (item), expanded);
+  ligma_viewable_set_expanded (LIGMA_VIEWABLE (item), expanded);
 }
 CODE
     );
@@ -520,7 +520,7 @@ sub item_get_name {
     %invoke = (
 	code => <<'CODE'
 {
-  name = g_strdup (gimp_object_get_name (item));
+  name = g_strdup (ligma_object_get_name (item));
 }
 CODE
     );
@@ -544,7 +544,7 @@ sub item_set_name {
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_rename (GIMP_ITEM (item), name, error);
+  success = ligma_item_rename (LIGMA_ITEM (item), name, error);
 }
 CODE
     );
@@ -571,7 +571,7 @@ sub item_get_visible {
     %invoke = (
 	code => <<'CODE'
 {
-  visible = gimp_item_get_visible (GIMP_ITEM (item));
+  visible = ligma_item_get_visible (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -595,7 +595,7 @@ sub item_set_visible {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_set_visible (GIMP_ITEM (item), visible, TRUE);
+  ligma_item_set_visible (LIGMA_ITEM (item), visible, TRUE);
 }
 CODE
     );
@@ -621,7 +621,7 @@ sub item_get_lock_content {
     %invoke = (
 	code => <<'CODE'
 {
-  lock_content = gimp_item_get_lock_content (GIMP_ITEM (item));
+  lock_content = ligma_item_get_lock_content (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -644,8 +644,8 @@ sub item_set_lock_content {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_can_lock_content (GIMP_ITEM (item)))
-    gimp_item_set_lock_content (GIMP_ITEM (item), lock_content, TRUE);
+  if (ligma_item_can_lock_content (LIGMA_ITEM (item)))
+    ligma_item_set_lock_content (LIGMA_ITEM (item), lock_content, TRUE);
   else
     success = FALSE;
 }
@@ -673,7 +673,7 @@ sub item_get_lock_position {
     %invoke = (
 	code => <<'CODE'
 {
-  lock_position = gimp_item_get_lock_position (GIMP_ITEM (item));
+  lock_position = ligma_item_get_lock_position (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -696,8 +696,8 @@ sub item_set_lock_position {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_can_lock_position (GIMP_ITEM (item)))
-    gimp_item_set_lock_position (GIMP_ITEM (item), lock_position, TRUE);
+  if (ligma_item_can_lock_position (LIGMA_ITEM (item)))
+    ligma_item_set_lock_position (LIGMA_ITEM (item), lock_position, TRUE);
   else
     success = FALSE;
 }
@@ -725,7 +725,7 @@ sub item_get_lock_visibility {
     %invoke = (
 	code => <<'CODE'
 {
-  lock_visibility = gimp_item_get_lock_visibility (GIMP_ITEM (item));
+  lock_visibility = ligma_item_get_lock_visibility (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -748,8 +748,8 @@ sub item_set_lock_visibility {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_can_lock_visibility (GIMP_ITEM (item)))
-    gimp_item_set_lock_visibility (GIMP_ITEM (item), lock_visibility, TRUE);
+  if (ligma_item_can_lock_visibility (LIGMA_ITEM (item)))
+    ligma_item_set_lock_visibility (LIGMA_ITEM (item), lock_visibility, TRUE);
   else
     success = FALSE;
 }
@@ -770,14 +770,14 @@ sub item_get_color_tag {
     );
 
     @outargs = (
-	{ name => 'color_tag', type => 'enum GimpColorTag',
+	{ name => 'color_tag', type => 'enum LigmaColorTag',
 	  desc => "The item's color tag" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  color_tag = gimp_item_get_color_tag (GIMP_ITEM (item));
+  color_tag = ligma_item_get_color_tag (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -793,14 +793,14 @@ sub item_set_color_tag {
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The item' },
-	{ name => 'color_tag', type => 'enum GimpColorTag',
+	{ name => 'color_tag', type => 'enum LigmaColorTag',
 	  desc => "The new item color tag" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_set_color_tag (GIMP_ITEM (item), color_tag, TRUE);
+  ligma_item_set_color_tag (LIGMA_ITEM (item), color_tag, TRUE);
 }
 CODE
     );
@@ -831,7 +831,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  tattoo = gimp_item_get_tattoo (GIMP_ITEM (item));
+  tattoo = ligma_item_get_tattoo (LIGMA_ITEM (item));
 }
 CODE
     );
@@ -859,7 +859,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_set_tattoo (GIMP_ITEM (item), tattoo);
+  ligma_item_set_tattoo (LIGMA_ITEM (item), tattoo);
 }
 CODE
     );
@@ -884,8 +884,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_parasite_validate (item, parasite, error))
-    gimp_item_parasite_attach (item, parasite, TRUE);
+  if (ligma_item_parasite_validate (item, parasite, error))
+    ligma_item_parasite_attach (item, parasite, TRUE);
   else
     success = FALSE;
 }
@@ -912,7 +912,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_detach (item, name, TRUE);
+  ligma_item_parasite_detach (item, name, TRUE);
 }
 CODE
     );
@@ -942,7 +942,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = gimp_parasite_copy (gimp_item_parasite_find (item, name));
+  parasite = ligma_parasite_copy (ligma_item_parasite_find (item, name));
 
   if (! parasite)
     success = FALSE;
@@ -970,20 +970,20 @@ sub item_get_parasite_list {
     %invoke = (
 	code => <<'CODE'
 {
-  parasites = gimp_item_parasite_list (item);
+  parasites = ligma_item_parasite_list (item);
 }
 CODE
     );
 }
 
-@headers = qw("core/gimplayermask.h"
-              "core/gimplist.h"
-              "core/gimpselection.h"
-              "text/gimptextlayer.h"
-	      "vectors/gimpvectors.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("core/ligmalayermask.h"
+              "core/ligmalist.h"
+              "core/ligmaselection.h"
+              "text/ligmatextlayer.h"
+	      "vectors/ligmavectors.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(item_id_is_valid
             item_id_is_drawable
@@ -1013,7 +1013,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Item procedures';
-$doc_title = 'gimpitem';
+$doc_title = 'ligmaitem';
 $doc_short_desc = 'Functions to manipulate items.';
 $doc_long_desc = 'Functions to manipulate items.';
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns-save.h
@@ -22,8 +22,8 @@
 #define __ICNS_SAVE_H__
 
 
-GimpPDBStatusType icns_save_image (GFile     *file,
-                                   GimpImage *image,
+LigmaPDBStatusType icns_save_image (GFile     *file,
+                                   LigmaImage *image,
                                    gint32     run_mode,
                                    GError   **error);
 

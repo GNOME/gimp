@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,32 +22,32 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimppalette.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmapalette.h"
 
-#include "gimpcolordialog.h"
-#include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimpdialogfactory.h"
-#include "gimphelp-ids.h"
-#include "gimppaletteeditor.h"
-#include "gimppaletteview.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpuimanager.h"
-#include "gimpviewrendererpalette.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacolordialog.h"
+#include "ligmadnd.h"
+#include "ligmadocked.h"
+#include "ligmadialogfactory.h"
+#include "ligmahelp-ids.h"
+#include "ligmapaletteeditor.h"
+#include "ligmapaletteview.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmauimanager.h"
+#include "ligmaviewrendererpalette.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define ENTRY_WIDTH  12
@@ -62,118 +62,118 @@
 
 /*  local function prototypes  */
 
-static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
+static void   ligma_palette_editor_docked_iface_init (LigmaDockedInterface *face);
 
-static void   gimp_palette_editor_constructed      (GObject           *object);
-static void   gimp_palette_editor_dispose          (GObject           *object);
+static void   ligma_palette_editor_constructed      (GObject           *object);
+static void   ligma_palette_editor_dispose          (GObject           *object);
 
-static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
+static void   ligma_palette_editor_unmap            (GtkWidget         *widget);
 
-static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
-                                                    GimpData          *data);
+static void   ligma_palette_editor_set_data         (LigmaDataEditor    *editor,
+                                                    LigmaData          *data);
 
-static void   gimp_palette_editor_set_context      (GimpDocked        *docked,
-                                                    GimpContext       *context);
-static void   gimp_palette_editor_set_aux_info     (GimpDocked        *docked,
+static void   ligma_palette_editor_set_context      (LigmaDocked        *docked,
+                                                    LigmaContext       *context);
+static void   ligma_palette_editor_set_aux_info     (LigmaDocked        *docked,
                                                     GList             *aux_info);
-static GList *gimp_palette_editor_get_aux_info     (GimpDocked        *docked);
+static GList *ligma_palette_editor_get_aux_info     (LigmaDocked        *docked);
 
-static void   palette_editor_invalidate_preview    (GimpPalette       *palette,
-                                                    GimpPaletteEditor *editor);
+static void   palette_editor_invalidate_preview    (LigmaPalette       *palette,
+                                                    LigmaPaletteEditor *editor);
 
 static void   palette_editor_viewport_size_allocate(GtkWidget         *widget,
                                                     GtkAllocation     *allocation,
-                                                    GimpPaletteEditor *editor);
+                                                    LigmaPaletteEditor *editor);
 
 static void   palette_editor_drop_palette          (GtkWidget         *widget,
                                                     gint               x,
                                                     gint               y,
-                                                    GimpViewable      *viewable,
+                                                    LigmaViewable      *viewable,
                                                     gpointer           data);
 static void   palette_editor_drop_color            (GtkWidget         *widget,
                                                     gint               x,
                                                     gint               y,
-                                                    const GimpRGB     *color,
+                                                    const LigmaRGB     *color,
                                                     gpointer           data);
 
-static void   palette_editor_entry_clicked         (GimpPaletteView   *view,
-                                                    GimpPaletteEntry  *entry,
+static void   palette_editor_entry_clicked         (LigmaPaletteView   *view,
+                                                    LigmaPaletteEntry  *entry,
                                                     GdkModifierType    state,
-                                                    GimpPaletteEditor *editor);
-static void   palette_editor_entry_selected        (GimpPaletteView   *view,
-                                                    GimpPaletteEntry  *entry,
-                                                    GimpPaletteEditor *editor);
-static void   palette_editor_entry_activated       (GimpPaletteView   *view,
-                                                    GimpPaletteEntry  *entry,
-                                                    GimpPaletteEditor *editor);
+                                                    LigmaPaletteEditor *editor);
+static void   palette_editor_entry_selected        (LigmaPaletteView   *view,
+                                                    LigmaPaletteEntry  *entry,
+                                                    LigmaPaletteEditor *editor);
+static void   palette_editor_entry_activated       (LigmaPaletteView   *view,
+                                                    LigmaPaletteEntry  *entry,
+                                                    LigmaPaletteEditor *editor);
 static gboolean palette_editor_button_press_event  (GtkWidget *widget,
                                                     GdkEvent  *event,
                                                     gpointer   user_data);
 static gboolean palette_editor_popup_menu          (GtkWidget *widget,
                                                     gpointer   user_data);
-static void   palette_editor_color_dropped         (GimpPaletteView   *view,
-                                                    GimpPaletteEntry  *entry,
-                                                    const GimpRGB     *color,
-                                                    GimpPaletteEditor *editor);
+static void   palette_editor_color_dropped         (LigmaPaletteView   *view,
+                                                    LigmaPaletteEntry  *entry,
+                                                    const LigmaRGB     *color,
+                                                    LigmaPaletteEditor *editor);
 
 static void   palette_editor_color_name_changed    (GtkWidget         *widget,
-                                                    GimpPaletteEditor *editor);
+                                                    LigmaPaletteEditor *editor);
 static void   palette_editor_columns_changed       (GtkAdjustment     *adj,
-                                                    GimpPaletteEditor *editor);
+                                                    LigmaPaletteEditor *editor);
 
-static void   palette_editor_resize                (GimpPaletteEditor *editor,
+static void   palette_editor_resize                (LigmaPaletteEditor *editor,
                                                     gint               width,
                                                     gdouble            zoom_factor);
-static void   palette_editor_scroll_top_left       (GimpPaletteEditor *editor);
-static void   palette_editor_edit_color_update     (GimpColorDialog   *dialog,
-                                                    const GimpRGB     *color,
-                                                    GimpColorDialogState state,
-                                                    GimpPaletteEditor *editor);
+static void   palette_editor_scroll_top_left       (LigmaPaletteEditor *editor);
+static void   palette_editor_edit_color_update     (LigmaColorDialog   *dialog,
+                                                    const LigmaRGB     *color,
+                                                    LigmaColorDialogState state,
+                                                    LigmaPaletteEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpPaletteEditor, gimp_palette_editor,
-                         GIMP_TYPE_DATA_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_palette_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaPaletteEditor, ligma_palette_editor,
+                         LIGMA_TYPE_DATA_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_palette_editor_docked_iface_init))
 
-#define parent_class gimp_palette_editor_parent_class
+#define parent_class ligma_palette_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
+ligma_palette_editor_class_init (LigmaPaletteEditorClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  LigmaDataEditorClass *editor_class = LIGMA_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructed = gimp_palette_editor_constructed;
-  object_class->dispose     = gimp_palette_editor_dispose;
+  object_class->constructed = ligma_palette_editor_constructed;
+  object_class->dispose     = ligma_palette_editor_dispose;
 
-  widget_class->unmap       = gimp_palette_editor_unmap;
+  widget_class->unmap       = ligma_palette_editor_unmap;
 
-  editor_class->set_data    = gimp_palette_editor_set_data;
+  editor_class->set_data    = ligma_palette_editor_set_data;
   editor_class->title       = _("Palette Editor");
 }
 
 static void
-gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_palette_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_context  = gimp_palette_editor_set_context;
-  iface->set_aux_info = gimp_palette_editor_set_aux_info;
-  iface->get_aux_info = gimp_palette_editor_get_aux_info;
+  iface->set_context  = ligma_palette_editor_set_context;
+  iface->set_aux_info = ligma_palette_editor_set_aux_info;
+  iface->get_aux_info = ligma_palette_editor_get_aux_info;
 }
 
 static void
-gimp_palette_editor_init (GimpPaletteEditor *editor)
+ligma_palette_editor_init (LigmaPaletteEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
   GtkWidget      *viewport;
   GtkWidget      *hbox;
   GtkWidget      *icon;
@@ -196,15 +196,15 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (data_editor->view), viewport);
   gtk_widget_show (viewport);
 
-  editor->view = gimp_view_new_full_by_types (NULL,
-                                              GIMP_TYPE_PALETTE_VIEW,
-                                              GIMP_TYPE_PALETTE,
+  editor->view = ligma_view_new_full_by_types (NULL,
+                                              LIGMA_TYPE_PALETTE_VIEW,
+                                              LIGMA_TYPE_PALETTE,
                                               PREVIEW_WIDTH, PREVIEW_HEIGHT, 0,
                                               FALSE, TRUE, FALSE);
-  gimp_view_renderer_palette_set_cell_size
-    (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), -1);
-  gimp_view_renderer_palette_set_draw_grid
-    (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), TRUE);
+  ligma_view_renderer_palette_set_cell_size
+    (LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (editor->view)->renderer), -1);
+  ligma_view_renderer_palette_set_draw_grid
+    (LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (editor->view)->renderer), TRUE);
   gtk_container_add (GTK_CONTAINER (viewport), editor->view);
   gtk_widget_show (editor->view);
 
@@ -231,16 +231,16 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     G_CALLBACK (palette_editor_popup_menu),
                     editor);
 
-  gimp_dnd_viewable_dest_add (editor->view,
-                              GIMP_TYPE_PALETTE,
+  ligma_dnd_viewable_dest_add (editor->view,
+                              LIGMA_TYPE_PALETTE,
                               palette_editor_drop_palette,
                               editor);
-  gimp_dnd_viewable_dest_add (gtk_widget_get_parent (editor->view),
-                              GIMP_TYPE_PALETTE,
+  ligma_dnd_viewable_dest_add (gtk_widget_get_parent (editor->view),
+                              LIGMA_TYPE_PALETTE,
                               palette_editor_drop_palette,
                               editor);
 
-  gimp_dnd_color_dest_add (gtk_widget_get_parent (editor->view),
+  ligma_dnd_color_dest_add (gtk_widget_get_parent (editor->view),
                            palette_editor_drop_color,
                            editor);
 
@@ -251,7 +251,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   /*  The color index number  */
   editor->index_label = gtk_label_new ("####");
   gtk_box_pack_start (GTK_BOX (hbox), editor->index_label, FALSE, FALSE, 0);
-  gimp_label_set_attributes (GTK_LABEL (editor->index_label),
+  ligma_label_set_attributes (GTK_LABEL (editor->index_label),
                              PANGO_ATTR_FAMILY, "Monospace", -1);
   gtk_widget_show (editor->index_label);
 
@@ -267,18 +267,18 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     G_CALLBACK (palette_editor_color_name_changed),
                     editor);
 
-  icon = gtk_image_new_from_icon_name (GIMP_ICON_GRID, GTK_ICON_SIZE_MENU);
+  icon = gtk_image_new_from_icon_name (LIGMA_ICON_GRID, GTK_ICON_SIZE_MENU);
   gtk_widget_set_margin_start (icon, 2);
   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
   gtk_widget_show (icon);
 
   editor->columns_adj = gtk_adjustment_new (0, 0, 64, 1, 4, 0);
-  spinbutton = gimp_spin_button_new (editor->columns_adj, 1.0, 0);
+  spinbutton = ligma_spin_button_new (editor->columns_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  gimp_help_set_help_data (spinbutton, _("Set the number of columns"), NULL);
+  ligma_help_set_help_data (spinbutton, _("Set the number of columns"), NULL);
 
   g_signal_connect (editor->columns_adj, "value-changed",
                     G_CALLBACK (palette_editor_columns_changed),
@@ -286,38 +286,38 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 }
 
 static void
-gimp_palette_editor_constructed (GObject *object)
+ligma_palette_editor_constructed (GObject *object)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (object);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-edit-color", NULL);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-new-color-fg",
                                  "palette-editor-new-color-bg",
-                                 gimp_get_toggle_behavior_mask (),
+                                 ligma_get_toggle_behavior_mask (),
                                  NULL);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-delete-color", NULL);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-zoom-out", NULL);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-zoom-in", NULL);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor), "palette-editor",
                                  "palette-editor-zoom-all", NULL);
 }
 
 static void
-gimp_palette_editor_dispose (GObject *object)
+ligma_palette_editor_dispose (GObject *object)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (object);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (object);
 
   g_clear_pointer (&editor->color_dialog, gtk_widget_destroy);
 
@@ -325,9 +325,9 @@ gimp_palette_editor_dispose (GObject *object)
 }
 
 static void
-gimp_palette_editor_unmap (GtkWidget *widget)
+ligma_palette_editor_unmap (GtkWidget *widget)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (widget);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (widget);
 
   if (editor->color_dialog)
     gtk_widget_hide (editor->color_dialog);
@@ -336,10 +336,10 @@ gimp_palette_editor_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_palette_editor_set_data (GimpDataEditor *editor,
-                              GimpData       *data)
+ligma_palette_editor_set_data (LigmaDataEditor *editor,
+                              LigmaData       *data)
 {
-  GimpPaletteEditor *palette_editor = GIMP_PALETTE_EDITOR (editor);
+  LigmaPaletteEditor *palette_editor = LIGMA_PALETTE_EDITOR (editor);
 
   g_signal_handlers_block_by_func (palette_editor->columns_adj,
                                    palette_editor_columns_changed,
@@ -360,25 +360,25 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
       gtk_adjustment_set_value (palette_editor->columns_adj, 0);
     }
 
-  GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+  LIGMA_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
-  gimp_view_set_viewable (GIMP_VIEW (palette_editor->view),
-                          GIMP_VIEWABLE (data));
+  ligma_view_set_viewable (LIGMA_VIEW (palette_editor->view),
+                          LIGMA_VIEWABLE (data));
 
   if (editor->data)
     {
-      GimpPalette *palette = GIMP_PALETTE (editor->data);
+      LigmaPalette *palette = LIGMA_PALETTE (editor->data);
 
       g_signal_connect (editor->data, "invalidate-preview",
                         G_CALLBACK (palette_editor_invalidate_preview),
                         editor);
 
       gtk_adjustment_set_value (palette_editor->columns_adj,
-                                gimp_palette_get_columns (palette));
+                                ligma_palette_get_columns (palette));
 
       palette_editor_scroll_top_left (palette_editor);
 
-      palette_editor_invalidate_preview (GIMP_PALETTE (editor->data),
+      palette_editor_invalidate_preview (LIGMA_PALETTE (editor->data),
                                          palette_editor);
     }
 
@@ -388,31 +388,31 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 }
 
 static void
-gimp_palette_editor_set_context (GimpDocked  *docked,
-                                 GimpContext *context)
+ligma_palette_editor_set_context (LigmaDocked  *docked,
+                                 LigmaContext *context)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (docked);
 
   parent_docked_iface->set_context (docked, context);
 
-  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+  ligma_view_renderer_set_context (LIGMA_VIEW (editor->view)->renderer,
                                   context);
 }
 
 #define AUX_INFO_ZOOM_FACTOR "zoom-factor"
 
 static void
-gimp_palette_editor_set_aux_info (GimpDocked *docked,
+ligma_palette_editor_set_aux_info (LigmaDocked *docked,
                                   GList      *aux_info)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (docked);
   GList             *list;
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
 
       if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
         {
@@ -426,21 +426,21 @@ gimp_palette_editor_set_aux_info (GimpDocked *docked,
 }
 
 static GList *
-gimp_palette_editor_get_aux_info (GimpDocked *docked)
+ligma_palette_editor_get_aux_info (LigmaDocked *docked)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (docked);
   GList             *aux_info;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
   if (editor->zoom_factor != 1.0)
     {
-      GimpSessionInfoAux *aux;
+      LigmaSessionInfoAux *aux;
       gchar               value[G_ASCII_DTOSTR_BUF_SIZE];
 
       g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
 
-      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
+      aux = ligma_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -451,48 +451,48 @@ gimp_palette_editor_get_aux_info (GimpDocked *docked)
 /*  public functions  */
 
 GtkWidget *
-gimp_palette_editor_new (GimpContext     *context,
-                         GimpMenuFactory *menu_factory)
+ligma_palette_editor_new (LigmaContext     *context,
+                         LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_PALETTE_EDITOR,
+  return g_object_new (LIGMA_TYPE_PALETTE_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<PaletteEditor>",
                        "ui-path",         "/palette-editor-popup",
-                       "data-factory",    context->gimp->palette_factory,
+                       "data-factory",    context->ligma->palette_factory,
                        "context",         context,
-                       "data",            gimp_context_get_palette (context),
+                       "data",            ligma_context_get_palette (context),
                        NULL);
 }
 
 void
-gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
+ligma_palette_editor_edit_color (LigmaPaletteEditor *editor)
 {
-  GimpDataEditor *data_editor;
-  GimpPalette    *palette;
+  LigmaDataEditor *data_editor;
+  LigmaPalette    *palette;
 
-  g_return_if_fail (GIMP_IS_PALETTE_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_PALETTE_EDITOR (editor));
 
-  data_editor = GIMP_DATA_EDITOR (editor);
+  data_editor = LIGMA_DATA_EDITOR (editor);
 
   if (! (data_editor->data_editable && editor->color))
     return;
 
-  palette = GIMP_PALETTE (gimp_data_editor_get_data (data_editor));
+  palette = LIGMA_PALETTE (ligma_data_editor_get_data (data_editor));
 
   if (! editor->color_dialog)
     {
       editor->color_dialog =
-        gimp_color_dialog_new (GIMP_VIEWABLE (palette),
+        ligma_color_dialog_new (LIGMA_VIEWABLE (palette),
                                data_editor->context,
                                FALSE,
                                _("Edit Palette Color"),
-                               GIMP_ICON_PALETTE,
+                               LIGMA_ICON_PALETTE,
                                _("Edit Color Palette Entry"),
                                GTK_WIDGET (editor),
-                               gimp_dialog_factory_get_singleton (),
-                               "gimp-palette-editor-color-dialog",
+                               ligma_dialog_factory_get_singleton (),
+                               "ligma-palette-editor-color-dialog",
                                &editor->color->color,
                                FALSE, FALSE);
 
@@ -506,55 +506,55 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
     }
   else
     {
-      gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
+      ligma_viewable_dialog_set_viewables (LIGMA_VIEWABLE_DIALOG (editor->color_dialog),
                                           g_list_prepend (NULL, palette),
                                           data_editor->context);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
+      ligma_color_dialog_set_color (LIGMA_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
 
       if (! gtk_widget_get_visible (editor->color_dialog))
-        gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
-                                             "gimp-palette-editor-color-dialog",
+        ligma_dialog_factory_position_dialog (ligma_dialog_factory_get_singleton (),
+                                             "ligma-palette-editor-color-dialog",
                                              editor->color_dialog,
-                                             gimp_widget_get_monitor (GTK_WIDGET (editor)));
+                                             ligma_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
 
 void
-gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
-                                const GimpRGB      *color,
-                                GimpColorPickState  pick_state)
+ligma_palette_editor_pick_color (LigmaPaletteEditor  *editor,
+                                const LigmaRGB      *color,
+                                LigmaColorPickState  pick_state)
 {
-  g_return_if_fail (GIMP_IS_PALETTE_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_PALETTE_EDITOR (editor));
   g_return_if_fail (color != NULL);
 
-  if (GIMP_DATA_EDITOR (editor)->data_editable)
+  if (LIGMA_DATA_EDITOR (editor)->data_editable)
     {
-      GimpPaletteEntry *entry;
-      GimpData         *data;
+      LigmaPaletteEntry *entry;
+      LigmaData         *data;
       gint              index = -1;
 
-      data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
-      index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
+      data = ligma_data_editor_get_data (LIGMA_DATA_EDITOR (editor));
+      index = ligma_palette_get_entry_position (LIGMA_PALETTE (data),
                                                editor->color);
 
       switch (pick_state)
         {
-        case GIMP_COLOR_PICK_STATE_START:
+        case LIGMA_COLOR_PICK_STATE_START:
           if (editor->color)
             index += 1;
 
-          entry = gimp_palette_add_entry (GIMP_PALETTE (data), index,
+          entry = ligma_palette_add_entry (LIGMA_PALETTE (data), index,
                                           NULL, color);
-          gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
+          ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (editor->view),
                                           entry);
           break;
 
-        case GIMP_COLOR_PICK_STATE_UPDATE:
-        case GIMP_COLOR_PICK_STATE_END:
-          gimp_palette_set_entry_color (GIMP_PALETTE (data),
+        case LIGMA_COLOR_PICK_STATE_UPDATE:
+        case LIGMA_COLOR_PICK_STATE_END:
+          ligma_palette_set_entry_color (LIGMA_PALETTE (data),
                                         index, color);
           break;
         }
@@ -562,15 +562,15 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 }
 
 void
-gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
-                          GimpZoomType        zoom_type)
+ligma_palette_editor_zoom (LigmaPaletteEditor  *editor,
+                          LigmaZoomType        zoom_type)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gdouble      zoom_factor;
 
-  g_return_if_fail (GIMP_IS_PALETTE_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_PALETTE_EDITOR (editor));
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
   if (! palette)
     return;
@@ -579,21 +579,21 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
   switch (zoom_type)
     {
-    case GIMP_ZOOM_IN_MAX:
-    case GIMP_ZOOM_IN_MORE:
-    case GIMP_ZOOM_IN:
+    case LIGMA_ZOOM_IN_MAX:
+    case LIGMA_ZOOM_IN_MORE:
+    case LIGMA_ZOOM_IN:
       zoom_factor += 0.1;
       break;
 
-    case GIMP_ZOOM_OUT_MORE:
-    case GIMP_ZOOM_OUT:
+    case LIGMA_ZOOM_OUT_MORE:
+    case LIGMA_ZOOM_OUT:
       zoom_factor -= 0.1;
       break;
 
-    case GIMP_ZOOM_OUT_MAX:
-    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
+    case LIGMA_ZOOM_OUT_MAX:
+    case LIGMA_ZOOM_TO: /* abused as ZOOM_ALL */
       {
-        GtkWidget     *scrolled_win = GIMP_DATA_EDITOR (editor)->view;
+        GtkWidget     *scrolled_win = LIGMA_DATA_EDITOR (editor)->view;
         GtkWidget     *viewport     = gtk_bin_get_child (GTK_BIN (scrolled_win));
         GtkAllocation  allocation;
         gint           columns;
@@ -601,12 +601,12 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
         gtk_widget_get_allocation (viewport, &allocation);
 
-        columns = gimp_palette_get_columns (palette);
+        columns = ligma_palette_get_columns (palette);
         if (columns == 0)
           columns = COLUMNS;
 
-        rows = gimp_palette_get_n_colors (palette) / columns;
-        if (gimp_palette_get_n_colors (palette) % columns)
+        rows = ligma_palette_get_n_colors (palette) / columns;
+        if (ligma_palette_get_n_colors (palette) % columns)
           rows += 1;
 
         rows = MAX (1, rows);
@@ -616,14 +616,14 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
       }
       break;
 
-    case GIMP_ZOOM_SMOOTH:
-    case GIMP_ZOOM_PINCH: /* can't happen */
+    case LIGMA_ZOOM_SMOOTH:
+    case LIGMA_ZOOM_PINCH: /* can't happen */
       g_return_if_reached ();
     }
 
   zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
 
-  editor->columns = gimp_palette_get_columns (palette);
+  editor->columns = ligma_palette_get_columns (palette);
   if (editor->columns == 0)
     editor->columns = COLUMNS;
 
@@ -633,49 +633,49 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 }
 
 gint
-gimp_palette_editor_get_index (GimpPaletteEditor *editor,
-                               const GimpRGB     *search)
+ligma_palette_editor_get_index (LigmaPaletteEditor *editor,
+                               const LigmaRGB     *search)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), -1);
+  g_return_val_if_fail (LIGMA_IS_PALETTE_EDITOR (editor), -1);
   g_return_val_if_fail (search != NULL, -1);
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
-  if (palette && gimp_palette_get_n_colors (palette) > 0)
+  if (palette && ligma_palette_get_n_colors (palette) > 0)
     {
-      GimpPaletteEntry *entry;
+      LigmaPaletteEntry *entry;
 
-      entry = gimp_palette_find_entry (palette, search, editor->color);
+      entry = ligma_palette_find_entry (palette, search, editor->color);
 
       if (entry)
-        return gimp_palette_get_entry_position (palette, entry);
+        return ligma_palette_get_entry_position (palette, entry);
     }
 
   return -1;
 }
 
 gboolean
-gimp_palette_editor_set_index (GimpPaletteEditor *editor,
+ligma_palette_editor_set_index (LigmaPaletteEditor *editor,
                                gint               index,
-                               GimpRGB           *color)
+                               LigmaRGB           *color)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PALETTE_EDITOR (editor), FALSE);
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
-  if (palette && gimp_palette_get_n_colors (palette) > 0)
+  if (palette && ligma_palette_get_n_colors (palette) > 0)
     {
-      GimpPaletteEntry *entry;
+      LigmaPaletteEntry *entry;
 
-      index = CLAMP (index, 0, gimp_palette_get_n_colors (palette) - 1);
+      index = CLAMP (index, 0, ligma_palette_get_n_colors (palette) - 1);
 
-      entry = gimp_palette_get_entry (palette, index);
+      entry = ligma_palette_get_entry (palette, index);
 
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
+      ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (editor->view),
                                       entry);
 
       if (color)
@@ -688,17 +688,17 @@ gimp_palette_editor_set_index (GimpPaletteEditor *editor,
 }
 
 gint
-gimp_palette_editor_max_index (GimpPaletteEditor *editor)
+ligma_palette_editor_max_index (LigmaPaletteEditor *editor)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), -1);
+  g_return_val_if_fail (LIGMA_IS_PALETTE_EDITOR (editor), -1);
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
-  if (palette && gimp_palette_get_n_colors (palette) > 0)
+  if (palette && ligma_palette_get_n_colors (palette) > 0)
     {
-      return gimp_palette_get_n_colors (palette) - 1;
+      return ligma_palette_get_n_colors (palette) - 1;
     }
 
   return -1;
@@ -708,10 +708,10 @@ gimp_palette_editor_max_index (GimpPaletteEditor *editor)
 /*  private functions  */
 
 static void
-palette_editor_invalidate_preview (GimpPalette       *palette,
-                                   GimpPaletteEditor *editor)
+palette_editor_invalidate_preview (LigmaPalette       *palette,
+                                   LigmaPaletteEditor *editor)
 {
-  editor->columns = gimp_palette_get_columns (palette);
+  editor->columns = ligma_palette_get_columns (palette);
   if (editor->columns == 0)
     editor->columns = COLUMNS;
 
@@ -721,7 +721,7 @@ palette_editor_invalidate_preview (GimpPalette       *palette,
 static void
 palette_editor_viewport_size_allocate (GtkWidget         *widget,
                                        GtkAllocation     *allocation,
-                                       GimpPaletteEditor *editor)
+                                       LigmaPaletteEditor *editor)
 {
   if (allocation->width != editor->last_width)
     {
@@ -734,28 +734,28 @@ static void
 palette_editor_drop_palette (GtkWidget    *widget,
                              gint          x,
                              gint          y,
-                             GimpViewable *viewable,
+                             LigmaViewable *viewable,
                              gpointer      data)
 {
-  gimp_data_editor_set_data (GIMP_DATA_EDITOR (data), GIMP_DATA (viewable));
+  ligma_data_editor_set_data (LIGMA_DATA_EDITOR (data), LIGMA_DATA (viewable));
 }
 
 static void
 palette_editor_drop_color (GtkWidget     *widget,
                            gint           x,
                            gint           y,
-                           const GimpRGB *color,
+                           const LigmaRGB *color,
                            gpointer       data)
 {
-  GimpPaletteEditor *editor = data;
+  LigmaPaletteEditor *editor = data;
 
-  if (GIMP_DATA_EDITOR (editor)->data_editable)
+  if (LIGMA_DATA_EDITOR (editor)->data_editable)
     {
-      GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-      GimpPaletteEntry *entry;
+      LigmaPalette      *palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
+      LigmaPaletteEntry *entry;
 
-      entry = gimp_palette_add_entry (palette, -1, NULL, color);
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+      entry = ligma_palette_add_entry (palette, -1, NULL, color);
+      ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (editor->view), entry);
     }
 }
 
@@ -763,28 +763,28 @@ palette_editor_drop_color (GtkWidget     *widget,
 /*  palette view callbacks  */
 
 static void
-palette_editor_entry_clicked (GimpPaletteView   *view,
-                              GimpPaletteEntry  *entry,
+palette_editor_entry_clicked (LigmaPaletteView   *view,
+                              LigmaPaletteEntry  *entry,
                               GdkModifierType    state,
-                              GimpPaletteEditor *editor)
+                              LigmaPaletteEditor *editor)
 {
   if (entry)
     {
-      GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+      LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
 
-      if (state & gimp_get_toggle_behavior_mask ())
-        gimp_context_set_background (data_editor->context, &entry->color);
+      if (state & ligma_get_toggle_behavior_mask ())
+        ligma_context_set_background (data_editor->context, &entry->color);
       else
-        gimp_context_set_foreground (data_editor->context, &entry->color);
+        ligma_context_set_foreground (data_editor->context, &entry->color);
     }
 }
 
 static void
-palette_editor_entry_selected (GimpPaletteView   *view,
-                               GimpPaletteEntry  *entry,
-                               GimpPaletteEditor *editor)
+palette_editor_entry_selected (LigmaPaletteView   *view,
+                               LigmaPaletteEntry  *entry,
+                               LigmaPaletteEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
 
   if (editor->color != entry)
     {
@@ -794,10 +794,10 @@ palette_editor_entry_selected (GimpPaletteView   *view,
 
       if (entry)
         {
-          GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+          LigmaPalette *palette = LIGMA_PALETTE (data_editor->data);
           gint         pos;
 
-          pos = gimp_palette_get_entry_position (palette, entry);
+          pos = ligma_palette_get_entry_position (palette, entry);
           g_snprintf (index, sizeof (index), "%04i", pos);
         }
       else
@@ -821,19 +821,19 @@ palette_editor_entry_selected (GimpPaletteView   *view,
       gtk_editable_set_editable (GTK_EDITABLE (editor->color_name),
                                  entry && data_editor->data_editable);
 
-      gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                              gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+      ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                              ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
     }
 }
 
 static void
-palette_editor_entry_activated (GimpPaletteView   *view,
-                                GimpPaletteEntry  *entry,
-                                GimpPaletteEditor *editor)
+palette_editor_entry_activated (LigmaPaletteView   *view,
+                                LigmaPaletteEntry  *entry,
+                                LigmaPaletteEditor *editor)
 {
-  if (GIMP_DATA_EDITOR (editor)->data_editable && entry == editor->color)
+  if (LIGMA_DATA_EDITOR (editor)->data_editable && entry == editor->color)
     {
-      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+      ligma_ui_manager_activate_action (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
                                        "palette-editor",
                                        "palette-editor-edit-color");
     }
@@ -844,11 +844,11 @@ palette_editor_button_press_event (GtkWidget *widget,
                                    GdkEvent  *event,
                                    gpointer   user_data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (user_data);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (user_data);
 
   if (gdk_event_triggers_context_menu (event))
     {
-      gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), event);
+      ligma_editor_popup_menu_at_pointer (LIGMA_EDITOR (editor), event);
       return GDK_EVENT_STOP;
     }
 
@@ -859,37 +859,37 @@ static gboolean
 palette_editor_popup_menu (GtkWidget *widget,
                            gpointer   user_data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (user_data);
-  GimpPaletteEntry *selected;
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (user_data);
+  LigmaPaletteEntry *selected;
   GdkRectangle rect;
 
-  selected = gimp_palette_view_get_selected_entry (GIMP_PALETTE_VIEW (editor->view));
+  selected = ligma_palette_view_get_selected_entry (LIGMA_PALETTE_VIEW (editor->view));
   if (!selected)
     return GDK_EVENT_PROPAGATE;
 
-  gimp_palette_view_get_entry_rect (GIMP_PALETTE_VIEW (editor->view), selected, &rect);
-  return gimp_editor_popup_menu_at_rect (GIMP_EDITOR (editor),
+  ligma_palette_view_get_entry_rect (LIGMA_PALETTE_VIEW (editor->view), selected, &rect);
+  return ligma_editor_popup_menu_at_rect (LIGMA_EDITOR (editor),
                                          gtk_widget_get_window (GTK_WIDGET (editor->view)),
                                          &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST,
                                          NULL);
 }
 
 static void
-palette_editor_color_dropped (GimpPaletteView   *view,
-                              GimpPaletteEntry  *entry,
-                              const GimpRGB     *color,
-                              GimpPaletteEditor *editor)
+palette_editor_color_dropped (LigmaPaletteView   *view,
+                              LigmaPaletteEntry  *entry,
+                              const LigmaRGB     *color,
+                              LigmaPaletteEditor *editor)
 {
-  if (GIMP_DATA_EDITOR (editor)->data_editable)
+  if (LIGMA_DATA_EDITOR (editor)->data_editable)
     {
-      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      LigmaPalette *palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
       gint         pos     = -1;
 
       if (entry)
-        pos = gimp_palette_get_entry_position (palette, entry);
+        pos = ligma_palette_get_entry_position (palette, entry);
 
-      entry = gimp_palette_add_entry (palette, pos, NULL, color);
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+      entry = ligma_palette_add_entry (palette, pos, NULL, color);
+      ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (editor->view), entry);
     }
 }
 
@@ -898,30 +898,30 @@ palette_editor_color_dropped (GimpPaletteView   *view,
 
 static void
 palette_editor_color_name_changed (GtkWidget         *widget,
-                                   GimpPaletteEditor *editor)
+                                   LigmaPaletteEditor *editor)
 {
-  if (GIMP_DATA_EDITOR (editor)->data)
+  if (LIGMA_DATA_EDITOR (editor)->data)
     {
-      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      LigmaPalette *palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
       const gchar *name;
       gint         pos;
 
       name = gtk_entry_get_text (GTK_ENTRY (editor->color_name));
 
-      pos = gimp_palette_get_entry_position (palette, editor->color);
-      gimp_palette_set_entry_name (palette, pos, name);
+      pos = ligma_palette_get_entry_position (palette, editor->color);
+      ligma_palette_set_entry_name (palette, pos, name);
     }
 }
 
 static void
 palette_editor_columns_changed (GtkAdjustment     *adj,
-                                GimpPaletteEditor *editor)
+                                LigmaPaletteEditor *editor)
 {
-  if (GIMP_DATA_EDITOR (editor)->data)
+  if (LIGMA_DATA_EDITOR (editor)->data)
     {
-      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      LigmaPalette *palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
-      gimp_palette_set_columns (palette,
+      ligma_palette_set_columns (palette,
                                 ROUND (gtk_adjustment_get_value (adj)));
     }
 }
@@ -930,16 +930,16 @@ palette_editor_columns_changed (GtkAdjustment     *adj,
 /*  misc utils  */
 
 static void
-palette_editor_resize (GimpPaletteEditor *editor,
+palette_editor_resize (LigmaPaletteEditor *editor,
                        gint               width,
                        gdouble            zoom_factor)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gint         rows;
   gint         preview_width;
   gint         preview_height;
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
   if (! palette)
     return;
@@ -951,26 +951,26 @@ palette_editor_resize (GimpPaletteEditor *editor,
   if (editor->col_width < 0)
     editor->col_width = 0;
 
-  rows = gimp_palette_get_n_colors (palette) / editor->columns;
-  if (gimp_palette_get_n_colors (palette) % editor->columns)
+  rows = ligma_palette_get_n_colors (palette) / editor->columns;
+  if (ligma_palette_get_n_colors (palette) % editor->columns)
     rows += 1;
 
   preview_width  = (editor->col_width + SPACING) * editor->columns;
   preview_height = (rows *
                     (SPACING + (gint) (ENTRY_HEIGHT * editor->zoom_factor)));
 
-  if (preview_height > GIMP_VIEWABLE_MAX_PREVIEW_SIZE)
-    preview_height = ((GIMP_VIEWABLE_MAX_PREVIEW_SIZE - SPACING) / rows) * rows;
+  if (preview_height > LIGMA_VIEWABLE_MAX_PREVIEW_SIZE)
+    preview_height = ((LIGMA_VIEWABLE_MAX_PREVIEW_SIZE - SPACING) / rows) * rows;
 
-  gimp_view_renderer_set_size_full (GIMP_VIEW (editor->view)->renderer,
+  ligma_view_renderer_set_size_full (LIGMA_VIEW (editor->view)->renderer,
                                     preview_width  + SPACING,
                                     preview_height + SPACING, 0);
 }
 
 static void
-palette_editor_scroll_top_left (GimpPaletteEditor *palette_editor)
+palette_editor_scroll_top_left (LigmaPaletteEditor *palette_editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (palette_editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (palette_editor);
   GtkAdjustment  *hadj;
   GtkAdjustment  *vadj;
 
@@ -987,27 +987,27 @@ palette_editor_scroll_top_left (GimpPaletteEditor *palette_editor)
 }
 
 static void
-palette_editor_edit_color_update (GimpColorDialog      *dialog,
-                                  const GimpRGB        *color,
-                                  GimpColorDialogState  state,
-                                  GimpPaletteEditor    *editor)
+palette_editor_edit_color_update (LigmaColorDialog      *dialog,
+                                  const LigmaRGB        *color,
+                                  LigmaColorDialogState  state,
+                                  LigmaPaletteEditor    *editor)
 {
-  GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+  LigmaPalette *palette = LIGMA_PALETTE (LIGMA_DATA_EDITOR (editor)->data);
 
   switch (state)
     {
-    case GIMP_COLOR_DIALOG_UPDATE:
+    case LIGMA_COLOR_DIALOG_UPDATE:
       break;
 
-    case GIMP_COLOR_DIALOG_OK:
+    case LIGMA_COLOR_DIALOG_OK:
       if (editor->color)
         {
           editor->color->color = *color;
-          gimp_data_dirty (GIMP_DATA (palette));
+          ligma_data_dirty (LIGMA_DATA (palette));
         }
       /* Fallthrough */
 
-    case GIMP_COLOR_DIALOG_CANCEL:
+    case LIGMA_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (editor->color_dialog);
       break;
     }

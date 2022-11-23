@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpselection.c
+ * ligmaselection.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,58 +20,58 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
-struct _GimpSelection
+struct _LigmaSelection
 {
-  GimpChannel parent_instance;
+  LigmaChannel parent_instance;
 };
 
 
-G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
+G_DEFINE_TYPE (LigmaSelection, ligma_selection, LIGMA_TYPE_CHANNEL)
 
-#define parent_class gimp_selection_parent_class
+#define parent_class ligma_selection_parent_class
 
 
 static void
-gimp_selection_class_init (GimpSelectionClass *klass)
+ligma_selection_class_init (LigmaSelectionClass *klass)
 {
 }
 
 static void
-gimp_selection_init (GimpSelection *selection)
+ligma_selection_init (LigmaSelection *selection)
 {
 }
 
 /**
- * gimp_selection_get_by_id:
+ * ligma_selection_get_by_id:
  * @selection_id: The selection id.
  *
- * Returns a #GimpSelection representing @selection_id. This function
- * calls gimp_item_get_by_id() and returns the item if it is selection
+ * Returns a #LigmaSelection representing @selection_id. This function
+ * calls ligma_item_get_by_id() and returns the item if it is selection
  * or %NULL otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpSelection for
+ * Returns: (nullable) (transfer none): a #LigmaSelection for
  *          @selection_id or %NULL if @selection_id does not represent
- *          a valid selection. The object belongs to libgimp and you
+ *          a valid selection. The object belongs to libligma and you
  *          must not modify or unref it.
  *
  * Since: 3.0
  **/
-GimpSelection *
-gimp_selection_get_by_id (gint32 selection_id)
+LigmaSelection *
+ligma_selection_get_by_id (gint32 selection_id)
 {
-  GimpItem *item = gimp_item_get_by_id (selection_id);
+  LigmaItem *item = ligma_item_get_by_id (selection_id);
 
-  if (GIMP_IS_SELECTION (item))
-    return (GimpSelection *) item;
+  if (LIGMA_IS_SELECTION (item))
+    return (LigmaSelection *) item;
 
   return NULL;
 }
 
 /**
- * gimp_selection_float:
+ * ligma_selection_float:
  * @image:       ignored
  * @n_drawables: Size of @drawables.
  * @drawables:   (array length=n_drawables): The drawables from which to
@@ -90,15 +90,15 @@ gimp_selection_get_by_id (gint32 selection_id)
  *
  * Returns: (transfer none): The floated layer.
  */
-GimpLayer *
-gimp_selection_float (GimpImage     *image,
+LigmaLayer *
+ligma_selection_float (LigmaImage     *image,
                       gint           n_drawables,
-                      GimpDrawable **drawables,
+                      LigmaDrawable **drawables,
                       gint           offx,
                       gint           offy)
 {
-  return _gimp_selection_float (n_drawables,
-                                (const GimpItem **) drawables,
+  return _ligma_selection_float (n_drawables,
+                                (const LigmaItem **) drawables,
                                 offx,
                                 offy);
 }

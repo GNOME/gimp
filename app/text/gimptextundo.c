@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "text-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimp-memsize.h"
-#include "core/gimpitem.h"
-#include "core/gimpitemundo.h"
+#include "core/ligma-memsize.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaitemundo.h"
 
-#include "gimptext.h"
-#include "gimptextlayer.h"
-#include "gimptextundo.h"
+#include "ligmatext.h"
+#include "ligmatextlayer.h"
+#include "ligmatextundo.h"
 
 
 enum
@@ -43,77 +43,77 @@ enum
 };
 
 
-static void     gimp_text_undo_constructed  (GObject             *object);
-static void     gimp_text_undo_set_property (GObject             *object,
+static void     ligma_text_undo_constructed  (GObject             *object);
+static void     ligma_text_undo_set_property (GObject             *object,
                                              guint                property_id,
                                              const GValue        *value,
                                              GParamSpec          *pspec);
-static void     gimp_text_undo_get_property (GObject             *object,
+static void     ligma_text_undo_get_property (GObject             *object,
                                              guint                property_id,
                                              GValue              *value,
                                              GParamSpec          *pspec);
 
-static gint64   gimp_text_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_text_undo_get_memsize  (LigmaObject          *object,
                                              gint64              *gui_size);
 
-static void     gimp_text_undo_pop          (GimpUndo            *undo,
-                                             GimpUndoMode         undo_mode,
-                                             GimpUndoAccumulator *accum);
-static void     gimp_text_undo_free         (GimpUndo            *undo,
-                                             GimpUndoMode         undo_mode);
+static void     ligma_text_undo_pop          (LigmaUndo            *undo,
+                                             LigmaUndoMode         undo_mode,
+                                             LigmaUndoAccumulator *accum);
+static void     ligma_text_undo_free         (LigmaUndo            *undo,
+                                             LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpTextUndo, gimp_text_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaTextUndo, ligma_text_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_text_undo_parent_class
+#define parent_class ligma_text_undo_parent_class
 
 
 static void
-gimp_text_undo_class_init (GimpTextUndoClass *klass)
+ligma_text_undo_class_init (LigmaTextUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_text_undo_constructed;
-  object_class->set_property     = gimp_text_undo_set_property;
-  object_class->get_property     = gimp_text_undo_get_property;
+  object_class->constructed      = ligma_text_undo_constructed;
+  object_class->set_property     = ligma_text_undo_set_property;
+  object_class->get_property     = ligma_text_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_text_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_text_undo_get_memsize;
 
-  undo_class->pop                = gimp_text_undo_pop;
-  undo_class->free               = gimp_text_undo_free;
+  undo_class->pop                = ligma_text_undo_pop;
+  undo_class->free               = ligma_text_undo_free;
 
   g_object_class_install_property (object_class, PROP_PARAM,
                                    g_param_spec_param ("param", NULL, NULL,
                                                        G_TYPE_PARAM,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_text_undo_init (GimpTextUndo *undo)
+ligma_text_undo_init (LigmaTextUndo *undo)
 {
 }
 
 static void
-gimp_text_undo_constructed (GObject *object)
+ligma_text_undo_constructed (GObject *object)
 {
-  GimpTextUndo  *text_undo = GIMP_TEXT_UNDO (object);
-  GimpTextLayer *layer;
+  LigmaTextUndo  *text_undo = LIGMA_TEXT_UNDO (object);
+  LigmaTextLayer *layer;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item));
+  ligma_assert (LIGMA_IS_TEXT_LAYER (LIGMA_ITEM_UNDO (text_undo)->item));
 
-  layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item);
+  layer = LIGMA_TEXT_LAYER (LIGMA_ITEM_UNDO (text_undo)->item);
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_TEXT_LAYER:
+    case LIGMA_UNDO_TEXT_LAYER:
       if (text_undo->pspec)
         {
-          gimp_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
+          ligma_assert (text_undo->pspec->owner_type == LIGMA_TYPE_TEXT);
 
           text_undo->value = g_slice_new0 (GValue);
 
@@ -123,30 +123,30 @@ gimp_text_undo_constructed (GObject *object)
         }
       else if (layer->text)
         {
-          text_undo->text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+          text_undo->text = ligma_config_duplicate (LIGMA_CONFIG (layer->text));
         }
       break;
 
-    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
+    case LIGMA_UNDO_TEXT_LAYER_MODIFIED:
       text_undo->modified = layer->modified;
       break;
 
-    case GIMP_UNDO_TEXT_LAYER_CONVERT:
-      text_undo->format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+    case LIGMA_UNDO_TEXT_LAYER_CONVERT:
+      text_undo->format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
       break;
 
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
     }
 }
 
 static void
-gimp_text_undo_set_property (GObject      *object,
+ligma_text_undo_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpTextUndo *text_undo = GIMP_TEXT_UNDO (object);
+  LigmaTextUndo *text_undo = LIGMA_TEXT_UNDO (object);
 
   switch (property_id)
     {
@@ -161,12 +161,12 @@ gimp_text_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_text_undo_get_property (GObject    *object,
+ligma_text_undo_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpTextUndo *text_undo = GIMP_TEXT_UNDO (object);
+  LigmaTextUndo *text_undo = LIGMA_TEXT_UNDO (object);
 
   switch (property_id)
     {
@@ -181,32 +181,32 @@ gimp_text_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_text_undo_get_memsize (GimpObject *object,
+ligma_text_undo_get_memsize (LigmaObject *object,
                             gint64     *gui_size)
 {
-  GimpTextUndo *undo    = GIMP_TEXT_UNDO (object);
+  LigmaTextUndo *undo    = LIGMA_TEXT_UNDO (object);
   gint64        memsize = 0;
 
-  memsize += gimp_g_value_get_memsize (undo->value);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (undo->text), NULL);
+  memsize += ligma_g_value_get_memsize (undo->value);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (undo->text), NULL);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_text_undo_pop (GimpUndo            *undo,
-                    GimpUndoMode         undo_mode,
-                    GimpUndoAccumulator *accum)
+ligma_text_undo_pop (LigmaUndo            *undo,
+                    LigmaUndoMode         undo_mode,
+                    LigmaUndoAccumulator *accum)
 {
-  GimpTextUndo  *text_undo = GIMP_TEXT_UNDO (undo);
-  GimpTextLayer *layer     = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  LigmaTextUndo  *text_undo = LIGMA_TEXT_UNDO (undo);
+  LigmaTextLayer *layer     = LIGMA_TEXT_LAYER (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_TEXT_LAYER:
+    case LIGMA_UNDO_TEXT_LAYER:
       if (text_undo->pspec)
         {
           GValue *value;
@@ -229,16 +229,16 @@ gimp_text_undo_pop (GimpUndo            *undo,
         }
       else
         {
-          GimpText *text;
+          LigmaText *text;
 
           text = (layer->text ?
-                  gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
+                  ligma_config_duplicate (LIGMA_CONFIG (layer->text)) : NULL);
 
           if (layer->text && text_undo->text)
-            gimp_config_sync (G_OBJECT (text_undo->text),
+            ligma_config_sync (G_OBJECT (text_undo->text),
                               G_OBJECT (layer->text), 0);
           else
-            gimp_text_layer_set_text (layer, text_undo->text);
+            ligma_text_layer_set_text (layer, text_undo->text);
 
           if (text_undo->text)
             g_object_unref (text_undo->text);
@@ -247,7 +247,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
         }
       break;
 
-    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
+    case LIGMA_UNDO_TEXT_LAYER_MODIFIED:
       {
         gboolean modified;
 
@@ -261,19 +261,19 @@ gimp_text_undo_pop (GimpUndo            *undo,
         g_object_set (layer, "modified", text_undo->modified, NULL);
         text_undo->modified = modified;
 
-        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+        ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (layer));
       }
       break;
 
-    case GIMP_UNDO_TEXT_LAYER_CONVERT:
+    case LIGMA_UNDO_TEXT_LAYER_CONVERT:
       {
         const Babl *format;
 
-        format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
-        gimp_drawable_convert_type (GIMP_DRAWABLE (layer),
-                                    gimp_item_get_image (GIMP_ITEM (layer)),
-                                    gimp_babl_format_get_base_type (text_undo->format),
-                                    gimp_babl_format_get_precision (text_undo->format),
+        format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
+        ligma_drawable_convert_type (LIGMA_DRAWABLE (layer),
+                                    ligma_item_get_image (LIGMA_ITEM (layer)),
+                                    ligma_babl_format_get_base_type (text_undo->format),
+                                    ligma_babl_format_get_precision (text_undo->format),
                                     babl_format_has_alpha (text_undo->format),
                                     NULL, NULL,
                                     GEGL_DITHER_NONE, GEGL_DITHER_NONE,
@@ -283,15 +283,15 @@ gimp_text_undo_pop (GimpUndo            *undo,
       break;
 
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
     }
 }
 
 static void
-gimp_text_undo_free (GimpUndo     *undo,
-                     GimpUndoMode  undo_mode)
+ligma_text_undo_free (LigmaUndo     *undo,
+                     LigmaUndoMode  undo_mode)
 {
-  GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
+  LigmaTextUndo *text_undo = LIGMA_TEXT_UNDO (undo);
 
   g_clear_object (&text_undo->text);
 
@@ -304,5 +304,5 @@ gimp_text_undo_free (GimpUndo     *undo,
       text_undo->pspec = NULL;
     }
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

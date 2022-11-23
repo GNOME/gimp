@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry-mirror.c
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry-mirror.c
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,22 +26,22 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-cairo.h"
-#include "gimpbrush.h"
-#include "gimpguide.h"
-#include "gimpimage.h"
-#include "gimpimage-guides.h"
-#include "gimpimage-symmetry.h"
-#include "gimpitem.h"
-#include "gimpsymmetry-mirror.h"
+#include "ligma.h"
+#include "ligma-cairo.h"
+#include "ligmabrush.h"
+#include "ligmaguide.h"
+#include "ligmaimage.h"
+#include "ligmaimage-guides.h"
+#include "ligmaimage-symmetry.h"
+#include "ligmaitem.h"
+#include "ligmasymmetry-mirror.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -58,122 +58,122 @@ enum
 
 /* Local function prototypes */
 
-static void       gimp_mirror_constructed             (GObject             *object);
-static void       gimp_mirror_finalize                (GObject             *object);
-static void       gimp_mirror_set_property            (GObject             *object,
+static void       ligma_mirror_constructed             (GObject             *object);
+static void       ligma_mirror_finalize                (GObject             *object);
+static void       ligma_mirror_set_property            (GObject             *object,
                                                        guint                property_id,
                                                        const GValue        *value,
                                                        GParamSpec          *pspec);
-static void       gimp_mirror_get_property            (GObject             *object,
+static void       ligma_mirror_get_property            (GObject             *object,
                                                        guint                property_id,
                                                        GValue              *value,
                                                        GParamSpec          *pspec);
 
-static void       gimp_mirror_update_strokes          (GimpSymmetry        *mirror,
-                                                       GimpDrawable        *drawable,
-                                                       GimpCoords          *origin);
-static void       gimp_mirror_get_transform           (GimpSymmetry        *mirror,
+static void       ligma_mirror_update_strokes          (LigmaSymmetry        *mirror,
+                                                       LigmaDrawable        *drawable,
+                                                       LigmaCoords          *origin);
+static void       ligma_mirror_get_transform           (LigmaSymmetry        *mirror,
                                                        gint                 stroke,
                                                        gdouble             *angle,
                                                        gboolean            *reflect);
-static void       gimp_mirror_reset                   (GimpMirror          *mirror);
-static void       gimp_mirror_add_guide               (GimpMirror          *mirror,
-                                                       GimpOrientationType  orientation);
-static void       gimp_mirror_remove_guide            (GimpMirror          *mirror,
-                                                       GimpOrientationType  orientation);
-static void       gimp_mirror_guide_removed_cb        (GObject             *object,
-                                                       GimpMirror          *mirror);
-static void       gimp_mirror_guide_position_cb       (GObject             *object,
+static void       ligma_mirror_reset                   (LigmaMirror          *mirror);
+static void       ligma_mirror_add_guide               (LigmaMirror          *mirror,
+                                                       LigmaOrientationType  orientation);
+static void       ligma_mirror_remove_guide            (LigmaMirror          *mirror,
+                                                       LigmaOrientationType  orientation);
+static void       ligma_mirror_guide_removed_cb        (GObject             *object,
+                                                       LigmaMirror          *mirror);
+static void       ligma_mirror_guide_position_cb       (GObject             *object,
                                                        GParamSpec          *pspec,
-                                                       GimpMirror          *mirror);
-static void       gimp_mirror_active_changed          (GimpSymmetry        *sym);
-static void       gimp_mirror_set_horizontal_symmetry (GimpMirror          *mirror,
+                                                       LigmaMirror          *mirror);
+static void       ligma_mirror_active_changed          (LigmaSymmetry        *sym);
+static void       ligma_mirror_set_horizontal_symmetry (LigmaMirror          *mirror,
                                                        gboolean             active);
-static void       gimp_mirror_set_vertical_symmetry   (GimpMirror          *mirror,
+static void       ligma_mirror_set_vertical_symmetry   (LigmaMirror          *mirror,
                                                        gboolean             active);
-static void       gimp_mirror_set_point_symmetry      (GimpMirror          *mirror,
+static void       ligma_mirror_set_point_symmetry      (LigmaMirror          *mirror,
                                                        gboolean             active);
 
-static void       gimp_mirror_image_size_changed_cb   (GimpImage           *image,
+static void       ligma_mirror_image_size_changed_cb   (LigmaImage           *image,
                                                        gint                 previous_origin_x,
                                                        gint                 previous_origin_y,
                                                        gint                 previous_width,
                                                        gint                 previous_height,
-                                                       GimpSymmetry        *sym);
+                                                       LigmaSymmetry        *sym);
 
-G_DEFINE_TYPE (GimpMirror, gimp_mirror, GIMP_TYPE_SYMMETRY)
+G_DEFINE_TYPE (LigmaMirror, ligma_mirror, LIGMA_TYPE_SYMMETRY)
 
-#define parent_class gimp_mirror_parent_class
+#define parent_class ligma_mirror_parent_class
 
 
 static void
-gimp_mirror_class_init (GimpMirrorClass *klass)
+ligma_mirror_class_init (LigmaMirrorClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
+  LigmaSymmetryClass *symmetry_class = LIGMA_SYMMETRY_CLASS (klass);
   GParamSpec        *pspec;
 
-  object_class->constructed         = gimp_mirror_constructed;
-  object_class->finalize            = gimp_mirror_finalize;
-  object_class->set_property        = gimp_mirror_set_property;
-  object_class->get_property        = gimp_mirror_get_property;
+  object_class->constructed         = ligma_mirror_constructed;
+  object_class->finalize            = ligma_mirror_finalize;
+  object_class->set_property        = ligma_mirror_set_property;
+  object_class->get_property        = ligma_mirror_get_property;
 
   symmetry_class->label             = _("Mirror");
-  symmetry_class->update_strokes    = gimp_mirror_update_strokes;
-  symmetry_class->get_transform     = gimp_mirror_get_transform;
-  symmetry_class->active_changed    = gimp_mirror_active_changed;
+  symmetry_class->update_strokes    = ligma_mirror_update_strokes;
+  symmetry_class->get_transform     = ligma_mirror_get_transform;
+  symmetry_class->active_changed    = ligma_mirror_active_changed;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
                             "horizontal-symmetry",
                             _("Horizontal Symmetry"),
                             _("Reflect the initial stroke across a horizontal axis"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_SYMMETRY_PARAM_GUI);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VERTICAL_SYMMETRY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_VERTICAL_SYMMETRY,
                             "vertical-symmetry",
                             _("Vertical Symmetry"),
                             _("Reflect the initial stroke across a vertical axis"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_SYMMETRY_PARAM_GUI);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_POINT_SYMMETRY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_POINT_SYMMETRY,
                             "point-symmetry",
                             _("Central Symmetry"),
                             _("Invert the initial stroke through a point"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_SYMMETRY_PARAM_GUI);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
                             "disable-transformation",
                             _("Disable brush transform"),
                             _("Disable brush reflection"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_SYMMETRY_PARAM_GUI);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_SYMMETRY_PARAM_GUI);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_X,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_X,
                            "mirror-position-x",
                            _("Vertical axis position"),
                            NULL,
                            0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_SYMMETRY_PARAM_GUI);
 
   pspec = g_object_class_find_property (object_class, "mirror-position-x");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
   gegl_param_spec_set_property_key (pspec, "axis", "x");
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_Y,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_MIRROR_POSITION_Y,
                            "mirror-position-y",
                            _("Horizontal axis position"),
                            NULL,
                            0.0, G_MAXDOUBLE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_SYMMETRY_PARAM_GUI);
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_SYMMETRY_PARAM_GUI);
 
   pspec = g_object_class_find_property (object_class, "mirror-position-y");
   gegl_param_spec_set_property_key (pspec, "unit", "pixel-coordinate");
@@ -181,24 +181,24 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 }
 
 static void
-gimp_mirror_init (GimpMirror *mirror)
+ligma_mirror_init (LigmaMirror *mirror)
 {
 }
 
 static void
-gimp_mirror_constructed (GObject *object)
+ligma_mirror_constructed (GObject *object)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (object);
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (object);
 
   g_signal_connect_object (sym->image, "size-changed-detailed",
-                           G_CALLBACK (gimp_mirror_image_size_changed_cb),
+                           G_CALLBACK (ligma_mirror_image_size_changed_cb),
                            sym, 0);
 }
 
 static void
-gimp_mirror_finalize (GObject *object)
+ligma_mirror_finalize (GObject *object)
 {
-  GimpMirror *mirror = GIMP_MIRROR (object);
+  LigmaMirror *mirror = LIGMA_MIRROR (object);
 
   g_clear_object (&mirror->horizontal_guide);
   g_clear_object (&mirror->vertical_guide);
@@ -207,28 +207,28 @@ gimp_mirror_finalize (GObject *object)
 }
 
 static void
-gimp_mirror_set_property (GObject      *object,
+ligma_mirror_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpMirror *mirror = GIMP_MIRROR (object);
-  GimpImage  *image  = GIMP_SYMMETRY (mirror)->image;
+  LigmaMirror *mirror = LIGMA_MIRROR (object);
+  LigmaImage  *image  = LIGMA_SYMMETRY (mirror)->image;
 
   switch (property_id)
     {
     case PROP_HORIZONTAL_SYMMETRY:
-      gimp_mirror_set_horizontal_symmetry (mirror,
+      ligma_mirror_set_horizontal_symmetry (mirror,
                                            g_value_get_boolean (value));
       break;
 
     case PROP_VERTICAL_SYMMETRY:
-      gimp_mirror_set_vertical_symmetry (mirror,
+      ligma_mirror_set_vertical_symmetry (mirror,
                                          g_value_get_boolean (value));
       break;
 
     case PROP_POINT_SYMMETRY:
-      gimp_mirror_set_point_symmetry (mirror,
+      ligma_mirror_set_point_symmetry (mirror,
                                       g_value_get_boolean (value));
       break;
 
@@ -238,20 +238,20 @@ gimp_mirror_set_property (GObject      *object,
 
     case PROP_MIRROR_POSITION_X:
       if (g_value_get_double (value) >= 0.0 &&
-          g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
+          g_value_get_double (value) < (gdouble) ligma_image_get_width (image))
         {
           mirror->mirror_position_x = g_value_get_double (value);
 
           if (mirror->vertical_guide)
             {
               g_signal_handlers_block_by_func (mirror->vertical_guide,
-                                               gimp_mirror_guide_position_cb,
+                                               ligma_mirror_guide_position_cb,
                                                mirror);
-              gimp_image_move_guide (image, mirror->vertical_guide,
+              ligma_image_move_guide (image, mirror->vertical_guide,
                                      mirror->mirror_position_x,
                                      FALSE);
               g_signal_handlers_unblock_by_func (mirror->vertical_guide,
-                                                 gimp_mirror_guide_position_cb,
+                                                 ligma_mirror_guide_position_cb,
                                                  mirror);
             }
         }
@@ -259,20 +259,20 @@ gimp_mirror_set_property (GObject      *object,
 
     case PROP_MIRROR_POSITION_Y:
       if (g_value_get_double (value) >= 0.0 &&
-          g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
+          g_value_get_double (value) < (gdouble) ligma_image_get_height (image))
         {
           mirror->mirror_position_y = g_value_get_double (value);
 
           if (mirror->horizontal_guide)
             {
               g_signal_handlers_block_by_func (mirror->horizontal_guide,
-                                               gimp_mirror_guide_position_cb,
+                                               ligma_mirror_guide_position_cb,
                                                mirror);
-              gimp_image_move_guide (image, mirror->horizontal_guide,
+              ligma_image_move_guide (image, mirror->horizontal_guide,
                                      mirror->mirror_position_y,
                                      FALSE);
               g_signal_handlers_unblock_by_func (mirror->horizontal_guide,
-                                                 gimp_mirror_guide_position_cb,
+                                                 ligma_mirror_guide_position_cb,
                                                  mirror);
             }
         }
@@ -285,12 +285,12 @@ gimp_mirror_set_property (GObject      *object,
 }
 
 static void
-gimp_mirror_get_property (GObject    *object,
+ligma_mirror_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpMirror *mirror = GIMP_MIRROR (object);
+  LigmaMirror *mirror = LIGMA_MIRROR (object);
 
   switch (property_id)
     {
@@ -319,42 +319,42 @@ gimp_mirror_get_property (GObject    *object,
 }
 
 static void
-gimp_mirror_update_strokes (GimpSymmetry *sym,
-                            GimpDrawable *drawable,
-                            GimpCoords   *origin)
+ligma_mirror_update_strokes (LigmaSymmetry *sym,
+                            LigmaDrawable *drawable,
+                            LigmaCoords   *origin)
 {
-  GimpMirror *mirror  = GIMP_MIRROR (sym);
+  LigmaMirror *mirror  = LIGMA_MIRROR (sym);
   GList      *strokes = NULL;
-  GimpCoords *coords;
+  LigmaCoords *coords;
   gdouble     mirror_position_x, mirror_position_y;
   gint        offset_x,          offset_y;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &offset_x, &offset_y);
 
   mirror_position_x = mirror->mirror_position_x - offset_x;
   mirror_position_y = mirror->mirror_position_y - offset_y;
 
   g_list_free_full (sym->strokes, g_free);
   strokes = g_list_prepend (strokes,
-                            g_memdup2 (origin, sizeof (GimpCoords)));
+                            g_memdup2 (origin, sizeof (LigmaCoords)));
 
   if (mirror->horizontal_mirror)
     {
-      coords = g_memdup2 (origin, sizeof (GimpCoords));
+      coords = g_memdup2 (origin, sizeof (LigmaCoords));
       coords->y = 2.0 * mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->vertical_mirror)
     {
-      coords = g_memdup2 (origin, sizeof (GimpCoords));
+      coords = g_memdup2 (origin, sizeof (LigmaCoords));
       coords->x = 2.0 * mirror_position_x - origin->x;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->point_symmetry)
     {
-      coords = g_memdup2 (origin, sizeof (GimpCoords));
+      coords = g_memdup2 (origin, sizeof (LigmaCoords));
       coords->x = 2.0 * mirror_position_x - origin->x;
       coords->y = 2.0 * mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
@@ -366,12 +366,12 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
 }
 
 static void
-gimp_mirror_get_transform (GimpSymmetry *sym,
+ligma_mirror_get_transform (LigmaSymmetry *sym,
                            gint          stroke,
                            gdouble      *angle,
                            gboolean     *reflect)
 {
-  GimpMirror *mirror = GIMP_MIRROR (sym);
+  LigmaMirror *mirror = LIGMA_MIRROR (sym);
 
   if (mirror->disable_transformation)
     return;
@@ -410,39 +410,39 @@ gimp_mirror_get_transform (GimpSymmetry *sym,
 }
 
 static void
-gimp_mirror_reset (GimpMirror *mirror)
+ligma_mirror_reset (LigmaMirror *mirror)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (mirror);
 
   if (sym->origin)
     {
-      gimp_symmetry_set_origin (sym, sym->drawable,
+      ligma_symmetry_set_origin (sym, sym->drawable,
                                 sym->origin);
     }
 }
 
 static void
-gimp_mirror_add_guide (GimpMirror          *mirror,
-                       GimpOrientationType  orientation)
+ligma_mirror_add_guide (LigmaMirror          *mirror,
+                       LigmaOrientationType  orientation)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
-  GimpImage    *image;
-  Gimp         *gimp;
-  GimpGuide    *guide;
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (mirror);
+  LigmaImage    *image;
+  Ligma         *ligma;
+  LigmaGuide    *guide;
   gdouble       position;
 
   image = sym->image;
-  gimp  = image->gimp;
+  ligma  = image->ligma;
 
-  guide = gimp_guide_custom_new (orientation,
-                                 gimp->next_guide_id++,
-                                 GIMP_GUIDE_STYLE_MIRROR);
+  guide = ligma_guide_custom_new (orientation,
+                                 ligma->next_guide_id++,
+                                 LIGMA_GUIDE_STYLE_MIRROR);
 
-  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+  if (orientation == LIGMA_ORIENTATION_HORIZONTAL)
     {
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->mirror_position_y < 1.0)
-        position = gimp_image_get_height (image) / 2.0;
+        position = ligma_image_get_height (image) / 2.0;
       else
         position = mirror->mirror_position_y;
 
@@ -456,7 +456,7 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
     {
       /* Mirror guide position at first activation is at canvas middle. */
       if (mirror->mirror_position_x < 1.0)
-        position = gimp_image_get_width (image) / 2.0;
+        position = ligma_image_get_width (image) / 2.0;
       else
         position = mirror->mirror_position_x;
 
@@ -468,42 +468,42 @@ gimp_mirror_add_guide (GimpMirror          *mirror,
     }
 
   g_signal_connect (guide, "removed",
-                    G_CALLBACK (gimp_mirror_guide_removed_cb),
+                    G_CALLBACK (ligma_mirror_guide_removed_cb),
                     mirror);
 
-  gimp_image_add_guide (image, guide, (gint) position);
+  ligma_image_add_guide (image, guide, (gint) position);
 
   g_signal_connect (guide, "notify::position",
-                    G_CALLBACK (gimp_mirror_guide_position_cb),
+                    G_CALLBACK (ligma_mirror_guide_position_cb),
                     mirror);
 }
 
 static void
-gimp_mirror_remove_guide (GimpMirror          *mirror,
-                          GimpOrientationType  orientation)
+ligma_mirror_remove_guide (LigmaMirror          *mirror,
+                          LigmaOrientationType  orientation)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (mirror);
-  GimpImage    *image;
-  GimpGuide    *guide;
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (mirror);
+  LigmaImage    *image;
+  LigmaGuide    *guide;
 
   image = sym->image;
-  guide = (orientation == GIMP_ORIENTATION_HORIZONTAL) ?
+  guide = (orientation == LIGMA_ORIENTATION_HORIZONTAL) ?
     mirror->horizontal_guide : mirror->vertical_guide;
 
   /* The guide may have already been removed, for instance from GUI. */
   if (guide)
     {
       g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
-                                            gimp_mirror_guide_removed_cb,
+                                            ligma_mirror_guide_removed_cb,
                                             mirror);
       g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
-                                            gimp_mirror_guide_position_cb,
+                                            ligma_mirror_guide_position_cb,
                                             mirror);
 
-      gimp_image_remove_guide (image, guide, FALSE);
+      ligma_image_remove_guide (image, guide, FALSE);
       g_object_unref (guide);
 
-      if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+      if (orientation == LIGMA_ORIENTATION_HORIZONTAL)
         mirror->horizontal_guide = NULL;
       else
         mirror->vertical_guide = NULL;
@@ -511,19 +511,19 @@ gimp_mirror_remove_guide (GimpMirror          *mirror,
 }
 
 static void
-gimp_mirror_guide_removed_cb (GObject    *object,
-                              GimpMirror *mirror)
+ligma_mirror_guide_removed_cb (GObject    *object,
+                              LigmaMirror *mirror)
 {
-  GimpSymmetry *symmetry = GIMP_SYMMETRY (mirror);
+  LigmaSymmetry *symmetry = LIGMA_SYMMETRY (mirror);
 
   g_signal_handlers_disconnect_by_func (object,
-                                        gimp_mirror_guide_removed_cb,
+                                        ligma_mirror_guide_removed_cb,
                                         mirror);
   g_signal_handlers_disconnect_by_func (object,
-                                        gimp_mirror_guide_position_cb,
+                                        ligma_mirror_guide_position_cb,
                                         mirror);
 
-  if (GIMP_GUIDE (object) == mirror->horizontal_guide)
+  if (LIGMA_GUIDE (object) == mirror->horizontal_guide)
     {
       g_object_unref (mirror->horizontal_guide);
       mirror->horizontal_guide    = NULL;
@@ -542,19 +542,19 @@ gimp_mirror_guide_removed_cb (GObject    *object,
           ! mirror->vertical_mirror)
         {
           g_signal_handlers_disconnect_by_func (G_OBJECT (mirror->vertical_guide),
-                                                gimp_mirror_guide_removed_cb,
+                                                ligma_mirror_guide_removed_cb,
                                                 mirror);
           g_signal_handlers_disconnect_by_func (G_OBJECT (mirror->vertical_guide),
-                                                gimp_mirror_guide_position_cb,
+                                                ligma_mirror_guide_position_cb,
                                                 mirror);
 
-          gimp_image_remove_guide (symmetry->image,
+          ligma_image_remove_guide (symmetry->image,
                                    mirror->vertical_guide,
                                    FALSE);
           g_clear_object (&mirror->vertical_guide);
         }
     }
-  else if (GIMP_GUIDE (object) == mirror->vertical_guide)
+  else if (LIGMA_GUIDE (object) == mirror->vertical_guide)
     {
       g_object_unref (mirror->vertical_guide);
       mirror->vertical_guide    = NULL;
@@ -573,13 +573,13 @@ gimp_mirror_guide_removed_cb (GObject    *object,
           ! mirror->horizontal_mirror)
         {
           g_signal_handlers_disconnect_by_func (G_OBJECT (mirror->horizontal_guide),
-                                                gimp_mirror_guide_removed_cb,
+                                                ligma_mirror_guide_removed_cb,
                                                 mirror);
           g_signal_handlers_disconnect_by_func (G_OBJECT (mirror->horizontal_guide),
-                                                gimp_mirror_guide_position_cb,
+                                                ligma_mirror_guide_position_cb,
                                                 mirror);
 
-          gimp_image_remove_guide (symmetry->image,
+          ligma_image_remove_guide (symmetry->image,
                                    mirror->horizontal_guide,
                                    FALSE);
           g_clear_object (&mirror->horizontal_guide);
@@ -589,65 +589,65 @@ gimp_mirror_guide_removed_cb (GObject    *object,
   if (mirror->horizontal_guide == NULL &&
       mirror->vertical_guide   == NULL)
     {
-      gimp_image_symmetry_remove (symmetry->image,
-                                  GIMP_SYMMETRY (mirror));
+      ligma_image_symmetry_remove (symmetry->image,
+                                  LIGMA_SYMMETRY (mirror));
     }
   else
     {
-      gimp_mirror_reset (mirror);
+      ligma_mirror_reset (mirror);
       g_signal_emit_by_name (mirror, "gui-param-changed",
-                             GIMP_SYMMETRY (mirror)->image);
+                             LIGMA_SYMMETRY (mirror)->image);
     }
 }
 
 static void
-gimp_mirror_guide_position_cb (GObject    *object,
+ligma_mirror_guide_position_cb (GObject    *object,
                                GParamSpec *pspec,
-                               GimpMirror *mirror)
+                               LigmaMirror *mirror)
 {
-  GimpGuide *guide = GIMP_GUIDE (object);
+  LigmaGuide *guide = LIGMA_GUIDE (object);
 
   if (guide == mirror->horizontal_guide)
     {
       g_object_set (mirror,
-                    "mirror-position-y", (gdouble) gimp_guide_get_position (guide),
+                    "mirror-position-y", (gdouble) ligma_guide_get_position (guide),
                     NULL);
     }
   else if (guide == mirror->vertical_guide)
     {
       g_object_set (mirror,
-                    "mirror-position-x", (gdouble) gimp_guide_get_position (guide),
+                    "mirror-position-x", (gdouble) ligma_guide_get_position (guide),
                     NULL);
     }
 }
 
 static void
-gimp_mirror_active_changed (GimpSymmetry *sym)
+ligma_mirror_active_changed (LigmaSymmetry *sym)
 {
-  GimpMirror *mirror = GIMP_MIRROR (sym);
+  LigmaMirror *mirror = LIGMA_MIRROR (sym);
 
   if (sym->active)
     {
       if ((mirror->horizontal_mirror || mirror->point_symmetry) &&
           ! mirror->horizontal_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
 
       if ((mirror->vertical_mirror || mirror->point_symmetry) &&
           ! mirror->vertical_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
   else
     {
       if (mirror->horizontal_guide)
-        gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+        ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
 
       if (mirror->vertical_guide)
-        gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+        ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
 }
 
 static void
-gimp_mirror_set_horizontal_symmetry (GimpMirror *mirror,
+ligma_mirror_set_horizontal_symmetry (LigmaMirror *mirror,
                                      gboolean    active)
 {
   if (active == mirror->horizontal_mirror)
@@ -658,18 +658,18 @@ gimp_mirror_set_horizontal_symmetry (GimpMirror *mirror,
   if (active)
     {
       if (! mirror->horizontal_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
     }
   else if (! mirror->point_symmetry)
     {
-      gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+      ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
     }
 
-  gimp_mirror_reset (mirror);
+  ligma_mirror_reset (mirror);
 }
 
 static void
-gimp_mirror_set_vertical_symmetry (GimpMirror *mirror,
+ligma_mirror_set_vertical_symmetry (LigmaMirror *mirror,
                                    gboolean    active)
 {
   if (active == mirror->vertical_mirror)
@@ -680,18 +680,18 @@ gimp_mirror_set_vertical_symmetry (GimpMirror *mirror,
   if (active)
     {
       if (! mirror->vertical_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
   else if (! mirror->point_symmetry)
     {
-      gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+      ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
 
-  gimp_mirror_reset (mirror);
+  ligma_mirror_reset (mirror);
 }
 
 static void
-gimp_mirror_set_point_symmetry (GimpMirror *mirror,
+ligma_mirror_set_point_symmetry (LigmaMirror *mirror,
                                 gboolean    active)
 {
   if (active == mirror->point_symmetry)
@@ -703,36 +703,36 @@ gimp_mirror_set_point_symmetry (GimpMirror *mirror,
     {
       /* Show the horizontal guide unless already shown */
       if (! mirror->horizontal_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
 
       /* Show the vertical guide unless already shown */
       if (! mirror->vertical_guide)
-        gimp_mirror_add_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+        ligma_mirror_add_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
   else
     {
       /* Remove the horizontal guide unless needed by horizontal mirror */
       if (! mirror->horizontal_mirror)
-        gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_HORIZONTAL);
+        ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_HORIZONTAL);
 
       /* Remove the vertical guide unless needed by vertical mirror */
       if (! mirror->vertical_mirror)
-        gimp_mirror_remove_guide (mirror, GIMP_ORIENTATION_VERTICAL);
+        ligma_mirror_remove_guide (mirror, LIGMA_ORIENTATION_VERTICAL);
     }
 
-  gimp_mirror_reset (mirror);
+  ligma_mirror_reset (mirror);
 }
 
 static void
-gimp_mirror_image_size_changed_cb (GimpImage    *image,
+ligma_mirror_image_size_changed_cb (LigmaImage    *image,
                                    gint          previous_origin_x,
                                    gint          previous_origin_y,
                                    gint          previous_width,
                                    gint          previous_height,
-                                   GimpSymmetry *sym)
+                                   LigmaSymmetry *sym)
 {
-  if (previous_width != gimp_image_get_width (image) ||
-      previous_height != gimp_image_get_height (image))
+  if (previous_width != ligma_image_get_width (image) ||
+      previous_height != ligma_image_get_height (image))
     {
       g_signal_emit_by_name (sym, "gui-param-changed", sym->image);
     }

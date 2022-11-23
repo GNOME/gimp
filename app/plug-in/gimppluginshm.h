@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginshm.h
+ * ligmapluginshm.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_SHM_H__
-#define __GIMP_PLUG_IN_SHM_H__
+#ifndef __LIGMA_PLUG_IN_SHM_H__
+#define __LIGMA_PLUG_IN_SHM_H__
 
 
-GimpPlugInShm * gimp_plug_in_shm_new      (void);
-void            gimp_plug_in_shm_free     (GimpPlugInShm *shm);
+LigmaPlugInShm * ligma_plug_in_shm_new      (void);
+void            ligma_plug_in_shm_free     (LigmaPlugInShm *shm);
 
-gint            gimp_plug_in_shm_get_id   (GimpPlugInShm *shm);
-guchar        * gimp_plug_in_shm_get_addr (GimpPlugInShm *shm);
+gint            ligma_plug_in_shm_get_id   (LigmaPlugInShm *shm);
+guchar        * ligma_plug_in_shm_get_addr (LigmaPlugInShm *shm);
 
 
-#endif /* __GIMP_PLUG_IN_SHM_H__ */
+#endif /* __LIGMA_PLUG_IN_SHM_H__ */

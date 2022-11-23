@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpseamlesscloneoptions.h
+ * ligmaseamlesscloneoptions.h
  * Copyright (C) 2011 Barak Itkin <lightningismyname@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,41 +17,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SEAMLESS_CLONE_OPTIONS_H__
-#define __GIMP_SEAMLESS_CLONE_OPTIONS_H__
+#ifndef __LIGMA_SEAMLESS_CLONE_OPTIONS_H__
+#define __LIGMA_SEAMLESS_CLONE_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_SEAMLESS_CLONE_OPTIONS            (gimp_seamless_clone_options_get_type ())
-#define GIMP_SEAMLESS_CLONE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SEAMLESS_CLONE_OPTIONS, GimpSeamlessCloneOptions))
-#define GIMP_SEAMLESS_CLONE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SEAMLESS_CLONE_OPTIONS, GimpSeamlessCloneOptionsClass))
-#define GIMP_IS_SEAMLESS_CLONE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SEAMLESS_CLONE_OPTIONS))
-#define GIMP_IS_SEAMLESS_CLONE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SEAMLESS_CLONE_OPTIONS))
-#define GIMP_SEAMLESS_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SEAMLESS_CLONE_OPTIONS, GimpSeamlessCloneOptionsClass))
+#define LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS            (ligma_seamless_clone_options_get_type ())
+#define LIGMA_SEAMLESS_CLONE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS, LigmaSeamlessCloneOptions))
+#define LIGMA_SEAMLESS_CLONE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS, LigmaSeamlessCloneOptionsClass))
+#define LIGMA_IS_SEAMLESS_CLONE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS))
+#define LIGMA_IS_SEAMLESS_CLONE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS))
+#define LIGMA_SEAMLESS_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SEAMLESS_CLONE_OPTIONS, LigmaSeamlessCloneOptionsClass))
 
 
-typedef struct _GimpSeamlessCloneOptions      GimpSeamlessCloneOptions;
-typedef struct _GimpSeamlessCloneOptionsClass GimpSeamlessCloneOptionsClass;
+typedef struct _LigmaSeamlessCloneOptions      LigmaSeamlessCloneOptions;
+typedef struct _LigmaSeamlessCloneOptionsClass LigmaSeamlessCloneOptionsClass;
 
-struct _GimpSeamlessCloneOptions
+struct _LigmaSeamlessCloneOptions
 {
-  GimpToolOptions parent_instance;
+  LigmaToolOptions parent_instance;
 
   gint            max_refine_scale;
   gboolean        temp;
 };
 
-struct _GimpSeamlessCloneOptionsClass
+struct _LigmaSeamlessCloneOptionsClass
 {
-  GimpToolOptionsClass  parent_class;
+  LigmaToolOptionsClass  parent_class;
 };
 
 
-GType       gimp_seamless_clone_options_get_type (void) G_GNUC_CONST;
+GType       ligma_seamless_clone_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_seamless_clone_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_seamless_clone_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_SEAMLESS_CLONE_OPTIONS_H__  */
+#endif  /*  __LIGMA_SEAMLESS_CLONE_OPTIONS_H__  */

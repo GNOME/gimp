@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcoords.c
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmacoords.c
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpcoords.h"
+#include "ligmacoords.h"
 
 
 #define INPUT_RESOLUTION 256
@@ -35,11 +35,11 @@
 /*   amul * a + bmul * b = ret_val  */
 
 void
-gimp_coords_mix (const gdouble     amul,
-                 const GimpCoords *a,
+ligma_coords_mix (const gdouble     amul,
+                 const LigmaCoords *a,
                  const gdouble     bmul,
-                 const GimpCoords *b,
-                 GimpCoords       *ret_val)
+                 const LigmaCoords *b,
+                 LigmaCoords       *ret_val)
 {
   if (b)
     {
@@ -75,52 +75,52 @@ gimp_coords_mix (const gdouble     amul,
 /*    (a+b)/2 = ret_average  */
 
 void
-gimp_coords_average (const GimpCoords *a,
-                     const GimpCoords *b,
-                     GimpCoords       *ret_average)
+ligma_coords_average (const LigmaCoords *a,
+                     const LigmaCoords *b,
+                     LigmaCoords       *ret_average)
 {
-  gimp_coords_mix (0.5, a, 0.5, b, ret_average);
+  ligma_coords_mix (0.5, a, 0.5, b, ret_average);
 }
 
 
 /* a + b = ret_add  */
 
 void
-gimp_coords_add (const GimpCoords *a,
-                 const GimpCoords *b,
-                 GimpCoords       *ret_add)
+ligma_coords_add (const LigmaCoords *a,
+                 const LigmaCoords *b,
+                 LigmaCoords       *ret_add)
 {
-  gimp_coords_mix (1.0, a, 1.0, b, ret_add);
+  ligma_coords_mix (1.0, a, 1.0, b, ret_add);
 }
 
 
 /* a - b = ret_difference */
 
 void
-gimp_coords_difference (const GimpCoords *a,
-                        const GimpCoords *b,
-                        GimpCoords       *ret_difference)
+ligma_coords_difference (const LigmaCoords *a,
+                        const LigmaCoords *b,
+                        LigmaCoords       *ret_difference)
 {
-  gimp_coords_mix (1.0, a, -1.0, b, ret_difference);
+  ligma_coords_mix (1.0, a, -1.0, b, ret_difference);
 }
 
 
 /* a * f = ret_product  */
 
 void
-gimp_coords_scale (const gdouble     f,
-                   const GimpCoords *a,
-                   GimpCoords       *ret_product)
+ligma_coords_scale (const gdouble     f,
+                   const LigmaCoords *a,
+                   LigmaCoords       *ret_product)
 {
-  gimp_coords_mix (f, a, 0.0, NULL, ret_product);
+  ligma_coords_mix (f, a, 0.0, NULL, ret_product);
 }
 
 
-/* local helper for measuring the scalarproduct of two gimpcoords. */
+/* local helper for measuring the scalarproduct of two ligmacoords. */
 
 gdouble
-gimp_coords_scalarprod (const GimpCoords *a,
-                        const GimpCoords *b)
+ligma_coords_scalarprod (const LigmaCoords *a,
+                        const LigmaCoords *b)
 {
   return (a->x         * b->x        +
           a->y         * b->y        +
@@ -137,15 +137,15 @@ gimp_coords_scalarprod (const GimpCoords *a,
 
 
 /*
- * The "length" of the gimpcoord.
+ * The "length" of the ligmacoord.
  * Applies a metric that increases the weight on the
  * pressure/xtilt/ytilt/wheel to ensure proper interpolation
  */
 
 gdouble
-gimp_coords_length_squared (const GimpCoords *a)
+ligma_coords_length_squared (const LigmaCoords *a)
 {
-  GimpCoords upscaled_a;
+  LigmaCoords upscaled_a;
 
   upscaled_a.x         = a->x;
   upscaled_a.y         = a->y;
@@ -159,14 +159,14 @@ gimp_coords_length_squared (const GimpCoords *a)
   upscaled_a.velocity  = a->velocity  * INPUT_RESOLUTION;
   upscaled_a.direction = a->direction * INPUT_RESOLUTION;
 
-  return gimp_coords_scalarprod (&upscaled_a, &upscaled_a);
+  return ligma_coords_scalarprod (&upscaled_a, &upscaled_a);
 }
 
 
 gdouble
-gimp_coords_length (const GimpCoords *a)
+ligma_coords_length (const LigmaCoords *a)
 {
-  return sqrt (gimp_coords_length_squared (a));
+  return sqrt (ligma_coords_length_squared (a));
 }
 
 /*
@@ -175,8 +175,8 @@ gimp_coords_length (const GimpCoords *a)
  */
 
 gdouble
-gimp_coords_manhattan_dist (const GimpCoords *a,
-                            const GimpCoords *b)
+ligma_coords_manhattan_dist (const LigmaCoords *a,
+                            const LigmaCoords *b)
 {
   gdouble dist = 0;
 
@@ -199,8 +199,8 @@ gimp_coords_manhattan_dist (const GimpCoords *a,
 }
 
 gboolean
-gimp_coords_equal (const GimpCoords *a,
-                   const GimpCoords *b)
+ligma_coords_equal (const LigmaCoords *a,
+                   const LigmaCoords *b)
 {
   return (a->x         == b->x        &&
           a->y         == b->y        &&
@@ -219,11 +219,11 @@ gimp_coords_equal (const GimpCoords *a,
    */
 }
 
-/* helper for calculating direction of two gimpcoords. */
+/* helper for calculating direction of two ligmacoords. */
 
 gdouble
-gimp_coords_direction (const GimpCoords *a,
-                       const GimpCoords *b)
+ligma_coords_direction (const LigmaCoords *a,
+                       const LigmaCoords *b)
 {
   gdouble direction;
   gdouble delta_x, delta_y;

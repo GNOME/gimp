@@ -2,7 +2,7 @@
 
 ## About this document
 
-This describes *some* changes needed to port a Scriptfu script to GIMP 3:
+This describes *some* changes needed to port a Scriptfu script to LIGMA 3:
 - changes in types
 - changes in PDB signatures for multi-layer support
 - changes in error messages
@@ -16,7 +16,7 @@ It does *not* document:
 
 ## Changes in types of PDB signatures
 
-Calls from a script to GIMP are calls to PDB procedures.
+Calls from a script to LIGMA are calls to PDB procedures.
 PDB procedures are documented in terms of C and GLib types.
 
 This table summarizes the changes:
@@ -25,13 +25,13 @@ This table summarizes the changes:
 | ---------------|-----------------------|-----------------------| ----------------|-----------------------|
 | Pass file name | gchar*, gchar*        | GFile                 | string string   | string                |
 | Recv file name | gchar*                | GFile                 | string          | string                |
-| pass drawable  | GimpDrawable          | gint, GimpObjectArray | int   (an ID)   | int (a length) vector |
-| Pass obj array | gint, GimpInt32Array  | gint, GimpObjectArray | int  vector     | int vector            |
-| Recv obj array | gint, GimpInt32Array  | gint, GimpObjectArray | int  vector     | int vector            |
-| Pass set of str | gint, GimpStringArray | GStrv                 | int  list       | list                  |
-| Recv set of str | gint, GimpStringArray | GStrv                 | int  list       | list                  |
+| pass drawable  | LigmaDrawable          | gint, LigmaObjectArray | int   (an ID)   | int (a length) vector |
+| Pass obj array | gint, LigmaInt32Array  | gint, LigmaObjectArray | int  vector     | int vector            |
+| Recv obj array | gint, LigmaInt32Array  | gint, LigmaObjectArray | int  vector     | int vector            |
+| Pass set of str | gint, LigmaStringArray | GStrv                 | int  list       | list                  |
+| Recv set of str | gint, LigmaStringArray | GStrv                 | int  list       | list                  |
 
-(Where "obj" means an object of a GIMP type such as GimpDrawable or similar.)
+(Where "obj" means an object of a LIGMA type such as LigmaDrawable or similar.)
 
 ### Use one string for a filename instead of two.
 
@@ -46,8 +46,8 @@ Now, the single string in a script can be either a local file path or a remote U
 
 Example:
 
-(gimp-file-load RUN-NONINTERACTIVE "/tmp/foo" "")
-=> (gimp-file-load RUN-NONINTERACTIVE "/tmp/foo")
+(ligma-file-load RUN-NONINTERACTIVE "/tmp/foo" "")
+=> (ligma-file-load RUN-NONINTERACTIVE "/tmp/foo")
 
 
 ### PDB procedures still return a string for a filename
@@ -64,8 +64,8 @@ The returned string is either a local file path or a URI.
 
 ### Use a vector of drawables for PDB procedures that now take an array of drawables
 
-Formerly, some PDB procedures took a single GimpDrawable,
-but now they take an array of GimpDrawable ( type GimpObjectArray.)
+Formerly, some PDB procedures took a single LigmaDrawable,
+but now they take an array of LigmaDrawable ( type LigmaObjectArray.)
 (Formerly, no PDB procedure took an array of drawables.
 Some that formerly took a single drawable still take a single drawable.
 See the list below. )
@@ -76,29 +76,29 @@ These changes support a user selecting multiple layers for an operation.
 
 Example:
 
-(gimp-edit-copy drawable)  => (gimp-edit-copy 1 (vector drawable))
+(ligma-edit-copy drawable)  => (ligma-edit-copy 1 (vector drawable))
 
-(gimp-edit-copy 2)  => (gimp-edit-copy 1 '#(2))
+(ligma-edit-copy 2)  => (ligma-edit-copy 1 '#(2))
 
-### The PDB procedures which formerly took single Drawable and now take GimpObjectArray
+### The PDB procedures which formerly took single Drawable and now take LigmaObjectArray
 
 - Many of the file load/save procedures.
-- gimp-color-picker
-- gimp-edit-copy
-- gimp-edit-cut
-- gimp-edit-named-copy
-- gimp-edit-named-cut
-- gimp-file-save
-- gimp-image-pick-color
-- gimp-selection-float
-- gimp-xcf-save
+- ligma-color-picker
+- ligma-edit-copy
+- ligma-edit-cut
+- ligma-edit-named-copy
+- ligma-edit-named-cut
+- ligma-file-save
+- ligma-image-pick-color
+- ligma-selection-float
+- ligma-xcf-save
 
 
 ### Receiving an array of drawables
 
-Formerly a PDB procedure returning an array of drawables (or other GIMP objects)
-had a signature specifying a returned gint and GimpInt32Array.
-Now the signature specifies a returned gint and GimpObjectArray.
+Formerly a PDB procedure returning an array of drawables (or other LIGMA objects)
+had a signature specifying a returned gint and LigmaInt32Array.
+Now the signature specifies a returned gint and LigmaObjectArray.
 A script receives an int and a vector.
 The elements of the vector are numeric ID's,
 but are opaque to scripts
@@ -109,14 +109,14 @@ No changes are needed to a script.
 
 Example:
 
-(gimp-image-get-layers image)
+(ligma-image-get-layers image)
 
 Will return a list whose first element is a length,
 and whose second element is a vector of drawables (Scheme numerics for drawable ID's)
 
 In the ScriptFu console,
 
-(gimp-image-get-layers (car (gimp-image-new 10 30 1)))
+(ligma-image-get-layers (car (ligma-image-new 10 30 1)))
 
 would print:
 
@@ -139,7 +139,7 @@ Now you only receive the list
 Examples are the many PDB procedures whose name ends in "-list".
 Remember that the result of a call to the PDB is a list of values,
 in this case the result is a list containing a list,
-and for example you get the list of strings like "(car (gimp-fonts-get-list ".*"))"
+and for example you get the list of strings like "(car (ligma-fonts-get-list ".*"))"
 
 ## Changes in error messages
 
@@ -163,7 +163,7 @@ Now, when a script has the wrong count of arguments to a PDB procedure:
   Usually the PDB procedure will fail and return its own error message.
 
 When you suspect errors in a script,
-it is now important to run GIMP from a console to see warnings.
+it is now important to run LIGMA from a console to see warnings.
 
 
 ## ScriptFu logging
@@ -172,4 +172,4 @@ ScriptFu now does some logging using GLib logging.
 When you define in the environment "G_MESSAGES_DEBUG=scriptfu"
 ScriptFu will print many messages to the console.
 
-This is mostly useful for GIMP developers.
+This is mostly useful for LIGMA developers.

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasgrid.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasgrid.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_GRID_H__
-#define __GIMP_CANVAS_GRID_H__
+#ifndef __LIGMA_CANVAS_GRID_H__
+#define __LIGMA_CANVAS_GRID_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_GRID            (gimp_canvas_grid_get_type ())
-#define GIMP_CANVAS_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_GRID, GimpCanvasGrid))
-#define GIMP_CANVAS_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_GRID, GimpCanvasGridClass))
-#define GIMP_IS_CANVAS_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_GRID))
-#define GIMP_IS_CANVAS_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_GRID))
-#define GIMP_CANVAS_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_GRID, GimpCanvasGridClass))
+#define LIGMA_TYPE_CANVAS_GRID            (ligma_canvas_grid_get_type ())
+#define LIGMA_CANVAS_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_GRID, LigmaCanvasGrid))
+#define LIGMA_CANVAS_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_GRID, LigmaCanvasGridClass))
+#define LIGMA_IS_CANVAS_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_GRID))
+#define LIGMA_IS_CANVAS_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_GRID))
+#define LIGMA_CANVAS_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_GRID, LigmaCanvasGridClass))
 
 
-typedef struct _GimpCanvasGrid      GimpCanvasGrid;
-typedef struct _GimpCanvasGridClass GimpCanvasGridClass;
+typedef struct _LigmaCanvasGrid      LigmaCanvasGrid;
+typedef struct _LigmaCanvasGridClass LigmaCanvasGridClass;
 
-struct _GimpCanvasGrid
+struct _LigmaCanvasGrid
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasGridClass
+struct _LigmaCanvasGridClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_grid_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_grid_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_grid_new      (GimpDisplayShell *shell,
-                                            GimpGrid         *grid);
+LigmaCanvasItem * ligma_canvas_grid_new      (LigmaDisplayShell *shell,
+                                            LigmaGrid         *grid);
 
 
-#endif /* __GIMP_CANVAS_GRID_H__ */
+#endif /* __LIGMA_CANVAS_GRID_H__ */

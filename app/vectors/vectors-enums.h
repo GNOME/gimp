@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * vectors-enums.h
- * Copyright (C) 2006 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2006 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,23 +24,23 @@
 
 typedef enum
 {
-  GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL
-} GimpAnchorType;
+  LIGMA_ANCHOR_ANCHOR,
+  LIGMA_ANCHOR_CONTROL
+} LigmaAnchorType;
 
 typedef enum
 {
-  GIMP_ANCHOR_FEATURE_NONE,
-  GIMP_ANCHOR_FEATURE_EDGE,
-  GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC
-} GimpAnchorFeatureType;
+  LIGMA_ANCHOR_FEATURE_NONE,
+  LIGMA_ANCHOR_FEATURE_EDGE,
+  LIGMA_ANCHOR_FEATURE_ALIGNED,
+  LIGMA_ANCHOR_FEATURE_SYMMETRIC
+} LigmaAnchorFeatureType;
 
 typedef enum
 {
   EXTEND_SIMPLE,
   EXTEND_EDITABLE
-} GimpVectorExtendMode;
+} LigmaVectorExtendMode;
 
 
 #endif /* __VECTORS_ENUMS_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors-compat.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmavectors-compat.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_COMPAT_H__
-#define __GIMP_VECTORS_COMPAT_H__
+#ifndef __LIGMA_VECTORS_COMPAT_H__
+#define __LIGMA_VECTORS_COMPAT_H__
 
 
-typedef struct _GimpVectorsCompatPoint GimpVectorsCompatPoint;
+typedef struct _LigmaVectorsCompatPoint LigmaVectorsCompatPoint;
 
-struct _GimpVectorsCompatPoint
+struct _LigmaVectorsCompatPoint
 {
   guint32 type;
   gdouble x;
@@ -32,17 +32,17 @@ struct _GimpVectorsCompatPoint
 };
 
 
-GimpVectors * gimp_vectors_compat_new (GimpImage              *image,
+LigmaVectors * ligma_vectors_compat_new (LigmaImage              *image,
                                        const gchar            *name,
-                                       GimpVectorsCompatPoint *points,
+                                       LigmaVectorsCompatPoint *points,
                                        gint                    n_points,
                                        gboolean                closed);
 
-gboolean              gimp_vectors_compat_is_compatible (GimpImage   *image);
+gboolean              ligma_vectors_compat_is_compatible (LigmaImage   *image);
 
-GimpVectorsCompatPoint * gimp_vectors_compat_get_points (GimpVectors *vectors,
+LigmaVectorsCompatPoint * ligma_vectors_compat_get_points (LigmaVectors *vectors,
                                                          gint32      *n_points,
                                                          gint32      *closed);
 
 
-#endif /* __GIMP_VECTORS_COMPAT_H__ */
+#endif /* __LIGMA_VECTORS_COMPAT_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,86 +25,86 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager-help-domain.h"
-#include "plug-in/gimppluginmanager.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmapluginmanager-help-domain.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-help_invoker (GimpProcedure         *procedure,
-              Gimp                  *gimp,
-              GimpContext           *context,
-              GimpProgress          *progress,
-              const GimpValueArray  *args,
+static LigmaValueArray *
+help_invoker (LigmaProcedure         *procedure,
+              Ligma                  *ligma,
+              LigmaContext           *context,
+              LigmaProgress          *progress,
+              const LigmaValueArray  *args,
               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *help_domain;
   const gchar *help_id;
 
-  help_domain = g_value_get_string (gimp_value_array_index (args, 0));
-  help_id = g_value_get_string (gimp_value_array_index (args, 1));
+  help_domain = g_value_get_string (ligma_value_array_index (args, 0));
+  help_id = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpPlugInManager *manager = gimp->plug_in_manager;
+      LigmaPlugInManager *manager = ligma->plug_in_manager;
 
       if (! help_domain && manager->current_plug_in)
         help_domain = (gchar *)
-          gimp_plug_in_manager_get_help_domain (manager,
+          ligma_plug_in_manager_get_help_domain (manager,
                                                 manager->current_plug_in->file,
                                                 NULL);
 
-      gimp_help (gimp, progress, help_domain, help_id);
+      ligma_help (ligma, progress, help_domain, help_id);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_help_procs (GimpPDB *pdb)
+register_help_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-help
+   * ligma-help
    */
-  procedure = gimp_procedure_new (help_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-help");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (help_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-help");
+  ligma_procedure_set_static_help (procedure,
                                   "Load a help page.",
-                                  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the 'gimp-plugin-help-register' procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
+                                  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the 'ligma-plugin-help-register' procedure. If help_domain is NULL and no help domain was registered, the help domain of the main LIGMA installation is used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2000");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("help-domain",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("help-domain",
                                                        "help domain",
                                                        "The help domain in which help_id is registered",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("help-id",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("help-id",
                                                        "help id",
                                                        "The help page's ID",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

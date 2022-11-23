@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-tile"
 #define PLUG_IN_BINARY "tile"
-#define PLUG_IN_ROLE   "gimp-tile"
+#define PLUG_IN_ROLE   "ligma-tile"
 
 
 typedef struct
@@ -47,12 +47,12 @@ typedef struct _TileClass TileClass;
 
 struct _Tile
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _TileClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -61,22 +61,22 @@ struct _TileClass
 
 GType                   tile_get_type         (void) G_GNUC_CONST;
 
-static GList          * tile_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * tile_create_procedure (GimpPlugIn           *plug_in,
+static GList          * tile_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * tile_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * tile_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * tile_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
-static void             tile                  (GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               GimpImage           **new_image,
-                                               GimpLayer           **new_layer);
+static void             tile                  (LigmaImage            *image,
+                                               LigmaDrawable         *drawable,
+                                               LigmaImage           **new_image,
+                                               LigmaLayer           **new_layer);
 
 static void             tile_gegl             (GeglBuffer           *src,
                                                gint                  src_width,
@@ -85,13 +85,13 @@ static void             tile_gegl             (GeglBuffer           *src,
                                                gint                  dst_width,
                                                gint                  dst_height);
 
-static gboolean         tile_dialog           (GimpImage            *image,
-                                               GimpDrawable         *drawable);
+static gboolean         tile_dialog           (LigmaImage            *image,
+                                               LigmaDrawable         *drawable);
 
 
-G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Tile, tile, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (TILE_TYPE)
+LIGMA_MAIN (TILE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -107,7 +107,7 @@ static TileVals tvals =
 static void
 tile_class_init (TileClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = tile_query_procedures;
   plug_in_class->create_procedure = tile_create_procedure;
@@ -120,31 +120,31 @@ tile_init (Tile *tile)
 }
 
 static GList *
-tile_query_procedures (GimpPlugIn *plug_in)
+tile_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-tile_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+tile_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             tile_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Tile..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
+      ligma_procedure_set_menu_label (procedure, _("_Tile..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create an array of copies "
                                           "of the image"),
                                         "This function creates a new image "
@@ -157,36 +157,36 @@ tile_create_procedure (GimpPlugIn  *plug_in,
                                         "drawable and the new image will "
                                         "have a corresponding base type.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1996-1997");
 
-      GIMP_PROC_ARG_INT (procedure, "new-width",
+      LIGMA_PROC_ARG_INT (procedure, "new-width",
                          "New width",
                          "New (tiled) image width",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         1, LIGMA_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "new-height",
+      LIGMA_PROC_ARG_INT (procedure, "new-height",
                          "New height",
                          "New (tiled) image height",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         1, LIGMA_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "new-image",
                              "New image",
                              "Create a new image",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
                            "Output image (NULL if new-image == FALSE)",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_LAYER (procedure, "new-layer",
+      LIGMA_PROC_VAL_LAYER (procedure, "new-layer",
                            "New layer",
                            "Output layer (NULL if new-image == FALSE)",
                            TRUE,
@@ -196,19 +196,19 @@ tile_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-tile_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+tile_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpLayer      *new_layer;
-  GimpImage      *new_image;
-  GimpDrawable   *drawable;
+  LigmaValueArray *return_vals;
+  LigmaLayer      *new_layer;
+  LigmaImage      *new_image;
+  LigmaDrawable   *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -216,12 +216,12 @@ tile_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -231,52 +231,52 @@ tile_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &tvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &tvals);
 
       if (! tile_dialog (image, drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      tvals.new_width  = GIMP_VALUES_GET_INT     (args, 0);
-      tvals.new_height = GIMP_VALUES_GET_INT     (args, 1);
-      tvals.new_image  = GIMP_VALUES_GET_BOOLEAN (args, 2);
+    case LIGMA_RUN_NONINTERACTIVE:
+      tvals.new_width  = LIGMA_VALUES_GET_INT     (args, 0);
+      tvals.new_height = LIGMA_VALUES_GET_INT     (args, 1);
+      tvals.new_image  = LIGMA_VALUES_GET_BOOLEAN (args, 2);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &tvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &tvals);
       break;
     }
 
-  gimp_progress_init (_("Tiling"));
+  ligma_progress_init (_("Tiling"));
 
   tile (image,
         drawable,
         &new_image,
         &new_layer);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &tvals, sizeof (TileVals));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC, &tvals, sizeof (TileVals));
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
     {
       if (tvals.new_image)
-        gimp_display_new (new_image);
+        ligma_display_new (new_image);
       else
-        gimp_displays_flush ();
+        ligma_displays_flush ();
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, new_image);
-  GIMP_VALUES_SET_LAYER (return_vals, 2, new_layer);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, new_image);
+  LIGMA_VALUES_SET_LAYER (return_vals, 2, new_layer);
 
   return return_vals;
 }
@@ -338,120 +338,120 @@ tile_gegl (GeglBuffer  *src,
 
   while (gegl_processor_work (processor, &progress))
     if (!((gint) (progress * 100.0) % 10))
-      gimp_progress_update (progress);
+      ligma_progress_update (progress);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_object_unref (processor);
   g_object_unref (node);
 }
 
 static void
-tile (GimpImage     *image,
-      GimpDrawable  *drawable,
-      GimpImage    **new_image,
-      GimpLayer    **new_layer)
+tile (LigmaImage     *image,
+      LigmaDrawable  *drawable,
+      LigmaImage    **new_image,
+      LigmaLayer    **new_layer)
 {
-  GimpDrawable *dst_drawable;
+  LigmaDrawable *dst_drawable;
   GeglBuffer   *dst_buffer;
   GeglBuffer   *src_buffer;
   gint          dst_width  = tvals.new_width;
   gint          dst_height = tvals.new_height;
-  gint          src_width  = gimp_drawable_get_width (drawable);
-  gint          src_height = gimp_drawable_get_height (drawable);
+  gint          src_width  = ligma_drawable_get_width (drawable);
+  gint          src_height = ligma_drawable_get_height (drawable);
 
-  GimpImageBaseType  image_type   = GIMP_RGB;
+  LigmaImageBaseType  image_type   = LIGMA_RGB;
 
   if (tvals.new_image)
     {
       /*  create  a new image  */
-      gint32 precision = gimp_image_get_precision (image);
+      gint32 precision = ligma_image_get_precision (image);
 
-      switch (gimp_drawable_type (drawable))
+      switch (ligma_drawable_type (drawable))
         {
-        case GIMP_RGB_IMAGE:
-        case GIMP_RGBA_IMAGE:
-          image_type = GIMP_RGB;
+        case LIGMA_RGB_IMAGE:
+        case LIGMA_RGBA_IMAGE:
+          image_type = LIGMA_RGB;
           break;
 
-        case GIMP_GRAY_IMAGE:
-        case GIMP_GRAYA_IMAGE:
-          image_type = GIMP_GRAY;
+        case LIGMA_GRAY_IMAGE:
+        case LIGMA_GRAYA_IMAGE:
+          image_type = LIGMA_GRAY;
           break;
 
-        case GIMP_INDEXED_IMAGE:
-        case GIMP_INDEXEDA_IMAGE:
-          image_type = GIMP_INDEXED;
+        case LIGMA_INDEXED_IMAGE:
+        case LIGMA_INDEXEDA_IMAGE:
+          image_type = LIGMA_INDEXED;
           break;
         }
 
-      *new_image = gimp_image_new_with_precision (dst_width,
+      *new_image = ligma_image_new_with_precision (dst_width,
                                                   dst_height,
                                                   image_type,
                                                   precision);
-      gimp_image_undo_disable (*new_image);
+      ligma_image_undo_disable (*new_image);
 
       /*  copy the colormap, if necessary  */
-      if (image_type == GIMP_INDEXED)
+      if (image_type == LIGMA_INDEXED)
         {
           guchar *cmap;
           gint    ncols;
 
-          cmap = gimp_image_get_colormap (image, &ncols);
-          gimp_image_set_colormap (*new_image, cmap, ncols);
+          cmap = ligma_image_get_colormap (image, &ncols);
+          ligma_image_set_colormap (*new_image, cmap, ncols);
           g_free (cmap);
         }
 
-      *new_layer = gimp_layer_new (*new_image, _("Background"),
+      *new_layer = ligma_layer_new (*new_image, _("Background"),
                                    dst_width, dst_height,
-                                   gimp_drawable_type (drawable),
+                                   ligma_drawable_type (drawable),
                                    100,
-                                   gimp_image_get_default_new_layer_mode (*new_image));
+                                   ligma_image_get_default_new_layer_mode (*new_image));
 
       if (*new_layer == NULL)
         return;
 
-      gimp_image_insert_layer (*new_image, *new_layer, NULL, 0);
-      dst_drawable = GIMP_DRAWABLE (*new_layer);
+      ligma_image_insert_layer (*new_image, *new_layer, NULL, 0);
+      dst_drawable = LIGMA_DRAWABLE (*new_layer);
     }
   else
     {
       *new_image = NULL;
       *new_layer = NULL;
 
-      gimp_image_undo_group_start (image);
-      gimp_image_resize (image, dst_width, dst_height, 0, 0);
+      ligma_image_undo_group_start (image);
+      ligma_image_resize (image, dst_width, dst_height, 0, 0);
 
-      if (gimp_item_is_layer (GIMP_ITEM (drawable)))
+      if (ligma_item_is_layer (LIGMA_ITEM (drawable)))
         {
-          gimp_layer_resize (GIMP_LAYER (drawable), dst_width, dst_height, 0, 0);
+          ligma_layer_resize (LIGMA_LAYER (drawable), dst_width, dst_height, 0, 0);
         }
-      else if (gimp_item_is_layer_mask (GIMP_ITEM (drawable)))
+      else if (ligma_item_is_layer_mask (LIGMA_ITEM (drawable)))
         {
-          GimpLayer *layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
+          LigmaLayer *layer = ligma_layer_from_mask (LIGMA_LAYER_MASK (drawable));
 
-          gimp_layer_resize (layer, dst_width, dst_height, 0, 0);
+          ligma_layer_resize (layer, dst_width, dst_height, 0, 0);
         }
 
       dst_drawable = drawable;
     }
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
-  dst_buffer = gimp_drawable_get_buffer (dst_drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
+  dst_buffer = ligma_drawable_get_buffer (dst_drawable);
 
   tile_gegl (src_buffer, src_width, src_height,
              dst_buffer, dst_width, dst_height);
 
   gegl_buffer_flush (dst_buffer);
-  gimp_drawable_update (dst_drawable, 0, 0, dst_width, dst_height);
+  ligma_drawable_update (dst_drawable, 0, 0, dst_width, dst_height);
 
   if (tvals.new_image)
     {
-      gimp_image_undo_enable (*new_image);
+      ligma_image_undo_enable (*new_image);
     }
   else
     {
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
     }
 
   g_object_unref (src_buffer);
@@ -459,8 +459,8 @@ tile (GimpImage     *image,
 }
 
 static gboolean
-tile_dialog (GimpImage    *image,
-             GimpDrawable *drawable)
+tile_dialog (LigmaImage    *image,
+             LigmaDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -472,34 +472,34 @@ tile_dialog (GimpImage    *image,
   gint       height;
   gdouble    xres;
   gdouble    yres;
-  GimpUnit   unit;
+  LigmaUnit   unit;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  width  = gimp_drawable_get_width (drawable);
-  height = gimp_drawable_get_height (drawable);
-  unit   = gimp_image_get_unit (image);
-  gimp_image_get_resolution (image, &xres, &yres);
+  width  = ligma_drawable_get_width (drawable);
+  height = ligma_drawable_get_height (drawable);
+  unit   = ligma_image_get_unit (image);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   tvals.new_width  = width;
   tvals.new_height = height;
 
-  dlg = gimp_dialog_new (_("Tile"), PLUG_IN_ROLE,
+  dlg = ligma_dialog_new (_("Tile"), PLUG_IN_ROLE,
                          NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         ligma_standard_help_func, PLUG_IN_PROC,
 
                          _("_Cancel"), GTK_RESPONSE_CANCEL,
                          _("_OK"),     GTK_RESPONSE_OK,
 
                          NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  ligma_window_set_transient (GTK_WINDOW (dlg));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -507,26 +507,26 @@ tile_dialog (GimpImage    *image,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_frame_new (_("Tile to New Size"));
+  frame = ligma_frame_new (_("Tile to New Size"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 8,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+  sizeentry = ligma_coordinates_new (unit, "%a", TRUE, TRUE, 8,
+                                    LIGMA_SIZE_ENTRY_UPDATE_SIZE,
 
                                     tvals.constrain, TRUE,
 
                                     _("_Width:"), width, xres,
-                                    1, GIMP_MAX_IMAGE_SIZE,
+                                    1, LIGMA_MAX_IMAGE_SIZE,
                                     0, width,
 
                                     _("_Height:"), height, yres,
-                                    1, GIMP_MAX_IMAGE_SIZE,
+                                    1, LIGMA_MAX_IMAGE_SIZE,
                                     0, height);
   gtk_container_add (GTK_CONTAINER (frame), sizeentry);
   gtk_widget_show (sizeentry);
 
-  chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
+  chainbutton = GTK_WIDGET (LIGMA_COORDINATES_CHAINBUTTON (sizeentry));
 
   toggle = gtk_check_button_new_with_mnemonic (_("C_reate new image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
@@ -534,22 +534,22 @@ tile_dialog (GimpImage    *image,
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &tvals.new_image);
 
   gtk_widget_show (dlg);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     {
       tvals.new_width =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0));
+        RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (sizeentry), 0));
       tvals.new_height =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1));
+        RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (sizeentry), 1));
 
       tvals.constrain =
-        gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton));
+        ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (chainbutton));
     }
 
   gtk_widget_destroy (dlg);

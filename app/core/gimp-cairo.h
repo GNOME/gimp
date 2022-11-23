@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-cairo.h
- * Copyright (C) 2010-2012  Michael Natterer <mitch@gimp.org>
+ * ligma-cairo.h
+ * Copyright (C) 2010-2012  Michael Natterer <mitch@ligma.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -21,31 +21,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_CAIRO_H__
-#define __APP_GIMP_CAIRO_H__
+#ifndef __APP_LIGMA_CAIRO_H__
+#define __APP_LIGMA_CAIRO_H__
 
 
-cairo_pattern_t * gimp_cairo_pattern_create_stipple (const GimpRGB   *fg,
-                                                     const GimpRGB   *bg,
+cairo_pattern_t * ligma_cairo_pattern_create_stipple (const LigmaRGB   *fg,
+                                                     const LigmaRGB   *bg,
                                                      gint             index,
                                                      gdouble          offset_x,
                                                      gdouble          offset_y);
 
-void              gimp_cairo_arc                    (cairo_t         *cr,
+void              ligma_cairo_arc                    (cairo_t         *cr,
                                                      gdouble          center_x,
                                                      gdouble          center_y,
                                                      gdouble          radius,
                                                      gdouble          start_angle,
                                                      gdouble          slice_angle);
-void              gimp_cairo_rounded_rectangle      (cairo_t         *cr,
+void              ligma_cairo_rounded_rectangle      (cairo_t         *cr,
                                                      gdouble          x,
                                                      gdouble          y,
                                                      gdouble          width,
                                                      gdouble          height,
                                                      gdouble          corner_radius);
-void              gimp_cairo_segments               (cairo_t         *cr,
-                                                     GimpSegment     *segs,
+void              ligma_cairo_segments               (cairo_t         *cr,
+                                                     LigmaSegment     *segs,
                                                      gint             n_segs);
 
 
-#endif /* __APP_GIMP_CAIRO_H__ */
+#endif /* __APP_LIGMA_CAIRO_H__ */

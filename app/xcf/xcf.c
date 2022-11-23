@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,18 +25,18 @@
 #include <glib/gstdio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginprocedure.h"
 
 #include "xcf.h"
 #include "xcf-private.h"
@@ -44,29 +44,29 @@
 #include "xcf-read.h"
 #include "xcf-save.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-typedef GimpImage * GimpXcfLoaderFunc (Gimp     *gimp,
+typedef LigmaImage * LigmaXcfLoaderFunc (Ligma     *ligma,
                                        XcfInfo  *info,
                                        GError  **error);
 
 
-static GimpValueArray * xcf_load_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray * xcf_load_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error);
-static GimpValueArray * xcf_save_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
+static LigmaValueArray * xcf_save_invoker (LigmaProcedure         *procedure,
+                                          Ligma                  *ligma,
+                                          LigmaContext           *context,
+                                          LigmaProgress          *progress,
+                                          const LigmaValueArray  *args,
                                           GError               **error);
 
 
-static GimpXcfLoaderFunc * const xcf_loaders[] =
+static LigmaXcfLoaderFunc * const xcf_loaders[] =
 {
   xcf_load_image,   /* version  0 */
   xcf_load_image,   /* version  1 */
@@ -91,13 +91,13 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
 
 
 void
-xcf_init (Gimp *gimp)
+xcf_init (Ligma *ligma)
 {
-  GimpPlugInProcedure *proc;
+  LigmaPlugInProcedure *proc;
   GFile               *file;
-  GimpProcedure       *procedure;
+  LigmaProcedure       *procedure;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   /* So this is sort of a hack, but its better than it was before.  To
    * do this right there would be a file load-save handler type and
@@ -108,163 +108,163 @@ xcf_init (Gimp *gimp)
    * PlugInProcDef struct.  -josh
    */
 
-  /*  gimp-xcf-save  */
-  file = g_file_new_for_path ("gimp-xcf-save");
-  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
+  /*  ligma-xcf-save  */
+  file = g_file_new_for_path ("ligma-xcf-save");
+  procedure = ligma_plug_in_procedure_new (LIGMA_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
+  procedure->proc_type    = LIGMA_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = xcf_save_invoker;
 
-  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP XCF image"));
-  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
-                                   (const guint8 *) "gimp-wilber",
-                                   strlen ("gimp-wilber") + 1,
+  proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
+  proc->menu_label = g_strdup (N_("LIGMA XCF image"));
+  ligma_plug_in_procedure_set_icon (proc, LIGMA_ICON_TYPE_ICON_NAME,
+                                   (const guint8 *) "ligma-wilber",
+                                   strlen ("ligma-wilber") + 1,
                                    NULL);
-  gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
-  gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
-  gimp_plug_in_procedure_set_handles_remote (proc);
+  ligma_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
+  ligma_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
+  ligma_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
+  ligma_plug_in_procedure_set_handles_remote (proc);
 
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
-  gimp_procedure_set_static_help (procedure,
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure), "ligma-xcf-save");
+  ligma_procedure_set_static_help (procedure,
                                   "Saves file in the .xcf file format",
                                   "The XCF file format has been designed "
                                   "specifically for loading and saving "
-                                  "tiled and layered images in GIMP. "
+                                  "tiled and layered images in LIGMA. "
                                   "This procedure will save the specified "
                                   "image in the xcf file format.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("dummy-param",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("dummy-param",
                                                      "Dummy Param",
                                                      "Dummy parameter",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "Image",
                                                       "Input image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("n-drawables",
                                                  "Num drawables",
                                                  "Number of drawables",
                                                  0, G_MAXINT, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "Drawables",
                                                              "Selected drawables",
-                                                             GIMP_TYPE_DRAWABLE,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
+                                                             LIGMA_TYPE_DRAWABLE,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "File",
                                                     "The file "
                                                     "to save the image in",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_plug_in_manager_add_procedure (ligma->plug_in_manager, proc);
   g_object_unref (procedure);
 
-  /*  gimp-xcf-load  */
-  file = g_file_new_for_path ("gimp-xcf-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
+  /*  ligma-xcf-load  */
+  file = g_file_new_for_path ("ligma-xcf-load");
+  procedure = ligma_plug_in_procedure_new (LIGMA_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
+  procedure->proc_type    = LIGMA_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = xcf_load_invoker;
 
-  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP XCF image"));
-  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
-                                   (const guint8 *) "gimp-wilber",
-                                   strlen ("gimp-wilber") + 1,
+  proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
+  proc->menu_label = g_strdup (N_("LIGMA XCF image"));
+  ligma_plug_in_procedure_set_icon (proc, LIGMA_ICON_TYPE_ICON_NAME,
+                                   (const guint8 *) "ligma-wilber",
+                                   strlen ("ligma-wilber") + 1,
                                    NULL);
-  gimp_plug_in_procedure_set_image_types (proc, NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "",
-                                        "0,string,gimp\\040xcf\\040");
-  gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
-  gimp_plug_in_procedure_set_handles_remote (proc);
+  ligma_plug_in_procedure_set_image_types (proc, NULL);
+  ligma_plug_in_procedure_set_file_proc (proc, "xcf", "",
+                                        "0,string,ligma\\040xcf\\040");
+  ligma_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
+  ligma_plug_in_procedure_set_handles_remote (proc);
 
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
-  gimp_procedure_set_static_help (procedure,
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure), "ligma-xcf-load");
+  ligma_procedure_set_static_help (procedure,
                                   "Loads file saved in the .xcf file format",
                                   "The XCF file format has been designed "
                                   "specifically for loading and saving "
-                                  "tiled and layered images in GIMP. "
+                                  "tiled and layered images in LIGMA. "
                                   "This procedure will load the specified "
                                   "file.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("dummy-param",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("dummy-param",
                                                      "Dummy Param",
                                                      "Dummy parameter",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "File",
                                                     "The file to load",
                                                     G_TYPE_FILE,
-                                                  GIMP_PARAM_READWRITE));
+                                                  LIGMA_PARAM_READWRITE));
 
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image ("image",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_image ("image",
                                                           "Image",
                                                           "Output image",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_plug_in_manager_add_procedure (ligma->plug_in_manager, proc);
   g_object_unref (procedure);
 }
 
 void
-xcf_exit (Gimp *gimp)
+xcf_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 }
 
-GimpImage *
-xcf_load_stream (Gimp          *gimp,
+LigmaImage *
+xcf_load_stream (Ligma          *ligma,
                  GInputStream  *input,
                  GFile         *input_file,
-                 GimpProgress  *progress,
+                 LigmaProgress  *progress,
                  GError       **error)
 {
   XcfInfo      info  = { 0, };
   const gchar *filename;
-  GimpImage   *image = NULL;
+  LigmaImage   *image = NULL;
   gchar        id[14];
   gboolean     success;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (input_file == NULL || G_IS_FILE (input_file), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (input_file)
-    filename = gimp_file_get_utf8_name (input_file);
+    filename = ligma_file_get_utf8_name (input_file);
   else
     filename = _("Memory Stream");
 
-  info.gimp             = gimp;
+  info.ligma             = ligma;
   info.input            = input;
   info.seekable         = G_SEEKABLE (input);
   info.bytes_per_offset = 4;
@@ -273,13 +273,13 @@ xcf_load_stream (Gimp          *gimp,
   info.compression      = COMPRESS_NONE;
 
   if (progress)
-    gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
+    ligma_progress_start (progress, FALSE, _("Opening '%s'"), filename);
 
   success = TRUE;
 
   xcf_read_int8 (&info, (guint8 *) id, 14);
 
-  if (! g_str_has_prefix (id, "gimp xcf "))
+  if (! g_str_has_prefix (id, "ligma xcf "))
     {
       success = FALSE;
     }
@@ -305,7 +305,7 @@ xcf_load_stream (Gimp          *gimp,
       if (info.file_version >= 0 &&
           info.file_version < G_N_ELEMENTS (xcf_loaders))
         {
-          image = (*(xcf_loaders[info.file_version])) (gimp, &info, error);
+          image = (*(xcf_loaders[info.file_version])) (ligma, &info, error);
 
           if (! image)
             success = FALSE;
@@ -322,17 +322,17 @@ xcf_load_stream (Gimp          *gimp,
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
   return image;
 }
 
 gboolean
-xcf_save_stream (Gimp           *gimp,
-                 GimpImage      *image,
+xcf_save_stream (Ligma           *ligma,
+                 LigmaImage      *image,
                  GOutputStream  *output,
                  GFile          *output_file,
-                 GimpProgress   *progress,
+                 LigmaProgress   *progress,
                  GError        **error)
 {
   XcfInfo       info     = { 0, };
@@ -341,31 +341,31 @@ xcf_save_stream (Gimp           *gimp,
   GError       *my_error = NULL;
   GCancellable *cancellable;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
   g_return_val_if_fail (output_file == NULL || G_IS_FILE (output_file), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (output_file)
-    filename = gimp_file_get_utf8_name (output_file);
+    filename = ligma_file_get_utf8_name (output_file);
   else
     filename = _("Memory Stream");
 
-  info.gimp             = gimp;
+  info.ligma             = ligma;
   info.output           = output;
   info.seekable         = G_SEEKABLE (output);
   info.bytes_per_offset = 4;
   info.progress         = progress;
   info.file             = output_file;
 
-  if (gimp_image_get_xcf_compression (image))
+  if (ligma_image_get_xcf_compression (image))
     info.compression = COMPRESS_ZLIB;
   else
     info.compression = COMPRESS_RLE;
 
-  info.file_version = gimp_image_get_xcf_version (image,
+  info.file_version = ligma_image_get_xcf_version (image,
                                                   info.compression ==
                                                   COMPRESS_ZLIB,
                                                   NULL, NULL, NULL);
@@ -374,7 +374,7 @@ xcf_save_stream (Gimp           *gimp,
     info.bytes_per_offset = 8;
 
   if (progress)
-    gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
+    ligma_progress_start (progress, FALSE, _("Saving '%s'"), filename);
 
   success = xcf_save_image (&info, image, &my_error);
 
@@ -382,7 +382,7 @@ xcf_save_stream (Gimp           *gimp,
   if (success)
     {
       if (progress)
-        gimp_progress_set_text (progress, _("Closing '%s'"), filename);
+        ligma_progress_set_text (progress, _("Closing '%s'"), filename);
     }
   else
     {
@@ -403,7 +403,7 @@ xcf_save_stream (Gimp           *gimp,
                                 _("Error writing '%s': "), filename);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
   return success;
 }
@@ -411,29 +411,29 @@ xcf_save_stream (Gimp           *gimp,
 
 /*  private functions  */
 
-static GimpValueArray *
-xcf_load_invoker (GimpProcedure         *procedure,
-                  Gimp                  *gimp,
-                  GimpContext           *context,
-                  GimpProgress          *progress,
-                  const GimpValueArray  *args,
+static LigmaValueArray *
+xcf_load_invoker (LigmaProcedure         *procedure,
+                  Ligma                  *ligma,
+                  LigmaContext           *context,
+                  LigmaProgress          *progress,
+                  const LigmaValueArray  *args,
                   GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image = NULL;
   GFile          *file;
   GInputStream   *input;
   GError         *my_error = NULL;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
   if (input)
     {
-      image = xcf_load_stream (gimp, input, file, progress, error);
+      image = xcf_load_stream (ligma, input, file, progress, error);
 
       g_object_unref (input);
     }
@@ -441,39 +441,39 @@ xcf_load_invoker (GimpProcedure         *procedure,
     {
       g_propagate_prefixed_error (error, my_error,
                                   _("Could not open '%s' for reading: "),
-                                  gimp_file_get_utf8_name (file));
+                                  ligma_file_get_utf8_name (file));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
+  return_vals = ligma_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
 
   if (image)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), image);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }
 
-static GimpValueArray *
-xcf_save_invoker (GimpProcedure         *procedure,
-                  Gimp                  *gimp,
-                  GimpContext           *context,
-                  GimpProgress          *progress,
-                  const GimpValueArray  *args,
+static LigmaValueArray *
+xcf_save_invoker (LigmaProcedure         *procedure,
+                  Ligma                  *ligma,
+                  LigmaContext           *context,
+                  LigmaProgress          *progress,
+                  const LigmaValueArray  *args,
                   GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GFile          *file;
   GOutputStream  *output;
   gboolean        success  = FALSE;
   GError         *my_error = NULL;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  file  = g_value_get_object (gimp_value_array_index (args, 4));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  file  = g_value_get_object (ligma_value_array_index (args, 4));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -481,7 +481,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   if (output)
     {
-      success = xcf_save_stream (gimp, image, output, file, progress, error);
+      success = xcf_save_stream (ligma, image, output, file, progress, error);
 
       g_object_unref (output);
     }
@@ -489,13 +489,13 @@ xcf_save_invoker (GimpProcedure         *procedure,
     {
       g_propagate_prefixed_error (error, my_error,
                                   _("Error creating '%s': "),
-                                  gimp_file_get_utf8_name (file));
+                                  ligma_file_get_utf8_name (file));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }

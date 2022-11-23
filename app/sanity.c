@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,15 +26,15 @@
 #include <gexiv2/gexiv2.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "sanity.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  early-stage tests  */
-static gchar * sanity_check_gimp              (void);
+static gchar * sanity_check_ligma              (void);
 static gchar * sanity_check_glib              (void);
 static gchar * sanity_check_cairo             (void);
 static gchar * sanity_check_pango             (void);
@@ -60,7 +60,7 @@ sanity_check_early (void)
   gchar *abort_message = NULL;
 
   if (! abort_message)
-    abort_message = sanity_check_gimp ();
+    abort_message = sanity_check_ligma ();
 
   if (! abort_message)
     abort_message = sanity_check_glib ();
@@ -148,20 +148,20 @@ sanity_check_version (guint major_version, guint required_major,
 }
 
 static gchar *
-sanity_check_gimp (void)
+sanity_check_ligma (void)
 {
-  if (GIMP_MAJOR_VERSION != gimp_major_version ||
-      GIMP_MINOR_VERSION != gimp_minor_version ||
-      GIMP_MICRO_VERSION != gimp_micro_version)
+  if (LIGMA_MAJOR_VERSION != ligma_major_version ||
+      LIGMA_MINOR_VERSION != ligma_minor_version ||
+      LIGMA_MICRO_VERSION != ligma_micro_version)
     {
       return g_strdup_printf
-        ("Libgimp version mismatch!\n\n"
-         "The GIMP binary cannot run with a libgimp version\n"
-         "other than its own. This is GIMP %d.%d.%d, but the\n"
-         "libgimp version is %d.%d.%d.\n\n"
-         "Maybe you have GIMP versions in both /usr and /usr/local ?",
-         GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION,
-         gimp_major_version, gimp_minor_version, gimp_micro_version);
+        ("Libligma version mismatch!\n\n"
+         "The LIGMA binary cannot run with a libligma version\n"
+         "other than its own. This is LIGMA %d.%d.%d, but the\n"
+         "libligma version is %d.%d.%d.\n\n"
+         "Maybe you have LIGMA versions in both /usr and /usr/local ?",
+         LIGMA_MAJOR_VERSION, LIGMA_MINOR_VERSION, LIGMA_MICRO_VERSION,
+         ligma_major_version, ligma_minor_version, ligma_micro_version);
     }
 
   return NULL;
@@ -182,10 +182,10 @@ sanity_check_glib (void)
     {
       return g_strdup_printf
         ("%s\n\n"
-         "GIMP requires GLib version %d.%d.%d or later.\n"
+         "LIGMA requires GLib version %d.%d.%d or later.\n"
          "Installed GLib version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older GLib version.\n\n"
+         "to install LIGMA with an older GLib version.\n\n"
          "Please upgrade to GLib version %d.%d.%d or later.",
          mismatch,
          GLIB_REQUIRED_MAJOR, GLIB_REQUIRED_MINOR, GLIB_REQUIRED_MICRO,
@@ -213,10 +213,10 @@ sanity_check_cairo (void)
     {
       return g_strdup_printf
         ("The Cairo version being used is too old!\n\n"
-         "GIMP requires Cairo version %d.%d.%d or later.\n"
+         "LIGMA requires Cairo version %d.%d.%d or later.\n"
          "Installed Cairo version is %s.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older Cairo version.\n\n"
+         "to install LIGMA with an older Cairo version.\n\n"
          "Please upgrade to Cairo version %d.%d.%d or later.",
          CAIRO_REQUIRED_MAJOR, CAIRO_REQUIRED_MINOR, CAIRO_REQUIRED_MICRO,
          cairo_version_string (),
@@ -249,10 +249,10 @@ sanity_check_pango (void)
 
       return g_strdup_printf
         ("%s\n\n"
-         "GIMP requires Pango version %d.%d.%d or later.\n"
+         "LIGMA requires Pango version %d.%d.%d or later.\n"
          "Installed Pango version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older Pango version.\n\n"
+         "to install LIGMA with an older Pango version.\n\n"
          "Please upgrade to Pango version %d.%d.%d or later.",
          mismatch,
          PANGO_REQUIRED_MAJOR, PANGO_REQUIRED_MINOR, PANGO_REQUIRED_MICRO,
@@ -286,8 +286,8 @@ sanity_check_fontconfig (void)
 
       return g_strdup_printf
         ("The Fontconfig version being used is too old!\n\n"
-         "GIMP requires Fontconfig version %d.%d.%d or later.\n"
-         "The Fontconfig version loaded by GIMP is %d.%d.%d.\n\n"
+         "LIGMA requires Fontconfig version %d.%d.%d or later.\n"
+         "The Fontconfig version loaded by LIGMA is %d.%d.%d.\n\n"
          "This may be caused by another instance of libfontconfig.so.1\n"
          "being installed in the system, probably in /usr/X11R6/lib.\n"
          "Please correct the situation or report it to someone who can.",
@@ -336,10 +336,10 @@ sanity_check_freetype (void)
     {
       return g_strdup_printf
         ("FreeType version too old!\n\n"
-         "GIMP requires FreeType version %d.%d.%d or later.\n"
+         "LIGMA requires FreeType version %d.%d.%d or later.\n"
          "Installed FreeType version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older FreeType version.\n\n"
+         "to install LIGMA with an older FreeType version.\n\n"
          "Please upgrade to FreeType version %d.%d.%d or later.",
          FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO,
          ft_major_version, ft_minor_version, ft_micro_version,
@@ -366,10 +366,10 @@ sanity_check_gdk_pixbuf (void)
     {
       return g_strdup_printf
         ("GdkPixbuf version too old!\n\n"
-         "GIMP requires GdkPixbuf version %d.%d.%d or later.\n"
+         "LIGMA requires GdkPixbuf version %d.%d.%d or later.\n"
          "Installed GdkPixbuf version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older GdkPixbuf version.\n\n"
+         "to install LIGMA with an older GdkPixbuf version.\n\n"
          "Please upgrade to GdkPixbuf version %d.%d.%d or later.",
          GDK_PIXBUF_REQUIRED_MAJOR, GDK_PIXBUF_REQUIRED_MINOR, GDK_PIXBUF_REQUIRED_MICRO,
          gdk_pixbuf_major_version, gdk_pixbuf_minor_version, gdk_pixbuf_micro_version,
@@ -399,10 +399,10 @@ sanity_check_lcms (void)
 
       return g_strdup_printf
         ("Liblcms2 version too old!\n\n"
-         "GIMP requires LittleCMS version %d.%d or later.\n"
+         "LIGMA requires LittleCMS version %d.%d or later.\n"
          "Installed LittleCMS version is %d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older LittleCMS version.\n\n"
+         "to install LIGMA with an older LittleCMS version.\n\n"
          "Please upgrade to LittleCMS version %d.%d or later.",
          LCMS_REQUIRED_MAJOR, LCMS_REQUIRED_MINOR,
          lcms_major_version, lcms_minor_version,
@@ -436,10 +436,10 @@ sanity_check_gexiv2 (void)
 
       return g_strdup_printf
         ("gexiv2 version too old!\n\n"
-         "GIMP requires gexiv2 version %d.%d.%d or later.\n"
+         "LIGMA requires gexiv2 version %d.%d.%d or later.\n"
          "Installed gexiv2 version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older gexiv2 version.\n\n"
+         "to install LIGMA with an older gexiv2 version.\n\n"
          "Please upgrade to gexiv2 version %d.%d.%d or later.",
          GEXIV2_REQUIRED_MAJOR, GEXIV2_REQUIRED_MINOR, GEXIV2_REQUIRED_MICRO,
          gexiv2_major_version, gexiv2_minor_version, gexiv2_micro_version,
@@ -476,10 +476,10 @@ sanity_check_babl (void)
     {
       return g_strdup_printf
         ("BABL version too old!\n\n"
-         "GIMP requires BABL version %d.%d.%d or later.\n"
+         "LIGMA requires BABL version %d.%d.%d or later.\n"
          "Installed BABL version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older BABL version.\n\n"
+         "to install LIGMA with an older BABL version.\n\n"
          "Please upgrade to BABL version %d.%d.%d or later.",
          BABL_REQUIRED_MAJOR, BABL_REQUIRED_MINOR, BABL_REQUIRED_MICRO,
          babl_major_version, babl_minor_version, babl_micro_version,
@@ -514,10 +514,10 @@ sanity_check_gegl (void)
     {
       return g_strdup_printf
         ("GEGL version too old!\n\n"
-         "GIMP requires GEGL version %d.%d.%d or later.\n"
+         "LIGMA requires GEGL version %d.%d.%d or later.\n"
          "Installed GEGL version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install GIMP with an older GEGL version.\n\n"
+         "to install LIGMA with an older GEGL version.\n\n"
          "Please upgrade to GEGL version %d.%d.%d or later.",
          GEGL_REQUIRED_MAJOR, GEGL_REQUIRED_MINOR, GEGL_REQUIRED_MICRO,
          gegl_major_version, gegl_minor_version, gegl_micro_version,
@@ -556,13 +556,13 @@ sanity_check_filename_encoding (void)
 
   g_free (result);
 
-  result = g_filename_to_utf8 (gimp_directory (), -1, NULL, NULL, &error);
+  result = g_filename_to_utf8 (ligma_directory (), -1, NULL, NULL, &error);
 
   if (! result)
     {
       gchar *msg =
         g_strdup_printf
-        (_("The name of the directory holding the GIMP user configuration "
+        (_("The name of the directory holding the LIGMA user configuration "
            "cannot be converted to UTF-8: "
            "%s\n\n"
            "Your filesystem probably stores files in an encoding "
@@ -726,10 +726,10 @@ sanity_check_gegl_ops (void)
         {
           return g_strdup_printf
             ("GEGL operation missing!\n\n"
-             "GIMP requires the GEGL operation \"%s\".\n"
+             "LIGMA requires the GEGL operation \"%s\".\n"
              "This operation cannot be found. Check your\n"
              "GEGL install and ensure it has been compiled\n"
-             "with any dependencies required for GIMP.",
+             "with any dependencies required for LIGMA.",
              required_ops [i]);
         }
     }

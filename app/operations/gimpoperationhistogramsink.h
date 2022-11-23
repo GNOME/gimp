@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhistogramsink.h
+ * ligmaoperationhistogramsink.h
  * Copyright (C) 2012 Øyvind Kolås
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_HISTOGRAM_SINK_H__
-#define __GIMP_OPERATION_HISTOGRAM_SINK_H__
+#ifndef __LIGMA_OPERATION_HISTOGRAM_SINK_H__
+#define __LIGMA_OPERATION_HISTOGRAM_SINK_H__
 
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-sink.h>
 
 
-#define GIMP_TYPE_OPERATION_HISTOGRAM_SINK            (gimp_operation_histogram_sink_get_type ())
-#define GIMP_OPERATION_HISTOGRAM_SINK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_HISTOGRAM_SINK, GimpOperationHistogramSink))
-#define GIMP_OPERATION_HISTOGRAM_SINK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_HISTOGRAM_SINK, GimpOperationHistogramSinkClass))
-#define GEGL_IS_OPERATION_HISTOGRAM_SINK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_HISTOGRAM_SINK))
-#define GEGL_IS_OPERATION_HISTOGRAM_SINK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_HISTOGRAM_SINK))
-#define GIMP_OPERATION_HISTOGRAM_SINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HISTOGRAM_SINK, GimpOperationHistogramSinkClass))
+#define LIGMA_TYPE_OPERATION_HISTOGRAM_SINK            (ligma_operation_histogram_sink_get_type ())
+#define LIGMA_OPERATION_HISTOGRAM_SINK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_HISTOGRAM_SINK, LigmaOperationHistogramSink))
+#define LIGMA_OPERATION_HISTOGRAM_SINK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_HISTOGRAM_SINK, LigmaOperationHistogramSinkClass))
+#define GEGL_IS_OPERATION_HISTOGRAM_SINK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_HISTOGRAM_SINK))
+#define GEGL_IS_OPERATION_HISTOGRAM_SINK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_HISTOGRAM_SINK))
+#define LIGMA_OPERATION_HISTOGRAM_SINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_HISTOGRAM_SINK, LigmaOperationHistogramSinkClass))
 
 
-typedef struct _GimpOperationHistogramSink      GimpOperationHistogramSink;
-typedef struct _GimpOperationHistogramSinkClass GimpOperationHistogramSinkClass;
+typedef struct _LigmaOperationHistogramSink      LigmaOperationHistogramSink;
+typedef struct _LigmaOperationHistogramSinkClass LigmaOperationHistogramSinkClass;
 
-struct _GimpOperationHistogramSink
+struct _LigmaOperationHistogramSink
 {
   GeglOperation  parent_instance;
 
-  GimpHistogram *histogram;
+  LigmaHistogram *histogram;
 };
 
-struct _GimpOperationHistogramSinkClass
+struct _LigmaOperationHistogramSinkClass
 {
   GeglOperationSinkClass  parent_class;
 };
 
 
-GType   gimp_operation_histogram_sink_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_histogram_sink_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_HISTOGRAM_SINK_C__ */
+#endif /* __LIGMA_OPERATION_HISTOGRAM_SINK_C__ */

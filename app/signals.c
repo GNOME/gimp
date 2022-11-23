@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,11 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
 #include "errors.h"
 #include "signals.h"
@@ -38,18 +38,18 @@
 
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prevExceptionFilter = NULL;
 
-static LONG WINAPI  gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+static LONG WINAPI  ligma_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
 #endif
 
 #else
 
-static void         gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
+static void         ligma_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
 
 #endif
 
 
 void
-gimp_init_signal_handlers (gchar **backtrace_file)
+ligma_init_signal_handlers (gchar **backtrace_file)
 {
   time_t  t;
   gchar  *filename;
@@ -60,10 +60,10 @@ gimp_init_signal_handlers (gchar **backtrace_file)
      directory) as backtraces correspond to the binaries on this
      system. */
   dir = g_build_filename (g_get_user_data_dir (),
-                          GIMPDIR, GIMP_USER_VERSION, "CrashLog",
+                          LIGMADIR, LIGMA_USER_VERSION, "CrashLog",
                           NULL);
 #else
-  dir = g_build_filename (gimp_directory (), "CrashLog", NULL);
+  dir = g_build_filename (ligma_directory (), "CrashLog", NULL);
 #endif
 
   time (&t);
@@ -89,7 +89,7 @@ gimp_init_signal_handlers (gchar **backtrace_file)
    * that ExcHnl's handler runs first since that's in FILO order.
    */
   if (! g_prevExceptionFilter)
-    g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
+    g_prevExceptionFilter = SetUnhandledExceptionFilter (ligma_sigfatal_handler);
 
   ExcHndlInit ();
   ExcHndlSetLogFileNameA (*backtrace_file);
@@ -100,30 +100,30 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 
   /* Handle fatal signals */
 
-  /* these are handled by gimp_terminate() */
-  gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
+  /* these are handled by ligma_terminate() */
+  ligma_signal_private (SIGHUP,  ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGINT,  ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGQUIT, ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGTERM, ligma_sigfatal_handler, 0);
 
-  /* these are handled by gimp_fatal_error() */
+  /* these are handled by ligma_fatal_error() */
   /*
    * MacOS has it's own crash handlers which end up fighting the
-   * these Gimp supplied handlers and leading to very hard to
+   * these Ligma supplied handlers and leading to very hard to
    * deal with hangs (just get a spin dump)
    */
 #ifndef PLATFORM_OSX
-  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
+  ligma_signal_private (SIGABRT, ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGBUS,  ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGSEGV, ligma_sigfatal_handler, 0);
+  ligma_signal_private (SIGFPE,  ligma_sigfatal_handler, 0);
 #endif
 
   /* Ignore SIGPIPE because plug_in.c handles broken pipes */
-  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
+  ligma_signal_private (SIGPIPE, SIG_IGN, 0);
 
   /* Restart syscalls on SIGCHLD */
-  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
+  ligma_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
 #endif /* G_OS_WIN32 */
 }
@@ -133,7 +133,7 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 
 #ifdef HAVE_EXCHNDL
 static LONG WINAPI
-gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
+ligma_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 {
   EXCEPTION_RECORD *er;
   int               fatal;
@@ -154,10 +154,10 @@ gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
       SetUnhandledExceptionFilter (g_prevExceptionFilter);
 
       /* Now process the exception. */
-      gimp_fatal_error ("unhandled exception");
+      ligma_fatal_error ("unhandled exception");
     }
 
-  if (g_prevExceptionFilter && g_prevExceptionFilter != gimp_sigfatal_handler)
+  if (g_prevExceptionFilter && g_prevExceptionFilter != ligma_sigfatal_handler)
     return g_prevExceptionFilter (pExceptionInfo);
   else
     return EXCEPTION_CONTINUE_SEARCH;
@@ -166,10 +166,10 @@ gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 
 #else
 
-/* gimp core signal handler for fatal signals */
+/* ligma core signal handler for fatal signals */
 
 static void
-gimp_sigfatal_handler (gint sig_num)
+ligma_sigfatal_handler (gint sig_num)
 {
   switch (sig_num)
     {
@@ -177,7 +177,7 @@ gimp_sigfatal_handler (gint sig_num)
     case SIGINT:
     case SIGQUIT:
     case SIGTERM:
-      gimp_terminate (g_strsignal (sig_num));
+      ligma_terminate (g_strsignal (sig_num));
       break;
 
     case SIGABRT:
@@ -185,7 +185,7 @@ gimp_sigfatal_handler (gint sig_num)
     case SIGSEGV:
     case SIGFPE:
     default:
-      gimp_fatal_error (g_strsignal (sig_num));
+      ligma_fatal_error (g_strsignal (sig_num));
       break;
     }
 }

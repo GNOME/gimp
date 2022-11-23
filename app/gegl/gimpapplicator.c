@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpapplicator.c
- * Copyright (C) 2012-2013 Michael Natterer <mitch@gimp.org>
+ * ligmaapplicator.c
+ * Copyright (C) 2012-2013 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,54 +22,54 @@
 
 #include <gegl.h>
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-gegl-nodes.h"
-#include "gimpapplicator.h"
+#include "ligma-gegl-nodes.h"
+#include "ligmaapplicator.h"
 
 
-static void   gimp_applicator_finalize     (GObject      *object);
-static void   gimp_applicator_set_property (GObject      *object,
+static void   ligma_applicator_finalize     (GObject      *object);
+static void   ligma_applicator_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
-static void   gimp_applicator_get_property (GObject      *object,
+static void   ligma_applicator_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpApplicator, gimp_applicator, G_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaApplicator, ligma_applicator, G_TYPE_OBJECT)
 
-#define parent_class gimp_applicator_parent_class
+#define parent_class ligma_applicator_parent_class
 
 
 static void
-gimp_applicator_class_init (GimpApplicatorClass *klass)
+ligma_applicator_class_init (LigmaApplicatorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_applicator_finalize;
-  object_class->set_property = gimp_applicator_set_property;
-  object_class->get_property = gimp_applicator_get_property;
+  object_class->finalize     = ligma_applicator_finalize;
+  object_class->set_property = ligma_applicator_set_property;
+  object_class->get_property = ligma_applicator_get_property;
 }
 
 static void
-gimp_applicator_init (GimpApplicator *applicator)
+ligma_applicator_init (LigmaApplicator *applicator)
 {
   applicator->active          = TRUE;
   applicator->opacity         = 1.0;
-  applicator->paint_mode      = GIMP_LAYER_MODE_NORMAL;
-  applicator->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-  applicator->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-  applicator->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
-  applicator->affect          = GIMP_COMPONENT_MASK_ALL;
+  applicator->paint_mode      = LIGMA_LAYER_MODE_NORMAL;
+  applicator->blend_space     = LIGMA_LAYER_COLOR_SPACE_AUTO;
+  applicator->composite_space = LIGMA_LAYER_COLOR_SPACE_AUTO;
+  applicator->composite_mode  = LIGMA_LAYER_COMPOSITE_AUTO;
+  applicator->affect          = LIGMA_COMPONENT_MASK_ALL;
 }
 
 static void
-gimp_applicator_finalize (GObject *object)
+ligma_applicator_finalize (GObject *object)
 {
-  GimpApplicator *applicator = GIMP_APPLICATOR (object);
+  LigmaApplicator *applicator = LIGMA_APPLICATOR (object);
 
   g_clear_object (&applicator->node);
 
@@ -77,7 +77,7 @@ gimp_applicator_finalize (GObject *object)
 }
 
 static void
-gimp_applicator_set_property (GObject      *object,
+ligma_applicator_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
@@ -91,7 +91,7 @@ gimp_applicator_set_property (GObject      *object,
 }
 
 static void
-gimp_applicator_get_property (GObject    *object,
+ligma_applicator_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
@@ -104,14 +104,14 @@ gimp_applicator_get_property (GObject    *object,
     }
 }
 
-GimpApplicator *
-gimp_applicator_new (GeglNode *parent)
+LigmaApplicator *
+ligma_applicator_new (GeglNode *parent)
 {
-  GimpApplicator *applicator;
+  LigmaApplicator *applicator;
 
   g_return_val_if_fail (parent == NULL || GEGL_IS_NODE (parent), NULL);
 
-  applicator = g_object_new (GIMP_TYPE_APPLICATOR, NULL);
+  applicator = g_object_new (LIGMA_TYPE_APPLICATOR, NULL);
 
   if (parent)
     applicator->node = g_object_ref (parent);
@@ -128,15 +128,15 @@ gimp_applicator_new (GeglNode *parent)
     gegl_node_get_output_proxy (applicator->node, "output");
 
   applicator->mode_node = gegl_node_new_child (applicator->node,
-                                               "operation", "gimp:normal",
+                                               "operation", "ligma:normal",
                                                NULL);
 
-  gimp_gegl_mode_node_set_mode (applicator->mode_node,
+  ligma_gegl_mode_node_set_mode (applicator->mode_node,
                                 applicator->paint_mode,
                                 applicator->blend_space,
                                 applicator->composite_space,
                                 applicator->composite_mode);
-  gimp_gegl_mode_node_set_opacity (applicator->mode_node,
+  ligma_gegl_mode_node_set_opacity (applicator->mode_node,
                                    applicator->opacity);
 
   gegl_node_connect_to (applicator->input_node, "output",
@@ -170,7 +170,7 @@ gimp_applicator_new (GeglNode *parent)
 
   applicator->affect_node =
     gegl_node_new_child (applicator->node,
-                         "operation", "gimp:mask-components",
+                         "operation", "ligma:mask-components",
                          "mask",      applicator->affect,
                          NULL);
 
@@ -204,10 +204,10 @@ gimp_applicator_new (GeglNode *parent)
 }
 
 void
-gimp_applicator_set_active (GimpApplicator *applicator,
+ligma_applicator_set_active (LigmaApplicator *applicator,
                             gboolean        active)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (active != applicator->active)
     {
@@ -221,10 +221,10 @@ gimp_applicator_set_active (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_src_buffer (GimpApplicator *applicator,
+ligma_applicator_set_src_buffer (LigmaApplicator *applicator,
                                 GeglBuffer     *src_buffer)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
   g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
 
   if (src_buffer == applicator->src_buffer)
@@ -263,10 +263,10 @@ gimp_applicator_set_src_buffer (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
+ligma_applicator_set_dest_buffer (LigmaApplicator *applicator,
                                  GeglBuffer     *dest_buffer)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
   g_return_if_fail (dest_buffer == NULL || GEGL_IS_BUFFER (dest_buffer));
 
   if (dest_buffer == applicator->dest_buffer)
@@ -305,10 +305,10 @@ gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_mask_buffer (GimpApplicator *applicator,
+ligma_applicator_set_mask_buffer (LigmaApplicator *applicator,
                                  GeglBuffer     *mask_buffer)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
   g_return_if_fail (mask_buffer == NULL || GEGL_IS_BUFFER (mask_buffer));
 
   if (applicator->mask_buffer == mask_buffer)
@@ -332,11 +332,11 @@ gimp_applicator_set_mask_buffer (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_mask_offset (GimpApplicator *applicator,
+ligma_applicator_set_mask_offset (LigmaApplicator *applicator,
                                  gint            mask_offset_x,
                                  gint            mask_offset_y)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->mask_offset_x != mask_offset_x ||
       applicator->mask_offset_y != mask_offset_y)
@@ -352,10 +352,10 @@ gimp_applicator_set_mask_offset (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
+ligma_applicator_set_apply_buffer (LigmaApplicator *applicator,
                                   GeglBuffer     *apply_buffer)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
   g_return_if_fail (apply_buffer == NULL || GEGL_IS_BUFFER (apply_buffer));
 
   if (apply_buffer == applicator->apply_buffer)
@@ -394,11 +394,11 @@ gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_apply_offset (GimpApplicator *applicator,
+ligma_applicator_set_apply_offset (LigmaApplicator *applicator,
                                   gint            apply_offset_x,
                                   gint            apply_offset_y)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->apply_offset_x != apply_offset_x ||
       applicator->apply_offset_y != apply_offset_y)
@@ -414,28 +414,28 @@ gimp_applicator_set_apply_offset (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_opacity (GimpApplicator *applicator,
+ligma_applicator_set_opacity (LigmaApplicator *applicator,
                              gdouble         opacity)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->opacity != opacity)
     {
       applicator->opacity = opacity;
 
-      gimp_gegl_mode_node_set_opacity (applicator->mode_node,
+      ligma_gegl_mode_node_set_opacity (applicator->mode_node,
                                        opacity);
     }
 }
 
 void
-gimp_applicator_set_mode (GimpApplicator         *applicator,
-                          GimpLayerMode           paint_mode,
-                          GimpLayerColorSpace     blend_space,
-                          GimpLayerColorSpace     composite_space,
-                          GimpLayerCompositeMode  composite_mode)
+ligma_applicator_set_mode (LigmaApplicator         *applicator,
+                          LigmaLayerMode           paint_mode,
+                          LigmaLayerColorSpace     blend_space,
+                          LigmaLayerColorSpace     composite_space,
+                          LigmaLayerCompositeMode  composite_mode)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->paint_mode      != paint_mode      ||
       applicator->blend_space     != blend_space     ||
@@ -447,17 +447,17 @@ gimp_applicator_set_mode (GimpApplicator         *applicator,
       applicator->composite_space = composite_space;
       applicator->composite_mode  = composite_mode;
 
-      gimp_gegl_mode_node_set_mode (applicator->mode_node,
+      ligma_gegl_mode_node_set_mode (applicator->mode_node,
                                     paint_mode, blend_space,
                                     composite_space, composite_mode);
     }
 }
 
 void
-gimp_applicator_set_affect (GimpApplicator    *applicator,
-                            GimpComponentMask  affect)
+ligma_applicator_set_affect (LigmaApplicator    *applicator,
+                            LigmaComponentMask  affect)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->affect != affect)
     {
@@ -470,10 +470,10 @@ gimp_applicator_set_affect (GimpApplicator    *applicator,
 }
 
 void
-gimp_applicator_set_output_format (GimpApplicator *applicator,
+ligma_applicator_set_output_format (LigmaApplicator *applicator,
                                    const Babl     *format)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->output_format != format)
     {
@@ -505,18 +505,18 @@ gimp_applicator_set_output_format (GimpApplicator *applicator,
 }
 
 const Babl *
-gimp_applicator_get_output_format (GimpApplicator *applicator)
+ligma_applicator_get_output_format (LigmaApplicator *applicator)
 {
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+  g_return_val_if_fail (LIGMA_IS_APPLICATOR (applicator), NULL);
 
   return applicator->output_format;
 }
 
 void
-gimp_applicator_set_cache (GimpApplicator *applicator,
+ligma_applicator_set_cache (LigmaApplicator *applicator,
                            gboolean        enable)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->cache_enabled != enable)
     {
@@ -538,9 +538,9 @@ gimp_applicator_set_cache (GimpApplicator *applicator,
 }
 
 gboolean
-gimp_applicator_get_cache (GimpApplicator *applicator)
+ligma_applicator_get_cache (LigmaApplicator *applicator)
 {
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), FALSE);
+  g_return_val_if_fail (LIGMA_IS_APPLICATOR (applicator), FALSE);
 
   return applicator->cache_enabled;
 }
@@ -550,11 +550,11 @@ gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
                                             gint           *n_rectangles);
 
 GeglBuffer *
-gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
+ligma_applicator_get_cache_buffer (LigmaApplicator  *applicator,
                                   GeglRectangle  **rectangles,
                                   gint            *n_rectangles)
 {
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+  g_return_val_if_fail (LIGMA_IS_APPLICATOR (applicator), NULL);
   g_return_val_if_fail (rectangles != NULL, NULL);
   g_return_val_if_fail (n_rectangles != NULL, NULL);
 
@@ -582,10 +582,10 @@ gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
 }
 
 void
-gimp_applicator_set_crop (GimpApplicator      *applicator,
+ligma_applicator_set_crop (LigmaApplicator      *applicator,
                           const GeglRectangle *rect)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   if (applicator->crop_enabled != (rect != NULL) ||
       (rect && ! gegl_rectangle_equal (&applicator->crop_rect, rect)))
@@ -595,7 +595,7 @@ gimp_applicator_set_crop (GimpApplicator      *applicator,
           if (! applicator->crop_enabled)
             {
               gegl_node_set (applicator->crop_node,
-                             "operation", "gimp:compose-crop",
+                             "operation", "ligma:compose-crop",
                              "x",         rect->x,
                              "y",         rect->y,
                              "width",     rect->width,
@@ -631,9 +631,9 @@ gimp_applicator_set_crop (GimpApplicator      *applicator,
 }
 
 const GeglRectangle *
-gimp_applicator_get_crop (GimpApplicator *applicator)
+ligma_applicator_get_crop (LigmaApplicator *applicator)
 {
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+  g_return_val_if_fail (LIGMA_IS_APPLICATOR (applicator), NULL);
 
   if (applicator->crop_enabled)
     return &applicator->crop_rect;
@@ -642,10 +642,10 @@ gimp_applicator_get_crop (GimpApplicator *applicator)
 }
 
 void
-gimp_applicator_blit (GimpApplicator      *applicator,
+ligma_applicator_blit (LigmaApplicator      *applicator,
                       const GeglRectangle *rect)
 {
-  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+  g_return_if_fail (LIGMA_IS_APPLICATOR (applicator));
 
   gegl_node_blit (applicator->dest_node, 1.0, rect,
                   NULL, NULL, 0, GEGL_BLIT_DEFAULT);

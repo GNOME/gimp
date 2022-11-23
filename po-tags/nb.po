@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.8.5\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.8.5\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-05-27 22:22+0200\n"
 "PO-Revision-Date: 2013-05-27 22:43+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "rund"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "uklar"

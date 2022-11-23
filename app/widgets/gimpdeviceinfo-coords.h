@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_INFO_COORDS_H__
-#define __GIMP_DEVICE_INFO_COORDS_H__
+#ifndef __LIGMA_DEVICE_INFO_COORDS_H__
+#define __LIGMA_DEVICE_INFO_COORDS_H__
 
 
-gboolean gimp_device_info_get_event_coords   (GimpDeviceInfo  *info,
+gboolean ligma_device_info_get_event_coords   (LigmaDeviceInfo  *info,
                                               GdkWindow       *window,
                                               const GdkEvent  *event,
-                                              GimpCoords      *coords);
-void     gimp_device_info_get_device_coords  (GimpDeviceInfo  *info,
+                                              LigmaCoords      *coords);
+void     ligma_device_info_get_device_coords  (LigmaDeviceInfo  *info,
                                               GdkWindow       *window,
-                                              GimpCoords      *coords);
+                                              LigmaCoords      *coords);
 
-void     gimp_device_info_get_time_coords    (GimpDeviceInfo  *info,
+void     ligma_device_info_get_time_coords    (LigmaDeviceInfo  *info,
                                               GdkTimeCoord    *event,
-                                              GimpCoords      *coords);
+                                              LigmaCoords      *coords);
 
-gboolean gimp_device_info_get_event_state    (GimpDeviceInfo  *info,
+gboolean ligma_device_info_get_event_state    (LigmaDeviceInfo  *info,
                                               GdkWindow       *window,
                                               const GdkEvent  *event,
                                               GdkModifierType *state);
-void     gimp_device_info_get_device_state   (GimpDeviceInfo  *info,
+void     ligma_device_info_get_device_state   (LigmaDeviceInfo  *info,
                                               GdkWindow       *window,
                                               GdkModifierType *state);
 
 
-#endif /* __GIMP_DEVICE_INFO_COORDS_H__ */
+#endif /* __LIGMA_DEVICE_INFO_COORDS_H__ */

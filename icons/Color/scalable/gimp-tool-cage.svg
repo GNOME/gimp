@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-cage.svg"
+   sodipodi:docname="ligma-tool-cage.svg"
    inkscape:export-filename="/a/home/cc/students/cs/barakitk/Documents/Cage_16_Blue.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
@@ -158,7 +158,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Cage Transform Icon for GIMP - 16X16px</dc:title>
+        <dc:title>Cage Transform Icon for LIGMA - 16X16px</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Barak Itkin &lt;lightningismyname@gmail.com&gt;</dc:title>

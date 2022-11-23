@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,199 +20,199 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdata.h"
-#include "core/gimpdatafactory.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadata.h"
+#include "core/ligmadatafactory.h"
 
 #include "file/file-open.h"
 
-#include "widgets/gimpclipboard.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdataeditor.h"
-#include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaclipboard.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmadataeditor.h"
+#include "widgets/ligmadatafactoryview.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "dialogs/data-delete-dialog.h"
 
 #include "actions.h"
 #include "data-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-data_open_as_image_cmd_callback (GimpAction *action,
+data_open_as_image_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
   context =
-    gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+    ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_get_file (data))
+  if (data && ligma_data_get_file (data))
     {
-      GFile             *file   = gimp_data_get_file (data);
+      GFile             *file   = ligma_data_get_file (data);
       GtkWidget         *widget = GTK_WIDGET (view);
-      GimpImage         *image;
-      GimpPDBStatusType  status;
+      LigmaImage         *image;
+      LigmaPDBStatusType  status;
       GError            *error = NULL;
 
-      image = file_open_with_display (context->gimp, context, NULL,
+      image = file_open_with_display (context->ligma, context, NULL,
                                       file, FALSE,
-                                      G_OBJECT (gimp_widget_get_monitor (widget)),
+                                      G_OBJECT (ligma_widget_get_monitor (widget)),
                                       &status, &error);
 
-      if (! image && status != GIMP_PDB_CANCEL)
+      if (! image && status != LIGMA_PDB_CANCEL)
         {
-          gimp_message (context->gimp, G_OBJECT (view),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (context->ligma, G_OBJECT (view),
+                        LIGMA_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        gimp_file_get_utf8_name (file), error->message);
+                        ligma_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
     }
 }
 
 void
-data_new_cmd_callback (GimpAction *action,
+data_new_cmd_callback (LigmaAction *action,
                        GVariant   *value,
                        gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
 
-  if (gimp_data_factory_view_has_data_new_func (view))
+  if (ligma_data_factory_view_has_data_new_func (view))
     {
-      GimpDataFactory *factory;
-      GimpContext     *context;
-      GimpData        *data;
+      LigmaDataFactory *factory;
+      LigmaContext     *context;
+      LigmaData        *data;
 
-      factory = gimp_data_factory_view_get_data_factory (view);
+      factory = ligma_data_factory_view_get_data_factory (view);
 
       context =
-        gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+        ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-      data = gimp_data_factory_data_new (factory, context, _("Untitled"));
+      data = ligma_data_factory_data_new (factory, context, _("Untitled"));
 
       if (data)
         {
-          gimp_context_set_by_type (context,
-                                    gimp_data_factory_view_get_children_type (view),
-                                    GIMP_OBJECT (data));
+          ligma_context_set_by_type (context,
+                                    ligma_data_factory_view_get_children_type (view),
+                                    LIGMA_OBJECT (data));
 
-          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
+          gtk_button_clicked (GTK_BUTTON (ligma_data_factory_view_get_edit_button (view)));
         }
     }
 }
 
 void
-data_duplicate_cmd_callback (GimpAction *action,
+data_duplicate_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context = ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
+  if (data && ligma_data_factory_view_have (view, LIGMA_OBJECT (data)))
     {
-      GimpData *new_data;
+      LigmaData *new_data;
 
-      new_data = gimp_data_factory_data_duplicate (gimp_data_factory_view_get_data_factory (view), data);
+      new_data = ligma_data_factory_data_duplicate (ligma_data_factory_view_get_data_factory (view), data);
 
       if (new_data)
         {
-          gimp_context_set_by_type (context,
-                                    gimp_data_factory_view_get_children_type (view),
-                                    GIMP_OBJECT (new_data));
+          ligma_context_set_by_type (context,
+                                    ligma_data_factory_view_get_children_type (view),
+                                    LIGMA_OBJECT (new_data));
 
-          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
+          gtk_button_clicked (GTK_BUTTON (ligma_data_factory_view_get_edit_button (view)));
         }
     }
 }
 
 void
-data_copy_location_cmd_callback (GimpAction *action,
+data_copy_location_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context = ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
   if (data)
     {
-      GFile *file = gimp_data_get_file (data);
+      GFile *file = ligma_data_get_file (data);
 
       if (file)
         {
           gchar *uri = g_file_get_uri (file);
 
-          gimp_clipboard_set_text (context->gimp, uri);
+          ligma_clipboard_set_text (context->ligma, uri);
           g_free (uri);
         }
     }
 }
 
 void
-data_show_in_file_manager_cmd_callback (GimpAction *action,
+data_show_in_file_manager_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context = ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
   if (data)
     {
-      GFile *file = gimp_data_get_file (data);
+      GFile *file = ligma_data_get_file (data);
 
       if (file)
         {
           GError *error = NULL;
 
-          if (! gimp_file_show_in_file_manager (file, &error))
+          if (! ligma_file_show_in_file_manager (file, &error))
             {
-              gimp_message (context->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_ERROR,
+              ligma_message (context->ligma, G_OBJECT (view),
+                            LIGMA_MESSAGE_ERROR,
                             _("Can't show file in file manager: %s"),
                             error->message);
               g_clear_error (&error);
@@ -222,29 +222,29 @@ data_show_in_file_manager_cmd_callback (GimpAction *action,
 }
 
 void
-data_delete_cmd_callback (GimpAction *action,
+data_delete_cmd_callback (LigmaAction *action,
                           GVariant   *value,
                           gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
   context =
-    gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+    ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
   if (data                          &&
-      gimp_data_is_deletable (data) &&
-      gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
+      ligma_data_is_deletable (data) &&
+      ligma_data_factory_view_have (view, LIGMA_OBJECT (data)))
     {
-      GimpDataFactory *factory;
+      LigmaDataFactory *factory;
       GtkWidget       *dialog;
 
-      factory = gimp_data_factory_view_get_data_factory (view);
+      factory = ligma_data_factory_view_get_data_factory (view);
 
       dialog = data_delete_dialog_new (factory, data, context,
                                        GTK_WIDGET (view));
@@ -253,49 +253,49 @@ data_delete_cmd_callback (GimpAction *action,
 }
 
 void
-data_refresh_cmd_callback (GimpAction *action,
+data_refresh_cmd_callback (LigmaAction *action,
                            GVariant   *value,
                            gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  Gimp                *gimp;
-  return_if_no_gimp (gimp, user_data);
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  Ligma                *ligma;
+  return_if_no_ligma (ligma, user_data);
 
-  gimp_set_busy (gimp);
-  gimp_data_factory_data_refresh (gimp_data_factory_view_get_data_factory (view),
+  ligma_set_busy (ligma);
+  ligma_data_factory_data_refresh (ligma_data_factory_view_get_data_factory (view),
                                   action_data_get_context (user_data));
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 }
 
 void
-data_edit_cmd_callback (GimpAction *action,
+data_edit_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
+  LigmaDataFactoryView *view = LIGMA_DATA_FACTORY_VIEW (user_data);
+  LigmaContext         *context;
+  LigmaData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context = ligma_container_view_get_context (LIGMA_CONTAINER_EDITOR (view)->view);
 
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-                              gimp_data_factory_view_get_children_type (view));
+  data = (LigmaData *)
+    ligma_context_get_by_type (context,
+                              ligma_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
+  if (data && ligma_data_factory_view_have (view, LIGMA_OBJECT (data)))
     {
-      GdkMonitor *monitor = gimp_widget_get_monitor (GTK_WIDGET (view));
+      GdkMonitor *monitor = ligma_widget_get_monitor (GTK_WIDGET (view));
       GtkWidget  *dockable;
 
       dockable =
-        gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
-                                                   context->gimp,
-                                                   gimp_dialog_factory_get_singleton (),
+        ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (context->ligma)),
+                                                   context->ligma,
+                                                   ligma_dialog_factory_get_singleton (),
                                                    monitor,
                                                    g_variant_get_string (value,
                                                                          NULL));
 
-      gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
+      ligma_data_editor_set_data (LIGMA_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                                  data);
     }
 }

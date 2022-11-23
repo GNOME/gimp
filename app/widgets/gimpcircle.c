@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcircle.c
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmacircle.c
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * Based on code from the color-rotate plug-in
  * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
@@ -27,14 +27,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpcircle.h"
+#include "ligmacircle.h"
 
 
 enum
@@ -46,11 +46,11 @@ enum
 };
 
 
-struct _GimpCirclePrivate
+struct _LigmaCirclePrivate
 {
   gint                  size;
   gint                  border_width;
-  GimpCircleBackground  background;
+  LigmaCircleBackground  background;
 
   GdkWindow            *event_window;
   cairo_surface_t      *surface;
@@ -59,108 +59,108 @@ struct _GimpCirclePrivate
 };
 
 
-static void        gimp_circle_dispose              (GObject              *object);
-static void        gimp_circle_set_property         (GObject              *object,
+static void        ligma_circle_dispose              (GObject              *object);
+static void        ligma_circle_set_property         (GObject              *object,
                                                      guint                 property_id,
                                                      const GValue         *value,
                                                      GParamSpec           *pspec);
-static void        gimp_circle_get_property         (GObject              *object,
+static void        ligma_circle_get_property         (GObject              *object,
                                                      guint                 property_id,
                                                      GValue               *value,
                                                      GParamSpec           *pspec);
 
-static void        gimp_circle_realize              (GtkWidget            *widget);
-static void        gimp_circle_unrealize            (GtkWidget            *widget);
-static void        gimp_circle_map                  (GtkWidget            *widget);
-static void        gimp_circle_unmap                (GtkWidget            *widget);
-static void        gimp_circle_get_preferred_width  (GtkWidget            *widget,
+static void        ligma_circle_realize              (GtkWidget            *widget);
+static void        ligma_circle_unrealize            (GtkWidget            *widget);
+static void        ligma_circle_map                  (GtkWidget            *widget);
+static void        ligma_circle_unmap                (GtkWidget            *widget);
+static void        ligma_circle_get_preferred_width  (GtkWidget            *widget,
                                                      gint                 *minimum_width,
                                                      gint                 *natural_width);
-static void        gimp_circle_get_preferred_height (GtkWidget            *widget,
+static void        ligma_circle_get_preferred_height (GtkWidget            *widget,
                                                      gint                 *minimum_height,
                                                      gint                 *natural_height);
-static void        gimp_circle_size_allocate        (GtkWidget            *widget,
+static void        ligma_circle_size_allocate        (GtkWidget            *widget,
                                                      GtkAllocation        *allocation);
-static gboolean    gimp_circle_draw                 (GtkWidget            *widget,
+static gboolean    ligma_circle_draw                 (GtkWidget            *widget,
                                                      cairo_t              *cr);
-static gboolean    gimp_circle_button_press_event   (GtkWidget            *widget,
+static gboolean    ligma_circle_button_press_event   (GtkWidget            *widget,
                                                      GdkEventButton       *bevent);
-static gboolean    gimp_circle_button_release_event (GtkWidget            *widget,
+static gboolean    ligma_circle_button_release_event (GtkWidget            *widget,
                                                      GdkEventButton       *bevent);
-static gboolean    gimp_circle_enter_notify_event   (GtkWidget            *widget,
+static gboolean    ligma_circle_enter_notify_event   (GtkWidget            *widget,
                                                      GdkEventCrossing     *event);
-static gboolean    gimp_circle_leave_notify_event   (GtkWidget            *widget,
+static gboolean    ligma_circle_leave_notify_event   (GtkWidget            *widget,
                                                      GdkEventCrossing     *event);
 
-static void        gimp_circle_real_reset_target    (GimpCircle           *circle);
+static void        ligma_circle_real_reset_target    (LigmaCircle           *circle);
 
-static void        gimp_circle_background_hsv       (gdouble               angle,
+static void        ligma_circle_background_hsv       (gdouble               angle,
                                                      gdouble               distance,
                                                      guchar               *rgb);
 
-static void        gimp_circle_draw_background      (GimpCircle           *circle,
+static void        ligma_circle_draw_background      (LigmaCircle           *circle,
                                                      cairo_t              *cr,
                                                      gint                  size,
-                                                     GimpCircleBackground  background);
+                                                     LigmaCircleBackground  background);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCircle, gimp_circle, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCircle, ligma_circle, GTK_TYPE_WIDGET)
 
-#define parent_class gimp_circle_parent_class
+#define parent_class ligma_circle_parent_class
 
 
 static void
-gimp_circle_class_init (GimpCircleClass *klass)
+ligma_circle_class_init (LigmaCircleClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose              = gimp_circle_dispose;
-  object_class->get_property         = gimp_circle_get_property;
-  object_class->set_property         = gimp_circle_set_property;
+  object_class->dispose              = ligma_circle_dispose;
+  object_class->get_property         = ligma_circle_get_property;
+  object_class->set_property         = ligma_circle_set_property;
 
-  widget_class->realize              = gimp_circle_realize;
-  widget_class->unrealize            = gimp_circle_unrealize;
-  widget_class->map                  = gimp_circle_map;
-  widget_class->unmap                = gimp_circle_unmap;
-  widget_class->get_preferred_width  = gimp_circle_get_preferred_width;
-  widget_class->get_preferred_height = gimp_circle_get_preferred_height;
-  widget_class->size_allocate        = gimp_circle_size_allocate;
-  widget_class->draw                 = gimp_circle_draw;
-  widget_class->button_press_event   = gimp_circle_button_press_event;
-  widget_class->button_release_event = gimp_circle_button_release_event;
-  widget_class->enter_notify_event   = gimp_circle_enter_notify_event;
-  widget_class->leave_notify_event   = gimp_circle_leave_notify_event;
+  widget_class->realize              = ligma_circle_realize;
+  widget_class->unrealize            = ligma_circle_unrealize;
+  widget_class->map                  = ligma_circle_map;
+  widget_class->unmap                = ligma_circle_unmap;
+  widget_class->get_preferred_width  = ligma_circle_get_preferred_width;
+  widget_class->get_preferred_height = ligma_circle_get_preferred_height;
+  widget_class->size_allocate        = ligma_circle_size_allocate;
+  widget_class->draw                 = ligma_circle_draw;
+  widget_class->button_press_event   = ligma_circle_button_press_event;
+  widget_class->button_release_event = ligma_circle_button_release_event;
+  widget_class->enter_notify_event   = ligma_circle_enter_notify_event;
+  widget_class->leave_notify_event   = ligma_circle_leave_notify_event;
 
-  klass->reset_target                = gimp_circle_real_reset_target;
+  klass->reset_target                = ligma_circle_real_reset_target;
 
   g_object_class_install_property (object_class, PROP_SIZE,
                                    g_param_spec_int ("size",
                                                      NULL, NULL,
                                                      32, 1024, 96,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BORDER_WIDTH,
                                    g_param_spec_int ("border-width",
                                                      NULL, NULL,
                                                      0, 64, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BACKGROUND,
                                    g_param_spec_enum ("background",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_CIRCLE_BACKGROUND,
-                                                      GIMP_CIRCLE_BACKGROUND_HSV,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_CIRCLE_BACKGROUND,
+                                                      LIGMA_CIRCLE_BACKGROUND_HSV,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_circle_init (GimpCircle *circle)
+ligma_circle_init (LigmaCircle *circle)
 {
-  circle->priv = gimp_circle_get_instance_private (circle);
+  circle->priv = ligma_circle_get_instance_private (circle);
 
   gtk_widget_set_has_window (GTK_WIDGET (circle), FALSE);
   gtk_widget_add_events (GTK_WIDGET (circle),
@@ -173,9 +173,9 @@ gimp_circle_init (GimpCircle *circle)
 }
 
 static void
-gimp_circle_dispose (GObject *object)
+ligma_circle_dispose (GObject *object)
 {
-  GimpCircle *circle = GIMP_CIRCLE (object);
+  LigmaCircle *circle = LIGMA_CIRCLE (object);
 
   g_clear_pointer (&circle->priv->surface, cairo_surface_destroy);
 
@@ -183,12 +183,12 @@ gimp_circle_dispose (GObject *object)
 }
 
 static void
-gimp_circle_set_property (GObject      *object,
+ligma_circle_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpCircle *circle = GIMP_CIRCLE (object);
+  LigmaCircle *circle = LIGMA_CIRCLE (object);
 
   switch (property_id)
     {
@@ -215,12 +215,12 @@ gimp_circle_set_property (GObject      *object,
 }
 
 static void
-gimp_circle_get_property (GObject    *object,
+ligma_circle_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpCircle *circle = GIMP_CIRCLE (object);
+  LigmaCircle *circle = LIGMA_CIRCLE (object);
 
   switch (property_id)
     {
@@ -243,9 +243,9 @@ gimp_circle_get_property (GObject    *object,
 }
 
 static void
-gimp_circle_realize (GtkWidget *widget)
+ligma_circle_realize (GtkWidget *widget)
 {
-  GimpCircle    *circle = GIMP_CIRCLE (widget);
+  LigmaCircle    *circle = LIGMA_CIRCLE (widget);
   GtkAllocation  allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
@@ -270,9 +270,9 @@ gimp_circle_realize (GtkWidget *widget)
 }
 
 static void
-gimp_circle_unrealize (GtkWidget *widget)
+ligma_circle_unrealize (GtkWidget *widget)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   if (circle->priv->event_window)
     {
@@ -285,9 +285,9 @@ gimp_circle_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_circle_map (GtkWidget *widget)
+ligma_circle_map (GtkWidget *widget)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -296,9 +296,9 @@ gimp_circle_map (GtkWidget *widget)
 }
 
 static void
-gimp_circle_unmap (GtkWidget *widget)
+ligma_circle_unmap (GtkWidget *widget)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   if (circle->priv->has_grab)
     {
@@ -313,30 +313,30 @@ gimp_circle_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_circle_get_preferred_width (GtkWidget *widget,
+ligma_circle_get_preferred_width (GtkWidget *widget,
                                  gint      *minimum_width,
                                  gint      *natural_width)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   *minimum_width = *natural_width = 2 * circle->priv->border_width + circle->priv->size;
 }
 
 static void
-gimp_circle_get_preferred_height (GtkWidget *widget,
+ligma_circle_get_preferred_height (GtkWidget *widget,
                                   gint      *minimum_height,
                                   gint      *natural_height)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   *minimum_height = *natural_height = 2 * circle->priv->border_width + circle->priv->size;
 }
 
 static void
-gimp_circle_size_allocate (GtkWidget     *widget,
+ligma_circle_size_allocate (GtkWidget     *widget,
                            GtkAllocation *allocation)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
@@ -351,10 +351,10 @@ gimp_circle_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_circle_draw (GtkWidget *widget,
+ligma_circle_draw (GtkWidget *widget,
                   cairo_t   *cr)
 {
-  GimpCircle    *circle = GIMP_CIRCLE (widget);
+  LigmaCircle    *circle = LIGMA_CIRCLE (widget);
   GtkAllocation  allocation;
   gint           size = circle->priv->size;
 
@@ -366,7 +366,7 @@ gimp_circle_draw (GtkWidget *widget,
                    (allocation.width  - size) / 2,
                    (allocation.height - size) / 2);
 
-  gimp_circle_draw_background (circle, cr, size, circle->priv->background);
+  ligma_circle_draw_background (circle, cr, size, circle->priv->background);
 
   cairo_restore (cr);
 
@@ -374,10 +374,10 @@ gimp_circle_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_circle_button_press_event (GtkWidget      *widget,
+ligma_circle_button_press_event (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   if (bevent->type == GDK_BUTTON_PRESS &&
       bevent->button == 1)
@@ -390,10 +390,10 @@ gimp_circle_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_circle_button_release_event (GtkWidget      *widget,
+ligma_circle_button_release_event (GtkWidget      *widget,
                                   GdkEventButton *bevent)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   if (bevent->button == 1)
     {
@@ -401,17 +401,17 @@ gimp_circle_button_release_event (GtkWidget      *widget,
       circle->priv->has_grab = FALSE;
 
       if (! circle->priv->in_widget)
-        GIMP_CIRCLE_GET_CLASS (circle)->reset_target (circle);
+        LIGMA_CIRCLE_GET_CLASS (circle)->reset_target (circle);
     }
 
   return FALSE;
 }
 
 static gboolean
-gimp_circle_enter_notify_event (GtkWidget        *widget,
+ligma_circle_enter_notify_event (GtkWidget        *widget,
                                 GdkEventCrossing *event)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   circle->priv->in_widget = TRUE;
 
@@ -419,21 +419,21 @@ gimp_circle_enter_notify_event (GtkWidget        *widget,
 }
 
 static gboolean
-gimp_circle_leave_notify_event (GtkWidget        *widget,
+ligma_circle_leave_notify_event (GtkWidget        *widget,
                                 GdkEventCrossing *event)
 {
-  GimpCircle *circle = GIMP_CIRCLE (widget);
+  LigmaCircle *circle = LIGMA_CIRCLE (widget);
 
   circle->priv->in_widget = FALSE;
 
   if (! circle->priv->has_grab)
-    GIMP_CIRCLE_GET_CLASS (circle)->reset_target (circle);
+    LIGMA_CIRCLE_GET_CLASS (circle)->reset_target (circle);
 
   return FALSE;
 }
 
 static void
-gimp_circle_real_reset_target (GimpCircle *circle)
+ligma_circle_real_reset_target (LigmaCircle *circle)
 {
 }
 
@@ -441,9 +441,9 @@ gimp_circle_real_reset_target (GimpCircle *circle)
 /*  public functions  */
 
 GtkWidget *
-gimp_circle_new (void)
+ligma_circle_new (void)
 {
-  return g_object_new (GIMP_TYPE_CIRCLE, NULL);
+  return g_object_new (LIGMA_TYPE_CIRCLE, NULL);
 }
 
 
@@ -471,15 +471,15 @@ get_angle_and_distance (gdouble  center_x,
 }
 
 gboolean
-_gimp_circle_has_grab (GimpCircle *circle)
+_ligma_circle_has_grab (LigmaCircle *circle)
 {
-  g_return_val_if_fail (GIMP_IS_CIRCLE (circle), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CIRCLE (circle), FALSE);
 
   return circle->priv->has_grab;
 }
 
 gdouble
-_gimp_circle_get_angle_and_distance (GimpCircle *circle,
+_ligma_circle_get_angle_and_distance (LigmaCircle *circle,
                                      gdouble     event_x,
                                      gdouble     event_y,
                                      gdouble    *distance)
@@ -488,7 +488,7 @@ _gimp_circle_get_angle_and_distance (GimpCircle *circle,
   gdouble       center_x;
   gdouble       center_y;
 
-  g_return_val_if_fail (GIMP_IS_CIRCLE (circle), 0.0);
+  g_return_val_if_fail (LIGMA_IS_CIRCLE (circle), 0.0);
 
   gtk_widget_get_allocation (GTK_WIDGET (circle), &allocation);
 
@@ -504,32 +504,32 @@ _gimp_circle_get_angle_and_distance (GimpCircle *circle,
 /*  private functions  */
 
 static void
-gimp_circle_background_hsv (gdouble  angle,
+ligma_circle_background_hsv (gdouble  angle,
                             gdouble  distance,
                             guchar  *rgb)
 {
-  GimpHSV hsv;
-  GimpRGB color;
+  LigmaHSV hsv;
+  LigmaRGB color;
 
-  gimp_hsv_set (&hsv,
+  ligma_hsv_set (&hsv,
                 angle / (2.0 * G_PI),
                 distance,
                 1 - sqrt (distance) / 4 /* it just looks nicer this way */);
 
-  gimp_hsv_to_rgb (&hsv, &color);
+  ligma_hsv_to_rgb (&hsv, &color);
 
-  gimp_rgb_get_uchar (&color, rgb, rgb + 1, rgb + 2);
+  ligma_rgb_get_uchar (&color, rgb, rgb + 1, rgb + 2);
 }
 
 static void
-gimp_circle_draw_background (GimpCircle           *circle,
+ligma_circle_draw_background (LigmaCircle           *circle,
                              cairo_t              *cr,
                              gint                  size,
-                             GimpCircleBackground  background)
+                             LigmaCircleBackground  background)
 {
   cairo_save (cr);
 
-  if (background == GIMP_CIRCLE_BACKGROUND_PLAIN)
+  if (background == LIGMA_CIRCLE_BACKGROUND_PLAIN)
     {
       cairo_arc (cr, size / 2.0, size / 2.0, size / 2.0 - 1.5, 0.0, 2 * G_PI);
 
@@ -570,15 +570,15 @@ gimp_circle_draw_background (GimpCircle           *circle,
 
                   switch (background)
                     {
-                    case GIMP_CIRCLE_BACKGROUND_HSV:
-                      gimp_circle_background_hsv (angle, distance, rgb);
+                    case LIGMA_CIRCLE_BACKGROUND_HSV:
+                      ligma_circle_background_hsv (angle, distance, rgb);
                       break;
 
                     default:
                       break;
                     }
 
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
+                  LIGMA_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
                                                rgb[0], rgb[1], rgb[2], 255);
                 }
             }

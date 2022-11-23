@@ -1,63 +1,63 @@
 
-libgimpcolor_sources = files(
-  'gimpadaptivesupersample.c',
-  'gimpbilinear.c',
-  'gimpcairo.c',
-  'gimpcmyk.c',
-  'gimpcolormanaged.c',
-  'gimpcolorprofile.c',
-  'gimpcolorspace.c',
-  'gimpcolortransform.c',
-  'gimphsl.c',
-  'gimphsv.c',
-  'gimppixbuf.c',
-  'gimprgb-parse.c',
-  'gimprgb.c',
+libligmacolor_sources = files(
+  'ligmaadaptivesupersample.c',
+  'ligmabilinear.c',
+  'ligmacairo.c',
+  'ligmacmyk.c',
+  'ligmacolormanaged.c',
+  'ligmacolorprofile.c',
+  'ligmacolorspace.c',
+  'ligmacolortransform.c',
+  'ligmahsl.c',
+  'ligmahsv.c',
+  'ligmapixbuf.c',
+  'ligmargb-parse.c',
+  'ligmargb.c',
 )
 
-libgimpcolor_headers_introspectable = files(
-  'gimpcolortypes.h',
-  'gimpadaptivesupersample.h',
-  'gimpbilinear.h',
-  'gimpcairo.h',
-  'gimpcmyk.h',
-  'gimpcolormanaged.h',
-  'gimpcolorprofile.h',
-  'gimpcolorspace.h',
-  'gimpcolortransform.h',
-  'gimphsl.h',
-  'gimphsv.h',
-  'gimppixbuf.h',
-  'gimprgb.h',
+libligmacolor_headers_introspectable = files(
+  'ligmacolortypes.h',
+  'ligmaadaptivesupersample.h',
+  'ligmabilinear.h',
+  'ligmacairo.h',
+  'ligmacmyk.h',
+  'ligmacolormanaged.h',
+  'ligmacolorprofile.h',
+  'ligmacolorspace.h',
+  'ligmacolortransform.h',
+  'ligmahsl.h',
+  'ligmahsv.h',
+  'ligmapixbuf.h',
+  'ligmargb.h',
 )
 
-libgimpcolor_headers = [
-  libgimpcolor_headers_introspectable,
-  'gimpcolor.h',
+libligmacolor_headers = [
+  libligmacolor_headers_introspectable,
+  'ligmacolor.h',
 ]
 
-libgimpcolor_introspectable = [
-  libgimpcolor_sources,
-  libgimpcolor_headers_introspectable,
+libligmacolor_introspectable = [
+  libligmacolor_sources,
+  libligmacolor_headers_introspectable,
 ]
 
 
-libgimpcolor = library('gimpcolor-' + gimp_api_version,
-  libgimpcolor_sources,
+libligmacolor = library('ligmacolor-' + ligma_api_version,
+  libligmacolor_sources,
   include_directories: rootInclude,
   dependencies: [
     cairo, gdk_pixbuf, gegl, lcms, math,
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpColor"', '-DGIMP_COLOR_COMPILATION', ],
-  link_with: [ libgimpbase, ],
-  vs_module_defs: 'gimpcolor.def',
+  c_args: [ '-DG_LOG_DOMAIN="LibLigmaColor"', '-DLIGMA_COLOR_COMPILATION', ],
+  link_with: [ libligmabase, ],
+  vs_module_defs: 'ligmacolor.def',
   install: true,
   version: so_version,
 )
 
 install_headers(
-  libgimpcolor_headers,
-  subdir: gimp_api_name / 'libgimpcolor',
+  libligmacolor_headers,
+  subdir: ligma_api_name / 'libligmacolor',
 )
 
 
@@ -70,7 +70,7 @@ executable('test-color-parser',
     babl,
     # glib,
   ],
-  c_args: '-DG_LOG_DOMAIN="LibGimpColor"',
-  link_with: [ libgimpbase, libgimpcolor, ],
+  c_args: '-DG_LOG_DOMAIN="LibLigmaColor"',
+  link_with: [ libligmabase, libligmacolor, ],
   install: false,
 )

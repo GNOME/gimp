@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawabletreeview.c
- * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ * ligmadrawabletreeview.c
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,172 +23,172 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawable-edit.h"
-#include "core/gimpfilloptions.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimppattern.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadrawable-edit.h"
+#include "core/ligmafilloptions.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmapattern.h"
 
-#include "gimpcontainerview.h"
-#include "gimpdnd.h"
-#include "gimpdrawabletreeview.h"
+#include "ligmacontainerview.h"
+#include "ligmadnd.h"
+#include "ligmadrawabletreeview.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface);
+static void   ligma_drawable_tree_view_view_iface_init (LigmaContainerViewInterface *iface);
 
-static void     gimp_drawable_tree_view_constructed   (GObject           *object);
+static void     ligma_drawable_tree_view_constructed   (GObject           *object);
 
-static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView *view,
+static gboolean ligma_drawable_tree_view_select_items  (LigmaContainerView *view,
                                                        GList             *items,
                                                        GList             *paths);
 
-static gboolean gimp_drawable_tree_view_drop_possible(GimpContainerTreeView *view,
-                                                      GimpDndType          src_type,
+static gboolean ligma_drawable_tree_view_drop_possible(LigmaContainerTreeView *view,
+                                                      LigmaDndType          src_type,
                                                       GList               *src_viewables,
-                                                      GimpViewable        *dest_viewable,
+                                                      LigmaViewable        *dest_viewable,
                                                       GtkTreePath         *drop_path,
                                                       GtkTreeViewDropPosition  drop_pos,
                                                       GtkTreeViewDropPosition *return_drop_pos,
                                                       GdkDragAction       *return_drag_action);
-static void   gimp_drawable_tree_view_drop_viewables (GimpContainerTreeView   *view,
+static void   ligma_drawable_tree_view_drop_viewables (LigmaContainerTreeView   *view,
                                                       GList                   *src_viewables,
-                                                      GimpViewable            *dest_viewable,
+                                                      LigmaViewable            *dest_viewable,
                                                       GtkTreeViewDropPosition  drop_pos);
-static void   gimp_drawable_tree_view_drop_color (GimpContainerTreeView *view,
-                                                  const GimpRGB       *color,
-                                                  GimpViewable        *dest_viewable,
+static void   ligma_drawable_tree_view_drop_color (LigmaContainerTreeView *view,
+                                                  const LigmaRGB       *color,
+                                                  LigmaViewable        *dest_viewable,
                                                   GtkTreeViewDropPosition  drop_pos);
 
-static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
-                                                  GimpImage            *image);
+static void   ligma_drawable_tree_view_set_image  (LigmaItemTreeView     *view,
+                                                  LigmaImage            *image);
 
-static void   gimp_drawable_tree_view_floating_selection_changed
-                                                 (GimpImage            *image,
-                                                  GimpDrawableTreeView *view);
+static void   ligma_drawable_tree_view_floating_selection_changed
+                                                 (LigmaImage            *image,
+                                                  LigmaDrawableTreeView *view);
 
-static void   gimp_drawable_tree_view_new_pattern_dropped
+static void   ligma_drawable_tree_view_new_pattern_dropped
                                                  (GtkWidget            *widget,
                                                   gint                  x,
                                                   gint                  y,
-                                                  GimpViewable         *viewable,
+                                                  LigmaViewable         *viewable,
                                                   gpointer              data);
-static void   gimp_drawable_tree_view_new_color_dropped
+static void   ligma_drawable_tree_view_new_color_dropped
                                                  (GtkWidget            *widget,
                                                   gint                  x,
                                                   gint                  y,
-                                                  const GimpRGB        *color,
+                                                  const LigmaRGB        *color,
                                                   gpointer              data);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDrawableTreeView, gimp_drawable_tree_view,
-                         GIMP_TYPE_ITEM_TREE_VIEW,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_drawable_tree_view_view_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDrawableTreeView, ligma_drawable_tree_view,
+                         LIGMA_TYPE_ITEM_TREE_VIEW,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_drawable_tree_view_view_iface_init))
 
-#define parent_class gimp_drawable_tree_view_parent_class
+#define parent_class ligma_drawable_tree_view_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static LigmaContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
-gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
+ligma_drawable_tree_view_class_init (LigmaDrawableTreeViewClass *klass)
 {
   GObjectClass               *object_class;
-  GimpContainerTreeViewClass *tree_view_class;
-  GimpItemTreeViewClass      *item_view_class;
+  LigmaContainerTreeViewClass *tree_view_class;
+  LigmaItemTreeViewClass      *item_view_class;
 
   object_class    = G_OBJECT_CLASS (klass);
-  tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
-  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  tree_view_class = LIGMA_CONTAINER_TREE_VIEW_CLASS (klass);
+  item_view_class = LIGMA_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed      = gimp_drawable_tree_view_constructed;
+  object_class->constructed      = ligma_drawable_tree_view_constructed;
 
-  tree_view_class->drop_possible  = gimp_drawable_tree_view_drop_possible;
-  tree_view_class->drop_viewables = gimp_drawable_tree_view_drop_viewables;
-  tree_view_class->drop_color     = gimp_drawable_tree_view_drop_color;
+  tree_view_class->drop_possible  = ligma_drawable_tree_view_drop_possible;
+  tree_view_class->drop_viewables = ligma_drawable_tree_view_drop_viewables;
+  tree_view_class->drop_color     = ligma_drawable_tree_view_drop_color;
 
-  item_view_class->set_image     = gimp_drawable_tree_view_set_image;
+  item_view_class->set_image     = ligma_drawable_tree_view_set_image;
 
-  item_view_class->lock_content_icon_name    = GIMP_ICON_LOCK_CONTENT;
+  item_view_class->lock_content_icon_name    = LIGMA_ICON_LOCK_CONTENT;
   item_view_class->lock_content_tooltip      = _("Lock pixels");
-  item_view_class->lock_position_icon_name   = GIMP_ICON_LOCK_POSITION;
+  item_view_class->lock_position_icon_name   = LIGMA_ICON_LOCK_POSITION;
   item_view_class->lock_position_tooltip     = _("Lock position and size");
-  item_view_class->lock_visibility_icon_name = GIMP_ICON_LOCK_VISIBILITY;
+  item_view_class->lock_visibility_icon_name = LIGMA_ICON_LOCK_VISIBILITY;
   item_view_class->lock_visibility_tooltip   = _("Lock visibility");
 }
 
 static void
-gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+ligma_drawable_tree_view_view_iface_init (LigmaContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->select_items = gimp_drawable_tree_view_select_items;
+  iface->select_items = ligma_drawable_tree_view_select_items;
 }
 
 static void
-gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
+ligma_drawable_tree_view_init (LigmaDrawableTreeView *view)
 {
 }
 
 static void
-gimp_drawable_tree_view_constructed (GObject *object)
+ligma_drawable_tree_view_constructed (GObject *object)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
-  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (object);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (object);
+  LigmaItemTreeView      *item_view = LIGMA_ITEM_TREE_VIEW (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view),
-                              GIMP_TYPE_PATTERN,
-                              gimp_drawable_tree_view_new_pattern_dropped,
+  ligma_dnd_viewable_dest_add (ligma_item_tree_view_get_new_button (item_view),
+                              LIGMA_TYPE_PATTERN,
+                              ligma_drawable_tree_view_new_pattern_dropped,
                               item_view);
-  gimp_dnd_color_dest_add (gimp_item_tree_view_get_new_button (item_view),
-                           gimp_drawable_tree_view_new_color_dropped,
+  ligma_dnd_color_dest_add (ligma_item_tree_view_get_new_button (item_view),
+                           ligma_drawable_tree_view_new_color_dropped,
                            item_view);
 
-  gimp_dnd_color_dest_add    (GTK_WIDGET (tree_view->view),
+  ligma_dnd_color_dest_add    (GTK_WIDGET (tree_view->view),
                               NULL, tree_view);
-  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
+  ligma_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), LIGMA_TYPE_PATTERN,
                               NULL, tree_view);
 }
 
 
-/*  GimpContainerView methods  */
+/*  LigmaContainerView methods  */
 
 static gboolean
-gimp_drawable_tree_view_select_items (GimpContainerView *view,
+ligma_drawable_tree_view_select_items (LigmaContainerView *view,
                                       GList             *items,
                                       GList             *paths)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
+  LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaImage        *image     = ligma_item_tree_view_get_image (item_view);
   gboolean          success   = TRUE;
 
   if (image)
     {
-      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
+      LigmaLayer *floating_sel = ligma_image_get_floating_selection (image);
 
       success = (items        == NULL ||
                  floating_sel == NULL ||
                  (g_list_length (items) == 1 &&
-                  items->data           == GIMP_VIEWABLE (floating_sel)));
+                  items->data           == LIGMA_VIEWABLE (floating_sel)));
 
       if (! success)
         {
-          Gimp        *gimp    = image->gimp;
-          GimpContext *context = gimp_get_user_context (gimp);
-          GimpDisplay *display = gimp_context_get_display (context);
+          Ligma        *ligma    = image->ligma;
+          LigmaContext *context = ligma_get_user_context (ligma);
+          LigmaDisplay *display = ligma_context_get_display (context);
 
-          gimp_message_literal (gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma, G_OBJECT (display), LIGMA_MESSAGE_WARNING,
                                 _("Cannot select items while a floating "
                                   "selection is active."));
         }
@@ -200,19 +200,19 @@ gimp_drawable_tree_view_select_items (GimpContainerView *view,
   return success;
 }
 
-/*  GimpContainerTreeView methods  */
+/*  LigmaContainerTreeView methods  */
 
 static gboolean
-gimp_drawable_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
-                                       GimpDndType              src_type,
+ligma_drawable_tree_view_drop_possible (LigmaContainerTreeView   *tree_view,
+                                       LigmaDndType              src_type,
                                        GList                   *src_viewables,
-                                       GimpViewable            *dest_viewable,
+                                       LigmaViewable            *dest_viewable,
                                        GtkTreePath             *drop_path,
                                        GtkTreeViewDropPosition  drop_pos,
                                        GtkTreeViewDropPosition *return_drop_pos,
                                        GdkDragAction           *return_drag_action)
 {
-  if (GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+  if (LIGMA_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
                                                                     src_type,
                                                                     src_viewables,
                                                                     dest_viewable,
@@ -221,12 +221,12 @@ gimp_drawable_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                                                     return_drop_pos,
                                                                     return_drag_action))
     {
-      if (src_type == GIMP_DND_TYPE_COLOR ||
-          src_type == GIMP_DND_TYPE_PATTERN)
+      if (src_type == LIGMA_DND_TYPE_COLOR ||
+          src_type == LIGMA_DND_TYPE_PATTERN)
         {
           if (! dest_viewable ||
-              gimp_item_is_content_locked (GIMP_ITEM (dest_viewable), NULL) ||
-              gimp_viewable_get_children (GIMP_VIEWABLE (dest_viewable)))
+              ligma_item_is_content_locked (LIGMA_ITEM (dest_viewable), NULL) ||
+              ligma_viewable_get_children (LIGMA_VIEWABLE (dest_viewable)))
             return FALSE;
 
           if (return_drop_pos)
@@ -242,85 +242,85 @@ gimp_drawable_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 }
 
 static void
-gimp_drawable_tree_view_drop_viewables (GimpContainerTreeView   *view,
+ligma_drawable_tree_view_drop_viewables (LigmaContainerTreeView   *view,
                                         GList                   *src_viewables,
-                                        GimpViewable            *dest_viewable,
+                                        LigmaViewable            *dest_viewable,
                                         GtkTreeViewDropPosition  drop_pos)
 {
   GList *iter;
 
   for (iter = src_viewables; iter; iter = iter->next)
     {
-      GimpViewable *src_viewable = iter->data;
+      LigmaViewable *src_viewable = iter->data;
 
-      if (dest_viewable && GIMP_IS_PATTERN (src_viewable))
+      if (dest_viewable && LIGMA_IS_PATTERN (src_viewable))
         {
-          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
-          GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+          LigmaImage       *image   = ligma_item_get_image (LIGMA_ITEM (dest_viewable));
+          LigmaFillOptions *options = ligma_fill_options_new (image->ligma, NULL, FALSE);
 
-          gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-          gimp_context_set_pattern (GIMP_CONTEXT (options),
-                                    GIMP_PATTERN (src_viewable));
+          ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_PATTERN);
+          ligma_context_set_pattern (LIGMA_CONTEXT (options),
+                                    LIGMA_PATTERN (src_viewable));
 
-          gimp_drawable_edit_fill (GIMP_DRAWABLE (dest_viewable),
+          ligma_drawable_edit_fill (LIGMA_DRAWABLE (dest_viewable),
                                    options,
                                    C_("undo-type", "Drop pattern to layer"));
 
           g_object_unref (options);
 
-          gimp_image_flush (image);
+          ligma_image_flush (image);
           return;
         }
     }
 
-  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewables (view,
+  LIGMA_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewables (view,
                                                                  src_viewables,
                                                                  dest_viewable,
                                                                  drop_pos);
 }
 
 static void
-gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
-                                    const GimpRGB           *color,
-                                    GimpViewable            *dest_viewable,
+ligma_drawable_tree_view_drop_color (LigmaContainerTreeView   *view,
+                                    const LigmaRGB           *color,
+                                    LigmaViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
   if (dest_viewable)
     {
-      GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
-      GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+      LigmaImage       *image   = ligma_item_get_image (LIGMA_ITEM (dest_viewable));
+      LigmaFillOptions *options = ligma_fill_options_new (image->ligma, NULL, FALSE);
 
-      gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
-      gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+      ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_SOLID);
+      ligma_context_set_foreground (LIGMA_CONTEXT (options), color);
 
-      gimp_drawable_edit_fill (GIMP_DRAWABLE (dest_viewable),
+      ligma_drawable_edit_fill (LIGMA_DRAWABLE (dest_viewable),
                                options,
                                C_("undo-type", "Drop color to layer"));
 
       g_object_unref (options);
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 }
 
 
-/*  GimpItemTreeView methods  */
+/*  LigmaItemTreeView methods  */
 
 static void
-gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
-                                   GimpImage        *image)
+ligma_drawable_tree_view_set_image (LigmaItemTreeView *view,
+                                   LigmaImage        *image)
 {
-  if (gimp_item_tree_view_get_image (view))
-    g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
-                                          gimp_drawable_tree_view_floating_selection_changed,
+  if (ligma_item_tree_view_get_image (view))
+    g_signal_handlers_disconnect_by_func (ligma_item_tree_view_get_image (view),
+                                          ligma_drawable_tree_view_floating_selection_changed,
                                           view);
 
-  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
+  LIGMA_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
 
-  if (gimp_item_tree_view_get_image (view))
-    g_signal_connect (gimp_item_tree_view_get_image (view),
+  if (ligma_item_tree_view_get_image (view))
+    g_signal_connect (ligma_item_tree_view_get_image (view),
                       "floating-selection-changed",
-                      G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
+                      G_CALLBACK (ligma_drawable_tree_view_floating_selection_changed),
                       view);
 }
 
@@ -328,81 +328,81 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
 /*  callbacks  */
 
 static void
-gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
-                                                    GimpDrawableTreeView *view)
+ligma_drawable_tree_view_floating_selection_changed (LigmaImage            *image,
+                                                    LigmaDrawableTreeView *view)
 {
   GList *items;
 
-  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  items = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
   items = g_list_copy (items);
 
   /*  update button states  */
-  g_signal_handlers_block_by_func (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)),
-                                   gimp_drawable_tree_view_floating_selection_changed,
+  g_signal_handlers_block_by_func (ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view)),
+                                   ligma_drawable_tree_view_floating_selection_changed,
                                    view);
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
-  g_signal_handlers_unblock_by_func (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)),
-                                     gimp_drawable_tree_view_floating_selection_changed,
+  ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (view), items);
+  g_signal_handlers_unblock_by_func (ligma_item_tree_view_get_image (LIGMA_ITEM_TREE_VIEW (view)),
+                                     ligma_drawable_tree_view_floating_selection_changed,
                                      view);
   g_list_free (items);
 }
 
 static void
-gimp_drawable_tree_view_new_dropped (GimpItemTreeView *view,
-                                     GimpFillOptions  *options,
+ligma_drawable_tree_view_new_dropped (LigmaItemTreeView *view,
+                                     LigmaFillOptions  *options,
                                      const gchar      *undo_desc)
 {
-  GimpImage *image = gimp_item_tree_view_get_image (view);
-  GimpItem  *item;
+  LigmaImage *image = ligma_item_tree_view_get_image (view);
+  LigmaItem  *item;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (image);
+  item = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (image);
 
   if (item)
-    gimp_drawable_edit_fill (GIMP_DRAWABLE (item), options, undo_desc);
+    ligma_drawable_edit_fill (LIGMA_DRAWABLE (item), options, undo_desc);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 static void
-gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
+ligma_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
                                              gint          x,
                                              gint          y,
-                                             GimpViewable *viewable,
+                                             LigmaViewable *viewable,
                                              gpointer      data)
 {
-  GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
-  GimpImage        *image   = gimp_item_tree_view_get_image (view);
-  GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+  LigmaItemTreeView *view    = LIGMA_ITEM_TREE_VIEW (data);
+  LigmaImage        *image   = ligma_item_tree_view_get_image (view);
+  LigmaFillOptions  *options = ligma_fill_options_new (image->ligma, NULL, FALSE);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-  gimp_context_set_pattern (GIMP_CONTEXT (options), GIMP_PATTERN (viewable));
+  ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_PATTERN);
+  ligma_context_set_pattern (LIGMA_CONTEXT (options), LIGMA_PATTERN (viewable));
 
-  gimp_drawable_tree_view_new_dropped (view, options,
+  ligma_drawable_tree_view_new_dropped (view, options,
                                        C_("undo-type", "Drop pattern to layer"));
 
   g_object_unref (options);
 }
 
 static void
-gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
+ligma_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                            gint           x,
                                            gint           y,
-                                           const GimpRGB *color,
+                                           const LigmaRGB *color,
                                            gpointer       data)
 {
-  GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
-  GimpImage        *image   = gimp_item_tree_view_get_image (view);
-  GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+  LigmaItemTreeView *view    = LIGMA_ITEM_TREE_VIEW (data);
+  LigmaImage        *image   = ligma_item_tree_view_get_image (view);
+  LigmaFillOptions  *options = ligma_fill_options_new (image->ligma, NULL, FALSE);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
-  gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+  ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_SOLID);
+  ligma_context_set_foreground (LIGMA_CONTEXT (options), color);
 
-  gimp_drawable_tree_view_new_dropped (view, options,
+  ligma_drawable_tree_view_new_dropped (view, options,
                                        C_("undo-type", "Drop color to layer"));
 
   g_object_unref (options);

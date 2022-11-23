@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaction-history.c
+ * ligmaaction-history.c
  * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,22 +24,22 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpuimanager.h"
-#include "gimpaction.h"
-#include "gimpaction-history.h"
+#include "ligmauimanager.h"
+#include "ligmaaction.h"
+#include "ligmaaction-history.h"
 
 
-#define GIMP_ACTION_HISTORY_FILENAME "action-history"
+#define LIGMA_ACTION_HISTORY_FILENAME "action-history"
 
 /* History items are stored in a queue, sorted by frequency (number of times
  * the action was activated), from most frequent to least frequent.  Each item,
@@ -74,55 +74,55 @@ typedef struct
   gchar *action_name;
   gint   index;
   gint   delta;
-} GimpActionHistoryItem;
+} LigmaActionHistoryItem;
 
 static struct
 {
-  Gimp       *gimp;
+  Ligma       *ligma;
   GQueue     *items;
   GHashTable *links;
 } history;
 
 
-static GimpActionHistoryItem * gimp_action_history_item_new       (const gchar           *action_name,
+static LigmaActionHistoryItem * ligma_action_history_item_new       (const gchar           *action_name,
                                                                    gint                   index,
                                                                    gint                   delta);
-static void                    gimp_action_history_item_free      (GimpActionHistoryItem *item);
+static void                    ligma_action_history_item_free      (LigmaActionHistoryItem *item);
 
-static gint                    gimp_action_history_item_max_delta (gint                   index);
+static gint                    ligma_action_history_item_max_delta (gint                   index);
 
 
 /*  public functions  */
 
 void
-gimp_action_history_init (Gimp *gimp)
+ligma_action_history_init (Ligma *ligma)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
   GFile         *file;
   GScanner      *scanner;
   GTokenType     token;
   gint           delta = 0;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
-  if (history.gimp != NULL)
+  if (history.ligma != NULL)
     {
       g_warning ("%s: must be run only once.", G_STRFUNC);
       return;
     }
 
-  history.gimp  = gimp;
+  history.ligma  = ligma;
   history.items = g_queue_new ();
   history.links = g_hash_table_new (g_str_hash, g_str_equal);
 
-  file = gimp_directory_file (GIMP_ACTION_HISTORY_FILENAME, NULL);
+  file = ligma_directory_file (LIGMA_ACTION_HISTORY_FILENAME, NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (file, NULL);
+  scanner = ligma_scanner_new_file (file, NULL);
   g_object_unref (file);
 
   if (! scanner)
@@ -153,24 +153,24 @@ gimp_action_history_init (Gimp *gimp)
               if (g_scanner_peek_next_token (scanner) != token)
                 break;
 
-              if (! gimp_scanner_parse_string (scanner, &action_name))
+              if (! ligma_scanner_parse_string (scanner, &action_name))
                 break;
 
               token = G_TOKEN_INT;
 
               if (g_scanner_peek_next_token (scanner) != token ||
-                  ! gimp_scanner_parse_int (scanner, &delta))
+                  ! ligma_scanner_parse_int (scanner, &delta))
                 {
                   g_free (action_name);
                   break;
                 }
 
-              if (! gimp_action_history_is_excluded_action (action_name) &&
+              if (! ligma_action_history_is_excluded_action (action_name) &&
                   ! g_hash_table_contains (history.links, action_name))
                 {
-                  GimpActionHistoryItem *item;
+                  LigmaActionHistoryItem *item;
 
-                  item = gimp_action_history_item_new (
+                  item = ligma_action_history_item_new (
                     action_name,
                     g_queue_get_length (history.items),
                     delta);
@@ -200,29 +200,29 @@ gimp_action_history_init (Gimp *gimp)
     }
 
  done:
-  gimp_scanner_unref (scanner);
+  ligma_scanner_unref (scanner);
 }
 
 void
-gimp_action_history_exit (Gimp *gimp)
+ligma_action_history_exit (Ligma *ligma)
 {
-  GimpGuiConfig         *config;
-  GimpActionHistoryItem *item;
+  LigmaGuiConfig         *config;
+  LigmaActionHistoryItem *item;
   GList                 *actions;
   GFile                 *file;
-  GimpConfigWriter      *writer;
+  LigmaConfigWriter      *writer;
   gint                   i;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
-  file = gimp_directory_file (GIMP_ACTION_HISTORY_FILENAME, NULL);
+  file = ligma_directory_file (LIGMA_ACTION_HISTORY_FILENAME, NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  writer = gimp_config_writer_new_from_file (file, TRUE, "GIMP action-history",
+  writer = ligma_config_writer_new_from_file (file, TRUE, "LIGMA action-history",
                                              NULL);
   g_object_unref (file);
 
@@ -232,95 +232,95 @@ gimp_action_history_exit (Gimp *gimp)
     {
       item = actions->data;
 
-      gimp_config_writer_open (writer, "history-item");
-      gimp_config_writer_string (writer, item->action_name);
-      gimp_config_writer_printf (writer, "%d", item->delta);
-      gimp_config_writer_close (writer);
+      ligma_config_writer_open (writer, "history-item");
+      ligma_config_writer_string (writer, item->action_name);
+      ligma_config_writer_printf (writer, "%d", item->delta);
+      ligma_config_writer_close (writer);
     }
 
-  gimp_config_writer_finish (writer, "end of action-history", NULL);
+  ligma_config_writer_finish (writer, "end of action-history", NULL);
 
-  gimp_action_history_clear (gimp);
+  ligma_action_history_clear (ligma);
 
   g_clear_pointer (&history.links, g_hash_table_unref);
   g_clear_pointer (&history.items, g_queue_free);
-  history.gimp = NULL;
+  history.ligma = NULL;
 }
 
 void
-gimp_action_history_clear (Gimp *gimp)
+ligma_action_history_clear (Ligma *ligma)
 {
-  GimpActionHistoryItem *item;
+  LigmaActionHistoryItem *item;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   g_hash_table_remove_all (history.links);
 
   while ((item = g_queue_pop_head (history.items)))
-    gimp_action_history_item_free (item);
+    ligma_action_history_item_free (item);
 }
 
 /**
- * gimp_action_history_search:
- * @gimp:
+ * ligma_action_history_search:
+ * @ligma:
  * @match_func:
  * @keyword:
  *
- * Search all history #GimpAction which match @keyword with function
+ * Search all history #LigmaAction which match @keyword with function
  * @match_func(action, keyword).
  * It will also return inactive actions, but will discard non-visible
  * actions.
  *
- * returns: a #GList of #GimpAction, which must be freed with
+ * returns: a #GList of #LigmaAction, which must be freed with
  *          g_list_free_full (result, (GDestroyNotify) g_object_unref)
  */
 GList *
-gimp_action_history_search (Gimp                *gimp,
-                            GimpActionMatchFunc  match_func,
+ligma_action_history_search (Ligma                *ligma,
+                            LigmaActionMatchFunc  match_func,
                             const gchar         *keyword)
 {
-  GimpGuiConfig *config;
-  GimpUIManager *manager;
+  LigmaGuiConfig *config;
+  LigmaUIManager *manager;
   GList         *actions;
   GList         *result = NULL;
   gint           i;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (match_func != NULL, NULL);
 
-  config  = GIMP_GUI_CONFIG (gimp->config);
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
+  config  = LIGMA_GUI_CONFIG (ligma->config);
+  manager = ligma_ui_managers_from_name ("<Image>")->data;
 
   for (actions = history.items->head, i = 0;
        actions && i < config->action_history_size;
        actions = g_list_next (actions), i++)
     {
-      GimpActionHistoryItem *item   = actions->data;
-      GimpAction            *action;
+      LigmaActionHistoryItem *item   = actions->data;
+      LigmaAction            *action;
 
-      action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
+      action = ligma_ui_manager_find_action (manager, NULL, item->action_name);
       if (action == NULL)
         continue;
 
-      if (! gimp_action_is_visible (action))
+      if (! ligma_action_is_visible (action))
         continue;
 
-      if (match_func (action, keyword, NULL, gimp))
+      if (match_func (action, keyword, NULL, ligma))
         result = g_list_prepend (result, g_object_ref (action));
     }
 
   return g_list_reverse (result);
 }
 
-/* gimp_action_history_is_blacklisted_action:
+/* ligma_action_history_is_blacklisted_action:
  *
  * Returns whether an action should be excluded from both
  * history and search results.
  */
 gboolean
-gimp_action_history_is_blacklisted_action (const gchar *action_name)
+ligma_action_history_is_blacklisted_action (const gchar *action_name)
 {
-  if (gimp_action_is_gui_blacklisted (action_name))
+  if (ligma_action_is_gui_blacklisted (action_name))
     return TRUE;
 
   return (g_str_has_suffix (action_name, "-set")            ||
@@ -330,7 +330,7 @@ gimp_action_history_is_blacklisted_action (const gchar *action_name)
           g_strcmp0 (action_name, "dialogs-action-search") == 0);
 }
 
-/* gimp_action_history_is_excluded_action:
+/* ligma_action_history_is_excluded_action:
  *
  * Returns whether an action should be excluded from history.
  *
@@ -341,9 +341,9 @@ gimp_action_history_is_blacklisted_action (const gchar *action_name)
  * actions.
  */
 gboolean
-gimp_action_history_is_excluded_action (const gchar *action_name)
+ligma_action_history_is_excluded_action (const gchar *action_name)
 {
-  if (gimp_action_history_is_blacklisted_action (action_name))
+  if (ligma_action_history_is_blacklisted_action (action_name))
     return TRUE;
 
   return (g_strcmp0 (action_name, "edit-undo") == 0        ||
@@ -354,32 +354,32 @@ gimp_action_history_is_excluded_action (const gchar *action_name)
           g_strcmp0 (action_name, "filters-reshow") == 0);
 }
 
-/* Called whenever a GimpAction is activated.
+/* Called whenever a LigmaAction is activated.
  * It allows us to log all used actions.
  */
 void
-gimp_action_history_action_activated (GimpAction *action)
+ligma_action_history_action_activated (LigmaAction *action)
 {
-  GimpGuiConfig         *config;
+  LigmaGuiConfig         *config;
   const gchar           *action_name;
   GList                 *link;
-  GimpActionHistoryItem *item;
+  LigmaActionHistoryItem *item;
 
   /* Silently return when called at the wrong time, like when the
    * activated action was "quit" and the history is already gone.
    */
-  if (! history.gimp)
+  if (! history.ligma)
     return;
 
-  config = GIMP_GUI_CONFIG (history.gimp->config);
+  config = LIGMA_GUI_CONFIG (history.ligma->config);
 
   if (config->action_history_size == 0)
     return;
 
-  action_name = gimp_action_get_name (action);
+  action_name = ligma_action_get_name (action);
 
   /* Some specific actions are of no log interest. */
-  if (gimp_action_history_is_excluded_action (action_name))
+  if (ligma_action_history_is_excluded_action (action_name))
     return;
 
   g_return_if_fail (action_name != NULL);
@@ -391,7 +391,7 @@ gimp_action_history_action_activated (GimpAction *action)
 
       g_hash_table_remove (history.links, item->action_name);
 
-      gimp_action_history_item_free (item);
+      ligma_action_history_item_free (item);
     }
 
   /* Look up the action in the history. */
@@ -409,10 +409,10 @@ gimp_action_history_action_activated (GimpAction *action)
 
           g_hash_table_remove (history.links, item->action_name);
 
-          gimp_action_history_item_free (item);
+          ligma_action_history_item_free (item);
         }
 
-      item = gimp_action_history_item_new (
+      item = ligma_action_history_item_new (
         action_name,
         g_queue_get_length (history.items),
         0);
@@ -433,7 +433,7 @@ gimp_action_history_action_activated (GimpAction *action)
   if (item->index > 0)
     {
       GList                 *prev_link = g_list_previous (link);
-      GimpActionHistoryItem *prev_item = prev_link->data;
+      LigmaActionHistoryItem *prev_item = prev_link->data;
 
       if (prev_item->delta == 0)
         {
@@ -473,37 +473,37 @@ gimp_action_history_action_activated (GimpAction *action)
         prev_item->delta--;
     }
 
-  if (item->delta < gimp_action_history_item_max_delta (item->index))
+  if (item->delta < ligma_action_history_item_max_delta (item->index))
     item->delta++;
 }
 
 
 /*  private functions  */
 
-static GimpActionHistoryItem *
-gimp_action_history_item_new (const gchar *action_name,
+static LigmaActionHistoryItem *
+ligma_action_history_item_new (const gchar *action_name,
                               gint         index,
                               gint         delta)
 {
-  GimpActionHistoryItem *item = g_slice_new (GimpActionHistoryItem);
+  LigmaActionHistoryItem *item = g_slice_new (LigmaActionHistoryItem);
 
   item->action_name = g_strdup (action_name);
   item->index       = index;
-  item->delta       = CLAMP (delta, 0, gimp_action_history_item_max_delta (index));
+  item->delta       = CLAMP (delta, 0, ligma_action_history_item_max_delta (index));
 
   return item;
 }
 
 static void
-gimp_action_history_item_free (GimpActionHistoryItem *item)
+ligma_action_history_item_free (LigmaActionHistoryItem *item)
 {
   g_free (item->action_name);
 
-  g_slice_free (GimpActionHistoryItem, item);
+  g_slice_free (LigmaActionHistoryItem, item);
 }
 
 static gint
-gimp_action_history_item_max_delta (gint index)
+ligma_action_history_item_max_delta (gint index)
 {
   return floor (MAX_DELTA * exp (log (MAX_DELTA_FALLOFF) * index));
 }

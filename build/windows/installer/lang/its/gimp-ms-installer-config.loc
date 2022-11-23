@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <locatingRules>
-  <locatingRule name="GimpMsInstallerConfig" pattern="*.xml">
-    <documentRule localName="gimp-ms-installer-config" target="gimp-ms-installer-config.its"/>
+  <locatingRule name="LigmaMsInstallerConfig" pattern="*.xml">
+    <documentRule localName="ligma-ms-installer-config" target="ligma-ms-installer-config.its"/>
   </locatingRule>
 </locatingRules>

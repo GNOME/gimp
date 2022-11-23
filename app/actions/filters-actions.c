@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,40 +20,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp-filter-history.h"
-#include "core/gimpimage.h"
-#include "core/gimplayermask.h"
+#include "core/ligma-filter-history.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayermask.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmaprocedure.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmauimanager.h"
 
 #include "actions.h"
 #include "filters-actions.h"
 #include "filters-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   filters_actions_set_tooltips    (GimpActionGroup             *group,
-                                               const GimpStringActionEntry *entries,
+static void   filters_actions_set_tooltips    (LigmaActionGroup             *group,
+                                               const LigmaStringActionEntry *entries,
                                                gint                         n_entries);
-static void   filters_actions_history_changed (Gimp                        *gimp,
-                                               GimpActionGroup             *group);
+static void   filters_actions_history_changed (Ligma                        *ligma,
+                                               LigmaActionGroup             *group);
 
 
 /*  private variables  */
 
-static const GimpActionEntry filters_menu_actions[] =
+static const LigmaActionEntry filters_menu_actions[] =
 {
   { "filters-menu",                 NULL, NC_("filters-action",
                                               "Filte_rs")          },
@@ -103,42 +103,42 @@ static const GimpActionEntry filters_menu_actions[] =
                                               "An_imation")        }
 };
 
-static const GimpStringActionEntry filters_actions[] =
+static const LigmaStringActionEntry filters_actions[] =
 {
-  { "filters-antialias", GIMP_ICON_GEGL,
+  { "filters-antialias", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Antialias"), NULL, NULL,
     "gegl:antialias",
-    GIMP_HELP_FILTER_ANTIALIAS },
+    LIGMA_HELP_FILTER_ANTIALIAS },
 
-  { "filters-color-enhance", GIMP_ICON_GEGL,
+  { "filters-color-enhance", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Color Enhance"), NULL, NULL,
     "gegl:color-enhance",
-    GIMP_HELP_FILTER_COLOR_ENHANCE },
+    LIGMA_HELP_FILTER_COLOR_ENHANCE },
 
-  { "filters-invert-linear", GIMP_ICON_INVERT,
+  { "filters-invert-linear", LIGMA_ICON_INVERT,
     NC_("filters-action", "L_inear Invert"), NULL, NULL,
     "gegl:invert-linear",
-    GIMP_HELP_FILTER_INVERT_LINEAR },
+    LIGMA_HELP_FILTER_INVERT_LINEAR },
 
-  { "filters-invert-perceptual", GIMP_ICON_INVERT,
+  { "filters-invert-perceptual", LIGMA_ICON_INVERT,
     NC_("filters-action", "In_vert"), NULL, NULL,
     "gegl:invert-gamma",
-    GIMP_HELP_FILTER_INVERT_PERCEPTUAL },
+    LIGMA_HELP_FILTER_INVERT_PERCEPTUAL },
 
-  { "filters-invert-value", GIMP_ICON_INVERT,
+  { "filters-invert-value", LIGMA_ICON_INVERT,
     NC_("filters-action", "_Value Invert"), NULL, NULL,
     "gegl:value-invert",
-    GIMP_HELP_FILTER_INVERT_VALUE },
+    LIGMA_HELP_FILTER_INVERT_VALUE },
 
-  { "filters-stretch-contrast-hsv", GIMP_ICON_GEGL,
+  { "filters-stretch-contrast-hsv", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Stretch Contrast HSV"), NULL, NULL,
     "gegl:stretch-contrast-hsv",
-    GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV }
+    LIGMA_HELP_FILTER_STRETCH_CONTRAST_HSV }
 };
 
-static const GimpStringActionEntry filters_settings_actions[] =
+static const LigmaStringActionEntry filters_settings_actions[] =
 {
-  { "filters-dilate", GIMP_ICON_GEGL,
+  { "filters-dilate", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Dilate"), NULL,
     NC_("filters-action", "Grow lighter areas of the image"),
     "gegl:value-propagate\n"
@@ -152,9 +152,9 @@ static const GimpStringActionEntry filters_settings_actions[] =
     "(bottom yes)"
     "(value yes)"
     "(alpha no)",
-    GIMP_HELP_FILTER_DILATE },
+    LIGMA_HELP_FILTER_DILATE },
 
-  { "filters-erode", GIMP_ICON_GEGL,
+  { "filters-erode", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Erode"), NULL,
     NC_("filters-action", "Grow darker areas of the image"),
     "gegl:value-propagate\n"
@@ -168,669 +168,669 @@ static const GimpStringActionEntry filters_settings_actions[] =
     "(bottom yes)"
     "(value yes)"
     "(alpha no)",
-    GIMP_HELP_FILTER_ERODE }
+    LIGMA_HELP_FILTER_ERODE }
 };
 
-static const GimpStringActionEntry filters_interactive_actions[] =
+static const LigmaStringActionEntry filters_interactive_actions[] =
 {
-  { "filters-alien-map", GIMP_ICON_GEGL,
+  { "filters-alien-map", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Alien Map..."), NULL, NULL,
     "gegl:alien-map",
-    GIMP_HELP_FILTER_ALIEN_MAP },
+    LIGMA_HELP_FILTER_ALIEN_MAP },
 
-  { "filters-apply-canvas", GIMP_ICON_GEGL,
+  { "filters-apply-canvas", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Apply Canvas..."), NULL, NULL,
     "gegl:texturize-canvas",
-    GIMP_HELP_FILTER_APPLY_CANVAS },
+    LIGMA_HELP_FILTER_APPLY_CANVAS },
 
-  { "filters-apply-lens", GIMP_ICON_GEGL,
+  { "filters-apply-lens", LIGMA_ICON_GEGL,
     NC_("filters-action", "Apply _Lens..."), NULL, NULL,
     "gegl:apply-lens",
-    GIMP_HELP_FILTER_APPLY_LENS },
+    LIGMA_HELP_FILTER_APPLY_LENS },
 
-  { "filters-bayer-matrix", GIMP_ICON_GEGL,
+  { "filters-bayer-matrix", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Bayer Matrix..."), NULL, NULL,
     "gegl:bayer-matrix",
-    GIMP_HELP_FILTER_BAYER_MATRIX },
+    LIGMA_HELP_FILTER_BAYER_MATRIX },
 
-  { "filters-bloom", GIMP_ICON_GEGL,
+  { "filters-bloom", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Bloom..."), NULL, NULL,
     "gegl:bloom",
-    GIMP_HELP_FILTER_BLOOM },
+    LIGMA_HELP_FILTER_BLOOM },
 
-  { "filters-brightness-contrast", GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
+  { "filters-brightness-contrast", LIGMA_ICON_TOOL_BRIGHTNESS_CONTRAST,
     NC_("filters-action", "B_rightness-Contrast..."), NULL, NULL,
-    "gimp:brightness-contrast",
-    GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST },
+    "ligma:brightness-contrast",
+    LIGMA_HELP_TOOL_BRIGHTNESS_CONTRAST },
 
-  { "filters-bump-map", GIMP_ICON_GEGL,
+  { "filters-bump-map", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Bump Map..."), NULL, NULL,
     "gegl:bump-map",
-    GIMP_HELP_FILTER_BUMP_MAP },
+    LIGMA_HELP_FILTER_BUMP_MAP },
 
-  { "filters-c2g", GIMP_ICON_GEGL,
+  { "filters-c2g", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Color to Gray..."), NULL, NULL,
     "gegl:c2g",
-    GIMP_HELP_FILTER_C2G },
+    LIGMA_HELP_FILTER_C2G },
 
-  { "filters-cartoon", GIMP_ICON_GEGL,
+  { "filters-cartoon", LIGMA_ICON_GEGL,
     NC_("filters-action", "Ca_rtoon..."), NULL, NULL,
     "gegl:cartoon",
-    GIMP_HELP_FILTER_CARTOON },
+    LIGMA_HELP_FILTER_CARTOON },
 
-  { "filters-channel-mixer", GIMP_ICON_GEGL,
+  { "filters-channel-mixer", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Channel Mixer..."), NULL, NULL,
     "gegl:channel-mixer",
-    GIMP_HELP_FILTER_CHANNEL_MIXER },
+    LIGMA_HELP_FILTER_CHANNEL_MIXER },
 
-  { "filters-checkerboard", GIMP_ICON_GEGL,
+  { "filters-checkerboard", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Checkerboard..."), NULL, NULL,
     "gegl:checkerboard",
-    GIMP_HELP_FILTER_CHECKERBOARD },
+    LIGMA_HELP_FILTER_CHECKERBOARD },
 
-  { "filters-color-balance", GIMP_ICON_TOOL_COLOR_BALANCE,
+  { "filters-color-balance", LIGMA_ICON_TOOL_COLOR_BALANCE,
     NC_("filters-action", "Color _Balance..."), NULL, NULL,
-    "gimp:color-balance",
-    GIMP_HELP_TOOL_COLOR_BALANCE },
+    "ligma:color-balance",
+    LIGMA_HELP_TOOL_COLOR_BALANCE },
 
-  { "filters-color-exchange", GIMP_ICON_GEGL,
+  { "filters-color-exchange", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Color Exchange..."), NULL, NULL,
     "gegl:color-exchange",
-    GIMP_HELP_FILTER_COLOR_EXCHANGE },
+    LIGMA_HELP_FILTER_COLOR_EXCHANGE },
 
-  { "filters-colorize", GIMP_ICON_TOOL_COLORIZE,
+  { "filters-colorize", LIGMA_ICON_TOOL_COLORIZE,
     NC_("filters-action", "Colori_ze..."), NULL, NULL,
-    "gimp:colorize",
-    GIMP_HELP_TOOL_COLORIZE },
+    "ligma:colorize",
+    LIGMA_HELP_TOOL_COLORIZE },
 
-  { "filters-dither", GIMP_ICON_GEGL,
+  { "filters-dither", LIGMA_ICON_GEGL,
     NC_("filters-action", "Dithe_r..."), NULL, NULL,
     "gegl:dither",
-    GIMP_HELP_FILTER_DITHER },
+    LIGMA_HELP_FILTER_DITHER },
 
-  { "filters-color-rotate", GIMP_ICON_GEGL,
+  { "filters-color-rotate", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Rotate Colors..."), NULL, NULL,
     "gegl:color-rotate",
-    GIMP_HELP_FILTER_COLOR_ROTATE },
+    LIGMA_HELP_FILTER_COLOR_ROTATE },
 
-  { "filters-color-temperature", GIMP_ICON_TOOL_COLOR_TEMPERATURE,
+  { "filters-color-temperature", LIGMA_ICON_TOOL_COLOR_TEMPERATURE,
     NC_("filters-action", "Color T_emperature..."), NULL, NULL,
     "gegl:color-temperature",
-    GIMP_HELP_FILTER_COLOR_TEMPERATURE },
+    LIGMA_HELP_FILTER_COLOR_TEMPERATURE },
 
-  { "filters-color-to-alpha", GIMP_ICON_GEGL,
+  { "filters-color-to-alpha", LIGMA_ICON_GEGL,
     NC_("filters-action", "Color to _Alpha..."), NULL, NULL,
     "gegl:color-to-alpha",
-    GIMP_HELP_FILTER_COLOR_TO_ALPHA },
+    LIGMA_HELP_FILTER_COLOR_TO_ALPHA },
 
-  { "filters-component-extract", GIMP_ICON_GEGL,
+  { "filters-component-extract", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Extract Component..."), NULL, NULL,
     "gegl:component-extract",
-    GIMP_HELP_FILTER_COMPONENT_EXTRACT },
+    LIGMA_HELP_FILTER_COMPONENT_EXTRACT },
 
-  { "filters-convolution-matrix", GIMP_ICON_GEGL,
+  { "filters-convolution-matrix", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Convolution Matrix..."), NULL, NULL,
     "gegl:convolution-matrix",
-    GIMP_HELP_FILTER_CONVOLUTION_MATRIX },
+    LIGMA_HELP_FILTER_CONVOLUTION_MATRIX },
 
-  { "filters-cubism", GIMP_ICON_GEGL,
+  { "filters-cubism", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Cubism..."), NULL, NULL,
     "gegl:cubism",
-    GIMP_HELP_FILTER_CUBISM },
+    LIGMA_HELP_FILTER_CUBISM },
 
-  { "filters-curves", GIMP_ICON_TOOL_CURVES,
+  { "filters-curves", LIGMA_ICON_TOOL_CURVES,
     NC_("filters-action", "_Curves..."), NULL, NULL,
-    "gimp:curves",
-    GIMP_HELP_TOOL_CURVES },
+    "ligma:curves",
+    LIGMA_HELP_TOOL_CURVES },
 
-  { "filters-deinterlace", GIMP_ICON_GEGL,
+  { "filters-deinterlace", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Deinterlace..."), NULL, NULL,
     "gegl:deinterlace",
-    GIMP_HELP_FILTER_DEINTERLACE },
+    LIGMA_HELP_FILTER_DEINTERLACE },
 
-  { "filters-desaturate", GIMP_ICON_TOOL_DESATURATE,
+  { "filters-desaturate", LIGMA_ICON_TOOL_DESATURATE,
     NC_("filters-action", "_Desaturate..."), NULL, NULL,
-    "gimp:desaturate",
-    GIMP_HELP_FILTER_DESATURATE },
+    "ligma:desaturate",
+    LIGMA_HELP_FILTER_DESATURATE },
 
-  { "filters-difference-of-gaussians", GIMP_ICON_GEGL,
+  { "filters-difference-of-gaussians", LIGMA_ICON_GEGL,
     NC_("filters-action", "Difference of _Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
-    GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS },
+    LIGMA_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS },
 
-  { "filters-diffraction-patterns", GIMP_ICON_GEGL,
+  { "filters-diffraction-patterns", LIGMA_ICON_GEGL,
     NC_("filters-action", "D_iffraction Patterns..."), NULL, NULL,
     "gegl:diffraction-patterns",
-    GIMP_HELP_FILTER_DIFFRACTION_PATTERNS },
+    LIGMA_HELP_FILTER_DIFFRACTION_PATTERNS },
 
-  { "filters-displace", GIMP_ICON_GEGL,
+  { "filters-displace", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Displace..."), NULL, NULL,
     "gegl:displace",
-    GIMP_HELP_FILTER_DISPLACE },
+    LIGMA_HELP_FILTER_DISPLACE },
 
-  { "filters-distance-map", GIMP_ICON_GEGL,
+  { "filters-distance-map", LIGMA_ICON_GEGL,
     NC_("filters-action", "Distance _Map..."), NULL, NULL,
     "gegl:distance-transform",
-    GIMP_HELP_FILTER_DISTANCE_MAP },
+    LIGMA_HELP_FILTER_DISTANCE_MAP },
 
-  { "filters-dropshadow", GIMP_ICON_GEGL,
+  { "filters-dropshadow", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Drop Shadow..."), NULL, NULL,
     "gegl:dropshadow",
-    GIMP_HELP_FILTER_DROPSHADOW },
+    LIGMA_HELP_FILTER_DROPSHADOW },
 
-  { "filters-edge", GIMP_ICON_GEGL,
+  { "filters-edge", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Edge..."), NULL, NULL,
     "gegl:edge",
-    GIMP_HELP_FILTER_EDGE },
+    LIGMA_HELP_FILTER_EDGE },
 
-  { "filters-edge-laplace", GIMP_ICON_GEGL,
+  { "filters-edge-laplace", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Laplace"), NULL, NULL,
     "gegl:edge-laplace",
-    GIMP_HELP_FILTER_EDGE_LAPLACE },
+    LIGMA_HELP_FILTER_EDGE_LAPLACE },
 
-  { "filters-edge-neon", GIMP_ICON_GEGL,
+  { "filters-edge-neon", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Neon..."), NULL, NULL,
     "gegl:edge-neon",
-    GIMP_HELP_FILTER_EDGE_NEON },
+    LIGMA_HELP_FILTER_EDGE_NEON },
 
-  { "filters-edge-sobel", GIMP_ICON_GEGL,
+  { "filters-edge-sobel", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Sobel..."), NULL, NULL,
     "gegl:edge-sobel",
-    GIMP_HELP_FILTER_EDGE_SOBEL },
+    LIGMA_HELP_FILTER_EDGE_SOBEL },
 
-  { "filters-emboss", GIMP_ICON_GEGL,
+  { "filters-emboss", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Emboss..."), NULL, NULL,
     "gegl:emboss",
-    GIMP_HELP_FILTER_EMBOSS },
+    LIGMA_HELP_FILTER_EMBOSS },
 
-  { "filters-engrave", GIMP_ICON_GEGL,
+  { "filters-engrave", LIGMA_ICON_GEGL,
     NC_("filters-action", "En_grave..."), NULL, NULL,
     "gegl:engrave",
-    GIMP_HELP_FILTER_ENGRAVE },
+    LIGMA_HELP_FILTER_ENGRAVE },
 
-  { "filters-exposure", GIMP_ICON_TOOL_EXPOSURE,
+  { "filters-exposure", LIGMA_ICON_TOOL_EXPOSURE,
     NC_("filters-action", "E_xposure..."), NULL, NULL,
     "gegl:exposure",
-    GIMP_HELP_FILTER_EXPOSURE },
+    LIGMA_HELP_FILTER_EXPOSURE },
 
-  { "filters-fattal-2002", GIMP_ICON_GEGL,
+  { "filters-fattal-2002", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Fattal et al. 2002..."), NULL, NULL,
     "gegl:fattal02",
-    GIMP_HELP_FILTER_FATTAL_2002 },
+    LIGMA_HELP_FILTER_FATTAL_2002 },
 
-  { "filters-focus-blur", GIMP_ICON_GEGL,
+  { "filters-focus-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Focus Blur..."), NULL, NULL,
     "gegl:focus-blur",
-    GIMP_HELP_FILTER_FOCUS_BLUR },
+    LIGMA_HELP_FILTER_FOCUS_BLUR },
 
-  { "filters-fractal-trace", GIMP_ICON_GEGL,
+  { "filters-fractal-trace", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Fractal Trace..."), NULL, NULL,
     "gegl:fractal-trace",
-    GIMP_HELP_FILTER_FRACTAL_TRACE },
+    LIGMA_HELP_FILTER_FRACTAL_TRACE },
 
-  { "filters-gaussian-blur", GIMP_ICON_GEGL,
+  { "filters-gaussian-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Gaussian Blur..."), NULL, NULL,
     "gegl:gaussian-blur",
-    GIMP_HELP_FILTER_GAUSSIAN_BLUR },
+    LIGMA_HELP_FILTER_GAUSSIAN_BLUR },
 
-  { "filters-gaussian-blur-selective", GIMP_ICON_GEGL,
+  { "filters-gaussian-blur-selective", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Selective Gaussian Blur..."), NULL, NULL,
     "gegl:gaussian-blur-selective",
-    GIMP_HELP_FILTER_GAUSSIAN_BLUR_SELECTIVE },
+    LIGMA_HELP_FILTER_GAUSSIAN_BLUR_SELECTIVE },
 
-  { "filters-gegl-graph", GIMP_ICON_GEGL,
+  { "filters-gegl-graph", LIGMA_ICON_GEGL,
     NC_("filters-action", "_GEGL Graph..."), NULL, NULL,
     "gegl:gegl",
-    GIMP_HELP_FILTER_GEGL_GRAPH },
+    LIGMA_HELP_FILTER_GEGL_GRAPH },
 
-  { "filters-grid", GIMP_ICON_GRID,
+  { "filters-grid", LIGMA_ICON_GRID,
     NC_("filters-action", "_Grid..."), NULL, NULL,
     "gegl:grid",
-    GIMP_HELP_FILTER_GRID },
+    LIGMA_HELP_FILTER_GRID },
 
-  { "filters-high-pass", GIMP_ICON_GEGL,
+  { "filters-high-pass", LIGMA_ICON_GEGL,
     NC_("filters-action", "_High Pass..."), NULL, NULL,
     "gegl:high-pass",
-    GIMP_HELP_FILTER_HIGH_PASS },
+    LIGMA_HELP_FILTER_HIGH_PASS },
 
-  { "filters-hue-chroma", GIMP_ICON_GEGL,
+  { "filters-hue-chroma", LIGMA_ICON_GEGL,
     NC_("filters-action", "Hue-_Chroma..."), NULL, NULL,
     "gegl:hue-chroma",
-    GIMP_HELP_FILTER_HUE_CHROMA },
+    LIGMA_HELP_FILTER_HUE_CHROMA },
 
-  { "filters-hue-saturation", GIMP_ICON_TOOL_HUE_SATURATION,
+  { "filters-hue-saturation", LIGMA_ICON_TOOL_HUE_SATURATION,
     NC_("filters-action", "Hue-_Saturation..."), NULL, NULL,
-    "gimp:hue-saturation",
-    GIMP_HELP_TOOL_HUE_SATURATION },
+    "ligma:hue-saturation",
+    LIGMA_HELP_TOOL_HUE_SATURATION },
 
-  { "filters-illusion", GIMP_ICON_GEGL,
+  { "filters-illusion", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Illusion..."), NULL, NULL,
     "gegl:illusion",
-    GIMP_HELP_FILTER_ILLUSION },
+    LIGMA_HELP_FILTER_ILLUSION },
 
-  { "filters-image-gradient", GIMP_ICON_GEGL,
+  { "filters-image-gradient", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Image Gradient..."), NULL, NULL,
     "gegl:image-gradient",
-    GIMP_HELP_FILTER_IMAGE_GRADIENT },
+    LIGMA_HELP_FILTER_IMAGE_GRADIENT },
 
-  { "filters-kaleidoscope", GIMP_ICON_GEGL,
+  { "filters-kaleidoscope", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
     "gegl:mirrors",
-    GIMP_HELP_FILTER_KALEIDOSCOPE },
+    LIGMA_HELP_FILTER_KALEIDOSCOPE },
 
-  { "filters-lens-blur", GIMP_ICON_GEGL,
+  { "filters-lens-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "Le_ns Blur..."), NULL, NULL,
     "gegl:lens-blur",
-    GIMP_HELP_FILTER_LENS_BLUR },
+    LIGMA_HELP_FILTER_LENS_BLUR },
 
-  { "filters-lens-distortion", GIMP_ICON_GEGL,
+  { "filters-lens-distortion", LIGMA_ICON_GEGL,
     NC_("filters-action", "Le_ns Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
-    GIMP_HELP_FILTER_LENS_DISTORTION },
+    LIGMA_HELP_FILTER_LENS_DISTORTION },
 
-  { "filters-lens-flare", GIMP_ICON_GEGL,
+  { "filters-lens-flare", LIGMA_ICON_GEGL,
     NC_("filters-action", "Lens _Flare..."), NULL, NULL,
     "gegl:lens-flare",
-    GIMP_HELP_FILTER_LENS_FLARE },
+    LIGMA_HELP_FILTER_LENS_FLARE },
 
-  { "filters-levels", GIMP_ICON_TOOL_LEVELS,
+  { "filters-levels", LIGMA_ICON_TOOL_LEVELS,
     NC_("filters-action", "_Levels..."), NULL, NULL,
-    "gimp:levels",
-    GIMP_HELP_TOOL_LEVELS },
+    "ligma:levels",
+    LIGMA_HELP_TOOL_LEVELS },
 
-  { "filters-linear-sinusoid", GIMP_ICON_TOOL_LEVELS,
+  { "filters-linear-sinusoid", LIGMA_ICON_TOOL_LEVELS,
     NC_("filters-action", "_Linear Sinusoid..."), NULL, NULL,
     "gegl:linear-sinusoid",
-    GIMP_HELP_FILTER_LINEAR_SINUSOID },
+    LIGMA_HELP_FILTER_LINEAR_SINUSOID },
 
-  { "filters-little-planet", GIMP_ICON_GEGL,
+  { "filters-little-planet", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Little Planet..."), NULL, NULL,
     "gegl:stereographic-projection",
-    GIMP_HELP_FILTER_LITTLE_PLANET },
+    LIGMA_HELP_FILTER_LITTLE_PLANET },
 
-  { "filters-long-shadow", GIMP_ICON_GEGL,
+  { "filters-long-shadow", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Long Shadow..."), NULL, NULL,
     "gegl:long-shadow",
-    GIMP_HELP_FILTER_LONG_SHADOW },
+    LIGMA_HELP_FILTER_LONG_SHADOW },
 
-  { "filters-mantiuk-2006", GIMP_ICON_GEGL,
+  { "filters-mantiuk-2006", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Mantiuk 2006..."), NULL, NULL,
     "gegl:mantiuk06",
-    GIMP_HELP_FILTER_MANTIUK_2006 },
+    LIGMA_HELP_FILTER_MANTIUK_2006 },
 
-  { "filters-maze", GIMP_ICON_GEGL,
+  { "filters-maze", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Maze..."), NULL, NULL,
     "gegl:maze",
-    GIMP_HELP_FILTER_MAZE },
+    LIGMA_HELP_FILTER_MAZE },
 
-  { "filters-mean-curvature-blur", GIMP_ICON_GEGL,
+  { "filters-mean-curvature-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "Mean C_urvature Blur..."), NULL, NULL,
     "gegl:mean-curvature-blur",
-    GIMP_HELP_FILTER_MEAN_CURVATURE_BLUR },
+    LIGMA_HELP_FILTER_MEAN_CURVATURE_BLUR },
 
-  { "filters-median-blur", GIMP_ICON_GEGL,
+  { "filters-median-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Median Blur..."), NULL, NULL,
     "gegl:median-blur",
-    GIMP_HELP_FILTER_MEDIAN_BLUR },
+    LIGMA_HELP_FILTER_MEDIAN_BLUR },
 
-  { "filters-mono-mixer", GIMP_ICON_GEGL,
+  { "filters-mono-mixer", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Mono Mixer..."), NULL, NULL,
     "gegl:mono-mixer",
-    GIMP_HELP_FILTER_MONO_MIXER },
+    LIGMA_HELP_FILTER_MONO_MIXER },
 
-  { "filters-mosaic", GIMP_ICON_GEGL,
+  { "filters-mosaic", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Mosaic..."), NULL, NULL,
     "gegl:mosaic",
-    GIMP_HELP_FILTER_MOSAIC },
+    LIGMA_HELP_FILTER_MOSAIC },
 
-  { "filters-motion-blur-circular", GIMP_ICON_GEGL,
+  { "filters-motion-blur-circular", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Circular Motion Blur..."), NULL, NULL,
     "gegl:motion-blur-circular",
-    GIMP_HELP_FILTER_MOTION_BLUR_CIRCULAR },
+    LIGMA_HELP_FILTER_MOTION_BLUR_CIRCULAR },
 
-  { "filters-motion-blur-linear", GIMP_ICON_GEGL,
+  { "filters-motion-blur-linear", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Linear Motion Blur..."), NULL, NULL,
     "gegl:motion-blur-linear",
-    GIMP_HELP_FILTER_MOTION_BLUR_LINEAR },
+    LIGMA_HELP_FILTER_MOTION_BLUR_LINEAR },
 
-  { "filters-motion-blur-zoom", GIMP_ICON_GEGL,
+  { "filters-motion-blur-zoom", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Zoom Motion Blur..."), NULL, NULL,
     "gegl:motion-blur-zoom",
-    GIMP_HELP_FILTER_MOTION_BLUR_ZOOM },
+    LIGMA_HELP_FILTER_MOTION_BLUR_ZOOM },
 
-  { "filters-noise-cell", GIMP_ICON_GEGL,
+  { "filters-noise-cell", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Cell Noise..."), NULL, NULL,
     "gegl:cell-noise",
-    GIMP_HELP_FILTER_NOISE_CELL },
+    LIGMA_HELP_FILTER_NOISE_CELL },
 
-  { "filters-newsprint", GIMP_ICON_GEGL,
+  { "filters-newsprint", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Newsprint..."), NULL, NULL,
     "gegl:newsprint",
-    GIMP_HELP_FILTER_NEWSPRINT },
+    LIGMA_HELP_FILTER_NEWSPRINT },
 
-  { "filters-noise-cie-lch", GIMP_ICON_GEGL,
+  { "filters-noise-cie-lch", LIGMA_ICON_GEGL,
     NC_("filters-action", "_CIE lch Noise..."), NULL, NULL,
     "gegl:noise-cie-lch",
-    GIMP_HELP_FILTER_NOISE_CIE_LCH },
+    LIGMA_HELP_FILTER_NOISE_CIE_LCH },
 
-  { "filters-noise-hsv", GIMP_ICON_GEGL,
+  { "filters-noise-hsv", LIGMA_ICON_GEGL,
     NC_("filters-action", "HS_V Noise..."), NULL, NULL,
     "gegl:noise-hsv",
-    GIMP_HELP_FILTER_NOISE_HSV },
+    LIGMA_HELP_FILTER_NOISE_HSV },
 
-  { "filters-noise-hurl", GIMP_ICON_GEGL,
+  { "filters-noise-hurl", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Hurl..."), NULL, NULL,
     "gegl:noise-hurl",
-    GIMP_HELP_FILTER_NOISE_HURL },
+    LIGMA_HELP_FILTER_NOISE_HURL },
 
-  { "filters-noise-perlin", GIMP_ICON_GEGL,
+  { "filters-noise-perlin", LIGMA_ICON_GEGL,
     NC_("filters-action", "Perlin _Noise..."), NULL, NULL,
     "gegl:perlin-noise",
-    GIMP_HELP_FILTER_NOISE_PERLIN },
+    LIGMA_HELP_FILTER_NOISE_PERLIN },
 
-  { "filters-noise-pick", GIMP_ICON_GEGL,
+  { "filters-noise-pick", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Pick..."), NULL, NULL,
     "gegl:noise-pick",
-    GIMP_HELP_FILTER_NOISE_PICK },
+    LIGMA_HELP_FILTER_NOISE_PICK },
 
-  { "filters-noise-rgb", GIMP_ICON_GEGL,
+  { "filters-noise-rgb", LIGMA_ICON_GEGL,
     NC_("filters-action", "_RGB Noise..."), NULL, NULL,
     "gegl:noise-rgb",
-    GIMP_HELP_FILTER_NOISE_RGB },
+    LIGMA_HELP_FILTER_NOISE_RGB },
 
-  { "filters-noise-reduction", GIMP_ICON_GEGL,
+  { "filters-noise-reduction", LIGMA_ICON_GEGL,
     NC_("filters-action", "Noise R_eduction..."), NULL, NULL,
     "gegl:noise-reduction",
-    GIMP_HELP_FILTER_NOISE_REDUCTION },
+    LIGMA_HELP_FILTER_NOISE_REDUCTION },
 
-  { "filters-noise-simplex", GIMP_ICON_GEGL,
+  { "filters-noise-simplex", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Simplex Noise..."), NULL, NULL,
     "gegl:simplex-noise",
-    GIMP_HELP_FILTER_NOISE_SIMPLEX },
+    LIGMA_HELP_FILTER_NOISE_SIMPLEX },
 
-  { "filters-noise-slur", GIMP_ICON_GEGL,
+  { "filters-noise-slur", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Slur..."), NULL, NULL,
     "gegl:noise-slur",
-    GIMP_HELP_FILTER_NOISE_SLUR },
+    LIGMA_HELP_FILTER_NOISE_SLUR },
 
-  { "filters-noise-solid", GIMP_ICON_GEGL,
+  { "filters-noise-solid", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Solid Noise..."), NULL, NULL,
     "gegl:noise-solid",
-    GIMP_HELP_FILTER_NOISE_SOLID },
+    LIGMA_HELP_FILTER_NOISE_SOLID },
 
-  { "filters-noise-spread", GIMP_ICON_GEGL,
+  { "filters-noise-spread", LIGMA_ICON_GEGL,
     NC_("filters-action", "Sp_read..."), NULL, NULL,
     "gegl:noise-spread",
-    GIMP_HELP_FILTER_NOISE_SPREAD },
+    LIGMA_HELP_FILTER_NOISE_SPREAD },
 
-  { "filters-normal-map", GIMP_ICON_GEGL,
+  { "filters-normal-map", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Normal Map..."), NULL, NULL,
     "gegl:normal-map",
-    GIMP_HELP_FILTER_NORMAL_MAP },
+    LIGMA_HELP_FILTER_NORMAL_MAP },
 
-  { "filters-offset", GIMP_ICON_TOOL_OFFSET,
+  { "filters-offset", LIGMA_ICON_TOOL_OFFSET,
     NC_("filters-action", "_Offset..."), "<primary><shift>O", NULL,
-    "gimp:offset",
-    GIMP_HELP_TOOL_OFFSET },
+    "ligma:offset",
+    LIGMA_HELP_TOOL_OFFSET },
 
-  { "filters-oilify", GIMP_ICON_GEGL,
+  { "filters-oilify", LIGMA_ICON_GEGL,
     NC_("filters-action", "Oili_fy..."), NULL, NULL,
     "gegl:oilify",
-    GIMP_HELP_FILTER_OILIFY },
+    LIGMA_HELP_FILTER_OILIFY },
 
-  { "filters-panorama-projection", GIMP_ICON_GEGL,
+  { "filters-panorama-projection", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Panorama Projection..."), NULL, NULL,
     "gegl:panorama-projection",
-    GIMP_HELP_FILTER_PANORAMA_PROJECTION },
+    LIGMA_HELP_FILTER_PANORAMA_PROJECTION },
 
-  { "filters-photocopy", GIMP_ICON_GEGL,
+  { "filters-photocopy", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Photocopy..."), NULL, NULL,
     "gegl:photocopy",
-    GIMP_HELP_FILTER_PHOTOCOPY },
+    LIGMA_HELP_FILTER_PHOTOCOPY },
 
-  { "filters-pixelize", GIMP_ICON_GEGL,
+  { "filters-pixelize", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Pixelize..."), NULL, NULL,
     "gegl:pixelize",
-    GIMP_HELP_FILTER_PIXELIZE },
+    LIGMA_HELP_FILTER_PIXELIZE },
 
-  { "filters-plasma", GIMP_ICON_GEGL,
+  { "filters-plasma", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Plasma..."), NULL, NULL,
     "gegl:plasma",
-    GIMP_HELP_FILTER_PLASMA },
+    LIGMA_HELP_FILTER_PLASMA },
 
-  { "filters-polar-coordinates", GIMP_ICON_GEGL,
+  { "filters-polar-coordinates", LIGMA_ICON_GEGL,
     NC_("filters-action", "P_olar Coordinates..."), NULL, NULL,
     "gegl:polar-coordinates",
-    GIMP_HELP_FILTER_POLAR_COORDINATES },
+    LIGMA_HELP_FILTER_POLAR_COORDINATES },
 
-  { "filters-posterize", GIMP_ICON_TOOL_POSTERIZE,
+  { "filters-posterize", LIGMA_ICON_TOOL_POSTERIZE,
     NC_("filters-action", "_Posterize..."), NULL, NULL,
-    "gimp:posterize",
-    GIMP_HELP_FILTER_POSTERIZE },
+    "ligma:posterize",
+    LIGMA_HELP_FILTER_POSTERIZE },
 
-  { "filters-recursive-transform", GIMP_ICON_GEGL,
+  { "filters-recursive-transform", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Recursive Transform..."), NULL, NULL,
     "gegl:recursive-transform",
-    GIMP_HELP_FILTER_RECURSIVE_TRANSFORM },
+    LIGMA_HELP_FILTER_RECURSIVE_TRANSFORM },
 
-  { "filters-red-eye-removal", GIMP_ICON_GEGL,
+  { "filters-red-eye-removal", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
     "gegl:red-eye-removal",
-    GIMP_HELP_FILTER_RED_EYE_REMOVAL },
+    LIGMA_HELP_FILTER_RED_EYE_REMOVAL },
 
-  { "filters-reinhard-2005", GIMP_ICON_GEGL,
+  { "filters-reinhard-2005", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Reinhard 2005..."), NULL, NULL,
     "gegl:reinhard05",
-    GIMP_HELP_FILTER_REINHARD_2005 },
+    LIGMA_HELP_FILTER_REINHARD_2005 },
 
-  { "filters-rgb-clip", GIMP_ICON_GEGL,
+  { "filters-rgb-clip", LIGMA_ICON_GEGL,
     NC_("filters-action", "RGB _Clip..."), NULL, NULL,
     "gegl:rgb-clip",
-    GIMP_HELP_FILTER_RGB_CLIP },
+    LIGMA_HELP_FILTER_RGB_CLIP },
 
-  { "filters-ripple", GIMP_ICON_GEGL,
+  { "filters-ripple", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Ripple..."), NULL, NULL,
     "gegl:ripple",
-    GIMP_HELP_FILTER_RIPPLE },
+    LIGMA_HELP_FILTER_RIPPLE },
 
-  { "filters-saturation", GIMP_ICON_GEGL,
+  { "filters-saturation", LIGMA_ICON_GEGL,
     NC_("filters-action", "Sat_uration..."), NULL, NULL,
     "gegl:saturation",
-    GIMP_HELP_FILTER_SATURATION },
+    LIGMA_HELP_FILTER_SATURATION },
 
-  { "filters-semi-flatten", GIMP_ICON_GEGL,
+  { "filters-semi-flatten", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
-    "gimp:semi-flatten",
-    GIMP_HELP_FILTER_SEMI_FLATTEN },
+    "ligma:semi-flatten",
+    LIGMA_HELP_FILTER_SEMI_FLATTEN },
 
-  { "filters-sepia", GIMP_ICON_GEGL,
+  { "filters-sepia", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Sepia..."), NULL, NULL,
     "gegl:sepia",
-    GIMP_HELP_FILTER_SEPIA },
+    LIGMA_HELP_FILTER_SEPIA },
 
-  { "filters-shadows-highlights", GIMP_ICON_TOOL_SHADOWS_HIGHLIGHTS,
+  { "filters-shadows-highlights", LIGMA_ICON_TOOL_SHADOWS_HIGHLIGHTS,
     NC_("filters-action", "S_hadows-Highlights..."), NULL, NULL,
     "gegl:shadows-highlights",
-    GIMP_HELP_FILTER_SHADOWS_HIGHLIGHTS },
+    LIGMA_HELP_FILTER_SHADOWS_HIGHLIGHTS },
 
-  { "filters-shift", GIMP_ICON_GEGL,
+  { "filters-shift", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Shift..."), NULL, NULL,
     "gegl:shift",
-    GIMP_HELP_FILTER_SHIFT },
+    LIGMA_HELP_FILTER_SHIFT },
 
-  { "filters-sinus", GIMP_ICON_GEGL,
+  { "filters-sinus", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Sinus..."), NULL, NULL,
     "gegl:sinus",
-    GIMP_HELP_FILTER_SINUS },
+    LIGMA_HELP_FILTER_SINUS },
 
-  { "filters-slic", GIMP_ICON_GEGL,
+  { "filters-slic", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Simple Linear Iterative Clustering..."), NULL, NULL,
     "gegl:slic",
-    GIMP_HELP_FILTER_SLIC },
+    LIGMA_HELP_FILTER_SLIC },
 
-  { "filters-snn-mean", GIMP_ICON_GEGL,
+  { "filters-snn-mean", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Symmetric Nearest Neighbor..."), NULL, NULL,
     "gegl:snn-mean",
-    GIMP_HELP_FILTER_SNN_MEAN },
+    LIGMA_HELP_FILTER_SNN_MEAN },
 
-  { "filters-softglow", GIMP_ICON_GEGL,
+  { "filters-softglow", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
     "gegl:softglow",
-    GIMP_HELP_FILTER_SOFTGLOW },
+    LIGMA_HELP_FILTER_SOFTGLOW },
 
-  { "filters-spherize", GIMP_ICON_GEGL,
+  { "filters-spherize", LIGMA_ICON_GEGL,
     NC_("filters-action", "Spheri_ze..."), NULL, NULL,
     "gegl:spherize",
-    GIMP_HELP_FILTER_SPHERIZE },
+    LIGMA_HELP_FILTER_SPHERIZE },
 
-  { "filters-spiral", GIMP_ICON_GEGL,
+  { "filters-spiral", LIGMA_ICON_GEGL,
     NC_("filters-action", "S_piral..."), NULL, NULL,
     "gegl:spiral",
-    GIMP_HELP_FILTER_SPIRAL },
+    LIGMA_HELP_FILTER_SPIRAL },
 
-  { "filters-stretch-contrast", GIMP_ICON_GEGL,
+  { "filters-stretch-contrast", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Stretch Contrast..."), NULL, NULL,
     "gegl:stretch-contrast",
-    GIMP_HELP_FILTER_STRETCH_CONTRAST },
+    LIGMA_HELP_FILTER_STRETCH_CONTRAST },
 
-  { "filters-stress", GIMP_ICON_GEGL,
+  { "filters-stress", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Stress..."), NULL, NULL,
     "gegl:stress",
-    GIMP_HELP_FILTER_STRESS },
+    LIGMA_HELP_FILTER_STRESS },
 
-  { "filters-supernova", GIMP_ICON_GEGL,
+  { "filters-supernova", LIGMA_ICON_GEGL,
     NC_("filters-action", "Super_nova..."), NULL, NULL,
     "gegl:supernova",
-    GIMP_HELP_FILTER_SUPERNOVA },
+    LIGMA_HELP_FILTER_SUPERNOVA },
 
-  { "filters-threshold", GIMP_ICON_TOOL_THRESHOLD,
+  { "filters-threshold", LIGMA_ICON_TOOL_THRESHOLD,
     NC_("filters-action", "_Threshold..."), NULL, NULL,
-    "gimp:threshold",
-    GIMP_HELP_TOOL_THRESHOLD },
+    "ligma:threshold",
+    LIGMA_HELP_TOOL_THRESHOLD },
 
-  { "filters-threshold-alpha", GIMP_ICON_GEGL,
+  { "filters-threshold-alpha", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
-    "gimp:threshold-alpha",
-    GIMP_HELP_FILTER_THRESHOLD_ALPHA },
+    "ligma:threshold-alpha",
+    LIGMA_HELP_FILTER_THRESHOLD_ALPHA },
 
-  { "filters-tile-glass", GIMP_ICON_GEGL,
+  { "filters-tile-glass", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Glass Tile..."), NULL, NULL,
     "gegl:tile-glass",
-    GIMP_HELP_FILTER_TILE_GLASS },
+    LIGMA_HELP_FILTER_TILE_GLASS },
 
-  { "filters-tile-paper", GIMP_ICON_GEGL,
+  { "filters-tile-paper", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Paper Tile..."), NULL, NULL,
     "gegl:tile-paper",
-    GIMP_HELP_FILTER_TILE_PAPER },
+    LIGMA_HELP_FILTER_TILE_PAPER },
 
-  { "filters-tile-seamless", GIMP_ICON_GEGL,
+  { "filters-tile-seamless", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Tile Seamless..."), NULL, NULL,
     "gegl:tile-seamless",
-    GIMP_HELP_FILTER_TILE_SEAMLESS },
+    LIGMA_HELP_FILTER_TILE_SEAMLESS },
 
-  { "filters-unsharp-mask", GIMP_ICON_GEGL,
+  { "filters-unsharp-mask", LIGMA_ICON_GEGL,
     NC_("filters-action", "Sharpen (_Unsharp Mask)..."), NULL, NULL,
     "gegl:unsharp-mask",
-    GIMP_HELP_FILTER_UNSHARP_MASK },
+    LIGMA_HELP_FILTER_UNSHARP_MASK },
 
-  { "filters-value-propagate", GIMP_ICON_GEGL,
+  { "filters-value-propagate", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Value Propagate..."), NULL, NULL,
     "gegl:value-propagate",
-    GIMP_HELP_FILTER_VALUE_PROPAGATE },
+    LIGMA_HELP_FILTER_VALUE_PROPAGATE },
 
-  { "filters-variable-blur", GIMP_ICON_GEGL,
+  { "filters-variable-blur", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Variable Blur..."), NULL, NULL,
     "gegl:variable-blur",
-    GIMP_HELP_FILTER_VARIABLE_BLUR },
+    LIGMA_HELP_FILTER_VARIABLE_BLUR },
 
-  { "filters-video-degradation", GIMP_ICON_GEGL,
+  { "filters-video-degradation", LIGMA_ICON_GEGL,
     NC_("filters-action", "Vi_deo Degradation..."), NULL, NULL,
     "gegl:video-degradation",
-    GIMP_HELP_FILTER_VIDEO_DEGRADATION },
+    LIGMA_HELP_FILTER_VIDEO_DEGRADATION },
 
-  { "filters-vignette", GIMP_ICON_GEGL,
+  { "filters-vignette", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Vignette..."), NULL, NULL,
     "gegl:vignette",
-    GIMP_HELP_FILTER_VIGNETTE },
+    LIGMA_HELP_FILTER_VIGNETTE },
 
-  { "filters-waterpixels", GIMP_ICON_GEGL,
+  { "filters-waterpixels", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Waterpixels..."), NULL, NULL,
     "gegl:waterpixels",
-    GIMP_HELP_FILTER_WATERPIXELS },
+    LIGMA_HELP_FILTER_WATERPIXELS },
 
-  { "filters-waves", GIMP_ICON_GEGL,
+  { "filters-waves", LIGMA_ICON_GEGL,
     NC_("filters-action", "_Waves..."), NULL, NULL,
     "gegl:waves",
-    GIMP_HELP_FILTER_WAVES },
+    LIGMA_HELP_FILTER_WAVES },
 
-  { "filters-whirl-pinch", GIMP_ICON_GEGL,
+  { "filters-whirl-pinch", LIGMA_ICON_GEGL,
     NC_("filters-action", "W_hirl and Pinch..."), NULL, NULL,
     "gegl:whirl-pinch",
-    GIMP_HELP_FILTER_WHIRL_PINCH },
+    LIGMA_HELP_FILTER_WHIRL_PINCH },
 
-  { "filters-wind", GIMP_ICON_GEGL,
+  { "filters-wind", LIGMA_ICON_GEGL,
     NC_("filters-action", "W_ind..."), NULL, NULL,
     "gegl:wind",
-    GIMP_HELP_FILTER_WIND }
+    LIGMA_HELP_FILTER_WIND }
 };
 
-static const GimpEnumActionEntry filters_repeat_actions[] =
+static const LigmaEnumActionEntry filters_repeat_actions[] =
 {
-  { "filters-repeat", GIMP_ICON_SYSTEM_RUN,
+  { "filters-repeat", LIGMA_ICON_SYSTEM_RUN,
     NC_("filters-action", "Re_peat Last"), "<primary>F",
     NC_("filters-action",
         "Rerun the last used filter using the same settings"),
-    GIMP_RUN_WITH_LAST_VALS, FALSE,
-    GIMP_HELP_FILTER_REPEAT },
+    LIGMA_RUN_WITH_LAST_VALS, FALSE,
+    LIGMA_HELP_FILTER_REPEAT },
 
-  { "filters-reshow", GIMP_ICON_DIALOG_RESHOW_FILTER,
+  { "filters-reshow", LIGMA_ICON_DIALOG_RESHOW_FILTER,
     NC_("filters-action", "R_e-Show Last"), "<primary><shift>F",
     NC_("filters-action", "Show the last used filter dialog again"),
-    GIMP_RUN_INTERACTIVE, FALSE,
-    GIMP_HELP_FILTER_RESHOW }
+    LIGMA_RUN_INTERACTIVE, FALSE,
+    LIGMA_HELP_FILTER_RESHOW }
 };
 
 
 void
-filters_actions_setup (GimpActionGroup *group)
+filters_actions_setup (LigmaActionGroup *group)
 {
-  GimpProcedureActionEntry *entries;
+  LigmaProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
 
-  gimp_action_group_add_actions (group, "filters-action",
+  ligma_action_group_add_actions (group, "filters-action",
                                  filters_menu_actions,
                                  G_N_ELEMENTS (filters_menu_actions));
 
-  gimp_action_group_add_string_actions (group, "filters-action",
+  ligma_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
                                         G_N_ELEMENTS (filters_actions),
                                         filters_apply_cmd_callback);
   filters_actions_set_tooltips (group, filters_actions,
                                 G_N_ELEMENTS (filters_actions));
 
-  gimp_action_group_add_string_actions (group, "filters-action",
+  ligma_action_group_add_string_actions (group, "filters-action",
                                         filters_settings_actions,
                                         G_N_ELEMENTS (filters_settings_actions),
                                         filters_apply_cmd_callback);
   filters_actions_set_tooltips (group, filters_settings_actions,
                                 G_N_ELEMENTS (filters_settings_actions));
 
-  gimp_action_group_add_string_actions (group, "filters-action",
+  ligma_action_group_add_string_actions (group, "filters-action",
                                         filters_interactive_actions,
                                         G_N_ELEMENTS (filters_interactive_actions),
                                         filters_apply_interactive_cmd_callback);
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
 
-  gimp_action_group_add_enum_actions (group, "filters-action",
+  ligma_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
                                       G_N_ELEMENTS (filters_repeat_actions),
                                       filters_repeat_cmd_callback);
 
-  n_entries = gimp_filter_history_size (group->gimp);
+  n_entries = ligma_filter_history_size (group->ligma);
 
-  entries = g_new0 (GimpProcedureActionEntry, n_entries);
+  entries = g_new0 (LigmaProcedureActionEntry, n_entries);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -840,32 +840,32 @@ filters_actions_setup (GimpActionGroup *group)
       entries[i].accelerator = "";
       entries[i].tooltip     = NULL;
       entries[i].procedure   = NULL;
-      entries[i].help_id     = GIMP_HELP_FILTER_RESHOW;
+      entries[i].help_id     = LIGMA_HELP_FILTER_RESHOW;
     }
 
-  gimp_action_group_add_procedure_actions (group, entries, n_entries,
+  ligma_action_group_add_procedure_actions (group, entries, n_entries,
                                            filters_history_cmd_callback);
 
   for (i = 0; i < n_entries; i++)
     {
-      gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
+      ligma_action_group_set_action_visible (group, entries[i].name, FALSE);
       g_free ((gchar *) entries[i].name);
     }
 
   g_free (entries);
 
-  g_signal_connect_object (group->gimp, "filter-history-changed",
+  g_signal_connect_object (group->ligma, "filter-history-changed",
                            G_CALLBACK (filters_actions_history_changed),
                            group, 0);
 
-  filters_actions_history_changed (group->gimp, group);
+  filters_actions_history_changed (group->ligma, group);
 }
 
 void
-filters_actions_update (GimpActionGroup *group,
+filters_actions_update (LigmaActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   gboolean      writable       = FALSE;
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
@@ -877,25 +877,25 @@ filters_actions_update (GimpActionGroup *group,
     {
       GList *drawables;
 
-      drawables = gimp_image_get_selected_drawables (image);
+      drawables = ligma_image_get_selected_drawables (image);
 
       if (g_list_length (drawables) == 1)
         {
-          GimpDrawable *drawable = drawables->data;
-          GimpItem     *item;
+          LigmaDrawable *drawable = drawables->data;
+          LigmaItem     *item;
 
-          gray           = gimp_drawable_is_gray (drawable);
-          alpha          = gimp_drawable_has_alpha (drawable);
-          supports_alpha = gimp_drawable_supports_alpha (drawable);
+          gray           = ligma_drawable_is_gray (drawable);
+          alpha          = ligma_drawable_has_alpha (drawable);
+          supports_alpha = ligma_drawable_supports_alpha (drawable);
 
-          if (GIMP_IS_LAYER_MASK (drawable))
-            item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+          if (LIGMA_IS_LAYER_MASK (drawable))
+            item = LIGMA_ITEM (ligma_layer_mask_get_layer (LIGMA_LAYER_MASK (drawable)));
           else
-            item = GIMP_ITEM (drawable);
+            item = LIGMA_ITEM (drawable);
 
-          writable = ! gimp_item_is_content_locked (item, NULL);
+          writable = ! ligma_item_is_content_locked (item, NULL);
 
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+          if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawable)))
             writable = FALSE;
         }
 
@@ -903,7 +903,7 @@ filters_actions_update (GimpActionGroup *group,
    }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("filters-alien-map",               writable);
   SET_SENSITIVE ("filters-antialias",               writable);
@@ -1037,34 +1037,34 @@ filters_actions_update (GimpActionGroup *group,
 #undef SET_SENSITIVE
 
   {
-    GimpProcedure *proc   = gimp_filter_history_nth (group->gimp, 0);
+    LigmaProcedure *proc   = ligma_filter_history_nth (group->ligma, 0);
     const gchar   *reason = NULL;
     gint           i;
 
     if (proc &&
-        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image), &reason))
+        ligma_procedure_get_sensitive (proc, LIGMA_OBJECT (image), &reason))
       {
-        gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE, NULL);
-        gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE, NULL);
+        ligma_action_group_set_action_sensitive (group, "filters-repeat", TRUE, NULL);
+        ligma_action_group_set_action_sensitive (group, "filters-reshow", TRUE, NULL);
       }
     else
       {
-        gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE, reason);
-        gimp_action_group_set_action_sensitive (group, "filters-reshow", FALSE, reason);
+        ligma_action_group_set_action_sensitive (group, "filters-repeat", FALSE, reason);
+        ligma_action_group_set_action_sensitive (group, "filters-reshow", FALSE, reason);
      }
 
-    for (i = 0; i < gimp_filter_history_length (group->gimp); i++)
+    for (i = 0; i < ligma_filter_history_length (group->ligma); i++)
       {
         gchar    *name = g_strdup_printf ("filters-recent-%02d", i + 1);
         gboolean  sensitive;
 
-        proc = gimp_filter_history_nth (group->gimp, i);
+        proc = ligma_filter_history_nth (group->ligma, i);
 
         reason = NULL;
-        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image),
+        sensitive = ligma_procedure_get_sensitive (proc, LIGMA_OBJECT (image),
                                                   &reason);
 
-        gimp_action_group_set_action_sensitive (group, name, sensitive, reason);
+        ligma_action_group_set_action_sensitive (group, name, sensitive, reason);
 
         g_free (name);
       }
@@ -1072,39 +1072,39 @@ filters_actions_update (GimpActionGroup *group,
 }
 
 static void
-filters_actions_set_tooltips (GimpActionGroup             *group,
-                              const GimpStringActionEntry *entries,
+filters_actions_set_tooltips (LigmaActionGroup             *group,
+                              const LigmaStringActionEntry *entries,
                               gint                         n_entries)
 {
   gint i;
 
   for (i = 0; i < n_entries; i++)
     {
-      const GimpStringActionEntry *entry = entries + i;
+      const LigmaStringActionEntry *entry = entries + i;
       const gchar                 *description;
 
       description = gegl_operation_get_key (entry->value, "description");
 
       if (description)
-        gimp_action_group_set_action_tooltip (group, entry->name,
+        ligma_action_group_set_action_tooltip (group, entry->name,
                                               description);
     }
 }
 
-static GimpActionGroup *
-filters_actions_get_plug_in_group (GimpActionGroup *group)
+static LigmaActionGroup *
+filters_actions_get_plug_in_group (LigmaActionGroup *group)
 {
   GList *list;
 
-  for (list = gimp_ui_managers_from_name ("<Image>");
+  for (list = ligma_ui_managers_from_name ("<Image>");
        list;
        list = g_list_next (list))
     {
-      GimpUIManager *manager = list->data;
+      LigmaUIManager *manager = list->data;
 
       /* if this is our UI manager */
-      if (gimp_ui_manager_get_action_group (manager, "filters") == group)
-        return gimp_ui_manager_get_action_group (manager, "plug-in");
+      if (ligma_ui_manager_get_action_group (manager, "filters") == group)
+        return ligma_ui_manager_get_action_group (manager, "plug-in");
     }
 
   /* this happens during initial UI manager construction */
@@ -1112,42 +1112,42 @@ filters_actions_get_plug_in_group (GimpActionGroup *group)
 }
 
 static void
-filters_actions_history_changed (Gimp            *gimp,
-                                 GimpActionGroup *group)
+filters_actions_history_changed (Ligma            *ligma,
+                                 LigmaActionGroup *group)
 {
-  GimpProcedure   *proc;
-  GimpActionGroup *plug_in_group;
+  LigmaProcedure   *proc;
+  LigmaActionGroup *plug_in_group;
   gint             i;
 
   plug_in_group = filters_actions_get_plug_in_group (group);
 
-  proc = gimp_filter_history_nth (gimp, 0);
+  proc = ligma_filter_history_nth (ligma, 0);
 
   if (proc)
     {
-      GimpAction  *actual_action = NULL;
+      LigmaAction  *actual_action = NULL;
       const gchar *label;
       gchar       *repeat;
       gchar       *reshow;
       const gchar *reason    = NULL;
       gboolean     sensitive = FALSE;
 
-      label = gimp_procedure_get_label (proc);
+      label = ligma_procedure_get_label (proc);
 
       repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
       reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
 
-      gimp_action_group_set_action_label (group, "filters-repeat", repeat);
-      gimp_action_group_set_action_label (group, "filters-reshow", reshow);
+      ligma_action_group_set_action_label (group, "filters-repeat", repeat);
+      ligma_action_group_set_action_label (group, "filters-reshow", reshow);
 
       g_free (repeat);
       g_free (reshow);
 
-      if (g_str_has_prefix (gimp_object_get_name (proc), "filters-"))
+      if (g_str_has_prefix (ligma_object_get_name (proc), "filters-"))
         {
           actual_action =
-            gimp_action_group_get_action (group,
-                                          gimp_object_get_name (proc));
+            ligma_action_group_get_action (group,
+                                          ligma_object_get_name (proc));
         }
       else if (plug_in_group)
         {
@@ -1158,80 +1158,80 @@ filters_actions_history_changed (Gimp            *gimp,
            *  #517683.
            */
           actual_action =
-            gimp_action_group_get_action (plug_in_group,
-                                          gimp_object_get_name (proc));
+            ligma_action_group_get_action (plug_in_group,
+                                          ligma_object_get_name (proc));
         }
 
       if (actual_action)
-        sensitive = gimp_action_get_sensitive (actual_action, &reason);
+        sensitive = ligma_action_get_sensitive (actual_action, &reason);
 
-      gimp_action_group_set_action_sensitive (group, "filters-repeat",
+      ligma_action_group_set_action_sensitive (group, "filters-repeat",
                                               sensitive, reason);
-      gimp_action_group_set_action_sensitive (group, "filters-reshow",
+      ligma_action_group_set_action_sensitive (group, "filters-reshow",
                                               sensitive, reason);
    }
   else
     {
-      gimp_action_group_set_action_label (group, "filters-repeat",
+      ligma_action_group_set_action_label (group, "filters-repeat",
                                           _("Repeat Last"));
-      gimp_action_group_set_action_label (group, "filters-reshow",
+      ligma_action_group_set_action_label (group, "filters-reshow",
                                           _("Re-Show Last"));
 
-      gimp_action_group_set_action_sensitive (group, "filters-repeat",
+      ligma_action_group_set_action_sensitive (group, "filters-repeat",
                                               FALSE, _("No last used filters"));
-      gimp_action_group_set_action_sensitive (group, "filters-reshow",
+      ligma_action_group_set_action_sensitive (group, "filters-reshow",
                                               FALSE, _("No last used filters"));
     }
 
-  for (i = 0; i < gimp_filter_history_length (gimp); i++)
+  for (i = 0; i < ligma_filter_history_length (ligma); i++)
     {
-      GimpAction  *action;
-      GimpAction  *actual_action = NULL;
+      LigmaAction  *action;
+      LigmaAction  *actual_action = NULL;
       const gchar *label;
       gchar       *name;
       gboolean     sensitive = FALSE;
 
       name = g_strdup_printf ("filters-recent-%02d", i + 1);
-      action = gimp_action_group_get_action (group, name);
+      action = ligma_action_group_get_action (group, name);
       g_free (name);
 
-      proc = gimp_filter_history_nth (gimp, i);
+      proc = ligma_filter_history_nth (ligma, i);
 
-      label = gimp_procedure_get_menu_label (proc);
+      label = ligma_procedure_get_menu_label (proc);
 
-      if (g_str_has_prefix (gimp_object_get_name (proc), "filters-"))
+      if (g_str_has_prefix (ligma_object_get_name (proc), "filters-"))
         {
           actual_action =
-            gimp_action_group_get_action (group,
-                                          gimp_object_get_name (proc));
+            ligma_action_group_get_action (group,
+                                          ligma_object_get_name (proc));
         }
       else if (plug_in_group)
         {
           /*  see comment above  */
           actual_action =
-            gimp_action_group_get_action (plug_in_group,
-                                          gimp_object_get_name (proc));
+            ligma_action_group_get_action (plug_in_group,
+                                          ligma_object_get_name (proc));
         }
 
       if (actual_action)
-        sensitive = gimp_action_get_sensitive (actual_action, NULL);
+        sensitive = ligma_action_get_sensitive (actual_action, NULL);
 
       g_object_set (action,
                     "visible",   TRUE,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
-                    "icon-name", gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc)),
-                    "tooltip",   gimp_procedure_get_blurb (proc),
+                    "icon-name", ligma_viewable_get_icon_name (LIGMA_VIEWABLE (proc)),
+                    "tooltip",   ligma_procedure_get_blurb (proc),
                     NULL);
     }
 
-  for (; i < gimp_filter_history_size (gimp); i++)
+  for (; i < ligma_filter_history_size (ligma); i++)
     {
-      GimpAction *action;
+      LigmaAction *action;
       gchar      *name = g_strdup_printf ("filters-recent-%02d", i + 1);
 
-      action = gimp_action_group_get_action (group, name);
+      action = ligma_action_group_get_action (group, name);
       g_free (name);
 
       g_object_set (action,

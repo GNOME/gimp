@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,17 +23,17 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <webkit2/webkit2.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-web-page"
 #define PLUG_IN_BINARY "web-page"
-#define PLUG_IN_ROLE   "gimp-web-page"
+#define PLUG_IN_ROLE   "ligma-web-page"
 #define MAX_URL_LEN    2048
 
 
@@ -42,7 +42,7 @@ typedef struct
   char      *url;
   gint32     width;
   gint       font_size;
-  GimpImage *image;
+  LigmaImage *image;
   GError    *error;
 } WebpageVals;
 
@@ -59,12 +59,12 @@ typedef struct _WebpageClass WebpageClass;
 
 struct _Webpage
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _WebpageClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -73,21 +73,21 @@ struct _WebpageClass
 
 GType                   webpage_get_type         (void) G_GNUC_CONST;
 
-static GList          * webpage_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * webpage_create_procedure (GimpPlugIn           *plug_in,
+static GList          * webpage_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * webpage_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * webpage_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+static LigmaValueArray * webpage_run              (LigmaProcedure        *procedure,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static gboolean         webpage_dialog           (void);
-static GimpImage      * webpage_capture          (void);
+static LigmaImage      * webpage_capture          (void);
 
 
-G_DEFINE_TYPE (Webpage, webpage, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Webpage, webpage, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (WEBPAGE_TYPE)
+LIGMA_MAIN (WEBPAGE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -97,7 +97,7 @@ static WebpageVals webpagevals;
 static void
 webpage_class_init (WebpageClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = webpage_query_procedures;
   plug_in_class->create_procedure = webpage_create_procedure;
@@ -110,62 +110,62 @@ webpage_init (Webpage *webpage)
 }
 
 static GList *
-webpage_query_procedures (GimpPlugIn *plug_in)
+webpage_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-webpage_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+webpage_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       webpage_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("From _Webpage..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+      ligma_procedure_set_menu_label (procedure, _("From _Webpage..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create an image of a webpage"),
                                         "The plug-in allows you to take a "
                                         "screenshot of a webpage.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@banu.com>",
                                       "2011",
                                       "2011");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "url",
+      LIGMA_PROC_ARG_STRING (procedure, "url",
                             "URL",
                             "URL of the webpage to screenshot",
-                            "http://www.gimp.org/",
+                            "http://www.ligma.org/",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "width",
+      LIGMA_PROC_ARG_INT (procedure, "width",
                          "Width",
                          "The width of the screenshot (in pixels)",
-                         100, GIMP_MAX_IMAGE_SIZE, 1024,
+                         100, LIGMA_MAX_IMAGE_SIZE, 1024,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "font-size",
+      LIGMA_PROC_ARG_INT (procedure, "font-size",
                          "Font size",
                          "The font size to use in the page (in pt)",
                          1, 1000, 12,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "image",
                            "Image",
                            "The output image",
                            FALSE,
@@ -175,19 +175,19 @@ webpage_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-webpage_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+static LigmaValueArray *
+webpage_run (LigmaProcedure        *procedure,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpValueArray  *return_vals;
-  GimpRunMode      run_mode;
-  GimpImage       *image;
-  WebpageSaveVals  save = { "https://www.gimp.org/", 1024, 12 };
+  LigmaValueArray  *return_vals;
+  LigmaRunMode      run_mode;
+  LigmaImage       *image;
+  WebpageSaveVals  save = { "https://www.ligma.org/", 1024, 12 };
 
-  gimp_get_data (PLUG_IN_PROC, &save);
+  ligma_get_data (PLUG_IN_PROC, &save);
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  run_mode = LIGMA_VALUES_GET_ENUM (args, 0);
 
   webpagevals.url       = g_strdup (save.url);
   webpagevals.width     = save.width;
@@ -196,23 +196,23 @@ webpage_run (GimpProcedure        *procedure,
   /* how are we running today? */
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       if (! webpage_dialog ())
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+    case LIGMA_RUN_WITH_LAST_VALS:
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      webpagevals.url       = (gchar *) GIMP_VALUES_GET_STRING (args, 1);
-      webpagevals.width     = GIMP_VALUES_GET_INT              (args, 2);
-      webpagevals.font_size = GIMP_VALUES_GET_INT              (args, 3);
+    case LIGMA_RUN_NONINTERACTIVE:
+      webpagevals.url       = (gchar *) LIGMA_VALUES_GET_STRING (args, 1);
+      webpagevals.width     = LIGMA_VALUES_GET_INT              (args, 2);
+      webpagevals.font_size = LIGMA_VALUES_GET_INT              (args, 3);
       break;
 
     default:
@@ -222,8 +222,8 @@ webpage_run (GimpProcedure        *procedure,
   image = webpage_capture ();
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              webpagevals.error);
 
   save.width     = webpagevals.width;
@@ -238,16 +238,16 @@ webpage_run (GimpProcedure        *procedure,
       memset (save.url, 0, MAX_URL_LEN);
     }
 
-  gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
+  ligma_set_data (PLUG_IN_PROC, &save, sizeof save);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_display_new (image);
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_display_new (image);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -269,22 +269,22 @@ webpage_dialog (void)
   gint           status;
   gboolean       ret = FALSE;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Create from webpage"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Create from webpage"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("Cre_ate"), GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -296,7 +296,7 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_WEB,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_WEB,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
@@ -337,7 +337,7 @@ webpage_dialog (void)
 
   adjustment = gtk_adjustment_new (webpagevals.width,
                                    1, 8192, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -355,7 +355,7 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gimp_int_combo_box_new (_("Huge"), 16,
+  combo = ligma_int_combo_box_new (_("Huge"), 16,
                                   _("Large"), 14,
                                   C_("web-page", "Default"), 12,
                                   _("Small"), 10,
@@ -375,14 +375,14 @@ webpage_dialog (void)
       active = 12;
     }
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), active);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), active);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   g_object_unref (sizegroup);
 
-  status = gimp_dialog_run (GIMP_DIALOG (dialog));
+  status = ligma_dialog_run (LIGMA_DIALOG (dialog));
   if (status == GTK_RESPONSE_OK)
     {
       g_free (webpagevals.url);
@@ -390,7 +390,7 @@ webpage_dialog (void)
 
       webpagevals.width = (gint) gtk_adjustment_get_value (adjustment);
 
-      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo),
                                      &webpagevals.font_size);
 
       ret = TRUE;
@@ -411,7 +411,7 @@ notify_progress_cb (WebKitWebView  *view,
 
   if ((progress - old_progress) > 0.01)
     {
-      gimp_progress_update (progress);
+      ligma_progress_update (progress);
       old_progress = progress;
     }
 }
@@ -445,24 +445,24 @@ snapshot_ready (GObject      *source_object,
     {
       gint       width;
       gint       height;
-      GimpLayer *layer;
+      LigmaLayer *layer;
 
       width  = cairo_image_surface_get_width (surface);
       height = cairo_image_surface_get_height (surface);
 
-      webpagevals.image = gimp_image_new (width, height, GIMP_RGB);
+      webpagevals.image = ligma_image_new (width, height, LIGMA_RGB);
 
-      gimp_image_undo_disable (webpagevals.image);
-      layer = gimp_layer_new_from_surface (webpagevals.image, _("Webpage"),
+      ligma_image_undo_disable (webpagevals.image);
+      layer = ligma_layer_new_from_surface (webpagevals.image, _("Webpage"),
                                            surface,
                                            0.25, 1.0);
-      gimp_image_insert_layer (webpagevals.image, layer, NULL, 0);
-      gimp_image_undo_enable (webpagevals.image);
+      ligma_image_insert_layer (webpagevals.image, layer, NULL, 0);
+      ligma_image_undo_enable (webpagevals.image);
 
       cairo_surface_destroy (surface);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   gtk_main_quit ();
 }
@@ -472,7 +472,7 @@ load_finished_idle (gpointer data)
 {
   static gint count = 0;
 
-  gimp_progress_update ((gdouble) count * 0.025);
+  ligma_progress_update ((gdouble) count * 0.025);
 
   count++;
 
@@ -500,7 +500,7 @@ load_changed_cb (WebKitWebView   *view,
     {
       if (! webpagevals.error)
         {
-          gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
+          ligma_progress_init_printf (_("Transferring webpage image for '%s'"),
                                      webpagevals.url);
 
           g_timeout_add (100, load_finished_idle, view);
@@ -512,7 +512,7 @@ load_changed_cb (WebKitWebView   *view,
     }
 }
 
-static GimpImage *
+static LigmaImage *
 webpage_capture (void)
 {
   gchar          *scheme;
@@ -564,11 +564,11 @@ webpage_capture (void)
   gtk_widget_set_size_request (view, webpagevals.width, -1);
   gtk_container_add (GTK_CONTAINER (window), view);
 
-  /* Append "GIMP/<GIMP_VERSION>" to the user agent string */
+  /* Append "LIGMA/<LIGMA_VERSION>" to the user agent string */
   settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW (view));
-  ua = g_strdup_printf ("%s GIMP/%s",
+  ua = g_strdup_printf ("%s LIGMA/%s",
                         webkit_settings_get_user_agent (settings),
-                        GIMP_VERSION);
+                        LIGMA_VERSION);
   webkit_settings_set_user_agent (settings, ua);
   g_free (ua);
 
@@ -585,7 +585,7 @@ webpage_capture (void)
                     G_CALLBACK (load_changed_cb),
                     window);
 
-  gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
+  ligma_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
 
   webkit_web_view_load_uri (WEBKIT_WEB_VIEW (view),
                             webpagevals.url);
@@ -594,7 +594,7 @@ webpage_capture (void)
 
   gtk_widget_destroy (window);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return webpagevals.image;
 }

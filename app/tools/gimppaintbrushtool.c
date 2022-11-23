@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,75 +20,75 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "gimppaintbrushtool.h"
-#include "gimppaintoptions-gui.h"
-#include "gimptoolcontrol.h"
+#include "ligmapaintbrushtool.h"
+#include "ligmapaintoptions-gui.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
-
-
-static gboolean   gimp_paintbrush_tool_is_alpha_only (GimpPaintTool *paint_tool,
-                                                      GimpDrawable  *drawable);
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_BRUSH_TOOL)
+static gboolean   ligma_paintbrush_tool_is_alpha_only (LigmaPaintTool *paint_tool,
+                                                      LigmaDrawable  *drawable);
+
+
+G_DEFINE_TYPE (LigmaPaintbrushTool, ligma_paintbrush_tool, LIGMA_TYPE_BRUSH_TOOL)
 
 
 void
-gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
+ligma_paintbrush_tool_register (LigmaToolRegisterCallback  callback,
                                gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_PAINTBRUSH_TOOL,
-                GIMP_TYPE_PAINT_OPTIONS,
-                gimp_paint_options_gui,
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_PROP_MASK_GRADIENT,
-                "gimp-paintbrush-tool",
+  (* callback) (LIGMA_TYPE_PAINTBRUSH_TOOL,
+                LIGMA_TYPE_PAINT_OPTIONS,
+                ligma_paint_options_gui,
+                LIGMA_PAINT_OPTIONS_CONTEXT_MASK |
+                LIGMA_CONTEXT_PROP_MASK_GRADIENT,
+                "ligma-paintbrush-tool",
                 _("Paintbrush"),
                 _("Paintbrush Tool: Paint smooth strokes using a brush"),
                 N_("_Paintbrush"), "P",
-                NULL, GIMP_HELP_TOOL_PAINTBRUSH,
-                GIMP_ICON_TOOL_PAINTBRUSH,
+                NULL, LIGMA_HELP_TOOL_PAINTBRUSH,
+                LIGMA_ICON_TOOL_PAINTBRUSH,
                 data);
 }
 
 static void
-gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
+ligma_paintbrush_tool_class_init (LigmaPaintbrushToolClass *klass)
 {
-  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+  LigmaPaintToolClass *paint_tool_class = LIGMA_PAINT_TOOL_CLASS (klass);
 
-  paint_tool_class->is_alpha_only = gimp_paintbrush_tool_is_alpha_only;
+  paint_tool_class->is_alpha_only = ligma_paintbrush_tool_is_alpha_only;
 }
 
 static void
-gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
+ligma_paintbrush_tool_init (LigmaPaintbrushTool *paintbrush)
 {
-  GimpTool *tool = GIMP_TOOL (paintbrush);
+  LigmaTool *tool = LIGMA_TOOL (paintbrush);
 
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_PAINTBRUSH);
+  ligma_tool_control_set_tool_cursor (tool->control,
+                                     LIGMA_TOOL_CURSOR_PAINTBRUSH);
 
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
-                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
+  ligma_paint_tool_enable_color_picker (LIGMA_PAINT_TOOL (paintbrush),
+                                       LIGMA_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static gboolean
-gimp_paintbrush_tool_is_alpha_only (GimpPaintTool *paint_tool,
-                                    GimpDrawable  *drawable)
+ligma_paintbrush_tool_is_alpha_only (LigmaPaintTool *paint_tool,
+                                    LigmaDrawable  *drawable)
 {
-  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
-  GimpContext      *context       = GIMP_CONTEXT (paint_options);
-  GimpLayerMode     paint_mode    = gimp_context_get_paint_mode (context);
+  LigmaPaintOptions *paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  LigmaContext      *context       = LIGMA_CONTEXT (paint_options);
+  LigmaLayerMode     paint_mode    = ligma_context_get_paint_mode (context);
 
-  return gimp_layer_mode_is_alpha_only (paint_mode);
+  return ligma_layer_mode_is_alpha_only (paint_mode);
 }

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub edit_cut {
     $blurb = 'Cut from the specified drawables.';
@@ -22,10 +22,10 @@ sub edit_cut {
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
 selection is cut from the specified drawables and placed in an internal
-GIMP edit buffer. It can subsequently be retrieved using the
-gimp_edit_paste() command. If there is no selection and only one
+LIGMA edit buffer. It can subsequently be retrieved using the
+ligma_edit_paste() command. If there is no selection and only one
 specified drawable, then the specified drawable will be removed and its
-contents stored in the internal GIMP edit buffer.
+contents stored in the internal LIGMA edit buffer.
 This procedure will fail if the selected area lies completely outside
 the bounds of the current drawables and there is nothing to cut from.
 HELP
@@ -50,15 +50,15 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpImage *image         = NULL;
+  LigmaImage *image         = NULL;
   GList     *drawable_list = NULL;
   gint       i;
 
   for (i = 0; i < num_drawables; i++)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                       GIMP_PDB_ITEM_CONTENT, error) ||
-          gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+      if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                       LIGMA_PDB_ITEM_CONTENT, error) ||
+          ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error))
         {
           success = FALSE;
           break;
@@ -66,13 +66,13 @@ HELP
 
       if (! image)
         {
-          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+          image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
         }
-      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+      else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
         {
           success = FALSE;
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 _("All specified drawables must belong to the same image."));
           break;
         }
@@ -84,12 +84,12 @@ HELP
     {
       GError *my_error = NULL;
 
-      non_empty = gimp_edit_cut (image, drawable_list, context, &my_error) != NULL;
+      non_empty = ligma_edit_cut (image, drawable_list, context, &my_error) != NULL;
 
       if (! non_empty)
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
@@ -110,9 +110,9 @@ sub edit_copy {
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
 selection is copied from the specified drawables and placed in an
-internal GIMP edit buffer. It can subsequently be retrieved using the
-gimp_edit_paste() command.  If there is no selection, then the
-specified drawables' contents will be stored in the internal GIMP edit
+internal LIGMA edit buffer. It can subsequently be retrieved using the
+ligma_edit_paste() command.  If there is no selection, then the
+specified drawables' contents will be stored in the internal LIGMA edit
 buffer. This procedure will fail if the selected area lies completely
 outside the bounds of the current drawables and there is nothing to
 copy from.
@@ -139,22 +139,22 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpImage *image          = NULL;
+  LigmaImage *image          = NULL;
   GList     *drawables_list = NULL;
   gint       i;
 
   for (i = 0; i < num_drawables; i++)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
+      if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL, 0, error))
         {
           success = FALSE;
           break;
         }
       if (image == NULL)
         {
-          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+          image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
         }
-      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+      else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
         {
           success = FALSE;
           break;
@@ -166,12 +166,12 @@ HELP
     {
       GError *my_error = NULL;
 
-      non_empty = gimp_edit_copy (image, drawables_list, context, &my_error) != NULL;
+      non_empty = ligma_edit_copy (image, drawables_list, context, &my_error) != NULL;
 
       if (! non_empty)
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
@@ -190,10 +190,10 @@ sub edit_copy_visible {
 
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
-selection is copied from the projection and placed in an internal GIMP
+selection is copied from the projection and placed in an internal LIGMA
 edit buffer. It can subsequently be retrieved using the
-gimp_edit_paste() command. If there is no selection, then the
-projection's contents will be stored in the internal GIMP edit buffer.
+ligma_edit_paste() command. If there is no selection, then the
+projection's contents will be stored in the internal LIGMA edit buffer.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -213,12 +213,12 @@ HELP
 {
   GError *my_error = NULL;
 
-  non_empty = gimp_edit_copy_visible (image, context, &my_error) != NULL;
+  non_empty = ligma_edit_copy_visible (image, context, &my_error) != NULL;
 
   if (! non_empty)
     {
-      gimp_message_literal (gimp,
-                            G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (ligma,
+                            G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                             my_error->message);
       g_clear_error (&my_error);
     }
@@ -231,9 +231,9 @@ sub edit_paste {
     $blurb = 'Paste buffer to the specified drawable.';
 
     $help = <<'HELP';
-This procedure pastes a copy of the internal GIMP edit buffer to the
-specified drawable. The GIMP edit buffer will be empty unless a call
-was previously made to either gimp_edit_cut() or gimp_edit_copy(). The
+This procedure pastes a copy of the internal LIGMA edit buffer to the
+specified drawable. The LIGMA edit buffer will be empty unless a call
+was previously made to either ligma_edit_cut() or ligma_edit_copy(). The
 "paste_into" option specifies whether to clear the current image
 selection, or to paste the buffer "behind" the selection. This allows
 the selection to act as a mask for the pasted buffer. Anywhere that
@@ -268,12 +268,12 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpObject *paste = gimp_get_clipboard_object (gimp);
+  LigmaObject *paste = ligma_get_clipboard_object (ligma);
 
   if (paste &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GList *drawables = NULL;
       GList *list;
@@ -282,11 +282,11 @@ HELP
       if (drawable != NULL)
         drawables = g_list_prepend (drawables, drawable);
 
-      list = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+      list = ligma_edit_paste (ligma_item_get_image (LIGMA_ITEM (drawable)),
                               drawables, paste,
                               paste_into ?
-                              GIMP_PASTE_TYPE_FLOATING_INTO :
-                              GIMP_PASTE_TYPE_FLOATING,
+                              LIGMA_PASTE_TYPE_FLOATING_INTO :
+                              LIGMA_PASTE_TYPE_FLOATING,
                               context, FALSE,
                               -1, -1, -1, -1);
       g_list_free (drawables);
@@ -295,7 +295,7 @@ HELP
         success = FALSE;
 
       num_layers = g_list_length (list);
-      layers = g_new (GimpLayer *, num_layers);
+      layers = g_new (LigmaLayer *, num_layers);
 
       for (i = 0; i < num_layers; i++, list = g_list_next (list))
         layers[i] = g_object_ref (list->data);
@@ -313,9 +313,9 @@ sub edit_paste_as_new_image {
     $blurb = 'Paste buffer to a new image.';
 
     $help = <<'HELP';
-This procedure pastes a copy of the internal GIMP edit buffer to a new
-image.  The GIMP edit buffer will be empty unless a call was
-previously made to either gimp_edit_cut() or gimp_edit_copy(). This
+This procedure pastes a copy of the internal LIGMA edit buffer to a new
+image.  The LIGMA edit buffer will be empty unless a call was
+previously made to either ligma_edit_cut() or ligma_edit_copy(). This
 procedure returns the new image or -1 if the edit buffer was empty.
 HELP
 
@@ -328,11 +328,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpObject *paste = gimp_get_clipboard_object (gimp);
+  LigmaObject *paste = ligma_get_clipboard_object (ligma);
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = ligma_edit_paste_as_new_image (ligma, paste);
 
       if (! image)
         success = FALSE;
@@ -346,7 +346,7 @@ sub edit_named_cut {
     $blurb = 'Cut into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_cut(), but additionally stores the
+This procedure works like ligma_edit_cut(), but additionally stores the
 cut buffer into a named buffer that will stay available for later
 pasting, regardless of any intermediate copy or cut operations.
 HELP
@@ -373,15 +373,15 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpImage *image         = NULL;
+  LigmaImage *image         = NULL;
   GList     *drawable_list = NULL;
   gint       i;
 
   for (i = 0; i < num_drawables; i++)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                       GIMP_PDB_ITEM_CONTENT, error) ||
-          gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+      if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                       LIGMA_PDB_ITEM_CONTENT, error) ||
+          ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error))
         {
           success = FALSE;
           break;
@@ -389,13 +389,13 @@ HELP
 
       if (! image)
         {
-          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+          image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
         }
-      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+      else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
         {
           success = FALSE;
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 _("All specified drawables must belong to the same image."));
           break;
         }
@@ -407,7 +407,7 @@ HELP
     {
       GError *my_error = NULL;
 
-      real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+      real_name = (gchar *) ligma_edit_named_cut (image, buffer_name,
                                                  drawable_list, context, &my_error);
 
       if (real_name)
@@ -416,8 +416,8 @@ HELP
         }
       else
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
@@ -436,7 +436,7 @@ sub edit_named_copy {
     $blurb = 'Copy into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_copy(), but additionally stores the
+This procedure works like ligma_edit_copy(), but additionally stores the
 copied buffer into a named buffer that will stay available for later
 pasting, regardless of any intermediate copy or cut operations.
 HELP
@@ -463,13 +463,13 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpImage *image         = NULL;
+  LigmaImage *image         = NULL;
   GList     *drawable_list = NULL;
   gint       i;
 
   for (i = 0; i < num_drawables; i++)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+      if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
                                        0, error))
         {
           success = FALSE;
@@ -478,13 +478,13 @@ HELP
 
       if (! image)
         {
-          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+          image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
         }
-      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+      else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
         {
           success = FALSE;
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 _("All specified drawables must belong to the same image."));
           break;
         }
@@ -496,7 +496,7 @@ HELP
     {
       GError *my_error = NULL;
 
-      real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+      real_name = (gchar *) ligma_edit_named_copy (image, buffer_name,
                                                   drawable_list, context, &my_error);
 
       if (real_name)
@@ -505,8 +505,8 @@ HELP
         }
       else
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
@@ -525,7 +525,7 @@ sub edit_named_copy_visible {
     $blurb = 'Copy from the projection into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_copy_visible(), but additionally
+This procedure works like ligma_edit_copy_visible(), but additionally
 stores the copied buffer into a named buffer that will stay available
 for later pasting, regardless of any intermediate copy or cut
 operations.
@@ -551,7 +551,7 @@ HELP
 {
   GError *my_error = NULL;
 
-  real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+  real_name = (gchar *) ligma_edit_named_copy_visible (image, buffer_name,
                                                       context, &my_error);
 
   if (real_name)
@@ -560,8 +560,8 @@ HELP
     }
   else
     {
-      gimp_message_literal (gimp,
-                            G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (ligma,
+                            G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                             my_error->message);
       g_clear_error (&my_error);
     }
@@ -574,7 +574,7 @@ sub edit_named_paste {
     $blurb = 'Paste named buffer to the specified drawable.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_paste() but pastes a named buffer
+This procedure works like ligma_edit_paste() but pastes a named buffer
 instead of the global buffer.
 HELP
 
@@ -597,12 +597,12 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GList *drawables = NULL;
       GList *layers;
@@ -610,11 +610,11 @@ HELP
       if (drawable != NULL)
         drawables = g_list_prepend (drawables, drawable);
 
-      layers = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                drawables, GIMP_OBJECT (buffer),
+      layers = ligma_edit_paste (ligma_item_get_image (LIGMA_ITEM (drawable)),
+                                drawables, LIGMA_OBJECT (buffer),
                                 paste_into ?
-                                GIMP_PASTE_TYPE_FLOATING_INTO :
-                                GIMP_PASTE_TYPE_FLOATING,
+                                LIGMA_PASTE_TYPE_FLOATING_INTO :
+                                LIGMA_PASTE_TYPE_FLOATING,
                                 context, FALSE,
                                 -1, -1, -1, -1);
       g_list_free (drawables);
@@ -637,7 +637,7 @@ sub edit_named_paste_as_new_image {
     $blurb = 'Paste named buffer to a new image.';
 
     $help = <<'HELP';
-This procedure works like gimp_edit_paste_as_new_image() but pastes a
+This procedure works like ligma_edit_paste_as_new_image() but pastes a
 named buffer instead of the global buffer.
 HELP
 
@@ -656,11 +656,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
     {
-      image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
+      image = ligma_edit_paste_as_new_image (ligma, LIGMA_OBJECT (buffer));
 
       if (! image)
         success = FALSE;
@@ -673,16 +673,16 @@ CODE
 }
 
 
-@headers = qw("libgimpconfig/gimpconfig.h"
-              "core/gimp.h"
-              "core/gimp-edit.h"
-              "core/gimpdrawable-edit.h"
-              "core/gimpbuffer.h"
-              "core/gimpimage.h"
-              "core/gimpprogress.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("libligmaconfig/ligmaconfig.h"
+              "core/ligma.h"
+              "core/ligma-edit.h"
+              "core/ligmadrawable-edit.h"
+              "core/ligmabuffer.h"
+              "core/ligmaimage.h"
+              "core/ligmaprogress.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(edit_cut
             edit_copy
@@ -698,7 +698,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';
-$doc_title = 'gimpedit';
+$doc_title = 'ligmaedit';
 $doc_short_desc = 'Edit menu functions (cut, copy, paste, clear, etc.)';
 $doc_long_desc = 'Edit menu functions (cut, copy, paste, clear, etc.)';
 

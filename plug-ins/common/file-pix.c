@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Alias|Wavefront pix/matte image reading and writing code
  * Copyright (C) 1997 Mike Taylor
@@ -46,16 +46,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-pix-load"
 #define SAVE_PROC      "file-pix-save"
 #define PLUG_IN_BINARY "file-pix"
-#define PLUG_IN_ROLE   "gimp-file-pix"
+#define PLUG_IN_ROLE   "ligma-file-pix"
 
 
 /* #define PIX_DEBUG */
@@ -72,12 +72,12 @@ typedef struct _PixClass PixClass;
 
 struct _Pix
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PixClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -86,29 +86,29 @@ struct _PixClass
 
 GType                   pix_get_type         (void) G_GNUC_CONST;
 
-static GList          * pix_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pix_create_procedure (GimpPlugIn           *plug_in,
+static GList          * pix_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * pix_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * pix_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * pix_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * pix_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * pix_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               GError              **error);
 
 static gboolean         get_short            (GInputStream         *input,
@@ -119,16 +119,16 @@ static gboolean         put_short            (GOutputStream        *output,
                                               GError              **error);
 
 
-G_DEFINE_TYPE (Pix, pix, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Pix, pix, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PIX_TYPE)
+LIGMA_MAIN (PIX_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 pix_class_init (PixClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = pix_query_procedures;
   plug_in_class->create_procedure = pix_create_procedure;
@@ -141,7 +141,7 @@ pix_init (Pix *pix)
 }
 
 static GList *
-pix_query_procedures (GimpPlugIn *plug_in)
+pix_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -151,77 +151,77 @@ pix_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-pix_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+pix_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pix_load, NULL, NULL);
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      gimp_procedure_set_menu_label (procedure, _("Alias Pix image"));
+      ligma_procedure_set_menu_label (procedure, _("Alias Pix image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of the Alias|Wavefront "
                                         "Pix file format",
                                         "Loads files of the Alias|Wavefront "
                                         "Pix file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Michael Taylor",
                                       "Michael Taylor",
                                       "1997");
 
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pix,matte,mask,alpha,als");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pix_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      gimp_procedure_set_menu_label (procedure, _("Alias Pix image"));
+      ligma_procedure_set_menu_label (procedure, _("Alias Pix image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Export file in the Alias|Wavefront "
                                         "pix/matte file format",
                                         "Export file in the Alias|Wavefront "
                                         "pix/matte file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Michael Taylor",
                                       "Michael Taylor",
                                       "1997");
 
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pix,matte,mask,alpha,als");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-pix_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+pix_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -229,49 +229,49 @@ pix_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-pix_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+pix_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export = LIGMA_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PIX",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PIX",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -284,23 +284,23 @@ pix_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("PIX format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   if (! save_image (file, image, drawables[0], &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /*
@@ -351,7 +351,7 @@ put_short (GOutputStream  *output,
 
 /*
  *  Description:
- *      load the given image into gimp
+ *      load the given image into ligma
  *
  *  Arguments:
  *      filename      - name on the file to read
@@ -361,24 +361,24 @@ put_short (GOutputStream  *output,
  *
  */
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
   GInputStream      *input;
   GeglBuffer        *buffer;
-  GimpImageBaseType  imgtype;
-  GimpImageType      gdtype;
+  LigmaImageBaseType  imgtype;
+  LigmaImageType      gdtype;
   guchar            *dest;
   guchar            *dest_base;
-  GimpImage         *image;
-  GimpLayer         *layer;
+  LigmaImage         *image;
+  LigmaLayer         *layer;
   gushort            width, height, depth;
   gint               i, j, tile_height, row;
 
-  PIX_DEBUG_PRINT ("Opening file: %s\n", gimp_file_get_utf8_name (file));
+  PIX_DEBUG_PRINT ("Opening file: %s\n", ligma_file_get_utf8_name (file));
 
-  gimp_progress_init_printf (_("Opening '%s'"),
+  ligma_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
@@ -402,14 +402,14 @@ load_image (GFile   *file,
   if (depth == 8)
     {
       /* Loading a matte file */
-      imgtype = GIMP_GRAY;
-      gdtype  = GIMP_GRAY_IMAGE;
+      imgtype = LIGMA_GRAY;
+      gdtype  = LIGMA_GRAY_IMAGE;
     }
   else if (depth == 24)
     {
       /* Loading an RGB file */
-      imgtype = GIMP_RGB;
-      gdtype  = GIMP_RGB_IMAGE;
+      imgtype = LIGMA_RGB;
+      gdtype  = LIGMA_RGB_IMAGE;
     }
   else
     {
@@ -418,19 +418,19 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  image = gimp_image_new (width, height, imgtype);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new (width, height, imgtype);
+  ligma_image_set_file (image, file);
 
-  layer = gimp_layer_new (image, _("Background"),
+  layer = ligma_layer_new (image, _("Background"),
                           width, height,
                           gdtype,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   if (depth == 24)
     {
@@ -473,7 +473,7 @@ load_image (GFile   *file,
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - row, width, row), 0,
                            NULL, dest_base, GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update ((double) i / (double) height);
+          ligma_progress_update ((double) i / (double) height);
         }
 
       g_free (dest_base);
@@ -518,7 +518,7 @@ load_image (GFile   *file,
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - row, width, row), 0,
                            NULL, dest_base, GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update ((double) i / (double) height);
+          ligma_progress_update ((double) i / (double) height);
         }
 
       g_free (dest_base);
@@ -527,7 +527,7 @@ load_image (GFile   *file,
   g_object_unref (buffer);
   g_object_unref (input);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
@@ -544,8 +544,8 @@ load_image (GFile   *file,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GError       **error)
 {
   GOutputStream *output;
@@ -559,7 +559,7 @@ save_image (GFile         *file,
   guchar        *src;
   guchar        *src_base;
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
+  ligma_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
@@ -569,12 +569,12 @@ save_image (GFile         *file,
     return FALSE;
 
   /* Get info about image */
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  savingColor = ! gimp_drawable_is_gray (drawable);
+  savingColor = ! ligma_drawable_is_gray (drawable);
 
   if (savingColor)
     format = babl_format ("R'G'B' u8");
@@ -602,7 +602,7 @@ save_image (GFile         *file,
       return FALSE;
     }
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   src_base    = g_new (guchar, tile_height * width * depth);
 
   if (savingColor)
@@ -671,7 +671,7 @@ save_image (GFile         *file,
                 }
             }
 
-          gimp_progress_update ((double) i / (double) height);
+          ligma_progress_update ((double) i / (double) height);
         }
     }
   else
@@ -733,7 +733,7 @@ save_image (GFile         *file,
                 }
             }
 
-          gimp_progress_update ((double) i / (double) height);
+          ligma_progress_update ((double) i / (double) height);
         }
     }
 
@@ -741,7 +741,7 @@ save_image (GFile         *file,
   g_object_unref (output);
   g_object_unref (buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return TRUE;
 

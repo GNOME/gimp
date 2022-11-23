@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasproxygroup.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasproxygroup.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PROXY_GROUP_H__
-#define __GIMP_CANVAS_PROXY_GROUP_H__
+#ifndef __LIGMA_CANVAS_PROXY_GROUP_H__
+#define __LIGMA_CANVAS_PROXY_GROUP_H__
 
 
-#include "gimpcanvasgroup.h"
+#include "ligmacanvasgroup.h"
 
 
-#define GIMP_TYPE_CANVAS_PROXY_GROUP            (gimp_canvas_proxy_group_get_type ())
-#define GIMP_CANVAS_PROXY_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_PROXY_GROUP, GimpCanvasProxyGroup))
-#define GIMP_CANVAS_PROXY_GROUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_PROXY_GROUP, GimpCanvasProxyGroupClass))
-#define GIMP_IS_CANVAS_PROXY_GROUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_PROXY_GROUP))
-#define GIMP_IS_CANVAS_PROXY_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_PROXY_GROUP))
-#define GIMP_CANVAS_PROXY_GROUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_PROXY_GROUP, GimpCanvasProxyGroupClass))
+#define LIGMA_TYPE_CANVAS_PROXY_GROUP            (ligma_canvas_proxy_group_get_type ())
+#define LIGMA_CANVAS_PROXY_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_PROXY_GROUP, LigmaCanvasProxyGroup))
+#define LIGMA_CANVAS_PROXY_GROUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_PROXY_GROUP, LigmaCanvasProxyGroupClass))
+#define LIGMA_IS_CANVAS_PROXY_GROUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_PROXY_GROUP))
+#define LIGMA_IS_CANVAS_PROXY_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_PROXY_GROUP))
+#define LIGMA_CANVAS_PROXY_GROUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_PROXY_GROUP, LigmaCanvasProxyGroupClass))
 
 
-typedef struct _GimpCanvasProxyGroup      GimpCanvasProxyGroup;
-typedef struct _GimpCanvasProxyGroupClass GimpCanvasProxyGroupClass;
+typedef struct _LigmaCanvasProxyGroup      LigmaCanvasProxyGroup;
+typedef struct _LigmaCanvasProxyGroupClass LigmaCanvasProxyGroupClass;
 
-struct _GimpCanvasProxyGroup
+struct _LigmaCanvasProxyGroup
 {
-  GimpCanvasGroup  parent_instance;
+  LigmaCanvasGroup  parent_instance;
 };
 
-struct _GimpCanvasProxyGroupClass
+struct _LigmaCanvasProxyGroupClass
 {
-  GimpCanvasGroupClass  parent_class;
+  LigmaCanvasGroupClass  parent_class;
 };
 
 
-GType            gimp_canvas_proxy_group_get_type    (void) G_GNUC_CONST;
+GType            ligma_canvas_proxy_group_get_type    (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_proxy_group_new         (GimpDisplayShell     *shell);
+LigmaCanvasItem * ligma_canvas_proxy_group_new         (LigmaDisplayShell     *shell);
 
-void             gimp_canvas_proxy_group_add_item    (GimpCanvasProxyGroup *group,
+void             ligma_canvas_proxy_group_add_item    (LigmaCanvasProxyGroup *group,
                                                       gpointer              object,
-                                                      GimpCanvasItem       *proxy_item);
-void             gimp_canvas_proxy_group_remove_item (GimpCanvasProxyGroup *group,
+                                                      LigmaCanvasItem       *proxy_item);
+void             ligma_canvas_proxy_group_remove_item (LigmaCanvasProxyGroup *group,
                                                       gpointer              object);
-GimpCanvasItem * gimp_canvas_proxy_group_get_item    (GimpCanvasProxyGroup *group,
+LigmaCanvasItem * ligma_canvas_proxy_group_get_item    (LigmaCanvasProxyGroup *group,
                                                       gpointer              object);
 
 
-#endif /* __GIMP_CANVAS_PROXY_GROUP_H__ */
+#endif /* __LIGMA_CANVAS_PROXY_GROUP_H__ */

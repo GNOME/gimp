@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpasync.h
+ * ligmaasync.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,78 +18,78 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ASYNC_H__
-#define __GIMP_ASYNC_H__
+#ifndef __LIGMA_ASYNC_H__
+#define __LIGMA_ASYNC_H__
 
 
-#define GIMP_TYPE_ASYNC            (gimp_async_get_type ())
-#define GIMP_ASYNC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ASYNC, GimpAsync))
-#define GIMP_ASYNC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ASYNC, GimpAsyncClass))
-#define GIMP_IS_ASYNC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ASYNC))
-#define GIMP_IS_ASYNC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ASYNC))
-#define GIMP_ASYNC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ASYNC, GimpAsyncClass))
+#define LIGMA_TYPE_ASYNC            (ligma_async_get_type ())
+#define LIGMA_ASYNC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ASYNC, LigmaAsync))
+#define LIGMA_ASYNC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ASYNC, LigmaAsyncClass))
+#define LIGMA_IS_ASYNC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ASYNC))
+#define LIGMA_IS_ASYNC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ASYNC))
+#define LIGMA_ASYNC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ASYNC, LigmaAsyncClass))
 
 
-typedef void (* GimpAsyncCallback) (GimpAsync *async,
+typedef void (* LigmaAsyncCallback) (LigmaAsync *async,
                                     gpointer   data);
 
 
-typedef struct _GimpAsyncPrivate GimpAsyncPrivate;
-typedef struct _GimpAsyncClass   GimpAsyncClass;
+typedef struct _LigmaAsyncPrivate LigmaAsyncPrivate;
+typedef struct _LigmaAsyncClass   LigmaAsyncClass;
 
-struct _GimpAsync
+struct _LigmaAsync
 {
   GObject           parent_instance;
 
-  GimpAsyncPrivate *priv;
+  LigmaAsyncPrivate *priv;
 };
 
-struct _GimpAsyncClass
+struct _LigmaAsyncClass
 {
   GObjectClass  parent_class;
 
   /*  signals  */
-  void   (* waiting) (GimpAsync *async);
+  void   (* waiting) (LigmaAsync *async);
 };
 
 
-GType       gimp_async_get_type                (void) G_GNUC_CONST;
+GType       ligma_async_get_type                (void) G_GNUC_CONST;
 
-GimpAsync * gimp_async_new                     (void);
+LigmaAsync * ligma_async_new                     (void);
 
-gboolean    gimp_async_is_synced               (GimpAsync         *async);
+gboolean    ligma_async_is_synced               (LigmaAsync         *async);
 
-void        gimp_async_add_callback            (GimpAsync         *async,
-                                                GimpAsyncCallback  callback,
+void        ligma_async_add_callback            (LigmaAsync         *async,
+                                                LigmaAsyncCallback  callback,
                                                 gpointer           data);
-void        gimp_async_add_callback_for_object (GimpAsync         *async,
-                                                GimpAsyncCallback  callback,
+void        ligma_async_add_callback_for_object (LigmaAsync         *async,
+                                                LigmaAsyncCallback  callback,
                                                 gpointer           data,
                                                 gpointer           gobject);
-void        gimp_async_remove_callback         (GimpAsync         *async,
-                                                GimpAsyncCallback  callback,
+void        ligma_async_remove_callback         (LigmaAsync         *async,
+                                                LigmaAsyncCallback  callback,
                                                 gpointer           data);
 
-gboolean    gimp_async_is_stopped              (GimpAsync         *async);
+gboolean    ligma_async_is_stopped              (LigmaAsync         *async);
 
-void        gimp_async_finish                  (GimpAsync         *async,
+void        ligma_async_finish                  (LigmaAsync         *async,
                                                 gpointer           result);
-void        gimp_async_finish_full             (GimpAsync         *async,
+void        ligma_async_finish_full             (LigmaAsync         *async,
                                                 gpointer           result,
                                                 GDestroyNotify     result_destroy_func);
-gboolean    gimp_async_is_finished             (GimpAsync         *async);
-gpointer    gimp_async_get_result              (GimpAsync         *async);
+gboolean    ligma_async_is_finished             (LigmaAsync         *async);
+gpointer    ligma_async_get_result              (LigmaAsync         *async);
 
-void        gimp_async_abort                   (GimpAsync         *async);
+void        ligma_async_abort                   (LigmaAsync         *async);
 
-gboolean    gimp_async_is_canceled             (GimpAsync         *async);
+gboolean    ligma_async_is_canceled             (LigmaAsync         *async);
 
-void        gimp_async_cancel_and_wait         (GimpAsync         *async);
+void        ligma_async_cancel_and_wait         (LigmaAsync         *async);
 
 
 /*  stats  */
 
-gint        gimp_async_get_n_running           (void);
+gint        ligma_async_get_n_running           (void);
 
 
-#endif /* __GIMP_ASYNC_H__ */
+#endif /* __LIGMA_ASYNC_H__ */

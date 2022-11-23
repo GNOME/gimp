@@ -1,11 +1,11 @@
-# Swedish messages for gimp-tags.
+# Swedish messages for ligma-tags.
 # Copyright (C) 1998-2009 Free Software Foundation, Inc.
 # Martin Nordholts <martinn@src.gnome.org>, 2009
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2009-07-20 10:47+0200\n"
 "PO-Revision-Date: 2009-07-20 10:48+0200\n"
 "Last-Translator: Martin Nordholts <martinn@src.gnome.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "luddig"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "rund"
 

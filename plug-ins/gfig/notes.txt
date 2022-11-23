@@ -38,7 +38,7 @@ shape; others will be added shortly.
 When you start Gfig, and the dialog comes up, the background of the
 preview shows a representation of the image you are working on.  Each
 time you do something in GFig, the result is reflected by a change in
-both the Gimp image and the GFig preview, so you can see in real time
+both the Ligma image and the GFig preview, so you can see in real time
 the results of everything that you do.  (The rendering could stand to
 be speeded up, though.)  You can turn the background display in the
 preview on or off by toggling Edit->Options->Show image.
@@ -55,7 +55,7 @@ ALSO NOTE: When GFig loads a GFig layer, it begins by clearing the
 layer to transparent and redrawing it as stored in the GFig parasite.
 This means that any changes you have made in the layer in the meantime
 will be lost.  It would be nice if GFig could give a warning that this
-is about to happen, but it is difficult to implement, because Gimp
+is about to happen, but it is difficult to implement, because Ligma
 does not yet provide an easy way to tell whether a layer has been
 modified (as far as I know).
 

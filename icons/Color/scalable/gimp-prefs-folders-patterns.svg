@@ -15,7 +15,7 @@
    id="svg2"
    viewBox="0 0 16.000009 15.999956"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-prefs-folders-patterns.svg">
+   sodipodi:docname="ligma-prefs-folders-patterns.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -43,13 +43,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -153,7 +153,7 @@
      id="preferences">
     <g
        transform="matrix(1.0000007,0,0,1.0043555,349.25589,26.997831)"
-       id="gimp-prefs-folders-patterns">
+       id="ligma-prefs-folders-patterns">
       <path
          d="m 0.92261721,46.051608 c 0.008516,0.162654 0.17969019,0.32531 0.34234519,0.32531 l 12.2398306,0 c 0.162654,0 0.316794,-0.162656 0.308278,-0.32531 l -0.36588,-10.637802 c -0.0085,-0.162654 -0.179687,-0.325312 -0.342341,-0.325312 l -5.1850844,0 c -0.1895174,0 -0.482323,-0.123305 -0.5476386,-0.432374 L 7.1332494,33.525763 C 7.0725059,33.238327 6.7885582,33.120249 6.6259034,33.120249 l -5.77427184,0 c -0.16265824,0 -0.31679709,0.162655 -0.30828118,0.32531 z"
          id="path216-54"

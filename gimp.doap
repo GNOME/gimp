@@ -4,40 +4,40 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">GIMP</name>
+  <name xml:lang="en">LIGMA</name>
 
   <shortdesc xml:lang="en">GNU Image Manipulation Program</shortdesc>
 
   <description xml:lang="en">
-      GIMP is an acronym for GNU Image Manipulation Program. It is a
+      LIGMA is an acronym for GNU Image Manipulation Program. It is a
       freely distributed program for such tasks as photo retouching,
       image composition and image authoring.
       It has many capabilities. It can be used as a simple paint
       program, an expert quality photo retouching program, an online
       batch processing system, a mass production image renderer, an
       image format converter, etc.
-      GIMP is expandable and extensible. It is designed to be
+      LIGMA is expandable and extensible. It is designed to be
       augmented with plug-ins and extensions to do just about
       anything. The advanced scripting interface allows everything
       from the simplest task to the most complex image manipulation
-      procedures to be easily scripted. GIMP is available for Linux,
+      procedures to be easily scripted. LIGMA is available for Linux,
       Windows and OS X.
   </description>
   <description xml:lang="de">
-      GIMP ist die Abkürzung für GNU Image Manipulation Program.
+      LIGMA ist die Abkürzung für GNU Image Manipulation Program.
       Es ist ein frei verfügbares Programm für Aufgaben wie Fotoretusche,
       Bildgestaltung und Bildbearbeitung.
-      GIMP hat viele Fähigkeiten. Sie können es verwenden für einfache
+      LIGMA hat viele Fähigkeiten. Sie können es verwenden für einfache
       Zeichenaufgabben, professionelle Fotoretuschen, die Online-
       Stapelverarbeitung, Bildrendering in der Massenproduktion,
       die Umwandlung von Grafikdateien und vieles mehr.
-      GIMP ist durch Plug-ins erweiterungsfähig.
-      Mithilfe der Programmierschnittstelle von GIMP können Sie einfache
+      LIGMA ist durch Plug-ins erweiterungsfähig.
+      Mithilfe der Programmierschnittstelle von LIGMA können Sie einfache
       Aufgaben wie auch komplexe Bildverarbeitungprozeduren automatisieren.
-      GIMP steht Ihnen unter Linux, Windows und OS X zur Verfügung.
+      LIGMA steht Ihnen unter Linux, Windows und OS X zur Verfügung.
   </description>
   <description xml:lang="it">
-      GIMP è un acronimo per GNU Image Manipulation Program. È un 
+      LIGMA è un acronimo per GNU Image Manipulation Program. È un 
       programma distribuito liberamente adatto al foto ritocco,
       alla composizione e alla creazione di immagini.
       È molto flessibile. Può essere usato come semplice programma 
@@ -45,24 +45,24 @@
       come sistema di elaborazione bach in linea, come generatore
       di immagini prodotte automaticamente, come convertitore tra
       diversi formati immagine e altro ancora.
-      GIMP è espandibile ed estensibile. È stato progettato per 
+      LIGMA è espandibile ed estensibile. È stato progettato per 
       essere ampliato con plug-in ed estensioni per poter aggiungere
       praticamente qualunque comando. L'interfaccia avanzata di 
       scripting semplifica la conversione in procedura dal compito
       più semplice fino all'elaborazione di immagini più complessa.
-      GIMP è disponibile per Linux, Windows e OS X.
+      LIGMA è disponibile per Linux, Windows e OS X.
   </description>
 
-  <homepage rdf:resource="https://www.gimp.org" />
+  <homepage rdf:resource="https://www.ligma.org" />
 
-  <mailing-list rdf:resource="https://gimp.org/mail_lists.html" />
+  <mailing-list rdf:resource="https://ligma.org/mail_lists.html" />
 
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 
-  <download-page rdf:resource="https:///www.gimp.org/downloads/" />
+  <download-page rdf:resource="https:///www.ligma.org/downloads/" />
 
   <bug-database
-    rdf:resource="https://gitlab.gnome.org/GNOME/gimp/issues"
+    rdf:resource="https://gitlab.gnome.org/GNOME/ligma/issues"
   />
 
   <programming-language>C</programming-language>

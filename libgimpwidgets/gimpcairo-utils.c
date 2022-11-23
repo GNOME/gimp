@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcairo-utils.c
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
+ * ligmacairo-utils.c
+ * Copyright (C) 2007 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,24 +26,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpcairo-utils.h"
+#include "ligmacairo-utils.h"
 
 
 /**
- * SECTION: gimpcairo-utils
- * @title: GimpCairo-utils
+ * SECTION: ligmacairo-utils
+ * @title: LigmaCairo-utils
  * @short_description: Utility functions for cairo
  *
  * Utility functions that make cairo easier to use with common
- * GIMP data types.
+ * LIGMA data types.
  **/
 
 
 /**
- * gimp_cairo_set_focus_line_pattern:
+ * ligma_cairo_set_focus_line_pattern:
  * @cr:     Cairo context
  * @widget: widget to draw the focus indicator on
  *
@@ -56,7 +56,7 @@
  * Since: 2.6
  **/
 gboolean
-gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
+ligma_cairo_set_focus_line_pattern (cairo_t   *cr,
                                    GtkWidget *widget)
 {
   gint8    *dash_list;
@@ -97,7 +97,7 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
 }
 
 /**
- * gimp_cairo_surface_create_from_pixbuf:
+ * ligma_cairo_surface_create_from_pixbuf:
  * @pixbuf: a #GdkPixbuf
  *
  * Create a Cairo image surface from a GdkPixbuf.
@@ -110,7 +110,7 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
  * Since: 2.6
  **/
 cairo_surface_t *
-gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
+ligma_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
 {
   cairo_surface_t *surface;
   cairo_format_t   format;
@@ -161,7 +161,7 @@ gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
 
           while (w--)
             {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
+              LIGMA_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
 
               s += 3;
               d += 4;
@@ -181,7 +181,7 @@ gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
 
           while (w--)
             {
-              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
+              LIGMA_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
 
               s += 4;
               d += 4;

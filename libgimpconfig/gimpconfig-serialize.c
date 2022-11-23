@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Object properties serialization routines
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,38 +25,38 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpconfigtypes.h"
+#include "ligmaconfigtypes.h"
 
-#include "gimpconfigwriter.h"
-#include "gimpconfig-iface.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-path.h"
-#include "gimpconfig-serialize.h"
-#include "gimpconfig-utils.h"
+#include "ligmaconfigwriter.h"
+#include "ligmaconfig-iface.h"
+#include "ligmaconfig-params.h"
+#include "ligmaconfig-path.h"
+#include "ligmaconfig-serialize.h"
+#include "ligmaconfig-utils.h"
 
 
 /**
- * SECTION: gimpconfig-serialize
- * @title: GimpConfig-serialize
- * @short_description: Serializing for libgimpconfig.
+ * SECTION: ligmaconfig-serialize
+ * @title: LigmaConfig-serialize
+ * @short_description: Serializing for libligmaconfig.
  *
- * Serializing interface for libgimpconfig.
+ * Serializing interface for libligmaconfig.
  **/
 
 
-static gboolean  gimp_config_serialize_rgb (const GValue *value,
+static gboolean  ligma_config_serialize_rgb (const GValue *value,
                                             GString      *str,
                                             gboolean      has_alpha);
 
 
 /**
- * gimp_config_serialize_properties:
- * @config: a #GimpConfig.
- * @writer: a #GimpConfigWriter.
+ * ligma_config_serialize_properties:
+ * @config: a #LigmaConfig.
+ * @writer: a #LigmaConfigWriter.
  *
  * This function writes all object properties to the @writer.
  *
@@ -65,8 +65,8 @@ static gboolean  gimp_config_serialize_rgb (const GValue *value,
  * Since: 2.4
  **/
 gboolean
-gimp_config_serialize_properties (GimpConfig       *config,
-                                  GimpConfigWriter *writer)
+ligma_config_serialize_properties (LigmaConfig       *config,
+                                  LigmaConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -86,10 +86,10 @@ gimp_config_serialize_properties (GimpConfig       *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (config, prop_spec, writer))
+      if (! ligma_config_serialize_property (config, prop_spec, writer))
         return FALSE;
     }
 
@@ -99,9 +99,9 @@ gimp_config_serialize_properties (GimpConfig       *config,
 }
 
 /**
- * gimp_config_serialize_changed_properties:
- * @config: a #GimpConfig.
- * @writer: a #GimpConfigWriter.
+ * ligma_config_serialize_changed_properties:
+ * @config: a #LigmaConfig.
+ * @writer: a #LigmaConfigWriter.
  *
  * This function writes all object properties that have been changed from
  * their default values to the @writer.
@@ -111,8 +111,8 @@ gimp_config_serialize_properties (GimpConfig       *config,
  * Since: 2.4
  **/
 gboolean
-gimp_config_serialize_changed_properties (GimpConfig       *config,
-                                          GimpConfigWriter *writer)
+ligma_config_serialize_changed_properties (LigmaConfig       *config,
+                                          LigmaConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -133,7 +133,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE))
         continue;
 
       g_value_init (&value, prop_spec->value_type);
@@ -141,7 +141,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 
       if (! g_param_value_defaults (prop_spec, &value))
         {
-          if (! gimp_config_serialize_property (config, prop_spec, writer))
+          if (! ligma_config_serialize_property (config, prop_spec, writer))
             return FALSE;
         }
 
@@ -154,10 +154,10 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 }
 
 /**
- * gimp_config_serialize_property:
- * @config:     a #GimpConfig.
+ * ligma_config_serialize_property:
+ * @config:     a #LigmaConfig.
  * @param_spec: a #GParamSpec.
- * @writer:     a #GimpConfigWriter.
+ * @writer:     a #LigmaConfigWriter.
  *
  * This function serializes a single object property to the @writer.
  *
@@ -166,25 +166,25 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
  * Since: 2.4
  **/
 gboolean
-gimp_config_serialize_property (GimpConfig       *config,
+ligma_config_serialize_property (LigmaConfig       *config,
                                 GParamSpec       *param_spec,
-                                GimpConfigWriter *writer)
+                                LigmaConfigWriter *writer)
 {
-  GimpConfigInterface *config_iface = NULL;
-  GimpConfigInterface *parent_iface = NULL;
+  LigmaConfigInterface *config_iface = NULL;
+  LigmaConfigInterface *parent_iface = NULL;
   GValue               value        = G_VALUE_INIT;
   gboolean             success      = FALSE;
 
-  if (! (param_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+  if (! (param_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE))
     return FALSE;
 
-  if (param_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
+  if (param_spec->flags & LIGMA_CONFIG_PARAM_IGNORE)
     return TRUE;
 
   g_value_init (&value, param_spec->value_type);
   g_object_get_property (G_OBJECT (config), param_spec->name, &value);
 
-  if (param_spec->flags & GIMP_CONFIG_PARAM_DEFAULTS &&
+  if (param_spec->flags & LIGMA_CONFIG_PARAM_DEFAULTS &&
       g_param_value_defaults (param_spec, &value))
     {
       g_value_unset (&value);
@@ -195,17 +195,17 @@ gimp_config_serialize_property (GimpConfig       *config,
     {
       GTypeClass *owner_class = g_type_class_peek (param_spec->owner_type);
 
-      config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
+      config_iface = g_type_interface_peek (owner_class, LIGMA_TYPE_CONFIG);
 
       /*  We must call serialize_property() *only* if the *exact* class
        *  which implements it is param_spec->owner_type's class.
        *
        *  Therefore, we ask param_spec->owner_type's immediate parent class
-       *  for it's GimpConfigInterface and check if we get a different
+       *  for it's LigmaConfigInterface and check if we get a different
        *  pointer.
        *
        *  (if the pointers are the same, param_spec->owner_type's
-       *   GimpConfigInterface is inherited from one of it's parent classes
+       *   LigmaConfigInterface is inherited from one of it's parent classes
        *   and thus not able to handle param_spec->owner_type's properties).
        */
       if (config_iface)
@@ -215,7 +215,7 @@ gimp_config_serialize_property (GimpConfig       *config,
           owner_parent_class = g_type_class_peek_parent (owner_class);
 
           parent_iface = g_type_interface_peek (owner_parent_class,
-                                                GIMP_TYPE_CONFIG);
+                                                LIGMA_TYPE_CONFIG);
         }
     }
 
@@ -237,11 +237,11 @@ gimp_config_serialize_property (GimpConfig       *config,
 
   if (! success)
     {
-      if (G_VALUE_TYPE (&value) == GIMP_TYPE_PARASITE)
+      if (G_VALUE_TYPE (&value) == LIGMA_TYPE_PARASITE)
         {
-          GimpParasite *parasite = g_value_get_boxed (&value);
+          LigmaParasite *parasite = g_value_get_boxed (&value);
 
-          gimp_config_writer_open (writer, param_spec->name);
+          ligma_config_writer_open (writer, param_spec->name);
 
           if (parasite)
             {
@@ -250,78 +250,78 @@ gimp_config_serialize_property (GimpConfig       *config,
               guint32        data_length;
               gulong         flags;
 
-              name = gimp_parasite_get_name (parasite);
-              gimp_config_writer_string (writer, name);
+              name = ligma_parasite_get_name (parasite);
+              ligma_config_writer_string (writer, name);
 
-              flags = gimp_parasite_get_flags (parasite);
-              data = gimp_parasite_get_data (parasite, &data_length);
-              gimp_config_writer_printf (writer, "%lu %u", flags, data_length);
-              gimp_config_writer_data (writer, data_length, data);
+              flags = ligma_parasite_get_flags (parasite);
+              data = ligma_parasite_get_data (parasite, &data_length);
+              ligma_config_writer_printf (writer, "%lu %u", flags, data_length);
+              ligma_config_writer_data (writer, data_length, data);
 
               success = TRUE;
             }
 
           if (success)
-            gimp_config_writer_close (writer);
+            ligma_config_writer_close (writer);
           else
-            gimp_config_writer_revert (writer);
+            ligma_config_writer_revert (writer);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {
-          GimpConfigInterface *config_iface = NULL;
-          GimpConfig          *prop_object;
+          LigmaConfigInterface *config_iface = NULL;
+          LigmaConfig          *prop_object;
 
           prop_object = g_value_get_object (&value);
 
           if (prop_object)
-            config_iface = GIMP_CONFIG_GET_IFACE (prop_object);
+            config_iface = LIGMA_CONFIG_GET_IFACE (prop_object);
           else
             success = TRUE;
 
           if (config_iface)
             {
-              gimp_config_writer_open (writer, param_spec->name);
+              ligma_config_writer_open (writer, param_spec->name);
 
-              /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE,
+              /*  if the object property is not LIGMA_CONFIG_PARAM_AGGREGATE,
                *  deserializing will need to know the exact type
                *  in order to create the object
                */
-              if (! (param_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
+              if (! (param_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE))
                 {
                   GType object_type = G_TYPE_FROM_INSTANCE (prop_object);
 
-                  gimp_config_writer_string (writer, g_type_name (object_type));
+                  ligma_config_writer_string (writer, g_type_name (object_type));
                 }
 
               success = config_iface->serialize (prop_object, writer, NULL);
 
               if (success)
-                gimp_config_writer_close (writer);
+                ligma_config_writer_close (writer);
               else
-                gimp_config_writer_revert (writer);
+                ligma_config_writer_revert (writer);
             }
         }
       else
         {
           GString *str = g_string_new (NULL);
 
-          if (GIMP_VALUE_HOLDS_RGB (&value))
+          if (LIGMA_VALUE_HOLDS_RGB (&value))
             {
-              gboolean has_alpha = gimp_param_spec_rgb_has_alpha (param_spec);
+              gboolean has_alpha = ligma_param_spec_rgb_has_alpha (param_spec);
 
-              success = gimp_config_serialize_rgb (&value, str, has_alpha);
+              success = ligma_config_serialize_rgb (&value, str, has_alpha);
             }
           else
             {
-              success = gimp_config_serialize_value (&value, str, TRUE);
+              success = ligma_config_serialize_value (&value, str, TRUE);
             }
 
           if (success)
             {
-              gimp_config_writer_open (writer, param_spec->name);
-              gimp_config_writer_print (writer, str->str, str->len);
-              gimp_config_writer_close (writer);
+              ligma_config_writer_open (writer, param_spec->name);
+              ligma_config_writer_print (writer, str->str, str->len);
+              ligma_config_writer_close (writer);
             }
 
           g_string_free (str, TRUE);
@@ -350,10 +350,10 @@ gimp_config_serialize_property (GimpConfig       *config,
 }
 
 /**
- * gimp_config_serialize_property_by_name:
- * @config:    a #GimpConfig.
+ * ligma_config_serialize_property_by_name:
+ * @config:    a #LigmaConfig.
  * @prop_name: the property's name.
- * @writer:    a #GimpConfigWriter.
+ * @writer:    a #LigmaConfigWriter.
  *
  * This function serializes a single object property to the @writer.
  *
@@ -362,9 +362,9 @@ gimp_config_serialize_property (GimpConfig       *config,
  * Since: 2.6
  **/
 gboolean
-gimp_config_serialize_property_by_name (GimpConfig       *config,
+ligma_config_serialize_property_by_name (LigmaConfig       *config,
                                         const gchar      *prop_name,
-                                        GimpConfigWriter *writer)
+                                        LigmaConfigWriter *writer)
 {
   GParamSpec *pspec;
 
@@ -374,11 +374,11 @@ gimp_config_serialize_property_by_name (GimpConfig       *config,
   if (! pspec)
     return FALSE;
 
-  return gimp_config_serialize_property (config, pspec, writer);
+  return ligma_config_serialize_property (config, pspec, writer);
 }
 
 /**
- * gimp_config_serialize_value:
+ * ligma_config_serialize_value:
  * @value: a #GValue.
  * @str: a #GString.
  * @escaped: whether to escape string values.
@@ -390,7 +390,7 @@ gimp_config_serialize_property_by_name (GimpConfig       *config,
  * Since: 2.4
  **/
 gboolean
-gimp_config_serialize_value (const GValue *value,
+ligma_config_serialize_value (const GValue *value,
                              GString      *str,
                              gboolean      escaped)
 {
@@ -430,7 +430,7 @@ gimp_config_serialize_value (const GValue *value,
         return FALSE;
 
       if (escaped)
-        gimp_config_string_append_escaped (str, cstr);
+        ligma_config_string_append_escaped (str, cstr);
       else
         g_string_append (str, cstr);
 
@@ -452,14 +452,14 @@ gimp_config_serialize_value (const GValue *value,
       return TRUE;
     }
 
-  if (GIMP_VALUE_HOLDS_RGB (value))
+  if (LIGMA_VALUE_HOLDS_RGB (value))
     {
-      return gimp_config_serialize_rgb (value, str, TRUE);
+      return ligma_config_serialize_rgb (value, str, TRUE);
     }
 
-  if (GIMP_VALUE_HOLDS_MATRIX2 (value))
+  if (LIGMA_VALUE_HOLDS_MATRIX2 (value))
     {
-      GimpMatrix2 *trafo;
+      LigmaMatrix2 *trafo;
 
       trafo = g_value_get_boxed (value);
 
@@ -484,15 +484,15 @@ gimp_config_serialize_value (const GValue *value,
       return TRUE;
     }
 
-  if (G_VALUE_TYPE (value) == GIMP_TYPE_VALUE_ARRAY)
+  if (G_VALUE_TYPE (value) == LIGMA_TYPE_VALUE_ARRAY)
     {
-      GimpValueArray *array;
+      LigmaValueArray *array;
 
       array = g_value_get_boxed (value);
 
       if (array)
         {
-          gint length = gimp_value_array_length (array);
+          gint length = ligma_value_array_length (array);
           gint i;
 
           g_string_append_printf (str, "%d", length);
@@ -501,7 +501,7 @@ gimp_config_serialize_value (const GValue *value,
             {
               g_string_append (str, " ");
 
-              if (! gimp_config_serialize_value (gimp_value_array_index (array,
+              if (! ligma_config_serialize_value (ligma_value_array_index (array,
                                                                          i),
                                                  str, TRUE))
                 return FALSE;
@@ -526,14 +526,14 @@ gimp_config_serialize_value (const GValue *value,
 
           if (path)
             {
-              unexpand = gimp_config_path_unexpand (path, TRUE, NULL);
+              unexpand = ligma_config_path_unexpand (path, TRUE, NULL);
               g_free (path);
             }
 
           if (unexpand)
             {
               if (escaped)
-                gimp_config_string_append_escaped (str, unexpand);
+                ligma_config_string_append_escaped (str, unexpand);
               else
                 g_string_append (str, unexpand);
 
@@ -569,11 +569,11 @@ gimp_config_serialize_value (const GValue *value,
 }
 
 static gboolean
-gimp_config_serialize_rgb (const GValue *value,
+ligma_config_serialize_rgb (const GValue *value,
                            GString      *str,
                            gboolean      has_alpha)
 {
-  GimpRGB *rgb;
+  LigmaRGB *rgb;
 
   rgb = g_value_get_boxed (value);
 

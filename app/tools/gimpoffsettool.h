@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OFFSET_TOOL_H__
-#define __GIMP_OFFSET_TOOL_H__
+#ifndef __LIGMA_OFFSET_TOOL_H__
+#define __LIGMA_OFFSET_TOOL_H__
 
 
-#include "gimpfiltertool.h"
+#include "ligmafiltertool.h"
 
 
-#define GIMP_TYPE_OFFSET_TOOL            (gimp_offset_tool_get_type ())
-#define GIMP_OFFSET_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OFFSET_TOOL, GimpOffsetTool))
-#define GIMP_OFFSET_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_TOOL, GimpOffsetToolClass))
-#define GIMP_IS_OFFSET_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OFFSET_TOOL))
-#define GIMP_IS_OFFSET_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_TOOL))
-#define GIMP_OFFSET_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OFFSET_TOOL, GimpOffsetToolClass))
+#define LIGMA_TYPE_OFFSET_TOOL            (ligma_offset_tool_get_type ())
+#define LIGMA_OFFSET_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OFFSET_TOOL, LigmaOffsetTool))
+#define LIGMA_OFFSET_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OFFSET_TOOL, LigmaOffsetToolClass))
+#define LIGMA_IS_OFFSET_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OFFSET_TOOL))
+#define LIGMA_IS_OFFSET_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OFFSET_TOOL))
+#define LIGMA_OFFSET_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OFFSET_TOOL, LigmaOffsetToolClass))
 
 
-typedef struct _GimpOffsetTool      GimpOffsetTool;
-typedef struct _GimpOffsetToolClass GimpOffsetToolClass;
+typedef struct _LigmaOffsetTool      LigmaOffsetTool;
+typedef struct _LigmaOffsetToolClass LigmaOffsetToolClass;
 
-struct _GimpOffsetTool
+struct _LigmaOffsetTool
 {
-  GimpFilterTool  parent_instance;
+  LigmaFilterTool  parent_instance;
 
   gboolean        dragging;
   gdouble         x;
@@ -48,16 +48,16 @@ struct _GimpOffsetTool
   GtkWidget      *transparent_radio;
 };
 
-struct _GimpOffsetToolClass
+struct _LigmaOffsetToolClass
 {
-  GimpFilterToolClass  parent_class;
+  LigmaFilterToolClass  parent_class;
 };
 
 
-void    gimp_offset_tool_register (GimpToolRegisterCallback callback,
+void    ligma_offset_tool_register (LigmaToolRegisterCallback callback,
                                    gpointer                 data);
 
-GType   gimp_offset_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_offset_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_OFFSET_TOOL_H__  */
+#endif  /*  __LIGMA_OFFSET_TOOL_H__  */

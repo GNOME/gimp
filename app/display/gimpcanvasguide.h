@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasguide.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasguide.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_GUIDE_H__
-#define __GIMP_CANVAS_GUIDE_H__
+#ifndef __LIGMA_CANVAS_GUIDE_H__
+#define __LIGMA_CANVAS_GUIDE_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_GUIDE            (gimp_canvas_guide_get_type ())
-#define GIMP_CANVAS_GUIDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuide))
-#define GIMP_CANVAS_GUIDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuideClass))
-#define GIMP_IS_CANVAS_GUIDE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_GUIDE))
-#define GIMP_IS_CANVAS_GUIDE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_GUIDE))
-#define GIMP_CANVAS_GUIDE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuideClass))
+#define LIGMA_TYPE_CANVAS_GUIDE            (ligma_canvas_guide_get_type ())
+#define LIGMA_CANVAS_GUIDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_GUIDE, LigmaCanvasGuide))
+#define LIGMA_CANVAS_GUIDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_GUIDE, LigmaCanvasGuideClass))
+#define LIGMA_IS_CANVAS_GUIDE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_GUIDE))
+#define LIGMA_IS_CANVAS_GUIDE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_GUIDE))
+#define LIGMA_CANVAS_GUIDE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_GUIDE, LigmaCanvasGuideClass))
 
 
-typedef struct _GimpCanvasGuide      GimpCanvasGuide;
-typedef struct _GimpCanvasGuideClass GimpCanvasGuideClass;
+typedef struct _LigmaCanvasGuide      LigmaCanvasGuide;
+typedef struct _LigmaCanvasGuideClass LigmaCanvasGuideClass;
 
-struct _GimpCanvasGuide
+struct _LigmaCanvasGuide
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasGuideClass
+struct _LigmaCanvasGuideClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_guide_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_guide_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
-                                             GimpOrientationType  orientation,
+LigmaCanvasItem * ligma_canvas_guide_new      (LigmaDisplayShell    *shell,
+                                             LigmaOrientationType  orientation,
                                              gint                 position,
-                                             GimpGuideStyle       style);
+                                             LigmaGuideStyle       style);
 
-void             gimp_canvas_guide_set      (GimpCanvasItem      *guide,
-                                             GimpOrientationType  orientation,
+void             ligma_canvas_guide_set      (LigmaCanvasItem      *guide,
+                                             LigmaOrientationType  orientation,
                                              gint                 position);
 
 
-#endif /* __GIMP_CANVAS_GUIDE_H__ */
+#endif /* __LIGMA_CANVAS_GUIDE_H__ */

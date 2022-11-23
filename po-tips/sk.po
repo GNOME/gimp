@@ -1,6 +1,6 @@
-# Slovak translation of gimp-tips.
+# Slovak translation of ligma-tips.
 # Copyright (C) 2002-2005, 2009 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp-tips package.
+# This file is distributed under the same license as the ligma-tips package.
 # Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>, 2002.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
 # Marcel Telka <marcel@telka.sk>, 2005.
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 14:47+0000\n"
 "PO-Revision-Date: 2020-10-16 11:30+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
@@ -21,26 +21,26 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Pomocou stlačenia klávesu F1 získate pomocníka citlivého na kontext, ktorý "
-"popisuje väčšinu vlastností programu GIMP. Tento pomocník funguje aj v "
+"popisuje väčšinu vlastností programu LIGMA. Tento pomocník funguje aj v "
 "ponukách."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP používa vrstvy na organizáciu vašich obrázkov. Môžete si ich predstaviť "
+"LIGMA používa vrstvy na organizáciu vašich obrázkov. Môžete si ich predstaviť "
 "ako sadu fólií alebo filtrov, cez ktoré sa pozeráte, keď chcete vidieť ich "
 "kompozíciu."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -48,19 +48,19 @@ msgstr ""
 "K mnohým operáciám s vrstvami máte prístup pomocou kliknutia pravým "
 "tlačidlom myši na označenie vrstvy v dialógovom okne Vrstvy."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Ukladanie obrázkov využíva formát XCF, natívny formát súborov aplikácie GIMP "
+"Ukladanie obrázkov využíva formát XCF, natívny formát súborov aplikácie LIGMA "
 "(prípona súboru <tt>.xcf</tt>). Tým sa zachovajú vrstvy a veľa aspektov "
 "vašej prebiehajúcej práce, čo vám umožní pokračovať v práci neskôr. Po "
 "dokončení projektu ho môžete uložiť ako JPEG, PNG, GIF, atď."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -70,7 +70,7 @@ msgstr ""
 "niektorých prípadoch budete musieť zlúčiť všetky vrstvy (Obrázok→Do jednej "
 "vrstvy), ak budete chcieť pracovať s celým obrázkom."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -80,7 +80,7 @@ msgstr ""
 "vrstva neobsahuje alfa kanál. Alfa kanál môžete pridať pomocou "
 "Vrstva→Priesvitnosť→Pridať alfa kanál."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -92,7 +92,7 @@ msgstr ""
 "(Obrázok→Režim→RGB), pridať alfa kanál (Vrstvy→Priesvitnosť→Pridať alfa-"
 "kanál) alebo zlúčiť vrstvy (Obrázok→Do jednej vrstvy)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -105,17 +105,17 @@ msgstr ""
 "kláves <tt>Alt</tt> alebo aby miesto neho používali kláves <tt>Super</tt> "
 "(alebo „logo Windows“)."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Veľa vecí v programe GIMP môžete jednoducho pretiahnuť a pustiť. Napríklad, "
+"Veľa vecí v programe LIGMA môžete jednoducho pretiahnuť a pustiť. Napríklad, "
 "ak pretiahnete farbu z panela nástrojov alebo z farebnej palety a pustíte ju "
 "do obrázka, tak sa aktuálny výber vyplní touto farbou."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -124,7 +124,7 @@ msgstr ""
 "pomocou prostredného tlačidla myši (alebo držaním <tt>Medzerníka</tt> počas "
 "pohybu myši)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -135,7 +135,7 @@ msgstr ""
 "odstrániť tak, že pomocou nástroja Presun ich pretiahnete mimo plochu "
 "obrázka."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -144,7 +144,7 @@ msgstr ""
 "nástrojov. To vytvorí nový obrázok, ktorý bude obsahovať iba túto vrstvu."
 
 # PK: inde ukotvit
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -155,18 +155,18 @@ msgstr ""
 "alebo poslednej aktívnej vrstve. Kliknite na tlačidlo „Nová vrstva“ alebo "
 "„Ukotviť vrstvu“ v dialógovom okne Vrstvy, alebo to urobte pomocou ponuky."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP podporuje priebežnú kompresiu gzip. Stačí pridať koncovku <tt>.gz</tt> "
+"LIGMA podporuje priebežnú kompresiu gzip. Stačí pridať koncovku <tt>.gz</tt> "
 "(alebo <tt>.bz2</tt>, ak máte nainštalovaný bzip2) k názvu súboru a obrázok "
 "bude uložený komprimovaný. Rovnako to funguje, prirodzene, aj pri načítavaní "
 "obrázkov."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -176,7 +176,7 @@ msgstr ""
 "nový výber pridaný k predchádzajúcemu. Naopak, pomocou klávesu <tt>Ctrl</tt> "
 "môžete ubrať z aktuálneho výberu."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -186,7 +186,7 @@ msgstr ""
 "kruhy. Táto fukcia obtiahne hranice aktuálneho výberu. Zložitejšie tvary je "
 "možné kresliť pomocou nástroja Cesta alebo Filtre→Generovanie→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -196,7 +196,7 @@ msgstr ""
 "nastavenia kresliaceho nástroja. Môžete použiť štetec v režime prechodu, "
 "gumu alebo dokonca rozmazanie."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -206,7 +206,7 @@ msgstr ""
 "Dialógové okno Cesty umožňuje pracovať s viacerými cestami a konvertovať ich "
 "do výberu."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -218,7 +218,7 @@ msgstr ""
 "obrázka a opätovné kliknutie na tlačidlo ju skonvertuje späť na normály "
 "výber."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -229,13 +229,13 @@ msgstr ""
 "ľubovoľným kresliacim nástrojom. Tlačidlá v dialógovom okne Kanály prepínajú "
 "viditeľnosť tohoto nového kanála alebo ho konvertujú do výberu."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -243,10 +243,10 @@ msgstr ""
 "Nastavenia, klávesové skratky môžete zmeniť. Spraviť to môžete tak, že "
 "otvoríte ponuku, označíte položku a stlačíte požadovanú klávesovú skratku. "
 "Ak je zaškrtnuté pole „Uložiť klávesové skratky“, tak sa skratky uložia pri "
-"ukončení programu GIMP. Potom môžete „Dynamické klávesové skratky“ vypnúť, "
+"ukončení programu LIGMA. Potom môžete „Dynamické klávesové skratky“ vypnúť, "
 "aby ste predišli náhodnej nechcenej zmene skratiek."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -254,7 +254,7 @@ msgstr ""
 "Ak je na obrazovke veľký zmätok, stlačenie klávesu <tt>Tab</tt> v okne s "
 "obrázkom skryje alebo zobrazí panel nástrojov a ostatné dialógové okná."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -263,7 +263,7 @@ msgstr ""
 "<tt>Shift</tt>je možné skryť všetky vrstvy okrem tej, na ktorú ste klikli. "
 "Ďalšie kliknutie zobrazí všetky vrstvy."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -274,7 +274,7 @@ msgstr ""
 "klávesom <tt>Alt</tt> na náhľad masky vrstvy v dialógovom okne Vrstvy priamo "
 "prepína zobrazenie masky vrstvy."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -282,7 +282,7 @@ msgstr ""
 "Pomocou kláves <tt>Ctrl</tt>-<tt>Tab</tt> môžete prepínať vrstvy obrázka "
 "(pokiaľ túto kombináciu nepoužíva správca okien…)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -294,7 +294,7 @@ msgstr ""
 "stlačeným klávesom <tt>Ctrl</tt> pri použití Pipety nastaví farbu pozadia "
 "namiesto farby popredia."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -302,7 +302,7 @@ msgstr ""
 "Ťahanie s <tt>Ctrl</tt> s nástrojom Otočenie spôsobí otáčanie s 15 "
 "stupňovými krokmi."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "

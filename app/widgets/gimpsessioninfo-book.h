@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo-book.h
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo-book.h
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_BOOK_H__
-#define __GIMP_SESSION_INFO_BOOK_H__
+#ifndef __LIGMA_SESSION_INFO_BOOK_H__
+#define __LIGMA_SESSION_INFO_BOOK_H__
 
 
 /**
- * GimpSessionInfoBook:
+ * LigmaSessionInfoBook:
  *
  * Contains information about a book (a GtkNotebook of dockables) in
  * the interface.
  */
-struct _GimpSessionInfoBook
+struct _LigmaSessionInfoBook
 {
   gint   position;
   gint   current_page;
 
-  /*  list of GimpSessionInfoDockable  */
+  /*  list of LigmaSessionInfoDockable  */
   GList *dockables;
 };
 
 
-GimpSessionInfoBook *
-             gimp_session_info_book_new         (void);
-void         gimp_session_info_book_free        (GimpSessionInfoBook  *info);
+LigmaSessionInfoBook *
+             ligma_session_info_book_new         (void);
+void         ligma_session_info_book_free        (LigmaSessionInfoBook  *info);
 
-void         gimp_session_info_book_serialize   (GimpConfigWriter     *writer,
-                                                 GimpSessionInfoBook  *book);
-GTokenType   gimp_session_info_book_deserialize (GScanner             *scanner,
+void         ligma_session_info_book_serialize   (LigmaConfigWriter     *writer,
+                                                 LigmaSessionInfoBook  *book);
+GTokenType   ligma_session_info_book_deserialize (GScanner             *scanner,
                                                  gint                  scope,
-                                                 GimpSessionInfoBook **book);
+                                                 LigmaSessionInfoBook **book);
 
-GimpSessionInfoBook *
-             gimp_session_info_book_from_widget (GimpDockbook         *dockbook);
+LigmaSessionInfoBook *
+             ligma_session_info_book_from_widget (LigmaDockbook         *dockbook);
 
-GimpDockbook * gimp_session_info_book_restore   (GimpSessionInfoBook  *info,
-                                                 GimpDock             *dock);
+LigmaDockbook * ligma_session_info_book_restore   (LigmaSessionInfoBook  *info,
+                                                 LigmaDock             *dock);
 
 
-#endif  /* __GIMP_SESSION_INFO_BOOK_H__ */
+#endif  /* __LIGMA_SESSION_INFO_BOOK_H__ */

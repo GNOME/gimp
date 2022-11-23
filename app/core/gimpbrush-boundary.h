@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_BOUNDARY_H__
-#define __GIMP_BRUSH_BOUNDARY_H__
+#ifndef __LIGMA_BRUSH_BOUNDARY_H__
+#define __LIGMA_BRUSH_BOUNDARY_H__
 
 
-GimpBezierDesc * gimp_brush_real_transform_boundary (GimpBrush *brush,
+LigmaBezierDesc * ligma_brush_real_transform_boundary (LigmaBrush *brush,
                                                      gdouble    scale,
                                                      gdouble    aspect_ratio,
                                                      gdouble    angle,
@@ -29,4 +29,4 @@ GimpBezierDesc * gimp_brush_real_transform_boundary (GimpBrush *brush,
                                                      gint      *height);
 
 
-#endif /* __GIMP_BRUSH_BOUNDARY_H__ */
+#endif /* __LIGMA_BRUSH_BOUNDARY_H__ */

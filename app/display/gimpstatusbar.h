@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STATUSBAR_H__
-#define __GIMP_STATUSBAR_H__
+#ifndef __LIGMA_STATUSBAR_H__
+#define __LIGMA_STATUSBAR_H__
 
 G_BEGIN_DECLS
 
@@ -25,22 +25,22 @@ G_BEGIN_DECLS
 #define CURSOR_FORMAT_LENGTH 32
 
 
-#define GIMP_TYPE_STATUSBAR            (gimp_statusbar_get_type ())
-#define GIMP_STATUSBAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STATUSBAR, GimpStatusbar))
-#define GIMP_STATUSBAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STATUSBAR, GimpStatusbarClass))
-#define GIMP_IS_STATUSBAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STATUSBAR))
-#define GIMP_IS_STATUSBAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STATUSBAR))
-#define GIMP_STATUSBAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STATUSBAR, GimpStatusbarClass))
+#define LIGMA_TYPE_STATUSBAR            (ligma_statusbar_get_type ())
+#define LIGMA_STATUSBAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_STATUSBAR, LigmaStatusbar))
+#define LIGMA_STATUSBAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_STATUSBAR, LigmaStatusbarClass))
+#define LIGMA_IS_STATUSBAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_STATUSBAR))
+#define LIGMA_IS_STATUSBAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_STATUSBAR))
+#define LIGMA_STATUSBAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_STATUSBAR, LigmaStatusbarClass))
 
-typedef struct _GimpStatusbarClass GimpStatusbarClass;
+typedef struct _LigmaStatusbarClass LigmaStatusbarClass;
 
-struct _GimpStatusbar
+struct _LigmaStatusbar
 {
   GtkFrame             parent_instance;
 
-  Gimp                *gimp;
-  GimpDisplayShell    *shell;
-  GimpImage           *image;
+  Ligma                *ligma;
+  LigmaDisplayShell    *shell;
+  LigmaImage           *image;
 
   GSList              *messages;
   GHashTable          *context_ids;
@@ -56,12 +56,12 @@ struct _GimpStatusbar
 
   guint                temp_context_id;
   guint                temp_timeout_id;
-  GimpMessageSeverity  temp_severity;
+  LigmaMessageSeverity  temp_severity;
 
   gchar                cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar                cursor_format_str_f[CURSOR_FORMAT_LENGTH];
   gchar                length_format_str[CURSOR_FORMAT_LENGTH];
-  GimpCursorPrecision  cursor_precision;
+  LigmaCursorPrecision  cursor_precision;
   gint                 cursor_w_digits;
   gint                 cursor_h_digits;
 
@@ -96,87 +96,87 @@ struct _GimpStatusbar
   GSList              *size_widgets;
 };
 
-struct _GimpStatusbarClass
+struct _LigmaStatusbarClass
 {
   GtkFrameClass parent_class;
 };
 
 
-GType       gimp_statusbar_get_type              (void) G_GNUC_CONST;
-GtkWidget * gimp_statusbar_new                   (void);
+GType       ligma_statusbar_get_type              (void) G_GNUC_CONST;
+GtkWidget * ligma_statusbar_new                   (void);
 
-void        gimp_statusbar_set_shell             (GimpStatusbar       *statusbar,
-                                                  GimpDisplayShell    *shell);
+void        ligma_statusbar_set_shell             (LigmaStatusbar       *statusbar,
+                                                  LigmaDisplayShell    *shell);
 
-gboolean    gimp_statusbar_get_visible           (GimpStatusbar       *statusbar);
-void        gimp_statusbar_set_visible           (GimpStatusbar       *statusbar,
+gboolean    ligma_statusbar_get_visible           (LigmaStatusbar       *statusbar);
+void        ligma_statusbar_set_visible           (LigmaStatusbar       *statusbar,
                                                   gboolean             visible);
-void        gimp_statusbar_empty                 (GimpStatusbar       *statusbar);
-void        gimp_statusbar_fill                  (GimpStatusbar       *statusbar);
+void        ligma_statusbar_empty                 (LigmaStatusbar       *statusbar);
+void        ligma_statusbar_fill                  (LigmaStatusbar       *statusbar);
 
-void        gimp_statusbar_override_window_title (GimpStatusbar       *statusbar);
-void        gimp_statusbar_restore_window_title  (GimpStatusbar       *statusbar);
+void        ligma_statusbar_override_window_title (LigmaStatusbar       *statusbar);
+void        ligma_statusbar_restore_window_title  (LigmaStatusbar       *statusbar);
 
-void        gimp_statusbar_push                  (GimpStatusbar       *statusbar,
+void        ligma_statusbar_push                  (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   ...) G_GNUC_PRINTF (4, 5);
-void        gimp_statusbar_push_valist           (GimpStatusbar       *statusbar,
+void        ligma_statusbar_push_valist           (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   va_list              args) G_GNUC_PRINTF (4, 0);
-void        gimp_statusbar_push_coords           (GimpStatusbar       *statusbar,
+void        ligma_statusbar_push_coords           (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
-                                                  GimpCursorPrecision  precision,
+                                                  LigmaCursorPrecision  precision,
                                                   const gchar         *title,
                                                   gdouble              x,
                                                   const gchar         *separator,
                                                   gdouble              y,
                                                   const gchar         *help);
-void        gimp_statusbar_push_length           (GimpStatusbar       *statusbar,
+void        ligma_statusbar_push_length           (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
                                                   const gchar         *title,
-                                                  GimpOrientationType  axis,
+                                                  LigmaOrientationType  axis,
                                                   gdouble              value,
                                                   const gchar         *help);
-void        gimp_statusbar_replace               (GimpStatusbar       *statusbar,
+void        ligma_statusbar_replace               (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   ...) G_GNUC_PRINTF (4, 5);
-void        gimp_statusbar_replace_valist        (GimpStatusbar       *statusbar,
+void        ligma_statusbar_replace_valist        (LigmaStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   va_list              args) G_GNUC_PRINTF (4, 0);
-const gchar * gimp_statusbar_peek                (GimpStatusbar       *statusbar,
+const gchar * ligma_statusbar_peek                (LigmaStatusbar       *statusbar,
                                                   const gchar         *context);
-void        gimp_statusbar_pop                   (GimpStatusbar       *statusbar,
+void        ligma_statusbar_pop                   (LigmaStatusbar       *statusbar,
                                                   const gchar         *context);
 
-void        gimp_statusbar_push_temp             (GimpStatusbar       *statusbar,
-                                                  GimpMessageSeverity  severity,
+void        ligma_statusbar_push_temp             (LigmaStatusbar       *statusbar,
+                                                  LigmaMessageSeverity  severity,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   ...) G_GNUC_PRINTF (4, 5);
-void        gimp_statusbar_push_temp_valist      (GimpStatusbar       *statusbar,
-                                                  GimpMessageSeverity  severity,
+void        ligma_statusbar_push_temp_valist      (LigmaStatusbar       *statusbar,
+                                                  LigmaMessageSeverity  severity,
                                                   const gchar         *icon_name,
                                                   const gchar         *format,
                                                   va_list              args) G_GNUC_PRINTF (4, 0);
-void        gimp_statusbar_pop_temp              (GimpStatusbar       *statusbar);
+void        ligma_statusbar_pop_temp              (LigmaStatusbar       *statusbar);
 
-void        gimp_statusbar_update_cursor         (GimpStatusbar       *statusbar,
-                                                  GimpCursorPrecision  precision,
+void        ligma_statusbar_update_cursor         (LigmaStatusbar       *statusbar,
+                                                  LigmaCursorPrecision  precision,
                                                   gdouble              x,
                                                   gdouble              y);
-void        gimp_statusbar_clear_cursor          (GimpStatusbar       *statusbar);
+void        ligma_statusbar_clear_cursor          (LigmaStatusbar       *statusbar);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_STATUSBAR_H__ */
+#endif /* __LIGMA_STATUSBAR_H__ */

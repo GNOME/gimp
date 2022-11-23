@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "script-fu-types.h"
 #include "script-fu-arg.h"
@@ -35,14 +35,14 @@
  * Like a GValue, it holds a value.
  * Like a GParamSpec, it is metadata and holds a default value.
  *
- * In GIMP 2, extension-script-fu stays running and keeps instances of SFArg in memory.
- * This is how ScriptFu "settings" aka "last values" are persistent for a session of GIMP.
+ * In LIGMA 2, extension-script-fu stays running and keeps instances of SFArg in memory.
+ * This is how ScriptFu "settings" aka "last values" are persistent for a session of LIGMA.
  *
- * In GIMP 2, in the GUI implemented by ScriptFu (script-fu-interface.c),
+ * In LIGMA 2, in the GUI implemented by ScriptFu (script-fu-interface.c),
  * initial values of widgets are taken from SFArg (s),
  * and result values of widgets are written back to SFArg.
  *
- * In GIMP 3, SFArg might be somewhat replaced with GimpConfig.
+ * In LIGMA 3, SFArg might be somewhat replaced with LigmaConfig.
  * Then many of these methods are not needed.
  *
  * Roughly, the methods hide how to convert/represent SFArgs back/forth
@@ -74,7 +74,7 @@
  * SFArgType denotes not only a C type, but also a Scheme type.
  * For example, SF_ADJUSTMENT denotes the C type "float"
  * and the Scheme type "numeric" (which encompasses float and int.)
- * Another example, SF_PATTERN denotes the C type GimpPattern
+ * Another example, SF_PATTERN denotes the C type LigmaPattern
  * and the Scheme type string (names of brushes are used in scripts.)
  */
 
@@ -259,13 +259,13 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
  *
  * Used to specify an arg to the PDB proc which this script implements.
  * The GParamSpec is "floating" meaning ownership will transfer
- * to the GimpPDBProcedure.
+ * to the LigmaPDBProcedure.
  *
  * Ensure GParamSpec has a default except as noted below.
  * Default value from self.
  *
- * FUTURE: use GimpProcedureDialog
- * Because GimpProcedureDialog creates widgets from properties/paramspecs,
+ * FUTURE: use LigmaProcedureDialog
+ * Because LigmaProcedureDialog creates widgets from properties/paramspecs,
  * this should convey what SFArg denotes about desired widget kind,
  * but it doesn't fully do that yet.
  */
@@ -278,9 +278,9 @@ script_fu_arg_get_param_spec (SFArg       *arg,
 
   switch (arg->type)
     {
-      /* No defaults for GIMP objects: Image, Item subclasses, Display */
+      /* No defaults for LIGMA objects: Image, Item subclasses, Display */
     case SF_IMAGE:
-      pspec = gimp_param_spec_image (name,
+      pspec = ligma_param_spec_image (name,
                                      nick,
                                      arg->label,
                                      TRUE,  /* None is valid. */
@@ -288,7 +288,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_DRAWABLE:
-      pspec = gimp_param_spec_drawable (name,
+      pspec = ligma_param_spec_drawable (name,
                                         nick,
                                         arg->label,
                                         TRUE,
@@ -296,7 +296,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_LAYER:
-      pspec = gimp_param_spec_layer (name,
+      pspec = ligma_param_spec_layer (name,
                                      nick,
                                      arg->label,
                                      TRUE,
@@ -304,7 +304,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_CHANNEL:
-      pspec = gimp_param_spec_channel (name,
+      pspec = ligma_param_spec_channel (name,
                                        nick,
                                        arg->label,
                                        TRUE,
@@ -312,7 +312,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_VECTORS:
-      pspec = gimp_param_spec_vectors (name,
+      pspec = ligma_param_spec_vectors (name,
                                        nick,
                                        arg->label,
                                        TRUE,
@@ -320,7 +320,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_DISPLAY:
-      pspec = gimp_param_spec_display (name,
+      pspec = ligma_param_spec_display (name,
                                        nick,
                                        arg->label,
                                        TRUE,
@@ -328,10 +328,10 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_COLOR:
-      /* Pass address of default color i.e. instance of GimpRGB.
+      /* Pass address of default color i.e. instance of LigmaRGB.
        * Color is owned by ScriptFu and exists for lifetime of SF process.
        */
-      pspec = gimp_param_spec_rgb (name,
+      pspec = ligma_param_spec_rgb (name,
                                    nick,
                                    arg->label,
                                    TRUE,  /* is alpha relevant */
@@ -350,14 +350,14 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     /* FUTURE special widgets for multiline text.
-     * script-fu-interface does, but GimpProcedureDialog does not.
+     * script-fu-interface does, but LigmaProcedureDialog does not.
      */
     case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
 
     /* FUTURE special widgets.
-     * script-fu-interface does, but GimpProcedureDialog does not?
+     * script-fu-interface does, but LigmaProcedureDialog does not?
      */
     case SF_FONT:
     case SF_PALETTE:
@@ -375,7 +375,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
 
     case SF_BRUSH:
       /* FUTURE: brush object has more fields.
-       * ?? Implement gimp_param_spec_brush
+       * ?? Implement ligma_param_spec_brush
        */
       pspec = g_param_spec_string (name,
                                    nick,
@@ -410,7 +410,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
                                    arg->label,
                                    G_TYPE_FILE,
                                    G_PARAM_READWRITE |
-                                   GIMP_PARAM_NO_VALIDATE);
+                                   LIGMA_PARAM_NO_VALIDATE);
       pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
       /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
       break;
@@ -450,7 +450,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
  *
  * The repr comes from the value of the GValue, not the value of the SFArg.
  *
- * Used when GIMP is calling the PDB procedure implemented by the script,
+ * Used when LIGMA is calling the PDB procedure implemented by the script,
  * passing a GValueArray.
  */
 void
@@ -480,11 +480,11 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_COLOR:
       {
-        GimpRGB color;
+        LigmaRGB color;
         guchar  r, g, b;
 
-        gimp_value_get_rgb (gvalue, &color);
-        gimp_rgb_get_uchar (&color, &r, &g, &b);
+        ligma_value_get_rgb (gvalue, &color);
+        ligma_rgb_get_uchar (&color, &r, &g, &b);
         g_string_append_printf (result_string, "'(%d %d %d)",
                                 (gint) r, (gint) g, (gint) b);
       }
@@ -518,7 +518,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
             GFile *file = g_value_get_object (gvalue);
 
             /* Catch: GValue initialized to hold a GFile, but not hold one.
-             * Specificially, GimpProcedureDialog can yield that condition;
+             * Specificially, LigmaProcedureDialog can yield that condition;
              * the dialog shows "(None)" meaning user has not chosen a file yet.
              */
             if (G_IS_FILE (file))
@@ -585,7 +585,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
         }
       else
         {
-          /* For now, occurs when GimpConfig or GimpProcedureDialog does not support GParamEnum. */
+          /* For now, occurs when LigmaConfig or LigmaProcedureDialog does not support GParamEnum. */
           g_warning ("Expecting GValue holding a GEnum.");
           /* Append arbitrary int, so no errors in signature of Scheme call.
            * The call might not yield result the user intended.
@@ -625,7 +625,7 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
       {
         guchar r, g, b;
 
-        gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
+        ligma_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
         g_string_append_printf (result_string, "'(%d %d %d)",
                                 (gint) r, (gint) g, (gint) b);
       }
@@ -738,7 +738,7 @@ script_fu_arg_reset_name_generator (void)
  * It is unique among all names returned between resets of the generator.
  * Thus name meets uniquity for names of properties of one object.
  *
- * !!! GimpImageProcedures already have properties for convenience arguments,
+ * !!! LigmaImageProcedures already have properties for convenience arguments,
  * e.g. a property named "image" "n_drawables" and "drawables"
  * So we avoid that name clash by starting with "otherImage"
  *

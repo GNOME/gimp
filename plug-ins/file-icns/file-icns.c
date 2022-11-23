@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns.c
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 /* #define ICNS_DBG */
 
@@ -34,7 +34,7 @@
 #include "file-icns-load.h"
 #include "file-icns-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define LOAD_PROC           "file-icns-load"
 #define LOAD_THUMB_PROC     "file-icns-load-thumb"
@@ -46,12 +46,12 @@ typedef struct _IcnsClass IcnsClass;
 
 struct _Icns
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _IcnsClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -60,39 +60,39 @@ struct _IcnsClass
 
 GType                   icns_get_type         (void) G_GNUC_CONST;
 
-static GList          * icns_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * icns_create_procedure (GimpPlugIn           *plug_in,
+static GList          * icns_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * icns_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * icns_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
+static LigmaValueArray * icns_load             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * icns_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * icns_load_thumb       (LigmaProcedure        *procedure,
                                                GFile                *file,
                                                gint                  size,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * icns_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * icns_save             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 
-G_DEFINE_TYPE (Icns, icns, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Icns, icns, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (ICNS_TYPE)
+LIGMA_MAIN (ICNS_TYPE)
 DEFINE_STD_SET_I18N
 
 static void
 icns_class_init (IcnsClass *klass)
 {
-  GimpPlugInClass *plug_in_class  = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class  = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = icns_query_procedures;
   plug_in_class->create_procedure = icns_create_procedure;
@@ -105,7 +105,7 @@ icns_init (Icns *icns)
 }
 
 static GList *
-icns_query_procedures (GimpPlugIn *plug_in)
+icns_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -116,92 +116,92 @@ icns_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-icns_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+icns_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            icns_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Icns"));
+      ligma_procedure_set_menu_label (procedure, N_("Icns"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in Apple Icon Image format",
                                         "Loads Apple Icon Image files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Brion Vibber <brion@pobox.com>",
                                       "Brion Vibber <brion@pobox.com>",
                                       "2004");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-icns");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "icns");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\x69\x63\x6E\x73");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 icns_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads a preview from an Apple Icon Image file",
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Brion Vibber <brion@pobox.com>",
                                       "Brion Vibber <brion@pobox.com>",
                                       "2004");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            icns_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Apple Icon Image"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Apple Icon Image"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in Apple Icon Image file format",
                                         "Saves files in Apple Icon Image file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Brion Vibber <brion@pobox.com>",
                                       "Brion Vibber <brion@pobox.com>",
                                       "2004");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-icns");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "icns");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-icns_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+icns_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error       = NULL;
 
   gegl_init (NULL, NULL);
@@ -209,30 +209,30 @@ icns_load (GimpProcedure        *procedure,
   image = icns_load_image (file, NULL, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-icns_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+icns_load_thumb (LigmaProcedure        *procedure,
                  GFile                *file,
                  gint                  size,
-                 const GimpValueArray *args,
+                 const LigmaValueArray *args,
                  gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width;
   gint            height;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -244,41 +244,41 @@ icns_load_thumb (GimpProcedure        *procedure,
                                      &width, &height, 0, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
 
-static GimpValueArray *
-icns_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+icns_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
   status = icns_save_image (file, image, run_mode, &error);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /* Buffer should point to *at least 5 byte buffer*! */

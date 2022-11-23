@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -20,31 +20,31 @@
 
 #include <glib-object.h>
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimphsl.h"
+#include "ligmahsl.h"
 
 
 /*
- * GIMP_TYPE_HSL
+ * LIGMA_TYPE_HSL
  */
 
-static GimpHSL * gimp_hsl_copy (const GimpHSL *hsl);
+static LigmaHSL * ligma_hsl_copy (const LigmaHSL *hsl);
 
 
-G_DEFINE_BOXED_TYPE (GimpHSL, gimp_hsl, gimp_hsl_copy, g_free)
+G_DEFINE_BOXED_TYPE (LigmaHSL, ligma_hsl, ligma_hsl_copy, g_free)
 
-static GimpHSL *
-gimp_hsl_copy (const GimpHSL *hsl)
+static LigmaHSL *
+ligma_hsl_copy (const LigmaHSL *hsl)
 {
-  return g_memdup2 (hsl, sizeof (GimpHSL));
+  return g_memdup2 (hsl, sizeof (LigmaHSL));
 }
 
 
 /*  HSL functions  */
 
 /**
- * gimp_hsl_set:
+ * ligma_hsl_set:
  * @hsl:
  * @h:
  * @s:
@@ -53,7 +53,7 @@ gimp_hsl_copy (const GimpHSL *hsl)
  * Since: 2.8
  **/
 void
-gimp_hsl_set (GimpHSL *hsl,
+ligma_hsl_set (LigmaHSL *hsl,
               gdouble  h,
               gdouble  s,
               gdouble  l)
@@ -66,14 +66,14 @@ gimp_hsl_set (GimpHSL *hsl,
 }
 
 /**
- * gimp_hsl_set_alpha:
+ * ligma_hsl_set_alpha:
  * @hsl:
  * @a:
  *
  * Since: 2.10
  **/
 void
-gimp_hsl_set_alpha (GimpHSL *hsl,
+ligma_hsl_set_alpha (LigmaHSL *hsl,
                     gdouble a)
 {
   g_return_if_fail (hsl != NULL);

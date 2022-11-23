@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsaveprocedure.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmasaveprocedure.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,10 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAVE_PROCEDURE_H__
-#define __GIMP_SAVE_PROCEDURE_H__
+#ifndef __LIGMA_SAVE_PROCEDURE_H__
+#define __LIGMA_SAVE_PROCEDURE_H__
 
-#include <libgimp/gimpfileprocedure.h>
+#include <libligma/ligmafileprocedure.h>
 
 G_BEGIN_DECLS
 
@@ -30,88 +30,88 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpRunSaveFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
+ * LigmaRunSaveFunc:
+ * @procedure:   the #LigmaProcedure that runs.
+ * @run_mode:    the #LigmaRunMode.
  * @image:       the image to save.
  * @n_drawables: the number of drawables to save.
  * @drawables: (array length=n_drawables):   the drawables to save.
  * @file:        the #GFile to save to.
  * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_save_procedure_new().
+ * @run_data: (closure): the run_data given in ligma_save_procedure_new().
  *
- * The save function is run during the lifetime of the GIMP session,
+ * The save function is run during the lifetime of the LIGMA session,
  * each time a plug-in save procedure is called.
  *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+typedef LigmaValueArray * (* LigmaRunSaveFunc) (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 
-#define GIMP_TYPE_SAVE_PROCEDURE            (gimp_save_procedure_get_type ())
-#define GIMP_SAVE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAVE_PROCEDURE, GimpSaveProcedure))
-#define GIMP_SAVE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAVE_PROCEDURE, GimpSaveProcedureClass))
-#define GIMP_IS_SAVE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAVE_PROCEDURE))
-#define GIMP_IS_SAVE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAVE_PROCEDURE))
-#define GIMP_SAVE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAVE_PROCEDURE, GimpSaveProcedureClass))
+#define LIGMA_TYPE_SAVE_PROCEDURE            (ligma_save_procedure_get_type ())
+#define LIGMA_SAVE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAVE_PROCEDURE, LigmaSaveProcedure))
+#define LIGMA_SAVE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAVE_PROCEDURE, LigmaSaveProcedureClass))
+#define LIGMA_IS_SAVE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAVE_PROCEDURE))
+#define LIGMA_IS_SAVE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAVE_PROCEDURE))
+#define LIGMA_SAVE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAVE_PROCEDURE, LigmaSaveProcedureClass))
 
 
-typedef struct _GimpSaveProcedure        GimpSaveProcedure;
-typedef struct _GimpSaveProcedureClass   GimpSaveProcedureClass;
-typedef struct _GimpSaveProcedurePrivate GimpSaveProcedurePrivate;
+typedef struct _LigmaSaveProcedure        LigmaSaveProcedure;
+typedef struct _LigmaSaveProcedureClass   LigmaSaveProcedureClass;
+typedef struct _LigmaSaveProcedurePrivate LigmaSaveProcedurePrivate;
 
-struct _GimpSaveProcedure
+struct _LigmaSaveProcedure
 {
-  GimpFileProcedure         parent_instance;
+  LigmaFileProcedure         parent_instance;
 
-  GimpSaveProcedurePrivate *priv;
+  LigmaSaveProcedurePrivate *priv;
 };
 
-struct _GimpSaveProcedureClass
+struct _LigmaSaveProcedureClass
 {
-  GimpFileProcedureClass parent_class;
+  LigmaFileProcedureClass parent_class;
 };
 
 
-GType           gimp_save_procedure_get_type (void) G_GNUC_CONST;
+GType           ligma_save_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_save_procedure_new      (GimpPlugIn      *plug_in,
+LigmaProcedure * ligma_save_procedure_new      (LigmaPlugIn      *plug_in,
                                               const gchar     *name,
-                                              GimpPDBProcType  proc_type,
-                                              GimpRunSaveFunc  run_func,
+                                              LigmaPDBProcType  proc_type,
+                                              LigmaRunSaveFunc  run_func,
                                               gpointer         run_data,
                                               GDestroyNotify   run_data_destroy);
 
-void            gimp_save_procedure_set_support_exif      (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_exif      (LigmaSaveProcedure *procedure,
                                                            gboolean           supports);
-void            gimp_save_procedure_set_support_iptc      (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_iptc      (LigmaSaveProcedure *procedure,
                                                            gboolean           supports);
-void            gimp_save_procedure_set_support_xmp       (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_xmp       (LigmaSaveProcedure *procedure,
                                                            gboolean           supports);
-void            gimp_save_procedure_set_support_profile   (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_profile   (LigmaSaveProcedure *procedure,
                                                            gboolean           supports);
-void            gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_thumbnail (LigmaSaveProcedure *procedure,
                                                            gboolean           supports);
-void            gimp_save_procedure_set_support_comment   (GimpSaveProcedure *procedure,
+void            ligma_save_procedure_set_support_comment   (LigmaSaveProcedure *procedure,
                                                             gboolean           supports);
 
-gboolean        gimp_save_procedure_get_support_exif      (GimpSaveProcedure *procedure);
-gboolean        gimp_save_procedure_get_support_iptc      (GimpSaveProcedure *procedure);
-gboolean        gimp_save_procedure_get_support_xmp       (GimpSaveProcedure *procedure);
-gboolean        gimp_save_procedure_get_support_profile   (GimpSaveProcedure *procedure);
-gboolean        gimp_save_procedure_get_support_thumbnail (GimpSaveProcedure *procedure);
-gboolean        gimp_save_procedure_get_support_comment   (GimpSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_exif      (LigmaSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_iptc      (LigmaSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_xmp       (LigmaSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_profile   (LigmaSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_thumbnail (LigmaSaveProcedure *procedure);
+gboolean        ligma_save_procedure_get_support_comment   (LigmaSaveProcedure *procedure);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_SAVE_PROCEDURE_H__  */
+#endif  /*  __LIGMA_SAVE_PROCEDURE_H__  */

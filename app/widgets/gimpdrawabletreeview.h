@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawabletreeview.h
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * ligmadrawabletreeview.h
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,35 +18,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_TREE_VIEW_H__
-#define __GIMP_DRAWABLE_TREE_VIEW_H__
+#ifndef __LIGMA_DRAWABLE_TREE_VIEW_H__
+#define __LIGMA_DRAWABLE_TREE_VIEW_H__
 
 
-#include "gimpitemtreeview.h"
+#include "ligmaitemtreeview.h"
 
 
-#define GIMP_TYPE_DRAWABLE_TREE_VIEW            (gimp_drawable_tree_view_get_type ())
-#define GIMP_DRAWABLE_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_TREE_VIEW, GimpDrawableTreeView))
-#define GIMP_DRAWABLE_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_TREE_VIEW, GimpDrawableTreeViewClass))
-#define GIMP_IS_DRAWABLE_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_TREE_VIEW))
-#define GIMP_IS_DRAWABLE_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_TREE_VIEW))
-#define GIMP_DRAWABLE_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_TREE_VIEW, GimpDrawableTreeViewClass))
+#define LIGMA_TYPE_DRAWABLE_TREE_VIEW            (ligma_drawable_tree_view_get_type ())
+#define LIGMA_DRAWABLE_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DRAWABLE_TREE_VIEW, LigmaDrawableTreeView))
+#define LIGMA_DRAWABLE_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DRAWABLE_TREE_VIEW, LigmaDrawableTreeViewClass))
+#define LIGMA_IS_DRAWABLE_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DRAWABLE_TREE_VIEW))
+#define LIGMA_IS_DRAWABLE_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DRAWABLE_TREE_VIEW))
+#define LIGMA_DRAWABLE_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DRAWABLE_TREE_VIEW, LigmaDrawableTreeViewClass))
 
 
-typedef struct _GimpDrawableTreeViewClass  GimpDrawableTreeViewClass;
+typedef struct _LigmaDrawableTreeViewClass  LigmaDrawableTreeViewClass;
 
-struct _GimpDrawableTreeView
+struct _LigmaDrawableTreeView
 {
-  GimpItemTreeView  parent_instance;
+  LigmaItemTreeView  parent_instance;
 };
 
-struct _GimpDrawableTreeViewClass
+struct _LigmaDrawableTreeViewClass
 {
-  GimpItemTreeViewClass  parent_class;
+  LigmaItemTreeViewClass  parent_class;
 };
 
 
-GType   gimp_drawable_tree_view_get_type (void) G_GNUC_CONST;
+GType   ligma_drawable_tree_view_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_DRAWABLE_TREE_VIEW_H__  */
+#endif  /*  __LIGMA_DRAWABLE_TREE_VIEW_H__  */

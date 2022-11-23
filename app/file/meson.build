@@ -9,7 +9,7 @@ libappfile_sources = [
 libappfile = static_library('appfile',
   libappfile_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: '-DG_LOG_DOMAIN="Gimp-File"',
+  c_args: '-DG_LOG_DOMAIN="Ligma-File"',
   dependencies: [
     gegl, gdk_pixbuf,
   ],

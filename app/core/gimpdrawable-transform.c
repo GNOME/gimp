@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,75 +24,75 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp.h"
-#include "gimp-transform-resize.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-transform.h"
-#include "gimpimage.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimplayer-floating-selection.h"
-#include "gimplayer-new.h"
-#include "gimppickable.h"
-#include "gimpprogress.h"
-#include "gimpselection.h"
+#include "ligma.h"
+#include "ligma-transform-resize.h"
+#include "ligmachannel.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-transform.h"
+#include "ligmaimage.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmalayer.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmalayer-new.h"
+#include "ligmapickable.h"
+#include "ligmaprogress.h"
+#include "ligmaselection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 GeglBuffer *
-gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
-                                       GimpContext             *context,
+ligma_drawable_transform_buffer_affine (LigmaDrawable            *drawable,
+                                       LigmaContext             *context,
                                        GeglBuffer              *orig_buffer,
                                        gint                     orig_offset_x,
                                        gint                     orig_offset_y,
-                                       const GimpMatrix3       *matrix,
-                                       GimpTransformDirection   direction,
-                                       GimpInterpolationType    interpolation_type,
-                                       GimpTransformResize      clip_result,
-                                       GimpColorProfile       **buffer_profile,
+                                       const LigmaMatrix3       *matrix,
+                                       LigmaTransformDirection   direction,
+                                       LigmaInterpolationType    interpolation_type,
+                                       LigmaTransformResize      clip_result,
+                                       LigmaColorProfile       **buffer_profile,
                                        gint                    *new_offset_x,
                                        gint                    *new_offset_y,
-                                       GimpProgress            *progress)
+                                       LigmaProgress            *progress)
 {
   GeglBuffer  *new_buffer;
-  GimpMatrix3  m;
+  LigmaMatrix3  m;
   gint         u1, v1, u2, v2;  /* source bounding box */
   gint         x1, y1, x2, y2;  /* target bounding box */
-  GimpMatrix3  gegl_matrix;
+  LigmaMatrix3  gegl_matrix;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
   g_return_val_if_fail (buffer_profile != NULL, NULL);
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
   *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+    ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (drawable));
 
   m = *matrix;
 
-  if (direction == GIMP_TRANSFORM_BACKWARD)
+  if (direction == LIGMA_TRANSFORM_BACKWARD)
     {
       /*  Find the inverse of the transformation matrix  */
-      gimp_matrix3_invert (&m);
+      ligma_matrix3_invert (&m);
     }
 
   u1 = orig_offset_x;
@@ -101,7 +101,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
   v2 = v1 + gegl_buffer_get_height (orig_buffer);
 
   /*  Find the bounding coordinates of target */
-  gimp_transform_resize_boundary (&m, clip_result,
+  ligma_transform_resize_boundary (&m, clip_result,
                                   u1, v1, u2, v2,
                                   &x1, &y1, &x2, &y2);
 
@@ -109,12 +109,12 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
   new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                 gegl_buffer_get_format (orig_buffer));
 
-  gimp_matrix3_identity (&gegl_matrix);
-  gimp_matrix3_translate (&gegl_matrix, u1, v1);
-  gimp_matrix3_mult (&m, &gegl_matrix);
-  gimp_matrix3_translate (&gegl_matrix, -x1, -y1);
+  ligma_matrix3_identity (&gegl_matrix);
+  ligma_matrix3_translate (&gegl_matrix, u1, v1);
+  ligma_matrix3_mult (&m, &gegl_matrix);
+  ligma_matrix3_translate (&gegl_matrix, -x1, -y1);
 
-  gimp_gegl_apply_transform (orig_buffer, progress, NULL,
+  ligma_gegl_apply_transform (orig_buffer, progress, NULL,
                              new_buffer,
                              interpolation_type,
                              &gegl_matrix);
@@ -126,15 +126,15 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
 }
 
 GeglBuffer *
-gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
-                                     GimpContext          *context,
+ligma_drawable_transform_buffer_flip (LigmaDrawable         *drawable,
+                                     LigmaContext          *context,
                                      GeglBuffer           *orig_buffer,
                                      gint                  orig_offset_x,
                                      gint                  orig_offset_y,
-                                     GimpOrientationType   flip_type,
+                                     LigmaOrientationType   flip_type,
                                      gdouble               axis,
                                      gboolean              clip_result,
-                                     GimpColorProfile    **buffer_profile,
+                                     LigmaColorProfile    **buffer_profile,
                                      gint                 *new_offset_x,
                                      gint                 *new_offset_y)
 {
@@ -150,16 +150,16 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
   gint                new_width, new_height;
   gint                x, y;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
   g_return_val_if_fail (buffer_profile != NULL, NULL);
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
 
   *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+    ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (drawable));
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
@@ -173,17 +173,17 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
 
   switch (flip_type)
     {
-    case GIMP_ORIENTATION_HORIZONTAL:
+    case LIGMA_ORIENTATION_HORIZONTAL:
       new_x = RINT (-((gdouble) orig_x +
                       (gdouble) orig_width - axis) + axis);
       break;
 
-    case GIMP_ORIENTATION_VERTICAL:
+    case LIGMA_ORIENTATION_VERTICAL:
       new_y = RINT (-((gdouble) orig_y +
                       (gdouble) orig_height - axis) + axis);
       break;
 
-    case GIMP_ORIENTATION_UNKNOWN:
+    case LIGMA_ORIENTATION_UNKNOWN:
       g_return_val_if_reached (NULL);
       break;
     }
@@ -197,7 +197,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
 
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
-      GimpRGB    bg;
+      LigmaRGB    bg;
       GeglColor *color;
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
@@ -208,22 +208,22 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
       /*  Use transparency, rather than the bg color, as the "outside" color of
        *  channels, and drawables with an alpha channel.
        */
-      if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
+      if (LIGMA_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
         {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+          ligma_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
         }
       else
         {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+          ligma_context_get_background (context, &bg);
+          ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                              &bg, &bg);
         }
 
-      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
+      color = ligma_gegl_color_new (&bg, ligma_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
-      if (gimp_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
+      if (ligma_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
                                     new_x, new_y, new_width, new_height,
                                     &clip_x, &clip_y,
                                     &clip_width, &clip_height))
@@ -259,7 +259,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
 
   switch (flip_type)
     {
-    case GIMP_ORIENTATION_HORIZONTAL:
+    case LIGMA_ORIENTATION_HORIZONTAL:
       while (gegl_buffer_iterator_next (iter))
         {
           gint stride = iter->items[0].roi.width * bpp;
@@ -296,7 +296,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
         }
       break;
 
-    case GIMP_ORIENTATION_VERTICAL:
+    case LIGMA_ORIENTATION_VERTICAL:
       while (gegl_buffer_iterator_next (iter))
         {
           gint stride = iter->items[0].roi.width * bpp;
@@ -333,7 +333,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
         }
       break;
 
-    case GIMP_ORIENTATION_UNKNOWN:
+    case LIGMA_ORIENTATION_UNKNOWN:
       gegl_buffer_iterator_stop (iter);
       break;
     }
@@ -342,9 +342,9 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
 }
 
 static void
-gimp_drawable_transform_rotate_point (gint              x,
+ligma_drawable_transform_rotate_point (gint              x,
                                       gint              y,
-                                      GimpRotationType  rotate_type,
+                                      LigmaRotationType  rotate_type,
                                       gdouble           center_x,
                                       gdouble           center_y,
                                       gint             *new_x,
@@ -355,17 +355,17 @@ gimp_drawable_transform_rotate_point (gint              x,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case LIGMA_ROTATE_90:
       *new_x = RINT (center_x - (gdouble) y + center_y);
       *new_y = RINT (center_y + (gdouble) x - center_x);
       break;
 
-    case GIMP_ROTATE_180:
+    case LIGMA_ROTATE_180:
       *new_x = RINT (center_x - ((gdouble) x - center_x));
       *new_y = RINT (center_y - ((gdouble) y - center_y));
       break;
 
-    case GIMP_ROTATE_270:
+    case LIGMA_ROTATE_270:
       *new_x = RINT (center_x + (gdouble) y - center_y);
       *new_y = RINT (center_y - (gdouble) x + center_x);
       break;
@@ -378,16 +378,16 @@ gimp_drawable_transform_rotate_point (gint              x,
 }
 
 GeglBuffer *
-gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
-                                       GimpContext       *context,
+ligma_drawable_transform_buffer_rotate (LigmaDrawable      *drawable,
+                                       LigmaContext       *context,
                                        GeglBuffer        *orig_buffer,
                                        gint               orig_offset_x,
                                        gint               orig_offset_y,
-                                       GimpRotationType   rotate_type,
+                                       LigmaRotationType   rotate_type,
                                        gdouble            center_x,
                                        gdouble            center_y,
                                        gboolean           clip_result,
-                                       GimpColorProfile **buffer_profile,
+                                       LigmaColorProfile **buffer_profile,
                                        gint              *new_offset_x,
                                        gint              *new_offset_y)
 {
@@ -401,16 +401,16 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
   gint           new_x, new_y;
   gint           new_width, new_height;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
   g_return_val_if_fail (buffer_profile != NULL, NULL);
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
 
   *buffer_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+    ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (drawable));
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
@@ -420,8 +420,8 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
-      gimp_drawable_transform_rotate_point (orig_x,
+    case LIGMA_ROTATE_90:
+      ligma_drawable_transform_rotate_point (orig_x,
                                             orig_y + orig_height,
                                             rotate_type, center_x, center_y,
                                             &new_x, &new_y);
@@ -429,8 +429,8 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       new_height = orig_width;
       break;
 
-    case GIMP_ROTATE_180:
-      gimp_drawable_transform_rotate_point (orig_x + orig_width,
+    case LIGMA_ROTATE_180:
+      ligma_drawable_transform_rotate_point (orig_x + orig_width,
                                             orig_y + orig_height,
                                             rotate_type, center_x, center_y,
                                             &new_x, &new_y);
@@ -438,8 +438,8 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       new_height = orig_height;
       break;
 
-    case GIMP_ROTATE_270:
-      gimp_drawable_transform_rotate_point (orig_x + orig_width,
+    case LIGMA_ROTATE_270:
+      ligma_drawable_transform_rotate_point (orig_x + orig_width,
                                             orig_y,
                                             rotate_type, center_x, center_y,
                                             &new_x, &new_y);
@@ -458,7 +458,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
                       new_width != orig_width || new_height != orig_height))
 
     {
-      GimpRGB    bg;
+      LigmaRGB    bg;
       GeglColor *color;
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
@@ -473,22 +473,22 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       /*  Use transparency, rather than the bg color, as the "outside" color of
        *  channels, and drawables with an alpha channel.
        */
-      if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
+      if (LIGMA_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
         {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
+          ligma_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
         }
       else
         {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+          ligma_context_get_background (context, &bg);
+          ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                              &bg, &bg);
         }
 
-      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
+      color = ligma_gegl_color_new (&bg, ligma_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
-      if (gimp_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
+      if (ligma_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
                                     new_x, new_y, new_width, new_height,
                                     &clip_x, &clip_y,
                                     &clip_width, &clip_height))
@@ -501,10 +501,10 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
           switch (rotate_type)
             {
-            case GIMP_ROTATE_90:
-              gimp_drawable_transform_rotate_point (clip_x + clip_width,
+            case LIGMA_ROTATE_90:
+              ligma_drawable_transform_rotate_point (clip_x + clip_width,
                                                     clip_y,
-                                                    GIMP_ROTATE_270,
+                                                    LIGMA_ROTATE_270,
                                                     center_x,
                                                     center_y,
                                                     &orig_x,
@@ -515,17 +515,17 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
               orig_height  = clip_width;
               break;
 
-            case GIMP_ROTATE_180:
+            case LIGMA_ROTATE_180:
               orig_x      = clip_x - orig_x;
               orig_y      = clip_y - orig_y;
               orig_width  = clip_width;
               orig_height = clip_height;
               break;
 
-            case GIMP_ROTATE_270:
-              gimp_drawable_transform_rotate_point (clip_x,
+            case LIGMA_ROTATE_270:
+              ligma_drawable_transform_rotate_point (clip_x,
                                                     clip_y + clip_height,
-                                                    GIMP_ROTATE_90,
+                                                    LIGMA_ROTATE_90,
                                                     center_x,
                                                     center_y,
                                                     &orig_x,
@@ -576,7 +576,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case LIGMA_ROTATE_90:
       {
         guchar *buf = g_new (guchar, new_height * orig_bpp);
         gint    i;
@@ -608,7 +608,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       }
       break;
 
-    case GIMP_ROTATE_180:
+    case LIGMA_ROTATE_180:
       {
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i, j, k;
@@ -654,7 +654,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       }
       break;
 
-    case GIMP_ROTATE_270:
+    case LIGMA_ROTATE_270:
       {
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i;
@@ -690,39 +690,39 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
   return new_buffer;
 }
 
-GimpDrawable *
-gimp_drawable_transform_affine (GimpDrawable           *drawable,
-                                GimpContext            *context,
-                                const GimpMatrix3      *matrix,
-                                GimpTransformDirection  direction,
-                                GimpInterpolationType   interpolation_type,
-                                GimpTransformResize     clip_result,
-                                GimpProgress           *progress)
+LigmaDrawable *
+ligma_drawable_transform_affine (LigmaDrawable           *drawable,
+                                LigmaContext            *context,
+                                const LigmaMatrix3      *matrix,
+                                LigmaTransformDirection  direction,
+                                LigmaInterpolationType   interpolation_type,
+                                LigmaTransformResize     clip_result,
+                                LigmaProgress           *progress)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GList        *drawables;
   GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
-  GimpDrawable *result = NULL;
+  LigmaDrawable *result = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM,
+  ligma_image_undo_group_start (image,
+                               LIGMA_UNDO_GROUP_TRANSFORM,
                                C_("undo-type", "Transform"));
 
   /* Cut/Copy from the specified drawable */
   drawables   = g_list_prepend (NULL, drawable);
-  orig_buffer = gimp_drawable_transform_cut (drawables, context,
+  orig_buffer = ligma_drawable_transform_cut (drawables, context,
                                              &orig_offset_x, &orig_offset_y,
                                              &new_layer);
   g_free (drawables);
@@ -732,16 +732,16 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
       GeglBuffer       *new_buffer;
       gint              new_offset_x;
       gint              new_offset_y;
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
       /*  also transform the mask if we are transforming an entire layer  */
-      if (GIMP_IS_LAYER (drawable) &&
-          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
-          gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (LIGMA_IS_LAYER (drawable) &&
+          ligma_layer_get_mask (LIGMA_LAYER (drawable)) &&
+          ligma_channel_is_empty (ligma_image_get_mask (image)))
         {
-          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+          LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (drawable));
 
-          gimp_item_transform (GIMP_ITEM (mask), context,
+          ligma_item_transform (LIGMA_ITEM (mask), context,
                                matrix,
                                direction,
                                interpolation_type,
@@ -750,7 +750,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
         }
 
       /* transform the buffer */
-      new_buffer = gimp_drawable_transform_buffer_affine (drawable, context,
+      new_buffer = ligma_drawable_transform_buffer_affine (drawable, context,
                                                           orig_buffer,
                                                           orig_offset_x,
                                                           orig_offset_y,
@@ -768,7 +768,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
       if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
+          result = ligma_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
           g_object_unref (new_buffer);
@@ -776,40 +776,40 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return result;
 }
 
-GimpDrawable *
-gimp_drawable_transform_flip (GimpDrawable        *drawable,
-                              GimpContext         *context,
-                              GimpOrientationType  flip_type,
+LigmaDrawable *
+ligma_drawable_transform_flip (LigmaDrawable        *drawable,
+                              LigmaContext         *context,
+                              LigmaOrientationType  flip_type,
                               gdouble              axis,
                               gboolean             clip_result)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GList        *drawables;
   GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
-  GimpDrawable *result = NULL;
+  LigmaDrawable *result = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM,
+  ligma_image_undo_group_start (image,
+                               LIGMA_UNDO_GROUP_TRANSFORM,
                                C_("undo-type", "Flip"));
 
   /* Cut/Copy from the specified drawable */
   drawables   = g_list_prepend (NULL, drawable);
-  orig_buffer = gimp_drawable_transform_cut (drawables, context,
+  orig_buffer = ligma_drawable_transform_cut (drawables, context,
                                              &orig_offset_x, &orig_offset_y,
                                              &new_layer);
   g_free (drawables);
@@ -819,23 +819,23 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
       GeglBuffer       *new_buffer;
       gint              new_offset_x;
       gint              new_offset_y;
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
       /*  also transform the mask if we are transforming an entire layer  */
-      if (GIMP_IS_LAYER (drawable) &&
-          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
-          gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (LIGMA_IS_LAYER (drawable) &&
+          ligma_layer_get_mask (LIGMA_LAYER (drawable)) &&
+          ligma_channel_is_empty (ligma_image_get_mask (image)))
         {
-          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+          LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (drawable));
 
-          gimp_item_flip (GIMP_ITEM (mask), context,
+          ligma_item_flip (LIGMA_ITEM (mask), context,
                           flip_type,
                           axis,
                           clip_result);
         }
 
       /* transform the buffer */
-      new_buffer = gimp_drawable_transform_buffer_flip (drawable, context,
+      new_buffer = ligma_drawable_transform_buffer_flip (drawable, context,
                                                         orig_buffer,
                                                         orig_offset_x,
                                                         orig_offset_y,
@@ -850,7 +850,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
       if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
+          result = ligma_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
           g_object_unref (new_buffer);
@@ -858,41 +858,41 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return result;
 }
 
-GimpDrawable *
-gimp_drawable_transform_rotate (GimpDrawable     *drawable,
-                                GimpContext      *context,
-                                GimpRotationType  rotate_type,
+LigmaDrawable *
+ligma_drawable_transform_rotate (LigmaDrawable     *drawable,
+                                LigmaContext      *context,
+                                LigmaRotationType  rotate_type,
                                 gdouble           center_x,
                                 gdouble           center_y,
                                 gboolean          clip_result)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GList        *drawables;
   GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
-  GimpDrawable *result = NULL;
+  LigmaDrawable *result = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM,
+  ligma_image_undo_group_start (image,
+                               LIGMA_UNDO_GROUP_TRANSFORM,
                                C_("undo-type", "Rotate"));
 
   /* Cut/Copy from the specified drawable */
   drawables   = g_list_prepend (NULL, drawable);
-  orig_buffer = gimp_drawable_transform_cut (drawables, context,
+  orig_buffer = ligma_drawable_transform_cut (drawables, context,
                                              &orig_offset_x, &orig_offset_y,
                                              &new_layer);
   g_free (drawables);
@@ -902,16 +902,16 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       GeglBuffer       *new_buffer;
       gint              new_offset_x;
       gint              new_offset_y;
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
       /*  also transform the mask if we are transforming an entire layer  */
-      if (GIMP_IS_LAYER (drawable) &&
-          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
-          gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (LIGMA_IS_LAYER (drawable) &&
+          ligma_layer_get_mask (LIGMA_LAYER (drawable)) &&
+          ligma_channel_is_empty (ligma_image_get_mask (image)))
         {
-          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+          LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (drawable));
 
-          gimp_item_rotate (GIMP_ITEM (mask), context,
+          ligma_item_rotate (LIGMA_ITEM (mask), context,
                             rotate_type,
                             center_x,
                             center_y,
@@ -919,7 +919,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
         }
 
       /* transform the buffer */
-      new_buffer = gimp_drawable_transform_buffer_rotate (drawable, context,
+      new_buffer = ligma_drawable_transform_buffer_rotate (drawable, context,
                                                           orig_buffer,
                                                           orig_offset_x,
                                                           orig_offset_y,
@@ -935,7 +935,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 
       if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_buffer, profile,
+          result = ligma_drawable_transform_paste (drawable, new_buffer, profile,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
           g_object_unref (new_buffer);
@@ -943,63 +943,63 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return result;
 }
 
 GeglBuffer *
-gimp_drawable_transform_cut (GList        *drawables,
-                             GimpContext  *context,
+ligma_drawable_transform_cut (GList        *drawables,
+                             LigmaContext  *context,
                              gint         *offset_x,
                              gint         *offset_y,
                              gboolean     *new_layer)
 {
-  GimpImage  *image  = NULL;
+  LigmaImage  *image  = NULL;
   GeglBuffer *buffer = NULL;
   GList      *iter;
   gboolean    drawables_are_layers = FALSE;
 
   g_return_val_if_fail (g_list_length (drawables), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (offset_x != NULL, NULL);
   g_return_val_if_fail (offset_y != NULL, NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (iter->data), NULL);
 
       if (! image)
-        image = gimp_item_get_image (iter->data);
+        image = ligma_item_get_image (iter->data);
       else
-        g_return_val_if_fail (image == gimp_item_get_image (iter->data), NULL);
+        g_return_val_if_fail (image == ligma_item_get_image (iter->data), NULL);
 
       if (drawables_are_layers)
-        g_return_val_if_fail (GIMP_IS_LAYER (iter->data), NULL);
-      else if (GIMP_IS_LAYER (iter->data))
+        g_return_val_if_fail (LIGMA_IS_LAYER (iter->data), NULL);
+      else if (LIGMA_IS_LAYER (iter->data))
         drawables_are_layers = TRUE;
     }
 
   /*  extract the selected mask if there is a selection  */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+  if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
     {
       gint x, y, w, h;
 
       /* set the keep_indexed flag to FALSE here, since we use
-       * gimp_layer_new_from_gegl_buffer() later which assumes that
+       * ligma_layer_new_from_gegl_buffer() later which assumes that
        * the buffer are either RGB or GRAY.  Eeek!!!  (Sven)
        */
-      if (gimp_image_mask_intersect (image, drawables, &x, &y, &w, &h))
+      if (ligma_image_mask_intersect (image, drawables, &x, &y, &w, &h))
         {
-          buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+          buffer = ligma_selection_extract (LIGMA_SELECTION (ligma_image_get_mask (image)),
                                            drawables, context,
                                            TRUE, FALSE, TRUE,
                                            offset_x, offset_y,
                                            NULL);
           /*  clear the selection  */
-          gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+          ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
 
           *new_layer = TRUE;
         }
@@ -1011,7 +1011,7 @@ gimp_drawable_transform_cut (GList        *drawables,
     }
   else  /*  otherwise, just copy the layer  */
     {
-      buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+      buffer = ligma_selection_extract (LIGMA_SELECTION (ligma_image_get_mask (image)),
                                        drawables, context,
                                        FALSE, TRUE,
                                        drawables_are_layers,
@@ -1024,59 +1024,59 @@ gimp_drawable_transform_cut (GList        *drawables,
   return buffer;
 }
 
-GimpDrawable *
-gimp_drawable_transform_paste (GimpDrawable     *drawable,
+LigmaDrawable *
+ligma_drawable_transform_paste (LigmaDrawable     *drawable,
                                GeglBuffer       *buffer,
-                               GimpColorProfile *buffer_profile,
+                               LigmaColorProfile *buffer_profile,
                                gint              offset_x,
                                gint              offset_y,
                                gboolean          new_layer)
 {
-  GimpImage   *image;
-  GimpLayer   *layer     = NULL;
+  LigmaImage   *image;
+  LigmaLayer   *layer     = NULL;
   const gchar *undo_desc = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (buffer_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (buffer_profile), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
-  if (GIMP_IS_LAYER (drawable))
+  if (LIGMA_IS_LAYER (drawable))
     undo_desc = C_("undo-type", "Transform Layer");
-  else if (GIMP_IS_CHANNEL (drawable))
+  else if (LIGMA_IS_CHANNEL (drawable))
     undo_desc = C_("undo-type", "Transform Channel");
   else
     return NULL;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_EDIT_PASTE, undo_desc);
 
   if (new_layer)
     {
       layer =
-        gimp_layer_new_from_gegl_buffer (buffer, image,
-                                         gimp_drawable_get_format_with_alpha (drawable),
+        ligma_layer_new_from_gegl_buffer (buffer, image,
+                                         ligma_drawable_get_format_with_alpha (drawable),
                                          _("Transformation"),
-                                         GIMP_OPACITY_OPAQUE,
-                                         gimp_image_get_default_new_layer_mode (image),
+                                         LIGMA_OPACITY_OPAQUE,
+                                         ligma_image_get_default_new_layer_mode (image),
                                          buffer_profile);
 
-      gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
+      ligma_item_set_offset (LIGMA_ITEM (layer), offset_x, offset_y);
 
       floating_sel_attach (layer, drawable);
 
-      drawable = GIMP_DRAWABLE (layer);
+      drawable = LIGMA_DRAWABLE (layer);
     }
   else
     {
-      gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
+      ligma_drawable_set_buffer_full (drawable, TRUE, NULL,
                                      buffer,
                                      GEGL_RECTANGLE (offset_x, offset_y, 0, 0),
                                      TRUE);
     }
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return drawable;
 }

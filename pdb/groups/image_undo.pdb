@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_undo_group_start {
     $blurb = 'Starts a group undo.';
@@ -22,7 +22,7 @@ sub image_undo_group_start {
     $help = <<'HELP';
 This function is used to start a group undo--necessary for logically combining
 two or more undo operations into a single operation. This call must be used in
-conjunction with a gimp_image_undo_group_end() call.
+conjunction with a ligma_image_undo_group_end() call.
 HELP
 
     &std_pdb_misc;
@@ -36,19 +36,19 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn  *plug_in   = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn  *plug_in   = ligma->plug_in_manager->current_plug_in;
   const gchar *undo_desc = NULL;
 
   if (plug_in)
     {
-      success = gimp_plug_in_cleanup_undo_group_start (plug_in, image);
+      success = ligma_plug_in_cleanup_undo_group_start (plug_in, image);
 
       if (success)
-        undo_desc = gimp_plug_in_get_undo_desc (plug_in);
+        undo_desc = ligma_plug_in_get_undo_desc (plug_in);
     }
 
   if (success)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_MISC, undo_desc);
 }
 CODE
     );
@@ -58,7 +58,7 @@ sub image_undo_group_end {
     $blurb = 'Finish a group undo.';
 
     $help = <<'HELP';
-This function must be called once for each gimp_image_undo_group_start() call
+This function must be called once for each ligma_image_undo_group_start() call
 that is made.
 HELP
 
@@ -73,13 +73,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_undo_group_end (plug_in, image);
+    success = ligma_plug_in_cleanup_undo_group_end (plug_in, image);
 
   if (success)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 CODE
     );
@@ -91,8 +91,8 @@ sub image_undo_is_enabled {
     $help = <<'HELP';
 This procedure checks if the image's undo stack is currently enabled or
 disabled.  This is useful when several plug-ins or scripts call each other
-and want to check if their caller has already used gimp_image_undo_disable()
-or gimp_image_undo_freeze().
+and want to check if their caller has already used ligma_image_undo_disable()
+or ligma_image_undo_freeze().
 HELP
 
     &raphael_pdb_misc('1999');
@@ -110,7 +110,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  enabled = gimp_image_undo_is_enabled (image);
+  enabled = ligma_image_undo_is_enabled (image);
 }
 CODE
     );
@@ -122,7 +122,7 @@ sub image_undo_disable {
     $help = <<'HELP';
 This procedure disables the image's undo stack, allowing subsequent operations
 to ignore their undo steps. This is generally called in conjunction with
-gimp_image_undo_enable() to temporarily disable an image undo stack. This is
+ligma_image_undo_enable() to temporarily disable an image undo stack. This is
 advantageous because saving undo steps can be time and memory intensive.
 HELP
 
@@ -142,14 +142,14 @@ HELP
 	code => <<'CODE'
 {
 #if 0
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_undo_disable (plug_in, image);
+    success = ligma_plug_in_cleanup_undo_disable (plug_in, image);
 #endif
 
   if (success)
-    disabled = gimp_image_undo_disable (image);
+    disabled = ligma_image_undo_disable (image);
 }
 CODE
     );
@@ -161,7 +161,7 @@ sub image_undo_enable {
     $help = <<'HELP';
 This procedure enables the image's undo stack, allowing subsequent operations
 to store their undo steps. This is generally called in conjunction with
-gimp_image_undo_disable() to temporarily disable an image undo stack.
+ligma_image_undo_disable() to temporarily disable an image undo stack.
 HELP
 
     &std_pdb_misc;
@@ -180,14 +180,14 @@ HELP
 	code => <<'CODE'
 {
 #if 0
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_undo_enable (plug_in, image);
+    success = ligma_plug_in_cleanup_undo_enable (plug_in, image);
 #endif
 
   if (success)
-    enabled = gimp_image_undo_enable (image);
+    enabled = ligma_image_undo_enable (image);
 }
 CODE
     );
@@ -201,11 +201,11 @@ sub image_undo_freeze {
     $help = <<'HELP';
 This procedure freezes the image's undo stack, allowing subsequent
 operations to ignore their undo steps.  This is generally called in
-conjunction with gimp_image_undo_thaw() to temporarily disable an
+conjunction with ligma_image_undo_thaw() to temporarily disable an
 image undo stack.  This is advantageous because saving undo steps can
-be time and memory intensive.  gimp_image_undo_freeze() /
-gimp_image_undo_thaw() and gimp_image_undo_disable() /
-gimp_image_undo_enable() differ in that the former does not free up
+be time and memory intensive.  ligma_image_undo_freeze() /
+ligma_image_undo_thaw() and ligma_image_undo_disable() /
+ligma_image_undo_enable() differ in that the former does not free up
 all undo steps when undo is thawed, so is more suited to interactive
 in-situ previews.  It is important in this case that the image is back
 to the same state it was frozen in before thawing, else 'undo'
@@ -226,14 +226,14 @@ HELP
 	code => <<'CODE'
 {
 #if 0
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_undo_freeze (plug_in, image);
+    success = ligma_plug_in_cleanup_undo_freeze (plug_in, image);
 #endif
 
   if (success)
-    frozen = gimp_image_undo_freeze (image);
+    frozen = ligma_image_undo_freeze (image);
 }
 CODE
     );
@@ -247,9 +247,9 @@ sub image_undo_thaw {
     $help = <<'HELP';
 This procedure thaws the image's undo stack, allowing subsequent
 operations to store their undo steps. This is generally called in
-conjunction with gimp_image_undo_freeze() to temporarily freeze an
-image undo stack.  gimp_image_undo_thaw() does NOT free the undo stack
-as gimp_image_undo_enable() does, so is suited for situations where
+conjunction with ligma_image_undo_freeze() to temporarily freeze an
+image undo stack.  ligma_image_undo_thaw() does NOT free the undo stack
+as ligma_image_undo_enable() does, so is suited for situations where
 one wishes to leave the undo stack in the same state in which one
 found it despite non-destructively playing with the image in the
 meantime.  An example would be in-situ plug-in previews.  Balancing
@@ -271,25 +271,25 @@ HELP
 	code => <<'CODE'
 {
 #if 0
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_undo_thaw (plug_in, image);
+    success = ligma_plug_in_cleanup_undo_thaw (plug_in, image);
 #endif
 
   if (success)
-    thawed = gimp_image_undo_thaw (image);
+    thawed = ligma_image_undo_thaw (image);
 }
 CODE
     );
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpimage-undo.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimpplugin-cleanup.h"
-              "plug-in/gimppluginmanager.h");
+@headers = qw("core/ligma.h"
+              "core/ligmaimage-undo.h"
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmaplugin-cleanup.h"
+              "plug-in/ligmapluginmanager.h");
 
 @procs = qw(image_undo_group_start image_undo_group_end
             image_undo_is_enabled
@@ -299,7 +299,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Undo';
-$doc_title = 'gimpimageundo';
+$doc_title = 'ligmaimageundo';
 $doc_short_desc = 'Control of image undo/redo.';
 $doc_long_desc = 'Control of image undo/redo.';
 

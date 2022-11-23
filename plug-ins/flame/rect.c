@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 /* for batch
  *   interpolate

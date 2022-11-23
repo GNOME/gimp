@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2017 Sébastien Fourey & David Tchumperlé
@@ -18,56 +18,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LINEART__
-#define __GIMP_LINEART__
+#ifndef __LIGMA_LINEART__
+#define __LIGMA_LINEART__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
-#define GIMP_TYPE_LINE_ART            (gimp_line_art_get_type ())
-#define GIMP_LINE_ART(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LINE_ART, GimpLineArt))
-#define GIMP_LINE_ART_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LINE_ART, GimpLineArtClass))
-#define GIMP_IS_LINE_ART(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LINE_ART))
-#define GIMP_IS_LINE_ART_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LINE_ART))
-#define GIMP_LINE_ART_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LINE_ART, GimpLineArtClass))
+#define LIGMA_TYPE_LINE_ART            (ligma_line_art_get_type ())
+#define LIGMA_LINE_ART(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LINE_ART, LigmaLineArt))
+#define LIGMA_LINE_ART_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LINE_ART, LigmaLineArtClass))
+#define LIGMA_IS_LINE_ART(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LINE_ART))
+#define LIGMA_IS_LINE_ART_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LINE_ART))
+#define LIGMA_LINE_ART_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LINE_ART, LigmaLineArtClass))
 
 
-typedef struct _GimpLineArtClass   GimpLineArtClass;
-typedef struct _GimpLineArtPrivate GimpLineArtPrivate;
+typedef struct _LigmaLineArtClass   LigmaLineArtClass;
+typedef struct _LigmaLineArtPrivate LigmaLineArtPrivate;
 
-struct _GimpLineArt
+struct _LigmaLineArt
 {
-  GimpObject          parent_instance;
+  LigmaObject          parent_instance;
 
-  GimpLineArtPrivate *priv;
+  LigmaLineArtPrivate *priv;
 };
 
-struct _GimpLineArtClass
+struct _LigmaLineArtClass
 {
-  GimpObjectClass     parent_class;
+  LigmaObjectClass     parent_class;
 
   /* Signals */
 
-  void (* computing_start) (GimpLineArt *line_art);
-  void (* computing_end)   (GimpLineArt *line_art);
+  void (* computing_start) (LigmaLineArt *line_art);
+  void (* computing_end)   (LigmaLineArt *line_art);
 };
 
 
-GType                gimp_line_art_get_type         (void) G_GNUC_CONST;
+GType                ligma_line_art_get_type         (void) G_GNUC_CONST;
 
-GimpLineArt        * gimp_line_art_new              (void);
+LigmaLineArt        * ligma_line_art_new              (void);
 
-void                 gimp_line_art_bind_gap_length  (GimpLineArt  *line_art,
+void                 ligma_line_art_bind_gap_length  (LigmaLineArt  *line_art,
                                                      gboolean      bound);
 
-void                 gimp_line_art_set_input        (GimpLineArt  *line_art,
-                                                     GimpPickable *pickable);
-GimpPickable       * gimp_line_art_get_input        (GimpLineArt  *line_art);
-void                 gimp_line_art_freeze           (GimpLineArt  *line_art);
-void                 gimp_line_art_thaw             (GimpLineArt  *line_art);
-gboolean             gimp_line_art_is_frozen        (GimpLineArt  *line_art);
+void                 ligma_line_art_set_input        (LigmaLineArt  *line_art,
+                                                     LigmaPickable *pickable);
+LigmaPickable       * ligma_line_art_get_input        (LigmaLineArt  *line_art);
+void                 ligma_line_art_freeze           (LigmaLineArt  *line_art);
+void                 ligma_line_art_thaw             (LigmaLineArt  *line_art);
+gboolean             ligma_line_art_is_frozen        (LigmaLineArt  *line_art);
 
-GeglBuffer         * gimp_line_art_get              (GimpLineArt  *line_art,
+GeglBuffer         * ligma_line_art_get              (LigmaLineArt  *line_art,
                                                      gfloat      **distmap);
 
-#endif /* __GIMP_LINEART__ */
+#endif /* __LIGMA_LINEART__ */

@@ -9,6 +9,6 @@ extern GtkWidget *previewarea;
 /* Externally visible functions */
 /* ============================ */
 
-gboolean main_dialog (GimpDrawable *drawable);
+gboolean main_dialog (LigmaDrawable *drawable);
 
 #endif  /* __MAPOBJECT_UI_H__ */

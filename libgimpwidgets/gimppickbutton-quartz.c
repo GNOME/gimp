@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton-quartz.c
+ * ligmapickbutton-quartz.c
  * Copyright (C) 2015 Kristian Rietveld <kris@loopnest.org>
  *
  * This library is distributed in the hope that it will be useful,
@@ -20,12 +20,12 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-private.h"
-#include "gimppickbutton-quartz.h"
+#include "ligmawidgetstypes.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-private.h"
+#include "ligmapickbutton-quartz.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
@@ -33,36 +33,36 @@
 #include <ApplicationServices/ApplicationServices.h>
 #endif
 
-@interface GimpPickWindowController : NSObject
+@interface LigmaPickWindowController : NSObject
 {
-  GimpPickButton *button;
+  LigmaPickButton *button;
   NSMutableArray *windows;
 }
 
 @property (nonatomic, assign) BOOL firstBecameKey;
 @property (readonly, retain) NSCursor *cursor;
 
-- (id)initWithButton:(GimpPickButton *)_button;
+- (id)initWithButton:(LigmaPickButton *)_button;
 - (void)updateKeyWindow;
 - (void)shutdown;
 @end
 
-@interface GimpPickView : NSView
+@interface LigmaPickView : NSView
 {
-  GimpPickButton *button;
-  GimpPickWindowController *controller;
+  LigmaPickButton *button;
+  LigmaPickWindowController *controller;
 }
 
 @property (readonly,assign) NSTrackingArea *area;
 
-- (id)initWithButton:(GimpPickButton *)_button controller:(GimpPickWindowController *)controller;
+- (id)initWithButton:(LigmaPickButton *)_button controller:(LigmaPickWindowController *)controller;
 @end
 
-@implementation GimpPickView
+@implementation LigmaPickView
 
 @synthesize area;
 
-- (id)initWithButton:(GimpPickButton *)_button controller:(GimpPickWindowController *)_controller
+- (id)initWithButton:(LigmaPickButton *)_button controller:(LigmaPickWindowController *)_controller
 {
   self = [super init];
 
@@ -109,7 +109,7 @@
 - (void)mouseEntered:(NSEvent *)event
 {
   /* We handle the mouse cursor manually, see also the comment in
-   * [GimpPickWindow windowDidBecomeMain below].
+   * [LigmaPickWindow windowDidBecomeMain below].
    */
   if (controller.cursor)
     [controller.cursor push];
@@ -156,9 +156,9 @@
   CGImageRef        root_image_ref;
   CFDataRef         pixel_data;
   const guchar     *data;
-  GimpRGB           rgb;
+  LigmaRGB           rgb;
   NSPoint           point;
-  GimpColorProfile *profile     = NULL;
+  LigmaColorProfile *profile     = NULL;
   CGColorSpaceRef   color_space = NULL;
 
   /* The event gives us a point in Cocoa window coordinates. The function
@@ -195,7 +195,7 @@
           CFDataGetBytes (icc_data, CFRangeMake (0, CFDataGetLength (icc_data)),
                           buffer);
 
-          profile = gimp_color_profile_new_from_icc_profile (buffer,
+          profile = ligma_color_profile_new_from_icc_profile (buffer,
                                                              CFDataGetLength (icc_data),
                                                              NULL);
           g_free (buffer);
@@ -203,32 +203,32 @@
         }
     }
 
-  gimp_rgba_set_uchar (&rgb, data[2], data[1], data[0], 255);
+  ligma_rgba_set_uchar (&rgb, data[2], data[1], data[0], 255);
   if (profile)
     {
-      GimpColorProfile        *srgb_profile;
-      GimpColorTransform      *transform;
+      LigmaColorProfile        *srgb_profile;
+      LigmaColorTransform      *transform;
       const Babl              *format;
-      GimpColorTransformFlags  flags = 0;
+      LigmaColorTransformFlags  flags = 0;
 
       format = babl_format ("R'G'B'A double");
 
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+      flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      srgb_profile = gimp_color_profile_new_rgb_srgb ();
-      transform = gimp_color_transform_new (profile,      format,
+      srgb_profile = ligma_color_profile_new_rgb_srgb ();
+      transform = ligma_color_transform_new (profile,      format,
                                             srgb_profile, format,
-                                            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                            LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                             flags);
 
       if (transform)
         {
-          gimp_color_transform_process_pixels (transform,
+          ligma_color_transform_process_pixels (transform,
                                                format, &rgb,
                                                format, &rgb,
                                                1);
-          gimp_rgb_clamp (&rgb);
+          ligma_rgb_clamp (&rgb);
 
           g_object_unref (transform);
         }
@@ -244,16 +244,16 @@
 @end
 
 
-@interface GimpPickWindow : NSWindow <NSWindowDelegate>
+@interface LigmaPickWindow : NSWindow <NSWindowDelegate>
 {
-  GimpPickWindowController *controller;
+  LigmaPickWindowController *controller;
 }
 
-- (id)initWithButton:(GimpPickButton *)button forScreen:(NSScreen *)screen withController:(GimpPickWindowController *)_controller;
+- (id)initWithButton:(LigmaPickButton *)button forScreen:(NSScreen *)screen withController:(LigmaPickWindowController *)_controller;
 @end
 
-@implementation GimpPickWindow
-- (id)initWithButton:(GimpPickButton *)button forScreen:(NSScreen *)screen withController:(GimpPickWindowController *)_controller
+@implementation LigmaPickWindow
+- (id)initWithButton:(LigmaPickButton *)button forScreen:(NSScreen *)screen withController:(LigmaPickWindowController *)_controller
 {
   self = [super initWithContentRect:screen.frame
                 styleMask:NSBorderlessWindowMask
@@ -262,7 +262,7 @@
 
   if (self)
     {
-      GimpPickView *view;
+      LigmaPickView *view;
 
       controller = _controller;
 
@@ -282,7 +282,7 @@
       /* Set the highest level, so on top of everything */
       [self setLevel:NSScreenSaverWindowLevel];
 
-      view = [[GimpPickView alloc] initWithButton:button controller:controller];
+      view = [[LigmaPickView alloc] initWithButton:button controller:controller];
       [self setContentView:view];
       [self makeFirstResponder:view];
       [view release];
@@ -346,19 +346,19 @@
 
 
 /* To properly handle multi-monitor setups we need to create a
- * GimpPickWindow for each monitor (NSScreen). This is necessary because
+ * LigmaPickWindow for each monitor (NSScreen). This is necessary because
  * a window on Mac OS X (tested on 10.9) cannot span more than one
  * monitor, so any approach that attempts to create one large window
  * spanning all monitors cannot work. So, we have to create multiple
  * windows in case of multi-monitor setups and these different windows
- * are managed by GimpPickWindowController.
+ * are managed by LigmaPickWindowController.
  */
-@implementation GimpPickWindowController
+@implementation LigmaPickWindowController
 
 @synthesize firstBecameKey;
 @synthesize cursor;
 
-- (id)initWithButton:(GimpPickButton *)_button;
+- (id)initWithButton:(LigmaPickButton *)_button;
 {
   self = [super init];
 
@@ -366,15 +366,15 @@
     {
       firstBecameKey = YES;
       button = _button;
-      cursor = [GimpPickWindowController makePickCursor];
+      cursor = [LigmaPickWindowController makePickCursor];
 
       windows = [[NSMutableArray alloc] init];
 
       for (NSScreen *screen in [NSScreen screens])
         {
-          GimpPickWindow *window;
+          LigmaPickWindow *window;
 
-          window = [[GimpPickWindow alloc] initWithButton:button
+          window = [[LigmaPickWindow alloc] initWithButton:button
                                            forScreen:screen
                                            withController:self];
 
@@ -392,7 +392,7 @@
 
 - (void)updateKeyWindow
 {
-  for (GimpPickWindow *window in windows)
+  for (LigmaPickWindow *window in windows)
     {
       if (NSPointInRect ([NSEvent mouseLocation], window.frame))
         [window makeKeyWindow];
@@ -403,7 +403,7 @@
 {
   GtkWidget *window;
 
-  for (GimpPickWindow *window in windows)
+  for (LigmaPickWindow *window in windows)
     [window close];
 
   [windows release];
@@ -423,7 +423,7 @@
   GBytes    *bytes = NULL;
   GError    *error = NULL;
 
-  bytes = g_resources_lookup_data ("/org/gimp/color-picker-cursors-raw/cursor-color-picker.png",
+  bytes = g_resources_lookup_data ("/org/ligma/color-picker-cursors-raw/cursor-color-picker.png",
                                    G_RESOURCE_LOOKUP_FLAGS_NONE, &error);
 
   if (bytes)
@@ -448,16 +448,16 @@
 }
 @end
 
-/* entry point to this file, called from gimppickbutton.c */
+/* entry point to this file, called from ligmapickbutton.c */
 void
-_gimp_pick_button_quartz_pick (GimpPickButton *button)
+_ligma_pick_button_quartz_pick (LigmaPickButton *button)
 {
-  GimpPickWindowController *controller;
+  LigmaPickWindowController *controller;
   NSAutoreleasePool        *pool;
 
   pool = [[NSAutoreleasePool alloc] init];
 
-  controller = [[GimpPickWindowController alloc] initWithButton:button];
+  controller = [[LigmaPickWindowController alloc] initWithButton:button];
 
   [pool release];
 }

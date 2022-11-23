@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 
 #include "core-types.h"
 
-#include "core/gimpsubprogress.h"
-#include "core/gimpprogress.h"
+#include "core/ligmasubprogress.h"
+#include "core/ligmaprogress.h"
 
 
 enum
@@ -32,63 +32,63 @@ enum
 };
 
 
-static void           gimp_sub_progress_iface_init    (GimpProgressInterface *iface);
+static void           ligma_sub_progress_iface_init    (LigmaProgressInterface *iface);
 
-static void           gimp_sub_progress_finalize      (GObject             *object);
-static void           gimp_sub_progress_set_property  (GObject             *object,
+static void           ligma_sub_progress_finalize      (GObject             *object);
+static void           ligma_sub_progress_set_property  (GObject             *object,
                                                        guint                property_id,
                                                        const GValue        *value,
                                                        GParamSpec          *pspec);
-static void           gimp_sub_progress_get_property  (GObject             *object,
+static void           ligma_sub_progress_get_property  (GObject             *object,
                                                        guint                property_id,
                                                        GValue              *value,
                                                        GParamSpec          *pspec);
 
-static GimpProgress * gimp_sub_progress_start         (GimpProgress        *progress,
+static LigmaProgress * ligma_sub_progress_start         (LigmaProgress        *progress,
                                                        gboolean             cancellable,
                                                        const gchar         *message);
-static void           gimp_sub_progress_end           (GimpProgress        *progress);
-static gboolean       gimp_sub_progress_is_active     (GimpProgress        *progress);
-static void           gimp_sub_progress_set_text      (GimpProgress        *progress,
+static void           ligma_sub_progress_end           (LigmaProgress        *progress);
+static gboolean       ligma_sub_progress_is_active     (LigmaProgress        *progress);
+static void           ligma_sub_progress_set_text      (LigmaProgress        *progress,
                                                        const gchar         *message);
-static void           gimp_sub_progress_set_value     (GimpProgress        *progress,
+static void           ligma_sub_progress_set_value     (LigmaProgress        *progress,
                                                        gdouble              percentage);
-static gdouble        gimp_sub_progress_get_value     (GimpProgress        *progress);
-static void           gimp_sub_progress_pulse         (GimpProgress        *progress);
-static guint32        gimp_sub_progress_get_window_id (GimpProgress        *progress);
-static gboolean       gimp_sub_progress_message       (GimpProgress        *progress,
-                                                       Gimp                *gimp,
-                                                       GimpMessageSeverity  severity,
+static gdouble        ligma_sub_progress_get_value     (LigmaProgress        *progress);
+static void           ligma_sub_progress_pulse         (LigmaProgress        *progress);
+static guint32        ligma_sub_progress_get_window_id (LigmaProgress        *progress);
+static gboolean       ligma_sub_progress_message       (LigmaProgress        *progress,
+                                                       Ligma                *ligma,
+                                                       LigmaMessageSeverity  severity,
                                                        const gchar         *domain,
                                                        const gchar         *message);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpSubProgress, gimp_sub_progress, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_sub_progress_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaSubProgress, ligma_sub_progress, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROGRESS,
+                                                ligma_sub_progress_iface_init))
 
-#define parent_class gimp_sub_progress_parent_class
+#define parent_class ligma_sub_progress_parent_class
 
 
 static void
-gimp_sub_progress_class_init (GimpSubProgressClass *klass)
+ligma_sub_progress_class_init (LigmaSubProgressClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_sub_progress_finalize;
-  object_class->set_property = gimp_sub_progress_set_property;
-  object_class->get_property = gimp_sub_progress_get_property;
+  object_class->finalize     = ligma_sub_progress_finalize;
+  object_class->set_property = ligma_sub_progress_set_property;
+  object_class->get_property = ligma_sub_progress_get_property;
 
   g_object_class_install_property (object_class, PROP_PROGRESS,
                                    g_param_spec_object ("progress",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_PROGRESS,
+                                                        LIGMA_TYPE_PROGRESS,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_sub_progress_init (GimpSubProgress *sub)
+ligma_sub_progress_init (LigmaSubProgress *sub)
 {
   sub->progress = NULL;
   sub->start    = 0.0;
@@ -96,9 +96,9 @@ gimp_sub_progress_init (GimpSubProgress *sub)
 }
 
 static void
-gimp_sub_progress_finalize (GObject *object)
+ligma_sub_progress_finalize (GObject *object)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (object);
 
   g_clear_object (&sub->progress);
 
@@ -106,26 +106,26 @@ gimp_sub_progress_finalize (GObject *object)
 }
 
 static void
-gimp_sub_progress_iface_init (GimpProgressInterface *iface)
+ligma_sub_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start         = gimp_sub_progress_start;
-  iface->end           = gimp_sub_progress_end;
-  iface->is_active     = gimp_sub_progress_is_active;
-  iface->set_text      = gimp_sub_progress_set_text;
-  iface->set_value     = gimp_sub_progress_set_value;
-  iface->get_value     = gimp_sub_progress_get_value;
-  iface->pulse         = gimp_sub_progress_pulse;
-  iface->get_window_id = gimp_sub_progress_get_window_id;
-  iface->message       = gimp_sub_progress_message;
+  iface->start         = ligma_sub_progress_start;
+  iface->end           = ligma_sub_progress_end;
+  iface->is_active     = ligma_sub_progress_is_active;
+  iface->set_text      = ligma_sub_progress_set_text;
+  iface->set_value     = ligma_sub_progress_set_value;
+  iface->get_value     = ligma_sub_progress_get_value;
+  iface->pulse         = ligma_sub_progress_pulse;
+  iface->get_window_id = ligma_sub_progress_get_window_id;
+  iface->message       = ligma_sub_progress_message;
 }
 
 static void
-gimp_sub_progress_set_property (GObject      *object,
+ligma_sub_progress_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (object);
 
   switch (property_id)
     {
@@ -141,12 +141,12 @@ gimp_sub_progress_set_property (GObject      *object,
 }
 
 static void
-gimp_sub_progress_get_property (GObject    *object,
+ligma_sub_progress_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (object);
 
   switch (property_id)
     {
@@ -160,8 +160,8 @@ gimp_sub_progress_get_property (GObject    *object,
     }
 }
 
-static GimpProgress *
-gimp_sub_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_sub_progress_start (LigmaProgress *progress,
                          gboolean      cancellable,
                          const gchar  *message)
 {
@@ -170,115 +170,115 @@ gimp_sub_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_sub_progress_end (GimpProgress *progress)
+ligma_sub_progress_end (LigmaProgress *progress)
 {
   /* does nothing */
 }
 
 static gboolean
-gimp_sub_progress_is_active (GimpProgress *progress)
+ligma_sub_progress_is_active (LigmaProgress *progress)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    return gimp_progress_is_active (sub->progress);
+    return ligma_progress_is_active (sub->progress);
 
   return FALSE;
 }
 
 static void
-gimp_sub_progress_set_text (GimpProgress *progress,
+ligma_sub_progress_set_text (LigmaProgress *progress,
                             const gchar  *message)
 {
   /* does nothing */
 }
 
 static void
-gimp_sub_progress_set_value (GimpProgress *progress,
+ligma_sub_progress_set_value (LigmaProgress *progress,
                              gdouble       percentage)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    gimp_progress_set_value (sub->progress,
+    ligma_progress_set_value (sub->progress,
                              sub->start + percentage * (sub->end - sub->start));
 }
 
 static gdouble
-gimp_sub_progress_get_value (GimpProgress *progress)
+ligma_sub_progress_get_value (LigmaProgress *progress)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    return gimp_progress_get_value (sub->progress);
+    return ligma_progress_get_value (sub->progress);
 
   return 0.0;
 }
 
 static void
-gimp_sub_progress_pulse (GimpProgress *progress)
+ligma_sub_progress_pulse (LigmaProgress *progress)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    gimp_progress_pulse (sub->progress);
+    ligma_progress_pulse (sub->progress);
 }
 
 static guint32
-gimp_sub_progress_get_window_id (GimpProgress *progress)
+ligma_sub_progress_get_window_id (LigmaProgress *progress)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    return gimp_progress_get_window_id (sub->progress);
+    return ligma_progress_get_window_id (sub->progress);
 
   return 0;
 }
 
 static gboolean
-gimp_sub_progress_message (GimpProgress        *progress,
-                           Gimp                *gimp,
-                           GimpMessageSeverity  severity,
+ligma_sub_progress_message (LigmaProgress        *progress,
+                           Ligma                *ligma,
+                           LigmaMessageSeverity  severity,
                            const gchar         *domain,
                            const gchar         *message)
 {
-  GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
+  LigmaSubProgress *sub = LIGMA_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    return gimp_progress_message (sub->progress,
-                                  gimp, severity, domain, message);
+    return ligma_progress_message (sub->progress,
+                                  ligma, severity, domain, message);
 
   return FALSE;
 }
 
 /**
- * gimp_sub_progress_new:
+ * ligma_sub_progress_new:
  * @progress: parent progress or %NULL
  *
- * GimpSubProgress implements the GimpProgress interface and can be
- * used wherever a GimpProgress is needed. It maps progress
+ * LigmaSubProgress implements the LigmaProgress interface and can be
+ * used wherever a LigmaProgress is needed. It maps progress
  * information to a sub-range of its parent @progress. This is useful
  * when an action breaks down into multiple sub-actions that itself
- * need a #GimpProgress pointer. See gimp_image_scale() for an example.
+ * need a #LigmaProgress pointer. See ligma_image_scale() for an example.
  *
- * Returns: a new #GimpProgress object
+ * Returns: a new #LigmaProgress object
  */
-GimpProgress *
-gimp_sub_progress_new (GimpProgress *progress)
+LigmaProgress *
+ligma_sub_progress_new (LigmaProgress *progress)
 {
-  GimpSubProgress *sub;
+  LigmaSubProgress *sub;
 
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
-  sub = g_object_new (GIMP_TYPE_SUB_PROGRESS,
+  sub = g_object_new (LIGMA_TYPE_SUB_PROGRESS,
                       "progress", progress,
                       NULL);
 
-  return GIMP_PROGRESS (sub);
+  return LIGMA_PROGRESS (sub);
 }
 
 /**
- * gimp_sub_progress_set_range:
+ * ligma_sub_progress_set_range:
  * @start: start value of range on the parent process
  * @end:   end value of range on the parent process
  *
@@ -286,11 +286,11 @@ gimp_sub_progress_new (GimpProgress *progress)
  * mapped to.
  */
 void
-gimp_sub_progress_set_range (GimpSubProgress *progress,
+ligma_sub_progress_set_range (LigmaSubProgress *progress,
                              gdouble          start,
                              gdouble          end)
 {
-  g_return_if_fail (GIMP_IS_SUB_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_SUB_PROGRESS (progress));
   g_return_if_fail (start < end);
 
   progress->start = start;
@@ -298,18 +298,18 @@ gimp_sub_progress_set_range (GimpSubProgress *progress,
 }
 
 /**
- * gimp_sub_progress_set_step:
+ * ligma_sub_progress_set_step:
  * @index:     step index
  * @num_steps: number of steps
  *
- * A more convenient form of gimp_sub_progress_set_range().
+ * A more convenient form of ligma_sub_progress_set_range().
  */
 void
-gimp_sub_progress_set_step (GimpSubProgress *progress,
+ligma_sub_progress_set_step (LigmaSubProgress *progress,
                             gint             index,
                             gint             num_steps)
 {
-  g_return_if_fail (GIMP_IS_SUB_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_SUB_PROGRESS (progress));
   g_return_if_fail (index < num_steps && num_steps > 0);
 
   progress->start = (gdouble) index / num_steps;

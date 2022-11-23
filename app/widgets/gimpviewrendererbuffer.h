@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererbuffer.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererbuffer.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,33 +18,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_BUFFER_H__
-#define __GIMP_VIEW_RENDERER_BUFFER_H__
+#ifndef __LIGMA_VIEW_RENDERER_BUFFER_H__
+#define __LIGMA_VIEW_RENDERER_BUFFER_H__
 
-#include "gimpviewrenderer.h"
+#include "ligmaviewrenderer.h"
 
-#define GIMP_TYPE_VIEW_RENDERER_BUFFER            (gimp_view_renderer_buffer_get_type ())
-#define GIMP_VIEW_RENDERER_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBuffer))
-#define GIMP_VIEW_RENDERER_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBufferClass))
-#define GIMP_IS_VIEW_RENDERER_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_BUFFER))
-#define GIMP_IS_VIEW_RENDERER_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_BUFFER))
-#define GIMP_VIEW_RENDERER_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBufferClass))
+#define LIGMA_TYPE_VIEW_RENDERER_BUFFER            (ligma_view_renderer_buffer_get_type ())
+#define LIGMA_VIEW_RENDERER_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW_RENDERER_BUFFER, LigmaViewRendererBuffer))
+#define LIGMA_VIEW_RENDERER_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW_RENDERER_BUFFER, LigmaViewRendererBufferClass))
+#define LIGMA_IS_VIEW_RENDERER_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW_RENDERER_BUFFER))
+#define LIGMA_IS_VIEW_RENDERER_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW_RENDERER_BUFFER))
+#define LIGMA_VIEW_RENDERER_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW_RENDERER_BUFFER, LigmaViewRendererBufferClass))
 
 
-typedef struct _GimpViewRendererBufferClass  GimpViewRendererBufferClass;
+typedef struct _LigmaViewRendererBufferClass  LigmaViewRendererBufferClass;
 
-struct _GimpViewRendererBuffer
+struct _LigmaViewRendererBuffer
 {
-  GimpViewRenderer  parent_instance;
+  LigmaViewRenderer  parent_instance;
 };
 
-struct _GimpViewRendererBufferClass
+struct _LigmaViewRendererBufferClass
 {
-  GimpViewRendererClass  parent_class;
+  LigmaViewRendererClass  parent_class;
 };
 
 
-GType   gimp_view_renderer_buffer_get_type (void) G_GNUC_CONST;
+GType   ligma_view_renderer_buffer_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_VIEW_RENDERER_BUFFER_H__ */
+#endif /* __LIGMA_VIEW_RENDERER_BUFFER_H__ */

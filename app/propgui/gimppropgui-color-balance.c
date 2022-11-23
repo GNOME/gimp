@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-color-balance.c
+ * ligmapropgui-color-balance.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +22,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "operations/gimpcolorbalanceconfig.h"
+#include "operations/ligmacolorbalanceconfig.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-color-balance.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-color-balance.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void
@@ -54,9 +54,9 @@ create_levels_scale (GObject     *config,
   gtk_grid_attach (GTK_GRID (grid), label, 0, col, 1, 1);
   gtk_widget_show (label);
 
-  scale = gimp_prop_spin_scale_new (config, property_name, 0.01, 0.1, 0);
-  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
-  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  scale = ligma_prop_spin_scale_new (config, property_name, 0.01, 0.1, 0);
+  ligma_spin_scale_set_label (LIGMA_SPIN_SCALE (scale), NULL);
+  ligma_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
   gtk_widget_set_hexpand (scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), scale, 1, col, 1, 1);
 
@@ -67,13 +67,13 @@ create_levels_scale (GObject     *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_color_balance (GObject                  *config,
+_ligma_prop_gui_new_color_balance (GObject                  *config,
                                   GParamSpec              **param_specs,
                                   guint                     n_param_specs,
                                   GeglRectangle            *area,
-                                  GimpContext              *context,
-                                  GimpCreatePickerFunc      create_picker_func,
-                                  GimpCreateControllerFunc  create_controller_func,
+                                  LigmaContext              *context,
+                                  LigmaCreatePickerFunc      create_picker_func,
+                                  LigmaCreateControllerFunc  create_controller_func,
                                   gpointer                  creator)
 {
   GtkWidget *main_vbox;
@@ -86,16 +86,16 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "range",
+  frame = ligma_prop_enum_radio_frame_new (config, "range",
                                           _("Select Range to Adjust"),
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  frame = gimp_frame_new (_("Adjust Color Levels"));
+  frame = ligma_frame_new (_("Adjust Color Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -131,10 +131,10 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_color_balance_config_reset_range),
+                            G_CALLBACK (ligma_color_balance_config_reset_range),
                             config);
 
-  button = gimp_prop_check_button_new (config,
+  button = ligma_prop_check_button_new (config,
                                        "preserve-luminosity",
                                        _("Preserve _luminosity"));
   gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);

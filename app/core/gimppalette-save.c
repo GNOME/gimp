@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,43 +21,43 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimppalette.h"
-#include "gimppalette-save.h"
+#include "ligmapalette.h"
+#include "ligmapalette-save.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 gboolean
-gimp_palette_save (GimpData       *data,
+ligma_palette_save (LigmaData       *data,
                    GOutputStream  *output,
                    GError        **error)
 {
-  GimpPalette *palette = GIMP_PALETTE (data);
+  LigmaPalette *palette = LIGMA_PALETTE (data);
   GString     *string;
   GList       *list;
 
-  string = g_string_new ("GIMP Palette\n");
+  string = g_string_new ("LIGMA Palette\n");
 
   g_string_append_printf (string,
                           "Name: %s\n"
                           "Columns: %d\n"
                           "#\n",
-                          gimp_object_get_name (palette),
-                          CLAMP (gimp_palette_get_columns (palette), 0, 256));
+                          ligma_object_get_name (palette),
+                          CLAMP (ligma_palette_get_columns (palette), 0, 256));
 
-  for (list = gimp_palette_get_colors (palette);
+  for (list = ligma_palette_get_colors (palette);
        list;
        list = g_list_next (list))
     {
-      GimpPaletteEntry *entry = list->data;
+      LigmaPaletteEntry *entry = list->data;
       guchar            r, g, b;
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+      ligma_rgb_get_uchar (&entry->color, &r, &g, &b);
 
       g_string_append_printf (string, "%3d %3d %3d\t%s\n",
                               r, g, b, entry->name);

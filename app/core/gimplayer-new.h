@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,37 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_NEW_H__
-#define __GIMP_LAYER_NEW_H__
+#ifndef __LIGMA_LAYER_NEW_H__
+#define __LIGMA_LAYER_NEW_H__
 
 
-GimpLayer * gimp_layer_new                  (GimpImage        *image,
+LigmaLayer * ligma_layer_new                  (LigmaImage        *image,
                                              gint              width,
                                              gint              height,
                                              const Babl       *format,
                                              const gchar      *name,
                                              gdouble           opacity,
-                                             GimpLayerMode     mode);
+                                             LigmaLayerMode     mode);
 
-GimpLayer * gimp_layer_new_from_buffer      (GimpBuffer       *buffer,
-                                             GimpImage        *dest_image,
+LigmaLayer * ligma_layer_new_from_buffer      (LigmaBuffer       *buffer,
+                                             LigmaImage        *dest_image,
                                              const Babl       *format,
                                              const gchar      *name,
                                              gdouble           opacity,
-                                             GimpLayerMode     mode);
-GimpLayer * gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
-                                             GimpImage        *dest_image,
+                                             LigmaLayerMode     mode);
+LigmaLayer * ligma_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
+                                             LigmaImage        *dest_image,
                                              const Babl       *format,
                                              const gchar      *name,
                                              gdouble           opacity,
-                                             GimpLayerMode     mode,
-                                             GimpColorProfile *buffer_profile);
-GimpLayer * gimp_layer_new_from_pixbuf      (GdkPixbuf        *pixbuf,
-                                             GimpImage        *dest_image,
+                                             LigmaLayerMode     mode,
+                                             LigmaColorProfile *buffer_profile);
+LigmaLayer * ligma_layer_new_from_pixbuf      (GdkPixbuf        *pixbuf,
+                                             LigmaImage        *dest_image,
                                              const Babl       *format,
                                              const gchar      *name,
                                              gdouble           opacity,
-                                             GimpLayerMode     mode);
+                                             LigmaLayerMode     mode);
 
 
-#endif /* __GIMP_LAYER_NEW_H__ */
+#endif /* __LIGMA_LAYER_NEW_H__ */

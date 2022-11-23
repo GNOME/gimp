@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationposterize.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationposterize.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationposterize.h"
+#include "ligmaoperationposterize.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -42,16 +42,16 @@ enum
 };
 
 
-static void     gimp_operation_posterize_get_property (GObject             *object,
+static void     ligma_operation_posterize_get_property (GObject             *object,
                                                        guint                property_id,
                                                        GValue              *value,
                                                        GParamSpec          *pspec);
-static void     gimp_operation_posterize_set_property (GObject             *object,
+static void     ligma_operation_posterize_set_property (GObject             *object,
                                                        guint                property_id,
                                                        const GValue        *value,
                                                        GParamSpec          *pspec);
 
-static gboolean gimp_operation_posterize_process      (GeglOperation       *operation,
+static gboolean ligma_operation_posterize_process      (GeglOperation       *operation,
                                                        void                *in_buf,
                                                        void                *out_buf,
                                                        glong                samples,
@@ -59,50 +59,50 @@ static gboolean gimp_operation_posterize_process      (GeglOperation       *oper
                                                        gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationPosterize, gimp_operation_posterize,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationPosterize, ligma_operation_posterize,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_posterize_parent_class
+#define parent_class ligma_operation_posterize_parent_class
 
 
 static void
-gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
+ligma_operation_posterize_class_init (LigmaOperationPosterizeClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_posterize_set_property;
-  object_class->get_property = gimp_operation_posterize_get_property;
+  object_class->set_property = ligma_operation_posterize_set_property;
+  object_class->get_property = ligma_operation_posterize_get_property;
 
-  point_class->process       = gimp_operation_posterize_process;
+  point_class->process       = ligma_operation_posterize_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:posterize",
+                                 "name",        "ligma:posterize",
                                  "categories",  "color",
                                  "description", _("Reduce to a limited set of colors"),
                                  NULL);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_LEVELS,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_LEVELS,
                         "levels",
                         _("Posterize levels"),
                         NULL,
                         2, 256, 3,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_operation_posterize_init (GimpOperationPosterize *self)
+ligma_operation_posterize_init (LigmaOperationPosterize *self)
 {
 }
 
 static void
-gimp_operation_posterize_get_property (GObject    *object,
+ligma_operation_posterize_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpOperationPosterize *posterize = GIMP_OPERATION_POSTERIZE (object);
+  LigmaOperationPosterize *posterize = LIGMA_OPERATION_POSTERIZE (object);
 
   switch (property_id)
     {
@@ -117,12 +117,12 @@ gimp_operation_posterize_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_posterize_set_property (GObject      *object,
+ligma_operation_posterize_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpOperationPosterize *posterize = GIMP_OPERATION_POSTERIZE (object);
+  LigmaOperationPosterize *posterize = LIGMA_OPERATION_POSTERIZE (object);
 
   switch (property_id)
     {
@@ -137,14 +137,14 @@ gimp_operation_posterize_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_operation_posterize_process (GeglOperation       *operation,
+ligma_operation_posterize_process (GeglOperation       *operation,
                                   void                *in_buf,
                                   void                *out_buf,
                                   glong                samples,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  GimpOperationPosterize *posterize = GIMP_OPERATION_POSTERIZE (operation);
+  LigmaOperationPosterize *posterize = LIGMA_OPERATION_POSTERIZE (operation);
   gfloat                 *src       = in_buf;
   gfloat                 *dest      = out_buf;
   gfloat                  levels;

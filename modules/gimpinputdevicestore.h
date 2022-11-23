@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpinputdevicestore.h
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * ligmainputdevicestore.h
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INPUT_DEVICE_STORE_H__
-#define __GIMP_INPUT_DEVICE_STORE_H__
+#ifndef __LIGMA_INPUT_DEVICE_STORE_H__
+#define __LIGMA_INPUT_DEVICE_STORE_H__
 
 
-#define GIMP_TYPE_INPUT_DEVICE_STORE    (gimp_input_device_store_get_type ())
-#define GIMP_INPUT_DEVICE_STORE(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INPUT_DEVICE_STORE, GimpInputDeviceStore))
-#define GIMP_IS_INPUT_DEVICE_STORE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INPUT_DEVICE_STORE))
+#define LIGMA_TYPE_INPUT_DEVICE_STORE    (ligma_input_device_store_get_type ())
+#define LIGMA_INPUT_DEVICE_STORE(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_INPUT_DEVICE_STORE, LigmaInputDeviceStore))
+#define LIGMA_IS_INPUT_DEVICE_STORE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_INPUT_DEVICE_STORE))
 
-typedef struct _GimpInputDeviceStore GimpInputDeviceStore;
+typedef struct _LigmaInputDeviceStore LigmaInputDeviceStore;
 
 
-void                   gimp_input_device_store_register_types  (GTypeModule           *module);
+void                   ligma_input_device_store_register_types  (GTypeModule           *module);
 
-GType                  gimp_input_device_store_get_type        (void);
+GType                  ligma_input_device_store_get_type        (void);
 
-GimpInputDeviceStore * gimp_input_device_store_new             (void);
-gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore  *store,
+LigmaInputDeviceStore * ligma_input_device_store_new             (void);
+gchar                * ligma_input_device_store_get_device_file (LigmaInputDeviceStore  *store,
                                                                 const gchar           *udi);
-GError               * gimp_input_device_store_get_error       (GimpInputDeviceStore  *store);
+GError               * ligma_input_device_store_get_error       (LigmaInputDeviceStore  *store);
 
 
-#endif  /* __GIMP_INPUT_DEVICE_STORE_H__ */
+#endif  /* __LIGMA_INPUT_DEVICE_STORE_H__ */

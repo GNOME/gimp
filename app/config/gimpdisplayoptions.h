@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDisplayOptions
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaDisplayOptions
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_OPTIONS_H__
-#define __GIMP_DISPLAY_OPTIONS_H__
+#ifndef __LIGMA_DISPLAY_OPTIONS_H__
+#define __LIGMA_DISPLAY_OPTIONS_H__
 
 
-#define GIMP_TYPE_DISPLAY_OPTIONS            (gimp_display_options_get_type ())
-#define GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN (gimp_display_options_fullscreen_get_type ())
-#define GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE   (gimp_display_options_no_image_get_type ())
+#define LIGMA_TYPE_DISPLAY_OPTIONS            (ligma_display_options_get_type ())
+#define LIGMA_TYPE_DISPLAY_OPTIONS_FULLSCREEN (ligma_display_options_fullscreen_get_type ())
+#define LIGMA_TYPE_DISPLAY_OPTIONS_NO_IMAGE   (ligma_display_options_no_image_get_type ())
 
-#define GIMP_DISPLAY_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_OPTIONS, GimpDisplayOptions))
-#define GIMP_DISPLAY_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_OPTIONS, GimpDisplayOptionsClass))
-#define GIMP_IS_DISPLAY_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY_OPTIONS))
-#define GIMP_IS_DISPLAY_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_OPTIONS))
-#define GIMP_DISPLAY_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_OPTIONS, GimpDisplayOptionsClass))
+#define LIGMA_DISPLAY_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DISPLAY_OPTIONS, LigmaDisplayOptions))
+#define LIGMA_DISPLAY_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DISPLAY_OPTIONS, LigmaDisplayOptionsClass))
+#define LIGMA_IS_DISPLAY_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DISPLAY_OPTIONS))
+#define LIGMA_IS_DISPLAY_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DISPLAY_OPTIONS))
+#define LIGMA_DISPLAY_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DISPLAY_OPTIONS, LigmaDisplayOptionsClass))
 
 
-typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsClass;
+typedef struct _LigmaDisplayOptionsClass LigmaDisplayOptionsClass;
 
-struct _GimpDisplayOptions
+struct _LigmaDisplayOptions
 {
   GObject                parent_instance;
 
-  /*  GimpImageWindow options  */
+  /*  LigmaImageWindow options  */
   gboolean               show_menubar;
   gboolean               show_statusbar;
 
-  /*  GimpDisplayShell options  */
+  /*  LigmaDisplayShell options  */
   gboolean               show_rulers;
   gboolean               show_scrollbars;
   gboolean               show_selection;
@@ -58,21 +58,21 @@ struct _GimpDisplayOptions
   gboolean               snap_to_canvas;
   gboolean               snap_to_path;
 
-  GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  LigmaCanvasPaddingMode  padding_mode;
+  LigmaRGB                padding_color;
   gboolean               padding_mode_set;
   gboolean               padding_in_show_all;
 };
 
-struct _GimpDisplayOptionsClass
+struct _LigmaDisplayOptionsClass
 {
   GObjectClass           parent_class;
 };
 
 
-GType  gimp_display_options_get_type            (void) G_GNUC_CONST;
-GType  gimp_display_options_fullscreen_get_type (void) G_GNUC_CONST;
-GType  gimp_display_options_no_image_get_type   (void) G_GNUC_CONST;
+GType  ligma_display_options_get_type            (void) G_GNUC_CONST;
+GType  ligma_display_options_fullscreen_get_type (void) G_GNUC_CONST;
+GType  ligma_display_options_no_image_get_type   (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_DISPLAY_OPTIONS_H__ */
+#endif /* __LIGMA_DISPLAY_OPTIONS_H__ */

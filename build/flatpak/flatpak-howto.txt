@@ -1,10 +1,10 @@
-GIMP Flatpak HowTo
+LIGMA Flatpak HowTo
 ==================
 
 Stable build
 ~~~~~~~~~~~~
 
-The stable manifest is maintained at flathub: https://github.com/flathub/org.gimp.GIMP
+The stable manifest is maintained at flathub: https://github.com/flathub/org.ligma.LIGMA
 
 To prepare a new build:
 
@@ -12,9 +12,9 @@ To prepare a new build:
   master commit (even if the release is not tagged yet).
 * Commit in a branch and push (DO NOT PUSH TO MASTER):
 
-> git checkout -b test-gimp-2-10-4-release
+> git checkout -b test-ligma-2-10-4-release
 > git commit -a
-> git push origin HEAD:test-gimp-2-10-4-release
+> git push origin HEAD:test-ligma-2-10-4-release
 
 * Create a pull-request from this branch.
 * In the comment section, just write "bot, build".
@@ -32,7 +32,7 @@ Development and nightly builds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Flathub does not host non-stable builds, therefore they are maintained
-separately on the GIMP repository. Nevertheless they should remain as
+separately on the LIGMA repository. Nevertheless they should remain as
 close to the stable manifest as possible since they are meant to become
 stable too eventually.
 
@@ -66,7 +66,7 @@ Or simply update them if you have already installed them:
 
 * Run the build script:
 
-> ./gimp-flatpak-cron.sh <GPGKEY> <REPO> <LOGDIR> <BUILDDIR>
+> ./ligma-flatpak-cron.sh <GPGKEY> <REPO> <LOGDIR> <BUILDDIR>
 
 Note that it is named with the "-cron" suffix because it is a good cron
 script for nightlies.
@@ -76,7 +76,7 @@ The parameters:
 GPGKEY: your GPG key used to sign the builds
 REPO: the directory where the repository is locally.
       For instance, it could be /var/www/html/flatpak/ (which could map
-      to https://download.gimp.org/flatpak/ for instance)
+      to https://download.ligma.org/flatpak/ for instance)
 LOGDIR: where the logs of the build will be kept (under subdirectories
         by date).
 BUILDDIR: where the built prefix will be kept for later review.
@@ -87,16 +87,16 @@ verification.
 Maintaining the manifests
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* GIMP uses Flatpak's GNOME runtime, which contains a base of libraries,
-  some of which are dependencies of GIMP.
+* LIGMA uses Flatpak's GNOME runtime, which contains a base of libraries,
+  some of which are dependencies of LIGMA.
   Check out the available versions at: http://flatpak.org/runtimes.html
-  Verify that we use the last runtime version in `org.gimp.GIMP.json`:
+  Verify that we use the last runtime version in `org.ligma.LIGMA.json`:
 
 > "runtime-version": "3.28"
 
-* Other GIMP dependencies which are not available in the GNOME runtime
-  should be built along as modules within GIMP's flatpak.
-  Check format in `org.gimp.GIMP-nightly.json` and add modules if
+* Other LIGMA dependencies which are not available in the GNOME runtime
+  should be built along as modules within LIGMA's flatpak.
+  Check format in `org.ligma.LIGMA-nightly.json` and add modules if
   necessary.  For more information and options, check flatpak builder's
   manifest format:
   http://flatpak.org/flatpak/flatpak-docs.html#flatpak-builder
@@ -104,12 +104,12 @@ Maintaining the manifests
 * On the other hand, if we increased the runtime version in particular,
   some modules may no longer be necessary.
   For instance, at time of writing, GNOME runtime 3.22 includes libpng
-  1.6.17 but GIMP requires "libpng >= 1.6.25".
+  1.6.17 but LIGMA requires "libpng >= 1.6.25".
   Similarly lcms2 was available in the runtime but on a low version.
   On a higher version runtime, these modules can likely be removed from
   our manifest.
 
-  A flatpak is a layered set of modules. Our GIMP build in particular is
+  A flatpak is a layered set of modules. Our LIGMA build in particular is
   built over the GNOME runtime, itself built over the Freedesktop
   runtime, itself based on a yocto-built image.
   Other than by trial and error, you can find the installed dependencies
@@ -119,9 +119,9 @@ Maintaining the manifests
 
 Or if you already have a build:
 
-> flatpak run --devel --command=bash org.gimp.GIMP
+> flatpak run --devel --command=bash org.ligma.LIGMA
 
-  GIMP manifest available at:
+  LIGMA manifest available at:
 
 > less /app/manifest.json
 
@@ -144,8 +144,8 @@ Or if you already have a build:
 
   The OCI image is not straightforward at first but is the least intrusive
   if you already have docker or podman installed:
-  $ cd <path-to-gimp-repo>/flatpak/build
-  $ podman run --rm --privileged -v "$(pwd):/run/host:rw" ghcr.io/flathub/flatpak-external-data-checker:latest /run/host/org.gimp.GIMP-nightly.json
+  $ cd <path-to-ligma-repo>/flatpak/build
+  $ podman run --rm --privileged -v "$(pwd):/run/host:rw" ghcr.io/flathub/flatpak-external-data-checker:latest /run/host/org.ligma.LIGMA-nightly.json
 
   Our prefered backend for the checker is Anitya, a database maintained
   by the Fedora project. To set up a new dependency check by Anitya:
@@ -166,35 +166,35 @@ Or if you already have a build:
 >  "desktop-file-name-prefix": "(Dev) ",
 
 * For a stable release, set top "branch":"stable", and inside the
-  "gimp", "babl" and "gegl" modules, set "branch" to the git tag (ex:
-  "GIMP_2_10"), and "commit" to the git commit hash for this tag.
+  "ligma", "babl" and "gegl" modules, set "branch" to the git tag (ex:
+  "LIGMA_2_10"), and "commit" to the git commit hash for this tag.
 
 * For a development release, set top "branch":"dev", and inside the
-  "gimp", "babl" and "gegl" modules, set "branch" to the git tag (ex:
-  "GIMP_2_9_6"), and "commit" to the git commit hash for this tag.
+  "ligma", "babl" and "gegl" modules, set "branch" to the git tag (ex:
+  "LIGMA_2_9_6"), and "commit" to the git commit hash for this tag.
 
 * For a nightly build, set top "branch":"master", and inside the
-  "gimp", "babl" and "gegl" modules, set "branch" to "master", and
+  "ligma", "babl" and "gegl" modules, set "branch" to "master", and
   remove any "commit" line.
 
 * Test it locally with:
 
-> flatpak --user remote-add --no-gpg-verify gimp /path/to/repo
+> flatpak --user remote-add --no-gpg-verify ligma /path/to/repo
 
 Or remotely:
 
-> flatpak --user remote-add --no-gpg-verify gimp http://example.com/repo
+> flatpak --user remote-add --no-gpg-verify ligma http://example.com/repo
 
-> flatpak --user install gimp org.gimp.GIMP
+> flatpak --user install ligma org.ligma.LIGMA
 
   Once installed check that the commit hash outputted at export is the
   same as the one from the local command:
 
 > flatpak list --user -d
 
-  You can also run your flatpaked GIMP:
+  You can also run your flatpaked LIGMA:
 
-> flatpak run org.gimp.GIMP
+> flatpak run org.ligma.LIGMA
 
   Also an entry "(Dev) GNU Image Manipulation Software" should now be
   available in your menus (or GNOME Overview). This will run the flatpak

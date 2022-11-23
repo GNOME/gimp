@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,115 +20,115 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "paint/gimpmybrushoptions.h"
+#include "paint/ligmamybrushoptions.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpcanvasarc.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmacanvasarc.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "gimpmybrushoptions-gui.h"
-#include "gimpmybrushtool.h"
-#include "gimptoolcontrol.h"
-#include "core/gimpmybrush.h"
+#include "ligmamybrushoptions-gui.h"
+#include "ligmamybrushtool.h"
+#include "ligmatoolcontrol.h"
+#include "core/ligmamybrush.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (LigmaMybrushTool, ligma_mybrush_tool, LIGMA_TYPE_PAINT_TOOL)
 
-#define parent_class gimp_mybrush_tool_parent_class
+#define parent_class ligma_mybrush_tool_parent_class
 
 
-static void   gimp_mybrush_tool_options_notify        (GimpTool         *tool,
-                                                       GimpToolOptions  *options,
+static void   ligma_mybrush_tool_options_notify        (LigmaTool         *tool,
+                                                       LigmaToolOptions  *options,
                                                        const GParamSpec *pspec);
 
-static GimpCanvasItem * gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
-                                                       GimpDisplay   *display,
+static LigmaCanvasItem * ligma_mybrush_tool_get_outline (LigmaPaintTool *paint_tool,
+                                                       LigmaDisplay   *display,
                                                        gdouble        x,
                                                        gdouble        y);
 
 
 void
-gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
+ligma_mybrush_tool_register (LigmaToolRegisterCallback  callback,
                             gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_MYBRUSH_TOOL,
-                GIMP_TYPE_MYBRUSH_OPTIONS,
-                gimp_mybrush_options_gui,
-                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND |
-                GIMP_CONTEXT_PROP_MASK_OPACITY    |
-                GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
-                GIMP_CONTEXT_PROP_MASK_MYBRUSH,
-                "gimp-mypaint-brush-tool",
+  (* callback) (LIGMA_TYPE_MYBRUSH_TOOL,
+                LIGMA_TYPE_MYBRUSH_OPTIONS,
+                ligma_mybrush_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_FOREGROUND |
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND |
+                LIGMA_CONTEXT_PROP_MASK_OPACITY    |
+                LIGMA_CONTEXT_PROP_MASK_PAINT_MODE |
+                LIGMA_CONTEXT_PROP_MASK_MYBRUSH,
+                "ligma-mypaint-brush-tool",
                 _("MyPaint Brush"),
-                _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
+                _("MyPaint Brush Tool: Use MyPaint brushes in LIGMA"),
                 N_("M_yPaint Brush"), "Y",
-                NULL, GIMP_HELP_TOOL_MYPAINT_BRUSH,
-                GIMP_ICON_TOOL_MYPAINT_BRUSH,
+                NULL, LIGMA_HELP_TOOL_MYPAINT_BRUSH,
+                LIGMA_ICON_TOOL_MYPAINT_BRUSH,
                 data);
 }
 
 static void
-gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
+ligma_mybrush_tool_class_init (LigmaMybrushToolClass *klass)
 {
-  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
-  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+  LigmaToolClass      *tool_class       = LIGMA_TOOL_CLASS (klass);
+  LigmaPaintToolClass *paint_tool_class = LIGMA_PAINT_TOOL_CLASS (klass);
 
-  tool_class->options_notify    = gimp_mybrush_tool_options_notify;
+  tool_class->options_notify    = ligma_mybrush_tool_options_notify;
 
-  paint_tool_class->get_outline = gimp_mybrush_tool_get_outline;
+  paint_tool_class->get_outline = ligma_mybrush_tool_get_outline;
 }
 
 static void
-gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
+ligma_mybrush_tool_init (LigmaMybrushTool *mybrush_tool)
 {
-  GimpTool *tool = GIMP_TOOL (mybrush_tool);
+  LigmaTool *tool = LIGMA_TOOL (mybrush_tool);
 
-  gimp_tool_control_set_tool_cursor       (tool->control, GIMP_TOOL_CURSOR_INK);
-  gimp_tool_control_set_action_size       (tool->control,
+  ligma_tool_control_set_tool_cursor       (tool->control, LIGMA_TOOL_CURSOR_INK);
+  ligma_tool_control_set_action_size       (tool->control,
                                            "tools/tools-mypaint-brush-radius-set");
-  gimp_tool_control_set_action_pixel_size (tool->control,
+  ligma_tool_control_set_action_pixel_size (tool->control,
                                            "tools/tools-mypaint-brush-pixel-size-set");
-  gimp_tool_control_set_action_hardness   (tool->control,
+  ligma_tool_control_set_action_hardness   (tool->control,
                                            "tools/tools-mypaint-brush-hardness-set");
 
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
-                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
+  ligma_paint_tool_enable_color_picker (LIGMA_PAINT_TOOL (mybrush_tool),
+                                       LIGMA_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static void
-gimp_mybrush_tool_options_notify (GimpTool         *tool,
-                                  GimpToolOptions  *options,
+ligma_mybrush_tool_options_notify (LigmaTool         *tool,
+                                  LigmaToolOptions  *options,
                                   const GParamSpec *pspec)
 {
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+  LIGMA_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
   if (! strcmp (pspec->name, "radius"))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
+      ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
     }
 }
 
-static GimpCanvasItem *
-gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
-                               GimpDisplay   *display,
+static LigmaCanvasItem *
+ligma_mybrush_tool_get_outline (LigmaPaintTool *paint_tool,
+                               LigmaDisplay   *display,
                                gdouble        x,
                                gdouble        y)
 {
-  GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
-  GimpCanvasItem     *item    = NULL;
-  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
+  LigmaMybrushOptions *options = LIGMA_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
+  LigmaCanvasItem     *item    = NULL;
+  LigmaDisplayShell   *shell   = ligma_display_get_shell (display);
   gdouble             radius;
 
   /* Radius size as used by libmypaint is logarithmic.
@@ -141,37 +141,37 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
   radius = exp (options->radius);
   radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), radius);
 
-  item = gimp_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);
+  item = ligma_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);
 
   if (! item)
     {
-      gimp_paint_tool_set_draw_fallback (paint_tool,
+      ligma_paint_tool_set_draw_fallback (paint_tool,
                                          TRUE, radius);
     }
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_mybrush_tool_create_cursor (GimpPaintTool *paint_tool,
-                                 GimpDisplay   *display,
+LigmaCanvasItem *
+ligma_mybrush_tool_create_cursor (LigmaPaintTool *paint_tool,
+                                 LigmaDisplay   *display,
                                  gdouble        x,
                                  gdouble        y,
                                  gdouble        radius)
 {
 
-  GimpDisplayShell     *shell;
+  LigmaDisplayShell     *shell;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
-  shell = gimp_display_get_shell (display);
+  shell = ligma_display_get_shell (display);
 
   /*  don't draw the boundary if it becomes too small  */
   if (SCALEX (shell, radius) > 4 &&
       SCALEY (shell, radius) > 4)
     {
-      return gimp_canvas_arc_new(shell, x, y, radius, radius, 0.0, 2 * G_PI, FALSE);
+      return ligma_canvas_arc_new(shell, x, y, radius, radius, 0.0, 2 * G_PI, FALSE);
     }
 
   return NULL;

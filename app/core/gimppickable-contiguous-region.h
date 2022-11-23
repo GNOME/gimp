@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
-#define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
+#ifndef __LIGMA_PICKABLE_CONTIGUOUS_REGION_H__
+#define __LIGMA_PICKABLE_CONTIGUOUS_REGION_H__
 
 
-GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
+GeglBuffer * ligma_pickable_contiguous_region_by_seed                (LigmaPickable        *pickable,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
-                                                                     GimpSelectCriterion  select_criterion,
+                                                                     LigmaSelectCriterion  select_criterion,
                                                                      gboolean             diagonal_neighbors,
                                                                      gint                 x,
                                                                      gint                 y);
 
-GeglBuffer * gimp_pickable_contiguous_region_by_color               (GimpPickable        *pickable,
+GeglBuffer * ligma_pickable_contiguous_region_by_color               (LigmaPickable        *pickable,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
-                                                                     GimpSelectCriterion  select_criterion,
-                                                                     const GimpRGB       *color);
+                                                                     LigmaSelectCriterion  select_criterion,
+                                                                     const LigmaRGB       *color);
 
-GeglBuffer * gimp_pickable_contiguous_region_by_line_art            (GimpPickable        *pickable,
-                                                                     GimpLineArt         *line_art,
+GeglBuffer * ligma_pickable_contiguous_region_by_line_art            (LigmaPickable        *pickable,
+                                                                     LigmaLineArt         *line_art,
                                                                      GeglBuffer          *fill_buffer,
-                                                                     const GimpRGB       *fill_color,
+                                                                     const LigmaRGB       *fill_color,
                                                                      gfloat               fill_threshold,
                                                                      gint                 fill_offset_x,
                                                                      gint                 fill_offset_y,
                                                                      gint                 x,
                                                                      gint                 y);
 
-#endif  /*  __GIMP_PICKABLE_CONTIGUOUS_REGION_H__ */
+#endif  /*  __LIGMA_PICKABLE_CONTIGUOUS_REGION_H__ */

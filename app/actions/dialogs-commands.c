@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
 
 #include "actions.h"
 #include "dialogs-commands.h"
@@ -37,7 +37,7 @@
 /*  public functions  */
 
 void
-dialogs_create_toplevel_cmd_callback (GimpAction *action,
+dialogs_create_toplevel_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
@@ -48,30 +48,30 @@ dialogs_create_toplevel_cmd_callback (GimpAction *action,
   identifier = g_variant_get_string (value, NULL);
 
   if (identifier)
-    gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                    gimp_widget_get_monitor (widget),
+    ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                    ligma_widget_get_monitor (widget),
                                     NULL /*ui_manager*/,
                                     widget,
                                     identifier, -1, TRUE);
 }
 
 void
-dialogs_create_dockable_cmd_callback (GimpAction *action,
+dialogs_create_dockable_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  Gimp        *gimp;
+  Ligma        *ligma;
   GtkWidget   *widget;
   const gchar *identifier;
-  return_if_no_gimp   (gimp, data);
+  return_if_no_ligma   (ligma, data);
   return_if_no_widget (widget, data);
 
   identifier = g_variant_get_string (value, NULL);
 
   if (identifier)
-    gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                               gimp,
-                                               gimp_dialog_factory_get_singleton (),
-                                               gimp_widget_get_monitor (widget),
+    ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                               ligma,
+                                               ligma_dialog_factory_get_singleton (),
+                                               ligma_widget_get_monitor (widget),
                                                identifier);
 }

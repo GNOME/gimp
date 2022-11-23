@@ -1,18 +1,18 @@
-.TH GIMPTOOL\-2.0 1 "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH LIGMATOOL\-2.0 1 "Version @LIGMA_VERSION@" "LIGMA Manual Pages"
 
 .SH NAME
-gimptool\-2.0 - script to perform various GIMPy functions
+ligmatool\-2.0 - script to perform various LIGMAy functions
 
 
 .SH SYNOPSIS
-.B gimptool\-2.0
+.B ligmatool\-2.0
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run]
 [\-\-recon] [\-\-msvc-syntax]
 [\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir]
 [\-\-sysconfdir] [\-\-sharedstatedir] [\-\-localstatedir] [-\-libdir]
-[\-\-infodir] [\-\-mandir] [\-\-includedir] [\-\-gimpplugindir]
-[\-\-gimpdatadir] [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi]
+[\-\-infodir] [\-\-mandir] [\-\-includedir] [\-\-ligmaplugindir]
+[\-\-ligmadatadir] [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi]
 [\-\-build \fIplug\-in.c\fP]
 [\-\-build\-strip \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP]
 [\-\-install-strip \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP] 
@@ -29,21 +29,21 @@ gimptool\-2.0 - script to perform various GIMPy functions
 
 .SH DESCRIPTION
 .PP
-\fIgimptool\-2.0\fP is a tool that can, among other things, build
+\fIligmatool\-2.0\fP is a tool that can, among other things, build
 plug-ins or scripts and install them if they are distributed in one
 source file.
 .PP
-\fIgimptool\-2.0\fP can also be used by programs that need to know what
-libraries and include-paths \fIGIMP\fP was compiled with. \fIgimptool\-2.0\fP
+\fIligmatool\-2.0\fP can also be used by programs that need to know what
+libraries and include-paths \fILIGMA\fP was compiled with. \fIligmatool\-2.0\fP
 uses \fIpkg-config\fP for this task. For use in Makefiles, it is recommended
-that you use \fIpkg-config\fP directly instead of calling \fIgimptool\-2.0\fP.
+that you use \fIpkg-config\fP directly instead of calling \fIligmatool\-2.0\fP.
 
 
 .SH OPTIONS
-\fIgimptool\-2.0\fP accepts the following options:
+\fIligmatool\-2.0\fP accepts the following options:
 .TP 8
 .B  \-\-version
-Print the currently installed version of \fIGIMP\fP on the standard output.
+Print the currently installed version of \fILIGMA\fP on the standard output.
 .TP 8
 .B \-\-help
 Print out the help blurb, showing commonly used commandline options.
@@ -70,122 +70,122 @@ Test mode. Print the commands but don't actually execute them. Same as \-n.
 .B \-\-msvc-syntax
 Useful on Windows. Outputs the compiler and linker flags in the syntax
 used by Microsoft's toolchain. Passed to the pkg-config command that
-does most of \fIgimptool\-2.0\fP's work.
+does most of \fIligmatool\-2.0\fP's work.
 .TP 8
 .B \-\-bindir
-Outputs the bindir used to install the \fIGIMP\fP.
+Outputs the bindir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-sbindir
-Outputs the sbindir used to install the \fIGIMP\fP.
+Outputs the sbindir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-libexecdir
-Outputs the libexecdir used to install the \fIGIMP\fP.
+Outputs the libexecdir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-datadir
-Outputs the datadir used to install the \fIGIMP\fP.
+Outputs the datadir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-sysconfdir
-Outputs the sysconfdir used to install the \fIGIMP\fP.
+Outputs the sysconfdir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-sharedstatedir
-Outputs the sharedstatedir used to install the \fIGIMP\fP.
+Outputs the sharedstatedir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-localstatedir
-Outputs the localstatedir used to install the \fIGIMP\fP.
+Outputs the localstatedir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-libdir
-Outputs the libdir used to install the \fIGIMP\fP.
+Outputs the libdir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-infodir
-Outputs the infodir used to install the \fIGIMP\fP.
+Outputs the infodir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-mandir
-Outputs the mandir used to install the \fIGIMP\fP.
+Outputs the mandir used to install the \fILIGMA\fP.
 .TP 8
 .B \-\-includedir
-Outputs the includedir used to install the \fIGIMP\fP.
+Outputs the includedir used to install the \fILIGMA\fP.
 .TP 8
-.B \-\-gimpdatadir
-Outputs the actual directory where the \fIGIMP\fP data files were installed.
+.B \-\-ligmadatadir
+Outputs the actual directory where the \fILIGMA\fP data files were installed.
 .TP 8
-.B \-\-gimpplugindir
-Outputs the actual directory where the \fIGIMP\fP plug-ins were installed.
+.B \-\-ligmaplugindir
+Outputs the actual directory where the \fILIGMA\fP plug-ins were installed.
 .TP 8
 .B  \-\-build \fIplug-in.c\fP
-Compile and link \fIplug-in.c\fP into a \fIGIMP\fP plug-in.
+Compile and link \fIplug-in.c\fP into a \fILIGMA\fP plug-in.
 .TP 8
 .B  \-\-build\-strip \fIplug-in.c\fP
-Compile,link, and strip \fIplug-in.c\fP into a \fIGIMP\fP plug-in.
+Compile,link, and strip \fIplug-in.c\fP into a \fILIGMA\fP plug-in.
 .TP 8
 .B  \-\-install \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the user's personal
-\fIGIMP\fP plug-in directory (@manpage_gimpdir@/plug-ins)
+\fILIGMA\fP plug-in directory (@manpage_ligmadir@/plug-ins)
 .TP 8
 .B  \-\-install\-strip \fIplug-in.c\fP
 Compile, link,strip, and install \fIplug-in.c\fP into the user's
-personal \fIGIMP\fP
-plug-in directory (@manpage_gimpdir@/plug-ins)
+personal \fILIGMA\fP
+plug-in directory (@manpage_ligmadir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin \fIplug-in.c\fP
-Compile, link, and install \fIplug-in.c\fP into the system-wide \fIGIMP\fP
-plug-in directory (@gimpplugindir@/plug-ins)
+Compile, link, and install \fIplug-in.c\fP into the system-wide \fILIGMA\fP
+plug-in directory (@ligmaplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin \fIplug-in\fP
-Install \fIplug-in\fP into the user's personal \fIGIMP\fP
-plug-in directory (@manpage_gimpdir@/plug-ins)
+Install \fIplug-in\fP into the user's personal \fILIGMA\fP
+plug-in directory (@manpage_ligmadir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin \fIplug-in\fP
-Install \fIplug-in\fP into the system-wide \fIGIMP\fP
-plug-in directory (@gimpplugindir@/plug-ins)
+Install \fIplug-in\fP into the system-wide \fILIGMA\fP
+plug-in directory (@ligmaplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin\-strip \fIplug-in\fP
-Install stripped \fIplug-in\fP into the user's personal \fIGIMP\fP
-plug-in directory (@manpage_gimpdir@/plug-ins)
+Install stripped \fIplug-in\fP into the user's personal \fILIGMA\fP
+plug-in directory (@manpage_ligmadir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin\-strip \fIplug-in\fP
-Install stripped \fIplug-in\fP into the system-wide \fIGIMP\fP
-plug-in directory (@gimpplugindir@/plug-ins)
+Install stripped \fIplug-in\fP into the system-wide \fILIGMA\fP
+plug-in directory (@ligmaplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-script \fIscript.scm\fP
-Install \fIscript.scm\fP into the user's personal \fIGIMP\fP
-script directory (@manpage_gimpdir@/scripts)
+Install \fIscript.scm\fP into the user's personal \fILIGMA\fP
+script directory (@manpage_ligmadir@/scripts)
 .TP 8
 .B  \-\-install\-admin\-script \fIscript.scm\fP
-Install \fIscript.scm\fP into the system-wide \fIGIMP\fP
-script directory (@gimpdatadir@/scripts)
+Install \fIscript.scm\fP into the system-wide \fILIGMA\fP
+script directory (@ligmadatadir@/scripts)
 .TP 8
 .B  \-\-uninstall\-bin \fIplug-in\fP
-Uninstall \fIplug-in\fP from the user's personal \fIGIMP\fP
-plug-in directory (@manpage_gimpdir@/plug-ins)
+Uninstall \fIplug-in\fP from the user's personal \fILIGMA\fP
+plug-in directory (@manpage_ligmadir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-admin\-bin \fIplug-in\fP
-Uninstall \fIplug-in\fP from the system-wide \fIGIMP\fP
-plug-in directory (@gimpplugindir@/plug-ins)
+Uninstall \fIplug-in\fP from the system-wide \fILIGMA\fP
+plug-in directory (@ligmaplugindir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-script \fIscript.scm\fP
-Uninstall \fIscript.scm\fP from the user's personal \fIGIMP\fP
-script directory (@manpage_gimpdir@/scripts)
+Uninstall \fIscript.scm\fP from the user's personal \fILIGMA\fP
+script directory (@manpage_ligmadir@/scripts)
 .TP 8
 .B  \-\-uninstall\-admin\-script \fIscript.scm\fP
-Uninstall \fIscript.scm\fP from the system-wide \fIGIMP\fP
-script directory (@gimpdatadir@/scripts)
+Uninstall \fIscript.scm\fP from the system-wide \fILIGMA\fP
+script directory (@ligmadatadir@/scripts)
 .TP 8
 .B  \-\-libs
-Print the linker flags that are necessary to link a \fIGIMP\fP plug-in.
+Print the linker flags that are necessary to link a \fILIGMA\fP plug-in.
 .TP 8
 .B \-\-libs-noui
-Print the linker flags that are necessary to link a \fIGIMP\fP plug-in, for
+Print the linker flags that are necessary to link a \fILIGMA\fP plug-in, for
 plug-ins that do not require the GTK libraries.
 .TP 8
 .B  \-\-cflags
-Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in.
+Print the compiler flags that are necessary to compile a \fILIGMA\fP plug-in.
 .TP 8
 .B \-\-clags-noui
-Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in
+Print the compiler flags that are necessary to compile a \fILIGMA\fP plug-in
 for plug-ins that do not require the GTK libraries.
 .TP 8
 .B  \-\-prefix=PREFIX
-If specified, use PREFIX instead of the installation prefix that \fIGIMP\fP
+If specified, use PREFIX instead of the installation prefix that \fILIGMA\fP
 was built with when computing the output for the \-\-cflags and
 \-\-libs options. This option is also used for the exec prefix
 if \-\-exec\-prefix was not specified. This option must be specified
@@ -193,7 +193,7 @@ before any \-\-libs or \-\-cflags options.
 .TP 8
 .B  \-\-exec\-prefix=PREFIX
 If specified, use PREFIX instead of the installation exec prefix that
-\fIGIMP\fP was built with when computing the output for the \-\-cflags
+\fILIGMA\fP was built with when computing the output for the \-\-cflags
 and \-\-libs options. This option must be specified before any
 \-\-libs or \-\-cflags options.
 
@@ -216,20 +216,20 @@ LIBS=-lintl .
 .TP 8
 .B PKG_CONFIG
 to get the location of the \fIpkg-config\fP program that is used to determine
-details about your glib, pango, gtk and gimp installation.
+details about your glib, pango, gtk and ligma installation.
 
 
 .SH SEE ALSO
-.BR gimp (1), 
-.BR gimprc (5),
+.BR ligma (1), 
+.BR ligmarc (5),
 .BR pkg\-config (1)
 
 
 .SH AUTHORS
-gimptool was written by Manish Singh (yosh@gimp.org) and is based on
+ligmatool was written by Manish Singh (yosh@ligma.org) and is based on
 gtk\-config by Owen Taylor (owen@gtk.org).
 
 This man page was written by Ben Gertzfield (che@debian.org), and tweaked
-by Manish Singh (yosh@gimp.org), Adrian Likins (adrian@gimp.org) and Marc
+by Manish Singh (yosh@ligma.org), Adrian Likins (adrian@ligma.org) and Marc
 Lehmann (pcg@goof.com>).
 

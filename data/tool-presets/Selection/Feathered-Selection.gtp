@@ -1,12 +1,12 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-rect-select")
+(icon-name "ligma-tool-rect-select")
 (name "Feathered Selection")
-(tool-options "GimpRectangleSelectOptions"
+(tool-options "LigmaRectangleSelectOptions"
     (aspect-denominator 424.483617)
     (aspect-numerator 453.543307)
     (guide center-lines)
-    (tool "gimp-rect-select-tool")
+    (tool "ligma-rect-select-tool")
     (feather yes)
     (feather-radius 25.000000)
     (round-corners yes)
@@ -19,4 +19,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpiconpicker.h
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmaiconpicker.h
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *               2012 Daniel Sabo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,42 +19,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ICON_PICKER_H__
-#define __GIMP_ICON_PICKER_H__
+#ifndef __LIGMA_ICON_PICKER_H__
+#define __LIGMA_ICON_PICKER_H__
 
 
-#define GIMP_TYPE_ICON_PICKER            (gimp_icon_picker_get_type ())
-#define GIMP_ICON_PICKER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ICON_PICKER, GimpIconPicker))
-#define GIMP_ICON_PICKER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ICON_PICKER, GimpIconPickerClass))
-#define GIMP_IS_ICON_PICKER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ICON_PICKER))
-#define GIMP_IS_ICON_PICKER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ICON_PICKER))
-#define GIMP_ICON_PICKER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ICON_PICKER, GimpIconPickerClass))
+#define LIGMA_TYPE_ICON_PICKER            (ligma_icon_picker_get_type ())
+#define LIGMA_ICON_PICKER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ICON_PICKER, LigmaIconPicker))
+#define LIGMA_ICON_PICKER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ICON_PICKER, LigmaIconPickerClass))
+#define LIGMA_IS_ICON_PICKER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ICON_PICKER))
+#define LIGMA_IS_ICON_PICKER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ICON_PICKER))
+#define LIGMA_ICON_PICKER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ICON_PICKER, LigmaIconPickerClass))
 
 
-typedef struct _GimpIconPickerClass GimpIconPickerClass;
+typedef struct _LigmaIconPickerClass LigmaIconPickerClass;
 
-struct _GimpIconPicker
+struct _LigmaIconPicker
 {
   GtkBox  parent_instance;
 };
 
-struct _GimpIconPickerClass
+struct _LigmaIconPickerClass
 {
   GtkBoxClass   parent_class;
 };
 
 
-GType          gimp_icon_picker_get_type       (void) G_GNUC_CONST;
+GType          ligma_icon_picker_get_type       (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_icon_picker_new             (Gimp           *gimp);
+GtkWidget   * ligma_icon_picker_new             (Ligma           *ligma);
 
-const gchar * gimp_icon_picker_get_icon_name   (GimpIconPicker *picker);
-void          gimp_icon_picker_set_icon_name   (GimpIconPicker *picker,
+const gchar * ligma_icon_picker_get_icon_name   (LigmaIconPicker *picker);
+void          ligma_icon_picker_set_icon_name   (LigmaIconPicker *picker,
                                                 const gchar    *icon_name);
 
-GdkPixbuf   * gimp_icon_picker_get_icon_pixbuf (GimpIconPicker *picker);
-void          gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
+GdkPixbuf   * ligma_icon_picker_get_icon_pixbuf (LigmaIconPicker *picker);
+void          ligma_icon_picker_set_icon_pixbuf (LigmaIconPicker *picker,
                                                 GdkPixbuf      *value);
 
 
-#endif  /*  __GIMP_ICON_PICKER_H__  */
+#endif  /*  __LIGMA_ICON_PICKER_H__  */

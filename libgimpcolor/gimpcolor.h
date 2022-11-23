@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,26 +16,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_H__
-#define __GIMP_COLOR_H__
+#ifndef __LIGMA_COLOR_H__
+#define __LIGMA_COLOR_H__
 
-#define __GIMP_COLOR_H_INSIDE__
+#define __LIGMA_COLOR_H_INSIDE__
 
-#include <libgimpcolor/gimpcolortypes.h>
+#include <libligmacolor/ligmacolortypes.h>
 
-#include <libgimpcolor/gimpadaptivesupersample.h>
-#include <libgimpcolor/gimpbilinear.h>
-#include <libgimpcolor/gimpcairo.h>
-#include <libgimpcolor/gimpcolormanaged.h>
-#include <libgimpcolor/gimpcolorprofile.h>
-#include <libgimpcolor/gimpcolorspace.h>
-#include <libgimpcolor/gimpcolortransform.h>
-#include <libgimpcolor/gimpcmyk.h>
-#include <libgimpcolor/gimphsl.h>
-#include <libgimpcolor/gimphsv.h>
-#include <libgimpcolor/gimppixbuf.h>
-#include <libgimpcolor/gimprgb.h>
+#include <libligmacolor/ligmaadaptivesupersample.h>
+#include <libligmacolor/ligmabilinear.h>
+#include <libligmacolor/ligmacairo.h>
+#include <libligmacolor/ligmacolormanaged.h>
+#include <libligmacolor/ligmacolorprofile.h>
+#include <libligmacolor/ligmacolorspace.h>
+#include <libligmacolor/ligmacolortransform.h>
+#include <libligmacolor/ligmacmyk.h>
+#include <libligmacolor/ligmahsl.h>
+#include <libligmacolor/ligmahsv.h>
+#include <libligmacolor/ligmapixbuf.h>
+#include <libligmacolor/ligmargb.h>
 
-#undef __GIMP_COLOR_H_INSIDE__
+#undef __LIGMA_COLOR_H_INSIDE__
 
-#endif  /* __GIMP_COLOR_H__ */
+#endif  /* __LIGMA_COLOR_H__ */

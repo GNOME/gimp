@@ -1,4 +1,4 @@
-uidatadir = $(gimpdatadir)/ui/plug-ins
+uidatadir = $(ligmadatadir)/ui/plug-ins
 
 uidata_DATA = \
 	plug-in-metadata-editor.ui		\

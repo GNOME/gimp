@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Legacy
+## Makefile.am for ligma/data/patterns/Legacy
 
-patternslegacydatadir = $(gimpdatadir)/patterns/Legacy
+patternslegacydatadir = $(ligmadatadir)/patterns/Legacy
 
 patternslegacydata_DATA = \
 	3dgreen.pat		\

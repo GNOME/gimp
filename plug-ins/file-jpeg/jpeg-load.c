@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,49 +30,49 @@
 
 #include <lcms2.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "jpeg.h"
 #include "jpeg-icc.h"
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 
-static gboolean  jpeg_load_resolution       (GimpImage *image,
+static gboolean  jpeg_load_resolution       (LigmaImage *image,
                                              struct jpeg_decompress_struct
                                                        *cinfo);
 
 static void      jpeg_load_sanitize_comment (gchar    *comment);
 
 
-GimpImage * volatile  preview_image;
-GimpLayer *           preview_layer;
+LigmaImage * volatile  preview_image;
+LigmaLayer *           preview_layer;
 
-GimpImage *
+LigmaImage *
 load_image (GFile        *file,
-            GimpRunMode   runmode,
+            LigmaRunMode   runmode,
             gboolean      preview,
             gboolean     *resolution_loaded,
             GError      **error)
 {
-  GimpImage * volatile image;
-  GimpLayer           *layer;
+  LigmaImage * volatile image;
+  LigmaLayer           *layer;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   jpeg_saved_marker_ptr         marker;
   FILE              *infile;
   guchar            *buf;
   guchar           **rowbuf;
-  GimpImageBaseType  image_type;
-  GimpImageType      layer_type;
+  LigmaImageBaseType  image_type;
+  LigmaImageType      layer_type;
   GeglBuffer        *buffer       = NULL;
   const Babl        *format;
   const Babl        *space;
   const gchar       *encoding;
   const gchar       *layer_name   = NULL;
-  GimpColorProfile  *cmyk_profile = NULL;
+  LigmaColorProfile  *cmyk_profile = NULL;
   gint               tile_height;
   gint               i;
 
@@ -84,8 +84,8 @@ load_image (GFile        *file,
     {
       jerr.pub.output_message = my_output_message;
 
-      gimp_progress_init_printf (_("Opening '%s'"),
-                                 gimp_file_get_utf8_name (file));
+      ligma_progress_init_printf (_("Opening '%s'"),
+                                 ligma_file_get_utf8_name (file));
     }
 
   infile = g_fopen (g_file_peek_path (file), "rb");
@@ -94,7 +94,7 @@ load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -111,7 +111,7 @@ load_image (GFile        *file,
         fclose (infile);
 
       if (image && !preview)
-        gimp_image_delete (image);
+        ligma_image_delete (image);
 
       if (preview)
         destroy_preview ();
@@ -171,7 +171,7 @@ load_image (GFile        *file,
    */
 
   /* temporary buffer */
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   buf = g_new (guchar,
                tile_height * cinfo.output_width * cinfo.output_components);
 
@@ -183,20 +183,20 @@ load_image (GFile        *file,
   switch (cinfo.output_components)
     {
     case 1:
-      image_type = GIMP_GRAY;
-      layer_type = GIMP_GRAY_IMAGE;
+      image_type = LIGMA_GRAY;
+      layer_type = LIGMA_GRAY_IMAGE;
       break;
 
     case 3:
-      image_type = GIMP_RGB;
-      layer_type = GIMP_RGB_IMAGE;
+      image_type = LIGMA_RGB;
+      layer_type = LIGMA_RGB_IMAGE;
       break;
 
     case 4:
       if (cinfo.out_color_space == JCS_CMYK)
         {
-          image_type = GIMP_RGB;
-          layer_type = GIMP_RGB_IMAGE;
+          image_type = LIGMA_RGB;
+          layer_type = LIGMA_RGB_IMAGE;
           break;
         }
       /*fallthrough*/
@@ -224,13 +224,13 @@ load_image (GFile        *file,
 
       layer_name = _("Background");
 
-      image = gimp_image_new_with_precision (cinfo.output_width,
+      image = ligma_image_new_with_precision (cinfo.output_width,
                                              cinfo.output_height,
                                              image_type,
-                                             GIMP_PRECISION_U8_NON_LINEAR);
+                                             LIGMA_PRECISION_U8_NON_LINEAR);
 
-      gimp_image_undo_disable (image);
-      gimp_image_set_file (image, file);
+      ligma_image_undo_disable (image);
+      ligma_image_set_file (image, file);
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image);
@@ -243,7 +243,7 @@ load_image (GFile        *file,
 
           if (marker->marker == JPEG_COM)
             {
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
               g_print ("jpeg-load: found image comment (%d bytes)\n",
                        marker->data_length);
 #endif
@@ -263,7 +263,7 @@ load_image (GFile        *file,
                    && (len > sizeof (JPEG_APP_HEADER_EXIF) + 8)
                    && ! strcmp (JPEG_APP_HEADER_EXIF, data))
             {
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
               g_print ("jpeg-load: found Exif block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
@@ -279,15 +279,15 @@ load_image (GFile        *file,
       /* if we found any comments, then make a parasite for them */
       if (comment_buffer && comment_buffer->len)
         {
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
 
           jpeg_load_sanitize_comment (comment_buffer->str);
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("ligma-comment",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comment_buffer->str) + 1,
                                         comment_buffer->str);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
 
           g_string_free (comment_buffer, TRUE);
         }
@@ -297,9 +297,9 @@ load_image (GFile        *file,
 
       if (icc_data)
         {
-          GimpColorProfile *profile;
+          LigmaColorProfile *profile;
 
-          profile = gimp_color_profile_new_from_icc_profile (icc_data,
+          profile = ligma_color_profile_new_from_icc_profile (icc_data,
                                                              icc_length,
                                                              NULL);
           if (cinfo.out_color_space == JCS_CMYK)
@@ -311,7 +311,7 @@ load_image (GFile        *file,
 
           if (profile)
             {
-              gimp_image_set_color_profile (image, profile);
+              ligma_image_set_color_profile (image, profile);
               g_object_unref (profile);
             }
         }
@@ -323,12 +323,12 @@ load_image (GFile        *file,
        */
     }
 
-  layer = gimp_layer_new (image, layer_name,
+  layer = ligma_layer_new (image, layer_name,
                           cinfo.output_width,
                           cinfo.output_height,
                           layer_type,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
   if (preview)
     preview_layer = layer;
@@ -340,17 +340,17 @@ load_image (GFile        *file,
    * loop counter, so that we don't have to keep track ourselves.
    */
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   if (cinfo.out_color_space == JCS_CMYK)
     {
       encoding = "cmyk u8";
       if (cmyk_profile)
         {
-          space = gimp_color_profile_get_space (cmyk_profile,
-                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+          space = ligma_color_profile_get_space (cmyk_profile,
+                                                LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                 error);
-          gimp_image_set_simulation_profile (image, cmyk_profile);
+          ligma_image_set_simulation_profile (image, cmyk_profile);
         }
       else
         {
@@ -359,11 +359,11 @@ load_image (GFile        *file,
     }
   else
     {
-      if (image_type == GIMP_RGB)
+      if (image_type == LIGMA_RGB)
         encoding = "R'G'B' u8";
       else
         encoding = "Y' u8";
-      space = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+      space = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
     }
   format = babl_format_with_space (encoding, space);
 
@@ -407,7 +407,7 @@ load_image (GFile        *file,
         goto finish;
 
       if (! preview && (cinfo.output_scanline % 32) == 0)
-        gimp_progress_update ((gdouble) cinfo.output_scanline /
+        ligma_progress_update ((gdouble) cinfo.output_scanline /
                               (gdouble) cinfo.output_height);
     }
 
@@ -447,16 +447,16 @@ load_image (GFile        *file,
    */
   if (! preview)
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
     }
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
   return image;
 }
 
 static gboolean
-jpeg_load_resolution (GimpImage                     *image,
+jpeg_load_resolution (LigmaImage                     *image,
                       struct jpeg_decompress_struct *cinfo)
 {
   if (cinfo->saw_JFIF_marker && cinfo->X_density != 0 && cinfo->Y_density != 0)
@@ -472,7 +472,7 @@ jpeg_load_resolution (GimpImage                     *image,
                  */
           asymmetry = xresolution / yresolution;
 
-          gimp_image_get_resolution (image, &xresolution, &yresolution);
+          ligma_image_get_resolution (image, &xresolution, &yresolution);
 
           xresolution *= asymmetry;
           break;
@@ -483,7 +483,7 @@ jpeg_load_resolution (GimpImage                     *image,
         case 2: /* dots per cm */
           xresolution *= 2.54;
           yresolution *= 2.54;
-          gimp_image_set_unit (image, GIMP_UNIT_MM);
+          ligma_image_set_unit (image, LIGMA_UNIT_MM);
           break;
 
         default:
@@ -492,7 +492,7 @@ jpeg_load_resolution (GimpImage                     *image,
           break;
         }
 
-      gimp_image_set_resolution (image, xresolution, yresolution);
+      ligma_image_set_resolution (image, xresolution, yresolution);
 
       return TRUE;
     }
@@ -503,7 +503,7 @@ jpeg_load_resolution (GimpImage                     *image,
 /*
  * A number of JPEG files have comments written in a local character set
  * instead of UTF-8.  Some of these files may have been saved by older
- * versions of GIMP.  It is not possible to reliably detect the character
+ * versions of LIGMA.  It is not possible to reliably detect the character
  * set used, but it is better to keep all characters in the ASCII range
  * and replace the non-ASCII characters instead of discarding the whole
  * comment.  This is especially useful if the comment contains only a few
@@ -526,22 +526,22 @@ jpeg_load_sanitize_comment (gchar *comment)
     }
 }
 
-GimpImage *
+LigmaImage *
 load_thumbnail_image (GFile         *file,
                       gint          *width,
                       gint          *height,
-                      GimpImageType *type,
+                      LigmaImageType *type,
                       GError       **error)
 {
-  GimpImage * volatile          image = NULL;
+  LigmaImage * volatile          image = NULL;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   FILE                         *infile   = NULL;
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
                              g_file_get_parse_name (file));
 
-  image = gimp_image_metadata_load_thumbnail (file, error);
+  image = ligma_image_metadata_load_thumbnail (file, error);
   if (! image)
     return NULL;
 
@@ -556,7 +556,7 @@ load_thumbnail_image (GFile         *file,
                    g_file_get_parse_name (file), g_strerror (errno));
 
       if (image)
-        gimp_image_delete (image);
+        ligma_image_delete (image);
 
       return NULL;
     }
@@ -571,7 +571,7 @@ load_thumbnail_image (GFile         *file,
       jpeg_destroy_decompress (&cinfo);
 
       if (image)
-        gimp_image_delete (image);
+        ligma_image_delete (image);
 
       return NULL;
     }
@@ -595,17 +595,17 @@ load_thumbnail_image (GFile         *file,
   switch (cinfo.output_components)
     {
     case 1:
-      *type = GIMP_GRAY_IMAGE;
+      *type = LIGMA_GRAY_IMAGE;
       break;
 
     case 3:
-      *type = GIMP_RGB_IMAGE;
+      *type = LIGMA_RGB_IMAGE;
       break;
 
     case 4:
       if (cinfo.out_color_space == JCS_CMYK)
         {
-          *type = GIMP_RGB_IMAGE;
+          *type = LIGMA_RGB_IMAGE;
           break;
         }
       /*fallthrough*/
@@ -616,7 +616,7 @@ load_thumbnail_image (GFile         *file,
                  cinfo.output_components, cinfo.out_color_space,
                  cinfo.jpeg_color_space);
 
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       image = NULL;
       break;
     }

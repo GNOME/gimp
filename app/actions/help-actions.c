@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,47 +20,47 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "help-actions.h"
 #include "help-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry help_actions[] =
+static const LigmaActionEntry help_actions[] =
 {
   { "help-menu", NULL, NC_("help-action", "_Help") },
 
-  { "help-help", "gimp-prefs-help-system",
+  { "help-help", "ligma-prefs-help-system",
     NC_("help-action", "_Help"), "F1",
-    NC_("help-action", "Open the GIMP user manual"),
+    NC_("help-action", "Open the LIGMA user manual"),
     help_help_cmd_callback,
-    GIMP_HELP_HELP },
+    LIGMA_HELP_HELP },
 
-  { "help-context-help", "gimp-prefs-help-system",
+  { "help-context-help", "ligma-prefs-help-system",
     NC_("help-action", "_Context Help"), "<shift>F1",
     NC_("help-action", "Show the help for a specific user interface item"),
     help_context_help_cmd_callback,
-    GIMP_HELP_HELP_CONTEXT }
+    LIGMA_HELP_HELP_CONTEXT }
 };
 
 
 void
-help_actions_setup (GimpActionGroup *group)
+help_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "help-action",
+  ligma_action_group_add_actions (group, "help-action",
                                  help_actions,
                                  G_N_ELEMENTS (help_actions));
 }
 
 void
-help_actions_update (GimpActionGroup *group,
+help_actions_update (LigmaActionGroup *group,
                      gpointer         data)
 {
 }

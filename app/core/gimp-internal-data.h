@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimp-internal-data.h
+ * ligma-internal-data.h
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTERNAL_DATA__
-#define __GIMP_INTERNAL_DATA__
+#ifndef __LIGMA_INTERNAL_DATA__
+#define __LIGMA_INTERNAL_DATA__
 
 
-gboolean   gimp_internal_data_load  (Gimp    *gimp,
+gboolean   ligma_internal_data_load  (Ligma    *ligma,
                                      GError **error);
-gboolean   gimp_internal_data_save  (Gimp    *gimp,
-                                     GError **error);
-
-gboolean   gimp_internal_data_clear (Gimp    *gimp,
+gboolean   ligma_internal_data_save  (Ligma    *ligma,
                                      GError **error);
 
+gboolean   ligma_internal_data_clear (Ligma    *ligma,
+                                     GError **error);
 
-#endif /* __GIMP_INTERNAL_DATA__ */
+
+#endif /* __LIGMA_INTERNAL_DATA__ */

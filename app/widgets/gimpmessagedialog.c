@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmessagedialog.c
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmamessagedialog.c
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
+#include "ligmamessagebox.h"
+#include "ligmamessagedialog.h"
 
 
-G_DEFINE_TYPE (GimpMessageDialog, gimp_message_dialog, GIMP_TYPE_DIALOG)
+G_DEFINE_TYPE (LigmaMessageDialog, ligma_message_dialog, LIGMA_TYPE_DIALOG)
 
 
 static void
-gimp_message_dialog_class_init (GimpMessageDialogClass *klass)
+ligma_message_dialog_class_init (LigmaMessageDialogClass *klass)
 {
 }
 
 static void
-gimp_message_dialog_init (GimpMessageDialog *dialog)
+ligma_message_dialog_init (LigmaMessageDialog *dialog)
 {
 }
 
@@ -48,15 +48,15 @@ gimp_message_dialog_init (GimpMessageDialog *dialog)
 /*  public functions  */
 
 GtkWidget *
-gimp_message_dialog_new (const gchar    *title,
+ligma_message_dialog_new (const gchar    *title,
                          const gchar    *icon_name,
                          GtkWidget      *parent,
                          GtkDialogFlags  flags,
-                         GimpHelpFunc    help_func,
+                         LigmaHelpFunc    help_func,
                          const gchar    *help_id,
                          ...)
 {
-  GimpMessageDialog *dialog;
+  LigmaMessageDialog *dialog;
   va_list            args;
   gboolean           use_header_bar;
 
@@ -67,9 +67,9 @@ gimp_message_dialog_new (const gchar    *title,
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
-  dialog = g_object_new (GIMP_TYPE_MESSAGE_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_MESSAGE_DIALOG,
                          "title",          title,
-                         "role",           "gimp-message-dialog",
+                         "role",           "ligma-message-dialog",
                          "modal",          (flags & GTK_DIALOG_MODAL),
                          "help-func",      help_func,
                          "help-id",        help_id,
@@ -98,11 +98,11 @@ gimp_message_dialog_new (const gchar    *title,
 
   va_start (args, help_id);
 
-  gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
+  ligma_dialog_add_buttons_valist (LIGMA_DIALOG (dialog), args);
 
   va_end (args);
 
-  dialog->box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
+  dialog->box = g_object_new (LIGMA_TYPE_MESSAGE_BOX,
                               "icon-name", icon_name,
                               NULL);
 

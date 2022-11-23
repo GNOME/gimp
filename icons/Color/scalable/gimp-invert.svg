@@ -15,7 +15,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-invert.svg">
+   sodipodi:docname="ligma-invert.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -83,8 +83,8 @@
       <g
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
-         inkscape:label="gimp-invert"
-         id="gimp-invert"
+         inkscape:label="ligma-invert"
+         id="ligma-invert"
          transform="matrix(1.1428571,0,0,1.1428571,-185.14308,464.93365)">
         <path
            style="fill:#000000"

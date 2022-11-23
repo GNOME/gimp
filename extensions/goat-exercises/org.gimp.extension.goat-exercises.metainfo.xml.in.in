@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="addon">
-  <id>org.gimp.extension.goat-exercises</id>
-  <extends>org.gimp.GIMP</extends>
+  <id>org.ligma.extension.goat-exercises</id>
+  <extends>org.ligma.LIGMA</extends>
   <name>Goat Exercises</name>
   <summary>Official Demo Plug-ins</summary>
   <description>
@@ -15,16 +15,16 @@
     a GEGL operation on the active layer.
     </p>
   </description>
-  <url type="homepage">https://gimp.org</url>
+  <url type="homepage">https://ligma.org</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <releases>
    <release version="1.0.0" date="2020-10-08" />
   </releases>
   <requires>
-   <id version="2.99.0" compare="ge">org.gimp.GIMP</id>
+   <id version="2.99.0" compare="ge">org.ligma.LIGMA</id>
   </requires>
   <metadata>
-   <value key="GIMP::plug-in-path">@GOAT_EXERCISES@</value>
+   <value key="LIGMA::plug-in-path">@GOAT_EXERCISES@</value>
   </metadata>
 </component>

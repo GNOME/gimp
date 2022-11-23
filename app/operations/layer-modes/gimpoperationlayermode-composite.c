@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlayermode-composite.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
- *               2017 Øyvind Kolås <pippin@gimp.org>
+ * ligmaoperationlayermode-composite.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
+ *               2017 Øyvind Kolås <pippin@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationlayermode-composite.h"
+#include "ligmaoperationlayermode-composite.h"
 
 
 /*  non-subtractive compositing functions.  these functions expect comp[ALPHA]
@@ -39,7 +39,7 @@
 
 
 void
-gimp_operation_layer_mode_composite_union (const gfloat *in,
+ligma_operation_layer_mode_composite_union (const gfloat *in,
                                            const gfloat *layer,
                                            const gfloat *comp,
                                            const gfloat *mask,
@@ -92,7 +92,7 @@ gimp_operation_layer_mode_composite_union (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
+ligma_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
                                                       const gfloat *layer,
                                                       const gfloat *comp,
                                                       const gfloat *mask,
@@ -133,7 +133,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
+ligma_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
                                                    const gfloat *layer,
                                                    const gfloat *comp,
                                                    const gfloat *mask,
@@ -181,7 +181,7 @@ gimp_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_intersection (const gfloat *in,
+ligma_operation_layer_mode_composite_intersection (const gfloat *in,
                                                   const gfloat *layer,
                                                   const gfloat *comp,
                                                   const gfloat *mask,
@@ -228,7 +228,7 @@ gimp_operation_layer_mode_composite_intersection (const gfloat *in,
  */
 
 void
-gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
+ligma_operation_layer_mode_composite_union_sub (const gfloat *in,
                                                const gfloat *layer,
                                                const gfloat *comp,
                                                const gfloat *mask,
@@ -284,7 +284,7 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
+ligma_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
                                                           const gfloat *layer,
                                                           const gfloat *comp,
                                                           const gfloat *mask,
@@ -335,7 +335,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
+ligma_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
                                                        const gfloat *layer,
                                                        const gfloat *comp,
                                                        const gfloat *mask,
@@ -393,7 +393,7 @@ gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_intersection_sub (const gfloat *in,
+ligma_operation_layer_mode_composite_intersection_sub (const gfloat *in,
                                                       const gfloat *layer,
                                                       const gfloat *comp,
                                                       const gfloat *mask,

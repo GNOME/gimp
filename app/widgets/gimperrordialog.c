@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimperrordialog.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaerrordialog.c
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimperrordialog.h"
-#include "gimpmessagebox.h"
+#include "ligmaerrordialog.h"
+#include "ligmamessagebox.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-#define GIMP_ERROR_DIALOG_MAX_MESSAGES 3
+#define LIGMA_ERROR_DIALOG_MAX_MESSAGES 3
 
 
 typedef struct
@@ -42,34 +42,34 @@ typedef struct
   GtkWidget *box;
   gchar     *domain;
   gchar     *message;
-} GimpErrorDialogMessage;
+} LigmaErrorDialogMessage;
 
-static void   gimp_error_dialog_finalize        (GObject   *object);
-static void   gimp_error_dialog_response        (GtkDialog *dialog,
+static void   ligma_error_dialog_finalize        (GObject   *object);
+static void   ligma_error_dialog_response        (GtkDialog *dialog,
                                                  gint       response_id);
 
-static void   gimp_error_dialog_message_destroy (gpointer   data);
+static void   ligma_error_dialog_message_destroy (gpointer   data);
 
-G_DEFINE_TYPE (GimpErrorDialog, gimp_error_dialog, GIMP_TYPE_DIALOG)
+G_DEFINE_TYPE (LigmaErrorDialog, ligma_error_dialog, LIGMA_TYPE_DIALOG)
 
-#define parent_class gimp_error_dialog_parent_class
+#define parent_class ligma_error_dialog_parent_class
 
 
 static void
-gimp_error_dialog_class_init (GimpErrorDialogClass *klass)
+ligma_error_dialog_class_init (LigmaErrorDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->finalize = gimp_error_dialog_finalize;
+  object_class->finalize = ligma_error_dialog_finalize;
 
-  dialog_class->response = gimp_error_dialog_response;
+  dialog_class->response = ligma_error_dialog_response;
 }
 
 static void
-gimp_error_dialog_init (GimpErrorDialog *dialog)
+ligma_error_dialog_init (LigmaErrorDialog *dialog)
 {
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-message");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-message");
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 
@@ -91,27 +91,27 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
 }
 
 static void
-gimp_error_dialog_finalize (GObject *object)
+ligma_error_dialog_finalize (GObject *object)
 {
-  GimpErrorDialog *dialog = GIMP_ERROR_DIALOG (object);
+  LigmaErrorDialog *dialog = LIGMA_ERROR_DIALOG (object);
 
   g_list_free_full (dialog->messages,
-                    gimp_error_dialog_message_destroy);
+                    ligma_error_dialog_message_destroy);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_error_dialog_response (GtkDialog *dialog,
+ligma_error_dialog_response (GtkDialog *dialog,
                             gint       response_id)
 {
   gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static void
-gimp_error_dialog_message_destroy (gpointer data)
+ligma_error_dialog_message_destroy (gpointer data)
 {
-  GimpErrorDialogMessage *item = (GimpErrorDialogMessage *) data;
+  LigmaErrorDialogMessage *item = (LigmaErrorDialogMessage *) data;
 
   g_free (item->domain);
   g_free (item->message);
@@ -122,7 +122,7 @@ gimp_error_dialog_message_destroy (gpointer data)
 /*  public functions  */
 
 GtkWidget *
-gimp_error_dialog_new (const gchar *title)
+ligma_error_dialog_new (const gchar *title)
 {
   gboolean use_header_bar;
 
@@ -132,22 +132,22 @@ gimp_error_dialog_new (const gchar *title)
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
-  return g_object_new (GIMP_TYPE_ERROR_DIALOG,
+  return g_object_new (LIGMA_TYPE_ERROR_DIALOG,
                        "title",          title,
                        "use-header-bar", use_header_bar,
                         NULL);
 }
 
 void
-gimp_error_dialog_add (GimpErrorDialog *dialog,
+ligma_error_dialog_add (LigmaErrorDialog *dialog,
                        const gchar     *icon_name,
                        const gchar     *domain,
                        const gchar     *message)
 {
-  GimpErrorDialogMessage *item;
+  LigmaErrorDialogMessage *item;
   gboolean                overflow = FALSE;
 
-  g_return_if_fail (GIMP_IS_ERROR_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_ERROR_DIALOG (dialog));
   g_return_if_fail (domain != NULL);
   g_return_if_fail (message != NULL);
 
@@ -161,18 +161,18 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
           if (strcmp (item->domain, domain)   == 0 &&
               strcmp (item->message, message) == 0)
             {
-              if (gimp_message_box_repeat (GIMP_MESSAGE_BOX (item->box)))
+              if (ligma_message_box_repeat (LIGMA_MESSAGE_BOX (item->box)))
                 return;
             }
         }
     }
 
-  if (g_list_length (dialog->messages) >= GIMP_ERROR_DIALOG_MAX_MESSAGES)
+  if (g_list_length (dialog->messages) >= LIGMA_ERROR_DIALOG_MAX_MESSAGES)
     {
       g_printerr ("%s: %s\n\n", domain, message);
 
       overflow  = TRUE;
-      icon_name = GIMP_ICON_WILBER_EEK;
+      icon_name = LIGMA_ICON_WILBER_EEK;
       domain    = _("Too many error messages!");
       message   = _("Messages are redirected to stderr.");
 
@@ -184,25 +184,25 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
       dialog->overflow = TRUE;
     }
 
-  item = g_new0 (GimpErrorDialogMessage, 1);
-  item->box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
+  item = g_new0 (LigmaErrorDialogMessage, 1);
+  item->box = g_object_new (LIGMA_TYPE_MESSAGE_BOX,
                             "icon-name", icon_name,
                             NULL);
   item->domain  = g_strdup (domain);
   item->message = g_strdup (message);
 
   if (overflow)
-    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (item->box),
+    ligma_message_box_set_primary_text (LIGMA_MESSAGE_BOX (item->box),
                                        "%s", domain);
   else
-    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (item->box),
+    ligma_message_box_set_primary_text (LIGMA_MESSAGE_BOX (item->box),
                                        /* %s is a message domain,
-                                        * like "GIMP Message" or
+                                        * like "LIGMA Message" or
                                         * "PNG Message"
                                         */
                                        _("%s Message"), domain);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (item->box), "%s", message);
+  ligma_message_box_set_text (LIGMA_MESSAGE_BOX (item->box), "%s", message);
 
   gtk_box_pack_start (GTK_BOX (dialog->vbox), item->box, TRUE, TRUE, 0);
   gtk_widget_show (item->box);

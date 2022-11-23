@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "print.h"
 #include "print-settings.h"
@@ -39,7 +39,7 @@ static void       print_settings_add_to_key_file             (const gchar       
 
 static GKeyFile * print_settings_key_file_from_resource_file (void);
 
-static GKeyFile * print_settings_key_file_from_parasite      (GimpImage         *image);
+static GKeyFile * print_settings_key_file_from_parasite      (LigmaImage         *image);
 
 static gboolean   print_settings_load_from_key_file          (PrintData         *data,
                                                               GKeyFile          *key_file);
@@ -79,12 +79,12 @@ print_settings_save (PrintData *data)
   GKeyFile *key_file = print_settings_key_file_from_settings (data);
 
   /* image setup */
-  if (gimp_image_is_valid (data->image))
+  if (ligma_image_is_valid (data->image))
     {
       gdouble xres;
       gdouble yres;
 
-      gimp_image_get_resolution (data->image, &xres, &yres);
+      ligma_image_get_resolution (data->image, &xres, &yres);
 
       g_key_file_set_integer (key_file, "image-setup",
                               "unit", data->unit);
@@ -197,7 +197,7 @@ print_settings_key_file_from_resource_file (void)
  * NULL otherwise
  */
 static GKeyFile *
-print_settings_key_file_from_parasite (GimpImage *image)
+print_settings_key_file_from_parasite (LigmaImage *image)
 {
   GKeyFile *key_file;
 

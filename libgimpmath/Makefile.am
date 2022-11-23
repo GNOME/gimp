@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -12,71 +12,71 @@ libm = -lm
 endif
 
 if OS_WIN32
-gimpmath_def = gimpmath.def
-libgimpmath_export_symbols = -export-symbols $(srcdir)/gimpmath.def
+ligmamath_def = ligmamath.def
+libligmamath_export_symbols = -export-symbols $(srcdir)/ligmamath.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpmath-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimpmath.def $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligmamath-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligmamath.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpmath-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/gimpmath.def
+	-rm $(DESTDIR)$(libdir)/libligmamath-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/ligmamath.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpmath-$(GIMP_API_VERSION).lib
+noinst_DATA = ligmamath-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpmath-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligmamath-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpmath-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligmamath-$(LIGMA_API_VERSION).lib
 
-gimpmath-@GIMP_API_VERSION@.lib: gimpmath.def
-	lib -name:libgimpmath-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmath.def -out:$@
+ligmamath-@LIGMA_API_VERSION@.lib: ligmamath.def
+	lib -name:libligmamath-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligmamath.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpmathincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmath
+libligmamathincludedir = $(includedir)/ligma-$(LIGMA_API_VERSION)/libligmamath
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpMath\"	\
-	-DGIMP_MATH_COMPILATION		\
+	-DG_LOG_DOMAIN=\"LibLigmaMath\"	\
+	-DLIGMA_MATH_COMPILATION		\
 	-I$(top_srcdir)			\
 	$(GLIB_CFLAGS)			\
 	-I$(includedir)
 
 EXTRA_DIST = \
-	gimpmath.def
+	ligmamath.def
 
-lib_LTLIBRARIES = libgimpmath-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligmamath-@LIGMA_API_VERSION@.la
 
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimpmath/Makefile.gi
+include $(top_srcdir)/libligmamath/Makefile.gi
 
-libgimpmath_@GIMP_API_VERSION@_la_SOURCES = \
-	$(libgimpmath_introspectable)
+libligmamath_@LIGMA_API_VERSION@_la_SOURCES = \
+	$(libligmamath_introspectable)
 
-libgimpmathinclude_HEADERS = \
-	$(top_srcdir)/libgimpmath/gimpmath.h	\
-	$(libgimpmath_introspectable_headers)
+libligmamathinclude_HEADERS = \
+	$(top_srcdir)/libligmamath/ligmamath.h	\
+	$(libligmamath_introspectable_headers)
 
-libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligmamath_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimpmath_export_symbols)
+	$(libligmamath_export_symbols)
 
-EXTRA_libgimpmath_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmath_def)
+EXTRA_libligmamath_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(ligmamath_def)
 
-libgimpmath_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpbase)	\
+libligmamath_@LIGMA_API_VERSION@_la_LIBADD = \
+	$(libligmabase)	\
 	$(GLIB_LIBS)	\
 	$(libm)
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata-editor.c
@@ -22,16 +22,16 @@
 
 #include <gexiv2/gexiv2.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "metadata-misc.h"
 #include "metadata-xml.h"
 #include "metadata-tags.h"
 
-extern gboolean gimpmetadata;
+extern gboolean ligmametadata;
 extern gboolean force_write;
 
 gboolean xmptag;
@@ -64,9 +64,9 @@ xml_parser_start_element (GMarkupParseContext  *context,
                           gpointer              user_data,
                           GError              **error)
 {
-  if (strcmp (element_name, "gimp-metadata") == 0)
+  if (strcmp (element_name, "ligma-metadata") == 0)
     {
-      gimpmetadata = TRUE;
+      ligmametadata = TRUE;
     }
   else if (strcmp (element_name, "iptc-tag") == 0)
     {
@@ -849,9 +849,9 @@ xml_parser_end_element (GMarkupParseContext  *context,
 
   args = user_data;
 
-  if (strcmp (element_name, "gimp-metadata") == 0)
+  if (strcmp (element_name, "ligma-metadata") == 0)
     {
-      gimpmetadata = FALSE;
+      ligmametadata = FALSE;
     }
   else if (strcmp (element_name, "iptc-tag") == 0)
     {
@@ -958,7 +958,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
 }
 
 gboolean
-xml_parser_parse_file (GimpXmlParser  *parser,
+xml_parser_parse_file (LigmaXmlParser  *parser,
                        const gchar    *filename,
                        GError        **error)
 {
@@ -980,15 +980,15 @@ xml_parser_parse_file (GimpXmlParser  *parser,
   return success;
 }
 
-GimpXmlParser *
+LigmaXmlParser *
 xml_parser_new (const GMarkupParser *markup_parser,
                 gpointer             user_data)
 {
-  GimpXmlParser *parser;
+  LigmaXmlParser *parser;
 
   g_return_val_if_fail (markup_parser != NULL, NULL);
 
-  parser = g_slice_new (GimpXmlParser);
+  parser = g_slice_new (LigmaXmlParser);
 
   parser->context = g_markup_parse_context_new (markup_parser,
                     0, user_data, NULL);
@@ -997,12 +997,12 @@ xml_parser_new (const GMarkupParser *markup_parser,
 }
 
 void
-xml_parser_free (GimpXmlParser *parser)
+xml_parser_free (LigmaXmlParser *parser)
 {
   g_return_if_fail (parser != NULL);
 
   g_markup_parse_context_free (parser->context);
-  g_slice_free (GimpXmlParser, parser);
+  g_slice_free (LigmaXmlParser, parser);
 }
 
 gboolean
@@ -1070,7 +1070,7 @@ parse_encoding (const gchar  *text,
 }
 
 gboolean
-xml_parser_parse_io_channel (GimpXmlParser  *parser,
+xml_parser_parse_io_channel (LigmaXmlParser  *parser,
                              GIOChannel     *io,
                              GError        **error)
 {

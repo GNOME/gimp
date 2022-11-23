@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,45 +23,45 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-nodes.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-new.h"
-#include "core/gimppattern.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-new.h"
+#include "core/ligmapattern.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimpperspectiveclone.h"
-#include "gimpperspectivecloneoptions.h"
+#include "ligmaperspectiveclone.h"
+#include "ligmaperspectivecloneoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void         gimp_perspective_clone_paint      (GimpPaintCore     *paint_core,
+static void         ligma_perspective_clone_paint      (LigmaPaintCore     *paint_core,
                                                        GList             *drawables,
-                                                       GimpPaintOptions  *paint_options,
-                                                       GimpSymmetry      *sym,
-                                                       GimpPaintState     paint_state,
+                                                       LigmaPaintOptions  *paint_options,
+                                                       LigmaSymmetry      *sym,
+                                                       LigmaPaintState     paint_state,
                                                        guint32            time);
 
-static gboolean     gimp_perspective_clone_use_source (GimpSourceCore    *source_core,
-                                                       GimpSourceOptions *options);
-static GeglBuffer * gimp_perspective_clone_get_source (GimpSourceCore    *source_core,
-                                                       GimpDrawable      *drawable,
-                                                       GimpPaintOptions  *paint_options,
+static gboolean     ligma_perspective_clone_use_source (LigmaSourceCore    *source_core,
+                                                       LigmaSourceOptions *options);
+static GeglBuffer * ligma_perspective_clone_get_source (LigmaSourceCore    *source_core,
+                                                       LigmaDrawable      *drawable,
+                                                       LigmaPaintOptions  *paint_options,
                                                        gboolean           self_drawable,
-                                                       GimpPickable      *src_pickable,
+                                                       LigmaPickable      *src_pickable,
                                                        gint               src_offset_x,
                                                        gint               src_offset_y,
                                                        GeglBuffer        *paint_buffer,
@@ -73,42 +73,42 @@ static GeglBuffer * gimp_perspective_clone_get_source (GimpSourceCore    *source
                                                        gint              *paint_area_height,
                                                        GeglRectangle     *src_rect);
 
-static void         gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
-                                                       GimpMatrix3          *matrix);
+static void         ligma_perspective_clone_get_matrix (LigmaPerspectiveClone *clone,
+                                                       LigmaMatrix3          *matrix);
 
 
-G_DEFINE_TYPE (GimpPerspectiveClone, gimp_perspective_clone,
-               GIMP_TYPE_CLONE)
+G_DEFINE_TYPE (LigmaPerspectiveClone, ligma_perspective_clone,
+               LIGMA_TYPE_CLONE)
 
-#define parent_class gimp_perspective_clone_parent_class
+#define parent_class ligma_perspective_clone_parent_class
 
 
 void
-gimp_perspective_clone_register (Gimp                      *gimp,
-                                 GimpPaintRegisterCallback  callback)
+ligma_perspective_clone_register (Ligma                      *ligma,
+                                 LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PERSPECTIVE_CLONE,
-                GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS,
-                "gimp-perspective-clone",
+  (* callback) (ligma,
+                LIGMA_TYPE_PERSPECTIVE_CLONE,
+                LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS,
+                "ligma-perspective-clone",
                 _("Perspective Clone"),
-                "gimp-tool-perspective-clone");
+                "ligma-tool-perspective-clone");
 }
 
 static void
-gimp_perspective_clone_class_init (GimpPerspectiveCloneClass *klass)
+ligma_perspective_clone_class_init (LigmaPerspectiveCloneClass *klass)
 {
-  GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
-  GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
+  LigmaPaintCoreClass  *paint_core_class  = LIGMA_PAINT_CORE_CLASS (klass);
+  LigmaSourceCoreClass *source_core_class = LIGMA_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->paint       = gimp_perspective_clone_paint;
+  paint_core_class->paint       = ligma_perspective_clone_paint;
 
-  source_core_class->use_source = gimp_perspective_clone_use_source;
-  source_core_class->get_source = gimp_perspective_clone_get_source;
+  source_core_class->use_source = ligma_perspective_clone_use_source;
+  source_core_class->get_source = ligma_perspective_clone_get_source;
 }
 
 static void
-gimp_perspective_clone_init (GimpPerspectiveClone *clone)
+ligma_perspective_clone_init (LigmaPerspectiveClone *clone)
 {
   clone->src_x_fv  = 0.0;    /* source coords in front_view perspective */
   clone->src_y_fv  = 0.0;
@@ -116,34 +116,34 @@ gimp_perspective_clone_init (GimpPerspectiveClone *clone)
   clone->dest_x_fv = 0.0;    /* destination coords in front_view perspective */
   clone->dest_y_fv = 0.0;
 
-  gimp_matrix3_identity (&clone->transform);
-  gimp_matrix3_identity (&clone->transform_inv);
+  ligma_matrix3_identity (&clone->transform);
+  ligma_matrix3_identity (&clone->transform_inv);
 }
 
 static void
-gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
+ligma_perspective_clone_paint (LigmaPaintCore    *paint_core,
                               GList            *drawables,
-                              GimpPaintOptions *paint_options,
-                              GimpSymmetry     *sym,
-                              GimpPaintState    paint_state,
+                              LigmaPaintOptions *paint_options,
+                              LigmaSymmetry     *sym,
+                              LigmaPaintState    paint_state,
                               guint32           time)
 {
-  GimpSourceCore       *source_core   = GIMP_SOURCE_CORE (paint_core);
-  GimpPerspectiveClone *clone         = GIMP_PERSPECTIVE_CLONE (paint_core);
-  GimpContext          *context       = GIMP_CONTEXT (paint_options);
-  GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
-  GimpSourceOptions    *options       = GIMP_SOURCE_OPTIONS (paint_options);
-  const GimpCoords     *coords;
+  LigmaSourceCore       *source_core   = LIGMA_SOURCE_CORE (paint_core);
+  LigmaPerspectiveClone *clone         = LIGMA_PERSPECTIVE_CLONE (paint_core);
+  LigmaContext          *context       = LIGMA_CONTEXT (paint_options);
+  LigmaCloneOptions     *clone_options = LIGMA_CLONE_OPTIONS (paint_options);
+  LigmaSourceOptions    *options       = LIGMA_SOURCE_OPTIONS (paint_options);
+  const LigmaCoords     *coords;
   gboolean              sample_merged;
 
   /* The source is based on the original stroke */
-  coords        = gimp_symmetry_get_origin (sym);
+  coords        = ligma_symmetry_get_origin (sym);
 
   sample_merged = options->sample_merged && (g_list_length (drawables) > 1);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
+    case LIGMA_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
           gint src_x = floor (coords->x);
@@ -156,7 +156,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                         NULL);
 
           /* get source coordinates in front view perspective */
-          gimp_matrix3_transform_point (&clone->transform_inv,
+          ligma_matrix3_transform_point (&clone->transform_inv,
                                         src_x,
                                         src_y,
                                         &clone->src_x_fv,
@@ -166,11 +166,11 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         }
       else
         {
-          GimpImage  *del_image   = NULL;
+          LigmaImage  *del_image   = NULL;
           GeglBuffer *orig_buffer = NULL;
           GeglNode   *tile        = NULL;
 
-          if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
+          if (options->align_mode == LIGMA_SOURCE_ALIGN_NO)
             {
               g_object_get (options,
                             "src-x", &source_core->orig_src_x,
@@ -188,11 +188,11 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           switch (clone_options->clone_type)
             {
-            case GIMP_CLONE_IMAGE:
+            case LIGMA_CLONE_IMAGE:
               {
-                GimpPickable *src_pickable = NULL;
-                GimpImage    *src_image;
-                GimpImage    *dest_image;
+                LigmaPickable *src_pickable = NULL;
+                LigmaImage    *src_image;
+                LigmaImage    *dest_image;
 
                 /*  If the source image is different from the
                  *  destination, then we should copy straight from the
@@ -200,12 +200,12 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                  *  Otherwise, we need a call to get_orig_image to make sure
                  *  we get a copy of the unblemished (offset) image
                  */
-                src_image = gimp_pickable_get_image (options->src_drawables->data);
+                src_image = ligma_pickable_get_image (options->src_drawables->data);
 
                 if (sample_merged)
-                  src_pickable = GIMP_PICKABLE (src_image);
+                  src_pickable = LIGMA_PICKABLE (src_image);
 
-                dest_image = gimp_item_get_image (GIMP_ITEM (drawables->data));
+                dest_image = ligma_item_get_image (LIGMA_ITEM (drawables->data));
 
                 if ((sample_merged &&
                      (src_image != dest_image)) ||
@@ -215,38 +215,38 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                      (options->src_drawables != drawables->data)))
                   {
                     if (! sample_merged)
-                      src_pickable = GIMP_PICKABLE (options->src_drawables->data);
+                      src_pickable = LIGMA_PICKABLE (options->src_drawables->data);
 
-                    orig_buffer = gimp_pickable_get_buffer (src_pickable);
+                    orig_buffer = ligma_pickable_get_buffer (src_pickable);
                   }
                 else
                   {
                     if (sample_merged && paint_core->use_saved_proj)
-                      orig_buffer = gimp_paint_core_get_orig_proj (paint_core);
+                      orig_buffer = ligma_paint_core_get_orig_proj (paint_core);
                     else
-                      orig_buffer = gimp_paint_core_get_orig_image (paint_core, drawables->data);
+                      orig_buffer = ligma_paint_core_get_orig_image (paint_core, drawables->data);
                   }
 
                 if (! orig_buffer)
                   {
                     /* A composited image of the drawables */
-                    del_image = gimp_image_new_from_drawables (src_image->gimp, drawables,
+                    del_image = ligma_image_new_from_drawables (src_image->ligma, drawables,
                                                                FALSE, FALSE);
-                    gimp_container_remove (src_image->gimp->images, GIMP_OBJECT (del_image));
+                    ligma_container_remove (src_image->ligma->images, LIGMA_OBJECT (del_image));
 
-                    src_pickable = GIMP_PICKABLE (del_image);
-                    gimp_pickable_flush (src_pickable);
+                    src_pickable = LIGMA_PICKABLE (del_image);
+                    ligma_pickable_flush (src_pickable);
 
-                    orig_buffer = gimp_pickable_get_buffer (src_pickable);
+                    orig_buffer = ligma_pickable_get_buffer (src_pickable);
                   }
               }
               break;
 
-            case GIMP_CLONE_PATTERN:
+            case LIGMA_CLONE_PATTERN:
               {
-                GimpPattern *pattern = gimp_context_get_pattern (context);
+                LigmaPattern *pattern = ligma_context_get_pattern (context);
 
-                orig_buffer = gimp_pattern_create_buffer (pattern);
+                orig_buffer = ligma_pattern_create_buffer (pattern);
 
                 tile = gegl_node_new_child (clone->node,
                                             "operation", "gegl:tile",
@@ -266,7 +266,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
           clone->transform_node =
             gegl_node_new_child (clone->node,
                                  "operation", "gegl:transform",
-                                 "sampler",    GIMP_INTERPOLATION_LINEAR,
+                                 "sampler",    LIGMA_INTERPOLATION_LINEAR,
                                  NULL);
 
           clone->dest_node =
@@ -297,7 +297,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         }
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
+    case LIGMA_PAINT_STATE_MOTION:
       if (source_core->set_source)
         {
           gint src_x = floor (coords->x);
@@ -312,7 +312,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                         NULL);
 
           /* get source coordinates in front view perspective */
-          gimp_matrix3_transform_point (&clone->transform_inv,
+          ligma_matrix3_transform_point (&clone->transform_inv,
                                         src_x,
                                         src_y,
                                         &clone->src_x_fv,
@@ -337,20 +337,20 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                         "src-y", &src_y,
                         NULL);
 
-          n_strokes = gimp_symmetry_get_size (sym);
+          n_strokes = ligma_symmetry_get_size (sym);
           for (i = 0; i < n_strokes; i++)
             {
-              coords = gimp_symmetry_get_coords (sym, i);
+              coords = ligma_symmetry_get_coords (sym, i);
 
               dest_x = floor (coords->x);
               dest_y = floor (coords->y);
 
-              if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
+              if (options->align_mode == LIGMA_SOURCE_ALIGN_REGISTERED)
                 {
                   source_core->offset_x = 0;
                   source_core->offset_y = 0;
                 }
-              else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
+              else if (options->align_mode == LIGMA_SOURCE_ALIGN_FIXED)
                 {
                   source_core->offset_x = src_x - dest_x;
                   source_core->offset_y = src_y - dest_y;
@@ -361,7 +361,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                   source_core->offset_y = src_y - dest_y;
 
                   /* get destination coordinates in front view perspective */
-                  gimp_matrix3_transform_point (&clone->transform_inv,
+                  ligma_matrix3_transform_point (&clone->transform_inv,
                                                 dest_x,
                                                 dest_y,
                                                 &clone->dest_x_fv,
@@ -372,12 +372,12 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
             }
 
           for (GList *iter = drawables; iter; iter = iter->next)
-            gimp_source_core_motion (source_core, iter->data, paint_options,
+            ligma_source_core_motion (source_core, iter->data, paint_options,
                                      (g_list_length (drawables) > 1), sym);
         }
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
+    case LIGMA_PAINT_STATE_FINISH:
       g_clear_object (&clone->node);
       clone->crop           = NULL;
       clone->transform_node = NULL;
@@ -390,18 +390,18 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 }
 
 static gboolean
-gimp_perspective_clone_use_source (GimpSourceCore    *source_core,
-                                   GimpSourceOptions *options)
+ligma_perspective_clone_use_source (LigmaSourceCore    *source_core,
+                                   LigmaSourceOptions *options)
 {
   return TRUE;
 }
 
 static GeglBuffer *
-gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
-                                   GimpDrawable     *drawable,
-                                   GimpPaintOptions *paint_options,
+ligma_perspective_clone_get_source (LigmaSourceCore   *source_core,
+                                   LigmaDrawable     *drawable,
+                                   LigmaPaintOptions *paint_options,
                                    gboolean          self_drawable,
-                                   GimpPickable     *src_pickable,
+                                   LigmaPickable     *src_pickable,
                                    gint              src_offset_x,
                                    gint              src_offset_y,
                                    GeglBuffer       *paint_buffer,
@@ -413,22 +413,22 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    gint             *paint_area_height,
                                    GeglRectangle    *src_rect)
 {
-  GimpPerspectiveClone *clone         = GIMP_PERSPECTIVE_CLONE (source_core);
-  GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
+  LigmaPerspectiveClone *clone         = LIGMA_PERSPECTIVE_CLONE (source_core);
+  LigmaCloneOptions     *clone_options = LIGMA_CLONE_OPTIONS (paint_options);
   GeglBuffer           *src_buffer;
   GeglBuffer           *dest_buffer;
   const Babl           *src_format_alpha;
   gint                  x1d, y1d, x2d, y2d;
   gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;
   gint                  xmin, ymin, xmax, ymax;
-  GimpMatrix3           matrix;
-  GimpMatrix3           gegl_matrix;
+  LigmaMatrix3           matrix;
+  LigmaMatrix3           gegl_matrix;
 
   if (self_drawable)
-    src_pickable = GIMP_PICKABLE (drawable);
+    src_pickable = LIGMA_PICKABLE (drawable);
 
-  src_buffer       = gimp_pickable_get_buffer (src_pickable);
-  src_format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
+  src_buffer       = ligma_pickable_get_buffer (src_pickable);
+  src_format_alpha = ligma_pickable_get_format_with_alpha (src_pickable);
 
   /* Destination coordinates that will be painted */
   x1d = paint_buffer_x;
@@ -440,10 +440,10 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
    * the box to paint in destination area to its correspondent in
    * source area bearing in mind perspective
    */
-  gimp_perspective_clone_get_source_point (clone, x1d, y1d, &x1s, &y1s);
-  gimp_perspective_clone_get_source_point (clone, x1d, y2d, &x2s, &y2s);
-  gimp_perspective_clone_get_source_point (clone, x2d, y1d, &x3s, &y3s);
-  gimp_perspective_clone_get_source_point (clone, x2d, y2d, &x4s, &y4s);
+  ligma_perspective_clone_get_source_point (clone, x1d, y1d, &x1s, &y1s);
+  ligma_perspective_clone_get_source_point (clone, x1d, y2d, &x2s, &y2s);
+  ligma_perspective_clone_get_source_point (clone, x2d, y1d, &x3s, &y3s);
+  ligma_perspective_clone_get_source_point (clone, x2d, y2d, &x4s, &y4s);
 
   xmin = floor (MIN4 (x1s, x2s, x3s, x4s));
   ymin = floor (MIN4 (y1s, y2s, y3s, y4s));
@@ -452,8 +452,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 
   switch (clone_options->clone_type)
     {
-    case GIMP_CLONE_IMAGE:
-      if (! gimp_rectangle_intersect (xmin, ymin,
+    case LIGMA_CLONE_IMAGE:
+      if (! ligma_rectangle_intersect (xmin, ymin,
                                       xmax - xmin, ymax - ymin,
                                       gegl_buffer_get_x      (src_buffer),
                                       gegl_buffer_get_y      (src_buffer),
@@ -472,7 +472,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
         }
       break;
 
-    case GIMP_CLONE_PATTERN:
+    case LIGMA_CLONE_PATTERN:
       gegl_node_set (clone->crop,
                      "x",      (gdouble) xmin,
                      "y",      (gdouble) ymin,
@@ -485,13 +485,13 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d),
                                  src_format_alpha);
 
-  gimp_perspective_clone_get_matrix (clone, &matrix);
+  ligma_perspective_clone_get_matrix (clone, &matrix);
 
-  gimp_matrix3_identity (&gegl_matrix);
-  gimp_matrix3_mult (&matrix, &gegl_matrix);
-  gimp_matrix3_translate (&gegl_matrix, -x1d, -y1d);
+  ligma_matrix3_identity (&gegl_matrix);
+  ligma_matrix3_mult (&matrix, &gegl_matrix);
+  ligma_matrix3_translate (&gegl_matrix, -x1d, -y1d);
 
-  gimp_gegl_node_set_matrix (clone->transform_node, &gegl_matrix);
+  ligma_gegl_node_set_matrix (clone->transform_node, &gegl_matrix);
 
   gegl_node_set (clone->dest_node,
                  "buffer", dest_buffer,
@@ -510,16 +510,16 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 /*  public functions  */
 
 void
-gimp_perspective_clone_set_transform (GimpPerspectiveClone *clone,
-                                      GimpMatrix3          *transform)
+ligma_perspective_clone_set_transform (LigmaPerspectiveClone *clone,
+                                      LigmaMatrix3          *transform)
 {
-  g_return_if_fail (GIMP_IS_PERSPECTIVE_CLONE (clone));
+  g_return_if_fail (LIGMA_IS_PERSPECTIVE_CLONE (clone));
   g_return_if_fail (transform != NULL);
 
   clone->transform = *transform;
 
   clone->transform_inv = clone->transform;
-  gimp_matrix3_invert (&clone->transform_inv);
+  ligma_matrix3_invert (&clone->transform_inv);
 
 #if 0
   g_printerr ("%f\t%f\t%f\n%f\t%f\t%f\n%f\t%f\t%f\n\n",
@@ -536,7 +536,7 @@ gimp_perspective_clone_set_transform (GimpPerspectiveClone *clone,
 }
 
 void
-gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
+ligma_perspective_clone_get_source_point (LigmaPerspectiveClone *clone,
                                          gdouble               x,
                                          gdouble               y,
                                          gdouble              *newx,
@@ -544,11 +544,11 @@ gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
 {
   gdouble temp_x, temp_y;
 
-  g_return_if_fail (GIMP_IS_PERSPECTIVE_CLONE (clone));
+  g_return_if_fail (LIGMA_IS_PERSPECTIVE_CLONE (clone));
   g_return_if_fail (newx != NULL);
   g_return_if_fail (newy != NULL);
 
-  gimp_matrix3_transform_point (&clone->transform_inv,
+  ligma_matrix3_transform_point (&clone->transform_inv,
                                 x, y, &temp_x, &temp_y);
 
 #if 0
@@ -567,7 +567,7 @@ gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
   temp_y += clone->src_y_fv - clone->dest_y_fv;
 
   /* Convert the source pixel to perspective view */
-  gimp_matrix3_transform_point (&clone->transform,
+  ligma_matrix3_transform_point (&clone->transform,
                                 temp_x, temp_y, newx, newy);
 }
 
@@ -575,17 +575,17 @@ gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
 /*  private functions  */
 
 static void
-gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
-                                   GimpMatrix3          *matrix)
+ligma_perspective_clone_get_matrix (LigmaPerspectiveClone *clone,
+                                   LigmaMatrix3          *matrix)
 {
-  GimpMatrix3 temp;
+  LigmaMatrix3 temp;
 
-  gimp_matrix3_identity (&temp);
-  gimp_matrix3_translate (&temp,
+  ligma_matrix3_identity (&temp);
+  ligma_matrix3_translate (&temp,
                           clone->dest_x_fv - clone->src_x_fv,
                           clone->dest_y_fv - clone->src_y_fv);
 
   *matrix = clone->transform_inv;
-  gimp_matrix3_mult (&temp, matrix);
-  gimp_matrix3_mult (&clone->transform, matrix);
+  ligma_matrix3_mult (&temp, matrix);
+  ligma_matrix3_mult (&clone->transform, matrix);
 }

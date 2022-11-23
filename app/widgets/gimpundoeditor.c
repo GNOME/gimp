@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpundostack.h"
+#include "core/ligma.h"
+#include "core/ligmalist.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaundostack.h"
 
-#include "gimpcontainertreeview.h"
-#include "gimpcontainerview.h"
-#include "gimpdocked.h"
-#include "gimphelp-ids.h"
-#include "gimpmenufactory.h"
-#include "gimpundoeditor.h"
+#include "ligmacontainertreeview.h"
+#include "ligmacontainerview.h"
+#include "ligmadocked.h"
+#include "ligmahelp-ids.h"
+#include "ligmamenufactory.h"
+#include "ligmaundoeditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -50,88 +50,88 @@ enum
 };
 
 
-static void   gimp_undo_editor_docked_iface_init (GimpDockedInterface *iface);
+static void   ligma_undo_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void   gimp_undo_editor_constructed    (GObject           *object);
-static void   gimp_undo_editor_set_property   (GObject           *object,
+static void   ligma_undo_editor_constructed    (GObject           *object);
+static void   ligma_undo_editor_set_property   (GObject           *object,
                                                guint              property_id,
                                                const GValue      *value,
                                                GParamSpec        *pspec);
 
-static void   gimp_undo_editor_set_image      (GimpImageEditor   *editor,
-                                               GimpImage         *image);
+static void   ligma_undo_editor_set_image      (LigmaImageEditor   *editor,
+                                               LigmaImage         *image);
 
-static void   gimp_undo_editor_set_context    (GimpDocked        *docked,
-                                               GimpContext       *context);
+static void   ligma_undo_editor_set_context    (LigmaDocked        *docked,
+                                               LigmaContext       *context);
 
-static void   gimp_undo_editor_fill           (GimpUndoEditor    *editor);
-static void   gimp_undo_editor_clear          (GimpUndoEditor    *editor);
+static void   ligma_undo_editor_fill           (LigmaUndoEditor    *editor);
+static void   ligma_undo_editor_clear          (LigmaUndoEditor    *editor);
 
-static void   gimp_undo_editor_undo_event     (GimpImage         *image,
-                                               GimpUndoEvent      event,
-                                               GimpUndo          *undo,
-                                               GimpUndoEditor    *editor);
+static void   ligma_undo_editor_undo_event     (LigmaImage         *image,
+                                               LigmaUndoEvent      event,
+                                               LigmaUndo          *undo,
+                                               LigmaUndoEditor    *editor);
 
-static gboolean gimp_undo_editor_select_items (GimpContainerView *view,
+static gboolean ligma_undo_editor_select_items (LigmaContainerView *view,
                                                GList             *undos,
                                                GList             *paths,
-                                               GimpUndoEditor    *editor);
+                                               LigmaUndoEditor    *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpUndoEditor, gimp_undo_editor,
-                         GIMP_TYPE_IMAGE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_undo_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaUndoEditor, ligma_undo_editor,
+                         LIGMA_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_undo_editor_docked_iface_init))
 
-#define parent_class gimp_undo_editor_parent_class
+#define parent_class ligma_undo_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
+ligma_undo_editor_class_init (LigmaUndoEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
-  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  LigmaImageEditorClass *image_editor_class = LIGMA_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->constructed     = gimp_undo_editor_constructed;
-  object_class->set_property    = gimp_undo_editor_set_property;
+  object_class->constructed     = ligma_undo_editor_constructed;
+  object_class->set_property    = ligma_undo_editor_set_property;
 
-  image_editor_class->set_image = gimp_undo_editor_set_image;
+  image_editor_class->set_image = ligma_undo_editor_set_image;
 
   g_object_class_install_property (object_class, PROP_VIEW_SIZE,
                                    g_param_spec_enum ("view-size",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_VIEW_SIZE,
-                                                      GIMP_VIEW_SIZE_LARGE,
-                                                      GIMP_PARAM_WRITABLE |
+                                                      LIGMA_TYPE_VIEW_SIZE,
+                                                      LIGMA_VIEW_SIZE_LARGE,
+                                                      LIGMA_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_undo_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_undo_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_context = gimp_undo_editor_set_context;
+  iface->set_context = ligma_undo_editor_set_context;
 }
 
 static void
-gimp_undo_editor_init (GimpUndoEditor *undo_editor)
+ligma_undo_editor_init (LigmaUndoEditor *undo_editor)
 {
 }
 
 static void
-gimp_undo_editor_constructed (GObject *object)
+ligma_undo_editor_constructed (GObject *object)
 {
-  GimpUndoEditor *undo_editor = GIMP_UNDO_EDITOR (object);
+  LigmaUndoEditor *undo_editor = LIGMA_UNDO_EDITOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
+  undo_editor->view = ligma_container_tree_view_new (NULL, NULL,
                                                     undo_editor->view_size,
                                                     1);
 
@@ -139,29 +139,29 @@ gimp_undo_editor_constructed (GObject *object)
   gtk_widget_show (undo_editor->view);
 
   g_signal_connect (undo_editor->view, "select-items",
-                    G_CALLBACK (gimp_undo_editor_select_items),
+                    G_CALLBACK (ligma_undo_editor_select_items),
                     undo_editor);
 
   undo_editor->undo_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+    ligma_editor_add_action_button (LIGMA_EDITOR (undo_editor), "edit",
                                    "edit-undo", NULL);
 
   undo_editor->redo_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+    ligma_editor_add_action_button (LIGMA_EDITOR (undo_editor), "edit",
                                    "edit-redo", NULL);
 
   undo_editor->clear_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+    ligma_editor_add_action_button (LIGMA_EDITOR (undo_editor), "edit",
                                    "edit-undo-clear", NULL);
 }
 
 static void
-gimp_undo_editor_set_property (GObject      *object,
+ligma_undo_editor_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpUndoEditor *undo_editor = GIMP_UNDO_EDITOR (object);
+  LigmaUndoEditor *undo_editor = LIGMA_UNDO_EDITOR (object);
 
   switch (property_id)
     {
@@ -175,38 +175,38 @@ gimp_undo_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_undo_editor_set_image (GimpImageEditor *image_editor,
-                            GimpImage       *image)
+ligma_undo_editor_set_image (LigmaImageEditor *image_editor,
+                            LigmaImage       *image)
 {
-  GimpUndoEditor *editor = GIMP_UNDO_EDITOR (image_editor);
+  LigmaUndoEditor *editor = LIGMA_UNDO_EDITOR (image_editor);
 
   if (image_editor->image)
     {
-      gimp_undo_editor_clear (editor);
+      ligma_undo_editor_clear (editor);
 
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_undo_editor_undo_event,
+                                            ligma_undo_editor_undo_event,
                                             editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
+  LIGMA_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
   if (image_editor->image)
     {
-      if (gimp_image_undo_is_enabled (image_editor->image))
-        gimp_undo_editor_fill (editor);
+      if (ligma_image_undo_is_enabled (image_editor->image))
+        ligma_undo_editor_fill (editor);
 
       g_signal_connect (image_editor->image, "undo-event",
-                        G_CALLBACK (gimp_undo_editor_undo_event),
+                        G_CALLBACK (ligma_undo_editor_undo_event),
                         editor);
     }
 }
 
 static void
-gimp_undo_editor_set_context (GimpDocked  *docked,
-                              GimpContext *context)
+ligma_undo_editor_set_context (LigmaDocked  *docked,
+                              LigmaContext *context)
 {
-  GimpUndoEditor *editor = GIMP_UNDO_EDITOR (docked);
+  LigmaUndoEditor *editor = LIGMA_UNDO_EDITOR (docked);
 
   if (editor->context)
     g_object_unref (editor->context);
@@ -216,12 +216,12 @@ gimp_undo_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     g_object_ref (editor->context);
 
-  /* This calls gimp_undo_editor_set_image(), so make sure that it
+  /* This calls ligma_undo_editor_set_image(), so make sure that it
    * isn't called before editor->context has been initialized.
    */
   parent_docked_iface->set_context (docked, context);
 
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (editor->view),
+  ligma_container_view_set_context (LIGMA_CONTAINER_VIEW (editor->view),
                                    context);
 }
 
@@ -229,13 +229,13 @@ gimp_undo_editor_set_context (GimpDocked  *docked,
 /*  public functions  */
 
 GtkWidget *
-gimp_undo_editor_new (GimpCoreConfig  *config,
-                      GimpMenuFactory *menu_factory)
+ligma_undo_editor_new (LigmaCoreConfig  *config,
+                      LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_CORE_CONFIG (config), NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  return g_object_new (GIMP_TYPE_UNDO_EDITOR,
+  return g_object_new (LIGMA_TYPE_UNDO_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<Undo>",
                        "ui-path",         "/undo-popup",
@@ -247,17 +247,17 @@ gimp_undo_editor_new (GimpCoreConfig  *config,
 /*  private functions  */
 
 static void
-gimp_undo_editor_fill (GimpUndoEditor *editor)
+ligma_undo_editor_fill (LigmaUndoEditor *editor)
 {
-  GimpImage     *image      = GIMP_IMAGE_EDITOR (editor)->image;
-  GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
-  GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
-  GimpUndo      *top_undo_item;
+  LigmaImage     *image      = LIGMA_IMAGE_EDITOR (editor)->image;
+  LigmaUndoStack *undo_stack = ligma_image_get_undo_stack (image);
+  LigmaUndoStack *redo_stack = ligma_image_get_redo_stack (image);
+  LigmaUndo      *top_undo_item;
   GList         *list;
 
   /*  create a container as model for the undo history list  */
-  editor->container = gimp_list_new (GIMP_TYPE_UNDO, FALSE);
-  editor->base_item = g_object_new (GIMP_TYPE_UNDO,
+  editor->container = ligma_list_new (LIGMA_TYPE_UNDO, FALSE);
+  editor->base_item = g_object_new (LIGMA_TYPE_UNDO,
                                     "image", image,
                                     "name",  _("[ Base Image ]"),
                                     NULL);
@@ -265,68 +265,68 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   /*  the list prepends its items, so first add the redo items in
    *  reverse (ascending) order...
    */
-  for (list = GIMP_LIST (redo_stack->undos)->queue->tail;
+  for (list = LIGMA_LIST (redo_stack->undos)->queue->tail;
        list;
        list = g_list_previous (list))
     {
-      gimp_container_add (editor->container, GIMP_OBJECT (list->data));
+      ligma_container_add (editor->container, LIGMA_OBJECT (list->data));
     }
 
   /*  ...then add the undo items in descending order...  */
-  for (list = GIMP_LIST (undo_stack->undos)->queue->head;
+  for (list = LIGMA_LIST (undo_stack->undos)->queue->head;
        list;
        list = g_list_next (list))
     {
       /*  Don't add the topmost item if it is an open undo group,
        *  it will be added upon closing of the group.
        */
-      if (list->prev || ! GIMP_IS_UNDO_STACK (list->data) ||
-          gimp_image_get_undo_group_count (image) == 0)
+      if (list->prev || ! LIGMA_IS_UNDO_STACK (list->data) ||
+          ligma_image_get_undo_group_count (image) == 0)
         {
-          gimp_container_add (editor->container, GIMP_OBJECT (list->data));
+          ligma_container_add (editor->container, LIGMA_OBJECT (list->data));
         }
     }
 
   /*  ...finally, the first item is the special "base_item" which stands
    *  for the image with no more undos available to pop
    */
-  gimp_container_add (editor->container, GIMP_OBJECT (editor->base_item));
+  ligma_container_add (editor->container, LIGMA_OBJECT (editor->base_item));
 
   /*  display the container  */
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
+  ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (editor->view),
                                      editor->container);
 
-  top_undo_item = gimp_undo_stack_peek (undo_stack);
+  top_undo_item = ligma_undo_stack_peek (undo_stack);
 
   g_signal_handlers_block_by_func (editor->view,
-                                   gimp_undo_editor_select_items,
+                                   ligma_undo_editor_select_items,
                                    editor);
 
   /*  select the current state of the image  */
   if (top_undo_item)
     {
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                       GIMP_VIEWABLE (top_undo_item));
-      gimp_undo_create_preview (top_undo_item, editor->context, FALSE);
+      ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (editor->view),
+                                       LIGMA_VIEWABLE (top_undo_item));
+      ligma_undo_create_preview (top_undo_item, editor->context, FALSE);
     }
   else
     {
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                       GIMP_VIEWABLE (editor->base_item));
-      gimp_undo_create_preview (editor->base_item, editor->context, TRUE);
+      ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (editor->view),
+                                       LIGMA_VIEWABLE (editor->base_item));
+      ligma_undo_create_preview (editor->base_item, editor->context, TRUE);
     }
 
   g_signal_handlers_unblock_by_func (editor->view,
-                                     gimp_undo_editor_select_items,
+                                     ligma_undo_editor_select_items,
                                      editor);
 }
 
 static void
-gimp_undo_editor_clear (GimpUndoEditor *editor)
+ligma_undo_editor_clear (LigmaUndoEditor *editor)
 {
   if (editor->container)
     {
-      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
+      ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (editor->view),
                                          NULL);
       g_clear_object (&editor->container);
     }
@@ -335,86 +335,86 @@ gimp_undo_editor_clear (GimpUndoEditor *editor)
 }
 
 static void
-gimp_undo_editor_undo_event (GimpImage      *image,
-                             GimpUndoEvent   event,
-                             GimpUndo       *undo,
-                             GimpUndoEditor *editor)
+ligma_undo_editor_undo_event (LigmaImage      *image,
+                             LigmaUndoEvent   event,
+                             LigmaUndo       *undo,
+                             LigmaUndoEditor *editor)
 {
-  GimpUndoStack *undo_stack    = gimp_image_get_undo_stack (image);
-  GimpUndo      *top_undo_item = gimp_undo_stack_peek (undo_stack);
+  LigmaUndoStack *undo_stack    = ligma_image_get_undo_stack (image);
+  LigmaUndo      *top_undo_item = ligma_undo_stack_peek (undo_stack);
 
   switch (event)
     {
-    case GIMP_UNDO_EVENT_UNDO_PUSHED:
+    case LIGMA_UNDO_EVENT_UNDO_PUSHED:
       g_signal_handlers_block_by_func (editor->view,
-                                       gimp_undo_editor_select_items,
+                                       ligma_undo_editor_select_items,
                                        editor);
 
-      gimp_container_insert (editor->container, GIMP_OBJECT (undo), -1);
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                       GIMP_VIEWABLE (undo));
-      gimp_undo_create_preview (undo, editor->context, FALSE);
+      ligma_container_insert (editor->container, LIGMA_OBJECT (undo), -1);
+      ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (editor->view),
+                                       LIGMA_VIEWABLE (undo));
+      ligma_undo_create_preview (undo, editor->context, FALSE);
 
       g_signal_handlers_unblock_by_func (editor->view,
-                                         gimp_undo_editor_select_items,
+                                         ligma_undo_editor_select_items,
                                          editor);
       break;
 
-    case GIMP_UNDO_EVENT_UNDO_EXPIRED:
-    case GIMP_UNDO_EVENT_REDO_EXPIRED:
-      gimp_container_remove (editor->container, GIMP_OBJECT (undo));
+    case LIGMA_UNDO_EVENT_UNDO_EXPIRED:
+    case LIGMA_UNDO_EVENT_REDO_EXPIRED:
+      ligma_container_remove (editor->container, LIGMA_OBJECT (undo));
       break;
 
-    case GIMP_UNDO_EVENT_UNDO:
-    case GIMP_UNDO_EVENT_REDO:
+    case LIGMA_UNDO_EVENT_UNDO:
+    case LIGMA_UNDO_EVENT_REDO:
       g_signal_handlers_block_by_func (editor->view,
-                                       gimp_undo_editor_select_items,
+                                       ligma_undo_editor_select_items,
                                        editor);
 
       if (top_undo_item)
         {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                           GIMP_VIEWABLE (top_undo_item));
-          gimp_undo_create_preview (top_undo_item, editor->context, FALSE);
+          ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (editor->view),
+                                           LIGMA_VIEWABLE (top_undo_item));
+          ligma_undo_create_preview (top_undo_item, editor->context, FALSE);
         }
       else
         {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                           GIMP_VIEWABLE (editor->base_item));
-          gimp_undo_create_preview (editor->base_item, editor->context, TRUE);
+          ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (editor->view),
+                                           LIGMA_VIEWABLE (editor->base_item));
+          ligma_undo_create_preview (editor->base_item, editor->context, TRUE);
         }
 
       g_signal_handlers_unblock_by_func (editor->view,
-                                         gimp_undo_editor_select_items,
+                                         ligma_undo_editor_select_items,
                                          editor);
       break;
 
-    case GIMP_UNDO_EVENT_UNDO_FREE:
-      if (gimp_image_undo_is_enabled (image))
-        gimp_undo_editor_clear (editor);
+    case LIGMA_UNDO_EVENT_UNDO_FREE:
+      if (ligma_image_undo_is_enabled (image))
+        ligma_undo_editor_clear (editor);
       break;
 
-    case GIMP_UNDO_EVENT_UNDO_FREEZE:
-      gimp_undo_editor_clear (editor);
+    case LIGMA_UNDO_EVENT_UNDO_FREEZE:
+      ligma_undo_editor_clear (editor);
       break;
 
-    case GIMP_UNDO_EVENT_UNDO_THAW:
-      gimp_undo_editor_fill (editor);
+    case LIGMA_UNDO_EVENT_UNDO_THAW:
+      ligma_undo_editor_fill (editor);
       break;
     }
 }
 
 static gboolean
-gimp_undo_editor_select_items (GimpContainerView *view,
+ligma_undo_editor_select_items (LigmaContainerView *view,
                                GList             *undos,
                                GList             *paths,
-                               GimpUndoEditor    *editor)
+                               LigmaUndoEditor    *editor)
 {
-  GimpImage     *image      = GIMP_IMAGE_EDITOR (editor)->image;
-  GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
-  GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
-  GimpUndo      *top_undo_item;
-  GimpUndo      *undo;
+  LigmaImage     *image      = LIGMA_IMAGE_EDITOR (editor)->image;
+  LigmaUndoStack *undo_stack = ligma_image_get_undo_stack (image);
+  LigmaUndoStack *redo_stack = ligma_image_get_redo_stack (image);
+  LigmaUndo      *top_undo_item;
+  LigmaUndo      *undo;
 
   g_return_val_if_fail (g_list_length (undos) < 2, FALSE);
 
@@ -423,7 +423,7 @@ gimp_undo_editor_select_items (GimpContainerView *view,
 
   undo = undos->data;
 
-  top_undo_item = gimp_undo_stack_peek (undo_stack);
+  top_undo_item = ligma_undo_stack_peek (undo_stack);
 
   if (undo == editor->base_item)
     {
@@ -431,40 +431,40 @@ gimp_undo_editor_select_items (GimpContainerView *view,
        */
       while (top_undo_item != NULL)
         {
-          if (! gimp_image_undo (image))
+          if (! ligma_image_undo (image))
             break;
 
-          top_undo_item = gimp_undo_stack_peek (undo_stack);
+          top_undo_item = ligma_undo_stack_peek (undo_stack);
         }
     }
-  else if (gimp_container_have (undo_stack->undos, GIMP_OBJECT (undo)))
+  else if (ligma_container_have (undo_stack->undos, LIGMA_OBJECT (undo)))
     {
       /*  the selected item is on the undo stack, pop undos until it
        *  is on top of the undo stack
        */
       while (top_undo_item != undo)
         {
-          if(! gimp_image_undo (image))
+          if(! ligma_image_undo (image))
             break;
 
-          top_undo_item = gimp_undo_stack_peek (undo_stack);
+          top_undo_item = ligma_undo_stack_peek (undo_stack);
         }
     }
-  else if (gimp_container_have (redo_stack->undos, GIMP_OBJECT (undo)))
+  else if (ligma_container_have (redo_stack->undos, LIGMA_OBJECT (undo)))
     {
       /*  the selected item is on the redo stack, pop redos until it
        *  is on top of the undo stack
        */
       while (top_undo_item != undo)
         {
-          if (! gimp_image_redo (image))
+          if (! ligma_image_redo (image))
             break;
 
-          top_undo_item = gimp_undo_stack_peek (undo_stack);
+          top_undo_item = ligma_undo_stack_peek (undo_stack);
         }
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   return TRUE;
 }

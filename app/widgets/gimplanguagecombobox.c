@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplanguagecombobox.c
- * Copyright (C) 2009  Sven Neumann <sven@gimp.org>
+ * ligmalanguagecombobox.c
+ * Copyright (C) 2009  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* GimpLanguageComboBox is a combo-box widget to select the user
+/* LigmaLanguageComboBox is a combo-box widget to select the user
  * interface language.
  */
 
@@ -30,29 +30,29 @@
 
 #include "widgets-types.h"
 
-#include "gimplanguagecombobox.h"
-#include "gimptranslationstore.h"
+#include "ligmalanguagecombobox.h"
+#include "ligmatranslationstore.h"
 
 
-struct _GimpLanguageComboBox
+struct _LigmaLanguageComboBox
 {
   GtkComboBox parent_instance;
 };
 
 
-G_DEFINE_TYPE (GimpLanguageComboBox,
-               gimp_language_combo_box, GTK_TYPE_COMBO_BOX)
+G_DEFINE_TYPE (LigmaLanguageComboBox,
+               ligma_language_combo_box, GTK_TYPE_COMBO_BOX)
 
-#define parent_class gimp_language_combo_box_parent_class
+#define parent_class ligma_language_combo_box_parent_class
 
 
 static void
-gimp_language_combo_box_class_init (GimpLanguageComboBoxClass *klass)
+ligma_language_combo_box_class_init (LigmaLanguageComboBoxClass *klass)
 {
 }
 
 static void
-gimp_language_combo_box_init (GimpLanguageComboBox *combo)
+ligma_language_combo_box_init (LigmaLanguageComboBox *combo)
 {
   GtkCellRenderer *renderer;
 
@@ -60,12 +60,12 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
 
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer,
-                                  "text",  GIMP_LANGUAGE_STORE_LABEL,
+                                  "text",  LIGMA_LANGUAGE_STORE_LABEL,
                                   NULL);
 }
 
 /**
- * gimp_language_combo_box_new:
+ * ligma_language_combo_box_new:
  * @manual_l18n: get only the sublist of manual languages.
  * @empty_label: the label for empty language code.
  *
@@ -77,14 +77,14 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
  * Language" localized in itself (not in the GUI language).
  */
 GtkWidget *
-gimp_language_combo_box_new (gboolean     manual_l18n,
+ligma_language_combo_box_new (gboolean     manual_l18n,
                              const gchar *empty_label)
 {
   GtkWidget    *combo;
   GtkListStore *store;
 
-  store = gimp_translation_store_new (manual_l18n, empty_label);
-  combo = g_object_new (GIMP_TYPE_LANGUAGE_COMBO_BOX,
+  store = ligma_translation_store_new (manual_l18n, empty_label);
+  combo = g_object_new (LIGMA_TYPE_LANGUAGE_COMBO_BOX,
                         "model", store,
                         NULL);
 
@@ -94,31 +94,31 @@ gimp_language_combo_box_new (gboolean     manual_l18n,
 }
 
 gchar *
-gimp_language_combo_box_get_code (GimpLanguageComboBox *combo)
+ligma_language_combo_box_get_code (LigmaLanguageComboBox *combo)
 {
   GtkTreeIter  iter;
   gchar       *code;
 
-  g_return_val_if_fail (GIMP_IS_LANGUAGE_COMBO_BOX (combo), NULL);
+  g_return_val_if_fail (LIGMA_IS_LANGUAGE_COMBO_BOX (combo), NULL);
 
   if (! gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
     return NULL;
 
   gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)), &iter,
-                      GIMP_LANGUAGE_STORE_CODE, &code,
+                      LIGMA_LANGUAGE_STORE_CODE, &code,
                       -1);
 
   return code;
 }
 
 gboolean
-gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,
+ligma_language_combo_box_set_code (LigmaLanguageComboBox *combo,
                                   const gchar          *code)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
 
-  g_return_val_if_fail (GIMP_IS_LANGUAGE_COMBO_BOX (combo), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LANGUAGE_COMBO_BOX (combo), FALSE);
 
   if (! code || ! strlen (code))
     {
@@ -128,7 +128,7 @@ gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  if (gimp_language_store_lookup (GIMP_LANGUAGE_STORE (model), code, &iter))
+  if (ligma_language_store_lookup (LIGMA_LANGUAGE_STORE (model), code, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
       return TRUE;

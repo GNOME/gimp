@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpzoompreview.h
- * Copyright (C) 2005  David Odin <dindinx@gimp.org>
+ * ligmazoompreview.h
+ * Copyright (C) 2005  David Odin <dindinx@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ZOOM_PREVIEW_H__
-#define __GIMP_ZOOM_PREVIEW_H__
+#ifndef __LIGMA_ZOOM_PREVIEW_H__
+#define __LIGMA_ZOOM_PREVIEW_H__
 
 G_BEGIN_DECLS
 
@@ -32,57 +32,57 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_ZOOM_PREVIEW            (gimp_zoom_preview_get_type ())
-#define GIMP_ZOOM_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreview))
-#define GIMP_ZOOM_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewClass))
-#define GIMP_IS_ZOOM_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ZOOM_PREVIEW))
-#define GIMP_IS_ZOOM_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ZOOM_PREVIEW))
-#define GIMP_ZOOM_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewClass))
+#define LIGMA_TYPE_ZOOM_PREVIEW            (ligma_zoom_preview_get_type ())
+#define LIGMA_ZOOM_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ZOOM_PREVIEW, LigmaZoomPreview))
+#define LIGMA_ZOOM_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ZOOM_PREVIEW, LigmaZoomPreviewClass))
+#define LIGMA_IS_ZOOM_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ZOOM_PREVIEW))
+#define LIGMA_IS_ZOOM_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ZOOM_PREVIEW))
+#define LIGMA_ZOOM_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ZOOM_PREVIEW, LigmaZoomPreviewClass))
 
 
-typedef struct _GimpZoomPreviewPrivate GimpZoomPreviewPrivate;
-typedef struct _GimpZoomPreviewClass   GimpZoomPreviewClass;
+typedef struct _LigmaZoomPreviewPrivate LigmaZoomPreviewPrivate;
+typedef struct _LigmaZoomPreviewClass   LigmaZoomPreviewClass;
 
-struct _GimpZoomPreview
+struct _LigmaZoomPreview
 {
-  GimpScrolledPreview     parent_instance;
+  LigmaScrolledPreview     parent_instance;
 
-  GimpZoomPreviewPrivate *priv;
+  LigmaZoomPreviewPrivate *priv;
 };
 
-struct _GimpZoomPreviewClass
+struct _LigmaZoomPreviewClass
 {
-  GimpScrolledPreviewClass  parent_class;
+  LigmaScrolledPreviewClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType           gimp_zoom_preview_get_type       (void) G_GNUC_CONST;
+GType           ligma_zoom_preview_get_type       (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable);
-GtkWidget     * gimp_zoom_preview_new_with_model_from_drawable
-                                                 (GimpDrawable    *drawable,
-                                                  GimpZoomModel   *model);
+GtkWidget     * ligma_zoom_preview_new_from_drawable (LigmaDrawable *drawable);
+GtkWidget     * ligma_zoom_preview_new_with_model_from_drawable
+                                                 (LigmaDrawable    *drawable,
+                                                  LigmaZoomModel   *model);
 
-guchar        * gimp_zoom_preview_get_source     (GimpZoomPreview *preview,
+guchar        * ligma_zoom_preview_get_source     (LigmaZoomPreview *preview,
                                                   gint            *width,
                                                   gint            *height,
                                                   gint            *bpp);
 
-GimpDrawable  * gimp_zoom_preview_get_drawable   (GimpZoomPreview *preview);
-GimpZoomModel * gimp_zoom_preview_get_model      (GimpZoomPreview *preview);
-gdouble         gimp_zoom_preview_get_factor     (GimpZoomPreview *preview);
+LigmaDrawable  * ligma_zoom_preview_get_drawable   (LigmaZoomPreview *preview);
+LigmaZoomModel * ligma_zoom_preview_get_model      (LigmaZoomPreview *preview);
+gdouble         ligma_zoom_preview_get_factor     (LigmaZoomPreview *preview);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_ZOOM_PREVIEW_H__ */
+#endif /* __LIGMA_ZOOM_PREVIEW_H__ */

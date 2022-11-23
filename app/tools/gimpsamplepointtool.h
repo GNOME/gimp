@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,48 +15,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_TOOL_H__
-#define __GIMP_SAMPLE_POINT_TOOL_H__
+#ifndef __LIGMA_SAMPLE_POINT_TOOL_H__
+#define __LIGMA_SAMPLE_POINT_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_SAMPLE_POINT_TOOL            (gimp_sample_point_tool_get_type ())
-#define GIMP_SAMPLE_POINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAMPLE_POINT_TOOL, GimpSamplePointTool))
-#define GIMP_SAMPLE_POINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAMPLE_POINT_TOOL, GimpSamplePointToolClass))
-#define GIMP_IS_SAMPLE_POINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAMPLE_POINT_TOOL))
-#define GIMP_IS_SAMPLE_POINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAMPLE_POINT_TOOL))
-#define GIMP_SAMPLE_POINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT_TOOL, GimpSamplePointToolClass))
+#define LIGMA_TYPE_SAMPLE_POINT_TOOL            (ligma_sample_point_tool_get_type ())
+#define LIGMA_SAMPLE_POINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAMPLE_POINT_TOOL, LigmaSamplePointTool))
+#define LIGMA_SAMPLE_POINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAMPLE_POINT_TOOL, LigmaSamplePointToolClass))
+#define LIGMA_IS_SAMPLE_POINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAMPLE_POINT_TOOL))
+#define LIGMA_IS_SAMPLE_POINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAMPLE_POINT_TOOL))
+#define LIGMA_SAMPLE_POINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAMPLE_POINT_TOOL, LigmaSamplePointToolClass))
 
 
-typedef struct _GimpSamplePointTool      GimpSamplePointTool;
-typedef struct _GimpSamplePointToolClass GimpSamplePointToolClass;
+typedef struct _LigmaSamplePointTool      LigmaSamplePointTool;
+typedef struct _LigmaSamplePointToolClass LigmaSamplePointToolClass;
 
-struct _GimpSamplePointTool
+struct _LigmaSamplePointTool
 {
-  GimpDrawTool     parent_instance;
+  LigmaDrawTool     parent_instance;
 
-  GimpSamplePoint *sample_point;
+  LigmaSamplePoint *sample_point;
   gint             sample_point_old_x;
   gint             sample_point_old_y;
   gint             sample_point_x;
   gint             sample_point_y;
 };
 
-struct _GimpSamplePointToolClass
+struct _LigmaSamplePointToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 };
 
 
-GType   gimp_sample_point_tool_get_type   (void) G_GNUC_CONST;
+GType   ligma_sample_point_tool_get_type   (void) G_GNUC_CONST;
 
-void    gimp_sample_point_tool_start_new  (GimpTool        *parent_tool,
-                                           GimpDisplay     *display);
-void    gimp_sample_point_tool_start_edit (GimpTool        *parent_tool,
-                                           GimpDisplay     *display,
-                                           GimpSamplePoint *sample_point);
+void    ligma_sample_point_tool_start_new  (LigmaTool        *parent_tool,
+                                           LigmaDisplay     *display);
+void    ligma_sample_point_tool_start_edit (LigmaTool        *parent_tool,
+                                           LigmaDisplay     *display,
+                                           LigmaSamplePoint *sample_point);
 
 
-#endif  /*  __GIMP_SAMPLE_POINT_TOOL_H__  */
+#endif  /*  __LIGMA_SAMPLE_POINT_TOOL_H__  */

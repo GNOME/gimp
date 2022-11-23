@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 #include <windows.h>
 #endif
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "tinyscheme/scheme-private.h"
 
@@ -87,7 +87,7 @@ static GList *script_menu_list = NULL;
  * This should only be called once.
  */
 GTree *
-script_fu_find_scripts_into_tree ( GimpPlugIn *plug_in,
+script_fu_find_scripts_into_tree ( LigmaPlugIn *plug_in,
                                    GList      *paths)
 {
   /*  Clear any existing scripts  */
@@ -134,12 +134,12 @@ script_fu_get_menu_list (void)
  * owned by self PDB procedure (e.g. extension-script-fu.)
  */
 void
-script_fu_find_scripts (GimpPlugIn *plug_in,
+script_fu_find_scripts (LigmaPlugIn *plug_in,
                         GList      *path)
 {
   script_fu_find_scripts_into_tree (plug_in, path);
 
-  /*  Now that all scripts are read in and sorted, tell gimp about them  */
+  /*  Now that all scripts are read in and sorted, tell ligma about them  */
   g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_install_script,
                   plug_in);
@@ -176,7 +176,7 @@ script_fu_add_script (scheme  *sc,
   script = script_fu_script_new_from_metadata_args (sc, &a);
 
   /* Require drawable_arity defaults to SF_PROC_ORDINARY.
-   * script-fu-register specifies an ordinary GimpProcedure.
+   * script-fu-register specifies an ordinary LigmaProcedure.
    * We may go on to infer a different arity.
    */
   g_assert (script->drawable_arity == SF_NO_DRAWABLE);
@@ -195,7 +195,7 @@ script_fu_add_script (scheme  *sc,
    */
   script_fu_script_infer_drawable_arity (script);
 
-  script->proc_class = GIMP_TYPE_PROCEDURE;
+  script->proc_class = LIGMA_TYPE_PROCEDURE;
 
   script_fu_try_map_menu (script);
   script_fu_append_script_to_tree (script);
@@ -242,7 +242,7 @@ script_fu_add_script_filter (scheme  *sc,
   if (args_error != sc->NIL)
       return args_error;
 
-  script->proc_class = GIMP_TYPE_IMAGE_PROCEDURE;
+  script->proc_class = LIGMA_TYPE_IMAGE_PROCEDURE;
 
   script_fu_try_map_menu (script);
   script_fu_append_script_to_tree (script);
@@ -342,7 +342,7 @@ script_fu_load_directory (GFile *directory)
 static void
 script_fu_load_script (GFile *file)
 {
-  if (gimp_file_has_extension (file, ".scm"))
+  if (ligma_file_has_extension (file, ".scm"))
     {
       gchar  *path    = g_file_get_path (file);
       gchar  *escaped = script_fu_strescape (path);
@@ -355,7 +355,7 @@ script_fu_load_script (GFile *file)
       if (! script_fu_run_command (command, &error))
         {
           gchar *message = g_strdup_printf (_("Error while loading %s:"),
-                                            gimp_file_get_utf8_name (file));
+                                            ligma_file_get_utf8_name (file));
 
           g_message ("%s\n\n%s", message, error->message);
 
@@ -385,7 +385,7 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
                           GList    *scripts,
                           gpointer  data)
 {
-  GimpPlugIn *plug_in = data;
+  LigmaPlugIn *plug_in = data;
   GList      *list;
 
   for (list = scripts; list; list = g_list_next (list))
@@ -405,14 +405,14 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
 static void
 script_fu_install_menu (SFMenu *menu)
 {
-  GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-  GimpProcedure *procedure = NULL;
+  LigmaPlugIn    *plug_in   = ligma_get_plug_in ();
+  LigmaProcedure *procedure = NULL;
 
-  procedure = gimp_plug_in_get_temp_procedure (plug_in,
+  procedure = ligma_plug_in_get_temp_procedure (plug_in,
                                                menu->script->name);
 
   if (procedure)
-    gimp_procedure_add_menu_path (procedure, menu->menu_path);
+    ligma_procedure_add_menu_path (procedure, menu->menu_path);
 
   g_free (menu->menu_path);
   g_slice_free (SFMenu, menu);
@@ -426,7 +426,7 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
                          GList    *scripts,
                          gpointer  data)
 {
-  GimpPlugIn *plug_in = data;
+  LigmaPlugIn *plug_in = data;
   GList      *list;
 
   for (list = scripts; list; list = g_list_next (list))

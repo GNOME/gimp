@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpplugin_pdb.c
+ * ligmaplugin_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,58 +24,58 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
-#include "gimpplugin_pdb.h"
+#include "ligma.h"
+#include "ligmaplugin_pdb.h"
 
 /**
- * _gimp_plug_in_help_register:
+ * _ligma_plug_in_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_file: The root URI of the plug-in's help pages.
  *
  * Register a help path for a plug-in.
  *
  * This procedure registers user documentation for the calling plug-in
- * with the GIMP help system. The domain_uri parameter points to the
+ * with the LIGMA help system. The domain_uri parameter points to the
  * root directory where the plug-in help is installed. For each
- * supported language there should be a file called 'gimp-help.xml'
+ * supported language there should be a file called 'ligma-help.xml'
  * that maps the help IDs to the actual help files.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_plug_in_help_register (const gchar *domain_name,
+_ligma_plug_in_help_register (const gchar *domain_name,
                              GFile       *domain_file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, domain_name,
                                           G_TYPE_FILE, domain_file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plug-in-help-register",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-plug-in-help-register",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_plug_in_menu_branch_register:
+ * _ligma_plug_in_menu_branch_register:
  * @menu_path: The sub-menu's menu path.
  * @menu_name: The name of the sub-menu.
  *
  * Register a sub-menu.
  *
  * This procedure installs a sub-menu which does not belong to any
- * procedure. The menu-name should be the untranslated menu label. GIMP
+ * procedure. The menu-name should be the untranslated menu label. LIGMA
  * will look up the translation in the textdomain registered for the
  * plug-in.
  *
@@ -84,42 +84,42 @@ _gimp_plug_in_help_register (const gchar *domain_name,
  * Since: 2.4
  **/
 gboolean
-_gimp_plug_in_menu_branch_register (const gchar *menu_path,
+_ligma_plug_in_menu_branch_register (const gchar *menu_path,
                                     const gchar *menu_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, menu_path,
                                           G_TYPE_STRING, menu_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plug-in-menu-branch-register",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-plug-in-menu-branch-register",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_plug_in_set_pdb_error_handler:
+ * _ligma_plug_in_set_pdb_error_handler:
  * @handler: Who is responsible for handling procedure call errors.
  *
  * Sets an error handler for procedure calls.
  *
  * This procedure changes the way that errors in procedure calls are
- * handled. By default GIMP will raise an error dialog if a procedure
+ * handled. By default LIGMA will raise an error dialog if a procedure
  * call made by a plug-in fails. Using this procedure the plug-in can
  * change this behavior. If the error handler is set to
- * %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
- * calling gimp_get_pdb_error() and handling the error whenever one if
+ * %LIGMA_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
+ * calling ligma_get_pdb_error() and handling the error whenever one if
  * its procedure calls fails. It can do this by displaying the error
  * message or by forwarding it in its own return values.
  *
@@ -128,60 +128,60 @@ _gimp_plug_in_menu_branch_register (const gchar *menu_path,
  * Since: 2.6
  **/
 gboolean
-_gimp_plug_in_set_pdb_error_handler (GimpPDBErrorHandler handler)
+_ligma_plug_in_set_pdb_error_handler (LigmaPDBErrorHandler handler)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_PDB_ERROR_HANDLER, handler,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_PDB_ERROR_HANDLER, handler,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plug-in-set-pdb-error-handler",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-plug-in-set-pdb-error-handler",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_plug_in_get_pdb_error_handler:
+ * _ligma_plug_in_get_pdb_error_handler:
  *
  * Retrieves the active error handler for procedure calls.
  *
  * This procedure retrieves the currently active error handler for
  * procedure calls made by the calling plug-in. See
- * gimp_plugin_set_pdb_error_handler() for details.
+ * ligma_plugin_set_pdb_error_handler() for details.
  *
  * Returns: Who is responsible for handling procedure call errors.
  *
  * Since: 2.6
  **/
-GimpPDBErrorHandler
-_gimp_plug_in_get_pdb_error_handler (void)
+LigmaPDBErrorHandler
+_ligma_plug_in_get_pdb_error_handler (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpPDBErrorHandler handler = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaPDBErrorHandler handler = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plug-in-get-pdb-error-handler",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-plug-in-get-pdb-error-handler",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    handler = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    handler = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return handler;
 }

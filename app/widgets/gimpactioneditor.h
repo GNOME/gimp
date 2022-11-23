@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactioneditor.h
- * Copyright (C) 2008  Michael Natterer <mitch@gimp.org>
+ * ligmaactioneditor.h
+ * Copyright (C) 2008  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_EDITOR_H__
-#define __GIMP_ACTION_EDITOR_H__
+#ifndef __LIGMA_ACTION_EDITOR_H__
+#define __LIGMA_ACTION_EDITOR_H__
 
 
-#define GIMP_TYPE_ACTION_EDITOR            (gimp_action_editor_get_type ())
-#define GIMP_ACTION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_EDITOR, GimpActionEditor))
-#define GIMP_ACTION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACTION_EDITOR, GimpActionEditorClass))
-#define GIMP_IS_ACTION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION_EDITOR))
-#define GIMP_IS_ACTION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ACTION_EDITOR))
-#define GIMP_ACTION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ACTION_EDITOR, GimpActionEditorClass))
+#define LIGMA_TYPE_ACTION_EDITOR            (ligma_action_editor_get_type ())
+#define LIGMA_ACTION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ACTION_EDITOR, LigmaActionEditor))
+#define LIGMA_ACTION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ACTION_EDITOR, LigmaActionEditorClass))
+#define LIGMA_IS_ACTION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ACTION_EDITOR))
+#define LIGMA_IS_ACTION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ACTION_EDITOR))
+#define LIGMA_ACTION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ACTION_EDITOR, LigmaActionEditorClass))
 
 
-typedef struct _GimpActionEditorClass GimpActionEditorClass;
+typedef struct _LigmaActionEditorClass LigmaActionEditorClass;
 
-struct _GimpActionEditor
+struct _LigmaActionEditor
 {
   GtkBox     parent_instance;
 
   GtkWidget *view;
 };
 
-struct _GimpActionEditorClass
+struct _LigmaActionEditorClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_action_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_action_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_action_editor_new      (GimpUIManager *manager,
+GtkWidget * ligma_action_editor_new      (LigmaUIManager *manager,
                                          const gchar   *select_action,
                                          gboolean       show_shortcuts);
 
 
-#endif  /*  __GIMP_ACTION_EDITOR_H__  */
+#endif  /*  __LIGMA_ACTION_EDITOR_H__  */

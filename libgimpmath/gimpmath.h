@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpmath.h
+ * ligmamath.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,8 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MATH_H__
-#define __GIMP_MATH_H__
+#ifndef __LIGMA_MATH_H__
+#define __LIGMA_MATH_H__
 
 
 #include <math.h>
@@ -32,25 +32,25 @@
 #include <float.h>
 #endif
 
-#define __GIMP_MATH_H_INSIDE__
+#define __LIGMA_MATH_H_INSIDE__
 
-#include <libgimpmath/gimpmathtypes.h>
+#include <libligmamath/ligmamathtypes.h>
 
-#include <libgimpmath/gimpmatrix.h>
-#include <libgimpmath/gimpvector.h>
+#include <libligmamath/ligmamatrix.h>
+#include <libligmamath/ligmavector.h>
 
-#undef __GIMP_MATH_H_INSIDE__
+#undef __LIGMA_MATH_H_INSIDE__
 
 
 G_BEGIN_DECLS
 
 
 /**
- * SECTION: gimpmath
- * @title: GimpMath
+ * SECTION: ligmamath
+ * @title: LigmaMath
  * @short_description: Mathematical definitions and macros.
  *
- * Mathematical definitions and macros for use both by the GIMP
+ * Mathematical definitions and macros for use both by the LIGMA
  * application and plug-ins. These macros should be used rather than
  * the ones from &lt;math.h&gt; for enhanced portability.
  **/
@@ -131,22 +131,22 @@ G_BEGIN_DECLS
 #define SAFE_CLAMP(x, low, high)  ((x) > (low) ? (x) < (high) ? (x) : (high) : (low))
 
 /**
- * gimp_deg_to_rad:
+ * ligma_deg_to_rad:
  * @angle: the angle to be converted.
  *
  * This macro converts its argument @angle from degree to radian.
  **/
-#define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
+#define ligma_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
 
 /**
- * gimp_rad_to_deg:
+ * ligma_rad_to_deg:
  * @angle: the angle to be converted.
  *
  * This macro converts its argument @angle from radian to degree.
  **/
-#define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
+#define ligma_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 
 
 G_END_DECLS
 
-#endif /* __GIMP_MATH_H__ */
+#endif /* __LIGMA_MATH_H__ */

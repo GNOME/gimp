@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,20 @@
 #define __VECTOR_TOOLPATH_COMMANDS_H__
 
 
-void   vector_toolpath_delete_anchor_cmd_callback  (GimpAction *action,
+void   vector_toolpath_delete_anchor_cmd_callback  (LigmaAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
-void   vector_toolpath_shift_start_cmd_callback    (GimpAction *action,
+void   vector_toolpath_shift_start_cmd_callback    (LigmaAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
 
-void   vector_toolpath_insert_anchor_cmd_callback  (GimpAction *action,
+void   vector_toolpath_insert_anchor_cmd_callback  (LigmaAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
-void   vector_toolpath_delete_segment_cmd_callback (GimpAction *action,
+void   vector_toolpath_delete_segment_cmd_callback (LigmaAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
-void   vector_toolpath_reverse_stroke_cmd_callback (GimpAction *action,
+void   vector_toolpath_reverse_stroke_cmd_callback (LigmaAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
 

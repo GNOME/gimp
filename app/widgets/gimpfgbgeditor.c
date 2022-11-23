@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfgbgeditor.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmafgbgeditor.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,25 +25,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimpmarshal.h"
-#include "core/gimppalette.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-colormap.h"
+#include "core/ligmamarshal.h"
+#include "core/ligmapalette.h"
 
-#include "gimpdnd.h"
-#include "gimpfgbgeditor.h"
-#include "gimpwidgets-utils.h"
+#include "ligmadnd.h"
+#include "ligmafgbgeditor.h"
+#include "ligmawidgets-utils.h"
 
 #define CHANNEL_EPSILON 1e-3
 
@@ -65,62 +65,62 @@ enum
 };
 
 
-static void     gimp_fg_bg_editor_dispose           (GObject          *object);
-static void     gimp_fg_bg_editor_set_property      (GObject          *object,
+static void     ligma_fg_bg_editor_dispose           (GObject          *object);
+static void     ligma_fg_bg_editor_set_property      (GObject          *object,
                                                      guint             property_id,
                                                      const GValue     *value,
                                                      GParamSpec       *pspec);
-static void     gimp_fg_bg_editor_get_property      (GObject          *object,
+static void     ligma_fg_bg_editor_get_property      (GObject          *object,
                                                      guint             property_id,
                                                      GValue           *value,
                                                      GParamSpec       *pspec);
 
 static GtkSizeRequestMode
-                gimp_fg_bg_editor_get_request_mode  (GtkWidget        *widget);
+                ligma_fg_bg_editor_get_request_mode  (GtkWidget        *widget);
 static void
-   gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget        *widget,
+   ligma_fg_bg_editor_get_preferred_width_for_height (GtkWidget        *widget,
                                                      gint              height,
                                                      gint             *minimum_width,
                                                      gint             *natural_width);
 
-static void     gimp_fg_bg_editor_size_allocate     (GtkWidget        *editor,
+static void     ligma_fg_bg_editor_size_allocate     (GtkWidget        *editor,
                                                      GtkAllocation    *allocation);
-static void     gimp_fg_bg_editor_style_updated     (GtkWidget        *widget);
-static gboolean gimp_fg_bg_editor_draw              (GtkWidget        *widget,
+static void     ligma_fg_bg_editor_style_updated     (GtkWidget        *widget);
+static gboolean ligma_fg_bg_editor_draw              (GtkWidget        *widget,
                                                      cairo_t          *cr);
-static gboolean gimp_fg_bg_editor_button_press      (GtkWidget        *widget,
+static gboolean ligma_fg_bg_editor_button_press      (GtkWidget        *widget,
                                                      GdkEventButton   *bevent);
-static gboolean gimp_fg_bg_editor_button_release    (GtkWidget        *widget,
+static gboolean ligma_fg_bg_editor_button_release    (GtkWidget        *widget,
                                                      GdkEventButton   *bevent);
-static gboolean gimp_fg_bg_editor_drag_motion       (GtkWidget        *widget,
+static gboolean ligma_fg_bg_editor_drag_motion       (GtkWidget        *widget,
                                                      GdkDragContext   *context,
                                                      gint              x,
                                                      gint              y,
                                                      guint             time);
-static gboolean gimp_fg_bg_editor_query_tooltip     (GtkWidget        *widget,
+static gboolean ligma_fg_bg_editor_query_tooltip     (GtkWidget        *widget,
                                                      gint              x,
                                                      gint              y,
                                                      gboolean          keyboard_mode,
                                                      GtkTooltip       *tooltip);
 
-static void     gimp_fg_bg_editor_drag_color        (GtkWidget        *widget,
-                                                     GimpRGB          *color,
+static void     ligma_fg_bg_editor_drag_color        (GtkWidget        *widget,
+                                                     LigmaRGB          *color,
                                                      gpointer          data);
-static void     gimp_fg_bg_editor_drop_color        (GtkWidget        *widget,
+static void     ligma_fg_bg_editor_drop_color        (GtkWidget        *widget,
                                                      gint              x,
                                                      gint              y,
-                                                     const GimpRGB    *color,
+                                                     const LigmaRGB    *color,
                                                      gpointer          data);
 
-static void     gimp_fg_bg_editor_create_transform  (GimpFgBgEditor   *editor);
-static void     gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor   *editor);
+static void     ligma_fg_bg_editor_create_transform  (LigmaFgBgEditor   *editor);
+static void     ligma_fg_bg_editor_destroy_transform (LigmaFgBgEditor   *editor);
 
-static void     gimp_fg_bg_editor_image_changed     (GimpFgBgEditor   *editor,
-                                                     GimpImage        *image);
+static void     ligma_fg_bg_editor_image_changed     (LigmaFgBgEditor   *editor,
+                                                     LigmaImage        *image);
 
-static void     gimp_fg_bg_editor_draw_color_frame  (GimpFgBgEditor   *editor,
+static void     ligma_fg_bg_editor_draw_color_frame  (LigmaFgBgEditor   *editor,
                                                      cairo_t          *cr,
-                                                     const GimpRGB    *color,
+                                                     const LigmaRGB    *color,
                                                      gint              x,
                                                      gint              y,
                                                      gint              width,
@@ -128,15 +128,15 @@ static void     gimp_fg_bg_editor_draw_color_frame  (GimpFgBgEditor   *editor,
                                                      gint              corner_dx,
                                                      gint              corner_dy);
 
-G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE (LigmaFgBgEditor, ligma_fg_bg_editor, GTK_TYPE_EVENT_BOX)
 
-#define parent_class gimp_fg_bg_editor_parent_class
+#define parent_class ligma_fg_bg_editor_parent_class
 
 static guint  editor_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
+ligma_fg_bg_editor_class_init (LigmaFgBgEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -145,25 +145,25 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
     g_signal_new ("color-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFgBgEditorClass, color_clicked),
+                  G_STRUCT_OFFSET (LigmaFgBgEditorClass, color_clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_ACTIVE_COLOR);
+                  LIGMA_TYPE_ACTIVE_COLOR);
 
   editor_signals[COLOR_DROPPED] =
     g_signal_new ("color-dropped",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFgBgEditorClass, color_dropped),
+                  G_STRUCT_OFFSET (LigmaFgBgEditorClass, color_dropped),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_ACTIVE_COLOR);
+                  LIGMA_TYPE_ACTIVE_COLOR);
 
   editor_signals[COLORS_SWAPPED] =
     g_signal_new ("colors-swapped",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFgBgEditorClass, colors_swapped),
+                  G_STRUCT_OFFSET (LigmaFgBgEditorClass, colors_swapped),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -171,7 +171,7 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
     g_signal_new ("colors-default",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFgBgEditorClass, colors_default),
+                  G_STRUCT_OFFSET (LigmaFgBgEditorClass, colors_default),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -179,47 +179,47 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
     g_signal_new ("tooltip",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFgBgEditorClass, tooltip),
+                  G_STRUCT_OFFSET (LigmaFgBgEditorClass, tooltip),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_OBJECT,
+                  ligma_marshal_VOID__INT_OBJECT,
                   G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   GTK_TYPE_TOOLTIP);
 
-  object_class->dispose              = gimp_fg_bg_editor_dispose;
-  object_class->set_property         = gimp_fg_bg_editor_set_property;
-  object_class->get_property         = gimp_fg_bg_editor_get_property;
+  object_class->dispose              = ligma_fg_bg_editor_dispose;
+  object_class->set_property         = ligma_fg_bg_editor_set_property;
+  object_class->get_property         = ligma_fg_bg_editor_get_property;
 
-  widget_class->get_request_mode               = gimp_fg_bg_editor_get_request_mode;
-  widget_class->get_preferred_width_for_height = gimp_fg_bg_editor_get_preferred_width_for_height;
-  widget_class->size_allocate                  = gimp_fg_bg_editor_size_allocate;
-  widget_class->style_updated                  = gimp_fg_bg_editor_style_updated;
-  widget_class->draw                           = gimp_fg_bg_editor_draw;
-  widget_class->button_press_event             = gimp_fg_bg_editor_button_press;
-  widget_class->button_release_event           = gimp_fg_bg_editor_button_release;
-  widget_class->drag_motion                    = gimp_fg_bg_editor_drag_motion;
-  widget_class->query_tooltip                  = gimp_fg_bg_editor_query_tooltip;
+  widget_class->get_request_mode               = ligma_fg_bg_editor_get_request_mode;
+  widget_class->get_preferred_width_for_height = ligma_fg_bg_editor_get_preferred_width_for_height;
+  widget_class->size_allocate                  = ligma_fg_bg_editor_size_allocate;
+  widget_class->style_updated                  = ligma_fg_bg_editor_style_updated;
+  widget_class->draw                           = ligma_fg_bg_editor_draw;
+  widget_class->button_press_event             = ligma_fg_bg_editor_button_press;
+  widget_class->button_release_event           = ligma_fg_bg_editor_button_release;
+  widget_class->drag_motion                    = ligma_fg_bg_editor_drag_motion;
+  widget_class->query_tooltip                  = ligma_fg_bg_editor_query_tooltip;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ACTIVE_COLOR,
                                    g_param_spec_enum ("active-color",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_ACTIVE_COLOR,
-                                                      GIMP_ACTIVE_COLOR_FOREGROUND,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_ACTIVE_COLOR,
+                                                      LIGMA_ACTIVE_COLOR_FOREGROUND,
+                                                      LIGMA_PARAM_READWRITE));
 
-  gtk_widget_class_set_css_name (widget_class, "GimpFgBgEditor");
+  gtk_widget_class_set_css_name (widget_class, "LigmaFgBgEditor");
 }
 
 static void
-gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
+ligma_fg_bg_editor_init (LigmaFgBgEditor *editor)
 {
-  editor->active_color = GIMP_ACTIVE_COLOR_FOREGROUND;
+  editor->active_color = LIGMA_ACTIVE_COLOR_FOREGROUND;
 
   gtk_widget_set_can_focus (GTK_WIDGET (editor), FALSE);
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (editor), FALSE);
@@ -228,25 +228,25 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
                          GDK_BUTTON_PRESS_MASK |
                          GDK_BUTTON_RELEASE_MASK);
 
-  gimp_dnd_color_source_add (GTK_WIDGET (editor),
-                             gimp_fg_bg_editor_drag_color, NULL);
-  gimp_dnd_color_dest_add (GTK_WIDGET (editor),
-                           gimp_fg_bg_editor_drop_color, NULL);
+  ligma_dnd_color_source_add (GTK_WIDGET (editor),
+                             ligma_fg_bg_editor_drag_color, NULL);
+  ligma_dnd_color_dest_add (GTK_WIDGET (editor),
+                           ligma_fg_bg_editor_drop_color, NULL);
 
-  gimp_widget_track_monitor (GTK_WIDGET (editor),
-                             G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
+  ligma_widget_track_monitor (GTK_WIDGET (editor),
+                             G_CALLBACK (ligma_fg_bg_editor_destroy_transform),
                              NULL, NULL);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), 24, 24);
 }
 
 static void
-gimp_fg_bg_editor_dispose (GObject *object)
+ligma_fg_bg_editor_dispose (GObject *object)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (object);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (object);
 
   if (editor->context)
-    gimp_fg_bg_editor_set_context (editor, NULL);
+    ligma_fg_bg_editor_set_context (editor, NULL);
 
   g_clear_object (&editor->default_icon);
   g_clear_object (&editor->swap_icon);
@@ -255,20 +255,20 @@ gimp_fg_bg_editor_dispose (GObject *object)
 }
 
 static void
-gimp_fg_bg_editor_set_property (GObject      *object,
+ligma_fg_bg_editor_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (object);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (object);
 
   switch (property_id)
     {
     case PROP_CONTEXT:
-      gimp_fg_bg_editor_set_context (editor, g_value_get_object (value));
+      ligma_fg_bg_editor_set_context (editor, g_value_get_object (value));
       break;
     case PROP_ACTIVE_COLOR:
-      gimp_fg_bg_editor_set_active (editor, g_value_get_enum (value));
+      ligma_fg_bg_editor_set_active (editor, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -277,12 +277,12 @@ gimp_fg_bg_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_fg_bg_editor_get_property (GObject    *object,
+ligma_fg_bg_editor_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (object);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (object);
 
   switch (property_id)
     {
@@ -299,13 +299,13 @@ gimp_fg_bg_editor_get_property (GObject    *object,
 }
 
 static GtkSizeRequestMode
-gimp_fg_bg_editor_get_request_mode (GtkWidget *widget)
+ligma_fg_bg_editor_get_request_mode (GtkWidget *widget)
 {
   return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
 }
 
 static void
-gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
+ligma_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
                                                   gint       height,
                                                   gint      *minimum_width,
                                                   gint      *natural_width)
@@ -315,18 +315,18 @@ gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
 }
 
 static void
-gimp_fg_bg_editor_size_allocate (GtkWidget      *widget,
+ligma_fg_bg_editor_size_allocate (GtkWidget      *widget,
                                  GtkAllocation  *allocation)
 {
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  gimp_fg_bg_editor_style_updated (widget);
+  ligma_fg_bg_editor_style_updated (widget);
 }
 
 static void
-gimp_fg_bg_editor_style_updated (GtkWidget *widget)
+ligma_fg_bg_editor_style_updated (GtkWidget *widget)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -335,10 +335,10 @@ gimp_fg_bg_editor_style_updated (GtkWidget *widget)
 }
 
 static gboolean
-gimp_fg_bg_editor_draw (GtkWidget *widget,
+ligma_fg_bg_editor_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor  *editor = LIGMA_FG_BG_EDITOR (widget);
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
   GtkBorder        border;
   GtkBorder        padding;
@@ -347,7 +347,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   gint             width, height;
   gint             default_w, default_h;
   gint             swap_w, swap_h;
-  GimpRGB          color;
+  LigmaRGB          color;
 
   gtk_style_context_save (style);
 
@@ -368,8 +368,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
-    editor->default_icon = gimp_widget_load_icon (widget,
-                                                  GIMP_ICON_COLORS_DEFAULT,
+    editor->default_icon = ligma_widget_load_icon (widget,
+                                                  LIGMA_ICON_COLORS_DEFAULT,
                                                   MAX (MIN (width * 0.3, 12), 6));
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon) / scale_factor;
@@ -395,8 +395,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
-    editor->swap_icon = gimp_widget_load_icon (widget,
-                                               GIMP_ICON_COLORS_SWAP,
+    editor->swap_icon = ligma_widget_load_icon (widget,
+                                               LIGMA_ICON_COLORS_SWAP,
                                                MAX (MIN (width * 0.3, 12), 6));
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon) / scale_factor;
@@ -431,24 +431,24 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   editor->rect_height = rect.height;
 
   if (! editor->transform)
-    gimp_fg_bg_editor_create_transform (editor);
+    ligma_fg_bg_editor_create_transform (editor);
 
   if (editor->context)
     {
       /*  draw the background frame  */
-      gimp_context_get_background (editor->context, &color);
+      ligma_context_get_background (editor->context, &color);
       rect.x = width  - rect.width  - border.right;
       rect.y = height - rect.height - border.bottom;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+      ligma_fg_bg_editor_draw_color_frame (editor, cr, &color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           -1,         -1);
 
       /*  draw the foreground frame  */
-      gimp_context_get_foreground (editor->context, &color);
+      ligma_context_get_foreground (editor->context, &color);
       rect.x = border.left;
       rect.y = border.top;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+      ligma_fg_bg_editor_draw_color_frame (editor, cr, &color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           +1,         +1);
@@ -459,8 +459,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   return TRUE;
 }
 
-static GimpFgBgTarget
-gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
+static LigmaFgBgTarget
+ligma_fg_bg_editor_target (LigmaFgBgEditor *editor,
                           gint            x,
                           gint            y)
 {
@@ -496,74 +496,74 @@ gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
       y > border.top           &&
       y < border.top + rect_h)
     {
-      return GIMP_FG_BG_TARGET_FOREGROUND;
+      return LIGMA_FG_BG_TARGET_FOREGROUND;
     }
   else if (x > width  - border.right - rect_w  &&
            x < width  - border.right           &&
            y > height - border.bottom - rect_h &&
            y < height - border.bottom)
     {
-      return GIMP_FG_BG_TARGET_BACKGROUND;
+      return LIGMA_FG_BG_TARGET_BACKGROUND;
     }
   else if (x > border.left                &&
            x < border.left + button_width &&
            y > border.top + rect_h        &&
            y < height - border.bottom)
     {
-      return GIMP_FG_BG_TARGET_DEFAULT;
+      return LIGMA_FG_BG_TARGET_DEFAULT;
     }
   else if (x > border.left + rect_w &&
            x < width - border.right &&
            y > border.top           &&
            y < border.top + button_height)
     {
-      return GIMP_FG_BG_TARGET_SWAP;
+      return LIGMA_FG_BG_TARGET_SWAP;
     }
 
-  return GIMP_FG_BG_TARGET_INVALID;
+  return LIGMA_FG_BG_TARGET_INVALID;
 }
 
 static gboolean
-gimp_fg_bg_editor_button_press (GtkWidget      *widget,
+ligma_fg_bg_editor_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
 
   if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
-      GimpFgBgTarget target = gimp_fg_bg_editor_target (editor,
+      LigmaFgBgTarget target = ligma_fg_bg_editor_target (editor,
                                                         bevent->x, bevent->y);
 
-      editor->click_target = GIMP_FG_BG_TARGET_INVALID;
+      editor->click_target = LIGMA_FG_BG_TARGET_INVALID;
 
       switch (target)
         {
-        case GIMP_FG_BG_TARGET_FOREGROUND:
-          if (editor->active_color != GIMP_ACTIVE_COLOR_FOREGROUND)
-            gimp_fg_bg_editor_set_active (editor,
-                                          GIMP_ACTIVE_COLOR_FOREGROUND);
-          editor->click_target = GIMP_FG_BG_TARGET_FOREGROUND;
+        case LIGMA_FG_BG_TARGET_FOREGROUND:
+          if (editor->active_color != LIGMA_ACTIVE_COLOR_FOREGROUND)
+            ligma_fg_bg_editor_set_active (editor,
+                                          LIGMA_ACTIVE_COLOR_FOREGROUND);
+          editor->click_target = LIGMA_FG_BG_TARGET_FOREGROUND;
           break;
 
-        case GIMP_FG_BG_TARGET_BACKGROUND:
-          if (editor->active_color != GIMP_ACTIVE_COLOR_BACKGROUND)
-            gimp_fg_bg_editor_set_active (editor,
-                                          GIMP_ACTIVE_COLOR_BACKGROUND);
-          editor->click_target = GIMP_FG_BG_TARGET_BACKGROUND;
+        case LIGMA_FG_BG_TARGET_BACKGROUND:
+          if (editor->active_color != LIGMA_ACTIVE_COLOR_BACKGROUND)
+            ligma_fg_bg_editor_set_active (editor,
+                                          LIGMA_ACTIVE_COLOR_BACKGROUND);
+          editor->click_target = LIGMA_FG_BG_TARGET_BACKGROUND;
           break;
 
-        case GIMP_FG_BG_TARGET_SWAP:
+        case LIGMA_FG_BG_TARGET_SWAP:
           if (editor->context)
             {
-              gimp_context_swap_colors (editor->context);
+              ligma_context_swap_colors (editor->context);
               g_signal_emit (editor, editor_signals[COLORS_SWAPPED], 0);
             }
           break;
 
-        case GIMP_FG_BG_TARGET_DEFAULT:
+        case LIGMA_FG_BG_TARGET_DEFAULT:
           if (editor->context)
             {
-              gimp_context_set_default_colors (editor->context);
+              ligma_context_set_default_colors (editor->context);
               g_signal_emit (editor, editor_signals[COLORS_DEFAULT], 0);
             }
           break;
@@ -577,28 +577,28 @@ gimp_fg_bg_editor_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_fg_bg_editor_button_release (GtkWidget      *widget,
+ligma_fg_bg_editor_button_release (GtkWidget      *widget,
                                   GdkEventButton *bevent)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
 
   if (bevent->button == 1)
     {
-      GimpFgBgTarget target = gimp_fg_bg_editor_target (editor,
+      LigmaFgBgTarget target = ligma_fg_bg_editor_target (editor,
                                                         bevent->x, bevent->y);
 
       if (target == editor->click_target)
         {
           switch (target)
             {
-            case GIMP_FG_BG_TARGET_FOREGROUND:
+            case LIGMA_FG_BG_TARGET_FOREGROUND:
               g_signal_emit (editor, editor_signals[COLOR_CLICKED], 0,
-                             GIMP_ACTIVE_COLOR_FOREGROUND);
+                             LIGMA_ACTIVE_COLOR_FOREGROUND);
               break;
 
-            case GIMP_FG_BG_TARGET_BACKGROUND:
+            case LIGMA_FG_BG_TARGET_BACKGROUND:
               g_signal_emit (editor, editor_signals[COLOR_CLICKED], 0,
-                             GIMP_ACTIVE_COLOR_BACKGROUND);
+                             LIGMA_ACTIVE_COLOR_BACKGROUND);
               break;
 
             default:
@@ -606,24 +606,24 @@ gimp_fg_bg_editor_button_release (GtkWidget      *widget,
             }
         }
 
-      editor->click_target = GIMP_FG_BG_TARGET_INVALID;
+      editor->click_target = LIGMA_FG_BG_TARGET_INVALID;
     }
 
   return GDK_EVENT_STOP;
 }
 
 static gboolean
-gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
+ligma_fg_bg_editor_drag_motion (GtkWidget      *widget,
                                GdkDragContext *context,
                                gint            x,
                                gint            y,
                                guint           time)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-  GimpFgBgTarget  target = gimp_fg_bg_editor_target (editor, x, y);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
+  LigmaFgBgTarget  target = ligma_fg_bg_editor_target (editor, x, y);
 
-  if (target == GIMP_FG_BG_TARGET_FOREGROUND ||
-      target == GIMP_FG_BG_TARGET_BACKGROUND)
+  if (target == LIGMA_FG_BG_TARGET_FOREGROUND ||
+      target == LIGMA_FG_BG_TARGET_BACKGROUND)
     {
       gdk_drag_status (context, GDK_ACTION_COPY, time);
 
@@ -636,7 +636,7 @@ gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_fg_bg_editor_query_tooltip (GtkWidget  *widget,
+ligma_fg_bg_editor_query_tooltip (GtkWidget  *widget,
                                  gint        x,
                                  gint        y,
                                  gboolean    keyboard_mode,
@@ -644,10 +644,10 @@ gimp_fg_bg_editor_query_tooltip (GtkWidget  *widget,
 {
   if (! keyboard_mode)
     {
-      GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-      GimpFgBgTarget  target = gimp_fg_bg_editor_target (editor, x, y);
+      LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
+      LigmaFgBgTarget  target = ligma_fg_bg_editor_target (editor, x, y);
 
-      if (target != GIMP_FG_BG_TARGET_INVALID)
+      if (target != LIGMA_FG_BG_TARGET_INVALID)
         {
           g_signal_emit (widget, editor_signals[TOOLTIP], 0,
                          target, tooltip);
@@ -663,21 +663,21 @@ gimp_fg_bg_editor_query_tooltip (GtkWidget  *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_fg_bg_editor_new (GimpContext *context)
+ligma_fg_bg_editor_new (LigmaContext *context)
 {
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_FG_BG_EDITOR,
+  return g_object_new (LIGMA_TYPE_FG_BG_EDITOR,
                        "context", context,
                        NULL);
 }
 
 void
-gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
-                               GimpContext    *context)
+ligma_fg_bg_editor_set_context (LigmaFgBgEditor *editor,
+                               LigmaContext    *context)
 {
-  g_return_if_fail (GIMP_IS_FG_BG_EDITOR (editor));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_FG_BG_EDITOR (editor));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
   if (context != editor->context)
     {
@@ -687,12 +687,12 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
                                                 gtk_widget_queue_draw,
                                                 editor);
           g_signal_handlers_disconnect_by_func (editor->context,
-                                                G_CALLBACK (gimp_fg_bg_editor_image_changed),
+                                                G_CALLBACK (ligma_fg_bg_editor_image_changed),
                                                 editor);
           g_object_unref (editor->context);
 
           g_signal_handlers_disconnect_by_func (editor->color_config,
-                                                gimp_fg_bg_editor_destroy_transform,
+                                                ligma_fg_bg_editor_destroy_transform,
                                                 editor);
           g_clear_object (&editor->color_config);
         }
@@ -710,27 +710,27 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     editor);
           g_signal_connect_swapped (context, "image-changed",
-                                    G_CALLBACK (gimp_fg_bg_editor_image_changed),
+                                    G_CALLBACK (ligma_fg_bg_editor_image_changed),
                                     editor);
 
-          editor->color_config = g_object_ref (context->gimp->config->color_management);
+          editor->color_config = g_object_ref (context->ligma->config->color_management);
 
           g_signal_connect_swapped (editor->color_config, "notify",
-                                    G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
+                                    G_CALLBACK (ligma_fg_bg_editor_destroy_transform),
                                     editor);
         }
 
-      gimp_fg_bg_editor_destroy_transform (editor);
+      ligma_fg_bg_editor_destroy_transform (editor);
 
       g_object_notify (G_OBJECT (editor), "context");
     }
 }
 
 void
-gimp_fg_bg_editor_set_active (GimpFgBgEditor  *editor,
-                              GimpActiveColor  active)
+ligma_fg_bg_editor_set_active (LigmaFgBgEditor  *editor,
+                              LigmaActiveColor  active)
 {
-  g_return_if_fail (GIMP_IS_FG_BG_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_FG_BG_EDITOR (editor));
 
   editor->active_color = active;
   gtk_widget_queue_draw (GTK_WIDGET (editor));
@@ -741,50 +741,50 @@ gimp_fg_bg_editor_set_active (GimpFgBgEditor  *editor,
 /*  private functions  */
 
 static void
-gimp_fg_bg_editor_drag_color (GtkWidget *widget,
-                              GimpRGB   *color,
+ligma_fg_bg_editor_drag_color (GtkWidget *widget,
+                              LigmaRGB   *color,
                               gpointer   data)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
 
   if (editor->context)
     {
       switch (editor->active_color)
         {
-        case GIMP_ACTIVE_COLOR_FOREGROUND:
-          gimp_context_get_foreground (editor->context, color);
+        case LIGMA_ACTIVE_COLOR_FOREGROUND:
+          ligma_context_get_foreground (editor->context, color);
           break;
 
-        case GIMP_ACTIVE_COLOR_BACKGROUND:
-          gimp_context_get_background (editor->context, color);
+        case LIGMA_ACTIVE_COLOR_BACKGROUND:
+          ligma_context_get_background (editor->context, color);
           break;
         }
     }
 }
 
 static void
-gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
+ligma_fg_bg_editor_drop_color (GtkWidget     *widget,
                               gint           x,
                               gint           y,
-                              const GimpRGB *color,
+                              const LigmaRGB *color,
                               gpointer       data)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  LigmaFgBgEditor *editor = LIGMA_FG_BG_EDITOR (widget);
 
   if (editor->context)
     {
-      switch (gimp_fg_bg_editor_target (editor, x, y))
+      switch (ligma_fg_bg_editor_target (editor, x, y))
         {
-        case GIMP_FG_BG_TARGET_FOREGROUND:
-          gimp_context_set_foreground (editor->context, color);
+        case LIGMA_FG_BG_TARGET_FOREGROUND:
+          ligma_context_set_foreground (editor->context, color);
           g_signal_emit (editor, editor_signals[COLOR_DROPPED], 0,
-                         GIMP_ACTIVE_COLOR_FOREGROUND);
+                         LIGMA_ACTIVE_COLOR_FOREGROUND);
           break;
 
-        case GIMP_FG_BG_TARGET_BACKGROUND:
-          gimp_context_set_background (editor->context, color);
+        case LIGMA_FG_BG_TARGET_BACKGROUND:
+          ligma_context_set_background (editor->context, color);
           g_signal_emit (editor, editor_signals[COLOR_DROPPED], 0,
-                         GIMP_ACTIVE_COLOR_BACKGROUND);
+                         LIGMA_ACTIVE_COLOR_BACKGROUND);
           break;
 
         default:
@@ -794,29 +794,29 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
 }
 
 static void
-gimp_fg_bg_editor_create_transform (GimpFgBgEditor *editor)
+ligma_fg_bg_editor_create_transform (LigmaFgBgEditor *editor)
 {
   if (editor->color_config)
     {
-      static GimpColorProfile *profile = NULL;
+      static LigmaColorProfile *profile = NULL;
 
       if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
+        profile = ligma_color_profile_new_rgb_srgb ();
 
       editor->transform =
-        gimp_widget_get_color_transform (GTK_WIDGET (editor),
+        ligma_widget_get_color_transform (GTK_WIDGET (editor),
                                          editor->color_config,
                                          profile,
                                          babl_format ("R'G'B'A double"),
                                          babl_format ("R'G'B'A double"),
                                          NULL,
-                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                          FALSE);
     }
 }
 
 static void
-gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor *editor)
+ligma_fg_bg_editor_destroy_transform (LigmaFgBgEditor *editor)
 {
   g_clear_object (&editor->transform);
 
@@ -824,8 +824,8 @@ gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor *editor)
 }
 
 static void
-gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
-                                 GimpImage      *image)
+ligma_fg_bg_editor_image_changed (LigmaFgBgEditor *editor,
+                                 LigmaImage      *image)
 {
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 
@@ -834,11 +834,11 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
       g_signal_handlers_disconnect_by_func (editor->active_image,
                                             G_CALLBACK (gtk_widget_queue_draw),
                                             editor);
-      if (gimp_image_get_base_type (editor->active_image) == GIMP_INDEXED)
+      if (ligma_image_get_base_type (editor->active_image) == LIGMA_INDEXED)
         {
-          GimpPalette *palette;
+          LigmaPalette *palette;
 
-          palette = gimp_image_get_colormap_palette (editor->active_image);
+          palette = ligma_image_get_colormap_palette (editor->active_image);
           g_signal_handlers_disconnect_by_func (palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 editor);
@@ -854,11 +854,11 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 editor);
 
-      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+      if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
         {
-          GimpPalette *palette;
+          LigmaPalette *palette;
 
-          palette = gimp_image_get_colormap_palette (editor->active_image);
+          palette = ligma_image_get_colormap_palette (editor->active_image);
           g_signal_connect_swapped (palette, "dirty",
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     editor);
@@ -867,9 +867,9 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
 }
 
 static void
-gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
+ligma_fg_bg_editor_draw_color_frame (LigmaFgBgEditor *editor,
                                     cairo_t        *cr,
-                                    const GimpRGB  *color,
+                                    const LigmaRGB  *color,
                                     gint            x,
                                     gint            y,
                                     gint            width,
@@ -877,24 +877,24 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     gint            corner_dx,
                                     gint            corner_dy)
 {
-  GimpPalette       *colormap_palette = NULL;
-  GimpImageBaseType  base_type        = GIMP_RGB;
-  GimpRGB            transformed_color;
+  LigmaPalette       *colormap_palette = NULL;
+  LigmaImageBaseType  base_type        = LIGMA_RGB;
+  LigmaRGB            transformed_color;
 
   if (editor->active_image)
     {
-      base_type = gimp_image_get_base_type (editor->active_image);
+      base_type = ligma_image_get_base_type (editor->active_image);
 
-      if (base_type == GIMP_INDEXED)
+      if (base_type == LIGMA_INDEXED)
         {
-          colormap_palette = gimp_image_get_colormap_palette (
+          colormap_palette = ligma_image_get_colormap_palette (
             editor->active_image);
         }
     }
 
   if (editor->transform)
     {
-      gimp_color_transform_process_pixels (editor->transform,
+      ligma_color_transform_process_pixels (editor->transform,
                                            babl_format ("R'G'B'A double"),
                                            color,
                                            babl_format ("R'G'B'A double"),
@@ -908,7 +908,7 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
 
   cairo_save (cr);
 
-  gimp_cairo_set_source_rgb (cr, &transformed_color);
+  ligma_cairo_set_source_rgb (cr, &transformed_color);
 
   cairo_rectangle (cr, x, y, width, height);
   cairo_fill (cr);
@@ -920,9 +920,9 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
         color->b < 0.0 || color->b > 1.0) ||
        /* Indexed images */
        (colormap_palette &&
-        ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
+        ! ligma_palette_find_entry (colormap_palette, color, NULL)) ||
        /* Grayscale images */
-       (base_type == GIMP_GRAY &&
+       (base_type == LIGMA_GRAY &&
         (ABS (color->r - color->g) > CHANNEL_EPSILON ||
          ABS (color->r - color->b) > CHANNEL_EPSILON ||
          ABS (color->g - color->b) > CHANNEL_EPSILON))))
@@ -930,16 +930,16 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
       gint    corner_x = x + 0.5 * (1.0 - corner_dx) * width;
       gint    corner_y = y + 0.5 * (1.0 - corner_dy) * height;
       gint    side     = MIN (width, height) * 2 / 3;
-      GimpRGB out_of_gamut_color;
+      LigmaRGB out_of_gamut_color;
 
       cairo_move_to (cr, corner_x, corner_y);
       cairo_line_to (cr, corner_x + side * corner_dx, corner_y);
       cairo_line_to (cr, corner_x, corner_y + side * corner_dy);
       cairo_close_path (cr);
 
-      gimp_color_config_get_out_of_gamut_color (editor->color_config,
+      ligma_color_config_get_out_of_gamut_color (editor->color_config,
                                                 &out_of_gamut_color);
-      gimp_cairo_set_source_rgb (cr, &out_of_gamut_color);
+      ligma_cairo_set_source_rgb (cr, &out_of_gamut_color);
       cairo_fill (cr);
     }
 

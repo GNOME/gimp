@@ -12,13 +12,13 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:export-ydpi="90.000000"
    inkscape:export-xdpi="90.000000"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/stock-layers-16.png"
+   inkscape:export-filename="/home/jimmac/src/cvs/gnome/ligma/themes/Default/images/stock-layers-16.png"
    width="16"
    height="16"
    id="svg11300"
    sodipodi:version="0.32"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-selection-to-channel.svg"
+   sodipodi:docname="ligma-selection-to-channel.svg"
    version="1.0"
    viewBox="0 0 16 16">
   <sodipodi:namedview
@@ -345,7 +345,7 @@
         </g>
       </g>
       <g
-         id="gimp-channel"
+         id="ligma-channel"
          transform="matrix(0.76232012,0,0,0.75097316,4.9780622,0.02894763)"
          style="display:inline">
         <g

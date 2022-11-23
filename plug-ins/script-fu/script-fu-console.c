@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 
 #include <glib/gstdio.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -91,9 +91,9 @@ static void      script_fu_output_to_console     (gboolean          is_error,
  *  Function definitions
  */
 
-GimpValueArray *
-script_fu_console_run (GimpProcedure        *procedure,
-                       const GimpValueArray *args)
+LigmaValueArray *
+script_fu_console_run (LigmaProcedure        *procedure,
+                       const LigmaValueArray *args)
 {
   ConsoleInterface  console = { 0, };
   GtkWidget        *vbox;
@@ -103,14 +103,14 @@ script_fu_console_run (GimpProcedure        *procedure,
 
   script_fu_set_print_flag (1);
 
-  gimp_ui_init ("script-fu");
+  ligma_ui_init ("script-fu");
 
   console.history_max = 50;
 
-  console.dialog = gimp_dialog_new (_("Script-Fu Console"),
-                                    "gimp-script-fu-console",
+  console.dialog = ligma_dialog_new (_("Script-Fu Console"),
+                                    "ligma-script-fu-console",
                                     NULL, 0,
-                                    gimp_standard_help_func, PROC_NAME,
+                                    ligma_standard_help_func, PROC_NAME,
 
                                     _("_Save"),  RESPONSE_SAVE,
                                     _("C_lear"), RESPONSE_CLEAR,
@@ -118,7 +118,7 @@ script_fu_console_run (GimpProcedure        *procedure,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (console.dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (console.dialog),
                                            GTK_RESPONSE_CLOSE,
                                            RESPONSE_CLEAR,
                                            RESPONSE_SAVE,
@@ -238,7 +238,7 @@ script_fu_console_run (GimpProcedure        *procedure,
   if (console.dialog)
     gtk_widget_destroy (console.dialog);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
@@ -284,7 +284,7 @@ script_fu_console_save_dialog (ConsoleInterface *console)
 
       gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
                                        GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -323,7 +323,7 @@ script_fu_console_save_response (GtkWidget        *dialog,
       if (! fh)
         {
           g_message (_("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (filename),
+                     ligma_filename_to_utf8 (filename),
                      g_strerror (errno));
 
           g_free (filename);
@@ -351,9 +351,9 @@ script_fu_browse_callback (GtkWidget        *widget,
   if (! console->proc_browser)
     {
       console->proc_browser =
-        gimp_proc_browser_dialog_new (_("Script-Fu Procedure Browser"),
+        ligma_proc_browser_dialog_new (_("Script-Fu Procedure Browser"),
                                       "script-fu-procedure-browser",
-                                      gimp_standard_help_func, PROC_NAME,
+                                      ligma_standard_help_func, PROC_NAME,
 
                                       _("_Apply"), GTK_RESPONSE_APPLY,
                                       _("_Close"), GTK_RESPONSE_CLOSE,
@@ -362,7 +362,7 @@ script_fu_browse_callback (GtkWidget        *widget,
 
       gtk_dialog_set_default_response (GTK_DIALOG (console->proc_browser),
                                        GTK_RESPONSE_APPLY);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (console->proc_browser),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (console->proc_browser),
                                                GTK_RESPONSE_CLOSE,
                                                GTK_RESPONSE_APPLY,
                                                -1);
@@ -386,8 +386,8 @@ script_fu_browse_response (GtkWidget        *widget,
                            gint              response_id,
                            ConsoleInterface *console)
 {
-  GimpProcBrowserDialog  *dialog = GIMP_PROC_BROWSER_DIALOG (widget);
-  GimpProcedure          *procedure;
+  LigmaProcBrowserDialog  *dialog = LIGMA_PROC_BROWSER_DIALOG (widget);
+  LigmaProcedure          *procedure;
   gchar                  *proc_name;
   GParamSpec            **pspecs;
   gint                    n_pspecs;
@@ -400,14 +400,14 @@ script_fu_browse_response (GtkWidget        *widget,
       return;
     }
 
-  proc_name = gimp_proc_browser_dialog_get_selected (dialog);
+  proc_name = ligma_proc_browser_dialog_get_selected (dialog);
 
   if (proc_name == NULL)
     return;
 
-  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), proc_name);
+  procedure = ligma_pdb_lookup_procedure (ligma_get_pdb (), proc_name);
 
-  pspecs = gimp_procedure_get_arguments (procedure, &n_pspecs);
+  pspecs = ligma_procedure_get_arguments (procedure, &n_pspecs);
 
   text = g_string_new ("(");
   text = g_string_append (text, proc_name);
@@ -569,8 +569,8 @@ script_fu_cc_key_function (GtkWidget        *widget,
       output = g_string_new (NULL);
       script_fu_redirect_output_to_gstr (output);
 
-      gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                          GIMP_PDB_ERROR_HANDLER_PLUGIN);
+      ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                          LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
       is_error = script_fu_interpret_string (list->data);
 
@@ -579,12 +579,12 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                    output->len,
                                    console);
 
-      gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                          GIMP_PDB_ERROR_HANDLER_INTERNAL);
+      ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                          LIGMA_PDB_ERROR_HANDLER_INTERNAL);
 
       g_string_free (output, TRUE);
 
-      gimp_displays_flush ();
+      ligma_displays_flush ();
 
       console->history = g_list_append (console->history, NULL);
 

@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Circuit board effect
@@ -29,9 +29,9 @@
                            keep-selection
                            separate-layer)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-get-width image)))
-        (image-height (car (gimp-image-get-height image)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-width (car (ligma-image-get-width image)))
+        (image-height (car (ligma-image-get-height image)))
         (active-selection 0)
         (from-selection 0)
         (selection-bounds 0)
@@ -43,23 +43,23 @@
         (active-layer 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-group-start image)
+    (ligma-image-undo-group-start image)
 
-    (gimp-layer-add-alpha drawable)
+    (ligma-layer-add-alpha drawable)
 
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
+    (if (= (car (ligma-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-          (set! active-selection (car (gimp-selection-save image)))
+          (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (set! active-selection (car (ligma-selection-save image)))
           (set! from-selection FALSE))
         (begin
           (set! from-selection TRUE)
-          (set! active-selection (car (gimp-selection-save image)))))
+          (set! active-selection (car (ligma-selection-save image)))))
 
-    (set! selection-bounds (gimp-selection-bounds image))
+    (set! selection-bounds (ligma-selection-bounds image))
     (set! select-offset-x (cadr selection-bounds))
     (set! select-offset-y (caddr selection-bounds))
     (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -67,7 +67,7 @@
 
     (if (= separate-layer TRUE)
         (begin
-          (set! effect-layer (car (gimp-layer-new image
+          (set! effect-layer (car (ligma-layer-new image
                                                   select-width
                                                   select-height
                                                   type
@@ -75,62 +75,62 @@
                                                   100
                                                   LAYER-MODE-NORMAL)))
 
-          (gimp-image-insert-layer image effect-layer 0 -1)
-          (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
-          (gimp-selection-none image)
-          (gimp-drawable-edit-clear effect-layer)
-          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-copy 1 (vector drawable))
+          (ligma-image-insert-layer image effect-layer 0 -1)
+          (ligma-layer-set-offsets effect-layer select-offset-x select-offset-y)
+          (ligma-selection-none image)
+          (ligma-drawable-edit-clear effect-layer)
+          (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+          (ligma-edit-copy 1 (vector drawable))
 
           (let* (
-                 (pasted (gimp-edit-paste effect-layer FALSE))
+                 (pasted (ligma-edit-paste effect-layer FALSE))
                  (num-pasted (car pasted))
                  (floating-sel (aref (cadr pasted) (- num-pasted 1)))
                 )
-           (gimp-floating-sel-anchor floating-sel)
+           (ligma-floating-sel-anchor floating-sel)
           )
-          (gimp-image-set-selected-layers image 1 (vector effect-layer)))
+          (ligma-image-set-selected-layers image 1 (vector effect-layer)))
           (set! effect-layer drawable)
     )
     (set! active-layer effect-layer)
 
     (if (= remove-bg TRUE)
-        (gimp-context-set-foreground '(0 0 0))
-        (gimp-context-set-foreground '(14 14 14))
+        (ligma-context-set-foreground '(0 0 0))
+        (ligma-context-set-foreground '(14 14 14))
     )
 
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (plug-in-maze RUN-NONINTERACTIVE image active-layer 5 5 TRUE 0 seed 57 1)
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
     (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
     (if (= type RGBA-IMAGE)
-      (gimp-drawable-desaturate active-layer DESATURATE-LIGHTNESS))
+      (ligma-drawable-desaturate active-layer DESATURATE-LIGHTNESS))
 
     (if (and
          (= remove-bg TRUE)
          (= separate-layer TRUE))
         (begin
-          (gimp-image-select-color image CHANNEL-OP-REPLACE active-layer '(0 0 0))
-          (gimp-drawable-edit-clear active-layer)))
+          (ligma-image-select-color image CHANNEL-OP-REPLACE active-layer '(0 0 0))
+          (ligma-drawable-edit-clear active-layer)))
 
     (if (= keep-selection FALSE)
-        (gimp-selection-none image))
+        (ligma-selection-none image))
 
-    (gimp-image-remove-channel image active-selection)
-    (gimp-image-set-selected-layers image 1 (vector drawable))
+    (ligma-image-remove-channel image active-selection)
+    (ligma-image-set-selected-layers image 1 (vector drawable))
 
-    (gimp-image-undo-group-end image)
+    (ligma-image-undo-group-end image)
 
-    (gimp-displays-flush)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-circuit"
   _"_Circuit..."
   _"Fill the selected region (or alpha) with traces like those on a circuit board"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "10/17/97"
   "RGB* GRAY*"

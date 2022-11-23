@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginview.c
- * Copyright (C) 2017  Michael Natterer <mitch@gimp.org>
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmapluginview.c
+ * Copyright (C) 2017  Michael Natterer <mitch@ligma.org>
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gtk/gtk.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "widgets-types.h"
 
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "gimppluginview.h"
+#include "ligmapluginview.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -49,39 +49,39 @@ enum
 };
 
 
-static void  gimp_plug_in_view_finalize          (GObject          *object);
+static void  ligma_plug_in_view_finalize          (GObject          *object);
 
-static void  gimp_plug_in_view_selection_changed (GtkTreeSelection *selection,
-                                                  GimpPlugInView   *view);
+static void  ligma_plug_in_view_selection_changed (GtkTreeSelection *selection,
+                                                  LigmaPlugInView   *view);
 
 
-G_DEFINE_TYPE (GimpPlugInView, gimp_plug_in_view, GTK_TYPE_TREE_VIEW)
+G_DEFINE_TYPE (LigmaPlugInView, ligma_plug_in_view, GTK_TYPE_TREE_VIEW)
 
-#define parent_class gimp_plug_in_view_parent_class
+#define parent_class ligma_plug_in_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_plug_in_view_class_init (GimpPlugInViewClass *klass)
+ligma_plug_in_view_class_init (LigmaPlugInViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_plug_in_view_finalize;
+  object_class->finalize = ligma_plug_in_view_finalize;
 
   klass->changed         = NULL;
 
   view_signals[CHANGED] = g_signal_new ("changed",
                                         G_TYPE_FROM_CLASS (klass),
                                         G_SIGNAL_RUN_LAST,
-                                        G_STRUCT_OFFSET (GimpPlugInViewClass,
+                                        G_STRUCT_OFFSET (LigmaPlugInViewClass,
                                                          changed),
                                         NULL, NULL, NULL,
                                         G_TYPE_NONE, 0);
 }
 
 static void
-gimp_plug_in_view_init (GimpPlugInView *view)
+ligma_plug_in_view_init (LigmaPlugInView *view)
 {
   view->plug_in_hash = g_hash_table_new_full (g_file_hash,
                                               (GEqualFunc) g_file_equal,
@@ -90,9 +90,9 @@ gimp_plug_in_view_init (GimpPlugInView *view)
 }
 
 static void
-gimp_plug_in_view_finalize (GObject *object)
+ligma_plug_in_view_finalize (GObject *object)
 {
-  GimpPlugInView *view = GIMP_PLUG_IN_VIEW (object);
+  LigmaPlugInView *view = LIGMA_PLUG_IN_VIEW (object);
 
   g_clear_pointer (&view->plug_in_hash, g_hash_table_unref);
 
@@ -100,7 +100,7 @@ gimp_plug_in_view_finalize (GObject *object)
 }
 
 GtkWidget *
-gimp_plug_in_view_new (GSList *procedures)
+ligma_plug_in_view_new (GSList *procedures)
 {
   GtkTreeView       *view;
   GtkTreeViewColumn *column;
@@ -112,7 +112,7 @@ gimp_plug_in_view_new (GSList *procedures)
                               G_TYPE_FILE,    /* COLUMN_FILE */
                               G_TYPE_STRING); /* COLUMN_PATH */
 
-  view = g_object_new (GIMP_TYPE_PLUG_IN_VIEW,
+  view = g_object_new (LIGMA_TYPE_PLUG_IN_VIEW,
                        "model", store,
                        NULL);
 
@@ -120,13 +120,13 @@ gimp_plug_in_view_new (GSList *procedures)
 
   for (list = procedures; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
-      GFile               *file = gimp_plug_in_procedure_get_file (proc);
+      LigmaPlugInProcedure *proc = list->data;
+      GFile               *file = ligma_plug_in_procedure_get_file (proc);
 
-      if (! g_hash_table_lookup (GIMP_PLUG_IN_VIEW (view)->plug_in_hash, file))
+      if (! g_hash_table_lookup (LIGMA_PLUG_IN_VIEW (view)->plug_in_hash, file))
         {
           GtkTreeIter  iter;
-          gchar       *path = gimp_file_get_config_path (file, NULL);
+          gchar       *path = ligma_file_get_config_path (file, NULL);
 
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
@@ -136,7 +136,7 @@ gimp_plug_in_view_new (GSList *procedures)
 
           g_free (path);
 
-          g_hash_table_insert (GIMP_PLUG_IN_VIEW (view)->plug_in_hash,
+          g_hash_table_insert (LIGMA_PLUG_IN_VIEW (view)->plug_in_hash,
                                g_object_ref (file),
                                g_memdup2 (&iter, sizeof (GtkTreeIter)));
         }
@@ -155,20 +155,20 @@ gimp_plug_in_view_new (GSList *procedures)
   gtk_tree_view_append_column (view, column);
 
   g_signal_connect (gtk_tree_view_get_selection (view), "changed",
-                    G_CALLBACK (gimp_plug_in_view_selection_changed),
+                    G_CALLBACK (ligma_plug_in_view_selection_changed),
                     view);
 
   return GTK_WIDGET (view);
 }
 
 gchar *
-gimp_plug_in_view_get_plug_in (GimpPlugInView *view)
+ligma_plug_in_view_get_plug_in (LigmaPlugInView *view)
 {
   GtkTreeModel     *model;
   GtkTreeSelection *selection;
   GtkTreeIter       iter;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_VIEW (view), NULL);
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -187,16 +187,16 @@ gimp_plug_in_view_get_plug_in (GimpPlugInView *view)
 }
 
 gboolean
-gimp_plug_in_view_set_plug_in (GimpPlugInView *view,
+ligma_plug_in_view_set_plug_in (LigmaPlugInView *view,
                                const gchar    *path)
 {
   GFile            *file;
   GtkTreeIter      *iter;
   GtkTreeSelection *selection;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_VIEW (view), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_VIEW (view), FALSE);
 
-  file = gimp_file_new_for_config_path (path, NULL);
+  file = ligma_file_new_for_config_path (path, NULL);
 
   iter = g_hash_table_lookup (view->plug_in_hash, file);
 
@@ -217,8 +217,8 @@ gimp_plug_in_view_set_plug_in (GimpPlugInView *view,
 }
 
 static void
-gimp_plug_in_view_selection_changed (GtkTreeSelection *selection,
-                                     GimpPlugInView   *view)
+ligma_plug_in_view_selection_changed (GtkTreeSelection *selection,
+                                     LigmaPlugInView   *view)
 {
   g_signal_emit (view, view_signals[CHANGED], 0);
 }

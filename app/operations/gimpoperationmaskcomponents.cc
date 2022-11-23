@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationmaskcomponents.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationmaskcomponents.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ extern "C"
 
 #include "operations-types.h"
 
-#include "gimpoperationmaskcomponents.h"
+#include "ligmaoperationmaskcomponents.h"
 
 } /* extern "C" */
 
@@ -40,24 +40,24 @@ enum
 };
 
 
-static void            gimp_operation_mask_components_get_property     (GObject             *object,
+static void            ligma_operation_mask_components_get_property     (GObject             *object,
                                                                         guint                property_id,
                                                                         GValue              *value,
                                                                         GParamSpec          *pspec);
-static void            gimp_operation_mask_components_set_property     (GObject             *object,
+static void            ligma_operation_mask_components_set_property     (GObject             *object,
                                                                         guint                property_id,
                                                                         const GValue        *value,
                                                                         GParamSpec          *pspec);
 
-static void            gimp_operation_mask_components_prepare          (GeglOperation       *operation);
-static GeglRectangle   gimp_operation_mask_components_get_bounding_box (GeglOperation       *operation);
-static gboolean        gimp_operation_mask_components_parent_process   (GeglOperation        *operation,
+static void            ligma_operation_mask_components_prepare          (GeglOperation       *operation);
+static GeglRectangle   ligma_operation_mask_components_get_bounding_box (GeglOperation       *operation);
+static gboolean        ligma_operation_mask_components_parent_process   (GeglOperation        *operation,
                                                                         GeglOperationContext *context,
                                                                         const gchar          *output_prop,
                                                                         const GeglRectangle  *result,
                                                                         gint                  level);
 
-static gboolean        gimp_operation_mask_components_process          (GeglOperation       *operation,
+static gboolean        ligma_operation_mask_components_process          (GeglOperation       *operation,
                                                                         void                *in_buf,
                                                                         void                *aux_buf,
                                                                         void                *out_buf,
@@ -66,40 +66,40 @@ static gboolean        gimp_operation_mask_components_process          (GeglOper
                                                                         gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationMaskComponents, gimp_operation_mask_components,
+G_DEFINE_TYPE (LigmaOperationMaskComponents, ligma_operation_mask_components,
                GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
-#define parent_class gimp_operation_mask_components_parent_class
+#define parent_class ligma_operation_mask_components_parent_class
 
 
 static void
-gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *klass)
+ligma_operation_mask_components_class_init (LigmaOperationMaskComponentsClass *klass)
 {
   GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_mask_components_set_property;
-  object_class->get_property = gimp_operation_mask_components_get_property;
+  object_class->set_property = ligma_operation_mask_components_set_property;
+  object_class->get_property = ligma_operation_mask_components_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:mask-components",
-                                 "categories",  "gimp",
+                                 "name",        "ligma:mask-components",
+                                 "categories",  "ligma",
                                  "description", "Selectively pick components from src or aux",
                                  NULL);
 
-  operation_class->prepare          = gimp_operation_mask_components_prepare;
-  operation_class->get_bounding_box = gimp_operation_mask_components_get_bounding_box;
-  operation_class->process          = gimp_operation_mask_components_parent_process;
+  operation_class->prepare          = ligma_operation_mask_components_prepare;
+  operation_class->get_bounding_box = ligma_operation_mask_components_get_bounding_box;
+  operation_class->process          = ligma_operation_mask_components_parent_process;
 
-  point_class->process              = gimp_operation_mask_components_process;
+  point_class->process              = ligma_operation_mask_components_process;
 
   g_object_class_install_property (object_class, PROP_MASK,
                                    g_param_spec_flags ("mask",
                                                        "Mask",
                                                        "The component mask",
-                                                       GIMP_TYPE_COMPONENT_MASK,
-                                                       GIMP_COMPONENT_MASK_ALL,
+                                                       LIGMA_TYPE_COMPONENT_MASK,
+                                                       LIGMA_COMPONENT_MASK_ALL,
                                                        (GParamFlags) (
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT)));
@@ -117,17 +117,17 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
 }
 
 static void
-gimp_operation_mask_components_init (GimpOperationMaskComponents *self)
+ligma_operation_mask_components_init (LigmaOperationMaskComponents *self)
 {
 }
 
 static void
-gimp_operation_mask_components_get_property (GObject    *object,
+ligma_operation_mask_components_get_property (GObject    *object,
                                              guint       property_id,
                                              GValue     *value,
                                              GParamSpec *pspec)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (object);
+  LigmaOperationMaskComponents *self = LIGMA_OPERATION_MASK_COMPONENTS (object);
 
   switch (property_id)
     {
@@ -146,17 +146,17 @@ gimp_operation_mask_components_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_mask_components_set_property (GObject      *object,
+ligma_operation_mask_components_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (object);
+  LigmaOperationMaskComponents *self = LIGMA_OPERATION_MASK_COMPONENTS (object);
 
   switch (property_id)
     {
     case PROP_MASK:
-      self->mask = (GimpComponentMask) g_value_get_flags (value);
+      self->mask = (LigmaComponentMask) g_value_get_flags (value);
       break;
 
     case PROP_ALPHA:
@@ -207,7 +207,7 @@ struct ProcessGeneric
            gconstpointer     aux_buf,
            gpointer          out_buf,
            gint              n,
-           GimpComponentMask mask,
+           LigmaComponentMask mask,
            T                 alpha_value)
   {
     T    *out = (T *) out_buf;
@@ -279,7 +279,7 @@ struct Process<guint8>
            gconstpointer     aux_buf,
            gpointer          out_buf,
            gint              n,
-           GimpComponentMask mask,
+           LigmaComponentMask mask,
            guint8            alpha_value)
   {
     const guint32 *in;
@@ -321,7 +321,7 @@ struct Process<guint8>
       }
     else
       {
-        if (! (mask & GIMP_COMPONENT_MASK_ALPHA) || ! alpha_value)
+        if (! (mask & LIGMA_COMPONENT_MASK_ALPHA) || ! alpha_value)
           {
             for (i = 0; i < n; i++)
               {
@@ -351,7 +351,7 @@ struct Process<guint8>
 
 template <class T>
 static gboolean
-gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
+ligma_operation_mask_components_process (LigmaOperationMaskComponents *self,
                                         void                        *in_buf,
                                         void                        *aux_buf,
                                         void                        *out_buf,
@@ -366,12 +366,12 @@ gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
 }
 
 static void
-gimp_operation_mask_components_prepare (GeglOperation *operation)
+ligma_operation_mask_components_prepare (GeglOperation *operation)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+  LigmaOperationMaskComponents *self = LIGMA_OPERATION_MASK_COMPONENTS (operation);
   const Babl                  *format;
 
-  format = gimp_operation_mask_components_get_format (
+  format = ligma_operation_mask_components_get_format (
     gegl_operation_get_source_format (operation, "input"));
 
   gegl_operation_set_format (operation, "input",  format);
@@ -388,17 +388,17 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
         {
         case 4:
           self->process = (gpointer)
-                            gimp_operation_mask_components_process<guint8>;
+                            ligma_operation_mask_components_process<guint8>;
           break;
 
         case 8:
           self->process = (gpointer)
-                            gimp_operation_mask_components_process<guint16>;
+                            ligma_operation_mask_components_process<guint16>;
           break;
 
         case 16:
           self->process = (gpointer)
-                            gimp_operation_mask_components_process<guint32>;
+                            ligma_operation_mask_components_process<guint32>;
           break;
 
         default:
@@ -408,9 +408,9 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
 }
 
 static GeglRectangle
-gimp_operation_mask_components_get_bounding_box (GeglOperation *operation)
+ligma_operation_mask_components_get_bounding_box (GeglOperation *operation)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+  LigmaOperationMaskComponents *self = LIGMA_OPERATION_MASK_COMPONENTS (operation);
   GeglRectangle               *in_rect;
   GeglRectangle               *aux_rect;
   GeglRectangle                result = {};
@@ -423,7 +423,7 @@ gimp_operation_mask_components_get_bounding_box (GeglOperation *operation)
       if (in_rect)
         return *in_rect;
     }
-  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
+  else if (self->mask == LIGMA_COMPONENT_MASK_ALL)
     {
       if (aux_rect)
         return *aux_rect;
@@ -439,13 +439,13 @@ gimp_operation_mask_components_get_bounding_box (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_mask_components_parent_process (GeglOperation        *operation,
+ligma_operation_mask_components_parent_process (GeglOperation        *operation,
                                                GeglOperationContext *context,
                                                const gchar          *output_prop,
                                                const GeglRectangle  *result,
                                                gint                  level)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+  LigmaOperationMaskComponents *self = LIGMA_OPERATION_MASK_COMPONENTS (operation);
 
   if (self->mask == 0)
     {
@@ -455,7 +455,7 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
+  else if (self->mask == LIGMA_COMPONENT_MASK_ALL)
     {
       GObject *aux = gegl_operation_context_get_object (context, "aux");
 
@@ -477,7 +477,7 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
 }
 
 static gboolean
-gimp_operation_mask_components_process (GeglOperation       *operation,
+ligma_operation_mask_components_process (GeglOperation       *operation,
                                         void                *in_buf,
                                         void                *aux_buf,
                                         void                *out_buf,
@@ -485,7 +485,7 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  typedef gboolean (* ProcessFunc) (GimpOperationMaskComponents *self,
+  typedef gboolean (* ProcessFunc) (LigmaOperationMaskComponents *self,
                                     void                        *in_buf,
                                     void                        *aux_buf,
                                     void                        *out_buf,
@@ -493,7 +493,7 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
                                     const GeglRectangle         *roi,
                                     gint                         level);
 
-  GimpOperationMaskComponents *self = (GimpOperationMaskComponents *) operation;
+  LigmaOperationMaskComponents *self = (LigmaOperationMaskComponents *) operation;
 
   return ((ProcessFunc) self->process) (self,
                                         in_buf, aux_buf, out_buf, samples,
@@ -501,7 +501,7 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
 }
 
 const Babl *
-gimp_operation_mask_components_get_format (const Babl *input_format)
+ligma_operation_mask_components_get_format (const Babl *input_format)
 {
   const Babl *format = NULL;
 
@@ -557,12 +557,12 @@ gimp_operation_mask_components_get_format (const Babl *input_format)
 }
 
 void
-gimp_operation_mask_components_process (const Babl        *format,
+ligma_operation_mask_components_process (const Babl        *format,
                                         gconstpointer      in,
                                         gconstpointer      aux,
                                         gpointer           out,
                                         gint               n,
-                                        GimpComponentMask  mask)
+                                        LigmaComponentMask  mask)
 {
   g_return_if_fail (format != NULL);
   g_return_if_fail (in != NULL);

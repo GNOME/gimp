@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,67 +22,67 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpbase-private.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmabase/ligmabase-private.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimprc.h"
+#include "config/ligmarc.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimp-pdb-compat.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligma-pdb-compat.h"
 #include "pdb/internal-procs.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-restore.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginmanager-restore.h"
 
-#include "paint/gimp-paint.h"
+#include "paint/ligma-paint.h"
 
 #include "xcf/xcf.h"
 #include "file-data/file-data.h"
 
-#include "gimp.h"
-#include "gimp-contexts.h"
-#include "gimp-data-factories.h"
-#include "gimp-filter-history.h"
-#include "gimp-memsize.h"
-#include "gimp-modules.h"
-#include "gimp-parasites.h"
-#include "gimp-templates.h"
-#include "gimp-units.h"
-#include "gimp-utils.h"
-#include "gimpbrush.h"
-#include "gimpbuffer.h"
-#include "gimpcontext.h"
-#include "gimpdynamics.h"
-#include "gimpdocumentlist.h"
-#include "gimpextensionmanager.h"
-#include "gimpgradient.h"
-#include "gimpidtable.h"
-#include "gimpimage.h"
-#include "gimpimagefile.h"
-#include "gimplist.h"
-#include "gimpmarshal.h"
-#include "gimpmybrush.h"
-#include "gimppalette.h"
-#include "gimpparasitelist.h"
-#include "gimppattern.h"
-#include "gimptemplate.h"
-#include "gimptoolinfo.h"
-#include "gimptreeproxy.h"
+#include "ligma.h"
+#include "ligma-contexts.h"
+#include "ligma-data-factories.h"
+#include "ligma-filter-history.h"
+#include "ligma-memsize.h"
+#include "ligma-modules.h"
+#include "ligma-parasites.h"
+#include "ligma-templates.h"
+#include "ligma-units.h"
+#include "ligma-utils.h"
+#include "ligmabrush.h"
+#include "ligmabuffer.h"
+#include "ligmacontext.h"
+#include "ligmadynamics.h"
+#include "ligmadocumentlist.h"
+#include "ligmaextensionmanager.h"
+#include "ligmagradient.h"
+#include "ligmaidtable.h"
+#include "ligmaimage.h"
+#include "ligmaimagefile.h"
+#include "ligmalist.h"
+#include "ligmamarshal.h"
+#include "ligmamybrush.h"
+#include "ligmapalette.h"
+#include "ligmaparasitelist.h"
+#include "ligmapattern.h"
+#include "ligmatemplate.h"
+#include "ligmatoolinfo.h"
+#include "ligmatreeproxy.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  we need to register all enum types so they are known to the type
- *  system by name, re-use the files the pdb generated for libgimp
+ *  system by name, re-use the files the pdb generated for libligma
  */
-void           gimp_enums_init           (void);
-const gchar ** gimp_enums_get_type_names (gint *n_type_names);
-#include "libgimp/gimpenums.c.tail"
+void           ligma_enums_init           (void);
+const gchar ** ligma_enums_get_type_names (gint *n_type_names);
+#include "libligma/ligmaenums.c.tail"
 
 
 enum
@@ -103,230 +103,230 @@ enum
 };
 
 
-static void      gimp_constructed          (GObject           *object);
-static void      gimp_set_property         (GObject           *object,
+static void      ligma_constructed          (GObject           *object);
+static void      ligma_set_property         (GObject           *object,
                                             guint              property_id,
                                             const GValue      *value,
                                             GParamSpec        *pspec);
-static void      gimp_get_property         (GObject           *object,
+static void      ligma_get_property         (GObject           *object,
                                             guint              property_id,
                                             GValue            *value,
                                             GParamSpec        *pspec);
-static void      gimp_dispose              (GObject           *object);
-static void      gimp_finalize             (GObject           *object);
+static void      ligma_dispose              (GObject           *object);
+static void      ligma_finalize             (GObject           *object);
 
-static gint64    gimp_get_memsize          (GimpObject        *object,
+static gint64    ligma_get_memsize          (LigmaObject        *object,
                                             gint64            *gui_size);
 
-static void      gimp_real_initialize      (Gimp              *gimp,
-                                            GimpInitStatusFunc status_callback);
-static void      gimp_real_restore         (Gimp              *gimp,
-                                            GimpInitStatusFunc status_callback);
-static gboolean  gimp_real_exit            (Gimp              *gimp,
+static void      ligma_real_initialize      (Ligma              *ligma,
+                                            LigmaInitStatusFunc status_callback);
+static void      ligma_real_restore         (Ligma              *ligma,
+                                            LigmaInitStatusFunc status_callback);
+static gboolean  ligma_real_exit            (Ligma              *ligma,
                                             gboolean           force);
 
-static void      gimp_global_config_notify (GObject           *global_config,
+static void      ligma_global_config_notify (GObject           *global_config,
                                             GParamSpec        *param_spec,
                                             GObject           *edit_config);
-static void      gimp_edit_config_notify   (GObject           *edit_config,
+static void      ligma_edit_config_notify   (GObject           *edit_config,
                                             GParamSpec        *param_spec,
                                             GObject           *global_config);
 
 
-G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE (Ligma, ligma, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_parent_class
+#define parent_class ligma_parent_class
 
-static guint gimp_signals[LAST_SIGNAL] = { 0, };
+static guint ligma_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_class_init (GimpClass *klass)
+ligma_class_init (LigmaClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
-  gimp_signals[INITIALIZE] =
+  ligma_signals[INITIALIZE] =
     g_signal_new ("initialize",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, initialize),
+                  G_STRUCT_OFFSET (LigmaClass, initialize),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  gimp_signals[RESTORE] =
+  ligma_signals[RESTORE] =
     g_signal_new ("restore",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, restore),
+                  G_STRUCT_OFFSET (LigmaClass, restore),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  gimp_signals[EXIT] =
+  ligma_signals[EXIT] =
     g_signal_new ("exit",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, exit),
+                  G_STRUCT_OFFSET (LigmaClass, exit),
                   g_signal_accumulator_true_handled, NULL,
-                  gimp_marshal_BOOLEAN__BOOLEAN,
+                  ligma_marshal_BOOLEAN__BOOLEAN,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_BOOLEAN);
 
-  gimp_signals[CLIPBOARD_CHANGED] =
+  ligma_signals[CLIPBOARD_CHANGED] =
     g_signal_new ("clipboard-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, clipboard_changed),
+                  G_STRUCT_OFFSET (LigmaClass, clipboard_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_signals[FILTER_HISTORY_CHANGED] =
+  ligma_signals[FILTER_HISTORY_CHANGED] =
     g_signal_new ("filter-history-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass,
+                  G_STRUCT_OFFSET (LigmaClass,
                                    filter_history_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_signals[IMAGE_OPENED] =
+  ligma_signals[IMAGE_OPENED] =
     g_signal_new ("image-opened",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, image_opened),
+                  G_STRUCT_OFFSET (LigmaClass, image_opened),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1, G_TYPE_FILE);
 
-  object_class->constructed      = gimp_constructed;
-  object_class->set_property     = gimp_set_property;
-  object_class->get_property     = gimp_get_property;
-  object_class->dispose          = gimp_dispose;
-  object_class->finalize         = gimp_finalize;
+  object_class->constructed      = ligma_constructed;
+  object_class->set_property     = ligma_set_property;
+  object_class->get_property     = ligma_get_property;
+  object_class->dispose          = ligma_dispose;
+  object_class->finalize         = ligma_finalize;
 
-  gimp_object_class->get_memsize = gimp_get_memsize;
+  ligma_object_class->get_memsize = ligma_get_memsize;
 
-  klass->initialize              = gimp_real_initialize;
-  klass->restore                 = gimp_real_restore;
-  klass->exit                    = gimp_real_exit;
+  klass->initialize              = ligma_real_initialize;
+  klass->restore                 = ligma_real_restore;
+  klass->exit                    = ligma_real_exit;
   klass->clipboard_changed       = NULL;
 
   g_object_class_install_property (object_class, PROP_VERBOSE,
                                    g_param_spec_boolean ("verbose", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_init (Gimp *gimp)
+ligma_init (Ligma *ligma)
 {
-  gimp->be_verbose       = FALSE;
-  gimp->no_data          = FALSE;
-  gimp->no_interface     = FALSE;
-  gimp->show_gui         = TRUE;
-  gimp->use_shm          = FALSE;
-  gimp->use_cpu_accel    = TRUE;
-  gimp->message_handler  = GIMP_CONSOLE;
-  gimp->show_playground  = FALSE;
-  gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
-  gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
+  ligma->be_verbose       = FALSE;
+  ligma->no_data          = FALSE;
+  ligma->no_interface     = FALSE;
+  ligma->show_gui         = TRUE;
+  ligma->use_shm          = FALSE;
+  ligma->use_cpu_accel    = TRUE;
+  ligma->message_handler  = LIGMA_CONSOLE;
+  ligma->show_playground  = FALSE;
+  ligma->stack_trace_mode = LIGMA_STACK_TRACE_NEVER;
+  ligma->pdb_compat_mode  = LIGMA_PDB_COMPAT_OFF;
 
-  gimp_gui_init (gimp);
+  ligma_gui_init (ligma);
 
-  gimp->parasites = gimp_parasite_list_new ();
+  ligma->parasites = ligma_parasite_list_new ();
 
-  gimp_enums_init ();
+  ligma_enums_init ();
 
-  gimp_units_init (gimp);
+  ligma_units_init (ligma);
 
-  gimp->images = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
+  ligma->images = ligma_list_new_weak (LIGMA_TYPE_IMAGE, FALSE);
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->images), "images");
 
-  gimp->next_guide_id        = 1;
-  gimp->next_sample_point_id = 1;
-  gimp->image_table          = gimp_id_table_new ();
-  gimp->item_table           = gimp_id_table_new ();
+  ligma->next_guide_id        = 1;
+  ligma->next_sample_point_id = 1;
+  ligma->image_table          = ligma_id_table_new ();
+  ligma->item_table           = ligma_id_table_new ();
 
-  gimp->displays = g_object_new (GIMP_TYPE_LIST,
-                                 "children-type", GIMP_TYPE_OBJECT,
-                                 "policy",        GIMP_CONTAINER_POLICY_WEAK,
+  ligma->displays = g_object_new (LIGMA_TYPE_LIST,
+                                 "children-type", LIGMA_TYPE_OBJECT,
+                                 "policy",        LIGMA_CONTAINER_POLICY_WEAK,
                                  "append",        TRUE,
                                  NULL);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
-  gimp->next_display_id = 1;
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->displays), "displays");
+  ligma->next_display_id = 1;
 
-  gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
+  ligma->named_buffers = ligma_list_new (LIGMA_TYPE_BUFFER, TRUE);
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->named_buffers),
                                "named buffers");
 
-  gimp_data_factories_init (gimp);
+  ligma_data_factories_init (ligma);
 
-  gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
-                                       "children-type", GIMP_TYPE_TOOL_INFO,
+  ligma->tool_info_list = g_object_new (LIGMA_TYPE_LIST,
+                                       "children-type", LIGMA_TYPE_TOOL_INFO,
                                        "append",        TRUE,
                                        NULL);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->tool_info_list),
                                "tool infos");
 
-  gimp->tool_item_list = g_object_new (GIMP_TYPE_LIST,
-                                       "children-type", GIMP_TYPE_TOOL_ITEM,
+  ligma->tool_item_list = g_object_new (LIGMA_TYPE_LIST,
+                                       "children-type", LIGMA_TYPE_TOOL_ITEM,
                                        "append",        TRUE,
                                        NULL);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_list),
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->tool_item_list),
                                "tool items");
 
-  gimp->tool_item_ui_list = gimp_tree_proxy_new_for_container (
-    gimp->tool_item_list);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_ui_list),
+  ligma->tool_item_ui_list = ligma_tree_proxy_new_for_container (
+    ligma->tool_item_list);
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->tool_item_ui_list),
                                "ui tool items");
 
-  gimp->documents = gimp_document_list_new (gimp);
+  ligma->documents = ligma_document_list_new (ligma);
 
-  gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
-  gimp_object_set_static_name (GIMP_OBJECT (gimp->templates), "templates");
+  ligma->templates = ligma_list_new (LIGMA_TYPE_TEMPLATE, TRUE);
+  ligma_object_set_static_name (LIGMA_OBJECT (ligma->templates), "templates");
 }
 
 static void
-gimp_constructed (GObject *object)
+ligma_constructed (GObject *object)
 {
-  Gimp *gimp = GIMP (object);
+  Ligma *ligma = LIGMA (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_modules_init (gimp);
+  ligma_modules_init (ligma);
 
-  gimp_paint_init (gimp);
+  ligma_paint_init (ligma);
 
-  gimp->extension_manager = gimp_extension_manager_new (gimp);
-  gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
-  gimp->pdb               = gimp_pdb_new (gimp);
+  ligma->extension_manager = ligma_extension_manager_new (ligma);
+  ligma->plug_in_manager   = ligma_plug_in_manager_new (ligma);
+  ligma->pdb               = ligma_pdb_new (ligma);
 
-  xcf_init (gimp);
-  file_data_init (gimp);
+  xcf_init (ligma);
+  file_data_init (ligma);
 
   /*  create user and default context  */
-  gimp_contexts_init (gimp);
+  ligma_contexts_init (ligma);
 
   /* Initialize the extension manager early as its contents may be used
    * at the very start (e.g. the splash image).
    */
-  gimp_extension_manager_initialize (gimp->extension_manager);
+  ligma_extension_manager_initialize (ligma->extension_manager);
 }
 
 static void
-gimp_set_property (GObject           *object,
+ligma_set_property (GObject           *object,
                    guint              property_id,
                    const GValue      *value,
                    GParamSpec        *pspec)
 {
-  Gimp *gimp = GIMP (object);
+  Ligma *ligma = LIGMA (object);
 
   switch (property_id)
     {
     case PROP_VERBOSE:
-      gimp->be_verbose = g_value_get_boolean (value);
+      ligma->be_verbose = g_value_get_boolean (value);
       break;
 
     default:
@@ -336,17 +336,17 @@ gimp_set_property (GObject           *object,
 }
 
 static void
-gimp_get_property (GObject    *object,
+ligma_get_property (GObject    *object,
                    guint       property_id,
                    GValue     *value,
                    GParamSpec *pspec)
 {
-  Gimp *gimp = GIMP (object);
+  Ligma *ligma = LIGMA (object);
 
   switch (property_id)
     {
     case PROP_VERBOSE:
-      g_value_set_boolean (value, gimp->be_verbose);
+      g_value_set_boolean (value, ligma->be_verbose);
       break;
 
     default:
@@ -356,240 +356,240 @@ gimp_get_property (GObject    *object,
 }
 
 static void
-gimp_dispose (GObject *object)
+ligma_dispose (GObject *object)
 {
-  Gimp *gimp = GIMP (object);
+  Ligma *ligma = LIGMA (object);
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  gimp_data_factories_clear (gimp);
+  ligma_data_factories_clear (ligma);
 
-  gimp_filter_history_clear (gimp);
+  ligma_filter_history_clear (ligma);
 
-  g_clear_object (&gimp->edit_config);
-  g_clear_object (&gimp->config);
+  g_clear_object (&ligma->edit_config);
+  g_clear_object (&ligma->config);
 
-  gimp_contexts_exit (gimp);
+  ligma_contexts_exit (ligma);
 
-  g_clear_object (&gimp->image_new_last_template);
+  g_clear_object (&ligma->image_new_last_template);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_finalize (GObject *object)
+ligma_finalize (GObject *object)
 {
-  Gimp  *gimp      = GIMP (object);
+  Ligma  *ligma      = LIGMA (object);
   GList *standards = NULL;
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   standards = g_list_prepend (standards,
-                              gimp_brush_get_standard (gimp->user_context));
+                              ligma_brush_get_standard (ligma->user_context));
   standards = g_list_prepend (standards,
-                              gimp_dynamics_get_standard (gimp->user_context));
+                              ligma_dynamics_get_standard (ligma->user_context));
   standards = g_list_prepend (standards,
-                              gimp_mybrush_get_standard (gimp->user_context));
+                              ligma_mybrush_get_standard (ligma->user_context));
   standards = g_list_prepend (standards,
-                              gimp_pattern_get_standard (gimp->user_context));
+                              ligma_pattern_get_standard (ligma->user_context));
   standards = g_list_prepend (standards,
-                              gimp_gradient_get_standard (gimp->user_context));
+                              ligma_gradient_get_standard (ligma->user_context));
   standards = g_list_prepend (standards,
-                              gimp_palette_get_standard (gimp->user_context));
+                              ligma_palette_get_standard (ligma->user_context));
 
-  g_clear_object (&gimp->templates);
-  g_clear_object (&gimp->documents);
+  g_clear_object (&ligma->templates);
+  g_clear_object (&ligma->documents);
 
-  gimp_tool_info_set_standard (gimp, NULL);
+  ligma_tool_info_set_standard (ligma, NULL);
 
-  g_clear_object (&gimp->tool_item_list);
-  g_clear_object (&gimp->tool_item_ui_list);
+  g_clear_object (&ligma->tool_item_list);
+  g_clear_object (&ligma->tool_item_ui_list);
 
-  if (gimp->tool_info_list)
+  if (ligma->tool_info_list)
     {
-      gimp_container_foreach (gimp->tool_info_list,
+      ligma_container_foreach (ligma->tool_info_list,
                               (GFunc) g_object_run_dispose, NULL);
-      g_clear_object (&gimp->tool_info_list);
+      g_clear_object (&ligma->tool_info_list);
     }
 
-  file_data_exit (gimp);
-  xcf_exit (gimp);
+  file_data_exit (ligma);
+  xcf_exit (ligma);
 
-  g_clear_object (&gimp->pdb);
+  g_clear_object (&ligma->pdb);
 
-  gimp_data_factories_exit (gimp);
+  ligma_data_factories_exit (ligma);
 
-  g_clear_object (&gimp->named_buffers);
-  g_clear_object (&gimp->clipboard_buffer);
-  g_clear_object (&gimp->clipboard_image);
-  g_clear_object (&gimp->displays);
-  g_clear_object (&gimp->item_table);
-  g_clear_object (&gimp->image_table);
-  g_clear_object (&gimp->images);
-  g_clear_object (&gimp->plug_in_manager);
-  g_clear_object (&gimp->extension_manager);
+  g_clear_object (&ligma->named_buffers);
+  g_clear_object (&ligma->clipboard_buffer);
+  g_clear_object (&ligma->clipboard_image);
+  g_clear_object (&ligma->displays);
+  g_clear_object (&ligma->item_table);
+  g_clear_object (&ligma->image_table);
+  g_clear_object (&ligma->images);
+  g_clear_object (&ligma->plug_in_manager);
+  g_clear_object (&ligma->extension_manager);
 
-  if (gimp->module_db)
-    gimp_modules_exit (gimp);
+  if (ligma->module_db)
+    ligma_modules_exit (ligma);
 
-  gimp_paint_exit (gimp);
+  ligma_paint_exit (ligma);
 
-  g_clear_object (&gimp->parasites);
-  g_clear_object (&gimp->default_folder);
+  g_clear_object (&ligma->parasites);
+  g_clear_object (&ligma->default_folder);
 
-  g_clear_pointer (&gimp->session_name, g_free);
+  g_clear_pointer (&ligma->session_name, g_free);
 
-  if (gimp->context_list)
+  if (ligma->context_list)
     {
       GList *list;
 
       g_warning ("%s: list of contexts not empty upon exit (%d contexts left)\n",
-                 G_STRFUNC, g_list_length (gimp->context_list));
+                 G_STRFUNC, g_list_length (ligma->context_list));
 
-      for (list = gimp->context_list; list; list = g_list_next (list))
-        g_printerr ("stale context: %s\n", gimp_object_get_name (list->data));
+      for (list = ligma->context_list; list; list = g_list_next (list))
+        g_printerr ("stale context: %s\n", ligma_object_get_name (list->data));
 
-      g_list_free (gimp->context_list);
-      gimp->context_list = NULL;
+      g_list_free (ligma->context_list);
+      ligma->context_list = NULL;
     }
 
   g_list_foreach (standards, (GFunc) g_object_unref, NULL);
   g_list_free (standards);
 
-  gimp_units_exit (gimp);
+  ligma_units_exit (ligma);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gint64
-gimp_get_memsize (GimpObject *object,
+ligma_get_memsize (LigmaObject *object,
                   gint64     *gui_size)
 {
-  Gimp   *gimp    = GIMP (object);
+  Ligma   *ligma    = LIGMA (object);
   gint64  memsize = 0;
 
-  memsize += gimp_g_list_get_memsize (gimp->user_units, 0 /* FIXME */);
+  memsize += ligma_g_list_get_memsize (ligma->user_units, 0 /* FIXME */);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->parasites),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->paint_info_list),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->paint_info_list),
                                       gui_size);
 
-  memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->plug_in_manager),
+  memsize += ligma_g_object_get_memsize (G_OBJECT (ligma->module_db));
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->plug_in_manager),
                                       gui_size);
 
-  memsize += gimp_g_list_get_memsize_foreach (gimp->filter_history,
-                                              (GimpMemsizeFunc)
-                                              gimp_object_get_memsize,
+  memsize += ligma_g_list_get_memsize_foreach (ligma->filter_history,
+                                              (LigmaMemsizeFunc)
+                                              ligma_object_get_memsize,
                                               gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_table), 0);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->item_table),  0);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->image_table), 0);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->item_table),  0);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->displays), gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->clipboard_image),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->clipboard_image),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->clipboard_buffer),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->clipboard_buffer),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers),
-                                      gui_size);
-
-  memsize += gimp_data_factories_get_memsize (gimp, gui_size);
-
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pdb), gui_size);
-
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->documents),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->templates),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_new_last_template),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->named_buffers),
                                       gui_size);
 
-  memsize += gimp_g_list_get_memsize (gimp->context_list, 0);
+  memsize += ligma_data_factories_get_memsize (ligma, gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->pdb), gui_size);
+
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->tool_info_list),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->standard_tool_info),
+                                      gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->documents),
+                                      gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->templates),
+                                      gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->image_new_last_template),
                                       gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  memsize += ligma_g_list_get_memsize (ligma->context_list, 0);
+
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->default_context),
+                                      gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (ligma->user_context),
+                                      gui_size);
+
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_real_initialize (Gimp               *gimp,
-                      GimpInitStatusFunc  status_callback)
+ligma_real_initialize (Ligma               *ligma,
+                      LigmaInitStatusFunc  status_callback)
 {
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
   status_callback (_("Initialization"), NULL, 0.0);
 
   /*  set the last values used to default values  */
-  gimp->image_new_last_template =
-    gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
+  ligma->image_new_last_template =
+    ligma_config_duplicate (LIGMA_CONFIG (ligma->config->default_image));
 
   /*  add data objects that need the user context  */
-  gimp_data_factories_add_builtin (gimp);
+  ligma_data_factories_add_builtin (ligma);
 
   /*  register all internal procedures  */
   status_callback (NULL, _("Internal Procedures"), 0.2);
-  internal_procs_init (gimp->pdb);
-  gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
+  internal_procs_init (ligma->pdb);
+  ligma_pdb_compat_procs_register (ligma->pdb, ligma->pdb_compat_mode);
 
-  gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
+  ligma_plug_in_manager_initialize (ligma->plug_in_manager, status_callback);
 
   status_callback (NULL, "", 1.0);
 }
 
 static void
-gimp_real_restore (Gimp               *gimp,
-                   GimpInitStatusFunc  status_callback)
+ligma_real_restore (Ligma               *ligma,
+                   LigmaInitStatusFunc  status_callback)
 {
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
-  gimp_plug_in_manager_restore (gimp->plug_in_manager,
-                                gimp_get_user_context (gimp), status_callback);
+  ligma_plug_in_manager_restore (ligma->plug_in_manager,
+                                ligma_get_user_context (ligma), status_callback);
 
   /*  initialize babl fishes  */
   status_callback (_("Initialization"), "Babl Fishes", 0.0);
-  gimp_babl_init_fishes (status_callback);
+  ligma_babl_init_fishes (status_callback);
 
-  gimp->restored = TRUE;
+  ligma->restored = TRUE;
 }
 
 static gboolean
-gimp_real_exit (Gimp     *gimp,
+ligma_real_exit (Ligma     *ligma,
                 gboolean  force)
 {
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  gimp_plug_in_manager_exit (gimp->plug_in_manager);
-  gimp_extension_manager_exit (gimp->extension_manager);
-  gimp_modules_unload (gimp);
+  ligma_plug_in_manager_exit (ligma->plug_in_manager);
+  ligma_extension_manager_exit (ligma->extension_manager);
+  ligma_modules_unload (ligma);
 
-  gimp_data_factories_save (gimp);
+  ligma_data_factories_save (ligma);
 
-  gimp_templates_save (gimp);
-  gimp_parasiterc_save (gimp);
-  gimp_unitrc_save (gimp);
+  ligma_templates_save (ligma);
+  ligma_parasiterc_save (ligma);
+  ligma_unitrc_save (ligma);
 
   return FALSE; /* continue exiting */
 }
 
-Gimp *
-gimp_new (const gchar       *name,
+Ligma *
+ligma_new (const gchar       *name,
           const gchar       *session_name,
           GFile             *default_folder,
           gboolean           be_verbose,
@@ -601,69 +601,69 @@ gimp_new (const gchar       *name,
           gboolean           console_messages,
           gboolean           show_playground,
           gboolean           show_debug_menu,
-          GimpStackTraceMode stack_trace_mode,
-          GimpPDBCompatMode  pdb_compat_mode)
+          LigmaStackTraceMode stack_trace_mode,
+          LigmaPDBCompatMode  pdb_compat_mode)
 {
-  Gimp *gimp;
+  Ligma *ligma;
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  gimp = g_object_new (GIMP_TYPE_GIMP,
+  ligma = g_object_new (LIGMA_TYPE_LIGMA,
                        "name",    name,
                        "verbose", be_verbose ? TRUE : FALSE,
                        NULL);
 
   if (default_folder)
-    gimp->default_folder = g_object_ref (default_folder);
+    ligma->default_folder = g_object_ref (default_folder);
 
-  gimp->session_name     = g_strdup (session_name);
-  gimp->no_data          = no_data          ? TRUE : FALSE;
-  gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
-  gimp->no_interface     = no_interface     ? TRUE : FALSE;
-  gimp->use_shm          = use_shm          ? TRUE : FALSE;
-  gimp->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
-  gimp->console_messages = console_messages ? TRUE : FALSE;
-  gimp->show_playground  = show_playground  ? TRUE : FALSE;
-  gimp->show_debug_menu  = show_debug_menu  ? TRUE : FALSE;
-  gimp->stack_trace_mode = stack_trace_mode;
-  gimp->pdb_compat_mode  = pdb_compat_mode;
+  ligma->session_name     = g_strdup (session_name);
+  ligma->no_data          = no_data          ? TRUE : FALSE;
+  ligma->no_fonts         = no_fonts         ? TRUE : FALSE;
+  ligma->no_interface     = no_interface     ? TRUE : FALSE;
+  ligma->use_shm          = use_shm          ? TRUE : FALSE;
+  ligma->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
+  ligma->console_messages = console_messages ? TRUE : FALSE;
+  ligma->show_playground  = show_playground  ? TRUE : FALSE;
+  ligma->show_debug_menu  = show_debug_menu  ? TRUE : FALSE;
+  ligma->stack_trace_mode = stack_trace_mode;
+  ligma->pdb_compat_mode  = pdb_compat_mode;
 
-  return gimp;
+  return ligma;
 }
 
 /**
- * gimp_set_show_gui:
- * @gimp:
+ * ligma_set_show_gui:
+ * @ligma:
  * @show:
  *
  * Test cases that tests the UI typically don't want any windows to be
  * presented during the test run. Allow them to set this.
  **/
 void
-gimp_set_show_gui (Gimp     *gimp,
+ligma_set_show_gui (Ligma     *ligma,
                    gboolean  show_gui)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp->show_gui = show_gui;
+  ligma->show_gui = show_gui;
 }
 
 /**
- * gimp_get_show_gui:
- * @gimp:
+ * ligma_get_show_gui:
+ * @ligma:
  *
  * Returns: %TRUE if the GUI should be shown, %FALSE otherwise.
  **/
 gboolean
-gimp_get_show_gui (Gimp *gimp)
+ligma_get_show_gui (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  return gimp->show_gui;
+  return ligma->show_gui;
 }
 
 static void
-gimp_global_config_notify (GObject    *global_config,
+ligma_global_config_notify (GObject    *global_config,
                            GParamSpec *param_spec,
                            GObject    *edit_config)
 {
@@ -679,13 +679,13 @@ gimp_global_config_notify (GObject    *global_config,
   if (g_param_values_cmp (param_spec, &global_value, &edit_value))
     {
       g_signal_handlers_block_by_func (edit_config,
-                                       gimp_edit_config_notify,
+                                       ligma_edit_config_notify,
                                        global_config);
 
       g_object_set_property (edit_config, param_spec->name, &global_value);
 
       g_signal_handlers_unblock_by_func (edit_config,
-                                         gimp_edit_config_notify,
+                                         ligma_edit_config_notify,
                                          global_config);
     }
 
@@ -694,7 +694,7 @@ gimp_global_config_notify (GObject    *global_config,
 }
 
 static void
-gimp_edit_config_notify (GObject    *edit_config,
+ligma_edit_config_notify (GObject    *edit_config,
                          GParamSpec *param_spec,
                          GObject    *global_config)
 {
@@ -709,9 +709,9 @@ gimp_edit_config_notify (GObject    *edit_config,
 
   if (g_param_values_cmp (param_spec, &edit_value, &global_value))
     {
-      if (param_spec->flags & GIMP_CONFIG_PARAM_RESTART)
+      if (param_spec->flags & LIGMA_CONFIG_PARAM_RESTART)
         {
-#ifdef GIMP_CONFIG_DEBUG
+#ifdef LIGMA_CONFIG_DEBUG
           g_print ("NOT Applying edit_config change of '%s' to global_config "
                    "because it needs restart\n",
                    param_spec->name);
@@ -719,18 +719,18 @@ gimp_edit_config_notify (GObject    *edit_config,
         }
       else
         {
-#ifdef GIMP_CONFIG_DEBUG
+#ifdef LIGMA_CONFIG_DEBUG
           g_print ("Applying edit_config change of '%s' to global_config\n",
                    param_spec->name);
 #endif
           g_signal_handlers_block_by_func (global_config,
-                                           gimp_global_config_notify,
+                                           ligma_global_config_notify,
                                            edit_config);
 
           g_object_set_property (global_config, param_spec->name, &edit_value);
 
           g_signal_handlers_unblock_by_func (global_config,
-                                             gimp_global_config_notify,
+                                             ligma_global_config_notify,
                                              edit_config);
         }
     }
@@ -740,45 +740,45 @@ gimp_edit_config_notify (GObject    *edit_config,
 }
 
 void
-gimp_load_config (Gimp  *gimp,
-                  GFile *alternate_system_gimprc,
-                  GFile *alternate_gimprc)
+ligma_load_config (Ligma  *ligma,
+                  GFile *alternate_system_ligmarc,
+                  GFile *alternate_ligmarc)
 {
-  GimpRc *gimprc;
+  LigmaRc *ligmarc;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (alternate_system_gimprc == NULL ||
-                    G_IS_FILE (alternate_system_gimprc));
-  g_return_if_fail (alternate_gimprc == NULL ||
-                    G_IS_FILE (alternate_gimprc));
-  g_return_if_fail (gimp->config == NULL);
-  g_return_if_fail (gimp->edit_config == NULL);
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (alternate_system_ligmarc == NULL ||
+                    G_IS_FILE (alternate_system_ligmarc));
+  g_return_if_fail (alternate_ligmarc == NULL ||
+                    G_IS_FILE (alternate_ligmarc));
+  g_return_if_fail (ligma->config == NULL);
+  g_return_if_fail (ligma->edit_config == NULL);
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
-  /*  this needs to be done before gimprc loading because gimprc can
+  /*  this needs to be done before ligmarc loading because ligmarc can
    *  use user defined units
    */
-  gimp_unitrc_load (gimp);
+  ligma_unitrc_load (ligma);
 
-  gimprc = gimp_rc_new (G_OBJECT (gimp),
-                        alternate_system_gimprc,
-                        alternate_gimprc,
-                        gimp->be_verbose);
+  ligmarc = ligma_rc_new (G_OBJECT (ligma),
+                        alternate_system_ligmarc,
+                        alternate_ligmarc,
+                        ligma->be_verbose);
 
-  gimp->config = GIMP_CORE_CONFIG (gimprc);
+  ligma->config = LIGMA_CORE_CONFIG (ligmarc);
 
-  gimp->edit_config = gimp_config_duplicate (GIMP_CONFIG (gimp->config));
+  ligma->edit_config = ligma_config_duplicate (LIGMA_CONFIG (ligma->config));
 
-  g_signal_connect_object (gimp->config, "notify",
-                           G_CALLBACK (gimp_global_config_notify),
-                           gimp->edit_config, 0);
-  g_signal_connect_object (gimp->edit_config, "notify",
-                           G_CALLBACK (gimp_edit_config_notify),
-                           gimp->config, 0);
+  g_signal_connect_object (ligma->config, "notify",
+                           G_CALLBACK (ligma_global_config_notify),
+                           ligma->edit_config, 0);
+  g_signal_connect_object (ligma->edit_config, "notify",
+                           G_CALLBACK (ligma_edit_config_notify),
+                           ligma->config, 0);
 
-  if (! gimp->show_playground)
+  if (! ligma->show_playground)
     {
       gboolean    use_opencl;
       gboolean    use_npd_tool;
@@ -797,33 +797,33 @@ gimp_load_config (Gimp  *gimp,
        * gone.
        */
 
-      g_object_get (gimp->edit_config,
+      g_object_get (ligma->edit_config,
                     "use-opencl",                     &use_opencl,
                     "playground-npd-tool",            &use_npd_tool,
                     "playground-seamless-clone-tool", &use_seamless_clone_tool,
                     NULL);
       if (use_opencl || use_npd_tool || use_seamless_clone_tool)
-        gimp->show_playground = TRUE;
+        ligma->show_playground = TRUE;
     }
 }
 
 void
-gimp_initialize (Gimp               *gimp,
-                 GimpInitStatusFunc  status_callback)
+ligma_initialize (Ligma               *ligma,
+                 LigmaInitStatusFunc  status_callback)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (status_callback != NULL);
-  g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
+  g_return_if_fail (LIGMA_IS_CORE_CONFIG (ligma->config));
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
-  g_signal_emit (gimp, gimp_signals[INITIALIZE], 0, status_callback);
+  g_signal_emit (ligma, ligma_signals[INITIALIZE], 0, status_callback);
 }
 
 /**
- * gimp_restore:
- * @gimp: a #Gimp object
+ * ligma_restore:
+ * @ligma: a #Ligma object
  * @error: a #GError for uncessful loading.
  *
  * This function always succeeds. If present, @error may be filled for
@@ -831,75 +831,75 @@ gimp_initialize (Gimp               *gimp,
  * fatale error.
  **/
 void
-gimp_restore (Gimp                *gimp,
-              GimpInitStatusFunc   status_callback,
+ligma_restore (Ligma                *ligma,
+              LigmaInitStatusFunc   status_callback,
               GError             **error)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (status_callback != NULL);
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
 
   /*  initialize  the global parasite table  */
   status_callback (_("Looking for data files"), _("Parasites"), 0.0);
-  gimp_parasiterc_load (gimp);
+  ligma_parasiterc_load (ligma);
 
-  /*  initialize the lists of gimp brushes, dynamics, patterns etc.  */
-  gimp_data_factories_load (gimp, status_callback);
+  /*  initialize the lists of ligma brushes, dynamics, patterns etc.  */
+  ligma_data_factories_load (ligma, status_callback);
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.8);
-  gimp_templates_load (gimp);
+  ligma_templates_load (ligma);
 
   /*  initialize the module list  */
   status_callback (NULL, _("Modules"), 0.9);
-  gimp_modules_load (gimp);
+  ligma_modules_load (ligma);
 
-  g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
+  g_signal_emit (ligma, ligma_signals[RESTORE], 0, status_callback);
 
   /* when done, make sure everything is clean, to clean out dirty
    * states from data objects which reference each other and got
    * dirtied by loading the referenced object
    */
-  gimp_data_factories_data_clean (gimp);
+  ligma_data_factories_data_clean (ligma);
 }
 
 /**
- * gimp_is_restored:
- * @gimp: a #Gimp object
+ * ligma_is_restored:
+ * @ligma: a #Ligma object
  *
- * Returns: %TRUE if GIMP is completely started, %FALSE otherwise.
+ * Returns: %TRUE if LIGMA is completely started, %FALSE otherwise.
  **/
 gboolean
-gimp_is_restored (Gimp *gimp)
+ligma_is_restored (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  return gimp->initialized && gimp->restored;
+  return ligma->initialized && ligma->restored;
 }
 
 /**
- * gimp_exit:
- * @gimp: a #Gimp object
+ * ligma_exit:
+ * @ligma: a #Ligma object
  * @force: whether to force the application to quit
  *
- * Exit this GIMP session. Unless @force is %TRUE, the user is queried
+ * Exit this LIGMA session. Unless @force is %TRUE, the user is queried
  * whether unsaved images should be saved and can cancel the operation.
  **/
 void
-gimp_exit (Gimp     *gimp,
+ligma_exit (Ligma     *ligma,
            gboolean  force)
 {
   gboolean  handled;
   GList    *image_iter;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  g_signal_emit (gimp, gimp_signals[EXIT], 0,
+  g_signal_emit (ligma, ligma_signals[EXIT], 0,
                  force ? TRUE : FALSE,
                  &handled);
 
@@ -908,156 +908,156 @@ gimp_exit (Gimp     *gimp,
 
   /* Get rid of images without display. We do this *after* handling the
    * usual exit callbacks, because the things that are torn down there
-   * might have references to these images (for instance GimpActions
+   * might have references to these images (for instance LigmaActions
    * in the UI manager).
    */
-  while ((image_iter = gimp_get_image_iter (gimp)))
+  while ((image_iter = ligma_get_image_iter (ligma)))
     {
-      GimpImage *image = image_iter->data;
+      LigmaImage *image = image_iter->data;
 
       g_object_unref (image);
     }
 }
 
 GList *
-gimp_get_image_iter (Gimp *gimp)
+ligma_get_image_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->images)->queue->head;
+  return LIGMA_LIST (ligma->images)->queue->head;
 }
 
 GList *
-gimp_get_display_iter (Gimp *gimp)
+ligma_get_display_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->displays)->queue->head;
+  return LIGMA_LIST (ligma->displays)->queue->head;
 }
 
 GList *
-gimp_get_image_windows (Gimp *gimp)
+ligma_get_image_windows (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_list_copy (gimp->image_windows);
+  return g_list_copy (ligma->image_windows);
 }
 
 GList *
-gimp_get_paint_info_iter (Gimp *gimp)
+ligma_get_paint_info_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->paint_info_list)->queue->head;
+  return LIGMA_LIST (ligma->paint_info_list)->queue->head;
 }
 
 GList *
-gimp_get_tool_info_iter (Gimp *gimp)
+ligma_get_tool_info_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->tool_info_list)->queue->head;
+  return LIGMA_LIST (ligma->tool_info_list)->queue->head;
 }
 
 GList *
-gimp_get_tool_item_iter (Gimp *gimp)
+ligma_get_tool_item_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->tool_item_list)->queue->head;
+  return LIGMA_LIST (ligma->tool_item_list)->queue->head;
 }
 
 GList *
-gimp_get_tool_item_ui_iter (Gimp *gimp)
+ligma_get_tool_item_ui_iter (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return GIMP_LIST (gimp->tool_item_ui_list)->queue->head;
+  return LIGMA_LIST (ligma->tool_item_ui_list)->queue->head;
 }
 
-GimpObject *
-gimp_get_clipboard_object (Gimp *gimp)
+LigmaObject *
+ligma_get_clipboard_object (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->clipboard_image)
-    return GIMP_OBJECT (gimp->clipboard_image);
+  if (ligma->clipboard_image)
+    return LIGMA_OBJECT (ligma->clipboard_image);
 
-  return GIMP_OBJECT (gimp->clipboard_buffer);
+  return LIGMA_OBJECT (ligma->clipboard_buffer);
 }
 
 void
-gimp_set_clipboard_image (Gimp      *gimp,
-                          GimpImage *image)
+ligma_set_clipboard_image (Ligma      *ligma,
+                          LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
-  g_clear_object (&gimp->clipboard_buffer);
-  g_set_object (&gimp->clipboard_image, image);
+  g_clear_object (&ligma->clipboard_buffer);
+  g_set_object (&ligma->clipboard_image, image);
 
   /* we want the signal emission */
-  g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
+  g_signal_emit (ligma, ligma_signals[CLIPBOARD_CHANGED], 0);
 }
 
-GimpImage *
-gimp_get_clipboard_image (Gimp *gimp)
+LigmaImage *
+ligma_get_clipboard_image (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return gimp->clipboard_image;
+  return ligma->clipboard_image;
 }
 
 void
-gimp_set_clipboard_buffer (Gimp       *gimp,
-                           GimpBuffer *buffer)
+ligma_set_clipboard_buffer (Ligma       *ligma,
+                           LigmaBuffer *buffer)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (buffer == NULL || LIGMA_IS_BUFFER (buffer));
 
-  g_clear_object (&gimp->clipboard_image);
-  g_set_object (&gimp->clipboard_buffer, buffer);
+  g_clear_object (&ligma->clipboard_image);
+  g_set_object (&ligma->clipboard_buffer, buffer);
 
   /* we want the signal emission */
-  g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
+  g_signal_emit (ligma, ligma_signals[CLIPBOARD_CHANGED], 0);
 }
 
-GimpBuffer *
-gimp_get_clipboard_buffer (Gimp *gimp)
+LigmaBuffer *
+ligma_get_clipboard_buffer (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return gimp->clipboard_buffer;
+  return ligma->clipboard_buffer;
 }
 
-GimpImage *
-gimp_create_image (Gimp              *gimp,
+LigmaImage *
+ligma_create_image (Ligma              *ligma,
                    gint               width,
                    gint               height,
-                   GimpImageBaseType  type,
-                   GimpPrecision      precision,
+                   LigmaImageBaseType  type,
+                   LigmaPrecision      precision,
                    gboolean           attach_comment)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  image = gimp_image_new (gimp, width, height, type, precision);
+  image = ligma_image_new (ligma, width, height, type, precision);
 
   if (attach_comment)
     {
       const gchar *comment;
 
-      comment = gimp_template_get_comment (gimp->config->default_image);
+      comment = ligma_template_get_comment (ligma->config->default_image);
 
       if (comment)
         {
-          GimpParasite *parasite = gimp_parasite_new ("gimp-comment",
-                                                      GIMP_PARASITE_PERSISTENT,
+          LigmaParasite *parasite = ligma_parasite_new ("ligma-comment",
+                                                      LIGMA_PARASITE_PERSISTENT,
                                                       strlen (comment) + 1,
                                                       comment);
-          gimp_image_parasite_attach (image, parasite, FALSE);
-          gimp_parasite_free (parasite);
+          ligma_image_parasite_attach (image, parasite, FALSE);
+          ligma_parasite_free (parasite);
         }
     }
 
@@ -1065,59 +1065,59 @@ gimp_create_image (Gimp              *gimp,
 }
 
 void
-gimp_set_default_context (Gimp        *gimp,
-                          GimpContext *context)
+ligma_set_default_context (Ligma        *ligma,
+                          LigmaContext *context)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
-  g_set_object (&gimp->default_context, context);
+  g_set_object (&ligma->default_context, context);
 }
 
-GimpContext *
-gimp_get_default_context (Gimp *gimp)
+LigmaContext *
+ligma_get_default_context (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return gimp->default_context;
+  return ligma->default_context;
 }
 
 void
-gimp_set_user_context (Gimp        *gimp,
-                       GimpContext *context)
+ligma_set_user_context (Ligma        *ligma,
+                       LigmaContext *context)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
-  g_set_object (&gimp->user_context, context);
+  g_set_object (&ligma->user_context, context);
 }
 
-GimpContext *
-gimp_get_user_context (Gimp *gimp)
+LigmaContext *
+ligma_get_user_context (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return gimp->user_context;
+  return ligma->user_context;
 }
 
-GimpToolInfo *
-gimp_get_tool_info (Gimp        *gimp,
+LigmaToolInfo *
+ligma_get_tool_info (Ligma        *ligma,
                     const gchar *tool_id)
 {
   gpointer info;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (tool_id != NULL, NULL);
 
-  info = gimp_container_get_child_by_name (gimp->tool_info_list, tool_id);
+  info = ligma_container_get_child_by_name (ligma->tool_info_list, tool_id);
 
-  return (GimpToolInfo *) info;
+  return (LigmaToolInfo *) info;
 }
 
 /**
- * gimp_message:
- * @gimp:     a pointer to the %Gimp object
- * @handler:  either a %GimpProgress or a %GtkWidget pointer
+ * ligma_message:
+ * @ligma:     a pointer to the %Ligma object
+ * @handler:  either a %LigmaProgress or a %GtkWidget pointer
  * @severity: severity of the message
  * @format:   printf-like format string
  * @...:      arguments to use with @format
@@ -1126,9 +1126,9 @@ gimp_get_tool_info (Gimp        *gimp,
  * depends on the @severity, the @handler object and user preferences.
  **/
 void
-gimp_message (Gimp                *gimp,
+ligma_message (Ligma                *ligma,
               GObject             *handler,
-              GimpMessageSeverity  severity,
+              LigmaMessageSeverity  severity,
               const gchar         *format,
               ...)
 {
@@ -1136,74 +1136,74 @@ gimp_message (Gimp                *gimp,
 
   va_start (args, format);
 
-  gimp_message_valist (gimp, handler, severity, format, args);
+  ligma_message_valist (ligma, handler, severity, format, args);
 
   va_end (args);
 }
 
 /**
- * gimp_message_valist:
- * @gimp:     a pointer to the %Gimp object
- * @handler:  either a %GimpProgress or a %GtkWidget pointer
+ * ligma_message_valist:
+ * @ligma:     a pointer to the %Ligma object
+ * @handler:  either a %LigmaProgress or a %GtkWidget pointer
  * @severity: severity of the message
  * @format:   printf-like format string
  * @args:     arguments to use with @format
  *
- * See documentation for gimp_message().
+ * See documentation for ligma_message().
  **/
 void
-gimp_message_valist (Gimp                *gimp,
+ligma_message_valist (Ligma                *ligma,
                      GObject             *handler,
-                     GimpMessageSeverity  severity,
+                     LigmaMessageSeverity  severity,
                      const gchar         *format,
                      va_list              args)
 {
   gchar *message;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (format != NULL);
 
   message = g_strdup_vprintf (format, args);
 
-  gimp_show_message (gimp, handler, severity, NULL, message);
+  ligma_show_message (ligma, handler, severity, NULL, message);
 
   g_free (message);
 }
 
 void
-gimp_message_literal (Gimp                *gimp,
+ligma_message_literal (Ligma                *ligma,
                       GObject             *handler,
-                      GimpMessageSeverity  severity,
+                      LigmaMessageSeverity  severity,
                       const gchar         *message)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (message != NULL);
 
-  gimp_show_message (gimp, handler, severity, NULL, message);
+  ligma_show_message (ligma, handler, severity, NULL, message);
 }
 
 void
-gimp_filter_history_changed (Gimp *gimp)
+ligma_filter_history_changed (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  g_signal_emit (gimp, gimp_signals[FILTER_HISTORY_CHANGED], 0);
+  g_signal_emit (ligma, ligma_signals[FILTER_HISTORY_CHANGED], 0);
 }
 
 void
-gimp_image_opened (Gimp  *gimp,
+ligma_image_opened (Ligma  *ligma,
                    GFile *file)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, file);
+  g_signal_emit (ligma, ligma_signals[IMAGE_OPENED], 0, file);
 }
 
 GFile *
-gimp_get_temp_file (Gimp        *gimp,
+ligma_get_temp_file (Ligma        *ligma,
                     const gchar *extension)
 {
   static gint  id = 0;
@@ -1212,17 +1212,17 @@ gimp_get_temp_file (Gimp        *gimp,
   GFile       *dir;
   GFile       *file;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (id == 0)
-    pid = gimp_get_pid ();
+    pid = ligma_get_pid ();
 
   if (extension)
-    basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
+    basename = g_strdup_printf ("ligma-temp-%d%d.%s", pid, id++, extension);
   else
-    basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
+    basename = g_strdup_printf ("ligma-temp-%d%d", pid, id++);
 
-  dir = gimp_file_new_for_config_path (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
+  dir = ligma_file_new_for_config_path (LIGMA_GEGL_CONFIG (ligma->config)->temp_path,
                                        NULL);
   if (! g_file_query_exists (dir, NULL))
     {

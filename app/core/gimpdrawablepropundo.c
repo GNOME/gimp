@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,12 +22,12 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp-memsize.h"
-#include "gimpimage.h"
-#include "gimpdrawable.h"
-#include "gimpdrawablepropundo.h"
+#include "ligma-memsize.h"
+#include "ligmaimage.h"
+#include "ligmadrawable.h"
+#include "ligmadrawablepropundo.h"
 
 
 enum
@@ -36,61 +36,61 @@ enum
 };
 
 
-static void   gimp_drawable_prop_undo_constructed  (GObject             *object);
-static void   gimp_drawable_prop_undo_set_property (GObject             *object,
+static void   ligma_drawable_prop_undo_constructed  (GObject             *object);
+static void   ligma_drawable_prop_undo_set_property (GObject             *object,
                                                     guint                property_id,
                                                     const GValue        *value,
                                                     GParamSpec          *pspec);
-static void   gimp_drawable_prop_undo_get_property (GObject             *object,
+static void   ligma_drawable_prop_undo_get_property (GObject             *object,
                                                     guint                property_id,
                                                     GValue              *value,
                                                     GParamSpec          *pspec);
 
-static void   gimp_drawable_prop_undo_pop          (GimpUndo            *undo,
-                                                    GimpUndoMode         undo_mode,
-                                                    GimpUndoAccumulator *accum);
+static void   ligma_drawable_prop_undo_pop          (LigmaUndo            *undo,
+                                                    LigmaUndoMode         undo_mode,
+                                                    LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpDrawablePropUndo, gimp_drawable_prop_undo,
-               GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaDrawablePropUndo, ligma_drawable_prop_undo,
+               LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_drawable_prop_undo_parent_class
+#define parent_class ligma_drawable_prop_undo_parent_class
 
 
 static void
-gimp_drawable_prop_undo_class_init (GimpDrawablePropUndoClass *klass)
+ligma_drawable_prop_undo_class_init (LigmaDrawablePropUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed  = gimp_drawable_prop_undo_constructed;
-  object_class->set_property = gimp_drawable_prop_undo_set_property;
-  object_class->get_property = gimp_drawable_prop_undo_get_property;
+  object_class->constructed  = ligma_drawable_prop_undo_constructed;
+  object_class->set_property = ligma_drawable_prop_undo_set_property;
+  object_class->get_property = ligma_drawable_prop_undo_get_property;
 
-  undo_class->pop            = gimp_drawable_prop_undo_pop;
+  undo_class->pop            = ligma_drawable_prop_undo_pop;
 }
 
 static void
-gimp_drawable_prop_undo_init (GimpDrawablePropUndo *undo)
+ligma_drawable_prop_undo_init (LigmaDrawablePropUndo *undo)
 {
 }
 
 static void
-gimp_drawable_prop_undo_constructed (GObject *object)
+ligma_drawable_prop_undo_constructed (GObject *object)
 {
-  GimpDrawablePropUndo *drawable_prop_undo = GIMP_DRAWABLE_PROP_UNDO (object);
-  GimpDrawable         *drawable;
+  LigmaDrawablePropUndo *drawable_prop_undo = LIGMA_DRAWABLE_PROP_UNDO (object);
+  LigmaDrawable         *drawable;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_DRAWABLE (LIGMA_ITEM_UNDO (object)->item));
 
-  drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (object)->item);
+  drawable = LIGMA_DRAWABLE (LIGMA_ITEM_UNDO (object)->item);
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_DRAWABLE_FORMAT:
-      drawable_prop_undo->format = gimp_drawable_get_format (drawable);
+    case LIGMA_UNDO_DRAWABLE_FORMAT:
+      drawable_prop_undo->format = ligma_drawable_get_format (drawable);
       break;
 
     default:
@@ -99,7 +99,7 @@ gimp_drawable_prop_undo_constructed (GObject *object)
 }
 
 static void
-gimp_drawable_prop_undo_set_property (GObject      *object,
+ligma_drawable_prop_undo_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
@@ -113,7 +113,7 @@ gimp_drawable_prop_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_drawable_prop_undo_get_property (GObject    *object,
+ligma_drawable_prop_undo_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
@@ -127,24 +127,24 @@ gimp_drawable_prop_undo_get_property (GObject    *object,
 }
 
 static void
-gimp_drawable_prop_undo_pop (GimpUndo            *undo,
-                             GimpUndoMode         undo_mode,
-                             GimpUndoAccumulator *accum)
+ligma_drawable_prop_undo_pop (LigmaUndo            *undo,
+                             LigmaUndoMode         undo_mode,
+                             LigmaUndoAccumulator *accum)
 {
-  GimpDrawablePropUndo *drawable_prop_undo = GIMP_DRAWABLE_PROP_UNDO (undo);
-  GimpDrawable         *drawable;
+  LigmaDrawablePropUndo *drawable_prop_undo = LIGMA_DRAWABLE_PROP_UNDO (undo);
+  LigmaDrawable         *drawable;
 
-  drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
+  drawable = LIGMA_DRAWABLE (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_DRAWABLE_FORMAT:
+    case LIGMA_UNDO_DRAWABLE_FORMAT:
       {
-        const Babl *format = gimp_drawable_get_format (drawable);
+        const Babl *format = ligma_drawable_get_format (drawable);
 
-        gimp_drawable_set_format (drawable,
+        ligma_drawable_set_format (drawable,
                                   drawable_prop_undo->format,
                                   TRUE, FALSE);
 

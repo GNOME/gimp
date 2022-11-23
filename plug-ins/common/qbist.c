@@ -33,10 +33,10 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define MAX_TRANSFORMS  36
@@ -45,7 +45,7 @@
 
 #define PLUG_IN_PROC    "plug-in-qbist"
 #define PLUG_IN_BINARY  "qbist"
-#define PLUG_IN_ROLE    "gimp-qbist"
+#define PLUG_IN_ROLE    "ligma-qbist"
 #define PLUG_IN_VERSION "January 2001, 1.12"
 
 
@@ -89,12 +89,12 @@ typedef struct _QbistClass QbistClass;
 
 struct _Qbist
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _QbistClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -103,16 +103,16 @@ struct _QbistClass
 
 GType                   qbist_get_type         (void) G_GNUC_CONST;
 
-static GList          * qbist_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * qbist_create_procedure (GimpPlugIn           *plug_in,
+static GList          * qbist_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * qbist_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * qbist_run              (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * qbist_run              (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                LigmaDrawable        **drawables,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
 static gboolean         dialog_run             (void);
@@ -135,9 +135,9 @@ static void             qbist                  (ExpInfo              *info,
                                                 gint                  oversampling);
 
 
-G_DEFINE_TYPE (Qbist, qbist, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Qbist, qbist, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (QBIST_TYPE)
+LIGMA_MAIN (QBIST_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -148,7 +148,7 @@ static GRand     *gr = NULL;
 static void
 qbist_class_init (QbistClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = qbist_query_procedures;
   plug_in_class->create_procedure = qbist_create_procedure;
@@ -161,32 +161,32 @@ qbist_init (Qbist *qbist)
 }
 
 static GList *
-qbist_query_procedures (GimpPlugIn *plug_in)
+qbist_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-qbist_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+qbist_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             qbist_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Qbist..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Qbist..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Generate a huge variety of "
                                           "abstract patterns"),
                                         "This Plug-in is based on an article by "
@@ -195,7 +195,7 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
                                         "pictures from a random genetic "
                                         "formula.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       PLUG_IN_VERSION);
@@ -203,16 +203,16 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
       /* Saving the pattern as a parasite is a trick allowing to store
        * random binary data.
        */
-      GIMP_PROC_AUX_ARG_PARASITE (procedure, "pattern",
+      LIGMA_PROC_AUX_ARG_PARASITE (procedure, "pattern",
                                   "Qbist pattern", NULL,
                                   G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "oversampling",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "oversampling",
                              "Oversampling", NULL,
                              1, 4, 4,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "data-path",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "data-path",
                                 "Path of data file",
                                 _("Any file which will be used as source for pattern generation"),
                                 NULL,
@@ -222,22 +222,22 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-qbist_run (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+qbist_run (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           LigmaDrawable        **drawables,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
+  LigmaProcedureConfig *config;
   gint                 sel_x1, sel_y1, sel_width, sel_height;
   gint                 img_height, img_width;
   GeglBuffer          *buffer;
   GeglBufferIterator  *iter;
-  GimpDrawable        *drawable;
-  GimpParasite        *pattern_parasite;
+  LigmaDrawable        *drawable;
+  LigmaParasite        *pattern_parasite;
   gconstpointer        pattern_data;
   guint32              pattern_data_length;
   gint                 total_pixels;
@@ -249,12 +249,12 @@ qbist_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -262,25 +262,25 @@ qbist_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
-  img_width  = gimp_drawable_get_width (drawable);
-  img_height = gimp_drawable_get_height (drawable);
+  img_width  = ligma_drawable_get_width (drawable);
+  img_height = ligma_drawable_get_height (drawable);
 
-  if (! gimp_drawable_is_rgb (drawable))
+  if (! ligma_drawable_is_rgb (drawable))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
     }
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_SUCCESS,
                                                NULL);
     }
 
@@ -292,7 +292,7 @@ qbist_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       g_object_get (config,
                     "data-path",    &qbist_info.path,
                     "oversampling", &qbist_info.oversampling,
@@ -300,23 +300,23 @@ qbist_run (GimpProcedure        *procedure,
                     NULL);
       if (pattern_parasite)
         {
-          pattern_data = gimp_parasite_get_data (pattern_parasite,
+          pattern_data = ligma_parasite_get_data (pattern_parasite,
                                                  &pattern_data_length);
           memcpy (&qbist_info.info, pattern_data, pattern_data_length);
-          gimp_parasite_free (pattern_parasite);
+          ligma_parasite_free (pattern_parasite);
           pattern_parasite = NULL;
         }
 
       if (! dialog_run ())
         {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          ligma_procedure_config_end_run (config, LIGMA_PDB_CANCEL);
 
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
 
-      pattern_parasite = gimp_parasite_new ("pattern", 0,
+      pattern_parasite = ligma_parasite_new ("pattern", 0,
                                             sizeof (qbist_info.info),
                                             &qbist_info.info);
       g_object_set (config,
@@ -324,17 +324,17 @@ qbist_run (GimpProcedure        *procedure,
                     "oversampling", qbist_info.oversampling,
                     "pattern",      pattern_parasite,
                     NULL);
-      gimp_parasite_free (pattern_parasite);
+      ligma_parasite_free (pattern_parasite);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      gimp_procedure_config_end_run (config, GIMP_PDB_CALLING_ERROR);
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+    case LIGMA_RUN_NONINTERACTIVE:
+      ligma_procedure_config_end_run (config, LIGMA_PDB_CALLING_ERROR);
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       g_object_get (config,
                     "data-path",    &qbist_info.path,
                     "oversampling", &qbist_info.oversampling,
@@ -343,10 +343,10 @@ qbist_run (GimpProcedure        *procedure,
 
       if (pattern_parasite)
         {
-          pattern_data = gimp_parasite_get_data (pattern_parasite,
+          pattern_data = ligma_parasite_get_data (pattern_parasite,
                                                  &pattern_data_length);
           memcpy (&qbist_info.info, pattern_data, pattern_data_length);
-          gimp_parasite_free (pattern_parasite);
+          ligma_parasite_free (pattern_parasite);
           pattern_parasite = NULL;
         }
       break;
@@ -355,7 +355,7 @@ qbist_run (GimpProcedure        *procedure,
   total_pixels = img_width * img_height;
   done_pixels  = 0;
 
-  buffer = gimp_drawable_get_shadow_buffer (drawable);
+  buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (0, 0,
@@ -366,7 +366,7 @@ qbist_run (GimpProcedure        *procedure,
 
   optimize (&qbist_info.info);
 
-  gimp_progress_init (_("Qbist"));
+  ligma_progress_init (_("Qbist"));
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -388,26 +388,26 @@ qbist_run (GimpProcedure        *procedure,
 
       done_pixels += roi.width * roi.height;
 
-      gimp_progress_update ((gdouble) done_pixels /
+      ligma_progress_update ((gdouble) done_pixels /
                             (gdouble) total_pixels);
     }
 
   g_object_unref (buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, sel_x1, sel_y1,
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, sel_x1, sel_y1,
                         sel_width, sel_height);
 
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 
   g_rand_free (gr);
 
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  ligma_procedure_config_end_run (config, LIGMA_PDB_SUCCESS);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 
@@ -716,9 +716,9 @@ dialog_update_previews (GtkWidget *widget,
 
       babl_process (fish, buf, u8_buf, size * size);
 
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview[j]),
+      ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview[j]),
                               0, 0, size, size,
-                              GIMP_RGBA_IMAGE,
+                              LIGMA_RGBA_IMAGE,
                               u8_buf,
                               size * 4);
     }
@@ -850,7 +850,7 @@ dialog_load (GtkWidget *widget,
 
                                         NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -892,7 +892,7 @@ dialog_save (GtkWidget *widget,
 
                                         NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -935,23 +935,23 @@ dialog_run (void)
   gint       i;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("G-Qbist"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1000,7 +1000,7 @@ dialog_run (void)
                         G_CALLBACK (dialog_select_preview),
                         (gpointer) & (info[(i + 5) % 9]));
 
-      preview[i] = gimp_preview_area_new ();
+      preview[i] = ligma_preview_area_new ();
       gtk_widget_set_size_request (preview[i], preview_size, preview_size);
       gtk_container_add (GTK_CONTAINER (button), preview[i]);
       gtk_widget_show (preview[i]);
@@ -1048,7 +1048,7 @@ dialog_run (void)
   gtk_widget_show (dialog);
   dialog_update_previews (NULL, preview_size);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     qbist_info.info = info[0];

@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-shadows-highlights.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-shadows-highlights.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,26 +24,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-shadows-highlights.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-shadows-highlights.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GtkWidget *
-_gimp_prop_gui_new_shadows_highlights (GObject                  *config,
+_ligma_prop_gui_new_shadows_highlights (GObject                  *config,
                                        GParamSpec              **param_specs,
                                        guint                     n_param_specs,
                                        GeglRectangle            *area,
-                                       GimpContext              *context,
-                                       GimpCreatePickerFunc      create_picker_func,
-                                       GimpCreateControllerFunc  create_controller_func,
+                                       LigmaContext              *context,
+                                       LigmaCreatePickerFunc      create_picker_func,
+                                       LigmaCreateControllerFunc  create_controller_func,
                                        gpointer                  creator)
 {
   GtkWidget   *main_vbox;
@@ -55,11 +55,11 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_frame_new (_("Shadows"));
+  frame = ligma_frame_new (_("Shadows"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -67,15 +67,15 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "shadows",
+  scale = ligma_prop_widget_new (config, "shadows",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "shadows-ccorrect",
+  scale = ligma_prop_widget_new (config, "shadows-ccorrect",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  frame = gimp_frame_new (_("Highlights"));
+  frame = ligma_frame_new (_("Highlights"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -83,15 +83,15 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "highlights",
+  scale = ligma_prop_widget_new (config, "highlights",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "highlights-ccorrect",
+  scale = ligma_prop_widget_new (config, "highlights-ccorrect",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  frame = gimp_frame_new (_("Common"));
+  frame = ligma_frame_new (_("Common"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -99,15 +99,15 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "whitepoint",
+  scale = ligma_prop_widget_new (config, "whitepoint",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "radius",
+  scale = ligma_prop_widget_new (config, "radius",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "compress",
+  scale = ligma_prop_widget_new (config, "compress",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

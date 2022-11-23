@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfile_pdb.c
+ * ligmafile_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpfile
- * @title: gimpfile
+ * SECTION: ligmafile
+ * @title: ligmafile
  * @short_description: Image file operations (load, save, etc.)
  *
  * Image file operations (load, save, etc.)
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_file_load:
+ * ligma_file_load:
  * @run_mode: The run mode.
  * @file: The file to load.
  *
@@ -49,34 +49,34 @@
  *
  * Returns: (transfer none): The output image.
  **/
-GimpImage *
-gimp_file_load (GimpRunMode  run_mode,
+LigmaImage *
+ligma_file_load (LigmaRunMode  run_mode,
                 GFile       *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RUN_MODE, run_mode,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-file-load",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }
 
 /**
- * gimp_file_load_layer:
+ * ligma_file_load_layer:
  * @run_mode: The run mode.
  * @image: Destination image.
  * @file: The file to load.
@@ -86,42 +86,42 @@ gimp_file_load (GimpRunMode  run_mode,
  * This procedure behaves like the file-load procedure but opens the
  * specified image as a layer for an existing image. The returned layer
  * needs to be added to the existing image with
- * gimp_image_insert_layer().
+ * ligma_image_insert_layer().
  *
  * Returns: (transfer none): The layer created when loading the image file.
  *
  * Since: 2.4
  **/
-GimpLayer *
-gimp_file_load_layer (GimpRunMode  run_mode,
-                      GimpImage   *image,
+LigmaLayer *
+ligma_file_load_layer (LigmaRunMode  run_mode,
+                      LigmaImage   *image,
                       GFile       *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RUN_MODE, run_mode,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-file-load-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_file_load_layers:
+ * ligma_file_load_layers:
  * @run_mode: The run mode.
  * @image: Destination image.
  * @file: The file to load.
@@ -132,54 +132,54 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * This procedure behaves like the file-load procedure but opens the
  * specified image as layers for an existing image. The returned layers
  * needs to be added to the existing image with
- * gimp_image_insert_layer().
+ * ligma_image_insert_layer().
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (array length=num_layers) (element-type LigmaLayer) (transfer container):
  *          The list of loaded layers.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
-GimpLayer **
-gimp_file_load_layers (GimpRunMode  run_mode,
-                       GimpImage   *image,
+LigmaLayer **
+ligma_file_load_layers (LigmaRunMode  run_mode,
+                       LigmaImage   *image,
                        GFile       *file,
                        gint        *num_layers)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer **layers = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer **layers = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RUN_MODE, run_mode,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-file-load-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_layers = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_layers = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layers;
 }
 
 /**
- * gimp_file_save:
+ * ligma_file_save:
  * @run_mode: The run mode.
  * @image: Input image.
  * @num_drawables: The number of drawables to save.
- * @drawables: (array length=num_drawables) (element-type GimpItem): Drawables to save.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): Drawables to save.
  * @file: The file to save the image in.
  *
  * Saves a file by extension.
@@ -190,39 +190,39 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save (GimpRunMode      run_mode,
-                GimpImage       *image,
+ligma_file_save (LigmaRunMode      run_mode,
+                LigmaImage       *image,
                 gint             num_drawables,
-                const GimpItem **drawables,
+                const LigmaItem **drawables,
                 GFile           *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RUN_MODE, run_mode,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 3), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 3), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-save",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-file-save",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_file_save_thumbnail:
+ * ligma_file_save_thumbnail:
  * @image: The image.
  * @file: The file the thumbnail belongs to.
  *
@@ -238,26 +238,26 @@ gimp_file_save (GimpRunMode      run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save_thumbnail (GimpImage *image,
+ligma_file_save_thumbnail (LigmaImage *image,
                           GFile     *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-save-thumbnail",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-file-save-thumbnail",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

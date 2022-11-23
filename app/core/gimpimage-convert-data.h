@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@
 /* Misc data definitions used by the convert.c code module.  Moved
    out here simply to unclutter convert.c, mostly. */
 
-#ifndef __GIMP_IMAGE_CONVERT_DATA_H__
-#define __GIMP_IMAGE_CONVERT_DATA_H__
+#ifndef __LIGMA_IMAGE_CONVERT_DATA_H__
+#define __LIGMA_IMAGE_CONVERT_DATA_H__
 
 #include <glib.h>
 
@@ -140,4 +140,4 @@ static const guchar DM_ORIGINAL[32][32] = {
   {170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85,170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85}
 };
 
-#endif /* __GIMP_IMAGE_CONVERT_DATA_H__ */
+#endif /* __LIGMA_IMAGE_CONVERT_DATA_H__ */

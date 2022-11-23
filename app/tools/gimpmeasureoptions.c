@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmeasuretool.c
- * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
+ * ligmameasuretool.c
+ * Copyright (C) 1999 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpmeasureoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmameasureoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -45,57 +45,57 @@ enum
 };
 
 
-static void   gimp_measure_options_set_property (GObject      *object,
+static void   ligma_measure_options_set_property (GObject      *object,
                                                  guint         property_id,
                                                  const GValue *value,
                                                  GParamSpec   *pspec);
-static void   gimp_measure_options_get_property (GObject      *object,
+static void   ligma_measure_options_get_property (GObject      *object,
                                                  guint         property_id,
                                                  GValue       *value,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpMeasureOptions, gimp_measure_options,
-               GIMP_TYPE_TRANSFORM_OPTIONS)
+G_DEFINE_TYPE (LigmaMeasureOptions, ligma_measure_options,
+               LIGMA_TYPE_TRANSFORM_OPTIONS)
 
 
 static void
-gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
+ligma_measure_options_class_init (LigmaMeasureOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_measure_options_set_property;
-  object_class->get_property = gimp_measure_options_get_property;
+  object_class->set_property = ligma_measure_options_set_property;
+  object_class->get_property = ligma_measure_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
                          "orientation",
                          _("Orientation"),
                          _("Orientation against which the angle is measured"),
-                         GIMP_TYPE_COMPASS_ORIENTATION,
-                         GIMP_COMPASS_ORIENTATION_AUTO,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COMPASS_ORIENTATION,
+                         LIGMA_COMPASS_ORIENTATION_AUTO,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                             "use-info-window",
                             _("Use info window"),
                             _("Open a floating dialog to view details "
                               "about measurements"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_measure_options_init (GimpMeasureOptions *options)
+ligma_measure_options_init (LigmaMeasureOptions *options)
 {
 }
 
 static void
-gimp_measure_options_set_property (GObject      *object,
+ligma_measure_options_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (object);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -112,12 +112,12 @@ gimp_measure_options_set_property (GObject      *object,
 }
 
 static void
-gimp_measure_options_get_property (GObject    *object,
+ligma_measure_options_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (object);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -134,37 +134,37 @@ gimp_measure_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_measure_options_gui (GimpToolOptions *tool_options)
+ligma_measure_options_gui (LigmaToolOptions *tool_options)
 {
   GObject            *config  = G_OBJECT (tool_options);
-  GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (tool_options);
-  GtkWidget          *vbox    = gimp_tool_options_gui (tool_options);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_OPTIONS (tool_options);
+  GtkWidget          *vbox    = ligma_tool_options_gui (tool_options);
   GtkWidget          *frame;
   GtkWidget          *button;
   GtkWidget          *vbox2;
   gchar              *str;
-  GdkModifierType     toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType     toggle_mask = ligma_get_toggle_behavior_mask ();
 
   /*  the orientation frame  */
   str = g_strdup_printf (_("Orientation  (%s)"),
-                         gimp_get_mod_string (toggle_mask));
-  frame = gimp_prop_enum_radio_frame_new (config, "orientation", str, -1, -1);
+                         ligma_get_mod_string (toggle_mask));
+  frame = ligma_prop_enum_radio_frame_new (config, "orientation", str, -1, -1);
   g_free (str);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   /*  the use_info_window toggle button  */
-  button = gimp_prop_check_button_new (config, "use-info-window", NULL);
+  button = ligma_prop_check_button_new (config, "use-info-window", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the straighten frame  */
-  frame = gimp_frame_new (_("Straighten"));
+  frame = ligma_frame_new (_("Straighten"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  the transform options  */
-  vbox2 = gimp_transform_options_gui (tool_options, FALSE, TRUE, TRUE);
+  vbox2 = ligma_transform_options_gui (tool_options, FALSE, TRUE, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -172,7 +172,7 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   button = gtk_button_new_with_label (_("Straighten"));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Rotate the active layer, selection or path "
                              "by the measured angle"),
                            NULL);

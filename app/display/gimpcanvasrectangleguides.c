@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasrectangleguides.c
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasrectangleguides.c
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "gimpcanvasrectangleguides.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvasrectangleguides.h"
+#include "ligmadisplayshell.h"
 
 
 #define SQRT5 2.236067977
@@ -47,103 +47,103 @@ enum
 };
 
 
-typedef struct _GimpCanvasRectangleGuidesPrivate GimpCanvasRectangleGuidesPrivate;
+typedef struct _LigmaCanvasRectangleGuidesPrivate LigmaCanvasRectangleGuidesPrivate;
 
-struct _GimpCanvasRectangleGuidesPrivate
+struct _LigmaCanvasRectangleGuidesPrivate
 {
   gdouble        x;
   gdouble        y;
   gdouble        width;
   gdouble        height;
-  GimpGuidesType type;
+  LigmaGuidesType type;
   gint           n_guides;
 };
 
 #define GET_PRIVATE(rectangle) \
-        ((GimpCanvasRectangleGuidesPrivate *) gimp_canvas_rectangle_guides_get_instance_private ((GimpCanvasRectangleGuides *) (rectangle)))
+        ((LigmaCanvasRectangleGuidesPrivate *) ligma_canvas_rectangle_guides_get_instance_private ((LigmaCanvasRectangleGuides *) (rectangle)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_rectangle_guides_set_property (GObject        *object,
+static void             ligma_canvas_rectangle_guides_set_property (GObject        *object,
                                                                    guint           property_id,
                                                                    const GValue   *value,
                                                                    GParamSpec     *pspec);
-static void             gimp_canvas_rectangle_guides_get_property (GObject        *object,
+static void             ligma_canvas_rectangle_guides_get_property (GObject        *object,
                                                                    guint           property_id,
                                                                    GValue         *value,
                                                                    GParamSpec     *pspec);
-static void             gimp_canvas_rectangle_guides_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_rectangle_guides_draw         (LigmaCanvasItem *item,
                                                                    cairo_t        *cr);
-static cairo_region_t * gimp_canvas_rectangle_guides_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_rectangle_guides_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasRectangleGuides,
-                            gimp_canvas_rectangle_guides, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasRectangleGuides,
+                            ligma_canvas_rectangle_guides, LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_rectangle_guides_parent_class
+#define parent_class ligma_canvas_rectangle_guides_parent_class
 
 
 static void
-gimp_canvas_rectangle_guides_class_init (GimpCanvasRectangleGuidesClass *klass)
+ligma_canvas_rectangle_guides_class_init (LigmaCanvasRectangleGuidesClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_rectangle_guides_set_property;
-  object_class->get_property = gimp_canvas_rectangle_guides_get_property;
+  object_class->set_property = ligma_canvas_rectangle_guides_set_property;
+  object_class->get_property = ligma_canvas_rectangle_guides_get_property;
 
-  item_class->draw           = gimp_canvas_rectangle_guides_draw;
-  item_class->get_extents    = gimp_canvas_rectangle_guides_get_extents;
+  item_class->draw           = ligma_canvas_rectangle_guides_draw;
+  item_class->get_extents    = ligma_canvas_rectangle_guides_get_extents;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_double ("x", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_double ("y", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_double ("width", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_double ("height", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,
-                                                      GIMP_TYPE_GUIDES_TYPE,
-                                                      GIMP_GUIDES_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_GUIDES_TYPE,
+                                                      LIGMA_GUIDES_NONE,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_N_GUIDES,
                                    g_param_spec_int ("n-guides", NULL, NULL,
                                                      1, 128, 4,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_rectangle_guides_init (GimpCanvasRectangleGuides *rectangle)
+ligma_canvas_rectangle_guides_init (LigmaCanvasRectangleGuides *rectangle)
 {
 }
 
 static void
-gimp_canvas_rectangle_guides_set_property (GObject      *object,
+ligma_canvas_rectangle_guides_set_property (GObject      *object,
                                            guint         property_id,
                                            const GValue *value,
                                            GParamSpec   *pspec)
 {
-  GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasRectangleGuidesPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -173,12 +173,12 @@ gimp_canvas_rectangle_guides_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_rectangle_guides_get_property (GObject    *object,
+ligma_canvas_rectangle_guides_get_property (GObject    *object,
                                            guint       property_id,
                                            GValue     *value,
                                            GParamSpec *pspec)
 {
-  GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasRectangleGuidesPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -208,21 +208,21 @@ gimp_canvas_rectangle_guides_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_rectangle_guides_transform (GimpCanvasItem *item,
+ligma_canvas_rectangle_guides_transform (LigmaCanvasItem *item,
                                         gdouble        *x1,
                                         gdouble        *y1,
                                         gdouble        *x2,
                                         gdouble        *y2)
 {
-  GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MIN (private->x,
                                         private->x + private->width),
                                    MIN (private->y,
                                         private->y + private->height),
                                    x1, y1);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MAX (private->x,
                                         private->x + private->width),
                                    MAX (private->y,
@@ -263,27 +263,27 @@ draw_vline (cairo_t *cr,
 }
 
 static void
-gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
+ligma_canvas_rectangle_guides_draw (LigmaCanvasItem *item,
                                    cairo_t        *cr)
 {
-  GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
   gdouble                           x1, y1;
   gdouble                           x2, y2;
   gint                              i;
 
-  gimp_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
+  ligma_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
 
   switch (private->type)
     {
-    case GIMP_GUIDES_NONE:
+    case LIGMA_GUIDES_NONE:
       break;
 
-    case GIMP_GUIDES_CENTER_LINES:
+    case LIGMA_GUIDES_CENTER_LINES:
       draw_hline (cr, x1, x2, (y1 + y2) / 2);
       draw_vline (cr, y1, y2, (x1 + x2) / 2);
       break;
 
-    case GIMP_GUIDES_THIRDS:
+    case LIGMA_GUIDES_THIRDS:
       draw_hline (cr, x1, x2, (2 * y1 +     y2) / 3);
       draw_hline (cr, x1, x2, (    y1 + 2 * y2) / 3);
 
@@ -291,7 +291,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
       draw_vline (cr, y1, y2, (    x1 + 2 * x2) / 3);
       break;
 
-    case GIMP_GUIDES_FIFTHS:
+    case LIGMA_GUIDES_FIFTHS:
       for (i = 0; i < 5; i++)
         {
           draw_hline (cr, x1, x2, y1 + i * (y2 - y1) / 5);
@@ -299,7 +299,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_GUIDES_GOLDEN:
+    case LIGMA_GUIDES_GOLDEN:
       draw_hline (cr, x1, x2, (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5));
       draw_hline (cr, x1, x2, ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5));
 
@@ -310,7 +310,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
     /* This code implements the method of diagonals discovered by
      * Edwin Westhoff - see http://www.diagonalmethod.info/
      */
-    case GIMP_GUIDES_DIAGONALS:
+    case LIGMA_GUIDES_DIAGONALS:
       {
         /* the side of the largest square that can be
          * fitted in whole into the rectangle (x1, y1), (x2, y2)
@@ -335,7 +335,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
       }
       break;
 
-    case GIMP_GUIDES_N_LINES:
+    case LIGMA_GUIDES_N_LINES:
       for (i = 0; i < private->n_guides; i++)
         {
           draw_hline (cr, x1, x2, y1 + i * (y2 - y1) / private->n_guides);
@@ -343,25 +343,25 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_GUIDES_SPACING:
+    case LIGMA_GUIDES_SPACING:
       break;
     }
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_rectangle_guides_get_extents (GimpCanvasItem *item)
+ligma_canvas_rectangle_guides_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
 
-  if (private->type != GIMP_GUIDES_NONE)
+  if (private->type != LIGMA_GUIDES_NONE)
     {
       cairo_rectangle_int_t rectangle;
       gdouble               x1, y1;
       gdouble               x2, y2;
 
-      gimp_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
+      ligma_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
 
       rectangle.x      = floor (x1 - 1.5);
       rectangle.y      = floor (y1 - 1.5);
@@ -374,18 +374,18 @@ gimp_canvas_rectangle_guides_get_extents (GimpCanvasItem *item)
   return NULL;
 }
 
-GimpCanvasItem *
-gimp_canvas_rectangle_guides_new (GimpDisplayShell *shell,
+LigmaCanvasItem *
+ligma_canvas_rectangle_guides_new (LigmaDisplayShell *shell,
                                   gdouble           x,
                                   gdouble           y,
                                   gdouble           width,
                                   gdouble           height,
-                                  GimpGuidesType    type,
+                                  LigmaGuidesType    type,
                                   gint              n_guides)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_RECTANGLE_GUIDES,
+  return g_object_new (LIGMA_TYPE_CANVAS_RECTANGLE_GUIDES,
                        "shell",    shell,
                        "x",        x,
                        "y",        y,
@@ -397,17 +397,17 @@ gimp_canvas_rectangle_guides_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_canvas_rectangle_guides_set (GimpCanvasItem *rectangle,
+ligma_canvas_rectangle_guides_set (LigmaCanvasItem *rectangle,
                                   gdouble         x,
                                   gdouble         y,
                                   gdouble         width,
                                   gdouble         height,
-                                  GimpGuidesType  type,
+                                  LigmaGuidesType  type,
                                   gint            n_guides)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_RECTANGLE_GUIDES (rectangle));
+  g_return_if_fail (LIGMA_IS_CANVAS_RECTANGLE_GUIDES (rectangle));
 
-  gimp_canvas_item_begin_change (rectangle);
+  ligma_canvas_item_begin_change (rectangle);
 
   g_object_set (rectangle,
                 "x",        x,
@@ -418,5 +418,5 @@ gimp_canvas_rectangle_guides_set (GimpCanvasItem *rectangle,
                 "n-guides", n_guides,
                 NULL);
 
-  gimp_canvas_item_end_change (rectangle);
+  ligma_canvas_item_end_change (rectangle);
 }

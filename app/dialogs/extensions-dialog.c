@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * extension-dialog.c
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpextensionmanager.h"
-#include "core/gimpextension.h"
+#include "core/ligma.h"
+#include "core/ligmaextensionmanager.h"
+#include "core/ligmaextension.h"
 
-#include "widgets/gimpextensiondetails.h"
-#include "widgets/gimpextensionlist.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpprefsbox.h"
+#include "widgets/ligmaextensiondetails.h"
+#include "widgets/ligmaextensionlist.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaprefsbox.h"
 
 #include "extensions-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-#define GIMP_EXTENSION_LIST_STACK_CHILD    "extension-list"
-#define GIMP_EXTENSION_DETAILS_STACK_CHILD "extension-details"
+#define LIGMA_EXTENSION_LIST_STACK_CHILD    "extension-list"
+#define LIGMA_EXTENSION_DETAILS_STACK_CHILD "extension-details"
 
 static void extensions_dialog_response            (GtkWidget            *widget,
                                                    gint                  response_id,
@@ -53,8 +53,8 @@ static void extensions_dialog_search_icon_pressed (GtkEntry             *entry,
                                                    GtkEntryIconPosition  icon_pos,
                                                    GdkEvent             *event,
                                                    gpointer              user_data);
-static void extensions_dialog_extension_activated (GimpExtensionList    *list,
-                                                   GimpExtension        *extension,
+static void extensions_dialog_extension_activated (LigmaExtensionList    *list,
+                                                   LigmaExtension        *extension,
                                                    GtkStack             *stack);
 static void extensions_dialog_back_button_clicked (GtkButton            *button,
                                                    GtkStack             *stack);
@@ -62,7 +62,7 @@ static void extensions_dialog_back_button_clicked (GtkButton            *button,
 /*  public function  */
 
 GtkWidget *
-extensions_dialog_new (Gimp *gimp)
+extensions_dialog_new (Ligma *ligma)
 {
   GtkWidget   *dialog;
   GtkWidget   *stack;
@@ -73,9 +73,9 @@ extensions_dialog_new (Gimp *gimp)
   GtkWidget   *widget;
   GtkTreeIter  top_iter;
 
-  dialog = gimp_dialog_new (_("Extensions"), "gimp-extensions",
+  dialog = ligma_dialog_new (_("Extensions"), "ligma-extensions",
                             NULL, 0, NULL,
-                            GIMP_HELP_EXTENSIONS_DIALOG,
+                            LIGMA_HELP_EXTENSIONS_DIALOG,
                             _("_OK"), GTK_RESPONSE_OK,
                             NULL);
 
@@ -96,58 +96,58 @@ extensions_dialog_new (Gimp *gimp)
 
   /* The extension lists. */
 
-  stacked = gimp_prefs_box_new ();
+  stacked = ligma_prefs_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (stacked), 12);
   gtk_stack_add_named (GTK_STACK (stack), stacked,
-                       GIMP_EXTENSION_LIST_STACK_CHILD);
+                       LIGMA_EXTENSION_LIST_STACK_CHILD);
   gtk_widget_show (stacked);
 
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (stacked),
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (stacked),
                                   "system-software-install",
-                                  /*"gimp-extensions-installed",*/
+                                  /*"ligma-extensions-installed",*/
                                   _("Installed Extensions"),
                                   _("Installed Extensions"),
-                                  GIMP_HELP_EXTENSIONS_INSTALLED,
+                                  LIGMA_HELP_EXTENSIONS_INSTALLED,
                                   NULL,
                                   &top_iter);
 
-  list = gimp_extension_list_new (gimp->extension_manager);
+  list = ligma_extension_list_new (ligma->extension_manager);
   g_signal_connect (list, "extension-activated",
                     G_CALLBACK (extensions_dialog_extension_activated),
                     stack);
-  gimp_extension_list_show_user (GIMP_EXTENSION_LIST (list));
+  ligma_extension_list_show_user (LIGMA_EXTENSION_LIST (list));
   gtk_box_pack_start (GTK_BOX (vbox), list, TRUE, TRUE, 1);
   gtk_widget_show (list);
 
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (stacked),
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (stacked),
                                   "system-software-install",
                                   _("System Extensions"),
                                   _("System Extensions"),
-                                  GIMP_HELP_EXTENSIONS_SYSTEM,
+                                  LIGMA_HELP_EXTENSIONS_SYSTEM,
                                   NULL,
                                   &top_iter);
 
-  list = gimp_extension_list_new (gimp->extension_manager);
+  list = ligma_extension_list_new (ligma->extension_manager);
   g_signal_connect (list, "extension-activated",
                     G_CALLBACK (extensions_dialog_extension_activated),
                     stack);
-  gimp_extension_list_show_system (GIMP_EXTENSION_LIST (list));
+  ligma_extension_list_show_system (LIGMA_EXTENSION_LIST (list));
   gtk_box_pack_start (GTK_BOX (vbox), list, TRUE, TRUE, 1);
   gtk_widget_show (list);
 
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (stacked),
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (stacked),
                                   "system-software-install",
                                   _("Install Extensions"),
                                   _("Install Extensions"),
-                                  GIMP_HELP_EXTENSIONS_INSTALL,
+                                  LIGMA_HELP_EXTENSIONS_INSTALL,
                                   NULL,
                                   &top_iter);
 
-  list = gimp_extension_list_new (gimp->extension_manager);
+  list = ligma_extension_list_new (ligma->extension_manager);
   g_signal_connect (list, "extension-activated",
                     G_CALLBACK (extensions_dialog_extension_activated),
                     stack);
-  gimp_extension_list_show_search (GIMP_EXTENSION_LIST (list), NULL);
+  ligma_extension_list_show_search (LIGMA_EXTENSION_LIST (list), NULL);
   gtk_box_pack_end (GTK_BOX (vbox), list, TRUE, TRUE, 1);
   gtk_widget_show (list);
 
@@ -184,13 +184,13 @@ extensions_dialog_new (Gimp *gimp)
 
   /* The extension details. */
 
-  stacked = gimp_extension_details_new ();
+  stacked = ligma_extension_details_new ();
   gtk_stack_add_named (GTK_STACK (stack), stacked,
-                       GIMP_EXTENSION_DETAILS_STACK_CHILD);
+                       LIGMA_EXTENSION_DETAILS_STACK_CHILD);
   gtk_widget_show (stacked);
 
   gtk_stack_set_visible_child_name (GTK_STACK (stack),
-                                    GIMP_EXTENSION_LIST_STACK_CHILD);
+                                    LIGMA_EXTENSION_LIST_STACK_CHILD);
   return dialog;
 }
 
@@ -206,9 +206,9 @@ static void
 extensions_dialog_search_activate (GtkEntry *entry,
                                    gpointer  user_data)
 {
-  GimpExtensionList *list = user_data;
+  LigmaExtensionList *list = user_data;
 
-  gimp_extension_list_show_search  (list, gtk_entry_get_text (entry));
+  ligma_extension_list_show_search  (list, gtk_entry_get_text (entry));
 }
 
 static void
@@ -221,8 +221,8 @@ extensions_dialog_search_icon_pressed (GtkEntry             *entry,
 }
 
 static void
-extensions_dialog_extension_activated (GimpExtensionList *list,
-                                       GimpExtension     *extension,
+extensions_dialog_extension_activated (LigmaExtensionList *list,
+                                       LigmaExtension     *extension,
                                        GtkStack          *stack)
 {
   GtkWidget *dialog = gtk_widget_get_toplevel (GTK_WIDGET (stack));
@@ -239,12 +239,12 @@ extensions_dialog_extension_activated (GimpExtensionList *list,
   gtk_header_bar_pack_start (GTK_HEADER_BAR (header_bar), widget);
 
   /* Show the details of the extension. */
-  widget = gtk_stack_get_child_by_name (stack, GIMP_EXTENSION_DETAILS_STACK_CHILD);
-  gimp_extension_details_set (GIMP_EXTENSION_DETAILS (widget),
+  widget = gtk_stack_get_child_by_name (stack, LIGMA_EXTENSION_DETAILS_STACK_CHILD);
+  ligma_extension_details_set (LIGMA_EXTENSION_DETAILS (widget),
                               extension);
 
   gtk_stack_set_visible_child_name (stack,
-                                    GIMP_EXTENSION_DETAILS_STACK_CHILD);
+                                    LIGMA_EXTENSION_DETAILS_STACK_CHILD);
 }
 
 static void
@@ -252,6 +252,6 @@ extensions_dialog_back_button_clicked (GtkButton *button,
                                        GtkStack  *stack)
 {
   gtk_stack_set_visible_child_name (stack,
-                                    GIMP_EXTENSION_LIST_STACK_CHILD);
+                                    LIGMA_EXTENSION_LIST_STACK_CHILD);
   gtk_widget_destroy (GTK_WIDGET (button));
 }

@@ -1,19 +1,19 @@
 --[[
-  This file is part of GIMP,
+  This file is part of LIGMA,
   copyright (c) 2015-2017 Tobias Ellinghaus
 
-  GIMP is free software: you can redistribute it and/or modify
+  LIGMA is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  GIMP is distributed in the hope that it will be useful,
+  LIGMA is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with GIMP.  If not, see <https://www.gnu.org/licenses/>.
+  along with LIGMA.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
 --[[
@@ -55,7 +55,7 @@ if dt.configuration.api_version_string < min_api_version then
   dt.print_error("the exit export script requires at least darktable version 1.7.0")
   return
 else
-  dt.print("closing darktable will export the image and make GIMP load it")
+  dt.print("closing darktable will export the image and make LIGMA load it")
 end
 
 local CURR_API_STRING = dt.configuration.api_version_string

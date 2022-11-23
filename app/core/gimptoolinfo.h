@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,32 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_INFO_H__
-#define __GIMP_TOOL_INFO_H__
+#ifndef __LIGMA_TOOL_INFO_H__
+#define __LIGMA_TOOL_INFO_H__
 
 
-#include "gimptoolitem.h"
+#include "ligmatoolitem.h"
 
 
-#define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())
-#define GIMP_TOOL_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
-#define GIMP_TOOL_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
-#define GIMP_IS_TOOL_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
-#define GIMP_IS_TOOL_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_INFO))
-#define GIMP_TOOL_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
+#define LIGMA_TYPE_TOOL_INFO            (ligma_tool_info_get_type ())
+#define LIGMA_TOOL_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_INFO, LigmaToolInfo))
+#define LIGMA_TOOL_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_INFO, LigmaToolInfoClass))
+#define LIGMA_IS_TOOL_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_INFO))
+#define LIGMA_IS_TOOL_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_INFO))
+#define LIGMA_TOOL_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_INFO, LigmaToolInfoClass))
 
 
-typedef struct _GimpToolInfoClass GimpToolInfoClass;
+typedef struct _LigmaToolInfoClass LigmaToolInfoClass;
 
-struct _GimpToolInfo
+struct _LigmaToolInfo
 {
-  GimpToolItem         parent_instance;
+  LigmaToolItem         parent_instance;
 
-  Gimp                *gimp;
+  Ligma                *ligma;
 
   GType                tool_type;
   GType                tool_options_type;
-  GimpContextPropMask  context_props;
+  LigmaContextPropMask  context_props;
 
   gchar               *label;
   gchar               *tooltip;
@@ -54,24 +54,24 @@ struct _GimpToolInfo
   gboolean             hidden;
   gboolean             experimental;
 
-  GimpToolOptions     *tool_options;
-  GimpPaintInfo       *paint_info;
+  LigmaToolOptions     *tool_options;
+  LigmaPaintInfo       *paint_info;
 
-  GimpContainer       *presets;
+  LigmaContainer       *presets;
 };
 
-struct _GimpToolInfoClass
+struct _LigmaToolInfoClass
 {
-  GimpToolItemClass  parent_class;
+  LigmaToolItemClass  parent_class;
 };
 
 
-GType          gimp_tool_info_get_type         (void) G_GNUC_CONST;
+GType          ligma_tool_info_get_type         (void) G_GNUC_CONST;
 
-GimpToolInfo * gimp_tool_info_new              (Gimp                *gimp,
+LigmaToolInfo * ligma_tool_info_new              (Ligma                *ligma,
                                                 GType                tool_type,
                                                 GType                tool_options_type,
-                                                GimpContextPropMask  context_props,
+                                                LigmaContextPropMask  context_props,
                                                 const gchar         *identifier,
                                                 const gchar         *label,
                                                 const gchar         *tooltip,
@@ -82,14 +82,14 @@ GimpToolInfo * gimp_tool_info_new              (Gimp                *gimp,
                                                 const gchar         *paint_core_name,
                                                 const gchar         *icon_name);
 
-void           gimp_tool_info_set_standard     (Gimp                *gimp,
-                                                GimpToolInfo        *tool_info);
-GimpToolInfo * gimp_tool_info_get_standard     (Gimp                *gimp);
+void           ligma_tool_info_set_standard     (Ligma                *ligma,
+                                                LigmaToolInfo        *tool_info);
+LigmaToolInfo * ligma_tool_info_get_standard     (Ligma                *ligma);
 
-gchar        * gimp_tool_info_get_action_name (GimpToolInfo         *tool_info);
+gchar        * ligma_tool_info_get_action_name (LigmaToolInfo         *tool_info);
 
-GFile        * gimp_tool_info_get_options_file (GimpToolInfo        *tool_info,
+GFile        * ligma_tool_info_get_options_file (LigmaToolInfo        *tool_info,
                                                 const gchar         *suffix);
 
 
-#endif  /*  __GIMP_TOOL_INFO_H__  */
+#endif  /*  __LIGMA_TOOL_INFO_H__  */

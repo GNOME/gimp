@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_LOAD_H__
-#define __GIMP_PATTERN_LOAD_H__
+#ifndef __LIGMA_PATTERN_LOAD_H__
+#define __LIGMA_PATTERN_LOAD_H__
 
 
-#define GIMP_PATTERN_FILE_EXTENSION ".pat"
+#define LIGMA_PATTERN_FILE_EXTENSION ".pat"
 
 
-GList * gimp_pattern_load        (GimpContext   *context,
+GList * ligma_pattern_load        (LigmaContext   *context,
                                   GFile         *file,
                                   GInputStream  *input,
                                   GError       **error);
-GList * gimp_pattern_load_pixbuf (GimpContext   *context,
+GList * ligma_pattern_load_pixbuf (LigmaContext   *context,
                                   GFile         *file,
                                   GInputStream  *input,
                                   GError       **error);
 
 
-#endif /* __GIMP_PATTERN_LOAD_H__ */
+#endif /* __LIGMA_PATTERN_LOAD_H__ */

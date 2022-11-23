@@ -219,7 +219,7 @@ uninst.inf documentation:
 
 Directives are parsed from the end of the file backwards as the first step of uninstall.
 
-IMPORTANT: From GIMP 2.10.12 onwards (Inno Setup 6 with support for per-user install), Registry keys referring to HKCR will be
+IMPORTANT: From LIGMA 2.10.12 onwards (Inno Setup 6 with support for per-user install), Registry keys referring to HKCR will be
 processed by the installer as the first step of install (and the entries will be removed from uninst.inf), since file associations
 code was rewritten.
 

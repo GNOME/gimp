@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpsizeentry.c
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
+ * ligmasizeentry.c
+ * Copyright (C) 1999-2000 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,19 +27,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
-#include "gimpeevl.h"
-#include "gimpsizeentry.h"
+#include "ligmaeevl.h"
+#include "ligmasizeentry.h"
 
 
 /**
- * SECTION: gimpsizeentry
- * @title: GimpSizeEntry
+ * SECTION: ligmasizeentry
+ * @title: LigmaSizeEntry
  * @short_description: Widget for entering pixel values and resolutions.
- * @see_also: #GimpUnit, #GimpUnitComboBox, gimp_coordinates_new()
+ * @see_also: #LigmaUnit, #LigmaUnitComboBox, ligma_coordinates_new()
  *
  * This widget is used to enter pixel distances/sizes and resolutions.
  *
@@ -47,26 +47,26 @@
  * each field automatic mappings are performed between the field's
  * "reference value" and its "value".
  *
- * There is a #GimpUnitComboBox right of the entry fields which lets
- * you specify the #GimpUnit of the displayed values.
+ * There is a #LigmaUnitComboBox right of the entry fields which lets
+ * you specify the #LigmaUnit of the displayed values.
  *
  * For each field, there can be one or two #GtkSpinButton's to enter
  * "value" and "reference value". If you specify @show_refval as
- * %FALSE in gimp_size_entry_new() there will be only one
- * #GtkSpinButton and the #GimpUnitComboBox will contain an item for
- * selecting GIMP_UNIT_PIXEL.
+ * %FALSE in ligma_size_entry_new() there will be only one
+ * #GtkSpinButton and the #LigmaUnitComboBox will contain an item for
+ * selecting LIGMA_UNIT_PIXEL.
  *
- * The "reference value" is either of GIMP_UNIT_PIXEL or dpi,
- * depending on which #GimpSizeEntryUpdatePolicy you specify in
- * gimp_size_entry_new().  The "value" is either the size in pixels
- * mapped to the size in a real-world-unit (see #GimpUnit) or the dpi
+ * The "reference value" is either of LIGMA_UNIT_PIXEL or dpi,
+ * depending on which #LigmaSizeEntryUpdatePolicy you specify in
+ * ligma_size_entry_new().  The "value" is either the size in pixels
+ * mapped to the size in a real-world-unit (see #LigmaUnit) or the dpi
  * value mapped to pixels per real-world-unit.
  **/
 
 
 #define SIZE_MAX_VALUE 500000.0
 
-#define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)
+#define LIGMA_SIZE_ENTRY_DIGITS(unit) (MIN (ligma_unit_get_digits (unit), 5) + 1)
 
 
 enum
@@ -78,9 +78,9 @@ enum
 };
 
 
-struct _GimpSizeEntryField
+struct _LigmaSizeEntryField
 {
-  GimpSizeEntry *gse;
+  LigmaSizeEntry *gse;
 
   gdouble        resolution;
   gdouble        lower;
@@ -103,84 +103,84 @@ struct _GimpSizeEntryField
 };
 
 
-struct _GimpSizeEntryPrivate
+struct _LigmaSizeEntryPrivate
 {
   GSList                    *fields;
   gint                       number_of_fields;
 
   GtkWidget                 *unit_combo;
-  GimpUnit                   unit;
+  LigmaUnit                   unit;
   gboolean                   menu_show_pixels;
   gboolean                   menu_show_percent;
 
   gboolean                   show_refval;
-  GimpSizeEntryUpdatePolicy  update_policy;
+  LigmaSizeEntryUpdatePolicy  update_policy;
 };
 
-#define GET_PRIVATE(obj) (((GimpSizeEntry *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaSizeEntry *) (obj))->priv)
 
 
-static void      gimp_size_entry_finalize            (GObject            *object);
-static void      gimp_size_entry_update_value        (GimpSizeEntryField *gsef,
+static void      ligma_size_entry_finalize            (GObject            *object);
+static void      ligma_size_entry_update_value        (LigmaSizeEntryField *gsef,
                                                       gdouble             value);
-static void      gimp_size_entry_value_callback      (GtkAdjustment      *adjustment,
+static void      ligma_size_entry_value_callback      (GtkAdjustment      *adjustment,
                                                       gpointer            data);
-static void      gimp_size_entry_update_refval       (GimpSizeEntryField *gsef,
+static void      ligma_size_entry_update_refval       (LigmaSizeEntryField *gsef,
                                                       gdouble             refval);
-static void      gimp_size_entry_refval_callback     (GtkAdjustment      *adjustment,
+static void      ligma_size_entry_refval_callback     (GtkAdjustment      *adjustment,
                                                       gpointer            data);
-static void      gimp_size_entry_update_unit         (GimpSizeEntry      *gse,
-                                                      GimpUnit            unit);
-static void      gimp_size_entry_unit_callback       (GtkWidget          *widget,
-                                                      GimpSizeEntry      *sizeentry);
-static void      gimp_size_entry_attach_eevl         (GtkSpinButton      *spin_button,
-                                                      GimpSizeEntryField *gsef);
-static gint      gimp_size_entry_eevl_input_callback (GtkSpinButton      *spinner,
+static void      ligma_size_entry_update_unit         (LigmaSizeEntry      *gse,
+                                                      LigmaUnit            unit);
+static void      ligma_size_entry_unit_callback       (GtkWidget          *widget,
+                                                      LigmaSizeEntry      *sizeentry);
+static void      ligma_size_entry_attach_eevl         (GtkSpinButton      *spin_button,
+                                                      LigmaSizeEntryField *gsef);
+static gint      ligma_size_entry_eevl_input_callback (GtkSpinButton      *spinner,
                                                       gdouble            *return_val,
                                                       gpointer           *data);
-static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
-                                                      GimpEevlQuantity   *factor,
+static gboolean  ligma_size_entry_eevl_unit_resolver  (const gchar        *ident,
+                                                      LigmaEevlQuantity   *factor,
                                                       gdouble            *offset,
                                                       gpointer            data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSizeEntry, ligma_size_entry, GTK_TYPE_GRID)
 
-#define parent_class gimp_size_entry_parent_class
+#define parent_class ligma_size_entry_parent_class
 
-static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_size_entry_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_size_entry_class_init (GimpSizeEntryClass *klass)
+ligma_size_entry_class_init (LigmaSizeEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_size_entry_signals[VALUE_CHANGED] =
+  ligma_size_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
+                  G_STRUCT_OFFSET (LigmaSizeEntryClass, value_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_size_entry_signals[REFVAL_CHANGED] =
+  ligma_size_entry_signals[REFVAL_CHANGED] =
     g_signal_new ("refval-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, refval_changed),
+                  G_STRUCT_OFFSET (LigmaSizeEntryClass, refval_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_size_entry_signals[UNIT_CHANGED] =
+  ligma_size_entry_signals[UNIT_CHANGED] =
     g_signal_new ("unit-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, unit_changed),
+                  G_STRUCT_OFFSET (LigmaSizeEntryClass, unit_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize = gimp_size_entry_finalize;
+  object_class->finalize = ligma_size_entry_finalize;
 
   klass->value_changed   = NULL;
   klass->refval_changed  = NULL;
@@ -188,32 +188,32 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 }
 
 static void
-gimp_size_entry_init (GimpSizeEntry *gse)
+ligma_size_entry_init (LigmaSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
+  LigmaSizeEntryPrivate *priv;
 
-  gse->priv = gimp_size_entry_get_instance_private (gse);
+  gse->priv = ligma_size_entry_get_instance_private (gse);
 
   priv = gse->priv;
 
-  priv->unit              = GIMP_UNIT_PIXEL;
+  priv->unit              = LIGMA_UNIT_PIXEL;
   priv->menu_show_pixels  = TRUE;
   priv->menu_show_percent = TRUE;
   priv->show_refval       = FALSE;
-  priv->update_policy     = GIMP_SIZE_ENTRY_UPDATE_NONE;
+  priv->update_policy     = LIGMA_SIZE_ENTRY_UPDATE_NONE;
 }
 
 static void
-gimp_size_entry_finalize (GObject *object)
+ligma_size_entry_finalize (GObject *object)
 {
-  GimpSizeEntryPrivate *priv = GET_PRIVATE (object);
+  LigmaSizeEntryPrivate *priv = GET_PRIVATE (object);
 
   if (priv->fields)
     {
       GSList *list;
 
       for (list = priv->fields; list; list = list->next)
-        g_slice_free (GimpSizeEntryField, list->data);
+        g_slice_free (LigmaSizeEntryField, list->data);
 
       g_slist_free (priv->fields);
       priv->fields = NULL;
@@ -223,70 +223,70 @@ gimp_size_entry_finalize (GObject *object)
 }
 
 /**
- * gimp_size_entry_new:
+ * ligma_size_entry_new:
  * @number_of_fields:  The number of input fields.
  * @unit:              The initial unit.
  * @unit_format:       A printf-like unit-format string as is used with
- *                     gimp_unit_menu_new().
+ *                     ligma_unit_menu_new().
  * @menu_show_pixels:  %TRUE if the unit menu should contain an item for
- *                     GIMP_UNIT_PIXEL (ignored if the @update_policy is not
- *                     GIMP_SIZE_ENTRY_UPDATE_NONE).
+ *                     LIGMA_UNIT_PIXEL (ignored if the @update_policy is not
+ *                     LIGMA_SIZE_ENTRY_UPDATE_NONE).
  * @menu_show_percent: %TRUE if the unit menu should contain an item for
- *                     GIMP_UNIT_PERCENT.
+ *                     LIGMA_UNIT_PERCENT.
  * @show_refval:       %TRUE if you want an extra "reference value"
  *                     spinbutton per input field.
  * @spinbutton_width:  The minimal horizontal size of the #GtkSpinButton's.
  * @update_policy:     How the automatic pixel <-> real-world-unit
  *                     calculations should be done.
  *
- * Creates a new #GimpSizeEntry widget.
+ * Creates a new #LigmaSizeEntry widget.
  *
  * To have all automatic calculations performed correctly, set up the
  * widget in the following order:
  *
- * 1. gimp_size_entry_new()
+ * 1. ligma_size_entry_new()
  *
- * 2. (for each additional input field) gimp_size_entry_add_field()
+ * 2. (for each additional input field) ligma_size_entry_add_field()
  *
- * 3. gimp_size_entry_set_unit()
+ * 3. ligma_size_entry_set_unit()
  *
  * For each input field:
  *
- * 4. gimp_size_entry_set_resolution()
+ * 4. ligma_size_entry_set_resolution()
  *
- * 5. gimp_size_entry_set_refval_boundaries()
- *    (or gimp_size_entry_set_value_boundaries())
+ * 5. ligma_size_entry_set_refval_boundaries()
+ *    (or ligma_size_entry_set_value_boundaries())
  *
- * 6. gimp_size_entry_set_size()
+ * 6. ligma_size_entry_set_size()
  *
- * 7. gimp_size_entry_set_refval() (or gimp_size_entry_set_value())
+ * 7. ligma_size_entry_set_refval() (or ligma_size_entry_set_value())
  *
- * The #GimpSizeEntry is derived from #GtkGrid and will have
+ * The #LigmaSizeEntry is derived from #GtkGrid and will have
  * an empty border of one cell width on each side plus an empty column left
- * of the #GimpUnitComboBox to allow the caller to add labels or a
- * #GimpChainButton.
+ * of the #LigmaUnitComboBox to allow the caller to add labels or a
+ * #LigmaChainButton.
  *
- * Returns: A Pointer to the new #GimpSizeEntry widget.
+ * Returns: A Pointer to the new #LigmaSizeEntry widget.
  **/
 GtkWidget *
-gimp_size_entry_new (gint                       number_of_fields,
-                     GimpUnit                   unit,
+ligma_size_entry_new (gint                       number_of_fields,
+                     LigmaUnit                   unit,
                      const gchar               *unit_format,
                      gboolean                   menu_show_pixels,
                      gboolean                   menu_show_percent,
                      gboolean                   show_refval,
                      gint                       spinbutton_width,
-                     GimpSizeEntryUpdatePolicy  update_policy)
+                     LigmaSizeEntryUpdatePolicy  update_policy)
 {
-  GimpSizeEntry        *gse;
-  GimpSizeEntryPrivate *priv;
-  GimpUnitStore        *store;
+  LigmaSizeEntry        *gse;
+  LigmaSizeEntryPrivate *priv;
+  LigmaUnitStore        *store;
   gint                  i;
 
   g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
                         NULL);
 
-  gse = g_object_new (GIMP_TYPE_SIZE_ENTRY, NULL);
+  gse = g_object_new (LIGMA_TYPE_SIZE_ENTRY, NULL);
 
   priv = GET_PRIVATE (gse);
 
@@ -298,7 +298,7 @@ gimp_size_entry_new (gint                       number_of_fields,
   /*  show the 'pixels' menu entry only if we are a 'size' sizeentry and
    *  don't have the reference value spinbutton
    */
-  if ((update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
+  if ((update_policy == LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION) ||
       (show_refval == TRUE))
     priv->menu_show_pixels = FALSE;
   else
@@ -306,14 +306,14 @@ gimp_size_entry_new (gint                       number_of_fields,
 
   /*  show the 'percent' menu entry only if we are a 'size' sizeentry
    */
-  if (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
+  if (update_policy == LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION)
     priv->menu_show_percent = FALSE;
   else
     priv->menu_show_percent = menu_show_percent;
 
   for (i = 0; i < number_of_fields; i++)
     {
-      GimpSizeEntryField *gsef = g_slice_new0 (GimpSizeEntryField);
+      LigmaSizeEntryField *gsef = g_slice_new0 (LigmaSizeEntryField);
       gint                digits;
 
       priv->fields = g_slist_append (priv->fields, gsef);
@@ -331,23 +331,23 @@ gimp_size_entry_new (gint                       number_of_fields,
       gsef->min_refval        = 0;
       gsef->max_refval        = SIZE_MAX_VALUE;
       gsef->refval_digits     =
-        (update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
+        (update_policy == LIGMA_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
       gsef->stop_recursion    = 0;
 
-      digits = ((unit == GIMP_UNIT_PIXEL) ?
-                gsef->refval_digits : ((unit == GIMP_UNIT_PERCENT) ?
-                                       2 : GIMP_SIZE_ENTRY_DIGITS (unit)));
+      digits = ((unit == LIGMA_UNIT_PIXEL) ?
+                gsef->refval_digits : ((unit == LIGMA_UNIT_PERCENT) ?
+                                       2 : LIGMA_SIZE_ENTRY_DIGITS (unit)));
 
       gsef->value_adjustment = gtk_adjustment_new (gsef->value,
                                                    gsef->min_value,
                                                    gsef->max_value,
                                                    1.0, 10.0, 0.0);
-      gsef->value_spinbutton = gimp_spin_button_new (gsef->value_adjustment,
+      gsef->value_spinbutton = ligma_spin_button_new (gsef->value_adjustment,
                                                      1.0, digits);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                    TRUE);
 
-      gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+      ligma_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                    gsef);
 
       if (spinbutton_width > 0)
@@ -363,7 +363,7 @@ gimp_size_entry_new (gint                       number_of_fields,
       gtk_grid_attach (GTK_GRID (gse), gsef->value_spinbutton,
                        i+1, priv->show_refval+1, 1, 1);
       g_signal_connect (gsef->value_adjustment, "value-changed",
-                        G_CALLBACK (gimp_size_entry_value_callback),
+                        G_CALLBACK (ligma_size_entry_value_callback),
                         gsef);
 
       gtk_widget_show (gsef->value_spinbutton);
@@ -374,7 +374,7 @@ gimp_size_entry_new (gint                       number_of_fields,
                                                         gsef->min_refval,
                                                         gsef->max_refval,
                                                         1.0, 10.0, 0.0);
-          gsef->refval_spinbutton = gimp_spin_button_new (gsef->refval_adjustment,
+          gsef->refval_spinbutton = ligma_spin_button_new (gsef->refval_adjustment,
                                                           1.0,
                                                           gsef->refval_digits);
           gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
@@ -386,21 +386,21 @@ gimp_size_entry_new (gint                       number_of_fields,
                            i + 1, 1, 1, 1);
           g_signal_connect (gsef->refval_adjustment,
                             "value-changed",
-                            G_CALLBACK (gimp_size_entry_refval_callback),
+                            G_CALLBACK (ligma_size_entry_refval_callback),
                             gsef);
 
           gtk_widget_show (gsef->refval_spinbutton);
         }
 
-      if (priv->menu_show_pixels && (unit == GIMP_UNIT_PIXEL) &&
+      if (priv->menu_show_pixels && (unit == LIGMA_UNIT_PIXEL) &&
           ! priv->show_refval)
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                     gsef->refval_digits);
     }
 
-  store = gimp_unit_store_new (priv->number_of_fields);
-  gimp_unit_store_set_has_pixels (store, priv->menu_show_pixels);
-  gimp_unit_store_set_has_percent (store, priv->menu_show_percent);
+  store = ligma_unit_store_new (priv->number_of_fields);
+  ligma_unit_store_set_has_pixels (store, priv->menu_show_pixels);
+  ligma_unit_store_set_has_percent (store, priv->menu_show_percent);
 
   if (unit_format)
     {
@@ -423,15 +423,15 @@ gimp_size_entry_new (gint                       number_of_fields,
       g_free (short_format);
     }
 
-  priv->unit_combo = gimp_unit_combo_box_new_with_model (store);
+  priv->unit_combo = ligma_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (priv->unit_combo), unit);
+  ligma_unit_combo_box_set_active (LIGMA_UNIT_COMBO_BOX (priv->unit_combo), unit);
 
   gtk_grid_attach (GTK_GRID (gse), priv->unit_combo,
                     i+2, priv->show_refval+1, 1, 1);
   g_signal_connect (priv->unit_combo, "changed",
-                    G_CALLBACK (gimp_size_entry_unit_callback),
+                    G_CALLBACK (ligma_size_entry_unit_callback),
                     gse);
   gtk_widget_show (priv->unit_combo);
 
@@ -440,28 +440,28 @@ gimp_size_entry_new (gint                       number_of_fields,
 
 
 /**
- * gimp_size_entry_add_field:
+ * ligma_size_entry_add_field:
  * @gse:               The sizeentry you want to add a field to.
  * @value_spinbutton:  The spinbutton to display the field's value.
  * @refval_spinbutton: (nullable): The spinbutton to display the field's reference value.
  *
- * Adds an input field to the #GimpSizeEntry.
+ * Adds an input field to the #LigmaSizeEntry.
  *
  * The new input field will have the index 0. If you specified @show_refval
- * as %TRUE in gimp_size_entry_new() you have to pass an additional
+ * as %TRUE in ligma_size_entry_new() you have to pass an additional
  * #GtkSpinButton to hold the reference value. If @show_refval was %FALSE,
  * @refval_spinbutton will be ignored.
  **/
 void
-gimp_size_entry_add_field  (GimpSizeEntry *gse,
+ligma_size_entry_add_field  (LigmaSizeEntry *gse,
                             GtkSpinButton *value_spinbutton,
                             GtkSpinButton *refval_spinbutton)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
   gint                  digits;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
   g_return_if_fail (GTK_IS_SPIN_BUTTON (value_spinbutton));
 
   priv = GET_PRIVATE (gse);
@@ -471,7 +471,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       g_return_if_fail (GTK_IS_SPIN_BUTTON (refval_spinbutton));
     }
 
-  gsef = g_slice_new0 (GimpSizeEntryField);
+  gsef = g_slice_new0 (LigmaSizeEntryField);
 
   priv->fields = g_slist_prepend (priv->fields, gsef);
   priv->number_of_fields++;
@@ -487,16 +487,16 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gsef->min_refval     = 0;
   gsef->max_refval     = SIZE_MAX_VALUE;
   gsef->refval_digits  =
-    (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
+    (priv->update_policy == LIGMA_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
   gsef->stop_recursion = 0;
 
   gsef->value_adjustment = gtk_spin_button_get_adjustment (value_spinbutton);
   gsef->value_spinbutton = GTK_WIDGET (value_spinbutton);
   g_signal_connect (gsef->value_adjustment, "value-changed",
-                    G_CALLBACK (gimp_size_entry_value_callback),
+                    G_CALLBACK (ligma_size_entry_value_callback),
                     gsef);
 
-  gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+  ligma_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                gsef);
 
   if (priv->show_refval)
@@ -504,69 +504,69 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       gsef->refval_adjustment = gtk_spin_button_get_adjustment (refval_spinbutton);
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
       g_signal_connect (gsef->refval_adjustment, "value-changed",
-                        G_CALLBACK (gimp_size_entry_refval_callback),
+                        G_CALLBACK (ligma_size_entry_refval_callback),
                         gsef);
     }
 
-  digits = ((priv->unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
-            (priv->unit == GIMP_UNIT_PERCENT) ? 2 :
-            GIMP_SIZE_ENTRY_DIGITS (priv->unit));
+  digits = ((priv->unit == LIGMA_UNIT_PIXEL) ? gsef->refval_digits :
+            (priv->unit == LIGMA_UNIT_PERCENT) ? 2 :
+            LIGMA_SIZE_ENTRY_DIGITS (priv->unit));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton), digits);
 
   if (priv->menu_show_pixels &&
       !priv->show_refval &&
-      (priv->unit == GIMP_UNIT_PIXEL))
+      (priv->unit == LIGMA_UNIT_PIXEL))
     {
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                   gsef->refval_digits);
     }
 }
 
-GimpSizeEntryUpdatePolicy
-gimp_size_entry_get_update_policy (GimpSizeEntry *gse)
+LigmaSizeEntryUpdatePolicy
+ligma_size_entry_get_update_policy (LigmaSizeEntry *gse)
 {
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), LIGMA_SIZE_ENTRY_UPDATE_SIZE);
 
   return GET_PRIVATE (gse)->update_policy;
 }
 
 gint
-gimp_size_entry_get_n_fields (GimpSizeEntry *gse)
+ligma_size_entry_get_n_fields (LigmaSizeEntry *gse)
 {
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 0);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), 0);
 
   return GET_PRIVATE (gse)->number_of_fields;
 }
 
 /**
- * gimp_size_entry_get_unit_combo:
- * @gse: a #GimpSizeEntry.
+ * ligma_size_entry_get_unit_combo:
+ * @gse: a #LigmaSizeEntry.
  *
- * Returns: (transfer none) (type GimpUnitComboBox): the size entry's #GimpUnitComboBox.
+ * Returns: (transfer none) (type LigmaUnitComboBox): the size entry's #LigmaUnitComboBox.
  **/
 GtkWidget *
-gimp_size_entry_get_unit_combo (GimpSizeEntry *gse)
+ligma_size_entry_get_unit_combo (LigmaSizeEntry *gse)
 {
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), NULL);
 
   return GET_PRIVATE (gse)->unit_combo;
 }
 
 /**
- * gimp_size_entry_attach_label:
+ * ligma_size_entry_attach_label:
  * @gse:       The sizeentry you want to add a label to.
  * @text:      The text of the label.
  * @row:       The row where the label will be attached.
  * @column:    The column where the label will be attached.
  * @alignment: The horizontal alignment of the label.
  *
- * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkGrid).
+ * Attaches a #GtkLabel to the #LigmaSizeEntry (which is a #GtkGrid).
  *
  * Returns: (transfer none): A pointer to the new #GtkLabel widget.
  **/
 GtkWidget *
-gimp_size_entry_attach_label (GimpSizeEntry *gse,
+ligma_size_entry_attach_label (LigmaSizeEntry *gse,
                               const gchar   *text,
                               gint           row,
                               gint           column,
@@ -574,7 +574,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 {
   GtkWidget *label;
 
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), NULL);
   g_return_val_if_fail (text != NULL, NULL);
 
   label = gtk_label_new_with_mnemonic (text);
@@ -617,130 +617,130 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 
 
 /**
- * gimp_size_entry_set_resolution:
+ * ligma_size_entry_set_resolution:
  * @gse:        The sizeentry you want to set a resolution for.
  * @field:      The index of the field you want to set the resolution for.
  * @resolution: The new resolution (in dpi) for the chosen @field.
  * @keep_size:  %TRUE if the @field's size in pixels should stay the same.
  *              %FALSE if the @field's size in units should stay the same.
  *
- * Sets the resolution (in dpi) for field # @field of the #GimpSizeEntry.
+ * Sets the resolution (in dpi) for field # @field of the #LigmaSizeEntry.
  *
  * The @resolution passed will be clamped to fit in
- * [#GIMP_MIN_RESOLUTION..#GIMP_MAX_RESOLUTION].
+ * [#LIGMA_MIN_RESOLUTION..#LIGMA_MAX_RESOLUTION].
  *
- * This function does nothing if the #GimpSizeEntryUpdatePolicy specified in
- * gimp_size_entry_new() doesn't equal to #GIMP_SIZE_ENTRY_UPDATE_SIZE.
+ * This function does nothing if the #LigmaSizeEntryUpdatePolicy specified in
+ * ligma_size_entry_new() doesn't equal to #LIGMA_SIZE_ENTRY_UPDATE_SIZE.
  **/
 void
-gimp_size_entry_set_resolution (GimpSizeEntry *gse,
+ligma_size_entry_set_resolution (LigmaSizeEntry *gse,
                                 gint           field,
                                 gdouble        resolution,
                                 gboolean       keep_size)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
   gfloat                val;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
 
-  resolution = CLAMP (resolution, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  resolution = CLAMP (resolution, LIGMA_MIN_RESOLUTION, LIGMA_MAX_RESOLUTION);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField*) g_slist_nth_data (priv->fields, field);
   gsef->resolution = resolution;
 
   val = gsef->value;
 
   gsef->stop_recursion = 0;
-  gimp_size_entry_set_refval_boundaries (gse, field,
+  ligma_size_entry_set_refval_boundaries (gse, field,
                                          gsef->min_refval, gsef->max_refval);
 
   if (! keep_size)
-    gimp_size_entry_set_value (gse, field, val);
+    ligma_size_entry_set_value (gse, field, val);
 }
 
 
 /**
- * gimp_size_entry_set_size:
+ * ligma_size_entry_set_size:
  * @gse:   The sizeentry you want to set a size for.
  * @field: The index of the field you want to set the size for.
  * @lower: The reference value which will be treated as 0%.
  * @upper: The reference value which will be treated as 100%.
  *
- * Sets the pixel values for field # @field of the #GimpSizeEntry
+ * Sets the pixel values for field # @field of the #LigmaSizeEntry
  * which will be treated as 0% and 100%.
  *
  * These values will be used if you specified @menu_show_percent as %TRUE
- * in gimp_size_entry_new() and the user has selected GIMP_UNIT_PERCENT in
- * the #GimpSizeEntry's #GimpUnitComboBox.
+ * in ligma_size_entry_new() and the user has selected LIGMA_UNIT_PERCENT in
+ * the #LigmaSizeEntry's #LigmaUnitComboBox.
  *
- * This function does nothing if the #GimpSizeEntryUpdatePolicy specified in
- * gimp_size_entry_new() doesn't equal to GIMP_SIZE_ENTRY_UPDATE_SIZE.
+ * This function does nothing if the #LigmaSizeEntryUpdatePolicy specified in
+ * ligma_size_entry_new() doesn't equal to LIGMA_SIZE_ENTRY_UPDATE_SIZE.
  **/
 void
-gimp_size_entry_set_size (GimpSizeEntry *gse,
+ligma_size_entry_set_size (LigmaSizeEntry *gse,
                           gint           field,
                           gdouble        lower,
                           gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField*) g_slist_nth_data (priv->fields, field);
   gsef->lower = lower;
   gsef->upper = upper;
 
-  gimp_size_entry_set_refval (gse, field, gsef->refval);
+  ligma_size_entry_set_refval (gse, field, gsef->refval);
 }
 
 
 /**
- * gimp_size_entry_set_value_boundaries:
+ * ligma_size_entry_set_value_boundaries:
  * @gse:   The sizeentry you want to set value boundaries for.
  * @field: The index of the field you want to set value boundaries for.
  * @lower: The new lower boundary of the value of the chosen @field.
  * @upper: The new upper boundary of the value of the chosen @field.
  *
  * Limits the range of possible values which can be entered in field # @field
- * of the #GimpSizeEntry.
+ * of the #LigmaSizeEntry.
  *
  * The current value of the @field will be clamped to fit in the @field's
  * new boundaries.
  *
  * NOTE: In most cases you won't be interested in this function because the
- *       #GimpSizeEntry's purpose is to shield the programmer from unit
- *       calculations. Use gimp_size_entry_set_refval_boundaries() instead.
+ *       #LigmaSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use ligma_size_entry_set_refval_boundaries() instead.
  *       Whatever you do, don't mix these calls. A size entry should either
  *       be clamped by the value or the reference value.
  **/
 void
-gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
+ligma_size_entry_set_value_boundaries (LigmaSizeEntry *gse,
                                       gint           field,
                                       gdouble        lower,
                                       gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField*) g_slist_nth_data (priv->fields, field);
   gsef->min_value        = lower;
   gsef->max_value        = upper;
 
@@ -758,19 +758,19 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
   gsef->stop_recursion++;
   switch (priv->update_policy)
     {
-    case GIMP_SIZE_ENTRY_UPDATE_NONE:
+    case LIGMA_SIZE_ENTRY_UPDATE_NONE:
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
+    case LIGMA_SIZE_ENTRY_UPDATE_SIZE:
       switch (priv->unit)
         {
-        case GIMP_UNIT_PIXEL:
-          gimp_size_entry_set_refval_boundaries (gse, field,
+        case LIGMA_UNIT_PIXEL:
+          ligma_size_entry_set_refval_boundaries (gse, field,
                                                  gsef->min_value,
                                                  gsef->max_value);
           break;
-        case GIMP_UNIT_PERCENT:
-          gimp_size_entry_set_refval_boundaries (gse, field,
+        case LIGMA_UNIT_PERCENT:
+          ligma_size_entry_set_refval_boundaries (gse, field,
                                                  gsef->lower +
                                                  (gsef->upper - gsef->lower) *
                                                  gsef->min_value / 100,
@@ -779,23 +779,23 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
                                                  gsef->max_value / 100);
           break;
         default:
-          gimp_size_entry_set_refval_boundaries (gse, field,
+          ligma_size_entry_set_refval_boundaries (gse, field,
                                                  gsef->min_value *
                                                  gsef->resolution /
-                                                 gimp_unit_get_factor (priv->unit),
+                                                 ligma_unit_get_factor (priv->unit),
                                                  gsef->max_value *
                                                  gsef->resolution /
-                                                 gimp_unit_get_factor (priv->unit));
+                                                 ligma_unit_get_factor (priv->unit));
           break;
         }
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      gimp_size_entry_set_refval_boundaries (gse, field,
+    case LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION:
+      ligma_size_entry_set_refval_boundaries (gse, field,
                                              gsef->min_value *
-                                             gimp_unit_get_factor (priv->unit),
+                                             ligma_unit_get_factor (priv->unit),
                                              gsef->max_value *
-                                             gimp_unit_get_factor (priv->unit));
+                                             ligma_unit_get_factor (priv->unit));
       break;
 
     default:
@@ -803,51 +803,51 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
     }
   gsef->stop_recursion--;
 
-  gimp_size_entry_set_value (gse, field, gsef->value);
+  ligma_size_entry_set_value (gse, field, gsef->value);
 
   g_object_thaw_notify (G_OBJECT (gsef->value_adjustment));
 }
 
 /**
- * gimp_size_entry_get_value:
+ * ligma_size_entry_get_value:
  * @gse:   The sizeentry you want to know a value of.
  * @field: The index of the field you want to know the value of.
  *
- * Returns the value of field # @field of the #GimpSizeEntry.
+ * Returns the value of field # @field of the #LigmaSizeEntry.
  *
  * The @value returned is a distance or resolution
- * in the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitComboBox.
+ * in the #LigmaUnit the user has selected in the #LigmaSizeEntry's
+ * #LigmaUnitComboBox.
  *
  * NOTE: In most cases you won't be interested in this value because the
- *       #GimpSizeEntry's purpose is to shield the programmer from unit
- *       calculations. Use gimp_size_entry_get_refval() instead.
+ *       #LigmaSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use ligma_size_entry_get_refval() instead.
  *
  * Returns: The value of the chosen @field.
  **/
 gdouble
-gimp_size_entry_get_value (GimpSizeEntry *gse,
+ligma_size_entry_get_value (LigmaSizeEntry *gse,
                            gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 0);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), 0);
 
   priv = GET_PRIVATE (gse);
 
   g_return_val_if_fail ((field >= 0) && (field < priv->number_of_fields), 0);
 
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField *) g_slist_nth_data (priv->fields, field);
 
   return gsef->value;
 }
 
 static void
-gimp_size_entry_update_value (GimpSizeEntryField *gsef,
+ligma_size_entry_update_value (LigmaSizeEntryField *gsef,
                               gdouble             value)
 {
-  GimpSizeEntryPrivate *priv = gsef->gse->priv;
+  LigmaSizeEntryPrivate *priv = gsef->gse->priv;
 
   if (gsef->stop_recursion > 1)
     return;
@@ -856,16 +856,16 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 
   switch (priv->update_policy)
     {
-    case GIMP_SIZE_ENTRY_UPDATE_NONE:
+    case LIGMA_SIZE_ENTRY_UPDATE_NONE:
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
+    case LIGMA_SIZE_ENTRY_UPDATE_SIZE:
       switch (priv->unit)
         {
-        case GIMP_UNIT_PIXEL:
+        case LIGMA_UNIT_PIXEL:
           gsef->refval = value;
           break;
-        case GIMP_UNIT_PERCENT:
+        case LIGMA_UNIT_PERCENT:
           gsef->refval =
             CLAMP (gsef->lower + (gsef->upper - gsef->lower) * value / 100,
                    gsef->min_refval, gsef->max_refval);
@@ -873,7 +873,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
         default:
           gsef->refval =
             CLAMP (value * gsef->resolution /
-                   gimp_unit_get_factor (priv->unit),
+                   ligma_unit_get_factor (priv->unit),
                    gsef->min_refval, gsef->max_refval);
           break;
         }
@@ -881,9 +881,9 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
         gtk_adjustment_set_value (gsef->refval_adjustment, gsef->refval);
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
+    case LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->refval =
-        CLAMP (value * gimp_unit_get_factor (priv->unit),
+        CLAMP (value * ligma_unit_get_factor (priv->unit),
                gsef->min_refval, gsef->max_refval);
       if (priv->show_refval)
         gtk_adjustment_set_value (gsef->refval_adjustment, gsef->refval);
@@ -893,65 +893,65 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
       break;
     }
 
-  g_signal_emit (gsef->gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
+  g_signal_emit (gsef->gse, ligma_size_entry_signals[VALUE_CHANGED], 0);
 }
 
 /**
- * gimp_size_entry_set_value:
+ * ligma_size_entry_set_value:
  * @gse:   The sizeentry you want to set a value for.
  * @field: The index of the field you want to set a value for.
  * @value: The new value for @field.
  *
- * Sets the value for field # @field of the #GimpSizeEntry.
+ * Sets the value for field # @field of the #LigmaSizeEntry.
  *
  * The @value passed is treated to be a distance or resolution
- * in the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitComboBox.
+ * in the #LigmaUnit the user has selected in the #LigmaSizeEntry's
+ * #LigmaUnitComboBox.
  *
  * NOTE: In most cases you won't be interested in this value because the
- *       #GimpSizeEntry's purpose is to shield the programmer from unit
- *       calculations. Use gimp_size_entry_set_refval() instead.
+ *       #LigmaSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use ligma_size_entry_set_refval() instead.
  **/
 void
-gimp_size_entry_set_value (GimpSizeEntry *gse,
+ligma_size_entry_set_value (LigmaSizeEntry *gse,
                            gint           field,
                            gdouble        value)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
 
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField *) g_slist_nth_data (priv->fields, field);
 
   value = CLAMP (value, gsef->min_value, gsef->max_value);
   gtk_adjustment_set_value (gsef->value_adjustment, value);
-  gimp_size_entry_update_value (gsef, value);
+  ligma_size_entry_update_value (gsef, value);
 }
 
 
 static void
-gimp_size_entry_value_callback (GtkAdjustment *adjustment,
+ligma_size_entry_value_callback (GtkAdjustment *adjustment,
                                 gpointer       data)
 {
-  GimpSizeEntryField *gsef;
+  LigmaSizeEntryField *gsef;
   gdouble             new_value;
 
-  gsef = (GimpSizeEntryField *) data;
+  gsef = (LigmaSizeEntryField *) data;
 
   new_value = gtk_adjustment_get_value (adjustment);
 
   if (gsef->value != new_value)
-    gimp_size_entry_update_value (gsef, new_value);
+    ligma_size_entry_update_value (gsef, new_value);
 }
 
 
 /**
- * gimp_size_entry_set_refval_boundaries:
+ * ligma_size_entry_set_refval_boundaries:
  * @gse:   The sizeentry you want to set the reference value boundaries for.
  * @field: The index of the field you want to set the reference value
  *         boundaries for.
@@ -959,28 +959,28 @@ gimp_size_entry_value_callback (GtkAdjustment *adjustment,
  * @upper: The new upper boundary of the reference value of the chosen @field.
  *
  * Limits the range of possible reference values which can be entered in
- * field # @field of the #GimpSizeEntry.
+ * field # @field of the #LigmaSizeEntry.
  *
  * The current reference value of the @field will be clamped to fit in the
  * @field's new boundaries.
  **/
 void
-gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
+ligma_size_entry_set_refval_boundaries (LigmaSizeEntry *gse,
                                        gint           field,
                                        gdouble        lower,
                                        gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField *) g_slist_nth_data (priv->fields, field);
   gsef->min_refval = lower;
   gsef->max_refval = upper;
 
@@ -1003,19 +1003,19 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
   gsef->stop_recursion++;
   switch (priv->update_policy)
     {
-    case GIMP_SIZE_ENTRY_UPDATE_NONE:
+    case LIGMA_SIZE_ENTRY_UPDATE_NONE:
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
+    case LIGMA_SIZE_ENTRY_UPDATE_SIZE:
       switch (priv->unit)
         {
-        case GIMP_UNIT_PIXEL:
-          gimp_size_entry_set_value_boundaries (gse, field,
+        case LIGMA_UNIT_PIXEL:
+          ligma_size_entry_set_value_boundaries (gse, field,
                                                 gsef->min_refval,
                                                 gsef->max_refval);
           break;
-        case GIMP_UNIT_PERCENT:
-          gimp_size_entry_set_value_boundaries (gse, field,
+        case LIGMA_UNIT_PERCENT:
+          ligma_size_entry_set_value_boundaries (gse, field,
                                                 100 * (gsef->min_refval -
                                                        gsef->lower) /
                                                 (gsef->upper - gsef->lower),
@@ -1024,23 +1024,23 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
                                                 (gsef->upper - gsef->lower));
           break;
         default:
-          gimp_size_entry_set_value_boundaries (gse, field,
+          ligma_size_entry_set_value_boundaries (gse, field,
                                                 gsef->min_refval *
-                                                gimp_unit_get_factor (priv->unit) /
+                                                ligma_unit_get_factor (priv->unit) /
                                                 gsef->resolution,
                                                 gsef->max_refval *
-                                                gimp_unit_get_factor (priv->unit) /
+                                                ligma_unit_get_factor (priv->unit) /
                                                 gsef->resolution);
           break;
         }
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      gimp_size_entry_set_value_boundaries (gse, field,
+    case LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION:
+      ligma_size_entry_set_value_boundaries (gse, field,
                                             gsef->min_refval /
-                                            gimp_unit_get_factor (priv->unit),
+                                            ligma_unit_get_factor (priv->unit),
                                             gsef->max_refval /
-                                            gimp_unit_get_factor (priv->unit));
+                                            ligma_unit_get_factor (priv->unit));
       break;
 
     default:
@@ -1048,92 +1048,92 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
     }
   gsef->stop_recursion--;
 
-  gimp_size_entry_set_refval (gse, field, gsef->refval);
+  ligma_size_entry_set_refval (gse, field, gsef->refval);
 
   if (priv->show_refval)
     g_object_thaw_notify (G_OBJECT (gsef->refval_adjustment));
 }
 
 /**
- * gimp_size_entry_set_refval_digits:
+ * ligma_size_entry_set_refval_digits:
  * @gse:    The sizeentry you want to set the reference value digits for.
  * @field:  The index of the field you want to set the reference value for.
  * @digits: The new number of decimal digits for the #GtkSpinButton which
  *          displays @field's reference value.
  *
- * Sets the decimal digits of field # @field of the #GimpSizeEntry to
+ * Sets the decimal digits of field # @field of the #LigmaSizeEntry to
  * @digits.
  *
  * If you don't specify this value explicitly, the reference value's number
- * of digits will equal to 0 for #GIMP_SIZE_ENTRY_UPDATE_SIZE and to 2 for
- * #GIMP_SIZE_ENTRY_UPDATE_RESOLUTION.
+ * of digits will equal to 0 for #LIGMA_SIZE_ENTRY_UPDATE_SIZE and to 2 for
+ * #LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION.
  **/
 void
-gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
+ligma_size_entry_set_refval_digits (LigmaSizeEntry *gse,
                                    gint           field,
                                    gint           digits)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
   g_return_if_fail ((digits >= 0) && (digits <= 6));
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField*) g_slist_nth_data (priv->fields, field);
   gsef->refval_digits = digits;
 
-  if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
+  if (priv->update_policy == LIGMA_SIZE_ENTRY_UPDATE_SIZE)
     {
       if (priv->show_refval)
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
                                     gsef->refval_digits);
-      else if (priv->unit == GIMP_UNIT_PIXEL)
+      else if (priv->unit == LIGMA_UNIT_PIXEL)
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                     gsef->refval_digits);
     }
 }
 
 /**
- * gimp_size_entry_get_refval:
+ * ligma_size_entry_get_refval:
  * @gse:   The sizeentry you want to know a reference value of.
  * @field: The index of the field you want to know the reference value of.
  *
- * Returns the reference value for field # @field of the #GimpSizeEntry.
+ * Returns the reference value for field # @field of the #LigmaSizeEntry.
  *
  * The reference value is either a distance in pixels or a resolution
- * in dpi, depending on which #GimpSizeEntryUpdatePolicy you chose in
- * gimp_size_entry_new().
+ * in dpi, depending on which #LigmaSizeEntryUpdatePolicy you chose in
+ * ligma_size_entry_new().
  *
  * Returns: The reference value of the chosen @field.
  **/
 gdouble
-gimp_size_entry_get_refval (GimpSizeEntry *gse,
+ligma_size_entry_get_refval (LigmaSizeEntry *gse,
                             gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
   /*  return 1.0 to avoid division by zero  */
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 1.0);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), 1.0);
 
   priv = GET_PRIVATE (gse);
 
   g_return_val_if_fail ((field >= 0) && (field < priv->number_of_fields), 1.0);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField*) g_slist_nth_data (priv->fields, field);
 
   return gsef->refval;
 }
 
 static void
-gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
+ligma_size_entry_update_refval (LigmaSizeEntryField *gsef,
                                gdouble             refval)
 {
-  GimpSizeEntryPrivate *priv = GET_PRIVATE (gsef->gse);
+  LigmaSizeEntryPrivate *priv = GET_PRIVATE (gsef->gse);
 
   if (gsef->stop_recursion > 1)
     return;
@@ -1142,23 +1142,23 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 
   switch (priv->update_policy)
     {
-    case GIMP_SIZE_ENTRY_UPDATE_NONE:
+    case LIGMA_SIZE_ENTRY_UPDATE_NONE:
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
+    case LIGMA_SIZE_ENTRY_UPDATE_SIZE:
       switch (priv->unit)
         {
-        case GIMP_UNIT_PIXEL:
+        case LIGMA_UNIT_PIXEL:
           gsef->value = refval;
           break;
-        case GIMP_UNIT_PERCENT:
+        case LIGMA_UNIT_PERCENT:
           gsef->value =
             CLAMP (100 * (refval - gsef->lower) / (gsef->upper - gsef->lower),
                    gsef->min_value, gsef->max_value);
           break;
         default:
           gsef->value =
-            CLAMP (refval * gimp_unit_get_factor (priv->unit) /
+            CLAMP (refval * ligma_unit_get_factor (priv->unit) /
                    gsef->resolution,
                    gsef->min_value, gsef->max_value);
           break;
@@ -1166,9 +1166,9 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
       gtk_adjustment_set_value (gsef->value_adjustment, gsef->value);
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
+    case LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->value =
-        CLAMP (refval / gimp_unit_get_factor (priv->unit),
+        CLAMP (refval / ligma_unit_get_factor (priv->unit),
                gsef->min_value, gsef->max_value);
       gtk_adjustment_set_value (gsef->value_adjustment, gsef->value);
       break;
@@ -1177,210 +1177,210 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
       break;
     }
 
-  g_signal_emit (gsef->gse, gimp_size_entry_signals[REFVAL_CHANGED], 0);
+  g_signal_emit (gsef->gse, ligma_size_entry_signals[REFVAL_CHANGED], 0);
 }
 
 /**
- * gimp_size_entry_set_refval:
+ * ligma_size_entry_set_refval:
  * @gse:    The sizeentry you want to set a reference value for.
  * @field:  The index of the field you want to set the reference value for.
  * @refval: The new reference value for @field.
  *
- * Sets the reference value for field # @field of the #GimpSizeEntry.
+ * Sets the reference value for field # @field of the #LigmaSizeEntry.
  *
  * The @refval passed is either a distance in pixels or a resolution in dpi,
- * depending on which #GimpSizeEntryUpdatePolicy you chose in
- * gimp_size_entry_new().
+ * depending on which #LigmaSizeEntryUpdatePolicy you chose in
+ * ligma_size_entry_new().
  **/
 void
-gimp_size_entry_set_refval (GimpSizeEntry *gse,
+ligma_size_entry_set_refval (LigmaSizeEntry *gse,
                             gint           field,
                             gdouble        refval)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
 
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (LigmaSizeEntryField *) g_slist_nth_data (priv->fields, field);
 
   refval = CLAMP (refval, gsef->min_refval, gsef->max_refval);
 
   if (priv->show_refval)
     gtk_adjustment_set_value (gsef->refval_adjustment, refval);
 
-  gimp_size_entry_update_refval (gsef, refval);
+  ligma_size_entry_update_refval (gsef, refval);
 }
 
 static void
-gimp_size_entry_refval_callback (GtkAdjustment *adjustment,
+ligma_size_entry_refval_callback (GtkAdjustment *adjustment,
                                  gpointer       data)
 {
-  GimpSizeEntryField *gsef;
+  LigmaSizeEntryField *gsef;
   gdouble             new_refval;
 
-  gsef = (GimpSizeEntryField *) data;
+  gsef = (LigmaSizeEntryField *) data;
 
   new_refval = gtk_adjustment_get_value (adjustment);
 
   if (gsef->refval != new_refval)
-    gimp_size_entry_update_refval (gsef, new_refval);
+    ligma_size_entry_update_refval (gsef, new_refval);
 }
 
 
 /**
- * gimp_size_entry_get_unit:
+ * ligma_size_entry_get_unit:
  * @gse: The sizeentry you want to know the unit of.
  *
- * Returns the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitComboBox.
+ * Returns the #LigmaUnit the user has selected in the #LigmaSizeEntry's
+ * #LigmaUnitComboBox.
  *
  * Returns: (transfer none): The sizeentry's unit.
  **/
-GimpUnit
-gimp_size_entry_get_unit (GimpSizeEntry *gse)
+LigmaUnit
+ligma_size_entry_get_unit (LigmaSizeEntry *gse)
 {
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), GIMP_UNIT_INCH);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), LIGMA_UNIT_INCH);
 
   return GET_PRIVATE (gse)->unit;
 }
 
 static void
-gimp_size_entry_update_unit (GimpSizeEntry *gse,
-                             GimpUnit       unit)
+ligma_size_entry_update_unit (LigmaSizeEntry *gse,
+                             LigmaUnit       unit)
 {
-  GimpSizeEntryPrivate *priv = GET_PRIVATE (gse);
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv = GET_PRIVATE (gse);
+  LigmaSizeEntryField   *gsef;
   gint                  i;
   gint                  digits;
 
   priv->unit = unit;
 
   digits = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (gse),
-                                               "gimp-pixel-digits"));
+                                               "ligma-pixel-digits"));
 
   for (i = 0; i < priv->number_of_fields; i++)
     {
-      gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, i);
+      gsef = (LigmaSizeEntryField *) g_slist_nth_data (priv->fields, i);
 
-      if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
+      if (priv->update_policy == LIGMA_SIZE_ENTRY_UPDATE_SIZE)
         {
-          if (unit == GIMP_UNIT_PIXEL)
+          if (unit == LIGMA_UNIT_PIXEL)
             gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                         gsef->refval_digits + digits);
-          else if (unit == GIMP_UNIT_PERCENT)
+          else if (unit == LIGMA_UNIT_PERCENT)
             gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                         2 + digits);
           else
             gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-                                        GIMP_SIZE_ENTRY_DIGITS (unit) + digits);
+                                        LIGMA_SIZE_ENTRY_DIGITS (unit) + digits);
         }
-      else if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
+      else if (priv->update_policy == LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION)
         {
-          digits = (gimp_unit_get_digits (GIMP_UNIT_INCH) -
-                    gimp_unit_get_digits (unit));
+          digits = (ligma_unit_get_digits (LIGMA_UNIT_INCH) -
+                    ligma_unit_get_digits (unit));
           gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                       MAX (3 + digits, 3));
         }
 
       gsef->stop_recursion = 0; /* hack !!! */
 
-      gimp_size_entry_set_refval_boundaries (gse, i,
+      ligma_size_entry_set_refval_boundaries (gse, i,
                                              gsef->min_refval,
                                              gsef->max_refval);
     }
 
-  g_signal_emit (gse, gimp_size_entry_signals[UNIT_CHANGED], 0);
+  g_signal_emit (gse, ligma_size_entry_signals[UNIT_CHANGED], 0);
 }
 
 
 /**
- * gimp_size_entry_set_unit:
+ * ligma_size_entry_set_unit:
  * @gse:  The sizeentry you want to change the unit for.
  * @unit: The new unit.
  *
- * Sets the #GimpSizeEntry's unit. The reference value for all fields will
+ * Sets the #LigmaSizeEntry's unit. The reference value for all fields will
  * stay the same but the value in units or pixels per unit will change
- * according to which #GimpSizeEntryUpdatePolicy you chose in
- * gimp_size_entry_new().
+ * according to which #LigmaSizeEntryUpdatePolicy you chose in
+ * ligma_size_entry_new().
  **/
 void
-gimp_size_entry_set_unit (GimpSizeEntry *gse,
-                          GimpUnit       unit)
+ligma_size_entry_set_unit (LigmaSizeEntry *gse,
+                          LigmaUnit       unit)
 {
-  GimpSizeEntryPrivate *priv;
+  LigmaSizeEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
-  g_return_if_fail (priv->menu_show_pixels || (unit != GIMP_UNIT_PIXEL));
-  g_return_if_fail (priv->menu_show_percent || (unit != GIMP_UNIT_PERCENT));
+  g_return_if_fail (priv->menu_show_pixels || (unit != LIGMA_UNIT_PIXEL));
+  g_return_if_fail (priv->menu_show_percent || (unit != LIGMA_UNIT_PERCENT));
 
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (priv->unit_combo), unit);
-  gimp_size_entry_update_unit (gse, unit);
+  ligma_unit_combo_box_set_active (LIGMA_UNIT_COMBO_BOX (priv->unit_combo), unit);
+  ligma_size_entry_update_unit (gse, unit);
 }
 
 static void
-gimp_size_entry_unit_callback (GtkWidget     *widget,
-                               GimpSizeEntry *gse)
+ligma_size_entry_unit_callback (GtkWidget     *widget,
+                               LigmaSizeEntry *gse)
 {
-  GimpUnit new_unit;
+  LigmaUnit new_unit;
 
-  new_unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (widget));
+  new_unit = ligma_unit_combo_box_get_active (LIGMA_UNIT_COMBO_BOX (widget));
 
   if (GET_PRIVATE (gse)->unit != new_unit)
-    gimp_size_entry_update_unit (gse, new_unit);
+    ligma_size_entry_update_unit (gse, new_unit);
 }
 
 /**
- * gimp_size_entry_attach_eevl:
+ * ligma_size_entry_attach_eevl:
  * @spin_button: one of the size_entry's spinbuttons.
  * @gsef:        a size entry field.
  *
- * Hooks in the GimpEevl unit expression parser into the
- * #GtkSpinButton of the #GimpSizeEntryField.
+ * Hooks in the LigmaEevl unit expression parser into the
+ * #GtkSpinButton of the #LigmaSizeEntryField.
  **/
 static void
-gimp_size_entry_attach_eevl (GtkSpinButton      *spin_button,
-                             GimpSizeEntryField *gsef)
+ligma_size_entry_attach_eevl (GtkSpinButton      *spin_button,
+                             LigmaSizeEntryField *gsef)
 {
   gtk_spin_button_set_numeric (spin_button, FALSE);
   gtk_spin_button_set_update_policy (spin_button, GTK_UPDATE_IF_VALID);
 
   g_signal_connect_after (spin_button, "input",
-                          G_CALLBACK (gimp_size_entry_eevl_input_callback),
+                          G_CALLBACK (ligma_size_entry_eevl_input_callback),
                           gsef);
 }
 
 static gint
-gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
+ligma_size_entry_eevl_input_callback (GtkSpinButton *spinner,
                                      gdouble       *return_val,
                                      gpointer      *data)
 {
-  GimpSizeEntryField   *gsef      = (GimpSizeEntryField *) data;
-  GimpSizeEntryPrivate *priv      = GET_PRIVATE (gsef->gse);
-  GimpEevlOptions       options   = GIMP_EEVL_OPTIONS_INIT;
+  LigmaSizeEntryField   *gsef      = (LigmaSizeEntryField *) data;
+  LigmaSizeEntryPrivate *priv      = GET_PRIVATE (gsef->gse);
+  LigmaEevlOptions       options   = LIGMA_EEVL_OPTIONS_INIT;
   gboolean              success   = FALSE;
   const gchar          *error_pos = NULL;
   GError               *error     = NULL;
-  GimpEevlQuantity      result;
+  LigmaEevlQuantity      result;
 
   g_return_val_if_fail (GTK_IS_SPIN_BUTTON (spinner), FALSE);
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gsef->gse), FALSE);
 
-  options.unit_resolver_proc = gimp_size_entry_eevl_unit_resolver;
+  options.unit_resolver_proc = ligma_size_entry_eevl_unit_resolver;
   options.data               = data;
 
   /* enable ratio expressions when there are two fields */
   if (priv->number_of_fields == 2)
     {
-      GimpSizeEntryField *other_gsef;
-      GimpEevlQuantity    default_unit_factor;
+      LigmaSizeEntryField *other_gsef;
+      LigmaEevlQuantity    default_unit_factor;
       gdouble             default_unit_offset;
 
       options.ratio_expressions = TRUE;
@@ -1407,7 +1407,7 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
       options.ratio_quantity.dimension = default_unit_factor.dimension;
     }
 
-  success = gimp_eevl_evaluate (gtk_entry_get_text (GTK_ENTRY (spinner)),
+  success = ligma_eevl_evaluate (gtk_entry_get_text (GTK_ENTRY (spinner)),
                                 &options,
                                 &result,
                                 &error_pos,
@@ -1429,14 +1429,14 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
       gtk_widget_error_bell (GTK_WIDGET (spinner));
       return GTK_INPUT_ERROR;
     }
-  else if (result.dimension != 1 && priv->unit != GIMP_UNIT_PERCENT)
+  else if (result.dimension != 1 && priv->unit != LIGMA_UNIT_PERCENT)
     {
       g_printerr ("ERROR: result has wrong dimension (expected 1, got %d)\n", result.dimension);
 
       gtk_widget_error_bell (GTK_WIDGET (spinner));
       return GTK_INPUT_ERROR;
     }
-  else if (result.dimension != 0 && priv->unit == GIMP_UNIT_PERCENT)
+  else if (result.dimension != 0 && priv->unit == LIGMA_UNIT_PERCENT)
     {
       g_printerr ("ERROR: result has wrong dimension (expected 0, got %d)\n", result.dimension);
 
@@ -1446,22 +1446,22 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
   else
     {
       /* transform back to UI-unit */
-      GimpEevlQuantity  ui_unit;
+      LigmaEevlQuantity  ui_unit;
       GtkAdjustment    *adj;
       gdouble           val;
 
       switch (priv->unit)
         {
-        case GIMP_UNIT_PIXEL:
+        case LIGMA_UNIT_PIXEL:
           ui_unit.value     = gsef->resolution;
           ui_unit.dimension = 1;
           break;
-        case GIMP_UNIT_PERCENT:
+        case LIGMA_UNIT_PERCENT:
           ui_unit.value     = 1.0;
           ui_unit.dimension = 0;
           break;
         default:
-          ui_unit.value     = gimp_unit_get_factor(priv->unit);
+          ui_unit.value     = ligma_unit_get_factor(priv->unit);
           ui_unit.dimension = 1;
           break;
         }
@@ -1489,40 +1489,40 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
 }
 
 static gboolean
-gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
-                                    GimpEevlQuantity *factor,
+ligma_size_entry_eevl_unit_resolver (const gchar      *identifier,
+                                    LigmaEevlQuantity *factor,
                                     gdouble          *offset,
                                     gpointer          data)
 {
-  GimpSizeEntryField   *gsef                 = (GimpSizeEntryField *) data;
-  GimpSizeEntryPrivate *priv                 = GET_PRIVATE (gsef->gse);
+  LigmaSizeEntryField   *gsef                 = (LigmaSizeEntryField *) data;
+  LigmaSizeEntryPrivate *priv                 = GET_PRIVATE (gsef->gse);
   gboolean              resolve_default_unit = (identifier == NULL);
-  GimpUnit              unit;
+  LigmaUnit              unit;
 
   g_return_val_if_fail (gsef, FALSE);
   g_return_val_if_fail (factor != NULL, FALSE);
   g_return_val_if_fail (offset != NULL, FALSE);
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gsef->gse), FALSE);
 
   *offset = 0.0;
 
   for (unit = 0;
-       unit <= gimp_unit_get_number_of_units ();
+       unit <= ligma_unit_get_number_of_units ();
        unit++)
     {
       /* Hack to handle percent within the loop */
-      if (unit == gimp_unit_get_number_of_units ())
-        unit = GIMP_UNIT_PERCENT;
+      if (unit == ligma_unit_get_number_of_units ())
+        unit = LIGMA_UNIT_PERCENT;
 
       if ((resolve_default_unit && unit == priv->unit) ||
           (identifier &&
-           (strcmp (gimp_unit_get_symbol (unit),       identifier) == 0 ||
-            strcmp (gimp_unit_get_abbreviation (unit), identifier) == 0)))
+           (strcmp (ligma_unit_get_symbol (unit),       identifier) == 0 ||
+            strcmp (ligma_unit_get_abbreviation (unit), identifier) == 0)))
         {
           switch (unit)
             {
-            case GIMP_UNIT_PERCENT:
-              if (priv->unit == GIMP_UNIT_PERCENT)
+            case LIGMA_UNIT_PERCENT:
+              if (priv->unit == LIGMA_UNIT_PERCENT)
                 {
                   factor->value = 1;
                   factor->dimension = 0;
@@ -1537,15 +1537,15 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
                 }
               /* return here, don't perform percentage conversion */
               return TRUE;
-            case GIMP_UNIT_PIXEL:
+            case LIGMA_UNIT_PIXEL:
               factor->value     = gsef->resolution;
               break;
             default:
-              factor->value     = gimp_unit_get_factor (unit);
+              factor->value     = ligma_unit_get_factor (unit);
               break;
             }
 
-          if (priv->unit == GIMP_UNIT_PERCENT)
+          if (priv->unit == LIGMA_UNIT_PERCENT)
             {
               /* map non-percentages onto percent */
               factor->value = gsef->upper/(100*gsef->resolution);
@@ -1565,8 +1565,8 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
 }
 
 /**
- * gimp_size_entry_show_unit_menu:
- * @gse: a #GimpSizeEntry
+ * ligma_size_entry_show_unit_menu:
+ * @gse: a #LigmaSizeEntry
  * @show: Boolean
  *
  * Controls whether a unit menu is shown in the size entry.  If
@@ -1575,53 +1575,53 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
  * Since: 2.4
  **/
 void
-gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
+ligma_size_entry_show_unit_menu (LigmaSizeEntry *gse,
                                 gboolean       show)
 {
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   gtk_widget_set_visible (GET_PRIVATE (gse)->unit_combo, show);
 }
 
 
 /**
- * gimp_size_entry_set_pixel_digits:
- * @gse: a #GimpSizeEntry
+ * ligma_size_entry_set_pixel_digits:
+ * @gse: a #LigmaSizeEntry
  * @digits: the number of digits to display for a pixel size
  *
- * This function allows you set up a #GimpSizeEntry so that sub-pixel
+ * This function allows you set up a #LigmaSizeEntry so that sub-pixel
  * sizes can be entered.
  **/
 void
-gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
+ligma_size_entry_set_pixel_digits (LigmaSizeEntry *gse,
                                   gint           digits)
 {
-  GimpUnitComboBox *combo;
+  LigmaUnitComboBox *combo;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
-  combo = GIMP_UNIT_COMBO_BOX (GET_PRIVATE (gse)->unit_combo);
+  combo = LIGMA_UNIT_COMBO_BOX (GET_PRIVATE (gse)->unit_combo);
 
-  g_object_set_data (G_OBJECT (gse), "gimp-pixel-digits",
+  g_object_set_data (G_OBJECT (gse), "ligma-pixel-digits",
                      GINT_TO_POINTER (digits));
-  gimp_size_entry_update_unit (gse, gimp_unit_combo_box_get_active (combo));
+  ligma_size_entry_update_unit (gse, ligma_unit_combo_box_get_active (combo));
 }
 
 
 /**
- * gimp_size_entry_grab_focus:
+ * ligma_size_entry_grab_focus:
  * @gse: The sizeentry you want to grab the keyboard focus.
  *
  * This function is rather ugly and just a workaround for the fact that
  * it's impossible to implement gtk_widget_grab_focus() for a #GtkGrid (is this actually true after the Table->Grid conversion?).
  **/
 void
-gimp_size_entry_grab_focus (GimpSizeEntry *gse)
+ligma_size_entry_grab_focus (LigmaSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
@@ -1632,29 +1632,29 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 }
 
 /**
- * gimp_size_entry_set_activates_default:
- * @gse:     A #GimpSizeEntry
+ * ligma_size_entry_set_activates_default:
+ * @gse:     A #LigmaSizeEntry
  * @setting: %TRUE to activate window's default widget on Enter keypress
  *
- * Iterates over all entries in the #GimpSizeEntry and calls
+ * Iterates over all entries in the #LigmaSizeEntry and calls
  * gtk_entry_set_activates_default() on them.
  *
  * Since: 2.4
  **/
 void
-gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
+ligma_size_entry_set_activates_default (LigmaSizeEntry *gse,
                                        gboolean       setting)
 {
-  GimpSizeEntryPrivate *priv;
+  LigmaSizeEntryPrivate *priv;
   GSList               *list;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (LIGMA_IS_SIZE_ENTRY (gse));
 
   priv = GET_PRIVATE (gse);
 
   for (list = priv->fields; list; list = g_slist_next (list))
     {
-      GimpSizeEntryField *gsef = list->data;
+      LigmaSizeEntryField *gsef = list->data;
 
       if (gsef->value_spinbutton)
         gtk_entry_set_activates_default (GTK_ENTRY (gsef->value_spinbutton),
@@ -1667,24 +1667,24 @@ gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
 }
 
 /**
- * gimp_size_entry_get_help_widget:
- * @gse: a #GimpSizeEntry
+ * ligma_size_entry_get_help_widget:
+ * @gse: a #LigmaSizeEntry
  * @field: the index of the widget you want to get a pointer to
  *
- * You shouldn't fiddle with the internals of a #GimpSizeEntry but
- * if you want to set tooltips using gimp_help_set_help_data() you
+ * You shouldn't fiddle with the internals of a #LigmaSizeEntry but
+ * if you want to set tooltips using ligma_help_set_help_data() you
  * can use this function to get a pointer to the spinbuttons.
  *
  * Returns: (transfer none): a #GtkWidget pointer that you can attach a tooltip to.
  **/
 GtkWidget *
-gimp_size_entry_get_help_widget (GimpSizeEntry *gse,
+ligma_size_entry_get_help_widget (LigmaSizeEntry *gse,
                                  gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  LigmaSizeEntryPrivate *priv;
+  LigmaSizeEntryField   *gsef;
 
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (gse), NULL);
 
   priv = GET_PRIVATE (gse);
 

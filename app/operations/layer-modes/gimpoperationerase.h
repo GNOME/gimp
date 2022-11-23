@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationerase.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationerase.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_ERASE_H__
-#define __GIMP_OPERATION_ERASE_H__
+#ifndef __LIGMA_OPERATION_ERASE_H__
+#define __LIGMA_OPERATION_ERASE_H__
 
 
-#include "gimpoperationlayermode.h"
+#include "ligmaoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_ERASE            (gimp_operation_erase_get_type ())
-#define GIMP_OPERATION_ERASE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_ERASE, GimpOperationErase))
-#define GIMP_OPERATION_ERASE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_ERASE, GimpOperationEraseClass))
-#define GIMP_IS_OPERATION_ERASE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_ERASE))
-#define GIMP_IS_OPERATION_ERASE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_ERASE))
-#define GIMP_OPERATION_ERASE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ERASE, GimpOperationEraseClass))
+#define LIGMA_TYPE_OPERATION_ERASE            (ligma_operation_erase_get_type ())
+#define LIGMA_OPERATION_ERASE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_ERASE, LigmaOperationErase))
+#define LIGMA_OPERATION_ERASE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_ERASE, LigmaOperationEraseClass))
+#define LIGMA_IS_OPERATION_ERASE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_ERASE))
+#define LIGMA_IS_OPERATION_ERASE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_ERASE))
+#define LIGMA_OPERATION_ERASE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_ERASE, LigmaOperationEraseClass))
 
 
-typedef struct _GimpOperationErase      GimpOperationErase;
-typedef struct _GimpOperationEraseClass GimpOperationEraseClass;
+typedef struct _LigmaOperationErase      LigmaOperationErase;
+typedef struct _LigmaOperationEraseClass LigmaOperationEraseClass;
 
-struct _GimpOperationErase
+struct _LigmaOperationErase
 {
-  GimpOperationLayerMode  parent_instance;
+  LigmaOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationEraseClass
+struct _LigmaOperationEraseClass
 {
-  GimpOperationLayerModeClass  parent_class;
+  LigmaOperationLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_erase_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_erase_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_ERASE_MODE_H__ */
+#endif /* __LIGMA_OPERATION_ERASE_MODE_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,40 +17,40 @@
 
 #if 0
 
-#ifndef __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
-#define __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
+#ifndef __LIGMA_FOREGROUND_SELECT_TOOL_UNDO_H__
+#define __LIGMA_FOREGROUND_SELECT_TOOL_UNDO_H__
 
 
-#include "core/gimpundo.h"
+#include "core/ligmaundo.h"
 
 
-#define GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO            (gimp_foreground_select_tool_undo_get_type ())
-#define GIMP_FOREGROUND_SELECT_TOOL_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO, GimpForegroundSelectToolUndo))
-#define GIMP_FOREGROUND_SELECT_TOOL_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO, GimpForegroundSelectToolUndoClass))
-#define GIMP_IS_FOREGROUND_SELECT_TOOL_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO))
-#define GIMP_IS_FOREGROUND_SELECT_TOOL_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO))
-#define GIMP_FOREGROUND_SELECT_TOOL_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FOREGROUND_SELECT_TOOL_UNDO, GimpForegroundSelectToolUndoClass))
+#define LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO            (ligma_foreground_select_tool_undo_get_type ())
+#define LIGMA_FOREGROUND_SELECT_TOOL_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO, LigmaForegroundSelectToolUndo))
+#define LIGMA_FOREGROUND_SELECT_TOOL_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO, LigmaForegroundSelectToolUndoClass))
+#define LIGMA_IS_FOREGROUND_SELECT_TOOL_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO))
+#define LIGMA_IS_FOREGROUND_SELECT_TOOL_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO))
+#define LIGMA_FOREGROUND_SELECT_TOOL_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FOREGROUND_SELECT_TOOL_UNDO, LigmaForegroundSelectToolUndoClass))
 
 
-typedef struct _GimpForegroundSelectToolUndo      GimpForegroundSelectToolUndo;
-typedef struct _GimpForegroundSelectToolUndoClass GimpForegroundSelectToolUndoClass;
+typedef struct _LigmaForegroundSelectToolUndo      LigmaForegroundSelectToolUndo;
+typedef struct _LigmaForegroundSelectToolUndoClass LigmaForegroundSelectToolUndoClass;
 
-struct _GimpForegroundSelectToolUndo
+struct _LigmaForegroundSelectToolUndo
 {
-  GimpUndo                  parent_instance;
+  LigmaUndo                  parent_instance;
 
-  GimpForegroundSelectTool *foreground_select_tool;
+  LigmaForegroundSelectTool *foreground_select_tool;
 };
 
-struct _GimpForegroundSelectToolUndoClass
+struct _LigmaForegroundSelectToolUndoClass
 {
-  GimpUndoClass  parent_class;
+  LigmaUndoClass  parent_class;
 };
 
 
-GType   gimp_foreground_select_tool_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_foreground_select_tool_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__ */
+#endif /* __LIGMA_FOREGROUND_SELECT_TOOL_UNDO_H__ */
 
 #endif

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-brushdatadir = $(gimpdatadir)/gimpressionist/Brushes
+brushdatadir = $(ligmadatadir)/ligmaressionist/Brushes
 
 brushdata_DATA = \
 	arrow01.pgm		\
@@ -57,7 +57,7 @@ brushdata_DATA = \
 	spunge04.pgm		\
 	spunge05.pgm		\
 	strange01.pgm		\
-	thegimp.pgm		\
+	theligma.pgm		\
 	torus.ppm		\
 	wavy.pgm		\
 	weave.pgm		\

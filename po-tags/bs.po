@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-01-27 21:40+0000\n"
 "PO-Revision-Date: 2015-02-05 01:18+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-03-14 13:28+0000\n"
 "X-Generator: Launchpad (build 17389)\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "oblo"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "nejasno"

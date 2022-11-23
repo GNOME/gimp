@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,35 +19,35 @@
 #define __RESIZE_DIALOG_H__
 
 
-typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
-                                     GimpViewable *viewable,
-                                     GimpContext  *context,
+typedef void (* LigmaResizeCallback) (GtkWidget    *dialog,
+                                     LigmaViewable *viewable,
+                                     LigmaContext  *context,
                                      gint          width,
                                      gint          height,
-                                     GimpUnit      unit,
+                                     LigmaUnit      unit,
                                      gint          offset_x,
                                      gint          offset_y,
                                      gdouble       xres,
                                      gdouble       yres,
-                                     GimpUnit      res_unit,
-                                     GimpFillType  fill_type,
-                                     GimpItemSet   layer_set,
+                                     LigmaUnit      res_unit,
+                                     LigmaFillType  fill_type,
+                                     LigmaItemSet   layer_set,
                                      gboolean      resize_text_layers,
                                      gpointer      user_data);
 
 
-GtkWidget * resize_dialog_new (GimpViewable       *viewable,
-                               GimpContext        *context,
+GtkWidget * resize_dialog_new (LigmaViewable       *viewable,
+                               LigmaContext        *context,
                                const gchar        *title,
                                const gchar        *role,
                                GtkWidget          *parent,
-                               GimpHelpFunc        help_func,
+                               LigmaHelpFunc        help_func,
                                const gchar        *help_id,
-                               GimpUnit            unit,
-                               GimpFillType        fill_type,
-                               GimpItemSet         layer_set,
+                               LigmaUnit            unit,
+                               LigmaFillType        fill_type,
+                               LigmaItemSet         layer_set,
                                gboolean            resize_text_layers,
-                               GimpResizeCallback  callback,
+                               LigmaResizeCallback  callback,
                                gpointer            user_data);
 
 

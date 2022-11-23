@@ -1,4 +1,4 @@
-menus_dir = prefix / gimpdatadir / 'menus'
+menus_dir = prefix / ligmadatadir / 'menus'
 
 menus_files = files(
   'brush-editor-menu.xml',

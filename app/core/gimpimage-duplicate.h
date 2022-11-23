@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_DUPLICATE_H__
-#define __GIMP_IMAGE_DUPLICATE_H__
+#ifndef __LIGMA_IMAGE_DUPLICATE_H__
+#define __LIGMA_IMAGE_DUPLICATE_H__
 
 
-GimpImage * gimp_image_duplicate (GimpImage *image);
+LigmaImage * ligma_image_duplicate (LigmaImage *image);
 
 
-#endif  /*  __GIMP_IMAGE_DUPLICATE_H__  */
+#endif  /*  __LIGMA_IMAGE_DUPLICATE_H__  */

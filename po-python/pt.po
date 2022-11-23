@@ -1,6 +1,6 @@
-# gimp-python's Portuguese translation.
-# Copyright © 2002-2022 gimp
-# This file is distributed under the same license as the gimp package.
+# ligma-python's Portuguese translation.
+# Copyright © 2002-2022 ligma
+# This file is distributed under the same license as the ligma package.
 #
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Filipe Maia <fmaia@gmx.net>, 2002.
@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-07 14:42+0000\n"
 "PO-Revision-Date: 2022-06-12 22:16+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
@@ -492,8 +492,8 @@ msgid "Python _Console"
 msgstr "_Consola Python"
 
 #: ../plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interpretador interativo GIMP Python"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interpretador interativo LIGMA Python"
 
 #: ../plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -849,7 +849,7 @@ msgstr ""
 "ativa ou guardar no caminho"
 
 #: ../plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr "Espirógrafo"
 
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
@@ -954,7 +954,7 @@ msgstr ""
 "O tamanho e localização do padrão é baseado na seleção atual."
 
 #: ../plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr "Espirógrafo…"
 
 #~ msgid "Fog _color"

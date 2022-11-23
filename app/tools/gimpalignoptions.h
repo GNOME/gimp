@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,61 +15,61 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ALIGN_OPTIONS_H__
-#define __GIMP_ALIGN_OPTIONS_H__
+#ifndef __LIGMA_ALIGN_OPTIONS_H__
+#define __LIGMA_ALIGN_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_ALIGN_OPTIONS            (gimp_align_options_get_type ())
-#define GIMP_ALIGN_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ALIGN_OPTIONS, GimpAlignOptions))
-#define GIMP_ALIGN_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ALIGN_OPTIONS, GimpAlignOptionsClass))
-#define GIMP_IS_ALIGN_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ALIGN_OPTIONS))
-#define GIMP_IS_ALIGN_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ALIGN_OPTIONS))
-#define GIMP_ALIGN_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ALIGN_OPTIONS, GimpAlignOptionsClass))
+#define LIGMA_TYPE_ALIGN_OPTIONS            (ligma_align_options_get_type ())
+#define LIGMA_ALIGN_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ALIGN_OPTIONS, LigmaAlignOptions))
+#define LIGMA_ALIGN_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ALIGN_OPTIONS, LigmaAlignOptionsClass))
+#define LIGMA_IS_ALIGN_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ALIGN_OPTIONS))
+#define LIGMA_IS_ALIGN_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ALIGN_OPTIONS))
+#define LIGMA_ALIGN_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ALIGN_OPTIONS, LigmaAlignOptionsClass))
 
 
-typedef struct _GimpAlignOptions        GimpAlignOptions;
-typedef struct _GimpAlignOptionsPrivate GimpAlignOptionsPrivate;
-typedef struct _GimpAlignOptionsClass   GimpAlignOptionsClass;
+typedef struct _LigmaAlignOptions        LigmaAlignOptions;
+typedef struct _LigmaAlignOptionsPrivate LigmaAlignOptionsPrivate;
+typedef struct _LigmaAlignOptionsClass   LigmaAlignOptionsClass;
 
-struct _GimpAlignOptions
+struct _LigmaAlignOptions
 {
-  GimpToolOptions          parent_instance;
+  LigmaToolOptions          parent_instance;
 
-  GimpAlignReferenceType   align_reference;
+  LigmaAlignReferenceType   align_reference;
 
-  GimpAlignOptionsPrivate *priv;
+  LigmaAlignOptionsPrivate *priv;
 };
 
-struct _GimpAlignOptionsClass
+struct _LigmaAlignOptionsClass
 {
-  GimpToolOptionsClass  parent_class;
+  LigmaToolOptionsClass  parent_class;
 
-  void (* align_button_clicked) (GimpAlignOptions  *options,
-                                 GimpAlignmentType  align_type);
+  void (* align_button_clicked) (LigmaAlignOptions  *options,
+                                 LigmaAlignmentType  align_type);
 };
 
 
-GType       gimp_align_options_get_type          (void) G_GNUC_CONST;
+GType       ligma_align_options_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_align_options_gui               (GimpToolOptions  *tool_options);
+GtkWidget * ligma_align_options_gui               (LigmaToolOptions  *tool_options);
 
-GList     * gimp_align_options_get_objects       (GimpAlignOptions *options);
-void        gimp_align_options_get_pivot         (GimpAlignOptions *options,
+GList     * ligma_align_options_get_objects       (LigmaAlignOptions *options);
+void        ligma_align_options_get_pivot         (LigmaAlignOptions *options,
                                                   gdouble          *x,
                                                   gdouble          *y);
 
-void        gimp_align_options_pick_reference    (GimpAlignOptions *options,
+void        ligma_align_options_pick_reference    (LigmaAlignOptions *options,
                                                   GObject          *object);
-GObject   * gimp_align_options_get_reference     (GimpAlignOptions *options,
+GObject   * ligma_align_options_get_reference     (LigmaAlignOptions *options,
                                                   gboolean          blink_if_none);
-gboolean    gimp_align_options_align_contents    (GimpAlignOptions *options);
+gboolean    ligma_align_options_align_contents    (LigmaAlignOptions *options);
 
-void        gimp_align_options_pick_guide        (GimpAlignOptions *options,
-                                                  GimpGuide        *guide,
+void        ligma_align_options_pick_guide        (LigmaAlignOptions *options,
+                                                  LigmaGuide        *guide,
                                                   gboolean          extend);
 
 
-#endif /* __GIMP_ALIGN_OPTIONS_H__ */
+#endif /* __LIGMA_ALIGN_OPTIONS_H__ */

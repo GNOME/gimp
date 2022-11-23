@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,38 +20,38 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimptextbuffer.h"
-#include "widgets/gimptexteditor.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmatextbuffer.h"
+#include "widgets/ligmatexteditor.h"
+#include "widgets/ligmauimanager.h"
 
 #include "text-editor-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
 static void   text_editor_load_response (GtkWidget      *dialog,
                                          gint            response_id,
-                                         GimpTextEditor *editor);
+                                         LigmaTextEditor *editor);
 
 
 /*  public functions  */
 
 void
-text_editor_load_cmd_callback (GimpAction *action,
+text_editor_load_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
+  LigmaTextEditor *editor = LIGMA_TEXT_EDITOR (data);
 
   if (! editor->file_dialog)
     {
@@ -68,12 +68,12 @@ text_editor_load_cmd_callback (GimpAction *action,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
 
-      gtk_window_set_role (GTK_WINDOW (dialog), "gimp-text-load-file");
+      gtk_window_set_role (GTK_WINDOW (dialog), "ligma-text-load-file");
       gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
       gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
@@ -92,11 +92,11 @@ text_editor_load_cmd_callback (GimpAction *action,
 }
 
 void
-text_editor_clear_cmd_callback (GimpAction *action,
+text_editor_clear_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
+  LigmaTextEditor *editor = LIGMA_TEXT_EDITOR (data);
   GtkTextBuffer  *buffer;
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
@@ -105,16 +105,16 @@ text_editor_clear_cmd_callback (GimpAction *action,
 }
 
 void
-text_editor_direction_cmd_callback (GimpAction *action,
+text_editor_direction_cmd_callback (LigmaAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpTextEditor    *editor = GIMP_TEXT_EDITOR (data);
-  GimpTextDirection  direction;
+  LigmaTextEditor    *editor = LIGMA_TEXT_EDITOR (data);
+  LigmaTextDirection  direction;
 
-  direction = (GimpTextDirection) g_variant_get_int32 (value);
+  direction = (LigmaTextDirection) g_variant_get_int32 (value);
 
-  gimp_text_editor_set_direction (editor, direction);
+  ligma_text_editor_set_direction (editor, direction);
 }
 
 
@@ -123,7 +123,7 @@ text_editor_direction_cmd_callback (GimpAction *action,
 static void
 text_editor_load_response (GtkWidget      *dialog,
                            gint            response_id,
-                           GimpTextEditor *editor)
+                           LigmaTextEditor *editor)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -134,12 +134,12 @@ text_editor_load_response (GtkWidget      *dialog,
       buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
       file   = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_load (GIMP_TEXT_BUFFER (buffer), file, &error))
+      if (! ligma_text_buffer_load (LIGMA_TEXT_BUFFER (buffer), file, &error))
         {
-          gimp_message (editor->ui_manager->gimp, G_OBJECT (dialog),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (editor->ui_manager->ligma, G_OBJECT (dialog),
+                        LIGMA_MESSAGE_ERROR,
                         _("Could not open '%s' for reading: %s"),
-                        gimp_file_get_utf8_name (file),
+                        ligma_file_get_utf8_name (file),
                         error->message);
           g_clear_error (&error);
           g_object_unref (file);

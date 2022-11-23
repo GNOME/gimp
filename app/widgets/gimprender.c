@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,75 +22,75 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimprender.h"
+#include "ligmarender.h"
 
 
-static void   gimp_render_setup_notify (gpointer    config,
+static void   ligma_render_setup_notify (gpointer    config,
                                         GParamSpec *param_spec,
-                                        Gimp       *gimp);
+                                        Ligma       *ligma);
 
 
-static GimpRGB color1;
-static GimpRGB color2;
+static LigmaRGB color1;
+static LigmaRGB color2;
 
 
 void
-gimp_render_init (Gimp *gimp)
+ligma_render_init (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  g_signal_connect (gimp->config, "notify::transparency-type",
-                    G_CALLBACK (gimp_render_setup_notify),
-                    gimp);
+  g_signal_connect (ligma->config, "notify::transparency-type",
+                    G_CALLBACK (ligma_render_setup_notify),
+                    ligma);
 
-  g_signal_connect (gimp->config, "notify::transparency-custom-color1",
-                    G_CALLBACK (gimp_render_setup_notify),
-                    gimp);
+  g_signal_connect (ligma->config, "notify::transparency-custom-color1",
+                    G_CALLBACK (ligma_render_setup_notify),
+                    ligma);
 
-  g_signal_connect (gimp->config, "notify::transparency-custom-color2",
-                    G_CALLBACK (gimp_render_setup_notify),
-                    gimp);
+  g_signal_connect (ligma->config, "notify::transparency-custom-color2",
+                    G_CALLBACK (ligma_render_setup_notify),
+                    ligma);
 
-  gimp_render_setup_notify (gimp->config, NULL, gimp);
+  ligma_render_setup_notify (ligma->config, NULL, ligma);
 }
 
 void
-gimp_render_exit (Gimp *gimp)
+ligma_render_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  g_signal_handlers_disconnect_by_func (gimp->config,
-                                        gimp_render_setup_notify,
-                                        gimp);
+  g_signal_handlers_disconnect_by_func (ligma->config,
+                                        ligma_render_setup_notify,
+                                        ligma);
 }
 
-const GimpRGB *
-gimp_render_check_color1 (void)
+const LigmaRGB *
+ligma_render_check_color1 (void)
 {
   return &color1;
 }
 
-const GimpRGB *
-gimp_render_check_color2 (void)
+const LigmaRGB *
+ligma_render_check_color2 (void)
 {
   return &color2;
 }
 
 static void
-gimp_render_setup_notify (gpointer    config,
+ligma_render_setup_notify (gpointer    config,
                           GParamSpec *param_spec,
-                          Gimp       *gimp)
+                          Ligma       *ligma)
 {
-  GimpRGB       *color1_custom;
-  GimpRGB       *color2_custom;
-  GimpCheckType  check_type;
+  LigmaRGB       *color1_custom;
+  LigmaRGB       *color2_custom;
+  LigmaCheckType  check_type;
 
   g_object_get (config,
                 "transparency-type",          &check_type,
@@ -100,7 +100,7 @@ gimp_render_setup_notify (gpointer    config,
 
   color1 = *color1_custom;
   color2 = *color2_custom;
-  gimp_checks_get_colors (check_type, &color1, &color2);
+  ligma_checks_get_colors (check_type, &color1, &color2);
   g_free (color1_custom);
   g_free (color2_custom);
 }

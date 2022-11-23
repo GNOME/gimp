@@ -1,4 +1,4 @@
-/* CSource - GIMP Plugin to dump image data in RGB(A) format for C source
+/* CSource - LIGMA Plugin to dump image data in RGB(A) format for C source
  * Copyright (C) 1999 Tim Janik
  *
  * This program is free software: you can redistribute it and/or
@@ -25,15 +25,15 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-csource-save"
 #define PLUG_IN_BINARY "file-csource"
-#define PLUG_IN_ROLE   "gimp-file-csource"
+#define PLUG_IN_ROLE   "ligma-file-csource"
 
 
 typedef struct _Csource      Csource;
@@ -41,12 +41,12 @@ typedef struct _CsourceClass CsourceClass;
 
 struct _Csource
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _CsourceClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -55,38 +55,38 @@ struct _CsourceClass
 
 GType                   csource_get_type         (void) G_GNUC_CONST;
 
-static GList          * csource_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * csource_create_procedure (GimpPlugIn           *plug_in,
+static GList          * csource_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * csource_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * csource_save             (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * csource_save             (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
+                                                  LigmaDrawable        **drawables,
                                                   GFile                *file,
-                                                  const GimpValueArray *args,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static gboolean         save_image               (GFile                *file,
-                                                  GimpImage            *image,
-                                                  GimpDrawable         *drawable,
+                                                  LigmaImage            *image,
+                                                  LigmaDrawable         *drawable,
                                                   GObject              *config,
                                                   GError              **error);
-static gboolean         save_dialog              (GimpProcedure        *procedure,
+static gboolean         save_dialog              (LigmaProcedure        *procedure,
                                                   GObject              *config);
 
 
-G_DEFINE_TYPE (Csource, csource, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Csource, csource, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (CSOURCE_TYPE)
+LIGMA_MAIN (CSOURCE_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 csource_class_init (CsourceClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = csource_query_procedures;
   plug_in_class->create_procedure = csource_create_procedure;
@@ -99,163 +99,163 @@ csource_init (Csource *csource)
 }
 
 static GList *
-csource_query_procedures (GimpPlugIn *plug_in)
+csource_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-csource_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+csource_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            csource_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("C source code"));
+      ligma_procedure_set_menu_label (procedure, _("C source code"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Dump image data in RGB(A) format "
                                         "for C source",
                                         "CSource cannot be run non-interactively.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tim Janik",
                                       "Tim Janik",
                                       "1999");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-csrc");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "c");
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "prefixed-name",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "prefixed-name",
                                 "Prefixed name",
                                 "Prefixed name",
-                                "gimp_image",
-                                GIMP_PARAM_READWRITE);
+                                "ligma_image",
+                                LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "ligma-comment",
                                 "Comment",
                                 "Comment",
-                                gimp_get_default_comment (),
-                                GIMP_PARAM_READWRITE);
+                                ligma_get_default_comment (),
+                                LIGMA_PARAM_READWRITE);
 
-      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
+      ligma_procedure_set_argument_sync (procedure, "ligma-comment",
+                                        LIGMA_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
                                  "Save comment",
                                  "Save comment",
-                                 gimp_export_comment (),
-                                 GIMP_PARAM_READWRITE);
+                                 ligma_export_comment (),
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
                                  "GLib types",
                                  "Use GLib types",
                                  TRUE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-alpha",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-alpha",
                                  "Save alpha",
                                  "Save the alpha channel",
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "rgb565",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "rgb565",
                                  "RGB565",
                                  "Use RGB565 encoding",
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-macros",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-macros",
                                  "Use macros",
                                  "Use C macros",
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
                                  "Use RLE",
                                  "Use run-lenght-encoding",
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_DOUBLE (procedure, "opacity",
+      LIGMA_PROC_AUX_ARG_DOUBLE (procedure, "opacity",
                                 "Opacity",
                                 "Opacity",
                                 0.0, 100.0, 100.0,
-                                GIMP_PARAM_READWRITE);
+                                LIGMA_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-csource_save (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+csource_save (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
+              LigmaDrawable        **drawables,
               GFile                *file,
-              const GimpValueArray *args,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   gchar               *prefixed_name;
   gchar               *comment;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CALLING_ERROR,
+  if (run_mode != LIGMA_RUN_INTERACTIVE)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CALLING_ERROR,
                                              NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  export = gimp_export_image (&image, &n_drawables, &drawables, "C Source",
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = ligma_export_image (&image, &n_drawables, &drawables, "C Source",
+                              LIGMA_EXPORT_CAN_HANDLE_RGB |
+                              LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
   if (n_drawables != 1)
     {
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("C source does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   g_object_set (config,
-                "save-alpha", gimp_drawable_has_alpha (drawables[0]),
+                "save-alpha", ligma_drawable_has_alpha (drawables[0]),
                 NULL);
 
-  if (export == GIMP_EXPORT_CANCEL)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CANCEL,
+  if (export == LIGMA_EXPORT_CANCEL)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CANCEL,
                                              NULL);
 
   if (! save_dialog (procedure, G_OBJECT (config)))
-    status = GIMP_PDB_CANCEL;
+    status = LIGMA_PDB_CANCEL;
 
   g_object_get (config,
                 "prefixed-name", &prefixed_name,
-                "gimp-comment",  &comment,
+                "ligma-comment",  &comment,
                 NULL);
 
   if (! prefixed_name || ! prefixed_name[0])
@@ -265,31 +265,31 @@ csource_save (GimpProcedure        *procedure,
 
   if (comment && ! comment[0])
     g_object_set (config,
-                  "gimp-comment", NULL,
+                  "ligma-comment", NULL,
                   NULL);
 
   g_free (prefixed_name);
   g_free (comment);
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
@@ -509,15 +509,15 @@ save_uchar (GOutputStream  *output,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GObject       *config,
             GError       **error)
 {
   GOutputStream *output;
   GeglBuffer    *buffer;
   GCancellable  *cancellable;
-  GimpImageType  drawable_type = gimp_drawable_type (drawable);
+  LigmaImageType  drawable_type = ligma_drawable_type (drawable);
   gchar         *s_uint_8, *s_uint, *s_char, *s_null;
   guint          c;
   gchar         *macro_name;
@@ -541,7 +541,7 @@ save_image (GFile         *file,
 
   g_object_get (config,
                 "prefixed-name", &config_prefixed_name,
-                "gimp-comment",  &config_comment,
+                "ligma-comment",  &config_comment,
                 "save-comment",  &config_save_comment,
                 "glib-types",    &config_glib_types,
                 "save-alpha",    &config_save_alpha,
@@ -568,12 +568,12 @@ save_image (GFile         *file,
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     drawable_format = babl_format ("R'G'B'A u8");
   else
     drawable_format = babl_format ("R'G'B' u8");
@@ -602,7 +602,7 @@ save_image (GFile         *file,
               guint8 *d = data + x * drawable_bpp;
               guint8 r, g, b;
               gushort rgb16;
-              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+              gdouble alpha = drawable_type == LIGMA_RGBA_IMAGE ? d[3] : 0xff;
 
               alpha *= config_opacity / 25500.0;
               r = (0.5 + alpha * (gdouble) d[0]);
@@ -621,7 +621,7 @@ save_image (GFile         *file,
           for (x = 0; x < width; x++)
             {
               guint8 *d = data + x * drawable_bpp;
-              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+              gdouble alpha = drawable_type == LIGMA_RGBA_IMAGE ? d[3] : 0xff;
 
               alpha *= config_opacity / 100.0;
               *(p++) = d[0];
@@ -635,7 +635,7 @@ save_image (GFile         *file,
           for (x = 0; x < width; x++)
             {
               guint8 *d = data + x * drawable_bpp;
-              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+              gdouble alpha = drawable_type == LIGMA_RGBA_IMAGE ? d[3] : 0xff;
 
               alpha *= config_opacity / 25500.0;
               *(p++) = 0.5 + alpha * (gdouble) d[0];
@@ -691,7 +691,7 @@ save_image (GFile         *file,
   basename = g_file_get_basename (file);
 
   if (! print (output, error,
-               "/* GIMP %s C-Source image dump %s(%s) */\n\n",
+               "/* LIGMA %s C-Source image dump %s(%s) */\n\n",
                config_save_alpha ? "RGBA" : "RGB",
                config_use_rle ? "1-byte-run-length-encoded " : "",
                basename))
@@ -903,8 +903,8 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGB_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       do
         {
           if (! save_uchar (output, &c, *(img_buffer++), config_use_macros,
@@ -952,7 +952,7 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -963,8 +963,8 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *scale;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as C-Source"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -981,45 +981,45 @@ save_dialog (GimpProcedure *procedure,
 
   /* Prefixed Name
    */
-  entry = gimp_prop_entry_new (config, "prefixed-name", -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  entry = ligma_prop_entry_new (config, "prefixed-name", -1);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Prefixed name:"), 0.0, 0.5,
                             entry, 1);
 
   /* Comment Entry
    */
-  entry = gimp_prop_entry_new (config, "gimp-comment", -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  entry = ligma_prop_entry_new (config, "ligma-comment", -1);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Co_mment:"), 0.0, 0.5,
                             entry, 1);
 
   /* Use Comment
    */
-  toggle = gimp_prop_check_button_new (config, "save-comment",
+  toggle = ligma_prop_check_button_new (config, "save-comment",
                                        _("_Save comment to file"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* GLib types
    */
-  toggle = gimp_prop_check_button_new (config, "glib-types",
+  toggle = ligma_prop_check_button_new (config, "glib-types",
                                        _("_Use GLib types (guint8*)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* Use Macros
    */
-  toggle = gimp_prop_check_button_new (config, "use-macros",
+  toggle = ligma_prop_check_button_new (config, "use-macros",
                                        _("Us_e macros instead of struct"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* Use RLE
    */
-  toggle = gimp_prop_check_button_new (config, "use-rle",
+  toggle = ligma_prop_check_button_new (config, "use-rle",
                                        _("Use _1 byte Run-Length-Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* Alpha
    */
-  toggle = gimp_prop_check_button_new (config, "save-alpha",
+  toggle = ligma_prop_check_button_new (config, "save-alpha",
                                        _("Sa_ve alpha channel (RGBA/RGB)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
@@ -1030,19 +1030,19 @@ save_dialog (GimpProcedure *procedure,
 
   /* RGB-565
    */
-  toggle = gimp_prop_check_button_new (config, "rgb565",
+  toggle = ligma_prop_check_button_new (config, "rgb565",
                                        _("Save as _RGB565 (16-bit)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* Max Alpha Value
    */
-  scale = gimp_prop_scale_entry_new (config, "opacity", _("Op_acity:"),
+  scale = ligma_prop_scale_entry_new (config, "opacity", _("Op_acity:"),
                                      1.0, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
   gtk_widget_show (scale);
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

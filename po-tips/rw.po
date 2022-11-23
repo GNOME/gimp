@@ -1,12 +1,12 @@
-# Canadian English translation for gimp tips
+# Canadian English translation for ligma tips
 # Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
-# This file is distributed under the same license as the gimp tips package.
+# This file is distributed under the same license as the ligma tips package.
 # Gareth Owen <gowen72@yahoo.com> 2004
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2005-05-14 17:18+0200\n"
 "PO-Revision-Date: 2004-11-21 23:00+0100\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../tips/gimp-tips.xml.in.h:1
+#: ../tips/ligma-tips.xml.in.h:1
 #, fuzzy
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 msgstr "<Kuri i"
 
-#: ../tips/gimp-tips.xml.in.h:2
+#: ../tips/ligma-tips.xml.in.h:2
 #, fuzzy
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
 msgstr "<Kanda ku i Akugara Igaragazambere in i Ikiganiro i"
 
-#: ../tips/gimp-tips.xml.in.h:3
+#: ../tips/ligma-tips.xml.in.h:3
 #, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
@@ -36,21 +36,21 @@ msgid ""
 msgstr ""
 "<Kanda ku i Akugara Igaragazambere in i Ikiganiro i INGARUKA Bya i Akugara"
 
-#: ../tips/gimp-tips.xml.in.h:4
+#: ../tips/ligma-tips.xml.in.h:4
 #, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
 msgstr "<Kanda Na: i Kuri Gukoresha i Mbuganyuma Ibara Bya i Ibara"
 
-#: ../tips/gimp-tips.xml.in.h:5
+#: ../tips/ligma-tips.xml.in.h:5
 #, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr "<Kurura Na: i Gutegeka i Ukuzenguruka Kuri 15 Dogere"
 
-#: ../tips/gimp-tips.xml.in.h:6
+#: ../tips/ligma-tips.xml.in.h:6
 #, fuzzy
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
@@ -59,7 +59,7 @@ msgstr ""
 "<Kanda ku i Agashushondanga in i Ikiganiro Kuri Gushisha Byose Kanda Kuri "
 "Garagaza Byose"
 
-#: ../tips/gimp-tips.xml.in.h:7
+#: ../tips/ligma-tips.xml.in.h:7
 #, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
@@ -71,20 +71,20 @@ msgstr ""
 "Akugara Mbere Ikindi Ibikorwa: ku i Ishusho ku i Cyangwa i Akabuto in i "
 "Ikiganiro Cyangwa Gukoresha i Ibikubiyemo Kuri i"
 
-#: ../tips/gimp-tips.xml.in.h:8
+#: ../tips/ligma-tips.xml.in.h:8
 #, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
+"you exit LIGMA."
 msgstr ""
 "Bikora in i Ikiganiro Iy'ibusamo Utubuto ku Hejuru i Ibikubiyemo a "
 "Ibikubiyemo Ikintu Na i Urufunguzo Ivanga Kubika ni Bikora i Urufunguzo "
 "Ibyafataranyijwe Ryari: Gusohoka"
 
-#: ../tips/gimp-tips.xml.in.h:9
+#: ../tips/ligma-tips.xml.in.h:9
 #, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
@@ -94,41 +94,41 @@ msgstr ""
 "Na Kurura ku a Itegeko Kuri a ku Ishusho Gukata Kuri i Ibiyobora Gukuraho... "
 "Ibiyobora ku Bidakora i Ishusho Na: i"
 
-#: ../tips/gimp-tips.xml.in.h:10
+#: ../tips/ligma-tips.xml.in.h:10
 #, fuzzy
 msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
+"LIGMA allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr "Isubiranyuma Amahinduka Kuri i Ishusho Kigenga Kuri"
 
-#: ../tips/gimp-tips.xml.in.h:11
+#: ../tips/ligma-tips.xml.in.h:11
 #, fuzzy
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
 "igabanyangano ku i Kongeramo Cyangwa NIBA Kuri i Izina ry'idosiye: Na "
 "Ishusho Byegeranijwe Itangira... Byegeranijwe Ishusho"
 
-#: ../tips/gimp-tips.xml.in.h:12
+#: ../tips/ligma-tips.xml.in.h:12
 #, fuzzy
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
 "Kuri Gutunganya... Ishusho Bya Nka a Bya Ibice Cyangwa Muyunguruzi "
 "Gihinguranya a Bya Ibigize"
 
-#: ../tips/gimp-tips.xml.in.h:13
+#: ../tips/ligma-tips.xml.in.h:13
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
 
-#: ../tips/gimp-tips.xml.in.h:14
+#: ../tips/ligma-tips.xml.in.h:14
 #, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
@@ -137,7 +137,7 @@ msgid ""
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr "Bya OYA Nyamabara Urutonde Na: i Akabuto in i Ibara Na: i"
 
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../tips/ligma-tips.xml.in.h:15
 #, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
@@ -147,7 +147,7 @@ msgstr ""
 "Akarongo a Inzira i Ibikoresho Na: KIGEZWEHO Amagenamiterere Gukoresha i in "
 "Ikizamuko Ubwoko Cyangwa ATARIIGIHARWE i Cyangwa i"
 
-#: ../tips/gimp-tips.xml.in.h:16
+#: ../tips/ligma-tips.xml.in.h:16
 #, fuzzy
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
@@ -156,7 +156,7 @@ msgstr ""
 "Mugaragaza ni Kanda Igikubo Times in Ishusho Idirishya Kuri Gushisha Cyangwa "
 "Garagaza i Agasanduku k'ibikoresha Na Ikindi Ibiganiro"
 
-#: ../tips/gimp-tips.xml.in.h:17
+#: ../tips/ligma-tips.xml.in.h:17
 #, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
@@ -166,7 +166,7 @@ msgstr ""
 "Kongeramo Akazi ku i KIGEZWEHO Akugara Bya i KIGEZWEHO Ishusho Kuri "
 "Gukomatanya Byose NIBA i in Kuri Akazi ku i Ishusho"
 
-#: ../tips/gimp-tips.xml.in.h:18
+#: ../tips/ligma-tips.xml.in.h:18
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
@@ -178,7 +178,7 @@ msgstr ""
 "Ibikubiyemo Icyinjijwe Gicurasi Kuri Guhindura>> i Ishusho Ubwoko Kuri "
 "Kongeramo Alufa Cyangwa"
 
-#: ../tips/gimp-tips.xml.in.h:19
+#: ../tips/ligma-tips.xml.in.h:19
 #, fuzzy
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
@@ -188,7 +188,7 @@ msgstr ""
 "Na i Urufunguzo Mbere a Ihitamo Kuri Kongeramo Kuri i KIGEZWEHO Ihitamo Bya "
 "Guhindura:%s Mbere a Ihitamo Bivuye i KIGEZWEHO"
 
-#: ../tips/gimp-tips.xml.in.h:20
+#: ../tips/ligma-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -201,7 +201,7 @@ msgstr ""
 "Bihagaritse Ibiyobora Tanjante Kuri i Uruziga Kuri Guhitamo indanga ku i "
 "Ihuriro Bya i Ibiyobora Na i Ihitamo i Ibiyobora"
 
-#: ../tips/gimp-tips.xml.in.h:21
+#: ../tips/ligma-tips.xml.in.h:21
 #, fuzzy
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
@@ -213,10 +213,10 @@ msgstr ""
 "Igishushanyo Akadomo Kuri KIGEZWEHO indanga Ibirindiro Kanda i Umurongo Kuri "
 "15 Dogere"
 
-#: ../tips/gimp-tips.xml.in.h:22
+#: ../tips/ligma-tips.xml.in.h:22
 #, fuzzy
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -224,7 +224,7 @@ msgstr ""
 "Kubika Ishusho Kuri Akazi ku ikoresha i IDOSIYE Imiterere Gukoresha i "
 "IDOSIYE Umugereka i Na buri Bya Akazi in Aho bigeze a Umushinga ni Kubika Nka"
 
-#: ../tips/gimp-tips.xml.in.h:23
+#: ../tips/ligma-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -234,14 +234,14 @@ msgstr ""
 "Cyangwa Kwimura a Ihitamo ku ikoresha Kurura iyi i Idirishya Kwimura "
 "Idirishya Muyobozi i Urufunguzo ku i Igihe"
 
-#: ../tips/gimp-tips.xml.in.h:24
+#: ../tips/ligma-tips.xml.in.h:24
 #, fuzzy
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr "i Ihitamo Urutonde kugirango Guhitamo ku Na Ibumoso: Na Iburyo:"
 
-#: ../tips/gimp-tips.xml.in.h:25
+#: ../tips/ligma-tips.xml.in.h:25
 #, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
@@ -251,7 +251,7 @@ msgstr ""
 "Kurema Na Guhindura ITSINDA RY'IMIBARE C ikoresha i Ikiganiro Kuri Akazi ku "
 "Igikubo Inzira Na Kuri GUHINDURA Kuri"
 
-#: ../tips/gimp-tips.xml.in.h:26
+#: ../tips/ligma-tips.xml.in.h:26
 #, fuzzy
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
@@ -260,10 +260,10 @@ msgstr ""
 "Kurura a Akugara Bivuye i Ikiganiro Na i Agasanduku k'ibikoresha Kurema a "
 "Gishya Ishusho Akugara"
 
-#: ../tips/gimp-tips.xml.in.h:27
+#: ../tips/ligma-tips.xml.in.h:27
 #, fuzzy
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
@@ -271,7 +271,7 @@ msgstr ""
 "Bivuye a Ibara Urwunge rw'ibara: Na Ishusho Kuzuza i KIGEZWEHO Ishusho "
 "Cyangwa Ihitamo Na: Ibara"
 
-#: ../tips/gimp-tips.xml.in.h:28
+#: ../tips/ligma-tips.xml.in.h:28
 #, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
@@ -281,16 +281,16 @@ msgstr ""
 "Gushushanya Byoroheje kare Cyangwa Inziga ikoresha i Bya KIGEZWEHO Ihitamo "
 "ITSINDA RY'IMIBARE C Imisusire- shusho ikoresha i Cyangwa Na:"
 
-#: ../tips/gimp-tips.xml.in.h:29
+#: ../tips/ligma-tips.xml.in.h:29
 #, fuzzy
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
+"You can get context-sensitive help for most of the LIGMA's features by "
 "pressing the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Kubona Imvugiro Ifashayobora kugirango Bya i Ibiranga ku i Urufunguzo ku "
 "Igihe Mo Imbere i Ibikubiyemo"
 
-#: ../tips/gimp-tips.xml.in.h:30
+#: ../tips/ligma-tips.xml.in.h:30
 #, fuzzy
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
@@ -299,7 +299,7 @@ msgstr ""
 "Akugara Ibikorwa: ku Iburyo: ku i Umwandiko Akarango Bya a Akugara in i "
 "Ikiganiro"
 
-#: ../tips/gimp-tips.xml.in.h:31
+#: ../tips/ligma-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -309,7 +309,7 @@ msgstr ""
 "Kanda Cyangwa i Na Utubuto a Ihitamo in Itondekanya Kuri Gutegeka Kuri a "
 "kare Cyangwa a Uruziga Cyangwa Kuri Bishyizwe hagati ku Akadomo"
 
-#: ../tips/gimp-tips.xml.in.h:32
+#: ../tips/ligma-tips.xml.in.h:32
 #, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
@@ -321,7 +321,7 @@ msgstr ""
 "i Utubuto in i Ikiganiro Mukomatanya i Ukugaragara Bya iyi Gishya Cyangwa "
 "GUHINDURA Kuri a Ihitamo"
 
-#: ../tips/gimp-tips.xml.in.h:33
+#: ../tips/ligma-tips.xml.in.h:33
 #, fuzzy
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
@@ -330,7 +330,7 @@ msgstr ""
 "Gukoresha Kuri Uruziga Gihinguranya Byose in Ishusho NIBA Idirishya Muyobozi "
 "Utubuto"
 
-#: ../tips/gimp-tips.xml.in.h:34
+#: ../tips/ligma-tips.xml.in.h:34
 #, fuzzy
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
@@ -339,7 +339,7 @@ msgstr ""
 "Gukoresha i Hagati Imbeba Akabuto Kuri i Ishusho NIBA Kinini Kugaragaza "
 "Idirishya"
 
-#: ../tips/gimp-tips.xml.in.h:35
+#: ../tips/ligma-tips.xml.in.h:35
 #, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"

@@ -1,5 +1,5 @@
-/* Sparkle --- image filter plug-in for GIMP
- * Copyright (C) 1996 by John Beale;  ported to Gimp by Michael J. Hammel;
+/* Sparkle --- image filter plug-in for LIGMA
+ * Copyright (C) 1996 by John Beale;  ported to Ligma by Michael J. Hammel;
  *
  * It has been optimized a little, bugfixed and modified by Martin Weber
  * for additional functionality.  Also bugfixed by Seth Burgess (9/17/03)
@@ -21,7 +21,7 @@
  *
  * You can contact Michael at mjhammel@csn.net
  * You can contact Martin at martweb@gmx.net
- * You can contact Seth at sjburges@gimp.org
+ * You can contact Seth at sjburges@ligma.org
  */
 
 /*
@@ -32,15 +32,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-sparkle"
 #define PLUG_IN_BINARY "sparkle"
-#define PLUG_IN_ROLE   "gimp-sparkle"
+#define PLUG_IN_ROLE   "ligma-sparkle"
 
 #define MAX_CHANNELS     4
 #define PSV              2  /* point spread value */
@@ -73,12 +73,12 @@ typedef struct _SparkleClass SparkleClass;
 
 struct _Sparkle
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _SparkleClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -87,32 +87,32 @@ struct _SparkleClass
 
 GType                   sparkle_get_type         (void) G_GNUC_CONST;
 
-static GList          * sparkle_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * sparkle_create_procedure (GimpPlugIn           *plug_in,
+static GList          * sparkle_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * sparkle_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * sparkle_run              (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * sparkle_run              (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  LigmaDrawable        **drawables,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
-static gboolean         sparkle_dialog           (GimpDrawable         *drawable);
-static void    sparkle_scale_entry_update_double (GimpLabelSpin        *entry,
+static gboolean         sparkle_dialog           (LigmaDrawable         *drawable);
+static void    sparkle_scale_entry_update_double (LigmaLabelSpin        *entry,
                                                   gdouble              *value);
 
 
 static gint             compute_luminosity       (const guchar         *pixel,
                                                   gboolean              gray,
                                                   gboolean              has_alpha);
-static gint             compute_lum_threshold    (GimpDrawable         *drawable,
+static gint             compute_lum_threshold    (LigmaDrawable         *drawable,
                                                   gdouble               percentile);
-static void             sparkle                  (GimpDrawable         *drawable,
-                                                  GimpPreview          *preview);
-static void             sparkle_preview          (GimpDrawable         *drawable,
-                                                  GimpPreview          *preview);
+static void             sparkle                  (LigmaDrawable         *drawable,
+                                                  LigmaPreview          *preview);
+static void             sparkle_preview          (LigmaDrawable         *drawable,
+                                                  LigmaPreview          *preview);
 static void             fspike                   (GeglBuffer           *src_buffer,
                                                   GeglBuffer           *dest_buffer,
                                                   const Babl           *format,
@@ -142,9 +142,9 @@ static void             rpnt                     (GeglBuffer           *dest_buf
                                                   guchar               *dest_buf);
 
 
-G_DEFINE_TYPE (Sparkle, sparkle, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Sparkle, sparkle, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SPARKLE_TYPE)
+LIGMA_MAIN (SPARKLE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -171,7 +171,7 @@ static gint num_sparkles;
 static void
 sparkle_class_init (SparkleClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = sparkle_query_procedures;
   plug_in_class->create_procedure = sparkle_create_procedure;
@@ -184,118 +184,118 @@ sparkle_init (Sparkle *sparkle)
 }
 
 static GList *
-sparkle_query_procedures (GimpPlugIn *plug_in)
+sparkle_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-sparkle_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+sparkle_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             sparkle_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Sparkle..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Sparkle..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Light and Shadow/Light");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Turn bright spots into "
                                           "starry sparkles"),
                                         "Uses a percentage based luminoisty "
                                         "threhsold to find candidate pixels "
                                         "for adding some sparkles (spikes).",
                                         name);
-      gimp_procedure_set_attribution (procedure,
-                                      "John Beale, & (ported to GIMP v0.54) "
-                                      "Michael J. Hammel & ted to GIMP v1.0) "
+      ligma_procedure_set_attribution (procedure,
+                                      "John Beale, & (ported to LIGMA v0.54) "
+                                      "Michael J. Hammel & ted to LIGMA v1.0) "
                                       "& Seth Burgess & Spencer Kimball",
                                       "John Beale",
                                       "Version 1.27, September 2003");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "lum-threshold",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "lum-threshold",
                             "Lum threshold",
                             "Luminosity threshold",
                             0.0, 1.0, 0.001,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "flare-inten",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "flare-inten",
                             "Flare inten",
                             "Flare intensity",
                             0.0, 1.0, 0.5,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-len",
+      LIGMA_PROC_ARG_INT (procedure, "spike-len",
                          "Spike len",
                          "Spike length (in pixels)",
                          1, 1000, 20,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-points",
+      LIGMA_PROC_ARG_INT (procedure, "spike-points",
                          "Spike points",
                          "# of spike points",
                          1, 1000, 4,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-angle",
+      LIGMA_PROC_ARG_INT (procedure, "spike-angle",
                          "Spike angle",
                          "Spike angle (-1: random)",
                          -1, 360, 15,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "density",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "density",
                             "Density",
                             "Spike density",
                             0.0, 1.0, 1.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "transparency",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "transparency",
                             "Transparency",
                             "Transparency",
                             0.0, 1.0, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "random-hue",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "random-hue",
                             "Random hue",
                             "Random hue",
                             0.0, 1.0, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "random-saturation",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "random-saturation",
                             "Random saturation",
                             "Random saturation",
                             0.0, 1.0, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "preserve-luminosity",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "preserve-luminosity",
                              "Preserve luminosity",
                              "Preserve luminosity",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "inverse",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "inverse",
                              "Inverse",
                              "Inverse",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "border",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "border",
                              "Border",
                              "Add border",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "color-type",
+      LIGMA_PROC_ARG_INT (procedure, "color-type",
                          "Color type",
                          "Color of sparkles: { NATURAL (0), "
                          "FOREGROUND (1), BACKGROUND (2) }",
@@ -306,16 +306,16 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-sparkle_run (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+sparkle_run (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
-             const GimpValueArray *args,
+             LigmaDrawable        **drawables,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint          x, y, w, h;
 
   gegl_init (NULL, NULL);
@@ -324,12 +324,12 @@ sparkle_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -337,74 +337,74 @@ sparkle_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+  if (! ligma_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {
       g_message (_("Region selected for filter is empty"));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_SUCCESS,
                                                NULL);
     }
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &svals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &svals);
 
       if (! sparkle_dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      svals.lum_threshold       = GIMP_VALUES_GET_DOUBLE  (args, 0);
-      svals.flare_inten         = GIMP_VALUES_GET_DOUBLE  (args, 1);
-      svals.spike_len           = GIMP_VALUES_GET_INT     (args, 2);
-      svals.spike_pts           = GIMP_VALUES_GET_INT     (args, 3);
-      svals.spike_angle         = GIMP_VALUES_GET_INT     (args, 4);
-      svals.density             = GIMP_VALUES_GET_DOUBLE  (args, 5);
-      svals.transparency        = GIMP_VALUES_GET_DOUBLE  (args, 6);
-      svals.random_hue          = GIMP_VALUES_GET_DOUBLE  (args, 7);
-      svals.random_saturation   = GIMP_VALUES_GET_DOUBLE  (args, 8);
-      svals.preserve_luminosity = GIMP_VALUES_GET_BOOLEAN (args, 9);
-      svals.inverse             = GIMP_VALUES_GET_BOOLEAN (args, 10);
-      svals.border              = GIMP_VALUES_GET_BOOLEAN (args, 11);
-      svals.colortype           = GIMP_VALUES_GET_INT     (args, 12);
+    case LIGMA_RUN_NONINTERACTIVE:
+      svals.lum_threshold       = LIGMA_VALUES_GET_DOUBLE  (args, 0);
+      svals.flare_inten         = LIGMA_VALUES_GET_DOUBLE  (args, 1);
+      svals.spike_len           = LIGMA_VALUES_GET_INT     (args, 2);
+      svals.spike_pts           = LIGMA_VALUES_GET_INT     (args, 3);
+      svals.spike_angle         = LIGMA_VALUES_GET_INT     (args, 4);
+      svals.density             = LIGMA_VALUES_GET_DOUBLE  (args, 5);
+      svals.transparency        = LIGMA_VALUES_GET_DOUBLE  (args, 6);
+      svals.random_hue          = LIGMA_VALUES_GET_DOUBLE  (args, 7);
+      svals.random_saturation   = LIGMA_VALUES_GET_DOUBLE  (args, 8);
+      svals.preserve_luminosity = LIGMA_VALUES_GET_BOOLEAN (args, 9);
+      svals.inverse             = LIGMA_VALUES_GET_BOOLEAN (args, 10);
+      svals.border              = LIGMA_VALUES_GET_BOOLEAN (args, 11);
+      svals.colortype           = LIGMA_VALUES_GET_INT     (args, 12);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &svals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &svals);
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
-      gimp_progress_init (_("Sparkling"));
+      ligma_progress_init (_("Sparkling"));
 
       sparkle (drawable, NULL);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &svals, sizeof (SparkleVals));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &svals, sizeof (SparkleVals));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-sparkle_dialog (GimpDrawable *drawable)
+sparkle_dialog (LigmaDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -417,23 +417,23 @@ sparkle_dialog (GimpDrawable *drawable)
   GtkWidget *scale;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Sparkle"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Sparkle"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -441,7 +441,7 @@ sparkle_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -454,103 +454,103 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("Luminosity _threshold:"), svals.lum_threshold, 0.0, 0.1, 3);
-  gimp_help_set_help_data (scale, _("Adjust the luminosity threshold"), NULL);
+  scale = ligma_scale_entry_new (_("Luminosity _threshold:"), svals.lum_threshold, 0.0, 0.1, 3);
+  ligma_help_set_help_data (scale, _("Adjust the luminosity threshold"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.lum_threshold);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("F_lare intensity:"), svals.flare_inten, 0.0, 1.0, 2);
-  gimp_help_set_help_data (scale, _("Adjust the flare intensity"), NULL);
+  scale = ligma_scale_entry_new (_("F_lare intensity:"), svals.flare_inten, 0.0, 1.0, 2);
+  ligma_help_set_help_data (scale, _("Adjust the flare intensity"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.flare_inten);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Spike length:"), svals.spike_len, 1, 100, 0);
-  gimp_help_set_help_data (scale, _("Adjust the spike length"), NULL);
+  scale = ligma_scale_entry_new (_("_Spike length:"), svals.spike_len, 1, 100, 0);
+  ligma_help_set_help_data (scale, _("Adjust the spike length"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.spike_len);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Sp_ike points:"), svals.spike_pts, 0, 16, 0);
-  gimp_help_set_help_data (scale, _("Adjust the number of spikes"), NULL);
+  scale = ligma_scale_entry_new (_("Sp_ike points:"), svals.spike_pts, 0, 16, 0);
+  ligma_help_set_help_data (scale, _("Adjust the number of spikes"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.spike_pts);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Spi_ke angle (-1: random):"), svals.spike_angle, -1, 360, 0);
-  gimp_help_set_help_data (scale, _("Adjust the spike angle "
+  scale = ligma_scale_entry_new (_("Spi_ke angle (-1: random):"), svals.spike_angle, -1, 360, 0);
+  ligma_help_set_help_data (scale, _("Adjust the spike angle "
                                     "(-1 causes a random angle to be chosen)"), NULL);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.spike_angle);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Spik_e density:"), svals.density, 0.0, 1.0, 2);
-  gimp_help_set_help_data (scale, _("Adjust the spike density"), NULL);
+  scale = ligma_scale_entry_new (_("Spik_e density:"), svals.density, 0.0, 1.0, 2);
+  ligma_help_set_help_data (scale, _("Adjust the spike density"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.density);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Tr_ansparency:"), svals.transparency, 0.0, 1.0, 2);
-  gimp_help_set_help_data (scale, _("Adjust the opacity of the spikes"), NULL);
+  scale = ligma_scale_entry_new (_("Tr_ansparency:"), svals.transparency, 0.0, 1.0, 2);
+  ligma_help_set_help_data (scale, _("Adjust the opacity of the spikes"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.transparency);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 6, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Random hue:"), svals.random_hue, 0.0, 1.0, 2);
-  gimp_help_set_help_data (scale, _("Adjust how much the hue should be changed randomly"), NULL);
+  scale = ligma_scale_entry_new (_("_Random hue:"), svals.random_hue, 0.0, 1.0, 2);
+  ligma_help_set_help_data (scale, _("Adjust how much the hue should be changed randomly"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.random_hue);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 7, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Rando_m saturation:"), svals.random_saturation, 0.0, 1.0, 2);
-  gimp_help_set_help_data (scale, _("Adjust how much the saturation should be changed randomly"), NULL);
+  scale = ligma_scale_entry_new (_("Rando_m saturation:"), svals.random_saturation, 0.0, 1.0, 2);
+  ligma_help_set_help_data (scale, _("Adjust how much the saturation should be changed randomly"), NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (sparkle_scale_entry_update_double),
                     &svals.random_saturation);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 8, 3, 1);
   gtk_widget_show (scale);
@@ -569,14 +569,14 @@ sparkle_dialog (GimpDrawable *drawable)
                 svals.preserve_luminosity);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Should the luminosity be preserved?"), NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &svals.preserve_luminosity);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("In_verse"));
@@ -584,14 +584,14 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.inverse);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Should the effect be inversed?"), NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &svals.inverse);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("A_dd border"));
@@ -599,19 +599,19 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Draw a border of spikes around the image"), NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &svals.border);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /*  colortype  */
-  vbox = gimp_int_radio_group_new (FALSE, NULL,
-                                   G_CALLBACK (gimp_radio_button_update),
+  vbox = ligma_int_radio_group_new (FALSE, NULL,
+                                   G_CALLBACK (ligma_radio_button_update),
                                    &svals.colortype, NULL, svals.colortype,
 
                                    _("_Natural color"),    NATURAL,    &r1,
@@ -623,22 +623,22 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  gimp_help_set_help_data (r1, _("Use the color of the image"), NULL);
-  gimp_help_set_help_data (r2, _("Use the foreground color"), NULL);
-  gimp_help_set_help_data (r3, _("Use the background color"), NULL);
+  ligma_help_set_help_data (r1, _("Use the color of the image"), NULL);
+  ligma_help_set_help_data (r2, _("Use the foreground color"), NULL);
+  ligma_help_set_help_data (r3, _("Use the background color"), NULL);
   g_signal_connect_swapped (r1, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (r2, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (r3, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -646,10 +646,10 @@ sparkle_dialog (GimpDrawable *drawable)
 }
 
 static void
-sparkle_scale_entry_update_double (GimpLabelSpin *entry,
+sparkle_scale_entry_update_double (LigmaLabelSpin *entry,
                                    gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }
 
 
@@ -697,7 +697,7 @@ compute_luminosity (const guchar *pixel,
 }
 
 static gint
-compute_lum_threshold (GimpDrawable *drawable,
+compute_lum_threshold (LigmaDrawable *drawable,
                        gdouble percentile)
 {
   GeglBuffer         *src_buffer;
@@ -715,12 +715,12 @@ compute_lum_threshold (GimpDrawable *drawable,
   /*  zero out the luminosity values array  */
   memset (values, 0, sizeof (gint) * 256);
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return 0;
 
-  gray = gimp_drawable_is_gray (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  gray = ligma_drawable_is_gray (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
   if (gray)
     {
@@ -739,7 +739,7 @@ compute_lum_threshold (GimpDrawable *drawable,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -777,8 +777,8 @@ compute_lum_threshold (GimpDrawable *drawable,
 }
 
 static void
-sparkle (GimpDrawable *drawable,
-         GimpPreview  *preview)
+sparkle (LigmaDrawable *drawable,
+         LigmaPreview  *preview)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -797,8 +797,8 @@ sparkle (GimpDrawable *drawable,
   GRand              *gr;
   guchar             *dest_buf = NULL;
 
-  gray = gimp_drawable_is_gray (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  gray = ligma_drawable_is_gray (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
   if (gray)
     {
@@ -821,8 +821,8 @@ sparkle (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
+      ligma_preview_get_position (preview, &x1, &y1);
+      ligma_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -830,7 +830,7 @@ sparkle (GimpDrawable *drawable,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable,
+      if (! ligma_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         return;
 
@@ -841,8 +841,8 @@ sparkle (GimpDrawable *drawable,
   if (width < 1 || height < 1)
     return;
 
-  d_width  = gimp_drawable_get_width  (drawable);
-  d_height = gimp_drawable_get_height (drawable);
+  d_width  = ligma_drawable_get_width  (drawable);
+  d_height = ligma_drawable_get_height (drawable);
 
   gr = g_rand_new ();
 
@@ -862,8 +862,8 @@ sparkle (GimpDrawable *drawable,
   max_progress = num_sparkles;
 
   /* copy what is already there */
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -1001,7 +1001,7 @@ sparkle (GimpDrawable *drawable,
                       cur_progress ++;
 
                       if ((cur_progress % 5) == 0)
-                        gimp_progress_update ((double) cur_progress /
+                        ligma_progress_update ((double) cur_progress /
                                               (double) max_progress);
                     }
                 }
@@ -1018,23 +1018,23 @@ sparkle (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_draw_buffer (preview, dest_buf, width * bytes);
+      ligma_preview_draw_buffer (preview, dest_buf, width * bytes);
       g_free (dest_buf);
     }
   else
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, x1, y1, width, height);
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, x1, y1, width, height);
     }
 
   g_rand_free (gr);
 }
 
 static void
-sparkle_preview (GimpDrawable *drawable,
-                 GimpPreview  *preview)
+sparkle_preview (LigmaDrawable *drawable,
+                 LigmaPreview  *preview)
 {
   sparkle (drawable, preview);
 }
@@ -1146,7 +1146,7 @@ fspike (GeglBuffer   *src_buffer,
   gdouble        sfac;
   gint           i;
   gboolean       ok;
-  GimpRGB        gimp_color;
+  LigmaRGB        ligma_color;
   guchar         pixel[MAX_CHANNELS];
   guchar         chosen_color[MAX_CHANNELS];
   guchar         color[MAX_CHANNELS];
@@ -1159,14 +1159,14 @@ fspike (GeglBuffer   *src_buffer,
       break;
 
     case FOREGROUND:
-      gimp_context_get_foreground (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
+      ligma_context_get_foreground (&ligma_color);
+      ligma_rgb_get_uchar (&ligma_color, &chosen_color[0], &chosen_color[1],
                           &chosen_color[2]);
       break;
 
     case BACKGROUND:
-      gimp_context_get_background (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
+      ligma_context_get_background (&ligma_color);
+      ligma_rgb_get_uchar (&ligma_color, &chosen_color[0], &chosen_color[1],
                           &chosen_color[2]);
       break;
     }
@@ -1201,14 +1201,14 @@ fspike (GeglBuffer   *src_buffer,
 
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
-          GimpRGB rgb;
-          GimpHSV hsv;
+          LigmaRGB rgb;
+          LigmaHSV hsv;
 
           rgb.r = (gdouble) (255 - color[0]) / 255.0;
           rgb.g = (gdouble) (255 - color[1]) / 255.0;
           rgb.b = (gdouble) (255 - color[2]) / 255.0;
 
-          gimp_rgb_to_hsv (&rgb, &hsv);
+          ligma_rgb_to_hsv (&rgb, &hsv);
 
           hsv.h += svals.random_hue * g_rand_double_range (gr, -0.5, 0.5);
 
@@ -1222,7 +1222,7 @@ fspike (GeglBuffer   *src_buffer,
 
           hsv.v = CLAMP (hsv.v, 0.0, 1.0);
 
-          gimp_hsv_to_rgb (&hsv, &rgb);
+          ligma_hsv_to_rgb (&hsv, &rgb);
 
           color[0] = 255 - ROUND (rgb.r * 255.0);
           color[1] = 255 - ROUND (rgb.g * 255.0);

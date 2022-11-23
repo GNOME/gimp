@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,28 @@
 #define __DASHBOARD_COMMANDS_H__
 
 
-void   dashboard_update_interval_cmd_callback        (GimpAction *action,
+void   dashboard_update_interval_cmd_callback        (LigmaAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
-void   dashboard_history_duration_cmd_callback       (GimpAction *action,
-                                                      GVariant   *value,
-                                                      gpointer    data);
-
-void   dashboard_log_record_cmd_callback             (GimpAction *action,
-                                                      GVariant   *value,
-                                                      gpointer    data);
-void   dashboard_log_add_marker_cmd_callback         (GimpAction *action,
-                                                      GVariant   *value,
-                                                      gpointer    data);
-void   dashboard_log_add_empty_marker_cmd_callback   (GimpAction *action,
+void   dashboard_history_duration_cmd_callback       (LigmaAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
 
-void   dashboard_reset_cmd_callback                  (GimpAction *action,
+void   dashboard_log_record_cmd_callback             (LigmaAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   dashboard_log_add_marker_cmd_callback         (LigmaAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   dashboard_log_add_empty_marker_cmd_callback   (LigmaAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
 
-void   dashboard_low_swap_space_warning_cmd_callback (GimpAction *action,
+void   dashboard_reset_cmd_callback                  (LigmaAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+
+void   dashboard_low_swap_space_warning_cmd_callback (LigmaAction *action,
                                                       GVariant   *value,
                                                       gpointer    data);
 

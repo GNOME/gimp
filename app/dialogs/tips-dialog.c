@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "tips-dialog.h"
 #include "tips-parser.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -42,13 +42,13 @@ enum
   RESPONSE_NEXT     = 2
 };
 
-static void     tips_dialog_set_tip  (GimpTip       *tip);
+static void     tips_dialog_set_tip  (LigmaTip       *tip);
 static void     tips_dialog_response (GtkWidget     *dialog,
                                       gint           response);
 static void     tips_dialog_destroy  (GtkWidget     *widget,
-                                      GimpGuiConfig *config);
+                                      LigmaGuiConfig *config);
 static gboolean more_button_clicked  (GtkWidget     *button,
-                                      Gimp          *gimp);
+                                      Ligma          *ligma);
 
 
 static GtkWidget *tips_dialog = NULL;
@@ -59,45 +59,45 @@ static GList     *current_tip = NULL;
 
 
 GtkWidget *
-tips_dialog_create (Gimp *gimp)
+tips_dialog_create (Ligma *ligma)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
   GtkWidget     *button;
   GtkWidget     *image;
   gint           tips_count;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (!tips)
     {
       GError *error = NULL;
       GFile  *file;
 
-      file = gimp_data_directory_file ("tips", "gimp-tips.xml", NULL);
+      file = ligma_data_directory_file ("tips", "ligma-tips.xml", NULL);
 
-      tips = gimp_tips_from_file (file, &error);
+      tips = ligma_tips_from_file (file, &error);
 
       if (! tips)
         {
-          GimpTip *tip;
+          LigmaTip *tip;
 
           if (! error)
             {
-              tip = gimp_tip_new (_("The GIMP tips file is empty!"), NULL);
+              tip = ligma_tip_new (_("The LIGMA tips file is empty!"), NULL);
             }
           else if (error->code == G_FILE_ERROR_NOENT)
             {
-              tip = gimp_tip_new (_("The GIMP tips file appears to be "
+              tip = ligma_tip_new (_("The LIGMA tips file appears to be "
                                     "missing!"),
                                   _("There should be a file called '%s'. "
                                     "Please check your installation."),
-                                  gimp_file_get_utf8_name (file));
+                                  ligma_file_get_utf8_name (file));
             }
           else
             {
-              tip = gimp_tip_new (_("The GIMP tips file could not be parsed!"),
+              tip = ligma_tip_new (_("The LIGMA tips file could not be parsed!"),
                                   "%s", error->message);
             }
 
@@ -106,7 +106,7 @@ tips_dialog_create (Gimp *gimp)
       else if (error)
         {
           g_printerr ("Error while parsing '%s': %s\n",
-                      gimp_file_get_utf8_name (file), error->message);
+                      ligma_file_get_utf8_name (file), error->message);
         }
 
       g_clear_error (&error);
@@ -115,7 +115,7 @@ tips_dialog_create (Gimp *gimp)
 
   tips_count = g_list_length (tips);
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
   if (config->last_tip_shown >= tips_count || config->last_tip_shown < 0)
     config->last_tip_shown = 0;
@@ -125,21 +125,21 @@ tips_dialog_create (Gimp *gimp)
   if (tips_dialog)
     return tips_dialog;
 
-  tips_dialog = gimp_dialog_new (_("GIMP Tip of the Day"),
-                                 "gimp-tip-of-the-day",
+  tips_dialog = ligma_dialog_new (_("LIGMA Tip of the Day"),
+                                 "ligma-tip-of-the-day",
                                  NULL, 0, NULL, NULL,
                                  NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Previous Tip"), RESPONSE_PREVIOUS);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_GO_PREVIOUS,
                                                       GTK_ICON_SIZE_BUTTON));
 
   button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
                                   _("_Next Tip"), RESPONSE_NEXT);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_GO_NEXT,
                                                       GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
@@ -169,7 +169,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_INFORMATION,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DIALOG_INFORMATION,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -189,7 +189,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  more_button = gtk_link_button_new_with_label ("https://docs.gimp.org/",
+  more_button = gtk_link_button_new_with_label ("https://docs.ligma.org/",
   /*  a link to the related section in the user manual  */
                                                 _("Learn more"));
   gtk_widget_show (more_button);
@@ -197,7 +197,7 @@ tips_dialog_create (Gimp *gimp)
 
   g_signal_connect (more_button, "activate-link",
                     G_CALLBACK (more_button_clicked),
-                    gimp);
+                    ligma);
 
   tips_dialog_set_tip (current_tip->data);
 
@@ -206,7 +206,7 @@ tips_dialog_create (Gimp *gimp)
 
 static void
 tips_dialog_destroy (GtkWidget     *widget,
-                     GimpGuiConfig *config)
+                     LigmaGuiConfig *config)
 {
   /* the last-shown-tip is saved in sessionrc */
   config->last_tip_shown = g_list_position (tips, current_tip);
@@ -214,7 +214,7 @@ tips_dialog_destroy (GtkWidget     *widget,
   tips_dialog = NULL;
   current_tip = NULL;
 
-  gimp_tips_free (tips);
+  ligma_tips_free (tips);
   tips = NULL;
 }
 
@@ -241,7 +241,7 @@ tips_dialog_response (GtkWidget *dialog,
 }
 
 static void
-tips_dialog_set_tip (GimpTip *tip)
+tips_dialog_set_tip (LigmaTip *tip)
 {
   g_return_if_fail (tip != NULL);
 
@@ -249,19 +249,19 @@ tips_dialog_set_tip (GimpTip *tip)
 
   /*  set the URI to unset the "visited" state  */
   gtk_link_button_set_uri (GTK_LINK_BUTTON (more_button),
-                           "https://docs.gimp.org/");
+                           "https://docs.ligma.org/");
 
   gtk_widget_set_sensitive (more_button, tip->help_id != NULL);
 }
 
 static gboolean
 more_button_clicked (GtkWidget *button,
-                     Gimp      *gimp)
+                     Ligma      *ligma)
 {
-  GimpTip *tip = current_tip->data;
+  LigmaTip *tip = current_tip->data;
 
   if (tip->help_id)
-    gimp_help (gimp, NULL, NULL, tip->help_id);
+    ligma_help (ligma, NULL, NULL, tip->help_id);
 
   /* Do not run the link set at construction. */
   return TRUE;

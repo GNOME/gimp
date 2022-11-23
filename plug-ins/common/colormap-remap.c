@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,16 +31,16 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC_REMAP  "plug-in-colormap-remap"
 #define PLUG_IN_PROC_SWAP   "plug-in-colormap-swap"
 #define PLUG_IN_BINARY      "colormap-remap"
-#define PLUG_IN_ROLE        "gimp-colormap-remap"
+#define PLUG_IN_ROLE        "ligma-colormap-remap"
 
 
 typedef struct _Remap      Remap;
@@ -48,12 +48,12 @@ typedef struct _RemapClass RemapClass;
 
 struct _Remap
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _RemapClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -62,36 +62,36 @@ struct _RemapClass
 
 GType                   remap_get_type         (void) G_GNUC_CONST;
 
-static GList          * remap_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * remap_create_procedure (GimpPlugIn           *plug_in,
+static GList          * remap_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * remap_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * remap_run              (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * remap_run              (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                LigmaDrawable        **drawables,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
-static gboolean         remap                  (GimpImage            *image,
+static gboolean         remap                  (LigmaImage            *image,
                                                 gint                  num_colors,
                                                 guchar               *map);
 
-static gboolean         remap_dialog           (GimpImage            *image,
+static gboolean         remap_dialog           (LigmaImage            *image,
                                                 guchar               *map);
 
 
-G_DEFINE_TYPE (Remap, remap, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Remap, remap, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (REMAP_TYPE)
+LIGMA_MAIN (REMAP_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 remap_class_init (RemapClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = remap_query_procedures;
   plug_in_class->create_procedure = remap_create_procedure;
@@ -104,7 +104,7 @@ remap_init (Remap *remap)
 }
 
 static GList *
-remap_query_procedures (GimpPlugIn *plug_in)
+remap_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -114,68 +114,68 @@ remap_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-remap_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+remap_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC_REMAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             remap_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "INDEXED*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("R_earrange Colormap..."));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map/Colormap");
-      gimp_procedure_add_menu_path (procedure, "<Colormap>");
+      ligma_procedure_set_menu_label (procedure, _("R_earrange Colormap..."));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_COLORMAP);
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Map/Colormap");
+      ligma_procedure_add_menu_path (procedure, "<Colormap>");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Rearrange the colormap"),
                                         "This procedure takes an indexed "
                                         "image and lets you alter the "
                                         "positions of colors in the colormap "
                                         "without visually changing the image.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_INT (procedure, "num-colors",
+      LIGMA_PROC_ARG_INT (procedure, "num-colors",
                          "Num colors",
                          "Length of 'map' argument",
                          1, 256, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "map",
+      LIGMA_PROC_ARG_UINT8_ARRAY (procedure, "map",
                                  "Map",
                                  "Remap array for the colormap",
                                  G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PLUG_IN_PROC_SWAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             remap_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "INDEXED*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Swap Colors"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
+      ligma_procedure_set_menu_label (procedure, _("_Swap Colors"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_COLORMAP);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Swap two colors in the colormap"),
                                         "This procedure takes an indexed "
                                         "image and lets you swap the "
@@ -183,18 +183,18 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                         "colormap without visually changing "
                                         "the image.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_UCHAR (procedure, "index1",
+      LIGMA_PROC_ARG_UCHAR (procedure, "index1",
                            "Index 1",
                            "First index in the colormap",
                            0, 255, 0,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_UCHAR (procedure, "index2",
+      LIGMA_PROC_ARG_UCHAR (procedure, "index2",
                            "Index 2",
                            "Second (other) index in the colormap",
                            0, 255, 0,
@@ -204,13 +204,13 @@ remap_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-remap_run (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+remap_run (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           LigmaDrawable        **drawables,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
   guchar map[256];
@@ -219,79 +219,79 @@ remap_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   /*  Make sure that the image is indexed  */
-  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+  if (ligma_image_get_base_type (image) != LIGMA_INDEXED)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              NULL);
 
   for (i = 0; i < 256; i++)
     map[i] = i;
 
-  if (strcmp (gimp_procedure_get_name (procedure),
+  if (strcmp (ligma_procedure_get_name (procedure),
               PLUG_IN_PROC_REMAP) == 0)
     {
       gint          n_cols;
       gint          n_col_args;
       const guchar *col_args;
 
-      g_free (gimp_image_get_colormap (image, &n_cols));
+      g_free (ligma_image_get_colormap (image, &n_cols));
 
-      n_col_args = GIMP_VALUES_GET_INT        (args, 0);
-      col_args   = GIMP_VALUES_GET_UINT8_ARRAY (args, 1);
+      n_col_args = LIGMA_VALUES_GET_INT        (args, 0);
+      col_args   = LIGMA_VALUES_GET_UINT8_ARRAY (args, 1);
 
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
+        case LIGMA_RUN_INTERACTIVE:
           if (! remap_dialog (image, map))
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CANCEL,
+            return ligma_procedure_new_return_values (procedure,
+                                                     LIGMA_PDB_CANCEL,
                                                      NULL);
           break;
 
-        case GIMP_RUN_NONINTERACTIVE:
+        case LIGMA_RUN_NONINTERACTIVE:
           if (n_cols != n_col_args)
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CALLING_ERROR,
+            return ligma_procedure_new_return_values (procedure,
+                                                     LIGMA_PDB_CALLING_ERROR,
                                                      NULL);
 
           for (i = 0; i < n_cols; i++)
             map[i] = col_args[i];
           break;
 
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (PLUG_IN_PROC_REMAP, map);
+        case LIGMA_RUN_WITH_LAST_VALS:
+          ligma_get_data (PLUG_IN_PROC_REMAP, map);
           break;
         }
 
       if (! remap (image, n_cols, map))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_EXECUTION_ERROR,
                                                  NULL);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC_REMAP, map, sizeof (map));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC_REMAP, map, sizeof (map));
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
     }
-  else if (strcmp (gimp_procedure_get_name (procedure),
+  else if (strcmp (ligma_procedure_get_name (procedure),
                    PLUG_IN_PROC_SWAP) == 0)
     {
-      guchar index1 = GIMP_VALUES_GET_UCHAR (args, 0);
-      guchar index2 = GIMP_VALUES_GET_UCHAR (args, 1);
+      guchar index1 = LIGMA_VALUES_GET_UCHAR (args, 0);
+      guchar index2 = LIGMA_VALUES_GET_UCHAR (args, 1);
       guchar tmp;
       gint   n_cols;
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CALLING_ERROR,
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CALLING_ERROR,
                                                  NULL);
 
-      g_free (gimp_image_get_colormap (image, &n_cols));
+      g_free (ligma_image_get_colormap (image, &n_cols));
 
       if (index1 >= n_cols || index2 >= n_cols)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CALLING_ERROR,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CALLING_ERROR,
                                                  NULL);
 
       tmp = map[index1];
@@ -299,17 +299,17 @@ remap_run (GimpProcedure        *procedure,
       map[index2] = tmp;
 
       if (! remap (image, n_cols, map))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_EXECUTION_ERROR,
                                                  NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 
 static gboolean
-remap (GimpImage *image,
+remap (LigmaImage *image,
        gint       num_colors,
        guchar    *map)
 {
@@ -325,7 +325,7 @@ remap (GimpImage *image,
   gboolean  valid[256];
   gint      i;
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = ligma_image_get_colormap (image, &ncols);
 
   g_return_val_if_fail (cmap != NULL, FALSE);
   g_return_val_if_fail (ncols > 0, FALSE);
@@ -371,23 +371,23 @@ remap (GimpImage *image,
       *new_cmap_i++ = cmap[j + 2];
     }
 
-  gimp_image_undo_group_start (image);
+  ligma_image_undo_group_start (image);
 
-  gimp_image_set_colormap (image, new_cmap, ncols);
+  ligma_image_set_colormap (image, new_cmap, ncols);
 
   g_free (cmap);
   g_free (new_cmap);
 
-  gimp_progress_init (_("Rearranging the colormap"));
+  ligma_progress_init (_("Rearranging the colormap"));
 
   /*  There is no needs to process the layers recursively, because
    *  indexed images cannot have layer groups.
    */
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (list = layers; list; list = list->next)
     pixels +=
-      gimp_drawable_get_width (list->data) * gimp_drawable_get_height (list->data);
+      ligma_drawable_get_width (list->data) * ligma_drawable_get_height (list->data);
 
   for (list = layers; list; list = list->next)
     {
@@ -400,8 +400,8 @@ remap (GimpImage *image,
       gint                width, height, bpp;
       gint                update = 0;
 
-      buffer = gimp_drawable_get_buffer (list->data);
-      shadow = gimp_drawable_get_shadow_buffer (list->data);
+      buffer = ligma_drawable_get_buffer (list->data);
+      shadow = ligma_drawable_get_shadow_buffer (list->data);
 
       width   = gegl_buffer_get_width  (buffer);
       height  = gegl_buffer_get_height (buffer);
@@ -454,7 +454,7 @@ remap (GimpImage *image,
           update %= 16;
 
           if (update == 0)
-            gimp_progress_update ((gdouble) processed / pixels);
+            ligma_progress_update ((gdouble) processed / pixels);
 
           update++;
         }
@@ -462,15 +462,15 @@ remap (GimpImage *image,
       g_object_unref (buffer);
       g_object_unref (shadow);
 
-      gimp_drawable_merge_shadow (list->data, TRUE);
-      gimp_drawable_update (list->data, 0, 0, width, height);
+      ligma_drawable_merge_shadow (list->data, TRUE);
+      ligma_drawable_update (list->data, 0, 0, width, height);
     }
 
   g_list_free (layers);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return TRUE;
 }
@@ -562,7 +562,7 @@ remap_ui_manager_new (GtkWidget    *window,
       G_CALLBACK (remap_reverse_callback)
     },
     {
-      "reset", GIMP_ICON_RESET, N_("Reset Order"), NULL, NULL,
+      "reset", LIGMA_ICON_RESET, N_("Reset Order"), NULL, NULL,
       G_CALLBACK (remap_reset_callback)
     },
   };
@@ -642,7 +642,7 @@ remap_response (GtkWidget       *dialog,
 }
 
 static gboolean
-remap_dialog (GimpImage *image,
+remap_dialog (LigmaImage *image,
               guchar    *map)
 {
   GtkWidget       *dialog;
@@ -656,11 +656,11 @@ remap_dialog (GimpImage *image,
   gint             ncols, i;
   gboolean         valid;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Rearrange Colormap"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC_REMAP,
+                            ligma_standard_help_func, PLUG_IN_PROC_REMAP,
 
                             _("_Reset"),  RESPONSE_RESET,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -668,39 +668,39 @@ remap_dialog (GimpImage *image,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = ligma_image_get_colormap (image, &ncols);
 
   g_return_val_if_fail ((ncols > 0) && (ncols <= 256), FALSE);
 
   store = gtk_list_store_new (NUM_COLS,
-                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
+                              G_TYPE_INT, G_TYPE_STRING, LIGMA_TYPE_RGB,
                               G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
 
   for (i = 0; i < ncols; i++)
     {
-      GimpRGB  rgb;
-      GimpHSV  hsv;
+      LigmaRGB  rgb;
+      LigmaHSV  hsv;
       gint     index = map[i];
       gchar   *text  = g_strdup_printf ("%d", index);
 
-      gimp_rgb_set_uchar (&rgb,
+      ligma_rgb_set_uchar (&rgb,
                           cmap[index * 3],
                           cmap[index * 3 + 1],
                           cmap[index * 3 + 2]);
-      gimp_rgb_to_hsv (&rgb, &hsv);
+      ligma_rgb_to_hsv (&rgb, &hsv);
 
       reverse_order[i] = ncols - i - 1;
 
@@ -734,7 +734,7 @@ remap_dialog (GimpImage *image,
   gtk_icon_view_set_column_spacing (GTK_ICON_VIEW (iconview), 0);
   gtk_icon_view_set_reorderable (GTK_ICON_VIEW (iconview), TRUE);
 
-  renderer = gimp_cell_renderer_color_new ();
+  renderer = ligma_cell_renderer_color_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (iconview), renderer, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iconview), renderer,
                                   "color", COLOR_RGB,
@@ -762,7 +762,7 @@ remap_dialog (GimpImage *image,
                     G_CALLBACK (remap_button_press),
                     NULL);
 
-  box = gimp_hint_box_new (_("Drag and drop colors to rearrange the colormap.  "
+  box = ligma_hint_box_new (_("Drag and drop colors to rearrange the colormap.  "
                              "The numbers shown are the original indices.  "
                              "Right-click for a menu with sort options."));
 

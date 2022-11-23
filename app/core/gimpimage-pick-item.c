@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,43 +20,43 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpgrouplayer.h"
-#include "gimpguide.h"
-#include "gimpimage.h"
-#include "gimpimage-pick-item.h"
-#include "gimpimage-private.h"
-#include "gimppickable.h"
-#include "gimpsamplepoint.h"
+#include "ligmagrouplayer.h"
+#include "ligmaguide.h"
+#include "ligmaimage.h"
+#include "ligmaimage-pick-item.h"
+#include "ligmaimage-private.h"
+#include "ligmapickable.h"
+#include "ligmasamplepoint.h"
 
-#include "text/gimptextlayer.h"
+#include "text/ligmatextlayer.h"
 
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmastroke.h"
+#include "vectors/ligmavectors.h"
 
 
-GimpLayer *
-gimp_image_pick_layer (GimpImage *image,
+LigmaLayer *
+ligma_image_pick_layer (LigmaImage *image,
                        gint       x,
                        gint       y,
-                       GimpLayer *previously_picked)
+                       LigmaLayer *previously_picked)
 {
   GList *all_layers;
   GList *list;
   gint   off_x, off_y;
   gint   tries = 1;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  all_layers = gimp_image_get_layer_list (image);
+  all_layers = ligma_image_get_layer_list (image);
 
   if (previously_picked)
     {
-      gimp_item_get_offset (GIMP_ITEM (previously_picked), &off_x, &off_y);
-      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (previously_picked),
+      ligma_item_get_offset (LIGMA_ITEM (previously_picked), &off_x, &off_y);
+      if (ligma_pickable_get_opacity_at (LIGMA_PICKABLE (previously_picked),
                                         x - off_x, y - off_y) <= 0.25)
         previously_picked = NULL;
       else
@@ -67,7 +67,7 @@ gimp_image_pick_layer (GimpImage *image,
     {
       for (list = all_layers; list; list = g_list_next (list))
         {
-          GimpLayer *layer = list->data;
+          LigmaLayer *layer = list->data;
 
           if (previously_picked)
             {
@@ -79,9 +79,9 @@ gimp_image_pick_layer (GimpImage *image,
               continue;
             }
 
-          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+          ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
 
-          if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
+          if (ligma_pickable_get_opacity_at (LIGMA_PICKABLE (layer),
                                             x - off_x, y - off_y) > 0.25)
             {
               g_list_free (all_layers);
@@ -97,30 +97,30 @@ gimp_image_pick_layer (GimpImage *image,
   return NULL;
 }
 
-GimpLayer *
-gimp_image_pick_layer_by_bounds (GimpImage *image,
+LigmaLayer *
+ligma_image_pick_layer_by_bounds (LigmaImage *image,
                                  gint       x,
                                  gint       y)
 {
   GList *all_layers;
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  all_layers = gimp_image_get_layer_list (image);
+  all_layers = ligma_image_get_layer_list (image);
 
   for (list = all_layers; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      LigmaLayer *layer = list->data;
 
-      if (gimp_item_is_visible (GIMP_ITEM (layer)))
+      if (ligma_item_is_visible (LIGMA_ITEM (layer)))
         {
           gint off_x, off_y;
           gint width, height;
 
-          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-          width  = gimp_item_get_width  (GIMP_ITEM (layer));
-          height = gimp_item_get_height (GIMP_ITEM (layer));
+          ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
+          width  = ligma_item_get_width  (LIGMA_ITEM (layer));
+          height = ligma_item_get_height (LIGMA_ITEM (layer));
 
           if (x >= off_x        &&
               y >= off_y        &&
@@ -139,37 +139,37 @@ gimp_image_pick_layer_by_bounds (GimpImage *image,
   return NULL;
 }
 
-GimpTextLayer *
-gimp_image_pick_text_layer (GimpImage *image,
+LigmaTextLayer *
+ligma_image_pick_text_layer (LigmaImage *image,
                             gint       x,
                             gint       y)
 {
   GList *all_layers;
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  all_layers = gimp_image_get_layer_list (image);
+  all_layers = ligma_image_get_layer_list (image);
 
   for (list = all_layers; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      LigmaLayer *layer = list->data;
       gint       off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
 
-      if (GIMP_IS_TEXT_LAYER (layer) &&
+      if (LIGMA_IS_TEXT_LAYER (layer) &&
           x >= off_x &&
           y >= off_y &&
-          x <  off_x + gimp_item_get_width  (GIMP_ITEM (layer)) &&
-          y <  off_y + gimp_item_get_height (GIMP_ITEM (layer)) &&
-          gimp_item_is_visible (GIMP_ITEM (layer)))
+          x <  off_x + ligma_item_get_width  (LIGMA_ITEM (layer)) &&
+          y <  off_y + ligma_item_get_height (LIGMA_ITEM (layer)) &&
+          ligma_item_is_visible (LIGMA_ITEM (layer)))
         {
           g_list_free (all_layers);
 
-          return GIMP_TEXT_LAYER (layer);
+          return LIGMA_TEXT_LAYER (layer);
         }
-      else if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
+      else if (ligma_pickable_get_opacity_at (LIGMA_PICKABLE (layer),
                                              x - off_x, y - off_y) > 0.25)
         {
           /*  a normal layer covers any possible text layers below,
@@ -185,39 +185,39 @@ gimp_image_pick_text_layer (GimpImage *image,
   return NULL;
 }
 
-GimpVectors *
-gimp_image_pick_vectors (GimpImage *image,
+LigmaVectors *
+ligma_image_pick_vectors (LigmaImage *image,
                          gdouble    x,
                          gdouble    y,
                          gdouble    epsilon_x,
                          gdouble    epsilon_y)
 {
-  GimpVectors *ret = NULL;
+  LigmaVectors *ret = NULL;
   GList       *all_vectors;
   GList       *list;
   gdouble      mindist = G_MAXDOUBLE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  all_vectors = gimp_image_get_vectors_list (image);
+  all_vectors = ligma_image_get_vectors_list (image);
 
   for (list = all_vectors; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
+      LigmaVectors *vectors = list->data;
 
-      if (gimp_item_is_visible (GIMP_ITEM (vectors)))
+      if (ligma_item_is_visible (LIGMA_ITEM (vectors)))
         {
-          GimpStroke *stroke = NULL;
-          GimpCoords  coords = GIMP_COORDS_DEFAULT_VALUES;
+          LigmaStroke *stroke = NULL;
+          LigmaCoords  coords = LIGMA_COORDS_DEFAULT_VALUES;
 
-          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          while ((stroke = ligma_vectors_stroke_get_next (vectors, stroke)))
             {
               gdouble dist;
 
               coords.x = x;
               coords.y = y;
 
-              dist = gimp_stroke_nearest_point_get (stroke, &coords, 1.0,
+              dist = ligma_stroke_nearest_point_get (stroke, &coords, 1.0,
                                                     NULL, NULL, NULL, NULL);
 
               if (dist >= 0.0 &&
@@ -235,31 +235,31 @@ gimp_image_pick_vectors (GimpImage *image,
   return ret;
 }
 
-static GimpGuide *
-gimp_image_pick_guide_internal (GimpImage           *image,
+static LigmaGuide *
+ligma_image_pick_guide_internal (LigmaImage           *image,
                                 gdouble              x,
                                 gdouble              y,
                                 gdouble              epsilon_x,
                                 gdouble              epsilon_y,
-                                GimpOrientationType  orientation)
+                                LigmaOrientationType  orientation)
 {
   GList     *list;
-  GimpGuide *ret     = NULL;
+  LigmaGuide *ret     = NULL;
   gdouble    mindist = G_MAXDOUBLE;
 
-  for (list = GIMP_IMAGE_GET_PRIVATE (image)->guides;
+  for (list = LIGMA_IMAGE_GET_PRIVATE (image)->guides;
        list;
        list = g_list_next (list))
     {
-      GimpGuide *guide    = list->data;
-      gint       position = gimp_guide_get_position (guide);
+      LigmaGuide *guide    = list->data;
+      gint       position = ligma_guide_get_position (guide);
       gdouble    dist;
 
-      switch (gimp_guide_get_orientation (guide))
+      switch (ligma_guide_get_orientation (guide))
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          if (orientation == GIMP_ORIENTATION_HORIZONTAL ||
-              orientation == GIMP_ORIENTATION_UNKNOWN)
+        case LIGMA_ORIENTATION_HORIZONTAL:
+          if (orientation == LIGMA_ORIENTATION_HORIZONTAL ||
+              orientation == LIGMA_ORIENTATION_UNKNOWN)
             {
               dist = ABS (position - y);
               if (dist < MIN (epsilon_y, mindist))
@@ -271,9 +271,9 @@ gimp_image_pick_guide_internal (GimpImage           *image,
           break;
 
         /* mindist always is in vertical resolution to make it comparable */
-        case GIMP_ORIENTATION_VERTICAL:
-          if (orientation == GIMP_ORIENTATION_VERTICAL ||
-              orientation == GIMP_ORIENTATION_UNKNOWN)
+        case LIGMA_ORIENTATION_VERTICAL:
+          if (orientation == LIGMA_ORIENTATION_VERTICAL ||
+              orientation == LIGMA_ORIENTATION_UNKNOWN)
             {
               dist = ABS (position - x);
               if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
@@ -292,41 +292,41 @@ gimp_image_pick_guide_internal (GimpImage           *image,
   return ret;
 }
 
-GimpGuide *
-gimp_image_pick_guide (GimpImage *image,
+LigmaGuide *
+ligma_image_pick_guide (LigmaImage *image,
                        gdouble    x,
                        gdouble    y,
                        gdouble    epsilon_x,
                        gdouble    epsilon_y)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  return gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
-                                         GIMP_ORIENTATION_UNKNOWN);
+  return ligma_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                         LIGMA_ORIENTATION_UNKNOWN);
 }
 
 GList *
-gimp_image_pick_guides (GimpImage *image,
+ligma_image_pick_guides (LigmaImage *image,
                         gdouble    x,
                         gdouble    y,
                         gdouble    epsilon_x,
                         gdouble    epsilon_y)
 {
-  GimpGuide *guide;
+  LigmaGuide *guide;
   GList     *result = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  guide = gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
-                                          GIMP_ORIENTATION_HORIZONTAL);
+  guide = ligma_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                          LIGMA_ORIENTATION_HORIZONTAL);
 
   if (guide)
     result = g_list_append (result, guide);
 
-  guide = gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
-                                          GIMP_ORIENTATION_VERTICAL);
+  guide = ligma_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                          LIGMA_ORIENTATION_VERTICAL);
 
   if (guide)
     result = g_list_append (result, guide);
@@ -334,36 +334,36 @@ gimp_image_pick_guides (GimpImage *image,
   return result;
 }
 
-GimpSamplePoint *
-gimp_image_pick_sample_point (GimpImage *image,
+LigmaSamplePoint *
+ligma_image_pick_sample_point (LigmaImage *image,
                               gdouble    x,
                               gdouble    y,
                               gdouble    epsilon_x,
                               gdouble    epsilon_y)
 {
   GList           *list;
-  GimpSamplePoint *ret     = NULL;
+  LigmaSamplePoint *ret     = NULL;
   gdouble          mindist = G_MAXDOUBLE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  if (x < 0 || x >= gimp_image_get_width  (image) ||
-      y < 0 || y >= gimp_image_get_height (image))
+  if (x < 0 || x >= ligma_image_get_width  (image) ||
+      y < 0 || y >= ligma_image_get_height (image))
     {
       return NULL;
     }
 
-  for (list = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+  for (list = LIGMA_IMAGE_GET_PRIVATE (image)->sample_points;
        list;
        list = g_list_next (list))
     {
-      GimpSamplePoint *sample_point = list->data;
+      LigmaSamplePoint *sample_point = list->data;
       gint             sp_x;
       gint             sp_y;
       gdouble          dist;
 
-      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
+      ligma_sample_point_get_position (sample_point, &sp_x, &sp_y);
 
       if (sp_x < 0 || sp_y < 0)
         continue;

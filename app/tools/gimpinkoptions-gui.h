@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_INK_OPTIONS_GUI_H__
-#define  __GIMP_INK_OPTIONS_GUI_H__
+#ifndef  __LIGMA_INK_OPTIONS_GUI_H__
+#define  __LIGMA_INK_OPTIONS_GUI_H__
 
 
-GtkWidget * gimp_ink_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_ink_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_INK_OPTIONS_GUI_H__  */
+#endif  /*  __LIGMA_INK_OPTIONS_GUI_H__  */

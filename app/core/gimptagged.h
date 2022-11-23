@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimptagged.h
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * ligmatagged.h
+ * Copyright (C) 2008  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGGED_H__
-#define __GIMP_TAGGED_H__
+#ifndef __LIGMA_TAGGED_H__
+#define __LIGMA_TAGGED_H__
 
 
-#define GIMP_TYPE_TAGGED (gimp_tagged_get_type ())
-G_DECLARE_INTERFACE (GimpTagged, gimp_tagged, GIMP, TAGGED, GObject)
+#define LIGMA_TYPE_TAGGED (ligma_tagged_get_type ())
+G_DECLARE_INTERFACE (LigmaTagged, ligma_tagged, LIGMA, TAGGED, GObject)
 
 
-struct _GimpTaggedInterface
+struct _LigmaTaggedInterface
 {
   GTypeInterface base_iface;
 
   /*  signals            */
-  void       (* tag_added)      (GimpTagged *tagged,
-                                 GimpTag    *tag);
-  void       (* tag_removed)    (GimpTagged *tagged,
-                                 GimpTag    *tag);
+  void       (* tag_added)      (LigmaTagged *tagged,
+                                 LigmaTag    *tag);
+  void       (* tag_removed)    (LigmaTagged *tagged,
+                                 LigmaTag    *tag);
 
   /*  virtual functions  */
-  gboolean   (* add_tag)        (GimpTagged *tagged,
-                                 GimpTag    *tag);
-  gboolean   (* remove_tag)     (GimpTagged *tagged,
-                                 GimpTag    *tag);
-  GList    * (* get_tags)       (GimpTagged *tagged);
-  gchar    * (* get_identifier) (GimpTagged *tagged);
-  gchar    * (* get_checksum)   (GimpTagged *tagged);
+  gboolean   (* add_tag)        (LigmaTagged *tagged,
+                                 LigmaTag    *tag);
+  gboolean   (* remove_tag)     (LigmaTagged *tagged,
+                                 LigmaTag    *tag);
+  GList    * (* get_tags)       (LigmaTagged *tagged);
+  gchar    * (* get_identifier) (LigmaTagged *tagged);
+  gchar    * (* get_checksum)   (LigmaTagged *tagged);
 };
 
 
-void       gimp_tagged_add_tag        (GimpTagged *tagged,
-                                       GimpTag    *tag);
-void       gimp_tagged_remove_tag     (GimpTagged *tagged,
-                                       GimpTag    *tag);
+void       ligma_tagged_add_tag        (LigmaTagged *tagged,
+                                       LigmaTag    *tag);
+void       ligma_tagged_remove_tag     (LigmaTagged *tagged,
+                                       LigmaTag    *tag);
 
-void       gimp_tagged_set_tags       (GimpTagged *tagged,
+void       ligma_tagged_set_tags       (LigmaTagged *tagged,
                                        GList      *tags);
-GList    * gimp_tagged_get_tags       (GimpTagged *tagged);
+GList    * ligma_tagged_get_tags       (LigmaTagged *tagged);
 
-gchar    * gimp_tagged_get_identifier (GimpTagged *tagged);
-gchar    * gimp_tagged_get_checksum   (GimpTagged *tagged);
+gchar    * ligma_tagged_get_identifier (LigmaTagged *tagged);
+gchar    * ligma_tagged_get_checksum   (LigmaTagged *tagged);
 
-gboolean   gimp_tagged_has_tag        (GimpTagged *tagged,
-                                       GimpTag    *tag);
+gboolean   ligma_tagged_has_tag        (LigmaTagged *tagged,
+                                       LigmaTag    *tag);
 
 
-#endif  /* __GIMP_TAGGED_H__ */
+#endif  /* __LIGMA_TAGGED_H__ */

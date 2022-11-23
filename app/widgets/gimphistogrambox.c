@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,19 +22,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimphistogram.h"
+#include "core/ligmahistogram.h"
 
-#include "gimpcolorbar.h"
-#include "gimphandlebar.h"
-#include "gimphistogrambox.h"
-#include "gimphistogramview.h"
+#include "ligmacolorbar.h"
+#include "ligmahandlebar.h"
+#include "ligmahistogrambox.h"
+#include "ligmahistogramview.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  #define DEBUG_VIEW  */
@@ -45,32 +45,32 @@
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_box_low_adj_update  (GtkAdjustment     *adj,
-                                                  GimpHistogramBox  *box);
-static void   gimp_histogram_box_high_adj_update (GtkAdjustment     *adj,
-                                                  GimpHistogramBox  *box);
-static void   gimp_histogram_box_histogram_range (GimpHistogramView *view,
+static void   ligma_histogram_box_low_adj_update  (GtkAdjustment     *adj,
+                                                  LigmaHistogramBox  *box);
+static void   ligma_histogram_box_high_adj_update (GtkAdjustment     *adj,
+                                                  LigmaHistogramBox  *box);
+static void   ligma_histogram_box_histogram_range (LigmaHistogramView *view,
                                                   gint               start,
                                                   gint               end,
-                                                  GimpHistogramBox  *box);
-static void   gimp_histogram_box_channel_notify  (GimpHistogramView *view,
+                                                  LigmaHistogramBox  *box);
+static void   ligma_histogram_box_channel_notify  (LigmaHistogramView *view,
                                                   GParamSpec        *pspec,
-                                                  GimpHistogramBox  *box);
-static void   gimp_histogram_box_border_notify   (GimpHistogramView *view,
+                                                  LigmaHistogramBox  *box);
+static void   ligma_histogram_box_border_notify   (LigmaHistogramView *view,
                                                   GParamSpec        *pspec,
-                                                  GimpHistogramBox  *box);
+                                                  LigmaHistogramBox  *box);
 
 
-G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaHistogramBox, ligma_histogram_box, GTK_TYPE_BOX)
 
 
 static void
-gimp_histogram_box_class_init (GimpHistogramBoxClass *klass)
+ligma_histogram_box_class_init (LigmaHistogramBoxClass *klass)
 {
 }
 
 static void
-gimp_histogram_box_init (GimpHistogramBox *box)
+ligma_histogram_box_init (LigmaHistogramBox *box)
 {
   GtkWidget *hbox;
   GtkWidget *vbox;
@@ -96,24 +96,24 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_widget_show (vbox);
 
   /*  The histogram  */
-  view = gimp_histogram_view_new (TRUE);
+  view = ligma_histogram_view_new (TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
   g_signal_connect (view, "range-changed",
-                    G_CALLBACK (gimp_histogram_box_histogram_range),
+                    G_CALLBACK (ligma_histogram_box_histogram_range),
                     box);
 
-  box->view = GIMP_HISTOGRAM_VIEW (view);
+  box->view = LIGMA_HISTOGRAM_VIEW (view);
 
   /*  The gradient below the histogram */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2),
-                                  GIMP_HISTOGRAM_VIEW (view)->border_width);
+                                  LIGMA_HISTOGRAM_VIEW (view)->border_width);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  box->color_bar = bar = g_object_new (GIMP_TYPE_COLOR_BAR,
+  box->color_bar = bar = g_object_new (LIGMA_TYPE_COLOR_BAR,
                                        "histogram-channel", box->view->channel,
                                        NULL);
   gtk_widget_set_size_request (bar, -1, GRADIENT_HEIGHT);
@@ -121,18 +121,18 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_widget_show (bar);
 
   g_signal_connect (view, "notify::histogram-channel",
-                    G_CALLBACK (gimp_histogram_box_channel_notify),
+                    G_CALLBACK (ligma_histogram_box_channel_notify),
                     box);
   g_signal_connect (view, "notify::border-width",
-                    G_CALLBACK (gimp_histogram_box_border_notify),
+                    G_CALLBACK (ligma_histogram_box_border_notify),
                     box);
 
-  box->slider_bar = bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  box->slider_bar = bar = g_object_new (LIGMA_TYPE_HANDLE_BAR, NULL);
   gtk_widget_set_size_request (bar, -1, CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), bar, FALSE, FALSE, 0);
   gtk_widget_show (bar);
 
-  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (box->slider_bar),
+  ligma_handle_bar_connect_events (LIGMA_HANDLE_BAR (box->slider_bar),
                                   box->color_bar);
 
   /*  The range selection */
@@ -142,44 +142,44 @@ gimp_histogram_box_init (GimpHistogramBox *box)
 
   /*  low spinbutton  */
   box->low_adj = gtk_adjustment_new (0.0, 0.0, 255.0, 1.0, 16.0, 0.0);
-  box->low_spinbutton = gimp_spin_button_new (box->low_adj, 1.0, 0);
+  box->low_spinbutton = ligma_spin_button_new (box->low_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (box->low_spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), box->low_spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (box->low_spinbutton);
 
   g_signal_connect (box->low_adj, "value-changed",
-                    G_CALLBACK (gimp_histogram_box_low_adj_update),
+                    G_CALLBACK (ligma_histogram_box_low_adj_update),
                     box);
 
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (bar), 0, box->low_adj);
+  ligma_handle_bar_set_adjustment (LIGMA_HANDLE_BAR (bar), 0, box->low_adj);
 
   /*  high spinbutton  */
   box->high_adj = gtk_adjustment_new (255.0, 0.0, 255.0, 1.0, 16.0, 0.0);
-  box->high_spinbutton = gimp_spin_button_new (box->high_adj, 1.0, 0);
+  box->high_spinbutton = ligma_spin_button_new (box->high_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (box->high_spinbutton), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), box->high_spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (box->high_spinbutton);
 
   g_signal_connect (box->high_adj, "value-changed",
-                    G_CALLBACK (gimp_histogram_box_high_adj_update),
+                    G_CALLBACK (ligma_histogram_box_high_adj_update),
                     box);
 
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (bar), 2, box->high_adj);
+  ligma_handle_bar_set_adjustment (LIGMA_HANDLE_BAR (bar), 2, box->high_adj);
 
 #ifdef DEBUG_VIEW
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "border-width",
+  spinbutton = ligma_prop_spin_button_new (G_OBJECT (box->view), "border-width",
                                           1, 5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "subdivisions",
+  spinbutton = ligma_prop_spin_button_new (G_OBJECT (box->view), "subdivisions",
                                           1, 5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 #endif
 }
 
 static void
-gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
-                                   GimpHistogramBox *box)
+ligma_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
+                                   LigmaHistogramBox *box)
 {
   gdouble value = gtk_adjustment_get_value (adjustment);
 
@@ -191,12 +191,12 @@ gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
   value = ROUND (value);
 
   if (box->view->start != value)
-    gimp_histogram_view_set_range (box->view, value, box->view->end);
+    ligma_histogram_view_set_range (box->view, value, box->view->end);
 }
 
 static void
-gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
-                                    GimpHistogramBox *box)
+ligma_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
+                                    LigmaHistogramBox *box)
 {
   gdouble value = gtk_adjustment_get_value (adjustment);
 
@@ -208,14 +208,14 @@ gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
   value = ROUND (value);
 
   if (box->view->end != value)
-    gimp_histogram_view_set_range (box->view, box->view->start, value);
+    ligma_histogram_view_set_range (box->view, box->view->start, value);
 }
 
 static void
-gimp_histogram_box_histogram_range (GimpHistogramView *view,
+ligma_histogram_box_histogram_range (LigmaHistogramView *view,
                                     gint               start,
                                     gint               end,
-                                    GimpHistogramBox  *box)
+                                    LigmaHistogramBox  *box)
 {
   gdouble s = start;
   gdouble e = end;
@@ -274,17 +274,17 @@ gimp_histogram_box_histogram_range (GimpHistogramView *view,
 }
 
 static void
-gimp_histogram_box_channel_notify (GimpHistogramView *view,
+ligma_histogram_box_channel_notify (LigmaHistogramView *view,
                                    GParamSpec        *pspec,
-                                   GimpHistogramBox  *box)
+                                   LigmaHistogramBox  *box)
 {
-  gimp_color_bar_set_channel (GIMP_COLOR_BAR (box->color_bar), view->channel);
+  ligma_color_bar_set_channel (LIGMA_COLOR_BAR (box->color_bar), view->channel);
 }
 
 static void
-gimp_histogram_box_border_notify (GimpHistogramView *view,
+ligma_histogram_box_border_notify (LigmaHistogramView *view,
                                   GParamSpec        *pspec,
-                                  GimpHistogramBox  *box)
+                                  LigmaHistogramBox  *box)
 {
   GtkWidget *vbox = gtk_widget_get_parent (box->color_bar);
 
@@ -295,17 +295,17 @@ gimp_histogram_box_border_notify (GimpHistogramView *view,
 /*  public functions  */
 
 GtkWidget *
-gimp_histogram_box_new (void)
+ligma_histogram_box_new (void)
 {
-  return g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL);
+  return g_object_new (LIGMA_TYPE_HISTOGRAM_BOX, NULL);
 }
 
 void
-gimp_histogram_box_set_channel (GimpHistogramBox     *box,
-                                GimpHistogramChannel  channel)
+ligma_histogram_box_set_channel (LigmaHistogramBox     *box,
+                                LigmaHistogramChannel  channel)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_BOX (box));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_BOX (box));
 
   if (box->view)
-    gimp_histogram_view_set_channel (box->view, channel);
+    ligma_histogram_view_set_channel (box->view, channel);
 }

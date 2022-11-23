@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * module-dialog.h
- * (C) 1999 Austin Donnelly <austin@gimp.org>
+ * (C) 1999 Austin Donnelly <austin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef __MODULE_DIALOG_H__
 
 
-GtkWidget * module_dialog_new (Gimp *gimp);
+GtkWidget * module_dialog_new (Ligma *ligma);
 
 
 #endif  /* __MODULE_DIALOG_H__ */

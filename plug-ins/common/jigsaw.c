@@ -1,5 +1,5 @@
 /*
- * jigsaw - a plug-in for GIMP
+ * jigsaw - a plug-in for LIGMA
  *
  * Copyright (C) Nigel Wetten
  *
@@ -36,15 +36,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-jigsaw"
 #define PLUG_IN_BINARY "jigsaw"
-#define PLUG_IN_ROLE   "gimp-jigsaw"
+#define PLUG_IN_ROLE   "ligma-jigsaw"
 
 
 typedef enum
@@ -189,12 +189,12 @@ typedef struct _JigsawClass JigsawClass;
 
 struct _Jigsaw
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _JigsawClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -203,27 +203,27 @@ struct _JigsawClass
 
 GType                   jigsaw_get_type         (void) G_GNUC_CONST;
 
-static GList          * jigsaw_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * jigsaw_create_procedure (GimpPlugIn           *plug_in,
+static GList          * jigsaw_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * jigsaw_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * jigsaw_run              (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
+static LigmaValueArray * jigsaw_run              (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
+                                                 LigmaImage            *image,
                                                  gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
-                                                 const GimpValueArray *args,
+                                                 LigmaDrawable        **drawables,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
 
-static void     jigsaw             (GimpDrawable *drawable,
-                                    GimpPreview  *preview);
-static void     jigsaw_preview     (GimpDrawable *drawable,
-                                    GimpPreview  *preview);
+static void     jigsaw             (LigmaDrawable *drawable,
+                                    LigmaPreview  *preview);
+static void     jigsaw_preview     (LigmaDrawable *drawable,
+                                    LigmaPreview  *preview);
 
-static gboolean jigsaw_dialog                    (GimpDrawable        *drawable);
-static void     jigsaw_scale_entry_update_double (GimpLabelSpin       *entry,
+static gboolean jigsaw_dialog                    (LigmaDrawable        *drawable);
+static void     jigsaw_scale_entry_update_double (LigmaLabelSpin       *entry,
                                                   gdouble             *value);
-static void     jigsaw_scale_entry_update_int    (GimpLabelSpin       *entry,
+static void     jigsaw_scale_entry_update_int    (LigmaLabelSpin       *entry,
                                                   gint                *value);
 
 static void     draw_jigsaw        (guchar    *buffer,
@@ -343,9 +343,9 @@ static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
 static void check_config           (gint width, gint height);
 
 
-G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Jigsaw, jigsaw, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (JIGSAW_TYPE)
+LIGMA_MAIN (JIGSAW_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -364,7 +364,7 @@ static globals_t globals;
 static void
 jigsaw_class_init (JigsawClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = jigsaw_query_procedures;
   plug_in_class->create_procedure = jigsaw_create_procedure;
@@ -377,66 +377,66 @@ jigsaw_init (Jigsaw *jigsaw)
 }
 
 static GList *
-jigsaw_query_procedures (GimpPlugIn *plug_in)
+jigsaw_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-jigsaw_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+jigsaw_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             jigsaw_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Jigsaw..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Jigsaw..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Add a jigsaw-puzzle pattern "
                                           "to the image"),
                                         "Jigsaw puzzle look",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Nigel Wetten",
                                       "Nigel Wetten",
                                       "May 2000");
 
-      GIMP_PROC_ARG_INT (procedure, "x",
+      LIGMA_PROC_ARG_INT (procedure, "x",
                          "X",
                          "Number of tiles across",
-                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         1, LIGMA_MAX_IMAGE_SIZE, 5,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y",
+      LIGMA_PROC_ARG_INT (procedure, "y",
                          "Y",
                          "Number of tiles down",
-                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         1, LIGMA_MAX_IMAGE_SIZE, 5,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "style",
+      LIGMA_PROC_ARG_INT (procedure, "style",
                          "Style",
                          "The style/shape of the jigsaw puzzle { 0, 1 }",
                          0, 1, BEZIER_1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "blend-lines",
+      LIGMA_PROC_ARG_INT (procedure, "blend-lines",
                          "Blend lines",
                          "Number of lines for shading bevels",
-                         1, GIMP_MAX_IMAGE_SIZE, 3,
+                         1, LIGMA_MAX_IMAGE_SIZE, 3,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "blend-amount",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "blend-amount",
                             "Blend amount",
                             "The power of the light highlights",
                             0, 5, 0.5,
@@ -446,16 +446,16 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-jigsaw_run (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
+static LigmaValueArray *
+jigsaw_run (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
+            LigmaImage            *image,
             gint                  n_drawables,
-            GimpDrawable        **drawables,
-            const GimpValueArray *args,
+            LigmaDrawable        **drawables,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -463,12 +463,12 @@ jigsaw_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -478,46 +478,46 @@ jigsaw_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &config);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &config);
 
       if (! jigsaw_dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      config.x            = GIMP_VALUES_GET_INT    (args, 0);
-      config.y            = GIMP_VALUES_GET_INT    (args, 1);
-      config.style        = GIMP_VALUES_GET_INT    (args, 2);
-      config.blend_lines  = GIMP_VALUES_GET_INT    (args, 3);
-      config.blend_amount = GIMP_VALUES_GET_DOUBLE (args, 4);
+    case LIGMA_RUN_NONINTERACTIVE:
+      config.x            = LIGMA_VALUES_GET_INT    (args, 0);
+      config.y            = LIGMA_VALUES_GET_INT    (args, 1);
+      config.style        = LIGMA_VALUES_GET_INT    (args, 2);
+      config.blend_lines  = LIGMA_VALUES_GET_INT    (args, 3);
+      config.blend_amount = LIGMA_VALUES_GET_DOUBLE (args, 4);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS :
-      gimp_get_data (PLUG_IN_PROC, &config);
+    case LIGMA_RUN_WITH_LAST_VALS :
+      ligma_get_data (PLUG_IN_PROC, &config);
       break;
     };
 
-  gimp_progress_init (_("Assembling jigsaw"));
+  ligma_progress_init (_("Assembling jigsaw"));
 
   jigsaw (drawable, NULL);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC, &config, sizeof (config));
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
-jigsaw (GimpDrawable *drawable,
-        GimpPreview  *preview)
+jigsaw (LigmaDrawable *drawable,
+        LigmaPreview  *preview)
 {
   GeglBuffer *gegl_buffer = NULL;
   const Babl *format      = NULL;
@@ -529,19 +529,19 @@ jigsaw (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_size (preview, &width, &height);
-      buffer = gimp_drawable_get_thumbnail_data (drawable,
+      ligma_preview_get_size (preview, &width, &height);
+      buffer = ligma_drawable_get_thumbnail_data (drawable,
                                                  &width, &height, &bytes);
       buffer_size = bytes * width * height;
     }
   else
     {
-      gegl_buffer = gimp_drawable_get_buffer (drawable);
+      gegl_buffer = ligma_drawable_get_buffer (drawable);
 
-      width  = gimp_drawable_get_width  (drawable);
-      height = gimp_drawable_get_height (drawable);
+      width  = ligma_drawable_get_width  (drawable);
+      height = ligma_drawable_get_height (drawable);
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
@@ -570,27 +570,27 @@ jigsaw (GimpDrawable *drawable,
   /* cleanup */
   if (preview)
     {
-      gimp_preview_draw_buffer (preview, buffer, width * bytes);
+      ligma_preview_draw_buffer (preview, buffer, width * bytes);
     }
   else
     {
-      gegl_buffer = gimp_drawable_get_shadow_buffer (drawable);
+      gegl_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
       gegl_buffer_set (gegl_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        format, buffer,
                        GEGL_AUTO_ROWSTRIDE);
       g_object_unref (gegl_buffer);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, 0, 0, width, height);
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, 0, 0, width, height);
     }
 
   g_free (buffer);
 }
 
 static void
-jigsaw_preview (GimpDrawable *drawable,
-                GimpPreview  *preview)
+jigsaw_preview (LigmaDrawable *drawable,
+                LigmaPreview  *preview)
 {
   jigsaw (drawable, preview);
 }
@@ -669,14 +669,14 @@ draw_jigsaw (guchar   *buffer,
                                 x[i], ytiles,
                                 blend_lines, blend_amount);
           if (!preview_mode)
-            gimp_progress_update ((gdouble) i / (gdouble) progress_total);
+            ligma_progress_update ((gdouble) i / (gdouble) progress_total);
         }
       for (i = 0; i < ylines; i++)
         {
           draw_horizontal_border (buffer, bufsize, width, bytes, y[i], xtiles,
                                   blend_lines, blend_amount);
           if (!preview_mode)
-            gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
+            ligma_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
         }
     }
   else if (style == BEZIER_2)
@@ -687,7 +687,7 @@ draw_jigsaw (guchar   *buffer,
                                        x[i], xtiles, ytiles, blend_lines,
                                        blend_amount, steps);
           if (!preview_mode)
-            gimp_progress_update ((gdouble) i / (gdouble) progress_total);
+            ligma_progress_update ((gdouble) i / (gdouble) progress_total);
         }
       for (i = 0; i < ylines; i++)
         {
@@ -695,15 +695,15 @@ draw_jigsaw (guchar   *buffer,
                                          y[i], xtiles, ytiles, blend_lines,
                                          blend_amount, steps);
           if (!preview_mode)
-            gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
+            ligma_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
         }
     }
   else
     {
       g_printerr ("draw_jigsaw: bad style\n");
-      gimp_quit ();
+      ligma_quit ();
     }
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_free (globals.gridx);
   g_free (globals.gridy);
@@ -2476,7 +2476,7 @@ check_config (gint width,
 ********************************************************/
 
 static gboolean
-jigsaw_dialog (GimpDrawable *drawable)
+jigsaw_dialog (LigmaDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -2489,23 +2489,23 @@ jigsaw_dialog (GimpDrawable *drawable)
   GtkWidget     *scale;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Jigsaw"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Jigsaw"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -2513,7 +2513,7 @@ jigsaw_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new_from_drawable (drawable);
+  preview = ligma_aspect_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -2521,7 +2521,7 @@ jigsaw_dialog (GimpDrawable *drawable)
                             G_CALLBACK (jigsaw_preview),
                             drawable);
 
-  frame = gimp_frame_new (_("Number of Tiles"));
+  frame = ligma_frame_new (_("Number of Tiles"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   grid = gtk_grid_new ();
@@ -2532,40 +2532,40 @@ jigsaw_dialog (GimpDrawable *drawable)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* xtiles */
-  scale = gimp_scale_entry_new (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
-  gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
+  scale = ligma_scale_entry_new (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
+  ligma_help_set_help_data (scale, _("Number of pieces going across"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+  gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
   g_object_unref (group);
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.x);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /* ytiles */
-  scale = gimp_scale_entry_new (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
-  gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
+  scale = ligma_scale_entry_new (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
+  ligma_help_set_help_data (scale, _("Number of pieces going down"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+  gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.y);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (grid);
   gtk_widget_show (frame);
 
-  frame = gimp_frame_new (_("Bevel Edges"));
+  frame = ligma_frame_new (_("Bevel Edges"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   grid = gtk_grid_new ();
@@ -2574,33 +2574,33 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
 
   /* number of blending lines */
-  scale = gimp_scale_entry_new (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
-  gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"), NULL);
+  scale = ligma_scale_entry_new (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
+  ligma_help_set_help_data (scale, _("Degree of slope of each piece's edge"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+  gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_int),
                     &config.blend_lines);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   /* blending amount */
-  scale = gimp_scale_entry_new (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
-  gimp_help_set_help_data (scale, _("The amount of highlighting on the edges of each piece"), NULL);
+  scale = ligma_scale_entry_new (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
+  ligma_help_set_help_data (scale, _("The amount of highlighting on the edges of each piece"), NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+  gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
 
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (jigsaw_scale_entry_update_double),
                     &config.blend_amount);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (grid);
@@ -2608,8 +2608,8 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   /* frame for primitive radio buttons */
 
-  frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Jigsaw Style"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &config.style, NULL, config.style,
 
                                     _("_Square"), BEZIER_1, &rbutton1,
@@ -2617,13 +2617,13 @@ jigsaw_dialog (GimpDrawable *drawable)
 
                                     NULL);
 
-  gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
-  gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
+  ligma_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
+  ligma_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
   g_signal_connect_swapped (rbutton1, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (rbutton2, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -2631,7 +2631,7 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -2639,15 +2639,15 @@ jigsaw_dialog (GimpDrawable *drawable)
 }
 
 static void
-jigsaw_scale_entry_update_double (GimpLabelSpin *entry,
+jigsaw_scale_entry_update_double (LigmaLabelSpin *entry,
                                   gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }
 
 static void
-jigsaw_scale_entry_update_int (GimpLabelSpin *entry,
+jigsaw_scale_entry_update_int (LigmaLabelSpin *entry,
                                gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "script-fu-console.h"
 #include "script-fu-eval.h"
@@ -30,43 +30,43 @@
 
 
 #define SCRIPT_FU_TYPE (script_fu_get_type ())
-G_DECLARE_FINAL_TYPE (ScriptFu, script_fu, SCRIPT, FU, GimpPlugIn)
+G_DECLARE_FINAL_TYPE (ScriptFu, script_fu, SCRIPT, FU, LigmaPlugIn)
 
 struct _ScriptFu
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
-static GList          * script_fu_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * script_fu_create_procedure (GimpPlugIn           *plug_in,
+static GList          * script_fu_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * script_fu_create_procedure (LigmaPlugIn           *plug_in,
                                                     const gchar          *name);
 
-static GimpValueArray * script_fu_run              (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args,
+static LigmaValueArray * script_fu_run              (LigmaProcedure        *procedure,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
-static GimpValueArray * script_fu_batch_run        (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode,
+static LigmaValueArray * script_fu_batch_run        (LigmaProcedure        *procedure,
+                                                    LigmaRunMode           run_mode,
                                                     const gchar          *code,
-                                                    const GimpValueArray *args,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
-static void             script_fu_run_init         (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode);
-static void             script_fu_extension_init   (GimpPlugIn           *plug_in);
-static GimpValueArray * script_fu_refresh_proc     (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args,
+static void             script_fu_run_init         (LigmaProcedure        *procedure,
+                                                    LigmaRunMode           run_mode);
+static void             script_fu_extension_init   (LigmaPlugIn           *plug_in);
+static LigmaValueArray * script_fu_refresh_proc     (LigmaProcedure        *procedure,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
 
 
-G_DEFINE_TYPE (ScriptFu, script_fu, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (ScriptFu, script_fu, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SCRIPT_FU_TYPE)
+LIGMA_MAIN (SCRIPT_FU_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 script_fu_class_init (ScriptFuClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = script_fu_query_procedures;
   plug_in_class->create_procedure = script_fu_create_procedure;
@@ -79,7 +79,7 @@ script_fu_init (ScriptFu *script_fu)
 }
 
 static GList *
-script_fu_query_procedures (GimpPlugIn *plug_in)
+script_fu_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -91,92 +91,92 @@ script_fu_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-script_fu_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+script_fu_create_procedure (LigmaPlugIn  *plug_in,
                             const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, "extension-script-fu"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_EXTENSION,
                                       script_fu_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "A scheme interpreter for scripting "
-                                        "GIMP operations",
+                                        "LIGMA operations",
                                         "More help here later",
                                         NULL);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
     }
   else if (! strcmp (name, "plug-in-script-fu-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Script-Fu _Console"));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("Script-Fu _Console"));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Script-Fu");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Interactive console for Script-Fu "
                                           "development"),
                                         "Provides an interface which allows "
                                         "interactive scheme development.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Provides a text console mode for "
                                         "script-fu development",
                                         "Provides an interface which allows "
                                         "interactive scheme development.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-eval"))
     {
-      procedure = gimp_batch_procedure_new (plug_in, name, "Script-fu (scheme)",
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_batch_procedure_new (plug_in, name, "Script-fu (scheme)",
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             script_fu_batch_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Evaluate scheme code",
                                         "Evaluate the code under the scheme "
                                         "interpreter (primarily for batch mode)",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Manish Singh",
                                       "Manish Singh",
                                       "1998");
@@ -185,19 +185,19 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-script_fu_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+static LigmaValueArray *
+script_fu_run (LigmaProcedure        *procedure,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
-  const gchar    *name        = gimp_procedure_get_name (procedure);
-  GimpValueArray *return_vals = NULL;
+  LigmaPlugIn     *plug_in     = ligma_procedure_get_plug_in (procedure);
+  const gchar    *name        = ligma_procedure_get_name (procedure);
+  LigmaValueArray *return_vals = NULL;
 
-  if (gimp_value_array_length (args) > 0)
-    script_fu_run_init (procedure, GIMP_VALUES_GET_ENUM (args, 0));
+  if (ligma_value_array_length (args) > 0)
+    script_fu_run_init (procedure, LIGMA_VALUES_GET_ENUM (args, 0));
   else
-    script_fu_run_init (procedure, GIMP_RUN_NONINTERACTIVE);
+    script_fu_run_init (procedure, LIGMA_RUN_NONINTERACTIVE);
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
@@ -206,11 +206,11 @@ script_fu_run (GimpProcedure        *procedure,
        */
 
       /*  Acknowledge that the extension is properly initialized  */
-      gimp_procedure_extension_ready (procedure);
+      ligma_procedure_extension_ready (procedure);
 
       /*  Go into an endless loop  */
       while (TRUE)
-        gimp_plug_in_extension_process (plug_in, 0);
+        ligma_plug_in_extension_process (plug_in, 0);
     }
   else if (strcmp (name, "plug-in-script-fu-text-console") == 0)
     {
@@ -230,22 +230,22 @@ script_fu_run (GimpProcedure        *procedure,
     }
 
   if (! return_vals)
-    return_vals = gimp_procedure_new_return_values (procedure,
-                                                    GIMP_PDB_SUCCESS,
+    return_vals = ligma_procedure_new_return_values (procedure,
+                                                    LIGMA_PDB_SUCCESS,
                                                     NULL);
 
   return return_vals;
 }
 
-static GimpValueArray *
-script_fu_batch_run (GimpProcedure        *procedure,
-                     GimpRunMode           run_mode,
+static LigmaValueArray *
+script_fu_batch_run (LigmaProcedure        *procedure,
+                     LigmaRunMode           run_mode,
                      const gchar          *code,
-                     const GimpValueArray *args,
+                     const LigmaValueArray *args,
                      gpointer              run_data)
 {
-  const gchar    *name        = gimp_procedure_get_name (procedure);
-  GimpValueArray *return_vals = NULL;
+  const gchar    *name        = ligma_procedure_get_name (procedure);
+  LigmaValueArray *return_vals = NULL;
 
   script_fu_run_init (procedure, run_mode);
 
@@ -263,19 +263,19 @@ script_fu_batch_run (GimpProcedure        *procedure,
     }
 
   if (! return_vals)
-    return_vals = gimp_procedure_new_return_values (procedure,
-                                                    GIMP_PDB_SUCCESS,
+    return_vals = ligma_procedure_new_return_values (procedure,
+                                                    LIGMA_PDB_SUCCESS,
                                                     NULL);
 
   return return_vals;
 }
 
 static void
-script_fu_run_init (GimpProcedure *procedure,
-                    GimpRunMode    run_mode)
+script_fu_run_init (LigmaProcedure *procedure,
+                    LigmaRunMode    run_mode)
 {
-  GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
-  const gchar    *name        = gimp_procedure_get_name (procedure);
+  LigmaPlugIn     *plug_in     = ligma_procedure_get_plug_in (procedure);
+  const gchar    *name        = ligma_procedure_get_name (procedure);
   GList          *path;
 
   path = script_fu_search_path ();
@@ -303,68 +303,68 @@ script_fu_run_init (GimpProcedure *procedure,
 }
 
 static void
-script_fu_extension_init (GimpPlugIn *plug_in)
+script_fu_extension_init (LigmaPlugIn *plug_in)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_GIMP Online"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_User Manual"));
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_LIGMA Online"));
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_User Manual"));
 
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development",
                                 N_("_Script-Fu"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development/Script-Fu",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development/Script-Fu",
                                 N_("_Test"));
 
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
                                 N_("_Buttons"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
                                 N_("_Logos"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
                                 N_("_Patterns"));
 
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
                                 N_("_Web Page Themes"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
                                 N_("_Alien Glow"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
                                 N_("_Beveled Pattern"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
-                                N_("_Classic.Gimp.Org"));
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
+                                N_("_Classic.Ligma.Org"));
 
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
+  ligma_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
                                 N_("Alpha to _Logo"));
 
-  procedure = gimp_procedure_new (plug_in, "script-fu-refresh",
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+  procedure = ligma_procedure_new (plug_in, "script-fu-refresh",
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
                                   script_fu_refresh_proc, NULL, NULL);
 
-  gimp_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
-  gimp_procedure_add_menu_path (procedure,
+  ligma_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
+  ligma_procedure_add_menu_path (procedure,
                                 "<Image>/Filters/Development/Script-Fu");
 
-  gimp_procedure_set_documentation (procedure,
+  ligma_procedure_set_documentation (procedure,
                                     _("Re-read all available Script-Fu scripts"),
                                     "Re-read all available Script-Fu scripts",
                                     "script-fu-refresh");
-  gimp_procedure_set_attribution (procedure,
+  ligma_procedure_set_attribution (procedure,
                                   "Spencer Kimball & Peter Mattis",
                                   "Spencer Kimball & Peter Mattis",
                                   "1997");
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+  LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                       "Run mode",
                       "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_INTERACTIVE,
+                      LIGMA_TYPE_RUN_MODE,
+                      LIGMA_RUN_INTERACTIVE,
                       G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 }
 
-static GimpValueArray *
-script_fu_refresh_proc (GimpProcedure        *procedure,
-                        const GimpValueArray *args,
+static LigmaValueArray *
+script_fu_refresh_proc (LigmaProcedure        *procedure,
+                        const LigmaValueArray *args,
                         gpointer              run_data)
 {
   if (script_fu_extension_is_busy ())
@@ -373,8 +373,8 @@ script_fu_refresh_proc (GimpProcedure        *procedure,
                    "Script-Fu dialog box is open.  Please close "
                    "all Script-Fu windows and try again."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
   else
@@ -382,10 +382,10 @@ script_fu_refresh_proc (GimpProcedure        *procedure,
       /*  Reload all of the available scripts  */
       GList *path = script_fu_search_path ();
 
-      script_fu_find_and_register_scripts (gimp_procedure_get_plug_in (procedure), path);
+      script_fu_find_and_register_scripts (ligma_procedure_get_plug_in (procedure), path);
 
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }

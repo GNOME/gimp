@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpwidgets-constructors.h"
+#include "ligmawidgets-constructors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_icon_button_new (const gchar *icon_name,
+ligma_icon_button_new (const gchar *icon_name,
                       const gchar *label)
 {
   GtkWidget *button;
@@ -71,29 +71,29 @@ gimp_icon_button_new (const gchar *icon_name,
 }
 
 GtkWidget *
-gimp_color_profile_label_new (GimpColorProfile *profile)
+ligma_color_profile_label_new (LigmaColorProfile *profile)
 {
   GtkWidget   *expander;
   GtkWidget   *view;
   const gchar *label;
 
   g_return_val_if_fail (profile == NULL ||
-                        GIMP_IS_COLOR_PROFILE (profile), NULL);
+                        LIGMA_IS_COLOR_PROFILE (profile), NULL);
 
   if (profile)
-    label = gimp_color_profile_get_label (profile);
+    label = ligma_color_profile_get_label (profile);
   else
     label = C_("profile", "None");
 
   expander = gtk_expander_new (label);
 
-  view = gimp_color_profile_view_new ();
+  view = ligma_color_profile_view_new ();
 
   if (profile)
-    gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (view),
+    ligma_color_profile_view_set_profile (LIGMA_COLOR_PROFILE_VIEW (view),
                                          profile);
   else
-    gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (view),
+    ligma_color_profile_view_set_error (LIGMA_COLOR_PROFILE_VIEW (view),
                                        C_("profile", "None"));
 
   gtk_container_add (GTK_CONTAINER (expander), view);

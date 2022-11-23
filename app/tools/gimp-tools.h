@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLS_H__
-#define __GIMP_TOOLS_H__
+#ifndef __LIGMA_TOOLS_H__
+#define __LIGMA_TOOLS_H__
 
 
-void       gimp_tools_init        (Gimp              *gimp);
-void       gimp_tools_exit        (Gimp              *gimp);
+void       ligma_tools_init        (Ligma              *ligma);
+void       ligma_tools_exit        (Ligma              *ligma);
 
-void       gimp_tools_restore     (Gimp              *gimp);
-void       gimp_tools_save        (Gimp              *gimp,
+void       ligma_tools_restore     (Ligma              *ligma);
+void       ligma_tools_save        (Ligma              *ligma,
                                    gboolean           save_tool_options,
                                    gboolean           always_save);
 
-gboolean   gimp_tools_clear       (Gimp              *gimp,
+gboolean   ligma_tools_clear       (Ligma              *ligma,
                                    GError           **error);
 
-gboolean   gimp_tools_serialize   (Gimp              *gimp,
-                                   GimpContainer     *container,
-                                   GimpConfigWriter  *writer);
-gboolean   gimp_tools_deserialize (Gimp              *gimp,
-                                   GimpContainer     *container,
+gboolean   ligma_tools_serialize   (Ligma              *ligma,
+                                   LigmaContainer     *container,
+                                   LigmaConfigWriter  *writer);
+gboolean   ligma_tools_deserialize (Ligma              *ligma,
+                                   LigmaContainer     *container,
                                    GScanner          *scanner);
 
-void       gimp_tools_reset       (Gimp              *gimp,
-                                   GimpContainer     *container,
+void       ligma_tools_reset       (Ligma              *ligma,
+                                   LigmaContainer     *container,
                                    gboolean           user_toolrc);
 
 
-#endif  /* __GIMP_TOOLS_H__ */
+#endif  /* __LIGMA_TOOLS_H__ */

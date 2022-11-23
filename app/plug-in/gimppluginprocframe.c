@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginprocframe.c
+ * ligmapluginprocframe.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,81 +24,81 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "plug-in-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "pdb/gimppdbcontext.h"
-#include "pdb/gimppdberror.h"
+#include "pdb/ligmapdbcontext.h"
+#include "pdb/ligmapdberror.h"
 
-#include "gimpplugin.h"
-#include "gimpplugin-cleanup.h"
-#include "gimpplugin-progress.h"
-#include "gimppluginprocedure.h"
+#include "ligmaplugin.h"
+#include "ligmaplugin-cleanup.h"
+#include "ligmaplugin-progress.h"
+#include "ligmapluginprocedure.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
-GimpPlugInProcFrame *
-gimp_plug_in_proc_frame_new (GimpContext         *context,
-                             GimpProgress        *progress,
-                             GimpPlugInProcedure *procedure)
+LigmaPlugInProcFrame *
+ligma_plug_in_proc_frame_new (LigmaContext         *context,
+                             LigmaProgress        *progress,
+                             LigmaPlugInProcedure *procedure)
 {
-  GimpPlugInProcFrame *proc_frame;
+  LigmaPlugInProcFrame *proc_frame;
 
-  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_PROCEDURE (procedure), NULL);
 
-  proc_frame = g_slice_new0 (GimpPlugInProcFrame);
+  proc_frame = g_slice_new0 (LigmaPlugInProcFrame);
 
   proc_frame->ref_count = 1;
 
-  gimp_plug_in_proc_frame_init (proc_frame, context, progress, procedure);
+  ligma_plug_in_proc_frame_init (proc_frame, context, progress, procedure);
 
   return proc_frame;
 }
 
 void
-gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
-                              GimpContext         *context,
-                              GimpProgress        *progress,
-                              GimpPlugInProcedure *procedure)
+ligma_plug_in_proc_frame_init (LigmaPlugInProcFrame *proc_frame,
+                              LigmaContext         *context,
+                              LigmaProgress        *progress,
+                              LigmaPlugInProcedure *procedure)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (GIMP_IS_PDB_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PDB_CONTEXT (context));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
   g_return_if_fail (procedure == NULL ||
-                    GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+                    LIGMA_IS_PLUG_IN_PROCEDURE (procedure));
 
   proc_frame->main_context       = g_object_ref (context);
   proc_frame->context_stack      = NULL;
-  proc_frame->procedure          = procedure ? g_object_ref (GIMP_PROCEDURE (procedure)) : NULL;
+  proc_frame->procedure          = procedure ? g_object_ref (LIGMA_PROCEDURE (procedure)) : NULL;
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
   proc_frame->progress_created   = FALSE;
   proc_frame->progress_cancel_id = 0;
-  proc_frame->error_handler      = GIMP_PDB_ERROR_HANDLER_INTERNAL;
+  proc_frame->error_handler      = LIGMA_PDB_ERROR_HANDLER_INTERNAL;
 
   if (progress)
-    gimp_plug_in_progress_attach (progress);
+    ligma_plug_in_progress_attach (progress);
 }
 
 void
-gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
-                                 GimpPlugIn          *plug_in)
+ligma_plug_in_proc_frame_dispose (LigmaPlugInProcFrame *proc_frame,
+                                 LigmaPlugIn          *plug_in)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   if (proc_frame->progress)
     {
-      gimp_plug_in_progress_end (plug_in, proc_frame);
+      ligma_plug_in_progress_end (plug_in, proc_frame);
 
       g_clear_object (&proc_frame->progress);
     }
@@ -111,17 +111,17 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
     }
 
   g_clear_object (&proc_frame->main_context);
-  g_clear_pointer (&proc_frame->return_vals, gimp_value_array_unref);
+  g_clear_pointer (&proc_frame->return_vals, ligma_value_array_unref);
   g_clear_pointer (&proc_frame->main_loop, g_main_loop_unref);
 
   if (proc_frame->image_cleanups || proc_frame->item_cleanups)
-    gimp_plug_in_cleanup (plug_in, proc_frame);
+    ligma_plug_in_cleanup (plug_in, proc_frame);
 
   g_clear_object (&proc_frame->procedure);
 }
 
-GimpPlugInProcFrame *
-gimp_plug_in_proc_frame_ref (GimpPlugInProcFrame *proc_frame)
+LigmaPlugInProcFrame *
+ligma_plug_in_proc_frame_ref (LigmaPlugInProcFrame *proc_frame)
 {
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
@@ -131,31 +131,31 @@ gimp_plug_in_proc_frame_ref (GimpPlugInProcFrame *proc_frame)
 }
 
 void
-gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
-                               GimpPlugIn          *plug_in)
+ligma_plug_in_proc_frame_unref (LigmaPlugInProcFrame *proc_frame,
+                               LigmaPlugIn          *plug_in)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   proc_frame->ref_count--;
 
   if (proc_frame->ref_count < 1)
     {
-      gimp_plug_in_proc_frame_dispose (proc_frame, plug_in);
-      g_slice_free (GimpPlugInProcFrame, proc_frame);
+      ligma_plug_in_proc_frame_dispose (proc_frame, plug_in);
+      g_slice_free (LigmaPlugInProcFrame, proc_frame);
     }
 }
 
-GimpValueArray *
-gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
+LigmaValueArray *
+ligma_plug_in_proc_frame_get_return_values (LigmaPlugInProcFrame *proc_frame)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
 
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
   if (proc_frame->return_vals)
     {
-      if (gimp_value_array_length (proc_frame->return_vals) >=
+      if (ligma_value_array_length (proc_frame->return_vals) >=
           proc_frame->procedure->num_values + 1)
         {
           return_vals = proc_frame->return_vals;
@@ -163,20 +163,20 @@ gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
       else
         {
           /* Allocate new return values of the correct size. */
-          return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
+          return_vals = ligma_procedure_get_return_values (proc_frame->procedure,
                                                           TRUE, NULL);
 
           /* Copy all of the arguments we can. */
-          memcpy (gimp_value_array_index (return_vals, 0),
-                  gimp_value_array_index (proc_frame->return_vals, 0),
+          memcpy (ligma_value_array_index (return_vals, 0),
+                  ligma_value_array_index (proc_frame->return_vals, 0),
                   sizeof (GValue) *
-                  gimp_value_array_length (proc_frame->return_vals));
+                  ligma_value_array_length (proc_frame->return_vals));
 
           /* Free the old arguments. */
-          memset (gimp_value_array_index (proc_frame->return_vals, 0), 0,
+          memset (ligma_value_array_index (proc_frame->return_vals, 0), 0,
                   sizeof (GValue) *
-                  gimp_value_array_length (proc_frame->return_vals));
-          gimp_value_array_unref (proc_frame->return_vals);
+                  ligma_value_array_length (proc_frame->return_vals));
+          ligma_value_array_unref (proc_frame->return_vals);
         }
 
       /* We have consumed any saved values, so clear them. */
@@ -184,14 +184,14 @@ gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
     }
   else
     {
-      GimpProcedure *procedure = proc_frame->procedure;
+      LigmaProcedure *procedure = proc_frame->procedure;
       GError        *error;
 
-      error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
+      error = g_error_new (LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_RETURN_VALUE,
                            _("Procedure '%s' returned no return values"),
-                           gimp_object_get_name (procedure));
+                           ligma_object_get_name (procedure));
 
-      return_vals = gimp_procedure_get_return_values (procedure, FALSE,
+      return_vals = ligma_procedure_get_return_values (procedure, FALSE,
                                                       error);
       g_error_free (error);
     }

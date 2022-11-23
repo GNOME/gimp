@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -26,8 +26,8 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "imap_grid.h"
 #include "imap_main.h"
@@ -35,7 +35,7 @@
 #include "imap_preview.h"
 #include "imap_ui_grid.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 typedef enum {GRID_HIDDEN, GRID_LINES, GRID_CROSSES} GridType_t;
 
@@ -136,8 +136,8 @@ width_changed_cb(GtkWidget *widget, gpointer data)
    GridDialog_t *dialog = (GridDialog_t*) data;
 
    grid_assign_value(widget, data, &grid_width);
-   if (gimp_chain_button_get_active(
-          GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+   if (ligma_chain_button_get_active(
+          LIGMA_CHAIN_BUTTON(dialog->chain_width_height))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->height), value);
    }
@@ -149,8 +149,8 @@ height_changed_cb(GtkWidget *widget, gpointer data)
    GridDialog_t *dialog = (GridDialog_t*) data;
 
    grid_assign_value(widget, data, &grid_height);
-   if (gimp_chain_button_get_active(
-          GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+   if (ligma_chain_button_get_active(
+          LIGMA_CHAIN_BUTTON(dialog->chain_width_height))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->width), value);
    }
@@ -162,8 +162,8 @@ left_changed_cb(GtkWidget *widget, gpointer data)
    GridDialog_t *dialog = (GridDialog_t*) data;
 
    grid_assign_value(widget, data, &grid_left);
-   if (gimp_chain_button_get_active(
-          GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+   if (ligma_chain_button_get_active(
+          LIGMA_CHAIN_BUTTON(dialog->chain_left_top))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->top), value);
    }
@@ -175,8 +175,8 @@ top_changed_cb(GtkWidget *widget, gpointer data)
    GridDialog_t *dialog = (GridDialog_t*) data;
 
    grid_assign_value(widget, data, &grid_top);
-   if (gimp_chain_button_get_active(
-          GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+   if (ligma_chain_button_get_active(
+          LIGMA_CHAIN_BUTTON(dialog->chain_left_top))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->left), value);
    }
@@ -203,7 +203,7 @@ create_grid_settings_dialog(void)
    gtk_grid_attach (GTK_GRID (main_grid), data->snap, 0, 0, 1, 1);
    gtk_widget_show(data->snap);
 
-   data->type_frame = frame = gimp_frame_new(_("Grid Visibility and Type"));
+   data->type_frame = frame = ligma_frame_new(_("Grid Visibility and Type"));
    gtk_widget_show(frame);
    gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 1, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -235,7 +235,7 @@ create_grid_settings_dialog(void)
    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
    gtk_widget_show(button);
 
-   data->granularity_frame = frame = gimp_frame_new(_("Grid Granularity"));
+   data->granularity_frame = frame = ligma_frame_new(_("Grid Granularity"));
    gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 2, 1, 1);
    grid = gtk_grid_new ();
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -254,7 +254,7 @@ create_grid_settings_dialog(void)
                     G_CALLBACK (height_changed_cb), (gpointer) data);
    create_label_in_grid (grid, 1, 3, _("pixels"));
 
-   chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+   chain_button = ligma_chain_button_new(LIGMA_CHAIN_RIGHT);
    data->chain_width_height = chain_button;
    gtk_grid_attach (GTK_GRID (grid), chain_button, 2, 0, 1, 2);
    gtk_widget_show(chain_button);
@@ -262,7 +262,7 @@ create_grid_settings_dialog(void)
    gtk_widget_show(grid);
    gtk_widget_show(frame);
 
-   data->offset_frame = frame = gimp_frame_new(_("Grid Offset"));
+   data->offset_frame = frame = ligma_frame_new(_("Grid Offset"));
    gtk_grid_attach (GTK_GRID (main_grid), frame, 1, 2, 1, 1);
    grid = gtk_grid_new ();
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -279,7 +279,7 @@ create_grid_settings_dialog(void)
    g_signal_connect(data->top, "value-changed",
                     G_CALLBACK (top_changed_cb), (gpointer) data);
 
-   chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+   chain_button = ligma_chain_button_new(LIGMA_CHAIN_RIGHT);
    data->chain_left_top = chain_button;
    gtk_grid_attach (GTK_GRID (grid), chain_button, 1, 0, 1, 2);
    gtk_widget_show(chain_button);

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpmessage_pdb.c
+ * ligmamessage_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpmessage
- * @title: gimpmessage
+ * SECTION: ligmamessage
+ * @title: ligmamessage
  * @short_description: Display a dialog box with a message.
  *
  * Display a dialog box with a message.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_message:
+ * ligma_message:
  * @message: Message to display in the dialog.
  *
  * Displays a dialog box with a message.
@@ -48,93 +48,93 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_message (const gchar *message)
+ligma_message (const gchar *message)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, message,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-message",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-message",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_message_get_handler:
+ * ligma_message_get_handler:
  *
  * Returns the current state of where warning messages are displayed.
  *
  * This procedure returns the way g_message warnings are displayed.
  * They can be shown in a dialog box or printed on the console where
- * gimp was started.
+ * ligma was started.
  *
  * Returns: The current handler type.
  **/
-GimpMessageHandlerType
-gimp_message_get_handler (void)
+LigmaMessageHandlerType
+ligma_message_get_handler (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpMessageHandlerType handler = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaMessageHandlerType handler = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-message-get-handler",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-message-get-handler",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    handler = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    handler = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return handler;
 }
 
 /**
- * gimp_message_set_handler:
+ * ligma_message_set_handler:
  * @handler: The new handler type.
  *
  * Controls where warning messages are displayed.
  *
  * This procedure controls how g_message warnings are displayed. They
- * can be shown in a dialog box or printed on the console where gimp
+ * can be shown in a dialog box or printed on the console where ligma
  * was started.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_message_set_handler (GimpMessageHandlerType handler)
+ligma_message_set_handler (LigmaMessageHandlerType handler)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_MESSAGE_HANDLER_TYPE, handler,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_MESSAGE_HANDLER_TYPE, handler,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-message-set-handler",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-message-set-handler",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

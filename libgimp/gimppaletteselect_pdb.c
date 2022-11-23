@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppaletteselect_pdb.c
+ * ligmapaletteselect_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppaletteselect
- * @title: gimppaletteselect
+ * SECTION: ligmapaletteselect
+ * @title: ligmapaletteselect
  * @short_description: Functions providing a palette selection dialog.
  *
  * Functions providing a palette selection dialog.
@@ -37,46 +37,46 @@
 
 
 /**
- * gimp_palettes_popup:
+ * ligma_palettes_popup:
  * @palette_callback: The callback PDB proc to call when palette selection is made.
  * @popup_title: Title of the palette selection dialog.
  * @initial_palette: The name of the palette to set as the first selected.
  *
- * Invokes the Gimp palette selection.
+ * Invokes the Ligma palette selection.
  *
  * This procedure opens the palette selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_palettes_popup (const gchar *palette_callback,
+ligma_palettes_popup (const gchar *palette_callback,
                      const gchar *popup_title,
                      const gchar *initial_palette)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, palette_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_palette,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palettes-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palettes-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palettes_close_popup:
+ * ligma_palettes_close_popup:
  * @palette_callback: The name of the callback registered for this pop-up.
  *
  * Close the palette selection dialog.
@@ -86,30 +86,30 @@ gimp_palettes_popup (const gchar *palette_callback,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_palettes_close_popup (const gchar *palette_callback)
+ligma_palettes_close_popup (const gchar *palette_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, palette_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palettes-close-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palettes-close-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palettes_set_popup:
+ * ligma_palettes_set_popup:
  * @palette_callback: The name of the callback registered for this pop-up.
  * @palette_name: The name of the palette to set as selected.
  *
@@ -120,26 +120,26 @@ gimp_palettes_close_popup (const gchar *palette_callback)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_palettes_set_popup (const gchar *palette_callback,
+ligma_palettes_set_popup (const gchar *palette_callback,
                          const gchar *palette_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, palette_callback,
                                           G_TYPE_STRING, palette_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palettes-set-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palettes-set-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

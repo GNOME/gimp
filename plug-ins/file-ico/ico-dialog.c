@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 
 #include <config.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 /* #define ICO_DBG */
 
@@ -30,7 +30,7 @@
 #include "ico-dialog.h"
 #include "ico-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static void   ico_dialog_bpp_changed     (GtkWidget   *combo,
                                           GObject     *hbox);
@@ -57,7 +57,7 @@ ico_dialog_new (IcoSaveInfo   *info,
   GtkWidget     *viewport;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (ani_header ?
+  dialog = ligma_export_dialog_new (ani_header ?
                                    _("Windows Animated Cursor") : info->is_cursor ?
                                    _("Windows Cursor") : _("Windows Icon"),
                                    PLUG_IN_BINARY,
@@ -80,7 +80,7 @@ ico_dialog_new (IcoSaveInfo   *info,
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -94,7 +94,7 @@ ico_dialog_new (IcoSaveInfo   *info,
       GtkWidget     *hbox;
       GtkWidget     *entry;
 
-      frame = gimp_frame_new (_("Animated Cursor Settings"));
+      frame = ligma_frame_new (_("Animated Cursor Settings"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -106,7 +106,7 @@ ico_dialog_new (IcoSaveInfo   *info,
 
       /* Cursor Name */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("_Cursor Name (Optional)"),
                                 0.0, 0.5,
                                 hbox, 1);
@@ -123,7 +123,7 @@ ico_dialog_new (IcoSaveInfo   *info,
 
       /* Author Name */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                                 _("_Author Name (Optional)"),
                                 0.0, 0.5,
                                 hbox, 1);
@@ -140,14 +140,14 @@ ico_dialog_new (IcoSaveInfo   *info,
 
       /* Default delay spin */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 5,
                                 _("_Delay between frames:"),
                                 0.0, 0.5,
                                 hbox, 1);
 
       adjustment = gtk_adjustment_new (ani_header->jif_rate, 1, G_MAXINT,
                                        1, 10, 0);
-      spin = gimp_spin_button_new (adjustment, 1, 0);
+      spin = ligma_spin_button_new (adjustment, 1, 0);
       gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
       gtk_widget_show (spin);
 
@@ -156,12 +156,12 @@ ico_dialog_new (IcoSaveInfo   *info,
       gtk_widget_show (label);
 
       g_signal_connect (adjustment, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
+                        G_CALLBACK (ligma_int_adjustment_update),
                         &ani_header->jif_rate);
     }
 
   /* Cursor */
-  frame = gimp_frame_new (_("Icon Details"));
+  frame = ligma_frame_new (_("Icon Details"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 4);
   gtk_widget_show (frame);
 
@@ -181,8 +181,8 @@ ico_dialog_new (IcoSaveInfo   *info,
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);
 
-  warning = g_object_new (GIMP_TYPE_HINT_BOX,
-                          "icon-name", GIMP_ICON_DIALOG_WARNING,
+  warning = g_object_new (LIGMA_TYPE_HINT_BOX,
+                          "icon-name", LIGMA_ICON_DIALOG_WARNING,
                           "hint",
                           _("Large icons and compression are not supported "
                             "by all programs. Older applications may not "
@@ -197,16 +197,16 @@ ico_dialog_new (IcoSaveInfo   *info,
 }
 
 static GtkWidget *
-ico_preview_new (GimpDrawable *layer)
+ico_preview_new (LigmaDrawable *layer)
 {
   GtkWidget *image;
   GdkPixbuf *pixbuf;
-  gint       width  = gimp_drawable_get_width (layer);
-  gint       height = gimp_drawable_get_height (layer);
+  gint       width  = ligma_drawable_get_width (layer);
+  gint       height = ligma_drawable_get_height (layer);
 
-  pixbuf = gimp_drawable_get_thumbnail (layer,
+  pixbuf = ligma_drawable_get_thumbnail (layer,
                                         MIN (width, 128), MIN (height, 128),
-                                        GIMP_PIXBUF_SMALL_CHECKS);
+                                        LIGMA_PIXBUF_SMALL_CHECKS);
   image = gtk_image_new_from_pixbuf (pixbuf);
   g_object_unref (pixbuf);
 
@@ -217,7 +217,7 @@ ico_preview_new (GimpDrawable *layer)
    which then gets added to the dialog's main vbox. */
 static GtkWidget *
 ico_create_icon_hbox (GtkWidget    *icon_preview,
-                      GimpDrawable *layer,
+                      LigmaDrawable *layer,
                       gint          layer_num,
                       IcoSaveInfo  *info)
 {
@@ -253,13 +253,13 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
+  combo = ligma_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
                                   _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
                                   _("8 bpp, 1-bit alpha, 256-slot palette"), 8,
                                   _("24 bpp, 1-bit alpha, no palette"),     24,
                                   _("32 bpp, 8-bit alpha, no palette"),     32,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                  info->depths[layer_num]);
 
   g_signal_connect (combo, "changed",
@@ -284,14 +284,14 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
 
 static GtkWidget *
 ico_dialog_get_layer_preview (GtkWidget    *dialog,
-                              GimpDrawable *layer)
+                              LigmaDrawable *layer)
 {
   GtkWidget *preview;
   GtkWidget *icon_hbox;
   gchar      key[ICO_MAXBUF];
 
   g_snprintf (key, sizeof (key), "layer_%i_hbox",
-              gimp_item_get_id (GIMP_ITEM (layer)));
+              ligma_item_get_id (LIGMA_ITEM (layer)));
   icon_hbox = g_object_get_data (G_OBJECT (dialog), key);
 
   if (!icon_hbox)
@@ -313,39 +313,39 @@ ico_dialog_get_layer_preview (GtkWidget    *dialog,
 
 static void
 ico_dialog_update_icon_preview (GtkWidget    *dialog,
-                                GimpDrawable *layer,
+                                LigmaDrawable *layer,
                                 gint          bpp)
 {
   GtkWidget  *preview = ico_dialog_get_layer_preview (dialog, layer);
   GdkPixbuf  *pixbuf;
   const Babl *format;
-  gint        w       = gimp_drawable_get_width (layer);
-  gint        h       = gimp_drawable_get_height (layer);
+  gint        w       = ligma_drawable_get_width (layer);
+  gint        h       = ligma_drawable_get_height (layer);
 
   if (! preview)
     return;
 
-  switch (gimp_drawable_type (layer))
+  switch (ligma_drawable_type (layer))
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      format = gimp_drawable_get_format (layer);
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
+      format = ligma_drawable_get_format (layer);
       break;
 
     default:
@@ -356,33 +356,33 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
     {
       GeglBuffer *buffer;
       GeglBuffer *tmp;
-      GimpImage  *image;
-      GimpImage  *tmp_image;
-      GimpLayer  *tmp_layer;
+      LigmaImage  *image;
+      LigmaImage  *tmp_image;
+      LigmaLayer  *tmp_layer;
       guchar     *buf;
       guchar     *cmap;
       gint        num_colors;
 
-      image = gimp_item_get_image (GIMP_ITEM (layer));
+      image = ligma_item_get_image (LIGMA_ITEM (layer));
 
-      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
-      gimp_image_undo_disable (tmp_image);
+      tmp_image = ligma_image_new (w, h, ligma_image_get_base_type (image));
+      ligma_image_undo_disable (tmp_image);
 
-      if (gimp_drawable_is_indexed (layer))
+      if (ligma_drawable_is_indexed (layer))
         {
-          cmap = gimp_image_get_colormap (image, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          cmap = ligma_image_get_colormap (image, &num_colors);
+          ligma_image_set_colormap (tmp_image, cmap, num_colors);
           g_free (cmap);
         }
 
-      tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
-                                  gimp_drawable_type (layer),
+      tmp_layer = ligma_layer_new (tmp_image, "temporary", w, h,
+                                  ligma_drawable_type (layer),
                                   100,
-                                  gimp_image_get_default_new_layer_mode (tmp_image));
-      gimp_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
+                                  ligma_image_get_default_new_layer_mode (tmp_image));
+      ligma_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (layer);
-      tmp    = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+      buffer = ligma_drawable_get_buffer (layer);
+      tmp    = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
       buf = g_malloc (w * h * 4);
 
@@ -395,15 +395,15 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
       g_object_unref (tmp);
       g_object_unref (buffer);
 
-      if (gimp_drawable_is_indexed (layer))
-        gimp_image_convert_rgb (tmp_image);
+      if (ligma_drawable_is_indexed (layer))
+        ligma_image_convert_rgb (tmp_image);
 
-      gimp_image_convert_indexed (tmp_image,
-                                  GIMP_CONVERT_DITHER_FS,
-                                  GIMP_CONVERT_PALETTE_GENERATE,
+      ligma_image_convert_indexed (tmp_image,
+                                  LIGMA_CONVERT_DITHER_FS,
+                                  LIGMA_CONVERT_PALETTE_GENERATE,
                                   1 << bpp, TRUE, FALSE, "dummy");
 
-      cmap = gimp_image_get_colormap (tmp_image, &num_colors);
+      cmap = ligma_image_get_colormap (tmp_image, &num_colors);
 
       if (num_colors == (1 << bpp) &&
           ! ico_cmap_contains_black (cmap, num_colors))
@@ -411,109 +411,109 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
           /* Windows icons with color maps need the color black.
            * We need to eliminate one more color to make room for black.
            */
-          if (gimp_drawable_is_indexed (layer))
+          if (ligma_drawable_is_indexed (layer))
             {
               g_free (cmap);
-              cmap = gimp_image_get_colormap (image, &num_colors);
-              gimp_image_set_colormap (tmp_image, cmap, num_colors);
+              cmap = ligma_image_get_colormap (image, &num_colors);
+              ligma_image_set_colormap (tmp_image, cmap, num_colors);
             }
-          else if (gimp_drawable_is_gray (layer))
+          else if (ligma_drawable_is_gray (layer))
             {
-              gimp_image_convert_grayscale (tmp_image);
+              ligma_image_convert_grayscale (tmp_image);
             }
           else
             {
-              gimp_image_convert_rgb (tmp_image);
+              ligma_image_convert_rgb (tmp_image);
             }
 
-          tmp = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+          tmp = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
           gegl_buffer_set (tmp, GEGL_RECTANGLE (0, 0, w, h), 0,
                            format, buf, GEGL_AUTO_ROWSTRIDE);
 
           g_object_unref (tmp);
 
-          if (!gimp_drawable_is_rgb (layer))
-            gimp_image_convert_rgb (tmp_image);
+          if (!ligma_drawable_is_rgb (layer))
+            ligma_image_convert_rgb (tmp_image);
 
-          gimp_image_convert_indexed (tmp_image,
-                                      GIMP_CONVERT_DITHER_FS,
-                                      GIMP_CONVERT_PALETTE_GENERATE,
+          ligma_image_convert_indexed (tmp_image,
+                                      LIGMA_CONVERT_DITHER_FS,
+                                      LIGMA_CONVERT_PALETTE_GENERATE,
                                       (1 << bpp) - 1, TRUE, FALSE, "dummy");
         }
 
       g_free (cmap);
       g_free (buf);
 
-      pixbuf = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (tmp_layer),
+      pixbuf = ligma_drawable_get_thumbnail (LIGMA_DRAWABLE (tmp_layer),
                                             MIN (w, 128), MIN (h, 128),
-                                            GIMP_PIXBUF_SMALL_CHECKS);
+                                            LIGMA_PIXBUF_SMALL_CHECKS);
 
-      gimp_image_delete (tmp_image);
+      ligma_image_delete (tmp_image);
     }
   else if (bpp == 24)
     {
       GeglBuffer     *buffer;
       GeglBuffer     *tmp;
-      GimpImage      *image;
-      GimpImage      *tmp_image;
-      GimpLayer      *tmp_layer;
-      GimpValueArray *return_vals;
+      LigmaImage      *image;
+      LigmaImage      *tmp_image;
+      LigmaLayer      *tmp_layer;
+      LigmaValueArray *return_vals;
 
-      image = gimp_item_get_image (GIMP_ITEM (layer));
+      image = ligma_item_get_image (LIGMA_ITEM (layer));
 
-      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
-      gimp_image_undo_disable (tmp_image);
+      tmp_image = ligma_image_new (w, h, ligma_image_get_base_type (image));
+      ligma_image_undo_disable (tmp_image);
 
-      if (gimp_drawable_is_indexed (layer))
+      if (ligma_drawable_is_indexed (layer))
         {
           guchar *cmap;
           gint    num_colors;
 
-          cmap = gimp_image_get_colormap (image, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          cmap = ligma_image_get_colormap (image, &num_colors);
+          ligma_image_set_colormap (tmp_image, cmap, num_colors);
           g_free (cmap);
         }
 
-      tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
-                                  gimp_drawable_type (layer),
+      tmp_layer = ligma_layer_new (tmp_image, "temporary", w, h,
+                                  ligma_drawable_type (layer),
                                   100,
-                                  gimp_image_get_default_new_layer_mode (tmp_image));
-      gimp_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
+                                  ligma_image_get_default_new_layer_mode (tmp_image));
+      ligma_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (layer);
-      tmp    = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+      buffer = ligma_drawable_get_buffer (layer);
+      tmp    = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
       gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, tmp, NULL);
 
       g_object_unref (tmp);
       g_object_unref (buffer);
 
-      if (gimp_drawable_is_indexed (layer))
-        gimp_image_convert_rgb (tmp_image);
+      if (ligma_drawable_is_indexed (layer))
+        ligma_image_convert_rgb (tmp_image);
 
       return_vals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
+        ligma_pdb_run_procedure (ligma_get_pdb (),
                                 "plug-in-threshold-alpha",
-                                GIMP_TYPE_RUN_MODE,  GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,     tmp_image,
-                                GIMP_TYPE_DRAWABLE,  tmp_layer,
+                                LIGMA_TYPE_RUN_MODE,  LIGMA_RUN_NONINTERACTIVE,
+                                LIGMA_TYPE_IMAGE,     tmp_image,
+                                LIGMA_TYPE_DRAWABLE,  tmp_layer,
                                 G_TYPE_INT,          ICO_ALPHA_THRESHOLD,
                                 G_TYPE_NONE);
 
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
 
-      pixbuf = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (tmp_layer),
+      pixbuf = ligma_drawable_get_thumbnail (LIGMA_DRAWABLE (tmp_layer),
                                             MIN (w, 128), MIN (h, 128),
-                                            GIMP_PIXBUF_SMALL_CHECKS);
+                                            LIGMA_PIXBUF_SMALL_CHECKS);
 
-      gimp_image_delete (tmp_image);
+      ligma_image_delete (tmp_image);
     }
   else
     {
-      pixbuf = gimp_drawable_get_thumbnail (layer,
+      pixbuf = ligma_drawable_get_thumbnail (layer,
                                             MIN (w, 128), MIN (h, 128),
-                                            GIMP_PIXBUF_SMALL_CHECKS);
+                                            LIGMA_PIXBUF_SMALL_CHECKS);
     }
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
@@ -522,7 +522,7 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
 
 void
 ico_dialog_add_icon (GtkWidget    *dialog,
-                     GimpDrawable *layer,
+                     LigmaDrawable *layer,
                      gint          layer_num)
 {
   GtkWidget   *vbox;
@@ -541,7 +541,7 @@ ico_dialog_add_icon (GtkWidget    *dialog,
 
   /* Let's make the hbox accessible through the layer ID */
   g_snprintf (key, sizeof (key), "layer_%i_hbox",
-              gimp_item_get_id (GIMP_ITEM (layer)));
+              ligma_item_get_id (LIGMA_ITEM (layer)));
   g_object_set_data (G_OBJECT (dialog), key, hbox);
 
   ico_dialog_update_icon_preview (dialog, layer, info->depths[layer_num]);
@@ -564,27 +564,27 @@ ico_dialog_add_icon (GtkWidget    *dialog,
       adj = (GtkAdjustment *)
              gtk_adjustment_new (info->hot_spot_x[layer_num], 0,
                                  G_MAXUINT16, 1, 10, 0);
-      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      spinbutton = ligma_spin_button_new (adj, 1.0, 0);
       gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
                                  0, G_MAXUINT16);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                 _("Hot spot _X:"), 0.0, 0.5,
                                 spinbutton, 1);
       g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
+                        G_CALLBACK (ligma_int_adjustment_update),
                         &info->hot_spot_x[layer_num]);
 
       adj = (GtkAdjustment *)
              gtk_adjustment_new (info->hot_spot_y[layer_num], 0,
                                  G_MAXUINT16, 1, 10, 0);
-      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      spinbutton = ligma_spin_button_new (adj, 1.0, 0);
       gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
                                  0, G_MAXUINT16);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("Hot spot _Y:"), 0.0, 0.5,
                                 spinbutton, 1);
       g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
+                        G_CALLBACK (ligma_int_adjustment_update),
                         &info->hot_spot_y[layer_num]);
     }
 }
@@ -594,14 +594,14 @@ ico_dialog_bpp_changed (GtkWidget *combo,
                         GObject   *hbox)
 {
   GtkWidget    *dialog;
-  GimpDrawable *layer;
+  LigmaDrawable *layer;
   gint          layer_num;
   gint          bpp;
   IcoSaveInfo  *info;
 
   dialog = gtk_widget_get_toplevel (combo);
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &bpp);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo), &bpp);
 
   info = g_object_get_data (G_OBJECT (dialog), "save_info");
   g_assert (info);
@@ -647,8 +647,8 @@ ico_dialog_check_compat (GtkWidget   *dialog,
 
   for (iter = info->layers, i = 0; iter; iter = iter->next, i++)
     {
-      if (gimp_drawable_get_width (iter->data) > 255  ||
-          gimp_drawable_get_height (iter->data) > 255 ||
+      if (ligma_drawable_get_width (iter->data) > 255  ||
+          ligma_drawable_get_height (iter->data) > 255 ||
           info->compress[i])
         {
           warn = TRUE;

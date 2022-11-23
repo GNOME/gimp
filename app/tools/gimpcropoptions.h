@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CROP_OPTIONS_H__
-#define __GIMP_CROP_OPTIONS_H__
+#ifndef __LIGMA_CROP_OPTIONS_H__
+#define __LIGMA_CROP_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_CROP_OPTIONS            (gimp_crop_options_get_type ())
-#define GIMP_CROP_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CROP_OPTIONS, GimpCropOptions))
-#define GIMP_CROP_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CROP_OPTIONS, GimpCropOptionsClass))
-#define GIMP_IS_CROP_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CROP_OPTIONS))
-#define GIMP_IS_CROP_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CROP_OPTIONS))
-#define GIMP_CROP_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CROP_OPTIONS, GimpCropOptionsClass))
+#define LIGMA_TYPE_CROP_OPTIONS            (ligma_crop_options_get_type ())
+#define LIGMA_CROP_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CROP_OPTIONS, LigmaCropOptions))
+#define LIGMA_CROP_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CROP_OPTIONS, LigmaCropOptionsClass))
+#define LIGMA_IS_CROP_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CROP_OPTIONS))
+#define LIGMA_IS_CROP_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CROP_OPTIONS))
+#define LIGMA_CROP_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CROP_OPTIONS, LigmaCropOptionsClass))
 
 
-typedef struct _GimpCropOptions      GimpCropOptions;
-typedef struct _GimpToolOptionsClass GimpCropOptionsClass;
+typedef struct _LigmaCropOptions      LigmaCropOptions;
+typedef struct _LigmaToolOptionsClass LigmaCropOptionsClass;
 
-struct _GimpCropOptions
+struct _LigmaCropOptions
 {
-  GimpToolOptions  parent_instance;
+  LigmaToolOptions  parent_instance;
 
   /* Work on the current layer rather than the image. */
   gboolean         layer_only;
@@ -46,16 +46,16 @@ struct _GimpCropOptions
   gboolean         allow_growing;
 
   /* How to fill new areas created by 'allow_growing. */
-  GimpFillType     fill_type;
+  LigmaFillType     fill_type;
 
   /* Whether to discard layer data that falls out of the crop region */
   gboolean         delete_pixels;
 };
 
 
-GType       gimp_crop_options_get_type (void) G_GNUC_CONST;
+GType       ligma_crop_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_crop_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_crop_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif /* __GIMP_CROP_OPTIONS_H__ */
+#endif /* __LIGMA_CROP_OPTIONS_H__ */

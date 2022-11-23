@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorarea.h
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * ligmacolorarea.h
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,77 +24,77 @@
  * handles drag'n'drop.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_AREA_H__
-#define __GIMP_COLOR_AREA_H__
+#ifndef __LIGMA_COLOR_AREA_H__
+#define __LIGMA_COLOR_AREA_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_AREA            (gimp_color_area_get_type ())
-#define GIMP_COLOR_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_AREA, GimpColorArea))
-#define GIMP_COLOR_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
-#define GIMP_IS_COLOR_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_AREA))
-#define GIMP_IS_COLOR_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
-#define GIMP_COLOR_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
+#define LIGMA_TYPE_COLOR_AREA            (ligma_color_area_get_type ())
+#define LIGMA_COLOR_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_AREA, LigmaColorArea))
+#define LIGMA_COLOR_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_AREA, LigmaColorAreaClass))
+#define LIGMA_IS_COLOR_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_AREA))
+#define LIGMA_IS_COLOR_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_AREA))
+#define LIGMA_COLOR_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_AREA, LigmaColorAreaClass))
 
 
-typedef struct _GimpColorAreaPrivate GimpColorAreaPrivate;
-typedef struct _GimpColorAreaClass   GimpColorAreaClass;
+typedef struct _LigmaColorAreaPrivate LigmaColorAreaPrivate;
+typedef struct _LigmaColorAreaClass   LigmaColorAreaClass;
 
-struct _GimpColorArea
+struct _LigmaColorArea
 {
   GtkDrawingArea        parent_instance;
 
-  GimpColorAreaPrivate *priv;
+  LigmaColorAreaPrivate *priv;
 };
 
-struct _GimpColorAreaClass
+struct _LigmaColorAreaClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* color_changed) (GimpColorArea *area);
+  void (* color_changed) (LigmaColorArea *area);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_area_get_type         (void) G_GNUC_CONST;
+GType       ligma_color_area_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_area_new              (const GimpRGB     *color,
-                                              GimpColorAreaType  type,
+GtkWidget * ligma_color_area_new              (const LigmaRGB     *color,
+                                              LigmaColorAreaType  type,
                                               GdkModifierType    drag_mask);
 
-void        gimp_color_area_set_color        (GimpColorArea     *area,
-                                              const GimpRGB     *color);
-void        gimp_color_area_get_color        (GimpColorArea     *area,
-                                              GimpRGB           *color);
+void        ligma_color_area_set_color        (LigmaColorArea     *area,
+                                              const LigmaRGB     *color);
+void        ligma_color_area_get_color        (LigmaColorArea     *area,
+                                              LigmaRGB           *color);
 
-gboolean    gimp_color_area_has_alpha        (GimpColorArea     *area);
-void        gimp_color_area_set_type         (GimpColorArea     *area,
-                                              GimpColorAreaType  type);
-void        gimp_color_area_enable_drag      (GimpColorArea     *area,
+gboolean    ligma_color_area_has_alpha        (LigmaColorArea     *area);
+void        ligma_color_area_set_type         (LigmaColorArea     *area,
+                                              LigmaColorAreaType  type);
+void        ligma_color_area_enable_drag      (LigmaColorArea     *area,
                                               GdkModifierType    drag_mask);
-void        gimp_color_area_set_draw_border  (GimpColorArea     *area,
+void        ligma_color_area_set_draw_border  (LigmaColorArea     *area,
                                               gboolean           draw_border);
-void        gimp_color_area_set_out_of_gamut (GimpColorArea     *area,
+void        ligma_color_area_set_out_of_gamut (LigmaColorArea     *area,
                                               gboolean           out_of_gamut);
 
-void        gimp_color_area_set_color_config (GimpColorArea     *area,
-                                              GimpColorConfig   *config);
+void        ligma_color_area_set_color_config (LigmaColorArea     *area,
+                                              LigmaColorConfig   *config);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_AREA_H__ */
+#endif /* __LIGMA_COLOR_AREA_H__ */

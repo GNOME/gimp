@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppixbuf.h
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmapixbuf.h
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,25 +19,25 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __LIBGIMP_GIMP_PIXBUF_H__
-#define __LIBGIMP_GIMP_PIXBUF_H__
+#ifndef __LIBLIGMA_LIGMA_PIXBUF_H__
+#define __LIBLIGMA_LIGMA_PIXBUF_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-GdkPixbuf * _gimp_pixbuf_from_data (guchar                 *data,
+GdkPixbuf * _ligma_pixbuf_from_data (guchar                 *data,
                                     gint                    width,
                                     gint                    height,
                                     gint                    bpp,
-                                    GimpPixbufTransparency  alpha);
+                                    LigmaPixbufTransparency  alpha);
 
 
 G_END_DECLS
 
-#endif /* __LIBGIMP_GIMP_PIXBUF_H__ */
+#endif /* __LIBLIGMA_LIGMA_PIXBUF_H__ */

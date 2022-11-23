@@ -1,13 +1,13 @@
-# Lithuanian translation for gimp.
-# Copyright (C) 2021 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Lithuanian translation for ligma.
+# Copyright (C) 2021 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # leonassimkus <leonas.simkus@vetrungesgimnazija.lt>, 2021.
 # Aurimas Černius <aurisc4@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp gimp-2-10\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma ligma-2-10\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2021-09-03 21:17+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
@@ -25,13 +25,13 @@ msgid "License Agreement"
 msgstr "Licencijos sutartis"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Diegtuvę sukūrtė Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "Diegtuvę sukūrtė Jernej Simonèiè, jernej-ligma@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Ši GIMP versija reikalauja Windows 7 ar naujesnės Windows versijos."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
+msgstr "Ši LIGMA versija reikalauja Windows 7 ar naujesnės Windows versijos."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -39,20 +39,20 @@ msgstr "Kuriama versija"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Tai GIMP kuriama versija, kur kai kurios galimybės gali būti nebaigtos ar "
-"nestabilios.%nŠi GIMP versija nėra skirta kasdieniam darbui, kadangi ji gali "
+"Tai LIGMA kuriama versija, kur kai kurios galimybės gali būti nebaigtos ar "
+"nestabilios.%nŠi LIGMA versija nėra skirta kasdieniam darbui, kadangi ji gali "
 "būti nestabili ir Jūs galite prarasti savo darbą.%nJei susidursite su bet "
 "kokiomis problemomis, pirma patikrinkite, ar jos jau nepataisytos GIT prieš "
-"susisiekiant su kūrėjais ar pranešant apie tai GIMP gitlab:%n_https://gitlab."
-"gnome.org/GNOME/gimp/issues%n%nAr vis tiek norite tęsti įdiegimą?"
+"susisiekiant su kūrėjais ar pranešant apie tai LIGMA gitlab:%n_https://gitlab."
+"gnome.org/GNOME/ligma/issues%n%nAr vis tiek norite tęsti įdiegimą?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -65,8 +65,8 @@ msgstr "Išeiti"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "Ši GIMP versija reikalauja procesoriaus, palaikančio SSE instrukcijas."
+"This version of LIGMA requires a processor that supports SSE instructions."
+msgstr "Ši LIGMA versija reikalauja procesoriaus, palaikančio SSE instrukcijas."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -75,13 +75,13 @@ msgstr "Ekrano nuostatų problema"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
 "Diegtuvė nustatė, kad Jūsų Windows versija šiuo metu neveikia 32 bitų per "
 "pikselį atvaizdavimo režimu. Tai yra žinoma problema galinti kelti stabilumo "
-"problemų GIMP. Todėl rekomenduojama pakeisti ekrano spalvų gylį į 32BPP "
+"problemų LIGMA. Todėl rekomenduojama pakeisti ekrano spalvų gylį į 32BPP "
 "prieš tęsiant."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
@@ -90,11 +90,11 @@ msgstr "&Išeiti"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP jau paruošta diegti. Spustelėkite mygtuką Diegti dabar, kad įdiegtumėte "
+"LIGMA jau paruošta diegti. Spustelėkite mygtuką Diegti dabar, kad įdiegtumėte "
 "naudodami numatytuosius parametrus, arba spustelėkite mygtuką Tinkinti, jei "
 "norite geriau valdyti, kas bus įdiegta."
 
@@ -123,12 +123,12 @@ msgid "Description"
 msgstr "Aprašymas"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP ir visi numatytieji įskiepiai"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA ir visi numatytieji įskiepiai"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -136,9 +136,9 @@ msgstr "Programos vykdymo bibliotekos"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
 msgstr ""
-"Programos vykdymo bibliotekos naudojamos GIMP, įskaitant GTK+ programų "
+"Programos vykdymo bibliotekos naudojamos LIGMA, įskaitant GTK+ programų "
 "vykdymo aplinką"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
@@ -146,8 +146,8 @@ msgid "Debug symbols"
 msgstr "Derinimo simboliai"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
-msgstr "Įtraukti informaciją padedančią surasti GIMP klaidas"
+msgid "Include information to help with debugging LIGMA"
+msgstr "Įtraukti informaciją padedančią surasti LIGMA klaidas"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 #, fuzzy
@@ -155,8 +155,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "MS-Windows GTK+ varikliukas"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Įprasta Windows išvaizda skirta GIMP"
+msgid "Native Windows look for LIGMA"
+msgstr "Įprasta Windows išvaizda skirta LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -176,16 +176,16 @@ msgid "Python scripting"
 msgstr "Python scenarijai"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr "Leidžia GIMP naudoti įskiepius parašytus, Python skriptų kalba."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
+msgstr "Leidžia LIGMA naudoti įskiepius parašytus, Python skriptų kalba."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "Lua scripting"
 msgstr "Lua scenarijai"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
-msgstr "Leidžia GIMP naudoti įskiepius, parašytus Lua skriptų kalba."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
+msgstr "Leidžia LIGMA naudoti įskiepius, parašytus Lua skriptų kalba."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
@@ -200,8 +200,8 @@ msgid "PostScript support"
 msgstr "PostSricpt palaikymas"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "Leisti GIMP įkelti PostScript failus"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "Leisti LIGMA įkelti PostScript failus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -228,16 +228,16 @@ msgid "Create a &Quick Launch icon"
 msgstr "Sukurti &Greito paleidimo piktogramą"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "Pašalinti ankstesnę GIMP versiją"
+msgid "Remove previous LIGMA version"
+msgstr "Pašalinti ankstesnę LIGMA versiją"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"Iškilo problema atnaujinant GIMP aplinką - %1. Jei iškils klaidos įkeliant "
-"įskiepius, bandykite išdiegti ir iš naujo įdiegti GIMP."
+"Iškilo problema atnaujinant LIGMA aplinką - %1. Jei iškils klaidos įkeliant "
+"įskiepius, bandykite išdiegti ir iš naujo įdiegti LIGMA."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
@@ -256,12 +256,12 @@ msgid "There was an error updating %1."
 msgstr "Atnaujinant kilo klaida %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Kilo klaida atnaujinant GIMP konfigūracijos failą %1."
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "Kilo klaida atnaujinant LIGMA konfigūracijos failą %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "Redaguoti su GIMP"
+msgid "Edit with LIGMA"
+msgstr "Redaguoti su LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -272,15 +272,15 @@ msgid "Extensions:"
 msgstr "Plėtiniai:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Pasirinkite, kuriuos failų tipus norite susieti su GIMP"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "Pasirinkite, kuriuos failų tipus norite susieti su LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"Tai leis atidaryti pasirinktus failus su GIMP, kai ant jų paspausite dukart."
+"Tai leis atidaryti pasirinktus failus su LIGMA, kai ant jų paspausite dukart."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
 msgid "Select &All"
@@ -295,48 +295,48 @@ msgid "Select &Unused"
 msgstr "Pažymėti nenau&dojamus"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "Su GIMP susiejamų failų tipai:"
+msgid "File types to associate with LIGMA:"
+msgstr "Su LIGMA susiejamų failų tipai:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "Šalinama ankstesnė GIMP versija:"
+msgid "Removing previous version of LIGMA:"
+msgstr "Šalinama ankstesnė LIGMA versija:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
+"LIGMA %1 negali būti įdiegta vietoj šiuo metu įdiegtos LIGMA versijos ir "
 "automatinis senos versijos išdiegimas nepavyko.%n%nPrašome pašalinti "
-"ankstesnę GIMP versiją patiems prieš įdiegiant šią versiją į %2 arba "
+"ankstesnę LIGMA versiją patiems prieš įdiegiant šią versiją į %2 arba "
 "pasirinkite „Pasirinktinis diegimas“ ir parinkite kitą diegimo aplanką.%n"
 "%nDiegtuvė dabar baigs darbą."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
+"LIGMA %1 negali būti įdiegta vietoj šiuo metu įdiegtos LIGMA versijos ir "
 "diegtuvei nepavyko nustatyti, kaip automatiškai išdiegti seną versiją.%n"
-"%nPrašome pašalinti ankstesnę GIMP versiją ir bet kokius papildinius patiems "
+"%nPrašome pašalinti ankstesnę LIGMA versiją ir bet kokius papildinius patiems "
 "prieš įdiegiant šią versiją į %2 arba pasirinkite „Pasirinktinis diegimas“ "
 "ir parinkite kitą diegimo aplanką.%n%nDiegtuvė dabar baigs darbą."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"Ankstesnė GIMP versija sėkmingai pašalinta, tačiau Windows turi būti "
+"Ankstesnė LIGMA versija sėkmingai pašalinta, tačiau Windows turi būti "
 "paleista iš naujo prieš diegtuvei tęsiant darbą.%n%nPo kompiuterio paleidimo "
 "iš naujo diegimas bus pratęstas, kai kitą kartą prisijungs administratorius."
 
@@ -349,8 +349,8 @@ msgid "Cleaning up old files..."
 msgstr "Valomi seni failai..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Atsiminkite: GIMP yra laisva programinė įranga.%n%nPrašome aplankyti"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "Atsiminkite: LIGMA yra laisva programinė įranga.%n%nPrašome aplankyti"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -361,24 +361,24 @@ msgid "Setting up file associations..."
 msgstr "Nustatomi failų susiejimai..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Nustatoma GIMP Python plėtinio aplinka..."
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "Nustatoma LIGMA Python plėtinio aplinka..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Nustatomi MyPaint teptukai..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "Nustatoma GIMP aplinka..."
+msgid "Setting up LIGMA environment..."
+msgstr "Nustatoma LIGMA aplinka..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Nustatoma GIMP sąranka 32-bitų įskiepių palaikymui..."
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "Nustatoma LIGMA sąranka 32-bitų įskiepių palaikymui..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "Paleidžiama GIMP"
+msgid "Launch LIGMA"
+msgstr "Paleidžiama LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -390,6 +390,6 @@ msgstr "Vidinė klaida (%1)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
-msgstr "Panašu, kad GIMP nėra įdiegta į pasirinktą aplanką. Vis tiek tęsti?"
+msgstr "Panašu, kad LIGMA nėra įdiegta į pasirinktą aplanką. Vis tiek tęsti?"

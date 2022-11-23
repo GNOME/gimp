@@ -32,15 +32,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-nlfilt"
 #define PLUG_IN_BINARY "nl-filter"
-#define PLUG_IN_ROLE   "gimp-nl-filter"
+#define PLUG_IN_ROLE   "ligma-nl-filter"
 
 
 typedef struct
@@ -63,12 +63,12 @@ typedef struct _NlfilterClass NlfilterClass;
 
 struct _Nlfilter
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _NlfilterClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -77,24 +77,24 @@ struct _NlfilterClass
 
 GType                   nlfilter_get_type         (void) G_GNUC_CONST;
 
-static GList          * nlfilter_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * nlfilter_create_procedure (GimpPlugIn           *plug_in,
+static GList          * nlfilter_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * nlfilter_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * nlfilter_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * nlfilter_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static void             nlfilter                  (GimpDrawable     *drawable,
-                                                   GimpPreview      *preview);
-static void             nlfilter_preview          (GimpDrawable     *drawable,
-                                                   GimpPreview      *preview);
+static void             nlfilter                  (LigmaDrawable     *drawable,
+                                                   LigmaPreview      *preview);
+static void             nlfilter_preview          (LigmaDrawable     *drawable,
+                                                   LigmaPreview      *preview);
 
-static gboolean         nlfilter_dialog           (GimpDrawable     *drawable);
+static gboolean         nlfilter_dialog           (LigmaDrawable     *drawable);
 
 static gint             nlfiltInit                (gdouble           alpha,
                                                    gdouble           radius,
@@ -108,13 +108,13 @@ static void             nlfiltRow                 (guchar           *srclast,
                                                    gint              bpp,
                                                    gint              filtno);
 
-static void    nlfilter_scale_entry_update_double (GimpLabelSpin    *entry,
+static void    nlfilter_scale_entry_update_double (LigmaLabelSpin    *entry,
                                                    gdouble          *value);
 
 
-G_DEFINE_TYPE (Nlfilter, nlfilter, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Nlfilter, nlfilter, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (NLFILTER_TYPE)
+LIGMA_MAIN (NLFILTER_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -129,7 +129,7 @@ static NLFilterValues nlfvals =
 static void
 nlfilter_class_init (NlfilterClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = nlfilter_query_procedures;
   plug_in_class->create_procedure = nlfilter_create_procedure;
@@ -142,55 +142,55 @@ nlfilter_init (Nlfilter *nlfilter)
 }
 
 static GList *
-nlfilter_query_procedures (GimpPlugIn *plug_in)
+nlfilter_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-nlfilter_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+nlfilter_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             nlfilter_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_NL Filter..."));
-      gimp_procedure_add_menu_path (procedure,"<Image>/Filters/Enhance");
+      ligma_procedure_set_menu_label (procedure, _("_NL Filter..."));
+      ligma_procedure_add_menu_path (procedure,"<Image>/Filters/Enhance");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Nonlinear swiss army knife filter"),
-                                        "This is the pnmnlfilt, in gimp's "
+                                        "This is the pnmnlfilt, in ligma's "
                                         "clothing. See the pnmnlfilt manpage "
                                         "for details.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Graeme W. Gill, gimp 0.99 plug-in "
+      ligma_procedure_set_attribution (procedure,
+                                      "Graeme W. Gill, ligma 0.99 plug-in "
                                       "by Eric L. Hernes",
                                       "Graeme W. Gill, Eric L. Hernes",
                                       "1997");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "alpha",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "alpha",
                             "Alpha",
                             "The amount of the filter to apply",
                             0, 1, 0.3,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "radius",
                             "Radius",
                             "The filter radius",
                             1.0 / 3.0, 1, 1.0 / 3.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter",
+      LIGMA_PROC_ARG_INT (procedure, "filter",
                          "Filter",
                          "The Filter to Run, "
                          "0 - alpha trimmed mean; "
@@ -203,16 +203,16 @@ nlfilter_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-nlfilter_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+nlfilter_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -220,12 +220,12 @@ nlfilter_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -235,37 +235,37 @@ nlfilter_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &nlfvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &nlfvals);
 
       if (! nlfilter_dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      nlfvals.alpha  = GIMP_VALUES_GET_DOUBLE (args, 0);
-      nlfvals.radius = GIMP_VALUES_GET_DOUBLE (args, 1);
-      nlfvals.filter = GIMP_VALUES_GET_INT    (args, 2);
+    case LIGMA_RUN_NONINTERACTIVE:
+      nlfvals.alpha  = LIGMA_VALUES_GET_DOUBLE (args, 0);
+      nlfvals.radius = LIGMA_VALUES_GET_DOUBLE (args, 1);
+      nlfvals.filter = LIGMA_VALUES_GET_INT    (args, 2);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS :
-      gimp_get_data (PLUG_IN_PROC, &nlfvals);
+    case LIGMA_RUN_WITH_LAST_VALS :
+      ligma_get_data (PLUG_IN_PROC, &nlfvals);
       break;
     };
 
   nlfilter (drawable, NULL);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
@@ -967,8 +967,8 @@ rectang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
 }
 
 static void
-nlfilter (GimpDrawable *drawable,
-          GimpPreview  *preview)
+nlfilter (LigmaDrawable *drawable,
+          LigmaPreview  *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -981,30 +981,30 @@ nlfilter (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
+      ligma_preview_get_position (preview, &x1, &y1);
+      ligma_preview_get_size (preview, &width, &height);
       y2 = y1 + height;
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable,
+      if (! ligma_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         return;
 
       y2 = y1 + height;
     }
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   if (preview)
     dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer), format);
   else
-    dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+    dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
@@ -1024,7 +1024,7 @@ nlfilter (GimpDrawable *drawable,
   filtno = nlfiltInit (nlfvals.alpha, nlfvals.radius, nlfvals.filter);
 
   if (!preview)
-    gimp_progress_init (_("NL Filter"));
+    ligma_progress_init (_("NL Filter"));
 
   /* first row */
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y1, width, 1), 1.0,
@@ -1040,7 +1040,7 @@ nlfilter (GimpDrawable *drawable,
   for (y = y1; y < y2 - 1; y++)
     {
       if (((y % p_update) == 0) && !preview)
-        gimp_progress_update ((gdouble) y / (gdouble) height);
+        ligma_progress_update ((gdouble) y / (gdouble) height);
 
       gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y + 1, width, 1), 1.0,
                        format, nextrow,
@@ -1078,7 +1078,7 @@ nlfilter (GimpDrawable *drawable,
                        format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      gimp_preview_draw_buffer (GIMP_PREVIEW (preview), buf, width * bpp);
+      ligma_preview_draw_buffer (LIGMA_PREVIEW (preview), buf, width * bpp);
 
       g_free (buf);
     }
@@ -1088,23 +1088,23 @@ nlfilter (GimpDrawable *drawable,
 
   if (! preview)
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, x1, y1, width, height);
-      gimp_displays_flush ();
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, x1, y1, width, height);
+      ligma_displays_flush ();
     }
 }
 
 static void
-nlfilter_preview (GimpDrawable *drawable,
-                  GimpPreview  *preview)
+nlfilter_preview (LigmaDrawable *drawable,
+                  LigmaPreview  *preview)
 {
   nlfilter (drawable, preview);
 }
 
 static gboolean
-nlfilter_dialog (GimpDrawable *drawable)
+nlfilter_dialog (LigmaDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -1117,23 +1117,23 @@ nlfilter_dialog (GimpDrawable *drawable)
   GtkWidget *scale;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("NL Filter"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("NL Filter"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -1141,7 +1141,7 @@ nlfilter_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -1149,8 +1149,8 @@ nlfilter_dialog (GimpDrawable *drawable)
                             G_CALLBACK (nlfilter_preview),
                             drawable);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Filter"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Filter"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &nlfvals.filter, NULL, nlfvals.filter,
 
                                     _("_Alpha trimmed mean"),
@@ -1166,13 +1166,13 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   g_signal_connect_swapped (alpha_trim, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (opt_est, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (edge_enhance, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   grid = gtk_grid_new ();
@@ -1181,29 +1181,29 @@ nlfilter_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("A_lpha:"), nlfvals.alpha, 0.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("A_lpha:"), nlfvals.alpha, 0.0, 1.0, 2);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.alpha);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Radius:"), nlfvals.radius, 1.0 / 3.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("_Radius:"), nlfvals.radius, 1.0 / 3.0, 1.0, 2);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (nlfilter_scale_entry_update_double),
                     &nlfvals.radius);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
   gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -1211,8 +1211,8 @@ nlfilter_dialog (GimpDrawable *drawable)
 }
 
 static void
-nlfilter_scale_entry_update_double (GimpLabelSpin *entry,
+nlfilter_scale_entry_update_double (LigmaLabelSpin *entry,
                                     gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdisplayshell-items.h
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * ligmadisplayshell-items.h
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_ITEMS_H__
-#define __GIMP_DISPLAY_SHELL_ITEMS_H__
+#ifndef __LIGMA_DISPLAY_SHELL_ITEMS_H__
+#define __LIGMA_DISPLAY_SHELL_ITEMS_H__
 
 
-void   gimp_display_shell_items_init            (GimpDisplayShell *shell);
-void   gimp_display_shell_items_free            (GimpDisplayShell *shell);
+void   ligma_display_shell_items_init            (LigmaDisplayShell *shell);
+void   ligma_display_shell_items_free            (LigmaDisplayShell *shell);
 
-void   gimp_display_shell_add_item              (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
-void   gimp_display_shell_remove_item           (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
+void   ligma_display_shell_add_item              (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
+void   ligma_display_shell_remove_item           (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
 
-void   gimp_display_shell_add_preview_item      (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
-void   gimp_display_shell_remove_preview_item   (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
+void   ligma_display_shell_add_preview_item      (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
+void   ligma_display_shell_remove_preview_item   (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
 
-void   gimp_display_shell_add_unrotated_item    (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
-void   gimp_display_shell_remove_unrotated_item (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
+void   ligma_display_shell_add_unrotated_item    (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
+void   ligma_display_shell_remove_unrotated_item (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
 
-void   gimp_display_shell_add_tool_item         (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
-void   gimp_display_shell_remove_tool_item      (GimpDisplayShell *shell,
-                                                 GimpCanvasItem   *item);
+void   ligma_display_shell_add_tool_item         (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
+void   ligma_display_shell_remove_tool_item      (LigmaDisplayShell *shell,
+                                                 LigmaCanvasItem   *item);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_ITEMS_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_ITEMS_H__ */

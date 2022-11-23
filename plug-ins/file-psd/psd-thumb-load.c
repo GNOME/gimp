@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,14 +24,14 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "psd.h"
 #include "psd-util.h"
 #include "psd-image-res-load.h"
 #include "psd-thumb-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /*  Local function prototypes  */
 static gint    read_header_block          (PSDimage      *img_a,
@@ -46,17 +46,17 @@ static gint    read_image_resource_block  (PSDimage      *img_a,
                                            GInputStream  *input,
                                            GError       **error);
 
-static GimpImage * create_gimp_image      (PSDimage      *img_a,
+static LigmaImage * create_ligma_image      (PSDimage      *img_a,
                                            GFile         *file);
 
-static gint    add_image_resources        (GimpImage     *image,
+static gint    add_image_resources        (LigmaImage     *image,
                                            PSDimage      *img_a,
                                            GFile         *file,
                                            GInputStream  *input,
                                            GError       **error);
 
 /* Main file load function */
-GimpImage *
+LigmaImage *
 load_thumbnail_image (GFile   *file,
                       gint    *width,
                       gint    *height,
@@ -64,15 +64,15 @@ load_thumbnail_image (GFile   *file,
 {
   GInputStream  *input;
   PSDimage       img_a;
-  GimpImage     *image = NULL;
+  LigmaImage     *image = NULL;
   GError        *error = NULL;
 
   /* ----- Open PSD file ----- */
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             ligma_file_get_utf8_name (file));
 
-  IFDBG(1) g_debug ("Open file %s", gimp_file_get_utf8_name (file));
+  IFDBG(1) g_debug ("Open file %s", ligma_file_get_utf8_name (file));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
   if (! input)
@@ -80,12 +80,12 @@ load_thumbnail_image (GFile   *file,
       if (! error)
         g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for reading: %s"),
-                     gimp_file_get_utf8_name (file), g_strerror (errno));
+                     ligma_file_get_utf8_name (file), g_strerror (errno));
       else
         {
           g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (file), error->message);
+                       ligma_file_get_utf8_name (file), error->message);
           g_error_free (error);
         }
 
@@ -96,23 +96,23 @@ load_thumbnail_image (GFile   *file,
   IFDBG(2) g_debug ("Read header block");
   if (read_header_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.2);
+  ligma_progress_update (0.2);
 
   /* ----- Read the PSD file Color Mode block ----- */
   IFDBG(2) g_debug ("Read color mode block");
   if (read_color_mode_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.4);
+  ligma_progress_update (0.4);
 
   /* ----- Read the PSD file Image Resource block ----- */
   IFDBG(2) g_debug ("Read image resource block");
   if (read_image_resource_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.6);
+  ligma_progress_update (0.6);
 
-  /* ----- Create GIMP image ----- */
-  IFDBG(2) g_debug ("Create GIMP image");
-  image = create_gimp_image (&img_a, file);
+  /* ----- Create LIGMA image ----- */
+  IFDBG(2) g_debug ("Create LIGMA image");
+  image = create_ligma_image (&img_a, file);
   if (! image)
     goto load_error;
 
@@ -120,10 +120,10 @@ load_thumbnail_image (GFile   *file,
   IFDBG(2) g_debug ("Add image resources");
   if (add_image_resources (image, &img_a, file, input, &error) < 1)
     goto load_error;
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  gimp_image_clean_all (image);
-  gimp_image_undo_enable (image);
+  ligma_image_clean_all (image);
+  ligma_image_undo_enable (image);
   g_object_unref (input);
 
   *width = img_a.columns;
@@ -141,7 +141,7 @@ load_thumbnail_image (GFile   *file,
 
   /* Delete partially loaded image */
   if (image)
-    gimp_image_delete (image);
+    ligma_image_delete (image);
 
   /* Close file if Open */
   g_object_unref (input);
@@ -195,10 +195,10 @@ read_header_block (PSDimage      *img_a,
   if (img_a->channels > MAX_CHANNELS)
     return -1;
 
-  if (img_a->rows < 1 || img_a->rows > GIMP_MAX_IMAGE_SIZE)
+  if (img_a->rows < 1 || img_a->rows > LIGMA_MAX_IMAGE_SIZE)
     return -1;
 
-  if (img_a->columns < 1 || img_a->columns > GIMP_MAX_IMAGE_SIZE)
+  if (img_a->columns < 1 || img_a->columns > LIGMA_MAX_IMAGE_SIZE)
     return -1;
 
   return 0;
@@ -261,26 +261,26 @@ read_image_resource_block (PSDimage      *img_a,
   return 0;
 }
 
-static GimpImage *
-create_gimp_image (PSDimage *img_a,
+static LigmaImage *
+create_ligma_image (PSDimage *img_a,
                    GFile    *file)
 {
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
 
-  img_a->base_type = GIMP_RGB;
+  img_a->base_type = LIGMA_RGB;
 
-  /* Create gimp image */
+  /* Create ligma image */
   IFDBG(2) g_debug ("Create image");
-  image = gimp_image_new (img_a->columns, img_a->rows, img_a->base_type);
+  image = ligma_image_new (img_a->columns, img_a->rows, img_a->base_type);
 
-  gimp_image_set_file (image, file);
-  gimp_image_undo_disable (image);
+  ligma_image_set_file (image, file);
+  ligma_image_undo_disable (image);
 
   return image;
 }
 
 static gint
-add_image_resources (GimpImage     *image,
+add_image_resources (LigmaImage     *image,
                      PSDimage      *img_a,
                      GFile         *file,
                      GInputStream  *input,

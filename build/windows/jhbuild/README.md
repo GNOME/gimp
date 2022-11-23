@@ -10,11 +10,11 @@ From there, in theory, you can simply clone this repo, cd into it, and run:
 
 	./build
 
-That will build the development version of the gimp.
+That will build the development version of the ligma.
 
-If you'd rather build the stable version of the gimp, run this instead:
+If you'd rather build the stable version of the ligma, run this instead:
 
-	MODULE=gimp-stable ./build
+	MODULE=ligma-stable ./build
 
 If you'd like to build with debigging information, run:
 
@@ -51,5 +51,5 @@ Other Scripts
 =============
 There are a few other scripts included in this repo:
  * ./clean will remove all build artifacts (but leave the downloaded tarballs), leaving you with a clean setup.
- * ./mkarchive will create self extracting archives of the gimp.
- * ./split-build will do a special build where it builds both gimp-dev and gimp-stable but the two builds share the same dependencies. The directories then needs to be merged using ./mkarchive.
+ * ./mkarchive will create self extracting archives of the ligma.
+ * ./split-build will do a special build where it builds both ligma-dev and ligma-stable but the two builds share the same dependencies. The directories then needs to be merged using ./mkarchive.

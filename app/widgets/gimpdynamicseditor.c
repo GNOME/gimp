@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  *
@@ -21,49 +21,49 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdynamics.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadynamics.h"
 
-#include "gimpdocked.h"
-#include "gimpdynamicseditor.h"
-#include "gimpdynamicsoutputeditor.h"
-#include "gimpmenufactory.h"
-#include "gimppropwidgets.h"
+#include "ligmadocked.h"
+#include "ligmadynamicseditor.h"
+#include "ligmadynamicsoutputeditor.h"
+#include "ligmamenufactory.h"
+#include "ligmapropwidgets.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_dynamics_editor_constructed     (GObject            *object);
-static void   gimp_dynamics_editor_finalize        (GObject            *object);
+static void   ligma_dynamics_editor_constructed     (GObject            *object);
+static void   ligma_dynamics_editor_finalize        (GObject            *object);
 
-static void   gimp_dynamics_editor_set_data        (GimpDataEditor     *editor,
-                                                    GimpData           *data);
+static void   ligma_dynamics_editor_set_data        (LigmaDataEditor     *editor,
+                                                    LigmaData           *data);
 
-static void   gimp_dynamics_editor_notify_model    (GimpDynamics       *options,
+static void   ligma_dynamics_editor_notify_model    (LigmaDynamics       *options,
                                                     const GParamSpec   *pspec,
-                                                    GimpDynamicsEditor *editor);
-static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
+                                                    LigmaDynamicsEditor *editor);
+static void   ligma_dynamics_editor_notify_data     (LigmaDynamics       *options,
                                                     const GParamSpec   *pspec,
-                                                    GimpDynamicsEditor *editor);
+                                                    LigmaDynamicsEditor *editor);
 
-static void   gimp_dynamics_editor_add_icon_editor (GimpDynamics       *dynamics,
-                                                    Gimp               *gimp,
+static void   ligma_dynamics_editor_add_icon_editor (LigmaDynamics       *dynamics,
+                                                    Ligma               *ligma,
                                                     GtkWidget          *vbox);
 
-static void   gimp_dynamics_editor_add_output_row  (GObject     *config,
+static void   ligma_dynamics_editor_add_output_row  (GObject     *config,
                                                     const gchar *row_label,
                                                     GtkGrid     *grid,
                                                     gint         row);
 
-static void gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
+static void ligma_dynamics_editor_init_output_editors (LigmaDynamics *dynamics,
                                                       GtkWidget    *view_selector,
                                                       GtkWidget    *notebook,
                                                       GtkWidget    *check_grid);
@@ -74,42 +74,42 @@ static GtkWidget * dynamics_check_button_new       (GObject     *config,
                                                     gint         column,
                                                     gint         row);
 
-static void      gimp_dynamics_editor_view_changed (GtkComboBox *combo,
+static void      ligma_dynamics_editor_view_changed (GtkComboBox *combo,
                                                     GtkWidget   *notebook);
 
-G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
-                         GIMP_TYPE_DATA_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaDynamicsEditor, ligma_dynamics_editor,
+                         LIGMA_TYPE_DATA_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED, NULL))
 
-#define parent_class gimp_dynamics_editor_parent_class
+#define parent_class ligma_dynamics_editor_parent_class
 
 
 static void
-gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
+ligma_dynamics_editor_class_init (LigmaDynamicsEditorClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  LigmaDataEditorClass *editor_class = LIGMA_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructed = gimp_dynamics_editor_constructed;
-  object_class->finalize    = gimp_dynamics_editor_finalize;
+  object_class->constructed = ligma_dynamics_editor_constructed;
+  object_class->finalize    = ligma_dynamics_editor_finalize;
 
-  editor_class->set_data    = gimp_dynamics_editor_set_data;
+  editor_class->set_data    = ligma_dynamics_editor_set_data;
   editor_class->title       = _("Paint Dynamics Editor");
 }
 
 static void
-gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
+ligma_dynamics_editor_init (LigmaDynamicsEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
 
-  editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+  editor->dynamics_model = g_object_new (LIGMA_TYPE_DYNAMICS, NULL);
 
   g_signal_connect (editor->dynamics_model, "notify",
-                    G_CALLBACK (gimp_dynamics_editor_notify_model),
+                    G_CALLBACK (ligma_dynamics_editor_notify_model),
                     editor);
 
   editor->view_selector =
-    gimp_enum_combo_box_new (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE);
+    ligma_enum_combo_box_new (LIGMA_TYPE_DYNAMICS_OUTPUT_TYPE);
   gtk_box_pack_start (GTK_BOX (data_editor), editor->view_selector,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->view_selector);
@@ -122,11 +122,11 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 }
 
 static void
-gimp_dynamics_editor_constructed (GObject *object)
+ligma_dynamics_editor_constructed (GObject *object)
 {
-  GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (object);
-  GimpDynamicsEditor *editor      = GIMP_DYNAMICS_EDITOR (object);
-  GimpDynamics       *dynamics    = editor->dynamics_model;
+  LigmaDataEditor     *data_editor = LIGMA_DATA_EDITOR (object);
+  LigmaDynamicsEditor *editor      = LIGMA_DYNAMICS_EDITOR (object);
+  LigmaDynamics       *dynamics    = editor->dynamics_model;
   GtkWidget          *input_labels[7];
   GtkWidget          *vbox;
   GtkWidget          *icon_box;
@@ -145,15 +145,15 @@ gimp_dynamics_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (vbox), icon_box, FALSE, FALSE, 0);
   gtk_widget_show (icon_box);
 
-  gimp_dynamics_editor_add_icon_editor (dynamics,
-                                        data_editor->context->gimp,
+  ligma_dynamics_editor_add_icon_editor (dynamics,
+                                        data_editor->context->ligma,
                                         vbox);
 
   grid = gtk_grid_new ();
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  gimp_dynamics_editor_init_output_editors (dynamics,
+  ligma_dynamics_editor_init_output_editors (dynamics,
                                             editor->view_selector,
                                             editor->notebook,
                                             grid);
@@ -175,21 +175,21 @@ gimp_dynamics_editor_constructed (GObject *object)
       gtk_widget_show (input_labels[i]);
     }
 
-  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
-                              GIMP_INT_STORE_VALUE,     -1,
-                              GIMP_INT_STORE_LABEL,     _("Mapping matrix"),
-                              GIMP_INT_STORE_USER_DATA, vbox,
+  ligma_int_combo_box_prepend (LIGMA_INT_COMBO_BOX (editor->view_selector),
+                              LIGMA_INT_STORE_VALUE,     -1,
+                              LIGMA_INT_STORE_LABEL,     _("Mapping matrix"),
+                              LIGMA_INT_STORE_USER_DATA, vbox,
                               -1);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->view_selector), -1);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (editor->view_selector), -1);
 
-  gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
+  ligma_docked_set_show_button_bar (LIGMA_DOCKED (object), FALSE);
 }
 
 static void
-gimp_dynamics_editor_finalize (GObject *object)
+ligma_dynamics_editor_finalize (GObject *object)
 {
-  GimpDynamicsEditor *editor = GIMP_DYNAMICS_EDITOR (object);
+  LigmaDynamicsEditor *editor = LIGMA_DYNAMICS_EDITOR (object);
 
   g_clear_object (&editor->dynamics_model);
 
@@ -197,34 +197,34 @@ gimp_dynamics_editor_finalize (GObject *object)
 }
 
 static void
-gimp_dynamics_editor_set_data (GimpDataEditor *editor,
-                               GimpData       *data)
+ligma_dynamics_editor_set_data (LigmaDataEditor *editor,
+                               LigmaData       *data)
 {
-  GimpDynamicsEditor *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
+  LigmaDynamicsEditor *dynamics_editor = LIGMA_DYNAMICS_EDITOR (editor);
 
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
-                                          gimp_dynamics_editor_notify_data,
+                                          ligma_dynamics_editor_notify_data,
                                           editor);
 
-  GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+  LIGMA_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
   if (editor->data)
     {
       g_signal_handlers_block_by_func (dynamics_editor->dynamics_model,
-                                       gimp_dynamics_editor_notify_model,
+                                       ligma_dynamics_editor_notify_model,
                                        editor);
 
-      gimp_config_copy (GIMP_CONFIG (editor->data),
-                        GIMP_CONFIG (dynamics_editor->dynamics_model),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
+      ligma_config_copy (LIGMA_CONFIG (editor->data),
+                        LIGMA_CONFIG (dynamics_editor->dynamics_model),
+                        LIGMA_CONFIG_PARAM_SERIALIZE);
 
       g_signal_handlers_unblock_by_func (dynamics_editor->dynamics_model,
-                                         gimp_dynamics_editor_notify_model,
+                                         ligma_dynamics_editor_notify_model,
                                          editor);
 
       g_signal_connect (editor->data, "notify",
-                        G_CALLBACK (gimp_dynamics_editor_notify_data),
+                        G_CALLBACK (ligma_dynamics_editor_notify_data),
                         editor);
     }
 
@@ -235,19 +235,19 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
 /*  public functions  */
 
 GtkWidget *
-gimp_dynamics_editor_new (GimpContext     *context,
-                          GimpMenuFactory *menu_factory)
+ligma_dynamics_editor_new (LigmaContext     *context,
+                          LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
+  return g_object_new (LIGMA_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
                        "ui-path",         "/dynamics-editor-popup",
-                       "data-factory",    context->gimp->dynamics_factory,
+                       "data-factory",    context->ligma->dynamics_factory,
                        "context",         context,
-                       "data",            gimp_context_get_dynamics (context),
+                       "data",            ligma_context_get_dynamics (context),
                        NULL);
 }
 
@@ -255,51 +255,51 @@ gimp_dynamics_editor_new (GimpContext     *context,
 /*  private functions  */
 
 static void
-gimp_dynamics_editor_notify_model (GimpDynamics       *options,
+ligma_dynamics_editor_notify_model (LigmaDynamics       *options,
                                    const GParamSpec   *pspec,
-                                   GimpDynamicsEditor *editor)
+                                   LigmaDynamicsEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
 
   if (data_editor->data)
     {
       g_signal_handlers_block_by_func (data_editor->data,
-                                       gimp_dynamics_editor_notify_data,
+                                       ligma_dynamics_editor_notify_data,
                                        editor);
 
-      gimp_config_copy (GIMP_CONFIG (editor->dynamics_model),
-                        GIMP_CONFIG (data_editor->data),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
+      ligma_config_copy (LIGMA_CONFIG (editor->dynamics_model),
+                        LIGMA_CONFIG (data_editor->data),
+                        LIGMA_CONFIG_PARAM_SERIALIZE);
 
       g_signal_handlers_unblock_by_func (data_editor->data,
-                                         gimp_dynamics_editor_notify_data,
+                                         ligma_dynamics_editor_notify_data,
                                          editor);
     }
 }
 
 static void
-gimp_dynamics_editor_notify_data (GimpDynamics       *options,
+ligma_dynamics_editor_notify_data (LigmaDynamics       *options,
                                   const GParamSpec   *pspec,
-                                  GimpDynamicsEditor *editor)
+                                  LigmaDynamicsEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  LigmaDataEditor *data_editor = LIGMA_DATA_EDITOR (editor);
 
   g_signal_handlers_block_by_func (editor->dynamics_model,
-                                   gimp_dynamics_editor_notify_model,
+                                   ligma_dynamics_editor_notify_model,
                                    editor);
 
-  gimp_config_copy (GIMP_CONFIG (data_editor->data),
-                    GIMP_CONFIG (editor->dynamics_model),
-                    GIMP_CONFIG_PARAM_SERIALIZE);
+  ligma_config_copy (LIGMA_CONFIG (data_editor->data),
+                    LIGMA_CONFIG (editor->dynamics_model),
+                    LIGMA_CONFIG_PARAM_SERIALIZE);
 
   g_signal_handlers_unblock_by_func (editor->dynamics_model,
-                                     gimp_dynamics_editor_notify_model,
+                                     ligma_dynamics_editor_notify_model,
                                      editor);
 }
 
 static void
-gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
-                                      Gimp         *gimp,
+ligma_dynamics_editor_add_icon_editor (LigmaDynamics *dynamics,
+                                      Ligma         *ligma,
                                       GtkWidget    *vbox)
 {
   GtkWidget *hbox;
@@ -314,12 +314,12 @@ gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (dynamics), gimp);
+  button = ligma_prop_icon_picker_new (LIGMA_VIEWABLE (dynamics), ligma);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 }
 
 static void
-gimp_dynamics_editor_add_output_row (GObject     *config,
+ligma_dynamics_editor_add_output_row (GObject     *config,
                                      const gchar *row_label,
                                      GtkGrid     *grid,
                                      gint         row)
@@ -370,7 +370,7 @@ dynamics_check_button_new (GObject     *config,
 {
   GtkWidget *button;
 
-  button = gimp_prop_check_button_new (config, property_name, NULL);
+  button = ligma_prop_check_button_new (config, property_name, NULL);
   gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
   gtk_grid_attach (grid, button, column, row, 1, 1);
 
@@ -378,13 +378,13 @@ dynamics_check_button_new (GObject     *config,
 }
 
 static void
-gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
+ligma_dynamics_editor_init_output_editors (LigmaDynamics *dynamics,
                                           GtkWidget    *view_selector,
                                           GtkWidget    *notebook,
                                           GtkWidget    *check_grid)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view_selector));
-  GimpIntStore *list  = GIMP_INT_STORE (model);
+  LigmaIntStore *list  = LIGMA_INT_STORE (model);
   GtkTreeIter   iter;
   gboolean      iter_valid;
   gint          i;
@@ -395,26 +395,26 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
     {
       gint                output_type;
       gchar              *label;
-      GimpDynamicsOutput *output;
+      LigmaDynamicsOutput *output;
       GtkWidget          *output_editor;
 
       gtk_tree_model_get (GTK_TREE_MODEL (model), &iter,
-                          GIMP_INT_STORE_VALUE, &output_type,
-                          GIMP_INT_STORE_LABEL, &label,
+                          LIGMA_INT_STORE_VALUE, &output_type,
+                          LIGMA_INT_STORE_LABEL, &label,
                           -1);
 
-      output = gimp_dynamics_get_output (dynamics, output_type);
+      output = ligma_dynamics_get_output (dynamics, output_type);
 
-      output_editor = gimp_dynamics_output_editor_new (output);
+      output_editor = ligma_dynamics_output_editor_new (output);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), output_editor, NULL);
       gtk_widget_show (output_editor);
 
       gtk_list_store_set (GTK_LIST_STORE (list), &iter,
-                          GIMP_INT_STORE_USER_DATA, output_editor,
+                          LIGMA_INT_STORE_USER_DATA, output_editor,
                           -1);
 
-      gimp_dynamics_editor_add_output_row (G_OBJECT (output),
+      ligma_dynamics_editor_add_output_row (G_OBJECT (output),
                                            label,
                                            GTK_GRID (check_grid),
                                            i);
@@ -423,12 +423,12 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
   }
 
   g_signal_connect (G_OBJECT (view_selector), "changed",
-                    G_CALLBACK (gimp_dynamics_editor_view_changed),
+                    G_CALLBACK (ligma_dynamics_editor_view_changed),
                     notebook);
 }
 
 static void
-gimp_dynamics_editor_view_changed (GtkComboBox *combo,
+ligma_dynamics_editor_view_changed (GtkComboBox *combo,
                                    GtkWidget   *notebook)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (combo);
@@ -439,7 +439,7 @@ gimp_dynamics_editor_view_changed (GtkComboBox *combo,
   gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter);
 
   gtk_tree_model_get (model, &iter,
-                      GIMP_INT_STORE_USER_DATA, &widget,
+                      LIGMA_INT_STORE_USER_DATA, &widget,
                       -1);
   page = gtk_notebook_page_num (GTK_NOTEBOOK (notebook), widget);
 

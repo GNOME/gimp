@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-symmetry.h
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmaimage-symmetry.h
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_SYMMETRY_H__
-#define __GIMP_IMAGE_SYMMETRY_H__
+#ifndef __LIGMA_IMAGE_SYMMETRY_H__
+#define __LIGMA_IMAGE_SYMMETRY_H__
 
 
-GList        * gimp_image_symmetry_list       (void);
+GList        * ligma_image_symmetry_list       (void);
 
-GimpSymmetry * gimp_image_symmetry_new        (GimpImage    *image,
+LigmaSymmetry * ligma_image_symmetry_new        (LigmaImage    *image,
                                                GType         type);
-void           gimp_image_symmetry_add        (GimpImage    *image,
-                                               GimpSymmetry *sym);
-void           gimp_image_symmetry_remove     (GimpImage    *image,
-                                               GimpSymmetry *sym);
-GList        * gimp_image_symmetry_get        (GimpImage    *image);
+void           ligma_image_symmetry_add        (LigmaImage    *image,
+                                               LigmaSymmetry *sym);
+void           ligma_image_symmetry_remove     (LigmaImage    *image,
+                                               LigmaSymmetry *sym);
+GList        * ligma_image_symmetry_get        (LigmaImage    *image);
 
-gboolean       gimp_image_set_active_symmetry (GimpImage    *image,
+gboolean       ligma_image_set_active_symmetry (LigmaImage    *image,
                                                GType         type);
-GimpSymmetry * gimp_image_get_active_symmetry (GimpImage    *image);
+LigmaSymmetry * ligma_image_get_active_symmetry (LigmaImage    *image);
 
 
-#endif  /*  __GIMP_IMAGE_SYMMETRY_H__  */
+#endif  /*  __LIGMA_IMAGE_SYMMETRY_H__  */

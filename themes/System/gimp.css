@@ -1,119 +1,119 @@
-/* GIMP theme css file */
+/* LIGMA theme css file */
 
 * {
     -gtk-icon-style:                   symbolic;
-    -GimpDockWindow-default-height:    300;
-    -GimpMenuDock-minimal-width:       200;
-    -GimpDockWindow-menu-preview-size: button;
-    -GimpToolPalette-tool-icon-size:   large-toolbar;
-    -GimpToolPalette-button-relief:    none;
-    -GimpDockbook-tab-icon-size:       button;
-    -GimpColorNotebook-tab-icon-size:  button;
-    -GimpDeviceEditor-handle-size:     12;
-    -GimpDockable-content-border:      2;
-    -GimpEditor-content-spacing:       2;
-    -GimpEditor-button-spacing:        2;
-    -GimpEditor-button-icon-size:      menu;
-    -GimpDataEditor-minimal-height:    96;
+    -LigmaDockWindow-default-height:    300;
+    -LigmaMenuDock-minimal-width:       200;
+    -LigmaDockWindow-menu-preview-size: button;
+    -LigmaToolPalette-tool-icon-size:   large-toolbar;
+    -LigmaToolPalette-button-relief:    none;
+    -LigmaDockbook-tab-icon-size:       button;
+    -LigmaColorNotebook-tab-icon-size:  button;
+    -LigmaDeviceEditor-handle-size:     12;
+    -LigmaDockable-content-border:      2;
+    -LigmaEditor-content-spacing:       2;
+    -LigmaEditor-button-spacing:        2;
+    -LigmaEditor-button-icon-size:      menu;
+    -LigmaDataEditor-minimal-height:    96;
     -GtkDialog-content-area-border:    0;
     -GtkDialog-button-spacing:         6;
     -GtkDialog-action-area-border:     12;
-    -GimpUnitComboBox-appears-as-list: 0;
+    -LigmaUnitComboBox-appears-as-list: 0;
 }
 
-GimpToolDialog {
+LigmaToolDialog {
     -GtkDialog-action-area-border: 6;
 }
 
-GimpColorNotebook tab {
+LigmaColorNotebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock GimpColorNotebook spinbutton,
-GimpDock GimpColorNotebook spinbutton entry,
-GimpDock GimpColorScales spinbutton,
-GimpDock GimpColorScales spinbutton entry {
+LigmaDock LigmaColorNotebook spinbutton,
+LigmaDock LigmaColorNotebook spinbutton entry,
+LigmaDock LigmaColorScales spinbutton,
+LigmaDock LigmaColorScales spinbutton entry {
     min-height: 0;
 }
 
-GimpColorSelection ColorselCmyk {
+LigmaColorSelection ColorselCmyk {
     padding: 2px 2px 2px 2px;
 }
 
-GimpColorHistory button {
+LigmaColorHistory button {
     padding: 3px 3px 3px 3px;
 }
 
-#gimp-color-tag-box button {
+#ligma-color-tag-box button {
     padding: 4px 6px 4px 6px;
 }
 
-tab GimpFgBgView {
+tab LigmaFgBgView {
     padding: 6px 6px 6px 6px;
 }
 
-GimpFgBgEditor:active {
+LigmaFgBgEditor:active {
     border-width: 2px 2px 2px 2px;
 }
 
-GimpDock {
+LigmaDock {
     font-size: smaller;
 }
 
-GimpDock notebook tab {
+LigmaDock notebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock :not(toolbutton) > button,
-GimpOverlayDialog button,
-GimpToolDialog :not(headerbar) button,
-GimpTextStyleEditor button {
+LigmaDock :not(toolbutton) > button,
+LigmaOverlayDialog button,
+LigmaToolDialog :not(headerbar) button,
+LigmaTextStyleEditor button {
     padding: 0px 2px 0px 2px;
 }
 
-GimpToolDialog headerbar {
+LigmaToolDialog headerbar {
     min-height: 0;
 }
 
-GimpToolDialog headerbar button {
+LigmaToolDialog headerbar button {
     padding: 2px 2px 2px 2px;
 }
 
-GimpDock frame {
-    -GimpFrame-label-bold:       0;
-    -GimpFrame-label-spacing:    2;
+LigmaDock frame {
+    -LigmaFrame-label-bold:       0;
+    -LigmaFrame-label-spacing:    2;
 }
 
-GimpDisplayShell grid > button {
+LigmaDisplayShell grid > button {
     min-height: 0;
     min-width: 0;
     padding: 0 0 0 0;
 }
 
-GimpDisplayShell combobox entry {
+LigmaDisplayShell combobox entry {
     font-size: smaller;
 }
 
-GimpDisplayShell combobox button {
+LigmaDisplayShell combobox button {
     font-size: smaller;
 }
 
-GimpDisplayShell progressbar text {
+LigmaDisplayShell progressbar text {
     font-size: larger;
 }
 
-GimpDisplayShell progressbar trough,
-GimpDisplayShell progressbar progress {
+LigmaDisplayShell progressbar trough,
+LigmaDisplayShell progressbar progress {
     min-height: 1em;
 }
 
-GimpFileDialog progressbar trough,
-GimpFileDialog progressbar progress {
+LigmaFileDialog progressbar trough,
+LigmaFileDialog progressbar progress {
     min-width: 1px; /* hack */
     min-height: 1em;
 }
 
-GimpRuler {
+LigmaRuler {
     font-size: smaller;
 }
 
@@ -121,18 +121,18 @@ spinbutton entry {
     border-radius: 3px;
 }
 
-GimpSpinScale entry {
+LigmaSpinScale entry {
     /* Important: prevent overhigh spin scale */
     min-height: 16px;
 }
 
-GimpSpinScale entry progress {
+LigmaSpinScale entry progress {
     background-color: @theme_selected_bg_color;
     border-width:     0px;
     border-radius:    3px;
 }
 
-GimpSpinScale button {
+LigmaSpinScale button {
     /* Makes the +- buttons a bit more compact. */
     padding: 0 1px 0 1px;
 }

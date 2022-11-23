@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_RESIZE_H__
-#define __GIMP_TRANSFORM_RESIZE_H__
+#ifndef __LIGMA_TRANSFORM_RESIZE_H__
+#define __LIGMA_TRANSFORM_RESIZE_H__
 
 
-gboolean   gimp_transform_resize_boundary (const GimpMatrix3   *inv,
-                                           GimpTransformResize  resize,
+gboolean   ligma_transform_resize_boundary (const LigmaMatrix3   *inv,
+                                           LigmaTransformResize  resize,
                                            gdouble              u1,
                                            gdouble              v1,
                                            gdouble              u2,
@@ -31,4 +31,4 @@ gboolean   gimp_transform_resize_boundary (const GimpMatrix3   *inv,
                                            gint                *y2);
 
 
-#endif  /*  __GIMP_TRANSFORM_RESIZE_H__  */
+#endif  /*  __LIGMA_TRANSFORM_RESIZE_H__  */

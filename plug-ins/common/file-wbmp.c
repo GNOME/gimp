@@ -1,5 +1,5 @@
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define LOAD_PROC      "file-wbmp-load"
 #define PLUG_IN_BINARY "file-wbmp"
-#define PLUG_IN_ROLE   "gimp-file-wbmp"
+#define PLUG_IN_ROLE   "ligma-file-wbmp"
 
 #define ReadOK(file,buffer,len)  (fread(buffer, len, 1, file) != 0)
 
@@ -39,12 +39,12 @@ typedef struct _WbmpClass WbmpClass;
 
 struct _Wbmp
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _WbmpClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 #define WBMP_TYPE  (wbmp_get_type ())
@@ -52,34 +52,34 @@ struct _WbmpClass
 
 GType                   wbmp_get_type         (void) G_GNUC_CONST;
 
-static GList          * wbmp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * wbmp_create_procedure (GimpPlugIn           *plug_in,
+static GList          * wbmp_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * wbmp_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * wbmp_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
+static LigmaValueArray * wbmp_load             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
-GimpImage             * load_image            (GFile                *file,
+LigmaImage             * load_image            (GFile                *file,
                                                GError              **error);
 
-static GimpImage      * read_image            (FILE                 *fd,
+static LigmaImage      * read_image            (FILE                 *fd,
                                                GFile                *file,
                                                gint                  width,
                                                gint                  height,
                                                GError              **error);
 
-G_DEFINE_TYPE (Wbmp, wbmp, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Wbmp, wbmp, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (WBMP_TYPE)
+LIGMA_MAIN (WBMP_TYPE)
 DEFINE_STD_SET_I18N
 
 static void
 wbmp_class_init (WbmpClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = wbmp_query_procedures;
   plug_in_class->create_procedure = wbmp_create_procedure;
@@ -92,7 +92,7 @@ wbmp_init (Wbmp *wmp)
 }
 
 static GList *
-wbmp_query_procedures (GimpPlugIn *plug_in)
+wbmp_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -101,47 +101,47 @@ wbmp_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-wbmp_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+wbmp_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            wbmp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Wireless BMP image"));
+      ligma_procedure_set_menu_label (procedure, _("Wireless BMP image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads files of Wireless BMP file format"),
                                         _("Loads files of Wireless BMP file format"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Kevin Toyle",
                                       "Kevin Toyle",
                                       "2022");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/vnd.wap.wbmp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "wbmp");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-wbmp_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+wbmp_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -149,32 +149,32 @@ wbmp_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-GimpImage *
+LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
   FILE      *fd;
-  GimpImage *image  = NULL;
+  LigmaImage *image  = NULL;
   gint       width  = 0;
   gint       height = 0;
   gint8      magic;
   guchar     value;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fd = g_fopen (g_file_peek_path (file), "rb");
 
@@ -182,7 +182,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
@@ -191,7 +191,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s': Invalid WBMP type value"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -200,7 +200,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s': Unsupported WBMP fixed header value"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -222,7 +222,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid WBMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -236,7 +236,7 @@ out:
 }
 
 /* Code referenced from /plug-ins/file-bmp/bmp-load.c */
-static GimpImage *
+static LigmaImage *
 read_image (FILE    *fd,
             GFile   *file,
             gint     width,
@@ -247,34 +247,34 @@ read_image (FILE    *fd,
   guchar       v;
   gint         xpos    = 0;
   gint         ypos    = 0;
-  GimpImage   *image;
-  GimpLayer   *layer;
+  LigmaImage   *image;
+  LigmaLayer   *layer;
   GeglBuffer  *buffer;
   guchar      *dest, *temp;
   gint         i, cur_progress, max_progress;
 
-  /* Make a new image in GIMP */
-  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
+  /* Make a new image in LIGMA */
+  if ((width < 0) || (width > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       return NULL;
     }
 
-  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
+  if ((height < 0) || (height > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       return NULL;
     }
 
-  image = gimp_image_new (width, height, GIMP_INDEXED);
-  layer = gimp_layer_new (image, _("Background"), width, height,
-                          GIMP_INDEXED_IMAGE, 100,
-                          gimp_image_get_default_new_layer_mode (image));
+  image = ligma_image_new (width, height, LIGMA_INDEXED);
+  layer = ligma_layer_new (image, _("Background"), width, height,
+                          LIGMA_INDEXED_IMAGE, 100,
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_set_file (image, file);
-  gimp_image_set_colormap (image, mono, 2);
+  ligma_image_set_file (image, file);
+  ligma_image_set_colormap (image, mono, 2);
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
   dest = g_malloc0 (width * height);
 
@@ -301,14 +301,14 @@ read_image (FILE    *fd,
 
           cur_progress++;
           if ((cur_progress % 5) == 0)
-            gimp_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
+            ligma_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
         }
 
       if (ypos > height - 1)
         break;
     }
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0, NULL, dest,
                    GEGL_AUTO_ROWSTRIDE);

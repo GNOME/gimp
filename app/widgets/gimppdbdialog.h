@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdbdialog.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapdbdialog.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,69 +18,69 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_DIALOG_H__
-#define __GIMP_PDB_DIALOG_H__
+#ifndef __LIGMA_PDB_DIALOG_H__
+#define __LIGMA_PDB_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_PDB_DIALOG            (gimp_pdb_dialog_get_type ())
-#define GIMP_PDB_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB_DIALOG, GimpPdbDialog))
-#define GIMP_PDB_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB_DIALOG, GimpPdbDialogClass))
-#define GIMP_IS_PDB_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB_DIALOG))
-#define GIMP_IS_PDB_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB_DIALOG))
-#define GIMP_PDB_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB_DIALOG, GimpPdbDialogClass))
+#define LIGMA_TYPE_PDB_DIALOG            (ligma_pdb_dialog_get_type ())
+#define LIGMA_PDB_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PDB_DIALOG, LigmaPdbDialog))
+#define LIGMA_PDB_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PDB_DIALOG, LigmaPdbDialogClass))
+#define LIGMA_IS_PDB_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PDB_DIALOG))
+#define LIGMA_IS_PDB_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PDB_DIALOG))
+#define LIGMA_PDB_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PDB_DIALOG, LigmaPdbDialogClass))
 
 
-typedef struct _GimpPdbDialogClass  GimpPdbDialogClass;
+typedef struct _LigmaPdbDialogClass  LigmaPdbDialogClass;
 
-struct _GimpPdbDialog
+struct _LigmaPdbDialog
 {
-  GimpDialog       parent_instance;
+  LigmaDialog       parent_instance;
 
-  GimpPDB         *pdb;
+  LigmaPDB         *pdb;
 
   /*  The context we were created with. This is the context the plug-in
    *  exists in and must be used when calling the plug-in.
    */
-  GimpContext     *caller_context;
+  LigmaContext     *caller_context;
 
   /*  The dialog's private context, serves just as model for the
    *  select widgets and must not be used when calling the plug-in.
    */
-  GimpContext     *context;
+  LigmaContext     *context;
 
   GType            select_type;
-  GimpObject      *initial_object;
+  LigmaObject      *initial_object;
   gchar           *callback_name;
   gboolean         callback_busy;
 
-  GimpMenuFactory *menu_factory;
+  LigmaMenuFactory *menu_factory;
   GtkWidget       *view;
 };
 
-struct _GimpPdbDialogClass
+struct _LigmaPdbDialogClass
 {
-  GimpDialogClass  parent_class;
+  LigmaDialogClass  parent_class;
 
   GList           *dialogs;
 
-  GimpValueArray * (* run_callback) (GimpPdbDialog  *dialog,
-                                     GimpObject     *object,
+  LigmaValueArray * (* run_callback) (LigmaPdbDialog  *dialog,
+                                     LigmaObject     *object,
                                      gboolean        closing,
                                      GError        **error);
 };
 
 
-GType           gimp_pdb_dialog_get_type        (void) G_GNUC_CONST;
+GType           ligma_pdb_dialog_get_type        (void) G_GNUC_CONST;
 
-void            gimp_pdb_dialog_run_callback    (GimpPdbDialog     **dialog,
+void            ligma_pdb_dialog_run_callback    (LigmaPdbDialog     **dialog,
                                                  gboolean            closing);
 
-GimpPdbDialog * gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
+LigmaPdbDialog * ligma_pdb_dialog_get_by_callback (LigmaPdbDialogClass *klass,
                                                  const gchar        *callback_name);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PDB_DIALOG_H__ */
+#endif /* __LIGMA_PDB_DIALOG_H__ */

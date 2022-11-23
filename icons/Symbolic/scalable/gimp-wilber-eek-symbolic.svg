@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-wilber-eek.svg">
+   sodipodi:docname="ligma-wilber-eek.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -157,18 +157,18 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-wilber-eek"
+       id="ligma-wilber-eek"
        transform="matrix(1,0,0,0.99990559,-12.026747,-939.30037)">
       <g
          transform="translate(-141.0002,397.36073)"
          style="display:inline"
-         id="gimp-wilber-4">
+         id="ligma-wilber-4">
         <g
-           id="gimp-9"
+           id="ligma-9"
            style="display:inline"
            transform="translate(-122.00001,443.99848)">
           <g
-             id="applications-gimp-7">
+             id="applications-ligma-7">
             <path
                id="path7016-07"
                d="m 278.7795,195.00152 c 0,0 -0.11302,4.06234 -5.84302,4.03087 -4.86485,-0.0267 -4.96814,-3.03096 -4.96814,-3.03096 0.52967,4.99998 -0.99987,6.99933 -0.99987,6.99933 0,0 -0.10876,0.71567 -2.40596,0.5937 1.21604,1.73419 4.67535,5.28601 8.39078,4.3746 l -0.40477,-1.2779 -0.56055,-1.44277 c -0.86213,-0.46795 -2.92752,0.47426 -2.33221,-0.18512 3.13278,-0.87546 2.86319,-0.99355 5.93421,-0.7678 0.4166,0.0306 0.30874,0.41957 0.16812,0.39427 -0.52955,-0.0953 -1.88315,-0.0625 -1.47684,0.22547 1.00216,0.71017 1.41498,1.90848 1.41498,1.90848 2.80388,-0.68342 3.56714,-6.80058 3.08327,-11.82221 z m -4.09324,4.49958 c 0.95981,0 1.74979,0.78716 1.74979,1.74983 0,0.96267 -0.78998,1.74983 -1.74979,1.74983 -0.95981,0 -1.74978,-0.78716 -1.74978,-1.74983 0,-0.96267 0.78997,-1.74983 1.74978,-1.74983 z m -4.15573,0.49995 c 0.82596,0 1.46856,0.67143 1.46856,1.49985 0,0.82844 -0.6426,1.49986 -1.46856,1.49986 -0.82597,0 -1.49982,-0.67142 -1.49982,-1.49986 0,-0.82842 0.67385,-1.49985 1.49982,-1.49985 z"

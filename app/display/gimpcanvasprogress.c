@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasprogress.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasprogress.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "gimpcanvas.h"
-#include "gimpcanvas-style.h"
-#include "gimpcanvasitem-utils.h"
-#include "gimpcanvasprogress.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvas.h"
+#include "ligmacanvas-style.h"
+#include "ligmacanvasitem-utils.h"
+#include "ligmacanvasprogress.h"
+#include "ligmadisplayshell.h"
 
 
 #define BORDER                5
@@ -52,11 +52,11 @@ enum
 };
 
 
-typedef struct _GimpCanvasProgressPrivate GimpCanvasProgressPrivate;
+typedef struct _LigmaCanvasProgressPrivate LigmaCanvasProgressPrivate;
 
-struct _GimpCanvasProgressPrivate
+struct _LigmaCanvasProgressPrivate
 {
-  GimpHandleAnchor  anchor;
+  LigmaHandleAnchor  anchor;
   gdouble           x;
   gdouble           y;
 
@@ -67,111 +67,111 @@ struct _GimpCanvasProgressPrivate
 };
 
 #define GET_PRIVATE(progress) \
-        ((GimpCanvasProgressPrivate *) gimp_canvas_progress_get_instance_private ((GimpCanvasProgress *) (progress)))
+        ((LigmaCanvasProgressPrivate *) ligma_canvas_progress_get_instance_private ((LigmaCanvasProgress *) (progress)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_progress_iface_init   (GimpProgressInterface *iface);
+static void             ligma_canvas_progress_iface_init   (LigmaProgressInterface *iface);
 
-static void             gimp_canvas_progress_finalize     (GObject               *object);
-static void             gimp_canvas_progress_set_property (GObject               *object,
+static void             ligma_canvas_progress_finalize     (GObject               *object);
+static void             ligma_canvas_progress_set_property (GObject               *object,
                                                            guint                  property_id,
                                                            const GValue          *value,
                                                            GParamSpec            *pspec);
-static void             gimp_canvas_progress_get_property (GObject               *object,
+static void             ligma_canvas_progress_get_property (GObject               *object,
                                                            guint                  property_id,
                                                            GValue                *value,
                                                            GParamSpec            *pspec);
-static void             gimp_canvas_progress_draw         (GimpCanvasItem        *item,
+static void             ligma_canvas_progress_draw         (LigmaCanvasItem        *item,
                                                            cairo_t               *cr);
-static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem        *item);
-static gboolean         gimp_canvas_progress_hit          (GimpCanvasItem        *item,
+static cairo_region_t * ligma_canvas_progress_get_extents  (LigmaCanvasItem        *item);
+static gboolean         ligma_canvas_progress_hit          (LigmaCanvasItem        *item,
                                                            gdouble                x,
                                                            gdouble                y);
 
-static GimpProgress   * gimp_canvas_progress_start        (GimpProgress          *progress,
+static LigmaProgress   * ligma_canvas_progress_start        (LigmaProgress          *progress,
                                                            gboolean               cancellable,
                                                            const gchar           *message);
-static void             gimp_canvas_progress_end          (GimpProgress          *progress);
-static gboolean         gimp_canvas_progress_is_active    (GimpProgress          *progress);
-static void             gimp_canvas_progress_set_text     (GimpProgress          *progress,
+static void             ligma_canvas_progress_end          (LigmaProgress          *progress);
+static gboolean         ligma_canvas_progress_is_active    (LigmaProgress          *progress);
+static void             ligma_canvas_progress_set_text     (LigmaProgress          *progress,
                                                            const gchar           *message);
-static void             gimp_canvas_progress_set_value    (GimpProgress          *progress,
+static void             ligma_canvas_progress_set_value    (LigmaProgress          *progress,
                                                            gdouble                percentage);
-static gdouble          gimp_canvas_progress_get_value    (GimpProgress          *progress);
-static void             gimp_canvas_progress_pulse        (GimpProgress          *progress);
-static gboolean         gimp_canvas_progress_message      (GimpProgress          *progress,
-                                                           Gimp                  *gimp,
-                                                           GimpMessageSeverity    severity,
+static gdouble          ligma_canvas_progress_get_value    (LigmaProgress          *progress);
+static void             ligma_canvas_progress_pulse        (LigmaProgress          *progress);
+static gboolean         ligma_canvas_progress_message      (LigmaProgress          *progress,
+                                                           Ligma                  *ligma,
+                                                           LigmaMessageSeverity    severity,
                                                            const gchar           *domain,
                                                            const gchar           *message);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpCanvasProgress, gimp_canvas_progress,
-                         GIMP_TYPE_CANVAS_ITEM,
-                         G_ADD_PRIVATE (GimpCanvasProgress)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_canvas_progress_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaCanvasProgress, ligma_canvas_progress,
+                         LIGMA_TYPE_CANVAS_ITEM,
+                         G_ADD_PRIVATE (LigmaCanvasProgress)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROGRESS,
+                                                ligma_canvas_progress_iface_init))
 
-#define parent_class gimp_canvas_progress_parent_class
+#define parent_class ligma_canvas_progress_parent_class
 
 
 static void
-gimp_canvas_progress_class_init (GimpCanvasProgressClass *klass)
+ligma_canvas_progress_class_init (LigmaCanvasProgressClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->finalize     = gimp_canvas_progress_finalize;
-  object_class->set_property = gimp_canvas_progress_set_property;
-  object_class->get_property = gimp_canvas_progress_get_property;
+  object_class->finalize     = ligma_canvas_progress_finalize;
+  object_class->set_property = ligma_canvas_progress_set_property;
+  object_class->get_property = ligma_canvas_progress_get_property;
 
-  item_class->draw           = gimp_canvas_progress_draw;
-  item_class->get_extents    = gimp_canvas_progress_get_extents;
-  item_class->hit            = gimp_canvas_progress_hit;
+  item_class->draw           = ligma_canvas_progress_draw;
+  item_class->get_extents    = ligma_canvas_progress_get_extents;
+  item_class->hit            = ligma_canvas_progress_hit;
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
-                                                      GIMP_TYPE_HANDLE_ANCHOR,
-                                                      GIMP_HANDLE_ANCHOR_CENTER,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_HANDLE_ANCHOR,
+                                                      LIGMA_HANDLE_ANCHOR_CENTER,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_double ("x", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_double ("y", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_progress_iface_init (GimpProgressInterface *iface)
+ligma_canvas_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start     = gimp_canvas_progress_start;
-  iface->end       = gimp_canvas_progress_end;
-  iface->is_active = gimp_canvas_progress_is_active;
-  iface->set_text  = gimp_canvas_progress_set_text;
-  iface->set_value = gimp_canvas_progress_set_value;
-  iface->get_value = gimp_canvas_progress_get_value;
-  iface->pulse     = gimp_canvas_progress_pulse;
-  iface->message   = gimp_canvas_progress_message;
+  iface->start     = ligma_canvas_progress_start;
+  iface->end       = ligma_canvas_progress_end;
+  iface->is_active = ligma_canvas_progress_is_active;
+  iface->set_text  = ligma_canvas_progress_set_text;
+  iface->set_value = ligma_canvas_progress_set_value;
+  iface->get_value = ligma_canvas_progress_get_value;
+  iface->pulse     = ligma_canvas_progress_pulse;
+  iface->message   = ligma_canvas_progress_message;
 }
 
 static void
-gimp_canvas_progress_init (GimpCanvasProgress *progress)
+ligma_canvas_progress_init (LigmaCanvasProgress *progress)
 {
 }
 
 static void
-gimp_canvas_progress_finalize (GObject *object)
+ligma_canvas_progress_finalize (GObject *object)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->text, g_free);
 
@@ -179,12 +179,12 @@ gimp_canvas_progress_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_progress_set_property (GObject      *object,
+ligma_canvas_progress_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -205,12 +205,12 @@ gimp_canvas_progress_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_progress_get_property (GObject    *object,
+ligma_canvas_progress_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -231,17 +231,17 @@ gimp_canvas_progress_get_property (GObject    *object,
 }
 
 static PangoLayout *
-gimp_canvas_progress_transform (GimpCanvasItem *item,
+ligma_canvas_progress_transform (LigmaCanvasItem *item,
                                 gdouble        *x,
                                 gdouble        *y,
                                 gint           *width,
                                 gint           *height)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (item);
-  GtkWidget                 *canvas  = gimp_canvas_item_get_canvas (item);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (item);
+  GtkWidget                 *canvas  = ligma_canvas_item_get_canvas (item);
   PangoLayout               *layout;
 
-  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas), "%s",
+  layout = ligma_canvas_get_layout (LIGMA_CANVAS (canvas), "%s",
                                    private->text);
 
   pango_layout_get_pixel_size (layout, width, height);
@@ -251,11 +251,11 @@ gimp_canvas_progress_transform (GimpCanvasItem *item,
   *width  += 2 * BORDER;
   *height += 3 * BORDER + 2 * RADIUS;
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    private->x, private->y,
                                    x, y);
 
-  gimp_canvas_item_shift_to_north_west (private->anchor,
+  ligma_canvas_item_shift_to_north_west (private->anchor,
                                         *x, *y,
                                         *width,
                                         *height,
@@ -268,15 +268,15 @@ gimp_canvas_progress_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_progress_draw (GimpCanvasItem *item,
+ligma_canvas_progress_draw (LigmaCanvasItem *item,
                            cairo_t        *cr)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (item);
-  GtkWidget                 *canvas  = gimp_canvas_item_get_canvas (item);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (item);
+  GtkWidget                 *canvas  = ligma_canvas_item_get_canvas (item);
   gdouble                    x, y;
   gint                       width, height;
 
-  gimp_canvas_progress_transform (item, &x, &y, &width, &height);
+  ligma_canvas_progress_transform (item, &x, &y, &width, &height);
 
   cairo_move_to (cr, x, y);
   cairo_line_to (cr, x + width, y);
@@ -286,15 +286,15 @@ gimp_canvas_progress_draw (GimpCanvasItem *item,
              BORDER + RADIUS, 0, G_PI);
   cairo_close_path (cr);
 
-  _gimp_canvas_item_fill (item, cr);
+  _ligma_canvas_item_fill (item, cr);
 
   cairo_move_to (cr, x + BORDER, y + BORDER);
   cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
   pango_cairo_show_layout (cr,
-                           gimp_canvas_get_layout (GIMP_CANVAS (canvas),
+                           ligma_canvas_get_layout (LIGMA_CANVAS (canvas),
                                                    "%s", private->text));
 
-  gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
+  ligma_canvas_set_tool_bg_style (ligma_canvas_item_get_canvas (item), cr);
   cairo_arc (cr, x + BORDER + RADIUS, y + height - BORDER - RADIUS,
              RADIUS, - G_PI / 2.0, 2 * G_PI - G_PI / 2.0);
   cairo_fill (cr);
@@ -307,13 +307,13 @@ gimp_canvas_progress_draw (GimpCanvasItem *item,
 }
 
 static cairo_region_t *
-gimp_canvas_progress_get_extents (GimpCanvasItem *item)
+ligma_canvas_progress_get_extents (LigmaCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x, y;
   gint                  width, height;
 
-  gimp_canvas_progress_transform (item, &x, &y, &width, &height);
+  ligma_canvas_progress_transform (item, &x, &y, &width, &height);
 
   /*  add 1px on each side because fill()'s default impl does the same  */
   rectangle.x      = (gint) x - 1;
@@ -325,7 +325,7 @@ gimp_canvas_progress_get_extents (GimpCanvasItem *item)
 }
 
 static gboolean
-gimp_canvas_progress_hit (GimpCanvasItem *item,
+ligma_canvas_progress_hit (LigmaCanvasItem *item,
                           gdouble         x,
                           gdouble         y)
 {
@@ -333,8 +333,8 @@ gimp_canvas_progress_hit (GimpCanvasItem *item,
   gint    pwidth, pheight;
   gdouble tx, ty;
 
-  gimp_canvas_progress_transform (item, &px, &py, &pwidth, &pheight);
-  gimp_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
+  ligma_canvas_progress_transform (item, &px, &py, &pwidth, &pheight);
+  ligma_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
 
   pheight -= BORDER + 2 * RADIUS;
 
@@ -342,14 +342,14 @@ gimp_canvas_progress_hit (GimpCanvasItem *item,
           ty >= py && ty < (py + pheight));
 }
 
-static GimpProgress *
-gimp_canvas_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_canvas_progress_start (LigmaProgress *progress,
                             gboolean      cancellable,
                             const gchar  *message)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (progress);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (progress);
 
-  gimp_canvas_progress_set_text (progress, message);
+  ligma_canvas_progress_set_text (progress, message);
 
   private->last_update_time = g_get_monotonic_time ();
 
@@ -357,46 +357,46 @@ gimp_canvas_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_canvas_progress_end (GimpProgress *progress)
+ligma_canvas_progress_end (LigmaProgress *progress)
 {
 }
 
 static gboolean
-gimp_canvas_progress_is_active (GimpProgress *progress)
+ligma_canvas_progress_is_active (LigmaProgress *progress)
 {
   return TRUE;
 }
 
 static void
-gimp_canvas_progress_set_text (GimpProgress *progress,
+ligma_canvas_progress_set_text (LigmaProgress *progress,
                                const gchar  *message)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (progress);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (progress);
   cairo_region_t            *old_region;
   cairo_region_t            *new_region;
 
-  old_region = gimp_canvas_item_get_extents (GIMP_CANVAS_ITEM (progress));
+  old_region = ligma_canvas_item_get_extents (LIGMA_CANVAS_ITEM (progress));
 
   if (private->text)
     g_free (private->text);
 
   private->text = g_strdup (message);
 
-  new_region = gimp_canvas_item_get_extents (GIMP_CANVAS_ITEM (progress));
+  new_region = ligma_canvas_item_get_extents (LIGMA_CANVAS_ITEM (progress));
 
   cairo_region_union (new_region, old_region);
   cairo_region_destroy (old_region);
 
-  _gimp_canvas_item_update (GIMP_CANVAS_ITEM (progress), new_region);
+  _ligma_canvas_item_update (LIGMA_CANVAS_ITEM (progress), new_region);
 
   cairo_region_destroy (new_region);
 }
 
 static void
-gimp_canvas_progress_set_value (GimpProgress *progress,
+ligma_canvas_progress_set_value (LigmaProgress *progress,
                                 gdouble       percentage)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (progress);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (progress);
 
   if (percentage != private->value)
     {
@@ -410,9 +410,9 @@ gimp_canvas_progress_set_value (GimpProgress *progress,
 
           private->last_update_time = time;
 
-          region = gimp_canvas_item_get_extents (GIMP_CANVAS_ITEM (progress));
+          region = ligma_canvas_item_get_extents (LIGMA_CANVAS_ITEM (progress));
 
-          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (progress), region);
+          _ligma_canvas_item_update (LIGMA_CANVAS_ITEM (progress), region);
 
           cairo_region_destroy (region);
         }
@@ -420,37 +420,37 @@ gimp_canvas_progress_set_value (GimpProgress *progress,
 }
 
 static gdouble
-gimp_canvas_progress_get_value (GimpProgress *progress)
+ligma_canvas_progress_get_value (LigmaProgress *progress)
 {
-  GimpCanvasProgressPrivate *private = GET_PRIVATE (progress);
+  LigmaCanvasProgressPrivate *private = GET_PRIVATE (progress);
 
   return private->value;
 }
 
 static void
-gimp_canvas_progress_pulse (GimpProgress *progress)
+ligma_canvas_progress_pulse (LigmaProgress *progress)
 {
 }
 
 static gboolean
-gimp_canvas_progress_message (GimpProgress        *progress,
-                              Gimp                *gimp,
-                              GimpMessageSeverity  severity,
+ligma_canvas_progress_message (LigmaProgress        *progress,
+                              Ligma                *ligma,
+                              LigmaMessageSeverity  severity,
                               const gchar         *domain,
                               const gchar         *message)
 {
   return FALSE;
 }
 
-GimpCanvasItem *
-gimp_canvas_progress_new (GimpDisplayShell *shell,
-                          GimpHandleAnchor  anchor,
+LigmaCanvasItem *
+ligma_canvas_progress_new (LigmaDisplayShell *shell,
+                          LigmaHandleAnchor  anchor,
                           gdouble           x,
                           gdouble           y)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_PROGRESS,
+  return g_object_new (LIGMA_TYPE_CANVAS_PROGRESS,
                        "shell",  shell,
                        "anchor", anchor,
                        "x",      x,

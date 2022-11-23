@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush.c
+ * ligmamybrush.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,78 +25,78 @@
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpmybrush.h"
-#include "gimpmybrush-load.h"
-#include "gimpmybrush-private.h"
-#include "gimptagged.h"
+#include "ligma-memsize.h"
+#include "ligmamybrush.h"
+#include "ligmamybrush-load.h"
+#include "ligmamybrush-private.h"
+#include "ligmatagged.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void          gimp_mybrush_tagged_iface_init     (GimpTaggedInterface  *iface);
+static void          ligma_mybrush_tagged_iface_init     (LigmaTaggedInterface  *iface);
 
-static void          gimp_mybrush_finalize              (GObject              *object);
-static void          gimp_mybrush_set_property          (GObject              *object,
+static void          ligma_mybrush_finalize              (GObject              *object);
+static void          ligma_mybrush_set_property          (GObject              *object,
                                                          guint                 property_id,
                                                          const GValue         *value,
                                                          GParamSpec           *pspec);
-static void          gimp_mybrush_get_property          (GObject              *object,
+static void          ligma_mybrush_get_property          (GObject              *object,
                                                          guint                 property_id,
                                                          GValue               *value,
                                                          GParamSpec           *pspec);
 
-static gint64        gimp_mybrush_get_memsize           (GimpObject           *object,
+static gint64        ligma_mybrush_get_memsize           (LigmaObject           *object,
                                                          gint64               *gui_size);
 
-static gchar       * gimp_mybrush_get_description       (GimpViewable         *viewable,
+static gchar       * ligma_mybrush_get_description       (LigmaViewable         *viewable,
                                                          gchar               **tooltip);
 
-static void          gimp_mybrush_dirty                 (GimpData             *data);
-static const gchar * gimp_mybrush_get_extension         (GimpData             *data);
+static void          ligma_mybrush_dirty                 (LigmaData             *data);
+static const gchar * ligma_mybrush_get_extension         (LigmaData             *data);
 
-static gchar       * gimp_mybrush_get_checksum          (GimpTagged           *tagged);
+static gchar       * ligma_mybrush_get_checksum          (LigmaTagged           *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpMybrush, gimp_mybrush, GIMP_TYPE_DATA,
-                         G_ADD_PRIVATE (GimpMybrush)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_mybrush_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaMybrush, ligma_mybrush, LIGMA_TYPE_DATA,
+                         G_ADD_PRIVATE (LigmaMybrush)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_mybrush_tagged_iface_init))
 
-#define parent_class gimp_mybrush_parent_class
+#define parent_class ligma_mybrush_parent_class
 
 
 static void
-gimp_mybrush_class_init (GimpMybrushClass *klass)
+ligma_mybrush_class_init (LigmaMybrushClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
 
-  object_class->finalize            = gimp_mybrush_finalize;
-  object_class->get_property        = gimp_mybrush_get_property;
-  object_class->set_property        = gimp_mybrush_set_property;
+  object_class->finalize            = ligma_mybrush_finalize;
+  object_class->get_property        = ligma_mybrush_get_property;
+  object_class->set_property        = ligma_mybrush_set_property;
 
-  gimp_object_class->get_memsize    = gimp_mybrush_get_memsize;
+  ligma_object_class->get_memsize    = ligma_mybrush_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-mypaint-brush";
-  viewable_class->get_description   = gimp_mybrush_get_description;
+  viewable_class->default_icon_name = "ligma-tool-mypaint-brush";
+  viewable_class->get_description   = ligma_mybrush_get_description;
 
-  data_class->dirty                 = gimp_mybrush_dirty;
-  data_class->get_extension         = gimp_mybrush_get_extension;
+  data_class->dirty                 = ligma_mybrush_dirty;
+  data_class->get_extension         = ligma_mybrush_get_extension;
 }
 
 static void
-gimp_mybrush_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_mybrush_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->get_checksum = gimp_mybrush_get_checksum;
+  iface->get_checksum = ligma_mybrush_get_checksum;
 }
 
 static void
-gimp_mybrush_init (GimpMybrush *brush)
+ligma_mybrush_init (LigmaMybrush *brush)
 {
-  brush->priv = gimp_mybrush_get_instance_private (brush);
+  brush->priv = ligma_mybrush_get_instance_private (brush);
 
   brush->priv->radius   = 1.0;
   brush->priv->opaque   = 1.0;
@@ -105,9 +105,9 @@ gimp_mybrush_init (GimpMybrush *brush)
 }
 
 static void
-gimp_mybrush_finalize (GObject *object)
+ligma_mybrush_finalize (GObject *object)
 {
-  GimpMybrush *brush = GIMP_MYBRUSH (object);
+  LigmaMybrush *brush = LIGMA_MYBRUSH (object);
 
   g_clear_pointer (&brush->priv->brush_json, g_free);
 
@@ -115,7 +115,7 @@ gimp_mybrush_finalize (GObject *object)
 }
 
 static void
-gimp_mybrush_set_property (GObject      *object,
+ligma_mybrush_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
@@ -129,7 +129,7 @@ gimp_mybrush_set_property (GObject      *object,
 }
 
 static void
-gimp_mybrush_get_property (GObject    *object,
+ligma_mybrush_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
@@ -143,44 +143,44 @@ gimp_mybrush_get_property (GObject    *object,
 }
 
 static gint64
-gimp_mybrush_get_memsize (GimpObject *object,
+ligma_mybrush_get_memsize (LigmaObject *object,
                           gint64     *gui_size)
 {
-  GimpMybrush *brush   = GIMP_MYBRUSH (object);
+  LigmaMybrush *brush   = LIGMA_MYBRUSH (object);
   gint64       memsize = 0;
 
-  memsize += gimp_string_get_memsize (brush->priv->brush_json);
+  memsize += ligma_string_get_memsize (brush->priv->brush_json);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gchar *
-gimp_mybrush_get_description (GimpViewable  *viewable,
+ligma_mybrush_get_description (LigmaViewable  *viewable,
                               gchar        **tooltip)
 {
-  GimpMybrush *brush = GIMP_MYBRUSH (viewable);
+  LigmaMybrush *brush = LIGMA_MYBRUSH (viewable);
 
   return g_strdup_printf ("%s",
-                          gimp_object_get_name (brush));
+                          ligma_object_get_name (brush));
 }
 
 static void
-gimp_mybrush_dirty (GimpData *data)
+ligma_mybrush_dirty (LigmaData *data)
 {
-  GIMP_DATA_CLASS (parent_class)->dirty (data);
+  LIGMA_DATA_CLASS (parent_class)->dirty (data);
 }
 
 static const gchar *
-gimp_mybrush_get_extension (GimpData *data)
+ligma_mybrush_get_extension (LigmaData *data)
 {
-  return GIMP_MYBRUSH_FILE_EXTENSION;
+  return LIGMA_MYBRUSH_FILE_EXTENSION;
 }
 
 static gchar *
-gimp_mybrush_get_checksum (GimpTagged *tagged)
+ligma_mybrush_get_checksum (LigmaTagged *tagged)
 {
-  GimpMybrush *brush           = GIMP_MYBRUSH (tagged);
+  LigmaMybrush *brush           = LIGMA_MYBRUSH (tagged);
   gchar       *checksum_string = NULL;
 
   if (brush->priv->brush_json)
@@ -201,29 +201,29 @@ gimp_mybrush_get_checksum (GimpTagged *tagged)
 
 /*  public functions  */
 
-GimpData *
-gimp_mybrush_new (GimpContext *context,
+LigmaData *
+ligma_mybrush_new (LigmaContext *context,
                   const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_MYBRUSH,
+  return g_object_new (LIGMA_TYPE_MYBRUSH,
                        "name",      name,
-                       "mime-type", "image/x-gimp-myb",
+                       "mime-type", "image/x-ligma-myb",
                        NULL);
 }
 
-GimpData *
-gimp_mybrush_get_standard (GimpContext *context)
+LigmaData *
+ligma_mybrush_get_standard (LigmaContext *context)
 {
-  static GimpData *standard_mybrush = NULL;
+  static LigmaData *standard_mybrush = NULL;
 
   if (! standard_mybrush)
     {
-      standard_mybrush = gimp_mybrush_new (context, "Standard");
+      standard_mybrush = ligma_mybrush_new (context, "Standard");
 
-      gimp_data_clean (standard_mybrush);
-      gimp_data_make_internal (standard_mybrush, "gimp-mybrush-standard");
+      ligma_data_clean (standard_mybrush);
+      ligma_data_make_internal (standard_mybrush, "ligma-mybrush-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_mybrush),
                                  (gpointer *) &standard_mybrush);
@@ -233,49 +233,49 @@ gimp_mybrush_get_standard (GimpContext *context)
 }
 
 const gchar *
-gimp_mybrush_get_brush_json (GimpMybrush *brush)
+ligma_mybrush_get_brush_json (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), NULL);
 
   return brush->priv->brush_json;
 }
 
 gdouble
-gimp_mybrush_get_radius (GimpMybrush *brush)
+ligma_mybrush_get_radius (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), 1.0);
 
   return brush->priv->radius;
 }
 
 gdouble
-gimp_mybrush_get_opaque (GimpMybrush *brush)
+ligma_mybrush_get_opaque (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), 1.0);
 
   return brush->priv->opaque;
 }
 
 gdouble
-gimp_mybrush_get_hardness (GimpMybrush *brush)
+ligma_mybrush_get_hardness (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), 1.0);
 
   return brush->priv->hardness;
 }
 
 gdouble
-gimp_mybrush_get_offset_by_random (GimpMybrush *brush)
+ligma_mybrush_get_offset_by_random (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), 1.0);
 
   return brush->priv->offset_by_random;
 }
 
 gboolean
-gimp_mybrush_get_is_eraser (GimpMybrush *brush)
+ligma_mybrush_get_is_eraser (LigmaMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), FALSE);
+  g_return_val_if_fail (LIGMA_IS_MYBRUSH (brush), FALSE);
 
   return brush->priv->eraser;
 }

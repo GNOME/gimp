@@ -1,6 +1,6 @@
-# Hungarian translation for gimp-script-fu.
+# Hungarian translation for ligma-script-fu.
 # Copyright (C) 2001, 2003, 2004, 2007, 2008, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp-script-fu package.
+# This file is distributed under the same license as the ligma-script-fu package.
 #
 # András Tímár <timar at gnome dot hu>, 2001, 2003.
 # Emese Kovács <emese at gnome dot hu>, 2001.
@@ -11,8 +11,8 @@
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu.master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-11-22 14:38+0000\n"
 "PO-Revision-Date: 2022-11-23 00:54+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
@@ -33,8 +33,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Interaktív konzol Script-Fu-fejlesztéshez"
 
 #: plug-ins/script-fu/script-fu.c:310
-msgid "_GIMP Online"
-msgstr "_GIMP-webhely"
+msgid "_LIGMA Online"
+msgstr "_LIGMA-webhely"
 
 #: plug-ins/script-fu/script-fu.c:311
 msgid "_User Manual"
@@ -73,8 +73,8 @@ msgid "_Beveled Pattern"
 msgstr "_Térhatású minta"
 
 #: plug-ins/script-fu/script-fu.c:332
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: plug-ins/script-fu/script-fu.c:335
 msgid "Alpha to _Logo"
@@ -820,88 +820,88 @@ msgstr "Árnyék szélessége (%)"
 msgid "Flatten image"
 msgstr "Kép lapítása"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Út_vonalak használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/ligma-online.scm:60
+#: plug-ins/script-fu/scripts/ligma-online.scm:73
+#: plug-ins/script-fu/scripts/ligma-online.scm:86
+#: plug-ins/script-fu/scripts/ligma-online.scm:99
+#: plug-ins/script-fu/scripts/ligma-online.scm:112
+#: plug-ins/script-fu/scripts/ligma-online.scm:125
+#: plug-ins/script-fu/scripts/ligma-online.scm:138
+#: plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Könyvjelző a felhasználói kézikönyvhöz"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "Képek készítése a _webhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Digitális kamerák képeinek használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "_Fájlok létrehozása, megnyitása és mentése"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Alapinformációk"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "A _párbeszédablakok használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "_Egyszerű objektumok rajzolása"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Kiválasztások _létrehozása és használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Fő webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Könyvjelző a GIMP weblapjához"
+#: plug-ins/script-fu/scripts/ligma-online.scm:191
+#: plug-ins/script-fu/scripts/ligma-online.scm:204
+#: plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Könyvjelző a LIGMA weblapjához"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Fe_jlesztői webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "Ütem_terv"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Könyvjelző a GIMP ütemtervéhez"
+#: plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Könyvjelző a LIGMA ütemtervéhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Könyvjelző a GIMP wikihez"
+#: plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Könyvjelző a LIGMA wikihez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hibajelentések és funkciókérések"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Könyvjelző a GIMP hibakövetőjéhez"
+#: plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Könyvjelző a LIGMA hibakövetőjéhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "A felhasználói _kézikönyv webhelye"
 

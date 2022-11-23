@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppivotselector.h
+ * ligmapivotselector.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,61 +18,61 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PIVOT_SELECTOR_H__
-#define __GIMP_PIVOT_SELECTOR_H__
+#ifndef __LIGMA_PIVOT_SELECTOR_H__
+#define __LIGMA_PIVOT_SELECTOR_H__
 
 
-#define GIMP_TYPE_PIVOT_SELECTOR            (gimp_pivot_selector_get_type ())
-#define GIMP_PIVOT_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PIVOT_SELECTOR, GimpPivotSelector))
-#define GIMP_PIVOT_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PIVOT_SELECTOR, GimpPivotSelectorClass))
-#define GIMP_IS_PIVOT_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PIVOT_SELECTOR))
-#define GIMP_IS_PIVOT_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIVOT_SELECTOR))
-#define GIMP_PIVOT_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PIVOT_SELECTOR, GimpPivotSelectorClass))
+#define LIGMA_TYPE_PIVOT_SELECTOR            (ligma_pivot_selector_get_type ())
+#define LIGMA_PIVOT_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PIVOT_SELECTOR, LigmaPivotSelector))
+#define LIGMA_PIVOT_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PIVOT_SELECTOR, LigmaPivotSelectorClass))
+#define LIGMA_IS_PIVOT_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_PIVOT_SELECTOR))
+#define LIGMA_IS_PIVOT_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PIVOT_SELECTOR))
+#define LIGMA_PIVOT_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PIVOT_SELECTOR, LigmaPivotSelectorClass))
 
 
-typedef struct _GimpPivotSelectorPrivate GimpPivotSelectorPrivate;
-typedef struct _GimpPivotSelectorClass   GimpPivotSelectorClass;
+typedef struct _LigmaPivotSelectorPrivate LigmaPivotSelectorPrivate;
+typedef struct _LigmaPivotSelectorClass   LigmaPivotSelectorClass;
 
-struct _GimpPivotSelector
+struct _LigmaPivotSelector
 {
   GtkGrid                   parent_instance;
 
-  GimpPivotSelectorPrivate *priv;
+  LigmaPivotSelectorPrivate *priv;
 };
 
-struct _GimpPivotSelectorClass
+struct _LigmaPivotSelectorClass
 {
   GtkGridClass  parent_class;
 
   /*  signals  */
-  void (* changed) (GimpPivotSelector *selector);
+  void (* changed) (LigmaPivotSelector *selector);
 };
 
 
-GType       gimp_pivot_selector_get_type     (void) G_GNUC_CONST;
+GType       ligma_pivot_selector_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_pivot_selector_new          (gdouble            left,
+GtkWidget * ligma_pivot_selector_new          (gdouble            left,
                                               gdouble            top,
                                               gdouble            right,
                                               gdouble            bottom);
 
-void        gimp_pivot_selector_set_position (GimpPivotSelector *selector,
+void        ligma_pivot_selector_set_position (LigmaPivotSelector *selector,
                                               gdouble            x,
                                               gdouble            y);
-void        gimp_pivot_selector_get_position (GimpPivotSelector *selector,
+void        ligma_pivot_selector_get_position (LigmaPivotSelector *selector,
                                               gdouble           *x,
                                               gdouble           *y);
 
-void        gimp_pivot_selector_set_bounds   (GimpPivotSelector *selector,
+void        ligma_pivot_selector_set_bounds   (LigmaPivotSelector *selector,
                                               gdouble            left,
                                               gdouble            top,
                                               gdouble            right,
                                               gdouble            bottom);
-void        gimp_pivot_selector_get_bounds   (GimpPivotSelector *selector,
+void        ligma_pivot_selector_get_bounds   (LigmaPivotSelector *selector,
                                               gdouble           *left,
                                               gdouble           *top,
                                               gdouble           *right,
                                               gdouble           *bottom);
 
 
-#endif /* __GIMP_PIVOT_SELECTOR_H__ */
+#endif /* __LIGMA_PIVOT_SELECTOR_H__ */

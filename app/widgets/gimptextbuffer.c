@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextBuffer
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextBuffer
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "widgets-types.h"
 
-#include "gimptextbuffer.h"
-#include "gimptextbuffer-serialize.h"
-#include "gimptexttag.h"
+#include "ligmatextbuffer.h"
+#include "ligmatextbuffer-serialize.h"
+#include "ligmatexttag.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,63 +46,63 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_text_buffer_constructed (GObject           *object);
-static void   gimp_text_buffer_dispose     (GObject           *object);
-static void   gimp_text_buffer_finalize    (GObject           *object);
+static void   ligma_text_buffer_constructed (GObject           *object);
+static void   ligma_text_buffer_dispose     (GObject           *object);
+static void   ligma_text_buffer_finalize    (GObject           *object);
 
-static void   gimp_text_buffer_mark_set    (GtkTextBuffer     *buffer,
+static void   ligma_text_buffer_mark_set    (GtkTextBuffer     *buffer,
                                             const GtkTextIter *location,
                                             GtkTextMark       *mark);
 
 
-G_DEFINE_TYPE (GimpTextBuffer, gimp_text_buffer, GTK_TYPE_TEXT_BUFFER)
+G_DEFINE_TYPE (LigmaTextBuffer, ligma_text_buffer, GTK_TYPE_TEXT_BUFFER)
 
-#define parent_class gimp_text_buffer_parent_class
+#define parent_class ligma_text_buffer_parent_class
 
 static guint buffer_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_text_buffer_class_init (GimpTextBufferClass *klass)
+ligma_text_buffer_class_init (LigmaTextBufferClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GtkTextBufferClass *buffer_class = GTK_TEXT_BUFFER_CLASS (klass);
 
-  object_class->constructed = gimp_text_buffer_constructed;
-  object_class->dispose     = gimp_text_buffer_dispose;
-  object_class->finalize    = gimp_text_buffer_finalize;
+  object_class->constructed = ligma_text_buffer_constructed;
+  object_class->dispose     = ligma_text_buffer_dispose;
+  object_class->finalize    = ligma_text_buffer_finalize;
 
-  buffer_class->mark_set    = gimp_text_buffer_mark_set;
+  buffer_class->mark_set    = ligma_text_buffer_mark_set;
 
   buffer_signals[COLOR_APPLIED] =
     g_signal_new ("color-applied",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpTextBufferClass, color_applied),
+                  G_STRUCT_OFFSET (LigmaTextBufferClass, color_applied),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_RGB);
+                  LIGMA_TYPE_RGB);
 }
 
 static void
-gimp_text_buffer_init (GimpTextBuffer *buffer)
+ligma_text_buffer_init (LigmaTextBuffer *buffer)
 {
   buffer->markup_atom =
     gtk_text_buffer_register_serialize_format (GTK_TEXT_BUFFER (buffer),
-                                               "application/x-gimp-pango-markup",
-                                               gimp_text_buffer_serialize,
+                                               "application/x-ligma-pango-markup",
+                                               ligma_text_buffer_serialize,
                                                NULL, NULL);
 
   gtk_text_buffer_register_deserialize_format (GTK_TEXT_BUFFER (buffer),
-                                               "application/x-gimp-pango-markup",
-                                               gimp_text_buffer_deserialize,
+                                               "application/x-ligma-pango-markup",
+                                               ligma_text_buffer_deserialize,
                                                NULL, NULL);
 }
 
 static void
-gimp_text_buffer_constructed (GObject *object)
+ligma_text_buffer_constructed (GObject *object)
 {
-  GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
+  LigmaTextBuffer *buffer = LIGMA_TEXT_BUFFER (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -135,17 +135,17 @@ gimp_text_buffer_constructed (GObject *object)
 }
 
 static void
-gimp_text_buffer_dispose (GObject *object)
+ligma_text_buffer_dispose (GObject *object)
 {
-  /* GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object); */
+  /* LigmaTextBuffer *buffer = LIGMA_TEXT_BUFFER (object); */
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_text_buffer_finalize (GObject *object)
+ligma_text_buffer_finalize (GObject *object)
 {
-  GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
+  LigmaTextBuffer *buffer = LIGMA_TEXT_BUFFER (object);
 
   if (buffer->size_tags)
     {
@@ -189,17 +189,17 @@ gimp_text_buffer_finalize (GObject *object)
       buffer->preedit_bg_color_tags = NULL;
     }
 
-  gimp_text_buffer_clear_insert_tags (buffer);
+  ligma_text_buffer_clear_insert_tags (buffer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_text_buffer_mark_set (GtkTextBuffer     *buffer,
+ligma_text_buffer_mark_set (GtkTextBuffer     *buffer,
                            const GtkTextIter *location,
                            GtkTextMark       *mark)
 {
-  gimp_text_buffer_clear_insert_tags (GIMP_TEXT_BUFFER (buffer));
+  ligma_text_buffer_clear_insert_tags (LIGMA_TEXT_BUFFER (buffer));
 
   GTK_TEXT_BUFFER_CLASS (parent_class)->mark_set (buffer, location, mark);
 }
@@ -207,32 +207,32 @@ gimp_text_buffer_mark_set (GtkTextBuffer     *buffer,
 
 /*  public functions  */
 
-GimpTextBuffer *
-gimp_text_buffer_new (void)
+LigmaTextBuffer *
+ligma_text_buffer_new (void)
 {
-  return g_object_new (GIMP_TYPE_TEXT_BUFFER, NULL);
+  return g_object_new (LIGMA_TYPE_TEXT_BUFFER, NULL);
 }
 
 void
-gimp_text_buffer_set_text (GimpTextBuffer *buffer,
+ligma_text_buffer_set_text (LigmaTextBuffer *buffer,
                            const gchar    *text)
 {
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
   if (text == NULL)
     text = "";
 
   gtk_text_buffer_set_text (GTK_TEXT_BUFFER (buffer), text, -1);
 
-  gimp_text_buffer_clear_insert_tags (buffer);
+  ligma_text_buffer_clear_insert_tags (buffer);
 }
 
 gchar *
-gimp_text_buffer_get_text (GimpTextBuffer *buffer)
+ligma_text_buffer_get_text (LigmaTextBuffer *buffer)
 {
   GtkTextIter start, end;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), NULL);
 
   gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
 
@@ -241,12 +241,12 @@ gimp_text_buffer_get_text (GimpTextBuffer *buffer)
 }
 
 void
-gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
+ligma_text_buffer_set_markup (LigmaTextBuffer *buffer,
                              const gchar    *markup)
 {
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
-  gimp_text_buffer_set_text (buffer, NULL);
+  ligma_text_buffer_set_text (buffer, NULL);
 
   if (markup)
     {
@@ -274,7 +274,7 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
         {
           GtkTextIter start, end;
 
-          gimp_text_buffer_post_deserialize (buffer, content);
+          ligma_text_buffer_post_deserialize (buffer, content);
 
           gtk_text_buffer_get_bounds (content, &start, &end);
           gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &insert);
@@ -286,11 +286,11 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
       g_object_unref (content);
     }
 
-  gimp_text_buffer_clear_insert_tags (buffer);
+  ligma_text_buffer_clear_insert_tags (buffer);
 }
 
 gchar *
-gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
+ligma_text_buffer_get_markup (LigmaTextBuffer *buffer)
 {
   GtkTextTagTable *tag_table;
   GtkTextBuffer   *content;
@@ -299,7 +299,7 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
   gchar           *markup;
   gsize            length;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), NULL);
 
   tag_table = gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer));
   content = gtk_text_buffer_new (tag_table);
@@ -309,7 +309,7 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
 
   gtk_text_buffer_insert_range (content, &insert, &start, &end);
 
-  gimp_text_buffer_pre_serialize (buffer, content);
+  ligma_text_buffer_pre_serialize (buffer, content);
 
   gtk_text_buffer_get_bounds (content, &start, &end);
 
@@ -325,11 +325,11 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
 }
 
 gboolean
-gimp_text_buffer_has_markup (GimpTextBuffer *buffer)
+ligma_text_buffer_has_markup (LigmaTextBuffer *buffer)
 {
   GtkTextIter iter;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), FALSE);
 
   gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
@@ -349,7 +349,7 @@ gimp_text_buffer_has_markup (GimpTextBuffer *buffer)
 }
 
 GtkTextTag *
-gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
+ligma_text_buffer_get_iter_size (LigmaTextBuffer    *buffer,
                                 const GtkTextIter *iter,
                                 gint              *size)
 {
@@ -362,7 +362,7 @@ gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (size)
-            *size = gimp_text_tag_get_size (tag);
+            *size = ligma_text_tag_get_size (tag);
 
           return tag;
         }
@@ -375,7 +375,7 @@ gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
+ligma_text_buffer_get_size_tag (LigmaTextBuffer *buffer,
                                gint            size)
 {
   GList      *list;
@@ -386,7 +386,7 @@ gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
     {
       tag = list->data;
 
-      if (size == gimp_text_tag_get_size (tag))
+      if (size == ligma_text_tag_get_size (tag))
         return tag;
     }
 
@@ -394,7 +394,7 @@ gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    GIMP_TEXT_PROP_NAME_SIZE, size,
+                                    LIGMA_TEXT_PROP_NAME_SIZE, size,
                                     NULL);
 
   buffer->size_tags = g_list_prepend (buffer->size_tags, tag);
@@ -403,14 +403,14 @@ gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_size (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_size (LigmaTextBuffer    *buffer,
                            const GtkTextIter *start,
                            const GtkTextIter *end,
                            gint               size)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -429,7 +429,7 @@ gimp_text_buffer_set_size (GimpTextBuffer    *buffer,
     {
       GtkTextTag *tag;
 
-      tag = gimp_text_buffer_get_size_tag (buffer, size);
+      tag = ligma_text_buffer_get_size_tag (buffer, size);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -439,7 +439,7 @@ gimp_text_buffer_set_size (GimpTextBuffer    *buffer,
 }
 
 void
-gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
+ligma_text_buffer_change_size (LigmaTextBuffer    *buffer,
                               const GtkTextIter *start,
                               const GtkTextIter *end,
                               gint               count)
@@ -450,7 +450,7 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
   GtkTextTag  *span_tag;
   gint         span_size;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -459,7 +459,7 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
 
   iter       = *start;
   span_start = *start;
-  span_tag   = gimp_text_buffer_get_iter_size (buffer, &iter,
+  span_tag   = ligma_text_buffer_get_iter_size (buffer, &iter,
                                                &span_size);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
@@ -471,7 +471,7 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_tag = gimp_text_buffer_get_iter_size (buffer, &iter,
+      iter_tag = ligma_text_buffer_get_iter_size (buffer, &iter,
                                                  &iter_size);
 
       span_end = iter;
@@ -487,7 +487,7 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
 
           if ((span_size + count) > 0)
             {
-              span_tag = gimp_text_buffer_get_size_tag (buffer,
+              span_tag = ligma_text_buffer_get_size_tag (buffer,
                                                         span_size + count);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
@@ -509,7 +509,7 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
+ligma_text_buffer_get_iter_baseline (LigmaTextBuffer    *buffer,
                                     const GtkTextIter *iter,
                                     gint              *baseline)
 {
@@ -522,7 +522,7 @@ gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (baseline)
-            *baseline = gimp_text_tag_get_baseline (tag);
+            *baseline = ligma_text_tag_get_baseline (tag);
 
           return tag;
         }
@@ -535,7 +535,7 @@ gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
 }
 
 static GtkTextTag *
-gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
+ligma_text_buffer_get_baseline_tag (LigmaTextBuffer *buffer,
                                    gint            baseline)
 {
   GList      *list;
@@ -546,7 +546,7 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
     {
       tag = list->data;
 
-      if (baseline == gimp_text_tag_get_baseline (tag))
+      if (baseline == ligma_text_tag_get_baseline (tag))
         return tag;
     }
 
@@ -554,7 +554,7 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    GIMP_TEXT_PROP_NAME_BASELINE, baseline,
+                                    LIGMA_TEXT_PROP_NAME_BASELINE, baseline,
                                     NULL);
 
   buffer->baseline_tags = g_list_prepend (buffer->baseline_tags, tag);
@@ -563,14 +563,14 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_baseline (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_baseline (LigmaTextBuffer    *buffer,
                                const GtkTextIter *start,
                                const GtkTextIter *end,
                                gint               baseline)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -589,7 +589,7 @@ gimp_text_buffer_set_baseline (GimpTextBuffer    *buffer,
     {
       GtkTextTag *tag;
 
-      tag = gimp_text_buffer_get_baseline_tag (buffer, baseline);
+      tag = ligma_text_buffer_get_baseline_tag (buffer, baseline);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -599,7 +599,7 @@ gimp_text_buffer_set_baseline (GimpTextBuffer    *buffer,
 }
 
 void
-gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
+ligma_text_buffer_change_baseline (LigmaTextBuffer    *buffer,
                                   const GtkTextIter *start,
                                   const GtkTextIter *end,
                                   gint               count)
@@ -610,7 +610,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   GtkTextTag  *span_tag;
   gint         span_baseline;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -619,7 +619,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
   iter       = *start;
   span_start = *start;
-  span_tag   = gimp_text_buffer_get_iter_baseline (buffer, &iter,
+  span_tag   = ligma_text_buffer_get_iter_baseline (buffer, &iter,
                                                    &span_baseline);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
@@ -631,7 +631,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_tag = gimp_text_buffer_get_iter_baseline (buffer, &iter,
+      iter_tag = ligma_text_buffer_get_iter_baseline (buffer, &iter,
                                                      &iter_baseline);
 
       span_end = iter;
@@ -647,7 +647,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
           if (span_baseline + count != 0)
             {
-              span_tag = gimp_text_buffer_get_baseline_tag (buffer,
+              span_tag = ligma_text_buffer_get_baseline_tag (buffer,
                                                             span_baseline + count);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
@@ -669,7 +669,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_iter_kerning (GimpTextBuffer    *buffer,
+ligma_text_buffer_get_iter_kerning (LigmaTextBuffer    *buffer,
                                    const GtkTextIter *iter,
                                    gint              *kerning)
 {
@@ -682,7 +682,7 @@ gimp_text_buffer_get_iter_kerning (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (kerning)
-            *kerning = gimp_text_tag_get_kerning (tag);
+            *kerning = ligma_text_tag_get_kerning (tag);
 
           return tag;
         }
@@ -695,7 +695,7 @@ gimp_text_buffer_get_iter_kerning (GimpTextBuffer    *buffer,
 }
 
 static GtkTextTag *
-gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
+ligma_text_buffer_get_kerning_tag (LigmaTextBuffer *buffer,
                                   gint            kerning)
 {
   GList      *list;
@@ -706,7 +706,7 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
     {
       tag = list->data;
 
-      if (kerning == gimp_text_tag_get_kerning (tag))
+      if (kerning == ligma_text_tag_get_kerning (tag))
         return tag;
     }
 
@@ -714,7 +714,7 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    GIMP_TEXT_PROP_NAME_KERNING, kerning,
+                                    LIGMA_TEXT_PROP_NAME_KERNING, kerning,
                                     NULL);
 
   buffer->kerning_tags = g_list_prepend (buffer->kerning_tags, tag);
@@ -723,14 +723,14 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_kerning (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_kerning (LigmaTextBuffer    *buffer,
                               const GtkTextIter *start,
                               const GtkTextIter *end,
                               gint               kerning)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -749,7 +749,7 @@ gimp_text_buffer_set_kerning (GimpTextBuffer    *buffer,
     {
       GtkTextTag *tag;
 
-      tag = gimp_text_buffer_get_kerning_tag (buffer, kerning);
+      tag = ligma_text_buffer_get_kerning_tag (buffer, kerning);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -759,7 +759,7 @@ gimp_text_buffer_set_kerning (GimpTextBuffer    *buffer,
 }
 
 void
-gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
+ligma_text_buffer_change_kerning (LigmaTextBuffer    *buffer,
                                  const GtkTextIter *start,
                                  const GtkTextIter *end,
                                  gint               count)
@@ -770,7 +770,7 @@ gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
   GtkTextTag  *span_tag;
   gint         span_kerning;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -779,7 +779,7 @@ gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
 
   iter       = *start;
   span_start = *start;
-  span_tag   = gimp_text_buffer_get_iter_kerning (buffer, &iter,
+  span_tag   = ligma_text_buffer_get_iter_kerning (buffer, &iter,
                                                   &span_kerning);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
@@ -791,7 +791,7 @@ gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_tag = gimp_text_buffer_get_iter_kerning (buffer, &iter,
+      iter_tag = ligma_text_buffer_get_iter_kerning (buffer, &iter,
                                                     &iter_kerning);
 
       span_end = iter;
@@ -807,7 +807,7 @@ gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
 
           if (span_kerning + count != 0)
             {
-              span_tag = gimp_text_buffer_get_kerning_tag (buffer,
+              span_tag = ligma_text_buffer_get_kerning_tag (buffer,
                                                            span_kerning + count);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
@@ -829,7 +829,7 @@ gimp_text_buffer_change_kerning (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
+ligma_text_buffer_get_iter_font (LigmaTextBuffer     *buffer,
                                 const GtkTextIter  *iter,
                                 gchar             **font)
 {
@@ -842,7 +842,7 @@ gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (font)
-            *font = gimp_text_tag_get_font (tag);
+            *font = ligma_text_tag_get_font (tag);
 
           return tag;
         }
@@ -855,7 +855,7 @@ gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
+ligma_text_buffer_get_font_tag (LigmaTextBuffer *buffer,
                                const gchar    *font)
 {
   GList      *list;
@@ -872,7 +872,7 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
 
       tag = list->data;
 
-      tag_font = gimp_text_tag_get_font (tag);
+      tag_font = ligma_text_tag_get_font (tag);
 
       if (! strcmp (description, tag_font))
         {
@@ -898,14 +898,14 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_font (LigmaTextBuffer    *buffer,
                            const GtkTextIter *start,
                            const GtkTextIter *end,
                            const gchar       *font)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -922,7 +922,7 @@ gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
 
   if (font)
     {
-      GtkTextTag *tag = gimp_text_buffer_get_font_tag (buffer, font);
+      GtkTextTag *tag = ligma_text_buffer_get_font_tag (buffer, font);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -932,9 +932,9 @@ gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
+ligma_text_buffer_get_iter_color (LigmaTextBuffer    *buffer,
                                  const GtkTextIter *iter,
-                                 GimpRGB           *color)
+                                 LigmaRGB           *color)
 {
   GList *list;
 
@@ -945,7 +945,7 @@ gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (color)
-            gimp_text_tag_get_fg_color (tag, color);
+            ligma_text_tag_get_fg_color (tag, color);
 
           return tag;
         }
@@ -955,26 +955,26 @@ gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
-                                const GimpRGB  *color)
+ligma_text_buffer_get_color_tag (LigmaTextBuffer *buffer,
+                                const LigmaRGB  *color)
 {
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
   guchar      r, g, b;
 
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  ligma_rgb_get_uchar (color, &r, &g, &b);
 
   for (list = buffer->color_tags; list; list = g_list_next (list))
     {
-      GimpRGB tag_color;
+      LigmaRGB tag_color;
       guchar  tag_r, tag_g, tag_b;
 
       tag = list->data;
 
-      gimp_text_tag_get_fg_color (tag, &tag_color);
+      ligma_text_tag_get_fg_color (tag, &tag_color);
 
-      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+      ligma_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
 
       /* Do not compare the alpha channel, since it's unused */
       if (tag_r == r &&
@@ -1000,14 +1000,14 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_color (LigmaTextBuffer    *buffer,
                             const GtkTextIter *start,
                             const GtkTextIter *end,
-                            const GimpRGB     *color)
+                            const LigmaRGB     *color)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -1024,7 +1024,7 @@ gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
 
   if (color)
     {
-      GtkTextTag *tag = gimp_text_buffer_get_color_tag (buffer, color);
+      GtkTextTag *tag = ligma_text_buffer_get_color_tag (buffer, color);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -1036,26 +1036,26 @@ gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
-                                        const GimpRGB  *color)
+ligma_text_buffer_get_preedit_color_tag (LigmaTextBuffer *buffer,
+                                        const LigmaRGB  *color)
 {
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
   guchar      r, g, b;
 
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  ligma_rgb_get_uchar (color, &r, &g, &b);
 
   for (list = buffer->preedit_color_tags; list; list = g_list_next (list))
     {
-      GimpRGB tag_color;
+      LigmaRGB tag_color;
       guchar  tag_r, tag_g, tag_b;
 
       tag = list->data;
 
-      gimp_text_tag_get_fg_color (tag, &tag_color);
+      ligma_text_tag_get_fg_color (tag, &tag_color);
 
-      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+      ligma_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
 
       /* Do not compare the alpha channel, since it's unused */
       if (tag_r == r &&
@@ -1081,14 +1081,14 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_preedit_color (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_preedit_color (LigmaTextBuffer    *buffer,
                                     const GtkTextIter *start,
                                     const GtkTextIter *end,
-                                    const GimpRGB     *color)
+                                    const LigmaRGB     *color)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -1105,7 +1105,7 @@ gimp_text_buffer_set_preedit_color (GimpTextBuffer    *buffer,
 
   if (color)
     {
-      GtkTextTag *tag = gimp_text_buffer_get_preedit_color_tag (buffer, color);
+      GtkTextTag *tag = ligma_text_buffer_get_preedit_color_tag (buffer, color);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -1115,26 +1115,26 @@ gimp_text_buffer_set_preedit_color (GimpTextBuffer    *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
-                                           const GimpRGB  *color)
+ligma_text_buffer_get_preedit_bg_color_tag (LigmaTextBuffer *buffer,
+                                           const LigmaRGB  *color)
 {
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
   guchar      r, g, b;
 
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  ligma_rgb_get_uchar (color, &r, &g, &b);
 
   for (list = buffer->preedit_bg_color_tags; list; list = g_list_next (list))
     {
-      GimpRGB tag_color;
+      LigmaRGB tag_color;
       guchar  tag_r, tag_g, tag_b;
 
       tag = list->data;
 
-      gimp_text_tag_get_bg_color (tag, &tag_color);
+      ligma_text_tag_get_bg_color (tag, &tag_color);
 
-      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+      ligma_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
 
       /* Do not compare the alpha channel, since it's unused */
       if (tag_r == r &&
@@ -1160,14 +1160,14 @@ gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_preedit_bg_color (GimpTextBuffer    *buffer,
+ligma_text_buffer_set_preedit_bg_color (LigmaTextBuffer    *buffer,
                                        const GtkTextIter *start,
                                        const GtkTextIter *end,
-                                       const GimpRGB     *color)
+                                       const LigmaRGB     *color)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
@@ -1184,7 +1184,7 @@ gimp_text_buffer_set_preedit_bg_color (GimpTextBuffer    *buffer,
 
   if (color)
     {
-      GtkTextTag *tag = gimp_text_buffer_get_preedit_bg_color_tag (buffer, color);
+      GtkTextTag *tag = ligma_text_buffer_get_preedit_bg_color_tag (buffer, color);
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
@@ -1195,23 +1195,23 @@ gimp_text_buffer_set_preedit_bg_color (GimpTextBuffer    *buffer,
 
 /*  Pango markup attribute names  */
 
-#define GIMP_TEXT_ATTR_NAME_SIZE      "size"
-#define GIMP_TEXT_ATTR_NAME_BASELINE  "rise"
-#define GIMP_TEXT_ATTR_NAME_KERNING   "letter_spacing"
-#define GIMP_TEXT_ATTR_NAME_FONT      "font"
-#define GIMP_TEXT_ATTR_NAME_STYLE     "style"
-#define GIMP_TEXT_ATTR_NAME_COLOR     "foreground"
-#define GIMP_TEXT_ATTR_NAME_FG_COLOR  "fgcolor"
-#define GIMP_TEXT_ATTR_NAME_BG_COLOR  "background"
-#define GIMP_TEXT_ATTR_NAME_UNDERLINE "underline"
+#define LIGMA_TEXT_ATTR_NAME_SIZE      "size"
+#define LIGMA_TEXT_ATTR_NAME_BASELINE  "rise"
+#define LIGMA_TEXT_ATTR_NAME_KERNING   "letter_spacing"
+#define LIGMA_TEXT_ATTR_NAME_FONT      "font"
+#define LIGMA_TEXT_ATTR_NAME_STYLE     "style"
+#define LIGMA_TEXT_ATTR_NAME_COLOR     "foreground"
+#define LIGMA_TEXT_ATTR_NAME_FG_COLOR  "fgcolor"
+#define LIGMA_TEXT_ATTR_NAME_BG_COLOR  "background"
+#define LIGMA_TEXT_ATTR_NAME_UNDERLINE "underline"
 
 const gchar *
-gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
+ligma_text_buffer_tag_to_name (LigmaTextBuffer  *buffer,
                               GtkTextTag      *tag,
                               const gchar    **attribute,
                               gchar          **value)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (GTK_IS_TEXT_TAG (tag), NULL);
 
   if (attribute)
@@ -1239,55 +1239,55 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
   else if (g_list_find (buffer->size_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_SIZE;
+        *attribute = LIGMA_TEXT_ATTR_NAME_SIZE;
 
       if (value)
-        *value = g_strdup_printf ("%d", gimp_text_tag_get_size (tag));
+        *value = g_strdup_printf ("%d", ligma_text_tag_get_size (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->baseline_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_BASELINE;
+        *attribute = LIGMA_TEXT_ATTR_NAME_BASELINE;
 
       if (value)
-        *value = g_strdup_printf ("%d", gimp_text_tag_get_baseline (tag));
+        *value = g_strdup_printf ("%d", ligma_text_tag_get_baseline (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->kerning_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_KERNING;
+        *attribute = LIGMA_TEXT_ATTR_NAME_KERNING;
 
       if (value)
-        *value = g_strdup_printf ("%d", gimp_text_tag_get_kerning (tag));
+        *value = g_strdup_printf ("%d", ligma_text_tag_get_kerning (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->font_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_FONT;
+        *attribute = LIGMA_TEXT_ATTR_NAME_FONT;
 
       if (value)
-        *value = gimp_text_tag_get_font (tag);
+        *value = ligma_text_tag_get_font (tag);
 
       return "span";
     }
   else if (g_list_find (buffer->color_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_COLOR;
+        *attribute = LIGMA_TEXT_ATTR_NAME_COLOR;
 
       if (value)
         {
-          GimpRGB color;
+          LigmaRGB color;
           guchar  r, g, b;
 
-          gimp_text_tag_get_fg_color (tag, &color);
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
+          ligma_text_tag_get_fg_color (tag, &color);
+          ligma_rgb_get_uchar (&color, &r, &g, &b);
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
         }
@@ -1300,15 +1300,15 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
        * one or the other as a trick to differentiate the color chosen
        * from the user and a display color for preedit. */
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_FG_COLOR;
+        *attribute = LIGMA_TEXT_ATTR_NAME_FG_COLOR;
 
       if (value)
         {
-          GimpRGB color;
+          LigmaRGB color;
           guchar  r, g, b;
 
-          gimp_text_tag_get_fg_color (tag, &color);
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
+          ligma_text_tag_get_fg_color (tag, &color);
+          ligma_rgb_get_uchar (&color, &r, &g, &b);
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
         }
@@ -1318,15 +1318,15 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
   else if (g_list_find (buffer->preedit_bg_color_tags, tag))
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_BG_COLOR;
+        *attribute = LIGMA_TEXT_ATTR_NAME_BG_COLOR;
 
       if (value)
         {
-          GimpRGB color;
+          LigmaRGB color;
           guchar  r, g, b;
 
-          gimp_text_tag_get_bg_color (tag, &color);
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
+          ligma_text_tag_get_bg_color (tag, &color);
+          ligma_rgb_get_uchar (&color, &r, &g, &b);
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
         }
@@ -1336,7 +1336,7 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
   else if (tag == buffer->preedit_underline_tag)
     {
       if (attribute)
-        *attribute = GIMP_TEXT_ATTR_NAME_UNDERLINE;
+        *attribute = LIGMA_TEXT_ATTR_NAME_UNDERLINE;
 
       if (value)
         *value = g_strdup ("single");
@@ -1348,12 +1348,12 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 }
 
 GtkTextTag *
-gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
+ligma_text_buffer_name_to_tag (LigmaTextBuffer *buffer,
                               const gchar    *name,
                               const gchar    *attribute,
                               const gchar    *value)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
   if (! strcmp (name, "b"))
@@ -1376,32 +1376,32 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
            attribute != NULL       &&
            value     != NULL)
     {
-      if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_SIZE))
+      if (! strcmp (attribute, LIGMA_TEXT_ATTR_NAME_SIZE))
         {
-          return gimp_text_buffer_get_size_tag (buffer, atoi (value));
+          return ligma_text_buffer_get_size_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_BASELINE))
+      else if (! strcmp (attribute, LIGMA_TEXT_ATTR_NAME_BASELINE))
         {
-          return gimp_text_buffer_get_baseline_tag (buffer, atoi (value));
+          return ligma_text_buffer_get_baseline_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_KERNING))
+      else if (! strcmp (attribute, LIGMA_TEXT_ATTR_NAME_KERNING))
         {
-          return gimp_text_buffer_get_kerning_tag (buffer, atoi (value));
+          return ligma_text_buffer_get_kerning_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_FONT))
+      else if (! strcmp (attribute, LIGMA_TEXT_ATTR_NAME_FONT))
         {
-          return gimp_text_buffer_get_font_tag (buffer, value);
+          return ligma_text_buffer_get_font_tag (buffer, value);
         }
-      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_COLOR))
+      else if (! strcmp (attribute, LIGMA_TEXT_ATTR_NAME_COLOR))
         {
-          GimpRGB color;
+          LigmaRGB color;
           guint   r, g, b;
 
           sscanf (value, "#%02x%02x%02x", &r, &g, &b);
 
-          gimp_rgb_set_uchar (&color, r, g, b);
+          ligma_rgb_set_uchar (&color, r, g, b);
 
-          return gimp_text_buffer_get_color_tag (buffer, &color);
+          return ligma_text_buffer_get_color_tag (buffer, &color);
         }
     }
 
@@ -1409,11 +1409,11 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_set_insert_tags (GimpTextBuffer *buffer,
+ligma_text_buffer_set_insert_tags (LigmaTextBuffer *buffer,
                                   GList          *insert_tags,
                                   GList          *remove_tags)
 {
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
   buffer->insert_tags_set = TRUE;
 
@@ -1424,9 +1424,9 @@ gimp_text_buffer_set_insert_tags (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_clear_insert_tags (GimpTextBuffer *buffer)
+ligma_text_buffer_clear_insert_tags (LigmaTextBuffer *buffer)
 {
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
   buffer->insert_tags_set = FALSE;
 
@@ -1437,7 +1437,7 @@ gimp_text_buffer_clear_insert_tags (GimpTextBuffer *buffer)
 }
 
 void
-gimp_text_buffer_insert (GimpTextBuffer *buffer,
+ligma_text_buffer_insert (LigmaTextBuffer *buffer,
                          const gchar    *text)
 {
   GtkTextIter  iter, start;
@@ -1446,9 +1446,9 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
   GList       *insert_tags;
   GList       *remove_tags;
   GSList      *tags_off = NULL;
-  GimpRGB      color;
+  LigmaRGB      color;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
   gtk_text_buffer_get_iter_at_mark (GTK_TEXT_BUFFER (buffer), &iter,
                                     gtk_text_buffer_get_insert (GTK_TEXT_BUFFER (buffer)));
@@ -1515,7 +1515,7 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
   g_list_free (remove_tags);
   g_list_free (insert_tags);
 
-  if (gimp_text_buffer_get_iter_color (buffer, &start, &color))
+  if (ligma_text_buffer_get_iter_color (buffer, &start, &color))
     {
       g_signal_emit (buffer, buffer_signals[COLOR_APPLIED], 0, &color);
     }
@@ -1524,7 +1524,7 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 }
 
 gint
-gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
+ligma_text_buffer_get_iter_index (LigmaTextBuffer *buffer,
                                  GtkTextIter    *iter,
                                  gboolean        layout_index)
 {
@@ -1532,7 +1532,7 @@ gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
   gchar       *string;
   gint         index;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), 0);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), 0);
 
   gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &start);
 
@@ -1575,7 +1575,7 @@ gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
+ligma_text_buffer_get_iter_at_index (LigmaTextBuffer *buffer,
                                     GtkTextIter    *iter,
                                     gint            index,
                                     gboolean        layout_index)
@@ -1584,7 +1584,7 @@ gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
   GtkTextIter  end;
   gchar       *string;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
 
   gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
 
@@ -1639,7 +1639,7 @@ gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
 }
 
 gboolean
-gimp_text_buffer_load (GimpTextBuffer *buffer,
+ligma_text_buffer_load (LigmaTextBuffer *buffer,
                        GFile          *file,
                        GError        **error)
 {
@@ -1652,7 +1652,7 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
   GtkTextIter   iter;
   GError       *my_error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -1661,14 +1661,14 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
     {
       g_set_error (error, my_error->domain, my_error->code,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
+                   ligma_file_get_utf8_name (file), my_error->message);
       g_clear_error (&my_error);
       return FALSE;
     }
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
-  gimp_text_buffer_set_text (buffer, NULL);
+  ligma_text_buffer_set_text (buffer, NULL);
   gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
   do
@@ -1698,7 +1698,7 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
           if (total_read > 0)
             {
               g_message (_("Input file '%s' appears truncated: %s"),
-                         gimp_file_get_utf8_name (file),
+                         ligma_file_get_utf8_name (file),
                          my_error->message);
               g_clear_error (&my_error);
               break;
@@ -1716,7 +1716,7 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
 
   if (remaining)
     g_message (_("Invalid UTF-8 data in file '%s'."),
-               gimp_file_get_utf8_name (file));
+               ligma_file_get_utf8_name (file));
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
   g_object_unref (input);
@@ -1725,7 +1725,7 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
 }
 
 gboolean
-gimp_text_buffer_save (GimpTextBuffer *buffer,
+ligma_text_buffer_save (LigmaTextBuffer *buffer,
                        GFile          *file,
                        gboolean        selection_only,
                        GError        **error)
@@ -1736,7 +1736,7 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
   gchar         *text_contents;
   GError        *my_error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -1767,7 +1767,7 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
 
           g_set_error (error, my_error->domain, my_error->code,
                        _("Writing text file '%s' failed: %s"),
-                       gimp_file_get_utf8_name (file), my_error->message);
+                       ligma_file_get_utf8_name (file), my_error->message);
           g_clear_error (&my_error);
           g_free (text_contents);
 

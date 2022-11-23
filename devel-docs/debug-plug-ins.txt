@@ -3,32 +3,32 @@ Debugging Plug-ins
 
 Eeek! The plug-in you're working on has a bug in it! And the fix isn't
 completely obvious, so you want to use a debugger to see what is going on.
-But hmm, how does one start a plug-in under a debugger if GIMP is the one
+But hmm, how does one start a plug-in under a debugger if LIGMA is the one
 who is starting the plug-in...
 
-To address this issue, libgimp has some hooks controlled by the
-GIMP_PLUGIN_DEBUG environment variable at runtime.
+To address this issue, libligma has some hooks controlled by the
+LIGMA_PLUGIN_DEBUG environment variable at runtime.
 
-GIMP_PLUGIN_DEBUG lets you arrange that a plug-in suspends when it starts,
+LIGMA_PLUGIN_DEBUG lets you arrange that a plug-in suspends when it starts,
 and then you can start a debugger and attach the debugger to the pid of the
 plug-in.
 
-GIMP_PLUGIN_DEBUG also lets you arrange for log messages of levels WARNING,
-CRITICAL, and ERROR (from the plug-in, GIMP libraries, and GLib libraries)
+LIGMA_PLUGIN_DEBUG also lets you arrange for log messages of levels WARNING,
+CRITICAL, and ERROR (from the plug-in, LIGMA libraries, and GLib libraries)
 to be fatal and generate a backtrace at that point (also called
 a stack trace, similar to that generated in a debugger using the 'bt' command.)
 
-When GIMP_PLUGIN_DEBUG is not defined, depending on how other GLib environment
+When LIGMA_PLUGIN_DEBUG is not defined, depending on how other GLib environment
 variables are defined, a plug-in may quietly execute past
 warning and critical logged events, and only terminate on a ERROR logged event
 (without a backtrace), or on a soft or hard fault such as a memory exception
 (possibly producing a core dump that you can examine using a debugger.)
 
 
-Format of GIMP_PLUGIN_DEBUG:
+Format of LIGMA_PLUGIN_DEBUG:
 ----------------------------
 
-GIMP_PLUGIN_DEBUG=name<,options>
+LIGMA_PLUGIN_DEBUG=name<,options>
 
 "name" specifies the name of the plug-in that you wish to debug,
 or "all" to debug every plug-in.  See below "Plug-in names".
@@ -40,7 +40,7 @@ or "all" to debug every plug-in.  See below "Plug-in names".
     init:            suspend the plug-in when its init func is called.
     quit:            suspend  the plug-in when its quit func is called.
     pid:             just print the pid of the plug-in on run_proc.
-    fatal-warnings:  similar to "gimp --g-fatal-warnings" on the command line,
+    fatal-warnings:  similar to "ligma --g-fatal-warnings" on the command line,
                      but for the plugin process
     fw:              shorthand for above.
     fatal-criticals: make CRITICAL level messages fatal (but not WARNING)
@@ -52,18 +52,18 @@ a backtrace according to stack-trace-mode
 To use a debugger on a C-language plug-in:
 ------------------------------
 
-  0. Ensure GIMP was built with debugging information (gcc -g)
+  0. Ensure LIGMA was built with debugging information (gcc -g)
 
-  1. In a terminal, start GIMP with the environment variable GIMP_PLUGIN_DEBUG set
-     ( e.g. ">GIMP_PLUGIN_DEBUG=blur,on gimp" )
+  1. In a terminal, start LIGMA with the environment variable LIGMA_PLUGIN_DEBUG set
+     ( e.g. ">LIGMA_PLUGIN_DEBUG=blur,on ligma" )
 
   2. In another terminal, start a debugger (gdb, lldb, or other) and load the plug-in
      program into the debugger.  Loading only loads the debug symbols.
      ( e.g. ">gdb blur" )
 
-  3. Invoke the plug-in procedure in GIMP. GIMP will start the plug-in
+  3. Invoke the plug-in procedure in LIGMA. LIGMA will start the plug-in
      process, then suspend it and print the pid of the plug-in process
-     to the terminal where you started GIMP.
+     to the terminal where you started LIGMA.
 
   4. In the debugger, attach to the pid of the plug-in process.
      (e.g. "gdb> attach <pid>")
@@ -71,7 +71,7 @@ To use a debugger on a C-language plug-in:
 
   5. In the debugger, set breakpoints (or examine memory, or step, etc.)
 
-  6. Windows: resume the plug-in process with "gimp-debug-resume.exe <pid>"
+  6. Windows: resume the plug-in process with "ligma-debug-resume.exe <pid>"
 
      Linux and Unix-like: the gdb `continue` command might resume the
      attached process. Possibly you will have to send a SIGCONT signal:
@@ -87,12 +87,12 @@ To use a debugger on a C-language plug-in:
 Examples using a debugger:
 --------------------------
 
-GIMP_PLUGIN_DEBUG=blur
+LIGMA_PLUGIN_DEBUG=blur
 
     When the blur plug-in's run func is called (the run phase),
-    GIMP suspends it and prints to the console:
+    LIGMA suspends it and prints to the console:
 
-    (blur:9000): LibGimp-DEBUG: Waiting for debugger...
+    (blur:9000): LibLigma-DEBUG: Waiting for debugger...
 
     9000 is the pid of the new plug-in process. You can start your debugger,
     attach to the plug-in, set breakpoints/watches/etc. and continue from there.
@@ -102,97 +102,97 @@ GIMP_PLUGIN_DEBUG=blur
     or worse event is logged or until a hard fault such as a memory violation.
     Then the debugger will be back in control.
 
-GIMP_PLUGIN_DEBUG=blur,on
-GIMP_PLUGIN_DEBUG=blur,run:fatal-warnings
+LIGMA_PLUGIN_DEBUG=blur,on
+LIGMA_PLUGIN_DEBUG=blur,run:fatal-warnings
 
     Same effect as above.
 
-GIMP_PLUGIN_DEBUG=blur,pid
+LIGMA_PLUGIN_DEBUG=blur,pid
 
     Prints:
 
-    (blur:9000): LibGimp-DEBUG: Here I am!
+    (blur:9000): LibLigma-DEBUG: Here I am!
 
     This simply prints the pid but doesn't suspend the plug-in. It is a
     convenience for a plug-in having a GUI. The GUI starts up and waits
     for user input.  When you attach, you will find the plug-in waiting
     in the event loop.
 
-GIMP_PLUGIN_DEBUG=blur,query
-GIMP_PLUGIN_DEBUG=blur,init
-GIMP_PLUGIN_DEBUG=blur,quit
+LIGMA_PLUGIN_DEBUG=blur,query
+LIGMA_PLUGIN_DEBUG=blur,init
+LIGMA_PLUGIN_DEBUG=blur,quit
 
-    Same effect as for "run", but instead libgimp suspends the plug-in before
+    Same effect as for "run", but instead libligma suspends the plug-in before
     one of a plugin's phases: query, init, run,  quit
-    E.G. when it is queried or init'ed on GIMP startup.
+    E.G. when it is queried or init'ed on LIGMA startup.
 
 
 To get a backtrace for a plug-in in any language:
 -------------------------------------------------
 
-  0. Ensure GIMP (and all libraries you want details for)
+  0. Ensure LIGMA (and all libraries you want details for)
      were built with debugging information (gcc -g)
 
-  1. In a terminal, start GIMP with the environment variable GIMP_PLUGIN_DEBUG set
-     ( e.g. ">GIMP_PLUGIN_DEBUG=all,fatal-criticals gimp" )
-     Expect GIMP to start normally.
+  1. In a terminal, start LIGMA with the environment variable LIGMA_PLUGIN_DEBUG set
+     ( e.g. ">LIGMA_PLUGIN_DEBUG=all,fatal-criticals ligma" )
+     Expect LIGMA to start normally.
 
-  2. In GIMP, do something that would invoke a plugin.
+  2. In LIGMA, do something that would invoke a plugin.
 
      Whenever the specified plug-in processes generate log events of
-     the specified levels or worse, libgimp will print or offer to print
+     the specified levels or worse, libligma will print or offer to print
      (depends on stack-trace-mode) a backtrace, and then terminate the plug-in.
-     The GIMP app will usually continue to run.
+     The LIGMA app will usually continue to run.
 
 For interpreted language plug-ins, the backtrace will include many frames
 from the interpreter and modules such as PyGObject.  Exceptions in the
 interpreted language may print on their own and not generate log events
-to be caught by GIMP_PLUGIN_DEBUG. But log events from the interpreter
-calling out (to LibGimp and GLib) can generate backtraces.
+to be caught by LIGMA_PLUGIN_DEBUG. But log events from the interpreter
+calling out (to LibLigma and GLib) can generate backtraces.
 
 
-GIMP_PLUGIN_DEBUG and stack-trace-mode
+LIGMA_PLUGIN_DEBUG and stack-trace-mode
 --------------------------------------
 
-GIMP_PLUGIN_DEBUG=all,fatal-warning only makes the machinery *consider*
+LIGMA_PLUGIN_DEBUG=all,fatal-warning only makes the machinery *consider*
 generating a backtrace, for more log events.  The 'stack-trace-mode' pertains.
 
-The GIMP app on the command line takes a flag:
+The LIGMA app on the command line takes a flag:
 
     --stack-trace-mode [never, query, always]
 
-When the GIMP app forks a plugin process, it passes that arg to the plugin,
+When the LIGMA app forks a plugin process, it passes that arg to the plugin,
 and the arg controls how a backtrace is printed.
 
-The default is "query", which means libgimp will ask you:
+The default is "query", which means libligma will ask you:
 "[E]xit [S]tacktrace [P]roceed"
 (similar to the GLib default handler for ERROR log events.)
 
-"always" means libgimp prints a backtrace (and then the plugin terminates.)
+"always" means libligma prints a backtrace (and then the plugin terminates.)
 
-"never" means libgimp does not print a backtrace, only a message. But for
-GIMP_PLUGIN_DEBUG=all,fatal-warning, the plugin terminates on the first WARNING.
+"never" means libligma does not print a backtrace, only a message. But for
+LIGMA_PLUGIN_DEBUG=all,fatal-warning, the plugin terminates on the first WARNING.
 
 
 Examples getting a backtrace on logged events:
 --------------------------------------------
 
-GIMP_PLUGIN_DEBUG=blur,fatal-warnings
+LIGMA_PLUGIN_DEBUG=blur,fatal-warnings
 
     The blur plug-in will run until the first logged WARNING or worse,
-    from the plug-in, GIMP libraries, or GLib libraries.
+    from the plug-in, LIGMA libraries, or GLib libraries.
     Then a backtrace can print to the console and the blur plug-in terminate.
-    Usually you will also see a message from the main GIMP app
+    Usually you will also see a message from the main LIGMA app
     saying the plugin aborted without returning a value.
 
-GIMP_PLUGIN_DEBUG=all,fatal-criticals
+LIGMA_PLUGIN_DEBUG=all,fatal-criticals
 
-    Every plug-in (whether you invoked it from the GIMP GUI or it was called
+    Every plug-in (whether you invoked it from the LIGMA GUI or it was called
     by another plug-in) will run until the first logged CRITICAL or worse,
-    from the plug-in, GIMP libraries, or GLib libraries.
+    from the plug-in, LIGMA libraries, or GLib libraries.
     Then, as above, a backtrace can print etc.
 
-GIMP_PLUGIN_DEBUG=all
+LIGMA_PLUGIN_DEBUG=all
 
     As above, for all plugins, but only for a logged ERROR.
 
@@ -202,7 +202,7 @@ Quality of a backtrace
 
 A detailed backtrace depends on:
 
-1) building GIMP and dependencies with debug info enabled
+1) building LIGMA and dependencies with debug info enabled
 2) having a debugger installed
 
 When a debugger is not installed, a backtrace may lack details such as
@@ -220,18 +220,18 @@ See https://developer.gnome.org/glib/stable/glib-Message-Logging.html
    CRITICAL   g_return_value_if_fail() or g_return_if_fail().
    ERROR      g_assert() or g_error().
 
-Use of logging levels is by convention, and libraries that GIMP uses may not
+Use of logging levels is by convention, and libraries that LIGMA uses may not
 follow conventions.
 
 Generally speaking...
 
 WARNINGs are common but don't signify much.  They might mean that your plug-in
-code does not understand, or is sloppy with, the GIMP API.
+code does not understand, or is sloppy with, the LIGMA API.
 
-CRITICALs are rare but more significant.  They usually mean that GIMP will
+CRITICALs are rare but more significant.  They usually mean that LIGMA will
 attempt to continue past an errant condition.  The GLib function
-g_return_value_if_fail() is often used in GIMP code as a precondition,
-required to succeed before a GIMP function executes its body,
+g_return_value_if_fail() is often used in LIGMA code as a precondition,
+required to succeed before a LIGMA function executes its body,
 the function returning early when the precondition fails.
 
 ERRORs are usually dire.  They always terminate a plug-in.
@@ -244,39 +244,39 @@ Plug-in names
 A plug-in may register many PDB procedures.  Use the plug-in name, not a
 procedure-name, e.g. "file-psd" not "file-psd-save".  When a plug-in is "run",
 one of its PDB procedures is run, and all of its PDB procedures
-are covered by a GIMP_PLUGIN_DEBUG definition.
+are covered by a LIGMA_PLUGIN_DEBUG definition.
 
 A name is usually the name of the executable file, including any suffix.
 Examples: "file-psd" or "foggify.py" or on some platforms "foo.exe."
 
 Usually an interpreted plug-in has a hashbang on the first line
 e.g. "#!/usr/bin/env python3" in the first line of foo.py.
-Then the file is executable, GIMP forks that file, and the Linux loader
+Then the file is executable, LIGMA forks that file, and the Linux loader
 invokes the interpreter.
 
-However, GIMP still allows a plug-in source
+However, LIGMA still allows a plug-in source
 to lack a hashbang (and it is not technically "an executable")
-but then GIMP forks the interpreter, passing the script filename.
+but then LIGMA forks the interpreter, passing the script filename.
 In this case, you must still use the name of the script file e.g. "foo.py"
-in GIMP_PLUGIN_DEBUG.
+in LIGMA_PLUGIN_DEBUG.
 
-(Since forever, GIMP does not understand Python packages.
-GIMP only installs Python plugins from directories named like foo/foo.py.
+(Since forever, LIGMA does not understand Python packages.
+LIGMA only installs Python plugins from directories named like foo/foo.py.
 A directory that is a Python package (having an __init__.py file)
-will be read by GIMP at startup, but GIMP will only install one plugin
+will be read by LIGMA at startup, but LIGMA will only install one plugin
 from that directory, and only if the .py file is named like the directory.)
 
 
 Finding plug-in source by name
 ------------------------------
 
-A GIMP supported C language plug-in's source should be in a similar-named
-directory in the GIMP repository.  For example, "file-psd" is a directory
+A LIGMA supported C language plug-in's source should be in a similar-named
+directory in the LIGMA repository.  For example, "file-psd" is a directory
 (but there is no "file-psd.c".)
 
 An interpreted plug-in is *installed* in a directory of a similar name
 e.g. "plug-ins/foggify/foggify.py".
-But in the GIMP repository, foggify.py does not live at foggify/foggify.py
+But in the LIGMA repository, foggify.py does not live at foggify/foggify.py
 but at plug-ins/python/foggify.py .
 
 
@@ -287,12 +287,12 @@ Examples using other debug tools:
 Hmm, but what about memory debuggers such as valgrind or purify? For those
 you can set the following:
 
-GIMP_PLUGIN_DEBUG_WRAP=name<,options>
+LIGMA_PLUGIN_DEBUG_WRAP=name<,options>
 
-    This is similar to GIMP_PLUGIN_DEBUG. Only "query", "init", and "run"
+    This is similar to LIGMA_PLUGIN_DEBUG. Only "query", "init", and "run"
     are valid, and "on" defaults to simply "run"
 
-GIMP_PLUGIN_DEBUG_WRAPPER=debugger
+LIGMA_PLUGIN_DEBUG_WRAPPER=debugger
 
     debugger refers to the debugger program, such as valgrind. You can
     put command line options here too, they will be parsed like they do
@@ -303,6 +303,6 @@ Windows:
 --------
 
 When compiled with Windows, a plug-in process is halted by Windows functions.
-It must be resumed externally by invoking gimp-debug-resume.exe <pid>
-The plug-ins pid can be found out by invoking gimp-debug-resume.exe
+It must be resumed externally by invoking ligma-debug-resume.exe <pid>
+The plug-ins pid can be found out by invoking ligma-debug-resume.exe
 without parameters. It shows the pid of all running processes.

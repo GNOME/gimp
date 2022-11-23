@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,25 +23,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
-#include "core/gimpgradient.h"
-#include "core/gimppattern.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmacontext.h"
+#include "core/ligmagradient.h"
+#include "core/ligmapattern.h"
 
-#include "gimpdnd.h"
-#include "gimphelp-ids.h"
-#include "gimptoolbox.h"
-#include "gimptoolbox-indicator-area.h"
-#include "gimpview.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindowstrategy.h"
+#include "ligmadnd.h"
+#include "ligmahelp-ids.h"
+#include "ligmatoolbox.h"
+#include "ligmatoolbox-indicator-area.h"
+#include "ligmaview.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindowstrategy.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define CELL_SIZE        24  /*  The size of the previews                  */
@@ -53,121 +53,121 @@
 static void
 brush_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
-                       GimpToolbox     *toolbox)
+                       LigmaToolbox     *toolbox)
 {
-  GimpContext *context = gimp_toolbox_get_context (toolbox);
+  LigmaContext *context = ligma_toolbox_get_context (toolbox);
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
-                                             context->gimp,
-                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gimp_widget_get_monitor (widget),
-                                             "gimp-brush-grid|gimp-brush-list");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (context->ligma)),
+                                             context->ligma,
+                                             ligma_dock_get_dialog_factory (LIGMA_DOCK (toolbox)),
+                                             ligma_widget_get_monitor (widget),
+                                             "ligma-brush-grid|ligma-brush-list");
 }
 
 static void
 brush_preview_drop_brush (GtkWidget    *widget,
                           gint          x,
                           gint          y,
-                          GimpViewable *viewable,
+                          LigmaViewable *viewable,
                           gpointer      data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
+  LigmaContext *context = LIGMA_CONTEXT (data);
 
-  gimp_context_set_brush (context, GIMP_BRUSH (viewable));
+  ligma_context_set_brush (context, LIGMA_BRUSH (viewable));
 }
 
 static void
 pattern_preview_clicked (GtkWidget       *widget,
                          GdkModifierType  state,
-                         GimpToolbox     *toolbox)
+                         LigmaToolbox     *toolbox)
 {
-  GimpContext *context = gimp_toolbox_get_context (toolbox);
+  LigmaContext *context = ligma_toolbox_get_context (toolbox);
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
-                                             context->gimp,
-                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gimp_widget_get_monitor (widget),
-                                             "gimp-pattern-grid|gimp-pattern-list");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (context->ligma)),
+                                             context->ligma,
+                                             ligma_dock_get_dialog_factory (LIGMA_DOCK (toolbox)),
+                                             ligma_widget_get_monitor (widget),
+                                             "ligma-pattern-grid|ligma-pattern-list");
 }
 
 static void
 pattern_preview_drop_pattern (GtkWidget    *widget,
                               gint          x,
                               gint          y,
-                              GimpViewable *viewable,
+                              LigmaViewable *viewable,
                               gpointer      data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
+  LigmaContext *context = LIGMA_CONTEXT (data);
 
-  gimp_context_set_pattern (context, GIMP_PATTERN (viewable));
+  ligma_context_set_pattern (context, LIGMA_PATTERN (viewable));
 }
 
 static void
 gradient_preview_clicked (GtkWidget       *widget,
                           GdkModifierType  state,
-                          GimpToolbox     *toolbox)
+                          LigmaToolbox     *toolbox)
 {
-  GimpContext *context = gimp_toolbox_get_context (toolbox);
+  LigmaContext *context = ligma_toolbox_get_context (toolbox);
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
-                                             context->gimp,
-                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gimp_widget_get_monitor (widget),
-                                             "gimp-gradient-list|gimp-gradient-grid");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (context->ligma)),
+                                             context->ligma,
+                                             ligma_dock_get_dialog_factory (LIGMA_DOCK (toolbox)),
+                                             ligma_widget_get_monitor (widget),
+                                             "ligma-gradient-list|ligma-gradient-grid");
 }
 
 static void
 gradient_preview_drop_gradient (GtkWidget    *widget,
                                 gint          x,
                                 gint          y,
-                                GimpViewable *viewable,
+                                LigmaViewable *viewable,
                                 gpointer      data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
+  LigmaContext *context = LIGMA_CONTEXT (data);
 
-  gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
+  ligma_context_set_gradient (context, LIGMA_GRADIENT (viewable));
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
+ligma_toolbox_indicator_area_create (LigmaToolbox *toolbox)
 {
-  GimpContext *context;
+  LigmaContext *context;
   GtkWidget   *grid;
   GtkWidget   *brush_view;
   GtkWidget   *pattern_view;
   GtkWidget   *gradient_view;
 
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOLBOX (toolbox), NULL);
 
-  context = gimp_toolbox_get_context (toolbox);
+  context = ligma_toolbox_get_context (toolbox);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), CELL_SPACING);
   gtk_grid_set_column_spacing (GTK_GRID (grid), CELL_SPACING);
 
-  gimp_help_set_help_data (grid, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
+  ligma_help_set_help_data (grid, NULL, LIGMA_HELP_TOOLBOX_INDICATOR_AREA);
 
   /*  brush view  */
 
   brush_view =
-    gimp_view_new_full_by_types (context,
-                                 GIMP_TYPE_VIEW, GIMP_TYPE_BRUSH,
+    ligma_view_new_full_by_types (context,
+                                 LIGMA_TYPE_VIEW, LIGMA_TYPE_BRUSH,
                                  CELL_SIZE, CELL_SIZE, 1,
                                  FALSE, TRUE, TRUE);
-  gimp_view_set_viewable (GIMP_VIEW (brush_view),
-                          GIMP_VIEWABLE (gimp_context_get_brush (context)));
+  ligma_view_set_viewable (LIGMA_VIEW (brush_view),
+                          LIGMA_VIEWABLE (ligma_context_get_brush (context)));
   gtk_grid_attach (GTK_GRID (grid), brush_view, 0, 0, 1, 1);
   gtk_widget_show (brush_view);
 
-  gimp_help_set_help_data (brush_view,
+  ligma_help_set_help_data (brush_view,
                            _("The active brush.\n"
                              "Click to open the Brush Dialog."), NULL);
 
   g_signal_connect_object (context, "brush-changed",
-                           G_CALLBACK (gimp_view_set_viewable),
+                           G_CALLBACK (ligma_view_set_viewable),
                            brush_view,
                            G_CONNECT_SWAPPED);
 
@@ -175,30 +175,30 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                     G_CALLBACK (brush_preview_clicked),
                     toolbox);
 
-  gimp_dnd_viewable_dest_add (brush_view,
-                              GIMP_TYPE_BRUSH,
+  ligma_dnd_viewable_dest_add (brush_view,
+                              LIGMA_TYPE_BRUSH,
                               brush_preview_drop_brush,
                               context);
 
   /*  pattern view  */
 
   pattern_view =
-    gimp_view_new_full_by_types (context,
-                                 GIMP_TYPE_VIEW, GIMP_TYPE_PATTERN,
+    ligma_view_new_full_by_types (context,
+                                 LIGMA_TYPE_VIEW, LIGMA_TYPE_PATTERN,
                                  CELL_SIZE, CELL_SIZE, 1,
                                  FALSE, TRUE, TRUE);
-  gimp_view_set_viewable (GIMP_VIEW (pattern_view),
-                          GIMP_VIEWABLE (gimp_context_get_pattern (context)));
+  ligma_view_set_viewable (LIGMA_VIEW (pattern_view),
+                          LIGMA_VIEWABLE (ligma_context_get_pattern (context)));
 
   gtk_grid_attach (GTK_GRID (grid), pattern_view, 1, 0, 1, 1);
   gtk_widget_show (pattern_view);
 
-  gimp_help_set_help_data (pattern_view,
+  ligma_help_set_help_data (pattern_view,
                            _("The active pattern.\n"
                              "Click to open the Pattern Dialog."), NULL);
 
   g_signal_connect_object (context, "pattern-changed",
-                           G_CALLBACK (gimp_view_set_viewable),
+                           G_CALLBACK (ligma_view_set_viewable),
                            pattern_view,
                            G_CONNECT_SWAPPED);
 
@@ -206,30 +206,30 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                     G_CALLBACK (pattern_preview_clicked),
                     toolbox);
 
-  gimp_dnd_viewable_dest_add (pattern_view,
-                              GIMP_TYPE_PATTERN,
+  ligma_dnd_viewable_dest_add (pattern_view,
+                              LIGMA_TYPE_PATTERN,
                               pattern_preview_drop_pattern,
                               context);
 
   /*  gradient view  */
 
   gradient_view =
-    gimp_view_new_full_by_types (context,
-                                 GIMP_TYPE_VIEW, GIMP_TYPE_GRADIENT,
+    ligma_view_new_full_by_types (context,
+                                 LIGMA_TYPE_VIEW, LIGMA_TYPE_GRADIENT,
                                  GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 1,
                                  FALSE, TRUE, TRUE);
-  gimp_view_set_viewable (GIMP_VIEW (gradient_view),
-                          GIMP_VIEWABLE (gimp_context_get_gradient (context)));
+  ligma_view_set_viewable (LIGMA_VIEW (gradient_view),
+                          LIGMA_VIEWABLE (ligma_context_get_gradient (context)));
 
   gtk_grid_attach (GTK_GRID (grid), gradient_view, 0, 1, 2, 1);
   gtk_widget_show (gradient_view);
 
-  gimp_help_set_help_data (gradient_view,
+  ligma_help_set_help_data (gradient_view,
                            _("The active gradient.\n"
                              "Click to open the Gradient Dialog."), NULL);
 
   g_signal_connect_object (context, "gradient-changed",
-                           G_CALLBACK (gimp_view_set_viewable),
+                           G_CALLBACK (ligma_view_set_viewable),
                            gradient_view,
                            G_CONNECT_SWAPPED);
 
@@ -237,8 +237,8 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                     G_CALLBACK (gradient_preview_clicked),
                     toolbox);
 
-  gimp_dnd_viewable_dest_add (gradient_view,
-                              GIMP_TYPE_GRADIENT,
+  ligma_dnd_viewable_dest_add (gradient_view,
+                              LIGMA_TYPE_GRADIENT,
                               gradient_preview_drop_gradient,
                               context);
 

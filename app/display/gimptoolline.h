@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolline.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolline.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,82 +18,82 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_LINE_H__
-#define __GIMP_TOOL_LINE_H__
+#ifndef __LIGMA_TOOL_LINE_H__
+#define __LIGMA_TOOL_LINE_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-/* in the context of GimpToolLine, "handle" is a collective term for either an
+/* in the context of LigmaToolLine, "handle" is a collective term for either an
  * endpoint or a slider.  a handle value may be either a (nonnegative) slider
  * index, or one of the values below:
  */
-#define GIMP_TOOL_LINE_HANDLE_NONE  (-3)
-#define GIMP_TOOL_LINE_HANDLE_START (-2)
-#define GIMP_TOOL_LINE_HANDLE_END   (-1)
+#define LIGMA_TOOL_LINE_HANDLE_NONE  (-3)
+#define LIGMA_TOOL_LINE_HANDLE_START (-2)
+#define LIGMA_TOOL_LINE_HANDLE_END   (-1)
 
-#define GIMP_TOOL_LINE_HANDLE_IS_SLIDER(handle) ((handle) >= 0)
-
-
-#define GIMP_TYPE_TOOL_LINE            (gimp_tool_line_get_type ())
-#define GIMP_TOOL_LINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_LINE, GimpToolLine))
-#define GIMP_TOOL_LINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_LINE, GimpToolLineClass))
-#define GIMP_IS_TOOL_LINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_LINE))
-#define GIMP_IS_TOOL_LINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_LINE))
-#define GIMP_TOOL_LINE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_LINE, GimpToolLineClass))
+#define LIGMA_TOOL_LINE_HANDLE_IS_SLIDER(handle) ((handle) >= 0)
 
 
-typedef struct _GimpToolLine        GimpToolLine;
-typedef struct _GimpToolLinePrivate GimpToolLinePrivate;
-typedef struct _GimpToolLineClass   GimpToolLineClass;
+#define LIGMA_TYPE_TOOL_LINE            (ligma_tool_line_get_type ())
+#define LIGMA_TOOL_LINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_LINE, LigmaToolLine))
+#define LIGMA_TOOL_LINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_LINE, LigmaToolLineClass))
+#define LIGMA_IS_TOOL_LINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_LINE))
+#define LIGMA_IS_TOOL_LINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_LINE))
+#define LIGMA_TOOL_LINE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_LINE, LigmaToolLineClass))
 
-struct _GimpToolLine
+
+typedef struct _LigmaToolLine        LigmaToolLine;
+typedef struct _LigmaToolLinePrivate LigmaToolLinePrivate;
+typedef struct _LigmaToolLineClass   LigmaToolLineClass;
+
+struct _LigmaToolLine
 {
-  GimpToolWidget       parent_instance;
+  LigmaToolWidget       parent_instance;
 
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 };
 
-struct _GimpToolLineClass
+struct _LigmaToolLineClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 
   /*  signals  */
-  gboolean (* can_add_slider)           (GimpToolLine        *line,
+  gboolean (* can_add_slider)           (LigmaToolLine        *line,
                                          gdouble              value);
-  gint     (* add_slider)               (GimpToolLine        *line,
+  gint     (* add_slider)               (LigmaToolLine        *line,
                                          gdouble              value);
-  void     (* prepare_to_remove_slider) (GimpToolLine        *line,
+  void     (* prepare_to_remove_slider) (LigmaToolLine        *line,
                                          gint                 slider,
                                          gboolean             remove);
-  void     (* remove_slider)            (GimpToolLine        *line,
+  void     (* remove_slider)            (LigmaToolLine        *line,
                                          gint                 slider);
-  void     (* selection_changed)        (GimpToolLine        *line);
-  gboolean (* handle_clicked)           (GimpToolLine        *line,
+  void     (* selection_changed)        (LigmaToolLine        *line);
+  gboolean (* handle_clicked)           (LigmaToolLine        *line,
                                          gint                 handle,
                                          GdkModifierType      state,
-                                         GimpButtonPressType  press_type);
+                                         LigmaButtonPressType  press_type);
 };
 
 
-GType                        gimp_tool_line_get_type      (void) G_GNUC_CONST;
+GType                        ligma_tool_line_get_type      (void) G_GNUC_CONST;
 
-GimpToolWidget             * gimp_tool_line_new           (GimpDisplayShell           *shell,
+LigmaToolWidget             * ligma_tool_line_new           (LigmaDisplayShell           *shell,
                                                            gdouble                     x1,
                                                            gdouble                     y1,
                                                            gdouble                     x2,
                                                            gdouble                     y2);
 
-void                         gimp_tool_line_set_sliders   (GimpToolLine               *line,
-                                                           const GimpControllerSlider *sliders,
+void                         ligma_tool_line_set_sliders   (LigmaToolLine               *line,
+                                                           const LigmaControllerSlider *sliders,
                                                            gint                        n_sliders);
-const GimpControllerSlider * gimp_tool_line_get_sliders   (GimpToolLine               *line,
+const LigmaControllerSlider * ligma_tool_line_get_sliders   (LigmaToolLine               *line,
                                                            gint                       *n_sliders);
 
-void                         gimp_tool_line_set_selection (GimpToolLine               *line,
+void                         ligma_tool_line_set_selection (LigmaToolLine               *line,
                                                            gint                        handle);
-gint                         gimp_tool_line_get_selection (GimpToolLine               *line);
+gint                         ligma_tool_line_get_selection (LigmaToolLine               *line);
 
 
-#endif /* __GIMP_TOOL_LINE_H__ */
+#endif /* __LIGMA_TOOL_LINE_H__ */

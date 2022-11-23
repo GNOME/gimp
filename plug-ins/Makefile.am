@@ -44,7 +44,7 @@ SUBDIRS = \
 	flame			\
 	fractal-explorer	\
 	gfig			\
-	gimpressionist		\
+	ligmaressionist		\
 	gradient-flare		\
 	help			\
 	$(help_browser)		\

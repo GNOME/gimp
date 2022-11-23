@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager-query.h
+ * ligmapluginmanager-query.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_QUERY_H__
-#define __GIMP_PLUG_IN_MANAGER_QUERY_H__
+#ifndef __LIGMA_PLUG_IN_MANAGER_QUERY_H__
+#define __LIGMA_PLUG_IN_MANAGER_QUERY_H__
 
 
-gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
+gint   ligma_plug_in_manager_query (LigmaPlugInManager   *manager,
                                    const gchar         *search_str,
                                    gchar             ***procedure_strs,
                                    gchar             ***accel_strs,
@@ -29,4 +29,4 @@ gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
                                    gint32             **time_ints);
 
 
-#endif /* __GIMP_PLUG_IN_MANAGER_QUERY_H__ */
+#endif /* __LIGMA_PLUG_IN_MANAGER_QUERY_H__ */

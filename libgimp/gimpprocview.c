@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprocview.c
+ * ligmaprocview.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
  * dbbrowser_utils.c
  * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
  *
- * 98/12/13  Sven Neumann <sven@gimp.org> : added help display
+ * 98/12/13  Sven Neumann <sven@ligma.org> : added help display
  */
 
 #include "config.h"
@@ -32,21 +32,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
-#include "gimpparamspecs-desc.h"
+#include "ligma.h"
+#include "ligmaparamspecs-desc.h"
 
-#include "gimpuitypes.h"
-#include "gimpprocview.h"
+#include "ligmauitypes.h"
+#include "ligmaprocview.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * SECTION: gimpprocview
- * @title: GimpProcView
+ * SECTION: ligmaprocview
+ * @title: LigmaProcView
  * @short_description: A widget showing information about a PDB procedure.
  *
  * A widget showing information about a PDB procedure, mainly for the
@@ -56,11 +56,11 @@
 
 /*  local function prototypes  */
 
-static gint        gimp_proc_view_add_label   (GtkGrid       *grid,
+static gint        ligma_proc_view_add_label   (GtkGrid       *grid,
                                                gint           row,
                                                const gchar   *left_label,
                                                const gchar   *right_label);
-static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
+static GtkWidget * ligma_proc_view_create_args (LigmaProcedure *procedure,
                                                gboolean       return_values,
                                                GtkSizeGroup  *name_group,
                                                GtkSizeGroup  *type_group,
@@ -71,18 +71,18 @@ static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
 
 
 /**
- * gimp_proc_view_new:
+ * ligma_proc_view_new:
  * @procedure_name: The name of a procedure.
  *
  * Returns: (transfer full): a new widget providing a view on a
- *          GIMP procedure
+ *          LIGMA procedure
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_proc_view_new (const gchar *procedure_name)
+ligma_proc_view_new (const gchar *procedure_name)
 {
-  GimpProcedure   *procedure;
+  LigmaProcedure   *procedure;
   GtkWidget       *main_vbox;
   GtkWidget       *frame;
   GtkWidget       *vbox;
@@ -97,22 +97,22 @@ gimp_proc_view_new (const gchar *procedure_name)
   const gchar     *authors;
   const gchar     *copyright;
   const gchar     *date;
-  GimpPDBProcType  type;
+  LigmaPDBProcType  type;
   const gchar     *type_str;
   gint             row;
 
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
-  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+  procedure = ligma_pdb_lookup_procedure (ligma_get_pdb (),
                                          procedure_name);
 
-  type      = gimp_procedure_get_proc_type (procedure);
-  blurb     = gimp_procedure_get_blurb     (procedure);
-  help      = gimp_procedure_get_help      (procedure);
-  help_id   = gimp_procedure_get_help_id   (procedure);
-  authors   = gimp_procedure_get_authors   (procedure);
-  copyright = gimp_procedure_get_copyright (procedure);
-  date      = gimp_procedure_get_date      (procedure);
+  type      = ligma_procedure_get_proc_type (procedure);
+  blurb     = ligma_procedure_get_blurb     (procedure);
+  help      = ligma_procedure_get_help      (procedure);
+  help_id   = ligma_procedure_get_help_id   (procedure);
+  authors   = ligma_procedure_get_authors   (procedure);
+  copyright = ligma_procedure_get_copyright (procedure);
+  date      = ligma_procedure_get_date      (procedure);
 
   if (blurb     && strlen (blurb) < 2)     blurb     = NULL;
   if (help      && strlen (help) < 2)      help      = NULL;
@@ -128,7 +128,7 @@ gimp_proc_view_new (const gchar *procedure_name)
 
   /* show the name */
 
-  frame = gimp_frame_new (procedure_name);
+  frame = ligma_frame_new (procedure_name);
   label = gtk_frame_get_label_widget (GTK_FRAME (frame));
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -138,12 +138,12 @@ gimp_proc_view_new (const gchar *procedure_name)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  if (! gimp_enum_get_value (GIMP_TYPE_PDB_PROC_TYPE, type,
+  if (! ligma_enum_get_value (LIGMA_TYPE_PDB_PROC_TYPE, type,
                              NULL, NULL, &type_str, NULL))
     type_str = "UNKNOWN";
 
   label = gtk_label_new (type_str);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -160,7 +160,7 @@ gimp_proc_view_new (const gchar *procedure_name)
       gtk_widget_show (label);
     }
 
-  if (type != GIMP_PDB_PROC_TYPE_INTERNAL)
+  if (type != LIGMA_PDB_PROC_TYPE_INTERNAL)
     {
       GList *list;
 
@@ -172,18 +172,18 @@ gimp_proc_view_new (const gchar *procedure_name)
 
       row = 0;
 
-      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+      row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                       _("Image types:"),
-                                      gimp_procedure_get_image_types (procedure));
-      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      ligma_procedure_get_image_types (procedure));
+      row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                       _("Menu label:"),
-                                      gimp_procedure_get_menu_label (procedure));
+                                      ligma_procedure_get_menu_label (procedure));
 
-      for (list = gimp_procedure_get_menu_paths (procedure);
+      for (list = ligma_procedure_get_menu_paths (procedure);
            list;
            list = g_list_next (list))
         {
-          row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+          row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                           _("Menu path:"),
                                           list->data);
         }
@@ -194,12 +194,12 @@ gimp_proc_view_new (const gchar *procedure_name)
   desc_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* in parameters */
-  grid = gimp_proc_view_create_args (procedure, FALSE,
+  grid = ligma_proc_view_create_args (procedure, FALSE,
                                      name_group, type_group, desc_group);
 
   if (grid)
     {
-      frame = gimp_frame_new (_("Parameters"));
+      frame = ligma_frame_new (_("Parameters"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -208,12 +208,12 @@ gimp_proc_view_new (const gchar *procedure_name)
     }
 
   /* out parameters */
-  grid = gimp_proc_view_create_args (procedure, TRUE,
+  grid = ligma_proc_view_create_args (procedure, TRUE,
                                      name_group, type_group, desc_group);
 
   if (grid)
     {
-      frame = gimp_frame_new (_("Return Values"));
+      frame = ligma_frame_new (_("Return Values"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -228,7 +228,7 @@ gimp_proc_view_new (const gchar *procedure_name)
   if (! help && ! authors && ! date && ! copyright)
     return main_vbox;
 
-  frame = gimp_frame_new (_("Additional Information"));
+  frame = ligma_frame_new (_("Additional Information"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -259,13 +259,13 @@ gimp_proc_view_new (const gchar *procedure_name)
 
       row = 0;
 
-      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+      row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                       _("Authors:"),
                                       authors);
-      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+      row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                       _("Date:"),
                                       date);
-      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+      row = ligma_proc_view_add_label (GTK_GRID (grid), row,
                                       _("Copyright:"),
                                       copyright);
     }
@@ -277,7 +277,7 @@ gimp_proc_view_new (const gchar *procedure_name)
 /*  private functions  */
 
 static gint
-gimp_proc_view_add_label (GtkGrid       *grid,
+ligma_proc_view_add_label (GtkGrid       *grid,
                           gint           row,
                           const gchar   *left_label,
                           const gchar   *right_label)
@@ -292,7 +292,7 @@ gimp_proc_view_add_label (GtkGrid       *grid,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                 left_label, 0.0, 0.0,
                                 label, 3);
     }
@@ -301,7 +301,7 @@ gimp_proc_view_add_label (GtkGrid       *grid,
 }
 
 static GtkWidget *
-gimp_proc_view_create_args (GimpProcedure *procedure,
+ligma_proc_view_create_args (LigmaProcedure *procedure,
                             gboolean       return_values,
                             GtkSizeGroup  *name_group,
                             GtkSizeGroup  *type_group,
@@ -313,9 +313,9 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
   gint         i;
 
   if (return_values)
-    pspecs = gimp_procedure_get_return_values (procedure, &n_pspecs);
+    pspecs = ligma_procedure_get_return_values (procedure, &n_pspecs);
   else
-    pspecs = gimp_procedure_get_arguments (procedure, &n_pspecs);
+    pspecs = ligma_procedure_get_arguments (procedure, &n_pspecs);
 
   if (! pspecs)
     return NULL;
@@ -331,7 +331,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gchar      *desc;
       gchar      *blurb;
 
-      desc = gimp_param_spec_get_desc (pspec);
+      desc = ligma_param_spec_get_desc (pspec);
 
       if (desc)
         {
@@ -353,7 +353,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
 
       /* type */
       label = gtk_label_new (g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_FAMILY, "monospace",
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);

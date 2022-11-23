@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp Python Brezhoneg 2.x\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma Python Brezhoneg 2.x\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-12-04 04:56+0000\n"
 "PO-Revision-Date: 2011-12-04 10:28+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
@@ -19,328 +19,328 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pyligma/ligmafu.py:394
 msgid "Missing exception information"
 msgstr "Stlennoù an nemedenn o vankout"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pyligma/ligmafu.py:403
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Degouezhet ez eus bet ur fazi e-pad ma oa oc'h erounit %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pyligma/ligmafu.py:414
 msgid "_More Information"
 msgstr "_Muioc'h a stlennoù"
 
-#: ../plug-ins/pygimp/gimpfu.py:526
-#: ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:526
+#: ../plug-ins/pyligma/ligmafu.py:538
+#: ../plug-ins/pyligma/ligmafu.py:544
 msgid "No"
 msgstr "Ket"
 
-#: ../plug-ins/pygimp/gimpfu.py:536
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:536
+#: ../plug-ins/pyligma/ligmafu.py:544
 msgid "Yes"
 msgstr "Ya"
 
-#: ../plug-ins/pygimp/gimpfu.py:596
-#: ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:596
+#: ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Diuzad restr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pyligma/ligmafu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "Diuzad teuliad Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pyligma/ligmafu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Enankad didalvoudek evit '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "Diuzad liv Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Oc'h enrollañ evel XHTML livet"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Enrollañ evel XHTML livet"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "XHTML livet"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Tarzh an arouezennoù"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Tarzh ar voneg"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Restr testenn"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Boestad enankañ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Restr da lenn pe arouezenn da arverañ"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "Ment an _nodrezh e pikselioù"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "Skrivañ ur restr CSS disrannet"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "Ilrezenn da arverañ"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Anv ar restr"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Ouzhpennañ un dreuzfollennad latar"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_Latar..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "Anv an _dreuzfollenn"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "Koumoul"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "_Liv al latar"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "S_trafuilh"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "_Demerez"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Linkañ al livioù wwar ul livaoueg"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "Linkañ al liva_oueg..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:56
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Livaoueg"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "Lin_kañ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
 msgstr "Rummañ al livioù war ul livaoueg"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
 msgstr "_Rummañ al livaoueg..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:57
 msgid "Color _model"
 msgstr "Skouer li_v"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:58
 msgid "RGB"
 msgstr "RGG"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:59
 msgid "HSV"
 msgstr "APL"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
 msgstr "_Sanell da rummañ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
 msgstr "Rue pe arliv"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:62
 msgid "Green or Saturation"
 msgstr "Gwer pe peurvec'hiañ"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:63
 msgid "Blue or Value"
 msgstr "Glas pe lintr"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:64
 msgid "_Ascending"
 msgstr "W_ar gresk"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Krouiñ un ilrezenn arrenek oc'h arverañ al livioù diwar al livaoueg"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Livaoueg war an ilrezenn ar_rennek"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Krouiñ un ilrezenn oc'h arverañ al livioù diwar al livaoueg"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Livaoueg d'an _ilrezenn"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Darn"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Troc'hañ ur skeudenn a-hed he dealfoù, krouiñ a ra skeudennoù ha brizhenn un daolenn HTML "
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Darnañ..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "TReug evit an ezporzhiañ HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Anv restr evit an ezporzhiañ"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Rakger anv ar skeudenn"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Mentrezh ar skeudenn"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Dispartiañ an teuliad skeudennoù"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Teuliad evit ezporzhiañ ar skeudenn"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Egor etre elfennoù an daolenn"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript evit onmouseover ha kliket"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Dilemel ar bliverezh evit pennlizherennoù an daolenn"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pyligma/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "Penel Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pyligma/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_Kantreal..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pyligma/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
 msgstr "Kantreer argerzhadur Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pyligma/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "N'haller ket digeriñ '%s' evit skrivañ : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pyligma/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "N'haller ket skrivañ war '%s' : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pyligma/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
 msgstr "Enrollañ ec'hankad penel Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
-msgid "Interactive GIMP Python interpreter"
-msgstr "Jubenner etrewezhiat Python evit GIMP"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:216
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Jubenner etrewezhiat Python evit LIGMA"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pyligma/plug-ins/python-console.py:221
 msgid "_Console"
 msgstr "_Penel"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Ouzhpennañ un disheol o kouezhañ dindan an dreuzfollenn, ha dre zibarzh lakaat beskell warni"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Disheol o kouezhañ ha beskell..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "_Ruzed an disheol"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_Beskell"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "_Disheol o kouezhañ"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "Dilec'hiadur _X an disheol o kouezhañ"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Dilec'hiadur _Y an disheol o kouezhañ"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
 msgstr "Krouiñ ur broust nevez gant arouezennoù un destenn"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:81
 msgid "New Brush from _Text..."
 msgstr "Broust nevez diouzh an des_tenn..."
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:84
 msgid "Font"
 msgstr "Nodrezh"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:85
 msgid "Pixel Size"
 msgstr "Ment ar piksel"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:86
 msgid "Text"
 msgstr "Testenn"
 

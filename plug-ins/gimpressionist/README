@@ -1,7 +1,7 @@
-	This is the README for The GIMPressionist
+	This is the README for The LIGMAressionist
 	(c) 1998, 1999 Vidar Madsen - vidar@prosalg.no
 
-	The GIMPressionist is free software, and may be distributed
+	The LIGMAressionist is free software, and may be distributed
 	freely, provided this file is included!
 
 	This program comes with no warranty, whatsoever. The author
@@ -11,15 +11,15 @@
 
 --- Introduction
 
-The GIMPressionist is a plug-in for the GNU Image Manipulation Program,
-a.k.a. GIMP. It can be used to create natural looking painting effects
+The LIGMAressionist is a plug-in for the GNU Image Manipulation Program,
+a.k.a. LIGMA. It can be used to create natural looking painting effects
 and similar. It can also be run in a primitive "standalone" mode. 
 
 The current version is still a bit shaky, and is to be considered beta
 software. I'll do some serious testing, hopefully across a few more
 platforms, as soon as I can.
 
-The official Web-page is http://www.prosalg.no/~vidar/gimpressionist/ and
+The official Web-page is http://www.prosalg.no/~vidar/ligmaressionist/ and
 will always contain a link to the latest released version. 
 
 
@@ -28,29 +28,29 @@ will always contain a link to the latest released version.
 To compile (hopefully):
 	make
 
-If you want to compile for GTK-1.1 and GIMP-1.1 instead, you will have
+If you want to compile for GTK-1.1 and LIGMA-1.1 instead, you will have
 to change the two variable at the top of Makefile. Possibly you would
 want to edit DEFAULTPATH as well, but that's not critical.
 
 To install plug-in and accompanying files:
 	make install
 
-The plug-in installs itself under $HOME/.gimp/plug-ins/ and copies a
-couple of files into the directory $HOME/.gimp/gimpressionist/.  The
+The plug-in installs itself under $HOME/.ligma/plug-ins/ and copies a
+couple of files into the directory $HOME/.ligma/ligmaressionist/.  The
 subdirectories 'Brushes', 'Paper' and 'Presets' will be created during
 "make install", and a few files will be added; As a minimum,
 'defaultbrush.pgm' and 'defaultpaper.pgm' under their respective
 directories. These are vanilla .PGM files, which could be edited (and
-created) with any decent program - like GIMP! :-) 
+created) with any decent program - like LIGMA! :-) 
 
 
 --- Standalone
 
-As of version 0.99 and later, the GIMPressionist can also be run
-separately from GIMP. This is primarily intended for debugging
-purposes, though, as it still needs GIMP libraries to compile. In your
+As of version 0.99 and later, the LIGMAressionist can also be run
+separately from LIGMA. This is primarily intended for debugging
+purposes, though, as it still needs LIGMA libraries to compile. In your
 shell, type: 
-	gimpressionist somefile.ppm
+	ligmaressionist somefile.ppm
 
 The image specified must be a valid PPM file. No other formats are
 supported, and probably never will.
@@ -62,11 +62,11 @@ If you "Cancel", nothing will be done to the file.
 --- File Formats
 
 The "normal" brushes are simply grayscale PGM files, which can be created
-with almost any program, including xv and of course GIMP. A number of
+with almost any program, including xv and of course LIGMA. A number of
 brushes is included, so I guess a more in-depth explanation is not
-necessary. And, for those who might want to try it, GIMPressionist can
-also read GBR files, which is GIMP's native brush format. (You still
-need to copy them to the GIMPressionist's brush-directory, though. This
+necessary. And, for those who might want to try it, LIGMAressionist can
+also read GBR files, which is LIGMA's native brush format. (You still
+need to copy them to the LIGMAressionist's brush-directory, though. This
 will probably be fixed sometimes.)
 
 Version 0.99.4 introduced the concept of using "colored" brushes (although

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  *   Portable Network Graphics (PNG) plug-in
@@ -29,18 +29,18 @@
 #include <glib/gstdio.h>
 #include "lcms2.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <png.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC       "file-png-load"
 #define SAVE_PROC       "file-png-save"
 #define PLUG_IN_BINARY  "file-png"
-#define PLUG_IN_ROLE    "gimp-file-png"
+#define PLUG_IN_ROLE    "ligma-file-png"
 
 #define PLUG_IN_VERSION "1.3.4 - 03 September 2002"
 #define SCALE_WIDTH     125
@@ -67,12 +67,12 @@ typedef struct _PngClass PngClass;
 
 struct _Png
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PngClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -81,33 +81,33 @@ struct _PngClass
 
 GType                   png_get_type         (void) G_GNUC_CONST;
 
-static GList          * png_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * png_create_procedure (GimpPlugIn           *plug_in,
+static GList          * png_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * png_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * png_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * png_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * png_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * png_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage * load_image                (GFile            *file,
+static LigmaImage * load_image                (GFile            *file,
                                               gboolean          interactive,
                                               gboolean         *resolution_loaded,
                                               gboolean         *profile_loaded,
                                               GError          **error);
 static gboolean    save_image                (GFile            *file,
-                                              GimpImage        *image,
-                                              GimpDrawable     *drawable,
-                                              GimpImage        *orig_image,
+                                              LigmaImage        *image,
+                                              LigmaDrawable     *drawable,
+                                              LigmaImage        *orig_image,
                                               GObject          *config,
                                               gint             *bits_per_sample,
                                               gboolean          interactive,
@@ -116,11 +116,11 @@ static gboolean    save_image                (GFile            *file,
 static int         respin_cmap               (png_structp       pp,
                                               png_infop         info,
                                               guchar           *remap,
-                                              GimpImage        *image,
-                                              GimpDrawable     *drawable);
+                                              LigmaImage        *image,
+                                              LigmaDrawable     *drawable);
 
-static gboolean    save_dialog               (GimpImage        *image,
-                                              GimpProcedure    *procedure,
+static gboolean    save_dialog               (LigmaImage        *image,
+                                              LigmaProcedure    *procedure,
                                               GObject          *config,
                                               gboolean          alpha);
 
@@ -133,16 +133,16 @@ static gint        find_unused_ia_color      (GeglBuffer       *buffer,
                                               gint             *colors);
 
 
-G_DEFINE_TYPE (Png, png, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Png, png, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PNG_TYPE)
+LIGMA_MAIN (PNG_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 png_class_init (PngClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = png_query_procedures;
   plug_in_class->create_procedure = png_create_procedure;
@@ -155,7 +155,7 @@ png_init (Png *png)
 }
 
 static GList *
-png_query_procedures (GimpPlugIn *plug_in)
+png_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -165,26 +165,26 @@ png_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-png_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+png_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            png_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("PNG image"));
+      ligma_procedure_set_menu_label (procedure, _("PNG image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in PNG file format",
                                         "This plug-in loads Portable Network "
                                         "Graphics (PNG) files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>, "
                                       "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                                       "Michael Sweet <mike@easysw.com>, "
@@ -192,29 +192,29 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       PLUG_IN_VERSION);
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/png");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "png");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\211PNG\r\n\032\n");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            png_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("PNG image"));
+      ligma_procedure_set_menu_label (procedure, _("PNG image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in PNG file format",
                                         "This plug-in exports Portable Network "
                                         "Graphics (PNG) files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>, "
                                       "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                                       "Michael Sweet <mike@easysw.com>, "
@@ -222,56 +222,56 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       PLUG_IN_VERSION);
 
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            _("PNG"));
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/png");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "png");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "interlaced",
                              _("_Interlacing (Adam7)"),
                              _("Use Adam7 interlacing"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
+      LIGMA_PROC_ARG_INT (procedure, "compression",
                          _("Co_mpression level"),
                          _("Deflate Compression factor (0..9)"),
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "bkgd",
                              _("Save _background color"),
                              _("Write bKGD chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "offs",
                              _("Save layer o_ffset"),
                              _("Write oFFs chunk (PNG metadata)"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "phys",
                              _("Save resol_ution"),
                              _("Write pHYs chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "time",
                              _("Save creation _time"),
                              _("Write tIME chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-transparent",
                              _("Save color _values from transparent pixels"),
                              _("Preserve color of completely transparent pixels"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "optimize-palette",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "optimize-palette",
                              _("Optimize for smallest possible palette size"),
                              _("When checked, save as 1, 2, 4, or 8-bit depending"
                                " on number of colors used. When unchecked, always"
@@ -279,48 +279,48 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "format",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "format",
                              _("_Pixel format"),
                              _("PNG export format"),
                              PNG_FORMAT_AUTO, PNG_FORMAT_GRAYA16,
                              PNG_FORMAT_AUTO,
                              G_PARAM_READWRITE);
 
-      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_exif      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_iptc      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_xmp       (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
 #if defined(PNG_iCCP_SUPPORTED)
-      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_profile   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
 #endif
-      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_thumbnail (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_comment   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-png_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+png_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gboolean        interactive;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
-  GimpImage      *image;
-  GimpMetadata   *metadata;
+  LigmaImage      *image;
+  LigmaMetadata   *metadata;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       interactive = TRUE;
       break;
     default:
@@ -335,78 +335,78 @@ png_load (GimpProcedure        *procedure,
                       &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/png",
+  metadata = ligma_image_metadata_load_prepare (image, "image/png",
                                                file, NULL);
 
   if (metadata)
     {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+      LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
       if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+        flags &= ~LIGMA_METADATA_LOAD_RESOLUTION;
 
       if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+        flags &= ~LIGMA_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image, "image/png",
+      ligma_image_metadata_load_finish (image, "image/png",
                                        metadata, flags);
 
       g_object_unref (metadata);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-png_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+png_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
-  GimpImage           *orig_image;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaMetadata        *metadata;
+  LigmaImage           *orig_image;
   gboolean             alpha;
   GError              *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  metadata = ligma_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/png");
 
   orig_image = image;
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PNG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PNG",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -422,12 +422,12 @@ png_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("PNG format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  alpha = gimp_drawable_has_alpha (drawables[0]);
+  alpha = ligma_drawable_has_alpha (drawables[0]);
 
   /* If the image has no transparency, then there is usually no need
    * to save a bKGD chunk. For more information, see:
@@ -438,39 +438,39 @@ png_save (GimpProcedure        *procedure,
                   "bkgd", FALSE,
                   NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (orig_image, procedure, G_OBJECT (config), alpha))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       gint bits_per_sample;
 
       if (save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
-                      &bits_per_sample, run_mode != GIMP_RUN_NONINTERACTIVE,
+                      &bits_per_sample, run_mode != LIGMA_RUN_NONINTERACTIVE,
                       &error))
         {
           if (metadata)
-            gimp_metadata_set_bits_per_sample (metadata, bits_per_sample);
+            ligma_metadata_set_bits_per_sample (metadata, bits_per_sample);
         }
       else
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 struct read_error_data
@@ -481,7 +481,7 @@ struct read_error_data
   guint32       width;           /* png_infop->width */
   guint32       height;          /* png_infop->height */
   gint          bpp;             /* Bytes per pixel */
-  gint          tile_height;     /* Height of tile in GIMP */
+  gint          tile_height;     /* Height of tile in LIGMA */
   gint          begin;           /* Beginning tile row */
   gint          end;             /* Ending tile row */
   gint          num;             /* Number of rows to load */
@@ -537,12 +537,12 @@ get_bit_depth_for_palette (int num_palette)
     return 8;
 }
 
-static GimpColorProfile *
+static LigmaColorProfile *
 load_color_profile (png_structp   pp,
                     png_infop     info,
                     gchar       **profile_name)
 {
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
 
 #if defined(PNG_iCCP_SUPPORTED)
   png_uint_32       proflen;
@@ -552,7 +552,7 @@ load_color_profile (png_structp   pp,
 
   if (png_get_iCCP (pp, info, &profname, &profcomp, &prof, &proflen))
     {
-      profile = gimp_color_profile_new_from_icc_profile ((guint8 *) prof,
+      profile = ligma_color_profile_new_from_icc_profile ((guint8 *) prof,
                                                          proflen, NULL);
       if (profile && profname)
         {
@@ -583,7 +583,7 @@ Build_sRGBGamma (cmsContext ContextID)
 /*
  * 'load_image()' - Load a PNG image into a new image window.
  */
-static GimpImage *
+static LigmaImage *
 load_image (GFile        *file,
             gboolean      interactive,
             gboolean     *resolution_loaded,
@@ -597,18 +597,18 @@ load_image (GFile        *file,
   gint              height;               /* image height */
   gint              num_passes;           /* Number of interlace passes in file */
   gint              pass;                 /* Current pass in file */
-  gint              tile_height;          /* Height of tile in GIMP */
+  gint              tile_height;          /* Height of tile in LIGMA */
   gint              begin;                /* Beginning tile row */
   gint              end;                  /* Ending tile row */
   gint              num;                  /* Number of rows to load */
-  GimpImageBaseType image_type;           /* Type of image */
-  GimpPrecision     image_precision;      /* Precision of image */
-  GimpImageType     layer_type;           /* Type of drawable/layer */
-  GimpColorProfile *profile      = NULL;  /* Color profile */
+  LigmaImageBaseType image_type;           /* Type of image */
+  LigmaPrecision     image_precision;      /* Precision of image */
+  LigmaImageType     layer_type;           /* Type of drawable/layer */
+  LigmaColorProfile *profile      = NULL;  /* Color profile */
   gchar            *profile_name = NULL;  /* Profile's name */
   FILE             *fp;                   /* File pointer */
-  volatile GimpImage *image      = NULL;  /* Image -- protected for setjmp() */
-  GimpLayer        *layer;                /* Layer */
+  volatile LigmaImage *image      = NULL;  /* Image -- protected for setjmp() */
+  LigmaLayer        *layer;                /* Layer */
   GeglBuffer       *buffer;               /* GEGL buffer for layer */
   const Babl       *file_format;          /* BABL format for layer */
   png_structp       pp;                   /* PNG read pointer */
@@ -628,7 +628,7 @@ load_image (GFile        *file,
 
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error creating PNG read struct while loading '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -637,7 +637,7 @@ load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while reading '%s'. Could not create PNG header info structure."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -645,8 +645,8 @@ load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error while reading '%s'. File corrupted?"),
-                   gimp_file_get_utf8_name (file));
-      return (GimpImage *) image;
+                   ligma_file_get_utf8_name (file));
+      return (LigmaImage *) image;
     }
 
 #ifdef PNG_BENIGN_ERRORS_SUPPORTED
@@ -662,8 +662,8 @@ load_image (GFile        *file,
    */
 
   if (interactive)
-    gimp_progress_init_printf (_("Opening '%s'"),
-                               gimp_file_get_utf8_name (file));
+    ligma_progress_init_printf (_("Opening '%s'"),
+                               ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -671,7 +671,7 @@ load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -787,7 +787,7 @@ load_image (GFile        *file,
           cmsMLUsetASCII (description_mlu,  "en", "US", profile_desc);
           cmsWriteTag (cms_profile, cmsSigProfileDescriptionTag, description_mlu);
 
-          profile = gimp_color_profile_new_from_lcms_profile (cms_profile, NULL);
+          profile = ligma_color_profile_new_from_lcms_profile (cms_profile, NULL);
 
           g_free (profile_desc);
           cmsMLUfree (description_mlu);
@@ -810,9 +810,9 @@ load_image (GFile        *file,
    */
 
   if (png_get_bit_depth (pp, info) == 16)
-    image_precision = GIMP_PRECISION_U16_NON_LINEAR;
+    image_precision = LIGMA_PRECISION_U16_NON_LINEAR;
   else
-    image_precision = GIMP_PRECISION_U8_NON_LINEAR;
+    image_precision = LIGMA_PRECISION_U8_NON_LINEAR;
 
   if (png_get_bit_depth (pp, info) < 8)
     {
@@ -873,48 +873,48 @@ load_image (GFile        *file,
   switch (png_get_color_type (pp, info))
     {
     case PNG_COLOR_TYPE_RGB:
-      image_type = GIMP_RGB;
-      layer_type = GIMP_RGB_IMAGE;
+      image_type = LIGMA_RGB;
+      layer_type = LIGMA_RGB_IMAGE;
       break;
 
     case PNG_COLOR_TYPE_RGB_ALPHA:
-      image_type = GIMP_RGB;
-      layer_type = GIMP_RGBA_IMAGE;
+      image_type = LIGMA_RGB;
+      layer_type = LIGMA_RGBA_IMAGE;
       break;
 
     case PNG_COLOR_TYPE_GRAY:
-      image_type = GIMP_GRAY;
-      layer_type = GIMP_GRAY_IMAGE;
+      image_type = LIGMA_GRAY;
+      layer_type = LIGMA_GRAY_IMAGE;
       break;
 
     case PNG_COLOR_TYPE_GRAY_ALPHA:
-      image_type = GIMP_GRAY;
-      layer_type = GIMP_GRAYA_IMAGE;
+      image_type = LIGMA_GRAY;
+      layer_type = LIGMA_GRAYA_IMAGE;
       break;
 
     case PNG_COLOR_TYPE_PALETTE:
-      image_type = GIMP_INDEXED;
-      layer_type = GIMP_INDEXED_IMAGE;
+      image_type = LIGMA_INDEXED;
+      layer_type = LIGMA_INDEXED_IMAGE;
       break;
 
     default:
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Unknown color model in PNG file '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
   width = png_get_image_width (pp, info);
   height = png_get_image_height (pp, info);
 
-  image = gimp_image_new_with_precision (width, height,
+  image = ligma_image_new_with_precision (width, height,
                                          image_type, image_precision);
   if (! image)
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Could not create new image for '%s': %s"),
-                   gimp_file_get_utf8_name (file),
-                   gimp_pdb_get_last_error (gimp_get_pdb ()));
+                   ligma_file_get_utf8_name (file),
+                   ligma_pdb_get_last_error (ligma_get_pdb ()));
       return NULL;
     }
 
@@ -924,20 +924,20 @@ load_image (GFile        *file,
 
   if (profile)
     {
-      gimp_image_set_color_profile ((GimpImage *) image, profile);
+      ligma_image_set_color_profile ((LigmaImage *) image, profile);
       g_object_unref (profile);
 
       if (profile_name)
         {
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
 
-          parasite = gimp_parasite_new ("icc-profile-name",
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
+          parasite = ligma_parasite_new ("icc-profile-name",
+                                        LIGMA_PARASITE_PERSISTENT |
+                                        LIGMA_PARASITE_UNDOABLE,
                                         strlen (profile_name),
                                         profile_name);
-          gimp_image_attach_parasite ((GimpImage *) image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite ((LigmaImage *) image, parasite);
+          ligma_parasite_free (parasite);
 
           g_free (profile_name);
         }
@@ -947,13 +947,13 @@ load_image (GFile        *file,
    * Create the "background" layer to hold the image...
    */
 
-  layer = gimp_layer_new ((GimpImage *) image, _("Background"), width, height,
+  layer = ligma_layer_new ((LigmaImage *) image, _("Background"), width, height,
                           layer_type,
                           100,
-                          gimp_image_get_default_new_layer_mode ((GimpImage *) image));
-  gimp_image_insert_layer ((GimpImage *) image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode ((LigmaImage *) image));
+  ligma_image_insert_layer ((LigmaImage *) image, layer, NULL, 0);
 
-  file_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  file_format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
   /*
    * Find out everything we can about the image resolution
@@ -971,11 +971,11 @@ load_image (GFile        *file,
         {
           if (! interactive)
             {
-              gimp_layer_set_offsets (layer, offset_x, offset_y);
+              ligma_layer_set_offsets (layer, offset_x, offset_y);
             }
           else if (offsets_dialog (offset_x, offset_y))
             {
-              gimp_layer_set_offsets (layer, offset_x, offset_y);
+              ligma_layer_set_offsets (layer, offset_x, offset_y);
 
               if (abs (offset_x) > width ||
                   abs (offset_y) > height)
@@ -1002,24 +1002,24 @@ load_image (GFile        *file,
               {
                 gdouble image_xres, image_yres;
 
-                gimp_image_get_resolution ((GimpImage *) image, &image_xres, &image_yres);
+                ligma_image_get_resolution ((LigmaImage *) image, &image_xres, &image_yres);
 
                 if (xres > yres)
                   image_xres = image_yres * (gdouble) xres / (gdouble) yres;
                 else
                   image_yres = image_xres * (gdouble) yres / (gdouble) xres;
 
-                gimp_image_set_resolution ((GimpImage *) image, image_xres, image_yres);
+                ligma_image_set_resolution ((LigmaImage *) image, image_xres, image_yres);
 
                 *resolution_loaded = TRUE;
               }
               break;
 
             case PNG_RESOLUTION_METER:
-              gimp_image_set_resolution ((GimpImage *) image,
+              ligma_image_set_resolution ((LigmaImage *) image,
                                          (gdouble) xres * 0.0254,
                                          (gdouble) yres * 0.0254);
-              gimp_image_set_unit ((GimpImage *) image, GIMP_UNIT_MM);
+              ligma_image_set_unit ((LigmaImage *) image, LIGMA_UNIT_MM);
 
               *resolution_loaded = TRUE;
               break;
@@ -1031,7 +1031,7 @@ load_image (GFile        *file,
 
     }
 
-  gimp_image_set_file ((GimpImage *) image, file);
+  ligma_image_set_file ((LigmaImage *) image, file);
 
   /*
    * Load the colormap as necessary...
@@ -1043,19 +1043,19 @@ load_image (GFile        *file,
       int num_palette;
 
       png_get_PLTE (pp, info, &palette, &num_palette);
-      gimp_image_set_colormap ((GimpImage *) image, (guchar *) palette,
+      ligma_image_set_colormap ((LigmaImage *) image, (guchar *) palette,
                                num_palette);
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   /*
    * Temporary buffer...
    */
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   pixel = g_new0 (guchar, tile_height * width * bpp);
   pixels = g_new (guchar *, tile_height);
 
@@ -1107,7 +1107,7 @@ load_image (GFile        *file,
                            GEGL_AUTO_ROWSTRIDE);
 
           if (interactive)
-            gimp_progress_update (((gdouble) pass +
+            ligma_progress_update (((gdouble) pass +
                                    (gdouble) end / (gdouble) height) /
                                   (gdouble) num_passes);
         }
@@ -1141,13 +1141,13 @@ load_image (GFile        *file,
 
       if (comment && *comment)
         {
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
 
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("ligma-comment",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comment) + 1, comment);
-          gimp_image_attach_parasite ((GimpImage *) image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite ((LigmaImage *) image, parasite);
+          ligma_parasite_free (parasite);
         }
 
       g_free (comment);
@@ -1172,8 +1172,8 @@ load_image (GFile        *file,
       GeglBufferIterator *iter;
       gint                n_components;
 
-      gimp_layer_add_alpha (layer);
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      ligma_layer_add_alpha (layer);
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
       file_format = gegl_buffer_get_format (buffer);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
@@ -1197,7 +1197,7 @@ load_image (GFile        *file,
       g_object_unref (buffer);
     }
 
-  return (GimpImage *) image;
+  return (LigmaImage *) image;
 }
 
 /*
@@ -1214,11 +1214,11 @@ offsets_dialog (gint offset_x,
   gchar     *message;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Apply PNG Offset"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Apply PNG Offset"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
+                            ligma_standard_help_func, LOAD_PROC,
 
                             _("Ignore PNG offset"),         GTK_RESPONSE_NO,
                             _("Apply PNG offset to layer"), GTK_RESPONSE_YES,
@@ -1226,12 +1226,12 @@ offsets_dialog (gint offset_x,
                             NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_YES,
                                            GTK_RESPONSE_NO,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -1240,7 +1240,7 @@ offsets_dialog (gint offset_x,
                       hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_QUESTION,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DIALOG_QUESTION,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -1258,7 +1258,7 @@ offsets_dialog (gint offset_x,
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_YES);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_YES);
 
   gtk_widget_destroy (dialog);
 
@@ -1284,9 +1284,9 @@ static PngGlobals pngg;
 
 static gboolean
 save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            GimpImage    *orig_image,
+            LigmaImage    *image,
+            LigmaDrawable *drawable,
+            LigmaImage    *orig_image,
             GObject      *config,
             gint         *bits_per_sample,
             gboolean      interactive,
@@ -1297,14 +1297,14 @@ save_image (GFile        *file,
   gint              type;             /* Type of drawable/layer */
   gint              num_passes;       /* Number of interlace passes in file */
   gint              pass;             /* Current pass in file */
-  gint              tile_height;      /* Height of tile in GIMP */
+  gint              tile_height;      /* Height of tile in LIGMA */
   gint              width;            /* image width */
   gint              height;           /* image height */
   gint              begin;            /* Beginning tile row */
   gint              end;              /* Ending tile row */
   gint              num;              /* Number of rows to load */
   FILE             *fp;               /* File pointer */
-  GimpColorProfile *profile = NULL;   /* Color profile */
+  LigmaColorProfile *profile = NULL;   /* Color profile */
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
   const Babl       *file_format = NULL; /* BABL format of file */
@@ -1316,7 +1316,7 @@ save_image (GFile        *file,
   guchar          **pixels;           /* Pixel rows */
   guchar           *fixed;            /* Fixed-up pixel data */
   guchar           *pixel;            /* Pixel data */
-  gdouble           xres, yres;       /* GIMP resolution (dpi) */
+  gdouble           xres, yres;       /* LIGMA resolution (dpi) */
   png_color_16      background;       /* Background color */
   png_time          mod_time;         /* Modification time (ie NOW) */
   time_t            cutime;           /* Time since epoch */
@@ -1354,7 +1354,7 @@ save_image (GFile        *file,
                 "phys",               &save_phys,
                 "time",               &save_time,
                 "save-comment",       &save_comment,
-                "gimp-comment",       &comment,
+                "ligma-comment",       &comment,
                 "save-transparent",   &save_transp_pixels,
                 "optimize-palette",   &optimize_palette,
                 "compression",        &compression_level,
@@ -1363,7 +1363,7 @@ save_image (GFile        *file,
                 NULL);
 
   out_linear = FALSE;
-  space      = gimp_drawable_get_format (drawable);
+  space      = ligma_drawable_get_format (drawable);
 
 #if defined(PNG_iCCP_SUPPORTED)
   /* If no profile is written: export as sRGB.
@@ -1375,7 +1375,7 @@ save_image (GFile        *file,
    */
   if (save_profile)
     {
-      profile = gimp_image_get_color_profile (orig_image);
+      profile = ligma_image_get_color_profile (orig_image);
 
       if (profile                             ||
           export_format == PNG_FORMAT_AUTO    ||
@@ -1383,13 +1383,13 @@ save_image (GFile        *file,
           export_format == PNG_FORMAT_RGBA16  ||
           export_format == PNG_FORMAT_GRAY16  ||
           export_format == PNG_FORMAT_GRAYA16 ||
-          gimp_image_get_precision (image) == GIMP_PRECISION_U8_LINEAR     ||
-          gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR ||
-          gimp_image_get_precision (image) == GIMP_PRECISION_U8_PERCEPTUAL)
+          ligma_image_get_precision (image) == LIGMA_PRECISION_U8_LINEAR     ||
+          ligma_image_get_precision (image) == LIGMA_PRECISION_U8_NON_LINEAR ||
+          ligma_image_get_precision (image) == LIGMA_PRECISION_U8_PERCEPTUAL)
         {
           if (! profile)
-            profile = gimp_image_get_effective_color_profile (orig_image);
-          out_linear = (gimp_color_profile_is_linear (profile));
+            profile = ligma_image_get_effective_color_profile (orig_image);
+          out_linear = (ligma_color_profile_is_linear (profile));
         }
       else
         {
@@ -1397,20 +1397,20 @@ save_image (GFile        *file,
            * with no manually assigned profile, make sure the result is
            * sRGB.
            */
-          profile = gimp_image_get_effective_color_profile (orig_image);
+          profile = ligma_image_get_effective_color_profile (orig_image);
 
-          if (gimp_color_profile_is_linear (profile))
+          if (ligma_color_profile_is_linear (profile))
             {
-              GimpColorProfile *saved_profile;
+              LigmaColorProfile *saved_profile;
 
-              saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+              saved_profile = ligma_color_profile_new_srgb_trc_from_color_profile (profile);
               g_object_unref (profile);
               profile = saved_profile;
             }
         }
 
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
       if (error && *error)
         {
@@ -1423,7 +1423,7 @@ save_image (GFile        *file,
           g_printerr ("%s: error getting the profile space: %s",
                      G_STRFUNC, (*error)->message);
           g_clear_error (error);
-          space = gimp_drawable_get_format (drawable);
+          space = ligma_drawable_get_format (drawable);
         }
     }
 #endif
@@ -1434,15 +1434,15 @@ save_image (GFile        *file,
    * profile.
    */
   bit_depth = 16;
-  switch (gimp_image_get_precision (image))
+  switch (ligma_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_LINEAR:
       if (out_linear)
         bit_depth = 8;
       break;
 
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
       if (! out_linear)
         bit_depth = 8;
       break;
@@ -1459,7 +1459,7 @@ save_image (GFile        *file,
        */
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error creating PNG write struct while exporting '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1468,7 +1468,7 @@ save_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while exporting '%s'. Could not create PNG header info structure."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1476,7 +1476,7 @@ save_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while exporting '%s'. Could not export image."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1493,8 +1493,8 @@ save_image (GFile        *file,
    */
 
   if (interactive)
-    gimp_progress_init_printf (_("Exporting '%s'"),
-                               gimp_file_get_utf8_name (file));
+    ligma_progress_init_printf (_("Exporting '%s'"),
+                               ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "wb");
 
@@ -1502,7 +1502,7 @@ save_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -1512,10 +1512,10 @@ save_image (GFile        *file,
    * Get the buffer for the current image...
    */
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
-  type   = gimp_drawable_type (drawable);
+  type   = ligma_drawable_type (drawable);
 
   /*
    * Initialise remap[]
@@ -1531,7 +1531,7 @@ save_image (GFile        *file,
 
     switch (type)
       {
-      case GIMP_RGB_IMAGE:
+      case LIGMA_RGB_IMAGE:
         color_type = PNG_COLOR_TYPE_RGB;
         if (bit_depth == 8)
           {
@@ -1549,7 +1549,7 @@ save_image (GFile        *file,
           }
         break;
 
-      case GIMP_RGBA_IMAGE:
+      case LIGMA_RGBA_IMAGE:
         color_type = PNG_COLOR_TYPE_RGB_ALPHA;
         if (bit_depth == 8)
           {
@@ -1567,7 +1567,7 @@ save_image (GFile        *file,
           }
         break;
 
-      case GIMP_GRAY_IMAGE:
+      case LIGMA_GRAY_IMAGE:
         color_type = PNG_COLOR_TYPE_GRAY;
         if (bit_depth == 8)
           {
@@ -1585,7 +1585,7 @@ save_image (GFile        *file,
           }
         break;
 
-      case GIMP_GRAYA_IMAGE:
+      case LIGMA_GRAYA_IMAGE:
         color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
         if (bit_depth == 8)
           {
@@ -1603,19 +1603,19 @@ save_image (GFile        *file,
           }
         break;
 
-      case GIMP_INDEXED_IMAGE:
+      case LIGMA_INDEXED_IMAGE:
         color_type = PNG_COLOR_TYPE_PALETTE;
-        file_format = gimp_drawable_get_format (drawable);
+        file_format = ligma_drawable_get_format (drawable);
         pngg.has_plte = TRUE;
-        pngg.palette = (png_colorp) gimp_image_get_colormap (image,
+        pngg.palette = (png_colorp) ligma_image_get_colormap (image,
                                                              &pngg.num_palette);
         if (optimize_palette)
           bit_depth = get_bit_depth_for_palette (pngg.num_palette);
         break;
 
-      case GIMP_INDEXEDA_IMAGE:
+      case LIGMA_INDEXEDA_IMAGE:
         color_type = PNG_COLOR_TYPE_PALETTE;
-        file_format = gimp_drawable_get_format (drawable);
+        file_format = ligma_drawable_get_format (drawable);
         /* fix up transparency */
         if (optimize_palette)
           bit_depth = respin_cmap (pp, info, remap, image, drawable);
@@ -1728,30 +1728,30 @@ save_image (GFile        *file,
 
   if (save_bkgd)
     {
-      GimpRGB color;
+      LigmaRGB color;
       guchar  red, green, blue;
 
-      gimp_context_get_background (&color);
-      gimp_rgb_get_uchar (&color, &red, &green, &blue);
+      ligma_context_get_background (&color);
+      ligma_rgb_get_uchar (&color, &red, &green, &blue);
 
       background.index = 0;
       background.red = red;
       background.green = green;
       background.blue = blue;
-      background.gray = gimp_rgb_luminance_uchar (&color);
+      background.gray = ligma_rgb_luminance_uchar (&color);
       png_set_bKGD (pp, info, &background);
     }
 
   if (save_offs)
     {
-      gimp_drawable_get_offsets (drawable, &offx, &offy);
+      ligma_drawable_get_offsets (drawable, &offx, &offy);
       if (offx != 0 || offy != 0)
         png_set_oFFs (pp, info, offx, offy, PNG_OFFSET_PIXEL);
     }
 
   if (save_phys)
     {
-      gimp_image_get_resolution (orig_image, &xres, &yres);
+      ligma_image_get_resolution (orig_image, &xres, &yres);
       png_set_pHYs (pp, info, RINT (xres / 0.0254), RINT (yres / 0.0254),
                     PNG_RESOLUTION_METER);
     }
@@ -1773,21 +1773,21 @@ save_image (GFile        *file,
 #if defined(PNG_iCCP_SUPPORTED)
   if (save_profile)
     {
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
       gchar        *profile_name = NULL;
       const guint8 *icc_data;
       gsize         icc_length;
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      icc_data = ligma_color_profile_get_icc_profile (profile, &icc_length);
 
-      parasite = gimp_image_get_parasite (orig_image,
+      parasite = ligma_image_get_parasite (orig_image,
                                           "icc-profile-name");
       if (parasite)
         {
           gchar   *parasite_data;
           guint32  parasite_size;
 
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           profile_name = g_convert (parasite_data, parasite_size,
                                     "UTF-8", "ISO-8859-1", NULL, NULL, NULL);
         }
@@ -1809,21 +1809,21 @@ save_image (GFile        *file,
       /* Be more specific by writing into the file that the image is in
        * sRGB color space.
        */
-      GimpColorConfig *config = gimp_get_color_configuration ();
+      LigmaColorConfig *config = ligma_get_color_configuration ();
       int              srgb_intent;
 
-      switch (gimp_color_config_get_display_intent (config))
+      switch (ligma_color_config_get_display_intent (config))
         {
-        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+        case LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL:
           srgb_intent = PNG_sRGB_INTENT_PERCEPTUAL;
           break;
-        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+        case LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
           srgb_intent = PNG_sRGB_INTENT_RELATIVE;
           break;
-        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+        case LIGMA_COLOR_RENDERING_INTENT_SATURATION:
           srgb_intent = PNG_sRGB_INTENT_SATURATION;
           break;
-        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+        case LIGMA_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
           srgb_intent = PNG_sRGB_INTENT_ABSOLUTE;
           break;
         }
@@ -1946,7 +1946,7 @@ save_image (GFile        *file,
    * Allocate memory for "tile_height" rows and export the image...
    */
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   pixel = g_new (guchar, tile_height * width * bpp);
   pixels = g_new (guchar *, tile_height);
 
@@ -2042,14 +2042,14 @@ save_image (GFile        *file,
           png_write_rows (pp, pixels, num);
 
           if (interactive)
-            gimp_progress_update (((double) pass + (double) end /
+            ligma_progress_update (((double) pass + (double) end /
                                    (double) height) /
                                   (double) num_passes);
         }
     }
 
   if (interactive)
-    gimp_progress_update (1.0);
+    ligma_progress_update (1.0);
 
   png_write_end (pp, info);
   png_destroy_write_struct (&pp, &info);
@@ -2178,8 +2178,8 @@ static int
 respin_cmap (png_structp   pp,
              png_infop     info,
              guchar       *remap,
-             GimpImage    *image,
-             GimpDrawable *drawable)
+             LigmaImage    *image,
+             LigmaDrawable *drawable)
 {
   static guchar trans[] = { 0 };
   GeglBuffer   *buffer;
@@ -2187,8 +2187,8 @@ respin_cmap (png_structp   pp,
   gint          colors;
   guchar       *before;
 
-  before = gimp_image_get_colormap (image, &colors);
-  buffer = gimp_drawable_get_buffer (drawable);
+  before = ligma_image_get_colormap (image, &colors);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   /* Make sure there is something in the colormap.
    */
@@ -2275,8 +2275,8 @@ respin_cmap (png_structp   pp,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config,
              gboolean       alpha)
 {
@@ -2285,16 +2285,16 @@ save_dialog (GimpImage     *image,
   gboolean      run;
   gboolean      indexed;
 
-  indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
+  indexed = (ligma_image_get_base_type (image) == LIGMA_INDEXED);
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "compression", GIMP_TYPE_SPIN_SCALE);
+  ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
+                                    "compression", LIGMA_TYPE_SPIN_SCALE);
 
-  store = gimp_int_store_new (_("Automatic"),    PNG_FORMAT_AUTO,
+  store = ligma_int_store_new (_("Automatic"),    PNG_FORMAT_AUTO,
                               _("8 bpc RGB"),    PNG_FORMAT_RGB8,
                               _("8 bpc GRAY"),   PNG_FORMAT_GRAY8,
                               _("8 bpc RGBA"),   PNG_FORMAT_RGBA8,
@@ -2304,28 +2304,28 @@ save_dialog (GimpImage     *image,
                               _("16 bpc RGBA"),  PNG_FORMAT_RGBA16,
                               _("16 bpc GRAYA"), PNG_FORMAT_GRAYA16,
                               NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "format", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "format", LIGMA_INT_STORE (store));
 
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "save-transparent",
                                        alpha, NULL, NULL, FALSE);
 
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "optimize-palette",
                                        indexed, NULL, NULL, FALSE);
 
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "offs");
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "phys");
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "time");
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_save_procedure_dialog_add_metadata (LIGMA_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
+  ligma_save_procedure_dialog_add_metadata (LIGMA_SAVE_PROCEDURE_DIALOG (dialog), "offs");
+  ligma_save_procedure_dialog_add_metadata (LIGMA_SAVE_PROCEDURE_DIALOG (dialog), "phys");
+  ligma_save_procedure_dialog_add_metadata (LIGMA_SAVE_PROCEDURE_DIALOG (dialog), "time");
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                               "format", "compression",
                               "interlaced", "save-transparent",
                               "optimize-palette",
                               NULL);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

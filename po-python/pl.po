@@ -1,6 +1,6 @@
-# Polish translation for gimp-python.
-# Copyright © 1999-2020 the gimp authors.
-# This file is distributed under the same license as the gimp package.
+# Polish translation for ligma-python.
+# Copyright © 1999-2020 the ligma authors.
+# This file is distributed under the same license as the ligma package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
@@ -10,7 +10,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
+"Project-Id-Version: ligma-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-25 09:55+0100\n"
 "PO-Revision-Date: 2020-10-25 10:00+0100\n"
@@ -23,442 +23,442 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pyligma/ligmafu.py:395
 msgid "Missing exception information"
 msgstr "Brak informacji o wyjątku"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pyligma/ligmafu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Wystąpił błąd podczas uruchamiania %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pyligma/ligmafu.py:415
 msgid "_More Information"
 msgstr "_Więcej informacji"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:528 ../plug-ins/pyligma/ligmafu.py:540
+#: ../plug-ins/pyligma/ligmafu.py:546
 msgid "No"
 msgstr "Nie"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:538 ../plug-ins/pyligma/ligmafu.py:546
 msgid "Yes"
 msgstr "Tak"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:599 ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Wybór pliku Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pyligma/ligmafu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Wybór katalogu Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pyligma/ligmafu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Błąd wprowadzania dla „%s”"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "Wybór koloru Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Zapis jako kolorowany XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Zapisz jako kolorowany XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Kolorowany XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "Ź_ródło znaku"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Kod źródłowy"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Plik tekstowy"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Pole edycji"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Plik do odczytu lub znak do użycia"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "Rozmiar _czcionki w pikselach"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "_Zapisanie jako oddzielny plik CSS"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "Gradient do użycia"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Nazwa pliku"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksportuje histogram obrazu do pliku tekstowego (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "Wy_eksportuj histogram…"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Obraz"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "O_bszar rysowania"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Plik _histogramu"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "_Rozmiar kubełka"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "_Próbowanie średniej kolorów"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Format wyjściowy"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Liczba pikseli"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Znormalizowane"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Procent"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Dodaje warstwę mgły"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_Mgła…"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "Nazwa _warstwy"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "Chmury"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "Kolor _mgły"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "_Turbulencje"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "K_rycie"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Przesuwa kolory w palecie"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "_Przesuń paletę…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:334
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "Prze_suń"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Red"
 msgstr "Czerwony"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Green"
 msgstr "Zielony"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Blue"
 msgstr "Niebieski"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Hue"
 msgstr "Barwa"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Saturation"
 msgstr "Nasycenie"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Value"
 msgstr "Wartość"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
 msgstr "Nasycenie (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
 msgstr "Jasność (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:29
 msgid "Index"
 msgstr "Indeks"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:30
 msgid "Random"
 msgstr "Losowo"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
 msgstr "Jasność (LAB)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "A-color"
 msgstr "Kolor A"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "B-color"
 msgstr "Kolor B"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
 msgstr "Chrominancja (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
 msgstr "Barwa (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
 msgstr "Porządkuje kolory w palecie"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
 msgstr "_Uporządkuj paletę…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr "_Zaznaczenia"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "All"
 msgstr "Wszystko"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
 msgstr "Podział/macierz"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
 msgstr "Automatyczny podział (pierwszy plan → tło)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:337
 msgid "Partitioned"
 msgstr "Podzielone"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
 msgstr "Wyrażenie p_odziału"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
 msgstr "Kanał do _uporządkowania"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:341
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "_Rosnąco"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:342
 msgid "Secondary Channel to s_ort"
 msgstr "Drugi kanał do _uporządkowania"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:345
 msgid "_Quantization"
 msgstr "_Kwantyzacja"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
 msgstr "_Dzielący kanał"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
 msgstr "K_wantyzacja podziału"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Tworzy powtarzający się gradient za pomocą kolorów z palety"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta na po_wtarzający się gradient"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Tworzy gradient za pomocą kolorów z palety"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Paleta na g_radient"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Przycinanie"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Obcina obraz wzdłuż prowadnic, tworzy obrazy i fragmenty tabel HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Przytnij…"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Ścieżka do eksportu HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Nazwa pliku do wyeksportowania"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Przedrostek nazwy obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Format obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Rozdziela katalog obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Katalog do wyeksportowania obrazów"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Odstęp między elementami tablicy"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "JavaScript dla zdarzeń „onmouseover” i „clicked”"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Pomija animację dla tabel"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: ../plug-ins/pyligma/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Konsola języka Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: ../plug-ins/pyligma/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Przeglądaj…"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
+#: ../plug-ins/pyligma/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Przeglądarka procedur języka Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: ../plug-ins/pyligma/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie można otworzyć „%s” do zapisania: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
+#: ../plug-ins/pyligma/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Nie można zapisać do „%s”: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
+#: ../plug-ins/pyligma/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Zapis wyjścia konsoli Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktywny interpreter języka Python dla programu GIMP"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:232
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktywny interpreter języka Python dla programu LIGMA"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
+#: ../plug-ins/pyligma/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Konsola"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Rzuca cień na warstwę i opcjonalnie krawędź"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Rzuć cień i krawędź…"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "Rozmycie _cienia"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_Krawędź"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "_Rzuć cień"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "_Poziome przesunięcie cienia"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Pi_onowe przesunięcie cienia"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:44
 msgid "Spyro Layer"
 msgstr "Warstwa Spyro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:45
 msgid "Spyro Path"
 msgstr "Ścieżka Spyro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:56
 msgid ""
 "Save\n"
 "as New Layer"
@@ -466,7 +466,7 @@ msgstr ""
 "Zapisanie\n"
 "jako nowa warstwa"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:57
 msgid ""
 "Redraw on\n"
 "Active layer"
@@ -474,7 +474,7 @@ msgstr ""
 "Ponowne narysowanie\n"
 "na aktywnej warstwie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:58
 msgid ""
 "Save\n"
 "as Path"
@@ -482,104 +482,104 @@ msgstr ""
 "Zapisanie\n"
 "jako ścieżka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:104
 msgid "Circle"
 msgstr "Okrąg"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:140
 msgid "Polygon-Star"
 msgstr "Wielokąt — gwiazda"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:947
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:166
 msgid "Bumps"
 msgstr "Wypukłości"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:271
 msgid "Rack"
 msgstr "Stojak"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:315
 msgid "Frame"
 msgstr "Ramka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:404
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:494
 msgid "Pencil"
 msgstr "Ołówek"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:510
 msgid "AirBrush"
 msgstr "Aerograf"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:570
 msgid "Preview"
 msgstr "Podgląd"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:575
 msgid "Stroke"
 msgstr "Kreska"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:622
 msgid "PaintBrush"
 msgstr "Pędzel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:624
 msgid "Ink"
 msgstr "Stalówka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:625
 msgid "MyPaintBrush"
 msgstr "Pędzel programu MyPaint"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:933
 msgid "Spyrograph"
 msgstr "Spirogram"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:940
 msgid "Epitrochoid"
 msgstr "Epitrochoida"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:967
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Typ krzywej"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
 "Wzór epitrochoidy powstaje, kiedy ruchoma zębatka jest poza stałą zębatką."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Narzędzie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1404
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Narzędzie, za pomocą którego rysować wzór. Narzędzie „Podgląd” po prostu "
 "rysuje szybko."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Długi gradient"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -589,11 +589,11 @@ msgstr ""
 "spowoduje użycie długiego gradientu, aby dopasować do długości wzoru na "
 "podstawie obecnego gradientu i trybu powtarzania z ustawień gradientu."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Określenie wzoru za pomocą jednej z tych kart:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -605,7 +605,7 @@ msgstr ""
 "w zabawkach. Jeśli używane są instrukcje z podręczników zabawek, to wyniki "
 "powinny być podobne."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -613,12 +613,12 @@ msgstr ""
 "Liczba zębów stałej zębatki. Rozmiar stałej zębatki jest proporcjonalny do "
 "liczby zębów."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Zęby stałej zębatki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -626,16 +626,16 @@ msgstr ""
 "Liczba zębów ruchomej zębatki. Rozmiar ruchomej zębatki jest proporcjonalny "
 "do liczby zębów."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Zęby ruchomej zębatki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Procent otworu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -643,11 +643,11 @@ msgstr ""
 "Jak daleko otwór jest od środka ruchomej zębatki. 100% oznacza, że otwór "
 "jest na krawędzi zębatki."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Numer otworu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -655,27 +655,27 @@ msgstr ""
 "Otwór o numerze 1 jest na krawędzi zębatki. Maksymalny numer otworu jest "
 "blisko środka. Maksymalny numer otworu jest różny dla każdej zębatki."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
 msgstr "Płatki kwiatu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
 msgstr "Liczba płatków na wzorze."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
 msgstr "Pominięcie płatka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "O ile płatków przesunąć do narysowania następnego."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
 msgstr "Promień otworu (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1520
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -685,11 +685,11 @@ msgstr ""
 "procent wymiarów wzoru. Wartość 0 spowoduje brak otworu. Wartość 99 "
 "spowoduje narysowanie cienkiej linii na krawędzi."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
 msgstr "Szerokość (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1534
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -698,24 +698,24 @@ msgstr ""
 "Szerokość wzoru jako procent jego wymiarów. Wartość 1 spowoduje narysowanie "
 "cienkiego wzoru. Wartość 100 wypełni całą stałą zębatkę."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1544
 msgid "Visual"
 msgstr "Wizualne"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Toy Kit"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Zębatki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Obrót"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -723,11 +723,11 @@ msgstr ""
 "Obrót wzoru w stopniach. Pozycja początkowa ruchomej zębatki w stałej "
 "zębatce."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Kształt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -741,40 +741,40 @@ msgstr ""
 "granicy. Zaznaczenie przytuli granice obecnego zaznaczenia — można spróbować "
 "coś nieprostokątnego."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Strony"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Liczba stron kształtu."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Przekształcenie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "Przekształcenie kształtu stałej zębatki. Ma wpływ tylko na część kształtów."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Obrót stałej zębatki w stopniach"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Margines (piksele)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Margines od krawędzi zaznaczenia."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
 msgstr "Równa szerokość i wysokość"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -783,11 +783,11 @@ msgstr ""
 "Zaznaczenie spowoduje, że wzór będzie miał tę samą szerokość i wysokość "
 "i będzie wyśrodkowany."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "P_onowne rysowanie"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -795,19 +795,19 @@ msgstr ""
 "Jeśli zmieniono ustawienia narzędzia, kolor lub zaznaczenie, to kliknięcie "
 "tego wyświetli podgląd, jak wzór będzie wyglądał."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1667
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -815,36 +815,36 @@ msgstr ""
 "Wybiera, czy zapisać jako nową warstwę, ponownie narysować na ostatniej "
 "aktywnej warstwie lub zapisać do ścieżki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1679
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Rysowanie spirogramów za pomocą obecnych ustawień narzędzia i zaznaczenia."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Wzór krzywej"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Stała zębatka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Rysowanie wzoru"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Proszę czekać: rysowanie wzoru"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
-msgid "Spyrogimp..."
-msgstr "Spyrogimp…"
+#: ../plug-ins/pyligma/plug-ins/spyro_plus.py:2164
+msgid "Spyroligma..."
+msgstr "Spyroligma…"

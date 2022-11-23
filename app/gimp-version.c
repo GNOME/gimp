@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "about.h"
 #include "git-version.h"
 
-#include "gimp-intl.h"
-#include "gimp-version.h"
+#include "ligma-intl.h"
+#include "ligma-version.h"
 
 
-static gchar * gimp_library_version          (const gchar *package,
+static gchar * ligma_library_version          (const gchar *package,
                                               gint         build_time_major,
                                               gint         build_time_minor,
                                               gint         build_time_micro,
@@ -46,14 +46,14 @@ static gchar * gimp_library_version          (const gchar *package,
                                               gint         run_time_minor,
                                               gint         run_time_micro,
                                               gboolean     localized);
-static gchar * gimp_library_versions         (gboolean     localized);
-static void    gimp_version_get_release_info (gint        *package_revision,
+static gchar * ligma_library_versions         (gboolean     localized);
+static void    ligma_version_get_release_info (gint        *package_revision,
                                               gboolean    *package_check_update);
 
 void
-gimp_version_show (gboolean be_verbose)
+ligma_version_show (gboolean be_verbose)
 {
-  gchar *version = gimp_version (be_verbose, TRUE);
+  gchar *version = ligma_version (be_verbose, TRUE);
 
   g_print ("%s", version);
 
@@ -61,14 +61,14 @@ gimp_version_show (gboolean be_verbose)
 }
 
 gchar *
-gimp_version (gboolean be_verbose,
+ligma_version (gboolean be_verbose,
               gboolean localized)
 {
   gchar *version;
   gchar *temp;
 
   version = g_strdup_printf (localized ? _("%s version %s") : "%s version %s",
-                             GIMP_NAME, GIMP_VERSION);;
+                             LIGMA_NAME, LIGMA_VERSION);;
   temp = g_strconcat (version, "\n", NULL);
   g_free (version);
   version = temp;
@@ -79,15 +79,15 @@ gimp_version (gboolean be_verbose,
       gchar *lib_versions;
       gchar *flatpak_info = NULL;
 
-      lib_versions = gimp_library_versions (localized);
+      lib_versions = ligma_library_versions (localized);
       verbose_info = g_strdup_printf ("git-describe: %s\n"
                                       "Build: %s rev %d for %s\n"
                                       "# C compiler #\n%s\n"
                                       "# Libraries #\n%s",
-                                      GIMP_GIT_VERSION,
-                                      GIMP_BUILD_ID,
-                                      gimp_version_get_revision (),
-                                      GIMP_BUILD_PLATFORM_FAMILY,
+                                      LIGMA_GIT_VERSION,
+                                      LIGMA_BUILD_ID,
+                                      ligma_version_get_revision (),
+                                      LIGMA_BUILD_PLATFORM_FAMILY,
                                       CC_VERSION,
                                       lib_versions);
       g_free (lib_versions);
@@ -115,27 +115,27 @@ gimp_version (gboolean be_verbose,
 }
 
 gint
-gimp_version_get_revision (void)
+ligma_version_get_revision (void)
 {
   gint revision;
 
-  gimp_version_get_release_info (&revision, NULL);
+  ligma_version_get_release_info (&revision, NULL);
 
   return revision;
 }
 
 gboolean
-gimp_version_check_update (void)
+ligma_version_check_update (void)
 {
   gboolean check_update;
 
-  gimp_version_get_release_info (NULL, &check_update);
+  ligma_version_get_release_info (NULL, &check_update);
 
   return check_update;
 }
 
 static gchar *
-gimp_library_version (const gchar *package,
+ligma_library_version (const gchar *package,
                       gint         build_time_major,
                       gint         build_time_minor,
                       gint         build_time_micro,
@@ -157,7 +157,7 @@ gimp_library_version (const gchar *package,
                                       run_time_minor,
                                       run_time_micro);
 
-  /* show versions of libraries used by GIMP */
+  /* show versions of libraries used by LIGMA */
   lib_version = g_strdup_printf (localized ?
                                  _("using %s version %s (compiled against version %s)") :
                                  "using %s version %s (compiled against version %s)",
@@ -169,7 +169,7 @@ gimp_library_version (const gchar *package,
 }
 
 static gchar *
-gimp_library_versions (gboolean localized)
+ligma_library_versions (gboolean localized)
 {
   gchar *lib_versions;
   gchar *lib_version;
@@ -185,7 +185,7 @@ gimp_library_versions (gboolean localized)
                     &babl_minor_version,
                     &babl_micro_version);
 
-  lib_versions = gimp_library_version ("babl",
+  lib_versions = ligma_library_version ("babl",
                                        BABL_MAJOR_VERSION,
                                        BABL_MINOR_VERSION,
                                        BABL_MICRO_VERSION,
@@ -198,7 +198,7 @@ gimp_library_versions (gboolean localized)
                     &gegl_minor_version,
                     &gegl_micro_version);
 
-  lib_version = gimp_library_version ("GEGL",
+  lib_version = ligma_library_version ("GEGL",
                                        GEGL_MAJOR_VERSION,
                                        GEGL_MINOR_VERSION,
                                        GEGL_MICRO_VERSION,
@@ -212,7 +212,7 @@ gimp_library_versions (gboolean localized)
   g_free (lib_version);
   lib_versions = temp;
 
-  lib_version = gimp_library_version ("GLib",
+  lib_version = ligma_library_version ("GLib",
                                       GLIB_MAJOR_VERSION,
                                       GLIB_MINOR_VERSION,
                                       GLIB_MICRO_VERSION,
@@ -225,7 +225,7 @@ gimp_library_versions (gboolean localized)
   g_free (lib_version);
   lib_versions = temp;
 
-  lib_version = gimp_library_version ("GdkPixbuf",
+  lib_version = ligma_library_version ("GdkPixbuf",
                                       GDK_PIXBUF_MAJOR,
                                       GDK_PIXBUF_MINOR,
                                       GDK_PIXBUF_MICRO,
@@ -238,8 +238,8 @@ gimp_library_versions (gboolean localized)
   g_free (lib_version);
   lib_versions = temp;
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  lib_version = gimp_library_version ("GTK+",
+#ifndef LIGMA_CONSOLE_COMPILATION
+  lib_version = ligma_library_version ("GTK+",
                                       GTK_MAJOR_VERSION,
                                       GTK_MINOR_VERSION,
                                       GTK_MICRO_VERSION,
@@ -253,7 +253,7 @@ gimp_library_versions (gboolean localized)
   lib_versions = temp;
 #endif
 
-  lib_version = gimp_library_version ("Pango",
+  lib_version = ligma_library_version ("Pango",
                                       PANGO_VERSION_MAJOR,
                                       PANGO_VERSION_MINOR,
                                       PANGO_VERSION_MICRO,
@@ -266,7 +266,7 @@ gimp_library_versions (gboolean localized)
   g_free (lib_version);
   lib_versions = temp;
 
-  lib_version = gimp_library_version ("Fontconfig",
+  lib_version = ligma_library_version ("Fontconfig",
                                       FC_MAJOR, FC_MINOR, FC_REVISION,
                                       FcGetVersion () / 100 / 100,
                                       FcGetVersion () / 100 % 100,
@@ -290,7 +290,7 @@ gimp_library_versions (gboolean localized)
 }
 
 static void
-gimp_version_get_release_info (gint     *package_revision,
+ligma_version_get_release_info (gint     *package_revision,
                                gboolean *package_check_update)
 {
   static gint     revision     = -1;
@@ -299,22 +299,22 @@ gimp_version_get_release_info (gint     *package_revision,
   if (revision == -1)
     {
       GKeyFile *key_file;
-      gchar    *gimp_release;
+      gchar    *ligma_release;
 
       revision = 0;
       key_file = g_key_file_new ();
 
-      /* The gimp-release file is inspired by /etc/os-release and similar
+      /* The ligma-release file is inspired by /etc/os-release and similar
        * distribution files. Right now its main use is to number the package
        * revision. This information is not a build variable because a new
        * package version does not necessarily imply a rebuild (maybe just
        * installed data or dependencies change).
        */
-      gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
+      ligma_release = g_build_filename (ligma_data_directory (), "ligma-release", NULL);
       /* Absence of the file is not an error. Actually most third-party
        * builds probably won't install such file.
        */
-      if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
+      if (g_key_file_load_from_file (key_file, ligma_release, G_KEY_FILE_NONE, NULL))
         {
           check_update = TRUE;
 
@@ -325,7 +325,7 @@ gimp_version_get_release_info (gint     *package_revision,
             check_update = g_key_file_get_boolean (key_file, "package", "check-update", NULL);
         }
       g_key_file_free (key_file);
-      g_free (gimp_release);
+      g_free (ligma_release);
     }
 
   if (package_revision)

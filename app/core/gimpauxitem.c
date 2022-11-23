@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpauxitem.h"
+#include "ligmaauxitem.h"
 
 
 enum
@@ -39,42 +39,42 @@ enum
 };
 
 
-struct _GimpAuxItemPrivate
+struct _LigmaAuxItemPrivate
 {
   guint32  aux_item_id;
 };
 
 
-static void   gimp_aux_item_get_property (GObject      *object,
+static void   ligma_aux_item_get_property (GObject      *object,
                                           guint         property_id,
                                           GValue       *value,
                                           GParamSpec   *pspec);
-static void   gimp_aux_item_set_property (GObject      *object,
+static void   ligma_aux_item_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpAuxItem, gimp_aux_item, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (LigmaAuxItem, ligma_aux_item, G_TYPE_OBJECT)
 
-static guint gimp_aux_item_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_aux_item_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_aux_item_class_init (GimpAuxItemClass *klass)
+ligma_aux_item_class_init (LigmaAuxItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_aux_item_signals[REMOVED] =
+  ligma_aux_item_signals[REMOVED] =
     g_signal_new ("removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpAuxItemClass, removed),
+                  G_STRUCT_OFFSET (LigmaAuxItemClass, removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->get_property = gimp_aux_item_get_property;
-  object_class->set_property = gimp_aux_item_set_property;
+  object_class->get_property = ligma_aux_item_get_property;
+  object_class->set_property = ligma_aux_item_set_property;
 
   klass->removed             = NULL;
 
@@ -82,22 +82,22 @@ gimp_aux_item_class_init (GimpAuxItemClass *klass)
                                    g_param_spec_uint ("id", NULL, NULL,
                                                       0, G_MAXUINT32, 0,
                                                       G_PARAM_CONSTRUCT_ONLY |
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_aux_item_init (GimpAuxItem *aux_item)
+ligma_aux_item_init (LigmaAuxItem *aux_item)
 {
-  aux_item->priv = gimp_aux_item_get_instance_private (aux_item);
+  aux_item->priv = ligma_aux_item_get_instance_private (aux_item);
 }
 
 static void
-gimp_aux_item_get_property (GObject    *object,
+ligma_aux_item_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpAuxItem *aux_item = GIMP_AUX_ITEM (object);
+  LigmaAuxItem *aux_item = LIGMA_AUX_ITEM (object);
 
   switch (property_id)
     {
@@ -112,12 +112,12 @@ gimp_aux_item_get_property (GObject    *object,
 }
 
 static void
-gimp_aux_item_set_property (GObject      *object,
+ligma_aux_item_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpAuxItem *aux_item = GIMP_AUX_ITEM (object);
+  LigmaAuxItem *aux_item = LIGMA_AUX_ITEM (object);
 
   switch (property_id)
     {
@@ -132,17 +132,17 @@ gimp_aux_item_set_property (GObject      *object,
 }
 
 guint32
-gimp_aux_item_get_id (GimpAuxItem *aux_item)
+ligma_aux_item_get_id (LigmaAuxItem *aux_item)
 {
-  g_return_val_if_fail (GIMP_IS_AUX_ITEM (aux_item), 0);
+  g_return_val_if_fail (LIGMA_IS_AUX_ITEM (aux_item), 0);
 
   return aux_item->priv->aux_item_id;
 }
 
 void
-gimp_aux_item_removed (GimpAuxItem *aux_item)
+ligma_aux_item_removed (LigmaAuxItem *aux_item)
 {
-  g_return_if_fail (GIMP_IS_AUX_ITEM (aux_item));
+  g_return_if_fail (LIGMA_IS_AUX_ITEM (aux_item));
 
-  g_signal_emit (aux_item, gimp_aux_item_signals[REMOVED], 0);
+  g_signal_emit (aux_item, ligma_aux_item_signals[REMOVED], 0);
 }

@@ -1,5 +1,5 @@
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,15 +42,15 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-spheredesigner"
 #define PLUG_IN_BINARY "sphere-designer"
-#define PLUG_IN_ROLE   "gimp-sphere-designer"
+#define PLUG_IN_ROLE   "ligma-sphere-designer"
 
 #define RESPONSE_RESET 1
 
@@ -133,7 +133,7 @@ typedef struct
 {
   gshort        numcol;
   gdouble       pos[MAXCOLPERGRADIENT];
-  GimpVector4   color[MAXCOLPERGRADIENT];
+  LigmaVector4   color[MAXCOLPERGRADIENT];
 } gradient;
 
 typedef struct
@@ -141,28 +141,28 @@ typedef struct
   gint          majtype;
   gint          type;
   gulong        flags;
-  GimpVector4   color1, color2;
+  LigmaVector4   color1, color2;
   gradient      gradient;
-  GimpVector4   ambient, diffuse;
+  LigmaVector4   ambient, diffuse;
   gdouble       oscale;
-  GimpVector4   scale, translate, rotate;
+  LigmaVector4   scale, translate, rotate;
   image         image;
-  GimpVector4   reflection;
-  GimpVector4   refraction;
-  GimpVector4   transparent;
+  LigmaVector4   reflection;
+  LigmaVector4   refraction;
+  LigmaVector4   transparent;
   gdouble       ior;
-  GimpVector4   phongcolor;
+  LigmaVector4   phongcolor;
   gdouble       phongsize;
   gdouble       amount;
   gdouble       exp;
-  GimpVector4   turbulence;
+  LigmaVector4   turbulence;
 } texture;
 
 typedef struct
 {
   gshort  type;
   gdouble density;
-  GimpVector4  color;
+  LigmaVector4  color;
   gdouble turbulence;
 } atmos;
 
@@ -179,46 +179,46 @@ typedef struct
 typedef struct
 {
   common com;
-  GimpVector4 a, b, c;
+  LigmaVector4 a, b, c;
 } triangle;
 
 typedef struct
 {
   common        com;
-  GimpVector4   a;
+  LigmaVector4   a;
   gdouble       b, r;
 } disc;
 
 typedef struct
 {
   common        com;
-  GimpVector4   a;
+  LigmaVector4   a;
   gdouble       r;
 } sphere;
 
 typedef struct
 {
   common        com;
-  GimpVector4   a, b, c;
+  LigmaVector4   a, b, c;
 } cylinder;
 
 typedef struct
 {
   common        com;
-  GimpVector4   a;
+  LigmaVector4   a;
   gdouble       b;
 } plane;
 
 typedef struct
 {
   common        com;
-  GimpVector4   color;
-  GimpVector4   a;
+  LigmaVector4   color;
+  LigmaVector4   a;
 } light;
 
 typedef struct
 {
-  GimpVector4   v1, v2;
+  LigmaVector4   v1, v2;
   gshort        inside;
   gdouble       ior;
 } ray;
@@ -251,7 +251,7 @@ struct world_t
 
 struct camera_t
 {
-  GimpVector4 location, lookat, up, right;
+  LigmaVector4 location, lookat, up, right;
   short  type;
   double fov, tilt;
 };
@@ -262,12 +262,12 @@ typedef struct _DesignerClass DesignerClass;
 
 struct _Designer
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _DesignerClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -276,19 +276,19 @@ struct _DesignerClass
 
 GType                   designer_get_type         (void) G_GNUC_CONST;
 
-static GList          * designer_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * designer_create_procedure (GimpPlugIn           *plug_in,
+static GList          * designer_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * designer_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * designer_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * designer_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static inline void vset          (GimpVector4          *v,
+static inline void vset          (LigmaVector4          *v,
                                   gdouble               a,
                                   gdouble               b,
                                   gdouble               c);
@@ -296,11 +296,11 @@ static void        restartrender (void);
 static void        drawcolor1    (GtkWidget            *widget);
 static void        drawcolor2    (GtkWidget            *widget);
 static gboolean    render        (void);
-static void        realrender    (GimpDrawable         *drawable);
+static void        realrender    (LigmaDrawable         *drawable);
 static void        fileselect    (GtkFileChooserAction  action,
                                   GtkWidget            *parent);
 static gint        traceray      (ray                  *r,
-                                  GimpVector4          *col,
+                                  LigmaVector4          *col,
                                   gint                  level,
                                   gdouble               imp);
 static gdouble     turbulence    (gdouble              *point,
@@ -308,9 +308,9 @@ static gdouble     turbulence    (gdouble              *point,
                                   gdouble               hifreq);
 
 
-G_DEFINE_TYPE (Designer, designer, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Designer, designer, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DESIGNER_TYPE)
+LIGMA_MAIN (DESIGNER_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -373,7 +373,7 @@ static GRand    *gr;
 static void
 designer_class_init (DesignerClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = designer_query_procedures;
   plug_in_class->create_procedure = designer_create_procedure;
@@ -386,31 +386,31 @@ designer_init (Designer *designer)
 }
 
 static GList *
-designer_query_procedures (GimpPlugIn *plug_in)
+designer_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-designer_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+designer_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             designer_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("Sphere _Designer..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
+      ligma_procedure_set_menu_label (procedure, _("Sphere _Designer..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create an image of a textured "
                                           "sphere"),
                                         "This plug-in can be used to create "
@@ -419,7 +419,7 @@ designer_create_procedure (GimpPlugIn  *plug_in,
                                         "raytracer to perform the task with "
                                         "good quality",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Vidar Madsen",
                                       "Vidar Madsen",
                                       "1999");
@@ -573,13 +573,13 @@ turbulence (gdouble * point, gdouble lofreq, gdouble hifreq)
 static struct world_t  world;
 
 static inline void
-vcopy (GimpVector4 *a, GimpVector4 *b)
+vcopy (LigmaVector4 *a, LigmaVector4 *b)
 {
   *a = *b;
 }
 
 static inline void
-vcross (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b)
+vcross (LigmaVector4 *r, LigmaVector4 *a, LigmaVector4 *b)
 {
   r->x = a->y * b->z - a->z * b->y;
   r->y = -(a->x * b->z - a->z * b->x);
@@ -587,13 +587,13 @@ vcross (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline gdouble
-vdot (GimpVector4 *a, GimpVector4 *b)
+vdot (LigmaVector4 *a, LigmaVector4 *b)
 {
   return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
 static inline gdouble
-vdist (GimpVector4 *a, GimpVector4 *b)
+vdist (LigmaVector4 *a, LigmaVector4 *b)
 {
   gdouble x, y, z;
 
@@ -605,7 +605,7 @@ vdist (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline gdouble
-vdist2 (GimpVector4 *a, GimpVector4 *b)
+vdist2 (LigmaVector4 *a, LigmaVector4 *b)
 {
   gdouble x, y, z;
 
@@ -617,13 +617,13 @@ vdist2 (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline gdouble
-vlen (GimpVector4 *a)
+vlen (LigmaVector4 *a)
 {
   return sqrt (a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
 static inline void
-vnorm (GimpVector4 *a, gdouble v)
+vnorm (LigmaVector4 *a, gdouble v)
 {
   gdouble d;
 
@@ -634,7 +634,7 @@ vnorm (GimpVector4 *a, gdouble v)
 }
 
 static inline void
-vrotate (GimpVector4 *axis, gdouble ang, GimpVector4 *vector)
+vrotate (LigmaVector4 *axis, gdouble ang, LigmaVector4 *vector)
 {
   gdouble rad = ang / 180.0 * G_PI;
   gdouble ax  = vector->x;
@@ -662,7 +662,7 @@ vrotate (GimpVector4 *axis, gdouble ang, GimpVector4 *vector)
 }
 
 static inline void
-vset (GimpVector4 *v, gdouble a, gdouble b, gdouble c)
+vset (LigmaVector4 *v, gdouble a, gdouble b, gdouble c)
 {
   v->x = a;
   v->y = b;
@@ -671,7 +671,7 @@ vset (GimpVector4 *v, gdouble a, gdouble b, gdouble c)
 }
 
 static inline void
-vcset (GimpVector4 *v, gdouble a, gdouble b, gdouble c, gdouble d)
+vcset (LigmaVector4 *v, gdouble a, gdouble b, gdouble c, gdouble d)
 {
   v->x = a;
   v->y = b;
@@ -680,9 +680,9 @@ vcset (GimpVector4 *v, gdouble a, gdouble b, gdouble c, gdouble d)
 }
 
 static inline void
-vvrotate (GimpVector4 *p, GimpVector4 *rot)
+vvrotate (LigmaVector4 *p, LigmaVector4 *rot)
 {
-  GimpVector4 axis;
+  LigmaVector4 axis;
 
   if (rot->x != 0.0)
     {
@@ -702,7 +702,7 @@ vvrotate (GimpVector4 *p, GimpVector4 *rot)
 }
 
 static inline void
-vsub (GimpVector4 *a, GimpVector4 *b)
+vsub (LigmaVector4 *a, LigmaVector4 *b)
 {
   a->x -= b->x;
   a->y -= b->y;
@@ -711,7 +711,7 @@ vsub (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline void
-vadd (GimpVector4 *a, GimpVector4 *b)
+vadd (LigmaVector4 *a, LigmaVector4 *b)
 {
   a->x += b->x;
   a->y += b->y;
@@ -720,7 +720,7 @@ vadd (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline void
-vneg (GimpVector4 *a)
+vneg (LigmaVector4 *a)
 {
   a->x = -a->x;
   a->y = -a->y;
@@ -729,7 +729,7 @@ vneg (GimpVector4 *a)
 }
 
 static inline void
-vmul (GimpVector4 *v, gdouble a)
+vmul (LigmaVector4 *v, gdouble a)
 {
   v->x *= a;
   v->y *= a;
@@ -738,7 +738,7 @@ vmul (GimpVector4 *v, gdouble a)
 }
 
 static inline void
-vvmul (GimpVector4 *a, GimpVector4 *b)
+vvmul (LigmaVector4 *a, LigmaVector4 *b)
 {
   a->x *= b->x;
   a->y *= b->y;
@@ -747,7 +747,7 @@ vvmul (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline void
-vvdiv (GimpVector4 *a, GimpVector4 *b)
+vvdiv (LigmaVector4 *a, LigmaVector4 *b)
 {
   a->x /= b->x;
   a->y /= b->y;
@@ -755,7 +755,7 @@ vvdiv (GimpVector4 *a, GimpVector4 *b)
 }
 
 static void
-vmix (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b, gdouble v)
+vmix (LigmaVector4 *r, LigmaVector4 *a, LigmaVector4 *b, gdouble v)
 {
   gdouble i = 1.0 - v;
 
@@ -766,7 +766,7 @@ vmix (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b, gdouble v)
 }
 
 static double
-vmax (GimpVector4 *a)
+vmax (LigmaVector4 *a)
 {
   gdouble max = fabs (a->x);
 
@@ -782,7 +782,7 @@ vmax (GimpVector4 *a)
 
 #if 0
 static void
-vavg (GimpVector4 * a)
+vavg (LigmaVector4 * a)
 {
   gdouble s;
 
@@ -792,7 +792,7 @@ vavg (GimpVector4 * a)
 #endif
 
 static void
-trianglenormal (GimpVector4 * n, gdouble *t, triangle * tri)
+trianglenormal (LigmaVector4 * n, gdouble *t, triangle * tri)
 {
   triangle tmp;
   vcopy (&tmp.b, &tri->b);
@@ -808,7 +808,7 @@ trianglenormal (GimpVector4 * n, gdouble *t, triangle * tri)
 static gdouble
 checkdisc (ray * r, disc * disc)
 {
-  GimpVector4 p, *v = &disc->a;
+  LigmaVector4 p, *v = &disc->a;
   gdouble t, d2;
   gdouble i, j, k;
 
@@ -834,7 +834,7 @@ checkdisc (ray * r, disc * disc)
 static gdouble
 checksphere (ray * r, sphere * sphere)
 {
-  GimpVector4 cendir, rdir;
+  LigmaVector4 cendir, rdir;
   gdouble dirproj, cdlensq;
   gdouble linear, constant, rsq, quadratic, discriminant;
   gdouble smallzero, solmin, solmax, tolerance = 0.001;
@@ -913,7 +913,7 @@ checkcylinder (ray * r, cylinder * cylinder)
 static gdouble
 checkplane (ray * r, plane * plane)
 {
-  GimpVector4 *v = &plane->a;
+  LigmaVector4 *v = &plane->a;
   gdouble t;
   gdouble i, j, k;
 
@@ -930,10 +930,10 @@ checkplane (ray * r, plane * plane)
 static gdouble
 checktri (ray * r, triangle * tri)
 {
-  GimpVector4  ed1, ed2;
-  GimpVector4  tvec, pvec, qvec;
+  LigmaVector4  ed1, ed2;
+  LigmaVector4  tvec, pvec, qvec;
   gdouble det, idet, t, u, v;
-  GimpVector4 *orig, dir;
+  LigmaVector4 *orig, dir;
 
   orig = &r->v1;
   dir = r->v2;
@@ -973,7 +973,7 @@ checktri (ray * r, triangle * tri)
 }
 
 static void
-transformpoint (GimpVector4 * p, texture * t)
+transformpoint (LigmaVector4 * p, texture * t)
 {
   gdouble point[3], f;
 
@@ -997,10 +997,10 @@ transformpoint (GimpVector4 * p, texture * t)
 }
 
 static void
-checker (GimpVector4 *q, GimpVector4 *col, texture *t)
+checker (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gint   c = 0;
-  GimpVector4 p;
+  LigmaVector4 p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1029,11 +1029,11 @@ checker (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-gradcolor (GimpVector4 *col, gradient *t, gdouble val)
+gradcolor (LigmaVector4 *col, gradient *t, gdouble val)
 {
   gint    i;
   gdouble d;
-  GimpVector4  tmpcol;
+  LigmaVector4  tmpcol;
 
   val = CLAMP (val, 0.0, 1.0);
 
@@ -1061,10 +1061,10 @@ gradcolor (GimpVector4 *col, gradient *t, gdouble val)
 }
 
 static void
-marble (GimpVector4 *q, GimpVector4 *col, texture *t)
+marble (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gdouble f;
-  GimpVector4 p;
+  LigmaVector4 p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1079,10 +1079,10 @@ marble (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-lizard (GimpVector4 *q, GimpVector4 *col, texture *t)
+lizard (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gdouble f;
-  GimpVector4 p;
+  LigmaVector4 p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1100,10 +1100,10 @@ lizard (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-wood (GimpVector4 *q, GimpVector4 *col, texture *t)
+wood (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gdouble f;
-  GimpVector4 p;
+  LigmaVector4 p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1120,10 +1120,10 @@ wood (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-spiral (GimpVector4 *q, GimpVector4 *col, texture *t)
+spiral (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gdouble f;
-  GimpVector4 p;
+  LigmaVector4 p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1140,10 +1140,10 @@ spiral (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-spots (GimpVector4 *q, GimpVector4 *col, texture *t)
+spots (LigmaVector4 *q, LigmaVector4 *col, texture *t)
 {
   gdouble f;
-  GimpVector4 p, r;
+  LigmaVector4 p, r;
 
   p = *q;
   transformpoint (&p, t);
@@ -1165,10 +1165,10 @@ spots (GimpVector4 *q, GimpVector4 *col, texture *t)
 }
 
 static void
-perlin (GimpVector4 * q, GimpVector4 * col, texture * t)
+perlin (LigmaVector4 * q, LigmaVector4 * col, texture * t)
 {
   gdouble f, point[3];
-  GimpVector4  p;
+  LigmaVector4  p;
 
   p = *q;
   transformpoint (&p, t);
@@ -1188,9 +1188,9 @@ perlin (GimpVector4 * q, GimpVector4 * col, texture * t)
 }
 
 static void
-imagepixel (GimpVector4 * q, GimpVector4 * col, texture * t)
+imagepixel (LigmaVector4 * q, LigmaVector4 * col, texture * t)
 {
-  GimpVector4 p;
+  LigmaVector4 p;
   gint x, y;
   guchar *rgb;
 
@@ -1208,11 +1208,11 @@ imagepixel (GimpVector4 * q, GimpVector4 * col, texture * t)
 }
 
 static void
-objcolor (GimpVector4 *col, GimpVector4 *p, common *obj)
+objcolor (LigmaVector4 *col, LigmaVector4 *p, common *obj)
 {
   gint     i;
   texture *t;
-  GimpVector4   tmpcol;
+  LigmaVector4   tmpcol;
 
   vcset (col, 0, 0, 0, 0);
 
@@ -1278,7 +1278,7 @@ objcolor (GimpVector4 *col, GimpVector4 *p, common *obj)
 }
 
 static void
-objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
+objnormal (LigmaVector4 *res, common *obj, LigmaVector4 *p)
 {
   gint i;
 
@@ -1308,8 +1308,8 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
   for (i = 0; i < obj->numnormal; i++)
     {
       gint     k;
-      GimpVector4   tmpcol[6];
-      GimpVector4   q[6], nres;
+      LigmaVector4   tmpcol[6];
+      LigmaVector4   q[6], nres;
       texture *t = &obj->normal[i];
       gdouble  nstep = 0.1;
 
@@ -1391,14 +1391,14 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
  */
 
 static void
-calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
+calclight (LigmaVector4 * col, LigmaVector4 * point, common * obj)
 {
   gint i, j;
   ray r;
   gdouble b, a;
-  GimpVector4 lcol;
-  GimpVector4 norm;
-  GimpVector4 pcol;
+  LigmaVector4 lcol;
+  LigmaVector4 norm;
+  LigmaVector4 pcol;
 
   vcset (col, 0, 0, 0, 0);
 
@@ -1470,14 +1470,14 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
 }
 
 static void
-calcphong (common * obj, ray * r2, GimpVector4 * col)
+calcphong (common * obj, ray * r2, LigmaVector4 * col)
 {
   gint    i, j;
   ray     r;
   gdouble b;
-  GimpVector4  lcol;
-  GimpVector4  norm;
-  GimpVector4  pcol;
+  LigmaVector4  lcol;
+  LigmaVector4  norm;
+  LigmaVector4  pcol;
   gdouble ps;
 
   vcopy (&pcol, col);
@@ -1524,13 +1524,13 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
 }
 
 static int
-traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
+traceray (ray * r, LigmaVector4 * col, gint level, gdouble imp)
 {
   gint         i, b = -1;
   gdouble      t = -1.0, min = 0.0;
   common      *obj, *bobj = NULL;
   gint         hits = 0;
-  GimpVector4  p = { 0, 0, 0, 0 };
+  LigmaVector4  p = { 0, 0, 0, 0 };
 
   if ((level == 0) || (imp < 0.005))
     {
@@ -1592,7 +1592,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
       if (world.flags & SMARTAMBIENT)
         {
           gdouble ambient = 0.3 * exp (-min / world.smartambient);
-          GimpVector4 lcol;
+          LigmaVector4 lcol;
           objcolor (&lcol, &p, bobj);
           vmul (&lcol, ambient);
           vadd (col, &lcol);
@@ -1606,7 +1606,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
                   || (bobj->texture[i].type == PHONG)))
             {
 
-              GimpVector4 refcol, norm, ocol;
+              LigmaVector4 refcol, norm, ocol;
               ray ref;
 
               objcolor (&ocol, &p, bobj);
@@ -1650,7 +1650,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
           if ((world.quality >= 5) && (col->w < 1.0))
             {
-              GimpVector4 refcol;
+              LigmaVector4 refcol;
               ray ref;
 
               vcopy (&ref.v1, &p);
@@ -1667,7 +1667,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
           if ((world.quality >= 5) && (bobj->texture[i].type == TRANSPARENT))
             {
-              GimpVector4 refcol;
+              LigmaVector4 refcol;
               ray ref;
 
               vcopy (&ref.v1, &p);
@@ -1687,7 +1687,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
           if ((world.quality >= 5) && (bobj->texture[i].type == SMOKE))
             {
-              GimpVector4 smcol, raydir, norm;
+              LigmaVector4 smcol, raydir, norm;
               double tran;
               ray ref;
 
@@ -1712,7 +1712,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
           if ((world.quality >= 5) && (bobj->texture[i].type == REFRACTION))
             {
-              GimpVector4 refcol, norm, tmpv;
+              LigmaVector4 refcol, norm, tmpv;
               ray ref;
               double c1, c2, n1, n2, n;
 
@@ -1783,7 +1783,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
   for (i = 0; i < world.numatmos; i++)
     {
-      GimpVector4 tmpcol;
+      LigmaVector4 tmpcol;
       if (world.atmos[i].type == FOG)
         {
           gdouble v, pt[3];
@@ -1904,24 +1904,24 @@ setvals (texture *t)
     return;
 
   noupdate = TRUE;
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (amountscale), t->amount);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (amountscale), t->amount);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalescale), t->oscale);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (scalescale), t->oscale);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalexscale), t->scale.x);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scaleyscale), t->scale.y);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (scalezscale), t->scale.z);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (scalexscale), t->scale.x);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (scaleyscale), t->scale.y);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (scalezscale), t->scale.z);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotxscale), t->rotate.x);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotyscale), t->rotate.y);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (rotzscale), t->rotate.z);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (rotxscale), t->rotate.x);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (rotyscale), t->rotate.y);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (rotzscale), t->rotate.z);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (posxscale), t->translate.x);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (posyscale), t->translate.y);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (poszscale), t->translate.z);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (posxscale), t->translate.x);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (posyscale), t->translate.y);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (poszscale), t->translate.z);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (turbulencescale), t->turbulence.x);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (expscale), t->exp);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (turbulencescale), t->turbulence.x);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (expscale), t->exp);
 
   drawcolor1 (NULL);
   drawcolor2 (NULL);
@@ -1931,14 +1931,14 @@ setvals (texture *t)
     {
       if (l->n == t->type)
         {
-          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (texturemenu),
+          ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (texturemenu),
                                          l->index);
           break;
         }
       l++;
     }
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (typemenu), t->majtype);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (typemenu), t->majtype);
 
   noupdate = FALSE;
 }
@@ -2088,14 +2088,14 @@ loadit (const gchar * fn)
   if (! f)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (fn), g_strerror (errno));
+                 ligma_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 
   if (2 != fscanf (f, "%d %d", &majtype, &type) || majtype < 0 || majtype > 2)
     {
       g_message (_("File '%s' is not a valid save file."),
-                 gimp_filename_to_utf8 (fn));
+                 ligma_filename_to_utf8 (fn));
       fclose (f);
       return;
     }
@@ -2199,7 +2199,7 @@ saveit (const gchar *fn)
   if (!f)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (fn), g_strerror (errno));
+                 ligma_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 
@@ -2292,7 +2292,7 @@ fileselect (GtkFileChooserAction  action,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2410,7 +2410,7 @@ selecttexture (GtkWidget *widget,
   if (!t)
     return;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &t->type);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &t->type);
 
   relabel ();
   restartrender ();
@@ -2429,7 +2429,7 @@ selecttype (GtkWidget *widget,
   if (!t)
     return;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &t->majtype);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &t->majtype);
 
   relabel ();
   restartrender ();
@@ -2449,40 +2449,40 @@ getscales (GtkWidget *widget,
   if (!t)
     return;
 
-  t->amount = gimp_label_spin_get_value (GIMP_LABEL_SPIN (amountscale));
-  t->exp = gimp_label_spin_get_value (GIMP_LABEL_SPIN (expscale));
+  t->amount = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (amountscale));
+  t->exp = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (expscale));
 
-  f = gimp_label_spin_get_value (GIMP_LABEL_SPIN (turbulencescale));
+  f = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (turbulencescale));
   vset (&t->turbulence, f, f, f);
 
-  t->oscale = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalescale));
+  t->oscale = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (scalescale));
 
-  t->scale.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalexscale));
-  t->scale.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scaleyscale));
-  t->scale.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scalezscale));
+  t->scale.x = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (scalexscale));
+  t->scale.y = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (scaleyscale));
+  t->scale.z = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (scalezscale));
 
-  t->rotate.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotxscale));
-  t->rotate.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotyscale));
-  t->rotate.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (rotzscale));
+  t->rotate.x = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (rotxscale));
+  t->rotate.y = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (rotyscale));
+  t->rotate.z = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (rotzscale));
 
-  t->translate.x = gimp_label_spin_get_value (GIMP_LABEL_SPIN (posxscale));
-  t->translate.y = gimp_label_spin_get_value (GIMP_LABEL_SPIN (posyscale));
-  t->translate.z = gimp_label_spin_get_value (GIMP_LABEL_SPIN (poszscale));
+  t->translate.x = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (posxscale));
+  t->translate.y = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (posyscale));
+  t->translate.z = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (poszscale));
 
   restartrender ();
 }
 
 
 static void
-color1_changed (GimpColorButton *button)
+color1_changed (LigmaColorButton *button)
 {
   texture *t = currenttexture ();
 
   if (t)
     {
-      GimpRGB color;
+      LigmaRGB color;
 
-      gimp_color_button_get_color (button, &color);
+      ligma_color_button_get_color (button, &color);
 
       t->color1.x = color.r;
       t->color1.y = color.g;
@@ -2494,15 +2494,15 @@ color1_changed (GimpColorButton *button)
 }
 
 static void
-color2_changed (GimpColorButton *button)
+color2_changed (LigmaColorButton *button)
 {
   texture *t = currenttexture ();
 
   if (t)
     {
-      GimpRGB color;
+      LigmaRGB color;
 
-      gimp_color_button_get_color (button, &color);
+      ligma_color_button_get_color (button, &color);
 
       t->color2.x = color.r;
       t->color2.y = color.g;
@@ -2518,7 +2518,7 @@ drawcolor1 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
 
-  GimpRGB  color;
+  LigmaRGB  color;
   texture *t = currenttexture ();
 
   if (w)
@@ -2531,10 +2531,10 @@ drawcolor1 (GtkWidget *w)
   if (!t)
     return;
 
-  gimp_rgba_set (&color,
+  ligma_rgba_set (&color,
                  t->color1.x, t->color1.y, t->color1.z, t->color1.w);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (w), &color);
 }
 
 static void
@@ -2542,7 +2542,7 @@ drawcolor2 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
 
-  GimpRGB  color;
+  LigmaRGB  color;
   texture *t = currenttexture ();
 
   if (w)
@@ -2555,10 +2555,10 @@ drawcolor2 (GtkWidget *w)
   if (!t)
     return;
 
-  gimp_rgba_set (&color,
+  ligma_rgba_set (&color,
                  t->color2.x, t->color2.y, t->color2.z, t->color2.w);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (w), &color);
 }
 
 static gboolean do_run = FALSE;
@@ -2622,11 +2622,11 @@ makewindow (void)
   GtkWidget  *vbox;
   GtkWidget  *button;
   GtkWidget  *list;
-  GimpRGB     rgb = { 0, 0, 0, 0 };
+  LigmaRGB     rgb = { 0, 0, 0, 0 };
 
-  window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_ROLE,
+  window = ligma_dialog_new (_("Sphere Designer"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Reset"),  RESPONSE_RESET,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -2634,13 +2634,13 @@ makewindow (void)
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (window));
+  ligma_window_set_transient (GTK_WINDOW (window));
 
   g_signal_connect (window, "response",
                     G_CALLBACK (sphere_response),
@@ -2758,7 +2758,7 @@ makewindow (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
-  frame = gimp_frame_new (_("Properties"));
+  frame = ligma_frame_new (_("Properties"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -2772,45 +2772,45 @@ makewindow (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  typemenu = gimp_int_combo_box_new (_("Texture"), 0,
+  typemenu = ligma_int_combo_box_new (_("Texture"), 0,
                                      _("Bump"),    1,
                                      _("Light"),   2,
                                      NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (typemenu), 0,
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (typemenu), 0,
                               G_CALLBACK (selecttype),
                               NULL, NULL);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Type:"), 0.0, 0.5,
                             typemenu, 2);
 
-  texturemenu = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  texturemenu = g_object_new (LIGMA_TYPE_INT_COMBO_BOX, NULL);
   {
     struct textures_t *t;
 
     for (t = textures; t->s; t++)
-      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (texturemenu),
-                                 GIMP_INT_STORE_VALUE, t->n,
-                                 GIMP_INT_STORE_LABEL, gettext (t->s),
+      ligma_int_combo_box_append (LIGMA_INT_COMBO_BOX (texturemenu),
+                                 LIGMA_INT_STORE_VALUE, t->n,
+                                 LIGMA_INT_STORE_LABEL, gettext (t->s),
                                  -1);
   }
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (texturemenu), 0,
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (texturemenu), 0,
                               G_CALLBACK (selecttexture),
                               NULL, NULL);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Texture:"), 0.0, 0.5,
                             texturemenu, 2);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("Colors:"), 0.0, 0.5,
                             hbox, 2);
 
-  button = gimp_color_button_new (_("Color Selection Dialog"),
+  button = ligma_color_button_new (_("Color Selection Dialog"),
                                   COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
+                                  LIGMA_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   drawcolor1 (button);
@@ -2819,9 +2819,9 @@ makewindow (void)
                     G_CALLBACK (color1_changed),
                     NULL);
 
-  button = gimp_color_button_new (_("Color Selection Dialog"),
+  button = ligma_color_button_new (_("Color Selection Dialog"),
                                   COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
+                                  LIGMA_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   drawcolor2 (button);
@@ -2830,37 +2830,37 @@ makewindow (void)
                     G_CALLBACK (color2_changed),
                     NULL);
 
-  scalescale = gimp_scale_entry_new (_("Scale:"), 1.0, 0.0, 10.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalescale), 0.1, 1.0);
+  scalescale = ligma_scale_entry_new (_("Scale:"), 1.0, 0.0, 10.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scalescale), 0.1, 1.0);
   g_signal_connect (scalescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scalescale, 0, 3, 3, 1);
   gtk_widget_show (scalescale);
 
-  turbulencescale = gimp_scale_entry_new (_("Turbulence:"), 1.0, 0.0, 10.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (turbulencescale), 0.1, 1.0);
+  turbulencescale = ligma_scale_entry_new (_("Turbulence:"), 1.0, 0.0, 10.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (turbulencescale), 0.1, 1.0);
   g_signal_connect (turbulencescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), turbulencescale, 0, 4, 3, 1);
   gtk_widget_show (turbulencescale);
 
-  amountscale = gimp_scale_entry_new (_("Amount:"), 1.0, 0.0, 1.0, 2);
+  amountscale = ligma_scale_entry_new (_("Amount:"), 1.0, 0.0, 1.0, 2);
   g_signal_connect (amountscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), amountscale, 0, 5, 3, 1);
   gtk_widget_show (amountscale);
 
-  expscale = gimp_scale_entry_new (_("Exp.:"), 1.0, 0.0, 1.0, 2);
+  expscale = ligma_scale_entry_new (_("Exp.:"), 1.0, 0.0, 1.0, 2);
   g_signal_connect (expscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), expscale, 0, 6, 3, 1);
   gtk_widget_show (expscale);
 
-  frame = gimp_frame_new (_("Transformations"));
+  frame = ligma_frame_new (_("Transformations"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -2874,75 +2874,75 @@ makewindow (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scalexscale = gimp_scale_entry_new (_("Scale X:"), 1.0, 0.0, 10.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalexscale), 0.1, 1.0);
+  scalexscale = ligma_scale_entry_new (_("Scale X:"), 1.0, 0.0, 10.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scalexscale), 0.1, 1.0);
   g_signal_connect (scalexscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scalexscale, 0, 0, 3, 1);
   gtk_widget_show (scalexscale);
 
-  scaleyscale = gimp_scale_entry_new (_("Scale Y:"), 1.0, 0.0, 10.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scaleyscale), 0.1, 1.0);
+  scaleyscale = ligma_scale_entry_new (_("Scale Y:"), 1.0, 0.0, 10.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scaleyscale), 0.1, 1.0);
   g_signal_connect (scaleyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scaleyscale, 0, 1, 3, 1);
   gtk_widget_show (scaleyscale);
 
-  scalezscale = gimp_scale_entry_new (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scalezscale), 0.1, 1.0);
-  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scalezscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scalezscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scalezscale)), 6);
+  scalezscale = ligma_scale_entry_new (_("Scale Z:"), 1.0, 0.0, 10.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scalezscale), 0.1, 1.0);
+  gtk_widget_set_margin_bottom (ligma_labeled_get_label (LIGMA_LABELED (scalezscale)), 6);
+  gtk_widget_set_margin_bottom (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (scalezscale)), 6);
+  gtk_widget_set_margin_bottom (ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (scalezscale)), 6);
   g_signal_connect (scalezscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scalezscale, 0, 2, 3, 1);
   gtk_widget_show (scalezscale);
 
-  rotxscale = gimp_scale_entry_new (_("Rotate X:"), 0.0, 0.0, 360.0, 1);
+  rotxscale = ligma_scale_entry_new (_("Rotate X:"), 0.0, 0.0, 360.0, 1);
   g_signal_connect (rotxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), rotxscale, 0, 3, 3, 1);
   gtk_widget_show (rotxscale);
 
-  rotyscale = gimp_scale_entry_new (_("Rotate Y:"), 0.0, 0.0, 360.0, 1);
+  rotyscale = ligma_scale_entry_new (_("Rotate Y:"), 0.0, 0.0, 360.0, 1);
   g_signal_connect (rotyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), rotyscale, 0, 4, 3, 1);
   gtk_widget_show (rotyscale);
 
-  rotzscale = gimp_scale_entry_new (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
-  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (rotzscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (rotzscale)), 6);
-  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (rotzscale)), 6);
+  rotzscale = ligma_scale_entry_new (_("Rotate Z:"), 0.0, 0.0, 360.0, 1);
+  gtk_widget_set_margin_bottom (ligma_labeled_get_label (LIGMA_LABELED (rotzscale)), 6);
+  gtk_widget_set_margin_bottom (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (rotzscale)), 6);
+  gtk_widget_set_margin_bottom (ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (rotzscale)), 6);
   g_signal_connect (rotzscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), rotzscale, 0, 5, 3, 1);
   gtk_widget_show (rotzscale);
 
-  posxscale = gimp_scale_entry_new (_("Position X:"), 0.0, -20.0, 20.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (posxscale), 0.1, 1.0);
+  posxscale = ligma_scale_entry_new (_("Position X:"), 0.0, -20.0, 20.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (posxscale), 0.1, 1.0);
   g_signal_connect (posxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), posxscale, 0, 6, 3, 1);
   gtk_widget_show (posxscale);
 
-  posyscale = gimp_scale_entry_new (_("Position Y:"), 0.0, -20.0, 20.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (posyscale), 0.1, 1.0);
+  posyscale = ligma_scale_entry_new (_("Position Y:"), 0.0, -20.0, 20.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (posyscale), 0.1, 1.0);
   g_signal_connect (posyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), posyscale, 0, 7, 3, 1);
   gtk_widget_show (posyscale);
 
-  poszscale = gimp_scale_entry_new (_("Position Z:"), 0.0, -20.0, 20.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (poszscale), 0.1, 1.0);
+  poszscale = ligma_scale_entry_new (_("Position Z:"), 0.0, -20.0, 20.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (poszscale), 0.1, 1.0);
   g_signal_connect (poszscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
@@ -2968,7 +2968,7 @@ pixelval (gdouble v)
 static gboolean
 render (void)
 {
-  GimpVector4  col;
+  LigmaVector4  col;
   guchar *dest_row;
   ray     r;
   gint    x, y, p;
@@ -3009,7 +3009,7 @@ render (void)
               else if (col.w > 1.0)
                 col.w = 1.0;
 
-              GIMP_CAIRO_RGB24_SET_PIXEL ((dest_row + p),
+              LIGMA_CAIRO_RGB24_SET_PIXEL ((dest_row + p),
                 pixelval (255 * col.x) * col.w + g * (1.0 - col.w),
                 pixelval (255 * col.y) * col.w + g * (1.0 - col.w),
                 pixelval (255 * col.z) * col.w + g * (1.0 - col.w));
@@ -3025,14 +3025,14 @@ render (void)
 }
 
 static void
-realrender (GimpDrawable *drawable)
+realrender (LigmaDrawable *drawable)
 {
   GeglBuffer  *src_buffer;
   GeglBuffer  *dest_buffer;
   const Babl  *format;
   gint         x, y;
   ray          r;
-  GimpVector4  rcol;
+  LigmaVector4  rcol;
   gint         width, height;
   gint         x1, y1;
   guchar      *dest;
@@ -3044,23 +3044,23 @@ realrender (GimpDrawable *drawable)
   r.v1.z = -10.0;
   r.v2.z = 0.0;
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -3071,7 +3071,7 @@ realrender (GimpDrawable *drawable)
   buffer  = g_malloc (width * 4);
   ibuffer = g_malloc (width * 4);
 
-  gimp_progress_init (_("Rendering sphere"));
+  ligma_progress_init (_("Rendering sphere"));
 
   for (y = 0; y < height; y++)
     {
@@ -3109,24 +3109,24 @@ realrender (GimpDrawable *drawable)
                        format, ibuffer,
                        GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((gdouble) y / (gdouble) height);
+      ligma_progress_update ((gdouble) y / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
   g_free (buffer);
   g_free (ibuffer);
 
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, x1, y1, width, height);
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, x1, y1, width, height);
 }
 
 static gboolean
-sphere_main (GimpDrawable *drawable)
+sphere_main (LigmaDrawable *drawable)
 {
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   img_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24, PREVIEWSIZE);
   img = g_malloc0 (img_stride * PREVIEWSIZE);
@@ -3157,16 +3157,16 @@ sphere_main (GimpDrawable *drawable)
   return do_run;
 }
 
-static GimpValueArray *
-designer_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+designer_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint          x, y, w, h;
 
   gegl_init (NULL, NULL);
@@ -3175,12 +3175,12 @@ designer_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -3188,49 +3188,49 @@ designer_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+  if (! ligma_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {
       g_message (_("Region selected for plug-in is empty"));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_SUCCESS,
                                                NULL);
     }
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_PROC, &s);
+      ligma_get_data (PLUG_IN_PROC, &s);
 
       if (! sphere_main (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_PROC, &s);
+      ligma_get_data (PLUG_IN_PROC, &s);
 
       if (s.com.numtexture == 0)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_EXECUTION_ERROR,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+    case LIGMA_RUN_NONINTERACTIVE:
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
+  ligma_set_data (PLUG_IN_PROC, &s, sizeof (s));
 
   realrender (drawable);
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }

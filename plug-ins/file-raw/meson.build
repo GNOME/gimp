@@ -14,7 +14,7 @@ foreach plugin_name : file_raw_exes
 
   if platform_windows
     plugin_rc = configure_file(
-      input : gimp_plugins_rc.full_path(),
+      input : ligma_plugins_rc.full_path(),
       output: plugin_name + '.rc',
       copy: true,
     )
@@ -34,9 +34,9 @@ foreach plugin_name : file_raw_exes
 
   executable(plugin_name,
     plugin_sources,
-    dependencies: libgimpui_dep,
+    dependencies: libligmaui_dep,
     install: true,
-    install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+    install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
   )
 endforeach
 
@@ -44,5 +44,5 @@ install_data([
     'file-darktable-export-on-exit.lua',
     'file-darktable-get-size.lua',
   ],
-  install_dir: prefix / gimpdatadir / 'file-raw',
+  install_dir: prefix / ligmadatadir / 'file-raw',
 )

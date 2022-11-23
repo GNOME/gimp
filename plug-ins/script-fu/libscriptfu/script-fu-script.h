@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,9 +29,9 @@ SFScript * script_fu_script_new                     (const gchar          *name,
                                                      gint                  n_args);
 void       script_fu_script_free                    (SFScript             *script);
 
-void       script_fu_script_install_proc            (GimpPlugIn           *plug_in,
+void       script_fu_script_install_proc            (LigmaPlugIn           *plug_in,
                                                      SFScript             *script);
-void       script_fu_script_uninstall_proc          (GimpPlugIn           *plug_in,
+void       script_fu_script_uninstall_proc          (LigmaPlugIn           *plug_in,
                                                      SFScript             *script);
 
 gchar    * script_fu_script_get_title               (SFScript             *script);
@@ -39,21 +39,21 @@ void       script_fu_script_reset                   (SFScript             *scrip
                                                      gboolean              reset_ids);
 
 gint       script_fu_script_collect_standard_args   (SFScript             *script,
-                                                     const GimpValueArray *args);
+                                                     const LigmaValueArray *args);
 
 gchar    * script_fu_script_get_command             (SFScript             *script);
 gchar    * script_fu_script_get_command_from_params (SFScript             *script,
-                                                     const GimpValueArray *args);
+                                                     const LigmaValueArray *args);
 gchar    * script_fu_script_get_command_for_image_proc (
                                                      SFScript             *script,
-                                                     GimpImage            *image,
+                                                     LigmaImage            *image,
                                                      guint                 n_drawables,
-                                                     GimpDrawable        **drawables,
-                                                     const GimpValueArray *args);
+                                                     LigmaDrawable        **drawables,
+                                                     const LigmaValueArray *args);
 
-GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_in,
+LigmaProcedure * script_fu_script_create_PDB_procedure (LigmaPlugIn         *plug_in,
                                                        SFScript           *script,
-                                                       GimpPDBProcType     plug_in_type);
+                                                       LigmaPDBProcType     plug_in_type);
 
 void            script_fu_script_infer_drawable_arity (SFScript           *script);
 

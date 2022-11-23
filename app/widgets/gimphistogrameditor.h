@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,37 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_EDITOR_H__
-#define __GIMP_HISTOGRAM_EDITOR_H__
+#ifndef __LIGMA_HISTOGRAM_EDITOR_H__
+#define __LIGMA_HISTOGRAM_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_HISTOGRAM_EDITOR            (gimp_histogram_editor_get_type ())
-#define GIMP_HISTOGRAM_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_EDITOR, GimpHistogramEditor))
-#define GIMP_HISTOGRAM_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_EDITOR, GimpHistogramEditorClass))
-#define GIMP_IS_HISTOGRAM_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_EDITOR))
-#define GIMP_IS_HISTOGRAM_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_EDITOR))
-#define GIMP_HISTOGRAM_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_EDITOR, GimpHistogramEditorClass))
+#define LIGMA_TYPE_HISTOGRAM_EDITOR            (ligma_histogram_editor_get_type ())
+#define LIGMA_HISTOGRAM_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HISTOGRAM_EDITOR, LigmaHistogramEditor))
+#define LIGMA_HISTOGRAM_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HISTOGRAM_EDITOR, LigmaHistogramEditorClass))
+#define LIGMA_IS_HISTOGRAM_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HISTOGRAM_EDITOR))
+#define LIGMA_IS_HISTOGRAM_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HISTOGRAM_EDITOR))
+#define LIGMA_HISTOGRAM_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HISTOGRAM_EDITOR, LigmaHistogramEditorClass))
 
 
-typedef struct _GimpHistogramEditorClass GimpHistogramEditorClass;
+typedef struct _LigmaHistogramEditorClass LigmaHistogramEditorClass;
 
-struct _GimpHistogramEditor
+struct _LigmaHistogramEditor
 {
-  GimpImageEditor       parent_instance;
+  LigmaImageEditor       parent_instance;
 
-  GimpTRCType           trc;
+  LigmaTRCType           trc;
 
-  GimpDrawable         *drawable;
-  GimpHistogram        *histogram;
-  GimpHistogram        *bg_histogram;
+  LigmaDrawable         *drawable;
+  LigmaHistogram        *histogram;
+  LigmaHistogram        *bg_histogram;
 
   guint                 idle_id;
   gboolean              recompute;
 
-  GimpAsync            *calculate_async;
+  LigmaAsync            *calculate_async;
   gboolean              bg_pending;
   gboolean              update_pending;
 
@@ -54,15 +54,15 @@ struct _GimpHistogramEditor
   GtkWidget            *labels[6];
 };
 
-struct _GimpHistogramEditorClass
+struct _LigmaHistogramEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_histogram_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_histogram_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_editor_new      (void);
+GtkWidget * ligma_histogram_editor_new      (void);
 
 
-#endif /* __GIMP_HISTOGRAM_EDITOR_H__ */
+#endif /* __LIGMA_HISTOGRAM_EDITOR_H__ */

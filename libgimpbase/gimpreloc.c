@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "gimpreloc.h"
+#include "ligmareloc.h"
 
 
 /*
@@ -35,11 +35,11 @@
  * not NULL, the error code will be stored there, if an error occurred.
  */
 static char *
-_br_find_exe (GimpBinrelocInitError *error)
+_br_find_exe (LigmaBinrelocInitError *error)
 {
 #if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32) || defined(__APPLE__)
   if (error)
-    *error = GIMP_RELOC_INIT_ERROR_DISABLED;
+    *error = LIGMA_RELOC_INIT_ERROR_DISABLED;
   return NULL;
 #else
   GDataInputStream *data_input;
@@ -110,7 +110,7 @@ _br_find_exe (GimpBinrelocInitError *error)
       g_clear_error (&gerror);
 
       if (error)
-        *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
+        *error = LIGMA_RELOC_INIT_ERROR_OPEN_MAPS;
 
       return NULL;
     }
@@ -131,7 +131,7 @@ _br_find_exe (GimpBinrelocInitError *error)
           g_object_unref (data_input);
 
           if (error)
-            *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
+            *error = LIGMA_RELOC_INIT_ERROR_READ_MAPS;
 
           return NULL;
         }
@@ -153,7 +153,7 @@ _br_find_exe (GimpBinrelocInitError *error)
     }
 
   if (path == NULL && error)
-    *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
+    *error = LIGMA_RELOC_INIT_ERROR_INVALID_MAPS;
 
   g_object_unref (data_input);
   g_free (maps_line);
@@ -168,11 +168,11 @@ _br_find_exe (GimpBinrelocInitError *error)
  * Returns a filename which must be freed, or NULL on error.
  */
 static char *
-_br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
+_br_find_exe_for_symbol (const void *symbol, LigmaBinrelocInitError *error)
 {
 #if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32) || defined(__APPLE__)
   if (error)
-    *error = GIMP_RELOC_INIT_ERROR_DISABLED;
+    *error = LIGMA_RELOC_INIT_ERROR_DISABLED;
   return (char *) NULL;
 #else
   GDataInputStream *data_input;
@@ -196,7 +196,7 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
       g_error_free (gerror);
 
       if (error)
-        *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
+        *error = LIGMA_RELOC_INIT_ERROR_OPEN_MAPS;
 
       return NULL;
     }
@@ -223,7 +223,7 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
             }
 
           if (error)
-            *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
+            *error = LIGMA_RELOC_INIT_ERROR_READ_MAPS;
 
           break;
         }
@@ -232,7 +232,7 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
       /* XXX Early versions of this code would check that the mapped
        * region was with r-xp permission. It might have been true at
        * some point in time, but last I tested, the searched pointer was
-       * in a r--p region for libgimpbase. Thus _br_find_exe_for_symbol()
+       * in a r--p region for libligmabase. Thus _br_find_exe_for_symbol()
        * would fail to find the executable's path.
        * So now we don't test the region's permission anymore.
        */
@@ -324,7 +324,7 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 
 static gchar *exe = NULL;
 
-static void set_gerror (GError **error, GimpBinrelocInitError errcode);
+static void set_gerror (GError **error, LigmaBinrelocInitError errcode);
 
 
 /* Initialize the BinReloc library (for applications).
@@ -333,24 +333,24 @@ static void set_gerror (GError **error, GimpBinrelocInitError errcode);
  * It attempts to locate the application's canonical filename.
  *
  * @note If you want to use BinReloc for a library, then you should call
- *       _gimp_reloc_init_lib() instead.
+ *       _ligma_reloc_init_lib() instead.
  * @note Initialization failure is not fatal. BinReloc functions will just
  *       fallback to the supplied default path.
  *
  * @param error  If BinReloc failed to initialize, then the error report will
  *               be stored in this variable. Set to NULL if you don't want an
- *               error report. See the #GimpBinrelocInitError for a list of error
+ *               error report. See the #LigmaBinrelocInitError for a list of error
  *               codes.
  *
  * @returns TRUE on success, FALSE if BinReloc failed to initialize.
  */
 gboolean
-_gimp_reloc_init (GError **error)
+_ligma_reloc_init (GError **error)
 {
-  GimpBinrelocInitError errcode;
+  LigmaBinrelocInitError errcode;
 
   /* Shut up compiler warning about uninitialized variable. */
-  errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
+  errcode = LIGMA_RELOC_INIT_ERROR_NOMEM;
 
   /* Locate the application's filename. */
   exe = _br_find_exe (&errcode);
@@ -379,12 +379,12 @@ _gimp_reloc_init (GError **error)
  * @returns TRUE on success, FALSE if a filename cannot be found.
  */
 gboolean
-_gimp_reloc_init_lib (GError **error)
+_ligma_reloc_init_lib (GError **error)
 {
-  GimpBinrelocInitError errcode;
+  LigmaBinrelocInitError errcode;
 
   /* Shut up compiler warning about uninitialized variable. */
-  errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
+  errcode = LIGMA_RELOC_INIT_ERROR_NOMEM;
 
   exe = _br_find_exe_for_symbol ((const void *) "", &errcode);
   if (exe != NULL)
@@ -401,7 +401,7 @@ _gimp_reloc_init_lib (GError **error)
 }
 
 static void
-set_gerror (GError **error, GimpBinrelocInitError errcode)
+set_gerror (GError **error, LigmaBinrelocInitError errcode)
 {
   const gchar *error_message;
 
@@ -410,19 +410,19 @@ set_gerror (GError **error, GimpBinrelocInitError errcode)
 
   switch (errcode)
     {
-    case GIMP_RELOC_INIT_ERROR_NOMEM:
+    case LIGMA_RELOC_INIT_ERROR_NOMEM:
       error_message = "Cannot allocate memory.";
       break;
-    case GIMP_RELOC_INIT_ERROR_OPEN_MAPS:
+    case LIGMA_RELOC_INIT_ERROR_OPEN_MAPS:
       error_message = "Unable to open /proc/self/maps for reading.";
       break;
-    case GIMP_RELOC_INIT_ERROR_READ_MAPS:
+    case LIGMA_RELOC_INIT_ERROR_READ_MAPS:
       error_message = "Unable to read from /proc/self/maps.";
       break;
-    case GIMP_RELOC_INIT_ERROR_INVALID_MAPS:
+    case LIGMA_RELOC_INIT_ERROR_INVALID_MAPS:
       error_message = "The file format of /proc/self/maps is invalid.";
       break;
-    case GIMP_RELOC_INIT_ERROR_DISABLED:
+    case LIGMA_RELOC_INIT_ERROR_DISABLED:
       error_message = "Binary relocation support is disabled.";
       break;
     default:
@@ -449,7 +449,7 @@ set_gerror (GError **error, GimpBinrelocInitError errcode)
  *         returned.
  */
 gchar *
-_gimp_reloc_find_prefix (const gchar *default_prefix)
+_ligma_reloc_find_prefix (const gchar *default_prefix)
 {
   gchar *dir1, *dir2;
 

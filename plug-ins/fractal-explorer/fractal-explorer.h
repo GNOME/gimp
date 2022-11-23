@@ -16,7 +16,7 @@
 
 #define PLUG_IN_PROC   "plug-in-fractalexplorer"
 #define PLUG_IN_BINARY "fractal-explorer"
-#define PLUG_IN_ROLE   "gimp-fractal-explorer"
+#define PLUG_IN_ROLE   "ligma-fractal-explorer"
 
 #define FRACTAL_HEADER "Fractal Explorer Plug-In Version 2 - (c) 1997 <cotting@mygale.org>\n"
 #define fractalexplorer_HEADER "Fractal Explorer Plug-In Version 2 - (c) 1997 <cotting@mygale.org>\n"

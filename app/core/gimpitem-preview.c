@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,32 +22,32 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimpimage.h"
-#include "gimpitem.h"
-#include "gimpitem-preview.h"
+#include "ligma.h"
+#include "ligmaimage.h"
+#include "ligmaitem.h"
+#include "ligmaitem-preview.h"
 
 
 /*  public functions  */
 
 void
-gimp_item_get_preview_size (GimpViewable *viewable,
+ligma_item_get_preview_size (LigmaViewable *viewable,
                             gint          size,
                             gboolean      is_popup,
                             gboolean      dot_for_dot,
                             gint         *width,
                             gint         *height)
 {
-  GimpItem  *item  = GIMP_ITEM (viewable);
-  GimpImage *image = gimp_item_get_image (item);
+  LigmaItem  *item  = LIGMA_ITEM (viewable);
+  LigmaImage *image = ligma_item_get_image (item);
 
-  if (image && ! image->gimp->config->layer_previews && ! is_popup)
+  if (image && ! image->ligma->config->layer_previews && ! is_popup)
     {
       *width  = size;
       *height = size;
@@ -59,10 +59,10 @@ gimp_item_get_preview_size (GimpViewable *viewable,
       gdouble xres;
       gdouble yres;
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
-                                       gimp_image_get_height (image),
+      ligma_viewable_calc_preview_size (ligma_image_get_width  (image),
+                                       ligma_image_get_height (image),
                                        size,
                                        size,
                                        dot_for_dot,
@@ -74,8 +74,8 @@ gimp_item_get_preview_size (GimpViewable *viewable,
     }
   else
     {
-      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
+      ligma_viewable_calc_preview_size (ligma_item_get_width  (item),
+                                       ligma_item_get_height (item),
                                        size,
                                        size,
                                        dot_for_dot, 1.0, 1.0,
@@ -86,31 +86,31 @@ gimp_item_get_preview_size (GimpViewable *viewable,
 }
 
 gboolean
-gimp_item_get_popup_size (GimpViewable *viewable,
+ligma_item_get_popup_size (LigmaViewable *viewable,
                           gint          width,
                           gint          height,
                           gboolean      dot_for_dot,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  GimpItem  *item  = GIMP_ITEM (viewable);
-  GimpImage *image = gimp_item_get_image (item);
+  LigmaItem  *item  = LIGMA_ITEM (viewable);
+  LigmaImage *image = ligma_item_get_image (item);
 
-  if (image && ! image->gimp->config->layer_previews)
+  if (image && ! image->ligma->config->layer_previews)
     return FALSE;
 
-  if (gimp_item_get_width  (item) > width ||
-      gimp_item_get_height (item) > height)
+  if (ligma_item_get_width  (item) > width ||
+      ligma_item_get_height (item) > height)
     {
       gboolean scaling_up;
       gdouble  xres = 1.0;
       gdouble  yres = 1.0;
 
       if (image)
-        gimp_image_get_resolution (image, &xres, &yres);
+        ligma_image_get_resolution (image, &xres, &yres);
 
-      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
+      ligma_viewable_calc_preview_size (ligma_item_get_width  (item),
+                                       ligma_item_get_height (item),
                                        width  * 2,
                                        height * 2,
                                        dot_for_dot,
@@ -122,8 +122,8 @@ gimp_item_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width  = gimp_item_get_width  (item);
-          *popup_height = gimp_item_get_height (item);
+          *popup_width  = ligma_item_get_width  (item);
+          *popup_height = ligma_item_get_height (item);
         }
 
       return TRUE;

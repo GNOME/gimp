@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Fabric
+## Makefile.am for ligma/data/patterns/Fabric
 
-patternsfabricdatadir = $(gimpdatadir)/patterns/Fabric
+patternsfabricdatadir = $(ligmadatadir)/patterns/Fabric
 
 patternsfabricdata_DATA = \
 	burlap.pat

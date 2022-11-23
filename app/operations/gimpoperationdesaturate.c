@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdesaturate.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationdesaturate.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationdesaturate.h"
+#include "ligmaoperationdesaturate.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -42,17 +42,17 @@ enum
 };
 
 
-static void     gimp_operation_desaturate_get_property (GObject             *object,
+static void     ligma_operation_desaturate_get_property (GObject             *object,
                                                         guint                property_id,
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
-static void     gimp_operation_desaturate_set_property (GObject             *object,
+static void     ligma_operation_desaturate_set_property (GObject             *object,
                                                         guint                property_id,
                                                         const GValue        *value,
                                                         GParamSpec          *pspec);
 
-static void     gimp_operation_desaturate_prepare      (GeglOperation       *operation);
-static gboolean gimp_operation_desaturate_process      (GeglOperation       *operation,
+static void     ligma_operation_desaturate_prepare      (GeglOperation       *operation);
+static gboolean ligma_operation_desaturate_process      (GeglOperation       *operation,
                                                         void                *in_buf,
                                                         void                *out_buf,
                                                         glong                samples,
@@ -60,53 +60,53 @@ static gboolean gimp_operation_desaturate_process      (GeglOperation       *ope
                                                         gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationDesaturate, ligma_operation_desaturate,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_desaturate_parent_class
+#define parent_class ligma_operation_desaturate_parent_class
 
 
 static void
-gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
+ligma_operation_desaturate_class_init (LigmaOperationDesaturateClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_desaturate_set_property;
-  object_class->get_property = gimp_operation_desaturate_get_property;
+  object_class->set_property = ligma_operation_desaturate_set_property;
+  object_class->get_property = ligma_operation_desaturate_get_property;
 
-  operation_class->prepare   = gimp_operation_desaturate_prepare;
+  operation_class->prepare   = ligma_operation_desaturate_prepare;
 
-  point_class->process       = gimp_operation_desaturate_process;
+  point_class->process       = ligma_operation_desaturate_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:desaturate",
+                                 "name",        "ligma:desaturate",
                                  "categories",  "color",
                                  "description", _("Turn colors into shades of gray"),
                                  NULL);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_MODE,
                          "mode",
                          _("Mode"),
                          _("Choose shade of gray based on"),
-                         GIMP_TYPE_DESATURATE_MODE,
-                         GIMP_DESATURATE_LUMINANCE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_DESATURATE_MODE,
+                         LIGMA_DESATURATE_LUMINANCE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_operation_desaturate_init (GimpOperationDesaturate *self)
+ligma_operation_desaturate_init (LigmaOperationDesaturate *self)
 {
 }
 
 static void
-gimp_operation_desaturate_get_property (GObject    *object,
+ligma_operation_desaturate_get_property (GObject    *object,
                                         guint       property_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (object);
+  LigmaOperationDesaturate *desaturate = LIGMA_OPERATION_DESATURATE (object);
 
   switch (property_id)
     {
@@ -121,12 +121,12 @@ gimp_operation_desaturate_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_desaturate_set_property (GObject      *object,
+ligma_operation_desaturate_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (object);
+  LigmaOperationDesaturate *desaturate = LIGMA_OPERATION_DESATURATE (object);
 
   switch (property_id)
     {
@@ -141,12 +141,12 @@ gimp_operation_desaturate_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_desaturate_prepare (GeglOperation *operation)
+ligma_operation_desaturate_prepare (GeglOperation *operation)
 {
-  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
+  LigmaOperationDesaturate *desaturate = LIGMA_OPERATION_DESATURATE (operation);
   const Babl              *format = gegl_operation_get_source_format (operation, "input");
 
-  if (desaturate->mode == GIMP_DESATURATE_LUMINANCE)
+  if (desaturate->mode == LIGMA_DESATURATE_LUMINANCE)
     {
       format = babl_format_with_space ("RGBA float", format);
     }
@@ -160,20 +160,20 @@ gimp_operation_desaturate_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_desaturate_process (GeglOperation       *operation,
+ligma_operation_desaturate_process (GeglOperation       *operation,
                                    void                *in_buf,
                                    void                *out_buf,
                                    glong                samples,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
+  LigmaOperationDesaturate *desaturate = LIGMA_OPERATION_DESATURATE (operation);
   gfloat                  *src        = in_buf;
   gfloat                  *dest       = out_buf;
 
   switch (desaturate->mode)
     {
-    case GIMP_DESATURATE_LIGHTNESS:
+    case LIGMA_DESATURATE_LIGHTNESS:
       /* This is the formula for Lightness in the HSL "bi-hexcone"
        * model: https://en.wikipedia.org/wiki/HSL_and_HSV
        */
@@ -198,8 +198,8 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
         }
       break;
 
-    case GIMP_DESATURATE_LUMA:
-    case GIMP_DESATURATE_LUMINANCE:
+    case LIGMA_DESATURATE_LUMA:
+    case LIGMA_DESATURATE_LUMINANCE:
       {
         const Babl *space = gegl_operation_get_source_space (operation, "input");
         double red_luminance, green_luminance, blue_luminance;
@@ -220,7 +220,7 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
       }
       break;
 
-    case GIMP_DESATURATE_AVERAGE:
+    case LIGMA_DESATURATE_AVERAGE:
       /* This is the formula for Intensity in the HSI model:
        * https://en.wikipedia.org/wiki/HSL_and_HSV
        */
@@ -238,7 +238,7 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
         }
       break;
 
-    case GIMP_DESATURATE_VALUE:
+    case LIGMA_DESATURATE_VALUE:
       /* This is the formula for Value in the HSV model:
        * https://en.wikipedia.org/wiki/HSL_and_HSV
        */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGrid
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,64 +18,64 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRID_H__
-#define __GIMP_GRID_H__
+#ifndef __LIGMA_GRID_H__
+#define __LIGMA_GRID_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_GRID            (gimp_grid_get_type ())
-#define GIMP_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRID, GimpGrid))
-#define GIMP_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRID, GimpGridClass))
-#define GIMP_IS_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRID))
-#define GIMP_IS_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRID))
-#define GIMP_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRID, GimpGridClass))
+#define LIGMA_TYPE_GRID            (ligma_grid_get_type ())
+#define LIGMA_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRID, LigmaGrid))
+#define LIGMA_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRID, LigmaGridClass))
+#define LIGMA_IS_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRID))
+#define LIGMA_IS_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRID))
+#define LIGMA_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRID, LigmaGridClass))
 
 
-typedef struct _GimpGridClass  GimpGridClass;
+typedef struct _LigmaGridClass  LigmaGridClass;
 
-struct _GimpGrid
+struct _LigmaGrid
 {
-  GimpObject     parent_instance;
+  LigmaObject     parent_instance;
 
-  GimpGridStyle  style;
-  GimpRGB        fgcolor;
-  GimpRGB        bgcolor;
+  LigmaGridStyle  style;
+  LigmaRGB        fgcolor;
+  LigmaRGB        bgcolor;
   gdouble        xspacing;
   gdouble        yspacing;
-  GimpUnit       spacing_unit;
+  LigmaUnit       spacing_unit;
   gdouble        xoffset;
   gdouble        yoffset;
-  GimpUnit       offset_unit;
+  LigmaUnit       offset_unit;
 };
 
 
-struct _GimpGridClass
+struct _LigmaGridClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType          gimp_grid_get_type               (void) G_GNUC_CONST;
+GType          ligma_grid_get_type               (void) G_GNUC_CONST;
 
-GimpGridStyle  gimp_grid_get_style              (GimpGrid           *grid);
+LigmaGridStyle  ligma_grid_get_style              (LigmaGrid           *grid);
 
-void           gimp_grid_get_fgcolor            (GimpGrid           *grid,
-                                                 GimpRGB            *fgcolor);
-void           gimp_grid_get_bgcolor            (GimpGrid           *grid,
-                                                 GimpRGB            *bgcolor);
+void           ligma_grid_get_fgcolor            (LigmaGrid           *grid,
+                                                 LigmaRGB            *fgcolor);
+void           ligma_grid_get_bgcolor            (LigmaGrid           *grid,
+                                                 LigmaRGB            *bgcolor);
 
-void           gimp_grid_get_spacing            (GimpGrid           *grid,
+void           ligma_grid_get_spacing            (LigmaGrid           *grid,
                                                  gdouble            *xspacing,
                                                  gdouble            *yspacing);
-void           gimp_grid_get_offset             (GimpGrid           *grid,
+void           ligma_grid_get_offset             (LigmaGrid           *grid,
                                                  gdouble            *xoffset,
                                                  gdouble            *yoffset);
 
-const gchar  * gimp_grid_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_grid_to_parasite            (GimpGrid           *grid);
-GimpGrid     * gimp_grid_from_parasite          (const GimpParasite *parasite);
+const gchar  * ligma_grid_parasite_name          (void) G_GNUC_CONST;
+LigmaParasite * ligma_grid_to_parasite            (LigmaGrid           *grid);
+LigmaGrid     * ligma_grid_from_parasite          (const LigmaParasite *parasite);
 
 
-#endif /* __GIMP_GRID_H__ */
+#endif /* __LIGMA_GRID_H__ */

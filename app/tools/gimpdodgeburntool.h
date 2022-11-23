@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,42 +15,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DODGE_BURN_TOOL_H__
-#define __GIMP_DODGE_BURN_TOOL_H__
+#ifndef __LIGMA_DODGE_BURN_TOOL_H__
+#define __LIGMA_DODGE_BURN_TOOL_H__
 
 
-#include "gimpbrushtool.h"
+#include "ligmabrushtool.h"
 
 
-#define GIMP_TYPE_DODGE_BURN_TOOL            (gimp_dodge_burn_tool_get_type ())
-#define GIMP_DODGE_BURN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGE_BURN_TOOL, GimpDodgeBurnTool))
-#define GIMP_IS_DODGE_BURN_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGE_BURN_TOOL))
-#define GIMP_DODGE_BURN_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGE_BURN_TOOL, GimpDodgeBurnToolClass))
-#define GIMP_IS_DODGE_BURN_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGE_BURN_TOOL))
+#define LIGMA_TYPE_DODGE_BURN_TOOL            (ligma_dodge_burn_tool_get_type ())
+#define LIGMA_DODGE_BURN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DODGE_BURN_TOOL, LigmaDodgeBurnTool))
+#define LIGMA_IS_DODGE_BURN_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DODGE_BURN_TOOL))
+#define LIGMA_DODGE_BURN_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DODGE_BURN_TOOL, LigmaDodgeBurnToolClass))
+#define LIGMA_IS_DODGE_BURN_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DODGE_BURN_TOOL))
 
-#define GIMP_DODGE_BURN_TOOL_GET_OPTIONS(t)  (GIMP_DODGE_BURN_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_DODGE_BURN_TOOL_GET_OPTIONS(t)  (LIGMA_DODGE_BURN_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpDodgeBurnTool      GimpDodgeBurnTool;
-typedef struct _GimpDodgeBurnToolClass GimpDodgeBurnToolClass;
+typedef struct _LigmaDodgeBurnTool      LigmaDodgeBurnTool;
+typedef struct _LigmaDodgeBurnToolClass LigmaDodgeBurnToolClass;
 
-struct _GimpDodgeBurnTool
+struct _LigmaDodgeBurnTool
 {
-  GimpBrushTool parent_instance;
+  LigmaBrushTool parent_instance;
 
   gboolean      toggled;
 };
 
-struct _GimpDodgeBurnToolClass
+struct _LigmaDodgeBurnToolClass
 {
-  GimpBrushToolClass parent_class;
+  LigmaBrushToolClass parent_class;
 };
 
 
-void    gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_dodge_burn_tool_register (LigmaToolRegisterCallback  callback,
                                        gpointer                  data);
 
-GType   gimp_dodge_burn_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_dodge_burn_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_DODGEBURN_TOOL_H__  */
+#endif  /*  __LIGMA_DODGEBURN_TOOL_H__  */

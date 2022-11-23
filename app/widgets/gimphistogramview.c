@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "core/gimphistogram.h"
-#include "core/gimpmarshal.h"
+#include "core/ligmahistogram.h"
+#include "core/ligmamarshal.h"
 
-#include "gimphistogramview.h"
-#include "gimpwidgets-utils.h"
+#include "ligmahistogramview.h"
+#include "ligmawidgets-utils.h"
 
 
 #define MIN_WIDTH  64
@@ -53,38 +53,38 @@ enum
 };
 
 
-static void     gimp_histogram_view_dispose              (GObject        *object);
-static void     gimp_histogram_view_set_property         (GObject        *object,
+static void     ligma_histogram_view_dispose              (GObject        *object);
+static void     ligma_histogram_view_set_property         (GObject        *object,
                                                           guint           property_id,
                                                           const GValue   *value,
                                                           GParamSpec     *pspec);
-static void     gimp_histogram_view_get_property         (GObject        *object,
+static void     ligma_histogram_view_get_property         (GObject        *object,
                                                           guint           property_id,
                                                           GValue         *value,
                                                           GParamSpec     *pspec);
 
-static void     gimp_histogram_view_get_preferred_width  (GtkWidget      *widget,
+static void     ligma_histogram_view_get_preferred_width  (GtkWidget      *widget,
                                                           gint           *minimum_width,
                                                           gint           *natural_width);
-static void     gimp_histogram_view_get_preferred_height (GtkWidget      *widget,
+static void     ligma_histogram_view_get_preferred_height (GtkWidget      *widget,
                                                           gint           *minimum_height,
                                                           gint           *natural_height);
-static gboolean gimp_histogram_view_draw                 (GtkWidget      *widget,
+static gboolean ligma_histogram_view_draw                 (GtkWidget      *widget,
                                                           cairo_t        *cr);
-static gboolean gimp_histogram_view_button_press         (GtkWidget      *widget,
+static gboolean ligma_histogram_view_button_press         (GtkWidget      *widget,
                                                           GdkEventButton *bevent);
-static gboolean gimp_histogram_view_button_release       (GtkWidget      *widget,
+static gboolean ligma_histogram_view_button_release       (GtkWidget      *widget,
                                                           GdkEventButton *bevent);
-static gboolean gimp_histogram_view_motion_notify        (GtkWidget      *widget,
+static gboolean ligma_histogram_view_motion_notify        (GtkWidget      *widget,
                                                           GdkEventMotion *bevent);
 
-static void     gimp_histogram_view_notify      (GimpHistogram        *histogram,
+static void     ligma_histogram_view_notify      (LigmaHistogram        *histogram,
                                                  const GParamSpec     *pspec,
-                                                 GimpHistogramView    *view);
-static void     gimp_histogram_view_update_bins (GimpHistogramView    *view);
+                                                 LigmaHistogramView    *view);
+static void     ligma_histogram_view_update_bins (LigmaHistogramView    *view);
 
-static void     gimp_histogram_view_draw_spike  (GimpHistogramView    *view,
-                                                 GimpHistogramChannel  channel,
+static void     ligma_histogram_view_draw_spike  (LigmaHistogramView    *view,
+                                                 LigmaHistogramChannel  channel,
                                                  cairo_t              *cr,
                                                  const GdkRGBA        *fg_color,
                                                  cairo_operator_t      fg_operator,
@@ -98,16 +98,16 @@ static void     gimp_histogram_view_draw_spike  (GimpHistogramView    *view,
                                                  gint                  border);
 
 
-G_DEFINE_TYPE (GimpHistogramView, gimp_histogram_view,
+G_DEFINE_TYPE (LigmaHistogramView, ligma_histogram_view,
                GTK_TYPE_DRAWING_AREA)
 
-#define parent_class gimp_histogram_view_parent_class
+#define parent_class ligma_histogram_view_parent_class
 
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
+ligma_histogram_view_class_init (LigmaHistogramViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -116,58 +116,58 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
     g_signal_new ("range-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpHistogramViewClass, range_changed),
+                  G_STRUCT_OFFSET (LigmaHistogramViewClass, range_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT,
+                  ligma_marshal_VOID__INT_INT,
                   G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->dispose              = gimp_histogram_view_dispose;
-  object_class->get_property         = gimp_histogram_view_get_property;
-  object_class->set_property         = gimp_histogram_view_set_property;
+  object_class->dispose              = ligma_histogram_view_dispose;
+  object_class->get_property         = ligma_histogram_view_get_property;
+  object_class->set_property         = ligma_histogram_view_set_property;
 
-  widget_class->get_preferred_width  = gimp_histogram_view_get_preferred_width;
-  widget_class->get_preferred_height = gimp_histogram_view_get_preferred_height;
-  widget_class->draw                 = gimp_histogram_view_draw;
-  widget_class->button_press_event   = gimp_histogram_view_button_press;
-  widget_class->button_release_event = gimp_histogram_view_button_release;
-  widget_class->motion_notify_event  = gimp_histogram_view_motion_notify;
+  widget_class->get_preferred_width  = ligma_histogram_view_get_preferred_width;
+  widget_class->get_preferred_height = ligma_histogram_view_get_preferred_height;
+  widget_class->draw                 = ligma_histogram_view_draw;
+  widget_class->button_press_event   = ligma_histogram_view_button_press;
+  widget_class->button_release_event = ligma_histogram_view_button_release;
+  widget_class->motion_notify_event  = ligma_histogram_view_motion_notify;
 
   klass->range_changed               = NULL;
 
   g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_enum ("histogram-channel",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                      GIMP_HISTOGRAM_VALUE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_HISTOGRAM_CHANNEL,
+                                                      LIGMA_HISTOGRAM_VALUE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SCALE,
                                    g_param_spec_enum ("histogram-scale",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_HISTOGRAM_SCALE,
-                                                      GIMP_HISTOGRAM_SCALE_LINEAR,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_HISTOGRAM_SCALE,
+                                                      LIGMA_HISTOGRAM_SCALE_LINEAR,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BORDER_WIDTH,
                                    g_param_spec_int ("border-width", NULL, NULL,
                                                      0, 32, 1,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SUBDIVISIONS,
                                    g_param_spec_int ("subdivisions",
                                                      NULL, NULL,
                                                      1, 64, 5,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_histogram_view_init (GimpHistogramView *view)
+ligma_histogram_view_init (LigmaHistogramView *view)
 {
   view->histogram    = NULL;
   view->bg_histogram = NULL;
@@ -177,23 +177,23 @@ gimp_histogram_view_init (GimpHistogramView *view)
 }
 
 static void
-gimp_histogram_view_dispose (GObject *object)
+ligma_histogram_view_dispose (GObject *object)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (object);
 
-  gimp_histogram_view_set_histogram (view, NULL);
-  gimp_histogram_view_set_background (view, NULL);
+  ligma_histogram_view_set_histogram (view, NULL);
+  ligma_histogram_view_set_background (view, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_histogram_view_set_property (GObject      *object,
+ligma_histogram_view_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (object);
 
   switch (property_id)
     {
@@ -221,12 +221,12 @@ gimp_histogram_view_set_property (GObject      *object,
 }
 
 static void
-gimp_histogram_view_get_property (GObject      *object,
+ligma_histogram_view_get_property (GObject      *object,
                                   guint         property_id,
                                   GValue       *value,
                                   GParamSpec   *pspec)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (object);
 
   switch (property_id)
     {
@@ -250,38 +250,38 @@ gimp_histogram_view_get_property (GObject      *object,
 }
 
 static void
-gimp_histogram_view_get_preferred_width (GtkWidget *widget,
+ligma_histogram_view_get_preferred_width (GtkWidget *widget,
                                          gint      *minimum_width,
                                          gint      *natural_width)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (widget);
 
   *minimum_width = *natural_width = MIN_WIDTH + 2 * view->border_width;
 }
 
 static void
-gimp_histogram_view_get_preferred_height (GtkWidget *widget,
+ligma_histogram_view_get_preferred_height (GtkWidget *widget,
                                           gint      *minimum_height,
                                           gint      *natural_height)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (widget);
 
   *minimum_height = *natural_height = MIN_HEIGHT + 2 * view->border_width;
 }
 
 static gdouble
-gimp_histogram_view_get_maximum (GimpHistogramView    *view,
-                                 GimpHistogram        *histogram,
-                                 GimpHistogramChannel  channel)
+ligma_histogram_view_get_maximum (LigmaHistogramView    *view,
+                                 LigmaHistogram        *histogram,
+                                 LigmaHistogramChannel  channel)
 {
-  gdouble max = gimp_histogram_get_maximum (histogram, channel);
+  gdouble max = ligma_histogram_get_maximum (histogram, channel);
 
   switch (view->scale)
     {
-    case GIMP_HISTOGRAM_SCALE_LINEAR:
+    case LIGMA_HISTOGRAM_SCALE_LINEAR:
       break;
 
-    case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
+    case LIGMA_HISTOGRAM_SCALE_LOGARITHMIC:
       if (max > 0.0)
         max = log (max);
       else
@@ -293,10 +293,10 @@ gimp_histogram_view_get_maximum (GimpHistogramView    *view,
 }
 
 static gboolean
-gimp_histogram_view_draw (GtkWidget *widget,
+ligma_histogram_view_draw (GtkWidget *widget,
                           cairo_t   *cr)
 {
-  GimpHistogramView *view  = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view  = LIGMA_HISTOGRAM_VIEW (widget);
   GtkStyleContext   *style = gtk_widget_get_style_context (widget);
   GtkAllocation      allocation;
   gint               x;
@@ -349,11 +349,11 @@ gimp_histogram_view_draw (GtkWidget *widget,
   x2 = CLAMP (MAX (view->start, view->end), 0, view->n_bins - 1);
 
   if (view->histogram)
-    max = gimp_histogram_view_get_maximum (view, view->histogram,
+    max = ligma_histogram_view_get_maximum (view, view->histogram,
                                            view->channel);
 
   if (view->bg_histogram)
-    bg_max = gimp_histogram_view_get_maximum (view, view->bg_histogram,
+    bg_max = ligma_histogram_view_get_maximum (view, view->bg_histogram,
                                               view->channel);
 
   gtk_style_context_get_color (style, gtk_style_context_get_state (style),
@@ -369,7 +369,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
   bg_color_in.alpha = 0.5;
   gtk_style_context_restore (style);
 
-  if (view->channel == GIMP_HISTOGRAM_RGB)
+  if (view->channel == LIGMA_HISTOGRAM_RGB)
     {
       for (x = 0; x < 3; x++)
         {
@@ -419,26 +419,26 @@ gimp_histogram_view_draw (GtkWidget *widget,
           gtk_style_context_restore (style);
         }
 
-      if (view->channel == GIMP_HISTOGRAM_RGB)
+      if (view->channel == LIGMA_HISTOGRAM_RGB)
         {
           GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };
           gint    c;
 
           for (c = 0; c < 3; c++)
-            gimp_histogram_view_draw_spike (view, GIMP_HISTOGRAM_RED + c, cr,
+            ligma_histogram_view_draw_spike (view, LIGMA_HISTOGRAM_RED + c, cr,
                                             &black,
                                             CAIRO_OPERATOR_OVER,
                                             NULL,
                                             x, i, j, max, bg_max, height, border);
 
           for (c = 0; c < 3; c++)
-            gimp_histogram_view_draw_spike (view, GIMP_HISTOGRAM_RED + c, cr,
+            ligma_histogram_view_draw_spike (view, LIGMA_HISTOGRAM_RED + c, cr,
                                             &rgb_color[c],
                                             CAIRO_OPERATOR_ADD,
                                             NULL,
                                             x, i, j, max, bg_max, height, border);
 
-          gimp_histogram_view_draw_spike (view, view->channel, cr,
+          ligma_histogram_view_draw_spike (view, view->channel, cr,
                                           in_selection ? &color_in : &color_out,
                                           CAIRO_OPERATOR_OVER,
                                           NULL,
@@ -446,7 +446,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
         }
       else
         {
-          gimp_histogram_view_draw_spike (view, view->channel, cr,
+          ligma_histogram_view_draw_spike (view, view->channel, cr,
                                           in_selection ? &color_in : &color_out,
                                           CAIRO_OPERATOR_OVER,
                                           in_selection ? &bg_color_in : &bg_color_out,
@@ -460,8 +460,8 @@ gimp_histogram_view_draw (GtkWidget *widget,
 }
 
 static void
-gimp_histogram_view_draw_spike (GimpHistogramView    *view,
-                                GimpHistogramChannel  channel,
+ligma_histogram_view_draw_spike (LigmaHistogramView    *view,
+                                LigmaHistogramChannel  channel,
                                 cairo_t              *cr,
                                 const GdkRGBA        *fg_color,
                                 cairo_operator_t      fg_operator,
@@ -485,7 +485,7 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
       do
         {
-          gdouble v = gimp_histogram_get_value (view->histogram,
+          gdouble v = ligma_histogram_get_value (view->histogram,
                                                 channel, ii++);
 
           if (v > value)
@@ -500,7 +500,7 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
       do
         {
-          gdouble v = gimp_histogram_get_value (view->bg_histogram,
+          gdouble v = ligma_histogram_get_value (view->bg_histogram,
                                                 channel, ii++);
 
           if (v > bg_value)
@@ -514,12 +514,12 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
   switch (view->scale)
     {
-    case GIMP_HISTOGRAM_SCALE_LINEAR:
+    case LIGMA_HISTOGRAM_SCALE_LINEAR:
       y    = (gint) (((height - 2) * value)    / max);
       bg_y = (gint) (((height - 2) * bg_value) / bg_max);
       break;
 
-    case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
+    case LIGMA_HISTOGRAM_SCALE_LOGARITHMIC:
       y    = (gint) (((height - 2) * log (value))    / max);
       bg_y = (gint) (((height - 2) * log (bg_value)) / bg_max);
       break;
@@ -553,10 +553,10 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 }
 
 static gboolean
-gimp_histogram_view_button_press (GtkWidget      *widget,
+ligma_histogram_view_button_press (GtkWidget      *widget,
                                   GdkEventButton *bevent)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (widget);
 
   if (! view->grab_seat &&
       bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
@@ -590,10 +590,10 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_histogram_view_button_release (GtkWidget      *widget,
+ligma_histogram_view_button_release (GtkWidget      *widget,
                                     GdkEventButton *bevent)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (widget);
 
   if (gdk_event_get_seat ((GdkEvent *) bevent) == view->grab_seat &&
       bevent->button == 1)
@@ -617,10 +617,10 @@ gimp_histogram_view_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_histogram_view_motion_notify (GtkWidget      *widget,
+ligma_histogram_view_motion_notify (GtkWidget      *widget,
                                    GdkEventMotion *mevent)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_VIEW (widget);
   GtkAllocation      allocation;
   gint               width;
 
@@ -643,9 +643,9 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_histogram_view_new (gboolean range)
+ligma_histogram_view_new (gboolean range)
 {
-  GtkWidget *view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
+  GtkWidget *view = g_object_new (LIGMA_TYPE_HISTOGRAM_VIEW, NULL);
 
   if (range)
     gtk_widget_add_events (view,
@@ -657,15 +657,15 @@ gimp_histogram_view_new (gboolean range)
 }
 
 void
-gimp_histogram_view_set_histogram (GimpHistogramView *view,
-                                   GimpHistogram     *histogram)
+ligma_histogram_view_set_histogram (LigmaHistogramView *view,
+                                   LigmaHistogram     *histogram)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 #if 0
   g_return_if_fail (histogram == NULL ||
                     view->bg_histogram == NULL ||
-                    gimp_histogram_n_components (view->bg_histogram) ==
-                    gimp_histogram_n_components (histogram));
+                    ligma_histogram_n_components (view->bg_histogram) ==
+                    ligma_histogram_n_components (histogram));
 #endif
 
   if (view->histogram != histogram)
@@ -673,7 +673,7 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
       if (view->histogram)
         {
           g_signal_handlers_disconnect_by_func (view->histogram,
-                                                gimp_histogram_view_notify,
+                                                ligma_histogram_view_notify,
                                                 view);
           g_object_unref (view->histogram);
         }
@@ -685,37 +685,37 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
           g_object_ref (histogram);
 
           g_signal_connect (histogram, "notify",
-                            G_CALLBACK (gimp_histogram_view_notify),
+                            G_CALLBACK (ligma_histogram_view_notify),
                             view);
 
-          if (! gimp_histogram_has_channel (histogram, view->channel))
-            gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+          if (! ligma_histogram_has_channel (histogram, view->channel))
+            ligma_histogram_view_set_channel (view, LIGMA_HISTOGRAM_VALUE);
         }
 
-      gimp_histogram_view_update_bins (view);
+      ligma_histogram_view_update_bins (view);
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
-GimpHistogram *
-gimp_histogram_view_get_histogram (GimpHistogramView *view)
+LigmaHistogram *
+ligma_histogram_view_get_histogram (LigmaHistogramView *view)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view), NULL);
 
   return view->histogram;
 }
 
 void
-gimp_histogram_view_set_background (GimpHistogramView *view,
-                                    GimpHistogram     *histogram)
+ligma_histogram_view_set_background (LigmaHistogramView *view,
+                                    LigmaHistogram     *histogram)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 #if 0
   g_return_if_fail (histogram == NULL ||
                     view->histogram == NULL ||
-                    gimp_histogram_n_components (view->histogram) ==
-                    gimp_histogram_n_components (histogram));
+                    ligma_histogram_n_components (view->histogram) ==
+                    ligma_histogram_n_components (histogram));
 #endif
 
   if (view->bg_histogram != histogram)
@@ -723,7 +723,7 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
       if (view->bg_histogram)
         {
           g_signal_handlers_disconnect_by_func (view->bg_histogram,
-                                                gimp_histogram_view_notify,
+                                                ligma_histogram_view_notify,
                                                 view);
           g_object_unref (view->bg_histogram);
         }
@@ -735,69 +735,69 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
           g_object_ref (histogram);
 
           g_signal_connect (histogram, "notify",
-                            G_CALLBACK (gimp_histogram_view_notify),
+                            G_CALLBACK (ligma_histogram_view_notify),
                             view);
 
-          if (! gimp_histogram_has_channel (histogram, view->channel))
-            gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+          if (! ligma_histogram_has_channel (histogram, view->channel))
+            ligma_histogram_view_set_channel (view, LIGMA_HISTOGRAM_VALUE);
         }
 
-      gimp_histogram_view_update_bins (view);
+      ligma_histogram_view_update_bins (view);
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
-GimpHistogram *
-gimp_histogram_view_get_background (GimpHistogramView *view)
+LigmaHistogram *
+ligma_histogram_view_get_background (LigmaHistogramView *view)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view), NULL);
 
   return view->bg_histogram;
 }
 
 void
-gimp_histogram_view_set_channel (GimpHistogramView    *view,
-                                 GimpHistogramChannel  channel)
+ligma_histogram_view_set_channel (LigmaHistogramView    *view,
+                                 LigmaHistogramChannel  channel)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 
   if (channel != view->channel)
     g_object_set (view, "histogram-channel", channel, NULL);
 }
 
-GimpHistogramChannel
-gimp_histogram_view_get_channel (GimpHistogramView *view)
+LigmaHistogramChannel
+ligma_histogram_view_get_channel (LigmaHistogramView *view)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM_VIEW (view), 0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view), 0);
 
   return view->channel;
 }
 
 void
-gimp_histogram_view_set_scale (GimpHistogramView  *view,
-                               GimpHistogramScale  scale)
+ligma_histogram_view_set_scale (LigmaHistogramView  *view,
+                               LigmaHistogramScale  scale)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 
   if (scale != view->scale)
     g_object_set (view, "histogram-scale", scale, NULL);
 }
 
-GimpHistogramScale
-gimp_histogram_view_get_scale (GimpHistogramView *view)
+LigmaHistogramScale
+ligma_histogram_view_get_scale (LigmaHistogramView *view)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM_VIEW (view), 0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view), 0);
 
   return view->scale;
 }
 
 void
-gimp_histogram_view_set_range (GimpHistogramView *view,
+ligma_histogram_view_set_range (LigmaHistogramView *view,
                                gint               start,
                                gint               end)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 
   if (view->start != MIN (start, end) ||
       view->end   != MAX (start, end))
@@ -813,11 +813,11 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 }
 
 void
-gimp_histogram_view_get_range (GimpHistogramView *view,
+ligma_histogram_view_get_range (LigmaHistogramView *view,
                                gint              *start,
                                gint              *end)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM_VIEW (view));
 
   if (start) *start = view->start;
   if (end)   *end   = view->end;
@@ -827,13 +827,13 @@ gimp_histogram_view_get_range (GimpHistogramView *view,
 /*  private functions  */
 
 static void
-gimp_histogram_view_notify (GimpHistogram     *histogram,
+ligma_histogram_view_notify (LigmaHistogram     *histogram,
                             const GParamSpec  *pspec,
-                            GimpHistogramView *view)
+                            LigmaHistogramView *view)
 {
   if (! strcmp (pspec->name, "n-bins"))
     {
-      gimp_histogram_view_update_bins (view);
+      ligma_histogram_view_update_bins (view);
     }
   else
     {
@@ -842,14 +842,14 @@ gimp_histogram_view_notify (GimpHistogram     *histogram,
 }
 
 static void
-gimp_histogram_view_update_bins (GimpHistogramView *view)
+ligma_histogram_view_update_bins (LigmaHistogramView *view)
 {
   gint new_bins = 0;
 
   if (view->histogram)
-    new_bins = gimp_histogram_n_bins (view->histogram);
+    new_bins = ligma_histogram_n_bins (view->histogram);
   else if (view->bg_histogram)
-    new_bins = gimp_histogram_n_bins (view->bg_histogram);
+    new_bins = ligma_histogram_n_bins (view->bg_histogram);
 
   if (new_bins > 0 && new_bins != view->n_bins)
     {

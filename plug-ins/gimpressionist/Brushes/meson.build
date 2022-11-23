@@ -53,7 +53,7 @@ brushes = [
   'spunge04.pgm',
   'spunge05.pgm',
   'strange01.pgm',
-  'thegimp.pgm',
+  'theligma.pgm',
   'torus.ppm',
   'wavy.pgm',
   'weave.pgm',
@@ -62,5 +62,5 @@ brushes = [
 
 install_data(
   brushes,
-  install_dir: gimpdatadir / 'gimpressionist' / 'Brushes',
+  install_dir: ligmadatadir / 'ligmaressionist' / 'Brushes',
 )

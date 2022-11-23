@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,21 +22,21 @@
 
 #include "display/display-types.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmaimagewindow.h"
 
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpdialogfactory.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmadialogfactory.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-new.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-new.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 #ifdef G_OS_WIN32
 /* SendInput() requirement is Windows 2000 pro or over.
@@ -56,7 +56,7 @@
 #endif /* GDK_WINDOWING_QUARTZ */
 
 void
-gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
+ligma_test_utils_set_env_to_subdir (const gchar *root_env_var,
                                    const gchar *subdir,
                                    const gchar *target_env_var)
 {
@@ -70,7 +70,7 @@ gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
                 "*  The env var %s is not set, you are probably running\n"
                 "*  in a debugger. Set it manually, e.g.:\n"
                 "*\n"
-                "*    set env %s=%s/source/gimp\n"
+                "*    set env %s=%s/source/ligma\n"
                 "*\n",
                 root_env_var,
                 root_env_var, g_get_home_dir ());
@@ -82,7 +82,7 @@ gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
 }
 
 void
-gimp_test_utils_set_env_to_subpath (const gchar *root_env_var1,
+ligma_test_utils_set_env_to_subpath (const gchar *root_env_var1,
                                     const gchar *root_env_var2,
                                     const gchar *subdir,
                                     const gchar *target_env_var)
@@ -100,7 +100,7 @@ gimp_test_utils_set_env_to_subpath (const gchar *root_env_var1,
                 "*  The env var %s is not set, you are probably running\n"
                 "*  in a debugger. Set it manually, e.g.:\n"
                 "*\n"
-                "*    set env %s=%s/source/gimp\n"
+                "*    set env %s=%s/source/ligma\n"
                 "*\n",
                 root_env_var1,
                 root_env_var1, g_get_home_dir ());
@@ -111,7 +111,7 @@ gimp_test_utils_set_env_to_subpath (const gchar *root_env_var1,
                 "*  The env var %s is not set, you are probably running\n"
                 "*  in a debugger. Set it manually, e.g.:\n"
                 "*\n"
-                "*    set env %s=%s/source/gimp\n"
+                "*    set env %s=%s/source/ligma\n"
                 "*\n",
                 root_env_var2,
                 root_env_var2, g_get_home_dir ());
@@ -132,92 +132,92 @@ gimp_test_utils_set_env_to_subpath (const gchar *root_env_var1,
 
 
 /**
- * gimp_test_utils_set_gimp3_directory:
- * @root_env_var: Either "GIMP_TESTING_ABS_TOP_SRCDIR" or
- *                "GIMP_TESTING_ABS_TOP_BUILDDIR"
+ * ligma_test_utils_set_ligma3_directory:
+ * @root_env_var: Either "LIGMA_TESTING_ABS_TOP_SRCDIR" or
+ *                "LIGMA_TESTING_ABS_TOP_BUILDDIR"
  * @subdir:       Subdir, may be %NULL
  *
- * Sets GIMP3_DIRECTORY to the source dir @root_env_var/@subdir. The
+ * Sets LIGMA3_DIRECTORY to the source dir @root_env_var/@subdir. The
  * environment variables is set up by the test runner, see Makefile.am
  **/
 void
-gimp_test_utils_set_gimp3_directory (const gchar *root_env_var,
+ligma_test_utils_set_ligma3_directory (const gchar *root_env_var,
                                      const gchar *subdir)
 {
-  gimp_test_utils_set_env_to_subdir (root_env_var,
+  ligma_test_utils_set_env_to_subdir (root_env_var,
                                      subdir,
-                                     "GIMP3_DIRECTORY" /*target_env_var*/);
+                                     "LIGMA3_DIRECTORY" /*target_env_var*/);
 }
 
 /**
- * gimp_test_utils_setup_menus_path:
+ * ligma_test_utils_setup_menus_path:
  *
- * Sets GIMP_TESTING_MENUS_PATH to "$top_srcdir/menus:$top_builddir/menus".
+ * Sets LIGMA_TESTING_MENUS_PATH to "$top_srcdir/menus:$top_builddir/menus".
  **/
 void
-gimp_test_utils_setup_menus_path (void)
+ligma_test_utils_setup_menus_path (void)
 {
-  /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
+  /* LIGMA_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
-  gimp_test_utils_set_env_to_subpath ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                      "GIMP_TESTING_ABS_TOP_BUILDDIR",
+  ligma_test_utils_set_env_to_subpath ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                      "LIGMA_TESTING_ABS_TOP_BUILDDIR",
                                       "menus",
-                                      "GIMP_TESTING_MENUS_PATH");
+                                      "LIGMA_TESTING_MENUS_PATH");
 }
 
 /**
- * gimp_test_utils_create_image:
- * @gimp:   A #Gimp instance.
+ * ligma_test_utils_create_image:
+ * @ligma:   A #Ligma instance.
  * @width:  Width of image (and layer)
  * @height: Height of image (and layer)
  *
  * Creates a new image of a given size with one layer of same size and
  * a display.
  *
- * Returns: The new #GimpImage.
+ * Returns: The new #LigmaImage.
  **/
 void
-gimp_test_utils_create_image (Gimp *gimp,
+ligma_test_utils_create_image (Ligma *ligma,
                               gint  width,
                               gint  height)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  LigmaImage *image;
+  LigmaLayer *layer;
 
-  image = gimp_image_new (gimp, width, height,
-                          GIMP_RGB, GIMP_PRECISION_U8_NON_LINEAR);
+  image = ligma_image_new (ligma, width, height,
+                          LIGMA_RGB, LIGMA_PRECISION_U8_NON_LINEAR);
 
-  layer = gimp_layer_new (image,
+  layer = ligma_layer_new (image,
                           width,
                           height,
-                          gimp_image_get_layer_format (image, TRUE),
+                          ligma_image_get_layer_format (image, TRUE),
                           "layer1",
                           1.0,
-                          GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_LAYER_MODE_NORMAL);
 
-  gimp_image_add_layer (image,
+  ligma_image_add_layer (image,
                         layer,
                         NULL /*parent*/,
                         0 /*position*/,
                         FALSE /*push_undo*/);
 
-  gimp_create_display (gimp,
+  ligma_create_display (ligma,
                        image,
-                       GIMP_UNIT_PIXEL,
+                       LIGMA_UNIT_PIXEL,
                        1.0 /*scale*/,
                        NULL);
 }
 
 /**
- * gimp_test_utils_synthesize_key_event:
+ * ligma_test_utils_synthesize_key_event:
  * @widget: Widget to target.
  * @keyval: Keyval, e.g. GDK_Return
  *
  * Simulates a keypress and release with gdk_test_simulate_key().
  **/
 void
-gimp_test_utils_synthesize_key_event (GtkWidget *widget,
+ligma_test_utils_synthesize_key_event (GtkWidget *widget,
                                       guint      keyval)
 {
 #if defined(GDK_WINDOWING_QUARTZ)
@@ -304,71 +304,71 @@ else
 }
 
 /**
- * gimp_test_utils_get_ui_manager:
- * @gimp: The #Gimp instance.
+ * ligma_test_utils_get_ui_manager:
+ * @ligma: The #Ligma instance.
  *
- * Returns the "best" #GimpUIManager to use when performing
+ * Returns the "best" #LigmaUIManager to use when performing
  * actions. It gives the ui manager of the empty display if it exists,
  * otherwise it gives it the ui manager of the first display.
  *
- * Returns: The #GimpUIManager.
+ * Returns: The #LigmaUIManager.
  **/
-GimpUIManager *
-gimp_test_utils_get_ui_manager (Gimp *gimp)
+LigmaUIManager *
+ligma_test_utils_get_ui_manager (Ligma *ligma)
 {
-  GimpDisplay       *display      = NULL;
-  GimpDisplayShell  *shell        = NULL;
+  LigmaDisplay       *display      = NULL;
+  LigmaDisplayShell  *shell        = NULL;
   GtkWidget         *toplevel     = NULL;
-  GimpImageWindow   *image_window = NULL;
-  GimpUIManager     *ui_manager   = NULL;
+  LigmaImageWindow   *image_window = NULL;
+  LigmaUIManager     *ui_manager   = NULL;
 
-  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  display = LIGMA_DISPLAY (ligma_get_empty_display (ligma));
 
   /* If there were not empty display, assume that there is at least
    * one image display and use that
    */
   if (! display)
-    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+    display = LIGMA_DISPLAY (ligma_get_display_iter (ligma)->data);
 
-  shell            = gimp_display_get_shell (display);
+  shell            = ligma_display_get_shell (display);
   toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  ui_manager       = gimp_image_window_get_ui_manager (image_window);
+  image_window     = LIGMA_IMAGE_WINDOW (toplevel);
+  ui_manager       = ligma_image_window_get_ui_manager (image_window);
 
   return ui_manager;
 }
 
 /**
- * gimp_test_utils_create_image_from_dalog:
- * @gimp:
+ * ligma_test_utils_create_image_from_dalog:
+ * @ligma:
  *
  * Creates a new image using the "New image" dialog, and then returns
- * the #GimpImage created.
+ * the #LigmaImage created.
  *
- * Returns: The created #GimpImage.
+ * Returns: The created #LigmaImage.
  **/
-GimpImage *
-gimp_test_utils_create_image_from_dialog (Gimp *gimp)
+LigmaImage *
+ligma_test_utils_create_image_from_dialog (Ligma *ligma)
 {
-  GimpImage     *image            = NULL;
+  LigmaImage     *image            = NULL;
   GtkWidget     *new_image_dialog = NULL;
-  guint          n_initial_images = g_list_length (gimp_get_image_iter (gimp));
+  guint          n_initial_images = g_list_length (ligma_get_image_iter (ligma));
   guint          n_images         = -1;
   gint           tries_left       = 100;
-  GimpUIManager *ui_manager       = gimp_test_utils_get_ui_manager (gimp);
+  LigmaUIManager *ui_manager       = ligma_test_utils_get_ui_manager (ligma);
 
   /* Bring up the new image dialog */
-  gimp_ui_manager_activate_action (ui_manager,
+  ligma_ui_manager_activate_action (ui_manager,
                                    "image",
                                    "image-new");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Get the GtkWindow of the dialog */
   new_image_dialog =
-    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
+    ligma_dialog_factory_dialog_raise (ligma_dialog_factory_get_singleton (),
                                       gdk_display_get_monitor (gdk_display_get_default (), 0),
                                       NULL,
-                                      "gimp-image-new-dialog",
+                                      "ligma-image-new-dialog",
                                       -1 /*view_size*/);
 
   /* Press the OK button. It will take a while for the image to be
@@ -378,8 +378,8 @@ gimp_test_utils_create_image_from_dialog (Gimp *gimp)
   do
     {
       g_usleep (20 * 1000);
-      gimp_test_run_mainloop_until_idle ();
-      n_images = g_list_length (gimp_get_image_iter (gimp));
+      ligma_test_run_mainloop_until_idle ();
+      n_images = g_list_length (ligma_get_image_iter (ligma));
     }
   while (tries_left-- &&
          n_images != n_initial_images + 1);
@@ -389,7 +389,7 @@ gimp_test_utils_create_image_from_dialog (Gimp *gimp)
                    ==,
                    n_initial_images + 1);
 
-  image = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
+  image = LIGMA_IMAGE (ligma_get_image_iter (ligma)->data);
 
   return image;
 }

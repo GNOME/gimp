@@ -1,15 +1,15 @@
-# Finnish messages for gimp-tips.
+# Finnish messages for ligma-tips.
 # Suomennos: https://l10n.gnome.org/teams/fi/
 # Ilkka Tuohela <hile@iki.fi>, 2006.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Petri Järvisalo <reaby @ Freenode>, 2008.
 # Elias Julkunen <elias.julkunen@gmail.com>, 2008.
-# Janne Peltonen <peltzi@gimp-suomi.org>, 2012.
+# Janne Peltonen <peltzi@ligma-suomi.org>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2019-09-20 16:59+0000\n"
 "PO-Revision-Date: 2020-02-23 20:19+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
@@ -20,26 +20,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Asiakohtaista avustusta on helppo saada milloin vain lähes mistä tahansa "
-"GIMP-ominaisuudesta myös valikkojen sisältä. Aktivoi ohje painamalla F1-"
+"LIGMA-ominaisuudesta myös valikkojen sisältä. Aktivoi ohje painamalla F1-"
 "näppäintä."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP käyttää tasoja, joten voit järjestää kuvasi elementit paremmin. "
+"LIGMA käyttää tasoja, joten voit järjestää kuvasi elementit paremmin. "
 "Ajattele tasoa läpinäkyväksi piirtoheitinkalvoksi, joita yhdistämällä saat "
 "eri kalvoille eri elementit kokonaiseksi kuvaksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -47,20 +47,20 @@ msgstr ""
 "Voit suorittaa monia tasotoimintoja napsauttamalla tason nimiä oikealla "
 "hiiren painikkeella tasoikkunasta."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Kun tallennat kuvan, se tallennetaan XCF-muotoon, joka on GIMPin oma "
+"Kun tallennat kuvan, se tallennetaan XCF-muotoon, joka on LIGMAin oma "
 "tiedostomuoto (tiedostopääte <tt>.xcf</tt>). Tämä säilyttää tasot ja monet "
 "muut yksityiskohdat työstäsi, jolloin paluu työskentelyyn onnistuu vaivatta. "
 "Kun projekti on valmis, voit viedä sen esimerkiksi JPEG-, PNG- tai GIF-"
 "muotoon."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -69,7 +69,7 @@ msgstr ""
 "Useimmat suotimet toimivat kuvan nykyisessä tasossa. Jos haluat suotimen "
 "toimivan koko kuvassa, täytyy kaikki tasot yhdistää (Kuva→Yhdistä kuva)."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -79,7 +79,7 @@ msgstr ""
 "alfa-kanavaa. Voit lisätä alfa-kanavan valikon kohdasta "
 "Taso→Läpinäkyvyys→Lisää alfakanava."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -91,7 +91,7 @@ msgstr ""
 "kuvan väritilan RGB-tilaan (Kuva→Tila→RGB) tai lisätä alfa-kanavan "
 "(Taso→Läpinäkyvyys→Lisää alfa-kanava) tai yhdistää kuvan (Kuva→Yhdistä kuva)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -104,17 +104,17 @@ msgstr ""
 "jättävät <tt>Alt</tt>-näppäimen huomiotta tai käyttävät <tt>Super</tt>-"
 "näppäintä (tai \"Windows-logo\") sen sijaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Voit raahata ja tiputtaa monia asioita GIMPissä. Voit esimerkiksi raahata "
+"Voit raahata ja tiputtaa monia asioita LIGMAissä. Voit esimerkiksi raahata "
 "värin työkalulaatikosta tai paletista kuvan päälle, jolloin kuva tai kohta "
 "täytetään valitulla värillä."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -122,7 +122,7 @@ msgstr ""
 "Voit siirtyä hiiren keskinapin avulla kuvan eri osiin, tai vaihtoehtoisesti "
 "pitää <tt>Välilyöntiä</tt> pohjassa siirtäessäsi hiirtä."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -133,7 +133,7 @@ msgstr ""
 "valinnat sidotaan apuviivoihin. Voit poistaa apulinjan kuvasta raahaamalla "
 "sen pois siirtotyökalulla."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -141,7 +141,7 @@ msgstr ""
 "Voit raahata tason tasoikkunasta ja tiputtaa sen työkalupakkiin. Tämä luo "
 "uuden kuvan, joka sisältää ainoastaan raahatun tason."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -153,17 +153,17 @@ msgstr ""
 "Napsauta joko \"Uusi taso\"- tai \"Ankkuroi taso\" -painiketta tasoikkunassa "
 "tai tee sama toimenpide valikosta."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP tukee gzip-pakkausta lennosta. Lisää joko <tt>.gz</tt> tai <tt>.bz2</"
-"tt> tiedostonimeen ja kuva tallennetaan pakattuna. Toki GIMP myös avaa "
+"LIGMA tukee gzip-pakkausta lennosta. Lisää joko <tt>.gz</tt> tai <tt>.bz2</"
+"tt> tiedostonimeen ja kuva tallennetaan pakattuna. Toki LIGMA myös avaa "
 "pakatut kuvat yhtä helposti."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -174,7 +174,7 @@ msgstr ""
 "tehtäisiin uusi valinta. Käyttämällä <tt>Ctrl</tt>-näppäintä ennen valinnan "
 "tekemistä poistetaan valinta nykyisestä valinnasta."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -184,7 +184,7 @@ msgstr ""
 "Tämä piirtää nykyisen valinnan reunat. Monimutkaisempia kuvioita voidaan "
 "piirtää käyttämällä Polku-työkalua tai Suotimet→Hahmota→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -194,7 +194,7 @@ msgstr ""
 "nykyisillä asetuksilla. Voit käyttää ruiskua liukuväri-tilassa tai jopa "
 "pyyhekumia tai sormi-työkalua."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -204,7 +204,7 @@ msgstr ""
 "mahdollistaa työskentelyn useilla poluilla ja polkujen muuntamisen "
 "valinnoiksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -216,7 +216,7 @@ msgstr ""
 "muuttaa valintaasi maalaamalla kuvassa ja muuttaa näin valitun alueen "
 "tavalliseksi valinnaksi painamalla samaa nappia uudestaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -228,13 +228,13 @@ msgstr ""
 "kanavaikkunassa voit muuttaa kanavan näkyvyyttä ja muuntaa kanavan "
 "valinnaksi."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -243,11 +243,11 @@ msgstr ""
 "&quot;Määritä näppäimistön pikavalinnat&quot; -ikkunassa painamalla haluttua "
 "pikanäppäintä tai näppäinyhdistelmää halutun toiminnon kohdalla. Jos &quot;"
 "Tallenna näppäimistön oikopolut&quot; on valittuna, näppäimistöoikopolut "
-"tallennetaan kun lopetat GIMPin. On yleensä suositeltavaa ottaa &quot;Käytä "
+"tallennetaan kun lopetat LIGMAin. On yleensä suositeltavaa ottaa &quot;Käytä "
 "dynaamisia näppäimistön pikavalintoja&quot; pois käytöstä jälkikäteen, jotta "
 "pikavalintoja ei lisättäisi tai muutettaisi vahingossa."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -256,7 +256,7 @@ msgstr ""
 "useita kertoja kuvaikkunassa. Tällöin työkalulaatikko ja muut ikkunat "
 "vuoroin piilotetaan tai näytetään."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -265,7 +265,7 @@ msgstr ""
 "tasot paitsi napsautetun, ja <tt>Shift</tt>-napsautus uudestaan näyttää "
 "jälleen muutkin tasot."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -275,7 +275,7 @@ msgstr ""
 "näyttää tasomaskin efektin. <tt>Alt</tt>-napsautus sen sijaan näyttää ja "
 "piilottaa itse tasomaskin."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -283,7 +283,7 @@ msgstr ""
 "Voit käyttää näppäinyhdistelmää <tt>Ctrl</tt>-<tt>Tab</tt> siirtymiseen "
 "kuvan tasojen välillä, jos ikkunanhallintasi ei käytä tätä yhdistelmää."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -294,14 +294,14 @@ msgstr ""
 "taustavärillä edustavärin sijasta. Vastaavasti värin poimintatyökalulla "
 "<tt>Ctrl</tt>-napsauttaminen asettaa taustavärin edustavärin sijaan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "<tt>Ctrl</tt>-raahaus kiertotyökalulla rajaa kierron 15 asteen kulmiin."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -315,17 +315,17 @@ msgstr ""
 "(Värit→Käyrät)"
 
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-#~ msgstr "<big>Tervetuloa käyttämään GIMPiä!</big>"
+#~ msgstr "<big>Tervetuloa käyttämään LIGMAiä!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
-#~ "GIMP antaa mahdollisuuden perua suurimman osan kuviin tehdyistä "
+#~ "LIGMA antaa mahdollisuuden perua suurimman osan kuviin tehdyistä "
 #~ "muutoksista, joten kokeile vapaasti eri vaihtoehtoja."
 
-#~ msgid "<big>Welcome to the GIMP!</big>"
-#~ msgstr "<big>Tervetuloa GIMPin käyttäjäksi!</big>"
+#~ msgid "<big>Welcome to the LIGMA!</big>"
+#~ msgstr "<big>Tervetuloa LIGMAin käyttäjäksi!</big>"
 
 #~ msgid ""
 #~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
@@ -353,14 +353,14 @@ msgstr ""
 #~ "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
 #~ "the menu, selecting a menu item, and pressing the desired key "
 #~ "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
-#~ "bindings are saved when you exit GIMP."
+#~ "bindings are saved when you exit LIGMA."
 #~ msgstr ""
 #~ "Kun olet valinnut Asetukset-ikkunasta Käytä dynaamisia näppäimistön "
 #~ "pikavalintoja voit järjestää pikanäppäimiä uudelleen. Tämä tapahtuu &quot;"
 #~ "Määritä näppäimistön pikavalinnat&quot; ikkunassa painamalla haluttua "
 #~ "pikanäppäintä tai näppäinyhdistelmää halutun toiminnon kohdalla.  Jos "
 #~ "&quot;Tallenna näppäimistön oikopolut&quot; on valittuna, "
-#~ "näppäimistöoikopolut tallennetaan kun lopetat GIMPin."
+#~ "näppäimistöoikopolut tallennetaan kun lopetat LIGMAin."
 
 #~ msgid ""
 #~ "If some of your scanned photos do not look colorful enough, you can "
@@ -381,27 +381,27 @@ msgstr ""
 #~ "piilottaa tai näyttää työkalupakin ja muut apuikkunat."
 
 #~ msgid ""
-#~ "The GIMP can undo most changes to the image, so feel free to experiment."
+#~ "The LIGMA can undo most changes to the image, so feel free to experiment."
 #~ msgstr ""
-#~ "GIMP tukee kumoamistoimintoa suurimpaan osaan kuvan muutoksista. Käytä "
+#~ "LIGMA tukee kumoamistoimintoa suurimpaan osaan kuvan muutoksista. Käytä "
 #~ "tätä luovasti työskentelyssäsi."
 
 #~ msgid ""
-#~ "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+#~ "The LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 #~ "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your "
 #~ "image will be saved compressed. Of course loading compressed images works "
 #~ "too."
 #~ msgstr ""
-#~ "GIMP tukee gzip-pakkausta. Lisää vain <tt>.gz</tt> (tai <tt>.bz2</tt>, "
+#~ "LIGMA tukee gzip-pakkausta. Lisää vain <tt>.gz</tt> (tai <tt>.bz2</tt>, "
 #~ "jos sinulla on bzip2 asennettuna) tiedoston nimen loppuun ja kuvasi "
 #~ "tallennetaan pakattuna. Pakattujen kuvien lataaminenkin toimii tietysti."
 
 #~ msgid ""
-#~ "The GIMP uses layers to let you organize your image. Think of them as a "
+#~ "The LIGMA uses layers to let you organize your image. Think of them as a "
 #~ "stack of slides or filters, such that looking through them you see a "
 #~ "composite of their contents."
 #~ msgstr ""
-#~ "GIMP käyttää tasoja, joten voit organisoida kuvasi elementit paremmin. "
+#~ "LIGMA käyttää tasoja, joten voit organisoida kuvasi elementit paremmin. "
 #~ "Ajattele tasoa läpinäkyväksi piirtoheitinkalvoksi, joita yhdistämällä "
 #~ "saat eri kalvoille eri elementit kokonaiseksi kuvaksi."
 
@@ -449,20 +449,20 @@ msgstr ""
 #~ "oikealle ja vasemmalle."
 
 #~ msgid ""
-#~ "You can drag and drop many things in the GIMP. For example, dragging a "
+#~ "You can drag and drop many things in the LIGMA. For example, dragging a "
 #~ "color from the toolbox or from a color palette and dropping it into an "
 #~ "image will fill the current image or selection with that color."
 #~ msgstr ""
-#~ "Voit raahata ja pudottaa monia asioita GIMPissä. Esimerkiksi, raahaamalla "
+#~ "Voit raahata ja pudottaa monia asioita LIGMAissä. Esimerkiksi, raahaamalla "
 #~ "värin työkalupakista tai väripaletista ja pudottamalla sen kuvaan täyttää "
 #~ "tason tai valinnan kyseisellä värillä."
 
 #~ msgid ""
-#~ "You can get context-sensitive help for most of the GIMP's features by "
+#~ "You can get context-sensitive help for most of the LIGMA's features by "
 #~ "pressing the F1 key at any time. This also works inside the menus."
 #~ msgstr ""
 #~ "Asiakohtaista avustusta on helppo saada milloin vain lähes mistä tahansa "
-#~ "GIMP-ominaisuudesta myös valikkojen sisältä! Aktivoi ohje painamalla F1-"
+#~ "LIGMA-ominaisuudesta myös valikkojen sisältä! Aktivoi ohje painamalla F1-"
 #~ "näppäintä."
 
 #~ msgid ""

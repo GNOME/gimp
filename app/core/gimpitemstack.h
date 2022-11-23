@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpitemstack.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaitemstack.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_STACK_H__
-#define __GIMP_ITEM_STACK_H__
+#ifndef __LIGMA_ITEM_STACK_H__
+#define __LIGMA_ITEM_STACK_H__
 
-#include "gimpfilterstack.h"
-
-
-#define GIMP_TYPE_ITEM_STACK            (gimp_item_stack_get_type ())
-#define GIMP_ITEM_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_STACK, GimpItemStack))
-#define GIMP_ITEM_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_STACK, GimpItemStackClass))
-#define GIMP_IS_ITEM_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_STACK))
-#define GIMP_IS_ITEM_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_STACK))
+#include "ligmafilterstack.h"
 
 
-typedef struct _GimpItemStackClass GimpItemStackClass;
+#define LIGMA_TYPE_ITEM_STACK            (ligma_item_stack_get_type ())
+#define LIGMA_ITEM_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ITEM_STACK, LigmaItemStack))
+#define LIGMA_ITEM_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ITEM_STACK, LigmaItemStackClass))
+#define LIGMA_IS_ITEM_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ITEM_STACK))
+#define LIGMA_IS_ITEM_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ITEM_STACK))
 
-struct _GimpItemStack
+
+typedef struct _LigmaItemStackClass LigmaItemStackClass;
+
+struct _LigmaItemStack
 {
-  GimpFilterStack  parent_instance;
+  LigmaFilterStack  parent_instance;
 };
 
-struct _GimpItemStackClass
+struct _LigmaItemStackClass
 {
-  GimpFilterStackClass  parent_class;
+  LigmaFilterStackClass  parent_class;
 };
 
 
-GType           gimp_item_stack_get_type            (void) G_GNUC_CONST;
-GimpContainer * gimp_item_stack_new                 (GType          item_type);
+GType           ligma_item_stack_get_type            (void) G_GNUC_CONST;
+LigmaContainer * ligma_item_stack_new                 (GType          item_type);
 
-gint            gimp_item_stack_get_n_items         (GimpItemStack *stack);
-gboolean        gimp_item_stack_is_flat             (GimpItemStack *stack);
-GList         * gimp_item_stack_get_item_iter       (GimpItemStack *stack);
-GList         * gimp_item_stack_get_item_list       (GimpItemStack *stack);
-GimpItem      * gimp_item_stack_get_item_by_tattoo  (GimpItemStack *stack,
-                                                     GimpTattoo     tattoo);
-GimpItem      * gimp_item_stack_get_item_by_path    (GimpItemStack *stack,
+gint            ligma_item_stack_get_n_items         (LigmaItemStack *stack);
+gboolean        ligma_item_stack_is_flat             (LigmaItemStack *stack);
+GList         * ligma_item_stack_get_item_iter       (LigmaItemStack *stack);
+GList         * ligma_item_stack_get_item_list       (LigmaItemStack *stack);
+LigmaItem      * ligma_item_stack_get_item_by_tattoo  (LigmaItemStack *stack,
+                                                     LigmaTattoo     tattoo);
+LigmaItem      * ligma_item_stack_get_item_by_path    (LigmaItemStack *stack,
                                                      GList         *path);
-GimpItem      * gimp_item_stack_get_parent_by_path  (GimpItemStack *stack,
+LigmaItem      * ligma_item_stack_get_parent_by_path  (LigmaItemStack *stack,
                                                      GList         *path,
                                                      gint          *index);
 
-void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
-void            gimp_item_stack_profile_changed     (GimpItemStack *stack);
+void            ligma_item_stack_invalidate_previews (LigmaItemStack *stack);
+void            ligma_item_stack_profile_changed     (LigmaItemStack *stack);
 
 
-#endif  /*  __GIMP_ITEM_STACK_H__  */
+#endif  /*  __LIGMA_ITEM_STACK_H__  */

@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -97,64 +97,64 @@
       n_array)
   )
 
-  (let* ((img (car (gimp-item-get-image adraw)))
-         (owidth (car (gimp-image-get-width img)))
-         (oheight (car (gimp-image-get-height img)))
+  (let* ((img (car (ligma-item-get-image adraw)))
+         (owidth (car (ligma-image-get-width img)))
+         (oheight (car (ligma-image-get-height img)))
          (width (+ owidth (* 2 xsize)))
          (height (+ oheight (* 2 ysize)))
-         (layer (car (gimp-layer-new img
+         (layer (car (ligma-layer-new img
                                      width height
-                                     (car (gimp-drawable-type-with-alpha adraw))
+                                     (car (ligma-drawable-type-with-alpha adraw))
                                      _"Border Layer" 100 LAYER-MODE-NORMAL))))
 
-    (gimp-context-push)
-    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
-    (gimp-context-set-opacity 100.0)
-    (gimp-context-set-antialias FALSE)
-    (gimp-context-set-feather FALSE)
+    (ligma-context-push)
+    (ligma-context-set-paint-mode LAYER-MODE-NORMAL)
+    (ligma-context-set-opacity 100.0)
+    (ligma-context-set-antialias FALSE)
+    (ligma-context-set-feather FALSE)
 
-    (gimp-image-undo-group-start img)
+    (ligma-image-undo-group-start img)
 
-    (gimp-image-resize img
+    (ligma-image-resize img
                        width
                        height
                        xsize
                        ysize)
 
-    (gimp-image-insert-layer img layer 0 0)
-    (gimp-drawable-fill layer FILL-TRANSPARENT)
+    (ligma-image-insert-layer img layer 0 0)
+    (ligma-drawable-fill layer FILL-TRANSPARENT)
 
-    (gimp-context-set-background (adjcolor color dvalue))
-    (gimp-image-select-polygon img
+    (ligma-context-set-background (adjcolor color dvalue))
+    (ligma-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_top_array xsize ysize owidth oheight width height))
-    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
-    (gimp-context-set-background (adjcolor color (/ dvalue 2)))
-    (gimp-image-select-polygon img
+    (ligma-drawable-edit-fill layer FILL-BACKGROUND)
+    (ligma-context-set-background (adjcolor color (/ dvalue 2)))
+    (ligma-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_left_array xsize ysize owidth oheight width height))
-    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
-    (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
-    (gimp-image-select-polygon img
+    (ligma-drawable-edit-fill layer FILL-BACKGROUND)
+    (ligma-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
+    (ligma-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_right_array xsize ysize owidth oheight width height))
 
-    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
-    (gimp-context-set-background (adjcolor color (- 0 dvalue)))
-    (gimp-image-select-polygon img
+    (ligma-drawable-edit-fill layer FILL-BACKGROUND)
+    (ligma-context-set-background (adjcolor color (- 0 dvalue)))
+    (ligma-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_bottom_array xsize ysize owidth oheight width height))
 
-    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
-    (gimp-selection-none img)
-    (gimp-image-undo-group-end img)
-    (gimp-displays-flush)
+    (ligma-drawable-edit-fill layer FILL-BACKGROUND)
+    (ligma-selection-none img)
+    (ligma-image-undo-group-end img)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
     )
 )
 

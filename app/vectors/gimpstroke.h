@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpstroke.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmastroke.h
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STROKE_H__
-#define __GIMP_STROKE_H__
+#ifndef __LIGMA_STROKE_H__
+#define __LIGMA_STROKE_H__
 
-#include "core/gimpobject.h"
-
-
-#define GIMP_TYPE_STROKE            (gimp_stroke_get_type ())
-#define GIMP_STROKE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE, GimpStroke))
-#define GIMP_STROKE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE, GimpStrokeClass))
-#define GIMP_IS_STROKE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STROKE))
-#define GIMP_IS_STROKE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STROKE))
-#define GIMP_STROKE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STROKE, GimpStrokeClass))
+#include "core/ligmaobject.h"
 
 
-typedef struct _GimpStrokeClass GimpStrokeClass;
+#define LIGMA_TYPE_STROKE            (ligma_stroke_get_type ())
+#define LIGMA_STROKE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_STROKE, LigmaStroke))
+#define LIGMA_STROKE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_STROKE, LigmaStrokeClass))
+#define LIGMA_IS_STROKE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_STROKE))
+#define LIGMA_IS_STROKE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_STROKE))
+#define LIGMA_STROKE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_STROKE, LigmaStrokeClass))
 
-struct _GimpStroke
+
+typedef struct _LigmaStrokeClass LigmaStrokeClass;
+
+struct _LigmaStroke
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
   gint        id;
 
   GQueue     *anchors;
@@ -44,192 +44,192 @@ struct _GimpStroke
   gboolean    closed;
 };
 
-struct _GimpStrokeClass
+struct _LigmaStrokeClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void          (* changed)              (GimpStroke            *stroke);
-  void          (* removed)              (GimpStroke            *stroke);
+  void          (* changed)              (LigmaStroke            *stroke);
+  void          (* removed)              (LigmaStroke            *stroke);
 
-  GimpAnchor  * (* anchor_get)           (GimpStroke            *stroke,
-                                          const GimpCoords      *coord);
-  gdouble       (* nearest_point_get)    (GimpStroke            *stroke,
-                                          const GimpCoords      *coord,
+  LigmaAnchor  * (* anchor_get)           (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coord);
+  gdouble       (* nearest_point_get)    (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coord,
                                           gdouble                precision,
-                                          GimpCoords            *ret_point,
-                                          GimpAnchor           **ret_segment_start,
-                                          GimpAnchor           **ret_segment_end,
+                                          LigmaCoords            *ret_point,
+                                          LigmaAnchor           **ret_segment_start,
+                                          LigmaAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
-  gdouble       (* nearest_tangent_get)  (GimpStroke            *stroke,
-                                          const GimpCoords      *coord1,
-                                          const GimpCoords      *coord2,
+  gdouble       (* nearest_tangent_get)  (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coord1,
+                                          const LigmaCoords      *coord2,
                                           gdouble                precision,
-                                          GimpCoords            *nearest,
-                                          GimpAnchor           **ret_segment_start,
-                                          GimpAnchor           **ret_segment_end,
+                                          LigmaCoords            *nearest,
+                                          LigmaAnchor           **ret_segment_start,
+                                          LigmaAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
   gdouble       (* nearest_intersection_get)
-                                         (GimpStroke            *stroke,
-                                          const GimpCoords      *coord1,
-                                          const GimpCoords      *direction,
+                                         (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coord1,
+                                          const LigmaCoords      *direction,
                                           gdouble                precision,
-                                          GimpCoords            *nearest,
-                                          GimpAnchor           **ret_segment_start,
-                                          GimpAnchor           **ret_segment_end,
+                                          LigmaCoords            *nearest,
+                                          LigmaAnchor           **ret_segment_start,
+                                          LigmaAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
-  GimpAnchor  * (* anchor_get_next)      (GimpStroke            *stroke,
-                                          const GimpAnchor      *prev);
-  void          (* anchor_select)        (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor,
+  LigmaAnchor  * (* anchor_get_next)      (LigmaStroke            *stroke,
+                                          const LigmaAnchor      *prev);
+  void          (* anchor_select)        (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor,
                                           gboolean               selected,
                                           gboolean               exclusive);
-  void          (* anchor_move_relative) (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor,
-                                          const GimpCoords      *deltacoord,
-                                          GimpAnchorFeatureType  feature);
-  void          (* anchor_move_absolute) (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor,
-                                          const GimpCoords      *coord,
-                                          GimpAnchorFeatureType  feature);
-  void          (* anchor_convert)       (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor,
-                                          GimpAnchorFeatureType  feature);
-  void          (* anchor_delete)        (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor);
+  void          (* anchor_move_relative) (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor,
+                                          const LigmaCoords      *deltacoord,
+                                          LigmaAnchorFeatureType  feature);
+  void          (* anchor_move_absolute) (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor,
+                                          const LigmaCoords      *coord,
+                                          LigmaAnchorFeatureType  feature);
+  void          (* anchor_convert)       (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor,
+                                          LigmaAnchorFeatureType  feature);
+  void          (* anchor_delete)        (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor);
 
-  gboolean      (* point_is_movable)     (GimpStroke            *stroke,
-                                          GimpAnchor            *predec,
+  gboolean      (* point_is_movable)     (LigmaStroke            *stroke,
+                                          LigmaAnchor            *predec,
                                           gdouble                position);
-  void          (* point_move_relative)  (GimpStroke            *stroke,
-                                          GimpAnchor            *predec,
+  void          (* point_move_relative)  (LigmaStroke            *stroke,
+                                          LigmaAnchor            *predec,
                                           gdouble                position,
-                                          const GimpCoords      *deltacoord,
-                                          GimpAnchorFeatureType  feature);
-  void          (* point_move_absolute)  (GimpStroke            *stroke,
-                                          GimpAnchor            *predec,
+                                          const LigmaCoords      *deltacoord,
+                                          LigmaAnchorFeatureType  feature);
+  void          (* point_move_absolute)  (LigmaStroke            *stroke,
+                                          LigmaAnchor            *predec,
                                           gdouble                position,
-                                          const GimpCoords      *coord,
-                                          GimpAnchorFeatureType  feature);
+                                          const LigmaCoords      *coord,
+                                          LigmaAnchorFeatureType  feature);
 
-  void          (* close)                (GimpStroke            *stroke);
-  GimpStroke  * (* open)                 (GimpStroke            *stroke,
-                                          GimpAnchor            *end_anchor);
-  gboolean      (* anchor_is_insertable) (GimpStroke            *stroke,
-                                          GimpAnchor            *predec,
+  void          (* close)                (LigmaStroke            *stroke);
+  LigmaStroke  * (* open)                 (LigmaStroke            *stroke,
+                                          LigmaAnchor            *end_anchor);
+  gboolean      (* anchor_is_insertable) (LigmaStroke            *stroke,
+                                          LigmaAnchor            *predec,
                                           gdouble                position);
-  GimpAnchor  * (* anchor_insert)        (GimpStroke            *stroke,
-                                          GimpAnchor            *predec,
+  LigmaAnchor  * (* anchor_insert)        (LigmaStroke            *stroke,
+                                          LigmaAnchor            *predec,
                                           gdouble                position);
-  gboolean      (* is_extendable)        (GimpStroke            *stroke,
-                                          GimpAnchor            *neighbor);
-  GimpAnchor  * (* extend)               (GimpStroke            *stroke,
-                                          const GimpCoords      *coords,
-                                          GimpAnchor            *neighbor,
-                                          GimpVectorExtendMode   extend_mode);
-  gboolean      (* connect_stroke)       (GimpStroke            *stroke,
-                                          GimpAnchor            *anchor,
-                                          GimpStroke            *extension,
-                                          GimpAnchor            *neighbor);
+  gboolean      (* is_extendable)        (LigmaStroke            *stroke,
+                                          LigmaAnchor            *neighbor);
+  LigmaAnchor  * (* extend)               (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coords,
+                                          LigmaAnchor            *neighbor,
+                                          LigmaVectorExtendMode   extend_mode);
+  gboolean      (* connect_stroke)       (LigmaStroke            *stroke,
+                                          LigmaAnchor            *anchor,
+                                          LigmaStroke            *extension,
+                                          LigmaAnchor            *neighbor);
 
-  gboolean      (* is_empty)             (GimpStroke            *stroke);
-  gboolean      (* reverse)              (GimpStroke            *stroke);
-  gboolean      (* shift_start)          (GimpStroke            *stroke,
-                                          GimpAnchor            *new_start);
+  gboolean      (* is_empty)             (LigmaStroke            *stroke);
+  gboolean      (* reverse)              (LigmaStroke            *stroke);
+  gboolean      (* shift_start)          (LigmaStroke            *stroke,
+                                          LigmaAnchor            *new_start);
 
-  gdouble       (* get_length)           (GimpStroke            *stroke,
+  gdouble       (* get_length)           (LigmaStroke            *stroke,
                                           gdouble                precision);
-  gdouble       (* get_distance)         (GimpStroke            *stroke,
-                                          const GimpCoords      *coord);
-  gboolean      (* get_point_at_dist)    (GimpStroke            *stroke,
+  gdouble       (* get_distance)         (LigmaStroke            *stroke,
+                                          const LigmaCoords      *coord);
+  gboolean      (* get_point_at_dist)    (LigmaStroke            *stroke,
                                           gdouble                dist,
                                           gdouble                precision,
-                                          GimpCoords            *position,
+                                          LigmaCoords            *position,
                                           gdouble               *slope);
 
-  GArray      * (* interpolate)          (GimpStroke            *stroke,
+  GArray      * (* interpolate)          (LigmaStroke            *stroke,
                                           gdouble                precision,
                                           gboolean              *ret_closed);
 
-  GimpStroke  * (* duplicate)            (GimpStroke            *stroke);
+  LigmaStroke  * (* duplicate)            (LigmaStroke            *stroke);
 
-  GimpBezierDesc * (* make_bezier)       (GimpStroke            *stroke);
+  LigmaBezierDesc * (* make_bezier)       (LigmaStroke            *stroke);
 
-  void          (* translate)            (GimpStroke            *stroke,
+  void          (* translate)            (LigmaStroke            *stroke,
                                           gdouble                offset_x,
                                           gdouble                offset_y);
-  void          (* scale)                (GimpStroke            *stroke,
+  void          (* scale)                (LigmaStroke            *stroke,
                                           gdouble                scale_x,
                                           gdouble                scale_y);
-  void          (* rotate)               (GimpStroke            *stroke,
+  void          (* rotate)               (LigmaStroke            *stroke,
                                           gdouble                center_x,
                                           gdouble                center_y,
                                           gdouble                angle);
-  void          (* flip)                 (GimpStroke             *stroke,
-                                          GimpOrientationType    flip_type,
+  void          (* flip)                 (LigmaStroke             *stroke,
+                                          LigmaOrientationType    flip_type,
                                           gdouble                axis);
-  void          (* flip_free)            (GimpStroke            *stroke,
+  void          (* flip_free)            (LigmaStroke            *stroke,
                                           gdouble                x1,
                                           gdouble                y1,
                                           gdouble                x2,
                                           gdouble                y2);
-  void          (* transform)            (GimpStroke            *stroke,
-                                          const GimpMatrix3     *matrix,
+  void          (* transform)            (LigmaStroke            *stroke,
+                                          const LigmaMatrix3     *matrix,
                                           GQueue                *ret_strokes);
 
-  GList       * (* get_draw_anchors)     (GimpStroke            *stroke);
-  GList       * (* get_draw_controls)    (GimpStroke            *stroke);
-  GArray      * (* get_draw_lines)       (GimpStroke            *stroke);
-  GArray      * (* control_points_get)   (GimpStroke            *stroke,
+  GList       * (* get_draw_anchors)     (LigmaStroke            *stroke);
+  GList       * (* get_draw_controls)    (LigmaStroke            *stroke);
+  GArray      * (* get_draw_lines)       (LigmaStroke            *stroke);
+  GArray      * (* control_points_get)   (LigmaStroke            *stroke,
                                           gboolean              *ret_closed);
 };
 
 
-GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
+GType        ligma_stroke_get_type             (void) G_GNUC_CONST;
 
-void         gimp_stroke_set_id               (GimpStroke            *stroke,
+void         ligma_stroke_set_id               (LigmaStroke            *stroke,
                                                gint                   id);
-gint         gimp_stroke_get_id               (GimpStroke            *stroke);
+gint         ligma_stroke_get_id               (LigmaStroke            *stroke);
 
 
 /* accessing / modifying the anchors */
 
-GArray     * gimp_stroke_control_points_get   (GimpStroke            *stroke,
+GArray     * ligma_stroke_control_points_get   (LigmaStroke            *stroke,
                                                gboolean              *closed);
 
-GimpAnchor * gimp_stroke_anchor_get           (GimpStroke            *stroke,
-                                               const GimpCoords      *coord);
+LigmaAnchor * ligma_stroke_anchor_get           (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coord);
 
-gdouble      gimp_stroke_nearest_point_get    (GimpStroke            *stroke,
-                                               const GimpCoords      *coord,
+gdouble      ligma_stroke_nearest_point_get    (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coord,
                                                gdouble                precision,
-                                               GimpCoords            *ret_point,
-                                               GimpAnchor           **ret_segment_start,
-                                               GimpAnchor           **ret_segment_end,
+                                               LigmaCoords            *ret_point,
+                                               LigmaAnchor           **ret_segment_start,
+                                               LigmaAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
-gdouble     gimp_stroke_nearest_tangent_get   (GimpStroke            *stroke,
-                                               const GimpCoords      *coords1,
-                                               const GimpCoords      *coords2,
+gdouble     ligma_stroke_nearest_tangent_get   (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coords1,
+                                               const LigmaCoords      *coords2,
                                                gdouble                precision,
-                                               GimpCoords            *nearest,
-                                               GimpAnchor           **ret_segment_start,
-                                               GimpAnchor           **ret_segment_end,
+                                               LigmaCoords            *nearest,
+                                               LigmaAnchor           **ret_segment_start,
+                                               LigmaAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
-gdouble  gimp_stroke_nearest_intersection_get (GimpStroke            *stroke,
-                                               const GimpCoords      *coords1,
-                                               const GimpCoords      *direction,
+gdouble  ligma_stroke_nearest_intersection_get (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coords1,
+                                               const LigmaCoords      *direction,
                                                gdouble                precision,
-                                               GimpCoords            *nearest,
-                                               GimpAnchor           **ret_segment_start,
-                                               GimpAnchor           **ret_segment_end,
+                                               LigmaCoords            *nearest,
+                                               LigmaAnchor           **ret_segment_start,
+                                               LigmaAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
 
 
 /* prev == NULL: "first" anchor */
-GimpAnchor * gimp_stroke_anchor_get_next      (GimpStroke            *stroke,
-                                               const GimpAnchor      *prev);
+LigmaAnchor * ligma_stroke_anchor_get_next      (LigmaStroke            *stroke,
+                                               const LigmaAnchor      *prev);
 
-void         gimp_stroke_anchor_select        (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
+void         ligma_stroke_anchor_select        (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor,
                                                gboolean               selected,
                                                gboolean               exclusive);
 
@@ -237,115 +237,115 @@ void         gimp_stroke_anchor_select        (GimpStroke            *stroke,
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
-void         gimp_stroke_anchor_move_relative (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
-                                               const GimpCoords      *delta,
-                                               GimpAnchorFeatureType  feature);
-void         gimp_stroke_anchor_move_absolute (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
-                                               const GimpCoords      *coord,
-                                               GimpAnchorFeatureType  feature);
+void         ligma_stroke_anchor_move_relative (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor,
+                                               const LigmaCoords      *delta,
+                                               LigmaAnchorFeatureType  feature);
+void         ligma_stroke_anchor_move_absolute (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor,
+                                               const LigmaCoords      *coord,
+                                               LigmaAnchorFeatureType  feature);
 
-gboolean     gimp_stroke_point_is_movable     (GimpStroke            *stroke,
-                                               GimpAnchor            *predec,
+gboolean     ligma_stroke_point_is_movable     (LigmaStroke            *stroke,
+                                               LigmaAnchor            *predec,
                                                gdouble                position);
-void         gimp_stroke_point_move_relative  (GimpStroke            *stroke,
-                                               GimpAnchor            *predec,
+void         ligma_stroke_point_move_relative  (LigmaStroke            *stroke,
+                                               LigmaAnchor            *predec,
                                                gdouble                position,
-                                               const GimpCoords      *deltacoord,
-                                               GimpAnchorFeatureType  feature);
-void         gimp_stroke_point_move_absolute  (GimpStroke            *stroke,
-                                               GimpAnchor            *predec,
+                                               const LigmaCoords      *deltacoord,
+                                               LigmaAnchorFeatureType  feature);
+void         ligma_stroke_point_move_absolute  (LigmaStroke            *stroke,
+                                               LigmaAnchor            *predec,
                                                gdouble                position,
-                                               const GimpCoords      *coord,
-                                               GimpAnchorFeatureType  feature);
+                                               const LigmaCoords      *coord,
+                                               LigmaAnchorFeatureType  feature);
 
-void         gimp_stroke_close                (GimpStroke            *stroke);
+void         ligma_stroke_close                (LigmaStroke            *stroke);
 
-void         gimp_stroke_anchor_convert       (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
-                                               GimpAnchorFeatureType  feature);
+void         ligma_stroke_anchor_convert       (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor,
+                                               LigmaAnchorFeatureType  feature);
 
-void         gimp_stroke_anchor_delete        (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor);
+void         ligma_stroke_anchor_delete        (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor);
 
-GimpStroke * gimp_stroke_open                 (GimpStroke            *stroke,
-                                               GimpAnchor            *end_anchor);
-gboolean     gimp_stroke_anchor_is_insertable (GimpStroke            *stroke,
-                                               GimpAnchor            *predec,
+LigmaStroke * ligma_stroke_open                 (LigmaStroke            *stroke,
+                                               LigmaAnchor            *end_anchor);
+gboolean     ligma_stroke_anchor_is_insertable (LigmaStroke            *stroke,
+                                               LigmaAnchor            *predec,
                                                gdouble                position);
-GimpAnchor * gimp_stroke_anchor_insert        (GimpStroke            *stroke,
-                                               GimpAnchor            *predec,
+LigmaAnchor * ligma_stroke_anchor_insert        (LigmaStroke            *stroke,
+                                               LigmaAnchor            *predec,
                                                gdouble                position);
 
-gboolean     gimp_stroke_is_extendable        (GimpStroke            *stroke,
-                                               GimpAnchor            *neighbor);
+gboolean     ligma_stroke_is_extendable        (LigmaStroke            *stroke,
+                                               LigmaAnchor            *neighbor);
 
-GimpAnchor * gimp_stroke_extend               (GimpStroke            *stroke,
-                                               const GimpCoords      *coords,
-                                               GimpAnchor            *neighbor,
-                                               GimpVectorExtendMode   extend_mode);
+LigmaAnchor * ligma_stroke_extend               (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coords,
+                                               LigmaAnchor            *neighbor,
+                                               LigmaVectorExtendMode   extend_mode);
 
-gboolean     gimp_stroke_connect_stroke       (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
-                                               GimpStroke            *extension,
-                                               GimpAnchor            *neighbor);
+gboolean     ligma_stroke_connect_stroke       (LigmaStroke            *stroke,
+                                               LigmaAnchor            *anchor,
+                                               LigmaStroke            *extension,
+                                               LigmaAnchor            *neighbor);
 
-gboolean     gimp_stroke_is_empty             (GimpStroke            *stroke);
+gboolean     ligma_stroke_is_empty             (LigmaStroke            *stroke);
 
-gboolean     gimp_stroke_reverse              (GimpStroke            *stroke);
-gboolean     gimp_stroke_shift_start          (GimpStroke            *stroke,
-                                               GimpAnchor            *new_start);
+gboolean     ligma_stroke_reverse              (LigmaStroke            *stroke);
+gboolean     ligma_stroke_shift_start          (LigmaStroke            *stroke,
+                                               LigmaAnchor            *new_start);
 
 /* accessing the shape of the curve */
 
-gdouble      gimp_stroke_get_length           (GimpStroke            *stroke,
+gdouble      ligma_stroke_get_length           (LigmaStroke            *stroke,
                                                gdouble                precision);
-gdouble      gimp_stroke_get_distance         (GimpStroke            *stroke,
-                                               const GimpCoords      *coord);
+gdouble      ligma_stroke_get_distance         (LigmaStroke            *stroke,
+                                               const LigmaCoords      *coord);
 
-gboolean     gimp_stroke_get_point_at_dist    (GimpStroke            *stroke,
+gboolean     ligma_stroke_get_point_at_dist    (LigmaStroke            *stroke,
                                                gdouble                dist,
                                                gdouble                precision,
-                                               GimpCoords            *position,
+                                               LigmaCoords            *position,
                                                gdouble               *slope);
 
 /* returns an array of valid coordinates */
-GArray     * gimp_stroke_interpolate          (GimpStroke            *stroke,
+GArray     * ligma_stroke_interpolate          (LigmaStroke            *stroke,
                                                const gdouble          precision,
                                                gboolean              *closed);
 
-GimpStroke * gimp_stroke_duplicate            (GimpStroke            *stroke);
+LigmaStroke * ligma_stroke_duplicate            (LigmaStroke            *stroke);
 
 /* creates a bezier approximation. */
-GimpBezierDesc * gimp_stroke_make_bezier      (GimpStroke            *stroke);
+LigmaBezierDesc * ligma_stroke_make_bezier      (LigmaStroke            *stroke);
 
-void         gimp_stroke_translate            (GimpStroke            *stroke,
+void         ligma_stroke_translate            (LigmaStroke            *stroke,
                                                gdouble                offset_x,
                                                gdouble                offset_y);
-void         gimp_stroke_scale                (GimpStroke            *stroke,
+void         ligma_stroke_scale                (LigmaStroke            *stroke,
                                                gdouble                scale_x,
                                                gdouble                scale_y);
-void         gimp_stroke_rotate               (GimpStroke            *stroke,
+void         ligma_stroke_rotate               (LigmaStroke            *stroke,
                                                gdouble                center_x,
                                                gdouble                center_y,
                                                gdouble                angle);
-void         gimp_stroke_flip                 (GimpStroke             *stroke,
-                                               GimpOrientationType    flip_type,
+void         ligma_stroke_flip                 (LigmaStroke             *stroke,
+                                               LigmaOrientationType    flip_type,
                                                gdouble                axis);
-void         gimp_stroke_flip_free            (GimpStroke            *stroke,
+void         ligma_stroke_flip_free            (LigmaStroke            *stroke,
                                                gdouble                x1,
                                                gdouble                y1,
                                                gdouble                x2,
                                                gdouble                y2);
-void         gimp_stroke_transform            (GimpStroke            *stroke,
-                                               const GimpMatrix3     *matrix,
+void         ligma_stroke_transform            (LigmaStroke            *stroke,
+                                               const LigmaMatrix3     *matrix,
                                                GQueue                *ret_strokes);
 
 
-GList      * gimp_stroke_get_draw_anchors     (GimpStroke            *stroke);
-GList      * gimp_stroke_get_draw_controls    (GimpStroke            *stroke);
-GArray     * gimp_stroke_get_draw_lines       (GimpStroke            *stroke);
+GList      * ligma_stroke_get_draw_anchors     (LigmaStroke            *stroke);
+GList      * ligma_stroke_get_draw_controls    (LigmaStroke            *stroke);
+GArray     * ligma_stroke_get_draw_lines       (LigmaStroke            *stroke);
 
-#endif /* __GIMP_STROKE_H__ */
+#endif /* __LIGMA_STROKE_H__ */
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYER_XCF_H__
-#define __GIMP_TEXT_LAYER_XCF_H__
+#ifndef __LIGMA_TEXT_LAYER_XCF_H__
+#define __LIGMA_TEXT_LAYER_XCF_H__
 
 
-gboolean  gimp_text_layer_xcf_load_hack    (GimpLayer     **layer);
+gboolean  ligma_text_layer_xcf_load_hack    (LigmaLayer     **layer);
 
-void      gimp_text_layer_xcf_save_prepare (GimpTextLayer  *text_layer);
+void      ligma_text_layer_xcf_save_prepare (LigmaTextLayer  *text_layer);
 
-guint32   gimp_text_layer_get_xcf_flags    (GimpTextLayer  *text_layer);
-void      gimp_text_layer_set_xcf_flags    (GimpTextLayer  *text_layer,
+guint32   ligma_text_layer_get_xcf_flags    (LigmaTextLayer  *text_layer);
+void      ligma_text_layer_set_xcf_flags    (LigmaTextLayer  *text_layer,
                                             guint32         flags);
 
 
-#endif /* __GIMP_TEXT_LAYER_XCF_H__ */
+#endif /* __LIGMA_TEXT_LAYER_XCF_H__ */

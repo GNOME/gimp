@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero
@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_EDITOR_H__
-#define __GIMP_GRADIENT_EDITOR_H__
+#ifndef __LIGMA_GRADIENT_EDITOR_H__
+#define __LIGMA_GRADIENT_EDITOR_H__
 
 
-#include "gimpdataeditor.h"
+#include "ligmadataeditor.h"
 
 
 #define GRAD_NUM_COLORS 10
@@ -37,19 +37,19 @@ typedef enum
 } GradientEditorDragMode;
 
 
-#define GIMP_TYPE_GRADIENT_EDITOR            (gimp_gradient_editor_get_type ())
-#define GIMP_GRADIENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditor))
-#define GIMP_GRADIENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditorClass))
-#define GIMP_IS_GRADIENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_EDITOR))
-#define GIMP_IS_GRADIENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_EDITOR))
-#define GIMP_GRADIENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditorClass))
+#define LIGMA_TYPE_GRADIENT_EDITOR            (ligma_gradient_editor_get_type ())
+#define LIGMA_GRADIENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRADIENT_EDITOR, LigmaGradientEditor))
+#define LIGMA_GRADIENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRADIENT_EDITOR, LigmaGradientEditorClass))
+#define LIGMA_IS_GRADIENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRADIENT_EDITOR))
+#define LIGMA_IS_GRADIENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRADIENT_EDITOR))
+#define LIGMA_GRADIENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRADIENT_EDITOR, LigmaGradientEditorClass))
 
 
-typedef struct _GimpGradientEditorClass GimpGradientEditorClass;
+typedef struct _LigmaGradientEditorClass LigmaGradientEditorClass;
 
-struct _GimpGradientEditor
+struct _LigmaGradientEditor
 {
-  GimpDataEditor          parent_instance;
+  LigmaDataEditor          parent_instance;
 
   GtkWidget              *current_color;
   GtkWidget              *hint_label1;
@@ -70,9 +70,9 @@ struct _GimpGradientEditor
   gboolean                view_button_down;
 
   /*  Gradient control  */
-  GimpGradientSegment    *control_drag_segment; /* Segment which is being dragged */
-  GimpGradientSegment    *control_sel_l;        /* Left segment of selection */
-  GimpGradientSegment    *control_sel_r;        /* Right segment of selection */
+  LigmaGradientSegment    *control_drag_segment; /* Segment which is being dragged */
+  LigmaGradientSegment    *control_sel_l;        /* Left segment of selection */
+  LigmaGradientSegment    *control_sel_r;        /* Right segment of selection */
   GradientEditorDragMode  control_drag_mode;    /* What is being dragged? */
   guint32                 control_click_time;   /* Time when mouse was pressed */
   gboolean                control_compress;     /* Compressing/expanding handles */
@@ -80,43 +80,43 @@ struct _GimpGradientEditor
   gdouble                 control_last_gx;      /* Last position (wrt gradient) when dragging */
   gdouble                 control_orig_pos;     /* Original click position when dragging */
 
-  GimpGradientBlendColorSpace  blend_color_space;
+  LigmaGradientBlendColorSpace  blend_color_space;
 
   /*  Saved colors  */
-  GimpRGB                 saved_colors[GRAD_NUM_COLORS];
+  LigmaRGB                 saved_colors[GRAD_NUM_COLORS];
 
   /*  Color dialog  */
   GtkWidget              *color_dialog;
-  GimpGradientSegment    *saved_segments;
+  LigmaGradientSegment    *saved_segments;
   gboolean                saved_dirty;
 };
 
-struct _GimpGradientEditorClass
+struct _LigmaGradientEditorClass
 {
-  GimpDataEditorClass  parent_class;
+  LigmaDataEditorClass  parent_class;
 };
 
 
-GType       gimp_gradient_editor_get_type         (void) G_GNUC_CONST;
+GType       ligma_gradient_editor_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_gradient_editor_new              (GimpContext          *context,
-                                                   GimpMenuFactory      *menu_factory);
+GtkWidget * ligma_gradient_editor_new              (LigmaContext          *context,
+                                                   LigmaMenuFactory      *menu_factory);
 
-void        gimp_gradient_editor_get_selection    (GimpGradientEditor   *editor,
-                                                   GimpGradient        **gradient,
-                                                   GimpGradientSegment **left,
-                                                   GimpGradientSegment **right);
-void        gimp_gradient_editor_set_selection    (GimpGradientEditor   *editor,
-                                                   GimpGradientSegment  *left,
-                                                   GimpGradientSegment  *right);
+void        ligma_gradient_editor_get_selection    (LigmaGradientEditor   *editor,
+                                                   LigmaGradient        **gradient,
+                                                   LigmaGradientSegment **left,
+                                                   LigmaGradientSegment **right);
+void        ligma_gradient_editor_set_selection    (LigmaGradientEditor   *editor,
+                                                   LigmaGradientSegment  *left,
+                                                   LigmaGradientSegment  *right);
 
-void        gimp_gradient_editor_edit_left_color  (GimpGradientEditor   *editor);
-void        gimp_gradient_editor_edit_right_color (GimpGradientEditor   *editor);
+void        ligma_gradient_editor_edit_left_color  (LigmaGradientEditor   *editor);
+void        ligma_gradient_editor_edit_right_color (LigmaGradientEditor   *editor);
 
-void        gimp_gradient_editor_zoom             (GimpGradientEditor   *editor,
-                                                   GimpZoomType          zoom_type,
+void        ligma_gradient_editor_zoom             (LigmaGradientEditor   *editor,
+                                                   LigmaZoomType          zoom_type,
                                                    gdouble               delta,
                                                    gdouble               zoom_focus_x);
 
 
-#endif  /* __GIMP_GRADIENT_EDITOR_H__ */
+#endif  /* __LIGMA_GRADIENT_EDITOR_H__ */

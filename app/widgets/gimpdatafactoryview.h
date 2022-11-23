@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdatafactoryview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadatafactoryview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,56 +18,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_FACTORY_VIEW_H__
-#define __GIMP_DATA_FACTORY_VIEW_H__
+#ifndef __LIGMA_DATA_FACTORY_VIEW_H__
+#define __LIGMA_DATA_FACTORY_VIEW_H__
 
 
-#include "gimpcontainereditor.h"
+#include "ligmacontainereditor.h"
 
 
-#define GIMP_TYPE_DATA_FACTORY_VIEW            (gimp_data_factory_view_get_type ())
-#define GIMP_DATA_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryView))
-#define GIMP_DATA_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
-#define GIMP_IS_DATA_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_FACTORY_VIEW))
-#define GIMP_IS_DATA_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY_VIEW))
-#define GIMP_DATA_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
+#define LIGMA_TYPE_DATA_FACTORY_VIEW            (ligma_data_factory_view_get_type ())
+#define LIGMA_DATA_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DATA_FACTORY_VIEW, LigmaDataFactoryView))
+#define LIGMA_DATA_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DATA_FACTORY_VIEW, LigmaDataFactoryViewClass))
+#define LIGMA_IS_DATA_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DATA_FACTORY_VIEW))
+#define LIGMA_IS_DATA_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DATA_FACTORY_VIEW))
+#define LIGMA_DATA_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DATA_FACTORY_VIEW, LigmaDataFactoryViewClass))
 
 
-typedef struct _GimpDataFactoryViewClass   GimpDataFactoryViewClass;
-typedef struct _GimpDataFactoryViewPrivate GimpDataFactoryViewPrivate;
+typedef struct _LigmaDataFactoryViewClass   LigmaDataFactoryViewClass;
+typedef struct _LigmaDataFactoryViewPrivate LigmaDataFactoryViewPrivate;
 
-struct _GimpDataFactoryView
+struct _LigmaDataFactoryView
 {
-  GimpContainerEditor         parent_instance;
+  LigmaContainerEditor         parent_instance;
 
-  GimpDataFactoryViewPrivate *priv;
+  LigmaDataFactoryViewPrivate *priv;
 };
 
-struct _GimpDataFactoryViewClass
+struct _LigmaDataFactoryViewClass
 {
-  GimpContainerEditorClass  parent_class;
+  LigmaContainerEditorClass  parent_class;
 };
 
 
-GType             gimp_data_factory_view_get_type             (void) G_GNUC_CONST;
+GType             ligma_data_factory_view_get_type             (void) G_GNUC_CONST;
 
-GtkWidget *       gimp_data_factory_view_new                  (GimpViewType      view_type,
-                                                               GimpDataFactory  *factory,
-                                                               GimpContext      *context,
+GtkWidget *       ligma_data_factory_view_new                  (LigmaViewType      view_type,
+                                                               LigmaDataFactory  *factory,
+                                                               LigmaContext      *context,
                                                                gint              view_size,
                                                                gint              view_border_width,
-                                                               GimpMenuFactory  *menu_factory,
+                                                               LigmaMenuFactory  *menu_factory,
                                                                const gchar      *menu_identifier,
                                                                const gchar      *ui_path,
                                                                const gchar      *action_group);
 
-GtkWidget       * gimp_data_factory_view_get_edit_button      (GimpDataFactoryView *factory_view);
-GtkWidget       * gimp_data_factory_view_get_duplicate_button (GimpDataFactoryView *factory_view);
-GimpDataFactory * gimp_data_factory_view_get_data_factory     (GimpDataFactoryView *factory_view);
-GType             gimp_data_factory_view_get_children_type    (GimpDataFactoryView *factory_view);
-gboolean          gimp_data_factory_view_has_data_new_func    (GimpDataFactoryView *factory_view);
-gboolean          gimp_data_factory_view_have                 (GimpDataFactoryView *factory_view,
-                                                               GimpObject          *object);
+GtkWidget       * ligma_data_factory_view_get_edit_button      (LigmaDataFactoryView *factory_view);
+GtkWidget       * ligma_data_factory_view_get_duplicate_button (LigmaDataFactoryView *factory_view);
+LigmaDataFactory * ligma_data_factory_view_get_data_factory     (LigmaDataFactoryView *factory_view);
+GType             ligma_data_factory_view_get_children_type    (LigmaDataFactoryView *factory_view);
+gboolean          ligma_data_factory_view_has_data_new_func    (LigmaDataFactoryView *factory_view);
+gboolean          ligma_data_factory_view_have                 (LigmaDataFactoryView *factory_view,
+                                                               LigmaObject          *object);
 
 
-#endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */
+#endif  /*  __LIGMA_DATA_FACTORY_VIEW_H__  */

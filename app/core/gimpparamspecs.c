@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,36 +20,36 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpdisplay.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimpparamspecs.h"
-#include "gimpselection.h"
+#include "ligma.h"
+#include "ligmadisplay.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayermask.h"
+#include "ligmaparamspecs.h"
+#include "ligmaselection.h"
 
-#include "text/gimptextlayer.h"
+#include "text/ligmatextlayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
 
 /*
- * GIMP_TYPE_PARAM_STRING
+ * LIGMA_TYPE_PARAM_STRING
  */
 
-static void       gimp_param_string_class_init (GParamSpecClass *klass);
-static void       gimp_param_string_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_string_validate   (GParamSpec      *pspec,
+static void       ligma_param_string_class_init (GParamSpecClass *klass);
+static void       ligma_param_string_init       (GParamSpec      *pspec);
+static gboolean   ligma_param_string_validate   (GParamSpec      *pspec,
                                                 GValue          *value);
 
-static GParamSpecClass * gimp_param_string_parent_class = NULL;
+static GParamSpecClass * ligma_param_string_parent_class = NULL;
 
 GType
-gimp_param_string_get_type (void)
+ligma_param_string_get_type (void)
 {
   static GType type = 0;
 
@@ -59,33 +59,33 @@ gimp_param_string_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_string_class_init,
+        (GClassInitFunc) ligma_param_string_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecString),
+        sizeof (LigmaParamSpecString),
         0,
-        (GInstanceInitFunc) gimp_param_string_init
+        (GInstanceInitFunc) ligma_param_string_init
       };
 
       type = g_type_register_static (G_TYPE_PARAM_STRING,
-                                     "GimpParamString", &info, 0);
+                                     "LigmaParamString", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_string_class_init (GParamSpecClass *klass)
+ligma_param_string_class_init (GParamSpecClass *klass)
 {
-  gimp_param_string_parent_class = g_type_class_peek_parent (klass);
+  ligma_param_string_parent_class = g_type_class_peek_parent (klass);
 
   klass->value_type     = G_TYPE_STRING;
-  klass->value_validate = gimp_param_string_validate;
+  klass->value_validate = ligma_param_string_validate;
 }
 
 static void
-gimp_param_string_init (GParamSpec *pspec)
+ligma_param_string_init (GParamSpec *pspec)
 {
-  GimpParamSpecString *sspec = GIMP_PARAM_SPEC_STRING (pspec);
+  LigmaParamSpecString *sspec = LIGMA_PARAM_SPEC_STRING (pspec);
 
   G_PARAM_SPEC_STRING (pspec)->ensure_non_null = TRUE;
 
@@ -94,13 +94,13 @@ gimp_param_string_init (GParamSpec *pspec)
 }
 
 static gboolean
-gimp_param_string_validate (GParamSpec *pspec,
+ligma_param_string_validate (GParamSpec *pspec,
                             GValue     *value)
 {
-  GimpParamSpecString *sspec  = GIMP_PARAM_SPEC_STRING (pspec);
+  LigmaParamSpecString *sspec  = LIGMA_PARAM_SPEC_STRING (pspec);
   gchar               *string = value->data[0].v_pointer;
 
-  if (gimp_param_string_parent_class->value_validate (pspec, value))
+  if (ligma_param_string_parent_class->value_validate (pspec, value))
     return TRUE;
 
   if (string)
@@ -146,7 +146,7 @@ gimp_param_string_validate (GParamSpec *pspec,
 }
 
 /**
- * gimp_param_spec_string:
+ * ligma_param_spec_string:
  * @name:           Canonical name of the property specified.
  * @nick:           Nick name of the property specified.
  * @blurb:          Description of the property specified.
@@ -156,7 +156,7 @@ gimp_param_string_validate (GParamSpec *pspec,
  * @default_value:  The default value.
  * @flags:          Flags for the property specified.
  *
- * Creates a new #GimpParamSpecString specifying a
+ * Creates a new #LigmaParamSpecString specifying a
  * #G_TYPE_STRING property.
  *
  * If @allow_non_utf8 is %FALSE, non-valid UTF-8 strings will be
@@ -169,12 +169,12 @@ gimp_param_string_validate (GParamSpec *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecString.
+ * Returns: (transfer full): The newly created #LigmaParamSpecString.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_string (const gchar *name,
+ligma_param_spec_string (const gchar *name,
                         const gchar *nick,
                         const gchar *blurb,
                         gboolean     allow_non_utf8,
@@ -183,11 +183,11 @@ gimp_param_spec_string (const gchar *name,
                         const gchar *default_value,
                         GParamFlags  flags)
 {
-  GimpParamSpecString *sspec;
+  LigmaParamSpecString *sspec;
 
   g_return_val_if_fail (! (null_ok && non_empty), NULL);
 
-  sspec = g_param_spec_internal (GIMP_TYPE_PARAM_STRING,
+  sspec = g_param_spec_internal (LIGMA_TYPE_PARAM_STRING,
                                  name, nick, blurb, flags);
 
   if (sspec)
@@ -206,17 +206,17 @@ gimp_param_spec_string (const gchar *name,
 
 
 /*
- * GIMP_TYPE_PARAM_ENUM
+ * LIGMA_TYPE_PARAM_ENUM
  */
 
-static void       gimp_param_enum_class_init (GParamSpecClass *klass);
-static void       gimp_param_enum_init       (GParamSpec      *pspec);
-static void       gimp_param_enum_finalize   (GParamSpec      *pspec);
-static gboolean   gimp_param_enum_validate   (GParamSpec      *pspec,
+static void       ligma_param_enum_class_init (GParamSpecClass *klass);
+static void       ligma_param_enum_init       (GParamSpec      *pspec);
+static void       ligma_param_enum_finalize   (GParamSpec      *pspec);
+static gboolean   ligma_param_enum_validate   (GParamSpec      *pspec,
                                               GValue          *value);
 
 GType
-gimp_param_enum_get_type (void)
+ligma_param_enum_get_type (void)
 {
   static GType type = 0;
 
@@ -226,43 +226,43 @@ gimp_param_enum_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_enum_class_init,
+        (GClassInitFunc) ligma_param_enum_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecEnum),
+        sizeof (LigmaParamSpecEnum),
         0,
-        (GInstanceInitFunc) gimp_param_enum_init
+        (GInstanceInitFunc) ligma_param_enum_init
       };
 
       type = g_type_register_static (G_TYPE_PARAM_ENUM,
-                                     "GimpParamEnum", &info, 0);
+                                     "LigmaParamEnum", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_enum_class_init (GParamSpecClass *klass)
+ligma_param_enum_class_init (GParamSpecClass *klass)
 {
   klass->value_type     = G_TYPE_ENUM;
-  klass->finalize       = gimp_param_enum_finalize;
-  klass->value_validate = gimp_param_enum_validate;
+  klass->finalize       = ligma_param_enum_finalize;
+  klass->value_validate = ligma_param_enum_validate;
 }
 
 static void
-gimp_param_enum_init (GParamSpec *pspec)
+ligma_param_enum_init (GParamSpec *pspec)
 {
-  GimpParamSpecEnum *espec = GIMP_PARAM_SPEC_ENUM (pspec);
+  LigmaParamSpecEnum *espec = LIGMA_PARAM_SPEC_ENUM (pspec);
 
   espec->excluded_values = NULL;
 }
 
 static void
-gimp_param_enum_finalize (GParamSpec *pspec)
+ligma_param_enum_finalize (GParamSpec *pspec)
 {
-  GimpParamSpecEnum *espec = GIMP_PARAM_SPEC_ENUM (pspec);
+  LigmaParamSpecEnum *espec = LIGMA_PARAM_SPEC_ENUM (pspec);
   GParamSpecClass   *parent_class;
 
-  parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_ENUM));
+  parent_class = g_type_class_peek (g_type_parent (LIGMA_TYPE_PARAM_ENUM));
 
   g_slist_free (espec->excluded_values);
 
@@ -270,14 +270,14 @@ gimp_param_enum_finalize (GParamSpec *pspec)
 }
 
 static gboolean
-gimp_param_enum_validate (GParamSpec *pspec,
+ligma_param_enum_validate (GParamSpec *pspec,
                           GValue     *value)
 {
-  GimpParamSpecEnum *espec  = GIMP_PARAM_SPEC_ENUM (pspec);
+  LigmaParamSpecEnum *espec  = LIGMA_PARAM_SPEC_ENUM (pspec);
   GParamSpecClass   *parent_class;
   GSList            *list;
 
-  parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_ENUM));
+  parent_class = g_type_class_peek (g_type_parent (LIGMA_TYPE_PARAM_ENUM));
 
   if (parent_class->value_validate (pspec, value))
     return TRUE;
@@ -295,14 +295,14 @@ gimp_param_enum_validate (GParamSpec *pspec,
 }
 
 GParamSpec *
-gimp_param_spec_enum (const gchar *name,
+ligma_param_spec_enum (const gchar *name,
                       const gchar *nick,
                       const gchar *blurb,
                       GType        enum_type,
                       gint         default_value,
                       GParamFlags  flags)
 {
-  GimpParamSpecEnum *espec;
+  LigmaParamSpecEnum *espec;
   GEnumClass        *enum_class;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
@@ -312,7 +312,7 @@ gimp_param_spec_enum (const gchar *name,
   g_return_val_if_fail (g_enum_get_value (enum_class, default_value) != NULL,
                         NULL);
 
-  espec = g_param_spec_internal (GIMP_TYPE_PARAM_ENUM,
+  espec = g_param_spec_internal (LIGMA_TYPE_PARAM_ENUM,
                                  name, nick, blurb, flags);
 
   G_PARAM_SPEC_ENUM (espec)->enum_class    = enum_class;
@@ -323,10 +323,10 @@ gimp_param_spec_enum (const gchar *name,
 }
 
 void
-gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
+ligma_param_spec_enum_exclude_value (LigmaParamSpecEnum *espec,
                                     gint               value)
 {
-  g_return_if_fail (GIMP_IS_PARAM_SPEC_ENUM (espec));
+  g_return_if_fail (LIGMA_IS_PARAM_SPEC_ENUM (espec));
   g_return_if_fail (g_enum_get_value (G_PARAM_SPEC_ENUM (espec)->enum_class,
                                       value) != NULL);
 
@@ -336,10 +336,10 @@ gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
 
 
 /*  include the implementation of the remaining paramspecs, they are
- *  shared between app/ and libgimp/ but need different headers.
+ *  shared between app/ and libligma/ but need different headers.
  */
-#define gimp_image_is_valid(image) TRUE
-#define gimp_item_is_valid(item) TRUE
-#define gimp_display_is_valid(display) TRUE
+#define ligma_image_is_valid(image) TRUE
+#define ligma_item_is_valid(item) TRUE
+#define ligma_display_is_valid(display) TRUE
 
-#include "../../libgimp/gimpparamspecs-body.c"
+#include "../../libligma/ligmaparamspecs-body.c"

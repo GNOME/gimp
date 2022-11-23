@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,97 +22,97 @@
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimpimage-sample-points.h"
-#include "gimpsamplepoint.h"
-#include "gimpsamplepointundo.h"
+#include "ligmaimage.h"
+#include "ligmaimage-sample-points.h"
+#include "ligmasamplepoint.h"
+#include "ligmasamplepointundo.h"
 
 
-static void   gimp_sample_point_undo_constructed  (GObject             *object);
+static void   ligma_sample_point_undo_constructed  (GObject             *object);
 
-static void   gimp_sample_point_undo_pop          (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode,
-                                                   GimpUndoAccumulator *accum);
+static void   ligma_sample_point_undo_pop          (LigmaUndo            *undo,
+                                                   LigmaUndoMode         undo_mode,
+                                                   LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpSamplePointUndo, gimp_sample_point_undo,
-               GIMP_TYPE_AUX_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaSamplePointUndo, ligma_sample_point_undo,
+               LIGMA_TYPE_AUX_ITEM_UNDO)
 
-#define parent_class gimp_sample_point_undo_parent_class
+#define parent_class ligma_sample_point_undo_parent_class
 
 
 static void
-gimp_sample_point_undo_class_init (GimpSamplePointUndoClass *klass)
+ligma_sample_point_undo_class_init (LigmaSamplePointUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_sample_point_undo_constructed;
+  object_class->constructed = ligma_sample_point_undo_constructed;
 
-  undo_class->pop           = gimp_sample_point_undo_pop;
+  undo_class->pop           = ligma_sample_point_undo_pop;
 }
 
 static void
-gimp_sample_point_undo_init (GimpSamplePointUndo *undo)
+ligma_sample_point_undo_init (LigmaSamplePointUndo *undo)
 {
 }
 
 static void
-gimp_sample_point_undo_constructed (GObject *object)
+ligma_sample_point_undo_constructed (GObject *object)
 {
-  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
-  GimpSamplePoint     *sample_point;
+  LigmaSamplePointUndo *sample_point_undo = LIGMA_SAMPLE_POINT_UNDO (object);
+  LigmaSamplePoint     *sample_point;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  sample_point = GIMP_SAMPLE_POINT (GIMP_AUX_ITEM_UNDO (object)->aux_item);
+  sample_point = LIGMA_SAMPLE_POINT (LIGMA_AUX_ITEM_UNDO (object)->aux_item);
 
-  gimp_assert (GIMP_IS_SAMPLE_POINT (sample_point));
+  ligma_assert (LIGMA_IS_SAMPLE_POINT (sample_point));
 
-  gimp_sample_point_get_position (sample_point,
+  ligma_sample_point_get_position (sample_point,
                                   &sample_point_undo->x,
                                   &sample_point_undo->y);
-  sample_point_undo->pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+  sample_point_undo->pick_mode = ligma_sample_point_get_pick_mode (sample_point);
 }
 
 static void
-gimp_sample_point_undo_pop (GimpUndo              *undo,
-                            GimpUndoMode           undo_mode,
-                            GimpUndoAccumulator   *accum)
+ligma_sample_point_undo_pop (LigmaUndo              *undo,
+                            LigmaUndoMode           undo_mode,
+                            LigmaUndoAccumulator   *accum)
 {
-  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (undo);
-  GimpSamplePoint     *sample_point;
+  LigmaSamplePointUndo *sample_point_undo = LIGMA_SAMPLE_POINT_UNDO (undo);
+  LigmaSamplePoint     *sample_point;
   gint                 x;
   gint                 y;
-  GimpColorPickMode    pick_mode;
+  LigmaColorPickMode    pick_mode;
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  sample_point = GIMP_SAMPLE_POINT (GIMP_AUX_ITEM_UNDO (undo)->aux_item);
+  sample_point = LIGMA_SAMPLE_POINT (LIGMA_AUX_ITEM_UNDO (undo)->aux_item);
 
-  gimp_sample_point_get_position (sample_point, &x, &y);
-  pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+  ligma_sample_point_get_position (sample_point, &x, &y);
+  pick_mode = ligma_sample_point_get_pick_mode (sample_point);
 
-  if (x == GIMP_SAMPLE_POINT_POSITION_UNDEFINED)
+  if (x == LIGMA_SAMPLE_POINT_POSITION_UNDEFINED)
     {
-      gimp_image_add_sample_point (undo->image,
+      ligma_image_add_sample_point (undo->image,
                                    sample_point,
                                    sample_point_undo->x,
                                    sample_point_undo->y);
     }
-  else if (sample_point_undo->x == GIMP_SAMPLE_POINT_POSITION_UNDEFINED)
+  else if (sample_point_undo->x == LIGMA_SAMPLE_POINT_POSITION_UNDEFINED)
     {
-      gimp_image_remove_sample_point (undo->image, sample_point, FALSE);
+      ligma_image_remove_sample_point (undo->image, sample_point, FALSE);
     }
   else
     {
-      gimp_sample_point_set_position (sample_point,
+      ligma_sample_point_set_position (sample_point,
                                       sample_point_undo->x,
                                       sample_point_undo->y);
-      gimp_sample_point_set_pick_mode (sample_point,
+      ligma_sample_point_set_pick_mode (sample_point,
                                        sample_point_undo->pick_mode);
 
-      gimp_image_sample_point_moved (undo->image, sample_point);
+      ligma_image_sample_point_moved (undo->image, sample_point);
     }
 
   sample_point_undo->x         = x;

@@ -1,12 +1,12 @@
-# Malay Translation of Gimp-plug-ins.
+# Malay Translation of Ligma-plug-ins.
 # Copyright (C) 2003 MIMOS Open Source Developement Group
 # This file is distributed under the same license as the PACKAGE package.
 # MIMOS Open Source Development Group <opensource@mimos.my>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp 1.3\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma 1.3\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2003-11-07 16:26+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <opensource@mimos.my>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:891
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
@@ -28,7 +28,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:543
 #: plug-ins/FractalExplorer/Dialogs.c:1647 plug-ins/imagemap/imap_about.c:39
-#: plug-ins/print/gimp_main_window.c:367
+#: plug-ins/print/ligma_main_window.c:367
 msgid "About"
 msgstr "Tentang"
 
@@ -645,7 +645,7 @@ msgstr "Keamatan Asli"
 
 #: plug-ins/Lighting/lighting_ui.c:417 plug-ins/MapObject/mapobject_ui.c:694
 #: plug-ins/MapObject/mapobject_ui.c:1021
-#: plug-ins/print/gimp_main_window.c:464
+#: plug-ins/print/ligma_main_window.c:464
 msgid "Position"
 msgstr "Kedudukan"
 
@@ -868,7 +868,7 @@ msgstr "Peta _Persekitaran"
 msgid "Lighting Effects"
 msgstr "Kesan Pencahayaan"
 
-#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/gimpressionist/preview.c:181
+#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/ligmaressionist/preview.c:181
 #: plug-ins/imagemap/imap_polygon.c:514
 msgid "_Update"
 msgstr "_Kemas kini"
@@ -1107,22 +1107,22 @@ msgid "Back:"
 msgstr "Belakang:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/print/gimp_main_window.c:523
+#: plug-ins/print/ligma_main_window.c:523
 msgid "Top:"
 msgstr "Atas:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/print/gimp_main_window.c:564
+#: plug-ins/print/ligma_main_window.c:564
 msgid "Bottom:"
 msgstr "Bawah:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1134
-#: plug-ins/print/gimp_main_window.c:510
+#: plug-ins/print/ligma_main_window.c:510
 msgid "Left:"
 msgstr "Kiri:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1134
-#: plug-ins/print/gimp_main_window.c:536
+#: plug-ins/print/ligma_main_window.c:536
 msgid "Right:"
 msgstr "Kanan:"
 
@@ -1160,7 +1160,7 @@ msgid "Images for the Cap Faces"
 msgstr "Imej untuk Permukaan Huruf"
 
 #: plug-ins/MapObject/mapobject_ui.c:1262
-#: plug-ins/print/gimp_main_window.c:1102
+#: plug-ins/print/ligma_main_window.c:1102
 msgid "Size"
 msgstr "Saiz"
 
@@ -1282,7 +1282,7 @@ msgstr ""
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
 #: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1286
-#: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
+#: plug-ins/ligmaressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
 msgstr "Latar belakang"
@@ -1582,7 +1582,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1594
-#: plug-ins/print/gimp_main_window.c:1645
+#: plug-ins/print/ligma_main_window.c:1645
 msgid "Standard"
 msgstr "Piawai"
 
@@ -1663,8 +1663,8 @@ msgid "Randoms from seed (shared)"
 msgstr "Rawak dari seed (terkongsi)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/CML_explorer.c:310
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:162
-#: plug-ins/gimpressionist/size.c:165
+#: plug-ins/common/decompose.c:143 plug-ins/ligmaressionist/orientation.c:162
+#: plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr "Warna"
 
@@ -1674,8 +1674,8 @@ msgid "Saturation"
 msgstr "Ketepuan"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:312
-#: plug-ins/common/decompose.c:145 plug-ins/gimpressionist/orientation.c:138
-#: plug-ins/gimpressionist/size.c:141
+#: plug-ins/common/decompose.c:145 plug-ins/ligmaressionist/orientation.c:138
+#: plug-ins/ligmaressionist/size.c:141
 msgid "Value"
 msgstr "Nilai"
 
@@ -2522,7 +2522,7 @@ msgid "_Psychobilly"
 msgstr "_Psychobilly"
 
 #: plug-ins/common/checkerboard.c:365 plug-ins/common/papertile.c:287
-#: plug-ins/gimpressionist/sizemap.c:487
+#: plug-ins/ligmaressionist/sizemap.c:487
 msgid "_Size:"
 msgstr "_Saiz:"
 
@@ -2607,7 +2607,7 @@ msgid "Hue:"
 msgstr "Warna:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:149 plug-ins/print/gimp_color_window.c:364
+#: plug-ins/common/compose.c:149 plug-ins/print/ligma_color_window.c:364
 #: plug-ins/rcm/rcm_dialog.c:479
 msgid "Saturation:"
 msgstr "Ketepuan:"
@@ -2621,17 +2621,17 @@ msgid "CMY"
 msgstr "CMY"
 
 #: plug-ins/common/compose.c:155 plug-ins/common/compose.c:162
-#: plug-ins/common/fp.c:220 plug-ins/print/gimp_color_window.c:307
+#: plug-ins/common/fp.c:220 plug-ins/print/ligma_color_window.c:307
 msgid "Cyan:"
 msgstr "Cyan:"
 
 #: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
-#: plug-ins/common/fp.c:222 plug-ins/print/gimp_color_window.c:326
+#: plug-ins/common/fp.c:222 plug-ins/print/ligma_color_window.c:326
 msgid "Magenta:"
 msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
-#: plug-ins/common/fp.c:221 plug-ins/print/gimp_color_window.c:345
+#: plug-ins/common/fp.c:221 plug-ins/print/ligma_color_window.c:345
 msgid "Yellow:"
 msgstr "Kuning:"
 
@@ -2956,8 +2956,8 @@ msgid "Curve Bend"
 msgstr "Bend Lengkung"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
-#: plug-ins/gimpressionist/sizemap.c:437
+#: plug-ins/common/curve_bend.c:1273 plug-ins/ligmaressionist/orientmap.c:567
+#: plug-ins/ligmaressionist/sizemap.c:437
 msgid "Preview"
 msgstr "Pralihat"
 
@@ -3318,7 +3318,7 @@ msgstr "Despeckle"
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:444 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:444 plug-ins/ligmaressionist/orientmap.c:616
 msgid "Type"
 msgstr "Jenis"
 
@@ -3512,7 +3512,7 @@ msgstr "J_ejari:"
 msgid "_Normalize"
 msgstr "_Normal"
 
-#: plug-ins/common/dog.c:336 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:336 plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Songsang"
 
@@ -4067,7 +4067,7 @@ msgid "_RLE"
 msgstr "RLE"
 
 #: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:151
-msgid "GIMP brush"
+msgid "LIGMA brush"
 msgstr ""
 
 #: plug-ins/common/gbr.c:369 plug-ins/common/gbr.c:381
@@ -4076,9 +4076,9 @@ msgstr "Format berus yang tidak disokong"
 
 #: plug-ins/common/gbr.c:392
 #, fuzzy, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr ""
-"Ralat dalam fail berus GIMP\n"
+"Ralat dalam fail berus LIGMA\n"
 "'%s'"
 
 #: plug-ins/common/gbr.c:400
@@ -4093,8 +4093,8 @@ msgstr "Tidak bernama"
 
 #: plug-ins/common/gbr.c:578
 #, fuzzy
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Berus GIMP adalah sama ada GRAYSCALE atau RGBA\n"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "Berus LIGMA adalah sama ada GRAYSCALE atau RGBA\n"
 
 #: plug-ins/common/gbr.c:663
 msgid "Save as Brush"
@@ -4106,7 +4106,7 @@ msgid "Spacing:"
 msgstr "Langkauan:"
 
 #: plug-ins/common/gbr.c:694 plug-ins/common/gih.c:904
-#: plug-ins/common/pat.c:521 plug-ins/gimpressionist/presets.c:642
+#: plug-ins/common/pat.c:521 plug-ins/ligmaressionist/presets.c:642
 msgid "Description:"
 msgstr "Huraian:"
 
@@ -4120,15 +4120,15 @@ msgstr "GEE-SLIME"
 
 #: plug-ins/common/gee.c:158 plug-ins/common/gee_zoom.c:191
 #, fuzzy
-msgid "Thank you for choosing GIMP"
-msgstr "** Terima kasih kerana memilih GIMP **"
+msgid "Thank you for choosing LIGMA"
+msgstr "** Terima kasih kerana memilih LIGMA **"
 
 #: plug-ins/common/gee.c:166
 msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"A less-obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Ciptaan terkini oleh Adam D.Moss / adam@gimp.org / adam@foxbox.org / 1998-"
+"Ciptaan terkini oleh Adam D.Moss / adam@ligma.org / adam@foxbox.org / 1998-"
 "2000"
 
 #: plug-ins/common/gee_zoom.c:124
@@ -4142,10 +4142,10 @@ msgstr ""
 
 #: plug-ins/common/gee_zoom.c:199
 msgid ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"An obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Ciptaan terkini oleh Adam D.Moss / adam@gimp.org / adam@foxbox.org / 1998-"
+"Ciptaan terkini oleh Adam D.Moss / adam@ligma.org / adam@foxbox.org / 1998-"
 "2000"
 
 #: plug-ins/common/gif.c:402 plug-ins/common/gifload.c:143
@@ -4313,7 +4313,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/gih.c:205 plug-ins/common/gih.c:226
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr ""
 
 #: plug-ins/common/gih.c:319
@@ -4322,12 +4322,12 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Lapisan %s tidak mempunyai rangkaian alfa, langkau"
 
 #: plug-ins/common/gih.c:490
-msgid "Error in GIMP brush pipe file."
-msgstr "Ralat di fail berus paip GIMP."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Ralat di fail berus paip LIGMA."
 
 #: plug-ins/common/gih.c:556
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Fail berus GIMP kelihatan seperti rosak."
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Fail berus LIGMA kelihatan seperti rosak."
 
 #: plug-ins/common/gih.c:704
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -4470,8 +4470,8 @@ msgstr "Persilangan"
 
 #. Width and Height
 #: plug-ins/common/grid.c:703 plug-ins/common/svg.c:761
-#: plug-ins/common/wmf.c:548 plug-ins/print/gimp_main_window.c:992
-#: plug-ins/print/gimp_main_window.c:1199
+#: plug-ins/common/wmf.c:548 plug-ins/print/ligma_main_window.c:992
+#: plug-ins/print/ligma_main_window.c:1199
 msgid "Width:"
 msgstr "Lebar:"
 
@@ -4499,8 +4499,8 @@ msgid "HTML table"
 msgstr "Marmar"
 
 #: plug-ins/common/gtm.c:399
-msgid "GIMP Table Magic"
-msgstr "Jadual Magik GIMP"
+msgid "LIGMA Table Magic"
+msgstr "Jadual Magik LIGMA"
 
 #: plug-ins/common/gtm.c:419
 msgid "Warning"
@@ -5837,7 +5837,7 @@ msgstr "Jubin Kertas..."
 
 #: plug-ins/common/pat.c:104 plug-ins/common/pat.c:126
 #, fuzzy
-msgid "GIMP pattern"
+msgid "LIGMA pattern"
 msgstr "Corak"
 
 #: plug-ins/common/pat.c:343
@@ -6216,7 +6216,7 @@ msgstr "Rendering"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2949 plug-ins/common/svg.c:882
-#: plug-ins/common/wmf.c:669 plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/common/wmf.c:669 plug-ins/print/ligma_main_window.c:1087
 msgid "Resolution:"
 msgstr "Resolusi:"
 
@@ -6246,8 +6246,8 @@ msgid "Gray"
 msgstr "Kelabu"
 
 #: plug-ins/common/postscript.c:3004 plug-ins/common/xpm.c:469
-#: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:151
-#: plug-ins/imagemap/imap_menu.c:306 plug-ins/print/gimp_main_window.c:1399
+#: plug-ins/ligmaressionist/color.c:48 plug-ins/ligmaressionist/general.c:151
+#: plug-ins/imagemap/imap_menu.c:306 plug-ins/print/ligma_main_window.c:1399
 msgid "Color"
 msgstr "Warna"
 
@@ -7241,7 +7241,7 @@ msgstr "Gunakan Warna Latar Depan"
 msgid "Use the background color"
 msgstr "Gunakan Warna Latar Belakang"
 
-#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:147
+#: plug-ins/common/spheredesigner.c:280 plug-ins/ligmaressionist/general.c:147
 msgid "Solid"
 msgstr "Pepejal"
 
@@ -7331,7 +7331,7 @@ msgid "Color Selection Dialog"
 msgstr "Pemilihan Warna Dialog"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2674 plug-ins/gimpressionist/paper.c:176
+#: plug-ins/common/spheredesigner.c:2674 plug-ins/ligmaressionist/paper.c:176
 #: plug-ins/ifscompose/ifscompose.c:572
 msgid "Scale:"
 msgstr "Skala"
@@ -7539,8 +7539,8 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Render Berskala Grafik Vektor"
 
 #: plug-ins/common/svg.c:767 plug-ins/common/wmf.c:554
-#: plug-ins/print/gimp_main_window.c:1009
-#: plug-ins/print/gimp_main_window.c:1212
+#: plug-ins/print/ligma_main_window.c:1009
+#: plug-ins/print/ligma_main_window.c:1212
 msgid "Height:"
 msgstr "Tinggi:"
 
@@ -7571,9 +7571,9 @@ msgstr "Import _Laluan"
 
 #: plug-ins/common/svg.c:914
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
-"Import elemen laluan SVG jadi ia boleh digunakan dengan laluan alat GIMP"
+"Import elemen laluan SVG jadi ia boleh digunakan dengan laluan alat LIGMA"
 
 #: plug-ins/common/svg.c:927
 #, fuzzy
@@ -7656,12 +7656,12 @@ msgstr "Saluran TIFF"
 #: plug-ins/common/tiff.c:859
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "Amaran:\n"
-"Imej yang anda muatkan mempunyai 16 bit setiap saluran.  GIMP hanya boleh "
+"Imej yang anda muatkan mempunyai 16 bit setiap saluran.  LIGMA hanya boleh "
 "memegang 8 bit, jadi ia akan ditukarkan untuk anda.  Maklumat akan hilang "
 "disebabkan pertukaran ini."
 
@@ -7795,10 +7795,10 @@ msgstr "Disimpan"
 
 #: plug-ins/common/uniteditor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Definasi unit hanya akan disimpan sebelum GIMP wujud jika lajur ini "
+"Definasi unit hanya akan disimpan sebelum LIGMA wujud jika lajur ini "
 "diperiksa."
 
 #: plug-ins/common/uniteditor.c:96
@@ -7807,10 +7807,10 @@ msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 "Rentetan ini akan digunakan untuk mengenalpasti unit di fail konfigurasi "
-"GIMP."
+"LIGMA."
 
 #: plug-ins/common/uniteditor.c:98
 msgid "Factor"
@@ -8248,7 +8248,7 @@ msgstr "Menu pilihan peta vektor-arah-tetap"
 
 #.
 #. if (display_diff_map) {
-#. gimp_display_new(new_image_id);
+#. ligma_display_new(new_image_id);
 #. }
 #.
 #. make sure layer is visible
@@ -8375,7 +8375,7 @@ msgstr "Format takdisokong atau Papan keratan kosong!"
 msgid "Can't get Clipboard data."
 msgstr "Tidak boleh mendapatkan data Papan keratan."
 
-#. ??? gimp_image_convert_rgb (image_ID);
+#. ??? ligma_image_convert_rgb (image_ID);
 #.
 #: plug-ins/common/winclipboard.c:587
 msgid "Pasted"
@@ -8449,7 +8449,7 @@ msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 "Nilai yang lebih tinggi menghadkan kesan kepada kawasan imej yang sedikit"
 
-#: plug-ins/common/wind.c:1012 plug-ins/gimpressionist/orientmap.c:669
+#: plug-ins/common/wind.c:1012 plug-ins/ligmaressionist/orientmap.c:669
 msgid "_Strength:"
 msgstr "_Kekuatan:"
 
@@ -8480,7 +8480,7 @@ msgstr "Pencetak tidak menyokong bitmap"
 msgid "StartPage failed"
 msgstr "HalamanMula Gagal"
 
-#: plug-ins/common/winprint.c:427 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:427 plug-ins/print/print-image-ligma.c:320
 msgid "Printing..."
 msgstr "Mencetak..."
 
@@ -8543,8 +8543,8 @@ msgid "X BitMap image"
 msgstr ""
 
 #: plug-ins/common/xbm.c:241
-msgid "Created with The GIMP"
-msgstr "Diwujudkan dengan GIMP"
+msgid "Created with The LIGMA"
+msgstr "Diwujudkan dengan LIGMA"
 
 #: plug-ins/common/xbm.c:804
 #, fuzzy, c-format
@@ -8732,51 +8732,51 @@ msgstr "ZealousCropping(tm)..."
 msgid "Nothing to crop."
 msgstr "Tiada apa-apa untuk dipotong."
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:128
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:142
 msgid "Procedure Browser"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:132
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:146
 #: plug-ins/dbbrowser/plugin-browser.c:548
 msgid "Search by _Name"
 msgstr "Carian berdasarkan _Nama"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: plug-ins/dbbrowser/gimpprocbrowser.c:147
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:133
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:147
 msgid "Search by _Blurb"
 msgstr "Carian berdasarkan _Blurb"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:224
 #: plug-ins/dbbrowser/plugin-browser.c:718
 msgid "_Search:"
 msgstr "_Carian:"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:386
 #: plug-ins/dbbrowser/plugin-browser.c:397
 msgid "Searching by name - please wait"
 msgstr "Carian berdasarkan nama - sila tunggu"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:410
 msgid "Searching by blurb - please wait"
 msgstr "Carian berdasarkan blurb - sila tunggu"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:421
 msgid "Searching - please wait"
 msgstr "Pencarian - sila tunggu"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:428
 #, fuzzy
 msgid "1 Procedure"
 msgstr "Prosidur Sementara"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:430
 #, fuzzy, c-format
 msgid "%d Procedures"
 msgstr "Prosidur Sementara"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:476
 #: plug-ins/dbbrowser/plugin-browser.c:516
 msgid "No matches"
 msgstr "Tidak padanan"
@@ -8787,46 +8787,46 @@ msgstr "Tidak padanan"
 #.
 #. *    Scales
 #.
-#: plug-ins/dbbrowser/gimpprocview.c:133 plug-ins/gflare/gflare.c:2673
+#: plug-ins/dbbrowser/ligmaprocview.c:133 plug-ins/gflare/gflare.c:2673
 #: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3608
 #: plug-ins/gflare/gflare.c:3745
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/dbbrowser/gimpprocview.c:146
+#: plug-ins/dbbrowser/ligmaprocview.c:146
 msgid "Return Values"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:159
+#: plug-ins/dbbrowser/ligmaprocview.c:159
 #, fuzzy
 msgid "Additional Information"
 msgstr "Penjelmaan Spatial"
 
-#: plug-ins/dbbrowser/gimpprocview.c:198
+#: plug-ins/dbbrowser/ligmaprocview.c:198
 msgid "Author:"
 msgstr "Pengarang:"
 
-#: plug-ins/dbbrowser/gimpprocview.c:209
+#: plug-ins/dbbrowser/ligmaprocview.c:209
 msgid "Date:"
 msgstr "Tarikh:"
 
-#: plug-ins/dbbrowser/gimpprocview.c:220
+#: plug-ins/dbbrowser/ligmaprocview.c:220
 msgid "Copyright:"
 msgstr "Hakcipta:"
 
-#: plug-ins/dbbrowser/gimpprocview.c:319
-msgid "Internal GIMP procedure"
-msgstr "Prosidur GIMP dalaman"
+#: plug-ins/dbbrowser/ligmaprocview.c:319
+msgid "Internal LIGMA procedure"
+msgstr "Prosidur LIGMA dalaman"
 
-#: plug-ins/dbbrowser/gimpprocview.c:320
-msgid "GIMP Plug-In"
-msgstr "Plug-In GIMP"
+#: plug-ins/dbbrowser/ligmaprocview.c:320
+msgid "LIGMA Plug-In"
+msgstr "Plug-In LIGMA"
 
-#: plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Extension"
-msgstr "Sambungan GIMP"
+#: plug-ins/dbbrowser/ligmaprocview.c:321
+msgid "LIGMA Extension"
+msgstr "Sambungan LIGMA"
 
-#: plug-ins/dbbrowser/gimpprocview.c:322
+#: plug-ins/dbbrowser/ligmaprocview.c:322
 msgid "Temporary Procedure"
 msgstr "Prosidur Sementara"
 
@@ -8977,8 +8977,8 @@ msgstr "_Rawak"
 msgid "Same"
 msgstr "Sama"
 
-#: plug-ins/flame/flame.c:732 plug-ins/gimpressionist/orientation.c:146
-#: plug-ins/gimpressionist/size.c:149
+#: plug-ins/flame/flame.c:732 plug-ins/ligmaressionist/orientation.c:146
+#: plug-ins/ligmaressionist/size.c:149
 msgid "Random"
 msgstr "Rawak"
 
@@ -9260,7 +9260,7 @@ msgstr "Sembunyikan Titik Kawalan"
 msgid "Max undo:"
 msgstr "Buat asal Maks:"
 
-#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/ligmaressionist/general.c:166
 msgid "Transparent"
 msgstr "Lut sinar"
 
@@ -9355,8 +9355,8 @@ msgstr "_Kanan"
 msgid "Left"
 msgstr "_Kiri"
 
-#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/gimpressionist/orientation.c:130
-#: plug-ins/print/gimp_main_window.c:500
+#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/ligmaressionist/orientation.c:130
+#: plug-ins/print/ligma_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientasi:"
 
@@ -9589,7 +9589,7 @@ msgstr "Opsyen Cat Rays"
 msgid "Second Flares Paint Options"
 msgstr "Opsyen Cat Flare kedua"
 
-#: plug-ins/gflare/gflare.c:3450 plug-ins/gimpressionist/general.c:115
+#: plug-ins/gflare/gflare.c:3450 plug-ins/ligmaressionist/general.c:115
 msgid "_General"
 msgstr "_Am"
 
@@ -9699,296 +9699,296 @@ msgstr "GFLI 1.3 - Muatkan framestack"
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Simpan framestack"
 
-#: plug-ins/gimpressionist/brush.c:230
+#: plug-ins/ligmaressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr "Hanya boleh simpan lukisan!"
 
-#: plug-ins/gimpressionist/brush.c:235
+#: plug-ins/ligmaressionist/brush.c:235
 #, fuzzy
 msgid "Save Brush"
 msgstr "Simpan berus"
 
-#: plug-ins/gimpressionist/brush.c:481
+#: plug-ins/ligmaressionist/brush.c:481
 msgid "_Brush"
 msgstr "_Berus"
 
-#: plug-ins/gimpressionist/brush.c:518 plug-ins/print/gimp_color_window.c:407
+#: plug-ins/ligmaressionist/brush.c:518 plug-ins/print/ligma_color_window.c:407
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: plug-ins/gimpressionist/brush.c:536
+#: plug-ins/ligmaressionist/brush.c:536
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ubah gama (kecerahan) bagi berus yang dipilih"
 
-#: plug-ins/gimpressionist/brush.c:544
+#: plug-ins/ligmaressionist/brush.c:544
 msgid "Select:"
 msgstr "Plih:"
 
-#: plug-ins/gimpressionist/brush.c:573
+#: plug-ins/ligmaressionist/brush.c:573
 msgid "Aspect ratio:"
 msgstr "Nisbah aspek:"
 
-#: plug-ins/gimpressionist/brush.c:577
+#: plug-ins/ligmaressionist/brush.c:577
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Tentukan nisbah aspek bagi berus"
 
-#: plug-ins/gimpressionist/brush.c:586 plug-ins/gimpressionist/paper.c:188
+#: plug-ins/ligmaressionist/brush.c:586 plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr "Kelegaan:"
 
-#: plug-ins/gimpressionist/brush.c:590 plug-ins/gimpressionist/paper.c:192
+#: plug-ins/ligmaressionist/brush.c:590 plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 "Tentukan jumlah persembunyian untuk digunakan pada imej (dalam peratus)"
 
-#: plug-ins/gimpressionist/color.c:42
+#: plug-ins/ligmaressionist/color.c:42
 msgid "Co_lor"
 msgstr "Wa_rna"
 
-#: plug-ins/gimpressionist/color.c:52
+#: plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "P_urata di bawah berus"
 
-#: plug-ins/gimpressionist/color.c:54
+#: plug-ins/ligmaressionist/color.c:54
 msgid "C_enter of brush"
 msgstr "T_engah berus"
 
-#: plug-ins/gimpressionist/color.c:61
+#: plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Warna dihasilkan daripada purata semua piksel di bawah berus"
 
-#: plug-ins/gimpressionist/color.c:65
+#: plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Sampelkan warna daripada piksel di dalam tengah berus itu"
 
-#: plug-ins/gimpressionist/color.c:76
+#: plug-ins/ligmaressionist/color.c:76
 msgid "Color _noise:"
 msgstr "Kebisingan warna:"
 
-#: plug-ins/gimpressionist/color.c:80
+#: plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "Tambah kebisingan rawak pada warna"
 
-#: plug-ins/gimpressionist/general.c:131
+#: plug-ins/ligmaressionist/general.c:131
 msgid "Keep original"
 msgstr "Simpan yang asal"
 
-#: plug-ins/gimpressionist/general.c:132
+#: plug-ins/ligmaressionist/general.c:132
 msgid "Preserve the original image as a background"
 msgstr "Kekalkan imej asal sebagai latar belakang"
 
-#: plug-ins/gimpressionist/general.c:137
+#: plug-ins/ligmaressionist/general.c:137
 msgid "From paper"
 msgstr "Dari kertas"
 
-#: plug-ins/gimpressionist/general.c:138
+#: plug-ins/ligmaressionist/general.c:138
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Salin tekstur bagi kertas pilihan sebagai latar belakang"
 
-#: plug-ins/gimpressionist/general.c:148
+#: plug-ins/ligmaressionist/general.c:148
 msgid "Solid colored background"
 msgstr "Latar belakang berwarna pejal"
 
-#: plug-ins/gimpressionist/general.c:167
+#: plug-ins/ligmaressionist/general.c:167
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 "Gunakan latar belakang lut sinar, Hanya goresan yang dicat akan dapat dilihat"
 
-#: plug-ins/gimpressionist/general.c:184
+#: plug-ins/ligmaressionist/general.c:184
 msgid "Paint edges"
 msgstr "Cat tepi"
 
-#: plug-ins/gimpressionist/general.c:189
+#: plug-ins/ligmaressionist/general.c:189
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Pilih jika untuk meletakkan goresan sepanjang jalan ke tepi imej"
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:194 plug-ins/maze/maze_face.c:264
+#: plug-ins/ligmaressionist/general.c:194 plug-ins/maze/maze_face.c:264
 msgid "Tileable"
 msgstr "Berjubin"
 
-#: plug-ins/gimpressionist/general.c:198
+#: plug-ins/ligmaressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Pilih jika imej yang dihasilkan perlu kelihatan berjubin"
 
-#: plug-ins/gimpressionist/general.c:203
+#: plug-ins/ligmaressionist/general.c:203
 msgid "Drop Shadow"
 msgstr "Gugurkan Bayang"
 
-#: plug-ins/gimpressionist/general.c:208
+#: plug-ins/ligmaressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Tambah suatu kesan bayang pada setiap goresan berus"
 
-#: plug-ins/gimpressionist/general.c:221
+#: plug-ins/ligmaressionist/general.c:221
 msgid "Edge darken:"
 msgstr "Tepi digelapkan:"
 
-#: plug-ins/gimpressionist/general.c:225
+#: plug-ins/ligmaressionist/general.c:225
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Berapa banyak untuk \"menggelapkan\" tepi bagi setiap goresan berus"
 
-#: plug-ins/gimpressionist/general.c:230
+#: plug-ins/ligmaressionist/general.c:230
 msgid "Shadow darken:"
 msgstr "Bayang digelapkan:"
 
-#: plug-ins/gimpressionist/general.c:234
+#: plug-ins/ligmaressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Berapa banyak untuk \"menggelapkan\" bayang yang gugur"
 
-#: plug-ins/gimpressionist/general.c:239
+#: plug-ins/ligmaressionist/general.c:239
 msgid "Shadow depth:"
 msgstr "Kedalaman bayang:"
 
-#: plug-ins/gimpressionist/general.c:243
+#: plug-ins/ligmaressionist/general.c:243
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "Kedalaman bagi bayang yang gugur, cth berapa jauh ia perlu berada dari objek "
 "itu"
 
-#: plug-ins/gimpressionist/general.c:248
+#: plug-ins/ligmaressionist/general.c:248
 msgid "Shadow blur:"
 msgstr "Kaburan bayang:"
 
-#: plug-ins/gimpressionist/general.c:252
+#: plug-ins/ligmaressionist/general.c:252
 msgid "How much to blur the drop shadow"
 msgstr "Berapa banyak untuk mengaburkan bayang yang gugur"
 
-#: plug-ins/gimpressionist/general.c:257
+#: plug-ins/ligmaressionist/general.c:257
 #, fuzzy
 msgid "Deviation threshold:"
 msgstr "Ambang sisihan:"
 
-#: plug-ins/gimpressionist/general.c:261
+#: plug-ins/ligmaressionist/general.c:261
 msgid "A bailout-value for adaptive selections"
 msgstr "Satu nilai-bailout untuk pemilihan mudah suai"
 
-#: plug-ins/gimpressionist/gimp.c:79
+#: plug-ins/ligmaressionist/ligma.c:79
 #, fuzzy
-msgid "_GIMPressionist..."
-msgstr "GIMPressionist"
+msgid "_LIGMAressionist..."
+msgstr "LIGMAressionist"
 
-#: plug-ins/gimpressionist/gimp.c:350
+#: plug-ins/ligmaressionist/ligma.c:350
 msgid "Painting..."
 msgstr "Mengecat..."
 
-#: plug-ins/gimpressionist/gimpressionist.c:117
-msgid "The GIMPressionist"
-msgstr "GIMPressionist"
+#: plug-ins/ligmaressionist/ligmaressionist.c:117
+msgid "The LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:196
-msgid "Gimpressionist"
-msgstr "Gimpressionist"
+#: plug-ins/ligmaressionist/ligmaressionist.c:196
+msgid "Ligmaressionist"
+msgstr "Ligmaressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:200
+#: plug-ins/ligmaressionist/ligmaressionist.c:200
 msgid "A_bout"
 msgstr "T_entang"
 
-#: plug-ins/gimpressionist/orientation.c:74
+#: plug-ins/ligmaressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr "Or_ientasi"
 
-#: plug-ins/gimpressionist/orientation.c:88
+#: plug-ins/ligmaressionist/orientation.c:88
 msgid "Directions:"
 msgstr "Arah:"
 
-#: plug-ins/gimpressionist/orientation.c:92
+#: plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Bilangan arah (cth. berus) untuk digunakan"
 
-#: plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/ligmaressionist/orientation.c:100
 msgid "Start angle:"
 msgstr "Mulakan sudut:"
 
-#: plug-ins/gimpressionist/orientation.c:104
+#: plug-ins/ligmaressionist/orientation.c:104
 #, fuzzy
 msgid "The starting angle of the first brush to create"
 msgstr "Sudut berus pertama yang diwujudkan"
 
-#: plug-ins/gimpressionist/orientation.c:112
+#: plug-ins/ligmaressionist/orientation.c:112
 msgid "Angle span:"
 msgstr "Sudut span:"
 
-#: plug-ins/gimpressionist/orientation.c:116
+#: plug-ins/ligmaressionist/orientation.c:116
 #, fuzzy
 msgid "The angle span of the first brush to create"
 msgstr "Sudut berus pertama yang diwujudkan"
 
-#: plug-ins/gimpressionist/orientation.c:139
+#: plug-ins/ligmaressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Biar nilai (kecerahan) bagi rantau tentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:142
-#: plug-ins/gimpressionist/size.c:145
+#: plug-ins/ligmaressionist/orientation.c:142
+#: plug-ins/ligmaressionist/size.c:145
 msgid "Radius"
 msgstr "Jejari"
 
-#: plug-ins/gimpressionist/orientation.c:143
+#: plug-ins/ligmaressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Jarak dari tengah imej menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:147
+#: plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr "Pilih satu arah rawak bagi setiap goresan"
 
-#: plug-ins/gimpressionist/orientation.c:150
-#: plug-ins/gimpressionist/size.c:153
+#: plug-ins/ligmaressionist/orientation.c:150
+#: plug-ins/ligmaressionist/size.c:153
 msgid "Radial"
 msgstr "Jejari"
 
-#: plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Biar arah dari tengah menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:158
-#: plug-ins/gimpressionist/size.c:161
+#: plug-ins/ligmaressionist/orientation.c:158
+#: plug-ins/ligmaressionist/size.c:161
 msgid "Flowing"
 msgstr "Aliran"
 
-#: plug-ins/gimpressionist/orientation.c:159
-#: plug-ins/gimpressionist/size.c:162
+#: plug-ins/ligmaressionist/orientation.c:159
+#: plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Goresan mengikut satu corak \"aliran\""
 
-#: plug-ins/gimpressionist/orientation.c:163
+#: plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Warna bagi rantau menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:166
-#: plug-ins/gimpressionist/size.c:169
+#: plug-ins/ligmaressionist/orientation.c:166
+#: plug-ins/ligmaressionist/size.c:169
 msgid "Adaptive"
 msgstr "Mudah suai"
 
-#: plug-ins/gimpressionist/orientation.c:167
+#: plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Arah yang paling sepadan dengan imej asal dipilih"
 
-#: plug-ins/gimpressionist/orientation.c:174
-#: plug-ins/gimpressionist/size.c:178
+#: plug-ins/ligmaressionist/orientation.c:174
+#: plug-ins/ligmaressionist/size.c:178
 msgid "Manual"
 msgstr "Manual"
 
-#: plug-ins/gimpressionist/orientation.c:175
+#: plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr "Tentukan orientasi goresan secara manual"
 
-#: plug-ins/gimpressionist/orientation.c:186
+#: plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr "Buka Editor Peta Orientasi"
 
-#: plug-ins/gimpressionist/orientmap.c:508
+#: plug-ins/ligmaressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr "Editor Peta Orientasi"
 
-#: plug-ins/gimpressionist/orientmap.c:530
+#: plug-ins/ligmaressionist/orientmap.c:530
 msgid "Vectors"
 msgstr "Vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:542
+#: plug-ins/ligmaressionist/orientmap.c:542
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9996,59 +9996,59 @@ msgstr ""
 "Medan vektor. Klik-kiri untuk alihkan vektor yang dipilih, Klik-kanan untuk "
 "halakannya kepada tetikus, Klik-tengah untuk tambah satu vektor baru."
 
-#: plug-ins/gimpressionist/orientmap.c:565
-#: plug-ins/gimpressionist/sizemap.c:435
+#: plug-ins/ligmaressionist/orientmap.c:565
+#: plug-ins/ligmaressionist/sizemap.c:435
 msgid "Adjust the preview's brightness"
 msgstr "Laraskan kecerahan pralihat"
 
-#: plug-ins/gimpressionist/orientmap.c:587
+#: plug-ins/ligmaressionist/orientmap.c:587
 msgid "Select previous vector"
 msgstr "Pilih vektor sebelumnya"
 
-#: plug-ins/gimpressionist/orientmap.c:593
+#: plug-ins/ligmaressionist/orientmap.c:593
 msgid "Select next vector"
 msgstr "Pilih vektor seterusnya"
 
-#: plug-ins/gimpressionist/orientmap.c:595
-#: plug-ins/gimpressionist/sizemap.c:466
+#: plug-ins/ligmaressionist/orientmap.c:595
+#: plug-ins/ligmaressionist/sizemap.c:466
 msgid "A_dd"
 msgstr "T_ambah"
 
-#: plug-ins/gimpressionist/orientmap.c:599
+#: plug-ins/ligmaressionist/orientmap.c:599
 msgid "Add new vector"
 msgstr "Tambah vektor baru"
 
-#: plug-ins/gimpressionist/orientmap.c:601
-#: plug-ins/gimpressionist/sizemap.c:473
+#: plug-ins/ligmaressionist/orientmap.c:601
+#: plug-ins/ligmaressionist/sizemap.c:473
 msgid "_Kill"
 msgstr "_Hapus"
 
-#: plug-ins/gimpressionist/orientmap.c:605
+#: plug-ins/ligmaressionist/orientmap.c:605
 msgid "Delete selected vector"
 msgstr "Hapuskan vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:620
+#: plug-ins/ligmaressionist/orientmap.c:620
 msgid "_Normal"
 msgstr "_Normal"
 
-#: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/ligmaressionist/orientmap.c:621
 msgid "Vorte_x"
 msgstr "Vorte_x"
 
-#: plug-ins/gimpressionist/orientmap.c:622
+#: plug-ins/ligmaressionist/orientmap.c:622
 msgid "Vortex_2"
 msgstr "Vortex_2"
 
-#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/ligmaressionist/orientmap.c:623
 msgid "Vortex_3"
 msgstr "Voetex_3"
 
-#: plug-ins/gimpressionist/orientmap.c:629
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/ligmaressionist/orientmap.c:629
+#: plug-ins/ligmaressionist/sizemap.c:518
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: plug-ins/gimpressionist/orientmap.c:637
+#: plug-ins/ligmaressionist/orientmap.c:637
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -10056,226 +10056,226 @@ msgstr ""
 "Mod-voronoi membuatkan hanya vektor terhampir kepada titik yang diberi "
 "mempunyai sebarang pengaruh"
 
-#: plug-ins/gimpressionist/orientmap.c:647
+#: plug-ins/ligmaressionist/orientmap.c:647
 msgid "A_ngle:"
 msgstr "S_udut:"
 
-#: plug-ins/gimpressionist/orientmap.c:651
+#: plug-ins/ligmaressionist/orientmap.c:651
 msgid "Change the angle of the selected vector"
 msgstr "Ubah sudut bagi vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:658
+#: plug-ins/ligmaressionist/orientmap.c:658
 msgid "Ang_le offset:"
 msgstr "Sud_ut ofset:"
 
-#: plug-ins/gimpressionist/orientmap.c:662
+#: plug-ins/ligmaressionist/orientmap.c:662
 msgid "Offset all vectors with a given angle"
 msgstr "Ofset semua vektor dengan sudut yang diberi"
 
-#: plug-ins/gimpressionist/orientmap.c:673
+#: plug-ins/ligmaressionist/orientmap.c:673
 msgid "Change the strength of the selected vector"
 msgstr "Ubah kekuatan vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:680
+#: plug-ins/ligmaressionist/orientmap.c:680
 msgid "S_trength exp.:"
 msgstr "Eks. kekuatan:"
 
-#: plug-ins/gimpressionist/orientmap.c:684
-#: plug-ins/gimpressionist/sizemap.c:513
+#: plug-ins/ligmaressionist/orientmap.c:684
+#: plug-ins/ligmaressionist/sizemap.c:513
 msgid "Change the exponent of the strength"
 msgstr "Ubah eksponen bagi kekuatan"
 
-#: plug-ins/gimpressionist/paper.c:120
+#: plug-ins/ligmaressionist/paper.c:120
 msgid "P_aper"
 msgstr "K_ertas"
 
-#: plug-ins/gimpressionist/paper.c:155
+#: plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr "Songsangkan tekstur Kertas"
 
-#: plug-ins/gimpressionist/paper.c:159
+#: plug-ins/ligmaressionist/paper.c:159
 msgid "O_verlay"
 msgstr "L_apisan"
 
-#: plug-ins/gimpressionist/paper.c:164
+#: plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Gunakan kertas sebagaimana ia (tanpa menyembunyikannya)"
 
-#: plug-ins/gimpressionist/paper.c:180
+#: plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Tentukan skala bagi tekstur (dalam peratus bagi fail asal)"
 
-#: plug-ins/gimpressionist/placement.c:49
+#: plug-ins/ligmaressionist/placement.c:49
 msgid "Pl_acement"
 msgstr "Pe_letakan"
 
-#: plug-ins/gimpressionist/placement.c:55
+#: plug-ins/ligmaressionist/placement.c:55
 msgid "Placement"
 msgstr "Peletakan"
 
-#: plug-ins/gimpressionist/placement.c:59
+#: plug-ins/ligmaressionist/placement.c:59
 msgid "Randomly"
 msgstr "Secara Rawak"
 
-#: plug-ins/gimpressionist/placement.c:63
+#: plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr "Diagihkan dengan tepat"
 
-#: plug-ins/gimpressionist/placement.c:71
+#: plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr "Letakkan goresan secara rawak di sekitar imej"
 
-#: plug-ins/gimpressionist/placement.c:75
+#: plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr "Goresan-goresan itu diagihkan secara tepat melalui imej tersebut"
 
-#: plug-ins/gimpressionist/placement.c:91
+#: plug-ins/ligmaressionist/placement.c:91
 msgid "Stroke _density:"
 msgstr "Densiti _goresan:"
 
-#: plug-ins/gimpressionist/placement.c:95
+#: plug-ins/ligmaressionist/placement.c:95
 msgid "The relative density of the brush strokes"
 msgstr "Densiti relatif bagi goresan berus"
 
-#: plug-ins/gimpressionist/placement.c:101
+#: plug-ins/ligmaressionist/placement.c:101
 msgid "Centerize"
 msgstr "Tengah"
 
-#: plug-ins/gimpressionist/placement.c:107
+#: plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokuskan goresan berus di kawasan tengah imej"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: plug-ins/gimpressionist/ppmtool.c:630
+#: plug-ins/ligmaressionist/ppmtool.c:630
 #, fuzzy, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 "Gagal untuk menyimpan fail PPM '%s':\n"
 "%s"
 
-#: plug-ins/gimpressionist/presets.c:621
+#: plug-ins/ligmaressionist/presets.c:621
 msgid "Save Current"
 msgstr "Simpan Semasa"
 
-#: plug-ins/gimpressionist/presets.c:863
+#: plug-ins/ligmaressionist/presets.c:863
 #, fuzzy
-msgid "The Gimpressionist Defaults"
-msgstr "Gimpressionist"
+msgid "The Ligmaressionist Defaults"
+msgstr "Ligmaressionist"
 
-#: plug-ins/gimpressionist/presets.c:979
+#: plug-ins/ligmaressionist/presets.c:979
 msgid "_Presets"
 msgstr "_Praset"
 
-#: plug-ins/gimpressionist/presets.c:994
+#: plug-ins/ligmaressionist/presets.c:994
 msgid "Save current..."
 msgstr "Simpan semasa..."
 
-#: plug-ins/gimpressionist/presets.c:999
+#: plug-ins/ligmaressionist/presets.c:999
 msgid "Save the current settings to the specified file"
 msgstr "Simpan seting semasa ke fail yang dinyatakan"
 
-#: plug-ins/gimpressionist/presets.c:1027
+#: plug-ins/ligmaressionist/presets.c:1027
 msgid "Reads the selected Preset into memory"
 msgstr "Baca Praset yang dipilih ke memori"
 
-#: plug-ins/gimpressionist/presets.c:1033
+#: plug-ins/ligmaressionist/presets.c:1033
 msgid "Deletes the selected Preset"
 msgstr "Hapuskan Praset yang dipilih"
 
-#: plug-ins/gimpressionist/presets.c:1039
+#: plug-ins/ligmaressionist/presets.c:1039
 msgid "Reread the folder of Presets"
 msgstr "Baca semula folder Praset"
 
-#: plug-ins/gimpressionist/preview.c:187
+#: plug-ins/ligmaressionist/preview.c:187
 msgid "Refresh the Preview window"
 msgstr "Muat semula tetingkap Pralihat"
 
-#: plug-ins/gimpressionist/preview.c:195
+#: plug-ins/ligmaressionist/preview.c:195
 msgid "Revert to the original image"
 msgstr "Kembali ke imej asal"
 
-#: plug-ins/gimpressionist/repaint.c:1160
+#: plug-ins/ligmaressionist/repaint.c:1160
 msgid "Update"
 msgstr "Kemas kini"
 
-#: plug-ins/gimpressionist/size.c:77
+#: plug-ins/ligmaressionist/size.c:77
 msgid "_Size"
 msgstr "_Saiz"
 
-#: plug-ins/gimpressionist/size.c:91
+#: plug-ins/ligmaressionist/size.c:91
 msgid "Sizes:"
 msgstr "Saiz:"
 
-#: plug-ins/gimpressionist/size.c:95
+#: plug-ins/ligmaressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr "Bilangan saiz berus untuk digunakan"
 
-#: plug-ins/gimpressionist/size.c:103
+#: plug-ins/ligmaressionist/size.c:103
 msgid "Minimum size:"
 msgstr "Saiz minimum:"
 
-#: plug-ins/gimpressionist/size.c:107
+#: plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr "Berus paling kecil yang diwujudkan"
 
-#: plug-ins/gimpressionist/size.c:115
+#: plug-ins/ligmaressionist/size.c:115
 msgid "Maximum size:"
 msgstr "Saiz maksimum:"
 
-#: plug-ins/gimpressionist/size.c:119
+#: plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr "Berus paling besar yang diwujudkan"
 
-#: plug-ins/gimpressionist/size.c:133
+#: plug-ins/ligmaressionist/size.c:133
 msgid "Size:"
 msgstr "Saiz:"
 
-#: plug-ins/gimpressionist/size.c:142
+#: plug-ins/ligmaressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Biarkan nilai (kecerahan) bagi rantau menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:146
+#: plug-ins/ligmaressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Jarak dari tengah imej menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:150
+#: plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr "Pilih saiz rawak bagi setiap goresan"
 
-#: plug-ins/gimpressionist/size.c:154
+#: plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Biarkan arah dari tengah menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:166
+#: plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Warna bagi rantau menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:170
+#: plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Saiz berus yang paling sepadan dengan imej asal dipilih"
 
-#: plug-ins/gimpressionist/size.c:179
+#: plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr "Tentukan saiz goresan secara manual"
 
-#: plug-ins/gimpressionist/size.c:190
+#: plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr "Buka Editor Peta Saiz"
 
-#: plug-ins/gimpressionist/sizemap.c:383
+#: plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr "Editor Peta Saiz"
 
-#: plug-ins/gimpressionist/sizemap.c:405
+#: plug-ins/ligmaressionist/sizemap.c:405
 msgid "Smvectors"
 msgstr "Smvektor"
 
-#: plug-ins/gimpressionist/sizemap.c:415
+#: plug-ins/ligmaressionist/sizemap.c:415
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10283,39 +10283,39 @@ msgstr ""
 "Medan smvektor. Klik-kiri untuk alihkan smvektor yang dipilih, Klik-kanan "
 "untuk halakannya kepada tetikus, Klik-tengah untuk tambah smvektor baru."
 
-#: plug-ins/gimpressionist/sizemap.c:457
+#: plug-ins/ligmaressionist/sizemap.c:457
 msgid "Select previous smvector"
 msgstr "Pilih smvektor sebelumnya"
 
-#: plug-ins/gimpressionist/sizemap.c:464
+#: plug-ins/ligmaressionist/sizemap.c:464
 msgid "Select next smvector"
 msgstr "Pilih smvektor seterusnya"
 
-#: plug-ins/gimpressionist/sizemap.c:471
+#: plug-ins/ligmaressionist/sizemap.c:471
 msgid "Add new smvector"
 msgstr "Tambah smvektor baru"
 
-#: plug-ins/gimpressionist/sizemap.c:478
+#: plug-ins/ligmaressionist/sizemap.c:478
 msgid "Delete selected smvector"
 msgstr "Hapuskan smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:491
+#: plug-ins/ligmaressionist/sizemap.c:491
 msgid "Change the angle of the selected smvector"
 msgstr "Ubah sudut smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:498
+#: plug-ins/ligmaressionist/sizemap.c:498
 msgid "S_trength:"
 msgstr "K_ekuatan"
 
-#: plug-ins/gimpressionist/sizemap.c:502
+#: plug-ins/ligmaressionist/sizemap.c:502
 msgid "Change the strength of the selected smvector"
 msgstr "Ubah kekuatan bagi smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:509
+#: plug-ins/ligmaressionist/sizemap.c:509
 msgid "St_rength exp.:"
 msgstr "Eks. Ke_kuatan:"
 
-#: plug-ins/gimpressionist/sizemap.c:525
+#: plug-ins/ligmaressionist/sizemap.c:525
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10323,24 +10323,24 @@ msgstr ""
 "Mod-voronoi membuatkan hanya smvektor terhampir kepada titik yang diberi "
 "mempunyai sebarang pengaruh"
 
-#. don't translate the gimprc entry
-#: plug-ins/gimpressionist/utils.c:135
+#. don't translate the ligmarc entry
+#: plug-ins/ligmaressionist/utils.c:135
 #, c-format
 msgid ""
 "It is highly recommended to add\n"
-" (gimpressionist-path \"%s\")\n"
-"(or similar) to your gimprc file."
+" (ligmaressionist-path \"%s\")\n"
+"(or similar) to your ligmarc file."
 msgstr ""
 "Adalah digalakkan untuk menambah\n"
-" (gimpressionist-path \"%s\")\n"
+" (ligmaressionist-path \"%s\")\n"
 "(atau yang sama) ke dalam fail gipmrc anda."
 
 #: plug-ins/help/domain.c:175
-msgid "The GIMP help files are not installed."
+msgid "The LIGMA help files are not installed."
 msgstr ""
 
 #: plug-ins/help/domain.c:177
-msgid "There is a problem with the GIMP help files."
+msgid "There is a problem with the LIGMA help files."
 msgstr ""
 
 #: plug-ins/help/domain.c:182
@@ -10363,8 +10363,8 @@ msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:157
 #, fuzzy
-msgid "GIMP Help browser"
-msgstr "Pelayar Bantuan GIMP"
+msgid "LIGMA Help browser"
+msgstr "Pelayar Bantuan LIGMA"
 
 #: plug-ins/helpbrowser/dialog.c:409
 #, fuzzy
@@ -10589,7 +10589,7 @@ msgid "Clear"
 msgstr "Kosongkan"
 
 #: plug-ins/imagemap/imap_cmd_create.c:58
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "Wujudkan"
 
@@ -10615,41 +10615,41 @@ msgid "Edit Object"
 msgstr "Edit Objek"
 
 #. Create the areas
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
-msgstr "Gunakan Panduan Gimp"
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
+msgstr "Gunakan Panduan Ligma"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr "Pilihan"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr "S_emua"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr "Tambah Panduan Tambahan"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft Border"
 msgstr "Sempadan K_iri"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right Border"
 msgstr "Sempadan _Kanan"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper Border"
 msgstr "Sempadan _Atas"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer Border"
 msgstr "Sempadan Ba_wah"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr "URL _asas:"
 
@@ -11033,7 +11033,7 @@ msgstr "Senarai Kawasan"
 msgid "Source..."
 msgstr "Sumber..."
 
-#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1410
+#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/ligma_main_window.c:1410
 msgid "Grayscale"
 msgstr "Skala kelabu"
 
@@ -11066,8 +11066,8 @@ msgstr "Seting Grid..."
 
 #: plug-ins/imagemap/imap_menu.c:389
 #, fuzzy
-msgid "Use GIMP guides..."
-msgstr "Gunakan Panduan GIMP..."
+msgid "Use LIGMA guides..."
+msgstr "Gunakan Panduan LIGMA..."
 
 #: plug-ins/imagemap/imap_menu.c:391
 #, fuzzy
@@ -11476,15 +11476,15 @@ msgstr "Lapisan Gulungan"
 msgid "Page Curl..."
 msgstr "Gulungan Halaman..."
 
-#: plug-ins/print/gimp_color_window.c:208
+#: plug-ins/print/ligma_color_window.c:208
 msgid "Print Color Adjust"
 msgstr "Pelarasan Warna Cetakan"
 
-#: plug-ins/print/gimp_color_window.c:268
+#: plug-ins/print/ligma_color_window.c:268
 msgid "Brightness:"
 msgstr "Kecerahan:"
 
-#: plug-ins/print/gimp_color_window.c:276
+#: plug-ins/print/ligma_color_window.c:276
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
@@ -11492,27 +11492,27 @@ msgstr ""
 "Setkan kecerahan bagi cetakan.\n"
 "0 ialah hitam pejal, 2 ialah putih pejal"
 
-#: plug-ins/print/gimp_color_window.c:288
+#: plug-ins/print/ligma_color_window.c:288
 msgid "Contrast:"
 msgstr "Kontras:"
 
-#: plug-ins/print/gimp_color_window.c:296
+#: plug-ins/print/ligma_color_window.c:296
 msgid "Set the contrast of the print"
 msgstr "Setkan kontras cetakan"
 
-#: plug-ins/print/gimp_color_window.c:315
+#: plug-ins/print/ligma_color_window.c:315
 msgid "Adjust the cyan balance of the print"
 msgstr "Laraskan keseimbangan cyan bagi cetakan"
 
-#: plug-ins/print/gimp_color_window.c:334
+#: plug-ins/print/ligma_color_window.c:334
 msgid "Adjust the magenta balance of the print"
 msgstr "Laraskan keseimbangan magenta bagi cetakan"
 
-#: plug-ins/print/gimp_color_window.c:353
+#: plug-ins/print/ligma_color_window.c:353
 msgid "Adjust the yellow balance of the print"
 msgstr "Laraskan keseimbangan kuning bagi cetakan"
 
-#: plug-ins/print/gimp_color_window.c:372
+#: plug-ins/print/ligma_color_window.c:372
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
@@ -11521,11 +11521,11 @@ msgstr ""
 "Guna ketepuan sifar untuk menghasilkan output skala kelabu menggunakan "
 "dakwat putih dan hitam"
 
-#: plug-ins/print/gimp_color_window.c:385
+#: plug-ins/print/ligma_color_window.c:385
 msgid "Density:"
 msgstr "Densiti:"
 
-#: plug-ins/print/gimp_color_window.c:393
+#: plug-ins/print/ligma_color_window.c:393
 msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
@@ -11535,7 +11535,7 @@ msgstr ""
 "mengalir melalui kertas atau mencomotkannya; tambahkan densiti jika rantau "
 "hitam tidak begitu pejal."
 
-#: plug-ins/print/gimp_color_window.c:415
+#: plug-ins/print/ligma_color_window.c:415
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
@@ -11546,11 +11546,11 @@ msgstr ""
 "menghasilkan cetakan yang lebih gelap. Hitam dan putih akan kekal sama, "
 "tidak seperti pelarasan kecerahan."
 
-#: plug-ins/print/gimp_color_window.c:432
+#: plug-ins/print/ligma_color_window.c:432
 msgid "Dither Algorithm:"
 msgstr "Algorithma Dither"
 
-#: plug-ins/print/gimp_color_window.c:440
+#: plug-ins/print/ligma_color_window.c:440
 msgid ""
 "Choose the dither algorithm to be used.\n"
 "Adaptive Hybrid usually produces the best all-around quality.\n"
@@ -11572,12 +11572,12 @@ msgstr ""
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:359
+#: plug-ins/print/ligma_main_window.c:359
 #, c-format
 msgid "%s -- Print v%s"
 msgstr "%s -- Cetak v%s"
 
-#: plug-ins/print/gimp_main_window.c:368
+#: plug-ins/print/ligma_main_window.c:368
 msgid ""
 "Save\n"
 "Settings"
@@ -11585,7 +11585,7 @@ msgstr ""
 "Simpan\n"
 "Seting"
 
-#: plug-ins/print/gimp_main_window.c:369
+#: plug-ins/print/ligma_main_window.c:369
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -11593,7 +11593,7 @@ msgstr ""
 "Cetak dan\n"
 "Simpan Seting"
 
-#: plug-ins/print/gimp_main_window.c:438
+#: plug-ins/print/ligma_main_window.c:438
 msgid ""
 "Position the image on the page.\n"
 "Click and drag with the primary button to position the image.\n"
@@ -11618,27 +11618,27 @@ msgstr ""
 "Jika anda klik butang lain semasa menyeret tetikus, imej tersebut akan "
 "kembali ke kedudukan asalnya."
 
-#: plug-ins/print/gimp_main_window.c:481
+#: plug-ins/print/ligma_main_window.c:481
 msgid "Auto"
 msgstr "Auto"
 
-#: plug-ins/print/gimp_main_window.c:482
+#: plug-ins/print/ligma_main_window.c:482
 msgid "Portrait"
 msgstr "Potret"
 
-#: plug-ins/print/gimp_main_window.c:483
+#: plug-ins/print/ligma_main_window.c:483
 msgid "Landscape"
 msgstr "Landskap"
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/ligma_main_window.c:484
 msgid "Upside down"
 msgstr "Tunggang terbalik"
 
-#: plug-ins/print/gimp_main_window.c:485
+#: plug-ins/print/ligma_main_window.c:485
 msgid "Seascape"
 msgstr "Pemandangan laut"
 
-#: plug-ins/print/gimp_main_window.c:495
+#: plug-ins/print/ligma_main_window.c:495
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
@@ -11646,98 +11646,98 @@ msgstr ""
 "Pilih orientasi: potret, landskap, tunggang terbalik, atau pemandangan laut "
 "(landskap tunggang terbalik)"
 
-#: plug-ins/print/gimp_main_window.c:514
+#: plug-ins/print/ligma_main_window.c:514
 msgid "Distance from the left of the paper to the image"
 msgstr "Jarak dari sebelah kiri kertas ke imej"
 
-#: plug-ins/print/gimp_main_window.c:527
+#: plug-ins/print/ligma_main_window.c:527
 msgid "Distance from the top of the paper to the image"
 msgstr "Jarak dari sebelah atas kertas ke imej"
 
-#: plug-ins/print/gimp_main_window.c:540
+#: plug-ins/print/ligma_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Jarak dari sebelah kiri kertas ke sebelah kanan imej"
 
-#: plug-ins/print/gimp_main_window.c:550
+#: plug-ins/print/ligma_main_window.c:550
 msgid "Right Border:"
 msgstr "Sempadan Kanan:"
 
-#: plug-ins/print/gimp_main_window.c:554
+#: plug-ins/print/ligma_main_window.c:554
 msgid "Distance from the right of the paper to the image"
 msgstr "Jarak dari sebelah kanan kertas ke imej"
 
-#: plug-ins/print/gimp_main_window.c:568
+#: plug-ins/print/ligma_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Jarak dari sebelah atas kertas ke bawah imej"
 
-#: plug-ins/print/gimp_main_window.c:578
+#: plug-ins/print/ligma_main_window.c:578
 msgid "Bottom Border:"
 msgstr "Sempadan Bawah:"
 
-#: plug-ins/print/gimp_main_window.c:582
+#: plug-ins/print/ligma_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Jarak dari sebelah bawah kertas ke imej"
 
-#: plug-ins/print/gimp_main_window.c:595
+#: plug-ins/print/ligma_main_window.c:595
 msgid "Center:"
 msgstr "Tengah:"
 
-#: plug-ins/print/gimp_main_window.c:599
+#: plug-ins/print/ligma_main_window.c:599
 msgid "Vertically"
 msgstr "Menegak"
 
-#: plug-ins/print/gimp_main_window.c:604
+#: plug-ins/print/ligma_main_window.c:604
 msgid "Center the image vertically on the paper"
 msgstr "Tengahkan imej secara menegak di atas kertas"
 
-#: plug-ins/print/gimp_main_window.c:610
+#: plug-ins/print/ligma_main_window.c:610
 msgid "Both"
 msgstr "Kedua-duanya"
 
-#: plug-ins/print/gimp_main_window.c:615
+#: plug-ins/print/ligma_main_window.c:615
 msgid "Center the image on the paper"
 msgstr "Tengahkan imej di atas kertas"
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/ligma_main_window.c:622
 msgid "Horizontally"
 msgstr "Mengufuk"
 
-#: plug-ins/print/gimp_main_window.c:627
+#: plug-ins/print/ligma_main_window.c:627
 msgid "Center the image horizontally on the paper"
 msgstr "Tengahkan imej secara mengufuk di atas kertas"
 
-#: plug-ins/print/gimp_main_window.c:643
+#: plug-ins/print/ligma_main_window.c:643
 msgid "Setup Printer"
 msgstr "Persediaan Pencetak"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:672
+#: plug-ins/print/ligma_main_window.c:672
 msgid "Printer Model:"
 msgstr "Model Pencetak:"
 
-#: plug-ins/print/gimp_main_window.c:684
+#: plug-ins/print/ligma_main_window.c:684
 msgid "Select your printer model"
 msgstr "Pilih model pencetak anda"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:723
+#: plug-ins/print/ligma_main_window.c:723
 msgid "PPD File:"
 msgstr "Fail PPD:"
 
-#: plug-ins/print/gimp_main_window.c:739
+#: plug-ins/print/ligma_main_window.c:739
 #, fuzzy
 msgid "Enter the PPD filename for your printer"
 msgstr "Masukkan nama fail PPD yang betul untuk pencetak anda"
 
-#: plug-ins/print/gimp_main_window.c:742
+#: plug-ins/print/ligma_main_window.c:742
 msgid "Browse"
 msgstr "Layar"
 
-#: plug-ins/print/gimp_main_window.c:748
+#: plug-ins/print/ligma_main_window.c:748
 #, fuzzy
 msgid "Choose the PPD file for your printer"
 msgstr "Pilih nama fail PPD yang betul untuk pencetak anda"
@@ -11745,11 +11745,11 @@ msgstr "Pilih nama fail PPD yang betul untuk pencetak anda"
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/print/ligma_main_window.c:758
 msgid "Command:"
 msgstr "Arahan:"
 
-#: plug-ins/print/gimp_main_window.c:771
+#: plug-ins/print/ligma_main_window.c:771
 #, fuzzy
 msgid ""
 "Enter the command to print to your printer. Note: Please do not remove the `-"
@@ -11759,40 +11759,40 @@ msgstr ""
 "jangan keluarkan `-l' atau `-oraw' dari rentetan arahan, jika tidak besar "
 "kemungkinan percetakan akan gagal!"
 
-#: plug-ins/print/gimp_main_window.c:781
+#: plug-ins/print/ligma_main_window.c:781
 #, fuzzy
 msgid "Choose PPD File"
 msgstr "Fail PPD?"
 
-#: plug-ins/print/gimp_main_window.c:802
+#: plug-ins/print/ligma_main_window.c:802
 msgid "Define New Printer"
 msgstr "Tentukan Pencetak Baru"
 
-#: plug-ins/print/gimp_main_window.c:825 plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/ligma_main_window.c:825 plug-ins/print/ligma_main_window.c:920
 #, fuzzy
 msgid "Printer name:"
 msgstr "Nama Pencetak:"
 
-#: plug-ins/print/gimp_main_window.c:829
+#: plug-ins/print/ligma_main_window.c:829
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Masukkan nama yang anda mahu berikan kepada pencetak logikal ini"
 
-#: plug-ins/print/gimp_main_window.c:842
-msgid "About Gimp-Print "
-msgstr "Tentang Gimp-Cetak"
+#: plug-ins/print/ligma_main_window.c:842
+msgid "About Ligma-Print "
+msgstr "Tentang Ligma-Cetak"
 
-#: plug-ins/print/gimp_main_window.c:855
-msgid "Gimp-Print Version "
-msgstr "Versi Gimp-Cetak"
+#: plug-ins/print/ligma_main_window.c:855
+msgid "Ligma-Print Version "
+msgstr "Versi Ligma-Cetak"
 
-#: plug-ins/print/gimp_main_window.c:855
+#: plug-ins/print/ligma_main_window.c:855
 msgid ""
 "\n"
 "\n"
 "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"and the rest of the Gimp-Print Development Team.\n"
+"and the rest of the Ligma-Print Development Team.\n"
 "\n"
-"Please visit our web site at http://gimp-print.sourceforge.net.\n"
+"Please visit our web site at http://ligma-print.sourceforge.net.\n"
 "\n"
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -11811,9 +11811,9 @@ msgstr ""
 "\n"
 "\n"
 "Hakcipta (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"dan semua ahli dalam Pasukan Pembangunan Gimp-Print.\n"
+"dan semua ahli dalam Pasukan Pembangunan Ligma-Print.\n"
 "\n"
-"Sila lawat laman web kami di http://gimp-print.sourceforge.net.\n"
+"Sila lawat laman web kami di http://ligma-print.sourceforge.net.\n"
 "\n"
 "Program ini ialah perisian bebas; anda boleh mengagihkannya semula dan/atau "
 "mengubah suainya\n"
@@ -11830,11 +11830,11 @@ msgstr ""
 "bersama-sama program ini; jika tidak, tulis kepada Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA\n"
 
-#: plug-ins/print/gimp_main_window.c:903
+#: plug-ins/print/ligma_main_window.c:903
 msgid "Printer Settings"
 msgstr "Seting Pencetak"
 
-#: plug-ins/print/gimp_main_window.c:916
+#: plug-ins/print/ligma_main_window.c:916
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -11842,7 +11842,7 @@ msgstr ""
 "Pilih nama pencetak (bukan jenis, atau model pencetak) yang anda mahu "
 "gunakan untuk mencetak"
 
-#: plug-ins/print/gimp_main_window.c:926
+#: plug-ins/print/ligma_main_window.c:926
 #, fuzzy
 msgid "Printer model:"
 msgstr "Model Pencetak:"
@@ -11850,12 +11850,12 @@ msgstr "Model Pencetak:"
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:937
+#: plug-ins/print/ligma_main_window.c:937
 #, fuzzy
 msgid "Setup printer..."
 msgstr "Persediaan Pencetak..."
 
-#: plug-ins/print/gimp_main_window.c:939
+#: plug-ins/print/ligma_main_window.c:939
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11866,12 +11866,12 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:954
+#: plug-ins/print/ligma_main_window.c:954
 #, fuzzy
 msgid "New printer..."
 msgstr "Pencetak Baru..."
 
-#: plug-ins/print/gimp_main_window.c:956
+#: plug-ins/print/ligma_main_window.c:956
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -11879,72 +11879,72 @@ msgstr ""
 "Tentukan pencetak logikal baru. Ini boleh digunakan untuk menamakan satu "
 "koleksi seting yang anda mahu gunakan pada masa hadapan."
 
-#: plug-ins/print/gimp_main_window.c:977
+#: plug-ins/print/ligma_main_window.c:977
 msgid "Size of paper that you wish to print to"
 msgstr "Saiz kertas yang anda mahu cetak"
 
-#: plug-ins/print/gimp_main_window.c:980
+#: plug-ins/print/ligma_main_window.c:980
 #, fuzzy
 msgid "Media size:"
 msgstr "Saiz Media:"
 
-#: plug-ins/print/gimp_main_window.c:989
+#: plug-ins/print/ligma_main_window.c:989
 msgid "Dimensions:"
 msgstr "Dimensi:"
 
-#: plug-ins/print/gimp_main_window.c:1003
+#: plug-ins/print/ligma_main_window.c:1003
 msgid "Width of the paper that you wish to print to"
 msgstr "Lebar kertas yang anda mahu cetak"
 
-#: plug-ins/print/gimp_main_window.c:1020
+#: plug-ins/print/ligma_main_window.c:1020
 msgid "Height of the paper that you wish to print to"
 msgstr "Tinggi kertas yang anda mahu cetak"
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/ligma_main_window.c:1036
 msgid "Type of media you're printing to"
 msgstr "Jenis media yang anda sedang cetak"
 
-#: plug-ins/print/gimp_main_window.c:1039
+#: plug-ins/print/ligma_main_window.c:1039
 #, fuzzy
 msgid "Media type:"
 msgstr "Jenis Media:"
 
-#: plug-ins/print/gimp_main_window.c:1052
+#: plug-ins/print/ligma_main_window.c:1052
 msgid "Source (input slot) of media you're printing to"
 msgstr "Sumber (input slot) media yang anda sedang cetak"
 
-#: plug-ins/print/gimp_main_window.c:1055
+#: plug-ins/print/ligma_main_window.c:1055
 #, fuzzy
 msgid "Media source:"
 msgstr "Sumber Media:"
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/ligma_main_window.c:1068
 msgid "Type of ink in the printer"
 msgstr "Jenis dakwat di dalam pencetak"
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/ligma_main_window.c:1071
 #, fuzzy
 msgid "Ink type:"
 msgstr "Jenis Dakwat:"
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/ligma_main_window.c:1084
 msgid "Resolution and quality of the print"
 msgstr "Resolusi dan kualiti cetakan"
 
-#: plug-ins/print/gimp_main_window.c:1121
+#: plug-ins/print/ligma_main_window.c:1121
 msgid "Scaling:"
 msgstr "Penskalaan:"
 
-#: plug-ins/print/gimp_main_window.c:1127
+#: plug-ins/print/ligma_main_window.c:1127
 msgid "Set the scale (size) of the image"
 msgstr "Setkan skala (saiz) bagi imej"
 
-#: plug-ins/print/gimp_main_window.c:1152
+#: plug-ins/print/ligma_main_window.c:1152
 #, fuzzy
 msgid "Scale by:"
 msgstr "Skala Z:"
 
-#: plug-ins/print/gimp_main_window.c:1157
+#: plug-ins/print/ligma_main_window.c:1157
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11952,58 +11952,58 @@ msgstr ""
 "Pilih sama ada penskalaan diukur sebagai peratus bagi saiz halaman yang ada "
 "atau bilangan bintik output setiap inci"
 
-#: plug-ins/print/gimp_main_window.c:1162
+#: plug-ins/print/ligma_main_window.c:1162
 msgid "Percent"
 msgstr "Peratus"
 
-#: plug-ins/print/gimp_main_window.c:1169
+#: plug-ins/print/ligma_main_window.c:1169
 msgid "Scale the print to the size of the page"
 msgstr "Skalakan cetakan kepada saiz halaman"
 
-#: plug-ins/print/gimp_main_window.c:1175
+#: plug-ins/print/ligma_main_window.c:1175
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1181
+#: plug-ins/print/ligma_main_window.c:1181
 msgid "Scale the print to the number of dots per inch"
 msgstr "Skalakan cetakan kepada bilangan bintik setiap inci"
 
-#: plug-ins/print/gimp_main_window.c:1203
+#: plug-ins/print/ligma_main_window.c:1203
 msgid "Set the width of the print"
 msgstr "Setkan lebar cetakan"
 
-#: plug-ins/print/gimp_main_window.c:1216
+#: plug-ins/print/ligma_main_window.c:1216
 msgid "Set the height of the print"
 msgstr "Setkan tinggi cetakan"
 
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/print/ligma_main_window.c:1237
 msgid "Units:"
 msgstr "Unit:"
 
-#: plug-ins/print/gimp_main_window.c:1242
+#: plug-ins/print/ligma_main_window.c:1242
 msgid "Select the base unit of measurement for printing"
 msgstr "Pilih unit asas pengukuran bagi percetakan"
 
-#: plug-ins/print/gimp_main_window.c:1245
+#: plug-ins/print/ligma_main_window.c:1245
 msgid "Inch"
 msgstr "Inci"
 
-#: plug-ins/print/gimp_main_window.c:1252
+#: plug-ins/print/ligma_main_window.c:1252
 msgid "Set the base unit of measurement to inches"
 msgstr "Setkan unit asas pengukuran kepada inci"
 
-#: plug-ins/print/gimp_main_window.c:1258
+#: plug-ins/print/ligma_main_window.c:1258
 msgid "cm"
 msgstr "sm"
 
-#: plug-ins/print/gimp_main_window.c:1264
+#: plug-ins/print/ligma_main_window.c:1264
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Setkan unit asas pengukuran kepada sentimeter"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1274
+#: plug-ins/print/ligma_main_window.c:1274
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -12011,46 +12011,46 @@ msgstr ""
 "Gunakan Saiz\n"
 "Imej Asal"
 
-#: plug-ins/print/gimp_main_window.c:1280
+#: plug-ins/print/ligma_main_window.c:1280
 msgid "Set the print size to the size of the image"
 msgstr "Setkan saiz cetakan kepada saiz imej"
 
-#: plug-ins/print/gimp_main_window.c:1303
+#: plug-ins/print/ligma_main_window.c:1303
 msgid "Image / Output Settings"
 msgstr "Imej / Seting Output"
 
-#: plug-ins/print/gimp_main_window.c:1317
+#: plug-ins/print/ligma_main_window.c:1317
 #, fuzzy
 msgid "Image type:"
 msgstr "Jenis Imej:"
 
-#: plug-ins/print/gimp_main_window.c:1325
+#: plug-ins/print/ligma_main_window.c:1325
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimumkan output bagi jenis imej yang sedang dicetak"
 
-#: plug-ins/print/gimp_main_window.c:1329
+#: plug-ins/print/ligma_main_window.c:1329
 #, fuzzy
 msgid "Line art"
 msgstr "Seni Garis"
 
-#: plug-ins/print/gimp_main_window.c:1336
+#: plug-ins/print/ligma_main_window.c:1336
 msgid "Fastest and brightest color for text and line art"
 msgstr "Warna paling laju dan paling cerah untuk teks dan seni garis"
 
-#: plug-ins/print/gimp_main_window.c:1343
+#: plug-ins/print/ligma_main_window.c:1343
 #, fuzzy
 msgid "Solid colors"
 msgstr "Warna Pejal"
 
-#: plug-ins/print/gimp_main_window.c:1350
+#: plug-ins/print/ligma_main_window.c:1350
 msgid "Best for images dominated by regions of solid color"
 msgstr "Terbaik untuk imej yang dikuasai oleh rantau warna pejal"
 
-#: plug-ins/print/gimp_main_window.c:1358
+#: plug-ins/print/ligma_main_window.c:1358
 msgid "Photograph"
 msgstr "Fotograf"
 
-#: plug-ins/print/gimp_main_window.c:1366
+#: plug-ins/print/ligma_main_window.c:1366
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -12058,48 +12058,48 @@ msgstr ""
 "Paling perlahan, tetapi warna paling tepat dan paling licin untuk imej yang "
 "mempunyai ton bersambung dan fotograf"
 
-#: plug-ins/print/gimp_main_window.c:1389
+#: plug-ins/print/ligma_main_window.c:1389
 #, fuzzy
 msgid "Output type:"
 msgstr "Jenis Output:"
 
-#: plug-ins/print/gimp_main_window.c:1396
+#: plug-ins/print/ligma_main_window.c:1396
 msgid "Select the desired output type"
 msgstr "Pilih jenis output yang dikehendaki"
 
-#: plug-ins/print/gimp_main_window.c:1405
+#: plug-ins/print/ligma_main_window.c:1405
 msgid "Color output"
 msgstr "Output warna"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/ligma_main_window.c:1417
 msgid "Print in shades of gray using black ink"
 msgstr "Cetak dalam lorekan kelabu menggunakan dakwat hitam"
 
-#: plug-ins/print/gimp_main_window.c:1424
+#: plug-ins/print/ligma_main_window.c:1424
 #, fuzzy
 msgid "Black and white"
 msgstr "Hitam dan Putih"
 
-#: plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/print/ligma_main_window.c:1431
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Cetak dalam hitam dan putih (tiada warna, dan tiada lorekan kelabu)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1442
+#: plug-ins/print/ligma_main_window.c:1442
 #, fuzzy
 msgid "Adjust output..."
 msgstr "Laraskan Output..."
 
-#: plug-ins/print/gimp_main_window.c:1449
+#: plug-ins/print/ligma_main_window.c:1449
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Laraskan keseimbangan warna, kecerahan, kontras, ketepuan, dan algoritma "
 "dither"
 
-#: plug-ins/print/gimp_main_window.c:1483
+#: plug-ins/print/ligma_main_window.c:1483
 #, fuzzy
 msgid "Print to File"
 msgstr "Cetak ke Fail?"
@@ -12311,7 +12311,7 @@ msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
 #: plug-ins/winicon/icodialog.c:151
-msgid "GIMP Windows Icon Plugin"
+msgid "LIGMA Windows Icon Plugin"
 msgstr ""
 
 #: plug-ins/winicon/icodialog.c:172
@@ -12358,7 +12358,7 @@ msgid "No data captured"
 msgstr "Tiada data dirangkum"
 
 #: plug-ins/xjt/xjt.c:475 plug-ins/xjt/xjt.c:493
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr ""
 
 #: plug-ins/xjt/xjt.c:714
@@ -12532,12 +12532,12 @@ msgstr "Ralat: failciri XJT %s kosong"
 #~ msgstr "Tidak menjumpai dokumen bantuan"
 
 #~ msgid ""
-#~ "The requested document could not be found in your GIMP help path as shown "
+#~ "The requested document could not be found in your LIGMA help path as shown "
 #~ "above. This means that the topic has not yet been written or your "
 #~ "installation is not complete. Ensure that your installation is complete "
 #~ "before reporting this error as a bug."
 #~ msgstr ""
-#~ "Dokumen yang diminta tidak dapat dijumpai dalam laluan bantuan GIMP "
+#~ "Dokumen yang diminta tidak dapat dijumpai dalam laluan bantuan LIGMA "
 #~ "seperti yang ditunjukkan di atas. Ini bermakna tajuk tersebut masih belum "
 #~ "ditulis atau pemasangan anda tidak lengkap. Pastikan pemasangan anda "
 #~ "lengkap sebelum melaporkan ralat ini sebagai pepijat."
@@ -12983,8 +12983,8 @@ msgstr "Ralat: failciri XJT %s kosong"
 #~ msgid "About Gfig"
 #~ msgstr "Tentang Gfig"
 
-#~ msgid "Gfig - GIMP plug-in"
-#~ msgstr "Gfig - GIMP plug-in"
+#~ msgid "Gfig - LIGMA plug-in"
+#~ msgstr "Gfig - LIGMA plug-in"
 
 #~ msgid "Release 2.0"
 #~ msgstr "Keluaran 2.0"
@@ -13360,8 +13360,8 @@ msgstr "Ralat: failciri XJT %s kosong"
 #~ msgid "<Image>/Filters/Toys/Gee-_Slime"
 #~ msgstr "<Image>/Filters/Toys/Gee-_Slime"
 
-#~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-#~ msgstr "GEE-ZOOm: Plug-in Ini Dahulu Dikenali Sebagai \"The GIMP E'er Egg\""
+#~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The LIGMA E'er Egg\""
+#~ msgstr "GEE-ZOOm: Plug-in Ini Dahulu Dikenali Sebagai \"The LIGMA E'er Egg\""
 
 #~ msgid "Save as GIcon"
 #~ msgstr "Simpan sebagai GIcon"
@@ -13591,8 +13591,8 @@ msgstr "Ralat: failciri XJT %s kosong"
 #~ msgid "Brush Preview:"
 #~ msgstr "Pralihat Berus"
 
-#~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-#~ msgstr "<Image>/Filters/Artistic/_GIMPressionist..."
+#~ msgid "<Image>/Filters/Artistic/_LIGMAressionist..."
+#~ msgstr "<Image>/Filters/Artistic/_LIGMAressionist..."
 
 #~ msgid "Paper Preview:"
 #~ msgstr "Pralihat Kertas:"

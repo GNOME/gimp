@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,106 +20,106 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimpimage.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmaimage.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimpdodgeburn.h"
-#include "gimpdodgeburnoptions.h"
+#include "ligmadodgeburn.h"
+#include "ligmadodgeburnoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   gimp_dodge_burn_paint  (GimpPaintCore    *paint_core,
+static void   ligma_dodge_burn_paint  (LigmaPaintCore    *paint_core,
                                       GList            *drawables,
-                                      GimpPaintOptions *paint_options,
-                                      GimpSymmetry     *sym,
-                                      GimpPaintState    paint_state,
+                                      LigmaPaintOptions *paint_options,
+                                      LigmaSymmetry     *sym,
+                                      LigmaPaintState    paint_state,
                                       guint32           time);
-static void   gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
-                                      GimpDrawable     *drawable,
-                                      GimpPaintOptions *paint_options,
-                                      GimpSymmetry     *sym);
+static void   ligma_dodge_burn_motion (LigmaPaintCore    *paint_core,
+                                      LigmaDrawable     *drawable,
+                                      LigmaPaintOptions *paint_options,
+                                      LigmaSymmetry     *sym);
 
 
-G_DEFINE_TYPE (GimpDodgeBurn, gimp_dodge_burn, GIMP_TYPE_BRUSH_CORE)
+G_DEFINE_TYPE (LigmaDodgeBurn, ligma_dodge_burn, LIGMA_TYPE_BRUSH_CORE)
 
-#define parent_class gimp_dodge_burn_parent_class
+#define parent_class ligma_dodge_burn_parent_class
 
 
 void
-gimp_dodge_burn_register (Gimp                      *gimp,
-                          GimpPaintRegisterCallback  callback)
+ligma_dodge_burn_register (Ligma                      *ligma,
+                          LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_DODGE_BURN,
-                GIMP_TYPE_DODGE_BURN_OPTIONS,
-                "gimp-dodge-burn",
+  (* callback) (ligma,
+                LIGMA_TYPE_DODGE_BURN,
+                LIGMA_TYPE_DODGE_BURN_OPTIONS,
+                "ligma-dodge-burn",
                 _("Dodge/Burn"),
-                "gimp-tool-dodge");
+                "ligma-tool-dodge");
 }
 
 static void
-gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass)
+ligma_dodge_burn_class_init (LigmaDodgeBurnClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
+  LigmaBrushCoreClass *brush_core_class = LIGMA_BRUSH_CORE_CLASS (klass);
 
-  paint_core_class->paint = gimp_dodge_burn_paint;
+  paint_core_class->paint = ligma_dodge_burn_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
 }
 
 static void
-gimp_dodge_burn_init (GimpDodgeBurn *dodgeburn)
+ligma_dodge_burn_init (LigmaDodgeBurn *dodgeburn)
 {
 }
 
 static void
-gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
+ligma_dodge_burn_paint (LigmaPaintCore    *paint_core,
                        GList            *drawables,
-                       GimpPaintOptions *paint_options,
-                       GimpSymmetry     *sym,
-                       GimpPaintState    paint_state,
+                       LigmaPaintOptions *paint_options,
+                       LigmaSymmetry     *sym,
+                       LigmaPaintState    paint_state,
                        guint32           time)
 {
   g_return_if_fail (g_list_length (drawables) == 1);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
+    case LIGMA_PAINT_STATE_INIT:
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
+    case LIGMA_PAINT_STATE_MOTION:
       for (GList *iter = drawables; iter; iter = iter->next)
-        gimp_dodge_burn_motion (paint_core, iter->data, paint_options, sym);
+        ligma_dodge_burn_motion (paint_core, iter->data, paint_options, sym);
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
+    case LIGMA_PAINT_STATE_FINISH:
       break;
     }
 }
 
 static void
-gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
-                        GimpDrawable     *drawable,
-                        GimpPaintOptions *paint_options,
-                        GimpSymmetry     *sym)
+ligma_dodge_burn_motion (LigmaPaintCore    *paint_core,
+                        LigmaDrawable     *drawable,
+                        LigmaPaintOptions *paint_options,
+                        LigmaSymmetry     *sym)
 {
-  GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_core);
-  GimpDodgeBurnOptions *options    = GIMP_DODGE_BURN_OPTIONS (paint_options);
-  GimpContext          *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics         *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage            *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaBrushCore        *brush_core = LIGMA_BRUSH_CORE (paint_core);
+  LigmaDodgeBurnOptions *options    = LIGMA_DODGE_BURN_OPTIONS (paint_options);
+  LigmaContext          *context    = LIGMA_CONTEXT (paint_options);
+  LigmaDynamics         *dynamics   = LIGMA_BRUSH_CORE (paint_core)->dynamics;
+  LigmaImage            *image      = ligma_item_get_image (LIGMA_ITEM (drawable));
   GeglBuffer           *src_buffer;
   GeglBuffer           *paint_buffer;
   gint                  paint_buffer_x;
@@ -127,49 +127,49 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble               fade_point;
   gdouble               opacity;
   gdouble               force;
-  GimpCoords            coords;
+  LigmaCoords            coords;
   gint                  off_x, off_y;
   gint                  paint_width, paint_height;
   gint                  n_strokes;
   gint                  i;
 
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
+  fade_point = ligma_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-  coords = *(gimp_symmetry_get_origin (sym));
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
+  coords = *(ligma_symmetry_get_origin (sym));
   coords.x -= off_x;
   coords.y -= off_y;
 
-  opacity = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+  opacity = ligma_dynamics_get_linear_value (dynamics,
+                                            LIGMA_DYNAMICS_OUTPUT_OPACITY,
                                             &coords,
                                             paint_options,
                                             fade_point);
   if (opacity == 0.0)
     return;
 
-  if (paint_options->application_mode == GIMP_PAINT_CONSTANT)
-    src_buffer = gimp_paint_core_get_orig_image (paint_core, drawable);
+  if (paint_options->application_mode == LIGMA_PAINT_CONSTANT)
+    src_buffer = ligma_paint_core_get_orig_image (paint_core, drawable);
   else
-    src_buffer = gimp_drawable_get_buffer (drawable);
+    src_buffer = ligma_drawable_get_buffer (drawable);
 
-  gimp_brush_core_eval_transform_dynamics (brush_core,
+  ligma_brush_core_eval_transform_dynamics (brush_core,
                                            image,
                                            paint_options,
                                            &coords);
-  n_strokes = gimp_symmetry_get_size (sym);
+  n_strokes = ligma_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      coords = *(gimp_symmetry_get_coords (sym, i));
+      coords = *(ligma_symmetry_get_coords (sym, i));
       coords.x -= off_x;
       coords.y -= off_y;
 
-      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+      ligma_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
-      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+      paint_buffer = ligma_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
-                                                       GIMP_LAYER_MODE_NORMAL,
+                                                       LIGMA_LAYER_MODE_NORMAL,
                                                        &coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
@@ -179,7 +179,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
         continue;
 
       /*  DodgeBurn the region  */
-      gimp_gegl_dodgeburn (src_buffer,
+      ligma_gegl_dodgeburn (src_buffer,
                            GEGL_RECTANGLE (paint_buffer_x,
                                            paint_buffer_y,
                                            gegl_buffer_get_width  (paint_buffer),
@@ -190,9 +190,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                            options->type,
                            options->mode);
 
-      if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
-        force = gimp_dynamics_get_linear_value (dynamics,
-                                                GIMP_DYNAMICS_OUTPUT_FORCE,
+      if (ligma_dynamics_is_output_enabled (dynamics, LIGMA_DYNAMICS_OUTPUT_FORCE))
+        force = ligma_dynamics_get_linear_value (dynamics,
+                                                LIGMA_DYNAMICS_OUTPUT_FORCE,
                                                 &coords,
                                                 paint_options,
                                                 fade_point);
@@ -200,11 +200,11 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
         force = paint_options->brush_force;
 
       /* Replace the newly dodgedburned area (paint_area) to the image */
-      gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+      ligma_brush_core_replace_canvas (LIGMA_BRUSH_CORE (paint_core), drawable,
                                       &coords,
-                                      MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                      gimp_context_get_opacity (context),
-                                      gimp_paint_options_get_brush_mode (paint_options),
+                                      MIN (opacity, LIGMA_OPACITY_OPAQUE),
+                                      ligma_context_get_opacity (context),
+                                      ligma_paint_options_get_brush_mode (paint_options),
                                       force,
                                       paint_options->application_mode);
     }

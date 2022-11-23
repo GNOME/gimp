@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_EXPORT_H__
-#define __GIMP_VECTORS_EXPORT_H__
+#ifndef __LIGMA_VECTORS_EXPORT_H__
+#define __LIGMA_VECTORS_EXPORT_H__
 
 
-gboolean   gimp_vectors_export_file   (GimpImage    *image,
+gboolean   ligma_vectors_export_file   (LigmaImage    *image,
                                        GList        *vectors,
                                        GFile        *file,
                                        GError      **error);
-gchar    * gimp_vectors_export_string (GimpImage    *image,
+gchar    * ligma_vectors_export_string (LigmaImage    *image,
                                        GList        *vectors);
 
 
-#endif /* __GIMP_VECTORS_IMPORT_H__ */
+#endif /* __LIGMA_VECTORS_IMPORT_H__ */

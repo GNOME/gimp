@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptranslationstore.c
- * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
+ * ligmatranslationstore.c
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,15 +25,15 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "gimphelp.h"
-#include "gimplanguagestore-parser.h"
-#include "gimptranslationstore.h"
+#include "ligmahelp.h"
+#include "ligmalanguagestore-parser.h"
+#include "ligmatranslationstore.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -42,65 +42,65 @@ enum
   PROP_EMPTY_LABEL
 };
 
-struct _GimpTranslationStoreClass
+struct _LigmaTranslationStoreClass
 {
-  GimpLanguageStoreClass  parent_class;
+  LigmaLanguageStoreClass  parent_class;
 };
 
-struct _GimpTranslationStore
+struct _LigmaTranslationStore
 {
-  GimpLanguageStore  parent_instance;
+  LigmaLanguageStore  parent_instance;
 
   gboolean           manual_l18n;
   gchar             *empty_label;
 };
 
 
-static void   gimp_translation_store_constructed  (GObject           *object);
-static void   gimp_translation_store_set_property (GObject           *object,
+static void   ligma_translation_store_constructed  (GObject           *object);
+static void   ligma_translation_store_set_property (GObject           *object,
                                                    guint              property_id,
                                                    const GValue      *value,
                                                    GParamSpec        *pspec);
-static void   gimp_translation_store_get_property (GObject           *object,
+static void   ligma_translation_store_get_property (GObject           *object,
                                                    guint              property_id,
                                                    GValue            *value,
                                                    GParamSpec        *pspec);
 
 
-G_DEFINE_TYPE (GimpTranslationStore, gimp_translation_store,
-               GIMP_TYPE_LANGUAGE_STORE)
+G_DEFINE_TYPE (LigmaTranslationStore, ligma_translation_store,
+               LIGMA_TYPE_LANGUAGE_STORE)
 
-#define parent_class gimp_translation_store_parent_class
+#define parent_class ligma_translation_store_parent_class
 
 
 static void
-gimp_translation_store_class_init (GimpTranslationStoreClass *klass)
+ligma_translation_store_class_init (LigmaTranslationStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_translation_store_constructed;
-  object_class->set_property = gimp_translation_store_set_property;
-  object_class->get_property = gimp_translation_store_get_property;
+  object_class->constructed  = ligma_translation_store_constructed;
+  object_class->set_property = ligma_translation_store_set_property;
+  object_class->get_property = ligma_translation_store_get_property;
 
   g_object_class_install_property (object_class, PROP_MANUAL_L18N,
                                    g_param_spec_boolean ("manual-l18n", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_EMPTY_LABEL,
                                    g_param_spec_string ("empty-label", NULL, NULL,
                                                          NULL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_translation_store_init (GimpTranslationStore *store)
+ligma_translation_store_init (LigmaTranslationStore *store)
 {
 }
 
 static void
-gimp_translation_store_constructed (GObject *object)
+ligma_translation_store_constructed (GObject *object)
 {
   GHashTable     *lang_list;
   GHashTableIter  lang_iter;
@@ -108,27 +108,27 @@ gimp_translation_store_constructed (GObject *object)
   gpointer        name;
   GList          *sublist = NULL;
 
-  lang_list = gimp_language_store_parser_get_languages (TRUE);
+  lang_list = ligma_language_store_parser_get_languages (TRUE);
   g_return_if_fail (lang_list != NULL);
 
-  if (GIMP_TRANSLATION_STORE (object)->manual_l18n)
-    sublist = gimp_help_get_installed_languages ();
+  if (LIGMA_TRANSLATION_STORE (object)->manual_l18n)
+    sublist = ligma_help_get_installed_languages ();
 
   g_hash_table_iter_init (&lang_iter, lang_list);
 
-  if (GIMP_TRANSLATION_STORE (object)->manual_l18n &&
-      GIMP_TRANSLATION_STORE (object)->empty_label)
+  if (LIGMA_TRANSLATION_STORE (object)->manual_l18n &&
+      LIGMA_TRANSLATION_STORE (object)->empty_label)
     {
-      GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                   GIMP_TRANSLATION_STORE (object)->empty_label,
+      LIGMA_LANGUAGE_STORE_GET_CLASS (object)->add (LIGMA_LANGUAGE_STORE (object),
+                                                   LIGMA_TRANSLATION_STORE (object)->empty_label,
                                                    "");
     }
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
     {
-      if (! GIMP_TRANSLATION_STORE (object)->manual_l18n ||
+      if (! LIGMA_TRANSLATION_STORE (object)->manual_l18n ||
           g_list_find_custom (sublist, code, (GCompareFunc) g_strcmp0))
         {
-          GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+          LIGMA_LANGUAGE_STORE_GET_CLASS (object)->add (LIGMA_LANGUAGE_STORE (object),
                                                        name, code);
         }
     }
@@ -136,12 +136,12 @@ gimp_translation_store_constructed (GObject *object)
 }
 
 static void
-gimp_translation_store_set_property (GObject      *object,
+ligma_translation_store_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
+  LigmaTranslationStore *store = LIGMA_TRANSLATION_STORE (object);
 
   switch (property_id)
     {
@@ -159,12 +159,12 @@ gimp_translation_store_set_property (GObject      *object,
 }
 
 static void
-gimp_translation_store_get_property (GObject    *object,
+ligma_translation_store_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
+  LigmaTranslationStore *store = LIGMA_TRANSLATION_STORE (object);
 
   switch (property_id)
     {
@@ -182,10 +182,10 @@ gimp_translation_store_get_property (GObject    *object,
 }
 
 GtkListStore *
-gimp_translation_store_new (gboolean     manual_l18n,
+ligma_translation_store_new (gboolean     manual_l18n,
                             const gchar *empty_label)
 {
-  return g_object_new (GIMP_TYPE_TRANSLATION_STORE,
+  return g_object_new (LIGMA_TYPE_TRANSLATION_STORE,
                        "manual-l18n", manual_l18n,
                        "empty-label", empty_label,
                        NULL);

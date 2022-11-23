@@ -24,22 +24,22 @@ libscriptfu_sources = [
 
 # !! just "library(...)" which means shared versus static depends on configuration of project.
 # Meson defaults to shared, but you can reconfigure to static.
-# This library is not generally useful except by core GIMP developers.
+# This library is not generally useful except by core LIGMA developers.
 
 # Dependencies:
-# libscriptfu uses Gtk (which libgimpui_dep references)
-# FUTURE: libscriptfu should use libgimpui but not Gtk directly
+# libscriptfu uses Gtk (which libligmaui_dep references)
+# FUTURE: libscriptfu should use libligmaui but not Gtk directly
 # libscriptfu does not use sockets (unlike the outer script-fu or script-fu-server)
 
 # link_whole means the entire ftx and tinyscheme static libraries are in
 # this library, whether or not they are used (see meson docs.)
 
-# FUTURE: install private to gimp, in 'lib' subdir parallel to 'modules' subdir
+# FUTURE: install private to ligma, in 'lib' subdir parallel to 'modules' subdir
 # Not doing this because it complicates packaging
-# Instead, this library installs in same place as libgimp
-# install_dir: gimpplugindir / 'lib',
+# Instead, this library installs in same place as libligma
+# install_dir: ligmaplugindir / 'lib',
 
-libscriptfu = library('gimp-scriptfu-'+ gimp_api_version,
+libscriptfu = library('ligma-scriptfu-'+ ligma_api_version,
   libscriptfu_sources,
   include_directories: [
     rootInclude,
@@ -52,7 +52,7 @@ libscriptfu = library('gimp-scriptfu-'+ gimp_api_version,
     '-DUSE_STRLWR=0',
   ],
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
   ],
   link_whole: [

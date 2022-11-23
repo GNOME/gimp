@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_UNDO_H__
-#define __GIMP_PAINT_CORE_UNDO_H__
+#ifndef __LIGMA_PAINT_CORE_UNDO_H__
+#define __LIGMA_PAINT_CORE_UNDO_H__
 
 
-#include "core/gimpundo.h"
+#include "core/ligmaundo.h"
 
 
-#define GIMP_TYPE_PAINT_CORE_UNDO            (gimp_paint_core_undo_get_type ())
-#define GIMP_PAINT_CORE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_CORE_UNDO, GimpPaintCoreUndo))
-#define GIMP_PAINT_CORE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_CORE_UNDO, GimpPaintCoreUndoClass))
-#define GIMP_IS_PAINT_CORE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_CORE_UNDO))
-#define GIMP_IS_PAINT_CORE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_CORE_UNDO))
-#define GIMP_PAINT_CORE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_CORE_UNDO, GimpPaintCoreUndoClass))
+#define LIGMA_TYPE_PAINT_CORE_UNDO            (ligma_paint_core_undo_get_type ())
+#define LIGMA_PAINT_CORE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PAINT_CORE_UNDO, LigmaPaintCoreUndo))
+#define LIGMA_PAINT_CORE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PAINT_CORE_UNDO, LigmaPaintCoreUndoClass))
+#define LIGMA_IS_PAINT_CORE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PAINT_CORE_UNDO))
+#define LIGMA_IS_PAINT_CORE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PAINT_CORE_UNDO))
+#define LIGMA_PAINT_CORE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PAINT_CORE_UNDO, LigmaPaintCoreUndoClass))
 
 
-typedef struct _GimpPaintCoreUndo      GimpPaintCoreUndo;
-typedef struct _GimpPaintCoreUndoClass GimpPaintCoreUndoClass;
+typedef struct _LigmaPaintCoreUndo      LigmaPaintCoreUndo;
+typedef struct _LigmaPaintCoreUndoClass LigmaPaintCoreUndoClass;
 
-struct _GimpPaintCoreUndo
+struct _LigmaPaintCoreUndo
 {
-  GimpUndo       parent_instance;
+  LigmaUndo       parent_instance;
 
-  GimpPaintCore *paint_core;
-  GimpCoords     last_coords;
+  LigmaPaintCore *paint_core;
+  LigmaCoords     last_coords;
 };
 
-struct _GimpPaintCoreUndoClass
+struct _LigmaPaintCoreUndoClass
 {
-  GimpUndoClass  parent_class;
+  LigmaUndoClass  parent_class;
 };
 
 
-GType   gimp_paint_core_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_paint_core_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_PAINT_CORE_UNDO_H__ */
+#endif /* __LIGMA_PAINT_CORE_UNDO_H__ */

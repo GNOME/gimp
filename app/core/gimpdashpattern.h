@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpdashpattern.h
+ * ligmadashpattern.h
  * Copyright (C) 2003 Simon Budig
  * Copyright (C) 2005 Sven Neumann
  *
@@ -19,35 +19,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DASH_PATTERN_H__
-#define __GIMP_DASH_PATTERN_H__
+#ifndef __LIGMA_DASH_PATTERN_H__
+#define __LIGMA_DASH_PATTERN_H__
 
 
-#define GIMP_TYPE_DASH_PATTERN               (gimp_dash_pattern_get_type ())
-#define GIMP_VALUE_HOLDS_DASH_PATTERN(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_DASH_PATTERN))
+#define LIGMA_TYPE_DASH_PATTERN               (ligma_dash_pattern_get_type ())
+#define LIGMA_VALUE_HOLDS_DASH_PATTERN(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_DASH_PATTERN))
 
 
-GType            gimp_dash_pattern_get_type          (void) G_GNUC_CONST;
+GType            ligma_dash_pattern_get_type          (void) G_GNUC_CONST;
 
-GArray         * gimp_dash_pattern_new_from_preset   (GimpDashPreset  preset);
-GArray         * gimp_dash_pattern_new_from_segments (const gboolean *segments,
+GArray         * ligma_dash_pattern_new_from_preset   (LigmaDashPreset  preset);
+GArray         * ligma_dash_pattern_new_from_segments (const gboolean *segments,
                                                       gint            n_segments,
                                                       gdouble         dash_length);
 
-void             gimp_dash_pattern_fill_segments     (GArray         *pattern,
+void             ligma_dash_pattern_fill_segments     (GArray         *pattern,
                                                       gboolean       *segments,
                                                       gint            n_segments);
 
-GArray         * gimp_dash_pattern_from_value_array  (GimpValueArray *value_array);
-GimpValueArray * gimp_dash_pattern_to_value_array    (GArray         *pattern);
+GArray         * ligma_dash_pattern_from_value_array  (LigmaValueArray *value_array);
+LigmaValueArray * ligma_dash_pattern_to_value_array    (GArray         *pattern);
 
-GArray         * gimp_dash_pattern_from_double_array (gint            n_dashes,
+GArray         * ligma_dash_pattern_from_double_array (gint            n_dashes,
                                                       const gdouble  *dashes);
-gdouble        * gimp_dash_pattern_to_double_array   (GArray         *pattern,
+gdouble        * ligma_dash_pattern_to_double_array   (GArray         *pattern,
                                                       gint           *n_dashes);
 
-GArray         * gimp_dash_pattern_copy              (GArray         *pattern);
-void             gimp_dash_pattern_free              (GArray         *pattern);
+GArray         * ligma_dash_pattern_copy              (GArray         *pattern);
+void             ligma_dash_pattern_free              (GArray         *pattern);
 
 
-#endif  /*  __GIMP_DASH_PATTERN_H__  */
+#endif  /*  __LIGMA_DASH_PATTERN_H__  */

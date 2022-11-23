@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-recursive-transform.c
+ * ligmapropgui-recursive-transform.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-recursive-transform.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-recursive-transform.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_N_TRANSFORMS 10
@@ -119,7 +119,7 @@ remove_transform (GtkButton *button,
 static void
 transform_grids_callback (GObject                    *config,
                           GeglRectangle              *area,
-                          const GimpMatrix3          *transforms,
+                          const LigmaMatrix3          *transforms,
                           gint                        n_transforms)
 {
   GString *transforms_str = g_string_new (NULL);
@@ -159,11 +159,11 @@ config_notify (GObject          *config,
   GtkWidget                             *add_button;
   GtkWidget                             *duplicate_button;
   GtkWidget                             *remove_button;
-  GimpControllerTransformGridsCallback   set_func;
+  LigmaControllerTransformGridsCallback   set_func;
   GeglRectangle                         *area;
   gchar                                 *transform_str;
   gchar                                **transform_strs;
-  GimpMatrix3                           *transforms;
+  LigmaMatrix3                           *transforms;
   gint                                   n_transforms;
   gint                                   i;
 
@@ -183,7 +183,7 @@ config_notify (GObject          *config,
 
   for (n_transforms = 0; transform_strs[n_transforms]; n_transforms++);
 
-  transforms = g_new (GimpMatrix3, n_transforms);
+  transforms = g_new (LigmaMatrix3, n_transforms);
 
   for (i = 0; i < n_transforms; i++)
     {
@@ -202,13 +202,13 @@ config_notify (GObject          *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_recursive_transform (GObject                  *config,
+_ligma_prop_gui_new_recursive_transform (GObject                  *config,
                                         GParamSpec              **param_specs,
                                         guint                     n_param_specs,
                                         GeglRectangle            *area,
-                                        GimpContext              *context,
-                                        GimpCreatePickerFunc      create_picker_func,
-                                        GimpCreateControllerFunc  create_controller_func,
+                                        LigmaContext              *context,
+                                        LigmaCreatePickerFunc      create_picker_func,
+                                        LigmaCreateControllerFunc  create_controller_func,
                                         gpointer                  creator)
 {
   GtkWidget *vbox;
@@ -216,7 +216,7 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   /* skip the "transform" property, which is controlled by a transform-grid
    * controller.
@@ -227,7 +227,7 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
       n_param_specs--;
     }
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs, n_param_specs,
                                      area, context,
                                      create_picker_func,
@@ -255,13 +255,13 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
       gtk_widget_show (hbox);
 
       button = gtk_button_new ();
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                _("Add transform"),
                                NULL);
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_LIST_ADD,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
@@ -273,13 +273,13 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
       g_object_set_data (config, "add-transform-button", button);
 
       button = gtk_button_new ();
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                _("Duplicate transform"),
                                NULL);
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_OBJECT_DUPLICATE,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_OBJECT_DUPLICATE,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
@@ -291,13 +291,13 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
       g_object_set_data (config, "duplicate-transform-button", button);
 
       button = gtk_button_new ();
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                _("Remove transform"),
                                NULL);
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_REMOVE,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_LIST_REMOVE,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
@@ -311,7 +311,7 @@ _gimp_prop_gui_new_recursive_transform (GObject                  *config,
       vbox = outer_vbox;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_TRANSFORM_GRIDS,
+                                         LIGMA_CONTROLLER_TYPE_TRANSFORM_GRIDS,
                                          _("Recursive Transform: "),
                                          (GCallback) transform_grids_callback,
                                          config,

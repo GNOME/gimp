@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,21 @@
 #define __ITEM_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpItemOptionsCallback) (GtkWidget    *dialog,
-                                          GimpImage    *image,
-                                          GimpItem     *item,
-                                          GimpContext  *context,
+typedef void (* LigmaItemOptionsCallback) (GtkWidget    *dialog,
+                                          LigmaImage    *image,
+                                          LigmaItem     *item,
+                                          LigmaContext  *context,
                                           const gchar  *item_name,
                                           gboolean      item_visible,
-                                          GimpColorTag  item_color_tag,
+                                          LigmaColorTag  item_color_tag,
                                           gboolean      item_lock_content,
                                           gboolean      item_lock_position,
                                           gpointer      user_data);
 
 
-GtkWidget * item_options_dialog_new (GimpImage               *image,
-                                     GimpItem                *item,
-                                     GimpContext             *context,
+GtkWidget * item_options_dialog_new (LigmaImage               *image,
+                                     LigmaItem                *item,
+                                     LigmaContext             *context,
                                      GtkWidget               *parent,
                                      const gchar             *title,
                                      const gchar             *role,
@@ -46,10 +46,10 @@ GtkWidget * item_options_dialog_new (GimpImage               *image,
                                      const gchar             *lock_position_label,
                                      const gchar             *item_name,
                                      gboolean                 item_visible,
-                                     GimpColorTag             item_color_tag,
+                                     LigmaColorTag             item_color_tag,
                                      gboolean                 item_lock_content,
                                      gboolean                 item_lock_position,
-                                     GimpItemOptionsCallback  callback,
+                                     LigmaItemOptionsCallback  callback,
                                      gpointer                 user_data);
 
 GtkWidget * item_options_dialog_get_vbox             (GtkWidget   *dialog);

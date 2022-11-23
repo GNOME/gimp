@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscale.h
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
- *                     Michael Natterer <mitch@gimp.org>
+ * ligmacolorscale.h
+ * Copyright (C) 2002  Sven Neumann <sven@ligma.org>
+ *                     Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,64 +20,64 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_SCALE_H__
-#define __GIMP_COLOR_SCALE_H__
+#ifndef __LIGMA_COLOR_SCALE_H__
+#define __LIGMA_COLOR_SCALE_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_SCALE            (gimp_color_scale_get_type ())
-#define GIMP_COLOR_SCALE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SCALE, GimpColorScale))
-#define GIMP_COLOR_SCALE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SCALE, GimpColorScaleClass))
-#define GIMP_IS_COLOR_SCALE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SCALE))
-#define GIMP_IS_COLOR_SCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SCALE))
-#define GIMP_COLOR_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SCALE, GimpColorScaleClass))
+#define LIGMA_TYPE_COLOR_SCALE            (ligma_color_scale_get_type ())
+#define LIGMA_COLOR_SCALE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_SCALE, LigmaColorScale))
+#define LIGMA_COLOR_SCALE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_SCALE, LigmaColorScaleClass))
+#define LIGMA_IS_COLOR_SCALE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_SCALE))
+#define LIGMA_IS_COLOR_SCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_SCALE))
+#define LIGMA_COLOR_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_SCALE, LigmaColorScaleClass))
 
 
-typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
-typedef struct _GimpColorScaleClass   GimpColorScaleClass;
+typedef struct _LigmaColorScalePrivate LigmaColorScalePrivate;
+typedef struct _LigmaColorScaleClass   LigmaColorScaleClass;
 
-struct _GimpColorScale
+struct _LigmaColorScale
 {
   GtkScale               parent_instance;
 
-  GimpColorScalePrivate *priv;
+  LigmaColorScalePrivate *priv;
 };
 
-struct _GimpColorScaleClass
+struct _LigmaColorScaleClass
 {
   GtkScaleClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_scale_get_type         (void) G_GNUC_CONST;
-GtkWidget * gimp_color_scale_new              (GtkOrientation            orientation,
-                                               GimpColorSelectorChannel  channel);
+GType       ligma_color_scale_get_type         (void) G_GNUC_CONST;
+GtkWidget * ligma_color_scale_new              (GtkOrientation            orientation,
+                                               LigmaColorSelectorChannel  channel);
 
-void        gimp_color_scale_set_channel      (GimpColorScale           *scale,
-                                               GimpColorSelectorChannel  channel);
-void        gimp_color_scale_set_color        (GimpColorScale           *scale,
-                                               const GimpRGB            *rgb,
-                                               const GimpHSV            *hsv);
+void        ligma_color_scale_set_channel      (LigmaColorScale           *scale,
+                                               LigmaColorSelectorChannel  channel);
+void        ligma_color_scale_set_color        (LigmaColorScale           *scale,
+                                               const LigmaRGB            *rgb,
+                                               const LigmaHSV            *hsv);
 
-void        gimp_color_scale_set_color_config (GimpColorScale           *scale,
-                                               GimpColorConfig          *config);
+void        ligma_color_scale_set_color_config (LigmaColorScale           *scale,
+                                               LigmaColorConfig          *config);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_SCALE_H__ */
+#endif /* __LIGMA_COLOR_SCALE_H__ */

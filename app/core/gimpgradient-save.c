@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,29 +20,29 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpgradient.h"
-#include "gimpgradient-save.h"
+#include "ligmagradient.h"
+#include "ligmagradient-save.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 gboolean
-gimp_gradient_save (GimpData       *data,
+ligma_gradient_save (LigmaData       *data,
                     GOutputStream  *output,
                     GError        **error)
 {
-  GimpGradient        *gradient = GIMP_GRADIENT (data);
+  LigmaGradient        *gradient = LIGMA_GRADIENT (data);
   GString             *string;
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
   gint                 num_segments;
 
   /* File format is:
    *
-   *   GIMP Gradient
+   *   LIGMA Gradient
    *   Name: name
    *   number_of_segments
    *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring left_color_type
@@ -50,10 +50,10 @@ gimp_gradient_save (GimpData       *data,
    *   ...
    */
 
-  string = g_string_new ("GIMP Gradient\n");
+  string = g_string_new ("LIGMA Gradient\n");
 
   g_string_append_printf (string, "Name: %s\n",
-                          gimp_object_get_name (gradient));
+                          ligma_object_get_name (gradient));
 
   /* Count number of segments */
   num_segments = 0;
@@ -109,18 +109,18 @@ gimp_gradient_save (GimpData       *data,
 }
 
 gboolean
-gimp_gradient_save_pov (GimpGradient  *gradient,
+ligma_gradient_save_pov (LigmaGradient  *gradient,
                         GFile         *file,
                         GError       **error)
 {
   GOutputStream       *output;
   GString             *string;
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
   gchar                buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar                color_buf[4][G_ASCII_DTOSTR_BUF_SIZE];
   GError              *my_error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -130,8 +130,8 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
   if (! output)
     return FALSE;
 
-  string = g_string_new ("/* color_map file created by GIMP */\n"
-                         "/* https://www.gimp.org/          */\n"
+  string = g_string_new ("/* color_map file created by LIGMA */\n"
+                         "/* https://www.ligma.org/          */\n"
                          "color_map {\n");
 
   for (seg = gradient->segments; seg; seg = seg->next)
@@ -198,9 +198,9 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
     {
       GCancellable *cancellable = g_cancellable_new ();
 
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_WRITE,
                    _("Writing POV file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (file),
+                   ligma_file_get_utf8_name (file),
                    my_error->message);
       g_clear_error (&my_error);
       g_string_free (string, TRUE);

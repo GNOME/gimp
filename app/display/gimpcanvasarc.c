@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasarc.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasarc.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-cairo.h"
+#include "core/ligma-cairo.h"
 
-#include "gimpcanvasarc.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvasarc.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -47,9 +47,9 @@ enum
 };
 
 
-typedef struct _GimpCanvasArcPrivate GimpCanvasArcPrivate;
+typedef struct _LigmaCanvasArcPrivate LigmaCanvasArcPrivate;
 
-struct _GimpCanvasArcPrivate
+struct _LigmaCanvasArcPrivate
 {
   gdouble  center_x;
   gdouble  center_y;
@@ -61,92 +61,92 @@ struct _GimpCanvasArcPrivate
 };
 
 #define GET_PRIVATE(arc) \
-        ((GimpCanvasArcPrivate *) gimp_canvas_arc_get_instance_private ((GimpCanvasArc *) (arc)))
+        ((LigmaCanvasArcPrivate *) ligma_canvas_arc_get_instance_private ((LigmaCanvasArc *) (arc)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_arc_set_property (GObject        *object,
+static void             ligma_canvas_arc_set_property (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
                                                       GParamSpec     *pspec);
-static void             gimp_canvas_arc_get_property (GObject        *object,
+static void             ligma_canvas_arc_get_property (GObject        *object,
                                                       guint           property_id,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
-static void             gimp_canvas_arc_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_arc_draw         (LigmaCanvasItem *item,
                                                       cairo_t        *cr);
-static cairo_region_t * gimp_canvas_arc_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_arc_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasArc, gimp_canvas_arc,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasArc, ligma_canvas_arc,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_arc_parent_class
+#define parent_class ligma_canvas_arc_parent_class
 
 
 static void
-gimp_canvas_arc_class_init (GimpCanvasArcClass *klass)
+ligma_canvas_arc_class_init (LigmaCanvasArcClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_arc_set_property;
-  object_class->get_property = gimp_canvas_arc_get_property;
+  object_class->set_property = ligma_canvas_arc_set_property;
+  object_class->get_property = ligma_canvas_arc_get_property;
 
-  item_class->draw           = gimp_canvas_arc_draw;
-  item_class->get_extents    = gimp_canvas_arc_get_extents;
+  item_class->draw           = ligma_canvas_arc_draw;
+  item_class->get_extents    = ligma_canvas_arc_get_extents;
 
   g_object_class_install_property (object_class, PROP_CENTER_X,
                                    g_param_spec_double ("center-x", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CENTER_Y,
                                    g_param_spec_double ("center-y", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_double ("radius-x", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_RADIUS_Y,
                                    g_param_spec_double ("radius-y", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_START_ANGLE,
                                    g_param_spec_double ("start-angle", NULL, NULL,
                                                         -1000, 1000, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SLICE_ANGLE,
                                    g_param_spec_double ("slice-angle", NULL, NULL,
                                                         -1000, 1000, 2 * G_PI,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FILLED,
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_arc_init (GimpCanvasArc *arc)
+ligma_canvas_arc_init (LigmaCanvasArc *arc)
 {
 }
 
 static void
-gimp_canvas_arc_set_property (GObject      *object,
+ligma_canvas_arc_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpCanvasArcPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasArcPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -179,12 +179,12 @@ gimp_canvas_arc_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_arc_get_property (GObject    *object,
+ligma_canvas_arc_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpCanvasArcPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasArcPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -217,21 +217,21 @@ gimp_canvas_arc_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_arc_transform (GimpCanvasItem *item,
+ligma_canvas_arc_transform (LigmaCanvasItem *item,
                            gdouble        *center_x,
                            gdouble        *center_y,
                            gdouble        *radius_x,
                            gdouble        *radius_y)
 {
-  GimpCanvasArcPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasArcPrivate *private = GET_PRIVATE (item);
   gdouble               x1, y1;
   gdouble               x2, y2;
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    private->center_x - private->radius_x,
                                    private->center_y - private->radius_y,
                                    &x1, &y1);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    private->center_x + private->radius_x,
                                    private->center_y + private->radius_y,
                                    &x2, &y2);
@@ -259,40 +259,40 @@ gimp_canvas_arc_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_arc_draw (GimpCanvasItem *item,
+ligma_canvas_arc_draw (LigmaCanvasItem *item,
                       cairo_t        *cr)
 {
-  GimpCanvasArcPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasArcPrivate *private = GET_PRIVATE (item);
   gdouble               center_x, center_y;
   gdouble               radius_x, radius_y;
 
-  gimp_canvas_arc_transform (item,
+  ligma_canvas_arc_transform (item,
                              &center_x, &center_y,
                              &radius_x, &radius_y);
 
   cairo_save (cr);
   cairo_translate (cr, center_x, center_y);
   cairo_scale (cr, radius_x, radius_y);
-  gimp_cairo_arc (cr, 0.0, 0.0, 1.0,
+  ligma_cairo_arc (cr, 0.0, 0.0, 1.0,
                   private->start_angle, private->slice_angle);
   cairo_restore (cr);
 
   if (private->filled)
-    _gimp_canvas_item_fill (item, cr);
+    _ligma_canvas_item_fill (item, cr);
   else
-    _gimp_canvas_item_stroke (item, cr);
+    _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_arc_get_extents (GimpCanvasItem *item)
+ligma_canvas_arc_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasArcPrivate  *private = GET_PRIVATE (item);
+  LigmaCanvasArcPrivate  *private = GET_PRIVATE (item);
   cairo_region_t        *region;
   cairo_rectangle_int_t  rectangle;
   gdouble                center_x, center_y;
   gdouble                radius_x, radius_y;
 
-  gimp_canvas_arc_transform (item,
+  ligma_canvas_arc_transform (item,
                              &center_x, &center_y,
                              &radius_x, &radius_y);
 
@@ -321,8 +321,8 @@ gimp_canvas_arc_get_extents (GimpCanvasItem *item)
   return region;
 }
 
-GimpCanvasItem *
-gimp_canvas_arc_new (GimpDisplayShell *shell,
+LigmaCanvasItem *
+ligma_canvas_arc_new (LigmaDisplayShell *shell,
                      gdouble          center_x,
                      gdouble          center_y,
                      gdouble          radius_x,
@@ -331,9 +331,9 @@ gimp_canvas_arc_new (GimpDisplayShell *shell,
                      gdouble          slice_angle,
                      gboolean         filled)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_ARC,
+  return g_object_new (LIGMA_TYPE_CANVAS_ARC,
                        "shell",       shell,
                        "center-x",    center_x,
                        "center-y",    center_y,
@@ -346,7 +346,7 @@ gimp_canvas_arc_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_canvas_arc_set (GimpCanvasItem *arc,
+ligma_canvas_arc_set (LigmaCanvasItem *arc,
                      gdouble         center_x,
                      gdouble         center_y,
                      gdouble         radius_x,
@@ -354,9 +354,9 @@ gimp_canvas_arc_set (GimpCanvasItem *arc,
                      gdouble         start_angle,
                      gdouble         slice_angle)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_ARC (arc));
+  g_return_if_fail (LIGMA_IS_CANVAS_ARC (arc));
 
-  gimp_canvas_item_begin_change (arc);
+  ligma_canvas_item_begin_change (arc);
   g_object_set (arc,
                 "center-x",    center_x,
                 "center-y",    center_y,
@@ -365,5 +365,5 @@ gimp_canvas_arc_set (GimpCanvasItem *arc,
                 "start-angle", start_angle,
                 "slice-angle", slice_angle,
                 NULL);
-  gimp_canvas_item_end_change (arc);
+  ligma_canvas_item_end_change (arc);
 }

@@ -1,11 +1,11 @@
-# Khmer translation for gimp.
-# Copyright (C) 2011 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Khmer translation for ligma.
+# Copyright (C) 2011 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Chris Leonard <cjl@laptop.org>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-09-11 18:30+0000\n"
 "PO-Revision-Date: 2011-04-17 23:02-0400\n"
 "Last-Translator: Chris Leonard <cjl@laptop.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Project-Style: gnome\n"
 "X-Language: km-KH\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "មូល"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ស្រពិចស្រពិល"

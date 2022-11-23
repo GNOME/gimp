@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,20 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_MAP_H__
-#define __GIMP_CURVE_MAP_H__
+#ifndef __LIGMA_CURVE_MAP_H__
+#define __LIGMA_CURVE_MAP_H__
 
 
-gdouble         gimp_curve_map_value         (GimpCurve     *curve,
+gdouble         ligma_curve_map_value         (LigmaCurve     *curve,
                                               gdouble        value);
-void            gimp_curve_map_pixels        (GimpCurve     *curve_colors,
-                                              GimpCurve     *curve_red,
-                                              GimpCurve     *curve_green,
-                                              GimpCurve     *curve_blue,
-                                              GimpCurve     *curve_alpha,
+void            ligma_curve_map_pixels        (LigmaCurve     *curve_colors,
+                                              LigmaCurve     *curve_red,
+                                              LigmaCurve     *curve_green,
+                                              LigmaCurve     *curve_blue,
+                                              LigmaCurve     *curve_alpha,
                                               gfloat        *src,
                                               gfloat        *dest,
                                               glong          samples);
 
 
-#endif /* __GIMP_CURVE_MAP_H__ */
+#endif /* __LIGMA_CURVE_MAP_H__ */

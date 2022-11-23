@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_RESIZE_H__
-#define __GIMP_IMAGE_RESIZE_H__
+#ifndef __LIGMA_IMAGE_RESIZE_H__
+#define __LIGMA_IMAGE_RESIZE_H__
 
 
-void   gimp_image_resize              (GimpImage    *image,
-                                       GimpContext  *context,
+void   ligma_image_resize              (LigmaImage    *image,
+                                       LigmaContext  *context,
                                        gint          new_width,
                                        gint          new_height,
                                        gint          offset_x,
                                        gint          offset_y,
-                                       GimpProgress *progress);
+                                       LigmaProgress *progress);
 
-void   gimp_image_resize_with_layers  (GimpImage    *image,
-                                       GimpContext  *context,
-                                       GimpFillType  fill_type,
+void   ligma_image_resize_with_layers  (LigmaImage    *image,
+                                       LigmaContext  *context,
+                                       LigmaFillType  fill_type,
                                        gint          new_width,
                                        gint          new_height,
                                        gint          offset_x,
                                        gint          offset_y,
-                                       GimpItemSet   layer_set,
+                                       LigmaItemSet   layer_set,
                                        gboolean      resize_text_layers,
-                                       GimpProgress *progress);
+                                       LigmaProgress *progress);
 
-void   gimp_image_resize_to_layers    (GimpImage    *image,
-                                       GimpContext  *context,
+void   ligma_image_resize_to_layers    (LigmaImage    *image,
+                                       LigmaContext  *context,
                                        gint         *offset_x,
                                        gint         *offset_y,
                                        gint         *new_width,
                                        gint         *new_height,
-                                       GimpProgress *progress);
-void   gimp_image_resize_to_selection (GimpImage    *image,
-                                       GimpContext  *context,
-                                       GimpProgress *progress);
+                                       LigmaProgress *progress);
+void   ligma_image_resize_to_selection (LigmaImage    *image,
+                                       LigmaContext  *context,
+                                       LigmaProgress *progress);
 
 
-#endif /* __GIMP_IMAGE_RESIZE_H__ */
+#endif /* __LIGMA_IMAGE_RESIZE_H__ */

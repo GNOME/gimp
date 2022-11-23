@@ -1,4 +1,4 @@
-# Basque translation for gimp-script-fu
+# Basque translation for ligma-script-fu
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -9,8 +9,8 @@
 # Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2018, 2021.
 #
 msgid ""
-msgstr "Project-Id-Version: gimp-script-fu master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+msgstr "Project-Id-Version: ligma-script-fu master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-10-28 19:39+0000\n"
 "PO-Revision-Date: 2021-10-30 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
@@ -38,8 +38,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Urruneko Script-Fu eragiketen zerbitzaria"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "Lineako _GIMP"
+msgid "_LIGMA Online"
+msgstr "Lineako _LIGMA"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -78,8 +78,8 @@ msgid "_Beveled Pattern"
 msgstr "Eredu _alakatua"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
@@ -799,88 +799,88 @@ msgstr "Itzalaren pisua (%)"
 msgid "Flatten image"
 msgstr "Berdindu irudia"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Bide-izenak erabiltzea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Sortu erabiltzailearen eskuliburuaren laster-marka"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Irudiak web guneentzako prestatzea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Argazki kamera digitalekin lan egitea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Sortu, ireki eta gorde _fitxategiak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Oinarrizko laguntzak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Nola erabili _elkarrizketa-koadroak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Objektu bakunak marraztea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Sortu eta erabili _hautapenak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Webgune nagusia"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Sortu GIMPen webgunearen laster-marka"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Sortu LIGMAen webgunearen laster-marka"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "_Garatzaileen web gunea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Errepide-mapa"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "GIMPen errepide-maparen laster-marka"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "LIGMAen errepide-maparen laster-marka"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wikia"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMPen wikiaren laster-marka"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "LIGMAen wikiaren laster-marka"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "Akatsen _jakinarazpena eta funtzionalitateen eskaera"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMPen akats-aztarnariaren laster-marka"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "LIGMAen akats-aztarnariaren laster-marka"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "_Erabiltzailearen eskuliburuaren web gune nagusia"
 
@@ -1576,7 +1576,7 @@ msgstr "Itzalaren Y desplazamendua"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Espirografia marrazten"
 
-#~ msgid "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
 #~ msgstr "E_spirografoa..."
 
 #~ msgid ""

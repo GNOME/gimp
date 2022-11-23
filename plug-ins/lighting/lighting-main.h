@@ -6,7 +6,7 @@
 
 #define PLUG_IN_PROC   "plug-in-lighting"
 #define PLUG_IN_BINARY "lighting"
-#define PLUG_IN_ROLE   "gimp-lighting"
+#define PLUG_IN_ROLE   "ligma-lighting"
 
 #define TILE_CACHE_SIZE 16
 #define NUM_LIGHTS      6
@@ -44,15 +44,15 @@ typedef struct
   gdouble     specular_ref;
   gdouble     highlight;
   gboolean    metallic;
-  GimpRGB     color;
+  LigmaRGB     color;
 } MaterialSettings;
 
 typedef struct
 {
   LightType    type;
-  GimpVector3  position;
-  GimpVector3  direction;
-  GimpRGB      color;
+  LigmaVector3  position;
+  LigmaVector3  direction;
+  LigmaRGB      color;
   gdouble      intensity;
   gboolean     active;
 } LightSettings;
@@ -66,8 +66,8 @@ typedef struct
   /* Render variables */
   /* ================ */
 
-  GimpVector3      viewpoint;
-  GimpVector3      planenormal;
+  LigmaVector3      viewpoint;
+  LigmaVector3      planenormal;
   LightSettings    lightsource[NUM_LIGHTS];
   MaterialSettings material;
   MaterialSettings ref_material;

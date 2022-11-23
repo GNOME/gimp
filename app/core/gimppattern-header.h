@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_HEADER_H__
-#define __GIMP_PATTERN_HEADER_H__
+#ifndef __LIGMA_PATTERN_HEADER_H__
+#define __LIGMA_PATTERN_HEADER_H__
 
 
-#define GIMP_PATTERN_MAGIC    (('G' << 24) + ('P' << 16) + \
+#define LIGMA_PATTERN_MAGIC    (('G' << 24) + ('P' << 16) + \
                                ('A' << 8)  + ('T' << 0))
-#define GIMP_PATTERN_MAX_SIZE 10000 /* Max size in either dimension in px */
-#define GIMP_PATTERN_MAX_NAME 256   /* Max length of the pattern's name   */
+#define LIGMA_PATTERN_MAX_SIZE 10000 /* Max size in either dimension in px */
+#define LIGMA_PATTERN_MAX_NAME 256   /* Max length of the pattern's name   */
 
 
 /*  All field entries are MSB  */
 
-typedef struct _GimpPatternHeader GimpPatternHeader;
+typedef struct _LigmaPatternHeader LigmaPatternHeader;
 
-struct _GimpPatternHeader
+struct _LigmaPatternHeader
 {
-  guint32   header_size;  /*  = sizeof (GimpPatternHeader) + pattern name  */
+  guint32   header_size;  /*  = sizeof (LigmaPatternHeader) + pattern name  */
   guint32   version;      /*  pattern file version #  */
   guint32   width;        /*  width of pattern  */
   guint32   height;       /*  height of pattern  */
   guint32   bytes;        /*  depth of pattern in bytes  */
-  guint32   magic_number; /*  GIMP pattern magic number  */
+  guint32   magic_number; /*  LIGMA pattern magic number  */
 };
 
 /*  In a pattern file, next comes the pattern name, null-terminated.
@@ -45,4 +45,4 @@ struct _GimpPatternHeader
  */
 
 
-#endif  /* __GIMP_PATTERN_HEADER_H__ */
+#endif  /* __LIGMA_PATTERN_HEADER_H__ */

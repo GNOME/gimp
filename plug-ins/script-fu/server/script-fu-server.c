@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,22 +18,22 @@
 /*
  * Testing
  *
- * Use a scriptfu server client such as https://github.com/vit1-irk/gimp-exec.
+ * Use a scriptfu server client such as https://github.com/vit1-irk/ligma-exec.
  *
  * In a console, export G_MESSAGES_DEBUG=scriptfu (to see more logging from scriptfu)
  * (script-fu-server does not use g_logging but rolls its own.)
  *
- * In the console, start GIMP app e.g. ">gimp"
+ * In the console, start LIGMA app e.g. ">ligma"
  * Choose menu item "Filters>Development>Script-Fu>Start Server..."
  * and choose the "Start Server" button in the dialog.
  * Expect in the console: "ScriptFu server: initialized and listening..."
  *
- * Using the client, send a file of Scheme language text e.g. "./gimp-exec test.scheme"
- * (where the text can be a GIMP PDB call like (gimp-message "hello")  )
+ * Using the client, send a file of Scheme language text e.g. "./ligma-exec test.scheme"
+ * (where the text can be a LIGMA PDB call like (ligma-message "hello")  )
  * Expect on the console, many log messages like  "ScriptFu server: <foo>"
  * Expect log like "(script-fu:223): scriptfu-DEBUG:.<fu>" from inner scriptfu
  * Expect log "ScriptFu server: post command callback"
- * Expect that the GIMP gui shows no progress, or other messages.
+ * Expect that the LIGMA gui shows no progress, or other messages.
  *
  * In the client send text "(script-fu-quit)"
  * Expect:
@@ -76,7 +76,7 @@ typedef short sa_family_t; /* Not defined by winsock */
  */
 #define AI_ADDRCONFIG 0x0400
 #endif
-#include <libgimpbase/gimpwin32-io.h>
+#include <libligmabase/ligmawin32-io.h>
 #else
 #include <sys/socket.h>
 #ifdef HAVE_SYS_SELECT_H
@@ -93,8 +93,8 @@ typedef short sa_family_t; /* Not defined by winsock */
 
 #include <glib/gstdio.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include "libscriptfu/script-fu-lib.h"
 #include "libscriptfu/script-fu-intl.h"
@@ -269,20 +269,20 @@ script_fu_server_post_command (void)
   script_fu_server_listen (10);
 }
 
-GimpValueArray *
-script_fu_server_run (GimpProcedure        *procedure,
-                      const GimpValueArray *args)
+LigmaValueArray *
+script_fu_server_run (LigmaProcedure        *procedure,
+                      const LigmaValueArray *args)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaRunMode        run_mode;
   const gchar       *ip;
   gint               port;
   const gchar       *logfile;
 
-  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
-  ip       = GIMP_VALUES_GET_STRING (args, 1);
-  port     = GIMP_VALUES_GET_INT    (args, 2);
-  logfile  = GIMP_VALUES_GET_STRING (args, 3);
+  run_mode = LIGMA_VALUES_GET_ENUM   (args, 0);
+  ip       = LIGMA_VALUES_GET_STRING (args, 1);
+  port     = LIGMA_VALUES_GET_INT    (args, 2);
+  logfile  = LIGMA_VALUES_GET_STRING (args, 3);
 
   script_fu_set_run_mode (run_mode);
   script_fu_set_print_flag (1);
@@ -292,7 +292,7 @@ script_fu_server_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       if (server_interface ())
         {
           /* Blocks, an event loop on IO. */
@@ -300,20 +300,20 @@ script_fu_server_run (GimpProcedure        *procedure,
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       server_start (ip ? ip : "127.0.0.1", port, logfile);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      status = GIMP_PDB_CALLING_ERROR;
+    case LIGMA_RUN_WITH_LAST_VALS:
+      status = LIGMA_PDB_CALLING_ERROR;
       g_printerr ("Script-Fu server does not handle "
-                  "\"GIMP_RUN_WITH_LAST_VALS\"\n");
+                  "\"LIGMA_RUN_WITH_LAST_VALS\"\n");
 
     default:
       break;
     }
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void
@@ -482,20 +482,20 @@ server_progress_set_value (gdouble   percentage,
 static const gchar *
 server_progress_install (void)
 {
-  GimpProgressVtable vtable = { 0, };
+  LigmaProgressVtable vtable = { 0, };
 
   vtable.start     = server_progress_start;
   vtable.end       = server_progress_end;
   vtable.set_text  = server_progress_set_text;
   vtable.set_value = server_progress_set_value;
 
-  return gimp_progress_install_vtable (&vtable, NULL, NULL);
+  return ligma_progress_install_vtable (&vtable, NULL, NULL);
 }
 
 static void
 server_progress_uninstall (const gchar *progress)
 {
-  gimp_progress_uninstall (progress);
+  ligma_progress_uninstall (progress);
 }
 
 static void
@@ -761,7 +761,7 @@ make_socket (const struct addrinfo *ai)
       else
         {
           print_socket_api_error ("WSAStartup");
-          gimp_quit ();
+          ligma_quit ();
         }
     }
 #endif
@@ -771,7 +771,7 @@ make_socket (const struct addrinfo *ai)
   if (sock < 0)
     {
       print_socket_api_error ("socket");
-      gimp_quit ();
+      ligma_quit ();
     }
 
   setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, (const void *) &v, sizeof(v));
@@ -784,7 +784,7 @@ make_socket (const struct addrinfo *ai)
       if (setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, (const void *) &v, sizeof(v)) < 0)
         {
           print_socket_api_error ("setsockopt");
-          gimp_quit();
+          ligma_quit();
         }
     }
 #endif
@@ -792,7 +792,7 @@ make_socket (const struct addrinfo *ai)
   if (bind (sock, ai->ai_addr, ai->ai_addrlen) < 0)
     {
       print_socket_api_error ("bind");
-      gimp_quit ();
+      ligma_quit ();
     }
 
   return sock;
@@ -875,18 +875,18 @@ server_interface (void)
   GtkWidget *image;
   GtkWidget *label;
 
-  gimp_ui_init ("script-fu");
+  ligma_ui_init ("script-fu");
 
-  dlg = gimp_dialog_new (_("Script-Fu Server Options"), "gimp-script-fu",
+  dlg = ligma_dialog_new (_("Script-Fu Server Options"), "ligma-script-fu",
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-script-fu-server",
+                         ligma_standard_help_func, "plug-in-script-fu-server",
 
                          _("_Cancel"),       GTK_RESPONSE_CANCEL,
                          _("_Start Server"), GTK_RESPONSE_OK,
 
                          NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -914,20 +914,20 @@ server_interface (void)
   /* The server ip to listen to */
   sint.ip_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.ip_entry), "127.0.0.1");
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Listen on IP:"), 0.0, 0.5,
                             sint.ip_entry, 1);
 
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Server port:"), 0.0, 0.5,
                             sint.port_entry, 1);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("Server logfile:"), 0.0, 0.5,
                             sint.log_entry, 1);
 
@@ -936,7 +936,7 @@ server_interface (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_WARNING,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DIALOG_WARNING,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
   gtk_widget_show (image);
@@ -946,7 +946,7 @@ server_interface (void)
                            "attackers to remotely execute arbitrary code "
                            "on this machine."));
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);

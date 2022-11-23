@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmapickbutton.c
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on gtk+/gtk/gtkcolorsel.c
  *
@@ -27,35 +27,35 @@
 #include <windows.h>
 #endif
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcairo-utils.h"
-#include "gimphelpui.h"
-#include "gimpicons.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-default.h"
-#include "gimppickbutton-private.h"
-#include "gimpwidgetsutils.h"
+#include "ligmacairo-utils.h"
+#include "ligmahelpui.h"
+#include "ligmaicons.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-default.h"
+#include "ligmapickbutton-private.h"
+#include "ligmawidgetsutils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
-static gboolean   gimp_pick_button_mouse_press   (GtkWidget      *invisible,
+static gboolean   ligma_pick_button_mouse_press   (GtkWidget      *invisible,
                                                   GdkEventButton *event,
-                                                  GimpPickButton *button);
-static gboolean   gimp_pick_button_key_press     (GtkWidget      *invisible,
+                                                  LigmaPickButton *button);
+static gboolean   ligma_pick_button_key_press     (GtkWidget      *invisible,
                                                   GdkEventKey    *event,
-                                                  GimpPickButton *button);
-static gboolean   gimp_pick_button_mouse_motion  (GtkWidget      *invisible,
+                                                  LigmaPickButton *button);
+static gboolean   ligma_pick_button_mouse_motion  (GtkWidget      *invisible,
                                                   GdkEventMotion *event,
-                                                  GimpPickButton *button);
-static gboolean   gimp_pick_button_mouse_release (GtkWidget      *invisible,
+                                                  LigmaPickButton *button);
+static gboolean   ligma_pick_button_mouse_release (GtkWidget      *invisible,
                                                   GdkEventButton *event,
-                                                  GimpPickButton *button);
-static void       gimp_pick_button_shutdown      (GimpPickButton *button);
-static void       gimp_pick_button_pick          (GimpPickButton *button,
+                                                  LigmaPickButton *button);
+static void       ligma_pick_button_shutdown      (LigmaPickButton *button);
+static void       ligma_pick_button_pick          (LigmaPickButton *button,
                                                   GdkEvent       *event);
 
 
@@ -65,7 +65,7 @@ make_cursor (GdkDisplay *display)
   GdkPixbuf *pixbuf;
   GError    *error = NULL;
 
-  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/color-picker-cursors/cursor-color-picker.png",
+  pixbuf = gdk_pixbuf_new_from_resource ("/org/ligma/color-picker-cursors/cursor-color-picker.png",
                                          &error);
 
   if (pixbuf)
@@ -86,27 +86,27 @@ make_cursor (GdkDisplay *display)
 }
 
 static gboolean
-gimp_pick_button_mouse_press (GtkWidget      *invisible,
+ligma_pick_button_mouse_press (GtkWidget      *invisible,
                               GdkEventButton *event,
-                              GimpPickButton *button)
+                              LigmaPickButton *button)
 {
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
       g_signal_connect (invisible, "motion-notify-event",
-                        G_CALLBACK (gimp_pick_button_mouse_motion),
+                        G_CALLBACK (ligma_pick_button_mouse_motion),
                         button);
       g_signal_connect (invisible, "button-release-event",
-                        G_CALLBACK (gimp_pick_button_mouse_release),
+                        G_CALLBACK (ligma_pick_button_mouse_release),
                         button);
 
       g_signal_handlers_disconnect_by_func (invisible,
-                                            gimp_pick_button_mouse_press,
+                                            ligma_pick_button_mouse_press,
                                             button);
       g_signal_handlers_disconnect_by_func (invisible,
-                                            gimp_pick_button_key_press,
+                                            ligma_pick_button_key_press,
                                             button);
 
-      gimp_pick_button_pick (button, (GdkEvent *) event);
+      ligma_pick_button_pick (button, (GdkEvent *) event);
 
       return TRUE;
     }
@@ -115,19 +115,19 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
 }
 
 static gboolean
-gimp_pick_button_key_press (GtkWidget      *invisible,
+ligma_pick_button_key_press (GtkWidget      *invisible,
                             GdkEventKey    *event,
-                            GimpPickButton *button)
+                            LigmaPickButton *button)
 {
   if (event->keyval == GDK_KEY_Escape)
     {
-      gimp_pick_button_shutdown (button);
+      ligma_pick_button_shutdown (button);
 
       g_signal_handlers_disconnect_by_func (invisible,
-                                            gimp_pick_button_mouse_press,
+                                            ligma_pick_button_mouse_press,
                                             button);
       g_signal_handlers_disconnect_by_func (invisible,
-                                            gimp_pick_button_key_press,
+                                            ligma_pick_button_key_press,
                                             button);
 
       return TRUE;
@@ -137,39 +137,39 @@ gimp_pick_button_key_press (GtkWidget      *invisible,
 }
 
 static gboolean
-gimp_pick_button_mouse_motion (GtkWidget      *invisible,
+ligma_pick_button_mouse_motion (GtkWidget      *invisible,
                                GdkEventMotion *event,
-                               GimpPickButton *button)
+                               LigmaPickButton *button)
 {
-  gimp_pick_button_pick (button, (GdkEvent *) event);
+  ligma_pick_button_pick (button, (GdkEvent *) event);
 
   return TRUE;
 }
 
 static gboolean
-gimp_pick_button_mouse_release (GtkWidget      *invisible,
+ligma_pick_button_mouse_release (GtkWidget      *invisible,
                                 GdkEventButton *event,
-                                GimpPickButton *button)
+                                LigmaPickButton *button)
 {
   if (event->button != 1)
     return FALSE;
 
-  gimp_pick_button_pick (button, (GdkEvent *) event);
+  ligma_pick_button_pick (button, (GdkEvent *) event);
 
-  gimp_pick_button_shutdown (button);
+  ligma_pick_button_shutdown (button);
 
   g_signal_handlers_disconnect_by_func (invisible,
-                                        gimp_pick_button_mouse_motion,
+                                        ligma_pick_button_mouse_motion,
                                         button);
   g_signal_handlers_disconnect_by_func (invisible,
-                                        gimp_pick_button_mouse_release,
+                                        ligma_pick_button_mouse_release,
                                         button);
 
   return TRUE;
 }
 
 static void
-gimp_pick_button_shutdown (GimpPickButton *button)
+ligma_pick_button_shutdown (LigmaPickButton *button)
 {
   GdkDisplay *display = gtk_widget_get_display (button->priv->grab_widget);
 
@@ -179,13 +179,13 @@ gimp_pick_button_shutdown (GimpPickButton *button)
 }
 
 static void
-gimp_pick_button_pick (GimpPickButton *button,
+ligma_pick_button_pick (LigmaPickButton *button,
                        GdkEvent       *event)
 {
   GdkScreen        *screen = gdk_event_get_screen (event);
-  GimpColorProfile *monitor_profile;
+  LigmaColorProfile *monitor_profile;
   GdkMonitor       *monitor;
-  GimpRGB           rgb;
+  LigmaRGB           rgb;
   gint              x_root;
   gint              y_root;
   gdouble           x_win;
@@ -215,7 +215,7 @@ gimp_pick_button_pick (GimpPickButton *button,
     win32_color = GetPixel (hdc, x_root + rect.left, y_root + rect.top);
     ReleaseDC (HWND_DESKTOP, hdc);
 
-    gimp_rgba_set_uchar (&rgb,
+    ligma_rgba_set_uchar (&rgb,
                          GetRValue (win32_color),
                          GetGValue (win32_color),
                          GetBValue (win32_color),
@@ -258,45 +258,45 @@ gimp_pick_button_pick (GimpPickButton *button,
     cairo_destroy (cr);
 
     data = cairo_image_surface_get_data (image);
-    GIMP_CAIRO_RGB24_GET_PIXEL (data, color[0], color[1], color[2]);
+    LIGMA_CAIRO_RGB24_GET_PIXEL (data, color[0], color[1], color[2]);
 
     cairo_surface_destroy (image);
 
-    gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
+    ligma_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
   }
 
 #endif
 
   monitor = gdk_display_get_monitor_at_point (gdk_screen_get_display (screen),
                                               x_root, y_root);
-  monitor_profile = gimp_monitor_get_color_profile (monitor);
+  monitor_profile = ligma_monitor_get_color_profile (monitor);
 
   if (monitor_profile)
     {
-      GimpColorProfile        *srgb_profile;
-      GimpColorTransform      *transform;
+      LigmaColorProfile        *srgb_profile;
+      LigmaColorTransform      *transform;
       const Babl              *format;
-      GimpColorTransformFlags  flags = 0;
+      LigmaColorTransformFlags  flags = 0;
 
       format = babl_format ("R'G'B'A double");
 
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+      flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      srgb_profile = gimp_color_profile_new_rgb_srgb ();
-      transform = gimp_color_transform_new (monitor_profile, format,
+      srgb_profile = ligma_color_profile_new_rgb_srgb ();
+      transform = ligma_color_transform_new (monitor_profile, format,
                                             srgb_profile,    format,
-                                            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                            LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                             flags);
       g_object_unref (srgb_profile);
 
       if (transform)
         {
-          gimp_color_transform_process_pixels (transform,
+          ligma_color_transform_process_pixels (transform,
                                                format, &rgb,
                                                format, &rgb,
                                                1);
-          gimp_rgb_clamp (&rgb);
+          ligma_rgb_clamp (&rgb);
 
           g_object_unref (transform);
         }
@@ -305,9 +305,9 @@ gimp_pick_button_pick (GimpPickButton *button,
   g_signal_emit_by_name (button, "color-picked", &rgb);
 }
 
-/* entry point to this file, called from gimppickbutton.c */
+/* entry point to this file, called from ligmapickbutton.c */
 void
-_gimp_pick_button_default_pick (GimpPickButton *button)
+_ligma_pick_button_default_pick (LigmaPickButton *button)
 {
   GdkDisplay *display;
   GtkWidget  *widget;
@@ -347,9 +347,9 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
   gtk_grab_add (widget);
 
   g_signal_connect (widget, "button-press-event",
-                    G_CALLBACK (gimp_pick_button_mouse_press),
+                    G_CALLBACK (ligma_pick_button_mouse_press),
                     button);
   g_signal_connect (widget, "key-press-event",
-                    G_CALLBACK (gimp_pick_button_key_press),
+                    G_CALLBACK (ligma_pick_button_key_press),
                     button);
 }

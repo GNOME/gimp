@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * color-profile-dialog.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,24 +32,24 @@ typedef enum
 } ColorProfileDialogType;
 
 
-typedef void (* GimpColorProfileCallback) (GtkWidget                *dialog,
-                                           GimpImage                *image,
-                                           GimpColorProfile         *new_profile,
+typedef void (* LigmaColorProfileCallback) (GtkWidget                *dialog,
+                                           LigmaImage                *image,
+                                           LigmaColorProfile         *new_profile,
                                            GFile                    *new_file,
-                                           GimpColorRenderingIntent  intent,
+                                           LigmaColorRenderingIntent  intent,
                                            gboolean                  bpc,
                                            gpointer                  user_data);
 
 
 GtkWidget * color_profile_dialog_new (ColorProfileDialogType    dialog_type,
-                                      GimpImage                *image,
-                                      GimpContext              *context,
+                                      LigmaImage                *image,
+                                      LigmaContext              *context,
                                       GtkWidget                *parent,
-                                      GimpColorProfile         *current_profile,
-                                      GimpColorProfile         *default_profile,
-                                      GimpColorRenderingIntent  intent,
+                                      LigmaColorProfile         *current_profile,
+                                      LigmaColorProfile         *default_profile,
+                                      LigmaColorRenderingIntent  intent,
                                       gboolean                  bpc,
-                                      GimpColorProfileCallback  callback,
+                                      LigmaColorProfileCallback  callback,
                                       gpointer                  user_data);
 
 

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<gimp-ms-installer-config>
+<ligma-ms-installer-config>
 
   <section name="Messages">
     <!-- InfoBefore page is used instead of license page because the GPL only concerns distribution, not use, and as such doesn't have to be accepted -->
@@ -7,25 +7,25 @@
       <value>License Agreement</value>
     </config>
     <config name="AboutSetupNote">
-      <value>Setup built by Jernej Simonèiè, jernej-gimp@ena.si</value>
+      <value>Setup built by Jernej Simonèiè, jernej-ligma@ena.si</value>
     </config>
     <config name="WinVersionTooLowError">
-      <value>This version of GIMP requires Windows 7, or a newer version of Windows.</value>
+      <value>This version of LIGMA requires Windows 7, or a newer version of Windows.</value>
     </config>
     <config name="WindowsVersionNotSupported">
-      <value>This version of GIMP requires Windows 7, or a newer version of Windows.</value>
+      <value>This version of LIGMA requires Windows 7, or a newer version of Windows.</value>
     </config>
   </section>
 
   <section name="CustomMessages">
-    <!-- Shown before the wizard starts on development versions of GIMP -->
+    <!-- Shown before the wizard starts on development versions of LIGMA -->
     <config name="DevelopmentWarningTitle">
       <value>Development version</value>
     </config>
 
-    <!-- Shown before the wizard starts on development versions of GIMP -->
+    <!-- Shown before the wizard starts on development versions of LIGMA -->
     <config name="DevelopmentWarning">
-      <value>This is a development version of GIMP where some features may not be finished, or it may be unstable.%nThis version of GIMP is not intended for day-to-day work as it may be unstable, and you could lose your work.%nIf you encounter any problems, first verify that they haven't already been fixed in GIT before you contact the developers or report it in GIMP gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with installation anyway?</value>
+      <value>This is a development version of LIGMA where some features may not be finished, or it may be unstable.%nThis version of LIGMA is not intended for day-to-day work as it may be unstable, and you could lose your work.%nIf you encounter any problems, first verify that they haven't already been fixed in GIT before you contact the developers or report it in LIGMA gitlab:%n_https://gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with installation anyway?</value>
     </config>
     <config name="DevelopmentButtonContinue">
       <value>&amp;Continue</value>
@@ -41,14 +41,14 @@
     -->
 
     <config name="SSERequired">
-      <value>This version of GIMP requires a processor that supports SSE instructions.</value>
+      <value>This version of LIGMA requires a processor that supports SSE instructions.</value>
     </config>
 
     <config name="Require32BPPTitle">
       <value>Display settings problem</value>
     </config>
     <config name="Require32BPP">
-      <value>Setup has detected that your Windows is not running in 32 bits-per-pixel display mode. This has been known to cause stability problems with GIMP, so it's recommended to change the display colour depth to 32BPP before continuing.</value>
+      <value>Setup has detected that your Windows is not running in 32 bits-per-pixel display mode. This has been known to cause stability problems with LIGMA, so it's recommended to change the display colour depth to 32BPP before continuing.</value>
     </config>
     <config name="Require32BPPContinue">
       <value>&amp;Continue</value>
@@ -58,7 +58,7 @@
     </config>
 
     <config name="InstallOrCustomize">
-      <value>GIMP is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed.</value>
+      <value>LIGMA is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed.</value>
     </config>
     <config name="Install">
       <value>&amp;Install</value>
@@ -85,12 +85,12 @@
       <value>Description</value>
     </config>
     <!-- Components -->
-    <config name="ComponentsGimp">
-      <value>GIMP</value>
+    <config name="ComponentsLigma">
+      <value>LIGMA</value>
     </config>
     <!-- Components -->
-    <config name="ComponentsGimpDescription">
-      <value>GIMP and all default plug-ins</value>
+    <config name="ComponentsLigmaDescription">
+      <value>LIGMA and all default plug-ins</value>
     </config>
     <!-- Components -->
     <config name="ComponentsDeps">
@@ -98,7 +98,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsDepsDescription">
-      <value>Run-time libraries used by GIMP, including GTK Run-time Environment</value>
+      <value>Run-time libraries used by LIGMA, including GTK Run-time Environment</value>
     </config>
     <!-- Components -->
     <config name="ComponentsDebug">
@@ -106,7 +106,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsDebugDescription">
-      <value>Include information to help with debugging GIMP</value>
+      <value>Include information to help with debugging LIGMA</value>
     </config>
     <!-- Components -->
     <config name="ComponentsGtkWimp">
@@ -114,7 +114,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsGtkWimpDescription">
-      <value>Native Windows look for GIMP</value>
+      <value>Native Windows look for LIGMA</value>
     </config>
     <!-- Components -->
     <config name="ComponentsCompat">
@@ -138,7 +138,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsPythonDescription">
-      <value>Allows you to use GIMP plugins written in Python scripting language.</value>
+      <value>Allows you to use LIGMA plugins written in Python scripting language.</value>
     </config>
     <!-- Components -->
     <config name="ComponentsLua">
@@ -146,7 +146,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsLuaDescription">
-      <value>Allows you to use GIMP plugins written in Lua scripting language.</value>
+      <value>Allows you to use LIGMA plugins written in Lua scripting language.</value>
     </config>
     <!-- Components -->
     <config name="ComponentsMyPaint">
@@ -162,14 +162,14 @@
     </config>
     <!-- Components -->
     <config name="ComponentsGhostscriptDescription">
-      <value>Allow GIMP to load PostScript files</value>
+      <value>Allow LIGMA to load PostScript files</value>
     </config>
     <!-- Components, only when installing on x64 Windows -->
-    <config name="ComponentsGimp32">
+    <config name="ComponentsLigma32">
       <value>Support for 32-bit plug-ins</value>
     </config>
     <!-- Compoments, only when installing on x64 Windows -->
-    <config name="ComponentsGimp32Description">
+    <config name="ComponentsLigma32Description">
       <value>Include files necessary for using 32-bit plug-ins.%nRequired for Python support.</value>
     </config>
 
@@ -186,13 +186,13 @@
       <value>Create a &amp;Quick Launch icon</value>
     </config>
 
-    <config name="RemoveOldGIMP">
-      <value>Remove previous GIMP version</value>
+    <config name="RemoveOldLIGMA">
+      <value>Remove previous LIGMA version</value>
     </config>
 
     <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
     <config name="ErrorChangingEnviron">
-      <value>There was a problem updating GIMP's environment in %1. If you get any errors loading the plug-ins, try uninstalling and re-installing GIMP.</value>
+      <value>There was a problem updating LIGMA's environment in %1. If you get any errors loading the plug-ins, try uninstalling and re-installing LIGMA.</value>
     </config>
     <!-- This message should never appear (unless user runs out of disk space at the exact right moment) -->
     <config name="ErrorExtractingTemp">
@@ -207,17 +207,17 @@
       <value>Error updating MyPaint brushes info.</value>
     </config>
     <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
-    <config name="ErrorReadingGimpRC">
+    <config name="ErrorReadingLigmaRC">
       <value>There was an error updating %1.</value>
     </config>
     <!-- %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment) -->
-    <config name="ErrorUpdatingGimpRC">
-      <value>There was an error updating GIMP's configuration file %1.</value>
+    <config name="ErrorUpdatingLigmaRC">
+      <value>There was an error updating LIGMA's configuration file %1.</value>
     </config>
 
     <!-- Displayed in Explorer's right-click menu -->
-    <config name="OpenWithGimp">
-      <value>Edit with GIMP</value>
+    <config name="OpenWithLigma">
+      <value>Edit with LIGMA</value>
     </config>
 
     <!-- File associations page -->
@@ -230,11 +230,11 @@
     </config>
     <!-- File associations page -->
     <config name="SelectAssociationsInfo1">
-      <value>Select the file types you wish to associate with GIMP</value>
+      <value>Select the file types you wish to associate with LIGMA</value>
     </config>
     <!-- File associations page -->
     <config name="SelectAssociationsInfo2">
-      <value>This will make selected files open in GIMP when you double-click them in Explorer.</value>
+      <value>This will make selected files open in LIGMA when you double-click them in Explorer.</value>
     </config>
     <!-- File associations page -->
     <config name="SelectAssociationsSelectAll">
@@ -251,23 +251,23 @@
 
     <!-- Shown on summary screen just before starting the install -->
     <config name="ReadyMemoAssociations">
-      <value>File types to associate with GIMP:</value>
+      <value>File types to associate with LIGMA:</value>
     </config>
 
     <config name="RemovingOldVersion">
-      <value>Removing previous version of GIMP:</value>
+      <value>Removing previous version of LIGMA:</value>
     </config>
     <!-- %1 = version, %2 = installation directory; ran uninstaller, but it returned an error, or didn't remove everything -->
     <config name="RemovingOldVersionFailed">
-      <value>GIMP %1 cannot be installed over your currently installed GIMP version, and the automatic uninstall of old version has failed.%n%nPlease remove the previous version of GIMP yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
+      <value>LIGMA %1 cannot be installed over your currently installed LIGMA version, and the automatic uninstall of old version has failed.%n%nPlease remove the previous version of LIGMA yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
     </config>
     <!-- %1 = version, %2 = installation directory; couldn't find an uninstaller, or found several uninstallers -->
     <config name="RemovingOldVersionCantUninstall">
-      <value>GIMP %1 cannot be installed over your currently installed GIMP version, and Setup couldn't determine how to remove the old version automatically.%n%nPlease remove the previous version of GIMP and any add-ons yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
+      <value>LIGMA %1 cannot be installed over your currently installed LIGMA version, and Setup couldn't determine how to remove the old version automatically.%n%nPlease remove the previous version of LIGMA and any add-ons yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
     </config>
 
     <config name="RebootRequiredFirst">
-      <value>Previous GIMP version was removed successfully, but Windows has to be restarted before the Setup can continue.%n%nAfter restarting your computer, Setup will continue next time an administrator logs in.</value>
+      <value>Previous LIGMA version was removed successfully, but Windows has to be restarted before the Setup can continue.%n%nAfter restarting your computer, Setup will continue next time an administrator logs in.</value>
     </config>
 
     <!-- Displayed if restart settings couldn't be read, or if the setup couldn't re-run itself -->
@@ -281,9 +281,9 @@
 
     <!-- Displayed while the files are being extracted; note the capitalisation! -->
     <config name="Billboard1">
-      <value>Remember: GIMP is Free Software.%n%nPlease visit</value>
+      <value>Remember: LIGMA is Free Software.%n%nPlease visit</value>
     </config>
-    <!-- www.gimp.org (displayed between Billboard1 and Billboard2) -->
+    <!-- www.ligma.org (displayed between Billboard1 and Billboard2) -->
     <config name="Billboard2">
       <value>for free updates.</value>
     </config>
@@ -291,22 +291,22 @@
     <config name="SettingUpAssociations">
       <value>Setting up file associations...</value>
     </config>
-    <config name="SettingUpPyGimp">
-      <value>Setting up environment for GIMP Python extension...</value>
+    <config name="SettingUpPyLigma">
+      <value>Setting up environment for LIGMA Python extension...</value>
     </config>
     <config name="SettingUpMyPaint">
       <value>Setting up MyPaint brushes...</value>
     </config>
     <config name="SettingUpEnvironment">
-      <value>Setting up GIMP environment...</value>
+      <value>Setting up LIGMA environment...</value>
     </config>
-    <config name="SettingUpGimpRC">
-      <value>Setting up GIMP configuration for 32-bit plug-in support...</value>
+    <config name="SettingUpLigmaRC">
+      <value>Setting up LIGMA configuration for 32-bit plug-in support...</value>
     </config>
 
     <!-- Displayed on last page -->
-    <config name="LaunchGimp">
-      <value>Launch GIMP</value>
+    <config name="LaunchLigma">
+      <value>Launch LIGMA</value>
     </config>
 
     <!-- Shown during uninstall when removing add-ons -->
@@ -319,8 +319,8 @@
     </config>
 
     <!-- Used by installer for add-ons (currently only help) -->
-    <config name="DirNotGimp">
-      <value>GIMP does not appear to be installed in the selected directory. Continue anyway?</value>
+    <config name="DirNotLigma">
+      <value>LIGMA does not appear to be installed in the selected directory. Continue anyway?</value>
     </config>
   </section>
-</gimp-ms-installer-config>
+</ligma-ms-installer-config>

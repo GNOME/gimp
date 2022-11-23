@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
+ * ligma_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpbrush-private.h"
-#include "gimpbrushgenerated.h"
-#include "gimpbrushgenerated-load.h"
-#include "gimpbrushgenerated-save.h"
-#include "gimptempbuf.h"
+#include "ligmabrush-private.h"
+#include "ligmabrushgenerated.h"
+#include "ligmabrushgenerated-load.h"
+#include "ligmabrushgenerated-save.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define OVERSAMPLING 4
@@ -53,46 +53,46 @@ enum
 
 /*  local function prototypes  */
 
-static void          gimp_brush_generated_set_property  (GObject      *object,
+static void          ligma_brush_generated_set_property  (GObject      *object,
                                                          guint         property_id,
                                                          const GValue *value,
                                                          GParamSpec   *pspec);
-static void          gimp_brush_generated_get_property  (GObject      *object,
+static void          ligma_brush_generated_get_property  (GObject      *object,
                                                          guint         property_id,
                                                          GValue       *value,
                                                          GParamSpec   *pspec);
 
-static void          gimp_brush_generated_dirty         (GimpData     *data);
-static const gchar * gimp_brush_generated_get_extension (GimpData     *data);
-static void          gimp_brush_generated_copy          (GimpData     *data,
-                                                         GimpData     *src_data);
+static void          ligma_brush_generated_dirty         (LigmaData     *data);
+static const gchar * ligma_brush_generated_get_extension (LigmaData     *data);
+static void          ligma_brush_generated_copy          (LigmaData     *data,
+                                                         LigmaData     *src_data);
 
-static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
+static void          ligma_brush_generated_transform_size(LigmaBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
                                                          gdouble       angle,
                                                          gboolean      reflect,
                                                          gint         *width,
                                                          gint         *height);
-static GimpTempBuf * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
+static LigmaTempBuf * ligma_brush_generated_transform_mask(LigmaBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
                                                          gdouble       angle,
                                                          gboolean      reflect,
                                                          gdouble       hardness);
 
-static GimpTempBuf * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
-                                                         GimpBrushGeneratedShape  shape,
+static LigmaTempBuf * ligma_brush_generated_calc          (LigmaBrushGenerated      *brush,
+                                                         LigmaBrushGeneratedShape  shape,
                                                          gfloat                   radius,
                                                          gint                     spikes,
                                                          gfloat                   hardness,
                                                          gfloat                   aspect_ratio,
                                                          gfloat                   angle,
                                                          gboolean                 reflect,
-                                                         GimpVector2             *xaxis,
-                                                         GimpVector2             *yaxis);
-static void          gimp_brush_generated_get_size      (GimpBrushGenerated      *gbrush,
-                                                         GimpBrushGeneratedShape  shape,
+                                                         LigmaVector2             *xaxis,
+                                                         LigmaVector2             *yaxis);
+static void          ligma_brush_generated_get_size      (LigmaBrushGenerated      *gbrush,
+                                                         LigmaBrushGeneratedShape  shape,
                                                          gfloat                   radius,
                                                          gint                     spikes,
                                                          gfloat                   hardness,
@@ -103,60 +103,60 @@ static void          gimp_brush_generated_get_size      (GimpBrushGenerated     
                                                          gint                    *height,
                                                          gdouble                 *_s,
                                                          gdouble                 *_c,
-                                                         GimpVector2             *_x_axis,
-                                                         GimpVector2             *_y_axis);
+                                                         LigmaVector2             *_x_axis,
+                                                         LigmaVector2             *_y_axis);
 
 
-G_DEFINE_TYPE (GimpBrushGenerated, gimp_brush_generated, GIMP_TYPE_BRUSH)
+G_DEFINE_TYPE (LigmaBrushGenerated, ligma_brush_generated, LIGMA_TYPE_BRUSH)
 
-#define parent_class gimp_brush_generated_parent_class
+#define parent_class ligma_brush_generated_parent_class
 
 
 static void
-gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
+ligma_brush_generated_class_init (LigmaBrushGeneratedClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass  *data_class   = GIMP_DATA_CLASS (klass);
-  GimpBrushClass *brush_class  = GIMP_BRUSH_CLASS (klass);
+  LigmaDataClass  *data_class   = LIGMA_DATA_CLASS (klass);
+  LigmaBrushClass *brush_class  = LIGMA_BRUSH_CLASS (klass);
 
-  object_class->set_property  = gimp_brush_generated_set_property;
-  object_class->get_property  = gimp_brush_generated_get_property;
+  object_class->set_property  = ligma_brush_generated_set_property;
+  object_class->get_property  = ligma_brush_generated_get_property;
 
-  data_class->save            = gimp_brush_generated_save;
-  data_class->dirty           = gimp_brush_generated_dirty;
-  data_class->get_extension   = gimp_brush_generated_get_extension;
-  data_class->copy            = gimp_brush_generated_copy;
+  data_class->save            = ligma_brush_generated_save;
+  data_class->dirty           = ligma_brush_generated_dirty;
+  data_class->get_extension   = ligma_brush_generated_get_extension;
+  data_class->copy            = ligma_brush_generated_copy;
 
-  brush_class->transform_size = gimp_brush_generated_transform_size;
-  brush_class->transform_mask = gimp_brush_generated_transform_mask;
+  brush_class->transform_size = ligma_brush_generated_transform_size;
+  brush_class->transform_mask = ligma_brush_generated_transform_mask;
 
   g_object_class_install_property (object_class, PROP_SHAPE,
                                    g_param_spec_enum ("shape", NULL,
                                                       _("Brush Shape"),
-                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                      GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      LIGMA_BRUSH_GENERATED_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL,
                                                         _("Brush Radius"),
                                                         0.1, 4000.0, 5.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SPIKES,
                                    g_param_spec_int    ("spikes", NULL,
                                                         _("Brush Spikes"),
                                                         2, 20, 2,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HARDNESS,
                                    g_param_spec_double ("hardness", NULL,
                                                         _("Brush Hardness"),
                                                         0.0, 1.0, 0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
@@ -164,21 +164,21 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                                         NULL,
                                                         _("Brush Aspect Ratio"),
                                                         1.0, 20.0, 1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle", NULL,
                                                         _("Brush Angle"),
                                                         0.0, 180.0, 0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_brush_generated_init (GimpBrushGenerated *brush)
+ligma_brush_generated_init (LigmaBrushGenerated *brush)
 {
-  brush->shape        = GIMP_BRUSH_GENERATED_CIRCLE;
+  brush->shape        = LIGMA_BRUSH_GENERATED_CIRCLE;
   brush->radius       = 5.0;
   brush->hardness     = 0.0;
   brush->aspect_ratio = 1.0;
@@ -186,32 +186,32 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
 }
 
 static void
-gimp_brush_generated_set_property (GObject      *object,
+ligma_brush_generated_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (object);
+  LigmaBrushGenerated *brush = LIGMA_BRUSH_GENERATED (object);
 
   switch (property_id)
     {
     case PROP_SHAPE:
-      gimp_brush_generated_set_shape (brush, g_value_get_enum (value));
+      ligma_brush_generated_set_shape (brush, g_value_get_enum (value));
       break;
     case PROP_RADIUS:
-      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      ligma_brush_generated_set_radius (brush, g_value_get_double (value));
       break;
     case PROP_SPIKES:
-      gimp_brush_generated_set_spikes (brush, g_value_get_int (value));
+      ligma_brush_generated_set_spikes (brush, g_value_get_int (value));
       break;
     case PROP_HARDNESS:
-      gimp_brush_generated_set_hardness (brush, g_value_get_double (value));
+      ligma_brush_generated_set_hardness (brush, g_value_get_double (value));
       break;
     case PROP_ASPECT_RATIO:
-      gimp_brush_generated_set_aspect_ratio (brush, g_value_get_double (value));
+      ligma_brush_generated_set_aspect_ratio (brush, g_value_get_double (value));
       break;
     case PROP_ANGLE:
-      gimp_brush_generated_set_angle (brush, g_value_get_double (value));
+      ligma_brush_generated_set_angle (brush, g_value_get_double (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -220,12 +220,12 @@ gimp_brush_generated_set_property (GObject      *object,
 }
 
 static void
-gimp_brush_generated_get_property (GObject    *object,
+ligma_brush_generated_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (object);
+  LigmaBrushGenerated *brush = LIGMA_BRUSH_GENERATED (object);
 
   switch (property_id)
     {
@@ -254,14 +254,14 @@ gimp_brush_generated_get_property (GObject    *object,
 }
 
 static void
-gimp_brush_generated_dirty (GimpData *data)
+ligma_brush_generated_dirty (LigmaData *data)
 {
-  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
-  GimpBrush          *gbrush = GIMP_BRUSH (brush);
+  LigmaBrushGenerated *brush  = LIGMA_BRUSH_GENERATED (data);
+  LigmaBrush          *gbrush = LIGMA_BRUSH (brush);
 
-  g_clear_pointer (&gbrush->priv->mask, gimp_temp_buf_unref);
+  g_clear_pointer (&gbrush->priv->mask, ligma_temp_buf_unref);
 
-  gbrush->priv->mask = gimp_brush_generated_calc (brush,
+  gbrush->priv->mask = ligma_brush_generated_calc (brush,
                                                   brush->shape,
                                                   brush->radius,
                                                   brush->spikes,
@@ -272,26 +272,26 @@ gimp_brush_generated_dirty (GimpData *data)
                                                   &gbrush->priv->x_axis,
                                                   &gbrush->priv->y_axis);
 
-  GIMP_DATA_CLASS (parent_class)->dirty (data);
+  LIGMA_DATA_CLASS (parent_class)->dirty (data);
 }
 
 static const gchar *
-gimp_brush_generated_get_extension (GimpData *data)
+ligma_brush_generated_get_extension (LigmaData *data)
 {
-  return GIMP_BRUSH_GENERATED_FILE_EXTENSION;
+  return LIGMA_BRUSH_GENERATED_FILE_EXTENSION;
 }
 
 static void
-gimp_brush_generated_copy (GimpData *data,
-                           GimpData *src_data)
+ligma_brush_generated_copy (LigmaData *data,
+                           LigmaData *src_data)
 {
-  GimpBrushGenerated *brush     = GIMP_BRUSH_GENERATED (data);
-  GimpBrushGenerated *src_brush = GIMP_BRUSH_GENERATED (src_data);
+  LigmaBrushGenerated *brush     = LIGMA_BRUSH_GENERATED (data);
+  LigmaBrushGenerated *src_brush = LIGMA_BRUSH_GENERATED (src_data);
 
-  gimp_data_freeze (data);
+  ligma_data_freeze (data);
 
-  gimp_brush_set_spacing (GIMP_BRUSH (brush),
-                          gimp_brush_get_spacing (GIMP_BRUSH (src_brush)));
+  ligma_brush_set_spacing (LIGMA_BRUSH (brush),
+                          ligma_brush_get_spacing (LIGMA_BRUSH (src_brush)));
 
   brush->shape        = src_brush->shape;
   brush->radius       = src_brush->radius;
@@ -300,11 +300,11 @@ gimp_brush_generated_copy (GimpData *data,
   brush->aspect_ratio = src_brush->aspect_ratio;
   brush->angle        = src_brush->angle;
 
-  gimp_data_thaw (data);
+  ligma_data_thaw (data);
 }
 
 static void
-gimp_brush_generated_transform_size (GimpBrush *gbrush,
+ligma_brush_generated_transform_size (LigmaBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
@@ -312,7 +312,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                      gint      *width,
                                      gint      *height)
 {
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
+  LigmaBrushGenerated *brush = LIGMA_BRUSH_GENERATED (gbrush);
   gdouble             ratio;
 
   ratio = fabs (aspect_ratio) * 19.0 / 20.0 + 1.0;
@@ -328,7 +328,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
   angle  = fmod (fmod (angle, 1.0) + 1.0, 1.0);
   angle *= 360;
 
-  gimp_brush_generated_get_size (brush,
+  ligma_brush_generated_get_size (brush,
                                  brush->shape,
                                  brush->radius * scale,
                                  brush->spikes,
@@ -340,15 +340,15 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                  NULL, NULL, NULL, NULL);
 }
 
-static GimpTempBuf *
-gimp_brush_generated_transform_mask (GimpBrush *gbrush,
+static LigmaTempBuf *
+ligma_brush_generated_transform_mask (LigmaBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
                                      gboolean   reflect,
                                      gdouble    hardness)
 {
-  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
+  LigmaBrushGenerated *brush  = LIGMA_BRUSH_GENERATED (gbrush);
   gdouble             ratio;
 
   ratio = fabs (aspect_ratio) * 19.0 / 20.0 + 1.0;
@@ -370,10 +370,10 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
       reflect  == FALSE               &&
       hardness == brush->hardness)
     {
-      return gimp_temp_buf_copy (gimp_brush_get_mask (gbrush));
+      return ligma_temp_buf_copy (ligma_brush_get_mask (gbrush));
     }
 
-  return gimp_brush_generated_calc (brush,
+  return ligma_brush_generated_calc (brush,
                                     brush->shape,
                                     brush->radius * scale,
                                     brush->spikes,
@@ -406,7 +406,7 @@ gauss (gdouble f)
 
 /* set up lookup table */
 static gfloat *
-gimp_brush_generated_calc_lut (gdouble radius,
+ligma_brush_generated_calc_lut (gdouble radius,
                                gdouble hardness)
 {
   gfloat  *lookup;
@@ -460,32 +460,32 @@ gimp_brush_generated_calc_lut (gdouble radius,
   return lookup;
 }
 
-static GimpTempBuf *
-gimp_brush_generated_calc (GimpBrushGenerated      *brush,
-                           GimpBrushGeneratedShape  shape,
+static LigmaTempBuf *
+ligma_brush_generated_calc (LigmaBrushGenerated      *brush,
+                           LigmaBrushGeneratedShape  shape,
                            gfloat                   radius,
                            gint                     spikes,
                            gfloat                   hardness,
                            gfloat                   aspect_ratio,
                            gfloat                   angle,
                            gboolean                 reflect,
-                           GimpVector2             *xaxis,
-                           GimpVector2             *yaxis)
+                           LigmaVector2             *xaxis,
+                           LigmaVector2             *yaxis)
 {
   gfloat      *centerp;
   gfloat      *lookup;
   gfloat       a;
   gint         x, y;
   gdouble      c, s, cs, ss;
-  GimpVector2  x_axis;
-  GimpVector2  y_axis;
-  GimpTempBuf *mask;
+  LigmaVector2  x_axis;
+  LigmaVector2  y_axis;
+  LigmaTempBuf *mask;
   gint         width;
   gint         height;
   gint         half_width;
   gint         half_height;
 
-  gimp_brush_generated_get_size (brush,
+  ligma_brush_generated_get_size (brush,
                                  shape,
                                  radius,
                                  spikes,
@@ -496,16 +496,16 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                                  &width, &height,
                                  &s, &c, &x_axis, &y_axis);
 
-  mask = gimp_temp_buf_new (width, height,
+  mask = ligma_temp_buf_new (width, height,
                             babl_format ("Y float"));
 
   half_width  = width  / 2;
   half_height = height / 2;
 
-  centerp = (gfloat *) gimp_temp_buf_get_data (mask) +
+  centerp = (gfloat *) ligma_temp_buf_get_data (mask) +
             half_height * width + half_width;
 
-  lookup = gimp_brush_generated_calc_lut (radius, hardness);
+  lookup = ligma_brush_generated_calc_lut (radius, hardness);
 
   cs = cos (- 2 * G_PI / spikes);
   ss = sin (- 2 * G_PI / spikes);
@@ -539,13 +539,13 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
 
           switch (shape)
             {
-            case GIMP_BRUSH_GENERATED_CIRCLE:
+            case LIGMA_BRUSH_GENERATED_CIRCLE:
               d = sqrt (SQR (tx) + SQR (ty));
               break;
-            case GIMP_BRUSH_GENERATED_SQUARE:
+            case LIGMA_BRUSH_GENERATED_SQUARE:
               d = MAX (fabs (tx), fabs (ty));
               break;
-            case GIMP_BRUSH_GENERATED_DIAMOND:
+            case LIGMA_BRUSH_GENERATED_DIAMOND:
               d = fabs (tx) + fabs (ty);
               break;
             }
@@ -573,13 +573,13 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   return mask;
 }
 
-/* This function is shared between gimp_brush_generated_transform_size and
- * gimp_brush_generated_calc, therefore we provide a bunch of optional
+/* This function is shared between ligma_brush_generated_transform_size and
+ * ligma_brush_generated_calc, therefore we provide a bunch of optional
  * pointers for returnvalues.
  */
 static void
-gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
-                               GimpBrushGeneratedShape  shape,
+ligma_brush_generated_get_size (LigmaBrushGenerated      *gbrush,
+                               LigmaBrushGeneratedShape  shape,
                                gfloat                   radius,
                                gint                     spikes,
                                gfloat                   hardness,
@@ -590,16 +590,16 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
                                gint                    *height,
                                gdouble                 *_s,
                                gdouble                 *_c,
-                               GimpVector2             *_x_axis,
-                               GimpVector2             *_y_axis)
+                               LigmaVector2             *_x_axis,
+                               LigmaVector2             *_y_axis)
 {
   gdouble      half_width  = 0.0;
   gdouble      half_height = 0.0;
   gint         w, h;
   gdouble      c, s;
   gdouble      short_radius;
-  GimpVector2  x_axis;
-  GimpVector2  y_axis;
+  LigmaVector2  x_axis;
+  LigmaVector2  y_axis;
 
   /* Since floatongpoint is not really accurate,
    * we need to round to limit the errors.
@@ -612,8 +612,8 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
 
   angle_in_degrees = RINT (angle_in_degrees * 1000.0) / 1000.0;
 
-  s = sin (gimp_deg_to_rad (angle_in_degrees));
-  c = cos (gimp_deg_to_rad (angle_in_degrees));
+  s = sin (ligma_deg_to_rad (angle_in_degrees));
+  c = cos (ligma_deg_to_rad (angle_in_degrees));
 
   if (reflect)
     c = -c;
@@ -627,17 +627,17 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
 
   switch (shape)
     {
-    case GIMP_BRUSH_GENERATED_CIRCLE:
+    case LIGMA_BRUSH_GENERATED_CIRCLE:
       half_width  = sqrt (x_axis.x * x_axis.x + y_axis.x * y_axis.x);
       half_height = sqrt (x_axis.y * x_axis.y + y_axis.y * y_axis.y);
       break;
 
-    case GIMP_BRUSH_GENERATED_SQUARE:
+    case LIGMA_BRUSH_GENERATED_SQUARE:
       half_width  = fabs (x_axis.x) + fabs (y_axis.x);
       half_height = fabs (x_axis.y) + fabs (y_axis.y);
       break;
 
-    case GIMP_BRUSH_GENERATED_DIAMOND:
+    case LIGMA_BRUSH_GENERATED_DIAMOND:
       half_width  = MAX (fabs (x_axis.x), fabs (y_axis.x));
       half_height = MAX (fabs (x_axis.y), fabs (y_axis.y));
       break;
@@ -662,7 +662,7 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
   *height = h;
 
   /*  These will typically be set then this function is called by
-   *  gimp_brush_generated_calc, which needs the values in its algorithms.
+   *  ligma_brush_generated_calc, which needs the values in its algorithms.
    */
   if (_s != NULL)
     *_s = s;
@@ -680,23 +680,23 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
 
 /*  public functions  */
 
-GimpData *
-gimp_brush_generated_new (const gchar             *name,
-                          GimpBrushGeneratedShape  shape,
+LigmaData *
+ligma_brush_generated_new (const gchar             *name,
+                          LigmaBrushGeneratedShape  shape,
                           gfloat                   radius,
                           gint                     spikes,
                           gfloat                   hardness,
                           gfloat                   aspect_ratio,
                           gfloat                   angle)
 {
-  GimpBrushGenerated *brush;
+  LigmaBrushGenerated *brush;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
+  brush = g_object_new (LIGMA_TYPE_BRUSH_GENERATED,
                         "name",         name,
-                        "mime-type",    "application/x-gimp-brush-generated",
+                        "mime-type",    "application/x-ligma-brush-generated",
                         "spacing",      20.0,
                         "shape",        shape,
                         "radius",       radius,
@@ -706,32 +706,32 @@ gimp_brush_generated_new (const gchar             *name,
                         "angle",        angle,
                         NULL);
 
-  return GIMP_DATA (brush);
+  return LIGMA_DATA (brush);
 }
 
-GimpBrushGeneratedShape
-gimp_brush_generated_set_shape (GimpBrushGenerated      *brush,
-                                GimpBrushGeneratedShape  shape)
+LigmaBrushGeneratedShape
+ligma_brush_generated_set_shape (LigmaBrushGenerated      *brush,
+                                LigmaBrushGeneratedShape  shape)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush),
-                        GIMP_BRUSH_GENERATED_CIRCLE);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush),
+                        LIGMA_BRUSH_GENERATED_CIRCLE);
 
   if (brush->shape != shape)
     {
       brush->shape = shape;
 
       g_object_notify (G_OBJECT (brush), "shape");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->shape;
 }
 
 gfloat
-gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
+ligma_brush_generated_set_radius (LigmaBrushGenerated *brush,
                                  gfloat              radius)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   radius = CLAMP (radius, 0.0, 32767.0);
 
@@ -740,17 +740,17 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
       brush->radius = radius;
 
       g_object_notify (G_OBJECT (brush), "radius");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->radius;
 }
 
 gint
-gimp_brush_generated_set_spikes (GimpBrushGenerated *brush,
+ligma_brush_generated_set_spikes (LigmaBrushGenerated *brush,
                                  gint                spikes)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1);
 
   spikes = CLAMP (spikes, 2, 20);
 
@@ -759,17 +759,17 @@ gimp_brush_generated_set_spikes (GimpBrushGenerated *brush,
       brush->spikes = spikes;
 
       g_object_notify (G_OBJECT (brush), "spikes");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->spikes;
 }
 
 gfloat
-gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
+ligma_brush_generated_set_hardness (LigmaBrushGenerated *brush,
                                    gfloat              hardness)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   hardness = CLAMP (hardness, 0.0, 1.0);
 
@@ -778,17 +778,17 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
       brush->hardness = hardness;
 
       g_object_notify (G_OBJECT (brush), "hardness");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->hardness;
 }
 
 gfloat
-gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
+ligma_brush_generated_set_aspect_ratio (LigmaBrushGenerated *brush,
                                        gfloat              ratio)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   ratio = CLAMP (ratio, 1.0, 1000.0);
 
@@ -797,17 +797,17 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
       brush->aspect_ratio = ratio;
 
       g_object_notify (G_OBJECT (brush), "aspect-ratio");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->aspect_ratio;
 }
 
 gfloat
-gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
+ligma_brush_generated_set_angle (LigmaBrushGenerated *brush,
                                 gfloat              angle)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   if (angle < 0.0)
     angle = -1.0 * fmod (angle, 180.0);
@@ -819,57 +819,57 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
       brush->angle = angle;
 
       g_object_notify (G_OBJECT (brush), "angle");
-      gimp_data_dirty (GIMP_DATA (brush));
+      ligma_data_dirty (LIGMA_DATA (brush));
     }
 
   return brush->angle;
 }
 
-GimpBrushGeneratedShape
-gimp_brush_generated_get_shape (GimpBrushGenerated *brush)
+LigmaBrushGeneratedShape
+ligma_brush_generated_get_shape (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush),
-                        GIMP_BRUSH_GENERATED_CIRCLE);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush),
+                        LIGMA_BRUSH_GENERATED_CIRCLE);
 
   return brush->shape;
 }
 
 gfloat
-gimp_brush_generated_get_radius (GimpBrushGenerated *brush)
+ligma_brush_generated_get_radius (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->radius;
 }
 
 gint
-gimp_brush_generated_get_spikes (GimpBrushGenerated *brush)
+ligma_brush_generated_get_spikes (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1);
 
   return brush->spikes;
 }
 
 gfloat
-gimp_brush_generated_get_hardness (GimpBrushGenerated *brush)
+ligma_brush_generated_get_hardness (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->hardness;
 }
 
 gfloat
-gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated *brush)
+ligma_brush_generated_get_aspect_ratio (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->aspect_ratio;
 }
 
 gfloat
-gimp_brush_generated_get_angle (GimpBrushGenerated *brush)
+ligma_brush_generated_get_angle (LigmaBrushGenerated *brush)
 {
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->angle;
 }

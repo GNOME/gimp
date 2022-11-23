@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationbrightnesscontrast.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationbrightnesscontrast.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_BRIGHTNESS_CONTRAST_H__
-#define __GIMP_OPERATION_BRIGHTNESS_CONTRAST_H__
+#ifndef __LIGMA_OPERATION_BRIGHTNESS_CONTRAST_H__
+#define __LIGMA_OPERATION_BRIGHTNESS_CONTRAST_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST            (gimp_operation_brightness_contrast_get_type ())
-#define GIMP_OPERATION_BRIGHTNESS_CONTRAST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST, GimpOperationBrightnessContrast))
-#define GIMP_OPERATION_BRIGHTNESS_CONTRAST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST, GimpOperationBrightnessContrastClass))
-#define GIMP_IS_OPERATION_BRIGHTNESS_CONTRAST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST))
-#define GIMP_IS_OPERATION_BRIGHTNESS_CONTRAST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST))
-#define GIMP_OPERATION_BRIGHTNESS_CONTRAST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST, GimpOperationBrightnessContrastClass))
+#define LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST            (ligma_operation_brightness_contrast_get_type ())
+#define LIGMA_OPERATION_BRIGHTNESS_CONTRAST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST, LigmaOperationBrightnessContrast))
+#define LIGMA_OPERATION_BRIGHTNESS_CONTRAST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST, LigmaOperationBrightnessContrastClass))
+#define LIGMA_IS_OPERATION_BRIGHTNESS_CONTRAST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST))
+#define LIGMA_IS_OPERATION_BRIGHTNESS_CONTRAST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST))
+#define LIGMA_OPERATION_BRIGHTNESS_CONTRAST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_BRIGHTNESS_CONTRAST, LigmaOperationBrightnessContrastClass))
 
 
-typedef struct _GimpOperationBrightnessContrast      GimpOperationBrightnessContrast;
-typedef struct _GimpOperationBrightnessContrastClass GimpOperationBrightnessContrastClass;
+typedef struct _LigmaOperationBrightnessContrast      LigmaOperationBrightnessContrast;
+typedef struct _LigmaOperationBrightnessContrastClass LigmaOperationBrightnessContrastClass;
 
-struct _GimpOperationBrightnessContrast
+struct _LigmaOperationBrightnessContrast
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 };
 
-struct _GimpOperationBrightnessContrastClass
+struct _LigmaOperationBrightnessContrastClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_brightness_contrast_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_brightness_contrast_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_BRIGHTNESS_CONTRAST_H__ */
+#endif /* __LIGMA_OPERATION_BRIGHTNESS_CONTRAST_H__ */

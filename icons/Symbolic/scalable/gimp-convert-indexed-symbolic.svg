@@ -15,7 +15,7 @@
    width="16.000572"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-convert-indexed.svg">
+   sodipodi:docname="ligma-convert-indexed.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -241,7 +241,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-convert-indexed"
+       id="ligma-convert-indexed"
        transform="translate(143.53403,255.73734)">
       <g
          id="g3988"

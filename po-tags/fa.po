@@ -1,12 +1,12 @@
-# Persian translation for gimp.
-# Copyright (C) 2012 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Persian translation for ligma.
+# Copyright (C) 2012 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # mearaji <mehdi.mearaji@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=ligma&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-04-03 14:58+0000\n"
 "PO-Revision-Date: 2012-04-04 13:10+0330\n"
 "Last-Translator: mearaji <mehdi.mearaji@gmail.com>\n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "گرد"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "تیره"
 

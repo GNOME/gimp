@@ -2,7 +2,7 @@
 /* Alexander.Schulz@stud.uni-karlsruhe.de                */
 
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,12 +27,12 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "bmp.h"
 #include "bmp-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #if !defined(WIN32) || defined(__MINGW32__)
@@ -44,7 +44,7 @@
 #endif
 
 
-static GimpImage * ReadImage (FILE                 *fd,
+static LigmaImage * ReadImage (FILE                 *fd,
                               GFile                *file,
                               gint                  width,
                               gint                  height,
@@ -200,7 +200,7 @@ ReadChannelMasks (guint32       *tmp,
   return TRUE;
 }
 
-GimpImage *
+LigmaImage *
 load_image (GFile  *file,
             GError **error)
 {
@@ -211,12 +211,12 @@ load_image (GFile  *file,
   gint            ColormapSize, rowbytes, Maps;
   gboolean        gray = FALSE;
   guchar          ColorMap[256][3];
-  GimpImage      *image = NULL;
+  LigmaImage      *image = NULL;
   gchar           magick[2];
   BitmapChannel   masks[4];
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fd = g_fopen (g_file_peek_path (file), "rb");
 
@@ -224,7 +224,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
@@ -240,7 +240,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -250,7 +250,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s' is not a valid BMP file"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -258,7 +258,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s' is not a valid BMP file"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -267,7 +267,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -282,7 +282,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -296,7 +296,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -323,7 +323,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -355,7 +355,7 @@ load_image (GFile  *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading BMP file header from '%s'"),
-                           gimp_file_get_utf8_name (file));
+                           ligma_file_get_utf8_name (file));
               goto out;
             }
 
@@ -380,7 +380,7 @@ load_image (GFile  *file,
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported compression (%u) in BMP file from '%s'"),
                        bitmap_head.biCompr,
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
         }
 
 #ifdef DEBUG
@@ -396,7 +396,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -427,7 +427,7 @@ load_image (GFile  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -469,7 +469,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error reading BMP file header from '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -489,7 +489,7 @@ load_image (GFile  *file,
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -514,7 +514,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -525,7 +525,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -533,7 +533,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -542,7 +542,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -554,7 +554,7 @@ load_image (GFile  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -612,20 +612,20 @@ load_image (GFile  *file,
       gdouble xresolution;
       gdouble yresolution;
 
-      /* I don't agree with scott's feeling that Gimp should be trying
+      /* I don't agree with scott's feeling that Ligma should be trying
        * to "fix" metric resolution translations, in the long term
-       * Gimp should be SI (metric) anyway, but we haven't told the
+       * Ligma should be SI (metric) anyway, but we haven't told the
        * Americans that yet
        */
 
       xresolution = bitmap_head.biXPels * 0.0254;
       yresolution = bitmap_head.biYPels * 0.0254;
 
-      gimp_image_set_resolution (image, xresolution, yresolution);
+      ligma_image_set_resolution (image, xresolution, yresolution);
     }
 
   if (bitmap_head.biHeight < 0)
-    gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
+    ligma_image_flip (image, LIGMA_ORIENTATION_VERTICAL);
 
 out:
   if (fd)
@@ -634,7 +634,7 @@ out:
   return image;
 }
 
-static GimpImage *
+static LigmaImage *
 ReadImage (FILE                 *fd,
            GFile                *file,
            gint                  width,
@@ -651,17 +651,17 @@ ReadImage (FILE                 *fd,
   guchar             v, n;
   gint               xpos = 0;
   gint               ypos = 0;
-  GimpImage         *image;
-  GimpLayer         *layer;
+  LigmaImage         *image;
+  LigmaLayer         *layer;
   GeglBuffer        *buffer;
   guchar            *dest, *temp, *row_buf;
-  guchar             gimp_cmap[768];
+  guchar             ligma_cmap[768];
   gushort            rgb;
   glong              rowstride, channels;
   gint               i, i_max, j, cur_progress, max_progress;
   gint               total_bytes_read;
-  GimpImageBaseType  base_type;
-  GimpImageType      image_type;
+  LigmaImageBaseType  base_type;
+  LigmaImageType      image_type;
   guint32            px32;
 
   if (! (compression == BI_RGB || compression == BI_BITFIELDS ||
@@ -674,22 +674,22 @@ ReadImage (FILE                 *fd,
       return NULL;
     }
 
-  /* Make a new image in GIMP */
+  /* Make a new image in LIGMA */
 
   switch (bpp)
     {
     case 32:
     case 24:
     case 16:
-      base_type = GIMP_RGB;
+      base_type = LIGMA_RGB;
       if (masks[3].mask != 0)
         {
-          image_type = GIMP_RGBA_IMAGE;
+          image_type = LIGMA_RGBA_IMAGE;
           channels = 4;
         }
       else
         {
-          image_type = GIMP_RGB_IMAGE;
+          image_type = LIGMA_RGB_IMAGE;
           channels = 3;
         }
       if (bpp == 24 && compression == BI_BITFIELDS)
@@ -701,13 +701,13 @@ ReadImage (FILE                 *fd,
     case 1:
       if (gray)
         {
-          base_type = GIMP_GRAY;
-          image_type = GIMP_GRAY_IMAGE;
+          base_type = LIGMA_GRAY;
+          image_type = LIGMA_GRAY_IMAGE;
         }
       else
         {
-          base_type = GIMP_INDEXED;
-          image_type = GIMP_INDEXED_IMAGE;
+          base_type = LIGMA_INDEXED;
+          image_type = LIGMA_INDEXED_IMAGE;
         }
       if (compression == BI_BITFIELDS)
         g_printerr ("Loading BMP with invalid combination of %d bpp and BI_BITFIELDS compression.\n",
@@ -721,27 +721,27 @@ ReadImage (FILE                 *fd,
       return NULL;
     }
 
-  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
+  if ((width < 0) || (width > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       return NULL;
     }
 
-  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
+  if ((height < 0) || (height > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       return NULL;
     }
 
-  image = gimp_image_new (width, height, base_type);
-  layer = gimp_layer_new (image, _("Background"),
+  image = ligma_image_new (width, height, base_type);
+  layer = ligma_layer_new (image, _("Background"),
                           width, height,
                           image_type, 100,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
   /* use g_malloc0 to initialize the dest buffer so that unspecified
      pixels in RLE bitmaps show up as the zeroth element in the palette.
@@ -779,7 +779,7 @@ ReadImage (FILE                 *fd,
 
             cur_progress++;
             if ((cur_progress % 5) == 0)
-              gimp_progress_update ((gdouble) cur_progress /
+              ligma_progress_update ((gdouble) cur_progress /
                                     (gdouble) max_progress);
           }
       }
@@ -805,7 +805,7 @@ ReadImage (FILE                 *fd,
 
             cur_progress++;
             if ((cur_progress % 5) == 0)
-              gimp_progress_update ((gdouble) cur_progress /
+              ligma_progress_update ((gdouble) cur_progress /
                                     (gdouble) max_progress);
           }
       }
@@ -834,7 +834,7 @@ ReadImage (FILE                 *fd,
 
             cur_progress++;
             if ((cur_progress % 5) == 0)
-              gimp_progress_update ((gdouble) cur_progress /
+              ligma_progress_update ((gdouble) cur_progress /
                                     (gdouble) max_progress);
           }
       }
@@ -869,7 +869,7 @@ ReadImage (FILE                 *fd,
 
                     cur_progress++;
                     if ((cur_progress % 5) == 0)
-                      gimp_progress_update ((gdouble) cur_progress /
+                      ligma_progress_update ((gdouble) cur_progress /
                                             (gdouble) max_progress);
                   }
 
@@ -967,7 +967,7 @@ ReadImage (FILE                 *fd,
 
                     cur_progress++;
                     if ((cur_progress % 5) == 0)
-                      gimp_progress_update ((gdouble) cur_progress /
+                      ligma_progress_update ((gdouble) cur_progress /
                                             (gdouble)  max_progress);
                   }
 
@@ -1003,12 +1003,12 @@ ReadImage (FILE                 *fd,
   if (bpp <= 8)
     for (i = 0, j = 0; i < ncols; i++)
       {
-        gimp_cmap[j++] = cmap[i][0];
-        gimp_cmap[j++] = cmap[i][1];
-        gimp_cmap[j++] = cmap[i][2];
+        ligma_cmap[j++] = cmap[i][0];
+        ligma_cmap[j++] = cmap[i][1];
+        ligma_cmap[j++] = cmap[i][2];
       }
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    NULL, dest, GEGL_AUTO_ROWSTRIDE);
@@ -1018,9 +1018,9 @@ ReadImage (FILE                 *fd,
   g_free (dest);
 
   if ((! gray) && (bpp <= 8))
-    gimp_image_set_colormap (image, gimp_cmap, ncols);
+    ligma_image_set_colormap (image, ligma_cmap, ncols);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }

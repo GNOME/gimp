@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2010-01-01 17:49+0000\n"
 "PO-Revision-Date: 2010-01-02 23:29+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "размыты"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "круглы"
 

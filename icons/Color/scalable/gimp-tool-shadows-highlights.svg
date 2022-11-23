@@ -15,8 +15,8 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-tool-shadows-highlights.svg"
-   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2018-01-05/icons/Color/16/gimp-tool-shadows-highlights.png"
+   sodipodi:docname="ligma-tool-shadows-highlights.svg"
+   inkscape:export-filename="/home/alex/soft/graphics/ligma/ligma-2018-01-05/icons/Color/16/ligma-tool-shadows-highlights.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -78,7 +78,7 @@
      id="layer1"
      transform="translate(0,-292.76666)">
     <g
-       id="gimp-tool-shadows-highlights"
+       id="ligma-tool-shadows-highlights"
        transform="matrix(0.66666436,0,0,0.66666436,1.9397808e-6,99.000683)"
        style="stroke-width:1.50000525">
       <circle

@@ -1,13 +1,13 @@
-# GIMP-Tags
-# Slovak GIMP translation
+# LIGMA-Tags
+# Slovak LIGMA translation
 # Copyright (C) 2011 Free Software Foundation, Inc.
-# This file is distributed under the same license as the GIMP-Tags package.
+# This file is distributed under the same license as the LIGMA-Tags package.
 # Stanislav Petrek <stanislav.petrek@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-05-31 07:39+0000\n"
 "PO-Revision-Date: 2013-05-31 14:42+0100\n"
 "Last-Translator: Stanislav Petrek <stanislav.petrek@gmail.com>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 # značka popisujúsa súbor štetca /brushes/Round.vbr
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "okrúhly"
 
 # značka popisujúsa súbor štetca /brushes/Round-Fuzzy.vbr
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "rozmazaný"

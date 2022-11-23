@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICES_H__
-#define __GIMP_DEVICES_H__
+#ifndef __LIGMA_DEVICES_H__
+#define __LIGMA_DEVICES_H__
 
 
-void                gimp_devices_init           (Gimp       *gimp);
-void                gimp_devices_exit           (Gimp       *gimp);
+void                ligma_devices_init           (Ligma       *ligma);
+void                ligma_devices_exit           (Ligma       *ligma);
 
-void                gimp_devices_restore        (Gimp       *gimp);
-void                gimp_devices_save           (Gimp       *gimp,
+void                ligma_devices_restore        (Ligma       *ligma);
+void                ligma_devices_save           (Ligma       *ligma,
                                                  gboolean    always_save);
 
-gboolean            gimp_devices_clear          (Gimp       *gimp,
+gboolean            ligma_devices_clear          (Ligma       *ligma,
                                                  GError    **error);
 
-GimpDeviceManager * gimp_devices_get_manager    (Gimp       *gimp);
+LigmaDeviceManager * ligma_devices_get_manager    (Ligma       *ligma);
 
-GdkDevice         * gimp_devices_get_from_event (Gimp            *gimp,
+GdkDevice         * ligma_devices_get_from_event (Ligma            *ligma,
                                                  const GdkEvent  *event,
                                                  GdkDevice      **grab_device);
 
-void                gimp_devices_add_widget     (Gimp       *gimp,
+void                ligma_devices_add_widget     (Ligma       *ligma,
                                                  GtkWidget  *widget);
 
-gboolean            gimp_devices_check_callback (GtkWidget  *widget,
+gboolean            ligma_devices_check_callback (GtkWidget  *widget,
                                                  GdkEvent   *event,
-                                                 Gimp       *gimp);
-gboolean            gimp_devices_check_change   (Gimp       *gimp,
+                                                 Ligma       *ligma);
+gboolean            ligma_devices_check_change   (Ligma       *ligma,
                                                  GdkDevice  *device);
 
 
-#endif /* __GIMP_DEVICES_H__ */
+#endif /* __LIGMA_DEVICES_H__ */

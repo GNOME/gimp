@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimperrordialog.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaerrordialog.c
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERROR_DIALOG_H__
-#define __GIMP_ERROR_DIALOG_H__
+#ifndef __LIGMA_ERROR_DIALOG_H__
+#define __LIGMA_ERROR_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_ERROR_DIALOG            (gimp_error_dialog_get_type ())
-#define GIMP_ERROR_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERROR_DIALOG, GimpErrorDialog))
-#define GIMP_ERROR_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERROR_DIALOG, GimpErrorDialogClass))
-#define GIMP_IS_ERROR_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERROR_DIALOG))
-#define GIMP_IS_ERROR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERROR_DIALOG))
-#define GIMP_ERROR_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERROR_DIALOG, GimpErrorDialogClass))
+#define LIGMA_TYPE_ERROR_DIALOG            (ligma_error_dialog_get_type ())
+#define LIGMA_ERROR_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ERROR_DIALOG, LigmaErrorDialog))
+#define LIGMA_ERROR_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ERROR_DIALOG, LigmaErrorDialogClass))
+#define LIGMA_IS_ERROR_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ERROR_DIALOG))
+#define LIGMA_IS_ERROR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ERROR_DIALOG))
+#define LIGMA_ERROR_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ERROR_DIALOG, LigmaErrorDialogClass))
 
 
-typedef struct _GimpErrorDialogClass  GimpErrorDialogClass;
+typedef struct _LigmaErrorDialogClass  LigmaErrorDialogClass;
 
-struct _GimpErrorDialog
+struct _LigmaErrorDialog
 {
-  GimpDialog       parent_instance;
+  LigmaDialog       parent_instance;
 
   GtkWidget       *vbox;
 
@@ -44,16 +44,16 @@ struct _GimpErrorDialog
   gboolean         overflow;
 };
 
-struct _GimpErrorDialogClass
+struct _LigmaErrorDialogClass
 {
-  GimpDialogClass  parent_class;
+  LigmaDialogClass  parent_class;
 };
 
 
-GType       gimp_error_dialog_get_type (void) G_GNUC_CONST;
+GType       ligma_error_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_error_dialog_new      (const gchar     *title);
-void        gimp_error_dialog_add      (GimpErrorDialog *dialog,
+GtkWidget * ligma_error_dialog_new      (const gchar     *title);
+void        ligma_error_dialog_add      (LigmaErrorDialog *dialog,
                                         const gchar     *icon_name,
                                         const gchar     *domain,
                                         const gchar     *message);
@@ -62,4 +62,4 @@ void        gimp_error_dialog_add      (GimpErrorDialog *dialog,
 
 G_END_DECLS
 
-#endif /* __GIMP_ERROR_DIALOG_H__ */
+#endif /* __LIGMA_ERROR_DIALOG_H__ */

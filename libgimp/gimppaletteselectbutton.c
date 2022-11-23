@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppaletteselectbutton.c
- * Copyright (C) 2004  Michael Natterer <mitch@gimp.org>
+ * ligmapaletteselectbutton.c
+ * Copyright (C) 2004  Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,27 +24,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpuitypes.h"
-#include "gimppaletteselectbutton.h"
-#include "gimpuimarshal.h"
+#include "ligmauitypes.h"
+#include "ligmapaletteselectbutton.h"
+#include "ligmauimarshal.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * SECTION: gimppaletteselectbutton
- * @title: GimpPaletteSelect
+ * SECTION: ligmapaletteselectbutton
+ * @title: LigmaPaletteSelect
  * @short_description: A button which pops up a palette select dialog.
  *
  * A button which pops up a palette select dialog.
  **/
 
 
-struct _GimpPaletteSelectButtonPrivate
+struct _LigmaPaletteSelectButtonPrivate
 {
   gchar     *title;
 
@@ -71,24 +71,24 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_palette_select_button_finalize     (GObject      *object);
+static void   ligma_palette_select_button_finalize     (GObject      *object);
 
-static void   gimp_palette_select_button_set_property (GObject      *object,
+static void   ligma_palette_select_button_set_property (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-static void   gimp_palette_select_button_get_property (GObject      *object,
+static void   ligma_palette_select_button_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void   gimp_palette_select_button_clicked  (GimpPaletteSelectButton *button);
+static void   ligma_palette_select_button_clicked  (LigmaPaletteSelectButton *button);
 
-static void   gimp_palette_select_button_callback (const gchar *palette_name,
+static void   ligma_palette_select_button_callback (const gchar *palette_name,
                                                    gboolean     dialog_closing,
                                                    gpointer     user_data);
 
-static void   gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
+static void   ligma_palette_select_drag_data_received (LigmaPaletteSelectButton *button,
                                                       GdkDragContext          *context,
                                                       gint                     x,
                                                       gint                     y,
@@ -96,35 +96,35 @@ static void   gimp_palette_select_drag_data_received (GimpPaletteSelectButton *b
                                                       guint                    info,
                                                       guint                    time);
 
-static GtkWidget * gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_button);
+static GtkWidget * ligma_palette_select_button_create_inside (LigmaPaletteSelectButton *palette_button);
 
 
-static const GtkTargetEntry target = { "application/x-gimp-palette-name", 0 };
+static const GtkTargetEntry target = { "application/x-ligma-palette-name", 0 };
 
 static guint palette_button_signals[LAST_SIGNAL] = { 0 };
 static GParamSpec *palette_button_props[N_PROPS] = { NULL, };
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPaletteSelectButton, gimp_palette_select_button,
-                            GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPaletteSelectButton, ligma_palette_select_button,
+                            LIGMA_TYPE_SELECT_BUTTON)
 
 
 static void
-gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
+ligma_palette_select_button_class_init (LigmaPaletteSelectButtonClass *klass)
 {
   GObjectClass          *object_class        = G_OBJECT_CLASS (klass);
-  GimpSelectButtonClass *select_button_class = GIMP_SELECT_BUTTON_CLASS (klass);
+  LigmaSelectButtonClass *select_button_class = LIGMA_SELECT_BUTTON_CLASS (klass);
 
-  object_class->finalize     = gimp_palette_select_button_finalize;
-  object_class->set_property = gimp_palette_select_button_set_property;
-  object_class->get_property = gimp_palette_select_button_get_property;
+  object_class->finalize     = ligma_palette_select_button_finalize;
+  object_class->set_property = ligma_palette_select_button_set_property;
+  object_class->get_property = ligma_palette_select_button_get_property;
 
-  select_button_class->select_destroy = gimp_palette_select_destroy;
+  select_button_class->select_destroy = ligma_palette_select_destroy;
 
   klass->palette_set = NULL;
 
   /**
-   * GimpPaletteSelectButton:title:
+   * LigmaPaletteSelectButton:title:
    *
    * The title to be used for the palette selection popup dialog.
    *
@@ -134,11 +134,11 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
                                                           "Title",
                                                           "The title to be used for the palette selection popup dialog",
                                                           _("Palette Selection"),
-                                                          GIMP_PARAM_READWRITE |
+                                                          LIGMA_PARAM_READWRITE |
                                                           G_PARAM_CONSTRUCT_ONLY);
 
   /**
-   * GimpPaletteSelectButton:palette-name:
+   * LigmaPaletteSelectButton:palette-name:
    *
    * The name of the currently selected palette.
    *
@@ -148,12 +148,12 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
                                                         "Palette name",
                                                         "The name of the currently selected palette",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE);
+                                                        LIGMA_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, palette_button_props);
 
   /**
-   * GimpPaletteSelectButton::palette-set:
+   * LigmaPaletteSelectButton::palette-set:
    * @widget: the object which received the signal.
    * @palette_name: the name of the currently selected palette.
    * @dialog_closing: whether the dialog was closed or not.
@@ -166,25 +166,25 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
     g_signal_new ("palette-set",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteSelectButtonClass, palette_set),
+                  G_STRUCT_OFFSET (LigmaPaletteSelectButtonClass, palette_set),
                   NULL, NULL,
-                  _gimpui_marshal_VOID__STRING_BOOLEAN,
+                  _ligmaui_marshal_VOID__STRING_BOOLEAN,
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
 }
 
 static void
-gimp_palette_select_button_init (GimpPaletteSelectButton *button)
+ligma_palette_select_button_init (LigmaPaletteSelectButton *button)
 {
-  button->priv = gimp_palette_select_button_get_instance_private (button);
+  button->priv = ligma_palette_select_button_get_instance_private (button);
 
-  button->priv->inside = gimp_palette_select_button_create_inside (button);
+  button->priv->inside = ligma_palette_select_button_create_inside (button);
   gtk_container_add (GTK_CONTAINER (button), button->priv->inside);
 }
 
 /**
- * gimp_palette_select_button_new:
+ * ligma_palette_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
  * @palette_name: (nullable): Initial palette name.
  *
@@ -197,18 +197,18 @@ gimp_palette_select_button_init (GimpPaletteSelectButton *button)
  * Since: 2.4
  */
 GtkWidget *
-gimp_palette_select_button_new (const gchar *title,
+ligma_palette_select_button_new (const gchar *title,
                                 const gchar *palette_name)
 {
   GtkWidget *button;
 
   if (title)
-    button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_PALETTE_SELECT_BUTTON,
                            "title",        title,
                            "palette-name", palette_name,
                            NULL);
   else
-    button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_PALETTE_SELECT_BUTTON,
                            "palette-name", palette_name,
                            NULL);
 
@@ -216,8 +216,8 @@ gimp_palette_select_button_new (const gchar *title,
 }
 
 /**
- * gimp_palette_select_button_get_palette:
- * @button: A #GimpPaletteSelectButton
+ * ligma_palette_select_button_get_palette:
+ * @button: A #LigmaPaletteSelectButton
  *
  * Retrieves the name of currently selected palette.
  *
@@ -226,16 +226,16 @@ gimp_palette_select_button_new (const gchar *title,
  * Since: 2.4
  */
 const gchar *
-gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button)
+ligma_palette_select_button_get_palette (LigmaPaletteSelectButton *button)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (button), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE_SELECT_BUTTON (button), NULL);
 
   return button->priv->palette_name;
 }
 
 /**
- * gimp_palette_select_button_set_palette:
- * @button: A #GimpPaletteSelectButton
+ * ligma_palette_select_button_set_palette:
+ * @button: A #LigmaPaletteSelectButton
  * @palette_name: (nullable): Palette name to set; %NULL means no change.
  *
  * Sets the current palette for the palette select button.
@@ -243,18 +243,18 @@ gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button)
  * Since: 2.4
  */
 void
-gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
+ligma_palette_select_button_set_palette (LigmaPaletteSelectButton *button,
                                         const gchar             *palette_name)
 {
-  GimpSelectButton *select_button;
+  LigmaSelectButton *select_button;
 
-  g_return_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_PALETTE_SELECT_BUTTON (button));
 
-  select_button = GIMP_SELECT_BUTTON (button);
+  select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      gimp_palettes_set_popup (select_button->temp_callback, palette_name);
+      ligma_palettes_set_popup (select_button->temp_callback, palette_name);
     }
   else
     {
@@ -264,10 +264,10 @@ gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
       if (palette_name && *palette_name)
         name = g_strdup (palette_name);
       else
-        name = gimp_context_get_palette ();
+        name = ligma_context_get_palette ();
 
-      if (gimp_palette_get_info (name, &num_colors))
-        gimp_palette_select_button_callback (name, FALSE, button);
+      if (ligma_palette_get_info (name, &num_colors))
+        ligma_palette_select_button_callback (name, FALSE, button);
 
       g_free (name);
     }
@@ -277,23 +277,23 @@ gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
 /*  private functions  */
 
 static void
-gimp_palette_select_button_finalize (GObject *object)
+ligma_palette_select_button_finalize (GObject *object)
 {
-  GimpPaletteSelectButton *button = GIMP_PALETTE_SELECT_BUTTON (object);
+  LigmaPaletteSelectButton *button = LIGMA_PALETTE_SELECT_BUTTON (object);
 
   g_clear_pointer (&button->priv->palette_name, g_free);
   g_clear_pointer (&button->priv->title,        g_free);
 
-  G_OBJECT_CLASS (gimp_palette_select_button_parent_class)->finalize (object);
+  G_OBJECT_CLASS (ligma_palette_select_button_parent_class)->finalize (object);
 }
 
 static void
-gimp_palette_select_button_set_property (GObject      *object,
+ligma_palette_select_button_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpPaletteSelectButton *button = GIMP_PALETTE_SELECT_BUTTON (object);
+  LigmaPaletteSelectButton *button = LIGMA_PALETTE_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -302,7 +302,7 @@ gimp_palette_select_button_set_property (GObject      *object,
       break;
 
     case PROP_PALETTE_NAME:
-      gimp_palette_select_button_set_palette (button,
+      ligma_palette_select_button_set_palette (button,
                                               g_value_get_string (value));
       break;
 
@@ -313,12 +313,12 @@ gimp_palette_select_button_set_property (GObject      *object,
 }
 
 static void
-gimp_palette_select_button_get_property (GObject    *object,
+ligma_palette_select_button_get_property (GObject    *object,
                                          guint       property_id,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpPaletteSelectButton *button = GIMP_PALETTE_SELECT_BUTTON (object);
+  LigmaPaletteSelectButton *button = LIGMA_PALETTE_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -337,12 +337,12 @@ gimp_palette_select_button_get_property (GObject    *object,
 }
 
 static void
-gimp_palette_select_button_callback (const gchar *palette_name,
+ligma_palette_select_button_callback (const gchar *palette_name,
                                      gboolean     dialog_closing,
                                      gpointer     user_data)
 {
-  GimpPaletteSelectButton *button        = user_data;
-  GimpSelectButton        *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaPaletteSelectButton *button        = user_data;
+  LigmaSelectButton        *select_button = LIGMA_SELECT_BUTTON (button);
 
   g_free (button->priv->palette_name);
   button->priv->palette_name = g_strdup (palette_name);
@@ -358,28 +358,28 @@ gimp_palette_select_button_callback (const gchar *palette_name,
 }
 
 static void
-gimp_palette_select_button_clicked (GimpPaletteSelectButton *button)
+ligma_palette_select_button_clicked (LigmaPaletteSelectButton *button)
 {
-  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaSelectButton *select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      /*  calling gimp_palettes_set_popup() raises the dialog  */
-      gimp_palettes_set_popup (select_button->temp_callback,
+      /*  calling ligma_palettes_set_popup() raises the dialog  */
+      ligma_palettes_set_popup (select_button->temp_callback,
                                button->priv->palette_name);
     }
   else
     {
       select_button->temp_callback =
-        gimp_palette_select_new (button->priv->title,
+        ligma_palette_select_new (button->priv->title,
                                  button->priv->palette_name,
-                                 gimp_palette_select_button_callback,
+                                 ligma_palette_select_button_callback,
                                  button, NULL);
     }
 }
 
 static void
-gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
+ligma_palette_select_drag_data_received (LigmaPaletteSelectButton *button,
                                         GdkDragContext          *context,
                                         gint                     x,
                                         gint                     y,
@@ -406,11 +406,11 @@ gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
       gint     name_offset = 0;
 
       if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
-          pid == gimp_getpid () && name_offset > 0)
+          pid == ligma_getpid () && name_offset > 0)
         {
           gchar *name = str + name_offset;
 
-          gimp_palette_select_button_set_palette (button, name);
+          ligma_palette_select_button_set_palette (button, name);
         }
     }
 
@@ -418,7 +418,7 @@ gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
 }
 
 static GtkWidget *
-gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_button)
+ligma_palette_select_button_create_inside (LigmaPaletteSelectButton *palette_button)
 {
   GtkWidget *button;
   GtkWidget *hbox;
@@ -429,7 +429,7 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (button), hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_PALETTE,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_PALETTE,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
@@ -439,7 +439,7 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
   gtk_widget_show_all (button);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_palette_select_button_clicked),
+                            G_CALLBACK (ligma_palette_select_button_clicked),
                             palette_button);
 
   gtk_drag_dest_set (GTK_WIDGET (button),
@@ -450,7 +450,7 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
                      GDK_ACTION_COPY);
 
   g_signal_connect_swapped (button, "drag-data-received",
-                            G_CALLBACK (gimp_palette_select_drag_data_received),
+                            G_CALLBACK (ligma_palette_select_drag_data_received),
                             palette_button);
 
   return button;

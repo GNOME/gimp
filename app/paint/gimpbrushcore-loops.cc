@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,21 +22,21 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 extern "C"
 {
 
 #include "paint-types.h"
 
-#include "core/gimptempbuf.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpbrushcore.h"
-#include "gimpbrushcore-loops.h"
+#include "ligmabrushcore.h"
+#include "ligmabrushcore-loops.h"
 
 } /* extern "C" */
 
-#include "gimpbrushcore-kernels.h"
+#include "ligmabrushcore-kernels.h"
 
 
 #define PIXELS_PER_THREAD \
@@ -46,26 +46,26 @@ extern "C"
 
 
 static void
-clear_edges (GimpTempBuf *buf,
+clear_edges (LigmaTempBuf *buf,
              gint         top,
              gint         bottom,
              gint         left,
              gint         right)
 {
   guchar     *data;
-  const Babl *format = gimp_temp_buf_get_format (buf);
+  const Babl *format = ligma_temp_buf_get_format (buf);
   gint        bpp    = babl_format_get_bytes_per_pixel (format);
-  gint        width  = gimp_temp_buf_get_width  (buf);
-  gint        height = gimp_temp_buf_get_height (buf);
+  gint        width  = ligma_temp_buf_get_width  (buf);
+  gint        height = ligma_temp_buf_get_height (buf);
 
   if (top + bottom >= height || left + right >= width)
     {
-      gimp_temp_buf_data_clear (buf);
+      ligma_temp_buf_data_clear (buf);
 
       return;
     }
 
-  data = gimp_temp_buf_get_data (buf);
+  data = ligma_temp_buf_get_data (buf);
 
   memset (data, 0, (top * width + left) * bpp);
 
@@ -75,7 +75,7 @@ clear_edges (GimpTempBuf *buf,
       gint size   = (left + right) * bpp;
       gint y;
 
-      data = gimp_temp_buf_get_data (buf) +
+      data = ligma_temp_buf_get_data (buf) +
              ((top + 1) * width - right) * bpp;
 
       for (y = top; y < height - bottom - 1; y++)
@@ -86,7 +86,7 @@ clear_edges (GimpTempBuf *buf,
         }
     }
 
-  data = gimp_temp_buf_get_data (buf) +
+  data = ligma_temp_buf_get_data (buf) +
          ((height - bottom) * width - right) * bpp;
 
   memset (data, 0, (bottom * width + right) * bpp);
@@ -110,8 +110,8 @@ rotate_pointers (T    **p,
 
 template <class T>
 static void
-gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
-                                     GimpTempBuf       *dest,
+ligma_brush_core_subsample_mask_impl (const LigmaTempBuf *mask,
+                                     LigmaTempBuf       *dest,
                                      gint               dest_offset_x,
                                      gint               dest_offset_y,
                                      gint               index1,
@@ -123,10 +123,10 @@ gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
 
   Subsample<T>       subsample;
   const kernel_type *kernel      = subsample.kernel[index2][index1];
-  gint               mask_width  = gimp_temp_buf_get_width  (mask);
-  gint               mask_height = gimp_temp_buf_get_height (mask);
-  gint               dest_width  = gimp_temp_buf_get_width  (dest);
-  gint               dest_height = gimp_temp_buf_get_height (dest);
+  gint               mask_width  = ligma_temp_buf_get_width  (mask);
+  gint               mask_height = ligma_temp_buf_get_height (mask);
+  gint               dest_width  = ligma_temp_buf_get_width  (dest);
+  gint               dest_height = ligma_temp_buf_get_height (dest);
 
   gegl_parallel_distribute_range (
     mask_height, PIXELS_PER_THREAD / mask_width,
@@ -147,7 +147,7 @@ gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
 
       y0 = MAX (y - (KERNEL_HEIGHT - 1), 0);
 
-      m = (const value_type *) gimp_temp_buf_get_data (mask) +
+      m = (const value_type *) ligma_temp_buf_get_data (mask) +
           y0 * mask_width;
 
       for (i = y0; i < y; i++)
@@ -184,7 +184,7 @@ gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
             }
 
           /* store the accum buffer into the destination mask */
-          d = (value_type *) gimp_temp_buf_get_data (dest) +
+          d = (value_type *) ligma_temp_buf_get_data (dest) +
               (i + dest_offset_y) * dest_width;
           for (j = 0; j < dest_width; j++)
             *d++ = subsample.round (accum[0][j]);
@@ -200,7 +200,7 @@ gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
           /* store the rest of the accum buffer into the dest mask */
           while (i + dest_offset_y < dest_height)
             {
-              d = (value_type *) gimp_temp_buf_get_data (dest) +
+              d = (value_type *) ligma_temp_buf_get_data (dest) +
                   (i + dest_offset_y) * dest_width;
               for (j = 0; j < dest_width; j++)
                 *d++ = subsample.round (accum[0][j]);
@@ -215,21 +215,21 @@ gimp_brush_core_subsample_mask_impl (const GimpTempBuf *mask,
     });
 }
 
-const GimpTempBuf *
-gimp_brush_core_subsample_mask (GimpBrushCore     *core,
-                                const GimpTempBuf *mask,
+const LigmaTempBuf *
+ligma_brush_core_subsample_mask (LigmaBrushCore     *core,
+                                const LigmaTempBuf *mask,
                                 gdouble            x,
                                 gdouble            y)
 {
-  GimpTempBuf *dest;
+  LigmaTempBuf *dest;
   const Babl  *mask_format;
   gdouble      left;
   gint         index1;
   gint         index2;
   gint         dest_offset_x = 0;
   gint         dest_offset_y = 0;
-  gint         mask_width  = gimp_temp_buf_get_width  (mask);
-  gint         mask_height = gimp_temp_buf_get_height (mask);
+  gint         mask_width  = ligma_temp_buf_get_width  (mask);
+  gint         mask_height = ligma_temp_buf_get_height (mask);
 
   left = x - floor (x);
   index1 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
@@ -271,15 +271,15 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
 
       for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-          g_clear_pointer (&core->subsample_brushes[i][j], gimp_temp_buf_unref);
+          g_clear_pointer (&core->subsample_brushes[i][j], ligma_temp_buf_unref);
 
       core->last_subsample_brush_mask = mask;
       core->subsample_cache_invalid   = FALSE;
     }
 
-  mask_format = gimp_temp_buf_get_format (mask);
+  mask_format = ligma_temp_buf_get_format (mask);
 
-  dest = gimp_temp_buf_new (mask_width  + 2,
+  dest = ligma_temp_buf_new (mask_width  + 2,
                             mask_height + 2,
                             mask_format);
   clear_edges (dest, dest_offset_y, 0, 0, 0);
@@ -288,13 +288,13 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
 
   if (mask_format == babl_format ("Y u8"))
     {
-      gimp_brush_core_subsample_mask_impl<guchar> (mask, dest,
+      ligma_brush_core_subsample_mask_impl<guchar> (mask, dest,
                                                    dest_offset_x, dest_offset_y,
                                                    index1, index2);
     }
   else if (mask_format == babl_format ("Y float"))
     {
-      gimp_brush_core_subsample_mask_impl<gfloat> (mask, dest,
+      ligma_brush_core_subsample_mask_impl<gfloat> (mask, dest,
                                                    dest_offset_x, dest_offset_y,
                                                    index1, index2);
     }
@@ -453,12 +453,12 @@ public:
 template <class T,
           class Pressure>
 void
-gimp_brush_core_pressurize_mask_impl (const GimpTempBuf *mask,
-                                      GimpTempBuf       *dest,
+ligma_brush_core_pressurize_mask_impl (const LigmaTempBuf *mask,
+                                      LigmaTempBuf       *dest,
                                       Pressure           pressure)
 {
   gegl_parallel_distribute_range (
-    gimp_temp_buf_get_width (mask) * gimp_temp_buf_get_height (mask),
+    ligma_temp_buf_get_width (mask) * ligma_temp_buf_get_height (mask),
     PIXELS_PER_THREAD,
     [=] (gint offset, gint size)
     {
@@ -466,8 +466,8 @@ gimp_brush_core_pressurize_mask_impl (const GimpTempBuf *mask,
       T       *d;
       gint     i;
 
-      m = (const T *) gimp_temp_buf_get_data (mask) + offset;
-      d = (      T *) gimp_temp_buf_get_data (dest) + offset;
+      m = (const T *) ligma_temp_buf_get_data (mask) + offset;
+      d = (      T *) ligma_temp_buf_get_data (dest) + offset;
 
       for (i = 0; i < size; i++)
         *d++ = pressure (*m++);
@@ -476,18 +476,18 @@ gimp_brush_core_pressurize_mask_impl (const GimpTempBuf *mask,
 
 /* #define FANCY_PRESSURE */
 
-const GimpTempBuf *
-gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
-                                 const GimpTempBuf *brush_mask,
+const LigmaTempBuf *
+ligma_brush_core_pressurize_mask (LigmaBrushCore     *core,
+                                 const LigmaTempBuf *brush_mask,
                                  gdouble            x,
                                  gdouble            y,
                                  gdouble            pressure)
 {
-  const GimpTempBuf *subsample_mask;
+  const LigmaTempBuf *subsample_mask;
   const Babl        *subsample_mask_format;
 
   /* Get the raw subsampled mask */
-  subsample_mask = gimp_brush_core_subsample_mask (core,
+  subsample_mask = ligma_brush_core_subsample_mask (core,
                                                    brush_mask,
                                                    x, y);
 
@@ -495,13 +495,13 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
   if (fabs (pressure - 0.5) <= EPSILON)
     return subsample_mask;
 
-  g_clear_pointer (&core->pressure_brush, gimp_temp_buf_unref);
+  g_clear_pointer (&core->pressure_brush, ligma_temp_buf_unref);
 
-  subsample_mask_format = gimp_temp_buf_get_format (subsample_mask);
+  subsample_mask_format = ligma_temp_buf_get_format (subsample_mask);
 
   core->pressure_brush =
-    gimp_temp_buf_new (gimp_temp_buf_get_width  (brush_mask) + 2,
-                       gimp_temp_buf_get_height (brush_mask) + 2,
+    ligma_temp_buf_new (ligma_temp_buf_get_width  (brush_mask) + 2,
+                       ligma_temp_buf_get_height (brush_mask) + 2,
                        subsample_mask_format);
 
 #ifdef FANCY_PRESSURE
@@ -512,14 +512,14 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
   if (subsample_mask_format == babl_format ("Y u8"))
     {
-      gimp_brush_core_pressurize_mask_impl<guchar> (subsample_mask,
+      ligma_brush_core_pressurize_mask_impl<guchar> (subsample_mask,
                                                     core->pressure_brush,
                                                     CachedPressure<guchar> (
                                                       Pressure (pressure)));
     }
   else if (subsample_mask_format == babl_format ("Y float"))
     {
-      gimp_brush_core_pressurize_mask_impl<gfloat> (subsample_mask,
+      ligma_brush_core_pressurize_mask_impl<gfloat> (subsample_mask,
                                                     core->pressure_brush,
                                                     Pressure (pressure));
     }
@@ -533,14 +533,14 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
 template <class T>
 static void
-gimp_brush_core_solidify_mask_impl (const GimpTempBuf *mask,
-                                    GimpTempBuf       *dest,
+ligma_brush_core_solidify_mask_impl (const LigmaTempBuf *mask,
+                                    LigmaTempBuf       *dest,
                                     gint               dest_offset_x,
                                     gint               dest_offset_y)
 {
-  gint mask_width  = gimp_temp_buf_get_width  (mask);
-  gint mask_height = gimp_temp_buf_get_height (mask);
-  gint dest_width  = gimp_temp_buf_get_width  (dest);
+  gint mask_width  = ligma_temp_buf_get_width  (mask);
+  gint mask_height = ligma_temp_buf_get_height (mask);
+  gint dest_width  = ligma_temp_buf_get_width  (dest);
 
   gegl_parallel_distribute_area (
     GEGL_RECTANGLE (0, 0, mask_width, mask_height),
@@ -551,9 +551,9 @@ gimp_brush_core_solidify_mask_impl (const GimpTempBuf *mask,
       gfloat  *d;
       gint     i, j;
 
-      m = (const T *) gimp_temp_buf_get_data (mask) +
+      m = (const T *) ligma_temp_buf_get_data (mask) +
           area->y * mask_width + area->x;
-      d = ((gfloat *) gimp_temp_buf_get_data (dest) +
+      d = ((gfloat *) ligma_temp_buf_get_data (dest) +
            ((dest_offset_y + 1 + area->y) * dest_width +
             (dest_offset_x + 1 + area->x)));
 
@@ -568,18 +568,18 @@ gimp_brush_core_solidify_mask_impl (const GimpTempBuf *mask,
     });
 }
 
-const GimpTempBuf *
-gimp_brush_core_solidify_mask (GimpBrushCore     *core,
-                               const GimpTempBuf *brush_mask,
+const LigmaTempBuf *
+ligma_brush_core_solidify_mask (LigmaBrushCore     *core,
+                               const LigmaTempBuf *brush_mask,
                                gdouble            x,
                                gdouble            y)
 {
-  GimpTempBuf  *dest;
+  LigmaTempBuf  *dest;
   const Babl   *brush_mask_format;
   gint          dest_offset_x     = 0;
   gint          dest_offset_y     = 0;
-  gint          brush_mask_width  = gimp_temp_buf_get_width  (brush_mask);
-  gint          brush_mask_height = gimp_temp_buf_get_height (brush_mask);
+  gint          brush_mask_width  = ligma_temp_buf_get_width  (brush_mask);
+  gint          brush_mask_height = ligma_temp_buf_get_height (brush_mask);
 
   if ((brush_mask_width % 2) == 0)
     {
@@ -611,15 +611,15 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
       for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
-          g_clear_pointer (&core->solid_brushes[i][j], gimp_temp_buf_unref);
+          g_clear_pointer (&core->solid_brushes[i][j], ligma_temp_buf_unref);
 
       core->last_solid_brush_mask = brush_mask;
       core->solid_cache_invalid   = FALSE;
     }
 
-  brush_mask_format = gimp_temp_buf_get_format (brush_mask);
+  brush_mask_format = ligma_temp_buf_get_format (brush_mask);
 
-  dest = gimp_temp_buf_new (brush_mask_width  + 2,
+  dest = ligma_temp_buf_new (brush_mask_width  + 2,
                             brush_mask_height + 2,
                             babl_format ("Y float"));
   clear_edges (dest,
@@ -630,12 +630,12 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
   if (brush_mask_format == babl_format ("Y u8"))
     {
-      gimp_brush_core_solidify_mask_impl<guchar> (brush_mask, dest,
+      ligma_brush_core_solidify_mask_impl<guchar> (brush_mask, dest,
                                                   dest_offset_x, dest_offset_y);
     }
   else if (brush_mask_format == babl_format ("Y float"))
     {
-      gimp_brush_core_solidify_mask_impl<gfloat> (brush_mask, dest,
+      ligma_brush_core_solidify_mask_impl<gfloat> (brush_mask, dest,
                                                   dest_offset_x, dest_offset_y);
     }
   else

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-11-09 14:43+0000\n"
 "PO-Revision-Date: 2021-11-11 21:17+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
@@ -437,8 +437,8 @@ msgid "Python _Console"
 msgstr "Python _konsole"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktīvs GIMP Python interpretators"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktīvs LIGMA Python interpretators"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -786,8 +786,8 @@ msgstr ""
 " saglabāt kā ceļu"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -814,8 +814,8 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Lūdzu, uzgaidiet — renderē rakstu"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."
 
 #~ msgid "Missing exception information"
 #~ msgstr "Trūkst informācija par izņēmumu"

@@ -1,46 +1,46 @@
-Tue Jun  2 16:40:33 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Jun  2 16:40:33 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 1.0.0 release
 
-Tue Jun  2 16:15:51 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Jun  2 16:15:51 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* Makefile.am: install gtkrc.forest2 in $prefix/share/gimp
+	* Makefile.am: install gtkrc.forest2 in $prefix/share/ligma
 
 	* plug-ins/CEL/CEL.c: change bzero to memset for portability
 
 	* plug-ins/gfli/fli.c: #include <glib.h> to get inline defintion
 
-Mon Jun  1 01:05:52 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Mon Jun  1 01:05:52 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* plug-ins/grid.c: fix a comment. :)
 	* ChangeLog: fix my last entry
 
-Sun May 31 21:50:12 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sun May 31 21:50:12 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* plug-ins/deinterlace/deinterlace.c: patch from sjburges
 	to prevent out of bounds indexing array (anyone see a pattern
 	here?)
 
-Sun May 31 15:35:33 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 31 15:35:33 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* gimptool.in: use test -r instead of test -e for portability
+	* ligmatool.in: use test -r instead of test -e for portability
 
-Sun May 31 08:03:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sun May 31 08:03:54 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* plug-ins/exchange/exchange.c: fix from sjburges to stop
 	out of bounds indexing of array.
 
-Sun May 31 01:58:36 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 31 01:58:36 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* README
 	* INSTALL: make info a bit more current
 
-	* gimptool.in: update usage message
+	* ligmatool.in: update usage message
 
 	* gtkrc.forest2: sample gtkrc file with cool stuff from tigert
 
-	* gimp.1
-	* gimptool.1: updated/rewrote some
+	* ligma.1
+	* ligmatool.1: updated/rewrote some
 
 	* app/fileops.c: removed the "might have tried to save an RGB
 	image with an indexed plugin" since g_message gives nice user
@@ -48,13 +48,13 @@ Sun May 31 01:58:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: fix the mem leak properly
 
-Sat May 30 23:42:12 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat May 30 23:42:12 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/interface.c: plug mem leak in message_box
 
 	* plug-ins/mail/mail.c: use g_message
 
-	* plug-ins/script-fu/scripts/carve-it.scm: fix for gimp-layer-new
+	* plug-ins/script-fu/scripts/carve-it.scm: fix for ligma-layer-new
 	params from Kevin Cozens <kcozens@interlog.com>
 
 	* plug-ins/CEL/CEL.c
@@ -65,7 +65,7 @@ Sat May 30 23:42:12 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/print/print.h: use correct version
 
-Fri May 29 23:54:42 PDT 1998 Manish Singh <yosh@gimp.org>
+Fri May 29 23:54:42 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* more changes to use g_message. All of app uses it now, plus
 	the major file plugins.
@@ -74,68 +74,68 @@ Fri May 29 23:54:42 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* INSTALL: info about why optional plugins won't build
 
-Sat May 30 02:03:19 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sat May 30 02:03:19 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* plug-ins/grid/grid.c: fix by sjburges to fix grid on selections.
 
-Fri May 29 23:34:07 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Fri May 29 23:34:07 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* plug-ins/gaus_iir/gauss_iir.c: fix by sjburges to fix horiz
 	only blur.  Funky bug!
 
-Fri May 29 21:36:36 MEST 1998 Sven Neumann <sven@gimp.org>
+Fri May 29 21:36:36 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/xcf.c: changed fopen parameters for better portability
 
-Thu May 28 20:12:02 MEST 1998 Sven Neumann <sven@gimp.org>
+Thu May 28 20:12:02 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* scripts/blend-anim.scm: use gimp-message to output an
+	* scripts/blend-anim.scm: use ligma-message to output an
 	error message
 
-Thu May 28 19:05:13 MEST 1998 Sven Neumann <sven@gimp.org>
+Thu May 28 19:05:13 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* plug-ins/rotate/rotate.c
 	* plug-ins/screenshot/screenshot.c: adapted to the new
 	way of error message handling
 
-Thu May 28 01:16:26 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu May 28 01:16:26 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* redid the error message handling. g_message now calls
 	message_box or prints to console depending on whether the
-	no_interface is set or not. gimp-message is also exported
-	to the PDB as a wrapper to g_message, and libgimp has a new
-	API: gimp_message. libgimp also overrides g_message for all
+	no_interface is set or not. ligma-message is also exported
+	to the PDB as a wrapper to g_message, and libligma has a new
+	API: ligma_message. libligma also overrides g_message for all
 	plugins. Converted lots of messages in app/* to g_message.
 	Made script-fu a little friendlier.
 
 	* updated the regex code from grep 2.2
 
-Wed May 27 11:22:46 MEST 1998 Sven Neumann <sven@gimp.org>
+Wed May 27 11:22:46 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* plug-ins/ifscompose/ifscompose.h: removed definition of TRUE
         and FALSE
 
-Tue May 26 17:20:26 EDT 1998 Adrian Likins <adrian@gimp.org>
+Tue May 26 17:20:26 EDT 1998 Adrian Likins <adrian@ligma.org>
 
 	* plug-ins/sript-fu/scripts/predator.scm: made insensitive on
 	greyscale images
 
-Tue May 26 12:03:07 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue May 26 12:03:07 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/batch.c: do "-" to "_" conversion after an failed pdb
 	lookup, just to make sure
 
 	* app/paint_core.c: fix for some uninitialized vars
 
-Tue May 26 01:17:14 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue May 26 01:17:14 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* gimptool.in: added --install-script. Use @INSTALL@ stuff
+	* ligmatool.in: added --install-script. Use @INSTALL@ stuff
 
-	* libgimp/gimpimage.c
-	* libgimp/gimplayer.c: fixes for silly errors from Marc Lehmann
+	* libligma/ligmaimage.c
+	* libligma/ligmalayer.c: fixes for silly errors from Marc Lehmann
 
-	* libgimp/gimpchannel.c: implemented gimp_channel_set_show_masked
-	and gimp_channel_get_show_masked (already in gimp.h)
+	* libligma/ligmachannel.c: implemented ligma_channel_set_show_masked
+	and ligma_channel_get_show_masked (already in ligma.h)
 
 	* plug-ins/blinds/blinds.c
 	* plug-ins/bmp/bmp.h
@@ -149,104 +149,104 @@ Sun May 24 08:41:34 EST 1998 Stephen Norris <srn@fn.com.au>
 
 	* plug-ins/displace/displace.c: Fix to GUI bug.
 
-Fri May 22 19:23:59 MEST 1998 Sven Neumann <sven@gimp.org>
+Fri May 22 19:23:59 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* docs/gimp_quick_reference.*: some small fixes and additions
+	* docs/ligma_quick_reference.*: some small fixes and additions
 
-Fri May 22 00:46:18 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Fri May 22 00:46:18 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/batch.c: removed global conversion from '-' to '_'
 
-Thu May 21 13:03:50 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu May 21 13:03:50 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* updated Adam's stuff
 
 	* app/app_procs.c: squleched warning
 
-	* gimptool.in: quote stuff to be flexible about our CC settings
+	* ligmatool.in: quote stuff to be flexible about our CC settings
 
 Wed May 20 20:21:45 EST 1998 Stephen Norris <srn@fn.com.au>
 
 	* plug-ins/bz2/bz2.c: Check return code from fopen.
 	* plug-ins/gz/gz.c: Check return code from fopen.
 
-Tue May 19 14:02:41 MET DST 1998 Sven Neumann <sven@gimp.org>
+Tue May 19 14:02:41 MET DST 1998 Sven Neumann <sven@ligma.org>
 
 	* added a new script from Wolfgang Hofer (fade-outline.scm)
 
-Mon May 18 20:30:44 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon May 18 20:30:44 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated the gfli plug-in to the version on the registry and
 	folded the "chunk-type-7-bug"-patch back in
 
-Sun May 17 23:06:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sun May 17 23:06:38 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/app_procs.c: applied patch from Michael Sweet to correct
 	NULL deref in splash screen.
 
-Mon May 18 02:50:03 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon May 18 02:50:03 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* plug-ins/tiff/tiff.c: updated tiff plug-in
 
-Sun May 17 17:31:05 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 17 17:31:05 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/maze: updated maze plugin
 
 	* plug-ins/script-fu/scripts/circuit.scm: reflected maze pdb
 	interface change
 
-Sun May 17 14:44:32 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 17 14:44:32 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/gimage.c: fix for merging indexed and indexed-alpha
 	layers (from Raph)
 
-Sun May 17 14:02:44 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 17 14:02:44 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c: reverted the splash screen idle loop changes
 	since they expose some weird GtkLabel redraw bugs
 
-Sun May 17 00:15:40 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun May 17 00:15:40 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.31 release
 
 	* updated print plugin
 
-Fri May 15 23:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
+Fri May 15 23:35:43 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/fileops.c: made url plugin autodetect work again
 
-Fri May 15 03:54:48 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Fri May 15 03:54:48 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
-	* gimp_tips.txt: fixed typo
+	* ligma_tips.txt: fixed typo
 
-Fri May 15 03:03:00 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Fri May 15 03:03:00 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/iscissors.c: fixed bezierify on offset layers
 
-Thu May 14 21:18:27 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Thu May 14 21:18:27 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/iscissors.c: a very sad attempt to fix some iscissors
 	lockups/segfaults
 
-Thu May 14 18:10:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Thu May 14 18:10:38 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/app_procs.c: made the splash screen a GTK_WINDOW_POPUP,
 	changed the hackish gtk_main_iteration with a null idle
 	loop to a more stylish while (gtk_events_pending())
 	gtk_main_iteration();
 
-Wed May 13 23:58:20 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Wed May 13 23:58:20 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/fileops.c (file_overwrite_yes_callback): destroy the
 	Overwrite dialog's window before running the save.
 
-Wed May 13 17:31:27 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed May 13 17:31:27 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/frac.c: stubbed out nonworking code
 
 	* updated print plugin
 
-Wed May 13 00:03:18 MEST 1998 Sven Neumann <sven@gimp.org>
+Wed May 13 00:03:18 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* added nine new scripts from Chris Gutteridge
 	(asc2img.scm, camo.scm, coffee.scm, distress_selection.scm,
@@ -256,7 +256,7 @@ Wed May 13 00:03:18 MEST 1998 Sven Neumann <sven@gimp.org>
 	* added two gradients that are used by the new scripts
 	(Coffee, Land_and_Sea)
 
-Tue May 12 02:49:12 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue May 12 02:49:12 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c: create tips dialog after loading files on the
 	command line, instead of in an idle function. Lamer hack, but it
@@ -265,11 +265,11 @@ Tue May 12 02:49:12 PDT 1998 Manish Singh <yosh@gimp.org>
 	* app/gdisplay_ops.c: fix for new view on zoomed image
 
 	* Makefile.am
-	* gimptool.1: added man page for gimptool by Ben Gertzfield
+	* ligmatool.1: added man page for ligmatool by Ben Gertzfield
 
-Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* gimptool.in: added --install-bin options for installing already
+	* ligmatool.in: added --install-bin options for installing already
 	built plugins
 
 	* app/convolve.c: check for indexed images properly
@@ -278,92 +278,92 @@ Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: fix for unlikely memleak
 
-	* libgimp/gimpimage.c: stupid ytpo ;)
+	* libligma/ligmaimage.c: stupid ytpo ;)
 
-	* plug-ins/gfli/gfli.c: applied gimp-wh-980507-0 to fix
+	* plug-ins/gfli/gfli.c: applied ligma-wh-980507-0 to fix
 	"chunk-type-7-bug"
 
-Mon May 11 23:28:20 MEST 1998 Sven Neumanns <sven@gimp.org>
+Mon May 11 23:28:20 MEST 1998 Sven Neumanns <sven@ligma.org>
 
 	* added two new scripts from Hrvoje Horvat
 	(glossy.scm, 3d-outline.scm)
 
-Mon May 11 21:40:25 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon May 11 21:40:25 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated print plug-in
 
-Fri May  8 20:51:24 PDT 1998 Manish Singh <yosh@gimp.org>
+Fri May  8 20:51:24 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/script-fu/script-fu-console.c: workaround for text
 	widget crash from Owen
 
-Thu May  7 16:32:15 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu May  7 16:32:15 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* gimptool.in: added --install and --install-admin options
+	* ligmatool.in: added --install and --install-admin options
 	to build and install a plug-in automagically
 
-Thu May  7 15:24:31 EDT 1998  Matthew Wilson <msw@gimp.org>
+Thu May  7 15:24:31 EDT 1998  Matthew Wilson <msw@ligma.org>
 
 	* app/fileops.c: more changes to fileselection
 
-Tue May  5 11:40:28 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue May  5 11:40:28 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/psd/psd.c: updates from Adam
 
 	* plug-ins/script-fu/scripts/text-circle.scm: new version
 
-Mon May  4 21:24:03 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon May  4 21:24:03 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.29 release
 
-Mon May  4 19:32:54 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon May  4 19:32:54 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/plug_in.c: make repeat last and re-show plugin menu
 	sensitive to image type
 
-Mon May  4 04:12:54 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon May  4 04:12:54 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: define and export version number parts. Check for
 	gtk 1.0.1
 
-	* gimptool.in: do some arg check for --build
+	* ligmatool.in: do some arg check for --build
 
 	* app/fileops.c: handle file overwrite dialog too
 
-Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/fileops.c: make fileselectors insensitive during
 	loading and saving
 
-Sun May  3 00:24:31 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun May  3 00:24:31 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/channels_dialog.c: minimalistic change to the interface,
 	makes it possible to set the channel opacity to 100.0%
 	(was 99.0% before)
 
-Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/about_dialog.c
 	* app/app_procs.c
-	* app/main.c: use GIMP_VERSION from config.h now
+	* app/main.c: use LIGMA_VERSION from config.h now
 
-	* gimptool made to ease plug-in development and installation
+	* ligmatool made to ease plug-in development and installation
 
-Sat May  2 16:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sat May  2 16:10:05 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/channels_dialog.c: removed my broken fix, put in a fix
 	that works
 
-Sat May  2 15:20:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sat May  2 15:20:54 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/channels_dialog.c: check to be sure that the gimage still
 	exists when editing a channel - fixes bug report from Sven
 
-Sat May  2 00:59:23 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat May  2 00:59:23 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* gimp.1: spelling corrections from Tamito Kajiyama
+	* ligma.1: spelling corrections from Tamito Kajiyama
 
-Sat May  2 00:41:36 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat May  2 00:41:36 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/tiff/tiff.c: another special case fix from Nick Lamb.
 	I said it before, and I'll say it again: TIFF sucks
@@ -376,7 +376,7 @@ Sat May  2 00:41:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* README: bring up to date
 
-Fri May  1 23:09:33 EDT 1998  Matthew Wilson  <msw@gimp.org>
+Fri May  1 23:09:33 EDT 1998  Matthew Wilson  <msw@ligma.org>
 
 	* app/channels_dialog.c: handle double click on our own since
 	channels_dialog_flush nukes the widgets and we never get
@@ -395,46 +395,46 @@ Fri May  1 13:22:21 1998  Tim Janik  <timj@gtk.org>
  	again: the selection is changed so update the list (.... oops,
 	sorry got caught in a recursive loop there ;) ))).
 
-Thu Apr 30 16:49:41 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr 30 16:49:41 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/channels_dialog.c: fix for off-by-one error in channel
 	position from Andy Thomas
 
-Thu Apr 30 16:38:59 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr 30 16:38:59 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* updated randomize and blur plugins, split out libgpc into
 	it's own dir
 
-Thu Apr 30 14:32:16 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr 30 14:32:16 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* upgraded to libtool 1.2
 
-Thu Apr 30 01:45:03 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr 30 01:45:03 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/xd/xd.c: selection logic fix from Gordon
 	Matzigkeit
 
-Thu Apr 30 03:15:51 EDT 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr 30 03:15:51 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/curves.c: Another small change to keep the segfaults away
 	* app/disp_callbacks.c: An attempt to squelch some warnings
 
-Thu Apr 30 02:08:23 EDT 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr 30 02:08:23 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/channels_dialog.c
 	* app/layers_dialog.c: Modified event handlers to bring up the
 	popup menu anywhere on layer/channel widget
 
-Wed Apr 29 22:29:16 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 22:29:16 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c: make splash screen honor gtkrc
 
-Wed Apr 29 16:49:27 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 16:49:27 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* plug-ins/CEL/CEL.c: reverted gimp-joke-980427-0 changes, they
+	* plug-ins/CEL/CEL.c: reverted ligma-joke-980427-0 changes, they
 	broke things
 
-Wed Apr 29 15:38:55 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 15:38:55 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/tiler/tiler.c: fix width > height case
 
@@ -442,27 +442,27 @@ Wed Apr 29 15:38:55 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/convmatrix/convmatrix.c
 	* plug-ins/tileit/tileit.c: removed spurious gtk_container_add's
 
-Wed Apr 29 07:50:26 EDT 1998 Adrian Likins <adrian@gimp.org>
+Wed Apr 29 07:50:26 EDT 1998 Adrian Likins <adrian@ligma.org>
 
-	* gimp.1: updated man page to reflect new --debug-handlers
+	* ligma.1: updated man page to reflect new --debug-handlers
 	argument
 
-Wed Apr 29 04:05:34 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 04:05:34 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: tightened png header check
 
-Wed Apr 29 03:46:44 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 03:46:44 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/animationplay/animationplay.c
 	* plug-ins/gif/gif.c
 	* plug-ins/psd/psd.c: updates from Adam
 
-Wed Apr 29 01:43:30 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 29 01:43:30 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/text_tool.c: don't die on corrupted fonts. Give some
 	error messages instead.
 
-Tue Apr 28 23:17:37 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Apr 28 23:17:37 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/gradient.c: enable adjustment of the gradient list box
 	for scrolling
@@ -472,22 +472,22 @@ Wed Apr 29 00:56:19 1998  Tim Janik  <timj@gtk.org>
 	* app/text_tool.c (text_create_dialog): enable adjustment of the
 	scrolled window to keep the focused font visible.
 
-Tue Apr 28 15:09:02 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Apr 28 15:09:02 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/CEL/CEL.c
 	* plug-ins/psd/psd.c: portability fix for SunOS 4
 
-Mon Apr 27 20:43:14 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 27 20:43:14 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/animationplay/animationplay.c
 	* plug-ins/CEL/CEL.c
 	* plug-ins/psd/psd.c
-	* plug-ins/xd/xd.c: applied gimp-joke-980427-0, warning cleanups
+	* plug-ins/xd/xd.c: applied ligma-joke-980427-0, warning cleanups
 
-	* app/temp_buf.c: applied gimp-entity-980427-0, temp_buf swap
+	* app/temp_buf.c: applied ligma-entity-980427-0, temp_buf swap
 	speedups and more robust tempfile handling
 
-Mon Apr 27 20:57:26 1998 EDT Matthew Wilson <msw@gimp.org>
+Mon Apr 27 20:57:26 1998 EDT Matthew Wilson <msw@ligma.org>
 
 	* app/curves: Initialize data that is referenced in event handlers
 	in the curves_new_dialog function.  Be on the look out for this
@@ -501,51 +501,51 @@ Tue Apr 28 00:16:31 1998  Tim Janik  <timj@gtk.org>
 	* app/layers_dialog.c (layers_dialog_create): adjust the scrolled
 	window to always show the currently focused layer item.
 
-Mon Apr 27 23:29:10 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 27 23:29:10 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated despeckle and sharpen plug-ins
 
-Mon Apr 27 18:09:01 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 27 18:09:01 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated bmp plug-in
 
-Sun Apr 26 16:31:06 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 26 16:31:06 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.28 release
 
-Sun Apr 26 16:17:46 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 26 16:17:46 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/procedural_db.c
 	* app/text_tool.c: applied mem leak patch from Mattias Gronlund
 
 	* plug-ins/tiff/tiff.c: fix for indexed save from Dan Mitchell
 
-Sun Apr 26 15:11:06 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 26 15:11:06 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/oilify/oilify.c: folded optimizations back in
 
-Sun Apr 26 18:14:28 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun Apr 26 18:14:28 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* gimp_tips.txt: added yet another tip
+	* ligma_tips.txt: added yet another tip
 
-Sun Apr 26 17:50:36 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun Apr 26 17:50:36 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated engrave plug-in
 
 	* updated oilify plug-in
 	* changed the call to plug-in-oilify in circuit.scm and lava.scm
 
-Sun Apr 26 03:06:16 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 26 03:06:16 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* oh goodie, the PSD plugin doesn't relay on endian junk anymore
 
-Sun Apr 26 02:34:21 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 26 02:34:21 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* updated CEL plugin
 
 	* added PSD plugin and autoconf for byte order
 
-Thu Apr 23 19:08:16 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr 23 19:08:16 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Added sharpen to stable dist
 
@@ -556,30 +556,30 @@ Thu Apr 23 19:08:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-in/gfig/gfig.c: spelling corrections :)
 
-	* app/fileops.c: applied gimp-gord-980420-0, fixes stale save
+	* app/fileops.c: applied ligma-gord-980420-0, fixes stale save
 	procs in the file dialog
 
-	* app/text_tool.c: applied gimp-egger-980420-0, text tool
+	* app/text_tool.c: applied ligma-egger-980420-0, text tool
 	optimization
 
-Thu Apr 23 21:27:23 EDT 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr 23 21:27:23 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/gimage.c: set srcPR2.[xy] to srcPR1.[xy] in
 	gimage_construct_composite_preview (fixes hangs in preview creation)
 
-Tue Apr 21 15:11:21 EDT 1998 Matthew Wilson <msw@gimp.org>
+Tue Apr 21 15:11:21 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/disp_callbacks.c: removed the tool reset when changing gdisplays
 	* app/bezier_select.c: stop draw_core when changing gdisplays
 
-Tue Apr 21 01:59:12 EDT 1998 Matthew Wilson <msw@gimp.org>
+Tue Apr 21 01:59:12 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/iscissors.c: Remove the iscissors outline by stopping the
 	draw_core before bezierifying the selection.  There may be
 	memory leaks here (the iscissors stuff does not appear to be freed
 	on bezierify)
 
-Mon Apr 20 18:15:54 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 20 18:15:54 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/main.c
 	* app/errors.c: added --debug-handlers switch to get stack traces
@@ -590,41 +590,41 @@ Mon Apr 20 18:15:54 PDT 1998 Manish Singh <yosh@gimp.org>
 
 1998-04-20  Marc Ewing  <marc@redhat.com>
 
-	* added RPM/* files and use them in gimp.spec
+	* added RPM/* files and use them in ligma.spec
 
-Mon Apr 20 01:24:10 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 20 01:24:10 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/faxg3/g3.h
 	* plug-ins/faxg3/run_tbl.c: commented out #ident's, since some
 	compilers complain
 
-Mon Apr 20 00:01:26 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 20 00:01:26 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/disp_callbacks.c: we get events in a funny order sometimes,
 	so don't try to remove nonexistent signal handlers
 
-Sun Apr 19 20:18:29 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 19 20:18:29 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* added screenshot plug-in
 
 	* plug-ins/animationplay/animationplay.c: fix sigsegv on close
 
-Sun Apr 19 14:16:44 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun Apr 19 14:16:44 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/app_procs.c: truncate labels in the splash screen if they
 	are too long to be displayed without resizing the window; this
 	should fix the problems with 100dpi fonts
 
-Sat Apr 18 22:19:10 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 18 22:19:10 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* app/gimprc.c: don't dereference NULL pointer when a gimprc
+	* app/ligmarc.c: don't dereference NULL pointer when a ligmarc
 	variable is used before it's defined. Exit gracefully
 
-Sat Apr 18 11:45:04 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 18 11:45:04 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.27 release
 
-Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/dbbrowser/dbbrowser_util.c: make text entry for function
 	name read-only
@@ -632,17 +632,17 @@ Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/film/film.c
 	* plug-ins/animationplay/animationplay.c: minor cleanups
 
-Thu Apr 16 19:46:46 MEST 1998 Sven Neumann <sven@gimp.org>
+Thu Apr 16 19:46:46 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* plug-ins/script-fu/interp_slib.c: changed the link to
-	the script-fu resources to point to www.gimp.org
+	the script-fu resources to point to www.ligma.org
 
-Wed Apr 15 13:18:47 EDT 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr 15 13:18:47 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/disp_callbacks.c: restart current tool when changing
 	gdisplays
 
-Wed Apr 15 17:40:55 MEST 1998 Sven Neumann <sven@gimp.org>
+Wed Apr 15 17:40:55 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/iscissors.c: changed toggle_buttons to check_buttons since
 	all tools use them in the options dialog
@@ -652,112 +652,112 @@ Wed Apr 15 02:44:58 1998  George Lebl  <jirka@5z.com>
 	* plug-ins/film/film.c: del_list_item_callback was calling
 	  gtk_widget_destroy on an already unrefed widget
 
-Wed Apr 15 02:03:25 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr 15 02:03:25 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/disp_callbacks.c: disable keyboard accelerators
 	during mouse image operations, so nothing funky happens
 	in the middle of a motion (like converting image types
 	or running a plugin)
 
-Wed Apr 15 01:58:12 EDT 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr 15 01:58:12 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/gdisplay.c: made a change to gdisplays_update_area to
 	update _all_ gdisplays that point at the gimage ID.  This
 	(should) fix the paint on the second layer of a second view bug.
 
-Tue Apr 14 16:15:52 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Apr 14 16:15:52 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* app/iscissors.c: partially applied gimp-monniaux-980413-0,
+	* app/iscissors.c: partially applied ligma-monniaux-980413-0,
 	corrects nonfunctional interface elements
 
-Tue Apr 14 18:01:50 EDT 1998 Matthew Wilson <msw@gimp.org>
+Tue Apr 14 18:01:50 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/gdisplay.c: Set active_tool->drawable to NULL when destroying
 	the gdisplay that the active tool points to.
 	* app/giamge.c: Fixed spacing...
 
-Tue Apr 14 13:40:07 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Apr 14 13:40:07 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* gradient.c: handle delete_event for color selector properly
 
 	* plug-ins/webbrowser/web-browser.scm: updated link to the bugs
 	page
 
-Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
+Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* gimp_tips.txt: applied gimp-quinet-980414-0; adds new tips
-	* plug-ins/pagecurl/pagecurl.c: applied gimp-quinet-980414-1;
+	* ligma_tips.txt: applied ligma-quinet-980414-0; adds new tips
+	* plug-ins/pagecurl/pagecurl.c: applied ligma-quinet-980414-1;
 	defines M_PI
-	* app/app_procs.c: applied gimp-quinet-980414-2; adds more
+	* app/app_procs.c: applied ligma-quinet-980414-2; adds more
 	information to the startup screen
 	* app/regex.c
 	* plugins/script-fu/regex.c: partially applied
-	gimp-jbuhler-980412-0; adds braces to nested if/else
+	ligma-jbuhler-980412-0; adds braces to nested if/else
 
-Tue Apr 14 10:11:04 MEST 1998 Sven Neumann <sven@gimp.org>
+Tue Apr 14 10:11:04 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/global_edit.c: Named cut and copy are now performed after
 	the user is asked for a name, so cancelling the dialog works
 	correctly.
 
-Mon Apr 13 15:17:51 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 13 15:17:51 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* moved man page from docs to top-level so it's always installed
 
-Mon Apr 13 23:48:31 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 13 23:48:31 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/histogram_tool.c: changed the Ok and Cancel buttons in the
 	histogram dialog to a simple Close, because that's what they were
 	actually doing
 
-Mon Apr 13 13:09:32 EDT 1998 Matthew Wilson <msw@gimp.org>
+Mon Apr 13 13:09:32 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/commands.c: Fixed prefs to save stingy memory
 
-Mon Apr 13 16:22:38 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 13 16:22:38 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/convert.c: converting an empty image from grayscale to
-	indexed used to crash the gimp
+	indexed used to crash the ligma
 
-Mon Apr 13 15:37:42 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 13 15:37:42 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/gdisplay.c: correctly update the menu-sensitivity; you can't
 	paste into an empty image
 	* global_edit.c: flush the displays when pasting from a named buffer
 
-Mon Apr 13 13:40:50 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 13 13:40:50 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	*docs/gimp.1: fixes and updates to the man-page
+	*docs/ligma.1: fixes and updates to the man-page
 
-Mon Apr 13 13:00:20 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Apr 13 13:00:20 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* gimp_tips.txt: more tips and nicer line wrap
+	* ligma_tips.txt: more tips and nicer line wrap
 	* app/tips_dialog.c: the last character (the final dot) was cut off
 
-Mon Apr 13 02:12:21 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 13 02:12:21 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/xcf.c: fix a tiny bug in the xcf loader that would have
-	caused gimp to crash on a corrupt xcf file
+	caused ligma to crash on a corrupt xcf file
 
-Mon Apr 13 01:47:22 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr 13 01:47:22 PDT 1998 Manish Singh <yosh@ligma.org>
 
-	* plug-ins/flarefx/flarefx.c: applied gimp-timecop-980412-0
+	* plug-ins/flarefx/flarefx.c: applied ligma-timecop-980412-0
 	and tweaked it a bit to make it have proper behavior
 
 	* plug-ins/snoise/snoise.c: updated plug-in
 
-Sun Apr 12 22:31:11 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 12 22:31:11 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Changed address for FSF in all .h and .c files
 
 	* app/configure.in: check for freebsd tiff libs
 
-Mon Apr 13 00:41:50 EDT 1998 Matthew Wilson <msw@gimp.org>
+Mon Apr 13 00:41:50 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/command.c: Duh. We have a message_box.  Why not use it for
 	the prefs code.
 
-Mon Apr 13 00:27:45 EDT 1998 Matthew Wilson <msw@gimp.org>
+Mon Apr 13 00:27:45 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/gdisplay.c: Set the current tool's gdisplay pointer to NULL
 	when destroying a gdisplay
@@ -765,19 +765,19 @@ Mon Apr 13 00:27:45 EDT 1998 Matthew Wilson <msw@gimp.org>
 	* app/interface.c: Use "clicked" as the signal to handle for menu
 	based tools.  This lets us pop by_color_select back up.
 
-Sun Apr 12 22:51:31 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun Apr 12 22:51:31 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* gimp_tips.txt: added a few more tips
+	* ligma_tips.txt: added a few more tips
 	* plugins/webbrowser/webbrowser.scm: updated the URL to the
-	GIMP Bugs page
+	LIGMA Bugs page
 
-Sun Apr 12 15:49:25 MEST 1998 Sven Neumann <sven@gimp.org>
+Sun Apr 12 15:49:25 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/palette.c: fixed a typo in the menu
-	* gimprc.in: removed the systemwide palettes directory from the
+	* ligmarc.in: removed the systemwide palettes directory from the
 	palettes searchpath
 
-Sun Apr 12 02:23:05 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 12 02:23:05 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: I guess it didn't end... an attempt to try to
 	recognize all types of tiff configs
@@ -787,20 +787,20 @@ Sun Apr 12 02:23:05 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/errors.c: gdk_exit needs to be prototyped
 
-Sun Apr 12 01:19:35 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Apr 12 01:19:35 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: more fixes... when will it all end...
 
 	* plug-ins/xd/xd.c: compile with >= 0.15 now
 
-	* app/transform.[ch]: applied gimp-alt-980412, fixes control
+	* app/transform.[ch]: applied ligma-alt-980412, fixes control
 	point selection for transforms
 
-Sat Apr 11 15:23:26 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 11 15:23:26 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.26 release
 
-Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/gdisplay.c: reverted cosmetic fix below, broke zoomed
 	updates
@@ -815,11 +815,11 @@ Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* fix for memory problem in xwd
 
-Sat Apr 11 00:03:33 PDT 1998 Manish Singh <yosh@gimp.org>
+Sat Apr 11 00:03:33 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.25 release
 
-Fri Apr 10 21:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
+Fri Apr 10 21:59:18 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c: fixed up idle handler for file open
 	(look like testgtk idle demo)
@@ -830,28 +830,28 @@ Fri Apr 10 21:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
 	* app/errors.h
 	* app/errors.c
 	* app/main.c
-	* libgimp/gimp.c: redid the signal handlers so we only get a
+	* libligma/ligma.c: redid the signal handlers so we only get a
 	debug prompt on SIGSEGV, SIGBUS, and SIGFPE.
 
-	* applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning
+	* applied ligma-jbuhler-980408-0 and ligma-joke-980409-0 (warning
 	fixups)
 
-	* applied gimp-monnaux-980409-0 for configurable plugin path for
+	* applied ligma-monnaux-980409-0 for configurable plugin path for
 	multiarch setups
 
-Fri Apr 10 00:17:23 EDT 1998 Matthew Wilson <msw@gimp.org>
+Fri Apr 10 00:17:23 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/commands.c: Fixed (hopefully) the preferences code.  Added
-	a warning to restart GIMP for those changes that require restarts.
+	a warning to restart LIGMA for those changes that require restarts.
 
-Fri Apr 10 01:55:50 MEST 1998 Sven Neumann <sven@gimp.org>
+Fri Apr 10 01:55:50 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* added three new logo-scripts from keebler@wco.com:
 	bovinated-logo.scm, comic-logo.scm and gradient-bevel-logo.scm
 
 Thu Apr  9 09:28:04 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
-	* libgimp/gimp.c (gimp_main): strict C requires that function
+	* libligma/ligma.c (ligma_main): strict C requires that function
 	pointers be preceded by '&'.  SGI compilers seem to not like it
 	when they're not.
 
@@ -860,7 +860,7 @@ Thu Apr  9 09:28:04 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	erased properly when the layer is removed); fixes a long-standing
 	cosmetic bug.
 
-Thu Apr  9 01:54:19 PDT 1998 Manish Singh <yosh@gimp.org>
+Thu Apr  9 01:54:19 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: fix jpeg check. Add config for sendmail
 
@@ -868,18 +868,18 @@ Thu Apr  9 01:54:19 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/script-fu: s/\<err\>/my_err/g for portability
 
-Thu Apr  9 02:53:14 EST 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr  9 02:53:14 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/app_procs.c: Added a little wrapper when loading files from
 	command line that loads the files after gtk_main starts.  This
 	fixes the segfault from the tips dialog when you load images on
 	the command line.  Cudos to Owen for the fix.
 
-Wed Apr  8 23:47:59 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr  8 23:47:59 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: add AC_FUNC_ALLOCA for regex
 
-Wed Apr  8 21:12:01 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr  8 21:12:01 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: redid libjpeg check to make sure old versions
 	aren't used. Also #undef PACKAGE and VERSION since some
@@ -890,7 +890,7 @@ Wed Apr  8 21:12:01 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/script-fu/interp_regex.c: we don't need to kludge
 	around OSF1 anymore, since we use our own regex stuff
 
-Wed Apr  8 17:55:38 EDT 1998 Adrian Likins <adrian@gimp.org>
+Wed Apr  8 17:55:38 EDT 1998 Adrian Likins <adrian@ligma.org>
 
 	*plugins/script-fu/scripts/grid-system.scm
 	*plugins/script-fu/scripts/hsv-graph.scm
@@ -901,29 +901,29 @@ Wed Apr  8 17:55:38 EDT 1998 Adrian Likins <adrian@gimp.org>
 	*data/palettes/Named_colors:
 	        script and palette updates from Shuji Narazaki
 
-Wed Apr  8 00:14:29 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr  8 00:14:29 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.24 release
 
-Wed Apr  8 00:04:31 PDT 1998 Manish Singh <yosh@gimp.org>
+Wed Apr  8 00:04:31 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* app/batch.c: fixup for script-fu in batch mode from
 	Christian Maegaard <cc@chaos.dk>
 
 	* added pagecurl plug-in
 
-Wed Apr  8 01:40:45 EDT 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr  8 01:40:45 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/by_color_select.c: Don't destroy tool.
 
-Tue Apr  7 22:36:22 PDT 1998 Manish Singh <yosh@gimp.org>
+Tue Apr  7 22:36:22 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* added regex.[ch] to app/ and plug-ins/script-fu/ so we REALLY
 	have proper regex functions on all platforms
 
 	* updated gfig plugin
 
-Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@gimp.org>
+Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: fix for $srcdir != $builddir for data. Tightened
 	check for random() and add -lucb on systems that need it. Fix for
@@ -955,7 +955,7 @@ Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated bmp plugin, folded in portability fixes
 
-Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@gimp.org>
+Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/bezier_select.c: Destroy the tool when changing displays.
 	* app/command.c: initialize pointers to drawables when selecting
@@ -966,14 +966,14 @@ Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@gimp.org>
 	* app/tools.c: make a fallback case when starting tools so that
 	you'll always have an active tool.
 
-Sat Apr  4 15:43:28 MEST 1998 Sven Neumann <sven@gimp.org>
+Sat Apr  4 15:43:28 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/ops_buttons.[c|h]
         * app/channels_dialog.c
         * app/layers_dialog.c: The sensitivity of the buttons wasn't set
 	correctly when deleting an image.
 
-Fri Apr  3 13:49:38 MEST 1998 Sven Neumann <sven@gimp.org>
+Fri Apr  3 13:49:38 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/menus.c
 	* app/gdisplay.c
@@ -981,7 +981,7 @@ Fri Apr  3 13:49:38 MEST 1998 Sven Neumann <sven@gimp.org>
 	the Image-menu. Now it is possible to work on a single-layer image
 	without opening the Layers-dialog for adding an alpha channel.
 
-Fri Apr  3 12:22:40 MEST 1998 Sven Neumann <sven@gimp.org>
+Fri Apr  3 12:22:40 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/Makefile.am
 	* tools/*.xpm
@@ -991,13 +991,13 @@ Fri Apr  3 12:22:40 MEST 1998 Sven Neumann <sven@gimp.org>
 	in the Layers&Channels-dialog more directly. They are connected to
 	the menu-item-callback-functions.
 
-Thu Apr  2 04:06:50 EST 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr  2 04:06:50 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/disp_callbacks.c: Always ungrab the pointer on button release.
 	This is a quick and dirty hack to try to nuke the pointer grab
 	bug.
 
-Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@gimp.org>
+Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/transform_core.c: added a change to make a note of the
 	current drawable in the button_release.  This prevents the tool
@@ -1006,23 +1006,23 @@ Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@gimp.org>
 	* app/tools.c: Initialize the current drawable to NULL if
 	there is gdisp == NULL.
 
-Thu Apr  2 23:52:54 EST 1998 Matthew Wilson <msw@gimp.org
+Thu Apr  2 23:52:54 EST 1998 Matthew Wilson <msw@ligma.org
 
 	* app/gimage.c
 	* app/tools.c: Made changes to restart tools properly when
 	the current drawable changes.
 
-Thu Apr  2 20:09:06 MEST 1998 Sven Neumann <sven@gimp.org>
+Thu Apr  2 20:09:06 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/channels_dialog.c: the impossibility of duplicating a
 	non-auxillary channel is now reflected by the menu-sensitivity
 
-Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
+Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* updated iwarp to the version on the registry and reapplied
 	(hopefully) all portability-patches that were applied in between
 
-Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/brightness_contrast.c
 	* app/by_color_select.c
@@ -1046,34 +1046,34 @@ Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org>
 	* app/tools.h: added tools_initialize, made changes to
 	be able save the last used drawable in the tool.
 
-Wed Apr  1 23:14:42 MEST 1998 Sven Neumann <sven@gimp.org>
+Wed Apr  1 23:14:42 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* configure.in: added checks for print-systems as suggested by
 	Michael Sweet
 	* plugins/print
 	* plugins/sgi: updated to the version on the registry
 
-Wed Apr  1 20:04:26 MEST 1998 Sven Neumann <sven@gimp.org>
+Wed Apr  1 20:04:26 MEST 1998 Sven Neumann <sven@ligma.org>
 
-	* app/layers_dialog.c: applied gimp-simon-980331-0
+	* app/layers_dialog.c: applied ligma-simon-980331-0
 	* app/blend.c: change the repeat_mode_menu to insensitive when
 	gradient_type is Shapeburst*
 
-Wed Apr 01 04:07:29 EST 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr 01 04:07:29 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/disp_callbacks.c: Only destroy the current tool if you change
 	gdisplays and the tool caches image data.
 
-Wed Apr 01 03:40:15 EST 1998 Matthew Wilson <msw@gimp.org>
+Wed Apr 01 03:40:15 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/disp_callbacks.c:  If the current gdisp->ID does not match
 	the ID of the gdisp_ptr in the active_tool, restart it.
 
-Tue Mar 31 03:10:12 EST 1998 Matthew Wilson <msw@gimp.org>
+Tue Mar 31 03:10:12 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/iscissors.c: Set tool->preserve to TRUE in tools_new_iscissors.
 
-Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
+Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/gimage.c
 	* app/tools.c
@@ -1108,7 +1108,7 @@ Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
 	* app/menus.c: Removed Nether's tool patch.
 
 
-Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@ligma.org>
 
         * app/brush_select.c
         * app/iscissors.c: get rid of unused variable warnings
@@ -1118,68 +1118,68 @@ Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
         * app/plug_in.c: make sure everything gets initialized to something
         in the plug-in struct
 
-Mon Mar 30 13:52:50 EST 1998 Adrian Likins <adrian@gimp.org>
+Mon Mar 30 13:52:50 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	*plug-ins/png/png.c: changed nparams it expected
 	so it would work non-ineractively
 
-Mon Mar 30 14:04:26 MEST 1998 Sven Neumann <sven@gimp.org>
+Mon Mar 30 14:04:26 MEST 1998 Sven Neumann <sven@ligma.org>
 
 	* app/by_color_select.c: now checks if the image it is
 	operating on still exists.
 
-Sun Mar 29 14:29:34 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar 29 14:29:34 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/sparkle/sparkle.c: fixed improper use of types;
 	works now
 
-Sun Mar 29 11:47:02 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Mar 29 11:47:02 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	*app/brushes.c: changed gimp-brushes-refresh so
+	*app/brushes.c: changed ligma-brushes-refresh so
 	that it actually refreshes again after i broke it.
 
 Sat Mar 28 22:42:49 1998  Owen Taylor  <owt1@cornell.edu>
 
-	* configure.in (gimpdir): Removed duplicate saving of
+	* configure.in (ligmadir): Removed duplicate saving of
 	cflags. Add GTK_CFLAGS to CPPFLAGS for library tests,
 	instead of to CFLAGS.
 
-Fri Mar 27 13:41:55 EST 1998 Matthew Wilson <msw@gimp.org>
+Fri Mar 27 13:41:55 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/floating_sel.c: Always update the drawable when converting
 	a floating selection to a layer
 
-Fri Mar 27 11:41:30 EST 1998 Adrian Likins <adrian@gimp.org>
+Fri Mar 27 11:41:30 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	*plug-ins/palette/*: added the save palette plugin
 
-Fri Mar 27 14:33:42 MET 1998 Sven Neumann <sven@gimp.org>
+Fri Mar 27 14:33:42 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* plugins/dbbrowser/dbbrowser_utils.c
 	* plugins/sparkle/sparkle.c: small changes to make it compile
 	on irix-6.4 with the native compiler.
 
-Fri Mar 27 00:19:38 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Mar 27 00:19:38 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.23 release
 
-Fri Mar 26 03:13:15 EST 1998 Matthew Wilson <msw@gimp.org>
+Fri Mar 26 03:13:15 EST 1998 Matthew Wilson <msw@ligma.org>
 	* app/paint_core.c: Offset brush buffer when painting on edges
 	of the canvas.
 	* app/text_tool.c: Set window to auto_shrink = FALSE
 
-Fri Mar 26 01:30:45 EST 1998 Matthew Wilson <msw@gimp.org>
+Fri Mar 26 01:30:45 EST 1998 Matthew Wilson <msw@ligma.org>
 	* app/iscissors.c
 	* app/bezier_select.c: Change to select the bezier tool properly
 	when converting from iscissors to bezier
 
-Thu Mar 26 17:41:55 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 17:41:55 MST 1998 Nathan Summers <rock@ligma.org>
 	* app/iscissors.c: fixed the sigsegv if the layer is offset!
 
-Thu Mar 26 16:32:05 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 16:32:05 MST 1998 Nathan Summers <rock@ligma.org>
 	* app/iscissors.c: fix a typo (i where a j should be)
 
-Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@ligma.org>
 	* app/iscissors.c: This version works much better.
 	outstanding bugs <VERY IMPORTANT>:
 
@@ -1194,19 +1194,19 @@ Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
 	help me with it?  (it converts to bezier fine, it just doesn't set
 	the active tool to bezier currectly.)
 
-Thu Mar 26 12:15:38 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 12:15:38 MST 1998 Nathan Summers <rock@ligma.org>
 
 	* app/iscissors.c: fixes the display artifact where the preview
 	outline of the selected area would not appear or would appear in the
 	wrong place or have the wrong shape
 
-Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@ligma.org>
 
 	* app/iscissors.c: This should hopefully fix most of the UMRs
 	(uninitialized memory reads) found with Purify.  No noticable
 	change in iscissors's behavior, unfortunately.
 
-Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@gimp.org>
+Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* app/app_procs.c app/brush_select.c app/brushes.c
 	app/brushes.h app/convert.c app/gradient.c app/gradient.h
@@ -1216,25 +1216,25 @@ Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@gimp.org>
 	the data can be loaded by the user even when started with --no-data.
 	Fixes the blend bug too...
 
-Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@gimp.org>
+Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@ligma.org>
 
 	app/gradient.c: fixed another --no-data problem; also the
 	editor now behaves better when it is resized
 
-Wed Mar 25 22:46:36 MST 1998 Nathan Summers <rock@gimp.org>
+Wed Mar 25 22:46:36 MST 1998 Nathan Summers <rock@ligma.org>
 
 	* app/iscissors.c: fixed a problem with unintialized variables
 
-Wed Mar 25 19:29:09 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 25 19:29:09 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* app/gimprc.c: support for parsing env vars in gimprc
+	* app/ligmarc.c: support for parsing env vars in ligmarc
 
-Wed Mar 25 18:06:39 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 25 18:06:39 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* applied gimp-quinet-980122-0 and tweaked the tests a bit,
+	* applied ligma-quinet-980122-0 and tweaked the tests a bit,
 	this makes the optional library tests in configure.
 
-	* applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+	* applied ligma-jbuhler-980321-0, fixes more warnings in plug-ins
 
 1998-03-25  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
@@ -1245,35 +1245,35 @@ Wed Mar 25 18:06:39 PST 1998 Manish Singh <yosh@gimp.org>
 	Also, assuming that all-bytes-zero is a floating-point 0 value is
 	not portable.
 
-Wed Mar 25 16:22:00 EST 1998 Matthew Wilson <msw@gimp.org>
+Wed Mar 25 16:22:00 EST 1998 Matthew Wilson <msw@ligma.org>
 
 	* app/app_procs.c: now prints messages when starting up --no-splash
 
-	* app/gimprc.c: now prints messages when starting up --no-splash
+	* app/ligmarc.c: now prints messages when starting up --no-splash
 
 	* app/plug-in.c: does not print messages when starting up with
 	splash screen
 
-Tue Mar 24 20:32:53 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 24 20:32:53 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/fileops.c: refresh the open/save as dialogs upon open
 
-	* applied gimp-quinet-980323-0, fixing more M_PI madness
+	* applied ligma-quinet-980323-0, fixing more M_PI madness
 
-	* applied gimp-quinet-980323-1 which fixes redundant inline
+	* applied ligma-quinet-980323-1 which fixes redundant inline
 	checks
 
 	* plug-ins/gfig/gfig.c: changed stipple to type unsigned char to
 	quell warnings
 
-Tue Mar 24 18:03:37 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 24 18:03:37 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: corrected test for libXmu for some systems; added
 	test for difftime
 
 	* app/main.c: use glib ATEXIT macro
 
-	* app/text_tool.c: applied gimp-stric-980321-0 (text preview
+	* app/text_tool.c: applied ligma-stric-980321-0 (text preview
 	refresh)
 
 	* plug-ins/script-fu/script-fu-console.c: don't need to init
@@ -1285,13 +1285,13 @@ Tue Mar 24 18:03:37 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins now #define RAND_MAX if needed
 
-	* plug-ins/sparkle/sparkle.c: applied gimp-joke-980322-1
+	* plug-ins/sparkle/sparkle.c: applied ligma-joke-980322-1
 
-Tue Mar 24 04:19:55 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 24 04:19:55 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/convert.c: fix for fencepost error from Adam
 
-Mon Mar 23 18:08:59 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Mar 23 18:08:59 PST 1998 Manish Singh <yosh@ligma.org>
 
         * app/gimage_mask.c
         * app/paint_core.c: applied patch from Ben Jackson to fix
@@ -1306,7 +1306,7 @@ Mon Mar 23 20:51:53 1998  Owen Taylor  <owt1@cornell.edu>
 	about why the configuration for GTK could be failing,
 	and pointed to it in the failure message.
 
-Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* plugins/dbbrowser/dbbrowser_utils.c:
 	* plugins/dbbrowser/dbbrowser_utils.h: Fix from
@@ -1316,10 +1316,10 @@ Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
 	* app/fileops.c: another patch from matt, this one to
 	fix the bug with saving images with no layers.
 
-Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@ligma.org>
 
         * app/iscissors.c, app/tips_dialog.c, app/gradient.c,
-        libgimp/gimp.c, plug-ins/AlienMap/AlienMap.c,
+        libligma/ligma.c, plug-ins/AlienMap/AlienMap.c,
         plug-ins/bmp/bmp.c, plug-ins/fits/fitsrw.h,
         plug-ins/fits/fitsrw.c, plug-ins/flarefx/flarefx.c,
         plug-ins/gfig/gfig.c, plug-ins/gfli/gfli.c,
@@ -1331,19 +1331,19 @@ Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
         plug-ins/pat/pat.c, plug-ins/pcx/pcx.c, plug-ins/rotate/rotate.c,
         plug-ins/script-fu/script-fu-server.c, plug-ins/snoise/snoise.c,
         plug-ins/threshold_alpha/threshold_alpha.c,
-        plug-ins/zealouscrop/zealouscrop.c :gimp-joke-980321
+        plug-ins/zealouscrop/zealouscrop.c :ligma-joke-980321
 
 	plug-ins/CML_explorer, plug-ins/autocrop,
         plug-ins/align_layers, plug-ins/blinds,
-        plug-ins/bmp, plug-ins/megawidget: gimp-joke-980322
+        plug-ins/bmp, plug-ins/megawidget: ligma-joke-980322
 
-	Applied gimp-joke-980322-0.patch and gimp-joke-980321-0.patch
+	Applied ligma-joke-980322-0.patch and ligma-joke-980321-0.patch
 	from Yasuhiro SHIRASAKI <joke@awa.tohoku.ac.jp>. Mostly
  	portability for DEC osf1's cc. Lots of MAIN();'s, trailing
 	commas in enums, and guchar/gchar madness.
 
 
-Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* autoconfed for random/lrand48/rand madness
 
@@ -1351,61 +1351,61 @@ Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* gfig.c: minor fix for buggy compilers
 
-	* plasma.c, snoise.c: applied gimp-kmt-980321-[0,1]
+	* plasma.c, snoise.c: applied ligma-kmt-980321-[0,1]
 
 	* tiff.c: minor fix
 
-Sat Mar 21 18:34:56 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 21 18:34:56 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* fixed ripply-anim.scm and readded it
 
-Sat Mar 21 16:26:08 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 21 16:26:08 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* docs/gimp.1
+	* docs/ligma.1
 	* app/install.c: small changes to reflect the fact that a gfig
-	directory is created in the users gimp-directory.
+	directory is created in the users ligma-directory.
 
-Sat Mar 21 15:43:34 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 21 15:43:34 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* gimprc.in
+	* ligmarc.in
 	* app/commands.c: removed auto-save from preferences and marked
-	it as not implemented in gimprc. The code is still there for later
+	it as not implemented in ligmarc. The code is still there for later
 	reuse.
 	* app/gdisplay_ops.c: changed the WMCLASS on the image close
 	confirmation dialog to 'really_close'
 
-Sat Mar 21 14:43:06 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 21 14:43:06 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* docs/gimp_quick_reference.[ps|tar.gz]:
+	* docs/ligma_quick_reference.[ps|tar.gz]:
 	Changes to the reference sheet.
 
-Fri Mar 20 18:15:06 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Mar 20 18:15:06 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* s/bzero/memset/ and s/bcopy/memcpy/ in plug-ins
 
-Fri Mar 20 16:54:47 EST 1998 Adrian Likins <adrian@gimp.org>
+Fri Mar 20 16:54:47 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* app/palette.c:
 	* app/palette.h:
 	* app/internal_procs.c: Fixed some brokenness in palette refreshing.
 
-Mar 19 21:36:41 PST 1998 Manish Singh <yosh@gimp.org>
+Mar 19 21:36:41 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.22 release
 	* app/undo.c: handle exposure correctly
 
-Thu Mar 19 22:05:56 CST 1998  Larry Ewing  <lewing@gimp.org>
+Thu Mar 19 22:05:56 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/palette.c: fixed out of bounds reference in pallete_create.
 	The dialogs are a mess.
 
-Thu Mar 19 18:36:09 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Mar 19 18:36:09 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* ltmain.sh: libtool patch for Solaris
 	* added libgck, MapObject, and gfig back in
-	* gimprc.in: entry for gfig patterns
+	* ligmarc.in: entry for gfig patterns
 
-Thu Mar 19 14:13:33 EST 1998 Adrian Likins <adrian@gimp.org>
+Thu Mar 19 14:13:33 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* applied patch from Andy Thomas to brushes.c to
 	improve brush loading via pdb. Fixes problems with
@@ -1414,22 +1414,22 @@ Thu Mar 19 14:13:33 EST 1998 Adrian Likins <adrian@gimp.org>
 	*plugins/script-fu/scripts/ripply-anim.scm: removed
 	until someone fixes it.
 
-Thu Mar 19 13:21:28 MET 1998 Sven Neumann <sven@gimp.org>
+Thu Mar 19 13:21:28 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* docs/gimp_quick_reference.[tex|ps]: added a
+	* docs/ligma_quick_reference.[tex|ps]: added a
 	single-paged reference sheet with most of the hotkeys
 
-Thu Mar 19 03:28:29 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Mar 19 03:28:29 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: handle delete
 	event for colorsel correctly
 	* plug-ins/polar/polar.c: minor cleanups
 
-Thu Mar 19 01:04:56 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Mar 19 01:04:56 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* applied gimp-jbuhler-980315-0 (quelled warnings)
+	* applied ligma-jbuhler-980315-0 (quelled warnings)
 
-Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@gimp.org>
+Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	 * AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
         align_layers/align_layers.c animationplay/animationplay.c
@@ -1444,14 +1444,14 @@ Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@gimp.org>
         sinus/sinus.c tga/tga.c tileit/tileit.c
         vpropagate/vpropagate.c xpm/xpm.c:
 		 More picky picky ansi type
-        	stuff from gimp-hpux-980316.patch.
+        	stuff from ligma-hpux-980316.patch.
 
-Wed Mar 18 15:06:13 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 18 15:06:13 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* define M_PI if it's not already defined in lots of
 	source files
 
-Wed Mar 18 16:57:52 EST 1998 Adrian Likins <adrian@gimp.org>
+Wed Mar 18 16:57:52 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	 * blend.c brightness_contrast.c brush_select.c brushes.c
           bucket_fill.c by_color_select.c channels_dialog.c
@@ -1461,32 +1461,32 @@ Wed Mar 18 16:57:52 EST 1998 Adrian Likins <adrian@gimp.org>
           move.c paintbrush.c pattern_select.c pencil.c
           perspective_tool.c posterize.c rect_select.c scale_tool.c
           threshold.c tips_dialog.c:
-                 appied most of gimp-hpux-980316-0.patch
+                 appied most of ligma-hpux-980316-0.patch
                 from ???? Mostly added static's here and there
 	         and casting stuff.
 
 	* app/indexed_palette.c: made dialog non-resizeable
 
-Wed Mar 18 21:16:14 MET 1998 Sven Neumann <sven@gimp.org>
+Wed Mar 18 21:16:14 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* app/crop.c: fixed an indented #define
 
-Wed Mar 18 19:11:01 MET 1998 Sven Neumann <sven@gimp.org>
+Wed Mar 18 19:11:01 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* app/app_procs.c: split the "Brought to you by S&P" line in
 	two to avoid problems with 100dpi fonts
 
-Wed Mar 18 00:06:50 MET 1998 Sven Neumann <sven@gimp.org>
+Wed Mar 18 00:06:50 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* gradient.c: fixed a problem in the gradient editor
-        when gimp is started with the no-data option and no
+        when ligma is started with the no-data option and no
         gradients are load.
 
-Tue Mar 17 01:38:18 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 17 01:38:18 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* updated gif, animationplay, animoptimize, and bmp plugins
 
-Mon Mar 16 21:52:46 CST 1998  Larry Ewing  <lewing@gimp.org>
+Mon Mar 16 21:52:46 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/convert.c (indexed_ok_callback): added gimage_ID to the
 	dialog struct to check if the gimage was still around.
@@ -1494,37 +1494,37 @@ Mon Mar 16 21:52:46 CST 1998  Larry Ewing  <lewing@gimp.org>
 	* app/commands.c: fixed border/grow/shrink to check for valid
 	gimage.  (Once again object if you don't like this method).
 
-Mon Mar 16 16:31:11 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Mar 16 16:31:11 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* updated xpm plugin
 
-Mon Mar 16 15:57:08 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Mar 16 15:57:08 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/iscissors.c: more iscissors fun
 
-Mon Mar 16 17:05:54 CST 1998  Larry Ewing  <lewing@gimp.org>
+Mon Mar 16 17:05:54 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/commands.c: changed select_feather_cmd_callback to pass the
 	gimage->ID rather than the gimage to prevent a fatal error.  If
 	you have objections to this speak now.
 
-Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
+Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* plugins/illusion/illusion.c:
 	* plugins/papertile/papertile.c:
 	* plugins/fractaltrace/fractaltrace.c:
 	* plugins/flame/flame.c: Changed MAIN(); to MAIN()
 
-	*gimprc_user: added a commented out (install-colormap)
+	*ligmarc_user: added a commented out (install-colormap)
 	option
 
-	*app/install.c: comsetic update to show info about .gimp/scripts
+	*app/install.c: comsetic update to show info about .ligma/scripts
 
 	*plugins/sparkle/sparkle.c:
 	*plugins/despeckle/despeckle.c: made a local MIN/MAX instead
 	of redefining the normal one (causes problems on some compilers)
 
-Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@gimp.org>
+Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/move.c:
 	* app/gdisplay.c:
@@ -1535,48 +1535,48 @@ Mon Mar 16 12:20:12 EET 1998 Lauri Alanko <la@iki.fi>
 
 	* app/menus.c: Fixed the tool options disappearing at undo.
 
-Mon Mar 16 02:03:47 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Mar 16 02:03:47 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* updated gif and animationplay plugins
 
-Sun Mar 15 22:32:17 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar 15 22:32:17 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* all plugins parse gtkrc now
 
 	* configure.in: save CFLAGS properly
 
-Mon Mar 16 00:28:16 CST 1998  Larry Ewing  <lewing@gimp.org>
+Mon Mar 16 00:28:16 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/undo.c: added back in the "extra" update I removed earlier.
 
-Sun Mar 15 20:39:12 CST 1998  Larry Ewing  <lewing@gimp.org>
+Sun Mar 15 20:39:12 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/undo.c (undo_pop_layer_displace): removed what seemed to be
 	an extra call to drawable_update on the layer, and added a call to
 	update the layer->mask.
 
-Sun Mar 15 14:50:21 CST 1998  Larry Ewing  <lewing@gimp.org>
+Sun Mar 15 14:50:21 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/fileops.c (file_save_as_callback): fixed file Save As
 	cancel callback to use gtk_signal_connect_object.
 
-Sun Mar 15 13:37:22 MET 1998 Sven Neumann <sven@gimp.org>
+Sun Mar 15 13:37:22 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* libgimp/gimpwire.c: applied Raphael Quinet's patch that
+	* libligma/ligmawire.c: applied Raphael Quinet's patch that
 	  changes the wire_read error message to something slightly more
 	  useful.
 
-Sun Mar 15 01:12:06 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar 15 01:12:06 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* made 0.99.21 release
 
-Sun Mar 15 02:06:18 CST 1998  Larry Ewing  <lewing@gimp.org>
+Sun Mar 15 02:06:18 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/layers_dialog.c: pass layer_ID instead of layer_widget to
 	rename funtion to prevent dereferencing freed mem. Fixes layer
 	rename bug.
 
-Sun Mar 15 06:15:37 1998  Tim Janik  <timj@gimp.org>
+Sun Mar 15 06:15:37 1998  Tim Janik  <timj@ligma.org>
 
 	* app/gimage.c (gimage_remove_layer): check whether the removed layer
 	is floating_sel *and* check whether it is active_layer.
@@ -1586,13 +1586,13 @@ Sun Mar 15 06:15:37 1998  Tim Janik  <timj@gimp.org>
 
 	* plug-ins/flame/flame.c: use gtk_quit_add_destroy instead of
 	gtk_quit_add (,gtk_widget_destroy,), i should have really known
- 	better since i wrote gtk_quit_add_destroy() exclusively for the gimp ;)
+ 	better since i wrote gtk_quit_add_destroy() exclusively for the ligma ;)
 	* app/tips_dialog.c (tips_dialog_create): likewise.
 	* app/indexed_palette.c (indexed_palette_create): likewise.
 	* app/fileops.c (file_open_callback): likewise.
 	* app/fileops.c	(file_save_as_callback): likewise.
 
-Sun Mar 15 03:54:58 1998  Tim Janik  <timj@gimp.org>
+Sun Mar 15 03:54:58 1998  Tim Janik  <timj@ligma.org>
 
 	* plug-ins/AlienMap/AlienMap.c: show/hide about dialog, don't affect
 	the main dialog.
@@ -1607,7 +1607,7 @@ Sun Mar 15 03:54:58 1998  Tim Janik  <timj@gimp.org>
 	correctly.
 	(gdisplay_delete): don't close image window without confirmation.
 
-Sat Mar 14 18:38:26 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Mar 14 18:38:26 PST 1998 Manish Singh <yosh@ligma.org>
 
         * app/iscissors.c: new, improved, still buggy iscissors!
 
@@ -1617,13 +1617,13 @@ Sat Mar 14 18:38:26 PST 1998 Manish Singh <yosh@gimp.org>
 
         * added aa plugin back in
 
-Sat Mar 14 20:52:06 EST 1998 Adrian Likins <adrian@gimp.org>
+Sat Mar 14 20:52:06 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	* doc/gimp.1
+	* doc/ligma.1
 	* app/main.c: some updates to reflect that none of
 	  "valid debugging options" do anything anymore
 
-Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* updated to use libtool 1.1
 
@@ -1632,38 +1632,38 @@ Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/pcx/pcx.c: updated pcx plug-in
 
-Sat Mar 14 18:50:29 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 14 18:50:29 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* app/main.c: applied gimp-ovchinnikov-970312-0.patch which
+	* app/main.c: applied ligma-ovchinnikov-970312-0.patch which
 	 initializes locale.
 
-Sat Mar 14 17:17:31 MET 1998 Sven Neumann <sven@gimp.org>
+Sat Mar 14 17:17:31 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* app/internal_procs.c
 	* app/text_tool.c
-	* app/text_tool.h: applied gimp-edas-980305-0.patch (after a small
+	* app/text_tool.h: applied ligma-edas-980305-0.patch (after a small
           fix). Now registry and encoding can be choosen in the text tool
           and two new pdb-functions are available to access this
 	  functionality.
 	* plugins/script-fu/scripts/i26-gunya2.scm: changed to make it
 	  follow the naming-convention
 
-Fri Mar 13 21:11:59 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Mar 13 21:11:59 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: use gtk-config now
 	* app/gimage.c: gtk is paranoid. Must appease the warning gods.
 
-Sat Mar 14 00:50:31 1998  Tim Janik  <timj@gimp.org>
+Sat Mar 14 00:50:31 1998  Tim Janik  <timj@ligma.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: only destroy the dialog at
 	the end of gtk_main() if it still exists.
 
-Fri Mar 13 16:54:12 CST 1998  Larry Ewing  <lewing@gimp.org>
+Fri Mar 13 16:54:12 CST 1998  Larry Ewing  <lewing@ligma.org>
 
 	* app/image_render.c:  added some g_return_if_fails to the render
 	funcs until I can come up with a better fix.
 
-Fri Mar 13 12:53:22 1998  Tim Janik  <timj@gimp.org>
+Fri Mar 13 12:53:22 1998  Tim Janik  <timj@ligma.org>
 
 
 	* app/layers_dialog.c: proper destruct at the end of gtk_main().
@@ -1685,15 +1685,15 @@ Fri Mar 13 12:53:22 1998  Tim Janik  <timj@gimp.org>
 	* plug-ins/script-fu/script-fu-console.c (script_fu_browse_callback):
 	properly destroy the browser when gtk_main() quits.
 
-	* plug-ins/dbbrowser/dbbrowser_utils.c (gimp_db_browser): pass a widget
+	* plug-ins/dbbrowser/dbbrowser_utils.c (ligma_db_browser): pass a widget
 	pointer back to our caller, for enabling proper destruction.
 
 	* plug-ins/script-fu/script-fu-console.c (script_fu_console_interface):
 	only destroy the dialog on exit if it is still existing.
 
-Fri Mar 13 17:22:46 MET 1998 Sven Neumann <sven@gimp.org>
+Fri Mar 13 17:22:46 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* docs/gimp.1: fixed some typos in the man-page
+	* docs/ligma.1: fixed some typos in the man-page
 
 Fri Mar 13 10:21:21 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -1701,12 +1701,12 @@ Fri Mar 13 10:21:21 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	convert.c correctly; the previous "fix" forced quantization when
 	it wasn't necessary in some cases (and made Adam very mad).
 
-Fri Mar 13 00:51:37 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Mar 13 00:51:37 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/color_picker.c: added display of hex triplets for HTML
 	people
 
-Thu Mar 12 18:51:09 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Mar 12 18:51:09 PST 1998 Manish Singh <yosh@ligma.org>
 
         * app/gdisplay.c
 	* app/by_color_select.c: Fix for indexed selection for multiple
@@ -1718,7 +1718,7 @@ Thu Mar 12 21:25:51 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* app/undo.c (undo_pop_layer_mod): Fixed a desynch bug when
 	undoing "add alpha layer".
 
-Thu Mar 12 22:52:47 1998  Tim Janik  <timj@gimp.org>
+Thu Mar 12 22:52:47 1998  Tim Janik  <timj@ligma.org>
 
 	* about_dialog.c:
 	* app_procs.c:
@@ -1755,18 +1755,18 @@ Thu Mar 12 22:52:47 1998  Tim Janik  <timj@gimp.org>
 	fixed a lot of the destroy handlers and delete_event handlers, still
  	not everything perfect, though.
 
-Wed Mar 11 22:02:03 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 11 22:02:03 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.20 release
 
-Wed Mar 11 21:42:15 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 11 21:42:15 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/iscissors.c: another iscissors patch, don't know
 	if it does any good though
 
-Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@gimp.org>
+Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	*docs/gimp.1: added gimp man page
+	*docs/ligma.1: added ligma man page
 
 	*app/gdisplay.c: disables by-color-select for indexed images
 
@@ -1774,21 +1774,21 @@ Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*plugins/script-fu/sripts/circuit.scm: update for change in maze
 
-Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@gimp.org>
+Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@ligma.org>
 
 	* app/disp_callbacks.c: added checks to recreate the active tool
 	if need be.
 
-Wed Mar 11 02:49:14 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 11 02:49:14 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/fileops.c: no need to hide the help button for fileops,
 	since it doesn't exist anymore
 
-Wed Mar 11 02:26:51 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 11 02:26:51 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* added animoptimize plugin
 
-Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/convert.c: fixed memory overrun error
 
@@ -1807,22 +1807,22 @@ Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/gimage.c: added a simple reference count to the guides so that
 	undo does not free them too early...
 
-Tue Mar 10 21:31:21 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 10 21:31:21 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/interface.c: scrollbars in the drawing area shouldn't
 	autofocus
 
-Tue Mar 10 17:09:27 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 10 17:09:27 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c
 	* app/colormaps.c: Do the preview_reset properly this time
 
-Tue Mar 10 00:38:31 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Mar 10 00:38:31 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/transform_core.c: transform tools add alpha channel
 	properly, fixing that really nasty painting bug
 
-Sun Mar  8 17:44:05 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar  8 17:44:05 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/app_procs.c: fix for (install-colormap) and splash screen
 	using gtk_preview_reset()
@@ -1844,11 +1844,11 @@ Tue Mar  3 01:02:30 1998  Larry Ewing  <lewing@discord.isc.tamu.edu>
 	* app/scale.c: Fixed a long standing bug in the scale factor
 	computation so that the scale labels all agree.
 
-Sun Mar  1 18:45:09 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Mar  1 18:45:09 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Made 0.99.19 release
 
-Sun Mar  1 20:28:54 MET 1998 Sven Neumann <sven@gimp.org>
+Sun Mar  1 20:28:54 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* app/internal_procs.c
  	* app/palette.c
@@ -1856,30 +1856,30 @@ Sun Mar  1 20:28:54 MET 1998 Sven Neumann <sven@gimp.org>
  	* app/commands.c
  	* app/commands.h
  	* app/menus.c
- 	* libgimp/gimppalette.c:
-	implemented gimp_palette_set_default_colors and
-	gimp_palette_swap_colors as pdb-calls and bound menu-entries and
-	keybindings to them (gimp-sven-980216-0.patch)
+ 	* libligma/ligmapalette.c:
+	implemented ligma_palette_set_default_colors and
+	ligma_palette_swap_colors as pdb-calls and bound menu-entries and
+	keybindings to them (ligma-sven-980216-0.patch)
 
-Sat Feb 28 22:05:15 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Feb 28 22:05:15 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* autoconfed the data stuff
 
-Sat Feb 28 23:38:30 EST 1998 Adrian Likins <adrian@gimp.org>
+Sat Feb 28 23:38:30 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	* at yosh's suggestion, merged gimp-data-min
-	  back into the main gimp tree under gimp/data
+	* at yosh's suggestion, merged ligma-data-min
+	  back into the main ligma tree under ligma/data
 
-Sat Feb 28 16:57:49 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Feb 28 16:57:49 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Makefile.am: don't do docs generation by default
 
 	* configure.in: -lXt for webbrowser plugin
 
-	* libgimp/gimp.c
-	* libgimp/gimpprotocol.c
-	* libgimp/gimptile.c
-	* libgimp/gimpwire.c
+	* libligma/ligma.c
+	* libligma/ligmaprotocol.c
+	* libligma/ligmatile.c
+	* libligma/ligmawire.c
 	* app/plug_in.c: applied memory leak patch from Mattias Gronlund
 
 	* app/eraser.c
@@ -1896,7 +1896,7 @@ Sat Feb 28 00:09:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* app/gimage_cmds.c (duplicate): Duplicate image wasn't copying
 	channels to the new image.  Fixed.
 
-Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@gimp.org)
+Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@ligma.org)
 
 	* app/about_dialog.c: (about_dialog_load_logo)
 	use a correct gc
@@ -1909,27 +1909,27 @@ Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@gimp.org)
 
 Thu Feb 26 12:19:44 EET 1998 Lauri Alanko <la@iki.fi>
 
-	* Another patch in gimp.h to name more GParam-types for gimple.
+	* Another patch in ligma.h to name more GParam-types for ligmale.
 
-Wed Feb 25 02:46:28 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Feb 25 02:46:28 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* added webbrowser plugin for gimp help
+	* added webbrowser plugin for ligma help
 
-Tue Feb 24 22:14:06 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Feb 24 22:14:06 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/xpm/xpm.c: update. Hopefully this fixes all
 	those problems we were having
 
-Tue Feb 24 04:14:36 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Feb 24 04:14:36 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: change to detect GTK 0.99.4 or higher
 
-Sun Feb 22 02:43:12 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Feb 22 02:43:12 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/text_tool.c: use our own sort function to appease
 	the gtk gods
 
-Sat Feb 21 16:40:47 EST 1998 Adrian Likins <adrian@gimp.org>
+Sat Feb 21 16:40:47 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* plugins/destripe/detripe: updated destripe
 
@@ -1937,7 +1937,7 @@ Sat Feb 21 16:40:47 EST 1998 Adrian Likins <adrian@gimp.org>
 	 plugins/semiflatten/*:  added these plugins
 
 
-Fri Feb 20 02:38:24 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Feb 20 02:38:24 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* initial plug-in stable/unstable split
 
@@ -1946,17 +1946,17 @@ Wed Feb 18 16:46:37 1998  Owen Taylor  <owt1@cornell.edu>
 	* plug-ins/ifscompose/ifscompose.c: refcounting fixups
 	  plug-ins/ifscompose/REAMDE.ifscompose: changed web address
 
-Wed Feb 18 17:56:40 MET 1998 Sven Neumann <sven@gimp.org>
+Wed Feb 18 17:56:40 MET 1998 Sven Neumann <sven@ligma.org>
 	* app/app_procs.c: fixed refcounting for the splash-image
 
-Tue Feb 17 21:23:20 MET 1998 Sven Neumann <sven@gimp.org>
+Tue Feb 17 21:23:20 MET 1998 Sven Neumann <sven@ligma.org>
 
 	* app/fileops.c: hide the help buttons since we have no
 	help (yet)
 
-Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@gimp.org>
+Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@ligma.org>
 
-	* gimp_splash.ppm: added the splash-screen image drawn
+	* ligma_splash.ppm: added the splash-screen image drawn
 	by Jens Lauterbacher to the distribution
 
 	* app/appenv.h
@@ -1967,35 +1967,35 @@ Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@gimp.org>
 	* ps_menurc: changed to reflect changes to the
 	menu-structure
 
-Tue Feb 17 09:24:44 EST 1998 Adrian Likins <adrian@gimp.org>
+Tue Feb 17 09:24:44 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* updated all of Sven Neumanns scripts. Including
 	blend-anim.scm, waves-anim.scm, drop-shadows.scm,
 	perspective-shadow.scm, round-corners.scm, slide.scm,
 	and selection-round.scm.
 
-Sat Feb 14 15:34:08 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Feb 14 15:34:08 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/iscissors.c: iscissors released for initial public
 	consumption
 
-Sat Feb 14 15:01:46 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Feb 14 15:01:46 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Fixed up docs and autoconf interaction (part of
-	gimp-rrh-980125-0)
+	ligma-rrh-980125-0)
 
-Fri Feb 13 02:00:01 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Feb 13 02:00:01 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* libgimp/gimp.c
+	* libligma/ligma.c
 	* app/menus.c: fixes for the g_string -> g_str change in glib
 
         * updated gfig
 
-Thu Feb 12 13:10:50 EST 1998 Adrian Likins <adrian@gimp.org>
+Thu Feb 12 13:10:50 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	*libgimp/gimp.h
+	*libligma/ligma.h
 		applied a patch from Lauri Alanko to make
-	  libgimp/pdb bindings for some languages a little easier
+	  libligma/pdb bindings for some languages a little easier
 
 Wed Feb  4 19:04:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -2021,7 +2021,7 @@ Mon Feb  2 19:19:16 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	calls to keep channel & layer widgets from dying when reordering
 	the channel/layer stacks.
 
-Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@gimp.org>
+Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* plug-ins/edge.c: added a check so it wouldnt segfault when
 	passed a non-existent drawable
@@ -2037,7 +2037,7 @@ Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@gimp.org>
 	* app/threshold.c : added a check so it wouldnt except
 	 a indexed drawable. This was previosly possible via the pdb.
 
-Sat Jan 31 00:16:22 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Jan 31 00:16:22 PST 1998 Manish Singh <yosh@ligma.org>
 
         * plug-ins/xpm/xpm.c: Changed to use g_strcasecmp
 
@@ -2049,19 +2049,19 @@ Fri Jan 30 13:47:57 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	the preview un-resizable, which is not a complete fix for the
 	preview resizing bug.
 
-Fri Jan 30 11:48:04 EST 1998 Adrian Likins <adrian@gimp.org>
+Fri Jan 30 11:48:04 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* More plugin non-interactive fixes:
 		DigitalSignature, hot, sinus, smooth_palette
 
-Thu Jan 29 19:25:52 EST 1998 Adrian Likins <adrian@gimp.org>
+Thu Jan 29 19:25:52 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* fixed the non-iteractive modes for plugins:
 		exchange, holes, grid, deinterlace
 	(mainly expecting wrong number of arguments or just ingome
 	non-interactive mood entirely)
 
-Thu Jan 29 01:05:10 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Jan 29 01:05:10 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* updated refract and warp plugins
 	* changed the INSTALL file to reflect the fact that gtk is a
@@ -2069,11 +2069,11 @@ Thu Jan 29 01:05:10 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/text_tool.c: small patch for indexed images and
 	antialiased toggle
 
-Thu Jan 29 00:00:54 PST 1998 Manish Singh <yosh@gimp.org>
+Thu Jan 29 00:00:54 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* removed all usage of linked.[ch] and switched to GSLists
 
-Wed Jan 28 22:03:42 EST 1998 Adrian Likins <adrian@gimp.org>
+Wed Jan 28 22:03:42 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* Fixed carve-it.scm and circuit.scm (circuit broke due
 	 to a plugin update, carve-it broke due to the add-layer stuff)
@@ -2097,18 +2097,18 @@ Tue Jan 27 22:31:00 PST 1998 Raph Levien <raph@acm.org>
 
 	* app/gimage_mask.c: hacked around fractional pixel errors in
  	paint_core_subsample_mask, fixing the "Stroked pixel bug" posted
- 	by Ben Jackson on 14 Jan 1998 to gimp-developer.
+ 	by Ben Jackson on 14 Jan 1998 to ligma-developer.
 
 Tue Jan 27 10:21:00 PST 1998 Raph Levien <raph@acm.org>
 
 	* app/gimage.c: fixed bug in image display with all channels
 	turned off
 
-Tue Jan 27 00:18:28 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Jan 27 00:18:28 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/xcf.c: fixes an off by one error in xcf_tile_save_rle()
 
-Sun Jan 25 18:41:17 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Jan 25 18:41:17 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/about_dialog.c: Added a couple names here
 
@@ -2118,15 +2118,15 @@ Sun Jan 25 18:41:17 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/color_select.h
 	* app/indexed_palette.c
 	* app/palette.c: Changed COLOR_UPDATE functionality, along with
-	cosmetic changes (gimp-quinet-980120-0)
+	cosmetic changes (ligma-quinet-980120-0)
 
 	* .cvsignore
 	* Makefile.am
 	* configure.in
-	* gimprc.in
-	* gimprc_user.in
-	* user_install: makes gimprc_user, splitting user and system-wide
-	settings. (gimp-quinet-980121-1)
+	* ligmarc.in
+	* ligmarc_user.in
+	* user_install: makes ligmarc_user, splitting user and system-wide
+	settings. (ligma-quinet-980121-1)
 
 Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -2136,23 +2136,23 @@ Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* app/gimage_cmds.c (duplicate): Fixed a bug in duplicate that was
 	entirely my fault. :)
 
-Sun Jan 25 16:51:56 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Jan 25 16:51:56 EST 1998 Adrian Likins <adrian@ligma.org>
 
-	* added the gtk_window_set_wmclass to most of the gimp
+	* added the gtk_window_set_wmclass to most of the ligma
 	dialogs so they set the XA_WM_CLASS properties.
 
-Sun Jan 25 13:28:28 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Jan 25 13:28:28 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* libgimp/gimppixelrgn.c
+	* libligma/ligmapixelrgn.c
 	* plug-ins/iwarp/iwarp.c
 	* plug-ins/sparkle/sparkle.c: Misc portability fixes for
-	DEC OSF1 (gimp-joke-980109-0)
+	DEC OSF1 (ligma-joke-980109-0)
 
-Sun Jan 25 02:24:03 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Jan 25 02:24:03 PST 1998 Manish Singh <yosh@ligma.org>
 
-	* libgimp/*: Placed libgimp under the LGPL
+	* libligma/*: Placed libligma under the LGPL
 
-Sun Jan 25 01:25:55 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Jan 25 01:25:55 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* plugin updates from the registry (align_layers,
 	despeckle, mathmap, print)
@@ -2162,15 +2162,15 @@ Sun Jan 25 01:25:55 PST 1998 Manish Singh <yosh@gimp.org>
 	Applied Sven's no arguments script patch and copy-visible
 	fix
 
-Sun Jan 25 00:12:15 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Jan 25 00:12:15 EST 1998 Adrian Likins <adrian@ligma.org>
 
 	* added plug-ins/script-fu-scripts/chip-away.scm
 
-Sat Jan 24 18:16:35 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Jan 24 18:16:35 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* applied Sven's menu patch
 
-Sat Jan 24 17:23:13 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Jan 24 17:23:13 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/indexed_palette.c: fix for wrong color selected in indexed
 	palette dialog
@@ -2178,7 +2178,7 @@ Sat Jan 24 17:23:13 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/xcf.c: don't crash on bad input (0 byte files)
 
 	* app/plug_in.h
-	* app/plug_in.c: fixes Gimp's most obscure bug. Failed plugin
+	* app/plug_in.c: fixes Ligma's most obscure bug. Failed plugin
 	queries are handle correctly now
 
 	* app/commands.c: added marching ants speed to preferences
@@ -2198,7 +2198,7 @@ Sat Jan 24 15:16:40 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	resize policy of the init status window so it doesn't constantly
 	resize itself.
 
-Wed Jan 21 23:59:02 PST 1998 Manish Singh <yosh@gimp.org>
+Wed Jan 21 23:59:02 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* Fixed up the change below to use the SetArg/GetArg stuff
 
@@ -2207,14 +2207,14 @@ Thu Jan 22 01:54:17 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* Rework of drawables, images, and layers to use GtkObjects.  Lots
 	  and lots of secondary changes.
 
-Sun Jan 18 18:07:23 EST 1998 Adrian Likins <adrian@gimp.org>
+Sun Jan 18 18:07:23 EST 1998 Adrian Likins <adrian@ligma.org>
 
         * added plugins/gflare/gflares and edited the makefiles
 	  so that the gfalres and gfig-examples would get installed
-	  into share/gimp/gflares and share/gimp/gfig
+	  into share/ligma/gflares and share/ligma/gfig
 
 
-Tue Jan 13 21:36:07 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Jan 13 21:36:07 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* ltconfig
 	* ltmain.sh: downgraded to libtool 1.0f at Jay's suggestion
@@ -2222,21 +2222,21 @@ Tue Jan 13 21:36:07 PST 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/fractaltrace/fractaltrace.c (query): ymax argument was
 	listed twice.  Fixed.
 
-Fri Jan  9 01:15:51 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Jan  9 01:15:51 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* INSTALL: updated to properly reflect installation procedure
 
 	* app/text_tool.c: Fixed bad string in tool description
 
-	* libgimp/gimppixelrgn.c: tiles aren't marked dirty in
-	gimp_pixel_rgn_get_pixel
+	* libligma/ligmapixelrgn.c: tiles aren't marked dirty in
+	ligma_pixel_rgn_get_pixel
 
 	* plug-ins/edge/edge.c
 	* plug-ins/edge/emboss.c
 	* plug-ins/edge/laplace.c
 	* plug-ins/edge/sobel.c: DEC OSF1 cannont handle reference to
 	array element with a negative arugment with an unsigned int
-	(gimp-joke-980108-0)
+	(ligma-joke-980108-0)
 
 	* plug-ins/sinus/sinus_logo.h: got rid of really long string
 
@@ -2246,7 +2246,7 @@ Fri Jan  9 01:15:51 PST 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/xpm/xpm.c: made our own case-insenstive strcmp
 	for checking for transperancy
 
-Tue Jan  6 14:17:02 PST 1998 Manish Singh <yosh@gimp.org>
+Tue Jan  6 14:17:02 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* configure.in: make it *really* check for gtk >= 0.99.1 this
 	time
@@ -2257,7 +2257,7 @@ Tue Jan  6 14:17:02 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/install.c: reduce the size of the install info dialog so it
 	fits better on 640x480 screen
 
-Mon Jan  5 19:30:38 PST 1998 Manish Singh <yosh@gimp.org>
+Mon Jan  5 19:30:38 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/by_color_select.c: fix for indexed images
 
@@ -2267,9 +2267,9 @@ Mon Jan  5 19:30:38 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Updated to libtool 1.0h
 
-	* libgimp/Makefile.am: removed spurious -rpath
+	* libligma/Makefile.am: removed spurious -rpath
 
-Sun Jan  4 17:43:32 PST 1998 Manish Singh <yosh@gimp.org>
+Sun Jan  4 17:43:32 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/by_color_select.c: Prevent divide-by-zero error when
 	fuzzy threshold in select by color is 0
@@ -2290,10 +2290,10 @@ Sun Jan  4 14:24:05 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 	The algorithm still generates artifacts in the top rows of the
 	image.
 
-Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@gimp.org>
+Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@ligma.org>
 
 	* app/colormaps.c: check for NULL pointer access when not enough
-	colormaps for standard colormaps (gimp-joke-971219-0)
+	colormaps for standard colormaps (ligma-joke-971219-0)
 
 	* app/fileops.c: fix for saving files in the wrong place
 
@@ -2303,7 +2303,7 @@ Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/text_tool.c: negative border-value disables autocropping
 	of text
 
-	* libgimp/gimplayer.c: gimp_layer_copy pdb called with correct args
+	* libligma/ligmalayer.c: ligma_layer_copy pdb called with correct args
 
 	* docs/Wilber.xcf.gz: added logo to docs dir :)
 
@@ -2315,7 +2315,7 @@ Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Updated plugins with their new registry versions
 
-Thu Dec 25 23:04:00 PST 1997 Manish Singh <yosh@gimp.org>
+Thu Dec 25 23:04:00 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* Updates from the plugin registry: Compose, Film, FITS, ps,
 	refract, sunras, twist
@@ -2325,9 +2325,9 @@ Thu Dec 18 11:15:17 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* app/main.c (main): Freeing arguments to putenv afterwards is
 	naughty.  Fixed.  Plug-ins work now.
 
-Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@ligma.org>
 
-	* All these changes are from Owen Taylor to make GIMP work
+	* All these changes are from Owen Taylor to make LIGMA work
           with reference changes make in GTK.  This mainly affects
           functions gtk_pixmap_destroy, gdk_colormap_destroy,
           gdk_font(set)_free; they have disappeared and where
@@ -2344,7 +2344,7 @@ Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
         * app/gdisplay.c: destroy gc, event now pointer
         * app/scroll.c: use scroll_gc, make sure graphics expose events
           are processed before scrolling again
-        * gimp/app/gdisplay.h: add scroll_gc to struct
+        * ligma/app/gdisplay.h: add scroll_gc to struct
 
 Wed Dec 17 23:23:05 1997  Ray Lehtiniemi  <rayl@netrover.com>
 
@@ -2352,7 +2352,7 @@ Wed Dec 17 23:23:05 1997  Ray Lehtiniemi  <rayl@netrover.com>
 
 	* app/pattern_select.c (pattern_popup_open): fix memory leak
 
-Wed Dec 17 15:33:23 PST 1997 Manish Singh <yosh@gimp.org>
+Wed Dec 17 15:33:23 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* plug-ins/pcx/pcx.c: Applied patch to fix PCX saving from
 	Nicholas Lamb
@@ -2368,29 +2368,29 @@ Wed Dec 17 13:24:48 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* plug-ins/xpm/xpm.c (run): Added access to the alpha cutoff via
 	the PDB.  Added a missing break in the run_mode switch.
 
-Tue Dec 16 16:55:04 PST 1997 Manish Singh <yosh@gimp.org>
+Tue Dec 16 16:55:04 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* app/convert.c: no more crashes with indexed conversion and no
 	palettes
 
-Tue Dec 16 15:24:36 EST 1997 Adrian Likins <adrian@gimp.org>
+Tue Dec 16 15:24:36 EST 1997 Adrian Likins <adrian@ligma.org>
 
         * modified user-isntall to make a scripts and gflares dir
 
-        * added path to gflares in the gimprc
+        * added path to gflares in the ligmarc
 
 
 Tue Dec 16 12:32:30 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/xcf.c (xcf_load_invoker): Shuji's xcf load close patch.
 
-Mon Dec 15 19:03:59 EST 1997 Adrian Likins <adrian@gimp.org>
+Mon Dec 15 19:03:59 EST 1997 Adrian Likins <adrian@ligma.org>
 
-	* fixed a few broken tips in gimp_tips.txt
+	* fixed a few broken tips in ligma_tips.txt
 
 	* updated add-bevel.scm
 
-Sun Dec 14 19:47:59 PST 1997 Manish Singh <yosh@gimp.org>
+Sun Dec 14 19:47:59 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* Configured in the flame plugin by default
 	* updated the ripply-anim script (still broken though)
@@ -2404,58 +2404,58 @@ Sun Dec 14 20:57:46 1997  Ray Lehtiniemi  <rayl@netrover.com>
 	* app/blend.c fixed cores when using custom gradients with
 	  offset of 100
 
-Sun Dec 14 16:56:33 PST 1997 Manish Singh <yosh@gimp.org>
+Sun Dec 14 16:56:33 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* backed out of the tools fix, cause problems with
 	rmb script-fu
 
-Sun Dec 14 03:41:27 PST 1997 Manish Singh <yosh@gimp.org>
+Sun Dec 14 03:41:27 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* Support for dithering to custom palettes
 
 	* a proper PDB entry for indexed conversion
-	(gimp-convert-indexed-palette)
+	(ligma-convert-indexed-palette)
 
 Sun Dec 14 00:08:00 PST 1997 Raph Levien <raph@acm.org>
 	* a minor patch to make the file selection dialog not always
 	select the first file in a directory
 
-Sat Dec 13 23:37:59 PST 1997 Manish Singh <yosh@gimp.org>
+Sat Dec 13 23:37:59 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* mkbrush.scm updated
 
 	* Added support for tooltips in preferences
 
-Sun Dec 14 00:06:00 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+Sun Dec 14 00:06:00 CST 1997 Shawn T. Amundson <amundson@ligma.org>
 
-	* configure.in: Changed gimp lib dir to lib/gimp/MAJOR.MINOR
-          instead of lib/gimp/MAJOR.MINOR.MICRO
+	* configure.in: Changed ligma lib dir to lib/ligma/MAJOR.MINOR
+          instead of lib/ligma/MAJOR.MINOR.MICRO
 	* script-fu/scripts: removed piechart, kanji-circle, kanji-neon
 	* configure.in: change check for EMACS to allow emacs to not
           exist (in which case, no error results, but pdb docs don't
           get made)
 
-Sat Dec 13 19:41:35 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+Sat Dec 13 19:41:35 CST 1997 Shawn T. Amundson <amundson@ligma.org>
 
 	* plug-ins/fuse/Makefile.am: fuse.c couldn't find gck/gck.h
 
-Fri Dec 12 02:07:26 PST 1997 Manish Singh <yosh@gimp.org>
+Fri Dec 12 02:07:26 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* Updated gif and animationplay with the new versions
 
-Thu Dec 11 20:56:09 PST 1997 Manish Singh <yosh@gimp.org>
+Thu Dec 11 20:56:09 PST 1997 Manish Singh <yosh@ligma.org>
 
-	* Removed dgimp (it never worked anyway)
+	* Removed dligma (it never worked anyway)
 
-Wed Dec 10 16:59:56 PST 1997 Manish Singh <yosh@gimp.org>
+Wed Dec 10 16:59:56 PST 1997 Manish Singh <yosh@ligma.org>
 
-	* Added gimprc option for enabling/disabling tooltips
+	* Added ligmarc option for enabling/disabling tooltips
 
 	* Fixed up about dialog
 
 	* Added Fractaltrace plugin
 
-Tue Dec  9 15:26:48 PST 1997 Manish Singh <yosh@gimp.org>
+Tue Dec  9 15:26:48 PST 1997 Manish Singh <yosh@ligma.org>
 
 	* Added Lauri Alanko's tools patch
 
@@ -2464,38 +2464,38 @@ Tue Dec  9 15:26:48 PST 1997 Manish Singh <yosh@gimp.org>
 
 Tue Dec  9 15:21:16 PST 1997 Raph Levien <raph@acm.org>
 
-	* app/gimprc.c, app/commands.c: committed the preferences patch I
- 	 posted to gimp-developer on 4 Nov 1997. This patch fixes some
+	* app/ligmarc.c, app/commands.c: committed the preferences patch I
+ 	 posted to ligma-developer on 4 Nov 1997. This patch fixes some
  	 stability problems, as well as makes the preferences saving
  	 functionality more complete.
 
-Tue Dec  9 00:52:15 EST 1997 Adrian Likins <adrian@gimp.org>
+Tue Dec  9 00:52:15 EST 1997 Adrian Likins <adrian@ligma.org>
 
 	* added illusion, papertile, colorify, and glasstile
 	 plugins
 
 	* updated despeckle, and math map
 
-Mon Dec  8 21:59:03 PST 1997  Manish Singh <yosh@gimp.org>
+Mon Dec  8 21:59:03 PST 1997  Manish Singh <yosh@ligma.org>
 
 	* updated CML_explorer
 
-Mon Dec  8 16:30:29 EST 1997  Adrian Likins <adrian@gimp.org>
+Mon Dec  8 16:30:29 EST 1997  Adrian Likins <adrian@ligma.org>
 
 	* udpdate gqbist, warp, randomize, fuse, gfig plugins
 
 	* removed gflare-tar.gz from the plugins dir
 
-Mon Dec  8 11:43:17 EST 1997 Adrian Likins <adrian@gimp.org>
+Mon Dec  8 11:43:17 EST 1997 Adrian Likins <adrian@ligma.org>
 
 	* updated iwarp to latest version
 
 	* added Sven Neumans patch for 32-bit color in gck
 
-	* fixed gimp_tips.txt (the tip about the "add alpha")
+	* fixed ligma_tips.txt (the tip about the "add alpha")
 
 
-Mon Dec  8 02:13:36 PST 1997  Manish Singh <yosh@gimp.org>
+Mon Dec  8 02:13:36 PST 1997  Manish Singh <yosh@ligma.org>
 
 	* app/about_dialog.c: Added Nathan Summers patch to make it
 	work better
@@ -2506,7 +2506,7 @@ Mon Dec  8 02:13:36 PST 1997  Manish Singh <yosh@gimp.org>
 	* app/undo.c: Added Andy Thomas's patch to check for a NULL
 	active_tool in the undo (so it can work with plugins)
 
-Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@gimp.org>
+Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@ligma.org>
 
 	* added Sven Neumann's patch to the scale and resize dialogs for		ratio input fields (app/resize.h, app/resize.c)
 
@@ -2514,7 +2514,7 @@ Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@gimp.org>
 	(app/convolve.c, app/gimage.h, app/gimage.c, paint_core.h,
 	paint_core.c, paint_funcs.h, paint_funcs.c)
 
-Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
+Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@ligma.org>
 
 	* fixed refract.c to look for megawidget.h in the proper place
 
@@ -2535,7 +2535,7 @@ Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
 	* patched gif.c with Adam D. Moss's patch to fix some weirdness with
 	transparncy in anim gifs
 
-Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@gimp.org>
+Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@ligma.org>
 
 	* Added a check in some of the layer/channel preview code
 	to keep stuff from breaking when it got ) values for size
@@ -2560,14 +2560,14 @@ Wed Nov 26 14:38:30 1997  Larry Ewing  <lewing@isc.tamu.edu>
 	app/scale.c with a single call in gdisplay_flush () so that
 	the info window reflects the current status
 
-Wed Nov 19 13:22:09 EST 1997 Adrian Likins <adrian@gimp.org>
+Wed Nov 19 13:22:09 EST 1997 Adrian Likins <adrian@ligma.org>
 
 	* updated vpropagate.c and align_layers.c
 
 Tue Nov 18 16:40:22 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 
 	* Larry Ewing fixed a bug which caused multible confirm-on close
-	Windows to appear and took GIMP with them on close
+	Windows to appear and took LIGMA with them on close
 
 	* plug-ins/iwarp added
 
@@ -2582,7 +2582,7 @@ Mon Nov 17 14:29:00 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	(now handles also layered images, patch resubmitted by
 	Daniel R Risacher <risacher@worldnet.att.net>)
 
-Mon Nov 17 15:14:14 EST 1997 Adrian Likins <adrian@gimp.org>
+Mon Nov 17 15:14:14 EST 1997 Adrian Likins <adrian@ligma.org>
 
 	* Finally fixed the scripts that broke with the last
 	  release. This includes crystal-logo.scm, sota-chrome-logo.scm,
@@ -2638,20 +2638,20 @@ Tue Nov 11 14:57:16 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 	in version 0 with only saving 1/3 of the colormap of images with
 	colormaps (i.e. indexed images).
 
-Fri Nov  7 00:27:44 CST 1997 Adrian Likins <adrian@gimp.org>
+Fri Nov  7 00:27:44 CST 1997 Adrian Likins <adrian@ligma.org>
 
 	* added docs/cheat_sheet.txt and docs/keybindings.txt
 
 Thu Nov  6 14:08:35 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
-	* configure.in (gimpdatadir): Changed gimpdatadir to be
+	* configure.in (ligmadatadir): Changed ligmadatadir to be
 	$datadir/$PACKAGE instead of $datadir/$PACKAGE/$VERSION.
 	Datafiles are version-independent.
 
 Tue Nov  4 08:46:19 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
-	* app/commands.c app/gimprc.c: Patch from Raph Levien to fix the
-	preferences and gimprc mechanism.
+	* app/commands.c app/ligmarc.c: Patch from Raph Levien to fix the
+	preferences and ligmarc mechanism.
 
 	* app/convert.c: Adam's patch to fix web and mono palette modes.
 
@@ -2696,14 +2696,14 @@ Tue Oct 28 22:30:32 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 	* plug-ins/MapObject/mapobject_main.c (run): removed an
 	inappropriate cast of radius from float to int
 
-Mon Oct 27 07:45:23 EST 1997 Adrian Likins ,adrian@gimp.org
+Mon Oct 27 07:45:23 EST 1997 Adrian Likins ,adrian@ligma.org
 
 	* updated title-header.scm to not add a layer twice
 
 	* remove t-o-p.scm, it was a duplicate of t-o-p-logo.scm
 	 jsut registered under a different name
 
-Sun Oct 26 22:28:15 EST 1997  Adrian Likins <adrian@gimp.org>
+Sun Oct 26 22:28:15 EST 1997  Adrian Likins <adrian@ligma.org>
 
         * added Spencer's patch to the brush and patterns dialog. Now
           instead of scrolling the object around to see all of, a small
@@ -2746,7 +2746,7 @@ Fri Oct 24 21:45:11 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* Made 0.99.15 release.
 
-Fri Oct 24 17:54:54 EDT 1997 Adrian Likins <adrian@gimp.org>
+Fri Oct 24 17:54:54 EDT 1997 Adrian Likins <adrian@ligma.org>
 
 	* Applied a patch by Josh Parsons <josh@coombs.anu.edu.au>
           by way of Adam Moss to gif.c so that it works while
@@ -2765,7 +2765,7 @@ Fri Oct 24 11:49:55 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	* plug-ins/blinds.c plug-ins/sharpen.c: Art Haas's patch to clean
  	up several warnings in plug-ins.
 
-	* libgimp/gimppixelrgn.c: #ifndef'ed out some variables according
+	* libligma/ligmapixelrgn.c: #ifndef'ed out some variables according
 	to Adam's MEMCPY_IS_NICE stuff so that the compiler emits no
 	warnings about unused variables.
 
@@ -2781,7 +2781,7 @@ Fri Oct 24 11:49:55 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* app/tips_dialog.c (read_tips_file): Added fclose(fp).
 
-	* app/gimprc.c (save_gimprc): Added g_free(cur_line).  It was
+	* app/ligmarc.c (save_ligmarc): Added g_free(cur_line).  It was
 	missing and thus causing a memory leak.
 
 	* README: Added reference to the plug-in registry.
@@ -2809,13 +2809,13 @@ Thu Oct 23 11:20:05 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* app/brushes.c: Removed the declaration of int_value (it is never used).
 
-	* app/gimprc.c app/gimprc.h app/commands.c app/tips_dialog.c:
- 	save_gimprc() may modify the lists it gets passed (by
+	* app/ligmarc.c app/ligmarc.h app/commands.c app/tips_dialog.c:
+ 	save_ligmarc() may modify the lists it gets passed (by
  	adding/removing elements).  Changed the prototype to take GList**
- 	values instead of just GList*.  Changed the calls to save_gimprc()
+ 	values instead of just GList*.  Changed the calls to save_ligmarc()
 	accordingly.
 
-Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
+Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@ligma.org>
 
         * app/menus.c: applied patch malheiro-970917 which
           prevents installing bogus accelerator handlers for the
@@ -2828,10 +2828,10 @@ Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
 
         * plug-ins/gicon.c: fixed the number of return values on save
 
-        * libgimp/gimpprotocol.c fixed GPProcrun/GPProcReturn typo and
+        * libligma/ligmaprotocol.c fixed GPProcrun/GPProcReturn typo and
           freed params in _gp_params_destroy()
 
-        * libgimp/gimp.c: gimp_run_procedure() now frees proc_run.params,
+        * libligma/ligma.c: ligma_run_procedure() now frees proc_run.params,
           since it is allocated in that function and no longer used
 
         * app/plug_in.c: fixed memory overrun in plug_in.c when
@@ -2843,15 +2843,15 @@ Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
         * app/plug_in.c: fixed memory leak in plug_in_params_destroy()
           and plug_in_args_destroy()
 
-Wed Oct 22 20:38:46 EDT 1997  Adrian Likins <adrian@gimp.org>
+Wed Oct 22 20:38:46 EDT 1997  Adrian Likins <adrian@ligma.org>
 
-	* Added the www.gimp.org web page look scripts (gimp-labels.scm
-	  and gimp-headers.scm)to the dist
+	* Added the www.ligma.org web page look scripts (ligma-labels.scm
+	  and ligma-headers.scm)to the dist
 
 	* also added a handful of scripts (predator.scm, circuit.scm,
 	  xach-effect.scm, copy-visible.scm, select_to_brush.scm,
 	  select_to_image.scm, and glow.scm).
-	  see www.gimp.org/~adrian/scripts.html
+	  see www.ligma.org/~adrian/scripts.html
 
 	* patched maze.c to work better interactively
 
@@ -2863,7 +2863,7 @@ Wed Oct 22 20:38:46 EDT 1997  Adrian Likins <adrian@gimp.org>
 
         * moving script-fu wasnt entirely my idea :-)
 
-Wed Oct 22 18:48:28 1997  Shawn T. Amundson <amundson@gimp.org>
+Wed Oct 22 18:48:28 1997  Shawn T. Amundson <amundson@ligma.org>
 
 	* this was actually all Adrian's idea -- moved all the
           scripts from <Image>/Filters/Script-Fu to just
@@ -2871,12 +2871,12 @@ Wed Oct 22 18:48:28 1997  Shawn T. Amundson <amundson@gimp.org>
 
 Fri Oct 17 15:59:58 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 
-	* changed and autoconfigured gimptcl (needs further integration,
+	* changed and autoconfigured ligmatcl (needs further integration,
 	  works only with -ldl), gfig (click 2 buttons bug)
 
-	* plug-ins/gimptcl/gtclenums.h: fixed a typo
+	* plug-ins/ligmatcl/gtclenums.h: fixed a typo
 
-	* added gimptcl (1.0), gfig (0.9)
+	* added ligmatcl (1.0), gfig (0.9)
 
 Thu Oct 16 17:05:32 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 
@@ -2895,7 +2895,7 @@ Wed Oct 22 11:42:50 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* Raphael Quinet's and Tristan Tarrant's big patch to add
 	preferences saving, tip of the day, and some bugfixes to the
-	gimprc code.  Thanks!
+	ligmarc code.  Thanks!
 
 	* Adam Moss's patch to fix scaling of indexed images and the
 	transform tool.
@@ -2916,7 +2916,7 @@ Wed Oct 22 11:42:50 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	* app/global_edit.c: Applied Owen Taylor's patch to fix edit_clear
 	when the image has no layers.
 
-	* app/app_procs.c: Applied Jason Riedy's patch to fix gimpdir checking.
+	* app/app_procs.c: Applied Jason Riedy's patch to fix ligmadir checking.
 
 	* app/layers_dialog.c: Applied Scott Goehring's patch to avoid
 	desensitizing the Close button when there are no images.
@@ -2953,9 +2953,9 @@ Thu Oct 16 10:30:15 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
  	plug-ins/nlfilt.c plug-ins/sinus.c plug-ins/zealouscrop.c: fixed
  	"inline" functions.  PLEASE DO NOT USE THIS.
 
-	* plug-ins/dgimp/dgimp.c: Added inclusion of <sys/select.h> if necessary.
+	* plug-ins/dligma/dligma.c: Added inclusion of <sys/select.h> if necessary.
 
-	* libgimp/gimp.c: Added inclusion of <sys/select.h> if necessary.
+	* libligma/ligma.c: Added inclusion of <sys/select.h> if necessary.
 
 	* plug-ins/emboss.c (run): Fixed the check for the number of
 	parameters --- this was causing the plug-in to crash when being
@@ -2990,16 +2990,16 @@ Wed Oct 15 08:52:23 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
  	plug-ins/sgilib.c plug-ins/ifscompose_utils.c: Added <string.h> to
  	includes to avoid warnings.
 
-	* libgimp/gimpwire.c: Added <string.h> to includes to avoid warnings.
+	* libligma/ligmawire.c: Added <string.h> to includes to avoid warnings.
 
 	* app/convert.c (compute_color_rgb): Applied Adam's patch to fix
 	division by zero on completely transparent images.
 
-	* libgimp/gimpenums.h (enum): Fixed SUBTRACT_MODE typo.  Oops :-)
+	* libligma/ligmaenums.h (enum): Fixed SUBTRACT_MODE typo.  Oops :-)
 
 Mon Oct 13 14:28:20 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
-	* libgimp/gimpmenu.h libgimp/gimp.h: Applied Tom Bech's patch to
+	* libligma/ligmamenu.h libligma/ligma.h: Applied Tom Bech's patch to
 	make ld not puke on plug-ins written in C++.
 
 Sun Oct 12 09:19:19 1997  Tim Janik  <timj@psynet.net>
@@ -3024,7 +3024,7 @@ Thu Oct  9 19:32:17 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	* app/fileops.c (file_open_callback): Applied Tom Bech's patch to
 	fix disappearing file list items.
 
-	* app/gimprc.c (gimp_directory): Applied Raphael Quinet's patch to
+	* app/ligmarc.c (ligma_directory): Applied Raphael Quinet's patch to
  	fix NULL home directory.
 
 	* app/brush_select.c, app/pattern_select.c: Applied Tom Bech's
@@ -3034,7 +3034,7 @@ Wed Oct  8 21:33:50 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 
 	* plug-ins/
 	added MapObject (0.32) plugin (still requires libgck to be installed)
-	written by Tom Bech <tomb@gimp.org>
+	written by Tom Bech <tomb@ligma.org>
 	added, updated (all 1.01 now) and autoconfigured (ADUPAC) following
 	 AlienMap, Anamorphose, CentralReflection, Curtain, Encript_Decript,
 	 Julia, Mandelbrot by Daniel Cotting (CSP) <cotting@mygale.org>
@@ -3073,7 +3073,7 @@ Thu Oct  2 17:41:51 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	* app/color_select.c (color_select_update_hue_value): Applied
 	Laury Alanko's patch to fix hue calculation.
 
-	* libgimp/gimppixelrgn.c: Applied Adam Moss's patch to use
+	* libligma/ligmapixelrgn.c: Applied Adam Moss's patch to use
 	memcpy() instead of for() loops to copy tile data.
 
 Wed Oct  1 01:25:38 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
@@ -3091,7 +3091,7 @@ Tue Sep 30 17:18:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 	* app/color_select.c: Applied Lauri Alanko's patch to make color
 	selection update immediate.
 
-	* libgimp/gimplayer.c (gimp_layer_copy): fixed pdb run procedure.
+	* libligma/ligmalayer.c (ligma_layer_copy): fixed pdb run procedure.
 
 	* main.c (main): Applied Miles O'Neal's patch to change the help output.
 
@@ -3125,7 +3125,7 @@ Thu Sep 25 17:16:47 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* Added the xd plug-in by Josh MacDonald.
 
-	* Separated Gtk+ from GIMP.  Hope the chainsawing was correct :-)
+	* Separated Gtk+ from LIGMA.  Hope the chainsawing was correct :-)
 
 	* plug-ins/apply_lens.c: Morten Eriksen authorized the removal of
 	the additional licensing restriction, so I removed it.  Thanks!!!
@@ -3163,7 +3163,7 @@ Wed Sep 24 13:47:31 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 Tue Sep 23 12:22:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
-	* libgimp/gimp.c: From Tim Janik's patch; now _shm_ID = -1.
+	* libligma/ligma.c: From Tim Janik's patch; now _shm_ID = -1.
 
 	* app/plug_in.c: Applied Tim Janik's patch to mark shm segments
 	with IPC_RMID so that they are automatically removed always.
@@ -3258,7 +3258,7 @@ Wed Sep 24 13:47:31 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 Tue Sep 23 12:22:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
-	* libgimp/gimp.c: From Tim Janik's patch; now _shm_ID = -1.
+	* libligma/ligma.c: From Tim Janik's patch; now _shm_ID = -1.
 
 	* app/plug_in.c: Applied Tim Janik's patch to mark shm segments
 	with IPC_RMID so that they are automatically removed always.

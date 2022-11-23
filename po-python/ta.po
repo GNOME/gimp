@@ -1,4 +1,4 @@
-# translation of gimp-python.gimp-2-6.po to Tamil
+# translation of ligma-python.ligma-2-6.po to Tamil
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
@@ -6,8 +6,8 @@
 # Dr,T,Vasudevan <agnihot3@gmail.com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python.gimp-2-6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python.ligma-2-6\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-09-16 17:40+0530\n"
 "PO-Revision-Date: 2011-09-16 17:45+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
@@ -19,327 +19,327 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pyligma/ligmafu.py:394
 msgid "Missing exception information"
 msgstr "விலக்கு தகவல்  காணப்படவில்லை"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pyligma/ligmafu.py:403
 #, python-format
 msgid "An error occurred running %s"
 msgstr "%s ஐ இயக்கும் போது பிழை ஏற்பட்டது"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pyligma/ligmafu.py:414
 msgid "_More Information"
 msgstr "_M மேலதிக தகவல்"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:526 ../plug-ins/pyligma/ligmafu.py:538
+#: ../plug-ins/pyligma/ligmafu.py:544
 msgid "No"
 msgstr "இல்லை"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:536 ../plug-ins/pyligma/ligmafu.py:544
 msgid "Yes"
 msgstr "ஆம்"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:596 ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "பைத்தான் ஃபூ கோப்பு தேர்வு"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pyligma/ligmafu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "பைத்தான் ஃபூ அடைவு தேர்வு"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pyligma/ligmafu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr " '%s' க்கு செல்லுபடியாகாத உள்ளீடு"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "பைத்தான்-ஃபூ நிறம் தேர்வு"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் ஆக சேமிக்கிறது"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் ஆக சேமி"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் "
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_s எழுத்து மூலம்"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "மூலம்"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "உரை கோப்பு"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "உள்ளீடு பெட்டி"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "படிக்க கோப்பு அல்லது பயன்படுத்த எண் எழுத்துக்கள் குறியீடுகள்"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_n எழுத்துரு அளவு பிக்ஸல்களில்"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "_W ஒரு சிஎஸ்எஸ்(CSS) கோப்பு ஆக எழுது"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "பயன் படுத்த நிறச்சீர் மாற்றம்"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "கோப்புப் பெயர்"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "இதில் ஒரு அடுக்கு மூடுபனியை சேர்"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_F மூடுபனி..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "_L அடுக்கு பெயர்"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "மேகங்கள்"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "_F மூடுபனி நிறம்"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "_T கொந்தளிப்பு"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "_a ஒளி புகாத்தன்மை"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "வண்ணத்தட்டில் நிற குத்து நீட்டம் "
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "_O குத்து நீட்டம்..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:56
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "வண்ணத்தட்டு "
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "_s குத்து நீட்டம்"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
 msgstr "வண்ணத்தட்டில் நிறங்களை வரிசைப்படுத்து "
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
 msgstr "_S வண்ணத்தட்டில் வரிசைப்படுத்து..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:57
 msgid "Color _model"
 msgstr "_m நிற மாதிரி"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:58
 msgid "RGB"
 msgstr "ஆர்ஜிபி"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:59
 msgid "HSV"
 msgstr "ஹெச்எஸ்வி "
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
 msgstr "_s வரிசைப்படுத்த வாய்க்கால் "
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
 msgstr "சிகப்பு அல்லது சாயல்"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:62
 msgid "Green or Saturation"
 msgstr "பச்சை அல்லது தெவிட்டம்"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:63
 msgid "Blue or Value"
 msgstr "நீலம் அல்லது மதிப்பு"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:64
 msgid "_Ascending"
 msgstr "ஏறுவரிசை(_A)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "வண்ணத்தட்டில் இருந்து நிறங்களை பயன்படுத்தி ஒரு திருப்பும் சீர் மாற்றத்தை உருவாக்குக"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "_R திருப்பும் சீர் மாற்றத்துக்கு வண்ணத்தட்டு"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "வண்ணத்தட்டில் இருந்து நிறங்களை பயன்படுத்தி ஒரு சீர் மாற்றத்தை உருவாக்குக"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "_G சீர் மாற்றத்துக்கு வண்ணத்தட்டு"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "துண்டு"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "பிம்பத்தை அதன் வழிகாட்டிகளோடு வெட்டுகிறது; பிம்பங்களை உருவாக்குகிறது மற்றும் ஒரு "
 "ஹெச்டிஎம்எல்(HTML) அட்டவணை வெட்டு துண்டை உருவாக்குகிறது "
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_S வெட்டுத்துண்டு..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "ஹெச்டிஎம்எல்(HTML) ஏற்றுமதிக்கு பாதை"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "ஏற்றுமதிக்கு கோப்பு பெயர்"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "பிம்ப முன்னொட்டு பெயர்"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "பிம்ப ஒழுங்கு"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "தனி பட அடைவு"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "ஏற்றுமதி செய்ய படங்களுக்கு அடைவு"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "அட்டவணை மூலகங்கள் நடுவில் இடம் "
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "சொடுக்கிமேலோட்டம் மற்றும் சொடுக்கலுக்கு ஜாவா ஸ்கிரிப்ட் "
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "அட்டவணை தலைப்புக்களுக்கு அசைவூட்டம் தவிர்"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pyligma/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "பைத்தான் முனையம்"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pyligma/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_B உலாவு..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pyligma/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
 msgstr "பைத்தான் நடைமுறை உலாவி"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pyligma/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "எழுதுவதற்கு '%s'ஐ திறக்கமுடியவில்லை: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pyligma/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "'%s' க்கு எழுத முடியவில்லை: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pyligma/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
 msgstr "பைத்தான்-ஃபூ முனைய வெளிப்பாட்டை சேமி "
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
-msgid "Interactive GIMP Python interpreter"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:216
+msgid "Interactive LIGMA Python interpreter"
 msgstr "ஊடாடும் கிம்ப் பைத்தான் உணர்ந்துணரி"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pyligma/plug-ins/python-console.py:221
 msgid "_Console"
 msgstr "(_C) முனையம்"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "ஒரு அடுக்குக்கு ஒரு நிழல் இடு, மேலும் தேர்வில் அதை சாய்முனையாகச்செய்"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_D நிழல் இடு மற்றும் சாய்முனையாக்கு..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "_S நிழலை மழுங்கச்செய்"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_B சாய்முனை"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "_D நிழல் இடு "
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr " நிழல் இட _X நகட்டம்"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr " நிழல் இட _Y நகட்டம்"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
 msgstr "உரையில் உள்ள எழுத்துருக்களில்  இருந்து புதிய தூரிகை ஒன்றை உருவாக்குக"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:81
 msgid "New Brush from _Text..."
 msgstr "_T உரையில் இருந்து புதிய தூரிகை..."
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:84
 msgid "Font"
 msgstr "எழுத்து வகை"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:85
 msgid "Pixel Size"
 msgstr "பிக்செல் அளவு"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+#: ../plug-ins/pyligma/plug-ins/text-brush.py:86
 msgid "Text"
 msgstr "உரை"
 

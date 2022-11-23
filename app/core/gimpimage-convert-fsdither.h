@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_FSDITHER_H__
-#define __GIMP_IMAGE_CONVERT_FSDITHER_H__
+#ifndef __LIGMA_IMAGE_CONVERT_FSDITHER_H__
+#define __LIGMA_IMAGE_CONVERT_FSDITHER_H__
 
 /* The following 5 arrays are used in performing floyd-steinberg
  *  error diffusion dithering. The range array allows the quick
@@ -556,4 +556,4 @@ static const gshort floyd_steinberg_error4[] = {
    33,   33,   34,   32,   33,
 };
 
-#endif /* __GIMP_IMAGE_CONVERT_FSDITHER_H__ */
+#endif /* __LIGMA_IMAGE_CONVERT_FSDITHER_H__ */

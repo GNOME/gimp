@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,64 +20,64 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/ligmadisplayconfig.h"
 
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpprojectable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmaprojectable.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpdisplayshell-filter.h"
-#include "gimpdisplayshell-profile.h"
-#include "gimpdisplayshell-render.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmadisplayshell-filter.h"
+#include "ligmadisplayshell-profile.h"
+#include "ligmadisplayshell-render.h"
 
 
-#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
-#define GIMP_DISPLAY_RENDER_MAX_SCALE      4
+#define LIGMA_DISPLAY_RENDER_ENABLE_SCALING 1
+#define LIGMA_DISPLAY_RENDER_MAX_SCALE      4
 
 
 void
-gimp_display_shell_render_set_scale (GimpDisplayShell *shell,
+ligma_display_shell_render_set_scale (LigmaDisplayShell *shell,
                                      gint              scale)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-#if GIMP_DISPLAY_RENDER_ENABLE_SCALING
-  scale = CLAMP (scale, 1, GIMP_DISPLAY_RENDER_MAX_SCALE);
+#if LIGMA_DISPLAY_RENDER_ENABLE_SCALING
+  scale = CLAMP (scale, 1, LIGMA_DISPLAY_RENDER_MAX_SCALE);
 
   if (scale != shell->render_scale)
     {
       shell->render_scale = scale;
 
-      gimp_display_shell_render_invalidate_full (shell);
+      ligma_display_shell_render_invalidate_full (shell);
     }
 #endif
 }
 
 void
-gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell)
+ligma_display_shell_render_invalidate_full (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   g_clear_pointer (&shell->render_cache_valid, cairo_region_destroy);
 }
 
 void
-gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,
+ligma_display_shell_render_invalidate_area (LigmaDisplayShell *shell,
                                            gint              x,
                                            gint              y,
                                            gint              width,
                                            gint              height)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->render_cache_valid)
     {
@@ -93,13 +93,13 @@ gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_render_validate_area (GimpDisplayShell *shell,
+ligma_display_shell_render_validate_area (LigmaDisplayShell *shell,
                                          gint              x,
                                          gint              y,
                                          gint              width,
                                          gint              height)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->render_cache_valid)
     {
@@ -115,7 +115,7 @@ gimp_display_shell_render_validate_area (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_render_is_valid (GimpDisplayShell *shell,
+ligma_display_shell_render_is_valid (LigmaDisplayShell *shell,
                                     gint              x,
                                     gint              y,
                                     gint              width,
@@ -141,7 +141,7 @@ gimp_display_shell_render_is_valid (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_render (GimpDisplayShell *shell,
+ligma_display_shell_render (LigmaDisplayShell *shell,
                            cairo_t          *cr,
                            gint              tx,
                            gint              ty,
@@ -149,8 +149,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              theight,
                            gdouble           scale)
 {
-  GimpDisplayConfig *display_config;
-  GimpImage         *image;
+  LigmaDisplayConfig *display_config;
+  LigmaImage         *image;
   GeglBuffer        *buffer;
 #ifdef USE_NODE_BLIT
   GeglNode          *node;
@@ -168,12 +168,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   GeglAbyssPolicy    abyss_policy;
   gint               filter = GEGL_BUFFER_FILTER_AUTO;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (scale > 0.0);
 
   /* map chunk from screen space to scaled image space */
-  gimp_display_shell_untransform_bounds_with_scale (shell, scale,
+  ligma_display_shell_untransform_bounds_with_scale (shell, scale,
                                                     tx, ty,
                                                     tx + twidth, ty + theight,
                                                     &x1, &y1,
@@ -199,18 +199,18 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   else
     abyss_policy = GEGL_ABYSS_CLAMP;
 
-  if (display_config->zoom_quality != GIMP_ZOOM_QUALITY_HIGH)
+  if (display_config->zoom_quality != LIGMA_ZOOM_QUALITY_HIGH)
     {
       filter = GEGL_BUFFER_FILTER_NEAREST;
     }
 
-  image  = gimp_display_get_image (shell->display);
-  buffer = gimp_pickable_get_buffer (
-    gimp_display_shell_get_pickable (shell));
+  image  = ligma_display_get_image (shell->display);
+  buffer = ligma_pickable_get_buffer (
+    ligma_display_shell_get_pickable (shell));
 #ifdef USE_NODE_BLIT
-  node   = gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+  node   = ligma_projectable_get_graph (LIGMA_PROJECTABLE (image));
 
-  gimp_projectable_begin_render (GIMP_PROJECTABLE (image));
+  ligma_projectable_begin_render (LIGMA_PROJECTABLE (image));
 #endif
 
   if (! shell->render_surface)
@@ -255,7 +255,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_data   = cairo_image_surface_get_data (shell->render_surface);
 
   if (shell->profile_transform ||
-      gimp_display_shell_has_filter (shell))
+      ligma_display_shell_has_filter (shell))
     {
       gboolean can_convert_to_u8;
 
@@ -263,12 +263,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
        *  to use temp buffers
        */
 
-      can_convert_to_u8 = gimp_display_shell_profile_can_convert_to_u8 (shell);
+      can_convert_to_u8 = ligma_display_shell_profile_can_convert_to_u8 (shell);
 
       /*  create the filter buffer if we have filters, or can't convert
        *  to u8 directly
        */
-      if ((gimp_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
+      if ((ligma_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
           ! shell->filter_buffer)
         {
           gint fw = shell->render_buf_width;
@@ -290,7 +290,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                               shell->filter_data);
         }
 
-      if (! gimp_display_shell_has_filter (shell) || shell->filter_transform)
+      if (! ligma_display_shell_has_filter (shell) || shell->filter_transform)
         {
           /*  if there are no filters, or there is a filter transform,
            *  load the projection pixels into the profile_buffer
@@ -298,13 +298,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 #ifndef USE_NODE_BLIT
           gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (x, y, width, height), scale,
-                           gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
+                           ligma_projectable_get_format (LIGMA_PROJECTABLE (image)),
                            shell->profile_data, shell->profile_stride,
                            abyss_policy | filter);
 #else
           gegl_node_blit (node,
                           scale, GEGL_RECTANGLE (x, y, width, height),
-                          gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
+                          ligma_projectable_get_format (LIGMA_PROJECTABLE (image)),
                           shell->profile_data, shell->profile_stride,
                           GEGL_BLIT_CACHE | filter);
 #endif
@@ -333,7 +333,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
        */
       if (shell->filter_transform)
         {
-          gimp_color_transform_process_buffer (shell->filter_transform,
+          ligma_color_transform_process_buffer (shell->filter_transform,
                                                shell->profile_buffer,
                                                GEGL_RECTANGLE (0, 0,
                                                                width, height),
@@ -344,7 +344,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       /*  if there are filters, apply them
        */
-      if (gimp_display_shell_has_filter (shell))
+      if (ligma_display_shell_has_filter (shell))
         {
           GeglBuffer *filter_buffer;
 
@@ -360,7 +360,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
           /*  convert the filter_buffer in place
            */
-          gimp_color_display_stack_convert_buffer (shell->filter_stack,
+          ligma_color_display_stack_convert_buffer (shell->filter_stack,
                                                    filter_buffer,
                                                    GEGL_RECTANGLE (x, y,
                                                                    width, height));
@@ -372,12 +372,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
        */
       if (shell->profile_transform)
         {
-          if (gimp_display_shell_has_filter (shell))
+          if (ligma_display_shell_has_filter (shell))
             {
               /*  if we have filters, convert the pixels in the filter_buffer
                *  in-place
                */
-              gimp_color_transform_process_buffer (shell->profile_transform,
+              ligma_color_transform_process_buffer (shell->profile_transform,
                                                    shell->filter_buffer,
                                                    GEGL_RECTANGLE (0, 0,
                                                                    width, height),
@@ -390,7 +390,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
               /*  otherwise, if we can't convert to u8 directly, convert
                *  the pixels from the profile_buffer to the filter_buffer
                */
-              gimp_color_transform_process_buffer (shell->profile_transform,
+              ligma_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
                                                    GEGL_RECTANGLE (0, 0,
                                                                    width, height),
@@ -411,7 +411,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
               /*  otherwise, convert the profile_buffer directly into
                *  the cairo_buffer
                */
-              gimp_color_transform_process_buffer (shell->profile_transform,
+              ligma_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
                                                    GEGL_RECTANGLE (0, 0,
                                                                    width, height),
@@ -425,7 +425,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       /*  finally, copy the filter buffer to the cairo-ARGB32 buffer,
        *  if necessary
        */
-      if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
+      if (ligma_display_shell_has_filter (shell) || ! can_convert_to_u8)
         {
           gegl_buffer_get (shell->filter_buffer,
                            GEGL_RECTANGLE (0, 0, width, height), 1.0,
@@ -455,7 +455,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
 
 #ifdef USE_NODE_BLIT
-  gimp_projectable_end_render (GIMP_PROJECTABLE (image));
+  ligma_projectable_end_render (LIGMA_PROJECTABLE (image));
 #endif
 
   cairo_surface_mark_dirty (shell->render_surface);
@@ -514,7 +514,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       cairo_surface_mark_dirty (shell->mask_surface);
 
-      gimp_cairo_set_source_rgba (my_cr, &shell->mask_color);
+      ligma_cairo_set_source_rgba (my_cr, &shell->mask_color);
       cairo_mask_surface (my_cr, shell->mask_surface, x, y);
     }
 

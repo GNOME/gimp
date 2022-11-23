@@ -1,6 +1,6 @@
-# translation of gimp-plug-ins.HEAD.pa.po to Panjabi
-# Copyright (C) 2004 THE gimp-plug-ins'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp-plug-ins package.
+# translation of ligma-plug-ins.HEAD.pa.po to Panjabi
+# Copyright (C) 2004 THE ligma-plug-ins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma-plug-ins package.
 #
 # Jaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004.
@@ -10,8 +10,8 @@
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.HEAD.pa\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins.HEAD.pa\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-10-23 19:30+0100\n"
 "PO-Revision-Date: 2007-10-27 10:02+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
@@ -25,15 +25,15 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/ligmaressionist/utils.c:124
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"gimprc ਵਿੱਚ ਕੋਈ %s ਨਹੀਂ:\n"
+"ligmarc ਵਿੱਚ ਕੋਈ %s ਨਹੀਂ:\n"
 "ਤੁਹਾਨੂੰ ਇੱਕ (%s \"%s\") ਵਰਗੀ\n"
 "ਐਂਟਰੀ  ਆਪਣੀ ਫਾਇਲ %s\n"
 "ਵਿੱਚ ਜੋੜਨੀ ਪਵੇਗੀ।"
@@ -402,7 +402,7 @@ msgstr "ਫ਼ਰੈਕਟਲ ਪੈਰਾਮੀਟਰਾਂ ਨੂੰ ਸੰਭ
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
-#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
+#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/ligmahelplocale.c:193
 #: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
@@ -829,8 +829,8 @@ msgid "_Environment Map"
 msgstr "ਵਾਤਾਵਰਣ ਨਕਸ਼ਾ(_E)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1044
-#: ../plug-ins/gimpressionist/preview.c:186
-#: ../plug-ins/gimpressionist/repaint.c:1166
+#: ../plug-ins/ligmaressionist/preview.c:186
+#: ../plug-ins/ligmaressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "ਨਵੀਨੀਕਰਨ"
@@ -1209,7 +1209,7 @@ msgstr "ਗ਼ੈਰ-ਸਹਾਇਕ ਜਾਂ ਗਲਤ ਚਿੱਤਰ ਉਚ�
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/ligmaressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
 #: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
@@ -1590,8 +1590,8 @@ msgstr "ਸ਼ੀਡ ਤੋਂ ਰੈਂਡਮ (ਸ਼ੇਅਰਡ)"
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:162
+#: ../plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr "ਆਭਾ"
 
@@ -1602,8 +1602,8 @@ msgstr "ਸੰਤ੍ਰਿਪਤ"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141
+#: ../plug-ins/ligmaressionist/orientation.c:138
+#: ../plug-ins/ligmaressionist/size.c:141
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
@@ -1936,7 +1936,7 @@ msgid "_Use the (invisible) bottom layer as the base"
 msgstr "(ਅਦਿੱਖ) ਤਲ ਲੇਅਰ ਨੂੰ ਬੇਸ ਵਾਂਗ ਮੰਨ ਕੇ ਚੱਲੋ(_U)"
 
 #: ../plug-ins/common/animationplay.c:163
-msgid "Preview a GIMP layer-based animation"
+msgid "Preview a LIGMA layer-based animation"
 msgstr "ਇੱਕ ਜੈਮਪ ਲੇਅਰ-ਆਧਾਰਿਤ ਐਨੀਮੇਸ਼ਨ ਝਲਕ"
 
 #: ../plug-ins/common/animationplay.c:168
@@ -2451,7 +2451,7 @@ msgid "Checkerboard"
 msgstr "ਚੈਕਰਬੋਰਡ"
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "_Size:"
 msgstr "ਆਕਾਰ(_S):"
 
@@ -2980,7 +2980,7 @@ msgid "Cannot operate on layers with masks."
 msgstr "ਮਾਸਕ ਨਾਲ ਲੇਅਰ ਉੱਤੇ ਓਪਰੇਟ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ।"
 
 #. could not float the selection because selection rectangle
-#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#. * is completely empty return LIGMA_PDB_EXECUTION_ERROR
 #.
 #: ../plug-ins/common/curve_bend.c:694
 msgid "Cannot operate on empty selections."
@@ -2994,8 +2994,8 @@ msgstr "ਕਰਵ ਬਲੈੱਡ"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1231
-#: ../plug-ins/gimpressionist/orientmap.c:574
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/ligmaressionist/orientmap.c:574
+#: ../plug-ins/ligmaressionist/sizemap.c:443
 msgid "Preview"
 msgstr "ਝਲਕ"
 
@@ -3611,7 +3611,7 @@ msgstr "ਰੇਡੀਅਸ 2(_a):"
 msgid "_Normalize"
 msgstr "ਨਾਰਮੇਲਾਈਜ਼(_N)"
 
-#: ../plug-ins/common/dog.c:347 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:347 ../plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr "ਉਲਟ(_I)"
 
@@ -4154,7 +4154,7 @@ msgid "_RLE"
 msgstr "_RLE"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
-msgid "GIMP brush"
+msgid "LIGMA brush"
 msgstr "ਜੈਮਪ ਬੁਰਸ਼"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
@@ -4163,7 +4163,7 @@ msgstr "ਗ਼ੈਰ-ਸਹਾਇਕ ਬੁਰਸ਼ ਫਾਰਮੈਟ"
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr "ਜੈਮਪ ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਗਲਤੀ"
 
 #: ../plug-ins/common/gbr.c:419
@@ -4177,7 +4177,7 @@ msgid "Unnamed"
 msgstr "ਬਿਨਾਂ ਨਾਂ"
 
 #: ../plug-ins/common/gbr.c:607
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
 msgstr "ਜੈਮਪ ਬਰੁਸ਼ ਜਾਂ ਤਾਂ ਗਰੇਸ-ਸਕੇਲ ਹਨ ਜਾਂ RGBA"
 
 #: ../plug-ins/common/gbr.c:704
@@ -4190,12 +4190,12 @@ msgid "Spacing:"
 msgstr "ਖਾਲ਼ੀ ਥਾਂ:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/common/pat.c:541 ../plug-ins/ligmaressionist/presets.c:646
 msgid "Description:"
 msgstr "ਵੇਰਵਾ:"
 
 #: ../plug-ins/common/gee.c:99 ../plug-ins/common/gee_zoom.c:121
-msgid "A big hello from the GIMP team!"
+msgid "A big hello from the LIGMA team!"
 msgstr "ਜੈਮਪ ਟੀਮ ਵਲੋਂ ਵੱਡਾ ਸਵਾਗਤ ਹੈ!"
 
 #: ../plug-ins/common/gee.c:104 ../plug-ins/common/gee.c:160
@@ -4203,7 +4203,7 @@ msgid "Gee Slime"
 msgstr "ਜੀ ਸਲਿਮੀ"
 
 #: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:192
-msgid "Thank You for Choosing GIMP"
+msgid "Thank You for Choosing LIGMA"
 msgstr "ਜੈਪਮ ਚੁਣਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ"
 
 #: ../plug-ins/common/gee.c:173
@@ -4365,7 +4365,7 @@ msgid "The default comment is limited to %d characters."
 msgstr "ਡਿਫਾਲਟ ਟਿੱਪਣੀ %d ਅੱਖਰਾਂ ਤੱਕ ਹੀ ਸੀਮਿਤ ਹੈ।"
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr "ਜੈਮਪ ਬੁਰਸ਼ (ਐਨੀਮੇਟਡ)"
 
 #: ../plug-ins/common/gih.c:321
@@ -4374,11 +4374,11 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "ਲੇਅਰ %s ਵਿੱਚ ਇੱਕ ਐਲਫ਼ਾ ਚੈਨਲ ਨਹੀਂ ਹੈ, ਛੱਡਿਆ ਜਾਂਦਾ ਹੈ"
 
 #: ../plug-ins/common/gih.c:492
-msgid "Error in GIMP brush pipe file."
+msgid "Error in LIGMA brush pipe file."
 msgstr "ਜੈਮਪ ਬੁਰਸ਼ ਪਾਇਪ ਫਾਇਲ ਵਿੱਚ ਗਲਤੀ ਹੈ।"
 
 #: ../plug-ins/common/gih.c:558
-msgid "GIMP brush file appears to be corrupted."
+msgid "LIGMA brush file appears to be corrupted."
 msgstr "ਜੈਮਪ ਬੁਰਸ਼ ਫਾਇਲ ਨਿਕਾਰਾ ਹੋਈ ਜਾਪਦੀ ਹੈ।"
 
 #: ../plug-ins/common/gih.c:703
@@ -5945,7 +5945,7 @@ msgid "_Paper Tile..."
 msgstr "ਪੇਪਰ ਟਾਇਲ(_P)..."
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
-msgid "GIMP pattern"
+msgid "LIGMA pattern"
 msgstr "ਜੈਮਪ ਪੈਟਰਨ"
 
 #: ../plug-ins/common/pat.c:358
@@ -6261,7 +6261,7 @@ msgid "Invalid X resolution."
 msgstr "ਗਲਤ X ਰੈਜ਼ੂਲੇਸ਼ਨ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:540
-msgid "Image width is larger than GIMP can handle."
+msgid "Image width is larger than LIGMA can handle."
 msgstr "ਚਿੱਤਰ ਚੌੜਾਈ ਜੈਮਪ ਵੱਲੋਂ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਧ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:547
@@ -6269,7 +6269,7 @@ msgid "Invalid Y resolution."
 msgstr "ਗਲਤ Y ਰੈਜ਼ੂਲੇਸ਼ਨ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:549
-msgid "Image height is larger than GIMP can handle."
+msgid "Image height is larger than LIGMA can handle."
 msgstr "ਚਿੱਤਰ ਉਚਾਈ ਜੈਮਪ ਵੱਲੋਂ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਧ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:561
@@ -6420,7 +6420,7 @@ msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਐਲਫ਼ਾ ਚੈਨਲਾਂ �
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
@@ -6495,8 +6495,8 @@ msgid "Gray"
 msgstr "ਸਲੇਟੀ"
 
 #: ../plug-ins/common/postscript.c:3213 ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/ligmaressionist/color.c:48
+#: ../plug-ins/ligmaressionist/general.c:152
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "ਰੰਗ"
@@ -6659,7 +6659,7 @@ msgstr ""
 "ਪਲੱਗਇਨ ਇਸ ਨਾਲ ਸੰਭਾਲਣ ਲਈ ਤਿਆਰ ਨਹੀਂ ਹੈ, ਇਸ ਦੀ ਬਜਾਏ ਆਮ ਢੰਗ ਵਰਤੋਂ।"
 
 #: ../plug-ins/common/psd-save.c:608
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr "ਗਲਤੀ: ਜੈਮਪ ਬੇਸ ਚਿੱਤਰ-ਟਾਇਪ ਨੂੰ PSD ਮੋਡ 'ਚ ਬਦਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।"
 
 #: ../plug-ins/common/psd-save.c:1525
@@ -7591,7 +7591,7 @@ msgid "Use the background color"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/ligmaressionist/general.c:148
 msgid "Solid"
 msgstr "ਗੂੜਾ"
 
@@ -7681,7 +7681,7 @@ msgstr "ਕਲਰ ਚੋਣ ਡਾਈਲਾਗ"
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2755
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr "ਸਕੇਲ:"
@@ -7839,7 +7839,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
 "ਚਿੱਤਰ ਚੌੜਾਈ ਜੈਮਪ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਡਾ ਹੈ"
@@ -7859,7 +7859,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
 "ਚਿੱਤਰ ਉਚਾਈ ਜੈਮਪ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਡਾ ਹੈ"
@@ -7959,7 +7959,7 @@ msgid "Import _paths"
 msgstr "ਮਾਰਗ ਇੰਪੋਰਟ ਕਰੋ(_p)"
 
 #: ../plug-ins/common/svg.c:930
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr "SVG ਦੇ ਪਾਥ ਐਲੀਮੈਂਟ ਇੰਪੋਰਟ ਕਰੋ ਤਾਂ ਕਿ ਉਹ ਜੈਮਪ ਪਾਥ ਟੂਲ ਨਾਲ ਵਰਤੇ ਜਾ ਸਕਣ।"
 
 #: ../plug-ins/common/svg.c:943
@@ -8043,7 +8043,7 @@ msgstr "TIFF ਚੈਨਲ"
 #: ../plug-ins/common/tiff-load.c:969
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
@@ -8199,7 +8199,7 @@ msgstr "ਸੰਭਾਲਿਆ"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 "ਇੱਕ ਯੂਨਿਟ ਦੀ ਪਰਿਭਾਸ਼ਾ ਨੂੰ ਜੈਮਪ ਬੰਦ ਕਰਨ ਸਮੇਂ ਉਦੋਂ ਹੀ ਸੰਭਾਲਿਆ ਜਾ ਸਕਦਾ ਹੈ, ਜਦੋਂ ਇਹ ਕਾਲਮ "
@@ -8210,7 +8210,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
 msgstr "ਇਹ ਲਾਈਨ ਜੈਮਪ ਦੀ ਸੰਰਚਨਾ ਫਾਇਲ ਵਿੱਚ ਇੱਕ ਯੂਨਿਟ ਦੀ ਪਛਾਣ ਲਈ ਵਰਤੀ ਜਾਵੇਗੀ।"
 
 #: ../plug-ins/common/uniteditor.c:98
@@ -8280,7 +8280,7 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "ਚੁਣੇ ਯੂਨਿਟ ਨੂੰ ਟੈਪਲੇਟ ਵਾਂਗ ਵਰਤ ਕੇ ਇੱਕ ਨਵੀਂ ਯੂਨਿਟ ਬਣਾਓ"
 
 #: ../plug-ins/common/uniteditor.c:145
-msgid "Create or alter units used in GIMP"
+msgid "Create or alter units used in LIGMA"
 msgstr "ਜੈਮਪ ਵਿੱਚ ਯੂਨਿਟ ਬਣਾਓ ਜਾਂ ਬਦਲੋ"
 
 #: ../plug-ins/common/uniteditor.c:150
@@ -8794,7 +8794,7 @@ msgstr "ਦੋਵੇਂ(_h)"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "ਵੱਧ ਮੁੱਲ ਨਾਲ ਚਿੱਤਰ ਦੇ ਕੁਝ ਭਾਗਾਂ ਉੱਤੇ ਸੀਮਿਤ ਹੋਵੇਗਾ।"
 
-#: ../plug-ins/common/wind.c:1016 ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/common/wind.c:1016 ../plug-ins/ligmaressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "ਸ਼ਕਤੀ(_S):"
 
@@ -9075,8 +9075,8 @@ msgstr "ਬੇਪੈਟਰਨੀ(_R)"
 msgid "Same"
 msgstr "ਉਹੀ"
 
-#: ../plug-ins/flame/flame.c:745 ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/flame/flame.c:745 ../plug-ins/ligmaressionist/orientation.c:146
+#: ../plug-ins/ligmaressionist/size.c:149
 msgid "Random"
 msgstr "ਰਲਵਾਂ"
 
@@ -9348,7 +9348,7 @@ msgid "Max undo:"
 msgstr "ਵੱਧੋ-ਵੱਧ ਵਾਪਸ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Transparent"
 msgstr "ਪਾਰਦਰਸ਼ੀ"
 
@@ -9441,7 +9441,7 @@ msgid "Left"
 msgstr "ਖੱਬਾ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/ligmaressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "ਸਥਿਤੀ:"
 
@@ -9680,7 +9680,7 @@ msgstr "ਕਿਰਨ ਪੇਂਟ ਚੋਣਾਂ"
 msgid "Second Flares Paint Options"
 msgstr "ਦੂਜਾ ਫਲੇਅਰ ਪੇਂਟ ਚੋਣਾਂ"
 
-#: ../plug-ins/gflare/gflare.c:3483 ../plug-ins/gimpressionist/general.c:116
+#: ../plug-ins/gflare/gflare.c:3483 ../plug-ins/ligmaressionist/general.c:116
 msgid "_General"
 msgstr "ਆਮ(_G)"
 
@@ -9788,284 +9788,284 @@ msgstr "GFLI 1.3 - ਫਰੇਮਸਟੇਕ ਲੋਡ ਕਰੋ"
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - ਫਰੇਮ-ਸਟੇਕ ਸੰਭਾਲੋ"
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/ligmaressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr "ਕੇਵਲ ਡਰਾਅਯੋਗ ਹੀ ਸੰਭਾਲੇ ਜਾ ਸਕਦੇ ਹਨ!"
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/ligmaressionist/brush.c:235
 msgid "Save Brush"
 msgstr "ਬੁਰਸ਼ ਸੰਭਾਲੋ"
 
-#: ../plug-ins/gimpressionist/brush.c:490
+#: ../plug-ins/ligmaressionist/brush.c:490
 msgid "_Brush"
 msgstr "ਬੁਰਸ਼(_B)"
 
-#: ../plug-ins/gimpressionist/brush.c:527
+#: ../plug-ins/ligmaressionist/brush.c:527
 msgid "Gamma:"
 msgstr "ਗਾਮਾ:"
 
-#: ../plug-ins/gimpressionist/brush.c:545
+#: ../plug-ins/ligmaressionist/brush.c:545
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "ਚੁਣੇ ਬੁਰਸ਼ ਲਈ ਗਾਮਾ (ਚਮਕ) ਬਦਲਦੀ ਹੈ"
 
-#: ../plug-ins/gimpressionist/brush.c:553
+#: ../plug-ins/ligmaressionist/brush.c:553
 msgid "Select:"
 msgstr "ਚੁਣ:"
 
-#: ../plug-ins/gimpressionist/brush.c:582
+#: ../plug-ins/ligmaressionist/brush.c:582
 msgid "Aspect ratio:"
 msgstr "ਆਕਾਰ ਅਨੁਪਾਤ:"
 
-#: ../plug-ins/gimpressionist/brush.c:586
+#: ../plug-ins/ligmaressionist/brush.c:586
 msgid "Specifies the aspect ratio of the brush"
 msgstr "ਬੁਰਸ਼ ਲਈ ਆਕਾਰ ਰੇਸ਼ੋ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/ligmaressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr "ਰਾਹਤ:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/ligmaressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "ਚਿੱਤਰ ਉੱਤੇ ਲਾਗੂ ਕਰਨ ਲਈ ਈਬੋਸਿੰਗ ਦੀ ਮਾਤਰਾ ਦਿਓ (ਫੀਸਦੀ ਵਿੱਚ)"
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/ligmaressionist/color.c:42
 msgid "Co_lor"
 msgstr "ਰੰਗ"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "ਬੁਰਸ਼ ਥੱਲੇ ਔਸਤ(_v)"
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/ligmaressionist/color.c:54
 msgid "C_enter of brush"
 msgstr "ਬੁਰਸ਼ ਦਾ ਸੈਂਟਰ(_e)"
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "ਰੰਗ ਬੁਰਸ਼ ਲਈ ਸਭ ਪਿਕਸਲਾਂ ਦੀ ਔਸਤ ਤੋਂ ਕੰਪਿਊਟ ਕੀਤਾ ਜਾਂਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "ਬੁਰਸ਼ ਦੇ ਸੈਂਟਰ ਵਿੱਚ ਪਿਕਸਲ ਤੋਂ ਰੰਗ ਸੈਂਪਲ ਹੈ"
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/ligmaressionist/color.c:76
 msgid "Color _noise:"
 msgstr "ਕਲਰ ਨੋਵਾਇਸ(_n):"
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "ਰੰਗ ਵਿੱਚ ਰੈਂਡਮ ਨੋਵਾਇਸ ਸ਼ਾਮਲ ਕਰਦੀ ਹੈ"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/ligmaressionist/general.c:132
 msgid "Keep original"
 msgstr "ਅਸਲੀ ਰੱਖੋ"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 msgid "Preserve the original image as a background"
 msgstr "ਅਸਲੀ ਚਿੱਤਰ ਬੈਕਗਰਾਊਂਡ ਵਾਂਗ ਰੱਖੋ"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/ligmaressionist/general.c:138
 msgid "From paper"
 msgstr "ਪੇਪਰ ਤੋਂ"
 
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
 msgstr "ਚੁਣੇ ਪੇਪਰ ਲਈ ਟੈਕਸਟ ਬੈਕਗਰਾਊਂਡ ਵਾਂਗ ਕਾਪੀ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Solid colored background"
 msgstr "ਗੂੜ੍ਹੀ ਰੰਗਦਾਰ ਬੈਕਗਰਾਊਂਡ"
 
-#: ../plug-ins/gimpressionist/general.c:168
+#: ../plug-ins/ligmaressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "ਇੱਕ ਟਰਾਂਸਪਰੇਸੀ ਬੈਕਗਰਾਊਂਡ ਵਰਤੋਂ, ਕੇਵਲ ਪੇਂਟ ਕੀਤੇ ਸਟਰੋਕ ਹੀ ਵੇਖਾਈ ਦੇਣਗੇ"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Paint edges"
 msgstr "ਪੇਂਟ ਕੋਨੇ"
 
-#: ../plug-ins/gimpressionist/general.c:190
+#: ../plug-ins/ligmaressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "ਚੁਣੋ, ਜੇ ਚਿੱਤਰ ਦੇ ਕੋਨਿਆਂ ਲਈ ਸਭ ਪਾਸਿਆਂ ਤੋਂ ਸਟਰੋਕ ਰੱਖਣਾ ਹੈ"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:284
+#: ../plug-ins/ligmaressionist/general.c:195 ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
 msgstr "ਟਾਇਲੇਬਲ"
 
-#: ../plug-ins/gimpressionist/general.c:199
+#: ../plug-ins/ligmaressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "ਚੁਣੋ, ਜੇ ਬਣਿਆ ਚਿੱਤਰ ਬੇਸ਼ੱਕ ਟਾਇਲਯੋਗ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/general.c:204
+#: ../plug-ins/ligmaressionist/general.c:204
 msgid "Drop shadow"
 msgstr "ਡਰਾਪ ਸ਼ੈਡੋ"
 
-#: ../plug-ins/gimpressionist/general.c:209
+#: ../plug-ins/ligmaressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "ਹਰੇਕ ਬੁਰਸ਼ ਸਟਰੋਕ ਨਾਲ ਇੱਕ ਸ਼ੈਡੋ ਪਰਭਾਵ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/ligmaressionist/general.c:222
 msgid "Edge darken:"
 msgstr "ਕੋਨਾ ਗੂੜ੍ਹਾ:"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "ਹਰੇਕ ਬੁਰਸ਼ ਸਟਰੋਕ ਦੇ ਕੋਨਿਆਂ ਨੂੰ ਕਿੰਨਾ \"ਗੂੜ੍ਹਾ\" ਬਣਾਉਣਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/general.c:231
+#: ../plug-ins/ligmaressionist/general.c:231
 msgid "Shadow darken:"
 msgstr "ਛਾਂ ਗੂੜ੍ਹੀ:"
 
-#: ../plug-ins/gimpressionist/general.c:235
+#: ../plug-ins/ligmaressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
 msgstr "ਸ਼ੈਡੋ ਡਰੋਪ ਨੂੰ ਕਿੰਨਾ \"ਗੂੜ੍ਹਾ\" ਬਣਾਉਣਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "Shadow depth:"
 msgstr "ਛਾਂ ਡੂੰਘਾਈ:"
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/ligmaressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "ਡਰਾਪ ਸ਼ੈਡੋ ਦੀ ਡੂੰਘਾਈ, ਜਿਵੇਂ ਕਿ ਆਬਜੈਕਟ ਤੋਂ ਕਿੰਨਾ ਕੁ ਦੂਰ ਹੋਵੇ"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "Shadow blur:"
 msgstr "ਸ਼ੈਡੋ ਬਲਰ:"
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/ligmaressionist/general.c:253
 msgid "How much to blur the drop shadow"
 msgstr "ਡਰਾਪ ਸ਼ੈਡੋ ਨੂੰ ਕਿੰਨਾ ਬਲਰ ਕਰਨਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/ligmaressionist/general.c:258
 msgid "Deviation threshold:"
 msgstr "ਡੇਵੀਏਸ਼ਨ ਥਰੈਸ਼ਹੋਲਡ:"
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/ligmaressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
 msgstr "ਐਡਪਟਿਵ ਚੋਣ ਲਈ ਇੱਕ ਬੇਲਆਉਟ-ਮੁੱਲ"
 
-#: ../plug-ins/gimpressionist/gimp.c:74
+#: ../plug-ins/ligmaressionist/ligma.c:74
 msgid "Performs various artistic operations"
 msgstr "ਕਈ ਕਲਾਕਾਰੀ ਓਪਰੇਸ਼ਨ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/gimp.c:79
-msgid "_GIMPressionist..."
-msgstr "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:79
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/ligmaressionist/ligma.c:350
 msgid "Painting"
 msgstr "ਪੇਟਿੰਗ"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:121
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:121
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/ligmaressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr "ਸਥਿਤੀ(_i)"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/ligmaressionist/orientation.c:88
 msgid "Directions:"
 msgstr "ਦਿਸ਼ਾ:"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "ਵਰਤਣ ਲਈ ਦਿਸ਼ਾ (ਬੁਰਸ਼) ਦੀ ਗਿਣਤੀ।"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Start angle:"
 msgstr "ਸ਼ੁਰੂ ਕੋਣ:"
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/ligmaressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
 msgstr "ਬਣਾਉਣ ਲਈ ਪਹਿਲੇ ਬੁਰਸ਼ ਦਾ ਸ਼ੁਰੂਆਤੀ ਕੋਣ"
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/ligmaressionist/orientation.c:112
 msgid "Angle span:"
 msgstr "ਕੋਣ ਸਪੈਨ:"
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/ligmaressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
 msgstr "ਬਣਾਉਣ ਲਈ ਪਹਿਲੇ ਬੁਰਸ਼ ਦਾ ਕੋਣ ਸਪੈਨ"
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/ligmaressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "ਖੇਤਰ ਦਾ ਮੁੱਲ (ਬਰਾਈਟਨੈੱਸ) ਨੂੰ ਸਟਰੋਕ ਦੀ ਦਿਸ਼ਾ ਤਹਿ ਕਰਨ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/ligmaressionist/orientation.c:142
+#: ../plug-ins/ligmaressionist/size.c:145
 msgid "Radius"
 msgstr "ਰੇਡੀਅਸ"
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/ligmaressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "ਚਿੱਤਰ ਦੇ ਸੈਂਟਰ ਤੋਂ ਦੂਰੀ ਸਟਰੋਕ ਦੀ ਦਿਸ਼ਾ ਤਹਿ ਕਰਦੀ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr "ਹਰੇਕ ਸਟਰੋਕ ਲਈ ਰੈਂਡਮ ਦਿਸ਼ਾ ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:150
+#: ../plug-ins/ligmaressionist/size.c:153
 msgid "Radial"
 msgstr "ਰੇਡੀਕਲ"
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "ਸੈਂਟਰ ਤੋਂ ਦਿਸ਼ਾ ਨੂੰ ਸਟਰੋਕ ਦੀ ਦਿਸ਼ਾ ਦੇਣ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:158
+#: ../plug-ins/ligmaressionist/size.c:161
 msgid "Flowing"
 msgstr "ਫਲੋਇੰਗ (ਵਹਿੰਦਾ)"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "ਸਟਰੋਕ ਇੱਕ \"ਵਹਿੰਦਾ\" ਪੈਟਰਨ ਮੰਨਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "ਖੇਤਰ ਦੀ ਆਭਾ ਸਟਰੋਕ ਦੀ ਦਿਸ਼ਾ ਤਹਿ ਕਰਦੀ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:166
+#: ../plug-ins/ligmaressionist/size.c:169
 msgid "Adaptive"
 msgstr "ਅਡਪਟਿਵ"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr "ਦਿਸ਼ਾ, ਜੋ ਕਿ ਅਸਲੀ ਚਿੱਤਰ ਨਾਲ ਮਿਲਦੀ ਹੈ, ਚੁਣੇ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:174
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Manual"
 msgstr "ਦਸਤੀ"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr "ਸਟਰੋਕ ਸਥਿਤੀ ਖੁਦ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr "ਸਥਿਤੀ ਮੈਪ ਐਡੀਟਰ ਖੋਲ੍ਹਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/ligmaressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr "ਸਥਿਤੀ ਮੈਪ ਐਡੀਟਰ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:537
 msgid "Vectors"
 msgstr "ਵੈਕਟਰ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:549
+#: ../plug-ins/ligmaressionist/orientmap.c:549
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10073,279 +10073,279 @@ msgstr ""
 "ਵੈਕਟਰ-ਖੇਤਰ: ਖੱਬੇ-ਕਲਿੱਕ ਨਾਲ ਚੁਣਿਆ ਵੈਕਟਰ ਹਿਲਾਓ, ਸੱਜੇ-ਕਲਿੱਕ ਨਾਲ ਮਾਊਂਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰੋ, ਮਿਡਲ-"
 "ਕਲਿੱਕ ਨਾਲ ਨਵਾਂ ਵੈਕਟਰ ਸ਼ਾਮਲ ਕਰੋ।"
 
-#: ../plug-ins/gimpressionist/orientmap.c:572
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/ligmaressionist/orientmap.c:572
+#: ../plug-ins/ligmaressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr "ਝਲਕ ਦੀ ਬਰਾਈਟਨੈੱਸ ਅਡਜੱਸਟ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:594
+#: ../plug-ins/ligmaressionist/orientmap.c:594
 msgid "Select previous vector"
 msgstr "ਪਿੱਛੇ ਵੈਕਟਰ ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:600
+#: ../plug-ins/ligmaressionist/orientmap.c:600
 msgid "Select next vector"
 msgstr "ਅੱਗੇ ਵੈਕਟਰ ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:602
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/ligmaressionist/orientmap.c:602
+#: ../plug-ins/ligmaressionist/sizemap.c:472
 msgid "A_dd"
 msgstr "ਸ਼ਾਮਲ ਕਰੋ(_d)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:606
+#: ../plug-ins/ligmaressionist/orientmap.c:606
 msgid "Add new vector"
 msgstr "ਨਵਾਂ ਵੈਕਟਰ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:608
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/orientmap.c:608
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "_Kill"
 msgstr "ਕਿੱਲ ਕਰੋ(_K)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/ligmaressionist/orientmap.c:612
 msgid "Delete selected vector"
 msgstr "ਚੁਣਿਆ ਵੈਕਟਰ ਹਟਾਓ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Type"
 msgstr "ਟਾਇਪ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "_Normal"
 msgstr "ਸਧਾਰਨ(_N)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/ligmaressionist/orientmap.c:628
 msgid "Vorte_x"
 msgstr "ਵੋਰਟਿਕਸ(_x)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Vortex_2"
 msgstr "ਵੋਰਟਿਕਸ_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/ligmaressionist/orientmap.c:630
 msgid "Vortex_3"
 msgstr "ਵੋਰਟਿਕਸ_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:636
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/ligmaressionist/orientmap.c:636
+#: ../plug-ins/ligmaressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr "ਵੋਰੋਨੋਈ(_V)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "ਵੋਰੋਨੋਈ-ਮੋਡ ਕਿਸੇ ਵੀ ਪਰਭਾਵ ਦੇ ਦਿੱਤੇ ਪੁਆਇੰਟ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ ਹੀ ਵੈਕਟਰ ਬਣਾਉਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/ligmaressionist/orientmap.c:654
 msgid "A_ngle:"
 msgstr "ਕੋਣ(_n):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:658
+#: ../plug-ins/ligmaressionist/orientmap.c:658
 msgid "Change the angle of the selected vector"
 msgstr "ਚੁਣੇ ਵੈਕਟਰ ਦਾ ਕੋਣ ਬਦਲੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:665
+#: ../plug-ins/ligmaressionist/orientmap.c:665
 msgid "Ang_le offset:"
 msgstr "ਕੋਣ ਆਫਸੈੱਟ(_l):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/ligmaressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
 msgstr "ਇੱਕ ਦਿੱਤੇ ਕੋਣ ਨਾਲ ਸਭ ਵੈਕਟਰ ਆਫਸੈੱਟ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
 msgstr "ਚੁਣੇ ਵੈਕਟਦ ਦੀ ਤਾਕਤ ਬਦਲੋ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/ligmaressionist/orientmap.c:687
 msgid "S_trength exp.:"
 msgstr "ਤਾਕਤ ਸਮੀਕਰਨ(_t):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/ligmaressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
 msgstr "ਤਾਕਤ ਦਾ ਐਕਸਪੋਨੈੱਟ ਬਦਲੋ"
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/ligmaressionist/paper.c:120
 msgid "P_aper"
 msgstr "ਪੇਪਰ(_a)"
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr "ਪੇਪਰ ਟੈਕਸਟ ਉਲਟ ਕਰਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/ligmaressionist/paper.c:159
 msgid "O_verlay"
 msgstr "ਓਵਰ-ਲੇ(_v)"
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "ਪੇਪਰ ਉੱਤੇ ਇੰਝ ਹੀ ਲਾਗੂ ਕਰੋ (ਬਿਨਾਂ ਇਹ ਮੋਰੜੇ-ਤੋੜੇ)"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "ਟੈਕਸਟ ਲਈ ਸਕੇਲ ਦਿਓ (ਅਸਲੀ ਚਿੱਤਰ ਦੀ ਫੀ-ਸਦੀ)"
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/ligmaressionist/placement.c:49
 msgid "Pl_acement"
 msgstr "ਪਲੇਸਮੈਂਟ(_a)"
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/ligmaressionist/placement.c:55
 msgid "Placement"
 msgstr "ਪਲੇਸਮੈਂਟ"
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/ligmaressionist/placement.c:59
 msgid "Randomly"
 msgstr "ਰੈਂਡਮ"
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr "ਬਰਾਬਰ ਢੰਗ ਨਾਲ ਰੱਖੋ"
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr "ਸਟਰੋਕ ਰੈਂਡਮ ਢੰਗ ਨਾਲ ਪੂਰੇ ਚਿੱਤਰ ਉੱਤੇ ਰੱਖੋ"
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr "ਸਟਰੋਕ ਬਰਾਬਰ ਢੰਗ ਨਾਲ ਸਾਰੇ ਚਿੱਤਰ ਉੱਤੇ ਵੰਡੋ"
 
-#: ../plug-ins/gimpressionist/placement.c:84
+#: ../plug-ins/ligmaressionist/placement.c:84
 msgid "Centered"
 msgstr "ਸੈਂਟਰਡ"
 
-#: ../plug-ins/gimpressionist/placement.c:90
+#: ../plug-ins/ligmaressionist/placement.c:90
 msgid "Focus the brush strokes around the center of the image"
 msgstr "ਬੁਰਸ਼ ਸਟਰੋਕਾਂ ਦਾ ਫੋਕਸ ਚਿੱਤਰ ਦੇ ਸੈਂਟਰ ਦੁਆਲੇ ਰੱਖੋ"
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/ligmaressionist/placement.c:102
 msgid "Stroke _density:"
 msgstr "ਸਟਰੋਕ ਡੈੱਨਸਟੀ(_d):"
 
-#: ../plug-ins/gimpressionist/placement.c:106
+#: ../plug-ins/ligmaressionist/placement.c:106
 msgid "The relative density of the brush strokes"
 msgstr "ਬੁਰਸ਼ ਸਟੋਰਕਾਂ ਦੀ ਅਨੁਸਾਰੀ ਡੈੱਨਸਟੀ"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/ligmaressionist/ppmtool.c:632
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "PPM ਫਾਇਲ '%s' ਸੰਭਾਲਣ ਲਈ ਫੇਲ੍ਹ: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:620
+#: ../plug-ins/ligmaressionist/presets.c:620
 msgid "Save Current"
 msgstr "ਮੌਜੂਦਾ ਸੰਭਾਲੋ"
 
-#: ../plug-ins/gimpressionist/presets.c:874
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist ਡਿਫਾਲਟ"
+#: ../plug-ins/ligmaressionist/presets.c:874
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist ਡਿਫਾਲਟ"
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/ligmaressionist/presets.c:995
 msgid "_Presets"
 msgstr "ਪ੍ਰੀ-ਸੈੱਟ(_P)"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/ligmaressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "ਮੌਜੂਦਾ ਸੰਭਾਲੋ..."
 
-#: ../plug-ins/gimpressionist/presets.c:1018
+#: ../plug-ins/ligmaressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
 msgstr "ਮੌਜੂਦਾ ਸੈਟਿੰਗ ਨੂੰ ਚੁਣੀ ਫਾਇਲ ਲਈ ਸੰਭਾਲੋ"
 
-#: ../plug-ins/gimpressionist/presets.c:1046
+#: ../plug-ins/ligmaressionist/presets.c:1046
 msgid "Reads the selected Preset into memory"
 msgstr "ਚੁਣੇ ਪ੍ਰੀ-ਸੈੱਟ ਨੂੰ ਮੈਮੋਰੀ ਤੋਂ ਪੜ੍ਹਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/presets.c:1052
+#: ../plug-ins/ligmaressionist/presets.c:1052
 msgid "Deletes the selected Preset"
 msgstr "ਚੁਣਿਆ ਪ੍ਰੀ-ਸੈੱਟ ਹਟਾਓ"
 
-#: ../plug-ins/gimpressionist/presets.c:1058
+#: ../plug-ins/ligmaressionist/presets.c:1058
 msgid "Reread the folder of Presets"
 msgstr "ਪ੍ਰੀ-ਸੈੱਟ ਦਾ ਫੋਲਡਰ ਫੇਰ ਤੋਂ ਪੜ੍ਹੋ"
 
-#: ../plug-ins/gimpressionist/preview.c:192
+#: ../plug-ins/ligmaressionist/preview.c:192
 msgid "Refresh the Preview window"
 msgstr "ਝਲਕ ਵਿੰਡੋ ਤਾਜ਼ਾ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/preview.c:200
+#: ../plug-ins/ligmaressionist/preview.c:200
 msgid "Revert to the original image"
 msgstr "ਅਸਲੀ ਚਿੱਤਰ ਲਈ ਰੀਵਰਟ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/ligmaressionist/size.c:77
 msgid "_Size"
 msgstr "ਸਾਇਜ਼(_S)"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/ligmaressionist/size.c:91
 msgid "Sizes:"
 msgstr "ਸਾਇਜ਼:"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr "ਵਰਤਣ ਲਈ ਬੁਰਸ਼ ਦੇ ਸਾਇਜ਼ਾਂ ਦੀ ਗਿਣਤੀ"
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/ligmaressionist/size.c:103
 msgid "Minimum size:"
 msgstr "ਘੱਟੋ-ਘੱਟ ਸਾਇਜ਼:"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr "ਬਣਾਉਣ ਲਈ ਸਭ ਤੋਂ ਛੋਟਾ ਬੁਰਸ਼"
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/ligmaressionist/size.c:115
 msgid "Maximum size:"
 msgstr "ਵੱਧੋ-ਵੱਧ ਸਾਇਜ਼:"
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr "ਬਣਾਉਣ ਲਈ ਸਭ ਤੋਂ ਵੱਡਾ ਬੁਰਸ਼"
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 msgid "Size:"
 msgstr "ਸਾਇਜ਼:"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/ligmaressionist/size.c:142
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "ਖੇਤਰ ਦੇ ਮੁੱਲ (ਬਰਾਈਟਨੈੱਸ) ਨੂੰ ਸਟਰੋਕ ਦਾ ਸਾਇਜ਼ ਤਹਿ ਕਰਨ ਦਿਓ।"
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/ligmaressionist/size.c:146
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "ਚਿੱਤਰ ਦੇ ਸੈਂਟਰ ਤੋਂ ਦੂਰੀ ਸਟਰੋਕ ਦਾ ਸਾਇਜ਼ ਤਹਿ ਕਰਦਾ ਹੈ।"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr "ਹਰੇਕ ਸਟਰੋਕ ਲਈ ਰੈਂਡਮ ਸਾਇਜ਼ ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "ਸੈਂਟਰ ਤੋਂ ਦਿਸ਼ਾ ਨੂੰ ਸਟਰੋਕ ਦਾ ਸਾਇਜ ਤਹਿ ਕਰਨ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr "ਖੇਤਰ ਦੀ ਆਭਾ ਤਹਿ ਸਟਰੋਕ ਦਾ ਸਾਇਜ਼ ਤਹਿ ਕਰਦੀ ਹੈ"
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "ਬੁਰਸ਼-ਆਕਾਰ, ਜੋ ਕਿ ਅਸਲੀ ਚਿੱਤਰ ਨਾਲ ਮਿਲਦਾ ਹੈ, ਜੋ ਕਿ ਚੁਣੇ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ ਹੋਵੇ"
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr "ਸਟਰੋਕ ਸਾਇਜ਼ ਖੁਦ ਦਿਓ"
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr "ਇੱਕ ਸਾਇਜ਼ ਮੈਪ ਐਡੀਟਰ ਖੋਲ੍ਹਦਾ ਹੈ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr "ਸਾਇਜ਼ ਮੈਪ ਐਡੀਟਰ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/ligmaressionist/sizemap.c:411
 msgid "Smvectors"
 msgstr "ਸਮ-ਵੈਕਟਰ(smvector)"
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/ligmaressionist/sizemap.c:421
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10353,68 +10353,68 @@ msgstr ""
 "smvector-ਖੇਤਰ: ਚੁਣੇ smvector ਨੂੰ ਹਿਲਾਉਣ ਲਈ ਖੱਬਾ-ਕਲਿੱਕ, ਮਾਊਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰਨ ਲਈ ਸੱਜਾ-"
 "ਕਲਿੱਕ, ਨਵੇਂ smvector ਲਈ ਮਿਡਲ-ਕਲਿੱਕ ਕਰੋ।"
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/ligmaressionist/sizemap.c:463
 msgid "Select previous smvector"
 msgstr "ਪਿਛਲਾ smvector ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/ligmaressionist/sizemap.c:470
 msgid "Select next smvector"
 msgstr "ਅੱਗੇ smvector ਚੁਣੋ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/ligmaressionist/sizemap.c:477
 msgid "Add new smvector"
 msgstr "ਨਵਾਂ smvector ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/ligmaressionist/sizemap.c:484
 msgid "Delete selected smvector"
 msgstr "ਚੁਣਿਆ smvector ਹਟਾਓ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "Change the angle of the selected smvector"
 msgstr "ਚੁਣੇ smvector ਦਾ ਕੋਣ ਬਦਲੋ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/ligmaressionist/sizemap.c:504
 msgid "S_trength:"
 msgstr "ਤਾਕਤ(_t):"
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "Change the strength of the selected smvector"
 msgstr "ਚੁਣੇ smvector ਦੀ ਤਾਕਤ ਬਦਲੋ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 msgid "St_rength exp.:"
 msgstr "ਤਾਕਤ ਸਮੀਕਰਨ(_r):"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/ligmaressionist/sizemap.c:531
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr "ਵੋਰੋਨੋਈ-ਮੋਡ ਕਿਸੇ ਵੀ ਪਰਭਾਵ ਦੇ ਦਿੱਤੇ ਪੁਆਇੰਟ ਦੇ ਨੇੜੇ smvector ਬਣਾਉਦਾ ਹੈ।"
 
-#: ../plug-ins/help/gimphelpdomain.c:178
-msgid "The GIMP help files are not found."
+#: ../plug-ins/help/ligmahelpdomain.c:178
+msgid "The LIGMA help files are not found."
 msgstr "ਜੈਮਪ ਮੱਦਦ ਫਾਇਲਾਂ ਨਹੀਂ ਲੱਭੀਆਂ ਹਨ।"
 
-#: ../plug-ins/help/gimphelpdomain.c:179
+#: ../plug-ins/help/ligmahelpdomain.c:179
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
-msgstr "ਹੋਰ ਮੱਦਦ ਪੈਕੇਜ ਇੰਸਟਾਲ ਕਰੋ ਜੀ ਜਾਂ http://docs.gimp.org/ ਉੱਤੇ ਆਨਲਾਇਨ ਮੈਨੂਅਲ ਵੇਖੋ ਜੀ।"
+"http://docs.ligma.org/."
+msgstr "ਹੋਰ ਮੱਦਦ ਪੈਕੇਜ ਇੰਸਟਾਲ ਕਰੋ ਜੀ ਜਾਂ http://docs.ligma.org/ ਉੱਤੇ ਆਨਲਾਇਨ ਮੈਨੂਅਲ ਵੇਖੋ ਜੀ।"
 
-#: ../plug-ins/help/gimphelpdomain.c:185
-msgid "There is a problem with the GIMP help files."
+#: ../plug-ins/help/ligmahelpdomain.c:185
+msgid "There is a problem with the LIGMA help files."
 msgstr "ਜੈਮਪ ਮੱਦਦ ਫਾਇਲਾਂ ਨਾਲ ਇੱਕ ਸਮੱਸਿਆ ਆਈ ਹੈ।"
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid "Please check your installation."
 msgstr "ਆਪਣੀ ਇੰਸਟਾਲੇਸ਼ਨ ਚੈੱਕ ਕਰੋ ਜੀ।"
 
-#: ../plug-ins/help/gimphelpdomain.c:197
+#: ../plug-ins/help/ligmahelpdomain.c:197
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ਮੱਦਦ ID '%s' ਅਣਜਾਣ"
 
-#: ../plug-ins/help/gimphelplocale.c:215
+#: ../plug-ins/help/ligmahelplocale.c:215
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10424,7 +10424,7 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/helpbrowser/dialog.c:217
-msgid "GIMP Help Browser"
+msgid "LIGMA Help Browser"
 msgstr "ਜੈਮਪ ਮੱਦਦ ਬਰਾਊਜ਼ਰ"
 
 #: ../plug-ins/helpbrowser/dialog.c:312
@@ -10444,7 +10444,7 @@ msgid "Go to the index page"
 msgstr "ਇੰਡੈਕਸ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 
 #: ../plug-ins/helpbrowser/dialog.c:747
-msgid "Visit the GIMP documentation website"
+msgid "Visit the LIGMA documentation website"
 msgstr "ਜੈਮਪ ਡੌਕੂਮੈਂਟ ਵੈੱਬਸਾਇਟ ਵੇਖੋ"
 
 #: ../plug-ins/helpbrowser/dialog.c:823
@@ -10652,7 +10652,7 @@ msgid "Clear"
 msgstr "ਸਾਫ਼ ਕਰੋ"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "ਬਣਾਓ"
 
@@ -10677,41 +10677,41 @@ msgid "Edit Object"
 msgstr "ਆਬਜੈਕਟ ਸੋਧ"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
 msgstr "ਜੈਮਪ ਗਾਈਡਾਂ ਵਰਤੋਂ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr "ਬਦਲਵਾਂ(_t)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr "ਸਭ(_l)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr "ਹੋਰ ਗਾਈਡਾਂ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft border"
 msgstr "ਖੱਬਾ ਬਾਰਡਰ(_e)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right border"
 msgstr "ਸੱਜਾ ਬਾਰਡਰ(_R)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper border"
 msgstr "ਅੱਪਰ ਬਾਰਡਰ(_U)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer border"
 msgstr "ਹੇਠਾਂ ਬਾਰਡਰ(_w)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr "ਬੇਸ URL (_B):"
 
@@ -11146,7 +11146,7 @@ msgid "Grid Settings..."
 msgstr "ਗਰਿੱਡ ਸੈਟਿੰਗ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-msgid "Use GIMP Guides..."
+msgid "Use LIGMA Guides..."
 msgstr "ਜੈਮਪ ਗਾਈਡ ਵਰਤੋਂ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:196
@@ -11362,7 +11362,7 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "EXIF ਡਾਟੇ ਦੇ ਮੁਤਾਬਕ, ਇਹ ਚਿੱਤਰ ਘੁੰਮਾਇਆ ਗਿਆ।"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:362
-msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
 msgstr "ਕੀ ਤੁਸੀਂ ਚਾਹੁੰਦੇ ਹੋ ਕਿ ਜੈਮਪ ਇਸ ਨੂੰ ਸਟੈਂਡਰਡ ਸਥਿਤੀ ਮੁਤਾਬਕ ਘੁੰਮਾ ਦੇਵੇ?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:241
@@ -12102,7 +12102,7 @@ msgid "No data captured"
 msgstr "ਕੋਈ ਕੈਪਚਰ ਡਾਟਾ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr "ਜੈਮਪ ਕੰਪਰੈੱਸਡ XJT ਚਿੱਤਰ"
 
 #: ../plug-ins/xjt/xjt.c:724

@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Predator effect
@@ -31,9 +31,9 @@
                             keep-selection
                             separate-layer)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-get-width image)))
-        (image-height (car (gimp-image-get-height image)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-width (car (ligma-image-get-width image)))
+        (image-height (car (ligma-image-get-height image)))
         (active-selection 0)
         (from-selection 0)
         (selection-bounds 0)
@@ -45,24 +45,24 @@
         (active-layer 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
-    (gimp-image-undo-group-start image)
-    (gimp-layer-add-alpha drawable)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
+    (ligma-image-undo-group-start image)
+    (ligma-layer-add-alpha drawable)
 
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
+    (if (= (car (ligma-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-          (set! active-selection (car (gimp-selection-save image)))
+          (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (set! active-selection (car (ligma-selection-save image)))
           (set! from-selection FALSE)
         )
         (begin
           (set! from-selection TRUE)
-          (set! active-selection (car (gimp-selection-save image)))
+          (set! active-selection (car (ligma-selection-save image)))
         )
     )
 
-    (set! selection-bounds (gimp-selection-bounds image))
+    (set! selection-bounds (ligma-selection-bounds image))
     (set! select-offset-x (cadr selection-bounds))
     (set! select-offset-y (caddr selection-bounds))
     (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -70,7 +70,7 @@
 
     (if (= separate-layer TRUE)
         (begin
-          (set! effect-layer (car (gimp-layer-new image
+          (set! effect-layer (car (ligma-layer-new image
                                                   select-width
                                                   select-height
                                                   type
@@ -79,23 +79,23 @@
                                                   LAYER-MODE-NORMAL))
           )
 
-          (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
-          (gimp-image-insert-layer image effect-layer 0 -1)
-          (gimp-selection-none image)
-          (gimp-drawable-edit-clear effect-layer)
+          (ligma-layer-set-offsets effect-layer select-offset-x select-offset-y)
+          (ligma-image-insert-layer image effect-layer 0 -1)
+          (ligma-selection-none image)
+          (ligma-drawable-edit-clear effect-layer)
 
-          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-copy 1 (vector drawable))
+          (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+          (ligma-edit-copy 1 (vector drawable))
 
           (let* (
-                 (pasted (gimp-edit-paste effect-layer FALSE))
+                 (pasted (ligma-edit-paste effect-layer FALSE))
                  (num-pasted (car pasted))
                  (floating-sel (aref (cadr pasted) (- num-pasted 1)))
                  )
-            (gimp-floating-sel-anchor floating-sel)
+            (ligma-floating-sel-anchor floating-sel)
           )
 
-          (gimp-image-set-selected-layers image 1 (vector effect-layer))
+          (ligma-image-set-selected-layers image 1 (vector effect-layer))
         )
         (set! effect-layer drawable)
     )
@@ -109,24 +109,24 @@
     (plug-in-edge RUN-NONINTERACTIVE image active-layer edge-amount 1 0)
 
     ; clean up the selection copy
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
     (if (= keep-selection FALSE)
-        (gimp-selection-none image)
+        (ligma-selection-none image)
     )
 
-    (gimp-image-set-selected-layers image 1 (vector drawable))
-    (gimp-image-remove-channel image active-selection)
-    (gimp-image-undo-group-end image)
-    (gimp-displays-flush)
-    (gimp-context-pop)
+    (ligma-image-set-selected-layers image 1 (vector drawable))
+    (ligma-image-remove-channel image active-selection)
+    (ligma-image-undo-group-end image)
+    (ligma-displays-flush)
+    (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-predator"
   _"_Predator..."
   _"Add a 'Predator' effect to the selected region (or alpha)"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "10/12/97"
   "RGB*"

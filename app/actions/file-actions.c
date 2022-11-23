@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,186 +20,186 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmaviewable.h"
 
-#include "file/gimp-file.h"
+#include "file/ligma-file.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpactionimpl.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaactionimpl.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
+#include "display/ligmadisplay.h"
 
 #include "actions.h"
 #include "file-actions.h"
 #include "file-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void    file_actions_last_opened_update  (GimpContainer   *container,
-                                                 GimpImagefile   *unused,
-                                                 GimpActionGroup *group);
-static void    file_actions_last_opened_reorder (GimpContainer   *container,
-                                                 GimpImagefile   *unused1,
+static void    file_actions_last_opened_update  (LigmaContainer   *container,
+                                                 LigmaImagefile   *unused,
+                                                 LigmaActionGroup *group);
+static void    file_actions_last_opened_reorder (LigmaContainer   *container,
+                                                 LigmaImagefile   *unused1,
                                                  gint             unused2,
-                                                 GimpActionGroup *group);
-static void    file_actions_close_all_update    (GimpContainer   *images,
-                                                 GimpObject      *unused,
-                                                 GimpActionGroup *group);
+                                                 LigmaActionGroup *group);
+static void    file_actions_close_all_update    (LigmaContainer   *images,
+                                                 LigmaObject      *unused,
+                                                 LigmaActionGroup *group);
 static gchar * file_actions_create_label        (const gchar     *format,
                                                  GFile           *file);
 
 
-static const GimpActionEntry file_actions[] =
+static const LigmaActionEntry file_actions[] =
 {
   { "file-menu",             NULL, NC_("file-action", "_File")        },
   { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
-  { "file-open", GIMP_ICON_IMAGE_OPEN,
+  { "file-open", LIGMA_ICON_IMAGE_OPEN,
     NC_("file-action", "_Open..."), "<primary>O",
     NC_("file-action", "Open an image file"),
     file_open_cmd_callback,
-    GIMP_HELP_FILE_OPEN },
+    LIGMA_HELP_FILE_OPEN },
 
-  { "file-open-as-layers", GIMP_ICON_LAYER,
+  { "file-open-as-layers", LIGMA_ICON_LAYER,
     NC_("file-action", "Op_en as Layers..."), "<primary><alt>O",
     NC_("file-action", "Open an image file as layers"),
     file_open_as_layers_cmd_callback,
-    GIMP_HELP_FILE_OPEN_AS_LAYER },
+    LIGMA_HELP_FILE_OPEN_AS_LAYER },
 
-  { "file-open-location", GIMP_ICON_WEB,
+  { "file-open-location", LIGMA_ICON_WEB,
     NC_("file-action", "Open _Location..."), NULL,
     NC_("file-action", "Open an image file from a specified location"),
     file_open_location_cmd_callback,
-    GIMP_HELP_FILE_OPEN_LOCATION },
+    LIGMA_HELP_FILE_OPEN_LOCATION },
 
   { "file-create-template", NULL,
     NC_("file-action", "Create _Template..."), NULL,
     NC_("file-action", "Create a new template from this image"),
     file_create_template_cmd_callback,
-    GIMP_HELP_FILE_CREATE_TEMPLATE },
+    LIGMA_HELP_FILE_CREATE_TEMPLATE },
 
-  { "file-revert", GIMP_ICON_IMAGE_RELOAD,
+  { "file-revert", LIGMA_ICON_IMAGE_RELOAD,
     NC_("file-action", "Re_vert"), NULL,
     NC_("file-action", "Reload the image file from disk"),
     file_revert_cmd_callback,
-    GIMP_HELP_FILE_REVERT },
+    LIGMA_HELP_FILE_REVERT },
 
-  { "file-close-all", GIMP_ICON_CLOSE_ALL,
+  { "file-close-all", LIGMA_ICON_CLOSE_ALL,
     NC_("file-action", "C_lose All"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     file_close_all_cmd_callback,
-    GIMP_HELP_FILE_CLOSE_ALL },
+    LIGMA_HELP_FILE_CLOSE_ALL },
 
-  { "file-copy-location", GIMP_ICON_EDIT_COPY,
+  { "file-copy-location", LIGMA_ICON_EDIT_COPY,
     NC_("file-action", "Copy _Image Location"), NULL,
     NC_("file-action", "Copy image file location to clipboard"),
     file_copy_location_cmd_callback,
-    GIMP_HELP_FILE_COPY_LOCATION },
+    LIGMA_HELP_FILE_COPY_LOCATION },
 
-  { "file-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
+  { "file-show-in-file-manager", LIGMA_ICON_FILE_MANAGER,
     NC_("file-action", "Show in _File Manager"), "<primary><alt>F",
     NC_("file-action", "Show image file location in the file manager"),
     file_show_in_file_manager_cmd_callback,
-    GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
+    LIGMA_HELP_FILE_SHOW_IN_FILE_MANAGER },
 
-  { "file-quit", GIMP_ICON_APPLICATION_EXIT,
+  { "file-quit", LIGMA_ICON_APPLICATION_EXIT,
     NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     file_quit_cmd_callback,
-    GIMP_HELP_FILE_QUIT }
+    LIGMA_HELP_FILE_QUIT }
 };
 
-static const GimpEnumActionEntry file_save_actions[] =
+static const LigmaEnumActionEntry file_save_actions[] =
 {
-  { "file-save", GIMP_ICON_DOCUMENT_SAVE,
+  { "file-save", LIGMA_ICON_DOCUMENT_SAVE,
     NC_("file-action", "_Save"), "<primary>S",
     NC_("file-action", "Save this image"),
-    GIMP_SAVE_MODE_SAVE, FALSE,
-    GIMP_HELP_FILE_SAVE },
+    LIGMA_SAVE_MODE_SAVE, FALSE,
+    LIGMA_HELP_FILE_SAVE },
 
-  { "file-save-as", GIMP_ICON_DOCUMENT_SAVE_AS,
+  { "file-save-as", LIGMA_ICON_DOCUMENT_SAVE_AS,
     NC_("file-action", "Save _As..."), "<primary><shift>S",
     NC_("file-action", "Save this image with a different name"),
-    GIMP_SAVE_MODE_SAVE_AS, FALSE,
-    GIMP_HELP_FILE_SAVE_AS },
+    LIGMA_SAVE_MODE_SAVE_AS, FALSE,
+    LIGMA_HELP_FILE_SAVE_AS },
 
   { "file-save-a-copy", NULL,
     NC_("file-action", "Save a Cop_y..."), NULL,
     NC_("file-action",
         "Save a copy of this image, without affecting the source file "
         "(if any) or the current state of the image"),
-    GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
-    GIMP_HELP_FILE_SAVE_A_COPY },
+    LIGMA_SAVE_MODE_SAVE_A_COPY, FALSE,
+    LIGMA_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-and-close", NULL,
     NC_("file-action", "Save and Close..."), NULL,
     NC_("file-action", "Save this image and close its window"),
-    GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
-    GIMP_HELP_FILE_SAVE },
+    LIGMA_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
+    LIGMA_HELP_FILE_SAVE },
 
   { "file-export", NULL,
     NC_("file-action", "E_xport..."), "<primary>E",
     NC_("file-action", "Export the image"),
-    GIMP_SAVE_MODE_EXPORT, FALSE,
-    GIMP_HELP_FILE_EXPORT },
+    LIGMA_SAVE_MODE_EXPORT, FALSE,
+    LIGMA_HELP_FILE_EXPORT },
 
   { "file-overwrite", NULL,
     NC_("file-action", "Over_write"), "",
     NC_("file-action", "Export the image back to the imported file in the import format"),
-    GIMP_SAVE_MODE_OVERWRITE, FALSE,
-    GIMP_HELP_FILE_OVERWRITE },
+    LIGMA_SAVE_MODE_OVERWRITE, FALSE,
+    LIGMA_HELP_FILE_OVERWRITE },
 
   { "file-export-as", NULL,
     NC_("file-action", "E_xport As..."), "<primary><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
-    GIMP_SAVE_MODE_EXPORT_AS, FALSE,
-    GIMP_HELP_FILE_EXPORT_AS }
+    LIGMA_SAVE_MODE_EXPORT_AS, FALSE,
+    LIGMA_HELP_FILE_EXPORT_AS }
 };
 
 void
-file_actions_setup (GimpActionGroup *group)
+file_actions_setup (LigmaActionGroup *group)
 {
-  GimpEnumActionEntry *entries;
+  LigmaEnumActionEntry *entries;
   gint                 n_entries;
   gint                 i;
 
-  gimp_action_group_add_actions (group, "file-action",
+  ligma_action_group_add_actions (group, "file-action",
                                  file_actions,
                                  G_N_ELEMENTS (file_actions));
 
-  gimp_action_group_add_enum_actions (group, "file-action",
+  ligma_action_group_add_enum_actions (group, "file-action",
                                       file_save_actions,
                                       G_N_ELEMENTS (file_save_actions),
                                       file_save_cmd_callback);
 
-  n_entries = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
+  n_entries = LIGMA_GUI_CONFIG (group->ligma->config)->last_opened_size;
 
-  entries = g_new0 (GimpEnumActionEntry, n_entries);
+  entries = g_new0 (LigmaEnumActionEntry, n_entries);
 
   for (i = 0; i < n_entries; i++)
     {
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
-      entries[i].icon_name      = GIMP_ICON_DOCUMENT_OPEN,
+      entries[i].icon_name      = LIGMA_ICON_DOCUMENT_OPEN,
       entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
@@ -213,14 +213,14 @@ file_actions_setup (GimpActionGroup *group)
         entries[i].accelerator = NULL;
     }
 
-  gimp_action_group_add_enum_actions (group, NULL, entries, n_entries,
+  ligma_action_group_add_enum_actions (group, NULL, entries, n_entries,
                                       file_open_recent_cmd_callback);
 
   for (i = 0; i < n_entries; i++)
     {
-      gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
-      gimp_action_group_set_action_context (group, entries[i].name,
-                                            gimp_get_user_context (group->gimp));
+      ligma_action_group_set_action_visible (group, entries[i].name, FALSE);
+      ligma_action_group_set_action_context (group, entries[i].name,
+                                            ligma_get_user_context (group->ligma));
 
       g_free ((gchar *) entries[i].name);
       if (entries[i].accelerator)
@@ -229,37 +229,37 @@ file_actions_setup (GimpActionGroup *group)
 
   g_free (entries);
 
-  g_signal_connect_object (group->gimp->documents, "add",
+  g_signal_connect_object (group->ligma->documents, "add",
                            G_CALLBACK (file_actions_last_opened_update),
                            group, 0);
-  g_signal_connect_object (group->gimp->documents, "remove",
+  g_signal_connect_object (group->ligma->documents, "remove",
                            G_CALLBACK (file_actions_last_opened_update),
                            group, 0);
-  g_signal_connect_object (group->gimp->documents, "reorder",
+  g_signal_connect_object (group->ligma->documents, "reorder",
                            G_CALLBACK (file_actions_last_opened_reorder),
                            group, 0);
 
-  file_actions_last_opened_update (group->gimp->documents, NULL, group);
+  file_actions_last_opened_update (group->ligma->documents, NULL, group);
 
   /*  also listen to image adding/removal so we catch the case where
    *  the last image is closed but its display stays open.
    */
-  g_signal_connect_object (group->gimp->images, "add",
+  g_signal_connect_object (group->ligma->images, "add",
                            G_CALLBACK (file_actions_close_all_update),
                            group, 0);
-  g_signal_connect_object (group->gimp->images, "remove",
+  g_signal_connect_object (group->ligma->images, "remove",
                            G_CALLBACK (file_actions_close_all_update),
                            group, 0);
 
-  file_actions_close_all_update (group->gimp->displays, NULL, group);
+  file_actions_close_all_update (group->ligma->displays, NULL, group);
 }
 
 void
-file_actions_update (GimpActionGroup *group,
+file_actions_update (LigmaActionGroup *group,
                      gpointer         data)
 {
-  Gimp         *gimp           = action_data_get_gimp (data);
-  GimpImage    *image          = action_data_get_image (data);
+  Ligma         *ligma           = action_data_get_ligma (data);
+  LigmaImage    *image          = action_data_get_image (data);
   GList        *drawables      = NULL;
   GFile        *file           = NULL;
   GFile        *source         = NULL;
@@ -268,23 +268,23 @@ file_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      drawables = gimp_image_get_selected_drawables (image);
+      drawables = ligma_image_get_selected_drawables (image);
 
-      file   = gimp_image_get_file (image);
-      source = gimp_image_get_imported_file (image);
-      export = gimp_image_get_exported_file (image);
+      file   = ligma_image_get_file (image);
+      source = ligma_image_get_imported_file (image);
+      export = ligma_image_get_exported_file (image);
     }
 
   show_overwrite =
     (source &&
-     gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                               GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+     ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                               LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                source, NULL));
 
 #define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+        ligma_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("file-save",                 drawables);
   SET_SENSITIVE ("file-save-as",              drawables);
@@ -302,13 +302,13 @@ file_actions_update (GimpActionGroup *group,
 
   if (file)
     {
-      gimp_action_group_set_action_label (group,
+      ligma_action_group_set_action_label (group,
                                           "file-save",
                                           C_("file-action", "_Save"));
     }
   else
     {
-      gimp_action_group_set_action_label (group,
+      ligma_action_group_set_action_label (group,
                                           "file-save",
                                           C_("file-action", "_Save..."));
     }
@@ -316,18 +316,18 @@ file_actions_update (GimpActionGroup *group,
   if (export)
     {
       gchar *label = file_actions_create_label (_("Export to %s"), export);
-      gimp_action_group_set_action_label (group, "file-export", label);
+      ligma_action_group_set_action_label (group, "file-export", label);
       g_free (label);
     }
   else if (show_overwrite)
     {
       gchar *label = file_actions_create_label (_("Over_write %s"), source);
-      gimp_action_group_set_action_label (group, "file-overwrite", label);
+      ligma_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
     }
   else
     {
-      gimp_action_group_set_action_label (group,
+      ligma_action_group_set_action_label (group,
                                           "file-export",
                                           C_("file-action", "E_xport..."));
     }
@@ -344,41 +344,41 @@ file_actions_update (GimpActionGroup *group,
 /*  private functions  */
 
 static void
-file_actions_last_opened_update (GimpContainer   *container,
-                                 GimpImagefile   *unused,
-                                 GimpActionGroup *group)
+file_actions_last_opened_update (LigmaContainer   *container,
+                                 LigmaImagefile   *unused,
+                                 LigmaActionGroup *group)
 {
   gint num_documents;
   gint i;
-  gint n = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
+  gint n = LIGMA_GUI_CONFIG (group->ligma->config)->last_opened_size;
 
-  num_documents = gimp_container_get_n_children (container);
+  num_documents = ligma_container_get_n_children (container);
 
   for (i = 0; i < n; i++)
     {
-      GimpAction *action;
+      LigmaAction *action;
       gchar      *name = g_strdup_printf ("file-open-recent-%02d", i + 1);
 
-      action = gimp_action_group_get_action (group, name);
+      action = ligma_action_group_get_action (group, name);
 
       if (i < num_documents)
         {
-          GimpImagefile *imagefile = (GimpImagefile *)
-            gimp_container_get_child_by_index (container, i);
+          LigmaImagefile *imagefile = (LigmaImagefile *)
+            ligma_container_get_child_by_index (container, i);
 
-          if (GIMP_ACTION_IMPL (action)->viewable != (GimpViewable *) imagefile)
+          if (LIGMA_ACTION_IMPL (action)->viewable != (LigmaViewable *) imagefile)
             {
               GFile       *file;
               const gchar *name;
               gchar       *basename;
               gchar       *escaped;
 
-              file = gimp_imagefile_get_file (imagefile);
+              file = ligma_imagefile_get_file (imagefile);
 
-              name     = gimp_file_get_utf8_name (file);
+              name     = ligma_file_get_utf8_name (file);
               basename = g_path_get_basename (name);
 
-              escaped = gimp_escape_uline (basename);
+              escaped = ligma_escape_uline (basename);
 
               g_free (basename);
 
@@ -407,42 +407,42 @@ file_actions_last_opened_update (GimpContainer   *container,
 }
 
 static void
-file_actions_last_opened_reorder (GimpContainer   *container,
-                                  GimpImagefile   *unused1,
+file_actions_last_opened_reorder (LigmaContainer   *container,
+                                  LigmaImagefile   *unused1,
                                   gint             unused2,
-                                  GimpActionGroup *group)
+                                  LigmaActionGroup *group)
 {
   file_actions_last_opened_update (container, unused1, group);
 }
 
 static void
-file_actions_close_all_update (GimpContainer   *images,
-                               GimpObject      *unused,
-                               GimpActionGroup *group)
+file_actions_close_all_update (LigmaContainer   *images,
+                               LigmaObject      *unused,
+                               LigmaActionGroup *group)
 {
-  GimpContainer *container  = group->gimp->displays;
-  gint           n_displays = gimp_container_get_n_children (container);
+  LigmaContainer *container  = group->ligma->displays;
+  gint           n_displays = ligma_container_get_n_children (container);
   gboolean       sensitive  = (n_displays > 0);
 
   if (n_displays == 1)
     {
-      GimpDisplay *display;
+      LigmaDisplay *display;
 
-      display = GIMP_DISPLAY (gimp_container_get_first_child (container));
+      display = LIGMA_DISPLAY (ligma_container_get_first_child (container));
 
-      if (! gimp_display_get_image (display))
+      if (! ligma_display_get_image (display))
         sensitive = FALSE;
     }
 
-  gimp_action_group_set_action_sensitive (group, "file-close-all", sensitive, NULL);
+  ligma_action_group_set_action_sensitive (group, "file-close-all", sensitive, NULL);
 }
 
 static gchar *
 file_actions_create_label (const gchar *format,
                            GFile       *file)
 {
-  gchar *basename         = g_path_get_basename (gimp_file_get_utf8_name (file));
-  gchar *escaped_basename = gimp_escape_uline (basename);
+  gchar *basename         = g_path_get_basename (ligma_file_get_utf8_name (file));
+  gchar *escaped_basename = ligma_escape_uline (basename);
   gchar *label            = g_strdup_printf (format, escaped_basename);
 
   g_free (escaped_basename);

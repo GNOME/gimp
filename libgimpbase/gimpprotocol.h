@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,8 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROTOCOL_H__
-#define __GIMP_PROTOCOL_H__
+#ifndef __LIGMA_PROTOCOL_H__
+#define __LIGMA_PROTOCOL_H__
 
 G_BEGIN_DECLS
 
@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x010F
+#define LIGMA_PROTOCOL_VERSION  0x010F
 
 
 enum
@@ -127,8 +127,8 @@ struct _GPConfig
   gint32   num_processors;
 
   /* since protocol version 0x010F: */
-  GimpRGB  check_custom_color1;
-  GimpRGB  check_custom_color2;
+  LigmaRGB  check_custom_color1;
+  LigmaRGB  check_custom_color2;
 };
 
 struct _GPTileReq
@@ -189,7 +189,7 @@ struct _GPParamDefString
 struct _GPParamDefColor
 {
   gint32  has_alpha;
-  GimpRGB default_val;
+  LigmaRGB default_val;
 };
 
 struct _GPParamDefID
@@ -250,8 +250,8 @@ struct _GPParam
     gdouble             d_float;
     gchar              *d_string;
     gchar             **d_strv;
-    GimpRGB             d_color;
-    GimpParasite        d_parasite;
+    LigmaRGB             d_color;
+    LigmaParasite        d_parasite;
     GPParamArray        d_array;
     GPParamIDArray      d_id_array;
     GPParamDef          d_param_def;
@@ -329,4 +329,4 @@ gboolean  gp_has_init_write         (GIOChannel      *channel,
 
 G_END_DECLS
 
-#endif /* __GIMP_PROTOCOL_H__ */
+#endif /* __LIGMA_PROTOCOL_H__ */

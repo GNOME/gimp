@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpinterpreterdb.h
- * (C) 2005 Manish Singh <yosh@gimp.org>
+ * ligmainterpreterdb.h
+ * (C) 2005 Manish Singh <yosh@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_INTERPRETER_DB_H__
-#define __GIMP_INTERPRETER_DB_H__
+#ifndef __LIGMA_INTERPRETER_DB_H__
+#define __LIGMA_INTERPRETER_DB_H__
 
 
-#define GIMP_TYPE_INTERPRETER_DB            (gimp_interpreter_db_get_type ())
-#define GIMP_INTERPRETER_DB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INTERPRETER_DB, GimpInterpreterDB))
-#define GIMP_INTERPRETER_DB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INTERPRETER_DB, GimpInterpreterDBClass))
-#define GIMP_IS_INTERPRETER_DB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INTERPRETER_DB))
-#define GIMP_IS_INTERPRETER_DB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INTERPRETER_DB))
-#define GIMP_INTERPRETER_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INTERPRETER_DB, GimpInterpreterDBClass))
+#define LIGMA_TYPE_INTERPRETER_DB            (ligma_interpreter_db_get_type ())
+#define LIGMA_INTERPRETER_DB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_INTERPRETER_DB, LigmaInterpreterDB))
+#define LIGMA_INTERPRETER_DB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_INTERPRETER_DB, LigmaInterpreterDBClass))
+#define LIGMA_IS_INTERPRETER_DB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_INTERPRETER_DB))
+#define LIGMA_IS_INTERPRETER_DB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_INTERPRETER_DB))
+#define LIGMA_INTERPRETER_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_INTERPRETER_DB, LigmaInterpreterDBClass))
 
 
-typedef struct _GimpInterpreterDBClass GimpInterpreterDBClass;
+typedef struct _LigmaInterpreterDBClass LigmaInterpreterDBClass;
 
-struct _GimpInterpreterDB
+struct _LigmaInterpreterDB
 {
   GObject     parent_instance;
 
@@ -47,24 +47,24 @@ struct _GimpInterpreterDB
   GHashTable *extension_names;
 };
 
-struct _GimpInterpreterDBClass
+struct _LigmaInterpreterDBClass
 {
   GObjectClass  parent_class;
 };
 
 
-GType               gimp_interpreter_db_get_type (void) G_GNUC_CONST;
-GimpInterpreterDB * gimp_interpreter_db_new      (gboolean            verbose);
+GType               ligma_interpreter_db_get_type (void) G_GNUC_CONST;
+LigmaInterpreterDB * ligma_interpreter_db_new      (gboolean            verbose);
 
-void                gimp_interpreter_db_load     (GimpInterpreterDB  *db,
+void                ligma_interpreter_db_load     (LigmaInterpreterDB  *db,
                                                   GList              *path);
 
-void                gimp_interpreter_db_clear    (GimpInterpreterDB  *db);
+void                ligma_interpreter_db_clear    (LigmaInterpreterDB  *db);
 
-gchar             * gimp_interpreter_db_resolve  (GimpInterpreterDB  *db,
+gchar             * ligma_interpreter_db_resolve  (LigmaInterpreterDB  *db,
                                                   const gchar        *program_path,
                                                   gchar             **interp_arg);
-gchar       * gimp_interpreter_db_get_extensions (GimpInterpreterDB  *db);
+gchar       * ligma_interpreter_db_get_extensions (LigmaInterpreterDB  *db);
 
 
-#endif /* __GIMP_INTERPRETER_DB_H__ */
+#endif /* __LIGMA_INTERPRETER_DB_H__ */

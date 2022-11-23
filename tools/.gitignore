@@ -3,10 +3,10 @@
 /.deps
 /.libs
 /kernelgen
-/gimptool-2.99
-/gimptool-2.99.exe
-/gimp-test-clipboard-2.99
-/gimp-test-clipboard-2.99.exe
-/gimp-debug-resume.exe
+/ligmatool-2.99
+/ligmatool-2.99.exe
+/ligma-test-clipboard-2.99
+/ligma-test-clipboard-2.99.exe
+/ligma-debug-resume.exe
 /compute-svg-viewbox
 /compute-svg-viewbox.exe

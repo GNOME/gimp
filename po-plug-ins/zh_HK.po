@@ -1,4 +1,4 @@
-# Chinese (Hong Kong) translation for gimp-std-plugins.
+# Chinese (Hong Kong) translation for ligma-std-plugins.
 # Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-std-plug-ins 2.1.6\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-01-01 19:43+0800\n"
 "PO-Revision-Date: 2011-01-01 19:43+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
@@ -51,13 +51,13 @@ msgstr "關聯"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:297
-#: ../plug-ins/file-fli/fli-gimp.c:873 ../plug-ins/file-fli/fli-gimp.c:929
+#: ../plug-ins/file-fli/fli-ligma.c:873 ../plug-ins/file-fli/fli-ligma.c:929
 msgid "From:"
 msgstr "從："
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:323
-#: ../plug-ins/file-fli/fli-gimp.c:882 ../plug-ins/file-fli/fli-gimp.c:938
+#: ../plug-ins/file-fli/fli-ligma.c:882 ../plug-ins/file-fli/fli-ligma.c:938
 msgid "To:"
 msgstr "到："
 
@@ -436,8 +436,8 @@ msgid "Optimizing animation"
 msgstr "最佳化動畫"
 
 #: ../plug-ins/common/animation-play.c:167
-msgid "Preview a GIMP layer-based animation"
-msgstr "預覽 GIMP 以圖層為基礎的動畫 "
+msgid "Preview a LIGMA layer-based animation"
+msgstr "預覽 LIGMA 以圖層為基礎的動畫 "
 
 #: ../plug-ins/common/animation-play.c:172
 msgid "_Playback..."
@@ -635,7 +635,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1576 ../plug-ins/file-sgi/sgi.c:406
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/ligmaressionist/general.c:139 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1155
 msgid "Background"
 msgstr "背景"
@@ -1045,8 +1045,8 @@ msgstr "載入色版混合器設定"
 #: ../plug-ins/common/file-xmc.c:666 ../plug-ins/common/file-xmc.c:853
 #: ../plug-ins/common/file-xwd.c:432 ../plug-ins/common/sphere-designer.c:2003
 #: ../plug-ins/file-bmp/bmp-read.c:155 ../plug-ins/file-faxg3/faxg3.c:232
-#: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:458
-#: ../plug-ins/file-fli/fli-gimp.c:495 ../plug-ins/file-ico/ico-load.c:652
+#: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-ligma.c:458
+#: ../plug-ins/file-fli/fli-ligma.c:495 ../plug-ins/file-ico/ico-load.c:652
 #: ../plug-ins/file-ico/ico-load.c:731 ../plug-ins/file-jpeg/jpeg-load.c:108
 #: ../plug-ins/file-jpeg/jpeg-load.c:830 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
@@ -1055,8 +1055,8 @@ msgstr "載入色版混合器設定"
 #: ../plug-ins/flame/flame.c:409
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:928
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1357
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1085,7 +1085,7 @@ msgstr "儲存色版混合器設定"
 #: ../plug-ins/common/file-xmc.c:1460 ../plug-ins/common/file-xwd.c:617
 #: ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:295 ../plug-ins/file-fits/fits.c:475
-#: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-ligma.c:748 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1637
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:162
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
@@ -1121,7 +1121,7 @@ msgid "Checkerboard"
 msgstr "棋盤"
 
 #: ../plug-ins/common/checkerboard.c:412 ../plug-ins/common/file-xmc.c:1167
-#: ../plug-ins/gimpressionist/sizemap.c:511
+#: ../plug-ins/ligmaressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "尺寸(_S)："
 
@@ -1326,8 +1326,8 @@ msgstr "從種子隨機產生(共享)"
 
 #: ../plug-ins/common/cml-explorer.c:299 ../plug-ins/common/cml-explorer.c:307
 #: ../plug-ins/common/decompose.c:187
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "色相"
 
@@ -1338,8 +1338,8 @@ msgstr "飽和度"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:189
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "亮度"
 
@@ -2278,8 +2278,8 @@ msgstr "根據曲線扭曲"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1261
-#: ../plug-ins/gimpressionist/orientmap.c:591
-#: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/ligmaressionist/orientmap.c:591
+#: ../plug-ins/ligmaressionist/sizemap.c:461
 #: ../plug-ins/print/print-page-layout.c:171
 msgid "Preview"
 msgstr "預覽"
@@ -2886,7 +2886,7 @@ msgstr "半徑 _1："
 msgid "R_adius 2:"
 msgstr "半徑 _2："
 
-#: ../plug-ins/common/edge-dog.c:372 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:372 ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "反轉(_I)"
 
@@ -3095,7 +3095,7 @@ msgstr "載入 KISS 調色盤"
 #: ../plug-ins/common/file-xbm.c:741 ../plug-ins/common/file-xmc.c:678
 #: ../plug-ins/common/file-xpm.c:351 ../plug-ins/common/file-xwd.c:523
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
-#: ../plug-ins/file-fli/fli-gimp.c:500 ../plug-ins/file-ico/ico-load.c:645
+#: ../plug-ins/file-fli/fli-ligma.c:500 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3329
 #, fuzzy, c-format
@@ -3123,7 +3123,7 @@ msgstr "不支援的顏色位元數(%d)！"
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xmc.c:1465
 #: ../plug-ins/common/file-xpm.c:636 ../plug-ins/common/file-xwd.c:622
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:480
-#: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-ligma.c:716 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1642
 #: ../plug-ins/file-sgi/sgi.c:575 ../plug-ins/file-xjt/xjt.c:1692
 #, fuzzy, c-format
@@ -3235,8 +3235,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "無法處理不明的圖片。"
 
 #: ../plug-ins/common/file-gbr.c:153 ../plug-ins/common/file-gbr.c:174
-msgid "GIMP brush"
-msgstr "GIMP 筆刷"
+msgid "LIGMA brush"
+msgstr "LIGMA 筆刷"
 
 #: ../plug-ins/common/file-gbr.c:398 ../plug-ins/common/file-pat.c:417
 #, c-format
@@ -3249,8 +3249,8 @@ msgstr "不支援的筆刷格式"
 
 #: ../plug-ins/common/file-gbr.c:446
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "GIMP 筆刷檔案‘%s’中含有錯誤"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "LIGMA 筆刷檔案‘%s’中含有錯誤"
 
 #: ../plug-ins/common/file-gbr.c:454
 #, c-format
@@ -3264,8 +3264,8 @@ msgid "Unnamed"
 msgstr "未命名"
 
 #: ../plug-ins/common/file-gbr.c:652
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP 筆刷檔必須為灰階或 RGBA 圖片"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "LIGMA 筆刷檔必須為灰階或 RGBA 圖片"
 
 #: ../plug-ins/common/file-gbr.c:769
 msgid "Brush"
@@ -3277,7 +3277,7 @@ msgid "Spacing:"
 msgstr "間隔："
 
 #: ../plug-ins/common/file-gbr.c:794 ../plug-ins/common/file-gih.c:892
-#: ../plug-ins/common/file-pat.c:566 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:566 ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "描述："
 
@@ -3409,17 +3409,17 @@ msgstr "預設的備註文字長度上限為 %d 字符。"
 
 #: ../plug-ins/common/file-gih.c:208 ../plug-ins/common/file-gih.c:229
 #, fuzzy
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr "顯示筆刷輪廓(_B)"
 
 #: ../plug-ins/common/file-gih.c:484
 #, fuzzy
-msgid "Error in GIMP brush pipe file."
-msgstr "分析筆刷檔 ‘%s’ 時出現嚴重錯誤：它不是 GIMP 筆刷檔案"
+msgid "Error in LIGMA brush pipe file."
+msgstr "分析筆刷檔 ‘%s’ 時出現嚴重錯誤：它不是 LIGMA 筆刷檔案"
 
 #: ../plug-ins/common/file-gih.c:550
-msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP 筆刷檔似乎壞了。"
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "LIGMA 筆刷檔似乎壞了。"
 
 #: ../plug-ins/common/file-gih.c:700
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3787,8 +3787,8 @@ msgid "MNG animation"
 msgstr "MNG 動畫"
 
 #: ../plug-ins/common/file-pat.c:122 ../plug-ins/common/file-pat.c:144
-msgid "GIMP pattern"
-msgstr "GIMP 圖樣"
+msgid "LIGMA pattern"
+msgstr "LIGMA 圖樣"
 
 #: ../plug-ins/common/file-pat.c:377
 #, c-format
@@ -3988,8 +3988,8 @@ msgid "Invalid X resolution."
 msgstr "字型解像度"
 
 #: ../plug-ins/common/file-pnm.c:554
-msgid "Image width is larger than GIMP can handle."
-msgstr "圖片闊度大於 GIMP 可以處理的範圍。"
+msgid "Image width is larger than LIGMA can handle."
+msgstr "圖片闊度大於 LIGMA 可以處理的範圍。"
 
 #: ../plug-ins/common/file-pnm.c:561
 #, fuzzy
@@ -3997,8 +3997,8 @@ msgid "Invalid Y resolution."
 msgstr "字型解像度"
 
 #: ../plug-ins/common/file-pnm.c:563
-msgid "Image height is larger than GIMP can handle."
-msgstr "圖片高度大於 GIMP 可以處理的範圍。"
+msgid "Image height is larger than LIGMA can handle."
+msgstr "圖片高度大於 LIGMA 可以處理的範圍。"
 
 #: ../plug-ins/common/file-pnm.c:575
 #, fuzzy
@@ -4056,7 +4056,7 @@ msgstr "PostScript 儲存程序無法處理有透明色版的圖片"
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
@@ -4126,8 +4126,8 @@ msgid "B/W"
 msgstr "黑白"
 
 #: ../plug-ins/common/file-ps.c:3229 ../plug-ins/common/file-xpm.c:478
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "色彩"
@@ -4369,7 +4369,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:472 ../plug-ins/common/file-xbm.c:840
@@ -4387,7 +4387,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:518
@@ -4496,7 +4496,7 @@ msgstr "匯入路徑(_P)"
 
 #: ../plug-ins/common/file-svg.c:960
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 
 #: ../plug-ins/common/file-svg.c:973
@@ -4574,12 +4574,12 @@ msgstr "TIFF 色版"
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "警告：\n"
-"準備載入的圖片的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行轉換，而在這個過程中將會失去一部份資訊。"
+"準備載入的圖片的色版是 16 位元色版。LIGMA 只支援 8 位元色版，因此它會自動進行轉換，而在這個過程中將會失去一部份資訊。"
 
 #: ../plug-ins/common/file-tiff-save.c:887
 msgid ""
@@ -7347,7 +7347,7 @@ msgid "Use the background color"
 msgstr "使用背景顏色"
 
 #: ../plug-ins/common/sphere-designer.c:292
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "純色"
 
@@ -7444,7 +7444,7 @@ msgstr "顏色選擇對話方塊"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2752
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:551
 msgid "Scale:"
 msgstr "比例："
@@ -7742,7 +7742,7 @@ msgstr "已儲存"
 
 #: ../plug-ins/common/unit-editor.c:93
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 
@@ -7752,8 +7752,8 @@ msgstr "識別字"
 
 #: ../plug-ins/common/unit-editor.c:95
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr "此字串是用來識別各個 GIMP 設定檔中的單位。"
+"This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "此字串是用來識別各個 LIGMA 設定檔中的單位。"
 
 #: ../plug-ins/common/unit-editor.c:97
 msgid "Factor"
@@ -7818,8 +7818,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "使用目前選取的單位為範本，建立一個新的單位"
 
 #: ../plug-ins/common/unit-editor.c:144
-msgid "Create or alter units used in GIMP"
-msgstr "建立或改變使用在 GIMP 中的長度單位"
+msgid "Create or alter units used in LIGMA"
+msgstr "建立或改變使用在 LIGMA 中的長度單位"
 
 #: ../plug-ins/common/unit-editor.c:149
 msgid "U_nits"
@@ -8459,7 +8459,7 @@ msgstr "兩者(_H)"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1027 ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "強度(_S)："
 
@@ -8594,25 +8594,25 @@ msgstr "根據統一碼區段(_U)"
 msgid "Image Composing"
 msgstr "正在編輯郵件"
 
-#: ../plug-ins/file-fli/fli-gimp.c:165 ../plug-ins/file-fli/fli-gimp.c:185
+#: ../plug-ins/file-fli/fli-ligma.c:165 ../plug-ins/file-fli/fli-ligma.c:185
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC 動畫"
 
-#: ../plug-ins/file-fli/fli-gimp.c:560
+#: ../plug-ins/file-fli/fli-ligma.c:560
 #, c-format
 msgid "Frame (%i)"
 msgstr "畫格 (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:712
+#: ../plug-ins/file-fli/fli-ligma.c:712
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "抱歉，只可以儲存索引色或灰階圖片。"
 
-#: ../plug-ins/file-fli/fli-gimp.c:844
+#: ../plug-ins/file-fli/fli-ligma.c:844
 #, fuzzy
 msgid "GFLI 1.3 - Load framestack"
 msgstr "載入一局已儲存的棋局"
 
-#: ../plug-ins/file-fli/fli-gimp.c:912
+#: ../plug-ins/file-fli/fli-ligma.c:912
 msgid "GFLI 1.3"
 msgstr ""
 
@@ -8688,7 +8688,7 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:366
-msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
 msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
@@ -8934,8 +8934,8 @@ msgid ""
 msgstr "無法以「%s」模式儲存圖層。可能是 PSD 檔案格式或儲存插件不支援，使用正常的模式代替。"
 
 #: ../plug-ins/file-psd/psd-save.c:633
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "錯誤：不能將 GIMP 基本圖片類型轉換為 PSD 模式"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "錯誤：不能將 LIGMA 基本圖片類型轉換為 PSD 模式"
 
 #: ../plug-ins/file-psd/psd-save.c:1607
 #, c-format
@@ -9091,7 +9091,7 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr ""
 
 #: ../plug-ins/file-xjt/xjt.c:733
@@ -9206,8 +9206,8 @@ msgstr "隨機化(_R)"
 msgid "Same"
 msgstr "Same GNOME"
 
-#: ../plug-ins/flame/flame.c:744 ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:744 ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "隨機"
 
@@ -9365,16 +9365,16 @@ msgid "C_amera"
 msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:273 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:273 ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:880
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"gimprc 中未定義 %1$s︰\n"
+"ligmarc 中未定義 %1$s︰\n"
 "你需要在 %4$s 檔案中加上類似\n"
 "(%2$s \"%3$s\")\n"
 "的設定。"
@@ -9902,7 +9902,7 @@ msgid "Max undo:"
 msgstr "復原次數上限："
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "透明"
 
@@ -9998,7 +9998,7 @@ msgid "Left"
 msgstr "左"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1719
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "方向："
 
@@ -10058,636 +10058,636 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "無法開啟‘%s’來讀取資料：%s"
 
-#: ../plug-ins/gimpressionist/brush.c:246
+#: ../plug-ins/ligmaressionist/brush.c:246
 msgid "Can only save drawables!"
 msgstr "只可以儲存可繪物件！"
 
-#: ../plug-ins/gimpressionist/brush.c:251
+#: ../plug-ins/ligmaressionist/brush.c:251
 msgid "Save Brush"
 msgstr "儲存筆刷"
 
-#: ../plug-ins/gimpressionist/brush.c:506
+#: ../plug-ins/ligmaressionist/brush.c:506
 msgid "_Brush"
 msgstr "筆刷(_B)"
 
-#: ../plug-ins/gimpressionist/brush.c:543
+#: ../plug-ins/ligmaressionist/brush.c:543
 msgid "Gamma:"
 msgstr "筆刷的亮度值："
 
-#: ../plug-ins/gimpressionist/brush.c:561
+#: ../plug-ins/ligmaressionist/brush.c:561
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "更改所選筆刷的 gamma(亮度)值"
 
-#: ../plug-ins/gimpressionist/brush.c:569
+#: ../plug-ins/ligmaressionist/brush.c:569
 msgid "Select:"
 msgstr "選取："
 
-#: ../plug-ins/gimpressionist/brush.c:598
+#: ../plug-ins/ligmaressionist/brush.c:598
 msgid "Aspect ratio:"
 msgstr "長寬比:"
 
-#: ../plug-ins/gimpressionist/brush.c:602
+#: ../plug-ins/ligmaressionist/brush.c:602
 msgid "Specifies the aspect ratio of the brush"
 msgstr "指定筆刷的長寬比"
 
-#: ../plug-ins/gimpressionist/brush.c:611
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:611
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "浮雕："
 
-#: ../plug-ins/gimpressionist/brush.c:615
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "色彩(_L)"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "筆刷下的平均顏色(_V)"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "筆刷中心點(_E)"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "根據筆刷下的所有像素的平均顏色來計算顏色"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "取筆刷中心點的顏色"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "彩色雜訊(_N):"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "添加隨機色彩雜訊"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3528
 msgid "_General"
 msgstr "一般(_G)"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "保留"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "保留原來的圖片作為背景"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "使用紙張"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "純色背景"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "使用透明背景；只會顯示新繪畫的筆劃"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "繪製細邊框"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
+#: ../plug-ins/ligmaressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "可鋪排"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "決定最終的圖片可否重複鋪排"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "陰影效果"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "為每一筆加上陰影效果"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "邊緣的陰暗度："
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "每一筆的邊緣變黑的程度"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "陰影的陰暗度："
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "陰影變黑的程度"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "陰影深度："
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "陰影的深度，即是它離原來的物件有多遠"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "陰影模糊化："
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "陰影模糊的程度"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "偏差臨界值："
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "執行各種不同的藝術操作"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
 msgstr "印象派風格(_G)..."
 
-#: ../plug-ins/gimpressionist/gimp.c:164
+#: ../plug-ins/ligmaressionist/ligma.c:164
 msgid "The selection does not intersect the active layer or mask."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:391
+#: ../plug-ins/ligmaressionist/ligma.c:391
 msgid "Painting"
 msgstr "繪畫"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
 msgstr "印象派風格"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "方向(_I)"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "方向："
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 #, fuzzy
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "要這次遊戲中拼貼顏色的數目"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "起始角度："
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "角度範圍："
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "根據該區域的亮度來決定筆劃的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "半徑"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "以該點和圖片中心點之間的距離來決定筆劃的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "隨機決定每一筆的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "旋轉"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "依從圖片中心點出發至該點的方向來決定筆劃的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "流動"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "筆劃會以「流動」的方式來鋪排"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "根據該區域的色相來決定筆劃的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "適應性"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "自選"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "自行指定筆劃的方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:525
+#: ../plug-ins/ligmaressionist/orientmap.c:525
 #, fuzzy
 msgid "Orientation Map Editor"
 msgstr "簡易選單編輯器 %s"
 
-#: ../plug-ins/gimpressionist/orientmap.c:554
+#: ../plug-ins/ligmaressionist/orientmap.c:554
 msgid "Vectors"
 msgstr "向量"
 
-#: ../plug-ins/gimpressionist/orientmap.c:566
+#: ../plug-ins/ligmaressionist/orientmap.c:566
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr "調整預覽圖的亮度"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "選取上一個向量"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "選取下一個向量"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:490
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "加入(_D)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "加入新的向量"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "_Kill"
 msgstr "刪除(_K)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "刪除指定的向量"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "類型"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "正常(_N)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "旋渦 _1"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "旋渦 _2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "旋渦 _3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:542
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Voronoi 模式表示最接近某一點的向量才會對於該點的筆劃有影響"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "角度(_N)："
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 #, fuzzy
 msgid "Change the angle of the selected vector"
 msgstr "改變選定資料夾的屬性"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 #, fuzzy
 msgid "Ang_le offset:"
 msgstr "鍵盤預覽，X 位移"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 #, fuzzy
 msgid "Change the strength of the selected vector"
 msgstr "改變選定資料夾的屬性"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 #, fuzzy
 msgid "S_trength exp.:"
 msgstr "Function exp"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:537
 #, fuzzy
 msgid "Change the exponent of the strength"
 msgstr "密碼匙強度[位元](_S):"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "紙張(_A)"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 #, fuzzy
 msgid "Inverts the Papers texture"
 msgstr "Background texture tile"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "覆蓋(_V)"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "筆劃位置(_A)"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "筆劃位置"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "隨機"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "平均分佈"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "隨機地在圖片中繪出筆劃"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "筆劃均勻地在圖片中分佈"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "位於中心的"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "將筆劃盡量集中在圖片中心點附近"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "筆劃密度(_D)："
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "筆劃的相對密度"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:652
+#: ../plug-ins/ligmaressionist/ppmtool.c:652
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "無法儲存 PPM 檔‘%s’：%s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "儲存目前設定"
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
 msgstr "印象派風格預設值"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr "預設值(_P)"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "儲存目前設定..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "將目前的設定儲存至指定的檔案"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "刪除指定的預設值"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 #, fuzzy
 msgid "Reread the folder of Presets"
 msgstr "排序預設組合選單"
 
-#: ../plug-ins/gimpressionist/preview.c:173
-#: ../plug-ins/gimpressionist/repaint.c:1183
+#: ../plug-ins/ligmaressionist/preview.c:173
+#: ../plug-ins/ligmaressionist/repaint.c:1183
 #: ../plug-ins/imagemap/imap_polygon.c:514
 #: ../plug-ins/lighting/lighting-ui.c:1073
 msgid "_Update"
 msgstr "更新(_U)"
 
-#: ../plug-ins/gimpressionist/preview.c:179
+#: ../plug-ins/ligmaressionist/preview.c:179
 msgid "Refresh the Preview window"
 msgstr "更新預覽視窗"
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/ligmaressionist/preview.c:187
 msgid "Revert to the original image"
 msgstr "還原至本來的圖片"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "筆劃尺寸(_S)"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr "尺寸變量："
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "使用多少種不同尺寸的筆刷"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "尺寸下限："
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "筆刷尺寸下限"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "尺寸上限："
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "筆刷尺寸上限"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "尺寸取決於："
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "根據該區域的亮度來決定筆劃的大小"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "以該點和圖片中心點之間的距離來決定筆劃的大小"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "每一筆的大小都是隨機決定的"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "依從圖片中心點出發至該點的方向來決定筆劃的大小"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "根據該區域的色相來決定筆劃的大小"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "自行指定筆劃的大小"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #, fuzzy
 msgid "Size Map Editor"
 msgstr " 會映射到大小： "
 
-#: ../plug-ins/gimpressionist/sizemap.c:429
+#: ../plug-ins/ligmaressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:439
+#: ../plug-ins/ligmaressionist/sizemap.c:439
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:481
+#: ../plug-ins/ligmaressionist/sizemap.c:481
 #, fuzzy
 msgid "Select previous smvector"
 msgstr "顯示上一步"
 
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 #, fuzzy
 msgid "Select next smvector"
 msgstr "選擇下一個符合的項目"
 
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 #, fuzzy
 msgid "Add new smvector"
 msgstr "加入新的欄位"
 
-#: ../plug-ins/gimpressionist/sizemap.c:502
+#: ../plug-ins/ligmaressionist/sizemap.c:502
 #, fuzzy
 msgid "Delete selected smvector"
 msgstr "刪除選取的項目"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 #, fuzzy
 msgid "Change the angle of the selected smvector"
 msgstr "改變選定資料夾的屬性"
 
-#: ../plug-ins/gimpressionist/sizemap.c:522
+#: ../plug-ins/ligmaressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "強度(_T)："
 
-#: ../plug-ins/gimpressionist/sizemap.c:526
+#: ../plug-ins/ligmaressionist/sizemap.c:526
 #, fuzzy
 msgid "Change the strength of the selected smvector"
 msgstr "改變選定資料夾的屬性"
 
-#: ../plug-ins/gimpressionist/sizemap.c:533
+#: ../plug-ins/ligmaressionist/sizemap.c:533
 #, fuzzy
 msgid "St_rength exp.:"
 msgstr "動畫開始(_A)"
 
-#: ../plug-ins/gimpressionist/sizemap.c:549
+#: ../plug-ins/ligmaressionist/sizemap.c:549
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10973,7 +10973,7 @@ msgstr "第二光斑(_S)"
 #: ../plug-ins/help-browser/dialog.c:185
 #: ../plug-ins/help-browser/dialog.c:1114
 #, fuzzy
-msgid "GIMP Help Browser"
+msgid "LIGMA Help Browser"
 msgstr "執行說明文件瀏覽器"
 
 #: ../plug-ins/help-browser/dialog.c:563
@@ -11035,8 +11035,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "顯示/隱藏狀態列"
 
 #: ../plug-ins/help-browser/dialog.c:655
-msgid "Visit the GIMP documentation website"
-msgstr "參訪 GIMP 文件網站"
+msgid "Visit the LIGMA documentation website"
+msgstr "參訪 LIGMA 文件網站"
 
 #: ../plug-ins/help-browser/dialog.c:1155
 #, fuzzy
@@ -11055,37 +11055,37 @@ msgctxt "search"
 msgid "_Next"
 msgstr "下一首(_N)"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:186
+#: ../plug-ins/help/ligmahelpdomain.c:186
 #, fuzzy
-msgid "The GIMP user manual is not available."
+msgid "The LIGMA user manual is not available."
 msgstr "使用者手冊並沒有在本地端安裝。"
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, fuzzy, c-format
 msgid "Help ID '%s' unknown"
 msgstr "正規表示式「%s」中的不明 id「%s」"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, fuzzy, c-format
 msgid "Loading index from '%s'"
 msgstr "正在從「%s」載入文件"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11320,7 +11320,7 @@ msgid "Clear"
 msgstr "清除"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "建立"
 
@@ -11346,46 +11346,46 @@ msgid "Edit Object"
 msgstr "編輯物件"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "使用 Gimp 參考線"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "使用 Ligma 參考線"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 #, fuzzy
 msgid "Al_ternate"
 msgstr "哈德"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "全部(_L)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "加入額外的參考線"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 #, fuzzy
 msgid "L_eft border"
 msgstr "<b>框線設定值</b>"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 #, fuzzy
 msgid "_Right border"
 msgstr "<b>框線設定值</b>"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 #, fuzzy
 msgid "_Upper border"
 msgstr "<b>框線設定值</b>"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 #, fuzzy
 msgid "Lo_wer border"
 msgstr "格線外框的顏色"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 #, fuzzy
 msgid "_Base URL:"
 msgstr "目標框架的基礎 URL"
@@ -11831,8 +11831,8 @@ msgid "Grid Settings..."
 msgstr "格線設定..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "使用 Gimp 參考線... "
+msgid "Use LIGMA Guides..."
+msgstr "使用 Ligma 參考線... "
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."

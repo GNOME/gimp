@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimpimage-arrange.h"
-#include "gimpimage-guides.h"
-#include "gimpimage-undo.h"
-#include "gimpitem.h"
-#include "gimpguide.h"
-#include "gimppickable.h"
-#include "gimppickable-auto-shrink.h"
+#include "ligmaimage.h"
+#include "ligmaimage-arrange.h"
+#include "ligmaimage-guides.h"
+#include "ligmaimage-undo.h"
+#include "ligmaitem.h"
+#include "ligmaguide.h"
+#include "ligmapickable.h"
+#include "ligmapickable-auto-shrink.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static GList * sort_by_offset  (GList             *list);
@@ -52,8 +52,8 @@ static gint    offset_compare  (gconstpointer      a,
 
 
 /**
- * gimp_image_arrange_objects:
- * @image:                The #GimpImage to which the objects belong.
+ * ligma_image_arrange_objects:
+ * @image:                The #LigmaImage to which the objects belong.
  * @list:                 A #GList of objects to be aligned.
  * @align_x:              Relative X coordinate of point on each target object to bring into alignment.
  * @align_y:              Relative Y coordinate of point on each target object to bring into alignment.
@@ -74,12 +74,12 @@ static gint    offset_compare  (gconstpointer      a,
  * first object in the sorted list is used as reference.
  */
 void
-gimp_image_arrange_objects (GimpImage         *image,
+ligma_image_arrange_objects (LigmaImage         *image,
                             GList             *list,
                             gdouble            align_x,
                             gdouble            align_y,
                             GObject           *reference,
-                            GimpAlignmentType  reference_alignment,
+                            LigmaAlignmentType  reference_alignment,
                             gboolean           align_contents)
 {
   gdouble  reference_x      = 0.0;
@@ -91,33 +91,33 @@ gimp_image_arrange_objects (GimpImage         *image,
   gint     z0               = 0;
   GList   *object_list;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (G_IS_OBJECT (reference) || reference == NULL);
 
   /* get offsets used for sorting */
   switch (reference_alignment)
     {
       /* order vertically for horizontal alignment */
-    case GIMP_ALIGN_LEFT:
-    case GIMP_ALIGN_HCENTER:
-    case GIMP_ALIGN_RIGHT:
-      if (GIMP_IS_GUIDE (reference) &&
-          gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL)
+    case LIGMA_ALIGN_LEFT:
+    case LIGMA_ALIGN_HCENTER:
+    case LIGMA_ALIGN_RIGHT:
+      if (LIGMA_IS_GUIDE (reference) &&
+          ligma_guide_get_orientation (LIGMA_GUIDE (reference)) == LIGMA_ORIENTATION_HORIZONTAL)
         return;
 
       use_obj_x_offset = TRUE;
 
       use_ref_x_offset = TRUE;
-      if (reference_alignment == GIMP_ALIGN_HCENTER)
+      if (reference_alignment == LIGMA_ALIGN_HCENTER)
         reference_x = 0.5;
-      else if (reference_alignment == GIMP_ALIGN_RIGHT)
+      else if (reference_alignment == LIGMA_ALIGN_RIGHT)
         reference_x = 1.0;
 
       do_x = TRUE;
       break;
 
       /* order horizontally for horizontal arrangement */
-    case GIMP_ARRANGE_HFILL:
+    case LIGMA_ARRANGE_HFILL:
       if (g_list_length (list) <= 2)
         return;
       use_obj_x_offset = TRUE;
@@ -126,32 +126,32 @@ gimp_image_arrange_objects (GimpImage         *image,
       break;
 
       /* order horizontally for vertical alignment */
-    case GIMP_ALIGN_TOP:
-    case GIMP_ALIGN_VCENTER:
-    case GIMP_ALIGN_BOTTOM:
-      if (GIMP_IS_GUIDE (reference) &&
-          gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_VERTICAL)
+    case LIGMA_ALIGN_TOP:
+    case LIGMA_ALIGN_VCENTER:
+    case LIGMA_ALIGN_BOTTOM:
+      if (LIGMA_IS_GUIDE (reference) &&
+          ligma_guide_get_orientation (LIGMA_GUIDE (reference)) == LIGMA_ORIENTATION_VERTICAL)
         return;
 
-      if (reference_alignment == GIMP_ALIGN_VCENTER)
+      if (reference_alignment == LIGMA_ALIGN_VCENTER)
         reference_y = 0.5;
-      else if (reference_alignment == GIMP_ALIGN_BOTTOM)
+      else if (reference_alignment == LIGMA_ALIGN_BOTTOM)
         reference_y = 1.0;
 
       do_y = TRUE;
       break;
 
       /* order vertically for vertical arrangement */
-    case GIMP_ARRANGE_VFILL:
+    case LIGMA_ARRANGE_VFILL:
       if (g_list_length (list) <= 2)
         return;
       do_y = TRUE;
       break;
 
-    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
+    case LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
       use_obj_x_offset = TRUE;
       do_x             = TRUE;
-    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
+    case LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP:
       if (g_list_length (list) <= 2)
         return;
 
@@ -180,10 +180,10 @@ gimp_image_arrange_objects (GimpImage         *image,
       gint     n;
       gdouble  fill_offset = 0;
 
-      if (reference_alignment == GIMP_ARRANGE_HFILL                  ||
-          reference_alignment == GIMP_ARRANGE_VFILL                  ||
-          reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
-          reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
+      if (reference_alignment == LIGMA_ARRANGE_HFILL                  ||
+          reference_alignment == LIGMA_ARRANGE_VFILL                  ||
+          reference_alignment == LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
+          reference_alignment == LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP)
         {
           /* Distribution does not use the reference. Extreme coordinate items
            * are used instead.
@@ -194,14 +194,14 @@ gimp_image_arrange_objects (GimpImage         *image,
           z0 = GPOINTER_TO_INT (g_object_get_data (object_list->data, "align-offset"));
           distr_length = GPOINTER_TO_INT (g_object_get_data (last_object->data, "align-offset")) - z0;
 
-          if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
-              reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
+          if (reference_alignment == LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
+              reference_alignment == LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP)
             {
               for (list = object_list; list && list->next; list = g_list_next (list))
                 {
                   gint obj_len;
 
-                  if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
+                  if (reference_alignment == LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
                     obj_len = GPOINTER_TO_INT (g_object_get_data (list->data, "align-width"));
                   else
                     obj_len = GPOINTER_TO_INT (g_object_get_data (list->data, "align-height"));
@@ -236,7 +236,7 @@ gimp_image_arrange_objects (GimpImage         *image,
         }
 
       /* FIXME: undo group type is wrong */
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_DISPLACE,
                                    C_("undo-type", "Arrange Objects"));
 
       for (list = object_list, n = 1;
@@ -250,15 +250,15 @@ gimp_image_arrange_objects (GimpImage         *image,
 
           z1 = GPOINTER_TO_INT (g_object_get_data (target, "align-offset"));
 
-          if (reference_alignment == GIMP_ARRANGE_HFILL)
+          if (reference_alignment == LIGMA_ARRANGE_HFILL)
             {
               xtranslate = ROUND (z0 - z1 + n * fill_offset);
             }
-          else if (reference_alignment == GIMP_ARRANGE_VFILL)
+          else if (reference_alignment == LIGMA_ARRANGE_VFILL)
             {
               ytranslate =  ROUND (z0 - z1 + n * fill_offset);
             }
-          else if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
+          else if (reference_alignment == LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
             {
               gint obj_len;
 
@@ -267,7 +267,7 @@ gimp_image_arrange_objects (GimpImage         *image,
               obj_len = GPOINTER_TO_INT (g_object_get_data (target, "align-width"));
               z0 = z0 + fill_offset + obj_len;
             }
-          else if (reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
+          else if (reference_alignment == LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP)
             {
               gint obj_len;
 
@@ -288,23 +288,23 @@ gimp_image_arrange_objects (GimpImage         *image,
             }
 
           /* now actually align the target object */
-          if (GIMP_IS_ITEM (target))
+          if (LIGMA_IS_ITEM (target))
             {
-              gimp_item_translate (GIMP_ITEM (target),
+              ligma_item_translate (LIGMA_ITEM (target),
                                    xtranslate, ytranslate, TRUE);
             }
-          else if (GIMP_IS_GUIDE (target))
+          else if (LIGMA_IS_GUIDE (target))
             {
-              GimpGuide *guide = GIMP_GUIDE (target);
+              LigmaGuide *guide = LIGMA_GUIDE (target);
 
-              switch (gimp_guide_get_orientation (guide))
+              switch (ligma_guide_get_orientation (guide))
                 {
-                case GIMP_ORIENTATION_VERTICAL:
-                  gimp_image_move_guide (image, guide, z1 + xtranslate, TRUE);
+                case LIGMA_ORIENTATION_VERTICAL:
+                  ligma_image_move_guide (image, guide, z1 + xtranslate, TRUE);
                   break;
 
-                case GIMP_ORIENTATION_HORIZONTAL:
-                  gimp_image_move_guide (image, guide, z1 + ytranslate, TRUE);
+                case LIGMA_ORIENTATION_HORIZONTAL:
+                  ligma_image_move_guide (image, guide, z1 + ytranslate, TRUE);
                   break;
 
                 default:
@@ -313,7 +313,7 @@ gimp_image_arrange_objects (GimpImage         *image,
             }
         }
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
     }
 
   g_list_free (object_list);
@@ -369,38 +369,38 @@ compute_offset (GObject  *object,
   gint object_width    = 0;
   gint offset          = 0;
 
-  if (GIMP_IS_IMAGE (object))
+  if (LIGMA_IS_IMAGE (object))
     {
-      GimpImage *image = GIMP_IMAGE (object);
+      LigmaImage *image = LIGMA_IMAGE (object);
 
       object_offset_x = 0;
       object_offset_y = 0;
-      object_height   = gimp_image_get_height (image);
-      object_width    = gimp_image_get_width (image);
+      object_height   = ligma_image_get_height (image);
+      object_width    = ligma_image_get_width (image);
     }
-  else if (GIMP_IS_ITEM (object))
+  else if (LIGMA_IS_ITEM (object))
     {
-      GimpItem *item = GIMP_ITEM (object);
+      LigmaItem *item = LIGMA_ITEM (object);
       gint      off_x, off_y;
 
-      gimp_item_bounds (item,
+      ligma_item_bounds (item,
                         &object_offset_x,
                         &object_offset_y,
                         &object_width,
                         &object_height);
 
-      if (align_contents && GIMP_IS_PICKABLE (object))
+      if (align_contents && LIGMA_IS_PICKABLE (object))
         {
           gint x;
           gint y;
           gint width;
           gint height;
 
-          if (gimp_pickable_auto_shrink (GIMP_PICKABLE (object),
+          if (ligma_pickable_auto_shrink (LIGMA_PICKABLE (object),
                                          0, 0,
-                                         gimp_item_get_width  (GIMP_ITEM (object)),
-                                         gimp_item_get_height (GIMP_ITEM (object)),
-                                         &x, &y, &width, &height) == GIMP_AUTO_SHRINK_SHRINK)
+                                         ligma_item_get_width  (LIGMA_ITEM (object)),
+                                         ligma_item_get_height (LIGMA_ITEM (object)),
+                                         &x, &y, &width, &height) == LIGMA_AUTO_SHRINK_SHRINK)
             {
               object_offset_x += x;
               object_offset_y += y;
@@ -409,24 +409,24 @@ compute_offset (GObject  *object,
             }
         }
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
 
       object_offset_x += off_x;
       object_offset_y += off_y;
     }
-  else if (GIMP_IS_GUIDE (object))
+  else if (LIGMA_IS_GUIDE (object))
     {
-      GimpGuide *guide = GIMP_GUIDE (object);
+      LigmaGuide *guide = LIGMA_GUIDE (object);
 
-      switch (gimp_guide_get_orientation (guide))
+      switch (ligma_guide_get_orientation (guide))
         {
-        case GIMP_ORIENTATION_VERTICAL:
-          object_offset_x = gimp_guide_get_position (guide);
+        case LIGMA_ORIENTATION_VERTICAL:
+          object_offset_x = ligma_guide_get_position (guide);
           object_width = 0;
           break;
 
-        case GIMP_ORIENTATION_HORIZONTAL:
-          object_offset_y = gimp_guide_get_position (guide);
+        case LIGMA_ORIENTATION_HORIZONTAL:
+          object_offset_y = ligma_guide_get_position (guide);
           object_height = 0;
           break;
 
@@ -448,7 +448,7 @@ compute_offset (GObject  *object,
                      GINT_TO_POINTER (offset));
 
   /* These are only used for HFILL and VFILL, but since the call to
-   * gimp_image_arrange_objects allows for two different alignments
+   * ligma_image_arrange_objects allows for two different alignments
    * (object and reference_alignment) we better be on the safe side in
    * case they differ.  (the current implementation of the align tool
    * always pass the same value to both parameters)

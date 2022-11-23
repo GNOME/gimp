@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,17 +19,17 @@
 #define __PALETTE_EDITOR_COMMANDS_H__
 
 
-void   palette_editor_edit_color_cmd_callback   (GimpAction *action,
+void   palette_editor_edit_color_cmd_callback   (LigmaAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
-void   palette_editor_new_color_cmd_callback    (GimpAction *action,
+void   palette_editor_new_color_cmd_callback    (LigmaAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
-void   palette_editor_delete_color_cmd_callback (GimpAction *action,
+void   palette_editor_delete_color_cmd_callback (LigmaAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
 
-void   palette_editor_zoom_cmd_callback         (GimpAction *action,
+void   palette_editor_zoom_cmd_callback         (LigmaAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
 

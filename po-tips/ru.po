@@ -1,4 +1,4 @@
-# translation of gimp tips to Russian
+# translation of ligma tips to Russian
 # Copyright (C) 2004, 2005 Free Software Foundation, Inc.
 # Roxana Kolosova <mavka@justos.org>, 2004.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp tips HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma tips HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-05-23 22:17+0000\n"
 "PO-Revision-Date: 2022-05-24 12:35+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
@@ -18,25 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Контекстную помощь для большинства функций и пунктов меню GIMP можно вызвать "
+"Контекстную помощь для большинства функций и пунктов меню LIGMA можно вызвать "
 "клавишей F1."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"Для создания сложного изображения в GIMP используются слои. Чтобы понять, "
+"Для создания сложного изображения в LIGMA используются слои. Чтобы понять, "
 "что это такое, представьте себе стопку картинок, нарисованных на прозрачной "
 "пленке, так что при просмотре они видны все сразу."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -45,20 +45,20 @@ msgstr ""
 "для работы со слоями. Для его вызова  нажмите правую кнопку мыши на названии "
 "слоя."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"При сохранении изображения используется XCF, родной формат файлов GIMP "
+"При сохранении изображения используется XCF, родной формат файлов LIGMA "
 "(расширение файла <tt>.xcf</tt>). Это сохраняет слои и многие аспекты вашей "
 "незавершенной работы, позволяя продолжить работу над ней позже. После "
 "завершения проекта вы можете экспортировать его в форматы JPEG, PNG, GIF и т."
 "д."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -68,7 +68,7 @@ msgstr ""
 "некоторых случаях вам придется объединить слои («Изображение→Свести "
 "изображение»), чтобы расширение обработало все изображение."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -78,7 +78,7 @@ msgstr ""
 "означает, что у данного слоя нет альфа-канала. Вы можете добавить альфа-"
 "канал через меню «Слой→Прозрачность→Добавить альфа-канал»."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -91,7 +91,7 @@ msgstr ""
 "(«Изображение→Режим→RGB»), добавить альфа-канал («Слой→Прозрачность→Добавить "
 "альфа-канал») или свести изображение («Изображение→Свести изображение»)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -105,17 +105,17 @@ msgstr ""
 "настройки оконного менеджера (сменив <tt>Alt</tt> на <tt>Super</tt> или "
 "клавишу с логотипом Windows)."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"В GIMP можно перетаскивать мышкой многие элементы. Например, если перетащить "
+"В LIGMA можно перетаскивать мышкой многие элементы. Например, если перетащить "
 "цвет с панели инструментов или из палитры на изображение, то изображение или "
 "его выделенная область будет залито этим цветом."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -125,7 +125,7 @@ msgstr ""
 "программ — удерживая нажатой клавишу <tt>пробела</tt>, перемещать курсор "
 "мыши."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -137,7 +137,7 @@ msgstr ""
 "«Перемещение» и перетащите их за пределы изображения, либо воспользуйтесь "
 "командой «Изображение→Направляющие→Удалить направляющие»."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -145,7 +145,7 @@ msgstr ""
 "Если перетащить слой из диалога слоев на панель инструментов, будет создано "
 "новое изображение, состоящее только из этого слоя."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -157,17 +157,17 @@ msgstr ""
 "нажмите на кнопку «Создать слой» или «Прикрепить плавающее выделение», "
 "находящиеся в окне диалога слоев, либо вызовите эти функции из меню слоя."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"В GIMP поддерживается архивирование gzip «на лету». Добавьте <tt>.gz</tt> "
+"В LIGMA поддерживается архивирование gzip «на лету». Добавьте <tt>.gz</tt> "
 "(или <tt>.bz2</tt>) к имени файла, и изображение будет сохранено сжатым. "
 "Заархивированные изображения можно открывать точно так же, как обычные."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -178,7 +178,7 @@ msgstr ""
 "Соответствующие клавиши нужно нажимать до начала выделения и удерживать до "
 "конца процедуры."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -190,7 +190,7 @@ msgstr ""
 "пунктиром с задаваемыми параметрами. Более сложные геометрические фигуры "
 "можно рисовать при помощи подпрограммы Gfig («Фильтры→Визуализация→Gfig»)."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -201,17 +201,17 @@ msgstr ""
 "можете использовать «Кисть» в режиме градиента, «Штамп» с источником из "
 "шаблона или даже «Ластик» и «Палец»."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"В GIMP вы можете создавать и редактировать составные области выделения при "
+"В LIGMA вы можете создавать и редактировать составные области выделения при "
 "помощи контуров. В диалоге контуров можно работать с несколькими контурами и "
 "преобразовывать их в области выделения."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -222,7 +222,7 @@ msgstr ""
 "для рисования. Для этого надо включить «Быструю маску», отредактировать "
 "выделение области рисующим инструментом, а потом выключить «Быструю маску»."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -234,26 +234,26 @@ msgstr ""
 "Изменять видимость канала и преобразовывать его в выделение вы можете при "
 "помощи кнопок в диалоге каналов."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
 "После того, как вы включили в диалоге настройки функцию «Динамические "
 "клавиатурные комбинации», вы можете переопределить сочетания клавиш быстрого "
 "доступа. Чтобы это сделать, наведите курсор мыши на нужный пункт меню и "
-"нажмите удобное вам сочетание клавиш. Проверьте, стоит ли в настройках GIMP "
+"нажмите удобное вам сочетание клавиш. Проверьте, стоит ли в настройках LIGMA "
 "флажок напротив «Сохранять клавиши быстрого доступа при выходе», чтобы при "
 "следующем запуске программы не переназначать всё заново. После установки "
 "всех комбинаций, возможно, стоит отключить динамическое запоминание, чтобы "
 "случайно ничего не переназначить."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -261,7 +261,7 @@ msgstr ""
 "Если на экране мало места, можно воспользоваться кнопкой <tt>Tab</tt> в окне "
 "изображения, чтобы скрыть или показать панель инструментов и окна диалогов."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -271,7 +271,7 @@ msgstr ""
 "Чтобы сделать все слои видимыми, снова нажмите тот же значок, удерживая "
 "нажатой клавишу <tt>Shift</tt>."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -281,7 +281,7 @@ msgstr ""
 "удерживая клавишу <tt>Ctrl</tt>. <tt>Alt</tt>+щелчок по эскизу маски "
 "переключает прямое отображение маски."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -289,7 +289,7 @@ msgstr ""
 "Переключаться между слоями можно по <tt>Ctrl</tt>-<tt>Tab</tt> (если ваш "
 "оконный менеджер не использует это сочетание клавиш)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -301,7 +301,7 @@ msgstr ""
 "Аналогично, при нажатой клавише <tt>Ctrl</tt> пипетка снимает цвет для фона, "
 "а не для переднего плана."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -309,7 +309,7 @@ msgstr ""
 "Чтобы повернуть слой или выделенную область на число градусов, кратное 15, "
 "используйте клавишу <tt>Ctrl</tt> с инструментом интерактивного вращения."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "

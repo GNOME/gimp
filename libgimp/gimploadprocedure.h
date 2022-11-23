@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimploadprocedure.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaloadprocedure.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,10 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LOAD_PROCEDURE_H__
-#define __GIMP_LOAD_PROCEDURE_H__
+#ifndef __LIGMA_LOAD_PROCEDURE_H__
+#define __LIGMA_LOAD_PROCEDURE_H__
 
-#include <libgimp/gimpfileprocedure.h>
+#include <libligma/ligmafileprocedure.h>
 
 G_BEGIN_DECLS
 
@@ -30,70 +30,70 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpRunLoadFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
+ * LigmaRunLoadFunc:
+ * @procedure:   the #LigmaProcedure that runs.
+ * @run_mode:    the #LigmaRunMode.
  * @file:        the #GFile to load from.
  * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_load_procedure_new().
+ * @run_data: (closure): the run_data given in ligma_load_procedure_new().
  *
- * The load function is run during the lifetime of the GIMP session,
+ * The load function is run during the lifetime of the LIGMA session,
  * each time a plug-in load procedure is called.
  *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+typedef LigmaValueArray * (* LigmaRunLoadFunc) (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 
-#define GIMP_TYPE_LOAD_PROCEDURE            (gimp_load_procedure_get_type ())
-#define GIMP_LOAD_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedure))
-#define GIMP_LOAD_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedureClass))
-#define GIMP_IS_LOAD_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LOAD_PROCEDURE))
-#define GIMP_IS_LOAD_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LOAD_PROCEDURE))
-#define GIMP_LOAD_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedureClass))
+#define LIGMA_TYPE_LOAD_PROCEDURE            (ligma_load_procedure_get_type ())
+#define LIGMA_LOAD_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LOAD_PROCEDURE, LigmaLoadProcedure))
+#define LIGMA_LOAD_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LOAD_PROCEDURE, LigmaLoadProcedureClass))
+#define LIGMA_IS_LOAD_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LOAD_PROCEDURE))
+#define LIGMA_IS_LOAD_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LOAD_PROCEDURE))
+#define LIGMA_LOAD_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LOAD_PROCEDURE, LigmaLoadProcedureClass))
 
 
-typedef struct _GimpLoadProcedure        GimpLoadProcedure;
-typedef struct _GimpLoadProcedureClass   GimpLoadProcedureClass;
-typedef struct _GimpLoadProcedurePrivate GimpLoadProcedurePrivate;
+typedef struct _LigmaLoadProcedure        LigmaLoadProcedure;
+typedef struct _LigmaLoadProcedureClass   LigmaLoadProcedureClass;
+typedef struct _LigmaLoadProcedurePrivate LigmaLoadProcedurePrivate;
 
-struct _GimpLoadProcedure
+struct _LigmaLoadProcedure
 {
-  GimpFileProcedure         parent_instance;
+  LigmaFileProcedure         parent_instance;
 
-  GimpLoadProcedurePrivate *priv;
+  LigmaLoadProcedurePrivate *priv;
 };
 
-struct _GimpLoadProcedureClass
+struct _LigmaLoadProcedureClass
 {
-  GimpFileProcedureClass parent_class;
+  LigmaFileProcedureClass parent_class;
 };
 
 
-GType           gimp_load_procedure_get_type             (void) G_GNUC_CONST;
+GType           ligma_load_procedure_get_type             (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plug_in,
+LigmaProcedure * ligma_load_procedure_new                  (LigmaPlugIn        *plug_in,
                                                           const gchar       *name,
-                                                          GimpPDBProcType    proc_type,
-                                                          GimpRunLoadFunc    run_func,
+                                                          LigmaPDBProcType    proc_type,
+                                                          LigmaRunLoadFunc    run_func,
                                                           gpointer           run_data,
                                                           GDestroyNotify     run_data_destroy);
 
-void            gimp_load_procedure_set_handles_raw      (GimpLoadProcedure *procedure,
+void            ligma_load_procedure_set_handles_raw      (LigmaLoadProcedure *procedure,
                                                           gboolean           handles_raw);
-gboolean        gimp_load_procedure_get_handles_raw      (GimpLoadProcedure *procedure);
+gboolean        ligma_load_procedure_get_handles_raw      (LigmaLoadProcedure *procedure);
 
-void            gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
+void            ligma_load_procedure_set_thumbnail_loader (LigmaLoadProcedure *procedure,
                                                           const gchar       *thumbnail_proc);
-const gchar   * gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure);
+const gchar   * ligma_load_procedure_get_thumbnail_loader (LigmaLoadProcedure *procedure);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_LOAD_PROCEDURE_H__  */
+#endif  /*  __LIGMA_LOAD_PROCEDURE_H__  */

@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Paper
+## Makefile.am for ligma/data/patterns/Paper
 
-patternpaperdatadir = $(gimpdatadir)/patterns/Paper
+patternpaperdatadir = $(ligmadatadir)/patterns/Paper
 
 patternpaperdata_DATA = \
 	crinklepaper.pat	\

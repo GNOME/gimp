@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ADAPTIVE_SUPERSAMPLE_H__
-#define __GIMP_ADAPTIVE_SUPERSAMPLE_H__
+#ifndef __LIGMA_ADAPTIVE_SUPERSAMPLE_H__
+#define __LIGMA_ADAPTIVE_SUPERSAMPLE_H__
 
 G_BEGIN_DECLS
 
@@ -29,54 +29,54 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpRenderFunc:
+ * LigmaRenderFunc:
  * @x:
  * @y:
  * @color: (out caller-allocates): The rendered pixel as RGB
  * @data: (closure):
  */
-typedef void (* GimpRenderFunc)   (gdouble   x,
+typedef void (* LigmaRenderFunc)   (gdouble   x,
                                    gdouble   y,
-                                   GimpRGB  *color,
+                                   LigmaRGB  *color,
                                    gpointer  data);
 /**
- * GimpPutPixelFunc:
+ * LigmaPutPixelFunc:
  * @x:
  * @y:
  * @color:
  * @data: (closure):
  */
-typedef void (* GimpPutPixelFunc) (gint      x,
+typedef void (* LigmaPutPixelFunc) (gint      x,
                                    gint      y,
-                                   GimpRGB  *color,
+                                   LigmaRGB  *color,
                                    gpointer  data);
 /**
- * GimpProgressFunc:
+ * LigmaProgressFunc:
  * @min:
  * @max:
  * @current:
  * @data: (closure):
  */
-typedef void (* GimpProgressFunc) (gint      min,
+typedef void (* LigmaProgressFunc) (gint      min,
                                    gint      max,
                                    gint      current,
                                    gpointer  data);
 
 
-gulong   gimp_adaptive_supersample_area (gint              x1,
+gulong   ligma_adaptive_supersample_area (gint              x1,
                                          gint              y1,
                                          gint              x2,
                                          gint              y2,
                                          gint              max_depth,
                                          gdouble           threshold,
-                                         GimpRenderFunc    render_func,
+                                         LigmaRenderFunc    render_func,
                                          gpointer          render_data,
-                                         GimpPutPixelFunc  put_pixel_func,
+                                         LigmaPutPixelFunc  put_pixel_func,
                                          gpointer          put_pixel_data,
-                                         GimpProgressFunc  progress_func,
+                                         LigmaProgressFunc  progress_func,
                                          gpointer          progress_data);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_ADAPTIVE_SUPERSAMPLE_H__ */
+#endif  /* __LIGMA_ADAPTIVE_SUPERSAMPLE_H__ */

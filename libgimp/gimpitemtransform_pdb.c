@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpitemtransform_pdb.c
+ * ligmaitemtransform_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpitemtransform
- * @title: gimpitemtransform
+ * SECTION: ligmaitemtransform
+ * @title: ligmaitemtransform
  * @short_description: Functions to perform transformations on items.
  *
  * Functions to perform transformations on items.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_item_transform_translate:
+ * ligma_item_transform_translate:
  * @item: The item.
  * @off_x: Offset in x direction.
  * @off_y: Offset in y direction.
@@ -53,36 +53,36 @@
  *
  * Since: 2.10
  **/
-GimpItem *
-gimp_item_transform_translate (GimpItem *item,
+LigmaItem *
+ligma_item_transform_translate (LigmaItem *item,
                                gdouble   off_x,
                                gdouble   off_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, off_x,
                                           G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-translate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-translate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_flip_simple:
+ * ligma_item_transform_flip_simple:
  * @item: The affected item.
  * @flip_type: Type of flip.
  * @auto_center: Whether to automatically position the axis in the selection center.
@@ -105,44 +105,44 @@ gimp_item_transform_translate (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_transform_resize().
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The flipped item.
  *
  * Since: 2.2
  **/
-GimpItem *
-gimp_item_transform_flip_simple (GimpItem            *item,
-                                 GimpOrientationType  flip_type,
+LigmaItem *
+ligma_item_transform_flip_simple (LigmaItem            *item,
+                                 LigmaOrientationType  flip_type,
                                  gboolean             auto_center,
                                  gdouble              axis)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-flip-simple",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-flip-simple",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_flip:
+ * ligma_item_transform_flip:
  * @item: The affected item.
  * @x0: horz. coord. of one end of axis.
  * @y0: vert. coord. of one end of axis.
@@ -164,48 +164,48 @@ gimp_item_transform_flip_simple (GimpItem            *item,
  * will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The flipped item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_flip (GimpItem *item,
+LigmaItem *
+ligma_item_transform_flip (LigmaItem *item,
                           gdouble   x0,
                           gdouble   y0,
                           gdouble   x1,
                           gdouble   y1)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-flip",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-flip",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_perspective:
+ * ligma_item_transform_perspective:
  * @item: The affected item.
  * @x0: The new x coordinate of upper-left corner of original bounding box.
  * @y0: The new y coordinate of upper-left corner of original bounding box.
@@ -240,16 +240,16 @@ gimp_item_transform_flip (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_perspective (GimpItem *item,
+LigmaItem *
+ligma_item_transform_perspective (LigmaItem *item,
                                  gdouble   x0,
                                  gdouble   y0,
                                  gdouble   x1,
@@ -259,12 +259,12 @@ gimp_item_transform_perspective (GimpItem *item,
                                  gdouble   x3,
                                  gdouble   y3)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -275,21 +275,21 @@ gimp_item_transform_perspective (GimpItem *item,
                                           G_TYPE_DOUBLE, y3,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-perspective",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-perspective",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_rotate_simple:
+ * ligma_item_transform_rotate_simple:
  * @item: The affected item.
  * @rotate_type: Type of rotation.
  * @auto_center: Whether to automatically rotate around the selection center.
@@ -316,46 +316,46 @@ gimp_item_transform_perspective (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_transform_resize().
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The rotated item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_rotate_simple (GimpItem         *item,
-                                   GimpRotationType  rotate_type,
+LigmaItem *
+ligma_item_transform_rotate_simple (LigmaItem         *item,
+                                   LigmaRotationType  rotate_type,
                                    gboolean          auto_center,
                                    gdouble           center_x,
                                    gdouble           center_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_ROTATION_TYPE, rotate_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-rotate-simple",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-rotate-simple",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_rotate:
+ * ligma_item_transform_rotate:
  * @item: The affected item.
  * @angle: The angle of rotation (radians).
  * @auto_center: Whether to automatically rotate around the selection center.
@@ -382,48 +382,48 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The rotated item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_rotate (GimpItem *item,
+LigmaItem *
+ligma_item_transform_rotate (LigmaItem *item,
                             gdouble   angle,
                             gboolean  auto_center,
                             gdouble   center_x,
                             gdouble   center_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-rotate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-rotate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_scale:
+ * ligma_item_transform_scale:
  * @item: The affected item.
  * @x0: The new x coordinate of the upper-left corner of the scaled region.
  * @y0: The new y coordinate of the upper-left corner of the scaled region.
@@ -447,48 +447,48 @@ gimp_item_transform_rotate (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The scaled item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_scale (GimpItem *item,
+LigmaItem *
+ligma_item_transform_scale (LigmaItem *item,
                            gdouble   x0,
                            gdouble   y0,
                            gdouble   x1,
                            gdouble   y1)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-scale",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-scale",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_shear:
+ * ligma_item_transform_shear:
  * @item: The affected item.
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
@@ -512,44 +512,44 @@ gimp_item_transform_scale (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The sheared item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_shear (GimpItem            *item,
-                           GimpOrientationType  shear_type,
+LigmaItem *
+ligma_item_transform_shear (LigmaItem            *item,
+                           LigmaOrientationType  shear_type,
                            gdouble              magnitude)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_ORIENTATION_TYPE, shear_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_ORIENTATION_TYPE, shear_type,
                                           G_TYPE_DOUBLE, magnitude,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-shear",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-shear",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_2d:
+ * ligma_item_transform_2d:
  * @item: The affected item.
  * @source_x: X coordinate of the transformation center.
  * @source_y: Y coordinate of the transformation center.
@@ -579,16 +579,16 @@ gimp_item_transform_shear (GimpItem            *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_2d (GimpItem *item,
+LigmaItem *
+ligma_item_transform_2d (LigmaItem *item,
                         gdouble   source_x,
                         gdouble   source_y,
                         gdouble   scale_x,
@@ -597,12 +597,12 @@ gimp_item_transform_2d (GimpItem *item,
                         gdouble   dest_x,
                         gdouble   dest_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, source_x,
                                           G_TYPE_DOUBLE, source_y,
                                           G_TYPE_DOUBLE, scale_x,
@@ -612,21 +612,21 @@ gimp_item_transform_2d (GimpItem *item,
                                           G_TYPE_DOUBLE, dest_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-2d",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-2d",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }
 
 /**
- * gimp_item_transform_matrix:
+ * ligma_item_transform_matrix:
  * @item: The affected item.
  * @coeff_0_0: coefficient (0,0) of the transformation matrix.
  * @coeff_0_1: coefficient (0,1) of the transformation matrix.
@@ -656,16 +656,16 @@ gimp_item_transform_2d (GimpItem *item,
  * The return value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_interpolation(),
- * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize().
+ * ligma_context_set_interpolation(),
+ * ligma_context_set_transform_direction(),
+ * ligma_context_set_transform_resize().
  *
  * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_transform_matrix (GimpItem *item,
+LigmaItem *
+ligma_item_transform_matrix (LigmaItem *item,
                             gdouble   coeff_0_0,
                             gdouble   coeff_0_1,
                             gdouble   coeff_0_2,
@@ -676,12 +676,12 @@ gimp_item_transform_matrix (GimpItem *item,
                             gdouble   coeff_2_1,
                             gdouble   coeff_2_2)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *ret_item = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *ret_item = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, coeff_0_0,
                                           G_TYPE_DOUBLE, coeff_0_1,
                                           G_TYPE_DOUBLE, coeff_0_2,
@@ -693,15 +693,15 @@ gimp_item_transform_matrix (GimpItem *item,
                                           G_TYPE_DOUBLE, coeff_2_2,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-transform-matrix",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-transform-matrix",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    ret_item = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return ret_item;
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsettingsbox.c
- * Copyright (C) 2008-2017 Michael Natterer <mitch@gimp.org>
+ * ligmasettingsbox.c
+ * Copyright (C) 2008-2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,25 +23,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "operations/gimp-operation-config.h"
+#include "operations/ligma-operation-config.h"
 
-#include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimpmarshal.h"
+#include "core/ligma.h"
+#include "core/ligmalist.h"
+#include "core/ligmamarshal.h"
 
-#include "gimpcontainercombobox.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpsettingsbox.h"
-#include "gimpsettingseditor.h"
+#include "ligmacontainercombobox.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmasettingsbox.h"
+#include "ligmasettingseditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -56,7 +56,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_CONFIG,
   PROP_CONTAINER,
   PROP_HELP_ID,
@@ -67,9 +67,9 @@ enum
 };
 
 
-typedef struct _GimpSettingsBoxPrivate GimpSettingsBoxPrivate;
+typedef struct _LigmaSettingsBoxPrivate LigmaSettingsBoxPrivate;
 
-struct _GimpSettingsBoxPrivate
+struct _LigmaSettingsBoxPrivate
 {
   GtkWidget     *combo;
   GtkWidget     *menu;
@@ -78,9 +78,9 @@ struct _GimpSettingsBoxPrivate
   GtkWidget     *file_dialog;
   GtkWidget     *editor_dialog;
 
-  Gimp          *gimp;
+  Ligma          *ligma;
   GObject       *config;
-  GimpContainer *container;
+  LigmaContainer *container;
 
   gchar         *help_id;
   gchar         *import_title;
@@ -89,69 +89,69 @@ struct _GimpSettingsBoxPrivate
   GFile         *last_file;
 };
 
-#define GET_PRIVATE(item) ((GimpSettingsBoxPrivate *) gimp_settings_box_get_instance_private ((GimpSettingsBox *) (item)))
+#define GET_PRIVATE(item) ((LigmaSettingsBoxPrivate *) ligma_settings_box_get_instance_private ((LigmaSettingsBox *) (item)))
 
 
-static void      gimp_settings_box_constructed   (GObject           *object);
-static void      gimp_settings_box_finalize      (GObject           *object);
-static void      gimp_settings_box_set_property  (GObject           *object,
+static void      ligma_settings_box_constructed   (GObject           *object);
+static void      ligma_settings_box_finalize      (GObject           *object);
+static void      ligma_settings_box_set_property  (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
-static void      gimp_settings_box_get_property  (GObject           *object,
+static void      ligma_settings_box_get_property  (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
 
 static GtkWidget *
-                 gimp_settings_box_menu_item_add (GimpSettingsBox   *box,
+                 ligma_settings_box_menu_item_add (LigmaSettingsBox   *box,
                                                   const gchar       *label,
                                                   GCallback          callback);
 static gboolean
-            gimp_settings_box_row_separator_func (GtkTreeModel      *model,
+            ligma_settings_box_row_separator_func (GtkTreeModel      *model,
                                                   GtkTreeIter       *iter,
                                                   gpointer           data);
 static gboolean
-              gimp_settings_box_setting_selected (GimpContainerView *view,
+              ligma_settings_box_setting_selected (LigmaContainerView *view,
                                                   GList             *objects,
                                                   GList             *paths,
-                                                  GimpSettingsBox   *box);
-static gboolean gimp_settings_box_menu_press     (GtkWidget         *widget,
+                                                  LigmaSettingsBox   *box);
+static gboolean ligma_settings_box_menu_press     (GtkWidget         *widget,
                                                   GdkEventButton    *bevent,
-                                                  GimpSettingsBox   *box);
-static void  gimp_settings_box_favorite_activate (GtkWidget         *widget,
-                                                  GimpSettingsBox   *box);
-static void  gimp_settings_box_import_activate   (GtkWidget         *widget,
-                                                  GimpSettingsBox   *box);
-static void  gimp_settings_box_export_activate   (GtkWidget         *widget,
-                                                  GimpSettingsBox   *box);
-static void  gimp_settings_box_manage_activate   (GtkWidget         *widget,
-                                                  GimpSettingsBox   *box);
+                                                  LigmaSettingsBox   *box);
+static void  ligma_settings_box_favorite_activate (GtkWidget         *widget,
+                                                  LigmaSettingsBox   *box);
+static void  ligma_settings_box_import_activate   (GtkWidget         *widget,
+                                                  LigmaSettingsBox   *box);
+static void  ligma_settings_box_export_activate   (GtkWidget         *widget,
+                                                  LigmaSettingsBox   *box);
+static void  ligma_settings_box_manage_activate   (GtkWidget         *widget,
+                                                  LigmaSettingsBox   *box);
 
-static void  gimp_settings_box_favorite_callback (GtkWidget         *query_box,
+static void  ligma_settings_box_favorite_callback (GtkWidget         *query_box,
                                                   const gchar       *string,
                                                   gpointer           data);
-static void  gimp_settings_box_file_dialog       (GimpSettingsBox   *box,
+static void  ligma_settings_box_file_dialog       (LigmaSettingsBox   *box,
                                                   const gchar       *title,
                                                   gboolean           save);
-static void  gimp_settings_box_file_response     (GtkWidget         *dialog,
+static void  ligma_settings_box_file_response     (GtkWidget         *dialog,
                                                   gint               response_id,
-                                                  GimpSettingsBox   *box);
-static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
+                                                  LigmaSettingsBox   *box);
+static void  ligma_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
                                                   GtkWidget         *dialog);
-static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
+static void  ligma_settings_box_truncate_list     (LigmaSettingsBox   *box,
                                                   gint               max_recent);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSettingsBox, ligma_settings_box, GTK_TYPE_BOX)
 
-#define parent_class gimp_settings_box_parent_class
+#define parent_class ligma_settings_box_parent_class
 
 static guint settings_box_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
+ligma_settings_box_class_init (LigmaSettingsBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -159,9 +159,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
     g_signal_new ("file-dialog-setup",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpSettingsBoxClass, file_dialog_setup),
+                  G_STRUCT_OFFSET (LigmaSettingsBoxClass, file_dialog_setup),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_BOOLEAN,
+                  ligma_marshal_VOID__OBJECT_BOOLEAN,
                   G_TYPE_NONE, 2,
                   GTK_TYPE_FILE_CHOOSER_DIALOG,
                   G_TYPE_BOOLEAN);
@@ -170,9 +170,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
     g_signal_new ("import",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpSettingsBoxClass, import),
+                  G_STRUCT_OFFSET (LigmaSettingsBoxClass, import),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__OBJECT,
+                  ligma_marshal_BOOLEAN__OBJECT,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_FILE);
 
@@ -180,9 +180,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
     g_signal_new ("export",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpSettingsBoxClass, export),
+                  G_STRUCT_OFFSET (LigmaSettingsBoxClass, export),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__OBJECT,
+                  ligma_marshal_BOOLEAN__OBJECT,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_FILE);
 
@@ -190,80 +190,80 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
     g_signal_new ("selected",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpSettingsBoxClass, selected),
+                  G_STRUCT_OFFSET (LigmaSettingsBoxClass, selected),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_CONFIG);
+                  LIGMA_TYPE_CONFIG);
 
-  object_class->constructed  = gimp_settings_box_constructed;
-  object_class->finalize     = gimp_settings_box_finalize;
-  object_class->set_property = gimp_settings_box_set_property;
-  object_class->get_property = gimp_settings_box_get_property;
+  object_class->constructed  = ligma_settings_box_constructed;
+  object_class->finalize     = ligma_settings_box_finalize;
+  object_class->set_property = ligma_settings_box_set_property;
+  object_class->get_property = ligma_settings_box_get_property;
 
   klass->file_dialog_setup   = NULL;
   klass->import              = NULL;
   klass->export              = NULL;
   klass->selected            = NULL;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONFIG,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONFIG,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CONTAINER,
                                    g_param_spec_object ("container",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTAINER,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_IMPORT_TITLE,
                                    g_param_spec_string ("import-title",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_EXPORT_TITLE,
                                    g_param_spec_string ("export-title",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_DEFAULT_FOLDER,
                                    g_param_spec_object ("default-folder",
                                                         NULL, NULL,
                                                         G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LAST_FILE,
                                    g_param_spec_object ("last-file",
                                                         NULL, NULL,
                                                         G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_settings_box_init (GimpSettingsBox *box)
+ligma_settings_box_init (LigmaSettingsBox *box)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -272,10 +272,10 @@ gimp_settings_box_init (GimpSettingsBox *box)
 }
 
 static void
-gimp_settings_box_constructed (GObject *object)
+ligma_settings_box_constructed (GObject *object)
 {
-  GimpSettingsBox        *box     = GIMP_SETTINGS_BOX (object);
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsBox        *box     = LIGMA_SETTINGS_BOX (object);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (object);
   GtkWidget              *hbox2;
   GtkWidget              *button;
   GtkWidget              *image;
@@ -283,24 +283,24 @@ gimp_settings_box_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (private->gimp));
-  gimp_assert (GIMP_IS_CONFIG (private->config));
-  gimp_assert (GIMP_IS_CONTAINER (private->container));
+  ligma_assert (LIGMA_IS_LIGMA (private->ligma));
+  ligma_assert (LIGMA_IS_CONFIG (private->config));
+  ligma_assert (LIGMA_IS_CONTAINER (private->container));
 
-  private->combo = gimp_container_combo_box_new (private->container,
-                                                 gimp_get_user_context (private->gimp),
+  private->combo = ligma_container_combo_box_new (private->container,
+                                                 ligma_get_user_context (private->ligma),
                                                  16, 0);
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (private->combo),
-                                        gimp_settings_box_row_separator_func,
+                                        ligma_settings_box_row_separator_func,
                                         NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), private->combo, TRUE, TRUE, 0);
   gtk_widget_show (private->combo);
 
-  gimp_help_set_help_data (private->combo, _("Pick a preset from the list"),
+  ligma_help_set_help_data (private->combo, _("Pick a preset from the list"),
                            NULL);
 
   g_signal_connect_after (private->combo, "select-items",
-                          G_CALLBACK (gimp_settings_box_setting_selected),
+                          G_CALLBACK (ligma_settings_box_setting_selected),
                           box);
 
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -314,17 +314,17 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_LIST_ADD,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Save the current settings as named preset"),
                            NULL);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_settings_box_favorite_activate),
+                    G_CALLBACK (ligma_settings_box_favorite_activate),
                     box);
 
   button = gtk_button_new ();
@@ -333,15 +333,15 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  arrow = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+  arrow = gtk_image_new_from_icon_name (LIGMA_ICON_MENU_LEFT,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), arrow);
   gtk_widget_show (arrow);
 
-  gimp_help_set_help_data (button, _("Manage presets"), NULL);
+  ligma_help_set_help_data (button, _("Manage presets"), NULL);
 
   g_signal_connect (button, "button-press-event",
-                    G_CALLBACK (gimp_settings_box_menu_press),
+                    G_CALLBACK (ligma_settings_box_menu_press),
                     box);
 
   /*  Favorites menu  */
@@ -350,26 +350,26 @@ gimp_settings_box_constructed (GObject *object)
   gtk_menu_attach_to_widget (GTK_MENU (private->menu), button, NULL);
 
   private->import_item =
-    gimp_settings_box_menu_item_add (box,
+    ligma_settings_box_menu_item_add (box,
                                      _("_Import Current Settings from File..."),
-                                     G_CALLBACK (gimp_settings_box_import_activate));
+                                     G_CALLBACK (ligma_settings_box_import_activate));
 
   private->export_item =
-    gimp_settings_box_menu_item_add (box,
+    ligma_settings_box_menu_item_add (box,
                                      _("_Export Current Settings to File..."),
-                                     G_CALLBACK (gimp_settings_box_export_activate));
+                                     G_CALLBACK (ligma_settings_box_export_activate));
 
-  gimp_settings_box_menu_item_add (box, NULL, NULL);
+  ligma_settings_box_menu_item_add (box, NULL, NULL);
 
-  gimp_settings_box_menu_item_add (box,
+  ligma_settings_box_menu_item_add (box,
                                    _("_Manage Saved Presets..."),
-                                   G_CALLBACK (gimp_settings_box_manage_activate));
+                                   G_CALLBACK (ligma_settings_box_manage_activate));
 }
 
 static void
-gimp_settings_box_finalize (GObject *object)
+ligma_settings_box_finalize (GObject *object)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->config);
   g_clear_object (&private->container);
@@ -390,17 +390,17 @@ gimp_settings_box_finalize (GObject *object)
 }
 
 static void
-gimp_settings_box_set_property (GObject      *object,
+ligma_settings_box_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value); /* don't dup */
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value); /* don't dup */
       break;
 
     case PROP_CONFIG:
@@ -420,7 +420,7 @@ gimp_settings_box_set_property (GObject      *object,
         g_object_unref (private->container);
       private->container = g_value_dup_object (value);
       if (private->combo)
-        gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->combo),
+        ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (private->combo),
                                            private->container);
       break;
 
@@ -458,17 +458,17 @@ gimp_settings_box_set_property (GObject      *object,
 }
 
 static void
-gimp_settings_box_get_property (GObject    *object,
+ligma_settings_box_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
 
     case PROP_CONFIG:
@@ -506,11 +506,11 @@ gimp_settings_box_get_property (GObject    *object,
 }
 
 static GtkWidget *
-gimp_settings_box_menu_item_add (GimpSettingsBox *box,
+ligma_settings_box_menu_item_add (LigmaSettingsBox *box,
                                  const gchar     *label,
                                  GCallback        callback)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget              *item;
 
   if (label)
@@ -533,14 +533,14 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
 }
 
 static gboolean
-gimp_settings_box_row_separator_func (GtkTreeModel *model,
+ligma_settings_box_row_separator_func (GtkTreeModel *model,
                                       GtkTreeIter  *iter,
                                       gpointer      data)
 {
   gchar *name = NULL;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, &name,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, &name,
                       -1);
   g_free (name);
 
@@ -548,10 +548,10 @@ gimp_settings_box_row_separator_func (GtkTreeModel *model,
 }
 
 static gboolean
-gimp_settings_box_setting_selected (GimpContainerView *view,
+ligma_settings_box_setting_selected (LigmaContainerView *view,
                                     GList             *objects,
                                     GList             *paths,
-                                    GimpSettingsBox   *box)
+                                    LigmaSettingsBox   *box)
 {
   g_return_val_if_fail (g_list_length (objects) < 2, FALSE);
 
@@ -563,11 +563,11 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
 }
 
 static gboolean
-gimp_settings_box_menu_press (GtkWidget       *widget,
+ligma_settings_box_menu_press (GtkWidget       *widget,
                               GdkEventButton  *bevent,
-                              GimpSettingsBox *box)
+                              LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
 
   if (bevent->type == GDK_BUTTON_PRESS)
     {
@@ -581,46 +581,46 @@ gimp_settings_box_menu_press (GtkWidget       *widget,
 }
 
 static void
-gimp_settings_box_favorite_activate (GtkWidget       *widget,
-                                     GimpSettingsBox *box)
+ligma_settings_box_favorite_activate (GtkWidget       *widget,
+                                     LigmaSettingsBox *box)
 {
   GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
   GtkWidget *dialog;
 
-  dialog = gimp_query_string_box (_("Save Settings as Named Preset"),
+  dialog = ligma_query_string_box (_("Save Settings as Named Preset"),
                                   toplevel,
-                                  gimp_standard_help_func, NULL,
+                                  ligma_standard_help_func, NULL,
                                   _("Enter a name for the preset"),
                                   _("Saved Settings"),
                                   G_OBJECT (toplevel), "hide",
-                                  gimp_settings_box_favorite_callback,
+                                  ligma_settings_box_favorite_callback,
                                   box, NULL);
   gtk_widget_show (dialog);
 }
 
 static void
-gimp_settings_box_import_activate (GtkWidget       *widget,
-                                   GimpSettingsBox *box)
+ligma_settings_box_import_activate (GtkWidget       *widget,
+                                   LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
 
-  gimp_settings_box_file_dialog (box, private->import_title, FALSE);
+  ligma_settings_box_file_dialog (box, private->import_title, FALSE);
 }
 
 static void
-gimp_settings_box_export_activate (GtkWidget       *widget,
-                                   GimpSettingsBox *box)
+ligma_settings_box_export_activate (GtkWidget       *widget,
+                                   LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
 
-  gimp_settings_box_file_dialog (box, private->export_title, TRUE);
+  ligma_settings_box_file_dialog (box, private->export_title, TRUE);
 }
 
 static void
-gimp_settings_box_manage_activate (GtkWidget       *widget,
-                                   GimpSettingsBox *box)
+ligma_settings_box_manage_activate (GtkWidget       *widget,
+                                   LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget              *toplevel;
   GtkWidget              *editor;
   GtkWidget              *content_area;
@@ -633,8 +633,8 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  private->editor_dialog = gimp_dialog_new (_("Manage Saved Presets"),
-                                            "gimp-settings-editor-dialog",
+  private->editor_dialog = ligma_dialog_new (_("Manage Saved Presets"),
+                                            "ligma-settings-editor-dialog",
                                             toplevel, 0,
                                             NULL, NULL,
 
@@ -645,14 +645,14 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
   g_object_add_weak_pointer (G_OBJECT (private->editor_dialog),
                              (gpointer) &private->editor_dialog);
   g_signal_connect_object (toplevel, "unmap",
-                           G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                           G_CALLBACK (ligma_settings_box_toplevel_unmap),
                            private->editor_dialog, 0);
 
   g_signal_connect (private->editor_dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     box);
 
-  editor = gimp_settings_editor_new (private->gimp,
+  editor = ligma_settings_editor_new (private->ligma,
                                      private->config,
                                      private->container);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
@@ -665,28 +665,28 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 }
 
 static void
-gimp_settings_box_favorite_callback (GtkWidget   *query_box,
+ligma_settings_box_favorite_callback (GtkWidget   *query_box,
                                      const gchar *string,
                                      gpointer     data)
 {
-  GimpSettingsBox        *box     = GIMP_SETTINGS_BOX (data);
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
-  GimpConfig             *config;
+  LigmaSettingsBox        *box     = LIGMA_SETTINGS_BOX (data);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaConfig             *config;
 
-  config = gimp_config_duplicate (GIMP_CONFIG (private->config));
-  gimp_object_set_name (GIMP_OBJECT (config), string);
-  gimp_container_add (private->container, GIMP_OBJECT (config));
+  config = ligma_config_duplicate (LIGMA_CONFIG (private->config));
+  ligma_object_set_name (LIGMA_OBJECT (config), string);
+  ligma_container_add (private->container, LIGMA_OBJECT (config));
   g_object_unref (config);
 
-  gimp_operation_config_serialize (private->gimp, private->container, NULL);
+  ligma_operation_config_serialize (private->ligma, private->container, NULL);
 }
 
 static void
-gimp_settings_box_file_dialog (GimpSettingsBox *box,
+ligma_settings_box_file_dialog (LigmaSettingsBox *box,
                                const gchar     *title,
                                gboolean         save)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget              *toplevel;
   GtkWidget              *dialog;
 
@@ -716,21 +716,21 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                  NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-import-export-settings");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-import-export-settings");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
   g_object_add_weak_pointer (G_OBJECT (dialog),
                              (gpointer) &private->file_dialog);
   g_signal_connect_object (toplevel, "unmap",
-                           G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                           G_CALLBACK (ligma_settings_box_toplevel_unmap),
                            dialog, 0);
 
   if (save)
@@ -738,7 +738,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                                     TRUE);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gimp_settings_box_file_response),
+                    G_CALLBACK (ligma_settings_box_file_response),
                     box);
   g_signal_connect (dialog, "delete-event",
                     G_CALLBACK (gtk_true),
@@ -769,7 +769,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
     gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog),
                                private->last_file, NULL);
 
-  gimp_help_connect (private->file_dialog, gimp_standard_help_func,
+  ligma_help_connect (private->file_dialog, ligma_standard_help_func,
                      private->help_id, NULL, NULL);
 
   /*  allow callbacks to add widgets to the dialog  */
@@ -780,11 +780,11 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 }
 
 static void
-gimp_settings_box_file_response (GtkWidget       *dialog,
+ligma_settings_box_file_response (GtkWidget       *dialog,
                                  gint             response_id,
-                                 GimpSettingsBox *box)
+                                 LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
   gboolean                save;
 
   save = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "save"));
@@ -826,24 +826,24 @@ gimp_settings_box_file_response (GtkWidget       *dialog,
 }
 
 static void
-gimp_settings_box_toplevel_unmap (GtkWidget *toplevel,
+ligma_settings_box_toplevel_unmap (GtkWidget *toplevel,
                                   GtkWidget *dialog)
 {
   gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_DELETE_EVENT);
 }
 
 static void
-gimp_settings_box_truncate_list (GimpSettingsBox *box,
+ligma_settings_box_truncate_list (LigmaSettingsBox *box,
                                  gint             max_recent)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaSettingsBoxPrivate *private = GET_PRIVATE (box);
   GList                  *list;
   gint                    n_recent = 0;
 
-  list = GIMP_LIST (private->container)->queue->head;
+  list = LIGMA_LIST (private->container)->queue->head;
   while (list)
     {
-      GimpConfig *config = list->data;
+      LigmaConfig *config = list->data;
       gint64      t;
 
       list = g_list_next (list);
@@ -857,7 +857,7 @@ gimp_settings_box_truncate_list (GimpSettingsBox *box,
           n_recent++;
 
           if (n_recent > max_recent)
-            gimp_container_remove (private->container, GIMP_OBJECT (config));
+            ligma_container_remove (private->container, LIGMA_OBJECT (config));
         }
       else
         {
@@ -870,24 +870,24 @@ gimp_settings_box_truncate_list (GimpSettingsBox *box,
 /*  public functions  */
 
 GtkWidget *
-gimp_settings_box_new (Gimp          *gimp,
+ligma_settings_box_new (Ligma          *ligma,
                        GObject       *config,
-                       GimpContainer *container,
+                       LigmaContainer *container,
                        const gchar   *import_title,
                        const gchar   *export_title,
                        const gchar   *help_id,
                        GFile         *default_folder,
                        GFile         *last_file)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (default_folder == NULL || G_IS_FILE (default_folder),
                         NULL);
   g_return_val_if_fail (last_file == NULL || G_IS_FILE (last_file), NULL);
 
-  return g_object_new (GIMP_TYPE_SETTINGS_BOX,
-                       "gimp",           gimp,
+  return g_object_new (LIGMA_TYPE_SETTINGS_BOX,
+                       "ligma",           ligma,
                        "config",         config,
                        "container",      container,
                        "help-id",        help_id,
@@ -899,26 +899,26 @@ gimp_settings_box_new (Gimp          *gimp,
 }
 
 GtkWidget *
-gimp_settings_box_get_combo (GimpSettingsBox *box)
+ligma_settings_box_get_combo (LigmaSettingsBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_SETTINGS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_SETTINGS_BOX (box), NULL);
 
   return GET_PRIVATE (box)->combo;
 }
 
 void
-gimp_settings_box_add_current (GimpSettingsBox *box,
+ligma_settings_box_add_current (LigmaSettingsBox *box,
                                gint             max_recent)
 {
-  GimpSettingsBoxPrivate *private;
-  GimpConfig             *config = NULL;
+  LigmaSettingsBoxPrivate *private;
+  LigmaConfig             *config = NULL;
   GList                  *list;
 
-  g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
+  g_return_if_fail (LIGMA_IS_SETTINGS_BOX (box));
 
   private = GET_PRIVATE (box);
 
-  for (list = GIMP_LIST (private->container)->queue->head;
+  for (list = LIGMA_LIST (private->container)->queue->head;
        list;
        list = g_list_next (list))
     {
@@ -930,8 +930,8 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
                     "time", &t,
                     NULL);
 
-      if (t > 0 && gimp_config_is_equal_to (config,
-                                            GIMP_CONFIG (private->config)))
+      if (t > 0 && ligma_config_is_equal_to (config,
+                                            LIGMA_CONFIG (private->config)))
         {
           GDateTime *now = g_date_time_new_now_utc ();
 
@@ -948,30 +948,30 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
     {
       GDateTime *now = g_date_time_new_now_utc ();
 
-      config = gimp_config_duplicate (GIMP_CONFIG (private->config));
+      config = ligma_config_duplicate (LIGMA_CONFIG (private->config));
 
       g_object_set (config,
                     "time", g_date_time_to_unix (now),
                     NULL);
       g_date_time_unref (now);
 
-      gimp_container_insert (private->container, GIMP_OBJECT (config), 0);
+      ligma_container_insert (private->container, LIGMA_OBJECT (config), 0);
       g_object_unref (config);
     }
 
-  gimp_settings_box_truncate_list (box, max_recent);
+  ligma_settings_box_truncate_list (box, max_recent);
 
-  gimp_operation_config_serialize (private->gimp, private->container, NULL);
+  ligma_operation_config_serialize (private->ligma, private->container, NULL);
 }
 
 void
-gimp_settings_box_unset (GimpSettingsBox *box)
+ligma_settings_box_unset (LigmaSettingsBox *box)
 {
-  GimpSettingsBoxPrivate *private;
+  LigmaSettingsBoxPrivate *private;
 
-  g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
+  g_return_if_fail (LIGMA_IS_SETTINGS_BOX (box));
 
   private = GET_PRIVATE (box);
 
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (private->combo), NULL);
+  ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (private->combo), NULL);
 }

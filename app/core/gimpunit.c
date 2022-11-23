@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpunit.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * ligmaunit.c
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,14 +26,14 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpunit.h"
+#include "ligma.h"
+#include "ligmaunit.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* internal structures */
@@ -48,12 +48,12 @@ typedef struct
   gchar    *abbreviation;
   gchar    *singular;
   gchar    *plural;
-} GimpUnitDef;
+} LigmaUnitDef;
 
 
 /*  these are the built-in units
  */
-static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
+static const LigmaUnitDef ligma_unit_defs[LIGMA_UNIT_END] =
 {
   /* pseudo unit */
   { FALSE,  0.0, 0, "pixels",      "px", "px",
@@ -76,7 +76,7 @@ static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 
 /*  not a unit at all but kept here to have the strings in one place
  */
-static const GimpUnitDef gimp_unit_percent =
+static const LigmaUnitDef ligma_unit_percent =
 {
     FALSE,  0.0, 0, "percent",     "%",  "%",
     NC_("singular", "percent"),    NC_("plural", "percent")
@@ -85,30 +85,30 @@ static const GimpUnitDef gimp_unit_percent =
 
 /* private functions */
 
-static GimpUnitDef *
-_gimp_unit_get_user_unit (Gimp     *gimp,
-                          GimpUnit  unit)
+static LigmaUnitDef *
+_ligma_unit_get_user_unit (Ligma     *ligma,
+                          LigmaUnit  unit)
 {
-  return g_list_nth_data (gimp->user_units, unit - GIMP_UNIT_END);
+  return g_list_nth_data (ligma->user_units, unit - LIGMA_UNIT_END);
 }
 
 
 /* public functions */
 
 gint
-_gimp_unit_get_number_of_units (Gimp *gimp)
+_ligma_unit_get_number_of_units (Ligma *ligma)
 {
-  return GIMP_UNIT_END + gimp->n_user_units;
+  return LIGMA_UNIT_END + ligma->n_user_units;
 }
 
 gint
-_gimp_unit_get_number_of_built_in_units (Gimp *gimp)
+_ligma_unit_get_number_of_built_in_units (Ligma *ligma)
 {
-  return GIMP_UNIT_END;
+  return LIGMA_UNIT_END;
 }
 
-GimpUnit
-_gimp_unit_new (Gimp        *gimp,
+LigmaUnit
+_ligma_unit_new (Ligma        *ligma,
                 const gchar *identifier,
                 gdouble      factor,
                 gint         digits,
@@ -117,7 +117,7 @@ _gimp_unit_new (Gimp        *gimp,
                 const gchar *singular,
                 const gchar *plural)
 {
-  GimpUnitDef *user_unit = g_slice_new0 (GimpUnitDef);
+  LigmaUnitDef *user_unit = g_slice_new0 (LigmaUnitDef);
 
   user_unit->delete_on_exit = TRUE;
   user_unit->factor         = factor;
@@ -128,167 +128,167 @@ _gimp_unit_new (Gimp        *gimp,
   user_unit->singular       = g_strdup (singular);
   user_unit->plural         = g_strdup (plural);
 
-  gimp->user_units = g_list_append (gimp->user_units, user_unit);
-  gimp->n_user_units++;
+  ligma->user_units = g_list_append (ligma->user_units, user_unit);
+  ligma->n_user_units++;
 
-  return GIMP_UNIT_END + gimp->n_user_units - 1;
+  return LIGMA_UNIT_END + ligma->n_user_units - 1;
 }
 
 gboolean
-_gimp_unit_get_deletion_flag (Gimp     *gimp,
-                              GimpUnit  unit)
+_ligma_unit_get_deletion_flag (Ligma     *ligma,
+                              LigmaUnit  unit)
 {
-  g_return_val_if_fail (unit < (GIMP_UNIT_END + gimp->n_user_units), FALSE);
+  g_return_val_if_fail (unit < (LIGMA_UNIT_END + ligma->n_user_units), FALSE);
 
-  if (unit < GIMP_UNIT_END)
+  if (unit < LIGMA_UNIT_END)
     return FALSE;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->delete_on_exit;
+  return _ligma_unit_get_user_unit (ligma, unit)->delete_on_exit;
 }
 
 void
-_gimp_unit_set_deletion_flag (Gimp     *gimp,
-                              GimpUnit  unit,
+_ligma_unit_set_deletion_flag (Ligma     *ligma,
+                              LigmaUnit  unit,
                               gboolean  deletion_flag)
 {
-  g_return_if_fail ((unit >= GIMP_UNIT_END) &&
-                    (unit < (GIMP_UNIT_END + gimp->n_user_units)));
+  g_return_if_fail ((unit >= LIGMA_UNIT_END) &&
+                    (unit < (LIGMA_UNIT_END + ligma->n_user_units)));
 
-  _gimp_unit_get_user_unit (gimp, unit)->delete_on_exit =
+  _ligma_unit_get_user_unit (ligma, unit)->delete_on_exit =
     deletion_flag ? TRUE : FALSE;
 }
 
 gdouble
-_gimp_unit_get_factor (Gimp     *gimp,
-                       GimpUnit  unit)
+_ligma_unit_get_factor (Ligma     *ligma,
+                       LigmaUnit  unit)
 {
-  g_return_val_if_fail (unit < (GIMP_UNIT_END + gimp->n_user_units) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].factor);
+  g_return_val_if_fail (unit < (LIGMA_UNIT_END + ligma->n_user_units) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].factor);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].factor;
+  if (unit < LIGMA_UNIT_END)
+    return ligma_unit_defs[unit].factor;
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return gimp_unit_percent.factor;
+  if (unit == LIGMA_UNIT_PERCENT)
+    return ligma_unit_percent.factor;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->factor;
+  return _ligma_unit_get_user_unit (ligma, unit)->factor;
 }
 
 gint
-_gimp_unit_get_digits (Gimp     *gimp,
-                       GimpUnit  unit)
+_ligma_unit_get_digits (Ligma     *ligma,
+                       LigmaUnit  unit)
 {
-  g_return_val_if_fail (unit < (GIMP_UNIT_END + gimp->n_user_units) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].digits);
+  g_return_val_if_fail (unit < (LIGMA_UNIT_END + ligma->n_user_units) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].digits);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].digits;
+  if (unit < LIGMA_UNIT_END)
+    return ligma_unit_defs[unit].digits;
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return gimp_unit_percent.digits;
+  if (unit == LIGMA_UNIT_PERCENT)
+    return ligma_unit_percent.digits;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->digits;
+  return _ligma_unit_get_user_unit (ligma, unit)->digits;
 }
 
 const gchar *
-_gimp_unit_get_identifier (Gimp     *gimp,
-                           GimpUnit  unit)
+_ligma_unit_get_identifier (Ligma     *ligma,
+                           LigmaUnit  unit)
 {
-  g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].identifier);
+  g_return_val_if_fail ((unit < (LIGMA_UNIT_END + ligma->n_user_units)) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].identifier);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].identifier;
+  if (unit < LIGMA_UNIT_END)
+    return ligma_unit_defs[unit].identifier;
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return gimp_unit_percent.identifier;
+  if (unit == LIGMA_UNIT_PERCENT)
+    return ligma_unit_percent.identifier;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->identifier;
+  return _ligma_unit_get_user_unit (ligma, unit)->identifier;
 }
 
 const gchar *
-_gimp_unit_get_symbol (Gimp     *gimp,
-                       GimpUnit  unit)
+_ligma_unit_get_symbol (Ligma     *ligma,
+                       LigmaUnit  unit)
 {
-  g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].symbol);
+  g_return_val_if_fail ((unit < (LIGMA_UNIT_END + ligma->n_user_units)) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].symbol);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].symbol;
+  if (unit < LIGMA_UNIT_END)
+    return ligma_unit_defs[unit].symbol;
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return gimp_unit_percent.symbol;
+  if (unit == LIGMA_UNIT_PERCENT)
+    return ligma_unit_percent.symbol;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->symbol;
+  return _ligma_unit_get_user_unit (ligma, unit)->symbol;
 }
 
 const gchar *
-_gimp_unit_get_abbreviation (Gimp     *gimp,
-                             GimpUnit  unit)
+_ligma_unit_get_abbreviation (Ligma     *ligma,
+                             LigmaUnit  unit)
 {
-  g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].abbreviation);
+  g_return_val_if_fail ((unit < (LIGMA_UNIT_END + ligma->n_user_units)) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].abbreviation);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].abbreviation;
+  if (unit < LIGMA_UNIT_END)
+    return ligma_unit_defs[unit].abbreviation;
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return gimp_unit_percent.abbreviation;
+  if (unit == LIGMA_UNIT_PERCENT)
+    return ligma_unit_percent.abbreviation;
 
-  return _gimp_unit_get_user_unit (gimp, unit)->abbreviation;
+  return _ligma_unit_get_user_unit (ligma, unit)->abbreviation;
 }
 
 const gchar *
-_gimp_unit_get_singular (Gimp     *gimp,
-                         GimpUnit  unit)
+_ligma_unit_get_singular (Ligma     *ligma,
+                         LigmaUnit  unit)
 {
-  g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].singular);
+  g_return_val_if_fail ((unit < (LIGMA_UNIT_END + ligma->n_user_units)) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].singular);
 
-  if (unit < GIMP_UNIT_END)
-    return g_dpgettext2 (NULL, "unit-singular", gimp_unit_defs[unit].singular);
+  if (unit < LIGMA_UNIT_END)
+    return g_dpgettext2 (NULL, "unit-singular", ligma_unit_defs[unit].singular);
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return g_dpgettext2 (NULL, "unit-singular", gimp_unit_percent.singular);
+  if (unit == LIGMA_UNIT_PERCENT)
+    return g_dpgettext2 (NULL, "unit-singular", ligma_unit_percent.singular);
 
-  return _gimp_unit_get_user_unit (gimp, unit)->singular;
+  return _ligma_unit_get_user_unit (ligma, unit)->singular;
 }
 
 const gchar *
-_gimp_unit_get_plural (Gimp     *gimp,
-                       GimpUnit  unit)
+_ligma_unit_get_plural (Ligma     *ligma,
+                       LigmaUnit  unit)
 {
-  g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
-                        (unit == GIMP_UNIT_PERCENT),
-                        gimp_unit_defs[GIMP_UNIT_INCH].plural);
+  g_return_val_if_fail ((unit < (LIGMA_UNIT_END + ligma->n_user_units)) ||
+                        (unit == LIGMA_UNIT_PERCENT),
+                        ligma_unit_defs[LIGMA_UNIT_INCH].plural);
 
-  if (unit < GIMP_UNIT_END)
-    return g_dpgettext2 (NULL, "unit-plural", gimp_unit_defs[unit].plural);
+  if (unit < LIGMA_UNIT_END)
+    return g_dpgettext2 (NULL, "unit-plural", ligma_unit_defs[unit].plural);
 
-  if (unit == GIMP_UNIT_PERCENT)
-    return g_dpgettext2 (NULL, "unit-plural", gimp_unit_percent.plural);
+  if (unit == LIGMA_UNIT_PERCENT)
+    return g_dpgettext2 (NULL, "unit-plural", ligma_unit_percent.plural);
 
-  return _gimp_unit_get_user_unit (gimp, unit)->plural;
+  return _ligma_unit_get_user_unit (ligma, unit)->plural;
 }
 
 
 /* The sole purpose of this function is to release the allocated
- * memory. It must only be used from gimp_units_exit().
+ * memory. It must only be used from ligma_units_exit().
  */
 void
-gimp_user_units_free (Gimp *gimp)
+ligma_user_units_free (Ligma *ligma)
 {
   GList *list;
 
-  for (list = gimp->user_units; list; list = g_list_next (list))
+  for (list = ligma->user_units; list; list = g_list_next (list))
     {
-      GimpUnitDef *user_unit = list->data;
+      LigmaUnitDef *user_unit = list->data;
 
       g_free (user_unit->identifier);
       g_free (user_unit->symbol);
@@ -296,10 +296,10 @@ gimp_user_units_free (Gimp *gimp)
       g_free (user_unit->singular);
       g_free (user_unit->plural);
 
-      g_slice_free (GimpUnitDef, user_unit);
+      g_slice_free (LigmaUnitDef, user_unit);
     }
 
-  g_list_free (gimp->user_units);
-  gimp->user_units   = NULL;
-  gimp->n_user_units = 0;
+  g_list_free (ligma->user_units);
+  ligma->user_units   = NULL;
+  ligma->n_user_units = 0;
 }

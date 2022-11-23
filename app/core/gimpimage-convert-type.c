@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,59 +21,59 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "gimp.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-color-profile.h"
-#include "gimpimage-colormap.h"
-#include "gimpimage-convert-type.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimpobjectqueue.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmadrawable.h"
+#include "ligmaimage.h"
+#include "ligmaimage-color-profile.h"
+#include "ligmaimage-colormap.h"
+#include "ligmaimage-convert-type.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmaobjectqueue.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 gboolean
-gimp_image_convert_type (GimpImage          *image,
-                         GimpImageBaseType   new_type,
-                         GimpColorProfile   *dest_profile,
-                         GimpProgress       *progress,
+ligma_image_convert_type (LigmaImage          *image,
+                         LigmaImageBaseType   new_type,
+                         LigmaColorProfile   *dest_profile,
+                         LigmaProgress       *progress,
                          GError            **error)
 {
-  GimpColorProfile  *src_profile;
-  GimpImageBaseType  old_type;
+  LigmaColorProfile  *src_profile;
+  LigmaImageBaseType  old_type;
   const Babl        *new_layer_format;
-  GimpObjectQueue   *queue;
+  LigmaObjectQueue   *queue;
   GList             *all_layers;
-  GimpDrawable      *drawable;
+  LigmaDrawable      *drawable;
   const gchar       *undo_desc = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (new_type != gimp_image_get_base_type (image), FALSE);
-  g_return_val_if_fail (new_type != GIMP_INDEXED, FALSE);
-  g_return_val_if_fail (gimp_babl_is_valid (new_type,
-                                            gimp_image_get_precision (image)),
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (new_type != ligma_image_get_base_type (image), FALSE);
+  g_return_val_if_fail (new_type != LIGMA_INDEXED, FALSE);
+  g_return_val_if_fail (ligma_babl_is_valid (new_type,
+                                            ligma_image_get_precision (image)),
                         FALSE);
-  g_return_val_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile),
+  g_return_val_if_fail (dest_profile == NULL || LIGMA_IS_COLOR_PROFILE (dest_profile),
                         FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  new_layer_format = gimp_babl_format (new_type,
-                                       gimp_image_get_precision (image),
+  new_layer_format = ligma_babl_format (new_type,
+                                       ligma_image_get_precision (image),
                                        TRUE,
-                                       gimp_image_get_layer_space (image));
+                                       ligma_image_get_layer_space (image));
 
   if (dest_profile &&
-      ! gimp_image_validate_color_profile_by_format (new_layer_format,
+      ! ligma_image_validate_color_profile_by_format (new_layer_format,
                                                      dest_profile,
                                                      NULL, error))
     {
@@ -82,11 +82,11 @@ gimp_image_convert_type (GimpImage          *image,
 
   switch (new_type)
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       undo_desc = C_("undo-type", "Convert Image to RGB");
       break;
 
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       undo_desc = C_("undo-type", "Convert Image to Grayscale");
       break;
 
@@ -94,27 +94,27 @@ gimp_image_convert_type (GimpImage          *image,
       g_return_val_if_reached (FALSE);
     }
 
-  gimp_set_busy (image->gimp);
+  ligma_set_busy (image->ligma);
 
-  queue    = gimp_object_queue_new (progress);
-  progress = GIMP_PROGRESS (queue);
+  queue    = ligma_object_queue_new (progress);
+  progress = LIGMA_PROGRESS (queue);
 
-  all_layers = gimp_image_get_layer_list (image);
-  gimp_object_queue_push_list (queue, all_layers);
+  all_layers = ligma_image_get_layer_list (image);
+  ligma_object_queue_push_list (queue, all_layers);
   g_list_free (all_layers);
 
   g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
-  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+  src_profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
   /*  Push the image type to the stack  */
-  gimp_image_undo_push_image_type (image, NULL);
+  ligma_image_undo_push_image_type (image, NULL);
 
   /*  Set the new base type  */
-  old_type = gimp_image_get_base_type (image);
+  old_type = ligma_image_get_base_type (image);
 
   g_object_set (image, "base-type", new_type, NULL);
 
@@ -122,44 +122,44 @@ gimp_image_convert_type (GimpImage          *image,
    *  builtin profile as a fallback, we need one for convert_type on
    *  the same image
    */
-  if (old_type == GIMP_GRAY ||
-      new_type == GIMP_GRAY)
+  if (old_type == LIGMA_GRAY ||
+      new_type == LIGMA_GRAY)
     {
       if (! dest_profile)
-        dest_profile = gimp_image_get_builtin_color_profile (image);
+        dest_profile = ligma_image_get_builtin_color_profile (image);
     }
 
-  while ((drawable = gimp_object_queue_pop (queue)))
+  while ((drawable = ligma_object_queue_pop (queue)))
     {
-      gimp_drawable_convert_type (drawable, image,
+      ligma_drawable_convert_type (drawable, image,
                                   new_type,
-                                  gimp_drawable_get_precision (drawable),
-                                  gimp_drawable_has_alpha (drawable),
+                                  ligma_drawable_get_precision (drawable),
+                                  ligma_drawable_has_alpha (drawable),
                                   src_profile,
                                   dest_profile,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   TRUE, progress);
     }
 
-  if (old_type == GIMP_INDEXED)
-    gimp_image_unset_colormap (image, TRUE);
+  if (old_type == LIGMA_INDEXED)
+    ligma_image_unset_colormap (image, TRUE);
 
   /*  When converting to/from GRAY, set the new profile.
    */
-  if (old_type == GIMP_GRAY ||
-      new_type == GIMP_GRAY)
+  if (old_type == LIGMA_GRAY ||
+      new_type == LIGMA_GRAY)
     {
-      gimp_image_set_color_profile (image, dest_profile, NULL);
+      ligma_image_set_color_profile (image, dest_profile, NULL);
     }
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_image_mode_changed (image);
+  ligma_image_mode_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
 
   g_object_unref (queue);
 
-  gimp_unset_busy (image->gimp);
+  ligma_unset_busy (image->ligma);
 
   return TRUE;
 }

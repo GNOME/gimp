@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimppdbcontext.c
+ * ligmapdbcontext.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,24 +22,24 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/ligma.h"
+#include "core/ligmalist.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmastrokeoptions.h"
 
-#include "paint/gimpbrushcore.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmabrushcore.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "gimppdbcontext.h"
+#include "ligmapdbcontext.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -61,196 +61,196 @@ enum
 };
 
 
-static void   gimp_pdb_context_iface_init   (GimpConfigInterface *iface);
+static void   ligma_pdb_context_iface_init   (LigmaConfigInterface *iface);
 
-static void   gimp_pdb_context_constructed  (GObject      *object);
-static void   gimp_pdb_context_finalize     (GObject      *object);
-static void   gimp_pdb_context_set_property (GObject      *object,
+static void   ligma_pdb_context_constructed  (GObject      *object);
+static void   ligma_pdb_context_finalize     (GObject      *object);
+static void   ligma_pdb_context_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void   gimp_pdb_context_get_property (GObject      *object,
+static void   ligma_pdb_context_get_property (GObject      *object,
                                              guint         property_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
-static void   gimp_pdb_context_reset        (GimpConfig   *config);
+static void   ligma_pdb_context_reset        (LigmaConfig   *config);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpPDBContext, gimp_pdb_context, GIMP_TYPE_CONTEXT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_pdb_context_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaPDBContext, ligma_pdb_context, LIGMA_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_pdb_context_iface_init))
 
-#define parent_class gimp_pdb_context_parent_class
+#define parent_class ligma_pdb_context_parent_class
 
-static GimpConfigInterface *parent_config_iface = NULL;
+static LigmaConfigInterface *parent_config_iface = NULL;
 
 
 static void
-gimp_pdb_context_class_init (GimpPDBContextClass *klass)
+ligma_pdb_context_class_init (LigmaPDBContextClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_pdb_context_constructed;
-  object_class->finalize     = gimp_pdb_context_finalize;
-  object_class->set_property = gimp_pdb_context_set_property;
-  object_class->get_property = gimp_pdb_context_get_property;
+  object_class->constructed  = ligma_pdb_context_constructed;
+  object_class->finalize     = ligma_pdb_context_finalize;
+  object_class->set_property = ligma_pdb_context_set_property;
+  object_class->get_property = ligma_pdb_context_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                             "antialias",
                             _("Antialiasing"),
                             _("Smooth edges"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
                             "feather",
                             _("Feather"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
                            "feather-radius-x",
                            _("Feather radius X"),
                            NULL,
                            0.0, 1000.0, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
                            "feather-radius-y",
                            _("Feather radius Y"),
                            NULL,
                            0.0, 1000.0, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
                          "sample-criterion",
                          _("Sample criterion"),
                          NULL,
-                         GIMP_TYPE_SELECT_CRITERION,
-                         GIMP_SELECT_CRITERION_COMPOSITE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_SELECT_CRITERION,
+                         LIGMA_SELECT_CRITERION_COMPOSITE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
                            "sample-threshold",
                            _("Sample threshold"),
                            NULL,
                            0.0, 1.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
                             "sample-transparent",
                             _("Sample transparent"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DIAGONAL_NEIGHBORS,
                             "diagonal-neighbors",
                             _("Diagonal neighbors"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
                          "interpolation",
                          _("Interpolation"),
                          NULL,
-                         GIMP_TYPE_INTERPOLATION_TYPE,
-                         GIMP_INTERPOLATION_CUBIC,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_INTERPOLATION_TYPE,
+                         LIGMA_INTERPOLATION_CUBIC,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
                          "transform-direction",
                          _("Transform direction"),
                          NULL,
-                         GIMP_TYPE_TRANSFORM_DIRECTION,
-                         GIMP_TRANSFORM_FORWARD,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TRANSFORM_DIRECTION,
+                         LIGMA_TRANSFORM_FORWARD,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
                          "transform-resize",
                          _("Transform resize"),
                          NULL,
-                         GIMP_TYPE_TRANSFORM_RESIZE,
-                         GIMP_TRANSFORM_RESIZE_ADJUST,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TRANSFORM_RESIZE,
+                         LIGMA_TRANSFORM_RESIZE_ADJUST,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
   /* Legacy blend used "manhattan" metric to compute distance.
    * API needs to stay compatible, hence the default value for this
    * property.
-   * Nevertheless Euclidean distance since to render better; for GIMP 3
+   * Nevertheless Euclidean distance since to render better; for LIGMA 3
    * API, we might therefore want to change the defaults to
    * GEGL_DISTANCE_METRIC_EUCLIDEAN. FIXME.
    */
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
                          "distance-metric",
                          _("Distance metric"),
                          NULL,
                          GEGL_TYPE_DISTANCE_METRIC,
                          GEGL_DISTANCE_METRIC_MANHATTAN,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
 }
 
 static void
-gimp_pdb_context_iface_init (GimpConfigInterface *iface)
+ligma_pdb_context_iface_init (LigmaConfigInterface *iface)
 {
   parent_config_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_config_iface)
-    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+    parent_config_iface = g_type_default_interface_peek (LIGMA_TYPE_CONFIG);
 
-  iface->reset = gimp_pdb_context_reset;
+  iface->reset = ligma_pdb_context_reset;
 }
 
 static void
-gimp_pdb_context_init (GimpPDBContext *context)
+ligma_pdb_context_init (LigmaPDBContext *context)
 {
-  context->paint_options_list = gimp_list_new (GIMP_TYPE_PAINT_OPTIONS,
+  context->paint_options_list = ligma_list_new (LIGMA_TYPE_PAINT_OPTIONS,
                                                FALSE);
 }
 
 static void
-gimp_pdb_context_constructed (GObject *object)
+ligma_pdb_context_constructed (GObject *object)
 {
-  GimpPDBContext        *context = GIMP_PDB_CONTEXT (object);
-  GimpInterpolationType  interpolation;
+  LigmaPDBContext        *context = LIGMA_PDB_CONTEXT (object);
+  LigmaInterpolationType  interpolation;
   gint                   threshold;
   GParamSpec            *pspec;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  context->stroke_options = gimp_stroke_options_new (GIMP_CONTEXT (context)->gimp,
-                                                     GIMP_CONTEXT (context),
+  context->stroke_options = ligma_stroke_options_new (LIGMA_CONTEXT (context)->ligma,
+                                                     LIGMA_CONTEXT (context),
                                                      TRUE);
 
   /* keep the stroke options in sync with the context */
-  gimp_context_define_properties (GIMP_CONTEXT (context->stroke_options),
-                                  GIMP_CONTEXT_PROP_MASK_ALL, FALSE);
-  gimp_context_set_parent (GIMP_CONTEXT (context->stroke_options),
-                           GIMP_CONTEXT (context));
+  ligma_context_define_properties (LIGMA_CONTEXT (context->stroke_options),
+                                  LIGMA_CONTEXT_PROP_MASK_ALL, FALSE);
+  ligma_context_set_parent (LIGMA_CONTEXT (context->stroke_options),
+                           LIGMA_CONTEXT (context));
 
   /* preserve the traditional PDB default */
   g_object_set (context->stroke_options,
-                "method", GIMP_STROKE_PAINT_METHOD,
+                "method", LIGMA_STROKE_PAINT_METHOD,
                 NULL);
 
   g_object_bind_property (G_OBJECT (context),                 "antialias",
                           G_OBJECT (context->stroke_options), "antialias",
                           G_BINDING_SYNC_CREATE);
 
-  /* get default interpolation from gimprc */
+  /* get default interpolation from ligmarc */
 
-  interpolation = GIMP_CONTEXT (object)->gimp->config->interpolation_type;
+  interpolation = LIGMA_CONTEXT (object)->ligma->config->interpolation_type;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
                                         "interpolation");
@@ -260,9 +260,9 @@ gimp_pdb_context_constructed (GObject *object)
 
   g_object_set (object, "interpolation", interpolation, NULL);
 
-  /* get default threshold from gimprc */
+  /* get default threshold from ligmarc */
 
-  threshold = GIMP_CONTEXT (object)->gimp->config->default_threshold;
+  threshold = LIGMA_CONTEXT (object)->ligma->config->default_threshold;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
                                         "sample-threshold");
@@ -274,9 +274,9 @@ gimp_pdb_context_constructed (GObject *object)
 }
 
 static void
-gimp_pdb_context_finalize (GObject *object)
+ligma_pdb_context_finalize (GObject *object)
 {
-  GimpPDBContext *context = GIMP_PDB_CONTEXT (object);
+  LigmaPDBContext *context = LIGMA_PDB_CONTEXT (object);
 
   g_clear_object (&context->paint_options_list);
   g_clear_object (&context->stroke_options);
@@ -285,12 +285,12 @@ gimp_pdb_context_finalize (GObject *object)
 }
 
 static void
-gimp_pdb_context_set_property (GObject      *object,
+ligma_pdb_context_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpPDBContext *options = GIMP_PDB_CONTEXT (object);
+  LigmaPDBContext *options = LIGMA_PDB_CONTEXT (object);
 
   switch (property_id)
     {
@@ -353,12 +353,12 @@ gimp_pdb_context_set_property (GObject      *object,
 }
 
 static void
-gimp_pdb_context_get_property (GObject    *object,
+ligma_pdb_context_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpPDBContext *options = GIMP_PDB_CONTEXT (object);
+  LigmaPDBContext *options = LIGMA_PDB_CONTEXT (object);
 
   switch (property_id)
     {
@@ -421,23 +421,23 @@ gimp_pdb_context_get_property (GObject    *object,
 }
 
 static void
-gimp_pdb_context_reset (GimpConfig *config)
+ligma_pdb_context_reset (LigmaConfig *config)
 {
-  GimpPDBContext *context = GIMP_PDB_CONTEXT (config);
+  LigmaPDBContext *context = LIGMA_PDB_CONTEXT (config);
   GList          *list;
 
-  for (list = GIMP_LIST (context->paint_options_list)->queue->head;
+  for (list = LIGMA_LIST (context->paint_options_list)->queue->head;
        list;
        list = g_list_next (list))
     {
-      gimp_config_reset (list->data);
+      ligma_config_reset (list->data);
     }
 
-  gimp_config_reset (GIMP_CONFIG (context->stroke_options));
+  ligma_config_reset (LIGMA_CONFIG (context->stroke_options));
 
   /* preserve the traditional PDB default */
   g_object_set (context->stroke_options,
-                "method", GIMP_STROKE_PAINT_METHOD,
+                "method", LIGMA_STROKE_PAINT_METHOD,
                 NULL);
 
   parent_config_iface->reset (config);
@@ -445,53 +445,53 @@ gimp_pdb_context_reset (GimpConfig *config)
   g_object_notify (G_OBJECT (context), "antialias");
 }
 
-GimpContext *
-gimp_pdb_context_new (Gimp        *gimp,
-                      GimpContext *parent,
+LigmaContext *
+ligma_pdb_context_new (Ligma        *ligma,
+                      LigmaContext *parent,
                       gboolean     set_parent)
 {
-  GimpPDBContext *context;
+  LigmaPDBContext *context;
   GList          *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (parent), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (parent), NULL);
 
-  context = g_object_new (GIMP_TYPE_PDB_CONTEXT,
-                          "gimp", gimp,
+  context = g_object_new (LIGMA_TYPE_PDB_CONTEXT,
+                          "ligma", ligma,
                           "name", "PDB Context",
                           NULL);
 
   if (set_parent)
     {
-      gimp_context_define_properties (GIMP_CONTEXT (context),
-                                      GIMP_CONTEXT_PROP_MASK_ALL, FALSE);
-      gimp_context_set_parent (GIMP_CONTEXT (context), parent);
+      ligma_context_define_properties (LIGMA_CONTEXT (context),
+                                      LIGMA_CONTEXT_PROP_MASK_ALL, FALSE);
+      ligma_context_set_parent (LIGMA_CONTEXT (context), parent);
 
-      for (list = gimp_get_paint_info_iter (gimp);
+      for (list = ligma_get_paint_info_iter (ligma);
            list;
            list = g_list_next (list))
         {
-          GimpPaintInfo *info = list->data;
+          LigmaPaintInfo *info = list->data;
 
-          gimp_container_add (context->paint_options_list,
-                              GIMP_OBJECT (info->paint_options));
+          ligma_container_add (context->paint_options_list,
+                              LIGMA_OBJECT (info->paint_options));
         }
     }
   else
     {
-      for (list = GIMP_LIST (GIMP_PDB_CONTEXT (parent)->paint_options_list)->queue->head;
+      for (list = LIGMA_LIST (LIGMA_PDB_CONTEXT (parent)->paint_options_list)->queue->head;
            list;
            list = g_list_next (list))
         {
-          GimpPaintOptions *options = gimp_config_duplicate (list->data);
+          LigmaPaintOptions *options = ligma_config_duplicate (list->data);
 
-          gimp_container_add (context->paint_options_list,
-                              GIMP_OBJECT (options));
+          ligma_container_add (context->paint_options_list,
+                              LIGMA_OBJECT (options));
           g_object_unref (options);
         }
 
-      gimp_config_copy (GIMP_CONFIG (GIMP_PDB_CONTEXT (parent)->stroke_options),
-                        GIMP_CONFIG (context->stroke_options),
+      ligma_config_copy (LIGMA_CONFIG (LIGMA_PDB_CONTEXT (parent)->stroke_options),
+                        LIGMA_CONFIG (context->stroke_options),
                         0);
     }
 
@@ -499,62 +499,62 @@ gimp_pdb_context_new (Gimp        *gimp,
    *  overwritten by the above copying of stroke options, which have
    *  the pdb context as parent
    */
-  gimp_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
+  ligma_config_sync (G_OBJECT (parent), G_OBJECT (context), 0);
 
   /* Reset the proper init name after syncing. */
   g_object_set (G_OBJECT (context),
                 "name", "PDB Context",
                 NULL);
 
-  return GIMP_CONTEXT (context);
+  return LIGMA_CONTEXT (context);
 }
 
-GimpContainer *
-gimp_pdb_context_get_paint_options_list (GimpPDBContext *context)
+LigmaContainer *
+ligma_pdb_context_get_paint_options_list (LigmaPDBContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_CONTEXT (context), NULL);
 
   return context->paint_options_list;
 }
 
-GimpPaintOptions *
-gimp_pdb_context_get_paint_options (GimpPDBContext *context,
+LigmaPaintOptions *
+ligma_pdb_context_get_paint_options (LigmaPDBContext *context,
                                     const gchar    *name)
 {
-  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_CONTEXT (context), NULL);
 
   if (! name)
-    name = gimp_object_get_name (gimp_context_get_paint_info (GIMP_CONTEXT (context)));
+    name = ligma_object_get_name (ligma_context_get_paint_info (LIGMA_CONTEXT (context)));
 
-  return (GimpPaintOptions *)
-    gimp_container_get_child_by_name (context->paint_options_list, name);
+  return (LigmaPaintOptions *)
+    ligma_container_get_child_by_name (context->paint_options_list, name);
 }
 
 GList *
-gimp_pdb_context_get_brush_options (GimpPDBContext *context)
+ligma_pdb_context_get_brush_options (LigmaPDBContext *context)
 {
   GList *brush_options = NULL;
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_CONTEXT (context), NULL);
 
-  for (list = GIMP_LIST (context->paint_options_list)->queue->head;
+  for (list = LIGMA_LIST (context->paint_options_list)->queue->head;
        list;
        list = g_list_next (list))
     {
-      GimpPaintOptions *options = list->data;
+      LigmaPaintOptions *options = list->data;
 
-      if (g_type_is_a (options->paint_info->paint_type, GIMP_TYPE_BRUSH_CORE))
+      if (g_type_is_a (options->paint_info->paint_type, LIGMA_TYPE_BRUSH_CORE))
         brush_options = g_list_prepend (brush_options, options);
     }
 
   return g_list_reverse (brush_options);
 }
 
-GimpStrokeOptions *
-gimp_pdb_context_get_stroke_options (GimpPDBContext *context)
+LigmaStrokeOptions *
+ligma_pdb_context_get_stroke_options (LigmaPDBContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_CONTEXT (context), NULL);
 
   return context->stroke_options;
 }

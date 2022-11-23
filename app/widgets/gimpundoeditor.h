@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,49 +15,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNDO_EDITOR_H__
-#define __GIMP_UNDO_EDITOR_H__
+#ifndef __LIGMA_UNDO_EDITOR_H__
+#define __LIGMA_UNDO_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_UNDO_EDITOR            (gimp_undo_editor_get_type ())
-#define GIMP_UNDO_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNDO_EDITOR, GimpUndoEditor))
-#define GIMP_UNDO_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNDO_EDITOR, GimpUndoEditorClass))
-#define GIMP_IS_UNDO_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNDO_EDITOR))
-#define GIMP_IS_UNDO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNDO_EDITOR))
-#define GIMP_UNDO_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNDO_EDITOR, GimpUndoEditorClass))
+#define LIGMA_TYPE_UNDO_EDITOR            (ligma_undo_editor_get_type ())
+#define LIGMA_UNDO_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UNDO_EDITOR, LigmaUndoEditor))
+#define LIGMA_UNDO_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_UNDO_EDITOR, LigmaUndoEditorClass))
+#define LIGMA_IS_UNDO_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UNDO_EDITOR))
+#define LIGMA_IS_UNDO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_UNDO_EDITOR))
+#define LIGMA_UNDO_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_UNDO_EDITOR, LigmaUndoEditorClass))
 
 
-typedef struct _GimpUndoEditorClass GimpUndoEditorClass;
+typedef struct _LigmaUndoEditorClass LigmaUndoEditorClass;
 
-struct _GimpUndoEditor
+struct _LigmaUndoEditor
 {
-  GimpImageEditor  parent_instance;
+  LigmaImageEditor  parent_instance;
 
-  GimpContext     *context;
-  GimpContainer   *container;
+  LigmaContext     *context;
+  LigmaContainer   *container;
   GtkWidget       *view;
-  GimpViewSize     view_size;
+  LigmaViewSize     view_size;
 
-  GimpUndo        *base_item;
+  LigmaUndo        *base_item;
 
   GtkWidget       *undo_button;
   GtkWidget       *redo_button;
   GtkWidget       *clear_button;
 };
 
-struct _GimpUndoEditorClass
+struct _LigmaUndoEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_undo_editor_get_type  (void) G_GNUC_CONST;
+GType       ligma_undo_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_undo_editor_new       (GimpCoreConfig  *config,
-                                        GimpMenuFactory *menu_factory);
+GtkWidget * ligma_undo_editor_new       (LigmaCoreConfig  *config,
+                                        LigmaMenuFactory *menu_factory);
 
 
-#endif /* __GIMP_UNDO_EDITOR_H__ */
+#endif /* __LIGMA_UNDO_EDITOR_H__ */

@@ -1,5 +1,5 @@
-/* gimpdebug
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+/* ligmadebug
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 /*
- * GimpDebug simply displays a dialog with debug data (backtraces,
+ * LigmaDebug simply displays a dialog with debug data (backtraces,
  * version, etc.), proposing to create a bug report. The reason why it
  * is a separate executable is simply that when the program crashed,
  * even though some actions are possible before exit() by catching fatal
@@ -37,7 +37,7 @@
 
 #include <gtk/gtk.h>
 
-#include "app/widgets/gimpcriticaldialog.h"
+#include "app/widgets/ligmacriticaldialog.h"
 
 
 
@@ -58,7 +58,7 @@ main (int    argc,
 
   if (argc != 6 && argc != 8)
     {
-      g_print ("Usage: gimp-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE] "
+      g_print ("Usage: ligma-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE] "
                "([LAST_VERSION] [RELEASE_TIMESTAMP])\n");
       exit (EXIT_FAILURE);
     }
@@ -84,9 +84,9 @@ main (int    argc,
 
   gtk_init (&argc, &argv);
 
-  dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"), last_version,
+  dialog = ligma_critical_dialog_new (_("LIGMA Crash Debug"), last_version,
                                      release_date ? g_ascii_strtoll (release_date, NULL, 10) : -1);
-  gimp_critical_dialog_add (dialog, error, trace, TRUE, program,
+  ligma_critical_dialog_add (dialog, error, trace, TRUE, program,
                             g_ascii_strtoull (pid, NULL, 10));
   g_free (error);
   g_free (trace);

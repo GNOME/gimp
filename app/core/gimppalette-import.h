@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_IMPORT__
-#define __GIMP_PALETTE_IMPORT__
+#ifndef __LIGMA_PALETTE_IMPORT__
+#define __LIGMA_PALETTE_IMPORT__
 
 
-GimpPalette * gimp_palette_import_from_gradient      (GimpGradient *gradient,
-                                                      GimpContext  *context,
+LigmaPalette * ligma_palette_import_from_gradient      (LigmaGradient *gradient,
+                                                      LigmaContext  *context,
                                                       gboolean      reverse,
-                                                      GimpGradientBlendColorSpace  blend_color_space,
+                                                      LigmaGradientBlendColorSpace  blend_color_space,
                                                       const gchar  *palette_name,
                                                       gint          n_colors);
-GimpPalette * gimp_palette_import_from_image         (GimpImage    *image,
-                                                      GimpContext  *context,
+LigmaPalette * ligma_palette_import_from_image         (LigmaImage    *image,
+                                                      LigmaContext  *context,
                                                       const gchar  *palette_name,
                                                       gint          n_colors,
                                                       gint          threshold,
                                                       gboolean      selection_only);
-GimpPalette * gimp_palette_import_from_indexed_image (GimpImage    *image,
-                                                      GimpContext  *context,
+LigmaPalette * ligma_palette_import_from_indexed_image (LigmaImage    *image,
+                                                      LigmaContext  *context,
                                                       const gchar  *palette_name);
-GimpPalette * gimp_palette_import_from_drawables     (GList        *drawables,
-                                                      GimpContext  *context,
+LigmaPalette * ligma_palette_import_from_drawables     (GList        *drawables,
+                                                      LigmaContext  *context,
                                                       const gchar  *palette_name,
                                                       gint          n_colors,
                                                       gint          threshold,
                                                       gboolean      selection_only);
-GimpPalette * gimp_palette_import_from_file          (GimpContext  *context,
+LigmaPalette * ligma_palette_import_from_file          (LigmaContext  *context,
                                                       GFile        *file,
                                                       const gchar  *palette_name,
                                                       GError      **error);
 
-#endif  /* __GIMP_PALETTE_IMPORT_H__ */
+#endif  /* __LIGMA_PALETTE_IMPORT_H__ */

@@ -1,8 +1,8 @@
 # translation of ca.po to Catalan
-# gimp-pug-ins translation to Catalan.
+# ligma-pug-ins translation to Catalan.
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
-# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Softcatala <ligma a llistes.softcatala.org>, 2000-2008.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
 # Quim Perez i Noguer <noguer@gmail.com>, 2005-2009.
@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-04-25 18:34+0000\n"
 "PO-Revision-Date: 2022-02-16 10:17+0100\n"
 "Last-Translator: maite guix <maite.guix@me.com>\n"
@@ -50,7 +50,7 @@ msgstr "Entrena una cabra en el llenguatge C"
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
 #: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398
-#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/ligmaressionist/ligma.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
 #: ../plug-ins/ifs-compose/ifs-compose.c:416
 #: ../plug-ins/imagemap/imap_main.c:199
@@ -105,11 +105,11 @@ msgstr "Entrena una cabra (C)"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1268
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
-#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2516
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/gradient-flare/gradient-flare.c:3478
@@ -198,10 +198,10 @@ msgstr "Entrena una cabra (Python 3)"
 #: ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2517
 #: ../plug-ins/gradient-flare/gradient-flare.c:3479
 #: ../plug-ins/ifs-compose/ifs-compose.c:810
@@ -217,15 +217,15 @@ msgstr "_D'acord"
 msgid "Exercise a goat (Vala)"
 msgstr "Exercita una cabra (Vala)"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:1
 msgid "Goat Exercises"
 msgstr "Entrenament de la cabra"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
 msgstr "Connectors de demostració oficials"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create"
 " your own plug-ins. Each plug-in does the same thing, except it is developed"
@@ -433,7 +433,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
@@ -510,7 +510,7 @@ msgid "Checkerboard"
 msgstr "Tauler d'escacs"
 
 #: ../plug-ins/common/checkerboard.c:555
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "_Mida:"
 
@@ -713,8 +713,8 @@ msgstr "Aleatoris amb llavor (compartit)"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:201
-#: ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "To"
 
@@ -725,8 +725,8 @@ msgstr "Saturació"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
 #: ../plug-ins/common/decompose.c:203
-#: ../plug-ins/gimpressionist/orientation.c:148
-#: ../plug-ins/gimpressionist/size.c:155
+#: ../plug-ins/ligmaressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/size.c:155
 msgid "Value"
 msgstr "Valor"
 
@@ -792,7 +792,7 @@ msgstr "_Obre"
 #: ../plug-ins/flame/flame.c:1111
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:807
 #: ../plug-ins/ifs-compose/ifs-compose.c:2563
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
@@ -985,7 +985,7 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
+#: ../plug-ins/file-fli/fli-ligma.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
@@ -1021,7 +1021,7 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
-#: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
+#: ../plug-ins/file-fli/fli-ligma.c:457 ../plug-ins/file-fli/fli-ligma.c:504
 #: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:96 ../plug-ins/file-jpeg/jpeg-load.c:550
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
@@ -1030,8 +1030,8 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
-#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1114,7 +1114,7 @@ msgstr "Ajusta el mapa de colors"
 #: ../plug-ins/common/sphere-designer.c:2629
 #: ../plug-ins/common/tile-small.c:524
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:808
 #: ../plug-ins/selection-to-path/selection-to-path.c:411
 msgid "_Reset"
@@ -1469,8 +1469,8 @@ msgstr "Distorsiona segons la corba"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1253
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Previsualitza"
@@ -1958,7 +1958,7 @@ msgstr ""
 #: ../plug-ins/common/file-xmc.c:649 ../plug-ins/common/file-xpm.c:382
 #: ../plug-ins/common/file-xwd.c:473 ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-exr/file-exr.c:187 ../plug-ins/file-faxg3/faxg3.c:239
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:669
+#: ../plug-ins/file-fli/fli-ligma.c:496 ../plug-ins/file-ico/ico-load.c:669
 #: ../plug-ins/file-jpeg/jpeg-load.c:87 ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2044,7 +2044,7 @@ msgstr ""
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
-#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
+#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-ligma.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:273
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1015
@@ -2158,14 +2158,14 @@ msgstr "«%s»: no és un fitxer DICOM."
 
 #: ../plug-ins/common/file-dicom.c:576
 #, c-format
-msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "El GIMP no permet la sintaxi de transferència %s."
+msgid "Transfer syntax %s is not supported by LIGMA."
+msgstr "El LIGMA no permet la sintaxi de transferència %s."
 
 #: ../plug-ins/common/file-dicom.c:631
 #, c-format
-msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgid "%s is not supported by LIGMA in combination with samples per pixel: %d"
 msgstr ""
-"%s no és compatible amb el GIMP en combinació amb mostres per píxel: %d"
+"%s no és compatible amb el LIGMA en combinació amb mostres per píxel: %d"
 
 #: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
@@ -2178,8 +2178,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "No es pot operar en tipus d'imatge desconeguts."
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "Pinzell del GIMP"
+msgid "LIGMA brush"
+msgstr "Pinzell del LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, c-format
@@ -2395,8 +2395,8 @@ msgstr ""
 "La imatge que intenteu exportar només en té una."
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "Pinzell del GIMP (animat)"
+msgid "LIGMA brush (animated)"
+msgstr "Pinzell del LIGMA (animat)"
 
 #: ../plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
@@ -3069,8 +3069,8 @@ msgstr ""
 "capa. La imatge que voleu exportar només en conté una."
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "Patró del GIMP"
+msgid "LIGMA pattern"
+msgstr "Patró del LIGMA"
 
 #: ../plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
@@ -3541,16 +3541,16 @@ msgid "Invalid X resolution."
 msgstr "La resolució X no és vàlida."
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "El GIMP no pot gestionar imatges d'aquesta amplada."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "El LIGMA no pot gestionar imatges d'aquesta amplada."
 
 #: ../plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "La resolució Y no és vàlida."
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "El GIMP no pot gestionar imatges d'aquesta alçada."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "El LIGMA no pot gestionar imatges d'aquesta alçada."
 
 #: ../plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3656,8 +3656,8 @@ msgid "Gray"
 msgstr "Gris"
 
 #: ../plug-ins/common/file-ps.c:3681 ../plug-ins/common/file-xpm.c:507
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Color"
@@ -4185,10 +4185,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "«%s»:\n"
-"El GIMP no pot gestionar imatges d'aquesta amplada"
+"El LIGMA no pot gestionar imatges d'aquesta amplada"
 
 #: ../plug-ins/common/file-sunras.c:537 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:566
@@ -4205,10 +4205,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "«%s»:\n"
-"El GIMP no pot gestionar imatges d'aquesta alçada"
+"El LIGMA no pot gestionar imatges d'aquesta alçada"
 
 #: ../plug-ins/common/file-sunras.c:581
 msgid "This image depth is not supported"
@@ -4316,10 +4316,10 @@ msgstr "Im_porta camins"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 "Importa els elements de camins SVG perquè es puguin utilitzar amb l'eina de "
-"camí del GIMP"
+"camí del LIGMA"
 
 #: ../plug-ins/common/file-svg.c:891
 msgid "Merge imported paths"
@@ -5345,9 +5345,9 @@ msgstr "Obtén color_s de mostra"
 #: ../plug-ins/common/sample-colorize.c:1415
 #: ../plug-ins/common/tile-small.c:628
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Aplica"
@@ -5587,7 +5587,7 @@ msgid "Use the background color"
 msgstr "Utilitza el color de fons"
 
 #: ../plug-ins/common/sphere-designer.c:335
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Sòlid"
 
@@ -5675,7 +5675,7 @@ msgstr "D_uplica"
 #: ../plug-ins/common/sphere-designer.c:2749
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1235
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/ifs-compose/ifs-compose.c:1077
@@ -5712,7 +5712,7 @@ msgstr "Diàleg de la selecció del color"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2831
-#: ../plug-ins/gimpressionist/paper.c:191
+#: ../plug-ins/ligmaressionist/paper.c:191
 #: ../plug-ins/ifs-compose/ifs-compose.c:586
 msgid "Scale:"
 msgstr "Escala:"
@@ -5862,10 +5862,10 @@ msgstr "Desat"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Una definició d'unitat només es desarà abans de sortir del GIMP si s'activa "
+"Una definició d'unitat només es desarà abans de sortir del LIGMA si s'activa "
 "aquesta columna."
 
 #: ../plug-ins/common/unit-editor.c:113
@@ -5874,10 +5874,10 @@ msgstr "Identificador"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 "Aquesta cadena s'utilitzarà per a identificar una unitat en els fitxers de "
-"configuració del GIMP."
+"configuració del LIGMA."
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "Factor"
@@ -5952,8 +5952,8 @@ msgid "U_nits"
 msgstr "U_nitats"
 
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
-msgstr "Crea o modifica les unitats que s'utilitzen al GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Crea o modifica les unitats que s'utilitzen al LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "Add a New Unit"
@@ -6003,7 +6003,7 @@ msgstr "Editor d'unitats"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Actualitza"
 
@@ -6445,12 +6445,12 @@ msgstr "_Escriure informació de l'espai en color"
 #: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Algunes aplicacions no poden llegir imatges BMP que inclouen informació de "
-"l'espai en color. El GIMP, per defecte, escriu la informació de l'espai de "
-"color. Si deshabiliteu aquesta opció, el GIMP no escriurà la informació de "
+"l'espai en color. El LIGMA, per defecte, escriu la informació de l'espai de "
+"color. Si deshabiliteu aquesta opció, el LIGMA no escriurà la informació de "
 "l'espai de color al fitxer."
 
 #. RGB Encoding Pptions
@@ -6721,34 +6721,34 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_Cap"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "Animació FLIC d'Autodesk"
 
-#: ../plug-ins/file-fli/fli-gimp.c:579
+#: ../plug-ins/file-fli/fli-ligma.c:579
 #, c-format
 msgid "Frame (%i)"
 msgstr "Marc (%i)x"
 
-#: ../plug-ins/file-fli/fli-gimp.c:740
+#: ../plug-ins/file-fli/fli-ligma.c:740
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Només es poden exportar imatges indexades i grises."
 
-#: ../plug-ins/file-fli/fli-gimp.c:901
+#: ../plug-ins/file-fli/fli-ligma.c:901
 msgid "Open FLIC Animation"
 msgstr "Obre l'animació FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:919
+#: ../plug-ins/file-fli/fli-ligma.c:919
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Des de:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:925
+#: ../plug-ins/file-fli/fli-ligma.c:925
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_A:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:955
+#: ../plug-ins/file-fli/fli-ligma.c:955
 msgid "Export Image as FLI Animation"
 msgstr "Exporta la imatge com a animació FLI"
 
@@ -7046,9 +7046,9 @@ msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
 
 #: ../plug-ins/file-psd/psd-save.c:470
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr ""
-"Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
+"Error: no es pot convertir de tipus d'imatge base del LIGMA al mode PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1770
 #, c-format
@@ -7193,7 +7193,7 @@ msgstr "Arriflex ARI en brut"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -7201,7 +7201,7 @@ msgid ""
 msgstr ""
 "No hi ha cap carregador RAW instal·lat per a obrir els fitxers «%s».\n"
 "\n"
-"El GIMP, actualment admet aquests carregadors RAW:\n"
+"El LIGMA, actualment admet aquests carregadors RAW:\n"
 "- darktable (http://www.darktable.org/), almenys 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), almenys 5.2\n"
 "\n"
@@ -7616,7 +7616,7 @@ msgstr "(tots els fotogrames són fotogrames clau)"
 msgid "Invalid WebP file '%s'"
 msgstr "El fitxer WebP no és vàlid «%s»"
 
-#  * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#  * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #  * that need not and should not be freed. So this call is OK.
 #  *
 #: ../plug-ins/file-webp/file-webp-load.c:202
@@ -7739,8 +7739,8 @@ msgstr "Aleatò_riament"
 msgid "Same"
 msgstr "Igual"
 
-#: ../plug-ins/flame/flame.c:808 ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/flame/flame.c:808 ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "Aleatori"
 
@@ -7873,8 +7873,8 @@ msgstr "Desa la flama"
 msgid "Flame"
 msgstr "Flama"
 
-#: ../plug-ins/flame/flame.c:1095 ../plug-ins/gimpressionist/orientation.c:190
-#: ../plug-ins/gimpressionist/size.c:199
+#: ../plug-ins/flame/flame.c:1095 ../plug-ins/ligmaressionist/orientation.c:190
+#: ../plug-ins/ligmaressionist/size.c:199
 #: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -7933,16 +7933,16 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:997
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"No hi ha cap %s al gimprc:\n"
+"No hi ha cap %s al ligmarc:\n"
 "Heu d'afegir una línia com\n"
 "(%s «%s»)\n"
 "al fitxer %s."
@@ -8553,7 +8553,7 @@ msgid "Max undo:"
 msgstr "Desfés al màxim:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1324
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -8654,7 +8654,7 @@ msgid "Left"
 msgstr "Esquerra"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1746
-#: ../plug-ins/gimpressionist/orientation.c:140
+#: ../plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Orientació:"
 
@@ -8714,162 +8714,162 @@ msgstr ""
 "S'ha produït un error en obrir el fitxer temporal «%s» per a carregar el "
 "paràsit: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Només es poden desar imatges!"
 
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Desa el pinzell"
 
-#: ../plug-ins/gimpressionist/brush.c:522
+#: ../plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "_Pinzell"
 
-#: ../plug-ins/gimpressionist/brush.c:559
+#: ../plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../plug-ins/gimpressionist/brush.c:577
+#: ../plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Canvia la brillantor del pinzell seleccionat"
 
-#: ../plug-ins/gimpressionist/brush.c:585
+#: ../plug-ins/ligmaressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:621
 msgid "Select:"
 msgstr "Selecciona:"
 
-#: ../plug-ins/gimpressionist/brush.c:601
+#: ../plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "_Anomena i desa"
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "Relació d'aspecte:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Especifica la relació d'aspecte del pinzell"
 
-#: ../plug-ins/gimpressionist/brush.c:626
-#: ../plug-ins/gimpressionist/paper.c:202
+#: ../plug-ins/ligmaressionist/brush.c:626
+#: ../plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "Relleu:"
 
-#: ../plug-ins/gimpressionist/brush.c:628
-#: ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:628
+#: ../plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 "Especifica la quantitat de difuminació a aplicar a la imatge (en tant per "
 "cent)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Co_lor"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Mitjana sota el pin_zell"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "C_entre del pinzell"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 "El color es calcula amb la mitjana de tots els píxels que hi ha sota el "
 "pinzell"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Mostreja el color des del píxel del centre del pinzell"
 
-#: ../plug-ins/gimpressionist/color.c:87
+#: ../plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "So_roll del color:"
 
-#: ../plug-ins/gimpressionist/color.c:89
+#: ../plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Afegeix aleatòriament soroll al color"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "_General"
 msgstr "_General"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Conserva l'original"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Preserva la imatge original com a fons"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Des del paper"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Copia la textura del paper seleccionat com a fons"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Fons acolorit com a sòlid"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Utilitza un fons transparent. Només els traços pintats seran visibles"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Pinta les vores"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 "Seleccioneu-lo per a situar tots els traços a l'exterior de les vores de la "
 "imatge"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "En mosaic"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 "Seleccioneu-lo si la imatge resultant hauria de semblar-se a un mosaic"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Ombra caiguda"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Afegeix un efecte d'ombra a cada traç de pinzell"
 
-#: ../plug-ins/gimpressionist/general.c:238
+#: ../plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "Vora enfosquida:"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Quant s'han d'«enfosquir» les vores de cada traç de pinzell"
 
-#: ../plug-ins/gimpressionist/general.c:246
+#: ../plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "Foscor de l'ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Quantitat de «foscor» de l'ombra caiguda"
 
-#: ../plug-ins/gimpressionist/general.c:255
+#: ../plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "Profunditat de l'ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should "
 "be"
@@ -8877,67 +8877,67 @@ msgstr ""
 "La profunditat de l'ombra caiguda, p. ex. quina distància s'hauria "
 "d'allunyar de l'objecte"
 
-#: ../plug-ins/gimpressionist/general.c:263
+#: ../plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "Difumina l'ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:265
+#: ../plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "Quantitat del difuminat de l'ombra caiguda"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "Llindar de desviació:"
 
-#: ../plug-ins/gimpressionist/general.c:273
+#: ../plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "Un valor de seguretat per seleccions adaptatives"
 
-#: ../plug-ins/gimpressionist/gimp.c:119
-msgid "_GIMPressionist..."
-msgstr "El _GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:119
+msgid "_LIGMAressionist..."
+msgstr "El _LIGMAressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:123
+#: ../plug-ins/ligmaressionist/ligma.c:123
 msgid "Performs various artistic operations"
 msgstr "Genera diversos efectes artístics"
 
-#: ../plug-ins/gimpressionist/gimp.c:448
+#: ../plug-ins/ligmaressionist/ligma.c:448
 msgid "Painting"
 msgstr "S'està pintant"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "El GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "El LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "Or_ientació"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "Direccions:"
 
-#: ../plug-ins/gimpressionist/orientation.c:102
+#: ../plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "El nombre de direccions (p. ex. pinzells) que s'utilitzaran"
 
-#: ../plug-ins/gimpressionist/orientation.c:111
+#: ../plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "Angle inicial:"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "L'angle inicial del primer pinzell a crear"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "Obertura d'angle:"
 
-#: ../plug-ins/gimpressionist/orientation.c:124
+#: ../plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "Obertura de l'angle del primer pinzell a crear"
 
-#: ../plug-ins/gimpressionist/orientation.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
@@ -8945,79 +8945,79 @@ msgstr ""
 "Permet que el valor (lluminositat) de la regió determini la direcció del "
 "traç"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "Radi"
 
-#: ../plug-ins/gimpressionist/orientation.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 "La distància des del centre de la imatge determina la direcció del traç"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "Selecciona aleatòriament una direcció de cada traç"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "Radial"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid ""
 "Let the direction from the center determine the direction of the stroke"
 msgstr "Permet que la direcció des del centre determini la direcció del traç"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "Flotant"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
-#: ../plug-ins/gimpressionist/size.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Els traços segueixen a un patró «flotant»"
 
-#: ../plug-ins/gimpressionist/orientation.c:173
+#: ../plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "El to de color de la regió determina la direcció del traç"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "Adaptable"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 "La direcció que coincideix amb la imatge original se selecciona la més "
 "propera"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "Manual"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "S'especifica l'orientació del traç de forma manual"
 
-#: ../plug-ins/gimpressionist/orientation.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "Obre l'editor de mapes d'orientació"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Editor de mapes d'orientació"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Vectors"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9026,63 +9026,63 @@ msgstr ""
 "vector seleccionat, el botó dret per a apuntar segons moveu el ratolí i el "
 "botó del mig per a afegir un vector nou."
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Ajusta la brillantor de la previsualització"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Seleccioneu el vector anterior"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Seleccioneu el vector següent"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "A_fegeix"
 
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Afegiu un vector nou"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "_Finalitza"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Suprimeix el vector seleccionat"
 
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Tipus"
 
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "Vòrte_x"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "Vòrtex_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "Vòrtex_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -9090,247 +9090,247 @@ msgstr ""
 "El mode Voronoi fa que només el vector més proper al punt donat tingui "
 "alguna influència"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "A_ngle:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "Canvia l'angle del vector seleccionat"
 
-#: ../plug-ins/gimpressionist/orientmap.c:678
+#: ../plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "Desplaçament d'ang_le:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr "Desplaçament de tots els vectors amb un angle donat"
 
-#: ../plug-ins/gimpressionist/orientmap.c:688
+#: ../plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "Inten_sitat:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "Canvia la intensitat del vector seleccionat"
 
-#: ../plug-ins/gimpressionist/orientmap.c:699
+#: ../plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "E_xp. de força:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "Canvia l'exponent de la intensitat"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "P_aper"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "_Inverteix"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Inverteix la textura del paper"
 
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "Su_perposa"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Aplica el paper com és (sense difuminar-lo)"
 
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 "Especifica l'escala de la textura (en tant per cent del fitxer original)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Empl_açament"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Emplaçament"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Aleatòriament"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Distribuït uniformement"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Posa els traços de forma aleatòria al voltant de la imatge"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Els traços es distribueixen uniformement al llarg de la imatge"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Centrat"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Enfoca els traços del pinzell al voltant del centre de la imatge"
 
-#: ../plug-ins/gimpressionist/placement.c:113
+#: ../plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "_Densitat del traç:"
 
-#: ../plug-ins/gimpressionist/placement.c:115
+#: ../plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "La densitat relativa dels traços del pinzell"
 
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#  * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#  * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #  * that need not and should not be freed. So this call is OK.
 #  *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "No s'ha pogut desar el fitxer PPM «%s»: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Desa l'actual"
 
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Descripció:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Opcions per defecte del GIMPressionist"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Opcions per defecte del LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "Valors _predefinits"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Desa l'actual..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Desa la configuració actual al fitxer especificat"
 
 # Albert: M'ha semblat més entenedor de la funció aquest text, ja que es
 # tracta d'una ajuda contextual.
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr ""
 "Llegeix la preconfiguració de l'efecte seleccionat a la llista dins la "
 "memòria"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Suprimeix la preconfiguració seleccionada"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Torna a llegir la carpeta de valors predefinits"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511
 #: ../plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "Act_ualitza"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Actualitza la finestra de previsualització"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Reverteix a la imatge original"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Mida"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "Variants de mida:"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "El nombre de mides de pinzells a usar"
 
-#: ../plug-ins/gimpressionist/size.c:118
+#: ../plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "Mida mínima:"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "El pinzell més petit per a crear"
 
-#: ../plug-ins/gimpressionist/size.c:129
+#: ../plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "Mida màxima:"
 
-#: ../plug-ins/gimpressionist/size.c:131
+#: ../plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "El pinzell més gran per a crear"
 
-#: ../plug-ins/gimpressionist/size.c:147
+#: ../plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "La mida depèn de:"
 
-#: ../plug-ins/gimpressionist/size.c:156
+#: ../plug-ins/ligmaressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 "Permet que el valor (lluminositat) de la regió determini la mida del traç"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "La distància des del centre de la imatge determina la mida del traç"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "Selecciona una mida aleatòria per cada traç"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Permet que la direcció des del centre determini la mida del traç"
 
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "El to de color de la regió determina la mida del traç"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 "Se seleccionarà la mida del pinzell que s'apropi més a la imatge original"
 
-#: ../plug-ins/gimpressionist/size.c:193
+#: ../plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "S'especifica manualment la mida del traç"
 
-#: ../plug-ins/gimpressionist/size.c:204
+#: ../plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "Obre l'editor del mapa de mides"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Editor del mapa de mides"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Vectors sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9339,39 +9339,39 @@ msgstr ""
 " vector sm, el botó dret per a apuntar cap al ratolí i el botó del mig per a"
 " afegir un de nou."
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Seleccioneu el vector sm anterior"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Seleccioneu el vector sm següent"
 
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Afegiu un vector sm nou"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Suprimeix el vector sm seleccionat"
 
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "Canvia l'angle del vector sm seleccionat"
 
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "In_tensitat:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "Canvia la intensitat del vector sm seleccionat"
 
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "Exp. de la int_ensitat:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:546
+#: ../plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10095,8 +10095,8 @@ msgstr "Flamarades _secundàries"
 
 #. the dialog window
 #: ../plug-ins/help-browser/dialog.c:261 ../plug-ins/help-browser/dialog.c:892
-msgid "GIMP Help Browser"
-msgstr "Navegador de l'ajuda del GIMP"
+msgid "LIGMA Help Browser"
+msgstr "Navegador de l'ajuda del LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:275
 msgid "_Reload"
@@ -10119,8 +10119,8 @@ msgid "Go to the index page"
 msgstr "Ves a la pàgina d'índex"
 
 #: ../plug-ins/help-browser/dialog.c:283
-msgid "Visit the GIMP documentation website"
-msgstr "Visiteu el web de documentació del GIMP"
+msgid "Visit the LIGMA documentation website"
+msgstr "Visiteu el web de documentació del LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:1235
 msgid "Find:"
@@ -10141,43 +10141,43 @@ msgctxt "search"
 msgid "_Close"
 msgstr "Tan_ca"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Les pàgines d'ajuda de «%s» no estan disponibles."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "El manual d'usuari del GIMP no està disponible."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "El manual d'usuari del LIGMA no està disponible."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
 #. * technical limitations, make sure the URL
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at:"
-" https://docs.gimp.org/"
+" https://docs.ligma.org/"
 msgstr ""
 "Heu d'instal·lar el paquet d'ajuda addicional o utilitzeu el manual d'usuari"
-" en línia a http://docs.gimp.org/"
+" en línia a http://docs.ligma.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Potser us falten el rerefons GIO i heu d'instal·lar el GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "L'identificador d'ajuda «%s» és desconegut"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "S'està carregant l'índex de «%s»"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10404,7 +10404,7 @@ msgid "Clear"
 msgstr "Buida"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Crea"
 
@@ -10429,41 +10429,41 @@ msgid "Edit Object"
 msgstr "Edita l'objecte"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Utilitza les guies del GIMP"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Utilitza les guies del LIGMA"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Al_terna"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "T_ot"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Afegeix guies addicionals"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "Marge _esquerre"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "Marge d_ret"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "Marge s_uperior"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Marge _inferior"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "URL _base:"
 
@@ -10907,8 +10907,8 @@ msgid "Grid Settings..."
 msgstr "Opcions de la quadrícula..."
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "Utilitza les guies del GIMP..."
+msgid "Use LIGMA Guides..."
+msgstr "Utilitza les guies del LIGMA..."
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * jpeg-settings.c
- * Copyright (C) 2007 Raphaël Quinet <raphael@gimp.org>
+ * Copyright (C) 2007 Raphaël Quinet <raphael@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,9 +50,9 @@
 
 #include <jpeglib.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "jpeg.h"
 #include "jpeg-quality.h"
@@ -75,11 +75,11 @@
  */
 gboolean
 jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
-                               GimpImage                     *image)
+                               LigmaImage                     *image)
 {
   guint         parasite_size;
   guchar       *parasite_data;
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   guchar       *dest;
   gint          quality;
   gint          num_quant_tables = 0;
@@ -127,13 +127,13 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
             }
     }
 
-  parasite = gimp_parasite_new ("jpeg-settings",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("jpeg-settings",
+                                LIGMA_PARASITE_PERSISTENT,
                                 parasite_size,
                                 parasite_data);
   g_free (parasite_data);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
 
   return TRUE;
 }
@@ -141,7 +141,7 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
 
 /*
  * TODO: compare the JPEG color space found in the parasite with the
- * GIMP color space of the drawable to be saved.  If one of them is
+ * LIGMA color space of the drawable to be saved.  If one of them is
  * grayscale and the other isn't, then the quality setting may be used
  * but the subsampling parameters and quantization tables should be
  * ignored.  The drawable needs to be passed around because the
@@ -165,12 +165,12 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
  * Returns: TRUE if a valid parasite was attached to the image
  */
 gboolean
-jpeg_restore_original_settings (GimpImage       *image,
+jpeg_restore_original_settings (LigmaImage       *image,
                                 gint            *quality,
                                 JpegSubsampling *subsmp,
                                 gint            *num_quant_tables)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   const guchar *src;
   guint32       src_size;
   gint          color_space;
@@ -184,10 +184,10 @@ jpeg_restore_original_settings (GimpImage       *image,
   g_return_val_if_fail (subsmp != NULL, FALSE);
   g_return_val_if_fail (num_quant_tables != NULL, FALSE);
 
-  parasite = gimp_image_get_parasite (image, "jpeg-settings");
+  parasite = ligma_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src = gimp_parasite_get_data (parasite, &src_size);
+      src = ligma_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
           color_space      = *src++;
@@ -230,12 +230,12 @@ jpeg_restore_original_settings (GimpImage       *image,
                     }
                 }
 
-              gimp_parasite_free (parasite);
+              ligma_parasite_free (parasite);
               return TRUE;
             }
         }
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
 
   *quality = -1;
@@ -267,10 +267,10 @@ jpeg_restore_original_settings (GimpImage       *image,
  * Returns: (nullable): an array of quantization tables, or NULL.
  */
 guint **
-jpeg_restore_original_tables (GimpImage *image,
+jpeg_restore_original_tables (LigmaImage *image,
                               gint       num_quant_tables)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   const guchar *src;
   guint32       src_size;
   gint          num_components;
@@ -279,10 +279,10 @@ jpeg_restore_original_tables (GimpImage *image,
   gint          t;
   gint          i;
 
-  parasite = gimp_image_get_parasite (image, "jpeg-settings");
+  parasite = ligma_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src = gimp_parasite_get_data (parasite, &src_size);
+      src = ligma_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
           num_components = src[2];
@@ -306,11 +306,11 @@ jpeg_restore_original_tables (GimpImage *image,
                       quant_tables[t][i] = c;
                     }
                 }
-              gimp_parasite_free (parasite);
+              ligma_parasite_free (parasite);
               return quant_tables;
             }
         }
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
   return NULL;
 }
@@ -326,9 +326,9 @@ jpeg_restore_original_tables (GimpImage *image,
  * mirrored along its diagonal.
  */
 void
-jpeg_swap_original_settings (GimpImage *image)
+jpeg_swap_original_settings (LigmaImage *image)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   const guchar *src;
   guint32       src_size;
   gint          num_components;
@@ -339,10 +339,10 @@ jpeg_swap_original_settings (GimpImage *image)
   gint          i;
   gint          j;
 
-  parasite = gimp_image_get_parasite (image, "jpeg-settings");
+  parasite = ligma_image_get_parasite (image, "jpeg-settings");
   if (parasite)
     {
-      src = gimp_parasite_get_data (parasite, &src_size);
+      src = ligma_parasite_get_data (parasite, &src_size);
       if (src_size >= 4)
         {
           num_components = src[2];
@@ -381,15 +381,15 @@ jpeg_swap_original_settings (GimpImage *image)
                                                      + num_tables * 128));
                     }
                 }
-              gimp_parasite_free (parasite);
-              parasite = gimp_parasite_new ("jpeg-settings",
-                                            GIMP_PARASITE_PERSISTENT,
+              ligma_parasite_free (parasite);
+              parasite = ligma_parasite_new ("jpeg-settings",
+                                            LIGMA_PARASITE_PERSISTENT,
                                             src_size,
                                             new_data);
               g_free (new_data);
-              gimp_image_attach_parasite (image, parasite);
+              ligma_image_attach_parasite (image, parasite);
             }
         }
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
 }

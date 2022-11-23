@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -24,8 +24,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "gfig.h"
 #include "gfig-line.h"
@@ -33,7 +33,7 @@
 #include "gfig-dialog.h"
 #include "gfig-bezier.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define FP_PNT_MAX  10
 
@@ -400,9 +400,9 @@ tool_options_bezier (GtkWidget *notebook)
 
   toggle = gtk_check_button_new_with_label (_("Closed"));
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &bezier_closed);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                         _("Close curve on completion"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_closed);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -410,9 +410,9 @@ tool_options_bezier (GtkWidget *notebook)
 
   toggle = gtk_check_button_new_with_label (_("Show Line Frame"));
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &bezier_line_frame);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Draws lines between the control points. "
                            "Only during curve creation"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_line_frame);

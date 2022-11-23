@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdarkenonlylegacy.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationdarkenonlylegacy.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_DARKEN_ONLY_LEGACY_H__
-#define __GIMP_OPERATION_DARKEN_ONLY_LEGACY_H__
+#ifndef __LIGMA_OPERATION_DARKEN_ONLY_LEGACY_H__
+#define __LIGMA_OPERATION_DARKEN_ONLY_LEGACY_H__
 
 
-#include "operations/layer-modes/gimpoperationlayermode.h"
+#include "operations/layer-modes/ligmaoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_DARKEN_ONLY_LEGACY            (gimp_operation_darken_only_legacy_get_type ())
-#define GIMP_OPERATION_DARKEN_ONLY_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE, GimpOperationDarkenOnlyLegacy))
-#define GIMP_OPERATION_DARKEN_ONLY_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE, GimpOperationDarkenOnlyLegacyClass))
-#define GIMP_IS_OPERATION_DARKEN_ONLY_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE))
-#define GIMP_IS_OPERATION_DARKEN_ONLY_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE))
-#define GIMP_OPERATION_DARKEN_ONLY_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE, GimpOperationDarkenOnlyLegacyClass))
+#define LIGMA_TYPE_OPERATION_DARKEN_ONLY_LEGACY            (ligma_operation_darken_only_legacy_get_type ())
+#define LIGMA_OPERATION_DARKEN_ONLY_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_DARKEN_ONLY_MODE, LigmaOperationDarkenOnlyLegacy))
+#define LIGMA_OPERATION_DARKEN_ONLY_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_DARKEN_ONLY_MODE, LigmaOperationDarkenOnlyLegacyClass))
+#define LIGMA_IS_OPERATION_DARKEN_ONLY_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_DARKEN_ONLY_MODE))
+#define LIGMA_IS_OPERATION_DARKEN_ONLY_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_DARKEN_ONLY_MODE))
+#define LIGMA_OPERATION_DARKEN_ONLY_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_DARKEN_ONLY_MODE, LigmaOperationDarkenOnlyLegacyClass))
 
 
-typedef struct _GimpOperationDarkenOnlyLegacy      GimpOperationDarkenOnlyLegacy;
-typedef struct _GimpOperationDarkenOnlyLegacyClass GimpOperationDarkenOnlyLegacyClass;
+typedef struct _LigmaOperationDarkenOnlyLegacy      LigmaOperationDarkenOnlyLegacy;
+typedef struct _LigmaOperationDarkenOnlyLegacyClass LigmaOperationDarkenOnlyLegacyClass;
 
-struct _GimpOperationDarkenOnlyLegacy
+struct _LigmaOperationDarkenOnlyLegacy
 {
-  GimpOperationLayerMode  parent_instance;
+  LigmaOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationDarkenOnlyLegacyClass
+struct _LigmaOperationDarkenOnlyLegacyClass
 {
-  GimpOperationLayerModeClass  parent_class;
+  LigmaOperationLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_darken_only_legacy_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_darken_only_legacy_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_DARKEN_ONLY_LEGACY_H__ */
+#endif /* __LIGMA_OPERATION_DARKEN_ONLY_LEGACY_H__ */

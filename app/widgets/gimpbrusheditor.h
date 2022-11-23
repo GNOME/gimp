@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrusheditor.h
+ * ligmabrusheditor.h
  * Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_BRUSH_EDITOR_H__
-#define  __GIMP_BRUSH_EDITOR_H__
+#ifndef  __LIGMA_BRUSH_EDITOR_H__
+#define  __LIGMA_BRUSH_EDITOR_H__
 
 
-#include "gimpdataeditor.h"
+#include "ligmadataeditor.h"
 
 
-#define GIMP_TYPE_BRUSH_EDITOR            (gimp_brush_editor_get_type ())
-#define GIMP_BRUSH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_EDITOR, GimpBrushEditor))
-#define GIMP_BRUSH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_EDITOR, GimpBrushEditorClass))
-#define GIMP_IS_BRUSH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_EDITOR))
-#define GIMP_IS_BRUSH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_EDITOR))
-#define GIMP_BRUSH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_EDITOR, GimpBrushEditorClass))
+#define LIGMA_TYPE_BRUSH_EDITOR            (ligma_brush_editor_get_type ())
+#define LIGMA_BRUSH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_EDITOR, LigmaBrushEditor))
+#define LIGMA_BRUSH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_EDITOR, LigmaBrushEditorClass))
+#define LIGMA_IS_BRUSH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_EDITOR))
+#define LIGMA_IS_BRUSH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_EDITOR))
+#define LIGMA_BRUSH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_EDITOR, LigmaBrushEditorClass))
 
 
-typedef struct _GimpBrushEditorClass GimpBrushEditorClass;
+typedef struct _LigmaBrushEditorClass LigmaBrushEditorClass;
 
-struct _GimpBrushEditor
+struct _LigmaBrushEditor
 {
-  GimpDataEditor  parent_instance;
+  LigmaDataEditor  parent_instance;
 
   GtkWidget      *shape_group;
   GtkWidget      *options_box;
@@ -49,16 +49,16 @@ struct _GimpBrushEditor
   GtkAdjustment  *spacing_data;
 };
 
-struct _GimpBrushEditorClass
+struct _LigmaBrushEditorClass
 {
-  GimpDataEditorClass  parent_class;
+  LigmaDataEditorClass  parent_class;
 };
 
 
-GType       gimp_brush_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_brush_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_brush_editor_new      (GimpContext     *context,
-                                        GimpMenuFactory *menu_factory);
+GtkWidget * ligma_brush_editor_new      (LigmaContext     *context,
+                                        LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_BRUSH_EDITOR_H__  */
+#endif  /*  __LIGMA_BRUSH_EDITOR_H__  */

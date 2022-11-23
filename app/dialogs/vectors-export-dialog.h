@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,19 @@
 #define __VECTORS_EXPORT_DIALOG_H__
 
 
-typedef void (* GimpVectorsExportCallback) (GtkWidget *dialog,
-                                            GimpImage *image,
+typedef void (* LigmaVectorsExportCallback) (GtkWidget *dialog,
+                                            LigmaImage *image,
                                             GFile     *file,
                                             GFile     *export_folder,
                                             gboolean   active_only,
                                             gpointer   user_data);
 
 
-GtkWidget * vectors_export_dialog_new (GimpImage                 *image,
+GtkWidget * vectors_export_dialog_new (LigmaImage                 *image,
                                        GtkWidget                 *parent,
                                        GFile                     *export_folder,
                                        gboolean                   active_only,
-                                       GimpVectorsExportCallback  callback,
+                                       LigmaVectorsExportCallback  callback,
                                        gpointer                   user_data);
 
 

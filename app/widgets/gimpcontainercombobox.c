@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainercombobox.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacontainercombobox.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,130 +25,130 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcellrendererviewable.h"
-#include "gimpcontainercombobox.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpviewrenderer.h"
+#include "ligmacellrendererviewable.h"
+#include "ligmacontainercombobox.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmaviewrenderer.h"
 
 
 enum
 {
   PROP_0,
-  PROP_ELLIPSIZE = GIMP_CONTAINER_VIEW_PROP_LAST + 1
+  PROP_ELLIPSIZE = LIGMA_CONTAINER_VIEW_PROP_LAST + 1
 };
 
 
-static void     gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface);
+static void     ligma_container_combo_box_view_iface_init (LigmaContainerViewInterface *iface);
 
-static void     gimp_container_combo_box_set_property (GObject                *object,
+static void     ligma_container_combo_box_set_property (GObject                *object,
                                                        guint                   property_id,
                                                        const GValue           *value,
                                                        GParamSpec             *pspec);
-static void     gimp_container_combo_box_get_property (GObject                *object,
+static void     ligma_container_combo_box_get_property (GObject                *object,
                                                        guint                   property_id,
                                                        GValue                 *value,
                                                        GParamSpec             *pspec);
 
-static void     gimp_container_combo_box_set_context  (GimpContainerView      *view,
-                                                       GimpContext            *context);
-static gpointer gimp_container_combo_box_insert_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
+static void     ligma_container_combo_box_set_context  (LigmaContainerView      *view,
+                                                       LigmaContext            *context);
+static gpointer ligma_container_combo_box_insert_item  (LigmaContainerView      *view,
+                                                       LigmaViewable           *viewable,
                                                        gpointer                parent_insert_data,
                                                        gint                    index);
-static void     gimp_container_combo_box_remove_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
+static void     ligma_container_combo_box_remove_item  (LigmaContainerView      *view,
+                                                       LigmaViewable           *viewable,
                                                        gpointer                insert_data);
-static void     gimp_container_combo_box_reorder_item (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
+static void     ligma_container_combo_box_reorder_item (LigmaContainerView      *view,
+                                                       LigmaViewable           *viewable,
                                                        gint                    new_index,
                                                        gpointer                insert_data);
-static void     gimp_container_combo_box_rename_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
+static void     ligma_container_combo_box_rename_item  (LigmaContainerView      *view,
+                                                       LigmaViewable           *viewable,
                                                        gpointer                insert_data);
-static gboolean  gimp_container_combo_box_select_items(GimpContainerView      *view,
+static gboolean  ligma_container_combo_box_select_items(LigmaContainerView      *view,
                                                        GList                  *viewables,
                                                        GList                  *paths);
-static void     gimp_container_combo_box_clear_items  (GimpContainerView      *view);
-static void    gimp_container_combo_box_set_view_size (GimpContainerView      *view);
-static gint    gimp_container_combo_box_get_selected  (GimpContainerView      *view,
+static void     ligma_container_combo_box_clear_items  (LigmaContainerView      *view);
+static void    ligma_container_combo_box_set_view_size (LigmaContainerView      *view);
+static gint    ligma_container_combo_box_get_selected  (LigmaContainerView      *view,
                                                        GList                 **items,
                                                        GList                 **items_data);
 
-static void     gimp_container_combo_box_changed      (GtkComboBox            *combo_box,
-                                                       GimpContainerView      *view);
+static void     ligma_container_combo_box_changed      (GtkComboBox            *combo_box,
+                                                       LigmaContainerView      *view);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpContainerComboBox, gimp_container_combo_box,
+G_DEFINE_TYPE_WITH_CODE (LigmaContainerComboBox, ligma_container_combo_box,
                          GTK_TYPE_COMBO_BOX,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_combo_box_view_iface_init))
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_container_combo_box_view_iface_init))
 
-#define parent_class gimp_container_combo_box_parent_class
+#define parent_class ligma_container_combo_box_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static LigmaContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
-gimp_container_combo_box_class_init (GimpContainerComboBoxClass *klass)
+ligma_container_combo_box_class_init (LigmaContainerComboBoxClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_container_combo_box_set_property;
-  object_class->get_property = gimp_container_combo_box_get_property;
+  object_class->set_property = ligma_container_combo_box_set_property;
+  object_class->get_property = ligma_container_combo_box_get_property;
 
-  gimp_container_view_install_properties (object_class);
+  ligma_container_view_install_properties (object_class);
 
   g_object_class_install_property (object_class,
                                    PROP_ELLIPSIZE,
                                    g_param_spec_enum ("ellipsize", NULL, NULL,
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_MIDDLE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
+ligma_container_combo_box_view_iface_init (LigmaContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_view_iface)
-    parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
+    parent_view_iface = g_type_default_interface_peek (LIGMA_TYPE_CONTAINER_VIEW);
 
-  iface->set_context   = gimp_container_combo_box_set_context;
-  iface->insert_item   = gimp_container_combo_box_insert_item;
-  iface->remove_item   = gimp_container_combo_box_remove_item;
-  iface->reorder_item  = gimp_container_combo_box_reorder_item;
-  iface->rename_item   = gimp_container_combo_box_rename_item;
-  iface->select_items  = gimp_container_combo_box_select_items;
-  iface->clear_items   = gimp_container_combo_box_clear_items;
-  iface->set_view_size = gimp_container_combo_box_set_view_size;
-  iface->get_selected  = gimp_container_combo_box_get_selected;
+  iface->set_context   = ligma_container_combo_box_set_context;
+  iface->insert_item   = ligma_container_combo_box_insert_item;
+  iface->remove_item   = ligma_container_combo_box_remove_item;
+  iface->reorder_item  = ligma_container_combo_box_reorder_item;
+  iface->rename_item   = ligma_container_combo_box_rename_item;
+  iface->select_items  = ligma_container_combo_box_select_items;
+  iface->clear_items   = ligma_container_combo_box_clear_items;
+  iface->set_view_size = ligma_container_combo_box_set_view_size;
+  iface->get_selected  = ligma_container_combo_box_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
 
 static void
-gimp_container_combo_box_init (GimpContainerComboBox *combo)
+ligma_container_combo_box_init (LigmaContainerComboBox *combo)
 {
   GtkTreeModel    *model;
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
-  GType            types[GIMP_CONTAINER_TREE_STORE_N_COLUMNS];
+  GType            types[LIGMA_CONTAINER_TREE_STORE_N_COLUMNS];
   gint             n_types = 0;
 
-  gimp_container_tree_store_columns_init (types, &n_types);
+  ligma_container_tree_store_columns_init (types, &n_types);
 
-  model = gimp_container_tree_store_new (GIMP_CONTAINER_VIEW (combo),
+  model = ligma_container_tree_store_new (LIGMA_CONTAINER_VIEW (combo),
                                          n_types, types);
 
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo), model);
@@ -157,16 +157,16 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
 
   layout = GTK_CELL_LAYOUT (combo);
 
-  cell = gimp_cell_renderer_viewable_new ();
+  cell = ligma_cell_renderer_viewable_new ();
   gtk_cell_layout_pack_start (layout, cell, FALSE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "renderer",
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   "sensitive",
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                   NULL);
 
-  gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_add_renderer_cell (LIGMA_CONTAINER_TREE_STORE (model),
                                                cell, -1);
 
   combo->viewable_renderer = cell;
@@ -175,27 +175,27 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text",
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME,
                                   "sensitive",
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                   NULL);
 
   combo->text_renderer = cell;
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_container_combo_box_changed),
+                    G_CALLBACK (ligma_container_combo_box_changed),
                     combo);
 
   gtk_widget_set_sensitive (GTK_WIDGET (combo), FALSE);
 }
 
 static void
-gimp_container_combo_box_set_property (GObject      *object,
+ligma_container_combo_box_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpContainerComboBox *combo = GIMP_CONTAINER_COMBO_BOX (object);
+  LigmaContainerComboBox *combo = LIGMA_CONTAINER_COMBO_BOX (object);
 
   switch (property_id)
     {
@@ -205,18 +205,18 @@ gimp_container_combo_box_set_property (GObject      *object,
       break;
 
     default:
-      gimp_container_view_set_property (object, property_id, value, pspec);
+      ligma_container_view_set_property (object, property_id, value, pspec);
       break;
     }
 }
 
 static void
-gimp_container_combo_box_get_property (GObject    *object,
+ligma_container_combo_box_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpContainerComboBox *combo = GIMP_CONTAINER_COMBO_BOX (object);
+  LigmaContainerComboBox *combo = LIGMA_CONTAINER_COMBO_BOX (object);
 
   switch (property_id)
     {
@@ -226,58 +226,58 @@ gimp_container_combo_box_get_property (GObject    *object,
       break;
 
     default:
-      gimp_container_view_get_property (object, property_id, value, pspec);
+      ligma_container_view_get_property (object, property_id, value, pspec);
       break;
     }
 }
 
 GtkWidget *
-gimp_container_combo_box_new (GimpContainer *container,
-                              GimpContext   *context,
+ligma_container_combo_box_new (LigmaContainer *container,
+                              LigmaContext   *context,
                               gint           view_size,
                               gint           view_border_width)
 {
   GtkWidget         *combo_box;
-  GimpContainerView *view;
+  LigmaContainerView *view;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX, NULL);
+  combo_box = g_object_new (LIGMA_TYPE_CONTAINER_COMBO_BOX, NULL);
 
-  view = GIMP_CONTAINER_VIEW (combo_box);
+  view = LIGMA_CONTAINER_VIEW (combo_box);
 
-  gimp_container_view_set_view_size (view, view_size, view_border_width);
+  ligma_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
-    gimp_container_view_set_container (view, container);
+    ligma_container_view_set_container (view, container);
 
   if (context)
-    gimp_container_view_set_context (view, context);
+    ligma_container_view_set_context (view, context);
 
   return combo_box;
 }
 
 
-/*  GimpContainerView methods  */
+/*  LigmaContainerView methods  */
 
 static void
-gimp_container_combo_box_set_context (GimpContainerView *view,
-                                      GimpContext       *context)
+ligma_container_combo_box_set_context (LigmaContainerView *view,
+                                      LigmaContext       *context)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
   parent_view_iface->set_context (view, context);
 
   if (model)
-    gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (model),
+    ligma_container_tree_store_set_context (LIGMA_CONTAINER_TREE_STORE (model),
                                            context);
 }
 
 static gpointer
-gimp_container_combo_box_insert_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
+ligma_container_combo_box_insert_item (LigmaContainerView *view,
+                                      LigmaViewable      *viewable,
                                       gpointer           parent_insert_data,
                                       gint               index)
 {
@@ -287,14 +287,14 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
     {
       GtkTreeIter *iter;
 
-      iter = gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
+      iter = ligma_container_tree_store_insert_item (LIGMA_CONTAINER_TREE_STORE (model),
                                                     viewable,
                                                     parent_insert_data,
                                                     index);
 
       if (gtk_tree_model_iter_n_children (model, NULL) == 1)
         {
-          /*  GimpContainerViews don't select items by default  */
+          /*  LigmaContainerViews don't select items by default  */
           gtk_combo_box_set_active (GTK_COMBO_BOX (view), -1);
 
           gtk_widget_set_sensitive (GTK_WIDGET (view), TRUE);
@@ -307,8 +307,8 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
 }
 
 static void
-gimp_container_combo_box_remove_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
+ligma_container_combo_box_remove_item (LigmaContainerView *view,
+                                      LigmaViewable      *viewable,
                                       gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
@@ -317,7 +317,7 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
     {
       GtkTreeIter *iter = insert_data;
 
-      gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
+      ligma_container_tree_store_remove_item (LIGMA_CONTAINER_TREE_STORE (model),
                                              viewable,
                                              iter);
 
@@ -329,48 +329,48 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
 }
 
 static void
-gimp_container_combo_box_reorder_item (GimpContainerView *view,
-                                       GimpViewable      *viewable,
+ligma_container_combo_box_reorder_item (LigmaContainerView *view,
+                                       LigmaViewable      *viewable,
                                        gint               new_index,
                                        gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
   if (model)
-    gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
+    ligma_container_tree_store_reorder_item (LIGMA_CONTAINER_TREE_STORE (model),
                                             viewable,
                                             new_index,
                                             insert_data);
 }
 
 static void
-gimp_container_combo_box_rename_item (GimpContainerView *view,
-                                      GimpViewable      *viewable,
+ligma_container_combo_box_rename_item (LigmaContainerView *view,
+                                      LigmaViewable      *viewable,
                                       gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
   if (model)
-    gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
+    ligma_container_tree_store_rename_item (LIGMA_CONTAINER_TREE_STORE (model),
                                            viewable,
                                            insert_data);
 }
 
 static gboolean
-gimp_container_combo_box_select_items (GimpContainerView *view,
+ligma_container_combo_box_select_items (LigmaContainerView *view,
                                        GList             *viewables,
                                        GList             *paths)
 {
   GtkComboBox *combo_box = GTK_COMBO_BOX (view);
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
-  /* Only zero or one items may selected in a GimpContainerComboBox. */
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_VIEW (view), FALSE);
+  /* Only zero or one items may selected in a LigmaContainerComboBox. */
   g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
 
   if (gtk_combo_box_get_model (GTK_COMBO_BOX (view)))
     {
       g_signal_handlers_block_by_func (combo_box,
-                                       gimp_container_combo_box_changed,
+                                       ligma_container_combo_box_changed,
                                        view);
 
       if (viewables)
@@ -383,10 +383,10 @@ gimp_container_combo_box_select_items (GimpContainerView *view,
                iter_valid;
                iter_valid = gtk_tree_model_iter_next (model, &iter))
             {
-              GimpViewRenderer *renderer;
+              LigmaViewRenderer *renderer;
 
               gtk_tree_model_get (model, &iter,
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                                   -1);
 
               if (renderer->viewable == viewables->data)
@@ -405,7 +405,7 @@ gimp_container_combo_box_select_items (GimpContainerView *view,
         }
 
       g_signal_handlers_unblock_by_func (combo_box,
-                                         gimp_container_combo_box_changed,
+                                         ligma_container_combo_box_changed,
                                          view);
     }
 
@@ -413,12 +413,12 @@ gimp_container_combo_box_select_items (GimpContainerView *view,
 }
 
 static void
-gimp_container_combo_box_clear_items (GimpContainerView *view)
+ligma_container_combo_box_clear_items (LigmaContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
   if (model)
-    gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
+    ligma_container_tree_store_clear_items (LIGMA_CONTAINER_TREE_STORE (model));
 
   gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
 
@@ -426,27 +426,27 @@ gimp_container_combo_box_clear_items (GimpContainerView *view)
 }
 
 static void
-gimp_container_combo_box_set_view_size (GimpContainerView *view)
+ligma_container_combo_box_set_view_size (LigmaContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
   if (model)
-    gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
+    ligma_container_tree_store_set_view_size (LIGMA_CONTAINER_TREE_STORE (model));
 }
 
 static gint
-gimp_container_combo_box_get_selected (GimpContainerView  *view,
+ligma_container_combo_box_get_selected (LigmaContainerView  *view,
                                        GList             **items,
                                        GList             **items_data)
 {
   GtkComboBox      *combo_box = GTK_COMBO_BOX (view);
-  GimpViewRenderer *renderer  = NULL;
+  LigmaViewRenderer *renderer  = NULL;
   GtkTreeIter       iter;
   gint              selected  = 0;
 
   if (gtk_combo_box_get_active_iter (combo_box, &iter))
     gtk_tree_model_get (gtk_combo_box_get_model (combo_box), &iter,
-                        GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                        LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                         -1);
 
   if (items)
@@ -467,20 +467,20 @@ gimp_container_combo_box_get_selected (GimpContainerView  *view,
 }
 
 static void
-gimp_container_combo_box_changed (GtkComboBox       *combo,
-                                  GimpContainerView *view)
+ligma_container_combo_box_changed (GtkComboBox       *combo,
+                                  LigmaContainerView *view)
 {
   GtkTreeIter iter;
 
   if (gtk_combo_box_get_active_iter (combo, &iter))
     {
-      GimpViewRenderer *renderer;
+      LigmaViewRenderer *renderer;
 
       gtk_tree_model_get (gtk_combo_box_get_model (combo), &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_container_view_item_selected (view, renderer->viewable);
+      ligma_container_view_item_selected (view, renderer->viewable);
       g_object_unref (renderer);
     }
 }

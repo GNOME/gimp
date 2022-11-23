@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpdynamicsoutputeditor.c
+ * ligmadynamicsoutputeditor.c
  * Copyright (C) 2010 Alexia Death
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,19 +23,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcurve.h"
-#include "core/gimpdynamicsoutput.h"
+#include "core/ligmacurve.h"
+#include "core/ligmadynamicsoutput.h"
 
-#include "gimpcurveview.h"
-#include "gimpdynamicsoutputeditor.h"
+#include "ligmacurveview.h"
+#include "ligmadynamicsoutputeditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define CURVE_SIZE   185
@@ -63,7 +63,7 @@ struct
   const gchar   *use_property;
   const gchar   *curve_property;
   const gchar   *label;
-  const GimpRGB  color;
+  const LigmaRGB  color;
 }
 inputs[] =
 {
@@ -79,11 +79,11 @@ inputs[] =
 #define INPUT_COLOR(i) (inputs[(i)].color.a ? &inputs[(i)].color : NULL)
 
 
-typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
+typedef struct _LigmaDynamicsOutputEditorPrivate LigmaDynamicsOutputEditorPrivate;
 
-struct _GimpDynamicsOutputEditorPrivate
+struct _LigmaDynamicsOutputEditorPrivate
 {
-  GimpDynamicsOutput *output;
+  LigmaDynamicsOutput *output;
 
   GtkListStore       *input_list;
   GtkTreeIter         input_iters[G_N_ELEMENTS (inputs)];
@@ -91,68 +91,68 @@ struct _GimpDynamicsOutputEditorPrivate
   GtkWidget          *curve_view;
   GtkWidget          *input_view;
 
-  GimpCurve          *active_curve;
+  LigmaCurve          *active_curve;
 };
 
 #define GET_PRIVATE(editor) \
-        ((GimpDynamicsOutputEditorPrivate *) gimp_dynamics_output_editor_get_instance_private ((GimpDynamicsOutputEditor *) (editor)))
+        ((LigmaDynamicsOutputEditorPrivate *) ligma_dynamics_output_editor_get_instance_private ((LigmaDynamicsOutputEditor *) (editor)))
 
 
-static void   gimp_dynamics_output_editor_constructed    (GObject                  *object);
-static void   gimp_dynamics_output_editor_finalize       (GObject                  *object);
-static void   gimp_dynamics_output_editor_set_property   (GObject                  *object,
+static void   ligma_dynamics_output_editor_constructed    (GObject                  *object);
+static void   ligma_dynamics_output_editor_finalize       (GObject                  *object);
+static void   ligma_dynamics_output_editor_set_property   (GObject                  *object,
                                                           guint                     property_id,
                                                           const GValue             *value,
                                                           GParamSpec               *pspec);
-static void   gimp_dynamics_output_editor_get_property   (GObject                  *object,
+static void   ligma_dynamics_output_editor_get_property   (GObject                  *object,
                                                           guint                     property_id,
                                                           GValue                   *value,
                                                           GParamSpec               *pspec);
 
-static void   gimp_dynamics_output_editor_curve_reset    (GtkWidget                *button,
-                                                          GimpDynamicsOutputEditor *editor);
+static void   ligma_dynamics_output_editor_curve_reset    (GtkWidget                *button,
+                                                          LigmaDynamicsOutputEditor *editor);
 
-static void   gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
-                                                          GimpDynamicsOutputEditor *editor);
+static void   ligma_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
+                                                          LigmaDynamicsOutputEditor *editor);
 
-static void   gimp_dynamics_output_editor_input_toggled  (GtkCellRenderer          *cell,
+static void   ligma_dynamics_output_editor_input_toggled  (GtkCellRenderer          *cell,
                                                           gchar                    *path,
-                                                          GimpDynamicsOutputEditor *editor);
+                                                          LigmaDynamicsOutputEditor *editor);
 
-static void   gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
+static void   ligma_dynamics_output_editor_activate_input (LigmaDynamicsOutputEditor *editor,
                                                           gint                      input);
 
-static void   gimp_dynamics_output_editor_notify_output  (GimpDynamicsOutput       *output,
+static void   ligma_dynamics_output_editor_notify_output  (LigmaDynamicsOutput       *output,
                                                           const GParamSpec         *pspec,
-                                                          GimpDynamicsOutputEditor *editor);
+                                                          LigmaDynamicsOutputEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDynamicsOutputEditor,
-                            gimp_dynamics_output_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDynamicsOutputEditor,
+                            ligma_dynamics_output_editor, GTK_TYPE_BOX)
 
-#define parent_class gimp_dynamics_output_editor_parent_class
+#define parent_class ligma_dynamics_output_editor_parent_class
 
 
 static void
-gimp_dynamics_output_editor_class_init (GimpDynamicsOutputEditorClass *klass)
+ligma_dynamics_output_editor_class_init (LigmaDynamicsOutputEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_dynamics_output_editor_constructed;
-  object_class->finalize     = gimp_dynamics_output_editor_finalize;
-  object_class->set_property = gimp_dynamics_output_editor_set_property;
-  object_class->get_property = gimp_dynamics_output_editor_get_property;
+  object_class->constructed  = ligma_dynamics_output_editor_constructed;
+  object_class->finalize     = ligma_dynamics_output_editor_finalize;
+  object_class->set_property = ligma_dynamics_output_editor_set_property;
+  object_class->get_property = ligma_dynamics_output_editor_get_property;
 
   g_object_class_install_property (object_class, PROP_OUTPUT,
                                    g_param_spec_object ("output",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DYNAMICS_OUTPUT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DYNAMICS_OUTPUT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_dynamics_output_editor_init (GimpDynamicsOutputEditor *editor)
+ligma_dynamics_output_editor_init (LigmaDynamicsOutputEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -161,26 +161,26 @@ gimp_dynamics_output_editor_init (GimpDynamicsOutputEditor *editor)
 }
 
 static void
-gimp_dynamics_output_editor_constructed (GObject *object)
+ligma_dynamics_output_editor_constructed (GObject *object)
 {
-  GimpDynamicsOutputEditor        *editor;
-  GimpDynamicsOutputEditorPrivate *private;
+  LigmaDynamicsOutputEditor        *editor;
+  LigmaDynamicsOutputEditorPrivate *private;
   GtkWidget                       *view;
   GtkWidget                       *button;
   GtkCellRenderer                 *cell;
   GtkTreeSelection                *tree_sel;
   gint                             i;
-  GimpDynamicsOutputType           output_type;
+  LigmaDynamicsOutputType           output_type;
   const gchar                     *type_desc;
 
-  editor  = GIMP_DYNAMICS_OUTPUT_EDITOR (object);
+  editor  = LIGMA_DYNAMICS_OUTPUT_EDITOR (object);
   private = GET_PRIVATE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
+  ligma_assert (LIGMA_IS_DYNAMICS_OUTPUT (private->output));
 
-  private->curve_view = gimp_curve_view_new ();
+  private->curve_view = ligma_curve_view_new ();
   g_object_set (private->curve_view,
                 "border-width", CURVE_BORDER,
                 NULL);
@@ -189,7 +189,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                "type", &output_type,
                NULL);
 
-  if (gimp_enum_get_value (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE, output_type,
+  if (ligma_enum_get_value (LIGMA_TYPE_DYNAMICS_OUTPUT_TYPE, output_type,
                            NULL, NULL, &type_desc, NULL))
     g_object_set (private->curve_view,
                   "y-axis-label", type_desc,
@@ -201,21 +201,21 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), private->curve_view, TRUE, TRUE, 0);
   gtk_widget_show (private->curve_view);
 
-  gimp_dynamics_output_editor_activate_input (editor, 0);
+  ligma_dynamics_output_editor_activate_input (editor, 0);
 
   button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_dynamics_output_editor_curve_reset),
+                    G_CALLBACK (ligma_dynamics_output_editor_curve_reset),
                     editor);
 
   private->input_list = gtk_list_store_new (INPUT_N_COLUMNS,
                                             G_TYPE_INT,
                                             G_TYPE_BOOLEAN,
                                             G_TYPE_STRING,
-                                            GIMP_TYPE_RGB);
+                                            LIGMA_TYPE_RGB);
 
   for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
@@ -247,12 +247,12 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                 NULL);
 
   g_signal_connect (G_OBJECT (cell), "toggled",
-                    G_CALLBACK (gimp_dynamics_output_editor_input_toggled),
+                    G_CALLBACK (ligma_dynamics_output_editor_input_toggled),
                     editor);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
                                                -1, NULL,
-                                               gimp_cell_renderer_color_new (),
+                                               ligma_cell_renderer_color_new (),
                                                "color", INPUT_COLUMN_COLOR,
                                                NULL);
 
@@ -279,18 +279,18 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   gtk_tree_selection_select_iter (tree_sel, &private->input_iters[0]);
 
   g_signal_connect (G_OBJECT (tree_sel), "changed",
-                    G_CALLBACK (gimp_dynamics_output_editor_input_selected),
+                    G_CALLBACK (ligma_dynamics_output_editor_input_selected),
                     editor);
 
   g_signal_connect (private->output, "notify",
-                    G_CALLBACK (gimp_dynamics_output_editor_notify_output),
+                    G_CALLBACK (ligma_dynamics_output_editor_notify_output),
                     editor);
 }
 
 static void
-gimp_dynamics_output_editor_finalize (GObject *object)
+ligma_dynamics_output_editor_finalize (GObject *object)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->output);
 
@@ -298,12 +298,12 @@ gimp_dynamics_output_editor_finalize (GObject *object)
 }
 
 static void
-gimp_dynamics_output_editor_set_property (GObject      *object,
+ligma_dynamics_output_editor_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -318,12 +318,12 @@ gimp_dynamics_output_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_dynamics_output_editor_get_property (GObject    *object,
+ligma_dynamics_output_editor_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -339,18 +339,18 @@ gimp_dynamics_output_editor_get_property (GObject    *object,
 
 
 static void
-gimp_dynamics_output_editor_curve_reset (GtkWidget                *button,
-                                         GimpDynamicsOutputEditor *editor)
+ligma_dynamics_output_editor_curve_reset (GtkWidget                *button,
+                                         LigmaDynamicsOutputEditor *editor)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
 
   if (private->active_curve)
-    gimp_curve_reset (private->active_curve, TRUE);
+    ligma_curve_reset (private->active_curve, TRUE);
 }
 
 static void
-gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
-                                            GimpDynamicsOutputEditor *editor)
+ligma_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
+                                            LigmaDynamicsOutputEditor *editor)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -363,16 +363,16 @@ gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
                           INPUT_COLUMN_INDEX, &input,
                           -1);
 
-      gimp_dynamics_output_editor_activate_input (editor, input);
+      ligma_dynamics_output_editor_activate_input (editor, input);
     }
 }
 
 static void
-gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
+ligma_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
                                            gchar                    *path,
-                                           GimpDynamicsOutputEditor *editor)
+                                           LigmaDynamicsOutputEditor *editor)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
   GtkTreeModel                    *model;
   GtkTreeIter                      iter;
 
@@ -395,19 +395,19 @@ gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
 }
 
 static void
-gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
+ligma_dynamics_output_editor_activate_input (LigmaDynamicsOutputEditor *editor,
                                             gint                      input)
 {
-  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
   gint                             i;
 
-  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view), NULL, NULL);
-  gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (private->curve_view));
+  ligma_curve_view_set_curve (LIGMA_CURVE_VIEW (private->curve_view), NULL, NULL);
+  ligma_curve_view_remove_all_backgrounds (LIGMA_CURVE_VIEW (private->curve_view));
 
   for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
       gboolean   use_input;
-      GimpCurve *input_curve;
+      LigmaCurve *input_curve;
 
       g_object_get (private->output,
                     inputs[i].use_property,   &use_input,
@@ -416,16 +416,16 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
 
       if (input == i)
         {
-          gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+          ligma_curve_view_set_curve (LIGMA_CURVE_VIEW (private->curve_view),
                                      input_curve, INPUT_COLOR (i));
           private->active_curve = input_curve;
 
-          gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
+          ligma_curve_view_set_x_axis_label (LIGMA_CURVE_VIEW (private->curve_view),
                                             inputs[i].label);
         }
       else if (use_input)
         {
-          gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+          ligma_curve_view_add_background (LIGMA_CURVE_VIEW (private->curve_view),
                                           input_curve, INPUT_COLOR (i));
         }
 
@@ -434,9 +434,9 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
 }
 
 static void
-gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
+ligma_dynamics_output_editor_notify_output (LigmaDynamicsOutput       *output,
                                            const GParamSpec         *pspec,
-                                           GimpDynamicsOutputEditor *editor)
+                                           LigmaDynamicsOutputEditor *editor)
 {
   gint i;
 
@@ -444,10 +444,10 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
     {
       if (! strcmp (pspec->name, inputs[i].use_property))
         {
-          GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+          LigmaDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
           GtkTreeSelection                *sel;
           gboolean                         use_input;
-          GimpCurve                       *input_curve;
+          LigmaCurve                       *input_curve;
 
           sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->input_view));
 
@@ -465,12 +465,12 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
             {
               if (use_input)
                 {
-                  gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                  ligma_curve_view_add_background (LIGMA_CURVE_VIEW (private->curve_view),
                                                   input_curve, INPUT_COLOR (i));
                 }
               else
                 {
-                  gimp_curve_view_remove_background (GIMP_CURVE_VIEW (private->curve_view),
+                  ligma_curve_view_remove_background (LIGMA_CURVE_VIEW (private->curve_view),
                                                      input_curve);
                 }
 
@@ -486,11 +486,11 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
 /*  public functions  */
 
 GtkWidget *
-gimp_dynamics_output_editor_new (GimpDynamicsOutput *output)
+ligma_dynamics_output_editor_new (LigmaDynamicsOutput *output)
 {
-  g_return_val_if_fail (GIMP_IS_DYNAMICS_OUTPUT (output), NULL);
+  g_return_val_if_fail (LIGMA_IS_DYNAMICS_OUTPUT (output), NULL);
 
-  return g_object_new (GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR,
+  return g_object_new (LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR,
                        "output", output,
                        NULL);
 }

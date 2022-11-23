@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationantierase.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationantierase.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationantierase.h"
+#include "ligmaoperationantierase.h"
 
 
 
-static gboolean                   gimp_operation_anti_erase_process             (GeglOperation          *op,
+static gboolean                   ligma_operation_anti_erase_process             (GeglOperation          *op,
                                                                                  void                   *in,
                                                                                  void                   *layer,
                                                                                  void                   *mask,
@@ -37,35 +37,35 @@ static gboolean                   gimp_operation_anti_erase_process             
                                                                                  glong                   samples,
                                                                                  const GeglRectangle    *roi,
                                                                                  gint                    level);
-static GimpLayerCompositeRegion   gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode);
+static LigmaLayerCompositeRegion   ligma_operation_anti_erase_get_affected_region (LigmaOperationLayerMode *layer_mode);
 
 
-G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationAntiErase, ligma_operation_anti_erase,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
+ligma_operation_anti_erase_class_init (LigmaOperationAntiEraseClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:anti-erase",
-                                 "description", "GIMP anti erase mode operation",
+                                 "name",        "ligma:anti-erase",
+                                 "description", "LIGMA anti erase mode operation",
                                  NULL);
 
-  layer_mode_class->process             = gimp_operation_anti_erase_process;
-  layer_mode_class->get_affected_region = gimp_operation_anti_erase_get_affected_region;
+  layer_mode_class->process             = ligma_operation_anti_erase_process;
+  layer_mode_class->get_affected_region = ligma_operation_anti_erase_get_affected_region;
 }
 
 static void
-gimp_operation_anti_erase_init (GimpOperationAntiErase *self)
+ligma_operation_anti_erase_init (LigmaOperationAntiErase *self)
 {
 }
 
 static gboolean
-gimp_operation_anti_erase_process (GeglOperation       *op,
+ligma_operation_anti_erase_process (GeglOperation       *op,
                                    void                *in_p,
                                    void                *layer_p,
                                    void                *mask_p,
@@ -74,7 +74,7 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -84,8 +84,8 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
 
   switch (layer_mode->composite_mode)
     {
-    case GIMP_LAYER_COMPOSITE_UNION:
-    case GIMP_LAYER_COMPOSITE_AUTO:
+    case LIGMA_LAYER_COMPOSITE_UNION:
+    case LIGMA_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
           gfloat value = opacity;
@@ -110,7 +110,7 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
       while (samples--)
         {
           gint b;
@@ -127,7 +127,7 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
           gfloat value = opacity;
@@ -152,7 +152,7 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_INTERSECTION:
+    case LIGMA_LAYER_COMPOSITE_INTERSECTION:
       while (samples--)
         {
           gfloat value = opacity;
@@ -181,8 +181,8 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerCompositeRegion
-gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode)
+static LigmaLayerCompositeRegion
+ligma_operation_anti_erase_get_affected_region (LigmaOperationLayerMode *layer_mode)
 {
-  return GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+  return LIGMA_LAYER_COMPOSITE_REGION_SOURCE;
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpuimanager.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmauimanager.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,116 +18,116 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_MANAGER_H__
-#define __GIMP_UI_MANAGER_H__
+#ifndef __LIGMA_UI_MANAGER_H__
+#define __LIGMA_UI_MANAGER_H__
 
 
-typedef struct _GimpUIManagerUIEntry GimpUIManagerUIEntry;
+typedef struct _LigmaUIManagerUIEntry LigmaUIManagerUIEntry;
 
-struct _GimpUIManagerUIEntry
+struct _LigmaUIManagerUIEntry
 {
   gchar                  *ui_path;
   gchar                  *basename;
-  GimpUIManagerSetupFunc  setup_func;
+  LigmaUIManagerSetupFunc  setup_func;
   guint                   merge_id;
   GtkWidget              *widget;
 };
 
 
-#define GIMP_TYPE_UI_MANAGER              (gimp_ui_manager_get_type ())
-#define GIMP_UI_MANAGER(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UI_MANAGER, GimpUIManager))
-#define GIMP_UI_MANAGER_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), GIMP_TYPE_UI_MANAGER, GimpUIManagerClass))
-#define GIMP_IS_UI_MANAGER(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UI_MANAGER))
-#define GIMP_IS_UI_MANAGER_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), GIMP_TYPE_UI_MANAGER))
-#define GIMP_UI_MANAGER_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), GIMP_TYPE_UI_MANAGER, GimpUIManagerClass))
+#define LIGMA_TYPE_UI_MANAGER              (ligma_ui_manager_get_type ())
+#define LIGMA_UI_MANAGER(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UI_MANAGER, LigmaUIManager))
+#define LIGMA_UI_MANAGER_CLASS(vtable)     (G_TYPE_CHECK_CLASS_CAST ((vtable), LIGMA_TYPE_UI_MANAGER, LigmaUIManagerClass))
+#define LIGMA_IS_UI_MANAGER(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UI_MANAGER))
+#define LIGMA_IS_UI_MANAGER_CLASS(vtable)  (G_TYPE_CHECK_CLASS_TYPE ((vtable), LIGMA_TYPE_UI_MANAGER))
+#define LIGMA_UI_MANAGER_GET_CLASS(inst)   (G_TYPE_INSTANCE_GET_CLASS ((inst), LIGMA_TYPE_UI_MANAGER, LigmaUIManagerClass))
 
 
-typedef struct _GimpUIManagerClass GimpUIManagerClass;
+typedef struct _LigmaUIManagerClass LigmaUIManagerClass;
 
 /**
  * Among other things, is responsible for updating menu bars. A more
- * appropriate name would perhaps be GimpMenubarManager.
+ * appropriate name would perhaps be LigmaMenubarManager.
  */
-struct _GimpUIManager
+struct _LigmaUIManager
 {
   GtkUIManager  parent_instance;
 
   gchar        *name;
-  Gimp         *gimp;
+  Ligma         *ligma;
   GList        *registered_uis;
 };
 
-struct _GimpUIManagerClass
+struct _LigmaUIManagerClass
 {
   GtkUIManagerClass  parent_class;
 
   GHashTable        *managers;
 
-  void (* update)       (GimpUIManager *manager,
+  void (* update)       (LigmaUIManager *manager,
                          gpointer       update_data);
-  void (* show_tooltip) (GimpUIManager *manager,
+  void (* show_tooltip) (LigmaUIManager *manager,
                          const gchar   *tooltip);
-  void (* hide_tooltip) (GimpUIManager *manager);
+  void (* hide_tooltip) (LigmaUIManager *manager);
 };
 
 
-GType           gimp_ui_manager_get_type    (void) G_GNUC_CONST;
+GType           ligma_ui_manager_get_type    (void) G_GNUC_CONST;
 
-GimpUIManager * gimp_ui_manager_new         (Gimp                   *gimp,
+LigmaUIManager * ligma_ui_manager_new         (Ligma                   *ligma,
                                              const gchar            *name);
 
-GList         * gimp_ui_managers_from_name  (const gchar            *name);
+GList         * ligma_ui_managers_from_name  (const gchar            *name);
 
-void            gimp_ui_manager_update      (GimpUIManager          *manager,
+void            ligma_ui_manager_update      (LigmaUIManager          *manager,
                                              gpointer                update_data);
 
-void            gimp_ui_manager_insert_action_group (GimpUIManager   *manager,
-                                                     GimpActionGroup *group,
+void            ligma_ui_manager_insert_action_group (LigmaUIManager   *manager,
+                                                     LigmaActionGroup *group,
                                                      gint             pos);
-GimpActionGroup * gimp_ui_manager_get_action_group  (GimpUIManager   *manager,
+LigmaActionGroup * ligma_ui_manager_get_action_group  (LigmaUIManager   *manager,
                                                      const gchar     *name);
-GList         * gimp_ui_manager_get_action_groups   (GimpUIManager   *manager);
+GList         * ligma_ui_manager_get_action_groups   (LigmaUIManager   *manager);
 
-GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
+GtkAccelGroup * ligma_ui_manager_get_accel_group (LigmaUIManager      *manager);
 
-GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
+GtkWidget     * ligma_ui_manager_get_widget      (LigmaUIManager      *manager,
                                                  const gchar        *path);
 
-gchar          * gimp_ui_manager_get_ui         (GimpUIManager      *manager);
+gchar          * ligma_ui_manager_get_ui         (LigmaUIManager      *manager);
 
-guint            gimp_ui_manager_new_merge_id   (GimpUIManager      *manager);
-void             gimp_ui_manager_add_ui         (GimpUIManager      *manager,
+guint            ligma_ui_manager_new_merge_id   (LigmaUIManager      *manager);
+void             ligma_ui_manager_add_ui         (LigmaUIManager      *manager,
                                                  guint               merge_id,
                                                  const gchar        *path,
                                                  const gchar        *name,
                                                  const gchar        *action,
                                                  GtkUIManagerItemType type,
                                                  gboolean            top);
-void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
+void            ligma_ui_manager_remove_ui       (LigmaUIManager      *manager,
                                                  guint               merge_id);
 
-void            gimp_ui_manager_ensure_update   (GimpUIManager      *manager);
+void            ligma_ui_manager_ensure_update   (LigmaUIManager      *manager);
 
-GimpAction    * gimp_ui_manager_get_action      (GimpUIManager      *manager,
+LigmaAction    * ligma_ui_manager_get_action      (LigmaUIManager      *manager,
                                                  const gchar        *path);
-GimpAction    * gimp_ui_manager_find_action     (GimpUIManager      *manager,
+LigmaAction    * ligma_ui_manager_find_action     (LigmaUIManager      *manager,
                                                  const gchar        *group_name,
                                                  const gchar        *action_name);
-gboolean        gimp_ui_manager_activate_action (GimpUIManager      *manager,
+gboolean        ligma_ui_manager_activate_action (LigmaUIManager      *manager,
                                                  const gchar        *group_name,
                                                  const gchar        *action_name);
-gboolean        gimp_ui_manager_toggle_action   (GimpUIManager      *manager,
+gboolean        ligma_ui_manager_toggle_action   (LigmaUIManager      *manager,
                                                  const gchar        *group_name,
                                                  const gchar        *action_name,
                                                  gboolean            active);
 
-void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
+void            ligma_ui_manager_ui_register (LigmaUIManager          *manager,
                                              const gchar            *ui_path,
                                              const gchar            *basename,
-                                             GimpUIManagerSetupFunc  setup_func);
+                                             LigmaUIManagerSetupFunc  setup_func);
 
-void            gimp_ui_manager_ui_popup_at_widget
-                                            (GimpUIManager          *manager,
+void            ligma_ui_manager_ui_popup_at_widget
+                                            (LigmaUIManager          *manager,
                                              const gchar            *ui_path,
                                              GtkWidget              *widget,
                                              GdkGravity              widget_anchor,
@@ -135,14 +135,14 @@ void            gimp_ui_manager_ui_popup_at_widget
                                              const GdkEvent         *trigger_event,
                                              GDestroyNotify          popdown_func,
                                              gpointer                popdown_data);
-void            gimp_ui_manager_ui_popup_at_pointer
-                                            (GimpUIManager          *manager,
+void            ligma_ui_manager_ui_popup_at_pointer
+                                            (LigmaUIManager          *manager,
                                              const gchar            *ui_path,
                                              const GdkEvent         *trigger_event,
                                              GDestroyNotify          popdown_func,
                                              gpointer                popdown_data);
-void            gimp_ui_manager_ui_popup_at_rect
-                                            (GimpUIManager           *manager,
+void            ligma_ui_manager_ui_popup_at_rect
+                                            (LigmaUIManager           *manager,
                                              const gchar             *ui_path,
                                              GdkWindow               *window,
                                              const GdkRectangle      *rect,
@@ -153,4 +153,4 @@ void            gimp_ui_manager_ui_popup_at_rect
                                              gpointer                 popdown_data);
 
 
-#endif  /* __GIMP_UI_MANAGER_H__ */
+#endif  /* __LIGMA_UI_MANAGER_H__ */

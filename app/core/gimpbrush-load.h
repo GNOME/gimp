@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_LOAD_H__
-#define __GIMP_BRUSH_LOAD_H__
+#ifndef __LIGMA_BRUSH_LOAD_H__
+#define __LIGMA_BRUSH_LOAD_H__
 
 
-#define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
-#define GIMP_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"
-#define GIMP_BRUSH_PS_FILE_EXTENSION     ".abr"
-#define GIMP_BRUSH_PSP_FILE_EXTENSION    ".jbr"
+#define LIGMA_BRUSH_FILE_EXTENSION        ".gbr"
+#define LIGMA_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"
+#define LIGMA_BRUSH_PS_FILE_EXTENSION     ".abr"
+#define LIGMA_BRUSH_PSP_FILE_EXTENSION    ".jbr"
 
 
-GList     * gimp_brush_load        (GimpContext   *context,
+GList     * ligma_brush_load        (LigmaContext   *context,
                                     GFile         *file,
                                     GInputStream  *input,
                                     GError       **error);
-GimpBrush * gimp_brush_load_brush  (GimpContext   *context,
-                                    GFile         *file,
-                                    GInputStream  *input,
-                                    GError       **error);
-
-GList     * gimp_brush_load_abr    (GimpContext   *context,
+LigmaBrush * ligma_brush_load_brush  (LigmaContext   *context,
                                     GFile         *file,
                                     GInputStream  *input,
                                     GError       **error);
 
+GList     * ligma_brush_load_abr    (LigmaContext   *context,
+                                    GFile         *file,
+                                    GInputStream  *input,
+                                    GError       **error);
 
-#endif /* __GIMP_BRUSH_LOAD_H__ */
+
+#endif /* __LIGMA_BRUSH_LOAD_H__ */

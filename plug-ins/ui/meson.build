@@ -5,5 +5,5 @@ plugin_ui = [
 ]
 
 install_data(plugin_ui,
-  install_dir: gimpdatadir / 'ui' / 'plug-ins',
+  install_dir: ligmadatadir / 'ui' / 'plug-ins',
 )

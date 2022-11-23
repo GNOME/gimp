@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphistogram module Copyright (C) 1999 Jay Cox <jaycox@gimp.org>
+ * ligmahistogram module Copyright (C) 1999 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,89 +17,89 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_H__
-#define __GIMP_HISTOGRAM_H__
+#ifndef __LIGMA_HISTOGRAM_H__
+#define __LIGMA_HISTOGRAM_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_HISTOGRAM            (gimp_histogram_get_type ())
-#define GIMP_HISTOGRAM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM, GimpHistogram))
-#define GIMP_HISTOGRAM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM, GimpHistogramClass))
-#define GIMP_IS_HISTOGRAM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM))
-#define GIMP_IS_HISTOGRAM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM))
-#define GIMP_HISTOGRAM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM, GimpHistogramClass))
+#define LIGMA_TYPE_HISTOGRAM            (ligma_histogram_get_type ())
+#define LIGMA_HISTOGRAM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HISTOGRAM, LigmaHistogram))
+#define LIGMA_HISTOGRAM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HISTOGRAM, LigmaHistogramClass))
+#define LIGMA_IS_HISTOGRAM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HISTOGRAM))
+#define LIGMA_IS_HISTOGRAM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HISTOGRAM))
+#define LIGMA_HISTOGRAM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HISTOGRAM, LigmaHistogramClass))
 
 
-typedef struct _GimpHistogramPrivate GimpHistogramPrivate;
-typedef struct _GimpHistogramClass   GimpHistogramClass;
+typedef struct _LigmaHistogramPrivate LigmaHistogramPrivate;
+typedef struct _LigmaHistogramClass   LigmaHistogramClass;
 
-struct _GimpHistogram
+struct _LigmaHistogram
 {
-  GimpObject            parent_instance;
+  LigmaObject            parent_instance;
 
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
 };
 
-struct _GimpHistogramClass
+struct _LigmaHistogramClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType           gimp_histogram_get_type        (void) G_GNUC_CONST;
+GType           ligma_histogram_get_type        (void) G_GNUC_CONST;
 
-GimpHistogram * gimp_histogram_new             (GimpTRCType           trc);
+LigmaHistogram * ligma_histogram_new             (LigmaTRCType           trc);
 
-GimpHistogram * gimp_histogram_duplicate       (GimpHistogram        *histogram);
+LigmaHistogram * ligma_histogram_duplicate       (LigmaHistogram        *histogram);
 
-void            gimp_histogram_calculate       (GimpHistogram        *histogram,
+void            ligma_histogram_calculate       (LigmaHistogram        *histogram,
                                                 GeglBuffer           *buffer,
                                                 const GeglRectangle  *buffer_rect,
                                                 GeglBuffer           *mask,
                                                 const GeglRectangle  *mask_rect);
-GimpAsync     * gimp_histogram_calculate_async (GimpHistogram        *histogram,
+LigmaAsync     * ligma_histogram_calculate_async (LigmaHistogram        *histogram,
                                                 GeglBuffer           *buffer,
                                                 const GeglRectangle  *buffer_rect,
                                                 GeglBuffer           *mask,
                                                 const GeglRectangle  *mask_rect);
 
-void            gimp_histogram_clear_values    (GimpHistogram        *histogram,
+void            ligma_histogram_clear_values    (LigmaHistogram        *histogram,
                                                 gint                  n_components);
 
-gdouble         gimp_histogram_get_maximum     (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel);
-gdouble         gimp_histogram_get_count       (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_maximum     (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel);
+gdouble         ligma_histogram_get_count       (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  start,
                                                 gint                  end);
-gdouble         gimp_histogram_get_mean        (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_mean        (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  start,
                                                 gint                  end);
-gdouble         gimp_histogram_get_median      (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_median      (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  start,
                                                 gint                  end);
-gdouble         gimp_histogram_get_std_dev     (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_std_dev     (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  start,
                                                 gint                  end);
-gdouble         gimp_histogram_get_threshold   (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_threshold   (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  start,
                                                 gint                  end);
-gdouble         gimp_histogram_get_value       (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel,
+gdouble         ligma_histogram_get_value       (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel,
                                                 gint                  bin);
-gdouble         gimp_histogram_get_component   (GimpHistogram        *histogram,
+gdouble         ligma_histogram_get_component   (LigmaHistogram        *histogram,
                                                 gint                  component,
                                                 gint                  bin);
-gint            gimp_histogram_n_components    (GimpHistogram        *histogram);
-gint            gimp_histogram_n_bins          (GimpHistogram        *histogram);
-gboolean        gimp_histogram_has_channel     (GimpHistogram        *histogram,
-                                                GimpHistogramChannel  channel);
+gint            ligma_histogram_n_components    (LigmaHistogram        *histogram);
+gint            ligma_histogram_n_bins          (LigmaHistogram        *histogram);
+gboolean        ligma_histogram_has_channel     (LigmaHistogram        *histogram,
+                                                LigmaHistogramChannel  channel);
 
 
-#endif /* __GIMP_HISTOGRAM_H__ */
+#endif /* __LIGMA_HISTOGRAM_H__ */

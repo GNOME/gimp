@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * plug-ins-query.c
@@ -24,13 +24,13 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "plug-in-types.h"
 
-#include "gimppluginmanager.h"
-#include "gimppluginmanager-query.h"
-#include "gimppluginprocedure.h"
+#include "ligmapluginmanager.h"
+#include "ligmapluginmanager-query.h"
+#include "ligmapluginprocedure.h"
 
 
 static gboolean
@@ -41,7 +41,7 @@ match_string (GRegex *regex,
 }
 
 gint
-gimp_plug_in_manager_query (GimpPlugInManager   *manager,
+ligma_plug_in_manager_query (LigmaPlugInManager   *manager,
                             const gchar         *search_str,
                             gchar             ***procedure_strs,
                             gchar             ***accel_strs,
@@ -54,7 +54,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
   GSList  *list;
   gint     i;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), 0);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), 0);
   g_return_val_if_fail (procedure_strs != NULL, 0);
   g_return_val_if_fail (accel_strs != NULL, 0);
   g_return_val_if_fail (prog_strs != NULL, 0);
@@ -82,13 +82,13 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
 
       if (proc->file && proc->menu_paths)
         {
           gchar *name = proc->menu_label;
 
-          name = gimp_strip_uline (name);
+          name = ligma_strip_uline (name);
 
           if (! search_str || match_string (sregex, name))
             {
@@ -111,9 +111,9 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
        list;
        list = g_slist_next (list), i++)
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
 
-      (*procedure_strs)[i] = g_strdup (gimp_object_get_name (proc));
+      (*procedure_strs)[i] = g_strdup (ligma_object_get_name (proc));
       (*accel_strs)[i]     = g_strdup ("");
       (*prog_strs)[i]      = g_file_get_path (proc->file);
       (*time_ints)[i]      = proc->mtime;

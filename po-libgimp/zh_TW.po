@@ -1,4 +1,4 @@
-# traditional Chinese translation of gimp-libgimp.
+# traditional Chinese translation of ligma-libligma.
 # Copyright (C) 2001, 03, 04, 05 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.3.3\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma 2.3.3\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2017-12-02 16:18+0000\n"
 "PO-Revision-Date: 2017-12-20 18:06+0800\n"
 "Last-Translator: taijuin <taijuin@gmail.com>\n"
@@ -20,104 +20,104 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1206
+#: ../libligma/ligma.c:1206
 msgid "success"
 msgstr "成功"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1210
+#: ../libligma/ligma.c:1210
 msgid "execution error"
 msgstr "執行錯誤"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1214
+#: ../libligma/ligma.c:1214
 msgid "calling error"
 msgstr "調用錯誤"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1218
+#: ../libligma/ligma.c:1218
 msgid "cancelled"
 msgstr "已取消"
 
-#: ../libgimp/gimpbrushselectbutton.c:179
+#: ../libligma/ligmabrushselectbutton.c:179
 msgid "Brush Selection"
 msgstr "筆刷選擇"
 
-#: ../libgimp/gimpbrushselectbutton.c:928
-#: ../libgimp/gimppatternselectbutton.c:726
+#: ../libligma/ligmabrushselectbutton.c:928
+#: ../libligma/ligmapatternselectbutton.c:726
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
+#: ../libligma/ligmaexport.c:251 ../libligma/ligmaexport.c:287
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s 外掛程式無法處理圖層"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
+#: ../libligma/ligmaexport.c:252 ../libligma/ligmaexport.c:261
+#: ../libligma/ligmaexport.c:270 ../libligma/ligmaexport.c:288
 msgid "Merge Visible Layers"
 msgstr "合併可見圖層"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libligma/ligmaexport.c:260
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s 外掛程式無法處理圖層的偏移、尺寸或不透明度"
 
-#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
+#: ../libligma/ligmaexport.c:269 ../libligma/ligmaexport.c:278
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s 外掛程式只能以動畫畫格的方式處理圖層"
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
+#: ../libligma/ligmaexport.c:270 ../libligma/ligmaexport.c:279
 msgid "Save as Animation"
 msgstr "儲存為動畫"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297
+#: ../libligma/ligmaexport.c:279 ../libligma/ligmaexport.c:288
+#: ../libligma/ligmaexport.c:297
 msgid "Flatten Image"
 msgstr "圖片平面化"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libligma/ligmaexport.c:296
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s 外掛程式無法處理透明度"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libligma/ligmaexport.c:305
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s 外掛程式無法處理圖層遮罩"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libligma/ligmaexport.c:306
 msgid "Apply Layer Masks"
 msgstr "套用圖層遮罩"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libligma/ligmaexport.c:314
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s 外掛程式只能處理 RGB 圖片"
 
-#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:362
+#: ../libligma/ligmaexport.c:315 ../libligma/ligmaexport.c:353
+#: ../libligma/ligmaexport.c:362
 msgid "Convert to RGB"
 msgstr "轉換成 RGB"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libligma/ligmaexport.c:323
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s 外掛程式只能處理灰階圖片"
 
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:374
+#: ../libligma/ligmaexport.c:324 ../libligma/ligmaexport.c:353
+#: ../libligma/ligmaexport.c:374
 msgid "Convert to Grayscale"
 msgstr "轉換成灰階"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libligma/ligmaexport.c:332
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s 外掛程式只能處理索引色圖片"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
-#: ../libgimp/gimpexport.c:372
+#: ../libligma/ligmaexport.c:333 ../libligma/ligmaexport.c:362
+#: ../libligma/ligmaexport.c:372
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -125,12 +125,12 @@ msgstr ""
 "根據預設設定轉換成索引色圖片\n"
 "(請自行調整結果)"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libligma/ligmaexport.c:342
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s 外掛程式只能處理黑白點陣圖"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libligma/ligmaexport.c:343
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -138,67 +138,67 @@ msgstr ""
 "根據預設的點陣圖設定轉換成索引色圖片\n"
 "(請自行調整結果)"
 
-#: ../libgimp/gimpexport.c:352
+#: ../libligma/ligmaexport.c:352
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s 外掛程式只能處理 RGB 或灰階圖片"
 
-#: ../libgimp/gimpexport.c:361
+#: ../libligma/ligmaexport.c:361
 #, fuzzy, c-format
 #| msgid "%s plug-in  can only handle RGB or indexed images"
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s 外掛程式只能處理 RGB 或索引色圖片"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libligma/ligmaexport.c:371
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s 外掛程式只能處理灰階或索引色圖片"
 
-#: ../libgimp/gimpexport.c:382
+#: ../libligma/ligmaexport.c:382
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s 外掛程式需要一透明色版"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libligma/ligmaexport.c:383
 msgid "Add Alpha Channel"
 msgstr "加入透明色版"
 
-#: ../libgimp/gimpexport.c:442
+#: ../libligma/ligmaexport.c:442
 msgid "Confirm Save"
 msgstr "確認儲存"
 
-#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+#: ../libligma/ligmaexport.c:447 ../libligma/ligmaexport.c:529
+#: ../libligma/ligmaexport.c:1021 ../libligmawidgets/ligmacolorbutton.c:572
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:152
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:162
+#: ../libligmawidgets/ligmafileentry.c:435 ../libligmawidgets/ligmaquerybox.c:274
+#: ../libligmawidgets/ligmaquerybox.c:334 ../libligmawidgets/ligmaquerybox.c:398
+#: ../libligmawidgets/ligmaquerybox.c:472 ../libligmawidgets/ligmaunitmenu.c:492
 #, fuzzy
 #| msgid "cancelled"
 msgid "_Cancel"
 msgstr "已取消"
 
-#: ../libgimp/gimpexport.c:448
+#: ../libligma/ligmaexport.c:448
 #, fuzzy
 #| msgid "Confirm"
 msgid "C_onfirm"
 msgstr "確認"
 
-#: ../libgimp/gimpexport.c:524
+#: ../libligma/ligmaexport.c:524
 msgid "Export File"
 msgstr "匯出檔案"
 
-#: ../libgimp/gimpexport.c:528
+#: ../libligma/ligmaexport.c:528
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libligma/ligmaexport.c:530 ../libligma/ligmaexport.c:1022
 msgid "_Export"
 msgstr "匯出(_E)"
 
 #. the headline
-#: ../libgimp/gimpexport.c:560
+#: ../libligma/ligmaexport.c:560
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -206,11 +206,11 @@ msgid ""
 msgstr "圖片在儲存至 %s 前必須匯出，原因如下："
 
 #. the footline
-#: ../libgimp/gimpexport.c:634
+#: ../libligma/ligmaexport.c:634
 msgid "The export conversion won't modify your original image."
 msgstr "匯出時的圖片轉換程序不會更改原有的圖片。"
 
-#: ../libgimp/gimpexport.c:741
+#: ../libligma/ligmaexport.c:741
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -219,7 +219,7 @@ msgstr ""
 "準備將圖層遮罩儲存為 %s。\n"
 "本程序不會儲存可見的圖層。"
 
-#: ../libgimp/gimpexport.c:747
+#: ../libligma/ligmaexport.c:747
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -228,454 +228,454 @@ msgstr ""
 "準備將色版(已儲存的選取區域)儲存為 %s。\n"
 " 本程序不會儲存可見的圖層。"
 
-#: ../libgimp/gimpexport.c:1015
+#: ../libligma/ligmaexport.c:1015
 msgid "Export Image as "
 msgstr "匯出圖片為"
 
-#: ../libgimp/gimpfontselectbutton.c:139
+#: ../libligma/ligmafontselectbutton.c:139
 msgid "Font Selection"
 msgstr "字型選擇"
 
-#: ../libgimp/gimpgradientselectbutton.c:157
+#: ../libligma/ligmagradientselectbutton.c:157
 msgid "Gradient Selection"
 msgstr "漸層選擇"
 
-#: ../libgimp/gimpimagemetadata.c:477
-msgid "GIMP 2.9/2.10"
+#: ../libligma/ligmaimagemetadata.c:477
+msgid "LIGMA 2.9/2.10"
 msgstr ""
 
-#: ../libgimp/gimpimagemetadata.c:661
+#: ../libligma/ligmaimagemetadata.c:661
 #, fuzzy
 #| msgid "_Background Color"
 msgid "Background"
 msgstr "背景顏色(_B)"
 
-#: ../libgimp/gimpimagemetadata.c:850
+#: ../libligma/ligmaimagemetadata.c:850
 #, fuzzy, c-format
 #| msgid "_Rotate"
 msgid "Rotate %s?"
 msgstr "旋轉(_R)"
 
-#: ../libgimp/gimpimagemetadata.c:856
+#: ../libligma/ligmaimagemetadata.c:856
 msgid "_Keep Original"
 msgstr ""
 
-#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:274
+#: ../libligma/ligmaimagemetadata.c:857 ../libligmawidgets/ligmaicons.c:274
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libligma/ligmaimagemetadata.c:898
 msgid "Original"
 msgstr ""
 
-#: ../libgimp/gimpimagemetadata.c:914
+#: ../libligma/ligmaimagemetadata.c:914
 #, fuzzy
 #| msgid "_Rotate"
 msgid "Rotated"
 msgstr "旋轉(_R)"
 
-#: ../libgimp/gimpimagemetadata.c:932
+#: ../libligma/ligmaimagemetadata.c:932
 msgid "This image contains Exif orientation metadata."
 msgstr ""
 
-#: ../libgimp/gimpimagemetadata.c:950
+#: ../libligma/ligmaimagemetadata.c:950
 msgid "Would you like to rotate the image?"
 msgstr ""
 
-#: ../libgimp/gimpimagemetadata.c:962
+#: ../libligma/ligmaimagemetadata.c:962
 msgid "_Don't ask me again"
 msgstr ""
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:253
+#: ../libligma/ligmamenu.c:462 ../libligmawidgets/ligmaintstore.c:253
 msgid "(Empty)"
 msgstr "(空白)"
 
-#: ../libgimp/gimppaletteselectbutton.c:139
+#: ../libligma/ligmapaletteselectbutton.c:139
 msgid "Palette Selection"
 msgstr "色盤選擇"
 
-#: ../libgimp/gimppatternselectbutton.c:165
+#: ../libligma/ligmapatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "圖樣選擇"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: ../libligma/ligmaprocbrowserdialog.c:150
 msgid "by name"
 msgstr "依名稱"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libligma/ligmaprocbrowserdialog.c:151
 msgid "by description"
 msgstr "依描述"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libligma/ligmaprocbrowserdialog.c:152
 msgid "by help"
 msgstr "依說明"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
+#: ../libligma/ligmaprocbrowserdialog.c:153
 msgid "by author"
 msgstr "依作者"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libligma/ligmaprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "依版權資訊"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libligma/ligmaprocbrowserdialog.c:155
 msgid "by date"
 msgstr "依修改日期"
 
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: ../libligma/ligmaprocbrowserdialog.c:156
 msgid "by type"
 msgstr "依類型"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
+#: ../libligma/ligmaprocbrowserdialog.c:395
+#: ../libligma/ligmaprocbrowserdialog.c:544 ../libligmawidgets/ligmabrowser.c:141
 msgid "No matches"
 msgstr "沒有符合的"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
+#: ../libligma/ligmaprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
 msgstr "無效或不完整的搜索字詞"
 
-#: ../libgimp/gimpprocbrowserdialog.c:407
+#: ../libligma/ligmaprocbrowserdialog.c:407
 msgid "Searching"
 msgstr "正在搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:418
+#: ../libligma/ligmaprocbrowserdialog.c:418
 msgid "Searching by name"
 msgstr "正依名稱搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
+#: ../libligma/ligmaprocbrowserdialog.c:439
 msgid "Searching by description"
 msgstr "正依描述搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: ../libligma/ligmaprocbrowserdialog.c:446
 msgid "Searching by help"
 msgstr "正依說明搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:453
+#: ../libligma/ligmaprocbrowserdialog.c:453
 msgid "Searching by author"
 msgstr "正依作者搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:460
+#: ../libligma/ligmaprocbrowserdialog.c:460
 msgid "Searching by copyright"
 msgstr "正依版權資訊搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libligma/ligmaprocbrowserdialog.c:467
 msgid "Searching by date"
 msgstr "正依修改日期搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libligma/ligmaprocbrowserdialog.c:474
 msgid "Searching by type"
 msgstr "正依類型搜尋"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libligma/ligmaprocbrowserdialog.c:484
 #, fuzzy, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "程序"
 
-#: ../libgimp/gimpprocbrowserdialog.c:493
+#: ../libligma/ligmaprocbrowserdialog.c:493
 msgid "No matches for your query"
 msgstr "沒有符合您查詢的"
 
-#: ../libgimp/gimpprocbrowserdialog.c:497
+#: ../libligma/ligmaprocbrowserdialog.c:497
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] ""
 
-#: ../libgimp/gimpprocview.c:173
+#: ../libligma/ligmaprocview.c:173
 msgid "Parameters"
 msgstr "參數"
 
-#: ../libgimp/gimpprocview.c:186
+#: ../libligma/ligmaprocview.c:186
 #, fuzzy
 msgid "Return Values"
 msgstr "是否改變數值？"
 
-#: ../libgimp/gimpprocview.c:199
+#: ../libligma/ligmaprocview.c:199
 msgid "Additional Information"
 msgstr "額外的資訊"
 
-#: ../libgimp/gimpprocview.c:240
+#: ../libligma/ligmaprocview.c:240
 msgid "Author:"
 msgstr "作者："
 
-#: ../libgimp/gimpprocview.c:253
+#: ../libligma/ligmaprocview.c:253
 msgid "Date:"
 msgstr "日期："
 
-#: ../libgimp/gimpprocview.c:266
+#: ../libligma/ligmaprocview.c:266
 msgid "Copyright:"
 msgstr "版權："
 
-#: ../libgimp/gimpunitcache.c:54
+#: ../libligma/ligmaunitcache.c:54
 msgid "percent"
 msgstr "百分比"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "白色[完全不透明](_W)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "黑色[完全透明](_B)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "圖層的透明色版(_A)"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "轉移圖層的透明色版(_T)"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "選取區域(_S) "
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "圖層的灰階複製(_G)"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libligmabase/ligmabaseenums.c:34
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "色版(_H)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "前景色至背景色(RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "前景色至背景色(HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:67
+#: ../libligmabase/ligmabaseenums.c:67
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "前景色至透明"
 
-#: ../libgimpbase/gimpbaseenums.c:68
+#: ../libligmabase/ligmabaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "自定義漸層"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libligmabase/ligmabaseenums.c:98
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:99
+#: ../libligmabase/ligmabaseenums.c:99
 #, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "正方形"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: ../libligmabase/ligmabaseenums.c:100
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libligmabase/ligmabaseenums.c:130
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "填上前景顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libligmabase/ligmabaseenums.c:131
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "填上背景顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libligmabase/ligmabaseenums.c:132
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "填上圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:162
+#: ../libligmabase/ligmabaseenums.c:162
 #, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "按鈕"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libligmabase/ligmabaseenums.c:163
 msgctxt "cap-style"
 msgid "Round"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libligmabase/ligmabaseenums.c:164
 #, fuzzy
 msgctxt "cap-style"
 msgid "Square"
 msgstr "正方形"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libligmabase/ligmabaseenums.c:195
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "加入至目前的選擇區域"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libligmabase/ligmabaseenums.c:196
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "從目前的選取區域刪除"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libligmabase/ligmabaseenums.c:197
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "取代目前的選取區域"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libligmabase/ligmabaseenums.c:198
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "和目前選取區域的交集"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libligmabase/ligmabaseenums.c:231
 msgctxt "channel-type"
 msgid "Red"
 msgstr "紅"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libligmabase/ligmabaseenums.c:232
 msgctxt "channel-type"
 msgid "Green"
 msgstr "綠"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libligmabase/ligmabaseenums.c:233
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "藍"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libligmabase/ligmabaseenums.c:234
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "灰色"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libligmabase/ligmabaseenums.c:235
 #, fuzzy
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "已索引欄位"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libligmabase/ligmabaseenums.c:236
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "透明"
 
-#: ../libgimpbase/gimpbaseenums.c:266
+#: ../libligmabase/ligmabaseenums.c:266
 msgctxt "check-size"
 msgid "Small"
 msgstr "小"
 
-#: ../libgimpbase/gimpbaseenums.c:267
+#: ../libligmabase/ligmabaseenums.c:267
 msgctxt "check-size"
 msgid "Medium"
 msgstr "中"
 
-#: ../libgimpbase/gimpbaseenums.c:268
+#: ../libligmabase/ligmabaseenums.c:268
 msgctxt "check-size"
 msgid "Large"
 msgstr "大"
 
-#: ../libgimpbase/gimpbaseenums.c:301
+#: ../libligmabase/ligmabaseenums.c:301
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "棋盤格中的淺色"
 
-#: ../libgimpbase/gimpbaseenums.c:302
+#: ../libligmabase/ligmabaseenums.c:302
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "中間色調的棋盤格顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libligmabase/ligmabaseenums.c:303
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "棋盤格中的深色"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libligmabase/ligmabaseenums.c:304
 msgctxt "check-type"
 msgid "White only"
 msgstr "白色"
 
-#: ../libgimpbase/gimpbaseenums.c:305
+#: ../libligmabase/ligmabaseenums.c:305
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "灰色"
 
-#: ../libgimpbase/gimpbaseenums.c:306
+#: ../libligmabase/ligmabaseenums.c:306
 msgctxt "check-type"
 msgid "Black only"
 msgstr "黑色"
 
-#: ../libgimpbase/gimpbaseenums.c:335
+#: ../libligmabase/ligmabaseenums.c:335
 msgctxt "clone-type"
 msgid "Image"
 msgstr "圖片"
 
-#: ../libgimpbase/gimpbaseenums.c:336
+#: ../libligmabase/ligmabaseenums.c:336
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:372
+#: ../libligmabase/ligmabaseenums.c:372
 #, fuzzy
 #| msgid "None"
 msgctxt "color-tag"
 msgid "None"
 msgstr "無"
 
-#: ../libgimpbase/gimpbaseenums.c:373
+#: ../libligmabase/ligmabaseenums.c:373
 #, fuzzy
 #| msgid "Blue"
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "藍"
 
-#: ../libgimpbase/gimpbaseenums.c:374
+#: ../libligmabase/ligmabaseenums.c:374
 #, fuzzy
 #| msgid "Green"
 msgctxt "color-tag"
 msgid "Green"
 msgstr "綠"
 
-#: ../libgimpbase/gimpbaseenums.c:375
+#: ../libligmabase/ligmabaseenums.c:375
 #, fuzzy
 #| msgid "Yellow"
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "黃"
 
-#: ../libgimpbase/gimpbaseenums.c:376
+#: ../libligmabase/ligmabaseenums.c:376
 msgctxt "color-tag"
 msgid "Orange"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:377
+#: ../libligmabase/ligmabaseenums.c:377
 msgctxt "color-tag"
 msgid "Brown"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:378
+#: ../libligmabase/ligmabaseenums.c:378
 #, fuzzy
 #| msgid "Red"
 msgctxt "color-tag"
 msgid "Red"
 msgstr "紅"
 
-#: ../libgimpbase/gimpbaseenums.c:379
+#: ../libligmabase/ligmabaseenums.c:379
 msgctxt "color-tag"
 msgid "Violet"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:380
+#: ../libligmabase/ligmabaseenums.c:380
 #, fuzzy
 #| msgctxt "channel-type"
 #| msgid "Gray"
@@ -683,67 +683,67 @@ msgctxt "color-tag"
 msgid "Gray"
 msgstr "灰色"
 
-#: ../libgimpbase/gimpbaseenums.c:413
+#: ../libligmabase/ligmabaseenums.c:413
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8位元整數"
 
-#: ../libgimpbase/gimpbaseenums.c:414
+#: ../libligmabase/ligmabaseenums.c:414
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16位元整數"
 
-#: ../libgimpbase/gimpbaseenums.c:415
+#: ../libligmabase/ligmabaseenums.c:415
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32位元整數"
 
-#: ../libgimpbase/gimpbaseenums.c:416
+#: ../libligmabase/ligmabaseenums.c:416
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16位元浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:417
+#: ../libligmabase/ligmabaseenums.c:417
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32位元浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:418
+#: ../libligmabase/ligmabaseenums.c:418
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64位元浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:449
+#: ../libligmabase/ligmabaseenums.c:449
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: ../libligmabase/ligmabaseenums.c:450
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: ../libligmabase/ligmabaseenums.c:451
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: ../libligmabase/ligmabaseenums.c:452
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:481
+#: ../libligmabase/ligmabaseenums.c:481
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:482
+#: ../libligmabase/ligmabaseenums.c:482
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:514
+#: ../libligmabase/ligmabaseenums.c:514
 #, fuzzy
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
@@ -751,71 +751,71 @@ msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "亮度"
 
-#: ../libgimpbase/gimpbaseenums.c:515
+#: ../libligmabase/ligmabaseenums.c:515
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: ../libligmabase/ligmabaseenums.c:516
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: ../libligmabase/ligmabaseenums.c:517
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: ../libligmabase/ligmabaseenums.c:518
 #, fuzzy
 #| msgid "Value"
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "明度"
 
-#: ../libgimpbase/gimpbaseenums.c:547
+#: ../libligmabase/ligmabaseenums.c:547
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "漂白"
 
-#: ../libgimpbase/gimpbaseenums.c:548
+#: ../libligmabase/ligmabaseenums.c:548
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "燻黑"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libligmabase/ligmabaseenums.c:580
 #| msgid "_Foreground Color"
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "前景色"
 
-#: ../libgimpbase/gimpbaseenums.c:581
+#: ../libligmabase/ligmabaseenums.c:581
 #| msgid "_Background Color"
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "背景色"
 
-#: ../libgimpbase/gimpbaseenums.c:582
+#: ../libligmabase/ligmabaseenums.c:582
 #| msgid "_White"
 msgctxt "fill-type"
 msgid "White"
 msgstr "白色"
 
-#: ../libgimpbase/gimpbaseenums.c:583
+#: ../libligmabase/ligmabaseenums.c:583
 #| msgctxt "blend-mode"
 #| msgid "FG to transparent"
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "透明"
 
-#: ../libgimpbase/gimpbaseenums.c:584
+#: ../libligmabase/ligmabaseenums.c:584
 #| msgctxt "clone-type"
 #| msgid "Pattern"
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libligmabase/ligmabaseenums.c:644
 #, fuzzy
 #| msgctxt "image-type"
 #| msgid "RGB"
@@ -823,33 +823,33 @@ msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:645
+#: ../libligmabase/ligmabaseenums.c:645
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libligmabase/ligmabaseenums.c:648
 #, fuzzy
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libligmabase/ligmabaseenums.c:649
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libligmabase/ligmabaseenums.c:652
 #, fuzzy
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libligmabase/ligmabaseenums.c:684
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Linear"
@@ -857,65 +857,65 @@ msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "線性"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libligmabase/ligmabaseenums.c:685
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:686
+#: ../libligmabase/ligmabaseenums.c:686
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:687
+#: ../libligmabase/ligmabaseenums.c:687
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:690
+#: ../libligmabase/ligmabaseenums.c:690
 #, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:691
+#: ../libligmabase/ligmabaseenums.c:691
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:694
+#: ../libligmabase/ligmabaseenums.c:694
 #, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:732
+#: ../libligmabase/ligmabaseenums.c:732
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "線性"
 
-#: ../libgimpbase/gimpbaseenums.c:733
+#: ../libligmabase/ligmabaseenums.c:733
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "雙線性"
 
-#: ../libgimpbase/gimpbaseenums.c:734
+#: ../libligmabase/ligmabaseenums.c:734
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "放射狀"
 
-#: ../libgimpbase/gimpbaseenums.c:735
+#: ../libligmabase/ligmabaseenums.c:735
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "正方形"
 
-#: ../libgimpbase/gimpbaseenums.c:736
+#: ../libligmabase/ligmabaseenums.c:736
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
@@ -923,13 +923,13 @@ msgstr "圓錐形(對稱)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:739
+#: ../libligmabase/ligmabaseenums.c:739
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "圓錐形(對稱)"
 
-#: ../libgimpbase/gimpbaseenums.c:740
+#: ../libligmabase/ligmabaseenums.c:740
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
@@ -937,31 +937,31 @@ msgstr "圓錐形(不對稱)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:743
+#: ../libligmabase/ligmabaseenums.c:743
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "圓錐形(不對稱)"
 
-#: ../libgimpbase/gimpbaseenums.c:744
+#: ../libligmabase/ligmabaseenums.c:744
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libligmabase/ligmabaseenums.c:745
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:746
+#: ../libligmabase/ligmabaseenums.c:746
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:747
+#: ../libligmabase/ligmabaseenums.c:747
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
@@ -969,13 +969,13 @@ msgstr "螺旋(順時針)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:750
+#: ../libligmabase/ligmabaseenums.c:750
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:751
+#: ../libligmabase/ligmabaseenums.c:751
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
@@ -983,175 +983,175 @@ msgstr "螺旋(順時針)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libligmabase/ligmabaseenums.c:754
 #, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:786
+#: ../libligmabase/ligmabaseenums.c:786
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "交叉口（點）"
 
-#: ../libgimpbase/gimpbaseenums.c:787
+#: ../libligmabase/ligmabaseenums.c:787
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "交叉口（十字線）"
 
-#: ../libgimpbase/gimpbaseenums.c:788
+#: ../libligmabase/ligmabaseenums.c:788
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "虛線"
 
-#: ../libgimpbase/gimpbaseenums.c:789
+#: ../libligmabase/ligmabaseenums.c:789
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "雙虛線"
 
-#: ../libgimpbase/gimpbaseenums.c:790
+#: ../libligmabase/ligmabaseenums.c:790
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "單色"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libligmabase/ligmabaseenums.c:860
 #, fuzzy
 #| msgid "by name"
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "依名稱"
 
-#: ../libgimpbase/gimpbaseenums.c:861
+#: ../libligmabase/ligmabaseenums.c:861
 #, fuzzy
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Pixbuf 物件"
 
-#: ../libgimpbase/gimpbaseenums.c:862
+#: ../libligmabase/ligmabaseenums.c:862
 #, fuzzy
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "圖型檔(_F):"
 
-#: ../libgimpbase/gimpbaseenums.c:892
+#: ../libligmabase/ligmabaseenums.c:892
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB 顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:893
+#: ../libligmabase/ligmabaseenums.c:893
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "灰階"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: ../libligmabase/ligmabaseenums.c:894
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "索引色"
 
-#: ../libgimpbase/gimpbaseenums.c:927
+#: ../libligmabase/ligmabaseenums.c:927
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:928
+#: ../libligmabase/ligmabaseenums.c:928
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB 模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:929
+#: ../libligmabase/ligmabaseenums.c:929
 #, fuzzy
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "灰階"
 
-#: ../libgimpbase/gimpbaseenums.c:930
+#: ../libligmabase/ligmabaseenums.c:930
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "灰階模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:931
+#: ../libligmabase/ligmabaseenums.c:931
 #, fuzzy
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "已索引欄位"
 
-#: ../libgimpbase/gimpbaseenums.c:932
+#: ../libligmabase/ligmabaseenums.c:932
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "索引色模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:962
+#: ../libligmabase/ligmabaseenums.c:962
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:963
+#: ../libligmabase/ligmabaseenums.c:963
 #, fuzzy
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "正方形"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: ../libligmabase/ligmabaseenums.c:964
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:996
+#: ../libligmabase/ligmabaseenums.c:996
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "無"
 
-#: ../libgimpbase/gimpbaseenums.c:997
+#: ../libligmabase/ligmabaseenums.c:997
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "線性"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: ../libligmabase/ligmabaseenums.c:998
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "立方"
 
-#: ../libgimpbase/gimpbaseenums.c:999
+#: ../libligmabase/ligmabaseenums.c:999
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1000
+#: ../libligmabase/ligmabaseenums.c:1000
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1030
+#: ../libligmabase/ligmabaseenums.c:1030
 msgctxt "join-style"
 msgid "Miter"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1031
+#: ../libligmabase/ligmabaseenums.c:1031
 msgctxt "join-style"
 msgid "Round"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1032
+#: ../libligmabase/ligmabaseenums.c:1032
 msgctxt "join-style"
 msgid "Bevel"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1093
+#: ../libligmabase/ligmabaseenums.c:1093
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1094
+#: ../libligmabase/ligmabaseenums.c:1094
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1095
+#: ../libligmabase/ligmabaseenums.c:1095
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1096
+#: ../libligmabase/ligmabaseenums.c:1096
 #, fuzzy
 #| msgctxt "clone-type"
 #| msgid "Pattern"
@@ -1159,212 +1159,212 @@ msgctxt "merge-type"
 msgid "Flatten"
 msgstr "圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:1188
+#: ../libligmabase/ligmabaseenums.c:1188
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1189
+#: ../libligmabase/ligmabaseenums.c:1189
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1190
+#: ../libligmabase/ligmabaseenums.c:1190
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1219
+#: ../libligmabase/ligmabaseenums.c:1219
 #, fuzzy
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "常數"
 
-#: ../libgimpbase/gimpbaseenums.c:1220
+#: ../libligmabase/ligmabaseenums.c:1220
 #, fuzzy
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "遞增模式"
 
-#: ../libgimpbase/gimpbaseenums.c:1353
+#: ../libligmabase/ligmabaseenums.c:1353
 #, fuzzy
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
+msgid "Internal LIGMA procedure"
 msgstr "找不到程序“%s”"
 
-#: ../libgimpbase/gimpbaseenums.c:1354
+#: ../libligmabase/ligmabaseenums.c:1354
 #, fuzzy
 #| msgctxt "pdb-proc-type"
-#| msgid "GIMP Plug-In"
+#| msgid "LIGMA Plug-In"
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
-msgstr "GIMP 外掛程式"
+msgid "LIGMA Plug-In"
+msgstr "LIGMA 外掛程式"
 
-#: ../libgimpbase/gimpbaseenums.c:1355
+#: ../libligmabase/ligmabaseenums.c:1355
 #, fuzzy
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
+msgid "LIGMA Extension"
 msgstr "依延伸檔名"
 
-#: ../libgimpbase/gimpbaseenums.c:1356
+#: ../libligmabase/ligmabaseenums.c:1356
 #, fuzzy
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "暫時檔案系統"
 
-#: ../libgimpbase/gimpbaseenums.c:1431
+#: ../libligmabase/ligmabaseenums.c:1431
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8位元線性整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1432
+#: ../libligmabase/ligmabaseenums.c:1432
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr "8位元 gamma 整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1433
+#: ../libligmabase/ligmabaseenums.c:1433
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16位元線性整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1434
+#: ../libligmabase/ligmabaseenums.c:1434
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr "16位元 gamma 整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1435
+#: ../libligmabase/ligmabaseenums.c:1435
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32位元線性整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1436
+#: ../libligmabase/ligmabaseenums.c:1436
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr "32位元 gamma 整數"
 
-#: ../libgimpbase/gimpbaseenums.c:1437
+#: ../libligmabase/ligmabaseenums.c:1437
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16位元線性浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1438
+#: ../libligmabase/ligmabaseenums.c:1438
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr "16位元 gamma 浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1439
+#: ../libligmabase/ligmabaseenums.c:1439
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32位元線性浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1440
+#: ../libligmabase/ligmabaseenums.c:1440
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr "32位元 gamma 浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1441
+#: ../libligmabase/ligmabaseenums.c:1441
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64位元線性浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1442
+#: ../libligmabase/ligmabaseenums.c:1442
 msgctxt "precision"
 msgid "64-bit gamma floating point"
 msgstr "64位元 gamma 浮點數"
 
-#: ../libgimpbase/gimpbaseenums.c:1511
+#: ../libligmabase/ligmabaseenums.c:1511
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1512
+#: ../libligmabase/ligmabaseenums.c:1512
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "鋸齒形波浪紋"
 
-#: ../libgimpbase/gimpbaseenums.c:1513
+#: ../libligmabase/ligmabaseenums.c:1513
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "三角形波浪紋"
 
-#: ../libgimpbase/gimpbaseenums.c:1514
+#: ../libligmabase/ligmabaseenums.c:1514
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: ../libligmabase/ligmabaseenums.c:1576
 #, fuzzy
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "執行程式..."
 
-#: ../libgimpbase/gimpbaseenums.c:1577
+#: ../libligmabase/ligmabaseenums.c:1577
 #, fuzzy
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "互動設定選項"
 
-#: ../libgimpbase/gimpbaseenums.c:1578
+#: ../libligmabase/ligmabaseenums.c:1578
 #, fuzzy
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "保留選擇區域"
 
-#: ../libgimpbase/gimpbaseenums.c:1616
+#: ../libligmabase/ligmabaseenums.c:1616
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1617
+#: ../libligmabase/ligmabaseenums.c:1617
 #, fuzzy
 #| msgid "Red"
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "紅"
 
-#: ../libgimpbase/gimpbaseenums.c:1618
+#: ../libligmabase/ligmabaseenums.c:1618
 #, fuzzy
 #| msgid "Green"
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "綠"
 
-#: ../libgimpbase/gimpbaseenums.c:1619
+#: ../libligmabase/ligmabaseenums.c:1619
 #, fuzzy
 #| msgid "Blue"
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "藍"
 
-#: ../libgimpbase/gimpbaseenums.c:1620
+#: ../libligmabase/ligmabaseenums.c:1620
 #, fuzzy
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "Hue (HSV)"
 msgstr "明度"
 
-#: ../libgimpbase/gimpbaseenums.c:1621
+#: ../libligmabase/ligmabaseenums.c:1621
 #, fuzzy
 #| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "Saturation (HSV)"
 msgstr "飽和度"
 
-#: ../libgimpbase/gimpbaseenums.c:1622
+#: ../libligmabase/ligmabaseenums.c:1622
 #, fuzzy
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "Value (HSV)"
 msgstr "明度"
 
-#: ../libgimpbase/gimpbaseenums.c:1623
+#: ../libligmabase/ligmabaseenums.c:1623
 #, fuzzy
 #| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "透明"
 
-#: ../libgimpbase/gimpbaseenums.c:1624
+#: ../libligmabase/ligmabaseenums.c:1624
 #, fuzzy
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
@@ -1372,312 +1372,312 @@ msgctxt "select-criterion"
 msgid "Lightness (LCH)"
 msgstr "亮度"
 
-#: ../libgimpbase/gimpbaseenums.c:1625
+#: ../libligmabase/ligmabaseenums.c:1625
 msgctxt "select-criterion"
 msgid "Chroma (LCH)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1626
+#: ../libligmabase/ligmabaseenums.c:1626
 msgctxt "select-criterion"
 msgid "Hue (LCH)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1655
+#: ../libligmabase/ligmabaseenums.c:1655
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "像素"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
+#: ../libligmabase/ligmabaseenums.c:1656
 #, fuzzy
 msgctxt "size-type"
 msgid "Points"
 msgstr "點"
 
-#: ../libgimpbase/gimpbaseenums.c:1717
+#: ../libligmabase/ligmabaseenums.c:1717
 #, fuzzy
 #| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "描邊(_S)"
 
-#: ../libgimpbase/gimpbaseenums.c:1718
+#: ../libligmabase/ligmabaseenums.c:1718
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1747
+#: ../libligmabase/ligmabaseenums.c:1747
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "從左至右"
 
-#: ../libgimpbase/gimpbaseenums.c:1748
+#: ../libligmabase/ligmabaseenums.c:1748
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "從右至左"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libligmabase/ligmabaseenums.c:1779
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "無"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libligmabase/ligmabaseenums.c:1780
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "輕微的"
 
-#: ../libgimpbase/gimpbaseenums.c:1781
+#: ../libligmabase/ligmabaseenums.c:1781
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "中等的"
 
-#: ../libgimpbase/gimpbaseenums.c:1782
+#: ../libligmabase/ligmabaseenums.c:1782
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "盡量多的"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libligmabase/ligmabaseenums.c:1813
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "左對齊"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libligmabase/ligmabaseenums.c:1814
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "右對齊"
 
-#: ../libgimpbase/gimpbaseenums.c:1815
+#: ../libligmabase/ligmabaseenums.c:1815
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "置中"
 
-#: ../libgimpbase/gimpbaseenums.c:1816
+#: ../libligmabase/ligmabaseenums.c:1816
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "左右對齊"
 
-#: ../libgimpbase/gimpbaseenums.c:1846
+#: ../libligmabase/ligmabaseenums.c:1846
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "陰影區域"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libligmabase/ligmabaseenums.c:1847
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "中間色調"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libligmabase/ligmabaseenums.c:1848
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "高亮度區"
 
-#: ../libgimpbase/gimpbaseenums.c:1877
+#: ../libligmabase/ligmabaseenums.c:1877
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "正常(向前)"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libligmabase/ligmabaseenums.c:1878
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "矯正(向後)"
 
-#: ../libgimpbase/gimpbaseenums.c:1909
+#: ../libligmabase/ligmabaseenums.c:1909
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "旋轉圖片後，擴大圖層尺寸"
 
-#: ../libgimpbase/gimpbaseenums.c:1910
+#: ../libligmabase/ligmabaseenums.c:1910
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "旋轉圖片後，裁切以符合畫布邊界"
 
-#: ../libgimpbase/gimpbaseenums.c:1911
+#: ../libligmabase/ligmabaseenums.c:1911
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "旋轉圖片後，矩形選取不透明區域"
 
-#: ../libgimpbase/gimpbaseenums.c:1912
+#: ../libligmabase/ligmabaseenums.c:1912
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "保持長寬比，矩形選取不透明區域"
 
-#: ../libgimpbase/gimpmetadata.c:840
+#: ../libligmabase/ligmametadata.c:840
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:900
+#: ../libligmabase/ligmametadata.c:900
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:976
+#: ../libligmabase/ligmametadata.c:976
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1027
+#: ../libligmabase/ligmametadata.c:1027
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1076
+#: ../libligmabase/ligmametadata.c:1076
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libligmabase/ligmautils.c:192 ../libligmabase/ligmautils.c:197
 msgid "(invalid UTF-8 string)"
 msgstr "無效的 UTF-8 文字)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libligmabase/ligmautils.c:367
 msgid "File path is NULL"
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libligmabase/ligmautils.c:376 ../libligmabase/ligmautils.c:387
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libligmabase/ligmautils.c:395
 msgid "ILCreateFromPath() failed"
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libligmabase/ligmautils.c:432
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libligmabase/ligmautils.c:460
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libligmabase/ligmautils.c:484
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:263
+#: ../libligmacolor/ligmacolorprofile.c:263
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../libgimpcolor/gimpcolorprofile.c:309
+#: ../libligmacolor/ligmacolorprofile.c:309
 #, fuzzy
 #| msgid "Color proof filter using ICC color profile"
 msgid "Data does not appear to be an ICC color profile"
 msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../libgimpcolor/gimpcolorprofile.c:366
+#: ../libligmacolor/ligmacolorprofile.c:366
 msgid "Could not save color profile to memory"
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:583
+#: ../libligmacolor/ligmacolorprofile.c:583
 #, fuzzy
 #| msgid "Image profile:"
 msgid "(unnamed profile)"
 msgstr "圖片配置檔："
 
-#: ../libgimpcolor/gimpcolorprofile.c:625
+#: ../libligmacolor/ligmacolorprofile.c:625
 #, fuzzy, c-format
 #| msgid "Profile: %s"
 msgid "Model: %s"
 msgstr "配置檔：%s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:634
+#: ../libligmacolor/ligmacolorprofile.c:634
 #, c-format
 msgid "Manufacturer: %s"
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:643
+#: ../libligmacolor/ligmacolorprofile.c:643
 #, fuzzy, c-format
 #| msgid "Copyright:"
 msgid "Copyright: %s"
 msgstr "版權："
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: ../libligmaconfig/ligmaconfigenums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "沒有色彩管理"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: ../libligmaconfig/ligmaconfigenums.c:25
 #| msgctxt "color-management-mode"
 #| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "色彩管理顯示"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: ../libligmaconfig/ligmaconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "軟校樣"
 
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: ../libligmaconfig/ligmaconfigenums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "感知"
 
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: ../libligmaconfig/ligmaconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "相對色度"
 
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: ../libligmaconfig/ligmaconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "飽和度"
 
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: ../libligmaconfig/ligmaconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "絕對色度"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr "如何在螢幕上顯示圖像。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libligmaconfig/ligmacolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "您(主要)螢幕的色彩配置檔。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libligmaconfig/ligmacolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"當啟用時，將嘗試從視窗系統使用GIMP的顯示顏色配置檔。然後已配置的螢幕配置檔只"
+"當啟用時，將嘗試從視窗系統使用LIGMA的顯示顏色配置檔。然後已配置的螢幕配置檔只"
 "作後備用。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libligmaconfig/ligmacolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:67
+#: ../libligmaconfig/ligmacolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libligmaconfig/ligmacolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK 色彩配置檔，使用於 RGB 和 CMYK 之間的轉換"
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libligmaconfig/ligmacolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:79
+#: ../libligmaconfig/ligmacolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1688,34 +1688,34 @@ msgstr ""
 "LUT 顯示器描述檔（大多數顯示器描述檔是矩陣），否則選擇感知意圖（perceptual "
 "intent）確實會給您提供相對色度。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: ../libligmaconfig/ligmacolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr "使用黑點補償（除非您知道不這麼做的理由）。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:90
+#: ../libligmaconfig/ligmacolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr "停用時，圖像顯示的速度可能會更好。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:94
+#: ../libligmaconfig/ligmacolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:99
+#: ../libligmaconfig/ligmacolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:103
+#: ../libligmaconfig/ligmacolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:107
+#: ../libligmaconfig/ligmacolorconfig.c:107
 #, fuzzy
 #| msgid ""
 #| "When enabled, the print simulation will mark colors which can not be "
@@ -1725,198 +1725,198 @@ msgid ""
 "represented in the target color space."
 msgstr "啟用後，列印模擬將標記色彩，該色彩不能代表目標色彩空間。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:111
+#: ../libligmaconfig/ligmacolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "這顏色使用於標記超出全色彩範圍的顏色。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:199
+#: ../libligmaconfig/ligmacolorconfig.c:199
 msgid "Mode of operation"
 msgstr "操作模式"
 
-#: ../libgimpconfig/gimpcolorconfig.c:207
+#: ../libligmaconfig/ligmacolorconfig.c:207
 msgid "Preferred RGB profile"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:214
+#: ../libligmaconfig/ligmacolorconfig.c:214
 msgid "Preferred grayscale profile"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:221
+#: ../libligmaconfig/ligmacolorconfig.c:221
 #, fuzzy
 #| msgid "Monitor profile:"
 msgid "CMYK profile"
 msgstr "螢幕配置檔："
 
-#: ../libgimpconfig/gimpcolorconfig.c:228
+#: ../libligmaconfig/ligmacolorconfig.c:228
 #, fuzzy
 #| msgid "Monitor profile:"
 msgid "Monitor profile"
 msgstr "螢幕配置檔："
 
-#: ../libgimpconfig/gimpcolorconfig.c:235
+#: ../libligmaconfig/ligmacolorconfig.c:235
 #, fuzzy
 #| msgid "Monitor profile:"
 msgid "Use the system monitor profile"
 msgstr "螢幕配置檔："
 
-#: ../libgimpconfig/gimpcolorconfig.c:243
+#: ../libligmaconfig/ligmacolorconfig.c:243
 msgid "Simulation profile for soft-proofing"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:250
+#: ../libligmaconfig/ligmacolorconfig.c:250
 msgid "Display rendering intent"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:258
+#: ../libligmaconfig/ligmacolorconfig.c:258
 msgid "Use black point compensation for the display"
 msgstr "對顯示使用黑點補償"
 
-#: ../libgimpconfig/gimpcolorconfig.c:265
+#: ../libligmaconfig/ligmacolorconfig.c:265
 msgid "Optimize display color transformations"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:272
+#: ../libligmaconfig/ligmacolorconfig.c:272
 msgid "Soft-proofing rendering intent"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:280
+#: ../libligmaconfig/ligmacolorconfig.c:280
 msgid "Use black point compensation for soft-proofing"
 msgstr "使用黑點補償進行軟打樣"
 
-#: ../libgimpconfig/gimpcolorconfig.c:287
+#: ../libligmaconfig/ligmacolorconfig.c:287
 msgid "Optimize soft-proofing color transformations"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:294
+#: ../libligmaconfig/ligmacolorconfig.c:294
 msgid "Mark out of gamut colors"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:301
+#: ../libligmaconfig/ligmacolorconfig.c:301
 msgid "Out of gamut warning color"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:660
-#: ../libgimpconfig/gimpcolorconfig.c:844
+#: ../libligmaconfig/ligmacolorconfig.c:660
+#: ../libligmaconfig/ligmacolorconfig.c:844
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../libgimpconfig/gimpcolorconfig.c:702
-#: ../libgimpconfig/gimpcolorconfig.c:894
+#: ../libligmaconfig/ligmacolorconfig.c:702
+#: ../libligmaconfig/ligmacolorconfig.c:894
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../libgimpconfig/gimpcolorconfig.c:744
-#: ../libgimpconfig/gimpcolorconfig.c:944
+#: ../libligmaconfig/ligmacolorconfig.c:744
+#: ../libligmaconfig/ligmacolorconfig.c:944
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#: ../libligmaconfig/ligmaconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s 的值不是有效的 UTF-8 字串"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#: ../libligmaconfig/ligmaconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "%s 布林值應該是‘yes’或者‘no’，但實際上是‘%s’"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#: ../libligmaconfig/ligmaconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "%2$s 的值‘%1$s’無效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#: ../libligmaconfig/ligmaconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "%2$s 的值‘%1$ld’無效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#: ../libligmaconfig/ligmaconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "分析‘%s’的值時發生錯誤：%s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:658
-#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:742
-#: ../libgimpconfig/gimpscanner.c:824
-#: ../libgimpwidgets/gimpcolorprofilestore.c:710
+#: ../libligmaconfig/ligmaconfig-iface.c:658
+#: ../libligmaconfig/ligmaconfig-iface.c:671 ../libligmaconfig/ligmascanner.c:742
+#: ../libligmaconfig/ligmascanner.c:824
+#: ../libligmawidgets/ligmacolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "分析時出現嚴重錯誤"
 
-#: ../libgimpconfig/gimpconfig-path.c:483
+#: ../libligmaconfig/ligmaconfig-path.c:483
 msgid "File has no path representation"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-path.c:566
+#: ../libligmaconfig/ligmaconfig-path.c:566
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "無法展開 ${%s} 變數"
 
-#: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:658
+#: ../libligmaconfig/ligmaconfigwriter.c:88
+#: ../libligmaconfig/ligmaconfigwriter.c:658
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "寫入‘%s’時發生錯誤：%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:184
+#: ../libligmaconfig/ligmaconfigwriter.c:184
 #, fuzzy, c-format
 #| msgid "Could not create temporary file for '%s': %s"
 msgid "Could not create temporary file for '%s': "
 msgstr "無法產生‘%s’所需的暫存檔：%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:761
+#: ../libligmaconfig/ligmaconfigwriter.c:761
 #, fuzzy, c-format
 #| msgid "Error writing to '%s': %s"
 msgid "Error writing '%s': %s"
 msgstr "寫入‘%s’時發生錯誤：%s"
 
-#: ../libgimpconfig/gimpscanner.c:408
+#: ../libligmaconfig/ligmascanner.c:408
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "無效的 UTF-8 字串"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:617
+#: ../libligmaconfig/ligmascanner.c:617
 #, fuzzy, c-format
 #| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "%s 布林值應該是‘yes’或者‘no’，但實際上是‘%s’"
 
-#: ../libgimpconfig/gimpscanner.c:851
+#: ../libligmaconfig/ligmascanner.c:851
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "分析第 %2$d 行的‘%1$s’時發生錯誤：%3$s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:442
+#: ../libligmamodule/ligmamodule.c:162 ../libligmamodule/ligmamodule.c:180
+#: ../libligmamodule/ligmamodule.c:289 ../libligmamodule/ligmamodule.c:316
+#: ../libligmamodule/ligmamodule.c:442
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "載入模組‘%s’時出現錯誤：%s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libligmamodule/ligmamodule.c:384
 msgid "Module error"
 msgstr "模組發生錯誤"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libligmamodule/ligmamodule.c:385
 msgid "Loaded"
 msgstr "已載入"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libligmamodule/ligmamodule.c:386
 msgid "Load failed"
 msgstr "載入失敗"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libligmamodule/ligmamodule.c:387
 msgid "Not loaded"
 msgstr "未載入"
 
-#: ../libgimpthumb/gimpthumb-utils.c:153
+#: ../libligmathumb/ligmathumb-utils.c:153
 #, fuzzy, c-format
 #| msgid ""
 #| "Cannot determine a valid home directory.\n"
@@ -1928,515 +1928,515 @@ msgstr ""
 "找不到正確的個人資料夾。\n"
 "縮圖會改為儲存至存放暫時性檔案的資料夾 (%s)。"
 
-#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#: ../libligmathumb/ligmathumb-utils.c:299 ../libligmathumb/ligmathumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "無法建立縮圖資料夾‘%s’。"
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libligmathumb/ligmathumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "縮圖沒有 Thumb::URI 標籤"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libligmathumb/ligmathumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "無法產生 %s 的縮圖: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:114
+#: ../libligmawidgets/ligmabrowser.c:114
 msgid "_Search:"
 msgstr "搜尋(_S):"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:152
+#: ../libligmawidgets/ligmacolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "前景顏色(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:156
+#: ../libligmawidgets/ligmacolorbutton.c:156
 msgid "_Background Color"
 msgstr "背景顏色(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:160
+#: ../libligmawidgets/ligmacolorbutton.c:160
 msgid "Blac_k"
 msgstr "黑(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:164
+#: ../libligmawidgets/ligmacolorbutton.c:164
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:571 ../libgimpwidgets/gimpicons.c:68
+#: ../libligmawidgets/ligmacolorbutton.c:571 ../libligmawidgets/ligmaicons.c:68
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:573
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+#: ../libligmawidgets/ligmacolorbutton.c:573
+#: ../libligmawidgets/ligmafileentry.c:436 ../libligmawidgets/ligmaquerybox.c:274
+#: ../libligmawidgets/ligmaquerybox.c:334 ../libligmawidgets/ligmaquerybox.c:398
+#: ../libligmawidgets/ligmaquerybox.c:472 ../libligmawidgets/ligmaunitmenu.c:493
 #, fuzzy
 #| msgid "_K"
 msgid "_OK"
 msgstr "_K"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:94
 #, fuzzy
 msgid "All files (*.*)"
 msgstr "所有檔案 (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC 色彩配置檔(*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:153
 msgid "_Save"
 msgstr "儲存(_S)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:163
 msgid "_Open"
 msgstr "開啟(_O)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
-#: ../libgimpwidgets/gimppatheditor.c:270
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:325
+#: ../libligmawidgets/ligmapatheditor.c:270
 msgid "Folder"
 msgstr "資料夾"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:330
 msgid "Not a regular file."
 msgstr "不是一個正常的檔案。"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+#: ../libligmawidgets/ligmacolorprofilestore.c:147
 msgid "Select color profile from disk..."
 msgstr "從磁碟選取色彩配置檔..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:315
+#: ../libligmawidgets/ligmacolorprofilestore.c:315
 msgctxt "profile"
 msgid "None"
 msgstr "無"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:170
+#: ../libligmawidgets/ligmacolorprofileview.c:170
 msgid "Manufacturer: "
 msgstr "廠商："
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:182
+#: ../libligmawidgets/ligmacolorprofileview.c:182
 #, fuzzy
 #| msgid "Copyright:"
 msgid "Copyright: "
 msgstr "版權："
 
-#: ../libgimpwidgets/gimpcolorscales.c:122
+#: ../libligmawidgets/ligmacolorscales.c:122
 msgid "Scales"
 msgstr "推桿"
 
-#: ../libgimpwidgets/gimpcolorselection.c:222
+#: ../libligmawidgets/ligmacolorselection.c:222
 msgid "Current:"
 msgstr "目前顏色:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: ../libligmawidgets/ligmacolorselection.c:231
 msgid "Old:"
 msgstr "原有顏色:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:316
+#: ../libligmawidgets/ligmacolorselection.c:316
 #, fuzzy
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr "常用於 HTML 和 CSS 的十六進位顏色碼。這個項目也可以使用 CSS 色彩名稱。"
 
-#: ../libgimpwidgets/gimpcolorselection.c:322
+#: ../libligmawidgets/ligmacolorselection.c:322
 msgid "HTML _notation:"
 msgstr "網頁標記(_N):"
 
-#: ../libgimpwidgets/gimpdialog.c:182
+#: ../libligmawidgets/ligmadialog.c:182
 msgid "_Help"
 msgstr "幫助(_H)"
 
-#: ../libgimpwidgets/gimpfileentry.c:152
+#: ../libligmawidgets/ligmafileentry.c:152
 msgid "Show file location in the file manager"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:223
+#: ../libligmawidgets/ligmafileentry.c:223
 msgid "Open a file selector to browse your folders"
 msgstr "打開一個檔案選取器來瀏覽您的資料夾 "
 
-#: ../libgimpwidgets/gimpfileentry.c:224
+#: ../libligmawidgets/ligmafileentry.c:224
 msgid "Open a file selector to browse your files"
 msgstr "打開一個檔案選取器來瀏覽您的檔案"
 
-#: ../libgimpwidgets/gimpfileentry.c:236
+#: ../libligmawidgets/ligmafileentry.c:236
 msgid "Indicates whether or not the folder exists"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:237
+#: ../libligmawidgets/ligmafileentry.c:237
 msgid "Indicates whether or not the file exists"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: ../libligmawidgets/ligmafileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libligmawidgets/ligmafileentry.c:424
 msgid "Select Folder"
 msgstr "選取資料夾"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libligmawidgets/ligmafileentry.c:426
 msgid "Select File"
 msgstr "選取檔案"
 
-#: ../libgimpwidgets/gimphelpui.c:433
+#: ../libligmawidgets/ligmahelpui.c:433
 #, fuzzy
 msgid "Press F1 for more help"
 msgstr "使用「%s --help」以獲得更多資訊。"
 
-#: ../libgimpwidgets/gimpicons.c:62
+#: ../libligmawidgets/ligmaicons.c:62
 msgid "Anchor"
 msgstr "固定"
 
-#: ../libgimpwidgets/gimpicons.c:63
+#: ../libligmawidgets/ligmaicons.c:63
 msgid "C_enter"
 msgstr "中央(_E)"
 
-#: ../libgimpwidgets/gimpicons.c:64
+#: ../libligmawidgets/ligmaicons.c:64
 msgid "_Duplicate"
 msgstr "重製(_D)"
 
-#: ../libgimpwidgets/gimpicons.c:65
+#: ../libligmawidgets/ligmaicons.c:65
 msgid "Linked"
 msgstr "連結"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libligmawidgets/ligmaicons.c:66
 msgid "Paste as New"
 msgstr "貼上成為新圖片"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libligmawidgets/ligmaicons.c:67
 msgid "Paste Into"
 msgstr "貼上成為圖層"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libligmawidgets/ligmaicons.c:69
 msgid "Visible"
 msgstr "可見"
 
-#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
+#: ../libligmawidgets/ligmaicons.c:105 ../libligmawidgets/ligmaicons.c:109
 msgid "_Stroke"
 msgstr "描邊(_S)"
 
-#: ../libgimpwidgets/gimpicons.c:121
+#: ../libligmawidgets/ligmaicons.c:121
 msgid "L_etter Spacing"
 msgstr "字距(_E)"
 
-#: ../libgimpwidgets/gimpicons.c:122
+#: ../libligmawidgets/ligmaicons.c:122
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: ../libgimpwidgets/gimpicons.c:139
+#: ../libligmawidgets/ligmaicons.c:139
 #, fuzzy
 #| msgid "_Resize"
 msgid "Re_size"
 msgstr "調整尺寸(_R)"
 
-#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:275
+#: ../libligmawidgets/ligmaicons.c:140 ../libligmawidgets/ligmaicons.c:275
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: ../libgimpwidgets/gimpicons.c:250
+#: ../libligmawidgets/ligmaicons.c:250
 #, fuzzy
 msgid "Cr_op"
 msgstr "透明度(_A)："
 
-#: ../libgimpwidgets/gimpicons.c:258
+#: ../libligmawidgets/ligmaicons.c:258
 #, fuzzy
 #| msgctxt "add-mask-type"
 #| msgid "_Selection"
 msgid "_Select"
 msgstr "選取區域(_S) "
 
-#: ../libgimpwidgets/gimpicons.c:270
+#: ../libligmawidgets/ligmaicons.c:270
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: ../libgimpwidgets/gimpicons.c:276
+#: ../libligmawidgets/ligmaicons.c:276
 msgid "_Shear"
 msgstr "推移(_S)"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libligmawidgets/ligmamemsizeentry.c:219
 msgid "Kilobytes"
 msgstr "KB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libligmawidgets/ligmamemsizeentry.c:220
 msgid "Megabytes"
 msgstr "MB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libligmawidgets/ligmamemsizeentry.c:221
 msgid "Gigabytes"
 msgstr "GB"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:274
-#: ../libgimpwidgets/gimppageselector.c:1070
+#: ../libligmawidgets/ligmapageselector.c:274
+#: ../libligmawidgets/ligmapageselector.c:1070
 #, fuzzy
 msgid "Nothing selected"
 msgstr "尚未選擇！"
 
-#: ../libgimpwidgets/gimppageselector.c:292
+#: ../libligmawidgets/ligmapageselector.c:292
 #, fuzzy
 msgid "Select _All"
 msgstr "全部選取(_A)"
 
-#: ../libgimpwidgets/gimppageselector.c:312
+#: ../libligmawidgets/ligmapageselector.c:312
 #, fuzzy
 msgid "Select _range:"
 msgstr "選擇要調整的範圍"
 
-#: ../libgimpwidgets/gimppageselector.c:324
+#: ../libligmawidgets/ligmapageselector.c:324
 #, fuzzy
 msgid "Open _pages as"
 msgstr "開啟為新圖片"
 
-#: ../libgimpwidgets/gimppageselector.c:452
-#: ../libgimpwidgets/gimppageselector.c:650
+#: ../libligmawidgets/ligmapageselector.c:452
+#: ../libligmawidgets/ligmapageselector.c:650
 #, fuzzy, c-format
 msgid "Page %d"
 msgstr "第 %d 頁"
 
-#: ../libgimpwidgets/gimppageselector.c:1075
+#: ../libligmawidgets/ligmapageselector.c:1075
 #, fuzzy
 msgid "One page selected"
 msgstr "從游標位置開始選取頁"
 
-#: ../libgimpwidgets/gimppageselector.c:1082
-#: ../libgimpwidgets/gimppageselector.c:1086
+#: ../libligmawidgets/ligmapageselector.c:1082
+#: ../libligmawidgets/ligmapageselector.c:1086
 #, fuzzy, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已選取收件人"
 
-#: ../libgimpwidgets/gimppatheditor.c:181
+#: ../libligmawidgets/ligmapatheditor.c:181
 msgid "Add a new folder"
 msgstr ""
 
-#: ../libgimpwidgets/gimppatheditor.c:199
+#: ../libligmawidgets/ligmapatheditor.c:199
 msgid "Move the selected folder up"
 msgstr ""
 
-#: ../libgimpwidgets/gimppatheditor.c:217
+#: ../libligmawidgets/ligmapatheditor.c:217
 msgid "Move the selected folder down"
 msgstr ""
 
-#: ../libgimpwidgets/gimppatheditor.c:235
+#: ../libligmawidgets/ligmapatheditor.c:235
 msgid "Remove the selected folder from the list"
 msgstr ""
 
-#: ../libgimpwidgets/gimppatheditor.c:261
+#: ../libligmawidgets/ligmapatheditor.c:261
 msgid "Writable"
 msgstr "可寫入"
 
-#: ../libgimpwidgets/gimppickbutton.c:110
+#: ../libligmawidgets/ligmapickbutton.c:110
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "按下滴管，然後在畫面中選取任何想要的顏色。"
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:293
+#: ../libligmawidgets/ligmapreview.c:293
 msgid "_Preview"
 msgstr "預覽(_P)"
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#: ../libligmawidgets/ligmapreviewarea.c:126
 msgid "Check Size"
 msgstr "方格大小"
 
-#: ../libgimpwidgets/gimppreviewarea.c:134
+#: ../libligmawidgets/ligmapreviewarea.c:134
 msgid "Check Style"
 msgstr "方格樣式"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2143
+#: ../libligmawidgets/ligmapropwidgets.c:2143
 #, fuzzy, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "本文字輸入欄位的長度限制為 %d 個字符。"
 
-#: ../libgimpwidgets/gimpunitmenu.c:261
+#: ../libligmawidgets/ligmaunitmenu.c:261
 msgid "More..."
 msgstr "其它..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:487
+#: ../libligmawidgets/ligmaunitmenu.c:487
 msgid "Unit Selection"
 msgstr "選擇單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:536
+#: ../libligmawidgets/ligmaunitmenu.c:536
 msgid "Unit"
 msgstr "單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:540
+#: ../libligmawidgets/ligmaunitmenu.c:540
 msgid "Factor"
 msgstr "比例"
 
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libligmawidgets/ligmawidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: ../libligmawidgets/ligmawidgets.c:525
 msgid "_New Seed"
 msgstr "產生隨機數(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libligmawidgets/ligmawidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: ../libligmawidgets/ligmawidgets.c:542
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libligmawidgets/ligmawidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "不可用"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libligmawidgets/ligmawidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "螢幕"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:52
+#: ../libligmawidgets/ligmawidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "視窗"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmawidgets/ligmawidgetsenums.c:24
 #, fuzzy
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "正方形"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "直向"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "橫向"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "色相(_H)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "HSV Hue"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "飽和度(_S)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 #, fuzzy
 #| msgid "Saturation"
 msgid "HSV Saturation"
 msgstr "飽和度"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "明度(_V)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 #, fuzzy
 #| msgid "Value"
 msgid "HSV Value"
 msgstr "明度"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgid "Red"
 msgstr "紅"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 msgid "Green"
 msgstr "綠"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 msgid "Blue"
 msgstr "藍"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 #, fuzzy
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "透明(_A)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 msgid "Alpha"
 msgstr "透明"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 #, fuzzy
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
 msgid "LCH Lightness"
 msgstr "亮度"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 #, fuzzy
 #| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 msgid "LCH Chroma"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 msgid "LCH Hue"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libligmawidgets/ligmawidgetsenums.c:167
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "圖層"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libligmawidgets/ligmawidgetsenums.c:168
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "圖片"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libligmawidgets/ligmawidgetsenums.c:229
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "拉近"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libligmawidgets/ligmawidgetsenums.c:230
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "拉遠"
@@ -2903,12 +2903,12 @@ msgid "MIDI Events"
 msgstr "系統事件"
 
 #: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: ../modules/controller-midi.c:428
-msgid "GIMP MIDI Input Controller"
-msgstr "GIMP MIDI 輸入控制器"
+msgid "LIGMA MIDI Input Controller"
+msgstr "LIGMA MIDI 輸入控制器"
 
 #: ../modules/display-filter-clip-warning.c:120
 #, fuzzy

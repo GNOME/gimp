@@ -15,8 +15,8 @@
    width="16"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-reshow-filter.svg"
-   inkscape:export-filename="/home/klaus/gimpwip/gimp/icons/Symbolic/scalable/gimp-reshow-filter.png"
+   sodipodi:docname="ligma-reshow-filter.svg"
+   inkscape:export-filename="/home/klaus/ligmawip/ligma/icons/Symbolic/scalable/ligma-reshow-filter.png"
    inkscape:export-xdpi="95.999718"
    inkscape:export-ydpi="95.999718">
   <sodipodi:namedview
@@ -57,7 +57,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>

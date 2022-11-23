@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbase-private.h
- * Copyright (C) 2003 Sven Neumann <sven@gimp.org>
+ * ligmabase-private.h
+ * Copyright (C) 2003 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,35 +19,35 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_PRIVATE_H__
-#define __GIMP_BASE_PRIVATE_H__
+#ifndef __LIGMA_BASE_PRIVATE_H__
+#define __LIGMA_BASE_PRIVATE_H__
 
 
-typedef struct _GimpUnitVtable GimpUnitVtable;
+typedef struct _LigmaUnitVtable LigmaUnitVtable;
 
-struct _GimpUnitVtable
+struct _LigmaUnitVtable
 {
   gint          (* unit_get_number_of_units)          (void);
   gint          (* unit_get_number_of_built_in_units) (void);
 
-  GimpUnit      (* unit_new)                          (gchar    *identifier,
+  LigmaUnit      (* unit_new)                          (gchar    *identifier,
                                                        gdouble   factor,
                                                        gint      digits,
                                                        gchar    *symbol,
                                                        gchar    *abbreviation,
                                                        gchar    *singular,
                                                        gchar    *plural);
-  gboolean      (* unit_get_deletion_flag)            (GimpUnit  unit);
-  void          (* unit_set_deletion_flag)            (GimpUnit  unit,
+  gboolean      (* unit_get_deletion_flag)            (LigmaUnit  unit);
+  void          (* unit_set_deletion_flag)            (LigmaUnit  unit,
                                                        gboolean  deletion_flag);
 
-  gdouble       (* unit_get_factor)                   (GimpUnit  unit);
-  gint          (* unit_get_digits)                   (GimpUnit  unit);
-  const gchar * (* unit_get_identifier)               (GimpUnit  unit);
-  const gchar * (* unit_get_symbol)                   (GimpUnit  unit);
-  const gchar * (* unit_get_abbreviation)             (GimpUnit  unit);
-  const gchar * (* unit_get_singular)                 (GimpUnit  unit);
-  const gchar * (* unit_get_plural)                   (GimpUnit  unit);
+  gdouble       (* unit_get_factor)                   (LigmaUnit  unit);
+  gint          (* unit_get_digits)                   (LigmaUnit  unit);
+  const gchar * (* unit_get_identifier)               (LigmaUnit  unit);
+  const gchar * (* unit_get_symbol)                   (LigmaUnit  unit);
+  const gchar * (* unit_get_abbreviation)             (LigmaUnit  unit);
+  const gchar * (* unit_get_singular)                 (LigmaUnit  unit);
+  const gchar * (* unit_get_plural)                   (LigmaUnit  unit);
 
   void          (* _reserved_1)                       (void);
   void          (* _reserved_2)                       (void);
@@ -56,14 +56,14 @@ struct _GimpUnitVtable
 };
 
 
-extern GimpUnitVtable _gimp_unit_vtable;
+extern LigmaUnitVtable _ligma_unit_vtable;
 
 
 G_BEGIN_DECLS
 
-void   gimp_base_init              (GimpUnitVtable *vtable);
-void   gimp_base_compat_enums_init (void);
+void   ligma_base_init              (LigmaUnitVtable *vtable);
+void   ligma_base_compat_enums_init (void);
 
 G_END_DECLS
 
-#endif /* __GIMP_BASE_PRIVATE_H__ */
+#endif /* __LIGMA_BASE_PRIVATE_H__ */

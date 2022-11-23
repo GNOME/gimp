@@ -1,12 +1,12 @@
-# translation of gimp-plug-ins.gimp-2-6.po to Kannada
+# translation of ligma-plug-ins.ligma-2-6.po to Kannada
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Shankar Prasad <svenkate@redhat.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins.ligma-2-6\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
 "PO-Revision-Date: 2009-04-16 12:20+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
@@ -52,15 +52,15 @@ msgstr "ಸನ್ನಿವೇಶ"
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:299
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:377
-#: ../plug-ins/common/color-to-alpha.c:410 ../plug-ins/file-fli/fli-gimp.c:875
-#: ../plug-ins/file-fli/fli-gimp.c:945
+#: ../plug-ins/common/color-to-alpha.c:410 ../plug-ins/file-fli/fli-ligma.c:875
+#: ../plug-ins/file-fli/fli-ligma.c:945
 msgid "From:"
 msgstr "ಯಿಂದ:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:325
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:378
-#: ../plug-ins/file-fli/fli-gimp.c:884 ../plug-ins/file-fli/fli-gimp.c:954
+#: ../plug-ins/file-fli/fli-ligma.c:884 ../plug-ins/file-fli/fli-ligma.c:954
 msgid "To:"
 msgstr "ಗೆ:"
 
@@ -422,7 +422,7 @@ msgid "Optimizing animation"
 msgstr ""
 
 #: ../plug-ins/common/animation-play.c:163
-msgid "Preview a GIMP layer-based animation"
+msgid "Preview a LIGMA layer-based animation"
 msgstr ""
 
 #: ../plug-ins/common/animation-play.c:168
@@ -607,7 +607,7 @@ msgstr "ಲಂಬ(_V)"
 #: ../plug-ins/file-psd/psd-image-res-load.c:995
 #: ../plug-ins/file-psd/psd-load.c:1526 ../plug-ins/file-sgi/sgi.c:384
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/twain/twain.c:568
+#: ../plug-ins/ligmaressionist/general.c:140 ../plug-ins/twain/twain.c:568
 #: ../plug-ins/win-snap/winsnap.c:1155
 msgid "Background"
 msgstr "ಹಿನ್ನಲೆ"
@@ -1015,8 +1015,8 @@ msgstr ""
 #: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:736
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2002
 #: ../plug-ins/file-bmp/bmp-read.c:154 ../plug-ins/file-faxg3/faxg3.c:233
-#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:460
-#: ../plug-ins/file-fli/fli-gimp.c:497 ../plug-ins/file-ico/ico-load.c:653
+#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-ligma.c:460
+#: ../plug-ins/file-fli/fli-ligma.c:497 ../plug-ins/file-ico/ico-load.c:653
 #: ../plug-ins/file-ico/ico-load.c:732 ../plug-ins/file-jpeg/jpeg-load.c:109
 #: ../plug-ins/file-jpeg/jpeg-load.c:831 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
@@ -1026,8 +1026,8 @@ msgstr ""
 #: ../plug-ins/flame/flame.c:412
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:929
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:223
-#: ../plug-ins/help/gimphelplocale.c:239
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/ligmahelplocale.c:223
+#: ../plug-ins/help/ligmahelplocale.c:239
 #: ../plug-ins/lighting/lighting-ui.c:1354
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1055,7 +1055,7 @@ msgstr ""
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
 #: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
+#: ../plug-ins/file-fli/fli-ligma.c:750 ../plug-ins/file-ico/ico-save.c:1008
 #: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1635
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
@@ -1091,7 +1091,7 @@ msgid "Checkerboard"
 msgstr ""
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:511
+#: ../plug-ins/ligmaressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "ಗಾತ್ರ(_S):"
 
@@ -1289,8 +1289,8 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:180
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Hue"
 msgstr "ಬಣ್ಣ"
 
@@ -1301,8 +1301,8 @@ msgstr "ಸ್ಯಾಚುರೇಶನ್"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Value"
 msgstr "ಮೌಲ್ಯ"
 
@@ -2193,8 +2193,8 @@ msgstr ""
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1247
-#: ../plug-ins/gimpressionist/orientmap.c:592
-#: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/ligmaressionist/orientmap.c:592
+#: ../plug-ins/ligmaressionist/sizemap.c:461
 #: ../plug-ins/print/print-page-layout.c:159
 msgid "Preview"
 msgstr "ಮುನ್ನೋಟ"
@@ -2778,7 +2778,7 @@ msgstr "ತ್ರಿಜ್ಯ 1(_R):"
 msgid "R_adius 2:"
 msgstr "ತ್ರಿಜ್ಯ 2 (_a):"
 
-#: ../plug-ins/common/edge-dog.c:370 ../plug-ins/gimpressionist/paper.c:167
+#: ../plug-ins/common/edge-dog.c:370 ../plug-ins/ligmaressionist/paper.c:167
 msgid "_Invert"
 msgstr ""
 
@@ -2984,7 +2984,7 @@ msgstr ""
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:741
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:520
 #: ../plug-ins/file-bmp/bmp-read.c:159 ../plug-ins/file-faxg3/faxg3.c:217
-#: ../plug-ins/file-fli/fli-gimp.c:502 ../plug-ins/file-ico/ico-load.c:646
+#: ../plug-ins/file-fli/fli-ligma.c:502 ../plug-ins/file-ico/ico-load.c:646
 #: ../plug-ins/file-jpeg/jpeg-load.c:115 ../plug-ins/file-psd/psd-load.c:136
 #: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3363
 #, c-format
@@ -3011,7 +3011,7 @@ msgstr ""
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
-#: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
+#: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-ligma.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
 #: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:554
 #: ../plug-ins/file-xjt/xjt.c:1710
@@ -3119,7 +3119,7 @@ msgid "Cannot operate on unknown image types."
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:154 ../plug-ins/common/file-gbr.c:175
-msgid "GIMP brush"
+msgid "LIGMA brush"
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-gbr.c:413
@@ -3128,7 +3128,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:425
 #, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:433
@@ -3143,7 +3143,7 @@ msgid "Unnamed"
 msgstr "ಹೆಸರಿಡದ"
 
 #: ../plug-ins/common/file-gbr.c:622
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:720
@@ -3156,7 +3156,7 @@ msgid "Spacing:"
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:758 ../plug-ins/common/file-gih.c:925
-#: ../plug-ins/common/file-pat.c:556 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:556 ../plug-ins/ligmaressionist/presets.c:666
 msgid "Description:"
 msgstr "ವಿವರಣೆ:"
 
@@ -3307,7 +3307,7 @@ msgid "The default comment is limited to %d characters."
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:209 ../plug-ins/common/file-gih.c:230
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:324
@@ -3316,11 +3316,11 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:503
-msgid "Error in GIMP brush pipe file."
+msgid "Error in LIGMA brush pipe file."
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:569
-msgid "GIMP brush file appears to be corrupted."
+msgid "LIGMA brush file appears to be corrupted."
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:718
@@ -3603,8 +3603,8 @@ msgid "MNG animation"
 msgstr ""
 
 #: ../plug-ins/common/file-pat.c:123 ../plug-ins/common/file-pat.c:145
-msgid "GIMP pattern"
-msgstr "GIMP ವಿನ್ಯಾಸ"
+msgid "LIGMA pattern"
+msgstr "LIGMA ವಿನ್ಯಾಸ"
 
 #: ../plug-ins/common/file-pat.c:371
 #, c-format
@@ -3836,7 +3836,7 @@ msgid "Invalid X resolution."
 msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:555
-msgid "Image width is larger than GIMP can handle."
+msgid "Image width is larger than LIGMA can handle."
 msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:562
@@ -3844,7 +3844,7 @@ msgid "Invalid Y resolution."
 msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:564
-msgid "Image height is larger than GIMP can handle."
+msgid "Image height is larger than LIGMA can handle."
 msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:576
@@ -3898,7 +3898,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
@@ -3964,8 +3964,8 @@ msgid "B/W"
 msgstr "B/W"
 
 #: ../plug-ins/common/file-ps.c:3232 ../plug-ins/common/file-xpm.c:479
-#: ../plug-ins/gimpressionist/color.c:66
-#: ../plug-ins/gimpressionist/general.c:170
+#: ../plug-ins/ligmaressionist/color.c:66
+#: ../plug-ins/ligmaressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "ಬಣ್ಣ"
@@ -4185,7 +4185,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:472 ../plug-ins/common/file-xbm.c:840
@@ -4201,7 +4201,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:518
@@ -4304,7 +4304,7 @@ msgid "Import _paths"
 msgstr ""
 
 #: ../plug-ins/common/file-svg.c:948
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 
 #: ../plug-ins/common/file-svg.c:961
@@ -4379,7 +4379,7 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-load.c:325
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
@@ -4918,7 +4918,7 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: ../plug-ins/common/gee-zoom.c:121 ../plug-ins/common/gee.c:99
-msgid "A big hello from the GIMP team!"
+msgid "A big hello from the LIGMA team!"
 msgstr ""
 
 #: ../plug-ins/common/gee-zoom.c:126 ../plug-ins/common/gee-zoom.c:186
@@ -4926,7 +4926,7 @@ msgid "Gee Zoom"
 msgstr ""
 
 #: ../plug-ins/common/gee-zoom.c:192 ../plug-ins/common/gee.c:166
-msgid "Thank You for Choosing GIMP"
+msgid "Thank You for Choosing LIGMA"
 msgstr ""
 
 #: ../plug-ins/common/gee-zoom.c:200
@@ -6896,7 +6896,7 @@ msgid "Use the background color"
 msgstr ""
 
 #: ../plug-ins/common/sphere-designer.c:291
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid"
 msgstr ""
 
@@ -6993,7 +6993,7 @@ msgstr ""
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
-#: ../plug-ins/gimpressionist/paper.c:194
+#: ../plug-ins/ligmaressionist/paper.c:194
 #: ../plug-ins/ifs-compose/ifs-compose.c:554
 msgid "Scale:"
 msgstr ""
@@ -7287,7 +7287,7 @@ msgstr ""
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 
@@ -7296,7 +7296,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 
 #: ../plug-ins/common/unit-editor.c:98
@@ -7361,7 +7361,7 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr ""
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
+msgid "Create or alter units used in LIGMA"
 msgstr ""
 
 #: ../plug-ins/common/unit-editor.c:150
@@ -7948,7 +7948,7 @@ msgstr ""
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:694
+#: ../plug-ins/common/wind.c:1027 ../plug-ins/ligmaressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr ""
 
@@ -8070,24 +8070,24 @@ msgstr ""
 msgid "Image Composing"
 msgstr ""
 
-#: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
+#: ../plug-ins/file-fli/fli-ligma.c:166 ../plug-ins/file-fli/fli-ligma.c:186
 msgid "AutoDesk FLIC animation"
 msgstr ""
 
-#: ../plug-ins/file-fli/fli-gimp.c:562
+#: ../plug-ins/file-fli/fli-ligma.c:562
 #, c-format
 msgid "Frame (%i)"
 msgstr ""
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-ligma.c:714
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr ""
 
-#: ../plug-ins/file-fli/fli-gimp.c:846
+#: ../plug-ins/file-fli/fli-ligma.c:846
 msgid "GFLI 1.3 - Load framestack"
 msgstr ""
 
-#: ../plug-ins/file-fli/fli-gimp.c:914
+#: ../plug-ins/file-fli/fli-ligma.c:914
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
@@ -8158,7 +8158,7 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:367
-msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
 msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
@@ -8369,7 +8369,7 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:631
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:1605
@@ -8426,39 +8426,39 @@ msgid ""
 "(not supported by SGI)"
 msgstr ""
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:448
+#: ../plug-ins/file-uri/ligmamountoperation.c:448
 msgid "Co_nnect"
 msgstr "ಸಂಪರ್ಕ ಕಲ್ಪಿಸು(_n)"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:492
+#: ../plug-ins/file-uri/ligmamountoperation.c:492
 msgid "Connect _anonymously"
 msgstr "ಅನಾಮಧೇಯವಾಗಿ ಸಂಪರ್ಕಹೊಂದು(_a)"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:501
+#: ../plug-ins/file-uri/ligmamountoperation.c:501
 msgid "Connect as u_ser:"
 msgstr "ಬಳಕೆದಾರನಾಗಿ ಸಂಪರ್ಕಹೊಂದು(_s):"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:538
+#: ../plug-ins/file-uri/ligmamountoperation.c:538
 msgid "_Username:"
 msgstr "ಬಳಕೆದಾರ ಹೆಸರು(_U):"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:542
+#: ../plug-ins/file-uri/ligmamountoperation.c:542
 msgid "_Domain:"
 msgstr "ಕ್ಷೇತ್ರ(_D):"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:547
+#: ../plug-ins/file-uri/ligmamountoperation.c:547
 msgid "_Password:"
 msgstr "ಗುಪ್ತಪದ(_P):"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:562
+#: ../plug-ins/file-uri/ligmamountoperation.c:562
 msgid "_Forget password immediately"
 msgstr "ಗುಪ್ತಪದವನ್ನು ಈ ಕೂಡಲೆ ಮರೆತು ಬಿಡು(_F)"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:570
+#: ../plug-ins/file-uri/ligmamountoperation.c:570
 msgid "_Remember password until you logout"
 msgstr "ನೀವು ನಿರ್ಗಮಿಸುವವರೆಗೂ ಗುಪ್ತಪದವನ್ನು ನೆನಪಿಟ್ಟುಕೊ(_R)"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:578
+#: ../plug-ins/file-uri/ligmamountoperation.c:578
 msgid "_Remember forever"
 msgstr "ಯಾವಾಗಲು ನೆನಪಿಡು(_R)"
 
@@ -8561,7 +8561,7 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:488 ../plug-ins/file-xjt/xjt.c:506
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr ""
 
 #: ../plug-ins/file-xjt/xjt.c:736
@@ -8674,8 +8674,8 @@ msgstr ""
 msgid "Same"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:747 ../plug-ins/gimpressionist/orientation.c:164
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/ligmaressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Random"
 msgstr "ಮನಸ್ಸಿಗೆ ಬಂದಂತೆ"
 
@@ -8824,11 +8824,11 @@ msgid "C_amera"
 msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:547
-#: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gimpressionist/utils.c:143
+#: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/ligmaressionist/utils.c:143
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
@@ -9344,7 +9344,7 @@ msgid "Max undo:"
 msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Transparent"
 msgstr "ಪಾರದರ್ಶಕ"
 
@@ -9438,7 +9438,7 @@ msgid "Left"
 msgstr "ಎಡ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/orientation.c:148
 msgid "Orientation:"
 msgstr "ನಿಲುವು:"
 
@@ -9496,612 +9496,612 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:247
+#: ../plug-ins/ligmaressionist/brush.c:247
 msgid "Can only save drawables!"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:252
+#: ../plug-ins/ligmaressionist/brush.c:252
 msgid "Save Brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:507
+#: ../plug-ins/ligmaressionist/brush.c:507
 msgid "_Brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:544
+#: ../plug-ins/ligmaressionist/brush.c:544
 msgid "Gamma:"
 msgstr "ಗಾಮಾ:"
 
-#: ../plug-ins/gimpressionist/brush.c:562
+#: ../plug-ins/ligmaressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:570
+#: ../plug-ins/ligmaressionist/brush.c:570
 msgid "Select:"
 msgstr "ಆರಿಸು:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Aspect ratio:"
 msgstr "ಆಕಾರ ಅನುಪಾತ:"
 
-#: ../plug-ins/gimpressionist/brush.c:603
+#: ../plug-ins/ligmaressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:206
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:206
 msgid "Relief:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:616
-#: ../plug-ins/gimpressionist/paper.c:210
+#: ../plug-ins/ligmaressionist/brush.c:616
+#: ../plug-ins/ligmaressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:60
+#: ../plug-ins/ligmaressionist/color.c:60
 msgid "Co_lor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:70
+#: ../plug-ins/ligmaressionist/color.c:70
 msgid "A_verage under brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:72
+#: ../plug-ins/ligmaressionist/color.c:72
 msgid "C_enter of brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:79
+#: ../plug-ins/ligmaressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:83
+#: ../plug-ins/ligmaressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:94
+#: ../plug-ins/ligmaressionist/color.c:94
 msgid "Color _noise:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:98
+#: ../plug-ins/ligmaressionist/color.c:98
 msgid "Adds random noise to the color"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:134
+#: ../plug-ins/ligmaressionist/general.c:134
 #: ../plug-ins/gradient-flare/gradient-flare.c:3529
 msgid "_General"
 msgstr "ಸಾಮಾನ್ಯ(_G)"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Keep original"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:151
+#: ../plug-ins/ligmaressionist/general.c:151
 msgid "Preserve the original image as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "From paper"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:157
+#: ../plug-ins/ligmaressionist/general.c:157
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Solid colored background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:186
+#: ../plug-ins/ligmaressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:203
+#: ../plug-ins/ligmaressionist/general.c:203
 msgid "Paint edges"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:208
+#: ../plug-ins/ligmaressionist/general.c:208
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
+#: ../plug-ins/ligmaressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
 msgid "Tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:217
+#: ../plug-ins/ligmaressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/ligmaressionist/general.c:222
 msgid "Drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:227
+#: ../plug-ins/ligmaressionist/general.c:227
 msgid "Adds a shadow effect to each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "Edge darken:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/ligmaressionist/general.c:244
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "Shadow darken:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/ligmaressionist/general.c:253
 msgid "How much to \"darken\" the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/ligmaressionist/general.c:258
 msgid "Shadow depth:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/ligmaressionist/general.c:262
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:267
+#: ../plug-ins/ligmaressionist/general.c:267
 msgid "Shadow blur:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "How much to blur the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:276
+#: ../plug-ins/ligmaressionist/general.c:276
 msgid "Deviation threshold:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:280
+#: ../plug-ins/ligmaressionist/general.c:280
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:90
+#: ../plug-ins/ligmaressionist/ligma.c:90
 msgid "Performs various artistic operations"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:95
-msgid "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:95
+msgid "_LIGMAressionist..."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:371
+#: ../plug-ins/ligmaressionist/ligma.c:371
 msgid "Painting"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:139
-msgid "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:139
+msgid "LIGMAressionist"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "Or_ientation"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:106
+#: ../plug-ins/ligmaressionist/orientation.c:106
 msgid "Directions:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:110
+#: ../plug-ins/ligmaressionist/orientation.c:110
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:118
+#: ../plug-ins/ligmaressionist/orientation.c:118
 msgid "Start angle:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/ligmaressionist/orientation.c:130
 msgid "Angle span:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:134
+#: ../plug-ins/ligmaressionist/orientation.c:134
 msgid "The angle span of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Radius"
 msgstr "ತ್ರಿಜ್ಯ"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:165
 msgid "Selects a random direction of each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Radial"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:169
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Flowing"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:177
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:181
+#: ../plug-ins/ligmaressionist/orientation.c:181
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "Adaptive"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:192
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manual"
 msgstr "ಕೈಯಾರೆ"
 
-#: ../plug-ins/gimpressionist/orientation.c:193
+#: ../plug-ins/ligmaressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:204
+#: ../plug-ins/ligmaressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:526
+#: ../plug-ins/ligmaressionist/orientmap.c:526
 msgid "Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:555
+#: ../plug-ins/ligmaressionist/orientmap.c:555
 msgid "Vectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:567
+#: ../plug-ins/ligmaressionist/orientmap.c:567
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/ligmaressionist/orientmap.c:612
 msgid "Select previous vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:618
+#: ../plug-ins/ligmaressionist/orientmap.c:618
 msgid "Select next vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:620
-#: ../plug-ins/gimpressionist/sizemap.c:490
+#: ../plug-ins/ligmaressionist/orientmap.c:620
+#: ../plug-ins/ligmaressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "ಸೇರಿಸು(_d)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:624
+#: ../plug-ins/ligmaressionist/orientmap.c:624
 msgid "Add new vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:626
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/orientmap.c:626
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "_Kill"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/ligmaressionist/orientmap.c:630
 msgid "Delete selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:641
+#: ../plug-ins/ligmaressionist/orientmap.c:641
 msgid "Type"
 msgstr "ಬಗೆ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "_Normal"
 msgstr "ಸಾಮಾನ್ಯ(_N)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vorte_x"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_2"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:648
+#: ../plug-ins/ligmaressionist/orientmap.c:648
 msgid "Vortex_3"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
-#: ../plug-ins/gimpressionist/sizemap.c:542
+#: ../plug-ins/ligmaressionist/orientmap.c:654
+#: ../plug-ins/ligmaressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:662
+#: ../plug-ins/ligmaressionist/orientmap.c:662
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:672
+#: ../plug-ins/ligmaressionist/orientmap.c:672
 msgid "A_ngle:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/ligmaressionist/orientmap.c:676
 msgid "Change the angle of the selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:683
+#: ../plug-ins/ligmaressionist/orientmap.c:683
 msgid "Ang_le offset:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/ligmaressionist/orientmap.c:687
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:698
+#: ../plug-ins/ligmaressionist/orientmap.c:698
 msgid "Change the strength of the selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:705
+#: ../plug-ins/ligmaressionist/orientmap.c:705
 msgid "S_trength exp.:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:709
-#: ../plug-ins/gimpressionist/sizemap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:709
+#: ../plug-ins/ligmaressionist/sizemap.c:537
 msgid "Change the exponent of the strength"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:138
+#: ../plug-ins/ligmaressionist/paper.c:138
 msgid "P_aper"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:173
+#: ../plug-ins/ligmaressionist/paper.c:173
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:177
+#: ../plug-ins/ligmaressionist/paper.c:177
 msgid "O_verlay"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:182
+#: ../plug-ins/ligmaressionist/paper.c:182
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:198
+#: ../plug-ins/ligmaressionist/paper.c:198
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:67
+#: ../plug-ins/ligmaressionist/placement.c:67
 msgid "Pl_acement"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:73
+#: ../plug-ins/ligmaressionist/placement.c:73
 msgid "Placement"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:77
+#: ../plug-ins/ligmaressionist/placement.c:77
 msgid "Randomly"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:81
+#: ../plug-ins/ligmaressionist/placement.c:81
 msgid "Evenly distributed"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:89
+#: ../plug-ins/ligmaressionist/placement.c:89
 msgid "Place strokes randomly around the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:93
+#: ../plug-ins/ligmaressionist/placement.c:93
 msgid "The strokes are evenly distributed across the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/ligmaressionist/placement.c:102
 msgid "Centered"
 msgstr "ಮಧ್ಯಕ್ಕೆ ಹೊಂದಿಸಿದ"
 
-#: ../plug-ins/gimpressionist/placement.c:108
+#: ../plug-ins/ligmaressionist/placement.c:108
 msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:120
+#: ../plug-ins/ligmaressionist/placement.c:120
 msgid "Stroke _density:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:124
+#: ../plug-ins/ligmaressionist/placement.c:124
 msgid "The relative density of the brush strokes"
 msgstr ""
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:650
+#: ../plug-ins/ligmaressionist/ppmtool.c:650
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:640
+#: ../plug-ins/ligmaressionist/presets.c:640
 msgid "Save Current"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:894
-msgid "Gimpressionist Defaults"
+#: ../plug-ins/ligmaressionist/presets.c:894
+msgid "Ligmaressionist Defaults"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/ligmaressionist/presets.c:1015
 msgid "_Presets"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/ligmaressionist/presets.c:1030
 msgid "Save Current..."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/ligmaressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/ligmaressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/ligmaressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/ligmaressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1184
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1184
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1075
 msgid "_Update"
 msgstr "ಅಪ್ಡೇಟ್(_U)"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 msgid "_Size"
 msgstr "ಗಾತ್ರ(_S)"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "Sizes:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:113
+#: ../plug-ins/ligmaressionist/size.c:113
 msgid "The number of sizes of brushes to use"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:121
+#: ../plug-ins/ligmaressionist/size.c:121
 msgid "Minimum size:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:125
+#: ../plug-ins/ligmaressionist/size.c:125
 msgid "The smallest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 msgid "Maximum size:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:137
+#: ../plug-ins/ligmaressionist/size.c:137
 msgid "The largest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:151
+#: ../plug-ins/ligmaressionist/size.c:151
 msgid "Size:"
 msgstr "ಗಾತ್ರ:"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Selects a random size for each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:172
+#: ../plug-ins/ligmaressionist/size.c:172
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The hue of the region determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:188
+#: ../plug-ins/ligmaressionist/size.c:188
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:197
+#: ../plug-ins/ligmaressionist/size.c:197
 msgid "Manually specify the stroke size"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:208
+#: ../plug-ins/ligmaressionist/size.c:208
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 msgid "Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:429
+#: ../plug-ins/ligmaressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:439
+#: ../plug-ins/ligmaressionist/sizemap.c:439
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:481
+#: ../plug-ins/ligmaressionist/sizemap.c:481
 msgid "Select previous smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "Select next smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "Add new smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:502
+#: ../plug-ins/ligmaressionist/sizemap.c:502
 msgid "Delete selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 msgid "Change the angle of the selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:522
+#: ../plug-ins/ligmaressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:526
+#: ../plug-ins/ligmaressionist/sizemap.c:526
 msgid "Change the strength of the selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:533
+#: ../plug-ins/ligmaressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:549
+#: ../plug-ins/ligmaressionist/sizemap.c:549
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10384,7 +10384,7 @@ msgstr ""
 
 #: ../plug-ins/help-browser/dialog.c:186
 #: ../plug-ins/help-browser/dialog.c:1134
-msgid "GIMP Help Browser"
+msgid "LIGMA Help Browser"
 msgstr ""
 
 #: ../plug-ins/help-browser/dialog.c:566
@@ -10440,7 +10440,7 @@ msgid "Toggle the visibility of the sidebar"
 msgstr ""
 
 #: ../plug-ins/help-browser/dialog.c:658
-msgid "Visit the GIMP documentation website"
+msgid "Visit the LIGMA documentation website"
 msgstr ""
 
 #: ../plug-ins/help-browser/dialog.c:1175
@@ -10457,36 +10457,36 @@ msgctxt "search"
 msgid "_Next"
 msgstr "ಮುಂದಕ್ಕೆ (_N)"
 
-#: ../plug-ins/help/gimphelpdomain.c:181
+#: ../plug-ins/help/ligmahelpdomain.c:181
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:187
-msgid "The GIMP user manual is not available."
+#: ../plug-ins/help/ligmahelpdomain.c:187
+msgid "The LIGMA user manual is not available."
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:188
+#: ../plug-ins/help/ligmahelpdomain.c:188
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:197
+#: ../plug-ins/help/ligmahelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:216
+#: ../plug-ins/help/ligmahelpdomain.c:216
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr ""
 
-#: ../plug-ins/help/gimphelplocale.c:209
+#: ../plug-ins/help/ligmahelplocale.c:209
 #, c-format
 msgid "Loading index from '%s'"
 msgstr ""
 
-#: ../plug-ins/help/gimphelplocale.c:267
+#: ../plug-ins/help/ligmahelplocale.c:267
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10711,7 +10711,7 @@ msgid "Clear"
 msgstr "ಅಳಿಸು"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "ರಚಿಸು"
 
@@ -10736,41 +10736,41 @@ msgid "Edit Object"
 msgstr ""
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft border"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right border"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper border"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer border"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr ""
 
@@ -11197,7 +11197,7 @@ msgid "Grid Settings..."
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-msgid "Use GIMP Guides..."
+msgid "Use LIGMA Guides..."
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_menu.c:196

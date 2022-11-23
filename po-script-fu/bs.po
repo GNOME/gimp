@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-01-27 21:39+0000\n"
 "PO-Revision-Date: 2015-02-04 14:27+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
@@ -30,8 +30,8 @@ msgid "_Start Server..."
 msgstr "_Pokreni server..."
 
 #: ../plug-ins/script-fu/script-fu.c:301
-msgid "_GIMP Online"
-msgstr "_GIMP online"
+msgid "_LIGMA Online"
+msgstr "_LIGMA online"
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
@@ -70,8 +70,8 @@ msgid "_Beveled Pattern"
 msgstr "_Ukošeni uzorak"
 
 #: ../plug-ins/script-fu/script-fu.c:323
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
@@ -236,19 +236,19 @@ msgstr "Horizontalno"
 msgid "Wrap"
 msgstr "Umotaj"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "Krug"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "Olovka"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "Čista boja"
 

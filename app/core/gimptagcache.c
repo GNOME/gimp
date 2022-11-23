@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptagcache.c
+ * ligmatagcache.c
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,34 +23,34 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "gimp-memsize.h"
-#include "gimpcontext.h"
-#include "gimpdata.h"
-#include "gimplist.h"
-#include "gimptag.h"
-#include "gimptagcache.h"
-#include "gimptagged.h"
+#include "ligma-memsize.h"
+#include "ligmacontext.h"
+#include "ligmadata.h"
+#include "ligmalist.h"
+#include "ligmatag.h"
+#include "ligmatagcache.h"
+#include "ligmatagged.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_TAG_CACHE_FILE  "tags.xml"
+#define LIGMA_TAG_CACHE_FILE  "tags.xml"
 
-/* #define DEBUG_GIMP_TAG_CACHE  1 */
+/* #define DEBUG_LIGMA_TAG_CACHE  1 */
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 
@@ -60,86 +60,86 @@ typedef struct
   GQuark  checksum;
   GList  *tags;
   guint   referenced : 1;
-} GimpTagCacheRecord;
+} LigmaTagCacheRecord;
 
 typedef struct
 {
   GArray             *records;
-  GimpTagCacheRecord  current_record;
-} GimpTagCacheParseData;
+  LigmaTagCacheRecord  current_record;
+} LigmaTagCacheParseData;
 
-struct _GimpTagCachePrivate
+struct _LigmaTagCachePrivate
 {
   GArray *records;
   GList  *containers;
 };
 
 
-static void          gimp_tag_cache_finalize           (GObject                *object);
+static void          ligma_tag_cache_finalize           (GObject                *object);
 
-static gint64        gimp_tag_cache_get_memsize        (GimpObject             *object,
+static gint64        ligma_tag_cache_get_memsize        (LigmaObject             *object,
                                                         gint64                 *gui_size);
-static void          gimp_tag_cache_object_initialize  (GimpTagged             *tagged,
-                                                        GimpTagCache           *cache);
-static void          gimp_tag_cache_add_object         (GimpTagCache           *cache,
-                                                        GimpTagged             *tagged);
+static void          ligma_tag_cache_object_initialize  (LigmaTagged             *tagged,
+                                                        LigmaTagCache           *cache);
+static void          ligma_tag_cache_add_object         (LigmaTagCache           *cache,
+                                                        LigmaTagged             *tagged);
 
-static void          gimp_tag_cache_load_start_element (GMarkupParseContext    *context,
+static void          ligma_tag_cache_load_start_element (GMarkupParseContext    *context,
                                                         const gchar            *element_name,
                                                         const gchar           **attribute_names,
                                                         const gchar           **attribute_values,
                                                         gpointer                user_data,
                                                         GError                **error);
-static void          gimp_tag_cache_load_end_element   (GMarkupParseContext    *context,
+static void          ligma_tag_cache_load_end_element   (GMarkupParseContext    *context,
                                                         const gchar            *element_name,
                                                         gpointer                user_data,
                                                         GError                **error);
-static void          gimp_tag_cache_load_text          (GMarkupParseContext    *context,
+static void          ligma_tag_cache_load_text          (GMarkupParseContext    *context,
                                                         const gchar            *text,
                                                         gsize                   text_len,
                                                         gpointer                user_data,
                                                         GError                **error);
-static  void         gimp_tag_cache_load_error         (GMarkupParseContext    *context,
+static  void         ligma_tag_cache_load_error         (GMarkupParseContext    *context,
                                                         GError                 *error,
                                                         gpointer                user_data);
-static const gchar * gimp_tag_cache_attribute_name_to_value
+static const gchar * ligma_tag_cache_attribute_name_to_value
                                                        (const gchar           **attribute_names,
                                                         const gchar           **attribute_values,
                                                         const gchar            *name);
 
-static GQuark        gimp_tag_cache_get_error_domain   (void);
+static GQuark        ligma_tag_cache_get_error_domain   (void);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaTagCache, ligma_tag_cache, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_tag_cache_parent_class
+#define parent_class ligma_tag_cache_parent_class
 
 
 static void
-gimp_tag_cache_class_init (GimpTagCacheClass *klass)
+ligma_tag_cache_class_init (LigmaTagCacheClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
-  object_class->finalize         = gimp_tag_cache_finalize;
+  object_class->finalize         = ligma_tag_cache_finalize;
 
-  gimp_object_class->get_memsize = gimp_tag_cache_get_memsize;
+  ligma_object_class->get_memsize = ligma_tag_cache_get_memsize;
 }
 
 static void
-gimp_tag_cache_init (GimpTagCache *cache)
+ligma_tag_cache_init (LigmaTagCache *cache)
 {
-  cache->priv = gimp_tag_cache_get_instance_private (cache);
+  cache->priv = ligma_tag_cache_get_instance_private (cache);
 
   cache->priv->records    = g_array_new (FALSE, FALSE,
-                                         sizeof (GimpTagCacheRecord));
+                                         sizeof (LigmaTagCacheRecord));
   cache->priv->containers = NULL;
 }
 
 static void
-gimp_tag_cache_finalize (GObject *object)
+ligma_tag_cache_finalize (GObject *object)
 {
-  GimpTagCache *cache = GIMP_TAG_CACHE (object);
+  LigmaTagCache *cache = LIGMA_TAG_CACHE (object);
 
   if (cache->priv->records)
     {
@@ -147,8 +147,8 @@ gimp_tag_cache_finalize (GObject *object)
 
       for (i = 0; i < cache->priv->records->len; i++)
         {
-          GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
-                                                    GimpTagCacheRecord, i);
+          LigmaTagCacheRecord *rec = &g_array_index (cache->priv->records,
+                                                    LigmaTagCacheRecord, i);
 
           g_list_free_full (rec->tags, (GDestroyNotify) g_object_unref);
         }
@@ -167,66 +167,66 @@ gimp_tag_cache_finalize (GObject *object)
 }
 
 static gint64
-gimp_tag_cache_get_memsize (GimpObject *object,
+ligma_tag_cache_get_memsize (LigmaObject *object,
                             gint64     *gui_size)
 {
-  GimpTagCache *cache   = GIMP_TAG_CACHE (object);
+  LigmaTagCache *cache   = LIGMA_TAG_CACHE (object);
   gint64        memsize = 0;
 
-  memsize += gimp_g_list_get_memsize (cache->priv->containers, 0);
-  memsize += cache->priv->records->len * sizeof (GimpTagCacheRecord);
+  memsize += ligma_g_list_get_memsize (cache->priv->containers, 0);
+  memsize += cache->priv->records->len * sizeof (LigmaTagCacheRecord);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 /**
- * gimp_tag_cache_new:
+ * ligma_tag_cache_new:
  *
- * Returns: creates new GimpTagCache object.
+ * Returns: creates new LigmaTagCache object.
  **/
-GimpTagCache *
-gimp_tag_cache_new (void)
+LigmaTagCache *
+ligma_tag_cache_new (void)
 {
-  return g_object_new (GIMP_TYPE_TAG_CACHE, NULL);
+  return g_object_new (LIGMA_TYPE_TAG_CACHE, NULL);
 }
 
 static void
-gimp_tag_cache_container_add_callback (GimpTagCache  *cache,
-                                       GimpTagged    *tagged,
-                                       GimpContainer *not_used)
+ligma_tag_cache_container_add_callback (LigmaTagCache  *cache,
+                                       LigmaTagged    *tagged,
+                                       LigmaContainer *not_used)
 {
-  gimp_tag_cache_add_object (cache, tagged);
+  ligma_tag_cache_add_object (cache, tagged);
 }
 
 /**
- * gimp_tag_cache_add_container:
- * @cache:      a GimpTagCache object.
- * @container:  container containing GimpTagged objects.
+ * ligma_tag_cache_add_container:
+ * @cache:      a LigmaTagCache object.
+ * @container:  container containing LigmaTagged objects.
  *
- * Adds container of GimpTagged objects to tag cache. Before calling this
- * function tag cache must be loaded using gimp_tag_cache_load(). When tag
+ * Adds container of LigmaTagged objects to tag cache. Before calling this
+ * function tag cache must be loaded using ligma_tag_cache_load(). When tag
  * cache is saved to file, tags are collected from objects in priv->containers.
  **/
 void
-gimp_tag_cache_add_container (GimpTagCache  *cache,
-                              GimpContainer *container)
+ligma_tag_cache_add_container (LigmaTagCache  *cache,
+                              LigmaContainer *container)
 {
-  g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
-  g_return_if_fail (GIMP_IS_CONTAINER (container));
+  g_return_if_fail (LIGMA_IS_TAG_CACHE (cache));
+  g_return_if_fail (LIGMA_IS_CONTAINER (container));
 
   cache->priv->containers = g_list_append (cache->priv->containers, container);
-  gimp_container_foreach (container, (GFunc) gimp_tag_cache_object_initialize,
+  ligma_container_foreach (container, (GFunc) ligma_tag_cache_object_initialize,
                           cache);
 
   g_signal_connect_swapped (container, "add",
-                            G_CALLBACK (gimp_tag_cache_container_add_callback),
+                            G_CALLBACK (ligma_tag_cache_container_add_callback),
                             cache);
 }
 
 static void
-gimp_tag_cache_add_object (GimpTagCache *cache,
-                           GimpTagged   *tagged)
+ligma_tag_cache_add_object (LigmaTagCache *cache,
+                           LigmaTagged   *tagged)
 {
   gchar  *identifier;
   GQuark  identifier_quark = 0;
@@ -235,7 +235,7 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
   GList  *list;
   gint    i;
 
-  identifier = gimp_tagged_get_identifier (tagged);
+  identifier = ligma_tagged_get_identifier (tagged);
 
   if (identifier)
     {
@@ -247,14 +247,14 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
     {
       for (i = 0; i < cache->priv->records->len; i++)
         {
-          GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
-                                                    GimpTagCacheRecord, i);
+          LigmaTagCacheRecord *rec = &g_array_index (cache->priv->records,
+                                                    LigmaTagCacheRecord, i);
 
           if (rec->identifier == identifier_quark)
             {
               for (list = rec->tags; list; list = g_list_next (list))
                 {
-                  gimp_tagged_add_tag (tagged, GIMP_TAG (list->data));
+                  ligma_tagged_add_tag (tagged, LIGMA_TAG (list->data));
                 }
 
               rec->referenced = TRUE;
@@ -263,7 +263,7 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
         }
     }
 
-  checksum = gimp_tagged_get_checksum (tagged);
+  checksum = ligma_tagged_get_checksum (tagged);
 
   if (checksum)
     {
@@ -275,12 +275,12 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
     {
       for (i = 0; i < cache->priv->records->len; i++)
         {
-          GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
-                                                    GimpTagCacheRecord, i);
+          LigmaTagCacheRecord *rec = &g_array_index (cache->priv->records,
+                                                    LigmaTagCacheRecord, i);
 
           if (rec->checksum == checksum_quark)
             {
-#if DEBUG_GIMP_TAG_CACHE
+#if DEBUG_LIGMA_TAG_CACHE
               g_printerr ("remapping identifier: %s ==> %s\n",
                           rec->identifier ? g_quark_to_string (rec->identifier) : "(NULL)",
                           identifier_quark ? g_quark_to_string (identifier_quark) : "(NULL)");
@@ -290,7 +290,7 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
 
               for (list = rec->tags; list; list = g_list_next (list))
                 {
-                  gimp_tagged_add_tag (tagged, GIMP_TAG (list->data));
+                  ligma_tagged_add_tag (tagged, LIGMA_TAG (list->data));
                 }
 
               rec->referenced = TRUE;
@@ -302,28 +302,28 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
 }
 
 static void
-gimp_tag_cache_object_initialize (GimpTagged   *tagged,
-                                  GimpTagCache *cache)
+ligma_tag_cache_object_initialize (LigmaTagged   *tagged,
+                                  LigmaTagCache *cache)
 {
-  gimp_tag_cache_add_object (cache, tagged);
+  ligma_tag_cache_add_object (cache, tagged);
 }
 
 static void
-gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
+ligma_tag_cache_tagged_to_cache_record_foreach (LigmaTagged  *tagged,
                                                GList      **cache_records)
 {
-  gchar *identifier = gimp_tagged_get_identifier (tagged);
+  gchar *identifier = ligma_tagged_get_identifier (tagged);
 
   if (identifier)
     {
-      GimpTagCacheRecord *cache_rec = g_new (GimpTagCacheRecord, 1);
+      LigmaTagCacheRecord *cache_rec = g_new (LigmaTagCacheRecord, 1);
       gchar              *checksum;
 
-      checksum = gimp_tagged_get_checksum (tagged);
+      checksum = ligma_tagged_get_checksum (tagged);
 
       cache_rec->identifier = g_quark_from_string (identifier);
       cache_rec->checksum   = g_quark_from_string (checksum);
-      cache_rec->tags       = g_list_copy (gimp_tagged_get_tags (tagged));
+      cache_rec->tags       = g_list_copy (ligma_tagged_get_tags (tagged));
 
       g_free (checksum);
 
@@ -334,13 +334,13 @@ gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
 }
 
 /**
- * gimp_tag_cache_save:
- * @cache:      a GimpTagCache object.
+ * ligma_tag_cache_save:
+ * @cache:      a LigmaTagCache object.
  *
  * Saves tag cache to cache file.
  **/
 void
-gimp_tag_cache_save (GimpTagCache *cache)
+ligma_tag_cache_save (LigmaTagCache *cache)
 {
   GString       *buf;
   GList         *saved_records;
@@ -350,20 +350,20 @@ gimp_tag_cache_save (GimpTagCache *cache)
   GError        *error = NULL;
   gint           i;
 
-  g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
+  g_return_if_fail (LIGMA_IS_TAG_CACHE (cache));
 
   saved_records = NULL;
   for (i = 0; i < cache->priv->records->len; i++)
     {
-      GimpTagCacheRecord *current_record = &g_array_index (cache->priv->records,
-                                                           GimpTagCacheRecord, i);
+      LigmaTagCacheRecord *current_record = &g_array_index (cache->priv->records,
+                                                           LigmaTagCacheRecord, i);
 
       if (! current_record->referenced && current_record->tags)
         {
           /* keep tagged objects which have tags assigned
            * but were not loaded.
            */
-          GimpTagCacheRecord *record_copy = g_new (GimpTagCacheRecord, 1);
+          LigmaTagCacheRecord *record_copy = g_new (LigmaTagCacheRecord, 1);
 
           record_copy->identifier = current_record->identifier;
           record_copy->checksum   = current_record->checksum;
@@ -377,8 +377,8 @@ gimp_tag_cache_save (GimpTagCache *cache)
        iterator;
        iterator = g_list_next (iterator))
     {
-      gimp_container_foreach (GIMP_CONTAINER (iterator->data),
-                              (GFunc) gimp_tag_cache_tagged_to_cache_record_foreach,
+      ligma_container_foreach (LIGMA_CONTAINER (iterator->data),
+                              (GFunc) ligma_tag_cache_tagged_to_cache_record_foreach,
                               &saved_records);
     }
 
@@ -390,7 +390,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
 
   for (iterator = saved_records; iterator; iterator = g_list_next (iterator))
     {
-      GimpTagCacheRecord *cache_rec = iterator->data;
+      LigmaTagCacheRecord *cache_rec = iterator->data;
       GList              *tag_iterator;
       gchar              *identifier_string;
       gchar              *tag_string;
@@ -405,11 +405,11 @@ gimp_tag_cache_save (GimpTagCache *cache)
            tag_iterator;
            tag_iterator = g_list_next (tag_iterator))
         {
-          GimpTag *tag = GIMP_TAG (tag_iterator->data);
+          LigmaTag *tag = LIGMA_TAG (tag_iterator->data);
 
-          if (! gimp_tag_get_internal (tag))
+          if (! ligma_tag_get_internal (tag))
             {
-              tag_string = g_markup_escape_text (gimp_tag_get_name (tag), -1);
+              tag_string = g_markup_escape_text (ligma_tag_get_name (tag), -1);
               g_string_append_printf (buf, "    <tag>%s</tag>\n", tag_string);
               g_free (tag_string);
             }
@@ -420,7 +420,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
 
   g_string_append (buf, "</tags>\n");
 
-  file = gimp_directory_file (GIMP_TAG_CACHE_FILE, NULL);
+  file = ligma_directory_file (LIGMA_TAG_CACHE_FILE, NULL);
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -435,7 +435,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
       GCancellable *cancellable = g_cancellable_new ();
 
       g_printerr (_("Error writing '%s': %s\n"),
-                  gimp_file_get_utf8_name (file), error->message);
+                  ligma_file_get_utf8_name (file), error->message);
 
       /* Cancel the overwrite initiated by g_file_replace(). */
       g_cancellable_cancel (cancellable);
@@ -445,7 +445,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
   else if (! g_output_stream_close (output, NULL, &error))
     {
       g_printerr (_("Error closing '%s': %s\n"),
-                  gimp_file_get_utf8_name (file), error->message);
+                  ligma_file_get_utf8_name (file), error->message);
     }
 
   if (output)
@@ -459,7 +459,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
        iterator;
        iterator = g_list_next (iterator))
     {
-      GimpTagCacheRecord *cache_rec = iterator->data;
+      LigmaTagCacheRecord *cache_rec = iterator->data;
 
       g_list_free (cache_rec->tags);
       g_free (cache_rec);
@@ -469,39 +469,39 @@ gimp_tag_cache_save (GimpTagCache *cache)
 }
 
 /**
- * gimp_tag_cache_load:
- * @cache:      a GimpTagCache object.
+ * ligma_tag_cache_load:
+ * @cache:      a LigmaTagCache object.
  *
  * Loads tag cache from file.
  **/
 void
-gimp_tag_cache_load (GimpTagCache *cache)
+ligma_tag_cache_load (LigmaTagCache *cache)
 {
   GFile                 *file;
   GMarkupParser          markup_parser;
-  GimpXmlParser         *xml_parser;
-  GimpTagCacheParseData  parse_data;
+  LigmaXmlParser         *xml_parser;
+  LigmaTagCacheParseData  parse_data;
   GError                *error = NULL;
 
-  g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
+  g_return_if_fail (LIGMA_IS_TAG_CACHE (cache));
 
   /* clear any previous priv->records */
   cache->priv->records = g_array_set_size (cache->priv->records, 0);
 
-  parse_data.records = g_array_new (FALSE, FALSE, sizeof (GimpTagCacheRecord));
-  memset (&parse_data.current_record, 0, sizeof (GimpTagCacheRecord));
+  parse_data.records = g_array_new (FALSE, FALSE, sizeof (LigmaTagCacheRecord));
+  memset (&parse_data.current_record, 0, sizeof (LigmaTagCacheRecord));
 
-  markup_parser.start_element = gimp_tag_cache_load_start_element;
-  markup_parser.end_element   = gimp_tag_cache_load_end_element;
-  markup_parser.text          = gimp_tag_cache_load_text;
+  markup_parser.start_element = ligma_tag_cache_load_start_element;
+  markup_parser.end_element   = ligma_tag_cache_load_end_element;
+  markup_parser.text          = ligma_tag_cache_load_text;
   markup_parser.passthrough   = NULL;
-  markup_parser.error         = gimp_tag_cache_load_error;
+  markup_parser.error         = ligma_tag_cache_load_error;
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, &parse_data);
+  xml_parser = ligma_xml_parser_new (&markup_parser, &parse_data);
 
-  file = gimp_directory_file (GIMP_TAG_CACHE_FILE, NULL);
+  file = ligma_directory_file (LIGMA_TAG_CACHE_FILE, NULL);
 
-  if (gimp_xml_parser_parse_gfile (xml_parser, file, &error))
+  if (ligma_xml_parser_parse_gfile (xml_parser, file, &error))
     {
       cache->priv->records = g_array_append_vals (cache->priv->records,
                                                   parse_data.records->data,
@@ -515,42 +515,42 @@ gimp_tag_cache_load (GimpTagCache *cache)
     }
 
   g_object_unref (file);
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
   g_array_free (parse_data.records, TRUE);
 }
 
 static  void
-gimp_tag_cache_load_start_element (GMarkupParseContext *context,
+ligma_tag_cache_load_start_element (GMarkupParseContext *context,
                                    const gchar         *element_name,
                                    const gchar        **attribute_names,
                                    const gchar        **attribute_values,
                                    gpointer             user_data,
                                    GError             **error)
 {
-  GimpTagCacheParseData *parse_data = user_data;
+  LigmaTagCacheParseData *parse_data = user_data;
 
   if (! strcmp (element_name, "resource"))
     {
       const gchar *identifier;
       const gchar *checksum;
 
-      identifier = gimp_tag_cache_attribute_name_to_value (attribute_names,
+      identifier = ligma_tag_cache_attribute_name_to_value (attribute_names,
                                                            attribute_values,
                                                            "identifier");
-      checksum   = gimp_tag_cache_attribute_name_to_value (attribute_names,
+      checksum   = ligma_tag_cache_attribute_name_to_value (attribute_names,
                                                            attribute_values,
                                                            "checksum");
 
       if (! identifier)
         {
           g_set_error (error,
-                       gimp_tag_cache_get_error_domain (),
+                       ligma_tag_cache_get_error_domain (),
                        1001,
                        "Resource tag does not contain required attribute identifier.");
           return;
         }
 
-      memset (&parse_data->current_record, 0, sizeof (GimpTagCacheRecord));
+      memset (&parse_data->current_record, 0, sizeof (LigmaTagCacheRecord));
 
       parse_data->current_record.identifier = g_quark_from_string (identifier);
       parse_data->current_record.checksum   = g_quark_from_string (checksum);
@@ -558,32 +558,32 @@ gimp_tag_cache_load_start_element (GMarkupParseContext *context,
 }
 
 static void
-gimp_tag_cache_load_end_element (GMarkupParseContext *context,
+ligma_tag_cache_load_end_element (GMarkupParseContext *context,
                                  const gchar         *element_name,
                                  gpointer             user_data,
                                  GError             **error)
 {
-  GimpTagCacheParseData *parse_data = user_data;
+  LigmaTagCacheParseData *parse_data = user_data;
 
   if (strcmp (element_name, "resource") == 0)
     {
       parse_data->records = g_array_append_val (parse_data->records,
                                                 parse_data->current_record);
-      memset (&parse_data->current_record, 0, sizeof (GimpTagCacheRecord));
+      memset (&parse_data->current_record, 0, sizeof (LigmaTagCacheRecord));
     }
 }
 
 static void
-gimp_tag_cache_load_text (GMarkupParseContext  *context,
+ligma_tag_cache_load_text (GMarkupParseContext  *context,
                           const gchar          *text,
                           gsize                 text_len,
                           gpointer              user_data,
                           GError              **error)
 {
-  GimpTagCacheParseData *parse_data = user_data;
+  LigmaTagCacheParseData *parse_data = user_data;
   const gchar           *current_element;
   gchar                  buffer[2048];
-  GimpTag               *tag;
+  LigmaTag               *tag;
 
   current_element = g_markup_parse_context_get_element (context);
 
@@ -591,7 +591,7 @@ gimp_tag_cache_load_text (GMarkupParseContext  *context,
     {
       if (text_len >= sizeof (buffer))
         {
-          g_set_error (error, gimp_tag_cache_get_error_domain (), 1002,
+          g_set_error (error, ligma_tag_cache_get_error_domain (), 1002,
                        "Tag value is too long.");
           return;
         }
@@ -599,7 +599,7 @@ gimp_tag_cache_load_text (GMarkupParseContext  *context,
       memcpy (buffer, text, text_len);
       buffer[text_len] = '\0';
 
-      tag = gimp_tag_new (buffer);
+      tag = ligma_tag_new (buffer);
       if (tag)
         {
           parse_data->current_record.tags = g_list_append (parse_data->current_record.tags,
@@ -614,7 +614,7 @@ gimp_tag_cache_load_text (GMarkupParseContext  *context,
 }
 
 static  void
-gimp_tag_cache_load_error (GMarkupParseContext *context,
+ligma_tag_cache_load_error (GMarkupParseContext *context,
                            GError              *error,
                            gpointer             user_data)
 {
@@ -622,7 +622,7 @@ gimp_tag_cache_load_error (GMarkupParseContext *context,
 }
 
 static const gchar*
-gimp_tag_cache_attribute_name_to_value (const gchar **attribute_names,
+ligma_tag_cache_attribute_name_to_value (const gchar **attribute_names,
                                         const gchar **attribute_values,
                                         const gchar  *name)
 {
@@ -641,7 +641,7 @@ gimp_tag_cache_attribute_name_to_value (const gchar **attribute_names,
 }
 
 static GQuark
-gimp_tag_cache_get_error_domain (void)
+ligma_tag_cache_get_error_domain (void)
 {
-  return g_quark_from_static_string ("gimp-tag-cache-error-quark");
+  return g_quark_from_static_string ("ligma-tag-cache-error-quark");
 }

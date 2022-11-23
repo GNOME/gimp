@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 # Item Transformations
 
@@ -23,16 +23,16 @@
 sub transform_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = <<"CODE";
-  success = gimp_pdb_item_is_attached (item, NULL,
-                                       GIMP_PDB_ITEM_CONTENT |
-                                       GIMP_PDB_ITEM_POSITION, error);
+  success = ligma_pdb_item_is_attached (item, NULL,
+                                       LIGMA_PDB_ITEM_CONTENT |
+                                       LIGMA_PDB_ITEM_POSITION, error);
 CODE
 
     if ($check) {
         $success_check = <<"CODE"
-  success = (gimp_pdb_item_is_attached (item, NULL,
-                                        GIMP_PDB_ITEM_CONTENT |
-                                        GIMP_PDB_ITEM_POSITION, error) &&
+  success = (ligma_pdb_item_is_attached (item, NULL,
+                                        LIGMA_PDB_ITEM_CONTENT |
+                                        LIGMA_PDB_ITEM_POSITION, error) &&
 	     $check);
 CODE
     }
@@ -45,15 +45,15 @@ CODE
 $success_check
 
   if (success &&
-      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+      ligma_item_mask_intersect (item, &x, &y, &width, &height))
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-      GimpImage      *image       = gimp_item_get_image (item);
-      GimpChannel    *mask        = gimp_image_get_mask (image);
-      GimpMatrix3     matrix;
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+      LigmaImage      *image       = ligma_item_get_image (item);
+      LigmaChannel    *mask        = ligma_image_get_mask (image);
+      LigmaMatrix3     matrix;
       gint            off_x, off_y;
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
       x += off_x;
       y += off_y;
 
@@ -61,16 +61,16 @@ $success_check
 $assemble_matrix
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _(\"$progress_text\"));
+        ligma_progress_start (progress, FALSE, _(\"$progress_text\"));
 
-      if (GIMP_IS_DRAWABLE (item)                             &&
-          item != GIMP_ITEM (mask)                            &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+      if (LIGMA_IS_DRAWABLE (item)                             &&
+          item != LIGMA_ITEM (mask)                            &&
+          ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+          ! ligma_channel_is_empty (mask))
         {
-          GimpDrawable *drawable;
+          LigmaDrawable *drawable;
 
-          drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+          drawable = ligma_drawable_transform_affine (LIGMA_DRAWABLE (item),
                                                      context, &matrix,
                                                      pdb_context->transform_direction,
                                                      pdb_context->interpolation,
@@ -78,22 +78,22 @@ $assemble_matrix
                                                      progress);
 
           if (drawable)
-            item = GIMP_ITEM (drawable);
+            item = LIGMA_ITEM (drawable);
           else
             success = FALSE;
         }
       else
         {
-          gimp_item_transform (item, context, &matrix,
+          ligma_item_transform (item, context, &matrix,
                                pdb_context->transform_direction,
                                pdb_context->interpolation,
-                               gimp_item_get_clip (
+                               ligma_item_get_clip (
                                  item, pdb_context->transform_resize),
                                progress);
         }
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
 }
 CODE
@@ -131,9 +131,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_modifiable (item,
-                                   GIMP_PDB_ITEM_POSITION, error))
-    gimp_item_translate (item, off_x, off_y, TRUE);
+  if (ligma_pdb_item_is_modifiable (item,
+                                   LIGMA_PDB_ITEM_POSITION, error))
+    ligma_item_translate (item, off_x, off_y, TRUE);
   else
     success = FALSE;
 }
@@ -165,7 +165,7 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_transform_resize().
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -174,7 +174,7 @@ HELP
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
         { name => 'flip_type',
-	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+	  type => 'enum LigmaOrientationType (no LIGMA_ORIENTATION_UNKNOWN)',
           desc => 'Type of flip' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically position the axis in the selection center' },
@@ -192,46 +192,46 @@ HELP
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (item, NULL,
-                                       GIMP_PDB_ITEM_CONTENT |
-                                       GIMP_PDB_ITEM_POSITION, error);
+  success = ligma_pdb_item_is_attached (item, NULL,
+                                       LIGMA_PDB_ITEM_CONTENT |
+                                       LIGMA_PDB_ITEM_POSITION, error);
 
   if (success &&
-      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+      ligma_item_mask_intersect (item, &x, &y, &width, &height))
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-      GimpImage      *image       = gimp_item_get_image (item);
-      GimpChannel    *mask        = gimp_image_get_mask (image);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+      LigmaImage      *image       = ligma_item_get_image (item);
+      LigmaChannel    *mask        = ligma_image_get_mask (image);
       gint            off_x, off_y;
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
       x += off_x;
       y += off_y;
 
-      gimp_transform_get_flip_axis (x, y, width, height,
+      ligma_transform_get_flip_axis (x, y, width, height,
                                     flip_type, auto_center, &axis);
 
-      if (GIMP_IS_DRAWABLE (item)                             &&
-          item != GIMP_ITEM (mask)                            &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+      if (LIGMA_IS_DRAWABLE (item)                             &&
+          item != LIGMA_ITEM (mask)                            &&
+          ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+          ! ligma_channel_is_empty (mask))
         {
-          GimpDrawable *drawable;
+          LigmaDrawable *drawable;
 
-          drawable = gimp_drawable_transform_flip (GIMP_DRAWABLE (item), context,
+          drawable = ligma_drawable_transform_flip (LIGMA_DRAWABLE (item), context,
                                                    flip_type, axis,
                                                    pdb_context->transform_resize);
 
           if (drawable)
-            item = GIMP_ITEM (drawable);
+            item = LIGMA_ITEM (drawable);
           else
             success = FALSE;
         }
       else
         {
-          gimp_item_flip (item, context,
+          ligma_item_flip (item, context,
                           flip_type, axis,
-                          gimp_item_get_clip (
+                          ligma_item_get_clip (
                             item, pdb_context->transform_resize));
         }
     }
@@ -263,8 +263,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -288,8 +288,8 @@ HELP
     );
 
     transform_invoke ("Flipping", <<CODE);
-      gimp_matrix3_identity (&matrix);
-      gimp_transform_matrix_flip_free (&matrix, x0, y0, x1, y1);
+      ligma_matrix3_identity (&matrix);
+      ligma_transform_matrix_flip_free (&matrix, x0, y0, x1, y1);
 CODE
 }
 
@@ -326,8 +326,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -367,8 +367,8 @@ HELP
     );
 
     transform_invoke ("Perspective", <<CODE);
-      gimp_matrix3_identity (&matrix);
-      gimp_transform_matrix_perspective (&matrix,
+      ligma_matrix3_identity (&matrix);
+      ligma_transform_matrix_perspective (&matrix,
                                          x, y, width, height,
                                          x0, y0, x1, y1,
                                          x2, y2, x3, y3);
@@ -402,7 +402,7 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_transform_resize().
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -410,7 +410,7 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-        { name => 'rotate_type', type => 'enum GimpRotationType',
+        { name => 'rotate_type', type => 'enum LigmaRotationType',
           desc => 'Type of rotation' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically rotate around the selection center' },
@@ -430,49 +430,49 @@ HELP
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (item, NULL,
-                                       GIMP_PDB_ITEM_CONTENT |
-                                       GIMP_PDB_ITEM_POSITION, error);
+  success = ligma_pdb_item_is_attached (item, NULL,
+                                       LIGMA_PDB_ITEM_CONTENT |
+                                       LIGMA_PDB_ITEM_POSITION, error);
 
   if (success &&
-      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+      ligma_item_mask_intersect (item, &x, &y, &width, &height))
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-      GimpImage      *image       = gimp_item_get_image (item);
-      GimpChannel    *mask        = gimp_image_get_mask (image);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+      LigmaImage      *image       = ligma_item_get_image (item);
+      LigmaChannel    *mask        = ligma_image_get_mask (image);
       gint            off_x, off_y;
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
       x += off_x;
       y += off_y;
 
-      gimp_transform_get_rotate_center (x, y, width, height,
+      ligma_transform_get_rotate_center (x, y, width, height,
                                         auto_center, &center_x, &center_y);
 
-      if (GIMP_IS_DRAWABLE (item)                             &&
-          item != GIMP_ITEM (mask)                            &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+      if (LIGMA_IS_DRAWABLE (item)                             &&
+          item != LIGMA_ITEM (mask)                            &&
+          ! ligma_viewable_get_children (LIGMA_VIEWABLE (item)) &&
+          ! ligma_channel_is_empty (mask))
         {
-          GimpDrawable *drawable;
+          LigmaDrawable *drawable;
 
-          drawable = gimp_drawable_transform_rotate (GIMP_DRAWABLE (item),
+          drawable = ligma_drawable_transform_rotate (LIGMA_DRAWABLE (item),
                                                      context,
                                                      rotate_type,
                                                      center_x, center_y,
                                                      pdb_context->transform_resize);
 
           if (drawable)
-            item = GIMP_ITEM (drawable);
+            item = LIGMA_ITEM (drawable);
           else
             success = FALSE;
         }
       else
         {
-          gimp_item_rotate (item, context,
+          ligma_item_rotate (item, context,
                             rotate_type,
                             center_x, center_y,
-                            gimp_item_get_clip (
+                            ligma_item_get_clip (
                               item, pdb_context->transform_resize));
         }
     }
@@ -509,8 +509,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -534,12 +534,12 @@ HELP
     );
 
     transform_invoke ("Rotating", <<CODE);
-      gimp_matrix3_identity (&matrix);
+      ligma_matrix3_identity (&matrix);
       if (auto_center)
-        gimp_transform_matrix_rotate_rect (&matrix,
+        ligma_transform_matrix_rotate_rect (&matrix,
                                            x, y, width, height, angle);
       else
-        gimp_transform_matrix_rotate_center (&matrix,
+        ligma_transform_matrix_rotate_center (&matrix,
                                              center_x, center_y, angle);
 CODE
 }
@@ -569,8 +569,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -598,8 +598,8 @@ HELP
     );
 
     transform_invoke ("Scaling", <<CODE, 'x0 < x1 && y0 < y1');
-      gimp_matrix3_identity (&matrix);
-      gimp_transform_matrix_scale (&matrix,
+      ligma_matrix3_identity (&matrix);
+      ligma_transform_matrix_scale (&matrix,
                                    x, y, width, height,
                                    x0, y0, x1 - x0, y1 - y0);
 CODE
@@ -633,8 +633,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -643,7 +643,7 @@ HELP
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
         { name => 'shear_type',
-	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+	  type => 'enum LigmaOrientationType (no LIGMA_ORIENTATION_UNKNOWN)',
           desc => 'Type of shear' },
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' }
@@ -655,8 +655,8 @@ HELP
     );
 
     transform_invoke ("Shearing", <<CODE);
-      gimp_matrix3_identity (&matrix);
-      gimp_transform_matrix_shear (&matrix,
+      ligma_matrix3_identity (&matrix);
+      ligma_transform_matrix_shear (&matrix,
                                    x, y, width, height,
                                    shear_type, magnitude);
 CODE
@@ -689,8 +689,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -720,11 +720,11 @@ HELP
     );
 
     transform_invoke ("2D Transform", <<CODE);
-      gimp_matrix3_identity  (&matrix);
-      gimp_matrix3_translate (&matrix, -source_x, -source_y);
-      gimp_matrix3_scale     (&matrix, scale_x, scale_y);
-      gimp_matrix3_rotate    (&matrix, angle);
-      gimp_matrix3_translate (&matrix, dest_x, dest_y);
+      ligma_matrix3_identity  (&matrix);
+      ligma_matrix3_translate (&matrix, -source_x, -source_y);
+      ligma_matrix3_scale     (&matrix, scale_x, scale_y);
+      ligma_matrix3_rotate    (&matrix, angle);
+      ligma_matrix3_translate (&matrix, dest_x, dest_y);
 CODE
 }
 
@@ -753,8 +753,8 @@ The return value will be equal to the item ID supplied as input.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize().
+ligma_context_set_interpolation(), ligma_context_set_transform_direction(),
+ligma_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -801,16 +801,16 @@ CODE
 }
 
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "core/gimp-transform-utils.h"
-              "core/gimpchannel.h"
-              "core/gimpdrawable.h"
-              "core/gimpdrawable-transform.h"
-              "core/gimpimage.h"
-              "core/gimpprogress.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("libligmamath/ligmamath.h"
+              "core/ligma-transform-utils.h"
+              "core/ligmachannel.h"
+              "core/ligmadrawable.h"
+              "core/ligmadrawable-transform.h"
+              "core/ligmaimage.h"
+              "core/ligmaprogress.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(item_transform_translate
             item_transform_flip_simple
@@ -826,7 +826,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Transformation procedures';
-$doc_title = 'gimpitemtransform';
+$doc_title = 'ligmaitemtransform';
 $doc_short_desc = 'Functions to perform transformations on items.';
 $doc_long_desc = 'Functions to perform transformations on items.';
 

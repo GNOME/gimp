@@ -1,4 +1,4 @@
-project('gimp',
+project('ligma',
   'c', 'cpp',
   version: '2.99.15',
   meson_version: '>=0.56.0',
@@ -8,7 +8,7 @@ project('gimp',
   ],
 )
 
-project_url = 'https://gitlab.gnome.org/GNOME/gimp'
+project_url = 'https://gitlab.gnome.org/GNOME/ligma'
 project_url_issues = project_url + '/issues/new'
 
 conf = configuration_data()
@@ -18,68 +18,68 @@ warnings = []
 ################################################################################
 # Project info
 
-prettyname = 'GIMP'
+prettyname = 'LIGMA'
 full_name  = 'GNU Image Manipulation Program'
 
 # General version
-gimp_version = meson.project_version()
+ligma_version = meson.project_version()
 
-package_string= prettyname + ' ' + gimp_version
+package_string= prettyname + ' ' + ligma_version
 
-gimp_app_version_arr = gimp_version.split('.')
-gimp_app_version_major = gimp_app_version_arr[0].to_int()
-gimp_app_version_minor = gimp_app_version_arr[1].to_int()
-gimp_app_version_micro = gimp_app_version_arr[2].to_int()
+ligma_app_version_arr = ligma_version.split('.')
+ligma_app_version_major = ligma_app_version_arr[0].to_int()
+ligma_app_version_minor = ligma_app_version_arr[1].to_int()
+ligma_app_version_micro = ligma_app_version_arr[2].to_int()
 
 # Override for Release-candidates
-gimp_app_version = '@0@.@1@'.format(
-  gimp_app_version_major,
-  gimp_app_version_minor
+ligma_app_version = '@0@.@1@'.format(
+  ligma_app_version_major,
+  ligma_app_version_minor
 )
 
 
 # API & pkg-config version
-api_version_major = gimp_app_version_major
-api_version_minor = gimp_app_version_minor
+api_version_major = ligma_app_version_major
+api_version_minor = ligma_app_version_minor
 
 if api_version_minor == 99
   api_version_major += 1
   api_version_minor = 0
 endif
 
-gimp_api_version = '@0@.@1@'.format(api_version_major, api_version_minor)
-gimp_api_name = 'gimp-' + gimp_api_version
+ligma_api_version = '@0@.@1@'.format(api_version_major, api_version_minor)
+ligma_api_name = 'ligma-' + ligma_api_version
 
 
 
-gimp_command  = 'gimp-' + gimp_app_version
+ligma_command  = 'ligma-' + ligma_app_version
 
-gettext_package= 'gimp@0@@1@'.format(api_version_major, api_version_minor)
+gettext_package= 'ligma@0@@1@'.format(api_version_major, api_version_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
-conf.set_quoted('GIMP_VERSION', gimp_version)
+conf.set_quoted('LIGMA_VERSION', ligma_version)
 
-# GIMP_UNSTABLE tells if we are on an unstable or stable development branch.
-stable = (gimp_app_version_minor % 2 == 0)
-conf.set('GIMP_UNSTABLE', stable ? false : 1)
+# LIGMA_UNSTABLE tells if we are on an unstable or stable development branch.
+stable = (ligma_app_version_minor % 2 == 0)
+conf.set('LIGMA_UNSTABLE', stable ? false : 1)
 
-# GIMP_RELEASE tells if this is a release or in-between release (git) code.
-release = (gimp_app_version_micro % 2 == 0)
-conf.set('GIMP_RELEASE', release ? 1 : false)
+# LIGMA_RELEASE tells if this is a release or in-between release (git) code.
+release = (ligma_app_version_micro % 2 == 0)
+conf.set('LIGMA_RELEASE', release ? 1 : false)
 
 versionconfig = configuration_data()
-versionconfig.set('GIMP_FULL_NAME',     full_name)
-versionconfig.set('GIMP_MAJOR_VERSION', gimp_app_version_major)
-versionconfig.set('GIMP_MINOR_VERSION', gimp_app_version_minor)
-versionconfig.set('GIMP_MICRO_VERSION', gimp_app_version_micro)
-versionconfig.set('GIMP_VERSION',       gimp_version)
-versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
+versionconfig.set('LIGMA_FULL_NAME',     full_name)
+versionconfig.set('LIGMA_MAJOR_VERSION', ligma_app_version_major)
+versionconfig.set('LIGMA_MINOR_VERSION', ligma_app_version_minor)
+versionconfig.set('LIGMA_MICRO_VERSION', ligma_app_version_micro)
+versionconfig.set('LIGMA_VERSION',       ligma_version)
+versionconfig.set('LIGMA_API_VERSION',   ligma_api_version)
 
 
 # Libtool versioning
-gimp_interface_age = 0
+ligma_interface_age = 0
 lt_current = 0
-lt_revision = gimp_app_version_micro
+lt_revision = ligma_app_version_micro
 lt_age = 100*api_version_minor + 0
 so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
 
@@ -98,7 +98,7 @@ cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
-exec_ver  = '-' + gimp_app_version
+exec_ver  = '-' + ligma_app_version
 
 compiler_args = []
 linker_args = []
@@ -168,7 +168,7 @@ endif
 
 if cc.get_id() == 'gcc' and cc.version() == '7.2.0'
   gcc_warning = '''
-    GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
+    GCC 7.2.0 has a serious bug affecting GEGL/LIGMA. We advise
     against using this version of the compiler (previous and
     further versions are fine).
     See https://bugzilla.gnome.org/show_bug.cgi?id=787222
@@ -184,7 +184,7 @@ endif
 #
 # -- Don't enable these flags project-wide, only files needing them
 # should be built with a given extension, which we do with meson simd
-# module. Otherwise GIMP would end up crashing when run on CPUs which
+# module. Otherwise LIGMA would end up crashing when run on CPUs which
 # don't support all the flags supported by the compiler.
 # See merge request !262 for more details.
 
@@ -391,7 +391,7 @@ endif
 
 
 if relocatable_bundle
-  mypaint_brushes_dir = '${gimp_installation_dir}'\
+  mypaint_brushes_dir = '${ligma_installation_dir}'\
                         /'share'/'mypaint-data'/'1.0'/'brushes'
 else
   mypaint_brushes_dir = mypaint_brushes.get_variable(pkgconfig: 'brushesdir')
@@ -419,7 +419,7 @@ if meson.is_cross_build() and not meson.can_run_host_binaries()
     glib_warning = '''
       Test for glib-networking cannot be performed while cross-compiling,
       unless you set an `exe_wrapper` binary in your toolchain file.
-      Make sure glib-networking is installed, otherwise GIMP will not be able
+      Make sure glib-networking is installed, otherwise LIGMA will not be able
       to display the remote help pages through the help browser, nor will it
       be able to open remote HTTPS (or other protocol using SSL/TLS) files.
       HTTPS is becoming the expected standard and should not be considered
@@ -444,7 +444,7 @@ else # not meson.is_cross_build() or meson.can_run_host_binaries()
         glib_warning = '''
       The cross-platform test for glib-networking failed, using the
       `exe_wrapper` set in your toolchain file.
-      Make sure glib-networking is installed, otherwise GIMP will not be able
+      Make sure glib-networking is installed, otherwise LIGMA will not be able
       to display the remote help pages through the help browser, nor will it
       be able to open remote HTTPS (or other protocol using SSL/TLS) files.
       HTTPS is becoming the expected standard and should not be considered
@@ -630,9 +630,9 @@ MIMEtypes = [
   'image/svg+xml',
   'image/x-compressed-xcf',
   'image/x-fits',
-  'image/x-gimp-gbr',
-  'image/x-gimp-gih',
-  'image/x-gimp-pat',
+  'image/x-ligma-gbr',
+  'image/x-ligma-gih',
+  'image/x-ligma-pat',
   'image/x-pcx',
   'image/x-portable-anymap',
   'image/x-portable-bitmap',
@@ -1115,7 +1115,7 @@ bug_report_url = get_option('bug-report-url')
 
 if bug_report_url == ''
   message('''
-    NOTE: if you plan on packaging GIMP for distribution, it is recommended
+    NOTE: if you plan on packaging LIGMA for distribution, it is recommended
     to override the bug report URL with option:
       -Dbug-report-url=https://example.com/
     so that you can filter packaging bugs from core bugs before reporting upstream.
@@ -1128,16 +1128,16 @@ conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 
 # Build identifiers #
 
-conf.set_quoted('GIMP_BUILD_ID', get_option('build-id'))
-conf.set_quoted('GIMP_BUILD_PLATFORM', host_os)
+conf.set_quoted('LIGMA_BUILD_ID', get_option('build-id'))
+conf.set_quoted('LIGMA_BUILD_PLATFORM', host_os)
 if platform_linux
-  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'linux')
+  conf.set_quoted('LIGMA_BUILD_PLATFORM_FAMILY', 'linux')
 elif platform_windows
-  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'windows')
+  conf.set_quoted('LIGMA_BUILD_PLATFORM_FAMILY', 'windows')
 elif platform_osx
-  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'macos')
+  conf.set_quoted('LIGMA_BUILD_PLATFORM_FAMILY', 'macos')
 else
-  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'other')
+  conf.set_quoted('LIGMA_BUILD_PLATFORM_FAMILY', 'other')
 endif
 
 if get_option('check-update') == 'yes'
@@ -1180,18 +1180,18 @@ if enable_default_bin and meson.version().version_compare('<0.61.0')
   error('"enable-default-bin" build option requires meson 0.61 or later. Please disable the option or update meson.')
 endif
 
-# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
-gimpdir = get_option('gimpdir')
-if gimpdir == ''
+# Possibly change default ligmadir from $XDG_CONFIG_HOME/LIGMA/ligma_user_version
+ligmadir = get_option('ligmadir')
+if ligmadir == ''
   # Default value
-  gimpdir = meson.project_name().to_upper()
+  ligmadir = meson.project_name().to_upper()
 endif
 
-project_subdir = meson.project_name() / gimp_app_version
-gimpdatadir    = get_option('datadir')    / project_subdir
-gimpplugindir  = get_option('libdir')     / project_subdir
-gimpsysconfdir = get_option('sysconfdir') / project_subdir
-gimpmanpagedir = gimpdir
+project_subdir = meson.project_name() / ligma_app_version
+ligmadatadir    = get_option('datadir')    / project_subdir
+ligmaplugindir  = get_option('libdir')     / project_subdir
+ligmasysconfdir = get_option('sysconfdir') / project_subdir
+ligmamanpagedir = ligmadir
 localedir      = get_option('datadir') / 'locale'
 
 
@@ -1200,14 +1200,14 @@ localedir      = get_option('datadir') / 'locale'
 extract_vector_icon = find_program('tools'/'extract-vector-icon.sh')
 generate_changelog  = find_program('tools'/'generate_changelog.sh')
 generate_news       = find_program('tools'/'generate-news')
-gimppath2svg        = find_program('tools'/'gimppath2svg.py')
+ligmapath2svg        = find_program('tools'/'ligmapath2svg.py')
 module_dependencies = find_program('tools'/'module-dependencies.py')
 meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
-gimp_mkenums = find_program('tools' / 'gimp-mkenums')
+ligma_mkenums = find_program('tools' / 'ligma-mkenums')
 mkenums_wrap = find_program(meson.current_source_dir() / 'tools' / 'meson-mkenums.sh')
 
-libgimp_mkenums_dtails = \
+libligma_mkenums_dtails = \
     '    { 0, NULL, NULL }\n'                                                      + \
     '  };\n'                                                                       + \
     '\n'                                                                           + \
@@ -1216,9 +1216,9 @@ libgimp_mkenums_dtails = \
     '  if (G_UNLIKELY (! type))\n'                                                 + \
     '    {\n'                                                                      + \
     '      type = g_@type@_register_static ("@EnumName@", values);\n'              + \
-    '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n' + \
-    '      gimp_type_set_translation_context (type, "@enumnick@");\n'              + \
-    '      gimp_@type@_set_value_descriptions (type, descs);\n'                    + \
+    '      ligma_type_set_translation_domain (type, GETTEXT_PACKAGE "-libligma");\n' + \
+    '      ligma_type_set_translation_context (type, "@enumnick@");\n'              + \
+    '      ligma_@type@_set_value_descriptions (type, descs);\n'                    + \
     '    }\n'                                                                      + \
     '\n'                                                                           + \
     '  return type;\n'                                                             + \
@@ -1420,30 +1420,30 @@ endif
 conf.set_quoted('CC_VERSION',     cc_version.strip())
 
 # Names
-conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
+conf.set_quoted('LIGMA_PACKAGE',   meson.project_name())
 conf.set_quoted('PACKAGE_NAME',   meson.project_name())
 conf.set_quoted('PACKAGE_STRING', package_string)
-conf.set_quoted('GIMP_COMMAND',   gimp_command)
+conf.set_quoted('LIGMA_COMMAND',   ligma_command)
 
 # Versions
-conf.set_quoted('GIMP_APP_VERSION_STRING',gimp_app_version)
-conf.set_quoted('GIMP_APP_VERSION',       gimp_app_version)
-conf.set_quoted('GIMP_USER_VERSION',      gimp_app_version)
+conf.set_quoted('LIGMA_APP_VERSION_STRING',ligma_app_version)
+conf.set_quoted('LIGMA_APP_VERSION',       ligma_app_version)
+conf.set_quoted('LIGMA_USER_VERSION',      ligma_app_version)
 
-conf.set_quoted('GIMP_DATA_VERSION',      gimp_app_version)
-conf.set_quoted('GIMP_PLUGIN_VERSION',    gimp_app_version)
-conf.set_quoted('GIMP_SYSCONF_VERSION',   gimp_app_version)
-conf.set_quoted('GIMP_TOOL_VERSION',      gimp_app_version)
-conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_api_version)
+conf.set_quoted('LIGMA_DATA_VERSION',      ligma_app_version)
+conf.set_quoted('LIGMA_PLUGIN_VERSION',    ligma_app_version)
+conf.set_quoted('LIGMA_SYSCONF_VERSION',   ligma_app_version)
+conf.set_quoted('LIGMA_TOOL_VERSION',      ligma_app_version)
+conf.set_quoted('LIGMA_PKGCONFIG_VERSION', ligma_api_version)
 
 # Directories
 conf.set_quoted('PREFIX',          prefix)
 conf.set_quoted('EXEC_PREFIX',     prefix)
-conf.set_quoted('GIMPDIR',         gimpdir)
-conf.set_quoted('GIMPSYSCONFDIR',  prefix / gimpsysconfdir)
-conf.set_quoted('GIMPDATADIR',     prefix / gimpdatadir)
-conf.set_quoted('GIMPPLUGINDIR',   prefix / gimpplugindir)
-conf.set_quoted('PLUGINDIR',       prefix / gimpplugindir)
+conf.set_quoted('LIGMADIR',         ligmadir)
+conf.set_quoted('LIGMASYSCONFDIR',  prefix / ligmasysconfdir)
+conf.set_quoted('LIGMADATADIR',     prefix / ligmadatadir)
+conf.set_quoted('LIGMAPLUGINDIR',   prefix / ligmaplugindir)
+conf.set_quoted('PLUGINDIR',       prefix / ligmaplugindir)
 conf.set_quoted('LOCALEDIR',       prefix / localedir)
 conf.set_quoted('DESKTOP_DATADIR', prefix / get_option('datadir'))
 
@@ -1468,8 +1468,8 @@ endif
 
 
 if platform_osx
-  # libgimp_cflags += '-xobjective-c'
-  # libgimp_lflags += ['-framework', 'Cocoa']
+  # libligma_cflags += '-xobjective-c'
+  # libligma_lflags += ['-framework', 'Cocoa']
 endif
 
 
@@ -1502,21 +1502,21 @@ if generate_version_h
     input : 'app/git-version.h.in',
     output: 'git-version.h.in.1',
     command: [ 'git', 'describe', '--always', ],
-    replace_string: '@GIMP_GIT_VERSION@',
+    replace_string: '@LIGMA_GIT_VERSION@',
     fallback: 'unknown (unsupported)',
   )
   gitversion_h2 = vcs_tag(
     input : gitversion_h1,
     output: 'git-version.h.in.2',
     command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
-    replace_string: '@GIMP_GIT_VERSION_ABBREV@',
+    replace_string: '@LIGMA_GIT_VERSION_ABBREV@',
     fallback: 'unknown (unsupported)',
   )
   gitversion_h = vcs_tag(
     input : gitversion_h2,
     output: 'git-version.h',
     command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
-    replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
+    replace_string: '@LIGMA_GIT_LAST_COMMIT_YEAR@',
     fallback: 'unknown (unsupported)',
   )
 
@@ -1542,9 +1542,9 @@ else
 endif
 
 install_conf = configuration_data()
-install_conf.set('GIMP_APP_VERSION', gimp_app_version)
-install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
-install_conf.set('GIMP_VERSION', gimp_version)
+install_conf.set('LIGMA_APP_VERSION', ligma_app_version)
+install_conf.set('LIGMA_PKGCONFIG_VERSION', ligma_version)
+install_conf.set('LIGMA_VERSION', ligma_version)
 install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib_minver)
 install_conf.set('ATK_REQUIRED_VERSION',          atk_minver)
 install_conf.set('BABL_REQUIRED_VERSION',         babl_minver)
@@ -1621,7 +1621,7 @@ custom_target('AUTHORS',
   build_by_default: false,
 )
 custom_target('authors.md',
-  input : [ 'authors4gimp-web.xsl', 'authors.xml', ],
+  input : [ 'authors4ligma-web.xsl', 'authors.xml', ],
   output: 'authors.md',
   command: [
     xsltproc,
@@ -1676,13 +1676,13 @@ if get_option('windows-installer')
 endif
 
 # Tools
-subdir('libgimpbase')
+subdir('libligmabase')
 subdir('tools')
 subdir('pdb')
 
 # Translations
 subdir('po')
-subdir('po-libgimp')
+subdir('po-libligma')
 subdir('po-plug-ins')
 subdir('po-python')
 subdir('po-script-fu')
@@ -1699,13 +1699,13 @@ subdir('menus')
 subdir('themes')
 
 # Libraries (order here is important!)
-subdir('libgimpcolor')
-subdir('libgimpmath')
-subdir('libgimpconfig')
-subdir('libgimpmodule')
-subdir('libgimpthumb')
-subdir('libgimpwidgets')
-subdir('libgimp')
+subdir('libligmacolor')
+subdir('libligmamath')
+subdir('libligmaconfig')
+subdir('libligmamodule')
+subdir('libligmathumb')
+subdir('libligmawidgets')
+subdir('libligma')
 
 # Executables, plugins
 subdir('extensions')
@@ -1719,63 +1719,63 @@ subdir('docs')
 subdir('devel-docs')
 
 
-pkgconfig.generate(libgimp,
-  filebase: 'gimp-' + gimp_api_version,
+pkgconfig.generate(libligma,
+  filebase: 'ligma-' + ligma_api_version,
   name: prettyname,
-  description: 'GIMP Library',
-  version: gimp_version,
+  description: 'LIGMA Library',
+  version: ligma_version,
   requires: [
     gdk_pixbuf,
     cairo,
     gegl,
   ],
   libraries: [
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
+    libligmabase,
+    libligmacolor,
+    libligmaconfig,
+    libligmamath,
   ],
   subdirs: [
-    gimp_api_name,
+    ligma_api_name,
   ],
   variables: [
     'datarootdir='    +'${prefix}/'+ get_option('datadir'),
-    'gimpdatadir='    +'${prefix}/'+ gimpdatadir,
-    'gimplibdir='     +'${prefix}/'+ gimpplugindir,
-    'gimpsysconfdir=' + gimpsysconfdir,
-    'gimplocaledir='  +'${prefix}/'+ localedir,
+    'ligmadatadir='    +'${prefix}/'+ ligmadatadir,
+    'ligmalibdir='     +'${prefix}/'+ ligmaplugindir,
+    'ligmasysconfdir=' + ligmasysconfdir,
+    'ligmalocaledir='  +'${prefix}/'+ localedir,
   ],
 )
 
-pkgconfig.generate(libgimpthumb,
-  filebase: 'gimpthumb-' + gimp_api_version,
-  name: 'GIMP Thumb',
-  description: 'GIMP Thumbnail Library',
-  version: gimp_version,
+pkgconfig.generate(libligmathumb,
+  filebase: 'ligmathumb-' + ligma_api_version,
+  name: 'LIGMA Thumb',
+  description: 'LIGMA Thumbnail Library',
+  version: ligma_version,
   requires: [
-    libgimp,
+    libligma,
     gdk_pixbuf,
   ],
   subdirs: [
-    gimp_api_name,
+    ligma_api_name,
   ],
 )
 
-pkgconfig.generate(libgimpui,
-  filebase: 'gimpui-' + gimp_api_version,
-  name: 'GIMP UI',
-  description: 'GIMP User Interface Library',
-  version: gimp_version,
+pkgconfig.generate(libligmaui,
+  filebase: 'ligmaui-' + ligma_api_version,
+  name: 'LIGMA UI',
+  description: 'LIGMA User Interface Library',
+  version: ligma_version,
   requires: [
-    libgimp,
+    libligma,
     gtk3,
   ],
   libraries: [
-    libgimpwidgets,
-    libgimpmodule,
+    libligmawidgets,
+    libligmamodule,
   ],
   subdirs: [
-    gimp_api_name,
+    ligma_api_name,
   ],
 )
 
@@ -1785,14 +1785,14 @@ pkgconfig.generate(libgimpui,
 # Subdir installations
 
 foreach dir : [
-    { 'dir': 'libgimp',        'deps': libgimp},
-    { 'dir': 'libgimpbase',    'deps': libgimpbase},
-    { 'dir': 'libgimpcolor',   'deps': libgimpcolor},
-    { 'dir': 'libgimpconfig',  'deps': libgimpconfig},
-    { 'dir': 'libgimpmath',    'deps': libgimpmath},
-    { 'dir': 'libgimpmodule',  'deps': libgimpmodule},
-    { 'dir': 'libgimpthumb',   'deps': libgimpthumb},
-    { 'dir': 'libgimpwidgets', 'deps': libgimpwidgets},
+    { 'dir': 'libligma',        'deps': libligma},
+    { 'dir': 'libligmabase',    'deps': libligmabase},
+    { 'dir': 'libligmacolor',   'deps': libligmacolor},
+    { 'dir': 'libligmaconfig',  'deps': libligmaconfig},
+    { 'dir': 'libligmamath',    'deps': libligmamath},
+    { 'dir': 'libligmamodule',  'deps': libligmamodule},
+    { 'dir': 'libligmathumb',   'deps': libligmathumb},
+    { 'dir': 'libligmawidgets', 'deps': libligmawidgets},
     { 'dir': 'icons' },
     { 'dir': 'plug-ins', },
     { 'dir': 'extensions', },
@@ -1809,7 +1809,7 @@ endforeach
 
 final_message = [
 '''Extra Binaries:''',
-'''  gimp-console:        @0@'''.format(enable_console_bin),
+'''  ligma-console:        @0@'''.format(enable_console_bin),
 '',
 '''Optional Features:''',
 '''  Check updates at startup:  @0@'''.format(check_update),
@@ -1864,7 +1864,7 @@ final_message = [
 '''  Test appdata         @0@'''.format(appstreamcli.found()),
 '',
 '''Documentation:''',
-'''  libgimp API Reference: @0@'''.format(gi_docgen.found()),
+'''  libligma API Reference: @0@'''.format(gi_docgen.found()),
 '''  GObject Introspection: @0@'''.format(get_option('g-ir-doc')),
 '',
 '''Bug report URL: @0@'''.format(bug_report_url),
@@ -1885,6 +1885,6 @@ if not platform_windows
           MESON BUILD IS IN EXTENSIVE TESTING PHASE!
 
           we now encourage usage of meson for packagers.
-          Please build GIMP with meson and report bugs.
+          Please build LIGMA with meson and report bugs.
           ''')
 endif

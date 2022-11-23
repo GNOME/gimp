@@ -1,12 +1,12 @@
-# Romanian GIMP translation
+# Romanian LIGMA translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 # Cristian Secară <cristi AT secarica DOT ro>, 2008-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-10-25 21:27+0000\n"
 "PO-Revision-Date: 2020-10-26 15:02+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
@@ -462,8 +462,8 @@ msgid "Python _Console"
 msgstr "_Consolă Python"
 
 #: ../plug-ins/python/python-console/python-console.py:281
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interpretor interactiv GIMP Python"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interpretor interactiv LIGMA Python"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -815,8 +815,8 @@ msgstr ""
 "activ sau să fie salvat la traseu"
 
 #: ../plug-ins/python/spyro-plus.py:1746
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
 msgid "Draw spyrographs using current tool settings and selection."
@@ -846,5 +846,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Așteptați: se randează modelul"
 
 #: ../plug-ins/python/spyro-plus.py:2296
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."

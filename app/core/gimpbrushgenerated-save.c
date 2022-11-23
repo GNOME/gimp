@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
+ * ligma_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,23 +22,23 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpbrushgenerated.h"
-#include "gimpbrushgenerated-save.h"
+#include "ligmabrushgenerated.h"
+#include "ligmabrushgenerated-save.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 gboolean
-gimp_brush_generated_save (GimpData       *data,
+ligma_brush_generated_save (LigmaData       *data,
                            GOutputStream  *output,
                            GError        **error)
 {
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
-  const gchar        *name  = gimp_object_get_name (data);
+  LigmaBrushGenerated *brush = LIGMA_BRUSH_GENERATED (data);
+  const gchar        *name  = ligma_object_get_name (data);
   GString            *string;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
   gboolean            have_shape = FALSE;
@@ -46,10 +46,10 @@ gimp_brush_generated_save (GimpData       *data,
   g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
 
   /* write magic header */
-  string = g_string_new ("GIMP-VBR\n");
+  string = g_string_new ("LIGMA-VBR\n");
 
   /* write version */
-  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE || brush->spikes > 2)
+  if (brush->shape != LIGMA_BRUSH_GENERATED_CIRCLE || brush->spikes > 2)
     {
       g_string_append (string, "1.5\n");
       have_shape = TRUE;
@@ -67,7 +67,7 @@ gimp_brush_generated_save (GimpData       *data,
       GEnumClass *enum_class;
       GEnumValue *shape_val;
 
-      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
+      enum_class = g_type_class_peek (LIGMA_TYPE_BRUSH_GENERATED_SHAPE);
 
       /* write shape */
       shape_val = g_enum_get_value (enum_class, brush->shape);
@@ -77,7 +77,7 @@ gimp_brush_generated_save (GimpData       *data,
   /* write brush spacing */
   g_string_append_printf (string, "%s\n",
                           g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE,
-                                          gimp_brush_get_spacing (GIMP_BRUSH (brush))));
+                                          ligma_brush_get_spacing (LIGMA_BRUSH (brush))));
 
   /* write brush radius */
   g_string_append_printf (string, "%s\n",

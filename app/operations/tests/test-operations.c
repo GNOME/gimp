@@ -1,5 +1,5 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2010 Øyvind Kolås <pippin@gimp.org>
+/* LIGMA - The GNU Image Manipulation Program
+ * Copyright (C) 2010 Øyvind Kolås <pippin@ligma.org>
  *               2012 Ville Sokk   <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 #include <gegl.h>
 #include <gegl-plugin.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "app/operations/gimp-operations.h"
+#include "app/operations/ligma-operations.h"
 
 
 #define DATA_DIR   "data"
@@ -392,10 +392,10 @@ main (gint     argc,
   gint  result;
 
   gegl_init (&argc, &argv);
-  gimp_operations_init ();
+  ligma_operations_init ();
   g_test_init (&argc, &argv, NULL);
 
-  g_test_add_func ("/gimp-operations", test_operations);
+  g_test_add_func ("/ligma-operations", test_operations);
 
   result = g_test_run ();
 

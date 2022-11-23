@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,28 +22,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimpimage.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsizebox.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasizebox.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimptoolgui.h"
-#include "display/gimptooltransformgrid.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmatoolgui.h"
+#include "display/ligmatooltransformgrid.h"
 
-#include "gimpscaletool.h"
-#include "gimptoolcontrol.h"
-#include "gimptransformgridoptions.h"
+#include "ligmascaletool.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatransformgridoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define EPSILON 1e-6
@@ -61,62 +61,62 @@ enum
 
 /*  local function prototypes  */
 
-static gboolean         gimp_scale_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
-                                                        GimpMatrix3           *transform);
-static void             gimp_scale_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
-                                                        const GimpMatrix3     *transform);
-static gchar          * gimp_scale_tool_get_undo_desc  (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_dialog         (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_dialog_update  (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_prepare        (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_readjust       (GimpTransformGridTool *tg_tool);
-static GimpToolWidget * gimp_scale_tool_get_widget     (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_update_widget  (GimpTransformGridTool *tg_tool);
-static void             gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool);
+static gboolean         ligma_scale_tool_info_to_matrix (LigmaTransformGridTool *tg_tool,
+                                                        LigmaMatrix3           *transform);
+static void             ligma_scale_tool_matrix_to_info (LigmaTransformGridTool *tg_tool,
+                                                        const LigmaMatrix3     *transform);
+static gchar          * ligma_scale_tool_get_undo_desc  (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_dialog         (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_dialog_update  (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_prepare        (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_readjust       (LigmaTransformGridTool *tg_tool);
+static LigmaToolWidget * ligma_scale_tool_get_widget     (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_update_widget  (LigmaTransformGridTool *tg_tool);
+static void             ligma_scale_tool_widget_changed (LigmaTransformGridTool *tg_tool);
 
-static void             gimp_scale_tool_size_notify    (GtkWidget             *box,
+static void             ligma_scale_tool_size_notify    (GtkWidget             *box,
                                                         GParamSpec            *pspec,
-                                                        GimpTransformGridTool *tg_tool);
+                                                        LigmaTransformGridTool *tg_tool);
 
 
-G_DEFINE_TYPE (GimpScaleTool, gimp_scale_tool, GIMP_TYPE_TRANSFORM_GRID_TOOL)
+G_DEFINE_TYPE (LigmaScaleTool, ligma_scale_tool, LIGMA_TYPE_TRANSFORM_GRID_TOOL)
 
-#define parent_class gimp_scale_tool_parent_class
+#define parent_class ligma_scale_tool_parent_class
 
 
 void
-gimp_scale_tool_register (GimpToolRegisterCallback  callback,
+ligma_scale_tool_register (LigmaToolRegisterCallback  callback,
                           gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_SCALE_TOOL,
-                GIMP_TYPE_TRANSFORM_GRID_OPTIONS,
-                gimp_transform_grid_options_gui,
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
-                "gimp-scale-tool",
+  (* callback) (LIGMA_TYPE_SCALE_TOOL,
+                LIGMA_TYPE_TRANSFORM_GRID_OPTIONS,
+                ligma_transform_grid_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND,
+                "ligma-scale-tool",
                 _("Scale"),
                 _("Scale Tool: Scale the layer, selection or path"),
                 N_("_Scale"), "<shift>S",
-                NULL, GIMP_HELP_TOOL_SCALE,
-                GIMP_ICON_TOOL_SCALE,
+                NULL, LIGMA_HELP_TOOL_SCALE,
+                LIGMA_ICON_TOOL_SCALE,
                 data);
 }
 
 static void
-gimp_scale_tool_class_init (GimpScaleToolClass *klass)
+ligma_scale_tool_class_init (LigmaScaleToolClass *klass)
 {
-  GimpTransformToolClass     *tr_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-  GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
+  LigmaTransformToolClass     *tr_class = LIGMA_TRANSFORM_TOOL_CLASS (klass);
+  LigmaTransformGridToolClass *tg_class = LIGMA_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  tg_class->info_to_matrix  = gimp_scale_tool_info_to_matrix;
-  tg_class->matrix_to_info  = gimp_scale_tool_matrix_to_info;
-  tg_class->get_undo_desc   = gimp_scale_tool_get_undo_desc;
-  tg_class->dialog          = gimp_scale_tool_dialog;
-  tg_class->dialog_update   = gimp_scale_tool_dialog_update;
-  tg_class->prepare         = gimp_scale_tool_prepare;
-  tg_class->readjust        = gimp_scale_tool_readjust;
-  tg_class->get_widget      = gimp_scale_tool_get_widget;
-  tg_class->update_widget   = gimp_scale_tool_update_widget;
-  tg_class->widget_changed  = gimp_scale_tool_widget_changed;
+  tg_class->info_to_matrix  = ligma_scale_tool_info_to_matrix;
+  tg_class->matrix_to_info  = ligma_scale_tool_matrix_to_info;
+  tg_class->get_undo_desc   = ligma_scale_tool_get_undo_desc;
+  tg_class->dialog          = ligma_scale_tool_dialog;
+  tg_class->dialog_update   = ligma_scale_tool_dialog_update;
+  tg_class->prepare         = ligma_scale_tool_prepare;
+  tg_class->readjust        = ligma_scale_tool_readjust;
+  tg_class->get_widget      = ligma_scale_tool_get_widget;
+  tg_class->update_widget   = ligma_scale_tool_update_widget;
+  tg_class->widget_changed  = ligma_scale_tool_widget_changed;
 
   tr_class->undo_desc       = C_("undo-type", "Scale");
   tr_class->progress_text   = _("Scaling");
@@ -124,21 +124,21 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 }
 
 static void
-gimp_scale_tool_init (GimpScaleTool *scale_tool)
+ligma_scale_tool_init (LigmaScaleTool *scale_tool)
 {
-  GimpTool *tool  = GIMP_TOOL (scale_tool);
+  LigmaTool *tool  = LIGMA_TOOL (scale_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
+  ligma_tool_control_set_tool_cursor (tool->control, LIGMA_TOOL_CURSOR_RESIZE);
 }
 
 static gboolean
-gimp_scale_tool_info_to_matrix  (GimpTransformGridTool *tg_tool,
-                                 GimpMatrix3           *transform)
+ligma_scale_tool_info_to_matrix  (LigmaTransformGridTool *tg_tool,
+                                 LigmaMatrix3           *transform)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  gimp_matrix3_identity (transform);
-  gimp_transform_matrix_scale (transform,
+  ligma_matrix3_identity (transform);
+  ligma_transform_matrix_scale (transform,
                                tr_tool->x1,
                                tr_tool->y1,
                                tr_tool->x2 - tr_tool->x1,
@@ -152,10 +152,10 @@ gimp_scale_tool_info_to_matrix  (GimpTransformGridTool *tg_tool,
 }
 
 static void
-gimp_scale_tool_matrix_to_info  (GimpTransformGridTool *tg_tool,
-                                 const GimpMatrix3     *transform)
+ligma_scale_tool_matrix_to_info  (LigmaTransformGridTool *tg_tool,
+                                 const LigmaMatrix3     *transform)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
   gdouble            x;
   gdouble            y;
   gdouble            w;
@@ -175,7 +175,7 @@ gimp_scale_tool_matrix_to_info  (GimpTransformGridTool *tg_tool,
 }
 
 static gchar *
-gimp_scale_tool_get_undo_desc (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_get_undo_desc (LigmaTransformGridTool *tg_tool)
 {
   gint width;
   gint height;
@@ -188,21 +188,21 @@ gimp_scale_tool_get_undo_desc (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_scale_tool_dialog (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_dialog (LigmaTransformGridTool *tg_tool)
 {
 }
 
 static void
-gimp_scale_tool_dialog_update (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_dialog_update (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  LigmaTransformGridOptions *options = LIGMA_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   gint                      width;
   gint                      height;
 
   width  = ROUND (tg_tool->trans_info[X1] - tg_tool->trans_info[X0]);
   height = ROUND (tg_tool->trans_info[Y1] - tg_tool->trans_info[Y0]);
 
-  g_object_set (GIMP_SCALE_TOOL (tg_tool)->box,
+  g_object_set (LIGMA_SCALE_TOOL (tg_tool)->box,
                 "width",       width,
                 "height",      height,
                 "keep-aspect", options->constrain_scale,
@@ -210,12 +210,12 @@ gimp_scale_tool_dialog_update (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_scale_tool_prepare (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_prepare (LigmaTransformGridTool *tg_tool)
 {
-  GimpScaleTool            *scale   = GIMP_SCALE_TOOL (tg_tool);
-  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
-  GimpDisplay              *display = GIMP_TOOL (tg_tool)->display;
+  LigmaScaleTool            *scale   = LIGMA_SCALE_TOOL (tg_tool);
+  LigmaTransformTool        *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformGridOptions *options = LIGMA_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  LigmaDisplay              *display = LIGMA_TOOL (tg_tool)->display;
   gdouble                   xres;
   gdouble                   yres;
 
@@ -224,44 +224,44 @@ gimp_scale_tool_prepare (GimpTransformGridTool *tg_tool)
   tg_tool->trans_info[X1] = (gdouble) tr_tool->x2;
   tg_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
 
-  gimp_image_get_resolution (gimp_display_get_image (display),
+  ligma_image_get_resolution (ligma_display_get_image (display),
                              &xres, &yres);
 
   if (scale->box)
     {
       g_signal_handlers_disconnect_by_func (scale->box,
-                                            gimp_scale_tool_size_notify,
+                                            ligma_scale_tool_size_notify,
                                             tg_tool);
       gtk_widget_destroy (scale->box);
     }
 
-  /*  Need to create a new GimpSizeBox widget because the initial
+  /*  Need to create a new LigmaSizeBox widget because the initial
    *  width and height is what counts as 100%.
    */
   scale->box =
-    g_object_new (GIMP_TYPE_SIZE_BOX,
+    g_object_new (LIGMA_TYPE_SIZE_BOX,
                   "width",       tr_tool->x2 - tr_tool->x1,
                   "height",      tr_tool->y2 - tr_tool->y1,
                   "keep-aspect", options->constrain_scale,
-                  "unit",        gimp_display_get_shell (display)->unit,
+                  "unit",        ligma_display_get_shell (display)->unit,
                   "xresolution", xres,
                   "yresolution", yres,
                   NULL);
 
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)),
+  gtk_box_pack_start (GTK_BOX (ligma_tool_gui_get_vbox (tg_tool->gui)),
                       scale->box, FALSE, FALSE, 0);
   gtk_widget_show (scale->box);
 
   g_signal_connect (scale->box, "notify",
-                    G_CALLBACK (gimp_scale_tool_size_notify),
+                    G_CALLBACK (ligma_scale_tool_size_notify),
                     tg_tool);
 }
 
 static void
-gimp_scale_tool_readjust (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_readjust (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (tg_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool  = LIGMA_TOOL (tg_tool);
+  LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
   gdouble           x;
   gdouble           y;
   gdouble           r;
@@ -269,10 +269,10 @@ gimp_scale_tool_readjust (GimpTransformGridTool *tg_tool)
   x = shell->disp_width  / 2.0;
   y = shell->disp_height / 2.0;
   r = MAX (MIN (x, y) / G_SQRT2 -
-           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
-           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
+           LIGMA_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
+           LIGMA_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
 
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        x, y,
                                        &x, &y);
 
@@ -282,15 +282,15 @@ gimp_scale_tool_readjust (GimpTransformGridTool *tg_tool)
   tg_tool->trans_info[Y1] = RINT (y + FUNSCALEY (shell, r));
 }
 
-static GimpToolWidget *
-gimp_scale_tool_get_widget (GimpTransformGridTool *tg_tool)
+static LigmaToolWidget *
+ligma_scale_tool_get_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
-  GimpToolWidget    *widget;
+  LigmaTool          *tool    = LIGMA_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaDisplayShell  *shell   = ligma_display_get_shell (tool->display);
+  LigmaToolWidget    *widget;
 
-  widget = gimp_tool_transform_grid_new (shell,
+  widget = ligma_tool_transform_grid_new (shell,
                                          &tr_tool->transform,
                                          tr_tool->x1,
                                          tr_tool->y1,
@@ -298,8 +298,8 @@ gimp_scale_tool_get_widget (GimpTransformGridTool *tg_tool)
                                          tr_tool->y2);
 
   g_object_set (widget,
-                "inside-function",    GIMP_TRANSFORM_FUNCTION_SCALE,
-                "outside-function",   GIMP_TRANSFORM_FUNCTION_SCALE,
+                "inside-function",    LIGMA_TRANSFORM_FUNCTION_SCALE,
+                "outside-function",   LIGMA_TRANSFORM_FUNCTION_SCALE,
                 "use-corner-handles", TRUE,
                 "use-side-handles",   TRUE,
                 "use-center-handle",  TRUE,
@@ -309,11 +309,11 @@ gimp_scale_tool_get_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_update_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
 
   g_object_set (
     tg_tool->widget,
@@ -325,11 +325,11 @@ gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
+ligma_scale_tool_widget_changed (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpMatrix3       *transform;
+  LigmaTool          *tool    = LIGMA_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaMatrix3       *transform;
   gdouble            x0, y0;
   gdouble            x1, y1;
   gint               width, height;
@@ -338,10 +338,10 @@ gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
                 "transform", &transform,
                 NULL);
 
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y1,
                                 &x0,         &y0);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y2,
                                 &x1,         &y1);
 
@@ -389,17 +389,17 @@ gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
     }
 
   if (width <= 0 || height <= 0)
-    gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
+    ligma_transform_tool_recalc_matrix (tr_tool, tool->display);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
 }
 
 static void
-gimp_scale_tool_size_notify (GtkWidget             *box,
+ligma_scale_tool_size_notify (GtkWidget             *box,
                              GParamSpec            *pspec,
-                             GimpTransformGridTool *tg_tool)
+                             LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  LigmaTransformGridOptions *options = LIGMA_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
 
   if (! strcmp (pspec->name, "width") ||
       ! strcmp (pspec->name, "height"))
@@ -419,8 +419,8 @@ gimp_scale_tool_size_notify (GtkWidget             *box,
 
       if ((width != old_width) || (height != old_height))
         {
-          GimpTool          *tool    = GIMP_TOOL (tg_tool);
-          GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+          LigmaTool          *tool    = LIGMA_TOOL (tg_tool);
+          LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
           if (options->frompivot_scale)
             {
@@ -443,9 +443,9 @@ gimp_scale_tool_size_notify (GtkWidget             *box,
               tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] + height;
             }
 
-          gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
+          ligma_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
-          gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
+          ligma_transform_tool_recalc_matrix (tr_tool, tool->display);
         }
     }
   else if (! strcmp (pspec->name, "keep-aspect"))

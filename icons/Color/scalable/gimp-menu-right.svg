@@ -15,8 +15,8 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-menu-right.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   sodipodi:docname="ligma-menu-right.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/ligma-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
   <defs
@@ -89,8 +89,8 @@
          style="fill:#000000"
          inkscape:export-ydpi="72"
          inkscape:export-xdpi="72"
-         inkscape:label="gimp-menu-left"
-         id="gimp-menu-left"
+         inkscape:label="ligma-menu-left"
+         id="ligma-menu-left"
          transform="matrix(1.3333333,0,0,1.3333333,-110.66693,448.36222)">
         <path
            style="fill:#000000"

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwindow.c
+ * ligmawindow.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,16 +23,16 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
 #include "display/display-types.h"
-#include "display/gimpcanvas.h"
+#include "display/ligmacanvas.h"
 
-#include "gimpwindow.h"
+#include "ligmawindow.h"
 
-#include "gimp-log.h"
+#include "ligma-log.h"
 
 
 enum
@@ -42,32 +42,32 @@ enum
 };
 
 
-struct _GimpWindowPrivate
+struct _LigmaWindowPrivate
 {
   GdkMonitor *monitor;
   GtkWidget  *primary_focus_widget;
 };
 
 
-static void      gimp_window_dispose         (GObject           *object);
+static void      ligma_window_dispose         (GObject           *object);
 
-static void      gimp_window_screen_changed  (GtkWidget         *widget,
+static void      ligma_window_screen_changed  (GtkWidget         *widget,
                                               GdkScreen         *previous_screen);
-static gboolean  gimp_window_configure_event (GtkWidget         *widget,
+static gboolean  ligma_window_configure_event (GtkWidget         *widget,
                                               GdkEventConfigure *cevent);
-static gboolean  gimp_window_key_press_event (GtkWidget         *widget,
+static gboolean  ligma_window_key_press_event (GtkWidget         *widget,
                                               GdkEventKey       *kevent);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpWindow, gimp_window, GTK_TYPE_APPLICATION_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaWindow, ligma_window, GTK_TYPE_APPLICATION_WINDOW)
 
-#define parent_class gimp_window_parent_class
+#define parent_class ligma_window_parent_class
 
 static guint window_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_window_class_init (GimpWindowClass *klass)
+ligma_window_class_init (LigmaWindowClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -76,36 +76,36 @@ gimp_window_class_init (GimpWindowClass *klass)
     g_signal_new ("monitor-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpWindowClass, monitor_changed),
+                  G_STRUCT_OFFSET (LigmaWindowClass, monitor_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MONITOR);
 
-  object_class->dispose         = gimp_window_dispose;
+  object_class->dispose         = ligma_window_dispose;
 
-  widget_class->screen_changed  = gimp_window_screen_changed;
-  widget_class->configure_event = gimp_window_configure_event;
-  widget_class->key_press_event = gimp_window_key_press_event;
+  widget_class->screen_changed  = ligma_window_screen_changed;
+  widget_class->configure_event = ligma_window_configure_event;
+  widget_class->key_press_event = ligma_window_key_press_event;
 }
 
 static void
-gimp_window_init (GimpWindow *window)
+ligma_window_init (LigmaWindow *window)
 {
-  window->private = gimp_window_get_instance_private (window);
+  window->private = ligma_window_get_instance_private (window);
 }
 
 static void
-gimp_window_dispose (GObject *object)
+ligma_window_dispose (GObject *object)
 {
-  gimp_window_set_primary_focus_widget (GIMP_WINDOW (object), NULL);
+  ligma_window_set_primary_focus_widget (LIGMA_WINDOW (object), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_window_monitor_changed (GtkWidget *widget)
+ligma_window_monitor_changed (GtkWidget *widget)
 {
-  GimpWindow *window     = GIMP_WINDOW (widget);
+  LigmaWindow *window     = LIGMA_WINDOW (widget);
   GdkDisplay *display    = gtk_widget_get_display (widget);
   GdkWindow  *gdk_window = gtk_widget_get_window (widget);
 
@@ -120,20 +120,20 @@ gimp_window_monitor_changed (GtkWidget *widget)
 }
 
 static void
-gimp_window_screen_changed (GtkWidget *widget,
+ligma_window_screen_changed (GtkWidget *widget,
                             GdkScreen *previous_screen)
 {
   if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
     GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous_screen);
 
-  gimp_window_monitor_changed (widget);
+  ligma_window_monitor_changed (widget);
 }
 
 static gboolean
-gimp_window_configure_event (GtkWidget         *widget,
+ligma_window_configure_event (GtkWidget         *widget,
                              GdkEventConfigure *cevent)
 {
-  GimpWindow *window     = GIMP_WINDOW (widget);
+  LigmaWindow *window     = LIGMA_WINDOW (widget);
   GdkDisplay *display    = gtk_widget_get_display (widget);
   GdkWindow  *gdk_window = gtk_widget_get_window (widget);
 
@@ -144,7 +144,7 @@ gimp_window_configure_event (GtkWidget         *widget,
       window->private->monitor !=
       gdk_display_get_monitor_at_window (display, gdk_window))
     {
-      gimp_window_monitor_changed (widget);
+      ligma_window_monitor_changed (widget);
     }
 
   return FALSE;
@@ -153,10 +153,10 @@ gimp_window_configure_event (GtkWidget         *widget,
 fnord (le);
 
 static gboolean
-gimp_window_key_press_event (GtkWidget   *widget,
+ligma_window_key_press_event (GtkWidget   *widget,
                              GdkEventKey *event)
 {
-  GimpWindow      *gimp_window = GIMP_WINDOW (widget);
+  LigmaWindow      *ligma_window = LIGMA_WINDOW (widget);
   GtkWindow       *window      = GTK_WINDOW (widget);
   GtkWidget       *focus       = gtk_window_get_focus (window);
   GdkModifierType  accel_mods;
@@ -172,13 +172,13 @@ gimp_window_key_press_event (GtkWidget   *widget,
   if (focus &&
       (GTK_IS_EDITABLE (focus)  ||
        GTK_IS_TEXT_VIEW (focus) ||
-       GIMP_IS_CANVAS (focus)   ||
-       gtk_widget_get_ancestor (focus, GIMP_TYPE_CANVAS)))
+       LIGMA_IS_CANVAS (focus)   ||
+       gtk_widget_get_ancestor (focus, LIGMA_TYPE_CANVAS)))
     {
       handled = gtk_window_propagate_key_event (window, event);
 
       if (handled)
-        GIMP_LOG (KEY_EVENTS,
+        LIGMA_LOG (KEY_EVENTS,
                   "handled by gtk_window_propagate_key_event(text_widget)");
     }
   else
@@ -191,10 +191,10 @@ gimp_window_key_press_event (GtkWidget   *widget,
 
   if (! handled &&
       event->keyval == GDK_KEY_Escape &&
-      gimp_window->private->primary_focus_widget)
+      ligma_window->private->primary_focus_widget)
     {
-      if (focus != gimp_window->private->primary_focus_widget)
-        gtk_widget_grab_focus (gimp_window->private->primary_focus_widget);
+      if (focus != ligma_window->private->primary_focus_widget)
+        gtk_widget_grab_focus (ligma_window->private->primary_focus_widget);
       else
         gtk_widget_error_bell (widget);
 
@@ -218,7 +218,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
       handled = gtk_window_activate_key (window, event);
 
       if (handled)
-        GIMP_LOG (KEY_EVENTS,
+        LIGMA_LOG (KEY_EVENTS,
                   "handled by gtk_window_activate_key(modified)");
     }
 
@@ -228,7 +228,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
       handled = gtk_window_propagate_key_event (window, event);
 
       if (handled)
-        GIMP_LOG (KEY_EVENTS,
+        LIGMA_LOG (KEY_EVENTS,
                   "handled by gtk_window_propagate_key_event(other_widget)");
     }
 
@@ -238,7 +238,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
       handled = gtk_window_activate_key (window, event);
 
       if (handled)
-        GIMP_LOG (KEY_EVENTS,
+        LIGMA_LOG (KEY_EVENTS,
                   "handled by gtk_window_activate_key(unmodified)");
     }
 
@@ -252,7 +252,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
       handled = widget_class->key_press_event (widget, event);
 
       if (handled)
-        GIMP_LOG (KEY_EVENTS,
+        LIGMA_LOG (KEY_EVENTS,
                   "handled by widget_class->key_press_event()");
     }
 
@@ -260,12 +260,12 @@ gimp_window_key_press_event (GtkWidget   *widget,
 }
 
 void
-gimp_window_set_primary_focus_widget (GimpWindow *window,
+ligma_window_set_primary_focus_widget (LigmaWindow *window,
                                       GtkWidget  *primary_focus)
 {
-  GimpWindowPrivate *private;
+  LigmaWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_WINDOW (window));
   g_return_if_fail (primary_focus == NULL || GTK_IS_WIDGET (primary_focus));
   g_return_if_fail (primary_focus == NULL ||
                     gtk_widget_get_toplevel (primary_focus) ==
@@ -285,9 +285,9 @@ gimp_window_set_primary_focus_widget (GimpWindow *window,
 }
 
 GtkWidget *
-gimp_window_get_primary_focus_widget (GimpWindow *window)
+ligma_window_get_primary_focus_widget (LigmaWindow *window)
 {
-  g_return_val_if_fail (GIMP_IS_WINDOW (window), NULL);
+  g_return_val_if_fail (LIGMA_IS_WINDOW (window), NULL);
 
   return window->private->primary_focus_widget;
 }

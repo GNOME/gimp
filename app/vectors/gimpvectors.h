@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmavectors.h
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,33 +18,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_H__
-#define __GIMP_VECTORS_H__
+#ifndef __LIGMA_VECTORS_H__
+#define __LIGMA_VECTORS_H__
 
-#include "core/gimpitem.h"
+#include "core/ligmaitem.h"
 
-#define GIMP_TYPE_VECTORS            (gimp_vectors_get_type ())
-#define GIMP_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS, GimpVectors))
-#define GIMP_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS, GimpVectorsClass))
-#define GIMP_IS_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS))
-#define GIMP_IS_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTORS))
-#define GIMP_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS, GimpVectorsClass))
+#define LIGMA_TYPE_VECTORS            (ligma_vectors_get_type ())
+#define LIGMA_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VECTORS, LigmaVectors))
+#define LIGMA_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VECTORS, LigmaVectorsClass))
+#define LIGMA_IS_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_VECTORS))
+#define LIGMA_IS_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VECTORS))
+#define LIGMA_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VECTORS, LigmaVectorsClass))
 
 
-typedef struct _GimpVectorsClass  GimpVectorsClass;
+typedef struct _LigmaVectorsClass  LigmaVectorsClass;
 
-struct _GimpVectors
+struct _LigmaVectors
 {
-  GimpItem        parent_instance;
+  LigmaItem        parent_instance;
 
-  GQueue         *strokes;        /* Queue of GimpStrokes         */
-  GHashTable     *stroke_to_list; /* Map from GimpStroke to strokes listnode */
+  GQueue         *strokes;        /* Queue of LigmaStrokes         */
+  GHashTable     *stroke_to_list; /* Map from LigmaStroke to strokes listnode */
   gint            last_stroke_id;
 
   gint            freeze_count;
   gdouble         precision;
 
-  GimpBezierDesc *bezier_desc;    /* Cached bezier representation */
+  LigmaBezierDesc *bezier_desc;    /* Cached bezier representation */
 
   gboolean        bounds_valid;   /* Cached bounding box          */
   gboolean        bounds_empty;
@@ -54,131 +54,131 @@ struct _GimpVectors
   gdouble         bounds_y2;
 };
 
-struct _GimpVectorsClass
+struct _LigmaVectorsClass
 {
-  GimpItemClass  parent_class;
+  LigmaItemClass  parent_class;
 
   /*  signals  */
-  void          (* freeze)            (GimpVectors       *vectors);
-  void          (* thaw)              (GimpVectors       *vectors);
+  void          (* freeze)            (LigmaVectors       *vectors);
+  void          (* thaw)              (LigmaVectors       *vectors);
 
   /*  virtual functions  */
-  void          (* stroke_add)        (GimpVectors       *vectors,
-                                       GimpStroke        *stroke);
-  void          (* stroke_remove)     (GimpVectors       *vectors,
-                                       GimpStroke        *stroke);
-  GimpStroke  * (* stroke_get)        (GimpVectors       *vectors,
-                                       const GimpCoords  *coord);
-  GimpStroke  * (* stroke_get_next)   (GimpVectors       *vectors,
-                                       GimpStroke        *prev);
-  gdouble       (* stroke_get_length) (GimpVectors       *vectors,
-                                       GimpStroke        *stroke);
-  GimpAnchor  * (* anchor_get)        (GimpVectors       *vectors,
-                                       const GimpCoords  *coord,
-                                       GimpStroke       **ret_stroke);
-  void          (* anchor_delete)     (GimpVectors       *vectors,
-                                       GimpAnchor        *anchor);
-  gdouble       (* get_length)        (GimpVectors       *vectors,
-                                       const GimpAnchor  *start);
-  gdouble       (* get_distance)      (GimpVectors       *vectors,
-                                       const GimpCoords  *coord);
-  gint          (* interpolate)       (GimpVectors       *vectors,
-                                       GimpStroke        *stroke,
+  void          (* stroke_add)        (LigmaVectors       *vectors,
+                                       LigmaStroke        *stroke);
+  void          (* stroke_remove)     (LigmaVectors       *vectors,
+                                       LigmaStroke        *stroke);
+  LigmaStroke  * (* stroke_get)        (LigmaVectors       *vectors,
+                                       const LigmaCoords  *coord);
+  LigmaStroke  * (* stroke_get_next)   (LigmaVectors       *vectors,
+                                       LigmaStroke        *prev);
+  gdouble       (* stroke_get_length) (LigmaVectors       *vectors,
+                                       LigmaStroke        *stroke);
+  LigmaAnchor  * (* anchor_get)        (LigmaVectors       *vectors,
+                                       const LigmaCoords  *coord,
+                                       LigmaStroke       **ret_stroke);
+  void          (* anchor_delete)     (LigmaVectors       *vectors,
+                                       LigmaAnchor        *anchor);
+  gdouble       (* get_length)        (LigmaVectors       *vectors,
+                                       const LigmaAnchor  *start);
+  gdouble       (* get_distance)      (LigmaVectors       *vectors,
+                                       const LigmaCoords  *coord);
+  gint          (* interpolate)       (LigmaVectors       *vectors,
+                                       LigmaStroke        *stroke,
                                        gdouble            precision,
                                        gint               max_points,
-                                       GimpCoords        *ret_coords);
-  GimpBezierDesc * (* make_bezier)    (GimpVectors       *vectors);
+                                       LigmaCoords        *ret_coords);
+  LigmaBezierDesc * (* make_bezier)    (LigmaVectors       *vectors);
 };
 
 
 /*  vectors utility functions  */
 
-GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
+GType           ligma_vectors_get_type           (void) G_GNUC_CONST;
 
-GimpVectors   * gimp_vectors_new                (GimpImage         *image,
+LigmaVectors   * ligma_vectors_new                (LigmaImage         *image,
                                                  const gchar       *name);
 
-GimpVectors   * gimp_vectors_get_parent         (GimpVectors       *vectors);
+LigmaVectors   * ligma_vectors_get_parent         (LigmaVectors       *vectors);
 
-void            gimp_vectors_freeze             (GimpVectors       *vectors);
-void            gimp_vectors_thaw               (GimpVectors       *vectors);
+void            ligma_vectors_freeze             (LigmaVectors       *vectors);
+void            ligma_vectors_thaw               (LigmaVectors       *vectors);
 
-void            gimp_vectors_copy_strokes       (GimpVectors       *src_vectors,
-                                                 GimpVectors       *dest_vectors);
-void            gimp_vectors_add_strokes        (GimpVectors       *src_vectors,
-                                                 GimpVectors       *dest_vectors);
+void            ligma_vectors_copy_strokes       (LigmaVectors       *src_vectors,
+                                                 LigmaVectors       *dest_vectors);
+void            ligma_vectors_add_strokes        (LigmaVectors       *src_vectors,
+                                                 LigmaVectors       *dest_vectors);
 
 
 /* accessing / modifying the anchors */
 
-GimpAnchor    * gimp_vectors_anchor_get         (GimpVectors       *vectors,
-                                                 const GimpCoords  *coord,
-                                                 GimpStroke       **ret_stroke);
+LigmaAnchor    * ligma_vectors_anchor_get         (LigmaVectors       *vectors,
+                                                 const LigmaCoords  *coord,
+                                                 LigmaStroke       **ret_stroke);
 
 /* prev == NULL: "first" anchor */
-GimpAnchor    * gimp_vectors_anchor_get_next    (GimpVectors        *vectors,
-                                                 const GimpAnchor   *prev);
+LigmaAnchor    * ligma_vectors_anchor_get_next    (LigmaVectors        *vectors,
+                                                 const LigmaAnchor   *prev);
 
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
-void          gimp_vectors_anchor_move_relative (GimpVectors        *vectors,
-                                                 GimpAnchor         *anchor,
-                                                 const GimpCoords   *deltacoord,
+void          ligma_vectors_anchor_move_relative (LigmaVectors        *vectors,
+                                                 LigmaAnchor         *anchor,
+                                                 const LigmaCoords   *deltacoord,
                                                  gint                type);
-void          gimp_vectors_anchor_move_absolute (GimpVectors        *vectors,
-                                                 GimpAnchor         *anchor,
-                                                 const GimpCoords   *coord,
+void          ligma_vectors_anchor_move_absolute (LigmaVectors        *vectors,
+                                                 LigmaAnchor         *anchor,
+                                                 const LigmaCoords   *coord,
                                                  gint                type);
 
-void          gimp_vectors_anchor_delete        (GimpVectors        *vectors,
-                                                 GimpAnchor         *anchor);
+void          ligma_vectors_anchor_delete        (LigmaVectors        *vectors,
+                                                 LigmaAnchor         *anchor);
 
-void          gimp_vectors_anchor_select        (GimpVectors        *vectors,
-                                                 GimpStroke         *target_stroke,
-                                                 GimpAnchor         *anchor,
+void          ligma_vectors_anchor_select        (LigmaVectors        *vectors,
+                                                 LigmaStroke         *target_stroke,
+                                                 LigmaAnchor         *anchor,
                                                  gboolean            selected,
                                                  gboolean            exclusive);
 
 
-/* GimpStroke is a connected component of a GimpVectors object */
+/* LigmaStroke is a connected component of a LigmaVectors object */
 
-void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
-                                                 GimpStroke         *stroke);
-void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
-                                                 GimpStroke         *stroke);
-gint            gimp_vectors_get_n_strokes      (GimpVectors        *vectors);
-GimpStroke    * gimp_vectors_stroke_get         (GimpVectors        *vectors,
-                                                 const GimpCoords   *coord);
-GimpStroke    * gimp_vectors_stroke_get_by_id   (GimpVectors        *vectors,
+void            ligma_vectors_stroke_add         (LigmaVectors        *vectors,
+                                                 LigmaStroke         *stroke);
+void            ligma_vectors_stroke_remove      (LigmaVectors        *vectors,
+                                                 LigmaStroke         *stroke);
+gint            ligma_vectors_get_n_strokes      (LigmaVectors        *vectors);
+LigmaStroke    * ligma_vectors_stroke_get         (LigmaVectors        *vectors,
+                                                 const LigmaCoords   *coord);
+LigmaStroke    * ligma_vectors_stroke_get_by_id   (LigmaVectors        *vectors,
                                                  gint                id);
 
 /* prev == NULL: "first" stroke */
-GimpStroke    * gimp_vectors_stroke_get_next    (GimpVectors        *vectors,
-                                                 GimpStroke         *prev);
-gdouble         gimp_vectors_stroke_get_length  (GimpVectors        *vectors,
-                                                 GimpStroke         *stroke);
+LigmaStroke    * ligma_vectors_stroke_get_next    (LigmaVectors        *vectors,
+                                                 LigmaStroke         *prev);
+gdouble         ligma_vectors_stroke_get_length  (LigmaVectors        *vectors,
+                                                 LigmaStroke         *stroke);
 
 /* accessing the shape of the curve */
 
-gdouble         gimp_vectors_get_length         (GimpVectors        *vectors,
-                                                 const GimpAnchor   *start);
-gdouble         gimp_vectors_get_distance       (GimpVectors        *vectors,
-                                                 const GimpCoords   *coord);
+gdouble         ligma_vectors_get_length         (LigmaVectors        *vectors,
+                                                 const LigmaAnchor   *start);
+gdouble         ligma_vectors_get_distance       (LigmaVectors        *vectors,
+                                                 const LigmaCoords   *coord);
 
 /* returns the number of valid coordinates */
 
-gint            gimp_vectors_interpolate        (GimpVectors        *vectors,
-                                                 GimpStroke         *stroke,
+gint            ligma_vectors_interpolate        (LigmaVectors        *vectors,
+                                                 LigmaStroke         *stroke,
                                                  gdouble             precision,
                                                  gint                max_points,
-                                                 GimpCoords         *ret_coords);
+                                                 LigmaCoords         *ret_coords);
 
 /* usually overloaded */
 
 /* returns a bezier representation */
-const GimpBezierDesc * gimp_vectors_get_bezier  (GimpVectors        *vectors);
+const LigmaBezierDesc * ligma_vectors_get_bezier  (LigmaVectors        *vectors);
 
 
-#endif /* __GIMP_VECTORS_H__ */
+#endif /* __LIGMA_VECTORS_H__ */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-3d-transform-utils.c
+ * ligma-3d-transform-utils.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimp-transform-3d-utils.h"
+#include "ligma-transform-3d-utils.h"
 
 
 #define MIN_FOCAL_LENGTH 0.01
 
 
 gdouble
-gimp_transform_3d_angle_of_view_to_focal_length (gdouble angle_of_view,
+ligma_transform_3d_angle_of_view_to_focal_length (gdouble angle_of_view,
                                                  gdouble width,
                                                  gdouble height)
 {
@@ -41,7 +41,7 @@ gimp_transform_3d_angle_of_view_to_focal_length (gdouble angle_of_view,
 }
 
 gdouble
-gimp_transform_3d_focal_length_to_angle_of_view (gdouble focal_length,
+ligma_transform_3d_focal_length_to_angle_of_view (gdouble focal_length,
                                                  gdouble width,
                                                  gdouble height)
 {
@@ -49,7 +49,7 @@ gimp_transform_3d_focal_length_to_angle_of_view (gdouble focal_length,
 }
 
 gint
-gimp_transform_3d_permutation_to_rotation_order (const gint permutation[3])
+ligma_transform_3d_permutation_to_rotation_order (const gint permutation[3])
 {
   if (permutation[1] == (permutation[0] + 1) % 3)
     return permutation[0] << 1;
@@ -58,7 +58,7 @@ gimp_transform_3d_permutation_to_rotation_order (const gint permutation[3])
 }
 
 void
-gimp_transform_3d_rotation_order_to_permutation (gint rotation_order,
+ligma_transform_3d_rotation_order_to_permutation (gint rotation_order,
                                                  gint permutation[3])
 {
   gboolean reverse = rotation_order & 1;
@@ -70,55 +70,55 @@ gimp_transform_3d_rotation_order_to_permutation (gint rotation_order,
 }
 
 gint
-gimp_transform_3d_rotation_order_reverse (gint rotation_order)
+ligma_transform_3d_rotation_order_reverse (gint rotation_order)
 {
   return rotation_order ^ 1;
 }
 
 void
-gimp_transform_3d_vector3_rotate (GimpVector3       *vector,
-                                  const GimpVector3 *axis)
+ligma_transform_3d_vector3_rotate (LigmaVector3       *vector,
+                                  const LigmaVector3 *axis)
 {
-  GimpVector3 normal;
-  GimpVector3 proj;
-  GimpVector3 u, v;
+  LigmaVector3 normal;
+  LigmaVector3 proj;
+  LigmaVector3 u, v;
   gdouble     angle;
 
-  angle = gimp_vector3_length (axis);
+  angle = ligma_vector3_length (axis);
 
   if (angle == 0.0)
     return;
 
-  normal = gimp_vector3_mul_val (*axis, 1.0 / angle);
+  normal = ligma_vector3_mul_val (*axis, 1.0 / angle);
 
-  proj = gimp_vector3_mul_val (normal,
-                               gimp_vector3_inner_product_val (*vector,
+  proj = ligma_vector3_mul_val (normal,
+                               ligma_vector3_inner_product_val (*vector,
                                                                normal));
 
-  u = gimp_vector3_sub_val (*vector, proj);
-  v = gimp_vector3_cross_product_val (u, normal);
+  u = ligma_vector3_sub_val (*vector, proj);
+  v = ligma_vector3_cross_product_val (u, normal);
 
-  gimp_vector3_mul (&u, cos (angle));
-  gimp_vector3_mul (&v, sin (angle));
+  ligma_vector3_mul (&u, cos (angle));
+  ligma_vector3_mul (&v, sin (angle));
 
   *vector = proj;
 
-  gimp_vector3_add (vector, vector, &u);
-  gimp_vector3_add (vector, vector, &v);
+  ligma_vector3_add (vector, vector, &u);
+  ligma_vector3_add (vector, vector, &v);
 }
 
-GimpVector3
-gimp_transform_3d_vector3_rotate_val (GimpVector3 vector,
-                                      GimpVector3 axis)
+LigmaVector3
+ligma_transform_3d_vector3_rotate_val (LigmaVector3 vector,
+                                      LigmaVector3 axis)
 {
-  gimp_transform_3d_vector3_rotate (&vector, &axis);
+  ligma_transform_3d_vector3_rotate (&vector, &axis);
 
   return vector;
 }
 
 void
-gimp_transform_3d_matrix3_to_matrix4 (const GimpMatrix3 *matrix3,
-                                      GimpMatrix4       *matrix4,
+ligma_transform_3d_matrix3_to_matrix4 (const LigmaMatrix3 *matrix3,
+                                      LigmaMatrix4       *matrix4,
                                       gint               axis)
 {
   gint i, j;
@@ -151,8 +151,8 @@ gimp_transform_3d_matrix3_to_matrix4 (const GimpMatrix3 *matrix3,
 }
 
 void
-gimp_transform_3d_matrix4_to_matrix3 (const GimpMatrix4 *matrix4,
-                                      GimpMatrix3       *matrix3,
+ligma_transform_3d_matrix4_to_matrix3 (const LigmaMatrix4 *matrix4,
+                                      LigmaMatrix3       *matrix3,
                                       gint               axis)
 {
   gint i, j;
@@ -172,7 +172,7 @@ gimp_transform_3d_matrix4_to_matrix3 (const GimpMatrix4 *matrix4,
 }
 
 void
-gimp_transform_3d_matrix4_translate (GimpMatrix4 *matrix,
+ligma_transform_3d_matrix4_translate (LigmaMatrix4 *matrix,
                                      gdouble      x,
                                      gdouble      y,
                                      gdouble      z)
@@ -190,13 +190,13 @@ gimp_transform_3d_matrix4_translate (GimpMatrix4 *matrix,
 }
 
 void
-gimp_transform_3d_matrix4_rotate (GimpMatrix4       *matrix,
-                                  const GimpVector3 *axis)
+ligma_transform_3d_matrix4_rotate (LigmaMatrix4       *matrix,
+                                  const LigmaVector3 *axis)
 {
-  GimpMatrix4 rotation;
-  GimpVector3 v;
+  LigmaMatrix4 rotation;
+  LigmaVector3 v;
 
-  v = gimp_transform_3d_vector3_rotate_val ((GimpVector3) {1.0, 0.0, 0.0},
+  v = ligma_transform_3d_vector3_rotate_val ((LigmaVector3) {1.0, 0.0, 0.0},
                                             *axis);
 
   rotation.coeff[0][0] = v.x;
@@ -204,7 +204,7 @@ gimp_transform_3d_matrix4_rotate (GimpMatrix4       *matrix,
   rotation.coeff[2][0] = v.z;
   rotation.coeff[3][0] = 0.0;
 
-  v = gimp_transform_3d_vector3_rotate_val ((GimpVector3) {0.0, 1.0, 0.0},
+  v = ligma_transform_3d_vector3_rotate_val ((LigmaVector3) {0.0, 1.0, 0.0},
                                             *axis);
 
   rotation.coeff[0][1] = v.x;
@@ -212,7 +212,7 @@ gimp_transform_3d_matrix4_rotate (GimpMatrix4       *matrix,
   rotation.coeff[2][1] = v.z;
   rotation.coeff[3][1] = 0.0;
 
-  v = gimp_transform_3d_vector3_rotate_val ((GimpVector3) {0.0, 0.0, 1.0},
+  v = ligma_transform_3d_vector3_rotate_val ((LigmaVector3) {0.0, 0.0, 1.0},
                                             *axis);
 
   rotation.coeff[0][2] = v.x;
@@ -225,11 +225,11 @@ gimp_transform_3d_matrix4_rotate (GimpMatrix4       *matrix,
   rotation.coeff[2][3] = 0.0;
   rotation.coeff[3][3] = 1.0;
 
-  gimp_matrix4_mult (&rotation, matrix);
+  ligma_matrix4_mult (&rotation, matrix);
 }
 
 void
-gimp_transform_3d_matrix4_rotate_standard (GimpMatrix4 *matrix,
+ligma_transform_3d_matrix4_rotate_standard (LigmaMatrix4 *matrix,
                                            gint         axis,
                                            gdouble      angle)
 {
@@ -237,11 +237,11 @@ gimp_transform_3d_matrix4_rotate_standard (GimpMatrix4 *matrix,
 
   v[axis] = angle;
 
-  gimp_transform_3d_matrix4_rotate (matrix, &(GimpVector3) {v[0], v[1], v[2]});
+  ligma_transform_3d_matrix4_rotate (matrix, &(LigmaVector3) {v[0], v[1], v[2]});
 }
 
 void
-gimp_transform_3d_matrix4_rotate_euler (GimpMatrix4 *matrix,
+ligma_transform_3d_matrix4_rotate_euler (LigmaMatrix4 *matrix,
                                         gint         rotation_order,
                                         gdouble      angle_x,
                                         gdouble      angle_y,
@@ -254,33 +254,33 @@ gimp_transform_3d_matrix4_rotate_euler (GimpMatrix4 *matrix,
   gint          permutation[3];
   gint          i;
 
-  gimp_transform_3d_rotation_order_to_permutation (rotation_order, permutation);
+  ligma_transform_3d_rotation_order_to_permutation (rotation_order, permutation);
 
-  gimp_transform_3d_matrix4_translate (matrix, -pivot_x, -pivot_y, -pivot_z);
+  ligma_transform_3d_matrix4_translate (matrix, -pivot_x, -pivot_y, -pivot_z);
 
   for (i = 0; i < 3; i++)
     {
-      gimp_transform_3d_matrix4_rotate_standard (matrix,
+      ligma_transform_3d_matrix4_rotate_standard (matrix,
                                                  permutation[i],
                                                  angles[permutation[i]]);
     }
 
-  gimp_transform_3d_matrix4_translate (matrix, +pivot_x, +pivot_y, +pivot_z);
+  ligma_transform_3d_matrix4_translate (matrix, +pivot_x, +pivot_y, +pivot_z);
 }
 
 void
-gimp_transform_3d_matrix4_rotate_euler_decompose (GimpMatrix4 *matrix,
+ligma_transform_3d_matrix4_rotate_euler_decompose (LigmaMatrix4 *matrix,
                                                   gint         rotation_order,
                                                   gdouble     *angle_x,
                                                   gdouble     *angle_y,
                                                   gdouble     *angle_z)
 {
-  GimpMatrix4     m = *matrix;
+  LigmaMatrix4     m = *matrix;
   gdouble * const angles[3] = {angle_x, angle_y, angle_z};
   gint            permutation[3];
   gboolean        forward;
 
-  gimp_transform_3d_rotation_order_to_permutation (rotation_order, permutation);
+  ligma_transform_3d_rotation_order_to_permutation (rotation_order, permutation);
 
   forward = permutation[1] == (permutation[0] + 1) % 3;
 
@@ -290,7 +290,7 @@ gimp_transform_3d_matrix4_rotate_euler_decompose (GimpMatrix4 *matrix,
   if (forward)
     *angles[permutation[2]] *= -1.0;
 
-  gimp_transform_3d_matrix4_rotate_standard (&m,
+  ligma_transform_3d_matrix4_rotate_standard (&m,
                                              permutation[2],
                                              -*angles[permutation[2]]);
 
@@ -300,7 +300,7 @@ gimp_transform_3d_matrix4_rotate_euler_decompose (GimpMatrix4 *matrix,
   if (! forward)
     *angles[permutation[1]] *= -1.0;
 
-  gimp_transform_3d_matrix4_rotate_standard (&m,
+  ligma_transform_3d_matrix4_rotate_standard (&m,
                                              permutation[1],
                                              -*angles[permutation[1]]);
 
@@ -312,7 +312,7 @@ gimp_transform_3d_matrix4_rotate_euler_decompose (GimpMatrix4 *matrix,
 }
 
 void
-gimp_transform_3d_matrix4_perspective (GimpMatrix4 *matrix,
+ligma_transform_3d_matrix4_perspective (LigmaMatrix4 *matrix,
                                        gdouble      camera_x,
                                        gdouble      camera_y,
                                        gdouble      camera_z)
@@ -321,16 +321,16 @@ gimp_transform_3d_matrix4_perspective (GimpMatrix4 *matrix,
 
   camera_z = MIN (camera_z, -MIN_FOCAL_LENGTH);
 
-  gimp_transform_3d_matrix4_translate (matrix, -camera_x, -camera_y, 0.0);
+  ligma_transform_3d_matrix4_translate (matrix, -camera_x, -camera_y, 0.0);
 
   for (i = 0; i < 4; i++)
     matrix->coeff[3][i] += matrix->coeff[2][i] / -camera_z;
 
-  gimp_transform_3d_matrix4_translate (matrix, +camera_x, +camera_y, 0.0);
+  ligma_transform_3d_matrix4_translate (matrix, +camera_x, +camera_y, 0.0);
 }
 
 void
-gimp_transform_3d_matrix (GimpMatrix3 *matrix,
+ligma_transform_3d_matrix (LigmaMatrix3 *matrix,
                           gdouble      camera_x,
                           gdouble      camera_y,
                           gdouble      camera_z,
@@ -345,15 +345,15 @@ gimp_transform_3d_matrix (GimpMatrix3 *matrix,
                           gdouble      pivot_y,
                           gdouble      pivot_z)
 {
-  GimpMatrix4 m;
+  LigmaMatrix4 m;
 
-  gimp_matrix4_identity (&m);
-  gimp_transform_3d_matrix4_rotate_euler (&m,
+  ligma_matrix4_identity (&m);
+  ligma_transform_3d_matrix4_rotate_euler (&m,
                                           rotation_order,
                                           angle_x, angle_y, angle_z,
                                           pivot_x, pivot_y, pivot_z);
-  gimp_transform_3d_matrix4_translate (&m, offset_x, offset_y, offset_z);
-  gimp_transform_3d_matrix4_perspective (&m, camera_x, camera_y, camera_z);
+  ligma_transform_3d_matrix4_translate (&m, offset_x, offset_y, offset_z);
+  ligma_transform_3d_matrix4_perspective (&m, camera_x, camera_y, camera_z);
 
-  gimp_transform_3d_matrix4_to_matrix3 (&m, matrix, 2);
+  ligma_transform_3d_matrix4_to_matrix3 (&m, matrix, 2);
 }

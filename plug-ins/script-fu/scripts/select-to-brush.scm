@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Selection-to-brush
@@ -31,8 +31,8 @@
                                       filename
                                       spacing)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (selection-bounds (gimp-selection-bounds image))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (selection-bounds (ligma-selection-bounds image))
         (select-offset-x  (cadr selection-bounds))
         (select-offset-y  (caddr selection-bounds))
         (selection-width  (- (cadr (cddr selection-bounds))  select-offset-x))
@@ -46,23 +46,23 @@
         (filename2 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-disable image)
+    (ligma-image-undo-disable image)
 
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
+    (if (= (car (ligma-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
           (set! from-selection FALSE)
         )
         (begin
           (set! from-selection TRUE)
-          (set! active-selection (car (gimp-selection-save image)))
+          (set! active-selection (car (ligma-selection-save image)))
         )
     )
 
-    (gimp-edit-copy 1 (make-vector 1 drawable))
+    (ligma-edit-copy 1 (make-vector 1 drawable))
 
     (set! brush-draw-type
           (if (= type GRAYA-IMAGE)
@@ -74,12 +74,12 @@
               GRAY
               RGB))
 
-    (set! brush-image (car (gimp-image-new selection-width
+    (set! brush-image (car (ligma-image-new selection-width
                                            selection-height
                                            brush-image-type)))
 
     (set! brush-draw
-          (car (gimp-layer-new brush-image
+          (car (ligma-layer-new brush-image
                                selection-width
                                selection-height
                                brush-draw-type
@@ -87,26 +87,26 @@
                                100
                                LAYER-MODE-NORMAL)))
 
-    (gimp-image-insert-layer brush-image brush-draw 0 0)
+    (ligma-image-insert-layer brush-image brush-draw 0 0)
 
-    (gimp-selection-none brush-image)
+    (ligma-selection-none brush-image)
 
     (if (= type GRAYA-IMAGE)
         (begin
-          (gimp-context-set-background '(255 255 255))
-          (gimp-drawable-fill brush-draw FILL-BACKGROUND))
-        (gimp-drawable-fill brush-draw FILL-TRANSPARENT)
+          (ligma-context-set-background '(255 255 255))
+          (ligma-drawable-fill brush-draw FILL-BACKGROUND))
+        (ligma-drawable-fill brush-draw FILL-TRANSPARENT)
     )
 
     (let* (
-           (pasted (gimp-edit-paste brush-draw FALSE))
+           (pasted (ligma-edit-paste brush-draw FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-      (gimp-floating-sel-anchor floating-sel)
+      (ligma-floating-sel-anchor floating-sel)
     )
 
-    (set! filename2 (string-append gimp-directory
+    (set! filename2 (string-append ligma-directory
                                    "/brushes/"
                                    filename
                                    (number->string image)
@@ -116,27 +116,27 @@
 
     (if (= from-selection TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-image-remove-channel image active-selection)
+          (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+          (ligma-image-remove-channel image active-selection)
         )
     )
 
-    (gimp-image-undo-enable image)
-    (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
-    (gimp-image-delete brush-image)
-    (gimp-displays-flush)
+    (ligma-image-undo-enable image)
+    (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
+    (ligma-image-delete brush-image)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
 
-    (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
+    (ligma-brushes-refresh)
+    (ligma-context-set-brush name)
   )
 )
 
 (script-fu-register "script-fu-selection-to-brush"
   _"To _Brush..."
   _"Convert a selection to a brush"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "10/07/97"
   "RGB* GRAY*"

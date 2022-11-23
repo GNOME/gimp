@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2003  Simon Budig
@@ -21,23 +21,23 @@
 #define __STROKE_DIALOG_H__
 
 
-typedef void (* GimpStrokeCallback) (GtkWidget         *dialog,
-                                     GimpItem          *item,
+typedef void (* LigmaStrokeCallback) (GtkWidget         *dialog,
+                                     LigmaItem          *item,
                                      GList             *drawables,
-                                     GimpContext       *context,
-                                     GimpStrokeOptions *options,
+                                     LigmaContext       *context,
+                                     LigmaStrokeOptions *options,
                                      gpointer           user_data);
 
 
-GtkWidget * stroke_dialog_new (GimpItem           *item,
+GtkWidget * stroke_dialog_new (LigmaItem           *item,
                                GList              *drawables,
-                               GimpContext        *context,
+                               LigmaContext        *context,
                                const gchar        *title,
                                const gchar        *icon_name,
                                const gchar        *help_id,
                                GtkWidget          *parent,
-                               GimpStrokeOptions  *options,
-                               GimpStrokeCallback  callback,
+                               LigmaStrokeOptions  *options,
+                               LigmaStrokeCallback  callback,
                                gpointer            user_data);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "orientation.h"
 #include "orientmap.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static GtkWidget *orient_radio[NUMORIENTRADIO];
 static GtkWidget *orient_num_adjust   = NULL;
@@ -49,11 +49,11 @@ void orientation_restore (void)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
                                 TRUE);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_num_adjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (orient_num_adjust),
                              pcvals.orient_num);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_first_adjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (orient_first_adjust),
                              pcvals.orient_first);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (orient_last_adjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (orient_last_adjust),
                              pcvals.orient_last);
 }
 
@@ -97,34 +97,34 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   orient_num_adjust =
-    gimp_scale_entry_new (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
-  gimp_help_set_help_data (orient_num_adjust,
+    ligma_scale_entry_new (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
+  ligma_help_set_help_data (orient_num_adjust,
                            _("The number of directions (i.e. brushes) to use"),
                            NULL);
   g_signal_connect (orient_num_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_int),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_int),
                     &pcvals.orient_num);
   gtk_grid_attach (GTK_GRID (grid), orient_num_adjust, 0, 0, 3, 1);
   gtk_widget_show (orient_num_adjust);
 
   orient_first_adjust =
-    gimp_scale_entry_new (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
-  gimp_help_set_help_data (orient_first_adjust,
+    ligma_scale_entry_new (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
+  ligma_help_set_help_data (orient_first_adjust,
                            _("The starting angle of the first brush to create"),
                            NULL);
   g_signal_connect (orient_first_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.orient_first);
   gtk_grid_attach (GTK_GRID (grid), orient_first_adjust, 0, 1, 3, 1);
   gtk_widget_show (orient_first_adjust);
 
   orient_last_adjust =
-    gimp_scale_entry_new (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
-  gimp_help_set_help_data (orient_last_adjust,
+    ligma_scale_entry_new (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
+  ligma_help_set_help_data (orient_last_adjust,
                            _("The angle span of the first brush to create"),
                            NULL);
   g_signal_connect (orient_last_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.orient_last);
   gtk_grid_attach (GTK_GRID (grid), orient_last_adjust, 0, 2, 3, 1);
   gtk_widget_show (orient_last_adjust);
@@ -192,7 +192,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (create_orientmap_dialog_helper), NULL);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (tmpw, _("Opens up the Orientation Map Editor"), NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);

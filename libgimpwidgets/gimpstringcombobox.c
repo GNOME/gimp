@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpstringcombobox.c
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * ligmastringcombobox.c
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,16 +25,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpstringcombobox.h"
+#include "ligmastringcombobox.h"
 
 
 /**
- * SECTION: gimpstringcombobox
- * @title: GimpStringComboBox
+ * SECTION: ligmastringcombobox
+ * @title: LigmaStringComboBox
  * @short_description: A #GtkComboBox subclass to select strings.
  *
  * A #GtkComboBox subclass to select strings.
@@ -50,44 +50,44 @@ enum
 };
 
 
-struct _GimpStringComboBoxPrivate
+struct _LigmaStringComboBoxPrivate
 {
   gint             id_column;
   gint             label_column;
   GtkCellRenderer *text_renderer;
 };
 
-#define GET_PRIVATE(obj) (((GimpStringComboBox *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaStringComboBox *) (obj))->priv)
 
 
-static void   gimp_string_combo_box_constructed  (GObject      *object);
-static void   gimp_string_combo_box_set_property (GObject      *object,
+static void   ligma_string_combo_box_constructed  (GObject      *object);
+static void   ligma_string_combo_box_set_property (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
                                                   GParamSpec   *pspec);
-static void   gimp_string_combo_box_get_property (GObject      *object,
+static void   ligma_string_combo_box_get_property (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpStringComboBox, gimp_string_combo_box,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaStringComboBox, ligma_string_combo_box,
                             GTK_TYPE_COMBO_BOX)
 
-#define parent_class gimp_string_combo_box_parent_class
+#define parent_class ligma_string_combo_box_parent_class
 
 
 static void
-gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
+ligma_string_combo_box_class_init (LigmaStringComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_string_combo_box_constructed;
-  object_class->set_property = gimp_string_combo_box_set_property;
-  object_class->get_property = gimp_string_combo_box_get_property;
+  object_class->constructed  = ligma_string_combo_box_constructed;
+  object_class->set_property = ligma_string_combo_box_set_property;
+  object_class->get_property = ligma_string_combo_box_get_property;
 
   /**
-   * GimpStringComboBox:id-column:
+   * LigmaStringComboBox:id-column:
    *
    * The column in the associated GtkTreeModel that holds unique
    * string IDs.
@@ -101,10 +101,10 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                      "The model column that holds the ID",
                                                      0, G_MAXINT,
                                                      0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
   /**
-   * GimpStringComboBox:label-column:
+   * LigmaStringComboBox:label-column:
    *
    * The column in the associated GtkTreeModel that holds strings to
    * be used as labels in the combo-box.
@@ -118,11 +118,11 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                      "The model column that holds the label",
                                                      0, G_MAXINT,
                                                      0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GimpStringComboBox:ellipsize:
+   * LigmaStringComboBox:ellipsize:
    *
    * Specifies the preferred place to ellipsize text in the combo-box,
    * if the cell renderer does not have enough room to display the
@@ -137,19 +137,19 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                       "Ellipsize mode for the text cell renderer",
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_string_combo_box_init (GimpStringComboBox *combo_box)
+ligma_string_combo_box_init (LigmaStringComboBox *combo_box)
 {
-  combo_box->priv = gimp_string_combo_box_get_instance_private (combo_box);
+  combo_box->priv = ligma_string_combo_box_get_instance_private (combo_box);
 }
 
 static void
-gimp_string_combo_box_constructed (GObject *object)
+ligma_string_combo_box_constructed (GObject *object)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaStringComboBoxPrivate *priv = GET_PRIVATE (object);
   GtkCellRenderer           *cell;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -163,12 +163,12 @@ gimp_string_combo_box_constructed (GObject *object)
 }
 
 static void
-gimp_string_combo_box_set_property (GObject      *object,
+ligma_string_combo_box_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaStringComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -191,12 +191,12 @@ gimp_string_combo_box_set_property (GObject      *object,
 }
 
 static void
-gimp_string_combo_box_get_property (GObject    *object,
+ligma_string_combo_box_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaStringComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -219,7 +219,7 @@ gimp_string_combo_box_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_string_model_lookup (GtkTreeModel *model,
+ligma_string_model_lookup (GtkTreeModel *model,
                           gint          column,
                           const gchar  *id,
                           GtkTreeIter  *iter)
@@ -256,17 +256,17 @@ gimp_string_model_lookup (GtkTreeModel *model,
 
 
 /**
- * gimp_string_combo_box_new:
+ * ligma_string_combo_box_new:
  * @model:        a #GtkTreeModel
  * @id_column:    the model column of the ID
  * @label_column: the modl column of the label
  *
- * Returns: a new #GimpStringComboBox.
+ * Returns: a new #LigmaStringComboBox.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_string_combo_box_new (GtkTreeModel *model,
+ligma_string_combo_box_new (GtkTreeModel *model,
                            gint          id_column,
                            gint          label_column)
 {
@@ -276,7 +276,7 @@ gimp_string_combo_box_new (GtkTreeModel *model,
   g_return_val_if_fail (gtk_tree_model_get_column_type (model,
                                                         label_column) == G_TYPE_STRING, NULL);
 
-  return g_object_new (GIMP_TYPE_STRING_COMBO_BOX,
+  return g_object_new (LIGMA_TYPE_STRING_COMBO_BOX,
                        "model",        model,
                        "id-column",    id_column,
                        "label-column", label_column,
@@ -284,8 +284,8 @@ gimp_string_combo_box_new (GtkTreeModel *model,
 }
 
 /**
- * gimp_string_combo_box_set_active:
- * @combo_box: a #GimpStringComboBox
+ * ligma_string_combo_box_set_active:
+ * @combo_box: a #LigmaStringComboBox
  * @id:        the ID of the item to select
  *
  * Looks up the item that belongs to the given @id and makes it the
@@ -297,10 +297,10 @@ gimp_string_combo_box_new (GtkTreeModel *model,
  * Since: 2.4
  **/
 gboolean
-gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
+ligma_string_combo_box_set_active (LigmaStringComboBox *combo_box,
                                   const gchar        *id)
 {
-  g_return_val_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_STRING_COMBO_BOX (combo_box), FALSE);
 
   if (id)
     {
@@ -312,7 +312,7 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
 
       column = GET_PRIVATE (combo_box)->id_column;
 
-      if (gimp_string_model_lookup (model, column, id, &iter))
+      if (ligma_string_model_lookup (model, column, id, &iter))
         {
           gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
           return TRUE;
@@ -329,8 +329,8 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
 }
 
 /**
- * gimp_string_combo_box_get_active:
- * @combo_box: a #GimpStringComboBox
+ * ligma_string_combo_box_get_active:
+ * @combo_box: a #LigmaStringComboBox
  *
  * Retrieves the value of the selected (active) item in the @combo_box.
  *
@@ -339,11 +339,11 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
  * Since: 2.4
  **/
 gchar *
-gimp_string_combo_box_get_active (GimpStringComboBox *combo_box)
+ligma_string_combo_box_get_active (LigmaStringComboBox *combo_box)
 {
   GtkTreeIter  iter;
 
-  g_return_val_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box), NULL);
+  g_return_val_if_fail (LIGMA_IS_STRING_COMBO_BOX (combo_box), NULL);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {

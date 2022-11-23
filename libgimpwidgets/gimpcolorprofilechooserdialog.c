@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorProfileChooserDialog
- * Copyright (C) 2006-2014 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
+ * LigmaColorProfileChooserDialog
+ * Copyright (C) 2006-2014 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,79 +30,79 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolorprofilechooserdialog.h"
-#include "gimpcolorprofileview.h"
-#include "gimpdialog.h"
+#include "ligmacolorprofilechooserdialog.h"
+#include "ligmacolorprofileview.h"
+#include "ligmadialog.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolorprofilechooserdialog
- * @title: GimpColorProfileChooserDialog
+ * SECTION: ligmacolorprofilechooserdialog
+ * @title: LigmaColorProfileChooserDialog
  * @short_description: A file chooser for selecting color profiles.
  *
  * A #GtkFileChooser subclass for selecting color profiles.
  **/
 
 
-struct _GimpColorProfileChooserDialogPrivate
+struct _LigmaColorProfileChooserDialogPrivate
 {
-  GimpColorProfileView *profile_view;
+  LigmaColorProfileView *profile_view;
 };
 
 
-static void     gimp_color_profile_chooser_dialog_constructed    (GObject                       *object);
+static void     ligma_color_profile_chooser_dialog_constructed    (GObject                       *object);
 
-static gboolean gimp_color_profile_chooser_dialog_delete_event   (GtkWidget                     *widget,
+static gboolean ligma_color_profile_chooser_dialog_delete_event   (GtkWidget                     *widget,
                                                                   GdkEventAny                   *event);
 
-static void     gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfileChooserDialog *dialog);
-static void     gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
+static void     ligma_color_profile_chooser_dialog_add_shortcut   (LigmaColorProfileChooserDialog *dialog);
+static void     ligma_color_profile_chooser_dialog_update_preview (LigmaColorProfileChooserDialog *dialog);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileChooserDialog,
-                            gimp_color_profile_chooser_dialog,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorProfileChooserDialog,
+                            ligma_color_profile_chooser_dialog,
                             GTK_TYPE_FILE_CHOOSER_DIALOG)
 
-#define parent_class gimp_color_profile_chooser_dialog_parent_class
+#define parent_class ligma_color_profile_chooser_dialog_parent_class
 
 
 static void
-gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass *klass)
+ligma_color_profile_chooser_dialog_class_init (LigmaColorProfileChooserDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_color_profile_chooser_dialog_constructed;
+  object_class->constructed  = ligma_color_profile_chooser_dialog_constructed;
 
-  widget_class->delete_event = gimp_color_profile_chooser_dialog_delete_event;
+  widget_class->delete_event = ligma_color_profile_chooser_dialog_delete_event;
 }
 
 static void
-gimp_color_profile_chooser_dialog_init (GimpColorProfileChooserDialog *dialog)
+ligma_color_profile_chooser_dialog_init (LigmaColorProfileChooserDialog *dialog)
 {
   dialog->priv =
-    gimp_color_profile_chooser_dialog_get_instance_private (dialog);
+    ligma_color_profile_chooser_dialog_get_instance_private (dialog);
 }
 
 static void
-gimp_color_profile_chooser_dialog_constructed (GObject *object)
+ligma_color_profile_chooser_dialog_constructed (GObject *object)
 {
-  GimpColorProfileChooserDialog *dialog;
+  LigmaColorProfileChooserDialog *dialog;
   GtkFileFilter                 *filter;
   GtkWidget                     *scrolled_window;
   GtkWidget                     *profile_view;
 
-  dialog  = GIMP_COLOR_PROFILE_CHOOSER_DIALOG (object);
+  dialog  = LIGMA_COLOR_PROFILE_CHOOSER_DIALOG (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-profile-chooser-dialog");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-profile-chooser-dialog");
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files (*.*)"));
@@ -127,29 +127,29 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
 
-  profile_view = gimp_color_profile_view_new ();
+  profile_view = ligma_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
   gtk_widget_show (profile_view);
 
-  dialog->priv->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
+  dialog->priv->profile_view = LIGMA_COLOR_PROFILE_VIEW (profile_view);
 
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        scrolled_window);
 
   g_signal_connect (dialog, "update-preview",
-                    G_CALLBACK (gimp_color_profile_chooser_dialog_update_preview),
+                    G_CALLBACK (ligma_color_profile_chooser_dialog_update_preview),
                     NULL);
 }
 
 static gboolean
-gimp_color_profile_chooser_dialog_delete_event (GtkWidget   *widget,
+ligma_color_profile_chooser_dialog_delete_event (GtkWidget   *widget,
                                                 GdkEventAny *event)
 {
   return TRUE;
 }
 
 GtkWidget *
-gimp_color_profile_chooser_dialog_new (const gchar          *title,
+ligma_color_profile_chooser_dialog_new (const gchar          *title,
                                        GtkWindow            *parent,
                                        GtkFileChooserAction  action)
 {
@@ -158,7 +158,7 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
 
-  dialog = g_object_new (GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
                          "title",  title,
                          "action", action,
                          NULL);
@@ -185,21 +185,21 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
                               NULL);
     }
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_ACCEPT,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
-  gimp_color_profile_chooser_dialog_add_shortcut (GIMP_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
+  ligma_color_profile_chooser_dialog_add_shortcut (LIGMA_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
 
   return dialog;
 }
 
 /* Add shortcuts for default ICC profile locations */
 static gboolean
-add_shortcut (GimpColorProfileChooserDialog *dialog,
+add_shortcut (LigmaColorProfileChooserDialog *dialog,
               const gchar                   *folder)
 {
   return (g_file_test (folder, G_FILE_TEST_IS_DIR) &&
@@ -208,7 +208,7 @@ add_shortcut (GimpColorProfileChooserDialog *dialog,
 }
 
 static void
-gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *dialog)
+ligma_color_profile_chooser_dialog_add_shortcut (LigmaColorProfileChooserDialog *dialog)
 {
   gboolean save = (gtk_file_chooser_get_action (GTK_FILE_CHOOSER (dialog)) ==
                    GTK_FILE_CHOOSER_ACTION_SAVE);
@@ -308,9 +308,9 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
 }
 
 static void
-gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog)
+ligma_color_profile_chooser_dialog_update_preview (LigmaColorProfileChooserDialog *dialog)
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
   GFile            *file;
   GError           *error = NULL;
 
@@ -318,36 +318,36 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
   if (! file)
     {
-      gimp_color_profile_view_set_profile (dialog->priv->profile_view, NULL);
+      ligma_color_profile_view_set_profile (dialog->priv->profile_view, NULL);
       return;
     }
 
   switch (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE, NULL))
     {
     case G_FILE_TYPE_REGULAR:
-      profile = gimp_color_profile_new_from_file (file, &error);
+      profile = ligma_color_profile_new_from_file (file, &error);
 
       if (! profile)
         {
-          gimp_color_profile_view_set_error (dialog->priv->profile_view,
+          ligma_color_profile_view_set_error (dialog->priv->profile_view,
                                              error->message);
           g_clear_error (&error);
         }
       else
         {
-          gimp_color_profile_view_set_profile (dialog->priv->profile_view,
+          ligma_color_profile_view_set_profile (dialog->priv->profile_view,
                                                profile);
           g_object_unref (profile);
         }
       break;
 
     case G_FILE_TYPE_DIRECTORY:
-      gimp_color_profile_view_set_error (dialog->priv->profile_view,
+      ligma_color_profile_view_set_error (dialog->priv->profile_view,
                                          _("Folder"));
       break;
 
     default:
-      gimp_color_profile_view_set_error (dialog->priv->profile_view,
+      ligma_color_profile_view_set_error (dialog->priv->profile_view,
                                          _("Not a regular file."));
       break;
     }

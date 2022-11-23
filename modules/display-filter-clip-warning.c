@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
  * Copyright (C) 2017 Ell
  *
@@ -23,19 +23,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
-#define DEFAULT_SHADOWS_COLOR    (&(GimpRGB) {0.25, 0.25, 1.00, 1.00})
-#define DEFAULT_HIGHLIGHTS_COLOR (&(GimpRGB) {1.00, 0.25, 0.25, 1.00})
-#define DEFAULT_BOGUS_COLOR      (&(GimpRGB) {1.00, 1.00, 0.25, 1.00})
+#define DEFAULT_SHADOWS_COLOR    (&(LigmaRGB) {0.25, 0.25, 1.00, 1.00})
+#define DEFAULT_HIGHLIGHTS_COLOR (&(LigmaRGB) {1.00, 0.25, 0.25, 1.00})
+#define DEFAULT_BOGUS_COLOR      (&(LigmaRGB) {1.00, 1.00, 0.25, 1.00})
 
 
 #define CDISPLAY_TYPE_CLIP_WARNING            (cdisplay_clip_warning_get_type ())
@@ -58,14 +58,14 @@ typedef struct _CdisplayClipWarningClass CdisplayClipWarningClass;
 
 struct _CdisplayClipWarning
 {
-  GimpColorDisplay  parent_instance;
+  LigmaColorDisplay  parent_instance;
 
   gboolean          show_shadows;
-  GimpRGB           shadows_color;
+  LigmaRGB           shadows_color;
   gboolean          show_highlights;
-  GimpRGB           highlights_color;
+  LigmaRGB           highlights_color;
   gboolean          show_bogus;
-  GimpRGB           bogus_color;
+  LigmaRGB           bogus_color;
   gboolean          include_alpha;
   gboolean          include_transparent;
 
@@ -74,7 +74,7 @@ struct _CdisplayClipWarning
 
 struct _CdisplayClipWarningClass
 {
-  GimpColorDisplayClass  parent_instance;
+  LigmaColorDisplayClass  parent_instance;
 };
 
 
@@ -103,7 +103,7 @@ static void    cdisplay_clip_warning_get_property   (GObject             *object
                                                      GValue              *value,
                                                      GParamSpec          *pspec);
 
-static void    cdisplay_clip_warning_convert_buffer (GimpColorDisplay    *display,
+static void    cdisplay_clip_warning_convert_buffer (LigmaColorDisplay    *display,
                                                      GeglBuffer          *buffer,
                                                      GeglRectangle       *area);
 
@@ -115,9 +115,9 @@ static void    cdisplay_clip_warning_set_member     (CdisplayClipWarning *clip_w
 static void    cdisplay_clip_warning_update_colors  (CdisplayClipWarning *clip_warning);
 
 
-static const GimpModuleInfo cdisplay_clip_warning_info =
+static const LigmaModuleInfo cdisplay_clip_warning_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("Clip warning color display filter"),
   "Ell",
   "v1.0",
@@ -127,17 +127,17 @@ static const GimpModuleInfo cdisplay_clip_warning_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (CdisplayClipWarning, cdisplay_clip_warning,
-                       GIMP_TYPE_COLOR_DISPLAY)
+                       LIGMA_TYPE_COLOR_DISPLAY)
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &cdisplay_clip_warning_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   cdisplay_clip_warning_register_type (module);
 
@@ -148,88 +148,88 @@ static void
 cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  LigmaColorDisplayClass *display_class = LIGMA_COLOR_DISPLAY_CLASS (klass);
 
   object_class->get_property     = cdisplay_clip_warning_get_property;
   object_class->set_property     = cdisplay_clip_warning_set_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SHADOWS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SHADOWS,
                             "show-shadows",
                             _("Show shadows"),
                             _("Show warning for pixels with a negative component"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_SHADOWS_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_SHADOWS_COLOR,
                         "shadows-color",
                         _("Shadows color"),
                         _("Shadows warning color"),
                         FALSE,
                         DEFAULT_SHADOWS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "shadows-color"),
     "sensitive", "show-shadows");
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_HIGHLIGHTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_HIGHLIGHTS,
                             "show-highlights",
                             _("Show highlights"),
                             _("Show warning for pixels with a component greater than one"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_HIGHLIGHTS_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_HIGHLIGHTS_COLOR,
                         "highlights-color",
                         _("Highlights color"),
                         _("Highlights warning color"),
                         FALSE,
                         DEFAULT_HIGHLIGHTS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "highlights-color"),
     "sensitive", "show-highlights");
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BOGUS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BOGUS,
                             "show-bogus",
                             _("Show bogus"),
                             _("Show warning for pixels with an infinite or NaN component"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_BOGUS_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_BOGUS_COLOR,
                         "bogus-color",
                         _("Bogus color"),
                         _("Bogus warning color"),
                         FALSE,
                         DEFAULT_BOGUS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "bogus-color"),
     "sensitive", "show-bogus");
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_ALPHA,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_ALPHA,
                             "include-alpha",
                             _("Include alpha component"),
                             _("Include alpha component in the warning"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_TRANSPARENT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_TRANSPARENT,
                             "include-transparent",
                             _("Include transparent pixels"),
                             _("Include fully transparent pixels in the warning"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
   display_class->name            = _("Clip Warning");
-  display_class->help_id         = "gimp-colordisplay-clip-warning";
-  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING;
+  display_class->help_id         = "ligma-colordisplay-clip-warning";
+  display_class->icon_name       = LIGMA_ICON_DISPLAY_FILTER_CLIP_WARNING;
 
   display_class->convert_buffer  = cdisplay_clip_warning_convert_buffer;
 }
@@ -345,7 +345,7 @@ cdisplay_clip_warning_set_property (GObject      *object,
 }
 
 static void
-cdisplay_clip_warning_convert_buffer (GimpColorDisplay *display,
+cdisplay_clip_warning_convert_buffer (LigmaColorDisplay *display,
                                       GeglBuffer       *buffer,
                                       GeglRectangle    *area)
 {
@@ -430,7 +430,7 @@ cdisplay_clip_warning_set_member (CdisplayClipWarning *clip_warning,
       cdisplay_clip_warning_update_colors (clip_warning);
 
       g_object_notify (G_OBJECT (clip_warning), property_name);
-      gimp_color_display_changed (GIMP_COLOR_DISPLAY (clip_warning));
+      ligma_color_display_changed (LIGMA_COLOR_DISPLAY (clip_warning));
     }
 }
 

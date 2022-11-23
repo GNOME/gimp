@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,12 +20,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimppenciloptions.h"
+#include "ligmapenciloptions.h"
 
 
 #define PENCIL_DEFAULT_HARD TRUE
@@ -38,47 +38,47 @@ enum
 };
 
 
-static void   gimp_pencil_options_set_property (GObject      *object,
+static void   ligma_pencil_options_set_property (GObject      *object,
                                                 guint         property_id,
                                                 const GValue *value,
                                                 GParamSpec   *pspec);
-static void   gimp_pencil_options_get_property (GObject      *object,
+static void   ligma_pencil_options_get_property (GObject      *object,
                                                 guint         property_id,
                                                 GValue       *value,
                                                 GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPencilOptions, gimp_pencil_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaPencilOptions, ligma_pencil_options,
+               LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_pencil_options_class_init (GimpPencilOptionsClass *klass)
+ligma_pencil_options_class_init (LigmaPencilOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_pencil_options_set_property;
-  object_class->get_property = gimp_pencil_options_get_property;
+  object_class->set_property = ligma_pencil_options_set_property;
+  object_class->get_property = ligma_pencil_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
                             "hard",
                             NULL, NULL,
                             PENCIL_DEFAULT_HARD,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_pencil_options_init (GimpPencilOptions *options)
+ligma_pencil_options_init (LigmaPencilOptions *options)
 {
 }
 
 static void
-gimp_pencil_options_set_property (GObject      *object,
+ligma_pencil_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
+  LigmaPaintOptions *options = LIGMA_PAINT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -92,12 +92,12 @@ gimp_pencil_options_set_property (GObject      *object,
 }
 
 static void
-gimp_pencil_options_get_property (GObject    *object,
+ligma_pencil_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
+  LigmaPaintOptions *options = LIGMA_PAINT_OPTIONS (object);
 
   switch (property_id)
     {

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * plug-in-rc.h
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #define __PLUG_IN_RC_H__
 
 
-GSList   * plug_in_rc_parse (Gimp    *gimp,
+GSList   * plug_in_rc_parse (Ligma    *ligma,
                              GFile   *file,
                              GError **error);
 gboolean   plug_in_rc_write (GSList  *plug_in_defs,

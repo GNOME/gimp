@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_DRAWABLE_GRADIENT_H__
-#define  __GIMP_DRAWABLE_GRADIENT_H__
+#ifndef  __LIGMA_DRAWABLE_GRADIENT_H__
+#define  __LIGMA_DRAWABLE_GRADIENT_H__
 
 
-void         gimp_drawable_gradient                    (GimpDrawable                *drawable,
-                                                        GimpContext                 *context,
-                                                        GimpGradient                *gradient,
+void         ligma_drawable_gradient                    (LigmaDrawable                *drawable,
+                                                        LigmaContext                 *context,
+                                                        LigmaGradient                *gradient,
                                                         GeglDistanceMetric           metric,
-                                                        GimpLayerMode                paint_mode,
-                                                        GimpGradientType             gradient_type,
+                                                        LigmaLayerMode                paint_mode,
+                                                        LigmaGradientType             gradient_type,
                                                         gdouble                      opacity,
                                                         gdouble                      offset,
-                                                        GimpRepeatMode               repeat,
+                                                        LigmaRepeatMode               repeat,
                                                         gboolean                     reverse,
-                                                        GimpGradientBlendColorSpace  blend_color_space,
+                                                        LigmaGradientBlendColorSpace  blend_color_space,
                                                         gboolean                     supersample,
                                                         gint                         max_depth,
                                                         gdouble                      threshold,
@@ -38,15 +38,15 @@ void         gimp_drawable_gradient                    (GimpDrawable            
                                                         gdouble                      starty,
                                                         gdouble                      endx,
                                                         gdouble                      endy,
-                                                        GimpProgress                *progress);
+                                                        LigmaProgress                *progress);
 
-GeglBuffer * gimp_drawable_gradient_shapeburst_distmap (GimpDrawable                *drawable,
+GeglBuffer * ligma_drawable_gradient_shapeburst_distmap (LigmaDrawable                *drawable,
                                                         GeglDistanceMetric           metric,
                                                         const GeglRectangle         *region,
-                                                        GimpProgress                *progress);
+                                                        LigmaProgress                *progress);
 
-void         gimp_drawable_gradient_adjust_coords      (GimpDrawable                *drawable,
-                                                        GimpGradientType             gradient_type,
+void         ligma_drawable_gradient_adjust_coords      (LigmaDrawable                *drawable,
+                                                        LigmaGradientType             gradient_type,
                                                         const GeglRectangle         *region,
                                                         gdouble                     *startx,
                                                         gdouble                     *starty,
@@ -54,4 +54,4 @@ void         gimp_drawable_gradient_adjust_coords      (GimpDrawable            
                                                         gdouble                     *endy);
 
 
-#endif /* __GIMP_DRAWABLE_GRADIENT_H__ */
+#endif /* __LIGMA_DRAWABLE_GRADIENT_H__ */

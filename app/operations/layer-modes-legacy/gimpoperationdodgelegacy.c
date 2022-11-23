@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdodgelegacy.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationdodgelegacy.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@
 
 #include <gegl-plugin.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "../operations-types.h"
 
-#include "gimpoperationdodgelegacy.h"
+#include "ligmaoperationdodgelegacy.h"
 
 
-static gboolean   gimp_operation_dodge_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_dodge_legacy_process (GeglOperation       *op,
                                                        void                *in,
                                                        void                *layer,
                                                        void                *mask,
@@ -40,31 +40,31 @@ static gboolean   gimp_operation_dodge_legacy_process (GeglOperation       *op,
                                                        gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationDodgeLegacy, gimp_operation_dodge_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationDodgeLegacy, ligma_operation_dodge_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_dodge_legacy_class_init (GimpOperationDodgeLegacyClass *klass)
+ligma_operation_dodge_legacy_class_init (LigmaOperationDodgeLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:dodge-legacy",
-                                 "description", "GIMP dodge mode operation",
+                                 "name",        "ligma:dodge-legacy",
+                                 "description", "LIGMA dodge mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_dodge_legacy_process;
+  layer_mode_class->process = ligma_operation_dodge_legacy_process;
 }
 
 static void
-gimp_operation_dodge_legacy_init (GimpOperationDodgeLegacy *self)
+ligma_operation_dodge_legacy_init (LigmaOperationDodgeLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_dodge_legacy_process (GeglOperation       *op,
+ligma_operation_dodge_legacy_process (GeglOperation       *op,
                                      void                *in_p,
                                      void                *layer_p,
                                      void                *mask_p,
@@ -73,7 +73,7 @@ gimp_operation_dodge_legacy_process (GeglOperation       *op,
                                      const GeglRectangle *roi,
                                      gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;

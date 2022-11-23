@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimageview.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmaimageview.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_VIEW_H__
-#define __GIMP_IMAGE_VIEW_H__
+#ifndef __LIGMA_IMAGE_VIEW_H__
+#define __LIGMA_IMAGE_VIEW_H__
 
 
-#include "gimpcontainereditor.h"
+#include "ligmacontainereditor.h"
 
 
-#define GIMP_TYPE_IMAGE_VIEW            (gimp_image_view_get_type ())
-#define GIMP_IMAGE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_VIEW, GimpImageView))
-#define GIMP_IMAGE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_VIEW, GimpImageViewClass))
-#define GIMP_IS_IMAGE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_VIEW))
-#define GIMP_IS_IMAGE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_VIEW))
-#define GIMP_IMAGE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_VIEW, GimpImageViewClass))
+#define LIGMA_TYPE_IMAGE_VIEW            (ligma_image_view_get_type ())
+#define LIGMA_IMAGE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_VIEW, LigmaImageView))
+#define LIGMA_IMAGE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_VIEW, LigmaImageViewClass))
+#define LIGMA_IS_IMAGE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_VIEW))
+#define LIGMA_IS_IMAGE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_VIEW))
+#define LIGMA_IMAGE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_VIEW, LigmaImageViewClass))
 
 
-typedef struct _GimpImageViewClass GimpImageViewClass;
+typedef struct _LigmaImageViewClass LigmaImageViewClass;
 
-struct _GimpImageView
+struct _LigmaImageView
 {
-  GimpContainerEditor  parent_instance;
+  LigmaContainerEditor  parent_instance;
 
   GtkWidget           *raise_button;
   GtkWidget           *new_button;
   GtkWidget           *delete_button;
 };
 
-struct _GimpImageViewClass
+struct _LigmaImageViewClass
 {
-  GimpContainerEditorClass  parent_class;
+  LigmaContainerEditorClass  parent_class;
 };
 
 
-GType       gimp_image_view_get_type (void) G_GNUC_CONST;
+GType       ligma_image_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_image_view_new      (GimpViewType     view_type,
-                                      GimpContainer   *container,
-                                      GimpContext     *context,
+GtkWidget * ligma_image_view_new      (LigmaViewType     view_type,
+                                      LigmaContainer   *container,
+                                      LigmaContext     *context,
                                       gint             view_size,
                                       gint             view_border_width,
-                                      GimpMenuFactory *menu_factory);
+                                      LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_IMAGE_VIEW_H__  */
+#endif  /*  __LIGMA_IMAGE_VIEW_H__  */

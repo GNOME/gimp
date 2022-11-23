@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ typedef pointer (*TsWrapperFunc) (scheme*, pointer);
 void          tinyscheme_init         (GList        *path,
                                        gboolean      register_scripts);
 
-void          ts_set_run_mode         (GimpRunMode   run_mode);
+void          ts_set_run_mode         (LigmaRunMode   run_mode);
 
 void          ts_set_print_flag       (gint          print_flag);
 void          ts_print_welcome        (void);

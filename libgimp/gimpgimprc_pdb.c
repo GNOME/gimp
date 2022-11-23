@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgimprc_pdb.c
+ * ligmaligmarc_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,103 +24,103 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpgimprc
- * @title: gimpgimprc
- * @short_description: Interactions with settings from gimprc.
+ * SECTION: ligmaligmarc
+ * @title: ligmaligmarc
+ * @short_description: Interactions with settings from ligmarc.
  *
- * Interactions with settings from gimprc.
+ * Interactions with settings from ligmarc.
  **/
 
 
 /**
- * gimp_gimprc_query:
+ * ligma_ligmarc_query:
  * @token: The token to query for.
  *
- * Queries the gimprc file parser for information on a specified token.
+ * Queries the ligmarc file parser for information on a specified token.
  *
  * This procedure is used to locate additional information contained in
- * the gimprc file considered extraneous to the operation of GIMP.
+ * the ligmarc file considered extraneous to the operation of LIGMA.
  * Plug-ins that need configuration information can expect it will be
- * stored in the user gimprc file and can use this procedure to
+ * stored in the user ligmarc file and can use this procedure to
  * retrieve it. This query procedure will return the value associated
  * with the specified token. This corresponds _only_ to entries with
  * the format: (&lt;token&gt; &lt;value&gt;). The value must be a
  * string. Entries not corresponding to this format will cause warnings
- * to be issued on gimprc parsing and will not be queryable.
+ * to be issued on ligmarc parsing and will not be queryable.
  *
  * Returns: (transfer full): The value associated with the queried token.
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_gimprc_query (const gchar *token)
+ligma_ligmarc_query (const gchar *token)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *value = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, token,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gimprc-query",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-ligmarc-query",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    value = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    value = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return value;
 }
 
 /**
- * gimp_gimprc_set:
+ * ligma_ligmarc_set:
  * @token: The token to add or modify.
  * @value: The value to set the token to.
  *
- * Sets a gimprc token to a value and saves it in the gimprc.
+ * Sets a ligmarc token to a value and saves it in the ligmarc.
  *
  * This procedure is used to add or change additional information in
- * the gimprc file that is considered extraneous to the operation of
- * GIMP. Plug-ins that need configuration information can use this
- * function to store it, and gimp_gimprc_query() to retrieve it. This
+ * the ligmarc file that is considered extraneous to the operation of
+ * LIGMA. Plug-ins that need configuration information can use this
+ * function to store it, and ligma_ligmarc_query() to retrieve it. This
  * will accept _only_ string values in UTF-8 encoding.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gimprc_set (const gchar *token,
+ligma_ligmarc_set (const gchar *token,
                  const gchar *value)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, token,
                                           G_TYPE_STRING, value,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gimprc-set",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-ligmarc-set",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_get_default_comment:
+ * ligma_get_default_comment:
  *
  * Get the default image comment as specified in the Preferences.
  *
@@ -130,30 +130,30 @@ gimp_gimprc_set (const gchar *token,
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_get_default_comment (void)
+ligma_get_default_comment (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *comment = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-default-comment",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-default-comment",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    comment = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    comment = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return comment;
 }
 
 /**
- * gimp_get_default_unit:
+ * ligma_get_default_unit:
  *
  * Get the default unit (taken from the user's locale).
  *
@@ -163,31 +163,31 @@ gimp_get_default_comment (void)
  *
  * Since: 2.4
  **/
-GimpUnit
-gimp_get_default_unit (void)
+LigmaUnit
+ligma_get_default_unit (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_PIXEL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaUnit unit_id = LIGMA_UNIT_PIXEL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-default-unit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-default-unit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit_id = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    unit_id = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return unit_id;
 }
 
 /**
- * gimp_get_monitor_resolution:
+ * ligma_get_monitor_resolution:
  * @xres: (out): X resolution.
  * @yres: (out): Y resolution.
  *
@@ -201,43 +201,43 @@ gimp_get_default_unit (void)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_get_monitor_resolution (gdouble *xres,
+ligma_get_monitor_resolution (gdouble *xres,
                              gdouble *yres)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-monitor-resolution",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-monitor-resolution",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *xres = 0.0;
   *yres = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *xres = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *yres = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *xres = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *yres = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_get_color_configuration:
+ * _ligma_get_color_configuration:
  *
  * Get a serialized version of the color management configuration.
  *
- * Returns a string that can be deserialized into a GimpColorConfig
+ * Returns a string that can be deserialized into a LigmaColorConfig
  * object representing the current color management configuration.
  *
  * Returns: (transfer full): Serialized color management configuration.
@@ -246,30 +246,30 @@ gimp_get_monitor_resolution (gdouble *xres,
  * Since: 2.4
  **/
 gchar *
-_gimp_get_color_configuration (void)
+_ligma_get_color_configuration (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *config = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-color-configuration",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-color-configuration",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    config = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    config = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return config;
 }
 
 /**
- * gimp_get_module_load_inhibit:
+ * ligma_get_module_load_inhibit:
  *
  * Get the list of modules which should not be loaded.
  *
@@ -279,24 +279,24 @@ _gimp_get_color_configuration (void)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_get_module_load_inhibit (void)
+ligma_get_module_load_inhibit (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *load_inhibit = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-module-load-inhibit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-module-load-inhibit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    load_inhibit = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    load_inhibit = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return load_inhibit;
 }

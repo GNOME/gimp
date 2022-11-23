@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabelintwidget.c
+ * ligmalabelintwidget.c
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimplabelintwidget.h"
+#include "ligmalabelintwidget.h"
 
 
 /**
- * SECTION: gimplabelintwidget
- * @title: GimpLabelIntWidget
+ * SECTION: ligmalabelintwidget
+ * @title: LigmaLabelIntWidget
  * @short_description: Widget containing a label and a widget with an
  *                     integer "value" property.
  *
- * This widget is a subclass of #GimpLabeled.
+ * This widget is a subclass of #LigmaLabeled.
  **/
 
 enum
@@ -53,58 +53,58 @@ enum
   PROP_WIDGET,
 };
 
-typedef struct _GimpLabelIntWidgetPrivate
+typedef struct _LigmaLabelIntWidgetPrivate
 {
-  GimpLabeled    parent_instance;
+  LigmaLabeled    parent_instance;
 
   GtkWidget     *widget;
   gint           value;
-} GimpLabelIntWidgetPrivate;
+} LigmaLabelIntWidgetPrivate;
 
-static void        gimp_label_int_widget_constructed       (GObject       *object);
-static void        gimp_label_int_widget_set_property      (GObject       *object,
+static void        ligma_label_int_widget_constructed       (GObject       *object);
+static void        ligma_label_int_widget_set_property      (GObject       *object,
                                                             guint          property_id,
                                                             const GValue  *value,
                                                             GParamSpec    *pspec);
-static void        gimp_label_int_widget_get_property      (GObject       *object,
+static void        ligma_label_int_widget_get_property      (GObject       *object,
                                                             guint          property_id,
                                                             GValue        *value,
                                                             GParamSpec    *pspec);
 
-static GtkWidget * gimp_label_int_widget_populate          (GimpLabeled   *widget,
+static GtkWidget * ligma_label_int_widget_populate          (LigmaLabeled   *widget,
                                                             gint          *x,
                                                             gint          *y,
                                                             gint          *width,
                                                             gint          *height);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelIntWidget, gimp_label_int_widget, GIMP_TYPE_LABELED)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaLabelIntWidget, ligma_label_int_widget, LIGMA_TYPE_LABELED)
 
-#define parent_class gimp_label_int_widget_parent_class
+#define parent_class ligma_label_int_widget_parent_class
 
-static guint gimp_label_int_widget_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_label_int_widget_signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_label_int_widget_class_init (GimpLabelIntWidgetClass *klass)
+ligma_label_int_widget_class_init (LigmaLabelIntWidgetClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpLabeledClass *labeled_class = GIMP_LABELED_CLASS (klass);
+  LigmaLabeledClass *labeled_class = LIGMA_LABELED_CLASS (klass);
 
-  gimp_label_int_widget_signals[VALUE_CHANGED] =
+  ligma_label_int_widget_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabelIntWidgetClass, value_changed),
+                  G_STRUCT_OFFSET (LigmaLabelIntWidgetClass, value_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed  = gimp_label_int_widget_constructed;
-  object_class->set_property = gimp_label_int_widget_set_property;
-  object_class->get_property = gimp_label_int_widget_get_property;
+  object_class->constructed  = ligma_label_int_widget_constructed;
+  object_class->set_property = ligma_label_int_widget_set_property;
+  object_class->get_property = ligma_label_int_widget_get_property;
 
-  labeled_class->populate    = gimp_label_int_widget_populate;
+  labeled_class->populate    = ligma_label_int_widget_populate;
 
   /**
-   * GimpLabelIntWidget:value:
+   * LigmaLabelIntWidget:value:
    *
    * The currently set value.
    *
@@ -114,10 +114,10 @@ gimp_label_int_widget_class_init (GimpLabelIntWidgetClass *klass)
                                    g_param_spec_int ("value", NULL,
                                                      "Current value",
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpLabelIntWidget:widget:
+   * LigmaLabelIntWidget:widget:
    *
    * The widget holding an integer value.
    *
@@ -127,20 +127,20 @@ gimp_label_int_widget_class_init (GimpLabelIntWidgetClass *klass)
                                    g_param_spec_object ("widget", NULL,
                                                         "Integer widget",
                                                         GTK_TYPE_WIDGET,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_label_int_widget_init (GimpLabelIntWidget *widget)
+ligma_label_int_widget_init (LigmaLabelIntWidget *widget)
 {
 }
 
 static void
-gimp_label_int_widget_constructed (GObject *object)
+ligma_label_int_widget_constructed (GObject *object)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  LigmaLabelIntWidget        *widget = LIGMA_LABEL_INT_WIDGET (object);
+  LigmaLabelIntWidgetPrivate *priv   = ligma_label_int_widget_get_instance_private (widget);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -158,19 +158,19 @@ gimp_label_int_widget_constructed (GObject *object)
 }
 
 static void
-gimp_label_int_widget_set_property (GObject      *object,
+ligma_label_int_widget_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  LigmaLabelIntWidget        *widget = LIGMA_LABEL_INT_WIDGET (object);
+  LigmaLabelIntWidgetPrivate *priv   = ligma_label_int_widget_get_instance_private (widget);
 
   switch (property_id)
     {
     case PROP_VALUE:
       priv->value = g_value_get_int (value);
-      g_signal_emit (object, gimp_label_int_widget_signals[VALUE_CHANGED], 0);
+      g_signal_emit (object, ligma_label_int_widget_signals[VALUE_CHANGED], 0);
       break;
     case PROP_WIDGET:
       priv->widget = g_value_get_object (value);
@@ -183,13 +183,13 @@ gimp_label_int_widget_set_property (GObject      *object,
 }
 
 static void
-gimp_label_int_widget_get_property (GObject    *object,
+ligma_label_int_widget_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  LigmaLabelIntWidget        *widget = LIGMA_LABEL_INT_WIDGET (object);
+  LigmaLabelIntWidgetPrivate *priv   = ligma_label_int_widget_get_instance_private (widget);
 
   switch (property_id)
     {
@@ -207,14 +207,14 @@ gimp_label_int_widget_get_property (GObject    *object,
 }
 
 static GtkWidget *
-gimp_label_int_widget_populate (GimpLabeled *labeled,
+ligma_label_int_widget_populate (LigmaLabeled *labeled,
                                 gint        *x,
                                 gint        *y,
                                 gint        *width,
                                 gint        *height)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (labeled);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  LigmaLabelIntWidget        *widget = LIGMA_LABEL_INT_WIDGET (labeled);
+  LigmaLabelIntWidgetPrivate *priv   = ligma_label_int_widget_get_instance_private (widget);
 
   gtk_grid_attach (GTK_GRID (widget), priv->widget, 1, 0, 1, 1);
   gtk_widget_show (priv->widget);
@@ -225,17 +225,17 @@ gimp_label_int_widget_populate (GimpLabeled *labeled,
 /* Public Functions */
 
 /**
- * gimp_label_int_widget_new:
+ * ligma_label_int_widget_new:
  * @text:   The text for the #GtkLabel.
  * @widget: (transfer full): The #GtkWidget to use.
  *
- * Creates a new #GimpLabelIntWidget whose "value" property is bound to
+ * Creates a new #LigmaLabelIntWidget whose "value" property is bound to
  * that of @widget (which must therefore have such an integer property).
  *
- * Returns: (transfer full): The new #GimpLabelIntWidget widget.
+ * Returns: (transfer full): The new #LigmaLabelIntWidget widget.
  **/
 GtkWidget *
-gimp_label_int_widget_new (const gchar *text,
+ligma_label_int_widget_new (const gchar *text,
                            GtkWidget   *widget)
 {
   GtkWidget  *int_widget;
@@ -246,7 +246,7 @@ gimp_label_int_widget_new (const gchar *text,
                         G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT,
                         NULL);
 
-  int_widget = g_object_new (GIMP_TYPE_LABEL_INT_WIDGET,
+  int_widget = g_object_new (LIGMA_TYPE_LABEL_INT_WIDGET,
                              "label",  text,
                              "widget", widget,
                              NULL);
@@ -255,19 +255,19 @@ gimp_label_int_widget_new (const gchar *text,
 }
 
 /**
- * gimp_label_int_widget_get_widget:
- * @widget: the #GimpLabelIntWidget.
+ * ligma_label_int_widget_get_widget:
+ * @widget: the #LigmaLabelIntWidget.
  *
  * Returns: (transfer none): The new #GtkWidget packed next to the label.
  **/
 GtkWidget *
-gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget)
+ligma_label_int_widget_get_widget (LigmaLabelIntWidget *widget)
 {
-  GimpLabelIntWidgetPrivate *priv;
+  LigmaLabelIntWidgetPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_LABEL_INT_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_LABEL_INT_WIDGET (widget), NULL);
 
-  priv = gimp_label_int_widget_get_instance_private (widget);
+  priv = ligma_label_int_widget_get_instance_private (widget);
 
   return priv->widget;
 }

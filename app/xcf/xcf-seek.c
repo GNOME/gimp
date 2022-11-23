@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #include "xcf-private.h"
 #include "xcf-seek.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 gboolean
@@ -46,7 +46,7 @@ xcf_seek_pos (XcfInfo  *info,
           return FALSE;
         }
 
-      gimp_assert (info->cp == g_seekable_tell (info->seekable));
+      ligma_assert (info->cp == g_seekable_tell (info->seekable));
     }
 
   return TRUE;

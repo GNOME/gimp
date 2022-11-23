@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextBuffer-serialize
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextBuffer-serialize
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * inspired by
  * gtktextbufferserialize.c
@@ -30,16 +30,16 @@
 
 #include "widgets-types.h"
 
-#include "gimptextbuffer.h"
-#include "gimptextbuffer-serialize.h"
+#include "ligmatextbuffer.h"
+#include "ligmatextbuffer-serialize.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  serialize  */
 
 static gboolean
-open_tag (GimpTextBuffer *buffer,
+open_tag (LigmaTextBuffer *buffer,
           GString        *string,
           GtkTextTag     *tag)
 {
@@ -47,7 +47,7 @@ open_tag (GimpTextBuffer *buffer,
   const gchar *attribute;
   gchar       *attribute_value;
 
-  name = gimp_text_buffer_tag_to_name (buffer, tag,
+  name = ligma_text_buffer_tag_to_name (buffer, tag,
                                        &attribute,
                                        &attribute_value);
 
@@ -75,11 +75,11 @@ open_tag (GimpTextBuffer *buffer,
 }
 
 static gboolean
-close_tag (GimpTextBuffer *buffer,
+close_tag (LigmaTextBuffer *buffer,
            GString        *string,
            GtkTextTag     *tag)
 {
-  const gchar *name = gimp_text_buffer_tag_to_name (buffer, tag, NULL, NULL);
+  const gchar *name = ligma_text_buffer_tag_to_name (buffer, tag, NULL, NULL);
 
   if (name)
     {
@@ -92,7 +92,7 @@ close_tag (GimpTextBuffer *buffer,
 }
 
 guint8 *
-gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
+ligma_text_buffer_serialize (GtkTextBuffer     *register_buffer,
                             GtkTextBuffer     *content_buffer,
                             const GtkTextIter *start,
                             const GtkTextIter *end,
@@ -123,7 +123,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
         {
           GtkTextTag *tag = tmp->data;
 
-          open_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag);
+          open_tag (LIGMA_TEXT_BUFFER (register_buffer), string, tag);
 
           active_tags = g_slist_prepend (active_tags, tag);
         }
@@ -167,7 +167,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 
       /* Close any open tags */
       for (tmp = active_tags; tmp; tmp = tmp->next)
-        close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tmp->data);
+        close_tag (LIGMA_TEXT_BUFFER (register_buffer), string, tmp->data);
 
       g_slist_free (active_tags);
     }
@@ -293,7 +293,7 @@ parse_tag_element (GMarkupParseContext  *context,
   const gchar *attribute_name  = NULL;
   const gchar *attribute_value = NULL;
 
-  gimp_assert (peek_state (info) == STATE_MARKUP ||
+  ligma_assert (peek_state (info) == STATE_MARKUP ||
                peek_state (info) == STATE_TAG    ||
                peek_state (info) == STATE_UNKNOWN);
 
@@ -303,7 +303,7 @@ parse_tag_element (GMarkupParseContext  *context,
   if (attribute_values)
     attribute_value = attribute_values[0];
 
-  tag = gimp_text_buffer_name_to_tag (GIMP_TEXT_BUFFER (info->register_buffer),
+  tag = ligma_text_buffer_name_to_tag (LIGMA_TEXT_BUFFER (info->register_buffer),
                                       element_name,
                                       attribute_name, attribute_value);
 
@@ -359,7 +359,7 @@ start_element_handler (GMarkupParseContext  *context,
       break;
 
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
       break;
     }
 }
@@ -376,14 +376,14 @@ end_element_handler (GMarkupParseContext  *context,
     {
     case STATE_UNKNOWN:
       pop_state (info);
-      gimp_assert (peek_state (info) == STATE_UNKNOWN ||
+      ligma_assert (peek_state (info) == STATE_UNKNOWN ||
                    peek_state (info) == STATE_TAG     ||
                    peek_state (info) == STATE_MARKUP);
       break;
 
     case STATE_TAG:
       pop_state (info);
-      gimp_assert (peek_state (info) == STATE_UNKNOWN ||
+      ligma_assert (peek_state (info) == STATE_UNKNOWN ||
                    peek_state (info) == STATE_TAG     ||
                    peek_state (info) == STATE_MARKUP);
 
@@ -394,13 +394,13 @@ end_element_handler (GMarkupParseContext  *context,
 
     case STATE_MARKUP:
       pop_state (info);
-      gimp_assert (peek_state (info) == STATE_START);
+      ligma_assert (peek_state (info) == STATE_START);
 
       info->spans = g_list_reverse (info->spans);
       break;
 
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
       break;
     }
 }
@@ -442,7 +442,7 @@ text_handler (GMarkupParseContext  *context,
   switch (peek_state (info))
     {
     case STATE_START:
-      gimp_assert_not_reached (); /* gmarkup shouldn't do this */
+      ligma_assert_not_reached (); /* gmarkup shouldn't do this */
       break;
 
     case STATE_MARKUP:
@@ -459,7 +459,7 @@ text_handler (GMarkupParseContext  *context,
       break;
 
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
       break;
     }
 }
@@ -533,7 +533,7 @@ insert_text (ParseInfo   *info,
 }
 
 gboolean
-gimp_text_buffer_deserialize (GtkTextBuffer *register_buffer,
+ligma_text_buffer_deserialize (GtkTextBuffer *register_buffer,
                               GtkTextBuffer *content_buffer,
                               GtkTextIter   *iter,
                               const guint8  *text,
@@ -581,12 +581,12 @@ gimp_text_buffer_deserialize (GtkTextBuffer *register_buffer,
 }
 
 void
-gimp_text_buffer_pre_serialize (GimpTextBuffer *buffer,
+ligma_text_buffer_pre_serialize (LigmaTextBuffer *buffer,
                                 GtkTextBuffer  *content)
 {
   GtkTextIter iter;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (GTK_IS_TEXT_BUFFER (content));
 
   gtk_text_buffer_get_start_iter (content, &iter);
@@ -622,12 +622,12 @@ gimp_text_buffer_pre_serialize (GimpTextBuffer *buffer,
 }
 
 void
-gimp_text_buffer_post_deserialize (GimpTextBuffer *buffer,
+ligma_text_buffer_post_deserialize (LigmaTextBuffer *buffer,
                                    GtkTextBuffer  *content)
 {
   GtkTextIter iter;
 
-  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (LIGMA_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (GTK_IS_TEXT_BUFFER (content));
 
   gtk_text_buffer_get_start_iter (content, &iter);

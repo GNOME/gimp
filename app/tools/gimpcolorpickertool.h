@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,46 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_COLOR_PICKER_TOOL_H__
-#define  __GIMP_COLOR_PICKER_TOOL_H__
+#ifndef  __LIGMA_COLOR_PICKER_TOOL_H__
+#define  __LIGMA_COLOR_PICKER_TOOL_H__
 
 
-#include "gimpcolortool.h"
+#include "ligmacolortool.h"
 
 
-#define GIMP_TYPE_COLOR_PICKER_TOOL            (gimp_color_picker_tool_get_type ())
-#define GIMP_COLOR_PICKER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerTool))
-#define GIMP_COLOR_PICKER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerToolClass))
-#define GIMP_IS_COLOR_PICKER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PICKER_TOOL))
-#define GIMP_IS_COLOR_PICKER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PICKER_TOOL))
-#define GIMP_COLOR_PICKER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerToolClass))
+#define LIGMA_TYPE_COLOR_PICKER_TOOL            (ligma_color_picker_tool_get_type ())
+#define LIGMA_COLOR_PICKER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_PICKER_TOOL, LigmaColorPickerTool))
+#define LIGMA_COLOR_PICKER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_PICKER_TOOL, LigmaColorPickerToolClass))
+#define LIGMA_IS_COLOR_PICKER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_PICKER_TOOL))
+#define LIGMA_IS_COLOR_PICKER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_PICKER_TOOL))
+#define LIGMA_COLOR_PICKER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_PICKER_TOOL, LigmaColorPickerToolClass))
 
-#define GIMP_COLOR_PICKER_TOOL_GET_OPTIONS(t)  (GIMP_COLOR_PICKER_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_COLOR_PICKER_TOOL_GET_OPTIONS(t)  (LIGMA_COLOR_PICKER_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpColorPickerTool      GimpColorPickerTool;
-typedef struct _GimpColorPickerToolClass GimpColorPickerToolClass;
+typedef struct _LigmaColorPickerTool      LigmaColorPickerTool;
+typedef struct _LigmaColorPickerToolClass LigmaColorPickerToolClass;
 
-struct _GimpColorPickerTool
+struct _LigmaColorPickerTool
 {
-  GimpColorTool  parent_instance;
+  LigmaColorTool  parent_instance;
 
-  GimpToolGui   *gui;
+  LigmaToolGui   *gui;
   GtkWidget     *color_area;
   GtkWidget     *color_frame1;
   GtkWidget     *color_frame2;
 };
 
-struct _GimpColorPickerToolClass
+struct _LigmaColorPickerToolClass
 {
-  GimpColorToolClass  parent_class;
+  LigmaColorToolClass  parent_class;
 };
 
 
-void    gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_color_picker_tool_register (LigmaToolRegisterCallback  callback,
                                          gpointer                  data);
 
-GType   gimp_color_picker_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_color_picker_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_COLOR_PICKER_TOOL_H__  */
+#endif  /*  __LIGMA_COLOR_PICKER_TOOL_H__  */

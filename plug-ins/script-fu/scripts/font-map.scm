@@ -28,7 +28,7 @@
 
         (if (= use-name TRUE)
             (set! text font))
-        (set! extents (gimp-text-get-extents-fontname text
+        (set! extents (ligma-text-get-extents-fontname text
                                                       font-size PIXELS
                                                       font))
         (set! width (car extents))
@@ -55,7 +55,7 @@
         (if (= use-name TRUE)
             (set! text font)
         )
-        (set! extents (gimp-text-get-extents-fontname text
+        (set! extents (ligma-text-get-extents-fontname text
                                                       font-size PIXELS
                                                       font))
         (set! height (cadr extents))
@@ -72,9 +72,9 @@
   )
 
   (let* (
-        ; gimp-fonts-get-list returns a one element list of results,
+        ; ligma-fonts-get-list returns a one element list of results,
         ; the only element is itself a list of fonts, possibly empty.
-        (font-list  (car (gimp-fonts-get-list font-filter)))
+        (font-list  (car (ligma-fonts-get-list font-filter)))
         (num-fonts  (length font-list))
         (label-size (/ font-size 2))
         (border     (+ border (* labels (/ label-size 2))))
@@ -84,35 +84,35 @@
         (width      (+ maxwidth (* 2 border)))
         (height     (+ (+ (* maxheight num-fonts) (* 2 border))
                        (* labels (* label-size num-fonts))))
-        (img        (car (gimp-image-new width height (if (= colors 0)
+        (img        (car (ligma-image-new width height (if (= colors 0)
                                                           GRAY RGB))))
-        (drawable   (car (gimp-layer-new img width height (if (= colors 0)
+        (drawable   (car (ligma-layer-new img width height (if (= colors 0)
                                                               GRAY-IMAGE RGB-IMAGE)
                                          "Background" 100 LAYER-MODE-NORMAL)))
         (count      0)
         (font       "")
         )
 
-    (gimp-context-push)
+    (ligma-context-push)
 
-    (gimp-image-undo-disable img)
+    (ligma-image-undo-disable img)
 
     (if (= colors 0)
         (begin
-          (gimp-context-set-background '(255 255 255))
-          (gimp-context-set-foreground '(0 0 0))))
+          (ligma-context-set-background '(255 255 255))
+          (ligma-context-set-foreground '(0 0 0))))
 
-    (gimp-image-insert-layer img drawable 0 0)
-    (gimp-drawable-edit-clear drawable)
+    (ligma-image-insert-layer img drawable 0 0)
+    (ligma-drawable-edit-clear drawable)
 
     (if (= labels TRUE)
         (begin
-          (set! drawable (car (gimp-layer-new img width height
+          (set! drawable (car (ligma-layer-new img width height
                                               (if (= colors 0)
                                                   GRAYA-IMAGE RGBA-IMAGE)
                                               "Labels" 100 LAYER-MODE-NORMAL)))
-          (gimp-image-insert-layer img drawable 0 -1)))
-          (gimp-drawable-edit-clear drawable)
+          (ligma-image-insert-layer img drawable 0 -1)))
+          (ligma-drawable-edit-clear drawable)
 
     (while (< count num-fonts)
       (set! font (car font-list))
@@ -120,7 +120,7 @@
       (if (= use-name TRUE)
           (set! text font))
 
-      (gimp-text-fontname img -1
+      (ligma-text-fontname img -1
                           border
                           y
                           text
@@ -131,7 +131,7 @@
 
       (if (= labels TRUE)
           (begin
-            (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
+            (ligma-floating-sel-anchor (car (ligma-text-fontname img drawable
                                                                (- border
                                                                   (/ label-size 2))
                                                                (- y
@@ -148,12 +148,12 @@
       (set! count (+ count 1))
     )
 
-    (gimp-image-set-selected-layers img 1 (vector drawable))
+    (ligma-image-set-selected-layers img 1 (vector drawable))
 
-    (gimp-image-undo-enable img)
-    (gimp-display-new img)
+    (ligma-image-undo-enable img)
+    (ligma-display-new img)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 

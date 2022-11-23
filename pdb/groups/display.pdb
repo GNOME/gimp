@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub display_id_is_valid {
     $blurb = 'Returns TRUE if the display ID is valid.';
@@ -39,7 +39,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  valid = (gimp_display_get_by_id (gimp, display_id) != NULL);
+  valid = (ligma_display_get_by_id (ligma, display_id) != NULL);
 }
 CODE
     );
@@ -51,10 +51,10 @@ sub display_new {
     $help = <<'HELP';
 Creates a new display for the specified image. If the image already has a
 display, another is added. Multiple displays are handled transparently by
-GIMP. The newly created display is returned and can be subsequently destroyed
-with a call to gimp_display_delete(). This procedure only makes sense for use
-with the GIMP UI, and will result in an execution error if called when
-GIMP has no UI.
+LIGMA. The newly created display is returned and can be subsequently destroyed
+with a call to ligma_display_delete(). This procedure only makes sense for use
+with the LIGMA UI, and will result in an execution error if called when
+LIGMA has no UI.
 HELP
 
     &std_pdb_misc;
@@ -72,14 +72,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
-  display = gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL);
+  display = ligma_create_display (ligma, image, LIGMA_UNIT_PIXEL, 1.0, NULL);
 
   if (display)
     {
       /* the first display takes ownership of the image */
-      if (gimp_image_get_display_count (image) == 1)
+      if (ligma_image_get_display_count (image) == 1)
         g_object_unref (image);
     }
   else
@@ -111,7 +111,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_delete_display (gimp, display);
+  ligma_delete_display (ligma, display);
 }
 CODE
     );
@@ -134,7 +134,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_display_present (display);
+  ligma_display_present (display);
 }
 CODE
     );
@@ -165,7 +165,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  window = (gint32) gimp_get_display_window_id (gimp, display);
+  window = (gint32) ligma_get_display_window_id (ligma, display);
 }
 CODE
     );
@@ -183,11 +183,11 @@ HELP
     &std_pdb_misc;
 
     %invoke = (
-        headers => [ qw("core/gimpcontainer.h") ],
+        headers => [ qw("core/ligmacontainer.h") ],
         code    => <<'CODE'
 
 {
-  gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
+  ligma_container_foreach (ligma->images, (GFunc) ligma_image_flush, NULL);
 }
 CODE
     );
@@ -216,15 +216,15 @@ HELP
 	code => <<'CODE'
 {
   success = (old_image != new_image    &&
-             gimp_image_get_display_count (old_image) > 0 &&
-             gimp_image_get_display_count (new_image) == 0);
+             ligma_image_get_display_count (old_image) > 0 &&
+             ligma_image_get_display_count (new_image) == 0);
 
   if (success)
     {
-      gimp_reconnect_displays (gimp, old_image, new_image);
+      ligma_reconnect_displays (ligma, old_image, new_image);
 
       /* take ownership of the image */
-      if (gimp_image_get_display_count (new_image) > 0)
+      if (ligma_image_get_display_count (new_image) > 0)
         g_object_unref (new_image);
     }
 }
@@ -233,8 +233,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpdisplay.h");
+@headers = qw("core/ligma.h"
+              "core/ligmadisplay.h");
 
 @procs = qw(display_id_is_valid
             display_new
@@ -247,7 +247,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Display procedures';
-$doc_title = 'gimpdisplay';
+$doc_title = 'ligmadisplay';
 $doc_short_desc = 'Functions to create, delete and flush displays (views) on an image.';
 $doc_long_desc = 'Functions to create, delete and flush displays (views) on an image.';
 

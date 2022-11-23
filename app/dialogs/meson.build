@@ -1,14 +1,14 @@
 welcome_dialog_data_h = custom_target('welcome-dialog-data-h',
                                       input : [meson.project_source_root() / 'tools/generate-welcome-dialog-data.py',
-                                               meson.project_source_root() / 'desktop/org.gimp.GIMP.appdata.xml.in.in'],
+                                               meson.project_source_root() / 'desktop/org.ligma.LIGMA.appdata.xml.in.in'],
                                       output : ['welcome-dialog-data.h'],
-                                      command : ['python3', '@INPUT0@', gimp_version, '--header'],
+                                      command : ['python3', '@INPUT0@', ligma_version, '--header'],
                                       capture: true)
 welcome_dialog_data_c = custom_target('welcome-dialog-data-c',
                                       input : [meson.project_source_root() / 'tools/generate-welcome-dialog-data.py',
-                                               meson.project_source_root() / 'desktop/org.gimp.GIMP.appdata.xml.in.in'],
+                                               meson.project_source_root() / 'desktop/org.ligma.LIGMA.appdata.xml.in.in'],
                                       output : ['welcome-dialog-data.c'],
-                                      command : ['python3', '@INPUT0@', gimp_version],
+                                      command : ['python3', '@INPUT0@', ligma_version],
                                       capture: true)
 
 libappdialogs_sources = [
@@ -74,7 +74,7 @@ libappdialogs_sources += [
 libappdialogs = static_library('appdialogs',
   libappdialogs_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: '-DG_LOG_DOMAIN="Gimp-Dialogs"',
+  c_args: '-DG_LOG_DOMAIN="Ligma-Dialogs"',
   dependencies: [
     appstream_glib,
     gegl,

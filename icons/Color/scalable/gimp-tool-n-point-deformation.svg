@@ -13,13 +13,13 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:export-ydpi="90.000000"
    inkscape:export-xdpi="90.000000"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/stock-layers-16.png"
+   inkscape:export-filename="/home/jimmac/src/cvs/gnome/ligma/themes/Default/images/stock-layers-16.png"
    width="16"
    height="16"
    id="svg11300"
    sodipodi:version="0.32"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-n-point-deformation.svg"
+   sodipodi:docname="ligma-tool-n-point-deformation.svg"
    version="1.0"
    viewBox="0 0 16 16">
   <sodipodi:namedview
@@ -194,7 +194,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       id="gimp-tool-n-point-deformation-8"
+       id="ligma-tool-n-point-deformation-8"
        transform="matrix(1.0066138,0,0,0.92337031,-0.29705342,-956.91062)">
       <g
          transform="matrix(0.34732867,0,0,0.27325738,-310.3608,1427.3192)"

@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-python.
+# traditional Chinese translation for ligma-python.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python 2.1.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python 2.1.6\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2017-04-13 14:39+0000\n"
 "PO-Revision-Date: 2017-04-19 21:24+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
@@ -18,459 +18,459 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pyligma/ligmafu.py:395
 #, fuzzy
 msgid "Missing exception information"
 msgstr "有關文字輸入欄的選項"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pyligma/ligmafu.py:404
 #, fuzzy, python-format
 msgid "An error occurred running %s"
 msgstr "發生錯誤。"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pyligma/ligmafu.py:415
 msgid "_More Information"
 msgstr "更多資訊(_M)"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:528 ../plug-ins/pyligma/ligmafu.py:540
+#: ../plug-ins/pyligma/ligmafu.py:546
 msgid "No"
 msgstr "否"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:538 ../plug-ins/pyligma/ligmafu.py:546
 msgid "Yes"
 msgstr "是"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:599 ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu 檔案選擇"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pyligma/ligmafu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu 資料夾選擇"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pyligma/ligmafu.py:737
 #, fuzzy, python-format
 msgid "Invalid input for '%s'"
 msgstr "--%2$s 有無效的數值「%1$s」"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 #, fuzzy
 msgid "Python-Fu Color Selection"
 msgstr "顏色選擇對話盒的標題"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 #, fuzzy
 msgid "Saving as colored XHTML"
 msgstr "儲存時預設建議的檔案名稱"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 #, fuzzy
 msgid "Save as colored XHTML"
 msgstr "將連絡人儲存為 VCar_d..."
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 #, fuzzy
 msgid "Colored XHTML"
 msgstr "XHTML 1.0 - Tags"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 #, fuzzy
 msgid "Character _source"
 msgstr "來源選項"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "原始碼"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "文字檔"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 #, fuzzy
 msgid "Entry box"
 msgstr "組合方塊項目"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 #, fuzzy
 msgid "_Write a separate CSS file"
 msgstr "無法寫入‘%s’檔案：%s"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "檔案名稱"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:93
 msgid "_Export histogram..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:95
 msgid "_Image"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:96
 msgid "_Drawable"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:97
 msgid "Histogram _File"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:98
 msgid "_Bucket Size"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:99
 msgid "Sample _Average"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:100
 msgid "Output format"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:101
 msgid "Pixel count"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:102
 msgid "Normalized"
 msgstr "標準化"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:103
 msgid "Percent"
 msgstr "百分比"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "添加一層霧"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "霧(_F)..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "圖層名稱(_L)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 #, fuzzy
 msgid "Clouds"
 msgstr "密雲"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "霧的顏色(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "亂流(_T)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "不透明度(_A)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 #, fuzzy
 msgid "Offset the colors in a palette"
 msgstr "增強顏色對比(_C)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 #, fuzzy
 msgid "_Offset Palette..."
 msgstr "調色盤顏色 %d"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:334
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "調色盤"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "偏移(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Red"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Green"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Blue"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Hue"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 #, fuzzy
 msgid "Saturation"
 msgstr "選擇性綠色飽和"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Value"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:29
 msgid "Index"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:30
 msgid "Random"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "A-color"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "B-color"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:312
 #, fuzzy
 msgid "Sort the colors in a palette"
 msgstr "增強顏色對比(_C)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:331
 #, fuzzy
 msgid "_Sort Palette..."
 msgstr "調色盤顏色 %d"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "All"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:337
 msgid "Partitioned"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:339
 #, fuzzy
 msgid "Channel to _sort"
 msgstr "seahorse 收件人欄位的排序形式"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:341
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:344
 #, fuzzy
 msgid "_Ascending"
 msgstr "遞增(_A)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:342
 #, fuzzy
 msgid "Secondary Channel to s_ort"
 msgstr "seahorse 收件人欄位的排序形式"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:345
 msgid "_Quantization"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 #, fuzzy
 msgid "Palette to _Repeating Gradient"
 msgstr "按這裡可以加入新的選字盤"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "建立一漸層，使用調色盤中的顏色"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 #, fuzzy
 msgid "Palette to _Gradient"
 msgstr "按這裡可以加入新的選字盤"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "切片"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "沿著指南剪裁圖像，創建圖像和一個 HTML 表格片段"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "切片(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 #, fuzzy
 msgid "Path for HTML export"
 msgstr "匯出 HTML 到指定位置"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 #, fuzzy
 msgid "Filename for export"
 msgstr "匯出 HTML 到指定位置"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 #, fuzzy
 msgid "Image name prefix"
 msgstr "圖片檔案名稱"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "圖片格式"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 #, fuzzy
 msgid "Separate image folder"
 msgstr "您選取了 %d 個資料夾"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:442
 #, fuzzy
 msgid "Folder for image export"
 msgstr "匯出 HTML 到指定位置"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 #, fuzzy
 msgid "Space between table elements"
 msgstr "區域中元件間的間距"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr ""
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pyligma/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "Python 訊息視窗"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pyligma/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:144
+#: ../plug-ins/pyligma/plug-ins/python-console.py:144
 #, fuzzy
 msgid "Python Procedure Browser"
 msgstr "瀏覽器需要終端機方可運作"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:173
+#: ../plug-ins/pyligma/plug-ins/python-console.py:173
 #, fuzzy, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "無法開啟‘%s’來寫入資料：%s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:188
+#: ../plug-ins/pyligma/plug-ins/python-console.py:188
 #, fuzzy, python-format
 msgid "Could not write to '%s': %s"
 msgstr "無法將 %s 的名稱更改為 %s：%s\n"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:196
+#: ../plug-ins/pyligma/plug-ins/python-console.py:196
 #, fuzzy
 msgid "Save Python-Fu Console Output"
 msgstr "儲存 Script-Fu 訊息視窗輸出"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
-msgid "Interactive GIMP Python interpreter"
-msgstr "互動式 GIMP Python 解譯器"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:222
+msgid "Interactive LIGMA Python interpreter"
+msgstr "互動式 LIGMA Python 解譯器"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:227
+#: ../plug-ins/pyligma/plug-ins/python-console.py:227
 msgid "_Console"
 msgstr "資訊視窗(_C)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 #, fuzzy
 msgid "_Drop Shadow and Bevel..."
 msgstr "分頁拖放的群組"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "陰影模糊(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "斜邊(_B)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "陰影(_D)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 #, fuzzy
 msgid "Drop shadow _X displacement"
 msgstr "拖放"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 #, fuzzy
 msgid "Drop shadow _Y displacement"
 msgstr "拖放"

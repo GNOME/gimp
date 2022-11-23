@@ -13,9 +13,9 @@ PDBGEN
 
 What is this?
 PDBGEN is a tool to automate much of the drudge work of making PDB interfaces
-to GIMP internals. Right now, it generates PDB description records,
+to LIGMA internals. Right now, it generates PDB description records,
 argument marshallers (with sanity checking) for the app side, as well
-as libgimp wrappers for C plugins. It's written so that extending it
+as libligma wrappers for C plugins. It's written so that extending it
 to provide support for CORBA and other languages suited to static
 autogeneration.
 
@@ -23,13 +23,13 @@ Invoking PDBGEN from the command line:
 1. Change into the ./pdb directory.
 2. $ ./pdbgen.pl DIRNAME
 where DIRNAME is either "lib" or "app", depending on which set of files
-you want to generate. The files are written into $destdir/app or $destdir/libgimp.
+you want to generate. The files are written into $destdir/app or $destdir/libligma.
 $destdir is the environment variable destdir. If it's not set,
 then it's the ./pdb directory. Make sure the directories
-$destdir/app and $destdir/libgimp already exist and you have write permissions.
+$destdir/app and $destdir/libligma already exist and you have write permissions.
 Otherwise the code generator will fail and exit.
 It's up to you to diff the file you changed. When you're happy with
-the generated file, copy it into the actual ./app/ or ./libgimp/ directory
+the generated file, copy it into the actual ./app/ or ./libligma/ directory
 where it finally gets built.
 
 Anatomy of a PDB descriptor:
@@ -41,11 +41,11 @@ do to help you do this. However, at the simplest level, you don't need
 to know perl at all to make PDB descriptors.
 
 Annotated description:
-For example, we will look at gimp_display_new, specified in gdisplay.pdb.
+For example, we will look at ligma_display_new, specified in gdisplay.pdb.
 
 sub display_new { 
 
-We start with the name of our PDB function (not including the "gimp_" prefix).
+We start with the name of our PDB function (not including the "ligma_" prefix).
 
     $blurb = 'Create a new display for the specified image.';
 
@@ -54,9 +54,9 @@ This directly corresponds to the "blurb" field in the ProcRecord.
     $help = <<'HELP';
 Creates a new display for the specified image. If the image already has a
 display, another is added. Multiple displays are handled transparently by the
-GIMP. The newly created display is returned and can be subsequently destroyed
-with a call to 'gimp-display-delete'. This procedure only makes sense for use
-with the GIMP UI.
+LIGMA. The newly created display is returned and can be subsequently destroyed
+with a call to 'ligma-display-delete'. This procedure only makes sense for use
+with the LIGMA UI.
 HELP
 
 This is the help field. Notice because it is a long string, we used HERE

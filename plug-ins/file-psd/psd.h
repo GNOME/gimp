@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,14 +36,14 @@
 #define LOAD_THUMB_PROC                 "file-psd-load-thumb"
 #define SAVE_PROC                       "file-psd-save"
 #define PLUG_IN_BINARY                  "file-psd"
-#define PLUG_IN_ROLE                    "gimp-file-psd"
+#define PLUG_IN_ROLE                    "ligma-file-psd"
 
-#define GIMP_PARASITE_COMMENT           "gimp-comment"
+#define LIGMA_PARASITE_COMMENT           "ligma-comment"
 
 #define PSD_PARASITE_DUOTONE_DATA       "psd-duotone-data"
 
-/* Copied from app/base/gimpimage-quick-mask.h - internal identifier for quick mask channel */
-#define GIMP_IMAGE_QUICK_MASK_NAME      "Qmask"
+/* Copied from app/base/ligmaimage-quick-mask.h - internal identifier for quick mask channel */
+#define LIGMA_IMAGE_QUICK_MASK_NAME      "Qmask"
 
 #define MAX_RAW_SIZE    0               /* FIXME all images are raw if 0 */
 
@@ -423,13 +423,13 @@ typedef union
   CMGrayColor       gray;
 } CMColor;
 
-/* GIMP layer mode info */
+/* LIGMA layer mode info */
 typedef struct
 {
-  GimpLayerMode          mode;
-  GimpLayerColorSpace    blend_space;
-  GimpLayerColorSpace    composite_space;
-  GimpLayerCompositeMode composite_mode;
+  LigmaLayerMode          mode;
+  LigmaLayerColorSpace    blend_space;
+  LigmaLayerColorSpace    composite_space;
+  LigmaLayerCompositeMode composite_mode;
 } LayerModeInfo;
 
 /* Image resolution data */
@@ -578,7 +578,7 @@ typedef struct
 /* PSD Layer data structure */
 typedef struct
 {
-  gboolean              drop;                   /* Do not add layer to GIMP image */
+  gboolean              drop;                   /* Do not add layer to LIGMA image */
   gint32                top;                    /* Layer top */
   gint32                left;                   /* Layer left */
   gint32                bottom;                 /* Layer bottom */
@@ -617,7 +617,7 @@ typedef struct
 /* PSD Channel data structure */
 typedef struct
 {
-  GimpRGB       gimp_color;             /* Gimp RGB color */
+  LigmaRGB       ligma_color;             /* Ligma RGB color */
   gint16        opacity;                /* Opacity */
   guchar        ps_mode;                /* PS mode flag */
   guchar        ps_kind;                /* PS type flag */
@@ -656,7 +656,7 @@ typedef struct
   guint32               columns;                /* Number of columns: 1 - 30000 */
   guint16               bps;                    /* Bits per sample: 1, 8, 16, or 32 */
   guint16               color_mode;             /* Image color mode: {PSDColorMode} */
-  GimpImageBaseType     base_type;              /* Image base color mode: (GIMP) */
+  LigmaImageBaseType     base_type;              /* Image base color mode: (LIGMA) */
   guint16               comp_mode;              /* Merged image compression mode */
   guchar               *color_map;              /* Color map data */
   guint32               color_map_len;          /* Color map data length */
@@ -672,7 +672,7 @@ typedef struct
   guint64               merged_image_len;       /* Merged image pixel data block length */
   gboolean              no_icc;                 /* Do not use ICC profile */
   guint16               layer_state;            /* Active layer index counting from bottom up */
-  GList                *layer_selection;        /* Selected layer IDs (GIMP layer tattoos) */
+  GList                *layer_selection;        /* Selected layer IDs (LIGMA layer tattoos) */
   GPtrArray            *alpha_names;            /* Alpha channel names */
   PSDchanneldata      **alpha_display_info;     /* Alpha channel display info */
   guint16               alpha_display_count;    /* Number of alpha channel display info recs */
@@ -680,7 +680,7 @@ typedef struct
   guint16               alpha_id_count;         /* Number of alpha channel id items */
   guint16               quick_mask_id;          /* Channel number containing quick mask */
 
-  GimpColorProfile     *cmyk_profile;
+  LigmaColorProfile     *cmyk_profile;
   gpointer              cmyk_transform;
   gpointer              cmyk_transform_alpha;
 } PSDimage;

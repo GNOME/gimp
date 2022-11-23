@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_EDIT_H__
-#define __GIMP_DRAWABLE_EDIT_H__
+#ifndef __LIGMA_DRAWABLE_EDIT_H__
+#define __LIGMA_DRAWABLE_EDIT_H__
 
 
-void   gimp_drawable_edit_clear (GimpDrawable    *drawable,
-                                 GimpContext     *context);
-void   gimp_drawable_edit_fill  (GimpDrawable    *drawable,
-                                 GimpFillOptions *options,
+void   ligma_drawable_edit_clear (LigmaDrawable    *drawable,
+                                 LigmaContext     *context);
+void   ligma_drawable_edit_fill  (LigmaDrawable    *drawable,
+                                 LigmaFillOptions *options,
                                  const gchar     *undo_desc);
 
 
-#endif  /*  __GIMP_DRAWABLE_EDIT_H__  */
+#endif  /*  __LIGMA_DRAWABLE_EDIT_H__  */

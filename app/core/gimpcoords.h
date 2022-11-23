@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcoords.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmacoords.h
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COORDS_H__
-#define __GIMP_COORDS_H__
+#ifndef __LIGMA_COORDS_H__
+#define __LIGMA_COORDS_H__
 
 
-void     gimp_coords_mix            (const gdouble     amul,
-                                     const GimpCoords *a,
+void     ligma_coords_mix            (const gdouble     amul,
+                                     const LigmaCoords *a,
                                      const gdouble     bmul,
-                                     const GimpCoords *b,
-                                     GimpCoords       *ret_val);
-void     gimp_coords_average        (const GimpCoords *a,
-                                     const GimpCoords *b,
-                                     GimpCoords       *ret_average);
-void     gimp_coords_add            (const GimpCoords *a,
-                                     const GimpCoords *b,
-                                     GimpCoords       *ret_add);
-void     gimp_coords_difference     (const GimpCoords *a,
-                                     const GimpCoords *b,
-                                     GimpCoords       *difference);
-void     gimp_coords_scale          (const gdouble     f,
-                                     const GimpCoords *a,
-                                     GimpCoords       *ret_product);
+                                     const LigmaCoords *b,
+                                     LigmaCoords       *ret_val);
+void     ligma_coords_average        (const LigmaCoords *a,
+                                     const LigmaCoords *b,
+                                     LigmaCoords       *ret_average);
+void     ligma_coords_add            (const LigmaCoords *a,
+                                     const LigmaCoords *b,
+                                     LigmaCoords       *ret_add);
+void     ligma_coords_difference     (const LigmaCoords *a,
+                                     const LigmaCoords *b,
+                                     LigmaCoords       *difference);
+void     ligma_coords_scale          (const gdouble     f,
+                                     const LigmaCoords *a,
+                                     LigmaCoords       *ret_product);
 
-gdouble  gimp_coords_scalarprod     (const GimpCoords *a,
-                                     const GimpCoords *b);
-gdouble  gimp_coords_length         (const GimpCoords *a);
-gdouble  gimp_coords_length_squared (const GimpCoords *a);
-gdouble  gimp_coords_manhattan_dist (const GimpCoords *a,
-                                     const GimpCoords *b);
+gdouble  ligma_coords_scalarprod     (const LigmaCoords *a,
+                                     const LigmaCoords *b);
+gdouble  ligma_coords_length         (const LigmaCoords *a);
+gdouble  ligma_coords_length_squared (const LigmaCoords *a);
+gdouble  ligma_coords_manhattan_dist (const LigmaCoords *a,
+                                     const LigmaCoords *b);
 
-gboolean gimp_coords_equal          (const GimpCoords *a,
-                                     const GimpCoords *b);
+gboolean ligma_coords_equal          (const LigmaCoords *a,
+                                     const LigmaCoords *b);
 
-gdouble  gimp_coords_direction      (const GimpCoords *a,
-                                     const GimpCoords *b);
+gdouble  ligma_coords_direction      (const LigmaCoords *a,
+                                     const LigmaCoords *b);
 
 
-#endif /* __GIMP_COORDS_H__ */
+#endif /* __LIGMA_COORDS_H__ */

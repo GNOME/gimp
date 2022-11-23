@@ -16,9 +16,9 @@ endif
 screenshot = executable('screenshot',
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     x11, xmu, xext, xfixes,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

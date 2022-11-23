@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,29 +22,29 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-rulers.h"
-#include "gimpdisplayshell-scale.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-rulers.h"
+#include "ligmadisplayshell-scale.h"
 
 
 /**
- * gimp_display_shell_rulers_update:
+ * ligma_display_shell_rulers_update:
  * @shell:
  *
  **/
 void
-gimp_display_shell_rulers_update (GimpDisplayShell *shell)
+ligma_display_shell_rulers_update (LigmaDisplayShell *shell)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gint       image_width;
   gint       image_height;
   gdouble    offset_x     = 0.0;
@@ -63,18 +63,18 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (image)
     {
       gint    image_x, image_y;
       gdouble res_x, res_y;
 
-      gimp_display_shell_scale_get_image_bounds (shell,
+      ligma_display_shell_scale_get_image_bounds (shell,
                                                  &image_x, &image_y,
                                                  &image_width, &image_height);
 
-      gimp_display_shell_get_rotated_scale (shell, &scale_x, &scale_y);
+      ligma_display_shell_get_rotated_scale (shell, &scale_x, &scale_y);
 
       image_width  /= scale_x;
       image_height /= scale_y;
@@ -82,7 +82,7 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
       offset_x = shell->offset_x - image_x;
       offset_y = shell->offset_y - image_y;
 
-      gimp_image_get_resolution (image, &res_x, &res_y);
+      ligma_image_get_resolution (image, &res_x, &res_y);
 
       if (shell->rotate_angle == 0.0 || res_x == res_y)
         {
@@ -121,18 +121,18 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
   if (image)
     {
-      horizontal_upper    = gimp_pixels_to_units (shell->disp_width / scale_x,
+      horizontal_upper    = ligma_pixels_to_units (shell->disp_width / scale_x,
                                                   shell->unit,
                                                   resolution_x);
-      horizontal_max_size = gimp_pixels_to_units (MAX (image_width,
+      horizontal_max_size = ligma_pixels_to_units (MAX (image_width,
                                                        image_height),
                                                   shell->unit,
                                                   resolution_x);
 
-      vertical_upper      = gimp_pixels_to_units (shell->disp_height / scale_y,
+      vertical_upper      = ligma_pixels_to_units (shell->disp_height / scale_y,
                                                   shell->unit,
                                                   resolution_y);
-      vertical_max_size   = gimp_pixels_to_units (MAX (image_width,
+      vertical_max_size   = ligma_pixels_to_units (MAX (image_width,
                                                        image_height),
                                                   shell->unit,
                                                   resolution_y);
@@ -163,19 +163,19 @@ gimp_display_shell_rulers_update (GimpDisplayShell *shell)
 
   /* Finally setup the actual rulers */
 
-  gimp_ruler_set_range (GIMP_RULER (shell->hrule),
+  ligma_ruler_set_range (LIGMA_RULER (shell->hrule),
                         horizontal_lower,
                         horizontal_upper,
                         horizontal_max_size);
 
-  gimp_ruler_set_unit  (GIMP_RULER (shell->hrule),
+  ligma_ruler_set_unit  (LIGMA_RULER (shell->hrule),
                         shell->unit);
 
-  gimp_ruler_set_range (GIMP_RULER (shell->vrule),
+  ligma_ruler_set_range (LIGMA_RULER (shell->vrule),
                         vertical_lower,
                         vertical_upper,
                         vertical_max_size);
 
-  gimp_ruler_set_unit  (GIMP_RULER (shell->vrule),
+  ligma_ruler_set_unit  (LIGMA_RULER (shell->vrule),
                         shell->unit);
 }

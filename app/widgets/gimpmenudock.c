@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmenudock.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * ligmamenudock.c
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,47 +25,47 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplist.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalist.h"
 
-#include "gimpdialogfactory.h"
-#include "gimpdockable.h"
-#include "gimpdockbook.h"
-#include "gimpmenudock.h"
+#include "ligmadialogfactory.h"
+#include "ligmadockable.h"
+#include "ligmadockbook.h"
+#include "ligmamenudock.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_MINIMAL_WIDTH  200
 
 
-struct _GimpMenuDockPrivate
+struct _LigmaMenuDockPrivate
 {
   gint make_sizeof_greater_than_zero;
 };
 
 
-static void   gimp_menu_dock_style_updated (GtkWidget *widget);
+static void   ligma_menu_dock_style_updated (GtkWidget *widget);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_DOCK)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaMenuDock, ligma_menu_dock, LIGMA_TYPE_DOCK)
 
-#define parent_class gimp_menu_dock_parent_class
+#define parent_class ligma_menu_dock_parent_class
 
 
 static void
-gimp_menu_dock_class_init (GimpMenuDockClass *klass)
+ligma_menu_dock_class_init (LigmaMenuDockClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->style_updated = gimp_menu_dock_style_updated;
+  widget_class->style_updated = ligma_menu_dock_style_updated;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("minimal-width",
@@ -73,16 +73,16 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_MINIMAL_WIDTH,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_menu_dock_init (GimpMenuDock *dock)
+ligma_menu_dock_init (LigmaMenuDock *dock)
 {
 }
 
 static void
-gimp_menu_dock_style_updated (GtkWidget *widget)
+ligma_menu_dock_style_updated (GtkWidget *widget)
 {
   gint minimal_width = -1;
 
@@ -96,7 +96,7 @@ gimp_menu_dock_style_updated (GtkWidget *widget)
 }
 
 GtkWidget *
-gimp_menu_dock_new (void)
+ligma_menu_dock_new (void)
 {
-  return g_object_new (GIMP_TYPE_MENU_DOCK, NULL);
+  return g_object_new (LIGMA_TYPE_MENU_DOCK, NULL);
 }

@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-XCF\"	\
+	-DG_LOG_DOMAIN=\"Ligma-XCF\"	\
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\

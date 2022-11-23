@@ -16,10 +16,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -40,10 +40,10 @@ import time
 
 
 def result_success():
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
 
-PROC_NAME = "plug-in-spyrogimp"
+PROC_NAME = "plug-in-spyroligma"
 
 two_pi, half_pi = 2 * pi, pi / 2
 layer_name = _("Spyro Layer")
@@ -369,20 +369,20 @@ class SelectionToPath:
 
     def convert_selection_to_path(self):
 
-        if Gimp.Selection.is_empty(self.image):
+        if Ligma.Selection.is_empty(self.image):
             selection_was_empty = True
-            Gimp.Selection.all(self.image)
+            Ligma.Selection.all(self.image)
         else:
             selection_was_empty = False
 
-        result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, self.image),
+        result = Ligma.get_pdb().run_procedure('plug-in-sel2path', [
+            GObject.Value(Ligma.RunMode, Ligma.RunMode.NONINTERACTIVE),
+            GObject.Value(Ligma.Image, self.image),
             GObject.Value(GObject.TYPE_INT, 0),
             # XXX: I could use self.image.list_selected_layers() but for
             # this call, it doesn't matter anyway.
-            GObject.Value(Gimp.ObjectArray,
-                          Gimp.ObjectArray.new(Gimp.Drawable, [], False)),
+            GObject.Value(Ligma.ObjectArray,
+                          Ligma.ObjectArray.new(Ligma.Drawable, [], False)),
         ])
 
         self.path = self.image.list_vectors()[0]
@@ -406,11 +406,11 @@ class SelectionToPath:
 
         if selection_was_empty:
             # Restore empty selection if it was empty.
-            Gimp.Selection.none(self.image)
+            Ligma.Selection.none(self.image)
 
     def compute_selection_hash(self):
         return naive_hash(self.image)
-        # In gimp 2 we used this:
+        # In ligma 2 we used this:
         #px = self.image.get_selection().  get_pixel_rgn(0, 0, self.image.get_width(), self.image.get_height())
         #return px[0:self.image.get_width(), 0:self.image.get_height()].__hash__()
 
@@ -474,9 +474,9 @@ class SelectionShape(Shape):
         perpendicular_p, perpendicular_m = slope_angle + half_pi, slope_angle - half_pi
         step_size = 2   # The distance we are going to go in the direction of each angle.
         xp, yp = x + step_size * cos(perpendicular_p), y + step_size * sin(perpendicular_p)
-        value_plus = Gimp.Selection.value(self.image, xp, yp)
+        value_plus = Ligma.Selection.value(self.image, xp, yp)
         xp, yp = x + step_size * cos(perpendicular_m), y + step_size * sin(perpendicular_m)
-        value_minus = Gimp.Selection.value(self.image, xp, yp)
+        value_minus = Ligma.Selection.value(self.image, xp, yp)
 
         perpendicular = perpendicular_p if value_plus > value_minus else perpendicular_m
         return x + dist * cos(perpendicular), y + dist * sin(perpendicular)
@@ -492,15 +492,15 @@ shapes = [
 
 
 def get_gradient_samples(num_samples):
-    gradient_name = Gimp.context_get_gradient()
-    reverse_mode = Gimp.context_get_gradient_reverse()
-    repeat_mode = Gimp.context_get_gradient_repeat_mode()
+    gradient_name = Ligma.context_get_gradient()
+    reverse_mode = Ligma.context_get_gradient_reverse()
+    repeat_mode = Ligma.context_get_gradient_repeat_mode()
 
-    if repeat_mode == Gimp.RepeatMode.TRIANGULAR:
+    if repeat_mode == Ligma.RepeatMode.TRIANGULAR:
         # Get two uniform samples, which are reversed from each other, and connect them.
 
         samples = num_samples/2 + 1
-        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name,
+        success, color_samples = Ligma.gradient_get_uniform_samples(gradient_name,
                                  samples, reverse_mode)
 
         del color_samples[-4:]   # Delete last color because it will appear in the next sample
@@ -509,14 +509,14 @@ def get_gradient_samples(num_samples):
         if num_samples % 2 == 1:
             samples += 1
 
-        success, color_samples2 = Gimp.gradient_get_uniform_samples(gradient_name,
+        success, color_samples2 = Ligma.gradient_get_uniform_samples(gradient_name,
              samples, 1 - reverse_mode)
 
         del color_samples2[-4:]  # Delete last color because it will appear in the very first sample
 
         color_samples = tuple(color_samples)
     else:
-        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name, num_samples, reverse_mode)
+        success, color_samples = Ligma.gradient_get_uniform_samples(gradient_name, num_samples, reverse_mode)
 
     return color_samples
 
@@ -527,14 +527,14 @@ class PencilTool():
 
     def draw(self, layer, strokes, color=None):
         if color:
-            Gimp.context_push()
-            Gimp.context_enable_dynamics(False)
-            Gimp.context_set_foreground(color)
+            Ligma.context_push()
+            Ligma.context_enable_dynamics(False)
+            Ligma.context_set_foreground(color)
 
-        Gimp.pencil(layer, strokes)
+        Ligma.pencil(layer, strokes)
 
         if color:
-            Gimp.context_pop()
+            Ligma.context_pop()
 
 
 class AirBrushTool():
@@ -543,14 +543,14 @@ class AirBrushTool():
 
     def draw(self, layer, strokes, color=None):
         if color:
-            Gimp.context_push()
-            Gimp.context_enable_dynamics(False)
-            Gimp.context_set_foreground(color)
+            Ligma.context_push()
+            Ligma.context_enable_dynamics(False)
+            Ligma.context_set_foreground(color)
 
-        Gimp.airbrush_default(layer, strokes)
+        Ligma.airbrush_default(layer, strokes)
 
         if color:
-            Gimp.context_pop()
+            Ligma.context_pop()
 
 
 class AbstractStrokeTool():
@@ -563,20 +563,20 @@ class AbstractStrokeTool():
             control_points += [i, k] * 3
 
         # Create path
-        path = Gimp.Vectors.new(layer.get_image(), 'temp_path')
+        path = Ligma.Vectors.new(layer.get_image(), 'temp_path')
         layer.get_image().insert_vectors(path, None, 0)
-        sid = path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+        sid = path.stroke_new_from_points(Ligma.VectorsStrokeType.BEZIER,
                                           control_points, False)
 
         # Draw it.
 
-        Gimp.context_push()
+        Ligma.context_push()
 
         # Call template method to set the kind of stroke to draw.
         self.prepare_stroke_context(color)
 
         layer.edit_stroke_item(path)
-        Gimp.context_pop()
+        Ligma.context_pop()
 
         # Get rid of the path.
         layer.get_image().remove_vectors(path)
@@ -587,16 +587,16 @@ class PreviewTool:
 
     # Implementation using pencil.  (A previous implementation using stroke was slower, and thus removed).
     def draw(self, layer, strokes, color=None):
-        success, foreground = Gimp.context_get_foreground()
-        Gimp.context_push()
-        Gimp.context_set_defaults()
-        Gimp.context_set_foreground(foreground)
-        Gimp.context_enable_dynamics(False)
-        Gimp.context_set_brush('1. Pixel')
-        Gimp.context_set_brush_size(1.0)
-        Gimp.context_set_brush_spacing(3.0)
-        Gimp.pencil(layer, strokes)
-        Gimp.context_pop()
+        success, foreground = Ligma.context_get_foreground()
+        Ligma.context_push()
+        Ligma.context_set_defaults()
+        Ligma.context_set_foreground(foreground)
+        Ligma.context_enable_dynamics(False)
+        Ligma.context_set_brush('1. Pixel')
+        Ligma.context_set_brush_size(1.0)
+        Ligma.context_set_brush_spacing(3.0)
+        Ligma.pencil(layer, strokes)
+        Ligma.context_pop()
 
     name = _("Preview")
     can_color = False
@@ -608,10 +608,10 @@ class StrokeTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if color:
-            Gimp.context_enable_dynamics(False)
-            Gimp.context_set_foreground(color)
+            Ligma.context_enable_dynamics(False)
+            Ligma.context_set_foreground(color)
 
-        Gimp.context_set_stroke_method(Gimp.StrokeMethod.LINE)
+        Ligma.context_set_stroke_method(Ligma.StrokeMethod.LINE)
 
 
 class StrokePaintTool(AbstractStrokeTool):
@@ -622,11 +622,11 @@ class StrokePaintTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if self.can_color and color is not None:
-            Gimp.context_enable_dynamics(False)
-            Gimp.context_set_foreground(color)
+            Ligma.context_enable_dynamics(False)
+            Ligma.context_set_foreground(color)
 
-        Gimp.context_set_stroke_method(Gimp.StrokeMethod.PAINT_METHOD)
-        Gimp.context_set_paint_method(self.paint_method)
+        Ligma.context_set_stroke_method(Ligma.StrokeMethod.PAINT_METHOD)
+        Ligma.context_set_paint_method(self.paint_method)
 
 
 class SaveToPathTool():
@@ -634,7 +634,7 @@ class SaveToPathTool():
         We dont add this to the list of tools. """
 
     def __init__(self, img):
-        self.path = Gimp.Vectors.new(img, path_name)
+        self.path = Ligma.Vectors.new(img, path_name)
         img.insert_vectors(self.path, None, 0)
 
     def draw(self, layer, strokes, color=None):
@@ -644,19 +644,19 @@ class SaveToPathTool():
         for i, k in zip(strokes[0::2], strokes[1::2]):
             control_points += [i, k] * 3
 
-        self.path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+        self.path.stroke_new_from_points(Ligma.VectorsStrokeType.BEZIER,
                                          control_points, False)
 
 
 tools = [
     PreviewTool(),
-    StrokePaintTool(_("PaintBrush"), "gimp-paintbrush"),
+    StrokePaintTool(_("PaintBrush"), "ligma-paintbrush"),
     PencilTool(), AirBrushTool(), StrokeTool(),
-    StrokePaintTool(_("Ink"), 'gimp-ink'),
-    StrokePaintTool(_("MyPaintBrush"), 'gimp-mybrush')
+    StrokePaintTool(_("Ink"), 'ligma-ink'),
+    StrokePaintTool(_("MyPaintBrush"), 'ligma-mybrush')
     # Clone does not work properly when an image is not set.  When that happens, drawing fails, and
     # I am unable to catch the error. This causes the plugin to crash, and subsequent problems with undo.
-    # StrokePaintTool("Clone", 'gimp-clone', False)
+    # StrokePaintTool("Clone", 'ligma-clone', False)
 ]
 
 
@@ -736,7 +736,7 @@ class PatternParameters:
 # Handle shelving of plugin parameters
 
 def unshelf_parameters():
-    # TODO: we'd usually use Gimp.PDB.set_data() but this won't work on
+    # TODO: we'd usually use Ligma.PDB.set_data() but this won't work on
     # introspection bindings. We will need to work on this.
     #if shelf.has_key("p"):
         #parameters = shelf["p"]
@@ -747,7 +747,7 @@ def unshelf_parameters():
 
 def shelf_parameters(pp):
     # TODO: see unshelf_parameters() which explains why we can't use
-    # Gimp.PDB.get_data().
+    # Ligma.PDB.get_data().
     pass
     #shelf["p"] = pp
 
@@ -841,14 +841,14 @@ class ComputedParameters:
             curve_types[self.pp.curve_type].supports_shapes()
         ):
             shapes[self.pp.shape_index].process_selection(img)
-            Gimp.displays_flush()
+            Ligma.displays_flush()
             self.num_drawings = shapes[self.pp.shape_index].get_num_drawings()
         else:
             self.num_drawings = 1
         self.current_drawing = 0
 
         # Get bounds. We don't care weather a selection exists or not.
-        success, exists, x1, y1, x2, y2 = Gimp.Selection.bounds(img)
+        success, exists, x1, y1, x2, y2 = Ligma.Selection.bounds(img)
 
         # Combine different ways to specify patterns, into a unified set of computed parameters.
         self.num_notation_drawings = 1
@@ -923,7 +923,7 @@ class ComputedParameters:
 
     def get_color(self, n):
         colors = self.gradients[4*n:4*(n+1)]
-        color = Gimp.RGB()
+        color = Ligma.RGB()
         color.r = colors[0]
         color.g = colors[1]
         color.b = colors[2]
@@ -1076,7 +1076,7 @@ class DrawingEngine:
 
         self.img.undo_group_end()
 
-        Gimp.displays_flush()
+        Ligma.displays_flush()
 
     # Methods for incremental drawing.
 
@@ -1745,8 +1745,8 @@ class SpyroWindow():
         def create_ui():
 
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            self.dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
-                                      title=_("Spyrogimp"))
+            self.dialog = LigmaUi.Dialog(use_header_bar=use_header_bar,
+                                      title=_("Spyroligma"))
             #self.set_default_size(350, -1)
             #self.set_border_width(10)
 
@@ -1755,7 +1755,7 @@ class SpyroWindow():
             self.dialog.get_content_area().add(vbox)
             vbox.show()
 
-            box = GimpUi.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
+            box = LigmaUi.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, False, False, 0)
             box.show()
 
@@ -1784,7 +1784,7 @@ class SpyroWindow():
 
             add_to_box(vbox, dialog_button_box())
 
-            self.progress_bar = Gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
+            self.progress_bar = Gtk.ProgressBar()   # ligmaui.ProgressBar() - causes ligmapdbprogress error message.
             self.progress_bar.set_show_text(True)
             vbox.add(self.progress_bar)
             self.progress_bar.show()
@@ -1801,14 +1801,14 @@ class SpyroWindow():
 
         self.engine = DrawingEngine(img, self.p)
 
-        # Make a new GIMP layer to draw on
-        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.get_width(), img.get_height(),
-                                          layer.type_with_alpha(), 100, Gimp.LayerMode.NORMAL)
+        # Make a new LIGMA layer to draw on
+        self.spyro_layer = Ligma.Layer.new(img, layer_name, img.get_width(), img.get_height(),
+                                          layer.type_with_alpha(), 100, Ligma.LayerMode.NORMAL)
         img.insert_layer(self.spyro_layer, None, 0)
         self.drawing_layer = self.spyro_layer
 
         # Create the UI.
-        GimpUi.init(sys.argv[0])
+        LigmaUi.init(sys.argv[0])
         create_ui()
         self.update_view()   # Update UI to reflect the parameter values.
 
@@ -1896,7 +1896,7 @@ class SpyroWindow():
 
                 self.img.undo_group_end()
 
-                Gimp.displays_flush()
+                Ligma.displays_flush()
 
                 Gtk.main_quit()
                 yield False
@@ -1912,7 +1912,7 @@ class SpyroWindow():
         # maybe it was already deleted by the user.
         if self.spyro_layer in self.img.list_layers():
             self.img.remove_layer(self.spyro_layer)
-            Gimp.displays_flush()
+            Ligma.displays_flush()
 
         Gtk.main_quit()
 
@@ -2132,7 +2132,7 @@ class SpyroWindow():
     def progress_start(self):
         self.progress_bar.set_text(_("Rendering Pattern"))
         self.progress_bar.set_fraction(0.0)
-        Gimp.displays_flush()
+        Ligma.displays_flush()
 
     def progress_end(self):
         self.progress_bar.set_text("")
@@ -2144,7 +2144,7 @@ class SpyroWindow():
     def progress_unknown(self):
         self.progress_bar.set_text(_("Please wait : Rendering Pattern"))
         self.progress_bar.pulse()
-        Gimp.displays_flush()
+        Ligma.displays_flush()
 
     # Incremental drawing.
 
@@ -2164,7 +2164,7 @@ class SpyroWindow():
         else:
             self.progress_end()
 
-        Gimp.displays_flush()
+        Ligma.displays_flush()
 
     def start_new_incremental_drawing(self):
         """
@@ -2194,8 +2194,8 @@ class SpyroWindow():
 
     def clear(self):
         """ Clear current drawing. """
-        # pdb.gimp_edit_clear(self.spyro_layer)
-        self.spyro_layer.fill(Gimp.FillType.TRANSPARENT)
+        # pdb.ligma_edit_clear(self.spyro_layer)
+        self.spyro_layer.fill(Ligma.FillType.TRANSPARENT)
 
     def redraw(self, data=None):
         if self.enable_incremental_drawing:
@@ -2203,7 +2203,7 @@ class SpyroWindow():
             self.start_new_incremental_drawing()
 
 
-class SpyrogimpPlusPlugin(Gimp.PlugIn):
+class SpyroligmaPlusPlugin(Ligma.PlugIn):
 
     ## Parameters ##
     __gproperties__ = {
@@ -2278,25 +2278,25 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                            GObject.ParamFlags.READWRITE),
     }
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [PROC_NAME]
 
     def do_create_procedure(self, name):
         if name == PROC_NAME:
-            procedure = Gimp.ImageProcedure.new(self, name,
-                                                Gimp.PDBProcType.PLUGIN,
-                                                self.plug_in_spyrogimp, None)
+            procedure = Ligma.ImageProcedure.new(self, name,
+                                                Ligma.PDBProcType.PLUGIN,
+                                                self.plug_in_spyroligma, None)
             procedure.set_image_types("*")
-            procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
+            procedure.set_sensitivity_mask (Ligma.ProcedureSensitivityMask.DRAWABLE)
             procedure.set_documentation (_("Draw spyrographs using current tool settings and selection."),
                                          _("Uses current tool settings to draw Spyrograph patterns. "
                                          "The size and location of the pattern is based on the current selection."),
                                          name)
-            procedure.set_menu_label(_("Spyrogimp..."))
+            procedure.set_menu_label(_("Spyroligma..."))
             procedure.set_attribution("Elad Shahar",
                                       "Elad Shahar",
                                       "2018")
@@ -2319,7 +2319,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
         return procedure
 
     # Implementation of plugin.
-    def plug_in_spyrogimp(self, procedure, run_mode, image, n_layers, layers, args, data):
+    def plug_in_spyroligma(self, procedure, run_mode, image, n_layers, layers, args, data):
         curve_type=args.index(0)
         shape=args.index(1)
         sides=args.index(2)
@@ -2334,7 +2334,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
         tool=args.index(11)
         long_gradient=args.index(12)
 
-        if run_mode == Gimp.RunMode.NONINTERACTIVE:
+        if run_mode == Ligma.RunMode.NONINTERACTIVE:
             pp = PatternParameters()
             pp.curve_type = curve_type
             pp.shape_index = shape
@@ -2353,16 +2353,16 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             engine = DrawingEngine(image, pp)
             engine.draw_full(layers[0])
 
-        elif run_mode == Gimp.RunMode.INTERACTIVE:
+        elif run_mode == Ligma.RunMode.INTERACTIVE:
             window = SpyroWindow(image, layers[0])
             Gtk.main()
 
-        elif run_mode == Gimp.RunMode.WITH_LAST_VALS:
+        elif run_mode == Ligma.RunMode.WITH_LAST_VALS:
             pp = unshelf_parameters()
             engine = DrawingEngine(image, pp)
             engine.draw_full(layers[0])
 
-        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+        return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
 
-Gimp.main(SpyrogimpPlusPlugin.__gtype__, sys.argv)
+Ligma.main(SpyroligmaPlusPlugin.__gtype__, sys.argv)

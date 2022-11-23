@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,65 +20,65 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpbrusheditor.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmabrusheditor.h"
 
 #include "brush-editor-actions.h"
 #include "data-editor-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry brush_editor_actions[] =
+static const LigmaActionEntry brush_editor_actions[] =
 {
-  { "brush-editor-popup", GIMP_ICON_BRUSH,
+  { "brush-editor-popup", LIGMA_ICON_BRUSH,
     NC_("brush-editor-action", "Brush Editor Menu"), NULL, NULL, NULL,
-    GIMP_HELP_BRUSH_EDITOR_DIALOG }
+    LIGMA_HELP_BRUSH_EDITOR_DIALOG }
 };
 
-static const GimpToggleActionEntry brush_editor_toggle_actions[] =
+static const LigmaToggleActionEntry brush_editor_toggle_actions[] =
 {
-  { "brush-editor-edit-active", GIMP_ICON_LINKED,
+  { "brush-editor-edit-active", LIGMA_ICON_LINKED,
     NC_("brush-editor-action", "Edit Active Brush"), NULL, NULL,
     data_editor_edit_active_cmd_callback,
     FALSE,
-    GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE }
+    LIGMA_HELP_BRUSH_EDITOR_EDIT_ACTIVE }
 };
 
 
 void
-brush_editor_actions_setup (GimpActionGroup *group)
+brush_editor_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "brush-editor-action",
+  ligma_action_group_add_actions (group, "brush-editor-action",
                                  brush_editor_actions,
                                  G_N_ELEMENTS (brush_editor_actions));
 
-  gimp_action_group_add_toggle_actions (group, "brush-editor-action",
+  ligma_action_group_add_toggle_actions (group, "brush-editor-action",
                                         brush_editor_toggle_actions,
                                         G_N_ELEMENTS (brush_editor_toggle_actions));
 }
 
 void
-brush_editor_actions_update (GimpActionGroup *group,
+brush_editor_actions_update (LigmaActionGroup *group,
                              gpointer         user_data)
 {
-  GimpDataEditor  *data_editor = GIMP_DATA_EDITOR (user_data);
+  LigmaDataEditor  *data_editor = LIGMA_DATA_EDITOR (user_data);
   gboolean         edit_active = FALSE;
 
-  edit_active = gimp_data_editor_get_edit_active (data_editor);
+  edit_active = ligma_data_editor_get_edit_active (data_editor);
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("brush-editor-edit-active", edit_active);
 

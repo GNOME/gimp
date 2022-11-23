@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * icon-themes.c
@@ -25,44 +25,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "gui-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
 #include "icon-themes.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   icons_apply_theme         (Gimp          *gimp,
+static void   icons_apply_theme         (Ligma          *ligma,
                                          const gchar   *icon_theme_name);
 static void   icons_list_icons_foreach  (gpointer       key,
                                          gpointer       value,
                                          gpointer       data);
 static gint   icons_name_compare        (const void    *p1,
                                          const void    *p2);
-static void   icons_theme_change_notify (GimpGuiConfig *config,
+static void   icons_theme_change_notify (LigmaGuiConfig *config,
                                          GParamSpec    *pspec,
-                                         Gimp          *gimp);
+                                         Ligma          *ligma);
 
 
 static GHashTable *icon_themes_hash = NULL;
 
 
 void
-icon_themes_init (Gimp *gimp)
+icon_themes_init (Ligma *ligma)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
   icon_themes_hash = g_hash_table_new_full (g_str_hash,
                                             g_str_equal,
@@ -74,7 +74,7 @@ icon_themes_init (Gimp *gimp)
       GList *path;
       GList *list;
 
-      path = gimp_config_path_expand_to_files (config->icon_theme_path, NULL);
+      path = ligma_config_path_expand_to_files (config->icon_theme_path, NULL);
 
       for (list = path; list; list = g_list_next (list))
         {
@@ -112,12 +112,12 @@ icon_themes_init (Gimp *gimp)
                           const gchar *name;
                           gchar       *basename;
 
-                          name     = gimp_file_get_utf8_name (file);
+                          name     = ligma_file_get_utf8_name (file);
                           basename = g_path_get_basename (name);
 
                           if (strcmp ("hicolor", basename))
                             {
-                              if (gimp->be_verbose)
+                              if (ligma->be_verbose)
                                 g_print ("Adding icon theme '%s' (%s)\n",
                                          basename, name);
 
@@ -146,21 +146,21 @@ icon_themes_init (Gimp *gimp)
 
   g_signal_connect (config, "notify::icon-theme",
                     G_CALLBACK (icons_theme_change_notify),
-                    gimp);
+                    ligma);
 
-  icons_theme_change_notify (config, NULL, gimp);
+  icons_theme_change_notify (config, NULL, ligma);
 }
 
 void
-icon_themes_exit (Gimp *gimp)
+icon_themes_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   if (icon_themes_hash)
     {
-      g_signal_handlers_disconnect_by_func (gimp->config,
+      g_signal_handlers_disconnect_by_func (ligma->config,
                                             icons_theme_change_notify,
-                                            gimp);
+                                            ligma);
 
       g_hash_table_destroy (icon_themes_hash);
       icon_themes_hash = NULL;
@@ -168,10 +168,10 @@ icon_themes_exit (Gimp *gimp)
 }
 
 gchar **
-icon_themes_list_themes (Gimp *gimp,
+icon_themes_list_themes (Ligma *ligma,
                          gint *n_icon_themes)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (n_icon_themes != NULL, NULL);
 
   *n_icon_themes = g_hash_table_size (icon_themes_hash);
@@ -196,46 +196,46 @@ icon_themes_list_themes (Gimp *gimp,
 }
 
 GFile *
-icon_themes_get_theme_dir (Gimp        *gimp,
+icon_themes_get_theme_dir (Ligma        *ligma,
                            const gchar *icon_theme_name)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (! icon_theme_name)
-    icon_theme_name = GIMP_CONFIG_DEFAULT_ICON_THEME;
+    icon_theme_name = LIGMA_CONFIG_DEFAULT_ICON_THEME;
 
   return g_hash_table_lookup (icon_themes_hash, icon_theme_name);
 }
 
 static void
-icons_apply_theme (Gimp        *gimp,
+icons_apply_theme (Ligma        *ligma,
                    const gchar *icon_theme_name)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   if (! icon_theme_name)
-    icon_theme_name = GIMP_CONFIG_DEFAULT_ICON_THEME;
+    icon_theme_name = LIGMA_CONFIG_DEFAULT_ICON_THEME;
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("Loading icon theme '%s'\n", icon_theme_name);
 
-  if (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+  if (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"))
     {
       GFile *file;
       gchar *path;
 
-      path = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+      path = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
                                "icons", icon_theme_name, NULL);
       file = g_file_new_for_path (path);
 
-      gimp_icons_set_icon_theme (file);
+      ligma_icons_set_icon_theme (file);
 
       g_object_unref (file);
       g_free (path);
     }
   else
     {
-      gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
+      ligma_icons_set_icon_theme (icon_themes_get_theme_dir (ligma, icon_theme_name));
     }
 }
 
@@ -259,9 +259,9 @@ icons_name_compare (const void *p1,
 }
 
 static void
-icons_theme_change_notify (GimpGuiConfig *config,
+icons_theme_change_notify (LigmaGuiConfig *config,
                            GParamSpec    *pspec,
-                           Gimp          *gimp)
+                           Ligma          *ligma)
 {
-  icons_apply_theme (gimp, config->icon_theme);
+  icons_apply_theme (ligma, config->icon_theme);
 }

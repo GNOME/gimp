@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpvaluearray.h ported from GValueArray
+ * ligmavaluearray.h ported from GValueArray
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,75 +18,75 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_VALUE_ARRAY_H__
-#define __GIMP_VALUE_ARRAY_H__
+#ifndef __LIGMA_VALUE_ARRAY_H__
+#define __LIGMA_VALUE_ARRAY_H__
 
 G_BEGIN_DECLS
 
 /**
- * GIMP_TYPE_VALUE_ARRAY:
+ * LIGMA_TYPE_VALUE_ARRAY:
  *
- * The type ID of the "GimpValueArray" type which is a boxed type,
- * used to pass around pointers to GimpValueArrays.
+ * The type ID of the "LigmaValueArray" type which is a boxed type,
+ * used to pass around pointers to LigmaValueArrays.
  *
  * Since: 2.10
  */
-#define GIMP_TYPE_VALUE_ARRAY (gimp_value_array_get_type ())
+#define LIGMA_TYPE_VALUE_ARRAY (ligma_value_array_get_type ())
 
 
-GType            gimp_value_array_get_type (void) G_GNUC_CONST;
+GType            ligma_value_array_get_type (void) G_GNUC_CONST;
 
-GimpValueArray * gimp_value_array_new      (gint                  n_prealloced);
-GimpValueArray * gimp_value_array_new_from_types
+LigmaValueArray * ligma_value_array_new      (gint                  n_prealloced);
+LigmaValueArray * ligma_value_array_new_from_types
                                            (gchar               **error_msg,
                                             GType                 first_type,
                                             ...);
-GimpValueArray * gimp_value_array_new_from_types_valist
+LigmaValueArray * ligma_value_array_new_from_types_valist
                                            (gchar               **error_msg,
                                             GType                 first_type,
                                             va_list               va_args);
-GimpValueArray * gimp_value_array_new_from_values
+LigmaValueArray * ligma_value_array_new_from_values
                                            (const GValue *values,
                                             gint          n_values);
 
-GimpValueArray * gimp_value_array_ref      (GimpValueArray       *value_array);
-void             gimp_value_array_unref    (GimpValueArray       *value_array);
+LigmaValueArray * ligma_value_array_ref      (LigmaValueArray       *value_array);
+void             ligma_value_array_unref    (LigmaValueArray       *value_array);
 
-gint             gimp_value_array_length   (const GimpValueArray *value_array);
+gint             ligma_value_array_length   (const LigmaValueArray *value_array);
 
-GValue         * gimp_value_array_index    (const GimpValueArray *value_array,
+GValue         * ligma_value_array_index    (const LigmaValueArray *value_array,
                                             gint                  index);
 
-GimpValueArray * gimp_value_array_prepend  (GimpValueArray       *value_array,
+LigmaValueArray * ligma_value_array_prepend  (LigmaValueArray       *value_array,
                                             const GValue         *value);
-GimpValueArray * gimp_value_array_append   (GimpValueArray       *value_array,
+LigmaValueArray * ligma_value_array_append   (LigmaValueArray       *value_array,
                                             const GValue         *value);
-GimpValueArray * gimp_value_array_insert   (GimpValueArray       *value_array,
+LigmaValueArray * ligma_value_array_insert   (LigmaValueArray       *value_array,
                                             gint                  index,
                                             const GValue         *value);
 
-GimpValueArray * gimp_value_array_remove   (GimpValueArray       *value_array,
+LigmaValueArray * ligma_value_array_remove   (LigmaValueArray       *value_array,
                                             gint                  index);
-void             gimp_value_array_truncate (GimpValueArray       *value_array,
+void             ligma_value_array_truncate (LigmaValueArray       *value_array,
                                             gint                  n_values);
 
 
 /*
- * GIMP_TYPE_PARAM_VALUE_ARRAY
+ * LIGMA_TYPE_PARAM_VALUE_ARRAY
  */
 
-#define GIMP_TYPE_PARAM_VALUE_ARRAY           (gimp_param_value_array_get_type ())
-#define GIMP_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY))
-#define GIMP_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY, GimpParamSpecValueArray))
+#define LIGMA_TYPE_PARAM_VALUE_ARRAY           (ligma_param_value_array_get_type ())
+#define LIGMA_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_VALUE_ARRAY))
+#define LIGMA_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), LIGMA_TYPE_PARAM_VALUE_ARRAY, LigmaParamSpecValueArray))
 
-typedef struct _GimpParamSpecValueArray GimpParamSpecValueArray;
+typedef struct _LigmaParamSpecValueArray LigmaParamSpecValueArray;
 
 /**
- * GimpParamSpecValueArray:
+ * LigmaParamSpecValueArray:
  * @parent_instance:  private #GParamSpec portion
  * @element_spec:     the #GParamSpec of the array elements
  * @fixed_n_elements: default length of the array
@@ -94,16 +94,16 @@ typedef struct _GimpParamSpecValueArray GimpParamSpecValueArray;
  * A #GParamSpec derived structure that contains the meta data for
  * value array properties.
  **/
-struct _GimpParamSpecValueArray
+struct _LigmaParamSpecValueArray
 {
   GParamSpec  parent_instance;
   GParamSpec *element_spec;
   gint        fixed_n_elements;
 };
 
-GType        gimp_param_value_array_get_type (void) G_GNUC_CONST;
+GType        ligma_param_value_array_get_type (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_value_array     (const gchar    *name,
+GParamSpec * ligma_param_spec_value_array     (const gchar    *name,
                                               const gchar    *nick,
                                               const gchar    *blurb,
                                               GParamSpec     *element_spec,
@@ -112,4 +112,4 @@ GParamSpec * gimp_param_spec_value_array     (const gchar    *name,
 
 G_END_DECLS
 
-#endif /* __GIMP_VALUE_ARRAY_H__ */
+#endif /* __LIGMA_VALUE_ARRAY_H__ */

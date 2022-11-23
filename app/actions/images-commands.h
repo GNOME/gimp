@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #define __IMAGES_COMMANDS_H__
 
 
-void   images_raise_views_cmd_callback  (GimpAction *action,
+void   images_raise_views_cmd_callback  (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data);
-void   images_new_view_cmd_callback     (GimpAction *action,
+void   images_new_view_cmd_callback     (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data);
-void   images_delete_image_cmd_callback (GimpAction *action,
+void   images_delete_image_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data);
 

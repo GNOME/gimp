@@ -1,18 +1,18 @@
-# French translation of gimp-tips
+# French translation of ligma-tips
 # Copyright (C) 2002-2018 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Raymond Ostertag <r.ostertag@caramail.com>, 2003-2007.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
-# Laurent Monin <gimp@norz.org>, 2007.
+# Laurent Monin <ligma@norz.org>, 2007.
 # Julien <jhardlin@orange.fr>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips.HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2018-04-18 23:05+0000\n"
 "PO-Revision-Date: 2018-05-17 18:11+0200\n"
 "Last-Translator: julien <jhardlin@orange.fr>\n"
@@ -23,26 +23,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Vous pouvez obtenir une aide contextuelle pour la majorité des "
-"fonctionnalités de GIMP en pressant à tout moment la touche F1. Cette aide "
+"fonctionnalités de LIGMA en pressant à tout moment la touche F1. Cette aide "
 "est aussi disponible dans les menus."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP utilise des calques pour vous aider à organiser votre image. Pensez à "
+"LIGMA utilise des calques pour vous aider à organiser votre image. Pensez à "
 "une pile de calques ou de transparents, de telle façon qu’en regardant à "
 "travers eux vous verriez une image composée de leurs contenus."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -50,19 +50,19 @@ msgstr ""
 "Vous pouvez réaliser de nombreuses opérations en faisant un clic-droit sur "
 "le titre d’un calque dans la boîte de dialogue des calques."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Enregistrer une image utilise XCF, qui est le format natif de GIMP (extension "
+"Enregistrer une image utilise XCF, qui est le format natif de LIGMA (extension "
 "<tt>.xcf</tt>). Ceci conserve les calques et de nombreux aspects de votre "
 "travail en cours, pouvant être retravaillé plus tard. Une fois qu’un projet "
 "est terminé, vous pouvez l’exporter en JPEG, PNG, GIF, etc."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -72,7 +72,7 @@ msgstr ""
 "actuelle. Parfois vous aurez à fusionner tous les calques (Image→Aplatir "
 "l’image) si vous souhaitez que le filtre agisse sur l’image entière."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -82,7 +82,7 @@ msgstr ""
 "<b>gras</b>, ce calque n’a pas de canal alpha. Vous pouvez ajouter un canal "
 "alpha en utilisant Calques→Transparence→Ajouter un canal alpha."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -95,7 +95,7 @@ msgstr ""
 "canal alpha (Calque→Transparence→Ajouter un canal alpha) ou l’aplatir "
 "(Image→Aplatir l’image)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -109,18 +109,18 @@ msgstr ""
 "la touche <tt>Alt</tt> ou utiliser la touche <tt>Logo</tt> (ou logo Windows) "
 "à la place."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Vous pouvez glisser et déposer beaucoup de choses dans GIMP. Par exemple, "
+"Vous pouvez glisser et déposer beaucoup de choses dans LIGMA. Par exemple, "
 "glisser une couleur depuis la boîte à outils ou depuis une palette de "
 "couleurs et la mettre dans une image va remplir l’image ou la sélection "
 "actuelle avec cette couleur."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -129,7 +129,7 @@ msgstr ""
 "dans l’image (ou optionnellement maintenir <tt>la barre d’espace</tt> tandis "
 "que vous déplacez la souris)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -139,7 +139,7 @@ msgstr ""
 "les constructions de sélection vont accrocher aux guides. Vous pouvez "
 "enlever les guides en les glissant hors de l’image avec l’outil déplacer."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -148,7 +148,7 @@ msgstr ""
 "mettre dans la boîte d’outils. Ceci créera une nouvelle image contenant "
 "uniquement ce calque."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -161,18 +161,18 @@ msgstr ""
 "&laquo; Ancrer le calque &raquo; dans la boîte de dialogue des calques, ou "
 "utilisez le menu pour faire de même."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP prend en charge la compression gzip à la volée. Ajoutez simplement "
+"LIGMA prend en charge la compression gzip à la volée. Ajoutez simplement "
 "l’extension <tt>.gz</tt> (ou <tt>.bz2</tt> si bzip2 est installé) au nom de "
 "fichier et votre image sera compressée et sauvegardée. Bien sûr le "
 "chargement d’images compressées fonctionne également."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -183,7 +183,7 @@ msgstr ""
 "remplacer. Utiliser <tt>Ctrl</tt> avant de faire une sélection la soustrait "
 "de la sélection actuelle."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -194,7 +194,7 @@ msgstr ""
 "actuelle. Des figures géométriques plus complexes sont réalisables avec "
 "l’outil chemin ou avec Filtres→Rendu→Figures géométriques."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -204,7 +204,7 @@ msgstr ""
 "peinture avec ses réglages courants peut être utilisé. Vous pouvez utilisez "
 "le pinceau en mode dégradé ou même la gomme ou l’outil éclaircir/assombrir."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -214,7 +214,7 @@ msgstr ""
 "chemin. La boîte de dialogue des chemins vous permet de travailler sur de "
 "multiples chemins et de les convertir en sélections."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -227,7 +227,7 @@ msgstr ""
 "cliquez à nouveau sur le bouton pour la reconvertir comme une sélection "
 "normale."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -240,13 +240,13 @@ msgstr ""
 "activer/désactiver la visibilité de ce nouveau canal ou le convertir vers "
 "une sélection."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -255,11 +255,11 @@ msgstr ""
 "clavier. Faites cela en affichant le menu, sélectionnez un élément du menu, "
 "et pressez sur la combinaison de touche désirée. Si &laquo; enregistrer à la "
 "sortie les raccourcis clavier &raquo; est activé, Ils sont enregistrés "
-"lorsque vous quittez GIMP. Vous devriez après cela désactiver les &laquo; "
+"lorsque vous quittez LIGMA. Vous devriez après cela désactiver les &laquo; "
 "raccourcis claviers dynamiques &raquo; pour éviter de réassigner "
 "accidentellement un raccourci clavier."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -268,7 +268,7 @@ msgstr ""
 "<tt>Tabulation</tt> dans une fenêtre d’image pour afficher ou masquer la "
 "boîte à outils et les autres boîtes de dialogue."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -277,7 +277,7 @@ msgstr ""
 "calques pour masquer tous les calques sauf celui-là. <tt>Majuscule</tt>-clic "
 "à nouveau pour afficher tous les calques."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -288,7 +288,7 @@ msgstr ""
 "<tt>Alt</tt> + clic sur l’aperçu d’un masque de calque dans la boîte de "
 "dialogue des calques active/désactive l’affichage direct du masque."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -297,7 +297,7 @@ msgstr ""
 "travers des calques d’une image (si votre environnement ne capture pas ces "
 "touches…)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -309,7 +309,7 @@ msgstr ""
 "similaire, un <tt>Ctrl</tt> + clic avec l’outil pipette capturera la couleur "
 "d’arrière-plan au lieu de la couleur de premier-plan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -317,7 +317,7 @@ msgstr ""
 "Un <tt>Ctrl</tt> + glissé avec l’outil rotation contraindra la rotation à "
 "des angles multiples de 15 degrés."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "

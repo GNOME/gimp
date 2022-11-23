@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-convert-indexed.c
- * Copyright (C) 1997-2004 Adam D. Moss <adam@gimp.org>
+ * ligmaimage-convert-indexed.c
+ * Copyright (C) 1997-2004 Adam D. Moss <adam@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 /*
  * 2005-09-04 - Switch 'positional' dither matrix to a 32x32 Bayer,
  *  which generates results that compress somewhat better (and may look
- *  worse or better depending on what you enjoy...).  [adam@gimp.org]
+ *  worse or better depending on what you enjoy...).  [adam@ligma.org]
  *
  * 2004-12-12 - Use a slower but much nicer technique for finding the
  *  two best colors to dither between when using fixed/positional
- *  dither methods.  Makes positional dither much less lame.  [adam@gimp.org]
+ *  dither methods.  Makes positional dither much less lame.  [adam@ligma.org]
  *
  * 2002-02-10 - Quantizer version 3.0 (the rest of the commit started
  *  a year ago -- whoops).  Divide colors within CIE L*a*b* space using
@@ -35,7 +35,7 @@
  *  chooses a much richer color set, especially for low numbers of
  *  colors.  n.b.: Less luminance-sloppy in straight remapping which is
  *  good for color but a bit worse for high-frequency detail (that's
- *  partly what fs-dithering is for -- use it).  [adam@gimp.org]
+ *  partly what fs-dithering is for -- use it).  [adam@ligma.org]
  *
  * 2001-03-25 - Define accessor function/macro for histogram reads and
  *  writes.  This slows us down a little because we avoid some of the
@@ -46,7 +46,7 @@
  *  than frumpy old RGB.  [Adam]
  *
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
- *  palette. Use libgimp callback functions.  [Sven]
+ *  palette. Use libligma callback functions.  [Sven]
  *
  * 99/09/01 - Created a low-bleed FS-dither option.  [Adam]
  *
@@ -100,7 +100,7 @@
  *
  * 97/07/01 - started todo/revision log.  Put code back in to
  *  eliminate full-alpha pixels from RGB histogram.
- *  [Adam D. Moss - adam@gimp.org]
+ *  [Adam D. Moss - adam@ligma.org]
  */
 
   /* TODO for Convert:
@@ -138,35 +138,35 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp.h"
-#include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimpimage-color-profile.h"
-#include "gimpimage-colormap.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimpobjectqueue.h"
-#include "gimppalette.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmacontainer.h"
+#include "ligmadrawable.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmaimage-color-profile.h"
+#include "ligmaimage-colormap.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmalayer.h"
+#include "ligmaobjectqueue.h"
+#include "ligmapalette.h"
+#include "ligmaprogress.h"
 
-#include "text/gimptextlayer.h"
+#include "text/ligmatextlayer.h"
 
-#include "gimpimage-convert-fsdither.h"
-#include "gimpimage-convert-data.h"
-#include "gimpimage-convert-indexed.h"
+#include "ligmaimage-convert-fsdither.h"
+#include "ligmaimage-convert-data.h"
+#include "ligmaimage-convert-indexed.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* basic memory/quality tradeoff */
@@ -199,7 +199,7 @@ typedef struct _QuantizeObj QuantizeObj;
 typedef void (* Pass1Func)     (QuantizeObj *quantize_obj);
 typedef void (* Pass2InitFunc) (QuantizeObj *quantize_obj);
 typedef void (* Pass2Func)     (QuantizeObj *quantize_obj,
-                                GimpLayer   *layer,
+                                LigmaLayer   *layer,
                                 GeglBuffer  *new_buffer);
 typedef void (* CleanupFunc)   (QuantizeObj *quantize_obj);
 
@@ -475,7 +475,7 @@ struct _QuantizeObj
   Pass2Func     second_pass;      /* second pass maps from image data to colormap */
   CleanupFunc   delete_func;      /* function to clean up data associated with private */
 
-  GimpPalette  *custom_palette;           /* The custom palette, if any        */
+  LigmaPalette  *custom_palette;           /* The custom palette, if any        */
 
   gint          desired_number_of_colors; /* Number of colors we will allow    */
   gint          actual_number_of_colors;  /* Number of colors actually needed  */
@@ -487,7 +487,7 @@ struct _QuantizeObj
   gboolean      want_dither_alpha;
   gint          error_freedom;            /* 0=much bleed, 1=controlled bleed */
 
-  GimpProgress *progress;
+  LigmaProgress *progress;
 };
 
 typedef struct
@@ -519,21 +519,21 @@ typedef struct
 static void          zero_histogram_gray     (CFHistogram   histogram);
 static void          zero_histogram_rgb      (CFHistogram   histogram);
 static void          generate_histogram_gray (CFHistogram   hostogram,
-                                              GimpLayer    *layer,
+                                              LigmaLayer    *layer,
                                               gboolean      dither_alpha);
 static void          generate_histogram_rgb  (CFHistogram   histogram,
-                                              GimpLayer    *layer,
+                                              LigmaLayer    *layer,
                                               gint          col_limit,
                                               gboolean      dither_alpha,
-                                              GimpProgress *progress);
+                                              LigmaProgress *progress);
 
-static QuantizeObj * initialize_median_cut   (GimpImageBaseType      old_type,
+static QuantizeObj * initialize_median_cut   (LigmaImageBaseType      old_type,
                                               gint                   max_colors,
-                                              GimpConvertDitherType  dither_type,
-                                              GimpConvertPaletteType palette_type,
-                                              GimpPalette           *custom_palette,
+                                              LigmaConvertDitherType  dither_type,
+                                              LigmaConvertPaletteType palette_type,
+                                              LigmaPalette           *custom_palette,
                                               gboolean               dither_alpha,
-                                              GimpProgress          *progress);
+                                              LigmaProgress          *progress);
 
 static void          compute_color_lin8      (QuantizeObj           *quantobj,
                                               CFHistogram            histogram,
@@ -567,7 +567,7 @@ mapping_compare (const void *a,
 
 /* FWIW, the make_remap_table() and mapping_compare() function source
  * and PalEntry may be re-used under the XFree86-style license.
- * <adam@gimp.org>
+ * <adam@ligma.org>
  */
 static void
 make_remap_table (const guchar  old_palette[],
@@ -685,7 +685,7 @@ make_remap_table (const guchar  old_palette[],
 }
 
 static void
-remap_indexed_layer (GimpLayer    *layer,
+remap_indexed_layer (LigmaLayer    *layer,
                      const guchar *remap_table,
                      gint          num_entries)
 {
@@ -694,12 +694,12 @@ remap_indexed_layer (GimpLayer    *layer,
   gint                bpp;
   gboolean            has_alpha;
 
-  format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
   bpp       = babl_format_get_bytes_per_pixel (format);
   has_alpha = babl_format_has_alpha (format);
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
@@ -739,8 +739,8 @@ color_quicksort (const void *c1,
   Color *color1 = (Color *) c1;
   Color *color2 = (Color *) c2;
 
-  gdouble v1 = GIMP_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
-  gdouble v2 = GIMP_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
+  gdouble v1 = LIGMA_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
+  gdouble v2 = LIGMA_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
 
   if (v1 < v2)
     return -1;
@@ -751,68 +751,68 @@ color_quicksort (const void *c1,
 }
 
 gboolean
-gimp_image_convert_indexed (GimpImage               *image,
-                            GimpConvertPaletteType   palette_type,
+ligma_image_convert_indexed (LigmaImage               *image,
+                            LigmaConvertPaletteType   palette_type,
                             gint                     max_colors,
                             gboolean                 remove_duplicates,
-                            GimpConvertDitherType    dither_type,
+                            LigmaConvertDitherType    dither_type,
                             gboolean                 dither_alpha,
                             gboolean                 dither_text_layers,
-                            GimpPalette             *custom_palette,
-                            GimpProgress            *progress,
+                            LigmaPalette             *custom_palette,
+                            LigmaProgress            *progress,
                             GError                 **error)
 {
   QuantizeObj       *quantobj     = NULL;
-  GimpObjectQueue   *queue        = NULL;
-  GimpProgress      *sub_progress = NULL;
-  GimpImageBaseType  old_type;
+  LigmaObjectQueue   *queue        = NULL;
+  LigmaProgress      *sub_progress = NULL;
+  LigmaImageBaseType  old_type;
   GList             *all_layers;
   GList             *list;
-  GimpColorProfile  *src_profile  = NULL;
-  GimpColorProfile  *dest_profile = NULL;
+  LigmaColorProfile  *src_profile  = NULL;
+  LigmaColorProfile  *dest_profile = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (gimp_image_get_base_type (image) != GIMP_INDEXED, FALSE);
-  g_return_val_if_fail (gimp_babl_is_valid (GIMP_INDEXED,
-                                            gimp_image_get_precision (image)),
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (ligma_image_get_base_type (image) != LIGMA_INDEXED, FALSE);
+  g_return_val_if_fail (ligma_babl_is_valid (LIGMA_INDEXED,
+                                            ligma_image_get_precision (image)),
                         FALSE);
   g_return_val_if_fail (custom_palette == NULL ||
-                        GIMP_IS_PALETTE (custom_palette), FALSE);
+                        LIGMA_IS_PALETTE (custom_palette), FALSE);
   g_return_val_if_fail (custom_palette == NULL ||
-                        gimp_palette_get_n_colors (custom_palette) <= 256,
+                        ligma_palette_get_n_colors (custom_palette) <= 256,
                         FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)
+  if (palette_type == LIGMA_CONVERT_PALETTE_CUSTOM)
     {
       if (! custom_palette)
-        palette_type = GIMP_CONVERT_PALETTE_MONO;
+        palette_type = LIGMA_CONVERT_PALETTE_MONO;
 
-      if (gimp_palette_get_n_colors (custom_palette) == 0)
+      if (ligma_palette_get_n_colors (custom_palette) == 0)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("Cannot convert image: palette is empty."));
           return FALSE;
         }
     }
 
-  gimp_set_busy (image->gimp);
+  ligma_set_busy (image->ligma);
 
-  all_layers = gimp_image_get_layer_list (image);
+  all_layers = ligma_image_get_layer_list (image);
 
   g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_CONVERT,
                                C_("undo-type", "Convert Image to Indexed"));
 
-  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+  src_profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
   /*  Push the image type to the stack  */
-  gimp_image_undo_push_image_type (image, NULL);
+  ligma_image_undo_push_image_type (image, NULL);
 
   /*  Set the new base type  */
-  old_type = gimp_image_get_base_type (image);
+  old_type = ligma_image_get_base_type (image);
 
   /*  Build histogram if necessary.  */
   rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
@@ -823,19 +823,19 @@ gimp_image_convert_indexed (GimpImage               *image,
   /* don't dither if the input is grayscale and we are simply mapping
    * every color
    */
-  if (old_type     == GIMP_GRAY &&
+  if (old_type     == LIGMA_GRAY &&
       max_colors   == 256       &&
-      palette_type == GIMP_CONVERT_PALETTE_GENERATE)
+      palette_type == LIGMA_CONVERT_PALETTE_GENERATE)
     {
-      dither_type = GIMP_CONVERT_DITHER_NONE;
+      dither_type = LIGMA_CONVERT_DITHER_NONE;
     }
 
   if (progress)
     {
-      queue        = gimp_object_queue_new (progress);
-      sub_progress = GIMP_PROGRESS (queue);
+      queue        = ligma_object_queue_new (progress);
+      sub_progress = LIGMA_PROGRESS (queue);
 
-      gimp_object_queue_push_list (queue, all_layers);
+      ligma_object_queue_push_list (queue, all_layers);
     }
 
   quantobj = initialize_median_cut (old_type, max_colors, dither_type,
@@ -843,9 +843,9 @@ gimp_image_convert_indexed (GimpImage               *image,
                                     dither_alpha,
                                     sub_progress);
 
-  if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)
+  if (palette_type == LIGMA_CONVERT_PALETTE_GENERATE)
     {
-      if (old_type == GIMP_GRAY)
+      if (old_type == LIGMA_GRAY)
         zero_histogram_gray (quantobj->histogram);
       else
         zero_histogram_rgb (quantobj->histogram);
@@ -864,12 +864,12 @@ gimp_image_convert_indexed (GimpImage               *image,
            list;
            list = g_list_next (list))
         {
-          GimpLayer *layer = list->data;
+          LigmaLayer *layer = list->data;
 
           if (queue)
-            gimp_object_queue_pop (queue);
+            ligma_object_queue_pop (queue);
 
-          if (old_type == GIMP_GRAY)
+          if (old_type == LIGMA_GRAY)
             {
               generate_histogram_gray (quantobj->histogram,
                                        layer, dither_alpha);
@@ -888,12 +888,12 @@ gimp_image_convert_indexed (GimpImage               *image,
     }
 
   if (progress)
-    gimp_progress_set_text_literal (progress,
+    ligma_progress_set_text_literal (progress,
                                     _("Converting to indexed colors (stage 2)"));
 
-  if (old_type == GIMP_RGB &&
+  if (old_type == LIGMA_RGB &&
       ! needs_quantize     &&
-      palette_type == GIMP_CONVERT_PALETTE_GENERATE)
+      palette_type == LIGMA_CONVERT_PALETTE_GENERATE)
     {
       gint i;
 
@@ -910,7 +910,7 @@ gimp_image_convert_indexed (GimpImage               *image,
 
       quantobj->delete_func (quantobj);
       quantobj = initialize_median_cut (old_type, max_colors,
-                                        GIMP_CONVERT_DITHER_NODESTRUCT,
+                                        LIGMA_CONVERT_DITHER_NODESTRUCT,
                                         palette_type,
                                         custom_palette,
                                         dither_alpha,
@@ -930,18 +930,18 @@ gimp_image_convert_indexed (GimpImage               *image,
       quantobj->first_pass (quantobj);
     }
 
-  if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)
+  if (palette_type == LIGMA_CONVERT_PALETTE_GENERATE)
     qsort (quantobj->cmap,
            quantobj->actual_number_of_colors, sizeof (Color),
            color_quicksort);
 
   if (progress)
     {
-      gimp_progress_set_text_literal (progress,
+      ligma_progress_set_text_literal (progress,
                                       _("Converting to indexed colors (stage 3)"));
 
-      gimp_object_queue_clear (queue);
-      gimp_object_queue_push_list (queue, all_layers);
+      ligma_object_queue_clear (queue);
+      ligma_object_queue_push_list (queue, all_layers);
     }
 
   /* Initialise data which must persist across indexed layer iterations */
@@ -956,14 +956,14 @@ gimp_image_convert_indexed (GimpImage               *image,
    * babl format nor profile).
    * See #3070.
    */
-  g_object_set (image, "base-type", GIMP_INDEXED, NULL);
+  g_object_set (image, "base-type", LIGMA_INDEXED, NULL);
 
   /*  Set the generated palette on the image, we need it to
    *  convert the layers. We optionally remove duplicate entries
    *  after the layer conversion.
    */
   {
-    guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
+    guchar colormap[LIGMA_IMAGE_COLORMAP_SIZE];
     gint   i, j;
 
     for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
@@ -973,28 +973,28 @@ gimp_image_convert_indexed (GimpImage               *image,
         colormap[j++] = quantobj->cmap[i].blue;
       }
 
-    gimp_image_set_colormap (image, colormap,
+    ligma_image_set_colormap (image, colormap,
                              quantobj->actual_number_of_colors, TRUE);
   }
 
   /* when converting from GRAY, always convert to the new type's
    * builtin profile
    */
-  if (old_type == GIMP_GRAY)
-    dest_profile = gimp_image_get_builtin_color_profile (image);
+  if (old_type == LIGMA_GRAY)
+    dest_profile = ligma_image_get_builtin_color_profile (image);
 
   /*  Convert all layers  */
   for (list = all_layers;
        list;
        list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      LigmaLayer *layer = list->data;
       gboolean   quantize;
 
       if (queue)
-        gimp_object_queue_pop (queue);
+        ligma_object_queue_pop (queue);
 
-      if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+      if (ligma_item_is_text_layer (LIGMA_ITEM (layer)))
         quantize = dither_text_layers;
       else
         quantize = TRUE;
@@ -1004,27 +1004,27 @@ gimp_image_convert_indexed (GimpImage               *image,
           GeglBuffer *new_buffer;
           gboolean    has_alpha;
 
-          has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          has_alpha = ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer));
 
           new_buffer =
             gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                             gimp_item_get_width  (GIMP_ITEM (layer)),
-                                             gimp_item_get_height (GIMP_ITEM (layer))),
-                             gimp_image_get_layer_format (image,
+                                             ligma_item_get_width  (LIGMA_ITEM (layer)),
+                                             ligma_item_get_height (LIGMA_ITEM (layer))),
+                             ligma_image_get_layer_format (image,
                                                           has_alpha));
 
           quantobj->second_pass (quantobj, layer, new_buffer);
 
-          gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
+          ligma_drawable_set_buffer (LIGMA_DRAWABLE (layer), TRUE, NULL,
                                     new_buffer);
           g_object_unref (new_buffer);
         }
       else
         {
-          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image,
-                                      GIMP_INDEXED,
-                                      gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
-                                      gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)),
+          ligma_drawable_convert_type (LIGMA_DRAWABLE (layer), image,
+                                      LIGMA_INDEXED,
+                                      ligma_drawable_get_precision (LIGMA_DRAWABLE (layer)),
+                                      ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)),
                                       src_profile,
                                       dest_profile,
                                       GEGL_DITHER_NONE, GEGL_DITHER_NONE,
@@ -1034,10 +1034,10 @@ gimp_image_convert_indexed (GimpImage               *image,
 
   /*  Set the final palette on the image  */
   if (remove_duplicates &&
-      (palette_type != GIMP_CONVERT_PALETTE_GENERATE) &&
-      (palette_type != GIMP_CONVERT_PALETTE_MONO))
+      (palette_type != LIGMA_CONVERT_PALETTE_GENERATE) &&
+      (palette_type != LIGMA_CONVERT_PALETTE_MONO))
     {
-      guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
+      guchar colormap[LIGMA_IMAGE_COLORMAP_SIZE];
       gint   i, j;
       guchar old_palette[256 * 3];
       guchar new_palette[256 * 3];
@@ -1071,28 +1071,28 @@ gimp_image_convert_indexed (GimpImage               *image,
           colormap[j] = new_palette[j]; j++;
         }
 
-      gimp_image_set_colormap (image, colormap, num_entries, TRUE);
+      ligma_image_set_colormap (image, colormap, num_entries, TRUE);
     }
 
   /*  When converting from GRAY, set the new profile.
    */
-  if (old_type == GIMP_GRAY)
-    gimp_image_set_color_profile (image, dest_profile, NULL);
+  if (old_type == LIGMA_GRAY)
+    ligma_image_set_color_profile (image, dest_profile, NULL);
 
   /*  Delete the quantizer object, if there is one */
   if (quantobj)
     quantobj->delete_func (quantobj);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_image_mode_changed (image);
+  ligma_image_mode_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
 
   g_clear_object (&queue);
 
   g_list_free (all_layers);
 
-  gimp_unset_busy (image->gimp);
+  ligma_unset_busy (image->ligma);
 
   return TRUE;
 }
@@ -1121,7 +1121,7 @@ zero_histogram_rgb (CFHistogram histogram)
 
 static void
 generate_histogram_gray (CFHistogram  histogram,
-                         GimpLayer   *layer,
+                         LigmaLayer   *layer,
                          gboolean     dither_alpha)
 {
   GeglBufferIterator *iter;
@@ -1129,7 +1129,7 @@ generate_histogram_gray (CFHistogram  histogram,
   gint                bpp;
   gboolean            has_alpha;
 
-  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
   g_return_if_fail (format == babl_format_with_space ("Y' u8", format) ||
                     format == babl_format_with_space ("Y'A u8", format));
@@ -1137,7 +1137,7 @@ generate_histogram_gray (CFHistogram  histogram,
   bpp       = babl_format_get_bytes_per_pixel (format);
   has_alpha = babl_format_has_alpha (format);
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
@@ -1183,10 +1183,10 @@ check_white_or_black (const guchar *data)
 
 static void
 generate_histogram_rgb (CFHistogram   histogram,
-                        GimpLayer    *layer,
+                        LigmaLayer    *layer,
                         gint          col_limit,
                         gboolean      dither_alpha,
-                        GimpProgress *progress)
+                        LigmaProgress *progress)
 {
   GeglBufferIterator *iter;
   const Babl         *format;
@@ -1201,7 +1201,7 @@ generate_histogram_rgb (CFHistogram   histogram,
   gint                bpp;
   gboolean            has_alpha;
 
-  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
   g_return_if_fail (format == babl_format_with_space ("R'G'B' u8", format) ||
                     format == babl_format_with_space ("R'G'B'A u8", format));
@@ -1209,20 +1209,20 @@ generate_histogram_rgb (CFHistogram   histogram,
   bpp       = babl_format_get_bytes_per_pixel (format);
   has_alpha = babl_format_has_alpha (format);
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
-                gimp_item_get_height (GIMP_ITEM (layer)));
+  layer_size = (ligma_item_get_width  (LIGMA_ITEM (layer)) *
+                ligma_item_get_height (LIGMA_ITEM (layer)));
 
   /*  g_printerr ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols); */
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   roi = &iter->items[0].roi;
 
   if (progress)
-    gimp_progress_set_value (progress, 0.0);
+    ligma_progress_set_value (progress, 0.0);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -1381,7 +1381,7 @@ generate_histogram_rgb (CFHistogram   histogram,
         }
 
       if (progress && (count % 16 == 0))
-        gimp_progress_set_value (progress,
+        ligma_progress_set_value (progress,
                                  (gdouble) total_size / (gdouble) layer_size);
     }
 
@@ -1951,12 +1951,12 @@ update_box_rgb (const CFHistogram histogram,
   /*
   fprintf(stderr, " %d,%d", dummyqo.cmap[0].blue, boxp->Bmax);
 
-  gimp_assert (boxp->Rhalferror >= boxp->Rmin);
-  gimp_assert (boxp->Rhalferror < boxp->Rmax);
-  gimp_assert (boxp->Ghalferror >= boxp->Gmin);
-  gimp_assert (boxp->Ghalferror < boxp->Gmax);
-  gimp_assert (boxp->Bhalferror >= boxp->Bmin);
-  gimp_assert (boxp->Bhalferror < boxp->Bmax);*/
+  ligma_assert (boxp->Rhalferror >= boxp->Rmin);
+  ligma_assert (boxp->Rhalferror < boxp->Rmax);
+  ligma_assert (boxp->Ghalferror >= boxp->Gmin);
+  ligma_assert (boxp->Ghalferror < boxp->Gmax);
+  ligma_assert (boxp->Bhalferror >= boxp->Bmin);
+  ligma_assert (boxp->Bhalferror < boxp->Bmax);*/
 
   /*boxp->error = (sqrt((double)(boxp->error/ccount)));*/
   /*  boxp->rerror = (sqrt((double)((boxp->rerror)/ccount)));
@@ -2028,7 +2028,7 @@ median_cut_rgb (CFHistogram   histogram,
                 boxptr        boxlist,
                 gint          numboxes,
                 gint          desired_colors,
-                GimpProgress *progress)
+                LigmaProgress *progress)
 {
   gint     lb;
   boxptr   b1, b2;
@@ -2080,7 +2080,7 @@ median_cut_rgb (CFHistogram   histogram,
       numboxes++;
 
       if (progress && (numboxes % 16 == 0))
-        gimp_progress_set_value (progress, (gdouble) numboxes / desired_colors);
+        ligma_progress_set_value (progress, (gdouble) numboxes / desired_colors);
 
       update_box_rgb (histogram, b1, desired_colors - numboxes);
       update_box_rgb (histogram, b2, desired_colors - numboxes);
@@ -2887,14 +2887,14 @@ custompal_pass1 (QuantizeObj *quantobj)
              "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
              theCustomPalette->name, theCustomPalette->filename); */
 
-  for (i = 0, list = gimp_palette_get_colors (quantobj->custom_palette);
+  for (i = 0, list = ligma_palette_get_colors (quantobj->custom_palette);
        list;
        i++, list = g_list_next (list))
     {
-      GimpPaletteEntry *entry = list->data;
+      LigmaPaletteEntry *entry = list->data;
       guchar            r, g, b;
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+      ligma_rgb_get_uchar (&entry->color, &r, &g, &b);
 
       quantobj->cmap[i].red   = (gint) r;
       quantobj->cmap[i].green = (gint) g;
@@ -2910,7 +2910,7 @@ custompal_pass1 (QuantizeObj *quantobj)
 
 static void
 median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
-                                 GimpLayer   *layer,
+                                 LigmaLayer   *layer,
                                  GeglBuffer  *new_buffer)
 {
   GeglBufferIterator *iter;
@@ -2926,9 +2926,9 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -2936,7 +2936,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   has_alpha = babl_format_has_alpha (src_format);
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   src_roi = &iter->items[0].roi;
@@ -3010,7 +3010,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
-                                    GimpLayer   *layer,
+                                    LigmaLayer   *layer,
                                     GeglBuffer  *new_buffer)
 {
   GeglBufferIterator *iter;
@@ -3032,9 +3032,9 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   gboolean            dither_alpha     = quantobj->want_dither_alpha;
   gint                offsetx, offsety;
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -3042,7 +3042,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   has_alpha = babl_format_has_alpha (src_format);
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   src_roi = &iter->items[0].roi;
@@ -3178,7 +3178,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
-                                GimpLayer   *layer,
+                                LigmaLayer   *layer,
                                 GeglBuffer  *new_buffer)
 {
   GeglBufferIterator *iter;
@@ -3202,9 +3202,9 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gint64              layer_size;
   gint                count            = 0;
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -3215,13 +3215,13 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
+  if (ligma_drawable_is_gray (LIGMA_DRAWABLE (layer)))
     {
       red_pix = green_pix = blue_pix = GRAY;
       alpha_pix = ALPHA_G;
     }
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   src_roi = &iter->items[0].roi;
@@ -3230,8 +3230,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                             NULL, 0, NULL,
                             GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
-  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
-                gimp_item_get_height (GIMP_ITEM (layer)));
+  layer_size = (ligma_item_get_width  (LIGMA_ITEM (layer)) *
+                ligma_item_get_height (LIGMA_ITEM (layer)));
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -3298,14 +3298,14 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
         }
 
       if (quantobj->progress && (count % 16 == 0))
-         gimp_progress_set_value (quantobj->progress,
+         ligma_progress_set_value (quantobj->progress,
                                   (gdouble) total_size / (gdouble) layer_size);
     }
 }
 
 static void
 median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
-                                   GimpLayer   *layer,
+                                   LigmaLayer   *layer,
                                    GeglBuffer  *new_buffer)
 {
   GeglBufferIterator *iter;
@@ -3335,9 +3335,9 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gint64              layer_size;
   gint                count            = 0;
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -3348,13 +3348,13 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
+  if (ligma_drawable_is_gray (LIGMA_DRAWABLE (layer)))
     {
       red_pix = green_pix = blue_pix = GRAY;
       alpha_pix = ALPHA_G;
     }
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   src_roi = &iter->items[0].roi;
@@ -3363,8 +3363,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                             NULL, 0, NULL,
                             GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
-  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
-                gimp_item_get_height (GIMP_ITEM (layer)));
+  layer_size = (ligma_item_get_width  (LIGMA_ITEM (layer)) *
+                ligma_item_get_height (LIGMA_ITEM (layer)));
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -3530,14 +3530,14 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
         }
 
       if (quantobj->progress && (count % 16 == 0))
-        gimp_progress_set_value (quantobj->progress,
+        ligma_progress_set_value (quantobj->progress,
                                  (gdouble) total_size / (gdouble) layer_size);
     }
 }
 
 static void
 median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
-                                        GimpLayer   *layer,
+                                        LigmaLayer   *layer,
                                         GeglBuffer  *new_buffer)
 {
   GeglBufferIterator *iter;
@@ -3558,9 +3558,9 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
   gint                lastblue     = -1;
   gint                offsetx, offsety;
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -3568,7 +3568,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   has_alpha = babl_format_has_alpha (src_format);
 
-  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+  iter = gegl_buffer_iterator_new (ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                    NULL, 0, NULL,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   src_roi = &iter->items[0].roi;
@@ -3750,7 +3750,7 @@ init_error_limit (const int error_freedom)
 
 static void
 median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
-                                 GimpLayer   *layer,
+                                 LigmaLayer   *layer,
                                  GeglBuffer  *new_buffer)
 {
   GeglBuffer   *src_buffer;
@@ -3781,11 +3781,11 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          width, height;
   guint64      *index_used_count = quantobj->index_used_count;
 
-  src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  src_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -3793,8 +3793,8 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   has_alpha = babl_format_has_alpha (src_format);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
+  width  = ligma_item_get_width  (LIGMA_ITEM (layer));
+  height = ligma_item_get_height (LIGMA_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
@@ -4003,7 +4003,7 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
 
 static void
 median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
-                                GimpLayer   *layer,
+                                LigmaLayer   *layer,
                                 GeglBuffer  *new_buffer)
 {
   GeglBuffer   *src_buffer;
@@ -4044,17 +4044,17 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          global_gmax = 0, global_gmin = G_MAXINT;
   gint          global_bmax = 0, global_bmin = G_MAXINT;
 
-  src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  src_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
+  if (ligma_drawable_is_gray (LIGMA_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY;
 
-  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  src_format  = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   dest_format = gegl_buffer_get_format (new_buffer);
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -4062,8 +4062,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
   has_alpha = babl_format_has_alpha (src_format);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
+  width  = ligma_item_get_width  (LIGMA_ITEM (layer));
+  height = ligma_item_get_height (LIGMA_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
@@ -4359,7 +4359,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                        GEGL_AUTO_ROWSTRIDE);
 
       if (quantobj->progress && (row % 16 == 0))
-        gimp_progress_set_value (quantobj->progress,
+        ligma_progress_set_value (quantobj->progress,
                                  (gdouble) row / (gdouble) height);
     }
 
@@ -4384,7 +4384,7 @@ delete_median_cut (QuantizeObj *quantobj)
 
 
 void
-gimp_image_convert_indexed_set_dither_matrix (const guchar *matrix,
+ligma_image_convert_indexed_set_dither_matrix (const guchar *matrix,
                                               gint          width,
                                               gint          height)
 {
@@ -4414,20 +4414,20 @@ gimp_image_convert_indexed_set_dither_matrix (const guchar *matrix,
 
 /**************************************************************/
 static QuantizeObj *
-initialize_median_cut (GimpImageBaseType       type,
+initialize_median_cut (LigmaImageBaseType       type,
                        gint                    num_colors,
-                       GimpConvertDitherType   dither_type,
-                       GimpConvertPaletteType  palette_type,
-                       GimpPalette            *custom_palette,
+                       LigmaConvertDitherType   dither_type,
+                       LigmaConvertPaletteType  palette_type,
+                       LigmaPalette            *custom_palette,
                        gboolean                want_dither_alpha,
-                       GimpProgress           *progress)
+                       LigmaProgress           *progress)
 {
   QuantizeObj *quantobj;
 
   /* Initialize the data structures */
   quantobj = g_new (QuantizeObj, 1);
 
-  if (type == GIMP_GRAY && palette_type == GIMP_CONVERT_PALETTE_GENERATE)
+  if (type == LIGMA_GRAY && palette_type == LIGMA_CONVERT_PALETTE_GENERATE)
     quantobj->histogram = g_new (ColorFreq, 256);
   else
     quantobj->histogram = g_new (ColorFreq,
@@ -4440,47 +4440,47 @@ initialize_median_cut (GimpImageBaseType       type,
 
   switch (type)
     {
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       switch (palette_type)
         {
-        case GIMP_CONVERT_PALETTE_GENERATE:
+        case LIGMA_CONVERT_PALETTE_GENERATE:
           quantobj->first_pass = median_cut_pass1_gray;
           break;
-        case GIMP_CONVERT_PALETTE_WEB:
+        case LIGMA_CONVERT_PALETTE_WEB:
           quantobj->first_pass = webpal_pass1;
           break;
-        case GIMP_CONVERT_PALETTE_CUSTOM:
+        case LIGMA_CONVERT_PALETTE_CUSTOM:
           quantobj->first_pass = custompal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_CONVERT_PALETTE_MONO:
+        case LIGMA_CONVERT_PALETTE_MONO:
         default:
           quantobj->first_pass = monopal_pass1;
         }
 
-      if (palette_type == GIMP_CONVERT_PALETTE_WEB ||
-          palette_type == GIMP_CONVERT_PALETTE_CUSTOM)
+      if (palette_type == LIGMA_CONVERT_PALETTE_WEB ||
+          palette_type == LIGMA_CONVERT_PALETTE_CUSTOM)
         {
           switch (dither_type)
             {
-            case GIMP_CONVERT_DITHER_NODESTRUCT:
+            case LIGMA_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W1");
-            case GIMP_CONVERT_DITHER_NONE:
+            case LIGMA_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_no_dither_rgb;
               break;
-            case GIMP_CONVERT_DITHER_FS:
+            case LIGMA_CONVERT_DITHER_FS:
               quantobj->error_freedom = 0;
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
               break;
-            case GIMP_CONVERT_DITHER_FS_LOWBLEED:
+            case LIGMA_CONVERT_DITHER_FS_LOWBLEED:
               quantobj->error_freedom = 1;
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
               break;
-            case GIMP_CONVERT_DITHER_FIXED:
+            case LIGMA_CONVERT_DITHER_FIXED:
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
               break;
@@ -4490,24 +4490,24 @@ initialize_median_cut (GimpImageBaseType       type,
         {
           switch (dither_type)
             {
-            case GIMP_CONVERT_DITHER_NODESTRUCT:
+            case LIGMA_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W2");
-            case GIMP_CONVERT_DITHER_NONE:
+            case LIGMA_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_no_dither_gray;
               break;
-            case GIMP_CONVERT_DITHER_FS:
+            case LIGMA_CONVERT_DITHER_FS:
               quantobj->error_freedom = 0;
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_gray;
               break;
-            case GIMP_CONVERT_DITHER_FS_LOWBLEED:
+            case LIGMA_CONVERT_DITHER_FS_LOWBLEED:
               quantobj->error_freedom = 1;
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_gray;
               break;
-            case GIMP_CONVERT_DITHER_FIXED:
+            case LIGMA_CONVERT_DITHER_FIXED:
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
               break;
@@ -4515,46 +4515,46 @@ initialize_median_cut (GimpImageBaseType       type,
         }
       break;
 
-    case GIMP_RGB:
+    case LIGMA_RGB:
       switch (palette_type)
         {
-        case GIMP_CONVERT_PALETTE_GENERATE:
+        case LIGMA_CONVERT_PALETTE_GENERATE:
           quantobj->first_pass = median_cut_pass1_rgb;
           break;
-        case GIMP_CONVERT_PALETTE_WEB:
+        case LIGMA_CONVERT_PALETTE_WEB:
           quantobj->first_pass = webpal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_CONVERT_PALETTE_CUSTOM:
+        case LIGMA_CONVERT_PALETTE_CUSTOM:
           quantobj->first_pass = custompal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_CONVERT_PALETTE_MONO:
+        case LIGMA_CONVERT_PALETTE_MONO:
         default:
           quantobj->first_pass = monopal_pass1;
         }
 
       switch (dither_type)
         {
-        case GIMP_CONVERT_DITHER_NONE:
+        case LIGMA_CONVERT_DITHER_NONE:
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_no_dither_rgb;
           break;
-        case GIMP_CONVERT_DITHER_FS:
+        case LIGMA_CONVERT_DITHER_FS:
           quantobj->error_freedom = 0;
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
           break;
-        case GIMP_CONVERT_DITHER_FS_LOWBLEED:
+        case LIGMA_CONVERT_DITHER_FS_LOWBLEED:
           quantobj->error_freedom = 1;
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
           break;
-        case GIMP_CONVERT_DITHER_NODESTRUCT:
+        case LIGMA_CONVERT_DITHER_NODESTRUCT:
           quantobj->second_pass_init = NULL;
           quantobj->second_pass = median_cut_pass2_nodestruct_dither_rgb;
           break;
-        case GIMP_CONVERT_DITHER_FIXED:
+        case LIGMA_CONVERT_DITHER_FIXED:
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
           break;

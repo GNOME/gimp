@@ -1,14 +1,14 @@
-# Introspectable sources for libgimpthumb
+# Introspectable sources for libligmathumb
 
-libgimpthumb_introspectable_headers =	\
-	../libgimpthumb/gimpthumb-enums.h	\
-	../libgimpthumb/gimpthumb-error.h	\
-	../libgimpthumb/gimpthumb-types.h	\
-	../libgimpthumb/gimpthumb-utils.h	\
-	../libgimpthumb/gimpthumbnail.h
+libligmathumb_introspectable_headers =	\
+	../libligmathumb/ligmathumb-enums.h	\
+	../libligmathumb/ligmathumb-error.h	\
+	../libligmathumb/ligmathumb-types.h	\
+	../libligmathumb/ligmathumb-utils.h	\
+	../libligmathumb/ligmathumbnail.h
 
-libgimpthumb_introspectable =	\
-	../libgimpthumb/gimpthumb-error.c	\
-	../libgimpthumb/gimpthumb-utils.c	\
-	../libgimpthumb/gimpthumbnail.c	\
-	$(libgimpthumb_introspectable_headers)
+libligmathumb_introspectable =	\
+	../libligmathumb/ligmathumb-error.c	\
+	../libligmathumb/ligmathumb-utils.c	\
+	../libligmathumb/ligmathumbnail.c	\
+	$(libligmathumb_introspectable_headers)

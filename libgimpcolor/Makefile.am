@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -12,43 +12,43 @@ libm = -lm
 endif
 
 if OS_WIN32
-gimpcolor_def = gimpcolor.def
-libgimpcolor_export_symbols = -export-symbols $(srcdir)/gimpcolor.def
+ligmacolor_def = ligmacolor.def
+libligmacolor_export_symbols = -export-symbols $(srcdir)/ligmacolor.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpcolor-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimpcolor.def $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligmacolor-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligmacolor.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/gimpcolor.def
+	-rm $(DESTDIR)$(libdir)/libligmacolor-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/ligmacolor.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpcolor-$(GIMP_API_VERSION).lib
+noinst_DATA = ligmacolor-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpcolor-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligmacolor-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpcolor-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligmacolor-$(LIGMA_API_VERSION).lib
 
-gimpcolor-@GIMP_API_VERSION@.lib: gimpcolor.def
-	lib -name:libgimpcolor-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
+ligmacolor-@LIGMA_API_VERSION@.lib: ligmacolor.def
+	lib -name:libligmacolor-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligmacolor.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpcolorincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpcolor
+libligmacolorincludedir = $(includedir)/ligma-$(LIGMA_API_VERSION)/libligmacolor
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpColor\"	\
-	-DGIMP_COLOR_COMPILATION	\
+	-DG_LOG_DOMAIN=\"LibLigmaColor\"	\
+	-DLIGMA_COLOR_COMPILATION	\
 	-I$(top_srcdir)			\
 	$(GEGL_CFLAGS)			\
 	$(CAIRO_CFLAGS)			\
@@ -57,30 +57,30 @@ AM_CPPFLAGS = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	gimpcolor.def
+	ligmacolor.def
 
-lib_LTLIBRARIES = libgimpcolor-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligmacolor-@LIGMA_API_VERSION@.la
 
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimpcolor/Makefile.gi
+include $(top_srcdir)/libligmacolor/Makefile.gi
 
-libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
-	gimpcolor.h			\
-	$(libgimpcolor_introspectable)
+libligmacolor_@LIGMA_API_VERSION@_la_SOURCES = \
+	ligmacolor.h			\
+	$(libligmacolor_introspectable)
 
-libgimpcolorinclude_HEADERS = \
-	gimpcolor.h			\
-	$(libgimpcolor_introspectable_headers)
+libligmacolorinclude_HEADERS = \
+	ligmacolor.h			\
+	$(libligmacolor_introspectable_headers)
 
-libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligmacolor_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
-	$(libgimpcolor_export_symbols)
+	$(libligmacolor_export_symbols)
 
-EXTRA_libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpcolor_def)
+EXTRA_libligmacolor_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(ligmacolor_def)
 
-libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpbase)		\
+libligmacolor_@LIGMA_API_VERSION@_la_LIBADD = \
+	$(libligmabase)		\
 	$(GEGL_LIBS)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
@@ -97,8 +97,8 @@ TESTS = test-color-parser$(EXEEXT)
 EXTRA_PROGRAMS = test-color-parser
 
 test_color_parser_DEPENDENCIES = \
-	$(libgimpbase)	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+	$(libligmabase)	\
+	$(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
 
 test_color_parser_LDADD = \
 	$(CAIRO_LIBS) 		\

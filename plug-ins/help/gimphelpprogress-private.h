@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,20 +20,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_PROGRESS_PRIVATE_H__
-#define __GIMP_HELP_PROGRESS_PRIVATE_H__
+#ifndef __LIGMA_HELP_PROGRESS_PRIVATE_H__
+#define __LIGMA_HELP_PROGRESS_PRIVATE_H__
 
 
 /*  internal API  */
 
-void  _gimp_help_progress_start  (GimpHelpProgress   *progress,
+void  _ligma_help_progress_start  (LigmaHelpProgress   *progress,
                                   GCancellable       *cancellable,
                                   const gchar        *format,
                                   ...) G_GNUC_PRINTF (3, 4)       G_GNUC_INTERNAL;
-void  _gimp_help_progress_update (GimpHelpProgress   *progress,
+void  _ligma_help_progress_update (LigmaHelpProgress   *progress,
                                   gdouble             percentage) G_GNUC_INTERNAL;
-void  _gimp_help_progress_pulse  (GimpHelpProgress   *progress)   G_GNUC_INTERNAL;
-void  _gimp_help_progress_finish (GimpHelpProgress   *progress)   G_GNUC_INTERNAL;
+void  _ligma_help_progress_pulse  (LigmaHelpProgress   *progress)   G_GNUC_INTERNAL;
+void  _ligma_help_progress_finish (LigmaHelpProgress   *progress)   G_GNUC_INTERNAL;
 
 
-#endif /* ! __GIMP_HELP_PROGRESS_PRIVATE_H__ */
+#endif /* ! __LIGMA_HELP_PROGRESS_PRIVATE_H__ */

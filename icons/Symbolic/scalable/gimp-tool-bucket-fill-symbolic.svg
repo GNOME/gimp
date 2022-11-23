@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-bucket-fill.svg">
+   sodipodi:docname="ligma-tool-bucket-fill.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -98,7 +98,7 @@
      style="display:inline"
      id="tools">
     <g
-       id="gimp-tool-bucket-fill"
+       id="ligma-tool-bucket-fill"
        transform="translate(32.10093,-720.59537)">
       <g
          transform="translate(-141.0002,859.3622)"

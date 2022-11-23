@@ -1,4 +1,4 @@
-## Makefile.am for gimp/data/brushes
+## Makefile.am for ligma/data/brushes
 
 SUBDIRS = \
 	Basic			\

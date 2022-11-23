@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui.h
- * Copyright (C) 2002-2017 Michael Natterer <mitch@gimp.org>
+ * ligmapropgui.h
+ * Copyright (C) 2002-2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,43 +18,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_H__
-#define __GIMP_PROP_GUI_H__
+#ifndef __LIGMA_PROP_GUI_H__
+#define __LIGMA_PROP_GUI_H__
 
 
 /*  A view on all of an object's properties  */
 
-GtkWidget * gimp_prop_widget_new            (GObject                 *config,
+GtkWidget * ligma_prop_widget_new            (GObject                 *config,
                                              const gchar             *property_name,
                                              GeglRectangle           *area,
-                                             GimpContext             *context,
-                                             GimpCreatePickerFunc     create_picker,
-                                             GimpCreateControllerFunc create_controller,
+                                             LigmaContext             *context,
+                                             LigmaCreatePickerFunc     create_picker,
+                                             LigmaCreateControllerFunc create_controller,
                                              gpointer                 creator,
                                              const gchar            **label);
-GtkWidget * gimp_prop_widget_new_from_pspec (GObject                 *config,
+GtkWidget * ligma_prop_widget_new_from_pspec (GObject                 *config,
                                              GParamSpec              *pspec,
                                              GeglRectangle           *area,
-                                             GimpContext             *context,
-                                             GimpCreatePickerFunc     create_picker,
-                                             GimpCreateControllerFunc create_controller,
+                                             LigmaContext             *context,
+                                             LigmaCreatePickerFunc     create_picker,
+                                             LigmaCreateControllerFunc create_controller,
                                              gpointer                 creator,
                                              const gchar            **label);
-GtkWidget * gimp_prop_gui_new               (GObject                 *config,
+GtkWidget * ligma_prop_gui_new               (GObject                 *config,
                                              GType                    owner_type,
                                              GParamFlags              flags,
                                              GeglRectangle           *area,
-                                             GimpContext             *context,
-                                             GimpCreatePickerFunc     create_picker,
-                                             GimpCreateControllerFunc create_controller,
+                                             LigmaContext             *context,
+                                             LigmaCreatePickerFunc     create_picker,
+                                             LigmaCreateControllerFunc create_controller,
                                              gpointer                 creator);
 
-void        gimp_prop_gui_bind_container    (GtkWidget               *source,
+void        ligma_prop_gui_bind_container    (GtkWidget               *source,
                                              GtkWidget               *target);
-void        gimp_prop_gui_bind_label        (GtkWidget               *source,
+void        ligma_prop_gui_bind_label        (GtkWidget               *source,
                                              GtkWidget               *target);
-void        gimp_prop_gui_bind_tooltip      (GtkWidget               *source,
+void        ligma_prop_gui_bind_tooltip      (GtkWidget               *source,
                                              GtkWidget               *target);
 
 
-#endif /* __GIMP_PROP_GUI_H__ */
+#endif /* __LIGMA_PROP_GUI_H__ */

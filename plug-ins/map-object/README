@@ -1,5 +1,5 @@
 
-MapObject 1.2.0 -- image filter plug-in for GIMP
+MapObject 1.2.0 -- image filter plug-in for LIGMA
 ===========================================================
 
 Copyright (C) 1996-98 Tom Bech
@@ -8,14 +8,14 @@ Copyright (C) 1996-98 Federico Mena Quintero
 Released 16th of July, 1998
 
 You can reach the author(s) via E-mail:
-tomb@gimp.org (Tom) or quartic@gimp.org (Federico).
+tomb@ligma.org (Tom) or quartic@ligma.org (Federico).
 
-GIMP was developed by Peter Mattis and Spencer Kimball.
-You can contact them at gimp@xcf.berkeley.edu.
+LIGMA was developed by Peter Mattis and Spencer Kimball.
+You can contact them at ligma@xcf.berkeley.edu.
 
-There's more GIMP stuff on our home pages:
-http://www.ii.uib.no/~tomb/gimp.html (Tom's page)
-http://www.nuclecu.unam.mx/~federico/gimp/index.html (Quartic's page)
+There's more LIGMA stuff on our home pages:
+http://www.ii.uib.no/~tomb/ligma.html (Tom's page)
+http://www.nuclecu.unam.mx/~federico/ligma/index.html (Quartic's page)
 
 Legal stuff
 ===========
@@ -38,7 +38,7 @@ In other words, you can't sue us for whatever happens while using this ;)
 Compiling
 =========
 
-To compile you'll need GIMP 1.0 and GTK+ 1.0.4 or later.
+To compile you'll need LIGMA 1.0 and GTK+ 1.0.4 or later.
 You'll also need GCK 1.00 (http://www.ii.uib.no/~tomb/gck.html)
 
 1) Edit the Makefile to reflect your system setup.

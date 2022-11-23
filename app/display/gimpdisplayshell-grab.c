@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdisplayshell-grab.c
+ * ligmadisplayshell-grab.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
 
 #include "display-types.h"
 
-#include "widgets/gimpdevices.h"
+#include "widgets/ligmadevices.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-grab.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-grab.h"
 
 
 static GdkDevice *
@@ -60,7 +60,7 @@ get_associated_pointer (GdkDevice *device)
 }
 
 gboolean
-gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
+ligma_display_shell_pointer_grab (LigmaDisplayShell *shell,
                                  const GdkEvent   *event,
                                  GdkEventMask      event_mask)
 {
@@ -68,11 +68,11 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
   GdkDevice     *source_device;
   GdkGrabStatus  status;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
   g_return_val_if_fail (shell->grab_pointer == NULL, FALSE);
 
-  source_device = gimp_devices_get_from_event (shell->display->gimp,
+  source_device = ligma_devices_get_from_event (shell->display->ligma,
                                                event, &device);
 
   if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
@@ -103,10 +103,10 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
+ligma_display_shell_pointer_ungrab (LigmaDisplayShell *shell,
                                    const GdkEvent   *event)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
   g_return_if_fail (shell->grab_pointer != NULL);
 

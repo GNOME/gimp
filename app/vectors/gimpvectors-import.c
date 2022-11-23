@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpVectors Import
- * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
+ * LigmaVectors Import
+ * Copyright (C) 2003-2004  Sven Neumann <sven@ligma.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -11,7 +11,7 @@
  * sufficient to parse path elements and basic shapes and to apply
  * transformations as described by the SVG specification:
  * http://www.w3.org/TR/SVG/.  It must handle the SVG files exported
- * by GIMP but it is also supposed to be able to extract paths and
+ * by LIGMA but it is also supposed to be able to extract paths and
  * shapes from foreign SVG documents.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,23 +36,23 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "vectors-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
 
-#include "gimpbezierstroke.h"
-#include "gimpstroke.h"
-#include "gimpvectors.h"
-#include "gimpvectors-import.h"
+#include "ligmabezierstroke.h"
+#include "ligmastroke.h"
+#include "ligmavectors.h"
+#include "ligmavectors-import.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define COORDS_INIT   \
@@ -71,7 +71,7 @@
 typedef struct
 {
   GQueue       *stack;
-  GimpImage    *image;
+  LigmaImage    *image;
   gboolean      scale;
   gint          svg_depth;
 } SvgParser;
@@ -94,7 +94,7 @@ struct _SvgHandler
   gdouble       height;
   gchar        *id;
   GList        *paths;
-  GimpMatrix3  *transform;
+  LigmaMatrix3  *transform;
 };
 
 
@@ -105,13 +105,13 @@ typedef struct
 } SvgPath;
 
 
-static gboolean  gimp_vectors_import  (GimpImage            *image,
+static gboolean  ligma_vectors_import  (LigmaImage            *image,
                                        GFile                *file,
                                        const gchar          *str,
                                        gsize                 len,
                                        gboolean              merge,
                                        gboolean              scale,
-                                       GimpVectors          *parent,
+                                       LigmaVectors          *parent,
                                        gint                  position,
                                        GList               **ret_vectors,
                                        GError              **error);
@@ -189,17 +189,17 @@ static gboolean   parse_svg_length    (const gchar  *value,
 static gboolean   parse_svg_viewbox   (const gchar  *value,
                                        gdouble      *width,
                                        gdouble      *height,
-                                       GimpMatrix3  *matrix);
+                                       LigmaMatrix3  *matrix);
 static gboolean   parse_svg_transform (const gchar  *value,
-                                       GimpMatrix3  *matrix);
+                                       LigmaMatrix3  *matrix);
 static GList    * parse_path_data     (const gchar  *data);
 
 
 /**
- * gimp_vectors_import_file:
- * @image:    the #GimpImage to add the paths to
+ * ligma_vectors_import_file:
+ * @image:    the #LigmaImage to add the paths to
  * @file:     a SVG file
- * @merge:    should multiple paths be merged into a single #GimpVectors object
+ * @merge:    should multiple paths be merged into a single #LigmaVectors object
  * @scale:    should the SVG be scaled to fit the image dimensions
  * @position: position in the image's vectors stack where to add the vectors
  * @error:    location to store possible errors
@@ -209,45 +209,45 @@ static GList    * parse_path_data     (const gchar  *data);
  * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
-gimp_vectors_import_file (GimpImage    *image,
+ligma_vectors_import_file (LigmaImage    *image,
                           GFile        *file,
                           gboolean      merge,
                           gboolean      scale,
-                          GimpVectors  *parent,
+                          LigmaVectors  *parent,
                           gint          position,
                           GList       **ret_vectors,
                           GError      **error)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_VECTORS (parent), FALSE);
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        LIGMA_IS_VECTORS (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_item_is_attached (LIGMA_ITEM (parent)), FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_item_get_image (LIGMA_ITEM (parent)) == image,
                         FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_viewable_get_children (LIGMA_VIEWABLE (parent)),
                         FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, file, NULL, 0, merge, scale,
+  return ligma_vectors_import (image, file, NULL, 0, merge, scale,
                               parent, position,
                               ret_vectors, error);
 }
 
 /**
- * gimp_vectors_import_string:
- * @image:  the #GimpImage to add the paths to
+ * ligma_vectors_import_string:
+ * @image:  the #LigmaImage to add the paths to
  * @buffer: a character buffer to parse
  * @len:    number of bytes in @str or -1 if @str is %NUL-terminated
- * @merge:  should multiple paths be merged into a single #GimpVectors object
+ * @merge:  should multiple paths be merged into a single #LigmaVectors object
  * @scale:  should the SVG be scaled to fit the image dimensions
  * @error:  location to store possible errors
  *
@@ -256,53 +256,53 @@ gimp_vectors_import_file (GimpImage    *image,
  * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
-gimp_vectors_import_buffer (GimpImage    *image,
+ligma_vectors_import_buffer (LigmaImage    *image,
                             const gchar  *buffer,
                             gsize         len,
                             gboolean      merge,
                             gboolean      scale,
-                            GimpVectors  *parent,
+                            LigmaVectors  *parent,
                             gint          position,
                             GList       **ret_vectors,
                             GError      **error)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_VECTORS (parent), FALSE);
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        LIGMA_IS_VECTORS (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_item_is_attached (LIGMA_ITEM (parent)), FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_item_get_image (LIGMA_ITEM (parent)) == image,
                         FALSE);
   g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_viewable_get_children (LIGMA_VIEWABLE (parent)),
                         FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, NULL, buffer, len, merge, scale,
+  return ligma_vectors_import (image, NULL, buffer, len, merge, scale,
                               parent, position,
                               ret_vectors, error);
 }
 
 static gboolean
-gimp_vectors_import (GimpImage    *image,
+ligma_vectors_import (LigmaImage    *image,
                      GFile        *file,
                      const gchar  *str,
                      gsize         len,
                      gboolean      merge,
                      gboolean      scale,
-                     GimpVectors  *parent,
+                     LigmaVectors  *parent,
                      gint          position,
                      GList       **ret_vectors,
                      GError      **error)
 {
-  GimpXmlParser *xml_parser;
+  LigmaXmlParser *xml_parser;
   SvgParser      parser;
   GList         *paths;
   SvgHandler    *base;
@@ -316,31 +316,31 @@ gimp_vectors_import (GimpImage    *image,
   /*  the base of the stack, defines the size of the view-port  */
   base = g_slice_new0 (SvgHandler);
   base->name   = "image";
-  base->width  = gimp_image_get_width  (image);
-  base->height = gimp_image_get_height (image);
+  base->width  = ligma_image_get_width  (image);
+  base->height = ligma_image_get_height (image);
 
   g_queue_push_head (parser.stack, base);
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
+  xml_parser = ligma_xml_parser_new (&markup_parser, &parser);
 
   if (file)
-    success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
+    success = ligma_xml_parser_parse_gfile (xml_parser, file, error);
   else
-    success = gimp_xml_parser_parse_buffer (xml_parser, str, len, error);
+    success = ligma_xml_parser_parse_buffer (xml_parser, str, len, error);
 
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
 
   if (success)
     {
       if (base->paths)
         {
-          GimpVectors *vectors = NULL;
+          LigmaVectors *vectors = NULL;
 
           base->paths = g_list_reverse (base->paths);
 
           merge = merge && base->paths->next;
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_VECTORS_IMPORT,
                                        _("Import Paths"));
 
           for (paths = base->paths; paths; paths = paths->next)
@@ -350,12 +350,12 @@ gimp_vectors_import (GimpImage    *image,
 
               if (! merge || ! vectors)
                 {
-                  vectors = gimp_vectors_new (image,
+                  vectors = ligma_vectors_new (image,
                                               ((merge || ! path->id) ?
                                                _("Imported Path") : path->id));
-                  gimp_image_add_vectors (image, vectors,
+                  ligma_image_add_vectors (image, vectors,
                                           parent, position, TRUE);
-                  gimp_vectors_freeze (vectors);
+                  ligma_vectors_freeze (vectors);
 
                   if (ret_vectors)
                     *ret_vectors = g_list_prepend (*ret_vectors, vectors);
@@ -365,28 +365,28 @@ gimp_vectors_import (GimpImage    *image,
                 }
 
               for (list = path->strokes; list; list = list->next)
-                gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+                ligma_vectors_stroke_add (vectors, LIGMA_STROKE (list->data));
 
               if (! merge)
-                gimp_vectors_thaw (vectors);
+                ligma_vectors_thaw (vectors);
 
               g_list_free_full (path->strokes, g_object_unref);
               path->strokes = NULL;
             }
 
           if (merge)
-            gimp_vectors_thaw (vectors);
+            ligma_vectors_thaw (vectors);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
       else
         {
           if (file)
-            g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+            g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                          _("No paths found in '%s'"),
-                         gimp_file_get_utf8_name (file));
+                         ligma_file_get_utf8_name (file));
           else
-            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+            g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                  _("No paths found in the buffer"));
 
           success = FALSE;
@@ -398,7 +398,7 @@ gimp_vectors_import (GimpImage    *image,
 
       (*error)->message =
         g_strdup_printf (_("Failed to import paths from '%s': %s"),
-                         gimp_file_get_utf8_name (file), msg);
+                         ligma_file_get_utf8_name (file), msg);
 
       g_free (msg);
     }
@@ -422,7 +422,7 @@ gimp_vectors_import (GimpImage    *image,
 
       g_list_free (base->paths);
 
-      g_slice_free (GimpMatrix3, base->transform);
+      g_slice_free (LigmaMatrix3, base->transform);
       g_slice_free (SvgHandler, base);
     }
 
@@ -498,11 +498,11 @@ svg_parser_end_element (GMarkupParseContext  *context,
               GList   *list;
 
               for (list = path->strokes; list; list = list->next)
-                gimp_stroke_transform (GIMP_STROKE (list->data),
+                ligma_stroke_transform (LIGMA_STROKE (list->data),
                                        handler->transform, NULL);
             }
 
-          g_slice_free (GimpMatrix3, handler->transform);
+          g_slice_free (LigmaMatrix3, handler->transform);
         }
 
       base = g_queue_peek_head (parser->stack);
@@ -518,8 +518,8 @@ svg_handler_svg_start (SvgHandler   *handler,
                        const gchar **values,
                        SvgParser    *parser)
 {
-  GimpMatrix3 *matrix;
-  GimpMatrix3  box;
+  LigmaMatrix3 *matrix;
+  LigmaMatrix3  box;
   const gchar *viewbox = NULL;
   gdouble      x = 0;
   gdouble      y = 0;
@@ -528,10 +528,10 @@ svg_handler_svg_start (SvgHandler   *handler,
   gdouble      xres;
   gdouble      yres;
 
-  matrix = g_slice_new (GimpMatrix3);
-  gimp_matrix3_identity (matrix);
+  matrix = g_slice_new (LigmaMatrix3);
+  ligma_matrix3_identity (matrix);
 
-  gimp_image_get_resolution (parser->image, &xres, &yres);
+  ligma_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -571,21 +571,21 @@ svg_handler_svg_start (SvgHandler   *handler,
     {
       /* according to the spec offsets are meaningless on the outermost svg */
       if (parser->svg_depth > 0)
-        gimp_matrix3_translate (matrix, x, y);
+        ligma_matrix3_translate (matrix, x, y);
     }
 
   if (viewbox && parse_svg_viewbox (viewbox, &w, &h, &box))
     {
-      gimp_matrix3_mult (&box, matrix);
+      ligma_matrix3_mult (&box, matrix);
     }
 
   /*  optionally scale the outermost svg to image size  */
   if (parser->scale && parser->svg_depth == 0)
     {
       if (w > 0.0 && h > 0.0)
-        gimp_matrix3_scale (matrix,
-                            gimp_image_get_width  (parser->image) / w,
-                            gimp_image_get_height (parser->image) / h);
+        ligma_matrix3_scale (matrix,
+                            ligma_image_get_width  (parser->image) / w,
+                            ligma_image_get_height (parser->image) / h);
     }
 
   handler->width  = w;
@@ -613,11 +613,11 @@ svg_handler_group_start (SvgHandler   *handler,
     {
       if (strcmp (*names, "transform") == 0 && ! handler->transform)
         {
-          GimpMatrix3  matrix;
+          LigmaMatrix3  matrix;
 
           if (parse_svg_transform (*values, &matrix))
             {
-              handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+              handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
 
 #ifdef DEBUG_VECTORS_IMPORT
               g_printerr ("transform %s: %g %g %g   %g %g %g   %g %g %g\n",
@@ -665,11 +665,11 @@ svg_handler_path_start (SvgHandler   *handler,
         case 't':
           if (strcmp (*names, "transform") == 0 && ! handler->transform)
             {
-              GimpMatrix3  matrix;
+              LigmaMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
                 {
-                  handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+                  handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
                 }
             }
           break;
@@ -698,7 +698,7 @@ svg_handler_rect_start (SvgHandler   *handler,
   gdouble  xres;
   gdouble  yres;
 
-  gimp_image_get_resolution (parser->image, &xres, &yres);
+  ligma_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -739,11 +739,11 @@ svg_handler_rect_start (SvgHandler   *handler,
         case 't':
           if (strcmp (*names, "transform") == 0 && ! handler->transform)
             {
-              GimpMatrix3  matrix;
+              LigmaMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
                 {
-                  handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+                  handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
                 }
             }
           break;
@@ -755,8 +755,8 @@ svg_handler_rect_start (SvgHandler   *handler,
 
   if (width > 0.0 && height > 0.0 && rx >= 0.0 && ry >= 0.0)
     {
-      GimpStroke *stroke;
-      GimpCoords  point = COORDS_INIT;
+      LigmaStroke *stroke;
+      LigmaCoords  point = COORDS_INIT;
 
       if (rx == 0.0)
         rx = ry;
@@ -768,62 +768,62 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       point.x = x + width - rx;
       point.y = y;
-      stroke = gimp_bezier_stroke_new_moveto (&point);
+      stroke = ligma_bezier_stroke_new_moveto (&point);
 
       if (rx)
         {
-          GimpCoords  end = COORDS_INIT;
+          LigmaCoords  end = COORDS_INIT;
 
           end.x = x + width;
           end.y = y + ry;
 
-          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+          ligma_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
       point.x = x + width;
       point.y = y + height - ry;
-      gimp_bezier_stroke_lineto (stroke, &point);
+      ligma_bezier_stroke_lineto (stroke, &point);
 
       if (rx)
         {
-          GimpCoords  end = COORDS_INIT;
+          LigmaCoords  end = COORDS_INIT;
 
           end.x = x + width - rx;
           end.y = y + height;
 
-          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+          ligma_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
       point.x = x + rx;
       point.y = y + height;
-      gimp_bezier_stroke_lineto (stroke, &point);
+      ligma_bezier_stroke_lineto (stroke, &point);
 
       if (rx)
         {
-          GimpCoords  end = COORDS_INIT;
+          LigmaCoords  end = COORDS_INIT;
 
           end.x = x;
           end.y = y + height - ry;
 
-          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+          ligma_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
       point.x = x;
       point.y = y + ry;
-      gimp_bezier_stroke_lineto (stroke, &point);
+      ligma_bezier_stroke_lineto (stroke, &point);
 
       if (rx)
         {
-          GimpCoords  end = COORDS_INIT;
+          LigmaCoords  end = COORDS_INIT;
 
           end.x = x + rx;
           end.y = y;
 
-          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+          ligma_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
       /* the last line is handled by closing the stroke */
-      gimp_stroke_close (stroke);
+      ligma_stroke_close (stroke);
 
       path->strokes = g_list_prepend (path->strokes, stroke);
     }
@@ -838,13 +838,13 @@ svg_handler_ellipse_start (SvgHandler   *handler,
                            SvgParser    *parser)
 {
   SvgPath    *path   = g_slice_new0 (SvgPath);
-  GimpCoords  center = COORDS_INIT;
+  LigmaCoords  center = COORDS_INIT;
   gdouble     rx     = 0.0;
   gdouble     ry     = 0.0;
   gdouble     xres;
   gdouble     yres;
 
-  gimp_image_get_resolution (parser->image, &xres, &yres);
+  ligma_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -881,11 +881,11 @@ svg_handler_ellipse_start (SvgHandler   *handler,
         case 't':
           if (strcmp (*names, "transform") == 0 && ! handler->transform)
             {
-              GimpMatrix3  matrix;
+              LigmaMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
                 {
-                  handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+                  handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
                 }
             }
           break;
@@ -897,7 +897,7 @@ svg_handler_ellipse_start (SvgHandler   *handler,
 
   if (rx >= 0.0 && ry >= 0.0)
     path->strokes = g_list_prepend (path->strokes,
-                                    gimp_bezier_stroke_new_ellipse (&center,
+                                    ligma_bezier_stroke_new_ellipse (&center,
                                                                     rx, ry,
                                                                     0.0));
 
@@ -911,13 +911,13 @@ svg_handler_line_start (SvgHandler   *handler,
                         SvgParser    *parser)
 {
   SvgPath    *path  = g_slice_new0 (SvgPath);
-  GimpCoords  start = COORDS_INIT;
-  GimpCoords  end   = COORDS_INIT;
-  GimpStroke *stroke;
+  LigmaCoords  start = COORDS_INIT;
+  LigmaCoords  end   = COORDS_INIT;
+  LigmaStroke *stroke;
   gdouble     xres;
   gdouble     yres;
 
-  gimp_image_get_resolution (parser->image, &xres, &yres);
+  ligma_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -945,11 +945,11 @@ svg_handler_line_start (SvgHandler   *handler,
         case 't':
           if (strcmp (*names, "transform") == 0 && ! handler->transform)
             {
-              GimpMatrix3  matrix;
+              LigmaMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
                 {
-                  handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+                  handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
                 }
             }
           break;
@@ -959,8 +959,8 @@ svg_handler_line_start (SvgHandler   *handler,
       values++;
     }
 
-  stroke = gimp_bezier_stroke_new_moveto (&start);
-  gimp_bezier_stroke_lineto (stroke, &end);
+  stroke = ligma_bezier_stroke_new_moveto (&start);
+  ligma_bezier_stroke_lineto (stroke, &end);
 
   path->strokes = g_list_prepend (path->strokes, stroke);
 
@@ -1034,11 +1034,11 @@ svg_handler_poly_start (SvgHandler   *handler,
         case 't':
           if (strcmp (*names, "transform") == 0 && ! handler->transform)
             {
-              GimpMatrix3  matrix;
+              LigmaMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
                 {
-                  handler->transform = g_slice_dup (GimpMatrix3, &matrix);
+                  handler->transform = g_slice_dup (LigmaMatrix3, &matrix);
                 }
             }
           break;
@@ -1063,7 +1063,7 @@ parse_svg_length (const gchar *value,
                   gdouble      resolution,
                   gdouble     *length)
 {
-  GimpUnit  unit = GIMP_UNIT_PIXEL;
+  LigmaUnit  unit = LIGMA_UNIT_PIXEL;
   gdouble   len;
   gchar    *ptr;
 
@@ -1081,8 +1081,8 @@ parse_svg_length (const gchar *value,
       switch (ptr[1])
         {
         case 'x':                         break;
-        case 't': unit = GIMP_UNIT_POINT; break;
-        case 'c': unit = GIMP_UNIT_PICA;  break;
+        case 't': unit = LIGMA_UNIT_POINT; break;
+        case 'c': unit = LIGMA_UNIT_PICA;  break;
         default:
           return FALSE;
         }
@@ -1091,7 +1091,7 @@ parse_svg_length (const gchar *value,
 
     case 'c':
       if (ptr[1] == 'm')
-        len *= 10.0, unit = GIMP_UNIT_MM;
+        len *= 10.0, unit = LIGMA_UNIT_MM;
       else
         return FALSE;
       ptr += 2;
@@ -1099,7 +1099,7 @@ parse_svg_length (const gchar *value,
 
     case 'm':
       if (ptr[1] == 'm')
-        unit = GIMP_UNIT_MM;
+        unit = LIGMA_UNIT_MM;
       else
         return FALSE;
       ptr += 2;
@@ -1107,14 +1107,14 @@ parse_svg_length (const gchar *value,
 
     case 'i':
       if (ptr[1] == 'n')
-        unit = GIMP_UNIT_INCH;
+        unit = LIGMA_UNIT_INCH;
       else
         return FALSE;
       ptr += 2;
       break;
 
     case '%':
-      unit = GIMP_UNIT_PERCENT;
+      unit = LIGMA_UNIT_PERCENT;
       ptr += 1;
       break;
 
@@ -1130,16 +1130,16 @@ parse_svg_length (const gchar *value,
 
   switch (unit)
     {
-    case GIMP_UNIT_PERCENT:
+    case LIGMA_UNIT_PERCENT:
       *length = len * reference / 100.0;
       break;
 
-    case GIMP_UNIT_PIXEL:
+    case LIGMA_UNIT_PIXEL:
       *length = len;
       break;
 
     default:
-      *length = len * resolution / gimp_unit_get_factor (unit);
+      *length = len * resolution / ligma_unit_get_factor (unit);
       break;
     }
 
@@ -1150,7 +1150,7 @@ static gboolean
 parse_svg_viewbox (const gchar *value,
                    gdouble     *width,
                    gdouble     *height,
-                   GimpMatrix3 *matrix)
+                   LigmaMatrix3 *matrix)
 {
   gdouble   x, y, w, h;
   gchar    *tok;
@@ -1185,12 +1185,12 @@ parse_svg_viewbox (const gchar *value,
 
   if (success)
     {
-      gimp_matrix3_identity (matrix);
-      gimp_matrix3_translate (matrix, -x,  -y);
+      ligma_matrix3_identity (matrix);
+      ligma_matrix3_translate (matrix, -x,  -y);
 
       if (w > 0.0 && h > 0.0)
         {
-          gimp_matrix3_scale (matrix, *width / w, *height / h);
+          ligma_matrix3_scale (matrix, *width / w, *height / h);
         }
       else  /* disable rendering of the element */
         {
@@ -1210,21 +1210,21 @@ parse_svg_viewbox (const gchar *value,
 
 static gboolean
 parse_svg_transform (const gchar *value,
-                     GimpMatrix3 *matrix)
+                     LigmaMatrix3 *matrix)
 {
   gint i;
 
-  gimp_matrix3_identity (matrix);
+  ligma_matrix3_identity (matrix);
 
   for (i = 0; value[i]; i++)
     {
-      GimpMatrix3  trafo;
+      LigmaMatrix3  trafo;
       gchar        keyword[32];
       gdouble      args[6];
       gint         n_args;
       gint         key_len;
 
-      gimp_matrix3_identity (&trafo);
+      ligma_matrix3_identity (&trafo);
 
       /* skip initial whitespace */
       while (g_ascii_isspace (value[i]))
@@ -1292,7 +1292,7 @@ parse_svg_transform (const gchar *value,
           if (n_args != 6)
             return FALSE;
 
-          gimp_matrix3_affine (&trafo,
+          ligma_matrix3_affine (&trafo,
                                args[0], args[1],
                                args[2], args[3],
                                args[4], args[5]);
@@ -1304,7 +1304,7 @@ parse_svg_transform (const gchar *value,
           else if (n_args != 2)
             return FALSE;
 
-          gimp_matrix3_translate (&trafo, args[0], args[1]);
+          ligma_matrix3_translate (&trafo, args[0], args[1]);
         }
       else if (strcmp (keyword, "scale") == 0)
         {
@@ -1313,19 +1313,19 @@ parse_svg_transform (const gchar *value,
           else if (n_args != 2)
             return FALSE;
 
-          gimp_matrix3_scale (&trafo, args[0], args[1]);
+          ligma_matrix3_scale (&trafo, args[0], args[1]);
         }
       else if (strcmp (keyword, "rotate") == 0)
         {
           if (n_args == 1)
             {
-              gimp_matrix3_rotate (&trafo, gimp_deg_to_rad (args[0]));
+              ligma_matrix3_rotate (&trafo, ligma_deg_to_rad (args[0]));
             }
           else if (n_args == 3)
             {
-              gimp_matrix3_translate (&trafo, -args[1], -args[2]);
-              gimp_matrix3_rotate (&trafo, gimp_deg_to_rad (args[0]));
-              gimp_matrix3_translate (&trafo, args[1], args[2]);
+              ligma_matrix3_translate (&trafo, -args[1], -args[2]);
+              ligma_matrix3_rotate (&trafo, ligma_deg_to_rad (args[0]));
+              ligma_matrix3_translate (&trafo, args[1], args[2]);
             }
           else
             return FALSE;
@@ -1335,25 +1335,25 @@ parse_svg_transform (const gchar *value,
           if (n_args != 1)
             return FALSE;
 
-          gimp_matrix3_xshear (&trafo, tan (gimp_deg_to_rad (args[0])));
+          ligma_matrix3_xshear (&trafo, tan (ligma_deg_to_rad (args[0])));
         }
       else if (strcmp (keyword, "skewY") == 0)
         {
           if (n_args != 1)
             return FALSE;
 
-          gimp_matrix3_yshear (&trafo, tan (gimp_deg_to_rad (args[0])));
+          ligma_matrix3_yshear (&trafo, tan (ligma_deg_to_rad (args[0])));
         }
       else
         {
           return FALSE; /* unknown keyword */
         }
 
-      gimp_matrix3_invert (&trafo);
-      gimp_matrix3_mult (&trafo, matrix);
+      ligma_matrix3_invert (&trafo);
+      ligma_matrix3_mult (&trafo, matrix);
     }
 
-  gimp_matrix3_invert (matrix);
+  ligma_matrix3_invert (matrix);
 
   return TRUE;
 }
@@ -1369,7 +1369,7 @@ parse_svg_transform (const gchar *value,
 typedef struct
 {
   GList       *strokes;
-  GimpStroke  *stroke;
+  LigmaStroke  *stroke;
   gdouble      cpx, cpy;  /* current point                               */
   gdouble      rpx, rpy;  /* reflection point (for 's' and 't' commands) */
   gchar        cmd;       /* current command (lowercase)                 */
@@ -1531,7 +1531,7 @@ parse_path_data (const gchar *data)
             parse_path_do_cmd (&ctx, TRUE);
 
           if (ctx.stroke)
-            gimp_stroke_close (ctx.stroke);
+            ligma_stroke_close (ctx.stroke);
         }
       else if (c >= 'A' && c <= 'Z' && c != 'E')
         {
@@ -1587,7 +1587,7 @@ static void
 parse_path_do_cmd (ParsePathContext *ctx,
                    gboolean          final)
 {
-  GimpCoords coords = COORDS_INIT;
+  LigmaCoords coords = COORDS_INIT;
 
   switch (ctx->cmd)
     {
@@ -1600,7 +1600,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->rpx = ctx->params[0];
           coords.y = ctx->cpy = ctx->rpy = ctx->params[1];
 
-          ctx->stroke = gimp_bezier_stroke_new_moveto (&coords);
+          ctx->stroke = ligma_bezier_stroke_new_moveto (&coords);
           ctx->strokes = g_list_prepend (ctx->strokes, ctx->stroke);
 
           ctx->param = 0;
@@ -1621,7 +1621,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->rpx = ctx->params[0];
           coords.y = ctx->cpy = ctx->rpy = ctx->params[1];
 
-          gimp_bezier_stroke_lineto (ctx->stroke, &coords);
+          ligma_bezier_stroke_lineto (ctx->stroke, &coords);
 
           ctx->param = 0;
         }
@@ -1631,8 +1631,8 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* curveto */
       if (ctx->param == 6 || final)
         {
-          GimpCoords ctrl1 = COORDS_INIT;
-          GimpCoords ctrl2 = COORDS_INIT;
+          LigmaCoords ctrl1 = COORDS_INIT;
+          LigmaCoords ctrl2 = COORDS_INIT;
 
           parse_path_default_xy (ctx, 6);
 
@@ -1643,7 +1643,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->params[4];
           coords.y = ctx->cpy = ctx->params[5];
 
-          gimp_bezier_stroke_cubicto (ctx->stroke, &ctrl1, &ctrl2, &coords);
+          ligma_bezier_stroke_cubicto (ctx->stroke, &ctrl1, &ctrl2, &coords);
 
           ctx->param = 0;
         }
@@ -1653,8 +1653,8 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* smooth curveto */
       if (ctx->param == 4 || final)
         {
-          GimpCoords ctrl1 = COORDS_INIT;
-          GimpCoords ctrl2 = COORDS_INIT;
+          LigmaCoords ctrl1 = COORDS_INIT;
+          LigmaCoords ctrl2 = COORDS_INIT;
 
           parse_path_default_xy (ctx, 4);
 
@@ -1665,7 +1665,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->params[2];
           coords.y = ctx->cpy = ctx->params[3];
 
-          gimp_bezier_stroke_cubicto (ctx->stroke, &ctrl1, &ctrl2, &coords);
+          ligma_bezier_stroke_cubicto (ctx->stroke, &ctrl1, &ctrl2, &coords);
 
           ctx->param = 0;
         }
@@ -1678,7 +1678,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->rpx = ctx->params[0];
           coords.y = ctx->cpy;
 
-          gimp_bezier_stroke_lineto (ctx->stroke, &coords);
+          ligma_bezier_stroke_lineto (ctx->stroke, &coords);
 
           ctx->param = 0;
         }
@@ -1691,7 +1691,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx;
           coords.y = ctx->cpy = ctx->rpy = ctx->params[0];
 
-          gimp_bezier_stroke_lineto (ctx->stroke, &coords);
+          ligma_bezier_stroke_lineto (ctx->stroke, &coords);
 
           ctx->param = 0;
         }
@@ -1701,7 +1701,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* quadratic bezier curveto */
       if (ctx->param == 4 || final)
         {
-          GimpCoords ctrl = COORDS_INIT;
+          LigmaCoords ctrl = COORDS_INIT;
 
           parse_path_default_xy (ctx, 4);
 
@@ -1710,7 +1710,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->params[2];
           coords.y = ctx->cpy = ctx->params[3];
 
-          gimp_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
+          ligma_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
 
           ctx->param = 0;
         }
@@ -1720,7 +1720,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* truetype quadratic bezier curveto */
       if (ctx->param == 2 || final)
         {
-          GimpCoords ctrl = COORDS_INIT;
+          LigmaCoords ctrl = COORDS_INIT;
 
           parse_path_default_xy (ctx, 2);
 
@@ -1729,7 +1729,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->params[0];
           coords.y = ctx->cpy = ctx->params[1];
 
-          gimp_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
+          ligma_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
 
           ctx->param = 0;
         }
@@ -1737,7 +1737,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
         {
           if (ctx->param > 2)
             {
-              GimpCoords ctrl = COORDS_INIT;
+              LigmaCoords ctrl = COORDS_INIT;
 
               parse_path_default_xy (ctx, 4);
 
@@ -1746,7 +1746,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
               coords.x = ctx->cpx = ctx->params[2];
               coords.y = ctx->cpy = ctx->params[3];
 
-              gimp_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
+              ligma_bezier_stroke_conicto (ctx->stroke, &ctrl, &coords);
             }
           else
             {
@@ -1755,7 +1755,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
               coords.x = ctx->cpx = ctx->rpx = ctx->params[0];
               coords.y = ctx->cpy = ctx->rpy = ctx->params[1];
 
-              gimp_bezier_stroke_lineto (ctx->stroke, &coords);
+              ligma_bezier_stroke_lineto (ctx->stroke, &coords);
             }
 
           ctx->param = 0;
@@ -1768,9 +1768,9 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.x = ctx->cpx = ctx->rpx = ctx->params[5];
           coords.y = ctx->cpy = ctx->rpy = ctx->params[6];
 
-          gimp_bezier_stroke_arcto (ctx->stroke,
+          ligma_bezier_stroke_arcto (ctx->stroke,
                                     ctx->params[0], ctx->params[1],
-                                    gimp_deg_to_rad (ctx->params[2]),
+                                    ligma_deg_to_rad (ctx->params[2]),
                                     ctx->params[3], ctx->params[4],
                                     &coords);
           ctx->param = 0;

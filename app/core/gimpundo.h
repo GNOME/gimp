@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNDO_H__
-#define __GIMP_UNDO_H__
+#ifndef __LIGMA_UNDO_H__
+#define __LIGMA_UNDO_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-struct _GimpUndoAccumulator
+struct _LigmaUndoAccumulator
 {
   gboolean mode_changed;
   gboolean precision_changed;
@@ -39,61 +39,61 @@ struct _GimpUndoAccumulator
 };
 
 
-#define GIMP_TYPE_UNDO            (gimp_undo_get_type ())
-#define GIMP_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNDO, GimpUndo))
-#define GIMP_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNDO, GimpUndoClass))
-#define GIMP_IS_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNDO))
-#define GIMP_IS_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNDO))
-#define GIMP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNDO, GimpUndoClass))
+#define LIGMA_TYPE_UNDO            (ligma_undo_get_type ())
+#define LIGMA_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UNDO, LigmaUndo))
+#define LIGMA_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_UNDO, LigmaUndoClass))
+#define LIGMA_IS_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UNDO))
+#define LIGMA_IS_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_UNDO))
+#define LIGMA_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_UNDO, LigmaUndoClass))
 
 
-typedef struct _GimpUndoClass GimpUndoClass;
+typedef struct _LigmaUndoClass LigmaUndoClass;
 
-struct _GimpUndo
+struct _LigmaUndo
 {
-  GimpViewable      parent_instance;
+  LigmaViewable      parent_instance;
 
-  GimpImage        *image;          /* the image this undo is part of     */
+  LigmaImage        *image;          /* the image this undo is part of     */
   guint             time;           /* time of undo step construction     */
 
-  GimpUndoType      undo_type;      /* undo type                          */
-  GimpDirtyMask     dirty_mask;     /* affected parts of the image        */
+  LigmaUndoType      undo_type;      /* undo type                          */
+  LigmaDirtyMask     dirty_mask;     /* affected parts of the image        */
 
-  GimpTempBuf      *preview;
+  LigmaTempBuf      *preview;
   guint             preview_idle_id;
 };
 
-struct _GimpUndoClass
+struct _LigmaUndoClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
-  void (* pop)  (GimpUndo            *undo,
-                 GimpUndoMode         undo_mode,
-                 GimpUndoAccumulator *accum);
-  void (* free) (GimpUndo            *undo,
-                 GimpUndoMode         undo_mode);
+  void (* pop)  (LigmaUndo            *undo,
+                 LigmaUndoMode         undo_mode,
+                 LigmaUndoAccumulator *accum);
+  void (* free) (LigmaUndo            *undo,
+                 LigmaUndoMode         undo_mode);
 };
 
 
-GType         gimp_undo_get_type        (void) G_GNUC_CONST;
+GType         ligma_undo_get_type        (void) G_GNUC_CONST;
 
-void          gimp_undo_pop             (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode,
-                                         GimpUndoAccumulator *accum);
-void          gimp_undo_free            (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode);
+void          ligma_undo_pop             (LigmaUndo            *undo,
+                                         LigmaUndoMode         undo_mode,
+                                         LigmaUndoAccumulator *accum);
+void          ligma_undo_free            (LigmaUndo            *undo,
+                                         LigmaUndoMode         undo_mode);
 
-void          gimp_undo_create_preview  (GimpUndo            *undo,
-                                         GimpContext         *context,
+void          ligma_undo_create_preview  (LigmaUndo            *undo,
+                                         LigmaContext         *context,
                                          gboolean             create_now);
-void          gimp_undo_refresh_preview (GimpUndo            *undo,
-                                         GimpContext         *context);
+void          ligma_undo_refresh_preview (LigmaUndo            *undo,
+                                         LigmaContext         *context);
 
-const gchar * gimp_undo_type_to_name    (GimpUndoType         type);
+const gchar * ligma_undo_type_to_name    (LigmaUndoType         type);
 
-gboolean      gimp_undo_is_weak         (GimpUndo            *undo);
-gint          gimp_undo_get_age         (GimpUndo            *undo);
-void          gimp_undo_reset_age       (GimpUndo            *undo);
+gboolean      ligma_undo_is_weak         (LigmaUndo            *undo);
+gint          ligma_undo_get_age         (LigmaUndo            *undo);
+void          ligma_undo_reset_age       (LigmaUndo            *undo);
 
 
-#endif /* __GIMP_UNDO_H__ */
+#endif /* __LIGMA_UNDO_H__ */

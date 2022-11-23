@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpprocedureaction.h
- * Copyright (C) 2004-2016 Michael Natterer <mitch@gimp.org>
+ * ligmaprocedureaction.h
+ * Copyright (C) 2004-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,44 +18,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_ACTION_H__
-#define __GIMP_PROCEDURE_ACTION_H__
+#ifndef __LIGMA_PROCEDURE_ACTION_H__
+#define __LIGMA_PROCEDURE_ACTION_H__
 
 
-#include "gimpactionimpl.h"
+#include "ligmaactionimpl.h"
 
 
-#define GIMP_TYPE_PROCEDURE_ACTION            (gimp_procedure_action_get_type ())
-#define GIMP_PROCEDURE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE_ACTION, GimpProcedureAction))
-#define GIMP_PROCEDURE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE_ACTION, GimpProcedureActionClass))
-#define GIMP_IS_PROCEDURE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROCEDURE_ACTION))
-#define GIMP_IS_PROCEDURE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_PROCEDURE_ACTION))
-#define GIMP_PROCEDURE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_PROCEDURE_ACTION, GimpProcedureActionClass))
+#define LIGMA_TYPE_PROCEDURE_ACTION            (ligma_procedure_action_get_type ())
+#define LIGMA_PROCEDURE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PROCEDURE_ACTION, LigmaProcedureAction))
+#define LIGMA_PROCEDURE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PROCEDURE_ACTION, LigmaProcedureActionClass))
+#define LIGMA_IS_PROCEDURE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PROCEDURE_ACTION))
+#define LIGMA_IS_PROCEDURE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), LIGMA_TYPE_PROCEDURE_ACTION))
+#define LIGMA_PROCEDURE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), LIGMA_TYPE_PROCEDURE_ACTION, LigmaProcedureActionClass))
 
 
-typedef struct _GimpProcedureActionClass GimpProcedureActionClass;
+typedef struct _LigmaProcedureActionClass LigmaProcedureActionClass;
 
-struct _GimpProcedureAction
+struct _LigmaProcedureAction
 {
-  GimpActionImpl  parent_instance;
+  LigmaActionImpl  parent_instance;
 
-  GimpProcedure  *procedure;
+  LigmaProcedure  *procedure;
 };
 
-struct _GimpProcedureActionClass
+struct _LigmaProcedureActionClass
 {
-  GimpActionImplClass parent_class;
+  LigmaActionImplClass parent_class;
 };
 
 
-GType                 gimp_procedure_action_get_type (void) G_GNUC_CONST;
+GType                 ligma_procedure_action_get_type (void) G_GNUC_CONST;
 
-GimpProcedureAction * gimp_procedure_action_new      (const gchar   *name,
+LigmaProcedureAction * ligma_procedure_action_new      (const gchar   *name,
                                                       const gchar   *label,
                                                       const gchar   *tooltip,
                                                       const gchar   *icon_name,
                                                       const gchar   *help_id,
-                                                      GimpProcedure *procedure);
+                                                      LigmaProcedure *procedure);
 
 
-#endif  /* __GIMP_PROCEDURE_ACTION_H__ */
+#endif  /* __LIGMA_PROCEDURE_ACTION_H__ */

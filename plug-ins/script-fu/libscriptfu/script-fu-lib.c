@@ -1,5 +1,5 @@
 
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "script-fu-lib.h"
 
@@ -43,10 +43,10 @@
 /*
  * Return whether extension-script-fu has an open dialog.
  * extension-script-fu is a single process.
- * It cannot have concurrent dialogs open in the GIMP app.
+ * It cannot have concurrent dialogs open in the LIGMA app.
  *
  * Other plugins implementing PLUGIN type PDB procedures
- * in their own process (e.g. gimp-scheme-interpreter) do not need this.
+ * in their own process (e.g. ligma-scheme-interpreter) do not need this.
  */
 gboolean
 script_fu_extension_is_busy (void)
@@ -60,7 +60,7 @@ script_fu_extension_is_busy (void)
  * owned by the PDB proc of type PLUGIN for the given plugin.
  */
 void
-script_fu_find_and_register_scripts ( GimpPlugIn     *plugin,
+script_fu_find_and_register_scripts ( LigmaPlugIn     *plugin,
                                       GList          *paths)
 {
   script_fu_find_scripts (plugin, paths);
@@ -84,7 +84,7 @@ script_fu_find_and_register_scripts ( GimpPlugIn     *plugin,
 void
 script_fu_init_embedded_interpreter ( GList          *paths,
                                       gboolean        allow_register,
-                                      GimpRunMode     run_mode)
+                                      LigmaRunMode     run_mode)
 {
   g_debug ("script_fu_init_embedded_interpreter");
   tinyscheme_init (paths, allow_register);
@@ -140,7 +140,7 @@ script_fu_interpret_string (const gchar *text)
 }
 
 void
-script_fu_set_run_mode (GimpRunMode run_mode)
+script_fu_set_run_mode (LigmaRunMode run_mode)
 {
   ts_set_run_mode (run_mode);
 }
@@ -171,9 +171,9 @@ script_fu_register_post_command_callback (void (*func) (void))
 
 /*
  * Return list of paths to directories containing .scm and .init scripts.
- * Usually at least GIMP's directory named like "/scripts."
+ * Usually at least LIGMA's directory named like "/scripts."
  * List can also contain dirs custom or private to a user.
- " The GIMP dir often contain: plugins, init scripts, and utility scripts.
+ " The LIGMA dir often contain: plugins, init scripts, and utility scripts.
  *
  * Caller must free the returned list.
  */
@@ -183,12 +183,12 @@ script_fu_search_path (void)
   gchar *path_str;
   GList *path = NULL;
 
-  path_str = gimp_gimprc_query ("script-fu-path");
+  path_str = ligma_ligmarc_query ("script-fu-path");
   if (path_str)
     {
       GError *error = NULL;
 
-      path = gimp_config_path_expand_to_files (path_str, &error);
+      path = ligma_config_path_expand_to_files (path_str, &error);
       g_free (path_str);
 
       if (! path)
@@ -202,8 +202,8 @@ script_fu_search_path (void)
 }
 
 
-GimpProcedure *
-script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+LigmaProcedure *
+script_fu_find_scripts_create_PDB_proc_plugin (LigmaPlugIn  *plug_in,
                                                GList       *paths,
                                                const gchar *name)
 {
@@ -212,7 +212,7 @@ script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
 }
 
 GList *
-script_fu_find_scripts_list_proc_names (GimpPlugIn *plug_in,
+script_fu_find_scripts_list_proc_names (LigmaPlugIn *plug_in,
                                         GList      *paths)
 {
   /* Delegate to factory. */

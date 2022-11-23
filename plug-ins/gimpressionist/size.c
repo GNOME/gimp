@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "ppmtool.h"
 #include "size.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define NUMSIZERADIO 8
 
@@ -58,11 +58,11 @@ void
 size_restore (void)
 {
   size_type_restore ();
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizenumadjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (sizenumadjust),
                              pcvals.size_num);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizefirstadjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (sizefirstadjust),
                              pcvals.size_first);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizelastadjust),
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (sizelastadjust),
                              pcvals.size_last);
 }
 
@@ -104,34 +104,34 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   sizenumadjust =
-    gimp_scale_entry_new (_("Size variants:"), pcvals.size_num, 1.0, 30.0, 0);
-  gimp_help_set_help_data (sizenumadjust,
+    ligma_scale_entry_new (_("Size variants:"), pcvals.size_num, 1.0, 30.0, 0);
+  ligma_help_set_help_data (sizenumadjust,
                            _("The number of sizes of brushes to use"),
                            NULL);
   g_signal_connect (sizenumadjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_int),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_int),
                     &pcvals.size_num);
   gtk_grid_attach (GTK_GRID (grid), sizenumadjust, 0, 0, 3, 1);
   gtk_widget_show (sizenumadjust);
 
   sizefirstadjust =
-    gimp_scale_entry_new (_("Minimum size:"), pcvals.size_first, 0.0, 360.0, 0);
-  gimp_help_set_help_data (sizefirstadjust,
+    ligma_scale_entry_new (_("Minimum size:"), pcvals.size_first, 0.0, 360.0, 0);
+  ligma_help_set_help_data (sizefirstadjust,
                            _("The smallest brush to create"),
                            NULL);
   g_signal_connect (sizefirstadjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.size_first);
   gtk_grid_attach (GTK_GRID (grid), sizefirstadjust, 0, 1, 3, 1);
   gtk_widget_show (sizefirstadjust);
 
   sizelastadjust =
-    gimp_scale_entry_new (_("Maximum size:"), pcvals.size_last, 0.0, 360.0, 0);
-  gimp_help_set_help_data (sizelastadjust,
+    ligma_scale_entry_new (_("Maximum size:"), pcvals.size_last, 0.0, 360.0, 0);
+  ligma_help_set_help_data (sizelastadjust,
                            _("The largest brush to create"),
                            NULL);
   g_signal_connect (sizelastadjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.size_last);
   gtk_grid_attach (GTK_GRID (grid), sizelastadjust, 0, 2, 3, 1);
   gtk_widget_show (sizelastadjust);
@@ -201,7 +201,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (create_sizemap_dialog_helper), NULL);
-  gimp_help_set_help_data (tmpw, _("Opens up the Size Map Editor"), NULL);
+  ligma_help_set_help_data (tmpw, _("Opens up the Size Map Editor"), NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

@@ -14,19 +14,19 @@ else
 libm = -lm
 endif
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la $(libm)
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la $(libm)
 
 # link to libscriptfu
-libgimp_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libgimp-scriptfu-$(GIMP_API_VERSION).la
+libligma_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libligma-scriptfu-$(LIGMA_API_VERSION).la
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+include $(top_srcdir)/build/windows/ligmarc-plug-ins.rule
 script_fu_server_RC = script-fu-server.rc.o
 endif
 
@@ -51,7 +51,7 @@ AM_LDFLAGS = \
 	$(xnone)
 
 # Each plugin must be installed in a dir of the same name as the executable
-script_fu_serverdir = $(gimpplugindir)/plug-ins/script-fu-server
+script_fu_serverdir = $(ligmaplugindir)/plug-ins/script-fu-server
 
 script_fu_server_PROGRAMS = script-fu-server
 
@@ -60,17 +60,17 @@ script_fu_server_SOURCES = \
 	script-fu-server.h       \
 	script-fu-server-plugin.c
 
-# link with libgimp-scriptfu and the usual gimp suspects
+# link with libligma-scriptfu and the usual ligma suspects
 # Also link w socket libs
 script_fu_server_LDADD = \
-	$(libgimp_scriptfu)  \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimpmath)		\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma_scriptfu)  \
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmaconfig)	\
+	$(libligmamath)		\
+	$(libligma)		\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(SOCKET_LIBS)		\
 	$(WINSOCK_LIBS)		\

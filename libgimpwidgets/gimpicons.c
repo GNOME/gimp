@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpicons.c
- * Copyright (C) 2001-2015 Michael Natterer <mitch@gimp.org>
+ * ligmaicons.c
+ * Copyright (C) 2001-2015 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,22 +23,22 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpicons.h"
+#include "ligmaicons.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpicons
- * @title: GimpIcons
+ * SECTION: ligmaicons
+ * @title: LigmaIcons
  * @short_description: Prebuilt common menu/toolbar items and
  *                     corresponding icons
  *
- * GIMP registers a set of menu/toolbar items and corresponding icons
+ * LIGMA registers a set of menu/toolbar items and corresponding icons
  * in addition to the standard GTK+ stock items. These can be used
- * just like GTK+ stock items. GIMP also overrides a few of the GTK+
+ * just like GTK+ stock items. LIGMA also overrides a few of the GTK+
  * icons (namely the ones in dialog size).
  *
  * Stock icons may have a RTL variant which gets used for
@@ -46,9 +46,9 @@
  **/
 
 
-#define LIBGIMP_DOMAIN          GETTEXT_PACKAGE "-libgimp"
-#define GIMP_TOILET_PAPER       "gimp-toilet-paper"
-#define GIMP_DEFAULT_ICON_THEME "Symbolic"
+#define LIBLIGMA_DOMAIN          GETTEXT_PACKAGE "-libligma"
+#define LIGMA_TOILET_PAPER       "ligma-toilet-paper"
+#define LIGMA_DEFAULT_ICON_THEME "Symbolic"
 
 
 static GFile *icon_theme_path     = NULL;
@@ -56,12 +56,12 @@ static GFile *default_search_path = NULL;
 
 
 static void
-gimp_icons_change_icon_theme (GFile *new_search_path)
+ligma_icons_change_icon_theme (GFile *new_search_path)
 {
   GFile *old_search_path = g_file_get_parent (icon_theme_path);
 
   if (! default_search_path)
-    default_search_path = gimp_data_directory_file ("icons", NULL);
+    default_search_path = ligma_data_directory_file ("icons", NULL);
 
   if (! g_file_equal (new_search_path, old_search_path))
     {
@@ -118,7 +118,7 @@ gimp_icons_change_icon_theme (GFile *new_search_path)
 }
 
 static void
-gimp_icons_notify_system_icon_theme (GObject    *settings,
+ligma_icons_notify_system_icon_theme (GObject    *settings,
                                      GParamSpec *param,
                                      gpointer    unused)
 {
@@ -151,7 +151,7 @@ gimp_icons_notify_system_icon_theme (GObject    *settings,
 }
 
 static gboolean
-gimp_icons_sanity_check (GFile       *path,
+ligma_icons_sanity_check (GFile       *path,
                          const gchar *theme_name)
 {
   gboolean exists = FALSE;
@@ -165,13 +165,13 @@ gimp_icons_sanity_check (GFile       *path,
         exists = TRUE;
       else
         g_printerr ("%s: Icon theme path has no '%s/index.theme': %s\n",
-                    G_STRFUNC, theme_name, gimp_file_get_utf8_name (path));
+                    G_STRFUNC, theme_name, ligma_file_get_utf8_name (path));
 
       g_object_unref (index);
     }
   else
     g_printerr ("%s: Icon theme path has no '%s' subdirectory: %s\n",
-                G_STRFUNC, theme_name, gimp_file_get_utf8_name (path));
+                G_STRFUNC, theme_name, ligma_file_get_utf8_name (path));
 
   g_object_unref (child);
 
@@ -179,7 +179,7 @@ gimp_icons_sanity_check (GFile       *path,
 }
 
 void
-gimp_icons_set_icon_theme (GFile *path)
+ligma_icons_set_icon_theme (GFile *path)
 {
   gchar *icon_theme_name;
   GFile *search_path;
@@ -189,18 +189,18 @@ gimp_icons_set_icon_theme (GFile *path)
   if (path)
     path = g_object_ref (path);
   else
-    path = gimp_data_directory_file ("icons", GIMP_DEFAULT_ICON_THEME, NULL);
+    path = ligma_data_directory_file ("icons", LIGMA_DEFAULT_ICON_THEME, NULL);
 
   search_path = g_file_get_parent (path);
   icon_theme_name = g_file_get_basename (path);
 
-  if (gimp_icons_sanity_check (search_path, "hicolor") &&
-      gimp_icons_sanity_check (search_path, icon_theme_name))
+  if (ligma_icons_sanity_check (search_path, "hicolor") &&
+      ligma_icons_sanity_check (search_path, icon_theme_name))
     {
       if (icon_theme_path)
         {
           /*  this is an icon theme change  */
-          gimp_icons_change_icon_theme (search_path);
+          ligma_icons_change_icon_theme (search_path);
 
           if (! g_file_equal (icon_theme_path, path))
             {
@@ -225,15 +225,15 @@ gimp_icons_set_icon_theme (GFile *path)
 }
 
 /**
- * gimp_icons_init:
+ * ligma_icons_init:
  *
- * Initializes the GIMP stock icon factory.
+ * Initializes the LIGMA stock icon factory.
  *
- * You don't need to call this function as gimp_ui_init() already does
+ * You don't need to call this function as ligma_ui_init() already does
  * this for you.
  */
 void
-gimp_icons_init (void)
+ligma_icons_init (void)
 {
   static gboolean initialized = FALSE;
 
@@ -242,7 +242,7 @@ gimp_icons_init (void)
   GError      *error = NULL;
   gchar       *icons_dir;
   gchar       *system_icon_theme;
-  gchar       *gimp_icon_theme;
+  gchar       *ligma_icon_theme;
 
   if (initialized)
     return;
@@ -252,7 +252,7 @@ gimp_icons_init (void)
    *  themes.
    */
   if (! default_search_path)
-    default_search_path = gimp_data_directory_file ("icons",
+    default_search_path = ligma_data_directory_file ("icons",
                                                     NULL);
 
   icons_dir = g_file_get_path (default_search_path);
@@ -275,11 +275,11 @@ gimp_icons_init (void)
         }
       g_object_unref (search_path);
 
-      gimp_icon_theme = g_file_get_basename (icon_theme_path);
+      ligma_icon_theme = g_file_get_basename (icon_theme_path);
     }
   else
     {
-      gimp_icon_theme = g_strdup (GIMP_DEFAULT_ICON_THEME);
+      ligma_icon_theme = g_strdup (LIGMA_DEFAULT_ICON_THEME);
     }
 
   settings = gtk_settings_get_for_screen (gdk_screen_get_default ());
@@ -288,20 +288,20 @@ gimp_icons_init (void)
 
   g_object_set (settings,
                 "gtk-fallback-icon-theme", system_icon_theme,
-                "gtk-icon-theme-name", gimp_icon_theme,
+                "gtk-icon-theme-name", ligma_icon_theme,
                 NULL);
 
-  g_free (gimp_icon_theme);
+  g_free (ligma_icon_theme);
   g_free (system_icon_theme);
 
   g_signal_connect (settings, "notify::gtk-icon-theme-name",
-                    G_CALLBACK (gimp_icons_notify_system_icon_theme), NULL);
-  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-wilber-eek.png",
+                    G_CALLBACK (ligma_icons_notify_system_icon_theme), NULL);
+  pixbuf = gdk_pixbuf_new_from_resource ("/org/ligma/icons/64/ligma-wilber-eek.png",
                                          &error);
 
   if (pixbuf)
     {
-      gtk_icon_theme_add_builtin_icon (GIMP_ICON_WILBER_EEK, 64, pixbuf);
+      gtk_icon_theme_add_builtin_icon (LIGMA_ICON_WILBER_EEK, 64, pixbuf);
       g_object_unref (pixbuf);
     }
   else

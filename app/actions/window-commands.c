@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,23 +22,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
 
 #include "actions.h"
 #include "window-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-window_close_cmd_callback (GimpAction *action,
+window_close_cmd_callback (LigmaAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
@@ -61,7 +61,7 @@ window_close_cmd_callback (GimpAction *action,
 }
 
 void
-window_open_display_cmd_callback (GimpAction *action,
+window_open_display_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
@@ -70,7 +70,7 @@ window_open_display_cmd_callback (GimpAction *action,
   GtkWidget *entry;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_message_dialog_new ("Open Display", GIMP_ICON_WILBER_EEK,
+  dialog = ligma_message_dialog_new ("Open Display", LIGMA_ICON_WILBER_EEK,
                                     widget, GTK_DIALOG_MODAL,
                                     NULL, NULL,
 
@@ -79,21 +79,21 @@ window_open_display_cmd_callback (GimpAction *action,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      "Experimental multi-display stuff!\n"
-                                     "Click OK and have fun crashing GIMP...");
+                                     "Click OK and have fun crashing LIGMA...");
 
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              "Please enter the name of the new display:");
 
   entry = gtk_entry_new ();
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-  gtk_box_pack_start (GTK_BOX (GIMP_MESSAGE_DIALOG (dialog)->box), entry,
+  gtk_box_pack_start (GTK_BOX (LIGMA_MESSAGE_DIALOG (dialog)->box), entry,
                       TRUE, TRUE, 0);
 
   gtk_widget_grab_focus (entry);
@@ -114,7 +114,7 @@ window_open_display_cmd_callback (GimpAction *action,
           display = gdk_display_open (screen_name);
 
           if (! display)
-            gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+            ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                        "Can't open display '%s'. "
                                        "Please try another one:",
                                        screen_name);
@@ -134,7 +134,7 @@ window_open_display_cmd_callback (GimpAction *action,
 }
 
 void
-window_move_to_screen_cmd_callback (GimpAction *action,
+window_move_to_screen_cmd_callback (LigmaAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {

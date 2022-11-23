@@ -1,49 +1,49 @@
-# This is the system-wide gimprc file.  Any change made in this file will
+# This is the system-wide ligmarc file.  Any change made in this file will
 # affect all users of this system, provided that they are not overriding the
-# default values in their personal gimprc file.
+# default values in their personal ligmarc file.
 # 
 # Lines that start with a '#' are comments. Blank lines are ignored.
 # 
 # By default everything in this file is commented out.  The file then
 # documents the default values and shows what changes are possible.
 # 
-# The variable ${gimp_dir} is set to the value of the environment variable
-# GIMP3_DIRECTORY or, if that is not set, the compiled-in default value is
-# used.  If GIMP3_DIRECTORY is not an absolute path, it is interpreted
+# The variable ${ligma_dir} is set to the value of the environment variable
+# LIGMA3_DIRECTORY or, if that is not set, the compiled-in default value is
+# used.  If LIGMA3_DIRECTORY is not an absolute path, it is interpreted
 # relative to your home directory.
 
 # Sets the folder for temporary storage. Files will appear here during the
-# course of running GIMP.  Most files will disappear when GIMP exits, but
+# course of running LIGMA.  Most files will disappear when LIGMA exits, but
 # some files are likely to remain, so it is best if this folder not be one
 # that is shared by other users.  This is a single folder.
 # 
-# (temp-path "${gimp_temp_dir}")
+# (temp-path "${ligma_temp_dir}")
 
-# Sets the swap file location. GIMP uses a tile based memory allocation
+# Sets the swap file location. LIGMA uses a tile based memory allocation
 # scheme. The swap file is used to quickly and easily swap tiles out to disk
-# and back in. Be aware that the swap file can easily get very large if GIMP
+# and back in. Be aware that the swap file can easily get very large if LIGMA
 # is used with large images. Also, things can get horribly slow if the swap
 # file is created on a folder that is mounted over NFS.  For these reasons,
 # it may be desirable to put your swap file in "/tmp".  This is a single
 # folder.
 # 
-# (swap-path "${gimp_cache_dir}")
+# (swap-path "${ligma_cache_dir}")
 
 # The compression method used for tile data stored in the swap file.  This is
 # a string value.
 # 
 # (swap-compression "fast")
 
-# Sets how many threads GIMP should use for operations that support it.  This
+# Sets how many threads LIGMA should use for operations that support it.  This
 # is an integer value.
 # 
 # (num-processors 1)
 
-# When the amount of pixel data exceeds this limit, GIMP will start to swap
+# When the amount of pixel data exceeds this limit, LIGMA will start to swap
 # tiles to disk.  This is a lot slower but it makes it possible to work on
 # images that wouldn't fit into memory otherwise.  If you have a lot of RAM,
 # you may want to set this to a higher value.  The integer size can contain a
-# suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being
+# suffix of 'B', 'K', 'M' or 'G' which makes LIGMA interpret the size as being
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
@@ -75,40 +75,40 @@
 # Sets the plug-in search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
+# (plug-in-path "${ligma_dir}/plug-ins:${ligma_plug_in_dir}/plug-ins")
 
 # Sets the module search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (module-path "${gimp_dir}/modules:${gimp_plug_in_dir}/modules")
+# (module-path "${ligma_dir}/modules:${ligma_plug_in_dir}/modules")
 
 # Sets the interpreter search path.  This is a colon-separated list of
 # folders to search.
 # 
-# (interpreter-path "${gimp_dir}/interpreters:${gimp_plug_in_dir}/interpreters")
+# (interpreter-path "${ligma_dir}/interpreters:${ligma_plug_in_dir}/interpreters")
 
 # Sets the environ search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (environ-path "${gimp_dir}/environ:${gimp_plug_in_dir}/environ")
+# (environ-path "${ligma_dir}/environ:${ligma_plug_in_dir}/environ")
 
 # Sets the brush search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
+# (brush-path "${ligma_dir}/brushes:${ligma_data_dir}/brushes")
 
 # This is a colon-separated list of folders to search.
 # 
-# (brush-path-writable "${gimp_dir}/brushes")
+# (brush-path-writable "${ligma_dir}/brushes")
 
 # Sets the dynamics search path.  This is a colon-separated list of folders
 # to search.
 # 
-# (dynamics-path "${gimp_dir}/dynamics:${gimp_data_dir}/dynamics")
+# (dynamics-path "${ligma_dir}/dynamics:${ligma_data_dir}/dynamics")
 
 # This is a colon-separated list of folders to search.
 # 
-# (dynamics-path-writable "${gimp_dir}/dynamics")
+# (dynamics-path-writable "${ligma_dir}/dynamics")
 
 # Sets the brush search path.  This is a colon-separated list of folders to
 # search.
@@ -122,43 +122,43 @@
 # Sets the pattern search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
+# (pattern-path "${ligma_dir}/patterns:${ligma_data_dir}/patterns")
 
 # This is a colon-separated list of folders to search.
 # 
-# (pattern-path-writable "${gimp_dir}/patterns")
+# (pattern-path-writable "${ligma_dir}/patterns")
 
 # Sets the palette search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
+# (palette-path "${ligma_dir}/palettes:${ligma_data_dir}/palettes")
 
 # This is a colon-separated list of folders to search.
 # 
-# (palette-path-writable "${gimp_dir}/palettes")
+# (palette-path-writable "${ligma_dir}/palettes")
 
 # Sets the gradient search path.  This is a colon-separated list of folders
 # to search.
 # 
-# (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
+# (gradient-path "${ligma_dir}/gradients:${ligma_data_dir}/gradients")
 
 # This is a colon-separated list of folders to search.
 # 
-# (gradient-path-writable "${gimp_dir}/gradients")
+# (gradient-path-writable "${ligma_dir}/gradients")
 
 # Sets the dynamics search path.  This is a colon-separated list of folders
 # to search.
 # 
-# (tool-preset-path "${gimp_dir}/tool-presets:${gimp_data_dir}/tool-presets")
+# (tool-preset-path "${ligma_dir}/tool-presets:${ligma_data_dir}/tool-presets")
 
 # This is a colon-separated list of folders to search.
 # 
-# (tool-preset-path-writable "${gimp_dir}/tool-presets")
+# (tool-preset-path-writable "${ligma_dir}/tool-presets")
 
 # Where to look for fonts in addition to the system-wide installed fonts. 
 # This is a colon-separated list of folders to search.
 # 
-# (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
+# (font-path "${ligma_dir}/fonts:${ligma_data_dir}/fonts")
 
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
@@ -238,7 +238,7 @@
 #     (precision u8-non-linear)
 #     (color-profile NULL)
 #     (fill-type background)
-#     (comment "Created with GIMP"))
+#     (comment "Created with LIGMA"))
 
 # Specify a default image grid.  This is a parameter list.
 # 
@@ -262,7 +262,7 @@
 # Sets an upper limit to the memory that is used per image to keep operations
 # on the undo stack. Regardless of this setting, at least as many undo-levels
 # as configured can be undone.  The integer size can contain a suffix of 'B',
-# 'K', 'M' or 'G' which makes GIMP interpret the size as being specified in
+# 'K', 'M' or 'G' which makes LIGMA interpret the size as being specified in
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
@@ -281,15 +281,15 @@
 
 # Sets the pluginrc search path.  This is a single filename.
 # 
-# (pluginrc-path "${gimp_dir}/pluginrc")
+# (pluginrc-path "${ligma_dir}/pluginrc")
 
-# Sets whether GIMP should create previews of layers and channels. Previews
+# Sets whether LIGMA should create previews of layers and channels. Previews
 # in the layers and channels dialog are nice to have but they can slow things
 # down when working with large images.  Possible values are yes and no.
 # 
 # (layer-previews yes)
 
-# Sets whether GIMP should create previews of layer groups. Layer group
+# Sets whether LIGMA should create previews of layer groups. Layer group
 # previews are more expensive than ordinary layer previews.  Possible values
 # are yes and no.
 # 
@@ -308,7 +308,7 @@
 
 # The thumbnail in the Open dialog will be automatically updated if the file
 # being previewed is smaller than the size set here.  The integer size can
-# contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
+# contain a suffix of 'B', 'K', 'M' or 'G' which makes LIGMA interpret the
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
 # suffix is specified the size defaults to being specified in kilobytes.
 # 
@@ -395,7 +395,7 @@
 # 
 # (debug-policy warning)
 
-# Check for availability of GIMP updates through background internet queries.
+# Check for availability of LIGMA updates through background internet queries.
 #  Possible values are yes and no.
 # 
 # (check-updates yes)
@@ -408,7 +408,7 @@
 # 
 # (last-release-timestamp 0)
 
-# The last known release version of GIMP as queried from official website. 
+# The last known release version of LIGMA as queried from official website. 
 # This is a string value.
 # 
 # 
@@ -417,7 +417,7 @@
 # 
 # (last-revision 0)
 
-# The last known release version of GIMP as queried from official website. 
+# The last known release version of LIGMA as queried from official website. 
 # This is a string value.
 # 
 # 
@@ -588,7 +588,7 @@
 # 
 # (monitor-yresolution 96)
 
-# When enabled, GIMP will use the monitor resolution from the windowing
+# When enabled, LIGMA will use the monitor resolution from the windowing
 # system.  Possible values are yes and no.
 # 
 # (monitor-resolution-from-windowing-system yes)
@@ -689,12 +689,12 @@
 # 
 # (filter-tool-show-color-options no)
 
-# When enabled, GIMP will not save an image if it has not been changed since
+# When enabled, LIGMA will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
 # 
 # (trust-dirty-flag no)
 
-# Remember the current tool, pattern, color, and brush across GIMP sessions. 
+# Remember the current tool, pattern, color, and brush across LIGMA sessions. 
 # Possible values are yes and no.
 # 
 # (save-device-status yes)
@@ -705,23 +705,23 @@
 # 
 # (devices-share-tool no)
 
-# Save the positions and sizes of the main dialogs when GIMP exits.  Possible
+# Save the positions and sizes of the main dialogs when LIGMA exits.  Possible
 # values are yes and no.
 # 
 # (save-session-info yes)
 
-# Let GIMP try to restore your last saved session on each startup.  Possible
+# Let LIGMA try to restore your last saved session on each startup.  Possible
 # values are yes and no.
 # 
 # (restore-session yes)
 
-# When enabled, GIMP will try to restore windows on the monitor they were
+# When enabled, LIGMA will try to restore windows on the monitor they were
 # open before.  When disabled, windows will appear on the currently used
 # monitor.  Possible values are yes and no.
 # 
 # (restore-monitor no)
 
-# Save the tool options when GIMP exits.  Possible values are yes and no.
+# Save the tool options when LIGMA exits.  Possible values are yes and no.
 # 
 # (save-tool-options yes)
 
@@ -731,12 +731,12 @@
 # 
 # (can-change-accels no)
 
-# Save changed keyboard shortcuts when GIMP exits.  Possible values are yes
+# Save changed keyboard shortcuts when LIGMA exits.  Possible values are yes
 # and no.
 # 
 # (save-accels yes)
 
-# Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
+# Restore saved keyboard shortcuts on each LIGMA startup.  Possible values are
 # yes and no.
 # 
 # (restore-accels yes)
@@ -746,9 +746,9 @@
 # 
 # (last-opened-size 10)
 
-# GIMP will warn the user if an attempt is made to create an image that would
+# LIGMA will warn the user if an attempt is made to create an image that would
 # take more memory than the size specified here.  The integer size can
-# contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
+# contain a suffix of 'B', 'K', 'M' or 'G' which makes LIGMA interpret the
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
 # suffix is specified the size defaults to being specified in kilobytes.
 # 
@@ -769,7 +769,7 @@
 # 
 # (toolbox-image-area no)
 
-# Show the GIMP mascot at the top of the toolbox.  Possible values are yes
+# Show the LIGMA mascot at the top of the toolbox.  Possible values are yes
 # and no.
 # 
 # (toolbox-wilber yes)
@@ -782,7 +782,7 @@
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
+# (theme-path "${ligma_dir}/themes:${ligma_data_dir}/themes")
 
 # The name of the theme to use.  This is a string value.
 # 
@@ -795,7 +795,7 @@
 # Sets the icon theme search path.  This is a colon-separated list of folders
 # to search.
 # 
-# (icon-theme-path "${gimp_dir}/icons:${gimp_data_dir}/icons")
+# (icon-theme-path "${ligma_dir}/icons:${ligma_data_dir}/icons")
 
 # The name of the icon theme to use.  This is a string value.
 # 
@@ -824,10 +824,10 @@
 # 
 # (help-locales "")
 
-# Sets the browser used by the help system.  Possible values are gimp and
+# Sets the browser used by the help system.  Possible values are ligma and
 # web-browser.
 # 
-# (help-browser gimp)
+# (help-browser ligma)
 
 # The maximum number of actions saved in history.  This is an integer value.
 # 
@@ -842,7 +842,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "https://docs.gimp.org/2.99")
+# (user-manual-online-uri "https://docs.ligma.org/2.99")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these
@@ -1147,25 +1147,25 @@
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.
 # 
-# (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
+# (fractalexplorer-path "${ligma_dir}/fractalexplorer:${ligma_data_dir}/fractalexplorer")
 
 # Where to search for Gfig figures used by the Gfig plug-in.  This is a
 # colon-separated list of folders to search.
 # 
-# (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
+# (gfig-path "${ligma_dir}/gfig:${ligma_data_dir}/gfig")
 
 # Where to search for gflares used by the GFlare plug-in.  This is a
 # colon-separated list of folders to search.
 # 
-# (gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
+# (gflare-path "${ligma_dir}/gflare:${ligma_data_dir}/gflare")
 
-# Where to search for data used by the Gimpressionist plug-in.  This is a
+# Where to search for data used by the Ligmaressionist plug-in.  This is a
 # colon-separated list of folders to search.
 # 
-# (gimpressionist-path "${gimp_dir}/gimpressionist:${gimp_data_dir}/gimpressionist")
+# (ligmaressionist-path "${ligma_dir}/ligmaressionist:${ligma_data_dir}/ligmaressionist")
 
 # This path will be searched for scripts when the Script-Fu plug-in is run. 
 # This is a colon-separated list of folders to search.
 # 
-# (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
+# (script-fu-path "${ligma_dir}/scripts:${ligma_data_dir}/scripts")
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,32 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_NEW_H__
-#define __GIMP_IMAGE_NEW_H__
+#ifndef __LIGMA_IMAGE_NEW_H__
+#define __LIGMA_IMAGE_NEW_H__
 
 
-GimpTemplate * gimp_image_new_get_last_template (Gimp            *gimp,
-                                                 GimpImage       *image);
-void           gimp_image_new_set_last_template (Gimp            *gimp,
-                                                 GimpTemplate    *template);
+LigmaTemplate * ligma_image_new_get_last_template (Ligma            *ligma,
+                                                 LigmaImage       *image);
+void           ligma_image_new_set_last_template (Ligma            *ligma,
+                                                 LigmaTemplate    *template);
 
-GimpImage    * gimp_image_new_from_template     (Gimp            *gimp,
-                                                 GimpTemplate    *template,
-                                                 GimpContext     *context);
-GimpImage    * gimp_image_new_from_drawable     (Gimp            *gimp,
-                                                 GimpDrawable    *drawable);
-GimpImage    * gimp_image_new_from_drawables    (Gimp            *gimp,
+LigmaImage    * ligma_image_new_from_template     (Ligma            *ligma,
+                                                 LigmaTemplate    *template,
+                                                 LigmaContext     *context);
+LigmaImage    * ligma_image_new_from_drawable     (Ligma            *ligma,
+                                                 LigmaDrawable    *drawable);
+LigmaImage    * ligma_image_new_from_drawables    (Ligma            *ligma,
                                                  GList           *drawables,
                                                  gboolean         copy_selection,
                                                  gboolean         tag_copies);
-GimpImage    * gimp_image_new_from_component    (Gimp            *gimp,
-                                                 GimpImage       *image,
-                                                 GimpChannelType  component);
-GimpImage    * gimp_image_new_from_buffer       (Gimp            *gimp,
-                                                 GimpBuffer      *buffer);
-GimpImage    * gimp_image_new_from_pixbuf       (Gimp            *gimp,
+LigmaImage    * ligma_image_new_from_component    (Ligma            *ligma,
+                                                 LigmaImage       *image,
+                                                 LigmaChannelType  component);
+LigmaImage    * ligma_image_new_from_buffer       (Ligma            *ligma,
+                                                 LigmaBuffer      *buffer);
+LigmaImage    * ligma_image_new_from_pixbuf       (Ligma            *ligma,
                                                  GdkPixbuf       *pixbuf,
                                                  const gchar     *layer_name);
 
 
-#endif /* __GIMP_IMAGE_NEW__ */
+#endif /* __LIGMA_IMAGE_NEW__ */

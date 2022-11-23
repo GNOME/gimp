@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,36 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MAGNIFY_OPTIONS_H__
-#define __GIMP_MAGNIFY_OPTIONS_H__
+#ifndef __LIGMA_MAGNIFY_OPTIONS_H__
+#define __LIGMA_MAGNIFY_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_MAGNIFY_OPTIONS            (gimp_magnify_options_get_type ())
-#define GIMP_MAGNIFY_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MAGNIFY_OPTIONS, GimpMagnifyOptions))
-#define GIMP_MAGNIFY_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MAGNIFY_OPTIONS, GimpMagnifyOptionsClass))
-#define GIMP_IS_MAGNIFY_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MAGNIFY_OPTIONS))
-#define GIMP_IS_MAGNIFY_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MAGNIFY_OPTIONS))
-#define GIMP_MAGNIFY_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MAGNIFY_OPTIONS, GimpMagnifyOptionsClass))
+#define LIGMA_TYPE_MAGNIFY_OPTIONS            (ligma_magnify_options_get_type ())
+#define LIGMA_MAGNIFY_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MAGNIFY_OPTIONS, LigmaMagnifyOptions))
+#define LIGMA_MAGNIFY_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MAGNIFY_OPTIONS, LigmaMagnifyOptionsClass))
+#define LIGMA_IS_MAGNIFY_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MAGNIFY_OPTIONS))
+#define LIGMA_IS_MAGNIFY_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MAGNIFY_OPTIONS))
+#define LIGMA_MAGNIFY_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MAGNIFY_OPTIONS, LigmaMagnifyOptionsClass))
 
 
-typedef struct _GimpMagnifyOptions   GimpMagnifyOptions;
-typedef struct _GimpToolOptionsClass GimpMagnifyOptionsClass;
+typedef struct _LigmaMagnifyOptions   LigmaMagnifyOptions;
+typedef struct _LigmaToolOptionsClass LigmaMagnifyOptionsClass;
 
-struct _GimpMagnifyOptions
+struct _LigmaMagnifyOptions
 {
-  GimpToolOptions   parent_instance;
+  LigmaToolOptions   parent_instance;
 
   gboolean          auto_resize;
-  GimpZoomType      zoom_type;
+  LigmaZoomType      zoom_type;
 };
 
 
-GType       gimp_magnify_options_get_type (void) G_GNUC_CONST;
+GType       ligma_magnify_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_magnify_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_magnify_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_MAGNIFY_OPTIONS_H__  */
+#endif  /*  __LIGMA_MAGNIFY_OPTIONS_H__  */

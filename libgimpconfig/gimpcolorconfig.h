@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorConfig class
+ * LigmaColorConfig class
  * Copyright (C) 2004  Stefan Döhla <stefan@doehla.de>
  *
  * This library is free software: you can redistribute it and/or
@@ -19,75 +19,75 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
-#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#if !defined (__LIGMA_CONFIG_H_INSIDE__) && !defined (LIGMA_CONFIG_COMPILATION)
+#error "Only <libligmaconfig/ligmaconfig.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_CONFIG_H__
-#define __GIMP_COLOR_CONFIG_H__
+#ifndef __LIGMA_COLOR_CONFIG_H__
+#define __LIGMA_COLOR_CONFIG_H__
 
 
-#define GIMP_TYPE_COLOR_CONFIG            (gimp_color_config_get_type ())
-#define GIMP_COLOR_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_CONFIG, GimpColorConfig))
-#define GIMP_COLOR_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_CONFIG, GimpColorConfigClass))
-#define GIMP_IS_COLOR_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_CONFIG))
-#define GIMP_IS_COLOR_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_CONFIG))
+#define LIGMA_TYPE_COLOR_CONFIG            (ligma_color_config_get_type ())
+#define LIGMA_COLOR_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_CONFIG, LigmaColorConfig))
+#define LIGMA_COLOR_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_CONFIG, LigmaColorConfigClass))
+#define LIGMA_IS_COLOR_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_CONFIG))
+#define LIGMA_IS_COLOR_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_CONFIG))
 
 
-typedef struct _GimpColorConfigPrivate GimpColorConfigPrivate;
-typedef struct _GimpColorConfigClass   GimpColorConfigClass;
+typedef struct _LigmaColorConfigPrivate LigmaColorConfigPrivate;
+typedef struct _LigmaColorConfigClass   LigmaColorConfigClass;
 
-struct _GimpColorConfig
+struct _LigmaColorConfig
 {
   GObject                 parent_instance;
 
-  GimpColorConfigPrivate *priv;
+  LigmaColorConfigPrivate *priv;
 };
 
-struct _GimpColorConfigClass
+struct _LigmaColorConfigClass
 {
   GObjectClass  parent_class;
 
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType              gimp_color_config_get_type                     (void) G_GNUC_CONST;
+GType              ligma_color_config_get_type                     (void) G_GNUC_CONST;
 
-GimpColorManagementMode
-                   gimp_color_config_get_mode                     (GimpColorConfig  *config);
+LigmaColorManagementMode
+                   ligma_color_config_get_mode                     (LigmaColorConfig  *config);
 
-GimpColorRenderingIntent
-                   gimp_color_config_get_display_intent           (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_display_bpc              (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_display_optimize         (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_display_profile_from_gdk (GimpColorConfig  *config);
+LigmaColorRenderingIntent
+                   ligma_color_config_get_display_intent           (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_display_bpc              (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_display_optimize         (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_display_profile_from_gdk (LigmaColorConfig  *config);
 
-GimpColorRenderingIntent
-                   gimp_color_config_get_simulation_intent        (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_simulation_bpc           (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_simulation_optimize      (GimpColorConfig  *config);
-gboolean           gimp_color_config_get_simulation_gamut_check   (GimpColorConfig  *config);
-void               gimp_color_config_get_out_of_gamut_color       (GimpColorConfig  *config,
-                                                                   GimpRGB          *color);
+LigmaColorRenderingIntent
+                   ligma_color_config_get_simulation_intent        (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_simulation_bpc           (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_simulation_optimize      (LigmaColorConfig  *config);
+gboolean           ligma_color_config_get_simulation_gamut_check   (LigmaColorConfig  *config);
+void               ligma_color_config_get_out_of_gamut_color       (LigmaColorConfig  *config,
+                                                                   LigmaRGB          *color);
 
-GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
+LigmaColorProfile * ligma_color_config_get_rgb_color_profile        (LigmaColorConfig  *config,
                                                                    GError          **error);
-GimpColorProfile * gimp_color_config_get_gray_color_profile       (GimpColorConfig  *config,
+LigmaColorProfile * ligma_color_config_get_gray_color_profile       (LigmaColorConfig  *config,
                                                                    GError          **error);
-GimpColorProfile * gimp_color_config_get_cmyk_color_profile       (GimpColorConfig  *config,
+LigmaColorProfile * ligma_color_config_get_cmyk_color_profile       (LigmaColorConfig  *config,
                                                                    GError          **error);
-GimpColorProfile * gimp_color_config_get_display_color_profile    (GimpColorConfig  *config,
+LigmaColorProfile * ligma_color_config_get_display_color_profile    (LigmaColorConfig  *config,
                                                                    GError          **error);
-GimpColorProfile * gimp_color_config_get_simulation_color_profile (GimpColorConfig  *config,
+LigmaColorProfile * ligma_color_config_get_simulation_color_profile (LigmaColorConfig  *config,
                                                                    GError          **error);
 
 
-#endif /* GIMP_COLOR_CONFIG_H__ */
+#endif /* LIGMA_COLOR_CONFIG_H__ */

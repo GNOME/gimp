@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorProfileChooserDialog
- * Copyright (C) 2006-2014 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
+ * LigmaColorProfileChooserDialog
+ * Copyright (C) 2006-2014 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,53 +19,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__
-#define __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__
+#ifndef __LIGMA_COLOR_PROFILE_CHOOSER_DIALOG_H__
+#define __LIGMA_COLOR_PROFILE_CHOOSER_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG            (gimp_color_profile_chooser_dialog_get_type ())
-#define GIMP_COLOR_PROFILE_CHOOSER_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, GimpColorProfileChooserDialog))
-#define GIMP_COLOR_PROFILE_CHOOSER_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, GimpColorProfileChooserDialogClass))
-#define GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG))
-#define GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG))
-#define GIMP_COLOR_PROFILE_CHOOSER_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, GimpColorProfileChooserDialogClass))
+#define LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG            (ligma_color_profile_chooser_dialog_get_type ())
+#define LIGMA_COLOR_PROFILE_CHOOSER_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, LigmaColorProfileChooserDialog))
+#define LIGMA_COLOR_PROFILE_CHOOSER_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, LigmaColorProfileChooserDialogClass))
+#define LIGMA_IS_COLOR_PROFILE_CHOOSER_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG))
+#define LIGMA_IS_COLOR_PROFILE_CHOOSER_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG))
+#define LIGMA_COLOR_PROFILE_CHOOSER_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_PROFILE_CHOOSER_DIALOG, LigmaColorProfileChooserDialogClass))
 
 
-typedef struct _GimpColorProfileChooserDialogClass   GimpColorProfileChooserDialogClass;
-typedef struct _GimpColorProfileChooserDialogPrivate GimpColorProfileChooserDialogPrivate;
+typedef struct _LigmaColorProfileChooserDialogClass   LigmaColorProfileChooserDialogClass;
+typedef struct _LigmaColorProfileChooserDialogPrivate LigmaColorProfileChooserDialogPrivate;
 
-struct _GimpColorProfileChooserDialog
+struct _LigmaColorProfileChooserDialog
 {
   GtkFileChooserDialog                  parent_instance;
 
-  GimpColorProfileChooserDialogPrivate *priv;
+  LigmaColorProfileChooserDialogPrivate *priv;
 };
 
-struct _GimpColorProfileChooserDialogClass
+struct _LigmaColorProfileChooserDialogClass
 {
   GtkFileChooserDialogClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_profile_chooser_dialog_get_type (void) G_GNUC_CONST;
+GType       ligma_color_profile_chooser_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_profile_chooser_dialog_new      (const gchar          *title,
+GtkWidget * ligma_color_profile_chooser_dialog_new      (const gchar          *title,
                                                         GtkWindow            *parent,
                                                         GtkFileChooserAction  action);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__ */
+#endif /* __LIGMA_COLOR_PROFILE_CHOOSER_DIALOG_H__ */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <png.h>
 
@@ -35,7 +35,7 @@
 #include "ico.h"
 #include "ico-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define A_VAL(p) ((guchar *)(p))[3]
@@ -43,10 +43,10 @@
 #define G_VAL(p) ((guchar *)(p))[1]
 #define B_VAL(p) ((guchar *)(p))[0]
 
-#define A_VAL_GIMP(p) ((guchar *)(p))[3]
-#define R_VAL_GIMP(p) ((guchar *)(p))[0]
-#define G_VAL_GIMP(p) ((guchar *)(p))[1]
-#define B_VAL_GIMP(p) ((guchar *)(p))[2]
+#define A_VAL_LIGMA(p) ((guchar *)(p))[3]
+#define R_VAL_LIGMA(p) ((guchar *)(p))[0]
+#define G_VAL_LIGMA(p) ((guchar *)(p))[1]
+#define B_VAL_LIGMA(p) ((guchar *)(p))[2]
 
 
 static gint       ico_read_int8  (FILE        *fp,
@@ -508,14 +508,14 @@ ico_read_icon (FILE    *fp,
                                                            w, y * w + x)];
             guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-            R_VAL_GIMP (dest) = R_VAL (&color);
-            G_VAL_GIMP (dest) = G_VAL (&color);
-            B_VAL_GIMP (dest) = B_VAL (&color);
+            R_VAL_LIGMA (dest) = R_VAL (&color);
+            G_VAL_LIGMA (dest) = G_VAL (&color);
+            B_VAL_LIGMA (dest) = B_VAL (&color);
 
             if (ico_get_bit_from_data (and_map, w, y * w + x))
-              A_VAL_GIMP (dest) = 0;
+              A_VAL_LIGMA (dest) = 0;
             else
-              A_VAL_GIMP (dest) = 255;
+              A_VAL_LIGMA (dest) = 255;
           }
       break;
 
@@ -527,14 +527,14 @@ ico_read_icon (FILE    *fp,
                                                               w, y * w + x)];
             guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-            R_VAL_GIMP (dest) = R_VAL (&color);
-            G_VAL_GIMP (dest) = G_VAL (&color);
-            B_VAL_GIMP (dest) = B_VAL (&color);
+            R_VAL_LIGMA (dest) = R_VAL (&color);
+            G_VAL_LIGMA (dest) = G_VAL (&color);
+            B_VAL_LIGMA (dest) = B_VAL (&color);
 
             if (ico_get_bit_from_data (and_map, w, y * w + x))
-              A_VAL_GIMP (dest) = 0;
+              A_VAL_LIGMA (dest) = 0;
             else
-              A_VAL_GIMP (dest) = 255;
+              A_VAL_LIGMA (dest) = 255;
           }
       break;
 
@@ -546,14 +546,14 @@ ico_read_icon (FILE    *fp,
                                                             w, y * w + x)];
             guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-            R_VAL_GIMP (dest) = R_VAL (&color);
-            G_VAL_GIMP (dest) = G_VAL (&color);
-            B_VAL_GIMP (dest) = B_VAL (&color);
+            R_VAL_LIGMA (dest) = R_VAL (&color);
+            G_VAL_LIGMA (dest) = G_VAL (&color);
+            B_VAL_LIGMA (dest) = B_VAL (&color);
 
             if (ico_get_bit_from_data (and_map, w, y * w + x))
-              A_VAL_GIMP (dest) = 0;
+              A_VAL_LIGMA (dest) = 0;
             else
-              A_VAL_GIMP (dest) = 255;
+              A_VAL_LIGMA (dest) = 255;
           }
       break;
 
@@ -571,20 +571,20 @@ ico_read_icon (FILE    *fp,
               {
                 guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-                B_VAL_GIMP (dest) = row[0];
-                G_VAL_GIMP (dest) = row[1];
-                R_VAL_GIMP (dest) = row[2];
+                B_VAL_LIGMA (dest) = row[0];
+                G_VAL_LIGMA (dest) = row[1];
+                R_VAL_LIGMA (dest) = row[2];
 
                 if (data.bpp < 32)
                   {
                     if (ico_get_bit_from_data (and_map, w, y * w + x))
-                      A_VAL_GIMP (dest) = 0;
+                      A_VAL_LIGMA (dest) = 0;
                     else
-                      A_VAL_GIMP (dest) = 255;
+                      A_VAL_LIGMA (dest) = 255;
                   }
                 else
                   {
-                    A_VAL_GIMP (dest) = row[3];
+                    A_VAL_LIGMA (dest) = row[3];
                   }
 
                 row += bytespp;
@@ -601,9 +601,9 @@ ico_read_icon (FILE    *fp,
   return TRUE;
 }
 
-static GimpLayer *
+static LigmaLayer *
 ico_load_layer (FILE        *fp,
-                GimpImage   *image,
+                LigmaImage   *image,
                 gint32       icon_num,
                 guchar      *buf,
                 gint         maxsize,
@@ -611,7 +611,7 @@ ico_load_layer (FILE        *fp,
                 IcoLoadInfo *info)
 {
   gint        width, height;
-  GimpLayer  *layer;
+  LigmaLayer  *layer;
   guint32     first_bytes;
   GeglBuffer *buffer;
   gchar       name[ICO_MAXBUF];
@@ -637,13 +637,13 @@ ico_load_layer (FILE        *fp,
 
   /* read successfully. add to image */
   g_snprintf (name, sizeof (name), _("Icon #%i"), icon_num+1);
-  layer = gimp_layer_new (image, name, width, height,
-                          GIMP_RGBA_IMAGE,
+  layer = ligma_layer_new (image, name, width, height,
+                          LIGMA_RGBA_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, icon_num);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, icon_num);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    NULL, buf, GEGL_AUTO_ROWSTRIDE);
@@ -654,7 +654,7 @@ ico_load_layer (FILE        *fp,
 }
 
 
-GimpImage *
+LigmaImage *
 ico_load_image (GFile        *file,
                 gint32       *file_offset,
                 GError      **error)
@@ -664,15 +664,15 @@ ico_load_image (GFile        *file,
   IcoLoadInfo   *info;
   gint           max_width, max_height;
   gint           i;
-  GimpImage     *image;
+  LigmaImage     *image;
   guchar        *buf;
   guint          icon_count;
   gint           maxsize;
   gchar         *str;
 
   if (! file_offset)
-    gimp_progress_init_printf (_("Opening '%s'"),
-                               gimp_file_get_utf8_name (file));
+    ligma_progress_init_printf (_("Opening '%s'"),
+                               ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -680,7 +680,7 @@ ico_load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -720,30 +720,30 @@ ico_load_image (GFile        *file,
     }
   D(("image size: %ix%i\n", max_width, max_height));
 
-  image = gimp_image_new (max_width, max_height, GIMP_RGB);
+  image = ligma_image_new (max_width, max_height, LIGMA_RGB);
   if (! file_offset)
-    gimp_image_set_file (image, file);
+    ligma_image_set_file (image, file);
 
   maxsize = max_width * max_height * 4;
   buf = g_new (guchar, max_width * max_height * 4);
   for (i = 0; i < icon_count; i++)
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
 
       layer = ico_load_layer (fp, image, i, buf, maxsize, file_offset ? *file_offset : 0, info+i);
 
       /* Save CUR hot spot information */
       if (header.resource_type == 2)
         {
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
 
           str = g_strdup_printf ("%d %d", info[i].planes, info[i].bpp);
-          parasite = gimp_parasite_new ("cur-hot-spot",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("cur-hot-spot",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (str) + 1, (gpointer) str);
           g_free (str);
-          gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
-          gimp_parasite_free (parasite);
+          ligma_item_attach_parasite (LIGMA_ITEM (layer), parasite);
+          ligma_parasite_free (parasite);
         }
     }
 
@@ -756,14 +756,14 @@ ico_load_image (GFile        *file,
 
   /* Don't update progress here if .ani file */
   if (! file_offset)
-    gimp_progress_update (1.0);
+    ligma_progress_update (1.0);
 
   return image;
 }
 
 /* Ported from James Huang's ani.c code, under the GPL license, version 3
  * or any later version of the license */
-GimpImage *
+LigmaImage *
 ani_load_image (GFile   *file,
                 gboolean load_thumb,
                 gint    *width,
@@ -771,8 +771,8 @@ ani_load_image (GFile   *file,
                 GError **error)
 {
   FILE         *fp;
-  GimpImage    *image = NULL;
-  GimpParasite *parasite;
+  LigmaImage    *image = NULL;
+  LigmaParasite *parasite;
   gchar         id[4];
   guint32       size;
   guint8        padding;
@@ -783,8 +783,8 @@ ani_load_image (GFile   *file,
   gchar         iart[G_MAXSHORT] = {0};
   gchar        *str;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -792,7 +792,7 @@ ani_load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -861,30 +861,30 @@ ani_load_image (GFile   *file,
                  }
                else
                  {
-                   GimpImage    *temp_image = NULL;
-                   GimpLayer   **layers;
-                   GimpLayer    *new_layer;
+                   LigmaImage    *temp_image = NULL;
+                   LigmaLayer   **layers;
+                   LigmaLayer    *new_layer;
                    gint          nlayers;
 
                    temp_image = ico_load_image (file, &file_offset, error);
-                   layers = gimp_image_get_layers (temp_image, &nlayers);
+                   layers = ligma_image_get_layers (temp_image, &nlayers);
                    if (layers)
                      {
                        for (gint i = 0; i < nlayers; i++)
                          {
-                           new_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[i]),
+                           new_layer = ligma_layer_new_from_drawable (LIGMA_DRAWABLE (layers[i]),
                                                                      image);
-                           gimp_image_insert_layer (image, new_layer, NULL, frame);
+                           ligma_image_insert_layer (image, new_layer, NULL, frame);
                            frame++;
                          }
                      }
-                   gimp_image_delete (temp_image);
+                   ligma_image_delete (temp_image);
                  }
 
                /* Update position after reading icon data */
                fseek (fp, file_offset, SEEK_SET);
                if (header.frames > 0)
-                 gimp_progress_update ((gdouble) frame /
+                 ligma_progress_update ((gdouble) frame /
                                        (gdouble) header.frames);
              }
         }
@@ -893,43 +893,43 @@ ani_load_image (GFile   *file,
 
   /* Saving header metadata */
   str = g_strdup_printf ("%d", header.jif_rate);
-  parasite = gimp_parasite_new ("ani-header",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("ani-header",
+                                LIGMA_PARASITE_PERSISTENT,
                                 strlen (str) + 1, (gpointer) str);
   g_free (str);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
 
   /* Saving INFO block */
   if (strlen (inam) > 0)
     {
       str = g_strdup_printf ("%s", inam);
-      parasite = gimp_parasite_new ("ani-info-inam",
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new ("ani-info-inam",
+                                    LIGMA_PARASITE_PERSISTENT,
                                     strlen (str) + 1, (gpointer) str);
       g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
 
   if (strlen (iart) > 0)
     {
       str = g_strdup_printf ("%s", iart);
-      parasite = gimp_parasite_new ("ani-info-iart",
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new ("ani-info-iart",
+                                    LIGMA_PARASITE_PERSISTENT,
                                     strlen (str) + 1, (gpointer) str);
       g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
 
-  gimp_image_set_file (image, file);
-  gimp_progress_update (1.0);
+  ligma_image_set_file (image, file);
+  ligma_progress_update (1.0);
 
   return image;
 }
 
-GimpImage *
+LigmaImage *
 ico_load_thumbnail_image (GFile   *file,
                           gint    *width,
                           gint    *height,
@@ -939,7 +939,7 @@ ico_load_thumbnail_image (GFile   *file,
   FILE          *fp;
   IcoLoadInfo   *info;
   IcoFileHeader  header;
-  GimpImage     *image;
+  LigmaImage     *image;
   gint           w     = 0;
   gint           h     = 0;
   gint           bpp   = 0;
@@ -947,8 +947,8 @@ ico_load_thumbnail_image (GFile   *file,
   gint           i, icon_count;
   guchar        *buf;
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -956,7 +956,7 @@ ico_load_thumbnail_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -972,7 +972,7 @@ ico_load_thumbnail_image (GFile   *file,
     }
 
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-     gimp_file_get_utf8_name (file), icon_count));
+     ligma_file_get_utf8_name (file), icon_count));
 
   info = ico_read_info (fp, icon_count, file_offset, error);
   if (! info)
@@ -1006,7 +1006,7 @@ ico_load_thumbnail_image (GFile   *file,
   if (w <= 0 || h <= 0)
     return NULL;
 
-  image = gimp_image_new (w, h, GIMP_RGB);
+  image = ligma_image_new (w, h, LIGMA_RGB);
   buf = g_new (guchar, w*h*4);
   ico_load_layer (fp, image, match, buf, w*h*4, file_offset, info+match);
   g_free (buf);
@@ -1016,7 +1016,7 @@ ico_load_thumbnail_image (GFile   *file,
 
   D(("*** thumbnail successfully loaded.\n\n"));
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_free (info);
   fclose (fp);

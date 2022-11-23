@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,11 +16,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODULE_TYPES_H__
-#define __GIMP_MODULE_TYPES_H__
+#ifndef __LIGMA_MODULE_TYPES_H__
+#define __LIGMA_MODULE_TYPES_H__
 
 
-#include <libgimpbase/gimpbasetypes.h>
+#include <libligmabase/ligmabasetypes.h>
 
 
 G_BEGIN_DECLS
@@ -28,11 +28,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-typedef struct _GimpModule     GimpModule;
-typedef struct _GimpModuleInfo GimpModuleInfo;
-typedef struct _GimpModuleDB   GimpModuleDB;
+typedef struct _LigmaModule     LigmaModule;
+typedef struct _LigmaModuleInfo LigmaModuleInfo;
+typedef struct _LigmaModuleDB   LigmaModuleDB;
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_MODULE_TYPES_H__ */
+#endif  /* __LIGMA_MODULE_TYPES_H__ */

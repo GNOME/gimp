@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrushcache.h
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmabrushcache.h
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CACHE_H__
-#define __GIMP_BRUSH_CACHE_H__
+#ifndef __LIGMA_BRUSH_CACHE_H__
+#define __LIGMA_BRUSH_CACHE_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_BRUSH_CACHE            (gimp_brush_cache_get_type ())
-#define GIMP_BRUSH_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_CACHE, GimpBrushCache))
-#define GIMP_BRUSH_CACHE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_CACHE, GimpBrushCacheClass))
-#define GIMP_IS_BRUSH_CACHE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_CACHE))
-#define GIMP_IS_BRUSH_CACHE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_CACHE))
-#define GIMP_BRUSH_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_CACHE, GimpBrushCacheClass))
+#define LIGMA_TYPE_BRUSH_CACHE            (ligma_brush_cache_get_type ())
+#define LIGMA_BRUSH_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_CACHE, LigmaBrushCache))
+#define LIGMA_BRUSH_CACHE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_CACHE, LigmaBrushCacheClass))
+#define LIGMA_IS_BRUSH_CACHE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_CACHE))
+#define LIGMA_IS_BRUSH_CACHE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_CACHE))
+#define LIGMA_BRUSH_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_CACHE, LigmaBrushCacheClass))
 
 
-typedef struct _GimpBrushCacheClass GimpBrushCacheClass;
+typedef struct _LigmaBrushCacheClass LigmaBrushCacheClass;
 
-struct _GimpBrushCache
+struct _LigmaBrushCache
 {
-  GimpObject      parent_instance;
+  LigmaObject      parent_instance;
 
   GDestroyNotify  data_destroy;
 
@@ -47,21 +47,21 @@ struct _GimpBrushCache
   gchar           debug_miss;
 };
 
-struct _GimpBrushCacheClass
+struct _LigmaBrushCacheClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType            gimp_brush_cache_get_type (void) G_GNUC_CONST;
+GType            ligma_brush_cache_get_type (void) G_GNUC_CONST;
 
-GimpBrushCache * gimp_brush_cache_new      (GDestroyNotify  data_destory,
+LigmaBrushCache * ligma_brush_cache_new      (GDestroyNotify  data_destory,
                                             gchar           debug_hit,
                                             gchar           debug_miss);
 
-void             gimp_brush_cache_clear    (GimpBrushCache *cache);
+void             ligma_brush_cache_clear    (LigmaBrushCache *cache);
 
-gconstpointer    gimp_brush_cache_get      (GimpBrushCache *cache,
+gconstpointer    ligma_brush_cache_get      (LigmaBrushCache *cache,
                                             gint            width,
                                             gint            height,
                                             gdouble         scale,
@@ -69,7 +69,7 @@ gconstpointer    gimp_brush_cache_get      (GimpBrushCache *cache,
                                             gdouble         angle,
                                             gboolean        reflect,
                                             gdouble         hardness);
-void             gimp_brush_cache_add      (GimpBrushCache *cache,
+void             ligma_brush_cache_add      (LigmaBrushCache *cache,
                                             gpointer        data,
                                             gint            width,
                                             gint            height,
@@ -80,4 +80,4 @@ void             gimp_brush_cache_add      (GimpBrushCache *cache,
                                             gdouble         hardness);
 
 
-#endif  /*  __GIMP_BRUSH_CACHE_H__  */
+#endif  /*  __LIGMA_BRUSH_CACHE_H__  */

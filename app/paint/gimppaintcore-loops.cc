@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2013 Daniel Sabo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@ extern "C"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "core/gimptempbuf.h"
+#include "core/ligmatempbuf.h"
 
-#include "operations/gimpoperationmaskcomponents.h"
+#include "operations/ligmaoperationmaskcomponents.h"
 
-#include "operations/layer-modes/gimpoperationlayermode.h"
+#include "operations/layer-modes/ligmaoperationlayermode.h"
 
-#include "gimppaintcore-loops.h"
+#include "ligmapaintcore-loops.h"
 
 } /* extern "C" */
 
@@ -46,17 +46,17 @@ extern "C"
 /* In order to avoid iterating over the same region of the same buffers
  * multiple times, when calling more than one of the paint-core loop functions
  * (hereafter referred to as "algorithms") in succession, we provide a single
- * function, gimp_paint_core_loops_process(), which can be used to perform
+ * function, ligma_paint_core_loops_process(), which can be used to perform
  * multiple algorithms in a row.  This function takes a pointer to a
- * GimpPaintCoreLoopsParams structure, providing the parameters for the
- * algorithms, and a GimpPaintCoreLoopsAlgorithm bitset, which specifies the
+ * LigmaPaintCoreLoopsParams structure, providing the parameters for the
+ * algorithms, and a LigmaPaintCoreLoopsAlgorithm bitset, which specifies the
  * set of algorithms to run; currently, the algorithms are always run in a
  * fixed order.  For convenience, we provide public functions for the
  * individual algorithms, but they're merely wrappers around
- * gimp_paint_core_loops_process().
+ * ligma_paint_core_loops_process().
  *
  * We use some C++ magic to statically generate specialized versions of
- * gimp_paint_core_loops_process() for all possible combinations of algorithms,
+ * ligma_paint_core_loops_process() for all possible combinations of algorithms,
  * and, where relevant, formats and input parameters, and to dispatch to the
  * correct version at runtime.
  *
@@ -90,7 +90,7 @@ extern "C"
  *     this function, before modifying the hierarchy itself.
  *
  * The dispatch() function is used to construct an algorithm hierarchy by
- * dispatching through a list of functions.  gimp_paint_core_loops_process()
+ * dispatching through a list of functions.  ligma_paint_core_loops_process()
  * calls dispatch() with the full list of algorithm dispatch functions,
  * receiving in return the algorithm hierarchy matching the input.  It then
  * uses the algorithm interface to perform the actual processing.
@@ -141,8 +141,8 @@ template <class Visitor,
           class Algorithm>
 static inline void
 dispatch (Visitor                         visitor,
-          const GimpPaintCoreLoopsParams *params,
-          GimpPaintCoreLoopsAlgorithm     algorithms,
+          const LigmaPaintCoreLoopsParams *params,
+          LigmaPaintCoreLoopsAlgorithm     algorithms,
           identity<Algorithm>             algorithm)
 {
   visitor (algorithm);
@@ -157,8 +157,8 @@ struct dispatch_impl
             class... DispatchRest>
   static void
   apply (Visitor                         visitor,
-         const GimpPaintCoreLoopsParams *params,
-         GimpPaintCoreLoopsAlgorithm     algorithms,
+         const LigmaPaintCoreLoopsParams *params,
+         LigmaPaintCoreLoopsAlgorithm     algorithms,
          identity<Algorithm>             algorithm,
          Dispatch                        disp,
          DispatchRest...                 disp_rest)
@@ -180,8 +180,8 @@ struct dispatch_impl<Algorithm, Dispatch, TRUE>
             class... DispatchRest>
   static void
   apply (Visitor                         visitor,
-         const GimpPaintCoreLoopsParams *params,
-         GimpPaintCoreLoopsAlgorithm     algorithms,
+         const LigmaPaintCoreLoopsParams *params,
+         LigmaPaintCoreLoopsAlgorithm     algorithms,
          identity<Algorithm>             algorithm,
          Dispatch                        disp,
          DispatchRest...                 disp_rest)
@@ -196,8 +196,8 @@ template <class    Visitor,
           class... DispatchRest>
 static inline void
 dispatch (Visitor                         visitor,
-          const GimpPaintCoreLoopsParams *params,
-          GimpPaintCoreLoopsAlgorithm     algorithms,
+          const LigmaPaintCoreLoopsParams *params,
+          LigmaPaintCoreLoopsAlgorithm     algorithms,
           identity<Algorithm>             algorithm,
           Dispatch                        disp,
           DispatchRest...                 disp_rest)
@@ -252,7 +252,7 @@ struct AlgorithmBase
    * should not be further modified.
    */
   explicit
-  AlgorithmBase (const GimpPaintCoreLoopsParams *params)
+  AlgorithmBase (const LigmaPaintCoreLoopsParams *params)
   {
   }
 
@@ -288,7 +288,7 @@ struct AlgorithmBase
    */
   template <class Derived>
   void
-  init (const GimpPaintCoreLoopsParams *params,
+  init (const LigmaPaintCoreLoopsParams *params,
         State<Derived>                 *state,
         GeglBufferIterator             *iter,
         const GeglRectangle            *roi,
@@ -308,7 +308,7 @@ struct AlgorithmBase
    */
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -328,7 +328,7 @@ struct AlgorithmBase
    */
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -351,7 +351,7 @@ struct AlgorithmBase
    */
   template <class Derived>
   void
-  finalize_step (const GimpPaintCoreLoopsParams *params,
+  finalize_step (const LigmaPaintCoreLoopsParams *params,
                  State<Derived>                 *state) const
   {
   }
@@ -368,7 +368,7 @@ struct AlgorithmBase
    */
   template <class Derived>
   void
-  finalize (const GimpPaintCoreLoopsParams *params,
+  finalize (const LigmaPaintCoreLoopsParams *params,
             State<Derived>                 *state) const
   {
   }
@@ -399,8 +399,8 @@ struct BasicDispatch
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     dispatch (
@@ -424,8 +424,8 @@ struct BasicDispatch<AlgorithmTemplate, Mask>
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     visitor (identity<AlgorithmTemplate<Algorithm>> ());
@@ -460,8 +460,8 @@ struct AlgorithmDispatch
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     if ((algorithms & mask) == mask)
@@ -511,8 +511,8 @@ struct MandatoryAlgorithmDispatch
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     g_return_if_fail ((algorithms & Mask) == Mask);
@@ -551,8 +551,8 @@ struct SuppressedAlgorithmDispatch
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     g_return_if_fail ((algorithms & Mask) != Mask);
@@ -583,11 +583,11 @@ struct PaintBuf : Base
   paint_type *paint_data;
 
   explicit
-  PaintBuf (const GimpPaintCoreLoopsParams *params) :
+  PaintBuf (const LigmaPaintCoreLoopsParams *params) :
     Base (params)
   {
-    paint_stride = gimp_temp_buf_get_width (params->paint_buf) * 4;
-    paint_data   = (paint_type *) gimp_temp_buf_get_data (params->paint_buf);
+    paint_stride = ligma_temp_buf_get_width (params->paint_buf) * 4;
+    paint_data   = (paint_type *) ligma_temp_buf_get_data (params->paint_buf);
   }
 };
 
@@ -619,12 +619,12 @@ struct PaintMask : Base
   const mask_type *mask_data;
 
   explicit
-  PaintMask (const GimpPaintCoreLoopsParams *params) :
+  PaintMask (const LigmaPaintCoreLoopsParams *params) :
     Base (params)
   {
-    mask_stride = gimp_temp_buf_get_width (params->paint_mask);
+    mask_stride = ligma_temp_buf_get_width (params->paint_mask);
     mask_data   =
-      (const mask_type *) gimp_temp_buf_get_data (params->paint_mask) +
+      (const mask_type *) ligma_temp_buf_get_data (params->paint_mask) +
       params->paint_mask_offset_y * mask_stride                       +
       params->paint_mask_offset_x;
   }
@@ -638,11 +638,11 @@ struct DispatchPaintMask
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
-    const Babl *mask_format = gimp_temp_buf_get_format (params->paint_mask);
+    const Babl *mask_format = ligma_temp_buf_get_format (params->paint_mask);
 
     if (mask_format == babl_format ("Y u8"))
       visitor (identity<PaintMask<Algorithm, guint8>> ());
@@ -682,8 +682,8 @@ struct DispatchStipple
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     if (params->stipple)
@@ -787,7 +787,7 @@ struct TempCompMask : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -802,7 +802,7 @@ struct TempCompMask : Base
 
   template <class Derived>
   void
-  finalize_step (const GimpPaintCoreLoopsParams *params,
+  finalize_step (const LigmaPaintCoreLoopsParams *params,
                  State<Derived>                 *state) const
   {
     gegl_scratch_free (state->comp_mask_data);
@@ -911,7 +911,7 @@ struct TempCompBuffer : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -926,7 +926,7 @@ struct TempCompBuffer : Base
 
   template <class Derived>
   void
-  finalize_step (const GimpPaintCoreLoopsParams *params,
+  finalize_step (const LigmaPaintCoreLoopsParams *params,
                  State<Derived>                 *state) const
   {
     gegl_scratch_free (state->comp_buffer_data);
@@ -1007,7 +1007,7 @@ struct CanvasBufferIterator<Base, Access, TRUE> : Base
 
   template <class Derived>
   void
-  init (const GimpPaintCoreLoopsParams *params,
+  init (const LigmaPaintCoreLoopsParams *params,
         State<Derived>                 *state,
         GeglBufferIterator             *iter,
         const GeglRectangle            *roi,
@@ -1071,7 +1071,7 @@ struct MaskBufferIterator : Base
 
   template <class Derived>
   void
-  init (const GimpPaintCoreLoopsParams *params,
+  init (const LigmaPaintCoreLoopsParams *params,
         State<Derived>                 *state,
         GeglBufferIterator             *iter,
         const GeglRectangle            *roi,
@@ -1098,8 +1098,8 @@ struct DispatchMaskBufferIterator
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     if (params->mask_buffer)
@@ -1156,11 +1156,11 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
 
   static constexpr guint filter =
     Base::filter                                                        |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1172,7 +1172,7 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1187,7 +1187,7 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1234,8 +1234,8 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
 
 static SuppressedAlgorithmDispatch<
   CombinePaintMaskToCanvasBufferToPaintBufAlpha,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask),
   decltype (dispatch_stipple),
@@ -1258,10 +1258,10 @@ struct CombinePaintMaskToCanvasBuffer : Base
 
   static constexpr guint filter =
     Base::filter                                                        |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1273,7 +1273,7 @@ struct CombinePaintMaskToCanvasBuffer : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1288,7 +1288,7 @@ struct CombinePaintMaskToCanvasBuffer : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1329,7 +1329,7 @@ struct CombinePaintMaskToCanvasBuffer : Base
 
 static AlgorithmDispatch<
   CombinePaintMaskToCanvasBuffer,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
   decltype (dispatch_paint_mask),
   decltype (dispatch_stipple),
   DispatchCanvasBufferIterator<GEGL_BUFFER_READWRITE>
@@ -1348,10 +1348,10 @@ struct CanvasBufferToPaintBufAlpha : Base
 {
   static constexpr guint filter =
     Base::filter                                                     |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA    |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK       |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA    |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK       |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1363,7 +1363,7 @@ struct CanvasBufferToPaintBufAlpha : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1378,7 +1378,7 @@ struct CanvasBufferToPaintBufAlpha : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1407,7 +1407,7 @@ struct CanvasBufferToPaintBufAlpha : Base
 
 static SuppressedAlgorithmDispatch<
   CanvasBufferToPaintBufAlpha,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   DispatchCanvasBufferIterator<GEGL_BUFFER_READ>
 >
@@ -1427,20 +1427,20 @@ struct PaintMaskToPaintBufAlpha : Base
 
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK    |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK    |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   explicit
-  PaintMaskToPaintBufAlpha (const GimpPaintCoreLoopsParams *params) :
+  PaintMaskToPaintBufAlpha (const LigmaPaintCoreLoopsParams *params) :
     Base (params)
   {
     /* Validate that the paint buffer is within the bounds of the paint mask */
-    g_return_if_fail (gimp_temp_buf_get_width (params->paint_buf) <=
-                      gimp_temp_buf_get_width (params->paint_mask) -
+    g_return_if_fail (ligma_temp_buf_get_width (params->paint_buf) <=
+                      ligma_temp_buf_get_width (params->paint_mask) -
                       params->paint_mask_offset_x);
-    g_return_if_fail (gimp_temp_buf_get_height (params->paint_buf) <=
-                      gimp_temp_buf_get_height (params->paint_mask) -
+    g_return_if_fail (ligma_temp_buf_get_height (params->paint_buf) <=
+                      ligma_temp_buf_get_height (params->paint_mask) -
                       params->paint_mask_offset_y);
   }
 
@@ -1449,7 +1449,7 @@ struct PaintMaskToPaintBufAlpha : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1479,7 +1479,7 @@ struct PaintMaskToPaintBufAlpha : Base
 
 static SuppressedAlgorithmDispatch<
   PaintMaskToPaintBufAlpha,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask)
 >
@@ -1499,8 +1499,8 @@ struct CanvasBufferToCompMask : Base
 
   static constexpr guint filter =
     Base::filter                                               |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1513,7 +1513,7 @@ struct CanvasBufferToCompMask : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1530,7 +1530,7 @@ struct CanvasBufferToCompMask : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1559,8 +1559,8 @@ struct CanvasBufferToCompMask<Base, TRUE> : Base
 {
   static constexpr guint filter =
     Base::filter                                               |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1569,7 +1569,7 @@ struct CanvasBufferToCompMask<Base, TRUE> : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1584,7 +1584,7 @@ struct CanvasBufferToCompMask<Base, TRUE> : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1601,7 +1601,7 @@ struct CanvasBufferToCompMask<Base, TRUE> : Base
 struct DispatchCanvasBufferToCompMask
 {
   static constexpr guint mask =
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
 
   template <class Base>
   using AlgorithmDirect   = CanvasBufferToCompMask<Base, TRUE>;
@@ -1610,12 +1610,12 @@ struct DispatchCanvasBufferToCompMask
 
   using DispatchDirect    = BasicDispatch<
     AlgorithmDirect,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
     decltype (dispatch_comp_mask)
   >;
   using DispatchIndirect  = BasicDispatch<
     AlgorithmIndirect,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
     decltype (dispatch_temp_comp_mask)
   >;
 
@@ -1635,8 +1635,8 @@ struct DispatchCanvasBufferToCompMask
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     if ((algorithms & mask) == mask)
@@ -1674,7 +1674,7 @@ struct PaintMaskToCompMask : Base
 
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1686,7 +1686,7 @@ struct PaintMaskToCompMask : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1704,7 +1704,7 @@ struct PaintMaskToCompMask : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1754,8 +1754,8 @@ struct PaintMaskToCompMask<Base, TRUE> : Base
 
   static constexpr guint filter =
     Base::filter                                            |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK |
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
 
   using Base::Base;
 
@@ -1764,7 +1764,7 @@ struct PaintMaskToCompMask<Base, TRUE> : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1782,7 +1782,7 @@ struct PaintMaskToCompMask<Base, TRUE> : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -1799,7 +1799,7 @@ struct PaintMaskToCompMask<Base, TRUE> : Base
 struct DispatchPaintMaskToCompMask
 {
   static constexpr guint mask =
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   template <class Base>
   using AlgorithmDirect   = PaintMaskToCompMask<Base, TRUE>;
@@ -1808,12 +1808,12 @@ struct DispatchPaintMaskToCompMask
 
   using DispatchDirect    = BasicDispatch<
     AlgorithmDirect,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
     decltype (dispatch_comp_mask)
   >;
   using DispatchIndirect  = BasicDispatch<
     AlgorithmIndirect,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
     decltype (dispatch_temp_comp_mask)
   >;
 
@@ -1834,8 +1834,8 @@ struct DispatchPaintMaskToCompMask
             class Algorithm>
   void
   operator () (Visitor                         visitor,
-               const GimpPaintCoreLoopsParams *params,
-               GimpPaintCoreLoopsAlgorithm     algorithms,
+               const LigmaPaintCoreLoopsParams *params,
+               LigmaPaintCoreLoopsAlgorithm     algorithms,
                identity<Algorithm>             algorithm) const
   {
     if ((algorithms & mask) == mask)
@@ -1845,7 +1845,7 @@ struct DispatchPaintMaskToCompMask
           {
             using NewAlgorithm = typename decltype (algorithm)::type;
 
-            if (params->paint_opacity == GIMP_OPACITY_OPAQUE)
+            if (params->paint_opacity == LIGMA_OPACITY_OPAQUE)
               Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
             else
               DispatchIndirect       () (visitor, params, algorithms, algorithm);
@@ -1872,27 +1872,27 @@ struct DoLayerBlend : Base
 {
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
   static constexpr gint max_n_iterators = Base::max_n_iterators + 2;
 
   const Babl             *iterator_format;
-  GimpOperationLayerMode *layer_mode = NULL;
+  LigmaOperationLayerMode *layer_mode = NULL;
 
   explicit
-  DoLayerBlend (const GimpPaintCoreLoopsParams *params) :
+  DoLayerBlend (const LigmaPaintCoreLoopsParams *params) :
     Base (params)
   {
-    layer_mode = GIMP_OPERATION_LAYER_MODE (gimp_layer_mode_get_operation (params->paint_mode));
+    layer_mode = LIGMA_OPERATION_LAYER_MODE (ligma_layer_mode_get_operation (params->paint_mode));
     layer_mode->opacity = params->image_opacity;
 
-    iterator_format = gimp_layer_mode_get_format (params->paint_mode,
+    iterator_format = ligma_layer_mode_get_format (params->paint_mode,
                                                   layer_mode->blend_space,
                                                   layer_mode->composite_space,
                                                   layer_mode->composite_mode,
-                                                  gimp_temp_buf_get_format (params->paint_buf));
+                                                  ligma_temp_buf_get_format (params->paint_buf));
 
-    g_return_if_fail (gimp_temp_buf_get_format (params->paint_buf) == iterator_format);
+    g_return_if_fail (ligma_temp_buf_get_format (params->paint_buf) == iterator_format);
   }
 
   template <class Derived>
@@ -1910,7 +1910,7 @@ struct DoLayerBlend : Base
 
   template <class Derived>
   void
-  init (const GimpPaintCoreLoopsParams *params,
+  init (const LigmaPaintCoreLoopsParams *params,
         State<Derived>                 *state,
         GeglBufferIterator             *iter,
         const GeglRectangle            *roi,
@@ -1937,7 +1937,7 @@ struct DoLayerBlend : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -1968,7 +1968,7 @@ struct DoLayerBlend : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -2021,7 +2021,7 @@ struct DoLayerBlend : Base
 
 static MandatoryAlgorithmDispatch<
   DoLayerBlend,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
   decltype (dispatch_paint_buf),
   decltype (dispatch_mask_buffer_iterator)
 >
@@ -2038,7 +2038,7 @@ struct MaskComponents : Base
 {
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
+    LIGMA_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
 
   static constexpr gint max_n_iterators = Base::max_n_iterators + 1;
 
@@ -2046,10 +2046,10 @@ struct MaskComponents : Base
   const Babl *comp_fish = NULL;
 
   explicit
-  MaskComponents (const GimpPaintCoreLoopsParams *params) :
+  MaskComponents (const LigmaPaintCoreLoopsParams *params) :
     Base (params)
   {
-    format = gimp_operation_mask_components_get_format (
+    format = ligma_operation_mask_components_get_format (
       gegl_buffer_get_format (params->dest_buffer));
 
     if (format != this->iterator_format)
@@ -2067,7 +2067,7 @@ struct MaskComponents : Base
 
   template <class Derived>
   void
-  init (const GimpPaintCoreLoopsParams *params,
+  init (const LigmaPaintCoreLoopsParams *params,
         State<Derived>                 *state,
         GeglBufferIterator             *iter,
         const GeglRectangle            *roi,
@@ -2086,7 +2086,7 @@ struct MaskComponents : Base
 
   template <class Derived>
   void
-  init_step (const GimpPaintCoreLoopsParams *params,
+  init_step (const LigmaPaintCoreLoopsParams *params,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
@@ -2107,7 +2107,7 @@ struct MaskComponents : Base
 
   template <class Derived>
   void
-  process_row (const GimpPaintCoreLoopsParams *params,
+  process_row (const LigmaPaintCoreLoopsParams *params,
                State<Derived>                 *state,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
@@ -2132,7 +2132,7 @@ struct MaskComponents : Base
         comp_pixel = state->comp_buffer_data;
       }
 
-    gimp_operation_mask_components_process (format,
+    ligma_operation_mask_components_process (format,
                                             state->dest_pixel, comp_pixel,
                                             state->dest_pixel,
                                             rect->width, params->affect);
@@ -2142,7 +2142,7 @@ struct MaskComponents : Base
 
   template <class Derived>
   void
-  finalize_step (const GimpPaintCoreLoopsParams *params,
+  finalize_step (const LigmaPaintCoreLoopsParams *params,
                  State<Derived>                 *state) const
   {
     if (comp_fish)
@@ -2154,26 +2154,26 @@ struct MaskComponents : Base
 
 static AlgorithmDispatch<
   MaskComponents,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS,
   decltype (dispatch_temp_comp_buffer)
 >
 dispatch_mask_components;
 
 
-/* gimp_paint_core_loops_process():
+/* ligma_paint_core_loops_process():
  *
  * Performs the set of algorithms requested in 'algorithms', specified as a
- * bitwise-OR of 'GimpPaintCoreLoopsAlgorithm' values, given the set of
+ * bitwise-OR of 'LigmaPaintCoreLoopsAlgorithm' values, given the set of
  * parameters 'params'.
  *
  * Note that the order in which the algorithms are performed is currently
  * fixed, and follows their order of appearance in the
- * 'GimpPaintCoreLoopsAlgorithm' enum.
+ * 'LigmaPaintCoreLoopsAlgorithm' enum.
  */
 
 void
-gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
-                               GimpPaintCoreLoopsAlgorithm     algorithms)
+ligma_paint_core_loops_process (const LigmaPaintCoreLoopsParams *params,
+                               LigmaPaintCoreLoopsAlgorithm     algorithms)
 {
   GeglRectangle roi;
 
@@ -2181,16 +2181,16 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
     {
       roi.x      = params->paint_buf_offset_x;
       roi.y      = params->paint_buf_offset_y;
-      roi.width  = gimp_temp_buf_get_width  (params->paint_buf);
-      roi.height = gimp_temp_buf_get_height (params->paint_buf);
+      roi.width  = ligma_temp_buf_get_width  (params->paint_buf);
+      roi.height = ligma_temp_buf_get_height (params->paint_buf);
     }
   else
     {
       roi.x      = params->paint_buf_offset_x;
       roi.y      = params->paint_buf_offset_y;
-      roi.width  = gimp_temp_buf_get_width (params->paint_mask) -
+      roi.width  = ligma_temp_buf_get_width (params->paint_mask) -
                    params->paint_mask_offset_x;
-      roi.height = gimp_temp_buf_get_height (params->paint_mask) -
+      roi.height = ligma_temp_buf_get_height (params->paint_mask) -
                    params->paint_mask_offset_y;
     }
 

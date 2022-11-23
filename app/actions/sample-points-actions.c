@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,28 +20,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsamplepointeditor.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasamplepointeditor.h"
 
 #include "sample-points-actions.h"
 #include "sample-points-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry sample_points_actions[] =
+static const LigmaActionEntry sample_points_actions[] =
 {
-  { "sample-points-popup", GIMP_ICON_SAMPLE_POINT,
+  { "sample-points-popup", LIGMA_ICON_SAMPLE_POINT,
     NC_("sample-points-action", "Sample Point Menu"), NULL, NULL, NULL,
-    GIMP_HELP_SAMPLE_POINT_DIALOG }
+    LIGMA_HELP_SAMPLE_POINT_DIALOG }
 };
 
-static const GimpToggleActionEntry sample_points_toggle_actions[] =
+static const LigmaToggleActionEntry sample_points_toggle_actions[] =
 {
   { "sample-points-sample-merged", NULL,
     NC_("sample-points-action", "_Sample Merged"), "",
@@ -49,33 +49,33 @@ static const GimpToggleActionEntry sample_points_toggle_actions[] =
         "Use the composite color of all visible layers"),
     sample_points_sample_merged_cmd_callback,
     TRUE,
-    GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED }
+    LIGMA_HELP_SAMPLE_POINT_SAMPLE_MERGED }
 };
 
 
 void
-sample_points_actions_setup (GimpActionGroup *group)
+sample_points_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "sample-points-action",
+  ligma_action_group_add_actions (group, "sample-points-action",
                                  sample_points_actions,
                                  G_N_ELEMENTS (sample_points_actions));
 
-  gimp_action_group_add_toggle_actions (group, "sample-points-action",
+  ligma_action_group_add_toggle_actions (group, "sample-points-action",
                                         sample_points_toggle_actions,
                                         G_N_ELEMENTS (sample_points_toggle_actions));
 }
 
 void
-sample_points_actions_update (GimpActionGroup *group,
+sample_points_actions_update (LigmaActionGroup *group,
                               gpointer         data)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (data);
 
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("sample-points-sample-merged",
-              gimp_sample_point_editor_get_sample_merged (editor));
+              ligma_sample_point_editor_get_sample_merged (editor));
 
 #undef SET_ACTIVE
 }

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_add_sample_point {
     $blurb = 'Add a sample point to an image.';
@@ -44,14 +44,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (position_x <= gimp_image_get_width  (image) &&
-      position_y <= gimp_image_get_height (image))
+  if (position_x <= ligma_image_get_width  (image) &&
+      position_y <= ligma_image_get_height (image))
     {
-      GimpSamplePoint *sp;
+      LigmaSamplePoint *sp;
 
-      sp = gimp_image_add_sample_point_at_pos (image, position_x, position_y,
+      sp = ligma_image_add_sample_point_at_pos (image, position_x, position_y,
                                                TRUE);
-      sample_point = gimp_aux_item_get_id (GIMP_AUX_ITEM (sp));
+      sample_point = ligma_aux_item_get_id (LIGMA_AUX_ITEM (sp));
     }
   else
     success = FALSE;
@@ -80,11 +80,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpSamplePoint *sp = gimp_pdb_image_get_sample_point (image, sample_point,
+  LigmaSamplePoint *sp = ligma_pdb_image_get_sample_point (image, sample_point,
                                                          error);
 
   if (sp)
-    gimp_image_remove_sample_point (image, sp, TRUE);
+    ligma_image_remove_sample_point (image, sp, TRUE);
   else
     success = FALSE;
 }
@@ -121,17 +121,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpSamplePoint *sp = gimp_image_get_next_sample_point (image, sample_point,
+  LigmaSamplePoint *sp = ligma_image_get_next_sample_point (image, sample_point,
                                                           &success);
 
   if (sp)
-    next_sample_point = gimp_aux_item_get_id (GIMP_AUX_ITEM (sp));
+    next_sample_point = ligma_aux_item_get_id (LIGMA_AUX_ITEM (sp));
 
   if (! success)
-    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+    g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                  _("Image '%s' (%d) does not contain sample point with ID %d"),
-                 gimp_image_get_display_name (image),
-                 gimp_image_get_id (image),
+                 ligma_image_get_display_name (image),
+                 ligma_image_get_id (image),
                  sample_point);
 }
 CODE
@@ -168,11 +168,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpSamplePoint *sp = gimp_pdb_image_get_sample_point (image, sample_point,
+  LigmaSamplePoint *sp = ligma_pdb_image_get_sample_point (image, sample_point,
                                                          error);
 
   if (sp)
-    gimp_sample_point_get_position (sp, &position_x, &position_y);
+    ligma_sample_point_get_position (sp, &position_x, &position_y);
   else
     success = FALSE;
 }
@@ -181,11 +181,11 @@ CODE
 }
 
 
-@headers = qw("core/gimpsamplepoint.h"
-              "core/gimpimage-sample-points.h"
-              "gimppdb-utils.h"
-              "gimppdberror.h"
-              "gimp-intl.h");
+@headers = qw("core/ligmasamplepoint.h"
+              "core/ligmaimage-sample-points.h"
+              "ligmapdb-utils.h"
+              "ligmapdberror.h"
+              "ligma-intl.h");
 
 @procs = qw(image_add_sample_point
             image_delete_sample_point
@@ -195,7 +195,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Sample Point procedures';
-$doc_title = 'gimpimagesamplepoints';
+$doc_title = 'ligmaimagesamplepoints';
 $doc_short_desc = 'Functions for manipulating an image\'s sample points.';
 $doc_long_desc = 'Functions for manipulating an image\'s sample points.';
 

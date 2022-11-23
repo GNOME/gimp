@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-contexts.h
+ * ligma-contexts.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTEXTS_H__
-#define __GIMP_CONTEXTS_H__
+#ifndef __LIGMA_CONTEXTS_H__
+#define __LIGMA_CONTEXTS_H__
 
 
-void       gimp_contexts_init  (Gimp    *gimp);
-void       gimp_contexts_exit  (Gimp    *gimp);
+void       ligma_contexts_init  (Ligma    *ligma);
+void       ligma_contexts_exit  (Ligma    *ligma);
 
-gboolean   gimp_contexts_load  (Gimp    *gimp,
+gboolean   ligma_contexts_load  (Ligma    *ligma,
                                 GError **error);
-gboolean   gimp_contexts_save  (Gimp    *gimp,
-                                GError **error);
-
-gboolean   gimp_contexts_clear (Gimp    *gimp,
+gboolean   ligma_contexts_save  (Ligma    *ligma,
                                 GError **error);
 
+gboolean   ligma_contexts_clear (Ligma    *ligma,
+                                GError **error);
 
-#endif  /*  __GIMP_CONTEXTS_H__  */
+
+#endif  /*  __LIGMA_CONTEXTS_H__  */

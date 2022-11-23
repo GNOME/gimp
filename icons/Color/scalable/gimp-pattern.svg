@@ -14,7 +14,7 @@
    id="svg2"
    viewBox="0 0 16 16"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-pattern.svg">
+   sodipodi:docname="ligma-pattern.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -53,7 +53,7 @@
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>

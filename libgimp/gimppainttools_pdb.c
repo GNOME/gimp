@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppainttools_pdb.c
+ * ligmapainttools_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppainttools
- * @title: gimppainttools
+ * SECTION: ligmapainttools
+ * @title: ligmapainttools
  * @short_description: Access to toolbox paint tools.
  *
  * Functions giving access to toolbox paint tools.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_airbrush:
+ * ligma_airbrush:
  * @drawable: The affected drawable.
  * @pressure: The pressure of the airbrush strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -54,37 +54,37 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_airbrush (GimpDrawable  *drawable,
+ligma_airbrush (LigmaDrawable  *drawable,
                gdouble        pressure,
                gint           num_strokes,
                const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-airbrush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-airbrush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_airbrush_default:
+ * ligma_airbrush_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -93,42 +93,42 @@ gimp_airbrush (GimpDrawable  *drawable,
  * is time-dependent.
  *
  * This tool simulates the use of an airbrush. It is similar to
- * gimp_airbrush() except that the pressure is derived from the
+ * ligma_airbrush() except that the pressure is derived from the
  * airbrush tools options box. It the option has not been set the
  * default for the option will be used.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_airbrush_default (GimpDrawable  *drawable,
+ligma_airbrush_default (LigmaDrawable  *drawable,
                        gint           num_strokes,
                        const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-airbrush-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-airbrush-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_clone:
+ * ligma_clone:
  * @drawable: The affected drawable.
  * @src_drawable: The source drawable.
  * @clone_type: The type of clone.
@@ -155,43 +155,43 @@ gimp_airbrush_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_clone (GimpDrawable  *drawable,
-            GimpDrawable  *src_drawable,
-            GimpCloneType  clone_type,
+ligma_clone (LigmaDrawable  *drawable,
+            LigmaDrawable  *src_drawable,
+            LigmaCloneType  clone_type,
             gdouble        src_x,
             gdouble        src_y,
             gint           num_strokes,
             const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_DRAWABLE, src_drawable,
-                                          GIMP_TYPE_CLONE_TYPE, clone_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_DRAWABLE, src_drawable,
+                                          LIGMA_TYPE_CLONE_TYPE, clone_type,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 6), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 6), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-clone",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-clone",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_clone_default:
+ * ligma_clone_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -200,7 +200,7 @@ gimp_clone (GimpDrawable  *drawable,
  *
  * This tool clones (copies) from the source drawable starting at the
  * specified source coordinates to the dest drawable. This function
- * performs exactly the same as the gimp_clone() function except that
+ * performs exactly the same as the ligma_clone() function except that
  * the tools arguments are obtained from the clones option dialog. It
  * this dialog has not been activated then the dialogs default values
  * will be used.
@@ -208,35 +208,35 @@ gimp_clone (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_clone_default (GimpDrawable  *drawable,
+ligma_clone_default (LigmaDrawable  *drawable,
                     gint           num_strokes,
                     const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-clone-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-clone-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_convolve:
+ * ligma_convolve:
  * @drawable: The affected drawable.
  * @pressure: The pressure.
  * @convolve_type: Convolve type.
@@ -253,39 +253,39 @@ gimp_clone_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_convolve (GimpDrawable     *drawable,
+ligma_convolve (LigmaDrawable     *drawable,
                gdouble           pressure,
-               GimpConvolveType  convolve_type,
+               LigmaConvolveType  convolve_type,
                gint              num_strokes,
                const gdouble    *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
-                                          GIMP_TYPE_CONVOLVE_TYPE, convolve_type,
+                                          LIGMA_TYPE_CONVOLVE_TYPE, convolve_type,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 4), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 4), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-convolve",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-convolve",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_convolve_default:
+ * ligma_convolve_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -294,42 +294,42 @@ gimp_convolve (GimpDrawable     *drawable,
  *
  * This tool convolves the specified drawable with either a sharpening
  * or blurring kernel. This function performs exactly the same as the
- * gimp_convolve() function except that the tools arguments are
+ * ligma_convolve() function except that the tools arguments are
  * obtained from the convolve option dialog. It this dialog has not
  * been activated then the dialogs default values will be used.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_convolve_default (GimpDrawable  *drawable,
+ligma_convolve_default (LigmaDrawable  *drawable,
                        gint           num_strokes,
                        const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-convolve-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-convolve-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_dodgeburn:
+ * ligma_dodgeburn:
  * @drawable: The affected drawable.
  * @exposure: The exposure of the strokes.
  * @dodgeburn_type: The type either dodge or burn.
@@ -344,47 +344,47 @@ gimp_convolve_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_dodgeburn (GimpDrawable      *drawable,
+ligma_dodgeburn (LigmaDrawable      *drawable,
                 gdouble            exposure,
-                GimpDodgeBurnType  dodgeburn_type,
-                GimpTransferMode   dodgeburn_mode,
+                LigmaDodgeBurnType  dodgeburn_type,
+                LigmaTransferMode   dodgeburn_mode,
                 gint               num_strokes,
                 const gdouble     *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, exposure,
-                                          GIMP_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
-                                          GIMP_TYPE_TRANSFER_MODE, dodgeburn_mode,
+                                          LIGMA_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
+                                          LIGMA_TYPE_TRANSFER_MODE, dodgeburn_mode,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 5), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-dodgeburn",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-dodgeburn",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_dodgeburn_default:
+ * ligma_dodgeburn_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Dodgeburn image with varying exposure. This is the same as the
- * gimp_dodgeburn() function except that the exposure, type and mode
+ * ligma_dodgeburn() function except that the exposure, type and mode
  * are taken from the tools option dialog. If the dialog has not been
  * activated then the defaults as used by the dialog will be used.
  *
@@ -393,35 +393,35 @@ gimp_dodgeburn (GimpDrawable      *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_dodgeburn_default (GimpDrawable  *drawable,
+ligma_dodgeburn_default (LigmaDrawable  *drawable,
                         gint           num_strokes,
                         const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-dodgeburn-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-dodgeburn-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_eraser:
+ * ligma_eraser:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -439,39 +439,39 @@ gimp_dodgeburn_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_eraser (GimpDrawable             *drawable,
+ligma_eraser (LigmaDrawable             *drawable,
              gint                      num_strokes,
              const gdouble            *strokes,
-             GimpBrushApplicationMode  hardness,
-             GimpPaintApplicationMode  method)
+             LigmaBrushApplicationMode  hardness,
+             LigmaPaintApplicationMode  method)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
-                                          GIMP_TYPE_BRUSH_APPLICATION_MODE, hardness,
-                                          GIMP_TYPE_PAINT_APPLICATION_MODE, method,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_BRUSH_APPLICATION_MODE, hardness,
+                                          LIGMA_TYPE_PAINT_APPLICATION_MODE, method,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-eraser",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-eraser",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_eraser_default:
+ * ligma_eraser_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -479,7 +479,7 @@ gimp_eraser (GimpDrawable             *drawable,
  * Erase using the current brush.
  *
  * This tool erases using the current brush mask. This function
- * performs exactly the same as the gimp_eraser() function except that
+ * performs exactly the same as the ligma_eraser() function except that
  * the tools arguments are obtained from the eraser option dialog. It
  * this dialog has not been activated then the dialogs default values
  * will be used.
@@ -487,35 +487,35 @@ gimp_eraser (GimpDrawable             *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_eraser_default (GimpDrawable  *drawable,
+ligma_eraser_default (LigmaDrawable  *drawable,
                      gint           num_strokes,
                      const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-eraser-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-eraser-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_heal:
+ * ligma_heal:
  * @drawable: The affected drawable.
  * @src_drawable: The source drawable.
  * @src_x: The x coordinate in the source image.
@@ -537,41 +537,41 @@ gimp_eraser_default (GimpDrawable  *drawable,
  * Since: 2.4
  **/
 gboolean
-gimp_heal (GimpDrawable  *drawable,
-           GimpDrawable  *src_drawable,
+ligma_heal (LigmaDrawable  *drawable,
+           LigmaDrawable  *src_drawable,
            gdouble        src_x,
            gdouble        src_y,
            gint           num_strokes,
            const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_DRAWABLE, src_drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_DRAWABLE, src_drawable,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 5), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-heal",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-heal",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_heal_default:
+ * ligma_heal_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -580,7 +580,7 @@ gimp_heal (GimpDrawable  *drawable,
  *
  * This tool heals from the source drawable starting at the specified
  * source coordinates to the dest drawable. This function performs
- * exactly the same as the gimp_heal() function except that the tools
+ * exactly the same as the ligma_heal() function except that the tools
  * arguments are obtained from the healing option dialog. It this
  * dialog has not been activated then the dialogs default values will
  * be used.
@@ -590,35 +590,35 @@ gimp_heal (GimpDrawable  *drawable,
  * Since: 2.4
  **/
 gboolean
-gimp_heal_default (GimpDrawable  *drawable,
+ligma_heal_default (LigmaDrawable  *drawable,
                    gint           num_strokes,
                    const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-heal-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-heal-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_paintbrush:
+ * ligma_paintbrush:
  * @drawable: The affected drawable.
  * @fade_out: Fade out parameter.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -642,41 +642,41 @@ gimp_heal_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_paintbrush (GimpDrawable             *drawable,
+ligma_paintbrush (LigmaDrawable             *drawable,
                  gdouble                   fade_out,
                  gint                      num_strokes,
                  const gdouble            *strokes,
-                 GimpPaintApplicationMode  method,
+                 LigmaPaintApplicationMode  method,
                  gdouble                   gradient_length)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, fade_out,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
-                                          GIMP_TYPE_PAINT_APPLICATION_MODE, method,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_PAINT_APPLICATION_MODE, method,
                                           G_TYPE_DOUBLE, gradient_length,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-paintbrush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-paintbrush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_paintbrush_default:
+ * ligma_paintbrush_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -701,35 +701,35 @@ gimp_paintbrush (GimpDrawable             *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_paintbrush_default (GimpDrawable  *drawable,
+ligma_paintbrush_default (LigmaDrawable  *drawable,
                          gint           num_strokes,
                          const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-paintbrush-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-paintbrush-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_pencil:
+ * ligma_pencil:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -746,35 +746,35 @@ gimp_paintbrush_default (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pencil (GimpDrawable  *drawable,
+ligma_pencil (LigmaDrawable  *drawable,
              gint           num_strokes,
              const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pencil",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-pencil",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_smudge:
+ * ligma_smudge:
  * @drawable: The affected drawable.
  * @pressure: The pressure of the smudge strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -789,37 +789,37 @@ gimp_pencil (GimpDrawable  *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_smudge (GimpDrawable  *drawable,
+ligma_smudge (LigmaDrawable  *drawable,
              gdouble        pressure,
              gint           num_strokes,
              const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-smudge",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-smudge",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_smudge_default:
+ * ligma_smudge_default:
  * @drawable: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -827,36 +827,36 @@ gimp_smudge (GimpDrawable  *drawable,
  * Smudge image with varying pressure.
  *
  * This tool simulates a smudge using the current brush. It behaves
- * exactly the same as gimp_smudge() except that the pressure value is
+ * exactly the same as ligma_smudge() except that the pressure value is
  * taken from the smudge tool options or the options default if the
  * tools option dialog has not been activated.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_smudge_default (GimpDrawable  *drawable,
+ligma_smudge_default (LigmaDrawable  *drawable,
                      gint           num_strokes,
                      const gdouble *strokes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 2), strokes, num_strokes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-smudge-default",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-smudge-default",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

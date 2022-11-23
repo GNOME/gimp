@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_HSL_H__
-#define __GIMP_HSL_H__
+#ifndef __LIGMA_HSL_H__
+#define __LIGMA_HSL_H__
 
 G_BEGIN_DECLS
 
@@ -29,21 +29,21 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_HSL
+ * LIGMA_TYPE_HSL
  */
 
-#define GIMP_TYPE_HSL       (gimp_hsl_get_type ())
+#define LIGMA_TYPE_HSL       (ligma_hsl_get_type ())
 
-GType   gimp_hsl_get_type   (void) G_GNUC_CONST;
+GType   ligma_hsl_get_type   (void) G_GNUC_CONST;
 
-void    gimp_hsl_set        (GimpHSL *hsl,
+void    ligma_hsl_set        (LigmaHSL *hsl,
                              gdouble  h,
                              gdouble  s,
                              gdouble  l);
-void    gimp_hsl_set_alpha  (GimpHSL *hsl,
+void    ligma_hsl_set_alpha  (LigmaHSL *hsl,
                              gdouble  a);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_HSL_H__ */
+#endif  /* __LIGMA_HSL_H__ */

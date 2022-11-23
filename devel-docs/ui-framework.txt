@@ -1,57 +1,57 @@
-  GIMP UI Framework
+  LIGMA UI Framework
   =================
 
-This document describes how the GIMP UI framework functions and is
+This document describes how the LIGMA UI framework functions and is
 implemented. Here, "UI framework" refers to the system that saves the
-UI layout between GIMP sessions, i.e. how docks, dockable dialogs etc
+UI layout between LIGMA sessions, i.e. how docks, dockable dialogs etc
 are setup.
 
 
   Key Classes
   -----------
 
-GimpDockable      - Represents a dockable dialog.
-GimpDockbook      - A GtkNotebook of GimpDockables
-GimpDock          - A columns of GimpDockbooks
-GimpToolbox       - Subclasses GimpDock, contains the toolbox.
+LigmaDockable      - Represents a dockable dialog.
+LigmaDockbook      - A GtkNotebook of LigmaDockables
+LigmaDock          - A columns of LigmaDockbooks
+LigmaToolbox       - Subclasses LigmaDock, contains the toolbox.
                     Dockables are added at the bottom
-GimpMenuDock      - Subclasses GimpDock, contains dockables, should
-                    probably be merged with GimpDock. The name
+LigmaMenuDock      - Subclasses LigmaDock, contains dockables, should
+                    probably be merged with LigmaDock. The name
                     contains "menu" from the time when it hosted the
                     Image Selection Menu that is now in the
-                    GimpDockWindow
-GimpDockColumns   - A set of GimpDocks arranged side by side.
-GimpDockWindow    - A toplevel window containing a GimpDockColumns.
-GimpImageWindow   - A toplevel window containing images and one
-                    GimpDockColumns to the left and to the right.
-GimpDialogFactory - A factory to create and position toplevel windows
-GimpSessionInfo   - Contains session info for one toplevel
-GimpUIConfigurer  - Configures the UI when switching between
+                    LigmaDockWindow
+LigmaDockColumns   - A set of LigmaDocks arranged side by side.
+LigmaDockWindow    - A toplevel window containing a LigmaDockColumns.
+LigmaImageWindow   - A toplevel window containing images and one
+                    LigmaDockColumns to the left and to the right.
+LigmaDialogFactory - A factory to create and position toplevel windows
+LigmaSessionInfo   - Contains session info for one toplevel
+LigmaUIConfigurer  - Configures the UI when switching between
                     single-window and multi-window mode
 
 
-  GimpDialogFactory
+  LigmaDialogFactory
   -----------------
 
-The GimpDialogFactory can be considered to solve two distinct
+The LigmaDialogFactory can be considered to solve two distinct
 problems:
 
 1. Create widgets from text, in particular from text in sessionrc
 2. Session manage toplevel windows so their position is remembered
-   across GIMP sessions
+   across LIGMA sessions
 
-One possible design adjustment would be to have GimpWidgetFactory that
-takes care of 1), and then have GimpDialogFactory inherit from
-GtkWidgetFactory and implementing 2). GimpWidgetFactory could possibly
+One possible design adjustment would be to have LigmaWidgetFactory that
+takes care of 1), and then have LigmaDialogFactory inherit from
+GtkWidgetFactory and implementing 2). LigmaWidgetFactory could possibly
 use GtkBuilder.
 
 
   sessionrc
   ---------
-When GIMP starts, the sessionrc file is parsed. This step puts
-GimpSessionInfo:s into GimpDialogFactories. Later when dialogs are
+When LIGMA starts, the sessionrc file is parsed. This step puts
+LigmaSessionInfo:s into LigmaDialogFactories. Later when dialogs are
 created, the dialog factory looks up existing session info entries. If
 one exists, it uses the session info to set e.g. the position of the
 created dialog. If it doesn't exist, it creates a new session info
-object for the dialog. When GIMP exists, the current session infos are
+object for the dialog. When LIGMA exists, the current session infos are
 then written back to sessionrc.

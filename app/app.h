@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __APP_H__
 
 
-#ifndef GIMP_APP_GLUE_COMPILATION
+#ifndef LIGMA_APP_GLUE_COMPILATION
 #error You must not #include "app.h" from a subdir
 #endif
 
@@ -32,8 +32,8 @@ void  app_exit      (gint                 status) G_GNUC_NORETURN;
 
 gint  app_run       (const gchar         *full_prog_name,
                      const gchar        **filenames,
-                     GFile               *alternate_system_gimprc,
-                     GFile               *alternate_gimprc,
+                     GFile               *alternate_system_ligmarc,
+                     GFile               *alternate_ligmarc,
                      const gchar         *session_name,
                      const gchar         *batch_interpreter,
                      const gchar        **batch_commands,
@@ -50,8 +50,8 @@ gint  app_run       (const gchar         *full_prog_name,
                      gboolean             use_debug_handler,
                      gboolean             show_playground,
                      gboolean             show_debug_menu,
-                     GimpStackTraceMode   stack_trace_mode,
-                     GimpPDBCompatMode    pdb_compat_mode,
+                     LigmaStackTraceMode   stack_trace_mode,
+                     LigmaPDBCompatMode    pdb_compat_mode,
                      const gchar         *backtrace_file);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,27 +22,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcurve.h"
-#include "core/gimpcurve-map.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacurve.h"
+#include "core/ligmacurve-map.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatoolinfo.h"
 
-#include "gimpdeviceinfo.h"
+#include "ligmadeviceinfo.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_DEVICE_INFO_DATA_KEY "gimp-device-info"
+#define LIGMA_DEVICE_INFO_DATA_KEY "ligma-device-info"
 
 /**
  * Some default names for axis. We will only use them when the device is
@@ -86,7 +86,7 @@ enum
   PROP_PRESSURE_CURVE
 };
 
-struct _GimpDeviceInfoPrivate
+struct _LigmaDeviceInfoPrivate
 {
   GdkDevice      *device;
   GdkDisplay     *display;
@@ -99,62 +99,62 @@ struct _GimpDeviceInfoPrivate
   gchar         **axes_names;
 
   gint            n_keys;
-  GimpDeviceKey  *keys;
+  LigmaDeviceKey  *keys;
 
   /*  curves  */
 
-  GimpCurve      *pressure_curve;
+  LigmaCurve      *pressure_curve;
 };
 
 
 /*  local function prototypes  */
 
-static void   gimp_device_info_constructed  (GObject        *object);
-static void   gimp_device_info_finalize     (GObject        *object);
-static void   gimp_device_info_set_property (GObject        *object,
+static void   ligma_device_info_constructed  (GObject        *object);
+static void   ligma_device_info_finalize     (GObject        *object);
+static void   ligma_device_info_set_property (GObject        *object,
                                              guint           property_id,
                                              const GValue   *value,
                                              GParamSpec     *pspec);
-static void   gimp_device_info_get_property (GObject        *object,
+static void   ligma_device_info_get_property (GObject        *object,
                                              guint           property_id,
                                              GValue         *value,
                                              GParamSpec     *pspec);
 
-static void   gimp_device_info_guess_icon   (GimpDeviceInfo *info);
+static void   ligma_device_info_guess_icon   (LigmaDeviceInfo *info);
 
-static void   gimp_device_info_tool_changed (GdkDevice      *device,
+static void   ligma_device_info_tool_changed (GdkDevice      *device,
                                              GdkDeviceTool  *tool,
-                                             GimpDeviceInfo *info);
-static void gimp_device_info_device_changed (GdkDevice      *device,
-                                             GimpDeviceInfo *info);
+                                             LigmaDeviceInfo *info);
+static void ligma_device_info_device_changed (GdkDevice      *device,
+                                             LigmaDeviceInfo *info);
 
-static void   gimp_device_info_updated      (GimpDeviceInfo *info);
+static void   ligma_device_info_updated      (LigmaDeviceInfo *info);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_TOOL_PRESET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDeviceInfo, ligma_device_info, LIGMA_TYPE_TOOL_PRESET)
 
-#define parent_class gimp_device_info_parent_class
+#define parent_class ligma_device_info_parent_class
 
 
 static void
-gimp_device_info_class_init (GimpDeviceInfoClass *klass)
+ligma_device_info_class_init (LigmaDeviceInfoClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
   GParamSpec        *param_spec;
 
-  object_class->constructed         = gimp_device_info_constructed;
-  object_class->finalize            = gimp_device_info_finalize;
-  object_class->set_property        = gimp_device_info_set_property;
-  object_class->get_property        = gimp_device_info_get_property;
+  object_class->constructed         = ligma_device_info_constructed;
+  object_class->finalize            = ligma_device_info_finalize;
+  object_class->set_property        = ligma_device_info_set_property;
+  object_class->get_property        = ligma_device_info_get_property;
 
-  viewable_class->default_icon_name = GIMP_ICON_INPUT_DEVICE;
+  viewable_class->default_icon_name = LIGMA_ICON_INPUT_DEVICE;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_object ("device",
                                                         NULL, NULL,
                                                         GDK_TYPE_DEVICE,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READWRITE         |
                                                         G_PARAM_CONSTRUCT_ONLY    |
                                                         G_PARAM_EXPLICIT_NOTIFY));
@@ -163,39 +163,39 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                    g_param_spec_object ("display",
                                                         NULL, NULL,
                                                         GDK_TYPE_DISPLAY,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READWRITE         |
                                                         G_PARAM_CONSTRUCT_ONLY    |
                                                         G_PARAM_EXPLICIT_NOTIFY));
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_MODE,
                          "mode",
                          _("Mode"),
                          NULL,
                          GDK_TYPE_INPUT_MODE,
                          GDK_MODE_DISABLED,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_SOURCE,
                                    g_param_spec_enum ("source",
                                                       NULL, NULL,
                                                       GDK_TYPE_INPUT_SOURCE,
                                                       GDK_SOURCE_MOUSE,
-                                                      GIMP_PARAM_STATIC_STRINGS |
+                                                      LIGMA_PARAM_STATIC_STRINGS |
                                                       G_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_VENDOR_ID,
                                    g_param_spec_string ("vendor-id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_PRODUCT_ID,
                                    g_param_spec_string ("product-id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_TOOL_TYPE,
@@ -203,86 +203,86 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                       NULL, NULL,
                                                       GDK_TYPE_DEVICE_TOOL_TYPE,
                                                       GDK_DEVICE_TOOL_TYPE_UNKNOWN,
-                                                      GIMP_PARAM_STATIC_STRINGS |
+                                                      LIGMA_PARAM_STATIC_STRINGS |
                                                       G_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_TOOL_SERIAL,
                                    g_param_spec_uint64 ("tool-serial",
                                                         NULL, NULL,
                                                         0, G_MAXUINT64, 0,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_TOOL_HARDWARE_ID,
                                    g_param_spec_uint64 ("tool-hardware-id",
                                                         NULL, NULL,
                                                         0, G_MAXUINT64, 0,
-                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        LIGMA_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
 
   param_spec = g_param_spec_enum ("axis",
                                   NULL, NULL,
                                   GDK_TYPE_AXIS_USE,
                                   GDK_AXIS_IGNORE,
-                                  GIMP_PARAM_READWRITE);
+                                  LIGMA_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_AXES,
-                                   gimp_param_spec_value_array ("axes",
+                                   ligma_param_spec_value_array ("axes",
                                                                 NULL, NULL,
                                                                 param_spec,
-                                                                GIMP_PARAM_STATIC_STRINGS |
-                                                                GIMP_CONFIG_PARAM_FLAGS));
+                                                                LIGMA_PARAM_STATIC_STRINGS |
+                                                                LIGMA_CONFIG_PARAM_FLAGS));
 
   param_spec = g_param_spec_string ("key",
                                     NULL, NULL,
                                     NULL,
-                                    GIMP_PARAM_READWRITE);
+                                    LIGMA_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_KEYS,
-                                   gimp_param_spec_value_array ("keys",
+                                   ligma_param_spec_value_array ("keys",
                                                                 NULL, NULL,
                                                                 param_spec,
-                                                                GIMP_PARAM_STATIC_STRINGS |
-                                                                GIMP_CONFIG_PARAM_FLAGS));
+                                                                LIGMA_PARAM_STATIC_STRINGS |
+                                                                LIGMA_CONFIG_PARAM_FLAGS));
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
                            "pressure-curve",
                            _("Pressure curve"),
                            NULL,
-                           GIMP_TYPE_CURVE,
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_CURVE,
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
-gimp_device_info_init (GimpDeviceInfo *info)
+ligma_device_info_init (LigmaDeviceInfo *info)
 {
-  gimp_data_make_internal (GIMP_DATA (info), NULL);
+  ligma_data_make_internal (LIGMA_DATA (info), NULL);
 
-  info->priv                 = gimp_device_info_get_instance_private (info);
+  info->priv                 = ligma_device_info_get_instance_private (info);
   info->priv->mode           = GDK_MODE_DISABLED;
-  info->priv->pressure_curve = GIMP_CURVE (gimp_curve_new ("pressure curve"));
+  info->priv->pressure_curve = LIGMA_CURVE (ligma_curve_new ("pressure curve"));
   info->priv->axes_names     = NULL;
 
   g_signal_connect (info, "notify::name",
-                    G_CALLBACK (gimp_device_info_guess_icon),
+                    G_CALLBACK (ligma_device_info_guess_icon),
                     NULL);
 }
 
 static void
-gimp_device_info_constructed (GObject *object)
+ligma_device_info_constructed (GObject *object)
 {
-  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
+  LigmaDeviceInfo *info = LIGMA_DEVICE_INFO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_device_info_updated (info);
+  ligma_device_info_updated (info);
 
-  gimp_assert ((info->priv->device == NULL         && info->priv->display == NULL) ||
+  ligma_assert ((info->priv->device == NULL         && info->priv->display == NULL) ||
                (GDK_IS_DEVICE (info->priv->device) && GDK_IS_DISPLAY (info->priv->display)));
 }
 
 static void
-gimp_device_info_finalize (GObject *object)
+ligma_device_info_finalize (GObject *object)
 {
-  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
+  LigmaDeviceInfo *info = LIGMA_DEVICE_INFO (object);
 
   g_clear_pointer (&info->priv->axes_uses, g_free);
   g_clear_pointer (&info->priv->keys, g_free);
@@ -294,15 +294,15 @@ gimp_device_info_finalize (GObject *object)
 }
 
 static void
-gimp_device_info_set_property (GObject      *object,
+ligma_device_info_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDeviceInfo *info       = GIMP_DEVICE_INFO (object);
+  LigmaDeviceInfo *info       = LIGMA_DEVICE_INFO (object);
   GdkDevice      *device     = info->priv->device;
-  GimpCurve      *src_curve  = NULL;
-  GimpCurve      *dest_curve = NULL;
+  LigmaCurve      *src_curve  = NULL;
+  LigmaCurve      *dest_curve = NULL;
 
   switch (property_id)
     {
@@ -313,10 +313,10 @@ gimp_device_info_set_property (GObject      *object,
       if (info->priv->device)
         {
           g_signal_connect_object (info->priv->device, "tool-changed",
-                                   G_CALLBACK (gimp_device_info_tool_changed),
+                                   G_CALLBACK (ligma_device_info_tool_changed),
                                    G_OBJECT (info), 0);
           g_signal_connect_object (info->priv->device, "changed",
-                                   G_CALLBACK (gimp_device_info_device_changed),
+                                   G_CALLBACK (ligma_device_info_device_changed),
                                    G_OBJECT (info), 0);
         }
       break;
@@ -326,18 +326,18 @@ gimp_device_info_set_property (GObject      *object,
       break;
 
     case PROP_MODE:
-      gimp_device_info_set_mode (info, g_value_get_enum (value));
+      ligma_device_info_set_mode (info, g_value_get_enum (value));
       break;
 
     case PROP_AXES:
       {
         /* Axes information as stored in devicerc. */
-        GimpValueArray *array = g_value_get_boxed (value);
+        LigmaValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
             gint i;
-            gint n_device_values = gimp_value_array_length (array);
+            gint n_device_values = ligma_value_array_length (array);
 
             if (device)
               {
@@ -361,9 +361,9 @@ gimp_device_info_set_property (GObject      *object,
               {
                 GdkAxisUse axis_use;
 
-                axis_use = g_value_get_enum (gimp_value_array_index (array, i));
+                axis_use = g_value_get_enum (ligma_value_array_index (array, i));
 
-                gimp_device_info_set_axis_use (info, i, axis_use);
+                ligma_device_info_set_axis_use (info, i, axis_use);
               }
           }
       }
@@ -371,20 +371,20 @@ gimp_device_info_set_property (GObject      *object,
 
     case PROP_KEYS:
       {
-        GimpValueArray *array = g_value_get_boxed (value);
+        LigmaValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
             gint i;
-            gint n_device_values = gimp_value_array_length (array);
+            gint n_device_values = ligma_value_array_length (array);
 
             if (device)
               n_device_values = MIN (n_device_values,
                                      gdk_device_get_n_keys (device));
 
             info->priv->n_keys = n_device_values;
-            info->priv->keys   = g_renew (GimpDeviceKey, info->priv->keys, info->priv->n_keys);
-            memset (info->priv->keys, 0, info->priv->n_keys * sizeof (GimpDeviceKey));
+            info->priv->keys   = g_renew (LigmaDeviceKey, info->priv->keys, info->priv->n_keys);
+            memset (info->priv->keys, 0, info->priv->n_keys * sizeof (LigmaDeviceKey));
 
             for (i = 0; i < n_device_values; i++)
               {
@@ -392,11 +392,11 @@ gimp_device_info_set_property (GObject      *object,
                 guint            keyval;
                 GdkModifierType  modifiers;
 
-                accel = g_value_get_string (gimp_value_array_index (array, i));
+                accel = g_value_get_string (ligma_value_array_index (array, i));
 
                 gtk_accelerator_parse (accel, &keyval, &modifiers);
 
-                gimp_device_info_set_key (info, i, keyval, modifiers);
+                ligma_device_info_set_key (info, i, keyval, modifiers);
               }
           }
       }
@@ -414,19 +414,19 @@ gimp_device_info_set_property (GObject      *object,
 
   if (src_curve && dest_curve)
     {
-      gimp_config_copy (GIMP_CONFIG (src_curve),
-                        GIMP_CONFIG (dest_curve),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
+      ligma_config_copy (LIGMA_CONFIG (src_curve),
+                        LIGMA_CONFIG (dest_curve),
+                        LIGMA_CONFIG_PARAM_SERIALIZE);
     }
 }
 
 static void
-gimp_device_info_get_property (GObject    *object,
+ligma_device_info_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
+  LigmaDeviceInfo *info = LIGMA_DEVICE_INFO (object);
 
   switch (property_id)
     {
@@ -439,51 +439,51 @@ gimp_device_info_get_property (GObject    *object,
       break;
 
     case PROP_MODE:
-      g_value_set_enum (value, gimp_device_info_get_mode (info));
+      g_value_set_enum (value, ligma_device_info_get_mode (info));
       break;
 
     case PROP_SOURCE:
-      g_value_set_enum (value, gimp_device_info_get_source (info));
+      g_value_set_enum (value, ligma_device_info_get_source (info));
       break;
 
     case PROP_VENDOR_ID:
-      g_value_set_string (value, gimp_device_info_get_vendor_id (info));
+      g_value_set_string (value, ligma_device_info_get_vendor_id (info));
       break;
 
      case PROP_PRODUCT_ID:
-      g_value_set_string (value, gimp_device_info_get_product_id (info));
+      g_value_set_string (value, ligma_device_info_get_product_id (info));
       break;
 
     case PROP_TOOL_TYPE:
-      g_value_set_enum (value, gimp_device_info_get_tool_type (info));
+      g_value_set_enum (value, ligma_device_info_get_tool_type (info));
       break;
 
     case PROP_TOOL_SERIAL:
-      g_value_set_uint64 (value, gimp_device_info_get_tool_serial (info));
+      g_value_set_uint64 (value, ligma_device_info_get_tool_serial (info));
       break;
 
     case PROP_TOOL_HARDWARE_ID:
-      g_value_set_uint64 (value, gimp_device_info_get_tool_hardware_id (info));
+      g_value_set_uint64 (value, ligma_device_info_get_tool_hardware_id (info));
       break;
 
     case PROP_AXES:
       {
-        GimpValueArray *array;
+        LigmaValueArray *array;
         GValue          enum_value = G_VALUE_INIT;
         gint            n_axes;
         gint            i;
 
-        array = gimp_value_array_new (6);
+        array = ligma_value_array_new (6);
         g_value_init (&enum_value, GDK_TYPE_AXIS_USE);
 
-        n_axes = gimp_device_info_get_n_axes (info);
+        n_axes = ligma_device_info_get_n_axes (info);
 
         for (i = 0; i < n_axes; i++)
           {
             g_value_set_enum (&enum_value,
-                              gimp_device_info_get_axis_use (info, i));
+                              ligma_device_info_get_axis_use (info, i));
 
-            gimp_value_array_append (array, &enum_value);
+            ligma_value_array_append (array, &enum_value);
           }
 
         g_value_unset (&enum_value);
@@ -494,22 +494,22 @@ gimp_device_info_get_property (GObject    *object,
 
     case PROP_KEYS:
       {
-        GimpValueArray *array;
+        LigmaValueArray *array;
         GValue          string_value = G_VALUE_INIT;
         gint            n_keys;
         gint            i;
 
-        array = gimp_value_array_new (32);
+        array = ligma_value_array_new (32);
         g_value_init (&string_value, G_TYPE_STRING);
 
-        n_keys = gimp_device_info_get_n_keys (info);
+        n_keys = ligma_device_info_get_n_keys (info);
 
         for (i = 0; i < n_keys; i++)
           {
             guint           keyval;
             GdkModifierType modifiers;
 
-            gimp_device_info_get_key (info, i, &keyval, &modifiers);
+            ligma_device_info_get_key (info, i, &keyval, &modifiers);
 
             if (keyval)
               {
@@ -528,7 +528,7 @@ gimp_device_info_get_property (GObject    *object,
                 g_value_set_string (&string_value, "");
               }
 
-            gimp_value_array_append (array, &string_value);
+            ligma_value_array_append (array, &string_value);
           }
 
         g_value_unset (&string_value);
@@ -548,29 +548,29 @@ gimp_device_info_get_property (GObject    *object,
 }
 
 static void
-gimp_device_info_guess_icon (GimpDeviceInfo *info)
+ligma_device_info_guess_icon (LigmaDeviceInfo *info)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (info);
+  LigmaViewable *viewable = LIGMA_VIEWABLE (info);
 
-  if (gimp_object_get_name (viewable) &&
-      ! strcmp (gimp_viewable_get_icon_name (viewable),
-                GIMP_VIEWABLE_GET_CLASS (viewable)->default_icon_name))
+  if (ligma_object_get_name (viewable) &&
+      ! strcmp (ligma_viewable_get_icon_name (viewable),
+                LIGMA_VIEWABLE_GET_CLASS (viewable)->default_icon_name))
     {
       const gchar *icon_name = NULL;
-      gchar       *down      = g_ascii_strdown (gimp_object_get_name (viewable),
+      gchar       *down      = g_ascii_strdown (ligma_object_get_name (viewable),
                                                 -1);
 
       if (strstr (down, "eraser"))
         {
-          icon_name = GIMP_ICON_TOOL_ERASER;
+          icon_name = LIGMA_ICON_TOOL_ERASER;
         }
       else if (strstr (down, "pen"))
         {
-          icon_name = GIMP_ICON_TOOL_PAINTBRUSH;
+          icon_name = LIGMA_ICON_TOOL_PAINTBRUSH;
         }
       else if (strstr (down, "airbrush"))
         {
-          icon_name = GIMP_ICON_TOOL_AIRBRUSH;
+          icon_name = LIGMA_ICON_TOOL_AIRBRUSH;
         }
       else if (strstr (down, "cursor")   ||
                strstr (down, "mouse")    ||
@@ -578,20 +578,20 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
                strstr (down, "touchpad") ||
                strstr (down, "trackpoint"))
         {
-          icon_name = GIMP_ICON_CURSOR;
+          icon_name = LIGMA_ICON_CURSOR;
         }
 
       g_free (down);
 
       if (icon_name)
-        gimp_viewable_set_icon_name (viewable, icon_name);
+        ligma_viewable_set_icon_name (viewable, icon_name);
     }
 }
 
 static void
-gimp_device_info_tool_changed (GdkDevice      *device,
+ligma_device_info_tool_changed (GdkDevice      *device,
                                GdkDeviceTool  *tool,
-                               GimpDeviceInfo *info)
+                               LigmaDeviceInfo *info)
 {
   g_object_freeze_notify (G_OBJECT (info));
 
@@ -624,7 +624,7 @@ gimp_device_info_tool_changed (GdkDevice      *device,
           GdkAxisUse axis_use;
 
           axis_use = gdk_device_get_axis_use (info->priv->device, i);
-          gimp_device_info_set_axis_use (info, i, axis_use);
+          ligma_device_info_set_axis_use (info, i, axis_use);
         }
     }
 
@@ -636,19 +636,19 @@ gimp_device_info_tool_changed (GdkDevice      *device,
 }
 
 static void
-gimp_device_info_device_changed (GdkDevice      *device,
-                                 GimpDeviceInfo *info)
+ligma_device_info_device_changed (GdkDevice      *device,
+                                 LigmaDeviceInfo *info)
 {
   /* Number of axes or keys can change on virtual devices when the
    * physical device changes.
    */
-  gimp_device_info_updated (info);
+  ligma_device_info_updated (info);
 }
 
 static void
-gimp_device_info_updated (GimpDeviceInfo *info)
+ligma_device_info_updated (LigmaDeviceInfo *info)
 {
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
   g_return_if_fail ((info->priv->device == NULL && info->priv->display == NULL) ||
                     (GDK_IS_DEVICE (info->priv->device) && GDK_IS_DISPLAY (info->priv->display)));
 
@@ -662,13 +662,13 @@ gimp_device_info_updated (GimpDeviceInfo *info)
       gint        old_n_axes;
       gint        i;
 
-      GimpDeviceKey  *old_keys;
+      LigmaDeviceKey  *old_keys;
       gint            old_n_keys;
 
-      g_object_set_data (G_OBJECT (info->priv->device), GIMP_DEVICE_INFO_DATA_KEY, info);
-      gimp_object_set_name (GIMP_OBJECT (info),
+      g_object_set_data (G_OBJECT (info->priv->device), LIGMA_DEVICE_INFO_DATA_KEY, info);
+      ligma_object_set_name (LIGMA_OBJECT (info),
                             gdk_device_get_name (info->priv->device));
-      gimp_device_info_set_mode (info, gdk_device_get_mode (info->priv->device));
+      ligma_device_info_set_mode (info, gdk_device_get_mode (info->priv->device));
 
       old_n_axes = info->priv->n_axes;
       old_uses   = info->priv->axes_uses;
@@ -693,7 +693,7 @@ gimp_device_info_updated (GimpDeviceInfo *info)
           else
             use = old_uses[i];
 
-          gimp_device_info_set_axis_use (info, i, use);
+          ligma_device_info_set_axis_use (info, i, use);
 
           if (iter->data != GDK_NONE)
             info->priv->axes_names[i] = gdk_atom_name (iter->data);
@@ -706,11 +706,11 @@ gimp_device_info_updated (GimpDeviceInfo *info)
       old_n_keys   = info->priv->n_keys;
       old_keys     = info->priv->keys;
       info->priv->n_keys = gdk_device_get_n_keys (info->priv->device);
-      info->priv->keys   = g_new0 (GimpDeviceKey, info->priv->n_keys);
+      info->priv->keys   = g_new0 (LigmaDeviceKey, info->priv->n_keys);
 
       for (i = 0; i < info->priv->n_keys; i++)
         {
-          GimpDeviceKey key;
+          LigmaDeviceKey key;
 
           if (gdk_device_get_device_type (info->priv->device) == GDK_DEVICE_TYPE_MASTER ||
               i >= old_n_keys)
@@ -718,13 +718,13 @@ gimp_device_info_updated (GimpDeviceInfo *info)
           else
             key = old_keys[i];
 
-          gimp_device_info_set_key (info, i, key.keyval, key.modifiers);
+          ligma_device_info_set_key (info, i, key.keyval, key.modifiers);
         }
       g_clear_pointer (&old_keys, g_free);
     }
 
   /*  sort order depends on device presence  */
-  gimp_object_name_changed (GIMP_OBJECT (info));
+  ligma_object_name_changed (LIGMA_OBJECT (info));
 
   g_object_notify (G_OBJECT (info), "source");
   g_object_notify (G_OBJECT (info), "vendor-id");
@@ -740,25 +740,25 @@ gimp_device_info_updated (GimpDeviceInfo *info)
 
 /*  public functions  */
 
-GimpDeviceInfo *
-gimp_device_info_new (Gimp       *gimp,
+LigmaDeviceInfo *
+ligma_device_info_new (Ligma       *ligma,
                       GdkDevice  *device,
                       GdkDisplay *display)
 {
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
+  LigmaContext  *context;
+  LigmaToolInfo *tool_info;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (GDK_IS_DEVICE (device), NULL);
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
 
-  context   = gimp_get_user_context (gimp);
-  tool_info = gimp_context_get_tool (context);
+  context   = ligma_get_user_context (ligma);
+  tool_info = ligma_context_get_tool (context);
 
   g_return_val_if_fail (tool_info != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_DEVICE_INFO,
-                       "gimp",         gimp,
+  return g_object_new (LIGMA_TYPE_DEVICE_INFO,
+                       "ligma",         ligma,
                        "device",       device,
                        "display",      display,
                        "mode",         gdk_device_get_mode (device),
@@ -767,10 +767,10 @@ gimp_device_info_new (Gimp       *gimp,
 }
 
 GdkDevice *
-gimp_device_info_get_device (GimpDeviceInfo  *info,
+ligma_device_info_get_device (LigmaDeviceInfo  *info,
                              GdkDisplay     **display)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), NULL);
 
   if (display)
     *display = info->priv->display;
@@ -779,23 +779,23 @@ gimp_device_info_get_device (GimpDeviceInfo  *info,
 }
 
 gboolean
-gimp_device_info_set_device (GimpDeviceInfo *info,
+ligma_device_info_set_device (LigmaDeviceInfo *info,
                              GdkDevice      *device,
                              GdkDisplay     *display)
 {
   GdkInputMode mode;
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), FALSE);
   g_return_val_if_fail ((device == NULL && display == NULL) ||
                         (GDK_IS_DEVICE (device) && GDK_IS_DISPLAY (display)),
                         FALSE);
   g_return_val_if_fail (device == NULL ||
                         strcmp (gdk_device_get_name (device),
-                                gimp_object_get_name (info)) == 0, FALSE);
+                                ligma_object_get_name (info)) == 0, FALSE);
 
   if (device && info->priv->device)
     {
-      g_printerr ("%s: trying to set GdkDevice '%s' on GimpDeviceInfo "
+      g_printerr ("%s: trying to set GdkDevice '%s' on LigmaDeviceInfo "
                   "which already has a device\n",
                   G_STRFUNC, gdk_device_get_name (device));
 
@@ -811,7 +811,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
        *  or udev or libinput or whatever side and the same device is
        *  present multiple times. Therefore there doesn't seem to be an
        *  absolute single "solution" to this problem (well there is, but
-       *  probably not in GIMP, where we can only react). This is more
+       *  probably not in LIGMA, where we can only react). This is more
        *  of an experimenting-in-real-life kind of bug.
        *  Also we had no clear report on macOS or BSD (AFAIK) of broken
        *  tablets with any of the version of the code. So let's keep
@@ -822,9 +822,9 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
     }
   else if (! device && ! info->priv->device)
     {
-      g_printerr ("%s: trying to unset GdkDevice of GimpDeviceInfo '%s'"
+      g_printerr ("%s: trying to unset GdkDevice of LigmaDeviceInfo '%s'"
                   "which has no device\n",
-                  G_STRFUNC, gimp_object_get_name (info));
+                  G_STRFUNC, ligma_object_get_name (info));
 
       /*  bail out, unsetting twice makes no sense  */
       return FALSE;
@@ -845,47 +845,47 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
   if (info->priv->device)
     {
       g_object_set_data (G_OBJECT (info->priv->device),
-                         GIMP_DEVICE_INFO_DATA_KEY, NULL);
+                         LIGMA_DEVICE_INFO_DATA_KEY, NULL);
       g_signal_handlers_disconnect_by_func (info->priv->device,
-                                            gimp_device_info_tool_changed,
+                                            ligma_device_info_tool_changed,
                                             info);
       g_signal_handlers_disconnect_by_func (info->priv->device,
-                                            gimp_device_info_device_changed,
+                                            ligma_device_info_device_changed,
                                             info);
     }
-  mode = gimp_device_info_get_mode (info);
+  mode = ligma_device_info_get_mode (info);
 
   info->priv->device  = device;
   info->priv->display = display;
   if (info->priv->device)
     {
       g_signal_connect_object (info->priv->device, "tool-changed",
-                               G_CALLBACK (gimp_device_info_tool_changed),
+                               G_CALLBACK (ligma_device_info_tool_changed),
                                G_OBJECT (info), 0);
       g_signal_connect_object (info->priv->device, "changed",
-                               G_CALLBACK (gimp_device_info_device_changed),
+                               G_CALLBACK (ligma_device_info_device_changed),
                                G_OBJECT (info), 0);
     }
 
-  gimp_device_info_updated (info);
+  ligma_device_info_updated (info);
   /* The info existed from a previous run. Restore its mode. */
-  gimp_device_info_set_mode (info, mode);
+  ligma_device_info_set_mode (info, mode);
 
   return TRUE;
 }
 
 void
-gimp_device_info_set_default_tool (GimpDeviceInfo *info)
+ligma_device_info_set_default_tool (LigmaDeviceInfo *info)
 {
-  GimpContainer *tools;
-  GimpToolInfo  *tool_info = NULL;
+  LigmaContainer *tools;
+  LigmaToolInfo  *tool_info = NULL;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
 
-  tools     = GIMP_TOOL_PRESET (info)->gimp->tool_info_list;
+  tools     = LIGMA_TOOL_PRESET (info)->ligma->tool_info_list;
   tool_info =
-    GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                      "gimp-paintbrush-tool"));
+    LIGMA_TOOL_INFO (ligma_container_get_child_by_name (tools,
+                                                      "ligma-paintbrush-tool"));
 
   if (info->priv->device)
     {
@@ -893,18 +893,18 @@ gimp_device_info_set_default_tool (GimpDeviceInfo *info)
         {
         case GDK_SOURCE_ERASER:
           tool_info =
-            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                              "gimp-eraser-tool"));
+            LIGMA_TOOL_INFO (ligma_container_get_child_by_name (tools,
+                                                              "ligma-eraser-tool"));
           break;
         case GDK_SOURCE_PEN:
           tool_info =
-            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                              "gimp-paintbrush-tool"));
+            LIGMA_TOOL_INFO (ligma_container_get_child_by_name (tools,
+                                                              "ligma-paintbrush-tool"));
           break;
         case GDK_SOURCE_TOUCHSCREEN:
           tool_info =
-            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
-                                                              "gimp-smudge-tool"));
+            LIGMA_TOOL_INFO (ligma_container_get_child_by_name (tools,
+                                                              "ligma-smudge-tool"));
           break;
         default:
           break;
@@ -920,84 +920,84 @@ gimp_device_info_set_default_tool (GimpDeviceInfo *info)
 }
 
 void
-gimp_device_info_save_tool (GimpDeviceInfo *info)
+ligma_device_info_save_tool (LigmaDeviceInfo *info)
 {
-  GimpToolPreset      *preset = GIMP_TOOL_PRESET (info);
-  GimpContext         *user_context;
-  GimpToolInfo        *tool_info;
-  GimpContextPropMask  serialize_props;
+  LigmaToolPreset      *preset = LIGMA_TOOL_PRESET (info);
+  LigmaContext         *user_context;
+  LigmaToolInfo        *tool_info;
+  LigmaContextPropMask  serialize_props;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
 
-  user_context = gimp_get_user_context (GIMP_TOOL_PRESET (info)->gimp);
+  user_context = ligma_get_user_context (LIGMA_TOOL_PRESET (info)->ligma);
 
-  tool_info = gimp_context_get_tool (user_context);
+  tool_info = ligma_context_get_tool (user_context);
 
   g_object_set (info,
                 "tool-options", tool_info->tool_options,
                 NULL);
 
   serialize_props =
-    gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+    ligma_context_get_serialize_properties (LIGMA_CONTEXT (preset->tool_options));
 
   g_object_set (preset,
                 "use-fg-bg",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_FOREGROUND) ||
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_BACKGROUND),
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_FOREGROUND) ||
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_BACKGROUND),
 
                 "use-brush",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_BRUSH) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_BRUSH) != 0,
 
                 "use-dynamics",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_DYNAMICS) != 0,
 
                 "use-mypaint-brush",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_MYBRUSH) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_MYBRUSH) != 0,
 
                 "use-gradient",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_GRADIENT) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_GRADIENT) != 0,
 
                 "use-pattern",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_PATTERN) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_PATTERN) != 0,
 
                 "use-palette",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_PALETTE) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_PALETTE) != 0,
 
                 "use-font",
-                (serialize_props & GIMP_CONTEXT_PROP_MASK_FONT) != 0,
+                (serialize_props & LIGMA_CONTEXT_PROP_MASK_FONT) != 0,
 
                 NULL);
 }
 
 void
-gimp_device_info_restore_tool (GimpDeviceInfo *info)
+ligma_device_info_restore_tool (LigmaDeviceInfo *info)
 {
-  GimpToolPreset *preset;
-  GimpContext    *user_context;
+  LigmaToolPreset *preset;
+  LigmaContext    *user_context;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
 
-  preset = GIMP_TOOL_PRESET (info);
+  preset = LIGMA_TOOL_PRESET (info);
 
-  user_context = gimp_get_user_context (GIMP_TOOL_PRESET (info)->gimp);
+  user_context = ligma_get_user_context (LIGMA_TOOL_PRESET (info)->ligma);
 
   if (preset->tool_options)
     {
-      if (gimp_context_get_tool_preset (user_context) != preset)
+      if (ligma_context_get_tool_preset (user_context) != preset)
         {
-          gimp_context_set_tool_preset (user_context, preset);
+          ligma_context_set_tool_preset (user_context, preset);
         }
       else
         {
-          gimp_context_tool_preset_changed (user_context);
+          ligma_context_tool_preset_changed (user_context);
         }
     }
 }
 
 GdkInputMode
-gimp_device_info_get_mode (GimpDeviceInfo *info)
+ligma_device_info_get_mode (LigmaDeviceInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), GDK_MODE_DISABLED);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), GDK_MODE_DISABLED);
 
   if (info->priv->device)
     return gdk_device_get_mode (info->priv->device);
@@ -1006,12 +1006,12 @@ gimp_device_info_get_mode (GimpDeviceInfo *info)
 }
 
 void
-gimp_device_info_set_mode (GimpDeviceInfo *info,
+ligma_device_info_set_mode (LigmaDeviceInfo *info,
                            GdkInputMode    mode)
 {
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
 
-  if (mode != gimp_device_info_get_mode (info))
+  if (mode != ligma_device_info_get_mode (info))
     {
       if (info->priv->device)
         gdk_device_set_mode (info->priv->device, mode);
@@ -1023,9 +1023,9 @@ gimp_device_info_set_mode (GimpDeviceInfo *info,
 }
 
 gboolean
-gimp_device_info_has_cursor (GimpDeviceInfo *info)
+ligma_device_info_has_cursor (LigmaDeviceInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), FALSE);
 
   if (info->priv->device)
     {
@@ -1046,9 +1046,9 @@ gimp_device_info_has_cursor (GimpDeviceInfo *info)
 }
 
 GdkInputSource
-gimp_device_info_get_source (GimpDeviceInfo *info)
+ligma_device_info_get_source (LigmaDeviceInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), GDK_SOURCE_MOUSE);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), GDK_SOURCE_MOUSE);
 
   if (info->priv->device)
     return gdk_device_get_source (info->priv->device);
@@ -1057,11 +1057,11 @@ gimp_device_info_get_source (GimpDeviceInfo *info)
 }
 
 const gchar *
-gimp_device_info_get_vendor_id (GimpDeviceInfo  *info)
+ligma_device_info_get_vendor_id (LigmaDeviceInfo  *info)
 {
   const gchar *id = _("(Device not present)");
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), NULL);
 
   if (info->priv->device)
     {
@@ -1082,11 +1082,11 @@ gimp_device_info_get_vendor_id (GimpDeviceInfo  *info)
 }
 
 const gchar *
-gimp_device_info_get_product_id (GimpDeviceInfo  *info)
+ligma_device_info_get_product_id (LigmaDeviceInfo  *info)
 {
   const gchar *id = _("(Device not present)");
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), NULL);
 
   if (info->priv->device)
     {
@@ -1107,11 +1107,11 @@ gimp_device_info_get_product_id (GimpDeviceInfo  *info)
 }
 
 GdkDeviceToolType
-gimp_device_info_get_tool_type (GimpDeviceInfo *info)
+ligma_device_info_get_tool_type (LigmaDeviceInfo *info)
 {
   GdkDeviceToolType type = GDK_DEVICE_TOOL_TYPE_UNKNOWN;
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), type);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), type);
 
   if (info->priv->device)
     {
@@ -1130,11 +1130,11 @@ gimp_device_info_get_tool_type (GimpDeviceInfo *info)
 }
 
 guint64
-gimp_device_info_get_tool_serial (GimpDeviceInfo *info)
+ligma_device_info_get_tool_serial (LigmaDeviceInfo *info)
 {
   guint64 serial = 0;
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), serial);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), serial);
 
   if (info->priv->device)
     {
@@ -1153,11 +1153,11 @@ gimp_device_info_get_tool_serial (GimpDeviceInfo *info)
 }
 
 guint64
-gimp_device_info_get_tool_hardware_id (GimpDeviceInfo *info)
+ligma_device_info_get_tool_hardware_id (LigmaDeviceInfo *info)
 {
   guint64 id = 0;
 
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), id);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), id);
 
   if (info->priv->device)
     {
@@ -1176,9 +1176,9 @@ gimp_device_info_get_tool_hardware_id (GimpDeviceInfo *info)
 }
 
 gint
-gimp_device_info_get_n_axes (GimpDeviceInfo *info)
+ligma_device_info_get_n_axes (LigmaDeviceInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), 0);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), 0);
 
   if (info->priv->device)
     return gdk_device_get_n_axes (info->priv->device);
@@ -1187,20 +1187,20 @@ gimp_device_info_get_n_axes (GimpDeviceInfo *info)
 }
 
 gboolean
-gimp_device_info_ignore_axis (GimpDeviceInfo *info,
+ligma_device_info_ignore_axis (LigmaDeviceInfo *info,
                               gint            axis)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), TRUE);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), TRUE);
   g_return_val_if_fail (axis >= 0 && axis < info->priv->n_axes, TRUE);
 
   return (info->priv->axes_names[axis] == NULL);
 }
 
 const gchar *
-gimp_device_info_get_axis_name (GimpDeviceInfo *info,
+ligma_device_info_get_axis_name (LigmaDeviceInfo *info,
                                 gint            axis)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), NULL);
   g_return_val_if_fail (axis >= 0 && axis < GDK_AXIS_LAST, NULL);
 
   if (info->priv->device && axis < info->priv->n_axes &&
@@ -1211,11 +1211,11 @@ gimp_device_info_get_axis_name (GimpDeviceInfo *info,
 }
 
 GdkAxisUse
-gimp_device_info_get_axis_use (GimpDeviceInfo *info,
+ligma_device_info_get_axis_use (LigmaDeviceInfo *info,
                                gint            axis)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), GDK_AXIS_IGNORE);
-  g_return_val_if_fail (axis >= 0 && axis < gimp_device_info_get_n_axes (info),
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), GDK_AXIS_IGNORE);
+  g_return_val_if_fail (axis >= 0 && axis < ligma_device_info_get_n_axes (info),
                         GDK_AXIS_IGNORE);
 
   if (info->priv->device)
@@ -1225,14 +1225,14 @@ gimp_device_info_get_axis_use (GimpDeviceInfo *info,
 }
 
 void
-gimp_device_info_set_axis_use (GimpDeviceInfo *info,
+ligma_device_info_set_axis_use (LigmaDeviceInfo *info,
                                gint            axis,
                                GdkAxisUse      use)
 {
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-  g_return_if_fail (axis >= 0 && axis < gimp_device_info_get_n_axes (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
+  g_return_if_fail (axis >= 0 && axis < ligma_device_info_get_n_axes (info));
 
-  if (use != gimp_device_info_get_axis_use (info, axis))
+  if (use != ligma_device_info_get_axis_use (info, axis))
     {
       if (info->priv->device)
         gdk_device_set_axis_use (info->priv->device, axis, use);
@@ -1244,9 +1244,9 @@ gimp_device_info_set_axis_use (GimpDeviceInfo *info,
 }
 
 gint
-gimp_device_info_get_n_keys (GimpDeviceInfo *info)
+ligma_device_info_get_n_keys (LigmaDeviceInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), 0);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), 0);
 
   if (info->priv->device)
     return gdk_device_get_n_keys (info->priv->device);
@@ -1255,13 +1255,13 @@ gimp_device_info_get_n_keys (GimpDeviceInfo *info)
 }
 
 void
-gimp_device_info_get_key (GimpDeviceInfo  *info,
+ligma_device_info_get_key (LigmaDeviceInfo  *info,
                           gint             key,
                           guint           *keyval,
                           GdkModifierType *modifiers)
 {
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-  g_return_if_fail (key >= 0 && key < gimp_device_info_get_n_keys (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
+  g_return_if_fail (key >= 0 && key < ligma_device_info_get_n_keys (info));
   g_return_if_fail (keyval != NULL);
   g_return_if_fail (modifiers != NULL);
 
@@ -1282,7 +1282,7 @@ gimp_device_info_get_key (GimpDeviceInfo  *info,
 }
 
 void
-gimp_device_info_set_key (GimpDeviceInfo *info,
+ligma_device_info_set_key (LigmaDeviceInfo *info,
                           gint             key,
                           guint            keyval,
                           GdkModifierType  modifiers)
@@ -1290,10 +1290,10 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
   guint           old_keyval;
   GdkModifierType old_modifiers;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-  g_return_if_fail (key >= 0 && key < gimp_device_info_get_n_keys (info));
+  g_return_if_fail (LIGMA_IS_DEVICE_INFO (info));
+  g_return_if_fail (key >= 0 && key < ligma_device_info_get_n_keys (info));
 
-  gimp_device_info_get_key (info, key, &old_keyval, &old_modifiers);
+  ligma_device_info_get_key (info, key, &old_keyval, &old_modifiers);
 
   if (keyval    != old_keyval ||
       modifiers != old_modifiers)
@@ -1308,11 +1308,11 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
     }
 }
 
-GimpCurve *
-gimp_device_info_get_curve (GimpDeviceInfo *info,
+LigmaCurve *
+ligma_device_info_get_curve (LigmaDeviceInfo *info,
                             GdkAxisUse      use)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), NULL);
 
   switch (use)
     {
@@ -1326,27 +1326,27 @@ gimp_device_info_get_curve (GimpDeviceInfo *info,
 }
 
 gdouble
-gimp_device_info_map_axis (GimpDeviceInfo *info,
+ligma_device_info_map_axis (LigmaDeviceInfo *info,
                            GdkAxisUse      use,
                            gdouble         value)
 {
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), value);
+  g_return_val_if_fail (LIGMA_IS_DEVICE_INFO (info), value);
 
   /* CLAMP() the return values be safe against buggy XInput drivers */
 
   switch (use)
     {
     case GDK_AXIS_PRESSURE:
-      return gimp_curve_map_value (info->priv->pressure_curve, value);
+      return ligma_curve_map_value (info->priv->pressure_curve, value);
 
     case GDK_AXIS_XTILT:
-      return CLAMP (value, GIMP_COORDS_MIN_TILT, GIMP_COORDS_MAX_TILT);
+      return CLAMP (value, LIGMA_COORDS_MIN_TILT, LIGMA_COORDS_MAX_TILT);
 
     case GDK_AXIS_YTILT:
-      return CLAMP (value, GIMP_COORDS_MIN_TILT, GIMP_COORDS_MAX_TILT);
+      return CLAMP (value, LIGMA_COORDS_MIN_TILT, LIGMA_COORDS_MAX_TILT);
 
     case GDK_AXIS_WHEEL:
-      return CLAMP (value, GIMP_COORDS_MIN_WHEEL, GIMP_COORDS_MAX_WHEEL);
+      return CLAMP (value, LIGMA_COORDS_MIN_WHEEL, LIGMA_COORDS_MAX_WHEEL);
 
     default:
       break;
@@ -1355,17 +1355,17 @@ gimp_device_info_map_axis (GimpDeviceInfo *info,
   return value;
 }
 
-GimpDeviceInfo *
-gimp_device_info_get_by_device (GdkDevice *device)
+LigmaDeviceInfo *
+ligma_device_info_get_by_device (GdkDevice *device)
 {
   g_return_val_if_fail (GDK_IS_DEVICE (device), NULL);
 
-  return g_object_get_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY);
+  return g_object_get_data (G_OBJECT (device), LIGMA_DEVICE_INFO_DATA_KEY);
 }
 
 gint
-gimp_device_info_compare (GimpDeviceInfo *a,
-                          GimpDeviceInfo *b)
+ligma_device_info_compare (LigmaDeviceInfo *a,
+                          LigmaDeviceInfo *b)
 {
   GdkSeat *seat;
 
@@ -1391,7 +1391,7 @@ gimp_device_info_compare (GimpDeviceInfo *a,
     }
   else
     {
-      return gimp_object_name_collate ((GimpObject *) a,
-                                       (GimpObject *) b);
+      return ligma_object_name_collate ((LigmaObject *) a,
+                                       (LigmaObject *) b);
     }
 }

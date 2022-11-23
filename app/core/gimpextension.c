@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpextension.c
+ * ligmaextension.c
  * Copyright (C) 2018 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,16 +23,16 @@
 #include <appstream-glib.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
-#include "gimperror.h"
-#include "gimpextension.h"
-#include "gimpextension-error.h"
+#include "ligma-utils.h"
+#include "ligmaerror.h"
+#include "ligmaextension.h"
+#include "ligmaextension-error.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -43,7 +43,7 @@ enum
   PROP_RUNNING
 };
 
-struct _GimpExtensionPrivate
+struct _LigmaExtensionPrivate
 {
   gchar    *path;
 
@@ -81,67 +81,67 @@ typedef struct
 } ParseState;
 
 
-static void         gimp_extension_finalize        (GObject        *object);
-static void         gimp_extension_set_property    (GObject        *object,
+static void         ligma_extension_finalize        (GObject        *object);
+static void         ligma_extension_set_property    (GObject        *object,
                                                     guint           property_id,
                                                     const GValue   *value,
                                                     GParamSpec     *pspec);
-static void         gimp_extension_get_property    (GObject        *object,
+static void         ligma_extension_get_property    (GObject        *object,
                                                     guint           property_id,
                                                     GValue         *value,
                                                     GParamSpec     *pspec);
 
-static void         gimp_extension_clean           (GimpExtension  *extension);
-static gint         gimp_extension_file_cmp        (GFile          *a,
+static void         ligma_extension_clean           (LigmaExtension  *extension);
+static gint         ligma_extension_file_cmp        (GFile          *a,
                                                     GFile          *b);
-static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
+static GList      * ligma_extension_validate_paths  (LigmaExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
                                                     GError        **error);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaExtension, ligma_extension, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_extension_parent_class
+#define parent_class ligma_extension_parent_class
 
 
 static void
-gimp_extension_class_init (GimpExtensionClass *klass)
+ligma_extension_class_init (LigmaExtensionClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_extension_finalize;
-  object_class->set_property = gimp_extension_set_property;
-  object_class->get_property = gimp_extension_get_property;
+  object_class->finalize     = ligma_extension_finalize;
+  object_class->set_property = ligma_extension_set_property;
+  object_class->get_property = ligma_extension_get_property;
 
   g_object_class_install_property (object_class, PROP_PATH,
                                    g_param_spec_string ("path",
                                                         NULL, NULL, NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_WRITABLE,
                                    g_param_spec_boolean ("writable",
                                                          NULL, NULL, FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_RUNNING,
                                    g_param_spec_boolean ("running",
                                                          NULL, NULL, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_extension_init (GimpExtension *extension)
+ligma_extension_init (LigmaExtension *extension)
 {
-  extension->p = gimp_extension_get_instance_private (extension);
+  extension->p = ligma_extension_get_instance_private (extension);
 }
 
 static void
-gimp_extension_finalize (GObject *object)
+ligma_extension_finalize (GObject *object)
 {
-  GimpExtension *extension = GIMP_EXTENSION (object);
+  LigmaExtension *extension = LIGMA_EXTENSION (object);
 
-  gimp_extension_clean (extension);
+  ligma_extension_clean (extension);
 
   g_free (extension->p->path);
   if (extension->p->app)
@@ -151,19 +151,19 @@ gimp_extension_finalize (GObject *object)
 }
 
 static void
-gimp_extension_set_property (GObject      *object,
+ligma_extension_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpExtension *extension = GIMP_EXTENSION (object);
+  LigmaExtension *extension = LIGMA_EXTENSION (object);
 
   switch (property_id)
     {
     case PROP_PATH:
       g_free (extension->p->path);
       extension->p->path = g_value_dup_string (value);
-      gimp_object_take_name (GIMP_OBJECT (object),
+      ligma_object_take_name (LIGMA_OBJECT (object),
                              g_path_get_basename (extension->p->path));
       break;
     case PROP_WRITABLE:
@@ -180,12 +180,12 @@ gimp_extension_set_property (GObject      *object,
 }
 
 static void
-gimp_extension_get_property (GObject      *object,
+ligma_extension_get_property (GObject      *object,
                              guint         property_id,
                              GValue       *value,
                              GParamSpec   *pspec)
 {
-  GimpExtension *extension = GIMP_EXTENSION (object);
+  LigmaExtension *extension = LIGMA_EXTENSION (object);
 
   switch (property_id)
     {
@@ -207,20 +207,20 @@ gimp_extension_get_property (GObject      *object,
 
 /*  public functions  */
 
-GimpExtension *
-gimp_extension_new (const gchar *dir,
+LigmaExtension *
+ligma_extension_new (const gchar *dir,
                     gboolean     writable)
 {
   g_return_val_if_fail (dir && g_file_test (dir, G_FILE_TEST_IS_DIR), NULL);
 
-  return g_object_new (GIMP_TYPE_EXTENSION,
+  return g_object_new (LIGMA_TYPE_EXTENSION,
                        "path",     dir,
                        "writable", writable,
                        NULL);
 }
 
 const gchar *
-gimp_extension_get_name (GimpExtension *extension)
+ligma_extension_get_name (LigmaExtension *extension)
 {
   g_return_val_if_fail (extension->p->app != NULL, NULL);
 
@@ -230,7 +230,7 @@ gimp_extension_get_name (GimpExtension *extension)
 }
 
 const gchar *
-gimp_extension_get_comment (GimpExtension *extension)
+ligma_extension_get_comment (LigmaExtension *extension)
 {
   g_return_val_if_fail (extension->p->app != NULL, NULL);
 
@@ -240,7 +240,7 @@ gimp_extension_get_comment (GimpExtension *extension)
 }
 
 const gchar *
-gimp_extension_get_description (GimpExtension *extension)
+ligma_extension_get_description (LigmaExtension *extension)
 {
   g_return_val_if_fail (extension->p->app != NULL, NULL);
 
@@ -250,7 +250,7 @@ gimp_extension_get_description (GimpExtension *extension)
 }
 
 GdkPixbuf *
-gimp_extension_get_screenshot (GimpExtension  *extension,
+ligma_extension_get_screenshot (LigmaExtension  *extension,
                                gint            width,
                                gint            height,
                                const gchar   **caption)
@@ -308,27 +308,27 @@ gimp_extension_get_screenshot (GimpExtension  *extension,
 }
 
 const gchar *
-gimp_extension_get_path (GimpExtension *extension)
+ligma_extension_get_path (LigmaExtension *extension)
 {
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), NULL);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension), NULL);
 
   return extension->p->path;
 }
 
 gchar *
-gimp_extension_get_markup_description (GimpExtension *extension)
+ligma_extension_get_markup_description (LigmaExtension *extension)
 {
   const gchar *description;
 
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), NULL);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension), NULL);
 
-  description = gimp_extension_get_description (extension);
+  description = ligma_extension_get_description (extension);
 
-  return gimp_appstream_to_pango_markup (description);
+  return ligma_appstream_to_pango_markup (description);
 }
 
 gboolean
-gimp_extension_load (GimpExtension  *extension,
+ligma_extension_load (LigmaExtension  *extension,
                      GError        **error)
 {
   AsApp     *app;
@@ -346,7 +346,7 @@ gimp_extension_load (GimpExtension  *extension,
    * directory and ending with ".metainfo.xml" exists.
    */
   appdata_name = g_strdup_printf ("%s.metainfo.xml",
-                                  gimp_object_get_name (GIMP_OBJECT (extension)));
+                                  ligma_object_get_name (LIGMA_OBJECT (extension)));
   path = g_build_filename (extension->p->path, appdata_name, NULL);
 
   app = as_app_new ();
@@ -360,8 +360,8 @@ gimp_extension_load (GimpExtension  *extension,
        * distributed appropriately through other means.
        */
       if (error && *error == NULL)
-        *error = g_error_new (GIMP_EXTENSION_ERROR,
-                              GIMP_EXTENSION_BAD_APPDATA,
+        *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                              LIGMA_EXTENSION_BAD_APPDATA,
                               _("Extension AppData must be of type \"addon\", found \"%s\" instead."),
                               as_app_kind_to_string (as_app_get_kind (app)));
       success = FALSE;
@@ -369,31 +369,31 @@ gimp_extension_load (GimpExtension  *extension,
 
   extends = as_app_get_extends (app);
   if (success &&
-      ! g_ptr_array_find_with_equal_func (extends, "org.gimp.GIMP",
+      ! g_ptr_array_find_with_equal_func (extends, "org.ligma.LIGMA",
                                           g_str_equal, NULL))
     {
       /* Properly setting the <extends> will allow extensions to be
        * distributed appropriately through other means.
        */
       if (error && *error == NULL)
-        *error = g_error_new (GIMP_EXTENSION_ERROR,
-                              GIMP_EXTENSION_BAD_APPDATA,
-                              _("Extension AppData must extend \"org.gimp.GIMP\"."));
+        *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                              LIGMA_EXTENSION_BAD_APPDATA,
+                              _("Extension AppData must extend \"org.ligma.LIGMA\"."));
       success = FALSE;
     }
 
   if (success &&
       g_strcmp0 (as_app_get_id (app),
-                 gimp_object_get_name (extension)) != 0)
+                 ligma_object_get_name (extension)) != 0)
     {
       /* Extension IDs will be unique and we want therefore the
        * installation folder to sync in order to avoid path clashes.
        */
       if (error && *error == NULL)
-        *error = g_error_new (GIMP_EXTENSION_ERROR,
-                              GIMP_EXTENSION_FAILED,
+        *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                              LIGMA_EXTENSION_FAILED,
                               _("Extension AppData id (\"%s\") and directory (\"%s\") must be the same."),
-                              as_app_get_id (app), gimp_object_get_name (extension));
+                              as_app_get_id (app), ligma_object_get_name (extension));
       success = FALSE;
     }
 
@@ -405,8 +405,8 @@ gimp_extension_load (GimpExtension  *extension,
        * the only way we can manage updates.
        */
       if (error && *error == NULL)
-        *error = g_error_new (GIMP_EXTENSION_ERROR,
-                              GIMP_EXTENSION_NO_VERSION,
+        *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                              LIGMA_EXTENSION_NO_VERSION,
                               _("Extension AppData must advertise a version in a <release> tag."));
       success = FALSE;
     }
@@ -417,7 +417,7 @@ gimp_extension_load (GimpExtension  *extension,
       gint i;
 
       /* An extension could set requirements, in particular a range of
-       * supported version of GIMP, but also other extensions.
+       * supported version of LIGMA, but also other extensions.
        */
 
       for (i = 0; i < requires->len; i++)
@@ -425,10 +425,10 @@ gimp_extension_load (GimpExtension  *extension,
           AsRequire *require = g_ptr_array_index (requires, i);
 
           if (as_require_get_kind (require) == AS_REQUIRE_KIND_ID &&
-              g_strcmp0 (as_require_get_value (require), "org.gimp.GIMP") == 0)
+              g_strcmp0 (as_require_get_value (require), "org.ligma.LIGMA") == 0)
             {
               has_require = TRUE;
-              if (! as_require_version_compare (require, GIMP_VERSION, error))
+              if (! as_require_version_compare (require, LIGMA_VERSION, error))
                 {
                   success = FALSE;
                   break;
@@ -436,11 +436,11 @@ gimp_extension_load (GimpExtension  *extension,
             }
           else if (error && *error == NULL)
             {
-              /* Right now we only support requirement relative to GIMP
+              /* Right now we only support requirement relative to LIGMA
                * version.
                */
-              *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                    GIMP_EXTENSION_FAILED,
+              *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                    LIGMA_EXTENSION_FAILED,
                                     _("Unsupported <requires> \"%s\" (type %s)."),
                                     as_require_get_value (require),
                                     as_require_kind_to_string (as_require_get_kind (require)));
@@ -454,9 +454,9 @@ gimp_extension_load (GimpExtension  *extension,
       success = FALSE;
       if (error && *error == NULL)
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                GIMP_EXTENSION_FAILED,
-                                _("<requires><id>org.gimp.GIMP</id></requires> for version comparison is mandatory."));
+          *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                LIGMA_EXTENSION_FAILED,
+                                _("<requires><id>org.ligma.LIGMA</id></requires> for version comparison is mandatory."));
         }
     }
 
@@ -469,7 +469,7 @@ gimp_extension_load (GimpExtension  *extension,
 }
 
 gboolean
-gimp_extension_run (GimpExtension  *extension,
+ligma_extension_run (LigmaExtension  *extension,
                     GError        **error)
 {
   GHashTable *metadata;
@@ -478,80 +478,80 @@ gimp_extension_run (GimpExtension  *extension,
   g_return_val_if_fail (extension->p->app != NULL, FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
-  gimp_extension_clean (extension);
+  ligma_extension_clean (extension);
   metadata = as_app_get_metadata (extension->p->app);
 
-  value = g_hash_table_lookup (metadata, "GIMP::brush-path");
-  extension->p->brush_paths = gimp_extension_validate_paths (extension,
+  value = g_hash_table_lookup (metadata, "LIGMA::brush-path");
+  extension->p->brush_paths = ligma_extension_validate_paths (extension,
                                                              value, TRUE,
                                                              error);
 
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::dynamics-path");
-      extension->p->dynamics_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::dynamics-path");
+      extension->p->dynamics_paths = ligma_extension_validate_paths (extension,
                                                                     value, TRUE,
                                                                     error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::mypaint-brush-path");
-      extension->p->mypaint_brush_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::mypaint-brush-path");
+      extension->p->mypaint_brush_paths = ligma_extension_validate_paths (extension,
                                                                          value, TRUE,
                                                                          error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::pattern-path");
-      extension->p->pattern_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::pattern-path");
+      extension->p->pattern_paths = ligma_extension_validate_paths (extension,
                                                                    value, TRUE,
                                                                    error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::gradient-path");
-      extension->p->gradient_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::gradient-path");
+      extension->p->gradient_paths = ligma_extension_validate_paths (extension,
                                                                     value, TRUE,
                                                                     error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::palette-path");
-      extension->p->palette_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::palette-path");
+      extension->p->palette_paths = ligma_extension_validate_paths (extension,
                                                                    value, TRUE,
                                                                    error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::tool-preset-path");
-      extension->p->tool_preset_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::tool-preset-path");
+      extension->p->tool_preset_paths = ligma_extension_validate_paths (extension,
                                                                        value, TRUE,
                                                                        error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::plug-in-path");
-      extension->p->plug_in_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::plug-in-path");
+      extension->p->plug_in_paths = ligma_extension_validate_paths (extension,
                                                                    value, FALSE,
                                                                    error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::splash-path");
-      extension->p->splash_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::splash-path");
+      extension->p->splash_paths = ligma_extension_validate_paths (extension,
                                                                   value, TRUE,
                                                                   error);
     }
   if (! (*error))
     {
-      value = g_hash_table_lookup (metadata, "GIMP::theme-path");
-      extension->p->theme_paths = gimp_extension_validate_paths (extension,
+      value = g_hash_table_lookup (metadata, "LIGMA::theme-path");
+      extension->p->theme_paths = ligma_extension_validate_paths (extension,
                                                                  value, TRUE,
                                                                  error);
     }
 
   if (*error)
-    gimp_extension_clean (extension);
+    ligma_extension_clean (extension);
 
   g_object_set (extension,
                 "running", TRUE,
@@ -561,77 +561,77 @@ gimp_extension_run (GimpExtension  *extension,
 }
 
 void
-gimp_extension_stop (GimpExtension  *extension)
+ligma_extension_stop (LigmaExtension  *extension)
 {
-  gimp_extension_clean (extension);
+  ligma_extension_clean (extension);
   g_object_set (extension,
                 "running", FALSE,
                 NULL);
 }
 
 GList *
-gimp_extension_get_brush_paths (GimpExtension  *extension)
+ligma_extension_get_brush_paths (LigmaExtension  *extension)
 {
   return extension->p->brush_paths;
 }
 
 GList *
-gimp_extension_get_dynamics_paths (GimpExtension *extension)
+ligma_extension_get_dynamics_paths (LigmaExtension *extension)
 {
   return extension->p->dynamics_paths;
 }
 
 GList *
-gimp_extension_get_mypaint_brush_paths (GimpExtension *extension)
+ligma_extension_get_mypaint_brush_paths (LigmaExtension *extension)
 {
   return extension->p->mypaint_brush_paths;
 }
 
 GList *
-gimp_extension_get_pattern_paths (GimpExtension *extension)
+ligma_extension_get_pattern_paths (LigmaExtension *extension)
 {
   return extension->p->pattern_paths;
 }
 
 GList *
-gimp_extension_get_gradient_paths (GimpExtension *extension)
+ligma_extension_get_gradient_paths (LigmaExtension *extension)
 {
   return extension->p->gradient_paths;
 }
 
 GList *
-gimp_extension_get_palette_paths (GimpExtension *extension)
+ligma_extension_get_palette_paths (LigmaExtension *extension)
 {
   return extension->p->palette_paths;
 }
 
 GList *
-gimp_extension_get_tool_preset_paths (GimpExtension *extension)
+ligma_extension_get_tool_preset_paths (LigmaExtension *extension)
 {
   return extension->p->tool_preset_paths;
 }
 
 GList *
-gimp_extension_get_splash_paths (GimpExtension *extension)
+ligma_extension_get_splash_paths (LigmaExtension *extension)
 {
   return extension->p->splash_paths;
 }
 
 GList *
-gimp_extension_get_theme_paths (GimpExtension *extension)
+ligma_extension_get_theme_paths (LigmaExtension *extension)
 {
   return extension->p->theme_paths;
 }
 
 GList *
-gimp_extension_get_plug_in_paths (GimpExtension *extension)
+ligma_extension_get_plug_in_paths (LigmaExtension *extension)
 {
   return extension->p->plug_in_paths;
 }
 
 /**
- * @extension1: a #GimpExtension.
- * @extension2: another #GimpExtension.
+ * @extension1: a #LigmaExtension.
+ * @extension2: another #LigmaExtension.
  *
  * Compare 2 extensions by their ID.
  *
@@ -639,18 +639,18 @@ gimp_extension_get_plug_in_paths (GimpExtension *extension)
  * represent different versions of the same extension).
  */
 gint
-gimp_extension_cmp (GimpExtension *extension1,
-                    GimpExtension *extension2)
+ligma_extension_cmp (LigmaExtension *extension1,
+                    LigmaExtension *extension2)
 {
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension1), -1);
-  g_return_val_if_fail (GIMP_IS_EXTENSION (extension2), -1);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension1), -1);
+  g_return_val_if_fail (LIGMA_IS_EXTENSION (extension2), -1);
 
-  return g_strcmp0 (gimp_object_get_name (extension1),
-                    gimp_object_get_name (extension2));
+  return g_strcmp0 (ligma_object_get_name (extension1),
+                    ligma_object_get_name (extension2));
 }
 
 /**
- * @extension: a #GimpExtension.
+ * @extension: a #LigmaExtension.
  * @id:        an extension ID (reverse-DNS scheme)
  *
  * Compare the extension ID with @id.
@@ -658,14 +658,14 @@ gimp_extension_cmp (GimpExtension *extension1,
  * Returns: 0 if @extension have @id as appstream ID.
  */
 gint
-gimp_extension_id_cmp (GimpExtension *extension,
+ligma_extension_id_cmp (LigmaExtension *extension,
                        const gchar   *id)
 {
-  return g_strcmp0 (gimp_object_get_name (extension), id);
+  return g_strcmp0 (ligma_object_get_name (extension), id);
 }
 
 static void
-gimp_extension_clean (GimpExtension  *extension)
+ligma_extension_clean (LigmaExtension  *extension)
 {
   g_list_free_full (extension->p->brush_paths, g_object_unref);
   extension->p->brush_paths = NULL;
@@ -690,26 +690,26 @@ gimp_extension_clean (GimpExtension  *extension)
 }
 
 /**
- * gimp_extension_file_cmp:
+ * ligma_extension_file_cmp:
  * @a:
  * @b:
  *
  * A small g_file_equal() wrapper using GCompareFunc signature.
  */
 static gint
-gimp_extension_file_cmp (GFile *a,
+ligma_extension_file_cmp (GFile *a,
                          GFile *b)
 {
   return g_file_equal (a, b) ? 0 : 1;
 }
 
 /**
- * gimp_extension_validate_paths:
- * @extension: the #GimpExtension
+ * ligma_extension_validate_paths:
+ * @extension: the #LigmaExtension
  * @path:      A list of directories separated by ':'.
  * @error:
  *
- * Very similar to gimp_path_parse() except that we don't use
+ * Very similar to ligma_path_parse() except that we don't use
  * G_SEARCHPATH_SEPARATOR as path separator, because it must not be
  * os-dependent.
  * Also we only allow relative path which are children of the main
@@ -719,7 +719,7 @@ gimp_extension_file_cmp (GFile *a,
  * Returns: A #GList of #GFile as listed in @path.
  **/
 static GList *
-gimp_extension_validate_paths (GimpExtension  *extension,
+ligma_extension_validate_paths (LigmaExtension  *extension,
                                const gchar    *paths,
                                gboolean        as_directories,
                                GError        **error)
@@ -749,8 +749,8 @@ gimp_extension_validate_paths (GimpExtension  *extension,
 
       if (g_path_is_absolute (patharray[i]))
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                GIMP_EXTENSION_BAD_PATH,
+          *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                LIGMA_EXTENSION_BAD_PATH,
                                 _("'%s' is not a relative path."),
                                 patharray[i]);
           break;
@@ -783,8 +783,8 @@ gimp_extension_validate_paths (GimpExtension  *extension,
 
       if (! is_subpath)
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                GIMP_EXTENSION_BAD_PATH,
+          *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                LIGMA_EXTENSION_BAD_PATH,
                                 _("'%s' is not a child of the extension."),
                                 patharray[i]);
           g_object_unref (file);
@@ -797,8 +797,8 @@ gimp_extension_validate_paths (GimpExtension  *extension,
                                       G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
                                       NULL) != G_FILE_TYPE_DIRECTORY)
             {
-              *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                    GIMP_EXTENSION_BAD_PATH,
+              *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                    LIGMA_EXTENSION_BAD_PATH,
                                     _("'%s' is not a directory."),
                                     patharray[i]);
               g_object_unref (file);
@@ -811,8 +811,8 @@ gimp_extension_validate_paths (GimpExtension  *extension,
                                       G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
                                       NULL) != G_FILE_TYPE_REGULAR)
             {
-              *error = g_error_new (GIMP_EXTENSION_ERROR,
-                                    GIMP_EXTENSION_BAD_PATH,
+              *error = g_error_new (LIGMA_EXTENSION_ERROR,
+                                    LIGMA_EXTENSION_BAD_PATH,
                                     _("'%s' is not a valid file."),
                                     patharray[i]);
               g_object_unref (file);
@@ -821,7 +821,7 @@ gimp_extension_validate_paths (GimpExtension  *extension,
         }
 
       g_return_val_if_fail (path != NULL, NULL);
-      if (g_list_find_custom (list, file, (GCompareFunc) gimp_extension_file_cmp))
+      if (g_list_find_custom (list, file, (GCompareFunc) ligma_extension_file_cmp))
         {
           /* Silently ignore duplicate paths. */
           g_object_unref (file);

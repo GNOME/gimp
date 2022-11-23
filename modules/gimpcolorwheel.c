@@ -3,9 +3,9 @@
  * Copyright (C) 1999 The Free Software Foundation
  *
  * Authors: Simon Budig <Simon.Budig@unix-ag.org> (original code)
- *          Federico Mena-Quintero <federico@gimp.org> (cleanup for GTK+)
+ *          Federico Mena-Quintero <federico@ligma.org> (cleanup for GTK+)
  *          Jonathan Blandford <jrb@redhat.com> (cleanup for GTK+)
- *          Michael Natterer <mitch@gimp.org> (ported back to GIMP)
+ *          Michael Natterer <mitch@ligma.org> (ported back to LIGMA)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,12 +35,12 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libgimpconfig/gimpconfig.h>
-#include <libgimpcolor/gimpcolor.h>
-#include <libgimpmath/gimpmath.h>
-#include <libgimpwidgets/gimpwidgets.h>
+#include <libligmaconfig/ligmaconfig.h>
+#include <libligmacolor/ligmacolor.h>
+#include <libligmamath/ligmamath.h>
+#include <libligmawidgets/ligmawidgets.h>
 
-#include "gimpcolorwheel.h"
+#include "ligmacolorwheel.h"
 
 
 /* Default ring fraction */
@@ -61,7 +61,7 @@ typedef enum
   DRAG_SV
 } DragMode;
 
-/* Private part of the GimpColorWheel structure */
+/* Private part of the LigmaColorWheel structure */
 typedef struct
 {
   /* Color value */
@@ -84,9 +84,9 @@ typedef struct
 
   guint focus_on_ring : 1;
 
-  GimpColorConfig    *config;
-  GimpColorTransform *transform;
-} GimpColorWheelPrivate;
+  LigmaColorConfig    *config;
+  LigmaColorTransform *transform;
+} LigmaColorWheelPrivate;
 
 enum
 {
@@ -96,88 +96,88 @@ enum
 };
 
 
-static void     gimp_color_wheel_dispose              (GObject            *object);
+static void     ligma_color_wheel_dispose              (GObject            *object);
 
-static void     gimp_color_wheel_map                  (GtkWidget          *widget);
-static void     gimp_color_wheel_unmap                (GtkWidget          *widget);
-static void     gimp_color_wheel_realize              (GtkWidget          *widget);
-static void     gimp_color_wheel_unrealize            (GtkWidget          *widget);
-static void     gimp_color_wheel_get_preferred_width  (GtkWidget          *widget,
+static void     ligma_color_wheel_map                  (GtkWidget          *widget);
+static void     ligma_color_wheel_unmap                (GtkWidget          *widget);
+static void     ligma_color_wheel_realize              (GtkWidget          *widget);
+static void     ligma_color_wheel_unrealize            (GtkWidget          *widget);
+static void     ligma_color_wheel_get_preferred_width  (GtkWidget          *widget,
                                                        gint               *minimum,
                                                        gint               *natural);
-static void     gimp_color_wheel_get_preferred_height (GtkWidget          *widget,
+static void     ligma_color_wheel_get_preferred_height (GtkWidget          *widget,
                                                        gint               *minimum,
                                                        gint               *natural);
-static void     gimp_color_wheel_size_allocate        (GtkWidget          *widget,
+static void     ligma_color_wheel_size_allocate        (GtkWidget          *widget,
                                                        GtkAllocation      *allocation);
-static gboolean gimp_color_wheel_draw                 (GtkWidget          *widget,
+static gboolean ligma_color_wheel_draw                 (GtkWidget          *widget,
                                                        cairo_t            *cr);
-static gboolean gimp_color_wheel_focus                (GtkWidget          *widget,
+static gboolean ligma_color_wheel_focus                (GtkWidget          *widget,
                                                        GtkDirectionType    direction);
-static void     gimp_color_wheel_move                 (GimpColorWheel     *wheel,
+static void     ligma_color_wheel_move                 (LigmaColorWheel     *wheel,
                                                        GtkDirectionType    dir);
-static void     gimp_color_wheel_drag_begin           (GtkGestureDrag     *gesture,
+static void     ligma_color_wheel_drag_begin           (GtkGestureDrag     *gesture,
                                                        gdouble             start_x,
                                                        gdouble             start_y,
                                                        gpointer            user_data);
-static void     gimp_color_wheel_drag_update          (GtkGestureDrag     *gesture,
+static void     ligma_color_wheel_drag_update          (GtkGestureDrag     *gesture,
                                                        gdouble             offset_x,
                                                        gdouble             offset_y,
                                                        gpointer            user_data);
-static void     gimp_color_wheel_drag_end             (GtkGestureDrag     *gesture,
+static void     ligma_color_wheel_drag_end             (GtkGestureDrag     *gesture,
                                                        gdouble             offset_x,
                                                        gdouble             offset_y,
                                                        gpointer            user_data);
-static void     gimp_color_wheel_drag_cancel          (GtkGesture         *gesture,
+static void     ligma_color_wheel_drag_cancel          (GtkGesture         *gesture,
                                                        GdkEventSequence   *sequence,
                                                        gpointer            user_data);
 
-static void     gimp_color_wheel_create_transform     (GimpColorWheel     *wheel);
-static void     gimp_color_wheel_destroy_transform    (GimpColorWheel     *wheel);
+static void     ligma_color_wheel_create_transform     (LigmaColorWheel     *wheel);
+static void     ligma_color_wheel_destroy_transform    (LigmaColorWheel     *wheel);
 
 
 static guint wheel_signals[LAST_SIGNAL];
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (GimpColorWheel, gimp_color_wheel,
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (LigmaColorWheel, ligma_color_wheel,
                                 GTK_TYPE_WIDGET, 0,
-                                G_ADD_PRIVATE_DYNAMIC (GimpColorWheel))
+                                G_ADD_PRIVATE_DYNAMIC (LigmaColorWheel))
 
-#define parent_class gimp_color_wheel_parent_class
+#define parent_class ligma_color_wheel_parent_class
 
 
 void
 color_wheel_register_type (GTypeModule *module)
 {
-  gimp_color_wheel_register_type (module);
+  ligma_color_wheel_register_type (module);
 }
 
 static void
-gimp_color_wheel_class_init (GimpColorWheelClass *class)
+ligma_color_wheel_class_init (LigmaColorWheelClass *class)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (class);
   GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (class);
-  GimpColorWheelClass *wheel_class  = GIMP_COLOR_WHEEL_CLASS (class);
+  LigmaColorWheelClass *wheel_class  = LIGMA_COLOR_WHEEL_CLASS (class);
   GtkBindingSet       *binding_set;
 
-  object_class->dispose              = gimp_color_wheel_dispose;
+  object_class->dispose              = ligma_color_wheel_dispose;
 
-  widget_class->map                  = gimp_color_wheel_map;
-  widget_class->unmap                = gimp_color_wheel_unmap;
-  widget_class->realize              = gimp_color_wheel_realize;
-  widget_class->unrealize            = gimp_color_wheel_unrealize;
-  widget_class->get_preferred_width  = gimp_color_wheel_get_preferred_width;
-  widget_class->get_preferred_height = gimp_color_wheel_get_preferred_height;
-  widget_class->size_allocate        = gimp_color_wheel_size_allocate;
-  widget_class->draw                 = gimp_color_wheel_draw;
-  widget_class->focus                = gimp_color_wheel_focus;
+  widget_class->map                  = ligma_color_wheel_map;
+  widget_class->unmap                = ligma_color_wheel_unmap;
+  widget_class->realize              = ligma_color_wheel_realize;
+  widget_class->unrealize            = ligma_color_wheel_unrealize;
+  widget_class->get_preferred_width  = ligma_color_wheel_get_preferred_width;
+  widget_class->get_preferred_height = ligma_color_wheel_get_preferred_height;
+  widget_class->size_allocate        = ligma_color_wheel_size_allocate;
+  widget_class->draw                 = ligma_color_wheel_draw;
+  widget_class->focus                = ligma_color_wheel_focus;
 
-  wheel_class->move                  = gimp_color_wheel_move;
+  wheel_class->move                  = ligma_color_wheel_move;
 
   wheel_signals[CHANGED] =
     g_signal_new ("changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorWheelClass, changed),
+                  G_STRUCT_OFFSET (LigmaColorWheelClass, changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -185,7 +185,7 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
     g_signal_new ("move",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpColorWheelClass, move),
+                  G_STRUCT_OFFSET (LigmaColorWheelClass, move),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GTK_TYPE_DIRECTION_TYPE);
@@ -223,14 +223,14 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
 }
 
 static void
-gimp_color_wheel_class_finalize (GimpColorWheelClass *klass)
+ligma_color_wheel_class_finalize (LigmaColorWheelClass *klass)
 {
 }
 
 static void
-gimp_color_wheel_init (GimpColorWheel *wheel)
+ligma_color_wheel_init (LigmaColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
   GtkGesture            *gesture;
 
   gtk_widget_set_has_window (GTK_WIDGET (wheel), FALSE);
@@ -240,41 +240,41 @@ gimp_color_wheel_init (GimpColorWheel *wheel)
   priv->size          = DEFAULT_SIZE;
   priv->ring_width    = DEFAULT_RING_WIDTH;
 
-  gimp_widget_track_monitor (GTK_WIDGET (wheel),
-                             G_CALLBACK (gimp_color_wheel_destroy_transform),
+  ligma_widget_track_monitor (GTK_WIDGET (wheel),
+                             G_CALLBACK (ligma_color_wheel_destroy_transform),
                              NULL, NULL);
 
   /* Allow the user to drag the rectangle on the preview */
   gesture = gtk_gesture_drag_new (GTK_WIDGET (wheel));
   g_signal_connect (gesture, "drag-begin",
-                    G_CALLBACK (gimp_color_wheel_drag_begin),
+                    G_CALLBACK (ligma_color_wheel_drag_begin),
                     wheel);
   g_signal_connect (gesture, "drag-update",
-                    G_CALLBACK (gimp_color_wheel_drag_update),
+                    G_CALLBACK (ligma_color_wheel_drag_update),
                     wheel);
   g_signal_connect (gesture, "drag-end",
-                    G_CALLBACK (gimp_color_wheel_drag_end),
+                    G_CALLBACK (ligma_color_wheel_drag_end),
                     wheel);
   g_signal_connect (gesture, "cancel",
-                    G_CALLBACK (gimp_color_wheel_drag_cancel),
+                    G_CALLBACK (ligma_color_wheel_drag_cancel),
                     wheel);
 }
 
 static void
-gimp_color_wheel_dispose (GObject *object)
+ligma_color_wheel_dispose (GObject *object)
 {
-  GimpColorWheel *wheel = GIMP_COLOR_WHEEL (object);
+  LigmaColorWheel *wheel = LIGMA_COLOR_WHEEL (object);
 
-  gimp_color_wheel_set_color_config (wheel, NULL);
+  ligma_color_wheel_set_color_config (wheel, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_color_wheel_map (GtkWidget *widget)
+ligma_color_wheel_map (GtkWidget *widget)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -282,10 +282,10 @@ gimp_color_wheel_map (GtkWidget *widget)
 }
 
 static void
-gimp_color_wheel_unmap (GtkWidget *widget)
+ligma_color_wheel_unmap (GtkWidget *widget)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
 
   gdk_window_hide (priv->window);
 
@@ -293,10 +293,10 @@ gimp_color_wheel_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_color_wheel_realize (GtkWidget *widget)
+ligma_color_wheel_realize (GtkWidget *widget)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
   GtkAllocation          allocation;
   GdkWindowAttr          attr;
   gint                   attr_mask;
@@ -332,10 +332,10 @@ gimp_color_wheel_realize (GtkWidget *widget)
 }
 
 static void
-gimp_color_wheel_unrealize (GtkWidget *widget)
+ligma_color_wheel_unrealize (GtkWidget *widget)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
 
   gdk_window_set_user_data (priv->window, NULL);
   gdk_window_destroy (priv->window);
@@ -345,7 +345,7 @@ gimp_color_wheel_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_color_wheel_get_preferred_width (GtkWidget *widget,
+ligma_color_wheel_get_preferred_width (GtkWidget *widget,
                                       gint      *minimum,
                                       gint      *natural)
 {
@@ -361,7 +361,7 @@ gimp_color_wheel_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-gimp_color_wheel_get_preferred_height (GtkWidget *widget,
+ligma_color_wheel_get_preferred_height (GtkWidget *widget,
                                        gint      *minimum,
                                        gint      *natural)
 {
@@ -377,11 +377,11 @@ gimp_color_wheel_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_color_wheel_size_allocate (GtkWidget     *widget,
+ligma_color_wheel_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
   gint                   focus_width;
   gint                   focus_pad;
 
@@ -483,7 +483,7 @@ hsv_to_rgb (gdouble *h,
 
 /* Computes the vertices of the saturation/value triangle */
 static void
-compute_triangle (GimpColorWheel *wheel,
+compute_triangle (LigmaColorWheel *wheel,
                   gint           *hx,
                   gint           *hy,
                   gint           *sx,
@@ -491,7 +491,7 @@ compute_triangle (GimpColorWheel *wheel,
                   gint           *vx,
                   gint           *vy)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
   GtkAllocation          allocation;
   gdouble                center_x;
   gdouble                center_y;
@@ -517,11 +517,11 @@ compute_triangle (GimpColorWheel *wheel,
 
 /* Computes whether a point is inside the hue ring */
 static gboolean
-is_in_ring (GimpColorWheel *wheel,
+is_in_ring (LigmaColorWheel *wheel,
             gdouble         x,
             gdouble         y)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
   GtkAllocation          allocation;
   gdouble                dx, dy, dist;
   gdouble                center_x;
@@ -545,7 +545,7 @@ is_in_ring (GimpColorWheel *wheel,
 
 /* Computes a saturation/value pair based on the mouse coordinates */
 static void
-compute_sv (GimpColorWheel *wheel,
+compute_sv (LigmaColorWheel *wheel,
             gdouble         x,
             gdouble         y,
             gdouble        *s,
@@ -636,7 +636,7 @@ compute_sv (GimpColorWheel *wheel,
 
 /* Computes whether a point is inside the saturation/value triangle */
 static gboolean
-is_in_triangle (GimpColorWheel *wheel,
+is_in_triangle (LigmaColorWheel *wheel,
                 gdouble         x,
                 gdouble         y)
 {
@@ -655,7 +655,7 @@ is_in_triangle (GimpColorWheel *wheel,
 
 /* Computes a value based on the mouse coordinates */
 static double
-compute_v (GimpColorWheel *wheel,
+compute_v (LigmaColorWheel *wheel,
            gdouble         x,
            gdouble         y)
 {
@@ -681,13 +681,13 @@ compute_v (GimpColorWheel *wheel,
 }
 
 static void
-gimp_color_wheel_drag_begin (GtkGestureDrag *gesture,
+ligma_color_wheel_drag_begin (GtkGestureDrag *gesture,
                              gdouble         start_x,
                              gdouble         start_y,
                              gpointer        user_data)
 {
-  GimpColorWheel        *wheel  = GIMP_COLOR_WHEEL (user_data);
-  GimpColorWheelPrivate *priv   = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel  = LIGMA_COLOR_WHEEL (user_data);
+  LigmaColorWheelPrivate *priv   = ligma_color_wheel_get_instance_private (wheel);
   GtkWidget             *widget = GTK_WIDGET (wheel);
   GdkCursor             *cursor;
 
@@ -700,7 +700,7 @@ gimp_color_wheel_drag_begin (GtkGestureDrag *gesture,
 
       priv->mode = DRAG_H;
 
-      gimp_color_wheel_set_color (wheel,
+      ligma_color_wheel_set_color (wheel,
                                   compute_v (wheel, start_x, start_y),
                                   priv->s,
                                   priv->v);
@@ -720,7 +720,7 @@ gimp_color_wheel_drag_begin (GtkGestureDrag *gesture,
       priv->mode = DRAG_SV;
 
       compute_sv (wheel, start_x, start_y, &s, &v);
-      gimp_color_wheel_set_color (wheel, priv->h, s, v);
+      ligma_color_wheel_set_color (wheel, priv->h, s, v);
 
       gtk_widget_grab_focus (widget);
       priv->focus_on_ring = FALSE;
@@ -728,13 +728,13 @@ gimp_color_wheel_drag_begin (GtkGestureDrag *gesture,
 }
 
 static void
-gimp_color_wheel_drag_update (GtkGestureDrag *gesture,
+ligma_color_wheel_drag_update (GtkGestureDrag *gesture,
                               gdouble         offset_x,
                               gdouble         offset_y,
                               gpointer        user_data)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (user_data);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (user_data);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
   gdouble                x, y;
 
   gtk_gesture_drag_get_start_point (gesture, &x, &y);
@@ -743,7 +743,7 @@ gimp_color_wheel_drag_update (GtkGestureDrag *gesture,
 
   if (priv->mode == DRAG_H)
     {
-      gimp_color_wheel_set_color (wheel,
+      ligma_color_wheel_set_color (wheel,
                                   compute_v (wheel, x, y), priv->s, priv->v);
     }
   else if (priv->mode == DRAG_SV)
@@ -751,18 +751,18 @@ gimp_color_wheel_drag_update (GtkGestureDrag *gesture,
       gdouble s, v;
 
       compute_sv (wheel, x, y, &s, &v);
-      gimp_color_wheel_set_color (wheel, priv->h, s, v);
+      ligma_color_wheel_set_color (wheel, priv->h, s, v);
     }
 }
 
 static void
-gimp_color_wheel_drag_end (GtkGestureDrag *gesture,
+ligma_color_wheel_drag_end (GtkGestureDrag *gesture,
                            gdouble         offset_x,
                            gdouble         offset_y,
                            gpointer        user_data)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (user_data);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (user_data);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
   DragMode               mode;
   gdouble                x, y;
 
@@ -777,7 +777,7 @@ gimp_color_wheel_drag_end (GtkGestureDrag *gesture,
 
   if (mode == DRAG_H)
     {
-      gimp_color_wheel_set_color (wheel,
+      ligma_color_wheel_set_color (wheel,
                                   compute_v (wheel, x, y), priv->s, priv->v);
     }
   else if (mode == DRAG_SV)
@@ -785,19 +785,19 @@ gimp_color_wheel_drag_end (GtkGestureDrag *gesture,
       gdouble s, v;
 
       compute_sv (wheel, x, y, &s, &v);
-      gimp_color_wheel_set_color (wheel, priv->h, s, v);
+      ligma_color_wheel_set_color (wheel, priv->h, s, v);
     }
 
   gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (wheel)), NULL);
 }
 
 static void
-gimp_color_wheel_drag_cancel (GtkGesture       *gesture,
+ligma_color_wheel_drag_cancel (GtkGesture       *gesture,
                               GdkEventSequence *sequence,
                               gpointer          user_data)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (user_data);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (user_data);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
 
   priv->mode = DRAG_NONE;
   gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (wheel)), NULL);
@@ -808,11 +808,11 @@ gimp_color_wheel_drag_cancel (GtkGesture       *gesture,
 
 /* Paints the hue ring */
 static void
-paint_ring (GimpColorWheel *wheel,
+paint_ring (LigmaColorWheel *wheel,
             cairo_t        *cr)
 {
   GtkWidget             *widget = GTK_WIDGET (wheel);
-  GimpColorWheelPrivate *priv   = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv   = ligma_color_wheel_get_instance_private (wheel);
   gint                   width, height;
   gint                   xx, yy;
   gdouble                dx, dy, dist;
@@ -883,7 +883,7 @@ paint_ring (GimpColorWheel *wheel,
 
       for (i = 0; i < height; i++)
         {
-          gimp_color_transform_process_pixels (priv->transform,
+          ligma_color_transform_process_pixels (priv->transform,
                                                format, b,
                                                format, b,
                                                width);
@@ -906,7 +906,7 @@ paint_ring (GimpColorWheel *wheel,
   b = 1.0;
   hsv_to_rgb (&r, &g, &b);
 
-  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
+  if (LIGMA_RGB_LUMINANCE (r, g, b) > 0.5)
     cairo_set_source_rgb (source_cr, 0.0, 0.0, 0.0);
   else
     cairo_set_source_rgb (source_cr, 1.0, 1.0, 1.0);
@@ -967,12 +967,12 @@ get_color (gdouble  h,
 
 /* Paints the HSV triangle */
 static void
-paint_triangle (GimpColorWheel *wheel,
+paint_triangle (LigmaColorWheel *wheel,
                 cairo_t        *cr,
                 gboolean        draw_focus)
 {
   GtkWidget             *widget = GTK_WIDGET (wheel);
-  GimpColorWheelPrivate *priv   = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv   = ligma_color_wheel_get_instance_private (wheel);
   gint                   hx, hy, sx, sy, vx, vy; /* HSV vertices */
   gint                   x1, y1, r1, g1, b1; /* First vertex in scanline order */
   gint                   x2, y2, r2, g2, b2; /* Second vertex */
@@ -1112,7 +1112,7 @@ paint_triangle (GimpColorWheel *wheel,
 
       for (i = 0; i < height; i++)
         {
-          gimp_color_transform_process_pixels (priv->transform,
+          ligma_color_transform_process_pixels (priv->transform,
                                                format, b,
                                                format, b,
                                                width);
@@ -1152,7 +1152,7 @@ paint_triangle (GimpColorWheel *wheel,
 
   gtk_style_context_save (context);
 
-  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
+  if (LIGMA_RGB_LUMINANCE (r, g, b) > 0.5)
     {
       gtk_style_context_add_class (context, "light-area-focus");
       cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
@@ -1193,17 +1193,17 @@ paint_triangle (GimpColorWheel *wheel,
 }
 
 static gboolean
-gimp_color_wheel_draw (GtkWidget *widget,
+ligma_color_wheel_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
   gboolean               draw_focus;
 
   draw_focus = gtk_widget_has_visible_focus (widget);
 
   if (! priv->transform)
-    gimp_color_wheel_create_transform (wheel);
+    ligma_color_wheel_create_transform (wheel);
 
   paint_ring (wheel, cr);
   paint_triangle (wheel, cr, draw_focus);
@@ -1221,11 +1221,11 @@ gimp_color_wheel_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_color_wheel_focus (GtkWidget        *widget,
+ligma_color_wheel_focus (GtkWidget        *widget,
                         GtkDirectionType  dir)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheel        *wheel = LIGMA_COLOR_WHEEL (widget);
+  LigmaColorWheelPrivate *priv  = ligma_color_wheel_get_instance_private (wheel);
 
   if (!gtk_widget_has_focus (widget))
     {
@@ -1277,7 +1277,7 @@ gimp_color_wheel_focus (GtkWidget        *widget,
 }
 
 /**
- * gimp_color_wheel_new:
+ * ligma_color_wheel_new:
  *
  * Creates a new HSV color selector.
  *
@@ -1286,13 +1286,13 @@ gimp_color_wheel_focus (GtkWidget        *widget,
  * Since: 2.10
  */
 GtkWidget*
-gimp_color_wheel_new (void)
+ligma_color_wheel_new (void)
 {
-  return g_object_new (GIMP_TYPE_COLOR_WHEEL, NULL);
+  return g_object_new (LIGMA_TYPE_COLOR_WHEEL, NULL);
 }
 
 /**
- * gimp_color_wheel_set_color:
+ * ligma_color_wheel_set_color:
  * @hsv: An HSV color selector
  * @h: Hue
  * @s: Saturation
@@ -1304,14 +1304,14 @@ gimp_color_wheel_new (void)
  * Since: 2.10
  */
 void
-gimp_color_wheel_set_color (GimpColorWheel *wheel,
+ligma_color_wheel_set_color (LigmaColorWheel *wheel,
                             gdouble         h,
                             gdouble         s,
                             gdouble         v)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
-  g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
+  g_return_if_fail (LIGMA_IS_COLOR_WHEEL (wheel));
   g_return_if_fail (h >= 0.0 && h <= 1.0);
   g_return_if_fail (s >= 0.0 && s <= 1.0);
   g_return_if_fail (v >= 0.0 && v <= 1.0);
@@ -1326,7 +1326,7 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
 }
 
 /**
- * gimp_color_wheel_get_color:
+ * ligma_color_wheel_get_color:
  * @hsv: An HSV color selector
  * @h: (out): Return value for the hue
  * @s: (out): Return value for the saturation
@@ -1338,14 +1338,14 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
  * Since: 2.10
  */
 void
-gimp_color_wheel_get_color (GimpColorWheel *wheel,
+ligma_color_wheel_get_color (LigmaColorWheel *wheel,
                             gdouble        *h,
                             gdouble        *s,
                             gdouble        *v)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
-  g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
+  g_return_if_fail (LIGMA_IS_COLOR_WHEEL (wheel));
 
   if (h) *h = priv->h;
   if (s) *s = priv->s;
@@ -1353,7 +1353,7 @@ gimp_color_wheel_get_color (GimpColorWheel *wheel,
 }
 
 /**
- * gimp_color_wheel_set_ring_fraction:
+ * ligma_color_wheel_set_ring_fraction:
  * @ring: A wheel color selector
  * @fraction: Ring fraction
  *
@@ -1362,12 +1362,12 @@ gimp_color_wheel_get_color (GimpColorWheel *wheel,
  * Since: 2.10
  */
 void
-gimp_color_wheel_set_ring_fraction (GimpColorWheel *hsv,
+ligma_color_wheel_set_ring_fraction (LigmaColorWheel *hsv,
                                     gdouble         fraction)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (hsv);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (hsv);
 
-  g_return_if_fail (GIMP_IS_COLOR_WHEEL (hsv));
+  g_return_if_fail (LIGMA_IS_COLOR_WHEEL (hsv));
 
   priv->ring_fraction = CLAMP (fraction, 0.01, 0.99);
 
@@ -1375,7 +1375,7 @@ gimp_color_wheel_set_ring_fraction (GimpColorWheel *hsv,
 }
 
 /**
- * gimp_color_wheel_get_ring_fraction:
+ * ligma_color_wheel_get_ring_fraction:
  * @ring: A wheel color selector
  *
  * Returns value: The ring fraction of the wheel color selector.
@@ -1383,42 +1383,42 @@ gimp_color_wheel_set_ring_fraction (GimpColorWheel *hsv,
  * Since: 2.10
  */
 gdouble
-gimp_color_wheel_get_ring_fraction (GimpColorWheel *wheel)
+ligma_color_wheel_get_ring_fraction (LigmaColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
-  g_return_val_if_fail (GIMP_IS_COLOR_WHEEL (wheel), DEFAULT_FRACTION);
+  g_return_val_if_fail (LIGMA_IS_COLOR_WHEEL (wheel), DEFAULT_FRACTION);
 
   return priv->ring_fraction;
 }
 
 /**
- * gimp_color_wheel_set_color_config:
- * @wheel:  a #GimpColorWheel widget.
- * @config: a #GimpColorConfig object.
+ * ligma_color_wheel_set_color_config:
+ * @wheel:  a #LigmaColorWheel widget.
+ * @config: a #LigmaColorConfig object.
  *
  * Sets the color management configuration to use with this color wheel.
  *
  * Since: 2.10
  */
 void
-gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
-                                   GimpColorConfig *config)
+ligma_color_wheel_set_color_config (LigmaColorWheel  *wheel,
+                                   LigmaColorConfig *config)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
-  g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_WHEEL (wheel));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
   if (config != priv->config)
     {
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_color_wheel_destroy_transform,
+                                                ligma_color_wheel_destroy_transform,
                                                 wheel);
 
-          gimp_color_wheel_destroy_transform (wheel);
+          ligma_color_wheel_destroy_transform (wheel);
         }
 
       g_set_object (&priv->config, config);
@@ -1426,15 +1426,15 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
       if (priv->config)
         {
           g_signal_connect_swapped (priv->config, "notify",
-                                    G_CALLBACK (gimp_color_wheel_destroy_transform),
+                                    G_CALLBACK (ligma_color_wheel_destroy_transform),
                                     wheel);
         }
     }
 }
 
 /**
- * gimp_color_wheel_is_adjusting:
- * @hsv: A #GimpColorWheel
+ * ligma_color_wheel_is_adjusting:
+ * @hsv: A #LigmaColorWheel
  *
  * An HSV color selector can be said to be adjusting if multiple rapid
  * changes are being made to its value, for example, when the user is
@@ -1448,20 +1448,20 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
  * Since: 2.10
  */
 gboolean
-gimp_color_wheel_is_adjusting (GimpColorWheel *wheel)
+ligma_color_wheel_is_adjusting (LigmaColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
-  g_return_val_if_fail (GIMP_IS_COLOR_WHEEL (wheel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_WHEEL (wheel), FALSE);
 
   return priv->mode != DRAG_NONE;
 }
 
 static void
-gimp_color_wheel_move (GimpColorWheel   *wheel,
+ligma_color_wheel_move (LigmaColorWheel   *wheel,
                        GtkDirectionType  dir)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
   gdouble                hue, sat, val;
   gint                   hx, hy, sx, sy, vx, vy; /* HSV vertices */
   gint                   x, y; /* position in triangle */
@@ -1530,38 +1530,38 @@ gimp_color_wheel_move (GimpColorWheel   *wheel,
   else if (hue > 1.0)
     hue = 0.0;
 
-  gimp_color_wheel_set_color (wheel, hue, sat, val);
+  ligma_color_wheel_set_color (wheel, hue, sat, val);
 }
 
 static void
-gimp_color_wheel_create_transform (GimpColorWheel *wheel)
+ligma_color_wheel_create_transform (LigmaColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
   if (priv->config)
     {
-      static GimpColorProfile *profile = NULL;
+      static LigmaColorProfile *profile = NULL;
 
       const Babl *format = babl_format ("cairo-RGB24");
 
       if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
+        profile = ligma_color_profile_new_rgb_srgb ();
 
-      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (wheel),
+      priv->transform = ligma_widget_get_color_transform (GTK_WIDGET (wheel),
                                                          priv->config,
                                                          profile,
                                                          format,
                                                          format,
                                                          NULL,
-                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                          FALSE);
     }
 }
 
 static void
-gimp_color_wheel_destroy_transform (GimpColorWheel *wheel)
+ligma_color_wheel_destroy_transform (LigmaColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+  LigmaColorWheelPrivate *priv = ligma_color_wheel_get_instance_private (wheel);
 
   if (priv->transform)
     {

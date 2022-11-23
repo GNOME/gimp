@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppickablebutton.c
- * Copyright (C) 2013 Michael Natterer <mitch@gimp.org>
+ * ligmapickablebutton.c
+ * Copyright (C) 2013 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,22 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimppickable.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmapickable.h"
 
-#include "gimpdnd.h"
-#include "gimpview.h"
-#include "gimpviewrenderer.h"
-#include "gimppickablebutton.h"
-#include "gimppickablepopup.h"
+#include "ligmadnd.h"
+#include "ligmaview.h"
+#include "ligmaviewrenderer.h"
+#include "ligmapickablebutton.h"
+#include "ligmapickablepopup.h"
 
 
 enum
@@ -48,113 +48,113 @@ enum
   PROP_PICKABLE
 };
 
-struct _GimpPickableButtonPrivate
+struct _LigmaPickableButtonPrivate
 {
   gint          view_size;
   gint          view_border_width;
 
-  GimpContext  *context;
-  GimpPickable *pickable;
+  LigmaContext  *context;
+  LigmaPickable *pickable;
 
   GtkWidget    *view;
 };
 
 
-static void     gimp_pickable_button_constructed   (GObject            *object);
-static void     gimp_pickable_button_dispose       (GObject            *object);
-static void     gimp_pickable_button_finalize      (GObject            *object);
-static void     gimp_pickable_button_set_property  (GObject            *object,
+static void     ligma_pickable_button_constructed   (GObject            *object);
+static void     ligma_pickable_button_dispose       (GObject            *object);
+static void     ligma_pickable_button_finalize      (GObject            *object);
+static void     ligma_pickable_button_set_property  (GObject            *object,
                                                     guint               property_id,
                                                     const GValue       *value,
                                                     GParamSpec         *pspec);
-static void     gimp_pickable_button_get_property  (GObject            *object,
+static void     ligma_pickable_button_get_property  (GObject            *object,
                                                     guint               property_id,
                                                     GValue             *value,
                                                     GParamSpec         *pspec);
 
-static void     gimp_pickable_button_clicked       (GtkButton          *button);
+static void     ligma_pickable_button_clicked       (GtkButton          *button);
 
-static void     gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
-                                                    GimpPickableButton *button);
-static void     gimp_pickable_button_drop_pickable (GtkWidget          *widget,
+static void     ligma_pickable_button_popup_confirm (LigmaPickablePopup  *popup,
+                                                    LigmaPickableButton *button);
+static void     ligma_pickable_button_drop_pickable (GtkWidget          *widget,
                                                     gint                x,
                                                     gint                y,
-                                                    GimpViewable       *viewable,
+                                                    LigmaViewable       *viewable,
                                                     gpointer            data);
-static void     gimp_pickable_button_notify_buffer (GimpPickable       *pickable,
+static void     ligma_pickable_button_notify_buffer (LigmaPickable       *pickable,
                                                     const GParamSpec   *pspec,
-                                                    GimpPickableButton *button);
+                                                    LigmaPickableButton *button);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPickableButton, gimp_pickable_button,
-                            GIMP_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPickableButton, ligma_pickable_button,
+                            LIGMA_TYPE_BUTTON)
 
-#define parent_class gimp_pickable_button_parent_class
+#define parent_class ligma_pickable_button_parent_class
 
 
 static void
-gimp_pickable_button_class_init (GimpPickableButtonClass *klass)
+ligma_pickable_button_class_init (LigmaPickableButtonClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
-  object_class->constructed  = gimp_pickable_button_constructed;
-  object_class->dispose      = gimp_pickable_button_dispose;
-  object_class->finalize     = gimp_pickable_button_finalize;
-  object_class->get_property = gimp_pickable_button_get_property;
-  object_class->set_property = gimp_pickable_button_set_property;
+  object_class->constructed  = ligma_pickable_button_constructed;
+  object_class->dispose      = ligma_pickable_button_dispose;
+  object_class->finalize     = ligma_pickable_button_finalize;
+  object_class->get_property = ligma_pickable_button_get_property;
+  object_class->set_property = ligma_pickable_button_set_property;
 
-  button_class->clicked      = gimp_pickable_button_clicked;
+  button_class->clicked      = ligma_pickable_button_clicked;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PICKABLE,
                                    g_param_spec_object ("pickable",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_PICKABLE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_PICKABLE,
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_pickable_button_init (GimpPickableButton *button)
+ligma_pickable_button_init (LigmaPickableButton *button)
 {
-  button->private = gimp_pickable_button_get_instance_private (button);
+  button->private = ligma_pickable_button_get_instance_private (button);
 
-  button->private->view_size         = GIMP_VIEW_SIZE_LARGE;
+  button->private->view_size         = LIGMA_VIEW_SIZE_LARGE;
   button->private->view_border_width = 1;
 
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (button), GIMP_TYPE_LAYER,
-                               gimp_pickable_button_drop_pickable,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (button), LIGMA_TYPE_LAYER,
+                               ligma_pickable_button_drop_pickable,
                                NULL);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (button), GIMP_TYPE_LAYER_MASK,
-                               gimp_pickable_button_drop_pickable,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (button), LIGMA_TYPE_LAYER_MASK,
+                               ligma_pickable_button_drop_pickable,
                                NULL);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (button), GIMP_TYPE_CHANNEL,
-                               gimp_pickable_button_drop_pickable,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (button), LIGMA_TYPE_CHANNEL,
+                               ligma_pickable_button_drop_pickable,
                                NULL);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (button), GIMP_TYPE_IMAGE,
-                               gimp_pickable_button_drop_pickable,
+  ligma_dnd_viewable_dest_add  (GTK_WIDGET (button), LIGMA_TYPE_IMAGE,
+                               ligma_pickable_button_drop_pickable,
                                NULL);
 }
 
 static void
-gimp_pickable_button_constructed (GObject *object)
+ligma_pickable_button_constructed (GObject *object)
 {
-  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+  LigmaPickableButton *button = LIGMA_PICKABLE_BUTTON (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_CONTEXT (button->private->context));
+  ligma_assert (LIGMA_IS_CONTEXT (button->private->context));
 
   button->private->view =
-    gimp_view_new_by_types (button->private->context,
-                            GIMP_TYPE_VIEW,
-                            GIMP_TYPE_VIEWABLE,
+    ligma_view_new_by_types (button->private->context,
+                            LIGMA_TYPE_VIEW,
+                            LIGMA_TYPE_VIEWABLE,
                             button->private->view_size,
                             button->private->view_border_width,
                             FALSE);
@@ -163,19 +163,19 @@ gimp_pickable_button_constructed (GObject *object)
 }
 
 static void
-gimp_pickable_button_dispose (GObject *object)
+ligma_pickable_button_dispose (GObject *object)
 {
-  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+  LigmaPickableButton *button = LIGMA_PICKABLE_BUTTON (object);
 
-  gimp_pickable_button_set_pickable (button, NULL);
+  ligma_pickable_button_set_pickable (button, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_pickable_button_finalize (GObject *object)
+ligma_pickable_button_finalize (GObject *object)
 {
-  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+  LigmaPickableButton *button = LIGMA_PICKABLE_BUTTON (object);
 
   g_clear_object (&button->private->context);
 
@@ -183,12 +183,12 @@ gimp_pickable_button_finalize (GObject *object)
 }
 
 static void
-gimp_pickable_button_set_property (GObject      *object,
+ligma_pickable_button_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+  LigmaPickableButton *button = LIGMA_PICKABLE_BUTTON (object);
 
   switch (property_id)
     {
@@ -198,7 +198,7 @@ gimp_pickable_button_set_property (GObject      *object,
       button->private->context = g_value_dup_object (value);
       break;
     case PROP_PICKABLE:
-      gimp_pickable_button_set_pickable (button, g_value_get_object (value));
+      ligma_pickable_button_set_pickable (button, g_value_get_object (value));
       break;
 
    default:
@@ -208,12 +208,12 @@ gimp_pickable_button_set_property (GObject      *object,
 }
 
 static void
-gimp_pickable_button_get_property (GObject    *object,
+ligma_pickable_button_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+  LigmaPickableButton *button = LIGMA_PICKABLE_BUTTON (object);
 
   switch (property_id)
     {
@@ -231,74 +231,74 @@ gimp_pickable_button_get_property (GObject    *object,
 }
 
 static void
-gimp_pickable_button_clicked (GtkButton *button)
+ligma_pickable_button_clicked (GtkButton *button)
 {
-  GimpPickableButton *pickable_button = GIMP_PICKABLE_BUTTON (button);
+  LigmaPickableButton *pickable_button = LIGMA_PICKABLE_BUTTON (button);
   GtkWidget          *popup;
 
-  popup = gimp_pickable_popup_new (pickable_button->private->context,
+  popup = ligma_pickable_popup_new (pickable_button->private->context,
                                    pickable_button->private->view_size,
                                    pickable_button->private->view_border_width);
 
   g_signal_connect (popup, "confirm",
-                    G_CALLBACK (gimp_pickable_button_popup_confirm),
+                    G_CALLBACK (ligma_pickable_button_popup_confirm),
                     button);
 
-  gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (button));
+  ligma_popup_show (LIGMA_POPUP (popup), GTK_WIDGET (button));
 }
 
 static void
-gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
-                                    GimpPickableButton *button)
+ligma_pickable_button_popup_confirm (LigmaPickablePopup  *popup,
+                                    LigmaPickableButton *button)
 {
-  GimpPickable *pickable = gimp_pickable_popup_get_pickable (popup);
+  LigmaPickable *pickable = ligma_pickable_popup_get_pickable (popup);
 
   if (pickable)
-    gimp_pickable_button_set_pickable (button, pickable);
+    ligma_pickable_button_set_pickable (button, pickable);
 }
 
 static void
-gimp_pickable_button_drop_pickable (GtkWidget    *widget,
+ligma_pickable_button_drop_pickable (GtkWidget    *widget,
                                     gint          x,
                                     gint          y,
-                                    GimpViewable *viewable,
+                                    LigmaViewable *viewable,
                                     gpointer      data)
 {
-  gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (widget),
-                                     GIMP_PICKABLE (viewable));
+  ligma_pickable_button_set_pickable (LIGMA_PICKABLE_BUTTON (widget),
+                                     LIGMA_PICKABLE (viewable));
 }
 
 static void
-gimp_pickable_button_notify_buffer (GimpPickable       *pickable,
+ligma_pickable_button_notify_buffer (LigmaPickable       *pickable,
                                     const GParamSpec   *pspec,
-                                    GimpPickableButton *button)
+                                    LigmaPickableButton *button)
 {
-  GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
+  GeglBuffer *buffer = ligma_pickable_get_buffer (pickable);
 
   if (buffer)
     g_object_notify (G_OBJECT (button), "pickable");
   else
-    gimp_pickable_button_set_pickable (button, NULL);
+    ligma_pickable_button_set_pickable (button, NULL);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_pickable_button_new (GimpContext *context,
+ligma_pickable_button_new (LigmaContext *context,
                           gint         view_size,
                           gint         view_border_width)
 {
-  GimpPickableButton *button;
+  LigmaPickableButton *button;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size >  0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_BUTTON_SIZE, NULL);
+                        view_size <= LIGMA_VIEWABLE_MAX_BUTTON_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  button = g_object_new (GIMP_TYPE_PICKABLE_BUTTON,
+  button = g_object_new (LIGMA_TYPE_PICKABLE_BUTTON,
                          "context", context,
                          NULL);
 
@@ -308,36 +308,36 @@ gimp_pickable_button_new (GimpContext *context,
   return GTK_WIDGET (button);
 }
 
-GimpPickable *
-gimp_pickable_button_get_pickable (GimpPickableButton *button)
+LigmaPickable *
+ligma_pickable_button_get_pickable (LigmaPickableButton *button)
 {
-  g_return_val_if_fail (GIMP_IS_PICKABLE_BUTTON (button), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE_BUTTON (button), NULL);
 
   return button->private->pickable;
 }
 
 void
-gimp_pickable_button_set_pickable (GimpPickableButton *button,
-                                   GimpPickable       *pickable)
+ligma_pickable_button_set_pickable (LigmaPickableButton *button,
+                                   LigmaPickable       *pickable)
 {
-  g_return_if_fail (GIMP_IS_PICKABLE_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_PICKABLE_BUTTON (button));
 
   if (pickable != button->private->pickable)
     {
       if (button->private->pickable)
         g_signal_handlers_disconnect_by_func (button->private->pickable,
-                                              gimp_pickable_button_notify_buffer,
+                                              ligma_pickable_button_notify_buffer,
                                               button);
 
       g_set_object (&button->private->pickable, pickable);
 
       if (button->private->pickable)
         g_signal_connect (button->private->pickable, "notify::buffer",
-                          G_CALLBACK (gimp_pickable_button_notify_buffer),
+                          G_CALLBACK (ligma_pickable_button_notify_buffer),
                           button);
 
-      gimp_view_set_viewable (GIMP_VIEW (button->private->view),
-                              GIMP_VIEWABLE (pickable));
+      ligma_view_set_viewable (LIGMA_VIEW (button->private->view),
+                              LIGMA_VIEWABLE (pickable));
 
       g_object_notify (G_OBJECT (button), "pickable");
     }

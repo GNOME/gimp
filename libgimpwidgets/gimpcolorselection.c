@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorselection.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacolorselection.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,27 +24,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolorarea.h"
-#include "gimpcolornotebook.h"
-#include "gimpcolorscales.h"
-#include "gimpcolorselect.h"
-#include "gimpcolorselection.h"
-#include "gimphelpui.h"
-#include "gimpicons.h"
-#include "gimpwidgets.h"
-#include "gimpwidgets-private.h"
+#include "ligmacolorarea.h"
+#include "ligmacolornotebook.h"
+#include "ligmacolorscales.h"
+#include "ligmacolorselect.h"
+#include "ligmacolorselection.h"
+#include "ligmahelpui.h"
+#include "ligmaicons.h"
+#include "ligmawidgets.h"
+#include "ligmawidgets-private.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolorselection
- * @title: GimpColorSelection
+ * SECTION: ligmacolorselection
+ * @title: LigmaColorSelection
  * @short_description: Widget for doing a color selection.
  *
  * Widget for doing a color selection.
@@ -80,13 +80,13 @@ enum
 };
 
 
-struct _GimpColorSelectionPrivate
+struct _LigmaColorSelectionPrivate
 {
   gboolean                  show_alpha;
 
-  GimpHSV                   hsv;
-  GimpRGB                   rgb;
-  GimpColorSelectorChannel  channel;
+  LigmaHSV                   hsv;
+  LigmaRGB                   rgb;
+  LigmaColorSelectorChannel  channel;
 
   GtkWidget                *left_vbox;
   GtkWidget                *right_vbox;
@@ -98,55 +98,55 @@ struct _GimpColorSelectionPrivate
   GtkWidget                *old_color;
 };
 
-#define GET_PRIVATE(obj) (((GimpColorSelection *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaColorSelection *) (obj))->priv)
 
 
-static void   gimp_color_selection_set_property      (GObject            *object,
+static void   ligma_color_selection_set_property      (GObject            *object,
                                                       guint               property_id,
                                                       const GValue       *value,
                                                       GParamSpec         *pspec);
 
-static void   gimp_color_selection_switch_page       (GtkWidget          *widget,
+static void   ligma_color_selection_switch_page       (GtkWidget          *widget,
                                                       gpointer            page,
                                                       guint               page_num,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_notebook_changed  (GimpColorSelector  *selector,
-                                                      const GimpRGB      *rgb,
-                                                      const GimpHSV      *hsv,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_scales_changed    (GimpColorSelector  *selector,
-                                                      const GimpRGB      *rgb,
-                                                      const GimpHSV      *hsv,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_color_picked      (GtkWidget          *widget,
-                                                      const GimpRGB      *rgb,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_entry_changed     (GimpColorHexEntry  *entry,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_channel_changed   (GimpColorSelector  *selector,
-                                                      GimpColorSelectorChannel channel,
-                                                      GimpColorSelection *selection);
-static void   gimp_color_selection_new_color_changed (GtkWidget          *widget,
-                                                      GimpColorSelection *selection);
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_notebook_changed  (LigmaColorSelector  *selector,
+                                                      const LigmaRGB      *rgb,
+                                                      const LigmaHSV      *hsv,
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_scales_changed    (LigmaColorSelector  *selector,
+                                                      const LigmaRGB      *rgb,
+                                                      const LigmaHSV      *hsv,
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_color_picked      (GtkWidget          *widget,
+                                                      const LigmaRGB      *rgb,
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_entry_changed     (LigmaColorHexEntry  *entry,
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_channel_changed   (LigmaColorSelector  *selector,
+                                                      LigmaColorSelectorChannel channel,
+                                                      LigmaColorSelection *selection);
+static void   ligma_color_selection_new_color_changed (GtkWidget          *widget,
+                                                      LigmaColorSelection *selection);
 
-static void   gimp_color_selection_update            (GimpColorSelection *selection,
+static void   ligma_color_selection_update            (LigmaColorSelection *selection,
                                                       UpdateType          update);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelection, gimp_color_selection,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorSelection, ligma_color_selection,
                             GTK_TYPE_BOX)
 
-#define parent_class gimp_color_selection_parent_class
+#define parent_class ligma_color_selection_parent_class
 
 static guint selection_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_color_selection_class_init (GimpColorSelectionClass *klass)
+ligma_color_selection_class_init (LigmaColorSelectionClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_color_selection_set_property;
+  object_class->set_property = ligma_color_selection_set_property;
 
   klass->color_changed       = NULL;
 
@@ -154,24 +154,24 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The color config used by this color selection",
-                                                        GIMP_TYPE_COLOR_CONFIG,
+                                                        LIGMA_TYPE_COLOR_CONFIG,
                                                         G_PARAM_WRITABLE));
 
   selection_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorSelectionClass, color_changed),
+                  G_STRUCT_OFFSET (LigmaColorSelectionClass, color_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelection");
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "LigmaColorSelection");
 }
 
 static void
-gimp_color_selection_init (GimpColorSelection *selection)
+ligma_color_selection_init (LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
   GtkWidget                 *main_hbox;
   GtkWidget                 *hbox;
   GtkWidget                 *vbox;
@@ -182,7 +182,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
 
-  selection->priv = gimp_color_selection_get_instance_private (selection);
+  selection->priv = ligma_color_selection_get_instance_private (selection);
 
   priv = selection->priv;
 
@@ -191,10 +191,10 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selection),
                                   GTK_ORIENTATION_VERTICAL);
 
-  gimp_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  ligma_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
+  ligma_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  priv->channel = GIMP_COLOR_SELECTOR_RED;
+  priv->channel = LIGMA_COLOR_SELECTOR_RED;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selection), main_hbox, TRUE, TRUE, 0);
@@ -206,32 +206,32 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (priv->left_vbox);
 
-  if (_gimp_ensure_modules_func)
+  if (_ligma_ensure_modules_func)
     {
-      g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
-      _gimp_ensure_modules_func ();
+      g_type_class_ref (LIGMA_TYPE_COLOR_SELECT);
+      _ligma_ensure_modules_func ();
     }
 
-  priv->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
+  priv->notebook = ligma_color_selector_new (LIGMA_TYPE_COLOR_NOTEBOOK,
                                             &priv->rgb,
                                             &priv->hsv,
                                             priv->channel);
 
-  if (_gimp_ensure_modules_func)
-    g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
+  if (_ligma_ensure_modules_func)
+    g_type_class_unref (g_type_class_peek (LIGMA_TYPE_COLOR_SELECT));
 
-  gimp_color_selector_set_toggles_visible
-    (GIMP_COLOR_SELECTOR (priv->notebook), FALSE);
+  ligma_color_selector_set_toggles_visible
+    (LIGMA_COLOR_SELECTOR (priv->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (priv->left_vbox), priv->notebook,
                       TRUE, TRUE, 0);
   gtk_widget_show (priv->notebook);
 
   g_signal_connect (priv->notebook, "color-changed",
-                    G_CALLBACK (gimp_color_selection_notebook_changed),
+                    G_CALLBACK (ligma_color_selection_notebook_changed),
                     selection);
-  g_signal_connect (gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (priv->notebook)),
+  g_signal_connect (ligma_color_notebook_get_notebook (LIGMA_COLOR_NOTEBOOK (priv->notebook)),
                     "switch-page",
-                    G_CALLBACK (gimp_color_selection_switch_page),
+                    G_CALLBACK (ligma_color_selection_switch_page),
                     selection);
 
   /*  The hbox for the color_areas  */
@@ -272,10 +272,10 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  priv->new_color = gimp_color_area_new (&priv->rgb,
+  priv->new_color = ligma_color_area_new (&priv->rgb,
                                          priv->show_alpha ?
-                                         GIMP_COLOR_AREA_SMALL_CHECKS :
-                                         GIMP_COLOR_AREA_FLAT,
+                                         LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                         LIGMA_COLOR_AREA_FLAT,
                                          GDK_BUTTON1_MASK |
                                          GDK_BUTTON2_MASK);
   gtk_size_group_add_widget (new_group, priv->new_color);
@@ -283,13 +283,13 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (priv->new_color);
 
   g_signal_connect (priv->new_color, "color-changed",
-                    G_CALLBACK (gimp_color_selection_new_color_changed),
+                    G_CALLBACK (ligma_color_selection_new_color_changed),
                     selection);
 
-  priv->old_color = gimp_color_area_new (&priv->rgb,
+  priv->old_color = ligma_color_area_new (&priv->rgb,
                                          priv->show_alpha ?
-                                         GIMP_COLOR_AREA_SMALL_CHECKS :
-                                         GIMP_COLOR_AREA_FLAT,
+                                         LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                         LIGMA_COLOR_AREA_FLAT,
                                          GDK_BUTTON1_MASK |
                                          GDK_BUTTON2_MASK);
   gtk_drag_dest_unset (priv->old_color);
@@ -303,23 +303,23 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (priv->right_vbox);
 
-  priv->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
+  priv->scales = ligma_color_selector_new (LIGMA_TYPE_COLOR_SCALES,
                                           &priv->rgb,
                                           &priv->hsv,
                                           priv->channel);
-  gimp_color_selector_set_toggles_visible
-    (GIMP_COLOR_SELECTOR (priv->scales), TRUE);
-  gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (priv->scales),
+  ligma_color_selector_set_toggles_visible
+    (LIGMA_COLOR_SELECTOR (priv->scales), TRUE);
+  ligma_color_selector_set_show_alpha (LIGMA_COLOR_SELECTOR (priv->scales),
                                       priv->show_alpha);
   gtk_box_pack_start (GTK_BOX (priv->right_vbox), priv->scales,
                       TRUE, TRUE, 0);
   gtk_widget_show (priv->scales);
 
   g_signal_connect (priv->scales, "channel-changed",
-                    G_CALLBACK (gimp_color_selection_channel_changed),
+                    G_CALLBACK (ligma_color_selection_channel_changed),
                     selection);
   g_signal_connect (priv->scales, "color-changed",
-                    G_CALLBACK (gimp_color_selection_scales_changed),
+                    G_CALLBACK (ligma_color_selection_scales_changed),
                     selection);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -327,16 +327,16 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (hbox);
 
   /*  The color picker  */
-  button = gimp_pick_button_new ();
+  button = ligma_pick_button_new ();
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "color-picked",
-                    G_CALLBACK (gimp_color_selection_color_picked),
+                    G_CALLBACK (ligma_color_selection_color_picked),
                     selection);
 
   /* The hex triplet entry */
-  entry = gimp_color_hex_entry_new ();
+  entry = ligma_color_hex_entry_new ();
   gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
@@ -348,22 +348,22 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_object_set_data (G_OBJECT (selection), "color-hex-entry", entry);
 
   g_signal_connect (entry, "color-changed",
-                    G_CALLBACK (gimp_color_selection_entry_changed),
+                    G_CALLBACK (ligma_color_selection_entry_changed),
                     selection);
 }
 
 static void
-gimp_color_selection_set_property (GObject      *object,
+ligma_color_selection_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpColorSelection *selection = GIMP_COLOR_SELECTION (object);
+  LigmaColorSelection *selection = LIGMA_COLOR_SELECTION (object);
 
   switch (property_id)
     {
     case PROP_CONFIG:
-      gimp_color_selection_set_config (selection, g_value_get_object (value));
+      ligma_color_selection_set_config (selection, g_value_get_object (value));
       break;
 
     default:
@@ -374,32 +374,32 @@ gimp_color_selection_set_property (GObject      *object,
 
 
 /**
- * gimp_color_selection_new:
+ * ligma_color_selection_new:
  *
- * Creates a new #GimpColorSelection widget.
+ * Creates a new #LigmaColorSelection widget.
  *
- * Returns: The new #GimpColorSelection widget.
+ * Returns: The new #LigmaColorSelection widget.
  **/
 GtkWidget *
-gimp_color_selection_new (void)
+ligma_color_selection_new (void)
 {
-  return g_object_new (GIMP_TYPE_COLOR_SELECTION, NULL);
+  return g_object_new (LIGMA_TYPE_COLOR_SELECTION, NULL);
 }
 
 /**
- * gimp_color_selection_set_show_alpha:
- * @selection:  A #GimpColorSelection widget.
+ * ligma_color_selection_set_show_alpha:
+ * @selection:  A #LigmaColorSelection widget.
  * @show_alpha: The new @show_alpha setting.
  *
  * Sets the @show_alpha property of the @selection widget.
  **/
 void
-gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
+ligma_color_selection_set_show_alpha (LigmaColorSelection *selection,
                                      gboolean            show_alpha)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
 
   priv = GET_PRIVATE (selection);
 
@@ -407,164 +407,164 @@ gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
     {
       priv->show_alpha = show_alpha ? TRUE : FALSE;
 
-      gimp_color_selector_set_show_alpha
-        (GIMP_COLOR_SELECTOR (priv->notebook), priv->show_alpha);
-      gimp_color_selector_set_show_alpha
-        (GIMP_COLOR_SELECTOR (priv->scales), priv->show_alpha);
+      ligma_color_selector_set_show_alpha
+        (LIGMA_COLOR_SELECTOR (priv->notebook), priv->show_alpha);
+      ligma_color_selector_set_show_alpha
+        (LIGMA_COLOR_SELECTOR (priv->scales), priv->show_alpha);
 
-      gimp_color_area_set_type (GIMP_COLOR_AREA (priv->new_color),
+      ligma_color_area_set_type (LIGMA_COLOR_AREA (priv->new_color),
                                 priv->show_alpha ?
-                                GIMP_COLOR_AREA_SMALL_CHECKS :
-                                GIMP_COLOR_AREA_FLAT);
-      gimp_color_area_set_type (GIMP_COLOR_AREA (priv->old_color),
+                                LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                LIGMA_COLOR_AREA_FLAT);
+      ligma_color_area_set_type (LIGMA_COLOR_AREA (priv->old_color),
                                 priv->show_alpha ?
-                                GIMP_COLOR_AREA_SMALL_CHECKS :
-                                GIMP_COLOR_AREA_FLAT);
+                                LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                LIGMA_COLOR_AREA_FLAT);
     }
 }
 
 /**
- * gimp_color_selection_get_show_alpha:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_get_show_alpha:
+ * @selection: A #LigmaColorSelection widget.
  *
  * Returns the @selection's @show_alpha property.
  *
- * Returns: %TRUE if the #GimpColorSelection has alpha controls.
+ * Returns: %TRUE if the #LigmaColorSelection has alpha controls.
  **/
 gboolean
-gimp_color_selection_get_show_alpha (GimpColorSelection *selection)
+ligma_color_selection_get_show_alpha (LigmaColorSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTION (selection), FALSE);
 
   return GET_PRIVATE (selection)->show_alpha;
 }
 
 /**
- * gimp_color_selection_set_color:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_set_color:
+ * @selection: A #LigmaColorSelection widget.
  * @color:     The @color to set as current color.
  *
- * Sets the #GimpColorSelection's current color to the new @color.
+ * Sets the #LigmaColorSelection's current color to the new @color.
  **/
 void
-gimp_color_selection_set_color (GimpColorSelection *selection,
-                                const GimpRGB      *color)
+ligma_color_selection_set_color (LigmaColorSelection *selection,
+                                const LigmaRGB      *color)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
   priv = GET_PRIVATE (selection);
 
   priv->rgb = *color;
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  ligma_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  gimp_color_selection_update (selection, UPDATE_ALL);
+  ligma_color_selection_update (selection, UPDATE_ALL);
 
-  gimp_color_selection_color_changed (selection);
+  ligma_color_selection_color_changed (selection);
 }
 
 /**
- * gimp_color_selection_get_color:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_get_color:
+ * @selection: A #LigmaColorSelection widget.
  * @color:     (out caller-allocates): Return location for the
  *             @selection's current @color.
  *
- * This function returns the #GimpColorSelection's current color.
+ * This function returns the #LigmaColorSelection's current color.
  **/
 void
-gimp_color_selection_get_color (GimpColorSelection *selection,
-                                GimpRGB            *color)
+ligma_color_selection_get_color (LigmaColorSelection *selection,
+                                LigmaRGB            *color)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
   *color = GET_PRIVATE (selection)->rgb;
 }
 
 /**
- * gimp_color_selection_set_old_color:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_set_old_color:
+ * @selection: A #LigmaColorSelection widget.
  * @color:     The @color to set as old color.
  *
- * Sets the #GimpColorSelection's old color.
+ * Sets the #LigmaColorSelection's old color.
  **/
 void
-gimp_color_selection_set_old_color (GimpColorSelection *selection,
-                                    const GimpRGB      *color)
+ligma_color_selection_set_old_color (LigmaColorSelection *selection,
+                                    const LigmaRGB      *color)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color);
+  ligma_color_area_set_color (LIGMA_COLOR_AREA (priv->old_color), color);
 }
 
 /**
- * gimp_color_selection_get_old_color:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_get_old_color:
+ * @selection: A #LigmaColorSelection widget.
  * @color:     (out caller-allocates): Return location for the
  *             @selection's old @color.
  *
- * This function returns the #GimpColorSelection's old color.
+ * This function returns the #LigmaColorSelection's old color.
  **/
 void
-gimp_color_selection_get_old_color (GimpColorSelection *selection,
-                                    GimpRGB            *color)
+ligma_color_selection_get_old_color (LigmaColorSelection *selection,
+                                    LigmaRGB            *color)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), color);
+  ligma_color_area_get_color (LIGMA_COLOR_AREA (priv->old_color), color);
 }
 
 /**
- * gimp_color_selection_reset:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_reset:
+ * @selection: A #LigmaColorSelection widget.
  *
- * Sets the #GimpColorSelection's current color to its old color.
+ * Sets the #LigmaColorSelection's current color to its old color.
  **/
 void
-gimp_color_selection_reset (GimpColorSelection *selection)
+ligma_color_selection_reset (LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv;
-  GimpRGB                    color;
+  LigmaColorSelectionPrivate *priv;
+  LigmaRGB                    color;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), &color);
-  gimp_color_selection_set_color (selection, &color);
+  ligma_color_area_get_color (LIGMA_COLOR_AREA (priv->old_color), &color);
+  ligma_color_selection_set_color (selection, &color);
 }
 
 /**
- * gimp_color_selection_color_changed:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_color_changed:
+ * @selection: A #LigmaColorSelection widget.
  *
  * Emits the "color-changed" signal.
  **/
 void
-gimp_color_selection_color_changed (GimpColorSelection *selection)
+ligma_color_selection_color_changed (LigmaColorSelection *selection)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
 
   g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
 }
 
 /**
- * gimp_color_selection_set_simulation:
- * @selection: A #GimpColorSelection widget.
- * @profile:   A #GimpColorProfile object.
- * @intent:    A #GimpColorRenderingIntent enum.
+ * ligma_color_selection_set_simulation:
+ * @selection: A #LigmaColorSelection widget.
+ * @profile:   A #LigmaColorProfile object.
+ * @intent:    A #LigmaColorRenderingIntent enum.
  * @bpc:       A gboolean.
  *
  * Sets the simulation options to use with this color selection.
@@ -572,14 +572,14 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
  * Since: 3.0
  */
 void
-gimp_color_selection_set_simulation (GimpColorSelection *selection,
-                                     GimpColorProfile   *profile,
-                                     GimpColorRenderingIntent intent,
+ligma_color_selection_set_simulation (LigmaColorSelection *selection,
+                                     LigmaColorProfile   *profile,
+                                     LigmaColorRenderingIntent intent,
                                      gboolean            bpc)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
 
-  gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+  ligma_color_notebook_set_simulation (LIGMA_COLOR_NOTEBOOK (selection->priv->notebook),
                                       profile,
                                       intent,
                                       bpc);
@@ -588,54 +588,54 @@ gimp_color_selection_set_simulation (GimpColorSelection *selection,
 }
 
 /**
- * gimp_color_selection_set_config:
- * @selection: A #GimpColorSelection widget.
- * @config:    A #GimpColorConfig object.
+ * ligma_color_selection_set_config:
+ * @selection: A #LigmaColorSelection widget.
+ * @config:    A #LigmaColorConfig object.
  *
  * Sets the color management configuration to use with this color selection.
  *
  * Since: 2.4
  */
 void
-gimp_color_selection_set_config (GimpColorSelection *selection,
-                                 GimpColorConfig    *config)
+ligma_color_selection_set_config (LigmaColorSelection *selection,
+                                 LigmaColorConfig    *config)
 {
-  GimpColorSelectionPrivate *priv;
+  LigmaColorSelectionPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (priv->notebook),
+  ligma_color_selector_set_config (LIGMA_COLOR_SELECTOR (priv->notebook),
                                   config);
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (priv->scales),
+  ligma_color_selector_set_config (LIGMA_COLOR_SELECTOR (priv->scales),
                                   config);
-  gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->old_color),
+  ligma_color_area_set_color_config (LIGMA_COLOR_AREA (priv->old_color),
                                     config);
-  gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->new_color),
+  ligma_color_area_set_color_config (LIGMA_COLOR_AREA (priv->new_color),
                                     config);
 }
 
 /**
- * gimp_color_selection_get_notebook:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_get_notebook:
+ * @selection: A #LigmaColorSelection widget.
  *
- * Returns: (transfer none): The selection's #GimpColorNotebook.
+ * Returns: (transfer none): The selection's #LigmaColorNotebook.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_color_selection_get_notebook (GimpColorSelection *selection)
+ligma_color_selection_get_notebook (LigmaColorSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTION (selection), NULL);
 
   return GET_PRIVATE (selection)->notebook;
 }
 
 /**
- * gimp_color_selection_get_right_vbox:
- * @selection: A #GimpColorSelection widget.
+ * ligma_color_selection_get_right_vbox:
+ * @selection: A #LigmaColorSelection widget.
  *
  * Returns: (transfer none) (type GtkBox): The selection's right #GtkBox which
  *          contains the color scales.
@@ -643,9 +643,9 @@ gimp_color_selection_get_notebook (GimpColorSelection *selection)
  * Since: 3.0
  */
 GtkWidget *
-gimp_color_selection_get_right_vbox (GimpColorSelection *selection)
+ligma_color_selection_get_right_vbox (LigmaColorSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTION (selection), NULL);
 
   return GET_PRIVATE (selection)->right_vbox;
 }
@@ -654,170 +654,170 @@ gimp_color_selection_get_right_vbox (GimpColorSelection *selection)
 /*  private functions  */
 
 static void
-gimp_color_selection_switch_page (GtkWidget          *widget,
+ligma_color_selection_switch_page (GtkWidget          *widget,
                                   gpointer            page,
                                   guint               page_num,
-                                  GimpColorSelection *selection)
+                                  LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv     = GET_PRIVATE (selection);
-  GimpColorNotebook         *notebook = GIMP_COLOR_NOTEBOOK (priv->notebook);
-  GimpColorSelector         *current;
+  LigmaColorSelectionPrivate *priv     = GET_PRIVATE (selection);
+  LigmaColorNotebook         *notebook = LIGMA_COLOR_NOTEBOOK (priv->notebook);
+  LigmaColorSelector         *current;
   gboolean                   sensitive;
 
-  current = gimp_color_notebook_get_current_selector (notebook);
+  current = ligma_color_notebook_get_current_selector (notebook);
 
-  sensitive = (GIMP_COLOR_SELECTOR_GET_CLASS (current)->set_channel != NULL);
+  sensitive = (LIGMA_COLOR_SELECTOR_GET_CLASS (current)->set_channel != NULL);
 
-  gimp_color_selector_set_toggles_sensitive
-    (GIMP_COLOR_SELECTOR (priv->scales), sensitive);
+  ligma_color_selector_set_toggles_sensitive
+    (LIGMA_COLOR_SELECTOR (priv->scales), sensitive);
 }
 
 static void
-gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
-                                       const GimpRGB      *rgb,
-                                       const GimpHSV      *hsv,
-                                       GimpColorSelection *selection)
+ligma_color_selection_notebook_changed (LigmaColorSelector  *selector,
+                                       const LigmaRGB      *rgb,
+                                       const LigmaHSV      *hsv,
+                                       LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
   priv->hsv = *hsv;
   priv->rgb = *rgb;
 
-  gimp_color_selection_update (selection,
+  ligma_color_selection_update (selection,
                                UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
-  gimp_color_selection_color_changed (selection);
+  ligma_color_selection_color_changed (selection);
 }
 
 static void
-gimp_color_selection_scales_changed (GimpColorSelector  *selector,
-                                     const GimpRGB      *rgb,
-                                     const GimpHSV      *hsv,
-                                     GimpColorSelection *selection)
+ligma_color_selection_scales_changed (LigmaColorSelector  *selector,
+                                     const LigmaRGB      *rgb,
+                                     const LigmaHSV      *hsv,
+                                     LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
   priv->rgb = *rgb;
   priv->hsv = *hsv;
 
-  gimp_color_selection_update (selection,
+  ligma_color_selection_update (selection,
                                UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
-  gimp_color_selection_color_changed (selection);
+  ligma_color_selection_color_changed (selection);
 }
 
 static void
-gimp_color_selection_color_picked (GtkWidget          *widget,
-                                   const GimpRGB      *rgb,
-                                   GimpColorSelection *selection)
+ligma_color_selection_color_picked (GtkWidget          *widget,
+                                   const LigmaRGB      *rgb,
+                                   LigmaColorSelection *selection)
 {
-  gimp_color_selection_set_color (selection, rgb);
+  ligma_color_selection_set_color (selection, rgb);
 }
 
 static void
-gimp_color_selection_entry_changed (GimpColorHexEntry  *entry,
-                                    GimpColorSelection *selection)
+ligma_color_selection_entry_changed (LigmaColorHexEntry  *entry,
+                                    LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
-  gimp_color_hex_entry_get_color (entry, &priv->rgb);
+  ligma_color_hex_entry_get_color (entry, &priv->rgb);
 
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  ligma_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  gimp_color_selection_update (selection,
+  ligma_color_selection_update (selection,
                                UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_COLOR);
-  gimp_color_selection_color_changed (selection);
+  ligma_color_selection_color_changed (selection);
 }
 
 static void
-gimp_color_selection_channel_changed (GimpColorSelector        *selector,
-                                      GimpColorSelectorChannel  channel,
-                                      GimpColorSelection       *selection)
+ligma_color_selection_channel_changed (LigmaColorSelector        *selector,
+                                      LigmaColorSelectorChannel  channel,
+                                      LigmaColorSelection       *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
   priv->channel = channel;
 
-  gimp_color_selector_set_channel (GIMP_COLOR_SELECTOR (priv->notebook),
+  ligma_color_selector_set_channel (LIGMA_COLOR_SELECTOR (priv->notebook),
                                    priv->channel);
 }
 
 static void
-gimp_color_selection_new_color_changed (GtkWidget          *widget,
-                                        GimpColorSelection *selection)
+ligma_color_selection_new_color_changed (GtkWidget          *widget,
+                                        LigmaColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &priv->rgb);
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  ligma_color_area_get_color (LIGMA_COLOR_AREA (widget), &priv->rgb);
+  ligma_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  gimp_color_selection_update (selection,
+  ligma_color_selection_update (selection,
                                UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_ENTRY);
-  gimp_color_selection_color_changed (selection);
+  ligma_color_selection_color_changed (selection);
 }
 
 static void
-gimp_color_selection_update (GimpColorSelection *selection,
+ligma_color_selection_update (LigmaColorSelection *selection,
                              UpdateType          update)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  LigmaColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
   if (update & UPDATE_NOTEBOOK)
     {
       g_signal_handlers_block_by_func (priv->notebook,
-                                       gimp_color_selection_notebook_changed,
+                                       ligma_color_selection_notebook_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->notebook),
+      ligma_color_selector_set_color (LIGMA_COLOR_SELECTOR (priv->notebook),
                                      &priv->rgb,
                                      &priv->hsv);
 
       g_signal_handlers_unblock_by_func (priv->notebook,
-                                         gimp_color_selection_notebook_changed,
+                                         ligma_color_selection_notebook_changed,
                                          selection);
     }
 
   if (update & UPDATE_SCALES)
     {
       g_signal_handlers_block_by_func (priv->scales,
-                                       gimp_color_selection_scales_changed,
+                                       ligma_color_selection_scales_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->scales),
+      ligma_color_selector_set_color (LIGMA_COLOR_SELECTOR (priv->scales),
                                      &priv->rgb,
                                      &priv->hsv);
 
       g_signal_handlers_unblock_by_func (priv->scales,
-                                         gimp_color_selection_scales_changed,
+                                         ligma_color_selection_scales_changed,
                                          selection);
     }
 
   if (update & UPDATE_ENTRY)
     {
-      GimpColorHexEntry *entry;
+      LigmaColorHexEntry *entry;
 
       entry = g_object_get_data (G_OBJECT (selection), "color-hex-entry");
 
       g_signal_handlers_block_by_func (entry,
-                                       gimp_color_selection_entry_changed,
+                                       ligma_color_selection_entry_changed,
                                        selection);
 
-      gimp_color_hex_entry_set_color (entry, &priv->rgb);
+      ligma_color_hex_entry_set_color (entry, &priv->rgb);
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_color_selection_entry_changed,
+                                         ligma_color_selection_entry_changed,
                                          selection);
     }
 
   if (update & UPDATE_COLOR)
     {
       g_signal_handlers_block_by_func (priv->new_color,
-                                       gimp_color_selection_new_color_changed,
+                                       ligma_color_selection_new_color_changed,
                                        selection);
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (priv->new_color),
+      ligma_color_area_set_color (LIGMA_COLOR_AREA (priv->new_color),
                                  &priv->rgb);
 
       g_signal_handlers_unblock_by_func (priv->new_color,
-                                         gimp_color_selection_new_color_changed,
+                                         ligma_color_selection_new_color_changed,
                                          selection);
     }
 }

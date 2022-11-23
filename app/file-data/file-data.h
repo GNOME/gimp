@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #define __FILE_DATA_H__
 
 
-void   file_data_init (Gimp *gimp);
-void   file_data_exit (Gimp *gimp);
+void   file_data_init (Ligma *ligma);
+void   file_data_exit (Ligma *ligma);
 
 
 #endif /* __FILE_DATA_H__ */

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton-kwin.c
- * Copyright (C) 2017 Jehan <jehan@gimp.org>
+ * ligmapickbutton-kwin.c
+ * Copyright (C) 2017 Jehan <jehan@ligma.org>
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,17 +19,17 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-default.h"
-#include "gimppickbutton-kwin.h"
+#include "ligmawidgetstypes.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-default.h"
+#include "ligmapickbutton-kwin.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 gboolean
-_gimp_pick_button_kwin_available (void)
+_ligma_pick_button_kwin_available (void)
 {
   GDBusProxy *proxy = NULL;
   gboolean    available = FALSE;
@@ -60,9 +60,9 @@ _gimp_pick_button_kwin_available (void)
   return available;
 }
 
-/* entry point to this file, called from gimppickbutton.c */
+/* entry point to this file, called from ligmapickbutton.c */
 void
-_gimp_pick_button_kwin_pick (GimpPickButton *button)
+_ligma_pick_button_kwin_pick (LigmaPickButton *button)
 {
   GDBusProxy *proxy = NULL;
   GError     *error = NULL;
@@ -82,13 +82,13 @@ _gimp_pick_button_kwin_pick (GimpPickButton *button)
                                    -1, NULL, &error);
   if (retval)
     {
-      GimpRGB rgb;
+      LigmaRGB rgb;
       guint32 color;
 
       g_variant_get (retval, "((u))", &color);
       g_variant_unref (retval);
       /* Returned value is ARGB stored in uint32. */
-      gimp_rgba_set_uchar (&rgb,
+      ligma_rgba_set_uchar (&rgb,
                            (color  >> 16 ) & 0xff, /* Red                           */
                            (color >> 8) & 0xff,    /* Green                         */
                            color & 0xff,           /* Blue: least significant byte. */
@@ -105,7 +105,7 @@ _gimp_pick_button_kwin_pick (GimpPickButton *button)
       if (error)
         g_warning ("KWin backend for color picking failed with error: %s",
                    error->message);
-      _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+      _ligma_pick_button_default_pick (LIGMA_PICK_BUTTON (button));
     }
   g_clear_error (&error);
   g_object_unref (proxy);

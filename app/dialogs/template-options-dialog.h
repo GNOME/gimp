@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,22 +19,22 @@
 #define __TEMPLATE_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpTemplateOptionsCallback) (GtkWidget    *dialog,
-                                              GimpTemplate *template,
-                                              GimpTemplate *edit_template,
-                                              GimpContext  *context,
+typedef void (* LigmaTemplateOptionsCallback) (GtkWidget    *dialog,
+                                              LigmaTemplate *template,
+                                              LigmaTemplate *edit_template,
+                                              LigmaContext  *context,
                                               gpointer      user_data);
 
 
-GtkWidget * template_options_dialog_new (GimpTemplate                *template,
-                                         GimpContext                 *context,
+GtkWidget * template_options_dialog_new (LigmaTemplate                *template,
+                                         LigmaContext                 *context,
                                          GtkWidget                   *parent,
                                          const gchar                 *title,
                                          const gchar                 *role,
                                          const gchar                 *icon_name,
                                          const gchar                 *desc,
                                          const gchar                 *help_id,
-                                         GimpTemplateOptionsCallback  callback,
+                                         LigmaTemplateOptionsCallback  callback,
                                          gpointer                     user_data);
 
 

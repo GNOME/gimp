@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,52 +20,52 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "text/gimpfont.h"
+#include "text/ligmafont.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "data-commands.h"
 #include "fonts-actions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry fonts_actions[] =
+static const LigmaActionEntry fonts_actions[] =
 {
-  { "fonts-popup", GIMP_ICON_FONT,
+  { "fonts-popup", LIGMA_ICON_FONT,
     NC_("fonts-action", "Fonts Menu"), NULL, NULL, NULL,
-    GIMP_HELP_FONT_DIALOG },
+    LIGMA_HELP_FONT_DIALOG },
 
-  { "fonts-refresh", GIMP_ICON_VIEW_REFRESH,
+  { "fonts-refresh", LIGMA_ICON_VIEW_REFRESH,
     NC_("fonts-action", "_Rescan Font List"), NULL,
     NC_("fonts-action", "Rescan the installed fonts"),
     data_refresh_cmd_callback,
-    GIMP_HELP_FONT_REFRESH }
+    LIGMA_HELP_FONT_REFRESH }
 };
 
 
 void
-fonts_actions_setup (GimpActionGroup *group)
+fonts_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "fonts-action",
+  ligma_action_group_add_actions (group, "fonts-action",
                                  fonts_actions,
                                  G_N_ELEMENTS (fonts_actions));
 }
 
 void
-fonts_actions_update (GimpActionGroup *group,
+fonts_actions_update (LigmaActionGroup *group,
                       gpointer         data)
 {
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("fonts-refresh", TRUE);
 

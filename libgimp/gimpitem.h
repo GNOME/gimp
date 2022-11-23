@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpitem.h
+ * ligmaitem.h
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,53 +19,53 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ITEM_H__
-#define __GIMP_ITEM_H__
+#ifndef __LIGMA_ITEM_H__
+#define __LIGMA_ITEM_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_ITEM (gimp_item_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpItem, gimp_item, GIMP, ITEM, GObject)
+#define LIGMA_TYPE_ITEM (ligma_item_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaItem, ligma_item, LIGMA, ITEM, GObject)
 
 
-struct _GimpItemClass
+struct _LigmaItemClass
 {
   GObjectClass parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-gint32      gimp_item_get_id        (GimpItem *item);
-GimpItem  * gimp_item_get_by_id     (gint32    item_id);
+gint32      ligma_item_get_id        (LigmaItem *item);
+LigmaItem  * ligma_item_get_by_id     (gint32    item_id);
 
-gboolean    gimp_item_is_valid      (GimpItem *item);
-gboolean    gimp_item_is_drawable   (GimpItem *item);
-gboolean    gimp_item_is_layer      (GimpItem *item);
-gboolean    gimp_item_is_text_layer (GimpItem *item);
-gboolean    gimp_item_is_channel    (GimpItem *item);
-gboolean    gimp_item_is_layer_mask (GimpItem *item);
-gboolean    gimp_item_is_selection  (GimpItem *item);
-gboolean    gimp_item_is_vectors    (GimpItem *item);
+gboolean    ligma_item_is_valid      (LigmaItem *item);
+gboolean    ligma_item_is_drawable   (LigmaItem *item);
+gboolean    ligma_item_is_layer      (LigmaItem *item);
+gboolean    ligma_item_is_text_layer (LigmaItem *item);
+gboolean    ligma_item_is_channel    (LigmaItem *item);
+gboolean    ligma_item_is_layer_mask (LigmaItem *item);
+gboolean    ligma_item_is_selection  (LigmaItem *item);
+gboolean    ligma_item_is_vectors    (LigmaItem *item);
 
-GList     * gimp_item_list_children (GimpItem *item);
+GList     * ligma_item_list_children (LigmaItem *item);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_ITEM_H__ */
+#endif /* __LIGMA_ITEM_H__ */

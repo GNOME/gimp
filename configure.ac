@@ -3,50 +3,50 @@
 AC_PREREQ(2.54)
 
 # Making releases on the stable branch:
-#   gimp_micro_version += 1;
-#   gimp_interface_age += 1;
+#   ligma_micro_version += 1;
+#   ligma_interface_age += 1;
 #
 # For a description of libtool version variables, see:
 # devel-docs/libtool-instructions.txt
 
-m4_define([gimp_major_version], [2])
-m4_define([gimp_minor_version], [99])
-m4_define([gimp_micro_version], [15])
-m4_define([gimp_real_version],
-          [gimp_major_version.gimp_minor_version.gimp_micro_version])
-m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [15])
-m4_define([gimp_binary_age],
-          [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
+m4_define([ligma_major_version], [2])
+m4_define([ligma_minor_version], [99])
+m4_define([ligma_micro_version], [15])
+m4_define([ligma_real_version],
+          [ligma_major_version.ligma_minor_version.ligma_micro_version])
+m4_define([ligma_version], [ligma_real_version])
+m4_define([ligma_interface_age], [15])
+m4_define([ligma_binary_age],
+          [m4_eval(100 * ligma_minor_version + ligma_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-# m4_define([gimp_version], [2.99.1])
+# m4_define([ligma_version], [2.99.1])
 
-# This is the X.Y used in -lgimp-X.Y
-m4_define([gimp_api_major_version], [3])
-m4_define([gimp_api_minor_version], [0])
-m4_define([gimp_api_version],
-          [gimp_api_major_version.gimp_api_minor_version])
+# This is the X.Y used in -lligma-X.Y
+m4_define([ligma_api_major_version], [3])
+m4_define([ligma_api_minor_version], [0])
+m4_define([ligma_api_version],
+          [ligma_api_major_version.ligma_api_minor_version])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.99])
-m4_define([gimp_plugin_version], [2.99])
-m4_define([gimp_tool_version], [2.99])
-m4_define([gimp_pkgconfig_version], [3.0])
-m4_define([gimp_data_version], [2.99])
-m4_define([gimp_sysconf_version], [2.99])
-m4_define([gimp_user_version], [2.99])
+m4_define([ligma_app_version], [2.99])
+m4_define([ligma_plugin_version], [2.99])
+m4_define([ligma_tool_version], [2.99])
+m4_define([ligma_pkgconfig_version], [3.0])
+m4_define([ligma_data_version], [2.99])
+m4_define([ligma_sysconf_version], [2.99])
+m4_define([ligma_user_version], [2.99])
 
-m4_define([gimp_unstable],
-          m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
-m4_define([gimp_stable],
-          m4_if(m4_eval(gimp_minor_version % 2), [0], [yes], [no]))
+m4_define([ligma_unstable],
+          m4_if(m4_eval(ligma_minor_version % 2), [1], [yes], [no]))
+m4_define([ligma_stable],
+          m4_if(m4_eval(ligma_minor_version % 2), [0], [yes], [no]))
 
-m4_define([gimp_release],
-          m4_if(m4_eval(gimp_micro_version % 2), [0], [yes], [no]))
+m4_define([ligma_release],
+          m4_if(m4_eval(ligma_micro_version % 2), [0], [yes], [no]))
 
-m4_define([gimp_full_name], [GNU Image Manipulation Program])
+m4_define([ligma_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([alsa_required_version], [1.0.0])
@@ -98,12 +98,12 @@ m4_define([wmf_required_version], [0.2.8])
 # required versions for build-time only tools
 m4_define([native_glib_required_version], [2.2.0])
 
-AC_INIT([GIMP], [gimp_version],
-        [https://gitlab.gnome.org/GNOME/gimp/issues/new],
-        [gimp])
+AC_INIT([LIGMA], [ligma_version],
+        [https://gitlab.gnome.org/GNOME/ligma/issues/new],
+        [ligma])
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([app/core/gimp.c])
+AC_CONFIG_SRCDIR([app/core/ligma.c])
 AC_CONFIG_MACRO_DIR([m4macros])
 
 AM_INIT_AUTOMAKE(no-define dist-bzip2 dist-xz no-dist-gzip foreign)
@@ -113,53 +113,53 @@ AM_INIT_AUTOMAKE(no-define dist-bzip2 dist-xz no-dist-gzip foreign)
 # configure or passing V=1 to make
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-GIMP_MAJOR_VERSION=gimp_major_version
-GIMP_MINOR_VERSION=gimp_minor_version
-GIMP_MICRO_VERSION=gimp_micro_version
-GIMP_INTERFACE_AGE=gimp_interface_age
-GIMP_BINARY_AGE=gimp_binary_age
-GIMP_VERSION=gimp_version
-GIMP_REAL_VERSION=gimp_real_version
-GIMP_API_MAJOR_VERSION=gimp_api_major_version
-GIMP_API_MINOR_VERSION=gimp_api_minor_version
-GIMP_API_VERSION=gimp_api_version
-GIMP_APP_VERSION=gimp_app_version
-GIMP_PLUGIN_VERSION=gimp_plugin_version
-GIMP_TOOL_VERSION=gimp_tool_version
-GIMP_PKGCONFIG_VERSION=gimp_pkgconfig_version
-GIMP_DATA_VERSION=gimp_data_version
-GIMP_SYSCONF_VERSION=gimp_sysconf_version
-GIMP_USER_VERSION=gimp_user_version
-GIMP_UNSTABLE=gimp_unstable
-GIMP_RELEASE=gimp_release
-GIMP_FULL_NAME="gimp_full_name"
-AC_SUBST(GIMP_MAJOR_VERSION)
-AC_SUBST(GIMP_MINOR_VERSION)
-AC_SUBST(GIMP_MICRO_VERSION)
-AC_SUBST(GIMP_INTERFACE_AGE)
-AC_SUBST(GIMP_BINARY_AGE)
-AC_SUBST(GIMP_VERSION)
-AC_SUBST(GIMP_REAL_VERSION)
-AC_SUBST(GIMP_API_MAJOR_VERSION)
-AC_SUBST(GIMP_API_MINOR_VERSION)
-AC_SUBST(GIMP_API_VERSION)
-AC_SUBST(GIMP_APP_VERSION)
-AC_SUBST(GIMP_PLUGIN_VERSION)
-AC_SUBST(GIMP_TOOL_VERSION)
-AC_SUBST(GIMP_PKGCONFIG_VERSION)
-AC_SUBST(GIMP_DATA_VERSION)
-AC_SUBST(GIMP_SYSCONF_VERSION)
-AC_SUBST(GIMP_USER_VERSION)
-AC_SUBST(GIMP_UNSTABLE)
-AC_SUBST(GIMP_RELEASE)
-AC_SUBST(GIMP_FULL_NAME)
+LIGMA_MAJOR_VERSION=ligma_major_version
+LIGMA_MINOR_VERSION=ligma_minor_version
+LIGMA_MICRO_VERSION=ligma_micro_version
+LIGMA_INTERFACE_AGE=ligma_interface_age
+LIGMA_BINARY_AGE=ligma_binary_age
+LIGMA_VERSION=ligma_version
+LIGMA_REAL_VERSION=ligma_real_version
+LIGMA_API_MAJOR_VERSION=ligma_api_major_version
+LIGMA_API_MINOR_VERSION=ligma_api_minor_version
+LIGMA_API_VERSION=ligma_api_version
+LIGMA_APP_VERSION=ligma_app_version
+LIGMA_PLUGIN_VERSION=ligma_plugin_version
+LIGMA_TOOL_VERSION=ligma_tool_version
+LIGMA_PKGCONFIG_VERSION=ligma_pkgconfig_version
+LIGMA_DATA_VERSION=ligma_data_version
+LIGMA_SYSCONF_VERSION=ligma_sysconf_version
+LIGMA_USER_VERSION=ligma_user_version
+LIGMA_UNSTABLE=ligma_unstable
+LIGMA_RELEASE=ligma_release
+LIGMA_FULL_NAME="ligma_full_name"
+AC_SUBST(LIGMA_MAJOR_VERSION)
+AC_SUBST(LIGMA_MINOR_VERSION)
+AC_SUBST(LIGMA_MICRO_VERSION)
+AC_SUBST(LIGMA_INTERFACE_AGE)
+AC_SUBST(LIGMA_BINARY_AGE)
+AC_SUBST(LIGMA_VERSION)
+AC_SUBST(LIGMA_REAL_VERSION)
+AC_SUBST(LIGMA_API_MAJOR_VERSION)
+AC_SUBST(LIGMA_API_MINOR_VERSION)
+AC_SUBST(LIGMA_API_VERSION)
+AC_SUBST(LIGMA_APP_VERSION)
+AC_SUBST(LIGMA_PLUGIN_VERSION)
+AC_SUBST(LIGMA_TOOL_VERSION)
+AC_SUBST(LIGMA_PKGCONFIG_VERSION)
+AC_SUBST(LIGMA_DATA_VERSION)
+AC_SUBST(LIGMA_SYSCONF_VERSION)
+AC_SUBST(LIGMA_USER_VERSION)
+AC_SUBST(LIGMA_UNSTABLE)
+AC_SUBST(LIGMA_RELEASE)
+AC_SUBST(LIGMA_FULL_NAME)
 
 # Version strings used in some source, though it seems unnecessary to
-# declare them in the public API (libgimpbase/gimpversion.h).
-AC_DEFINE(GIMP_PKGCONFIG_VERSION, "gimp_pkgconfig_version",
-          [libgimp pkg-config version])
-AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
-          [GIMP tools version])
+# declare them in the public API (libligmabase/ligmaversion.h).
+AC_DEFINE(LIGMA_PKGCONFIG_VERSION, "ligma_pkgconfig_version",
+          [libligma pkg-config version])
+AC_DEFINE(LIGMA_TOOL_VERSION, "ligma_tool_version",
+          [LIGMA tools version])
 
 # These are used for substitution (.pc, INSTALL, etc.).
 APPSTREAM_GLIB_REQUIRED_VERSION=appstream_glib_required_version
@@ -233,25 +233,25 @@ AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
 AC_SUBST(LIBUNWIND_REQUIRED_VERSION)
 
-# The symbol GIMP_UNSTABLE is defined above for substitution in
+# The symbol LIGMA_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
 # and automake conditional.
-if test "x$GIMP_UNSTABLE" = "xyes"; then
-  AC_DEFINE(GIMP_UNSTABLE, 1,
-            [Define to 1 if this is code from the unstable branch of GIMP])
+if test "x$LIGMA_UNSTABLE" = "xyes"; then
+  AC_DEFINE(LIGMA_UNSTABLE, 1,
+            [Define to 1 if this is code from the unstable branch of LIGMA])
 fi
-AM_CONDITIONAL(GIMP_UNSTABLE, test "x$GIMP_UNSTABLE" = "xyes")
+AM_CONDITIONAL(LIGMA_UNSTABLE, test "x$LIGMA_UNSTABLE" = "xyes")
 
-if test "x$GIMP_RELEASE" = "xyes"; then
-  AC_DEFINE(GIMP_RELEASE, 1,
-            [Define to 1 if this is a release version of GIMP])
+if test "x$LIGMA_RELEASE" = "xyes"; then
+  AC_DEFINE(LIGMA_RELEASE, 1,
+            [Define to 1 if this is a release version of LIGMA])
 fi
-AM_CONDITIONAL(GIMP_RELEASE, test "x$GIMP_RELEASE" = "xyes")
+AM_CONDITIONAL(LIGMA_RELEASE, test "x$LIGMA_RELEASE" = "xyes")
 
 # libtool versioning
-m4_define([lt_current], [m4_eval(100 * gimp_minor_version + gimp_micro_version - gimp_interface_age)])
-m4_define([lt_revision], [gimp_interface_age])
-m4_define([lt_age], [m4_eval(gimp_binary_age - gimp_interface_age)])
+m4_define([lt_current], [m4_eval(100 * ligma_minor_version + ligma_micro_version - ligma_interface_age)])
+m4_define([lt_revision], [ligma_interface_age])
+m4_define([lt_age], [m4_eval(ligma_binary_age - ligma_interface_age)])
 LT_VERSION_INFO="lt_current:lt_revision:lt_age"
 LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
 AC_SUBST(LT_VERSION_INFO)
@@ -259,7 +259,7 @@ AC_SUBST(LT_CURRENT_MINUS_AGE)
 
 
 # gettext i18n support
-GETTEXT_PACKAGE=gimp30
+GETTEXT_PACKAGE=ligma30
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
@@ -488,53 +488,53 @@ changequote([,])dnl
 
 
 # If possible, warn if C99isms are used
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wdeclaration-after-statement')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wdeclaration-after-statement')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-prototypes')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wmissing-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
 # We really don't want anyone using code with missing prototypes, which
 # can cause random behavior. If compile breaks due to the following,
 # come to us and we will point you to a newer version which works.
 #
-GIMP_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wstrict-prototypes')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wstrict-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Winit-self')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Winit-self')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wpointer-arith')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wpointer-arith')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wold-style-definition')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wold-style-definition')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-format-attribute')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wmissing-format-attribute')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-security')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wformat-security')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wlogical-op')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wlogical-op')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wtype-limits')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wtype-limits')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-fno-common')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-fdiagnostics-show-option')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-fdiagnostics-show-option')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wreturn-type')
+LIGMA_DETECT_CFLAGS(extra_warnings, '-Wreturn-type')
 CFLAGS="$CFLAGS $extra_warnings"
 
 # -Wreturn-type warns on forgotten return on non-void functions,
@@ -542,14 +542,14 @@ CFLAGS="$CFLAGS $extra_warnings"
 # -Wsystem-headers is needed for that.
 # Unfortunately it pulls tons of warnings on some systems.
 # So we comment out for now.
-# GIMP_DETECT_CFLAGS(extra_warnings, '-Wsystem-headers')
+# LIGMA_DETECT_CFLAGS(extra_warnings, '-Wsystem-headers')
 # CFLAGS="$CFLAGS $extra_warnings"
 
 # Extra optimization flags for super performance
-GIMP_DETECT_CFLAGS(extra_warnings, '--omg-optimized')
+LIGMA_DETECT_CFLAGS(extra_warnings, '--omg-optimized')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '--disable-instructions')
+LIGMA_DETECT_CFLAGS(extra_warnings, '--disable-instructions')
 CFLAGS="$CFLAGS $extra_warnings"
 
 
@@ -592,7 +592,7 @@ if test "x$GCC" = xyes; then
   gcc_version=`$CC -v 2>&1|grep 'gcc version'|sed -e 's/.*gcc version \([[0-9.]]\+\)[[^0-9.]].*/\1/'`
   if test "x$gcc_version" = "x7.2.0" ; then
     warning_gcc="
-WARNING: GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
+WARNING: GCC 7.2.0 has a serious bug affecting GEGL/LIGMA. We advise
          against using this version of the compiler (previous and
          further versions are fine).
          See https://bugzilla.gnome.org/show_bug.cgi?id=787222"
@@ -734,8 +734,8 @@ else
 fi
 
 AC_MSG_CHECKING([for glib-networking (GIO TLS implementation)])
-gimp_save_CFLAGS="$CFLAGS"
-gimp_save_LIBS="$LIBS"
+ligma_save_CFLAGS="$CFLAGS"
+ligma_save_LIBS="$LIBS"
 CFLAGS="$CFLAGS $GIO_CFLAGS"
 LIBS="$LIBS $GIO_LIBS"
 AC_RUN_IFELSE([AC_LANG_PROGRAM([#include <gio/gio.h>],
@@ -743,8 +743,8 @@ AC_RUN_IFELSE([AC_LANG_PROGRAM([#include <gio/gio.h>],
               [have_glib_networking="yes"],
               [have_glib_networking="no"],
               [have_glib_networking="unknown (cross-compiling)"])
-CFLAGS="$gimp_save_CFLAGS"
-LIBS="$gimp_save_LIBS"
+CFLAGS="$ligma_save_CFLAGS"
+LIBS="$ligma_save_LIBS"
 AC_MSG_RESULT($have_glib_networking)
 
 if test "x$have_glib_networking" = "xno"; then
@@ -753,7 +753,7 @@ if test "x$have_glib_networking" = "xno"; then
 elif test "x$have_glib_networking" != "xyes"; then
   warning_glib_networking="
 WARNING: Test for glib-networking cannot be performed while cross-compiling.
-         Make sure glib-networking is installed, otherwise GIMP will not be able
+         Make sure glib-networking is installed, otherwise LIGMA will not be able
          to display the remote help pages through the help browser, nor will it
          be able to open remote HTTPS (or other protocol using SSL/TLS) files.
          HTTPS is becoming the expected standard and should not be considered
@@ -802,12 +802,12 @@ fi
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
-gimp_save_LIBS=$LIBS
+ligma_save_LIBS=$LIBS
 LIBS="$LIBS $GLIB_LIBS"
 AC_CHECK_FUNCS(bind_textdomain_codeset,,
   add_deps_error([bind_textdomain_codeset()],
                  [Check for bind_textdomain_codeset() failed! This is required.]))
-LIBS=$gimp_save_LIBS
+LIBS=$ligma_save_LIBS
 
 
 AC_PATH_XTRA
@@ -839,12 +839,12 @@ PKG_CHECK_MODULES(PANGOCAIRO,
                   [add_deps_error([pangocairo >= pangocairo_required_version and pangoft2],
                                   [We require Pango with the optional support for Cairo compiled in.])])
 
-gimp_save_CFLAGS=$CFLAGS
+ligma_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 # Windows platform had a few bugs fixed in earlier fontconfig.
 # The bugs are serious enough (for instance very slow startups at each
-# GIMP start, but also slowness when closing, broken font features,
+# LIGMA start, but also slowness when closing, broken font features,
 # etc.) that we should bump the requirement for Win32.
 # See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
 # (2.12.4).
@@ -870,7 +870,7 @@ AC_COMPILE_IFELSE(
   [fontconfig_ok=no])
 AC_MSG_RESULT($fontconfig_ok)
 
-CFLAGS=$gimp_save_CFLAGS
+CFLAGS=$ligma_save_CFLAGS
 
 if test "x$fontconfig_ok" = xno; then
   AC_MSG_ERROR([
@@ -906,18 +906,18 @@ AC_ARG_ENABLE(win32-debug-console,
                           (default=auto)],,
               enable_win32_debug_console=auto)
 
-AC_MSG_CHECKING([if GIMP should open a debug console at start])
+AC_MSG_CHECKING([if LIGMA should open a debug console at start])
 if test "x$platform_win32" != "xyes"; then
    enable_win32_debug_console=no
 elif test "x$enable_win32_debug_console" != xno &&
      test "x$enable_win32_debug_console" != xyes; then
   # By default, we enable the debug console only for unstable builds.
-   enable_win32_debug_console=gimp_unstable
+   enable_win32_debug_console=ligma_unstable
 fi
 
 if test "x$enable_win32_debug_console" = "xyes"; then
   AC_DEFINE(ENABLE_WIN32_DEBUG_CONSOLE, 1,
-            [Define to 1 if GIMP should open a debug console at start])
+            [Define to 1 if LIGMA should open a debug console at start])
 fi
 AC_MSG_RESULT([$enable_win32_debug_console])
 
@@ -993,14 +993,14 @@ AC_CHECK_HEADERS(math.h ieeefp.h)
 
 # DU4 native cc currently needs -std1 for ANSI mode (instead of K&R)
 AC_MSG_CHECKING([for extra flags to get ANSI library prototypes])
-gimp_save_LIBS=$LIBS
+ligma_save_LIBS=$LIBS
 LIBS="$LIBS -lm"
 AC_RUN_IFELSE(
   [AC_LANG_SOURCE([[
     #include <math.h>
     int main (void) { return (log(1) != log(1.)); }]])],
   [AC_MSG_RESULT(none needed)],
-  [gimp_save_CFLAGS=$CFLAGS
+  [ligma_save_CFLAGS=$CFLAGS
    CFLAGS="$CFLAGS -std1"
    AC_RUN_IFELSE(
      [AC_LANG_SOURCE([[
@@ -1008,12 +1008,12 @@ AC_RUN_IFELSE(
        int main (void) { return (log(1) != log(1.)); }]])],
      [AC_MSG_RESULT(-std1)],
      [AC_MSG_RESULT()
-      CFLAGS=$gimp_save_CFLAGS
+      CFLAGS=$ligma_save_CFLAGS
       AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)])],
      [AC_MSG_RESULT])],
   [AC_MSG_RESULT()])
 
-LIBS=$gimp_save_LIBS
+LIBS=$ligma_save_LIBS
 
 
 # check for rint
@@ -1038,7 +1038,7 @@ AX_GCC_FUNC_ATTRIBUTE(destructor)
 # Check for extra libs needed for getaddrinfo, getnameinfo and socket
 #####################################################################
 
-gimp_save_LIBS=$LIBS
+ligma_save_LIBS=$LIBS
 LIBS=""
 
 AC_CHECK_FUNCS(getaddrinfo, , AC_CHECK_LIB(nsl, getaddrinfo))
@@ -1046,7 +1046,7 @@ AC_CHECK_FUNCS(getnameinfo, , AC_CHECK_LIB(nsl, getnameinfo))
 AC_CHECK_LIB(socket, socket)
 
 SOCKET_LIBS="$LIBS"
-LIBS=$gimp_save_LIBS
+LIBS=$ligma_save_LIBS
 
 AC_SUBST(SOCKET_LIBS)
 
@@ -1055,8 +1055,8 @@ AC_SUBST(SOCKET_LIBS)
 ###################################
 intrinsics_save_CFLAGS="$CFLAGS"
 #FIXME: Check the CFLAGS separately
-GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
-GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
+LIGMA_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
+LIGMA_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
 SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
 CFLAGS="$SSE2_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
@@ -1071,7 +1071,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_s
 )
 
 
-GIMP_DETECT_CFLAGS(SSE4_1_CFLAG, '-msse4.1')
+LIGMA_DETECT_CFLAGS(SSE4_1_CFLAG, '-msse4.1')
 SSE4_1_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE4_1_CFLAG"
 CFLAGS="$SSE4_1_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
@@ -1100,7 +1100,7 @@ AC_ARG_ENABLE(sse,
   enable_sse=$enable_mmx)
 
 if test "x$enable_mmx" = xyes; then
-  GIMP_DETECT_CFLAGS(MMX_EXTRA_CFLAGS, '-mmmx')
+  LIGMA_DETECT_CFLAGS(MMX_EXTRA_CFLAGS, '-mmmx')
   SSE_EXTRA_CFLAGS=
 
   AC_MSG_CHECKING(whether we can compile MMX code)
@@ -1114,7 +1114,7 @@ if test "x$enable_mmx" = xyes; then
     AC_MSG_RESULT(yes)
 
     if test "x$enable_sse" = xyes; then
-      GIMP_DETECT_CFLAGS(sse_flag, '-msse')
+      LIGMA_DETECT_CFLAGS(sse_flag, '-msse')
       SSE_EXTRA_CFLAGS="$MMX_EXTRA_CFLAGS $sse_flag"
 
       AC_MSG_CHECKING(whether we can compile SSE code)
@@ -1154,7 +1154,7 @@ AC_ARG_ENABLE(altivec,
 
 if test "x$enable_altivec" = xyes; then
 
-  GIMP_DETECT_CFLAGS(altivec_flag, '-faltivec' '-maltivec -mabi=altivec')
+  LIGMA_DETECT_CFLAGS(altivec_flag, '-faltivec' '-maltivec -mabi=altivec')
 
   ALTIVEC_EXTRA_CFLAGS=
   case "$altivec_flag" in
@@ -1342,17 +1342,17 @@ if test "x$os_win32" != xyes; then
     [AC_LANG_PROGRAM(
       [[#include <sys/types.h>]],
       [[fd_set readMask, writeMask;]])],
-    [gimp_ok=yes],
-    [gimp_ok=no])
-  if test "x$gimp_ok" = xno; then
-      AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
-      if test "x$gimp_ok" = xyes; then
+    [ligma_ok=yes],
+    [ligma_ok=no])
+  if test "x$ligma_ok" = xno; then
+      AC_EGREP_HEADER(fd_mask, sys/select.h, ligma_ok=yes)
+      if test "x$ligma_ok" = xyes; then
 	  AC_DEFINE(HAVE_SYS_SELECT_H, 1,
 		    [Define to 1 if you have the <sys/select.h> header.])
       fi
   fi
-  AC_MSG_RESULT($gimp_ok)
-  if test "x$gimp_ok" = xno; then
+  AC_MSG_RESULT($ligma_ok)
+  if test "x$ligma_ok" = xno; then
       AC_DEFINE(NO_FD_SET, 1,
 		[Define to 1 if you don't have the fd_set typedef.])
   fi
@@ -1389,8 +1389,8 @@ if test "x$have_gtk_x11" = "xyes"; then
    # screenshot plug-in needs to link to X11 explicitly
    SCREENSHOT_LIBS="$X_LIBS -lX11"
 
-   gimp_save_CFLAGS="$CFLAGS"
-   gimp_save_LDFLAGS="$LDFLAGS"
+   ligma_save_CFLAGS="$CFLAGS"
+   ligma_save_LDFLAGS="$LDFLAGS"
    CFLAGS="$CFLAGS $GTK_CFLAGS"
    LDFLAGS="$LDFLAGS $X_LIBS"
 
@@ -1411,8 +1411,8 @@ if test "x$have_gtk_x11" = "xyes"; then
         SCREENSHOT_LIBS="$SCREENSHOT_LIBS -lXext",,[#include <gdk/gdkx.h>])],,
      -lX11 -lXext)
 
-   CFLAGS="$gimp_save_CFLAGS"
-   LDFLAGS="$gimp_save_LDFLAGS"
+   CFLAGS="$ligma_save_CFLAGS"
+   LDFLAGS="$ligma_save_LDFLAGS"
 
    # check for the XFixes extension
    PKG_CHECK_MODULES(XFIXES, xfixes,
@@ -1428,9 +1428,9 @@ AC_SUBST(SCREENSHOT_LIBS)
 AC_SUBST(DOC_SHOOTER)
 
 
-GIMP_COMMAND='gimp-gimp_app_version'
+LIGMA_COMMAND='ligma-ligma_app_version'
 
-AC_SUBST(GIMP_COMMAND)
+AC_SUBST(LIGMA_COMMAND)
 
 
 ############
@@ -1439,7 +1439,7 @@ AC_SUBST(GIMP_COMMAND)
 
 # The list of MIME types that are supported by plug-ins that are compiled
 # unconditionally:
-MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-gimp-gbr;image/x-gimp-pat;image/x-gimp-gih;image/x-sun-raster"
+MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-ligma-gbr;image/x-ligma-pat;image/x-ligma-gih;image/x-sun-raster"
 
 #################
 # Bundle packages
@@ -1509,7 +1509,7 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
-gimp_save_LIBS=$LIBS
+ligma_save_LIBS=$LIBS
 LIBS="$LIBS -lbz2"
 
 if test -z "$BZIP2_LIBS"; then
@@ -1526,7 +1526,7 @@ if test -z "$BZIP2_LIBS"; then
     add_deps_error([libbzip2], [libbzip2 header files not found]))
 fi
 
-LIBS=$gimp_save_LIBS
+LIBS=$ligma_save_LIBS
 
 AC_SUBST(BZIP2_LIBS)
 
@@ -1661,9 +1661,9 @@ AC_SUBST(AA_LIBS)
 
 AC_ARG_WITH(libxpm,  [  --without-libxpm        build without XPM support])
 
-gimp_save_CFLAGS="$CFLAGS"
+ligma_save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS $X_CFLAGS"
-gimp_save_LDFLAGS="$LDFLAGS"
+ligma_save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $X_LIBS"
 if test "x$have_gtk_x11" = "xyes"; then
   lib_X11=-lX11
@@ -1677,8 +1677,8 @@ if test "x$with_libxpm" != xno && test -z "$XPM_LIBS"; then
       [have_libxpm="no (XPM header file not found)"])],
     [have_libxpm="no (XPM library not found)"], $X_PRE_LIBS $lib_X11)
 fi
-CFLAGS="$gimp_save_CFLAGS"
-LDFLAGS="$gimp_save_LDFLAGS"
+CFLAGS="$ligma_save_CFLAGS"
+LDFLAGS="$ligma_save_LDFLAGS"
 
 if test "x$have_libxpm" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-xpixmap"
@@ -1855,7 +1855,7 @@ have_libbacktrace=no
 if test "x$with_libbacktrace" != xno; then
   have_libbacktrace=yes
 
-  gimp_save_LIBS=$LIBS
+  ligma_save_LIBS=$LIBS
   LIBS="$LIBS -lbacktrace"
 
   AC_MSG_CHECKING([for LIBBACKTRACE])
@@ -1873,7 +1873,7 @@ if test "x$with_libbacktrace" != xno; then
     [AC_MSG_RESULT([yes]); LIBBACKTRACE_LIBS='-lbacktrace'],
     [AC_MSG_RESULT([no]); have_libbacktrace='no (libbacktrace is not found or not supported)'])
 
-  LIBS=$gimp_save_LIBS
+  LIBS=$ligma_save_LIBS
 
   AC_SUBST(LIBBACKTRACE_LIBS)
 fi
@@ -1937,7 +1937,7 @@ PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
 
 if test "x$enable_relocatable_bundle" != xno; then
-  mypaint_brushes_dir='${gimp_installation_dir}/share/mypaint-data/1.0/brushes'
+  mypaint_brushes_dir='${ligma_installation_dir}/share/mypaint-data/1.0/brushes'
 else
   mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
 fi
@@ -2289,7 +2289,7 @@ AC_ARG_ENABLE(force-gir-cross-compilation,
                           (default=auto)],,
               enable_force_gir_cross_compilation=auto)
 
-AC_MSG_CHECKING([if introspecting libgimp])
+AC_MSG_CHECKING([if introspecting libligma])
 warning_gir=
 build_gir=yes
 if test "x$cross_compiling" != xyes ||
@@ -2303,7 +2303,7 @@ else
 WARNING: GObject Introspection is disabled while cross-compiling because
          GI tools do not manage to properly generate introspection data
          while cross-compiling. Nevertheless we consider our introspected
-         API as a core component of GIMP, thus you are expected to build
+         API as a core component of LIGMA, thus you are expected to build
          this data natively.
          To forcefully build with GObject Introspection, set:
          --enable-force-gir-cross-compilation"
@@ -2437,7 +2437,7 @@ AC_ARG_WITH(vala,
 if test "x$with_vala" = xno; then
   warning_vala="
 WARNING: you disabled the installation of core Vala plug-ins. This
-         is discouraged as it won't provide the full GIMP experience."
+         is discouraged as it won't provide the full LIGMA experience."
   AM_CONDITIONAL(ENABLE_VAPIGEN, test "x$enable_vala" = "xyes")
 else
   VAPIGEN_CHECK($VALA_REQUIRED_VERSION)
@@ -2693,7 +2693,7 @@ AC_SUBST(BUG_REPORT_URL)
 override_bug_report_url=
 if test "x$with_bug_report_url" = "x$PACKAGE_BUGREPORT"; then
 override_bug_report_url="
-NOTE: if you plan on packaging GIMP for distribution, it is recommended
+NOTE: if you plan on packaging LIGMA for distribution, it is recommended
       to override the bug report URL with option:
         --with-bug-report-url=https://example.com/
       so that you can filter packaging bugs from core bugs before
@@ -2708,18 +2708,18 @@ fi
 AC_ARG_WITH(build-id,
             [  --with-build-id   A unique string used to define your build],,
             [with_build_id="unknown"])
-AC_DEFINE_UNQUOTED(GIMP_BUILD_ID, "$with_build_id",
+AC_DEFINE_UNQUOTED(LIGMA_BUILD_ID, "$with_build_id",
                    [The string defining the build])
 
 AC_ARG_WITH(revision,
             [  --with-revision   Revision increment for a package],,
             [with_revision="0"])
-GIMP_PACKAGE_REVISION=$with_revision
-AC_SUBST(GIMP_PACKAGE_REVISION)
+LIGMA_PACKAGE_REVISION=$with_revision
+AC_SUBST(LIGMA_PACKAGE_REVISION)
 
 AC_ARG_ENABLE(check-update,
               [  --enable-check-update
-                          GIMP will not look up new version availability on startup (default=auto)],,
+                          LIGMA will not look up new version availability on startup (default=auto)],,
               enable_check_update=auto)
 if test "x$enable_check_update" != xno &&
    test "x$enable_check_update" != xyes; then
@@ -2735,7 +2735,7 @@ if test "x$enable_check_update" = xyes; then
               [Define to 1 if automatic update check is enabled])
 fi
 
-AC_DEFINE_UNQUOTED(GIMP_BUILD_PLATFORM, "$host_os",
+AC_DEFINE_UNQUOTED(LIGMA_BUILD_PLATFORM, "$host_os",
                    [The OS this was built for])
 if test "x$platform_linux" = xyes; then
   platform_family="linux"
@@ -2746,7 +2746,7 @@ elif test "x$platform_osx" = xyes; then
 else
   platform_family="other"
 fi
-AC_DEFINE_UNQUOTED(GIMP_BUILD_PLATFORM_FAMILY, "$platform_family",
+AC_DEFINE_UNQUOTED(LIGMA_BUILD_PLATFORM_FAMILY, "$platform_family",
                    [The OS family this was built for])
 
 #########################
@@ -2830,59 +2830,59 @@ AM_CONDITIONAL(BUILD_WINDOWS_INSTALLER, test "x$enable_windows_installer" != xno
 
 
 #########################################
-# Allow to configure the GIMP environment
+# Allow to configure the LIGMA environment
 #########################################
 
-AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default gimp binary (default=gimp_stable)], , enable_default_binary=gimp_stable)
+AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default ligma binary (default=ligma_stable)], , enable_default_binary=ligma_stable)
 
 AM_CONDITIONAL(DEFAULT_BINARY, test "x$enable_default_binary" = xyes)
 
 
-AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only binary which does not link GTK], , enable_gimp_console=yes)
+AC_ARG_ENABLE(ligma-console, [  --enable-ligma-console   build a console-only binary which does not link GTK], , enable_ligma_console=yes)
 
-AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test "x$enable_gimp_console" != xno)
+AM_CONDITIONAL(ENABLE_LIGMA_CONSOLE, test "x$enable_ligma_console" != xno)
 
 
-# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
-gimpdir=GIMP
-AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version to $XDG_CONFIG_HOME/DIR/gimp_user_version, or to DIR if DIR is an absolute path],
-if eval "test x$with_gimpdir != x"; then
-  if eval "test x$with_gimpdir != xyes"; then
-    gimpdir=$with_gimpdir
+# Possibly change default ligmadir from $XDG_CONFIG_HOME/LIGMA/ligma_user_version
+ligmadir=LIGMA
+AC_ARG_WITH(ligmadir, [  --with-ligmadir=DIR      change default ligmadir from $XDG_CONFIG_HOME/LIGMA/ligma_user_version to $XDG_CONFIG_HOME/DIR/ligma_user_version, or to DIR if DIR is an absolute path],
+if eval "test x$with_ligmadir != x"; then
+  if eval "test x$with_ligmadir != xyes"; then
+    ligmadir=$with_ligmadir
   fi
 fi)
 
-# Build the gimpdir to be used in manpages here, because the manpage
+# Build the ligmadir to be used in manpages here, because the manpage
 # source is unreadable enough already
-case "$gimpdir" in
+case "$ligmadir" in
   /*)
-    manpage_gimpdir="$gimpdir"
+    manpage_ligmadir="$ligmadir"
     ;;
   *)
-    manpage_gimpdir="\\fB\$XDG_CONFIG_HOME\\fP/$gimpdir/gimp_user_version"
+    manpage_ligmadir="\\fB\$XDG_CONFIG_HOME\\fP/$ligmadir/ligma_user_version"
     ;;
 esac
 
-gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
-gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
-gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
+ligmadatadir="$datadir/$PACKAGE/ligma_data_version"
+ligmaplugindir="$libdir/$PACKAGE/ligma_plugin_version"
+ligmasysconfdir="$sysconfdir/$PACKAGE/ligma_sysconf_version"
 
-AC_SUBST(gimpdir)
-AC_SUBST(manpage_gimpdir)
-AC_SUBST(gimpdatadir)
-AC_SUBST(gimpplugindir)
-AC_SUBST(gimpsysconfdir)
+AC_SUBST(ligmadir)
+AC_SUBST(manpage_ligmadir)
+AC_SUBST(ligmadatadir)
+AC_SUBST(ligmaplugindir)
+AC_SUBST(ligmasysconfdir)
 
 
 # GNU format message catalogs go into $datadir/locale,
 # standard location is $libdir/locale. DATADIRNAME set accordingly.
 
-gimplocaledir="$datadir/locale"
+ligmalocaledir="$datadir/locale"
 if test "$DATADIRNAME" = "lib"; then
-   gimplocaledir="$libdir/locale"
+   ligmalocaledir="$libdir/locale"
 fi
 
-AC_SUBST(gimplocaledir)
+AC_SUBST(ligmalocaledir)
 
 
 ############################
@@ -2892,8 +2892,8 @@ AC_SUBST(gimplocaledir)
 AM_CONDITIONAL(STATICLIBS, test "x$enable_static" = xyes)
 
 # a tuned version of glib-mkenums
-GIMP_MKENUMS="\$(PERL) \$(top_srcdir)/tools/gimp-mkenums"
-AC_SUBST(GIMP_MKENUMS)
+LIGMA_MKENUMS="\$(PERL) \$(top_srcdir)/tools/ligma-mkenums"
+AC_SUBST(LIGMA_MKENUMS)
 
 #Add required trailing ; to list
 MIME_TYPES="$MIME_TYPES;"
@@ -2905,7 +2905,7 @@ AC_SUBST(MIME_TYPES)
 # Disable deprecated APIs
 #########################
 
-CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
+CPPFLAGS="${CPPFLAGS} -DLIGMA_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
 
 # Make sure not to disable deprecated APIs for unreleased versions.
 # We must build without problems with future releases of libraries
@@ -2925,38 +2925,38 @@ fi
 ##################
 
 # easy way to skip the plug-in build
-GIMP_EXTENSIONS=extensions
-GIMP_PLUGINS=plug-ins
-GIMP_MODULES=modules
-AC_SUBST(GIMP_EXTENSIONS)
-AC_SUBST(GIMP_PLUGINS)
-AC_SUBST(GIMP_MODULES)
+LIGMA_EXTENSIONS=extensions
+LIGMA_PLUGINS=plug-ins
+LIGMA_MODULES=modules
+AC_SUBST(LIGMA_EXTENSIONS)
+AC_SUBST(LIGMA_PLUGINS)
+AC_SUBST(LIGMA_MODULES)
 
-AC_CONFIG_COMMANDS([libgimpbase/gimpversion.h], [
-  outfile=gimpversion.h-tmp
+AC_CONFIG_COMMANDS([libligmabase/ligmaversion.h], [
+  outfile=ligmaversion.h-tmp
   cat > $outfile <<\_______EOF
-/* gimpversion.h
+/* ligmaversion.h
  *
  * This is a generated file.  Please modify 'configure.ac'
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_VERSION_H__
-#define __GIMP_VERSION_H__
+#ifndef __LIGMA_VERSION_H__
+#define __LIGMA_VERSION_H__
 
 G_BEGIN_DECLS
 
 
 /**
- * SECTION: gimpversion
- * @title: gimpversion
+ * SECTION: ligmaversion
+ * @title: ligmaversion
  * @short_description: Macros and constants useful for determining
- *                     GIMP's version number and capabilities.
+ *                     LIGMA's version number and capabilities.
  *
- * Macros and constants useful for determining GIMP's version number and
+ * Macros and constants useful for determining LIGMA's version number and
  * capabilities.
  **/
 
@@ -2964,81 +2964,81 @@ _______EOF
 
   cat >>$outfile <<_______EOF
 /**
- * GIMP_MAJOR_VERSION:
+ * LIGMA_MAJOR_VERSION:
  *
- * The major GIMP version number.
+ * The major LIGMA version number.
  **/
-#define GIMP_MAJOR_VERSION                              ($gimp_major_ver)
+#define LIGMA_MAJOR_VERSION                              ($ligma_major_ver)
 
 /**
- * GIMP_MINOR_VERSION:
+ * LIGMA_MINOR_VERSION:
  *
- * The minor GIMP version number.
+ * The minor LIGMA version number.
  **/
-#define GIMP_MINOR_VERSION                              ($gimp_minor_ver)
+#define LIGMA_MINOR_VERSION                              ($ligma_minor_ver)
 
 /**
- * GIMP_MICRO_VERSION:
+ * LIGMA_MICRO_VERSION:
  *
- * The micro GIMP version number.
+ * The micro LIGMA version number.
  **/
-#define GIMP_MICRO_VERSION                              ($gimp_micro_ver)
+#define LIGMA_MICRO_VERSION                              ($ligma_micro_ver)
 
 /**
- * GIMP_VERSION:
+ * LIGMA_VERSION:
  *
- * The GIMP version as a string.
+ * The LIGMA version as a string.
  **/
-#define GIMP_VERSION                                    "$gimp_ver"
+#define LIGMA_VERSION                                    "$ligma_ver"
 
 /**
- * GIMP_API_VERSION:
+ * LIGMA_API_VERSION:
  *
  * Since: 2.2
  **/
-#define GIMP_API_VERSION                                "$gimp_api_ver"
+#define LIGMA_API_VERSION                                "$ligma_api_ver"
 
 _______EOF
 
   cat >>$outfile <<\_______EOF
-#define GIMP_CHECK_VERSION(major, minor, micro) \
-    (GIMP_MAJOR_VERSION > (major) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
-      GIMP_MICRO_VERSION >= (micro)))
+#define LIGMA_CHECK_VERSION(major, minor, micro) \
+    (LIGMA_MAJOR_VERSION > (major) || \
+     (LIGMA_MAJOR_VERSION == (major) && LIGMA_MINOR_VERSION > (minor)) || \
+     (LIGMA_MAJOR_VERSION == (major) && LIGMA_MINOR_VERSION == (minor) && \
+      LIGMA_MICRO_VERSION >= (micro)))
 
 
 G_END_DECLS
 
-#endif /* __GIMP_VERSION_H__ */
+#endif /* __LIGMA_VERSION_H__ */
 _______EOF
 
-  if cmp -s $outfile libgimpbase/gimpversion.h; then
-    AC_MSG_NOTICE([libgimpbase/gimpversion.h is unchanged])
+  if cmp -s $outfile libligmabase/ligmaversion.h; then
+    AC_MSG_NOTICE([libligmabase/ligmaversion.h is unchanged])
     rm -f $outfile
   else
-    mv $outfile libgimpbase/gimpversion.h
+    mv $outfile libligmabase/ligmaversion.h
   fi
 ],[
-  gimp_major_ver=gimp_major_version
-  gimp_minor_ver=gimp_minor_version
-  gimp_micro_ver=gimp_micro_version
-  gimp_ver=gimp_version
-  gimp_api_ver=gimp_api_version
+  ligma_major_ver=ligma_major_version
+  ligma_minor_ver=ligma_minor_version
+  ligma_micro_ver=ligma_micro_version
+  ligma_ver=ligma_version
+  ligma_api_ver=ligma_api_version
 ])
 
 AC_CONFIG_FILES([
 INSTALL
 tools/Makefile
 pdb/Makefile
-libgimp/Makefile
-libgimpbase/Makefile
-libgimpconfig/Makefile
-libgimpcolor/Makefile
-libgimpmath/Makefile
-libgimpmodule/Makefile
-libgimpthumb/Makefile
-libgimpwidgets/Makefile
+libligma/Makefile
+libligmabase/Makefile
+libligmaconfig/Makefile
+libligmacolor/Makefile
+libligmamath/Makefile
+libligmamodule/Makefile
+libligmathumb/Makefile
+libligmawidgets/Makefile
 app/Makefile
 app/actions/Makefile
 app/config/Makefile
@@ -3065,24 +3065,24 @@ app/widgets/Makefile
 app/xcf/Makefile
 app/tests/Makefile
 app/tests/files/Makefile
-app/tests/gimpdir-empty/Makefile
-app/tests/gimpdir-empty/brushes/Makefile
-app/tests/gimpdir-empty/gradients/Makefile
-app/tests/gimpdir-empty/patterns/Makefile
-app/tests/gimpdir/Makefile
-app/tests/gimpdir/brushes/Makefile
-app/tests/gimpdir/gradients/Makefile
-app/tests/gimpdir/patterns/Makefile
+app/tests/ligmadir-empty/Makefile
+app/tests/ligmadir-empty/brushes/Makefile
+app/tests/ligmadir-empty/gradients/Makefile
+app/tests/ligmadir-empty/patterns/Makefile
+app/tests/ligmadir/Makefile
+app/tests/ligmadir/brushes/Makefile
+app/tests/ligmadir/gradients/Makefile
+app/tests/ligmadir/patterns/Makefile
 app-tools/Makefile
 build/Makefile
 build/windows/Makefile
-build/windows/gimp.rc
-build/windows/gimp-plug-ins.rc
+build/windows/ligma.rc
+build/windows/ligma-plug-ins.rc
 build/windows/installer/Makefile
 build/windows/installer/lang/Makefile
 extensions/Makefile
 extensions/goat-exercises/Makefile
-extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in
+extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
 plug-ins/file-dds/Makefile
@@ -3105,10 +3105,10 @@ plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile
 plug-ins/ui/Makefile
-plug-ins/gimpressionist/Brushes/Makefile
-plug-ins/gimpressionist/Makefile
-plug-ins/gimpressionist/Paper/Makefile
-plug-ins/gimpressionist/Presets/Makefile
+plug-ins/ligmaressionist/Brushes/Makefile
+plug-ins/ligmaressionist/Makefile
+plug-ins/ligmaressionist/Paper/Makefile
+plug-ins/ligmaressionist/Presets/Makefile
 plug-ins/gradient-flare/Makefile
 plug-ins/gradient-flare/flares/Makefile
 plug-ins/help-browser/Makefile
@@ -3140,8 +3140,8 @@ modules/Makefile
 devel-docs/Makefile
 devel-docs/g-ir-docs/Makefile
 devel-docs/reference/Makefile
-devel-docs/reference/gimp-ui/Makefile
-devel-docs/reference/gimp/Makefile
+devel-docs/reference/ligma-ui/Makefile
+devel-docs/reference/ligma/Makefile
 devel-docs/performance-logs/Makefile
 docs/Makefile
 menus/Makefile
@@ -3193,14 +3193,14 @@ data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
 desktop/Makefile
-desktop/gimp.desktop.in
-desktop/org.gimp.GIMP.appdata.xml.in
+desktop/ligma.desktop.in
+desktop/org.ligma.LIGMA.appdata.xml.in
 desktop/test-appdata.sh
 etc/Makefile
-etc/gimprc
+etc/ligmarc
 m4macros/Makefile
 po/Makefile.in
-po-libgimp/Makefile.in
+po-libligma/Makefile.in
 po-plug-ins/Makefile.in
 po-python/Makefile.in
 po-script-fu/Makefile.in
@@ -3211,18 +3211,18 @@ Makefile
 
 # Files with versions in their names
 AC_CONFIG_FILES(
-docs/gimp-gimp_app_version.1:docs/gimp.1.in
-docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
-docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
-gimp-gimp_pkgconfig_version.pc:gimp.pc.in
-gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
-gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
+docs/ligma-ligma_app_version.1:docs/ligma.1.in
+docs/ligmarc-ligma_app_version.5:docs/ligmarc.5.in
+docs/ligmatool-ligma_tool_version.1:docs/ligmatool.1.in
+ligma-ligma_pkgconfig_version.pc:ligma.pc.in
+ligmathumb-ligma_pkgconfig_version.pc:ligmathumb.pc.in
+ligmaui-ligma_pkgconfig_version.pc:ligmaui.pc.in
 )
 
 # Print a summary of features enabled/disabled:
 optional_deps="
 Extra Binaries:
-  gimp-console:              $enable_gimp_console
+  ligma-console:              $enable_ligma_console
 
 Optional Features:
   Check updates at startup:  $enable_check_update
@@ -3273,7 +3273,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Documentation:
-  libgimp API Reference:     $enable_gi_docgen
+  libligma API Reference:     $enable_gi_docgen
   GObject Introspection:     $enable_g_ir_doc
 
 Bug report URL: $with_bug_report_url
@@ -3282,19 +3282,19 @@ $override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$wa
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
   AC_MSG_RESULT([
-Building GIMP with prefix=$prefix, datarootdir=$datarootdir
+Building LIGMA with prefix=$prefix, datarootdir=$datarootdir
 Desktop files install into $DESKTOP_DATADIR
 $optional_deps
 
 INFO: MESON BUILD IS IN EXTENSIVE TESTING PHASE TO LIKELY REPLACE AUTOTOOLS!
 
       we now encourage usage of meson for packagers, instead of autotools.
-      Please build GIMP with meson and report bugs.]);
+      Please build LIGMA with meson and report bugs.]);
 else
   AC_MSG_ERROR([
 $optional_deps
 
-Error: GIMP configuration failed.
+Error: LIGMA configuration failed.
 $required_deps
 
 See the file 'INSTALL' for more help.]);

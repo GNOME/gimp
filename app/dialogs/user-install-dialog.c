@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * user-install-dialog.c
@@ -23,28 +23,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp-user-install.h"
+#include "core/ligma-user-install.h"
 
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
 
 #include "user-install-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GtkWidget * user_install_dialog_new (GimpUserInstall *install);
+static GtkWidget * user_install_dialog_new (LigmaUserInstall *install);
 static void        user_install_dialog_log (const gchar     *message,
                                             gboolean         error,
                                             gpointer         data);
 
 
 gboolean
-user_install_dialog_run (GimpUserInstall *install)
+user_install_dialog_run (LigmaUserInstall *install)
 {
   GtkWidget *dialog;
   gboolean   success;
@@ -53,7 +53,7 @@ user_install_dialog_run (GimpUserInstall *install)
 
   dialog = user_install_dialog_new (install);
 
-  success = gimp_user_install_run (install,
+  success = ligma_user_install_run (install,
                                    gtk_widget_get_scale_factor (dialog));
 
   if (! success)
@@ -73,7 +73,7 @@ user_install_dialog_run (GimpUserInstall *install)
 }
 
 static GtkWidget *
-user_install_dialog_new (GimpUserInstall *install)
+user_install_dialog_new (LigmaUserInstall *install)
 {
   GtkWidget     *dialog;
   GtkWidget     *frame;
@@ -81,23 +81,23 @@ user_install_dialog_new (GimpUserInstall *install)
   GtkTextBuffer *buffer;
   GtkWidget     *view;
 
-  gimp_icons_init ();
+  ligma_icons_init ();
 
-  dialog = gimp_message_dialog_new (_("GIMP User Installation"),
-                                    GIMP_ICON_WILBER_EEK,
+  dialog = ligma_message_dialog_new (_("LIGMA User Installation"),
+                                    LIGMA_ICON_WILBER_EEK,
                                     NULL, 0, NULL, NULL,
 
                                     _("_Quit"), GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("User installation failed!"));
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("The GIMP user installation failed; "
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
+                             _("The LIGMA user installation failed; "
                                "see the log for details."));
 
-  frame = gimp_frame_new (_("Installation Log"));
+  frame = ligma_frame_new (_("Installation Log"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, TRUE, TRUE, 0);
@@ -125,7 +125,7 @@ user_install_dialog_new (GimpUserInstall *install)
 
   g_object_unref (buffer);
 
-  gimp_user_install_set_log_handler (install, user_install_dialog_log, buffer);
+  ligma_user_install_set_log_handler (install, user_install_dialog_log, buffer);
 
   return dialog;
 }

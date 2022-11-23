@@ -1,8 +1,8 @@
-# Turkish translation for GIMP
+# Turkish translation for LIGMA
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2002-2019 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 #
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2014.
@@ -12,8 +12,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP plug-ins master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA plug-ins master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 16:45+0000\n"
 "PO-Revision-Date: 2020-05-26 23:14+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
@@ -79,11 +79,11 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:852
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1246
 #: ../plug-ins/gfig/gfig-dialog.c:291 ../plug-ins/gfig/gfig-dialog.c:641
-#: ../plug-ins/gfig/gfig-dialog.c:690 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:690 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:164
 #: ../plug-ins/gradient-flare/gradient-flare.c:2494
 #: ../plug-ins/gradient-flare/gradient-flare.c:3356
@@ -126,10 +126,10 @@ msgstr "_İptal"
 #: ../plug-ins/flame/flame.c:690 ../plug-ins/flame/flame.c:1014
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1247
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2495
 #: ../plug-ins/gradient-flare/gradient-flare.c:3469
 #: ../plug-ins/ifs-compose/ifs-compose.c:783
@@ -320,7 +320,7 @@ msgstr "_Dikey"
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
 #: ../plug-ins/file-tiff/file-tiff-load.c:1032
 #: ../plug-ins/file-webp/file-webp-load.c:173
-#: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:604
 msgid "Background"
@@ -395,7 +395,7 @@ msgid "Checkerboard"
 msgstr "Dama Tahtası"
 
 #: ../plug-ins/common/checkerboard.c:532 ../plug-ins/common/file-xmc.c:1248
-#: ../plug-ins/gimpressionist/sizemap.c:509
+#: ../plug-ins/ligmaressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Boyut:"
 
@@ -598,8 +598,8 @@ msgstr "Parçacıktan rastgele (paylaşılmış)"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:205
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "Renk tonu"
 
@@ -610,8 +610,8 @@ msgstr "Doygunluk"
 
 #: ../plug-ins/common/cml-explorer.c:304 ../plug-ins/common/cml-explorer.c:312
 #: ../plug-ins/common/decompose.c:207
-#: ../plug-ins/gimpressionist/orientation.c:151
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:151
+#: ../plug-ins/ligmaressionist/size.c:158
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Değer"
@@ -677,7 +677,7 @@ msgstr "A_ç"
 #: ../plug-ins/flame/flame.c:1092
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:821
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1679
-#: ../plug-ins/gfig/gfig-dialog.c:691 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:691 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:780
 #: ../plug-ins/ifs-compose/ifs-compose.c:2536
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:607
@@ -872,7 +872,7 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1568
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
-#: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
+#: ../plug-ins/file-fli/fli-ligma.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1753
 #: ../plug-ins/file-tiff/file-tiff-save.c:983
 #: ../plug-ins/file-tiff/file-tiff-save.c:1097 ../plug-ins/flame/flame.c:482
@@ -906,15 +906,15 @@ msgstr "CML Gezgini Parametrelerini Yükle"
 #: ../plug-ins/common/file-xmc.c:724 ../plug-ins/common/file-xmc.c:920
 #: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-faxg3/faxg3.c:256
-#: ../plug-ins/file-fits/fits.c:384 ../plug-ins/file-fli/fli-gimp.c:460
-#: ../plug-ins/file-fli/fli-gimp.c:510 ../plug-ins/file-ico/ico-load.c:676
+#: ../plug-ins/file-fits/fits.c:384 ../plug-ins/file-fli/fli-ligma.c:460
+#: ../plug-ins/file-fli/fli-ligma.c:510 ../plug-ins/file-ico/ico-load.c:676
 #: ../plug-ins/file-ico/ico-load.c:758 ../plug-ins/file-jpeg/jpeg-load.c:102
 #: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:152
 #: ../plug-ins/file-psd/psd-thumb-load.c:90 ../plug-ins/flame/flame.c:451
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1864
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1015
-#: ../plug-ins/gfig/gfig.c:454 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:454 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1383
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -995,7 +995,7 @@ msgstr "Renk Eşlemini Yeniden Düzenle"
 #: ../plug-ins/common/sphere-designer.c:2626
 #: ../plug-ins/common/tile-small.c:504
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:812
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:781
 #: ../plug-ins/selection-to-path/selection-to-path.c:405
 msgid "_Reset"
@@ -1347,8 +1347,8 @@ msgstr "Eğri Bükümü"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1222
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Önizleme"
@@ -1841,7 +1841,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/common/file-xbm.c:734 ../plug-ins/common/file-xmc.c:712
 #: ../plug-ins/common/file-xpm.c:381 ../plug-ins/common/file-xwd.c:474
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
-#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:500
+#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-ligma.c:500
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
@@ -1927,7 +1927,7 @@ msgstr "'%s': dosya sonu ya da palet verisi okunurken hata"
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1046
 #: ../plug-ins/common/file-xpm.c:699 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
-#: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
+#: ../plug-ins/file-fli/fli-ligma.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1716
 #: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:973
 #, c-format
@@ -2047,8 +2047,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Türü tanınmadığı için görüntü üzerinde işlem yapılamadı."
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "GIMP fırçası"
+msgid "LIGMA brush"
+msgstr "LIGMA fırçası"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, c-format
@@ -2261,8 +2261,8 @@ msgstr ""
 "Yalnızca bir katmana sahip görüntüyü dışa aktarmayı deniyorsunuz."
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "GIMP fırça (hareketli)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA fırça (hareketli)"
 
 #: ../plug-ins/common/file-gih.c:605
 msgid "Brush Pipe"
@@ -2753,8 +2753,8 @@ msgstr ""
 "aktarıyorsunuz."
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "GIMP deseni"
+msgid "LIGMA pattern"
+msgstr "LIGMA deseni"
 
 #: ../plug-ins/common/file-pat.c:206
 #, c-format
@@ -3274,16 +3274,16 @@ msgid "Invalid X resolution."
 msgstr "Geçersiz X çözünürlüğü."
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "Görüntü genişliği GIMP'in kaldırabileceğinden daha büyük."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Görüntü genişliği LIGMA'in kaldırabileceğinden daha büyük."
 
 #: ../plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "Geçersiz Y çözünürlüğü."
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "Görüntü yüksekliği GIMP'in kaldırabileceğinden daha fazla."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Görüntü yüksekliği LIGMA'in kaldırabileceğinden daha fazla."
 
 #: ../plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3389,8 +3389,8 @@ msgid "Gray"
 msgstr "Gri"
 
 #: ../plug-ins/common/file-ps.c:3692 ../plug-ins/common/file-xpm.c:513
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Renk"
@@ -3885,10 +3885,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Görüntü genişliği GIMP'in kaldırabileceğinden daha büyük"
+"Görüntü genişliği LIGMA'in kaldırabileceğinden daha büyük"
 
 #: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:848
 #: ../plug-ins/common/file-xwd.c:569
@@ -3905,10 +3905,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Görüntü yüksekliği GIMP'in kaldırabileceğinden daha büyük"
+"Görüntü yüksekliği LIGMA'in kaldırabileceğinden daha büyük"
 
 #: ../plug-ins/common/file-sunras.c:584
 msgid "This image depth is not supported"
@@ -4016,9 +4016,9 @@ msgstr "_Yolları içe aktar"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
-"SVG elementlerinin yolunu içe aktar böylece bu elementler GIMP yol aracı ile "
+"SVG elementlerinin yolunu içe aktar böylece bu elementler LIGMA yol aracı ile "
 "kullanılabilecek"
 
 #: ../plug-ins/common/file-svg.c:891
@@ -4788,7 +4788,7 @@ msgstr "İşlem"
 
 # Luma metodunun Luminance metodundan farkı var,
 # o sebeple "Renk Parlaklığı" olarak çevirdim
-# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
+# https://docs.ligma.org/2.10/en/ligma-filter-desaturate.html
 #: ../plug-ins/common/hot.c:703
 msgid "Reduce _Luminance"
 msgstr "_Renk Parlaklığını Azalt"
@@ -5080,9 +5080,9 @@ msgstr "Örnek Renkler _Al"
 #: ../plug-ins/common/sample-colorize.c:1393
 #: ../plug-ins/common/tile-small.c:608
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1202
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Uygula"
@@ -5322,7 +5322,7 @@ msgid "Use the background color"
 msgstr "Artalan rengini kullan"
 
 #: ../plug-ins/common/sphere-designer.c:334
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Kesiksiz"
 
@@ -5410,7 +5410,7 @@ msgstr "_Çoğalt"
 #: ../plug-ins/common/sphere-designer.c:2746
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:852
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3073
 #: ../plug-ins/gradient-flare/gradient-flare.c:3356
 #: ../plug-ins/ifs-compose/ifs-compose.c:1050
@@ -5447,7 +5447,7 @@ msgstr "Renk Seçim iletişim Kutusu"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2828
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/ligmaressionist/paper.c:192
 #: ../plug-ins/ifs-compose/ifs-compose.c:559
 msgid "Scale:"
 msgstr "Ölçekle:"
@@ -5596,10 +5596,10 @@ msgstr "Kaydedildi"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Öğe tanımı GIMP'ten çıkmadan önce eğer bu sütun işaretlenirse kaydedilecek."
+"Öğe tanımı LIGMA'ten çıkmadan önce eğer bu sütun işaretlenirse kaydedilecek."
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid "ID"
@@ -5607,9 +5607,9 @@ msgstr "Kimlik"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Bu dizgi GIMP'in yapılandırma dosyasındaki bir birimi saptamak için "
+"Bu dizgi LIGMA'in yapılandırma dosyasındaki bir birimi saptamak için "
 "kullanılacaktır."
 
 #: ../plug-ins/common/unit-editor.c:115
@@ -5683,8 +5683,8 @@ msgid "U_nits"
 msgstr "B_irimler"
 
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
-msgstr "GIMP'de kullanılmış birimleri oluştur yada değiştir"
+msgid "Create or alter units used in LIGMA"
+msgstr "LIGMA'de kullanılmış birimleri oluştur yada değiştir"
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "Add a New Unit"
@@ -5734,7 +5734,7 @@ msgstr "Birim Düzenleyici"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1191
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Yenile"
 
@@ -6172,12 +6172,12 @@ msgstr "Renk alanı bilgilerini _yaz"
 #: ../plug-ins/file-bmp/bmp-save.c:989
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Bazı uygulamalar renk uzayı bilgileri içeren BMP görüntülerini okuyamaz. "
-"GIMP öntanımlı olarak renk uzayı bilgisini yazar. Bu seçeneğin devre dışı "
-"bırakılması GIMP uygulamasının dosyaya renk uzayı bilgisi yazmamasına neden "
+"LIGMA öntanımlı olarak renk uzayı bilgisini yazar. Bu seçeneğin devre dışı "
+"bırakılması LIGMA uygulamasının dosyaya renk uzayı bilgisi yazmamasına neden "
 "olur."
 
 #. RGB Encoding Pptions
@@ -6389,34 +6389,34 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_Hiçbiri"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC canlandırması"
 
-#: ../plug-ins/file-fli/fli-gimp.c:585
+#: ../plug-ins/file-fli/fli-ligma.c:585
 #, c-format
 msgid "Frame (%i)"
 msgstr "Çerçeve (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:747
+#: ../plug-ins/file-fli/fli-ligma.c:747
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Üzgünüm, yalnızca İNDEKSLİ ve GRİ görüntüleri dışa aktarabilirim."
 
-#: ../plug-ins/file-fli/fli-gimp.c:910
+#: ../plug-ins/file-fli/fli-ligma.c:910
 msgid "Open FLIC Animation"
 msgstr "FLIC Canlandırması Aç"
 
-#: ../plug-ins/file-fli/fli-gimp.c:928 ../plug-ins/file-fli/fli-gimp.c:984
+#: ../plug-ins/file-fli/fli-ligma.c:928 ../plug-ins/file-fli/fli-ligma.c:984
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Gönderen:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:934 ../plug-ins/file-fli/fli-gimp.c:990
+#: ../plug-ins/file-fli/fli-ligma.c:934 ../plug-ins/file-fli/fli-ligma.c:990
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Alıcı:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:966
+#: ../plug-ins/file-fli/fli-ligma.c:966
 msgid "Export Image as FLI Animation"
 msgstr "Görüntüyü AutoDesk FLI Canlandırması Olarak Dışa Aktar"
 
@@ -6758,8 +6758,8 @@ msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
 
 #: ../plug-ins/file-psd/psd-save.c:463
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Hata: GIMP temel görüntü türü PSD biçimine dönüştürülemiyor"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Hata: LIGMA temel görüntü türü PSD biçimine dönüştürülemiyor"
 
 #: ../plug-ins/file-psd/psd-save.c:1709
 #, c-format
@@ -6896,7 +6896,7 @@ msgstr "Ham Arriflex ARI"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -6904,7 +6904,7 @@ msgid ""
 msgstr ""
 "'%s' dosyalarını açmak için kurulu bir RAW yükleyici yok.\n"
 "\n"
-"GIMP aşağıdaki RAW yükleyicilerini desteklemektedir:\n"
+"LIGMA aşağıdaki RAW yükleyicilerini desteklemektedir:\n"
 "- darktable (http://www.darktable.org/), en düşük sürüm 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), en düşük sürüm 5.2\n"
 "\n"
@@ -7302,8 +7302,8 @@ msgstr "_Rastgele"
 msgid "Same"
 msgstr "Benzer"
 
-#: ../plug-ins/flame/flame.c:789 ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:789 ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "Rastgele"
 
@@ -7436,8 +7436,8 @@ msgstr "Alevi Kaydet"
 msgid "Flame"
 msgstr "Alev"
 
-#: ../plug-ins/flame/flame.c:1076 ../plug-ins/gimpressionist/orientation.c:193
-#: ../plug-ins/gimpressionist/size.c:202
+#: ../plug-ins/flame/flame.c:1076 ../plug-ins/ligmaressionist/orientation.c:193
+#: ../plug-ins/ligmaressionist/size.c:202
 #: ../plug-ins/gradient-flare/gradient-flare.c:3071
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -7496,16 +7496,16 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:545
-#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:975
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Gimprc içinde %s yok:\n"
+"Ligmarc içinde %s yok:\n"
 "Şöyle bir giriş eklemelisiniz\n"
 "(%s \"%s\")\n"
 "%s dosyanıza."
@@ -8117,7 +8117,7 @@ msgstr "Kenar yumuşatma"
 msgid "Max undo:"
 msgstr "En Fazla Geri Alma:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1322 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1322 ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Saydam"
 
@@ -8218,7 +8218,7 @@ msgid "Left"
 msgstr "Sol"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1753
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/ligmaressionist/orientation.c:143
 msgid "Orientation:"
 msgstr "Yönelim:"
 
@@ -8276,296 +8276,296 @@ msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 "Parazit yüklemesi için geçici dosya '%s' açılmaya çalışılırken hata: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Yalnızca çizilebilenler kaydedilebilir!"
 
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Fırçayı Kaydet"
 
-#: ../plug-ins/gimpressionist/brush.c:521
+#: ../plug-ins/ligmaressionist/brush.c:521
 msgid "_Brush"
 msgstr "_Fırça"
 
-#: ../plug-ins/gimpressionist/brush.c:558
+#: ../plug-ins/ligmaressionist/brush.c:558
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: ../plug-ins/gimpressionist/brush.c:576
+#: ../plug-ins/ligmaressionist/brush.c:576
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Seçilen fırçanın gamasını (parlaklık) kaydet"
 
-#: ../plug-ins/gimpressionist/brush.c:584
+#: ../plug-ins/ligmaressionist/brush.c:584
 #: ../plug-ins/metadata/metadata-editor.c:586
 msgid "Select:"
 msgstr "Seç:"
 
-#: ../plug-ins/gimpressionist/brush.c:600
+#: ../plug-ins/ligmaressionist/brush.c:600
 msgid "Save _as"
 msgstr "_Farklı Kaydet"
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "En-boy oranı:"
 
-#: ../plug-ins/gimpressionist/brush.c:617
+#: ../plug-ins/ligmaressionist/brush.c:617
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Fırçanın en-boy oranını belirler"
 
-#: ../plug-ins/gimpressionist/brush.c:627
-#: ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:627
+#: ../plug-ins/ligmaressionist/paper.c:204
 msgid "Relief:"
 msgstr "Kabartma:"
 
-#: ../plug-ins/gimpressionist/brush.c:631
-#: ../plug-ins/gimpressionist/paper.c:208
+#: ../plug-ins/ligmaressionist/brush.c:631
+#: ../plug-ins/ligmaressionist/paper.c:208
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Görüntüye uygulanacak kabartma miktarını belirtir (yüzde olarak)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "R_enk"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Fırça altı or_talaması"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "_Fırçayı ortala"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Renk, fırça altındaki tüm piksellerin ortalamasından hesaplandı"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Rengi fırçanın merkezindeki piksellerden örnekler"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "Renk _gürültüsü:"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "Renge rastgele gürültü ekler"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3672
 msgid "_General"
 msgstr "_Genel"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Aslını koru"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Özgün görüntüyü artalan olarak koru"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Kağıttan"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Seçilen kağıdın dokusunu artalan olarak kopyala"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Düz renkli artalan"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Saydam artalan kullan; yalnızca boyanan darbeler görünür olacak"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Kenarları boya"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Görüntünün kenarlarından dışa çıkması için darbeler seçilir"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "Döşenebilir"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 "Sonuçlanan görüntünün kusursuz olarak döşenebilir olması istendiği için "
 "seçilir"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Gölge düşürme"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Her fırça darbesine bir gölge etkisi ekle"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "Kenar koyulaştır:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Her fırça darbesi için kenarlar ne kadar koyulaştırılacak"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "Gölge koyulaştır:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Gölgenin ne kadar \"koyu\" olacağı"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "Gölge derinliği:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Gölge derinliği, örn. nesneden ne kadar uzaklıkta bulunmalı"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "Gölge bulanıklığı:"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "Gölge bulanıklılığının ne kadar olacağı"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "Sapma eşiği:"
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "Uyarlanabilir seçimler için bir kurtarma değeri"
 
-#: ../plug-ins/gimpressionist/gimp.c:116
-msgid "_GIMPressionist..."
-msgstr "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:116
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:120
+#: ../plug-ins/ligmaressionist/ligma.c:120
 msgid "Performs various artistic operations"
 msgstr "Çeşitli sanatsal işlemler gerçekleştirir"
 
-#: ../plug-ins/gimpressionist/gimp.c:429
+#: ../plug-ins/ligmaressionist/ligma.c:429
 msgid "Painting"
 msgstr "Boyama"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "_Yöneltme"
 
-#: ../plug-ins/gimpressionist/orientation.c:101
+#: ../plug-ins/ligmaressionist/orientation.c:101
 msgid "Directions:"
 msgstr "Yönler:"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Kullanıcılacak yönlerin sayısı (örn. fırçalar)"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "Start angle:"
 msgstr "Başlangıç açısı:"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "The starting angle of the first brush to create"
 msgstr "Oluşturulacak ilk fırçanın başlangıç açısı"
 
-#: ../plug-ins/gimpressionist/orientation.c:125
+#: ../plug-ins/ligmaressionist/orientation.c:125
 msgid "Angle span:"
 msgstr "Köşe kirişi:"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "The angle span of the first brush to create"
 msgstr "İlk fırçanın oluşturulacak köşe kirişi"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/orientation.c:152
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Darbenin yönünü saptamak için alan değerine (parlaklık) izin ver"
 
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "Yarıçap"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Görüntünün ortasından gelen uzaklık darbenin yönünü saptar"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid "Selects a random direction of each stroke"
 msgstr "Her darbe için rastgele bir yön seçer"
 
-#: ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "Radyal"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Darbenin merkezden gelen yöne göre yönünün saptanmasına izin ver"
 
-#: ../plug-ins/gimpressionist/orientation.c:171
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:171
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "Akış"
 
-#: ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Darbeler bir \"akıcı\" deseni izler"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:176
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Alanın renk tonu darbenin yönünü saptar"
 
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "Uyarlamalı"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Özgün görüntü ile en yakın eşleşen yön seçildi"
 
-#: ../plug-ins/gimpressionist/orientation.c:187
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:187
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "Kılavuz"
 
-#: ../plug-ins/gimpressionist/orientation.c:188
+#: ../plug-ins/ligmaressionist/orientation.c:188
 msgid "Manually specify the stroke orientation"
 msgstr "Darbe yönelimini elle belirt"
 
-#: ../plug-ins/gimpressionist/orientation.c:199
+#: ../plug-ins/ligmaressionist/orientation.c:199
 msgid "Opens up the Orientation Map Editor"
 msgstr "Yönelim Eşlemi Düzenleyicisini açar"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Yönelim Eşlemi Düzenleyicisi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Vektörler"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -8573,302 +8573,302 @@ msgstr ""
 "Vektör alanı. Seçilen vektörü taşımak için sol tıklayın, fareye göre "
 "yönlendirmek için sağ tıklayın, yeni vektör eklemek için ortaya tıklayın."
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Önizlemenin parlaklığını ayarla"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Önceki vektörü seç"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Sonraki vektörü seç"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "_Ekle"
 
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Yeni vektör ekle"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "İşlemi Ö_ldür"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Seçilen vektörü sil"
 
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Tür"
 
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "_Girdap"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "Girdap_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "Girdap_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:540
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:540
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 "Voronoi-biçimi, verilen noktaya en yakın vektöre herhangi bir etki yapar"
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/ligmaressionist/orientmap.c:669
 msgid "A_ngle:"
 msgstr "_Açı:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:673
+#: ../plug-ins/ligmaressionist/orientmap.c:673
 msgid "Change the angle of the selected vector"
 msgstr "Seçilen vektörün açısını değiştir"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Ang_le offset:"
 msgstr "K_öşe konumu:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:684
+#: ../plug-ins/ligmaressionist/orientmap.c:684
 msgid "Offset all vectors with a given angle"
 msgstr "Tüm vektörleri bir açı ile dengele"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "_Strength:"
 msgstr "_Kuvvet:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:695
+#: ../plug-ins/ligmaressionist/orientmap.c:695
 msgid "Change the strength of the selected vector"
 msgstr "Seçilen vektörün kuvvetini değiştir"
 
-#: ../plug-ins/gimpressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/orientmap.c:702
 msgid "S_trength exp.:"
 msgstr "Ke_skinlik dışa aktarması:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:706
-#: ../plug-ins/gimpressionist/sizemap.c:535
+#: ../plug-ins/ligmaressionist/orientmap.c:706
+#: ../plug-ins/ligmaressionist/sizemap.c:535
 msgid "Change the exponent of the strength"
 msgstr "Kuvvetin katsayısını değiştir"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "K_ağıt"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "_Tersine Çevir"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Kağıtların dokusunu tersine çevirir"
 
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "Ka_plama"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Kağıdı olduğu gibi uygular (kabartma olmadan)"
 
-#: ../plug-ins/gimpressionist/paper.c:196
+#: ../plug-ins/ligmaressionist/paper.c:196
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Dokunun derecesini belirler (özgün dosyanın yüzdesi olarak)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Ye_rleşim"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Yerleştirme"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Rastgele"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Eşit olarak dağıtılmış"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Darbeleri görüntünün çevresine rastgele yerleştir"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Darbeleri görüntü boyunca eşit bir şekilde dağıt"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Ortalanmış"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fırça darbelerini görüntü merkezi etrafında odakla"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "Darbe _sıklığı:"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "Fırça darbelerinin göreceli sıklığı"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "PPM dosyası '%s' kaydedilemedi: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Geçerli Ayarları Kaydet"
 
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Açıklama:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist Varsayılanları"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist Varsayılanları"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Öntanımlı"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Geçerli Ayarları Kaydet..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Geçerli ayarları belirtilen dosyaya kaydet"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Belleğe seçilen Önayarı okur"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Seçili Önayarı siler"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Önayar klasörlerini yeniden okur"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511
 #: ../plug-ins/lighting/lighting-ui.c:1099
 msgid "_Update"
 msgstr "_Güncelle"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Önizleme penceresini yenile"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Özgün görüntüye geri döndür"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Boyut"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Size variants:"
 msgstr "Boyut değişkeni:"
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "Kullanılacak fırçaların boyutlarının sayısı"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "En düyük boyut:"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "Oluşturulacak en küçük fırça"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "En fazla boyut:"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "Oluşturulacak en büyük fırça"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size depends on:"
 msgstr "Bağlı boyut:"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Darbenin boyutunun saptanması için alan değerine (parlaklık) izin ver"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Görüntünün ortasından gelen uzaklık darbenin boyutunu saptar"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "Her darbe için rastgele boyut seçer"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Darbe boyutunun merkezden gelen yöne saptanmasına izin ver"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Alanın renk tonu darbenin boyutunu saptar"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Özgün görüntü ile eşleşen en yakın fırça boyutu seçildi"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "Darbe boyutunu elle belirle"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "Boyut Eşleme Düzenleyicisini açar"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Boyut Eşleme Düzenleyicisi"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Smvektörleri"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -8876,39 +8876,39 @@ msgstr ""
 "Smvektör alanı. smvektörü seçmek için ol tıklayın, fare istikametini "
 "işaretlemek için sağ tıklayın, yeni smvektör oluşturmak için ortaya tıklayın."
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Önceki smvektörü seç"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Sonraki smvektörü seç"
 
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Yeni smvektör ekle"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Seçilen smvektörü sil"
 
-#: ../plug-ins/gimpressionist/sizemap.c:513
+#: ../plug-ins/ligmaressionist/sizemap.c:513
 msgid "Change the angle of the selected smvector"
 msgstr "Seçilen smvektörün açısını değiştir"
 
-#: ../plug-ins/gimpressionist/sizemap.c:520
+#: ../plug-ins/ligmaressionist/sizemap.c:520
 msgid "S_trength:"
 msgstr "Ke_skinlik:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/ligmaressionist/sizemap.c:524
 msgid "Change the strength of the selected smvector"
 msgstr "Seçilen smvektörün kuvvetini değiştir"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/ligmaressionist/sizemap.c:531
 msgid "St_rength exp.:"
 msgstr "Ke_skinlik akt.:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:547
+#: ../plug-ins/ligmaressionist/sizemap.c:547
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9690,8 +9690,8 @@ msgid "_Second Flares"
 msgstr "İ_kinci Işımalar"
 
 #: ../plug-ins/help-browser/dialog.c:177 ../plug-ins/help-browser/dialog.c:1104
-msgid "GIMP Help Browser"
-msgstr "GIMP Yardım Gezgini"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA Yardım Gezgini"
 
 #: ../plug-ins/help-browser/dialog.c:542
 msgid "Go back one page"
@@ -9746,8 +9746,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Kenar çubuğu görünürlüğünü değiştir"
 
 #: ../plug-ins/help-browser/dialog.c:634
-msgid "Visit the GIMP documentation website"
-msgstr "GIMP belgeleme web sitesine git"
+msgid "Visit the LIGMA documentation website"
+msgstr "LIGMA belgeleme web sitesine git"
 
 #: ../plug-ins/help-browser/dialog.c:1146
 msgid "Find:"
@@ -9768,14 +9768,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "_Kapat"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "'%s' için yardım sayfaları kullanılabilir değil."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "GIMP kullanıcı kılavuzu kullanılabilir değil."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMA kullanıcı kılavuzu kullanılabilir değil."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -9783,29 +9783,29 @@ msgstr "GIMP kullanıcı kılavuzu kullanılabilir değil."
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"https://docs.ligma.org/"
 msgstr ""
-"Lütfen ilave yardım paketlerini kurun veya https://docs.gimp.org/ çevrimiçi "
+"Lütfen ilave yardım paketlerini kurun veya https://docs.ligma.org/ çevrimiçi "
 "kullanıcı kılavuzunu kullanın"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "GIO arkauçları eksik olabilir ve GVFS yüklemeniz gerekebilir?"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "'%s' yardım kimliği bilinmiyor"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "İçerik '%s' adresinden yükleniyor"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10031,7 +10031,7 @@ msgid "Clear"
 msgstr "Temizle"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Oluştur"
 
@@ -10056,41 +10056,41 @@ msgid "Edit Object"
 msgstr "Nesneyi Düzenle"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Gimp Kılavuzlarını Kullan"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Ligma Kılavuzlarını Kullan"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Al_ternatif"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "T_ümü"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Ek Kılavuzlar Ekle"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "S_ol sınır"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "S_ağ sınır"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "_Üst sınır"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "_Alt sınır"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Ana Adres:"
 
@@ -10536,8 +10536,8 @@ msgid "Grid Settings..."
 msgstr "Izgara Ayarları..."
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "GIMP Kılavuzlarını Kullan..."
+msgid "Use LIGMA Guides..."
+msgstr "LIGMA Kılavuzlarını Kullan..."
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
@@ -12761,8 +12761,8 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "Flame works only on RGB drawables."
 #~ msgstr "Alev yalnızca RGB çizilebilirliği üzerinde çalışır."
 
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "Bir GIMP katman-tabanlı animasyonun önizlemesi"
+#~ msgid "Preview a LIGMA layer-based animation"
+#~ msgstr "Bir LIGMA katman-tabanlı animasyonun önizlemesi"
 
 #~ msgid "_Playback..."
 #~ msgstr "_Oynat..."
@@ -12889,8 +12889,8 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "Brush name is too long: %lu"
 #~ msgstr "Fırça ismi çok uzun: %lu"
 
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "GIMP fırça dosyası bozuk."
+#~ msgid "LIGMA brush file appears to be corrupted."
+#~ msgstr "LIGMA fırça dosyası bozuk."
 
 #~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 #~ msgstr ""
@@ -12902,8 +12902,8 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
 #~ msgstr "'%s' içinde geçersiz başlık verisi: Fırça ismi çok uzun: %lu"
 
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "'%s' GIMP fırça dosyasında sorun"
+#~ msgid "Error in LIGMA brush file '%s'"
+#~ msgstr "'%s' LIGMA fırça dosyasında sorun"
 
 #~ msgid "Invalid UTF-8 string in brush file '%s'."
 #~ msgstr "'%s' fırça dosyası içinde geçersiz UTF-8 dizgisi."
@@ -13928,11 +13928,11 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "_Limit line width"
 #~ msgstr "Hat genişliği _sınırı"
 
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "GIMP fırçaları ya GRİTONLAMALI veya RGBA"
+#~ msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+#~ msgstr "LIGMA fırçaları ya GRİTONLAMALI veya RGBA"
 
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "GIMP fırça boru dosyasında hata."
+#~ msgid "Error in LIGMA brush pipe file."
+#~ msgstr "LIGMA fırça boru dosyasında hata."
 
 #~ msgid "Couldn't load one brush in the pipe, giving up."
 #~ msgstr "Borudaki bir fırça yüklenemedi, vazgeçiliyor."
@@ -13942,12 +13942,12 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 
 #~ msgid ""
 #~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+#~ "The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 #~ "bit, so it will be converted for you. Information will be lost because of "
 #~ "this conversion."
 #~ msgstr ""
 #~ "Uyarı:\n"
-#~ "Yüklediğiniz görüntü kanal başına 16 bit'e sahip. GIMP sadece 8 bit "
+#~ "Yüklediğiniz görüntü kanal başına 16 bit'e sahip. LIGMA sadece 8 bit "
 #~ "kullanabilir; bu yüzden, dönüştürülmesi gerekiyor. Bilgi, bu dönüşümden "
 #~ "dolayı kaybolacak."
 
@@ -14881,8 +14881,8 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "According to the EXIF data, this image is rotated."
 #~ msgstr "EXIF verisine göre bu resim döndürüldü."
 
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr "GIMP'in standart bir yönlenme ile döndürmesini ister misiniz?"
+#~ msgid "Would you like LIGMA to rotate it into the standard orientation?"
+#~ msgstr "LIGMA'in standart bir yönlenme ile döndürmesini ister misiniz?"
 
 #~ msgid "Downloading image (%s of %s)"
 #~ msgstr "Resim indiriliyor (%s de %s)"
@@ -14931,8 +14931,8 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "Failed to save to temporary file '%s'"
 #~ msgstr "PPM dosyası '%s' kaydedilemedi: %s"
 
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "GIMP sıkıştırmalı XJT görüntüsü"
+#~ msgid "LIGMA compressed XJT image"
+#~ msgstr "LIGMA sıkıştırmalı XJT görüntüsü"
 
 #~ msgid "XJT file contains unknown layermode %d"
 #~ msgstr "XJT dosyası bilinmeyen katmankipi %d içeriyor"
@@ -15070,12 +15070,12 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
+#~ "if necessary - use the environment variable GS_PROG to tell LIGMA about "
 #~ "its location.\n"
 #~ "(%s)"
 #~ msgstr ""
 #~ "Ghostscript başlatılırken hata. Ghostscript'in yüklendiğinden ve -eğer "
-#~ "gerekliyse- GS_PROG ortam değişkeninin GIMP'e konumunu bildirmesi için "
+#~ "gerekliyse- GS_PROG ortam değişkeninin LIGMA'e konumunu bildirmesi için "
 #~ "kullandığınızdan emin olun.\n"
 #~ "(%s)"
 
@@ -15148,14 +15148,14 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgid "Save as XPM"
 #~ msgstr "XPM olarak kaydet"
 
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "GIMP takımından kocaman bir merhaba!"
+#~ msgid "A big hello from the LIGMA team!"
+#~ msgstr "LIGMA takımından kocaman bir merhaba!"
 
 #~ msgid "Gee Zoom"
 #~ msgstr "Gee Yakınlaştırması"
 
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "GIMP'i Seçtiğiniz için Teşekkürler"
+#~ msgid "Thank You for Choosing LIGMA"
+#~ msgstr "LIGMA'i Seçtiğiniz için Teşekkürler"
 
 #~ msgid "An obsolete creation by %s"
 #~ msgstr "%s ile eski oluşturma"
@@ -15253,10 +15253,10 @@ msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
 #~ msgstr "Büyüklük:"
 
 #~ msgid ""
-#~ "Please make sure gimp-help-en is installed, or the appropriate gimp-help "
+#~ "Please make sure ligma-help-en is installed, or the appropriate ligma-help "
 #~ "package for your language."
 #~ msgstr ""
-#~ "Lütfen gimp-help-en ya da diliniz için uygun gimp-help paketi kurulu "
+#~ "Lütfen ligma-help-en ya da diliniz için uygun ligma-help paketi kurulu "
 #~ "olduğundan emin olun."
 
 #~ msgid "Send to Back"

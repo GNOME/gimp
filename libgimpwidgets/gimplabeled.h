@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabeled.h
+ * ligmalabeled.h
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,31 +19,31 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABELED_H__
-#define __GIMP_LABELED_H__
+#ifndef __LIGMA_LABELED_H__
+#define __LIGMA_LABELED_H__
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_LABELED (gimp_labeled_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabeled, gimp_labeled, GIMP, LABELED, GtkGrid)
+#define LIGMA_TYPE_LABELED (ligma_labeled_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLabeled, ligma_labeled, LIGMA, LABELED, GtkGrid)
 
-struct _GimpLabeledClass
+struct _LigmaLabeledClass
 {
   GtkGridClass       parent_class;
 
   /*  Signals        */
 
-  void (* mnemonic_widget_changed) (GimpLabeled *labeled,
+  void (* mnemonic_widget_changed) (LigmaLabeled *labeled,
                                     GtkWidget   *widget);
 
   /*  Class methods  */
 
   /**
-   * GimpLabelledClass::populate:
+   * LigmaLabelledClass::populate:
    *
    * Fill the #GtkGrid with any necessary widget and sets the
    * coordinates and dimensions the #GtkLabel should be attached to.
@@ -55,7 +55,7 @@ struct _GimpLabeledClass
    * Returns: (transfer none): the #GtkWidget which the label must be
    *                           set as mnemonic to.
    **/
-  GtkWidget     * (* populate)     (GimpLabeled *labeled,
+  GtkWidget     * (* populate)     (LigmaLabeled *labeled,
                                     gint        *x,
                                     gint        *y,
                                     gint        *width,
@@ -63,23 +63,23 @@ struct _GimpLabeledClass
 
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget     * gimp_labeled_get_label (GimpLabeled *labeled);
+GtkWidget     * ligma_labeled_get_label (LigmaLabeled *labeled);
 
-const gchar   * gimp_labeled_get_text  (GimpLabeled *labeled);
-void            gimp_labeled_set_text  (GimpLabeled *labeled,
+const gchar   * ligma_labeled_get_text  (LigmaLabeled *labeled);
+void            ligma_labeled_set_text  (LigmaLabeled *labeled,
                                         const gchar *text);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_LABELED_H__ */
+#endif /* __LIGMA_LABELED_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextLayer
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaTextLayer
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_LAYER_TRANSFORM_H__
-#define __GIMP_TEXT_LAYER_TRANSFORM_H__
+#ifndef __LIGMA_TEXT_LAYER_TRANSFORM_H__
+#define __LIGMA_TEXT_LAYER_TRANSFORM_H__
 
 
-void  gimp_text_layer_scale     (GimpItem               *item,
+void  ligma_text_layer_scale     (LigmaItem               *item,
                                  gint                    new_width,
                                  gint                    new_height,
                                  gint                    new_offset_x,
                                  gint                    new_offset_y,
-                                 GimpInterpolationType   interpolation_type,
-                                 GimpProgress           *progress);
-void  gimp_text_layer_flip      (GimpItem               *item,
-                                 GimpContext            *context,
-                                 GimpOrientationType     flip_type,
+                                 LigmaInterpolationType   interpolation_type,
+                                 LigmaProgress           *progress);
+void  ligma_text_layer_flip      (LigmaItem               *item,
+                                 LigmaContext            *context,
+                                 LigmaOrientationType     flip_type,
                                  gdouble                 axis,
                                  gboolean                clip_result);
-void  gimp_text_layer_rotate    (GimpItem               *item,
-                                 GimpContext            *context,
-                                 GimpRotationType        rotate_type,
+void  ligma_text_layer_rotate    (LigmaItem               *item,
+                                 LigmaContext            *context,
+                                 LigmaRotationType        rotate_type,
                                  gdouble                 center_x,
                                  gdouble                 center_y,
                                  gboolean                clip_result);
-void  gimp_text_layer_transform (GimpItem               *item,
-                                 GimpContext            *context,
-                                 const GimpMatrix3      *matrix,
-                                 GimpTransformDirection  direction,
-                                 GimpInterpolationType   interpolation_type,
+void  ligma_text_layer_transform (LigmaItem               *item,
+                                 LigmaContext            *context,
+                                 const LigmaMatrix3      *matrix,
+                                 LigmaTransformDirection  direction,
+                                 LigmaInterpolationType   interpolation_type,
                                  gboolean                supersample,
-                                 GimpTransformResize     clip_result,
-                                 GimpProgress           *progress);
+                                 LigmaTransformResize     clip_result,
+                                 LigmaProgress           *progress);
 
 
-#endif /* __GIMP_TEXT_LAYER_TRANSFORM_H__ */
+#endif /* __LIGMA_TEXT_LAYER_TRANSFORM_H__ */

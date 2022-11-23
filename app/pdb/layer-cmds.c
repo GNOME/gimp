@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,285 +27,285 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpgrouplayer.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-new.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppickable.h"
-#include "core/gimpprogress.h"
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmagrouplayer.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapickable.h"
+#include "core/ligmaprogress.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-layer_new_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+layer_new_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gint width;
   gint height;
   gint type;
   const gchar *name;
   gdouble opacity;
   gint mode;
-  GimpLayer *layer = NULL;
+  LigmaLayer *layer = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  width = g_value_get_int (gimp_value_array_index (args, 1));
-  height = g_value_get_int (gimp_value_array_index (args, 2));
-  type = g_value_get_enum (gimp_value_array_index (args, 3));
-  name = g_value_get_string (gimp_value_array_index (args, 4));
-  opacity = g_value_get_double (gimp_value_array_index (args, 5));
-  mode = g_value_get_enum (gimp_value_array_index (args, 6));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  width = g_value_get_int (ligma_value_array_index (args, 1));
+  height = g_value_get_int (ligma_value_array_index (args, 2));
+  type = g_value_get_enum (ligma_value_array_index (args, 3));
+  name = g_value_get_string (ligma_value_array_index (args, 4));
+  opacity = g_value_get_double (ligma_value_array_index (args, 5));
+  mode = g_value_get_enum (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      GimpImageBaseType  base_type = GIMP_RGB;
+      LigmaImageBaseType  base_type = LIGMA_RGB;
       gboolean           has_alpha = FALSE;
       const Babl        *format;
 
-      if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-        mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+      if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+        mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       switch (type)
         {
-        case GIMP_RGB_IMAGE:
-          base_type = GIMP_RGB;
+        case LIGMA_RGB_IMAGE:
+          base_type = LIGMA_RGB;
           has_alpha = FALSE;
           break;
 
-        case GIMP_RGBA_IMAGE:
-          base_type = GIMP_RGB;
+        case LIGMA_RGBA_IMAGE:
+          base_type = LIGMA_RGB;
           has_alpha = TRUE;
           break;
 
-        case GIMP_GRAY_IMAGE:
-          base_type = GIMP_GRAY;
+        case LIGMA_GRAY_IMAGE:
+          base_type = LIGMA_GRAY;
           has_alpha = FALSE;
           break;
 
-        case GIMP_GRAYA_IMAGE:
-          base_type = GIMP_GRAY;
+        case LIGMA_GRAYA_IMAGE:
+          base_type = LIGMA_GRAY;
           has_alpha = TRUE;
           break;
 
-        case GIMP_INDEXED_IMAGE:
-          base_type = GIMP_INDEXED;
+        case LIGMA_INDEXED_IMAGE:
+          base_type = LIGMA_INDEXED;
           has_alpha = FALSE;
           break;
 
-        case GIMP_INDEXEDA_IMAGE:
-          base_type = GIMP_INDEXED;
+        case LIGMA_INDEXEDA_IMAGE:
+          base_type = LIGMA_INDEXED;
           has_alpha = TRUE;
           break;
         }
 
-      if (base_type == GIMP_GRAY)
+      if (base_type == LIGMA_GRAY)
         {
-          /* do not use gimp_image_get_layer_format() because it might
+          /* do not use ligma_image_get_layer_format() because it might
            * be the floating selection of a channel or mask, we will
            * fix the format in image-add-layer and floating-sel-attach
            */
-          format = gimp_image_get_format (image, base_type,
-                                          gimp_image_get_precision (image),
+          format = ligma_image_get_format (image, base_type,
+                                          ligma_image_get_precision (image),
                                           has_alpha,
                                           NULL /* will fix later */);
         }
       else
         {
-          format = gimp_image_get_layer_format (image, has_alpha);
+          format = ligma_image_get_layer_format (image, has_alpha);
         }
 
-      layer = gimp_layer_new (image, width, height,
+      layer = ligma_layer_new (image, width, height,
                               format, name, opacity / 100.0, mode);
 
       if (! layer)
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_new_from_visible_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+layer_new_from_visible_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpImage *dest_image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaImage *dest_image;
   const gchar *name;
-  GimpLayer *layer = NULL;
+  LigmaLayer *layer = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  dest_image = g_value_get_object (gimp_value_array_index (args, 1));
-  name = g_value_get_string (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  dest_image = g_value_get_object (ligma_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPickable     *pickable = GIMP_PICKABLE (image);
-      GimpColorProfile *profile;
+      LigmaPickable     *pickable = LIGMA_PICKABLE (image);
+      LigmaColorProfile *profile;
 
-      gimp_pickable_flush (pickable);
+      ligma_pickable_flush (pickable);
 
-      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+      profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
-      layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+      layer = ligma_layer_new_from_gegl_buffer (ligma_pickable_get_buffer (pickable),
                                                dest_image,
-                                               gimp_image_get_layer_format (dest_image,
+                                               ligma_image_get_layer_format (dest_image,
                                                                             TRUE),
                                                name,
-                                               GIMP_OPACITY_OPAQUE,
-                                               gimp_image_get_default_new_layer_mode (dest_image),
+                                               LIGMA_OPACITY_OPAQUE,
+                                               ligma_image_get_default_new_layer_mode (dest_image),
                                                profile);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_new_from_drawable_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+layer_new_from_drawable_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
-  GimpImage *dest_image;
-  GimpLayer *layer_copy = NULL;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
+  LigmaImage *dest_image;
+  LigmaLayer *layer_copy = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  dest_image = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  dest_image = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
       GType     new_type;
-      GimpItem *new_item;
+      LigmaItem *new_item;
 
-      if (GIMP_IS_LAYER (drawable))
+      if (LIGMA_IS_LAYER (drawable))
         new_type = G_TYPE_FROM_INSTANCE (drawable);
       else
-        new_type = GIMP_TYPE_LAYER;
+        new_type = LIGMA_TYPE_LAYER;
 
-      new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
+      new_item = ligma_item_convert (LIGMA_ITEM (drawable), dest_image, new_type);
 
       if (new_item)
-        layer_copy = GIMP_LAYER (new_item);
+        layer_copy = LIGMA_LAYER (new_item);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer_copy);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer_copy);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_group_new_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+layer_group_new_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpLayer *layer_group = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaLayer *layer_group = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      layer_group = gimp_group_layer_new (image);
+      layer_group = ligma_group_layer_new (image);
 
       if (! layer_group)
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer_group);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer_group);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_copy_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+layer_copy_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean add_alpha;
-  GimpLayer *layer_copy = NULL;
+  LigmaLayer *layer_copy = NULL;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  add_alpha = g_value_get_boolean (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  add_alpha = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+      layer_copy = LIGMA_LAYER (ligma_item_duplicate (LIGMA_ITEM (layer),
                                                     G_TYPE_FROM_INSTANCE (layer)));
       if (layer_copy)
         {
           if (add_alpha)
-            gimp_layer_add_alpha (layer_copy);
+            ligma_layer_add_alpha (layer_copy);
         }
       else
         {
@@ -313,109 +313,109 @@ layer_copy_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer_copy);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer_copy);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_add_alpha_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+layer_add_alpha_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                       GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+      if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                       LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error))
         {
-          gimp_layer_add_alpha (layer);
+          ligma_layer_add_alpha (layer);
         }
       else
        success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_flatten_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+layer_flatten_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                       GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+      if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                       LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error))
         {
-          gimp_layer_remove_alpha (layer, context);
+          ligma_layer_remove_alpha (layer, context);
         }
       else
        success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_scale_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
+static LigmaValueArray *
+layer_scale_invoker (LigmaProcedure         *procedure,
+                     Ligma                  *ligma,
+                     LigmaContext           *context,
+                     LigmaProgress          *progress,
+                     const LigmaValueArray  *args,
                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint new_width;
   gint new_height;
   gboolean local_origin;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  local_origin = g_value_get_boolean (gimp_value_array_index (args, 3));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  new_width = g_value_get_int (ligma_value_array_index (args, 1));
+  new_height = g_value_get_int (ligma_value_array_index (args, 2));
+  local_origin = g_value_get_boolean (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                     GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                      error))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Scaling"));
+            ligma_progress_start (progress, FALSE, _("Scaling"));
 
-          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+          ligma_item_scale_by_origin (LIGMA_ITEM (layer), new_width, new_height,
                                      pdb_context->interpolation, progress,
                                      local_origin);
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
       else
         {
@@ -423,138 +423,138 @@ layer_scale_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_resize_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+layer_resize_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint new_width;
   gint new_height;
   gint offx;
   gint offy;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  offx = g_value_get_int (gimp_value_array_index (args, 3));
-  offy = g_value_get_int (gimp_value_array_index (args, 4));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  new_width = g_value_get_int (ligma_value_array_index (args, 1));
+  new_height = g_value_get_int (ligma_value_array_index (args, 2));
+  offx = g_value_get_int (ligma_value_array_index (args, 3));
+  offy = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                     GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                      error))
-        gimp_item_resize (GIMP_ITEM (layer), context, GIMP_FILL_TRANSPARENT,
+        ligma_item_resize (LIGMA_ITEM (layer), context, LIGMA_FILL_TRANSPARENT,
                           new_width, new_height, offx, offy);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_resize_to_image_size_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+layer_resize_to_image_size_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                     GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                      error))
-        gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
+        ligma_layer_resize_to_image (layer, context, LIGMA_FILL_TRANSPARENT);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_set_offsets_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_offsets_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint offx;
   gint offy;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  offx = g_value_get_int (gimp_value_array_index (args, 1));
-  offy = g_value_get_int (gimp_value_array_index (args, 2));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  offx = g_value_get_int (ligma_value_array_index (args, 1));
+  offy = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                       GIMP_PDB_ITEM_POSITION, error))
+      if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                       LIGMA_PDB_ITEM_POSITION, error))
         {
           gint offset_x;
           gint offset_y;
 
-          gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+          ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
           offx -= offset_x;
           offy -= offset_y;
 
-          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+          ligma_item_translate (LIGMA_ITEM (layer), offx, offy, TRUE);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_create_mask_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+layer_create_mask_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gint mask_type;
-  GimpLayerMask *mask = NULL;
+  LigmaLayerMask *mask = NULL;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  mask_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  mask_type = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpChannel *channel = NULL;
+      LigmaChannel *channel = NULL;
 
-      if (mask_type == GIMP_ADD_MASK_CHANNEL)
+      if (mask_type == LIGMA_ADD_MASK_CHANNEL)
         {
           GList *channels;
 
-          channels = gimp_image_get_selected_channels (gimp_item_get_image (GIMP_ITEM (layer)));
+          channels = ligma_image_get_selected_channels (ligma_item_get_image (LIGMA_ITEM (layer)));
 
           if (! channels)
             success = FALSE;
@@ -564,1100 +564,1100 @@ layer_create_mask_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
-          mask = gimp_layer_create_mask (layer, mask_type, channel);
+          mask = ligma_layer_create_mask (layer, mask_type, channel);
 
           if (! mask)
             success = FALSE;
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), mask);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), mask);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_get_mask_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_mask_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
-  GimpLayerMask *mask = NULL;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
+  LigmaLayerMask *mask = NULL;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      mask = gimp_layer_get_mask (layer);
+      mask = ligma_layer_get_mask (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), mask);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), mask);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_from_mask_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+layer_from_mask_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayerMask *mask;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *return_vals;
+  LigmaLayerMask *mask;
+  LigmaLayer *layer = NULL;
 
-  mask = g_value_get_object (gimp_value_array_index (args, 0));
+  mask = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      layer = gimp_layer_mask_get_layer (mask);
+      layer = ligma_layer_mask_get_layer (mask);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_add_mask_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+layer_add_mask_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
-  GimpLayerMask *mask;
+  LigmaLayer *layer;
+  LigmaLayerMask *mask;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  mask = g_value_get_object (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  mask = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
-                                     gimp_item_get_image (GIMP_ITEM (layer)),
+      if (ligma_pdb_item_is_floating (LIGMA_ITEM (mask),
+                                     ligma_item_get_image (LIGMA_ITEM (layer)),
                                      error))
-        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
+        success = (ligma_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_remove_mask_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+layer_remove_mask_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint mode;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  mode = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  mode = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpPDBItemModify modify = 0;
+      LigmaPDBItemModify modify = 0;
 
-      if (mode == GIMP_MASK_APPLY)
-        modify |= GIMP_PDB_ITEM_CONTENT;
+      if (mode == LIGMA_MASK_APPLY)
+        modify |= LIGMA_PDB_ITEM_CONTENT;
 
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error) &&
-          gimp_layer_get_mask (layer) &&
-          (mode == GIMP_MASK_DISCARD ||
-           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error)))
-        gimp_layer_apply_mask (layer, mode, TRUE);
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL, modify, error) &&
+          ligma_layer_get_mask (layer) &&
+          (mode == LIGMA_MASK_DISCARD ||
+           ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error)))
+        ligma_layer_apply_mask (layer, mode, TRUE);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_is_floating_sel_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+layer_is_floating_sel_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean is_floating_sel = FALSE;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      is_floating_sel = gimp_layer_is_floating_sel (layer);
+      is_floating_sel = ligma_layer_is_floating_sel (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_floating_sel);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), is_floating_sel);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_get_lock_alpha_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_lock_alpha_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean lock_alpha = FALSE;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      lock_alpha = gimp_layer_get_lock_alpha (layer);
+      lock_alpha = ligma_layer_get_lock_alpha (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), lock_alpha);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), lock_alpha);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_lock_alpha_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_lock_alpha_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gboolean lock_alpha;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  lock_alpha = g_value_get_boolean (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  lock_alpha = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_layer_can_lock_alpha (layer))
-        gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+      if (ligma_layer_can_lock_alpha (layer))
+        ligma_layer_set_lock_alpha (layer, lock_alpha, TRUE);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_apply_mask_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_apply_mask_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean apply_mask = FALSE;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       if (layer->mask)
-        apply_mask = gimp_layer_get_apply_mask (layer);
+        apply_mask = ligma_layer_get_apply_mask (layer);
       else
         apply_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), apply_mask);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), apply_mask);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_apply_mask_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_apply_mask_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gboolean apply_mask;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  apply_mask = g_value_get_boolean (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  apply_mask = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
       if (layer->mask)
-        gimp_layer_set_apply_mask (layer, apply_mask, TRUE);
+        ligma_layer_set_apply_mask (layer, apply_mask, TRUE);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_show_mask_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_show_mask_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean show_mask = FALSE;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       if (layer->mask)
-        show_mask = gimp_layer_get_show_mask (layer);
+        show_mask = ligma_layer_get_show_mask (layer);
       else
         show_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), show_mask);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), show_mask);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_show_mask_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_show_mask_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gboolean show_mask;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  show_mask = g_value_get_boolean (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  show_mask = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
       if (layer->mask)
-        gimp_layer_set_show_mask (layer, show_mask, TRUE);
+        ligma_layer_set_show_mask (layer, show_mask, TRUE);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_edit_mask_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_edit_mask_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gboolean edit_mask = FALSE;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       if (layer->mask)
-        edit_mask = gimp_layer_get_edit_mask (layer);
+        edit_mask = ligma_layer_get_edit_mask (layer);
       else
         edit_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), edit_mask);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), edit_mask);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_edit_mask_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_edit_mask_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gboolean edit_mask;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  edit_mask = g_value_get_boolean (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  edit_mask = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
       if (layer->mask)
-        gimp_layer_set_edit_mask (layer, edit_mask);
+        ligma_layer_set_edit_mask (layer, edit_mask);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_opacity_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_opacity_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gdouble opacity = 0.0;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      opacity = gimp_layer_get_opacity (layer) * 100.0;
+      opacity = ligma_layer_get_opacity (layer) * 100.0;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), opacity);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), opacity);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_opacity_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_opacity_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gdouble opacity;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  opacity = g_value_get_double (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  opacity = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+      ligma_layer_set_opacity (layer, opacity / 100.0, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_mode_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_mode_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gint mode = 0;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      mode = gimp_layer_get_mode (layer);
+      mode = ligma_layer_get_mode (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), mode);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), mode);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_mode_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_mode_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint mode;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  mode = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  mode = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-        mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+      if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+        mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+      if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)) == NULL)
         {
-          if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_LAYER))
+          if (! (ligma_layer_mode_get_context (mode) & LIGMA_LAYER_MODE_CONTEXT_LAYER))
             success = FALSE;
         }
       else
         {
-          if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_GROUP))
+          if (! (ligma_layer_mode_get_context (mode) & LIGMA_LAYER_MODE_CONTEXT_GROUP))
             success = FALSE;
         }
 
       if (success)
-        gimp_layer_set_mode (layer, mode, TRUE);
+        ligma_layer_set_mode (layer, mode, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_blend_space_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_blend_space_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gint blend_space = 0;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      blend_space = gimp_layer_get_blend_space (layer);
+      blend_space = ligma_layer_get_blend_space (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), blend_space);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), blend_space);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_blend_space_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_blend_space_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint blend_space;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  blend_space = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  blend_space = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_layer_set_blend_space (layer, blend_space, TRUE);
+      ligma_layer_set_blend_space (layer, blend_space, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_composite_space_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_composite_space_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gint composite_space = 0;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      composite_space = gimp_layer_get_composite_space (layer);
+      composite_space = ligma_layer_get_composite_space (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), composite_space);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), composite_space);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_composite_space_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_composite_space_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint composite_space;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  composite_space = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  composite_space = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_layer_set_composite_space (layer, composite_space, TRUE);
+      ligma_layer_set_composite_space (layer, composite_space, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-layer_get_composite_mode_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+layer_get_composite_mode_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpLayer *layer;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer;
   gint composite_mode = 0;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      composite_mode = gimp_layer_get_composite_mode (layer);
+      composite_mode = ligma_layer_get_composite_mode (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), composite_mode);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), composite_mode);
 
   return return_vals;
 }
 
-static GimpValueArray *
-layer_set_composite_mode_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+layer_set_composite_mode_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gint composite_mode;
 
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-  composite_mode = g_value_get_enum (gimp_value_array_index (args, 1));
+  layer = g_value_get_object (ligma_value_array_index (args, 0));
+  composite_mode = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_layer_set_composite_mode (layer, composite_mode, TRUE);
+      ligma_layer_set_composite_mode (layer, composite_mode, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_layer_procs (GimpPDB *pdb)
+register_layer_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-layer-new
+   * ligma-layer-new
    */
-  procedure = gimp_procedure_new (layer_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-new");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_new_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-new");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new layer.",
-                                  "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'ligma-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to which to add the layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "The layer width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "The layer height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
                                                   "The layer type",
-                                                  GIMP_TYPE_IMAGE_TYPE,
-                                                  GIMP_RGB_IMAGE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+                                                  LIGMA_TYPE_IMAGE_TYPE,
+                                                  LIGMA_RGB_IMAGE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The layer name",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The layer opacity",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "The layer combination mode",
-                                                  GIMP_TYPE_LAYER_MODE,
-                                                  GIMP_LAYER_MODE_NORMAL,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
+                                                  LIGMA_TYPE_LAYER_MODE,
+                                                  LIGMA_LAYER_MODE_NORMAL,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer",
                                                           "layer",
                                                           "The newly created layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-new-from-visible
+   * ligma-layer-new-from-visible
    */
-  procedure = gimp_procedure_new (layer_new_from_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-new-from-visible");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_new_from_visible_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-new-from-visible");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new layer from what is visible in an image.",
-                                  "This procedure creates a new layer from what is visible in the given image. The new layer still needs to be added to the destination image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer from what is visible in the given image. The new layer still needs to be added to the destination image, as this is not automatic. Add the new layer with the 'ligma-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2008");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The source image from where the content is copied",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("dest-image",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("dest-image",
                                                       "dest image",
                                                       "The destination image to which to add the layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The layer name",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer",
                                                           "layer",
                                                           "The newly created layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-new-from-drawable
+   * ligma-layer-new-from-drawable
    */
-  procedure = gimp_procedure_new (layer_new_from_drawable_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-new-from-drawable");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_new_from_drawable_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-new-from-drawable");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new layer by copying an existing drawable.",
-                                  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'ligma-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The source drawable from where the new layer is copied",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("dest-image",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("dest-image",
                                                       "dest image",
                                                       "The destination image to which to add the layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer-copy",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer-copy",
                                                           "layer copy",
                                                           "The newly copied layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-group-new
+   * ligma-layer-group-new
    */
-  procedure = gimp_procedure_new (layer_group_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-group-new");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_group_new_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-group-new");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new layer group.",
-                                  "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.\n"
-                                  "Other procedures useful with layer groups: 'gimp-image-reorder-item', 'gimp-item-get-parent', 'gimp-item-get-children', 'gimp-item-is-group'.",
+                                  "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'ligma-image-insert-layer' command.\n"
+                                  "Other procedures useful with layer groups: 'ligma-image-reorder-item', 'ligma-item-get-parent', 'ligma-item-get-children', 'ligma-item-is-group'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Barak Itkin <lightningismyname@gmail.com>",
                                          "Barak Itkin",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to which to add the layer group",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer-group",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer-group",
                                                           "layer group",
                                                           "The newly created layer group",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-copy
+   * ligma-layer-copy
    */
-  procedure = gimp_procedure_new (layer_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-copy");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_copy_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-copy");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy a layer.",
                                   "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image. The copied layer can optionally have an added alpha channel. This is useful if the background layer in an image is being copied and added to the same image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer to copy",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("add-alpha",
                                                      "add alpha",
                                                      "Add an alpha channel to the copied layer",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer-copy",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer-copy",
                                                           "layer copy",
                                                           "The newly copied layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-add-alpha
+   * ligma-layer-add-alpha
    */
-  procedure = gimp_procedure_new (layer_add_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-add-alpha");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_add_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-add-alpha");
+  ligma_procedure_set_static_help (procedure,
                                   "Add an alpha channel to the layer if it doesn't already have one.",
                                   "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to clear and erase to transparency, instead of the background color. This transforms layers of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-flatten
+   * ligma-layer-flatten
    */
-  procedure = gimp_procedure_new (layer_flatten_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-flatten");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_flatten_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-flatten");
+  ligma_procedure_set_static_help (procedure,
                                   "Remove the alpha channel from the layer if it has one.",
                                   "This procedure removes the alpha channel from a layer, blending all (partially) transparent pixels in the layer against the background color. This transforms layers of type RGBA to RGB, GRAYA to GRAY, and INDEXEDA to INDEXED.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2007");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-scale
+   * ligma-layer-scale
    */
-  procedure = gimp_procedure_new (layer_scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-scale");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_scale_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-scale");
+  ligma_procedure_set_static_help (procedure,
                                   "Scale the layer using the default interpolation method.",
-                                  "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
+                                  "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The interpolation method used can be set with 'ligma-context-set-interpolation'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
                                                  "New layer width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-height",
                                                  "new height",
                                                  "New layer height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("local-origin",
                                                      "local origin",
                                                      "Use a local origin (as opposed to the image origin)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-resize
+   * ligma-layer-resize
    */
-  procedure = gimp_procedure_new (layer_resize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-resize");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_resize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-resize");
+  ligma_procedure_set_static_help (procedure,
                                   "Resize the layer to the specified extents.",
                                   "This procedure resizes the layer so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
                                                  "New layer width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-height",
                                                  "new height",
                                                  "New layer height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "x offset between upper left corner of old and new layers: (old - new)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "y offset between upper left corner of old and new layers: (old - new)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-resize-to-image-size
+   * ligma-layer-resize-to-image-size
    */
-  procedure = gimp_procedure_new (layer_resize_to_image_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-resize-to-image-size");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_resize_to_image_size_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-resize-to-image-size");
+  ligma_procedure_set_static_help (procedure,
                                   "Resize a layer to the image size.",
                                   "This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Manish Singh",
                                          "Manish Singh",
                                          "2003");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer to resize",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-offsets
+   * ligma-layer-set-offsets
    */
-  procedure = gimp_procedure_new (layer_set_offsets_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-offsets");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_offsets_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-offsets");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the layer offsets.",
                                   "This procedure sets the offsets for the specified layer. The offsets are relative to the image origin and can be any values. This operation is valid only on layers which have been added to an image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "Offset in x direction",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "Offset in y direction",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-create-mask
+   * ligma-layer-create-mask
    */
-  procedure = gimp_procedure_new (layer_create_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-create-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_create_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-create-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a layer mask for the specified layer.",
                                   "This procedure creates a layer mask for the specified layer.\n"
                                   "Layer masks serve as an additional alpha channel for a layer. Different types of masks are allowed for initialisation:\n"
@@ -1668,709 +1668,709 @@ register_layer_procs (GimpPDB *pdb)
                                   "- a grayscale copy of the layer;\n"
                                   "- or a copy of the active channel.\n"
                                   "\n"
-                                  "The layer mask still needs to be added to the layer. This can be done with a call to 'gimp-layer-add-mask'.\n"
+                                  "The layer mask still needs to be added to the layer. This can be done with a call to 'ligma-layer-add-mask'.\n"
                                   "\n"
-                                  "'gimp-layer-create-mask' will fail if there are no active channels on the image, when called with 'ADD-CHANNEL-MASK'. It will return a black mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there is no selection on the image.",
+                                  "'ligma-layer-create-mask' will fail if there are no active channels on the image, when called with 'ADD-CHANNEL-MASK'. It will return a black mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there is no selection on the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer to which to add the mask",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("mask-type",
                                                   "mask type",
                                                   "The type of mask",
-                                                  GIMP_TYPE_ADD_MASK_TYPE,
-                                                  GIMP_ADD_MASK_WHITE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_mask ("mask",
+                                                  LIGMA_TYPE_ADD_MASK_TYPE,
+                                                  LIGMA_ADD_MASK_WHITE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer_mask ("mask",
                                                                "mask",
                                                                "The newly created mask",
                                                                FALSE,
-                                                               GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                               LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-mask
+   * ligma-layer-get-mask
    */
-  procedure = gimp_procedure_new (layer_get_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the specified layer's mask if it exists.",
                                   "This procedure returns the specified layer's mask, or -1 if none exists.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_mask ("mask",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer_mask ("mask",
                                                                "mask",
                                                                "The layer mask",
                                                                FALSE,
-                                                               GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                               LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-from-mask
+   * ligma-layer-from-mask
    */
-  procedure = gimp_procedure_new (layer_from_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-from-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_from_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-from-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the specified mask's layer.",
                                   "This procedure returns the specified mask's layer , or -1 if none exists.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Geert Jordaens",
                                          "Geert Jordaens",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_mask ("mask",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer_mask ("mask",
                                                            "mask",
                                                            "Mask for which to return the layer",
                                                            FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer",
                                                           "layer",
                                                           "The mask's layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-add-mask
+   * ligma-layer-add-mask
    */
-  procedure = gimp_procedure_new (layer_add_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-add-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_add_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-add-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Add a layer mask to the specified layer.",
-                                  "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'gimp-layer-create-mask'.",
+                                  "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'ligma-layer-create-mask'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer to receive the mask",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_mask ("mask",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer_mask ("mask",
                                                            "mask",
                                                            "The mask to add to the layer",
                                                            FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-remove-mask
+   * ligma-layer-remove-mask
    */
-  procedure = gimp_procedure_new (layer_remove_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-remove-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_remove_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-remove-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Remove the specified layer mask from the layer.",
                                   "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer from which to remove mask",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "Removal mode",
-                                                  GIMP_TYPE_MASK_APPLY_MODE,
-                                                  GIMP_MASK_APPLY,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_MASK_APPLY_MODE,
+                                                  LIGMA_MASK_APPLY,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-is-floating-sel
+   * ligma-layer-is-floating-sel
    */
-  procedure = gimp_procedure_new (layer_is_floating_sel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-is-floating-sel");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_is_floating_sel_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-is-floating-sel");
+  ligma_procedure_set_static_help (procedure,
                                   "Is the specified layer a floating selection?",
                                   "This procedure returns whether the layer is a floating selection. Floating selections are special cases of layers which are attached to a specific drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-floating-sel",
                                                          "is floating sel",
                                                          "TRUE if the layer is a floating selection",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-lock-alpha
+   * ligma-layer-get-lock-alpha
    */
-  procedure = gimp_procedure_new (layer_get_lock_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-lock-alpha");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_lock_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-lock-alpha");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the lock alpha channel setting of the specified layer.",
                                   "This procedure returns the specified layer's lock alpha channel setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("lock-alpha",
                                                          "lock alpha",
                                                          "The layer's lock alpha channel setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-lock-alpha
+   * ligma-layer-set-lock-alpha
    */
-  procedure = gimp_procedure_new (layer_set_lock_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-lock-alpha");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_lock_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-lock-alpha");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the lock alpha channel setting of the specified layer.",
                                   "This procedure sets the specified layer's lock alpha channel setting.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("lock-alpha",
                                                      "lock alpha",
                                                      "The new layer's lock alpha channel setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-apply-mask
+   * ligma-layer-get-apply-mask
    */
-  procedure = gimp_procedure_new (layer_get_apply_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-apply-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_apply_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-apply-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the apply mask setting of the specified layer.",
                                   "This procedure returns the specified layer's apply mask setting. If the value is TRUE, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("apply-mask",
                                                          "apply mask",
                                                          "The layer's apply mask setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-apply-mask
+   * ligma-layer-set-apply-mask
    */
-  procedure = gimp_procedure_new (layer_set_apply_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-apply-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_apply_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-apply-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the apply mask setting of the specified layer.",
                                   "This procedure sets the specified layer's apply mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("apply-mask",
                                                      "apply mask",
                                                      "The new layer's apply mask setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-show-mask
+   * ligma-layer-get-show-mask
    */
-  procedure = gimp_procedure_new (layer_get_show_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-show-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_show_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-show-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the show mask setting of the specified layer.",
                                   "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. TRUE indicates that the mask should be visible. If the layer has no mask, then this function returns an error.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("show-mask",
                                                          "show mask",
                                                          "The layer's show mask setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-show-mask
+   * ligma-layer-set-show-mask
    */
-  procedure = gimp_procedure_new (layer_set_show_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-show-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_show_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-show-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the show mask setting of the specified layer.",
                                   "This procedure sets the specified layer's show mask setting. This controls whether the layer or its mask is visible. TRUE indicates that the mask should be visible. If there is no layer mask, this function will return an error.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("show-mask",
                                                      "show mask",
                                                      "The new layer's show mask setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-edit-mask
+   * ligma-layer-get-edit-mask
    */
-  procedure = gimp_procedure_new (layer_get_edit_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-edit-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_edit_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-edit-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the edit mask setting of the specified layer.",
                                   "This procedure returns the specified layer's edit mask setting. If the value is TRUE, then the layer mask for this layer is currently active, and not the layer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("edit-mask",
                                                          "edit mask",
                                                          "The layer's edit mask setting",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-edit-mask
+   * ligma-layer-set-edit-mask
    */
-  procedure = gimp_procedure_new (layer_set_edit_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-edit-mask");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_edit_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-edit-mask");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the edit mask setting of the specified layer.",
                                   "This procedure sets the specified layer's edit mask setting. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("edit-mask",
                                                      "edit mask",
                                                      "The new layer's edit mask setting",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-opacity
+   * ligma-layer-get-opacity
    */
-  procedure = gimp_procedure_new (layer_get_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the opacity of the specified layer.",
                                   "This procedure returns the specified layer's opacity.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The layer opacity",
                                                         0, 100, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-opacity
+   * ligma-layer-set-opacity
    */
-  procedure = gimp_procedure_new (layer_set_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the opacity of the specified layer.",
                                   "This procedure sets the specified layer's opacity.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The new layer opacity",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-mode
+   * ligma-layer-get-mode
    */
-  procedure = gimp_procedure_new (layer_get_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the combination mode of the specified layer.",
                                   "This procedure returns the specified layer's combination mode.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("mode",
                                                       "mode",
                                                       "The layer combination mode",
-                                                      GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_LAYER_MODE,
+                                                      LIGMA_LAYER_MODE_NORMAL,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-mode
+   * ligma-layer-set-mode
    */
-  procedure = gimp_procedure_new (layer_set_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the combination mode of the specified layer.",
                                   "This procedure sets the specified layer's combination mode.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "The new layer combination mode",
-                                                  GIMP_TYPE_LAYER_MODE,
-                                                  GIMP_LAYER_MODE_NORMAL,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_LAYER_MODE,
+                                                  LIGMA_LAYER_MODE_NORMAL,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-blend-space
+   * ligma-layer-get-blend-space
    */
-  procedure = gimp_procedure_new (layer_get_blend_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-blend-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_blend_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-blend-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the blend space of the specified layer.",
                                   "This procedure returns the specified layer's blend space.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("blend-space",
                                                       "blend space",
                                                       "The layer blend space",
-                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_LAYER_COLOR_SPACE,
+                                                      LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-blend-space
+   * ligma-layer-set-blend-space
    */
-  procedure = gimp_procedure_new (layer_set_blend_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-blend-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_blend_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-blend-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the blend space of the specified layer.",
                                   "This procedure sets the specified layer's blend space.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("blend-space",
                                                   "blend space",
                                                   "The new layer blend space",
-                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_LAYER_COLOR_SPACE,
+                                                  LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-composite-space
+   * ligma-layer-get-composite-space
    */
-  procedure = gimp_procedure_new (layer_get_composite_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-composite-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_composite_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-composite-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the composite space of the specified layer.",
                                   "This procedure returns the specified layer's composite space.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("composite-space",
                                                       "composite space",
                                                       "The layer composite space",
-                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_LAYER_COLOR_SPACE,
+                                                      LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-composite-space
+   * ligma-layer-set-composite-space
    */
-  procedure = gimp_procedure_new (layer_set_composite_space_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-composite-space");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_composite_space_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-composite-space");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the composite space of the specified layer.",
                                   "This procedure sets the specified layer's composite space.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("composite-space",
                                                   "composite space",
                                                   "The new layer composite space",
-                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_LAYER_COLOR_SPACE,
+                                                  LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-get-composite-mode
+   * ligma-layer-get-composite-mode
    */
-  procedure = gimp_procedure_new (layer_get_composite_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-get-composite-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_get_composite_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-get-composite-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the composite mode of the specified layer.",
                                   "This procedure returns the specified layer's composite mode.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("composite-mode",
                                                       "composite mode",
                                                       "The layer composite mode",
-                                                      GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                                                      GIMP_LAYER_COMPOSITE_AUTO,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_LAYER_COMPOSITE_MODE,
+                                                      LIGMA_LAYER_COMPOSITE_AUTO,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-set-composite-mode
+   * ligma-layer-set-composite-mode
    */
-  procedure = gimp_procedure_new (layer_set_composite_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-set-composite-mode");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (layer_set_composite_mode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-layer-set-composite-mode");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the composite mode of the specified layer.",
                                   "This procedure sets the specified layer's composite mode.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_layer ("layer",
                                                       "layer",
                                                       "The layer",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("composite-mode",
                                                   "composite mode",
                                                   "The new layer composite mode",
-                                                  GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                                                  GIMP_LAYER_COMPOSITE_AUTO,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_LAYER_COMPOSITE_MODE,
+                                                  LIGMA_LAYER_COMPOSITE_AUTO,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

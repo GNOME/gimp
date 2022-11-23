@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpink-blob.c: routines for manipulating scan converted convex polygons.
+ * ligmaink-blob.c: routines for manipulating scan converted convex polygons.
  * Copyright 1998-1999, Owen Taylor <otaylor@gtk.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "gimpink-blob.h"
+#include "ligmaink-blob.h"
 
 
 typedef enum
@@ -39,18 +39,18 @@ typedef enum
 
 /*  local function prototypes  */
 
-static GimpBlob * gimp_blob_new            (gint      y,
+static LigmaBlob * ligma_blob_new            (gint      y,
                                             gint      height);
-static void       gimp_blob_fill           (GimpBlob *b,
+static void       ligma_blob_fill           (LigmaBlob *b,
                                             EdgeType *present);
-static void       gimp_blob_make_convex    (GimpBlob *b,
+static void       ligma_blob_make_convex    (LigmaBlob *b,
                                             EdgeType *present);
 
 #if 0
-static void       gimp_blob_line_add_pixel (GimpBlob *b,
+static void       ligma_blob_line_add_pixel (LigmaBlob *b,
                                             gint      x,
                                             gint      y);
-static void       gimp_blob_line           (GimpBlob *b,
+static void       ligma_blob_line           (LigmaBlob *b,
                                             gint      x0,
                                             gint      y0,
                                             gint      x1,
@@ -62,11 +62,11 @@ static void       gimp_blob_line           (GimpBlob *b,
 
 /* Return blob for the given (convex) polygon
  */
-GimpBlob *
-gimp_blob_polygon (GimpBlobPoint *points,
+LigmaBlob *
+ligma_blob_polygon (LigmaBlobPoint *points,
                    gint           n_points)
 {
-  GimpBlob *result;
+  LigmaBlob *result;
   EdgeType *present;
   gint      i;
   gint      im1;
@@ -84,7 +84,7 @@ gimp_blob_polygon (GimpBlobPoint *points,
         ymin = points[i].y;
     }
 
-  result = gimp_blob_new (ymin, ymax - ymin + 1);
+  result = ligma_blob_new (ymin, ymax - ymin + 1);
   present = g_new0 (EdgeType, result->height);
 
   im1 = n_points - 1;
@@ -138,7 +138,7 @@ gimp_blob_polygon (GimpBlobPoint *points,
         ip1 = 0;
     }
 
-  gimp_blob_fill (result, present);
+  ligma_blob_fill (result, present);
   g_free (present);
 
   return result;
@@ -147,15 +147,15 @@ gimp_blob_polygon (GimpBlobPoint *points,
 /* Scan convert a square specified by _offsets_ of major and minor
  * axes, and by center into a blob
  */
-GimpBlob *
-gimp_blob_square (gdouble xc,
+LigmaBlob *
+ligma_blob_square (gdouble xc,
                   gdouble yc,
                   gdouble xp,
                   gdouble yp,
                   gdouble xq,
                   gdouble yq)
 {
-  GimpBlobPoint points[4];
+  LigmaBlobPoint points[4];
 
   /* Make sure we order points ccw */
 
@@ -174,21 +174,21 @@ gimp_blob_square (gdouble xc,
   points[3].x = xc - xp + xq;
   points[3].y = yc - yp + yq;
 
-  return gimp_blob_polygon (points, 4);
+  return ligma_blob_polygon (points, 4);
 }
 
 /* Scan convert a diamond specified by _offsets_ of major and minor
  * axes, and by center into a blob
  */
-GimpBlob *
-gimp_blob_diamond (gdouble xc,
+LigmaBlob *
+ligma_blob_diamond (gdouble xc,
                    gdouble yc,
                    gdouble xp,
                    gdouble yp,
                    gdouble xq,
                    gdouble yq)
 {
-  GimpBlobPoint points[4];
+  LigmaBlobPoint points[4];
 
   /* Make sure we order points ccw */
 
@@ -207,7 +207,7 @@ gimp_blob_diamond (gdouble xc,
   points[3].x = xc + xq;
   points[3].y = yc + yq;
 
-  return gimp_blob_polygon (points, 4);
+  return ligma_blob_polygon (points, 4);
 }
 
 
@@ -244,15 +244,15 @@ static gint     trig_table[TABLE_SIZE];
 /* Scan convert an ellipse specified by _offsets_ of major and
  * minor axes, and by center into a blob
  */
-GimpBlob *
-gimp_blob_ellipse (gdouble xc,
+LigmaBlob *
+ligma_blob_ellipse (gdouble xc,
                    gdouble yc,
                    gdouble xp,
                    gdouble yp,
                    gdouble xq,
                    gdouble yq)
 {
-  GimpBlob *result;
+  LigmaBlob *result;
   EdgeType *present;
   gint      i;
   gdouble   r1, r2;
@@ -286,7 +286,7 @@ gimp_blob_ellipse (gdouble xc,
   maxy = ceil  (yc + fabs (yp) + fabs (yq));
   miny = floor (yc - fabs (yp) - fabs (yq));
 
-  result = gimp_blob_new (miny, maxy - miny + 1);
+  result = ligma_blob_new (miny, maxy - miny + 1);
   present = g_new0 (EdgeType, result->height);
 
   xc_base = floor (xc);
@@ -353,14 +353,14 @@ gimp_blob_ellipse (gdouble xc,
 
   /* Now fill in missing points */
 
-  gimp_blob_fill (result, present);
+  ligma_blob_fill (result, present);
   g_free (present);
 
   return result;
 }
 
 void
-gimp_blob_bounds (GimpBlob *b,
+ligma_blob_bounds (LigmaBlob *b,
                   gint     *x,
                   gint     *y,
                   gint     *width,
@@ -400,11 +400,11 @@ gimp_blob_bounds (GimpBlob *b,
   *height = y1 - y0;
 }
 
-GimpBlob *
-gimp_blob_convex_union (GimpBlob *b1,
-                        GimpBlob *b2)
+LigmaBlob *
+ligma_blob_convex_union (LigmaBlob *b1,
+                        LigmaBlob *b2)
 {
-  GimpBlob *result;
+  LigmaBlob *result;
   gint      y;
   gint      i, j;
   EdgeType *present;
@@ -412,7 +412,7 @@ gimp_blob_convex_union (GimpBlob *b1,
   /* Create the storage for the result */
 
   y = MIN (b1->y, b2->y);
-  result = gimp_blob_new (y, MAX (b1->y + b1->height, b2->y + b2->height)-y);
+  result = ligma_blob_new (y, MAX (b1->y + b1->height, b2->y + b2->height)-y);
 
   if (result->height == 0)
     return result;
@@ -451,24 +451,24 @@ gimp_blob_convex_union (GimpBlob *b1,
         }
     }
 
-  gimp_blob_make_convex (result, present);
+  ligma_blob_make_convex (result, present);
 
   g_free (present);
 
   return result;
 }
 
-GimpBlob *
-gimp_blob_duplicate (GimpBlob *b)
+LigmaBlob *
+ligma_blob_duplicate (LigmaBlob *b)
 {
   g_return_val_if_fail (b != NULL, NULL);
 
-  return g_memdup2 (b, sizeof (GimpBlob) +  sizeof (GimpBlobSpan) * (b->height - 1));
+  return g_memdup2 (b, sizeof (LigmaBlob) +  sizeof (LigmaBlobSpan) * (b->height - 1));
 }
 
 #if 0
 void
-gimp_blob_dump (GimpBlob *b)
+ligma_blob_dump (LigmaBlob *b)
 {
   gint i,j;
 
@@ -488,13 +488,13 @@ gimp_blob_dump (GimpBlob *b)
 
 /*  private functions  */
 
-static GimpBlob *
-gimp_blob_new (gint y,
+static LigmaBlob *
+ligma_blob_new (gint y,
                gint height)
 {
-  GimpBlob *result;
+  LigmaBlob *result;
 
-  result = g_malloc (sizeof (GimpBlob) +  sizeof (GimpBlobSpan) * (height - 1));
+  result = g_malloc (sizeof (LigmaBlob) +  sizeof (LigmaBlobSpan) * (height - 1));
 
   result->y      = y;
   result->height = height;
@@ -503,7 +503,7 @@ gimp_blob_new (gint y,
 }
 
 static void
-gimp_blob_fill (GimpBlob *b,
+ligma_blob_fill (LigmaBlob *b,
                 EdgeType *present)
 {
   gint start;
@@ -664,7 +664,7 @@ gimp_blob_fill (GimpBlob *b,
 }
 
 static void
-gimp_blob_make_convex (GimpBlob *b,
+ligma_blob_make_convex (LigmaBlob *b,
                        EdgeType *present)
 {
   gint x1, x2, y1, y2, i1, i2;
@@ -760,14 +760,14 @@ gimp_blob_make_convex (GimpBlob *b,
       i2 = i;
     }
 
-  gimp_blob_fill (b, present);
+  ligma_blob_fill (b, present);
 }
 
 
 #if 0
 
 static void
-gimp_blob_line_add_pixel (GimpBlob *b,
+ligma_blob_line_add_pixel (LigmaBlob *b,
                           gint      x,
                           gint      y)
 {
@@ -783,7 +783,7 @@ gimp_blob_line_add_pixel (GimpBlob *b,
 }
 
 static void
-gimp_blob_line (GimpBlob *b,
+ligma_blob_line (LigmaBlob *b,
                 gint      x0,
                 gint      y0,
                 gint      x1,
@@ -826,7 +826,7 @@ gimp_blob_line (GimpBlob *b,
       incrE  = 2 * dy;        /* increment used for move to E */
       incrNE = 2 * (dy - dx); /* increment used for move to NE */
 
-      gimp_blob_line_add_pixel (b, x, y);
+      ligma_blob_line_add_pixel (b, x, y);
 
       while (x != x1)
         {
@@ -842,7 +842,7 @@ gimp_blob_line (GimpBlob *b,
               y += ystep;
             }
 
-          gimp_blob_line_add_pixel (b, x, y);
+          ligma_blob_line_add_pixel (b, x, y);
         }
     }
   else
@@ -851,7 +851,7 @@ gimp_blob_line (GimpBlob *b,
       incrE  = 2 * dx;        /* increment used for move to E */
       incrNE = 2 * (dx - dy); /* increment used for move to NE */
 
-      gimp_blob_line_add_pixel (b, x, y);
+      ligma_blob_line_add_pixel (b, x, y);
 
       while (y != y1)
         {
@@ -867,7 +867,7 @@ gimp_blob_line (GimpBlob *b,
               y += ystep;
             }
 
-          gimp_blob_line_add_pixel (b, x, y);
+          ligma_blob_line_add_pixel (b, x, y);
         }
     }
 }

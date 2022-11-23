@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolwidgetgroup.h
+ * ligmatoolwidgetgroup.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_WIDGET_GROUP_H__
-#define __GIMP_TOOL_WIDGET_GROUP_H__
+#ifndef __LIGMA_TOOL_WIDGET_GROUP_H__
+#define __LIGMA_TOOL_WIDGET_GROUP_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-#define GIMP_TYPE_TOOL_WIDGET_GROUP            (gimp_tool_widget_group_get_type ())
-#define GIMP_TOOL_WIDGET_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_WIDGET_GROUP, GimpToolWidgetGroup))
-#define GIMP_TOOL_WIDGET_GROUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_WIDGET_GROUP, GimpToolWidgetGroupClass))
-#define GIMP_IS_TOOL_WIDGET_GROUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_WIDGET_GROUP))
-#define GIMP_IS_TOOL_WIDGET_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_WIDGET_GROUP))
-#define GIMP_TOOL_WIDGET_GROUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_WIDGET_GROUP, GimpToolWidgetGroupClass))
+#define LIGMA_TYPE_TOOL_WIDGET_GROUP            (ligma_tool_widget_group_get_type ())
+#define LIGMA_TOOL_WIDGET_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_WIDGET_GROUP, LigmaToolWidgetGroup))
+#define LIGMA_TOOL_WIDGET_GROUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_WIDGET_GROUP, LigmaToolWidgetGroupClass))
+#define LIGMA_IS_TOOL_WIDGET_GROUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_WIDGET_GROUP))
+#define LIGMA_IS_TOOL_WIDGET_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_WIDGET_GROUP))
+#define LIGMA_TOOL_WIDGET_GROUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_WIDGET_GROUP, LigmaToolWidgetGroupClass))
 
 
-typedef struct _GimpToolWidgetGroupPrivate GimpToolWidgetGroupPrivate;
-typedef struct _GimpToolWidgetGroupClass   GimpToolWidgetGroupClass;
+typedef struct _LigmaToolWidgetGroupPrivate LigmaToolWidgetGroupPrivate;
+typedef struct _LigmaToolWidgetGroupClass   LigmaToolWidgetGroupClass;
 
-struct _GimpToolWidgetGroup
+struct _LigmaToolWidgetGroup
 {
-  GimpToolWidget              parent_instance;
+  LigmaToolWidget              parent_instance;
 
-  GimpToolWidgetGroupPrivate *priv;
+  LigmaToolWidgetGroupPrivate *priv;
 };
 
-struct _GimpToolWidgetGroupClass
+struct _LigmaToolWidgetGroupClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 };
 
 
-GType            gimp_tool_widget_group_get_type         (void) G_GNUC_CONST;
+GType            ligma_tool_widget_group_get_type         (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_widget_group_new              (GimpDisplayShell    *shell);
+LigmaToolWidget * ligma_tool_widget_group_new              (LigmaDisplayShell    *shell);
 
-GimpContainer  * gimp_tool_widget_group_get_children     (GimpToolWidgetGroup *group);
+LigmaContainer  * ligma_tool_widget_group_get_children     (LigmaToolWidgetGroup *group);
 
-GimpToolWidget * gimp_tool_widget_group_get_focus_widget (GimpToolWidgetGroup *group);
+LigmaToolWidget * ligma_tool_widget_group_get_focus_widget (LigmaToolWidgetGroup *group);
 
-void             gimp_tool_widget_group_set_auto_raise   (GimpToolWidgetGroup *group,
+void             ligma_tool_widget_group_set_auto_raise   (LigmaToolWidgetGroup *group,
                                                           gboolean             auto_raise);
-gboolean         gimp_tool_widget_group_get_auto_raise   (GimpToolWidgetGroup *group);
+gboolean         ligma_tool_widget_group_get_auto_raise   (LigmaToolWidgetGroup *group);
 
 
-#endif /* __GIMP_TOOL_WIDGET_GROUP_H__ */
+#endif /* __LIGMA_TOOL_WIDGET_GROUP_H__ */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockcontainer.c
+ * ligmadockcontainer.c
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 
 #include "widgets-types.h"
 
-#include "gimpdockcontainer.h"
+#include "ligmadockcontainer.h"
 
 
-G_DEFINE_INTERFACE (GimpDockContainer, gimp_dock_container, GTK_TYPE_WIDGET)
+G_DEFINE_INTERFACE (LigmaDockContainer, ligma_dock_container, GTK_TYPE_WIDGET)
 
 
 /*  private functions  */
 
 
 static void
-gimp_dock_container_default_init (GimpDockContainerInterface *iface)
+ligma_dock_container_default_init (LigmaDockContainerInterface *iface)
 {
 }
 
@@ -43,20 +43,20 @@ gimp_dock_container_default_init (GimpDockContainerInterface *iface)
 
 
 /**
- * gimp_dock_container_get_docks:
- * @container: A #GimpDockContainer
+ * ligma_dock_container_get_docks:
+ * @container: A #LigmaDockContainer
  *
- * Returns: A list of #GimpDock:s in the dock container. Free with
+ * Returns: A list of #LigmaDock:s in the dock container. Free with
  *          g_list_free() when done.
  **/
 GList *
-gimp_dock_container_get_docks (GimpDockContainer *container)
+ligma_dock_container_get_docks (LigmaDockContainer *container)
 {
-  GimpDockContainerInterface *iface;
+  LigmaDockContainerInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
+  iface = LIGMA_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_docks)
     return iface->get_docks (container);
@@ -65,19 +65,19 @@ gimp_dock_container_get_docks (GimpDockContainer *container)
 }
 
 /**
- * gimp_dock_container_get_dialog_factory:
- * @container: A #GimpDockContainer
+ * ligma_dock_container_get_dialog_factory:
+ * @container: A #LigmaDockContainer
  *
- * Returns: The #GimpDialogFactory of the #GimpDockContainer
+ * Returns: The #LigmaDialogFactory of the #LigmaDockContainer
  **/
-GimpDialogFactory *
-gimp_dock_container_get_dialog_factory (GimpDockContainer *container)
+LigmaDialogFactory *
+ligma_dock_container_get_dialog_factory (LigmaDockContainer *container)
 {
-  GimpDockContainerInterface *iface;
+  LigmaDockContainerInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
+  iface = LIGMA_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_dialog_factory)
     return iface->get_dialog_factory (container);
@@ -86,19 +86,19 @@ gimp_dock_container_get_dialog_factory (GimpDockContainer *container)
 }
 
 /**
- * gimp_dock_container_get_ui_manager:
- * @container: A #GimpDockContainer
+ * ligma_dock_container_get_ui_manager:
+ * @container: A #LigmaDockContainer
  *
- * Returns: The #GimpUIManager of the #GimpDockContainer
+ * Returns: The #LigmaUIManager of the #LigmaDockContainer
  **/
-GimpUIManager *
-gimp_dock_container_get_ui_manager (GimpDockContainer *container)
+LigmaUIManager *
+ligma_dock_container_get_ui_manager (LigmaDockContainer *container)
 {
-  GimpDockContainerInterface *iface;
+  LigmaDockContainerInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
+  iface = LIGMA_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_ui_manager)
     return iface->get_ui_manager (container);
@@ -107,23 +107,23 @@ gimp_dock_container_get_ui_manager (GimpDockContainer *container)
 }
 
 /**
- * gimp_dock_container_add_dock:
- * @container: A #GimpDockContainer
- * @dock:      The newly created #GimpDock to add to the container.
- * @dock_info: The #GimpSessionInfoDock the @dock was created from.
+ * ligma_dock_container_add_dock:
+ * @container: A #LigmaDockContainer
+ * @dock:      The newly created #LigmaDock to add to the container.
+ * @dock_info: The #LigmaSessionInfoDock the @dock was created from.
  *
  * Add @dock that was created from @dock_info to @container.
  **/
 void
-gimp_dock_container_add_dock (GimpDockContainer   *container,
-                              GimpDock            *dock,
-                              GimpSessionInfoDock *dock_info)
+ligma_dock_container_add_dock (LigmaDockContainer   *container,
+                              LigmaDock            *dock,
+                              LigmaSessionInfoDock *dock_info)
 {
-  GimpDockContainerInterface *iface;
+  LigmaDockContainerInterface *iface;
 
-  g_return_if_fail (GIMP_IS_DOCK_CONTAINER (container));
+  g_return_if_fail (LIGMA_IS_DOCK_CONTAINER (container));
 
-  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
+  iface = LIGMA_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->add_dock)
     iface->add_dock (container,
@@ -132,23 +132,23 @@ gimp_dock_container_add_dock (GimpDockContainer   *container,
 }
 
 /**
- * gimp_dock_container_get_dock_side:
- * @container: A #GimpDockContainer
- * @dock:      A #GimpDock
+ * ligma_dock_container_get_dock_side:
+ * @container: A #LigmaDockContainer
+ * @dock:      A #LigmaDock
  *
  * Returns: What side @dock is in in @container, either
- *          GIMP_ALIGN_LEFT or GIMP_ALIGN_RIGHT, or -1 if the side
+ *          LIGMA_ALIGN_LEFT or LIGMA_ALIGN_RIGHT, or -1 if the side
  *          concept is not applicable.
  **/
-GimpAlignmentType
-gimp_dock_container_get_dock_side (GimpDockContainer   *container,
-                                   GimpDock            *dock)
+LigmaAlignmentType
+ligma_dock_container_get_dock_side (LigmaDockContainer   *container,
+                                   LigmaDock            *dock)
 {
-  GimpDockContainerInterface *iface;
+  LigmaDockContainerInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), -1);
+  g_return_val_if_fail (LIGMA_IS_DOCK_CONTAINER (container), -1);
 
-  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
+  iface = LIGMA_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_dock_side)
     return iface->get_dock_side (container, dock);

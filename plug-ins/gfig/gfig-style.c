@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -27,10 +27,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "gfig.h"
 #include "gfig-dobject.h"
@@ -52,10 +52,10 @@ static void gfig_read_parameter_double   (gchar        **text,
                                           const gchar   *name,
                                           gdouble       *style_entry);
 
-static void gfig_read_parameter_gimp_rgb (gchar        **text,
+static void gfig_read_parameter_ligma_rgb (gchar        **text,
                                           gint           nitems,
                                           const gchar   *name,
-                                          GimpRGB       *style_entry);
+                                          LigmaRGB       *style_entry);
 
 static void
 gfig_read_parameter_string (gchar       **text,
@@ -155,10 +155,10 @@ gfig_read_parameter_double (gchar        **text,
 }
 
 static void
-gfig_read_parameter_gimp_rgb (gchar        **text,
+gfig_read_parameter_ligma_rgb (gchar        **text,
                               gint           nitems,
                               const gchar   *name,
-                              GimpRGB       *style_entry)
+                              LigmaRGB       *style_entry)
 {
   gint   n = 0;
   gchar *ptr;
@@ -263,9 +263,9 @@ gfig_load_style (Style *style,
   gfig_read_parameter_string (style_text, nitems, "Pattern", &style->pattern);
   gfig_read_parameter_string (style_text, nitems, "Gradient", &style->gradient);
 
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",
+  gfig_read_parameter_ligma_rgb (style_text, nitems, "Foreground",
                                 &style->foreground);
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Background",
+  gfig_read_parameter_ligma_rgb (style_text, nitems, "Background",
                                 &style->background);
 
   gfig_read_parameter_int (style_text, nitems, "FillType", &value);
@@ -439,10 +439,10 @@ gfig_save_styles (GString *string)
  * gfig_context->enable_repaint is FALSE).
  */
 void
-set_foreground_callback (GimpColorButton *button,
+set_foreground_callback (LigmaColorButton *button,
                          gpointer         data)
 {
-  GimpRGB  color2;
+  LigmaRGB  color2;
   Style   *current_style;
 
   if (gfig_context->debug_styles)
@@ -450,19 +450,19 @@ set_foreground_callback (GimpColorButton *button,
 
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (button, &color2);
+  ligma_color_button_get_color (button, &color2);
 
-  gimp_rgba_set (&current_style->foreground,
+  ligma_rgba_set (&current_style->foreground,
                  color2.r, color2.g, color2.b, color2.a);
 
   gfig_paint_callback ();
 }
 
 void
-set_background_callback (GimpColorButton *button,
+set_background_callback (LigmaColorButton *button,
                          gpointer         data)
 {
-  GimpRGB  color2;
+  LigmaRGB  color2;
   Style   *current_style;
 
   if (gfig_context->debug_styles)
@@ -470,8 +470,8 @@ set_background_callback (GimpColorButton *button,
 
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (button, &color2);
-  gimp_rgba_set (&current_style->background,
+  ligma_color_button_get_color (button, &color2);
+  ligma_rgba_set (&current_style->background,
                  color2.r, color2.g, color2.b, color2.a);
 
   gfig_paint_callback ();
@@ -500,11 +500,11 @@ set_paint_type_callback (GtkToggleButton *toggle,
  * gfig_context->enable_repaint is FALSE).
  */
 void
-gfig_brush_changed_callback (GimpBrushSelectButton *button,
+gfig_brush_changed_callback (LigmaBrushSelectButton *button,
                              const gchar           *brush_name,
                              gdouble                opacity,
                              gint                   spacing,
-                             GimpLayerMode          paint_mode,
+                             LigmaLayerMode          paint_mode,
                              gint                   width,
                              gint                   height,
                              const guchar          *mask_data,
@@ -520,14 +520,14 @@ gfig_brush_changed_callback (GimpBrushSelectButton *button,
   gfig_context->bdesc.name = g_strdup (brush_name);
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
-  gimp_context_set_brush (brush_name);
-  gimp_context_set_brush_default_size ();
+  ligma_context_set_brush (brush_name);
+  ligma_context_set_brush_default_size ();
 
   gfig_paint_callback ();
 }
 
 void
-gfig_pattern_changed_callback (GimpPatternSelectButton *button,
+gfig_pattern_changed_callback (LigmaPatternSelectButton *button,
                                const gchar             *pattern_name,
                                gint                     width,
                                gint                     height,
@@ -545,7 +545,7 @@ gfig_pattern_changed_callback (GimpPatternSelectButton *button,
 }
 
 void
-gfig_gradient_changed_callback (GimpGradientSelectButton *button,
+gfig_gradient_changed_callback (LigmaGradientSelectButton *button,
                                 const gchar              *gradient_name,
                                 gint                      width,
                                 const gdouble            *grad_data,
@@ -561,8 +561,8 @@ gfig_gradient_changed_callback (GimpGradientSelectButton *button,
 }
 
 void
-gfig_rgba_copy (GimpRGB *color1,
-                GimpRGB *color2)
+gfig_rgba_copy (LigmaRGB *color1,
+                LigmaRGB *color2)
 {
   color1->r = color2->r;
   color1->g = color2->g;
@@ -599,7 +599,7 @@ gfig_style_copy (Style       *style1,
 
 /*
  * gfig_style_apply() applies the settings from the specified style to
- * the GIMP core.  It does not change any widgets, and does not cause
+ * the LIGMA core.  It does not change any widgets, and does not cause
  * a repaint.
  */
 void
@@ -608,54 +608,54 @@ gfig_style_apply (Style *style)
   if (gfig_context->debug_styles)
     g_printerr ("Applying style '%s' -- ", style->name);
 
-  gimp_context_set_foreground (&style->foreground);
+  ligma_context_set_foreground (&style->foreground);
 
-  gimp_context_set_background (&style->background);
+  ligma_context_set_background (&style->background);
 
-  if (! gimp_context_set_brush (style->brush_name))
+  if (! ligma_context_set_brush (style->brush_name))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
                style->brush_name, style->name);
 
-  gimp_context_set_brush_default_size ();
+  ligma_context_set_brush_default_size ();
 
-  gimp_context_set_pattern (style->pattern);
+  ligma_context_set_pattern (style->pattern);
 
-  gimp_context_set_gradient (style->gradient);
+  ligma_context_set_gradient (style->gradient);
 
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
 }
 
 /*
- * gfig_read_gimp_style() reads the style settings from the Gimp core,
+ * gfig_read_ligma_style() reads the style settings from the Ligma core,
  * and applies them to the specified style, giving that style the
  * specified name.  This is mainly useful as a way of initializing
  * a style.  The function does not cause a repaint.
  */
 void
-gfig_read_gimp_style (Style       *style,
+gfig_read_ligma_style (Style       *style,
                       const gchar *name)
 {
   gint dummy;
 
   if (!name)
-    g_message ("Error: name is NULL in gfig_read_gimp_style.");
+    g_message ("Error: name is NULL in gfig_read_ligma_style.");
 
   if (gfig_context->debug_styles)
-    g_printerr ("Reading Gimp settings as style %s\n", name);
+    g_printerr ("Reading Ligma settings as style %s\n", name);
   style->name = g_strdup (name);
 
-  gimp_context_get_foreground (&style->foreground);
-  gimp_context_get_background (&style->background);
+  ligma_context_get_foreground (&style->foreground);
+  ligma_context_get_background (&style->background);
 
-  style->brush_name = gimp_context_get_brush ();
-  gimp_brush_get_info (style->brush_name,
+  style->brush_name = ligma_context_get_brush ();
+  ligma_brush_get_info (style->brush_name,
                        &style->brush_width, &style->brush_height,
                        &dummy, &dummy);
-  gimp_brush_get_spacing (style->brush_name, &style->brush_spacing);
+  ligma_brush_get_spacing (style->brush_name, &style->brush_spacing);
 
-  style->gradient = gimp_context_get_gradient ();
-  style->pattern  = gimp_context_get_pattern ();
+  style->gradient = ligma_context_get_gradient ();
+  style->pattern  = ligma_context_get_pattern ();
 
   style->fill_opacity = 100.;
 
@@ -666,7 +666,7 @@ gfig_read_gimp_style (Style       *style,
 
 /*
  * gfig_style_set_content_from_style() sets all of the style control widgets
- * to values from the specified style.  This in turn sets the Gimp core's
+ * to values from the specified style.  This in turn sets the Ligma core's
  * values to the same things.  Repainting is suppressed while this happens,
  * so calling this function will not produce a repaint.
  *
@@ -682,30 +682,30 @@ gfig_style_set_context_from_style (Style *style)
   enable_repaint = gfig_context->enable_repaint;
   gfig_context->enable_repaint = FALSE;
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (gfig_context->fg_color_button),
                                &style->foreground);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (gfig_context->bg_color_button),
                                &style->background);
-  if (! gimp_context_set_brush (style->brush_name))
+  if (! ligma_context_set_brush (style->brush_name))
     g_message ("Style from context: Failed to set brush to '%s'",
                style->brush_name);
 
-  gimp_context_set_brush_default_size ();
+  ligma_context_set_brush_default_size ();
 
-  gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
+  ligma_brush_select_button_set_brush (LIGMA_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
                                       style->brush_name, -1.0, -1, -1);  /* FIXME */
 
-  gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
+  ligma_pattern_select_button_set_pattern (LIGMA_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
                                           style->pattern);
 
-  gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
+  ligma_gradient_select_button_set_gradient (LIGMA_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
                                             style->gradient);
 
   gfig_context->bdesc.name = style->brush_name;
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (gfig_context->fillstyle_combo),
                                  (gint) style->fill_type);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle),
@@ -721,20 +721,20 @@ void
 gfig_style_set_style_from_context (Style *style)
 {
   Style   *current_style;
-  GimpRGB  color;
+  LigmaRGB  color;
   gint     value;
 
   style->name = "object";
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
+  ligma_color_button_get_color (LIGMA_COLOR_BUTTON (gfig_context->fg_color_button),
                                &color);
   if (gfig_context->debug_styles)
     g_printerr ("Setting foreground color to %lg %lg %lg\n",
                 color.r, color.g, color.b);
 
   gfig_rgba_copy (&style->foreground, &color);
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
+  ligma_color_button_get_color (LIGMA_COLOR_BUTTON (gfig_context->bg_color_button),
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
@@ -747,7 +747,7 @@ gfig_style_set_style_from_context (Style *style)
 
   style->gradient = current_style->gradient;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo), &value))
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (gfig_context->fillstyle_combo), &value))
     style->fill_type = value;
 
   /* FIXME when there is an opacity control widget to read */
@@ -757,13 +757,13 @@ gfig_style_set_style_from_context (Style *style)
 }
 
 void
-mygimp_brush_info (gint *width,
+myligma_brush_info (gint *width,
                    gint *height)
 {
-  gchar *name = gimp_context_get_brush ();
+  gchar *name = ligma_context_get_brush ();
   gint   dummy;
 
-  if (name && gimp_brush_get_info (name, width, height, &dummy, &dummy))
+  if (name && ligma_brush_get_info (name, width, height, &dummy, &dummy))
     {
       *width  = MAX (*width, 32);
       *height = MAX (*height, 32);

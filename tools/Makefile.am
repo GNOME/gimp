@@ -2,7 +2,7 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
@@ -11,14 +11,14 @@ xnone = "-xnone"
 endif
 
 bin_PROGRAMS = \
-	gimptool-@GIMP_TOOL_VERSION@	\
-	gimp-test-clipboard-@GIMP_TOOL_VERSION@
+	ligmatool-@LIGMA_TOOL_VERSION@	\
+	ligma-test-clipboard-@LIGMA_TOOL_VERSION@
 
 if OS_WIN32
 
-bin_PROGRAMS += gimp-debug-resume
+bin_PROGRAMS += ligma-debug-resume
 
-gimp_debug_resume_SOURCES = gimp-debug-resume.c
+ligma_debug_resume_SOURCES = ligma-debug-resume.c
 
 endif
 
@@ -26,17 +26,17 @@ EXTRA_PROGRAMS = \
 	kernelgen
 
 
-gimptool_@GIMP_TOOL_VERSION@_SOURCES = gimptool.c
+ligmatool_@LIGMA_TOOL_VERSION@_SOURCES = ligmatool.c
 
-gimptool_@GIMP_TOOL_VERSION@_LDADD = \
-	$(libgimpbase)	\
+ligmatool_@LIGMA_TOOL_VERSION@_LDADD = \
+	$(libligmabase)	\
 	$(GTK_LIBS)
 
 
-gimp_test_clipboard_@GIMP_TOOL_VERSION@_SOURCES = gimp-test-clipboard.c
+ligma_test_clipboard_@LIGMA_TOOL_VERSION@_SOURCES = ligma-test-clipboard.c
 
-gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = \
-	$(libgimpbase)	\
+ligma_test_clipboard_@LIGMA_TOOL_VERSION@_LDADD = \
+	$(libligmabase)	\
 	$(GTK_LIBS)
 
 
@@ -73,8 +73,8 @@ all-local: colorsvg2png$(BUILD_EXEEXT)
 DISTCLEANFILES = colorsvg2png$(BUILD_EXEEXT)
 
 AM_CPPFLAGS = \
-	-DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"		\
-	-DLOCALEDIR=\""$(gimplocaledir)"\"			\
+	-DLIGMA_APP_VERSION=\"@LIGMA_APP_VERSION@\"		\
+	-DLOCALEDIR=\""$(ligmalocaledir)"\"			\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DEXEC_PREFIX=\""$(exec_prefix)"\"			\
 	-DBINDIR=\""$(bindir)"\"				\
@@ -88,11 +88,11 @@ AM_CPPFLAGS = \
 	-DLIBDIR=\""$(libdir)"\"				\
 	-DINFODIR=\""$(infodir)"\"				\
 	-DMANDIR=\""$(mandir)"\"				\
-	-DGIMPPLUGINDIR=\""$(gimpplugindir)"\"			\
-	-DGIMPDATADIR=\""$(gimpdatadir)"\"			\
+	-DLIGMAPLUGINDIR=\""$(ligmaplugindir)"\"			\
+	-DLIGMADATADIR=\""$(ligmadatadir)"\"			\
 	-DCC=\""$(CC)"\"					\
-	-DGIMPDIR=\""$(gimpdir)"\"				\
-	-DGIMP_PLUGIN_VERSION=\""$(GIMP_PLUGIN_VERSION)"\"	\
+	-DLIGMADIR=\""$(ligmadir)"\"				\
+	-DLIGMA_PLUGIN_VERSION=\""$(LIGMA_PLUGIN_VERSION)"\"	\
 	-I$(top_srcdir)						\
 	$(GTK_CFLAGS)						\
 	-I$(includedir)
@@ -110,8 +110,8 @@ EXTRA_DIST = \
 	colorsvg2png.c				\
 	defcheck.py				\
 	generate-welcome-dialog-data.py		\
-	gimp-mkenums				\
-	gimppath2svg.py				\
+	ligma-mkenums				\
+	ligmapath2svg.py				\
 	mnemonic-clashes			\
 	performance-log-close-tags.py		\
 	performance-log-coalesce.py		\

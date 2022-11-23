@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolornotebook.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolornotebook.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on color_notebook module
  * Copyright (C) 1998 Austin Donnelly <austin@greenend.org.uk>
@@ -22,67 +22,67 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_NOTEBOOK_H__
-#define __GIMP_COLOR_NOTEBOOK_H__
+#ifndef __LIGMA_COLOR_NOTEBOOK_H__
+#define __LIGMA_COLOR_NOTEBOOK_H__
 
-#include <libgimpwidgets/gimpcolorselector.h>
+#include <libligmawidgets/ligmacolorselector.h>
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_NOTEBOOK            (gimp_color_notebook_get_type ())
-#define GIMP_COLOR_NOTEBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebook))
-#define GIMP_COLOR_NOTEBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebookClass))
-#define GIMP_IS_COLOR_NOTEBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_NOTEBOOK))
-#define GIMP_IS_COLOR_NOTEBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_NOTEBOOK))
-#define GIMP_COLOR_NOTEBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebookClass))
+#define LIGMA_TYPE_COLOR_NOTEBOOK            (ligma_color_notebook_get_type ())
+#define LIGMA_COLOR_NOTEBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_NOTEBOOK, LigmaColorNotebook))
+#define LIGMA_COLOR_NOTEBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_NOTEBOOK, LigmaColorNotebookClass))
+#define LIGMA_IS_COLOR_NOTEBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_NOTEBOOK))
+#define LIGMA_IS_COLOR_NOTEBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_NOTEBOOK))
+#define LIGMA_COLOR_NOTEBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_NOTEBOOK, LigmaColorNotebookClass))
 
 
-typedef struct _GimpColorNotebookPrivate GimpColorNotebookPrivate;
-typedef struct _GimpColorNotebookClass   GimpColorNotebookClass;
+typedef struct _LigmaColorNotebookPrivate LigmaColorNotebookPrivate;
+typedef struct _LigmaColorNotebookClass   LigmaColorNotebookClass;
 
-struct _GimpColorNotebook
+struct _LigmaColorNotebook
 {
-  GimpColorSelector         parent_instance;
+  LigmaColorSelector         parent_instance;
 
-  GimpColorNotebookPrivate *priv;
+  LigmaColorNotebookPrivate *priv;
 };
 
-struct _GimpColorNotebookClass
+struct _LigmaColorNotebookClass
 {
-  GimpColorSelectorClass  parent_class;
+  LigmaColorSelectorClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType               gimp_color_notebook_get_type             (void) G_GNUC_CONST;
+GType               ligma_color_notebook_get_type             (void) G_GNUC_CONST;
 
-GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook *notebook,
+GtkWidget         * ligma_color_notebook_set_has_page         (LigmaColorNotebook *notebook,
                                                               GType              page_type,
                                                               gboolean           has_page);
 
-GtkWidget         * gimp_color_notebook_get_notebook         (GimpColorNotebook *notebook);
-GList             * gimp_color_notebook_get_selectors        (GimpColorNotebook *notebook);
-GimpColorSelector * gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook);
-void                gimp_color_notebook_set_simulation       (GimpColorNotebook *notebook,
-                                                              GimpColorProfile  *profile,
-                                                              GimpColorRenderingIntent intent,
+GtkWidget         * ligma_color_notebook_get_notebook         (LigmaColorNotebook *notebook);
+GList             * ligma_color_notebook_get_selectors        (LigmaColorNotebook *notebook);
+LigmaColorSelector * ligma_color_notebook_get_current_selector (LigmaColorNotebook *notebook);
+void                ligma_color_notebook_set_simulation       (LigmaColorNotebook *notebook,
+                                                              LigmaColorProfile  *profile,
+                                                              LigmaColorRenderingIntent intent,
                                                               gboolean           bpc);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_NOTEBOOK_H__ */
+#endif /* __LIGMA_COLOR_NOTEBOOK_H__ */

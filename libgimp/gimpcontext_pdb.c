@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpcontext_pdb.c
+ * ligmacontext_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpcontext
- * @title: gimpcontext
+ * SECTION: ligmacontext
+ * @title: ligmacontext
  * @short_description: Functions to manipulate a plug-in's context.
  *
  * Functions to manipulate a plug-in's context.
@@ -37,48 +37,48 @@
 
 
 /**
- * gimp_context_push:
+ * ligma_context_push:
  *
  * Pushes a context to the top of the plug-in's context stack.
  *
  * This procedure creates a new context by copying the current context.
  * This copy becomes the new current context for the calling plug-in
- * until it is popped again using gimp_context_pop().
+ * until it is popped again using ligma_context_pop().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_push (void)
+ligma_context_push (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-push",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-push",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_pop:
+ * ligma_context_pop:
  *
  * Pops the topmost context from the plug-in's context stack.
  *
  * This procedure removes the topmost context from the plug-in's
  * context stack. The context that was active before the corresponding
- * call to gimp_context_push() becomes the new current context of the
+ * call to ligma_context_push() becomes the new current context of the
  * plug-in.
  *
  * Returns: TRUE on success.
@@ -86,29 +86,29 @@ gimp_context_push (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_pop (void)
+ligma_context_pop (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-pop",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-pop",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_defaults:
+ * ligma_context_set_defaults:
  *
  * Reset context settings to their default values.
  *
@@ -123,69 +123,69 @@ gimp_context_pop (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_defaults (void)
+ligma_context_set_defaults (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-defaults",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-defaults",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_list_paint_methods:
+ * ligma_context_list_paint_methods:
  * @paint_methods: (out) (array zero-terminated=1) (transfer full): The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
  * This procedure lists the names of the available paint methods. Any
- * of the results can be used for gimp_context_set_paint_method().
+ * of the results can be used for ligma_context_set_paint_method().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_context_list_paint_methods (gchar ***paint_methods)
+ligma_context_list_paint_methods (gchar ***paint_methods)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-list-paint-methods",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-list-paint-methods",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *paint_methods = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    *paint_methods = GIMP_VALUES_DUP_STRV (return_vals, 1);
+    *paint_methods = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_paint_method:
+ * ligma_context_get_paint_method:
  *
  * Retrieve the currently active paint method.
  *
@@ -198,30 +198,30 @@ gimp_context_list_paint_methods (gchar ***paint_methods)
  * Since: 2.4
  **/
 gchar *
-gimp_context_get_paint_method (void)
+ligma_context_get_paint_method (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-paint-method",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-paint-method",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_paint_method:
+ * ligma_context_set_paint_method:
  * @name: The name of the paint method.
  *
  * Set the specified paint method as the active paint method.
@@ -238,30 +238,30 @@ gimp_context_get_paint_method (void)
  * Since: 2.4
  **/
 gboolean
-gimp_context_set_paint_method (const gchar *name)
+ligma_context_set_paint_method (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-paint-method",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-paint-method",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_stroke_method:
+ * ligma_context_get_stroke_method:
  *
  * Retrieve the currently active stroke method.
  *
@@ -271,31 +271,31 @@ gimp_context_set_paint_method (const gchar *name)
  *
  * Since: 2.10
  **/
-GimpStrokeMethod
-gimp_context_get_stroke_method (void)
+LigmaStrokeMethod
+ligma_context_get_stroke_method (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpStrokeMethod stroke_method = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaStrokeMethod stroke_method = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-stroke-method",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-stroke-method",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_method = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    stroke_method = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return stroke_method;
 }
 
 /**
- * gimp_context_set_stroke_method:
+ * ligma_context_set_stroke_method:
  * @stroke_method: The new stroke method.
  *
  * Set the specified stroke method as the active stroke method.
@@ -309,35 +309,35 @@ gimp_context_get_stroke_method (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
+ligma_context_set_stroke_method (LigmaStrokeMethod stroke_method)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_STROKE_METHOD, stroke_method,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_STROKE_METHOD, stroke_method,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-stroke-method",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-stroke-method",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_foreground:
+ * ligma_context_get_foreground:
  * @foreground: (out caller-allocates): The foreground color.
  *
- * Get the current GIMP foreground color.
+ * Get the current LIGMA foreground color.
  *
- * This procedure returns the current GIMP foreground color. The
+ * This procedure returns the current LIGMA foreground color. The
  * foreground color is used in a variety of tools such as paint tools,
  * blending, and bucket fill.
  *
@@ -346,37 +346,37 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
  * Since: 2.2
  **/
 gboolean
-gimp_context_get_foreground (GimpRGB *foreground)
+ligma_context_get_foreground (LigmaRGB *foreground)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-foreground",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-foreground",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*foreground);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*foreground);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_foreground:
+ * ligma_context_set_foreground:
  * @foreground: The foreground color.
  *
- * Set the current GIMP foreground color.
+ * Set the current LIGMA foreground color.
  *
- * This procedure sets the current GIMP foreground color. After this is
+ * This procedure sets the current LIGMA foreground color. After this is
  * set, operations which use foreground such as paint tools, blending,
  * and bucket fill will use the new value.
  *
@@ -385,35 +385,35 @@ gimp_context_get_foreground (GimpRGB *foreground)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_foreground (const GimpRGB *foreground)
+ligma_context_set_foreground (const LigmaRGB *foreground)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RGB, foreground,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RGB, foreground,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-foreground",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-foreground",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_background:
+ * ligma_context_get_background:
  * @background: (out caller-allocates): The background color.
  *
- * Get the current GIMP background color.
+ * Get the current LIGMA background color.
  *
- * This procedure returns the current GIMP background color. The
+ * This procedure returns the current LIGMA background color. The
  * background color is used in a variety of tools such as blending,
  * erasing (with non-alpha images), and image filling.
  *
@@ -422,37 +422,37 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  * Since: 2.2
  **/
 gboolean
-gimp_context_get_background (GimpRGB *background)
+ligma_context_get_background (LigmaRGB *background)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-background",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-background",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*background);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*background);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_background:
+ * ligma_context_set_background:
  * @background: The background color.
  *
- * Set the current GIMP background color.
+ * Set the current LIGMA background color.
  *
- * This procedure sets the current GIMP background color. After this is
+ * This procedure sets the current LIGMA background color. After this is
  * set, operations which use background such as blending, filling
  * images, clearing, and erasing (in non-alpha images) will use the new
  * value.
@@ -462,35 +462,35 @@ gimp_context_get_background (GimpRGB *background)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_background (const GimpRGB *background)
+ligma_context_set_background (const LigmaRGB *background)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RGB, background,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_RGB, background,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-background",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-background",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_default_colors:
+ * ligma_context_set_default_colors:
  *
- * Set the current GIMP foreground and background colors to black and
+ * Set the current LIGMA foreground and background colors to black and
  * white.
  *
- * This procedure sets the current GIMP foreground and background
+ * This procedure sets the current LIGMA foreground and background
  * colors to their initial default values, black and white.
  *
  * Returns: TRUE on success.
@@ -498,33 +498,33 @@ gimp_context_set_background (const GimpRGB *background)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_default_colors (void)
+ligma_context_set_default_colors (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-default-colors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-default-colors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_swap_colors:
+ * ligma_context_swap_colors:
  *
- * Swap the current GIMP foreground and background colors.
+ * Swap the current LIGMA foreground and background colors.
  *
- * This procedure swaps the current GIMP foreground and background
+ * This procedure swaps the current LIGMA foreground and background
  * colors, so that the new foreground color becomes the old background
  * color and vice versa.
  *
@@ -533,29 +533,29 @@ gimp_context_set_default_colors (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_swap_colors (void)
+ligma_context_swap_colors (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-swap-colors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-swap-colors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_opacity:
+ * ligma_context_get_opacity:
  *
  * Get the opacity.
  *
@@ -567,30 +567,30 @@ gimp_context_swap_colors (void)
  * Since: 2.2
  **/
 gdouble
-gimp_context_get_opacity (void)
+ligma_context_get_opacity (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble opacity = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    opacity = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return opacity;
 }
 
 /**
- * gimp_context_set_opacity:
+ * ligma_context_set_opacity:
  * @opacity: The opacity.
  *
  * Set the opacity.
@@ -603,30 +603,30 @@ gimp_context_get_opacity (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_opacity (gdouble opacity)
+ligma_context_set_opacity (gdouble opacity)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_paint_mode:
+ * ligma_context_get_paint_mode:
  *
  * Get the paint mode.
  *
@@ -638,31 +638,31 @@ gimp_context_set_opacity (gdouble opacity)
  *
  * Since: 2.2
  **/
-GimpLayerMode
-gimp_context_get_paint_mode (void)
+LigmaLayerMode
+ligma_context_get_paint_mode (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerMode paint_mode = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerMode paint_mode = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-paint-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-paint-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    paint_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    paint_mode = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return paint_mode;
 }
 
 /**
- * gimp_context_set_paint_mode:
+ * ligma_context_set_paint_mode:
  * @paint_mode: The paint mode.
  *
  * Set the paint mode.
@@ -674,30 +674,30 @@ gimp_context_get_paint_mode (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_paint_mode (GimpLayerMode paint_mode)
+ligma_context_set_paint_mode (LigmaLayerMode paint_mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_MODE, paint_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-paint-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-paint-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_width:
+ * ligma_context_get_line_width:
  *
  * Get the line width setting.
  *
@@ -708,30 +708,30 @@ gimp_context_set_paint_mode (GimpLayerMode paint_mode)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_line_width (void)
+ligma_context_get_line_width (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble line_width = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-width",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-width",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    line_width = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return line_width;
 }
 
 /**
- * gimp_context_set_line_width:
+ * ligma_context_set_line_width:
  * @line_width: The line width setting.
  *
  * Set the line width setting.
@@ -739,38 +739,38 @@ gimp_context_get_line_width (void)
  * This procedure modifies the line width setting for stroking lines.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_width (gdouble line_width)
+ligma_context_set_line_width (gdouble line_width)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, line_width,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-width",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-width",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_width_unit:
+ * ligma_context_get_line_width_unit:
  *
  * Get the line width unit setting.
  *
@@ -780,31 +780,31 @@ gimp_context_set_line_width (gdouble line_width)
  *
  * Since: 2.10
  **/
-GimpUnit
-gimp_context_get_line_width_unit (void)
+LigmaUnit
+ligma_context_get_line_width_unit (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaUnit line_width_unit = LIGMA_UNIT_PIXEL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-width-unit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-width-unit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_width_unit = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    line_width_unit = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return line_width_unit;
 }
 
 /**
- * gimp_context_set_line_width_unit:
+ * ligma_context_set_line_width_unit:
  * @line_width_unit: The line width setting unit.
  *
  * Set the line width unit setting.
@@ -813,38 +813,38 @@ gimp_context_get_line_width_unit (void)
  * lines.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_width_unit (GimpUnit line_width_unit)
+ligma_context_set_line_width_unit (LigmaUnit line_width_unit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, line_width_unit,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_UNIT, line_width_unit,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-width-unit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-width-unit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_cap_style:
+ * ligma_context_get_line_cap_style:
  *
  * Get the line cap style setting.
  *
@@ -854,31 +854,31 @@ gimp_context_set_line_width_unit (GimpUnit line_width_unit)
  *
  * Since: 2.10
  **/
-GimpCapStyle
-gimp_context_get_line_cap_style (void)
+LigmaCapStyle
+ligma_context_get_line_cap_style (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpCapStyle cap_style = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaCapStyle cap_style = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-cap-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-cap-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    cap_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    cap_style = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return cap_style;
 }
 
 /**
- * gimp_context_set_line_cap_style:
+ * ligma_context_set_line_cap_style:
  * @cap_style: The line cap style setting.
  *
  * Set the line cap style setting.
@@ -887,38 +887,38 @@ gimp_context_get_line_cap_style (void)
  * lines.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_cap_style (GimpCapStyle cap_style)
+ligma_context_set_line_cap_style (LigmaCapStyle cap_style)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CAP_STYLE, cap_style,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CAP_STYLE, cap_style,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-cap-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-cap-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_join_style:
+ * ligma_context_get_line_join_style:
  *
  * Get the line join style setting.
  *
@@ -928,31 +928,31 @@ gimp_context_set_line_cap_style (GimpCapStyle cap_style)
  *
  * Since: 2.10
  **/
-GimpJoinStyle
-gimp_context_get_line_join_style (void)
+LigmaJoinStyle
+ligma_context_get_line_join_style (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpJoinStyle join_style = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaJoinStyle join_style = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-join-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-join-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    join_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    join_style = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return join_style;
 }
 
 /**
- * gimp_context_set_line_join_style:
+ * ligma_context_set_line_join_style:
  * @join_style: The line join style setting.
  *
  * Set the line join style setting.
@@ -961,38 +961,38 @@ gimp_context_get_line_join_style (void)
  * lines.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_join_style (GimpJoinStyle join_style)
+ligma_context_set_line_join_style (LigmaJoinStyle join_style)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_JOIN_STYLE, join_style,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_JOIN_STYLE, join_style,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-join-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-join-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_miter_limit:
+ * ligma_context_get_line_miter_limit:
  *
  * Get the line miter limit setting.
  *
@@ -1003,30 +1003,30 @@ gimp_context_set_line_join_style (GimpJoinStyle join_style)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_line_miter_limit (void)
+ligma_context_get_line_miter_limit (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble miter_limit = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-miter-limit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-miter-limit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    miter_limit = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    miter_limit = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return miter_limit;
 }
 
 /**
- * gimp_context_set_line_miter_limit:
+ * ligma_context_set_line_miter_limit:
  * @miter_limit: The line miter limit setting.
  *
  * Set the line miter limit setting.
@@ -1038,38 +1038,38 @@ gimp_context_get_line_miter_limit (void)
  * the actual join point.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_miter_limit (gdouble miter_limit)
+ligma_context_set_line_miter_limit (gdouble miter_limit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, miter_limit,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-miter-limit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-miter-limit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_dash_offset:
+ * ligma_context_get_line_dash_offset:
  *
  * Get the line dash offset setting.
  *
@@ -1080,30 +1080,30 @@ gimp_context_set_line_miter_limit (gdouble miter_limit)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_line_dash_offset (void)
+ligma_context_get_line_dash_offset (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble dash_offset = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-dash-offset",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-dash-offset",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    dash_offset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    dash_offset = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return dash_offset;
 }
 
 /**
- * gimp_context_set_line_dash_offset:
+ * ligma_context_set_line_dash_offset:
  * @dash_offset: The line dash offset setting.
  *
  * Set the line dash offset setting.
@@ -1112,38 +1112,38 @@ gimp_context_get_line_dash_offset (void)
  * lines.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_dash_offset (gdouble dash_offset)
+ligma_context_set_line_dash_offset (gdouble dash_offset)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, dash_offset,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-dash-offset",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-dash-offset",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_line_dash_pattern:
+ * ligma_context_get_line_dash_pattern:
  * @num_dashes: (out): The number of dashes in the dash_pattern array.
  * @dashes: (out) (array length=num_dashes) (element-type gdouble) (transfer full): The line dash pattern setting.
  *
@@ -1156,39 +1156,39 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
  * Since: 2.10
  **/
 gboolean
-gimp_context_get_line_dash_pattern (gint     *num_dashes,
+ligma_context_get_line_dash_pattern (gint     *num_dashes,
                                     gdouble **dashes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-line-dash-pattern",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-line-dash-pattern",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_dashes = 0;
   *dashes = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *num_dashes = GIMP_VALUES_GET_INT (return_vals, 1);
-      *dashes = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
+      *num_dashes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *dashes = LIGMA_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_line_dash_pattern:
+ * ligma_context_set_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
  * @dashes: (array length=num_dashes) (element-type gdouble): The line dash pattern setting.
  *
@@ -1202,41 +1202,41 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  * results in a square segment shape (or gap shape).
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection(),
- * gimp_drawable_edit_stroke_item().
+ * ligma_drawable_edit_stroke_selection(),
+ * ligma_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_dash_pattern (gint           num_dashes,
+ligma_context_set_line_dash_pattern (gint           num_dashes,
                                     const gdouble *dashes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, num_dashes,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 1), dashes, num_dashes);
+  ligma_value_set_float_array (ligma_value_array_index (args, 1), dashes, num_dashes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-line-dash-pattern",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-line-dash-pattern",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush:
+ * ligma_context_get_brush:
  *
  * Retrieve the currently active brush.
  *
@@ -1250,30 +1250,30 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
  * Since: 2.2
  **/
 gchar *
-gimp_context_get_brush (void)
+ligma_context_get_brush (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_brush:
+ * ligma_context_set_brush:
  * @name: The name of the brush.
  *
  * Set the specified brush as the active brush.
@@ -1289,30 +1289,30 @@ gimp_context_get_brush (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_brush (const gchar *name)
+ligma_context_set_brush (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_size:
+ * ligma_context_get_brush_size:
  *
  * Get brush size in pixels.
  *
@@ -1323,30 +1323,30 @@ gimp_context_set_brush (const gchar *name)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_brush_size (void)
+ligma_context_get_brush_size (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    size = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return size;
 }
 
 /**
- * gimp_context_set_brush_size:
+ * ligma_context_set_brush_size:
  * @size: Brush size in pixels.
  *
  * Set brush size in pixels.
@@ -1358,30 +1358,30 @@ gimp_context_get_brush_size (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_brush_size (gdouble size)
+ligma_context_set_brush_size (gdouble size)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, size,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_brush_default_size:
+ * ligma_context_set_brush_default_size:
  *
  * Set brush size to its default.
  *
@@ -1393,29 +1393,29 @@ gimp_context_set_brush_size (gdouble size)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_brush_default_size (void)
+ligma_context_set_brush_default_size (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-default-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-default-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_aspect_ratio:
+ * ligma_context_get_brush_aspect_ratio:
  *
  * Get brush aspect ratio.
  *
@@ -1426,30 +1426,30 @@ gimp_context_set_brush_default_size (void)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_brush_aspect_ratio (void)
+ligma_context_get_brush_aspect_ratio (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble aspect = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    aspect = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return aspect;
 }
 
 /**
- * gimp_context_set_brush_aspect_ratio:
+ * ligma_context_set_brush_aspect_ratio:
  * @aspect: Aspect ratio.
  *
  * Set brush aspect ratio.
@@ -1461,30 +1461,30 @@ gimp_context_get_brush_aspect_ratio (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_brush_aspect_ratio (gdouble aspect)
+ligma_context_set_brush_aspect_ratio (gdouble aspect)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, aspect,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_angle:
+ * ligma_context_get_brush_angle:
  *
  * Get brush angle in degrees.
  *
@@ -1495,30 +1495,30 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_brush_angle (void)
+ligma_context_get_brush_angle (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    angle = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return angle;
 }
 
 /**
- * gimp_context_set_brush_angle:
+ * ligma_context_set_brush_angle:
  * @angle: Angle in degrees.
  *
  * Set brush angle in degrees.
@@ -1530,30 +1530,30 @@ gimp_context_get_brush_angle (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_brush_angle (gdouble angle)
+ligma_context_set_brush_angle (gdouble angle)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_spacing:
+ * ligma_context_get_brush_spacing:
  *
  * Get brush spacing as percent of size.
  *
@@ -1565,30 +1565,30 @@ gimp_context_set_brush_angle (gdouble angle)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_brush_spacing (void)
+ligma_context_get_brush_spacing (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble spacing = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    spacing = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return spacing;
 }
 
 /**
- * gimp_context_set_brush_spacing:
+ * ligma_context_set_brush_spacing:
  * @spacing: Brush spacing as fraction of size.
  *
  * Set brush spacing as percent of size.
@@ -1601,30 +1601,30 @@ gimp_context_get_brush_spacing (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_brush_spacing (gdouble spacing)
+ligma_context_set_brush_spacing (gdouble spacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, spacing,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_brush_default_spacing:
+ * ligma_context_set_brush_default_spacing:
  *
  * Set brush spacing to its default.
  *
@@ -1636,29 +1636,29 @@ gimp_context_set_brush_spacing (gdouble spacing)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_brush_default_spacing (void)
+ligma_context_set_brush_default_spacing (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-default-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-default-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_hardness:
+ * ligma_context_get_brush_hardness:
  *
  * Get brush hardness in paint options.
  *
@@ -1669,30 +1669,30 @@ gimp_context_set_brush_default_spacing (void)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_brush_hardness (void)
+ligma_context_get_brush_hardness (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble hardness = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-hardness",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-hardness",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    hardness = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return hardness;
 }
 
 /**
- * gimp_context_set_brush_hardness:
+ * ligma_context_set_brush_hardness:
  * @hardness: Brush hardness.
  *
  * Set brush hardness.
@@ -1704,30 +1704,30 @@ gimp_context_get_brush_hardness (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_brush_hardness (gdouble hardness)
+ligma_context_set_brush_hardness (gdouble hardness)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, hardness,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-hardness",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-hardness",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_brush_default_hardness:
+ * ligma_context_set_brush_default_hardness:
  *
  * Set brush spacing to its default.
  *
@@ -1739,29 +1739,29 @@ gimp_context_set_brush_hardness (gdouble hardness)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_brush_default_hardness (void)
+ligma_context_set_brush_default_hardness (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-default-hardness",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-default-hardness",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_brush_force:
+ * ligma_context_get_brush_force:
  *
  * Get brush force in paint options.
  *
@@ -1772,30 +1772,30 @@ gimp_context_set_brush_default_hardness (void)
  * Since: 2.10
  **/
 gdouble
-gimp_context_get_brush_force (void)
+ligma_context_get_brush_force (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble force = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-brush-force",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-brush-force",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    force = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    force = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return force;
 }
 
 /**
- * gimp_context_set_brush_force:
+ * ligma_context_set_brush_force:
  * @force: Brush application force.
  *
  * Set brush application force.
@@ -1807,30 +1807,30 @@ gimp_context_get_brush_force (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_brush_force (gdouble force)
+ligma_context_set_brush_force (gdouble force)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, force,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-brush-force",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-brush-force",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_dynamics:
+ * ligma_context_get_dynamics:
  *
  * Retrieve the currently active paint dynamics.
  *
@@ -1839,7 +1839,7 @@ gimp_context_set_brush_force (gdouble force)
  * this paint dynamics to control the application of paint to the
  * image. If disabled, the dynamics will be ignored during paint
  * actions.
- * See gimp_context_are_dynamics_enabled() to enquire whether dynamics
+ * See ligma_context_are_dynamics_enabled() to enquire whether dynamics
  * are used or ignored.
  *
  * Returns: (transfer full): The name of the active paint dynamics.
@@ -1848,30 +1848,30 @@ gimp_context_set_brush_force (gdouble force)
  * Since: 2.8
  **/
 gchar *
-gimp_context_get_dynamics (void)
+ligma_context_get_dynamics (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-dynamics",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-dynamics",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_dynamics:
+ * ligma_context_set_dynamics:
  * @name: The name of the paint dynamics.
  *
  * Set the specified paint dynamics as the active paint dynamics.
@@ -1889,66 +1889,66 @@ gimp_context_get_dynamics (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_dynamics (const gchar *name)
+ligma_context_set_dynamics (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-dynamics",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-dynamics",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_are_dynamics_enabled:
+ * ligma_context_are_dynamics_enabled:
  *
  * Inform whether the currently active paint dynamics will be applied
  * to painting.
  *
  * This procedure returns whether the currently active paint dynamics
- * (as returned by gimp_context_get_dynamics()) is enabled.
+ * (as returned by ligma_context_get_dynamics()) is enabled.
  *
  * Returns: Whether dynamics enabled or disabled.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_context_are_dynamics_enabled (void)
+ligma_context_are_dynamics_enabled (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean enabled = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-are-dynamics-enabled",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-are-dynamics-enabled",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    enabled = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    enabled = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return enabled;
 }
 
 /**
- * gimp_context_enable_dynamics:
+ * ligma_context_enable_dynamics:
  * @enable: Whether to enable or disable dynamics.
  *
  * Set the specified paint dynamics as the active paint dynamics.
@@ -1961,30 +1961,30 @@ gimp_context_are_dynamics_enabled (void)
  * Since: 3.0
  **/
 gboolean
-gimp_context_enable_dynamics (gboolean enable)
+ligma_context_enable_dynamics (gboolean enable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, enable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-enable-dynamics",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-enable-dynamics",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_mypaint_brush:
+ * ligma_context_get_mypaint_brush:
  *
  * Retrieve the currently active MyPaint brush.
  *
@@ -1997,30 +1997,30 @@ gimp_context_enable_dynamics (gboolean enable)
  * Since: 2.10
  **/
 gchar *
-gimp_context_get_mypaint_brush (void)
+ligma_context_get_mypaint_brush (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-mypaint-brush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-mypaint-brush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_mypaint_brush:
+ * ligma_context_set_mypaint_brush:
  * @name: The name of the MyPaint brush.
  *
  * Set the specified MyPaint brush as the active MyPaint brush.
@@ -2037,30 +2037,30 @@ gimp_context_get_mypaint_brush (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_mypaint_brush (const gchar *name)
+ligma_context_set_mypaint_brush (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-mypaint-brush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-mypaint-brush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_pattern:
+ * ligma_context_get_pattern:
  *
  * Retrieve the currently active pattern.
  *
@@ -2074,30 +2074,30 @@ gimp_context_set_mypaint_brush (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_context_get_pattern (void)
+ligma_context_get_pattern (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-pattern",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-pattern",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_pattern:
+ * ligma_context_set_pattern:
  * @name: The name of the pattern.
  *
  * Set the specified pattern as the active pattern.
@@ -2114,30 +2114,30 @@ gimp_context_get_pattern (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_pattern (const gchar *name)
+ligma_context_set_pattern (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-pattern",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-pattern",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_gradient:
+ * ligma_context_get_gradient:
  *
  * Retrieve the currently active gradient.
  *
@@ -2149,30 +2149,30 @@ gimp_context_set_pattern (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_context_get_gradient (void)
+ligma_context_get_gradient (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-gradient",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-gradient",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_gradient:
+ * ligma_context_set_gradient:
  * @name: The name of the gradient.
  *
  * Sets the specified gradient as the active gradient.
@@ -2189,30 +2189,30 @@ gimp_context_get_gradient (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_gradient (const gchar *name)
+ligma_context_set_gradient (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_gradient_fg_bg_rgb:
+ * ligma_context_set_gradient_fg_bg_rgb:
  *
  * Sets the built-in FG-BG RGB gradient as the active gradient.
  *
@@ -2225,29 +2225,29 @@ gimp_context_set_gradient (const gchar *name)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_fg_bg_rgb (void)
+ligma_context_set_gradient_fg_bg_rgb (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-fg-bg-rgb",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-fg-bg-rgb",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_gradient_fg_bg_hsv_cw:
+ * ligma_context_set_gradient_fg_bg_hsv_cw:
  *
  * Sets the built-in FG-BG HSV (cw) gradient as the active gradient.
  *
@@ -2260,29 +2260,29 @@ gimp_context_set_gradient_fg_bg_rgb (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_fg_bg_hsv_cw (void)
+ligma_context_set_gradient_fg_bg_hsv_cw (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-fg-bg-hsv-cw",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-fg-bg-hsv-cw",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_gradient_fg_bg_hsv_ccw:
+ * ligma_context_set_gradient_fg_bg_hsv_ccw:
  *
  * Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.
  *
@@ -2295,29 +2295,29 @@ gimp_context_set_gradient_fg_bg_hsv_cw (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_fg_bg_hsv_ccw (void)
+ligma_context_set_gradient_fg_bg_hsv_ccw (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-fg-bg-hsv-ccw",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-fg-bg-hsv-ccw",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_gradient_fg_transparent:
+ * ligma_context_set_gradient_fg_transparent:
  *
  * Sets the built-in FG-Transparent gradient as the active gradient.
  *
@@ -2330,29 +2330,29 @@ gimp_context_set_gradient_fg_bg_hsv_ccw (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_fg_transparent (void)
+ligma_context_set_gradient_fg_transparent (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-fg-transparent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-fg-transparent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_gradient_blend_color_space:
+ * ligma_context_get_gradient_blend_color_space:
  *
  * Get the gradient blend color space.
  *
@@ -2363,31 +2363,31 @@ gimp_context_set_gradient_fg_transparent (void)
  *
  * Since: 2.10
  **/
-GimpGradientBlendColorSpace
-gimp_context_get_gradient_blend_color_space (void)
+LigmaGradientBlendColorSpace
+ligma_context_get_gradient_blend_color_space (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpGradientBlendColorSpace blend_color_space = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaGradientBlendColorSpace blend_color_space = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-gradient-blend-color-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-gradient-blend-color-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    blend_color_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    blend_color_space = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return blend_color_space;
 }
 
 /**
- * gimp_context_set_gradient_blend_color_space:
+ * ligma_context_set_gradient_blend_color_space:
  * @blend_color_space: Blend color space.
  *
  * Set the gradient blend color space.
@@ -2400,30 +2400,30 @@ gimp_context_get_gradient_blend_color_space (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_blend_color_space (GimpGradientBlendColorSpace blend_color_space)
+ligma_context_set_gradient_blend_color_space (LigmaGradientBlendColorSpace blend_color_space)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE, blend_color_space,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE, blend_color_space,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-blend-color-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-blend-color-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_gradient_repeat_mode:
+ * ligma_context_get_gradient_repeat_mode:
  *
  * Get the gradient repeat mode.
  *
@@ -2433,31 +2433,31 @@ gimp_context_set_gradient_blend_color_space (GimpGradientBlendColorSpace blend_c
  *
  * Since: 2.10
  **/
-GimpRepeatMode
-gimp_context_get_gradient_repeat_mode (void)
+LigmaRepeatMode
+ligma_context_get_gradient_repeat_mode (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpRepeatMode repeat_mode = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaRepeatMode repeat_mode = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-gradient-repeat-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-gradient-repeat-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    repeat_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    repeat_mode = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return repeat_mode;
 }
 
 /**
- * gimp_context_set_gradient_repeat_mode:
+ * ligma_context_set_gradient_repeat_mode:
  * @repeat_mode: Repeat mode.
  *
  * Set the gradient repeat mode.
@@ -2469,30 +2469,30 @@ gimp_context_get_gradient_repeat_mode (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_repeat_mode (GimpRepeatMode repeat_mode)
+ligma_context_set_gradient_repeat_mode (LigmaRepeatMode repeat_mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_REPEAT_MODE, repeat_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_REPEAT_MODE, repeat_mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-repeat-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-repeat-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_gradient_reverse:
+ * ligma_context_get_gradient_reverse:
  *
  * Get the gradient reverse setting.
  *
@@ -2504,30 +2504,30 @@ gimp_context_set_gradient_repeat_mode (GimpRepeatMode repeat_mode)
  * Since: 2.10
  **/
 gboolean
-gimp_context_get_gradient_reverse (void)
+ligma_context_get_gradient_reverse (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean reverse = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-gradient-reverse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-gradient-reverse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    reverse = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    reverse = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return reverse;
 }
 
 /**
- * gimp_context_set_gradient_reverse:
+ * ligma_context_set_gradient_reverse:
  * @reverse: Reverse.
  *
  * Set the gradient reverse setting.
@@ -2540,30 +2540,30 @@ gimp_context_get_gradient_reverse (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_gradient_reverse (gboolean reverse)
+ligma_context_set_gradient_reverse (gboolean reverse)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, reverse,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-gradient-reverse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-gradient-reverse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_palette:
+ * ligma_context_get_palette:
  *
  * Retrieve the currently active palette.
  *
@@ -2575,30 +2575,30 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  * Since: 2.2
  **/
 gchar *
-gimp_context_get_palette (void)
+ligma_context_get_palette (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-palette",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-palette",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_palette:
+ * ligma_context_set_palette:
  * @name: The name of the palette.
  *
  * Set the specified palette as the active palette.
@@ -2615,30 +2615,30 @@ gimp_context_get_palette (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_palette (const gchar *name)
+ligma_context_set_palette (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-palette",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-palette",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_font:
+ * ligma_context_get_font:
  *
  * Retrieve the currently active font.
  *
@@ -2650,30 +2650,30 @@ gimp_context_set_palette (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_context_get_font (void)
+ligma_context_get_font (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-font",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-font",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_context_set_font:
+ * ligma_context_set_font:
  * @name: The name of the font.
  *
  * Set the specified font as the active font.
@@ -2689,30 +2689,30 @@ gimp_context_get_font (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_font (const gchar *name)
+ligma_context_set_font (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-font",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-font",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_antialias:
+ * ligma_context_get_antialias:
  *
  * Get the antialias setting.
  *
@@ -2723,30 +2723,30 @@ gimp_context_set_font (const gchar *name)
  * Since: 2.8
  **/
 gboolean
-gimp_context_get_antialias (void)
+ligma_context_get_antialias (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean antialias = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-antialias",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-antialias",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    antialias = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    antialias = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return antialias;
 }
 
 /**
- * gimp_context_set_antialias:
+ * ligma_context_set_antialias:
  * @antialias: The antialias setting.
  *
  * Set the antialias setting.
@@ -2758,41 +2758,41 @@ gimp_context_get_antialias (void)
  * selection is wanted.
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
- * gimp_image_select_polygon(), gimp_image_select_item(),
- * gimp_drawable_edit_bucket_fill(), gimp_drawable_edit_stroke_item(),
- * gimp_drawable_edit_stroke_selection().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_image_select_round_rectangle(), ligma_image_select_ellipse(),
+ * ligma_image_select_polygon(), ligma_image_select_item(),
+ * ligma_drawable_edit_bucket_fill(), ligma_drawable_edit_stroke_item(),
+ * ligma_drawable_edit_stroke_selection().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_antialias (gboolean antialias)
+ligma_context_set_antialias (gboolean antialias)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-antialias",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-antialias",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_feather:
+ * ligma_context_get_feather:
  *
  * Get the feather setting.
  *
@@ -2803,30 +2803,30 @@ gimp_context_set_antialias (gboolean antialias)
  * Since: 2.8
  **/
 gboolean
-gimp_context_get_feather (void)
+ligma_context_get_feather (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean feather = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-feather",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-feather",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    feather = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    feather = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return feather;
 }
 
 /**
- * gimp_context_set_feather:
+ * ligma_context_set_feather:
  * @feather: The feather setting.
  *
  * Set the feather setting.
@@ -2834,43 +2834,43 @@ gimp_context_get_feather (void)
  * This procedure modifies the feather setting. If the feather option
  * is enabled, selections will be blurred before combining. The blur is
  * a gaussian blur; its radii can be controlled using
- * gimp_context_set_feather_radius().
+ * ligma_context_set_feather_radius().
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_image_select_rectangle(), gimp_image_select_round_rectangle(),
- * gimp_image_select_ellipse(), gimp_image_select_polygon(),
- * gimp_image_select_item().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_image_select_rectangle(), ligma_image_select_round_rectangle(),
+ * ligma_image_select_ellipse(), ligma_image_select_polygon(),
+ * ligma_image_select_item().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_feather (gboolean feather)
+ligma_context_set_feather (gboolean feather)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, feather,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-feather",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-feather",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_feather_radius:
+ * ligma_context_get_feather_radius:
  * @feather_radius_x: (out): The horizontal feather radius.
  * @feather_radius_y: (out): The vertical feather radius.
  *
@@ -2883,39 +2883,39 @@ gimp_context_set_feather (gboolean feather)
  * Since: 2.8
  **/
 gboolean
-gimp_context_get_feather_radius (gdouble *feather_radius_x,
+ligma_context_get_feather_radius (gdouble *feather_radius_x,
                                  gdouble *feather_radius_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-feather-radius",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-feather-radius",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *feather_radius_x = 0.0;
   *feather_radius_y = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *feather_radius_x = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *feather_radius_y = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *feather_radius_x = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *feather_radius_y = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_set_feather_radius:
+ * ligma_context_set_feather_radius:
  * @feather_radius_x: The horizontal feather radius.
  * @feather_radius_y: The vertical feather radius.
  *
@@ -2924,39 +2924,39 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  * This procedure modifies the feather radius setting.
  *
  * This setting affects all procedures that are affected by
- * gimp_context_set_feather().
+ * ligma_context_set_feather().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_feather_radius (gdouble feather_radius_x,
+ligma_context_set_feather_radius (gdouble feather_radius_x,
                                  gdouble feather_radius_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, feather_radius_x,
                                           G_TYPE_DOUBLE, feather_radius_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-feather-radius",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-feather-radius",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_sample_merged:
+ * ligma_context_get_sample_merged:
  *
  * Get the sample merged setting.
  *
@@ -2967,30 +2967,30 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
  * Since: 2.8
  **/
 gboolean
-gimp_context_get_sample_merged (void)
+ligma_context_get_sample_merged (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean sample_merged = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-sample-merged",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-sample-merged",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_merged = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_merged = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_merged;
 }
 
 /**
- * gimp_context_set_sample_merged:
+ * ligma_context_set_sample_merged:
  * @sample_merged: The sample merged setting.
  *
  * Set the sample merged setting.
@@ -3004,38 +3004,38 @@ gimp_context_get_sample_merged (void)
  * layers).
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_drawable_edit_bucket_fill().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_sample_merged (gboolean sample_merged)
+ligma_context_set_sample_merged (gboolean sample_merged)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, sample_merged,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-sample-merged",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-sample-merged",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_sample_criterion:
+ * ligma_context_get_sample_criterion:
  *
  * Get the sample criterion setting.
  *
@@ -3045,31 +3045,31 @@ gimp_context_set_sample_merged (gboolean sample_merged)
  *
  * Since: 2.8
  **/
-GimpSelectCriterion
-gimp_context_get_sample_criterion (void)
+LigmaSelectCriterion
+ligma_context_get_sample_criterion (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpSelectCriterion sample_criterion = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaSelectCriterion sample_criterion = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-sample-criterion",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-sample-criterion",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_criterion = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_criterion = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_criterion;
 }
 
 /**
- * gimp_context_set_sample_criterion:
+ * ligma_context_set_sample_criterion:
  * @sample_criterion: The sample criterion setting.
  *
  * Set the sample criterion setting.
@@ -3081,38 +3081,38 @@ gimp_context_get_sample_criterion (void)
  * value.
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_drawable_edit_bucket_fill().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
+ligma_context_set_sample_criterion (LigmaSelectCriterion sample_criterion)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_SELECT_CRITERION, sample_criterion,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_SELECT_CRITERION, sample_criterion,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-sample-criterion",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-sample-criterion",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_sample_threshold:
+ * ligma_context_get_sample_threshold:
  *
  * Get the sample threshold setting.
  *
@@ -3123,30 +3123,30 @@ gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_sample_threshold (void)
+ligma_context_get_sample_threshold (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble sample_threshold = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-sample-threshold",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-sample-threshold",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_threshold = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_threshold = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_threshold;
 }
 
 /**
- * gimp_context_set_sample_threshold:
+ * ligma_context_set_sample_threshold:
  * @sample_threshold: The sample threshold setting.
  *
  * Set the sample threshold setting.
@@ -3156,112 +3156,112 @@ gimp_context_get_sample_threshold (void)
  * like when doing a seed fill, this setting controls what is
  * \"sufficiently close\" to be considered a similar color. If the
  * sample threshold has not been set explicitly, the default threshold
- * set in gimprc will be used.
+ * set in ligmarc will be used.
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_drawable_edit_bucket_fill().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_sample_threshold (gdouble sample_threshold)
+ligma_context_set_sample_threshold (gdouble sample_threshold)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, sample_threshold,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-sample-threshold",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-sample-threshold",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_sample_threshold_int:
+ * ligma_context_get_sample_threshold_int:
  *
  * Get the sample threshold setting as an integer value.
  *
  * This procedure returns the sample threshold setting as an integer
- * value. See gimp_context_get_sample_threshold().
+ * value. See ligma_context_get_sample_threshold().
  *
  * Returns: The sample threshold setting.
  *
  * Since: 2.8
  **/
 gint
-gimp_context_get_sample_threshold_int (void)
+ligma_context_get_sample_threshold_int (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint sample_threshold = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-sample-threshold-int",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-sample-threshold-int",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_threshold = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_threshold = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_threshold;
 }
 
 /**
- * gimp_context_set_sample_threshold_int:
+ * ligma_context_set_sample_threshold_int:
  * @sample_threshold: The sample threshold setting.
  *
  * Set the sample threshold setting as an integer value.
  *
  * This procedure modifies the sample threshold setting as an integer
- * value. See gimp_context_set_sample_threshold().
+ * value. See ligma_context_set_sample_threshold().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_sample_threshold_int (gint sample_threshold)
+ligma_context_set_sample_threshold_int (gint sample_threshold)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, sample_threshold,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-sample-threshold-int",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-sample-threshold-int",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_sample_transparent:
+ * ligma_context_get_sample_transparent:
  *
  * Get the sample transparent setting.
  *
@@ -3272,30 +3272,30 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
  * Since: 2.8
  **/
 gboolean
-gimp_context_get_sample_transparent (void)
+ligma_context_get_sample_transparent (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean sample_transparent = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-sample-transparent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-sample-transparent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_transparent = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_transparent = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_transparent;
 }
 
 /**
- * gimp_context_set_sample_transparent:
+ * ligma_context_set_sample_transparent:
  * @sample_transparent: The sample transparent setting.
  *
  * Set the sample transparent setting.
@@ -3307,38 +3307,38 @@ gimp_context_get_sample_transparent (void)
  * this setting is TRUE, transparent areas can be selected or filled.
  *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color(),
- * gimp_drawable_edit_bucket_fill().
+ * ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ * ligma_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_sample_transparent (gboolean sample_transparent)
+ligma_context_set_sample_transparent (gboolean sample_transparent)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, sample_transparent,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-sample-transparent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-sample-transparent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_diagonal_neighbors:
+ * ligma_context_get_diagonal_neighbors:
  *
  * Get the diagonal neighbors setting.
  *
@@ -3349,30 +3349,30 @@ gimp_context_set_sample_transparent (gboolean sample_transparent)
  * Since: 2.10
  **/
 gboolean
-gimp_context_get_diagonal_neighbors (void)
+ligma_context_get_diagonal_neighbors (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean diagonal_neighbors = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-diagonal-neighbors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-diagonal-neighbors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    diagonal_neighbors = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    diagonal_neighbors = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return diagonal_neighbors;
 }
 
 /**
- * gimp_context_set_diagonal_neighbors:
+ * ligma_context_set_diagonal_neighbors:
  * @diagonal_neighbors: The diagonal neighbors setting.
  *
  * Set the diagonal neighbors setting.
@@ -3385,152 +3385,152 @@ gimp_context_get_diagonal_neighbors (void)
  * orthogonal neighbors of each pixel are considered.
  *
  * This setting affects the following procedures:
- * gimp_image_select_contiguous_color(),
- * gimp_drawable_edit_bucket_fill().
+ * ligma_image_select_contiguous_color(),
+ * ligma_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_diagonal_neighbors (gboolean diagonal_neighbors)
+ligma_context_set_diagonal_neighbors (gboolean diagonal_neighbors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_BOOLEAN, diagonal_neighbors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-diagonal-neighbors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-diagonal-neighbors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_distance_metric:
+ * ligma_context_get_distance_metric:
  *
  * Get the distance metric used in some computations.
  *
  * This procedure returns the distance metric in the current context.
- * See gimp_context_set_distance_metric() to know more about its usage.
+ * See ligma_context_set_distance_metric() to know more about its usage.
  *
  * Returns: The distance metric.
  *
  * Since: 2.10
  **/
 GeglDistanceMetric
-gimp_context_get_distance_metric (void)
+ligma_context_get_distance_metric (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GeglDistanceMetric metric = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-distance-metric",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-distance-metric",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    metric = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    metric = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return metric;
 }
 
 /**
- * gimp_context_set_distance_metric:
+ * ligma_context_set_distance_metric:
  * @metric: The distance metric.
  *
  * Set the distance metric used in some computations.
  *
  * This procedure modifies the distance metric used in some
- * computations, such as gimp_drawable_edit_gradient_fill(). In
+ * computations, such as ligma_drawable_edit_gradient_fill(). In
  * particular, it does not change the metric used in generic distance
  * computation on canvas, as in the Measure tool.
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_gradient_fill().
+ * ligma_drawable_edit_gradient_fill().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_distance_metric (GeglDistanceMetric metric)
+ligma_context_set_distance_metric (GeglDistanceMetric metric)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           GEGL_TYPE_DISTANCE_METRIC, metric,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-distance-metric",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-distance-metric",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_interpolation:
+ * ligma_context_get_interpolation:
  *
  * Get the interpolation type.
  *
  * This procedure returns the interpolation setting. The return value
  * is an integer which corresponds to the values listed in the argument
  * description. If the interpolation has not been set explicitly by
- * gimp_context_set_interpolation(), the default interpolation set in
- * gimprc will be used.
+ * ligma_context_set_interpolation(), the default interpolation set in
+ * ligmarc will be used.
  *
  * Returns: The interpolation type.
  *
  * Since: 2.8
  **/
-GimpInterpolationType
-gimp_context_get_interpolation (void)
+LigmaInterpolationType
+ligma_context_get_interpolation (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpInterpolationType interpolation = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaInterpolationType interpolation = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-interpolation",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-interpolation",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    interpolation = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    interpolation = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return interpolation;
 }
 
 /**
- * gimp_context_set_interpolation:
+ * ligma_context_set_interpolation:
  * @interpolation: The interpolation type.
  *
  * Set the interpolation type.
@@ -3538,41 +3538,41 @@ gimp_context_get_interpolation (void)
  * This procedure modifies the interpolation setting.
  *
  * This setting affects affects the following procedures:
- * gimp_item_transform_flip(), gimp_item_transform_perspective(),
- * gimp_item_transform_rotate(), gimp_item_transform_scale(),
- * gimp_item_transform_shear(), gimp_item_transform_2d(),
- * gimp_item_transform_matrix(), gimp_image_scale(),
- * gimp_layer_scale().
+ * ligma_item_transform_flip(), ligma_item_transform_perspective(),
+ * ligma_item_transform_rotate(), ligma_item_transform_scale(),
+ * ligma_item_transform_shear(), ligma_item_transform_2d(),
+ * ligma_item_transform_matrix(), ligma_image_scale(),
+ * ligma_layer_scale().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_interpolation (GimpInterpolationType interpolation)
+ligma_context_set_interpolation (LigmaInterpolationType interpolation)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INTERPOLATION_TYPE, interpolation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_INTERPOLATION_TYPE, interpolation,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-interpolation",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-interpolation",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_transform_direction:
+ * ligma_context_get_transform_direction:
  *
  * Get the transform direction.
  *
@@ -3584,31 +3584,31 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
  *
  * Since: 2.8
  **/
-GimpTransformDirection
-gimp_context_get_transform_direction (void)
+LigmaTransformDirection
+ligma_context_get_transform_direction (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTransformDirection transform_direction = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTransformDirection transform_direction = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-transform-direction",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-transform-direction",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    transform_direction = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    transform_direction = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return transform_direction;
 }
 
 /**
- * gimp_context_set_transform_direction:
+ * ligma_context_set_transform_direction:
  * @transform_direction: The transform direction.
  *
  * Set the transform direction.
@@ -3616,40 +3616,40 @@ gimp_context_get_transform_direction (void)
  * This procedure modifies the transform direction setting.
  *
  * This setting affects affects the following procedures:
- * gimp_item_transform_flip(), gimp_item_transform_perspective(),
- * gimp_item_transform_rotate(), gimp_item_transform_scale(),
- * gimp_item_transform_shear(), gimp_item_transform_2d(),
- * gimp_item_transform_matrix().
+ * ligma_item_transform_flip(), ligma_item_transform_perspective(),
+ * ligma_item_transform_rotate(), ligma_item_transform_scale(),
+ * ligma_item_transform_shear(), ligma_item_transform_2d(),
+ * ligma_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_transform_direction (GimpTransformDirection transform_direction)
+ligma_context_set_transform_direction (LigmaTransformDirection transform_direction)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TRANSFORM_DIRECTION, transform_direction,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TRANSFORM_DIRECTION, transform_direction,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-transform-direction",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-transform-direction",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_transform_resize:
+ * ligma_context_get_transform_resize:
  *
  * Get the transform resize type.
  *
@@ -3661,31 +3661,31 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
  *
  * Since: 2.8
  **/
-GimpTransformResize
-gimp_context_get_transform_resize (void)
+LigmaTransformResize
+ligma_context_get_transform_resize (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTransformResize transform_resize = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTransformResize transform_resize = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-transform-resize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-transform-resize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    transform_resize = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    transform_resize = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return transform_resize;
 }
 
 /**
- * gimp_context_set_transform_resize:
+ * ligma_context_set_transform_resize:
  * @transform_resize: The transform resize type.
  *
  * Set the transform resize type.
@@ -3696,41 +3696,41 @@ gimp_context_get_transform_resize (void)
  * the resulting area is sized.
  *
  * This setting affects affects the following procedures:
- * gimp_item_transform_flip(), gimp_item_transform_flip_simple(),
- * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
- * gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
- * gimp_item_transform_shear(), gimp_item_transform_2d(),
- * gimp_item_transform_matrix().
+ * ligma_item_transform_flip(), ligma_item_transform_flip_simple(),
+ * ligma_item_transform_perspective(), ligma_item_transform_rotate(),
+ * ligma_item_transform_rotate_simple(), ligma_item_transform_scale(),
+ * ligma_item_transform_shear(), ligma_item_transform_2d(),
+ * ligma_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_transform_resize (GimpTransformResize transform_resize)
+ligma_context_set_transform_resize (LigmaTransformResize transform_resize)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TRANSFORM_RESIZE, transform_resize,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TRANSFORM_RESIZE, transform_resize,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-transform-resize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-transform-resize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_size:
+ * ligma_context_get_ink_size:
  *
  * Get ink blob size in pixels.
  *
@@ -3741,30 +3741,30 @@ gimp_context_set_transform_resize (GimpTransformResize transform_resize)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_size (void)
+ligma_context_get_ink_size (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    size = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return size;
 }
 
 /**
- * gimp_context_set_ink_size:
+ * ligma_context_set_ink_size:
  * @size: ink blob size in pixels.
  *
  * Set ink blob size in pixels.
@@ -3776,30 +3776,30 @@ gimp_context_get_ink_size (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_size (gdouble size)
+ligma_context_set_ink_size (gdouble size)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, size,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_angle:
+ * ligma_context_get_ink_angle:
  *
  * Get ink angle in degrees.
  *
@@ -3810,30 +3810,30 @@ gimp_context_set_ink_size (gdouble size)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_angle (void)
+ligma_context_get_ink_angle (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    angle = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return angle;
 }
 
 /**
- * gimp_context_set_ink_angle:
+ * ligma_context_set_ink_angle:
  * @angle: ink angle in degrees.
  *
  * Set ink angle in degrees.
@@ -3845,30 +3845,30 @@ gimp_context_get_ink_angle (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_angle (gdouble angle)
+ligma_context_set_ink_angle (gdouble angle)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_size_sensitivity:
+ * ligma_context_get_ink_size_sensitivity:
  *
  * Get ink size sensitivity.
  *
@@ -3879,30 +3879,30 @@ gimp_context_set_ink_angle (gdouble angle)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_size_sensitivity (void)
+ligma_context_get_ink_size_sensitivity (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble size = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-size-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-size-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    size = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return size;
 }
 
 /**
- * gimp_context_set_ink_size_sensitivity:
+ * ligma_context_set_ink_size_sensitivity:
  * @size: ink size sensitivity.
  *
  * Set ink size sensitivity.
@@ -3914,30 +3914,30 @@ gimp_context_get_ink_size_sensitivity (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_size_sensitivity (gdouble size)
+ligma_context_set_ink_size_sensitivity (gdouble size)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, size,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-size-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-size-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_tilt_sensitivity:
+ * ligma_context_get_ink_tilt_sensitivity:
  *
  * Get ink tilt sensitivity.
  *
@@ -3948,30 +3948,30 @@ gimp_context_set_ink_size_sensitivity (gdouble size)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_tilt_sensitivity (void)
+ligma_context_get_ink_tilt_sensitivity (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble tilt = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-tilt-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-tilt-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    tilt = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    tilt = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return tilt;
 }
 
 /**
- * gimp_context_set_ink_tilt_sensitivity:
+ * ligma_context_set_ink_tilt_sensitivity:
  * @tilt: ink tilt sensitivity.
  *
  * Set ink tilt sensitivity.
@@ -3983,30 +3983,30 @@ gimp_context_get_ink_tilt_sensitivity (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
+ligma_context_set_ink_tilt_sensitivity (gdouble tilt)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, tilt,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-tilt-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-tilt-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_speed_sensitivity:
+ * ligma_context_get_ink_speed_sensitivity:
  *
  * Get ink speed sensitivity.
  *
@@ -4017,30 +4017,30 @@ gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_speed_sensitivity (void)
+ligma_context_get_ink_speed_sensitivity (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble speed = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-speed-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-speed-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    speed = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    speed = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return speed;
 }
 
 /**
- * gimp_context_set_ink_speed_sensitivity:
+ * ligma_context_set_ink_speed_sensitivity:
  * @speed: ink speed sensitivity.
  *
  * Set ink speed sensitivity.
@@ -4052,30 +4052,30 @@ gimp_context_get_ink_speed_sensitivity (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_speed_sensitivity (gdouble speed)
+ligma_context_set_ink_speed_sensitivity (gdouble speed)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, speed,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-speed-sensitivity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-speed-sensitivity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_blob_type:
+ * ligma_context_get_ink_blob_type:
  *
  * Get ink blob type.
  *
@@ -4085,31 +4085,31 @@ gimp_context_set_ink_speed_sensitivity (gdouble speed)
  *
  * Since: 2.8
  **/
-GimpInkBlobType
-gimp_context_get_ink_blob_type (void)
+LigmaInkBlobType
+ligma_context_get_ink_blob_type (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpInkBlobType type = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaInkBlobType type = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-blob-type",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-blob-type",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    type = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return type;
 }
 
 /**
- * gimp_context_set_ink_blob_type:
+ * ligma_context_set_ink_blob_type:
  * @type: Ink blob type.
  *
  * Set ink blob type.
@@ -4121,30 +4121,30 @@ gimp_context_get_ink_blob_type (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_blob_type (GimpInkBlobType type)
+ligma_context_set_ink_blob_type (LigmaInkBlobType type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INK_BLOB_TYPE, type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_INK_BLOB_TYPE, type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-blob-type",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-blob-type",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_blob_aspect_ratio:
+ * ligma_context_get_ink_blob_aspect_ratio:
  *
  * Get ink blob aspect ratio.
  *
@@ -4155,30 +4155,30 @@ gimp_context_set_ink_blob_type (GimpInkBlobType type)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_blob_aspect_ratio (void)
+ligma_context_get_ink_blob_aspect_ratio (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble aspect = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-blob-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-blob-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    aspect = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return aspect;
 }
 
 /**
- * gimp_context_set_ink_blob_aspect_ratio:
+ * ligma_context_set_ink_blob_aspect_ratio:
  * @aspect: ink blob aspect ratio.
  *
  * Set ink blob aspect ratio.
@@ -4190,30 +4190,30 @@ gimp_context_get_ink_blob_aspect_ratio (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
+ligma_context_set_ink_blob_aspect_ratio (gdouble aspect)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, aspect,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-blob-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-blob-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_context_get_ink_blob_angle:
+ * ligma_context_get_ink_blob_angle:
  *
  * Get ink blob angle in degrees.
  *
@@ -4224,30 +4224,30 @@ gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
  * Since: 2.8
  **/
 gdouble
-gimp_context_get_ink_blob_angle (void)
+ligma_context_get_ink_blob_angle (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-get-ink-blob-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-get-ink-blob-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    angle = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return angle;
 }
 
 /**
- * gimp_context_set_ink_blob_angle:
+ * ligma_context_set_ink_blob_angle:
  * @angle: ink blob angle in degrees.
  *
  * Set ink blob angle in degrees.
@@ -4259,24 +4259,24 @@ gimp_context_get_ink_blob_angle (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_ink_blob_angle (gdouble angle)
+ligma_context_set_ink_blob_angle (gdouble angle)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-context-set-ink-blob-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-context-set-ink-blob-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

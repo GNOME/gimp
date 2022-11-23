@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,39 +27,39 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable-operation.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage-crop.h"
-#include "core/gimpimage-resize.h"
-#include "core/gimpimage-rotate.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppickable-auto-shrink.h"
-#include "core/gimppickable.h"
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "config/ligmacoreconfig.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable-operation.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage-crop.h"
+#include "core/ligmaimage-resize.h"
+#include "core/ligmaimage-rotate.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapickable-auto-shrink.h"
+#include "core/ligmapickable.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimppdb.h"
-#include "gimppdberror.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdberror.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static GeglNode *
@@ -74,7 +74,7 @@ wrap_in_graph (GeglNode *node)
   gegl_node_add_child (new_node, node);
   g_object_unref (node);
 
-  gimp_gegl_node_set_underlying_operation (new_node, node);
+  ligma_gegl_node_set_underlying_operation (new_node, node);
 
   input  = gegl_node_get_input_proxy  (new_node, "input");
   output = gegl_node_get_output_proxy (new_node, "output");
@@ -89,12 +89,12 @@ wrap_in_graph (GeglNode *node)
 
 static GeglNode *
 wrap_in_selection_bounds (GeglNode     *node,
-                          GimpDrawable *drawable)
+                          LigmaDrawable *drawable)
 {
   gint x, y;
   gint width, height;
 
-  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+  if (ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                 &x, &y, &width, &height))
     {
       GeglNode *new_node;
@@ -109,7 +109,7 @@ wrap_in_selection_bounds (GeglNode     *node,
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
 
-      gimp_gegl_node_set_underlying_operation (new_node, node);
+      ligma_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
@@ -148,9 +148,9 @@ wrap_in_selection_bounds (GeglNode     *node,
 
 static GeglNode *
 wrap_in_gamma_cast (GeglNode     *node,
-                    GimpDrawable *drawable)
+                    LigmaDrawable *drawable)
 {
-  if (gimp_drawable_get_trc (drawable) != GIMP_TRC_LINEAR)
+  if (ligma_drawable_get_trc (drawable) != LIGMA_TRC_LINEAR)
     {
       const Babl *drawable_format;
       const Babl *cast_format;
@@ -160,12 +160,12 @@ wrap_in_gamma_cast (GeglNode     *node,
       GeglNode   *cast_before;
       GeglNode   *cast_after;
 
-      drawable_format = gimp_drawable_get_format (drawable);
+      drawable_format = ligma_drawable_get_format (drawable);
 
       cast_format =
-        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
-                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               GIMP_TRC_LINEAR),
+        ligma_babl_format (ligma_babl_format_get_base_type (drawable_format),
+                          ligma_babl_precision (ligma_babl_format_get_component_type (drawable_format),
+                                               LIGMA_TRC_LINEAR),
                           babl_format_has_alpha (drawable_format),
                           babl_format_get_space (drawable_format));
 
@@ -174,7 +174,7 @@ wrap_in_gamma_cast (GeglNode     *node,
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
 
-      gimp_gegl_node_set_underlying_operation (new_node, node);
+      ligma_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
@@ -207,12 +207,12 @@ wrap_in_gamma_cast (GeglNode     *node,
 
 static GeglNode *
 create_buffer_source_node (GeglNode     *parent,
-                           GimpDrawable *drawable)
+                           LigmaDrawable *drawable)
 {
   GeglNode   *new_node;
   GeglBuffer *buffer;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   g_object_ref (buffer);
   new_node = gegl_node_new_child (parent,
                                   "operation", "gegl:buffer-source",
@@ -223,8 +223,8 @@ create_buffer_source_node (GeglNode     *parent,
 }
 
 static gboolean
-bump_map (GimpDrawable *drawable,
-          GimpDrawable *bump_map,
+bump_map (LigmaDrawable *drawable,
+          LigmaDrawable *bump_map,
           gdouble       azimuth,
           gdouble       elevation,
           gint          depth,
@@ -236,12 +236,12 @@ bump_map (GimpDrawable *drawable,
           gboolean      invert,
           gint          type,
           gboolean      tiled,
-          GimpProgress  *progress,
+          LigmaProgress  *progress,
           GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *graph;
       GeglNode *node;
@@ -268,7 +268,7 @@ bump_map (GimpDrawable *drawable,
 
       gegl_node_connect_to (src_node, "output", node, "aux");
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Bump Map"),
                                      graph);
       g_object_unref (graph);
@@ -280,21 +280,21 @@ bump_map (GimpDrawable *drawable,
 }
 
 static gboolean
-displace (GimpDrawable  *drawable,
+displace (LigmaDrawable  *drawable,
           gdouble        amount_x,
           gdouble        amount_y,
           gboolean       do_x,
           gboolean       do_y,
-          GimpDrawable  *displace_map_x,
-          GimpDrawable  *displace_map_y,
+          LigmaDrawable  *displace_map_x,
+          LigmaDrawable  *displace_map_y,
           gint           displace_type,
           gint           displace_mode,
-          GimpProgress  *progress,
+          LigmaProgress  *progress,
           GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       if (do_x || do_y)
         {
@@ -340,7 +340,7 @@ displace (GimpDrawable  *drawable,
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Displace"),
                                          graph);
           g_object_unref (graph);
@@ -353,15 +353,15 @@ displace (GimpDrawable  *drawable,
 }
 
 static gboolean
-gaussian_blur (GimpDrawable  *drawable,
+gaussian_blur (LigmaDrawable  *drawable,
                gdouble        horizontal,
                gdouble        vertical,
-               GimpProgress  *progress,
+               LigmaProgress  *progress,
                GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -374,7 +374,7 @@ gaussian_blur (GimpDrawable  *drawable,
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Gaussian Blur"),
                                      node);
       g_object_unref (node);
@@ -426,16 +426,16 @@ newsprint_angle (gdouble angle)
   return angle;
 }
 
-static GimpValueArray *
-plug_in_alienmap2_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_alienmap2_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble redfrequency;
   gdouble redangle;
   gdouble greenfrequency;
@@ -447,23 +447,23 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   guchar greenmode;
   guchar bluemode;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  redfrequency = g_value_get_double (gimp_value_array_index (args, 3));
-  redangle = g_value_get_double (gimp_value_array_index (args, 4));
-  greenfrequency = g_value_get_double (gimp_value_array_index (args, 5));
-  greenangle = g_value_get_double (gimp_value_array_index (args, 6));
-  bluefrequency = g_value_get_double (gimp_value_array_index (args, 7));
-  blueangle = g_value_get_double (gimp_value_array_index (args, 8));
-  colormodel = g_value_get_uchar (gimp_value_array_index (args, 9));
-  redmode = g_value_get_uchar (gimp_value_array_index (args, 10));
-  greenmode = g_value_get_uchar (gimp_value_array_index (args, 11));
-  bluemode = g_value_get_uchar (gimp_value_array_index (args, 12));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  redfrequency = g_value_get_double (ligma_value_array_index (args, 3));
+  redangle = g_value_get_double (ligma_value_array_index (args, 4));
+  greenfrequency = g_value_get_double (ligma_value_array_index (args, 5));
+  greenangle = g_value_get_double (ligma_value_array_index (args, 6));
+  bluefrequency = g_value_get_double (ligma_value_array_index (args, 7));
+  blueangle = g_value_get_double (ligma_value_array_index (args, 8));
+  colormodel = g_value_get_uchar (ligma_value_array_index (args, 9));
+  redmode = g_value_get_uchar (ligma_value_array_index (args, 10));
+  greenmode = g_value_get_uchar (ligma_value_array_index (args, 11));
+  bluemode = g_value_get_uchar (ligma_value_array_index (args, 12));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -480,7 +480,7 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
                                  "cpn-3-keep",       (gboolean) !bluemode,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Alien Map"),
                                          node);
           g_object_unref (node);
@@ -489,35 +489,35 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_antialias_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_antialias_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:antialias",
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Antialias"),
                                          node);
           g_object_unref (node);
@@ -526,32 +526,32 @@ plug_in_antialias_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_apply_canvas_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint direction;
   gint depth;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  direction = g_value_get_int (gimp_value_array_index (args, 3));
-  depth = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  direction = g_value_get_int (ligma_value_array_index (args, 3));
+  depth = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -560,7 +560,7 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
                                  "depth",     depth,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Apply Canvas"),
                                          node);
           g_object_unref (node);
@@ -569,45 +569,45 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_applylens_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_applylens_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble refraction;
   gboolean keep_surroundings;
   gboolean set_background;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  refraction = g_value_get_double (gimp_value_array_index (args, 3));
-  keep_surroundings = g_value_get_boolean (gimp_value_array_index (args, 4));
-  set_background = g_value_get_boolean (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  refraction = g_value_get_double (ligma_value_array_index (args, 3));
+  keep_surroundings = g_value_get_boolean (ligma_value_array_index (args, 4));
+  set_background = g_value_get_boolean (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpRGB    color;
+          LigmaRGB    color;
           GeglColor *gegl_color;
           GeglNode  *node;
 
           if (set_background)
-            gimp_context_get_background (context, &color);
+            ligma_context_get_background (context, &color);
           else
-            gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+            ligma_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
 
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+          gegl_color = ligma_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                      "operation",         "gegl:apply-lens",
@@ -620,7 +620,7 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_selection_bounds (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Apply Lens"),
                                          node);
           g_object_unref (node);
@@ -629,115 +629,115 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_autocrop_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_autocrop_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
+  LigmaImage *image;
+  LigmaDrawable *drawable;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error))
         {
           gint x, y, width, height;
           gint off_x, off_y;
 
-          gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+          ligma_pickable_auto_shrink (LIGMA_PICKABLE (drawable),
                                      0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable)),
+                                     ligma_item_get_width  (LIGMA_ITEM (drawable)),
+                                     ligma_item_get_height (LIGMA_ITEM (drawable)),
                                      &x, &y, &width, &height);
 
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
           x += off_x;
           y += off_y;
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+          ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_RESIZE,
                                        _("Autocrop image"));
 
           if (x          < 0                             ||
               y          < 0                             ||
-              x + width  > gimp_image_get_width  (image) ||
-              y + height > gimp_image_get_height (image))
+              x + width  > ligma_image_get_width  (image) ||
+              y + height > ligma_image_get_height (image))
             {
               /*
                * partially outside the image area, we need to
                * resize the image to be able to crop properly.
                */
-              gimp_image_resize (image, context, width, height, -x, -y, NULL);
+              ligma_image_resize (image, context, width, height, -x, -y, NULL);
 
               x = y = 0;
             }
 
-          gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+          ligma_image_crop (image, context, LIGMA_FILL_TRANSPARENT,
                            x, y, width, height, TRUE);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_autocrop_layer_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
+  LigmaImage *image;
+  LigmaDrawable *drawable;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error))
         {
-          GList *layers = gimp_image_get_selected_layers (image);
+          GList *layers = ligma_image_get_selected_layers (image);
           GList *iter;
           gint   x, y, width, height;
 
           if (layers)
             {
-              switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+              switch (ligma_pickable_auto_shrink (LIGMA_PICKABLE (drawable),
                                                  0, 0,
-                                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                                 gimp_item_get_height (GIMP_ITEM (drawable)),
+                                                 ligma_item_get_width  (LIGMA_ITEM (drawable)),
+                                                 ligma_item_get_height (LIGMA_ITEM (drawable)),
                                                  &x, &y, &width, &height))
                 {
-                case GIMP_AUTO_SHRINK_SHRINK:
-                  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                case LIGMA_AUTO_SHRINK_SHRINK:
+                  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_RESIZE,
                                                _("Autocrop layer"));
 
                   for (iter = layers; iter; iter = iter->next)
-                      gimp_item_resize (GIMP_ITEM (iter->data),
-                                        context, GIMP_FILL_TRANSPARENT,
+                      ligma_item_resize (LIGMA_ITEM (iter->data),
+                                        context, LIGMA_FILL_TRANSPARENT,
                                         width, height, -x, -y);
 
-                  gimp_image_undo_group_end (image);
+                  ligma_image_undo_group_end (image);
                   break;
 
                 default:
@@ -755,35 +755,35 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_autostretch_hsv_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_autostretch_hsv_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation",   "gegl:stretch-contrast-hsv",
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Stretch Contrast HSV"),
                                          node);
           g_object_unref (node);
@@ -792,21 +792,21 @@ plug_in_autostretch_hsv_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_bump_map_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_bump_map_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpDrawable *bumpmap;
+  LigmaDrawable *drawable;
+  LigmaDrawable *bumpmap;
   gdouble azimuth;
   gdouble elevation;
   gint depth;
@@ -818,18 +818,18 @@ plug_in_bump_map_invoker (GimpProcedure         *procedure,
   gboolean invert;
   gint type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  bumpmap = g_value_get_object (gimp_value_array_index (args, 3));
-  azimuth = g_value_get_double (gimp_value_array_index (args, 4));
-  elevation = g_value_get_double (gimp_value_array_index (args, 5));
-  depth = g_value_get_int (gimp_value_array_index (args, 6));
-  xofs = g_value_get_int (gimp_value_array_index (args, 7));
-  yofs = g_value_get_int (gimp_value_array_index (args, 8));
-  waterlevel = g_value_get_double (gimp_value_array_index (args, 9));
-  ambient = g_value_get_double (gimp_value_array_index (args, 10));
-  compensate = g_value_get_boolean (gimp_value_array_index (args, 11));
-  invert = g_value_get_boolean (gimp_value_array_index (args, 12));
-  type = g_value_get_int (gimp_value_array_index (args, 13));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  bumpmap = g_value_get_object (ligma_value_array_index (args, 3));
+  azimuth = g_value_get_double (ligma_value_array_index (args, 4));
+  elevation = g_value_get_double (ligma_value_array_index (args, 5));
+  depth = g_value_get_int (ligma_value_array_index (args, 6));
+  xofs = g_value_get_int (ligma_value_array_index (args, 7));
+  yofs = g_value_get_int (ligma_value_array_index (args, 8));
+  waterlevel = g_value_get_double (ligma_value_array_index (args, 9));
+  ambient = g_value_get_double (ligma_value_array_index (args, 10));
+  compensate = g_value_get_boolean (ligma_value_array_index (args, 11));
+  invert = g_value_get_boolean (ligma_value_array_index (args, 12));
+  type = g_value_get_int (ligma_value_array_index (args, 13));
 
   if (success)
     {
@@ -850,21 +850,21 @@ plug_in_bump_map_invoker (GimpProcedure         *procedure,
                           error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_bump_map_tiled_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpDrawable *bumpmap;
+  LigmaDrawable *drawable;
+  LigmaDrawable *bumpmap;
   gdouble azimuth;
   gdouble elevation;
   gint depth;
@@ -876,18 +876,18 @@ plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
   gboolean invert;
   gint type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  bumpmap = g_value_get_object (gimp_value_array_index (args, 3));
-  azimuth = g_value_get_double (gimp_value_array_index (args, 4));
-  elevation = g_value_get_double (gimp_value_array_index (args, 5));
-  depth = g_value_get_int (gimp_value_array_index (args, 6));
-  xofs = g_value_get_int (gimp_value_array_index (args, 7));
-  yofs = g_value_get_int (gimp_value_array_index (args, 8));
-  waterlevel = g_value_get_double (gimp_value_array_index (args, 9));
-  ambient = g_value_get_double (gimp_value_array_index (args, 10));
-  compensate = g_value_get_boolean (gimp_value_array_index (args, 11));
-  invert = g_value_get_boolean (gimp_value_array_index (args, 12));
-  type = g_value_get_int (gimp_value_array_index (args, 13));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  bumpmap = g_value_get_object (ligma_value_array_index (args, 3));
+  azimuth = g_value_get_double (ligma_value_array_index (args, 4));
+  elevation = g_value_get_double (ligma_value_array_index (args, 5));
+  depth = g_value_get_int (ligma_value_array_index (args, 6));
+  xofs = g_value_get_int (ligma_value_array_index (args, 7));
+  yofs = g_value_get_int (ligma_value_array_index (args, 8));
+  waterlevel = g_value_get_double (ligma_value_array_index (args, 9));
+  ambient = g_value_get_double (ligma_value_array_index (args, 10));
+  compensate = g_value_get_boolean (ligma_value_array_index (args, 11));
+  invert = g_value_get_boolean (ligma_value_array_index (args, 12));
+  type = g_value_get_int (ligma_value_array_index (args, 13));
 
   if (success)
     {
@@ -908,28 +908,28 @@ plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
                           error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_c_astretch_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_c_astretch_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -937,7 +937,7 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
                                  "keep-colors", (gboolean) FALSE,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Stretch Contrast"),
                                          node);
           g_object_unref (node);
@@ -946,32 +946,32 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_cartoon_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_cartoon_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble mask_radius;
   gdouble pct_black;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
-  pct_black = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  mask_radius = g_value_get_double (ligma_value_array_index (args, 3));
+  pct_black = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -980,7 +980,7 @@ plug_in_cartoon_invoker (GimpProcedure         *procedure,
                                  "pct-black",   pct_black,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Cartoon"),
                                          node);
           g_object_unref (node);
@@ -989,20 +989,20 @@ plug_in_cartoon_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_colors_channel_mixer_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint monochrome;
   gdouble rr_gain;
   gdouble rg_gain;
@@ -1014,23 +1014,23 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
   gdouble bg_gain;
   gdouble bb_gain;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  monochrome = g_value_get_int (gimp_value_array_index (args, 3));
-  rr_gain = g_value_get_double (gimp_value_array_index (args, 4));
-  rg_gain = g_value_get_double (gimp_value_array_index (args, 5));
-  rb_gain = g_value_get_double (gimp_value_array_index (args, 6));
-  gr_gain = g_value_get_double (gimp_value_array_index (args, 7));
-  gg_gain = g_value_get_double (gimp_value_array_index (args, 8));
-  gb_gain = g_value_get_double (gimp_value_array_index (args, 9));
-  br_gain = g_value_get_double (gimp_value_array_index (args, 10));
-  bg_gain = g_value_get_double (gimp_value_array_index (args, 11));
-  bb_gain = g_value_get_double (gimp_value_array_index (args, 12));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  monochrome = g_value_get_int (ligma_value_array_index (args, 3));
+  rr_gain = g_value_get_double (ligma_value_array_index (args, 4));
+  rg_gain = g_value_get_double (ligma_value_array_index (args, 5));
+  rb_gain = g_value_get_double (ligma_value_array_index (args, 6));
+  gr_gain = g_value_get_double (ligma_value_array_index (args, 7));
+  gg_gain = g_value_get_double (ligma_value_array_index (args, 8));
+  gb_gain = g_value_get_double (ligma_value_array_index (args, 9));
+  br_gain = g_value_get_double (ligma_value_array_index (args, 10));
+  bg_gain = g_value_get_double (ligma_value_array_index (args, 11));
+  bb_gain = g_value_get_double (ligma_value_array_index (args, 12));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node = NULL;
 
@@ -1059,7 +1059,7 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
                                             NULL);
              }
 
-           gimp_drawable_apply_operation (drawable, progress,
+           ligma_drawable_apply_operation (drawable, progress,
                                           C_("undo-type", "Channel Mixer"),
                                           node);
            g_object_unref (node);
@@ -1068,32 +1068,32 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_colortoalpha_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpRGB color;
+  LigmaDrawable *drawable;
+  LigmaRGB color;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  ligma_value_get_rgb (ligma_value_array_index (args, 3), &color);
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
+          GeglColor *gegl_color = ligma_gegl_color_new (&color, NULL);
           GeglNode  *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:color-to-alpha",
@@ -1101,7 +1101,7 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
                                  NULL);
           g_object_unref (gegl_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Color to Alpha"),
                                          node);
           g_object_unref (node);
@@ -1110,20 +1110,20 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_convmatrix_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_convmatrix_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint argc_matrix;
   const gdouble *matrix;
   gboolean alpha_alg;
@@ -1133,21 +1133,21 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
   const gint32 *channels;
   gint bmode;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  argc_matrix = g_value_get_int (gimp_value_array_index (args, 3));
-  matrix = gimp_value_get_float_array (gimp_value_array_index (args, 4));
-  alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 5));
-  divisor = g_value_get_double (gimp_value_array_index (args, 6));
-  offset = g_value_get_double (gimp_value_array_index (args, 7));
-  argc_channels = g_value_get_int (gimp_value_array_index (args, 8));
-  channels = gimp_value_get_int32_array (gimp_value_array_index (args, 9));
-  bmode = g_value_get_int (gimp_value_array_index (args, 10));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  argc_matrix = g_value_get_int (ligma_value_array_index (args, 3));
+  matrix = ligma_value_get_float_array (ligma_value_array_index (args, 4));
+  alpha_alg = g_value_get_boolean (ligma_value_array_index (args, 5));
+  divisor = g_value_get_double (ligma_value_array_index (args, 6));
+  offset = g_value_get_double (ligma_value_array_index (args, 7));
+  argc_channels = g_value_get_int (ligma_value_array_index (args, 8));
+  channels = ligma_value_get_int32_array (ligma_value_array_index (args, 9));
+  bmode = g_value_get_int (ligma_value_array_index (args, 10));
 
   if (success)
     {
       if (argc_matrix != 25)
         {
-          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+          g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                        _("Array 'matrix' has only %d members, must have 25"),
                        argc_matrix);
           success = FALSE;
@@ -1155,16 +1155,16 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
 
       if (success && argc_channels != 5)
         {
-          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+          g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                        _("Array 'channels' has only %d members, must have 5"),
                        argc_channels);
           success = FALSE;
         }
 
       if (success &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode        *node;
           GeglAbyssPolicy  border = GEGL_ABYSS_CLAMP;
@@ -1173,7 +1173,7 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
           gboolean         b      = channels[3];
           gboolean         a      = channels[4];
 
-          if (gimp_drawable_is_gray (drawable))
+          if (ligma_drawable_is_gray (drawable))
             {
               r = channels[0];
               g = channels[0];
@@ -1227,7 +1227,7 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Convolution Matrix"),
                                          node);
           g_object_unref (node);
@@ -1236,50 +1236,50 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_cubism_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_cubism_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble tile_size;
   gdouble tile_saturation;
   gint bg_color;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tile_size = g_value_get_double (gimp_value_array_index (args, 3));
-  tile_saturation = g_value_get_double (gimp_value_array_index (args, 4));
-  bg_color = g_value_get_int (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  tile_size = g_value_get_double (ligma_value_array_index (args, 3));
+  tile_saturation = g_value_get_double (ligma_value_array_index (args, 4));
+  bg_color = g_value_get_int (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpRGB    color;
+          LigmaRGB    color;
           GeglColor *gegl_color;
           GeglNode  *node;
 
           if (bg_color)
             {
-              gimp_context_get_background (context, &color);
-              gimp_rgb_set_alpha (&color, 0.0);
+              ligma_context_get_background (context, &color);
+              ligma_rgb_set_alpha (&color, 0.0);
             }
           else
             {
-              gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+              ligma_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
             }
 
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+          gegl_color = ligma_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:cubism",
@@ -1289,7 +1289,7 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
                                       NULL);
           g_object_unref (gegl_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Cubism"),
                                          node);
           g_object_unref (node);
@@ -1298,30 +1298,30 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_deinterlace_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_deinterlace_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint evenodd;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  evenodd = g_value_get_int (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  evenodd = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -1334,7 +1334,7 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Deinterlace"),
                                          node);
           g_object_unref (node);
@@ -1343,20 +1343,20 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_diffraction_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_diffraction_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble lam_r;
   gdouble lam_g;
   gdouble lam_b;
@@ -1370,30 +1370,30 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
   gdouble scattering;
   gdouble polarization;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  lam_r = g_value_get_double (gimp_value_array_index (args, 3));
-  lam_g = g_value_get_double (gimp_value_array_index (args, 4));
-  lam_b = g_value_get_double (gimp_value_array_index (args, 5));
-  contour_r = g_value_get_double (gimp_value_array_index (args, 6));
-  contour_g = g_value_get_double (gimp_value_array_index (args, 7));
-  contour_b = g_value_get_double (gimp_value_array_index (args, 8));
-  edges_r = g_value_get_double (gimp_value_array_index (args, 9));
-  edges_g = g_value_get_double (gimp_value_array_index (args, 10));
-  edges_b = g_value_get_double (gimp_value_array_index (args, 11));
-  brightness = g_value_get_double (gimp_value_array_index (args, 12));
-  scattering = g_value_get_double (gimp_value_array_index (args, 13));
-  polarization = g_value_get_double (gimp_value_array_index (args, 14));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  lam_r = g_value_get_double (ligma_value_array_index (args, 3));
+  lam_g = g_value_get_double (ligma_value_array_index (args, 4));
+  lam_b = g_value_get_double (ligma_value_array_index (args, 5));
+  contour_r = g_value_get_double (ligma_value_array_index (args, 6));
+  contour_g = g_value_get_double (ligma_value_array_index (args, 7));
+  contour_b = g_value_get_double (ligma_value_array_index (args, 8));
+  edges_r = g_value_get_double (ligma_value_array_index (args, 9));
+  edges_g = g_value_get_double (ligma_value_array_index (args, 10));
+  edges_b = g_value_get_double (ligma_value_array_index (args, 11));
+  brightness = g_value_get_double (ligma_value_array_index (args, 12));
+  scattering = g_value_get_double (ligma_value_array_index (args, 13));
+  polarization = g_value_get_double (ligma_value_array_index (args, 14));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gint      x, y, width, height;
 
-          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+          ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:diffraction-patterns",
@@ -1413,7 +1413,7 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
                                       "height",          height,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Diffraction Patterns"),
                                          node);
           g_object_unref (node);
@@ -1422,36 +1422,36 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_displace_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_displace_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble amount_x;
   gdouble amount_y;
   gboolean do_x;
   gboolean do_y;
-  GimpDrawable *displace_map_x;
-  GimpDrawable *displace_map_y;
+  LigmaDrawable *displace_map_x;
+  LigmaDrawable *displace_map_y;
   gint displace_type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  amount_x = g_value_get_double (gimp_value_array_index (args, 3));
-  amount_y = g_value_get_double (gimp_value_array_index (args, 4));
-  do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
-  do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
-  displace_map_x = g_value_get_object (gimp_value_array_index (args, 7));
-  displace_map_y = g_value_get_object (gimp_value_array_index (args, 8));
-  displace_type = g_value_get_int (gimp_value_array_index (args, 9));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  amount_x = g_value_get_double (ligma_value_array_index (args, 3));
+  amount_y = g_value_get_double (ligma_value_array_index (args, 4));
+  do_x = g_value_get_boolean (ligma_value_array_index (args, 5));
+  do_y = g_value_get_boolean (ligma_value_array_index (args, 6));
+  displace_map_x = g_value_get_object (ligma_value_array_index (args, 7));
+  displace_map_y = g_value_get_object (ligma_value_array_index (args, 8));
+  displace_type = g_value_get_int (ligma_value_array_index (args, 9));
 
   if (success)
     {
@@ -1468,36 +1468,36 @@ plug_in_displace_invoker (GimpProcedure         *procedure,
                           error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_displace_polar_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_displace_polar_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble amount_x;
   gdouble amount_y;
   gboolean do_x;
   gboolean do_y;
-  GimpDrawable *displace_map_x;
-  GimpDrawable *displace_map_y;
+  LigmaDrawable *displace_map_x;
+  LigmaDrawable *displace_map_y;
   gint displace_type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  amount_x = g_value_get_double (gimp_value_array_index (args, 3));
-  amount_y = g_value_get_double (gimp_value_array_index (args, 4));
-  do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
-  do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
-  displace_map_x = g_value_get_object (gimp_value_array_index (args, 7));
-  displace_map_y = g_value_get_object (gimp_value_array_index (args, 8));
-  displace_type = g_value_get_int (gimp_value_array_index (args, 9));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  amount_x = g_value_get_double (ligma_value_array_index (args, 3));
+  amount_y = g_value_get_double (ligma_value_array_index (args, 4));
+  do_x = g_value_get_boolean (ligma_value_array_index (args, 5));
+  do_y = g_value_get_boolean (ligma_value_array_index (args, 6));
+  displace_map_x = g_value_get_object (ligma_value_array_index (args, 7));
+  displace_map_y = g_value_get_object (ligma_value_array_index (args, 8));
+  displace_type = g_value_get_int (ligma_value_array_index (args, 9));
 
   if (success)
     {
@@ -1514,43 +1514,43 @@ plug_in_displace_polar_invoker (GimpProcedure         *procedure,
                           error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_dog_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_dog_invoker (LigmaProcedure         *procedure,
+                     Ligma                  *ligma,
+                     LigmaContext           *context,
+                     LigmaProgress          *progress,
+                     const LigmaValueArray  *args,
                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
+  LigmaImage *image;
+  LigmaDrawable *drawable;
   gdouble inner;
   gdouble outer;
   gboolean normalize;
   gboolean invert;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  inner = g_value_get_double (gimp_value_array_index (args, 3));
-  outer = g_value_get_double (gimp_value_array_index (args, 4));
-  normalize = g_value_get_boolean (gimp_value_array_index (args, 5));
-  invert = g_value_get_boolean (gimp_value_array_index (args, 6));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  inner = g_value_get_double (ligma_value_array_index (args, 3));
+  outer = g_value_get_double (ligma_value_array_index (args, 4));
+  normalize = g_value_get_boolean (ligma_value_array_index (args, 5));
+  invert = g_value_get_boolean (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
           if (normalize || invert)
-            gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+            ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_MISC,
                                          C_("undo-type", "DoG Edge Detect"));
 
           node = gegl_node_new_child (NULL,
@@ -1561,7 +1561,7 @@ plug_in_dog_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "DoG Edge Detect"),
                                          node);
           g_object_unref (node);
@@ -1574,53 +1574,53 @@ plug_in_dog_invoker (GimpProcedure         *procedure,
                                           "perceptual",  TRUE,
                                           NULL);
 
-              gimp_drawable_apply_operation (drawable, progress,
+              ligma_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Normalize"),
                                              node);
               g_object_unref (node);
             }
 
           if (invert)
-            gimp_drawable_apply_operation_by_name (drawable, progress,
+            ligma_drawable_apply_operation_by_name (drawable, progress,
                                                    C_("undo-type", "Invert"),
                                                    "gegl:invert-gamma",
                                                    NULL);
 
           if (normalize || invert)
-            gimp_image_undo_group_end (image);
+            ligma_image_undo_group_end (image);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_edge_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_edge_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble amount;
   gint warpmode;
   gint edgemode;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  amount = g_value_get_double (gimp_value_array_index (args, 3));
-  warpmode = g_value_get_int (gimp_value_array_index (args, 4));
-  edgemode = g_value_get_int (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  amount = g_value_get_double (ligma_value_array_index (args, 3));
+  warpmode = g_value_get_int (ligma_value_array_index (args, 4));
+  edgemode = g_value_get_int (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode        *node;
           GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
@@ -1651,7 +1651,7 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
                                       "border-behavior", border_behavior,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Edge"),
                                          node);
           g_object_unref (node);
@@ -1660,36 +1660,36 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_emboss_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_emboss_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble azimuth;
   gdouble elevation;
   gint depth;
   gboolean emboss;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  azimuth = g_value_get_double (gimp_value_array_index (args, 3));
-  elevation = g_value_get_double (gimp_value_array_index (args, 4));
-  depth = g_value_get_int (gimp_value_array_index (args, 5));
-  emboss = g_value_get_boolean (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  azimuth = g_value_get_double (ligma_value_array_index (args, 3));
+  elevation = g_value_get_double (ligma_value_array_index (args, 4));
+  depth = g_value_get_int (ligma_value_array_index (args, 5));
+  emboss = g_value_get_boolean (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -1703,7 +1703,7 @@ plug_in_emboss_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Emboss"),
                                          node);
         }
@@ -1711,32 +1711,32 @@ plug_in_emboss_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_engrave_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_engrave_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint height;
   gboolean limit;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  height = g_value_get_int (gimp_value_array_index (args, 3));
-  limit = g_value_get_boolean (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  height = g_value_get_int (ligma_value_array_index (args, 3));
+  limit = g_value_get_boolean (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -1746,7 +1746,7 @@ plug_in_engrave_invoker (GimpProcedure         *procedure,
                                       "limit",       limit,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Engrave"),
                                          node);
         }
@@ -1754,20 +1754,20 @@ plug_in_engrave_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_exchange_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_exchange_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   guchar from_red;
   guchar from_green;
   guchar from_blue;
@@ -1778,34 +1778,34 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
   guchar green_threshold;
   guchar blue_threshold;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  from_red = g_value_get_uchar (gimp_value_array_index (args, 3));
-  from_green = g_value_get_uchar (gimp_value_array_index (args, 4));
-  from_blue = g_value_get_uchar (gimp_value_array_index (args, 5));
-  to_red = g_value_get_uchar (gimp_value_array_index (args, 6));
-  to_green = g_value_get_uchar (gimp_value_array_index (args, 7));
-  to_blue = g_value_get_uchar (gimp_value_array_index (args, 8));
-  red_threshold = g_value_get_uchar (gimp_value_array_index (args, 9));
-  green_threshold = g_value_get_uchar (gimp_value_array_index (args, 10));
-  blue_threshold = g_value_get_uchar (gimp_value_array_index (args, 11));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  from_red = g_value_get_uchar (ligma_value_array_index (args, 3));
+  from_green = g_value_get_uchar (ligma_value_array_index (args, 4));
+  from_blue = g_value_get_uchar (ligma_value_array_index (args, 5));
+  to_red = g_value_get_uchar (ligma_value_array_index (args, 6));
+  to_green = g_value_get_uchar (ligma_value_array_index (args, 7));
+  to_blue = g_value_get_uchar (ligma_value_array_index (args, 8));
+  red_threshold = g_value_get_uchar (ligma_value_array_index (args, 9));
+  green_threshold = g_value_get_uchar (ligma_value_array_index (args, 10));
+  blue_threshold = g_value_get_uchar (ligma_value_array_index (args, 11));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpRGB    from;
-          GimpRGB    to;
+          LigmaRGB    from;
+          LigmaRGB    to;
           GeglColor *gegl_from;
           GeglColor *gegl_to;
           GeglNode  *node;
 
-          gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
-          gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
+          ligma_rgb_set_uchar (&from, from_red, from_green, from_blue);
+          ligma_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
 
-          gegl_from = gimp_gegl_color_new (&from, NULL);
-          gegl_to   = gimp_gegl_color_new (&to,   NULL);
+          gegl_from = ligma_gegl_color_new (&from, NULL);
+          gegl_to   = ligma_gegl_color_new (&to,   NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:color-exchange",
@@ -1819,7 +1819,7 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
           g_object_unref (gegl_from);
           g_object_unref (gegl_to);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Color Exchange"),
                                          node);
           g_object_unref (node);
@@ -1828,36 +1828,36 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_flarefx_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_flarefx_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint pos_x;
   gint pos_y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  pos_x = g_value_get_int (gimp_value_array_index (args, 3));
-  pos_y = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  pos_x = g_value_get_int (ligma_value_array_index (args, 3));
+  pos_y = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
-          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+          gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
           gdouble   x      = (gdouble) pos_x / (gdouble) width;
           gdouble   y      = (gdouble) pos_y / (gdouble) height;
 
@@ -1867,7 +1867,7 @@ plug_in_flarefx_invoker (GimpProcedure         *procedure,
                                       "pos-y",     y,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Lens Flare"),
                                          node);
           g_object_unref (node);
@@ -1876,20 +1876,20 @@ plug_in_flarefx_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_fractal_trace_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble xmin;
   gdouble xmax;
   gdouble ymin;
@@ -1897,19 +1897,19 @@ plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
   gint depth;
   gint outside_type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  xmin = g_value_get_double (gimp_value_array_index (args, 3));
-  xmax = g_value_get_double (gimp_value_array_index (args, 4));
-  ymin = g_value_get_double (gimp_value_array_index (args, 5));
-  ymax = g_value_get_double (gimp_value_array_index (args, 6));
-  depth = g_value_get_int (gimp_value_array_index (args, 7));
-  outside_type = g_value_get_int (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  xmin = g_value_get_double (ligma_value_array_index (args, 3));
+  xmax = g_value_get_double (ligma_value_array_index (args, 4));
+  ymin = g_value_get_double (ligma_value_array_index (args, 5));
+  ymax = g_value_get_double (ligma_value_array_index (args, 6));
+  depth = g_value_get_int (ligma_value_array_index (args, 7));
+  outside_type = g_value_get_int (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode        *node;
           GeglAbyssPolicy  abyss = GEGL_ABYSS_LOOP;
@@ -1932,7 +1932,7 @@ plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
                                       "abyss-policy", abyss,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Fractal Trace"),
                                          node);
           g_object_unref (node);
@@ -1941,54 +1941,54 @@ plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_gauss_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_gauss_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
-  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  horizontal = g_value_get_double (ligma_value_array_index (args, 3));
+  vertical = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       success = gaussian_blur (drawable, horizontal, vertical, progress, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_gauss_iir_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_gauss_iir_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble radius;
   gboolean horizontal;
   gboolean vertical;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_double (gimp_value_array_index (args, 3));
-  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
-  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_double (ligma_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (ligma_value_array_index (args, 4));
+  vertical = g_value_get_boolean (ligma_value_array_index (args, 5));
 
   if (success)
     {
@@ -1998,54 +1998,54 @@ plug_in_gauss_iir_invoker (GimpProcedure         *procedure,
                                progress, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_gauss_iir2_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_gauss_iir2_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
-  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  horizontal = g_value_get_double (ligma_value_array_index (args, 3));
+  vertical = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       success = gaussian_blur (drawable, horizontal, vertical, progress, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_gauss_rle_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_gauss_rle_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble radius;
   gboolean horizontal;
   gboolean vertical;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_double (gimp_value_array_index (args, 3));
-  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
-  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_double (ligma_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (ligma_value_array_index (args, 4));
+  vertical = g_value_get_boolean (ligma_value_array_index (args, 5));
 
   if (success)
     {
@@ -2055,58 +2055,58 @@ plug_in_gauss_rle_invoker (GimpProcedure         *procedure,
                                progress, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_gauss_rle2_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_gauss_rle2_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
-  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  horizontal = g_value_get_double (ligma_value_array_index (args, 3));
+  vertical = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
       success = gaussian_blur (drawable, horizontal, vertical, progress, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_glasstile_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_glasstile_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint tilex;
   gint tiley;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tilex = g_value_get_int (gimp_value_array_index (args, 3));
-  tiley = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  tilex = g_value_get_int (ligma_value_array_index (args, 3));
+  tiley = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -2116,7 +2116,7 @@ plug_in_glasstile_invoker (GimpProcedure         *procedure,
                                       "tile-height", tiley,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Glass Tile"),
                                          node);
           g_object_unref (node);
@@ -2125,36 +2125,36 @@ plug_in_glasstile_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_hsv_noise_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint holdness;
   gint hue_distance;
   gint saturation_distance;
   gint value_distance;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  holdness = g_value_get_int (gimp_value_array_index (args, 3));
-  hue_distance = g_value_get_int (gimp_value_array_index (args, 4));
-  saturation_distance = g_value_get_int (gimp_value_array_index (args, 5));
-  value_distance = g_value_get_int (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  holdness = g_value_get_int (ligma_value_array_index (args, 3));
+  hue_distance = g_value_get_int (ligma_value_array_index (args, 4));
+  saturation_distance = g_value_get_int (ligma_value_array_index (args, 5));
+  value_distance = g_value_get_int (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
 
@@ -2169,7 +2169,7 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
                                       "value-distance",      (gdouble) value,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Noise HSV"),
                                          node);
           g_object_unref (node);
@@ -2178,32 +2178,32 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_illusion_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_illusion_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint division;
   gint type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  division = g_value_get_int (gimp_value_array_index (args, 3));
-  type = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  division = g_value_get_int (ligma_value_array_index (args, 3));
+  type = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -2212,7 +2212,7 @@ plug_in_illusion_invoker (GimpProcedure         *procedure,
                                  "illusion-type", (gint) type,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Illusion"),
                                          node);
           g_object_unref (node);
@@ -2221,35 +2221,35 @@ plug_in_illusion_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_laplace_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_laplace_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:edge-laplace",
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Laplace"),
                                          node);
           g_object_unref (node);
@@ -2258,20 +2258,20 @@ plug_in_laplace_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_lens_distortion_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble offset_x;
   gdouble offset_y;
   gdouble main_adjust;
@@ -2279,36 +2279,36 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
   gdouble rescale;
   gdouble brighten;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  offset_x = g_value_get_double (gimp_value_array_index (args, 3));
-  offset_y = g_value_get_double (gimp_value_array_index (args, 4));
-  main_adjust = g_value_get_double (gimp_value_array_index (args, 5));
-  edge_adjust = g_value_get_double (gimp_value_array_index (args, 6));
-  rescale = g_value_get_double (gimp_value_array_index (args, 7));
-  brighten = g_value_get_double (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  offset_x = g_value_get_double (ligma_value_array_index (args, 3));
+  offset_y = g_value_get_double (ligma_value_array_index (args, 4));
+  main_adjust = g_value_get_double (ligma_value_array_index (args, 5));
+  edge_adjust = g_value_get_double (ligma_value_array_index (args, 6));
+  rescale = g_value_get_double (ligma_value_array_index (args, 7));
+  brighten = g_value_get_double (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node = NULL;
-          GimpRGB    color;
+          LigmaRGB    color;
           GeglColor *gegl_color;
 
-          gimp_context_get_background (context, &color);
+          ligma_context_get_background (context, &color);
 
-          if (gimp_drawable_has_alpha (drawable))
+          if (ligma_drawable_has_alpha (drawable))
             {
-              gimp_rgb_set_alpha (&color, 0.0);
+              ligma_rgb_set_alpha (&color, 0.0);
             }
           else
             {
-              gimp_rgb_set_alpha (&color, 1.0);
+              ligma_rgb_set_alpha (&color, 1.0);
             }
 
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+          gegl_color = ligma_gegl_color_new (&color, NULL);
 
           node =  gegl_node_new_child (NULL,
                                        "operation", "gegl:lens-distortion",
@@ -2325,7 +2325,7 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_selection_bounds (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                         C_("undo-type", "Lens Distortion"),
                                         node);
           g_object_unref (node);
@@ -2335,28 +2335,28 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_make_seamless_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_make_seamless_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -2365,7 +2365,7 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_selection_bounds (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Tile Seamless"),
                                          node);
           g_object_unref (node);
@@ -2374,49 +2374,49 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_maze_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_maze_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint width;
   gint height;
   guchar tileable;
   guchar algorithm;
   gint seed;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  width = g_value_get_int (gimp_value_array_index (args, 3));
-  height = g_value_get_int (gimp_value_array_index (args, 4));
-  tileable = g_value_get_uchar (gimp_value_array_index (args, 5));
-  algorithm = g_value_get_uchar (gimp_value_array_index (args, 6));
-  seed = g_value_get_int (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  width = g_value_get_int (ligma_value_array_index (args, 3));
+  height = g_value_get_int (ligma_value_array_index (args, 4));
+  tileable = g_value_get_uchar (ligma_value_array_index (args, 5));
+  algorithm = g_value_get_uchar (ligma_value_array_index (args, 6));
+  seed = g_value_get_int (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
           GeglColor *fg_color;
           GeglColor *bg_color;
-          GimpRGB    color;
+          LigmaRGB    color;
 
-          gimp_context_get_foreground (context, &color);
-          fg_color = gimp_gegl_color_new (&color, NULL);
+          ligma_context_get_foreground (context, &color);
+          fg_color = ligma_gegl_color_new (&color, NULL);
 
-          gimp_context_get_background (context, &color);
-          bg_color = gimp_gegl_color_new (&color, NULL);
+          ligma_context_get_background (context, &color);
+          bg_color = ligma_gegl_color_new (&color, NULL);
 
           node =  gegl_node_new_child (NULL,
                                        "operation",      "gegl:maze",
@@ -2432,7 +2432,7 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
           g_object_unref (fg_color);
           g_object_unref (bg_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Maze"),
                                         node);
           g_object_unref (node);
@@ -2441,42 +2441,42 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_mblur_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_mblur_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint type;
   gdouble length;
   gdouble angle;
   gdouble center_x;
   gdouble center_y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  type = g_value_get_int (gimp_value_array_index (args, 3));
-  length = g_value_get_double (gimp_value_array_index (args, 4));
-  angle = g_value_get_double (gimp_value_array_index (args, 5));
-  center_x = g_value_get_double (gimp_value_array_index (args, 6));
-  center_y = g_value_get_double (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  type = g_value_get_int (ligma_value_array_index (args, 3));
+  length = g_value_get_double (ligma_value_array_index (args, 4));
+  angle = g_value_get_double (ligma_value_array_index (args, 5));
+  center_x = g_value_get_double (ligma_value_array_index (args, 6));
+  center_y = g_value_get_double (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node   = NULL;
-          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+          gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
           center_x /= (gdouble) width;
           center_y /= (gdouble) height;
@@ -2515,7 +2515,7 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
 
           if (node != NULL)
             {
-              gimp_drawable_apply_operation (drawable, progress,
+              ligma_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
               g_object_unref (node);
@@ -2528,42 +2528,42 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_mblur_inward_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint type;
   gdouble length;
   gdouble angle;
   gdouble center_x;
   gdouble center_y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  type = g_value_get_int (gimp_value_array_index (args, 3));
-  length = g_value_get_double (gimp_value_array_index (args, 4));
-  angle = g_value_get_double (gimp_value_array_index (args, 5));
-  center_x = g_value_get_double (gimp_value_array_index (args, 6));
-  center_y = g_value_get_double (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  type = g_value_get_int (ligma_value_array_index (args, 3));
+  length = g_value_get_double (ligma_value_array_index (args, 4));
+  angle = g_value_get_double (ligma_value_array_index (args, 5));
+  center_x = g_value_get_double (ligma_value_array_index (args, 6));
+  center_y = g_value_get_double (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node   = NULL;
-          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+          gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
           center_x /= (gdouble) width;
           center_y /= (gdouble) height;
@@ -2599,7 +2599,7 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
 
           if (node != NULL)
             {
-              gimp_drawable_apply_operation (drawable, progress,
+              ligma_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
               g_object_unref (node);
@@ -2612,32 +2612,32 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_median_blur_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_median_blur_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint radius;
   gdouble percentile;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_int (gimp_value_array_index (args, 3));
-  percentile = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_int (ligma_value_array_index (args, 3));
+  percentile = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -2646,7 +2646,7 @@ plug_in_median_blur_invoker (GimpProcedure         *procedure,
                                  "percentile", percentile,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Median Blur"),
                                          node);
           g_object_unref (node);
@@ -2655,20 +2655,20 @@ plug_in_median_blur_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_mosaic_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_mosaic_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble tile_size;
   gdouble tile_height;
   gdouble tile_spacing;
@@ -2682,25 +2682,25 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
   gint tile_surface;
   gint grout_color;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tile_size = g_value_get_double (gimp_value_array_index (args, 3));
-  tile_height = g_value_get_double (gimp_value_array_index (args, 4));
-  tile_spacing = g_value_get_double (gimp_value_array_index (args, 5));
-  tile_neatness = g_value_get_double (gimp_value_array_index (args, 6));
-  tile_allow_split = g_value_get_int (gimp_value_array_index (args, 7));
-  light_dir = g_value_get_double (gimp_value_array_index (args, 8));
-  color_variation = g_value_get_double (gimp_value_array_index (args, 9));
-  antialiasing = g_value_get_int (gimp_value_array_index (args, 10));
-  color_averaging = g_value_get_int (gimp_value_array_index (args, 11));
-  tile_type = g_value_get_int (gimp_value_array_index (args, 12));
-  tile_surface = g_value_get_int (gimp_value_array_index (args, 13));
-  grout_color = g_value_get_int (gimp_value_array_index (args, 14));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  tile_size = g_value_get_double (ligma_value_array_index (args, 3));
+  tile_height = g_value_get_double (ligma_value_array_index (args, 4));
+  tile_spacing = g_value_get_double (ligma_value_array_index (args, 5));
+  tile_neatness = g_value_get_double (ligma_value_array_index (args, 6));
+  tile_allow_split = g_value_get_int (ligma_value_array_index (args, 7));
+  light_dir = g_value_get_double (ligma_value_array_index (args, 8));
+  color_variation = g_value_get_double (ligma_value_array_index (args, 9));
+  antialiasing = g_value_get_int (ligma_value_array_index (args, 10));
+  color_averaging = g_value_get_int (ligma_value_array_index (args, 11));
+  tile_type = g_value_get_int (ligma_value_array_index (args, 12));
+  tile_surface = g_value_get_int (ligma_value_array_index (args, 13));
+  grout_color = g_value_get_int (ligma_value_array_index (args, 14));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglColor *fg_color;
           GeglColor *bg_color;
@@ -2708,13 +2708,13 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
 
           if (grout_color)
             {
-              GimpRGB fgcolor, bgcolor;
+              LigmaRGB fgcolor, bgcolor;
 
-              gimp_context_get_background (context, &bgcolor);
-              bg_color = gimp_gegl_color_new (&bgcolor, NULL);
+              ligma_context_get_background (context, &bgcolor);
+              bg_color = ligma_gegl_color_new (&bgcolor, NULL);
 
-              gimp_context_get_foreground (context, &fgcolor);
-              fg_color = gimp_gegl_color_new (&fgcolor, NULL);
+              ligma_context_get_foreground (context, &fgcolor);
+              fg_color = ligma_gegl_color_new (&fgcolor, NULL);
             }
           else
             {
@@ -2743,7 +2743,7 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
           g_object_unref (fg_color);
           g_object_unref (bg_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Mosaic"),
                                          node);
           g_object_unref (node);
@@ -2752,32 +2752,32 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_neon_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_neon_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble radius;
   gdouble amount;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_double (gimp_value_array_index (args, 3));
-  amount = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_double (ligma_value_array_index (args, 3));
+  amount = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -2787,7 +2787,7 @@ plug_in_neon_invoker (GimpProcedure         *procedure,
                                       "amount",    amount,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Neon"),
                                          node);
           g_object_unref (node);
@@ -2796,20 +2796,20 @@ plug_in_neon_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_newsprint_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_newsprint_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint cell_width;
   gint colorspace;
   gint k_pullout;
@@ -2823,25 +2823,25 @@ plug_in_newsprint_invoker (GimpProcedure         *procedure,
   gint blu_spotfn;
   gint oversample;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  cell_width = g_value_get_int (gimp_value_array_index (args, 3));
-  colorspace = g_value_get_int (gimp_value_array_index (args, 4));
-  k_pullout = g_value_get_int (gimp_value_array_index (args, 5));
-  gry_ang = g_value_get_double (gimp_value_array_index (args, 6));
-  gry_spotfn = g_value_get_int (gimp_value_array_index (args, 7));
-  red_ang = g_value_get_double (gimp_value_array_index (args, 8));
-  red_spotfn = g_value_get_int (gimp_value_array_index (args, 9));
-  grn_ang = g_value_get_double (gimp_value_array_index (args, 10));
-  grn_spotfn = g_value_get_int (gimp_value_array_index (args, 11));
-  blu_ang = g_value_get_double (gimp_value_array_index (args, 12));
-  blu_spotfn = g_value_get_int (gimp_value_array_index (args, 13));
-  oversample = g_value_get_int (gimp_value_array_index (args, 14));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  cell_width = g_value_get_int (ligma_value_array_index (args, 3));
+  colorspace = g_value_get_int (ligma_value_array_index (args, 4));
+  k_pullout = g_value_get_int (ligma_value_array_index (args, 5));
+  gry_ang = g_value_get_double (ligma_value_array_index (args, 6));
+  gry_spotfn = g_value_get_int (ligma_value_array_index (args, 7));
+  red_ang = g_value_get_double (ligma_value_array_index (args, 8));
+  red_spotfn = g_value_get_int (ligma_value_array_index (args, 9));
+  grn_ang = g_value_get_double (ligma_value_array_index (args, 10));
+  grn_spotfn = g_value_get_int (ligma_value_array_index (args, 11));
+  blu_ang = g_value_get_double (ligma_value_array_index (args, 12));
+  blu_spotfn = g_value_get_int (ligma_value_array_index (args, 13));
+  oversample = g_value_get_int (ligma_value_array_index (args, 14));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gint      color_model = newsprint_color_model (colorspace);
@@ -2875,7 +2875,7 @@ plug_in_newsprint_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Newsprint"),
                                          node);
           g_object_unref (node);
@@ -2884,28 +2884,28 @@ plug_in_newsprint_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_normalize_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_normalize_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -2915,7 +2915,7 @@ plug_in_normalize_invoker (GimpProcedure         *procedure,
                                       "perceptual",  TRUE,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Normalize"),
                                          node);
           g_object_unref (node);
@@ -2924,45 +2924,45 @@ plug_in_normalize_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_nova_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_nova_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint xcenter;
   gint ycenter;
-  GimpRGB color;
+  LigmaRGB color;
   gint radius;
   gint nspoke;
   gint randomhue;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  xcenter = g_value_get_int (gimp_value_array_index (args, 3));
-  ycenter = g_value_get_int (gimp_value_array_index (args, 4));
-  gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
-  radius = g_value_get_int (gimp_value_array_index (args, 6));
-  nspoke = g_value_get_int (gimp_value_array_index (args, 7));
-  randomhue = g_value_get_int (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  xcenter = g_value_get_int (ligma_value_array_index (args, 3));
+  ycenter = g_value_get_int (ligma_value_array_index (args, 4));
+  ligma_value_get_rgb (ligma_value_array_index (args, 5), &color);
+  radius = g_value_get_int (ligma_value_array_index (args, 6));
+  nspoke = g_value_get_int (ligma_value_array_index (args, 7));
+  randomhue = g_value_get_int (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
-          gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
-          gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+          GeglColor *gegl_color = ligma_gegl_color_new (&color, NULL);
+          gdouble    center_x   = (gdouble) xcenter / (gdouble) ligma_item_get_width (LIGMA_ITEM (drawable));
+          gdouble    center_y   = (gdouble) ycenter / (gdouble) ligma_item_get_height (LIGMA_ITEM (drawable));
 
           node = gegl_node_new_child (NULL,
                                       "operation",    "gegl:supernova",
@@ -2977,7 +2977,7 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
 
           g_object_unref (gegl_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Supernova"),
                                          node);
           g_object_unref (node);
@@ -2986,32 +2986,32 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_oilify_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_oilify_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint mask_size;
   gint mode;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  mask_size = g_value_get_int (gimp_value_array_index (args, 3));
-  mode = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  mask_size = g_value_get_int (ligma_value_array_index (args, 3));
+  mode = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -3021,7 +3021,7 @@ plug_in_oilify_invoker (GimpProcedure         *procedure,
                                       "use-inten",       mode ? TRUE : FALSE,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Oilify"),
                                          node);
           g_object_unref (node);
@@ -3030,38 +3030,38 @@ plug_in_oilify_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_oilify_enhanced_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint mode;
   gint mask_size;
-  GimpDrawable *mask_size_map;
+  LigmaDrawable *mask_size_map;
   gint exponent;
-  GimpDrawable *exponent_map;
+  LigmaDrawable *exponent_map;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  mode = g_value_get_int (gimp_value_array_index (args, 3));
-  mask_size = g_value_get_int (gimp_value_array_index (args, 4));
-  mask_size_map = g_value_get_object (gimp_value_array_index (args, 5));
-  exponent = g_value_get_int (gimp_value_array_index (args, 6));
-  exponent_map = g_value_get_object (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  mode = g_value_get_int (ligma_value_array_index (args, 3));
+  mask_size = g_value_get_int (ligma_value_array_index (args, 4));
+  mask_size_map = g_value_get_object (ligma_value_array_index (args, 5));
+  exponent = g_value_get_int (ligma_value_array_index (args, 6));
+  exponent_map = g_value_get_object (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *graph;
           GeglNode *node;
@@ -3089,7 +3089,7 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Oilify"),
                                          graph);
           g_object_unref (graph);
@@ -3098,45 +3098,45 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_papertile_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_papertile_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint tile_size;
   gdouble move_max;
   gint fractional_type;
   gboolean wrap_around;
   gboolean centering;
   gint background_type;
-  GimpRGB background_color;
+  LigmaRGB background_color;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tile_size = g_value_get_int (gimp_value_array_index (args, 3));
-  move_max = g_value_get_double (gimp_value_array_index (args, 4));
-  fractional_type = g_value_get_int (gimp_value_array_index (args, 5));
-  wrap_around = g_value_get_boolean (gimp_value_array_index (args, 6));
-  centering = g_value_get_boolean (gimp_value_array_index (args, 7));
-  background_type = g_value_get_int (gimp_value_array_index (args, 8));
-  gimp_value_get_rgb (gimp_value_array_index (args, 9), &background_color);
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  tile_size = g_value_get_int (ligma_value_array_index (args, 3));
+  move_max = g_value_get_double (ligma_value_array_index (args, 4));
+  fractional_type = g_value_get_int (ligma_value_array_index (args, 5));
+  wrap_around = g_value_get_boolean (ligma_value_array_index (args, 6));
+  centering = g_value_get_boolean (ligma_value_array_index (args, 7));
+  background_type = g_value_get_int (ligma_value_array_index (args, 8));
+  ligma_value_get_rgb (ligma_value_array_index (args, 9), &background_color);
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GimpRGB    color;
+          LigmaRGB    color;
           GeglColor *gegl_color;
           gint       bg_type;
 
@@ -3144,17 +3144,17 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
             {
             default:
               bg_type = background_type;
-              gimp_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
+              ligma_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
               break;
 
             case 3:
               bg_type = 3;
-              gimp_context_get_foreground (context, &color);
+              ligma_context_get_foreground (context, &color);
               break;
 
             case 4:
               bg_type = 3;
-              gimp_context_get_background (context, &color);
+              ligma_context_get_background (context, &color);
               break;
 
             case 5:
@@ -3163,7 +3163,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
               break;
             }
 
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+          gegl_color = ligma_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:tile-paper",
@@ -3179,7 +3179,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
 
           g_object_unref (gegl_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Paper Tile"),
                                          node);
           g_object_unref (node);
@@ -3188,36 +3188,36 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_photocopy_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_photocopy_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble mask_radius;
   gdouble sharpness;
   gdouble pct_black;
   gdouble pct_white;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
-  sharpness = g_value_get_double (gimp_value_array_index (args, 4));
-  pct_black = g_value_get_double (gimp_value_array_index (args, 5));
-  pct_white = g_value_get_double (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  mask_radius = g_value_get_double (ligma_value_array_index (args, 3));
+  sharpness = g_value_get_double (ligma_value_array_index (args, 4));
+  pct_black = g_value_get_double (ligma_value_array_index (args, 5));
+  pct_white = g_value_get_double (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -3228,7 +3228,7 @@ plug_in_photocopy_invoker (GimpProcedure         *procedure,
                                  "white",       pct_white,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Photocopy"),
                                          node);
           g_object_unref (node);
@@ -3237,30 +3237,30 @@ plug_in_photocopy_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_pixelize_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_pixelize_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint pixel_width;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  pixel_width = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -3269,7 +3269,7 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
                                  "size-y",    pixel_width,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
           g_object_unref (node);
@@ -3278,32 +3278,32 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_pixelize2_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_pixelize2_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint pixel_width;
   gint pixel_height;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
-  pixel_height = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  pixel_width = g_value_get_int (ligma_value_array_index (args, 3));
+  pixel_height = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -3312,7 +3312,7 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
                                  "size-y",    pixel_height,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
           g_object_unref (node);
@@ -3321,37 +3321,37 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_plasma_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_plasma_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint seed;
   gdouble turbulence;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  seed = g_value_get_int (gimp_value_array_index (args, 3));
-  turbulence = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  seed = g_value_get_int (ligma_value_array_index (args, 3));
+  turbulence = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gint      x, y, width, height;
 
-          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+          ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
           node = gegl_node_new_child (NULL,
                                       "operation",  "gegl:plasma",
@@ -3363,7 +3363,7 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
                                       "height",     height,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Plasma"),
                                          node);
           g_object_unref (node);
@@ -3372,38 +3372,38 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_polar_coords_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_polar_coords_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble circle;
   gdouble angle;
   gboolean backwards;
   gboolean inverse;
   gboolean polrec;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  circle = g_value_get_double (gimp_value_array_index (args, 3));
-  angle = g_value_get_double (gimp_value_array_index (args, 4));
-  backwards = g_value_get_boolean (gimp_value_array_index (args, 5));
-  inverse = g_value_get_boolean (gimp_value_array_index (args, 6));
-  polrec = g_value_get_boolean (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  circle = g_value_get_double (ligma_value_array_index (args, 3));
+  angle = g_value_get_double (ligma_value_array_index (args, 4));
+  backwards = g_value_get_boolean (ligma_value_array_index (args, 5));
+  inverse = g_value_get_boolean (ligma_value_array_index (args, 6));
+  polrec = g_value_get_boolean (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -3417,7 +3417,7 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_selection_bounds (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Polar Coordinates"),
                                          node);
           g_object_unref (node);
@@ -3426,30 +3426,30 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_red_eye_removal_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint threshold;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  threshold = g_value_get_int (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  threshold = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -3457,7 +3457,7 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
                                  "threshold", (gdouble) (threshold - 50) / 50.0 * 0.2 + 0.4,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Red Eye Removal"),
                                          node);
           g_object_unref (node);
@@ -3466,36 +3466,36 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_randomize_hurl_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
   gint seed;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
-  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
-  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
-  seed = g_value_get_int (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  rndm_pct = g_value_get_double (ligma_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (ligma_value_array_index (args, 4));
+  randomize = g_value_get_boolean (ligma_value_array_index (args, 5));
+  seed = g_value_get_int (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -3510,7 +3510,7 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
                                  "repeat",     (gint) rndm_rcount,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Hurl"),
                                          node);
           g_object_unref (node);
@@ -3519,36 +3519,36 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_randomize_pick_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
   gint seed;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
-  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
-  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
-  seed = g_value_get_int (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  rndm_pct = g_value_get_double (ligma_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (ligma_value_array_index (args, 4));
+  randomize = g_value_get_boolean (ligma_value_array_index (args, 5));
+  seed = g_value_get_int (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -3563,7 +3563,7 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
                                  "repeat",     (gint) rndm_rcount,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Pick"),
                                          node);
           g_object_unref (node);
@@ -3572,36 +3572,36 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_randomize_slur_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
   gint seed;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
-  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
-  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
-  seed = g_value_get_int (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  rndm_pct = g_value_get_double (ligma_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (ligma_value_array_index (args, 4));
+  randomize = g_value_get_boolean (ligma_value_array_index (args, 5));
+  seed = g_value_get_int (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -3616,7 +3616,7 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
                                  "repeat",     (gint) rndm_rcount,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Slur"),
                                          node);
           g_object_unref (node);
@@ -3625,20 +3625,20 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_rgb_noise_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean independent;
   gboolean correlated;
   gdouble noise_1;
@@ -3646,24 +3646,24 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
   gdouble noise_3;
   gdouble noise_4;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  independent = g_value_get_boolean (gimp_value_array_index (args, 3));
-  correlated = g_value_get_boolean (gimp_value_array_index (args, 4));
-  noise_1 = g_value_get_double (gimp_value_array_index (args, 5));
-  noise_2 = g_value_get_double (gimp_value_array_index (args, 6));
-  noise_3 = g_value_get_double (gimp_value_array_index (args, 7));
-  noise_4 = g_value_get_double (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  independent = g_value_get_boolean (ligma_value_array_index (args, 3));
+  correlated = g_value_get_boolean (ligma_value_array_index (args, 4));
+  noise_1 = g_value_get_double (ligma_value_array_index (args, 5));
+  noise_2 = g_value_get_double (ligma_value_array_index (args, 6));
+  noise_3 = g_value_get_double (ligma_value_array_index (args, 7));
+  noise_4 = g_value_get_double (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gdouble   r, g, b, a;
 
-          if (gimp_drawable_is_gray (drawable))
+          if (ligma_drawable_is_gray (drawable))
             {
               r = noise_1;
               g = noise_1;
@@ -3691,7 +3691,7 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "RGB Noise"),
                                          node);
           g_object_unref (node);
@@ -3700,20 +3700,20 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_ripple_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_ripple_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint period;
   gint amplitude;
   gint orientation;
@@ -3722,20 +3722,20 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
   gboolean antialias;
   gboolean tile;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  period = g_value_get_int (gimp_value_array_index (args, 3));
-  amplitude = g_value_get_int (gimp_value_array_index (args, 4));
-  orientation = g_value_get_int (gimp_value_array_index (args, 5));
-  edges = g_value_get_int (gimp_value_array_index (args, 6));
-  waveform = g_value_get_int (gimp_value_array_index (args, 7));
-  antialias = g_value_get_boolean (gimp_value_array_index (args, 8));
-  tile = g_value_get_boolean (gimp_value_array_index (args, 9));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  period = g_value_get_int (ligma_value_array_index (args, 3));
+  amplitude = g_value_get_int (ligma_value_array_index (args, 4));
+  orientation = g_value_get_int (ligma_value_array_index (args, 5));
+  edges = g_value_get_int (ligma_value_array_index (args, 6));
+  waveform = g_value_get_int (ligma_value_array_index (args, 7));
+  antialias = g_value_get_boolean (ligma_value_array_index (args, 8));
+  tile = g_value_get_boolean (ligma_value_array_index (args, 9));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gdouble angle, phi;
@@ -3761,7 +3761,7 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Ripple"),
                                          node);
           g_object_unref (node);
@@ -3772,93 +3772,93 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_rotate_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_rotate_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
+  LigmaImage *image;
+  LigmaDrawable *drawable;
   gint angle;
   gboolean everything;
 
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  angle = g_value_get_int (gimp_value_array_index (args, 3));
-  everything = g_value_get_boolean (gimp_value_array_index (args, 4));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  angle = g_value_get_int (ligma_value_array_index (args, 3));
+  everything = g_value_get_boolean (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      GimpRotationType rotate_type = angle - 1;
+      LigmaRotationType rotate_type = angle - 1;
 
       if (everything)
         {
-          gimp_image_rotate (image, context, rotate_type, progress);
+          ligma_image_rotate (image, context, rotate_type, progress);
         }
-      else if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                          GIMP_PDB_ITEM_CONTENT, error))
+      else if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                          LIGMA_PDB_ITEM_CONTENT, error))
         {
-          GimpItem *item = GIMP_ITEM (drawable);
+          LigmaItem *item = LIGMA_ITEM (drawable);
           gint      off_x, off_y;
           gdouble   center_x, center_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
 
-          center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
-          center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+          center_x = ((gdouble) off_x + (gdouble) ligma_item_get_width  (item) / 2.0);
+          center_y = ((gdouble) off_y + (gdouble) ligma_item_get_height (item) / 2.0);
 
-          gimp_item_rotate (item, context, rotate_type, center_x, center_y,
-                            GIMP_IS_CHANNEL (drawable));
+          ligma_item_rotate (item, context, rotate_type, center_x, center_y,
+                            LIGMA_IS_CHANNEL (drawable));
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_noisify_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_noisify_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean independent;
   gdouble noise_1;
   gdouble noise_2;
   gdouble noise_3;
   gdouble noise_4;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  independent = g_value_get_boolean (gimp_value_array_index (args, 3));
-  noise_1 = g_value_get_double (gimp_value_array_index (args, 4));
-  noise_2 = g_value_get_double (gimp_value_array_index (args, 5));
-  noise_3 = g_value_get_double (gimp_value_array_index (args, 6));
-  noise_4 = g_value_get_double (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  independent = g_value_get_boolean (ligma_value_array_index (args, 3));
+  noise_1 = g_value_get_double (ligma_value_array_index (args, 4));
+  noise_2 = g_value_get_double (ligma_value_array_index (args, 5));
+  noise_3 = g_value_get_double (ligma_value_array_index (args, 6));
+  noise_4 = g_value_get_double (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gdouble   r, g, b, a;
 
-          if (gimp_drawable_is_gray (drawable))
+          if (ligma_drawable_is_gray (drawable))
             {
               r = noise_1;
               g = noise_1;
@@ -3886,7 +3886,7 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Noisify"),
                                          node);
           g_object_unref (node);
@@ -3895,32 +3895,32 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_sel_gauss_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble radius;
   gint max_delta;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_double (gimp_value_array_index (args, 3));
-  max_delta = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_double (ligma_value_array_index (args, 3));
+  max_delta = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
 
@@ -3930,7 +3930,7 @@ plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
                                       "max-delta",   (gdouble) max_delta / 255.0,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Selective Gaussian Blur"),
                                          node);
           g_object_unref (node);
@@ -3939,42 +3939,42 @@ plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_semiflatten_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_semiflatten_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          gimp_drawable_has_alpha (drawable))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+          ligma_drawable_has_alpha (drawable))
         {
           GeglNode *node;
-          GimpRGB   color;
+          LigmaRGB   color;
 
-          gimp_context_get_background (context, &color);
+          ligma_context_get_background (context, &color);
 
           node =
             gegl_node_new_child (NULL,
-                                 "operation", "gimp:semi-flatten",
+                                 "operation", "ligma:semi-flatten",
                                  "color",     &color,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Semi-Flatten"),
                                          node);
           g_object_unref (node);
@@ -3983,32 +3983,32 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_shift_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_shift_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint shift_amount;
   gint orientation;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  shift_amount = g_value_get_int (gimp_value_array_index (args, 3));
-  orientation = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  shift_amount = g_value_get_int (ligma_value_array_index (args, 3));
+  orientation = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4017,7 +4017,7 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
                                  "direction", orientation ? 0 : 1,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Shift"),
                                          node);
           g_object_unref (node);
@@ -4026,20 +4026,20 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_sinus_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_sinus_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble xscale;
   gdouble yscale;
   gdouble complex;
@@ -4047,33 +4047,33 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
   gboolean tiling;
   gboolean perturb;
   gint colors;
-  GimpRGB col1;
-  GimpRGB col2;
+  LigmaRGB col1;
+  LigmaRGB col2;
   gdouble alpha1;
   gdouble alpha2;
   gint blend;
   gdouble blend_power;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  xscale = g_value_get_double (gimp_value_array_index (args, 3));
-  yscale = g_value_get_double (gimp_value_array_index (args, 4));
-  complex = g_value_get_double (gimp_value_array_index (args, 5));
-  seed = g_value_get_int (gimp_value_array_index (args, 6));
-  tiling = g_value_get_boolean (gimp_value_array_index (args, 7));
-  perturb = g_value_get_boolean (gimp_value_array_index (args, 8));
-  colors = g_value_get_int (gimp_value_array_index (args, 9));
-  gimp_value_get_rgb (gimp_value_array_index (args, 10), &col1);
-  gimp_value_get_rgb (gimp_value_array_index (args, 11), &col2);
-  alpha1 = g_value_get_double (gimp_value_array_index (args, 12));
-  alpha2 = g_value_get_double (gimp_value_array_index (args, 13));
-  blend = g_value_get_int (gimp_value_array_index (args, 14));
-  blend_power = g_value_get_double (gimp_value_array_index (args, 15));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  xscale = g_value_get_double (ligma_value_array_index (args, 3));
+  yscale = g_value_get_double (ligma_value_array_index (args, 4));
+  complex = g_value_get_double (ligma_value_array_index (args, 5));
+  seed = g_value_get_int (ligma_value_array_index (args, 6));
+  tiling = g_value_get_boolean (ligma_value_array_index (args, 7));
+  perturb = g_value_get_boolean (ligma_value_array_index (args, 8));
+  colors = g_value_get_int (ligma_value_array_index (args, 9));
+  ligma_value_get_rgb (ligma_value_array_index (args, 10), &col1);
+  ligma_value_get_rgb (ligma_value_array_index (args, 11), &col2);
+  alpha1 = g_value_get_double (ligma_value_array_index (args, 12));
+  alpha2 = g_value_get_double (ligma_value_array_index (args, 13));
+  blend = g_value_get_int (ligma_value_array_index (args, 14));
+  blend_power = g_value_get_double (ligma_value_array_index (args, 15));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
           GeglColor *gegl_color1;
@@ -4083,23 +4083,23 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
           switch (colors)
             {
             case 0:
-              gimp_rgb_set (&col1, 0.0, 0.0, 0.0);
-              gimp_rgb_set (&col2, 1.0, 1.0, 1.0);
+              ligma_rgb_set (&col1, 0.0, 0.0, 0.0);
+              ligma_rgb_set (&col2, 1.0, 1.0, 1.0);
               break;
 
             case 1:
-              gimp_context_get_foreground (context, &col1);
-              gimp_context_get_background (context, &col2);
+              ligma_context_get_foreground (context, &col1);
+              ligma_context_get_background (context, &col2);
               break;
             }
 
-          gimp_rgb_set_alpha (&col1, alpha1);
-          gimp_rgb_set_alpha (&col2, alpha2);
+          ligma_rgb_set_alpha (&col1, alpha1);
+          ligma_rgb_set_alpha (&col2, alpha2);
 
-          gegl_color1 = gimp_gegl_color_new (&col1, NULL);
-          gegl_color2 = gimp_gegl_color_new (&col2, NULL);
+          gegl_color1 = ligma_gegl_color_new (&col1, NULL);
+          gegl_color2 = ligma_gegl_color_new (&col2, NULL);
 
-          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+          ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
           node = gegl_node_new_child (NULL,
                                       "operation",    "gegl:sinus",
@@ -4120,7 +4120,7 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
           g_object_unref (gegl_color1);
           g_object_unref (gegl_color2);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Sinus"),
                                          node);
           g_object_unref (node);
@@ -4129,34 +4129,34 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_sobel_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_sobel_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean horizontal;
   gboolean vertical;
   gboolean keep_sign;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  horizontal = g_value_get_boolean (gimp_value_array_index (args, 3));
-  vertical = g_value_get_boolean (gimp_value_array_index (args, 4));
-  keep_sign = g_value_get_boolean (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  horizontal = g_value_get_boolean (ligma_value_array_index (args, 3));
+  vertical = g_value_get_boolean (ligma_value_array_index (args, 4));
+  keep_sign = g_value_get_boolean (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4168,7 +4168,7 @@ plug_in_sobel_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Sobel"),
                                          node);
           g_object_unref (node);
@@ -4177,34 +4177,34 @@ plug_in_sobel_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_softglow_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_softglow_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble glow_radius;
   gdouble brightness;
   gdouble sharpness;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  glow_radius = g_value_get_double (gimp_value_array_index (args, 3));
-  brightness = g_value_get_double (gimp_value_array_index (args, 4));
-  sharpness = g_value_get_double (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  glow_radius = g_value_get_double (ligma_value_array_index (args, 3));
+  brightness = g_value_get_double (ligma_value_array_index (args, 4));
+  sharpness = g_value_get_double (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4216,7 +4216,7 @@ plug_in_softglow_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_gamma_cast (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Softglow"),
                                          node);
           g_object_unref (node);
@@ -4225,20 +4225,20 @@ plug_in_softglow_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_solid_noise_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_solid_noise_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean tileable;
   gboolean turbulent;
   gint seed;
@@ -4246,24 +4246,24 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
   gdouble xsize;
   gdouble ysize;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tileable = g_value_get_boolean (gimp_value_array_index (args, 3));
-  turbulent = g_value_get_boolean (gimp_value_array_index (args, 4));
-  seed = g_value_get_int (gimp_value_array_index (args, 5));
-  detail = g_value_get_int (gimp_value_array_index (args, 6));
-  xsize = g_value_get_double (gimp_value_array_index (args, 7));
-  ysize = g_value_get_double (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  tileable = g_value_get_boolean (ligma_value_array_index (args, 3));
+  turbulent = g_value_get_boolean (ligma_value_array_index (args, 4));
+  seed = g_value_get_int (ligma_value_array_index (args, 5));
+  detail = g_value_get_int (ligma_value_array_index (args, 6));
+  xsize = g_value_get_double (ligma_value_array_index (args, 7));
+  ysize = g_value_get_double (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
           gint      x, y, width, height;
 
-          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+          ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
           node = gegl_node_new_child (NULL,
                                       "operation", "gegl:noise-solid",
@@ -4277,7 +4277,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
                                       "height",    height,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Solid Noise"),
                                          node);
           g_object_unref (node);
@@ -4286,32 +4286,32 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_spread_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_spread_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble spread_amount_x;
   gdouble spread_amount_y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  spread_amount_x = g_value_get_double (gimp_value_array_index (args, 3));
-  spread_amount_y = g_value_get_double (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  spread_amount_x = g_value_get_double (ligma_value_array_index (args, 3));
+  spread_amount_y = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4321,7 +4321,7 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
                                  "seed",      g_random_int (),
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Spread"),
                                          node);
           g_object_unref (node);
@@ -4330,39 +4330,39 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_threshold_alpha_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint threshold;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  threshold = g_value_get_int (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  threshold = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          gimp_drawable_has_alpha (drawable))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+          ligma_drawable_has_alpha (drawable))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
-                                 "operation", "gimp:threshold-alpha",
+                                 "operation", "ligma:threshold-alpha",
                                  "value",     threshold / 255.0,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Threshold Alpha"),
                                          node);
           g_object_unref (node);
@@ -4371,34 +4371,34 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_unsharp_mask_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_unsharp_mask_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble radius;
   gdouble amount;
   gint threshold;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  radius = g_value_get_double (gimp_value_array_index (args, 3));
-  amount = g_value_get_double (gimp_value_array_index (args, 4));
-  threshold = g_value_get_int (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  radius = g_value_get_double (ligma_value_array_index (args, 3));
+  amount = g_value_get_double (ligma_value_array_index (args, 4));
+  threshold = g_value_get_int (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4408,7 +4408,7 @@ plug_in_unsharp_mask_invoker (GimpProcedure         *procedure,
                                  "threshold", threshold / 255.0,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Sharpen (Unsharp Mask)"),
                                          node);
           g_object_unref (node);
@@ -4417,34 +4417,34 @@ plug_in_unsharp_mask_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_video_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_video_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint pattern_number;
   gboolean additive;
   gboolean rotated;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  pattern_number = g_value_get_int (gimp_value_array_index (args, 3));
-  additive = g_value_get_boolean (gimp_value_array_index (args, 4));
-  rotated = g_value_get_boolean (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  pattern_number = g_value_get_int (ligma_value_array_index (args, 3));
+  additive = g_value_get_boolean (ligma_value_array_index (args, 4));
+  rotated = g_value_get_boolean (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4454,7 +4454,7 @@ plug_in_video_invoker (GimpProcedure         *procedure,
                                  "rotated",   rotated,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Video"),
                                          node);
           g_object_unref (node);
@@ -4463,35 +4463,35 @@ plug_in_video_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_vinvert_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_vinvert_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:value-invert",
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Invert"),
                                          node);
           g_object_unref (node);
@@ -4500,20 +4500,20 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_vpropagate_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_vpropagate_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint propagate_mode;
   gint propagating_channel;
   gdouble propagating_rate;
@@ -4521,22 +4521,22 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
   gint lower_limit;
   gint upper_limit;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  propagate_mode = g_value_get_int (gimp_value_array_index (args, 3));
-  propagating_channel = g_value_get_int (gimp_value_array_index (args, 4));
-  propagating_rate = g_value_get_double (gimp_value_array_index (args, 5));
-  direction_mask = g_value_get_int (gimp_value_array_index (args, 6));
-  lower_limit = g_value_get_int (gimp_value_array_index (args, 7));
-  upper_limit = g_value_get_int (gimp_value_array_index (args, 8));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  propagate_mode = g_value_get_int (ligma_value_array_index (args, 3));
+  propagating_channel = g_value_get_int (ligma_value_array_index (args, 4));
+  propagating_rate = g_value_get_double (ligma_value_array_index (args, 5));
+  direction_mask = g_value_get_int (ligma_value_array_index (args, 6));
+  lower_limit = g_value_get_int (ligma_value_array_index (args, 7));
+  upper_limit = g_value_get_int (ligma_value_array_index (args, 8));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GimpRGB    color;
+          LigmaRGB    color;
           GeglColor *gegl_color = NULL;
           gint       gegl_mode  = 0;
           gboolean   to_left    = (direction_mask & (0x1 << 0)) != 0;
@@ -4561,16 +4561,16 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
                 {
                   gegl_mode = propagate_mode;
 
-                  gimp_context_get_foreground (context, &color);
+                  ligma_context_get_foreground (context, &color);
                 }
               else
                 {
                   gegl_mode = 4;
 
-                  gimp_context_get_background (context, &color);
+                  ligma_context_get_background (context, &color);
                 }
 
-              gegl_color = gimp_gegl_color_new (&color, NULL);
+              gegl_color = ligma_gegl_color_new (&color, NULL);
               break;
 
             case 6:
@@ -4598,7 +4598,7 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
           if (gegl_color)
             g_object_unref (gegl_color);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Propagate"),
                                          node);
           g_object_unref (node);
@@ -4607,28 +4607,28 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_dilate_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_dilate_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4645,7 +4645,7 @@ plug_in_dilate_invoker (GimpProcedure         *procedure,
                                  "alpha",           FALSE,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Dilate"),
                                          node);
           g_object_unref (node);
@@ -4654,28 +4654,28 @@ plug_in_dilate_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_erode_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_erode_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4692,7 +4692,7 @@ plug_in_erode_invoker (GimpProcedure         *procedure,
                                  "alpha",           FALSE,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Erode"),
                                          node);
           g_object_unref (node);
@@ -4701,40 +4701,40 @@ plug_in_erode_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_waves_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_waves_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble amplitude;
   gdouble phase;
   gdouble wavelength;
   gboolean type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  amplitude = g_value_get_double (gimp_value_array_index (args, 3));
-  phase = g_value_get_double (gimp_value_array_index (args, 4));
-  wavelength = g_value_get_double (gimp_value_array_index (args, 5));
-  type = g_value_get_boolean (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  amplitude = g_value_get_double (ligma_value_array_index (args, 3));
+  phase = g_value_get_double (ligma_value_array_index (args, 4));
+  wavelength = g_value_get_double (ligma_value_array_index (args, 5));
+  type = g_value_get_boolean (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node;
-          gdouble   width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          gdouble   height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gdouble   width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+          gdouble   height = ligma_item_get_height (LIGMA_ITEM (drawable));
           gdouble   aspect;
 
           while (phase < 0)
@@ -4755,7 +4755,7 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
                                      "clamp",     ! type,
                                      NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Waves"),
                                          node);
           g_object_unref (node);
@@ -4764,34 +4764,34 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_whirl_pinch_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble whirl;
   gdouble pinch;
   gdouble radius;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  whirl = g_value_get_double (gimp_value_array_index (args, 3));
-  pinch = g_value_get_double (gimp_value_array_index (args, 4));
-  radius = g_value_get_double (gimp_value_array_index (args, 5));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  whirl = g_value_get_double (ligma_value_array_index (args, 3));
+  pinch = g_value_get_double (ligma_value_array_index (args, 4));
+  radius = g_value_get_double (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4803,7 +4803,7 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
 
           node = wrap_in_selection_bounds (node, drawable);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Whirl and Pinch"),
                                          node);
           g_object_unref (node);
@@ -4812,38 +4812,38 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_wind_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+plug_in_wind_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint threshold;
   gint direction;
   gint strength;
   gint algorithm;
   gint edge;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  threshold = g_value_get_int (gimp_value_array_index (args, 3));
-  direction = g_value_get_int (gimp_value_array_index (args, 4));
-  strength = g_value_get_int (gimp_value_array_index (args, 5));
-  algorithm = g_value_get_int (gimp_value_array_index (args, 6));
-  edge = g_value_get_int (gimp_value_array_index (args, 7));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  threshold = g_value_get_int (ligma_value_array_index (args, 3));
+  direction = g_value_get_int (ligma_value_array_index (args, 4));
+  strength = g_value_get_int (ligma_value_array_index (args, 5));
+  algorithm = g_value_get_int (ligma_value_array_index (args, 6));
+  edge = g_value_get_int (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
@@ -4855,7 +4855,7 @@ plug_in_wind_invoker (GimpProcedure         *procedure,
                                  "edge",      edge,
                                  NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Wind"),
                                          node);
           g_object_unref (node);
@@ -4864,4865 +4864,4865 @@ plug_in_wind_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_plug_in_compat_procs (GimpPDB *pdb)
+register_plug_in_compat_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-plug-in-alienmap2
+   * ligma-plug-in-alienmap2
    */
-  procedure = gimp_procedure_new (plug_in_alienmap2_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_alienmap2_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-alienmap2");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Alter colors in various psychedelic ways",
                                   "No help yet. Just try it and you'll see!",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
                                          "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("redfrequency",
                                                     "redfrequency",
                                                     "Red/hue component frequency factor",
                                                     0, 20, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("redangle",
                                                     "redangle",
                                                     "Red/hue component angle factor (0-360)",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("greenfrequency",
                                                     "greenfrequency",
                                                     "Green/saturation component frequency factor",
                                                     0, 20, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("greenangle",
                                                     "greenangle",
                                                     "Green/saturation component angle factor (0-360)",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("bluefrequency",
                                                     "bluefrequency",
                                                     "Blue/luminance component frequency factor",
                                                     0, 20, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("blueangle",
                                                     "blueangle",
                                                     "Blue/luminance component angle factor (0-360)",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("colormodel",
                                                    "colormodel",
                                                    "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("redmode",
                                                    "redmode",
                                                    "Red/hue application mode { TRUE, FALSE }",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("greenmode",
                                                    "greenmode",
                                                    "Green/saturation application mode { TRUE, FALSE }",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("bluemode",
                                                    "bluemode",
                                                    "Blue/luminance application mode { TRUE, FALSE }",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-antialias
+   * ligma-plug-in-antialias
    */
-  procedure = gimp_procedure_new (plug_in_antialias_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_antialias_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-antialias");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Antialias using the Scale3X edge-extrapolation algorithm",
                                   "No more help.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:antialias' for credits.",
                                          "Compatibility procedure. Please see 'gegl:antialias' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-apply-canvas
+   * ligma-plug-in-apply-canvas
    */
-  procedure = gimp_procedure_new (plug_in_apply_canvas_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_apply_canvas_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-apply-canvas");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Add a canvas texture to the image",
                                   "This function applies a canvas texture map to the drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
                                          "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("direction",
                                                  "direction",
                                                  "Light direction (0 - 3)",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("depth",
                                                  "depth",
                                                  "Texture depth (1 - 50)",
                                                  1, 50, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-applylens
+   * ligma-plug-in-applylens
    */
-  procedure = gimp_procedure_new (plug_in_applylens_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_applylens_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-applylens");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate an elliptical lens over the image",
                                   "This plug-in uses Snell's law to draw an ellipsoid lens over the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
                                          "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("refraction",
                                                     "refraction",
                                                     "Lens refraction index",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("keep-surroundings",
                                                      "keep surroundings",
                                                      "Keep lens surroundings",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("set-background",
                                                      "set background",
                                                      "Set lens surroundings to BG value",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("set-transparent",
                                                      "set transparent",
                                                      "Set lens surroundings transparent",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-autocrop
+   * ligma-plug-in-autocrop
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_autocrop_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-autocrop");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Remove empty borders from the image",
                                   "Remove empty borders from the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-autocrop-layer
+   * ligma-plug-in-autocrop-layer
    */
-  procedure = gimp_procedure_new (plug_in_autocrop_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_autocrop_layer_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-autocrop-layer");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Crop the selected layers based on empty borders of the input drawable",
                                   "Crop the selected layers of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily among the cropped layers (the current selected layers).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-autostretch-hsv
+   * ligma-plug-in-autostretch-hsv
    */
-  procedure = gimp_procedure_new (plug_in_autostretch_hsv_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_autostretch_hsv_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-autostretch-hsv");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Stretch contrast to cover the maximum possible range",
                                   "This simple plug-in does an automatic contrast stretch. For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range. For some images it may do just what you want; for others it may be total crap :). This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast-hsv' for credits.",
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast-hsv' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-bump-map
+   * ligma-plug-in-bump-map
    */
-  procedure = gimp_procedure_new (plug_in_bump_map_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_bump_map_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-bump-map");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Create an embossing effect using a bump map",
                                   "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be applied as a bump map to another image and produces a nice embossing effect.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                          "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("bumpmap",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("bumpmap",
                                                          "bumpmap",
                                                          "Bump map drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
                                                     "Azimuth",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("elevation",
                                                     "elevation",
                                                     "Elevation",
                                                     0.5, 90.0, 0.5,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("depth",
                                                  "depth",
                                                  "Depth",
                                                  1, 65, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("xofs",
                                                  "xofs",
                                                  "X offset",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("yofs",
                                                  "yofs",
                                                  "Y offset",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("waterlevel",
                                                     "waterlevel",
                                                     "Level that full transparency should represent",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("ambient",
                                                     "ambient",
                                                     "Ambient lighting factor",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("compensate",
                                                      "compensate",
                                                      "Compensate for darkening",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("invert",
                                                      "invert",
                                                      "Invert bumpmap",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
                                                  "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-bump-map-tiled
+   * ligma-plug-in-bump-map-tiled
    */
-  procedure = gimp_procedure_new (plug_in_bump_map_tiled_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_bump_map_tiled_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-bump-map-tiled");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Create an embossing effect using a tiled image as a bump map",
                                   "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be tiled and applied as a bump map to another image and produces a nice embossing effect.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                          "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("bumpmap",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("bumpmap",
                                                          "bumpmap",
                                                          "Bump map drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
                                                     "Azimuth",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("elevation",
                                                     "elevation",
                                                     "Elevation",
                                                     0.5, 90.0, 0.5,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("depth",
                                                  "depth",
                                                  "Depth",
                                                  1, 65, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("xofs",
                                                  "xofs",
                                                  "X offset",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("yofs",
                                                  "yofs",
                                                  "Y offset",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("waterlevel",
                                                     "waterlevel",
                                                     "Level that full transparency should represent",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("ambient",
                                                     "ambient",
                                                     "Ambient lighting factor",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("compensate",
                                                      "compensate",
                                                      "Compensate for darkening",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("invert",
                                                      "invert",
                                                      "Invert bumpmap",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
                                                  "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-c-astretch
+   * ligma-plug-in-c-astretch
    */
-  procedure = gimp_procedure_new (plug_in_c_astretch_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_c_astretch_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-c-astretch");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Stretch contrast to cover the maximum possible range",
                                   "This simple plug-in does an automatic contrast stretch. For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range. For some images it may do just what you want; for others it may not work that well.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-cartoon
+   * ligma-plug-in-cartoon
    */
-  procedure = gimp_procedure_new (plug_in_cartoon_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_cartoon_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-cartoon");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate a cartoon by enhancing edges",
                                   "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a black felt pen drawing subsequently shaded with color. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the shaded regions of color and much less detail for black areas everywhere including inside regions of color. Small values result in more subtle pen strokes and detail everywhere. Small values for the pct_black make the\n"
                                   "blend from the color regions to the black border lines smoother and the lines themselves thinner and less noticeable; larger values achieve the opposite effect.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
                                          "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("mask-radius",
                                                     "mask radius",
                                                     "Cartoon mask radius (radius of pixel neighborhood)",
                                                     1.0, 50.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pct-black",
                                                     "pct black",
                                                     "Percentage of darkened pixels to set to black",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-colors-channel-mixer
+   * ligma-plug-in-colors-channel-mixer
    */
-  procedure = gimp_procedure_new (plug_in_colors_channel_mixer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_colors_channel_mixer_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-colors-channel-mixer");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Alter colors by mixing RGB Channels",
                                   "This plug-in mixes the RGB channels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
                                          "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("monochrome",
                                                  "monochrome",
                                                  "Monochrome { TRUE, FALSE }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rr-gain",
                                                     "rr gain",
                                                     "Set the red gain for the red channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rg-gain",
                                                     "rg gain",
                                                     "Set the green gain for the red channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rb-gain",
                                                     "rb gain",
                                                     "Set the blue gain for the red channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("gr-gain",
                                                     "gr gain",
                                                     "Set the red gain for the green channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("gg-gain",
                                                     "gg gain",
                                                     "Set the green gain for the green channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("gb-gain",
                                                     "gb gain",
                                                     "Set the blue gain for the green channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("br-gain",
                                                     "br gain",
                                                     "Set the red gain for the blue channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("bg-gain",
                                                     "bg gain",
                                                     "Set the green gain for the blue channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("bb-gain",
                                                     "bb gain",
                                                     "Set the blue gain for the blue channel",
                                                     -2, 2, -2,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-colortoalpha
+   * ligma-plug-in-colortoalpha
    */
-  procedure = gimp_procedure_new (plug_in_colortoalpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_colortoalpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-colortoalpha");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Convert a specified color to transparency",
                                   "This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("color",
                                                     "color",
                                                     "Color to remove",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-convmatrix
+   * ligma-plug-in-convmatrix
    */
-  procedure = gimp_procedure_new (plug_in_convmatrix_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_convmatrix_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-convmatrix");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Apply a generic 5x5 convolution matrix",
                                   "Apply a generic 5x5 convolution matrix.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
                                          "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("argc-matrix",
                                                  "argc matrix",
                                                  "The number of elements in the following array, must always be 25",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("matrix",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("matrix",
                                                             "matrix",
                                                             "The 5x5 convolution matrix",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("alpha-alg",
                                                      "alpha alg",
                                                      "Enable weighting by alpha channel",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("divisor",
                                                     "divisor",
                                                     "Divisor",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("offset",
                                                     "offset",
                                                     "Offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("argc-channels",
                                                  "argc channels",
                                                  "The number of elements in following array, must always be 5",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32_array ("channels",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_int32_array ("channels",
                                                             "channels",
                                                             "Mask of the channels to be filtered",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("bmode",
                                                  "bmode",
                                                  "Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-cubism
+   * ligma-plug-in-cubism
    */
-  procedure = gimp_procedure_new (plug_in_cubism_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_cubism_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-cubism");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Convert the image into randomly rotated square blobs",
                                   "Convert the image into randomly rotated square blobs.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:cubism' for credits.",
                                          "Compatibility procedure. Please see 'gegl:cubism' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-size",
                                                     "tile size",
                                                     "Average diameter of each tile (in pixels)",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-saturation",
                                                     "tile saturation",
                                                     "Expand tiles by this amount",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("bg-color",
                                                  "bg color",
                                                  "Background color { BLACK (0), BG (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-deinterlace
+   * ligma-plug-in-deinterlace
    */
-  procedure = gimp_procedure_new (plug_in_deinterlace_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_deinterlace_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-deinterlace");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Fix images where every other row is missing",
                                   "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
                                          "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("evenodd",
                                                  "evenodd",
                                                  "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-diffraction
+   * ligma-plug-in-diffraction
    */
-  procedure = gimp_procedure_new (plug_in_diffraction_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_diffraction_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-diffraction");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Generate diffraction patterns",
                                   "Help? What help?",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
                                          "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("lam-r",
                                                     "lam r",
                                                     "Light frequency (red)",
                                                     0.0, 20.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("lam-g",
                                                     "lam g",
                                                     "Light frequency (green)",
                                                     0.0, 20.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("lam-b",
                                                     "lam b",
                                                     "Light frequency (blue)",
                                                     0.0, 20.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("contour-r",
                                                     "contour r",
                                                     "Number of contours (red)",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("contour-g",
                                                     "contour g",
                                                     "Number of contours (green)",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("contour-b",
                                                     "contour b",
                                                     "Number of contours (blue)",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("edges-r",
                                                     "edges r",
                                                     "Number of sharp edges (red)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("edges-g",
                                                     "edges g",
                                                     "Number of sharp edges (green)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("edges-b",
                                                     "edges b",
                                                     "Number of sharp edges (blue)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("brightness",
                                                     "brightness",
                                                     "Brightness and shifting/fattening of contours",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("scattering",
                                                     "scattering",
                                                     "Scattering (Speed vs. quality)",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("polarization",
                                                     "polarization",
                                                     "Polarization",
                                                     -1.0, 1.0, -1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-displace
+   * ligma-plug-in-displace
    */
-  procedure = gimp_procedure_new (plug_in_displace_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_displace_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-displace");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Displace pixels as indicated by displacement maps",
                                   "Displaces the contents of the specified drawable by the amounts specified by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding pixels in the 'displace-map' drawables.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                          "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-x",
                                                     "amount x",
                                                     "Displace multiplier for x direction",
                                                     -500.0, 500.0, -500.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-y",
                                                     "amount y",
                                                     "Displace multiplier for y direction",
                                                     -500.0, 500.0, -500.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("do-x",
                                                      "do x",
                                                      "Displace in x direction ?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("do-y",
                                                      "do y",
                                                      "Displace in y direction ?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("displace-map-x",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("displace-map-x",
                                                          "displace map x",
                                                          "Displacement map for x direction",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("displace-map-y",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("displace-map-y",
                                                          "displace map y",
                                                          "Displacement map for y direction",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("displace-type",
                                                  "displace type",
                                                  "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
                                                  1, 3, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-displace-polar
+   * ligma-plug-in-displace-polar
    */
-  procedure = gimp_procedure_new (plug_in_displace_polar_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_displace_polar_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-displace-polar");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Displace pixels as indicated by displacement maps",
                                   "Just like plug-in-displace but working in polar coordinates. The drawable is whirled and pinched according to the map.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                          "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-x",
                                                     "amount x",
                                                     "Displace multiplier for radial direction",
                                                     -500.0, 500.0, -500.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-y",
                                                     "amount y",
                                                     "Displace multiplier for tangent direction",
                                                     -500.0, 500.0, -500.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("do-x",
                                                      "do x",
                                                      "Displace in radial direction ?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("do-y",
                                                      "do y",
                                                      "Displace in tangent direction ?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("displace-map-x",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("displace-map-x",
                                                          "displace map x",
                                                          "Displacement map for radial direction",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("displace-map-y",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("displace-map-y",
                                                          "displace map y",
                                                          "Displacement map for tangent direction",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("displace-type",
                                                  "displace type",
                                                  "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
                                                  1, 3, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-dog
+   * ligma-plug-in-dog
    */
-  procedure = gimp_procedure_new (plug_in_dog_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_dog_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-dog");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Edge detection with control of edge thickness",
                                   "Applies two Gaussian blurs to the drawable, and subtracts the results. This is robust and widely used method for detecting edges.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
                                          "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("inner",
                                                     "inner",
                                                     "Radius of inner gaussian blur in pixels",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("outer",
                                                     "outer",
                                                     "Radius of outer gaussian blur in pixels",
                                                     0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("normalize",
                                                      "normalize",
                                                      "Normalize",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("invert",
                                                      "invert",
                                                      "Invert",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-edge
+   * ligma-plug-in-edge
    */
-  procedure = gimp_procedure_new (plug_in_edge_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_edge_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-edge");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Several simple methods for detecting edges",
                                   "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tileable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                          "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount",
                                                     "amount",
                                                     "Edge detection amount",
                                                     1.0, 10.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("warpmode",
                                                  "warpmode",
                                                  "Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("edgemode",
                                                  "edgemode",
                                                  "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
                                                  0, 5, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-emboss
+   * ligma-plug-in-emboss
    */
-  procedure = gimp_procedure_new (plug_in_emboss_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_emboss_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-emboss");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate an image created by embossing",
                                   "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:emboss' for credits.",
                                          "Compatibility procedure. Please see 'gegl:emboss' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
                                                     "The Light Angle (degrees)",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("elevation",
                                                     "elevation",
                                                     "The Elevation Angle (degrees)",
                                                     0.0, 180, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("depth",
                                                  "depth",
                                                  "The Filter Width",
                                                  1, 99, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("emboss",
                                                      "emboss",
                                                      "Emboss (TRUE), Bumpmap (FALSE)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-engrave
+   * ligma-plug-in-engrave
    */
-  procedure = gimp_procedure_new (plug_in_engrave_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_engrave_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-engrave");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate an antique engraving",
                                   "Creates a black-and-white 'engraved' version of an image as seen in old illustrations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:engrave' for credits.",
                                          "Compatibility procedure. Please see 'gegl:engrave' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "Resolution in pixels",
                                                  2, 16, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("limit",
                                                      "limit",
                                                      "Limit line width",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-exchange
+   * ligma-plug-in-exchange
    */
-  procedure = gimp_procedure_new (plug_in_exchange_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_exchange_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-exchange");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Swap one color with another",
                                   "Exchange one color with another, optionally setting a threshold to convert from one shade to another.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
                                          "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("from-red",
                                                    "from red",
                                                    "Red value (from)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("from-green",
                                                    "from green",
                                                    "Green value (from)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("from-blue",
                                                    "from blue",
                                                    "Blue value (from)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("to-red",
                                                    "to red",
                                                    "Red value (to)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("to-green",
                                                    "to green",
                                                    "Green value (to)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("to-blue",
                                                    "to blue",
                                                    "Blue value (to)",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("red-threshold",
                                                    "red threshold",
                                                    "Red threshold",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("green-threshold",
                                                    "green threshold",
                                                    "Green threshold",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("blue-threshold",
                                                    "blue threshold",
                                                    "Blue threshold",
                                                    0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-flarefx
+   * ligma-plug-in-flarefx
    */
-  procedure = gimp_procedure_new (plug_in_flarefx_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_flarefx_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-flarefx");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Add a lens flare effect",
                                   "Adds a lens flare effects. Makes your image look like it was snapped with a cheap camera with a lot of lens :)",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
                                          "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pos-x",
                                                  "pos x",
                                                  "X-Position",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pos-y",
                                                  "pos y",
                                                  "Y-Position",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-fractal-trace
+   * ligma-plug-in-fractal-trace
    */
-  procedure = gimp_procedure_new (plug_in_fractal_trace_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_fractal_trace_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-fractal-trace");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Transform image with the Mandelbrot Fractal",
                                   "Transform image with the Mandelbrot Fractal",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:fractal-trace' for credits.",
                                          "Compatibility procedure. Please see 'gegl:fractal-trace' for credits.",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xmin",
                                                     "xmin",
                                                     "xmin fractal image delimiter",
                                                     -50.0, 50.0, -50.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xmax",
                                                     "xmax",
                                                     "xmax fractal image delimiter",
                                                     -50.0, 50.0, -50.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("ymin",
                                                     "ymin",
                                                     "ymin fractal image delimiter",
                                                     -50.0, 50.0, -50.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("ymax",
                                                     "ymax",
                                                     "ymax fractal image delimiter",
                                                     -50.0, 50.0, -50.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("depth",
                                                  "depth",
                                                  "Trace depth",
                                                  1, 65536, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("outside-type",
                                                  "outside type",
                                                  "Outside type { WRAP (0), TRANS (1), BLACK (2), WHITE (3) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-gauss
+   * ligma-plug-in-gauss
    */
-  procedure = gimp_procedure_new (plug_in_gauss_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_gauss_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-gauss");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simplest, most commonly used way of blurring",
                                   "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run. The 'method' parameter is ignored.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
                                                     "Horizontal radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("vertical",
                                                     "vertical",
                                                     "Vertical radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("method",
                                                  "method",
                                                  "Blur method { IIR (0), RLE (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-gauss-iir
+   * ligma-plug-in-gauss-iir
    */
-  procedure = gimp_procedure_new (plug_in_gauss_iir_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_gauss_iir_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-gauss-iir");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Apply a gaussian blur",
                                   "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
                                                      "horizontal",
                                                      "Blur in horizontal direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("vertical",
                                                      "vertical",
                                                      "Blur in vertical direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-gauss-iir2
+   * ligma-plug-in-gauss-iir2
    */
-  procedure = gimp_procedure_new (plug_in_gauss_iir2_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_gauss_iir2_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-gauss-iir2");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Apply a gaussian blur",
                                   "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
                                                     "Horizontal radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("vertical",
                                                     "vertical",
                                                     "Vertical radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-gauss-rle
+   * ligma-plug-in-gauss-rle
    */
-  procedure = gimp_procedure_new (plug_in_gauss_rle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_gauss_rle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-gauss-rle");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Apply a gaussian blur",
                                   "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
                                                      "horizontal",
                                                      "Blur in horizontal direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("vertical",
                                                      "vertical",
                                                      "Blur in vertical direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-gauss-rle2
+   * ligma-plug-in-gauss-rle2
    */
-  procedure = gimp_procedure_new (plug_in_gauss_rle2_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_gauss_rle2_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-gauss-rle2");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Apply a gaussian blur",
                                   "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
                                                     "Horizontal radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("vertical",
                                                     "vertical",
                                                     "Vertical radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-glasstile
+   * ligma-plug-in-glasstile
    */
-  procedure = gimp_procedure_new (plug_in_glasstile_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_glasstile_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-glasstile");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate distortion caused by square glass tiles",
                                   "Divide the image into square glassblocks in which the image is refracted.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
                                          "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tilex",
                                                  "tilex",
                                                  "Tile width",
                                                  10, 500, 10,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tiley",
                                                  "tiley",
                                                  "Tile height",
                                                  10, 500, 10,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-hsv-noise
+   * ligma-plug-in-hsv-noise
    */
-  procedure = gimp_procedure_new (plug_in_hsv_noise_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_hsv_noise_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-hsv-noise");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Randomize hue, saturation and value independently",
                                   "Scattering pixel values in HSV space",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("holdness",
                                                  "holdness",
                                                  "Convolution strength",
                                                  1, 8, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("hue-distance",
                                                  "hue distance",
                                                  "Scattering of hue angle",
                                                  0, 180, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("saturation-distance",
                                                  "saturation distance",
                                                  "Distribution distance on saturation axis",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("value-distance",
                                                  "value distance",
                                                  "Distribution distance on value axis",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-illusion
+   * ligma-plug-in-illusion
    */
-  procedure = gimp_procedure_new (plug_in_illusion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_illusion_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-illusion");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Superimpose many altered copies of the image",
                                   "Produce illusion.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:illusion' for credits.",
                                          "Compatibility procedure. Please see 'gegl:illusion' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("division",
                                                  "division",
                                                  "The number of divisions",
                                                  0, 64, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
                                                  "Illusion type { TYPE1 (0), TYPE2 (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-laplace
+   * ligma-plug-in-laplace
    */
-  procedure = gimp_procedure_new (plug_in_laplace_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_laplace_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-laplace");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "High-resolution edge detection",
                                   "This plug-in creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
                                          "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-lens-distortion
+   * ligma-plug-in-lens-distortion
    */
-  procedure = gimp_procedure_new (plug_in_lens_distortion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_lens_distortion_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-lens-distortion");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Corrects lens distortion",
                                   "Corrects barrel or pincushion lens distortion.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:lens-distortion' for credits.",
                                          "Compatibility procedure. Please see 'gegl:lens-distortion' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("offset-x",
                                                     "offset x",
                                                     "Effect centre offset in X",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("offset-y",
                                                     "offset y",
                                                     "Effect centre offset in Y",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("main-adjust",
                                                     "main adjust",
                                                     "Amount of second-order distortion",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("edge-adjust",
                                                     "edge adjust",
                                                     "Amount of fourth-order distortion",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rescale",
                                                     "rescale",
                                                     "Rescale overall image size",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("brighten",
                                                     "brighten",
                                                     "Adjust brightness in corners",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-make-seamless
+   * ligma-plug-in-make-seamless
    */
-  procedure = gimp_procedure_new (plug_in_make_seamless_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_make_seamless_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-make-seamless");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Alters edges to make the image seamlessly tileable",
                                   "This plug-in creates a seamless tileable from the input drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:tile-seamless' for credits.",
                                          "Compatibility procedure. Please see 'gegl:tile-seamless' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-maze
+   * ligma-plug-in-maze
    */
-  procedure = gimp_procedure_new (plug_in_maze_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_maze_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-maze");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Draw a labyrinth",
                                   "Generates a maze using either the depth-first search method or Prim's algorithm. Can make tileable mazes too.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:maze' for credits.",
                                          "Compatibility procedure. Please see 'gegl:maze' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "Width of the passages",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "Height of the passages",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("tileable",
                                                    "tileable",
                                                    "Tileable maze? (TRUE or FALSE)",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_uchar ("algorithm",
                                                    "algorithm",
                                                    "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
                                                    0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                   LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Random Seed",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("multiple",
                                                  "multiple",
                                                  "Multiple (use 57)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offset",
                                                  "offset",
                                                  "Offset (use 1)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-mblur
+   * ligma-plug-in-mblur
    */
-  procedure = gimp_procedure_new (plug_in_mblur_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_mblur_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-mblur");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate movement using directional blur",
                                   "This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
                                                  "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("length",
                                                     "length",
                                                     "Length",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "Angle",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-x",
                                                     "center x",
                                                     "Center X",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-y",
                                                     "center y",
                                                     "Center Y",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-mblur-inward
+   * ligma-plug-in-mblur-inward
    */
-  procedure = gimp_procedure_new (plug_in_mblur_inward_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_mblur_inward_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-mblur-inward");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate movement using directional blur",
                                   "This procedure is equivalent to plug-in-mblur but performs the zoom blur inward instead of outward.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -circular' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
                                                  "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("length",
                                                     "length",
                                                     "Length",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "Angle",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-x",
                                                     "center x",
                                                     "Center X",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("center-y",
                                                     "center y",
                                                     "Center Y",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-median-blur
+   * ligma-plug-in-median-blur
    */
-  procedure = gimp_procedure_new (plug_in_median_blur_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_median_blur_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-median-blur");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Blur using the median color near each pixel",
                                   "Blur resulting from computing the median color in the neighborhood of each pixel",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:median-blur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:median-blur' for credits.",
                                          "2021");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("radius",
                                                  "radius",
                                                  "Neighborhood radius, a negative value will calculate with inverted percentiles",
                                                  -400, 400, -400,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("percentile",
                                                     "percentile",
                                                     "Neighborhood color percentile",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-mosaic
+   * ligma-plug-in-mosaic
    */
-  procedure = gimp_procedure_new (plug_in_mosaic_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_mosaic_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-mosaic");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Convert the image into irregular tiles",
                                   "Mosaic is a filter which transforms an image into what appears to be a mosaic, composed of small primitives, each of constant color and of an approximate size.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
                                          "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-size",
                                                     "tile size",
                                                     "Average diameter of each tile (in pixels)",
                                                     1, 1000, 1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-height",
                                                     "tile height",
                                                     "Apparent height of each tile (in pixels)",
                                                     1, 1000, 1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-spacing",
                                                     "tile spacing",
                                                     "Inter_tile spacing (in pixels)",
                                                     0.1, 1000, 0.1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-neatness",
                                                     "tile neatness",
                                                     "Deviation from perfectly formed tiles",
                                                     0, 1.0, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tile-allow-split",
                                                  "tile allow split",
                                                  "Allows splitting tiles at hard edges",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("light-dir",
                                                     "light dir",
                                                     "Direction of light_source (in degrees)",
                                                     0, 360, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("color-variation",
                                                     "color variation",
                                                     "Magnitude of random color variations",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("antialiasing",
                                                  "antialiasing",
                                                  "Enables smoother tile output at the cost of speed",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("color-averaging",
                                                  "color averaging",
                                                  "Tile color based on average of subsumed pixels",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tile-type",
                                                  "tile type",
                                                  "Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tile-surface",
                                                  "tile surface",
                                                  "Surface characteristics { SMOOTH (0), ROUGH (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("grout-color",
                                                  "grout color",
                                                  "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-neon
+   * ligma-plug-in-neon
    */
-  procedure = gimp_procedure_new (plug_in_neon_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_neon_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-neon");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate the glowing boundary of a neon light",
                                   "This filter works in a manner similar to the edge plug-in, but uses the first derivative of the gaussian operator to achieve resolution independence. The IIR method of calculating the effect is utilized to keep the processing time constant between large and small standard deviations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
                                          "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of neon effect (in pixels)",
                                                     0.0, 1500.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount",
                                                     "amount",
                                                     "Effect enhancement variable",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-newsprint
+   * ligma-plug-in-newsprint
    */
-  procedure = gimp_procedure_new (plug_in_newsprint_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_newsprint_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-newsprint");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Halftone the image to give newspaper-like effect",
                                   "Halftone the image to give newspaper-like effect",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
                                          "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("cell-width",
                                                  "cell width",
                                                  "Screen cell width in pixels",
                                                  0, 1500, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("colorspace",
                                                  "colorspace",
                                                  "Separate to { GRAYSCALE (0), RGB (1), CMYK (2), LUMINANCE (3) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("k-pullout",
                                                  "k pullout",
                                                  "Percentage of black to pullout (CMYK only)",
                                                  0, 100, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("gry-ang",
                                                     "gry ang",
                                                     "Grey/black screen angle (degrees)",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("gry-spotfn",
                                                  "gry spotfn",
                                                  "Grey/black spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
                                                  0, 4, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("red-ang",
                                                     "red ang",
                                                     "Red/cyan screen angle (degrees)",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("red-spotfn",
                                                  "red spotfn",
                                                  "Red/cyan spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
                                                  0, 4, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("grn-ang",
                                                     "grn ang",
                                                     "Green/magenta screen angle (degrees)",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("grn-spotfn",
                                                  "grn spotfn",
                                                  "Green/magenta spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
                                                  0, 4, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("blu-ang",
                                                     "blu ang",
                                                     "Blue/yellow screen angle (degrees)",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("blu-spotfn",
                                                  "blu spotfn",
                                                  "Blue/yellow spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
                                                  0, 4, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("oversample",
                                                  "oversample",
                                                  "how many times to oversample spot fn",
                                                  0, 128, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-normalize
+   * ligma-plug-in-normalize
    */
-  procedure = gimp_procedure_new (plug_in_normalize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_normalize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-normalize");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Stretch brightness values to cover the full range",
                                   "This plug-in performs almost the same operation as the 'contrast autostretch' plug-in, except that it won't allow the color channels to normalize independently. This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                          "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-nova
+   * ligma-plug-in-nova
    */
-  procedure = gimp_procedure_new (plug_in_nova_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_nova_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-nova");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Add a starburst to the image",
                                   "This plug-in produces an effect like a supernova burst. The amount of the light effect is approximately in proportion to 1/r, where r is the distance from the center of the star.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:supernova' for credits.",
                                          "Compatibility procedure. Please see 'gegl:supernova' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("xcenter",
                                                  "xcenter",
                                                  "X coordinates of the center of supernova",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("ycenter",
                                                  "ycenter",
                                                  "Y coordinates of the center of supernova",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("color",
                                                     "color",
                                                     "Color of supernova",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("radius",
                                                  "radius",
                                                  "Radius of supernova",
                                                  1, 3000, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("nspoke",
                                                  "nspoke",
                                                  "Number of spokes",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("randomhue",
                                                  "randomhue",
                                                  "Random hue",
                                                  0, 360, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-oilify
+   * ligma-plug-in-oilify
    */
-  procedure = gimp_procedure_new (plug_in_oilify_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_oilify_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-oilify");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Smear colors to simulate an oil painting",
                                   "This function performs the well-known oil-paint effect on the specified drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                          "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("mask-size",
                                                  "mask size",
                                                  "Oil paint mask size",
                                                  1, 200, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("mode",
                                                  "mode",
                                                  "Algorithm { RGB (0), INTENSITY (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-oilify-enhanced
+   * ligma-plug-in-oilify-enhanced
    */
-  procedure = gimp_procedure_new (plug_in_oilify_enhanced_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_oilify_enhanced_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-oilify-enhanced");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Smear colors to simulate an oil painting",
                                   "This function performs the well-known oil-paint effect on the specified drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                          "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("mode",
                                                  "mode",
                                                  "Algorithm { RGB (0), INTENSITY (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("mask-size",
                                                  "mask size",
                                                  "Oil paint mask size",
                                                  1, 200, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("mask-size-map",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("mask-size-map",
                                                          "mask size map",
                                                          "Mask size control map",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("exponent",
                                                  "exponent",
                                                  "Oil paint exponent",
                                                  1, 20, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("exponent-map",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("exponent-map",
                                                          "exponent map",
                                                          "Exponent control map",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-papertile
+   * ligma-plug-in-papertile
    */
-  procedure = gimp_procedure_new (plug_in_papertile_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_papertile_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-papertile");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Cut image into paper tiles, and slide them",
                                   "This plug-in cuts an image into paper tiles and slides each paper tile.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
                                          "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("tile-size",
                                                  "tile size",
                                                  "Tile size (pixels)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("move-max",
                                                     "move max",
                                                     "Max move rate (%)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("fractional-type",
                                                  "fractional type",
                                                  "Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("wrap-around",
                                                      "wrap around",
                                                      "Wrap around",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("centering",
                                                      "centering",
                                                      "Centering",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("background-type",
                                                  "background type",
                                                  "Background type { TRANSPARENT (0), INVERTED (1), IMAGE (2), FG (3), BG (4), COLOR (5) }",
                                                  0, 5, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("background-color",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("background-color",
                                                     "background color",
                                                     "Background color (for background-type == 5)",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("background-alpha",
                                                  "background alpha",
                                                  "Background alpha (unused)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-photocopy
+   * ligma-plug-in-photocopy
    */
-  procedure = gimp_procedure_new (plug_in_photocopy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_photocopy_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-photocopy");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate color distortion produced by a copy machine",
                                   "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a photocopied version of the image, with toner transferred based on the relative darkness of a particular region. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average and setting other pixels to white. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the regions of white and much less detail for black areas everywhere including inside regions of color. Small values result in\n"
                                   "less toner overall and more detail everywhere. Small values for the pct_black make the blend from the white regions to the black border lines smoother and the toner regions themselves thinner and less noticeable; larger values achieve the opposite effect.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
                                          "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("mask-radius",
                                                     "mask radius",
                                                     "Photocopy mask radius (radius of pixel neighborhood)",
                                                     3.0, 50.0, 3.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("sharpness",
                                                     "sharpness",
                                                     "Sharpness (detail level)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pct-black",
                                                     "pct black",
                                                     "Percentage of darkened pixels to set to black",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pct-white",
                                                     "pct white",
                                                     "Percentage of non-darkened pixels left white",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-pixelize
+   * ligma-plug-in-pixelize
    */
-  procedure = gimp_procedure_new (plug_in_pixelize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_pixelize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-pixelize");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simplify image into an array of solid-colored squares",
                                   "Pixelize the contents of the specified drawable with specified pixelizing width.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pixel-width",
                                                  "pixel width",
                                                  "Pixel width (the decrease in resolution)",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-pixelize2
+   * ligma-plug-in-pixelize2
    */
-  procedure = gimp_procedure_new (plug_in_pixelize2_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_pixelize2_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-pixelize2");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simplify image into an array of solid-colored rectangles",
                                   "Pixelize the contents of the specified drawable with specified pixelizing width and height.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pixel-width",
                                                  "pixel width",
                                                  "Pixel width (the decrease in horizontal resolution)",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pixel-height",
                                                  "pixel height",
                                                  "Pixel height (the decrease in vertical resolution)",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-plasma
+   * ligma-plug-in-plasma
    */
-  procedure = gimp_procedure_new (plug_in_plasma_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_plasma_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-plasma");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Create a random plasma texture",
                                   "This plug-in produces plasma fractal images.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:plasma' for credits.",
                                          "Compatibility procedure. Please see 'gegl:plasma' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Random seed",
                                                  -1, G_MAXINT, -1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("turbulence",
                                                     "turbulence",
                                                     "The value of the turbulence",
                                                     0.0, 7.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-polar-coords
+   * ligma-plug-in-polar-coords
    */
-  procedure = gimp_procedure_new (plug_in_polar_coords_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_polar_coords_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-polar-coords");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Convert image to or from polar coordinates",
                                   "Remaps and image from rectangular coordinates to polar coordinates or vice versa.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("circle",
                                                     "circle",
                                                     "Circle depth in %",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
                                                     "Offset angle",
                                                     0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("backwards",
                                                      "backwards",
                                                      "Map backwards",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("inverse",
                                                      "inverse",
                                                      "Map from top",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("polrec",
                                                      "polrec",
                                                      "Polar to rectangular",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-red-eye-removal
+   * ligma-plug-in-red-eye-removal
    */
-  procedure = gimp_procedure_new (plug_in_red_eye_removal_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_red_eye_removal_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-red-eye-removal");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Remove the red eye effect caused by camera flashes",
                                   "This procedure removes the red eye effect caused by camera flashes by using a percentage based red color threshold. Make a selection containing the eyes, and apply the filter while adjusting the threshold to accurately remove the red eyes.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:red-eye-removal' for credits.",
                                          "Compatibility procedure. Please see 'gegl:red-eye-removal' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
                                                  "Red eye threshold in percent",
                                                  0, 100, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-randomize-hurl
+   * ligma-plug-in-randomize-hurl
    */
-  procedure = gimp_procedure_new (plug_in_randomize_hurl_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_randomize_hurl_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-randomize-hurl");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Completely randomize a fraction of pixels",
                                   "This plug-in \"hurls\" randomly-valued pixels onto the selection or image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
                                                     "Randomization percentage",
                                                     0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-rcount",
                                                     "rndm rcount",
                                                     "Repeat count",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("randomize",
                                                      "randomize",
                                                      "Use random seed",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Seed value (used only if randomize is FALSE)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-randomize-pick
+   * ligma-plug-in-randomize-pick
    */
-  procedure = gimp_procedure_new (plug_in_randomize_pick_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_randomize_pick_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-randomize-pick");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Randomly interchange some pixels with neighbors",
                                   "This plug-in replaces a pixel with a random adjacent pixel. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
                                                     "Randomization percentage",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-rcount",
                                                     "rndm rcount",
                                                     "Repeat count",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("randomize",
                                                      "randomize",
                                                      "Use random seed",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Seed value (used only if randomize is FALSE)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-randomize-slur
+   * ligma-plug-in-randomize-slur
    */
-  procedure = gimp_procedure_new (plug_in_randomize_slur_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_randomize_slur_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-randomize-slur");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Randomly slide some pixels downward (similar to melting",
                                   "This plug-in \"slurs\" (melts like a bunch of icicles) an image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
                                                     "Randomization percentage",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-rcount",
                                                     "rndm rcount",
                                                     "Repeat count",
                                                     1.0, 100.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("randomize",
                                                      "randomize",
                                                      "Use random seed",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Seed value (used only if randomize is FALSE)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-rgb-noise
+   * ligma-plug-in-rgb-noise
    */
-  procedure = gimp_procedure_new (plug_in_rgb_noise_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_rgb_noise_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-rgb-noise");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Distort colors by random amounts",
                                   "Add normally distributed (zero mean) random values to image channels. Noise may be additive (uncorrelated) or multiplicative (correlated - also known as speckle noise). For color images color channels may be treated together or independently.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("independent",
                                                      "independent",
                                                      "Noise in channels independent",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("correlated",
                                                      "correlated",
                                                      "Noise correlated (i.e. multiplicative not additive)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-1",
                                                     "noise 1",
                                                     "Noise in the first channel (red, gray)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-2",
                                                     "noise 2",
                                                     "Noise in the second channel (green, gray_alpha)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-3",
                                                     "noise 3",
                                                     "Noise in the third channel (blue)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-4",
                                                     "noise 4",
                                                     "Noise in the fourth channel (alpha)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-ripple
+   * ligma-plug-in-ripple
    */
-  procedure = gimp_procedure_new (plug_in_ripple_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_ripple_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-ripple");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Displace pixels in a ripple pattern",
                                   "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:ripple' for credits.",
                                          "Compatibility procedure. Please see 'gegl:ripple' for credits.",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("period",
                                                  "period",
                                                  "Period: number of pixels for one wave to complete",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("amplitude",
                                                  "amplitude",
                                                  "Amplitude: maximum displacement of wave",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("orientation",
                                                  "orientation",
                                                  "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("edges",
                                                  "edges",
                                                  "Edges { SMEAR (0), WRAP (1), BLANK (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("waveform",
                                                  "waveform",
                                                  "Waveform { SAWTOOTH (0), SINE (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
                                                      "Antialias { TRUE, FALSE }",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tile",
                                                      "tile",
                                                      "Tileable { TRUE, FALSE }",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-rotate
+   * ligma-plug-in-rotate
    */
-  procedure = gimp_procedure_new (plug_in_rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_rotate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-rotate");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Rotates a layer or the whole image by 90, 180 or 270 degrees",
                                   "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is chosen, the image is resized if necessary.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("angle",
                                                  "angle",
                                                  "Angle { 90 (1), 180 (2), 270 (3) } degrees",
                                                  1, 3, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("everything",
                                                      "everything",
                                                      "Rotate the whole image",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-noisify
+   * ligma-plug-in-noisify
    */
-  procedure = gimp_procedure_new (plug_in_noisify_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_noisify_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-noisify");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Adds random noise to image channels",
                                   "Add normally distributed random values to image channels. For color images each color channel may be treated together or independently.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("independent",
                                                      "independent",
                                                      "Noise in channels independent",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-1",
                                                     "noise 1",
                                                     "Noise in the first channel (red, gray)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-2",
                                                     "noise 2",
                                                     "Noise in the second channel (green, gray_alpha)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-3",
                                                     "noise 3",
                                                     "Noise in the third channel (blue)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("noise-4",
                                                     "noise 4",
                                                     "Noise in the fourth channel (alpha)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-sel-gauss
+   * ligma-plug-in-sel-gauss
    */
-  procedure = gimp_procedure_new (plug_in_sel_gauss_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_sel_gauss_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-sel-gauss");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Blur neighboring pixels, but only in low-contrast areas",
                                   "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
                                          "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
                                          "2099");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of gaussian blur (in pixels)",
                                                     0.0, G_MAXDOUBLE, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("max-delta",
                                                  "max delta",
                                                  "Maximum delta",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-semiflatten
+   * ligma-plug-in-semiflatten
    */
-  procedure = gimp_procedure_new (plug_in_semiflatten_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_semiflatten_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-semiflatten");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Replace partial transparency with the current background color",
-                                  "This plug-in flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background color.",
+                                  "This plug-in flattens pixels in an RGBA image that aren't completely transparent against the current LIGMA background color.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-shift
+   * ligma-plug-in-shift
    */
-  procedure = gimp_procedure_new (plug_in_shift_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_shift_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-shift");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Shift each row or column of pixels by a random amount",
                                   "Shifts the pixels of the specified drawable. Each row or column will be displaced a random value of pixels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:shift' for credits.",
                                          "Compatibility procedure. Please see 'gegl:shift' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("shift-amount",
                                                  "shift amount",
                                                  "Shift amount",
                                                  0, 200, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("orientation",
                                                  "orientation",
                                                  "Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-sinus
+   * ligma-plug-in-sinus
    */
-  procedure = gimp_procedure_new (plug_in_sinus_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_sinus_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-sinus");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Generate complex sinusoidal textures",
                                   "FIXME: sinus help",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:sinus' for credits.",
                                          "Compatibility procedure. Please see 'gegl:sinus' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xscale",
                                                     "xscale",
                                                     "Scale value for x axis",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("yscale",
                                                     "yscale",
                                                     "Scale value for y axis",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("complex",
                                                     "complex",
                                                     "Complexity factor",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Seed value for random number generator",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tiling",
                                                      "tiling",
                                                      "If set, the pattern generated will tile",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("perturb",
                                                      "perturb",
                                                      "If set, the pattern is a little more distorted...",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("colors",
                                                  "colors",
                                                  "where to take the colors (0=B&W, 1=fg/bg, 2=col1/col2)",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("col1",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("col1",
                                                     "col1",
                                                     "fist color (sometimes unused)",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("col2",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("col2",
                                                     "col2",
                                                     "second color (sometimes unused)",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("alpha1",
                                                     "alpha1",
                                                     "alpha for the first color (used if the drawable has an alpha channel)",
                                                     0, 1, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("alpha2",
                                                     "alpha2",
                                                     "alpha for the second color (used if the drawable has an alpha channel)",
                                                     0, 1, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("blend",
                                                  "blend",
                                                  "0=linear, 1=bilinear, 2=sinusoidal",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("blend-power",
                                                     "blend power",
                                                     "Power used to stretch the blend",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-sobel
+   * ligma-plug-in-sobel
    */
-  procedure = gimp_procedure_new (plug_in_sobel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_sobel_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-sobel");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Specialized direction-dependent edge detection",
                                   "This plug-in calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolute value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.\"",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
                                          "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
                                                      "horizontal",
                                                      "Sobel in horizontal direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("vertical",
                                                      "vertical",
                                                      "Sobel in vertical direction",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("keep-sign",
                                                      "keep sign",
                                                      "Keep sign of result (one direction only)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-softglow
+   * ligma-plug-in-softglow
    */
-  procedure = gimp_procedure_new (plug_in_softglow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_softglow_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-softglow");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate glow by making highlights intense and fuzzy",
                                   "Gives an image a softglow effect by intensifying the highlights in the image. This is done by screening a modified version of the drawable with itself. The modified version is desaturated and then a sigmoidal transfer function is applied to force the distribution of intensities into very small and very large only. This desaturated version is then blurred to give it a fuzzy 'vaseline-on-the-lens' effect. The glow radius parameter controls the sharpness of the glow effect. The brightness parameter controls the degree of intensification applied to image highlights. The sharpness parameter controls how defined or alternatively, diffuse, the glow effect should be.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:softglow' for credits.",
                                          "Compatibility procedure. Please see 'gegl:softglow' for credits.",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("glow-radius",
                                                     "glow radius",
                                                     "Glow radius in pixels",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("brightness",
                                                     "brightness",
                                                     "Glow brightness",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("sharpness",
                                                     "sharpness",
                                                     "Glow sharpness",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-solid-noise
+   * ligma-plug-in-solid-noise
    */
-  procedure = gimp_procedure_new (plug_in_solid_noise_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_solid_noise_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-solid-noise");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Create a random cloud-like texture",
                                   "Generates 2D textures using Perlin's classic solid noise function.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tileable",
                                                      "tileable",
                                                      "Create a tileable output",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("turbulent",
                                                      "turbulent",
                                                      "Make a turbulent noise",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
                                                  "Random seed",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("detail",
                                                  "detail",
                                                  "Detail level",
                                                  0, 15, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xsize",
                                                     "xsize",
                                                     "Horizontal texture size",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("ysize",
                                                     "ysize",
                                                     "Vertical texture size",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-spread
+   * ligma-plug-in-spread
    */
-  procedure = gimp_procedure_new (plug_in_spread_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_spread_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-spread");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Move pixels around randomly",
                                   "Spreads the pixels of the specified drawable. Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
                                          "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("spread-amount-x",
                                                     "spread amount x",
                                                     "Horizontal spread amount",
                                                     0, 200, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("spread-amount-y",
                                                     "spread amount y",
                                                     "Vertical spread amount",
                                                     0, 200, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-threshold-alpha
+   * ligma-plug-in-threshold-alpha
    */
-  procedure = gimp_procedure_new (plug_in_threshold_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_threshold_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-threshold-alpha");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Make transparency all-or-nothing",
                                   "Make transparency all-or-nothing.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
                                                  "Threshold",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-unsharp-mask
+   * ligma-plug-in-unsharp-mask
    */
-  procedure = gimp_procedure_new (plug_in_unsharp_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_unsharp_mask_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-unsharp-mask");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "The most widely useful method for sharpening an image",
                                   "The unsharp mask is a sharpening filter that works by comparing using the difference of the image and a blurred version of the image. It is commonly used on photographic images, and is provides a much more pleasing result than the standard sharpen filter.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:unsharp-mask' for credits.",
                                          "Compatibility procedure. Please see 'gegl:unsharp-mask' for credits.",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of gaussian blur",
                                                     0.0, 300.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amount",
                                                     "amount",
                                                     "Strength of effect",
                                                     0.0, 300.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
                                                  "Threshold",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-video
+   * ligma-plug-in-video
    */
-  procedure = gimp_procedure_new (plug_in_video_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_video_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-video");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Simulate distortion produced by a fuzzy or low-res monitor",
                                   "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
                                          "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
                                          "2014");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("pattern-number",
                                                  "pattern number",
                                                  "Type of RGB pattern to use",
                                                  0, 8, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("additive",
                                                      "additive",
                                                      "Whether the function adds the result to the original image",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("rotated",
                                                      "rotated",
                                                      "Whether to rotate the RGB pattern by ninety degrees",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-vinvert
+   * ligma-plug-in-vinvert
    */
-  procedure = gimp_procedure_new (plug_in_vinvert_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_vinvert_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-vinvert");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Invert the brightness of each pixel",
                                   "This function takes an indexed/RGB image and inverts its 'value' in HSV space. The upshot of this is that the color and saturation at any given point remains the same, but its brightness is effectively inverted. Quite strange. Sometimes produces unpleasant color artifacts on images from lossy sources (ie. JPEG).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-vpropagate
+   * ligma-plug-in-vpropagate
    */
-  procedure = gimp_procedure_new (plug_in_vpropagate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_vpropagate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-vpropagate");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Propagate certain colors to neighboring pixels",
                                   "Propagate values of the layer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
                                                  "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
                                                  0, 7, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagating-channel",
                                                  "propagating channel",
                                                  "Channels which values are propagated",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
                                                     "Propagating rate",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("direction-mask",
                                                  "direction mask",
                                                  "Direction mask",
                                                  0, 15, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("lower-limit",
                                                  "lower limit",
                                                  "Lower limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("upper-limit",
                                                  "upper limit",
                                                  "Upper limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-dilate
+   * ligma-plug-in-dilate
    */
-  procedure = gimp_procedure_new (plug_in_dilate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_dilate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-dilate");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Grow lighter areas of the image",
                                   "Dilate image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
                                                  "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
                                                  0, 7, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagating-channel",
                                                  "propagating channel",
                                                  "Channels which values are propagated",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
                                                     "Propagating rate",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("direction-mask",
                                                  "direction mask",
                                                  "Direction mask",
                                                  0, 15, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("lower-limit",
                                                  "lower limit",
                                                  "Lower limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("upper-limit",
                                                  "upper limit",
                                                  "Upper limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-erode
+   * ligma-plug-in-erode
    */
-  procedure = gimp_procedure_new (plug_in_erode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_erode_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-erode");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Shrink lighter areas of the image",
                                   "Erode image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
                                                  "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
                                                  0, 7, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("propagating-channel",
                                                  "propagating channel",
                                                  "Channels which values are propagated",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
                                                     "Propagating rate",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("direction-mask",
                                                  "direction mask",
                                                  "Direction mask",
                                                  0, 15, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("lower-limit",
                                                  "lower limit",
                                                  "Lower limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("upper-limit",
                                                  "upper limit",
                                                  "Upper limit",
                                                  0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-waves
+   * ligma-plug-in-waves
    */
-  procedure = gimp_procedure_new (plug_in_waves_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_waves_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-waves");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Distort the image with waves",
                                   "Distort the image with waves.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:waves' for credits.",
                                          "Compatibility procedure. Please see 'gegl:waves' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("amplitude",
                                                     "amplitude",
                                                     "The Amplitude of the Waves",
                                                     0, 101, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("phase",
                                                     "phase",
                                                     "The Phase of the Waves",
                                                     -360, 360, -360,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("wavelength",
                                                     "wavelength",
                                                     "The Wavelength of the Waves",
                                                     0.1, 50, 0.1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("type",
                                                      "type",
                                                      "Type of waves: { 0 = smeared, 1 = black }",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reflective",
                                                      "reflective",
                                                      "Use Reflection (not implemented)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-whirl-pinch
+   * ligma-plug-in-whirl-pinch
    */
-  procedure = gimp_procedure_new (plug_in_whirl_pinch_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_whirl_pinch_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-whirl-pinch");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Distort an image by whirling and pinching",
                                   "Distorts the image by whirling and pinching, which are two common center-based, circular distortions. Whirling is like projecting the image onto the surface of water in a toilet and flushing. Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:whirl-pinch' for credits.",
                                          "Compatibility procedure. Please see 'gegl:whirl-pinch' for credits.",
                                          "2013");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("whirl",
                                                     "whirl",
                                                     "Whirl angle (degrees)",
                                                     -720, 720, -720,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("pinch",
                                                     "pinch",
                                                     "Pinch amount",
                                                     -1, 1, -1,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius (1.0 is the largest circle that fits in the image, and 2.0 goes all the way to the corners)",
                                                     0, 2, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-wind
+   * ligma-plug-in-wind
    */
-  procedure = gimp_procedure_new (plug_in_wind_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (plug_in_wind_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "plug-in-wind");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   "Smear image to give windblown effect",
                                   "Renders a wind effect.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:wind' for credits.",
                                          "Compatibility procedure. Please see 'gegl:wind' for credits.",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image (unused)",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "Input drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
                                                  "Controls where blending will be done",
                                                  0, 50, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("direction",
                                                  "direction",
                                                  "Wind direction { 0:left, 1:right, 2:top, 3:bottom }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("strength",
                                                  "strength",
                                                  "Controls the extent of the blending",
                                                  1, 100, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("algorithm",
                                                  "algorithm",
                                                  "Algorithm { WIND (0), BLAST (1) }",
                                                  0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("edge",
                                                  "edge",
                                                  "Affected edge { BOTH (0), LEADING (1), TRAILING (2) }",
                                                  0, 2, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

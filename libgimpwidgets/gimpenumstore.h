@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumstore.h
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaenumstore.h
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,68 +19,68 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ENUM_STORE_H__
-#define __GIMP_ENUM_STORE_H__
+#ifndef __LIGMA_ENUM_STORE_H__
+#define __LIGMA_ENUM_STORE_H__
 
-#include <libgimpwidgets/gimpintstore.h>
+#include <libligmawidgets/ligmaintstore.h>
 
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_ENUM_STORE            (gimp_enum_store_get_type ())
-#define GIMP_ENUM_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStore))
-#define GIMP_ENUM_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ENUM_STORE, GimpEnumStoreClass))
-#define GIMP_IS_ENUM_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ENUM_STORE))
-#define GIMP_IS_ENUM_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ENUM_STORE))
-#define GIMP_ENUM_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStoreClass))
+#define LIGMA_TYPE_ENUM_STORE            (ligma_enum_store_get_type ())
+#define LIGMA_ENUM_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ENUM_STORE, LigmaEnumStore))
+#define LIGMA_ENUM_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ENUM_STORE, LigmaEnumStoreClass))
+#define LIGMA_IS_ENUM_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ENUM_STORE))
+#define LIGMA_IS_ENUM_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ENUM_STORE))
+#define LIGMA_ENUM_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ENUM_STORE, LigmaEnumStoreClass))
 
 
-typedef struct _GimpEnumStorePrivate GimpEnumStorePrivate;
-typedef struct _GimpEnumStoreClass   GimpEnumStoreClass;
+typedef struct _LigmaEnumStorePrivate LigmaEnumStorePrivate;
+typedef struct _LigmaEnumStoreClass   LigmaEnumStoreClass;
 
-struct _GimpEnumStore
+struct _LigmaEnumStore
 {
-  GimpIntStore          parent_instance;
+  LigmaIntStore          parent_instance;
 
-  GimpEnumStorePrivate *priv;
+  LigmaEnumStorePrivate *priv;
 };
 
-struct _GimpEnumStoreClass
+struct _LigmaEnumStoreClass
 {
-  GimpIntStoreClass  parent_class;
+  LigmaIntStoreClass  parent_class;
 
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_enum_store_get_type               (void) G_GNUC_CONST;
+GType          ligma_enum_store_get_type               (void) G_GNUC_CONST;
 
-GtkListStore * gimp_enum_store_new                    (GType    enum_type);
-GtkListStore * gimp_enum_store_new_with_range         (GType    enum_type,
+GtkListStore * ligma_enum_store_new                    (GType    enum_type);
+GtkListStore * ligma_enum_store_new_with_range         (GType    enum_type,
                                                        gint     minimum,
                                                        gint     maximum);
-GtkListStore * gimp_enum_store_new_with_values        (GType    enum_type,
+GtkListStore * ligma_enum_store_new_with_values        (GType    enum_type,
                                                        gint     n_values,
                                                        ...);
-GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
+GtkListStore * ligma_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
 
-void           gimp_enum_store_set_icon_prefix  (GimpEnumStore *store,
+void           ligma_enum_store_set_icon_prefix  (LigmaEnumStore *store,
                                                  const gchar   *icon_prefix);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_ENUM_STORE_H__ */
+#endif  /* __LIGMA_ENUM_STORE_H__ */

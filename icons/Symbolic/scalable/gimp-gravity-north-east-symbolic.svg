@@ -15,7 +15,7 @@
    width="24"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-gravity-north-east.svg">
+   sodipodi:docname="ligma-gravity-north-east.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -131,7 +131,7 @@
      id="stock">
     <g
        transform="matrix(-1,0,0,1,531.67427,-1072.638)"
-       id="gimp-gravity-north-east">
+       id="ligma-gravity-north-east">
       <path
          style="fill:url(#linearGradient7369);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="M 16.394674,1035.3552 8,1035.3622 l -0.013365,8.5549 2.831407,-2.8832 c 0.970754,0.9126 6.392644,6.3353 6.392644,6.3353 l 2.802679,-2.854 c 0,0 -5.477729,-5.3653 -6.434683,-6.2925 z"

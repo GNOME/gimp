@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo-private.h
- * Copyright (C) 2001-2008 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo-private.h
+ * Copyright (C) 2001-2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_PRIVATE_H__
-#define __GIMP_SESSION_INFO_PRIVATE_H__
+#ifndef __LIGMA_SESSION_INFO_PRIVATE_H__
+#define __LIGMA_SESSION_INFO_PRIVATE_H__
 
 
-struct _GimpSessionInfoPrivate
+struct _LigmaSessionInfoPrivate
 {
   /*  the dialog factory entry for object we have session info for
    *  note that pure "dock" entries don't have any factory entry
    */
-  GimpDialogFactoryEntry *factory_entry;
+  LigmaDialogFactoryEntry *factory_entry;
 
   gint                    x;
   gint                    y;
@@ -40,14 +40,14 @@ struct _GimpSessionInfoPrivate
   /*  only valid while restoring and saving the session  */
   gboolean                open;
 
-  /*  dialog specific list of GimpSessionInfoAux  */
+  /*  dialog specific list of LigmaSessionInfoAux  */
   GList                  *aux_info;
 
   GtkWidget              *widget;
 
-  /*  list of GimpSessionInfoDock  */
+  /*  list of LigmaSessionInfoDock  */
   GList                  *docks;
 };
 
 
-#endif /* __GIMP_SESSION_INFO_PRIVATE_H__ */
+#endif /* __LIGMA_SESSION_INFO_PRIVATE_H__ */

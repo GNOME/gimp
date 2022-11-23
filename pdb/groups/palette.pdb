@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub palette_new {
     $blurb = "Creates a new palette";
@@ -35,11 +35,11 @@ sub palette_new {
     %invoke = (
         code => <<'CODE'
 {
-  GimpData *data = gimp_data_factory_data_new (gimp->palette_factory,
+  LigmaData *data = ligma_data_factory_data_new (ligma->palette_factory,
                                                context, name);
 
   if (data)
-    actual_name = g_strdup (gimp_object_get_name (data));
+    actual_name = g_strdup (ligma_object_get_name (data));
   else
     success = FALSE;
 }
@@ -66,10 +66,10 @@ sub palette_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
-    editable = gimp_data_is_writable (GIMP_DATA (palette));
+    editable = ligma_data_is_writable (LIGMA_DATA (palette));
   else
     success = FALSE;
 }
@@ -96,16 +96,16 @@ sub palette_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
-      GimpPalette *palette_copy = (GimpPalette *)
-        gimp_data_factory_data_duplicate (gimp->palette_factory,
-                                          GIMP_DATA (palette));
+      LigmaPalette *palette_copy = (LigmaPalette *)
+        ligma_data_factory_data_duplicate (ligma->palette_factory,
+                                          LIGMA_DATA (palette));
 
       if (palette_copy)
-        copy_name = g_strdup (gimp_object_get_name (palette_copy));
+        copy_name = g_strdup (ligma_object_get_name (palette_copy));
       else
         success = FALSE;
     }
@@ -137,12 +137,12 @@ sub palette_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_RENAME, error);
 
   if (palette)
     {
-      gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-      actual_name = g_strdup (gimp_object_get_name (palette));
+      ligma_object_set_name (LIGMA_OBJECT (palette), new_name);
+      actual_name = g_strdup (ligma_object_get_name (palette));
     }
   else
     success = FALSE;
@@ -165,11 +165,11 @@ sub palette_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
-  if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
-    success = gimp_data_factory_data_delete (gimp->palette_factory,
-                                             GIMP_DATA (palette),
+  if (palette && ligma_data_is_deletable (LIGMA_DATA (palette)))
+    success = ligma_data_factory_data_delete (ligma->palette_factory,
+                                             LIGMA_DATA (palette),
                                              TRUE, error);
   else
     success = FALSE;
@@ -201,10 +201,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
-    num_colors = gimp_palette_get_n_colors (palette);
+    num_colors = ligma_palette_get_n_colors (palette);
   else
     success = FALSE;
 }
@@ -234,22 +234,22 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
+	vars => [ 'LigmaPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
-      GList *list = gimp_palette_get_colors (palette);
+      GList *list = ligma_palette_get_colors (palette);
       gint   i;
 
-      num_colors = gimp_palette_get_n_colors (palette);
-      colors     = g_new (GimpRGB, num_colors);
+      num_colors = ligma_palette_get_n_colors (palette);
+      colors     = g_new (LigmaRGB, num_colors);
 
       for (i = 0; i < num_colors; i++, list = g_list_next (list))
         {
-          GimpPaletteEntry *entry = list->data;
+          LigmaPaletteEntry *entry = list->data;
 
           colors[i] = entry->color;
         }
@@ -283,10 +283,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
-    num_columns = gimp_palette_get_columns (palette);
+    num_columns = ligma_palette_get_columns (palette);
   else
     success = FALSE;
 }
@@ -314,10 +314,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
-    gimp_palette_set_columns (palette, columns);
+    ligma_palette_set_columns (palette, columns);
   else
     success = FALSE;
 }
@@ -352,14 +352,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     {
-      GimpPaletteEntry *entry =
-        gimp_palette_add_entry (palette, -1, entry_name, &color);
+      LigmaPaletteEntry *entry =
+        ligma_palette_add_entry (palette, -1, entry_name, &color);
 
-      entry_num = gimp_palette_get_entry_position (palette, entry);
+      entry_num = ligma_palette_get_entry_position (palette, entry);
     }
   else
     success = FALSE;
@@ -388,14 +388,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
+      LigmaPaletteEntry *entry = ligma_palette_get_entry (palette, entry_num);
 
       if (entry)
-        gimp_palette_delete_entry (palette, entry);
+        ligma_palette_delete_entry (palette, entry);
       else
         success = FALSE;
     }
@@ -431,11 +431,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
+      LigmaPaletteEntry *entry = ligma_palette_get_entry (palette, entry_num);
 
       if (entry)
         color = entry->color;
@@ -471,10 +471,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
-    success = gimp_palette_set_entry_color (palette, entry_num, &color);
+    success = ligma_palette_set_entry_color (palette, entry_num, &color);
   else
     success = FALSE;
 }
@@ -507,11 +507,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
+      LigmaPaletteEntry *entry = ligma_palette_get_entry (palette, entry_num);
 
       if (entry)
         entry_name = g_strdup (entry->name);
@@ -547,10 +547,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
-    success = gimp_palette_set_entry_name (palette, entry_num, entry_name);
+    success = ligma_palette_set_entry_name (palette, entry_num, entry_name);
   else
     success = FALSE;
 }
@@ -560,11 +560,11 @@ CODE
 
 
 @headers = qw(<string.h>
-              "core/gimp.h"
-              "core/gimpcontext.h"
-              "core/gimpdatafactory.h"
-              "core/gimppalette.h"
-              "gimppdb-utils.h");
+              "core/ligma.h"
+              "core/ligmacontext.h"
+              "core/ligmadatafactory.h"
+              "core/ligmapalette.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(palette_new
             palette_duplicate
@@ -580,7 +580,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette';
-$doc_title = 'gimppalette';
+$doc_title = 'ligmapalette';
 $doc_short_desc = 'Functions operating on a single palette.';
 $doc_long_desc = 'Functions operating on a single palette.';
 

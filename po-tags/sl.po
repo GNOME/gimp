@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp - Tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma - Tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2010-04-02 13:22+0000\n"
 "PO-Revision-Date: 2010-04-02 19:41+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "nejasno"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "zaobljeno"
 

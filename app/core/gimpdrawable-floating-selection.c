@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,166 +21,166 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gegl/gimpapplicator.h"
+#include "gegl/ligmaapplicator.h"
 
-#include "gimpchannel.h"
-#include "gimpdrawable-floating-selection.h"
-#include "gimpdrawable-filters.h"
-#include "gimpdrawable-private.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
+#include "ligmachannel.h"
+#include "ligmadrawable-floating-selection.h"
+#include "ligmadrawable-filters.h"
+#include "ligmadrawable-private.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
 
-#include "gimp-log.h"
+#include "ligma-log.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void    gimp_drawable_remove_fs_filter             (GimpDrawable      *drawable);
-static void    gimp_drawable_sync_fs_filter               (GimpDrawable      *drawable);
+static void    ligma_drawable_remove_fs_filter             (LigmaDrawable      *drawable);
+static void    ligma_drawable_sync_fs_filter               (LigmaDrawable      *drawable);
 
-static void    gimp_drawable_fs_notify                    (GObject           *object,
+static void    ligma_drawable_fs_notify                    (GObject           *object,
                                                            const GParamSpec  *pspec,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_lock_position_changed     (GimpDrawable      *signal_drawable,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_format_changed            (GimpDrawable      *signal_drawable,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_affect_changed            (GimpImage         *image,
-                                                           GimpChannelType    channel,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_mask_changed              (GimpImage         *image,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_visibility_changed        (GimpLayer         *fs,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_excludes_backdrop_changed (GimpLayer         *fs,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_bounding_box_changed      (GimpLayer         *fs,
-                                                           GimpDrawable      *drawable);
-static void    gimp_drawable_fs_update                    (GimpLayer         *fs,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_lock_position_changed     (LigmaDrawable      *signal_drawable,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_format_changed            (LigmaDrawable      *signal_drawable,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_affect_changed            (LigmaImage         *image,
+                                                           LigmaChannelType    channel,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_mask_changed              (LigmaImage         *image,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_visibility_changed        (LigmaLayer         *fs,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_excludes_backdrop_changed (LigmaLayer         *fs,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_bounding_box_changed      (LigmaLayer         *fs,
+                                                           LigmaDrawable      *drawable);
+static void    ligma_drawable_fs_update                    (LigmaLayer         *fs,
                                                            gint               x,
                                                            gint               y,
                                                            gint               width,
                                                            gint               height,
-                                                           GimpDrawable      *drawable);
+                                                           LigmaDrawable      *drawable);
 
 
 /*  public functions  */
 
-GimpLayer *
-gimp_drawable_get_floating_sel (GimpDrawable *drawable)
+LigmaLayer *
+ligma_drawable_get_floating_sel (LigmaDrawable *drawable)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
 
   return drawable->private->floating_selection;
 }
 
 void
-gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
-                                   GimpLayer    *fs)
+ligma_drawable_attach_floating_sel (LigmaDrawable *drawable,
+                                   LigmaLayer    *fs)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (gimp_drawable_get_floating_sel (drawable) == NULL);
-  g_return_if_fail (GIMP_IS_LAYER (fs));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (ligma_drawable_get_floating_sel (drawable) == NULL);
+  g_return_if_fail (LIGMA_IS_LAYER (fs));
 
-  GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
+  LIGMA_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
   drawable->private->floating_selection = fs;
-  gimp_image_set_floating_selection (image, fs);
+  ligma_image_set_floating_selection (image, fs);
 
   /*  clear the selection  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
+  ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (fs));
 
-  gimp_item_bind_visible_to_active (GIMP_ITEM (fs), FALSE);
-  gimp_filter_set_active (GIMP_FILTER (fs), FALSE);
+  ligma_item_bind_visible_to_active (LIGMA_ITEM (fs), FALSE);
+  ligma_filter_set_active (LIGMA_FILTER (fs), FALSE);
 
-  _gimp_drawable_add_floating_sel_filter (drawable);
+  _ligma_drawable_add_floating_sel_filter (drawable);
 
   g_signal_connect (fs, "visibility-changed",
-                    G_CALLBACK (gimp_drawable_fs_visibility_changed),
+                    G_CALLBACK (ligma_drawable_fs_visibility_changed),
                     drawable);
   g_signal_connect (fs, "excludes-backdrop-changed",
-                    G_CALLBACK (gimp_drawable_fs_excludes_backdrop_changed),
+                    G_CALLBACK (ligma_drawable_fs_excludes_backdrop_changed),
                     drawable);
   g_signal_connect (fs, "bounding-box-changed",
-                    G_CALLBACK (gimp_drawable_fs_bounding_box_changed),
+                    G_CALLBACK (ligma_drawable_fs_bounding_box_changed),
                     drawable);
   g_signal_connect (fs, "update",
-                    G_CALLBACK (gimp_drawable_fs_update),
+                    G_CALLBACK (ligma_drawable_fs_update),
                     drawable);
 
-  gimp_drawable_fs_update (fs,
+  ligma_drawable_fs_update (fs,
                            0, 0,
-                           gimp_item_get_width  (GIMP_ITEM (fs)),
-                           gimp_item_get_height (GIMP_ITEM (fs)),
+                           ligma_item_get_width  (LIGMA_ITEM (fs)),
+                           ligma_item_get_height (LIGMA_ITEM (fs)),
                            drawable);
 }
 
 void
-gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
+ligma_drawable_detach_floating_sel (LigmaDrawable *drawable)
 {
-  GimpImage *image;
-  GimpLayer *fs;
+  LigmaImage *image;
+  LigmaLayer *fs;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL);
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_drawable_get_floating_sel (drawable) != NULL);
 
-  GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
+  LIGMA_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
   fs    = drawable->private->floating_selection;
 
-  gimp_drawable_remove_fs_filter (drawable);
+  ligma_drawable_remove_fs_filter (drawable);
 
   g_signal_handlers_disconnect_by_func (fs,
-                                        gimp_drawable_fs_visibility_changed,
+                                        ligma_drawable_fs_visibility_changed,
                                         drawable);
   g_signal_handlers_disconnect_by_func (fs,
-                                        gimp_drawable_fs_excludes_backdrop_changed,
+                                        ligma_drawable_fs_excludes_backdrop_changed,
                                         drawable);
   g_signal_handlers_disconnect_by_func (fs,
-                                        gimp_drawable_fs_bounding_box_changed,
+                                        ligma_drawable_fs_bounding_box_changed,
                                         drawable);
   g_signal_handlers_disconnect_by_func (fs,
-                                        gimp_drawable_fs_update,
+                                        ligma_drawable_fs_update,
                                         drawable);
 
-  gimp_drawable_fs_update (fs,
+  ligma_drawable_fs_update (fs,
                            0, 0,
-                           gimp_item_get_width  (GIMP_ITEM (fs)),
-                           gimp_item_get_height (GIMP_ITEM (fs)),
+                           ligma_item_get_width  (LIGMA_ITEM (fs)),
+                           ligma_item_get_height (LIGMA_ITEM (fs)),
                            drawable);
 
-  gimp_item_bind_visible_to_active (GIMP_ITEM (fs), TRUE);
+  ligma_item_bind_visible_to_active (LIGMA_ITEM (fs), TRUE);
 
   /*  clear the selection  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
+  ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (fs));
 
-  gimp_image_set_floating_selection (image, NULL);
+  ligma_image_set_floating_selection (image, NULL);
   drawable->private->floating_selection = NULL;
 }
 
-GimpFilter *
-gimp_drawable_get_floating_sel_filter (GimpDrawable *drawable)
+LigmaFilter *
+ligma_drawable_get_floating_sel_filter (LigmaDrawable *drawable)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL, NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_drawable_get_floating_sel (drawable) != NULL, NULL);
 
   /* Ensure that the graph is constructed before the filter is used.
    * Otherwise, we rely on the projection to cause the graph to be
    * constructed, which fails for images that aren't displayed.
    */
-  gimp_filter_get_node (GIMP_FILTER (drawable));
+  ligma_filter_get_node (LIGMA_FILTER (drawable));
 
   return drawable->private->fs_filter;
 }
@@ -189,40 +189,40 @@ gimp_drawable_get_floating_sel_filter (GimpDrawable *drawable)
 /*  private functions  */
 
 void
-_gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
+_ligma_drawable_add_floating_sel_filter (LigmaDrawable *drawable)
 {
-  GimpDrawablePrivate *private = drawable->private;
-  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpLayer           *fs      = gimp_drawable_get_floating_sel (drawable);
+  LigmaDrawablePrivate *private = drawable->private;
+  LigmaImage           *image   = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaLayer           *fs      = ligma_drawable_get_floating_sel (drawable);
   GeglNode            *node;
   GeglNode            *fs_source;
 
   if (! private->source_node)
     return;
 
-  private->fs_filter = gimp_filter_new (_("Floating Selection"));
-  gimp_viewable_set_icon_name (GIMP_VIEWABLE (private->fs_filter),
-                               "gimp-floating-selection");
+  private->fs_filter = ligma_filter_new (_("Floating Selection"));
+  ligma_viewable_set_icon_name (LIGMA_VIEWABLE (private->fs_filter),
+                               "ligma-floating-selection");
 
-  node = gimp_filter_get_node (private->fs_filter);
+  node = ligma_filter_get_node (private->fs_filter);
 
-  fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+  fs_source = ligma_drawable_get_source_node (LIGMA_DRAWABLE (fs));
 
   /* rip the fs' source node out of its graph */
   if (fs->layer_offset_node)
     {
       gegl_node_disconnect (fs->layer_offset_node, "input");
-      gegl_node_remove_child (gimp_filter_get_node (GIMP_FILTER (fs)),
+      gegl_node_remove_child (ligma_filter_get_node (LIGMA_FILTER (fs)),
                               fs_source);
     }
 
   gegl_node_add_child (node, fs_source);
 
-  private->fs_applicator = gimp_applicator_new (node);
+  private->fs_applicator = ligma_applicator_new (node);
 
-  gimp_filter_set_applicator (private->fs_filter, private->fs_applicator);
+  ligma_filter_set_applicator (private->fs_filter, private->fs_applicator);
 
-  gimp_applicator_set_cache (private->fs_applicator, TRUE);
+  ligma_applicator_set_cache (private->fs_applicator, TRUE);
 
   private->fs_crop_node = gegl_node_new_child (node,
                                                "operation", "gegl:nop",
@@ -233,42 +233,42 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
   gegl_node_connect_to (private->fs_crop_node, "output",
                         node,                  "aux");
 
-  gimp_drawable_add_filter (drawable, private->fs_filter);
+  ligma_drawable_add_filter (drawable, private->fs_filter);
 
   g_signal_connect (fs, "notify",
-                    G_CALLBACK (gimp_drawable_fs_notify),
+                    G_CALLBACK (ligma_drawable_fs_notify),
                     drawable);
   g_signal_connect (drawable, "notify::offset-x",
-                    G_CALLBACK (gimp_drawable_fs_notify),
+                    G_CALLBACK (ligma_drawable_fs_notify),
                     drawable);
   g_signal_connect (drawable, "notify::offset-y",
-                    G_CALLBACK (gimp_drawable_fs_notify),
+                    G_CALLBACK (ligma_drawable_fs_notify),
                     drawable);
   g_signal_connect (drawable, "lock-position-changed",
-                    G_CALLBACK (gimp_drawable_fs_lock_position_changed),
+                    G_CALLBACK (ligma_drawable_fs_lock_position_changed),
                     drawable);
   g_signal_connect (drawable, "format-changed",
-                    G_CALLBACK (gimp_drawable_fs_format_changed),
+                    G_CALLBACK (ligma_drawable_fs_format_changed),
                     drawable);
   g_signal_connect (image, "component-active-changed",
-                    G_CALLBACK (gimp_drawable_fs_affect_changed),
+                    G_CALLBACK (ligma_drawable_fs_affect_changed),
                     drawable);
   g_signal_connect (image, "mask-changed",
-                    G_CALLBACK (gimp_drawable_fs_mask_changed),
+                    G_CALLBACK (ligma_drawable_fs_mask_changed),
                     drawable);
 
-  gimp_drawable_sync_fs_filter (drawable);
+  ligma_drawable_sync_fs_filter (drawable);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
+ligma_drawable_remove_fs_filter (LigmaDrawable *drawable)
 {
-  GimpDrawablePrivate *private = drawable->private;
-  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpLayer           *fs      = gimp_drawable_get_floating_sel (drawable);
+  LigmaDrawablePrivate *private = drawable->private;
+  LigmaImage           *image   = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaLayer           *fs      = ligma_drawable_get_floating_sel (drawable);
 
   if (private->fs_filter)
     {
@@ -276,36 +276,36 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
       GeglNode *fs_source;
 
       g_signal_handlers_disconnect_by_func (fs,
-                                            gimp_drawable_fs_notify,
+                                            ligma_drawable_fs_notify,
                                             drawable);
       g_signal_handlers_disconnect_by_func (drawable,
-                                            gimp_drawable_fs_notify,
+                                            ligma_drawable_fs_notify,
                                             drawable);
       g_signal_handlers_disconnect_by_func (drawable,
-                                            gimp_drawable_fs_lock_position_changed,
+                                            ligma_drawable_fs_lock_position_changed,
                                             drawable);
       g_signal_handlers_disconnect_by_func (drawable,
-                                            gimp_drawable_fs_format_changed,
+                                            ligma_drawable_fs_format_changed,
                                             drawable);
       g_signal_handlers_disconnect_by_func (image,
-                                            gimp_drawable_fs_affect_changed,
+                                            ligma_drawable_fs_affect_changed,
                                             drawable);
       g_signal_handlers_disconnect_by_func (image,
-                                            gimp_drawable_fs_mask_changed,
+                                            ligma_drawable_fs_mask_changed,
                                             drawable);
 
-      gimp_drawable_remove_filter (drawable, private->fs_filter);
+      ligma_drawable_remove_filter (drawable, private->fs_filter);
 
-      node = gimp_filter_get_node (private->fs_filter);
+      node = ligma_filter_get_node (private->fs_filter);
 
-      fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+      fs_source = ligma_drawable_get_source_node (LIGMA_DRAWABLE (fs));
 
       gegl_node_remove_child (node, fs_source);
 
       /* plug the fs' source node back into its graph */
       if (fs->layer_offset_node)
         {
-          gegl_node_add_child (gimp_filter_get_node (GIMP_FILTER (fs)),
+          gegl_node_add_child (ligma_filter_get_node (LIGMA_FILTER (fs)),
                                fs_source);
           gegl_node_connect_to (fs_source,             "output",
                                 fs->layer_offset_node, "input");
@@ -316,37 +316,37 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
 
       private->fs_crop_node = NULL;
 
-      gimp_drawable_update_bounding_box (drawable);
+      ligma_drawable_update_bounding_box (drawable);
     }
 }
 
 static void
-gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
+ligma_drawable_sync_fs_filter (LigmaDrawable *drawable)
 {
-  GimpDrawablePrivate *private = drawable->private;
-  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpChannel         *mask    = gimp_image_get_mask (image);
-  GimpLayer           *fs      = gimp_drawable_get_floating_sel (drawable);
+  LigmaDrawablePrivate *private = drawable->private;
+  LigmaImage           *image   = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaChannel         *mask    = ligma_image_get_mask (image);
+  LigmaLayer           *fs      = ligma_drawable_get_floating_sel (drawable);
   gint                 off_x, off_y;
   gint                 fs_off_x, fs_off_y;
 
-  gimp_filter_set_active (private->fs_filter,
-                          gimp_item_get_visible (GIMP_ITEM (fs)));
+  ligma_filter_set_active (private->fs_filter,
+                          ligma_item_get_visible (LIGMA_ITEM (fs)));
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-  gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (fs), &fs_off_x, &fs_off_y);
 
-  if (gimp_item_get_clip (GIMP_ITEM (drawable), GIMP_TRANSFORM_RESIZE_ADJUST) ==
-      GIMP_TRANSFORM_RESIZE_CLIP ||
-      ! gimp_drawable_has_alpha (drawable))
+  if (ligma_item_get_clip (LIGMA_ITEM (drawable), LIGMA_TRANSFORM_RESIZE_ADJUST) ==
+      LIGMA_TRANSFORM_RESIZE_CLIP ||
+      ! ligma_drawable_has_alpha (drawable))
     {
       gegl_node_set (
         private->fs_crop_node,
         "operation", "gegl:crop",
         "x",         (gdouble) (off_x - fs_off_x),
         "y",         (gdouble) (off_y - fs_off_y),
-        "width",     (gdouble) gimp_item_get_width  (GIMP_ITEM (drawable)),
-        "height",    (gdouble) gimp_item_get_height (GIMP_ITEM (drawable)),
+        "width",     (gdouble) ligma_item_get_width  (LIGMA_ITEM (drawable)),
+        "height",    (gdouble) ligma_item_get_height (LIGMA_ITEM (drawable)),
         NULL);
     }
   else
@@ -357,42 +357,42 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
         NULL);
     }
 
-  gimp_applicator_set_apply_offset (private->fs_applicator,
+  ligma_applicator_set_apply_offset (private->fs_applicator,
                                     fs_off_x - off_x,
                                     fs_off_y - off_y);
 
-  if (gimp_channel_is_empty (mask))
+  if (ligma_channel_is_empty (mask))
     {
-      gimp_applicator_set_mask_buffer (private->fs_applicator, NULL);
+      ligma_applicator_set_mask_buffer (private->fs_applicator, NULL);
     }
   else
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
-      gimp_applicator_set_mask_buffer (private->fs_applicator, buffer);
-      gimp_applicator_set_mask_offset (private->fs_applicator,
+      ligma_applicator_set_mask_buffer (private->fs_applicator, buffer);
+      ligma_applicator_set_mask_offset (private->fs_applicator,
                                        -off_x, -off_y);
     }
 
-  gimp_applicator_set_opacity (private->fs_applicator,
-                               gimp_layer_get_opacity (fs));
-  gimp_applicator_set_mode (private->fs_applicator,
-                            gimp_layer_get_mode (fs),
-                            gimp_layer_get_blend_space (fs),
-                            gimp_layer_get_composite_space (fs),
-                            gimp_layer_get_composite_mode (fs));
-  gimp_applicator_set_affect (private->fs_applicator,
-                              gimp_drawable_get_active_mask (drawable));
-  gimp_applicator_set_output_format (private->fs_applicator,
-                                     gimp_drawable_get_format (drawable));
+  ligma_applicator_set_opacity (private->fs_applicator,
+                               ligma_layer_get_opacity (fs));
+  ligma_applicator_set_mode (private->fs_applicator,
+                            ligma_layer_get_mode (fs),
+                            ligma_layer_get_blend_space (fs),
+                            ligma_layer_get_composite_space (fs),
+                            ligma_layer_get_composite_mode (fs));
+  ligma_applicator_set_affect (private->fs_applicator,
+                              ligma_drawable_get_active_mask (drawable));
+  ligma_applicator_set_output_format (private->fs_applicator,
+                                     ligma_drawable_get_format (drawable));
 
-  gimp_drawable_update_bounding_box (drawable);
+  ligma_drawable_update_bounding_box (drawable);
 }
 
 static void
-gimp_drawable_fs_notify (GObject          *object,
+ligma_drawable_fs_notify (GObject          *object,
                          const GParamSpec *pspec,
-                         GimpDrawable     *drawable)
+                         LigmaDrawable     *drawable)
 {
   if (! strcmp (pspec->name, "offset-x")        ||
       ! strcmp (pspec->name, "offset-y")        ||
@@ -403,97 +403,97 @@ gimp_drawable_fs_notify (GObject          *object,
       ! strcmp (pspec->name, "composite-mode")  ||
       ! strcmp (pspec->name, "opacity"))
     {
-      gimp_drawable_sync_fs_filter (drawable);
+      ligma_drawable_sync_fs_filter (drawable);
     }
 }
 
 static void
-gimp_drawable_fs_lock_position_changed (GimpDrawable *signal_drawable,
-                                        GimpDrawable *drawable)
+ligma_drawable_fs_lock_position_changed (LigmaDrawable *signal_drawable,
+                                        LigmaDrawable *drawable)
 {
-  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+  LigmaLayer *fs = ligma_drawable_get_floating_sel (drawable);
 
-  gimp_drawable_sync_fs_filter (drawable);
+  ligma_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_format_changed (GimpDrawable *signal_drawable,
-                                 GimpDrawable *drawable)
+ligma_drawable_fs_format_changed (LigmaDrawable *signal_drawable,
+                                 LigmaDrawable *drawable)
 {
-  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+  LigmaLayer *fs = ligma_drawable_get_floating_sel (drawable);
 
-  gimp_drawable_sync_fs_filter (drawable);
+  ligma_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_affect_changed (GimpImage       *image,
-                                 GimpChannelType  channel,
-                                 GimpDrawable    *drawable)
+ligma_drawable_fs_affect_changed (LigmaImage       *image,
+                                 LigmaChannelType  channel,
+                                 LigmaDrawable    *drawable)
 {
-  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+  LigmaLayer *fs = ligma_drawable_get_floating_sel (drawable);
 
-  gimp_drawable_sync_fs_filter (drawable);
+  ligma_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_mask_changed (GimpImage    *image,
-                               GimpDrawable *drawable)
+ligma_drawable_fs_mask_changed (LigmaImage    *image,
+                               LigmaDrawable *drawable)
 {
-  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+  LigmaLayer *fs = ligma_drawable_get_floating_sel (drawable);
 
-  gimp_drawable_sync_fs_filter (drawable);
+  ligma_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_visibility_changed (GimpLayer    *fs,
-                                     GimpDrawable *drawable)
+ligma_drawable_fs_visibility_changed (LigmaLayer    *fs,
+                                     LigmaDrawable *drawable)
 {
-  if (gimp_layer_get_excludes_backdrop (fs))
-    gimp_drawable_update (drawable, 0, 0, -1, -1);
+  if (ligma_layer_get_excludes_backdrop (fs))
+    ligma_drawable_update (drawable, 0, 0, -1, -1);
   else
-    gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+    ligma_drawable_update (LIGMA_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_excludes_backdrop_changed (GimpLayer    *fs,
-                                            GimpDrawable *drawable)
+ligma_drawable_fs_excludes_backdrop_changed (LigmaLayer    *fs,
+                                            LigmaDrawable *drawable)
 {
-  if (gimp_item_get_visible (GIMP_ITEM (fs)))
-    gimp_drawable_update (drawable, 0, 0, -1, -1);
+  if (ligma_item_get_visible (LIGMA_ITEM (fs)))
+    ligma_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 static void
-gimp_drawable_fs_bounding_box_changed (GimpLayer    *fs,
-                                       GimpDrawable *drawable)
+ligma_drawable_fs_bounding_box_changed (LigmaLayer    *fs,
+                                       LigmaDrawable *drawable)
 {
-  gimp_drawable_update_bounding_box (drawable);
+  ligma_drawable_update_bounding_box (drawable);
 }
 
 static void
-gimp_drawable_fs_update (GimpLayer    *fs,
+ligma_drawable_fs_update (LigmaLayer    *fs,
                          gint          x,
                          gint          y,
                          gint          width,
                          gint          height,
-                         GimpDrawable *drawable)
+                         LigmaDrawable *drawable)
 {
   GeglRectangle bounding_box;
   GeglRectangle rect;
   gint          fs_off_x, fs_off_y;
   gint          off_x, off_y;
 
-  gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (fs), &fs_off_x, &fs_off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
-  bounding_box = gimp_drawable_get_bounding_box (drawable);
+  bounding_box = ligma_drawable_get_bounding_box (drawable);
 
   bounding_box.x += off_x;
   bounding_box.y += off_y;
@@ -505,7 +505,7 @@ gimp_drawable_fs_update (GimpLayer    *fs,
 
   if (gegl_rectangle_intersect (&rect, &rect, &bounding_box))
     {
-      gimp_drawable_update (drawable,
+      ligma_drawable_update (drawable,
                             rect.x - off_x, rect.y - off_y,
                             rect.width, rect.height);
     }

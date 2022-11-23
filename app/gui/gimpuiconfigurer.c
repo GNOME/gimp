@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpuiconfigurer.c
+ * ligmauiconfigurer.c
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,107 +23,107 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "gui-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockcolumns.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockcolumns.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-appearance.h"
+#include "display/ligmaimagewindow.h"
 
-#include "gimpuiconfigurer.h"
+#include "ligmauiconfigurer.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 
-struct _GimpUIConfigurerPrivate
+struct _LigmaUIConfigurerPrivate
 {
-  Gimp *gimp;
+  Ligma *ligma;
 };
 
 
-static void              gimp_ui_configurer_set_property                (GObject           *object,
+static void              ligma_ui_configurer_set_property                (GObject           *object,
                                                                          guint              property_id,
                                                                          const GValue      *value,
                                                                          GParamSpec        *pspec);
-static void              gimp_ui_configurer_get_property                (GObject           *object,
+static void              ligma_ui_configurer_get_property                (GObject           *object,
                                                                          guint              property_id,
                                                                          GValue            *value,
                                                                          GParamSpec        *pspec);
-static void              gimp_ui_configurer_move_docks_to_columns       (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpImageWindow   *uber_image_window);
-static void              gimp_ui_configurer_move_shells                 (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpImageWindow   *source_image_window,
-                                                                         GimpImageWindow   *target_image_window);
-static void              gimp_ui_configurer_separate_docks              (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpImageWindow   *source_image_window);
-static void              gimp_ui_configurer_move_docks_to_window        (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpDockColumns   *dock_columns,
-                                                                         GimpAlignmentType  screen_side);
-static void              gimp_ui_configurer_separate_shells             (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpImageWindow   *source_image_window);
-static void              gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer  *ui_configurer);
-static void              gimp_ui_configurer_configure_for_multi_window  (GimpUIConfigurer  *ui_configurer);
-static GimpImageWindow * gimp_ui_configurer_get_uber_window             (GimpUIConfigurer  *ui_configurer);
+static void              ligma_ui_configurer_move_docks_to_columns       (LigmaUIConfigurer  *ui_configurer,
+                                                                         LigmaImageWindow   *uber_image_window);
+static void              ligma_ui_configurer_move_shells                 (LigmaUIConfigurer  *ui_configurer,
+                                                                         LigmaImageWindow   *source_image_window,
+                                                                         LigmaImageWindow   *target_image_window);
+static void              ligma_ui_configurer_separate_docks              (LigmaUIConfigurer  *ui_configurer,
+                                                                         LigmaImageWindow   *source_image_window);
+static void              ligma_ui_configurer_move_docks_to_window        (LigmaUIConfigurer  *ui_configurer,
+                                                                         LigmaDockColumns   *dock_columns,
+                                                                         LigmaAlignmentType  screen_side);
+static void              ligma_ui_configurer_separate_shells             (LigmaUIConfigurer  *ui_configurer,
+                                                                         LigmaImageWindow   *source_image_window);
+static void              ligma_ui_configurer_configure_for_single_window (LigmaUIConfigurer  *ui_configurer);
+static void              ligma_ui_configurer_configure_for_multi_window  (LigmaUIConfigurer  *ui_configurer);
+static LigmaImageWindow * ligma_ui_configurer_get_uber_window             (LigmaUIConfigurer  *ui_configurer);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpUIConfigurer, gimp_ui_configurer,
-                            GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaUIConfigurer, ligma_ui_configurer,
+                            LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_ui_configurer_parent_class
+#define parent_class ligma_ui_configurer_parent_class
 
 
 static void
-gimp_ui_configurer_class_init (GimpUIConfigurerClass *klass)
+ligma_ui_configurer_class_init (LigmaUIConfigurerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_ui_configurer_set_property;
-  object_class->get_property = gimp_ui_configurer_get_property;
+  object_class->set_property = ligma_ui_configurer_set_property;
+  object_class->get_property = ligma_ui_configurer_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_ui_configurer_init (GimpUIConfigurer *ui_configurer)
+ligma_ui_configurer_init (LigmaUIConfigurer *ui_configurer)
 {
-  ui_configurer->p = gimp_ui_configurer_get_instance_private (ui_configurer);
+  ui_configurer->p = ligma_ui_configurer_get_instance_private (ui_configurer);
 }
 
 static void
-gimp_ui_configurer_set_property (GObject      *object,
+ligma_ui_configurer_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpUIConfigurer *ui_configurer = GIMP_UI_CONFIGURER (object);
+  LigmaUIConfigurer *ui_configurer = LIGMA_UI_CONFIGURER (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      ui_configurer->p->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      ui_configurer->p->ligma = g_value_get_object (value); /* don't ref */
       break;
 
     default:
@@ -133,17 +133,17 @@ gimp_ui_configurer_set_property (GObject      *object,
 }
 
 static void
-gimp_ui_configurer_get_property (GObject    *object,
+ligma_ui_configurer_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpUIConfigurer *ui_configurer = GIMP_UI_CONFIGURER (object);
+  LigmaUIConfigurer *ui_configurer = LIGMA_UI_CONFIGURER (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, ui_configurer->p->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, ui_configurer->p->ligma);
       break;
 
     default:
@@ -154,7 +154,7 @@ gimp_ui_configurer_get_property (GObject    *object,
 
 
 static void
-gimp_ui_configurer_get_window_center_pos (GtkWindow *window,
+ligma_ui_configurer_get_window_center_pos (GtkWindow *window,
                                           gint      *out_x,
                                           gint      *out_y)
 {
@@ -169,74 +169,74 @@ gimp_ui_configurer_get_window_center_pos (GtkWindow *window,
 }
 
 /**
- * gimp_ui_configurer_get_relative_window_pos:
+ * ligma_ui_configurer_get_relative_window_pos:
  * @window_a:
  * @window_b:
  *
  * Returns: At what side @window_b is relative to @window_a. Either
- * GIMP_ALIGN_LEFT or GIMP_ALIGN_RIGHT.
+ * LIGMA_ALIGN_LEFT or LIGMA_ALIGN_RIGHT.
  **/
-static GimpAlignmentType
-gimp_ui_configurer_get_relative_window_pos (GtkWindow *window_a,
+static LigmaAlignmentType
+ligma_ui_configurer_get_relative_window_pos (GtkWindow *window_a,
                                             GtkWindow *window_b)
 {
   gint a_x, b_x;
 
-  gimp_ui_configurer_get_window_center_pos (window_a, &a_x, NULL);
-  gimp_ui_configurer_get_window_center_pos (window_b, &b_x, NULL);
+  ligma_ui_configurer_get_window_center_pos (window_a, &a_x, NULL);
+  ligma_ui_configurer_get_window_center_pos (window_b, &b_x, NULL);
 
-  return b_x < a_x ? GIMP_ALIGN_LEFT : GIMP_ALIGN_RIGHT;
+  return b_x < a_x ? LIGMA_ALIGN_LEFT : LIGMA_ALIGN_RIGHT;
 }
 
 static void
-gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
-                                          GimpImageWindow  *uber_image_window)
+ligma_ui_configurer_move_docks_to_columns (LigmaUIConfigurer *ui_configurer,
+                                          LigmaImageWindow  *uber_image_window)
 {
   GList *dialogs     = NULL;
   GList *dialog_iter = NULL;
 
   dialogs =
-    g_list_copy (gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ()));
+    g_list_copy (ligma_dialog_factory_get_open_dialogs (ligma_dialog_factory_get_singleton ()));
 
   for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)
     {
-      GimpDockWindow    *dock_window;
-      GimpDockContainer *dock_container;
-      GimpDockColumns   *dock_columns;
+      LigmaDockWindow    *dock_window;
+      LigmaDockContainer *dock_container;
+      LigmaDockColumns   *dock_columns;
       GList             *docks;
       GList             *dock_iter;
 
-      if (!GIMP_IS_DOCK_WINDOW (dialog_iter->data))
+      if (!LIGMA_IS_DOCK_WINDOW (dialog_iter->data))
         continue;
 
-      dock_window = GIMP_DOCK_WINDOW (dialog_iter->data);
+      dock_window = LIGMA_DOCK_WINDOW (dialog_iter->data);
 
       /* If the dock window is on the left side of the image window,
        * move the docks to the left side. If the dock window is on the
        * right side, move the docks to the right side of the image
        * window.
        */
-      if (gimp_ui_configurer_get_relative_window_pos (GTK_WINDOW (uber_image_window),
-                                                      GTK_WINDOW (dock_window)) == GIMP_ALIGN_LEFT)
-        dock_columns = gimp_image_window_get_left_docks (uber_image_window);
+      if (ligma_ui_configurer_get_relative_window_pos (GTK_WINDOW (uber_image_window),
+                                                      GTK_WINDOW (dock_window)) == LIGMA_ALIGN_LEFT)
+        dock_columns = ligma_image_window_get_left_docks (uber_image_window);
       else
-        dock_columns = gimp_image_window_get_right_docks (uber_image_window);
+        dock_columns = ligma_image_window_get_right_docks (uber_image_window);
 
-      dock_container = GIMP_DOCK_CONTAINER (dock_window);
+      dock_container = LIGMA_DOCK_CONTAINER (dock_window);
       g_object_add_weak_pointer (G_OBJECT (dock_window),
                                  (gpointer) &dock_window);
 
-      docks = gimp_dock_container_get_docks (dock_container);
+      docks = ligma_dock_container_get_docks (dock_container);
       for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
         {
-          GimpDock *dock = GIMP_DOCK (dock_iter->data);
+          LigmaDock *dock = LIGMA_DOCK (dock_iter->data);
 
           /* Move the dock from the image window to the dock columns
            * widget. Note that we need a ref while the dock is parentless
            */
           g_object_ref (dock);
-          gimp_dock_window_remove_dock (dock_window, dock);
-          gimp_dock_columns_add_dock (dock_columns, dock, -1);
+          ligma_dock_window_remove_dock (dock_window, dock);
+          ligma_dock_columns_add_dock (dock_columns, dock, -1);
           g_object_unref (dock);
         }
       g_list_free (docks);
@@ -252,12 +252,12 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
         {
           guint docks_len;
 
-          docks     = gimp_dock_container_get_docks (dock_container);
+          docks     = ligma_dock_container_get_docks (dock_container);
           docks_len = g_list_length (docks);
 
           if (docks_len == 0)
             {
-              gimp_dialog_factory_remove_dialog (gimp_dialog_factory_get_singleton (),
+              ligma_dialog_factory_remove_dialog (ligma_dialog_factory_get_singleton (),
                                                  GTK_WIDGET (dock_window));
               gtk_widget_destroy (GTK_WIDGET (dock_window));
             }
@@ -270,7 +270,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
 }
 
 /**
- * gimp_ui_configurer_move_shells:
+ * ligma_ui_configurer_move_shells:
  * @ui_configurer:
  * @source_image_window:
  * @target_image_window:
@@ -278,56 +278,56 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
  * Move all display shells from one image window to the another.
  **/
 static void
-gimp_ui_configurer_move_shells (GimpUIConfigurer  *ui_configurer,
-                                GimpImageWindow   *source_image_window,
-                                GimpImageWindow   *target_image_window)
+ligma_ui_configurer_move_shells (LigmaUIConfigurer  *ui_configurer,
+                                LigmaImageWindow   *source_image_window,
+                                LigmaImageWindow   *target_image_window)
 {
-  while (gimp_image_window_get_n_shells (source_image_window) > 0)
+  while (ligma_image_window_get_n_shells (source_image_window) > 0)
     {
-      GimpDisplayShell *shell;
+      LigmaDisplayShell *shell;
 
-      shell = gimp_image_window_get_shell (source_image_window, 0);
+      shell = ligma_image_window_get_shell (source_image_window, 0);
 
       g_object_ref (shell);
-      gimp_image_window_remove_shell (source_image_window, shell);
-      gimp_image_window_add_shell (target_image_window, shell);
+      ligma_image_window_remove_shell (source_image_window, shell);
+      ligma_image_window_add_shell (target_image_window, shell);
       g_object_unref (shell);
     }
 }
 
 /**
- * gimp_ui_configurer_separate_docks:
+ * ligma_ui_configurer_separate_docks:
  * @ui_configurer:
  * @image_window:
  *
  * Move out the docks from the image window.
  **/
 static void
-gimp_ui_configurer_separate_docks (GimpUIConfigurer  *ui_configurer,
-                                   GimpImageWindow   *image_window)
+ligma_ui_configurer_separate_docks (LigmaUIConfigurer  *ui_configurer,
+                                   LigmaImageWindow   *image_window)
 {
-  GimpDockColumns *left_docks  = NULL;
-  GimpDockColumns *right_docks = NULL;
+  LigmaDockColumns *left_docks  = NULL;
+  LigmaDockColumns *right_docks = NULL;
 
-  left_docks  = gimp_image_window_get_left_docks (image_window);
-  right_docks = gimp_image_window_get_right_docks (image_window);
+  left_docks  = ligma_image_window_get_left_docks (image_window);
+  right_docks = ligma_image_window_get_right_docks (image_window);
 
-  gimp_ui_configurer_move_docks_to_window (ui_configurer, left_docks, GIMP_ALIGN_LEFT);
-  gimp_ui_configurer_move_docks_to_window (ui_configurer, right_docks, GIMP_ALIGN_RIGHT);
+  ligma_ui_configurer_move_docks_to_window (ui_configurer, left_docks, LIGMA_ALIGN_LEFT);
+  ligma_ui_configurer_move_docks_to_window (ui_configurer, right_docks, LIGMA_ALIGN_RIGHT);
 }
 
 /**
- * gimp_ui_configurer_move_docks_to_window:
+ * ligma_ui_configurer_move_docks_to_window:
  * @dock_columns:
  * @screen_side: At what side of the screen the dock window should be put.
  *
- * Moves docks in @dock_columns into a new #GimpDockWindow and
+ * Moves docks in @dock_columns into a new #LigmaDockWindow and
  * position it on the screen in a non-overlapping manner.
  */
 static void
-gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
-                                         GimpDockColumns   *dock_columns,
-                                         GimpAlignmentType  screen_side)
+ligma_ui_configurer_move_docks_to_window (LigmaUIConfigurer  *ui_configurer,
+                                         LigmaDockColumns   *dock_columns,
+                                         LigmaAlignmentType  screen_side)
 {
   GdkMonitor    *monitor;
   GdkRectangle   monitor_rect;
@@ -339,11 +339,11 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   GtkAllocation  original_size;
   gint           x, y;
 
-  docks = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
+  docks = g_list_copy (ligma_dock_columns_get_docks (dock_columns));
   if (! docks)
     return;
 
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (dock_columns));
+  monitor = ligma_widget_get_monitor (GTK_WIDGET (dock_columns));
 
   gdk_monitor_get_workarea (monitor, &monitor_rect);
 
@@ -355,9 +355,9 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   /* Do we need a toolbox window? */
   for (iter = docks; iter; iter = g_list_next (iter))
     {
-      GimpDock *dock = GIMP_DOCK (iter->data);
+      LigmaDock *dock = LIGMA_DOCK (iter->data);
 
-      if (GIMP_IS_TOOLBOX (dock))
+      if (LIGMA_IS_TOOLBOX (dock))
         {
           contains_toolbox = TRUE;
           break;
@@ -365,41 +365,41 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     }
 
   /* Create a dock window to put the dock in. Checking for
-   * GIMP_IS_TOOLBOX() is kind of ugly but not a disaster. We need
+   * LIGMA_IS_TOOLBOX() is kind of ugly but not a disaster. We need
    * the dock window correctly configured if we create it for the
    * toolbox
    */
   dock_window =
-    gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+    ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
                                     monitor,
                                     NULL /*ui_manager*/,
                                     GTK_WIDGET (dock_columns),
                                     (contains_toolbox ?
-                                     "gimp-toolbox-window" :
-                                     "gimp-dock-window"),
+                                     "ligma-toolbox-window" :
+                                     "ligma-dock-window"),
                                     -1 /*view_size*/,
                                     FALSE /*present*/);
 
   for (iter = docks; iter; iter = g_list_next (iter))
     {
-      GimpDock *dock = GIMP_DOCK (iter->data);
+      LigmaDock *dock = LIGMA_DOCK (iter->data);
 
       /* Move the dock to the window */
       g_object_ref (dock);
-      gimp_dock_columns_remove_dock (dock_columns, dock);
-      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window), dock, -1);
+      ligma_dock_columns_remove_dock (dock_columns, dock);
+      ligma_dock_window_add_dock (LIGMA_DOCK_WINDOW (dock_window), dock, -1);
       g_object_unref (dock);
     }
 
   /* Position the window */
-  if (screen_side == GIMP_ALIGN_LEFT)
+  if (screen_side == LIGMA_ALIGN_LEFT)
     {
       gravity = GDK_GRAVITY_NORTH_WEST;
 
       x = monitor_rect.x;
       y = monitor_rect.y;
     }
-  else if (screen_side == GIMP_ALIGN_RIGHT)
+  else if (screen_side == LIGMA_ALIGN_RIGHT)
     {
       gravity = GDK_GRAVITY_NORTH_EAST;
 
@@ -408,7 +408,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     }
   else
     {
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
     }
 
   gtk_window_set_gravity (GTK_WINDOW (dock_window), gravity);
@@ -426,39 +426,39 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
 }
 
 /**
- * gimp_ui_configurer_separate_shells:
+ * ligma_ui_configurer_separate_shells:
  * @ui_configurer:
  * @source_image_window:
  *
  * Create one image window per display shell and move it there.
  **/
 static void
-gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
-                                    GimpImageWindow  *source_image_window)
+ligma_ui_configurer_separate_shells (LigmaUIConfigurer *ui_configurer,
+                                    LigmaImageWindow  *source_image_window)
 {
-  GimpDisplayShell *active_shell  = gimp_image_window_get_active_shell (source_image_window);
-  GimpImageWindow  *active_window = NULL;
+  LigmaDisplayShell *active_shell  = ligma_image_window_get_active_shell (source_image_window);
+  LigmaImageWindow  *active_window = NULL;
 
   /* The last display shell remains in its window */
-  while (gimp_image_window_get_n_shells (source_image_window) > 1)
+  while (ligma_image_window_get_n_shells (source_image_window) > 1)
     {
-      GimpImageWindow  *new_image_window;
-      GimpDisplayShell *shell;
+      LigmaImageWindow  *new_image_window;
+      LigmaDisplayShell *shell;
 
       /* Create a new image window */
-      new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
+      new_image_window = ligma_image_window_new (ui_configurer->p->ligma,
                                                 NULL,
-                                                gimp_dialog_factory_get_singleton (),
-                                                gimp_widget_get_monitor (GTK_WIDGET (source_image_window)));
+                                                ligma_dialog_factory_get_singleton (),
+                                                ligma_widget_get_monitor (GTK_WIDGET (source_image_window)));
       /* Move the shell there */
-      shell = gimp_image_window_get_shell (source_image_window, 1);
+      shell = ligma_image_window_get_shell (source_image_window, 1);
 
       if (shell == active_shell)
         active_window = new_image_window;
 
       g_object_ref (shell);
-      gimp_image_window_remove_shell (source_image_window, shell);
-      gimp_image_window_add_shell (new_image_window, shell);
+      ligma_image_window_remove_shell (source_image_window, shell);
+      ligma_image_window_add_shell (new_image_window, shell);
       g_object_unref (shell);
 
       /* FIXME: If we don't set a size request here the window will be
@@ -479,32 +479,32 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
 }
 
 /**
- * gimp_ui_configurer_configure_for_single_window:
+ * ligma_ui_configurer_configure_for_single_window:
  * @ui_configurer:
  *
  * Move docks and display shells into a single window.
  **/
 static void
-gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
+ligma_ui_configurer_configure_for_single_window (LigmaUIConfigurer *ui_configurer)
 {
-  Gimp             *gimp              = ui_configurer->p->gimp;
-  GList            *windows           = gimp_get_image_windows (gimp);
+  Ligma             *ligma              = ui_configurer->p->ligma;
+  GList            *windows           = ligma_get_image_windows (ligma);
   GList            *iter              = NULL;
-  GimpImageWindow  *uber_image_window = NULL;
-  GimpDisplay      *active_display    = gimp_context_get_display (gimp_get_user_context (gimp));
-  GimpDisplayShell *active_shell      = gimp_display_get_shell (active_display);
+  LigmaImageWindow  *uber_image_window = NULL;
+  LigmaDisplay      *active_display    = ligma_context_get_display (ligma_get_user_context (ligma));
+  LigmaDisplayShell *active_shell      = ligma_display_get_shell (active_display);
 
   /* Get and setup the window to put everything in */
-  uber_image_window = gimp_ui_configurer_get_uber_window (ui_configurer);
+  uber_image_window = ligma_ui_configurer_get_uber_window (ui_configurer);
 
   /* Mve docks to the left and right side of the image window */
-  gimp_ui_configurer_move_docks_to_columns (ui_configurer,
+  ligma_ui_configurer_move_docks_to_columns (ui_configurer,
                                             uber_image_window);
 
   /* Move image shells from other windows to the uber image window */
   for (iter = windows; iter; iter = g_list_next (iter))
     {
-      GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
+      LigmaImageWindow *image_window = LIGMA_IMAGE_WINDOW (iter->data);
 
       /* Don't move stuff to itself */
       if (image_window == uber_image_window)
@@ -513,91 +513,91 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
       /* Put the displays in the rest of the image windows into
        * the uber image window
        */
-      gimp_ui_configurer_move_shells (ui_configurer,
+      ligma_ui_configurer_move_shells (ui_configurer,
                                       image_window,
                                       uber_image_window);
       /* Destroy the window */
-      gimp_image_window_destroy (image_window);
+      ligma_image_window_destroy (image_window);
     }
 
   /* Ensure the context shell remains active after mode switch. */
-  gimp_image_window_set_active_shell (uber_image_window, active_shell);
+  ligma_image_window_set_active_shell (uber_image_window, active_shell);
 
   g_list_free (windows);
 }
 
 /**
- * gimp_ui_configurer_configure_for_multi_window:
+ * ligma_ui_configurer_configure_for_multi_window:
  * @ui_configurer:
  *
  * Moves all display shells into their own image window.
  **/
 static void
-gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
+ligma_ui_configurer_configure_for_multi_window (LigmaUIConfigurer *ui_configurer)
 {
-  Gimp  *gimp    = ui_configurer->p->gimp;
-  GList *windows = gimp_get_image_windows (gimp);
+  Ligma  *ligma    = ui_configurer->p->ligma;
+  GList *windows = ligma_get_image_windows (ligma);
   GList *iter    = NULL;
 
   for (iter = windows; iter; iter = g_list_next (iter))
     {
-      GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
+      LigmaImageWindow *image_window = LIGMA_IMAGE_WINDOW (iter->data);
 
-      gimp_ui_configurer_separate_docks (ui_configurer, image_window);
+      ligma_ui_configurer_separate_docks (ui_configurer, image_window);
 
-      gimp_ui_configurer_separate_shells (ui_configurer, image_window);
+      ligma_ui_configurer_separate_shells (ui_configurer, image_window);
     }
 
   g_list_free (windows);
 }
 
 /**
- * gimp_ui_configurer_get_uber_window:
+ * ligma_ui_configurer_get_uber_window:
  * @ui_configurer:
  *
  * Returns: The window to be used as the main window for single-window
  *          mode.
  **/
-static GimpImageWindow *
-gimp_ui_configurer_get_uber_window (GimpUIConfigurer *ui_configurer)
+static LigmaImageWindow *
+ligma_ui_configurer_get_uber_window (LigmaUIConfigurer *ui_configurer)
 {
-  Gimp             *gimp         = ui_configurer->p->gimp;
-  GimpDisplay      *display      = gimp_get_display_iter (gimp)->data;
-  GimpDisplayShell *shell        = gimp_display_get_shell (display);
-  GimpImageWindow  *image_window = gimp_display_shell_get_window (shell);
+  Ligma             *ligma         = ui_configurer->p->ligma;
+  LigmaDisplay      *display      = ligma_get_display_iter (ligma)->data;
+  LigmaDisplayShell *shell        = ligma_display_get_shell (display);
+  LigmaImageWindow  *image_window = ligma_display_shell_get_window (shell);
 
   return image_window;
 }
 
 /**
- * gimp_ui_configurer_update_appearance:
+ * ligma_ui_configurer_update_appearance:
  * @ui_configurer:
  *
  * Updates the appearance of all shells in all image windows, so they
  * do whatever they deem necessary to fit the new UI mode mode.
  **/
 static void
-gimp_ui_configurer_update_appearance (GimpUIConfigurer *ui_configurer)
+ligma_ui_configurer_update_appearance (LigmaUIConfigurer *ui_configurer)
 {
-  Gimp  *gimp    = ui_configurer->p->gimp;
-  GList *windows = gimp_get_image_windows (gimp);
+  Ligma  *ligma    = ui_configurer->p->ligma;
+  GList *windows = ligma_get_image_windows (ligma);
   GList *list;
 
   for (list = windows; list; list = g_list_next (list))
     {
-      GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (list->data);
+      LigmaImageWindow *image_window = LIGMA_IMAGE_WINDOW (list->data);
       gint             n_shells;
       gint             i;
 
-      n_shells = gimp_image_window_get_n_shells (image_window);
+      n_shells = ligma_image_window_get_n_shells (image_window);
 
       for (i = 0; i < n_shells; i++)
         {
-          GimpDisplayShell *shell;
+          LigmaDisplayShell *shell;
 
-          shell = gimp_image_window_get_shell (image_window, i);
+          shell = ligma_image_window_get_shell (image_window, i);
 
-          gimp_display_shell_appearance_update (shell);
+          ligma_display_shell_appearance_update (shell);
         }
     }
 
@@ -605,20 +605,20 @@ gimp_ui_configurer_update_appearance (GimpUIConfigurer *ui_configurer)
 }
 
 /**
- * gimp_ui_configurer_configure:
+ * ligma_ui_configurer_configure:
  * @ui_configurer:
  * @single_window_mode:
  *
  * Configure the UI.
  **/
 void
-gimp_ui_configurer_configure (GimpUIConfigurer *ui_configurer,
+ligma_ui_configurer_configure (LigmaUIConfigurer *ui_configurer,
                               gboolean          single_window_mode)
 {
   if (single_window_mode)
-    gimp_ui_configurer_configure_for_single_window (ui_configurer);
+    ligma_ui_configurer_configure_for_single_window (ui_configurer);
   else
-    gimp_ui_configurer_configure_for_multi_window (ui_configurer);
+    ligma_ui_configurer_configure_for_multi_window (ui_configurer);
 
-  gimp_ui_configurer_update_appearance (ui_configurer);
+  ligma_ui_configurer_update_appearance (ui_configurer);
 }

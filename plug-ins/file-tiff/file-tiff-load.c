@@ -1,4 +1,4 @@
-/* tiff loading for GIMP
+/* tiff loading for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -49,22 +49,22 @@
 
 #include <tiffio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-tiff.h"
 #include "file-tiff-io.h"
 #include "file-tiff-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
-#define PLUG_IN_ROLE "gimp-file-tiff-load"
+#define PLUG_IN_ROLE "ligma-file-tiff-load"
 
 
 typedef struct
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   GeglBuffer   *buffer;
   const Babl   *format;
   guchar       *pixels;
@@ -73,22 +73,22 @@ typedef struct
 
 typedef enum
 {
-  GIMP_TIFF_LOAD_ASSOCALPHA,
-  GIMP_TIFF_LOAD_UNASSALPHA,
-  GIMP_TIFF_LOAD_CHANNEL
+  LIGMA_TIFF_LOAD_ASSOCALPHA,
+  LIGMA_TIFF_LOAD_UNASSALPHA,
+  LIGMA_TIFF_LOAD_CHANNEL
 } DefaultExtra;
 
 typedef enum
 {
-  GIMP_TIFF_DEFAULT,
-  GIMP_TIFF_INDEXED,
-  GIMP_TIFF_GRAY,
-  GIMP_TIFF_GRAY_MINISWHITE,
+  LIGMA_TIFF_DEFAULT,
+  LIGMA_TIFF_INDEXED,
+  LIGMA_TIFF_GRAY,
+  LIGMA_TIFF_GRAY_MINISWHITE,
 } TiffColorMode;
 
 /* Declare some local functions */
 
-static GimpColorProfile * load_profile     (TIFF              *tif);
+static LigmaColorProfile * load_profile     (TIFF              *tif);
 
 static void               load_rgba        (TIFF              *tif,
                                             ChannelData       *channel);
@@ -109,7 +109,7 @@ static void               load_separate    (TIFF              *tif,
                                             gboolean           is_signed,
                                             gint               extra);
 static void               load_paths       (TIFF              *tif,
-                                            GimpImage         *image,
+                                            LigmaImage         *image,
                                             gint               width,
                                             gint               height,
                                             gint               offset_x,
@@ -261,10 +261,10 @@ get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
     }
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 load_image (GFile        *file,
-            GimpRunMode   run_mode,
-            GimpImage   **image,
+            LigmaRunMode   run_mode,
+            LigmaImage   **image,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
             GError      **error)
@@ -273,21 +273,21 @@ load_image (GFile        *file,
   TiffSelectedPages  pages;
 
   GList             *images_list        = NULL;
-  DefaultExtra       default_extra      = GIMP_TIFF_LOAD_UNASSALPHA;
-  gint               first_image_type   = GIMP_RGB;
+  DefaultExtra       default_extra      = LIGMA_TIFF_LOAD_UNASSALPHA;
+  gint               first_image_type   = LIGMA_RGB;
   gint               min_row            = G_MAXINT;
   gint               min_col            = G_MAXINT;
   gint               max_row            = 0;
   gint               max_col            = 0;
   gboolean           save_transp_pixels = FALSE;
-  GimpColorProfile  *first_profile      = NULL;
+  LigmaColorProfile  *first_profile      = NULL;
   const gchar       *extra_message      = NULL;
   gint               li;
   gint               selectable_pages;
 
   *image = NULL;
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   tif = tiff_open (file, "r", error);
   if (! tif)
@@ -296,14 +296,14 @@ load_image (GFile        *file,
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                      _("Not a TIFF image or image is corrupt."));
 
-      return  GIMP_PDB_EXECUTION_ERROR;
+      return  LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-  gimp_get_data (LOAD_PROC "-target", &pages.target);
+  pages.target = LIGMA_PAGE_SELECTOR_TARGET_LAYERS;
+  ligma_get_data (LOAD_PROC "-target", &pages.target);
 
   pages.keep_empty_space = TRUE;
-  gimp_get_data (LOAD_PROC "-keep-empty-space",
+  ligma_get_data (LOAD_PROC "-keep-empty-space",
                  &pages.keep_empty_space);
 
   pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
@@ -326,9 +326,9 @@ load_image (GFile        *file,
           TIFFClose (tif);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("TIFF '%s' does not contain any directories"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
 
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       TIFFSetDirectory (tif, 0);
@@ -339,7 +339,7 @@ load_image (GFile        *file,
                            "though there seem to be %d pages."
                            " Attempting to load the file with this assumption.",
                            pages.n_pages),
-                 gimp_file_get_utf8_name (file), pages.n_pages);
+                 ligma_file_get_utf8_name (file), pages.n_pages);
     }
 
   pages.pages = NULL;
@@ -350,12 +350,12 @@ load_image (GFile        *file,
   for (li = 0; li < pages.n_pages; li++)
     pages.filtered_pages[li] = li;
 
-  if (pages.n_pages == 1 || run_mode != GIMP_RUN_INTERACTIVE)
+  if (pages.n_pages == 1 || run_mode != LIGMA_RUN_INTERACTIVE)
     {
       pages.pages  = g_new0 (gint, pages.n_pages);
       for (li = 0; li < pages.n_pages; li++)
         pages.pages[li] = li;
-      pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+      pages.target = LIGMA_PAGE_SELECTOR_TARGET_LAYERS;
     }
 
   /* Check all pages if any has an unspecified or unset channel. */
@@ -486,7 +486,7 @@ load_image (GFile        *file,
 
   pages.tif = tif;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE &&
+  if (run_mode == LIGMA_RUN_INTERACTIVE &&
       (pages.n_pages > 1 || extra_message) &&
       ! load_dialog (LOAD_PROC, &pages,
                      extra_message, &default_extra))
@@ -494,7 +494,7 @@ load_image (GFile        *file,
       TIFFClose (tif);
       g_clear_pointer (&pages.pages, g_free);
 
-      return GIMP_PDB_CANCEL;
+      return LIGMA_PDB_CANCEL;
     }
 
   selectable_pages = pages.n_filtered_pages;
@@ -523,9 +523,9 @@ load_image (GFile        *file,
         }
     }
 
-  gimp_set_data (LOAD_PROC "-target",
+  ligma_set_data (LOAD_PROC "-target",
                  &pages.target, sizeof (pages.target));
-  gimp_set_data (LOAD_PROC "-keep-empty-space",
+  ligma_set_data (LOAD_PROC "-keep-empty-space",
                  &pages.keep_empty_space,
                  sizeof (pages.keep_empty_space));
 
@@ -539,9 +539,9 @@ load_image (GFile        *file,
       gushort           spp;
       gushort           photomet;
       gshort            sampleformat;
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
       gboolean          profile_linear = FALSE;
-      GimpPrecision     image_precision;
+      LigmaPrecision     image_precision;
       const Babl       *type;
       const Babl       *base_format = NULL;
       const Babl       *space       = NULL;
@@ -549,9 +549,9 @@ load_image (GFile        *file,
       gint              cols;
       gint              rows;
       gboolean          alpha;
-      gint              image_type           = GIMP_RGB;
-      GimpLayer        *layer;
-      gint              layer_type           = GIMP_RGB_IMAGE;
+      gint              image_type           = LIGMA_RGB;
+      LigmaLayer        *layer;
+      gint              layer_type           = LIGMA_RGB_IMAGE;
       float             layer_offset_x       = 0.0;
       float             layer_offset_y       = 0.0;
       gint              layer_offset_x_pixel = 0;
@@ -564,7 +564,7 @@ load_image (GFile        *file,
       gboolean          is_signed;
       gint              i;
       gboolean          worst_case = FALSE;
-      gint              gimp_compression = GIMP_COMPRESSION_NONE;
+      gint              ligma_compression = LIGMA_COMPRESSION_NONE;
       const gchar      *name;
 
       if (TIFFSetDirectory (tif, pages.pages[li]) == 0)
@@ -575,7 +575,7 @@ load_image (GFile        *file,
         }
       ilayer = pages.pages[li];
 
-      gimp_progress_update (0.0);
+      ligma_progress_update (0.0);
 
       TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
@@ -590,21 +590,21 @@ load_image (GFile        *file,
 
       if (profile)
         {
-          profile_linear = gimp_color_profile_is_linear (profile);
+          profile_linear = ligma_color_profile_is_linear (profile);
 
           if (! first_profile)
             {
               first_profile = profile;
               g_object_ref (first_profile);
 
-              if (profile_linear && li > 0 && pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+              if (profile_linear && li > 0 && pages.target != LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
                 g_message (_("This image has a linear color profile but "
                              "it was not set on the first layer. "
                              "The layers below layer # %d will be "
                              "interpreted as non linear."), li+1);
             }
-          else if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES &&
-                   ! gimp_color_profile_is_equal (first_profile, profile))
+          else if (pages.target != LIGMA_PAGE_SELECTOR_TARGET_IMAGES &&
+                   ! ligma_color_profile_is_equal (first_profile, profile))
             {
               g_message (_("This image has multiple color profiles. "
                            "We will use the first one. If this leads "
@@ -633,9 +633,9 @@ load_image (GFile        *file,
         case 4:
         case 8:
           if (profile_linear)
-            image_precision = GIMP_PRECISION_U8_LINEAR;
+            image_precision = LIGMA_PRECISION_U8_LINEAR;
           else
-            image_precision = GIMP_PRECISION_U8_NON_LINEAR;
+            image_precision = LIGMA_PRECISION_U8_NON_LINEAR;
 
           type = babl_type ("u8");
           break;
@@ -644,18 +644,18 @@ load_image (GFile        *file,
           if (sampleformat == SAMPLEFORMAT_IEEEFP)
             {
               if (profile_linear)
-                image_precision = GIMP_PRECISION_HALF_LINEAR;
+                image_precision = LIGMA_PRECISION_HALF_LINEAR;
               else
-                image_precision = GIMP_PRECISION_HALF_NON_LINEAR;
+                image_precision = LIGMA_PRECISION_HALF_NON_LINEAR;
 
               type = babl_type ("half");
             }
           else
             {
               if (profile_linear)
-                image_precision = GIMP_PRECISION_U16_LINEAR;
+                image_precision = LIGMA_PRECISION_U16_LINEAR;
               else
-                image_precision = GIMP_PRECISION_U16_NON_LINEAR;
+                image_precision = LIGMA_PRECISION_U16_NON_LINEAR;
 
               type = babl_type ("u16");
             }
@@ -665,18 +665,18 @@ load_image (GFile        *file,
           if (sampleformat == SAMPLEFORMAT_IEEEFP)
             {
               if (profile_linear)
-                image_precision = GIMP_PRECISION_FLOAT_LINEAR;
+                image_precision = LIGMA_PRECISION_FLOAT_LINEAR;
               else
-                image_precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+                image_precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
 
               type = babl_type ("float");
             }
           else
             {
               if (profile_linear)
-                image_precision = GIMP_PRECISION_U32_LINEAR;
+                image_precision = LIGMA_PRECISION_U32_LINEAR;
               else
-                image_precision = GIMP_PRECISION_U32_NON_LINEAR;
+                image_precision = LIGMA_PRECISION_U32_NON_LINEAR;
 
               type = babl_type ("u32");
             }
@@ -684,9 +684,9 @@ load_image (GFile        *file,
 
         case 64:
           if (profile_linear)
-            image_precision = GIMP_PRECISION_DOUBLE_LINEAR;
+            image_precision = LIGMA_PRECISION_DOUBLE_LINEAR;
           else
-            image_precision = GIMP_PRECISION_DOUBLE_NON_LINEAR;
+            image_precision = LIGMA_PRECISION_DOUBLE_NON_LINEAR;
 
           type = babl_type ("double");
           break;
@@ -708,20 +708,20 @@ load_image (GFile        *file,
         {
           TIFFClose (tif);
           g_message (_("Could not get image width from '%s'"),
-                     gimp_file_get_utf8_name (file));
-          return GIMP_PDB_EXECUTION_ERROR;
+                     ligma_file_get_utf8_name (file));
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (! TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
           TIFFClose (tif);
           g_message (_("Could not get image length from '%s'"),
-                     gimp_file_get_utf8_name (file));
-          return GIMP_PDB_EXECUTION_ERROR;
+                     ligma_file_get_utf8_name (file));
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
-      if (cols > GIMP_MAX_IMAGE_SIZE || cols <= 0 ||
-          rows > GIMP_MAX_IMAGE_SIZE || rows <= 0)
+      if (cols > LIGMA_MAX_IMAGE_SIZE || cols <= 0 ||
+          rows > LIGMA_MAX_IMAGE_SIZE || rows <= 0)
         {
           g_message (_("Invalid image dimensions (%u x %u) for page %d. "
                      "Image may be corrupt."),
@@ -746,14 +746,14 @@ load_image (GFile        *file,
             {
               g_message (_("Could not get photometric from '%s'. "
                          "Image is CCITT compressed, assuming min-is-white"),
-                         gimp_file_get_utf8_name (file));
+                         ligma_file_get_utf8_name (file));
               photomet = PHOTOMETRIC_MINISWHITE;
             }
           else
             {
               g_message (_("Could not get photometric from '%s'. "
                          "Assuming min-is-black"),
-                         gimp_file_get_utf8_name (file));
+                         ligma_file_get_utf8_name (file));
 
               /* old AppleScan software misses out the photometric tag
                * (and incidentally assumes min-is-white, but xv
@@ -779,25 +779,25 @@ load_image (GFile        *file,
         }
       else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
         {
-          if (run_mode != GIMP_RUN_INTERACTIVE)
+          if (run_mode != LIGMA_RUN_INTERACTIVE)
             /* In non-interactive mode, we assume unassociated alpha if unspecified.
              * We don't output messages in interactive mode as the user
              * has already the ability to choose through a dialog. */
             g_message (_("Alpha channel type not defined for %s. "
                        "Assuming alpha is not premultiplied"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
 
           switch (default_extra)
             {
-            case GIMP_TIFF_LOAD_ASSOCALPHA:
+            case LIGMA_TIFF_LOAD_ASSOCALPHA:
               alpha = TRUE;
               save_transp_pixels = FALSE;
               break;
-            case GIMP_TIFF_LOAD_UNASSALPHA:
+            case LIGMA_TIFF_LOAD_UNASSALPHA:
               alpha = TRUE;
               save_transp_pixels = TRUE;
               break;
-            default: /* GIMP_TIFF_LOAD_CHANNEL */
+            default: /* LIGMA_TIFF_LOAD_CHANNEL */
               alpha = FALSE;
               break;
             }
@@ -807,23 +807,23 @@ load_image (GFile        *file,
         {
           if (is_non_conformant_tiff (photomet, spp))
             {
-              if (run_mode != GIMP_RUN_INTERACTIVE)
+              if (run_mode != LIGMA_RUN_INTERACTIVE)
                 g_message (_("Image '%s' does not conform to the TIFF specification: "
                            "ExtraSamples field is not set while extra channels are present. "
                            "Assuming the first extra channel is non-premultiplied alpha."),
-                           gimp_file_get_utf8_name (file));
+                           ligma_file_get_utf8_name (file));
 
               switch (default_extra)
                 {
-                case GIMP_TIFF_LOAD_ASSOCALPHA:
+                case LIGMA_TIFF_LOAD_ASSOCALPHA:
                   alpha = TRUE;
                   save_transp_pixels = FALSE;
                   break;
-                case GIMP_TIFF_LOAD_UNASSALPHA:
+                case LIGMA_TIFF_LOAD_UNASSALPHA:
                   alpha = TRUE;
                   save_transp_pixels = TRUE;
                   break;
-                default: /* GIMP_TIFF_LOAD_CHANNEL */
+                default: /* LIGMA_TIFF_LOAD_CHANNEL */
                   alpha = FALSE;
                   break;
                 }
@@ -836,7 +836,7 @@ load_image (GFile        *file,
 
       extra = get_extra_channels_count (photomet, spp, alpha);
 
-      tiff_mode = GIMP_TIFF_DEFAULT;
+      tiff_mode = LIGMA_TIFF_DEFAULT;
       is_signed = sampleformat == SAMPLEFORMAT_INT;
 
       switch (photomet)
@@ -847,19 +847,19 @@ load_image (GFile        *file,
           /* Even for bps >= we may need to use tiff_mode, so always set it.
            * Currently we use it to detect the need to convert 8 bps miniswhite. */
           if (photomet == PHOTOMETRIC_PALETTE)
-            tiff_mode = GIMP_TIFF_INDEXED;
+            tiff_mode = LIGMA_TIFF_INDEXED;
           else if (photomet == PHOTOMETRIC_MINISBLACK)
-            tiff_mode = GIMP_TIFF_GRAY;
+            tiff_mode = LIGMA_TIFF_GRAY;
           else if (photomet == PHOTOMETRIC_MINISWHITE)
-            tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
+            tiff_mode = LIGMA_TIFF_GRAY_MINISWHITE;
 
           if (bps < 8)
             {
               /* FIXME: It should be a user choice whether this should be
                * interpreted as indexed or grayscale. For now we will
                * use indexed (see issue #6766). */
-              image_type = GIMP_INDEXED;
-              layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+              image_type = LIGMA_INDEXED;
+              layer_type = alpha ? LIGMA_INDEXEDA_IMAGE : LIGMA_INDEXED_IMAGE;
 
               if ((bps == 1 || bps == 2 || bps == 4) && ! alpha && spp == 1)
                 {
@@ -875,13 +875,13 @@ load_image (GFile        *file,
             {
               if (photomet == PHOTOMETRIC_PALETTE)
                 {
-                  image_type = GIMP_INDEXED;
-                  layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+                  image_type = LIGMA_INDEXED;
+                  layer_type = alpha ? LIGMA_INDEXEDA_IMAGE : LIGMA_INDEXED_IMAGE;
                 }
               else
                 {
-                  image_type = GIMP_GRAY;
-                  layer_type = alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+                  image_type = LIGMA_GRAY;
+                  layer_type = alpha ? LIGMA_GRAYA_IMAGE : LIGMA_GRAY_IMAGE;
                 }
             }
 
@@ -951,8 +951,8 @@ load_image (GFile        *file,
           break;
 
         case PHOTOMETRIC_RGB:
-          image_type = GIMP_RGB;
-          layer_type = alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          image_type = LIGMA_RGB;
+          layer_type = alpha ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE;
 
           if (alpha)
             {
@@ -1027,15 +1027,15 @@ load_image (GFile        *file,
           break;
 
         case PHOTOMETRIC_SEPARATED:
-          layer_type = alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          layer_type = alpha ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE;
           /* It's possible that a CMYK image might not have an
            * attached profile, so we'll check for it and set up
            * space accordingly
            */
-          if (profile && gimp_color_profile_is_cmyk (profile))
+          if (profile && ligma_color_profile_is_cmyk (profile))
             {
-              space = gimp_color_profile_get_space (profile,
-                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+              space = ligma_color_profile_get_space (profile,
+                                                    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                     error);
             }
           else
@@ -1104,13 +1104,13 @@ load_image (GFile        *file,
               }
           }
 
-        gimp_compression = tiff_compression_to_gimp_compression (compression);
+        ligma_compression = tiff_compression_to_ligma_compression (compression);
       }
 
       if (worst_case)
         {
-          image_type  = GIMP_RGB;
-          layer_type  = GIMP_RGBA_IMAGE;
+          image_type  = LIGMA_RGB;
+          layer_type  = LIGMA_RGBA_IMAGE;
 
           if (profile_linear)
             {
@@ -1134,7 +1134,7 @@ load_image (GFile        *file,
             }
         }
 
-      if (pages.target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
+      if (pages.target == LIGMA_PAGE_SELECTOR_TARGET_LAYERS)
         {
           if (li == 0)
             {
@@ -1146,22 +1146,22 @@ load_image (GFile        *file,
             }
         }
 
-      if ((pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! *image))
+      if ((pages.target == LIGMA_PAGE_SELECTOR_TARGET_IMAGES) || (! *image))
         {
-          *image = gimp_image_new_with_precision (cols, rows, image_type,
+          *image = ligma_image_new_with_precision (cols, rows, image_type,
                                                   image_precision);
 
           if (! *image)
             {
               TIFFClose (tif);
               g_message (_("Could not create a new image: %s"),
-                         gimp_pdb_get_last_error (gimp_get_pdb ()));
-              return GIMP_PDB_EXECUTION_ERROR;
+                         ligma_pdb_get_last_error (ligma_get_pdb ()));
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
 
-          gimp_image_undo_disable (*image);
+          ligma_image_undo_disable (*image);
 
-          if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+          if (pages.target == LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
             {
               gchar *uri;
               gchar *fname;
@@ -1171,7 +1171,7 @@ load_image (GFile        *file,
               fname    = g_strdup_printf ("%s-%d", uri, ilayer);
               new_file = g_file_new_for_uri (fname);
 
-              gimp_image_set_file (*image, new_file);
+              ligma_image_set_file (*image, new_file);
 
               g_free (uri);
               g_free (fname);
@@ -1191,7 +1191,7 @@ load_image (GFile        *file,
                                           pages.n_pages, pages.o_pages);
               new_file = g_file_new_for_uri (fname);
 
-              gimp_image_set_file (*image, new_file);
+              ligma_image_set_file (*image, new_file);
 
               g_free (uri);
               g_free (fname);
@@ -1199,22 +1199,22 @@ load_image (GFile        *file,
             }
           else
             {
-              gimp_image_set_file (*image, file);
+              ligma_image_set_file (*image, file);
             }
         }
 
-      /* attach CMYK profile to GimpImage if applicable */
-      if (profile && gimp_color_profile_is_cmyk (profile))
+      /* attach CMYK profile to LigmaImage if applicable */
+      if (profile && ligma_color_profile_is_cmyk (profile))
         {
-          gimp_image_set_simulation_profile (*image, profile);
+          ligma_image_set_simulation_profile (*image, profile);
           g_clear_object (&profile);
         }
 
       /* attach non-CMYK color profile */
       if (profile)
         {
-          if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
-            gimp_image_set_color_profile (*image, profile);
+          if (pages.target == LIGMA_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
+            ligma_image_set_color_profile (*image, profile);
 
           g_object_unref (profile);
         }
@@ -1222,8 +1222,8 @@ load_image (GFile        *file,
       /* attach parasites */
       {
         GString          *string;
-        GimpConfigWriter *writer;
-        GimpParasite     *parasite;
+        LigmaConfigWriter *writer;
+        LigmaParasite     *parasite;
         const gchar      *img_desc;
 
         /* construct the save parasite manually instead of simply
@@ -1232,102 +1232,102 @@ load_image (GFile        *file,
          */
 
         string = g_string_new (NULL);
-        writer = gimp_config_writer_new_from_string (string);
+        writer = ligma_config_writer_new_from_string (string);
 
-        gimp_config_writer_open (writer, "compression");
-        gimp_config_writer_printf (writer, "%d", gimp_compression);
-        gimp_config_writer_close (writer);
+        ligma_config_writer_open (writer, "compression");
+        ligma_config_writer_printf (writer, "%d", ligma_compression);
+        ligma_config_writer_close (writer);
 
-        gimp_config_writer_finish (writer, NULL, NULL);
+        ligma_config_writer_finish (writer, NULL, NULL);
 
-        parasite = gimp_parasite_new ("GimpProcedureConfig-file-tiff-save-last",
-                                      GIMP_PARASITE_PERSISTENT,
+        parasite = ligma_parasite_new ("LigmaProcedureConfig-file-tiff-save-last",
+                                      LIGMA_PARASITE_PERSISTENT,
                                       string->len + 1, string->str);
-        gimp_image_attach_parasite (*image, parasite);
-        gimp_parasite_free (parasite);
+        ligma_image_attach_parasite (*image, parasite);
+        ligma_parasite_free (parasite);
 
         g_string_free (string, TRUE);
 
         /* Attach a parasite containing the image description.
-         * Pretend to be a gimp comment so other plugins will use this
+         * Pretend to be a ligma comment so other plugins will use this
          * description as an image comment where appropriate.
          */
         if (TIFFGetField (tif, TIFFTAG_IMAGEDESCRIPTION, &img_desc) &&
             g_utf8_validate (img_desc, -1, NULL))
           {
-            parasite = gimp_parasite_new ("gimp-comment",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("ligma-comment",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           strlen (img_desc) + 1, img_desc);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
       }
 
 
       /* Attach GeoTIFF Tags as Parasite, If available */
       {
-        GimpParasite *parasite    = NULL;
+        LigmaParasite *parasite    = NULL;
         void         *geotag_data = NULL;
         uint32_t      count       = 0;
 
         if (TIFFGetField (tif, GEOTIFF_MODELPIXELSCALE, &count, &geotag_data))
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelPixelScale",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_ModelPixelScale",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_DOUBLE) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
 
         if (TIFFGetField (tif, GEOTIFF_MODELTIEPOINT, &count, &geotag_data))
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelTiePoint",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_ModelTiePoint",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_DOUBLE) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
 
         if (TIFFGetField (tif, GEOTIFF_MODELTRANSFORMATION, &count, &geotag_data))
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_ModelTransformation",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_ModelTransformation",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_DOUBLE) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
 
         if (TIFFGetField (tif, GEOTIFF_KEYDIRECTORY, &count, &geotag_data) )
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_KeyDirectory",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_KeyDirectory",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_SHORT) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
 
         if (TIFFGetField (tif, GEOTIFF_DOUBLEPARAMS, &count, &geotag_data))
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_DoubleParams",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_DoubleParams",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_DOUBLE) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
 
         if (TIFFGetField (tif, GEOTIFF_ASCIIPARAMS, &count, &geotag_data))
           {
-            parasite = gimp_parasite_new ("Gimp_GeoTIFF_Asciiparams",
-                                          GIMP_PARASITE_PERSISTENT,
+            parasite = ligma_parasite_new ("Ligma_GeoTIFF_Asciiparams",
+                                          LIGMA_PARASITE_PERSISTENT,
                                           (TIFFDataWidth (TIFF_ASCII) * count),
                                           geotag_data);
-            gimp_image_attach_parasite (*image, parasite);
-            gimp_parasite_free (parasite);
+            ligma_image_attach_parasite (*image, parasite);
+            ligma_parasite_free (parasite);
           }
       }
 
@@ -1336,7 +1336,7 @@ load_image (GFile        *file,
         gfloat   xres = 72.0;
         gfloat   yres = 72.0;
         gushort  read_unit;
-        GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
+        LigmaUnit unit = LIGMA_UNIT_PIXEL; /* invalid unit */
 
         if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres))
           {
@@ -1352,13 +1352,13 @@ load_image (GFile        *file,
                         break;
 
                       case RESUNIT_INCH:
-                        unit = GIMP_UNIT_INCH;
+                        unit = LIGMA_UNIT_INCH;
                         break;
 
                       case RESUNIT_CENTIMETER:
                         xres *= 2.54;
                         yres *= 2.54;
-                        unit = GIMP_UNIT_MM; /* this is our default metric unit */
+                        unit = LIGMA_UNIT_MM; /* this is our default metric unit */
                         break;
 
                       default:
@@ -1387,27 +1387,27 @@ load_image (GFile        *file,
             /* now set the new image's resolution info */
 
             /* If it is invalid, instead of forcing 72dpi, do not set
-             * the resolution at all. Gimp will then use the default
+             * the resolution at all. Ligma will then use the default
              * set by the user
              */
             if (read_unit != RESUNIT_NONE)
               {
                 if (! isfinite (xres) ||
-                    xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
+                    xres < LIGMA_MIN_RESOLUTION || xres > LIGMA_MAX_RESOLUTION ||
                     ! isfinite (yres) ||
-                    yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+                    yres < LIGMA_MIN_RESOLUTION || yres > LIGMA_MAX_RESOLUTION)
                   {
                     g_message (_("Invalid image resolution info, using default"));
                     /* We need valid xres and yres for computing
                      * layer_offset_x_pixel and layer_offset_y_pixel.
                      */
-                    gimp_image_get_resolution (*image, &xres, &yres);
+                    ligma_image_get_resolution (*image, &xres, &yres);
                   }
                 else
                   {
-                    gimp_image_set_resolution (*image, xres, yres);
-                    if (unit != GIMP_UNIT_PIXEL)
-                      gimp_image_set_unit (*image, unit);
+                    ligma_image_set_resolution (*image, xres, yres);
+                    if (unit != LIGMA_UNIT_PIXEL)
+                      ligma_image_set_unit (*image, unit);
 
                     *resolution_loaded = TRUE;
                   }
@@ -1434,14 +1434,14 @@ load_image (GFile        *file,
           layer_offset_y = 0.0;
 
         /* round floating point position to integer position required
-         * by GIMP
+         * by LIGMA
          */
         layer_offset_x_pixel = ROUND (layer_offset_x * xres);
         layer_offset_y_pixel = ROUND (layer_offset_y * yres);
       }
 
       /* Install colormap for INDEXED images only */
-      if (image_type == GIMP_INDEXED)
+      if (image_type == LIGMA_INDEXED)
         {
           guchar   cmap[768];
 
@@ -1457,8 +1457,8 @@ load_image (GFile        *file,
                 {
                   TIFFClose (tif);
                   g_message (_("Could not get colormaps from '%s'"),
-                             gimp_file_get_utf8_name (file));
-                  return GIMP_PDB_EXECUTION_ERROR;
+                             ligma_file_get_utf8_name (file));
+                  return LIGMA_PDB_EXECUTION_ERROR;
                 }
 
               for (i = 0, j = 0; i < (1 << bps); i++)
@@ -1534,10 +1534,10 @@ load_image (GFile        *file,
                 }
             }
 
-          gimp_image_set_colormap (*image, cmap, (1 << bps));
+          ligma_image_set_colormap (*image, cmap, (1 << bps));
         }
 
-      if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages.target != LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
         load_paths (tif, *image, cols, rows,
                     layer_offset_x_pixel, layer_offset_y_pixel);
       else
@@ -1547,7 +1547,7 @@ load_image (GFile        *file,
         {
           /* Validate number of channels to the same maximum as we use for
            * Photoshop. A higher number most likely means a corrupt image
-           * and can cause GIMP to become unresponsive and/or stuck.
+           * and can cause LIGMA to become unresponsive and/or stuck.
            * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
            */
           g_message (_("Suspicious number of extra channels: %d. Possibly corrupt image."), extra);
@@ -1562,11 +1562,11 @@ load_image (GFile        *file,
 
       if (name)
         {
-          layer = gimp_layer_new (*image, name,
+          layer = ligma_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (*image));
+                                  ligma_image_get_default_new_layer_mode (*image));
         }
       else
         {
@@ -1577,30 +1577,30 @@ load_image (GFile        *file,
           else
             name = g_strdup_printf (_("Page %d"), ilayer);
 
-          layer = gimp_layer_new (*image, name,
+          layer = ligma_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (*image));
+                                  ligma_image_get_default_new_layer_mode (*image));
           g_free (name);
         }
 
-      if (! base_format && image_type == GIMP_INDEXED)
+      if (! base_format && image_type == LIGMA_INDEXED)
         {
           /* can't create the palette format here, need to get it from
            * an existing layer
            */
-          base_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+          base_format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
         }
       else if (! space)
         {
           base_format =
             babl_format_with_space (babl_format_get_encoding (base_format),
-                                    gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
+                                    ligma_drawable_get_format (LIGMA_DRAWABLE (layer)));
         }
 
-      channel[0].drawable = GIMP_DRAWABLE (layer);
-      channel[0].buffer   = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      channel[0].drawable = LIGMA_DRAWABLE (layer);
+      channel[0].buffer   = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
       channel[0].format   = base_format;
 
       if (extra > 0 && ! worst_case)
@@ -1608,25 +1608,25 @@ load_image (GFile        *file,
           /* Add extra channels as appropriate */
           for (i = 1; i <= extra; i++)
             {
-              GimpRGB color;
+              LigmaRGB color;
 
-              gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+              ligma_rgb_set (&color, 0.0, 0.0, 0.0);
 
-              channel[i].drawable = GIMP_DRAWABLE (gimp_channel_new (*image, _("TIFF Channel"),
+              channel[i].drawable = LIGMA_DRAWABLE (ligma_channel_new (*image, _("TIFF Channel"),
                                                                      cols, rows,
                                                                      100.0, &color));
-              gimp_image_insert_channel (*image, GIMP_CHANNEL (channel[i].drawable), NULL, 0);
-              channel[i].buffer = gimp_drawable_get_buffer (channel[i].drawable);
+              ligma_image_insert_channel (*image, LIGMA_CHANNEL (channel[i].drawable), NULL, 0);
+              channel[i].buffer = ligma_drawable_get_buffer (channel[i].drawable);
 
               /* Unlike color channels, we don't care about the source
                * TRC for extra channels. We just want to import them
                * as-is without any value conversion. Since extra
-               * channels are always linear in GIMP, we consider TIFF
+               * channels are always linear in LIGMA, we consider TIFF
                * extra channels with unspecified data to be linear too.
                * Only exception are 8-bit non-linear images whose
                * channel are Y' for legacy/compatibility reasons.
                */
-              if (image_precision == GIMP_PRECISION_U8_NON_LINEAR)
+              if (image_precision == LIGMA_PRECISION_U8_NON_LINEAR)
                 channel[i].format = babl_format_new (babl_model ("Y'"),
                                                      type,
                                                      babl_component ("Y'"),
@@ -1685,14 +1685,14 @@ load_image (GFile        *file,
             }
 
           if (flip_horizontal)
-            gimp_item_transform_flip_simple (GIMP_ITEM (layer),
-                                             GIMP_ORIENTATION_HORIZONTAL,
+            ligma_item_transform_flip_simple (LIGMA_ITEM (layer),
+                                             LIGMA_ORIENTATION_HORIZONTAL,
                                              TRUE /* auto_center */,
                                              -1.0 /* axis */);
 
           if (flip_vertical)
-            gimp_item_transform_flip_simple (GIMP_ITEM (layer),
-                                             GIMP_ORIENTATION_VERTICAL,
+            ligma_item_transform_flip_simple (LIGMA_ITEM (layer),
+                                             LIGMA_ORIENTATION_VERTICAL,
                                              TRUE /* auto_center */,
                                              -1.0 /* axis */);
         }
@@ -1706,7 +1706,7 @@ load_image (GFile        *file,
       g_free (channel);
       channel = NULL;
 
-      if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages.target != LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
         {
           /* compute bounding box of all layers read so far */
           if (min_col > layer_offset_x_pixel)
@@ -1723,25 +1723,25 @@ load_image (GFile        *file,
           if (layer_offset_x_pixel > 0 ||
               layer_offset_y_pixel > 0)
             {
-              gimp_layer_set_offsets (layer,
+              ligma_layer_set_offsets (layer,
                                       layer_offset_x_pixel,
                                       layer_offset_y_pixel);
             }
         }
 
-      gimp_image_insert_layer (*image, layer, NULL, -1);
+      ligma_image_insert_layer (*image, layer, NULL, -1);
 
-      if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages.target == LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
         {
-          gimp_image_undo_enable (*image);
-          gimp_image_clean_all (*image);
+          ligma_image_undo_enable (*image);
+          ligma_image_clean_all (*image);
         }
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
     }
   g_clear_object (&first_profile);
 
-  if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+  if (pages.target == LIGMA_PAGE_SELECTOR_TARGET_IMAGES)
     {
       GList *list = images_list;
 
@@ -1754,7 +1754,7 @@ load_image (GFile        *file,
 
       for (; list; list = g_list_next (list))
         {
-          gimp_display_new (list->data);
+          ligma_display_new (list->data);
         }
 
       g_list_free (images_list);
@@ -1766,9 +1766,9 @@ load_image (GFile        *file,
           TIFFClose (tif);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("No data could be read from TIFF '%s'. The file is probably corrupted."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
 
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (pages.keep_empty_space)
@@ -1780,23 +1780,23 @@ load_image (GFile        *file,
         }
 
       /* resize image to bounding box of all layers */
-      gimp_image_resize (*image,
+      ligma_image_resize (*image,
                          max_col - min_col, max_row - min_row,
                          -min_col, -min_row);
 
-      gimp_image_undo_enable (*image);
+      ligma_image_undo_enable (*image);
     }
 
   g_free (pages.pages);
   TIFFClose (tif);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
-static GimpColorProfile *
+static LigmaColorProfile *
 load_profile (TIFF *tif)
 {
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
 
 #ifdef TIFFTAG_ICCPROFILE
   /* If TIFFTAG_ICCPROFILE is defined we are dealing with a
@@ -1809,7 +1809,7 @@ load_profile (TIFF *tif)
   /* set the ICC profile - if found in the TIFF */
   if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
     {
-      profile = gimp_color_profile_new_from_icc_profile (icc_profile,
+      profile = ligma_color_profile_new_from_icc_profile (icc_profile,
                                                          profile_size,
                                                          NULL);
     }
@@ -1862,7 +1862,7 @@ load_rgba (TIFF        *tif,
                        GEGL_AUTO_ROWSTRIDE);
 
       if ((row % 32) == 0)
-        gimp_progress_update ((gdouble) row / (gdouble) image_height);
+        ligma_progress_update ((gdouble) row / (gdouble) image_height);
     }
 
   g_free (buffer);
@@ -1870,7 +1870,7 @@ load_rgba (TIFF        *tif,
 
 static void
 load_paths (TIFF      *tif,
-            GimpImage *image,
+            LigmaImage *image,
             gint       width,
             gint       height,
             gint       offset_x,
@@ -1950,14 +1950,14 @@ load_paths (TIFF      *tif,
           /* path information */
           guint16      type;
           gint         rec = pos;
-          GimpVectors *vectors;
+          LigmaVectors *vectors;
           gdouble     *points          = NULL;
           gint         expected_points = 0;
           gint         pointcount      = 0;
           gboolean     closed          = FALSE;
 
-          vectors = gimp_vectors_new (image, name);
-          gimp_image_insert_vectors (image, vectors, NULL, path_index);
+          vectors = ligma_vectors_new (image, name);
+          ligma_image_insert_vectors (image, vectors, NULL, path_index);
           path_index++;
 
           while (rec < pos + len)
@@ -2015,7 +2015,7 @@ load_paths (TIFF      *tif,
                               (double) 0xFFFFFF;
 
                           /* coords are stored with vertical component
-                           * first, gimp expects the horizontal
+                           * first, ligma expects the horizontal
                            * component first. Sigh.
                            */
                           points[pointcount * 6 + (j ^ 1)] = f * size + offset;
@@ -2025,8 +2025,8 @@ load_paths (TIFF      *tif,
 
                       if (pointcount == expected_points)
                         {
-                          gimp_vectors_stroke_new_from_points (vectors,
-                                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                          ligma_vectors_stroke_new_from_points (vectors,
+                                                               LIGMA_VECTORS_STROKE_TYPE_BEZIER,
                                                                pointcount * 6,
                                                                points,
                                                                closed);
@@ -2111,7 +2111,7 @@ load_contiguous (TIFF         *tif,
       buffer = g_malloc (TIFFScanlineSize (tif));
     }
 
-  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+  if (tiff_mode != LIGMA_TIFF_DEFAULT && bps < 8)
     {
       needs_upscale = TRUE;
       bw_buffer = g_malloc (tile_width * tile_height);
@@ -2141,7 +2141,7 @@ load_contiguous (TIFF         *tif,
           guint32     cols;
           gint        offset;
 
-          gimp_progress_update (progress + one_row *
+          ligma_progress_update (progress + one_row *
                                 ((gdouble) x / (gdouble) image_width));
 
           if (TIFFIsTiled (tif))
@@ -2181,7 +2181,7 @@ load_contiguous (TIFF         *tif,
                                 tile_width * bytes_per_pixel);
             }
 
-          if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE && bps == 8)
+          if (tiff_mode == LIGMA_TIFF_GRAY_MINISWHITE && bps == 8)
             {
               convert_miniswhite (buffer, cols, rows);
             }
@@ -2288,7 +2288,7 @@ load_separate (TIFF         *tif,
       buffer = g_malloc (TIFFScanlineSize (tif));
     }
 
-  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+  if (tiff_mode != LIGMA_TIFF_DEFAULT && bps < 8)
     {
       needs_upscale = TRUE;
       bw_buffer = g_malloc (tile_width * tile_height);
@@ -2338,7 +2338,7 @@ load_separate (TIFF         *tif,
                   guint32             rows;
                   guint32             cols;
 
-                  gimp_progress_update (progress + one_row *
+                  ligma_progress_update (progress + one_row *
                                         ((gdouble) x / (gdouble) image_width));
 
                   if (TIFFIsTiled (tif))
@@ -2378,7 +2378,7 @@ load_separate (TIFF         *tif,
                                         tile_width * bytes_per_pixel);
                     }
 
-                  if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE && bps == 8)
+                  if (tiff_mode == LIGMA_TIFF_GRAY_MINISWHITE && bps == 8)
                     {
                       convert_miniswhite (buffer, cols, rows);
                     }
@@ -2444,7 +2444,7 @@ fill_bit2byte (TiffColorMode tiff_mode)
 
   dest = bit2byte;
 
-  if (tiff_mode == GIMP_TIFF_INDEXED)
+  if (tiff_mode == LIGMA_TIFF_INDEXED)
     {
       for (j = 0; j < 256; j++)
         for (i = 7; i >= 0; i--)
@@ -2452,13 +2452,13 @@ fill_bit2byte (TiffColorMode tiff_mode)
             *(dest++) = ((j & (1 << i)) != 0);
           }
     }
-  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+  else if (tiff_mode != LIGMA_TIFF_DEFAULT)
     {
       guchar *_to_8_bitmap = NULL;
 
-      if (tiff_mode == GIMP_TIFF_GRAY)
+      if (tiff_mode == LIGMA_TIFF_GRAY)
         _to_8_bitmap = (guchar *) &_1_to_8_bitmap;
-      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+      else if (tiff_mode == LIGMA_TIFF_GRAY_MINISWHITE)
         _to_8_bitmap = (guchar *) &_1_to_8_bitmap_rev;
 
       for (j = 0; j < 256; j++)
@@ -2487,7 +2487,7 @@ fill_2bit2byte (TiffColorMode tiff_mode)
 
   dest = _2bit2byte;
 
-  if (tiff_mode == GIMP_TIFF_INDEXED)
+  if (tiff_mode == LIGMA_TIFF_INDEXED)
     {
       for (j = 0; j < 256; j++)
         {
@@ -2497,13 +2497,13 @@ fill_2bit2byte (TiffColorMode tiff_mode)
           }
         }
     }
-  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+  else if (tiff_mode != LIGMA_TIFF_DEFAULT)
     {
       guchar *_to_8_bitmap = NULL;
 
-      if (tiff_mode == GIMP_TIFF_GRAY)
+      if (tiff_mode == LIGMA_TIFF_GRAY)
         _to_8_bitmap = (guchar *) &_2_to_8_bitmap;
-      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+      else if (tiff_mode == LIGMA_TIFF_GRAY_MINISWHITE)
         _to_8_bitmap = (guchar *) &_2_to_8_bitmap_rev;
 
       for (j = 0; j < 256; j++)
@@ -2534,7 +2534,7 @@ fill_4bit2byte (TiffColorMode tiff_mode)
 
   dest = _4bit2byte;
 
-  if (tiff_mode == GIMP_TIFF_INDEXED)
+  if (tiff_mode == LIGMA_TIFF_INDEXED)
     {
       for (j = 0; j < 256; j++)
         {
@@ -2544,13 +2544,13 @@ fill_4bit2byte (TiffColorMode tiff_mode)
           }
         }
     }
-  else if (tiff_mode != GIMP_TIFF_DEFAULT)
+  else if (tiff_mode != LIGMA_TIFF_DEFAULT)
     {
       guchar *_to_8_bitmap = NULL;
 
-      if (tiff_mode == GIMP_TIFF_GRAY)
+      if (tiff_mode == LIGMA_TIFF_GRAY)
         _to_8_bitmap = (guchar *) &_4_to_8_bitmap;
-      else if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE)
+      else if (tiff_mode == LIGMA_TIFF_GRAY_MINISWHITE)
         _to_8_bitmap = (guchar *) &_4_to_8_bitmap_rev;
 
       for (j = 0; j < 256; j++)
@@ -2704,21 +2704,21 @@ load_dialog (const gchar       *help_id,
 
   pages->selector = NULL;
 
-  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, help_id,
+                            ligma_standard_help_func, help_id,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_Import"), GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -2737,13 +2737,13 @@ load_dialog (const gchar       *help_id,
   if (pages->n_pages > 1)
     {
       /* Page Selector */
-      pages->selector = gimp_page_selector_new ();
+      pages->selector = ligma_page_selector_new ();
       gtk_widget_set_size_request (pages->selector, 300, 200);
       gtk_box_pack_start (GTK_BOX (vbox), pages->selector, TRUE, TRUE, 0);
 
-      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector),
+      ligma_page_selector_set_n_pages (LIGMA_PAGE_SELECTOR (pages->selector),
                                       pages->n_filtered_pages);
-      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (pages->selector),
+      ligma_page_selector_set_target (LIGMA_PAGE_SELECTOR (pages->selector),
                                      pages->target);
 
       /* Load a set number of pages, based on whether "Show Reduced Images"
@@ -2769,19 +2769,19 @@ load_dialog (const gchar       *help_id,
     {
       GtkWidget *warning;
 
-      warning = g_object_new (GIMP_TYPE_HINT_BOX,
-                             "icon-name", GIMP_ICON_DIALOG_WARNING,
+      warning = g_object_new (LIGMA_TYPE_HINT_BOX,
+                             "icon-name", LIGMA_ICON_DIALOG_WARNING,
                              "hint",      extra_message,
                              NULL);
       gtk_box_pack_start (GTK_BOX (vbox), warning, TRUE, TRUE, 0);
       gtk_widget_show (warning);
 
-      extra_radio = gimp_int_radio_group_new (TRUE, _("Process extra channel as:"),
-                                              (GCallback) gimp_radio_button_update,
-                                              default_extra, NULL, GIMP_TIFF_LOAD_UNASSALPHA,
-                                              _("_Non-premultiplied alpha"), GIMP_TIFF_LOAD_UNASSALPHA, NULL,
-                                              _("Pre_multiplied alpha"),     GIMP_TIFF_LOAD_ASSOCALPHA, NULL,
-                                              _("Channe_l"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
+      extra_radio = ligma_int_radio_group_new (TRUE, _("Process extra channel as:"),
+                                              (GCallback) ligma_radio_button_update,
+                                              default_extra, NULL, LIGMA_TIFF_LOAD_UNASSALPHA,
+                                              _("_Non-premultiplied alpha"), LIGMA_TIFF_LOAD_UNASSALPHA, NULL,
+                                              _("Pre_multiplied alpha"),     LIGMA_TIFF_LOAD_ASSOCALPHA, NULL,
+                                              _("Channe_l"),                 LIGMA_TIFF_LOAD_CHANNEL,    NULL,
                                               NULL);
       gtk_box_pack_start (GTK_BOX (vbox), extra_radio, TRUE, TRUE, 0);
       gtk_widget_show (extra_radio);
@@ -2791,17 +2791,17 @@ load_dialog (const gchar       *help_id,
   gtk_widget_show_all (dialog);
 
   /* run the dialog */
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
       if (pages->n_pages > 1)
         {
           pages->target =
-            gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (pages->selector));
+            ligma_page_selector_get_target (LIGMA_PAGE_SELECTOR (pages->selector));
 
           pages->pages =
-            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (pages->selector),
+            ligma_page_selector_get_selected_pages (LIGMA_PAGE_SELECTOR (pages->selector),
                                                    &pages->n_pages);
 
           pages->keep_empty_space =
@@ -2810,10 +2810,10 @@ load_dialog (const gchar       *help_id,
           /* select all if none selected */
           if (pages->n_pages == 0)
             {
-              gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (pages->selector));
+              ligma_page_selector_select_all (LIGMA_PAGE_SELECTOR (pages->selector));
 
               pages->pages =
-                gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (pages->selector),
+                ligma_page_selector_get_selected_pages (LIGMA_PAGE_SELECTOR (pages->selector),
                                                        &pages->n_pages);
             }
         }
@@ -2833,7 +2833,7 @@ tiff_dialog_show_reduced (GtkWidget *toggle,
   pages->show_reduced = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
 
   /* Clear current pages from selection */
-  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector), 0);
+  ligma_page_selector_set_n_pages (LIGMA_PAGE_SELECTOR (pages->selector), 0);
   /* Jump back to start of the TIFF file */
   TIFFSetDirectory (pages->tif, 0);
 
@@ -2841,7 +2841,7 @@ tiff_dialog_show_reduced (GtkWidget *toggle,
   if (pages->show_reduced)
     selectable_pages = pages->n_reducedimage_pages;
 
-  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector),
+  ligma_page_selector_set_n_pages (LIGMA_PAGE_SELECTOR (pages->selector),
                                   selectable_pages);
 
   for (i = 0, j = 0; i < pages->n_pages && j < selectable_pages; i++)
@@ -2852,7 +2852,7 @@ tiff_dialog_show_reduced (GtkWidget *toggle,
           const gchar *name = tiff_get_page_name (pages->tif);
 
           if (name)
-            gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (pages->selector),
+            ligma_page_selector_set_page_label (LIGMA_PAGE_SELECTOR (pages->selector),
                                                j, name);
           j++;
         }

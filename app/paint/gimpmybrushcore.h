@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_MYBRUSH_CORE_H__
-#define  __GIMP_MYBRUSH_CORE_H__
+#ifndef  __LIGMA_MYBRUSH_CORE_H__
+#define  __LIGMA_MYBRUSH_CORE_H__
 
 
-#include "gimppaintcore.h"
+#include "ligmapaintcore.h"
 
 
-#define GIMP_TYPE_MYBRUSH_CORE            (gimp_mybrush_core_get_type ())
-#define GIMP_MYBRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCore))
-#define GIMP_MYBRUSH_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCoreClass))
-#define GIMP_IS_MYBRUSH_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MYBRUSH_CORE))
-#define GIMP_IS_MYBRUSH_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH_CORE))
-#define GIMP_MYBRUSH_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MYBRUSH_CORE, GimpMybrushCoreClass))
+#define LIGMA_TYPE_MYBRUSH_CORE            (ligma_mybrush_core_get_type ())
+#define LIGMA_MYBRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MYBRUSH_CORE, LigmaMybrushCore))
+#define LIGMA_MYBRUSH_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MYBRUSH_CORE, LigmaMybrushCoreClass))
+#define LIGMA_IS_MYBRUSH_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MYBRUSH_CORE))
+#define LIGMA_IS_MYBRUSH_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MYBRUSH_CORE))
+#define LIGMA_MYBRUSH_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MYBRUSH_CORE, LigmaMybrushCoreClass))
 
 
-typedef struct _GimpMybrushCorePrivate GimpMybrushCorePrivate;
-typedef struct _GimpMybrushCoreClass   GimpMybrushCoreClass;
+typedef struct _LigmaMybrushCorePrivate LigmaMybrushCorePrivate;
+typedef struct _LigmaMybrushCoreClass   LigmaMybrushCoreClass;
 
-struct _GimpMybrushCore
+struct _LigmaMybrushCore
 {
-  GimpPaintCore           parent_instance;
+  LigmaPaintCore           parent_instance;
 
-  GimpMybrushCorePrivate *private;
+  LigmaMybrushCorePrivate *private;
 };
 
-struct _GimpMybrushCoreClass
+struct _LigmaMybrushCoreClass
 {
-  GimpPaintCoreClass  parent_class;
+  LigmaPaintCoreClass  parent_class;
 };
 
 
-void    gimp_mybrush_core_register (Gimp                      *gimp,
-                                    GimpPaintRegisterCallback  callback);
+void    ligma_mybrush_core_register (Ligma                      *ligma,
+                                    LigmaPaintRegisterCallback  callback);
 
-GType   gimp_mybrush_core_get_type (void) G_GNUC_CONST;
+GType   ligma_mybrush_core_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_MYBRUSH_CORE_H__  */
+#endif  /*  __LIGMA_MYBRUSH_CORE_H__  */

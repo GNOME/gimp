@@ -1,50 +1,50 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
 
 if OS_WIN32
-gimpmodule_def = gimpmodule.def
-libgimpmodule_export_symbols = -export-symbols $(srcdir)/gimpmodule.def
+ligmamodule_def = ligmamodule.def
+libligmamodule_export_symbols = -export-symbols $(srcdir)/ligmamodule.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpmodule-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimpmodule.def $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligmamodule-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligmamodule.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpmodule-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/gimpmodule.def
+	-rm $(DESTDIR)$(libdir)/libligmamodule-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/ligmamodule.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpmodule-$(GIMP_API_VERSION).lib
+noinst_DATA = ligmamodule-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpmodule-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligmamodule-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpmodule-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligmamodule-$(LIGMA_API_VERSION).lib
 
-gimpmodule-@GIMP_API_VERSION@.lib: gimpmodule.def
-	lib -name:libgimpmodule-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmodule.def -out:$@
+ligmamodule-@LIGMA_API_VERSION@.lib: ligmamodule.def
+	lib -name:libligmamodule-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligmamodule.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpmoduleincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmodule
+libligmamoduleincludedir = $(includedir)/ligma-$(LIGMA_API_VERSION)/libligmamodule
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpModule\"	\
-	-DGIMP_MODULE_COMPILATION		\
+	-DG_LOG_DOMAIN=\"LibLigmaModule\"	\
+	-DLIGMA_MODULE_COMPILATION		\
 	-I$(top_srcdir)				\
 	$(GIO_CFLAGS)				\
 	$(GLIB_CFLAGS)				\
@@ -52,29 +52,29 @@ AM_CPPFLAGS = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	gimpmodule.def
+	ligmamodule.def
 
-lib_LTLIBRARIES = libgimpmodule-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligmamodule-@LIGMA_API_VERSION@.la
 
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimpmodule/Makefile.gi
+include $(top_srcdir)/libligmamodule/Makefile.gi
 
-libgimpmodule_@GIMP_API_VERSION@_la_SOURCES = \
-	$(libgimpmodule_introspectable)
+libligmamodule_@LIGMA_API_VERSION@_la_SOURCES = \
+	$(libligmamodule_introspectable)
 
-libgimpmoduleinclude_HEADERS = \
-	$(libgimpmodule_introspectable_headers)
+libligmamoduleinclude_HEADERS = \
+	$(libligmamodule_introspectable_headers)
 
-libgimpmodule_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligmamodule_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
-	$(libgimpmodule_export_symbols)
+	$(libligmamodule_export_symbols)
 
-EXTRA_libgimpmodule_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmodule_def)
+EXTRA_libligmamodule_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(ligmamodule_def)
 
-libgimpmodule_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpbase)			\
-	$(libgimpconfig)		\
+libligmamodule_@LIGMA_API_VERSION@_la_LIBADD = \
+	$(libligmabase)			\
+	$(libligmaconfig)		\
 	$(GMODULE_NO_EXPORT_LIBS) 	\
 	$(GIO_LIBS)			\
 	$(GLIB_LIBS)

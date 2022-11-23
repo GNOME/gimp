@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILL_H__
-#define __GIMP_DRAWABLE_FILL_H__
+#ifndef __LIGMA_DRAWABLE_FILL_H__
+#define __LIGMA_DRAWABLE_FILL_H__
 
 
 /*  Lowlevel API that is used for initializing entire drawables and
  *  buffers before they are used in images, they don't push an undo.
  */
 
-void       gimp_drawable_fill              (GimpDrawable        *drawable,
-                                            GimpContext         *context,
-                                            GimpFillType         fill_type);
-void       gimp_drawable_fill_buffer       (GimpDrawable        *drawable,
+void       ligma_drawable_fill              (LigmaDrawable        *drawable,
+                                            LigmaContext         *context,
+                                            LigmaFillType         fill_type);
+void       ligma_drawable_fill_buffer       (LigmaDrawable        *drawable,
                                             GeglBuffer          *buffer,
-                                            const GimpRGB       *color,
-                                            GimpPattern         *pattern,
+                                            const LigmaRGB       *color,
+                                            LigmaPattern         *pattern,
                                             gint                 pattern_offset_x,
                                             gint                 pattern_offset_y);
 
@@ -37,24 +37,24 @@ void       gimp_drawable_fill_buffer       (GimpDrawable        *drawable,
 /*  Proper API that is used for actual editing (not just initializing)
  */
 
-void       gimp_drawable_fill_boundary     (GimpDrawable        *drawable,
-                                            GimpFillOptions     *options,
-                                            const GimpBoundSeg  *bound_segs,
+void       ligma_drawable_fill_boundary     (LigmaDrawable        *drawable,
+                                            LigmaFillOptions     *options,
+                                            const LigmaBoundSeg  *bound_segs,
                                             gint                 n_bound_segs,
                                             gint                 offset_x,
                                             gint                 offset_y,
                                             gboolean             push_undo);
 
-gboolean   gimp_drawable_fill_vectors      (GimpDrawable        *drawable,
-                                            GimpFillOptions     *options,
-                                            GimpVectors         *vectors,
+gboolean   ligma_drawable_fill_vectors      (LigmaDrawable        *drawable,
+                                            LigmaFillOptions     *options,
+                                            LigmaVectors         *vectors,
                                             gboolean             push_undo,
                                             GError             **error);
 
-void       gimp_drawable_fill_scan_convert (GimpDrawable        *drawable,
-                                            GimpFillOptions     *options,
-                                            GimpScanConvert     *scan_convert,
+void       ligma_drawable_fill_scan_convert (LigmaDrawable        *drawable,
+                                            LigmaFillOptions     *options,
+                                            LigmaScanConvert     *scan_convert,
                                             gboolean             push_undo);
 
 
-#endif /* __GIMP_DRAWABLE_FILL_H__ */
+#endif /* __LIGMA_DRAWABLE_FILL_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,97 +22,97 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpthumb/gimpthumb.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmathumb/ligmathumb.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimagefile.h"
-#include "core/gimpprogress.h"
-#include "core/gimpsubprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmasubprogress.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
-#include "gimpfiledialog.h" /* eek */
-#include "gimpthumbbox.h"
-#include "gimpview.h"
-#include "gimpviewrenderer-frame.h"
-#include "gimpwidgets-utils.h"
+#include "ligmafiledialog.h" /* eek */
+#include "ligmathumbbox.h"
+#include "ligmaview.h"
+#include "ligmaviewrenderer-frame.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface);
+static void     ligma_thumb_box_progress_iface_init (LigmaProgressInterface *iface);
 
-static void     gimp_thumb_box_dispose            (GObject           *object);
-static void     gimp_thumb_box_finalize           (GObject           *object);
+static void     ligma_thumb_box_dispose            (GObject           *object);
+static void     ligma_thumb_box_finalize           (GObject           *object);
 
-static GimpProgress *
-                gimp_thumb_box_progress_start     (GimpProgress      *progress,
+static LigmaProgress *
+                ligma_thumb_box_progress_start     (LigmaProgress      *progress,
                                                    gboolean           cancellable,
                                                    const gchar       *message);
-static void     gimp_thumb_box_progress_end       (GimpProgress      *progress);
-static gboolean gimp_thumb_box_progress_is_active (GimpProgress      *progress);
-static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
+static void     ligma_thumb_box_progress_end       (LigmaProgress      *progress);
+static gboolean ligma_thumb_box_progress_is_active (LigmaProgress      *progress);
+static void     ligma_thumb_box_progress_set_value (LigmaProgress      *progress,
                                                    gdouble            percentage);
-static gdouble  gimp_thumb_box_progress_get_value (GimpProgress      *progress);
-static void     gimp_thumb_box_progress_pulse     (GimpProgress      *progress);
+static gdouble  ligma_thumb_box_progress_get_value (LigmaProgress      *progress);
+static void     ligma_thumb_box_progress_pulse     (LigmaProgress      *progress);
 
-static gboolean gimp_thumb_box_progress_message   (GimpProgress      *progress,
-                                                   Gimp              *gimp,
-                                                   GimpMessageSeverity  severity,
+static gboolean ligma_thumb_box_progress_message   (LigmaProgress      *progress,
+                                                   Ligma              *ligma,
+                                                   LigmaMessageSeverity  severity,
                                                    const gchar       *domain,
                                                    const gchar       *message);
 
-static gboolean gimp_thumb_box_ebox_button_press  (GtkWidget         *widget,
+static gboolean ligma_thumb_box_ebox_button_press  (GtkWidget         *widget,
                                                    GdkEventButton    *bevent,
-                                                   GimpThumbBox      *box);
-static void gimp_thumb_box_thumbnail_clicked      (GtkWidget         *widget,
+                                                   LigmaThumbBox      *box);
+static void ligma_thumb_box_thumbnail_clicked      (GtkWidget         *widget,
                                                    GdkModifierType    state,
-                                                   GimpThumbBox      *box);
-static void gimp_thumb_box_imagefile_info_changed (GimpImagefile     *imagefile,
-                                                   GimpThumbBox      *box);
-static void gimp_thumb_box_thumb_state_notify     (GimpThumbnail     *thumb,
+                                                   LigmaThumbBox      *box);
+static void ligma_thumb_box_imagefile_info_changed (LigmaImagefile     *imagefile,
+                                                   LigmaThumbBox      *box);
+static void ligma_thumb_box_thumb_state_notify     (LigmaThumbnail     *thumb,
                                                    GParamSpec        *pspec,
-                                                   GimpThumbBox      *box);
-static void gimp_thumb_box_create_thumbnails      (GimpThumbBox      *box,
+                                                   LigmaThumbBox      *box);
+static void ligma_thumb_box_create_thumbnails      (LigmaThumbBox      *box,
                                                    gboolean           force);
-static void gimp_thumb_box_create_thumbnail       (GimpThumbBox      *box,
+static void ligma_thumb_box_create_thumbnail       (LigmaThumbBox      *box,
                                                    GFile             *file,
-                                                   GimpThumbnailSize  size,
+                                                   LigmaThumbnailSize  size,
                                                    gboolean           force,
-                                                   GimpProgress      *progress);
-static gboolean gimp_thumb_box_auto_thumbnail     (GimpThumbBox      *box);
+                                                   LigmaProgress      *progress);
+static gboolean ligma_thumb_box_auto_thumbnail     (LigmaThumbBox      *box);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpThumbBox, gimp_thumb_box, GTK_TYPE_FRAME,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_thumb_box_progress_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaThumbBox, ligma_thumb_box, GTK_TYPE_FRAME,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROGRESS,
+                                                ligma_thumb_box_progress_iface_init))
 
-#define parent_class gimp_thumb_box_parent_class
+#define parent_class ligma_thumb_box_parent_class
 
 
 static void
-gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
+ligma_thumb_box_class_init (LigmaThumbBoxClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose  = gimp_thumb_box_dispose;
-  object_class->finalize = gimp_thumb_box_finalize;
+  object_class->dispose  = ligma_thumb_box_dispose;
+  object_class->finalize = ligma_thumb_box_finalize;
 
   gtk_widget_class_set_css_name (widget_class, "treeview");
 }
 
 static void
-gimp_thumb_box_init (GimpThumbBox *box)
+ligma_thumb_box_init (LigmaThumbBox *box)
 {
   gtk_frame_set_shadow_type (GTK_FRAME (box), GTK_SHADOW_IN);
 
@@ -120,21 +120,21 @@ gimp_thumb_box_init (GimpThumbBox *box)
 }
 
 static void
-gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface)
+ligma_thumb_box_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start     = gimp_thumb_box_progress_start;
-  iface->end       = gimp_thumb_box_progress_end;
-  iface->is_active = gimp_thumb_box_progress_is_active;
-  iface->set_value = gimp_thumb_box_progress_set_value;
-  iface->get_value = gimp_thumb_box_progress_get_value;
-  iface->pulse     = gimp_thumb_box_progress_pulse;
-  iface->message   = gimp_thumb_box_progress_message;
+  iface->start     = ligma_thumb_box_progress_start;
+  iface->end       = ligma_thumb_box_progress_end;
+  iface->is_active = ligma_thumb_box_progress_is_active;
+  iface->set_value = ligma_thumb_box_progress_set_value;
+  iface->get_value = ligma_thumb_box_progress_get_value;
+  iface->pulse     = ligma_thumb_box_progress_pulse;
+  iface->message   = ligma_thumb_box_progress_message;
 }
 
 static void
-gimp_thumb_box_dispose (GObject *object)
+ligma_thumb_box_dispose (GObject *object)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (object);
+  LigmaThumbBox *box = LIGMA_THUMB_BOX (object);
 
   if (box->idle_id)
     {
@@ -148,23 +148,23 @@ gimp_thumb_box_dispose (GObject *object)
 }
 
 static void
-gimp_thumb_box_finalize (GObject *object)
+ligma_thumb_box_finalize (GObject *object)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (object);
+  LigmaThumbBox *box = LIGMA_THUMB_BOX (object);
 
-  gimp_thumb_box_take_files (box, NULL);
+  ligma_thumb_box_take_files (box, NULL);
 
   g_clear_object (&box->imagefile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static GimpProgress *
-gimp_thumb_box_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_thumb_box_progress_start (LigmaProgress *progress,
                                gboolean      cancellable,
                                const gchar  *message)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
+  LigmaThumbBox *box = LIGMA_THUMB_BOX (progress);
 
   if (! box->progress)
     return NULL;
@@ -180,7 +180,7 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-      if (GIMP_IS_FILE_DIALOG (toplevel))
+      if (LIGMA_IS_FILE_DIALOG (toplevel))
         gtk_dialog_set_response_sensitive (GTK_DIALOG (toplevel),
                                            GTK_RESPONSE_CANCEL, cancellable);
 
@@ -191,11 +191,11 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_thumb_box_progress_end (GimpProgress *progress)
+ligma_thumb_box_progress_end (LigmaProgress *progress)
 {
-  if (gimp_thumb_box_progress_is_active (progress))
+  if (ligma_thumb_box_progress_is_active (progress))
     {
-      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
+      LigmaThumbBox   *box = LIGMA_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, 0.0);
@@ -205,20 +205,20 @@ gimp_thumb_box_progress_end (GimpProgress *progress)
 }
 
 static gboolean
-gimp_thumb_box_progress_is_active (GimpProgress *progress)
+ligma_thumb_box_progress_is_active (LigmaProgress *progress)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
+  LigmaThumbBox *box = LIGMA_THUMB_BOX (progress);
 
   return (box->progress && box->progress_active);
 }
 
 static void
-gimp_thumb_box_progress_set_value (GimpProgress *progress,
+ligma_thumb_box_progress_set_value (LigmaProgress *progress,
                                    gdouble       percentage)
 {
-  if (gimp_thumb_box_progress_is_active (progress))
+  if (ligma_thumb_box_progress_is_active (progress))
     {
-      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
+      LigmaThumbBox   *box = LIGMA_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, percentage);
@@ -226,11 +226,11 @@ gimp_thumb_box_progress_set_value (GimpProgress *progress,
 }
 
 static gdouble
-gimp_thumb_box_progress_get_value (GimpProgress *progress)
+ligma_thumb_box_progress_get_value (LigmaProgress *progress)
 {
-  if (gimp_thumb_box_progress_is_active (progress))
+  if (ligma_thumb_box_progress_is_active (progress))
     {
-      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
+      LigmaThumbBox   *box = LIGMA_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       return gtk_progress_bar_get_fraction (bar);
@@ -240,11 +240,11 @@ gimp_thumb_box_progress_get_value (GimpProgress *progress)
 }
 
 static void
-gimp_thumb_box_progress_pulse (GimpProgress *progress)
+ligma_thumb_box_progress_pulse (LigmaProgress *progress)
 {
-  if (gimp_thumb_box_progress_is_active (progress))
+  if (ligma_thumb_box_progress_is_active (progress))
     {
-      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
+      LigmaThumbBox   *box = LIGMA_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_pulse (bar);
@@ -252,37 +252,37 @@ gimp_thumb_box_progress_pulse (GimpProgress *progress)
 }
 
 static gboolean
-gimp_thumb_box_progress_message (GimpProgress        *progress,
-                                 Gimp                *gimp,
-                                 GimpMessageSeverity  severity,
+ligma_thumb_box_progress_message (LigmaProgress        *progress,
+                                 Ligma                *ligma,
+                                 LigmaMessageSeverity  severity,
                                  const gchar         *domain,
                                  const gchar         *message)
 {
-  /*  GimpThumbBox never shows any messages  */
+  /*  LigmaThumbBox never shows any messages  */
 
   return TRUE;
 }
 
 
-/*  stupid GimpHeader class just so we get a "header" CSS node  */
+/*  stupid LigmaHeader class just so we get a "header" CSS node  */
 
-#define GIMP_TYPE_HEADER (gimp_header_get_type ())
+#define LIGMA_TYPE_HEADER (ligma_header_get_type ())
 
-typedef struct _GtkBox      GimpHeader;
-typedef struct _GtkBoxClass GimpHeaderClass;
+typedef struct _GtkBox      LigmaHeader;
+typedef struct _GtkBoxClass LigmaHeaderClass;
 
-static GType gimp_header_get_type (void) G_GNUC_CONST;
+static GType ligma_header_get_type (void) G_GNUC_CONST;
 
-G_DEFINE_TYPE (GimpHeader, gimp_header, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaHeader, ligma_header, GTK_TYPE_BOX)
 
 static void
-gimp_header_class_init (GimpHeaderClass *klass)
+ligma_header_class_init (LigmaHeaderClass *klass)
 {
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "header");
 }
 
 static void
-gimp_header_init (GimpHeader *header)
+ligma_header_init (LigmaHeader *header)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (header),
                                   GTK_ORIENTATION_VERTICAL);
@@ -292,9 +292,9 @@ gimp_header_init (GimpHeader *header)
 /*  public functions  */
 
 GtkWidget *
-gimp_thumb_box_new (GimpContext *context)
+ligma_thumb_box_new (LigmaContext *context)
 {
-  GimpThumbBox   *box;
+  LigmaThumbBox   *box;
   GtkWidget      *vbox;
   GtkWidget      *vbox2;
   GtkWidget      *ebox;
@@ -303,9 +303,9 @@ gimp_thumb_box_new (GimpContext *context)
   gchar          *str;
   gint            h, v;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
+  box = g_object_new (LIGMA_TYPE_THUMB_BOX, NULL);
 
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (box)),
                                GTK_STYLE_CLASS_VIEW);
@@ -317,15 +317,15 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_show (ebox);
 
   g_signal_connect (ebox, "button-press-event",
-                    G_CALLBACK (gimp_thumb_box_ebox_button_press),
+                    G_CALLBACK (ligma_thumb_box_ebox_button_press),
                     box);
 
   str = g_strdup_printf (_("Click to update preview\n"
                            "%s-Click to force update even "
                            "if preview is up-to-date"),
-                         gimp_get_mod_string (gimp_get_toggle_behavior_mask ()));
+                         ligma_get_mod_string (ligma_get_toggle_behavior_mask ()));
 
-  gimp_help_set_help_data (ebox, str, NULL);
+  ligma_help_set_help_data (ebox, str, NULL);
 
   g_free (str);
 
@@ -333,7 +333,7 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_container_add (GTK_CONTAINER (ebox), vbox);
   gtk_widget_show (vbox);
 
-  vbox2 = g_object_new (GIMP_TYPE_HEADER, NULL);
+  vbox2 = g_object_new (LIGMA_TYPE_HEADER, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
@@ -364,23 +364,23 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
-  box->imagefile = gimp_imagefile_new (context->gimp, NULL);
+  box->imagefile = ligma_imagefile_new (context->ligma, NULL);
 
   g_signal_connect (box->imagefile, "info-changed",
-                    G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
+                    G_CALLBACK (ligma_thumb_box_imagefile_info_changed),
                     box);
 
-  g_signal_connect (gimp_imagefile_get_thumbnail (box->imagefile),
+  g_signal_connect (ligma_imagefile_get_thumbnail (box->imagefile),
                     "notify::thumb-state",
-                    G_CALLBACK (gimp_thumb_box_thumb_state_notify),
+                    G_CALLBACK (ligma_thumb_box_thumb_state_notify),
                     box);
 
-  gimp_view_renderer_get_frame_size (&h, &v);
+  ligma_view_renderer_get_frame_size (&h, &v);
 
-  box->preview = gimp_view_new (context,
-                                GIMP_VIEWABLE (box->imagefile),
+  box->preview = ligma_view_new (context,
+                                LIGMA_VIEWABLE (box->imagefile),
                                 /* add padding for the shadow frame */
-                                context->gimp->config->thumbnail_size +
+                                context->ligma->config->thumbnail_size +
                                 MAX (h, v),
                                 0, FALSE);
 
@@ -392,14 +392,14 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), box->preview);
 
   g_signal_connect (box->preview, "clicked",
-                    G_CALLBACK (gimp_thumb_box_thumbnail_clicked),
+                    G_CALLBACK (ligma_thumb_box_thumbnail_clicked),
                     box);
 
   box->filename = gtk_label_new (_("No selection"));
   gtk_label_set_max_width_chars (GTK_LABEL (box->filename), 1);
   gtk_label_set_ellipsize (GTK_LABEL (box->filename), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
-  gimp_label_set_attributes (GTK_LABEL (box->filename),
+  ligma_label_set_attributes (GTK_LABEL (box->filename),
                              PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
@@ -408,7 +408,7 @@ gimp_thumb_box_new (GimpContext *context)
   box->info = gtk_label_new (" \n \n \n ");
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
   gtk_label_set_line_wrap (GTK_LABEL (box->info), TRUE);
-  gimp_label_set_attributes (GTK_LABEL (box->info),
+  ligma_label_set_attributes (GTK_LABEL (box->info),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->info, FALSE, FALSE, 0);
@@ -422,8 +422,8 @@ gimp_thumb_box_new (GimpContext *context)
   /* don't gtk_widget_show (box->progress); */
 
   gtk_widget_set_size_request (GTK_WIDGET (box),
-                               MAX ((gint) GIMP_THUMB_SIZE_NORMAL,
-                                    (gint) context->gimp->config->thumbnail_size) +
+                               MAX ((gint) LIGMA_THUMB_SIZE_NORMAL,
+                                    (gint) context->ligma->config->thumbnail_size) +
                                2 * MAX (h, v),
                                -1);
 
@@ -431,10 +431,10 @@ gimp_thumb_box_new (GimpContext *context)
 }
 
 void
-gimp_thumb_box_take_file (GimpThumbBox *box,
+ligma_thumb_box_take_file (LigmaThumbBox *box,
                           GFile        *file)
 {
-  g_return_if_fail (GIMP_IS_THUMB_BOX (box));
+  g_return_if_fail (LIGMA_IS_THUMB_BOX (box));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
   if (box->idle_id)
@@ -443,11 +443,11 @@ gimp_thumb_box_take_file (GimpThumbBox *box,
       box->idle_id = 0;
     }
 
-  gimp_imagefile_set_file (box->imagefile, file);
+  ligma_imagefile_set_file (box->imagefile, file);
 
   if (file)
     {
-      gchar *basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      gchar *basename = g_path_get_basename (ligma_file_get_utf8_name (file));
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
     }
@@ -457,14 +457,14 @@ gimp_thumb_box_take_file (GimpThumbBox *box,
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (box), file != NULL);
-  gimp_imagefile_update (box->imagefile);
+  ligma_imagefile_update (box->imagefile);
 }
 
 void
-gimp_thumb_box_take_files (GimpThumbBox *box,
+ligma_thumb_box_take_files (LigmaThumbBox *box,
                            GSList       *files)
 {
-  g_return_if_fail (GIMP_IS_THUMB_BOX (box));
+  g_return_if_fail (LIGMA_IS_THUMB_BOX (box));
 
   if (box->files)
     {
@@ -479,51 +479,51 @@ gimp_thumb_box_take_files (GimpThumbBox *box,
 /*  private functions  */
 
 static gboolean
-gimp_thumb_box_ebox_button_press (GtkWidget      *widget,
+ligma_thumb_box_ebox_button_press (GtkWidget      *widget,
                                   GdkEventButton *bevent,
-                                  GimpThumbBox   *box)
+                                  LigmaThumbBox   *box)
 {
-  gimp_thumb_box_thumbnail_clicked (widget, bevent->state, box);
+  ligma_thumb_box_thumbnail_clicked (widget, bevent->state, box);
 
   return TRUE;
 }
 
 static void
-gimp_thumb_box_thumbnail_clicked (GtkWidget       *widget,
+ligma_thumb_box_thumbnail_clicked (GtkWidget       *widget,
                                   GdkModifierType  state,
-                                  GimpThumbBox    *box)
+                                  LigmaThumbBox    *box)
 {
-  gimp_thumb_box_create_thumbnails (box,
-                                    (state & gimp_get_toggle_behavior_mask ()) ?
+  ligma_thumb_box_create_thumbnails (box,
+                                    (state & ligma_get_toggle_behavior_mask ()) ?
                                     TRUE : FALSE);
 }
 
 static void
-gimp_thumb_box_imagefile_info_changed (GimpImagefile *imagefile,
-                                       GimpThumbBox  *box)
+ligma_thumb_box_imagefile_info_changed (LigmaImagefile *imagefile,
+                                       LigmaThumbBox  *box)
 {
   gtk_label_set_text (GTK_LABEL (box->info),
-                      gimp_imagefile_get_desc_string (imagefile));
+                      ligma_imagefile_get_desc_string (imagefile));
 }
 
 static void
-gimp_thumb_box_thumb_state_notify (GimpThumbnail *thumb,
+ligma_thumb_box_thumb_state_notify (LigmaThumbnail *thumb,
                                    GParamSpec    *pspec,
-                                   GimpThumbBox  *box)
+                                   LigmaThumbBox  *box)
 {
   if (box->idle_id)
     return;
 
-  if (thumb->image_state == GIMP_THUMB_STATE_REMOTE)
+  if (thumb->image_state == LIGMA_THUMB_STATE_REMOTE)
     return;
 
   switch (thumb->thumb_state)
     {
-    case GIMP_THUMB_STATE_NOT_FOUND:
-    case GIMP_THUMB_STATE_OLD:
+    case LIGMA_THUMB_STATE_NOT_FOUND:
+    case LIGMA_THUMB_STATE_OLD:
       box->idle_id =
         g_idle_add_full (G_PRIORITY_LOW,
-                         (GSourceFunc) gimp_thumb_box_auto_thumbnail,
+                         (GSourceFunc) ligma_thumb_box_auto_thumbnail,
                          box, NULL);
       break;
 
@@ -533,29 +533,29 @@ gimp_thumb_box_thumb_state_notify (GimpThumbnail *thumb,
 }
 
 static void
-gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
+ligma_thumb_box_create_thumbnails (LigmaThumbBox *box,
                                   gboolean      force)
 {
-  Gimp           *gimp     = box->context->gimp;
-  GimpProgress   *progress = GIMP_PROGRESS (box);
-  GimpFileDialog *dialog   = NULL;
+  Ligma           *ligma     = box->context->ligma;
+  LigmaProgress   *progress = LIGMA_PROGRESS (box);
+  LigmaFileDialog *dialog   = NULL;
   GtkWidget      *toplevel;
   GSList         *list;
   gint            n_files;
   gint            i;
 
-  if (gimp->config->thumbnail_size == GIMP_THUMBNAIL_SIZE_NONE)
+  if (ligma->config->thumbnail_size == LIGMA_THUMBNAIL_SIZE_NONE)
     return;
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  if (GIMP_IS_FILE_DIALOG (toplevel))
-    dialog = GIMP_FILE_DIALOG (toplevel);
+  if (LIGMA_IS_FILE_DIALOG (toplevel))
+    dialog = LIGMA_FILE_DIALOG (toplevel);
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
   if (dialog)
-    gimp_file_dialog_set_sensitive (dialog, FALSE);
+    ligma_file_dialog_set_sensitive (dialog, FALSE);
   else
     gtk_widget_set_sensitive (toplevel, FALSE);
 
@@ -571,11 +571,11 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     {
       gchar *str;
 
-      gimp_progress_start (GIMP_PROGRESS (box), TRUE, "%s", "");
+      ligma_progress_start (LIGMA_PROGRESS (box), TRUE, "%s", "");
 
-      progress = gimp_sub_progress_new (GIMP_PROGRESS (box));
+      progress = ligma_sub_progress_new (LIGMA_PROGRESS (box));
 
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), 0, n_files);
+      ligma_sub_progress_set_step (LIGMA_SUB_PROGRESS (progress), 0, n_files);
 
       for (list = box->files->next, i = 1;
            list;
@@ -585,28 +585,28 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
           gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), str);
           g_free (str);
 
-          gimp_progress_set_value (progress, 0.0);
+          ligma_progress_set_value (progress, 0.0);
 
           while (g_main_context_pending (NULL))
             g_main_context_iteration (NULL, FALSE);
 
-          gimp_thumb_box_create_thumbnail (box,
+          ligma_thumb_box_create_thumbnail (box,
                                            list->data,
-                                           gimp->config->thumbnail_size,
+                                           ligma->config->thumbnail_size,
                                            force,
                                            progress);
 
           if (dialog && dialog->canceled)
             goto canceled;
 
-          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), i, n_files);
+          ligma_sub_progress_set_step (LIGMA_SUB_PROGRESS (progress), i, n_files);
         }
 
       str = g_strdup_printf (_("Thumbnail %d of %d"), n_files, n_files);
       gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), str);
       g_free (str);
 
-      gimp_progress_set_value (progress, 0.0);
+      ligma_progress_set_value (progress, 0.0);
 
       while (g_main_context_pending (NULL))
         g_main_context_iteration (NULL, FALSE);
@@ -614,13 +614,13 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
   if (box->files)
     {
-      gimp_thumb_box_create_thumbnail (box,
+      ligma_thumb_box_create_thumbnail (box,
                                        box->files->data,
-                                       gimp->config->thumbnail_size,
+                                       ligma->config->thumbnail_size,
                                        force,
                                        progress);
 
-      gimp_progress_set_value (progress, 1.0);
+      ligma_progress_set_value (progress, 1.0);
     }
 
  canceled:
@@ -629,7 +629,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     {
       g_object_unref (progress);
 
-      gimp_progress_end (GIMP_PROGRESS (box));
+      ligma_progress_end (LIGMA_PROGRESS (box));
       gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
     }
 
@@ -640,41 +640,41 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     }
 
   if (dialog)
-    gimp_file_dialog_set_sensitive (dialog, TRUE);
+    ligma_file_dialog_set_sensitive (dialog, TRUE);
   else
     gtk_widget_set_sensitive (toplevel, TRUE);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 }
 
 static void
-gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
+ligma_thumb_box_create_thumbnail (LigmaThumbBox      *box,
                                  GFile             *file,
-                                 GimpThumbnailSize  size,
+                                 LigmaThumbnailSize  size,
                                  gboolean           force,
-                                 GimpProgress      *progress)
+                                 LigmaProgress      *progress)
 {
-  GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
+  LigmaThumbnail *thumb = ligma_imagefile_get_thumbnail (box->imagefile);
   gchar         *basename;
 
-  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+  basename = g_path_get_basename (ligma_file_get_utf8_name (file));
   gtk_label_set_text (GTK_LABEL (box->filename), basename);
   g_free (basename);
 
-  gimp_imagefile_set_file (box->imagefile, file);
+  ligma_imagefile_set_file (box->imagefile, file);
 
   if (force ||
-      (gimp_thumbnail_peek_thumb (thumb, (GimpThumbSize) size) < GIMP_THUMB_STATE_FAILED &&
-       ! gimp_thumbnail_has_failed (thumb)))
+      (ligma_thumbnail_peek_thumb (thumb, (LigmaThumbSize) size) < LIGMA_THUMB_STATE_FAILED &&
+       ! ligma_thumbnail_has_failed (thumb)))
     {
       GError *error = NULL;
 
-      if (! gimp_imagefile_create_thumbnail (box->imagefile, box->context,
+      if (! ligma_imagefile_create_thumbnail (box->imagefile, box->context,
                                              progress,
                                              size, ! force, &error))
         {
-          gimp_message_literal (box->context->gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+          ligma_message_literal (box->context->ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_ERROR,
                                 error->message);
           g_clear_error (&error);
         }
@@ -682,25 +682,25 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 }
 
 static gboolean
-gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
+ligma_thumb_box_auto_thumbnail (LigmaThumbBox *box)
 {
-  Gimp          *gimp  = box->context->gimp;
-  GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
-  GFile         *file  = gimp_imagefile_get_file (box->imagefile);
+  Ligma          *ligma  = box->context->ligma;
+  LigmaThumbnail *thumb = ligma_imagefile_get_thumbnail (box->imagefile);
+  GFile         *file  = ligma_imagefile_get_file (box->imagefile);
 
   box->idle_id = 0;
 
-  if (thumb->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+  if (thumb->image_state == LIGMA_THUMB_STATE_NOT_FOUND)
     return FALSE;
 
   switch (thumb->thumb_state)
     {
-    case GIMP_THUMB_STATE_NOT_FOUND:
-    case GIMP_THUMB_STATE_OLD:
-      if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
-          ! gimp_thumbnail_has_failed (thumb)                            &&
-          gimp_plug_in_manager_file_procedure_find_by_extension (gimp->plug_in_manager,
-                                                                 GIMP_FILE_PROCEDURE_GROUP_OPEN,
+    case LIGMA_THUMB_STATE_NOT_FOUND:
+    case LIGMA_THUMB_STATE_OLD:
+      if (thumb->image_filesize < ligma->config->thumbnail_filesize_limit &&
+          ! ligma_thumbnail_has_failed (thumb)                            &&
+          ligma_plug_in_manager_file_procedure_find_by_extension (ligma->plug_in_manager,
+                                                                 LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                                  file))
         {
           if (thumb->image_filesize > 0)
@@ -723,9 +723,9 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
                                   _("Creating preview..."));
             }
 
-          gimp_imagefile_create_thumbnail_weak (box->imagefile, box->context,
-                                                GIMP_PROGRESS (box),
-                                                gimp->config->thumbnail_size,
+          ligma_imagefile_create_thumbnail_weak (box->imagefile, box->context,
+                                                LIGMA_PROGRESS (box),
+                                                ligma->config->thumbnail_size,
                                                 TRUE);
         }
       break;

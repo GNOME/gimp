@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfontselectbutton.c
- * Copyright (C) 2003  Sven Neumann  <sven@gimp.org>
+ * ligmafontselectbutton.c
+ * Copyright (C) 2003  Sven Neumann  <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpuitypes.h"
-#include "gimpfontselectbutton.h"
-#include "gimpuimarshal.h"
+#include "ligmauitypes.h"
+#include "ligmafontselectbutton.h"
+#include "ligmauimarshal.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * SECTION: gimpfontselectbutton
- * @title: GimpFontSelectButton
+ * SECTION: ligmafontselectbutton
+ * @title: LigmaFontSelectButton
  * @short_description: A button which pops up a font selection dialog.
  *
  * A button which pops up a font selection dialog.
@@ -59,7 +59,7 @@ enum
 };
 
 
-struct _GimpFontSelectButtonPrivate
+struct _LigmaFontSelectButtonPrivate
 {
   gchar       *title;
 
@@ -72,24 +72,24 @@ struct _GimpFontSelectButtonPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_font_select_button_finalize     (GObject      *object);
+static void   ligma_font_select_button_finalize     (GObject      *object);
 
-static void   gimp_font_select_button_set_property (GObject      *object,
+static void   ligma_font_select_button_set_property (GObject      *object,
                                                     guint         property_id,
                                                     const GValue *value,
                                                     GParamSpec   *pspec);
-static void   gimp_font_select_button_get_property (GObject      *object,
+static void   ligma_font_select_button_get_property (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
 
-static void   gimp_font_select_button_clicked  (GimpFontSelectButton *button);
+static void   ligma_font_select_button_clicked  (LigmaFontSelectButton *button);
 
-static void   gimp_font_select_button_callback (const gchar *font_name,
+static void   ligma_font_select_button_callback (const gchar *font_name,
                                                 gboolean     dialog_closing,
                                                 gpointer     user_data);
 
-static void   gimp_font_select_drag_data_received (GimpFontSelectButton *button,
+static void   ligma_font_select_drag_data_received (LigmaFontSelectButton *button,
                                                    GdkDragContext       *context,
                                                    gint                  x,
                                                    gint                  y,
@@ -97,35 +97,35 @@ static void   gimp_font_select_drag_data_received (GimpFontSelectButton *button,
                                                    guint                 info,
                                                    guint                 time);
 
-static GtkWidget * gimp_font_select_button_create_inside (GimpFontSelectButton *button);
+static GtkWidget * ligma_font_select_button_create_inside (LigmaFontSelectButton *button);
 
 
-static const GtkTargetEntry target = { "application/x-gimp-font-name", 0 };
+static const GtkTargetEntry target = { "application/x-ligma-font-name", 0 };
 
 static guint font_button_signals[LAST_SIGNAL] = { 0 };
 static GParamSpec *font_button_props[N_PROPS] = { NULL, };
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFontSelectButton, gimp_font_select_button,
-                            GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaFontSelectButton, ligma_font_select_button,
+                            LIGMA_TYPE_SELECT_BUTTON)
 
 
 static void
-gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
+ligma_font_select_button_class_init (LigmaFontSelectButtonClass *klass)
 {
   GObjectClass          *object_class        = G_OBJECT_CLASS (klass);
-  GimpSelectButtonClass *select_button_class = GIMP_SELECT_BUTTON_CLASS (klass);
+  LigmaSelectButtonClass *select_button_class = LIGMA_SELECT_BUTTON_CLASS (klass);
 
-  object_class->finalize     = gimp_font_select_button_finalize;
-  object_class->set_property = gimp_font_select_button_set_property;
-  object_class->get_property = gimp_font_select_button_get_property;
+  object_class->finalize     = ligma_font_select_button_finalize;
+  object_class->set_property = ligma_font_select_button_set_property;
+  object_class->get_property = ligma_font_select_button_get_property;
 
-  select_button_class->select_destroy = gimp_font_select_destroy;
+  select_button_class->select_destroy = ligma_font_select_destroy;
 
   klass->font_set = NULL;
 
   /**
-   * GimpFontSelectButton:title:
+   * LigmaFontSelectButton:title:
    *
    * The title to be used for the font selection popup dialog.
    *
@@ -135,11 +135,11 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
                                                        "Title",
                                                        "The title to be used for the font selection popup dialog",
                                                        _("Font Selection"),
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY);
 
   /**
-   * GimpFontSelectButton:font-name:
+   * LigmaFontSelectButton:font-name:
    *
    * The name of the currently selected font.
    *
@@ -149,12 +149,12 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
                                                            "Font name",
                                                            "The name of the currently selected font",
                                                            "Sans-serif",
-                                                           GIMP_PARAM_READWRITE);
+                                                           LIGMA_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, font_button_props);
 
   /**
-   * GimpFontSelectButton::font-set:
+   * LigmaFontSelectButton::font-set:
    * @widget: the object which received the signal.
    * @font_name: the name of the currently selected font.
    * @dialog_closing: whether the dialog was closed or not.
@@ -167,25 +167,25 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
     g_signal_new ("font-set",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFontSelectButtonClass, font_set),
+                  G_STRUCT_OFFSET (LigmaFontSelectButtonClass, font_set),
                   NULL, NULL,
-                  _gimpui_marshal_VOID__STRING_BOOLEAN,
+                  _ligmaui_marshal_VOID__STRING_BOOLEAN,
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
 }
 
 static void
-gimp_font_select_button_init (GimpFontSelectButton *button)
+ligma_font_select_button_init (LigmaFontSelectButton *button)
 {
-  button->priv = gimp_font_select_button_get_instance_private (button);
+  button->priv = ligma_font_select_button_get_instance_private (button);
 
-  button->priv->inside = gimp_font_select_button_create_inside (button);
+  button->priv->inside = ligma_font_select_button_create_inside (button);
   gtk_container_add (GTK_CONTAINER (button), button->priv->inside);
 }
 
 /**
- * gimp_font_select_button_new:
+ * ligma_font_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
  * @font_name: (nullable): Initial font name.
  *
@@ -198,18 +198,18 @@ gimp_font_select_button_init (GimpFontSelectButton *button)
  * Since: 2.4
  */
 GtkWidget *
-gimp_font_select_button_new (const gchar *title,
+ligma_font_select_button_new (const gchar *title,
                              const gchar *font_name)
 {
   GtkWidget *button;
 
   if (title)
-    button = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_FONT_SELECT_BUTTON,
                            "title",     title,
                            "font-name", font_name,
                            NULL);
   else
-    button = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_FONT_SELECT_BUTTON,
                            "font-name", font_name,
                            NULL);
 
@@ -217,8 +217,8 @@ gimp_font_select_button_new (const gchar *title,
 }
 
 /**
- * gimp_font_select_button_get_font:
- * @button: A #GimpFontSelectButton
+ * ligma_font_select_button_get_font:
+ * @button: A #LigmaFontSelectButton
  *
  * Retrieves the name of currently selected font.
  *
@@ -227,16 +227,16 @@ gimp_font_select_button_new (const gchar *title,
  * Since: 2.4
  */
 const gchar *
-gimp_font_select_button_get_font (GimpFontSelectButton *button)
+ligma_font_select_button_get_font (LigmaFontSelectButton *button)
 {
-  g_return_val_if_fail (GIMP_IS_FONT_SELECT_BUTTON (button), NULL);
+  g_return_val_if_fail (LIGMA_IS_FONT_SELECT_BUTTON (button), NULL);
 
   return button->priv->font_name;
 }
 
 /**
- * gimp_font_select_button_set_font:
- * @button: A #GimpFontSelectButton
+ * ligma_font_select_button_set_font:
+ * @button: A #LigmaFontSelectButton
  * @font_name: (nullable): Font name to set; %NULL means no change.
  *
  * Sets the current font for the font select button.
@@ -244,18 +244,18 @@ gimp_font_select_button_get_font (GimpFontSelectButton *button)
  * Since: 2.4
  */
 void
-gimp_font_select_button_set_font (GimpFontSelectButton *button,
+ligma_font_select_button_set_font (LigmaFontSelectButton *button,
                                   const gchar          *font_name)
 {
-  GimpSelectButton *select_button;
+  LigmaSelectButton *select_button;
 
-  g_return_if_fail (GIMP_IS_FONT_SELECT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_FONT_SELECT_BUTTON (button));
 
-  select_button = GIMP_SELECT_BUTTON (button);
+  select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      gimp_fonts_set_popup (select_button->temp_callback, font_name);
+      ligma_fonts_set_popup (select_button->temp_callback, font_name);
     }
   else
     {
@@ -264,9 +264,9 @@ gimp_font_select_button_set_font (GimpFontSelectButton *button,
       if (font_name && *font_name)
         name = g_strdup (font_name);
       else
-        name = gimp_context_get_font ();
+        name = ligma_context_get_font ();
 
-      gimp_font_select_button_callback (name, FALSE, button);
+      ligma_font_select_button_callback (name, FALSE, button);
 
       g_free (name);
     }
@@ -276,23 +276,23 @@ gimp_font_select_button_set_font (GimpFontSelectButton *button,
 /*  private functions  */
 
 static void
-gimp_font_select_button_finalize (GObject *object)
+ligma_font_select_button_finalize (GObject *object)
 {
-  GimpFontSelectButton *button = GIMP_FONT_SELECT_BUTTON (object);
+  LigmaFontSelectButton *button = LIGMA_FONT_SELECT_BUTTON (object);
 
   g_clear_pointer (&button->priv->font_name, g_free);
   g_clear_pointer (&button->priv->title,     g_free);
 
-  G_OBJECT_CLASS (gimp_font_select_button_parent_class)->finalize (object);
+  G_OBJECT_CLASS (ligma_font_select_button_parent_class)->finalize (object);
 }
 
 static void
-gimp_font_select_button_set_property (GObject      *object,
+ligma_font_select_button_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpFontSelectButton *button = GIMP_FONT_SELECT_BUTTON (object);
+  LigmaFontSelectButton *button = LIGMA_FONT_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -301,7 +301,7 @@ gimp_font_select_button_set_property (GObject      *object,
       break;
 
     case PROP_FONT_NAME:
-      gimp_font_select_button_set_font (button,
+      ligma_font_select_button_set_font (button,
                                         g_value_get_string (value));
       break;
 
@@ -312,12 +312,12 @@ gimp_font_select_button_set_property (GObject      *object,
 }
 
 static void
-gimp_font_select_button_get_property (GObject    *object,
+ligma_font_select_button_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpFontSelectButton *button = GIMP_FONT_SELECT_BUTTON (object);
+  LigmaFontSelectButton *button = LIGMA_FONT_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -336,13 +336,13 @@ gimp_font_select_button_get_property (GObject    *object,
 }
 
 static void
-gimp_font_select_button_callback (const gchar *font_name,
+ligma_font_select_button_callback (const gchar *font_name,
                                   gboolean     dialog_closing,
                                   gpointer     user_data)
 {
-  GimpFontSelectButton        *button        = GIMP_FONT_SELECT_BUTTON (user_data);
-  GimpFontSelectButtonPrivate *priv          = button->priv;
-  GimpSelectButton            *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaFontSelectButton        *button        = LIGMA_FONT_SELECT_BUTTON (user_data);
+  LigmaFontSelectButtonPrivate *priv          = button->priv;
+  LigmaSelectButton            *select_button = LIGMA_SELECT_BUTTON (button);
 
   g_free (priv->font_name);
   priv->font_name = g_strdup (font_name);
@@ -358,28 +358,28 @@ gimp_font_select_button_callback (const gchar *font_name,
 }
 
 static void
-gimp_font_select_button_clicked (GimpFontSelectButton *button)
+ligma_font_select_button_clicked (LigmaFontSelectButton *button)
 {
-  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaSelectButton *select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      /*  calling gimp_fonts_set_popup() raises the dialog  */
-      gimp_fonts_set_popup (select_button->temp_callback,
+      /*  calling ligma_fonts_set_popup() raises the dialog  */
+      ligma_fonts_set_popup (select_button->temp_callback,
                             button->priv->font_name);
     }
   else
     {
       select_button->temp_callback =
-        gimp_font_select_new (button->priv->title,
+        ligma_font_select_new (button->priv->title,
                               button->priv->font_name,
-                              gimp_font_select_button_callback,
+                              ligma_font_select_button_callback,
                               button, NULL);
     }
 }
 
 static void
-gimp_font_select_drag_data_received (GimpFontSelectButton *button,
+ligma_font_select_drag_data_received (LigmaFontSelectButton *button,
                                      GdkDragContext       *context,
                                      gint                  x,
                                      gint                  y,
@@ -406,11 +406,11 @@ gimp_font_select_drag_data_received (GimpFontSelectButton *button,
       gint     name_offset = 0;
 
       if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
-          pid == gimp_getpid () && name_offset > 0)
+          pid == ligma_getpid () && name_offset > 0)
         {
           gchar *name = str + name_offset;
 
-          gimp_font_select_button_set_font (button, name);
+          ligma_font_select_button_set_font (button, name);
         }
     }
 
@@ -418,9 +418,9 @@ gimp_font_select_drag_data_received (GimpFontSelectButton *button,
 }
 
 static GtkWidget *
-gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
+ligma_font_select_button_create_inside (LigmaFontSelectButton *font_button)
 {
-  GimpFontSelectButtonPrivate *priv = font_button->priv;
+  LigmaFontSelectButtonPrivate *priv = font_button->priv;
   GtkWidget                   *button;
   GtkWidget                   *hbox;
   GtkWidget                   *image;
@@ -430,7 +430,7 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (button), hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_FONT,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_FONT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
@@ -440,7 +440,7 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
   gtk_widget_show_all (button);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_font_select_button_clicked),
+                            G_CALLBACK (ligma_font_select_button_clicked),
                             font_button);
 
   gtk_drag_dest_set (GTK_WIDGET (button),
@@ -451,7 +451,7 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
                      GDK_ACTION_COPY);
 
   g_signal_connect_swapped (button, "drag-data-received",
-                            G_CALLBACK (gimp_font_select_drag_data_received),
+                            G_CALLBACK (ligma_font_select_drag_data_received),
                             font_button);
 
   return button;

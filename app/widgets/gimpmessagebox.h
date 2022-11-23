@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmessagebox.h
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmamessagebox.h
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MESSAGE_BOX_H__
-#define __GIMP_MESSAGE_BOX_H__
+#ifndef __LIGMA_MESSAGE_BOX_H__
+#define __LIGMA_MESSAGE_BOX_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_MESSAGE_BOX            (gimp_message_box_get_type ())
-#define GIMP_MESSAGE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MESSAGE_BOX, GimpMessageBox))
-#define GIMP_MESSAGE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MESSAGE_BOX, GimpMessageBoxClass))
-#define GIMP_IS_MESSAGE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MESSAGE_BOX))
-#define GIMP_IS_MESSAGE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MESSAGE_BOX))
-#define GIMP_MESSAGE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MESSAGE_BOX, GimpMessageBoxClass))
+#define LIGMA_TYPE_MESSAGE_BOX            (ligma_message_box_get_type ())
+#define LIGMA_MESSAGE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MESSAGE_BOX, LigmaMessageBox))
+#define LIGMA_MESSAGE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MESSAGE_BOX, LigmaMessageBoxClass))
+#define LIGMA_IS_MESSAGE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MESSAGE_BOX))
+#define LIGMA_IS_MESSAGE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MESSAGE_BOX))
+#define LIGMA_MESSAGE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MESSAGE_BOX, LigmaMessageBoxClass))
 
 
-typedef struct _GimpMessageBoxClass  GimpMessageBoxClass;
+typedef struct _LigmaMessageBoxClass  LigmaMessageBoxClass;
 
-struct _GimpMessageBox
+struct _LigmaMessageBox
 {
   GtkBox     parent_instance;
 
@@ -46,27 +46,27 @@ struct _GimpMessageBox
   guint      idle_id;
 };
 
-struct _GimpMessageBoxClass
+struct _LigmaMessageBoxClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_message_box_get_type         (void) G_GNUC_CONST;
+GType       ligma_message_box_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_message_box_new              (const gchar    *icon_name);
-void        gimp_message_box_set_primary_text (GimpMessageBox *box,
+GtkWidget * ligma_message_box_new              (const gchar    *icon_name);
+void        ligma_message_box_set_primary_text (LigmaMessageBox *box,
                                                const gchar    *format,
                                                ...) G_GNUC_PRINTF (2, 3);
-void        gimp_message_box_set_text         (GimpMessageBox *box,
+void        ligma_message_box_set_text         (LigmaMessageBox *box,
                                                const gchar    *format,
                                                ...) G_GNUC_PRINTF (2, 3);
-void        gimp_message_box_set_markup       (GimpMessageBox *box,
+void        ligma_message_box_set_markup       (LigmaMessageBox *box,
                                                const gchar    *format,
                                                ...) G_GNUC_PRINTF (2, 3);
-gint        gimp_message_box_repeat           (GimpMessageBox *box);
+gint        ligma_message_box_repeat           (LigmaMessageBox *box);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_MESSAGE_BOX_H__ */
+#endif /* __LIGMA_MESSAGE_BOX_H__ */

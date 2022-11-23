@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #include <windows.h>
 #endif
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "tinyscheme/scheme-private.h"
 
@@ -180,12 +180,12 @@ script_fu_script_create_formal_args (scheme   *sc,
             case SF_COLOR:
               if (sc->vptr->is_string (sc->vptr->pair_car (a)))
                 {
-                  if (! gimp_rgb_parse_css (&arg->default_value.sfa_color,
+                  if (! ligma_rgb_parse_css (&arg->default_value.sfa_color,
                                             sc->vptr->string_value (sc->vptr->pair_car (a)),
                                             -1))
                     return foreign_error (sc, "script-fu-register: invalid default color name", 0);
 
-                  gimp_rgb_set_alpha (&arg->default_value.sfa_color, 1.0);
+                  ligma_rgb_set_alpha (&arg->default_value.sfa_color, 1.0);
                 }
               else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
                        sc->vptr->list_length(sc, sc->vptr->pair_car (a)) == 3)
@@ -200,7 +200,7 @@ script_fu_script_create_formal_args (scheme   *sc,
                   color_list = sc->vptr->pair_cdr (color_list);
                   b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
 
-                  gimp_rgb_set_uchar (&arg->default_value.sfa_color, r, g, b);
+                  ligma_rgb_set_uchar (&arg->default_value.sfa_color, r, g, b);
                 }
               else
                 {
@@ -394,10 +394,10 @@ script_fu_script_create_formal_args (scheme   *sc,
 
                 val = sc->vptr->string_value (sc->vptr->pair_car (option_list));
 
-                if (g_str_has_prefix (val, "Gimp"))
+                if (g_str_has_prefix (val, "Ligma"))
                   type_name = g_strdup (val);
                 else
-                  type_name = g_strconcat ("Gimp", val, NULL);
+                  type_name = g_strconcat ("Ligma", val, NULL);
 
                 enum_type = g_type_from_name (type_name);
                 if (! G_TYPE_IS_ENUM (enum_type))

@@ -1,4 +1,4 @@
-# This is the Japanese locale definition for the GIMP tips.
+# This is the Japanese locale definition for the LIGMA tips.
 # Copyright (C) 1999, 2002-2004, 2008-2011, 2020 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
@@ -11,8 +11,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
 "PO-Revision-Date: 2020-06-07 22:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
@@ -23,24 +23,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "F1 を押すと、いつでもその機能のヘルプを呼び出すことができるんだ。これはメ"
 "ニューの中でも使えるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP ではレイヤーというものを使って画像をまとめているんだ。まぁ、アニメで使わ"
+"LIGMA ではレイヤーというものを使って画像をまとめているんだ。まぁ、アニメで使わ"
 "れるセル画を何枚か積み重ねたものを見ているようなものだと思ってくれればいい。"
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -48,20 +48,20 @@ msgstr ""
 "レイヤーダイアログ内のそれぞれのレイヤー名の上で右クリックをすると、レイヤー"
 "に対するいろんな操作が行えるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"画像は GIMP 固有の XCF 形式 (拡張子は <tt>.xcf</tt>) で保存しよう ([ファイ"
+"画像は LIGMA 固有の XCF 形式 (拡張子は <tt>.xcf</tt>) で保存しよう ([ファイ"
 "ル] → [保存] または [ファイル] → [名前を付けて保存] だよ)。これは後から編"
 "集し直せるように、レイヤーやチャンネルといった、作業中の状態のすべてを記録"
 "してくれるんだ。画像を完成させてから JPEG、PNG、GIF やその他の形式の画像フ"
 "ァイルにエクスポート ([ファイル] → [エクスポート]) しようね。"
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -71,7 +71,7 @@ msgstr ""
 "ら画像全体に効果を与えたいときには画像を統合 ([画像] → [画像の統合]) する必要"
 "があるんじゃないかな。"
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -84,7 +84,7 @@ msgstr ""
 "のアルファチャンネルを削除することもできるよ ([レイヤー] → [透明部分] → [アル"
 "ファチャンネルの削除])。"
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -97,7 +97,7 @@ msgstr ""
 "ファチャンネルを加えたり ([レイヤー] → [透明部分] → [アルファチャンネルの追"
 "加])、画像を統合してみたり ([画像] → [画像の統合]) するといいかもしれないね。"
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -109,17 +109,17 @@ msgstr ""
 "ているウィンドウマネージャーがすでに <tt>Alt</tt> を使ってるんだ。そういうと"
 "きは <tt>Shift</tt> も押しながら試してみてね。"
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"ウィンドウに GIMP の色々なものをドラッグ・アンド・ドロップすることができる"
+"ウィンドウに LIGMA の色々なものをドラッグ・アンド・ドロップすることができる"
 "よ。例えばツールボックスやカラーパレットから色アイコンをドラッグして画像ウィ"
 "ンドウにドロップすると、その色で画像や選択範囲が塗りつぶされるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -128,7 +128,7 @@ msgstr ""
 "ウスの中ボタンを押しながらマウスを動かしてみてね。(<tt>Space</tt> を押しなが"
 "らマウスを動かすのも同じだよ。) どうだい? 表示箇所がずりずりと動くだろ?"
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -138,7 +138,7 @@ msgstr ""
 "選択ツールなんかはこのガイドに吸いつくようになってるんだ。移動ツールでガイド"
 "を画像上から追い出せば、ガイドを削除したことになるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -146,7 +146,7 @@ msgstr ""
 "レイヤーダイアログからレイヤーのサムネイルをドラッグしてツールボックスへド"
 "ロップすることができるよ。するとそのレイヤーで新しい画像を作るんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -159,17 +159,17 @@ msgstr ""
 "メニュー ([レイヤー] → [レイヤーの固定] 、[レイヤー] → [新しいレイヤーの生"
 "成]) を使ってもいいよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP は自動 gzip 圧縮をサポートしているよ。単に拡張子 <tt>.gz</tt> (bzip2 が"
+"LIGMA は自動 gzip 圧縮をサポートしているよ。単に拡張子 <tt>.gz</tt> (bzip2 が"
 "ある時には <tt>.bz2</tt> の方がいいかな) を付けるだけで、自動的に圧縮されるよ"
 "うになってるんだ。もちろん、読み込む時にも自動で展開されるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -180,7 +180,7 @@ msgstr ""
 "囲を付け加えることになるんだ。<tt>Ctrl</tt>を押しながら始めれば範囲をさっ引く"
 "ことになるしね。"
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -191,7 +191,7 @@ msgstr ""
 "な図形を描きたい時にはパスツールや [フィルター] → [下塗り] → [シェイプ"
 "(Gfig)] だね。"
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -202,7 +202,7 @@ msgstr ""
 "ターンを使ってスタンプで描画したり…　消しゴムツールやにじみツールを使うこと"
 "だってできるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -211,7 +211,7 @@ msgstr ""
 "パスツールを使って複雑な選択範囲を作れるよ。パスダイアログでは複数のパスで作"
 "業したり選択範囲に変換したりできるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -223,7 +223,7 @@ msgstr ""
 "後にもう一度 [クイックマスク] ボタンをクリックすると… いつもの選択範囲表示に"
 "戻るよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -235,23 +235,23 @@ msgstr ""
 "ないでね。) チャンネルダイアログのボタンで、チャンネルの 表示/非表示 を切り替"
 "えたりチャンネルから選択範囲を作成したりできるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
 "設定ダイアログで [動的キーボードショートカットを使用する] をオンにすると、"
 "ショートカットキーを簡単に変えることができるよ。メニューアイテムがハイライト"
 "になっている状態で割り当てたいキーの組合せを押すだけで良いんだ。設定ダイアロ"
-"グの [終了時にキーボードショートカットを保存する] をオンにしておけば、GIMP 終"
+"グの [終了時にキーボードショートカットを保存する] をオンにしておけば、LIGMA 終"
 "了時に自動的に保存されるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -259,7 +259,7 @@ msgstr ""
 "画面がきゅうくつな時は、画像ウィンドウで <tt>Tab</tt> を押すとツールボックス"
 "やダイアログの 表示/非表示 を切り替えることができるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -268,7 +268,7 @@ msgstr ""
 "ると、それ以外のレイヤー全部を隠すことができるんだ。もう一回同じ事をすれば全"
 "部のレイヤーが表示されるようになるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -278,7 +278,7 @@ msgstr ""
 "リックすると、レイヤーマスクの 有効/無効 を切替えられるんだ。<tt>Alt</tt> を"
 "押しながらクリックすると、レイヤーマスクの 表示/非表示 を切り替えられるよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -287,7 +287,7 @@ msgstr ""
 "に切替えられるんだ。(ウィンドウマネージャーがこのキー割当を横取りしてなければ"
 "ね…)"
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -298,14 +298,14 @@ msgstr ""
 "すことができるよ。スポイトツールでは <tt>Ctrl</tt> を押しながらクリックすると"
 "背景色にその色をセットできるんだ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "回転ツールで <tt>Ctrl</tt> を押しながらドラッグすると15度毎に回転するよ。"
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -331,11 +331,11 @@ msgstr ""
 #~ msgstr "<big>GNU Image Manipulation Program へようこそ !</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
-#~ "このプログラムは GNU Image Manipulation Program の頭文字を取って、GIMP と"
-#~ "呼ばれているんだ。<br/>GIMP ではほとんどの操作は元に戻せるから、なんでも気"
+#~ "このプログラムは GNU Image Manipulation Program の頭文字を取って、LIGMA と"
+#~ "呼ばれているんだ。<br/>LIGMA ではほとんどの操作は元に戻せるから、なんでも気"
 #~ "軽に試すといいよ。"
 
 #~ msgid ""

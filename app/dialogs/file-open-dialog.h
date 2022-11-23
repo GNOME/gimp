@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __FILE_OPEN_DIALOG_H__
 
 
-GtkWidget * file_open_dialog_new (Gimp *gimp);
+GtkWidget * file_open_dialog_new (Ligma *ligma);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */

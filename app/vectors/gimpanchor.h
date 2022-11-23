@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpanchor.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmaanchor.h
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,31 +18,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ANCHOR_H__
-#define __GIMP_ANCHOR_H__
+#ifndef __LIGMA_ANCHOR_H__
+#define __LIGMA_ANCHOR_H__
 
-#define GIMP_ANCHOR(anchor)  ((GimpAnchor *) (anchor))
+#define LIGMA_ANCHOR(anchor)  ((LigmaAnchor *) (anchor))
 
-#define GIMP_TYPE_ANCHOR               (gimp_anchor_get_type ())
-#define GIMP_VALUE_HOLDS_ANCHOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_ANCHOR))
+#define LIGMA_TYPE_ANCHOR               (ligma_anchor_get_type ())
+#define LIGMA_VALUE_HOLDS_ANCHOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_ANCHOR))
 
-GType   gimp_anchor_get_type           (void) G_GNUC_CONST;
+GType   ligma_anchor_get_type           (void) G_GNUC_CONST;
 
 
-struct _GimpAnchor
+struct _LigmaAnchor
 {
-  GimpCoords        position;
+  LigmaCoords        position;
 
-  GimpAnchorType    type;   /* Interpretation dependent on GimpStroke type */
+  LigmaAnchorType    type;   /* Interpretation dependent on LigmaStroke type */
   gboolean          selected;
 };
 
 
-GimpAnchor  * gimp_anchor_new  (GimpAnchorType    type,
-                                const GimpCoords *position);
+LigmaAnchor  * ligma_anchor_new  (LigmaAnchorType    type,
+                                const LigmaCoords *position);
 
-GimpAnchor  * gimp_anchor_copy (const GimpAnchor *anchor);
-void          gimp_anchor_free (GimpAnchor       *anchor);
+LigmaAnchor  * ligma_anchor_copy (const LigmaAnchor *anchor);
+void          ligma_anchor_free (LigmaAnchor       *anchor);
 
 
-#endif /* __GIMP_ANCHOR_H__ */
+#endif /* __LIGMA_ANCHOR_H__ */

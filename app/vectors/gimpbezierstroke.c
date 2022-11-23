@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbezierstroke.c
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmabezierstroke.c
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,178 +23,178 @@
 #include <glib-object.h>
 #include <cairo.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "vectors-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimpbezierdesc.h"
-#include "core/gimpcoords.h"
-#include "core/gimpcoords-interpolate.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmabezierdesc.h"
+#include "core/ligmacoords.h"
+#include "core/ligmacoords-interpolate.h"
 
-#include "gimpanchor.h"
-#include "gimpbezierstroke.h"
+#include "ligmaanchor.h"
+#include "ligmabezierstroke.h"
 
 
 /*  local prototypes  */
 
 static gdouble
-    gimp_bezier_stroke_nearest_point_get   (GimpStroke            *stroke,
-                                            const GimpCoords      *coord,
+    ligma_bezier_stroke_nearest_point_get   (LigmaStroke            *stroke,
+                                            const LigmaCoords      *coord,
                                             gdouble                precision,
-                                            GimpCoords            *ret_point,
-                                            GimpAnchor           **ret_segment_start,
-                                            GimpAnchor           **ret_segment_end,
+                                            LigmaCoords            *ret_point,
+                                            LigmaAnchor           **ret_segment_start,
+                                            LigmaAnchor           **ret_segment_end,
                                             gdouble               *ret_pos);
 static gdouble
-    gimp_bezier_stroke_segment_nearest_point_get
-                                           (const GimpCoords      *beziercoords,
-                                            const GimpCoords      *coord,
+    ligma_bezier_stroke_segment_nearest_point_get
+                                           (const LigmaCoords      *beziercoords,
+                                            const LigmaCoords      *coord,
                                             gdouble                precision,
-                                            GimpCoords            *ret_point,
+                                            LigmaCoords            *ret_point,
                                             gdouble               *ret_pos,
                                             gint                   depth);
 static gdouble
-    gimp_bezier_stroke_nearest_tangent_get (GimpStroke            *stroke,
-                                            const GimpCoords      *coord1,
-                                            const GimpCoords      *coord2,
+    ligma_bezier_stroke_nearest_tangent_get (LigmaStroke            *stroke,
+                                            const LigmaCoords      *coord1,
+                                            const LigmaCoords      *coord2,
                                             gdouble                precision,
-                                            GimpCoords            *nearest,
-                                            GimpAnchor           **ret_segment_start,
-                                            GimpAnchor           **ret_segment_end,
+                                            LigmaCoords            *nearest,
+                                            LigmaAnchor           **ret_segment_start,
+                                            LigmaAnchor           **ret_segment_end,
                                             gdouble               *ret_pos);
 static gdouble
-    gimp_bezier_stroke_segment_nearest_tangent_get
-                                           (const GimpCoords      *beziercoords,
-                                            const GimpCoords      *coord1,
-                                            const GimpCoords      *coord2,
+    ligma_bezier_stroke_segment_nearest_tangent_get
+                                           (const LigmaCoords      *beziercoords,
+                                            const LigmaCoords      *coord1,
+                                            const LigmaCoords      *coord2,
                                             gdouble                precision,
-                                            GimpCoords            *ret_point,
+                                            LigmaCoords            *ret_point,
                                             gdouble               *ret_pos);
 static void
-    gimp_bezier_stroke_anchor_move_relative
-                                           (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor,
-                                            const GimpCoords      *deltacoord,
-                                            GimpAnchorFeatureType  feature);
+    ligma_bezier_stroke_anchor_move_relative
+                                           (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor,
+                                            const LigmaCoords      *deltacoord,
+                                            LigmaAnchorFeatureType  feature);
 static void
-    gimp_bezier_stroke_anchor_move_absolute
-                                           (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor,
-                                            const GimpCoords      *coord,
-                                            GimpAnchorFeatureType  feature);
+    ligma_bezier_stroke_anchor_move_absolute
+                                           (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor,
+                                            const LigmaCoords      *coord,
+                                            LigmaAnchorFeatureType  feature);
 static void
-    gimp_bezier_stroke_anchor_convert      (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor,
-                                            GimpAnchorFeatureType  feature);
+    ligma_bezier_stroke_anchor_convert      (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor,
+                                            LigmaAnchorFeatureType  feature);
 static void
-    gimp_bezier_stroke_anchor_delete       (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor);
+    ligma_bezier_stroke_anchor_delete       (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor);
 static gboolean
-    gimp_bezier_stroke_point_is_movable    (GimpStroke            *stroke,
-                                            GimpAnchor            *predec,
+    ligma_bezier_stroke_point_is_movable    (LigmaStroke            *stroke,
+                                            LigmaAnchor            *predec,
                                             gdouble                position);
 static void
-    gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
-                                            GimpAnchor            *predec,
+    ligma_bezier_stroke_point_move_relative (LigmaStroke            *stroke,
+                                            LigmaAnchor            *predec,
                                             gdouble                position,
-                                            const GimpCoords      *deltacoord,
-                                            GimpAnchorFeatureType  feature);
+                                            const LigmaCoords      *deltacoord,
+                                            LigmaAnchorFeatureType  feature);
 static void
-    gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
-                                            GimpAnchor            *predec,
+    ligma_bezier_stroke_point_move_absolute (LigmaStroke            *stroke,
+                                            LigmaAnchor            *predec,
                                             gdouble                position,
-                                            const GimpCoords      *coord,
-                                            GimpAnchorFeatureType  feature);
+                                            const LigmaCoords      *coord,
+                                            LigmaAnchorFeatureType  feature);
 
-static void gimp_bezier_stroke_close       (GimpStroke            *stroke);
+static void ligma_bezier_stroke_close       (LigmaStroke            *stroke);
 
-static GimpStroke *
-    gimp_bezier_stroke_open                (GimpStroke            *stroke,
-                                            GimpAnchor            *end_anchor);
+static LigmaStroke *
+    ligma_bezier_stroke_open                (LigmaStroke            *stroke,
+                                            LigmaAnchor            *end_anchor);
 static gboolean
-    gimp_bezier_stroke_anchor_is_insertable
-                                           (GimpStroke            *stroke,
-                                            GimpAnchor            *predec,
+    ligma_bezier_stroke_anchor_is_insertable
+                                           (LigmaStroke            *stroke,
+                                            LigmaAnchor            *predec,
                                             gdouble                position);
-static GimpAnchor *
-    gimp_bezier_stroke_anchor_insert       (GimpStroke            *stroke,
-                                            GimpAnchor            *predec,
+static LigmaAnchor *
+    ligma_bezier_stroke_anchor_insert       (LigmaStroke            *stroke,
+                                            LigmaAnchor            *predec,
                                             gdouble                position);
 static gboolean
-    gimp_bezier_stroke_is_extendable       (GimpStroke            *stroke,
-                                            GimpAnchor            *neighbor);
+    ligma_bezier_stroke_is_extendable       (LigmaStroke            *stroke,
+                                            LigmaAnchor            *neighbor);
 static gboolean
-    gimp_bezier_stroke_connect_stroke      (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor,
-                                            GimpStroke            *extension,
-                                            GimpAnchor            *neighbor);
+    ligma_bezier_stroke_connect_stroke      (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor,
+                                            LigmaStroke            *extension,
+                                            LigmaAnchor            *neighbor);
 static gboolean
-    gimp_bezier_stroke_reverse             (GimpStroke            *stroke);
+    ligma_bezier_stroke_reverse             (LigmaStroke            *stroke);
 static gboolean
-    gimp_bezier_stroke_shift_start         (GimpStroke            *stroke,
-                                            GimpAnchor            *anchor);
+    ligma_bezier_stroke_shift_start         (LigmaStroke            *stroke,
+                                            LigmaAnchor            *anchor);
 static GArray *
-    gimp_bezier_stroke_interpolate         (GimpStroke            *stroke,
+    ligma_bezier_stroke_interpolate         (LigmaStroke            *stroke,
                                             gdouble                precision,
                                             gboolean              *closed);
-static GimpBezierDesc *
-    gimp_bezier_stroke_make_bezier         (GimpStroke            *stroke);
-static void gimp_bezier_stroke_transform   (GimpStroke            *stroke,
-                                            const GimpMatrix3     *matrix,
+static LigmaBezierDesc *
+    ligma_bezier_stroke_make_bezier         (LigmaStroke            *stroke);
+static void ligma_bezier_stroke_transform   (LigmaStroke            *stroke,
+                                            const LigmaMatrix3     *matrix,
                                             GQueue                *ret_strokes);
 
-static void gimp_bezier_stroke_finalize    (GObject               *object);
+static void ligma_bezier_stroke_finalize    (GObject               *object);
 
 
-static GList * gimp_bezier_stroke_get_anchor_listitem
+static GList * ligma_bezier_stroke_get_anchor_listitem
                                            (GList                 *list);
 
 
-G_DEFINE_TYPE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE)
+G_DEFINE_TYPE (LigmaBezierStroke, ligma_bezier_stroke, LIGMA_TYPE_STROKE)
 
-#define parent_class gimp_bezier_stroke_parent_class
+#define parent_class ligma_bezier_stroke_parent_class
 
 
 static void
-gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
+ligma_bezier_stroke_class_init (LigmaBezierStrokeClass *klass)
 {
   GObjectClass    *object_class = G_OBJECT_CLASS (klass);
-  GimpStrokeClass *stroke_class = GIMP_STROKE_CLASS (klass);
+  LigmaStrokeClass *stroke_class = LIGMA_STROKE_CLASS (klass);
 
-  object_class->finalize             = gimp_bezier_stroke_finalize;
+  object_class->finalize             = ligma_bezier_stroke_finalize;
 
-  stroke_class->nearest_point_get    = gimp_bezier_stroke_nearest_point_get;
-  stroke_class->nearest_tangent_get  = gimp_bezier_stroke_nearest_tangent_get;
+  stroke_class->nearest_point_get    = ligma_bezier_stroke_nearest_point_get;
+  stroke_class->nearest_tangent_get  = ligma_bezier_stroke_nearest_tangent_get;
   stroke_class->nearest_intersection_get = NULL;
-  stroke_class->anchor_move_relative = gimp_bezier_stroke_anchor_move_relative;
-  stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
-  stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
-  stroke_class->anchor_delete        = gimp_bezier_stroke_anchor_delete;
-  stroke_class->point_is_movable     = gimp_bezier_stroke_point_is_movable;
-  stroke_class->point_move_relative  = gimp_bezier_stroke_point_move_relative;
-  stroke_class->point_move_absolute  = gimp_bezier_stroke_point_move_absolute;
-  stroke_class->close                = gimp_bezier_stroke_close;
-  stroke_class->open                 = gimp_bezier_stroke_open;
-  stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
-  stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
-  stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
-  stroke_class->extend               = gimp_bezier_stroke_extend;
-  stroke_class->connect_stroke       = gimp_bezier_stroke_connect_stroke;
-  stroke_class->reverse              = gimp_bezier_stroke_reverse;
-  stroke_class->shift_start          = gimp_bezier_stroke_shift_start;
-  stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
-  stroke_class->make_bezier          = gimp_bezier_stroke_make_bezier;
-  stroke_class->transform            = gimp_bezier_stroke_transform;
+  stroke_class->anchor_move_relative = ligma_bezier_stroke_anchor_move_relative;
+  stroke_class->anchor_move_absolute = ligma_bezier_stroke_anchor_move_absolute;
+  stroke_class->anchor_convert       = ligma_bezier_stroke_anchor_convert;
+  stroke_class->anchor_delete        = ligma_bezier_stroke_anchor_delete;
+  stroke_class->point_is_movable     = ligma_bezier_stroke_point_is_movable;
+  stroke_class->point_move_relative  = ligma_bezier_stroke_point_move_relative;
+  stroke_class->point_move_absolute  = ligma_bezier_stroke_point_move_absolute;
+  stroke_class->close                = ligma_bezier_stroke_close;
+  stroke_class->open                 = ligma_bezier_stroke_open;
+  stroke_class->anchor_is_insertable = ligma_bezier_stroke_anchor_is_insertable;
+  stroke_class->anchor_insert        = ligma_bezier_stroke_anchor_insert;
+  stroke_class->is_extendable        = ligma_bezier_stroke_is_extendable;
+  stroke_class->extend               = ligma_bezier_stroke_extend;
+  stroke_class->connect_stroke       = ligma_bezier_stroke_connect_stroke;
+  stroke_class->reverse              = ligma_bezier_stroke_reverse;
+  stroke_class->shift_start          = ligma_bezier_stroke_shift_start;
+  stroke_class->interpolate          = ligma_bezier_stroke_interpolate;
+  stroke_class->make_bezier          = ligma_bezier_stroke_make_bezier;
+  stroke_class->transform            = ligma_bezier_stroke_transform;
 }
 
 static void
-gimp_bezier_stroke_init (GimpBezierStroke *stroke)
+ligma_bezier_stroke_init (LigmaBezierStroke *stroke)
 {
 }
 
 static void
-gimp_bezier_stroke_finalize (GObject *object)
+ligma_bezier_stroke_finalize (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -202,45 +202,45 @@ gimp_bezier_stroke_finalize (GObject *object)
 
 /* Bezier specific functions */
 
-GimpStroke *
-gimp_bezier_stroke_new (void)
+LigmaStroke *
+ligma_bezier_stroke_new (void)
 {
-  return g_object_new (GIMP_TYPE_BEZIER_STROKE, NULL);
+  return g_object_new (LIGMA_TYPE_BEZIER_STROKE, NULL);
 }
 
 
-GimpStroke *
-gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
+LigmaStroke *
+ligma_bezier_stroke_new_from_coords (const LigmaCoords *coords,
                                     gint              n_coords,
                                     gboolean          closed)
 {
-  GimpStroke *stroke;
-  GimpAnchor *last_anchor;
+  LigmaStroke *stroke;
+  LigmaAnchor *last_anchor;
   gint        count;
 
   g_return_val_if_fail (coords != NULL, NULL);
   g_return_val_if_fail (n_coords >= 3, NULL);
   g_return_val_if_fail ((n_coords % 3) == 0, NULL);
 
-  stroke = gimp_bezier_stroke_new ();
+  stroke = ligma_bezier_stroke_new ();
 
   last_anchor = NULL;
 
   for (count = 0; count < n_coords; count++)
-    last_anchor = gimp_bezier_stroke_extend (stroke,
+    last_anchor = ligma_bezier_stroke_extend (stroke,
                                              &coords[count],
                                              last_anchor,
                                              EXTEND_SIMPLE);
 
   if (closed)
-    gimp_stroke_close (stroke);
+    ligma_stroke_close (stroke);
 
   return stroke;
 }
 
 static void
-gimp_bezier_stroke_anchor_delete (GimpStroke *stroke,
-                                  GimpAnchor *anchor)
+ligma_bezier_stroke_anchor_delete (LigmaStroke *stroke,
+                                  LigmaAnchor *anchor)
 {
   GList *list;
   GList *list2;
@@ -258,19 +258,19 @@ gimp_bezier_stroke_anchor_delete (GimpStroke *stroke,
       g_return_if_fail (list != NULL);
 
       list2 = g_list_next (list);
-      gimp_anchor_free (list->data);
+      ligma_anchor_free (list->data);
       g_queue_delete_link (stroke->anchors, list);
       list = list2;
     }
 }
 
-static GimpStroke *
-gimp_bezier_stroke_open (GimpStroke *stroke,
-                         GimpAnchor *end_anchor)
+static LigmaStroke *
+ligma_bezier_stroke_open (LigmaStroke *stroke,
+                         LigmaAnchor *end_anchor)
 {
   GList      *list;
   GList      *list2;
-  GimpStroke *new_stroke = NULL;
+  LigmaStroke *new_stroke = NULL;
 
   list = g_queue_find (stroke->anchors, end_anchor);
 
@@ -301,7 +301,7 @@ gimp_bezier_stroke_open (GimpStroke *stroke,
         }
       else
         {
-          new_stroke = gimp_bezier_stroke_new ();
+          new_stroke = ligma_bezier_stroke_new ();
           new_stroke->anchors->head = list2;
           new_stroke->anchors->tail = g_list_last (list2);
           new_stroke->anchors->length = g_list_length (list2);
@@ -315,24 +315,24 @@ gimp_bezier_stroke_open (GimpStroke *stroke,
 }
 
 static gboolean
-gimp_bezier_stroke_anchor_is_insertable (GimpStroke *stroke,
-                                         GimpAnchor *predec,
+ligma_bezier_stroke_anchor_is_insertable (LigmaStroke *stroke,
+                                         LigmaAnchor *predec,
                                          gdouble     position)
 {
   return (g_queue_find (stroke->anchors, predec) != NULL);
 }
 
 
-static GimpAnchor *
-gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
-                                  GimpAnchor *predec,
+static LigmaAnchor *
+ligma_bezier_stroke_anchor_insert (LigmaStroke *stroke,
+                                  LigmaAnchor *predec,
                                   gdouble     position)
 {
   GList      *segment_start;
   GList      *list;
   GList      *list2;
-  GimpCoords  subdivided[8];
-  GimpCoords  beziercoords[4];
+  LigmaCoords  subdivided[8];
+  LigmaCoords  beziercoords[4];
   gint        i;
 
   segment_start = g_queue_find (stroke->anchors, predec);
@@ -344,7 +344,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
 
   for (i = 0; i <= 3; i++)
     {
-      beziercoords[i] = GIMP_ANCHOR (list->data)->position;
+      beziercoords[i] = LIGMA_ANCHOR (list->data)->position;
       list = g_list_next (list);
       if (! list)
         list = stroke->anchors->head;
@@ -353,27 +353,27 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
 
-  gimp_coords_mix (1-position, &(beziercoords[0]),
+  ligma_coords_mix (1-position, &(beziercoords[0]),
                    position,   &(beziercoords[1]),
                    &(subdivided[1]));
 
-  gimp_coords_mix (1-position, &(beziercoords[1]),
+  ligma_coords_mix (1-position, &(beziercoords[1]),
                    position,   &(beziercoords[2]),
                    &(subdivided[7]));
 
-  gimp_coords_mix (1-position, &(beziercoords[2]),
+  ligma_coords_mix (1-position, &(beziercoords[2]),
                    position,   &(beziercoords[3]),
                    &(subdivided[5]));
 
-  gimp_coords_mix (1-position, &(subdivided[1]),
+  ligma_coords_mix (1-position, &(subdivided[1]),
                    position,   &(subdivided[7]),
                    &(subdivided[2]));
 
-  gimp_coords_mix (1-position, &(subdivided[7]),
+  ligma_coords_mix (1-position, &(subdivided[7]),
                    position,   &(subdivided[5]),
                    &(subdivided[4]));
 
-  gimp_coords_mix (1-position, &(subdivided[2]),
+  ligma_coords_mix (1-position, &(subdivided[2]),
                    position,   &(subdivided[4]),
                    &(subdivided[3]));
 
@@ -386,9 +386,9 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
       if (i >= 2 && i <= 4)
         {
           list2 = g_list_append (NULL,
-                                 gimp_anchor_new ((i == 3 ?
-                                                    GIMP_ANCHOR_ANCHOR:
-                                                    GIMP_ANCHOR_CONTROL),
+                                 ligma_anchor_new ((i == 3 ?
+                                                    LIGMA_ANCHOR_ANCHOR:
+                                                    LIGMA_ANCHOR_CONTROL),
                                                   &(subdivided[i])));
           /* insert it *before* list manually. */
           list2->next = list;
@@ -404,7 +404,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
         }
       else
         {
-          GIMP_ANCHOR (list->data)->position = subdivided[i];
+          LIGMA_ANCHOR (list->data)->position = subdivided[i];
         }
 
       list = g_list_next (list);
@@ -416,13 +416,13 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   stroke->anchors->tail = g_list_last (list);
   stroke->anchors->length += 3;
 
-  return GIMP_ANCHOR (segment_start->data);
+  return LIGMA_ANCHOR (segment_start->data);
 }
 
 
 static gboolean
-gimp_bezier_stroke_point_is_movable (GimpStroke *stroke,
-                                     GimpAnchor *predec,
+ligma_bezier_stroke_point_is_movable (LigmaStroke *stroke,
+                                     LigmaAnchor *predec,
                                      gdouble     position)
 {
   return (g_queue_find (stroke->anchors, predec) != NULL);
@@ -430,13 +430,13 @@ gimp_bezier_stroke_point_is_movable (GimpStroke *stroke,
 
 
 static void
-gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
-                                        GimpAnchor            *predec,
+ligma_bezier_stroke_point_move_relative (LigmaStroke            *stroke,
+                                        LigmaAnchor            *predec,
                                         gdouble                position,
-                                        const GimpCoords      *deltacoord,
-                                        GimpAnchorFeatureType  feature)
+                                        const LigmaCoords      *deltacoord,
+                                        LigmaAnchorFeatureType  feature)
 {
-  GimpCoords  offsetcoords[2];
+  LigmaCoords  offsetcoords[2];
   GList      *segment_start;
   GList      *list;
   gint        i;
@@ -449,7 +449,7 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
   /* dragging close to endpoints just moves the handle related to
    * the endpoint. Just make sure that feel_good is in the range from
    * 0 to 1. The 1.0 / 6.0 and 5.0 / 6.0 are duplicated in
-   * tools/gimpvectortool.c.
+   * tools/ligmavectortool.c.
    */
   if (position <= 1.0 / 6.0)
     feel_good = 0;
@@ -460,11 +460,11 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
   else
     feel_good = 1;
 
-  gimp_coords_scale ((1-feel_good)/(3*position*
+  ligma_coords_scale ((1-feel_good)/(3*position*
                                     (1-position)*(1-position)),
                      deltacoord,
                      &(offsetcoords[0]));
-  gimp_coords_scale (feel_good/(3*position*position*(1-position)),
+  ligma_coords_scale (feel_good/(3*position*position*(1-position)),
                      deltacoord,
                      &(offsetcoords[1]));
 
@@ -475,7 +475,7 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
   for (i = 0; i <= 1; i++)
     {
-      gimp_stroke_anchor_move_relative (stroke, GIMP_ANCHOR (list->data),
+      ligma_stroke_anchor_move_relative (stroke, LIGMA_ANCHOR (list->data),
                                         &(offsetcoords[i]), feature);
       list = g_list_next (list);
       if (! list)
@@ -485,15 +485,15 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
 
 static void
-gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
-                                        GimpAnchor            *predec,
+ligma_bezier_stroke_point_move_absolute (LigmaStroke            *stroke,
+                                        LigmaAnchor            *predec,
                                         gdouble                position,
-                                        const GimpCoords      *coord,
-                                        GimpAnchorFeatureType  feature)
+                                        const LigmaCoords      *coord,
+                                        LigmaAnchorFeatureType  feature)
 {
-  GimpCoords  deltacoord;
-  GimpCoords  tmp1, tmp2, abs_pos;
-  GimpCoords  beziercoords[4];
+  LigmaCoords  deltacoord;
+  LigmaCoords  tmp1, tmp2, abs_pos;
+  LigmaCoords  beziercoords[4];
   GList      *segment_start;
   GList      *list;
   gint        i;
@@ -506,32 +506,32 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
 
   for (i = 0; i <= 3; i++)
     {
-      beziercoords[i] = GIMP_ANCHOR (list->data)->position;
+      beziercoords[i] = LIGMA_ANCHOR (list->data)->position;
       list = g_list_next (list);
       if (! list)
         list = stroke->anchors->head;
     }
 
-  gimp_coords_mix ((1-position)*(1-position)*(1-position), &(beziercoords[0]),
+  ligma_coords_mix ((1-position)*(1-position)*(1-position), &(beziercoords[0]),
                    3*(1-position)*(1-position)*position, &(beziercoords[1]),
                    &tmp1);
-  gimp_coords_mix (3*(1-position)*position*position, &(beziercoords[2]),
+  ligma_coords_mix (3*(1-position)*position*position, &(beziercoords[2]),
                    position*position*position, &(beziercoords[3]),
                    &tmp2);
-  gimp_coords_add (&tmp1, &tmp2, &abs_pos);
+  ligma_coords_add (&tmp1, &tmp2, &abs_pos);
 
-  gimp_coords_difference (coord, &abs_pos, &deltacoord);
+  ligma_coords_difference (coord, &abs_pos, &deltacoord);
 
-  gimp_bezier_stroke_point_move_relative (stroke, predec, position,
+  ligma_bezier_stroke_point_move_relative (stroke, predec, position,
                                           &deltacoord, feature);
 }
 
 static void
-gimp_bezier_stroke_close (GimpStroke *stroke)
+ligma_bezier_stroke_close (LigmaStroke *stroke)
 {
   GList      *start;
   GList      *end;
-  GimpAnchor *anchor;
+  LigmaAnchor *anchor;
 
   start = stroke->anchors->head;
   end   = stroke->anchors->tail;
@@ -540,48 +540,48 @@ gimp_bezier_stroke_close (GimpStroke *stroke)
 
   if (start->next != end->prev)
     {
-      if (gimp_coords_equal (&(GIMP_ANCHOR (start->next->data)->position),
-                             &(GIMP_ANCHOR (start->data)->position)) &&
-          gimp_coords_equal (&(GIMP_ANCHOR (start->data)->position),
-                             &(GIMP_ANCHOR (end->data)->position)) &&
-          gimp_coords_equal (&(GIMP_ANCHOR (end->data)->position),
-                             &(GIMP_ANCHOR (end->prev->data)->position)))
+      if (ligma_coords_equal (&(LIGMA_ANCHOR (start->next->data)->position),
+                             &(LIGMA_ANCHOR (start->data)->position)) &&
+          ligma_coords_equal (&(LIGMA_ANCHOR (start->data)->position),
+                             &(LIGMA_ANCHOR (end->data)->position)) &&
+          ligma_coords_equal (&(LIGMA_ANCHOR (end->data)->position),
+                             &(LIGMA_ANCHOR (end->prev->data)->position)))
         {
           /* redundant segment */
 
-          gimp_anchor_free (stroke->anchors->tail->data);
+          ligma_anchor_free (stroke->anchors->tail->data);
           g_queue_delete_link (stroke->anchors, stroke->anchors->tail);
 
-          gimp_anchor_free (stroke->anchors->tail->data);
+          ligma_anchor_free (stroke->anchors->tail->data);
           g_queue_delete_link (stroke->anchors, stroke->anchors->tail);
 
           anchor = stroke->anchors->tail->data;
           g_queue_delete_link (stroke->anchors, stroke->anchors->tail);
 
-          gimp_anchor_free (stroke->anchors->head->data);
+          ligma_anchor_free (stroke->anchors->head->data);
           stroke->anchors->head->data = anchor;
         }
     }
 
-  GIMP_STROKE_CLASS (parent_class)->close (stroke);
+  LIGMA_STROKE_CLASS (parent_class)->close (stroke);
 }
 
 static gdouble
-gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
-                                      const GimpCoords  *coord,
+ligma_bezier_stroke_nearest_point_get (LigmaStroke        *stroke,
+                                      const LigmaCoords  *coord,
                                       gdouble            precision,
-                                      GimpCoords        *ret_point,
-                                      GimpAnchor       **ret_segment_start,
-                                      GimpAnchor       **ret_segment_end,
+                                      LigmaCoords        *ret_point,
+                                      LigmaAnchor       **ret_segment_start,
+                                      LigmaAnchor       **ret_segment_end,
                                       gdouble           *ret_pos)
 {
   gdouble     min_dist, dist, pos;
-  GimpCoords  point = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-  GimpCoords  segmentcoords[4];
+  LigmaCoords  point = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+  LigmaCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start;
-  GimpAnchor *segment_end = NULL;
-  GimpAnchor *anchor;
+  LigmaAnchor *segment_start;
+  LigmaAnchor *segment_end = NULL;
+  LigmaAnchor *anchor;
   gint        count;
 
   if (g_queue_is_empty (stroke->anchors))
@@ -592,7 +592,7 @@ gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
   pos = 0;
 
   for (anchorlist = stroke->anchors->head;
-       GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       LIGMA_ANCHOR (anchorlist->data)->type != LIGMA_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   segment_start = anchorlist->data;
@@ -607,7 +607,7 @@ gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
       if (count == 4)
         {
           segment_end = anchorlist->data;
-          dist = gimp_bezier_stroke_segment_nearest_point_get (segmentcoords,
+          dist = ligma_bezier_stroke_segment_nearest_point_get (segmentcoords,
                                                                coord, precision,
                                                                &point, &pos,
                                                                10);
@@ -638,7 +638,7 @@ gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
 
       while (count < 3)
         {
-          segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
+          segmentcoords[count] = LIGMA_ANCHOR (anchorlist->data)->position;
           count++;
         }
 
@@ -646,11 +646,11 @@ gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
 
       if (anchorlist)
         {
-          segment_end = GIMP_ANCHOR (anchorlist->data);
+          segment_end = LIGMA_ANCHOR (anchorlist->data);
           segmentcoords[3] = segment_end->position;
         }
 
-      dist = gimp_bezier_stroke_segment_nearest_point_get (segmentcoords,
+      dist = ligma_bezier_stroke_segment_nearest_point_get (segmentcoords,
                                                            coord, precision,
                                                            &point, &pos,
                                                            10);
@@ -675,44 +675,44 @@ gimp_bezier_stroke_nearest_point_get (GimpStroke        *stroke,
 
 
 static gdouble
-gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
-                                              const GimpCoords *coord,
+ligma_bezier_stroke_segment_nearest_point_get (const LigmaCoords *beziercoords,
+                                              const LigmaCoords *coord,
                                               gdouble           precision,
-                                              GimpCoords       *ret_point,
+                                              LigmaCoords       *ret_point,
                                               gdouble          *ret_pos,
                                               gint              depth)
 {
   /*
-   * beziercoords has to contain four GimpCoords with the four control points
+   * beziercoords has to contain four LigmaCoords with the four control points
    * of the bezier segment. We subdivide it at the parameter 0.5.
    */
 
-  GimpCoords subdivided[8];
+  LigmaCoords subdivided[8];
   gdouble    dist1, dist2;
-  GimpCoords point1, point2;
+  LigmaCoords point1, point2;
   gdouble    pos1, pos2;
 
-  gimp_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
-  gimp_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
+  ligma_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
+  ligma_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
 
-  if (! depth || (gimp_coords_bezier_is_straight (beziercoords, precision) &&
-                  gimp_coords_length_squared (&point1) < precision         &&
-                  gimp_coords_length_squared (&point2) < precision))
+  if (! depth || (ligma_coords_bezier_is_straight (beziercoords, precision) &&
+                  ligma_coords_length_squared (&point1) < precision         &&
+                  ligma_coords_length_squared (&point2) < precision))
     {
-      GimpCoords line, dcoord;
+      LigmaCoords line, dcoord;
       gdouble    length2, scalar;
       gint       i;
 
-      gimp_coords_difference (&(beziercoords[3]),
+      ligma_coords_difference (&(beziercoords[3]),
                               &(beziercoords[0]),
                               &line);
 
-      gimp_coords_difference (coord,
+      ligma_coords_difference (coord,
                               &(beziercoords[0]),
                               &dcoord);
 
-      length2 = gimp_coords_scalarprod (&line, &line);
-      scalar = gimp_coords_scalarprod (&line, &dcoord) / length2;
+      length2 = ligma_coords_scalarprod (&line, &line);
+      scalar = ligma_coords_scalarprod (&line, &dcoord) / length2;
 
       scalar = CLAMP (scalar, 0.0, 1.0);
 
@@ -734,13 +734,13 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
 
       *ret_pos = pos1;
 
-      gimp_coords_mix (1.0, &(beziercoords[0]),
+      ligma_coords_mix (1.0, &(beziercoords[0]),
                        scalar, &line,
                        ret_point);
 
-      gimp_coords_difference (coord, ret_point, &dcoord);
+      ligma_coords_difference (coord, ret_point, &dcoord);
 
-      return gimp_coords_length (&dcoord);
+      return ligma_coords_length (&dcoord);
     }
 
   /* ok, we have to subdivide */
@@ -750,22 +750,22 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
 
   /* if (!depth) g_printerr ("Hit recursion depth limit!\n"); */
 
-  gimp_coords_average (&(beziercoords[0]), &(beziercoords[1]),
+  ligma_coords_average (&(beziercoords[0]), &(beziercoords[1]),
                        &(subdivided[1]));
 
-  gimp_coords_average (&(beziercoords[1]), &(beziercoords[2]),
+  ligma_coords_average (&(beziercoords[1]), &(beziercoords[2]),
                        &(subdivided[7]));
 
-  gimp_coords_average (&(beziercoords[2]), &(beziercoords[3]),
+  ligma_coords_average (&(beziercoords[2]), &(beziercoords[3]),
                        &(subdivided[5]));
 
-  gimp_coords_average (&(subdivided[1]), &(subdivided[7]),
+  ligma_coords_average (&(subdivided[1]), &(subdivided[7]),
                        &(subdivided[2]));
 
-  gimp_coords_average (&(subdivided[7]), &(subdivided[5]),
+  ligma_coords_average (&(subdivided[7]), &(subdivided[5]),
                        &(subdivided[4]));
 
-  gimp_coords_average (&(subdivided[2]), &(subdivided[4]),
+  ligma_coords_average (&(subdivided[2]), &(subdivided[4]),
                        &(subdivided[3]));
 
   /*
@@ -773,12 +773,12 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
    * subdivided [0-3] and subdivided [3-6]
    */
 
-  dist1 = gimp_bezier_stroke_segment_nearest_point_get (&(subdivided[0]),
+  dist1 = ligma_bezier_stroke_segment_nearest_point_get (&(subdivided[0]),
                                                         coord, precision,
                                                         &point1, &pos1,
                                                         depth - 1);
 
-  dist2 = gimp_bezier_stroke_segment_nearest_point_get (&(subdivided[3]),
+  dist2 = ligma_bezier_stroke_segment_nearest_point_get (&(subdivided[3]),
                                                         coord, precision,
                                                         &point2, &pos2,
                                                         depth - 1);
@@ -799,22 +799,22 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
 
 
 static gdouble
-gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
-                                        const GimpCoords  *coord1,
-                                        const GimpCoords  *coord2,
+ligma_bezier_stroke_nearest_tangent_get (LigmaStroke        *stroke,
+                                        const LigmaCoords  *coord1,
+                                        const LigmaCoords  *coord2,
                                         gdouble            precision,
-                                        GimpCoords        *nearest,
-                                        GimpAnchor       **ret_segment_start,
-                                        GimpAnchor       **ret_segment_end,
+                                        LigmaCoords        *nearest,
+                                        LigmaAnchor       **ret_segment_start,
+                                        LigmaAnchor       **ret_segment_end,
                                         gdouble           *ret_pos)
 {
   gdouble     min_dist, dist, pos;
-  GimpCoords  point;
-  GimpCoords  segmentcoords[4];
+  LigmaCoords  point;
+  LigmaCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start;
-  GimpAnchor *segment_end = NULL;
-  GimpAnchor *anchor;
+  LigmaAnchor *segment_start;
+  LigmaAnchor *segment_end = NULL;
+  LigmaAnchor *anchor;
   gint        count;
 
   if (g_queue_is_empty (stroke->anchors))
@@ -824,7 +824,7 @@ gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
   min_dist = -1;
 
   for (anchorlist = stroke->anchors->head;
-       GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       LIGMA_ANCHOR (anchorlist->data)->type != LIGMA_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   segment_start = anchorlist->data;
@@ -839,7 +839,7 @@ gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
       if (count == 4)
         {
           segment_end = anchorlist->data;
-          dist = gimp_bezier_stroke_segment_nearest_tangent_get (segmentcoords,
+          dist = ligma_bezier_stroke_segment_nearest_tangent_get (segmentcoords,
                                                                  coord1, coord2,
                                                                  precision,
                                                                  &point, &pos);
@@ -870,7 +870,7 @@ gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
 
       while (count < 3)
         {
-          segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
+          segmentcoords[count] = LIGMA_ANCHOR (anchorlist->data)->position;
           count++;
         }
 
@@ -878,11 +878,11 @@ gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
 
       if (anchorlist)
         {
-          segment_end = GIMP_ANCHOR (anchorlist->data);
+          segment_end = LIGMA_ANCHOR (anchorlist->data);
           segmentcoords[3] = segment_end->position;
         }
 
-      dist = gimp_bezier_stroke_segment_nearest_tangent_get (segmentcoords,
+      dist = ligma_bezier_stroke_segment_nearest_tangent_get (segmentcoords,
                                                              coord1, coord2,
                                                              precision,
                                                              &point, &pos);
@@ -906,29 +906,29 @@ gimp_bezier_stroke_nearest_tangent_get (GimpStroke        *stroke,
 }
 
 static gdouble
-gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
-                                                const GimpCoords *coord1,
-                                                const GimpCoords *coord2,
+ligma_bezier_stroke_segment_nearest_tangent_get (const LigmaCoords *beziercoords,
+                                                const LigmaCoords *coord1,
+                                                const LigmaCoords *coord2,
                                                 gdouble           precision,
-                                                GimpCoords       *ret_point,
+                                                LigmaCoords       *ret_point,
                                                 gdouble          *ret_pos)
 {
   GArray     *ret_coords;
   GArray     *ret_params;
-  GimpCoords  dir, line, dcoord, min_point;
+  LigmaCoords  dir, line, dcoord, min_point;
   gdouble     min_dist = -1;
   gdouble     dist, length2, scalar, ori, ori2;
   gint        i;
 
-  gimp_coords_difference (coord2, coord1, &line);
+  ligma_coords_difference (coord2, coord1, &line);
 
-  ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+  ret_coords = g_array_new (FALSE, FALSE, sizeof (LigmaCoords));
   ret_params = g_array_new (FALSE, FALSE, sizeof (gdouble));
 
   g_printerr ("(%.2f, %.2f)-(%.2f,%.2f): ", coord1->x, coord1->y,
               coord2->x, coord2->y);
 
-  gimp_coords_interpolate_bezier (beziercoords, precision,
+  ligma_coords_interpolate_bezier (beziercoords, precision,
                                   ret_coords, ret_params);
 
   g_return_val_if_fail (ret_coords->len == ret_params->len, -1.0);
@@ -936,41 +936,41 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
   if (ret_coords->len < 2)
     return -1;
 
-  gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, 1),
-                          &g_array_index (ret_coords, GimpCoords, 0),
+  ligma_coords_difference (&g_array_index (ret_coords, LigmaCoords, 1),
+                          &g_array_index (ret_coords, LigmaCoords, 0),
                           &dir);
   ori = dir.x * line.y - dir.y * line.x;
 
   for (i = 2; i < ret_coords->len; i++)
     {
-      gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, i),
-                              &g_array_index (ret_coords, GimpCoords, i-1),
+      ligma_coords_difference (&g_array_index (ret_coords, LigmaCoords, i),
+                              &g_array_index (ret_coords, LigmaCoords, i-1),
                               &dir);
       ori2 = dir.x * line.y - dir.y * line.x;
 
       if (ori * ori2 <= 0)
         {
-          gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, i),
+          ligma_coords_difference (&g_array_index (ret_coords, LigmaCoords, i),
                                   coord1,
                                   &dcoord);
 
-          length2 = gimp_coords_scalarprod (&line, &line);
-          scalar = gimp_coords_scalarprod (&line, &dcoord) / length2;
+          length2 = ligma_coords_scalarprod (&line, &line);
+          scalar = ligma_coords_scalarprod (&line, &dcoord) / length2;
 
           if (scalar >= 0 && scalar <= 1)
             {
-              gimp_coords_mix (1.0, coord1,
+              ligma_coords_mix (1.0, coord1,
                                scalar, &line,
                                &min_point);
-              gimp_coords_difference (&min_point,
-                                      &g_array_index (ret_coords, GimpCoords, i),
+              ligma_coords_difference (&min_point,
+                                      &g_array_index (ret_coords, LigmaCoords, i),
                                       &dcoord);
-              dist = gimp_coords_length (&dcoord);
+              dist = ligma_coords_length (&dcoord);
 
               if (dist < min_dist || min_dist < 0)
                 {
                   min_dist   = dist;
-                  *ret_point = g_array_index (ret_coords, GimpCoords, i);
+                  *ret_point = g_array_index (ret_coords, LigmaCoords, i);
                   *ret_pos   = g_array_index (ret_params, gdouble, i);
                 }
             }
@@ -991,8 +991,8 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
 }
 
 static gboolean
-gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
-                                  GimpAnchor *neighbor)
+ligma_bezier_stroke_is_extendable (LigmaStroke *stroke,
+                                  LigmaAnchor *neighbor)
 {
   GList *listneighbor;
   gint   loose_end;
@@ -1032,15 +1032,15 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
 
           listneighbor = g_queue_find (stroke->anchors, neighbor);
 
-          if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
+          if (listneighbor && neighbor->type == LIGMA_ANCHOR_CONTROL)
             {
               if (listneighbor->prev &&
-                  GIMP_ANCHOR (listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                  LIGMA_ANCHOR (listneighbor->prev->data)->type == LIGMA_ANCHOR_ANCHOR)
                 {
                   listneighbor = listneighbor->prev;
                 }
               else if (listneighbor->next &&
-                       GIMP_ANCHOR (listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                       LIGMA_ANCHOR (listneighbor->next->data)->type == LIGMA_ANCHOR_ANCHOR)
                 {
                   listneighbor = listneighbor->next;
                 }
@@ -1073,13 +1073,13 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
   return (loose_end != 0);
 }
 
-GimpAnchor *
-gimp_bezier_stroke_extend (GimpStroke           *stroke,
-                           const GimpCoords     *coords,
-                           GimpAnchor           *neighbor,
-                           GimpVectorExtendMode  extend_mode)
+LigmaAnchor *
+ligma_bezier_stroke_extend (LigmaStroke           *stroke,
+                           const LigmaCoords     *coords,
+                           LigmaAnchor           *neighbor,
+                           LigmaVectorExtendMode  extend_mode)
 {
-  GimpAnchor *anchor = NULL;
+  LigmaAnchor *anchor = NULL;
   GList      *listneighbor;
   gint        loose_end, control_count;
 
@@ -1088,7 +1088,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
       /* assure that there is no neighbor specified */
       g_return_val_if_fail (neighbor == NULL, NULL);
 
-      anchor = gimp_anchor_new (GIMP_ANCHOR_CONTROL, coords);
+      anchor = ligma_anchor_new (LIGMA_ANCHOR_CONTROL, coords);
 
       g_queue_push_tail (stroke->anchors, anchor);
 
@@ -1098,12 +1098,12 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           break;
 
         case EXTEND_EDITABLE:
-          anchor = gimp_bezier_stroke_extend (stroke,
+          anchor = ligma_bezier_stroke_extend (stroke,
                                               coords, anchor,
                                               EXTEND_SIMPLE);
 
-          /* we return the GIMP_ANCHOR_ANCHOR */
-          gimp_bezier_stroke_extend (stroke,
+          /* we return the LIGMA_ANCHOR_ANCHOR */
+          ligma_bezier_stroke_extend (stroke,
                                      coords, anchor,
                                      EXTEND_SIMPLE);
 
@@ -1146,15 +1146,15 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
 
               listneighbor = g_queue_find (stroke->anchors, neighbor);
 
-              if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
+              if (listneighbor && neighbor->type == LIGMA_ANCHOR_CONTROL)
                 {
                   if (listneighbor->prev &&
-                      GIMP_ANCHOR (listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                      LIGMA_ANCHOR (listneighbor->prev->data)->type == LIGMA_ANCHOR_ANCHOR)
                     {
                       listneighbor = listneighbor->prev;
                     }
                   else if (listneighbor->next &&
-                           GIMP_ANCHOR (listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                           LIGMA_ANCHOR (listneighbor->next->data)->type == LIGMA_ANCHOR_ANCHOR)
                     {
                       listneighbor = listneighbor->next;
                     }
@@ -1188,7 +1188,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
 
       if (loose_end)
         {
-          GimpAnchorType  type;
+          LigmaAnchorType  type;
 
           /* We have to detect the type of the point to add... */
 
@@ -1197,7 +1197,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           if (loose_end == 1)
             {
               while (listneighbor &&
-                     GIMP_ANCHOR (listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
+                     LIGMA_ANCHOR (listneighbor->data)->type == LIGMA_ANCHOR_CONTROL)
                 {
                   control_count++;
                   listneighbor = listneighbor->prev;
@@ -1206,7 +1206,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           else
             {
               while (listneighbor &&
-                     GIMP_ANCHOR (listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
+                     LIGMA_ANCHOR (listneighbor->data)->type == LIGMA_ANCHOR_CONTROL)
                 {
                   control_count++;
                   listneighbor = listneighbor->next;
@@ -1219,24 +1219,24 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
               switch (control_count)
                 {
                 case 0:
-                  type = GIMP_ANCHOR_CONTROL;
+                  type = LIGMA_ANCHOR_CONTROL;
                   break;
                 case 1:
                   if (listneighbor)  /* only one handle in the path? */
-                    type = GIMP_ANCHOR_CONTROL;
+                    type = LIGMA_ANCHOR_CONTROL;
                   else
-                    type = GIMP_ANCHOR_ANCHOR;
+                    type = LIGMA_ANCHOR_ANCHOR;
                   break;
                 case 2:
-                  type = GIMP_ANCHOR_ANCHOR;
+                  type = LIGMA_ANCHOR_ANCHOR;
                   break;
                 default:
                   g_warning ("inconsistent bezier curve: "
                              "%d successive control handles", control_count);
-                  type = GIMP_ANCHOR_ANCHOR;
+                  type = LIGMA_ANCHOR_ANCHOR;
                 }
 
-              anchor = gimp_anchor_new (type, coords);
+              anchor = ligma_anchor_new (type, coords);
 
               if (loose_end == 1)
                 g_queue_push_tail (stroke->anchors, anchor);
@@ -1249,22 +1249,22 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
               switch (control_count)
                 {
                 case 0:
-                  neighbor = gimp_bezier_stroke_extend (stroke,
+                  neighbor = ligma_bezier_stroke_extend (stroke,
                                                         &(neighbor->position),
                                                         neighbor,
                                                         EXTEND_SIMPLE);
                 case 1:
-                  neighbor = gimp_bezier_stroke_extend (stroke,
+                  neighbor = ligma_bezier_stroke_extend (stroke,
                                                         coords,
                                                         neighbor,
                                                         EXTEND_SIMPLE);
                 case 2:
-                  anchor = gimp_bezier_stroke_extend (stroke,
+                  anchor = ligma_bezier_stroke_extend (stroke,
                                                       coords,
                                                       neighbor,
                                                       EXTEND_SIMPLE);
 
-                  neighbor = gimp_bezier_stroke_extend (stroke,
+                  neighbor = ligma_bezier_stroke_extend (stroke,
                                                         coords,
                                                         anchor,
                                                         EXTEND_SIMPLE);
@@ -1283,18 +1283,18 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
 }
 
 static gboolean
-gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
-                                   GimpAnchor *anchor,
-                                   GimpStroke *extension,
-                                   GimpAnchor *neighbor)
+ligma_bezier_stroke_connect_stroke (LigmaStroke *stroke,
+                                   LigmaAnchor *anchor,
+                                   LigmaStroke *extension,
+                                   LigmaAnchor *neighbor)
 {
   GList *list1;
   GList *list2;
 
   list1 = g_queue_find (stroke->anchors, anchor);
-  list1 = gimp_bezier_stroke_get_anchor_listitem (list1);
+  list1 = ligma_bezier_stroke_get_anchor_listitem (list1);
   list2 = g_queue_find (extension->anchors, neighbor);
-  list2 = gimp_bezier_stroke_get_anchor_listitem (list2);
+  list2 = ligma_bezier_stroke_get_anchor_listitem (list2);
 
   g_return_val_if_fail (list1 != NULL && list2 != NULL, FALSE);
 
@@ -1304,7 +1304,7 @@ gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
                              list2->next && list2->next->next == NULL) ||
                             (list1->next && list1->next->next == NULL &&
                              list2->prev && list2->prev->prev == NULL), FALSE);
-      gimp_stroke_close (stroke);
+      ligma_stroke_close (stroke);
       return TRUE;
     }
 
@@ -1332,9 +1332,9 @@ gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
 
 
 static gboolean
-gimp_bezier_stroke_reverse (GimpStroke *stroke)
+ligma_bezier_stroke_reverse (LigmaStroke *stroke)
 {
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+  g_return_val_if_fail (LIGMA_IS_BEZIER_STROKE (stroke), FALSE);
 
   g_queue_reverse (stroke->anchors);
 
@@ -1354,14 +1354,14 @@ gimp_bezier_stroke_reverse (GimpStroke *stroke)
 
 
 static gboolean
-gimp_bezier_stroke_shift_start (GimpStroke *stroke,
-                                GimpAnchor *new_start)
+ligma_bezier_stroke_shift_start (LigmaStroke *stroke,
+                                LigmaAnchor *new_start)
 {
   GList *link;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+  g_return_val_if_fail (LIGMA_IS_BEZIER_STROKE (stroke), FALSE);
   g_return_val_if_fail (new_start != NULL, FALSE);
-  g_return_val_if_fail (new_start->type == GIMP_ANCHOR_ANCHOR, FALSE);
+  g_return_val_if_fail (new_start->type == LIGMA_ANCHOR_ANCHOR, FALSE);
 
   link = g_queue_find (stroke->anchors, new_start);
   if (!link)
@@ -1389,12 +1389,12 @@ gimp_bezier_stroke_shift_start (GimpStroke *stroke,
 
 
 static void
-gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
-                                         GimpAnchor            *anchor,
-                                         const GimpCoords      *deltacoord,
-                                         GimpAnchorFeatureType  feature)
+ligma_bezier_stroke_anchor_move_relative (LigmaStroke            *stroke,
+                                         LigmaAnchor            *anchor,
+                                         const LigmaCoords      *deltacoord,
+                                         LigmaAnchorFeatureType  feature)
 {
-  GimpCoords  delta, coord1, coord2;
+  LigmaCoords  delta, coord1, coord2;
   GList      *anchor_list;
 
   delta = *deltacoord;
@@ -1403,38 +1403,38 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
   delta.ytilt    = 0;
   delta.wheel    = 0;
 
-  gimp_coords_add (&(anchor->position), &delta, &coord1);
+  ligma_coords_add (&(anchor->position), &delta, &coord1);
   anchor->position = coord1;
 
   anchor_list = g_queue_find (stroke->anchors, anchor);
   g_return_if_fail (anchor_list != NULL);
 
-  if (anchor->type == GIMP_ANCHOR_ANCHOR)
+  if (anchor->type == LIGMA_ANCHOR_ANCHOR)
     {
       if (g_list_previous (anchor_list))
         {
-          coord2 = GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position;
-          gimp_coords_add (&coord2, &delta, &coord1);
-          GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position = coord1;
+          coord2 = LIGMA_ANCHOR (g_list_previous (anchor_list)->data)->position;
+          ligma_coords_add (&coord2, &delta, &coord1);
+          LIGMA_ANCHOR (g_list_previous (anchor_list)->data)->position = coord1;
         }
 
       if (g_list_next (anchor_list))
         {
-          coord2 = GIMP_ANCHOR (g_list_next (anchor_list)->data)->position;
-          gimp_coords_add (&coord2, &delta, &coord1);
-          GIMP_ANCHOR (g_list_next (anchor_list)->data)->position = coord1;
+          coord2 = LIGMA_ANCHOR (g_list_next (anchor_list)->data)->position;
+          ligma_coords_add (&coord2, &delta, &coord1);
+          LIGMA_ANCHOR (g_list_next (anchor_list)->data)->position = coord1;
         }
     }
   else
     {
-      if (feature == GIMP_ANCHOR_FEATURE_SYMMETRIC)
+      if (feature == LIGMA_ANCHOR_FEATURE_SYMMETRIC)
         {
           GList *neighbour = NULL, *opposite = NULL;
 
           /* search for opposite control point. Sigh. */
           neighbour = g_list_previous (anchor_list);
           if (neighbour &&
-              GIMP_ANCHOR (neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
+              LIGMA_ANCHOR (neighbour->data)->type == LIGMA_ANCHOR_ANCHOR)
             {
               opposite = g_list_previous (neighbour);
             }
@@ -1442,19 +1442,19 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
             {
               neighbour = g_list_next (anchor_list);
               if (neighbour &&
-                  GIMP_ANCHOR (neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
+                  LIGMA_ANCHOR (neighbour->data)->type == LIGMA_ANCHOR_ANCHOR)
                 {
                   opposite = g_list_next (neighbour);
                 }
             }
           if (opposite &&
-              GIMP_ANCHOR (opposite->data)->type == GIMP_ANCHOR_CONTROL)
+              LIGMA_ANCHOR (opposite->data)->type == LIGMA_ANCHOR_CONTROL)
             {
-              gimp_coords_difference (&(GIMP_ANCHOR (neighbour->data)->position),
+              ligma_coords_difference (&(LIGMA_ANCHOR (neighbour->data)->position),
                                       &(anchor->position), &delta);
-              gimp_coords_add (&(GIMP_ANCHOR (neighbour->data)->position),
+              ligma_coords_add (&(LIGMA_ANCHOR (neighbour->data)->position),
                                &delta, &coord1);
-              GIMP_ANCHOR (opposite->data)->position = coord1;
+              LIGMA_ANCHOR (opposite->data)->position = coord1;
             }
         }
     }
@@ -1462,22 +1462,22 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
 
 
 static void
-gimp_bezier_stroke_anchor_move_absolute (GimpStroke            *stroke,
-                                         GimpAnchor            *anchor,
-                                         const GimpCoords      *coord,
-                                         GimpAnchorFeatureType  feature)
+ligma_bezier_stroke_anchor_move_absolute (LigmaStroke            *stroke,
+                                         LigmaAnchor            *anchor,
+                                         const LigmaCoords      *coord,
+                                         LigmaAnchorFeatureType  feature)
 {
-  GimpCoords deltacoord;
+  LigmaCoords deltacoord;
 
-  gimp_coords_difference (coord, &anchor->position, &deltacoord);
-  gimp_bezier_stroke_anchor_move_relative (stroke, anchor,
+  ligma_coords_difference (coord, &anchor->position, &deltacoord);
+  ligma_bezier_stroke_anchor_move_relative (stroke, anchor,
                                            &deltacoord, feature);
 }
 
 static void
-gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
-                                   GimpAnchor            *anchor,
-                                   GimpAnchorFeatureType  feature)
+ligma_bezier_stroke_anchor_convert (LigmaStroke            *stroke,
+                                   LigmaAnchor            *anchor,
+                                   LigmaAnchorFeatureType  feature)
 {
   GList *anchor_list;
 
@@ -1487,46 +1487,46 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
 
   switch (feature)
     {
-    case GIMP_ANCHOR_FEATURE_EDGE:
-      if (anchor->type == GIMP_ANCHOR_ANCHOR)
+    case LIGMA_ANCHOR_FEATURE_EDGE:
+      if (anchor->type == LIGMA_ANCHOR_ANCHOR)
         {
           if (g_list_previous (anchor_list))
-            GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position =
+            LIGMA_ANCHOR (g_list_previous (anchor_list)->data)->position =
               anchor->position;
 
           if (g_list_next (anchor_list))
-            GIMP_ANCHOR (g_list_next (anchor_list)->data)->position =
+            LIGMA_ANCHOR (g_list_next (anchor_list)->data)->position =
               anchor->position;
         }
       else
         {
           if (g_list_previous (anchor_list) &&
-              GIMP_ANCHOR (g_list_previous (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
-            anchor->position = GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position;
+              LIGMA_ANCHOR (g_list_previous (anchor_list)->data)->type == LIGMA_ANCHOR_ANCHOR)
+            anchor->position = LIGMA_ANCHOR (g_list_previous (anchor_list)->data)->position;
           if (g_list_next (anchor_list) &&
-              GIMP_ANCHOR (g_list_next (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
-            anchor->position = GIMP_ANCHOR (g_list_next (anchor_list)->data)->position;
+              LIGMA_ANCHOR (g_list_next (anchor_list)->data)->type == LIGMA_ANCHOR_ANCHOR)
+            anchor->position = LIGMA_ANCHOR (g_list_next (anchor_list)->data)->position;
         }
 
       break;
 
     default:
-      g_warning ("gimp_bezier_stroke_anchor_convert: "
+      g_warning ("ligma_bezier_stroke_anchor_convert: "
                  "unimplemented anchor conversion %d\n", feature);
     }
 }
 
 
-static GimpBezierDesc *
-gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
+static LigmaBezierDesc *
+ligma_bezier_stroke_make_bezier (LigmaStroke *stroke)
 {
   GArray            *points;
   GArray            *cmd_array;
-  GimpBezierDesc    *bezdesc;
+  LigmaBezierDesc    *bezdesc;
   cairo_path_data_t  pathdata;
   gint               num_cmds, i;
 
-  points = gimp_stroke_control_points_get (stroke, NULL);
+  points = ligma_stroke_control_points_get (stroke, NULL);
 
   g_return_val_if_fail (points && points->len % 3 == 0, NULL);
   if (points->len < 3)
@@ -1544,8 +1544,8 @@ gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
   pathdata.header.type = CAIRO_PATH_MOVE_TO;
   pathdata.header.length = 2;
   g_array_append_val (cmd_array, pathdata);
-  pathdata.point.x = g_array_index (points, GimpAnchor, 1).position.x;
-  pathdata.point.y = g_array_index (points, GimpAnchor, 1).position.y;
+  pathdata.point.x = g_array_index (points, LigmaAnchor, 1).position.x;
+  pathdata.point.y = g_array_index (points, LigmaAnchor, 1).position.y;
   g_array_append_val (cmd_array, pathdata);
 
   for (i = 2; i+2 < points->len; i += 3)
@@ -1554,16 +1554,16 @@ gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
       pathdata.header.length = 4;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, i).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, i).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, i).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, i).position.y;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, i+1).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, i+1).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, i+1).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, i+1).position.y;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, i+2).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, i+2).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, i+2).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, i+2).position.y;
       g_array_append_val (cmd_array, pathdata);
     }
 
@@ -1573,16 +1573,16 @@ gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
       pathdata.header.length = 4;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, i).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, i).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, i).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, i).position.y;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, 0).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, 0).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, 0).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, 0).position.y;
       g_array_append_val (cmd_array, pathdata);
 
-      pathdata.point.x = g_array_index (points, GimpAnchor, 1).position.x;
-      pathdata.point.y = g_array_index (points, GimpAnchor, 1).position.y;
+      pathdata.point.x = g_array_index (points, LigmaAnchor, 1).position.x;
+      pathdata.point.y = g_array_index (points, LigmaAnchor, 1).position.y;
       g_array_append_val (cmd_array, pathdata);
 
       pathdata.header.type = CAIRO_PATH_CLOSE_PATH;
@@ -1594,7 +1594,7 @@ gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
     g_printerr ("miscalculated path cmd length! (%d vs. %d)\n",
                 cmd_array->len, num_cmds);
 
-  bezdesc = gimp_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
+  bezdesc = ligma_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
                                   cmd_array->len);
   g_array_free (points, TRUE);
   g_array_free (cmd_array, FALSE);
@@ -1604,14 +1604,14 @@ gimp_bezier_stroke_make_bezier (GimpStroke *stroke)
 
 
 static GArray *
-gimp_bezier_stroke_interpolate (GimpStroke *stroke,
+ligma_bezier_stroke_interpolate (LigmaStroke *stroke,
                                 gdouble     precision,
                                 gboolean   *ret_closed)
 {
   GArray     *ret_coords;
-  GimpAnchor *anchor;
+  LigmaAnchor *anchor;
   GList      *anchorlist;
-  GimpCoords  segmentcoords[4];
+  LigmaCoords  segmentcoords[4];
   gint        count;
   gboolean    need_endpoint = FALSE;
 
@@ -1622,12 +1622,12 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
       return NULL;
     }
 
-  ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+  ret_coords = g_array_new (FALSE, FALSE, sizeof (LigmaCoords));
 
   count = 0;
 
   for (anchorlist = stroke->anchors->head;
-       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       anchorlist && LIGMA_ANCHOR (anchorlist->data)->type != LIGMA_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   for ( ; anchorlist; anchorlist = g_list_next (anchorlist))
@@ -1639,7 +1639,7 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
 
       if (count == 4)
         {
-          gimp_coords_interpolate_bezier (segmentcoords, precision,
+          ligma_coords_interpolate_bezier (segmentcoords, precision,
                                           ret_coords, NULL);
           segmentcoords[0] = segmentcoords[3];
           count = 1;
@@ -1653,14 +1653,14 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
 
       while (count < 3)
         {
-          segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
+          segmentcoords[count] = LIGMA_ANCHOR (anchorlist->data)->position;
           count++;
         }
       anchorlist = g_list_next (anchorlist);
       if (anchorlist)
-        segmentcoords[3] = GIMP_ANCHOR (anchorlist->data)->position;
+        segmentcoords[3] = LIGMA_ANCHOR (anchorlist->data)->position;
 
-      gimp_coords_interpolate_bezier (segmentcoords, precision,
+      ligma_coords_interpolate_bezier (segmentcoords, precision,
                                       ret_coords, NULL);
       need_endpoint = TRUE;
 
@@ -1683,15 +1683,15 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
 
 
 static void
-gimp_bezier_stroke_transform (GimpStroke        *stroke,
-                              const GimpMatrix3 *matrix,
+ligma_bezier_stroke_transform (LigmaStroke        *stroke,
+                              const LigmaMatrix3 *matrix,
                               GQueue            *ret_strokes)
 {
-  GimpStroke *first_stroke = NULL;
-  GimpStroke *last_stroke  = NULL;
+  LigmaStroke *first_stroke = NULL;
+  LigmaStroke *last_stroke  = NULL;
   GList      *anchorlist;
-  GimpAnchor *anchor;
-  GimpCoords  segmentcoords[4];
+  LigmaAnchor *anchor;
+  LigmaCoords  segmentcoords[4];
   GQueue     *transformed[2];
   gint        n_transformed;
   gint        count;
@@ -1700,10 +1700,10 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
 
   /* if there's no need for clipping, use the default implementation */
   if (! ret_strokes                   ||
-      gimp_matrix3_is_affine (matrix) ||
+      ligma_matrix3_is_affine (matrix) ||
       g_queue_is_empty (stroke->anchors))
     {
-      GIMP_STROKE_CLASS (parent_class)->transform (stroke, matrix, ret_strokes);
+      LIGMA_STROKE_CLASS (parent_class)->transform (stroke, matrix, ret_strokes);
 
       return;
     }
@@ -1715,7 +1715,7 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
 
   /* find the first non-control anchor */
   for (anchorlist = stroke->anchors->head;
-       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       anchorlist && LIGMA_ANCHOR (anchorlist->data)->type != LIGMA_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   for ( ; anchorlist || stroke->closed; anchorlist = g_list_next (anchorlist))
@@ -1740,13 +1740,13 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
           gboolean end_in;
           gint     i;
 
-          gimp_transform_bezier_coords (matrix, segmentcoords,
+          ligma_transform_bezier_coords (matrix, segmentcoords,
                                         transformed, &n_transformed,
                                         &start_in, &end_in);
 
           for (i = 0; i < n_transformed; i++)
             {
-              GimpStroke *s = NULL;
+              LigmaStroke *s = NULL;
               GList      *list;
               gint        j;
 
@@ -1763,21 +1763,21 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
                   anchor = g_queue_peek_tail (last_stroke->anchors);
 
                   g_queue_push_tail (last_stroke->anchors,
-                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                                       &anchor->position));
                 }
 
               for (list = transformed[i]->head; list; list = g_list_next (list))
                 {
-                  GimpCoords *transformedcoords = list->data;
+                  LigmaCoords *transformedcoords = list->data;
 
                   if (! s)
                     {
                       /* start a new stroke */
-                      s = gimp_bezier_stroke_new ();
+                      s = ligma_bezier_stroke_new ();
 
                       g_queue_push_tail (s->anchors,
-                                         gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                         ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                                           &transformedcoords[0]));
 
                       g_queue_push_tail (ret_strokes, s);
@@ -1794,15 +1794,15 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
 
                   for (; j < 4; j++)
                     {
-                      GimpAnchorType type;
+                      LigmaAnchorType type;
 
                       if (j == 0 || j == 3)
-                        type = GIMP_ANCHOR_ANCHOR;
+                        type = LIGMA_ANCHOR_ANCHOR;
                       else
-                        type = GIMP_ANCHOR_CONTROL;
+                        type = LIGMA_ANCHOR_CONTROL;
 
                       g_queue_push_tail (s->anchors,
-                                         gimp_anchor_new (type,
+                                         ligma_anchor_new (type,
                                                           &transformedcoords[j]));
                     }
 
@@ -1830,7 +1830,7 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
               anchor = g_queue_peek_tail (last_stroke->anchors);
 
               g_queue_push_tail (last_stroke->anchors,
-                                 gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                 ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                                   &anchor->position));
 
               last_stroke = NULL;
@@ -1855,11 +1855,11 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
           /* connect the first and last strokes */
 
           /* remove the first anchor, which is a synthetic control point */
-          gimp_anchor_free (g_queue_pop_head (first_stroke->anchors));
+          ligma_anchor_free (g_queue_pop_head (first_stroke->anchors));
           /* remove the last anchor, which is the same anchor point as the
            * first anchor
            */
-          gimp_anchor_free (g_queue_pop_tail (last_stroke->anchors));
+          ligma_anchor_free (g_queue_pop_tail (last_stroke->anchors));
 
           if (first_stroke == last_stroke)
             {
@@ -1891,99 +1891,99 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
           anchor = g_queue_peek_tail (last_stroke->anchors);
 
           g_queue_push_tail (last_stroke->anchors,
-                             gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                             ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                               &anchor->position));
         }
     }
 }
 
 
-GimpStroke *
-gimp_bezier_stroke_new_moveto (const GimpCoords *start)
+LigmaStroke *
+ligma_bezier_stroke_new_moveto (const LigmaCoords *start)
 {
-  GimpStroke *stroke = gimp_bezier_stroke_new ();
+  LigmaStroke *stroke = ligma_bezier_stroke_new ();
 
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       start));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     ligma_anchor_new (LIGMA_ANCHOR_ANCHOR,
                                       start));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       start));
   return stroke;
 }
 
 void
-gimp_bezier_stroke_lineto (GimpStroke       *stroke,
-                           const GimpCoords *end)
+ligma_bezier_stroke_lineto (LigmaStroke       *stroke,
+                           const LigmaCoords *end)
 {
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+  g_return_if_fail (LIGMA_IS_BEZIER_STROKE (stroke));
   g_return_if_fail (stroke->closed == FALSE);
   g_return_if_fail (g_queue_is_empty (stroke->anchors) == FALSE);
 
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     ligma_anchor_new (LIGMA_ANCHOR_ANCHOR,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       end));
 }
 
 void
-gimp_bezier_stroke_conicto (GimpStroke       *stroke,
-                            const GimpCoords *control,
-                            const GimpCoords *end)
+ligma_bezier_stroke_conicto (LigmaStroke       *stroke,
+                            const LigmaCoords *control,
+                            const LigmaCoords *end)
 {
-  GimpCoords start, coords;
+  LigmaCoords start, coords;
 
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+  g_return_if_fail (LIGMA_IS_BEZIER_STROKE (stroke));
   g_return_if_fail (stroke->closed == FALSE);
   g_return_if_fail (g_queue_get_length (stroke->anchors) > 1);
 
-  start = GIMP_ANCHOR (stroke->anchors->tail->prev->data)->position;
+  start = LIGMA_ANCHOR (stroke->anchors->tail->prev->data)->position;
 
-  gimp_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, &start, &coords);
+  ligma_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, &start, &coords);
 
-  GIMP_ANCHOR (stroke->anchors->tail->data)->position = coords;
+  LIGMA_ANCHOR (stroke->anchors->tail->data)->position = coords;
 
-  gimp_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, end, &coords);
+  ligma_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, end, &coords);
 
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       &coords));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     ligma_anchor_new (LIGMA_ANCHOR_ANCHOR,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       end));
 }
 
 void
-gimp_bezier_stroke_cubicto (GimpStroke       *stroke,
-                            const GimpCoords *control1,
-                            const GimpCoords *control2,
-                            const GimpCoords *end)
+ligma_bezier_stroke_cubicto (LigmaStroke       *stroke,
+                            const LigmaCoords *control1,
+                            const LigmaCoords *control2,
+                            const LigmaCoords *end)
 {
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+  g_return_if_fail (LIGMA_IS_BEZIER_STROKE (stroke));
   g_return_if_fail (stroke->closed == FALSE);
   g_return_if_fail (g_queue_is_empty (stroke->anchors) == FALSE);
 
-  GIMP_ANCHOR (stroke->anchors->tail->data)->position = *control1;
+  LIGMA_ANCHOR (stroke->anchors->tail->data)->position = *control1;
 
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       control2));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                     ligma_anchor_new (LIGMA_ANCHOR_ANCHOR,
                                       end));
   g_queue_push_tail (stroke->anchors,
-                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                     ligma_anchor_new (LIGMA_ANCHOR_CONTROL,
                                       end));
 }
 
@@ -2027,16 +2027,16 @@ arcto_circleparam (gdouble  h,
 static void
 arcto_subdivide (gdouble     t,
                  gint        part,
-                 GimpCoords *p)
+                 LigmaCoords *p)
 {
-  GimpCoords p01, p12, p23, p012, p123, p0123;
+  LigmaCoords p01, p12, p23, p012, p123, p0123;
 
-  gimp_coords_mix (1-t, &(p[0]), t, &(p[1]), &p01  );
-  gimp_coords_mix (1-t, &(p[1]), t, &(p[2]), &p12  );
-  gimp_coords_mix (1-t, &(p[2]), t, &(p[3]), &p23  );
-  gimp_coords_mix (1-t,  &p01  , t,  &p12  , &p012 );
-  gimp_coords_mix (1-t,  &p12  , t,  &p23  , &p123 );
-  gimp_coords_mix (1-t,  &p012 , t,  &p123 , &p0123);
+  ligma_coords_mix (1-t, &(p[0]), t, &(p[1]), &p01  );
+  ligma_coords_mix (1-t, &(p[1]), t, &(p[2]), &p12  );
+  ligma_coords_mix (1-t, &(p[2]), t, &(p[3]), &p23  );
+  ligma_coords_mix (1-t,  &p01  , t,  &p12  , &p012 );
+  ligma_coords_mix (1-t,  &p12  , t,  &p23  , &p123 );
+  ligma_coords_mix (1-t,  &p012 , t,  &p123 , &p0123);
 
   if (part == 0)
     {
@@ -2059,9 +2059,9 @@ arcto_ellipsesegment (gdouble     radius_x,
                       gdouble     radius_y,
                       gdouble     phi0,
                       gdouble     phi1,
-                      GimpCoords *ellips)
+                      LigmaCoords *ellips)
 {
-  const GimpCoords  template    = GIMP_COORDS_DEFAULT_VALUES;
+  const LigmaCoords  template    = LIGMA_COORDS_DEFAULT_VALUES;
   const gdouble     circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
 
   gdouble  phi_s, phi_e;
@@ -2100,8 +2100,8 @@ arcto_ellipsesegment (gdouble     radius_x,
   ellips[0].x = cos (phi_s); ellips[0].y = sin (phi_s);
   ellips[3].x = cos (phi_e); ellips[3].y = sin (phi_e);
 
-  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]), &(ellips[1]));
-  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]), &(ellips[2]));
+  ligma_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]), &(ellips[1]));
+  ligma_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]), &(ellips[2]));
 
   if (h0 > y[0])
     {
@@ -2122,46 +2122,46 @@ arcto_ellipsesegment (gdouble     radius_x,
 }
 
 void
-gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
+ligma_bezier_stroke_arcto (LigmaStroke       *bez_stroke,
                           gdouble           radius_x,
                           gdouble           radius_y,
                           gdouble           angle_rad,
                           gboolean          large_arc,
                           gboolean          sweep,
-                          const GimpCoords *end)
+                          const LigmaCoords *end)
 {
-  GimpCoords  start;
-  GimpCoords  middle;   /* between start and end */
-  GimpCoords  trans_delta;
-  GimpCoords  trans_center;
-  GimpCoords  tmp_center;
-  GimpCoords  center;
-  GimpCoords  ellips[4]; /* control points of untransformed ellipse segment */
-  GimpCoords  ctrl[4];   /* control points of next bezier segment           */
+  LigmaCoords  start;
+  LigmaCoords  middle;   /* between start and end */
+  LigmaCoords  trans_delta;
+  LigmaCoords  trans_center;
+  LigmaCoords  tmp_center;
+  LigmaCoords  center;
+  LigmaCoords  ellips[4]; /* control points of untransformed ellipse segment */
+  LigmaCoords  ctrl[4];   /* control points of next bezier segment           */
 
-  GimpMatrix3 anglerot;
+  LigmaMatrix3 anglerot;
 
   gdouble     lambda;
   gdouble     phi0, phi1, phi2;
   gdouble     tmpx, tmpy;
 
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (bez_stroke));
+  g_return_if_fail (LIGMA_IS_BEZIER_STROKE (bez_stroke));
   g_return_if_fail (bez_stroke->closed == FALSE);
   g_return_if_fail (g_queue_get_length (bez_stroke->anchors) > 1);
 
   if (radius_x == 0 || radius_y == 0)
     {
-      gimp_bezier_stroke_lineto (bez_stroke, end);
+      ligma_bezier_stroke_lineto (bez_stroke, end);
       return;
     }
 
-  start = GIMP_ANCHOR (bez_stroke->anchors->tail->prev->data)->position;
+  start = LIGMA_ANCHOR (bez_stroke->anchors->tail->prev->data)->position;
 
-  gimp_matrix3_identity (&anglerot);
-  gimp_matrix3_rotate (&anglerot, -angle_rad);
+  ligma_matrix3_identity (&anglerot);
+  ligma_matrix3_rotate (&anglerot, -angle_rad);
 
-  gimp_coords_mix (0.5, &start, -0.5, end, &trans_delta);
-  gimp_matrix3_transform_point (&anglerot,
+  ligma_coords_mix (0.5, &start, -0.5, end, &trans_delta);
+  ligma_matrix3_transform_point (&anglerot,
                                 trans_delta.x, trans_delta.y,
                                 &tmpx, &tmpy);
   trans_delta.x = tmpx;
@@ -2203,18 +2203,18 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
       trans_center.y *= -1;
     }
 
-  gimp_matrix3_identity (&anglerot);
-  gimp_matrix3_rotate (&anglerot, angle_rad);
+  ligma_matrix3_identity (&anglerot);
+  ligma_matrix3_rotate (&anglerot, angle_rad);
 
   tmp_center = trans_center;
-  gimp_matrix3_transform_point (&anglerot,
+  ligma_matrix3_transform_point (&anglerot,
                                 tmp_center.x, tmp_center.y,
                                 &tmpx, &tmpy);
   tmp_center.x = tmpx;
   tmp_center.y = tmpy;
 
-  gimp_coords_mix (0.5, &start, 0.5, end, &middle);
-  gimp_coords_add (&tmp_center, &middle, &center);
+  ligma_coords_mix (0.5, &start, 0.5, end, &middle);
+  ligma_coords_add (&tmp_center, &middle, &center);
 
   phi1 = atan2 ((trans_delta.y - trans_center.y) / radius_y,
                 (trans_delta.x - trans_center.x) / radius_x);
@@ -2241,24 +2241,24 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
                                 MAX (phi0, phi1), MIN (phi0 + G_PI_2, phi2),
                                 ellips);
 
-          gimp_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
                                         &tmpx, &tmpy);
           ellips[0].x = tmpx; ellips[0].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
                                         &tmpx, &tmpy);
           ellips[1].x = tmpx; ellips[1].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
                                         &tmpx, &tmpy);
           ellips[2].x = tmpx; ellips[2].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
                                         &tmpx, &tmpy);
           ellips[3].x = tmpx; ellips[3].y = tmpy;
 
-          gimp_coords_add (&center, &(ellips[1]), &(ctrl[1]));
-          gimp_coords_add (&center, &(ellips[2]), &(ctrl[2]));
-          gimp_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+          ligma_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          ligma_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          ligma_coords_add (&center, &(ellips[3]), &(ctrl[3]));
 
-          gimp_bezier_stroke_cubicto (bez_stroke,
+          ligma_bezier_stroke_cubicto (bez_stroke,
                                       &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
           phi0 += G_PI_2;
         }
@@ -2276,75 +2276,75 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
                                 MIN (phi0, phi1), MAX (phi0 - G_PI_2, phi2),
                                 ellips);
 
-          gimp_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
                                         &tmpx, &tmpy);
           ellips[0].x = tmpx; ellips[0].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
                                         &tmpx, &tmpy);
           ellips[1].x = tmpx; ellips[1].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
                                         &tmpx, &tmpy);
           ellips[2].x = tmpx; ellips[2].y = tmpy;
-          gimp_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
+          ligma_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
                                         &tmpx, &tmpy);
           ellips[3].x = tmpx; ellips[3].y = tmpy;
 
-          gimp_coords_add (&center, &(ellips[1]), &(ctrl[1]));
-          gimp_coords_add (&center, &(ellips[2]), &(ctrl[2]));
-          gimp_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+          ligma_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          ligma_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          ligma_coords_add (&center, &(ellips[3]), &(ctrl[3]));
 
-          gimp_bezier_stroke_cubicto (bez_stroke,
+          ligma_bezier_stroke_cubicto (bez_stroke,
                                       &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
           phi0 -= G_PI_2;
         }
     }
 }
 
-GimpStroke *
-gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
+LigmaStroke *
+ligma_bezier_stroke_new_ellipse (const LigmaCoords *center,
                                 gdouble           radius_x,
                                 gdouble           radius_y,
                                 gdouble           angle)
 {
-  GimpStroke    *stroke;
-  GimpCoords     p1 = *center;
-  GimpCoords     p2 = *center;
-  GimpCoords     p3 = *center;
-  GimpCoords     dx = { 0, };
-  GimpCoords     dy = { 0, };
+  LigmaStroke    *stroke;
+  LigmaCoords     p1 = *center;
+  LigmaCoords     p2 = *center;
+  LigmaCoords     p3 = *center;
+  LigmaCoords     dx = { 0, };
+  LigmaCoords     dy = { 0, };
   const gdouble  circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
-  GimpAnchor    *handle;
+  LigmaAnchor    *handle;
 
   dx.x =   radius_x * cos (angle);
   dx.y = - radius_x * sin (angle);
   dy.x =   radius_y * sin (angle);
   dy.y =   radius_y * cos (angle);
 
-  gimp_coords_mix (1.0, center, 1.0, &dx, &p1);
-  stroke = gimp_bezier_stroke_new_moveto (&p1);
+  ligma_coords_mix (1.0, center, 1.0, &dx, &p1);
+  stroke = ligma_bezier_stroke_new_moveto (&p1);
 
   handle = g_queue_peek_head (stroke->anchors);
-  gimp_coords_mix (1.0,    &p1, -circlemagic, &dy, &handle->position);
+  ligma_coords_mix (1.0,    &p1, -circlemagic, &dy, &handle->position);
 
-  gimp_coords_mix (1.0,    &p1,  circlemagic, &dy, &p1);
-  gimp_coords_mix (1.0, center,          1.0, &dy, &p3);
-  gimp_coords_mix (1.0,    &p3,  circlemagic, &dx, &p2);
-  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+  ligma_coords_mix (1.0,    &p1,  circlemagic, &dy, &p1);
+  ligma_coords_mix (1.0, center,          1.0, &dy, &p3);
+  ligma_coords_mix (1.0,    &p3,  circlemagic, &dx, &p2);
+  ligma_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
-  gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p1);
-  gimp_coords_mix (1.0, center,         -1.0, &dx, &p3);
-  gimp_coords_mix (1.0,    &p3,  circlemagic, &dy, &p2);
-  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+  ligma_coords_mix (1.0,    &p3, -circlemagic, &dx, &p1);
+  ligma_coords_mix (1.0, center,         -1.0, &dx, &p3);
+  ligma_coords_mix (1.0,    &p3,  circlemagic, &dy, &p2);
+  ligma_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
-  gimp_coords_mix (1.0,    &p3, -circlemagic, &dy, &p1);
-  gimp_coords_mix (1.0, center,         -1.0, &dy, &p3);
-  gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p2);
-  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+  ligma_coords_mix (1.0,    &p3, -circlemagic, &dy, &p1);
+  ligma_coords_mix (1.0, center,         -1.0, &dy, &p3);
+  ligma_coords_mix (1.0,    &p3, -circlemagic, &dx, &p2);
+  ligma_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
   handle = g_queue_peek_tail (stroke->anchors);
-  gimp_coords_mix (1.0,    &p3,  circlemagic, &dx, &handle->position);
+  ligma_coords_mix (1.0,    &p3,  circlemagic, &dx, &handle->position);
 
-  gimp_stroke_close (stroke);
+  ligma_stroke_close (stroke);
 
   return stroke;
 }
@@ -2353,18 +2353,18 @@ gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
 /* helper function to get the associated anchor of a listitem */
 
 static GList *
-gimp_bezier_stroke_get_anchor_listitem (GList *list)
+ligma_bezier_stroke_get_anchor_listitem (GList *list)
 {
   if (!list)
     return NULL;
 
-  if (GIMP_ANCHOR (list->data)->type == GIMP_ANCHOR_ANCHOR)
+  if (LIGMA_ANCHOR (list->data)->type == LIGMA_ANCHOR_ANCHOR)
     return list;
 
-  if (list->prev && GIMP_ANCHOR (list->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+  if (list->prev && LIGMA_ANCHOR (list->prev->data)->type == LIGMA_ANCHOR_ANCHOR)
     return list->prev;
 
-  if (list->next && GIMP_ANCHOR (list->next->data)->type == GIMP_ANCHOR_ANCHOR)
+  if (list->next && LIGMA_ANCHOR (list->next->data)->type == LIGMA_ANCHOR_ANCHOR)
     return list->next;
 
   g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);

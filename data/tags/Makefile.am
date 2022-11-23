@@ -1,8 +1,8 @@
-## Makefile.am for gimp/data/tags
+## Makefile.am for ligma/data/tags
 
-tagsdatadir = $(gimpdatadir)/tags
+tagsdatadir = $(ligmadatadir)/tags
 
-tagsdata_in_files = gimp-tags-default.xml.in
+tagsdata_in_files = ligma-tags-default.xml.in
 
 tagsdata_data_files = $(tagsdata_in_files:.xml.in=.xml)
 
@@ -11,24 +11,24 @@ tagsdata_DATA =	$(tagsdata_data_files)
 EXTRA_DIST = \
 	$(tagsdata_DATA)	\
 	$(tagsdata_in_files)	\
-	gimp-tags.dtd
+	ligma-tags.dtd
 
 DISTCLEANFILES = $(tagsdata_data_files)
 
 itsdir = $(datadir)/gettext/its
-its_DATA = its/gimp-tags.loc its/gimp-tags.its
+its_DATA = its/ligma-tags.loc its/ligma-tags.its
 
 EXTRA_DIST += $(its_DATA)
 
 
-gimp-tags-default.xml: gimp-tags-default.xml.in $(wildcard $(top_srcdir)/po-tags/*.po)
+ligma-tags-default.xml: ligma-tags-default.xml.in $(wildcard $(top_srcdir)/po-tags/*.po)
 	$(AM_V_GEN) GETTEXTDATADIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tags -o $@
 
 
-validate: gimp-tags-default.xml
+validate: ligma-tags-default.xml
 if HAVE_XMLLINT
 	@$(XMLLINT) --noout --path $(srcdir) --valid $< || \
-	  ( echo "* gimp-tags-default.xml INVALID *"; exit 1; )
+	  ( echo "* ligma-tags-default.xml INVALID *"; exit 1; )
 endif
 
 dist-hook: validate

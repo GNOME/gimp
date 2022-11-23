@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolpresetfactoryview.c
+ * ligmatoolpresetfactoryview.c
  * Copyright (C) 2010 Alexia Death
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,57 +23,57 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpeditor.h"
-#include "gimpmenufactory.h"
-#include "gimptoolpresetfactoryview.h"
-#include "gimpviewrenderer.h"
+#include "ligmaeditor.h"
+#include "ligmamenufactory.h"
+#include "ligmatoolpresetfactoryview.h"
+#include "ligmaviewrenderer.h"
 
 
-G_DEFINE_TYPE (GimpToolPresetFactoryView, gimp_tool_preset_factory_view,
-               GIMP_TYPE_DATA_FACTORY_VIEW)
+G_DEFINE_TYPE (LigmaToolPresetFactoryView, ligma_tool_preset_factory_view,
+               LIGMA_TYPE_DATA_FACTORY_VIEW)
 
 
 static void
-gimp_tool_preset_factory_view_class_init (GimpToolPresetFactoryViewClass *klass)
+ligma_tool_preset_factory_view_class_init (LigmaToolPresetFactoryViewClass *klass)
 {
 }
 
 static void
-gimp_tool_preset_factory_view_init (GimpToolPresetFactoryView *view)
+ligma_tool_preset_factory_view_init (LigmaToolPresetFactoryView *view)
 {
 }
 
 GtkWidget *
-gimp_tool_preset_factory_view_new (GimpViewType      view_type,
-                                   GimpDataFactory  *factory,
-                                   GimpContext      *context,
+ligma_tool_preset_factory_view_new (LigmaViewType      view_type,
+                                   LigmaDataFactory  *factory,
+                                   LigmaContext      *context,
                                    gint              view_size,
                                    gint              view_border_width,
-                                   GimpMenuFactory  *menu_factory)
+                                   LigmaMenuFactory  *menu_factory)
 {
-  GimpToolPresetFactoryView *factory_view;
-  GimpEditor                *editor;
+  LigmaToolPresetFactoryView *factory_view;
+  LigmaEditor                *editor;
   GtkWidget                 *button;
 
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        view_size <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+                        LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  factory_view = g_object_new (GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW,
+  factory_view = g_object_new (LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW,
                                "view-type",         view_type,
                                "data-factory",      factory,
                                "context",           context,
@@ -85,18 +85,18 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                                "action-group",      "tool-presets",
                                NULL);
 
-  gtk_widget_hide (gimp_data_factory_view_get_duplicate_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
+  gtk_widget_hide (ligma_data_factory_view_get_duplicate_button (LIGMA_DATA_FACTORY_VIEW (factory_view)));
 
-  editor = GIMP_EDITOR (GIMP_CONTAINER_EDITOR (factory_view)->view);
+  editor = LIGMA_EDITOR (LIGMA_CONTAINER_EDITOR (factory_view)->view);
 
-  button = gimp_editor_add_action_button (editor, "tool-presets",
+  button = ligma_editor_add_action_button (editor, "tool-presets",
                                           "tool-presets-save", NULL);
-  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
+  gtk_box_reorder_child (ligma_editor_get_button_box (editor),
                          button, 2);
 
-  button = gimp_editor_add_action_button (editor, "tool-presets",
+  button = ligma_editor_add_action_button (editor, "tool-presets",
                                           "tool-presets-restore", NULL);
-  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
+  gtk_box_reorder_child (ligma_editor_get_button_box (editor),
                          button, 3);
 
   return GTK_WIDGET (factory_view);

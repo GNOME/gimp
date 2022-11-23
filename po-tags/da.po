@@ -1,16 +1,16 @@
-# Danish translation for gimp-tags.
+# Danish translation for ligma-tags.
 # Copyright (C) 2011-2015 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
-# http://wiki.dansk-gruppen.dk/index.php/GIMP
+# http://wiki.dansk-gruppen.dk/index.php/LIGMA
 #
 # Joe Hansen <joedalton2@yahoo.dk>, 2011.
 # scootergrisen, 2015, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-03-16 07:11+0000\n"
 "PO-Revision-Date: 2016-03-16 21:36+0100\n"
 "Last-Translator: scootergrisen\n"
@@ -21,12 +21,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "rund"
 
 # Bug 658505  er det uafklaret eller sløret
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "sløret"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1999 Manish Singh
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_FILTER_H__
-#define __GIMP_DISPLAY_SHELL_FILTER_H__
+#ifndef __LIGMA_DISPLAY_SHELL_FILTER_H__
+#define __LIGMA_DISPLAY_SHELL_FILTER_H__
 
 
-void       gimp_display_shell_filter_set (GimpDisplayShell      *shell,
-                                          GimpColorDisplayStack *stack);
+void       ligma_display_shell_filter_set (LigmaDisplayShell      *shell,
+                                          LigmaColorDisplayStack *stack);
 
-gboolean   gimp_display_shell_has_filter (GimpDisplayShell      *shell);
+gboolean   ligma_display_shell_has_filter (LigmaDisplayShell      *shell);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_FILTER_H__ */

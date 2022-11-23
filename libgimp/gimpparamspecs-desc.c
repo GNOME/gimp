@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpparamspecs-desc.c
+ * ligmaparamspecs-desc.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,14 +24,14 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimp.h"
-#include "gimpparamspecs-desc.h"
+#include "ligma.h"
+#include "ligmaparamspecs-desc.h"
 
 
 static gchar *
-gimp_param_spec_boolean_desc (GParamSpec *pspec)
+ligma_param_spec_boolean_desc (GParamSpec *pspec)
 {
   GParamSpecBoolean *bspec = G_PARAM_SPEC_BOOLEAN (pspec);
 
@@ -40,7 +40,7 @@ gimp_param_spec_boolean_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_int_desc (GParamSpec *pspec)
+ligma_param_spec_int_desc (GParamSpec *pspec)
 {
   GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
 
@@ -68,7 +68,7 @@ gimp_param_spec_int_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_double_desc (GParamSpec *pspec)
+ligma_param_spec_double_desc (GParamSpec *pspec)
 {
   GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
 
@@ -96,7 +96,7 @@ gimp_param_spec_double_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_enum_desc (GParamSpec *pspec)
+ligma_param_spec_enum_desc (GParamSpec *pspec)
 {
   GParamSpecEnum *espec      = G_PARAM_SPEC_ENUM (pspec);
   GEnumClass     *enum_class = g_type_class_peek (pspec->value_type);
@@ -107,8 +107,8 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
   gint            i, n;
 
 #if 0
-  if (GIMP_IS_PARAM_SPEC_ENUM (pspec))
-    excluded = GIMP_PARAM_SPEC_ENUM (pspec)->excluded_values;
+  if (LIGMA_IS_PARAM_SPEC_ENUM (pspec))
+    excluded = LIGMA_PARAM_SPEC_ENUM (pspec)->excluded_values;
   else
 #endif
     excluded = NULL;
@@ -136,10 +136,10 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
       if (n > 0)
         g_string_append (str, ", ");
 
-      if (G_LIKELY (g_str_has_prefix (enum_value->value_name, "GIMP_")))
-        name = gimp_canonicalize_identifier (enum_value->value_name + 5);
+      if (G_LIKELY (g_str_has_prefix (enum_value->value_name, "LIGMA_")))
+        name = ligma_canonicalize_identifier (enum_value->value_name + 5);
       else
-        name = gimp_canonicalize_identifier (enum_value->value_name);
+        name = ligma_canonicalize_identifier (enum_value->value_name);
 
       if (enum_value->value == espec->default_value)
         default_name = g_strdup (name);
@@ -165,7 +165,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
 }
 
 /**
- * gimp_param_spec_get_desc:
+ * ligma_param_spec_get_desc:
  * @pspec: a #GParamSpec
  *
  * This function creates a description of the passed @pspec, which is
@@ -178,29 +178,29 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
  * Since: 3.0
  */
 gchar *
-gimp_param_spec_get_desc (GParamSpec *pspec)
+ligma_param_spec_get_desc (GParamSpec *pspec)
 {
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
 
-  if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
+  if (LIGMA_IS_PARAM_SPEC_UNIT (pspec))
     {
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
-      return gimp_param_spec_int_desc (pspec);
+      return ligma_param_spec_int_desc (pspec);
     }
   else
     {
       switch (G_TYPE_FUNDAMENTAL (pspec->value_type))
         {
         case G_TYPE_BOOLEAN:
-          return gimp_param_spec_boolean_desc (pspec);
+          return ligma_param_spec_boolean_desc (pspec);
 
         case G_TYPE_DOUBLE:
-          return gimp_param_spec_double_desc (pspec);
+          return ligma_param_spec_double_desc (pspec);
 
         case G_TYPE_ENUM:
-          return gimp_param_spec_enum_desc (pspec);
+          return ligma_param_spec_enum_desc (pspec);
         }
     }
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpthumb/gimpthumb.h"
+#include "libligmathumb/ligmathumb.h"
 
 #include "menus-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmaviewable.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactionimpl.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactionimpl.h"
+#include "widgets/ligmauimanager.h"
 
 #include "file-menu.h"
 
@@ -41,23 +41,23 @@ static gboolean file_menu_open_recent_query_tooltip (GtkWidget  *widget,
                                                      gint        y,
                                                      gboolean    keyboard_mode,
                                                      GtkTooltip *tooltip,
-                                                     GimpAction *action);
+                                                     LigmaAction *action);
 
 
 void
-file_menu_setup (GimpUIManager *manager,
+file_menu_setup (LigmaUIManager *manager,
                  const gchar   *ui_path)
 {
   gint  n_entries;
   guint merge_id;
   gint  i;
 
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  n_entries = GIMP_GUI_CONFIG (manager->gimp->config)->last_opened_size;
+  n_entries = LIGMA_GUI_CONFIG (manager->ligma->config)->last_opened_size;
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
+  merge_id = ligma_ui_manager_new_merge_id (manager);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -69,20 +69,20 @@ file_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/File/Open Recent/Files", ui_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
+      ligma_ui_manager_add_ui (manager, merge_id,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);
 
       full_path = g_strconcat (action_path, "/", action_name, NULL);
 
-      widget = gimp_ui_manager_get_widget (manager, full_path);
+      widget = ligma_ui_manager_get_widget (manager, full_path);
 
       if (widget)
         {
-          GimpAction *action;
+          LigmaAction *action;
 
-          action = gimp_ui_manager_find_action (manager, "file", action_name);
+          action = ligma_ui_manager_find_action (manager, "file", action_name);
 
           g_signal_connect_object (widget, "query-tooltip",
                                    G_CALLBACK (file_menu_open_recent_query_tooltip),
@@ -101,9 +101,9 @@ file_menu_open_recent_query_tooltip (GtkWidget  *widget,
                                      gint        y,
                                      gboolean    keyboard_mode,
                                      GtkTooltip *tooltip,
-                                     GimpAction *action)
+                                     LigmaAction *action)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+  LigmaActionImpl *impl = LIGMA_ACTION_IMPL (action);
   gchar          *text;
 
   text = gtk_widget_get_tooltip_text (widget);
@@ -111,10 +111,10 @@ file_menu_open_recent_query_tooltip (GtkWidget  *widget,
   g_free (text);
 
   gtk_tooltip_set_icon (tooltip,
-                        gimp_viewable_get_pixbuf (impl->viewable,
+                        ligma_viewable_get_pixbuf (impl->viewable,
                                                   impl->context,
-                                                  GIMP_THUMB_SIZE_NORMAL,
-                                                  GIMP_THUMB_SIZE_NORMAL));
+                                                  LIGMA_THUMB_SIZE_NORMAL,
+                                                  LIGMA_THUMB_SIZE_NORMAL));
 
   return TRUE;
 }

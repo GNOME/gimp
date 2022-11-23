@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_DOMAIN_H__
-#define __GIMP_HELP_DOMAIN_H__
+#ifndef __LIGMA_HELP_DOMAIN_H__
+#define __LIGMA_HELP_DOMAIN_H__
 
 
-struct _GimpHelpDomain
+struct _LigmaHelpDomain
 {
   gchar      *help_domain;
   gchar      *help_uri;
@@ -32,20 +32,20 @@ struct _GimpHelpDomain
 };
 
 
-GimpHelpDomain * gimp_help_domain_new           (const gchar       *domain_name,
+LigmaHelpDomain * ligma_help_domain_new           (const gchar       *domain_name,
                                                  const gchar       *domain_uri);
-void             gimp_help_domain_free          (GimpHelpDomain    *domain);
+void             ligma_help_domain_free          (LigmaHelpDomain    *domain);
 
-GimpHelpLocale * gimp_help_domain_lookup_locale (GimpHelpDomain    *domain,
+LigmaHelpLocale * ligma_help_domain_lookup_locale (LigmaHelpDomain    *domain,
                                                  const gchar       *locale_id,
-                                                 GimpHelpProgress  *progress);
-gchar          * gimp_help_domain_map           (GimpHelpDomain    *domain,
+                                                 LigmaHelpProgress  *progress);
+gchar          * ligma_help_domain_map           (LigmaHelpDomain    *domain,
                                                  GList             *help_locales,
                                                  const gchar       *help_id,
-                                                 GimpHelpProgress  *progress,
-                                                 GimpHelpLocale   **locale,
+                                                 LigmaHelpProgress  *progress,
+                                                 LigmaHelpLocale   **locale,
                                                  gboolean          *fatal_error);
-void             gimp_help_domain_exit          (void);
+void             ligma_help_domain_exit          (void);
 
 
-#endif /* ! __GIMP_HELP_DOMAIN_H__ */
+#endif /* ! __LIGMA_HELP_DOMAIN_H__ */

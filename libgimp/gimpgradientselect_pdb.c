@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgradientselect_pdb.c
+ * ligmagradientselect_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpgradientselect
- * @title: gimpgradientselect
+ * SECTION: ligmagradientselect
+ * @title: ligmagradientselect
  * @short_description: Functions providing a gradient selection dialog.
  *
  * Functions providing a gradient selection dialog.
@@ -37,49 +37,49 @@
 
 
 /**
- * gimp_gradients_popup:
+ * ligma_gradients_popup:
  * @gradient_callback: The callback PDB proc to call when gradient selection is made.
  * @popup_title: Title of the gradient selection dialog.
  * @initial_gradient: The name of the gradient to set as the first selected.
  * @sample_size: Size of the sample to return when the gradient is changed.
  *
- * Invokes the Gimp gradients selection.
+ * Invokes the Ligma gradients selection.
  *
  * This procedure opens the gradient selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gradients_popup (const gchar *gradient_callback,
+ligma_gradients_popup (const gchar *gradient_callback,
                       const gchar *popup_title,
                       const gchar *initial_gradient,
                       gint         sample_size)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_gradient,
                                           G_TYPE_INT, sample_size,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gradients-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-gradients-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_gradients_close_popup:
+ * ligma_gradients_close_popup:
  * @gradient_callback: The name of the callback registered for this pop-up.
  *
  * Close the gradient selection dialog.
@@ -89,30 +89,30 @@ gimp_gradients_popup (const gchar *gradient_callback,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gradients_close_popup (const gchar *gradient_callback)
+ligma_gradients_close_popup (const gchar *gradient_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gradients-close-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-gradients-close-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_gradients_set_popup:
+ * ligma_gradients_set_popup:
  * @gradient_callback: The name of the callback registered for this pop-up.
  * @gradient_name: The name of the gradient to set as selected.
  *
@@ -123,26 +123,26 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gradients_set_popup (const gchar *gradient_callback,
+ligma_gradients_set_popup (const gchar *gradient_callback,
                           const gchar *gradient_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_STRING, gradient_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gradients-set-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-gradients-set-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

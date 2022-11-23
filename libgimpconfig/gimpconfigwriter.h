@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpConfigWriter
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaConfigWriter
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,68 +19,68 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
-#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#if !defined (__LIGMA_CONFIG_H_INSIDE__) && !defined (LIGMA_CONFIG_COMPILATION)
+#error "Only <libligmaconfig/ligmaconfig.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CONFIG_WRITER_H__
-#define __GIMP_CONFIG_WRITER_H__
+#ifndef __LIGMA_CONFIG_WRITER_H__
+#define __LIGMA_CONFIG_WRITER_H__
 
 
 /**
- * GIMP_TYPE_CONFIG_WRITER:
+ * LIGMA_TYPE_CONFIG_WRITER:
  *
- * The type ID of the "GimpConfigWriter" type which is a boxed type,
+ * The type ID of the "LigmaConfigWriter" type which is a boxed type,
  * used to write config files.
  *
  * Since: 3.0
  */
-#define GIMP_TYPE_CONFIG_WRITER (gimp_config_writer_get_type ())
+#define LIGMA_TYPE_CONFIG_WRITER (ligma_config_writer_get_type ())
 
 
-GType              gimp_config_writer_get_type     (void) G_GNUC_CONST;
+GType              ligma_config_writer_get_type     (void) G_GNUC_CONST;
 
-GimpConfigWriter * gimp_config_writer_new_from_file     (GFile             *file,
+LigmaConfigWriter * ligma_config_writer_new_from_file     (GFile             *file,
                                                          gboolean           atomic,
                                                          const gchar       *header,
                                                          GError           **error);
-GimpConfigWriter * gimp_config_writer_new_from_stream   (GOutputStream     *output,
+LigmaConfigWriter * ligma_config_writer_new_from_stream   (GOutputStream     *output,
                                                          const gchar       *header,
                                                          GError           **error);
-GimpConfigWriter * gimp_config_writer_new_from_fd       (gint               fd);
-GimpConfigWriter * gimp_config_writer_new_from_string   (GString           *string);
+LigmaConfigWriter * ligma_config_writer_new_from_fd       (gint               fd);
+LigmaConfigWriter * ligma_config_writer_new_from_string   (GString           *string);
 
-GimpConfigWriter * gimp_config_writer_ref          (GimpConfigWriter  *writer);
-void               gimp_config_writer_unref        (GimpConfigWriter  *writer);
+LigmaConfigWriter * ligma_config_writer_ref          (LigmaConfigWriter  *writer);
+void               ligma_config_writer_unref        (LigmaConfigWriter  *writer);
 
-void               gimp_config_writer_open         (GimpConfigWriter  *writer,
+void               ligma_config_writer_open         (LigmaConfigWriter  *writer,
                                                     const gchar       *name);
-void               gimp_config_writer_comment_mode (GimpConfigWriter  *writer,
+void               ligma_config_writer_comment_mode (LigmaConfigWriter  *writer,
                                                     gboolean           enable);
 
-void               gimp_config_writer_print        (GimpConfigWriter  *writer,
+void               ligma_config_writer_print        (LigmaConfigWriter  *writer,
                                                     const gchar       *string,
                                                     gint               len);
-void               gimp_config_writer_printf       (GimpConfigWriter  *writer,
+void               ligma_config_writer_printf       (LigmaConfigWriter  *writer,
                                                     const gchar       *format,
                                                     ...) G_GNUC_PRINTF (2, 3);
-void               gimp_config_writer_identifier   (GimpConfigWriter  *writer,
+void               ligma_config_writer_identifier   (LigmaConfigWriter  *writer,
                                                     const gchar       *identifier);
-void               gimp_config_writer_string       (GimpConfigWriter  *writer,
+void               ligma_config_writer_string       (LigmaConfigWriter  *writer,
                                                     const gchar       *string);
-void               gimp_config_writer_data         (GimpConfigWriter  *writer,
+void               ligma_config_writer_data         (LigmaConfigWriter  *writer,
                                                     gint               length,
                                                     const guint8      *data);
-void               gimp_config_writer_comment      (GimpConfigWriter  *writer,
+void               ligma_config_writer_comment      (LigmaConfigWriter  *writer,
                                                     const gchar       *comment);
-void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);
+void               ligma_config_writer_linefeed     (LigmaConfigWriter  *writer);
 
 
-void               gimp_config_writer_revert       (GimpConfigWriter  *writer);
-void               gimp_config_writer_close        (GimpConfigWriter  *writer);
-gboolean           gimp_config_writer_finish       (GimpConfigWriter  *writer,
+void               ligma_config_writer_revert       (LigmaConfigWriter  *writer);
+void               ligma_config_writer_close        (LigmaConfigWriter  *writer);
+gboolean           ligma_config_writer_finish       (LigmaConfigWriter  *writer,
                                                     const gchar       *footer,
                                                     GError           **error);
 
 
-#endif /* __GIMP_CONFIG_WRITER_H__ */
+#endif /* __LIGMA_CONFIG_WRITER_H__ */

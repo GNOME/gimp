@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-coalesce.py -- Coalesce GIMP performance log symbols, by
+performance-log-coalesce.py -- Coalesce LIGMA performance log symbols, by
                                filling-in missing base addresses
 Copyright (C) 2018  Ell
 

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagetransform_pdb.c
+ * ligmaimagetransform_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimagetransform
- * @title: gimpimagetransform
+ * SECTION: ligmaimagetransform
+ * @title: ligmaimagetransform
  * @short_description: Transformations on images.
  *
  * Operations to scale, resize, crop, flip and rotate images.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_resize:
+ * ligma_image_resize:
  * @image: The image.
  * @new_width: New image width.
  * @new_height: New image height.
@@ -57,38 +57,38 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_resize (GimpImage *image,
+ligma_image_resize (LigmaImage *image,
                    gint       new_width,
                    gint       new_height,
                    gint       offx,
                    gint       offy)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-resize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-resize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_resize_to_layers:
+ * ligma_image_resize_to_layers:
  * @image: The image.
  *
  * Resize the image to fit all layers.
@@ -103,30 +103,30 @@ gimp_image_resize (GimpImage *image,
  * Since: 2.2
  **/
 gboolean
-gimp_image_resize_to_layers (GimpImage *image)
+ligma_image_resize_to_layers (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-resize-to-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-resize-to-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_scale:
+ * ligma_image_scale:
  * @image: The image.
  * @new_width: New image width.
  * @new_height: New image height.
@@ -137,39 +137,39 @@ gimp_image_resize_to_layers (GimpImage *image)
  * equal to the supplied parameters. All layers and channels within the
  * image are scaled according to the specified parameters; this
  * includes the image selection mask. The interpolation method used can
- * be set with gimp_context_set_interpolation().
+ * be set with ligma_context_set_interpolation().
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_scale (GimpImage *image,
+ligma_image_scale (LigmaImage *image,
                   gint       new_width,
                   gint       new_height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-scale",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-scale",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_crop:
+ * ligma_image_crop:
  * @image: The image.
  * @new_width: New image width: (0 < new_width <= width).
  * @new_height: New image height: (0 < new_height <= height).
@@ -188,38 +188,38 @@ gimp_image_scale (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_crop (GimpImage *image,
+ligma_image_crop (LigmaImage *image,
                  gint       new_width,
                  gint       new_height,
                  gint       offx,
                  gint       offy)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-crop",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-crop",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_flip:
+ * ligma_image_flip:
  * @image: The image.
  * @flip_type: Type of flip.
  *
@@ -230,32 +230,32 @@ gimp_image_crop (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_flip (GimpImage           *image,
-                 GimpOrientationType  flip_type)
+ligma_image_flip (LigmaImage           *image,
+                 LigmaOrientationType  flip_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-flip",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-flip",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_rotate:
+ * ligma_image_rotate:
  * @image: The image.
  * @rotate_type: Angle of rotation.
  *
@@ -266,26 +266,26 @@ gimp_image_flip (GimpImage           *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_rotate (GimpImage        *image,
-                   GimpRotationType  rotate_type)
+ligma_image_rotate (LigmaImage        *image,
+                   LigmaRotationType  rotate_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ROTATION_TYPE, rotate_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-rotate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-rotate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

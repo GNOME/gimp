@@ -1,19 +1,19 @@
-gimp_logo_dir = meson.current_source_dir()
+ligma_logo_dir = meson.current_source_dir()
 
 images = [
-  'gimp-splash.png',
+  'ligma-splash.png',
   'wilber.png',
 ]
-images += stable ? 'gimp-logo.png' : 'gimp-devel-logo.png'
+images += stable ? 'ligma-logo.png' : 'ligma-devel-logo.png'
 
 install_data(
   images,
-  install_dir: gimpdatadir / 'images',
+  install_dir: ligmadatadir / 'images',
 )
 
 if gi_docgen.found()
   install_data(
-    stable ? 'gimp-logo.png' : 'gimp-devel-logo.png',
-    install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
+    stable ? 'ligma-logo.png' : 'ligma-devel-logo.png',
+    install_dir: get_option('datadir') / 'doc' / 'ligma-@0@'.format(ligma_app_version) / 'images',
   )
 endif

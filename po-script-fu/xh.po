@@ -1,13 +1,13 @@
-# Xhosa translation of gimp-script-fu
+# Xhosa translation of ligma-script-fu
 # Copyright (C) 2005 Canonical Ltd.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Translation by Canonical Ltd <translations@canonical.com> with thanks to
 # Translation World CC in South Africa, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp20-script-fu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma20-script-fu\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2005-03-31 09:03+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"
@@ -36,8 +36,8 @@ msgstr "_Qalaq iseva..."
 
 #: ../plug-ins/script-fu/script-fu.c:307
 #, fuzzy
-msgid "_GIMP Online"
-msgstr "Ulwandiso lwe-GIMP"
+msgid "_LIGMA Online"
+msgstr "Ulwandiso lwe-LIGMA"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
@@ -82,7 +82,7 @@ msgid "_Beveled Pattern"
 msgstr "iPateni"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:332
@@ -306,7 +306,7 @@ msgid "Delta value on color"
 msgstr "Ixabiso le-Delta kumbala"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "i-Frame"
 
@@ -656,7 +656,7 @@ msgstr "Umakha-sangqa omfiliba"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "Umbala"
 
@@ -795,71 +795,71 @@ msgstr "Ubunzima besithunzi (%)"
 msgid "Flatten image"
 msgstr "Yenza mcaba umfanekiso"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 #, fuzzy
 msgid "Create and Use _Selections"
 msgstr "Gcina ukhetho"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "i-Web Site engu_Ndoqo"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "i-Web Site yo_Mphuhlisi"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 #, fuzzy
 msgid "_User Manual Web Site"
 msgstr "i-Web Site engu_Ndoqo"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "Ngenisa i_Rejistri"
 
@@ -988,7 +988,7 @@ msgid "Roughness"
 msgstr "Uburhabaxa"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "i-Gradient"
 
@@ -1400,128 +1400,128 @@ msgstr "Okungasemva okucacileyo"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Isalathisi ukuya kwimibala n (0 = uhlala engu-RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "i-_Spyrogimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
+msgstr "i-_Spyroligma..."
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 #, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Izoba ii-Spirographs, Epitrochoids namagophe e-Lissajous. Ulwazi oluthe "
-"vetshe e-info at http://netword.com/*spyrogimp"
+"vetshe e-info at http://netword.com/*spyroligma"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "Uhlobo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "i-Spyrograph"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "i-Epitrochoid"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "i-Lissajous"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "Imilo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "Isangqa"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "uNxantathu"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "IsiKwere"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "Umbombo-ntlanu"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "uNxantathu oValekileyo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "Umbombo-ninzi: amacala asi-7"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "Umbombo-ninzi: amacala asi-8"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "Umbombo-ninzi: amacala ali-9"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "Umbombo-ninzi: amacala ali-10"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "Amazinyo angaphandle"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "Izinyo elingaphakathi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "Umda wephepha (ii-pixels)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 msgid "Hole ratio"
 msgstr "Izinga lomngxunya"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "Qala i-engile"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "Isixhobo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "Ipensile"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "iBhrashi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "Ibhrashi yomoya"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "Indlela yombala"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "Umbala ongqindilili"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "i-Gradient: Isarha ebuzinyo yeseti yeengxelo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "i-Gradient: Unxanthathu weseti yeengxelo"
 
@@ -1769,11 +1769,11 @@ msgstr "Faka isithunzi sokungamiselwanga kuka-Y"
 #~ msgid "Additional Information"
 #~ msgstr "Ulwazi olongezelelekileyo"
 
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "Inkqubo ye-GIMP yangaphakathi"
+#~ msgid "Internal LIGMA procedure"
+#~ msgstr "Inkqubo ye-LIGMA yangaphakathi"
 
-#~ msgid "GIMP Plug-In"
-#~ msgstr "Ungeniso lwe-GIMP"
+#~ msgid "LIGMA Plug-In"
+#~ msgstr "Ungeniso lwe-LIGMA"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "Inkqubo yeXeshana"
@@ -2469,10 +2469,10 @@ msgstr "Faka isithunzi sokungamiselwanga kuka-Y"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
 #~ msgstr "<Ibhokisi yezixhobo>/Xtns/iSkripti-Fu/Utils"
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
 #~ msgstr ""
 #~ "<Ibhokisi yezixhobo>/Xtns/iSkripti-Fu/Imixholo yamaPhepha e-Web/Classic."
-#~ "Gimp.Org"
+#~ "Ligma.Org"
 
 #~ msgid "<Image>/Script-Fu/Utils"
 #~ msgstr "<Umfanekiso>/iScripti-Fu/Utils"
@@ -2492,5 +2492,5 @@ msgstr "Faka isithunzi sokungamiselwanga kuka-Y"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Misc"
 #~ msgstr "<Ibhokisi yezixhobo>/Xtns/iSkripti-Fu/Misc"
 
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Ibhokisi yezixhobo>/uNcedo/i-GIMP inonxibelelwano"
+#~ msgid "<Toolbox>/Help/The LIGMA Online"
+#~ msgstr "<Ibhokisi yezixhobo>/uNcedo/i-LIGMA inonxibelelwano"

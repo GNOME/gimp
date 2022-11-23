@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolsheargrid.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolsheargrid.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimp-utils.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimpdisplayshell.h"
-#include "gimptoolsheargrid.h"
+#include "ligmadisplayshell.h"
+#include "ligmatoolsheargrid.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,9 +46,9 @@ enum
 };
 
 
-struct _GimpToolShearGridPrivate
+struct _LigmaToolShearGridPrivate
 {
-  GimpOrientationType orientation;
+  LigmaOrientationType orientation;
   gdouble             shear_x;
   gdouble             shear_y;
 
@@ -59,79 +59,79 @@ struct _GimpToolShearGridPrivate
 
 /*  local function prototypes  */
 
-static void     gimp_tool_shear_grid_set_property (GObject             *object,
+static void     ligma_tool_shear_grid_set_property (GObject             *object,
                                                    guint                property_id,
                                                    const GValue        *value,
                                                    GParamSpec          *pspec);
-static void     gimp_tool_shear_grid_get_property (GObject             *object,
+static void     ligma_tool_shear_grid_get_property (GObject             *object,
                                                    guint                property_id,
                                                    GValue              *value,
                                                    GParamSpec          *pspec);
 
-static gint     gimp_tool_shear_grid_button_press (GimpToolWidget      *widget,
-                                                   const GimpCoords    *coords,
+static gint     ligma_tool_shear_grid_button_press (LigmaToolWidget      *widget,
+                                                   const LigmaCoords    *coords,
                                                    guint32              time,
                                                    GdkModifierType      state,
-                                                   GimpButtonPressType  press_type);
-static void     gimp_tool_shear_grid_motion        (GimpToolWidget      *widget,
-                                                    const GimpCoords    *coords,
+                                                   LigmaButtonPressType  press_type);
+static void     ligma_tool_shear_grid_motion        (LigmaToolWidget      *widget,
+                                                    const LigmaCoords    *coords,
                                                     guint32              time,
                                                     GdkModifierType      state);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolShearGrid, gimp_tool_shear_grid,
-                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolShearGrid, ligma_tool_shear_grid,
+                            LIGMA_TYPE_TOOL_TRANSFORM_GRID)
 
-#define parent_class gimp_tool_shear_grid_parent_class
+#define parent_class ligma_tool_shear_grid_parent_class
 
 
 static void
-gimp_tool_shear_grid_class_init (GimpToolShearGridClass *klass)
+ligma_tool_shear_grid_class_init (LigmaToolShearGridClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->set_property    = gimp_tool_shear_grid_set_property;
-  object_class->get_property    = gimp_tool_shear_grid_get_property;
+  object_class->set_property    = ligma_tool_shear_grid_set_property;
+  object_class->get_property    = ligma_tool_shear_grid_get_property;
 
-  widget_class->button_press    = gimp_tool_shear_grid_button_press;
-  widget_class->motion          = gimp_tool_shear_grid_motion;
+  widget_class->button_press    = ligma_tool_shear_grid_button_press;
+  widget_class->motion          = ligma_tool_shear_grid_motion;
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_ORIENTATION_TYPE,
-                                                      GIMP_ORIENTATION_UNKNOWN,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_ORIENTATION_TYPE,
+                                                      LIGMA_ORIENTATION_UNKNOWN,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SHEAR_X,
                                    g_param_spec_double ("shear-x",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SHEAR_Y,
                                    g_param_spec_double ("shear-y",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_shear_grid_init (GimpToolShearGrid *grid)
+ligma_tool_shear_grid_init (LigmaToolShearGrid *grid)
 {
-  grid->private = gimp_tool_shear_grid_get_instance_private (grid);
+  grid->private = ligma_tool_shear_grid_get_instance_private (grid);
 
   g_object_set (grid,
-                "inside-function",         GIMP_TRANSFORM_FUNCTION_SHEAR,
-                "outside-function",        GIMP_TRANSFORM_FUNCTION_SHEAR,
+                "inside-function",         LIGMA_TRANSFORM_FUNCTION_SHEAR,
+                "outside-function",        LIGMA_TRANSFORM_FUNCTION_SHEAR,
                 "use-corner-handles",      FALSE,
                 "use-perspective-handles", FALSE,
                 "use-side-handles",        FALSE,
@@ -142,13 +142,13 @@ gimp_tool_shear_grid_init (GimpToolShearGrid *grid)
 }
 
 static void
-gimp_tool_shear_grid_set_property (GObject      *object,
+ligma_tool_shear_grid_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpToolShearGrid        *grid    = GIMP_TOOL_SHEAR_GRID (object);
-  GimpToolShearGridPrivate *private = grid->private;
+  LigmaToolShearGrid        *grid    = LIGMA_TOOL_SHEAR_GRID (object);
+  LigmaToolShearGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -169,13 +169,13 @@ gimp_tool_shear_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_shear_grid_get_property (GObject    *object,
+ligma_tool_shear_grid_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpToolShearGrid        *grid    = GIMP_TOOL_SHEAR_GRID (object);
-  GimpToolShearGridPrivate *private = grid->private;
+  LigmaToolShearGrid        *grid    = LIGMA_TOOL_SHEAR_GRID (object);
+  LigmaToolShearGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -196,14 +196,14 @@ gimp_tool_shear_grid_get_property (GObject    *object,
 }
 
 static gint
-gimp_tool_shear_grid_button_press (GimpToolWidget      *widget,
-                                   const GimpCoords    *coords,
+ligma_tool_shear_grid_button_press (LigmaToolWidget      *widget,
+                                   const LigmaCoords    *coords,
                                    guint32              time,
                                    GdkModifierType      state,
-                                   GimpButtonPressType  press_type)
+                                   LigmaButtonPressType  press_type)
 {
-  GimpToolShearGrid        *grid    = GIMP_TOOL_SHEAR_GRID (widget);
-  GimpToolShearGridPrivate *private = grid->private;
+  LigmaToolShearGrid        *grid    = LIGMA_TOOL_SHEAR_GRID (widget);
+  LigmaToolShearGridPrivate *private = grid->private;
 
   private->last_x = coords->x;
   private->last_y = coords->y;
@@ -212,18 +212,18 @@ gimp_tool_shear_grid_button_press (GimpToolWidget      *widget,
 }
 
 void
-gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
-                             const GimpCoords *coords,
+ligma_tool_shear_grid_motion (LigmaToolWidget   *widget,
+                             const LigmaCoords *coords,
                              guint32           time,
                              GdkModifierType   state)
 {
-  GimpToolShearGrid        *grid    = GIMP_TOOL_SHEAR_GRID (widget);
-  GimpToolShearGridPrivate *private = grid->private;
+  LigmaToolShearGrid        *grid    = LIGMA_TOOL_SHEAR_GRID (widget);
+  LigmaToolShearGridPrivate *private = grid->private;
   gdouble                   diffx   = coords->x - private->last_x;
   gdouble                   diffy   = coords->y - private->last_y;
   gdouble                   amount  = 0.0;
-  GimpMatrix3               transform;
-  GimpMatrix3              *t;
+  LigmaMatrix3               transform;
+  LigmaMatrix3              *t;
   gdouble                   x1, y1;
   gdouble                   x2, y2;
   gdouble                   tx1, ty1;
@@ -241,10 +241,10 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
                 "y2",        &y2,
                 NULL);
 
-  gimp_matrix3_transform_point (t, x1, y1, &tx1, &ty1);
-  gimp_matrix3_transform_point (t, x2, y1, &tx2, &ty2);
-  gimp_matrix3_transform_point (t, x1, y2, &tx3, &ty3);
-  gimp_matrix3_transform_point (t, x2, y2, &tx4, &ty4);
+  ligma_matrix3_transform_point (t, x1, y1, &tx1, &ty1);
+  ligma_matrix3_transform_point (t, x2, y1, &tx2, &ty2);
+  ligma_matrix3_transform_point (t, x1, y2, &tx3, &ty3);
+  ligma_matrix3_transform_point (t, x2, y2, &tx4, &ty4);
 
   g_free (t);
 
@@ -257,7 +257,7 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
   /*  If we haven't yet decided on which way to control shearing
    *  decide using the maximum differential
    */
-  if (private->orientation == GIMP_ORIENTATION_UNKNOWN)
+  if (private->orientation == LIGMA_ORIENTATION_UNKNOWN)
     {
 #define MIN_MOVE 5
 
@@ -265,12 +265,12 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
         {
           if (ABS (diffx) > ABS (diffy))
             {
-              private->orientation = GIMP_ORIENTATION_HORIZONTAL;
+              private->orientation = LIGMA_ORIENTATION_HORIZONTAL;
               private->shear_x     = 0.0;
             }
           else
             {
-              private->orientation = GIMP_ORIENTATION_VERTICAL;
+              private->orientation = LIGMA_ORIENTATION_VERTICAL;
               private->shear_y     = 0.0;
             }
         }
@@ -283,7 +283,7 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
     }
 
   /*  if the direction is known, keep track of the magnitude  */
-  if (private->orientation == GIMP_ORIENTATION_HORIZONTAL)
+  if (private->orientation == LIGMA_ORIENTATION_HORIZONTAL)
     {
       if (current_y > (ty1 + ty3) / 2)
         private->shear_x += diffx;
@@ -292,7 +292,7 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
 
       amount = private->shear_x;
     }
-  else if (private->orientation == GIMP_ORIENTATION_VERTICAL)
+  else if (private->orientation == LIGMA_ORIENTATION_VERTICAL)
     {
       if (current_x > (tx1 + tx2) / 2)
         private->shear_y += diffy;
@@ -302,8 +302,8 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
       amount = private->shear_y;
     }
 
-  gimp_matrix3_identity (&transform);
-  gimp_transform_matrix_shear (&transform,
+  ligma_matrix3_identity (&transform);
+  ligma_transform_matrix_shear (&transform,
                                x1, y1, x2 - x1, y2 - y1,
                                private->orientation, amount);
 
@@ -321,32 +321,32 @@ gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_shear_grid_new (GimpDisplayShell    *shell,
+LigmaToolWidget *
+ligma_tool_shear_grid_new (LigmaDisplayShell    *shell,
                           gdouble              x1,
                           gdouble              y1,
                           gdouble              x2,
                           gdouble              y2,
-                          GimpOrientationType  orientation,
+                          LigmaOrientationType  orientation,
                           gdouble              shear_x,
                           gdouble              shear_y)
 {
-  GimpMatrix3 transform;
+  LigmaMatrix3 transform;
   gdouble     amount;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+  if (orientation == LIGMA_ORIENTATION_HORIZONTAL)
     amount = shear_x;
   else
     amount = shear_y;
 
-  gimp_matrix3_identity (&transform);
-  gimp_transform_matrix_shear (&transform,
+  ligma_matrix3_identity (&transform);
+  ligma_transform_matrix_shear (&transform,
                                x1, y1, x2 - x1, y2 - y1,
                                orientation, amount);
 
-  return g_object_new (GIMP_TYPE_TOOL_SHEAR_GRID,
+  return g_object_new (LIGMA_TYPE_TOOL_SHEAR_GRID,
                        "shell",       shell,
                        "transform",   &transform,
                        "x1",          x1,

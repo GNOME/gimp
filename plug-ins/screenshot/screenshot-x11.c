@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Screenshot plug-in
- * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
- * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ * Copyright 1998-2007 Sven Neumann <sven@ligma.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@ligma.org>
  * Copyright 2012      Simone Karin Lehmann - OS X patches
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #ifdef GDK_WINDOWING_X11
 
@@ -45,12 +45,12 @@
 #include "screenshot.h"
 #include "screenshot-x11.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static guint32     select_window        (ScreenshotValues *shootvals,
                                          GdkMonitor       *monitor);
-static GimpImage * create_image         (cairo_surface_t  *surface,
+static LigmaImage * create_image         (cairo_surface_t  *surface,
                                          cairo_region_t   *shape,
                                          const gchar      *name);
 
@@ -375,13 +375,13 @@ window_get_shape (GdkMonitor *monitor,
 }
 
 static void
-image_select_shape (GimpImage      *image,
+image_select_shape (LigmaImage      *image,
                     cairo_region_t *shape)
 {
   gint num_rects;
   gint i;
 
-  gimp_selection_none (image);
+  ligma_selection_none (image);
 
   num_rects = cairo_region_num_rectangles (shape);
 
@@ -391,63 +391,63 @@ image_select_shape (GimpImage      *image,
 
       cairo_region_get_rectangle (shape, i, &rect);
 
-      gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
+      ligma_image_select_rectangle (image, LIGMA_CHANNEL_OP_ADD,
                                    rect.x, rect.y,
                                    rect.width, rect.height);
     }
 
-  gimp_selection_invert (image);
+  ligma_selection_invert (image);
 }
 
 
-/* Create a GimpImage from a GdkPixbuf */
+/* Create a LigmaImage from a GdkPixbuf */
 
-static GimpImage *
+static LigmaImage *
 create_image (cairo_surface_t *surface,
               cairo_region_t  *shape,
               const gchar     *name)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  LigmaImage *image;
+  LigmaLayer *layer;
   gdouble    xres, yres;
   gint       width, height;
 
-  gimp_progress_init (_("Importing screenshot"));
+  ligma_progress_init (_("Importing screenshot"));
 
   width  = cairo_image_surface_get_width (surface);
   height = cairo_image_surface_get_height (surface);
 
-  image = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_undo_disable (image);
+  image = ligma_image_new (width, height, LIGMA_RGB);
+  ligma_image_undo_disable (image);
 
-  gimp_get_monitor_resolution (&xres, &yres);
-  gimp_image_set_resolution (image, xres, yres);
+  ligma_get_monitor_resolution (&xres, &yres);
+  ligma_image_set_resolution (image, xres, yres);
 
-  layer = gimp_layer_new_from_surface (image,
+  layer = ligma_layer_new_from_surface (image,
                                        name ? name : _("Screenshot"),
                                        surface,
                                        0.0, 1.0);
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
   if (shape && ! cairo_region_is_empty (shape))
     {
       image_select_shape (image, shape);
 
-      if (! gimp_selection_is_empty (image))
+      if (! ligma_selection_is_empty (image))
         {
-          gimp_layer_add_alpha (layer);
-          gimp_drawable_edit_clear (GIMP_DRAWABLE (layer));
-          gimp_selection_none (image);
+          ligma_layer_add_alpha (layer);
+          ligma_drawable_edit_clear (LIGMA_DRAWABLE (layer));
+          ligma_selection_none (image);
         }
     }
 
-  gimp_image_undo_enable (image);
+  ligma_image_undo_enable (image);
 
   return image;
 }
 
 static void
-add_cursor_image (GimpImage  *image,
+add_cursor_image (LigmaImage  *image,
                   GdkDisplay *display)
 {
 #ifdef HAVE_XFIXES
@@ -455,7 +455,7 @@ add_cursor_image (GimpImage  *image,
   GeglBuffer         *buffer;
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
-  GimpLayer          *layer;
+  LigmaLayer          *layer;
   GList              *selected;
 
   cursor = XFixesGetCursorImage (GDK_DISPLAY_XDISPLAY (display));
@@ -463,20 +463,20 @@ add_cursor_image (GimpImage  *image,
   if (!cursor)
     return;
 
-  selected = gimp_image_list_selected_layers (image);
+  selected = ligma_image_list_selected_layers (image);
 
-  layer = gimp_layer_new (image, _("Mouse Pointer"),
+  layer = ligma_layer_new (image, _("Mouse Pointer"),
                           cursor->width, cursor->height,
-                          GIMP_RGBA_IMAGE,
+                          LIGMA_RGBA_IMAGE,
                           100.0,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (0, 0,
-                                                   gimp_drawable_get_width  (GIMP_DRAWABLE (layer)),
-                                                   gimp_drawable_get_height (GIMP_DRAWABLE (layer))),
+                                                   ligma_drawable_get_width  (LIGMA_DRAWABLE (layer)),
+                                                   ligma_drawable_get_height (LIGMA_DRAWABLE (layer))),
                                    0, babl_format ("R'G'B'A u8"),
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
   roi = &iter->items[0].roi;
@@ -516,11 +516,11 @@ add_cursor_image (GimpImage  *image,
 
   g_object_unref (buffer);
 
-  gimp_image_insert_layer (image, layer, NULL, -1);
-  gimp_layer_set_offsets (layer,
+  ligma_image_insert_layer (image, layer, NULL, -1);
+  ligma_layer_set_offsets (layer,
                           cursor->x - cursor->xhot, cursor->y - cursor->yhot);
 
-  gimp_image_take_selected_layers (image, selected);
+  ligma_image_take_selected_layers (image, selected);
 #endif
 }
 
@@ -555,10 +555,10 @@ screenshot_x11_get_capabilities (void)
   return capabilities;
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 screenshot_x11_shoot (ScreenshotValues  *shootvals,
                       GdkMonitor        *monitor,
-                      GimpImage        **image,
+                      LigmaImage        **image,
                       GError           **error)
 {
   GdkDisplay       *display;
@@ -567,7 +567,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   cairo_surface_t  *screenshot;
   cairo_region_t   *shape = NULL;
   cairo_t          *cr;
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
   GdkRectangle      rect;
   GdkRectangle      screen_rect;
   gchar            *name  = NULL;
@@ -585,7 +585,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
       shootvals->window_id = select_window (shootvals, monitor);
 
       if (! shootvals->window_id)
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
 
   if (shootvals->screenshot_delay > 0)
@@ -624,7 +624,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
       if (! window)
         {
           g_set_error_literal (error, 0, 0, _("Specified window not found"));
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       rect.width  = gdk_window_get_width (window);
@@ -642,7 +642,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   screen_rect.height = gdk_window_get_height (window);
 
   if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
-    return GIMP_PDB_EXECUTION_ERROR;
+    return LIGMA_PDB_EXECUTION_ERROR;
 
   screenshot = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
                                            rect.width, rect.height);
@@ -684,15 +684,15 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
        shootvals->shoot_type == SHOOT_WINDOW) && shootvals->show_cursor)
     add_cursor_image (*image, display);
 
-  profile = gimp_monitor_get_color_profile (monitor);
+  profile = ligma_monitor_get_color_profile (monitor);
 
   if (profile)
     {
-      gimp_image_set_color_profile (*image, profile);
+      ligma_image_set_color_profile (*image, profile);
       g_object_unref (profile);
     }
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 #endif /* GDK_WINDOWING_X11 */

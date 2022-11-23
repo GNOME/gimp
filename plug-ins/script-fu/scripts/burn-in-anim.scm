@@ -1,5 +1,5 @@
 ;
-;  burn-in-anim.scm V2.1  -  script-fu for GIMP 1.1 and higher
+;  burn-in-anim.scm V2.1  -  script-fu for LIGMA 1.1 and higher
 ;
 ;  Copyright (C) 9/2000  Roland Berger
 ;  roland@fuchur.leute.server.de
@@ -49,74 +49,74 @@
         (set! speed (* -1 speed)) )
 
     ;--- check image and work on a copy
-    (if (and (= (car (gimp-image-get-layers org-img)) 2)
-             (= (car (gimp-image-get-floating-sel org-img)) -1))
+    (if (and (= (car (ligma-image-get-layers org-img)) 2)
+             (= (car (ligma-image-get-floating-sel org-img)) -1))
 
         ;--- main program structure starts here, begin of "if-1"
         (begin
-          (gimp-context-push)
-          (gimp-context-set-defaults)
+          (ligma-context-push)
+          (ligma-context-set-defaults)
 
-          (set! img (car (gimp-image-duplicate org-img)))
-          (gimp-image-undo-disable img)
-          (if (> (car (gimp-drawable-type org-layer)) 1 )
-              (gimp-image-convert-rgb img))
-          (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
-          (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
-          (set! source-layer-width (car (gimp-drawable-get-width  source-layer)))
+          (set! img (car (ligma-image-duplicate org-img)))
+          (ligma-image-undo-disable img)
+          (if (> (car (ligma-drawable-type org-layer)) 1 )
+              (ligma-image-convert-rgb img))
+          (set! source-layer    (aref (cadr (ligma-image-get-layers img)) 0 ))
+          (set! bg-source-layer (aref (cadr (ligma-image-get-layers img)) 1 ))
+          (set! source-layer-width (car (ligma-drawable-get-width  source-layer)))
 
           ;--- hide layers, cause we want to "merge visible layers" later
-          (gimp-item-set-visible source-layer FALSE)
-          (gimp-item-set-visible bg-source-layer     FALSE)
+          (ligma-item-set-visible source-layer FALSE)
+          (ligma-item-set-visible bg-source-layer     FALSE)
 
           ;--- process image horizontal with pixel-speed
           (while (< bl-x (+ source-layer-width bl-width))
-              (set! bl-layer (car (gimp-layer-copy source-layer TRUE)))
+              (set! bl-layer (car (ligma-layer-copy source-layer TRUE)))
               (set! bl-layer-name (string-append "fr-nr"
                                                  (number->string frame-nr 10) ) )
 
-              (gimp-image-insert-layer img bl-layer 0 -2)
-              (gimp-item-set-name bl-layer bl-layer-name)
-              (gimp-item-set-visible bl-layer TRUE)
-              (gimp-layer-set-lock-alpha bl-layer TRUE)
-              (gimp-layer-add-alpha bl-layer)
+              (ligma-image-insert-layer img bl-layer 0 -2)
+              (ligma-item-set-name bl-layer bl-layer-name)
+              (ligma-item-set-visible bl-layer TRUE)
+              (ligma-layer-set-lock-alpha bl-layer TRUE)
+              (ligma-layer-add-alpha bl-layer)
 
               ;--- add an alpha mask for blending and select it
-              (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
-              (set! bl-mask (car (gimp-layer-create-mask bl-layer ADD-MASK-BLACK)))
-              (gimp-layer-add-mask bl-layer bl-mask)
+              (ligma-image-select-item img CHANNEL-OP-REPLACE bl-layer)
+              (set! bl-mask (car (ligma-layer-create-mask bl-layer ADD-MASK-BLACK)))
+              (ligma-layer-add-mask bl-layer bl-mask)
 
               ;--- handle layer geometry
               (set! bl-layer-width source-layer-width)
-              (set! bl-height      (car (gimp-drawable-get-height bl-layer)))
+              (set! bl-height      (car (ligma-drawable-get-height bl-layer)))
               (set! bl-x-off (- bl-x     bl-width))
-              (set! bl-x-off (+ bl-x-off (car  (gimp-drawable-get-offsets bl-layer))))
-              (set! bl-y-off             (cadr (gimp-drawable-get-offsets bl-layer)))
+              (set! bl-x-off (+ bl-x-off (car  (ligma-drawable-get-offsets bl-layer))))
+              (set! bl-y-off             (cadr (ligma-drawable-get-offsets bl-layer)))
 
               ;--- select a rectangular area to blend
-              (gimp-image-select-rectangle img CHANNEL-OP-REPLACE bl-x-off bl-y-off bl-width bl-height)
+              (ligma-image-select-rectangle img CHANNEL-OP-REPLACE bl-x-off bl-y-off bl-width bl-height)
               ;--- select at least 1 pixel!
-              (gimp-image-select-rectangle img CHANNEL-OP-ADD bl-x-off bl-y-off (+ bl-width 1) bl-height)
+              (ligma-image-select-rectangle img CHANNEL-OP-ADD bl-x-off bl-y-off (+ bl-width 1) bl-height)
 
               (if (= fadeout FALSE)
                   (begin
-                    (set! nofadeout-bl-x-off (car (gimp-drawable-get-offsets bl-layer)))
+                    (set! nofadeout-bl-x-off (car (ligma-drawable-get-offsets bl-layer)))
                     (set! nofadeout-bl-width (+ nofadeout-bl-x-off bl-x))
                     (set! nofadeout-bl-width (max nofadeout-bl-width 1))
-                    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE
+                    (ligma-image-select-rectangle img CHANNEL-OP-REPLACE
                                                  nofadeout-bl-x-off bl-y-off
                                                  nofadeout-bl-width bl-height)
                   )
               )
 
               ;--- alpha blending text to trans (fadeout)
-              (gimp-context-set-foreground '(255 255 255))
-              (gimp-context-set-background '(  0   0   0))
+              (ligma-context-set-foreground '(255 255 255))
+              (ligma-context-set-background '(  0   0   0))
               (if (= fadeout TRUE)
                   (begin
                     ; blend with 20% offset to get less transparency in the front
-		    (gimp-context-set-gradient-fg-bg-rgb)
-                    (gimp-drawable-edit-gradient-fill bl-mask
+		    (ligma-context-set-gradient-fg-bg-rgb)
+                    (ligma-drawable-edit-gradient-fill bl-mask
 						      GRADIENT-LINEAR 20
 						      FALSE 0 0
 						      TRUE
@@ -127,25 +127,25 @@
 
               (if (= fadeout FALSE)
                   (begin
-                    (gimp-context-set-foreground '(255 255 255))
-                    (gimp-drawable-edit-fill bl-mask FILL-FOREGROUND)
+                    (ligma-context-set-foreground '(255 255 255))
+                    (ligma-drawable-edit-fill bl-mask FILL-FOREGROUND)
                   )
               )
 
-              (gimp-layer-remove-mask bl-layer MASK-APPLY)
+              (ligma-layer-remove-mask bl-layer MASK-APPLY)
 
               ;--- add bright glow in front
               (if (= show-glow TRUE)
                   (begin
                     ;--- add some brightness to whole text
                     (if (= fadeout TRUE)
-                        (gimp-drawable-brightness-contrast bl-layer 0.787 0)
+                        (ligma-drawable-brightness-contrast bl-layer 0.787 0)
                     )
 
 		    ;--- blend glow color inside the letters
-		    (gimp-context-set-foreground glow-color)
-		    (gimp-context-set-gradient-fg-transparent)
-		    (gimp-drawable-edit-gradient-fill bl-layer
+		    (ligma-context-set-foreground glow-color)
+		    (ligma-context-set-gradient-fg-transparent)
+		    (ligma-drawable-edit-gradient-fill bl-layer
 						      GRADIENT-LINEAR 0
 						      FALSE 0 0
 						      TRUE
@@ -153,13 +153,13 @@
 						      (- (+ bl-x-off bl-width) after-glow) 0)
 
                     ;--- add corona effect
-		    (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
-		    (gimp-selection-sharpen img)
-		    (gimp-selection-grow img corona-width)
-		    (gimp-layer-set-lock-alpha bl-layer FALSE)
-		    (gimp-selection-feather img corona-width)
-		    (gimp-context-set-foreground glow-color)
-		    (gimp-drawable-edit-gradient-fill bl-layer
+		    (ligma-image-select-item img CHANNEL-OP-REPLACE bl-layer)
+		    (ligma-selection-sharpen img)
+		    (ligma-selection-grow img corona-width)
+		    (ligma-layer-set-lock-alpha bl-layer FALSE)
+		    (ligma-selection-feather img corona-width)
+		    (ligma-context-set-foreground glow-color)
+		    (ligma-drawable-edit-gradient-fill bl-layer
 						      GRADIENT-LINEAR 0
 						      FALSE 0 0
 						      TRUE
@@ -169,17 +169,17 @@
 		  )
 
               ;--- merge with bg layer
-              (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
-              (gimp-image-insert-layer img bg-layer 0 -1)
-              (gimp-image-lower-item img bg-layer)
+              (set! bg-layer (car (ligma-layer-copy bg-source-layer FALSE)))
+              (ligma-image-insert-layer img bg-layer 0 -1)
+              (ligma-image-lower-item img bg-layer)
               (set! bg-layer-name (string-append "bg-"
                                                  (number->string frame-nr 10)))
-              (gimp-item-set-name bg-layer bg-layer-name)
-              (gimp-item-set-visible bg-layer TRUE)
-              (set! blended-layer (car (gimp-image-merge-visible-layers img
+              (ligma-item-set-name bg-layer bg-layer-name)
+              (ligma-item-set-visible bg-layer TRUE)
+              (set! blended-layer (car (ligma-image-merge-visible-layers img
                                         CLIP-TO-IMAGE)))
               ;(set! blended-layer bl-layer)
-              (gimp-item-set-visible blended-layer FALSE)
+              (ligma-item-set-visible blended-layer FALSE)
 
               ;--- end of "while" loop
               (set! frame-nr (+ frame-nr 1))
@@ -187,34 +187,34 @@
           )
 
           ;--- finalize the job
-          (gimp-selection-none img)
-          (gimp-image-remove-layer img    source-layer)
-          (gimp-image-remove-layer img bg-source-layer)
+          (ligma-selection-none img)
+          (ligma-image-remove-layer img    source-layer)
+          (ligma-image-remove-layer img bg-source-layer)
 
-          (gimp-image-set-filename img "burn-in")
+          (ligma-image-set-filename img "burn-in")
 
           (if (= optimize TRUE)
               (begin
-                (gimp-image-convert-indexed img CONVERT-DITHER-FS CONVERT-PALETTE-WEB 250 FALSE TRUE "")
+                (ligma-image-convert-indexed img CONVERT-DITHER-FS CONVERT-PALETTE-WEB 250 FALSE TRUE "")
                 (set! img (car (plug-in-animationoptimize RUN-NONINTERACTIVE
                                                           img
                                                           blended-layer)))
               )
           )
 
-          (gimp-item-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
+          (ligma-item-set-visible (aref (cadr (ligma-image-get-layers img)) 0)
                                   TRUE)
-          (gimp-image-undo-enable img)
-          (gimp-image-clean-all img)
-          (set! img-display (car (gimp-display-new img)))
+          (ligma-image-undo-enable img)
+          (ligma-image-clean-all img)
+          (set! img-display (car (ligma-display-new img)))
 
-          (gimp-displays-flush)
+          (ligma-displays-flush)
 
-          (gimp-context-pop)
+          (ligma-context-pop)
         )
 
         ;--- false form of "if-1"
-        (gimp-message _"The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer.")
+        (ligma-message _"The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer.")
     )
   )
 )

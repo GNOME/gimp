@@ -1,4 +1,4 @@
-# Finnish translation of libgimp
+# Finnish translation of libligma
 # Copyright (C) 1999-2008 Free Software Foundation, Inc.
 #
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 2000
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: libligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-05-05 13:05+0000\n"
 "PO-Revision-Date: 2022-06-08 19:53+0300\n"
 "Last-Translator: Juhani Numminen <juhaninumminen0@gmail.com>\n"
@@ -23,111 +23,111 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1265
+#: ../libligma/ligma.c:1265
 msgid "success"
 msgstr "onnistui"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1269
+#: ../libligma/ligma.c:1269
 msgid "execution error"
 msgstr "suoritusvirhe"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1273
+#: ../libligma/ligma.c:1273
 msgid "calling error"
 msgstr "kutsuvirhe"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1277
+#: ../libligma/ligma.c:1277
 msgid "cancelled"
 msgstr "peruttu"
 
-#: ../libgimp/gimpbrushselectbutton.c:179
+#: ../libligma/ligmabrushselectbutton.c:179
 msgid "Brush Selection"
 msgstr "Siveltimen valinta"
 
-#: ../libgimp/gimpbrushselectbutton.c:920
-#: ../libgimp/gimppatternselectbutton.c:718
+#: ../libligma/ligmabrushselectbutton.c:920
+#: ../libligma/ligmapatternselectbutton.c:718
 msgid "_Browse..."
 msgstr "_Selaa..."
 
-#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
+#: ../libligma/ligmaexport.c:295 ../libligma/ligmaexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s-liitännäinen ei voi käsitellä tasoja"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
-#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
+#: ../libligma/ligmaexport.c:296 ../libligma/ligmaexport.c:305
+#: ../libligma/ligmaexport.c:314 ../libligma/ligmaexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Yhdistä näkyvät tasot"
 
-#: ../libgimp/gimpexport.c:304
+#: ../libligma/ligmaexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "%s-liitännäinen ei voi käsitellä tason siirtymiä, kokoa tai läpinäkyvyyttä"
 
-#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
+#: ../libligma/ligmaexport.c:313 ../libligma/ligmaexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s-liitännäinen voi käsitellä tasoja ainoastaan animaation ruutuina"
 
-#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
+#: ../libligma/ligmaexport.c:314 ../libligma/ligmaexport.c:323
 msgid "Save as Animation"
 msgstr "Tallenna animaationa"
 
-#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
-#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
+#: ../libligma/ligmaexport.c:323 ../libligma/ligmaexport.c:332
+#: ../libligma/ligmaexport.c:341 ../libligma/ligmaexport.c:350
 msgid "Flatten Image"
 msgstr "Yhdistä kuva"
 
-#: ../libgimp/gimpexport.c:340
+#: ../libligma/ligmaexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s-liitännäinen ei voi käsitellä läpinäkyvyyttä"
 
-#: ../libgimp/gimpexport.c:349
+#: ../libligma/ligmaexport.c:349
 #, fuzzy, c-format
 #| msgid "%s plug-in can't handle transparency"
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s-liitännäinen ei voi käsitellä läpinäkyvyyttä"
 
-#: ../libgimp/gimpexport.c:358
+#: ../libligma/ligmaexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s-liitännäinen ei voi käsitellä tasomaskeja"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libligma/ligmaexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Sovella tason maskeja"
 
-#: ../libgimp/gimpexport.c:367
+#: ../libligma/ligmaexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s-liitännäinen voi käsitellä ainoastaan RGB-kuvia"
 
-#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
-#: ../libgimp/gimpexport.c:415
+#: ../libligma/ligmaexport.c:368 ../libligma/ligmaexport.c:406
+#: ../libligma/ligmaexport.c:415
 msgid "Convert to RGB"
 msgstr "Muunna täysvärikuvaksi"
 
-#: ../libgimp/gimpexport.c:376
+#: ../libligma/ligmaexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s-liitännäinen voi käsitellä ainoastaan harmaasävykuvia"
 
-#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
-#: ../libgimp/gimpexport.c:427
+#: ../libligma/ligmaexport.c:377 ../libligma/ligmaexport.c:406
+#: ../libligma/ligmaexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Muunna harmaasävyiksi"
 
-#: ../libgimp/gimpexport.c:385
+#: ../libligma/ligmaexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s-liitännäinen voi käsitellä ainoastaan indeksoituja kuvia"
 
-#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
-#: ../libgimp/gimpexport.c:425
+#: ../libligma/ligmaexport.c:386 ../libligma/ligmaexport.c:415
+#: ../libligma/ligmaexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -135,13 +135,13 @@ msgstr ""
 "Muunna indeksoiduksi käyttäen oletusasetuksia\n"
 "(Tee käsin jos haluat käyttää muita kuin oletuksia)"
 
-#: ../libgimp/gimpexport.c:395
+#: ../libligma/ligmaexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s-liitännäinen voi käsitellä ainoastaan kaksivärisiä indeksoituja kuvia"
 
-#: ../libgimp/gimpexport.c:396
+#: ../libligma/ligmaexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -149,77 +149,77 @@ msgstr ""
 "Muunna indeksoiduksi käyttäen oletusasetuksia\n"
 "(Tee käsin jos haluat säätää tulosta)"
 
-#: ../libgimp/gimpexport.c:405
+#: ../libligma/ligmaexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s-liitännäinen voi käsitellä ainoastaan RGB- tai harmaasävykuvia"
 
-#: ../libgimp/gimpexport.c:414
+#: ../libligma/ligmaexport.c:414
 #, fuzzy, c-format
 #| msgid "%s plug-in  can only handle RGB or indexed images"
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s-liitännäinen voi käsitellä ainoastaan RGB- tai indeksoituja kuvia"
 
-#: ../libgimp/gimpexport.c:424
+#: ../libligma/ligmaexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s-liitännäinen voi käsitellä ainoastaan harmaasävy- tai indeksoituja kuvia"
 
-#: ../libgimp/gimpexport.c:435
+#: ../libligma/ligmaexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s-liitännäinen vaatii kuvan alfakanavan"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libligma/ligmaexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Lisää alfakanava"
 
-#: ../libgimp/gimpexport.c:444
+#: ../libligma/ligmaexport.c:444
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:445
+#: ../libligma/ligmaexport.c:445
 msgid "Crop Layers"
 msgstr "Rajaa tasot"
 
-#: ../libgimp/gimpexport.c:445
+#: ../libligma/ligmaexport.c:445
 msgid "Resize Image to Layers"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:504
+#: ../libligma/ligmaexport.c:504
 msgid "Confirm Save"
 msgstr "Vahvista tallennus"
 
-#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
-#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
-#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
-#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
+#: ../libligma/ligmaexport.c:509 ../libligma/ligmaexport.c:591
+#: ../libligma/ligmaexport.c:1125 ../libligmawidgets/ligmacolorbutton.c:549
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:172
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:182
+#: ../libligmawidgets/ligmafileentry.c:435 ../libligmawidgets/ligmaquerybox.c:275
+#: ../libligmawidgets/ligmaquerybox.c:335 ../libligmawidgets/ligmaquerybox.c:399
+#: ../libligmawidgets/ligmaquerybox.c:473 ../libligmawidgets/ligmaunitmenu.c:492
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: ../libgimp/gimpexport.c:510
+#: ../libligma/ligmaexport.c:510
 msgid "C_onfirm"
 msgstr "V_ahvista"
 
-#: ../libgimp/gimpexport.c:586
+#: ../libligma/ligmaexport.c:586
 msgid "Export File"
 msgstr "Tiedoston vienti"
 
-#: ../libgimp/gimpexport.c:590
+#: ../libligma/ligmaexport.c:590
 msgid "_Ignore"
 msgstr "_Ohita"
 
-#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
+#: ../libligma/ligmaexport.c:592 ../libligma/ligmaexport.c:1126
 msgid "_Export"
 msgstr "_Vie"
 
 #. the headline
-#: ../libgimp/gimpexport.c:622
+#: ../libligma/ligmaexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -227,11 +227,11 @@ msgid ""
 msgstr "Kuvaasi pitää muokata muotoon %s tallennusta varten:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:696
+#: ../libligma/ligmaexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "Muokkaus ei vaikuta alkuperäiseen kuvaan."
 
-#: ../libgimp/gimpexport.c:800
+#: ../libligma/ligmaexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -240,7 +240,7 @@ msgstr ""
 "Olet tallentamassa tason maskia nimellä %s.\n"
 "Tämä ei tallenna näkyviä tasoja."
 
-#: ../libgimp/gimpexport.c:806
+#: ../libligma/ligmaexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -250,591 +250,591 @@ msgstr ""
 "Tämä ei tallenna näkyviä tasoja."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1119
+#: ../libligma/ligmaexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Vie kuva muodossa %s"
 
-#: ../libgimp/gimpfontselectbutton.c:139
+#: ../libligma/ligmafontselectbutton.c:139
 msgid "Font Selection"
 msgstr "Kirjasimen valinta"
 
-#: ../libgimp/gimpgradientselectbutton.c:158
+#: ../libligma/ligmagradientselectbutton.c:158
 msgid "Gradient Selection"
 msgstr "Liukuvärin valinta"
 
-#: ../libgimp/gimpimagemetadata.c:687
-msgid "GIMP 2.10"
-msgstr "GIMP 2.10"
+#: ../libligma/ligmaimagemetadata.c:687
+msgid "LIGMA 2.10"
+msgstr "LIGMA 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:878
+#: ../libligma/ligmaimagemetadata.c:878
 msgid "Background"
 msgstr "Taustaväri"
 
-#: ../libgimp/gimpimagemetadata.c:1067
+#: ../libligma/ligmaimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "Kierrä %s?"
 
-#: ../libgimp/gimpimagemetadata.c:1073
+#: ../libligma/ligmaimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "Säilytä al_kuperäinen"
 
-#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
+#: ../libligma/ligmaimagemetadata.c:1074 ../libligmawidgets/ligmaicons.c:271
 msgid "_Rotate"
 msgstr "_Kierrä"
 
-#: ../libgimp/gimpimagemetadata.c:1115
+#: ../libligma/ligmaimagemetadata.c:1115
 msgid "Original"
 msgstr "Alkuperäinen"
 
-#: ../libgimp/gimpimagemetadata.c:1131
+#: ../libligma/ligmaimagemetadata.c:1131
 msgid "Rotated"
 msgstr "Kierretty"
 
-#: ../libgimp/gimpimagemetadata.c:1149
+#: ../libligma/ligmaimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Tämä kuva sisältää Exif-metadatan suuntatiedot."
 
-#: ../libgimp/gimpimagemetadata.c:1167
+#: ../libligma/ligmaimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
 msgstr "Haluatko kääntää kuvan?"
 
-#: ../libgimp/gimpimagemetadata.c:1179
+#: ../libligma/ligmaimagemetadata.c:1179
 msgid "_Don't ask me again"
 msgstr "_Älä kysy uudelleen"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:252
+#: ../libligma/ligmamenu.c:462 ../libligmawidgets/ligmaintstore.c:252
 msgid "(Empty)"
 msgstr "(tyhjä)"
 
-#: ../libgimp/gimppaletteselectbutton.c:139
+#: ../libligma/ligmapaletteselectbutton.c:139
 msgid "Palette Selection"
 msgstr "Paletin valinta"
 
-#: ../libgimp/gimppatternselectbutton.c:165
+#: ../libligma/ligmapatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Kuvion valinta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: ../libligma/ligmaprocbrowserdialog.c:150
 msgid "by name"
 msgstr "nimen mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libligma/ligmaprocbrowserdialog.c:151
 msgid "by description"
 msgstr "kuvauksen mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libligma/ligmaprocbrowserdialog.c:152
 msgid "by help"
 msgstr "ohjeen mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
+#: ../libligma/ligmaprocbrowserdialog.c:153
 msgid "by author"
 msgstr "tekijän mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libligma/ligmaprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "tekijänoikeuksien mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libligma/ligmaprocbrowserdialog.c:155
 msgid "by date"
 msgstr "päivämäärän mukaan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: ../libligma/ligmaprocbrowserdialog.c:156
 msgid "by type"
 msgstr "tyypin mukaan"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
+#: ../libligma/ligmaprocbrowserdialog.c:395
+#: ../libligma/ligmaprocbrowserdialog.c:544 ../libligmawidgets/ligmabrowser.c:141
 msgid "No matches"
 msgstr "Ei osumia"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
+#: ../libligma/ligmaprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
 msgstr "Hakuehto ei kelpaa tai on vajaa"
 
-#: ../libgimp/gimpprocbrowserdialog.c:407
+#: ../libligma/ligmaprocbrowserdialog.c:407
 msgid "Searching"
 msgstr "Etsitään"
 
-#: ../libgimp/gimpprocbrowserdialog.c:418
+#: ../libligma/ligmaprocbrowserdialog.c:418
 msgid "Searching by name"
 msgstr "Haku nimen perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
+#: ../libligma/ligmaprocbrowserdialog.c:439
 msgid "Searching by description"
 msgstr "Haku kuvauksen perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: ../libligma/ligmaprocbrowserdialog.c:446
 msgid "Searching by help"
 msgstr "Haku ohjeen perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:453
+#: ../libligma/ligmaprocbrowserdialog.c:453
 msgid "Searching by author"
 msgstr "Haku tekijän perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:460
+#: ../libligma/ligmaprocbrowserdialog.c:460
 msgid "Searching by copyright"
 msgstr "Haku tekijänoikeuksien perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libligma/ligmaprocbrowserdialog.c:467
 msgid "Searching by date"
 msgstr "Haku päiväyksen perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libligma/ligmaprocbrowserdialog.c:474
 msgid "Searching by type"
 msgstr "Haku tyypin perusteella"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libligma/ligmaprocbrowserdialog.c:484
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d proseduuri"
 msgstr[1] "%d proseduuria"
 
-#: ../libgimp/gimpprocbrowserdialog.c:493
+#: ../libligma/ligmaprocbrowserdialog.c:493
 msgid "No matches for your query"
 msgstr "Haku ei tuottanut tuloksia"
 
-#: ../libgimp/gimpprocbrowserdialog.c:497
+#: ../libligma/ligmaprocbrowserdialog.c:497
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d proseduuri vastaa hakua"
 msgstr[1] "%d proseduuria vastaa hakua"
 
-#: ../libgimp/gimpprocview.c:173
+#: ../libligma/ligmaprocview.c:173
 msgid "Parameters"
 msgstr "Parametrit"
 
-#: ../libgimp/gimpprocview.c:186
+#: ../libligma/ligmaprocview.c:186
 msgid "Return Values"
 msgstr "Paluuarvot"
 
-#: ../libgimp/gimpprocview.c:199
+#: ../libligma/ligmaprocview.c:199
 msgid "Additional Information"
 msgstr "Lisätiedot"
 
-#: ../libgimp/gimpprocview.c:240
+#: ../libligma/ligmaprocview.c:240
 msgid "Author:"
 msgstr "Tekijä:"
 
-#: ../libgimp/gimpprocview.c:253
+#: ../libligma/ligmaprocview.c:253
 msgid "Date:"
 msgstr "Päivämäärä:"
 
-#: ../libgimp/gimpprocview.c:266
+#: ../libligma/ligmaprocview.c:266
 msgid "Copyright:"
 msgstr "Tekijänoikeudet:"
 
-#: ../libgimp/gimpunitcache.c:54
+#: ../libligma/ligmaunitcache.c:54
 msgid "percent"
 msgstr "prosenttia"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Valkoinen (täysin peittävä)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Musta (täysin läpinäkyvä)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Tason _alfakanava"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Siirrä tason alfakanava"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Valinta"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "_Harmaasävykopio tasosta"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libligmabase/ligmabaseenums.c:34
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Kanava"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "Edustaväristä taustaväriin (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "Edustaväristä taustaväriin (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:67
+#: ../libligmabase/ligmabaseenums.c:67
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "Edustaväristä läpinäkyvään"
 
-#: ../libgimpbase/gimpbaseenums.c:68
+#: ../libligmabase/ligmabaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "Oma väriliuku"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libligmabase/ligmabaseenums.c:98
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Ympyrä"
 
-#: ../libgimpbase/gimpbaseenums.c:99
+#: ../libligmabase/ligmabaseenums.c:99
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Neliö"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: ../libligmabase/ligmabaseenums.c:100
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Timantti"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libligmabase/ligmabaseenums.c:130
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "Täyttö edustavärillä"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libligmabase/ligmabaseenums.c:131
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "Täyttö taustavärillä"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libligmabase/ligmabaseenums.c:132
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Täyttö kuviolla"
 
-#: ../libgimpbase/gimpbaseenums.c:162
+#: ../libligmabase/ligmabaseenums.c:162
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Nappi"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libligmabase/ligmabaseenums.c:163
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Pyöreä"
 
-#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libligmabase/ligmabaseenums.c:164
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Neliömäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libligmabase/ligmabaseenums.c:195
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Lisää valintaan"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libligmabase/ligmabaseenums.c:196
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Vähennä valinnasta"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libligmabase/ligmabaseenums.c:197
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Korvaa valittu alue"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libligmabase/ligmabaseenums.c:198
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Leikkaa valinnan kanssa"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libligmabase/ligmabaseenums.c:231
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Punainen"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libligmabase/ligmabaseenums.c:232
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Vihreä"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libligmabase/ligmabaseenums.c:233
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Sininen"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libligmabase/ligmabaseenums.c:234
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Harmaa"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libligmabase/ligmabaseenums.c:235
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indeksoitu"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libligmabase/ligmabaseenums.c:236
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:266
+#: ../libligmabase/ligmabaseenums.c:266
 msgctxt "check-size"
 msgid "Small"
 msgstr "Pieni"
 
-#: ../libgimpbase/gimpbaseenums.c:267
+#: ../libligmabase/ligmabaseenums.c:267
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Keskikokoinen"
 
-#: ../libgimpbase/gimpbaseenums.c:268
+#: ../libligmabase/ligmabaseenums.c:268
 msgctxt "check-size"
 msgid "Large"
 msgstr "Suuri"
 
-#: ../libgimpbase/gimpbaseenums.c:301
+#: ../libligmabase/ligmabaseenums.c:301
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Vaaleat ruudut"
 
-#: ../libgimpbase/gimpbaseenums.c:302
+#: ../libligmabase/ligmabaseenums.c:302
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Keskisävyiset ruudut"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libligmabase/ligmabaseenums.c:303
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tummat ruudut"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libligmabase/ligmabaseenums.c:304
 msgctxt "check-type"
 msgid "White only"
 msgstr "Vain valkoinen"
 
-#: ../libgimpbase/gimpbaseenums.c:305
+#: ../libligmabase/ligmabaseenums.c:305
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Vain harmaa"
 
-#: ../libgimpbase/gimpbaseenums.c:306
+#: ../libligmabase/ligmabaseenums.c:306
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Vain musta"
 
-#: ../libgimpbase/gimpbaseenums.c:335
+#: ../libligmabase/ligmabaseenums.c:335
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Kuva"
 
-#: ../libgimpbase/gimpbaseenums.c:336
+#: ../libligmabase/ligmabaseenums.c:336
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Kuvio"
 
-#: ../libgimpbase/gimpbaseenums.c:372
+#: ../libligmabase/ligmabaseenums.c:372
 msgctxt "color-tag"
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../libgimpbase/gimpbaseenums.c:373
+#: ../libligmabase/ligmabaseenums.c:373
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Sininen"
 
-#: ../libgimpbase/gimpbaseenums.c:374
+#: ../libligmabase/ligmabaseenums.c:374
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Vihreä"
 
-#: ../libgimpbase/gimpbaseenums.c:375
+#: ../libligmabase/ligmabaseenums.c:375
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Keltainen"
 
-#: ../libgimpbase/gimpbaseenums.c:376
+#: ../libligmabase/ligmabaseenums.c:376
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Oranssi"
 
-#: ../libgimpbase/gimpbaseenums.c:377
+#: ../libligmabase/ligmabaseenums.c:377
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Ruskea"
 
-#: ../libgimpbase/gimpbaseenums.c:378
+#: ../libligmabase/ligmabaseenums.c:378
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Punainen"
 
-#: ../libgimpbase/gimpbaseenums.c:379
+#: ../libligmabase/ligmabaseenums.c:379
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Violetti"
 
-#: ../libgimpbase/gimpbaseenums.c:380
+#: ../libligmabase/ligmabaseenums.c:380
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Harmaa"
 
-#: ../libgimpbase/gimpbaseenums.c:413
+#: ../libligmabase/ligmabaseenums.c:413
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8-bittinen kokonaisluku"
 
-#: ../libgimpbase/gimpbaseenums.c:414
+#: ../libligmabase/ligmabaseenums.c:414
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16-bittinen kokonaisluku"
 
-#: ../libgimpbase/gimpbaseenums.c:415
+#: ../libligmabase/ligmabaseenums.c:415
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32-bittinen kokonaisluku"
 
-#: ../libgimpbase/gimpbaseenums.c:416
+#: ../libligmabase/ligmabaseenums.c:416
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:417
+#: ../libligmabase/ligmabaseenums.c:417
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:418
+#: ../libligmabase/ligmabaseenums.c:418
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:449
+#: ../libligmabase/ligmabaseenums.c:449
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Luo optimoitu paletti"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: ../libligmabase/ligmabaseenums.c:450
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Käytä web-optimoitua palettia"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: ../libligmabase/ligmabaseenums.c:451
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Käytä mustavalkoista (1-bit) palettia"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: ../libligmabase/ligmabaseenums.c:452
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Käytä mukautettua palettia"
 
-#: ../libgimpbase/gimpbaseenums.c:481
+#: ../libligmabase/ligmabaseenums.c:481
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:482
+#: ../libligmabase/ligmabaseenums.c:482
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:514
+#: ../libligmabase/ligmabaseenums.c:514
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Valoisuus (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:515
+#: ../libligmabase/ligmabaseenums.c:515
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: ../libligmabase/ligmabaseenums.c:516
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: ../libligmabase/ligmabaseenums.c:517
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: ../libligmabase/ligmabaseenums.c:518
 #, fuzzy
 #| msgid "Value"
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Arvo"
 
-#: ../libgimpbase/gimpbaseenums.c:547
+#: ../libligmabase/ligmabaseenums.c:547
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Värivalotus"
 
-#: ../libgimpbase/gimpbaseenums.c:548
+#: ../libligmabase/ligmabaseenums.c:548
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Värivarjostus"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libligmabase/ligmabaseenums.c:580
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Edustaväri"
 
-#: ../libgimpbase/gimpbaseenums.c:581
+#: ../libligmabase/ligmabaseenums.c:581
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Taustaväri"
 
-#: ../libgimpbase/gimpbaseenums.c:582
+#: ../libligmabase/ligmabaseenums.c:582
 msgctxt "fill-type"
 msgid "White"
 msgstr "Valkoinen"
 
-#: ../libgimpbase/gimpbaseenums.c:583
+#: ../libligmabase/ligmabaseenums.c:583
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Läpinäkyvyys"
 
-#: ../libgimpbase/gimpbaseenums.c:584
+#: ../libligmabase/ligmabaseenums.c:584
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Kuvio"
 
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libligmabase/ligmabaseenums.c:644
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Aistinmukainen RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:645
+#: ../libligmabase/ligmabaseenums.c:645
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Lineaarinen RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: ../libligmabase/ligmabaseenums.c:646
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libligmabase/ligmabaseenums.c:676
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:677
+#: ../libligmabase/ligmabaseenums.c:677
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:680
+#: ../libligmabase/ligmabaseenums.c:680
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (ccw)"
@@ -842,14 +842,14 @@ msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "Spiraali (vastapäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libligmabase/ligmabaseenums.c:681
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libligmabase/ligmabaseenums.c:684
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
@@ -857,7 +857,7 @@ msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "Spiraali (myötäpäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:717
+#: ../libligmabase/ligmabaseenums.c:717
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Linear"
@@ -865,24 +865,24 @@ msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: ../libgimpbase/gimpbaseenums.c:718
+#: ../libligmabase/ligmabaseenums.c:718
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:719
+#: ../libligmabase/ligmabaseenums.c:719
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:720
+#: ../libligmabase/ligmabaseenums.c:720
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:723
+#: ../libligmabase/ligmabaseenums.c:723
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
@@ -890,14 +890,14 @@ msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Spiraali (myötäpäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:724
+#: ../libligmabase/ligmabaseenums.c:724
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr ""
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:727
+#: ../libligmabase/ligmabaseenums.c:727
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
@@ -905,32 +905,32 @@ msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Spiraali (myötäpäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:728
+#: ../libligmabase/ligmabaseenums.c:728
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:766
+#: ../libligmabase/ligmabaseenums.c:766
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: ../libgimpbase/gimpbaseenums.c:767
+#: ../libligmabase/ligmabaseenums.c:767
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bilineaarinen"
 
-#: ../libgimpbase/gimpbaseenums.c:768
+#: ../libligmabase/ligmabaseenums.c:768
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Säteittäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:769
+#: ../libligmabase/ligmabaseenums.c:769
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Neliömäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:770
+#: ../libligmabase/ligmabaseenums.c:770
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Conical (sym)"
@@ -940,12 +940,12 @@ msgstr "Kartiomainen (symmetrinen)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:773
+#: ../libligmabase/ligmabaseenums.c:773
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Kartiomainen (symmetrinen)"
 
-#: ../libgimpbase/gimpbaseenums.c:774
+#: ../libligmabase/ligmabaseenums.c:774
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Conical (asym)"
@@ -955,27 +955,27 @@ msgstr "Kartiomainen (epäsymmetrinen)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libligmabase/ligmabaseenums.c:777
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Kartiomainen (epäsymmetrinen)"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libligmabase/ligmabaseenums.c:778
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Muotopurske (kulma)"
 
-#: ../libgimpbase/gimpbaseenums.c:779
+#: ../libligmabase/ligmabaseenums.c:779
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Muotopurske (pallo)"
 
-#: ../libgimpbase/gimpbaseenums.c:780
+#: ../libligmabase/ligmabaseenums.c:780
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Muotopurske (näppyläinen)"
 
-#: ../libgimpbase/gimpbaseenums.c:781
+#: ../libligmabase/ligmabaseenums.c:781
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (ccw)"
@@ -985,12 +985,12 @@ msgstr "Spiraali (vastapäivään)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:784
+#: ../libligmabase/ligmabaseenums.c:784
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spiraali (myötäpäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:785
+#: ../libligmabase/ligmabaseenums.c:785
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Spiral (ccw)"
@@ -1000,104 +1000,104 @@ msgstr "Spiraali (vastapäivään)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:788
+#: ../libligmabase/ligmabaseenums.c:788
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spiraali (vastapäivään)"
 
-#: ../libgimpbase/gimpbaseenums.c:820
+#: ../libligmabase/ligmabaseenums.c:820
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Leikkaukset (pisteet)"
 
-#: ../libgimpbase/gimpbaseenums.c:821
+#: ../libligmabase/ligmabaseenums.c:821
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Leikkaukset (ristikot)"
 
-#: ../libgimpbase/gimpbaseenums.c:822
+#: ../libligmabase/ligmabaseenums.c:822
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Katkoviiva"
 
-#: ../libgimpbase/gimpbaseenums.c:823
+#: ../libligmabase/ligmabaseenums.c:823
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Kaksoiskatkoviiva"
 
-#: ../libgimpbase/gimpbaseenums.c:824
+#: ../libligmabase/ligmabaseenums.c:824
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Yhtenäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: ../libligmabase/ligmabaseenums.c:894
 #, fuzzy
 #| msgid "by name"
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "nimen mukaan"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libligmabase/ligmabaseenums.c:895
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Sisäkkäinen pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libligmabase/ligmabaseenums.c:896
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Kuvatiedosto"
 
-#: ../libgimpbase/gimpbaseenums.c:926
+#: ../libligmabase/ligmabaseenums.c:926
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB-väri"
 
-#: ../libgimpbase/gimpbaseenums.c:927
+#: ../libligmabase/ligmabaseenums.c:927
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Harmaasävy"
 
-#: ../libgimpbase/gimpbaseenums.c:928
+#: ../libligmabase/ligmabaseenums.c:928
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indeksoitu paletti"
 
-#: ../libgimpbase/gimpbaseenums.c:961
+#: ../libligmabase/ligmabaseenums.c:961
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:962
+#: ../libligmabase/ligmabaseenums.c:962
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB+alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:963
+#: ../libligmabase/ligmabaseenums.c:963
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Harmaasävy"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: ../libligmabase/ligmabaseenums.c:964
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Harmaasävy+alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: ../libligmabase/ligmabaseenums.c:965
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indeksoitu"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: ../libligmabase/ligmabaseenums.c:966
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indeksoitu+alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:996
+#: ../libligmabase/ligmabaseenums.c:996
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:997
+#: ../libligmabase/ligmabaseenums.c:997
 #, fuzzy
 #| msgctxt "gradient-type"
 #| msgid "Square"
@@ -1105,67 +1105,67 @@ msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Neliömäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: ../libligmabase/ligmabaseenums.c:998
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1030
+#: ../libligmabase/ligmabaseenums.c:1030
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../libgimpbase/gimpbaseenums.c:1031
+#: ../libligmabase/ligmabaseenums.c:1031
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: ../libgimpbase/gimpbaseenums.c:1032
+#: ../libligmabase/ligmabaseenums.c:1032
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kuutiollinen"
 
-#: ../libgimpbase/gimpbaseenums.c:1033
+#: ../libligmabase/ligmabaseenums.c:1033
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1034
+#: ../libligmabase/ligmabaseenums.c:1034
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1064
+#: ../libligmabase/ligmabaseenums.c:1064
 msgctxt "join-style"
 msgid "Miter"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1065
+#: ../libligmabase/ligmabaseenums.c:1065
 msgctxt "join-style"
 msgid "Round"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1066
+#: ../libligmabase/ligmabaseenums.c:1066
 msgctxt "join-style"
 msgid "Bevel"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1127
+#: ../libligmabase/ligmabaseenums.c:1127
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1128
+#: ../libligmabase/ligmabaseenums.c:1128
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1129
+#: ../libligmabase/ligmabaseenums.c:1129
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1130
+#: ../libligmabase/ligmabaseenums.c:1130
 #, fuzzy
 #| msgctxt "clone-type"
 #| msgid "Pattern"
@@ -1173,197 +1173,197 @@ msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Kuvio"
 
-#: ../libgimpbase/gimpbaseenums.c:1224
+#: ../libligmabase/ligmabaseenums.c:1224
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1225
+#: ../libligmabase/ligmabaseenums.c:1225
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1226
+#: ../libligmabase/ligmabaseenums.c:1226
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: ../libgimpbase/gimpbaseenums.c:1255
+#: ../libligmabase/ligmabaseenums.c:1255
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Vakio"
 
-#: ../libgimpbase/gimpbaseenums.c:1256
+#: ../libligmabase/ligmabaseenums.c:1256
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Inkrementaalinen"
 
-#: ../libgimpbase/gimpbaseenums.c:1389
+#: ../libligmabase/ligmabaseenums.c:1389
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
-msgstr "Sisäinen GIMP-proseduuri"
+msgid "Internal LIGMA procedure"
+msgstr "Sisäinen LIGMA-proseduuri"
 
-#: ../libgimpbase/gimpbaseenums.c:1390
+#: ../libligmabase/ligmabaseenums.c:1390
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
-msgstr "GIMP-liitännäinen"
+msgid "LIGMA Plug-In"
+msgstr "LIGMA-liitännäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:1391
+#: ../libligmabase/ligmabaseenums.c:1391
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "GIMP-laajennos"
+msgid "LIGMA Extension"
+msgstr "LIGMA-laajennos"
 
-#: ../libgimpbase/gimpbaseenums.c:1392
+#: ../libligmabase/ligmabaseenums.c:1392
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Väliaikainen proseduuri"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: ../libligmabase/ligmabaseenums.c:1467
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: ../libligmabase/ligmabaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libligmabase/ligmabaseenums.c:1469
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libligmabase/ligmabaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libligmabase/ligmabaseenums.c:1471
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libligmabase/ligmabaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1473
+#: ../libligmabase/ligmabaseenums.c:1473
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1474
+#: ../libligmabase/ligmabaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1475
+#: ../libligmabase/ligmabaseenums.c:1475
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: ../libligmabase/ligmabaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1477
+#: ../libligmabase/ligmabaseenums.c:1477
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1478
+#: ../libligmabase/ligmabaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1547
+#: ../libligmabase/ligmabaseenums.c:1547
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1548
+#: ../libligmabase/ligmabaseenums.c:1548
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Sahalaita-aalto"
 
-#: ../libgimpbase/gimpbaseenums.c:1549
+#: ../libligmabase/ligmabaseenums.c:1549
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Kolmioaalto"
 
-#: ../libgimpbase/gimpbaseenums.c:1550
+#: ../libligmabase/ligmabaseenums.c:1550
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: ../libligmabase/ligmabaseenums.c:1612
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Suorita interaktiivisesti"
 
-#: ../libgimpbase/gimpbaseenums.c:1613
+#: ../libligmabase/ligmabaseenums.c:1613
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Suorita taustalla"
 
-#: ../libgimpbase/gimpbaseenums.c:1614
+#: ../libligmabase/ligmabaseenums.c:1614
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Suorita viimeksi käytetyillä arvoilla"
 
-#: ../libgimpbase/gimpbaseenums.c:1652
+#: ../libligmabase/ligmabaseenums.c:1652
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1653
+#: ../libligmabase/ligmabaseenums.c:1653
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Punainen"
 
-#: ../libgimpbase/gimpbaseenums.c:1654
+#: ../libligmabase/ligmabaseenums.c:1654
 #, fuzzy
 #| msgid "Green"
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Vihreä"
 
-#: ../libgimpbase/gimpbaseenums.c:1655
+#: ../libligmabase/ligmabaseenums.c:1655
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Sininen"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
+#: ../libligmabase/ligmabaseenums.c:1656
 #, fuzzy
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Arvo"
 
-#: ../libgimpbase/gimpbaseenums.c:1657
+#: ../libligmabase/ligmabaseenums.c:1657
 #, fuzzy
 #| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Kylläisyys"
 
-#: ../libgimpbase/gimpbaseenums.c:1658
+#: ../libligmabase/ligmabaseenums.c:1658
 #, fuzzy
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Arvo"
 
-#: ../libgimpbase/gimpbaseenums.c:1659
+#: ../libligmabase/ligmabaseenums.c:1659
 #, fuzzy
 #| msgid "Alpha"
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1660
+#: ../libligmabase/ligmabaseenums.c:1660
 #, fuzzy
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
@@ -1371,331 +1371,331 @@ msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Vaaleus"
 
-#: ../libgimpbase/gimpbaseenums.c:1661
+#: ../libligmabase/ligmabaseenums.c:1661
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1662
+#: ../libligmabase/ligmabaseenums.c:1662
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1691
+#: ../libligmabase/ligmabaseenums.c:1691
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Pikseleitä"
 
-#: ../libgimpbase/gimpbaseenums.c:1692
+#: ../libligmabase/ligmabaseenums.c:1692
 msgctxt "size-type"
 msgid "Points"
 msgstr "Pisteitä"
 
-#: ../libgimpbase/gimpbaseenums.c:1753
+#: ../libligmabase/ligmabaseenums.c:1753
 #, fuzzy
 #| msgid "_Stroke"
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "_Piirrä"
 
-#: ../libgimpbase/gimpbaseenums.c:1754
+#: ../libligmabase/ligmabaseenums.c:1754
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1787
+#: ../libligmabase/ligmabaseenums.c:1787
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Vasemmalta oikealle"
 
-#: ../libgimpbase/gimpbaseenums.c:1788
+#: ../libligmabase/ligmabaseenums.c:1788
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Oikealta vasemmalle"
 
-#: ../libgimpbase/gimpbaseenums.c:1789
+#: ../libligmabase/ligmabaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1790
+#: ../libligmabase/ligmabaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1791
+#: ../libligmabase/ligmabaseenums.c:1791
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1792
+#: ../libligmabase/ligmabaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1823
+#: ../libligmabase/ligmabaseenums.c:1823
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../libgimpbase/gimpbaseenums.c:1824
+#: ../libligmabase/ligmabaseenums.c:1824
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Vähäinen"
 
-#: ../libgimpbase/gimpbaseenums.c:1825
+#: ../libligmabase/ligmabaseenums.c:1825
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Keskitaso"
 
-#: ../libgimpbase/gimpbaseenums.c:1826
+#: ../libligmabase/ligmabaseenums.c:1826
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Täysi"
 
-#: ../libgimpbase/gimpbaseenums.c:1857
+#: ../libligmabase/ligmabaseenums.c:1857
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Tasattu vasemmalle"
 
-#: ../libgimpbase/gimpbaseenums.c:1858
+#: ../libligmabase/ligmabaseenums.c:1858
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Tasattu oikealle"
 
-#: ../libgimpbase/gimpbaseenums.c:1859
+#: ../libligmabase/ligmabaseenums.c:1859
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Keskitetty"
 
-#: ../libgimpbase/gimpbaseenums.c:1860
+#: ../libligmabase/ligmabaseenums.c:1860
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Tasaa molemmat"
 
-#: ../libgimpbase/gimpbaseenums.c:1890
+#: ../libligmabase/ligmabaseenums.c:1890
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Varjot"
 
-#: ../libgimpbase/gimpbaseenums.c:1891
+#: ../libligmabase/ligmabaseenums.c:1891
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Keskisävyt"
 
-#: ../libgimpbase/gimpbaseenums.c:1892
+#: ../libligmabase/ligmabaseenums.c:1892
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Kirkkaat kohdat"
 
-#: ../libgimpbase/gimpbaseenums.c:1921
+#: ../libligmabase/ligmabaseenums.c:1921
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Tavallinen (eteenpäin)"
 
-#: ../libgimpbase/gimpbaseenums.c:1922
+#: ../libligmabase/ligmabaseenums.c:1922
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korjaava (taaksepäin)"
 
-#: ../libgimpbase/gimpbaseenums.c:1953
+#: ../libligmabase/ligmabaseenums.c:1953
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Säädä"
 
-#: ../libgimpbase/gimpbaseenums.c:1954
+#: ../libligmabase/ligmabaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Rajaa"
 
-#: ../libgimpbase/gimpbaseenums.c:1955
+#: ../libligmabase/ligmabaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Rajaa tulokseen"
 
-#: ../libgimpbase/gimpbaseenums.c:1956
+#: ../libligmabase/ligmabaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Rajaa kuvasuhteessa"
 
-#: ../libgimpbase/gimpmetadata.c:982
+#: ../libligmabase/ligmametadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1038
+#: ../libligmabase/ligmametadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1086
+#: ../libligmabase/ligmametadata.c:1086
 #, c-format
 msgid "Invalid Exif data size."
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1115
+#: ../libligmabase/ligmametadata.c:1115
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1165
+#: ../libligmabase/ligmametadata.c:1165
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmetadata.c:1213
+#: ../libligmabase/ligmametadata.c:1213
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
+#: ../libligmabase/ligmautils.c:219 ../libligmabase/ligmautils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(kelpaamaton UTF-8 -merkkijono)"
 
-#: ../libgimpbase/gimputils.c:394
+#: ../libligmabase/ligmautils.c:394
 msgid "File path is NULL"
 msgstr "Tiedoston polku on NULL"
 
-#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
+#: ../libligmabase/ligmautils.c:403 ../libligmabase/ligmautils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:422
+#: ../libligmabase/ligmautils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() epäonnistui"
 
-#: ../libgimpbase/gimputils.c:459
+#: ../libligmabase/ligmautils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:487
+#: ../libligmabase/ligmautils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:511
+#: ../libligmabase/ligmautils.c:511
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:258
+#: ../libligmacolor/ligmacolorprofile.c:258
 #, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' ei vaikuta olevan ICC-väriprofiili"
 
-#: ../libgimpcolor/gimpcolorprofile.c:304
+#: ../libligmacolor/ligmacolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Data ei vaikuta olevan ICC-väriprofiili"
 
-#: ../libgimpcolor/gimpcolorprofile.c:361
+#: ../libligmacolor/ligmacolorprofile.c:361
 msgid "Could not save color profile to memory"
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:578
+#: ../libligmacolor/ligmacolorprofile.c:578
 #| msgid "Image profile:"
 msgid "(unnamed profile)"
 msgstr "(nimetön profiili)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:620
+#: ../libligmacolor/ligmacolorprofile.c:620
 #, c-format
 msgid "Model: %s"
 msgstr "Malli: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:629
+#: ../libligmacolor/ligmacolorprofile.c:629
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Valmistaja: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:638
+#: ../libligmacolor/ligmacolorprofile.c:638
 #, c-format
 #| msgid "Copyright:"
 msgid "Copyright: %s"
 msgstr "Tekijänoikeus: %s"
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: ../libligmaconfig/ligmaconfigenums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Ei värihallintaa"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: ../libligmaconfig/ligmaconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Värihallittu näyttö"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: ../libligmaconfig/ligmaconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: ../libligmaconfig/ligmaconfigenums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Havaittu"
 
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: ../libligmaconfig/ligmaconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Suhteellinen värimetriikka"
 
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: ../libligmaconfig/ligmaconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Kylläisyys"
 
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: ../libligmaconfig/ligmaconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absoluuttinen värimetriikka"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libligmaconfig/ligmacolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Ensisijaisen näytön väriprofiili."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libligmaconfig/ligmacolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Jos käytössä, GIMP yrittää käyttää näytön ikkunointijärjestelmän "
+"Jos käytössä, LIGMA yrittää käyttää näytön ikkunointijärjestelmän "
 "väriprofiilia. Määriteltyä näyttöprofiilia käytetään tällöin vain "
 "varavaihtoehtona."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libligmaconfig/ligmacolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:67
+#: ../libligmaconfig/ligmacolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libligmaconfig/ligmacolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "RGB- ja CMYK-värin väliseen konversioon käytetty CMYK-väriprofiili."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libligmaconfig/ligmacolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:79
+#: ../libligmaconfig/ligmacolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1703,34 +1703,34 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: ../libligmaconfig/ligmacolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:90
+#: ../libligmaconfig/ligmacolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:94
+#: ../libligmaconfig/ligmacolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:99
+#: ../libligmaconfig/ligmacolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:103
+#: ../libligmaconfig/ligmacolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:107
+#: ../libligmaconfig/ligmacolorconfig.c:107
 #, fuzzy
 #| msgid ""
 #| "When enabled, the print simulation will mark colors which can not be "
@@ -1742,206 +1742,206 @@ msgstr ""
 "Kun käytössä, tulostussimulointi merkkaa värit, joita ei voi esittää "
 "kohdeväriavaruudessa."
 
-#: ../libgimpconfig/gimpcolorconfig.c:111
+#: ../libligmaconfig/ligmacolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Väri, jota käytetään kirjon ulkopuolisten värien merkitsemiseen."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: ../libligmaconfig/ligmacolorconfig.c:198
 #, fuzzy
 #| msgid "Mode of operation:"
 msgid "Mode of operation"
 msgstr "Toimintatila:"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libligmaconfig/ligmacolorconfig.c:206
 msgid "Preferred RGB profile"
 msgstr "Ensisijainen RGB-profiili"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libligmaconfig/ligmacolorconfig.c:213
 msgid "Preferred grayscale profile"
 msgstr "Ensisijainen harmaasävyprofiili"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: ../libligmaconfig/ligmacolorconfig.c:220
 #| msgid "Monitor profile:"
 msgid "CMYK profile"
 msgstr "CMYK-profiili"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libligmaconfig/ligmacolorconfig.c:227
 #, fuzzy
 #| msgid "Monitor profile:"
 msgid "Monitor profile"
 msgstr "Näytön profiili:"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: ../libligmaconfig/ligmacolorconfig.c:234
 #, fuzzy
 #| msgid "Monitor profile:"
 msgid "Use the system monitor profile"
 msgstr "Näytön profiili:"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: ../libligmaconfig/ligmacolorconfig.c:242
 msgid "Simulation profile for soft-proofing"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: ../libligmaconfig/ligmacolorconfig.c:249
 msgid "Display rendering intent"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libligmaconfig/ligmacolorconfig.c:257
 #, fuzzy
 #| msgid "_Black Point Compensation"
 msgid "Use black point compensation for the display"
 msgstr "_Mustan pisteen kompensaatio"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libligmaconfig/ligmacolorconfig.c:264
 msgid "Optimize display color transformations"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: ../libligmaconfig/ligmacolorconfig.c:271
 msgid "Soft-proofing rendering intent"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: ../libligmaconfig/ligmacolorconfig.c:279
 msgid "Use black point compensation for soft-proofing"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: ../libligmaconfig/ligmacolorconfig.c:286
 msgid "Optimize soft-proofing color transformations"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: ../libligmaconfig/ligmacolorconfig.c:293
 msgid "Mark out of gamut colors"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: ../libligmaconfig/ligmacolorconfig.c:300
 msgid "Out of gamut warning color"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: ../libligmaconfig/ligmacolorconfig.c:657
+#: ../libligmaconfig/ligmacolorconfig.c:841
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Värikorjaussuodatin ICC-profiileille"
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: ../libligmaconfig/ligmacolorconfig.c:699
+#: ../libligmaconfig/ligmacolorconfig.c:891
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Värikorjaussuodatin ICC-profiileille"
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: ../libligmaconfig/ligmacolorconfig.c:741
+#: ../libligmaconfig/ligmacolorconfig.c:941
 #, fuzzy, c-format
 #| msgid "Color proof filter using ICC color profile"
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Värikorjaussuodatin ICC-profiileille"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#: ../libligmaconfig/ligmaconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "symbolin %s arvo ei ole kelvollinen UTF-8 -merkkijono"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:473
+#: ../libligmaconfig/ligmaconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "sallitut arvot: \"yes\" tai \"no\" asetukselle %s, tuli '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:588
+#: ../libligmaconfig/ligmaconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "väärä arvo \"%s\" symbolille %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libligmaconfig/ligmaconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "kelvoton arvo \"%ld\" symbolille %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:672
+#: ../libligmaconfig/ligmaconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "jäsennettäessä symbolia \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
-#: ../libgimpconfig/gimpscanner.c:838
-#: ../libgimpwidgets/gimpcolorprofilestore.c:710
+#: ../libligmaconfig/ligmaconfig-iface.c:682
+#: ../libligmaconfig/ligmaconfig-iface.c:695 ../libligmaconfig/ligmascanner.c:756
+#: ../libligmaconfig/ligmascanner.c:838
+#: ../libligmawidgets/ligmacolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "jäsennysvirhe"
 
-#: ../libgimpconfig/gimpconfig-path.c:483
+#: ../libligmaconfig/ligmaconfig-path.c:483
 msgid "File has no path representation"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-path.c:570
+#: ../libligmaconfig/ligmaconfig-path.c:570
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Ei voi laajentaa ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:673
+#: ../libligmaconfig/ligmaconfigwriter.c:88
+#: ../libligmaconfig/ligmaconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Virhe kirjoitettaessa tiedostoon \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:183
+#: ../libligmaconfig/ligmaconfigwriter.c:183
 #, fuzzy, c-format
 #| msgid "Could not create temporary file for '%s': %s"
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Tilapäistiedostoa \"%s\" ei voitu luoda: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:199
+#: ../libligmaconfig/ligmaconfigwriter.c:199
 #, fuzzy, c-format
 #| msgid "Could not create temporary file for '%s': %s"
 msgid "Could not create temporary file for '%s': "
 msgstr "Tilapäistiedostoa \"%s\" ei voitu luoda: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:783
+#: ../libligmaconfig/ligmaconfigwriter.c:783
 #, fuzzy, c-format
 #| msgid "Error writing to '%s': %s"
 msgid "Error writing '%s': %s"
 msgstr "Virhe kirjoitettaessa tiedostoon \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:409
+#: ../libligmaconfig/ligmascanner.c:409
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "epäkelpo UTF-8 -merkkijono"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:631
+#: ../libligmaconfig/ligmascanner.c:631
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "sallitut arvot: \"yes\" tai \"no\" asetukselle, tuli '%s'"
 
-#: ../libgimpconfig/gimpscanner.c:865
+#: ../libligmaconfig/ligmascanner.c:865
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Virhe jäsennettäessä tiedostoa '%s' rivillä %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
-#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libligmamodule/ligmamodule.c:148 ../libligmamodule/ligmamodule.c:166
+#: ../libligmamodule/ligmamodule.c:275 ../libligmamodule/ligmamodule.c:302
+#: ../libligmamodule/ligmamodule.c:428
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulin '%s' latausvirhe: %s"
 
-#: ../libgimpmodule/gimpmodule.c:370
+#: ../libligmamodule/ligmamodule.c:370
 msgid "Module error"
 msgstr "Modulivirhe"
 
-#: ../libgimpmodule/gimpmodule.c:371
+#: ../libligmamodule/ligmamodule.c:371
 msgid "Loaded"
 msgstr "Ladattu"
 
-#: ../libgimpmodule/gimpmodule.c:372
+#: ../libligmamodule/ligmamodule.c:372
 msgid "Load failed"
 msgstr "Lataus epäonnistui"
 
-#: ../libgimpmodule/gimpmodule.c:373
+#: ../libligmamodule/ligmamodule.c:373
 msgid "Not loaded"
 msgstr "Ei ladattu"
 
-#: ../libgimpthumb/gimpthumb-utils.c:153
+#: ../libligmathumb/ligmathumb-utils.c:153
 #, fuzzy, c-format
 #| msgid ""
 #| "Cannot determine a valid home directory.\n"
@@ -1953,53 +1953,53 @@ msgstr ""
 "Kelvollista kotihakemistoa ei voi määrittää.\n"
 "Pienoiskuvat tallennetaan väliaikaistiedostojen kansioon (%s) sen sijasta."
 
-#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#: ../libligmathumb/ligmathumb-utils.c:299 ../libligmathumb/ligmathumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Pienoiskuvakansiota '%s' ei voitu luoda."
 
-#: ../libgimpthumb/gimpthumbnail.c:479
+#: ../libligmathumb/ligmathumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Pienoiskuva ei sisällä Thumb::URI-merkintää"
 
-#: ../libgimpthumb/gimpthumbnail.c:876
+#: ../libligmathumb/ligmathumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Pienoiskuvaa %s ei voitu luoda: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:114
+#: ../libligmawidgets/ligmabrowser.c:114
 msgid "_Search:"
 msgstr "_Etsi:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: ../libligmawidgets/ligmacolorbutton.c:147
 msgid "_Foreground Color"
 msgstr "_Edustaväri"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:151
+#: ../libligmawidgets/ligmacolorbutton.c:151
 msgid "_Background Color"
 msgstr "_Taustaväri"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:155
+#: ../libligmawidgets/ligmacolorbutton.c:155
 msgid "Blac_k"
 msgstr "_Musta"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:159
+#: ../libligmawidgets/ligmacolorbutton.c:159
 msgid "_White"
 msgstr "_Valkoinen"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:548 ../libgimpwidgets/gimpicons.c:68
+#: ../libligmawidgets/ligmacolorbutton.c:548 ../libligmawidgets/ligmaicons.c:68
 msgid "_Reset"
 msgstr "_Nollaa"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:550
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
-#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
-#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
+#: ../libligmawidgets/ligmacolorbutton.c:550
+#: ../libligmawidgets/ligmafileentry.c:436 ../libligmawidgets/ligmaquerybox.c:275
+#: ../libligmawidgets/ligmaquerybox.c:335 ../libligmawidgets/ligmaquerybox.c:399
+#: ../libligmawidgets/ligmaquerybox.c:473 ../libligmawidgets/ligmaunitmenu.c:493
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimpwidgets/gimpcolorhexentry.c:118
+#: ../libligmawidgets/ligmacolorhexentry.c:118
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2007,260 +2007,260 @@ msgstr ""
 "HTML- ja CSS-tiedostoissa käytetty heksadesimaalinen värimäärittely. Kohta "
 "hyväksyy myös CSS-värinimet."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Kaikki tiedostot (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-väriprofiilit (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Tallenna"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Avaa"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
-#: ../libgimpwidgets/gimppatheditor.c:270
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:345
+#: ../libligmawidgets/ligmapatheditor.c:270
 msgid "Folder"
 msgstr "Kansio"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
+#: ../libligmawidgets/ligmacolorprofilechooserdialog.c:350
 msgid "Not a regular file."
 msgstr "Ei tavallinen tiedosto."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+#: ../libligmawidgets/ligmacolorprofilestore.c:147
 msgid "Select color profile from disk..."
 msgstr "Valitse väriprofiili levyltä..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:315
+#: ../libligmawidgets/ligmacolorprofilestore.c:315
 msgctxt "profile"
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:168
+#: ../libligmawidgets/ligmacolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Valmistaja: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:180
+#: ../libligmawidgets/ligmacolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Tekijänoikeudet: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libligmawidgets/ligmacolorscales.c:205
 msgid "Scales"
 msgstr "Asteikot"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#: ../libligmawidgets/ligmacolorscales.c:437
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libligmawidgets/ligmacolorscales.c:439
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: ../libligmawidgets/ligmacolorscales.c:460
 msgid "LCh"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libligmawidgets/ligmacolorscales.c:462
 msgid "HSV"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorselection.c:222
+#: ../libligmawidgets/ligmacolorselection.c:222
 msgid "Current:"
 msgstr "Nykyinen:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: ../libligmawidgets/ligmacolorselection.c:231
 msgid "Old:"
 msgstr "Vanha:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:318
+#: ../libligmawidgets/ligmacolorselection.c:318
 msgid "HTML _notation:"
 msgstr "HTML-_merkintä:"
 
-#: ../libgimpwidgets/gimpdialog.c:178
+#: ../libligmawidgets/ligmadialog.c:178
 msgid "_Help"
 msgstr "O_hje"
 
-#: ../libgimpwidgets/gimpfileentry.c:152
+#: ../libligmawidgets/ligmafileentry.c:152
 msgid "Show file location in the file manager"
 msgstr "Näytä tiedoston sijainti tiedostonhallinnassa"
 
-#: ../libgimpwidgets/gimpfileentry.c:223
+#: ../libligmawidgets/ligmafileentry.c:223
 msgid "Open a file selector to browse your folders"
 msgstr "Selaa kansioita avaamalla tiedoston valintaikkuna"
 
-#: ../libgimpwidgets/gimpfileentry.c:224
+#: ../libligmawidgets/ligmafileentry.c:224
 msgid "Open a file selector to browse your files"
 msgstr "Selaa tiedostoja avaamalla tiedoston valintaikkuna"
 
-#: ../libgimpwidgets/gimpfileentry.c:236
+#: ../libligmawidgets/ligmafileentry.c:236
 msgid "Indicates whether or not the folder exists"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:237
+#: ../libligmawidgets/ligmafileentry.c:237
 msgid "Indicates whether or not the file exists"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: ../libligmawidgets/ligmafileentry.c:397
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libligmawidgets/ligmafileentry.c:424
 msgid "Select Folder"
 msgstr "Valitse kansio"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libligmawidgets/ligmafileentry.c:426
 msgid "Select File"
 msgstr "Valitse tiedosto"
 
-#: ../libgimpwidgets/gimphelpui.c:433
+#: ../libligmawidgets/ligmahelpui.c:433
 msgid "Press F1 for more help"
 msgstr "Paina F1 saadaksesi lisäohjeita"
 
-#: ../libgimpwidgets/gimpicons.c:62
+#: ../libligmawidgets/ligmaicons.c:62
 msgid "Anchor"
 msgstr "Ankkuri"
 
-#: ../libgimpwidgets/gimpicons.c:63
+#: ../libligmawidgets/ligmaicons.c:63
 msgid "C_enter"
 msgstr "Keskitä"
 
-#: ../libgimpwidgets/gimpicons.c:64
+#: ../libligmawidgets/ligmaicons.c:64
 msgid "_Duplicate"
 msgstr "Kahdenna"
 
-#: ../libgimpwidgets/gimpicons.c:65
+#: ../libligmawidgets/ligmaicons.c:65
 msgid "Linked"
 msgstr "Linkitetty"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libligmawidgets/ligmaicons.c:66
 msgid "Paste as New"
 msgstr "Liitä uutena"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libligmawidgets/ligmaicons.c:67
 msgid "Paste Into"
 msgstr "Liitä johonkin"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libligmawidgets/ligmaicons.c:69
 msgid "Visible"
 msgstr "Näkyvä"
 
-#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
+#: ../libligmawidgets/ligmaicons.c:105 ../libligmawidgets/ligmaicons.c:109
 msgid "_Stroke"
 msgstr "_Piirrä"
 
-#: ../libgimpwidgets/gimpicons.c:121
+#: ../libligmawidgets/ligmaicons.c:121
 msgid "L_etter Spacing"
 msgstr "Kirjainvälistys"
 
-#: ../libgimpwidgets/gimpicons.c:122
+#: ../libligmawidgets/ligmaicons.c:122
 msgid "L_ine Spacing"
 msgstr "Riviväli"
 
-#: ../libgimpwidgets/gimpicons.c:139
+#: ../libligmawidgets/ligmaicons.c:139
 msgid "Re_size"
 msgstr "Muuta _kokoa"
 
-#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
+#: ../libligmawidgets/ligmaicons.c:140 ../libligmawidgets/ligmaicons.c:272
 msgid "_Scale"
 msgstr "_Skaalaa"
 
-#: ../libgimpwidgets/gimpicons.c:247
+#: ../libligmawidgets/ligmaicons.c:247
 msgid "Cr_op"
 msgstr "_Rajaa"
 
-#: ../libgimpwidgets/gimpicons.c:255
+#: ../libligmawidgets/ligmaicons.c:255
 msgid "_Select"
 msgstr "_Valinta"
 
-#: ../libgimpwidgets/gimpicons.c:267
+#: ../libligmawidgets/ligmaicons.c:267
 msgid "_Transform"
 msgstr "_Muunna"
 
-#: ../libgimpwidgets/gimpicons.c:273
+#: ../libligmawidgets/ligmaicons.c:273
 msgid "_Shear"
 msgstr "_Väännä"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:256
+#: ../libligmawidgets/ligmamemsizeentry.c:256
 #, fuzzy
 #| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "kilotavua"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:257
+#: ../libligmawidgets/ligmamemsizeentry.c:257
 #, fuzzy
 #| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "megatavua"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:258
+#: ../libligmawidgets/ligmamemsizeentry.c:258
 #, fuzzy
 #| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "gigatavua"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:270
-#: ../libgimpwidgets/gimppageselector.c:1066
+#: ../libligmawidgets/ligmapageselector.c:270
+#: ../libligmawidgets/ligmapageselector.c:1066
 msgid "Nothing selected"
 msgstr "Mitään ei ole valittu"
 
-#: ../libgimpwidgets/gimppageselector.c:288
+#: ../libligmawidgets/ligmapageselector.c:288
 msgid "Select _All"
 msgstr "Valitse k_aikki"
 
-#: ../libgimpwidgets/gimppageselector.c:308
+#: ../libligmawidgets/ligmapageselector.c:308
 msgid "Select _range:"
 msgstr "Valitse a_lue:"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libligmawidgets/ligmapageselector.c:320
 msgid "Open _pages as"
 msgstr "Avaa _sivut muodossa"
 
-#: ../libgimpwidgets/gimppageselector.c:448
-#: ../libgimpwidgets/gimppageselector.c:646
+#: ../libligmawidgets/ligmapageselector.c:448
+#: ../libligmawidgets/ligmapageselector.c:646
 #, c-format
 msgid "Page %d"
 msgstr "Sivu %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1071
+#: ../libligmawidgets/ligmapageselector.c:1071
 msgid "One page selected"
 msgstr "Yksi sivu valittu"
 
-#: ../libgimpwidgets/gimppageselector.c:1078
-#: ../libgimpwidgets/gimppageselector.c:1082
+#: ../libligmawidgets/ligmapageselector.c:1078
+#: ../libligmawidgets/ligmapageselector.c:1082
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d sivu valittu"
 msgstr[1] "%d sivua valittu"
 
-#: ../libgimpwidgets/gimppatheditor.c:181
+#: ../libligmawidgets/ligmapatheditor.c:181
 msgid "Add a new folder"
 msgstr "Lisää uusi kansio"
 
-#: ../libgimpwidgets/gimppatheditor.c:199
+#: ../libligmawidgets/ligmapatheditor.c:199
 msgid "Move the selected folder up"
 msgstr "Siirrä valittu kansio ylös"
 
-#: ../libgimpwidgets/gimppatheditor.c:217
+#: ../libligmawidgets/ligmapatheditor.c:217
 msgid "Move the selected folder down"
 msgstr "Siirrä valittu kansio alas"
 
-#: ../libgimpwidgets/gimppatheditor.c:235
+#: ../libligmawidgets/ligmapatheditor.c:235
 msgid "Remove the selected folder from the list"
 msgstr "Poista valittu kansio listalta"
 
-#: ../libgimpwidgets/gimppatheditor.c:261
+#: ../libligmawidgets/ligmapatheditor.c:261
 msgid "Writable"
 msgstr "Kirjoitettavissa"
 
-#: ../libgimpwidgets/gimppickbutton.c:113
+#: ../libligmawidgets/ligmapickbutton.c:113
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2269,42 +2269,42 @@ msgstr ""
 "valitaksesi värin."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:293
+#: ../libligmawidgets/ligmapreview.c:293
 msgid "_Preview"
 msgstr "_Esikatselu"
 
-#: ../libgimpwidgets/gimppreviewarea.c:125
+#: ../libligmawidgets/ligmapreviewarea.c:125
 msgid "Check Size"
 msgstr "Tarkista koko"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libligmawidgets/ligmapreviewarea.c:133
 msgid "Check Style"
 msgstr "Tarkista tyyli"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2178
+#: ../libligmawidgets/ligmapropwidgets.c:2178
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Tämä tekstin syöttökenttä on rajattu %d merkkiin."
 msgstr[1] "Tämä tekstin syöttökenttä on rajattu %d merkkiin."
 
-#: ../libgimpwidgets/gimpunitmenu.c:261
+#: ../libligmawidgets/ligmaunitmenu.c:261
 msgid "More..."
 msgstr "Lisää..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:487
+#: ../libligmawidgets/ligmaunitmenu.c:487
 msgid "Unit Selection"
 msgstr "Mittayksikön valinta"
 
-#: ../libgimpwidgets/gimpunitmenu.c:536
+#: ../libligmawidgets/ligmaunitmenu.c:536
 msgid "Unit"
 msgstr "Mittayksikkö"
 
-#: ../libgimpwidgets/gimpunitmenu.c:540
+#: ../libligmawidgets/ligmaunitmenu.c:540
 msgid "Factor"
 msgstr "Kerroin"
 
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libligmawidgets/ligmawidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2312,192 +2312,192 @@ msgstr ""
 "Käytetään tätä arvoa satunnaislukujen siemenenä. Tämä mahdollistaa "
 "näennäisesti satunnaisen toiminnon toiston samanlaisena."
 
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: ../libligmawidgets/ligmawidgets.c:525
 msgid "_New Seed"
 msgstr "_Siemenluku"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libligmawidgets/ligmawidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "Alusta satunnaisluvut luodulla satunnaisluvulla."
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: ../libligmawidgets/ligmawidgets.c:542
 msgid "_Randomize"
 msgstr "S_atunnaista"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libligmawidgets/ligmawidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Pois käytöstä"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libligmawidgets/ligmawidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Näyttö"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:52
+#: ../libligmawidgets/ligmawidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Ikkuna"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmawidgets/ligmawidgetsenums.c:24
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Neliö"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Pystysuuntainen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Vaakasuuntainen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "HSV Hue"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 #, fuzzy
 #| msgid "Saturation"
 msgid "HSV Saturation"
 msgstr "Kylläisyys"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgid "HSV Value"
 msgstr "HSV-arvo"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgid "Red"
 msgstr "Punainen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libligmawidgets/ligmawidgetsenums.c:133
 msgid "Green"
 msgstr "Vihreä"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libligmawidgets/ligmawidgetsenums.c:134
 msgid "Blue"
 msgstr "Sininen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libligmawidgets/ligmawidgetsenums.c:135
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libligmawidgets/ligmawidgetsenums.c:136
 #, fuzzy
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
 msgid "LCh Lightness"
 msgstr "Vaaleus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 #, fuzzy
 #| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libligmawidgets/ligmawidgetsenums.c:137
 msgid "LCh Chroma"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_h"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libligmawidgets/ligmawidgetsenums.c:138
 msgid "LCh Hue"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libligmawidgets/ligmawidgetsenums.c:168
 #| msgctxt "image-type"
 #| msgid "RGB"
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libligmawidgets/ligmawidgetsenums.c:168
 msgid "RGB color model"
 msgstr "RGB-värimalli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libligmawidgets/ligmawidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libligmawidgets/ligmawidgetsenums.c:169
 #| msgctxt "image-base-type"
 #| msgid "RGB color"
 msgid "CIE LCh color model"
 msgstr "CIE LCh -värimalli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libligmawidgets/ligmawidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libligmawidgets/ligmawidgetsenums.c:170
 msgid "HSV color model"
 msgstr "HSV-värimalli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#: ../libligmawidgets/ligmawidgetsenums.c:231
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Tasot"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#: ../libligmawidgets/ligmawidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Kuvat"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#: ../libligmawidgets/ligmawidgetsenums.c:293
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Lähennä"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#: ../libligmawidgets/ligmawidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Loitonna"
@@ -2906,11 +2906,11 @@ msgid "MIDI Events"
 msgstr "MIDI-tapahtumat"
 
 #: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: ../modules/controller-midi.c:428
-msgid "GIMP MIDI Input Controller"
+msgid "LIGMA MIDI Input Controller"
 msgstr "MIDI-tapahtumaohjain"
 
 #: ../modules/display-filter-clip-warning.c:120

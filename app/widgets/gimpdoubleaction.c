@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdoubleaction.c
+ * ligmadoubleaction.c
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimpaction-history.h"
-#include "gimpdoubleaction.h"
+#include "ligmaaction.h"
+#include "ligmaaction-history.h"
+#include "ligmadoubleaction.h"
 
 
 enum
@@ -38,54 +38,54 @@ enum
 };
 
 
-static void   gimp_double_action_set_property (GObject      *object,
+static void   ligma_double_action_set_property (GObject      *object,
                                                guint         prop_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_double_action_get_property (GObject      *object,
+static void   ligma_double_action_get_property (GObject      *object,
                                                guint         prop_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
-static void   gimp_double_action_activate     (GtkAction    *action);
+static void   ligma_double_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpDoubleAction, gimp_double_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE (LigmaDoubleAction, ligma_double_action, LIGMA_TYPE_ACTION_IMPL)
 
-#define parent_class gimp_double_action_parent_class
+#define parent_class ligma_double_action_parent_class
 
 
 static void
-gimp_double_action_class_init (GimpDoubleActionClass *klass)
+ligma_double_action_class_init (LigmaDoubleActionClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
 
-  object_class->set_property = gimp_double_action_set_property;
-  object_class->get_property = gimp_double_action_get_property;
+  object_class->set_property = ligma_double_action_set_property;
+  object_class->get_property = ligma_double_action_get_property;
 
-  action_class->activate = gimp_double_action_activate;
+  action_class->activate = ligma_double_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
                                                         NULL, NULL,
                                                         -G_MAXDOUBLE, G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_double_action_init (GimpDoubleAction *action)
+ligma_double_action_init (LigmaDoubleAction *action)
 {
 }
 
 static void
-gimp_double_action_get_property (GObject    *object,
+ligma_double_action_get_property (GObject    *object,
                                  guint       prop_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDoubleAction *action = GIMP_DOUBLE_ACTION (object);
+  LigmaDoubleAction *action = LIGMA_DOUBLE_ACTION (object);
 
   switch (prop_id)
     {
@@ -99,12 +99,12 @@ gimp_double_action_get_property (GObject    *object,
 }
 
 static void
-gimp_double_action_set_property (GObject      *object,
+ligma_double_action_set_property (GObject      *object,
                                  guint         prop_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDoubleAction *action = GIMP_DOUBLE_ACTION (object);
+  LigmaDoubleAction *action = LIGMA_DOUBLE_ACTION (object);
 
   switch (prop_id)
     {
@@ -117,17 +117,17 @@ gimp_double_action_set_property (GObject      *object,
     }
 }
 
-GimpDoubleAction *
-gimp_double_action_new (const gchar *name,
+LigmaDoubleAction *
+ligma_double_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
                         const gchar *help_id,
                         gdouble      value)
 {
-  GimpDoubleAction *action;
+  LigmaDoubleAction *action;
 
-  action = g_object_new (GIMP_TYPE_DOUBLE_ACTION,
+  action = g_object_new (LIGMA_TYPE_DOUBLE_ACTION,
                          "name",      name,
                          "label",     label,
                          "tooltip",   tooltip,
@@ -135,18 +135,18 @@ gimp_double_action_new (const gchar *name,
                          "value",     value,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  ligma_action_set_help_id (LIGMA_ACTION (action), help_id);
 
   return action;
 }
 
 static void
-gimp_double_action_activate (GtkAction *action)
+ligma_double_action_activate (GtkAction *action)
 {
-  GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
+  LigmaDoubleAction *double_action = LIGMA_DOUBLE_ACTION (action);
 
-  gimp_action_emit_activate (GIMP_ACTION (action),
+  ligma_action_emit_activate (LIGMA_ACTION (action),
                              g_variant_new_double (double_action->value));
 
-  gimp_action_history_action_activated (GIMP_ACTION (action));
+  ligma_action_history_action_activated (LIGMA_ACTION (action));
 }

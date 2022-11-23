@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdialog.h
- * Copyright (C) 2000-2003 Michael Natterer <mitch@gimp.org>
+ * ligmadialog.h
+ * Copyright (C) 2000-2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,94 +19,94 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DIALOG_H__
-#define __GIMP_DIALOG_H__
+#ifndef __LIGMA_DIALOG_H__
+#define __LIGMA_DIALOG_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_DIALOG            (gimp_dialog_get_type ())
-#define GIMP_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG, GimpDialog))
-#define GIMP_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG, GimpDialogClass))
-#define GIMP_IS_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DIALOG))
-#define GIMP_IS_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG))
-#define GIMP_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG, GimpDialogClass))
+#define LIGMA_TYPE_DIALOG            (ligma_dialog_get_type ())
+#define LIGMA_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DIALOG, LigmaDialog))
+#define LIGMA_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DIALOG, LigmaDialogClass))
+#define LIGMA_IS_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DIALOG))
+#define LIGMA_IS_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DIALOG))
+#define LIGMA_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DIALOG, LigmaDialogClass))
 
 
-typedef struct _GimpDialogPrivate GimpDialogPrivate;
-typedef struct _GimpDialogClass   GimpDialogClass;
+typedef struct _LigmaDialogPrivate LigmaDialogPrivate;
+typedef struct _LigmaDialogClass   LigmaDialogClass;
 
-struct _GimpDialog
+struct _LigmaDialog
 {
   GtkDialog          parent_instance;
 
-  GimpDialogPrivate *priv;
+  LigmaDialogPrivate *priv;
 };
 
-struct _GimpDialogClass
+struct _LigmaDialogClass
 {
   GtkDialogClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_dialog_get_type           (void) G_GNUC_CONST;
+GType       ligma_dialog_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dialog_new                (const gchar    *title,
+GtkWidget * ligma_dialog_new                (const gchar    *title,
                                             const gchar    *role,
                                             GtkWidget      *parent,
                                             GtkDialogFlags  flags,
-                                            GimpHelpFunc    help_func,
+                                            LigmaHelpFunc    help_func,
                                             const gchar    *help_id,
                                             ...) G_GNUC_NULL_TERMINATED;
 
-GtkWidget * gimp_dialog_new_valist         (const gchar    *title,
+GtkWidget * ligma_dialog_new_valist         (const gchar    *title,
                                             const gchar    *role,
                                             GtkWidget      *parent,
                                             GtkDialogFlags  flags,
-                                            GimpHelpFunc    help_func,
+                                            LigmaHelpFunc    help_func,
                                             const gchar    *help_id,
                                             va_list         args);
 
-GtkWidget * gimp_dialog_add_button         (GimpDialog     *dialog,
+GtkWidget * ligma_dialog_add_button         (LigmaDialog     *dialog,
                                             const gchar    *button_text,
                                             gint            response_id);
-void        gimp_dialog_add_buttons        (GimpDialog     *dialog,
+void        ligma_dialog_add_buttons        (LigmaDialog     *dialog,
                                             ...) G_GNUC_NULL_TERMINATED;
-void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
+void        ligma_dialog_add_buttons_valist (LigmaDialog     *dialog,
                                             va_list         args);
 
-gint        gimp_dialog_run                (GimpDialog     *dialog);
+gint        ligma_dialog_run                (LigmaDialog     *dialog);
 
-void        gimp_dialog_set_alternative_button_order_from_array
-                                           (GimpDialog     *dialog,
+void        ligma_dialog_set_alternative_button_order_from_array
+                                           (LigmaDialog     *dialog,
                                             gint            n_buttons,
                                             gint           *order);
 
 /*  for internal use only!  */
-void        gimp_dialogs_show_help_button  (gboolean        show);
+void        ligma_dialogs_show_help_button  (gboolean        show);
 
-/* gimp_dialog_set_alternative_button_order() doesn't need a dedicated
+/* ligma_dialog_set_alternative_button_order() doesn't need a dedicated
  * wrapper function because anyway it won't be introspectable.
  * GObject-Introspection bindings will have to use
- * gimp_dialog_set_alternative_button_order_from_array().
+ * ligma_dialog_set_alternative_button_order_from_array().
  */
-#define gimp_dialog_set_alternative_button_order(d,f...) \
+#define ligma_dialog_set_alternative_button_order(d,f...) \
   G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                      \
   gtk_dialog_set_alternative_button_order(d,f);          \
   G_GNUC_END_IGNORE_DEPRECATIONS;
@@ -114,4 +114,4 @@ void        gimp_dialogs_show_help_button  (gboolean        show);
 
 G_END_DECLS
 
-#endif /* __GIMP_DIALOG_H__ */
+#endif /* __LIGMA_DIALOG_H__ */

@@ -8,19 +8,19 @@ apptests_links = [
   libapppropgui,
   libapptools,
   libappwidgets,
-  libgimpbase,
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmath,
-  libgimpmodule,
-  libgimpthumb,
-  libgimpwidgets,
+  libligmabase,
+  libligmacolor,
+  libligmaconfig,
+  libligmamath,
+  libligmamodule,
+  libligmathumb,
+  libligmawidgets,
 ]
 
 
 libapptestutils_sources = [
-  'gimp-app-test-utils.c',
-  'gimp-test-session-utils.c',
+  'ligma-app-test-utils.c',
+  'ligma-test-session-utils.c',
 ]
 
 libapptestutils = static_library('apptestutils',
@@ -34,7 +34,7 @@ apptests_links += libapptestutils
 
 app_tests = [
   'core',
-  'gimpidtable',
+  'ligmaidtable',
   'save-and-export',
   'session-2-8-compatibility-multi-window',
   'session-2-8-compatibility-single-window',
@@ -59,10 +59,10 @@ foreach test_name : app_tests
   test(test_name,
     test_exe,
     env: [
-      'GIMP_TESTING_ABS_TOP_SRCDIR='  + meson.project_source_root(),
-      'GIMP_TESTING_ABS_TOP_BUILDDIR='+ meson.project_build_root(),
-      'GIMP_TESTING_PLUGINDIRS=' +      meson.project_build_root()/'plug-ins'/'common',
-      'GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl',
+      'LIGMA_TESTING_ABS_TOP_SRCDIR='  + meson.project_source_root(),
+      'LIGMA_TESTING_ABS_TOP_BUILDDIR='+ meson.project_build_root(),
+      'LIGMA_TESTING_PLUGINDIRS=' +      meson.project_build_root()/'plug-ins'/'common',
+      'LIGMA_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl',
       'UI_TEST=yes',
     ],
     suite: 'app',

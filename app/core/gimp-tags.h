@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGS_H__
-#define __GIMP_TAGS_H__
+#ifndef __LIGMA_TAGS_H__
+#define __LIGMA_TAGS_H__
 
 
-gboolean gimp_tags_user_install (void);
+gboolean ligma_tags_user_install (void);
 
 
-#endif  /*  __GIMP_TAGS_H__  */
+#endif  /*  __LIGMA_TAGS_H__  */

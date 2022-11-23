@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_APP_TEST_UTILS_H__
-#define  __GIMP_APP_TEST_UTILS_H__
+#ifndef  __LIGMA_APP_TEST_UTILS_H__
+#define  __LIGMA_APP_TEST_UTILS_H__
 
 
-void            gimp_test_utils_set_env_to_subdir    (const gchar *root_env_var,
+void            ligma_test_utils_set_env_to_subdir    (const gchar *root_env_var,
                                                       const gchar *subdir,
                                                       const gchar *target_env_var);
-void            gimp_test_utils_set_env_to_subpath   (const gchar *root_env_var1,
+void            ligma_test_utils_set_env_to_subpath   (const gchar *root_env_var1,
                                                       const gchar *root_env_var2,
                                                       const gchar *subdir,
                                                       const gchar *target_env_var);
-void            gimp_test_utils_set_gimp3_directory  (const gchar *root_env_var,
+void            ligma_test_utils_set_ligma3_directory  (const gchar *root_env_var,
                                                       const gchar *subdir);
-void            gimp_test_utils_setup_menus_path     (void);
-void            gimp_test_utils_create_image         (Gimp        *gimp,
+void            ligma_test_utils_setup_menus_path     (void);
+void            ligma_test_utils_create_image         (Ligma        *ligma,
                                                       gint         width,
                                                       gint         height);
-void            gimp_test_utils_synthesize_key_event (GtkWidget   *widget,
+void            ligma_test_utils_synthesize_key_event (GtkWidget   *widget,
                                                       guint        keyval);
-GimpUIManager * gimp_test_utils_get_ui_manager       (Gimp        *gimp);
-GimpImage     * gimp_test_utils_create_image_from_dialog
-                                                     (Gimp        *gimp);
+LigmaUIManager * ligma_test_utils_get_ui_manager       (Ligma        *ligma);
+LigmaImage     * ligma_test_utils_create_image_from_dialog
+                                                     (Ligma        *ligma);
 
 
-#endif /* __GIMP_APP_TEST_UTILS_H__ */
+#endif /* __LIGMA_APP_TEST_UTILS_H__ */

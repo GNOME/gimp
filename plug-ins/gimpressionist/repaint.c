@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "brush.h"
 #include "orientation.h"
 #include "placement.h"
@@ -34,9 +34,9 @@
 #include "size.h"
 #include "infile.h"
 
-#include <libgimp/stdplugins-intl.h>
+#include <libligma/stdplugins-intl.h>
 
-static gimpressionist_vals_t runningvals;
+static ligmaressionist_vals_t runningvals;
 
 static double
 get_siz_from_pcvals (double x, double y)
@@ -543,7 +543,7 @@ repaint (ppm_t *p, ppm_t *a)
       guchar tmpcol[3];
 
       ppm_new (&tmp, p->width, p->height);
-      gimp_rgb_get_uchar (&runningvals.color,
+      ligma_rgb_get_uchar (&runningvals.color,
                           &tmpcol[0], &tmpcol[1], &tmpcol[2]);
       fill (&tmp, tmpcol);
     }
@@ -848,7 +848,7 @@ repaint (ppm_t *p, ppm_t *a)
         {
           if(runningvals.run)
             {
-              gimp_progress_update (0.8 - 0.8 * ((double)i / max_progress));
+              ligma_progress_update (0.8 - 0.8 * ((double)i / max_progress));
             }
           else
             {
@@ -1190,7 +1190,7 @@ repaint (ppm_t *p, ppm_t *a)
 
   if (runningvals.run)
     {
-      gimp_progress_update (0.8);
+      ligma_progress_update (0.8);
     }
   else
     {

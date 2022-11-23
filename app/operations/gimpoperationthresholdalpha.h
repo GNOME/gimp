@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationthresholdalpha.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationthresholdalpha.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_THRESHOLD_ALPHA_H__
-#define __GIMP_OPERATION_THRESHOLD_ALPHA_H__
+#ifndef __LIGMA_OPERATION_THRESHOLD_ALPHA_H__
+#define __LIGMA_OPERATION_THRESHOLD_ALPHA_H__
 
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
-#define GIMP_TYPE_OPERATION_THRESHOLD_ALPHA            (gimp_operation_threshold_alpha_get_type ())
-#define GIMP_OPERATION_THRESHOLD_ALPHA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_THRESHOLD_ALPHA, GimpOperationThresholdAlpha))
-#define GIMP_OPERATION_THRESHOLD_ALPHA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_THRESHOLD_ALPHA, GimpOperationThresholdAlphaClass))
-#define GIMP_IS_OPERATION_THRESHOLD_ALPHA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_THRESHOLD_ALPHA))
-#define GIMP_IS_OPERATION_THRESHOLD_ALPHA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_THRESHOLD_ALPHA))
-#define GIMP_OPERATION_THRESHOLD_ALPHA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD_ALPHA, GimpOperationThresholdAlphaClass))
+#define LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA            (ligma_operation_threshold_alpha_get_type ())
+#define LIGMA_OPERATION_THRESHOLD_ALPHA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA, LigmaOperationThresholdAlpha))
+#define LIGMA_OPERATION_THRESHOLD_ALPHA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA, LigmaOperationThresholdAlphaClass))
+#define LIGMA_IS_OPERATION_THRESHOLD_ALPHA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA))
+#define LIGMA_IS_OPERATION_THRESHOLD_ALPHA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA))
+#define LIGMA_OPERATION_THRESHOLD_ALPHA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_THRESHOLD_ALPHA, LigmaOperationThresholdAlphaClass))
 
 
-typedef struct _GimpOperationThresholdAlpha      GimpOperationThresholdAlpha;
-typedef struct _GimpOperationThresholdAlphaClass GimpOperationThresholdAlphaClass;
+typedef struct _LigmaOperationThresholdAlpha      LigmaOperationThresholdAlpha;
+typedef struct _LigmaOperationThresholdAlphaClass LigmaOperationThresholdAlphaClass;
 
-struct _GimpOperationThresholdAlpha
+struct _LigmaOperationThresholdAlpha
 {
   GeglOperationPointFilter  parent_instance;
 
   gdouble                   value;
 };
 
-struct _GimpOperationThresholdAlphaClass
+struct _LigmaOperationThresholdAlphaClass
 {
   GeglOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_threshold_alpha_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_threshold_alpha_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_THRESHOLD_ALPHA_H__ */
+#endif /* __LIGMA_OPERATION_THRESHOLD_ALPHA_H__ */

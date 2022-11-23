@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_H__
-#define __GIMP_PAINT_CORE_H__
+#ifndef __LIGMA_PAINT_CORE_H__
+#define __LIGMA_PAINT_CORE_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_PAINT_CORE            (gimp_paint_core_get_type ())
-#define GIMP_PAINT_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_CORE, GimpPaintCore))
-#define GIMP_PAINT_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_CORE, GimpPaintCoreClass))
-#define GIMP_IS_PAINT_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_CORE))
-#define GIMP_IS_PAINT_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_CORE))
-#define GIMP_PAINT_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_CORE, GimpPaintCoreClass))
+#define LIGMA_TYPE_PAINT_CORE            (ligma_paint_core_get_type ())
+#define LIGMA_PAINT_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PAINT_CORE, LigmaPaintCore))
+#define LIGMA_PAINT_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PAINT_CORE, LigmaPaintCoreClass))
+#define LIGMA_IS_PAINT_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PAINT_CORE))
+#define LIGMA_IS_PAINT_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PAINT_CORE))
+#define LIGMA_PAINT_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PAINT_CORE, LigmaPaintCoreClass))
 
 
-typedef struct _GimpPaintCoreClass GimpPaintCoreClass;
+typedef struct _LigmaPaintCoreClass LigmaPaintCoreClass;
 
-struct _GimpPaintCore
+struct _LigmaPaintCore
 {
-  GimpObject      parent_instance;
+  LigmaObject      parent_instance;
 
   gint            ID;                /*  unique instance ID                  */
 
@@ -42,12 +42,12 @@ struct _GimpPaintCore
 
   gboolean        show_all;          /*  whether working in show-all mode    */
 
-  GimpCoords      start_coords;      /*  the last stroke's endpoint for undo */
+  LigmaCoords      start_coords;      /*  the last stroke's endpoint for undo */
 
-  GimpCoords      cur_coords;        /*  current coords                      */
-  GimpCoords      last_coords;       /*  last coords                         */
+  LigmaCoords      cur_coords;        /*  current coords                      */
+  LigmaCoords      last_coords;       /*  last coords                         */
 
-  GimpVector2     last_paint;        /*  last point that was painted         */
+  LigmaVector2     last_paint;        /*  last point that was painted         */
 
   gdouble         distance;          /*  distance traveled by brush          */
   gdouble         pixel_dist;        /*  distance in pixels                  */
@@ -57,7 +57,7 @@ struct _GimpPaintCore
 
   gboolean        use_saved_proj;    /*  keep the unmodified proj around     */
 
-  GimpPickable   *image_pickable;    /*  the image pickable                  */
+  LigmaPickable   *image_pickable;    /*  the image pickable                  */
 
   GHashTable     *undo_buffers;      /*  pixels which have been modified     */
   GeglBuffer     *saved_proj_buffer; /*  proj tiles which have been modified */
@@ -73,97 +73,97 @@ struct _GimpPaintCore
   GArray         *stroke_buffer;
 };
 
-struct _GimpPaintCoreClass
+struct _LigmaPaintCoreClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   /*  virtual functions  */
-  gboolean     (* start)            (GimpPaintCore    *core,
+  gboolean     (* start)            (LigmaPaintCore    *core,
                                      GList            *drawables,
-                                     GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
+                                     LigmaPaintOptions *paint_options,
+                                     const LigmaCoords *coords,
                                      GError          **error);
 
-  gboolean     (* pre_paint)        (GimpPaintCore    *core,
+  gboolean     (* pre_paint)        (LigmaPaintCore    *core,
                                      GList            *drawables,
-                                     GimpPaintOptions *paint_options,
-                                     GimpPaintState    paint_state,
+                                     LigmaPaintOptions *paint_options,
+                                     LigmaPaintState    paint_state,
                                      guint32           time);
-  void         (* paint)            (GimpPaintCore    *core,
+  void         (* paint)            (LigmaPaintCore    *core,
                                      GList            *drawables,
-                                     GimpPaintOptions *paint_options,
-                                     GimpSymmetry     *sym,
-                                     GimpPaintState    paint_state,
+                                     LigmaPaintOptions *paint_options,
+                                     LigmaSymmetry     *sym,
+                                     LigmaPaintState    paint_state,
                                      guint32           time);
-  void         (* post_paint)       (GimpPaintCore    *core,
+  void         (* post_paint)       (LigmaPaintCore    *core,
                                      GList            *drawables,
-                                     GimpPaintOptions *paint_options,
-                                     GimpPaintState    paint_state,
-                                     guint32           time);
-
-  void         (* interpolate)      (GimpPaintCore    *core,
-                                     GList            *drawables,
-                                     GimpPaintOptions *paint_options,
+                                     LigmaPaintOptions *paint_options,
+                                     LigmaPaintState    paint_state,
                                      guint32           time);
 
-  GeglBuffer * (* get_paint_buffer) (GimpPaintCore    *core,
-                                     GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options,
-                                     GimpLayerMode     paint_mode,
-                                     const GimpCoords *coords,
+  void         (* interpolate)      (LigmaPaintCore    *core,
+                                     GList            *drawables,
+                                     LigmaPaintOptions *paint_options,
+                                     guint32           time);
+
+  GeglBuffer * (* get_paint_buffer) (LigmaPaintCore    *core,
+                                     LigmaDrawable     *drawable,
+                                     LigmaPaintOptions *paint_options,
+                                     LigmaLayerMode     paint_mode,
+                                     const LigmaCoords *coords,
                                      gint             *paint_buffer_x,
                                      gint             *paint_buffer_y,
                                      gint             *paint_width,
                                      gint             *paint_height);
 
-  GimpUndo   * (* push_undo)        (GimpPaintCore    *core,
-                                     GimpImage        *image,
+  LigmaUndo   * (* push_undo)        (LigmaPaintCore    *core,
+                                     LigmaImage        *image,
                                      const gchar      *undo_desc);
 };
 
 
-GType     gimp_paint_core_get_type                  (void) G_GNUC_CONST;
+GType     ligma_paint_core_get_type                  (void) G_GNUC_CONST;
 
-void      gimp_paint_core_paint                     (GimpPaintCore    *core,
+void      ligma_paint_core_paint                     (LigmaPaintCore    *core,
                                                      GList            *drawables,
-                                                     GimpPaintOptions *paint_options,
-                                                     GimpPaintState    state,
+                                                     LigmaPaintOptions *paint_options,
+                                                     LigmaPaintState    state,
                                                      guint32           time);
 
-gboolean  gimp_paint_core_start                     (GimpPaintCore    *core,
+gboolean  ligma_paint_core_start                     (LigmaPaintCore    *core,
                                                      GList            *drawables,
-                                                     GimpPaintOptions *paint_options,
-                                                     const GimpCoords *coords,
+                                                     LigmaPaintOptions *paint_options,
+                                                     const LigmaCoords *coords,
                                                      GError          **error);
-void      gimp_paint_core_finish                    (GimpPaintCore    *core,
+void      ligma_paint_core_finish                    (LigmaPaintCore    *core,
                                                      GList            *drawables,
                                                      gboolean          push_undo);
-void      gimp_paint_core_cancel                    (GimpPaintCore    *core,
+void      ligma_paint_core_cancel                    (LigmaPaintCore    *core,
                                                      GList            *drawables);
-void      gimp_paint_core_cleanup                   (GimpPaintCore    *core);
+void      ligma_paint_core_cleanup                   (LigmaPaintCore    *core);
 
-void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
+void      ligma_paint_core_interpolate               (LigmaPaintCore    *core,
                                                      GList            *drawables,
-                                                     GimpPaintOptions *paint_options,
-                                                     const GimpCoords *coords,
+                                                     LigmaPaintOptions *paint_options,
+                                                     const LigmaCoords *coords,
                                                      guint32           time);
 
-void      gimp_paint_core_set_show_all              (GimpPaintCore    *core,
+void      ligma_paint_core_set_show_all              (LigmaPaintCore    *core,
                                                      gboolean          show_all);
-gboolean  gimp_paint_core_get_show_all              (GimpPaintCore    *core);
+gboolean  ligma_paint_core_get_show_all              (LigmaPaintCore    *core);
 
-void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,
-                                                     const GimpCoords *coords);
-void      gimp_paint_core_get_current_coords        (GimpPaintCore    *core,
-                                                     GimpCoords       *coords);
+void      ligma_paint_core_set_current_coords        (LigmaPaintCore    *core,
+                                                     const LigmaCoords *coords);
+void      ligma_paint_core_get_current_coords        (LigmaPaintCore    *core,
+                                                     LigmaCoords       *coords);
 
-void      gimp_paint_core_set_last_coords           (GimpPaintCore    *core,
-                                                     const GimpCoords *coords);
-void      gimp_paint_core_get_last_coords           (GimpPaintCore    *core,
-                                                     GimpCoords       *coords);
+void      ligma_paint_core_set_last_coords           (LigmaPaintCore    *core,
+                                                     const LigmaCoords *coords);
+void      ligma_paint_core_get_last_coords           (LigmaPaintCore    *core,
+                                                     LigmaCoords       *coords);
 
-void      gimp_paint_core_round_line                (GimpPaintCore    *core,
-                                                     GimpPaintOptions *options,
+void      ligma_paint_core_round_line                (LigmaPaintCore    *core,
+                                                     LigmaPaintOptions *options,
                                                      gboolean          constrain_15_degrees,
                                                      gdouble           constrain_offset_angle,
                                                      gdouble           constrain_xres,
@@ -172,44 +172,44 @@ void      gimp_paint_core_round_line                (GimpPaintCore    *core,
 
 /*  protected functions  */
 
-GeglBuffer * gimp_paint_core_get_paint_buffer       (GimpPaintCore    *core,
-                                                     GimpDrawable     *drawable,
-                                                     GimpPaintOptions *options,
-                                                     GimpLayerMode     paint_mode,
-                                                     const GimpCoords *coords,
+GeglBuffer * ligma_paint_core_get_paint_buffer       (LigmaPaintCore    *core,
+                                                     LigmaDrawable     *drawable,
+                                                     LigmaPaintOptions *options,
+                                                     LigmaLayerMode     paint_mode,
+                                                     const LigmaCoords *coords,
                                                      gint             *paint_buffer_x,
                                                      gint             *paint_buffer_y,
                                                      gint             *paint_width,
                                                      gint             *paint_height);
 
-GimpPickable * gimp_paint_core_get_image_pickable   (GimpPaintCore    *core);
+LigmaPickable * ligma_paint_core_get_image_pickable   (LigmaPaintCore    *core);
 
-GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core,
-                                                     GimpDrawable     *drawable);
-GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
+GeglBuffer * ligma_paint_core_get_orig_image         (LigmaPaintCore    *core,
+                                                     LigmaDrawable     *drawable);
+GeglBuffer * ligma_paint_core_get_orig_proj          (LigmaPaintCore    *core);
 
-void      gimp_paint_core_paste             (GimpPaintCore            *core,
-                                             const GimpTempBuf        *paint_mask,
+void      ligma_paint_core_paste             (LigmaPaintCore            *core,
+                                             const LigmaTempBuf        *paint_mask,
                                              gint                      paint_mask_offset_x,
                                              gint                      paint_mask_offset_y,
-                                             GimpDrawable             *drawable,
+                                             LigmaDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
-                                             GimpLayerMode             paint_mode,
-                                             GimpPaintApplicationMode  mode);
+                                             LigmaLayerMode             paint_mode,
+                                             LigmaPaintApplicationMode  mode);
 
-void      gimp_paint_core_replace           (GimpPaintCore            *core,
-                                             const GimpTempBuf        *paint_mask,
+void      ligma_paint_core_replace           (LigmaPaintCore            *core,
+                                             const LigmaTempBuf        *paint_mask,
                                              gint                      paint_mask_offset_x,
                                              gint                      paint_mask_offset_y,
-                                             GimpDrawable             *drawable,
+                                             LigmaDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
-                                             GimpPaintApplicationMode  mode);
+                                             LigmaPaintApplicationMode  mode);
 
-void      gimp_paint_core_smooth_coords             (GimpPaintCore    *core,
-                                                     GimpPaintOptions *paint_options,
-                                                     GimpCoords       *coords);
+void      ligma_paint_core_smooth_coords             (LigmaPaintCore    *core,
+                                                     LigmaPaintOptions *paint_options,
+                                                     LigmaCoords       *coords);
 
 
-#endif  /*  __GIMP_PAINT_CORE_H__  */
+#endif  /*  __LIGMA_PAINT_CORE_H__  */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-spawn.h
+ * ligma-spawn.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SPAWN_H__
-#define __GIMP_SPAWN_H__
+#ifndef __LIGMA_SPAWN_H__
+#define __LIGMA_SPAWN_H__
 
 
-gboolean   gimp_spawn_async       (gchar       **argv,
+gboolean   ligma_spawn_async       (gchar       **argv,
                                    gchar       **envp,
                                    GSpawnFlags   flags,
                                    GPid         *child_pid,
                                    GError      **error);
 
-void       gimp_spawn_set_cloexec (gint          fd);
+void       ligma_spawn_set_cloexec (gint          fd);
 
 
-#endif /* __GIMP_SPAWN_H__ */
+#endif /* __LIGMA_SPAWN_H__ */

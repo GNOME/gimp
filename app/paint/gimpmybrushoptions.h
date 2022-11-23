@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_MYBRUSH_OPTIONS_H__
-#define  __GIMP_MYBRUSH_OPTIONS_H__
+#ifndef  __LIGMA_MYBRUSH_OPTIONS_H__
+#define  __LIGMA_MYBRUSH_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_MYBRUSH_OPTIONS            (gimp_mybrush_options_get_type ())
-#define GIMP_MYBRUSH_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MYBRUSH_OPTIONS, GimpMybrushOptions))
-#define GIMP_MYBRUSH_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MYBRUSH_OPTIONS, GimpMybrushOptionsClass))
-#define GIMP_IS_MYBRUSH_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MYBRUSH_OPTIONS))
-#define GIMP_IS_MYBRUSH_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH_OPTIONS))
-#define GIMP_MYBRUSH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MYBRUSH_OPTIONS, GimpMybrushOptionsClass))
+#define LIGMA_TYPE_MYBRUSH_OPTIONS            (ligma_mybrush_options_get_type ())
+#define LIGMA_MYBRUSH_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MYBRUSH_OPTIONS, LigmaMybrushOptions))
+#define LIGMA_MYBRUSH_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MYBRUSH_OPTIONS, LigmaMybrushOptionsClass))
+#define LIGMA_IS_MYBRUSH_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MYBRUSH_OPTIONS))
+#define LIGMA_IS_MYBRUSH_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MYBRUSH_OPTIONS))
+#define LIGMA_MYBRUSH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MYBRUSH_OPTIONS, LigmaMybrushOptionsClass))
 
 
-typedef struct _GimpMybrushOptionsClass GimpMybrushOptionsClass;
+typedef struct _LigmaMybrushOptionsClass LigmaMybrushOptionsClass;
 
-struct _GimpMybrushOptions
+struct _LigmaMybrushOptions
 {
-  GimpPaintOptions  parent_instance;
+  LigmaPaintOptions  parent_instance;
 
   gdouble           radius;
   gdouble           opaque;
@@ -43,13 +43,13 @@ struct _GimpMybrushOptions
   gboolean          no_erasing;
 };
 
-struct _GimpMybrushOptionsClass
+struct _LigmaMybrushOptionsClass
 {
-  GimpPaintOptionsClass  parent_instance;
+  LigmaPaintOptionsClass  parent_instance;
 };
 
 
-GType   gimp_mybrush_options_get_type (void) G_GNUC_CONST;
+GType   ligma_mybrush_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_MYBRUSH_OPTIONS_H__  */
+#endif  /*  __LIGMA_MYBRUSH_OPTIONS_H__  */

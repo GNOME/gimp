@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * file-remote.c
- * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2014  Michael Natterer <mitch@ligma.org>
  *
  * Based on: URI plug-in, GIO/GVfs backend
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,16 +28,16 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmaprogress.h"
 
 #include "file-remote.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef enum
@@ -48,7 +48,7 @@ typedef enum
 
 typedef struct
 {
-  GimpProgress *progress;
+  LigmaProgress *progress;
   GCancellable *cancellable;
   gboolean      cancel;
   GMainLoop    *main_loop;
@@ -58,7 +58,7 @@ typedef struct
 typedef struct
 {
   RemoteCopyMode  mode;
-  GimpProgress   *progress;
+  LigmaProgress   *progress;
   GCancellable   *cancellable;
   gboolean        cancel;
   gint64          last_time;
@@ -68,18 +68,18 @@ typedef struct
 static void       file_remote_mount_volume_ready (GFile           *file,
                                                   GAsyncResult    *result,
                                                   RemoteMount     *mount);
-static void       file_remote_mount_file_cancel  (GimpProgress    *progress,
+static void       file_remote_mount_file_cancel  (LigmaProgress    *progress,
                                                   RemoteMount     *mount);
 
-static GFile    * file_remote_get_temp_file      (Gimp            *gimp,
+static GFile    * file_remote_get_temp_file      (Ligma            *ligma,
                                                   GFile           *file);
-static gboolean   file_remote_copy_file          (Gimp            *gimp,
+static gboolean   file_remote_copy_file          (Ligma            *ligma,
                                                   GFile           *src_file,
                                                   GFile           *dest_file,
                                                   RemoteCopyMode   mode,
-                                                  GimpProgress    *progress,
+                                                  LigmaProgress    *progress,
                                                   GError         **error);
-static void       file_remote_copy_file_cancel   (GimpProgress    *progress,
+static void       file_remote_copy_file_cancel   (LigmaProgress    *progress,
                                                   RemoteProgress  *remote_progress);
 
 static void       file_remote_progress_callback  (goffset          current_num_bytes,
@@ -90,27 +90,27 @@ static void       file_remote_progress_callback  (goffset          current_num_b
 /*  public functions  */
 
 gboolean
-file_remote_mount_file (Gimp          *gimp,
+file_remote_mount_file (Ligma          *ligma,
                         GFile         *file,
-                        GimpProgress  *progress,
+                        LigmaProgress  *progress,
                         GError       **error)
 {
   GMountOperation *operation;
   RemoteMount      mount = { 0, };
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   mount.progress  = progress;
   mount.main_loop = g_main_loop_new (NULL, FALSE);
 
-  operation = gimp_get_mount_operation (gimp, progress);
+  operation = ligma_get_mount_operation (ligma, progress);
 
   if (progress)
     {
-      gimp_progress_start (progress, TRUE, _("Mounting remote volume"));
+      ligma_progress_start (progress, TRUE, _("Mounting remote volume"));
 
       mount.cancellable = g_cancellable_new ();
 
@@ -135,7 +135,7 @@ file_remote_mount_file (Gimp          *gimp,
 
       g_object_unref (mount.cancellable);
 
-      gimp_progress_end (progress);
+      ligma_progress_end (progress);
     }
 
   g_object_unref (operation);
@@ -158,21 +158,21 @@ file_remote_mount_file (Gimp          *gimp,
 }
 
 GFile *
-file_remote_download_image (Gimp          *gimp,
+file_remote_download_image (Ligma          *ligma,
                             GFile         *file,
-                            GimpProgress  *progress,
+                            LigmaProgress  *progress,
                             GError       **error)
 {
   GFile *local_file;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  local_file = file_remote_get_temp_file (gimp, file);
+  local_file = file_remote_get_temp_file (ligma, file);
 
-  if (! file_remote_copy_file (gimp, file, local_file, DOWNLOAD,
+  if (! file_remote_copy_file (ligma, file, local_file, DOWNLOAD,
                                progress, error))
     {
       g_object_unref (local_file);
@@ -183,37 +183,37 @@ file_remote_download_image (Gimp          *gimp,
 }
 
 GFile *
-file_remote_upload_image_prepare (Gimp          *gimp,
+file_remote_upload_image_prepare (Ligma          *ligma,
                                   GFile         *file,
-                                  GimpProgress  *progress,
+                                  LigmaProgress  *progress,
                                   GError       **error)
 {
   GFile *local_file;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  local_file = file_remote_get_temp_file (gimp, file);
+  local_file = file_remote_get_temp_file (ligma, file);
 
   return local_file;
 }
 
 gboolean
-file_remote_upload_image_finish (Gimp          *gimp,
+file_remote_upload_image_finish (Ligma          *ligma,
                                  GFile         *file,
                                  GFile         *local_file,
-                                 GimpProgress  *progress,
+                                 LigmaProgress  *progress,
                                  GError       **error)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (G_IS_FILE (local_file), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! file_remote_copy_file (gimp, local_file, file, UPLOAD,
+  if (! file_remote_copy_file (ligma, local_file, file, UPLOAD,
                                progress, error))
     {
       return FALSE;
@@ -236,7 +236,7 @@ file_remote_mount_volume_ready (GFile        *file,
 }
 
 static void
-file_remote_mount_file_cancel (GimpProgress *progress,
+file_remote_mount_file_cancel (LigmaProgress *progress,
                                RemoteMount  *mount)
 {
   mount->cancel = TRUE;
@@ -245,36 +245,36 @@ file_remote_mount_file_cancel (GimpProgress *progress,
 }
 
 static GFile *
-file_remote_get_temp_file (Gimp  *gimp,
+file_remote_get_temp_file (Ligma  *ligma,
                            GFile *file)
 {
   gchar *basename;
   GFile *temp_file = NULL;
 
-  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+  basename = g_path_get_basename (ligma_file_get_utf8_name (file));
 
   if (basename)
     {
       const gchar *ext = strchr (basename, '.');
 
       if (ext && strlen (ext))
-        temp_file = gimp_get_temp_file (gimp, ext + 1);
+        temp_file = ligma_get_temp_file (ligma, ext + 1);
 
       g_free (basename);
     }
 
   if (! temp_file)
-    temp_file = gimp_get_temp_file (gimp, "xxx");
+    temp_file = ligma_get_temp_file (ligma, "xxx");
 
   return temp_file;
 }
 
 static gboolean
-file_remote_copy_file (Gimp            *gimp,
+file_remote_copy_file (Ligma            *ligma,
                        GFile           *src_file,
                        GFile           *dest_file,
                        RemoteCopyMode   mode,
-                       GimpProgress    *progress,
+                       LigmaProgress    *progress,
                        GError         **error)
 {
   RemoteProgress  remote_progress = { 0, };
@@ -286,7 +286,7 @@ file_remote_copy_file (Gimp            *gimp,
 
   if (progress)
     {
-      gimp_progress_start (progress, TRUE, _("Opening remote file"));
+      ligma_progress_start (progress, TRUE, _("Opening remote file"));
 
       remote_progress.cancellable = g_cancellable_new ();
 
@@ -305,8 +305,8 @@ file_remote_copy_file (Gimp            *gimp,
 
       g_object_unref (remote_progress.cancellable);
 
-      gimp_progress_set_value (progress, 1.0);
-      gimp_progress_end (progress);
+      ligma_progress_set_value (progress, 1.0);
+      ligma_progress_end (progress);
     }
   else
     {
@@ -319,7 +319,7 @@ file_remote_copy_file (Gimp            *gimp,
 }
 
 static void
-file_remote_copy_file_cancel (GimpProgress   *progress,
+file_remote_copy_file_cancel (LigmaProgress   *progress,
                               RemoteProgress *remote_progress)
 {
   remote_progress->cancel = TRUE;
@@ -360,14 +360,14 @@ file_remote_progress_callback (goffset  current_num_bytes,
           break;
 
         default:
-          gimp_assert_not_reached ();
+          ligma_assert_not_reached ();
         }
 
-      gimp_progress_set_text (progress->progress, format, done, total);
+      ligma_progress_set_text (progress->progress, format, done, total);
       g_free (total);
       g_free (done);
 
-      gimp_progress_set_value (progress->progress,
+      ligma_progress_set_value (progress->progress,
                                (gdouble) current_num_bytes /
                                (gdouble) total_num_bytes);
     }
@@ -387,13 +387,13 @@ file_remote_progress_callback (goffset  current_num_bytes,
           break;
 
         default:
-          gimp_assert_not_reached ();
+          ligma_assert_not_reached ();
         }
 
-      gimp_progress_set_text (progress->progress, format, done);
+      ligma_progress_set_text (progress->progress, format, done);
       g_free (done);
 
-      gimp_progress_pulse (progress->progress);
+      ligma_progress_pulse (progress->progress);
     }
 
   while (! progress->cancel && g_main_context_pending (NULL))

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 
 /* The history of this implementation is lonog and varied.  It was
  * originally done by Spencer and Peter, and worked fine in the 0.54
- * (motif only) release of GIMP.  Later revisions (0.99.something
+ * (motif only) release of LIGMA.  Later revisions (0.99.something
  * until about 1.1.4) completely changed the algorithm used, until it
  * bore little resemblance to the one described in the paper above.
  * The 0.54 version of the algorithm was then forwards ported to 1.1.4
@@ -50,33 +50,33 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpscanconvert.h"
-#include "core/gimptempbuf.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligmachannel.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmascanconvert.h"
+#include "core/ligmatempbuf.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpcanvasitem.h"
-#include "display/gimpdisplay.h"
+#include "display/ligmacanvasitem.h"
+#include "display/ligmadisplay.h"
 
-#include "gimpiscissorsoptions.h"
-#include "gimpiscissorstool.h"
-#include "gimptilehandleriscissors.h"
-#include "gimptoolcontrol.h"
+#include "ligmaiscissorsoptions.h"
+#include "ligmaiscissorstool.h"
+#include "ligmatilehandleriscissors.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  defines  */
@@ -115,95 +115,95 @@ struct _ICurve
 
 /*  local function prototypes  */
 
-static void          gimp_iscissors_tool_finalize       (GObject               *object);
+static void          ligma_iscissors_tool_finalize       (GObject               *object);
 
-static void          gimp_iscissors_tool_control        (GimpTool              *tool,
-                                                         GimpToolAction         action,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_button_press   (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+static void          ligma_iscissors_tool_control        (LigmaTool              *tool,
+                                                         LigmaToolAction         action,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_button_press   (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state,
-                                                         GimpButtonPressType    press_type,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_button_release (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+                                                         LigmaButtonPressType    press_type,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_button_release (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state,
-                                                         GimpButtonReleaseType  release_type,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_motion         (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+                                                         LigmaButtonReleaseType  release_type,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_motion         (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_oper_update    (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_oper_update    (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          GdkModifierType        state,
                                                          gboolean               proximity,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_cursor_update  (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_cursor_update  (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          GdkModifierType        state,
-                                                         GimpDisplay           *display);
-static gboolean      gimp_iscissors_tool_key_press      (GimpTool              *tool,
+                                                         LigmaDisplay           *display);
+static gboolean      ligma_iscissors_tool_key_press      (LigmaTool              *tool,
                                                          GdkEventKey           *kevent,
-                                                         GimpDisplay           *display);
-static const gchar * gimp_iscissors_tool_can_undo       (GimpTool              *tool,
-                                                         GimpDisplay           *display);
-static const gchar * gimp_iscissors_tool_can_redo       (GimpTool              *tool,
-                                                         GimpDisplay           *display);
-static gboolean      gimp_iscissors_tool_undo           (GimpTool              *tool,
-                                                         GimpDisplay           *display);
-static gboolean      gimp_iscissors_tool_redo           (GimpTool              *tool,
-                                                         GimpDisplay           *display);
+                                                         LigmaDisplay           *display);
+static const gchar * ligma_iscissors_tool_can_undo       (LigmaTool              *tool,
+                                                         LigmaDisplay           *display);
+static const gchar * ligma_iscissors_tool_can_redo       (LigmaTool              *tool,
+                                                         LigmaDisplay           *display);
+static gboolean      ligma_iscissors_tool_undo           (LigmaTool              *tool,
+                                                         LigmaDisplay           *display);
+static gboolean      ligma_iscissors_tool_redo           (LigmaTool              *tool,
+                                                         LigmaDisplay           *display);
 
-static void          gimp_iscissors_tool_draw           (GimpDrawTool          *draw_tool);
+static void          ligma_iscissors_tool_draw           (LigmaDrawTool          *draw_tool);
 
-static void          gimp_iscissors_tool_push_undo      (GimpIscissorsTool     *iscissors);
-static void          gimp_iscissors_tool_pop_undo       (GimpIscissorsTool     *iscissors);
-static void          gimp_iscissors_tool_free_redo      (GimpIscissorsTool     *iscissors);
+static void          ligma_iscissors_tool_push_undo      (LigmaIscissorsTool     *iscissors);
+static void          ligma_iscissors_tool_pop_undo       (LigmaIscissorsTool     *iscissors);
+static void          ligma_iscissors_tool_free_redo      (LigmaIscissorsTool     *iscissors);
 
-static void          gimp_iscissors_tool_halt           (GimpIscissorsTool     *iscissors,
-                                                         GimpDisplay           *display);
-static void          gimp_iscissors_tool_commit         (GimpIscissorsTool     *iscissors,
-                                                         GimpDisplay           *display);
+static void          ligma_iscissors_tool_halt           (LigmaIscissorsTool     *iscissors,
+                                                         LigmaDisplay           *display);
+static void          ligma_iscissors_tool_commit         (LigmaIscissorsTool     *iscissors,
+                                                         LigmaDisplay           *display);
 
-static void          iscissors_convert         (GimpIscissorsTool *iscissors,
-                                                GimpDisplay       *display);
-static GeglBuffer  * gradient_map_new          (GimpPickable      *pickable);
+static void          iscissors_convert         (LigmaIscissorsTool *iscissors,
+                                                LigmaDisplay       *display);
+static GeglBuffer  * gradient_map_new          (LigmaPickable      *pickable);
 
 static void          find_optimal_path         (GeglBuffer        *gradient_map,
-                                                GimpTempBuf       *dp_buf,
+                                                LigmaTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
                                                 gint               x2,
                                                 gint               y2,
                                                 gint               xs,
                                                 gint               ys);
-static void          find_max_gradient         (GimpIscissorsTool *iscissors,
-                                                GimpPickable      *pickable,
+static void          find_max_gradient         (LigmaIscissorsTool *iscissors,
+                                                LigmaPickable      *pickable,
                                                 gint              *x,
                                                 gint              *y);
-static void          calculate_segment         (GimpIscissorsTool *iscissors,
+static void          calculate_segment         (LigmaIscissorsTool *iscissors,
                                                 ISegment          *segment);
-static GimpCanvasItem * iscissors_draw_segment (GimpDrawTool      *draw_tool,
+static LigmaCanvasItem * iscissors_draw_segment (LigmaDrawTool      *draw_tool,
                                                 ISegment          *segment);
 
-static gint          mouse_over_vertex         (GimpIscissorsTool *iscissors,
+static gint          mouse_over_vertex         (LigmaIscissorsTool *iscissors,
                                                 gdouble            x,
                                                 gdouble            y);
-static gboolean      clicked_on_vertex         (GimpIscissorsTool *iscissors,
+static gboolean      clicked_on_vertex         (LigmaIscissorsTool *iscissors,
                                                 gdouble            x,
                                                 gdouble            y);
-static GList       * mouse_over_segment        (GimpIscissorsTool *iscissors,
+static GList       * mouse_over_segment        (LigmaIscissorsTool *iscissors,
                                                 gdouble            x,
                                                 gdouble            y);
-static gboolean      clicked_on_segment        (GimpIscissorsTool *iscissors,
+static gboolean      clicked_on_segment        (LigmaIscissorsTool *iscissors,
                                                 gdouble            x,
                                                 gdouble            y);
 
-static GPtrArray   * plot_pixels               (GimpTempBuf       *dp_buf,
+static GPtrArray   * plot_pixels               (LigmaTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
                                                 gint               xs,
@@ -239,7 +239,7 @@ static void          icurve_delete_segment     (ICurve            *curve,
 
 static void          icurve_close              (ICurve            *curve);
 
-static GimpScanConvert *
+static LigmaScanConvert *
                     icurve_create_scan_convert (ICurve            *curve);
 
 
@@ -274,54 +274,54 @@ static gint    diagonal_weight[256];
 static gint    direction_value[256][4];
 
 
-G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
-               GIMP_TYPE_SELECTION_TOOL)
+G_DEFINE_TYPE (LigmaIscissorsTool, ligma_iscissors_tool,
+               LIGMA_TYPE_SELECTION_TOOL)
 
-#define parent_class gimp_iscissors_tool_parent_class
+#define parent_class ligma_iscissors_tool_parent_class
 
 
 void
-gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
+ligma_iscissors_tool_register (LigmaToolRegisterCallback  callback,
                               gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_ISCISSORS_TOOL,
-                GIMP_TYPE_ISCISSORS_OPTIONS,
-                gimp_iscissors_options_gui,
+  (* callback) (LIGMA_TYPE_ISCISSORS_TOOL,
+                LIGMA_TYPE_ISCISSORS_OPTIONS,
+                ligma_iscissors_options_gui,
                 0,
-                "gimp-iscissors-tool",
+                "ligma-iscissors-tool",
                 _("Scissors Select"),
                 _("Scissors Select Tool: Select shapes using intelligent edge-fitting"),
                 N_("Intelligent _Scissors"),
                 "I",
-                NULL, GIMP_HELP_TOOL_ISCISSORS,
-                GIMP_ICON_TOOL_ISCISSORS,
+                NULL, LIGMA_HELP_TOOL_ISCISSORS,
+                LIGMA_ICON_TOOL_ISCISSORS,
                 data);
 }
 
 static void
-gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
+ligma_iscissors_tool_class_init (LigmaIscissorsToolClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  LigmaToolClass     *tool_class      = LIGMA_TOOL_CLASS (klass);
+  LigmaDrawToolClass *draw_tool_class = LIGMA_DRAW_TOOL_CLASS (klass);
   gint               i, j;
   gint               radius;
 
-  object_class->finalize     = gimp_iscissors_tool_finalize;
+  object_class->finalize     = ligma_iscissors_tool_finalize;
 
-  tool_class->control        = gimp_iscissors_tool_control;
-  tool_class->button_press   = gimp_iscissors_tool_button_press;
-  tool_class->button_release = gimp_iscissors_tool_button_release;
-  tool_class->motion         = gimp_iscissors_tool_motion;
-  tool_class->key_press      = gimp_iscissors_tool_key_press;
-  tool_class->oper_update    = gimp_iscissors_tool_oper_update;
-  tool_class->cursor_update  = gimp_iscissors_tool_cursor_update;
-  tool_class->can_undo       = gimp_iscissors_tool_can_undo;
-  tool_class->can_redo       = gimp_iscissors_tool_can_redo;
-  tool_class->undo           = gimp_iscissors_tool_undo;
-  tool_class->redo           = gimp_iscissors_tool_redo;
+  tool_class->control        = ligma_iscissors_tool_control;
+  tool_class->button_press   = ligma_iscissors_tool_button_press;
+  tool_class->button_release = ligma_iscissors_tool_button_release;
+  tool_class->motion         = ligma_iscissors_tool_motion;
+  tool_class->key_press      = ligma_iscissors_tool_key_press;
+  tool_class->oper_update    = ligma_iscissors_tool_oper_update;
+  tool_class->cursor_update  = ligma_iscissors_tool_cursor_update;
+  tool_class->can_undo       = ligma_iscissors_tool_can_undo;
+  tool_class->can_redo       = ligma_iscissors_tool_can_redo;
+  tool_class->undo           = ligma_iscissors_tool_undo;
+  tool_class->redo           = ligma_iscissors_tool_redo;
 
-  draw_tool_class->draw      = gimp_iscissors_tool_draw;
+  draw_tool_class->draw      = ligma_iscissors_tool_draw;
 
   for (i = 0; i < 256; i++)
     {
@@ -351,18 +351,18 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
 }
 
 static void
-gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
+ligma_iscissors_tool_init (LigmaIscissorsTool *iscissors)
 {
-  GimpTool *tool = GIMP_TOOL (iscissors);
+  LigmaTool *tool = LIGMA_TOOL (iscissors);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_snap_to     (tool->control, FALSE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask  (tool->control,
-                                     GIMP_DIRTY_IMAGE_SIZE |
-                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_ISCISSORS);
+  ligma_tool_control_set_scroll_lock (tool->control, TRUE);
+  ligma_tool_control_set_snap_to     (tool->control, FALSE);
+  ligma_tool_control_set_preserve    (tool->control, FALSE);
+  ligma_tool_control_set_dirty_mask  (tool->control,
+                                     LIGMA_DIRTY_IMAGE_SIZE |
+                                     LIGMA_DIRTY_ACTIVE_DRAWABLE);
+  ligma_tool_control_set_tool_cursor (tool->control,
+                                     LIGMA_TOOL_CURSOR_ISCISSORS);
 
   iscissors->op    = ISCISSORS_OP_NONE;
   iscissors->curve = icurve_new ();
@@ -370,9 +370,9 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
 }
 
 static void
-gimp_iscissors_tool_finalize (GObject *object)
+ligma_iscissors_tool_finalize (GObject *object)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (object);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (object);
 
   icurve_free (iscissors->curve);
   iscissors->curve = NULL;
@@ -381,41 +381,41 @@ gimp_iscissors_tool_finalize (GObject *object)
 }
 
 static void
-gimp_iscissors_tool_control (GimpTool       *tool,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
+ligma_iscissors_tool_control (LigmaTool       *tool,
+                             LigmaToolAction  action,
+                             LigmaDisplay    *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_iscissors_tool_halt (iscissors, display);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_iscissors_tool_halt (iscissors, display);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_iscissors_tool_commit (iscissors, display);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_iscissors_tool_commit (iscissors, display);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_iscissors_tool_button_press (GimpTool            *tool,
-                                  const GimpCoords    *coords,
+ligma_iscissors_tool_button_press (LigmaTool            *tool,
+                                  const LigmaCoords    *coords,
                                   guint32              time,
                                   GdkModifierType      state,
-                                  GimpButtonPressType  press_type,
-                                  GimpDisplay         *display)
+                                  LigmaButtonPressType  press_type,
+                                  LigmaDisplay         *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image     = gimp_display_get_image (display);
+  LigmaIscissorsTool    *iscissors = LIGMA_ISCISSORS_TOOL (tool);
+  LigmaIscissorsOptions *options   = LIGMA_ISCISSORS_TOOL_GET_OPTIONS (tool);
+  LigmaImage            *image     = ligma_display_get_image (display);
   ISegment             *segment;
 
   iscissors->x = RINT (coords->x);
@@ -423,26 +423,26 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
 
   /*  If the tool was being used in another image...reset it  */
   if (display != tool->display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, display);
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
   tool->display = display;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
   switch (iscissors->state)
     {
     case NO_ACTION:
       iscissors->state = SEED_PLACEMENT;
 
-      if (! (state & gimp_get_extend_selection_mask ()))
-        find_max_gradient (iscissors, GIMP_PICKABLE (image),
+      if (! (state & ligma_get_extend_selection_mask ()))
+        find_max_gradient (iscissors, LIGMA_PICKABLE (image),
                            &iscissors->x, &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, gimp_image_get_width  (image) - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, gimp_image_get_height (image) - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, ligma_image_get_width  (image) - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, ligma_image_get_height (image) - 1);
 
-      gimp_iscissors_tool_push_undo (iscissors);
+      ligma_iscissors_tool_push_undo (iscissors);
 
       segment = icurve_append_segment (iscissors->curve,
                                        iscissors->x,
@@ -451,7 +451,7 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
                                        iscissors->y);
 
       /*  Initialize the draw tool only on starting the tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+      ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
       break;
 
     default:
@@ -481,11 +481,11 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
         }
       /*  If the iscissors is closed, check if the click was inside  */
       else if (iscissors->curve->closed && iscissors->mask &&
-               gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
+               ligma_pickable_get_opacity_at (LIGMA_PICKABLE (iscissors->mask),
                                              iscissors->x,
                                              iscissors->y))
         {
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, display);
         }
       else if (! iscissors->curve->closed)
         {
@@ -495,7 +495,7 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
 
           iscissors->state = SEED_PLACEMENT;
 
-          gimp_iscissors_tool_push_undo (iscissors);
+          ligma_iscissors_tool_push_undo (iscissors);
 
           if (last->x1 == last->x2 &&
               last->y1 == last->y2)
@@ -521,44 +521,44 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
       break;
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 }
 
 static void
-iscissors_convert (GimpIscissorsTool *iscissors,
-                   GimpDisplay       *display)
+iscissors_convert (LigmaIscissorsTool *iscissors,
+                   LigmaDisplay       *display)
 {
-  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (iscissors);
-  GimpImage            *image   = gimp_display_get_image (display);
-  GimpScanConvert      *sc;
+  LigmaSelectionOptions *options = LIGMA_SELECTION_TOOL_GET_OPTIONS (iscissors);
+  LigmaImage            *image   = ligma_display_get_image (display);
+  LigmaScanConvert      *sc;
 
   sc = icurve_create_scan_convert (iscissors->curve);
 
   if (iscissors->mask)
     g_object_unref (iscissors->mask);
 
-  iscissors->mask = gimp_channel_new_mask (image,
-                                           gimp_image_get_width  (image),
-                                           gimp_image_get_height (image));
-  gimp_scan_convert_render (sc,
-                            gimp_drawable_get_buffer (GIMP_DRAWABLE (iscissors->mask)),
+  iscissors->mask = ligma_channel_new_mask (image,
+                                           ligma_image_get_width  (image),
+                                           ligma_image_get_height (image));
+  ligma_scan_convert_render (sc,
+                            ligma_drawable_get_buffer (LIGMA_DRAWABLE (iscissors->mask)),
                             0, 0, options->antialias);
 
-  gimp_scan_convert_free (sc);
+  ligma_scan_convert_free (sc);
 }
 
 static void
-gimp_iscissors_tool_button_release (GimpTool              *tool,
-                                    const GimpCoords      *coords,
+ligma_iscissors_tool_button_release (LigmaTool              *tool,
+                                    const LigmaCoords      *coords,
                                     guint32                time,
                                     GdkModifierType        state,
-                                    GimpButtonReleaseType  release_type,
-                                    GimpDisplay           *display)
+                                    LigmaButtonReleaseType  release_type,
+                                    LigmaDisplay           *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
+  LigmaIscissorsTool    *iscissors = LIGMA_ISCISSORS_TOOL (tool);
+  LigmaIscissorsOptions *options   = LIGMA_ISCISSORS_TOOL_GET_OPTIONS (tool);
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -566,9 +566,9 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
   if (iscissors->state == WAITING)
     return;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
-  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
+  if (release_type != LIGMA_BUTTON_RELEASE_CANCEL)
     {
       /*  Progress to the next stage of intelligent selection  */
       switch (iscissors->state)
@@ -581,13 +581,13 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 
               ISegment *segment = g_queue_peek_head (iscissors->curve->segments);
 
-              if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
+              if (ligma_draw_tool_on_handle (LIGMA_DRAW_TOOL (tool), display,
                                             iscissors->x, iscissors->y,
-                                            GIMP_HANDLE_CIRCLE,
+                                            LIGMA_HANDLE_CIRCLE,
                                             segment->x1, segment->y1,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_HANDLE_ANCHOR_CENTER))
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_HANDLE_ANCHOR_CENTER))
                 {
                   iscissors->x = segment->x1;
                   iscissors->y = segment->y1;
@@ -600,7 +600,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                       calculate_segment (iscissors, segment);
                     }
 
-                  gimp_iscissors_tool_free_redo (iscissors);
+                  ligma_iscissors_tool_free_redo (iscissors);
                 }
               else
                 {
@@ -612,11 +612,11 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                       if (! options->interactive)
                         calculate_segment (iscissors, segment);
 
-                      gimp_iscissors_tool_free_redo (iscissors);
+                      ligma_iscissors_tool_free_redo (iscissors);
                     }
                   else
                     {
-                      gimp_iscissors_tool_pop_undo (iscissors);
+                      ligma_iscissors_tool_pop_undo (iscissors);
                     }
                 }
             }
@@ -624,12 +624,12 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
             {
               iscissors->curve->first_point = FALSE;
 
-              gimp_iscissors_tool_free_redo (iscissors);
+              ligma_iscissors_tool_free_redo (iscissors);
             }
           break;
 
         case SEED_ADJUSTMENT:
-          if (state & gimp_get_modify_selection_mask ())
+          if (state & ligma_get_modify_selection_mask ())
             {
               if (iscissors->segment1 && iscissors->segment2)
                 {
@@ -656,7 +656,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                 }
             }
 
-          gimp_iscissors_tool_free_redo (iscissors);
+          ligma_iscissors_tool_free_redo (iscissors);
           break;
 
         default:
@@ -669,7 +669,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
         {
         case SEED_PLACEMENT:
         case SEED_ADJUSTMENT:
-          gimp_iscissors_tool_pop_undo (iscissors);
+          ligma_iscissors_tool_pop_undo (iscissors);
           break;
 
         default:
@@ -682,7 +682,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
   else
     iscissors->state = WAITING;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 
   /*  convert the curves into a region  */
   if (iscissors->curve->closed)
@@ -690,32 +690,32 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_iscissors_tool_motion (GimpTool         *tool,
-                            const GimpCoords *coords,
+ligma_iscissors_tool_motion (LigmaTool         *tool,
+                            const LigmaCoords *coords,
                             guint32           time,
                             GdkModifierType   state,
-                            GimpDisplay      *display)
+                            LigmaDisplay      *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image     = gimp_display_get_image (display);
+  LigmaIscissorsTool    *iscissors = LIGMA_ISCISSORS_TOOL (tool);
+  LigmaIscissorsOptions *options   = LIGMA_ISCISSORS_TOOL_GET_OPTIONS (tool);
+  LigmaImage            *image     = ligma_display_get_image (display);
   ISegment             *segment;
 
   if (iscissors->state == NO_ACTION)
     return;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
   iscissors->x = RINT (coords->x);
   iscissors->y = RINT (coords->y);
 
   /*  Hold the shift key down to disable the auto-edge snap feature  */
-  if (! (state & gimp_get_extend_selection_mask ()))
-    find_max_gradient (iscissors, GIMP_PICKABLE (image),
+  if (! (state & ligma_get_extend_selection_mask ()))
+    find_max_gradient (iscissors, LIGMA_PICKABLE (image),
                        &iscissors->x, &iscissors->y);
 
-  iscissors->x = CLAMP (iscissors->x, 0, gimp_image_get_width  (image) - 1);
-  iscissors->y = CLAMP (iscissors->y, 0, gimp_image_get_height (image) - 1);
+  iscissors->x = CLAMP (iscissors->x, 0, ligma_image_get_width  (image) - 1);
+  iscissors->y = CLAMP (iscissors->y, 0, ligma_image_get_height (image) - 1);
 
   switch (iscissors->state)
     {
@@ -761,15 +761,15 @@ gimp_iscissors_tool_motion (GimpTool         *tool,
       break;
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 }
 
 static void
-gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
+ligma_iscissors_tool_draw (LigmaDrawTool *draw_tool)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (draw_tool);
-  GimpCanvasItem       *item;
+  LigmaIscissorsTool    *iscissors = LIGMA_ISCISSORS_TOOL (draw_tool);
+  LigmaIscissorsOptions *options   = LIGMA_ISCISSORS_TOOL_GET_OPTIONS (draw_tool);
+  LigmaCanvasItem       *item;
   GList                *list;
 
   /*  First, render all segments and lines  */
@@ -793,12 +793,12 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                 segment == iscissors->segment2)))
             {
               if (! options->interactive)
-                item = gimp_draw_tool_add_line (draw_tool,
+                item = ligma_draw_tool_add_line (draw_tool,
                                                 segment->x1, segment->y1,
                                                 segment->x2, segment->y2);
 
               if (item)
-                gimp_canvas_item_set_highlight (item, TRUE);
+                ligma_canvas_item_set_highlight (item, TRUE);
             }
         }
     }
@@ -815,18 +815,18 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
           gboolean adjustment = (iscissors->state == SEED_ADJUSTMENT &&
                                  segment == iscissors->segment1);
 
-          item = gimp_draw_tool_add_handle (draw_tool,
+          item = ligma_draw_tool_add_handle (draw_tool,
                                             adjustment ?
-                                            GIMP_HANDLE_CROSS :
-                                            GIMP_HANDLE_FILLED_CIRCLE,
+                                            LIGMA_HANDLE_CROSS :
+                                            LIGMA_HANDLE_FILLED_CIRCLE,
                                             segment->x1,
                                             segment->y1,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_HANDLE_ANCHOR_CENTER);
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_HANDLE_ANCHOR_CENTER);
 
           if (adjustment)
-            gimp_canvas_item_set_highlight (item, TRUE);
+            ligma_canvas_item_set_highlight (item, TRUE);
         }
 
       /*  Draw the last point if the curve is not closed  */
@@ -834,28 +834,28 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
         {
           gboolean placement = (iscissors->state == SEED_PLACEMENT);
 
-          item = gimp_draw_tool_add_handle (draw_tool,
+          item = ligma_draw_tool_add_handle (draw_tool,
                                             placement ?
-                                            GIMP_HANDLE_CROSS :
-                                            GIMP_HANDLE_FILLED_CIRCLE,
+                                            LIGMA_HANDLE_CROSS :
+                                            LIGMA_HANDLE_FILLED_CIRCLE,
                                             segment->x2,
                                             segment->y2,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                            GIMP_HANDLE_ANCHOR_CENTER);
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                            LIGMA_HANDLE_ANCHOR_CENTER);
 
           if (placement)
-            gimp_canvas_item_set_highlight (item, TRUE);
+            ligma_canvas_item_set_highlight (item, TRUE);
         }
     }
 }
 
-static GimpCanvasItem *
-iscissors_draw_segment (GimpDrawTool *draw_tool,
+static LigmaCanvasItem *
+iscissors_draw_segment (LigmaDrawTool *draw_tool,
                         ISegment     *segment)
 {
-  GimpCanvasItem *item;
-  GimpVector2    *points;
+  LigmaCanvasItem *item;
+  LigmaVector2    *points;
   gpointer       *point;
   gint            i, len;
 
@@ -864,7 +864,7 @@ iscissors_draw_segment (GimpDrawTool *draw_tool,
 
   len = segment->points->len;
 
-  points = g_new (GimpVector2, len);
+  points = g_new (LigmaVector2, len);
 
   for (i = 0, point = segment->points->pdata; i < len; i++, point++)
     {
@@ -874,7 +874,7 @@ iscissors_draw_segment (GimpDrawTool *draw_tool,
       points[i].y = (coords >> 16);
     }
 
-  item = gimp_draw_tool_add_lines (draw_tool, points, len, NULL, FALSE);
+  item = ligma_draw_tool_add_lines (draw_tool, points, len, NULL, FALSE);
 
   g_free (points);
 
@@ -882,38 +882,38 @@ iscissors_draw_segment (GimpDrawTool *draw_tool,
 }
 
 static void
-gimp_iscissors_tool_oper_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
+ligma_iscissors_tool_oper_update (LigmaTool         *tool,
+                                 const LigmaCoords *coords,
                                  GdkModifierType   state,
                                  gboolean          proximity,
-                                 GimpDisplay      *display)
+                                 LigmaDisplay      *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+  LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
   /* parent sets a message in the status bar, but it will be replaced here */
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y) > 1)
     {
-      GdkModifierType snap_mask   = gimp_get_extend_selection_mask ();
-      GdkModifierType remove_mask = gimp_get_modify_selection_mask ();
+      GdkModifierType snap_mask   = ligma_get_extend_selection_mask ();
+      GdkModifierType remove_mask = ligma_get_modify_selection_mask ();
 
       if (state & remove_mask)
         {
-          gimp_tool_replace_status (tool, display,
+          ligma_tool_replace_status (tool, display,
                                     _("Click to remove this point"));
           iscissors->op = ISCISSORS_OP_REMOVE_POINT;
         }
       else
         {
           gchar *status =
-            gimp_suggest_modifiers (_("Click-Drag to move this point"),
+            ligma_suggest_modifiers (_("Click-Drag to move this point"),
                                     (snap_mask | remove_mask) & ~state,
                                     _("%s: disable auto-snap"),
                                     _("%s: remove this point"),
                                     NULL);
-          gimp_tool_replace_status (tool, display, "%s", status);
+          ligma_tool_replace_status (tool, display, "%s", status);
           g_free (status);
           iscissors->op = ISCISSORS_OP_MOVE_POINT;
         }
@@ -922,34 +922,34 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
     {
       ISegment *segment = g_queue_peek_head (iscissors->curve->segments);
 
-      if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
+      if (ligma_draw_tool_on_handle (LIGMA_DRAW_TOOL (tool), display,
                                     RINT (coords->x), RINT (coords->y),
-                                    GIMP_HANDLE_CIRCLE,
+                                    LIGMA_HANDLE_CIRCLE,
                                     segment->x1, segment->y1,
-                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                    GIMP_HANDLE_ANCHOR_CENTER))
+                                    LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                    LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                    LIGMA_HANDLE_ANCHOR_CENTER))
         {
-          gimp_tool_replace_status (tool, display,
+          ligma_tool_replace_status (tool, display,
                                     _("Click to close the curve"));
           iscissors->op = ISCISSORS_OP_CONNECT;
         }
       else
         {
-          gimp_tool_replace_status (tool, display,
+          ligma_tool_replace_status (tool, display,
                                     _("Click to add a point on this segment"));
           iscissors->op = ISCISSORS_OP_ADD_POINT;
         }
     }
   else if (iscissors->curve->closed && iscissors->mask)
     {
-      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
+      if (ligma_pickable_get_opacity_at (LIGMA_PICKABLE (iscissors->mask),
                                         RINT (coords->x),
                                         RINT (coords->y)))
         {
           if (proximity)
             {
-              gimp_tool_replace_status (tool, display,
+              ligma_tool_replace_status (tool, display,
                                         _("Click or press Enter to convert to"
                                           " a selection"));
             }
@@ -959,7 +959,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
         {
           if (proximity)
             {
-              gimp_tool_replace_status (tool, display,
+              ligma_tool_replace_status (tool, display,
                                         _("Press Enter to convert to a"
                                           " selection"));
             }
@@ -973,15 +973,15 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
         case WAITING:
           if (proximity)
             {
-              GdkModifierType  snap_mask = gimp_get_extend_selection_mask ();
+              GdkModifierType  snap_mask = ligma_get_extend_selection_mask ();
               gchar           *status;
 
-              status = gimp_suggest_modifiers (_("Click or Click-Drag to add a"
+              status = ligma_suggest_modifiers (_("Click or Click-Drag to add a"
                                                  " point"),
                                                snap_mask & ~state,
                                                _("%s: disable auto-snap"),
                                                NULL, NULL);
-              gimp_tool_replace_status (tool, display, "%s", status);
+              ligma_tool_replace_status (tool, display, "%s", status);
               g_free (status);
             }
           iscissors->op = ISCISSORS_OP_ADD_POINT;
@@ -996,74 +996,74 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
 }
 
 static void
-gimp_iscissors_tool_cursor_update (GimpTool         *tool,
-                                   const GimpCoords *coords,
+ligma_iscissors_tool_cursor_update (LigmaTool         *tool,
+                                   const LigmaCoords *coords,
                                    GdkModifierType   state,
-                                   GimpDisplay      *display)
+                                   LigmaDisplay      *display)
 {
-  GimpIscissorsTool  *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
+  LigmaIscissorsTool  *iscissors = LIGMA_ISCISSORS_TOOL (tool);
+  LigmaCursorModifier  modifier  = LIGMA_CURSOR_MODIFIER_NONE;
 
   switch (iscissors->op)
     {
     case ISCISSORS_OP_SELECT:
       {
-        GimpSelectionOptions *options;
+        LigmaSelectionOptions *options;
 
-        options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+        options = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
 
         /* Do not overwrite the modifiers for add, subtract, intersect */
-        if (options->operation == GIMP_CHANNEL_OP_REPLACE)
+        if (options->operation == LIGMA_CHANNEL_OP_REPLACE)
           {
-            modifier = GIMP_CURSOR_MODIFIER_SELECT;
+            modifier = LIGMA_CURSOR_MODIFIER_SELECT;
           }
       }
       break;
 
     case ISCISSORS_OP_MOVE_POINT:
-      modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier = LIGMA_CURSOR_MODIFIER_MOVE;
       break;
 
     case ISCISSORS_OP_ADD_POINT:
-      modifier = GIMP_CURSOR_MODIFIER_PLUS;
+      modifier = LIGMA_CURSOR_MODIFIER_PLUS;
       break;
 
     case ISCISSORS_OP_REMOVE_POINT:
-      modifier = GIMP_CURSOR_MODIFIER_MINUS;
+      modifier = LIGMA_CURSOR_MODIFIER_MINUS;
       break;
 
     case ISCISSORS_OP_CONNECT:
-      modifier = GIMP_CURSOR_MODIFIER_JOIN;
+      modifier = LIGMA_CURSOR_MODIFIER_JOIN;
       break;
 
     case ISCISSORS_OP_IMPOSSIBLE:
-      modifier = GIMP_CURSOR_MODIFIER_BAD;
+      modifier = LIGMA_CURSOR_MODIFIER_BAD;
       break;
 
     default:
       break;
     }
 
-  if (modifier != GIMP_CURSOR_MODIFIER_NONE)
+  if (modifier != LIGMA_CURSOR_MODIFIER_NONE)
     {
-      gimp_tool_set_cursor (tool, display,
-                            GIMP_CURSOR_MOUSE,
-                            GIMP_TOOL_CURSOR_ISCISSORS,
+      ligma_tool_set_cursor (tool, display,
+                            LIGMA_CURSOR_MOUSE,
+                            LIGMA_TOOL_CURSOR_ISCISSORS,
                             modifier);
     }
   else
     {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords,
+      LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords,
                                                      state, display);
     }
 }
 
 static gboolean
-gimp_iscissors_tool_key_press (GimpTool    *tool,
+ligma_iscissors_tool_key_press (LigmaTool    *tool,
                                GdkEventKey *kevent,
-                               GimpDisplay *display)
+                               LigmaDisplay *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
   if (display != tool->display)
     return FALSE;
@@ -1078,30 +1078,30 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 
           if (g_queue_get_length (iscissors->curve->segments) > 1)
             {
-              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+              ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
-              gimp_iscissors_tool_push_undo (iscissors);
+              ligma_iscissors_tool_push_undo (iscissors);
               icurve_delete_segment (iscissors->curve, segment);
-              gimp_iscissors_tool_free_redo (iscissors);
+              ligma_iscissors_tool_free_redo (iscissors);
 
-              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+              ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
             }
           else if (segment->x2 != segment->x1 || segment->y2 != segment->y1)
             {
-              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+              ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
-              gimp_iscissors_tool_push_undo (iscissors);
+              ligma_iscissors_tool_push_undo (iscissors);
               segment->x2 = segment->x1;
               segment->y2 = segment->y1;
               g_ptr_array_remove_range (segment->points,
                                         0, segment->points->len);
-              gimp_iscissors_tool_free_redo (iscissors);
+              ligma_iscissors_tool_free_redo (iscissors);
 
-              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+              ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
             }
           else
             {
-              gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+              ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, display);
             }
           return TRUE;
         }
@@ -1112,13 +1112,13 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
     case GDK_KEY_ISO_Enter:
       if (iscissors->curve->closed && iscissors->mask)
         {
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, display);
           return TRUE;
         }
       return FALSE;
 
     case GDK_KEY_Escape:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, display);
       return TRUE;
 
     default:
@@ -1127,10 +1127,10 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_iscissors_tool_can_undo (GimpTool    *tool,
-                              GimpDisplay *display)
+ligma_iscissors_tool_can_undo (LigmaTool    *tool,
+                              LigmaDisplay *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
   if (! iscissors->undo_stack)
     return NULL;
@@ -1139,10 +1139,10 @@ gimp_iscissors_tool_can_undo (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_iscissors_tool_can_redo (GimpTool    *tool,
-                              GimpDisplay *display)
+ligma_iscissors_tool_can_redo (LigmaTool    *tool,
+                              LigmaDisplay *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
   if (! iscissors->redo_stack)
     return NULL;
@@ -1151,12 +1151,12 @@ gimp_iscissors_tool_can_redo (GimpTool    *tool,
 }
 
 static gboolean
-gimp_iscissors_tool_undo (GimpTool    *tool,
-                          GimpDisplay *display)
+ligma_iscissors_tool_undo (LigmaTool    *tool,
+                          LigmaDisplay *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
   iscissors->redo_stack = g_list_prepend (iscissors->redo_stack,
                                           iscissors->curve);
@@ -1170,27 +1170,27 @@ gimp_iscissors_tool_undo (GimpTool    *tool,
     {
       iscissors->state = NO_ACTION;
 
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+      ligma_draw_tool_stop (LIGMA_DRAW_TOOL (tool));
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 
   return TRUE;
 }
 
 static gboolean
-gimp_iscissors_tool_redo (GimpTool    *tool,
-                          GimpDisplay *display)
+ligma_iscissors_tool_redo (LigmaTool    *tool,
+                          LigmaDisplay *display)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  LigmaIscissorsTool *iscissors = LIGMA_ISCISSORS_TOOL (tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
   if (! iscissors->undo_stack)
     {
       iscissors->state = WAITING;
 
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+      ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
     }
 
   iscissors->undo_stack = g_list_prepend (iscissors->undo_stack,
@@ -1201,20 +1201,20 @@ gimp_iscissors_tool_redo (GimpTool    *tool,
   iscissors->redo_stack = g_list_remove (iscissors->redo_stack,
                                          iscissors->curve);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 
   return TRUE;
 }
 
 static void
-gimp_iscissors_tool_push_undo (GimpIscissorsTool *iscissors)
+ligma_iscissors_tool_push_undo (LigmaIscissorsTool *iscissors)
 {
   iscissors->undo_stack = g_list_prepend (iscissors->undo_stack,
                                           icurve_copy (iscissors->curve));
 }
 
 static void
-gimp_iscissors_tool_pop_undo (GimpIscissorsTool *iscissors)
+ligma_iscissors_tool_pop_undo (LigmaIscissorsTool *iscissors)
 {
   icurve_free (iscissors->curve);
   iscissors->curve = iscissors->undo_stack->data;
@@ -1226,24 +1226,24 @@ gimp_iscissors_tool_pop_undo (GimpIscissorsTool *iscissors)
     {
       iscissors->state = NO_ACTION;
 
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (iscissors));
+      ligma_draw_tool_stop (LIGMA_DRAW_TOOL (iscissors));
     }
 }
 
 static void
-gimp_iscissors_tool_free_redo (GimpIscissorsTool *iscissors)
+ligma_iscissors_tool_free_redo (LigmaIscissorsTool *iscissors)
 {
   g_list_free_full (iscissors->redo_stack,
                     (GDestroyNotify) icurve_free);
   iscissors->redo_stack = NULL;
 
   /*  update the undo actions / menu items  */
-  gimp_image_flush (gimp_display_get_image (GIMP_TOOL (iscissors)->display));
+  ligma_image_flush (ligma_display_get_image (LIGMA_TOOL (iscissors)->display));
 }
 
 static void
-gimp_iscissors_tool_halt (GimpIscissorsTool *iscissors,
-                          GimpDisplay       *display)
+ligma_iscissors_tool_halt (LigmaIscissorsTool *iscissors,
+                          LigmaDisplay       *display)
 {
   icurve_clear (iscissors->curve);
 
@@ -1268,12 +1268,12 @@ gimp_iscissors_tool_halt (GimpIscissorsTool *iscissors,
 }
 
 static void
-gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
-                            GimpDisplay       *display)
+ligma_iscissors_tool_commit (LigmaIscissorsTool *iscissors,
+                            LigmaDisplay       *display)
 {
-  GimpTool             *tool    = GIMP_TOOL (iscissors);
-  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image   = gimp_display_get_image (display);
+  LigmaTool             *tool    = LIGMA_TOOL (iscissors);
+  LigmaSelectionOptions *options = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
+  LigmaImage            *image   = ligma_display_get_image (display);
 
   if (! iscissors->curve->closed)
     {
@@ -1298,8 +1298,8 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
 
   if (iscissors->curve->closed && iscissors->mask)
     {
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   gimp_tool_get_undo_desc (tool),
+      ligma_channel_select_channel (ligma_image_get_mask (image),
+                                   ligma_tool_get_undo_desc (tool),
                                    iscissors->mask,
                                    0, 0,
                                    options->operation,
@@ -1307,7 +1307,7 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
                                    options->feather_radius,
                                    options->feather_radius);
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 }
 
@@ -1315,7 +1315,7 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
 /* XXX need some scan-conversion routines from somewhere.  maybe. ? */
 
 static gint
-mouse_over_vertex (GimpIscissorsTool *iscissors,
+mouse_over_vertex (LigmaIscissorsTool *iscissors,
                    gdouble            x,
                    gdouble            y)
 {
@@ -1335,28 +1335,28 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
     {
       ISegment *segment = list->data;
 
-      if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
-                                    GIMP_TOOL (iscissors)->display,
+      if (ligma_draw_tool_on_handle (LIGMA_DRAW_TOOL (iscissors),
+                                    LIGMA_TOOL (iscissors)->display,
                                     x, y,
-                                    GIMP_HANDLE_CIRCLE,
+                                    LIGMA_HANDLE_CIRCLE,
                                     segment->x1, segment->y1,
-                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                    GIMP_HANDLE_ANCHOR_CENTER))
+                                    LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                    LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                    LIGMA_HANDLE_ANCHOR_CENTER))
         {
           iscissors->segment1 = segment;
 
           if (segments_found++)
             return segments_found;
         }
-      else if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
-                                         GIMP_TOOL (iscissors)->display,
+      else if (ligma_draw_tool_on_handle (LIGMA_DRAW_TOOL (iscissors),
+                                         LIGMA_TOOL (iscissors)->display,
                                          x, y,
-                                         GIMP_HANDLE_CIRCLE,
+                                         LIGMA_HANDLE_CIRCLE,
                                          segment->x2, segment->y2,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_HANDLE_ANCHOR_CENTER))
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_HANDLE_ANCHOR_CENTER))
         {
           iscissors->segment2 = segment;
 
@@ -1369,7 +1369,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
 }
 
 static gboolean
-clicked_on_vertex (GimpIscissorsTool *iscissors,
+clicked_on_vertex (LigmaIscissorsTool *iscissors,
                    gdouble            x,
                    gdouble            y)
 {
@@ -1377,7 +1377,7 @@ clicked_on_vertex (GimpIscissorsTool *iscissors,
 
   if (segments_found > 1)
     {
-      gimp_iscissors_tool_push_undo (iscissors);
+      ligma_iscissors_tool_push_undo (iscissors);
 
       return TRUE;
     }
@@ -1394,7 +1394,7 @@ clicked_on_vertex (GimpIscissorsTool *iscissors,
 
 
 static GList *
-mouse_over_segment (GimpIscissorsTool *iscissors,
+mouse_over_segment (LigmaIscissorsTool *iscissors,
                     gdouble            x,
                     gdouble            y)
 {
@@ -1427,10 +1427,10 @@ mouse_over_segment (GimpIscissorsTool *iscissors,
           ty = coords >> 16;
 
           /*  Is the specified point close enough to the segment?  */
-          if (gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (iscissors),
-                                                   GIMP_TOOL (iscissors)->display,
+          if (ligma_draw_tool_calc_distance_square (LIGMA_DRAW_TOOL (iscissors),
+                                                   LIGMA_TOOL (iscissors)->display,
                                                    tx, ty,
-                                                   x, y) < SQR (GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2))
+                                                   x, y) < SQR (LIGMA_TOOL_HANDLE_SIZE_CIRCLE / 2))
             {
               return list;
             }
@@ -1441,7 +1441,7 @@ mouse_over_segment (GimpIscissorsTool *iscissors,
 }
 
 static gboolean
-clicked_on_segment (GimpIscissorsTool *iscissors,
+clicked_on_segment (LigmaIscissorsTool *iscissors,
                     gdouble            x,
                     gdouble            y)
 {
@@ -1458,7 +1458,7 @@ clicked_on_segment (GimpIscissorsTool *iscissors,
       ISegment *segment = list->data;
       ISegment *new_segment;
 
-      gimp_iscissors_tool_push_undo (iscissors);
+      ligma_iscissors_tool_push_undo (iscissors);
 
       new_segment = icurve_insert_segment (iscissors->curve,
                                            list,
@@ -1478,11 +1478,11 @@ clicked_on_segment (GimpIscissorsTool *iscissors,
 
 
 static void
-calculate_segment (GimpIscissorsTool *iscissors,
+calculate_segment (LigmaIscissorsTool *iscissors,
                    ISegment          *segment)
 {
-  GimpDisplay  *display  = GIMP_TOOL (iscissors)->display;
-  GimpPickable *pickable = GIMP_PICKABLE (gimp_display_get_image (display));
+  LigmaDisplay  *display  = LIGMA_TOOL (iscissors)->display;
+  LigmaPickable *pickable = LIGMA_PICKABLE (ligma_display_get_image (display));
   gint          width;
   gint          height;
   gint          xs, ys, xe, ye;
@@ -1549,11 +1549,11 @@ calculate_segment (GimpIscissorsTool *iscissors,
     {
       /*  If the bounding box has width and height...  */
 
-      GimpTempBuf *dp_buf; /*  dynamic programming buffer  */
+      LigmaTempBuf *dp_buf; /*  dynamic programming buffer  */
       gint         dp_width  = (x2 - x1);
       gint         dp_height = (y2 - y1);
 
-      dp_buf = gimp_temp_buf_new (dp_width, dp_height,
+      dp_buf = ligma_temp_buf_new (dp_width, dp_height,
                                   babl_format ("Y u32"));
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
@@ -1563,7 +1563,7 @@ calculate_segment (GimpIscissorsTool *iscissors,
       /*  get a list of the pixels in the optimal path  */
       segment->points = plot_pixels (dp_buf, x1, y1, xs, ys, xe, ye);
 
-      gimp_temp_buf_unref (dp_buf);
+      ligma_temp_buf_unref (dp_buf);
     }
   else if ((x2 - x1) == 0)
     {
@@ -1670,7 +1670,7 @@ calculate_link (GeglSampler         *map_sampler,
 
 
 static GPtrArray *
-plot_pixels (GimpTempBuf *dp_buf,
+plot_pixels (LigmaTempBuf *dp_buf,
              gint         x1,
              gint         y1,
              gint         xs,
@@ -1681,12 +1681,12 @@ plot_pixels (GimpTempBuf *dp_buf,
   gint       x, y;
   guint32    coords;
   gint       link;
-  gint       width = gimp_temp_buf_get_width (dp_buf);
+  gint       width = ligma_temp_buf_get_width (dp_buf);
   guint     *data;
   GPtrArray *list;
 
   /*  Start the data pointer at the correct location  */
-  data = (guint *) gimp_temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
+  data = (guint *) ligma_temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
 
   x = xe;
   y = ye;
@@ -1715,11 +1715,11 @@ plot_pixels (GimpTempBuf *dp_buf,
 #define PACK(x, y)    ((((y) & 0xff) << 8) | ((x) & 0xff))
 #define OFFSET(pixel) ((gint8)((pixel) & 0xff) + \
                        ((gint8)(((pixel) & 0xff00) >> 8)) * \
-                       gimp_temp_buf_get_width (dp_buf))
+                       ligma_temp_buf_get_width (dp_buf))
 
 static void
 find_optimal_path (GeglBuffer  *gradient_map,
-                   GimpTempBuf *dp_buf,
+                   LigmaTempBuf *dp_buf,
                    gint         x1,
                    gint         y1,
                    gint         x2,
@@ -1743,8 +1743,8 @@ find_optimal_path (GeglBuffer  *gradient_map,
   guint32              pixel[8];
   guint32             *data;
   guint32             *d;
-  gint                 dp_buf_width  = gimp_temp_buf_get_width  (dp_buf);
-  gint                 dp_buf_height = gimp_temp_buf_get_height (dp_buf);
+  gint                 dp_buf_width  = ligma_temp_buf_get_width  (dp_buf);
+  gint                 dp_buf_height = ligma_temp_buf_get_height (dp_buf);
 
   /*  initialize the gradient map sampler and extent  */
   map_sampler = gegl_buffer_sampler_new (gradient_map,
@@ -1753,7 +1753,7 @@ find_optimal_path (GeglBuffer  *gradient_map,
   map_extent  = gegl_buffer_get_extent (gradient_map);
 
   /*  initialize the dynamic programming buffer  */
-  data = (guint32 *) gimp_temp_buf_data_clear (dp_buf);
+  data = (guint32 *) ligma_temp_buf_data_clear (dp_buf);
 
   /*  what directions are we filling the array in according to?  */
   dirx = (xs - x1 == 0) ? 1 : -1;
@@ -1866,24 +1866,24 @@ find_optimal_path (GeglBuffer  *gradient_map,
 }
 
 static GeglBuffer *
-gradient_map_new (GimpPickable *pickable)
+gradient_map_new (LigmaPickable *pickable)
 {
   GeglBuffer      *buffer;
   GeglTileHandler *handler;
 
-  buffer = gimp_pickable_get_buffer (pickable);
+  buffer = ligma_pickable_get_buffer (pickable);
 
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                             gegl_buffer_get_width  (buffer),
                                             gegl_buffer_get_height (buffer)),
                             babl_format_n (babl_type ("u8"), 2));
 
-  handler = gimp_tile_handler_iscissors_new (pickable);
+  handler = ligma_tile_handler_iscissors_new (pickable);
 
-  gimp_tile_handler_validate_assign (GIMP_TILE_HANDLER_VALIDATE (handler),
+  ligma_tile_handler_validate_assign (LIGMA_TILE_HANDLER_VALIDATE (handler),
                                      buffer);
 
-  gimp_tile_handler_validate_invalidate (GIMP_TILE_HANDLER_VALIDATE (handler),
+  ligma_tile_handler_validate_invalidate (LIGMA_TILE_HANDLER_VALIDATE (handler),
                                          GEGL_RECTANGLE (0, 0,
                                                          gegl_buffer_get_width  (buffer),
                                                          gegl_buffer_get_height (buffer)));
@@ -1894,8 +1894,8 @@ gradient_map_new (GimpPickable *pickable)
 }
 
 static void
-find_max_gradient (GimpIscissorsTool *iscissors,
-                   GimpPickable      *pickable,
+find_max_gradient (LigmaIscissorsTool *iscissors,
+                   LigmaPickable      *pickable,
                    gint              *x,
                    gint              *y)
 {
@@ -2136,15 +2136,15 @@ icurve_close (ICurve *curve)
   curve->closed = TRUE;
 }
 
-static GimpScanConvert *
+static LigmaScanConvert *
 icurve_create_scan_convert (ICurve *curve)
 {
-  GimpScanConvert *sc;
+  LigmaScanConvert *sc;
   GList           *list;
-  GimpVector2     *points;
+  LigmaVector2     *points;
   guint            n_total_points = 0;
 
-  sc = gimp_scan_convert_new ();
+  sc = ligma_scan_convert_new ();
 
   for (list = g_queue_peek_tail_link (curve->segments);
        list;
@@ -2155,7 +2155,7 @@ icurve_create_scan_convert (ICurve *curve)
       n_total_points += segment->points->len;
     }
 
-  points = g_new (GimpVector2, n_total_points);
+  points = g_new (LigmaVector2, n_total_points);
   n_total_points = 0;
 
   /* go over the segments in reverse order, adding the points we have */
@@ -2181,7 +2181,7 @@ icurve_create_scan_convert (ICurve *curve)
       n_total_points += n_points;
     }
 
-  gimp_scan_convert_add_polyline (sc, n_total_points, points, TRUE);
+  ligma_scan_convert_add_polyline (sc, n_total_points, points, TRUE);
   g_free (points);
 
   return sc;

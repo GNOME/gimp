@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpunitstore.h
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaunitstore.h
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,102 +19,102 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_UNIT_STORE_H__
-#define __GIMP_UNIT_STORE_H__
+#ifndef __LIGMA_UNIT_STORE_H__
+#define __LIGMA_UNIT_STORE_H__
 
 G_BEGIN_DECLS
 
 
 enum
 {
-  GIMP_UNIT_STORE_UNIT,
-  GIMP_UNIT_STORE_UNIT_FACTOR,
-  GIMP_UNIT_STORE_UNIT_DIGITS,
-  GIMP_UNIT_STORE_UNIT_IDENTIFIER,
-  GIMP_UNIT_STORE_UNIT_SYMBOL,
-  GIMP_UNIT_STORE_UNIT_ABBREVIATION,
-  GIMP_UNIT_STORE_UNIT_SINGULAR,
-  GIMP_UNIT_STORE_UNIT_PLURAL,
-  GIMP_UNIT_STORE_UNIT_SHORT_FORMAT,
-  GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
-  GIMP_UNIT_STORE_UNIT_COLUMNS,
-  GIMP_UNIT_STORE_FIRST_VALUE = GIMP_UNIT_STORE_UNIT_COLUMNS
+  LIGMA_UNIT_STORE_UNIT,
+  LIGMA_UNIT_STORE_UNIT_FACTOR,
+  LIGMA_UNIT_STORE_UNIT_DIGITS,
+  LIGMA_UNIT_STORE_UNIT_IDENTIFIER,
+  LIGMA_UNIT_STORE_UNIT_SYMBOL,
+  LIGMA_UNIT_STORE_UNIT_ABBREVIATION,
+  LIGMA_UNIT_STORE_UNIT_SINGULAR,
+  LIGMA_UNIT_STORE_UNIT_PLURAL,
+  LIGMA_UNIT_STORE_UNIT_SHORT_FORMAT,
+  LIGMA_UNIT_STORE_UNIT_LONG_FORMAT,
+  LIGMA_UNIT_STORE_UNIT_COLUMNS,
+  LIGMA_UNIT_STORE_FIRST_VALUE = LIGMA_UNIT_STORE_UNIT_COLUMNS
 };
 
 
-#define GIMP_TYPE_UNIT_STORE            (gimp_unit_store_get_type ())
-#define GIMP_UNIT_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_STORE, GimpUnitStore))
-#define GIMP_UNIT_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_STORE, GimpUnitStoreClass))
-#define GIMP_IS_UNIT_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNIT_STORE))
-#define GIMP_IS_UNIT_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_STORE))
-#define GIMP_UNIT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_STORE, GimpUnitStoreClass))
+#define LIGMA_TYPE_UNIT_STORE            (ligma_unit_store_get_type ())
+#define LIGMA_UNIT_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UNIT_STORE, LigmaUnitStore))
+#define LIGMA_UNIT_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_UNIT_STORE, LigmaUnitStoreClass))
+#define LIGMA_IS_UNIT_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UNIT_STORE))
+#define LIGMA_IS_UNIT_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_UNIT_STORE))
+#define LIGMA_UNIT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_UNIT_STORE, LigmaUnitStoreClass))
 
 
-typedef struct _GimpUnitStorePrivate GimpUnitStorePrivate;
-typedef struct _GimpUnitStoreClass   GimpUnitStoreClass;
+typedef struct _LigmaUnitStorePrivate LigmaUnitStorePrivate;
+typedef struct _LigmaUnitStoreClass   LigmaUnitStoreClass;
 
-struct _GimpUnitStore
+struct _LigmaUnitStore
 {
   GObject               parent_instance;
 
-  GimpUnitStorePrivate *priv;
+  LigmaUnitStorePrivate *priv;
 };
 
-struct _GimpUnitStoreClass
+struct _LigmaUnitStoreClass
 {
   GObjectClass  parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-GType           gimp_unit_store_get_type         (void) G_GNUC_CONST;
+GType           ligma_unit_store_get_type         (void) G_GNUC_CONST;
 
-GimpUnitStore * gimp_unit_store_new              (gint           num_values);
+LigmaUnitStore * ligma_unit_store_new              (gint           num_values);
 
-void            gimp_unit_store_set_has_pixels   (GimpUnitStore *store,
+void            ligma_unit_store_set_has_pixels   (LigmaUnitStore *store,
                                                   gboolean       has_pixels);
-gboolean        gimp_unit_store_get_has_pixels   (GimpUnitStore *store);
+gboolean        ligma_unit_store_get_has_pixels   (LigmaUnitStore *store);
 
-void            gimp_unit_store_set_has_percent  (GimpUnitStore *store,
+void            ligma_unit_store_set_has_percent  (LigmaUnitStore *store,
                                                   gboolean       has_percent);
-gboolean        gimp_unit_store_get_has_percent  (GimpUnitStore *store);
+gboolean        ligma_unit_store_get_has_percent  (LigmaUnitStore *store);
 
-void            gimp_unit_store_set_pixel_value  (GimpUnitStore *store,
+void            ligma_unit_store_set_pixel_value  (LigmaUnitStore *store,
                                                   gint           index,
                                                   gdouble        value);
-void            gimp_unit_store_set_pixel_values (GimpUnitStore *store,
+void            ligma_unit_store_set_pixel_values (LigmaUnitStore *store,
                                                   gdouble        first_value,
                                                   ...);
-void            gimp_unit_store_set_resolution   (GimpUnitStore *store,
+void            ligma_unit_store_set_resolution   (LigmaUnitStore *store,
                                                   gint           index,
                                                   gdouble        resolution);
-void            gimp_unit_store_set_resolutions  (GimpUnitStore *store,
+void            ligma_unit_store_set_resolutions  (LigmaUnitStore *store,
                                                   gdouble        first_resolution,
                                                   ...);
-gdouble         gimp_unit_store_get_nth_value    (GimpUnitStore *store,
-                                                  GimpUnit       unit,
+gdouble         ligma_unit_store_get_nth_value    (LigmaUnitStore *store,
+                                                  LigmaUnit       unit,
                                                   gint           index);
-void            gimp_unit_store_get_values       (GimpUnitStore *store,
-                                                  GimpUnit       unit,
+void            ligma_unit_store_get_values       (LigmaUnitStore *store,
+                                                  LigmaUnit       unit,
                                                   gdouble       *first_value,
                                                   ...);
 
-void            _gimp_unit_store_sync_units      (GimpUnitStore *store);
+void            _ligma_unit_store_sync_units      (LigmaUnitStore *store);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_UNIT_STORE_H__ */
+#endif  /* __LIGMA_UNIT_STORE_H__ */

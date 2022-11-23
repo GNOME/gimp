@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfonts_pdb.c
+ * ligmafonts_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpfonts
- * @title: gimpfonts
+ * SECTION: ligmafonts
+ * @title: ligmafonts
  * @short_description: Operations related to fonts.
  *
  * Operations related to fonts.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_fonts_refresh:
+ * ligma_fonts_refresh:
  *
  * Refresh current fonts. This function always succeeds.
  *
@@ -48,29 +48,29 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_fonts_refresh (void)
+ligma_fonts_refresh (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-refresh",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-fonts-refresh",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_fonts_get_list:
+ * ligma_fonts_get_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieve the list of loaded fonts.
@@ -82,25 +82,25 @@ gimp_fonts_refresh (void)
  *          The returned value must be freed with g_strfreev().
  **/
 gchar **
-gimp_fonts_get_list (const gchar *filter)
+ligma_fonts_get_list (const gchar *filter)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **font_list = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-get-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-fonts-get-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    font_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    font_list = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return font_list;
 }

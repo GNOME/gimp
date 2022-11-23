@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdbprogress.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapdbprogress.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,20 +25,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "gimp.h"
-#include "gimpparamspecs.h"
-#include "gimppdbprogress.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmaparamspecs.h"
+#include "ligmapdbprogress.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -50,38 +50,38 @@ enum
 };
 
 
-static void      gimp_pdb_progress_class_init     (GimpPdbProgressClass *klass);
-static void      gimp_pdb_progress_init           (GimpPdbProgress      *progress,
-                                                   GimpPdbProgressClass *klass);
-static void gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface);
+static void      ligma_pdb_progress_class_init     (LigmaPdbProgressClass *klass);
+static void      ligma_pdb_progress_init           (LigmaPdbProgress      *progress,
+                                                   LigmaPdbProgressClass *klass);
+static void ligma_pdb_progress_progress_iface_init (LigmaProgressInterface *iface);
 
-static void      gimp_pdb_progress_constructed    (GObject            *object);
-static void      gimp_pdb_progress_dispose        (GObject            *object);
-static void      gimp_pdb_progress_finalize       (GObject            *object);
-static void      gimp_pdb_progress_set_property   (GObject            *object,
+static void      ligma_pdb_progress_constructed    (GObject            *object);
+static void      ligma_pdb_progress_dispose        (GObject            *object);
+static void      ligma_pdb_progress_finalize       (GObject            *object);
+static void      ligma_pdb_progress_set_property   (GObject            *object,
                                                    guint               property_id,
                                                    const GValue       *value,
                                                    GParamSpec         *pspec);
 
-static GimpProgress * gimp_pdb_progress_progress_start   (GimpProgress *progress,
+static LigmaProgress * ligma_pdb_progress_progress_start   (LigmaProgress *progress,
                                                           gboolean      cancellable,
                                                           const gchar  *message);
-static void     gimp_pdb_progress_progress_end           (GimpProgress *progress);
-static gboolean gimp_pdb_progress_progress_is_active     (GimpProgress *progress);
-static void     gimp_pdb_progress_progress_set_text      (GimpProgress *progress,
+static void     ligma_pdb_progress_progress_end           (LigmaProgress *progress);
+static gboolean ligma_pdb_progress_progress_is_active     (LigmaProgress *progress);
+static void     ligma_pdb_progress_progress_set_text      (LigmaProgress *progress,
                                                           const gchar  *message);
-static void     gimp_pdb_progress_progress_set_value     (GimpProgress *progress,
+static void     ligma_pdb_progress_progress_set_value     (LigmaProgress *progress,
                                                           gdouble       percentage);
-static gdouble  gimp_pdb_progress_progress_get_value     (GimpProgress *progress);
-static void     gimp_pdb_progress_progress_pulse         (GimpProgress *progress);
-static guint32  gimp_pdb_progress_progress_get_window_id (GimpProgress *progress);
+static gdouble  ligma_pdb_progress_progress_get_value     (LigmaProgress *progress);
+static void     ligma_pdb_progress_progress_pulse         (LigmaProgress *progress);
+static guint32  ligma_pdb_progress_progress_get_window_id (LigmaProgress *progress);
 
 
 static GObjectClass *parent_class = NULL;
 
 
 GType
-gimp_pdb_progress_get_type (void)
+ligma_pdb_progress_get_type (void)
 {
   static GType type = 0;
 
@@ -89,29 +89,29 @@ gimp_pdb_progress_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GimpPdbProgressClass),
+        sizeof (LigmaPdbProgressClass),
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_pdb_progress_class_init,
+        (GClassInitFunc) ligma_pdb_progress_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
-        sizeof (GimpPdbProgress),
+        sizeof (LigmaPdbProgress),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_pdb_progress_init,
+        (GInstanceInitFunc) ligma_pdb_progress_init,
       };
 
       const GInterfaceInfo progress_iface_info =
       {
-        (GInterfaceInitFunc) gimp_pdb_progress_progress_iface_init,
+        (GInterfaceInitFunc) ligma_pdb_progress_progress_iface_init,
         NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
 
       type = g_type_register_static (G_TYPE_OBJECT,
-                                     "GimpPdbProgress",
+                                     "LigmaPdbProgress",
                                      &info, 0);
 
-      g_type_add_interface_static (type, GIMP_TYPE_PROGRESS,
+      g_type_add_interface_static (type, LIGMA_TYPE_PROGRESS,
                                    &progress_iface_info);
     }
 
@@ -119,72 +119,72 @@ gimp_pdb_progress_get_type (void)
 }
 
 static void
-gimp_pdb_progress_class_init (GimpPdbProgressClass *klass)
+ligma_pdb_progress_class_init (LigmaPdbProgressClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructed  = gimp_pdb_progress_constructed;
-  object_class->dispose      = gimp_pdb_progress_dispose;
-  object_class->finalize     = gimp_pdb_progress_finalize;
-  object_class->set_property = gimp_pdb_progress_set_property;
+  object_class->constructed  = ligma_pdb_progress_constructed;
+  object_class->dispose      = ligma_pdb_progress_dispose;
+  object_class->finalize     = ligma_pdb_progress_finalize;
+  object_class->set_property = ligma_pdb_progress_set_property;
 
   g_object_class_install_property (object_class, PROP_PDB,
                                    g_param_spec_object ("pdb", NULL, NULL,
-                                                        GIMP_TYPE_PDB,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_PDB,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CALLBACK_NAME,
                                    g_param_spec_string ("callback-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_pdb_progress_init (GimpPdbProgress      *progress,
-                        GimpPdbProgressClass *klass)
+ligma_pdb_progress_init (LigmaPdbProgress      *progress,
+                        LigmaPdbProgressClass *klass)
 {
   klass->progresses = g_list_prepend (klass->progresses, progress);
 }
 
 static void
-gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface)
+ligma_pdb_progress_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start         = gimp_pdb_progress_progress_start;
-  iface->end           = gimp_pdb_progress_progress_end;
-  iface->is_active     = gimp_pdb_progress_progress_is_active;
-  iface->set_text      = gimp_pdb_progress_progress_set_text;
-  iface->set_value     = gimp_pdb_progress_progress_set_value;
-  iface->get_value     = gimp_pdb_progress_progress_get_value;
-  iface->pulse         = gimp_pdb_progress_progress_pulse;
-  iface->get_window_id = gimp_pdb_progress_progress_get_window_id;
+  iface->start         = ligma_pdb_progress_progress_start;
+  iface->end           = ligma_pdb_progress_progress_end;
+  iface->is_active     = ligma_pdb_progress_progress_is_active;
+  iface->set_text      = ligma_pdb_progress_progress_set_text;
+  iface->set_value     = ligma_pdb_progress_progress_set_value;
+  iface->get_value     = ligma_pdb_progress_progress_get_value;
+  iface->pulse         = ligma_pdb_progress_progress_pulse;
+  iface->get_window_id = ligma_pdb_progress_progress_get_window_id;
 }
 
 static void
-gimp_pdb_progress_constructed (GObject *object)
+ligma_pdb_progress_constructed (GObject *object)
 {
-  GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
+  LigmaPdbProgress *progress = LIGMA_PDB_PROGRESS (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_PDB (progress->pdb));
-  gimp_assert (GIMP_IS_CONTEXT (progress->context));
+  ligma_assert (LIGMA_IS_PDB (progress->pdb));
+  ligma_assert (LIGMA_IS_CONTEXT (progress->context));
 }
 
 static void
-gimp_pdb_progress_dispose (GObject *object)
+ligma_pdb_progress_dispose (GObject *object)
 {
-  GimpPdbProgressClass *klass = GIMP_PDB_PROGRESS_GET_CLASS (object);
+  LigmaPdbProgressClass *klass = LIGMA_PDB_PROGRESS_GET_CLASS (object);
 
   klass->progresses = g_list_remove (klass->progresses, object);
 
@@ -192,9 +192,9 @@ gimp_pdb_progress_dispose (GObject *object)
 }
 
 static void
-gimp_pdb_progress_finalize (GObject *object)
+ligma_pdb_progress_finalize (GObject *object)
 {
-  GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
+  LigmaPdbProgress *progress = LIGMA_PDB_PROGRESS (object);
 
   g_clear_object (&progress->pdb);
   g_clear_object (&progress->context);
@@ -204,12 +204,12 @@ gimp_pdb_progress_finalize (GObject *object)
 }
 
 static void
-gimp_pdb_progress_set_property (GObject      *object,
+ligma_pdb_progress_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
+  LigmaPdbProgress *progress = LIGMA_PDB_PROGRESS (object);
 
   switch (property_id)
     {
@@ -238,8 +238,8 @@ gimp_pdb_progress_set_property (GObject      *object,
 }
 
 static gdouble
-gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
-                                GimpProgressCommand  command,
+ligma_pdb_progress_run_callback (LigmaPdbProgress     *progress,
+                                LigmaProgressCommand  command,
                                 const gchar         *text,
                                 gdouble              value)
 {
@@ -247,35 +247,35 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
   if (progress->callback_name && ! progress->callback_busy)
     {
-      GimpValueArray *return_vals;
+      LigmaValueArray *return_vals;
 
       progress->callback_busy = TRUE;
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (progress->pdb,
+        ligma_pdb_execute_procedure_by_name (progress->pdb,
                                             progress->context,
                                             NULL, NULL,
                                             progress->callback_name,
-                                            GIMP_TYPE_PROGRESS_COMMAND, command,
+                                            LIGMA_TYPE_PROGRESS_COMMAND, command,
                                             G_TYPE_STRING,              text,
                                             G_TYPE_DOUBLE,              value,
                                             G_TYPE_NONE);
 
-      if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
-          GIMP_PDB_SUCCESS)
+      if (g_value_get_enum (ligma_value_array_index (return_vals, 0)) !=
+          LIGMA_PDB_SUCCESS)
         {
-          gimp_message (progress->context->gimp, NULL, GIMP_MESSAGE_ERROR,
+          ligma_message (progress->context->ligma, NULL, LIGMA_MESSAGE_ERROR,
                         _("Unable to run %s callback. "
                           "The corresponding plug-in may have crashed."),
                         g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
-      else if (gimp_value_array_length (return_vals) >= 2 &&
-               G_VALUE_HOLDS_DOUBLE (gimp_value_array_index (return_vals, 1)))
+      else if (ligma_value_array_length (return_vals) >= 2 &&
+               G_VALUE_HOLDS_DOUBLE (ligma_value_array_index (return_vals, 1)))
         {
-          retval = g_value_get_double (gimp_value_array_index (return_vals, 1));
+          retval = g_value_get_double (ligma_value_array_index (return_vals, 1));
         }
 
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
 
       progress->callback_busy = FALSE;
     }
@@ -283,17 +283,17 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
   return retval;
 }
 
-static GimpProgress *
-gimp_pdb_progress_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_pdb_progress_progress_start (LigmaProgress *progress,
                                   gboolean      cancellable,
                                   const gchar  *message)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   if (! pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress,
-                                      GIMP_PROGRESS_COMMAND_START,
+      ligma_pdb_progress_run_callback (pdb_progress,
+                                      LIGMA_PROGRESS_COMMAND_START,
                                       message, 0.0);
 
       pdb_progress->active = TRUE;
@@ -306,14 +306,14 @@ gimp_pdb_progress_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_pdb_progress_progress_end (GimpProgress *progress)
+ligma_pdb_progress_progress_end (LigmaProgress *progress)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   if (pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress,
-                                      GIMP_PROGRESS_COMMAND_END,
+      ligma_pdb_progress_run_callback (pdb_progress,
+                                      LIGMA_PROGRESS_COMMAND_END,
                                       NULL, 0.0);
 
       pdb_progress->active = FALSE;
@@ -322,83 +322,83 @@ gimp_pdb_progress_progress_end (GimpProgress *progress)
 }
 
 static gboolean
-gimp_pdb_progress_progress_is_active (GimpProgress *progress)
+ligma_pdb_progress_progress_is_active (LigmaProgress *progress)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   return pdb_progress->active;
 }
 
 static void
-gimp_pdb_progress_progress_set_text (GimpProgress *progress,
+ligma_pdb_progress_progress_set_text (LigmaProgress *progress,
                                      const gchar  *message)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   if (pdb_progress->active)
-    gimp_pdb_progress_run_callback (pdb_progress,
-                                    GIMP_PROGRESS_COMMAND_SET_TEXT,
+    ligma_pdb_progress_run_callback (pdb_progress,
+                                    LIGMA_PROGRESS_COMMAND_SET_TEXT,
                                     message, 0.0);
 }
 
 static void
-gimp_pdb_progress_progress_set_value (GimpProgress *progress,
+ligma_pdb_progress_progress_set_value (LigmaProgress *progress,
                                       gdouble       percentage)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   if (pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress,
-                                      GIMP_PROGRESS_COMMAND_SET_VALUE,
+      ligma_pdb_progress_run_callback (pdb_progress,
+                                      LIGMA_PROGRESS_COMMAND_SET_VALUE,
                                       NULL, percentage);
       pdb_progress->value = percentage;
     }
 }
 
 static gdouble
-gimp_pdb_progress_progress_get_value (GimpProgress *progress)
+ligma_pdb_progress_progress_get_value (LigmaProgress *progress)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   return pdb_progress->value;
 
 }
 
 static void
-gimp_pdb_progress_progress_pulse (GimpProgress *progress)
+ligma_pdb_progress_progress_pulse (LigmaProgress *progress)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   if (pdb_progress->active)
-    gimp_pdb_progress_run_callback (pdb_progress,
-                                    GIMP_PROGRESS_COMMAND_PULSE,
+    ligma_pdb_progress_run_callback (pdb_progress,
+                                    LIGMA_PROGRESS_COMMAND_PULSE,
                                     NULL, 0.0);
 }
 
 static guint32
-gimp_pdb_progress_progress_get_window_id (GimpProgress *progress)
+ligma_pdb_progress_progress_get_window_id (LigmaProgress *progress)
 {
-  GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
+  LigmaPdbProgress *pdb_progress = LIGMA_PDB_PROGRESS (progress);
 
   return (guint32)
-    gimp_pdb_progress_run_callback (pdb_progress,
-                                    GIMP_PROGRESS_COMMAND_GET_WINDOW,
+    ligma_pdb_progress_run_callback (pdb_progress,
+                                    LIGMA_PROGRESS_COMMAND_GET_WINDOW,
                                     NULL, 0.0);
 }
 
-GimpPdbProgress *
-gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
+LigmaPdbProgress *
+ligma_pdb_progress_get_by_callback (LigmaPdbProgressClass *klass,
                                    const gchar          *callback_name)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_PDB_PROGRESS_CLASS (klass), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_PROGRESS_CLASS (klass), NULL);
   g_return_val_if_fail (callback_name != NULL, NULL);
 
   for (list = klass->progresses; list; list = g_list_next (list))
     {
-      GimpPdbProgress *progress = list->data;
+      LigmaPdbProgress *progress = list->data;
 
       if (! g_strcmp0 (callback_name, progress->callback_name))
         return progress;

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_GRID_OPTIONS_H__
-#define __GIMP_TRANSFORM_GRID_OPTIONS_H__
+#ifndef __LIGMA_TRANSFORM_GRID_OPTIONS_H__
+#define __LIGMA_TRANSFORM_GRID_OPTIONS_H__
 
 
-#include "gimptransformoptions.h"
+#include "ligmatransformoptions.h"
 
 
-#define GIMP_TYPE_TRANSFORM_GRID_OPTIONS            (gimp_transform_grid_options_get_type ())
-#define GIMP_TRANSFORM_GRID_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSFORM_GRID_OPTIONS, GimpTransformGridOptions))
-#define GIMP_TRANSFORM_GRID_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_GRID_OPTIONS, GimpTransformGridOptionsClass))
-#define GIMP_IS_TRANSFORM_GRID_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_GRID_OPTIONS))
-#define GIMP_IS_TRANSFORM_GRID_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_GRID_OPTIONS))
-#define GIMP_TRANSFORM_GRID_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_GRID_OPTIONS, GimpTransformGridOptionsClass))
+#define LIGMA_TYPE_TRANSFORM_GRID_OPTIONS            (ligma_transform_grid_options_get_type ())
+#define LIGMA_TRANSFORM_GRID_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRANSFORM_GRID_OPTIONS, LigmaTransformGridOptions))
+#define LIGMA_TRANSFORM_GRID_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRANSFORM_GRID_OPTIONS, LigmaTransformGridOptionsClass))
+#define LIGMA_IS_TRANSFORM_GRID_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRANSFORM_GRID_OPTIONS))
+#define LIGMA_IS_TRANSFORM_GRID_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRANSFORM_GRID_OPTIONS))
+#define LIGMA_TRANSFORM_GRID_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRANSFORM_GRID_OPTIONS, LigmaTransformGridOptionsClass))
 
 
-typedef struct _GimpTransformGridOptions      GimpTransformGridOptions;
-typedef struct _GimpTransformGridOptionsClass GimpTransformGridOptionsClass;
+typedef struct _LigmaTransformGridOptions      LigmaTransformGridOptions;
+typedef struct _LigmaTransformGridOptionsClass LigmaTransformGridOptionsClass;
 
-struct _GimpTransformGridOptions
+struct _LigmaTransformGridOptions
 {
-  GimpTransformOptions  parent_instance;
+  LigmaTransformOptions  parent_instance;
 
   gboolean              direction_linked;
   gboolean              show_preview;
   gboolean              composited_preview;
   gboolean              synchronous_preview;
   gdouble               preview_opacity;
-  GimpGuidesType        grid_type;
+  LigmaGuidesType        grid_type;
   gint                  grid_size;
   gboolean              constrain_move;
   gboolean              constrain_scale;
@@ -59,17 +59,17 @@ struct _GimpTransformGridOptions
   GtkWidget            *direction_chain_button;
 };
 
-struct _GimpTransformGridOptionsClass
+struct _LigmaTransformGridOptionsClass
 {
-  GimpTransformOptionsClass  parent_class;
+  LigmaTransformOptionsClass  parent_class;
 };
 
 
-GType       gimp_transform_grid_options_get_type     (void) G_GNUC_CONST;
+GType       ligma_transform_grid_options_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_transform_grid_options_gui          (GimpToolOptions          *tool_options);
+GtkWidget * ligma_transform_grid_options_gui          (LigmaToolOptions          *tool_options);
 
-gboolean    gimp_transform_grid_options_show_preview (GimpTransformGridOptions *options);
+gboolean    ligma_transform_grid_options_show_preview (LigmaTransformGridOptions *options);
 
 
-#endif /* __GIMP_TRANSFORM_GRID_OPTIONS_H__ */
+#endif /* __LIGMA_TRANSFORM_GRID_OPTIONS_H__ */

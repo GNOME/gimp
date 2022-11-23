@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpfilleditor.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmafilleditor.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpfilloptions.h"
+#include "core/ligmafilloptions.h"
 
-#include "gimpcolorpanel.h"
-#include "gimpfilleditor.h"
-#include "gimppropwidgets.h"
-#include "gimpviewablebox.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacolorpanel.h"
+#include "ligmafilleditor.h"
+#include "ligmapropwidgets.h"
+#include "ligmaviewablebox.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -47,50 +47,50 @@ enum
 };
 
 
-static void   gimp_fill_editor_constructed  (GObject      *object);
-static void   gimp_fill_editor_finalize     (GObject      *object);
-static void   gimp_fill_editor_set_property (GObject      *object,
+static void   ligma_fill_editor_constructed  (GObject      *object);
+static void   ligma_fill_editor_finalize     (GObject      *object);
+static void   ligma_fill_editor_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void   gimp_fill_editor_get_property (GObject      *object,
+static void   ligma_fill_editor_get_property (GObject      *object,
                                              guint         property_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpFillEditor, gimp_fill_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaFillEditor, ligma_fill_editor, GTK_TYPE_BOX)
 
-#define parent_class gimp_fill_editor_parent_class
+#define parent_class ligma_fill_editor_parent_class
 
 
 static void
-gimp_fill_editor_class_init (GimpFillEditorClass *klass)
+ligma_fill_editor_class_init (LigmaFillEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_fill_editor_constructed;
-  object_class->finalize     = gimp_fill_editor_finalize;
-  object_class->set_property = gimp_fill_editor_set_property;
-  object_class->get_property = gimp_fill_editor_get_property;
+  object_class->constructed  = ligma_fill_editor_constructed;
+  object_class->finalize     = ligma_fill_editor_finalize;
+  object_class->set_property = ligma_fill_editor_set_property;
+  object_class->get_property = ligma_fill_editor_get_property;
 
   g_object_class_install_property (object_class, PROP_OPTIONS,
                                    g_param_spec_object ("options",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_FILL_OPTIONS,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_FILL_OPTIONS,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_EDIT_CONTEXT,
                                    g_param_spec_boolean ("edit-context",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_fill_editor_init (GimpFillEditor *editor)
+ligma_fill_editor_init (LigmaFillEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -99,17 +99,17 @@ gimp_fill_editor_init (GimpFillEditor *editor)
 }
 
 static void
-gimp_fill_editor_constructed (GObject *object)
+ligma_fill_editor_constructed (GObject *object)
 {
-  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+  LigmaFillEditor *editor = LIGMA_FILL_EDITOR (object);
   GtkWidget      *box;
   GtkWidget      *button;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_FILL_OPTIONS (editor->options));
+  ligma_assert (LIGMA_IS_FILL_OPTIONS (editor->options));
 
-  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+  box = ligma_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
                                       0, 0);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
 
@@ -118,35 +118,35 @@ gimp_fill_editor_constructed (GObject *object)
       GtkWidget *color_button;
       GtkWidget *pattern_box;
 
-      color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+      color_button = ligma_prop_color_button_new (G_OBJECT (editor->options),
                                                  "foreground",
                                                  _("Fill Color"),
                                                  1, 24,
-                                                 GIMP_COLOR_AREA_SMALL_CHECKS);
-      gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
-                                    GIMP_CONTEXT (editor->options));
-      gimp_enum_radio_box_add (GTK_BOX (box), color_button,
-                               GIMP_FILL_STYLE_SOLID, FALSE);
+                                                 LIGMA_COLOR_AREA_SMALL_CHECKS);
+      ligma_color_panel_set_context (LIGMA_COLOR_PANEL (color_button),
+                                    LIGMA_CONTEXT (editor->options));
+      ligma_enum_radio_box_add (GTK_BOX (box), color_button,
+                               LIGMA_FILL_STYLE_SOLID, FALSE);
 
-      pattern_box = gimp_prop_pattern_box_new (NULL,
-                                               GIMP_CONTEXT (editor->options),
+      pattern_box = ligma_prop_pattern_box_new (NULL,
+                                               LIGMA_CONTEXT (editor->options),
                                                NULL, 2,
                                                "pattern-view-type",
                                                "pattern-view-size");
-      gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
-                               GIMP_FILL_STYLE_PATTERN, FALSE);
+      ligma_enum_radio_box_add (GTK_BOX (box), pattern_box,
+                               LIGMA_FILL_STYLE_PATTERN, FALSE);
     }
 
-  button = gimp_prop_check_button_new (G_OBJECT (editor->options),
+  button = ligma_prop_check_button_new (G_OBJECT (editor->options),
                                        "antialias",
                                        _("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
 }
 
 static void
-gimp_fill_editor_finalize (GObject *object)
+ligma_fill_editor_finalize (GObject *object)
 {
-  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+  LigmaFillEditor *editor = LIGMA_FILL_EDITOR (object);
 
   g_clear_object (&editor->options);
 
@@ -154,12 +154,12 @@ gimp_fill_editor_finalize (GObject *object)
 }
 
 static void
-gimp_fill_editor_set_property (GObject      *object,
+ligma_fill_editor_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+  LigmaFillEditor *editor = LIGMA_FILL_EDITOR (object);
 
   switch (property_id)
     {
@@ -180,12 +180,12 @@ gimp_fill_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_fill_editor_get_property (GObject    *object,
+ligma_fill_editor_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+  LigmaFillEditor *editor = LIGMA_FILL_EDITOR (object);
 
   switch (property_id)
     {
@@ -204,12 +204,12 @@ gimp_fill_editor_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_fill_editor_new (GimpFillOptions *options,
+ligma_fill_editor_new (LigmaFillOptions *options,
                       gboolean         edit_context)
 {
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), NULL);
 
-  return g_object_new (GIMP_TYPE_FILL_EDITOR,
+  return g_object_new (LIGMA_TYPE_FILL_EDITOR,
                        "options",      options,
                        "edit-context", edit_context ? TRUE : FALSE,
                        NULL);

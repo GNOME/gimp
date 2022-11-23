@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpImageCommentEditor
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * LigmaImageCommentEditor
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,47 +25,47 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimptemplate.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatemplate.h"
 
-#include "gimpimagecommenteditor.h"
+#include "ligmaimagecommenteditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-#define GIMP_IMAGE_COMMENT_PARASITE "gimp-comment"
-
-
-static void  gimp_image_comment_editor_update              (GimpImageParasiteView  *view);
-
-static void  gimp_image_comment_editor_buffer_changed      (GtkTextBuffer          *buffer,
-                                                            GimpImageCommentEditor *editor);
-static void  gimp_image_comment_editor_use_default_comment (GtkWidget              *button,
-                                                            GimpImageCommentEditor *editor);
+#define LIGMA_IMAGE_COMMENT_PARASITE "ligma-comment"
 
 
-G_DEFINE_TYPE (GimpImageCommentEditor,
-               gimp_image_comment_editor, GIMP_TYPE_IMAGE_PARASITE_VIEW)
+static void  ligma_image_comment_editor_update              (LigmaImageParasiteView  *view);
+
+static void  ligma_image_comment_editor_buffer_changed      (GtkTextBuffer          *buffer,
+                                                            LigmaImageCommentEditor *editor);
+static void  ligma_image_comment_editor_use_default_comment (GtkWidget              *button,
+                                                            LigmaImageCommentEditor *editor);
+
+
+G_DEFINE_TYPE (LigmaImageCommentEditor,
+               ligma_image_comment_editor, LIGMA_TYPE_IMAGE_PARASITE_VIEW)
 
 static void
-gimp_image_comment_editor_class_init (GimpImageCommentEditorClass *klass)
+ligma_image_comment_editor_class_init (LigmaImageCommentEditorClass *klass)
 {
-  GimpImageParasiteViewClass *view_class;
+  LigmaImageParasiteViewClass *view_class;
 
-  view_class = GIMP_IMAGE_PARASITE_VIEW_CLASS (klass);
+  view_class = LIGMA_IMAGE_PARASITE_VIEW_CLASS (klass);
 
-  view_class->update = gimp_image_comment_editor_update;
+  view_class->update = ligma_image_comment_editor_update;
 }
 
 static void
-gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
+ligma_image_comment_editor_init (LigmaImageCommentEditor *editor)
 {
   GtkWidget *vbox;
   GtkWidget *scrolled_window;
@@ -105,7 +105,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
 
   /* Button */
   button = gtk_button_new_with_mnemonic (_("Use _default comment"));
-  gimp_help_set_help_data (GTK_WIDGET (button),
+  ligma_help_set_help_data (GTK_WIDGET (button),
                            _("Replace the current image comment with the "
                              "default comment set in "
                              "Edit→Preferences→Default Image."),
@@ -114,14 +114,14 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_image_comment_editor_use_default_comment),
+                    G_CALLBACK (ligma_image_comment_editor_use_default_comment),
                     editor);
 
   /* Buffer */
   editor->buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
 
   g_signal_connect (editor->buffer, "changed",
-                    G_CALLBACK (gimp_image_comment_editor_buffer_changed),
+                    G_CALLBACK (ligma_image_comment_editor_buffer_changed),
                     editor);
 }
 
@@ -129,13 +129,13 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
 /*  public functions  */
 
 GtkWidget *
-gimp_image_comment_editor_new (GimpImage *image)
+ligma_image_comment_editor_new (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return g_object_new (GIMP_TYPE_IMAGE_COMMENT_EDITOR,
+  return g_object_new (LIGMA_TYPE_IMAGE_COMMENT_EDITOR,
                        "image",    image,
-                       "parasite", GIMP_IMAGE_COMMENT_PARASITE,
+                       "parasite", LIGMA_IMAGE_COMMENT_PARASITE,
                        NULL);
 }
 
@@ -143,31 +143,31 @@ gimp_image_comment_editor_new (GimpImage *image)
 /*  private functions  */
 
 static void
-gimp_image_comment_editor_update (GimpImageParasiteView *view)
+ligma_image_comment_editor_update (LigmaImageParasiteView *view)
 {
-  GimpImageCommentEditor *editor = GIMP_IMAGE_COMMENT_EDITOR (view);
-  const GimpParasite     *parasite;
+  LigmaImageCommentEditor *editor = LIGMA_IMAGE_COMMENT_EDITOR (view);
+  const LigmaParasite     *parasite;
 
   if (editor->recoursing)
     return;
 
   g_signal_handlers_block_by_func (editor->buffer,
-                                   gimp_image_comment_editor_buffer_changed,
+                                   ligma_image_comment_editor_buffer_changed,
                                    editor);
 
-  parasite = gimp_image_parasite_view_get_parasite (view);
+  parasite = ligma_image_parasite_view_get_parasite (view);
 
   if (parasite)
     {
       gchar   *text;
       guint32  text_size;
 
-      text = (gchar *) gimp_parasite_get_data (parasite, &text_size);
+      text = (gchar *) ligma_parasite_get_data (parasite, &text_size);
       text = g_strndup (text, text_size);
 
       if (! g_utf8_validate (text, -1, NULL))
         {
-          gchar *tmp = gimp_any_to_utf8 (text, -1, NULL);
+          gchar *tmp = ligma_any_to_utf8 (text, -1, NULL);
 
           g_free (text);
           text = tmp;
@@ -182,22 +182,22 @@ gimp_image_comment_editor_update (GimpImageParasiteView *view)
     }
 
   g_signal_handlers_unblock_by_func (editor->buffer,
-                                     gimp_image_comment_editor_buffer_changed,
+                                     ligma_image_comment_editor_buffer_changed,
                                      editor);
 }
 
 static void
-gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
-                                          GimpImageCommentEditor *editor)
+ligma_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
+                                          LigmaImageCommentEditor *editor)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   gchar       *text;
   gint         len;
   GtkTextIter  start;
   GtkTextIter  end;
 
   image =
-    gimp_image_parasite_view_get_image (GIMP_IMAGE_PARASITE_VIEW (editor));
+    ligma_image_parasite_view_get_image (LIGMA_IMAGE_PARASITE_VIEW (editor));
 
   gtk_text_buffer_get_bounds (buffer, &start, &end);
 
@@ -209,18 +209,18 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
 
   if (len > 0)
     {
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
 
-      parasite = gimp_parasite_new (GIMP_IMAGE_COMMENT_PARASITE,
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new (LIGMA_IMAGE_COMMENT_PARASITE,
+                                    LIGMA_PARASITE_PERSISTENT,
                                     len + 1, text);
 
-      gimp_image_parasite_attach (image, parasite, TRUE);
-      gimp_parasite_free (parasite);
+      ligma_image_parasite_attach (image, parasite, TRUE);
+      ligma_parasite_free (parasite);
     }
   else
     {
-      gimp_image_parasite_detach (image, GIMP_IMAGE_COMMENT_PARASITE, TRUE);
+      ligma_image_parasite_detach (image, LIGMA_IMAGE_COMMENT_PARASITE, TRUE);
     }
 
   editor->recoursing = FALSE;
@@ -229,19 +229,19 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
 }
 
 static void
-gimp_image_comment_editor_use_default_comment (GtkWidget              *button,
-                                               GimpImageCommentEditor *editor)
+ligma_image_comment_editor_use_default_comment (GtkWidget              *button,
+                                               LigmaImageCommentEditor *editor)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   const gchar *comment = NULL;
 
-  image = gimp_image_parasite_view_get_image (GIMP_IMAGE_PARASITE_VIEW (editor));
+  image = ligma_image_parasite_view_get_image (LIGMA_IMAGE_PARASITE_VIEW (editor));
 
   if (image)
     {
-      GimpTemplate *template = image->gimp->config->default_image;
+      LigmaTemplate *template = image->ligma->config->default_image;
 
-      comment = gimp_template_get_comment (template);
+      comment = ligma_template_get_comment (template);
     }
 
   if (comment)

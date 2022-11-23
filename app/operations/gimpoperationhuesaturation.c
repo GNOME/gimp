@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhuesaturation.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationhuesaturation.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "gimphuesaturationconfig.h"
-#include "gimpoperationhuesaturation.h"
+#include "ligmahuesaturationconfig.h"
+#include "ligmaoperationhuesaturation.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean gimp_operation_hue_saturation_process (GeglOperation       *operation,
+static gboolean ligma_operation_hue_saturation_process (GeglOperation       *operation,
                                                        void                *in_buf,
                                                        void                *out_buf,
                                                        glong                samples,
@@ -43,51 +43,51 @@ static gboolean gimp_operation_hue_saturation_process (GeglOperation       *oper
                                                        gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationHueSaturation, gimp_operation_hue_saturation,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationHueSaturation, ligma_operation_hue_saturation,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_hue_saturation_parent_class
+#define parent_class ligma_operation_hue_saturation_parent_class
 
 
 static void
-gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass)
+ligma_operation_hue_saturation_class_init (LigmaOperationHueSaturationClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_point_filter_set_property;
-  object_class->get_property   = gimp_operation_point_filter_get_property;
+  object_class->set_property   = ligma_operation_point_filter_set_property;
+  object_class->get_property   = ligma_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hue-saturation",
+                                 "name",        "ligma:hue-saturation",
                                  "categories",  "color",
                                  "description", _("Adjust hue, saturation, and lightness"),
                                  NULL);
 
-  point_class->process = gimp_operation_hue_saturation_process;
+  point_class->process = ligma_operation_hue_saturation_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
-                                                        GIMP_TYPE_HUE_SATURATION_CONFIG,
+                                                        LIGMA_TYPE_HUE_SATURATION_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_operation_hue_saturation_init (GimpOperationHueSaturation *self)
+ligma_operation_hue_saturation_init (LigmaOperationHueSaturation *self)
 {
 }
 
 static inline gdouble
-map_hue (GimpHueSaturationConfig *config,
-         GimpHueRange             range,
+map_hue (LigmaHueSaturationConfig *config,
+         LigmaHueRange             range,
          gdouble                  value)
 {
-  value += (config->hue[GIMP_HUE_RANGE_ALL] + config->hue[range]) / 2.0;
+  value += (config->hue[LIGMA_HUE_RANGE_ALL] + config->hue[range]) / 2.0;
 
   if (value < 0)
     return value + 1.0;
@@ -98,9 +98,9 @@ map_hue (GimpHueSaturationConfig *config,
 }
 
 static inline gdouble
-map_hue_overlap (GimpHueSaturationConfig *config,
-                 GimpHueRange             primary_range,
-                 GimpHueRange             secondary_range,
+map_hue_overlap (LigmaHueSaturationConfig *config,
+                 LigmaHueRange             primary_range,
+                 LigmaHueRange             secondary_range,
                  gdouble                  value,
                  gdouble                  primary_intensity,
                  gdouble                  secondary_intensity)
@@ -119,7 +119,7 @@ map_hue_overlap (GimpHueSaturationConfig *config,
   gdouble v = config->hue[primary_range]   * primary_intensity +
               config->hue[secondary_range] * secondary_intensity;
 
-  value += (config->hue[GIMP_HUE_RANGE_ALL] + v) / 2.0;
+  value += (config->hue[LIGMA_HUE_RANGE_ALL] + v) / 2.0;
 
   if (value < 0)
     return value + 1.0;
@@ -130,11 +130,11 @@ map_hue_overlap (GimpHueSaturationConfig *config,
 }
 
 static inline gdouble
-map_saturation (GimpHueSaturationConfig *config,
-                GimpHueRange             range,
+map_saturation (LigmaHueSaturationConfig *config,
+                LigmaHueRange             range,
                 gdouble                  value)
 {
-  gdouble v = config->saturation[GIMP_HUE_RANGE_ALL] + config->saturation[range];
+  gdouble v = config->saturation[LIGMA_HUE_RANGE_ALL] + config->saturation[range];
 
   /* This change affects the way saturation is computed. With the old
    * code (different code for value < 0), increasing the saturation
@@ -150,11 +150,11 @@ map_saturation (GimpHueSaturationConfig *config,
 }
 
 static inline gdouble
-map_lightness (GimpHueSaturationConfig *config,
-               GimpHueRange             range,
+map_lightness (LigmaHueSaturationConfig *config,
+               LigmaHueRange             range,
                gdouble                  value)
 {
-  gdouble v = (config->lightness[GIMP_HUE_RANGE_ALL] + config->lightness[range]);
+  gdouble v = (config->lightness[LIGMA_HUE_RANGE_ALL] + config->lightness[range]);
 
   if (v < 0)
     return value * (v + 1.0);
@@ -163,15 +163,15 @@ map_lightness (GimpHueSaturationConfig *config,
 }
 
 static gboolean
-gimp_operation_hue_saturation_process (GeglOperation       *operation,
+ligma_operation_hue_saturation_process (GeglOperation       *operation,
                                        void                *in_buf,
                                        void                *out_buf,
                                        glong                samples,
                                        const GeglRectangle *roi,
                                        gint                 level)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpHueSaturationConfig  *config = GIMP_HUE_SATURATION_CONFIG (point->config);
+  LigmaOperationPointFilter *point  = LIGMA_OPERATION_POINT_FILTER (operation);
+  LigmaHueSaturationConfig  *config = LIGMA_HUE_SATURATION_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
   gfloat                    overlap;
@@ -183,8 +183,8 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      GimpRGB  rgb;
-      GimpHSL  hsl;
+      LigmaRGB  rgb;
+      LigmaHSL  hsl;
       gdouble  h;
       gint     hue_counter;
       gint     hue                 = 0;
@@ -198,7 +198,7 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
       rgb.b = src[BLUE];
       rgb.a = src[ALPHA];
 
-      gimp_rgb_to_hsl (&rgb, &hsl);
+      ligma_rgb_to_hsl (&rgb, &hsl);
 
       h = hsl.h * 6.0;
 
@@ -241,7 +241,7 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
           secondary_hue = 0;
         }
 
-      /*  transform into GimpHueRange values  */
+      /*  transform into LigmaHueRange values  */
       hue++;
       secondary_hue++;
 
@@ -263,7 +263,7 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
           hsl.l = map_lightness  (config, hue, hsl.l);
         }
 
-      gimp_hsl_to_rgb (&hsl, &rgb);
+      ligma_hsl_to_rgb (&hsl, &rgb);
 
       dest[RED]   = rgb.r;
       dest[GREEN] = rgb.g;
@@ -281,22 +281,22 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
 /*  public functions  */
 
 void
-gimp_operation_hue_saturation_map (GimpHueSaturationConfig *config,
-                                   const GimpRGB           *color,
-                                   GimpHueRange             range,
-                                   GimpRGB                 *result)
+ligma_operation_hue_saturation_map (LigmaHueSaturationConfig *config,
+                                   const LigmaRGB           *color,
+                                   LigmaHueRange             range,
+                                   LigmaRGB                 *result)
 {
-  GimpHSL hsl;
+  LigmaHSL hsl;
 
-  g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_HUE_SATURATION_CONFIG (config));
   g_return_if_fail (color != NULL);
   g_return_if_fail (result != NULL);
 
-  gimp_rgb_to_hsl (color, &hsl);
+  ligma_rgb_to_hsl (color, &hsl);
 
   hsl.h = map_hue        (config, range, hsl.h);
   hsl.s = map_saturation (config, range, hsl.s);
   hsl.l = map_lightness  (config, range, hsl.l);
 
-  gimp_hsl_to_rgb (&hsl, result);
+  ligma_hsl_to_rgb (&hsl, result);
 }

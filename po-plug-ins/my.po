@@ -1,13 +1,13 @@
-# Burmese translation of gimp-plug-ins.
+# Burmese translation of ligma-plug-ins.
 # Copyright © 2009, 2010 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
 # BurmaIT Team <burmait@burmait.net>, 2009, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 2.7.1\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins 2.7.1\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2009-06-15 17:30+0000\n"
 "PO-Revision-Date: 2010-01-29 17:25+0200\n"
 "Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
@@ -53,15 +53,15 @@ msgstr "အကြောင်းအချက်"
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:298
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#: ../plug-ins/common/color-to-alpha.c:409 ../plug-ins/file-fli/fli-gimp.c:874
-#: ../plug-ins/file-fli/fli-gimp.c:944
+#: ../plug-ins/common/color-to-alpha.c:409 ../plug-ins/file-fli/fli-ligma.c:874
+#: ../plug-ins/file-fli/fli-ligma.c:944
 msgid "From:"
 msgstr "မှ -"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:324
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:377
-#: ../plug-ins/file-fli/fli-gimp.c:883 ../plug-ins/file-fli/fli-gimp.c:953
+#: ../plug-ins/file-fli/fli-ligma.c:883 ../plug-ins/file-fli/fli-ligma.c:953
 msgid "To:"
 msgstr "သို့ -"
 
@@ -423,8 +423,8 @@ msgid "Optimizing animation"
 msgstr "သက်၀င်မှုကို သင့်လျှော်စေခြင်း"
 
 #: ../plug-ins/common/animation-play.c:162
-msgid "Preview a GIMP layer-based animation"
-msgstr "GIMP အလွှာ-အခြေပြု သက်၀င်မှု တခုကို အစမ်းကြည့်ရှုပါ"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "LIGMA အလွှာ-အခြေပြု သက်၀င်မှု တခုကို အစမ်းကြည့်ရှုပါ"
 
 #: ../plug-ins/common/animation-play.c:167
 msgid "_Playback..."
@@ -609,7 +609,7 @@ msgstr "ဒေါင်လိုက်"
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
 #: ../plug-ins/file-psd/psd-load.c:1525 ../plug-ins/file-sgi/sgi.c:383
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/ligmaressionist/general.c:139 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1154
 msgid "Background"
 msgstr "နောက်ခံ"
@@ -1021,8 +1021,8 @@ msgstr "ချာနယ် ရောစပ်ကိရိယာ တပ်ဆင�
 #: ../plug-ins/common/file-xmc.c:852 ../plug-ins/common/file-xwd.c:432
 #: ../plug-ins/common/sphere-designer.c:2001
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:232
-#: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:652
+#: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-ligma.c:459
+#: ../plug-ins/file-fli/fli-ligma.c:496 ../plug-ins/file-ico/ico-load.c:652
 #: ../plug-ins/file-ico/ico-load.c:731 ../plug-ins/file-jpeg/jpeg-load.c:108
 #: ../plug-ins/file-jpeg/jpeg-load.c:830 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
@@ -1031,8 +1031,8 @@ msgstr "ချာနယ် ရောစပ်ကိရိယာ တပ်ဆင�
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:928
-#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1353
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1061,7 +1061,7 @@ msgstr "ချာနယ် ရောစပ်ကိရိယာ တပ်ဆင�
 #: ../plug-ins/common/file-xmc.c:1474 ../plug-ins/common/file-xwd.c:613
 #: ../plug-ins/common/sphere-designer.c:2111
 #: ../plug-ins/file-bmp/bmp-write.c:295 ../plug-ins/file-fits/fits.c:475
-#: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-ligma.c:749 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:329 ../plug-ins/file-psd/psd-save.c:1637
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:162
 #: ../plug-ins/file-xjt/xjt.c:1291 ../plug-ins/file-xjt/xjt.c:1726
@@ -1096,7 +1096,7 @@ msgid "Checkerboard"
 msgstr "ကျားကွက်"
 
 #: ../plug-ins/common/checkerboard.c:411 ../plug-ins/common/file-xmc.c:1181
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "အရွယ် -"
 
@@ -1294,8 +1294,8 @@ msgstr "မျိုးစေ့မှ ကျပန်းများ (မျှ
 
 #: ../plug-ins/common/cml-explorer.c:299 ../plug-ins/common/cml-explorer.c:307
 #: ../plug-ins/common/decompose.c:187
-#: ../plug-ins/gimpressionist/orientation.c:179
-#: ../plug-ins/gimpressionist/size.c:182
+#: ../plug-ins/ligmaressionist/orientation.c:179
+#: ../plug-ins/ligmaressionist/size.c:182
 msgid "Hue"
 msgstr "အရောင်"
 
@@ -1306,8 +1306,8 @@ msgstr "ပျော်၀င်မှု"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:189
-#: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ligmaressionist/orientation.c:155
+#: ../plug-ins/ligmaressionist/size.c:158
 msgid "Value"
 msgstr "တန်ဖိုး"
 
@@ -2215,8 +2215,8 @@ msgstr "မျဉ်းခုံးကို ကွေးညွတ်ပါ"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1252
-#: ../plug-ins/gimpressionist/orientmap.c:591
-#: ../plug-ins/gimpressionist/sizemap.c:460
+#: ../plug-ins/ligmaressionist/orientmap.c:591
+#: ../plug-ins/ligmaressionist/sizemap.c:460
 #: ../plug-ins/print/print-page-layout.c:171
 msgid "Preview"
 msgstr "အစမ်းမြင်ကွင်း"
@@ -2802,7 +2802,7 @@ msgstr "အချင်း၀က် ၁ -"
 msgid "R_adius 2:"
 msgstr "အချင်း၀က် ၂ -"
 
-#: ../plug-ins/common/edge-dog.c:369 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:369 ../plug-ins/ligmaressionist/paper.c:166
 msgid "_Invert"
 msgstr "ပြောင်းပြန်လှန်ပါ"
 
@@ -3009,7 +3009,7 @@ msgstr "KISS အရောင်စပ်ဆေးခွက်ကို ဖွင
 #: ../plug-ins/common/file-xbm.c:741 ../plug-ins/common/file-xmc.c:677
 #: ../plug-ins/common/file-xpm.c:351 ../plug-ins/common/file-xwd.c:519
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:216
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:645
+#: ../plug-ins/file-fli/fli-ligma.c:501 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3343
 #, c-format
@@ -3037,7 +3037,7 @@ msgstr "ပံ့ပိုးမထားတဲ့ ဘစ် အနက် (%d)�
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xmc.c:1479
 #: ../plug-ins/common/file-xpm.c:636 ../plug-ins/common/file-xwd.c:618
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:480
-#: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-ligma.c:717 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:286 ../plug-ins/file-psd/psd-save.c:1642
 #: ../plug-ins/file-sgi/sgi.c:553 ../plug-ins/file-xjt/xjt.c:1707
 #, c-format
@@ -3144,8 +3144,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "အမည်မသိတဲ့ ရုပ်ပု့အမျိုးအစားများ​ ​အပေါ် အလုပ်မလုပ်နိုင်ဘူး။"
 
 #: ../plug-ins/common/file-gbr.c:153 ../plug-ins/common/file-gbr.c:174
-msgid "GIMP brush"
-msgstr "GIMP စုတ်တံ"
+msgid "LIGMA brush"
+msgstr "LIGMA စုတ်တံ"
 
 #: ../plug-ins/common/file-gbr.c:400 ../plug-ins/common/file-gbr.c:412
 msgid "Unsupported brush format"
@@ -3153,8 +3153,8 @@ msgstr "ပံ့ပိုးမထားတဲ့ စုတ်တံ အမျ�
 
 #: ../plug-ins/common/file-gbr.c:424
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "GIMP စုတ်တံ ဖိုင် '%s' မှ အမှားအယွင်း"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "LIGMA စုတ်တံ ဖိုင် '%s' မှ အမှားအယွင်း"
 
 #: ../plug-ins/common/file-gbr.c:432
 #, c-format
@@ -3168,8 +3168,8 @@ msgid "Unnamed"
 msgstr "အမည်မရှိ"
 
 #: ../plug-ins/common/file-gbr.c:624
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP စုတ်တံများဟာ မီးခိုးရောင်စကေး (သို့) နီစိမ်းပြာအာဖာ ဖြစ်ကြတယ်"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "LIGMA စုတ်တံများဟာ မီးခိုးရောင်စကေး (သို့) နီစိမ်းပြာအာဖာ ဖြစ်ကြတယ်"
 
 #: ../plug-ins/common/file-gbr.c:731
 msgid "Save as Brush"
@@ -3181,7 +3181,7 @@ msgid "Spacing:"
 msgstr "ကြားအကွာအဝေး -"
 
 #: ../plug-ins/common/file-gbr.c:769 ../plug-ins/common/file-gih.c:906
-#: ../plug-ins/common/file-pat.c:555 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-pat.c:555 ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "ဖေါ်ပြချက် -"
 
@@ -3344,16 +3344,16 @@ msgid "The default comment is limited to %d characters."
 msgstr "စံထားချက် မှတ်ချက်ကို အက္ခရာများ %d ကန့်သတ်ထားတယ်။"
 
 #: ../plug-ins/common/file-gih.c:208 ../plug-ins/common/file-gih.c:229
-msgid "GIMP brush (animated)"
-msgstr "GIMP စုတ်တံ (သက်၀င်လှုပ်ရှားချက်)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA စုတ်တံ (သက်၀င်လှုပ်ရှားချက်)"
 
 #: ../plug-ins/common/file-gih.c:484
-msgid "Error in GIMP brush pipe file."
-msgstr "GIMP စုတ်တံ ပိုက် ဖိုင်မှ အမှားအယွင်း။"
+msgid "Error in LIGMA brush pipe file."
+msgstr "LIGMA စုတ်တံ ပိုက် ဖိုင်မှ အမှားအယွင်း။"
 
 #: ../plug-ins/common/file-gih.c:550
-msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP စုတ်တံ ဖိုင်ဟာ ပျက်စီးတဲ့ပုံပေါ်တယ်။"
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "LIGMA စုတ်တံ ဖိုင်ဟာ ပျက်စီးတဲ့ပုံပေါ်တယ်။"
 
 #: ../plug-ins/common/file-gih.c:699
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3663,8 +3663,8 @@ msgid "MNG animation"
 msgstr "MNG သက်၀င်လှုပ်ရှားမှု"
 
 #: ../plug-ins/common/file-pat.c:122 ../plug-ins/common/file-pat.c:144
-msgid "GIMP pattern"
-msgstr "GIMP နမူနာပုံစံ"
+msgid "LIGMA pattern"
+msgstr "LIGMA နမူနာပုံစံ"
 
 #: ../plug-ins/common/file-pat.c:370
 #, c-format
@@ -3896,16 +3896,16 @@ msgid "Invalid X resolution."
 msgstr "မမှန်တဲ့ X ​ထင်ရှားပြတ်သားမှု။"
 
 #: ../plug-ins/common/file-pnm.c:554
-msgid "Image width is larger than GIMP can handle."
-msgstr "GIMP ကိုင်တွယ်နိုင်တဲ့ ပမာဏထက် ကြီးတဲ့ ရုပ်ပုံအကျယ်။"
+msgid "Image width is larger than LIGMA can handle."
+msgstr "LIGMA ကိုင်တွယ်နိုင်တဲ့ ပမာဏထက် ကြီးတဲ့ ရုပ်ပုံအကျယ်။"
 
 #: ../plug-ins/common/file-pnm.c:561
 msgid "Invalid Y resolution."
 msgstr "မမှန်တဲ့ Y ​ထင်ရှားပြတ်သားမှု။"
 
 #: ../plug-ins/common/file-pnm.c:563
-msgid "Image height is larger than GIMP can handle."
-msgstr "GIMP ကိုင်တွယ်နိုင်တဲ့ ပမာဏထက် ကြီးတဲ့ ရုပ်ပုံအမြင့်။"
+msgid "Image height is larger than LIGMA can handle."
+msgstr "LIGMA ကိုင်တွယ်နိုင်တဲ့ ပမာဏထက် ကြီးတဲ့ ရုပ်ပုံအမြင့်။"
 
 #: ../plug-ins/common/file-pnm.c:575
 msgid "Unsupported maximum value."
@@ -3958,11 +3958,11 @@ msgstr "ပို့စခရစ်က အာဖာ ချာနယ်မျာ�
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
-"ဂိုးစခရစ် စတင်မှု အမှားအယွင်း။ ဂိုးစခရစ် တပ်ဆင်မှုကို သေချာစေပြီး - လိုအပ်ရင် - GIMP ကို "
+"ဂိုးစခရစ် စတင်မှု အမှားအယွင်း။ ဂိုးစခရစ် တပ်ဆင်မှုကို သေချာစေပြီး - လိုအပ်ရင် - LIGMA ကို "
 "၄င်းရဲ့ တည်နေရာ \n"
 " (%s) ကို ပြဖို့ ပတ်ဝန်းကျင် ကိန်းရှင် GS_PROG ကို သုံးပါ။"
 
@@ -4027,8 +4027,8 @@ msgid "B/W"
 msgstr "B/W"
 
 #: ../plug-ins/common/file-ps.c:3228 ../plug-ins/common/file-xpm.c:478
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "အရောင်"
@@ -4256,10 +4256,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"ရုပ်ပုံ အကျယ်ဟာ GIMP ကိုင်တွယ်နိုင်တာထက် ပိုကြီးတယ်"
+"ရုပ်ပုံ အကျယ်ဟာ LIGMA ကိုင်တွယ်နိုင်တာထက် ပိုကြီးတယ်"
 
 #: ../plug-ins/common/file-sunras.c:471 ../plug-ins/common/file-xbm.c:840
 #: ../plug-ins/common/file-xwd.c:505
@@ -4276,10 +4276,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"ရုပ်ပုံ အမြင့်ဟာ GIMP ကိုင်တွယ်နိုင်တာထက် ပိုကြီးတယ်"
+"ရုပ်ပုံ အမြင့်ဟာ LIGMA ကိုင်တွယ်နိုင်တာထက် ပိုကြီးတယ်"
 
 #: ../plug-ins/common/file-sunras.c:517
 msgid "This image depth is not supported"
@@ -4383,8 +4383,8 @@ msgid "Import _paths"
 msgstr "လမ်းကြောင်းများကို တင်သွင်းပါ"
 
 #: ../plug-ins/common/file-svg.c:947
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "GIMP လမ်ကြောင်း ကိရိယာနဲ့ သုံးစွဲနိုင်ဖို့ SVG ရဲ့ လမ်းကြောင်း အစိတ်အပိုင်းများကို တင်သွင်းပါ"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "LIGMA လမ်ကြောင်း ကိရိယာနဲ့ သုံးစွဲနိုင်ဖို့ SVG ရဲ့ လမ်းကြောင်း အစိတ်အပိုင်းများကို တင်သွင်းပါ"
 
 #: ../plug-ins/common/file-svg.c:960
 msgid "Merge imported paths"
@@ -4458,12 +4458,12 @@ msgstr "TIFF ချာနယ်"
 #: ../plug-ins/file-psd/psd-load.c:324
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "သတိပေးချက် -\n"
-"သင်ဖွင့်နေတဲ့ ရုပ်ပုံဟာ ချာနယ်တခုမှာ ၁၆ ဘစ် နှုန်းနဲ့ ဖွင့်နေတယ်။ GIMP က ၈ ဘစ် ထိသာ "
+"သင်ဖွင့်နေတဲ့ ရုပ်ပုံဟာ ချာနယ်တခုမှာ ၁၆ ဘစ် နှုန်းနဲ့ ဖွင့်နေတယ်။ LIGMA က ၈ ဘစ် ထိသာ "
 "ကိုင်တွယ်နိုင်တဲ့ အတွက်၊ ၄င်းကို သင့်အတွက် အသွင်ပြောင်းပေးလိမ့်မယ်။ "
 "ဒီအသွင်ပြောင်းမှုကြောင့် အချက်အလက်တွေ ပျောက်သွားလိမ့်မယ်။"
 
@@ -5256,16 +5256,16 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: ../plug-ins/common/gee-zoom.c:131 ../plug-ins/common/gee.c:98
-msgid "A big hello from the GIMP team!"
-msgstr "GIMP အဖွဲ့မှ အထူးကြိုဆိုချက်။"
+msgid "A big hello from the LIGMA team!"
+msgstr "LIGMA အဖွဲ့မှ အထူးကြိုဆိုချက်။"
 
 #: ../plug-ins/common/gee-zoom.c:136 ../plug-ins/common/gee-zoom.c:196
 msgid "Gee Zoom"
 msgstr "ဂျီး ချဲ့ထွင်မှု"
 
 #: ../plug-ins/common/gee-zoom.c:202 ../plug-ins/common/gee.c:165
-msgid "Thank You for Choosing GIMP"
-msgstr "GIMP ကို ရွေးချယ်တဲ့အတွက် ကျေးဇူးတင်ပါတယ်"
+msgid "Thank You for Choosing LIGMA"
+msgstr "LIGMA ကို ရွေးချယ်တဲ့အတွက် ကျေးဇူးတင်ပါတယ်"
 
 #: ../plug-ins/common/gee-zoom.c:210
 #, c-format
@@ -7248,7 +7248,7 @@ msgid "Use the background color"
 msgstr "နောက်ခံ အရောင်ကို သုံးပါ"
 
 #: ../plug-ins/common/sphere-designer.c:290
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "ခိုင်မာမှု"
 
@@ -7344,7 +7344,7 @@ msgstr "အရောင် ရွေးထားချက် အညွှန်�
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2747
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "စကေး -"
@@ -7638,17 +7638,17 @@ msgstr "သိမ်းဆည်းချက်"
 
 #: ../plug-ins/common/unit-editor.c:93
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
-msgstr "ဒီကော်လံကို ရွေးထားရင် GIMP မပိတ်ခင်မှာသာ ယူနစ် အနက်ပြန်ချက် တခုကို သိမ်းဆည်းလိမ့်မယ်။"
+msgstr "ဒီကော်လံကို ရွေးထားရင် LIGMA မပိတ်ခင်မှာသာ ယူနစ် အနက်ပြန်ချက် တခုကို သိမ်းဆည်းလိမ့်မယ်။"
 
 #: ../plug-ins/common/unit-editor.c:95
 msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:95
-msgid "This string will be used to identify a unit in GIMP's configuration files."
-msgstr "GIMP ရဲ့ စီစဉ်ဖန်တီးခြင်း ဖိုင်များထဲမှ ယူနစ်တခုကို ဖေါ်ထုတ်ဖို့ ဒီစာတန်းကို သုံးစွဲလိမ့်မယ်။"
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "LIGMA ရဲ့ စီစဉ်ဖန်တီးခြင်း ဖိုင်များထဲမှ ယူနစ်တခုကို ဖေါ်ထုတ်ဖို့ ဒီစာတန်းကို သုံးစွဲလိမ့်မယ်။"
 
 #: ../plug-ins/common/unit-editor.c:97
 msgid "Factor"
@@ -7717,8 +7717,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "လတ်တလော ရွေးချယ်တဲ့ ယူနစ်ကို ပုံစံခွက်အဖြစ် အသုံးပြုပြီး ယူနစ်အသစ် တခုကို ဖန်တီးပါ"
 
 #: ../plug-ins/common/unit-editor.c:144
-msgid "Create or alter units used in GIMP"
-msgstr "GIMP မှာ သုံးစွဲမဲ့ ယူနစ်များကို ဖန်တီး (သို့) ပြောင်းလဲပါ"
+msgid "Create or alter units used in LIGMA"
+msgstr "LIGMA မှာ သုံးစွဲမဲ့ ယူနစ်များကို ဖန်တီး (သို့) ပြောင်းလဲပါ"
 
 #: ../plug-ins/common/unit-editor.c:149
 msgid "U_nits"
@@ -8311,7 +8311,7 @@ msgstr "နှစ်စလုံး"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "ပိုမြင့်မားတဲ့ တန်ဖိုးများက ပိုနည်းတဲ့ ရုပ်ပုံရဲ့ နယ်ပယ်များကို သက်ရောက်မှု တားမြစ်ပေးတယ်"
 
-#: ../plug-ins/common/wind.c:1026 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1026 ../plug-ins/ligmaressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "အားကောင်းချက် -"
 
@@ -8433,24 +8433,24 @@ msgstr "DATAMIN/DATAMAX အားဖြင့်"
 msgid "Image Composing"
 msgstr "ရုပ်ပုံ ဖွဲ့စည်းနေခြင်း"
 
-#: ../plug-ins/file-fli/fli-gimp.c:165 ../plug-ins/file-fli/fli-gimp.c:185
+#: ../plug-ins/file-fli/fli-ligma.c:165 ../plug-ins/file-fli/fli-ligma.c:185
 msgid "AutoDesk FLIC animation"
 msgstr "အလိုအလျောက်စာရေးခုံ FLIC သက်၀င်လှုပ်ရှားမှု"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-ligma.c:561
 #, c-format
 msgid "Frame (%i)"
 msgstr "ဘောင် (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:713
+#: ../plug-ins/file-fli/fli-ligma.c:713
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "၀မ်းနည်းပါတယ်၊ ညွှန်းထားပြီး မီးခိုးရောင် ရုပ်ပုံများကိုသာ ကျွန်တော် သိမ်းဆည်းနိုင်တယ်။"
 
-#: ../plug-ins/file-fli/fli-gimp.c:845
+#: ../plug-ins/file-fli/fli-ligma.c:845
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI ၁.၃ - ဘောင်အဆင့်ကို ဖွင့်ပါ"
 
-#: ../plug-ins/file-fli/fli-gimp.c:913
+#: ../plug-ins/file-fli/fli-ligma.c:913
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI ၁.၃ - ဘောင်အဆင့်ကို သိမ်းဆည်းပါ"
 
@@ -8523,8 +8523,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "EXIF အချက်အလက်ကြမ်းအရ၊ ဒီရုပ်ပုံဟာ လှည့်ပတ်နေတယ်။"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:366
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "၄င်းကို GIMP က စံညွှန်း အနေအထားအတိုင်း လှည့်ပတ်ဖို့ သင်အလိုရှိသလား။"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "၄င်းကို LIGMA က စံညွှန်း အနေအထားအတိုင်း လှည့်ပတ်ဖို့ သင်အလိုရှိသလား။"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 msgid "JPEG preview"
@@ -8738,8 +8738,8 @@ msgstr ""
 "အဲဒါကို မပံ့ပိုးဘူး၊ သာမန် စနစ်ကို အစားထိုး သုံးပါ။"
 
 #: ../plug-ins/file-psd/psd-save.c:633
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "အမှားအယွင်း - GIMP အရင်းခံ ရုပ်ပုံအမျိုးအစားကို PSD စနစ်သို့ မပြောင်းနိုင်ဘူး"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "အမှားအယွင်း - LIGMA အရင်းခံ ရုပ်ပုံအမျိုးအစားကို PSD စနစ်သို့ မပြောင်းနိုင်ဘူး"
 
 #: ../plug-ins/file-psd/psd-save.c:1607
 #, c-format
@@ -8880,8 +8880,8 @@ msgid "URI"
 msgstr "ကွန်ရက်တည်နေရာ"
 
 #: ../plug-ins/file-xjt/xjt.c:487 ../plug-ins/file-xjt/xjt.c:505
-msgid "GIMP compressed XJT image"
-msgstr "GIMP က XJT ရုပ်ပုံကို ဖိသိပ်ထားတယ်"
+msgid "LIGMA compressed XJT image"
+msgstr "LIGMA က XJT ရုပ်ပုံကို ဖိသိပ်ထားတယ်"
 
 #: ../plug-ins/file-xjt/xjt.c:735
 #, c-format
@@ -8993,8 +8993,8 @@ msgstr "ကျပန်းစီစဉ်ပါ"
 msgid "Same"
 msgstr "တူတယ်"
 
-#: ../plug-ins/flame/flame.c:746 ../plug-ins/gimpressionist/orientation.c:163
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/flame/flame.c:746 ../plug-ins/ligmaressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "Random"
 msgstr "ကျပန်း"
 
@@ -9143,16 +9143,16 @@ msgid "C_amera"
 msgstr "ကင်မရာ"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:273 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:273 ../plug-ins/ligmaressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:880
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"%s မှာ gimprc မရှိဘူး။\n"
+"%s မှာ ligmarc မရှိဘူး။\n"
 "(%s \"%s\") လို ထည့်သွင်းချက် တခုကို \n"
 "သင့်ရဲ့ %s ဖိုင်ထဲ \n"
 "ထည့်သွင်းဖို့ လိုအပ်တယ်။"
@@ -9673,7 +9673,7 @@ msgid "Max undo:"
 msgstr "အများဆုံး ပြန်ဖြည်ချက် -"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1282
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု"
 
@@ -9768,7 +9768,7 @@ msgid "Left"
 msgstr "ဘယ်ဖက်"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1717
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "အနေအထား -"
 
@@ -9828,289 +9828,289 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "ကပ်ပါးကောင် ဖွင့်နေမှုအတွက် ယာယီဖိုင် '%s' ကို ဖွင့်ဖို့ အမှားအယွင်း ကြိုးစားမှု - %s"
 
-#: ../plug-ins/gimpressionist/brush.c:246
+#: ../plug-ins/ligmaressionist/brush.c:246
 msgid "Can only save drawables!"
 msgstr "ရေးဆွဲချက်များကိုသာ သိမ်းဆည်းနိုင်တယ်။"
 
-#: ../plug-ins/gimpressionist/brush.c:251
+#: ../plug-ins/ligmaressionist/brush.c:251
 msgid "Save Brush"
 msgstr "စုတ်တံကို သိမ်းဆည်းပါ"
 
-#: ../plug-ins/gimpressionist/brush.c:506
+#: ../plug-ins/ligmaressionist/brush.c:506
 msgid "_Brush"
 msgstr "စုတ်တံ"
 
-#: ../plug-ins/gimpressionist/brush.c:543
+#: ../plug-ins/ligmaressionist/brush.c:543
 msgid "Gamma:"
 msgstr "ဂါမာ -"
 
-#: ../plug-ins/gimpressionist/brush.c:561
+#: ../plug-ins/ligmaressionist/brush.c:561
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "ရွေးထားတဲ့ စုတ်တံရဲ့ ဂါမာ (တောက်ပမှု) ကို ပြောင်းလဲပါ"
 
-#: ../plug-ins/gimpressionist/brush.c:569
+#: ../plug-ins/ligmaressionist/brush.c:569
 msgid "Select:"
 msgstr "ရွေးချယ်ပါ -"
 
-#: ../plug-ins/gimpressionist/brush.c:598
+#: ../plug-ins/ligmaressionist/brush.c:598
 msgid "Aspect ratio:"
 msgstr "ရှုထောင့် အချိုး -"
 
-#: ../plug-ins/gimpressionist/brush.c:602
+#: ../plug-ins/ligmaressionist/brush.c:602
 msgid "Specifies the aspect ratio of the brush"
 msgstr "စုတ်တံရဲ့ ရှုထောင့် အချိုးကို သတ်မှတ်ပါ"
 
-#: ../plug-ins/gimpressionist/brush.c:611
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/ligmaressionist/brush.c:611
+#: ../plug-ins/ligmaressionist/paper.c:205
 msgid "Relief:"
 msgstr "ဖြေချမှု -"
 
-#: ../plug-ins/gimpressionist/brush.c:615
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/ligmaressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "ရုပ်ပုံ (ရာခိုင်နှုန်းနဲ့) မှာ အသုံးချမဲ့ ဖောင်းကြွမှု ပမာဏကို သတ်မှတ်ပါ"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "အရောင်"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "စုတ်တံအောက်က ပျမ်းမျှ"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "စုတ်တံရဲ့ ဗဟို"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "အရောင်ကို စုတ်တံအောက်က ပစ်ဆယ်များ အားလုံးရဲ့ ပျမ်းမျှကနေ ရေတွက်ခဲ့တယ်"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "စုတ်တံရဲ့ အလယ်ဗဟိုရှိ ပစ်ဆယ်မှ အရောင်ကို နမူနာယူပါ"
 
-#: ../plug-ins/gimpressionist/color.c:93
+#: ../plug-ins/ligmaressionist/color.c:93
 msgid "Color _noise:"
 msgstr "အရောင် လှိုင်း -"
 
-#: ../plug-ins/gimpressionist/color.c:97
+#: ../plug-ins/ligmaressionist/color.c:97
 msgid "Adds random noise to the color"
 msgstr "ကျပန်း လှိုင်းကို အရောင်ထဲ ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3528
 msgid "_General"
 msgstr "အထွေထွေ"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "မူရင်းကို သိမ်းထားပါ"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "မူရင်း ရုပ်ပုံကို နောက်ခံ တခုအဖြစ် ထိန်းသိမ်းပါ"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "စက္တူ မှ"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "ရွေးထားတဲ့ စက္ကူရဲ့ ထုံးဖွဲ့ပုံကို နောက်ခံတခုအဖြစ် မိတ္တူပွားပါ"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "ခိုင်မာအောင် ​အရောင်ဆိုးထားတဲ့ နောက်ခံ"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "ဖေါက်ထွင်းမြင်နိုင်တဲ့ နောက်ခံတခုကို သုံးစွဲပါ - ရေးဆွဲထားတဲ့ စုတ်ချက်များကို သာ မြင်နိုင်မယ်"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "အစွန်းများကို ရေးဆွဲပါ"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "စုတ်ချက်များကို ရုပ်ပုံရဲ့ အစွန်းများ အားလုံး တလျှောက် ထားရှိဖို့ ရွေးချယ်ပါ"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:277
+#: ../plug-ins/ligmaressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:277
 msgid "Tileable"
 msgstr "ခင်းကျင်းနိုင်တယ်"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "ထွက်လာတဲ့ ရုပ်ပုံဟာ စင်းကြောင်းမဲ့ ခင်းကျင်းနိုင်၊ မခင်းကျင်းနိုင်ကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "အရိပ်ကို ချထားပါ"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "စုတ်တံ စုတ်ချက်တိုင်းမှ အရိပ်သက်ရောက်မှု တခုကို ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/ligmaressionist/general.c:239
 msgid "Edge darken:"
 msgstr "မဲနက်တဲ့အစွန်း -"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/ligmaressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "စုတ်တံ စုတ်ချက်တိုင်းရဲ့ အစွန်းများကို ဘယ်လောက် \"မဲနက်စေ\" မလဲ"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/ligmaressionist/general.c:248
 msgid "Shadow darken:"
 msgstr "အရိပ် မဲနက်စေမှု -"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/ligmaressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
 msgstr "ချထားတဲ့အရိပ်ကို ဘယ်လောက် \"မဲနက်စေ\" မလဲ"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid "Shadow depth:"
 msgstr "အရိပ် အနက် -"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/ligmaressionist/general.c:261
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "ချထားတဲ့ အရိပ်ရဲ့ အနက်၊ ဥပမာ - ၀တ္ထူဟာ ၄င်းရှိသင့်တာထက် ကွာ​လှမ်းနေတဲ့ အတိုင်းအတာ"
 
-#: ../plug-ins/gimpressionist/general.c:266
+#: ../plug-ins/ligmaressionist/general.c:266
 msgid "Shadow blur:"
 msgstr "အရိပ် မှုန်ဝါးစေမှု -"
 
-#: ../plug-ins/gimpressionist/general.c:270
+#: ../plug-ins/ligmaressionist/general.c:270
 msgid "How much to blur the drop shadow"
 msgstr "ချထားတဲ့ အရိပ်ကို ဘယ်လောက် မှုန်ဝါးစေမလဲ"
 
-#: ../plug-ins/gimpressionist/general.c:275
+#: ../plug-ins/ligmaressionist/general.c:275
 msgid "Deviation threshold:"
 msgstr "သွေဖည်မှု အတိုင်းအတာ -"
 
-#: ../plug-ins/gimpressionist/general.c:279
+#: ../plug-ins/ligmaressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
 msgstr "လိုက်ဖက်ညီစေတဲ့ ရွေးချယ်ချက်များ အတွက် ကယ်တင်မှု တန်ဖိုးတခု"
 
-#: ../plug-ins/gimpressionist/gimp.c:89
+#: ../plug-ins/ligmaressionist/ligma.c:89
 msgid "Performs various artistic operations"
 msgstr "အမျိုးမျိုးသော အနုပညာဆန်တဲ့ လည်ပတ်မှုများကို လုပ်ဆောင်ပါ"
 
-#: ../plug-ins/gimpressionist/gimp.c:94
-msgid "_GIMPressionist..."
-msgstr "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:94
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:370
+#: ../plug-ins/ligmaressionist/ligma.c:370
 msgid "Painting"
 msgstr "ရေးဆွဲခြင်း"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:91
+#: ../plug-ins/ligmaressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "အနေအထား"
 
-#: ../plug-ins/gimpressionist/orientation.c:105
+#: ../plug-ins/ligmaressionist/orientation.c:105
 msgid "Directions:"
 msgstr "ဦးတည်ချက်များ -"
 
-#: ../plug-ins/gimpressionist/orientation.c:109
+#: ../plug-ins/ligmaressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "သုံးစွဲမဲ့ ဦးတည်ချက်များ (ဥပမာ - စုတ်တံများ) အရေအတွက်"
 
-#: ../plug-ins/gimpressionist/orientation.c:117
+#: ../plug-ins/ligmaressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "ထောင့်ကို စတင်ပါ -"
 
-#: ../plug-ins/gimpressionist/orientation.c:121
+#: ../plug-ins/ligmaressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
 msgstr "ဖန်တီးမဲ့ ပထမ စုတ်တံကို စတင်မဲ့ ထောင့်"
 
-#: ../plug-ins/gimpressionist/orientation.c:129
+#: ../plug-ins/ligmaressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "ထောင့် လွှမ်းခြု့မှု -"
 
-#: ../plug-ins/gimpressionist/orientation.c:133
+#: ../plug-ins/ligmaressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
 msgstr "ဖန်တီးမဲ့ ပထမ စုတ်တံကို စတင်မဲ့ လွှမ်းခြုံမှု"
 
-#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/orientation.c:156
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "နယ်ပယ်ရဲ့ တန်ဖိုး (တောက်ပမှု) က စုတ်ချက်ရဲ့ ဦးတည်ချက်ကို ဆုံးဖြတ်ပါစေ"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "Radius"
 msgstr "အချင်း၀က်"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/orientation.c:160
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "ရုပ်ပုံရဲ့ အလယ်မှ အ​ကွာအဝေးက စုတ်ချက်ရဲ့ ဦးတည်ချက်ကို ဆုံးဖြတ်ပေးတယ်"
 
-#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
 msgstr "စုတ်ချက် တခုစီရဲ့ ကျပန်း တည်နေရာကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "Radial"
 msgstr "ဖြာထွက်မှု"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "အလယ်ဗဟိုမှ ဦးတည်ချက်က စုတ်ချက်ရဲ့ ဦးတည်ချက်ကို ဆုံးဖြတ်ပါစေ"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Flowing"
 msgstr "စီးဆင်းမှု"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "စုတ်ချက်များက \"စီးဆင်းနေတဲ့\" နမူနာပုံစံ တခုကို လိုက်နေတယ်"
 
-#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "နယ်ပယ်ရဲ့ အရောင်က စုတ်ချက်ရဲ့ ဦးတည်ချက်ကို ဆုံးဖြတ်ပေးတယ်"
 
-#: ../plug-ins/gimpressionist/orientation.c:183
-#: ../plug-ins/gimpressionist/size.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:183
+#: ../plug-ins/ligmaressionist/size.c:186
 msgid "Adaptive"
 msgstr "လိုက်ဖက်ညီစေမှု"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr "အနီးစပ်ဆုံး မူရင်း ရုပ်ပုံနဲ့ ကိုက်ညီတဲ့ ဦးတည်ချက်ကို ရွေးထားတယ်"
 
-#: ../plug-ins/gimpressionist/orientation.c:191
-#: ../plug-ins/gimpressionist/size.c:195
+#: ../plug-ins/ligmaressionist/orientation.c:191
+#: ../plug-ins/ligmaressionist/size.c:195
 msgid "Manual"
 msgstr "လက်စွဲစာအုပ်များ"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
 msgstr "စုတ်ချက် အနေအထားကို လက်ဖြင့် သတ်မှတ်ပါ"
 
-#: ../plug-ins/gimpressionist/orientation.c:203
+#: ../plug-ins/ligmaressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
 msgstr "အနေအထား မြေပုံ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:525
+#: ../plug-ins/ligmaressionist/orientmap.c:525
 msgid "Orientation Map Editor"
 msgstr "အနေအထား မြေပုံ တည်းဖြတ်ကိရိယာ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:554
+#: ../plug-ins/ligmaressionist/orientmap.c:554
 msgid "Vectors"
 msgstr "ဗက်တာများ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:566
+#: ../plug-ins/ligmaressionist/orientmap.c:566
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10118,286 +10118,286 @@ msgstr ""
 "ဗက်တာ-နေရာလပ်။ ရွေးထားတဲ့ ဗက်တာကို​ ရွှေ့ဖို့ ဘယ်ဖက်-နှိုပ်ပါ၊ ကြွက်ခလုတ်ဖက် ၄င်းကို "
 "ညွှန်းဖို့ ညာဖက်-နှိုပ်ပါ၊ ဗက်တာအသစ် တခုကို ပေါင်းထည့်ဖို့ အလယ်-နှိုပ်ပါ။"
 
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 msgid "Adjust the preview's brightness"
 msgstr "အစမ်းမြင်ကွင်းရဲ့ တောက်ပမှုကို ချိန်ညှိပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/ligmaressionist/orientmap.c:611
 msgid "Select previous vector"
 msgstr "အရင် ဗက်တာကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/orientmap.c:617
 msgid "Select next vector"
 msgstr "နောက် ဗက်တာကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/ligmaressionist/orientmap.c:619
+#: ../plug-ins/ligmaressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Add new vector"
 msgstr "ဗက်တာအသစ်ကို ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/ligmaressionist/orientmap.c:625
+#: ../plug-ins/ligmaressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "ငြိမ်းသတ်ပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Delete selected vector"
 msgstr "ရွေးထားတဲ့ ဗက်တာကို ပယ်ဖျက်ပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:640
+#: ../plug-ins/ligmaressionist/orientmap.c:640
 msgid "Type"
 msgstr "အမျိုးအစား"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "_Normal"
 msgstr "သာမန်"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vorte_x"
 msgstr "ဗောတက်"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vortex_2"
 msgstr "ဗောတက်_၂"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_3"
 msgstr "ဗောတက်_၃"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/ligmaressionist/orientmap.c:653
+#: ../plug-ins/ligmaressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "ဗေါ်ရော်နွန်"
 
-#: ../plug-ins/gimpressionist/orientmap.c:661
+#: ../plug-ins/ligmaressionist/orientmap.c:661
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "ဗေါ်ရော်နွန်-စနစ်က ပေးထားတဲ့ အမှတ်နဲ့ အနီးဆုံး ဗက်တာကို ပြုလုပ်ချက်၌သာ လွှမ်းမိုးမှု ရှိတယ်"
 
-#: ../plug-ins/gimpressionist/orientmap.c:671
+#: ../plug-ins/ligmaressionist/orientmap.c:671
 msgid "A_ngle:"
 msgstr "ထောင့် -"
 
-#: ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/ligmaressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
 msgstr "ရွေးထားတဲ့ ဗက်တာရဲ့ ထောင့်ကို ပြောင်းလဲပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:682
+#: ../plug-ins/ligmaressionist/orientmap.c:682
 msgid "Ang_le offset:"
 msgstr "ထောင့် အော့ဖ်ဆက် -"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/ligmaressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
 msgstr "ဗက်တာများ အားလုံးကို ပေးထားတဲ့ ထောင့်တခုနဲ့ ခုနှိမ်ထားပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:697
+#: ../plug-ins/ligmaressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
 msgstr "ရွေးထားတဲ့ ဗက်တာရဲ့ စွမ်းအားကို ပြောင်းပါ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:704
+#: ../plug-ins/ligmaressionist/orientmap.c:704
 msgid "S_trength exp.:"
 msgstr "exp. ကို အားဖြည့်ပါ -"
 
-#: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/ligmaressionist/orientmap.c:708
+#: ../plug-ins/ligmaressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "စွမ်းအားရဲ့ ထပ်ညွှန်းကို ပြောင်းလဲပါ"
 
-#: ../plug-ins/gimpressionist/paper.c:137
+#: ../plug-ins/ligmaressionist/paper.c:137
 msgid "P_aper"
 msgstr "စက္ကူ"
 
-#: ../plug-ins/gimpressionist/paper.c:172
+#: ../plug-ins/ligmaressionist/paper.c:172
 msgid "Inverts the Papers texture"
 msgstr "စက္ကူများ ထုံးဖွဲ့ပုံကို ပြောင်းပြန်လှန်ပါ"
 
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 msgid "O_verlay"
 msgstr "အထပ်လွှာ"
 
-#: ../plug-ins/gimpressionist/paper.c:181
+#: ../plug-ins/ligmaressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "စက္ကူကို ၄င်းရှိတဲ့အတိုင်း အသုံးချပါ (၄င်းကို မဖောင်းကြွစေပဲ)"
 
-#: ../plug-ins/gimpressionist/paper.c:197
+#: ../plug-ins/ligmaressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "ထုံးဖွဲ့မှုရဲ့ စကေးကို သတ်မှတ်ပါ (မူရင်း ဖိုင်ရဲ့ ရာခိုင်နှုန်းနဲ့)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "အထားအသို"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "အထားအသို"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "အလျင်သင့်သလို"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "မျှမျှတတ ဖြန့်ဖြူးချက်"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "ရုပ်ပုံ ပတ်လည်မှာ စုတ်ချက်များကို ကျပန်း ချထားပါ"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "ရုပ်ပုံ တလျှောက် စုတ်ချက်များကို မျှမျှတတ ဖြန့်ဖြူးထားတယ်"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "အလယ်ဗဟိုချထားမှု"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "ရုပ်ပုံရဲ့ အလယ် ပတ်လည်မှာ စုတ်တံ စုတ်ချက်များကို ဗဟိုပြုပါ"
 
-#: ../plug-ins/gimpressionist/placement.c:119
+#: ../plug-ins/ligmaressionist/placement.c:119
 msgid "Stroke _density:"
 msgstr "စုတ်ချက် သိပ်သည်းမှု -"
 
-#: ../plug-ins/gimpressionist/placement.c:123
+#: ../plug-ins/ligmaressionist/placement.c:123
 msgid "The relative density of the brush strokes"
 msgstr "စုတ်တံ စုတ်ချက်များရဲ့ သက်ဆိုင်တဲ့ သိပ်သည်းချက်"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:649
+#: ../plug-ins/ligmaressionist/ppmtool.c:649
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "PPM ဖိုင် '%s' ကို သိမ်းဆည်းဖို့ မအောင်မြင်ဘူး - %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/ligmaressionist/presets.c:639
 msgid "Save Current"
 msgstr "လက်ရှိကို သိမ်းဆည်းပါ"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist စံထားချက်များ"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist စံထားချက်များ"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "ကြိုတင်သတ်မှတ်ချက်များ"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "လက်ရှိကို သိမ်းဆည်းပါ..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "လက်ရှိ တပ်ဆင်ချက်များကို သတ်မှတ်ထားတဲ့ဖိုင်မှာ သိမ်းဆည်းပါ"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "ရွေးထားတဲ့ ကြိုတင်သတ်မှတ်ချက်ကို မှတ်ဉာဏ်ထဲမှာ ဖတ်ရှုပါ"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "ရွေးထားတဲ့ ကြိုတင်သတ်မှတ်ချက်ကို ပယ်ဖျက်ပါ"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "ကြိုတင်သတ်မှတ်ချက်များရဲ့ ဖိုင်တွဲကို ပြန်ဖတ်ပါ"
 
-#: ../plug-ins/gimpressionist/preview.c:173
-#: ../plug-ins/gimpressionist/repaint.c:1183
+#: ../plug-ins/ligmaressionist/preview.c:173
+#: ../plug-ins/ligmaressionist/repaint.c:1183
 #: ../plug-ins/imagemap/imap_polygon.c:514
 #: ../plug-ins/lighting/lighting-ui.c:1074
 msgid "_Update"
 msgstr "မွမ်းမံပါ"
 
-#: ../plug-ins/gimpressionist/preview.c:179
+#: ../plug-ins/ligmaressionist/preview.c:179
 msgid "Refresh the Preview window"
 msgstr "အစမ်းမြင်ကွင်း ၀င်းဒိုးကို ပြန်နှိုးပါ"
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/ligmaressionist/preview.c:187
 msgid "Revert to the original image"
 msgstr "မူရင်း ရုပ်ပုံဆီ ပြန်ထားပါ"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "အရွယ် -"
 
-#: ../plug-ins/gimpressionist/size.c:108
+#: ../plug-ins/ligmaressionist/size.c:108
 msgid "Sizes:"
 msgstr "အရွယ်များ -"
 
-#: ../plug-ins/gimpressionist/size.c:112
+#: ../plug-ins/ligmaressionist/size.c:112
 msgid "The number of sizes of brushes to use"
 msgstr "သုံးစွဲမဲ့ စုတ်တံများရဲ့ အရွယ်များ အရေအတွက်"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "Minimum size:"
 msgstr "အနည်းဆုံး အရွယ် -"
 
-#: ../plug-ins/gimpressionist/size.c:124
+#: ../plug-ins/ligmaressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "ဖန်တီးမဲ့ အငယ်ဆုံး စုတ်တံ"
 
-#: ../plug-ins/gimpressionist/size.c:132
+#: ../plug-ins/ligmaressionist/size.c:132
 msgid "Maximum size:"
 msgstr "အများဆုံး အရွယ် -"
 
-#: ../plug-ins/gimpressionist/size.c:136
+#: ../plug-ins/ligmaressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "ဖန်တီးမဲ့ အကြီးဆုံး စုတ်တံ"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Size:"
 msgstr "အရွယ် -"
 
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "နယ်ပယ်ရဲ့ တန်ဖိုး (တောက်ပမှု) က စုတ်တံရဲ့ အရွယ်ကို ဆုံးဖြတ်ပါစေ"
 
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "ရုပ်ပုံရဲ့ အလယ်မှ အကွာအဝေးက စုတ်ချက်ရဲ့ အရွယ်ကို ဆုံးဖြတ်ပေးတယ်"
 
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Selects a random size for each stroke"
 msgstr "စုတ်ချက်တိုင်းအတွက် ကျပန်း အရွယ်တခုကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "အလယ်မှ ဦးတည်ချက်က စုတ်ချက်ရဲ့ အရွယ်ကို ဆုံးဖြတ်ပေးတယ်"
 
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
 msgstr "နယ်ပယ်ရဲ့ အရောင်က စုတ်ချက်ရဲ့ အရွယ်ကို ဆုံးဖြတ်ပေးတယ်"
 
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "အနီးစပ်ဆုံး မူရင်း ရုပ်ပုံနဲ့ ကိုက်ညီတဲ့ စုတ်တံ-အရွယ်ကို ရွေးထားတယ်"
 
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manually specify the stroke size"
 msgstr "စုတ်တံ အရွယ်ကို လက်ဖြင့် သတ်မှတ်ပါ"
 
-#: ../plug-ins/gimpressionist/size.c:207
+#: ../plug-ins/ligmaressionist/size.c:207
 msgid "Opens up the Size Map Editor"
 msgstr "အရွယ်​ မြေပုံ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 msgid "Size Map Editor"
 msgstr "အရွယ် မြေပုံ တည်း​ဖြတ်ကိရိယာ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:428
+#: ../plug-ins/ligmaressionist/sizemap.c:428
 msgid "Smvectors"
 msgstr "Smဗက်တာများ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:438
+#: ../plug-ins/ligmaressionist/sizemap.c:438
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10405,39 +10405,39 @@ msgstr ""
 "smဗက်တာ-နေရာလပ်။ ရွေးထားတဲ့ smဗက်တာကို​ ရွှေ့ဖို့ ဘယ်ဖက်-နှိုပ်ပါ၊ ကြွက်ခလုတ်ဖက် ၄င်းကို "
 "ညွှန်းဖို့ ညာဖက်-နှိုပ်ပါ၊ smဗက်တာ အသစ် တခုကို ပေါင်းထည့်ဖို့ အလယ်-နှိုပ်ပါ။"
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/ligmaressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "အရင် smဗက်တာကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/ligmaressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "နောက် smဗက်တာကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/ligmaressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "smဗက်တာ အသစ်ကို ရွေးပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/ligmaressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "ရွေးထားတဲ့ smဗက်တာကို ​ပယ်​ဖျက်ပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/ligmaressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "ရွေးထားတဲ့ smဗက်တာရဲ့​ ထောင့်ကို ​ပြောင်းလဲပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "အားကောင်းချက် -"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/ligmaressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "ရွေးထားတဲ့ smဗက်တာရဲ့ စွမ်းအားကို ပြောင်းလဲပါ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "exp. ကို အားဖြည့်ပါ -"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/ligmaressionist/sizemap.c:548
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10726,8 +10726,8 @@ msgstr "ဒုတိယ အလင်းတန်း"
 
 #: ../plug-ins/help-browser/dialog.c:185
 #: ../plug-ins/help-browser/dialog.c:1120
-msgid "GIMP Help Browser"
-msgstr "GIMP အကူအညီ ကွန်ရက်ကြည့်ယန္တရား"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA အကူအညီ ကွန်ရက်ကြည့်ယန္တရား"
 
 #: ../plug-ins/help-browser/dialog.c:563
 msgid "Go back one page"
@@ -10782,8 +10782,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "ဘေးတန်းရဲ့ မြင်နိုင်မှုကို ထိန်းပါ"
 
 #: ../plug-ins/help-browser/dialog.c:655
-msgid "Visit the GIMP documentation website"
-msgstr "GIMP အသုံးပြုနည်းလမ်းညွှန် ကွန်ရက်ကို လည်ပတ်ပါ"
+msgid "Visit the LIGMA documentation website"
+msgstr "LIGMA အသုံးပြုနည်းလမ်းညွှန် ကွန်ရက်ကို လည်ပတ်ပါ"
 
 #: ../plug-ins/help-browser/dialog.c:1161
 msgid "Find:"
@@ -10799,38 +10799,38 @@ msgctxt "search"
 msgid "_Next"
 msgstr "နောက်တခု"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "'%s' အတွက် အကူအညီ စာမျက်နှာများကို မရနိုင်ဘူး။"
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "GIMP သုံးစွဲသူ လက်စွဲကို မရနိုင်ဘူး။"
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMA သုံးစွဲသူ လက်စွဲကို မရနိုင်ဘူး။"
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
-"အရန် အကူအညီပေး ကုန်ထုတ်ပစ္စည်းကို တပ်ဆင်ပါ (သို့) http://docs.gimp.org/ မှ အွန်လိုင်း "
+"အရန် အကူအညီပေး ကုန်ထုတ်ပစ္စည်းကို တပ်ဆင်ပါ (သို့) http://docs.ligma.org/ မှ အွန်လိုင်း "
 "သုံးစွဲသူ လက်စွဲကို သုံးစွဲပါ။"
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "GIO ကျောထောက်နောက်ခံများ ပျောက်ဆုံးနေနိုင်တဲ့ အတွက် GVFS ကို တပ်ဆင်ဖို့ လိုအပ်မလား။"
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/ligmahelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "အမည်မသိတဲ့ အကူအညီ ID '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "'%s' မှ အညွှန်းကို ဖွင့်နေတယ်"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11057,7 +11057,7 @@ msgid "Clear"
 msgstr "ရှင်းလင်းပါ"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "ဖန်တီးပါ"
 
@@ -11082,41 +11082,41 @@ msgid "Edit Object"
 msgstr "၀တ္တူကို တည်းဖြတ်ပါ"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-msgid "Use Gimp Guides"
-msgstr "Gimp လမ်းညွှန်များကို သုံးစွဲပါ"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:250
+msgid "Use Ligma Guides"
+msgstr "Ligma လမ်းညွှန်များကို သုံးစွဲပါ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "အခြားရွေးစရာ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "အားလုံး"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "အရန် လမ်းညွှန်းများကို ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "ဘယ်ဖက် အနားသတ်"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "ညာဖက် အနားသတ်"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "အထက်ဖက် အနားသတ်"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "အောက်ဖက် အနားသတ်"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "အရင်းခံ ကွန်ရက်ကြည့်ယန္တရား -"
 
@@ -11547,8 +11547,8 @@ msgid "Grid Settings..."
 msgstr "ဂရစ်ကွက် တပ်ဆင်ချက်များ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-msgid "Use GIMP Guides..."
-msgstr "GIMP လမ်းညွှန်များကို သုံးစွဲပါ..."
+msgid "Use LIGMA Guides..."
+msgstr "LIGMA လမ်းညွှန်များကို သုံးစွဲပါ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."

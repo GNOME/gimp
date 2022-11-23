@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 #define __THEMES_H__
 
 
-void     themes_init           (Gimp        *gimp);
-void     themes_exit           (Gimp        *gimp);
+void     themes_init           (Ligma        *ligma);
+void     themes_exit           (Ligma        *ligma);
 
-gchar ** themes_list_themes    (Gimp        *gimp,
+gchar ** themes_list_themes    (Ligma        *ligma,
                                 gint        *n_themes);
-GFile  * themes_get_theme_dir  (Gimp        *gimp,
+GFile  * themes_get_theme_dir  (Ligma        *ligma,
                                 const gchar *theme_name);
-GFile  * themes_get_theme_file (Gimp        *gimp,
+GFile  * themes_get_theme_file (Ligma        *ligma,
                                 const gchar *first_component,
                                 ...) G_GNUC_NULL_TERMINATED;
 

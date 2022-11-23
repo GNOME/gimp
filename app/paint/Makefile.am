@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Paint\"		\
+	-DG_LOG_DOMAIN=\"Ligma-Paint\"		\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
@@ -17,77 +17,77 @@ noinst_LIBRARIES = libapppaint.a
 libapppaint_a_sources = \
 	paint-enums.h			\
 	paint-types.h			\
-	gimp-paint.c			\
-	gimp-paint.h			\
-	gimpairbrush.c			\
-	gimpairbrush.h			\
-	gimpairbrushoptions.c		\
-	gimpairbrushoptions.h		\
-	gimpbrushcore.c			\
-	gimpbrushcore.h			\
-	gimpbrushcore-loops.cc		\
-	gimpbrushcore-loops.h		\
-	gimpbrushcore-kernels.h		\
-	gimpclone.c			\
-	gimpclone.h			\
-	gimpcloneoptions.c		\
-	gimpcloneoptions.h		\
-	gimpconvolve.c			\
-	gimpconvolve.h			\
-	gimpconvolveoptions.c		\
-	gimpconvolveoptions.h		\
-	gimpdodgeburn.c			\
-	gimpdodgeburn.h			\
-	gimpdodgeburnoptions.c		\
-	gimpdodgeburnoptions.h		\
-	gimperaser.c			\
-	gimperaser.h			\
-	gimperaseroptions.c		\
-	gimperaseroptions.h		\
-	gimpheal.c			\
-	gimpheal.h			\
-	gimpink.c			\
-	gimpink.h			\
-	gimpink-blob.c			\
-	gimpink-blob.h			\
-	gimpinkoptions.c		\
-	gimpinkoptions.h		\
-	gimpinkundo.c			\
-	gimpinkundo.h			\
-	gimpmybrushcore.c		\
-	gimpmybrushcore.h		\
-	gimpmybrushoptions.c		\
-	gimpmybrushoptions.h		\
-	gimpmybrushsurface.c		\
-	gimpmybrushsurface.h		\
-	gimppaintcore.c			\
-	gimppaintcore.h			\
-	gimppaintcore-loops.cc		\
-	gimppaintcore-loops.h		\
-	gimppaintcore-stroke.c		\
-	gimppaintcore-stroke.h		\
-	gimppaintcoreundo.c		\
-	gimppaintcoreundo.h		\
-	gimppaintoptions.c		\
-	gimppaintoptions.h		\
-	gimppencil.c			\
-	gimppencil.h			\
-	gimppenciloptions.c		\
-	gimppenciloptions.h		\
-	gimppaintbrush.c		\
-	gimppaintbrush.h		\
-	gimpperspectiveclone.c		\
-	gimpperspectiveclone.h		\
-	gimpperspectivecloneoptions.c	\
-	gimpperspectivecloneoptions.h	\
-	gimpsmudge.c			\
-	gimpsmudge.h			\
-	gimpsmudgeoptions.c		\
-	gimpsmudgeoptions.h		\
-	gimpsourcecore.c		\
-	gimpsourcecore.h		\
-	gimpsourceoptions.c		\
-	gimpsourceoptions.h
+	ligma-paint.c			\
+	ligma-paint.h			\
+	ligmaairbrush.c			\
+	ligmaairbrush.h			\
+	ligmaairbrushoptions.c		\
+	ligmaairbrushoptions.h		\
+	ligmabrushcore.c			\
+	ligmabrushcore.h			\
+	ligmabrushcore-loops.cc		\
+	ligmabrushcore-loops.h		\
+	ligmabrushcore-kernels.h		\
+	ligmaclone.c			\
+	ligmaclone.h			\
+	ligmacloneoptions.c		\
+	ligmacloneoptions.h		\
+	ligmaconvolve.c			\
+	ligmaconvolve.h			\
+	ligmaconvolveoptions.c		\
+	ligmaconvolveoptions.h		\
+	ligmadodgeburn.c			\
+	ligmadodgeburn.h			\
+	ligmadodgeburnoptions.c		\
+	ligmadodgeburnoptions.h		\
+	ligmaeraser.c			\
+	ligmaeraser.h			\
+	ligmaeraseroptions.c		\
+	ligmaeraseroptions.h		\
+	ligmaheal.c			\
+	ligmaheal.h			\
+	ligmaink.c			\
+	ligmaink.h			\
+	ligmaink-blob.c			\
+	ligmaink-blob.h			\
+	ligmainkoptions.c		\
+	ligmainkoptions.h		\
+	ligmainkundo.c			\
+	ligmainkundo.h			\
+	ligmamybrushcore.c		\
+	ligmamybrushcore.h		\
+	ligmamybrushoptions.c		\
+	ligmamybrushoptions.h		\
+	ligmamybrushsurface.c		\
+	ligmamybrushsurface.h		\
+	ligmapaintcore.c			\
+	ligmapaintcore.h			\
+	ligmapaintcore-loops.cc		\
+	ligmapaintcore-loops.h		\
+	ligmapaintcore-stroke.c		\
+	ligmapaintcore-stroke.h		\
+	ligmapaintcoreundo.c		\
+	ligmapaintcoreundo.h		\
+	ligmapaintoptions.c		\
+	ligmapaintoptions.h		\
+	ligmapencil.c			\
+	ligmapencil.h			\
+	ligmapenciloptions.c		\
+	ligmapenciloptions.h		\
+	ligmapaintbrush.c		\
+	ligmapaintbrush.h		\
+	ligmaperspectiveclone.c		\
+	ligmaperspectiveclone.h		\
+	ligmaperspectivecloneoptions.c	\
+	ligmaperspectivecloneoptions.h	\
+	ligmasmudge.c			\
+	ligmasmudge.h			\
+	ligmasmudgeoptions.c		\
+	ligmasmudgeoptions.h		\
+	ligmasourcecore.c		\
+	ligmasourcecore.h		\
+	ligmasourceoptions.c		\
+	ligmasourceoptions.h
 
 libapppaint_a_built_sources = paint-enums.c
 
@@ -100,16 +100,16 @@ libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(libapppaint_a_sources)
 gen_sources = stamp-paint-enums.h xgen-pec
 CLEANFILES = $(gen_sources)
 
-xgen-pec: $(srcdir)/paint-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"stamp-paint-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"paint-enums.h\"\n#include \"gimp-intl.h\"" \
+xgen-pec: $(srcdir)/paint-enums.h $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"stamp-paint-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libligmabase/ligmabase.h\"\n#include \"paint-enums.h\"\n#include \"ligma-intl.h\"" \
 		--fprod "\n/* enumerations from \"@basename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > $@
 
 stamp-paint-enums.h: xgen-pec

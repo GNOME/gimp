@@ -11,26 +11,26 @@ stamp_text_enums = custom_target('stamp-text-enums.h',
     meson.current_build_dir(),
     'text-',
     '#include <gio/gio.h>\n'              +
-    '#include "libgimpbase/gimpbase.h"\n',
-    '#include "gimp-intl.h"'
+    '#include "libligmabase/ligmabase.h"\n',
+    '#include "ligma-intl.h"'
   ],
   build_by_default: true
 )
 
 libapptext_sources = [
-  'gimpfont.c',
-  'gimpfontfactory.c',
-  'gimptext-compat.c',
-  'gimptext-parasite.c',
-  'gimptext-vectors.c',
-  'gimptext-xlfd.c',
-  'gimptext.c',
-  'gimptextlayer-transform.c',
-  'gimptextlayer-xcf.c',
-  'gimptextlayer.c',
-  'gimptextlayout-render.c',
-  'gimptextlayout.c',
-  'gimptextundo.c',
+  'ligmafont.c',
+  'ligmafontfactory.c',
+  'ligmatext-compat.c',
+  'ligmatext-parasite.c',
+  'ligmatext-vectors.c',
+  'ligmatext-xlfd.c',
+  'ligmatext.c',
+  'ligmatextlayer-transform.c',
+  'ligmatextlayer-xcf.c',
+  'ligmatextlayer.c',
+  'ligmatextlayout-render.c',
+  'ligmatextlayout.c',
+  'ligmatextundo.c',
 
   'text-enums.c',
   stamp_text_enums
@@ -40,7 +40,7 @@ libapptext_sources = [
 libapptext = static_library('apptext',
   libapptext_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: '-DG_LOG_DOMAIN="Gimp-Text"',
+  c_args: '-DG_LOG_DOMAIN="Ligma-Text"',
   dependencies: [
     gegl, gdk_pixbuf, harfbuzz, pangocairo, pangoft2,
   ],

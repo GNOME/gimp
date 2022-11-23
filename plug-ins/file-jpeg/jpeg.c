@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,10 +24,10 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "jpeg.h"
 #include "jpeg-settings.h"
@@ -40,12 +40,12 @@ typedef struct _JpegClass JpegClass;
 
 struct _Jpeg
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _JpegClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -54,47 +54,47 @@ struct _JpegClass
 
 GType                   jpeg_get_type         (void) G_GNUC_CONST;
 
-static GList          * jpeg_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * jpeg_create_procedure (GimpPlugIn           *plug_in,
+static GList          * jpeg_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * jpeg_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * jpeg_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
+static LigmaValueArray * jpeg_load             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * jpeg_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * jpeg_load_thumb       (LigmaProcedure        *procedure,
                                                GFile                *file,
                                                gint                  size,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * jpeg_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * jpeg_save             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 
-G_DEFINE_TYPE (Jpeg, jpeg, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Jpeg, jpeg, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (JPEG_TYPE)
+LIGMA_MAIN (JPEG_TYPE)
 DEFINE_STD_SET_I18N
 
 
 gboolean         undo_touched      = FALSE;
-GimpDisplay     *display           = NULL;
+LigmaDisplay     *display           = NULL;
 gboolean         separate_display  = FALSE;
-GimpImage       *orig_image_global = NULL;
-GimpDrawable    *drawable_global   = NULL;
+LigmaImage       *orig_image_global = NULL;
+LigmaDrawable    *drawable_global   = NULL;
 
 
 static void
 jpeg_class_init (JpegClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = jpeg_query_procedures;
   plug_in_class->create_procedure = jpeg_create_procedure;
@@ -107,7 +107,7 @@ jpeg_init (Jpeg *jpeg)
 }
 
 static GList *
-jpeg_query_procedures (GimpPlugIn *plug_in)
+jpeg_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -118,118 +118,118 @@ jpeg_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-jpeg_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+jpeg_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jpeg_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG image"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in the JPEG file format",
                                         "Loads files in the JPEG file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & others",
                                       "Spencer Kimball & Peter Mattis",
                                       "1995-2007");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/jpeg");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "jpg,jpeg,jpe");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\xff\xd8\xff");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 jpeg_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads a thumbnail from a JPEG image",
                                         "Loads a thumbnail from a JPEG image, "
                                         "if one exists",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>, "
-                                      "Sven Neumann <sven@gimp.org>",
+                                      "Sven Neumann <sven@ligma.org>",
                                       "Mukund Sivaraman <muks@mukund.org>, "
-                                      "Sven Neumann <sven@gimp.org>",
+                                      "Sven Neumann <sven@ligma.org>",
                                       "November 15, 2004");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jpeg_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG image"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in the JPEG file format",
                                         "Saves files in the lossy, widely "
                                         "supported JPEG format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & others",
                                       "Spencer Kimball & Peter Mattis",
                                       "1995-2007");
 
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            _("JPEG"));
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/jpeg");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "jpg,jpeg,jpe");
 
       /* See bugs #63610 and #61088 for a discussion about the quality
        * settings
        */
-      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "quality",
                             "_Quality",
                             "Quality of exported image",
                             0.0, 1.0, 0.9,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "smoothing",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "smoothing",
                             "S_moothing",
                             "Smoothing factor for exported image",
                             0.0, 1.0, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "optimize",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "optimize",
                              "Optimi_ze",
                              "Use optimized tables during Huffman coding",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "progressive",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "progressive",
                              "_Progressive",
                              "Create progressive JPEG images",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "cmyk",
                              "Export as _CMYK",
                              "Create a CMYK JPEG image using the soft-proofing color profile",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "sub-sampling",
+      LIGMA_PROC_ARG_INT (procedure, "sub-sampling",
                          _("Su_bsampling"),
                          "Sub-sampling type { 0 == 4:2:0 (chroma quartered), "
                          "1 == 4:2:2 Horizontal (chroma halved), "
@@ -240,21 +240,21 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                          JPEG_SUBSAMPLING_1x1_1x1_1x1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "baseline",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "baseline",
                              "Baseline",
                              "Force creation of a baseline JPEG "
                              "(non-baseline JPEGs can't be read by all decoders)",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "restart",
+      LIGMA_PROC_ARG_INT (procedure, "restart",
                          _("Inter_val (MCU rows):"),
                          "Interval of restart markers "
                          "(in MCU rows, 0 = no restart markers)",
                          0, 64, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "dct",
+      LIGMA_PROC_ARG_INT (procedure, "dct",
                          _("_DCT method"),
                          "DCT method to use { INTEGER (0), FIXED (1), "
                          "FLOAT (2) }",
@@ -263,7 +263,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
 
       /* Some auxiliary arguments mostly for interactive usage. */
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-original-quality",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-original-quality",
                                  "_Use quality settings from original image",
                                  "If the original image was loaded from a JPEG "
                                  "file using non-standard quality settings "
@@ -271,57 +271,57 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                  "get almost the same quality and file size.",
                                  FALSE,
                                  G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-quality",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "original-quality",
                              NULL, NULL,
                              -1, 100, -1,
                              G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-sub-sampling",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "original-sub-sampling",
                              NULL, NULL,
                              JPEG_SUBSAMPLING_2x2_1x1_1x1,
                              JPEG_SUBSAMPLING_1x2_1x1_1x1,
                              JPEG_SUBSAMPLING_2x2_1x1_1x1,
                              G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-num-quant-tables",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "original-num-quant-tables",
                              NULL, NULL,
                              -1, 4, -1,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "show-preview",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "show-preview",
                                  "Sho_w preview in image window",
                                  "Creates a temporary layer with an export preview",
                                  FALSE,
                                  G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-arithmetic-coding",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-arithmetic-coding",
                                  "Use _arithmetic coding",
                                  _("Older software may have trouble opening "
                                    "arithmetic-coded images"),
                                  FALSE,
                                  G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-restart",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-restart",
                                  _("Use restart mar_kers"),
                                  NULL, FALSE,
                                  G_PARAM_READWRITE);
 
-      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_exif      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_iptc      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_xmp       (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_profile   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_thumbnail (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_comment   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-jpeg_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+jpeg_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   gboolean        resolution_loaded = FALSE;
   GError         *error             = NULL;
 
@@ -332,9 +332,9 @@ jpeg_load (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       break;
 
     default:
@@ -346,19 +346,19 @@ jpeg_load (GimpProcedure        *procedure,
 
   if (image)
     {
-      GimpMetadata *metadata;
+      LigmaMetadata *metadata;
 
-      metadata = gimp_image_metadata_load_prepare (image, "image/jpeg",
+      metadata = ligma_image_metadata_load_prepare (image, "image/jpeg",
                                                    file, NULL);
 
       if (metadata)
         {
-          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+          LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
           if (resolution_loaded)
-            flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+            flags &= ~LIGMA_METADATA_LOAD_RESOLUTION;
 
-          gimp_image_metadata_load_finish (image, "image/jpeg",
+          ligma_image_metadata_load_finish (image, "image/jpeg",
                                            metadata, flags);
 
           g_object_unref (metadata);
@@ -366,31 +366,31 @@ jpeg_load (GimpProcedure        *procedure,
     }
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-jpeg_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+jpeg_load_thumb (LigmaProcedure        *procedure,
                  GFile                *file,
                  gint                  size,
-                 const GimpValueArray *args,
+                 const LigmaValueArray *args,
                  gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   gint            width  = 0;
   gint            height = 0;
-  GimpImageType   type   = -1;
+  LigmaImageType   type   = -1;
   GError         *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -403,38 +403,38 @@ jpeg_load_thumb (GimpProcedure        *procedure,
 
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
-  GIMP_VALUES_SET_ENUM  (return_vals, 4, type);
-  GIMP_VALUES_SET_INT   (return_vals, 5, 1); /* 1 layer */
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_ENUM  (return_vals, 4, type);
+  LIGMA_VALUES_SET_INT   (return_vals, 5, 1); /* 1 layer */
 
   return return_vals;
 }
 
-static GimpValueArray *
-jpeg_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+jpeg_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpProcedureConfig   *config;
-  GimpMetadata          *metadata;
-  GimpImage             *orig_image;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType      status = LIGMA_PDB_SUCCESS;
+  LigmaProcedureConfig   *config;
+  LigmaMetadata          *metadata;
+  LigmaImage             *orig_image;
+  LigmaExportReturn       export = LIGMA_EXPORT_CANCEL;
   GError                *error  = NULL;
 
   gint                   orig_num_quant_tables = -1;
@@ -443,8 +443,8 @@ jpeg_save (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  metadata = ligma_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/jpeg");
   preview_image = NULL;
   preview_layer = NULL;
@@ -453,24 +453,24 @@ jpeg_save (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "JPEG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "JPEG",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY);
 
       switch (export)
         {
-        case GIMP_EXPORT_EXPORT:
+        case LIGMA_EXPORT_EXPORT:
           {
             gchar *tmp = g_filename_from_utf8 (_("Export Preview"), -1,
                                                NULL, NULL, NULL);
             if (tmp)
               {
                 GFile *file = g_file_new_for_path (tmp);
-                gimp_image_set_file (image, file);
+                ligma_image_set_file (image, file);
                 g_object_unref (file);
                 g_free (tmp);
               }
@@ -480,12 +480,12 @@ jpeg_save (GimpProcedure        *procedure,
           }
           break;
 
-        case GIMP_EXPORT_IGNORE:
+        case LIGMA_EXPORT_IGNORE:
           break;
 
-        case GIMP_EXPORT_CANCEL:
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+        case LIGMA_EXPORT_CANCEL:
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
           break;
         }
@@ -500,8 +500,8 @@ jpeg_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("JPEG format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
@@ -509,12 +509,12 @@ jpeg_save (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       g_object_set (config, "show-preview", FALSE, NULL);
       break;
 
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
         {
           /* restore the values found when loading the file (if available) */
           gdouble dquality;
@@ -570,7 +570,7 @@ jpeg_save (GimpProcedure        *procedure,
                 "original-num-quant-tables", orig_num_quant_tables,
                 NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       gboolean show_preview = FALSE;
 
@@ -579,7 +579,7 @@ jpeg_save (GimpProcedure        *procedure,
         {
           /* we freeze undo saving so that we can avoid sucking up
            * tile cache with our unneeded preview steps. */
-          gimp_image_undo_freeze (image);
+          ligma_image_undo_freeze (image);
 
           undo_touched = TRUE;
         }
@@ -592,7 +592,7 @@ jpeg_save (GimpProcedure        *procedure,
       /*  First acquire information with a dialog  */
       if (! save_dialog (procedure, config, drawables[0], orig_image))
         {
-          status = GIMP_PDB_CANCEL;
+          status = LIGMA_PDB_CANCEL;
         }
 
       if (undo_touched)
@@ -600,49 +600,49 @@ jpeg_save (GimpProcedure        *procedure,
           /* thaw undo saving and flush the displays to have them
            * reflect the current shortcuts
            */
-          gimp_image_undo_thaw (image);
-          gimp_displays_flush ();
+          ligma_image_undo_thaw (image);
+          ligma_displays_flush ();
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, config,
                         image, drawables[0], orig_image, FALSE,
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (metadata)
-        gimp_metadata_set_bits_per_sample (metadata, 8);
+        ligma_metadata_set_bits_per_sample (metadata, 8);
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
       /* If the image was exported, delete the new display. This also
        * deletes the image.
        */
       if (display)
         {
-          gimp_display_delete (display);
-          gimp_display_present (gimp_default_display ());
+          ligma_display_delete (display);
+          ligma_display_present (ligma_default_display ());
         }
       else
         {
-          gimp_image_delete (image);
+          ligma_image_delete (image);
         }
 
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /*

@@ -1,13 +1,13 @@
 # translation of el.po to
-# Greek translation for gimp-plugins.
+# Greek translation for ligma-plugins.
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Nikos Charonitakis <charosn@her.forthnet.gr>, 2003, 2004.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2011-2020.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins.master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-04-27 07:26+0000\n"
 "PO-Revision-Date: 2022-04-28 21:44+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
@@ -45,7 +45,7 @@ msgstr "Άσκηση κατσίκας στη γλώσσα C"
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
 #: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398
-#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/gfig/gfig.c:212 ../plug-ins/ligmaressionist/ligma.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
 #: ../plug-ins/ifs-compose/ifs-compose.c:416
 #: ../plug-ins/imagemap/imap_main.c:199
@@ -99,11 +99,11 @@ msgstr "Άσκηση κατσίκας (C)"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1268
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
-#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2516
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/gradient-flare/gradient-flare.c:3478
@@ -194,10 +194,10 @@ msgstr "Άσκηση κατσίκας (Python 3)"
 #: ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2517
 #: ../plug-ins/gradient-flare/gradient-flare.c:3479
 #: ../plug-ins/ifs-compose/ifs-compose.c:810
@@ -213,15 +213,15 @@ msgstr "Ε_ντάξει"
 msgid "Exercise a goat (Vala)"
 msgstr "Άσκηση κατσίκας (Vala)"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:1
 msgid "Goat Exercises"
 msgstr "Ασκήσεις κατσίκας"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
 msgstr "Επίσημη επίδειξη προσθέτων"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
@@ -436,7 +436,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-psd/psd-load.c:2509 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166
-#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
@@ -514,7 +514,7 @@ msgstr "Σκακιέρα"
 
 #
 #: ../plug-ins/common/checkerboard.c:555
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "_Μέγεθος:"
 
@@ -722,8 +722,8 @@ msgstr "Τυχαία από σπόρο (κοινό)"
 #
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:201
-#: ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "Απόχρωση"
 
@@ -735,8 +735,8 @@ msgstr "Κορεσμός"
 #
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
 #: ../plug-ins/common/decompose.c:203
-#: ../plug-ins/gimpressionist/orientation.c:148
-#: ../plug-ins/gimpressionist/size.c:155
+#: ../plug-ins/ligmaressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/size.c:155
 msgid "Value"
 msgstr "Τιμή"
 
@@ -803,7 +803,7 @@ msgstr "Ά_νοιγμα"
 #: ../plug-ins/flame/flame.c:1111
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:807
 #: ../plug-ins/ifs-compose/ifs-compose.c:2563
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
@@ -1003,7 +1003,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
+#: ../plug-ins/file-fli/fli-ligma.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
@@ -1038,7 +1038,7 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-xwd.c:481 ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
-#: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
+#: ../plug-ins/file-fli/fli-ligma.c:457 ../plug-ins/file-fli/fli-ligma.c:504
 #: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:96 ../plug-ins/file-jpeg/jpeg-load.c:550
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
@@ -1047,8 +1047,8 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
-#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1132,7 +1132,7 @@ msgstr "Αναδιάταξη του χρωματολογίου"
 #: ../plug-ins/common/sphere-designer.c:2629
 #: ../plug-ins/common/tile-small.c:524
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:808
 #: ../plug-ins/selection-to-path/selection-to-path.c:411
 msgid "_Reset"
@@ -1501,8 +1501,8 @@ msgstr "Καμπύλωση"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1253
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Προεπισκόπηση"
@@ -2000,7 +2000,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
-#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
+#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-ligma.c:496
 #: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:87
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
@@ -2083,7 +2083,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
-#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
+#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-ligma.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:273
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1015
@@ -2201,14 +2201,14 @@ msgstr "Το '%s' δεν είναι αρχείο DICOM."
 
 #: ../plug-ins/common/file-dicom.c:576
 #, c-format
-msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "Η σύνταξη μεταφοράς %s δεν υποστηρίζεται από το GIMP."
+msgid "Transfer syntax %s is not supported by LIGMA."
+msgstr "Η σύνταξη μεταφοράς %s δεν υποστηρίζεται από το LIGMA."
 
 #: ../plug-ins/common/file-dicom.c:631
 #, c-format
-msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgid "%s is not supported by LIGMA in combination with samples per pixel: %d"
 msgstr ""
-"το %s δεν υποστηρίζεται από το GIMP σε συνδυασμό με δείγματα ανά "
+"το %s δεν υποστηρίζεται από το LIGMA σε συνδυασμό με δείγματα ανά "
 "εικονοστοιχείο: %d"
 
 #: ../plug-ins/common/file-dicom.c:1524
@@ -2222,8 +2222,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Αδυναμία λειτουργίας σε άγνωστους τύπους εικόνας."
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "Πινέλο GIMP"
+msgid "LIGMA brush"
+msgstr "Πινέλο LIGMA"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, c-format
@@ -2448,12 +2448,12 @@ msgstr ""
 "Η εικόνα που προσπαθείτε να εξάγετε έχει μόνο μια στρώση."
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "Πινέλο GIMP (κινούμενο)"
+msgid "LIGMA brush (animated)"
+msgstr "Πινέλο LIGMA (κινούμενο)"
 
 #: ../plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
-msgstr "Πινέλο GIMP"
+msgstr "Πινέλο LIGMA"
 
 #
 #: ../plug-ins/common/file-gih.c:668
@@ -3145,8 +3145,8 @@ msgstr ""
 "περισσότερες από μία στρώσεις. Η εικόνα που εξάγετε έχει μόνο μια στρώση."
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "Μοτίβο GIMP"
+msgid "LIGMA pattern"
+msgstr "Μοτίβο LIGMA"
 
 #: ../plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
@@ -3686,9 +3686,9 @@ msgid "Invalid X resolution."
 msgstr "Άκυρη ανάλυση Χ."
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
+msgid "Image width is larger than LIGMA can handle."
 msgstr ""
-"Το πλάτος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να "
+"Το πλάτος της εικόνας είναι μεγαλύτερο από αυτό που το LIGMA μπορεί να "
 "χειριστεί."
 
 #: ../plug-ins/common/file-pnm.c:713
@@ -3696,9 +3696,9 @@ msgid "Invalid Y resolution."
 msgstr "Άκυρη ανάλυση Υ."
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
+msgid "Image height is larger than LIGMA can handle."
 msgstr ""
-"Το ύψος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να "
+"Το ύψος της εικόνας είναι μεγαλύτερο από αυτό που το LIGMA μπορεί να "
 "χειριστεί."
 
 #: ../plug-ins/common/file-pnm.c:727
@@ -3812,8 +3812,8 @@ msgstr "Γκρι"
 
 #
 #: ../plug-ins/common/file-ps.c:3681 ../plug-ins/common/file-xpm.c:507
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Χρώμα"
@@ -4345,10 +4345,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Το πλάτος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να "
+"Το πλάτος της εικόνας είναι μεγαλύτερο από αυτό που το LIGMA μπορεί να "
 "χειριστεί"
 
 #: ../plug-ins/common/file-sunras.c:537 ../plug-ins/common/file-xbm.c:851
@@ -4366,10 +4366,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Το ύψος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να χειριστεί"
+"Το ύψος της εικόνας είναι μεγαλύτερο από αυτό που το LIGMA μπορεί να χειριστεί"
 
 #: ../plug-ins/common/file-sunras.c:581
 msgid "This image depth is not supported"
@@ -4478,10 +4478,10 @@ msgstr "Εισαγωγή μονο_πατιών"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 "Εισαγωγή στοιχείων μονοπατιού του SVG , έτσι ώστε να μπορούν να "
-"χρησιμοποιηθούν με το εργαλείο μονοπατιού του GIMP"
+"χρησιμοποιηθούν με το εργαλείο μονοπατιού του LIGMA"
 
 #: ../plug-ins/common/file-svg.c:891
 msgid "Merge imported paths"
@@ -5570,9 +5570,9 @@ msgstr "Λή_ψη χρωμάτων δείγματος"
 #: ../plug-ins/common/sample-colorize.c:1415
 #: ../plug-ins/common/tile-small.c:628
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "Ε_φαρμογή"
@@ -5814,7 +5814,7 @@ msgid "Use the background color"
 msgstr "Χρήση του χρώματος παρασκηνίου"
 
 #: ../plug-ins/common/sphere-designer.c:335
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Συμπαγές"
 
@@ -5906,7 +5906,7 @@ msgstr "Διπ_λότυπο"
 #: ../plug-ins/common/sphere-designer.c:2749
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1235
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/ifs-compose/ifs-compose.c:1077
@@ -5947,7 +5947,7 @@ msgstr "Διάλογος Επιλογής Χρώματος"
 #
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2831
-#: ../plug-ins/gimpressionist/paper.c:191
+#: ../plug-ins/ligmaressionist/paper.c:191
 #: ../plug-ins/ifs-compose/ifs-compose.c:586
 msgid "Scale:"
 msgstr "Κλιμάκωση:"
@@ -6100,10 +6100,10 @@ msgstr "Αποθήκευση"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Ένας ορισμός μονάδας θα αποθηκευτεί πριν την έξοδο του GIMP, εάν αυτή η "
+"Ένας ορισμός μονάδας θα αποθηκευτεί πριν την έξοδο του LIGMA, εάν αυτή η "
 "στήλη επισημανθεί."
 
 #
@@ -6113,10 +6113,10 @@ msgstr "Ταυτότητα"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 "Αυτό το αλφαριθμητικό θα χρησιμοποιηθεί για την αναγνώριση μιας μονάδας σε "
-"αρχεία διαμόρφωσης του GIMP."
+"αρχεία διαμόρφωσης του LIGMA."
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "Factor"
@@ -6193,8 +6193,8 @@ msgid "U_nits"
 msgstr "Μο_νάδες"
 
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
-msgstr "Δημιουργία ή μεταβολή χρησιμοποιούμενων μονάδων στο GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Δημιουργία ή μεταβολή χρησιμοποιούμενων μονάδων στο LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "Add a New Unit"
@@ -6245,7 +6245,7 @@ msgstr "Επεξεργαστής Μονάδων"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "Ανανέ_ωση"
 
@@ -6698,12 +6698,12 @@ msgstr "_Συγγραφή πληροφοριών χρωματικού χώρου
 #: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "Μερικές εφαρμογές μπορεί να μην διαβάζουν εικόνες BMP που περιέχουν "
-"πληροφορίες χρωματικού χώρου. Το GIMP γράφει πληροφορίες χρωματικού χώρου "
-"από προεπιλογή. Ενεργοποίηση αυτής την επιλογής θα προκαλέσει στο GIMP να "
+"πληροφορίες χρωματικού χώρου. Το LIGMA γράφει πληροφορίες χρωματικού χώρου "
+"από προεπιλογή. Ενεργοποίηση αυτής την επιλογής θα προκαλέσει στο LIGMA να "
 "μην γράψει πληροφορίες χρωματικού χώρου στο αρχείο."
 
 #. RGB Encoding Pptions
@@ -6980,36 +6980,36 @@ msgctxt "composing"
 msgid "_None"
 msgstr "Κα_νένα"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "Κίνηση AutoDesk FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:579
+#: ../plug-ins/file-fli/fli-ligma.c:579
 #, c-format
 msgid "Frame (%i)"
 msgstr "Πλαίσιο (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:740
+#: ../plug-ins/file-fli/fli-ligma.c:740
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr ""
 "Συγνώμη, μπορούν να εξαχθούν μόνο εικόνες ΑΠΟ ΕΥΡΕΤΗΡΙΟ ή ΓΚΡΙΖΑ ΚΛΙΜΑΚΑ."
 
-#: ../plug-ins/file-fli/fli-gimp.c:901
+#: ../plug-ins/file-fli/fli-ligma.c:901
 msgid "Open FLIC Animation"
 msgstr "Άνοιγμα κίνησης FLIC"
 
 #
-#: ../plug-ins/file-fli/fli-gimp.c:919
+#: ../plug-ins/file-fli/fli-ligma.c:919
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "Α_πό:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:925
+#: ../plug-ins/file-fli/fli-ligma.c:925
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "Πρ_ος:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:955
+#: ../plug-ins/file-fli/fli-ligma.c:955
 msgid "Export Image as FLI Animation"
 msgstr "Εξαγωγή εικόνας ως κίνηση FLI"
 
@@ -7313,8 +7313,8 @@ msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
 #: ../plug-ins/file-psd/psd-save.c:470
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης GIMP σε κατάσταση PSD"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης LIGMA σε κατάσταση PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1770
 #, c-format
@@ -7457,7 +7457,7 @@ msgstr "Ακατέργαστο Arriflex ARI"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -7465,7 +7465,7 @@ msgid ""
 msgstr ""
 "Δεν υπάρχει εγκατεστημένος φορτωτής RAW για να ανοίγει αρχεία '%s'.\n"
 "\n"
-"Το GIMP προς το παρόν υποστηρίζει αυτούς τους φορτωτές RAW:\n"
+"Το LIGMA προς το παρόν υποστηρίζει αυτούς τους φορτωτές RAW:\n"
 "- darktable (http://www.darktable.org/), τουλάχιστον 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), τουλάχιστον 5.2\n"
 "\n"
@@ -8081,8 +8081,8 @@ msgstr "_Τυχαία σειρά"
 msgid "Same"
 msgstr "Ίδιο"
 
-#: ../plug-ins/flame/flame.c:808 ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/flame/flame.c:808 ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "Τυχαίο"
 
@@ -8220,8 +8220,8 @@ msgid "Flame"
 msgstr "Φλόγα"
 
 #
-#: ../plug-ins/flame/flame.c:1095 ../plug-ins/gimpressionist/orientation.c:190
-#: ../plug-ins/gimpressionist/size.c:199
+#: ../plug-ins/flame/flame.c:1095 ../plug-ins/ligmaressionist/orientation.c:190
+#: ../plug-ins/ligmaressionist/size.c:199
 #: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -8280,16 +8280,16 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:997
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Χωρίς %s στο gimprc:\n"
+"Χωρίς %s στο ligmarc:\n"
 "Χρειάζεσθε προσθήκη εισόδου όπως\n"
 "(%s \"%s\")\n"
 "στο αρχείο σας %s."
@@ -8936,7 +8936,7 @@ msgstr "Εξομάλυνση"
 msgid "Max undo:"
 msgstr "Μέγιστες αναιρέσεις:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Διαφανές"
 
@@ -9044,7 +9044,7 @@ msgid "Left"
 msgstr "Αριστερά"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1746
-#: ../plug-ins/gimpressionist/orientation.c:140
+#: ../plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Προσανατολισμός:"
 
@@ -9102,231 +9102,231 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Σφάλμα ανοίγματος προσωρινού αρχείου '%s' για φόρτωση παρασίτου: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Αποθήκευση μόνο σχεδίων!"
 
 #
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Αποθήκευση πινέλου"
 
-#: ../plug-ins/gimpressionist/brush.c:522
+#: ../plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "Πι_νέλο"
 
 #
-#: ../plug-ins/gimpressionist/brush.c:559
+#: ../plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "Γάμα:"
 
 #
-#: ../plug-ins/gimpressionist/brush.c:577
+#: ../plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Αλλαγή του γάμα (φωτεινότητας) του επιλεγμένου πινέλου"
 
 #
-#: ../plug-ins/gimpressionist/brush.c:585
+#: ../plug-ins/ligmaressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:621
 msgid "Select:"
 msgstr "Επιλογή:"
 
 #
-#: ../plug-ins/gimpressionist/brush.c:601
+#: ../plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "Αποθήκευση _ως"
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "Λόγος θέασης:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Ορισμός του λόγου θέασης του πινέλου"
 
-#: ../plug-ins/gimpressionist/brush.c:626
-#: ../plug-ins/gimpressionist/paper.c:202
+#: ../plug-ins/ligmaressionist/brush.c:626
+#: ../plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "Ανάγλυφο:"
 
-#: ../plug-ins/gimpressionist/brush.c:628
-#: ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:628
+#: ../plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Καθορίζει την ποσότητα χάραξης για εφαρμογή στην εικόνα (σε ποσοστό)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Χρώ_μα"
 
 #
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Μέσος όρος κάτ_ω από το πινέλο"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "Κέντρ_ο του πινέλου"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 "Το χρώμα υπολογίζεται από το μέσο όρο όλων των εικονοστοιχείων κάτω από το "
 "πινέλο"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Δειγματίζει το χρώμα από το εικονοστοιχείο στο κέντρο του πινέλου"
 
-#: ../plug-ins/gimpressionist/color.c:87
+#: ../plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "_Θόρυβος χρώματος:"
 
-#: ../plug-ins/gimpressionist/color.c:89
+#: ../plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Προσθήκη τυχαίου θορύβου στο χρώμα"
 
 #
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "_General"
 msgstr "_Γενικά"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Διατήρηση αρχικού"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Διατήρηση της αρχικής εικόνας ως παρασκήνιο"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Από χαρτί"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Αντιγραφή της υφής του επιλεγμένου χαρτιού ως παρασκήνιου"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Συμπαγές χρωματιστό παρασκήνιο"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Χρήση διαφανούς παρασκηνίου· Μόνο οι βαμμένες πινελιές θα είναι ορατές"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Άκρες βαφής"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Επιλογή εάν η τοποθέτηση πινελιών θα είναι μέχρι τα άκρα της εικόνας"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "Παραθέσιμος"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Επιλογή εάν η τελική εικόνα θα πρέπει να είναι χωρίς ραφές παραθέσιμη"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Πίπτουσα σκιά"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Προσθήκη εφέ σκιάς σε κάθε πινελιά"
 
-#: ../plug-ins/gimpressionist/general.c:238
+#: ../plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "Σκοτείνιασμα άκρης:"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Ποσότητα \"σκοτεινιάσματος\" των άκρων κάθε πινελιάς"
 
-#: ../plug-ins/gimpressionist/general.c:246
+#: ../plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "Σκοτείνιασμα σκιάς:"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Ποσότητα \"σκοτεινιάσματος\" της πίπτουσας σκιάς"
 
-#: ../plug-ins/gimpressionist/general.c:255
+#: ../plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "Βάθος σκιάς:"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "Το βάθος της πίπτουσας σκιάς, δηλαδή πόσο μακριά από το αντικείμενο θα "
 "πρέπει να είναι"
 
-#: ../plug-ins/gimpressionist/general.c:263
+#: ../plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "Θόλωση σκιάς:"
 
-#: ../plug-ins/gimpressionist/general.c:265
+#: ../plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "Ποσότητα θόλωσης της πίπτουσας σκιάς"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "Κατώφλι απόκλισης:"
 
-#: ../plug-ins/gimpressionist/general.c:273
+#: ../plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "Μια βοηθητική τιμή για προσαρμοστικές επιλογές"
 
-#: ../plug-ins/gimpressionist/gimp.c:119
-msgid "_GIMPressionist..."
-msgstr "Ιμπρεσιονιστής _GIMP..."
+#: ../plug-ins/ligmaressionist/ligma.c:119
+msgid "_LIGMAressionist..."
+msgstr "Ιμπρεσιονιστής _LIGMA..."
 
-#: ../plug-ins/gimpressionist/gimp.c:123
+#: ../plug-ins/ligmaressionist/ligma.c:123
 msgid "Performs various artistic operations"
 msgstr "Εκτέλεση ποικίλων καλλιτεχνικών λειτουργιών"
 
-#: ../plug-ins/gimpressionist/gimp.c:448
+#: ../plug-ins/ligmaressionist/ligma.c:448
 msgid "Painting"
 msgstr "Ζωγράφισμα"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "Ιμπρεσιονιστής GIMP"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "Ιμπρεσιονιστής LIGMA"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "Προσανατολ_ισμός"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "Κατευθύνσεις:"
 
-#: ../plug-ins/gimpressionist/orientation.c:102
+#: ../plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Ο αριθμός των χρησιμοποιούμενων κατευθύνσεων (δηλ. πινέλων)"
 
-#: ../plug-ins/gimpressionist/orientation.c:111
+#: ../plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "Αρχική γωνία:"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "Η αρχική γωνία του πρώτου δημιουργούμενου πινέλου"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "Γωνία επικάλυψης:"
 
-#: ../plug-ins/gimpressionist/orientation.c:124
+#: ../plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "Η γωνία επικάλυψης του πρώτου δημιουργούμενου πινέλου"
 
-#: ../plug-ins/gimpressionist/orientation.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
@@ -9334,78 +9334,78 @@ msgstr ""
 "Προσδιορισμός από την τιμή (φωτεινότητα) της περιοχής της κατεύθυνσης της "
 "πινελιάς"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "Ακτίνα"
 
-#: ../plug-ins/gimpressionist/orientation.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 "Η απόσταση από το κέντρο της εικόνας καθορίζει την κατεύθυνση της πινελιάς"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "Επιλογή μιας τυχαίας κατεύθυνσης για κάθε πινελιά"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "Ακτινικό"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Η κατεύθυνση από το κέντρο προσδιορίζει την κατεύθυνση της πινελιάς"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "Ροή"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
-#: ../plug-ins/gimpressionist/size.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Οι πινελιές ακολουθούν ένα μοτίβο \"ροής\""
 
-#: ../plug-ins/gimpressionist/orientation.c:173
+#: ../plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Η απόχρωση της περιοχής καθορίζει την κατεύθυνση της πινελιάς"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "Προσθετικό"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Η κατεύθυνση που ταιριάζει πιο κοντά στην αρχική εικόνα επιλέγεται"
 
 # Revise translation of "manual" (as in opposite of "automatic", not synonym of "documentation")
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "Εγχειρίδιο"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "Χειροκίνητος καθορισμός του προσανατολισμού πινελιάς"
 
 #
-#: ../plug-ins/gimpressionist/orientation.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "Άνοιγμα του επεξεργαστή χάρτη προσανατολισμού"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Επεξεργαστής χάρτη προσανατολισμού"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Διανύσματα"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9414,67 +9414,67 @@ msgstr ""
 "δεξί κλικ για κατεύθυνση προς το ποντίκι, μεσαίο κλικ για προσθήκη νέου "
 "διανύσματος."
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Ρύθμιση της φωτεινότητας προεπισκόπησης"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Επιλογή προηγούμενου διανύσματος"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Επιλογή επόμενου διανύσματος"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "Π_ροσθήκη"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Προσθήκη νέου διανύσματος"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "Σ_κότωμα"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Διαγραφή επιλεγμένου διανύσματος"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Τύπος"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "Κα_νονικό"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "Στρό_βιλος"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "Στρόβιλος_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "Στρόβιλος_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -9482,251 +9482,251 @@ msgstr ""
 "Η κατάσταση Voronoi κάνει μόνο το πιο κοντινό διάνυσμα στο δοσμένο σημείο να "
 "έχει οποιαδήποτε επίδραση"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "Γω_νία:"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "Αλλαγή της γωνίας του επιλεγμένου διανύσματος"
 
-#: ../plug-ins/gimpressionist/orientmap.c:678
+#: ../plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "Γ_ωνία μετατόπισης:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr "Μετατόπιση όλων των διανυσμάτων με μια δεδομένη γωνία"
 
-#: ../plug-ins/gimpressionist/orientmap.c:688
+#: ../plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "­_Δύναμη:"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "Αλλαγή της δύναμης του επιλεγμένου διανύσματος"
 
-#: ../plug-ins/gimpressionist/orientmap.c:699
+#: ../plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "_Δύναμη εκθέτη:"
 
 #
-#: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "Αλλαγή του εκθέτη της δύναμης"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "Χ_αρτί"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "Αντ_ιστροφή"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Αντιστροφή της υφής χαρτιών"
 
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "Επικάλυ_ψη"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Εφαρμογή του χαρτιού όπως είναι (χωρίς χάραξη του)"
 
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Καθορισμός της κλίμακας της υφής (σε ποσοστό του αρχικού αρχείου)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "Το_ποθέτηση"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Τοποθέτηση"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Τυχαία"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Ομοιόμορφα κατανεμημένο"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Τοποθέτηση πινελιών τυχαία γύρω από την εικόνα"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Οι πινελιές κατανέμονται ομοιόμορφα κατά μήκος της εικόνας"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Κεντραρισμένο"
 
 #
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Εστίαση των πινελιών γύρω από το κέντρο της εικόνας"
 
-#: ../plug-ins/gimpressionist/placement.c:113
+#: ../plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "Π_υκνότητα πινελιάς:"
 
-#: ../plug-ins/gimpressionist/placement.c:115
+#: ../plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "Η σχετική πυκνότητα των πινελιών"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Αποτυχία αποθήκευσης αρχείου PPM '%s': %s"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Αποθήκευση τρέχοντος"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Περιγραφή:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Προεπιλογές ιμπρεσιονιστή Gimp"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Προεπιλογές ιμπρεσιονιστή Ligma"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Προρρυθμίσεις"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Αποθήκευση τρέχοντος..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Αποθήκευση των τρεχουσών ρυθμίσεων για το καθορισμένο αρχείο"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Ανάγνωση της επιλεγμένης προρρύθμισης στη μνήμη"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Διαγραφή της επιλεγμένης προρρύθμισης"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Νέα ανάγνωση του φακέλου των προεπιλογών"
 
 #
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511
 #: ../plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "Ενημέρ_ωση"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Ανανέωση του παραθύρου προεπισκόπησης"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Επαναφορά στην αρχική εικόνα"
 
 #
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Μέγεθος"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "Παραλλαγές μεγέθους:"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "Ο αριθμός των χρησιμοποιούμενων μεγεθών πινέλων"
 
-#: ../plug-ins/gimpressionist/size.c:118
+#: ../plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "Ελάχιστο μέγεθος:"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "Το ελάχιστο πινέλο για δημιουργία"
 
-#: ../plug-ins/gimpressionist/size.c:129
+#: ../plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "Μέγιστο μέγεθος:"
 
-#: ../plug-ins/gimpressionist/size.c:131
+#: ../plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "Το μέγιστο πινέλο για δημιουργία"
 
-#: ../plug-ins/gimpressionist/size.c:147
+#: ../plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "Το μέγεθος εξαρτάται από:"
 
-#: ../plug-ins/gimpressionist/size.c:156
+#: ../plug-ins/ligmaressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Η τιμή (φωτεινότητα) της περιοχής καθορίζει το μέγεθος της πινελιάς"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Η απόσταση από το κέντρο της εικόνας καθορίζει το μέγεθος της πινελιάς"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "Επιλογή τυχαίου μεγέθους για κάθε πινελιά"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Η κατεύθυνση από το κέντρο καθορίζει το μέγεθος της πινελιάς"
 
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Η απόχρωση της περιοχής καθορίζει το μέγεθος της πινελιάς"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 "Το μέγεθος του πινέλου που ταιριάζει στην αρχική εικόνα περισσότερο "
 "επιλέγεται"
 
-#: ../plug-ins/gimpressionist/size.c:193
+#: ../plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "Χειροκίνητος καθορισμός του μεγέθους πινελιάς"
 
 #
-#: ../plug-ins/gimpressionist/size.c:204
+#: ../plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "Άνοιγμα του επεξεργαστή χάρτη μεγέθους"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Επεξεργαστής χάρτη μεγέθους"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Διανύσματα Sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9735,42 +9735,42 @@ msgstr ""
 "διανύσματος sm, δεξί κλικ για κατεύθυνση του προς το ποντίκι, μεσαίο κλικ "
 "για προσθήκη νέου διανύσματος sm."
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Επιλογή προηγούμενου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Επιλογή επόμενου διανύσματος sm"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Προσθήκη νέου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Διαγραφή επιλεγμένου διανύσματος sm"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "Αλλαγή της γωνίας του επιλεγμένου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "_Δύναμη:"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "Αλλαγή της δύναμης του επιλεγμένου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "Εκ_θέτης δύναμης:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:546
+#: ../plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10530,8 +10530,8 @@ msgstr "_Δεύτερες λάμψεις"
 
 #. the dialog window
 #: ../plug-ins/help-browser/dialog.c:261 ../plug-ins/help-browser/dialog.c:892
-msgid "GIMP Help Browser"
-msgstr "Περιηγητής βοήθειας GIMP"
+msgid "LIGMA Help Browser"
+msgstr "Περιηγητής βοήθειας LIGMA"
 
 #
 #: ../plug-ins/help-browser/dialog.c:275
@@ -10555,8 +10555,8 @@ msgid "Go to the index page"
 msgstr "Μετάβαση στο δείκτη σελίδας"
 
 #: ../plug-ins/help-browser/dialog.c:283
-msgid "Visit the GIMP documentation website"
-msgstr "Επίσκεψη της ιστοσελίδας τεκμηρίωσης του GIMP"
+msgid "Visit the LIGMA documentation website"
+msgstr "Επίσκεψη της ιστοσελίδας τεκμηρίωσης του LIGMA"
 
 #: ../plug-ins/help-browser/dialog.c:1235
 msgid "Find:"
@@ -10579,14 +10579,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Οι σελίδες βοήθειας για '%s' δεν είναι διαθέσιμες."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "Το εγχειρίδιο χρήστη του GIMP δεν είναι διαθέσιμο."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "Το εγχειρίδιο χρήστη του LIGMA δεν είναι διαθέσιμο."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -10594,29 +10594,29 @@ msgstr "Το εγχειρίδιο χρήστη του GIMP δεν είναι δ�
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"https://docs.ligma.org/"
 msgstr ""
 "Παρακαλούμε, εγκαταστήστε το πρόσθετο πακέτο βοήθειας ή χρησιμοποιήστε το "
-"δικτυακό εγχειρίδιο χρήστη στο http://docs.gimp.org/"
+"δικτυακό εγχειρίδιο χρήστη στο http://docs.ligma.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Ίσως σας λείπουν υποστηρικτικά GIO και χρειαζόσαστε εγκατάσταση GVFS;"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Ταυτότητα βοήθειας '%s' άγνωστη"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Φόρτωση δείκτη από '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10849,7 +10849,7 @@ msgstr "Καθαρισμός"
 
 #
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Δημιουργία"
 
@@ -10877,42 +10877,42 @@ msgid "Edit Object"
 msgstr "Επεξεργασία αντικειμένου"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Χρήση οδηγών Gimp"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Χρήση οδηγών Ligma"
 
 #
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Ενα_λλαγή"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "Ό_λα"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Προσθήκη πρόσθετων οδηγών"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "Αριστ_ερό περίγραμμα"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "Δεξί πε_ρίγραμμα"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "Ανώτ_ερο περίγραμμα"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "Κ_ατώτερο περίγραμμα"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Βάση URL:"
 
@@ -11390,8 +11390,8 @@ msgid "Grid Settings..."
 msgstr "Ρυθμίσεις πλέγματος..."
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "Χρήση οδηγών GIMP..."
+msgid "Use LIGMA Guides..."
+msgstr "Χρήση οδηγών LIGMA..."
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
@@ -13991,8 +13991,8 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ "Άκυρα δεδομένα κεφαλίδας στο '%s': Το όνομα του πινέλου είναι υπερβολικά "
 #~ "μεγάλο: %lu"
 
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "Σφάλμα στο αρχείο πινέλου GIMP '%s'"
+#~ msgid "Error in LIGMA brush file '%s'"
+#~ msgstr "Σφάλμα στο αρχείο πινέλου LIGMA '%s'"
 
 #~ msgid "Invalid UTF-8 string in brush file '%s'."
 #~ msgstr "Άκυρο αλφαριθμητικό UTF-8 σε αρχείο πινέλου '%s'."
@@ -14000,8 +14000,8 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgid "Brush name is too long: %lu"
 #~ msgstr "Το όνομα του πινέλου είναι υπερβολικά μεγάλο: %lu"
 
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "Το αρχείο πινέλου GIMP φαίνεται κατεστραμμένο."
+#~ msgid "LIGMA brush file appears to be corrupted."
+#~ msgstr "Το αρχείο πινέλου LIGMA φαίνεται κατεστραμμένο."
 
 #~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 #~ msgstr ""
@@ -14073,8 +14073,8 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgid "Unsharp Mask"
 #~ msgstr "Μάσκα απόξυνσης"
 
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "Προεπισκόπηση κίνησης βασισμένης σε στρώση GIMP"
+#~ msgid "Preview a LIGMA layer-based animation"
+#~ msgstr "Προεπισκόπηση κίνησης βασισμένης σε στρώση LIGMA"
 
 #~ msgid "_Playback..."
 #~ msgstr "Ανα_παραγωγή..."
@@ -15859,11 +15859,11 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgid "Cleanup"
 #~ msgstr "Καθαρισμός"
 
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "Τα πινέλα GIMP είναι είτε κλίμακας γκρι ή RGBA"
+#~ msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+#~ msgstr "Τα πινέλα LIGMA είναι είτε κλίμακας γκρι ή RGBA"
 
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "Σφάλμα στο αρχείο διοχέτευσης πινέλου GIMP."
+#~ msgid "Error in LIGMA brush pipe file."
+#~ msgstr "Σφάλμα στο αρχείο διοχέτευσης πινέλου LIGMA."
 
 #~ msgid "Couldn't load one brush in the pipe, giving up."
 #~ msgstr "Αδυναμία φόρτωσης ενός πινέλου στο σωλήνα, εγκατάλειψη."
@@ -15873,12 +15873,12 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 
 #~ msgid ""
 #~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+#~ "The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 #~ "bit, so it will be converted for you. Information will be lost because of "
 #~ "this conversion."
 #~ msgstr ""
 #~ "Προειδοποίηση:\n"
-#~ "Η εικόνα που φορτώνεται έχει 16 δυαδικά ψηφία ανά κανάλι. Το GIMP μπορεί "
+#~ "Η εικόνα που φορτώνεται έχει 16 δυαδικά ψηφία ανά κανάλι. Το LIGMA μπορεί "
 #~ "να χειριστεί μόνο 8, έτσι θα μετατραπεί για εσάς. Πληροφορίες θα χαθούν "
 #~ "εξαιτίας αυτής της μετατροπής."
 
@@ -16311,11 +16311,11 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgid "According to the EXIF data, this image is rotated."
 #~ msgstr "Σύμφωνα με τα δεδομένα EXIF, αυτή η εικόνα έχει περιστραφεί."
 
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr "Θα θέλατε το GIMP να το περιστρέψει σε κανονικό προσανατολισμό;"
+#~ msgid "Would you like LIGMA to rotate it into the standard orientation?"
+#~ msgstr "Θα θέλατε το LIGMA να το περιστρέψει σε κανονικό προσανατολισμό;"
 
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "Το GIMP συμπίεσε εικόνα XJT"
+#~ msgid "LIGMA compressed XJT image"
+#~ msgstr "Το LIGMA συμπίεσε εικόνα XJT"
 
 #~ msgid "XJT file contains unknown layermode %d"
 #~ msgstr "Το αρχείο XJT περιέχει άγνωστη κατάσταση στρώσης %d"
@@ -16447,13 +16447,13 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
+#~ "if necessary - use the environment variable GS_PROG to tell LIGMA about "
 #~ "its location.\n"
 #~ "(%s)"
 #~ msgstr ""
 #~ "Σφάλμα εκκίνησης Ghostscript. Βεβαιωθείτε ότι το Ghostscript είναι "
 #~ "εγκαταστημένο και - εάν χρειάζεται - χρησιμοποιήστε τη μεταβλητή "
-#~ "περιβάλλοντος GS_PROG για να πείτε στο GIMP για την τοποθεσία του.\n"
+#~ "περιβάλλοντος GS_PROG για να πείτε στο LIGMA για την τοποθεσία του.\n"
 #~ "(%s)"
 
 #~ msgid "The width of frame %d of '%s' is too big for X cursor."
@@ -17000,7 +17000,7 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgstr "Αποθηκευμένες Διαδικασίες"
 
 #, fuzzy
-#~ msgid "Internal GIMP procedure"
+#~ msgid "Internal LIGMA procedure"
 #~ msgstr "Εσωτερικό σφάλμα"
 
 #
@@ -17047,11 +17047,11 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #~ msgstr "Περιστροφή:"
 
 #, fuzzy
-#~ msgid "The GIMPressionist"
+#~ msgid "The LIGMAressionist"
 #~ msgstr "Συμπίεση"
 
 #, fuzzy
-#~ msgid "Gimpressionist"
+#~ msgid "Ligmaressionist"
 #~ msgstr "Συμπίεση"
 
 #

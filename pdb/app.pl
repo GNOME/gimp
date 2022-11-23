@@ -1,5 +1,5 @@
-# GIMP - The GNU Image Manipulation Program
-# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
+# LIGMA - The GNU Image Manipulation Program
+# Copyright (C) 1998-2003 Manish Singh <yosh@ligma.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,18 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Gimp::CodeGen::app;
+package Ligma::CodeGen::app;
 
 $destdir  = "$main::destdir/app/pdb";
 $builddir = "$main::builddir/app/pdb";
 
-*arg_types = \%Gimp::CodeGen::pdb::arg_types;
-*arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
+*arg_types = \%Ligma::CodeGen::pdb::arg_types;
+*arg_parse = \&Ligma::CodeGen::pdb::arg_parse;
 
-*enums = \%Gimp::CodeGen::enums::enums;
+*enums = \%Ligma::CodeGen::enums::enums;
 
-*write_file = \&Gimp::CodeGen::util::write_file;
-*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+*write_file = \&Ligma::CodeGen::util::write_file;
+*FILE_EXT   = \$Ligma::CodeGen::util::FILE_EXT;
 
 use Text::Wrap qw(wrap);
 
@@ -125,7 +125,7 @@ sub marshal_inargs {
 	my $var = $_->{name};
 	my $value;
 
-	$value = "gimp_value_array_index (args, $argc)";
+	$value = "ligma_value_array_index (args, $argc)";
 	if (!exists $_->{dead}) {
 	    $result .= eval qq/"  $arg->{get_value_func};\n"/;
 	}
@@ -149,12 +149,12 @@ sub marshal_outargs {
 
     if ($success) {
 	$result = <<CODE;
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 CODE
     } else {
 	$result = <<CODE;
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
 CODE
     }
 
@@ -170,7 +170,7 @@ CODE
 
 	    $argc++;
 
-	    $value = "gimp_value_array_index (return_vals, $argc)";
+	    $value = "ligma_value_array_index (return_vals, $argc)";
 
 	    if (exists $_->{array}) {
 		my $arrayarg = $_->{array};
@@ -219,20 +219,20 @@ sub generate_pspec {
     my $min;
     my $max;
     my $default;
-    my $flags = 'GIMP_PARAM_READWRITE';
+    my $flags = 'LIGMA_PARAM_READWRITE';
     my $pspec = "";
     my $postproc = "";
 
     $nick =~ s/-/ /g;
 
     if (exists $arg->{no_validate}) {
-	$flags .= ' | GIMP_PARAM_NO_VALIDATE';
+	$flags .= ' | LIGMA_PARAM_NO_VALIDATE';
     }
 
     if ($pdbtype eq 'image') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_image ("$name",
+ligma_param_spec_image ("$name",
                        "$nick",
                        "$blurb",
                        $none_ok,
@@ -242,7 +242,7 @@ CODE
     elsif ($pdbtype eq 'item') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_item ("$name",
+ligma_param_spec_item ("$name",
                       "$nick",
                       "$blurb",
                       $none_ok,
@@ -252,7 +252,7 @@ CODE
     elsif ($pdbtype eq 'drawable') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_drawable ("$name",
+ligma_param_spec_drawable ("$name",
                           "$nick",
                           "$blurb",
                           $none_ok,
@@ -262,7 +262,7 @@ CODE
     elsif ($pdbtype eq 'text_layer') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_text_layer ("$name",
+ligma_param_spec_text_layer ("$name",
                             "$nick",
                             "$blurb",
                             $none_ok,
@@ -272,7 +272,7 @@ CODE
     elsif ($pdbtype eq 'layer') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_layer ("$name",
+ligma_param_spec_layer ("$name",
                        "$nick",
                        "$blurb",
                        $none_ok,
@@ -282,7 +282,7 @@ CODE
     elsif ($pdbtype eq 'channel') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_channel ("$name",
+ligma_param_spec_channel ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
@@ -292,7 +292,7 @@ CODE
     elsif ($pdbtype eq 'layer_mask') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_layer_mask ("$name",
+ligma_param_spec_layer_mask ("$name",
                             "$nick",
                             "$blurb",
                             $none_ok,
@@ -302,7 +302,7 @@ CODE
     elsif ($pdbtype eq 'selection') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_selection ("$name",
+ligma_param_spec_selection ("$name",
                            "$nick",
                            "$blurb",
                            $none_ok,
@@ -312,7 +312,7 @@ CODE
     elsif ($pdbtype eq 'vectors') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_vectors ("$name",
+ligma_param_spec_vectors ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
@@ -322,7 +322,7 @@ CODE
     elsif ($pdbtype eq 'display') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_display ("$name",
+ligma_param_spec_display ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
@@ -459,7 +459,7 @@ CODE
 	$non_empty = exists $arg->{non_empty} ? 'TRUE' : 'FALSE';
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
-gimp_param_spec_string ("$name",
+ligma_param_spec_string ("$name",
                         "$nick",
                         "$blurb",
                         $allow_non_utf8, $null_ok, $non_empty,
@@ -472,14 +472,14 @@ CODE
 	$enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
 	$enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
 	$enum_type =~ tr/[a-z]/[A-Z]/;
-	$enum_type =~ s/^GIMP/GIMP_TYPE/;
+	$enum_type =~ s/^LIGMA/LIGMA_TYPE/;
 	$enum_type =~ s/^GEGL/GEGL_TYPE/;
 	$default = exists $arg->{default} ? $arg->{default} : $enums{$typeinfo[0]}->{symbols}[0];
 
 	my ($foo, $bar, @remove) = &arg_parse($arg->{type});
 
 	foreach (@remove) {
-	    $postproc .= 'gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM ($pspec),';
+	    $postproc .= 'ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM ($pspec),';
 	    $postproc .= "\n                                    $_);\n";
 	}
 
@@ -495,7 +495,7 @@ CODE
 	}
 	else {
 	    $pspec = <<CODE;
-gimp_param_spec_enum ("$name",
+ligma_param_spec_enum ("$name",
                       "$nick",
                       "$blurb",
                       $enum_type,
@@ -505,12 +505,12 @@ CODE
         }
     }
     elsif ($pdbtype eq 'unit') {
-	$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
-	$allow_pixels = $typeinfo[0] eq 'GIMP_UNIT_PIXEL' ? TRUE : FALSE;
+	$typeinfo[0] = 'LIGMA_UNIT_PIXEL' unless defined $typeinfo[0];
+	$allow_pixels = $typeinfo[0] eq 'LIGMA_UNIT_PIXEL' ? TRUE : FALSE;
 	$allow_percent = exists $arg->{allow_percent} ? TRUE : FALSE;
 	$default = exists $arg->{default} ? $arg->{default} : $typeinfo[0];
 	$pspec = <<CODE;
-gimp_param_spec_unit ("$name",
+ligma_param_spec_unit ("$name",
                       "$nick",
                       "$blurb",
                       $allow_pixels,
@@ -523,7 +523,7 @@ CODE
 	$has_alpha = exists $arg->{has_alpha} ? TRUE : FALSE;
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
-gimp_param_spec_rgb ("$name",
+ligma_param_spec_rgb ("$name",
                      "$nick",
                      "$blurb",
                      $has_alpha,
@@ -533,7 +533,7 @@ CODE
     }
     elsif ($pdbtype eq 'parasite') {
 	$pspec = <<CODE;
-gimp_param_spec_parasite ("$name",
+ligma_param_spec_parasite ("$name",
                           "$nick",
                           "$blurb",
                           $flags)
@@ -550,7 +550,7 @@ CODE
     }
     elsif ($pdbtype eq 'int32array') {
 	$pspec = <<CODE;
-gimp_param_spec_int32_array ("$name",
+ligma_param_spec_int32_array ("$name",
                              "$nick",
                              "$blurb",
                              $flags)
@@ -558,7 +558,7 @@ CODE
     }
     elsif ($pdbtype eq 'int8array') {
 	$pspec = <<CODE;
-gimp_param_spec_uint8_array ("$name",
+ligma_param_spec_uint8_array ("$name",
                              "$nick",
                              "$blurb",
                              $flags)
@@ -566,7 +566,7 @@ CODE
     }
     elsif ($pdbtype eq 'floatarray') {
 	$pspec = <<CODE;
-gimp_param_spec_float_array ("$name",
+ligma_param_spec_float_array ("$name",
                              "$nick",
                              "$blurb",
                              $flags)
@@ -583,7 +583,7 @@ CODE
     }
     elsif ($pdbtype eq 'colorarray') {
 	$pspec = <<CODE;
-gimp_param_spec_rgb_array ("$name",
+ligma_param_spec_rgb_array ("$name",
                            "$nick",
                            "$blurb",
                            $flags)
@@ -591,46 +591,46 @@ CODE
     }
     elsif ($pdbtype eq 'imagearray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
+ligma_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_IMAGE,
+                              LIGMA_TYPE_IMAGE,
                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'itemarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
+ligma_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_ITEM,
+                              LIGMA_TYPE_ITEM,
                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'layerarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
+ligma_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_LAYER,
+                              LIGMA_TYPE_LAYER,
                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'channelarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
+ligma_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_CHANNEL,
+                              LIGMA_TYPE_CHANNEL,
                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'vectorarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
+ligma_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_VECTORS,
+                              LIGMA_TYPE_VECTORS,
                               $flags)
 CODE
     }
@@ -689,12 +689,12 @@ sub generate {
 	    }
 	}
 
-	$help =~ s/gimp(\w+)\(\s*\)/"'gimp".canonicalize($1)."'"/ge;
+	$help =~ s/ligma(\w+)\(\s*\)/"'ligma".canonicalize($1)."'"/ge;
 
 	if ($proc->{group} eq "plug_in_compat") {
 	    $procedure_name = "$proc->{canonical_name}";
 	} else {
-	    $procedure_name = "gimp-$proc->{canonical_name}";
+	    $procedure_name = "ligma-$proc->{canonical_name}";
 	}
 
 	$out->{pcount}++; $total++;
@@ -702,16 +702,16 @@ sub generate {
 	$out->{register} .= <<CODE;
 
   /*
-   * gimp-$proc->{canonical_name}
+   * ligma-$proc->{canonical_name}
    */
-  procedure = gimp_procedure_new (${name}_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+  procedure = ligma_procedure_new (${name}_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
                                "$procedure_name");
-  gimp_procedure_set_static_help (procedure,
+  ligma_procedure_set_static_help (procedure,
                                   @{[ &quotewrap($blurb, 2, 34) ]},
                                   @{[ &quotewrap($help,  2, 34) ]},
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "$proc->{author}",
                                          "$proc->{copyright}",
                                          "$proc->{date}");
@@ -719,7 +719,7 @@ CODE
 
         if ($proc->{deprecated}) {
 	    $out->{register} .= <<CODE;
-  gimp_procedure_set_deprecated (procedure,
+  ligma_procedure_set_deprecated (procedure,
                                  "\"$proc->{deprecated}\"");
 CODE
 	}
@@ -729,10 +729,10 @@ CODE
         foreach $arg (@inargs) {
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 
-	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_argument (")/meg;
+	    $pspec =~ s/^/' ' x length("  ligma_procedure_add_argument (")/meg;
 
 	    $out->{register} .= <<CODE;
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
 ${pspec});
 CODE
 
@@ -751,10 +751,10 @@ CODE
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 	    my $argc = 0;
 
-	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_return_value (")/meg;
+	    $pspec =~ s/^/' ' x length("  ligma_procedure_add_return_value (")/meg;
 
 	    $out->{register} .= <<CODE;
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
 ${pspec});
 CODE
 
@@ -768,7 +768,7 @@ CODE
 	}
 
 	$out->{register} .= <<CODE;
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 CODE
 
@@ -778,12 +778,12 @@ CODE
 	    }
 	}
 
-	$out->{code} .= "\nstatic GimpValueArray *\n";
-	$out->{code} .= "${name}_invoker (GimpProcedure         *procedure,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp                  *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext           *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress          *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          const GimpValueArray  *args,\n";
+	$out->{code} .= "\nstatic LigmaValueArray *\n";
+	$out->{code} .= "${name}_invoker (LigmaProcedure         *procedure,\n";
+	$out->{code} .=  ' ' x length($name) . "          Ligma                  *ligma,\n";
+	$out->{code} .=  ' ' x length($name) . "          LigmaContext           *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          LigmaProgress          *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          const LigmaValueArray  *args,\n";
 	$out->{code} .=  ' ' x length($name) . "          GError               **error)\n{\n";
 
 	my $code = "";
@@ -794,7 +794,7 @@ CODE
 	else {
 	    my $invoker = "";
 	
-	    $invoker .= ' ' x 2 . "GimpValueArray *return_vals;\n" if scalar @outargs;
+	    $invoker .= ' ' x 2 . "LigmaValueArray *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 
@@ -827,7 +827,7 @@ CODE
     }
 
     my $gpl = <<'GPL';
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -858,7 +858,7 @@ GPL
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 
-	$out->{headers}->{"\"core/gimpparamspecs.h\""}++;
+	$out->{headers}->{"\"core/ligmaparamspecs.h\""}++;
 
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
@@ -866,7 +866,7 @@ GPL
 		if (/^</) {
 		    s/^</!/;
 		}
-		elsif (!/libgimp/) {
+		elsif (!/libligma/) {
 		    s/^/~/;
 		}
 	    }
@@ -895,7 +895,7 @@ GPL
 
 	    $seen = 0 if !/^</;
 
-	    if (/libgimp/) {
+	    if (/libligma/) {
 		$lib = 1;
 	    }
 	    else {
@@ -904,21 +904,21 @@ GPL
 
 		if ($sys == 1 && $base == 0) {
 		    $base = 1;
-		    $headers .= "#include \"libgimpbase/gimpbase.h\"\n\n";
+		    $headers .= "#include \"libligmabase/ligmabase.h\"\n\n";
 		    $headers .= "#include \"pdb-types.h\"\n\n";
 		}
 	    }
 
-	    if (/gimp-intl/) {
+	    if (/ligma-intl/) {
 		$intl = 1;
 	    }
-	    elsif (/gimppdb-utils/) {
+	    elsif (/ligmapdb-utils/) {
 		$utils = 1;
 	    }
-	    elsif (/gimppdberror/) {
+	    elsif (/ligmapdberror/) {
 		$error = 1;
 	    }
-	    elsif (/gimppdbcontext/) {
+	    elsif (/ligmapdbcontext/) {
 		$context = 1;
 	    }
 	    else {
@@ -927,14 +927,14 @@ GPL
 	}
 
 	$headers .= "\n";
-	$headers .= "#include \"gimppdb.h\"\n";
-	$headers .= "#include \"gimppdberror.h\"\n" if $error;
-	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
-	$headers .= "#include \"gimppdbcontext.h\"\n" if $context;
-	$headers .= "#include \"gimpprocedure.h\"\n";
+	$headers .= "#include \"ligmapdb.h\"\n";
+	$headers .= "#include \"ligmapdberror.h\"\n" if $error;
+	$headers .= "#include \"ligmapdb-utils.h\"\n" if $utils;
+	$headers .= "#include \"ligmapdbcontext.h\"\n" if $context;
+	$headers .= "#include \"ligmaprocedure.h\"\n";
 	$headers .= "#include \"internal-procs.h\"\n";
 
-	$headers .= "\n#include \"gimp-intl.h\"\n" if $intl;
+	$headers .= "\n#include \"ligma-intl.h\"\n" if $intl;
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{app}) {
@@ -950,8 +950,8 @@ GPL
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
-	print CFILE "\nvoid\nregister_${group}_procs (GimpPDB *pdb)\n";
-	print CFILE "{\n  GimpProcedure *procedure;\n$out->{register}}\n";
+	print CFILE "\nvoid\nregister_${group}_procs (LigmaPDB *pdb)\n";
+	print CFILE "{\n  LigmaProcedure *procedure;\n$out->{register}}\n";
 	close CFILE;
 	&write_file($cfile, $destdir);
 
@@ -974,11 +974,11 @@ GPL
 
 HEADER
 
-        print IFILE "void   internal_procs_init" . ' ' x ($longest - length "internal_procs_init") . " (GimpPDB *pdb);\n\n";
+        print IFILE "void   internal_procs_init" . ' ' x ($longest - length "internal_procs_init") . " (LigmaPDB *pdb);\n\n";
 
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
 	foreach (@group_decls) {
-	    print IFILE "void   $_" . ' ' x ($longest - length $_) . " (GimpPDB *pdb);\n";
+	    print IFILE "void   $_" . ' ' x ($longest - length $_) . " (LigmaPDB *pdb);\n";
 	}
 
 	print IFILE <<HEADER;
@@ -995,15 +995,15 @@ HEADER
 	print IFILE qq/#include "stamp-pdbgen.h"\n\n/;
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
-	print IFILE qq@#include "gimppdb.h"\n\n@;
+	print IFILE qq@#include "ligmapdb.h"\n\n@;
 	print IFILE qq@#include "internal-procs.h"\n\n@;
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
 	print IFILE <<BODY;
 void
-internal_procs_init (GimpPDB *pdb)
+internal_procs_init (LigmaPDB *pdb)
 {
-  g_return_if_fail (GIMP_IS_PDB (pdb));
+  g_return_if_fail (LIGMA_IS_PDB (pdb));
 
 $group_procs
 }

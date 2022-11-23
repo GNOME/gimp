@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -27,7 +27,7 @@
 #include "imap_commands.h"
 #include "imap_main.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static void move_sash_command_destruct(Command_t *command);
 static CmdExecuteValue_t move_sash_command_execute(Command_t *command);

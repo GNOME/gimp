@@ -4,14 +4,14 @@ use lib '../../pdb';
 
 require 'util.pl';
 
-*write_file = \&Gimp::CodeGen::util::write_file;
-*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+*write_file = \&Ligma::CodeGen::util::write_file;
+*FILE_EXT   = \$Ligma::CodeGen::util::FILE_EXT;
 
 $destdir = ".";
 $builddir = ".";
 
 $ignorefile = ".gitignore";
-$rcfile     = "gimprc.common";
+$rcfile     = "ligmarc.common";
 
 $outmk = "$builddir/Makefile.am$FILE_EXT";
 $outignore = "$builddir/$ignorefile$FILE_EXT";
@@ -37,7 +37,7 @@ foreach (sort keys %plugins) {
 	$bins .= "${makename}_libexec_PROGRAMS = $_\n";
     }
 
-    $dirs .= "${makename}_libexecdir = \$(gimpplugindir)/plug-ins/$_\n";
+    $dirs .= "${makename}_libexecdir = \$(ligmaplugindir)/plug-ins/$_\n";
 }
 
 $extra = "";
@@ -71,18 +71,18 @@ framework_cocoa = -framework Cocoa
 endif
 
 if HAVE_WINDRES
-include \$(top_srcdir)/build/windows/gimprc-plug-ins.rule
+include \$(top_srcdir)/build/windows/ligmarc-plug-ins.rule
 include $rcfile
 endif
 
-libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
-libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
-libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
-libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION).la
-libgimpmath = \$(top_builddir)/libgimpmath/libgimpmath-\$(GIMP_API_VERSION).la \$(libm)
-libgimpmodule = \$(top_builddir)/libgimpmodule/libgimpmodule-\$(GIMP_API_VERSION).la
-libgimpui = \$(top_builddir)/libgimp/libgimpui-\$(GIMP_API_VERSION).la
-libgimpwidgets = \$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(GIMP_API_VERSION).la
+libligma = \$(top_builddir)/libligma/libligma-\$(LIGMA_API_VERSION).la
+libligmabase = \$(top_builddir)/libligmabase/libligmabase-\$(LIGMA_API_VERSION).la
+libligmacolor = \$(top_builddir)/libligmacolor/libligmacolor-\$(LIGMA_API_VERSION).la
+libligmaconfig = \$(top_builddir)/libligmaconfig/libligmaconfig-\$(LIGMA_API_VERSION).la
+libligmamath = \$(top_builddir)/libligmamath/libligmamath-\$(LIGMA_API_VERSION).la \$(libm)
+libligmamodule = \$(top_builddir)/libligmamodule/libligmamodule-\$(LIGMA_API_VERSION).la
+libligmaui = \$(top_builddir)/libligma/libligmaui-\$(LIGMA_API_VERSION).la
+libligmawidgets = \$(top_builddir)/libligmawidgets/libligmawidgets-\$(LIGMA_API_VERSION).la
 
 
 AM_LDFLAGS = \$(mwindows)
@@ -107,14 +107,14 @@ $opts
 
 install-\%: \%
 	\@\$(NORMAL_INSTALL)
-	\$(mkinstalldirs) \$(DESTDIR)\$(gimpplugindir)/plug-ins/\$<
+	\$(mkinstalldirs) \$(DESTDIR)\$(ligmaplugindir)/plug-ins/\$<
 	\@p=\$<; p1=`echo \$\$p|sed 's/\$(EXEEXT)\$\$//'`; \\
 	if test -f \$\$p \\
 	   || test -f \$\$p1 \\
 	; then \\
 	  f=`echo "\$\$p1" | sed 's,^.*/,,;\$(transform);s/\$\$/\$(EXEEXT)/'`; \\
-	  echo " \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(INSTALL_PROGRAM) \$\$p \$(DESTDIR)\$(gimpplugindir)/plug-ins/\$\$p/\$\$f"; \\
-	  \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(INSTALL_PROGRAM) \$\$p \$(DESTDIR)\$(gimpplugindir)/plug-ins/\$\$p/\$\$f || exit 1; \\
+	  echo " \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(INSTALL_PROGRAM) \$\$p \$(DESTDIR)\$(ligmaplugindir)/plug-ins/\$\$p/\$\$f"; \\
+	  \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(INSTALL_PROGRAM) \$\$p \$(DESTDIR)\$(ligmaplugindir)/plug-ins/\$\$p/\$\$f || exit 1; \\
 	else :; fi
 EOT
 
@@ -129,20 +129,20 @@ foreach (sort keys %plugins) {
     my $makename = $_;
     $makename =~ s/-/_/g;
 
-    my $libgimp = "";
+    my $libligma = "";
 
     if (exists $plugins{$_}->{ui}) {
-        $libgimp .= "\$(libgimpui)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
-	$libgimp .= "\t\\\n\t\$(libgimpmodule)";
-	$libgimp .= "\t\\\n\t";
+        $libligma .= "\$(libligmaui)";
+        $libligma .= "\t\t\\\n\t\$(libligmawidgets)";
+	$libligma .= "\t\\\n\t\$(libligmamodule)";
+	$libligma .= "\t\\\n\t";
     }
 
-    $libgimp .= "\$(libgimp)";
-    $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
-    $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
-    $libgimp .= "\t\\\n\t\$(libgimpcolor)";
-    $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
+    $libligma .= "\$(libligma)";
+    $libligma .= "\t\t\\\n\t\$(libligmamath)";
+    $libligma .= "\t\t\\\n\t\$(libligmaconfig)";
+    $libligma .= "\t\\\n\t\$(libligmacolor)";
+    $libligma .= "\t\t\\\n\t\$(libligmabase)";
 
     my $glib;
     if (exists $plugins{$_}->{ui}) {
@@ -210,7 +210,7 @@ ${makename}_SOURCES = \\
 	$_.c
 
 ${makename}_LDADD = \\
-	$libgimp		\\
+	$libligma		\\
 	$glib$optlib
 	$deplib		\\
 	$rclib

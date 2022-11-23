@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns-load.c
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <png.h>
 
@@ -36,7 +36,7 @@
 #include "file-icns-data.h"
 #include "file-icns-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 IcnsResource * resource_load     (FILE         *file);
 
@@ -57,13 +57,13 @@ gboolean       icns_decompress   (guchar       *dest,
                                   IcnsResource *image,
                                   IcnsResource *mask);
 
-void           icns_attach_image (GimpImage    *image,
+void           icns_attach_image (LigmaImage    *image,
                                   IconType     *icontype,
                                   IcnsResource *icns,
                                   IcnsResource *mask,
                                   gboolean      isOSX);
 
-GimpImage *    icns_load         (IcnsResource *icns,
+LigmaImage *    icns_load         (IcnsResource *icns,
                                   GFile        *file);
 
 /* Ported from Brion Vibber's icnsload.c code, under the GPL license, version 3
@@ -157,20 +157,20 @@ resource_get_next (IcnsResource *icns,
   return TRUE;
 }
 
-GimpImage *
+LigmaImage *
 icns_load (IcnsResource *icns,
            GFile        *file)
 {
   IcnsResource *resources;
   guint         nResources;
   gfloat        current_resources = 0;
-  GimpImage    *image;
+  LigmaImage    *image;
 
   resources = g_new (IcnsResource, 256);
 
   /* Largest .icns icon is 1024 x 1024 */
-  image = gimp_image_new (1024, 1024, GIMP_RGB);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new (1024, 1024, LIGMA_RGB);
+  ligma_image_set_file (image, file);
 
   nResources = 0;
   while (resource_get_next (icns, &resources[nResources++])) {}
@@ -187,11 +187,11 @@ icns_load (IcnsResource *icns,
 
           icns_attach_image (image, &iconTypes[i], icns, mask, iconTypes[i].isModern);
 
-          gimp_progress_update (current_resources++ / nResources);
+          ligma_progress_update (current_resources++ / nResources);
         }
     }
 
-  gimp_image_resize_to_layers (image);
+  ligma_image_resize_to_layers (image);
   g_free (resources);
   return image;
 }
@@ -362,7 +362,7 @@ icns_decompress (guchar       *dest,
 }
 
 void
-icns_attach_image (GimpImage    *image,
+icns_attach_image (LigmaImage    *image,
                    IconType     *icontype,
                    IcnsResource *icns,
                    IcnsResource *mask,
@@ -370,7 +370,7 @@ icns_attach_image (GimpImage    *image,
 {
   gchar           layer_name[5];
   guchar         *dest;
-  GimpLayer      *layer;
+  LigmaLayer      *layer;
   GeglBuffer     *buffer;
   guint           row;
   guint           expected_size;
@@ -393,18 +393,18 @@ icns_attach_image (GimpImage    *image,
   if (isOSX)
     {
       gchar           image_type[5];
-      GimpImage      *temp_image;
+      LigmaImage      *temp_image;
       GFile          *temp_file      = NULL;
       FILE           *fp;
-      GimpValueArray *return_vals    = NULL;
-      GimpLayer     **layers;
-      GimpLayer      *new_layer;
+      LigmaValueArray *return_vals    = NULL;
+      LigmaLayer     **layers;
+      LigmaLayer      *new_layer;
       gint            n_layers;
       gchar          *temp_file_type = NULL;
       gchar          *procedure_name = NULL;
 
-      temp_image = gimp_image_new (icontype->width, icontype->height,
-                                   gimp_image_get_base_type (image));
+      temp_image = ligma_image_new (icontype->width, icontype->height,
+                                   ligma_image_get_base_type (image));
 
       strncpy (image_type, (gchar *) icns->data + 8, 4);
       image_type[4] = '\0';
@@ -424,7 +424,7 @@ icns_attach_image (GimpImage    *image,
 
       if (temp_file_type && procedure_name)
         {
-          temp_file = gimp_temp_file (temp_file_type);
+          temp_file = ligma_temp_file (temp_file_type);
           fp = g_fopen (g_file_peek_path (temp_file), "wb");
 
           if (! fp)
@@ -432,7 +432,7 @@ icns_attach_image (GimpImage    *image,
               g_message (_("Error trying to open temporary %s file '%s' "
                          "for icns loading: %s"),
                          temp_file_type,
-                         gimp_file_get_utf8_name (temp_file),
+                         ligma_file_get_utf8_name (temp_file),
                          g_strerror (errno));
               return;
             }
@@ -441,27 +441,27 @@ icns_attach_image (GimpImage    *image,
           fclose (fp);
 
           return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
+            ligma_pdb_run_procedure (ligma_get_pdb (),
                                     procedure_name,
-                                    GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                    LIGMA_TYPE_RUN_MODE, LIGMA_RUN_NONINTERACTIVE,
                                     G_TYPE_FILE,        temp_file,
                                     G_TYPE_NONE);
         }
 
       if (temp_image && return_vals)
         {
-          temp_image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+          temp_image = g_value_get_object (ligma_value_array_index (return_vals, 1));
 
-          layers = gimp_image_get_layers (temp_image, &n_layers);
-          new_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[0]), image);
-          gimp_item_set_name (GIMP_ITEM (new_layer), layer_name);
-          gimp_image_insert_layer (image, new_layer, NULL, 0);
+          layers = ligma_image_get_layers (temp_image, &n_layers);
+          new_layer = ligma_layer_new_from_drawable (LIGMA_DRAWABLE (layers[0]), image);
+          ligma_item_set_name (LIGMA_ITEM (new_layer), layer_name);
+          ligma_image_insert_layer (image, new_layer, NULL, 0);
 
           layer_loaded = TRUE;
 
           g_file_delete (temp_file, NULL, NULL);
           g_object_unref (temp_file);
-          gimp_value_array_unref (return_vals);
+          ligma_value_array_unref (return_vals);
           g_free (layers);
         }
     }
@@ -475,18 +475,18 @@ icns_attach_image (GimpImage    *image,
 
   if (! layer_loaded)
     {
-      layer = gimp_layer_new (image, layer_name, icontype->width, icontype->height,
-                              GIMP_RGBA_IMAGE, 100,
-                              gimp_image_get_default_new_layer_mode (image));
+      layer = ligma_layer_new (image, layer_name, icontype->width, icontype->height,
+                              LIGMA_RGBA_IMAGE, 100,
+                              ligma_image_get_default_new_layer_mode (image));
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, 0, icontype->width, icontype->height),
                        0, NULL,
                        dest, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_image_insert_layer (image, layer, NULL, 0);
+      ligma_image_insert_layer (image, layer, NULL, 0);
 
       g_object_unref (buffer);
     }
@@ -494,19 +494,19 @@ icns_attach_image (GimpImage    *image,
   g_free (dest);
 }
 
-GimpImage *
+LigmaImage *
 icns_load_image (GFile        *file,
                  gint32       *file_offset,
                  GError      **error)
 {
   FILE          *fp;
   IcnsResource  *icns;
-  GimpImage     *image;
+  LigmaImage     *image;
 
   gegl_init (NULL, NULL);
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -514,7 +514,7 @@ icns_load_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -532,12 +532,12 @@ icns_load_image (GFile        *file,
 
   g_free (icns);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
 
-GimpImage *
+LigmaImage *
 icns_load_thumbnail_image (GFile   *file,
                            gint    *width,
                            gint    *height,
@@ -546,7 +546,7 @@ icns_load_thumbnail_image (GFile   *file,
 {
   gint          w          = 0;
   FILE         *fp;
-  GimpImage    *image      = NULL;
+  LigmaImage    *image      = NULL;
   IcnsResource *icns;
   IcnsResource *resources;
   IcnsResource *mask       = NULL;
@@ -556,8 +556,8 @@ icns_load_thumbnail_image (GFile   *file,
 
   gegl_init (NULL, NULL);
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -565,7 +565,7 @@ icns_load_thumbnail_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -578,7 +578,7 @@ icns_load_thumbnail_image (GFile   *file,
     return NULL;
   }
 
-  image = gimp_image_new (1024, 1024, GIMP_RGB);
+  image = ligma_image_new (1024, 1024, LIGMA_RGB);
 
   resources = g_new (IcnsResource, 256);
   while (resource_get_next (icns, &resources[nResources++])) {}
@@ -604,7 +604,7 @@ icns_load_thumbnail_image (GFile   *file,
 
       icns_attach_image (image, &iconTypes[match], icns, mask, iconTypes[match].isModern);
 
-      gimp_image_resize_to_layers (image);
+      ligma_image_resize_to_layers (image);
     }
   else
     {
@@ -614,7 +614,7 @@ icns_load_thumbnail_image (GFile   *file,
 
   g_free (resources);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }

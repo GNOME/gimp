@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphistogram module Copyright (C) 1999 Jay Cox <jaycox@gimp.org>
+ * ligmahistogram module Copyright (C) 1999 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimptilehandlervalidate.h"
+#include "gegl/ligma-gegl-nodes.h"
+#include "gegl/ligmatilehandlervalidate.h"
 
-#include "gimpasync.h"
-#include "gimpchannel.h"
-#include "gimpdrawable-filters.h"
-#include "gimpdrawable-histogram.h"
-#include "gimphistogram.h"
-#include "gimpimage.h"
-#include "gimpprojectable.h"
+#include "ligmaasync.h"
+#include "ligmachannel.h"
+#include "ligmadrawable-filters.h"
+#include "ligmadrawable-histogram.h"
+#include "ligmahistogram.h"
+#include "ligmaimage.h"
+#include "ligmaprojectable.h"
 
 
 /*  local function prototypes  */
 
-static GimpAsync * gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
-                                                               GimpHistogram *histogram,
+static LigmaAsync * ligma_drawable_calculate_histogram_internal (LigmaDrawable  *drawable,
+                                                               LigmaHistogram *histogram,
                                                                gboolean       with_filters,
                                                                gboolean       run_async);
 
@@ -48,22 +48,22 @@ static GimpAsync * gimp_drawable_calculate_histogram_internal (GimpDrawable  *dr
 /*  private functions  */
 
 
-static GimpAsync *
-gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
-                                            GimpHistogram *histogram,
+static LigmaAsync *
+ligma_drawable_calculate_histogram_internal (LigmaDrawable  *drawable,
+                                            LigmaHistogram *histogram,
                                             gboolean       with_filters,
                                             gboolean       run_async)
 {
-  GimpAsync   *async = NULL;
-  GimpImage   *image;
-  GimpChannel *mask;
+  LigmaAsync   *async = NULL;
+  LigmaImage   *image;
+  LigmaChannel *mask;
   gint         x, y, width, height;
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height))
     goto end;
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-  mask  = gimp_image_get_mask (image);
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
+  mask  = ligma_image_get_mask (image);
 
   if (FALSE)
     {
@@ -74,37 +74,37 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
 
       if (with_filters)
         {
-          source = gimp_drawable_get_source_node (drawable);
+          source = ligma_drawable_get_source_node (drawable);
         }
       else
         {
           source =
-            gimp_gegl_add_buffer_source (node,
-                                         gimp_drawable_get_buffer (drawable),
+            ligma_gegl_add_buffer_source (node,
+                                         ligma_drawable_get_buffer (drawable),
                                          0, 0);
         }
 
       histogram_sink =
         gegl_node_new_child (node,
-                             "operation", "gimp:histogram-sink",
+                             "operation", "ligma:histogram-sink",
                              "histogram", histogram,
                              NULL);
 
       gegl_node_connect_to (source,         "output",
                             histogram_sink, "input");
 
-      if (! gimp_channel_is_empty (mask))
+      if (! ligma_channel_is_empty (mask))
         {
           GeglNode *mask_source;
           gint      off_x, off_y;
 
           g_printerr ("adding mask aux\n");
 
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
           mask_source =
-            gimp_gegl_add_buffer_source (node,
-                                         gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+            ligma_gegl_add_buffer_source (node,
+                                         ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask)),
                                          -off_x, -off_y);
 
           gegl_node_connect_to (mask_source,    "output",
@@ -121,27 +121,27 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
     }
   else
     {
-      GeglBuffer      *buffer      = gimp_drawable_get_buffer (drawable);
-      GimpProjectable *projectable = NULL;
+      GeglBuffer      *buffer      = ligma_drawable_get_buffer (drawable);
+      LigmaProjectable *projectable = NULL;
 
-      if (with_filters && gimp_drawable_has_filters (drawable))
+      if (with_filters && ligma_drawable_has_filters (drawable))
         {
-          GimpTileHandlerValidate *validate;
+          LigmaTileHandlerValidate *validate;
           GeglNode                *node;
 
-          node = gimp_drawable_get_source_node (drawable);
+          node = ligma_drawable_get_source_node (drawable);
 
           buffer = gegl_buffer_new (gegl_buffer_get_extent (buffer),
                                     gegl_buffer_get_format (buffer));
 
           validate =
-            GIMP_TILE_HANDLER_VALIDATE (gimp_tile_handler_validate_new (node));
+            LIGMA_TILE_HANDLER_VALIDATE (ligma_tile_handler_validate_new (node));
 
-          gimp_tile_handler_validate_assign (validate, buffer);
+          ligma_tile_handler_validate_assign (validate, buffer);
 
           g_object_unref (validate);
 
-          gimp_tile_handler_validate_invalidate (validate,
+          ligma_tile_handler_validate_invalidate (validate,
                                                  gegl_buffer_get_extent (buffer));
 
 #if 0
@@ -150,12 +150,12 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
            *  and doesn't need the signal connection
            */
           g_signal_connect_object (node, "invalidated",
-                                   G_CALLBACK (gimp_tile_handler_validate_invalidate),
+                                   G_CALLBACK (ligma_tile_handler_validate_invalidate),
                                    validate, G_CONNECT_SWAPPED);
 #endif
 
-          if (GIMP_IS_PROJECTABLE (drawable))
-            projectable = GIMP_PROJECTABLE (drawable);
+          if (LIGMA_IS_PROJECTABLE (drawable))
+            projectable = LIGMA_PROJECTABLE (drawable);
         }
       else
         {
@@ -163,29 +163,29 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
         }
 
       if (projectable)
-        gimp_projectable_begin_render (projectable);
+        ligma_projectable_begin_render (projectable);
 
-      if (! gimp_channel_is_empty (mask))
+      if (! ligma_channel_is_empty (mask))
         {
           gint off_x, off_y;
 
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
           if (run_async)
             {
-              async = gimp_histogram_calculate_async (
+              async = ligma_histogram_calculate_async (
                 histogram, buffer,
                 GEGL_RECTANGLE (x, y, width, height),
-                gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask)),
                 GEGL_RECTANGLE (x + off_x, y + off_y,
                                 width, height));
             }
           else
             {
-              gimp_histogram_calculate (
+              ligma_histogram_calculate (
                 histogram, buffer,
                 GEGL_RECTANGLE (x, y, width, height),
-                gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask)),
                 GEGL_RECTANGLE (x + off_x, y + off_y,
                                 width, height));
             }
@@ -194,14 +194,14 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
         {
           if (run_async)
             {
-              async = gimp_histogram_calculate_async (
+              async = ligma_histogram_calculate_async (
                 histogram, buffer,
                 GEGL_RECTANGLE (x, y, width, height),
                 NULL, NULL);
             }
           else
             {
-              gimp_histogram_calculate (
+              ligma_histogram_calculate (
                 histogram, buffer,
                 GEGL_RECTANGLE (x, y, width, height),
                 NULL, NULL);
@@ -209,7 +209,7 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
         }
 
       if (projectable)
-        gimp_projectable_end_render (projectable);
+        ligma_projectable_end_render (projectable);
 
       g_object_unref (buffer);
     }
@@ -217,9 +217,9 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
 end:
   if (run_async && ! async)
     {
-      async = gimp_async_new ();
+      async = ligma_async_new ();
 
-      gimp_async_finish (async, NULL);
+      ligma_async_finish (async, NULL);
     }
 
   return async;
@@ -230,29 +230,29 @@ end:
 
 
 void
-gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-                                   GimpHistogram *histogram,
+ligma_drawable_calculate_histogram (LigmaDrawable  *drawable,
+                                   LigmaHistogram *histogram,
                                    gboolean       with_filters)
 {
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
   g_return_if_fail (histogram != NULL);
 
-  gimp_drawable_calculate_histogram_internal (drawable,
+  ligma_drawable_calculate_histogram_internal (drawable,
                                               histogram, with_filters,
                                               FALSE);
 }
 
-GimpAsync *
-gimp_drawable_calculate_histogram_async (GimpDrawable  *drawable,
-                                         GimpHistogram *histogram,
+LigmaAsync *
+ligma_drawable_calculate_histogram_async (LigmaDrawable  *drawable,
+                                         LigmaHistogram *histogram,
                                          gboolean       with_filters)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
   g_return_val_if_fail (histogram != NULL, NULL);
 
-  return gimp_drawable_calculate_histogram_internal (drawable,
+  return ligma_drawable_calculate_histogram_internal (drawable,
                                                      histogram, with_filters,
                                                      TRUE);
 }

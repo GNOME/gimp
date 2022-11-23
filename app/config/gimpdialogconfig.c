@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDialogConfig class
- * Copyright (C) 2016  Michael Natterer <mitch@gimp.org>
+ * LigmaDialogConfig class
+ * Copyright (C) 2016  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,27 +24,27 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core/core-types.h" /* fill and stroke options */
-#include "core/gimp.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/ligma.h"
+#include "core/ligmastrokeoptions.h"
 
 #include "config-types.h"
 
-#include "gimprc-blurbs.h"
-#include "gimpdialogconfig.h"
+#include "ligmarc-blurbs.h"
+#include "ligmadialogconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
 
-  PROP_GIMP,
+  PROP_LIGMA,
 
   PROP_COLOR_PROFILE_POLICY,
   PROP_METADATA_ROTATION_POLICY,
@@ -115,472 +115,472 @@ enum
 };
 
 
-typedef struct _GimpDialogConfigPrivate GimpDialogConfigPrivate;
+typedef struct _LigmaDialogConfigPrivate LigmaDialogConfigPrivate;
 
-struct _GimpDialogConfigPrivate
+struct _LigmaDialogConfigPrivate
 {
-  Gimp *gimp;
+  Ligma *ligma;
 };
 
 #define GET_PRIVATE(config) \
-        ((GimpDialogConfigPrivate *) gimp_dialog_config_get_instance_private ((GimpDialogConfig *) (config)))
+        ((LigmaDialogConfigPrivate *) ligma_dialog_config_get_instance_private ((LigmaDialogConfig *) (config)))
 
 
-static void  gimp_dialog_config_constructed           (GObject      *object);
-static void  gimp_dialog_config_finalize              (GObject      *object);
-static void  gimp_dialog_config_set_property          (GObject      *object,
+static void  ligma_dialog_config_constructed           (GObject      *object);
+static void  ligma_dialog_config_finalize              (GObject      *object);
+static void  ligma_dialog_config_set_property          (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-static void  gimp_dialog_config_get_property          (GObject      *object,
+static void  ligma_dialog_config_get_property          (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void  gimp_dialog_config_fill_options_notify   (GObject      *object,
+static void  ligma_dialog_config_fill_options_notify   (GObject      *object,
                                                        GParamSpec   *pspec,
                                                        gpointer      data);
-static void  gimp_dialog_config_stroke_options_notify (GObject      *object,
+static void  ligma_dialog_config_stroke_options_notify (GObject      *object,
                                                        GParamSpec   *pspec,
                                                        gpointer      data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDialogConfig, gimp_dialog_config,
-                            GIMP_TYPE_GUI_CONFIG)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDialogConfig, ligma_dialog_config,
+                            LIGMA_TYPE_GUI_CONFIG)
 
-#define parent_class gimp_dialog_config_parent_class
+#define parent_class ligma_dialog_config_parent_class
 
 
 static void
-gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
+ligma_dialog_config_class_init (LigmaDialogConfigClass *klass)
 {
   GObjectClass *object_class     = G_OBJECT_CLASS (klass);
-  GimpRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
+  LigmaRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
 
-  object_class->constructed  = gimp_dialog_config_constructed;
-  object_class->finalize     = gimp_dialog_config_finalize;
-  object_class->set_property = gimp_dialog_config_set_property;
-  object_class->get_property = gimp_dialog_config_get_property;
+  object_class->constructed  = ligma_dialog_config_constructed;
+  object_class->finalize     = ligma_dialog_config_finalize;
+  object_class->set_property = ligma_dialog_config_set_property;
+  object_class->get_property = ligma_dialog_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
                          "color-profile-policy",
                          "Color profile policy",
                          COLOR_PROFILE_POLICY_BLURB,
-                         GIMP_TYPE_COLOR_PROFILE_POLICY,
-                         GIMP_COLOR_PROFILE_POLICY_ASK,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_PROFILE_POLICY,
+                         LIGMA_COLOR_PROFILE_POLICY_ASK,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_METADATA_ROTATION_POLICY,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_METADATA_ROTATION_POLICY,
                          "metadata-rotation-policy",
                          "Metadata rotation policy",
                          METADATA_ROTATION_POLICY_BLURB,
-                         GIMP_TYPE_METADATA_ROTATION_POLICY,
-                         GIMP_METADATA_ROTATION_POLICY_ASK,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_METADATA_ROTATION_POLICY,
+                         LIGMA_METADATA_ROTATION_POLICY_ASK,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_COLOR_PROFILE_PATH,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_COLOR_PROFILE_PATH,
                          "color-profile-path",
                          "Default color profile folder path",
                          COLOR_PROFILE_PATH_BLURB,
-                         GIMP_CONFIG_PATH_FILE,
+                         LIGMA_CONFIG_PATH_FILE,
                          NULL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
                          "image-convert-profile-intent",
                          "Default rendering intent for color profile conversion",
                          IMAGE_CONVERT_PROFILE_INTENT_BLURB,
-                         GIMP_TYPE_COLOR_RENDERING_INTENT,
-                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_RENDERING_INTENT,
+                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_CONVERT_PROFILE_BPC,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_CONVERT_PROFILE_BPC,
                             "image-convert-profile-black-point-compensation",
                             "Default 'Black point compensation' for "
                             "color profile conversion",
                             IMAGE_CONVERT_PROFILE_BPC_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class,
+  LIGMA_CONFIG_PROP_ENUM (object_class,
                          PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD,
                          "image-convert-precision-layer-dither-method",
                          "Default layer dither type for precision conversion",
                          IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD_BLURB,
                          GEGL_TYPE_DITHER_METHOD,
                          GEGL_DITHER_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class,
+  LIGMA_CONFIG_PROP_ENUM (object_class,
                          PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
                          "image-convert-precision-text-layer-dither-method",
                          "Default text layer dither type for precision conversion",
                          IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD_BLURB,
                          GEGL_TYPE_DITHER_METHOD,
                          GEGL_DITHER_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class,
+  LIGMA_CONFIG_PROP_ENUM (object_class,
                          PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
                          "image-convert-precision-channel-dither-method",
                          "Default channel dither type for precision conversion",
                          IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD_BLURB,
                          GEGL_TYPE_DITHER_METHOD,
                          GEGL_DITHER_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class,
+  LIGMA_CONFIG_PROP_ENUM (object_class,
                          PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE,
                          "image-convert-indexed-palette-type",
                          "Default palette type for indexed conversion",
                          IMAGE_CONVERT_INDEXED_PALETTE_TYPE_BLURB,
-                         GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                         GIMP_CONVERT_PALETTE_GENERATE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CONVERT_PALETTE_TYPE,
+                         LIGMA_CONVERT_PALETTE_GENERATE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class,
+  LIGMA_CONFIG_PROP_INT (object_class,
                         PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS,
                         "image-convert-indexed-max-colors",
                         "Default maximum number of colors for indexed conversion",
                         IMAGE_CONVERT_INDEXED_MAX_COLORS_BLURB,
                         2, 256, 256,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
                             PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES,
                             "image-convert-indexed-remove-duplicates",
                             "Default remove duplicates for indexed conversion",
                             IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class,
+  LIGMA_CONFIG_PROP_ENUM (object_class,
                          PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE,
                          "image-convert-indexed-dither-type",
                          "Default dither type for indexed conversion",
                          IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB,
-                         GIMP_TYPE_CONVERT_DITHER_TYPE,
-                         GIMP_CONVERT_DITHER_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CONVERT_DITHER_TYPE,
+                         LIGMA_CONVERT_DITHER_NONE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
                             PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA,
                             "image-convert-indexed-dither-alpha",
                             "Default dither alpha for indexed conversion",
                             IMAGE_CONVERT_INDEXED_DITHER_ALPHA_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
                             PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS,
                             "image-convert-indexed-dither-text-layers",
                             "Default dither text layers for indexed conversion",
                             IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_FILL_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_FILL_TYPE,
                          "image-resize-fill-type",
                          "Default image resize fill type",
                          IMAGE_RESIZE_FILL_TYPE_BLURB,
-                         GIMP_TYPE_FILL_TYPE,
-                         GIMP_FILL_TRANSPARENT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_TYPE,
+                         LIGMA_FILL_TRANSPARENT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_LAYER_SET,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_LAYER_SET,
                          "image-resize-layer-set",
                          "Default image resize layer set",
                          IMAGE_RESIZE_LAYER_SET_BLURB,
-                         GIMP_TYPE_ITEM_SET,
-                         GIMP_ITEM_SET_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_ITEM_SET,
+                         LIGMA_ITEM_SET_NONE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS,
                             "image-resize-resize-text-layers",
                             "Default image resize text layers",
                             IMAGE_RESIZE_RESIZE_TEXT_LAYERS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
                            "layer-new-name",
                            "Default new layer name",
                            LAYER_NEW_NAME_BLURB,
                            _("Layer"),
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_MODE,
                          "layer-new-mode",
                          "Default new layer mode",
                          LAYER_NEW_MODE_BLURB,
-                         GIMP_TYPE_LAYER_MODE,
-                         GIMP_LAYER_MODE_NORMAL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_LAYER_MODE,
+                         LIGMA_LAYER_MODE_NORMAL,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_BLEND_SPACE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_BLEND_SPACE,
                          "layer-new-blend-space",
                          "Default new layer blend space",
                          LAYER_NEW_BLEND_SPACE_BLURB,
-                         GIMP_TYPE_LAYER_COLOR_SPACE,
-                         GIMP_LAYER_COLOR_SPACE_AUTO,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_LAYER_COLOR_SPACE,
+                         LIGMA_LAYER_COLOR_SPACE_AUTO,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_COMPOSITE_SPACE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_COMPOSITE_SPACE,
                          "layer-new-composite-space",
                          "Default new layer composite space",
                          LAYER_NEW_COMPOSITE_SPACE_BLURB,
-                         GIMP_TYPE_LAYER_COLOR_SPACE,
-                         GIMP_LAYER_COLOR_SPACE_AUTO,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_LAYER_COLOR_SPACE,
+                         LIGMA_LAYER_COLOR_SPACE_AUTO,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_COMPOSITE_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_COMPOSITE_MODE,
                          "layer-new-composite-mode",
                          "Default new layer composite mode",
                          LAYER_NEW_COMPOSITE_MODE_BLURB,
-                         GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                         GIMP_LAYER_COMPOSITE_AUTO,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_LAYER_COMPOSITE_MODE,
+                         LIGMA_LAYER_COMPOSITE_AUTO,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LAYER_NEW_OPACITY,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LAYER_NEW_OPACITY,
                            "layer-new-opacity",
                            "Default new layer opacity",
                            LAYER_NEW_OPACITY_BLURB,
-                           GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE,
-                           GIMP_OPACITY_OPAQUE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_OPACITY_TRANSPARENT, LIGMA_OPACITY_OPAQUE,
+                           LIGMA_OPACITY_OPAQUE,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
                          "layer-new-fill-type",
                          "Default new layer fill type",
                          LAYER_NEW_FILL_TYPE_BLURB,
-                         GIMP_TYPE_FILL_TYPE,
-                         GIMP_FILL_TRANSPARENT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_TYPE,
+                         LIGMA_FILL_TRANSPARENT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_RESIZE_FILL_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_RESIZE_FILL_TYPE,
                          "layer-resize-fill-type",
                          "Default layer resize fill type",
                          LAYER_RESIZE_FILL_TYPE_BLURB,
-                         GIMP_TYPE_FILL_TYPE,
-                         GIMP_FILL_TRANSPARENT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_TYPE,
+                         LIGMA_FILL_TRANSPARENT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_ADD_MASK_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_ADD_MASK_TYPE,
                          "layer-add-mask-type",
                          "Default layer mask type",
                          LAYER_ADD_MASK_TYPE_BLURB,
-                         GIMP_TYPE_ADD_MASK_TYPE,
-                         GIMP_ADD_MASK_WHITE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_ADD_MASK_TYPE,
+                         LIGMA_ADD_MASK_WHITE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ADD_MASK_INVERT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ADD_MASK_INVERT,
                             "layer-add-mask-invert",
                             "Default layer mask invert",
                             LAYER_ADD_MASK_INVERT_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_MERGE_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_LAYER_MERGE_TYPE,
                          "layer-merge-type",
                          "Default layer merge type",
                          LAYER_MERGE_TYPE_BLURB,
-                         GIMP_TYPE_MERGE_TYPE,
-                         GIMP_EXPAND_AS_NECESSARY,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_MERGE_TYPE,
+                         LIGMA_EXPAND_AS_NECESSARY,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
                             "layer-merge-active-group-only",
                             "Default layer merge active groups only",
                             LAYER_MERGE_ACTIVE_GROUP_ONLY_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_DISCARD_INVISIBLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_DISCARD_INVISIBLE,
                             "layer-merge-discard-invisible",
                             "Default layer merge discard invisible",
                             LAYER_MERGE_DISCARD_INVISIBLE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_CHANNEL_NEW_NAME,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_CHANNEL_NEW_NAME,
                            "channel-new-name",
                            "Default new channel name",
                            CHANNEL_NEW_NAME_BLURB,
                            _("Channel"),
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_CHANNEL_NEW_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_CHANNEL_NEW_COLOR,
                         "channel-new-color",
                         "Default new channel color and opacity",
                         CHANNEL_NEW_COLOR_BLURB,
                         TRUE,
                         &half_transparent,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
                            "path-new-name",
                            "Default new path name",
                            VECTORS_NEW_NAME_BLURB,
                            _("Path"),
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_EXPORT_PATH,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_VECTORS_EXPORT_PATH,
                          "path-export-path",
                          "Default path export folder path",
                          VECTORS_EXPORT_PATH_BLURB,
-                         GIMP_CONFIG_PATH_FILE,
+                         LIGMA_CONFIG_PATH_FILE,
                          NULL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
                             "path-export-active-only",
                             "Default export only the selected paths",
                             VECTORS_EXPORT_ACTIVE_ONLY_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_IMPORT_PATH,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_VECTORS_IMPORT_PATH,
                          "path-import-path",
                          "Default path import folder path",
                          VECTORS_IMPORT_PATH_BLURB,
-                         GIMP_CONFIG_PATH_FILE,
+                         LIGMA_CONFIG_PATH_FILE,
                          NULL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
                             "path-import-merge",
                             "Default merge imported vectors",
                             VECTORS_IMPORT_MERGE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
                             "path-import-scale",
                             "Default scale imported vectors",
                             VECTORS_IMPORT_SCALE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
                            "selection-feather-radius",
                            "Selection feather radius",
                            SELECTION_FEATHER_RADIUS_BLURB,
                            0.0, 32767.0, 5.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_FEATHER_EDGE_LOCK,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_FEATHER_EDGE_LOCK,
                             "selection-feather-edge-lock",
                             "Selection feather edge lock",
                             SELECTION_FEATHER_EDGE_LOCK_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_GROW_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_GROW_RADIUS,
                            "selection-grow-radius",
                            "Selection grow radius",
                            SELECTION_GROW_RADIUS_BLURB,
                            1.0, 32767.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_SHRINK_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_SHRINK_RADIUS,
                            "selection-shrink-radius",
                            "Selection shrink radius",
                            SELECTION_SHRINK_RADIUS_BLURB,
                            1.0, 32767.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_SHRINK_EDGE_LOCK,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_SHRINK_EDGE_LOCK,
                             "selection-shrink-edge-lock",
                             "Selection shrink edge lock",
                             SELECTION_SHRINK_EDGE_LOCK_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_BORDER_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_BORDER_RADIUS,
                            "selection-border-radius",
                            "Selection border radius",
                            SELECTION_BORDER_RADIUS_BLURB,
                            1.0, 32767.0, 5.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_BORDER_EDGE_LOCK,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_BORDER_EDGE_LOCK,
                             "selection-border-edge-lock",
                             "Selection border edge lock",
                             SELECTION_BORDER_EDGE_LOCK_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SELECTION_BORDER_STYLE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_SELECTION_BORDER_STYLE,
                          "selection-border-style",
                          "Selection border style",
                          SELECTION_BORDER_STYLE_BLURB,
-                         GIMP_TYPE_CHANNEL_BORDER_STYLE,
-                         GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CHANNEL_BORDER_STYLE,
+                         LIGMA_CHANNEL_BORDER_STYLE_SMOOTH,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
                            "fill-options",
                            "Fill Options",
                            FILL_OPTIONS_BLURB,
-                           GIMP_TYPE_FILL_OPTIONS,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_FILL_OPTIONS,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
                            "stroke-options",
                            "Stroke Options",
                            STROKE_OPTIONS_BLURB,
-                           GIMP_TYPE_STROKE_OPTIONS,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_STROKE_OPTIONS,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
-gimp_dialog_config_init (GimpDialogConfig *config)
+ligma_dialog_config_init (LigmaDialogConfig *config)
 {
 }
 
 static void
-gimp_dialog_config_constructed (GObject *object)
+ligma_dialog_config_constructed (GObject *object)
 {
-  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
-  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
-  GimpContext             *context;
+  LigmaDialogConfig        *config = LIGMA_DIALOG_CONFIG (object);
+  LigmaDialogConfigPrivate *priv   = GET_PRIVATE (object);
+  LigmaContext             *context;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (priv->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (priv->ligma));
 
-  context = gimp_get_user_context (priv->gimp);
+  context = ligma_get_user_context (priv->ligma);
 
-  config->fill_options = gimp_fill_options_new (priv->gimp, context, TRUE);
-  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->fill_options),
+  config->fill_options = ligma_fill_options_new (priv->ligma, context, TRUE);
+  ligma_context_set_serialize_properties (LIGMA_CONTEXT (config->fill_options),
                                          0);
 
   g_signal_connect (config->fill_options, "notify",
-                    G_CALLBACK (gimp_dialog_config_fill_options_notify),
+                    G_CALLBACK (ligma_dialog_config_fill_options_notify),
                     config);
 
-  config->stroke_options = gimp_stroke_options_new (priv->gimp, context, TRUE);
-  gimp_context_set_serialize_properties (GIMP_CONTEXT (config->stroke_options),
+  config->stroke_options = ligma_stroke_options_new (priv->ligma, context, TRUE);
+  ligma_context_set_serialize_properties (LIGMA_CONTEXT (config->stroke_options),
                                          0);
 
   g_signal_connect (config->stroke_options, "notify",
-                    G_CALLBACK (gimp_dialog_config_stroke_options_notify),
+                    G_CALLBACK (ligma_dialog_config_stroke_options_notify),
                     config);
 }
 
 static void
-gimp_dialog_config_finalize (GObject *object)
+ligma_dialog_config_finalize (GObject *object)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
+  LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (object);
 
   g_clear_pointer (&config->color_profile_path,  g_free);
   g_clear_pointer (&config->layer_new_name,      g_free);
@@ -596,18 +596,18 @@ gimp_dialog_config_finalize (GObject *object)
 }
 
 static void
-gimp_dialog_config_set_property (GObject      *object,
+ligma_dialog_config_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
-  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
+  LigmaDialogConfig        *config = LIGMA_DIALOG_CONFIG (object);
+  LigmaDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      priv->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      priv->ligma = g_value_get_object (value); /* don't ref */
       break;
 
     case PROP_COLOR_PROFILE_POLICY:
@@ -723,7 +723,7 @@ gimp_dialog_config_set_property (GObject      *object,
       config->channel_new_name = g_value_dup_string (value);
       break;
     case PROP_CHANNEL_NEW_COLOR:
-      gimp_value_get_rgb (value, &config->channel_new_color);
+      ligma_value_get_rgb (value, &config->channel_new_color);
       break;
 
     case PROP_VECTORS_NEW_NAME:
@@ -783,12 +783,12 @@ gimp_dialog_config_set_property (GObject      *object,
 
     case PROP_FILL_OPTIONS:
       if (g_value_get_object (value))
-        gimp_config_sync (g_value_get_object (value) ,
+        ligma_config_sync (g_value_get_object (value) ,
                           G_OBJECT (config->fill_options), 0);
       break;
     case PROP_STROKE_OPTIONS:
       if (g_value_get_object (value))
-        gimp_config_sync (g_value_get_object (value) ,
+        ligma_config_sync (g_value_get_object (value) ,
                           G_OBJECT (config->stroke_options), 0);
       break;
 
@@ -799,18 +799,18 @@ gimp_dialog_config_set_property (GObject      *object,
 }
 
 static void
-gimp_dialog_config_get_property (GObject    *object,
+ligma_dialog_config_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDialogConfig        *config = GIMP_DIALOG_CONFIG (object);
-  GimpDialogConfigPrivate *priv   = GET_PRIVATE (object);
+  LigmaDialogConfig        *config = LIGMA_DIALOG_CONFIG (object);
+  LigmaDialogConfigPrivate *priv   = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, priv->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, priv->ligma);
       break;
 
     case PROP_COLOR_PROFILE_POLICY:
@@ -920,7 +920,7 @@ gimp_dialog_config_get_property (GObject    *object,
       g_value_set_string (value, config->channel_new_name);
       break;
     case PROP_CHANNEL_NEW_COLOR:
-      gimp_value_set_rgb (value, &config->channel_new_color);
+      ligma_value_set_rgb (value, &config->channel_new_color);
       break;
 
     case PROP_VECTORS_NEW_NAME:
@@ -986,7 +986,7 @@ gimp_dialog_config_get_property (GObject    *object,
 }
 
 static void
-gimp_dialog_config_fill_options_notify (GObject    *object,
+ligma_dialog_config_fill_options_notify (GObject    *object,
                                         GParamSpec *pspec,
                                         gpointer    data)
 {
@@ -996,7 +996,7 @@ gimp_dialog_config_fill_options_notify (GObject    *object,
 }
 
 static void
-gimp_dialog_config_stroke_options_notify (GObject    *object,
+ligma_dialog_config_stroke_options_notify (GObject    *object,
                                           GParamSpec *pspec,
                                           gpointer    data)
 {

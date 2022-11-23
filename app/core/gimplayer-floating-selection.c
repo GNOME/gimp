@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,45 +20,45 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpboundary.h"
-#include "gimpdrawable-filters.h"
-#include "gimpdrawable-floating-selection.h"
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimplayer-floating-selection.h"
-#include "gimplayermask.h"
+#include "ligmaboundary.h"
+#include "ligmadrawable-filters.h"
+#include "ligmadrawable-floating-selection.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmalayer.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmalayermask.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* public functions  */
 
 void
-floating_sel_attach (GimpLayer    *layer,
-                     GimpDrawable *drawable)
+floating_sel_attach (LigmaLayer    *layer,
+                     LigmaDrawable *drawable)
 {
-  GimpImage *image;
-  GimpLayer *floating_sel;
-  GimpLayer *parent   = NULL;
+  LigmaImage *image;
+  LigmaLayer *floating_sel;
+  LigmaLayer *parent   = NULL;
   gint       position = 0;
 
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (drawable != GIMP_DRAWABLE (layer));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) ==
-                    gimp_item_get_image (GIMP_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (drawable != LIGMA_DRAWABLE (layer));
+  g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (layer)) ==
+                    ligma_item_get_image (LIGMA_ITEM (drawable)));
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
-  floating_sel = gimp_image_get_floating_selection (image);
+  floating_sel = ligma_image_get_floating_selection (image);
 
   /*  If there is already a floating selection, anchor it  */
   if (floating_sel)
@@ -68,9 +68,9 @@ floating_sel_attach (GimpLayer    *layer,
       /*  if we were pasting to the old floating selection, paste now
        *  to the drawable
        */
-      if (drawable == (GimpDrawable *) floating_sel)
+      if (drawable == (LigmaDrawable *) floating_sel)
         {
-          GList *drawables = gimp_image_get_selected_drawables (image);
+          GList *drawables = ligma_image_get_selected_drawables (image);
 
           g_return_if_fail (g_list_length (drawables) == 1);
           drawable = drawables->data;
@@ -78,60 +78,60 @@ floating_sel_attach (GimpLayer    *layer,
         }
     }
 
-  gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
+  ligma_layer_set_lock_alpha (layer, TRUE, FALSE);
 
-  gimp_layer_set_floating_sel_drawable (layer, drawable);
+  ligma_layer_set_floating_sel_drawable (layer, drawable);
 
   /*  Floating selection layer placement, default to the top of the
    *  layers stack; parent and position are adapted according to the
    *  drawable associated with the floating selection.
    */
 
-  if (GIMP_IS_LAYER_MASK (drawable))
+  if (LIGMA_IS_LAYER_MASK (drawable))
     {
-       GimpLayer *tmp = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+       LigmaLayer *tmp = ligma_layer_mask_get_layer (LIGMA_LAYER_MASK (drawable));
 
-       parent   = GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (tmp)));
-       position = gimp_item_get_index (GIMP_ITEM (tmp));
+       parent   = LIGMA_LAYER (ligma_item_get_parent (LIGMA_ITEM (tmp)));
+       position = ligma_item_get_index (LIGMA_ITEM (tmp));
     }
-  else if (GIMP_IS_LAYER (drawable))
+  else if (LIGMA_IS_LAYER (drawable))
     {
-      parent   = GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable)));
-      position = gimp_item_get_index (GIMP_ITEM (drawable));
+      parent   = LIGMA_LAYER (ligma_item_get_parent (LIGMA_ITEM (drawable)));
+      position = ligma_item_get_index (LIGMA_ITEM (drawable));
     }
 
-  gimp_image_add_layer (image, layer, parent, position, TRUE);
+  ligma_image_add_layer (image, layer, parent, position, TRUE);
 }
 
 void
-floating_sel_anchor (GimpLayer *layer)
+floating_sel_anchor (LigmaLayer *layer)
 {
-  GimpImage     *image;
-  GimpDrawable  *drawable;
-  GimpFilter    *filter = NULL;
+  LigmaImage     *image;
+  LigmaDrawable  *drawable;
+  LigmaFilter    *filter = NULL;
   GeglRectangle  bounding_box;
   GeglRectangle  dr_bounding_box;
   gint           off_x, off_y;
   gint           dr_off_x, dr_off_y;
 
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
+  g_return_if_fail (ligma_layer_is_floating_sel (layer));
 
-  /* Don't let gimp_image_remove_layer free the layer while we still need it */
+  /* Don't let ligma_image_remove_layer free the layer while we still need it */
   g_object_ref (layer);
 
-  image = gimp_item_get_image (GIMP_ITEM (layer));
+  image = ligma_item_get_image (LIGMA_ITEM (layer));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_FS_ANCHOR,
                                C_("undo-type", "Anchor Floating Selection"));
 
-  drawable = gimp_layer_get_floating_sel_drawable (layer);
+  drawable = ligma_layer_get_floating_sel_drawable (layer);
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-  gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &dr_off_x, &dr_off_y);
 
-  bounding_box    = gimp_drawable_get_bounding_box (GIMP_DRAWABLE (layer));
-  dr_bounding_box = gimp_drawable_get_bounding_box (drawable);
+  bounding_box    = ligma_drawable_get_bounding_box (LIGMA_DRAWABLE (layer));
+  dr_bounding_box = ligma_drawable_get_bounding_box (drawable);
 
   bounding_box.x    += off_x;
   bounding_box.y    += off_y;
@@ -139,121 +139,121 @@ floating_sel_anchor (GimpLayer *layer)
   dr_bounding_box.x += dr_off_x;
   dr_bounding_box.y += dr_off_y;
 
-  if (gimp_item_get_visible (GIMP_ITEM (layer)) &&
+  if (ligma_item_get_visible (LIGMA_ITEM (layer)) &&
       gegl_rectangle_intersect (NULL, &bounding_box, &dr_bounding_box))
     {
-      filter = gimp_drawable_get_floating_sel_filter (drawable);
+      filter = ligma_drawable_get_floating_sel_filter (drawable);
     }
 
   if (filter)
     {
-      gimp_drawable_merge_filter (drawable, filter, NULL, NULL,
+      ligma_drawable_merge_filter (drawable, filter, NULL, NULL,
                                   NULL, FALSE, FALSE, FALSE);
     }
 
-  gimp_image_remove_layer (image, layer, TRUE, NULL);
+  ligma_image_remove_layer (image, layer, TRUE, NULL);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   /*  invalidate the boundaries  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (image)));
+  ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (ligma_image_get_mask (image)));
 
   g_object_unref (layer);
 }
 
 gboolean
-floating_sel_to_layer (GimpLayer  *layer,
+floating_sel_to_layer (LigmaLayer  *layer,
                        GError    **error)
 {
-  GimpItem  *item;
-  GimpImage *image;
+  LigmaItem  *item;
+  LigmaImage *image;
 
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-  g_return_val_if_fail (gimp_layer_is_floating_sel (layer), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (ligma_layer_is_floating_sel (layer), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  item  = GIMP_ITEM (layer);
-  image = gimp_item_get_image (item);
+  item  = LIGMA_ITEM (layer);
+  image = ligma_item_get_image (item);
 
   /*  Check if the floating layer belongs to a channel  */
-  if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
+  if (LIGMA_IS_CHANNEL (ligma_layer_get_floating_sel_drawable (layer)))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot create a new layer from the floating "
                              "selection because it belongs to a layer mask "
                              "or channel."));
       return FALSE;
     }
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_TO_LAYER,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_FS_TO_LAYER,
                                C_("undo-type", "Floating Selection to Layer"));
 
-  gimp_image_undo_push_fs_to_layer (image, NULL, layer);
+  ligma_image_undo_push_fs_to_layer (image, NULL, layer);
 
-  gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer));
-  gimp_layer_set_floating_sel_drawable (layer, NULL);
+  ligma_drawable_detach_floating_sel (ligma_layer_get_floating_sel_drawable (layer));
+  ligma_layer_set_floating_sel_drawable (layer, NULL);
 
-  gimp_item_set_visible (item, TRUE, TRUE);
-  gimp_layer_set_lock_alpha (layer, FALSE, TRUE);
+  ligma_item_set_visible (item, TRUE, TRUE);
+  ligma_layer_set_lock_alpha (layer, FALSE, TRUE);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   /* When the floating selection is converted to/from a normal layer
    * it does something resembling a name change, so emit the
    * "name-changed" signal
    */
-  gimp_object_name_changed (GIMP_OBJECT (layer));
+  ligma_object_name_changed (LIGMA_OBJECT (layer));
 
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
+  ligma_drawable_update (LIGMA_DRAWABLE (layer),
                         0, 0,
-                        gimp_item_get_width  (item),
-                        gimp_item_get_height (item));
+                        ligma_item_get_width  (item),
+                        ligma_item_get_height (item));
 
   return TRUE;
 }
 
 void
-floating_sel_activate_drawable (GimpLayer *layer)
+floating_sel_activate_drawable (LigmaLayer *layer)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
+  LigmaImage    *image;
+  LigmaDrawable *drawable;
   GList        *selected_drawables;
 
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
+  g_return_if_fail (ligma_layer_is_floating_sel (layer));
 
-  image = gimp_item_get_image (GIMP_ITEM (layer));
+  image = ligma_item_get_image (LIGMA_ITEM (layer));
 
-  drawable = gimp_layer_get_floating_sel_drawable (layer);
+  drawable = ligma_layer_get_floating_sel_drawable (layer);
 
   /*  set the underlying drawable to active  */
-  if (GIMP_IS_LAYER_MASK (drawable))
+  if (LIGMA_IS_LAYER_MASK (drawable))
     {
-      GimpLayerMask *mask = GIMP_LAYER_MASK (drawable);
+      LigmaLayerMask *mask = LIGMA_LAYER_MASK (drawable);
 
-      selected_drawables = g_list_prepend (NULL, gimp_layer_mask_get_layer (mask));
-      gimp_image_set_selected_layers (image, selected_drawables);
+      selected_drawables = g_list_prepend (NULL, ligma_layer_mask_get_layer (mask));
+      ligma_image_set_selected_layers (image, selected_drawables);
     }
-  else if (GIMP_IS_CHANNEL (drawable))
+  else if (LIGMA_IS_CHANNEL (drawable))
     {
       selected_drawables = g_list_prepend (NULL, drawable);
-      gimp_image_set_selected_channels (image, selected_drawables);
+      ligma_image_set_selected_channels (image, selected_drawables);
     }
   else
     {
       selected_drawables = g_list_prepend (NULL, drawable);
-      gimp_image_set_selected_layers (image, selected_drawables);
+      ligma_image_set_selected_layers (image, selected_drawables);
     }
 
   g_list_free (selected_drawables);
 }
 
-const GimpBoundSeg *
-floating_sel_boundary (GimpLayer *layer,
+const LigmaBoundSeg *
+floating_sel_boundary (LigmaLayer *layer,
                        gint      *n_segs)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (gimp_layer_is_floating_sel (layer), NULL);
+  g_return_val_if_fail (LIGMA_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (ligma_layer_is_floating_sel (layer), NULL);
   g_return_val_if_fail (n_segs != NULL, NULL);
 
   if (layer->fs.boundary_known == FALSE)
@@ -261,26 +261,26 @@ floating_sel_boundary (GimpLayer *layer,
       gint width, height;
       gint off_x, off_y;
 
-      width  = gimp_item_get_width  (GIMP_ITEM (layer));
-      height = gimp_item_get_height (GIMP_ITEM (layer));
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      width  = ligma_item_get_width  (LIGMA_ITEM (layer));
+      height = ligma_item_get_height (LIGMA_ITEM (layer));
+      ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
 
       if (layer->fs.segs)
         g_free (layer->fs.segs);
 
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+      if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)))
         {
           GeglBuffer *buffer;
           gint        i;
 
           /*  find the segments  */
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-          layer->fs.segs = gimp_boundary_find (buffer, NULL,
+          layer->fs.segs = ligma_boundary_find (buffer, NULL,
                                                babl_format ("A float"),
-                                               GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                               LIGMA_BOUNDARY_WITHIN_BOUNDS,
                                                0, 0, width, height,
-                                               GIMP_BOUNDARY_HALF_WAY,
+                                               LIGMA_BOUNDARY_HALF_WAY,
                                                &layer->fs.num_segs);
 
           /*  offset the segments  */
@@ -295,7 +295,7 @@ floating_sel_boundary (GimpLayer *layer,
       else
         {
           layer->fs.num_segs = 4;
-          layer->fs.segs     = g_new0 (GimpBoundSeg, 4);
+          layer->fs.segs     = g_new0 (LigmaBoundSeg, 4);
 
           /* top */
           layer->fs.segs[0].x1 = off_x;
@@ -331,13 +331,13 @@ floating_sel_boundary (GimpLayer *layer,
 }
 
 void
-floating_sel_invalidate (GimpLayer *layer)
+floating_sel_invalidate (LigmaLayer *layer)
 {
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
+  g_return_if_fail (ligma_layer_is_floating_sel (layer));
 
   /*  Invalidate the attached-to drawable's preview  */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimp_layer_get_floating_sel_drawable (layer)));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (ligma_layer_get_floating_sel_drawable (layer)));
 
   /*  Invalidate the boundary  */
   layer->fs.boundary_known = FALSE;

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-raw-utils.h -- raw file format plug-in
@@ -30,7 +30,7 @@
 #include <windows.h>
 #endif
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "file-raw-utils.h"
 

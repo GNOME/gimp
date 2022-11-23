@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-transform.c
+ * ligmaimage-transform.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,28 +23,28 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp.h"
-#include "gimp-transform-resize.h"
-#include "gimp-transform-utils.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpguide.h"
-#include "gimpimage.h"
-#include "gimpimage-guides.h"
-#include "gimpimage-sample-points.h"
-#include "gimpimage-transform.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimpitem.h"
-#include "gimpobjectqueue.h"
-#include "gimpprogress.h"
-#include "gimpsamplepoint.h"
+#include "ligma.h"
+#include "ligma-transform-resize.h"
+#include "ligma-transform-utils.h"
+#include "ligmachannel.h"
+#include "ligmacontext.h"
+#include "ligmaguide.h"
+#include "ligmaimage.h"
+#include "ligmaimage-guides.h"
+#include "ligmaimage-sample-points.h"
+#include "ligmaimage-transform.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmaitem.h"
+#include "ligmaobjectqueue.h"
+#include "ligmaprogress.h"
+#include "ligmasamplepoint.h"
 
 
 #define EPSILON 1e-6
@@ -52,39 +52,39 @@
 
 /*  local function prototypes  */
 
-static void    gimp_image_transform_guides        (GimpImage           *image,
-                                                   const GimpMatrix3   *matrix,
+static void    ligma_image_transform_guides        (LigmaImage           *image,
+                                                   const LigmaMatrix3   *matrix,
                                                    const GeglRectangle *old_bounds);
-static void    gimp_image_transform_sample_points (GimpImage           *image,
-                                                   const GimpMatrix3   *matrix,
+static void    ligma_image_transform_sample_points (LigmaImage           *image,
+                                                   const LigmaMatrix3   *matrix,
                                                    const GeglRectangle *old_bounds);
 
 
 /*  private functions  */
 
 static void
-gimp_image_transform_guides (GimpImage           *image,
-                             const GimpMatrix3   *matrix,
+ligma_image_transform_guides (LigmaImage           *image,
+                             const LigmaMatrix3   *matrix,
                              const GeglRectangle *old_bounds)
 {
   GList *iter;
 
-  for (iter = gimp_image_get_guides (image); iter;)
+  for (iter = ligma_image_get_guides (image); iter;)
     {
-      GimpGuide           *guide           = iter->data;
-      GimpOrientationType  old_orientation = gimp_guide_get_orientation (guide);
-      gint                 old_position    = gimp_guide_get_position (guide);
-      GimpOrientationType  new_orientation;
+      LigmaGuide           *guide           = iter->data;
+      LigmaOrientationType  old_orientation = ligma_guide_get_orientation (guide);
+      gint                 old_position    = ligma_guide_get_position (guide);
+      LigmaOrientationType  new_orientation;
       gint                 new_position;
-      GimpVector2          vertices[2];
+      LigmaVector2          vertices[2];
       gint                 n_vertices;
-      GimpVector2          diff;
+      LigmaVector2          diff;
 
       iter = g_list_next (iter);
 
       switch (old_orientation)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
+        case LIGMA_ORIENTATION_HORIZONTAL:
           vertices[0].x = old_bounds->x;
           vertices[0].y = old_bounds->y + old_position;
 
@@ -92,7 +92,7 @@ gimp_image_transform_guides (GimpImage           *image,
           vertices[1].y = old_bounds->y + old_position;
           break;
 
-        case GIMP_ORIENTATION_VERTICAL:
+        case LIGMA_ORIENTATION_VERTICAL:
           vertices[0].x = old_bounds->x + old_position;
           vertices[0].y = old_bounds->y;
 
@@ -100,50 +100,50 @@ gimp_image_transform_guides (GimpImage           *image,
           vertices[1].y = old_bounds->y + old_bounds->height / 2.0;
           break;
 
-        case GIMP_ORIENTATION_UNKNOWN:
+        case LIGMA_ORIENTATION_UNKNOWN:
           g_return_if_reached ();
         }
 
-      gimp_transform_polygon (matrix,
+      ligma_transform_polygon (matrix,
                               vertices, 2, FALSE,
                               vertices, &n_vertices);
 
       if (n_vertices < 2)
         {
-          gimp_image_remove_guide (image, guide, TRUE);
+          ligma_image_remove_guide (image, guide, TRUE);
 
           continue;
         }
 
-      gimp_vector2_sub (&diff, &vertices[1], &vertices[0]);
+      ligma_vector2_sub (&diff, &vertices[1], &vertices[0]);
 
-      if (gimp_vector2_length (&diff) <= EPSILON)
+      if (ligma_vector2_length (&diff) <= EPSILON)
         {
-          gimp_image_remove_guide (image, guide, TRUE);
+          ligma_image_remove_guide (image, guide, TRUE);
 
           continue;
         }
 
       if (fabs (diff.x) >= fabs (diff.y))
         {
-          new_orientation = GIMP_ORIENTATION_HORIZONTAL;
+          new_orientation = LIGMA_ORIENTATION_HORIZONTAL;
           new_position    = SIGNED_ROUND (vertices[1].y);
 
-          if (new_position < 0 || new_position > gimp_image_get_height (image))
+          if (new_position < 0 || new_position > ligma_image_get_height (image))
             {
-              gimp_image_remove_guide (image, guide, TRUE);
+              ligma_image_remove_guide (image, guide, TRUE);
 
               continue;
             }
         }
       else
         {
-          new_orientation = GIMP_ORIENTATION_VERTICAL;
+          new_orientation = LIGMA_ORIENTATION_VERTICAL;
           new_position    = SIGNED_ROUND (vertices[1].x);
 
-          if (new_position < 0 || new_position > gimp_image_get_width (image))
+          if (new_position < 0 || new_position > ligma_image_get_width (image))
             {
-              gimp_image_remove_guide (image, guide, TRUE);
+              ligma_image_remove_guide (image, guide, TRUE);
 
               continue;
             }
@@ -152,47 +152,47 @@ gimp_image_transform_guides (GimpImage           *image,
       if (new_orientation != old_orientation ||
           new_position    != old_position)
         {
-          gimp_image_undo_push_guide (image, NULL, guide);
+          ligma_image_undo_push_guide (image, NULL, guide);
 
-          gimp_guide_set_orientation (guide, new_orientation);
-          gimp_guide_set_position    (guide, new_position);
+          ligma_guide_set_orientation (guide, new_orientation);
+          ligma_guide_set_position    (guide, new_position);
 
-          gimp_image_guide_moved (image, guide);
+          ligma_image_guide_moved (image, guide);
         }
     }
 }
 
 static void
-gimp_image_transform_sample_points (GimpImage           *image,
-                                    const GimpMatrix3   *matrix,
+ligma_image_transform_sample_points (LigmaImage           *image,
+                                    const LigmaMatrix3   *matrix,
                                     const GeglRectangle *old_bounds)
 {
   GList *iter;
 
-  for (iter = gimp_image_get_sample_points (image); iter;)
+  for (iter = ligma_image_get_sample_points (image); iter;)
     {
-      GimpSamplePoint     *sample_point = iter->data;
+      LigmaSamplePoint     *sample_point = iter->data;
       gint                 old_x;
       gint                 old_y;
       gint                 new_x;
       gint                 new_y;
-      GimpVector2          vertices[1];
+      LigmaVector2          vertices[1];
       gint                 n_vertices;
 
       iter = g_list_next (iter);
 
-      gimp_sample_point_get_position (sample_point, &old_x, &old_y);
+      ligma_sample_point_get_position (sample_point, &old_x, &old_y);
 
       vertices[0].x = old_x;
       vertices[0].y = old_y;
 
-      gimp_transform_polygon (matrix,
+      ligma_transform_polygon (matrix,
                               vertices, 1, FALSE,
                               vertices, &n_vertices);
 
       if (n_vertices < 1)
         {
-          gimp_image_remove_sample_point (image, sample_point, TRUE);
+          ligma_image_remove_sample_point (image, sample_point, TRUE);
 
           continue;
         }
@@ -200,16 +200,16 @@ gimp_image_transform_sample_points (GimpImage           *image,
       new_x = SIGNED_ROUND (vertices[0].x);
       new_y = SIGNED_ROUND (vertices[0].y);
 
-      if (new_x < 0 || new_x >= gimp_image_get_width  (image) ||
-          new_y < 0 || new_y >= gimp_image_get_height (image))
+      if (new_x < 0 || new_x >= ligma_image_get_width  (image) ||
+          new_y < 0 || new_y >= ligma_image_get_height (image))
         {
-          gimp_image_remove_sample_point (image, sample_point, TRUE);
+          ligma_image_remove_sample_point (image, sample_point, TRUE);
 
           continue;
         }
 
       if (new_x != old_x || new_y != old_y)
-        gimp_image_move_sample_point (image, sample_point, new_x, new_y, TRUE);
+        ligma_image_move_sample_point (image, sample_point, new_x, new_y, TRUE);
     }
 }
 
@@ -217,38 +217,38 @@ gimp_image_transform_sample_points (GimpImage           *image,
 /*  public functions  */
 
 void
-gimp_image_transform (GimpImage              *image,
-                      GimpContext            *context,
-                      const GimpMatrix3      *matrix,
-                      GimpTransformDirection  direction,
-                      GimpInterpolationType   interpolation_type,
-                      GimpTransformResize     clip_result,
-                      GimpProgress           *progress)
+ligma_image_transform (LigmaImage              *image,
+                      LigmaContext            *context,
+                      const LigmaMatrix3      *matrix,
+                      LigmaTransformDirection  direction,
+                      LigmaInterpolationType   interpolation_type,
+                      LigmaTransformResize     clip_result,
+                      LigmaProgress           *progress)
 {
-  GimpObjectQueue *queue;
-  GimpItem        *item;
-  GimpMatrix3      transform;
+  LigmaObjectQueue *queue;
+  LigmaItem        *item;
+  LigmaMatrix3      transform;
   GeglRectangle    old_bounds;
   GeglRectangle    new_bounds;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
   g_return_if_fail (matrix != NULL);
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  gimp_set_busy (image->gimp);
+  ligma_set_busy (image->ligma);
 
   old_bounds.x      = 0;
   old_bounds.y      = 0;
-  old_bounds.width  = gimp_image_get_width  (image);
-  old_bounds.height = gimp_image_get_height (image);
+  old_bounds.width  = ligma_image_get_width  (image);
+  old_bounds.height = ligma_image_get_height (image);
 
   transform = *matrix;
 
-  if (direction == GIMP_TRANSFORM_BACKWARD)
-    gimp_matrix3_invert (&transform);
+  if (direction == LIGMA_TRANSFORM_BACKWARD)
+    ligma_matrix3_invert (&transform);
 
-  gimp_transform_resize_boundary (&transform, clip_result,
+  ligma_transform_resize_boundary (&transform, clip_result,
 
                                   old_bounds.x,
                                   old_bounds.y,
@@ -263,44 +263,44 @@ gimp_image_transform (GimpImage              *image,
   new_bounds.width  -= new_bounds.x;
   new_bounds.height -= new_bounds.y;
 
-  gimp_matrix3_translate (&transform,
+  ligma_matrix3_translate (&transform,
                           old_bounds.x - new_bounds.x,
                           old_bounds.y - new_bounds.y);
 
-  queue    = gimp_object_queue_new (progress);
-  progress = GIMP_PROGRESS (queue);
+  queue    = ligma_object_queue_new (progress);
+  progress = LIGMA_PROGRESS (queue);
 
-  gimp_object_queue_push_container (queue, gimp_image_get_layers (image));
-  gimp_object_queue_push (queue, gimp_image_get_mask (image));
-  gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
-  gimp_object_queue_push_container (queue, gimp_image_get_vectors (image));
+  ligma_object_queue_push_container (queue, ligma_image_get_layers (image));
+  ligma_object_queue_push (queue, ligma_image_get_mask (image));
+  ligma_object_queue_push_container (queue, ligma_image_get_channels (image));
+  ligma_object_queue_push_container (queue, ligma_image_get_vectors (image));
 
   g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_TRANSFORM, NULL);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_TRANSFORM, NULL);
 
   /*  Transform all layers, channels (including selection mask), and vectors  */
-  while ((item = gimp_object_queue_pop (queue)))
+  while ((item = ligma_object_queue_pop (queue)))
     {
-      GimpTransformResize clip = GIMP_TRANSFORM_RESIZE_ADJUST;
+      LigmaTransformResize clip = LIGMA_TRANSFORM_RESIZE_ADJUST;
 
-      if (GIMP_IS_CHANNEL (item))
+      if (LIGMA_IS_CHANNEL (item))
         clip = clip_result;
 
-      gimp_item_transform (item,
+      ligma_item_transform (item,
                            context,
                            &transform, direction,
                            interpolation_type, clip,
                            progress);
 
-      if (GIMP_IS_VECTORS (item))
-        gimp_item_set_size (item, new_bounds.width, new_bounds.height);
+      if (LIGMA_IS_VECTORS (item))
+        ligma_item_set_size (item, new_bounds.width, new_bounds.height);
     }
 
   /*  Resize the image (if needed)  */
   if (! gegl_rectangle_equal (&new_bounds, &old_bounds))
     {
-      gimp_image_undo_push_image_size (image,
+      ligma_image_undo_push_image_size (image,
                                        NULL,
                                        new_bounds.x,
                                        new_bounds.y,
@@ -314,18 +314,18 @@ gimp_image_transform (GimpImage              *image,
     }
 
   /*  Transform all Guides  */
-  gimp_image_transform_guides (image, &transform, &old_bounds);
+  ligma_image_transform_guides (image, &transform, &old_bounds);
 
   /*  Transform all sample points  */
-  gimp_image_transform_sample_points (image, &transform, &old_bounds);
+  ligma_image_transform_sample_points (image, &transform, &old_bounds);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   g_object_unref (queue);
 
   if (! gegl_rectangle_equal (&new_bounds, &old_bounds))
     {
-      gimp_image_size_changed_detailed (image,
+      ligma_image_size_changed_detailed (image,
                                         old_bounds.x - new_bounds.x,
                                         old_bounds.y - new_bounds.y,
                                         old_bounds.width,
@@ -334,5 +334,5 @@ gimp_image_transform (GimpImage              *image,
 
   g_object_thaw_notify (G_OBJECT (image));
 
-  gimp_unset_busy (image->gimp);
+  ligma_unset_busy (image->ligma);
 }

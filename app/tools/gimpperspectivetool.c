@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimptoolgui.h"
-#include "display/gimptooltransformgrid.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmatoolgui.h"
+#include "display/ligmatooltransformgrid.h"
 
-#include "gimpperspectivetool.h"
-#include "gimptoolcontrol.h"
-#include "gimptransformgridoptions.h"
+#include "ligmaperspectivetool.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatransformgridoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  index into trans_info array  */
@@ -56,92 +56,92 @@ enum
 
 /*  local function prototypes  */
 
-static void             gimp_perspective_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
-                                                              const GimpMatrix3        *transform);
-static void             gimp_perspective_tool_prepare        (GimpTransformGridTool    *tg_tool);
-static void             gimp_perspective_tool_readjust       (GimpTransformGridTool    *tg_tool);
-static GimpToolWidget * gimp_perspective_tool_get_widget     (GimpTransformGridTool    *tg_tool);
-static void             gimp_perspective_tool_update_widget  (GimpTransformGridTool    *tg_tool);
-static void             gimp_perspective_tool_widget_changed (GimpTransformGridTool    *tg_tool);
+static void             ligma_perspective_tool_matrix_to_info (LigmaTransformGridTool    *tg_tool,
+                                                              const LigmaMatrix3        *transform);
+static void             ligma_perspective_tool_prepare        (LigmaTransformGridTool    *tg_tool);
+static void             ligma_perspective_tool_readjust       (LigmaTransformGridTool    *tg_tool);
+static LigmaToolWidget * ligma_perspective_tool_get_widget     (LigmaTransformGridTool    *tg_tool);
+static void             ligma_perspective_tool_update_widget  (LigmaTransformGridTool    *tg_tool);
+static void             ligma_perspective_tool_widget_changed (LigmaTransformGridTool    *tg_tool);
 
-static void             gimp_perspective_tool_info_to_points (GimpGenericTransformTool *generic);
+static void             ligma_perspective_tool_info_to_points (LigmaGenericTransformTool *generic);
 
 
-G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
-               GIMP_TYPE_GENERIC_TRANSFORM_TOOL)
+G_DEFINE_TYPE (LigmaPerspectiveTool, ligma_perspective_tool,
+               LIGMA_TYPE_GENERIC_TRANSFORM_TOOL)
 
-#define parent_class gimp_perspective_tool_parent_class
+#define parent_class ligma_perspective_tool_parent_class
 
 
 void
-gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
+ligma_perspective_tool_register (LigmaToolRegisterCallback  callback,
                                 gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_PERSPECTIVE_TOOL,
-                GIMP_TYPE_TRANSFORM_GRID_OPTIONS,
-                gimp_transform_grid_options_gui,
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
-                "gimp-perspective-tool",
+  (* callback) (LIGMA_TYPE_PERSPECTIVE_TOOL,
+                LIGMA_TYPE_TRANSFORM_GRID_OPTIONS,
+                ligma_transform_grid_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND,
+                "ligma-perspective-tool",
                 _("Perspective"),
                 _("Perspective Tool: "
                   "Change perspective of the layer, selection or path"),
                 N_("_Perspective"), "<shift>P",
-                NULL, GIMP_HELP_TOOL_PERSPECTIVE,
-                GIMP_ICON_TOOL_PERSPECTIVE,
+                NULL, LIGMA_HELP_TOOL_PERSPECTIVE,
+                LIGMA_ICON_TOOL_PERSPECTIVE,
                 data);
 }
 
 static void
-gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
+ligma_perspective_tool_class_init (LigmaPerspectiveToolClass *klass)
 {
-  GimpTransformToolClass        *tr_class      = GIMP_TRANSFORM_TOOL_CLASS (klass);
-  GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
-  GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
+  LigmaTransformToolClass        *tr_class      = LIGMA_TRANSFORM_TOOL_CLASS (klass);
+  LigmaTransformGridToolClass    *tg_class      = LIGMA_TRANSFORM_GRID_TOOL_CLASS (klass);
+  LigmaGenericTransformToolClass *generic_class = LIGMA_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tg_class->matrix_to_info      = gimp_perspective_tool_matrix_to_info;
-  tg_class->prepare             = gimp_perspective_tool_prepare;
-  tg_class->readjust            = gimp_perspective_tool_readjust;
-  tg_class->get_widget          = gimp_perspective_tool_get_widget;
-  tg_class->update_widget       = gimp_perspective_tool_update_widget;
-  tg_class->widget_changed      = gimp_perspective_tool_widget_changed;
+  tg_class->matrix_to_info      = ligma_perspective_tool_matrix_to_info;
+  tg_class->prepare             = ligma_perspective_tool_prepare;
+  tg_class->readjust            = ligma_perspective_tool_readjust;
+  tg_class->get_widget          = ligma_perspective_tool_get_widget;
+  tg_class->update_widget       = ligma_perspective_tool_update_widget;
+  tg_class->widget_changed      = ligma_perspective_tool_widget_changed;
 
-  generic_class->info_to_points = gimp_perspective_tool_info_to_points;
+  generic_class->info_to_points = ligma_perspective_tool_info_to_points;
 
   tr_class->undo_desc           = C_("undo-type", "Perspective");
   tr_class->progress_text       = _("Perspective transformation");
 }
 
 static void
-gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
+ligma_perspective_tool_init (LigmaPerspectiveTool *perspective_tool)
 {
-  GimpTool *tool = GIMP_TOOL (perspective_tool);
+  LigmaTool *tool = LIGMA_TOOL (perspective_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_PERSPECTIVE);
+  ligma_tool_control_set_tool_cursor (tool->control,
+                                     LIGMA_TOOL_CURSOR_PERSPECTIVE);
 }
 
 static void
-gimp_perspective_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
-                                      const GimpMatrix3     *transform)
+ligma_perspective_tool_matrix_to_info (LigmaTransformGridTool *tg_tool,
+                                      const LigmaMatrix3     *transform)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x1,
                                 tr_tool->y1,
                                 &tg_tool->trans_info[X0],
                                 &tg_tool->trans_info[Y0]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x2,
                                 tr_tool->y1,
                                 &tg_tool->trans_info[X1],
                                 &tg_tool->trans_info[Y1]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x1,
                                 tr_tool->y2,
                                 &tg_tool->trans_info[X2],
                                 &tg_tool->trans_info[Y2]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x2,
                                 tr_tool->y2,
                                 &tg_tool->trans_info[X3],
@@ -149,11 +149,11 @@ gimp_perspective_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
 }
 
 static void
-gimp_perspective_tool_prepare (GimpTransformGridTool *tg_tool)
+ligma_perspective_tool_prepare (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
 
   tg_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tg_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
@@ -166,10 +166,10 @@ gimp_perspective_tool_prepare (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_perspective_tool_readjust (GimpTransformGridTool *tg_tool)
+ligma_perspective_tool_readjust (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (tg_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool  = LIGMA_TOOL (tg_tool);
+  LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
   gdouble           x;
   gdouble           y;
   gdouble           r;
@@ -177,36 +177,36 @@ gimp_perspective_tool_readjust (GimpTransformGridTool *tg_tool)
   x = shell->disp_width  / 2.0;
   y = shell->disp_height / 2.0;
   r = MAX (MIN (x, y) / G_SQRT2 -
-           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
-           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
+           LIGMA_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
+           LIGMA_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
 
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        x - r, y - r,
                                        &tg_tool->trans_info[X0],
                                        &tg_tool->trans_info[Y0]);
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        x + r, y - r,
                                        &tg_tool->trans_info[X1],
                                        &tg_tool->trans_info[Y1]);
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        x - r, y + r,
                                        &tg_tool->trans_info[X2],
                                        &tg_tool->trans_info[Y2]);
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        x + r, y + r,
                                        &tg_tool->trans_info[X3],
                                        &tg_tool->trans_info[Y3]);
 }
 
-static GimpToolWidget *
-gimp_perspective_tool_get_widget (GimpTransformGridTool *tg_tool)
+static LigmaToolWidget *
+ligma_perspective_tool_get_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
-  GimpToolWidget    *widget;
+  LigmaTool          *tool    = LIGMA_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaDisplayShell  *shell   = ligma_display_get_shell (tool->display);
+  LigmaToolWidget    *widget;
 
-  widget = gimp_tool_transform_grid_new (shell,
+  widget = ligma_tool_transform_grid_new (shell,
                                          &tr_tool->transform,
                                          tr_tool->x1,
                                          tr_tool->y1,
@@ -214,8 +214,8 @@ gimp_perspective_tool_get_widget (GimpTransformGridTool *tg_tool)
                                          tr_tool->y2);
 
   g_object_set (widget,
-                "inside-function",         GIMP_TRANSFORM_FUNCTION_PERSPECTIVE,
-                "outside-function",        GIMP_TRANSFORM_FUNCTION_PERSPECTIVE,
+                "inside-function",         LIGMA_TRANSFORM_FUNCTION_PERSPECTIVE,
+                "outside-function",        LIGMA_TRANSFORM_FUNCTION_PERSPECTIVE,
                 "use-perspective-handles", TRUE,
                 "use-center-handle",       TRUE,
                 NULL);
@@ -224,11 +224,11 @@ gimp_perspective_tool_get_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_perspective_tool_update_widget (GimpTransformGridTool *tg_tool)
+ligma_perspective_tool_update_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
 
   g_object_set (tg_tool->widget,
                 "x1", (gdouble) tr_tool->x1,
@@ -239,54 +239,54 @@ gimp_perspective_tool_update_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_perspective_tool_widget_changed (GimpTransformGridTool *tg_tool)
+ligma_perspective_tool_widget_changed (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpMatrix3       *transform;
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaMatrix3       *transform;
 
   g_object_get (tg_tool->widget,
                 "transform", &transform,
                 NULL);
 
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y1,
                                 &tg_tool->trans_info[X0],
                                 &tg_tool->trans_info[Y0]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y1,
                                 &tg_tool->trans_info[X1],
                                 &tg_tool->trans_info[Y1]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y2,
                                 &tg_tool->trans_info[X2],
                                 &tg_tool->trans_info[Y2]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y2,
                                 &tg_tool->trans_info[X3],
                                 &tg_tool->trans_info[Y3]);
 
   g_free (transform);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
 }
 
 static void
-gimp_perspective_tool_info_to_points (GimpGenericTransformTool *generic)
+ligma_perspective_tool_info_to_points (LigmaGenericTransformTool *generic)
 {
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
+  LigmaTransformTool     *tr_tool = LIGMA_TRANSFORM_TOOL (generic);
+  LigmaTransformGridTool *tg_tool = LIGMA_TRANSFORM_GRID_TOOL (generic);
 
-  generic->input_points[0]  = (GimpVector2) {tr_tool->x1, tr_tool->y1};
-  generic->input_points[1]  = (GimpVector2) {tr_tool->x2, tr_tool->y1};
-  generic->input_points[2]  = (GimpVector2) {tr_tool->x1, tr_tool->y2};
-  generic->input_points[3]  = (GimpVector2) {tr_tool->x2, tr_tool->y2};
+  generic->input_points[0]  = (LigmaVector2) {tr_tool->x1, tr_tool->y1};
+  generic->input_points[1]  = (LigmaVector2) {tr_tool->x2, tr_tool->y1};
+  generic->input_points[2]  = (LigmaVector2) {tr_tool->x1, tr_tool->y2};
+  generic->input_points[3]  = (LigmaVector2) {tr_tool->x2, tr_tool->y2};
 
-  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
+  generic->output_points[0] = (LigmaVector2) {tg_tool->trans_info[X0],
                                              tg_tool->trans_info[Y0]};
-  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
+  generic->output_points[1] = (LigmaVector2) {tg_tool->trans_info[X1],
                                              tg_tool->trans_info[Y1]};
-  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
+  generic->output_points[2] = (LigmaVector2) {tg_tool->trans_info[X2],
                                              tg_tool->trans_info[Y2]};
-  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
+  generic->output_points[3] = (LigmaVector2) {tg_tool->trans_info[X3],
                                              tg_tool->trans_info[Y3]};
 }

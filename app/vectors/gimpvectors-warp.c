@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors-warp.c
+ * ligmavectors-warp.c
  * Copyright (C) 2005 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,44 +25,44 @@
 
 #include "vectors-types.h"
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "core/gimp-utils.h"
-#include "core/gimpcoords.h"
+#include "core/ligma-utils.h"
+#include "core/ligmacoords.h"
 
-#include "gimpanchor.h"
-#include "gimpstroke.h"
-#include "gimpvectors.h"
-#include "gimpvectors-warp.h"
+#include "ligmaanchor.h"
+#include "ligmastroke.h"
+#include "ligmavectors.h"
+#include "ligmavectors-warp.h"
 
 
 #define EPSILON 0.2
 #define DX      2.0
 
 
-static void   gimp_stroke_warp_point   (GimpStroke  *stroke,
+static void   ligma_stroke_warp_point   (LigmaStroke  *stroke,
                                         gdouble      x,
                                         gdouble      y,
-                                        GimpCoords  *point_warped,
+                                        LigmaCoords  *point_warped,
                                         gdouble      y_offset,
                                         gdouble      x_len);
 
-static void   gimp_vectors_warp_stroke (GimpVectors *vectors,
-                                        GimpStroke  *stroke,
+static void   ligma_vectors_warp_stroke (LigmaVectors *vectors,
+                                        LigmaStroke  *stroke,
                                         gdouble      y_offset);
 
 
 void
-gimp_vectors_warp_point (GimpVectors *vectors,
-                         GimpCoords  *point,
-                         GimpCoords  *point_warped,
+ligma_vectors_warp_point (LigmaVectors *vectors,
+                         LigmaCoords  *point,
+                         LigmaCoords  *point_warped,
                          gdouble      y_offset)
 {
   gdouble     x      = point->x;
   gdouble     y      = point->y;
   gdouble     len;
   GList      *list;
-  GimpStroke *stroke;
+  LigmaStroke *stroke;
 
   for (list = vectors->strokes->head;
        list;
@@ -70,7 +70,7 @@ gimp_vectors_warp_point (GimpVectors *vectors,
     {
       stroke = list->data;
 
-      len = gimp_vectors_stroke_get_length (vectors, stroke);
+      len = ligma_vectors_stroke_get_length (vectors, stroke);
 
       if (x < len || ! list->next)
         break;
@@ -85,20 +85,20 @@ gimp_vectors_warp_point (GimpVectors *vectors,
       return;
     }
 
-  gimp_stroke_warp_point (stroke, x, y, point_warped, y_offset, len);
+  ligma_stroke_warp_point (stroke, x, y, point_warped, y_offset, len);
 }
 
 static void
-gimp_stroke_warp_point (GimpStroke *stroke,
+ligma_stroke_warp_point (LigmaStroke *stroke,
                         gdouble     x,
                         gdouble     y,
-                        GimpCoords *point_warped,
+                        LigmaCoords *point_warped,
                         gdouble     y_offset,
                         gdouble     x_len)
 {
-  GimpCoords point_zero  = { 0, };
-  GimpCoords point_minus = { 0, };
-  GimpCoords point_plus  = { 0, };
+  LigmaCoords point_zero  = { 0, };
+  LigmaCoords point_minus = { 0, };
+  LigmaCoords point_plus  = { 0, };
   gdouble    slope;
   gdouble    dx, dy, nx, ny, len;
 
@@ -106,7 +106,7 @@ gimp_stroke_warp_point (GimpStroke *stroke,
     {
       gdouble tx, ty;
 
-      if (! gimp_stroke_get_point_at_dist (stroke, x_len, EPSILON,
+      if (! ligma_stroke_get_point_at_dist (stroke, x_len, EPSILON,
                                            &point_zero, &slope))
         {
           point_warped->x = 0;
@@ -117,7 +117,7 @@ gimp_stroke_warp_point (GimpStroke *stroke,
       point_warped->x = point_zero.x;
       point_warped->y = point_zero.y;
 
-      if (! gimp_stroke_get_point_at_dist (stroke, x_len - DX, EPSILON,
+      if (! ligma_stroke_get_point_at_dist (stroke, x_len - DX, EPSILON,
                                            &point_minus, &slope))
         return;
 
@@ -141,7 +141,7 @@ gimp_stroke_warp_point (GimpStroke *stroke,
       return;
     }
 
-  if (! gimp_stroke_get_point_at_dist (stroke, x, EPSILON,
+  if (! ligma_stroke_get_point_at_dist (stroke, x, EPSILON,
                                        &point_zero, &slope))
     {
       point_warped->x = 0;
@@ -152,11 +152,11 @@ gimp_stroke_warp_point (GimpStroke *stroke,
   point_warped->x = point_zero.x;
   point_warped->y = point_zero.y;
 
-  if (! gimp_stroke_get_point_at_dist (stroke, x - DX, EPSILON,
+  if (! ligma_stroke_get_point_at_dist (stroke, x - DX, EPSILON,
                                        &point_minus, &slope))
     return;
 
-  if (! gimp_stroke_get_point_at_dist (stroke, x + DX, EPSILON,
+  if (! ligma_stroke_get_point_at_dist (stroke, x + DX, EPSILON,
                                        &point_plus, &slope))
     return;
 
@@ -176,25 +176,25 @@ gimp_stroke_warp_point (GimpStroke *stroke,
 }
 
 static void
-gimp_vectors_warp_stroke (GimpVectors *vectors,
-                          GimpStroke  *stroke,
+ligma_vectors_warp_stroke (LigmaVectors *vectors,
+                          LigmaStroke  *stroke,
                           gdouble      y_offset)
 {
   GList *list;
 
   for (list = stroke->anchors->head; list; list = g_list_next (list))
     {
-      GimpAnchor *anchor = list->data;
+      LigmaAnchor *anchor = list->data;
 
-      gimp_vectors_warp_point (vectors,
+      ligma_vectors_warp_point (vectors,
                                &anchor->position, &anchor->position,
                                y_offset);
     }
 }
 
 void
-gimp_vectors_warp_vectors (GimpVectors *vectors,
-                           GimpVectors *vectors_in,
+ligma_vectors_warp_vectors (LigmaVectors *vectors,
+                           LigmaVectors *vectors_in,
                            gdouble      y_offset)
 {
   GList *list;
@@ -203,8 +203,8 @@ gimp_vectors_warp_vectors (GimpVectors *vectors,
        list;
        list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_vectors_warp_stroke (vectors, stroke, y_offset);
+      ligma_vectors_warp_stroke (vectors, stroke, y_offset);
     }
 }

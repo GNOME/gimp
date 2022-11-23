@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -192,11 +192,11 @@ typedef struct
   {
     struct
     {
-      unsigned int magic1;   // FOURCC "GIMP"
+      unsigned int magic1;   // FOURCC "LIGMA"
       unsigned int magic2;   // FOURCC "-DDS"
       unsigned int version;
       unsigned int extra_fourcc;
-    } gimp_dds_special;
+    } ligma_dds_special;
     unsigned char pad[4 * 11];
   } reserved;
   dds_pixel_format_t pixelfmt;

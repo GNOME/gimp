@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpdynamics.h"
-#include "gimpdynamics-save.h"
+#include "ligmadynamics.h"
+#include "ligmadynamics-save.h"
 
 
 gboolean
-gimp_dynamics_save (GimpData       *data,
+ligma_dynamics_save (LigmaData       *data,
                     GOutputStream  *output,
                     GError        **error)
 {
-  g_return_val_if_fail (GIMP_IS_DYNAMICS (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DYNAMICS (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+  return ligma_config_serialize_to_stream (LIGMA_CONFIG (data),
                                           output,
-                                          "GIMP dynamics file",
-                                          "end of GIMP dynamics file",
+                                          "LIGMA dynamics file",
+                                          "end of LIGMA dynamics file",
                                           NULL, error);
 }

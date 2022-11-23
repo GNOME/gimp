@@ -1,7 +1,7 @@
-/*  gimprc-blurbs.h  --  descriptions for gimprc properties  */
+/*  ligmarc-blurbs.h  --  descriptions for ligmarc properties  */
 
-#ifndef __GIMP_RC_BLURBS_H__
-#define __GIMP_RC_BLURBS_H__
+#ifndef __LIGMA_RC_BLURBS_H__
+#define __LIGMA_RC_BLURBS_H__
 
 
 /*  Not all strings defined here are used in the user interface
@@ -41,7 +41,7 @@ _("Specifies whether to keep the canvas padding when \"View -> Show All\" " \
 _("Specifies how the area around the image should be drawn.")
 
 #define CHECK_UPDATES_BLURB \
-_("Check for availability of GIMP updates through background internet queries.")
+_("Check for availability of LIGMA updates through background internet queries.")
 
 #define CHECK_UPDATE_TIMESTAMP_BLURB \
 _("Timestamp of the last update check.")
@@ -151,8 +151,8 @@ _("The window type hint that is set on dock windows and the toolbox " \
 #define GFLARE_PATH_BLURB \
 "Where to search for gflares used by the GFlare plug-in."
 
-#define GIMPRESSIONIST_PATH_BLURB \
-"Where to search for data used by the Gimpressionist plug-in."
+#define LIGMARESSIONIST_PATH_BLURB \
+"Where to search for data used by the Ligmaressionist plug-in."
 
 #define GLOBAL_BRUSH_BLURB \
 _("When enabled, the selected brush will be used for all tools.")
@@ -276,10 +276,10 @@ _("Sets the level of interpolation used for scaling and other " \
 _("Specifies the language to use for the user interface.")
 
 #define LAST_KNOWN_RELEASE_BLURB \
-_("The last known release version of GIMP as queried from official website.")
+_("The last known release version of LIGMA as queried from official website.")
 
 #define CONFIG_VERSION_BLURB \
-_("The version of GIMP config files.")
+_("The version of LIGMA config files.")
 
 #define LAST_OPENED_SIZE_BLURB \
 _("How many recently opened image filenames to keep on the File menu.")
@@ -295,7 +295,7 @@ _("Speed of marching ants in the selection outline.  This value is in " \
   "milliseconds (less time indicates faster marching).")
 
 #define MAX_NEW_IMAGE_SIZE_BLURB  \
-_("GIMP will warn the user if an attempt is made to create an image that " \
+_("LIGMA will warn the user if an attempt is made to create an image that " \
   "would take more memory than the size specified here.")
 
 #define METADATA_ROTATION_POLICY_BLURB \
@@ -305,7 +305,7 @@ _("How to handle \"Orientation\" metadata when opening a file.")
 "Sets the module search path."
 
 #define MONITOR_RES_FROM_GDK_BLURB \
-"When enabled, GIMP will use the monitor resolution from the windowing system."
+"When enabled, LIGMA will use the monitor resolution from the windowing system."
 
 #define MONITOR_XRESOLUTION_BLURB \
 _("Sets the monitor's horizontal resolution, in dots per inch.  If set to " \
@@ -334,7 +334,7 @@ _("Sets the size of the navigation preview available in the lower right " \
   "corner of the image window.")
 
 #define NUM_PROCESSORS_BLURB \
-_("Sets how many threads GIMP should use for operations that support it.")
+_("Sets how many threads LIGMA should use for operations that support it.")
 
 #define PALETTE_PATH_BLURB \
 "Sets the palette search path."
@@ -356,12 +356,12 @@ _("Sets how many threads GIMP should use for operations that support it.")
 "Sets the pluginrc search path."
 
 #define LAYER_PREVIEWS_BLURB \
-_("Sets whether GIMP should create previews of layers and channels. " \
+_("Sets whether LIGMA should create previews of layers and channels. " \
   "Previews in the layers and channels dialog are nice to have but they " \
   "can slow things down when working with large images.")
 
 #define GROUP_LAYER_PREVIEWS_BLURB \
-_("Sets whether GIMP should create previews of layer groups. " \
+_("Sets whether LIGMA should create previews of layer groups. " \
   "Layer group previews are more expensive than ordinary layer previews.")
 
 #define LAYER_PREVIEW_SIZE_BLURB \
@@ -382,15 +382,15 @@ _("When enabled, the image window will automatically resize itself " \
   "effect in multi-window mode.")
 
 #define RESTORE_SESSION_BLURB \
-_("Let GIMP try to restore your last saved session on each startup.")
+_("Let LIGMA try to restore your last saved session on each startup.")
 
 #define RESTORE_MONITOR_BLURB \
-_("When enabled, GIMP will try to restore windows on the monitor they " \
+_("When enabled, LIGMA will try to restore windows on the monitor they " \
   "were open before.  When disabled, windows will appear on the currently " \
   "used monitor.")
 
 #define SAVE_DEVICE_STATUS_BLURB \
-_("Remember the current tool, pattern, color, and brush across GIMP " \
+_("Remember the current tool, pattern, color, and brush across LIGMA " \
   "sessions.")
 
 #define DEVICES_SHARE_TOOL_BLURB \
@@ -403,10 +403,10 @@ _("Keep a permanent record of all opened and saved files in the Recent " \
   "Documents list.")
 
 #define SAVE_SESSION_INFO_BLURB \
-_("Save the positions and sizes of the main dialogs when GIMP exits.")
+_("Save the positions and sizes of the main dialogs when LIGMA exits.")
 
 #define SAVE_TOOL_OPTIONS_BLURB \
-_("Save the tool options when GIMP exits.")
+_("Save the tool options when LIGMA exits.")
 
 #define SCRIPT_FU_PATH_BLURB \
 "This path will be searched for scripts when the Script-Fu plug-in is run."
@@ -474,7 +474,7 @@ _("When enabled, the sample points are visible by default. This can also be " \
 _("Show a tooltip when the pointer hovers over an item.")
 
 #define SINGLE_WINDOW_MODE_BLURB \
-_("Use GIMP in a single-window mode.")
+_("Use LIGMA in a single-window mode.")
 
 #define HIDE_DOCKS_BLURB \
 _("Hide docks and other windows, leaving only image windows.")
@@ -507,10 +507,10 @@ _("What to do when the space bar is pressed in the image window.")
 _("The compression method used for tile data stored in the swap file.")
 
 #define SWAP_PATH_BLURB \
-_("Sets the swap file location. GIMP uses a tile based memory allocation " \
+_("Sets the swap file location. LIGMA uses a tile based memory allocation " \
   "scheme. The swap file is used to quickly and easily swap tiles out to " \
   "disk and back in. Be aware that the swap file can easily get very large " \
-  "if GIMP is used with large images. " \
+  "if LIGMA is used with large images. " \
   "Also, things can get horribly slow if the swap file is created on " \
   "a folder that is mounted over NFS.  For these reasons, it may be " \
   "desirable to put your swap file in \"/tmp\".")
@@ -520,15 +520,15 @@ _("When enabled, you can change keyboard shortcuts for menu items " \
   "by hitting a key combination while the menu item is highlighted.")
 
 #define SAVE_ACCELS_BLURB \
-_("Save changed keyboard shortcuts when GIMP exits.")
+_("Save changed keyboard shortcuts when LIGMA exits.")
 
 #define RESTORE_ACCELS_BLURB \
-_("Restore saved keyboard shortcuts on each GIMP startup.")
+_("Restore saved keyboard shortcuts on each LIGMA startup.")
 
 #define TEMP_PATH_BLURB \
 _("Sets the folder for temporary storage. Files will appear here " \
-  "during the course of running GIMP.  Most files will disappear " \
-  "when GIMP exits, but some files are likely to remain, so it " \
+  "during the course of running LIGMA.  Most files will disappear " \
+  "when LIGMA exits, but some files are likely to remain, so it " \
   "is best if this folder not be one that is shared by other users.")
 
 #define THEME_BLURB \
@@ -702,7 +702,7 @@ _("The thumbnail in the Open dialog will be automatically updated " \
   "if the file being previewed is smaller than the size set here.")
 
 #define TILE_CACHE_SIZE_BLURB \
-_("When the amount of pixel data exceeds this limit, GIMP will start to " \
+_("When the amount of pixel data exceeds this limit, LIGMA will start to " \
   "swap tiles to disk.  This is a lot slower but it makes it possible to " \
   "work on images that wouldn't fit into memory otherwise.  If you have a " \
   "lot of RAM, you may want to set this to a higher value.")
@@ -720,7 +720,7 @@ _("Use a single toolbox button for grouped tools.")
 _("Show the currently active image in the toolbox.")
 
 #define TOOLBOX_WILBER_BLURB \
-_("Show the GIMP mascot at the top of the toolbox.")
+_("Show the LIGMA mascot at the top of the toolbox.")
 
 #define TRANSPARENCY_CUSTOM_COLOR1_BLURB \
 _("The first color to use in the transparency checkerboard, " \
@@ -737,7 +737,7 @@ _("Sets the manner in which transparency is displayed in images.")
 _("Sets the size of the checkerboard used to display transparency.")
 
 #define TRUST_DIRTY_FLAG_BLURB \
-_("When enabled, GIMP will not save an image if it has not been changed " \
+_("When enabled, LIGMA will not save an image if it has not been changed " \
   "since it was opened.")
 
 #define UNDO_LEVELS_BLURB \
@@ -780,4 +780,4 @@ _("When enabled, a search of actions will also return inactive actions.")
 _("The maximum number of actions saved in history.")
 
 
-#endif  /* __GIMP_RC_BLURBS_H__ */
+#endif  /* __LIGMA_RC_BLURBS_H__ */

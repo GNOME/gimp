@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -29,7 +29,7 @@
 #include "imap_menu.h"
 #include "imap_object_popup.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 void
 object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)

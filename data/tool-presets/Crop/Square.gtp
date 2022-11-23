@@ -1,15 +1,15 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-crop")
+(icon-name "ligma-tool-crop")
 (name "Square")
-(tool-options "GimpCropOptions"
+(tool-options "LigmaCropOptions"
     (desired-fixed-size-height 400.000000)
     (desired-fixed-size-width 400.000000)
     (desired-fixed-width 400.000000)
     (fixed-rule-active yes)
     (overridden-fixed-aspect yes)
     (overridden-fixed-size yes)
-    (tool "gimp-crop-tool"))
+    (tool "ligma-crop-tool"))
 (use-fg-bg no)
 (use-brush no)
 (use-dynamics no)
@@ -19,4 +19,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

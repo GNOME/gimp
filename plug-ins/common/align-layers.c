@@ -20,14 +20,14 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define PLUG_IN_PROC   "plug-in-align-layers"
 #define PLUG_IN_BINARY "align-layers"
-#define PLUG_IN_ROLE   "gimp-align-layers"
+#define PLUG_IN_ROLE   "ligma-align-layers"
 
 enum
 {
@@ -75,12 +75,12 @@ typedef struct _AlignLayersClass AlignLayersClass;
 
 struct _AlignLayers
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _AlignLayersClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -89,48 +89,48 @@ struct _AlignLayersClass
 
 GType                   align_layers_get_type               (void) G_GNUC_CONST;
 
-static GList          * align_layers_query_procedures       (GimpPlugIn           *plug_in);
-static GimpProcedure  * align_layers_create_procedure       (GimpPlugIn           *plug_in,
+static GList          * align_layers_query_procedures       (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * align_layers_create_procedure       (LigmaPlugIn           *plug_in,
                                                              const gchar          *name);
 
-static GimpValueArray * align_layers_run                    (GimpProcedure        *procedure,
-                                                             GimpRunMode           run_mode,
-                                                             GimpImage            *image,
+static LigmaValueArray * align_layers_run                    (LigmaProcedure        *procedure,
+                                                             LigmaRunMode           run_mode,
+                                                             LigmaImage            *image,
                                                              gint                  n_drawables,
-                                                             GimpDrawable        **drawables,
-                                                             const GimpValueArray *args,
+                                                             LigmaDrawable        **drawables,
+                                                             const LigmaValueArray *args,
                                                              gpointer              run_data);
 
 
 /* Main function */
-static GimpPDBStatusType align_layers                       (GimpImage            *image);
+static LigmaPDBStatusType align_layers                       (LigmaImage            *image);
 
 /* Helpers and internal functions */
 static gint             align_layers_count_visibles_layers  (GList                *layers);
-static GimpLayer      * align_layers_find_last_layer        (GList                *layers,
+static LigmaLayer      * align_layers_find_last_layer        (GList                *layers,
                                                              gboolean             *found);
 static gint             align_layers_spread_visibles_layers (GList                *layers,
-                                                             GimpLayer           **layers_array);
-static GimpLayer     ** align_layers_spread_image           (GimpImage            *image,
+                                                             LigmaLayer           **layers_array);
+static LigmaLayer     ** align_layers_spread_image           (LigmaImage            *image,
                                                              gint                 *layer_num);
-static GimpLayer      * align_layers_find_background        (GimpImage            *image);
-static AlignData        align_layers_gather_data            (GimpLayer           **layers,
+static LigmaLayer      * align_layers_find_background        (LigmaImage            *image);
+static AlignData        align_layers_gather_data            (LigmaLayer           **layers,
                                                              gint                  layer_num,
-                                                             GimpLayer            *background);
-static void             align_layers_perform_alignment      (GimpLayer           **layers,
+                                                             LigmaLayer            *background);
+static void             align_layers_perform_alignment      (LigmaLayer           **layers,
                                                              gint                  layer_num,
                                                              AlignData             data);
-static void             align_layers_get_align_offsets      (GimpDrawable         *drawable,
+static void             align_layers_get_align_offsets      (LigmaDrawable         *drawable,
                                                              gint                 *x,
                                                              gint                 *y);
 static gint             align_layers_dialog                 (void);
-static void             align_layers_scale_entry_update_int (GimpLabelSpin        *entry,
+static void             align_layers_scale_entry_update_int (LigmaLabelSpin        *entry,
                                                              gint                 *value);
 
 
-G_DEFINE_TYPE (AlignLayers, align_layers, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (AlignLayers, align_layers, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (ALIGN_LAYERS_TYPE)
+LIGMA_MAIN (ALIGN_LAYERS_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -160,7 +160,7 @@ static ValueType VALS =
 static void
 align_layers_class_init (AlignLayersClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = align_layers_query_procedures;
   plug_in_class->create_procedure = align_layers_create_procedure;
@@ -173,37 +173,37 @@ align_layers_init (AlignLayers *film)
 }
 
 static GList *
-align_layers_query_procedures (GimpPlugIn *plug_in)
+align_layers_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-align_layers_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+align_layers_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             align_layers_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("Align Visi_ble Layers..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Arrange");
+      ligma_procedure_set_menu_label (procedure, _("Align Visi_ble Layers..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Image/Arrange");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Align all visible layers of the image"),
                                         "Align visible layers",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Shuji Narazaki <narazaki@InetQ.or.jp>",
                                       "Shuji Narazaki",
                                       "1997");
@@ -214,12 +214,12 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
        * them.
        */
       /*
-      GIMP_PROC_ARG_BOOLEAN (procedure,
+      LIGMA_PROC_ARG_BOOLEAN (procedure,
                              "link-after-alignment",
                              "Link the visible layers after alignment",
                              FALSE,
                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_BOOLEAN (procedure,
+      LIGMA_PROC_ARG_BOOLEAN (procedure,
                              "use-bottom",
                              "use the bottom layer as the base of alignment",
                              TRUE,
@@ -230,25 +230,25 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-align_layers_run (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
-                  GimpImage            *image,
+static LigmaValueArray *
+align_layers_run (LigmaProcedure        *procedure,
+                  LigmaRunMode           run_mode,
+                  LigmaImage            *image,
                   gint                  n_drawables,
-                  GimpDrawable        **drawables,
-                  const GimpValueArray *args,
+                  LigmaDrawable        **drawables,
+                  const LigmaValueArray *args,
                   gpointer              run_data)
 {
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  LigmaValueArray    *return_vals = NULL;
+  LigmaPDBStatusType  status = LIGMA_PDB_EXECUTION_ERROR;
   GError            *error  = NULL;
   GList             *layers;
   gint               layer_num;
 
   switch ( run_mode )
     {
-    case GIMP_RUN_INTERACTIVE:
-      layers = gimp_image_list_layers (image);
+    case LIGMA_RUN_INTERACTIVE:
+      layers = ligma_image_list_layers (image);
       layer_num = align_layers_count_visibles_layers (layers);
       g_list_free (layers);
       if (layer_num < 2)
@@ -257,32 +257,32 @@ align_layers_run (GimpProcedure        *procedure,
                                        _("There are not enough layers to align."));
           break;
         }
-      gimp_get_data (PLUG_IN_PROC, &VALS);
+      ligma_get_data (PLUG_IN_PROC, &VALS);
       VALS.grid_size = MAX (VALS.grid_size, 1);
       if (! align_layers_dialog ())
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
-  if (status != GIMP_PDB_CANCEL)
+  if (status != LIGMA_PDB_CANCEL)
     {
       status = align_layers (image);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
+  if (run_mode == LIGMA_RUN_INTERACTIVE && status == LIGMA_PDB_SUCCESS)
+    ligma_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
 
-  return_vals = gimp_procedure_new_return_values (procedure, status,
+  return_vals = ligma_procedure_new_return_values (procedure, status,
                                                   error);
 
   return return_vals;
@@ -291,19 +291,19 @@ align_layers_run (GimpProcedure        *procedure,
 /*
  * Main function
  */
-static GimpPDBStatusType
-align_layers (GimpImage *image)
+static LigmaPDBStatusType
+align_layers (LigmaImage *image)
 {
   gint       layer_num  = 0;
-  GimpLayer  **layers     = NULL;
-  GimpLayer   *background = 0;
+  LigmaLayer  **layers     = NULL;
+  LigmaLayer   *background = 0;
   AlignData  data;
 
   layers = align_layers_spread_image (image, &layer_num);
   if (layer_num < 2)
     {
       g_free (layers);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   background = align_layers_find_background (image);
@@ -318,24 +318,24 @@ align_layers (GimpImage *image)
                                    layer_num,
                                    background);
 
-  gimp_image_undo_group_start (image);
+  ligma_image_undo_group_start (image);
 
   align_layers_perform_alignment (layers,
                                   layer_num,
                                   data);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   g_free (layers);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 /*
  * Find the bottommost layer, visible or not
  * The image must contain at least one layer.
  */
-static GimpLayer *
+static LigmaLayer *
 align_layers_find_last_layer (GList    *layers,
                               gboolean *found)
 {
@@ -343,24 +343,24 @@ align_layers_find_last_layer (GList    *layers,
 
   for (; last; last = last->prev)
     {
-      GimpItem *item = last->data;
+      LigmaItem *item = last->data;
 
-      if (gimp_item_is_group (item))
+      if (ligma_item_is_group (item))
         {
           GList     *children;
-          GimpLayer *last_layer;
+          LigmaLayer *last_layer;
 
-          children = gimp_item_list_children (item);
+          children = ligma_item_list_children (item);
           last_layer = align_layers_find_last_layer (children,
                                                      found);
           g_list_free (children);
           if (*found)
             return last_layer;
         }
-      else if (gimp_item_is_layer (item))
+      else if (ligma_item_is_layer (item))
         {
           *found = TRUE;
-          return GIMP_LAYER (item);
+          return LIGMA_LAYER (item);
         }
     }
 
@@ -371,14 +371,14 @@ align_layers_find_last_layer (GList    *layers,
 /*
  * Return the bottom layer.
  */
-static GimpLayer *
-align_layers_find_background (GimpImage *image)
+static LigmaLayer *
+align_layers_find_background (LigmaImage *image)
 {
   GList     *layers;
-  GimpLayer *background;
+  LigmaLayer *background;
   gboolean   found = FALSE;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   background = align_layers_find_last_layer (layers, &found);
   g_list_free (layers);
 
@@ -391,29 +391,29 @@ align_layers_find_background (GimpImage *image)
  */
 static gint
 align_layers_spread_visibles_layers (GList      *layers,
-                                     GimpLayer **layers_array)
+                                     LigmaLayer **layers_array)
 {
   GList *iter;
   gint   index = 0;
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
 
-      if (gimp_item_get_visible (item))
+      if (ligma_item_get_visible (item))
         {
-          if (gimp_item_is_group (item))
+          if (ligma_item_is_group (item))
             {
               GList *children;
 
-              children = gimp_item_list_children (item);
+              children = ligma_item_list_children (item);
               index += align_layers_spread_visibles_layers (children,
                                                             &(layers_array[index]));
               g_list_free (children);
             }
-          else if (gimp_item_is_layer (item))
+          else if (ligma_item_is_layer (item))
             {
-              layers_array[index] = GIMP_LAYER (item);
+              layers_array[index] = LIGMA_LAYER (item);
               index++;
             }
         }
@@ -425,17 +425,17 @@ align_layers_spread_visibles_layers (GList      *layers,
 /*
  * Return a contiguous array of all visible layers
  */
-static GimpLayer **
-align_layers_spread_image (GimpImage *image,
+static LigmaLayer **
+align_layers_spread_image (LigmaImage *image,
                            gint      *layer_num)
 {
   GList      *layers;
-  GimpLayer **layers_array;
+  LigmaLayer **layers_array;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   *layer_num = align_layers_count_visibles_layers (layers);
 
-  layers_array = g_malloc (sizeof (GimpLayer *) * *layer_num);
+  layers_array = g_malloc (sizeof (LigmaLayer *) * *layer_num);
 
   align_layers_spread_visibles_layers (layers,
                                        layers_array);
@@ -452,19 +452,19 @@ align_layers_count_visibles_layers (GList *layers)
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
 
-      if (gimp_item_get_visible (item))
+      if (ligma_item_get_visible (item))
         {
-          if (gimp_item_is_group (item))
+          if (ligma_item_is_group (item))
             {
               GList *children;
 
-              children = gimp_item_list_children (item);
+              children = ligma_item_list_children (item);
               count += align_layers_count_visibles_layers (children);
               g_list_free (children);
             }
-          else if (gimp_item_is_layer (item))
+          else if (ligma_item_is_layer (item))
             {
               count += 1;
             }
@@ -475,9 +475,9 @@ align_layers_count_visibles_layers (GList *layers)
 }
 
 static AlignData
-align_layers_gather_data (GimpLayer **layers,
+align_layers_gather_data (LigmaLayer **layers,
                           gint        layer_num,
-                          GimpLayer  *background)
+                          LigmaLayer  *background)
 {
   AlignData data;
   gint   min_x = G_MAXINT;
@@ -498,9 +498,9 @@ align_layers_gather_data (GimpLayer **layers,
   /* 0 is the top layer */
   for (index = 0; index < layer_num; index++)
     {
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
+      ligma_drawable_get_offsets (LIGMA_DRAWABLE (layers[index]), &orig_x, &orig_y);
 
-      align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
+      align_layers_get_align_offsets (LIGMA_DRAWABLE (layers[index]),
                                       &offset_x,
                                       &offset_y);
       orig_x += offset_x;
@@ -514,9 +514,9 @@ align_layers_gather_data (GimpLayer **layers,
 
   if (VALS.base_is_bottom_layer)
     {
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (background), &orig_x, &orig_y);
+      ligma_drawable_get_offsets (LIGMA_DRAWABLE (background), &orig_x, &orig_y);
 
-      align_layers_get_align_offsets (GIMP_DRAWABLE (background),
+      align_layers_get_align_offsets (LIGMA_DRAWABLE (background),
                                       &offset_x,
                                       &offset_y);
       orig_x += offset_x;
@@ -545,7 +545,7 @@ align_layers_gather_data (GimpLayer **layers,
  * according to data.
  */
 static void
-align_layers_perform_alignment (GimpLayer **layers,
+align_layers_perform_alignment (LigmaLayer **layers,
                                 gint        layer_num,
                                 AlignData   data)
 {
@@ -560,9 +560,9 @@ align_layers_perform_alignment (GimpLayer **layers,
       gint offset_x;
       gint offset_y;
 
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (layers[index]), &orig_x, &orig_y);
+      ligma_drawable_get_offsets (LIGMA_DRAWABLE (layers[index]), &orig_x, &orig_y);
 
-      align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
+      align_layers_get_align_offsets (LIGMA_DRAWABLE (layers[index]),
                                       &offset_x,
                                       &offset_y);
       switch (VALS.h_style)
@@ -607,17 +607,17 @@ align_layers_perform_alignment (GimpLayer **layers,
           break;
         }
 
-      gimp_layer_set_offsets (layers[index], x, y);
+      ligma_layer_set_offsets (layers[index], x, y);
     }
 }
 
 static void
-align_layers_get_align_offsets (GimpDrawable *drawable,
+align_layers_get_align_offsets (LigmaDrawable *drawable,
                                 gint         *x,
                                 gint         *y)
 {
-  gint width  = gimp_drawable_get_width  (drawable);
-  gint height = gimp_drawable_get_height (drawable);
+  gint width  = ligma_drawable_get_width  (drawable);
+  gint height = ligma_drawable_get_height (drawable);
 
   switch (VALS.h_base)
     {
@@ -662,23 +662,23 @@ align_layers_dialog (void)
   GtkWidget *scale;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Align Visible Layers"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -688,68 +688,68 @@ align_layers_dialog (void)
                       grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  combo = gimp_int_combo_box_new (C_("align-style", "None"), H_NONE,
+  combo = ligma_int_combo_box_new (C_("align-style", "None"), H_NONE,
                                   _("Collect"),              H_COLLECT,
                                   _("Fill (left to right)"), LEFT2RIGHT,
                                   _("Fill (right to left)"), RIGHT2LEFT,
                                   _("Snap to grid"),         SNAP2HGRID,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_style);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), VALS.h_style);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &VALS.h_style);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Horizontal style:"), 0.0, 0.5,
                             combo, 2);
 
 
-  combo = gimp_int_combo_box_new (_("Left edge"),  H_BASE_LEFT,
+  combo = ligma_int_combo_box_new (_("Left edge"),  H_BASE_LEFT,
                                   _("Center"),     H_BASE_CENTER,
                                   _("Right edge"), H_BASE_RIGHT,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_base);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), VALS.h_base);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &VALS.h_base);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Ho_rizontal base:"), 0.0, 0.5,
                             combo, 2);
 
-  combo = gimp_int_combo_box_new (C_("align-style", "None"), V_NONE,
+  combo = ligma_int_combo_box_new (C_("align-style", "None"), V_NONE,
                                   _("Collect"),              V_COLLECT,
                                   _("Fill (top to bottom)"), TOP2BOTTOM,
                                   _("Fill (bottom to top)"), BOTTOM2TOP,
                                   _("Snap to grid"),         SNAP2VGRID,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_style);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), VALS.v_style);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &VALS.v_style);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Vertical style:"), 0.0, 0.5,
                             combo, 2);
 
-  combo = gimp_int_combo_box_new (_("Top edge"),    V_BASE_TOP,
+  combo = ligma_int_combo_box_new (_("Top edge"),    V_BASE_TOP,
                                   _("Center"),      V_BASE_CENTER,
                                   _("Bottom edge"), V_BASE_BOTTOM,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_base);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), VALS.v_base);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &VALS.v_base);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("Ver_tical base:"), 0.0, 0.5,
                             combo, 2);
 
-  scale = gimp_scale_entry_new (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
+  scale = ligma_scale_entry_new (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (align_layers_scale_entry_update_int),
                     &VALS.grid_size);
@@ -763,7 +763,7 @@ align_layers_dialog (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &VALS.ignore_bottom);
 
   toggle = gtk_check_button_new_with_mnemonic
@@ -774,12 +774,12 @@ align_layers_dialog (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &VALS.base_is_bottom_layer);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -787,8 +787,8 @@ align_layers_dialog (void)
 }
 
 static void
-align_layers_scale_entry_update_int (GimpLabelSpin *entry,
+align_layers_scale_entry_update_int (LigmaLabelSpin *entry,
                                      gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }

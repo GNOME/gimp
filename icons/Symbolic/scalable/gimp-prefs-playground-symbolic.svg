@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-prefs-playground.svg">
+   sodipodi:docname="ligma-prefs-playground.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -186,7 +186,7 @@
     <g
        style="display:inline;opacity:1;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-opacity:1"
        transform="translate(219.43309,-842.85104)"
-       id="gimp-prefs-playground">
+       id="ligma-prefs-playground">
       <path
          style="opacity:1;fill:url(#linearGradient8240);fill-opacity:1;stroke:url(#linearGradient8252);stroke-width:0.94302762;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path4371"

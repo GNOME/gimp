@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdevicemanager.h
+ * ligmadevicemanager.h
  * Copyright (C) 2011 Michael Natterer
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,50 +18,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_MANAGER_H__
-#define __GIMP_DEVICE_MANAGER_H__
+#ifndef __LIGMA_DEVICE_MANAGER_H__
+#define __LIGMA_DEVICE_MANAGER_H__
 
 
-#include "core/gimplist.h"
+#include "core/ligmalist.h"
 
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_DEVICE_MANAGER            (gimp_device_manager_get_type ())
-#define GIMP_DEVICE_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_MANAGER, GimpDeviceManager))
-#define GIMP_DEVICE_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_MANAGER, GimpDeviceManagerClass))
-#define GIMP_IS_DEVICE_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DEVICE_MANAGER))
-#define GIMP_IS_DEVICE_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DEVICE_MANAGER))
-#define GIMP_DEVICE_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_MANAGER, GimpDeviceManagerClass))
+#define LIGMA_TYPE_DEVICE_MANAGER            (ligma_device_manager_get_type ())
+#define LIGMA_DEVICE_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DEVICE_MANAGER, LigmaDeviceManager))
+#define LIGMA_DEVICE_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DEVICE_MANAGER, LigmaDeviceManagerClass))
+#define LIGMA_IS_DEVICE_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DEVICE_MANAGER))
+#define LIGMA_IS_DEVICE_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DEVICE_MANAGER))
+#define LIGMA_DEVICE_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DEVICE_MANAGER, LigmaDeviceManagerClass))
 
 
-typedef struct _GimpDeviceManagerPrivate GimpDeviceManagerPrivate;
-typedef struct _GimpDeviceManagerClass   GimpDeviceManagerClass;
+typedef struct _LigmaDeviceManagerPrivate LigmaDeviceManagerPrivate;
+typedef struct _LigmaDeviceManagerClass   LigmaDeviceManagerClass;
 
-struct _GimpDeviceManager
+struct _LigmaDeviceManager
 {
-  GimpList                  parent_instance;
+  LigmaList                  parent_instance;
 
-  GimpDeviceManagerPrivate *priv;
+  LigmaDeviceManagerPrivate *priv;
 };
 
-struct _GimpDeviceManagerClass
+struct _LigmaDeviceManagerClass
 {
-  GimpListClass  parent_class;
+  LigmaListClass  parent_class;
 };
 
 
-GType               gimp_device_manager_get_type           (void) G_GNUC_CONST;
+GType               ligma_device_manager_get_type           (void) G_GNUC_CONST;
 
-GimpDeviceManager * gimp_device_manager_new                (Gimp *gimp);
+LigmaDeviceManager * ligma_device_manager_new                (Ligma *ligma);
 
-GimpDeviceInfo    * gimp_device_manager_get_current_device (GimpDeviceManager *manager);
-void                gimp_device_manager_set_current_device (GimpDeviceManager *manager,
-                                                            GimpDeviceInfo    *info);
+LigmaDeviceInfo    * ligma_device_manager_get_current_device (LigmaDeviceManager *manager);
+void                ligma_device_manager_set_current_device (LigmaDeviceManager *manager,
+                                                            LigmaDeviceInfo    *info);
 
-void                gimp_device_manager_reset              (GimpDeviceManager *manager);
+void                ligma_device_manager_reset              (LigmaDeviceManager *manager);
 
 G_END_DECLS
 
-#endif /* __GIMP_DEVICE_MANAGER_H__ */
+#endif /* __LIGMA_DEVICE_MANAGER_H__ */

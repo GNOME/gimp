@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbuffersourcebox.c
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * ligmabuffersourcebox.c
+ * Copyright (C) 2015 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,20 +25,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimppickable.h"
+#include "core/ligmacontext.h"
+#include "core/ligmapickable.h"
 
-#include "gimpbuffersourcebox.h"
-#include "gimppickablebutton.h"
+#include "ligmabuffersourcebox.h"
+#include "ligmapickablebutton.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -51,12 +51,12 @@ enum
   PROP_ENABLED
 };
 
-struct _GimpBufferSourceBoxPrivate
+struct _LigmaBufferSourceBoxPrivate
 {
-  GimpContext  *context;
+  LigmaContext  *context;
   GeglNode     *source_node;
   gchar        *name;
-  GimpPickable *pickable;
+  LigmaPickable *pickable;
   gboolean      enabled;
 
   GtkWidget    *toggle;
@@ -65,75 +65,75 @@ struct _GimpBufferSourceBoxPrivate
 };
 
 
-static void   gimp_buffer_source_box_constructed     (GObject             *object);
-static void   gimp_buffer_source_box_finalize        (GObject             *object);
-static void   gimp_buffer_source_box_set_property    (GObject             *object,
+static void   ligma_buffer_source_box_constructed     (GObject             *object);
+static void   ligma_buffer_source_box_finalize        (GObject             *object);
+static void   ligma_buffer_source_box_set_property    (GObject             *object,
                                                       guint                property_id,
                                                       const GValue        *value,
                                                       GParamSpec          *pspec);
-static void   gimp_buffer_source_box_get_property    (GObject             *object,
+static void   ligma_buffer_source_box_get_property    (GObject             *object,
                                                       guint                property_id,
                                                       GValue              *value,
                                                       GParamSpec          *pspec);
 
-static void   gimp_buffer_source_box_notify_pickable (GimpPickableButton  *button,
+static void   ligma_buffer_source_box_notify_pickable (LigmaPickableButton  *button,
                                                       const GParamSpec    *pspec,
-                                                      GimpBufferSourceBox *box);
-static void   gimp_buffer_source_box_enable_toggled  (GtkToggleButton     *button,
-                                                      GimpBufferSourceBox *box);
+                                                      LigmaBufferSourceBox *box);
+static void   ligma_buffer_source_box_enable_toggled  (GtkToggleButton     *button,
+                                                      LigmaBufferSourceBox *box);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBufferSourceBox, gimp_buffer_source_box,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaBufferSourceBox, ligma_buffer_source_box,
                             GTK_TYPE_BOX)
 
-#define parent_class gimp_buffer_source_box_parent_class
+#define parent_class ligma_buffer_source_box_parent_class
 
 
 static void
-gimp_buffer_source_box_class_init (GimpBufferSourceBoxClass *klass)
+ligma_buffer_source_box_class_init (LigmaBufferSourceBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_buffer_source_box_constructed;
-  object_class->finalize     = gimp_buffer_source_box_finalize;
-  object_class->set_property = gimp_buffer_source_box_set_property;
-  object_class->get_property = gimp_buffer_source_box_get_property;
+  object_class->constructed  = ligma_buffer_source_box_constructed;
+  object_class->finalize     = ligma_buffer_source_box_finalize;
+  object_class->set_property = ligma_buffer_source_box_set_property;
+  object_class->get_property = ligma_buffer_source_box_get_property;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SOURCE_NODE,
                                    g_param_spec_object ("source-node", NULL, NULL,
                                                         GEGL_TYPE_NODE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PICKABLE,
                                    g_param_spec_object ("pickable", NULL, NULL,
-                                                        GIMP_TYPE_PICKABLE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_PICKABLE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled", NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_buffer_source_box_init (GimpBufferSourceBox *box)
+ligma_buffer_source_box_init (LigmaBufferSourceBox *box)
 {
-  box->priv = gimp_buffer_source_box_get_instance_private (box);
+  box->priv = ligma_buffer_source_box_get_instance_private (box);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -141,9 +141,9 @@ gimp_buffer_source_box_init (GimpBufferSourceBox *box)
 }
 
 static void
-gimp_buffer_source_box_constructed (GObject *object)
+ligma_buffer_source_box_constructed (GObject *object)
 {
-  GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
+  LigmaBufferSourceBox *box = LIGMA_BUFFER_SOURCE_BOX (object);
 
   box->priv->toggle = gtk_check_button_new_with_mnemonic (box->priv->name);
   gtk_widget_set_valign (box->priv->toggle, GTK_ALIGN_CENTER);
@@ -153,12 +153,12 @@ gimp_buffer_source_box_constructed (GObject *object)
   gtk_widget_show (box->priv->toggle);
 
   g_signal_connect_object (box->priv->toggle, "toggled",
-                           G_CALLBACK (gimp_buffer_source_box_enable_toggled),
+                           G_CALLBACK (ligma_buffer_source_box_enable_toggled),
                            box, 0);
 
-  box->priv->button = gimp_pickable_button_new (box->priv->context,
-                                                GIMP_VIEW_SIZE_LARGE, 1);
-  gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (box->priv->button),
+  box->priv->button = ligma_pickable_button_new (box->priv->context,
+                                                LIGMA_VIEW_SIZE_LARGE, 1);
+  ligma_pickable_button_set_pickable (LIGMA_PICKABLE_BUTTON (box->priv->button),
                                      box->priv->pickable);
   gtk_box_pack_start (GTK_BOX (box), box->priv->button, FALSE, FALSE, 0);
   gtk_widget_show (box->priv->button);
@@ -170,16 +170,16 @@ gimp_buffer_source_box_constructed (GObject *object)
   gtk_widget_show (box->priv->label);
 
   g_signal_connect_object (box->priv->button, "notify::pickable",
-                           G_CALLBACK (gimp_buffer_source_box_notify_pickable),
+                           G_CALLBACK (ligma_buffer_source_box_notify_pickable),
                            box, 0);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
-gimp_buffer_source_box_finalize (GObject *object)
+ligma_buffer_source_box_finalize (GObject *object)
 {
-  GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
+  LigmaBufferSourceBox *box = LIGMA_BUFFER_SOURCE_BOX (object);
 
   g_clear_object (&box->priv->context);
   g_clear_object (&box->priv->source_node);
@@ -189,12 +189,12 @@ gimp_buffer_source_box_finalize (GObject *object)
 }
 
 static void
-gimp_buffer_source_box_set_property (GObject      *object,
+ligma_buffer_source_box_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
+  LigmaBufferSourceBox *box = LIGMA_BUFFER_SOURCE_BOX (object);
 
   switch (property_id)
     {
@@ -213,7 +213,7 @@ gimp_buffer_source_box_set_property (GObject      *object,
     case PROP_PICKABLE:
       box->priv->pickable = g_value_get_object (value);
       if (box->priv->button)
-        gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (box->priv->button),
+        ligma_pickable_button_set_pickable (LIGMA_PICKABLE_BUTTON (box->priv->button),
                                            box->priv->pickable);
       break;
 
@@ -231,12 +231,12 @@ gimp_buffer_source_box_set_property (GObject      *object,
 }
 
 static void
-gimp_buffer_source_box_get_property (GObject    *object,
+ligma_buffer_source_box_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
+  LigmaBufferSourceBox *box = LIGMA_BUFFER_SOURCE_BOX (object);
 
   switch (property_id)
     {
@@ -267,7 +267,7 @@ gimp_buffer_source_box_get_property (GObject    *object,
 }
 
 static void
-gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
+ligma_buffer_source_box_update_node (LigmaBufferSourceBox *box)
 {
   GeglBuffer *buffer = NULL;
 
@@ -277,16 +277,16 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
 
       if (box->priv->enabled)
         {
-          gimp_pickable_flush (box->priv->pickable);
+          ligma_pickable_flush (box->priv->pickable);
 
           /* dup the buffer, since the original may be modified while applying
            * the operation.  see issue #1283.
            */
-          buffer = gimp_gegl_buffer_dup (
-            gimp_pickable_get_buffer (box->priv->pickable));
+          buffer = ligma_gegl_buffer_dup (
+            ligma_pickable_get_buffer (box->priv->pickable));
         }
 
-      desc = gimp_viewable_get_description (GIMP_VIEWABLE (box->priv->pickable),
+      desc = ligma_viewable_get_description (LIGMA_VIEWABLE (box->priv->pickable),
                                             NULL);
       gtk_label_set_text (GTK_LABEL (box->priv->label), desc);
       g_free (desc);
@@ -304,24 +304,24 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
 }
 
 static void
-gimp_buffer_source_box_notify_pickable (GimpPickableButton  *button,
+ligma_buffer_source_box_notify_pickable (LigmaPickableButton  *button,
                                         const GParamSpec    *pspec,
-                                        GimpBufferSourceBox *box)
+                                        LigmaBufferSourceBox *box)
 {
-  box->priv->pickable = gimp_pickable_button_get_pickable (button);
+  box->priv->pickable = ligma_pickable_button_get_pickable (button);
 
-  gimp_buffer_source_box_update_node (box);
+  ligma_buffer_source_box_update_node (box);
 
   g_object_notify (G_OBJECT (box), "pickable");
 }
 
 static void
-gimp_buffer_source_box_enable_toggled (GtkToggleButton     *button,
-                                       GimpBufferSourceBox *box)
+ligma_buffer_source_box_enable_toggled (GtkToggleButton     *button,
+                                       LigmaBufferSourceBox *box)
 {
   box->priv->enabled = gtk_toggle_button_get_active (button);
 
-  gimp_buffer_source_box_update_node (box);
+  ligma_buffer_source_box_update_node (box);
 
   g_object_notify (G_OBJECT (box), "enabled");
 }
@@ -330,15 +330,15 @@ gimp_buffer_source_box_enable_toggled (GtkToggleButton     *button,
 /*  public functions  */
 
 GtkWidget *
-gimp_buffer_source_box_new (GimpContext *context,
+ligma_buffer_source_box_new (LigmaContext *context,
                             GeglNode    *source_node,
                             const gchar *name)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (source_node), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_BUFFER_SOURCE_BOX,
+  return g_object_new (LIGMA_TYPE_BUFFER_SOURCE_BOX,
                        "context",     context,
                        "source-node", source_node,
                        "name",        name,
@@ -346,9 +346,9 @@ gimp_buffer_source_box_new (GimpContext *context,
 }
 
 GtkWidget *
-gimp_buffer_source_box_get_toggle (GimpBufferSourceBox *box)
+ligma_buffer_source_box_get_toggle (LigmaBufferSourceBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_BUFFER_SOURCE_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_BUFFER_SOURCE_BOX (box), NULL);
 
   return box->priv->toggle;
 }

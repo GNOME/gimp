@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimpcloneoptions.h"
+#include "ligmacloneoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -39,50 +39,50 @@ enum
 };
 
 
-static void   gimp_clone_options_set_property (GObject      *object,
+static void   ligma_clone_options_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_clone_options_get_property (GObject      *object,
+static void   ligma_clone_options_get_property (GObject      *object,
                                                guint         property_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_SOURCE_OPTIONS)
+G_DEFINE_TYPE (LigmaCloneOptions, ligma_clone_options, LIGMA_TYPE_SOURCE_OPTIONS)
 
-#define parent_class gimp_clone_options_parent_class
+#define parent_class ligma_clone_options_parent_class
 
 
 static void
-gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
+ligma_clone_options_class_init (LigmaCloneOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_clone_options_set_property;
-  object_class->get_property = gimp_clone_options_get_property;
+  object_class->set_property = ligma_clone_options_set_property;
+  object_class->get_property = ligma_clone_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLONE_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CLONE_TYPE,
                          "clone-type",
                          _("Source"),
                          NULL,
-                         GIMP_TYPE_CLONE_TYPE,
-                         GIMP_CLONE_IMAGE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CLONE_TYPE,
+                         LIGMA_CLONE_IMAGE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_clone_options_init (GimpCloneOptions *options)
+ligma_clone_options_init (LigmaCloneOptions *options)
 {
 }
 
 static void
-gimp_clone_options_set_property (GObject      *object,
+ligma_clone_options_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpCloneOptions *options = GIMP_CLONE_OPTIONS (object);
+  LigmaCloneOptions *options = LIGMA_CLONE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -96,12 +96,12 @@ gimp_clone_options_set_property (GObject      *object,
 }
 
 static void
-gimp_clone_options_get_property (GObject    *object,
+ligma_clone_options_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpCloneOptions *options = GIMP_CLONE_OPTIONS (object);
+  LigmaCloneOptions *options = LIGMA_CLONE_OPTIONS (object);
 
   switch (property_id)
     {

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program Copyright (C) 1995
+/* LIGMA - The GNU Image Manipulation Program Copyright (C) 1995
  * Spencer Kimball and Peter Mattis
  *
- * gimpcanvaspolygon.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvaspolygon.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PATH_H__
-#define __GIMP_CANVAS_PATH_H__
+#ifndef __LIGMA_CANVAS_PATH_H__
+#define __LIGMA_CANVAS_PATH_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_PATH            (gimp_canvas_path_get_type ())
-#define GIMP_CANVAS_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_PATH, GimpCanvasPath))
-#define GIMP_CANVAS_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_PATH, GimpCanvasPathClass))
-#define GIMP_IS_CANVAS_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_PATH))
-#define GIMP_IS_CANVAS_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_PATH))
-#define GIMP_CANVAS_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_PATH, GimpCanvasPathClass))
+#define LIGMA_TYPE_CANVAS_PATH            (ligma_canvas_path_get_type ())
+#define LIGMA_CANVAS_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_PATH, LigmaCanvasPath))
+#define LIGMA_CANVAS_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_PATH, LigmaCanvasPathClass))
+#define LIGMA_IS_CANVAS_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_PATH))
+#define LIGMA_IS_CANVAS_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_PATH))
+#define LIGMA_CANVAS_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_PATH, LigmaCanvasPathClass))
 
 
-typedef struct _GimpCanvasPath      GimpCanvasPath;
-typedef struct _GimpCanvasPathClass GimpCanvasPathClass;
+typedef struct _LigmaCanvasPath      LigmaCanvasPath;
+typedef struct _LigmaCanvasPathClass LigmaCanvasPathClass;
 
-struct _GimpCanvasPath
+struct _LigmaCanvasPath
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasPathClass
+struct _LigmaCanvasPathClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_path_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_path_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_path_new      (GimpDisplayShell     *shell,
-                                            const GimpBezierDesc *bezier,
+LigmaCanvasItem * ligma_canvas_path_new      (LigmaDisplayShell     *shell,
+                                            const LigmaBezierDesc *bezier,
                                             gdouble               x,
                                             gdouble               y,
                                             gboolean              filled,
-                                            GimpPathStyle         style);
+                                            LigmaPathStyle         style);
 
-void             gimp_canvas_path_set      (GimpCanvasItem       *path,
-                                            const GimpBezierDesc *bezier);
+void             ligma_canvas_path_set      (LigmaCanvasItem       *path,
+                                            const LigmaBezierDesc *bezier);
 
 
-#endif /* __GIMP_CANVAS_PATH_H__ */
+#endif /* __LIGMA_CANVAS_PATH_H__ */

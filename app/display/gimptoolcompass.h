@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolcompass.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolcompass.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_COMPASS_H__
-#define __GIMP_TOOL_COMPASS_H__
+#ifndef __LIGMA_TOOL_COMPASS_H__
+#define __LIGMA_TOOL_COMPASS_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-#define GIMP_TYPE_TOOL_COMPASS            (gimp_tool_compass_get_type ())
-#define GIMP_TOOL_COMPASS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_COMPASS, GimpToolCompass))
-#define GIMP_TOOL_COMPASS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_COMPASS, GimpToolCompassClass))
-#define GIMP_IS_TOOL_COMPASS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_COMPASS))
-#define GIMP_IS_TOOL_COMPASS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_COMPASS))
-#define GIMP_TOOL_COMPASS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_COMPASS, GimpToolCompassClass))
+#define LIGMA_TYPE_TOOL_COMPASS            (ligma_tool_compass_get_type ())
+#define LIGMA_TOOL_COMPASS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_COMPASS, LigmaToolCompass))
+#define LIGMA_TOOL_COMPASS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_COMPASS, LigmaToolCompassClass))
+#define LIGMA_IS_TOOL_COMPASS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_COMPASS))
+#define LIGMA_IS_TOOL_COMPASS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_COMPASS))
+#define LIGMA_TOOL_COMPASS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_COMPASS, LigmaToolCompassClass))
 
 
-typedef struct _GimpToolCompass        GimpToolCompass;
-typedef struct _GimpToolCompassPrivate GimpToolCompassPrivate;
-typedef struct _GimpToolCompassClass   GimpToolCompassClass;
+typedef struct _LigmaToolCompass        LigmaToolCompass;
+typedef struct _LigmaToolCompassPrivate LigmaToolCompassPrivate;
+typedef struct _LigmaToolCompassClass   LigmaToolCompassClass;
 
-struct _GimpToolCompass
+struct _LigmaToolCompass
 {
-  GimpToolWidget          parent_instance;
+  LigmaToolWidget          parent_instance;
 
-  GimpToolCompassPrivate *private;
+  LigmaToolCompassPrivate *private;
 };
 
-struct _GimpToolCompassClass
+struct _LigmaToolCompassClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 
-  void (* create_guides) (GimpToolCompass *compass,
+  void (* create_guides) (LigmaToolCompass *compass,
                           gint             x,
                           gint             y,
                           gboolean         horizontal,
@@ -56,10 +56,10 @@ struct _GimpToolCompassClass
 };
 
 
-GType            gimp_tool_compass_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_compass_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_compass_new      (GimpDisplayShell       *shell,
-                                             GimpCompassOrientation  orinetation,
+LigmaToolWidget * ligma_tool_compass_new      (LigmaDisplayShell       *shell,
+                                             LigmaCompassOrientation  orinetation,
                                              gint                    n_points,
                                              gint                    x1,
                                              gint                    y1,
@@ -69,4 +69,4 @@ GimpToolWidget * gimp_tool_compass_new      (GimpDisplayShell       *shell,
                                              gint                    x3);
 
 
-#endif /* __GIMP_TOOL_COMPASS_H__ */
+#endif /* __LIGMA_TOOL_COMPASS_H__ */

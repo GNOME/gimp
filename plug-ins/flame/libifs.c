@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h> /* strcmp */
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 #include "libifs.h"
 
@@ -1051,12 +1051,12 @@ parse_control_point (char          **ss,
               parse_errors++;
               break;
             }
-          if (! g_ascii_string_to_signed (argv[i++], 10, 1, GIMP_MAX_IMAGE_SIZE, &w, NULL))
+          if (! g_ascii_string_to_signed (argv[i++], 10, 1, LIGMA_MAX_IMAGE_SIZE, &w, NULL))
             {
               g_printerr ("Ignoring invalid image width '%s'\n", argv[i-1]);
               parse_errors++;
             }
-          else if (! g_ascii_string_to_signed (argv[i++], 10, 1, GIMP_MAX_IMAGE_SIZE, &h, NULL))
+          else if (! g_ascii_string_to_signed (argv[i++], 10, 1, LIGMA_MAX_IMAGE_SIZE, &h, NULL))
             {
               g_printerr ("Ignoring invalid image_size heigth '%s'\n", argv[i-1]);
               parse_errors++;

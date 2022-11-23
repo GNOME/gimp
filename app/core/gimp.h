@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_H__
-#define __GIMP_H__
+#ifndef __LIGMA_H__
+#define __LIGMA_H__
 
 
-#include "gimpobject.h"
-#include "gimp-gui.h"
+#include "ligmaobject.h"
+#include "ligma-gui.h"
 
 
-#define GIMP_TYPE_GIMP            (gimp_get_type ())
-#define GIMP(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GIMP, Gimp))
-#define GIMP_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GIMP, GimpClass))
-#define GIMP_IS_GIMP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GIMP))
-#define GIMP_IS_GIMP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GIMP))
+#define LIGMA_TYPE_LIGMA            (ligma_get_type ())
+#define LIGMA(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LIGMA, Ligma))
+#define LIGMA_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LIGMA, LigmaClass))
+#define LIGMA_IS_LIGMA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LIGMA))
+#define LIGMA_IS_LIGMA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LIGMA))
 
 
-typedef struct _GimpClass GimpClass;
+typedef struct _LigmaClass LigmaClass;
 
-struct _Gimp
+struct _Ligma
 {
-  GimpObject              parent_instance;
+  LigmaObject              parent_instance;
 
-  GimpCoreConfig         *config;
-  GimpCoreConfig         *edit_config; /* don't use this one, it's just
+  LigmaCoreConfig         *config;
+  LigmaCoreConfig         *edit_config; /* don't use this one, it's just
                                         * for the preferences dialog
                                         */
   gchar                  *session_name;
@@ -50,16 +50,16 @@ struct _Gimp
   gboolean                show_gui;
   gboolean                use_shm;
   gboolean                use_cpu_accel;
-  GimpMessageHandlerType  message_handler;
+  LigmaMessageHandlerType  message_handler;
   gboolean                console_messages;
   gboolean                show_playground;
   gboolean                show_debug_menu;
-  GimpStackTraceMode      stack_trace_mode;
-  GimpPDBCompatMode       pdb_compat_mode;
+  LigmaStackTraceMode      stack_trace_mode;
+  LigmaPDBCompatMode       pdb_compat_mode;
 
-  GimpGui                 gui;         /* gui vtable */
+  LigmaGui                 gui;         /* gui vtable */
 
-  gboolean                restored;    /* becomes TRUE in gimp_restore() */
+  gboolean                restored;    /* becomes TRUE in ligma_restore() */
   gboolean                initialized; /* Fully initialized (only set once at start). */
   gboolean                query_all;   /* Force query all plug-ins. */
 
@@ -69,94 +69,94 @@ struct _Gimp
   GList                  *user_units;
   gint                    n_user_units;
 
-  GimpParasiteList       *parasites;
+  LigmaParasiteList       *parasites;
 
-  GimpContainer          *paint_info_list;
-  GimpPaintInfo          *standard_paint_info;
+  LigmaContainer          *paint_info_list;
+  LigmaPaintInfo          *standard_paint_info;
 
-  GimpModuleDB           *module_db;
+  LigmaModuleDB           *module_db;
   gboolean                write_modulerc;
 
-  GimpExtensionManager   *extension_manager;
-  GimpPlugInManager      *plug_in_manager;
+  LigmaExtensionManager   *extension_manager;
+  LigmaPlugInManager      *plug_in_manager;
 
   GList                  *filter_history;
 
-  GimpContainer          *images;
+  LigmaContainer          *images;
   guint32                 next_guide_id;
   guint32                 next_sample_point_id;
-  GimpIdTable            *image_table;
-  GimpIdTable            *item_table;
+  LigmaIdTable            *image_table;
+  LigmaIdTable            *item_table;
 
-  GimpContainer          *displays;
+  LigmaContainer          *displays;
   gint                    next_display_id;
 
   GList                  *image_windows;
 
-  GimpImage              *clipboard_image;
-  GimpBuffer             *clipboard_buffer;
-  GimpContainer          *named_buffers;
+  LigmaImage              *clipboard_image;
+  LigmaBuffer             *clipboard_buffer;
+  LigmaContainer          *named_buffers;
 
-  GimpDataFactory        *brush_factory;
-  GimpDataFactory        *dynamics_factory;
-  GimpDataFactory        *mybrush_factory;
-  GimpDataFactory        *pattern_factory;
-  GimpDataFactory        *gradient_factory;
-  GimpDataFactory        *palette_factory;
-  GimpDataFactory        *font_factory;
-  GimpDataFactory        *tool_preset_factory;
+  LigmaDataFactory        *brush_factory;
+  LigmaDataFactory        *dynamics_factory;
+  LigmaDataFactory        *mybrush_factory;
+  LigmaDataFactory        *pattern_factory;
+  LigmaDataFactory        *gradient_factory;
+  LigmaDataFactory        *palette_factory;
+  LigmaDataFactory        *font_factory;
+  LigmaDataFactory        *tool_preset_factory;
 
-  GimpTagCache           *tag_cache;
+  LigmaTagCache           *tag_cache;
 
-  GimpPDB                *pdb;
+  LigmaPDB                *pdb;
 
-  GimpContainer          *tool_info_list;
-  GimpToolInfo           *standard_tool_info;
+  LigmaContainer          *tool_info_list;
+  LigmaToolInfo           *standard_tool_info;
 
-  GimpContainer          *tool_item_list;
-  GimpContainer          *tool_item_ui_list;
+  LigmaContainer          *tool_item_list;
+  LigmaContainer          *tool_item_ui_list;
 
   /*  the opened and saved images in MRU order  */
-  GimpContainer          *documents;
+  LigmaContainer          *documents;
 
   /*  image_new values  */
-  GimpContainer          *templates;
-  GimpTemplate           *image_new_last_template;
+  LigmaContainer          *templates;
+  LigmaTemplate           *image_new_last_template;
 
   /*  the list of all contexts  */
   GList                  *context_list;
 
-  /*  the default context which is initialized from gimprc  */
-  GimpContext            *default_context;
+  /*  the default context which is initialized from ligmarc  */
+  LigmaContext            *default_context;
 
   /*  the context used by the interface  */
-  GimpContext            *user_context;
+  LigmaContext            *user_context;
 };
 
-struct _GimpClass
+struct _LigmaClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void     (* initialize)             (Gimp               *gimp,
-                                       GimpInitStatusFunc  status_callback);
-  void     (* restore)                (Gimp               *gimp,
-                                       GimpInitStatusFunc  status_callback);
-  gboolean (* exit)                   (Gimp               *gimp,
+  void     (* initialize)             (Ligma               *ligma,
+                                       LigmaInitStatusFunc  status_callback);
+  void     (* restore)                (Ligma               *ligma,
+                                       LigmaInitStatusFunc  status_callback);
+  gboolean (* exit)                   (Ligma               *ligma,
                                        gboolean            force);
 
-  void     (* clipboard_changed)      (Gimp               *gimp);
+  void     (* clipboard_changed)      (Ligma               *ligma);
 
-  void     (* filter_history_changed) (Gimp               *gimp);
+  void     (* filter_history_changed) (Ligma               *ligma);
 
   /*  emitted if an image is loaded and opened with a display  */
-  void     (* image_opened)           (Gimp               *gimp,
+  void     (* image_opened)           (Ligma               *ligma,
                                        GFile              *file);
 };
 
 
-GType          gimp_get_type               (void) G_GNUC_CONST;
+GType          ligma_get_type               (void) G_GNUC_CONST;
 
-Gimp         * gimp_new                    (const gchar         *name,
+Ligma         * ligma_new                    (const gchar         *name,
                                             const gchar         *session_name,
                                             GFile               *default_folder,
                                             gboolean             be_verbose,
@@ -168,83 +168,83 @@ Gimp         * gimp_new                    (const gchar         *name,
                                             gboolean             console_messages,
                                             gboolean             show_playground,
                                             gboolean             show_debug_menu,
-                                            GimpStackTraceMode   stack_trace_mode,
-                                            GimpPDBCompatMode    pdb_compat_mode);
-void           gimp_set_show_gui           (Gimp                *gimp,
+                                            LigmaStackTraceMode   stack_trace_mode,
+                                            LigmaPDBCompatMode    pdb_compat_mode);
+void           ligma_set_show_gui           (Ligma                *ligma,
                                             gboolean             show_gui);
-gboolean       gimp_get_show_gui           (Gimp                *gimp);
+gboolean       ligma_get_show_gui           (Ligma                *ligma);
 
-void           gimp_load_config            (Gimp                *gimp,
-                                            GFile               *alternate_system_gimprc,
-                                            GFile               *alternate_gimprc);
-void           gimp_initialize             (Gimp                *gimp,
-                                            GimpInitStatusFunc   status_callback);
-void           gimp_restore                (Gimp                *gimp,
-                                            GimpInitStatusFunc   status_callback,
+void           ligma_load_config            (Ligma                *ligma,
+                                            GFile               *alternate_system_ligmarc,
+                                            GFile               *alternate_ligmarc);
+void           ligma_initialize             (Ligma                *ligma,
+                                            LigmaInitStatusFunc   status_callback);
+void           ligma_restore                (Ligma                *ligma,
+                                            LigmaInitStatusFunc   status_callback,
                                             GError             **error);
-gboolean       gimp_is_restored            (Gimp                *gimp);
+gboolean       ligma_is_restored            (Ligma                *ligma);
 
-void           gimp_exit                   (Gimp                *gimp,
+void           ligma_exit                   (Ligma                *ligma,
                                             gboolean             force);
 
-GList        * gimp_get_image_iter         (Gimp                *gimp);
-GList        * gimp_get_display_iter       (Gimp                *gimp);
-GList        * gimp_get_image_windows      (Gimp                *gimp);
-GList        * gimp_get_paint_info_iter    (Gimp                *gimp);
-GList        * gimp_get_tool_info_iter     (Gimp                *gimp);
-GList        * gimp_get_tool_item_iter     (Gimp                *gimp);
-GList        * gimp_get_tool_item_ui_iter  (Gimp                *gimp);
+GList        * ligma_get_image_iter         (Ligma                *ligma);
+GList        * ligma_get_display_iter       (Ligma                *ligma);
+GList        * ligma_get_image_windows      (Ligma                *ligma);
+GList        * ligma_get_paint_info_iter    (Ligma                *ligma);
+GList        * ligma_get_tool_info_iter     (Ligma                *ligma);
+GList        * ligma_get_tool_item_iter     (Ligma                *ligma);
+GList        * ligma_get_tool_item_ui_iter  (Ligma                *ligma);
 
-GimpObject   * gimp_get_clipboard_object   (Gimp                *gimp);
+LigmaObject   * ligma_get_clipboard_object   (Ligma                *ligma);
 
-void           gimp_set_clipboard_image    (Gimp                *gimp,
-                                            GimpImage           *image);
-GimpImage    * gimp_get_clipboard_image    (Gimp                *gimp);
+void           ligma_set_clipboard_image    (Ligma                *ligma,
+                                            LigmaImage           *image);
+LigmaImage    * ligma_get_clipboard_image    (Ligma                *ligma);
 
-void           gimp_set_clipboard_buffer   (Gimp                *gimp,
-                                            GimpBuffer          *buffer);
-GimpBuffer   * gimp_get_clipboard_buffer   (Gimp                *gimp);
+void           ligma_set_clipboard_buffer   (Ligma                *ligma,
+                                            LigmaBuffer          *buffer);
+LigmaBuffer   * ligma_get_clipboard_buffer   (Ligma                *ligma);
 
-GimpImage    * gimp_create_image           (Gimp                *gimp,
+LigmaImage    * ligma_create_image           (Ligma                *ligma,
                                             gint                 width,
                                             gint                 height,
-                                            GimpImageBaseType    type,
-                                            GimpPrecision        precision,
+                                            LigmaImageBaseType    type,
+                                            LigmaPrecision        precision,
                                             gboolean             attach_comment);
 
-void           gimp_set_default_context    (Gimp                *gimp,
-                                            GimpContext         *context);
-GimpContext  * gimp_get_default_context    (Gimp                *gimp);
+void           ligma_set_default_context    (Ligma                *ligma,
+                                            LigmaContext         *context);
+LigmaContext  * ligma_get_default_context    (Ligma                *ligma);
 
-void           gimp_set_user_context       (Gimp                *gimp,
-                                            GimpContext         *context);
-GimpContext  * gimp_get_user_context       (Gimp                *gimp);
+void           ligma_set_user_context       (Ligma                *ligma,
+                                            LigmaContext         *context);
+LigmaContext  * ligma_get_user_context       (Ligma                *ligma);
 
-GimpToolInfo * gimp_get_tool_info          (Gimp                *gimp,
+LigmaToolInfo * ligma_get_tool_info          (Ligma                *ligma,
                                             const gchar         *tool_name);
 
-void           gimp_message                (Gimp                *gimp,
+void           ligma_message                (Ligma                *ligma,
                                             GObject             *handler,
-                                            GimpMessageSeverity  severity,
+                                            LigmaMessageSeverity  severity,
                                             const gchar         *format,
                                             ...) G_GNUC_PRINTF (4, 5);
-void           gimp_message_valist         (Gimp                *gimp,
+void           ligma_message_valist         (Ligma                *ligma,
                                             GObject             *handler,
-                                            GimpMessageSeverity  severity,
+                                            LigmaMessageSeverity  severity,
                                             const gchar         *format,
                                             va_list              args) G_GNUC_PRINTF (4, 0);
-void           gimp_message_literal        (Gimp                *gimp,
+void           ligma_message_literal        (Ligma                *ligma,
                                             GObject             *handler,
-                                            GimpMessageSeverity  severity,
+                                            LigmaMessageSeverity  severity,
                                             const gchar         *message);
 
-void           gimp_filter_history_changed (Gimp                *gimp);
+void           ligma_filter_history_changed (Ligma                *ligma);
 
-void           gimp_image_opened           (Gimp                *gimp,
+void           ligma_image_opened           (Ligma                *ligma,
                                             GFile               *file);
 
-GFile        * gimp_get_temp_file          (Gimp                *gimp,
+GFile        * ligma_get_temp_file          (Ligma                *ligma,
                                             const gchar         *extension);
 
 
-#endif  /* __GIMP_H__ */
+#endif  /* __LIGMA_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
- * GimpGrid
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_GRID_H__
-#define __GIMP_IMAGE_GRID_H__
+#ifndef __LIGMA_IMAGE_GRID_H__
+#define __LIGMA_IMAGE_GRID_H__
 
 
-GimpGrid * gimp_image_get_grid (GimpImage *image);
-void       gimp_image_set_grid (GimpImage *image,
-                                GimpGrid  *grid,
+LigmaGrid * ligma_image_get_grid (LigmaImage *image);
+void       ligma_image_set_grid (LigmaImage *image,
+                                LigmaGrid  *grid,
                                 gboolean   push_undo);
 
 
-#endif /* __GIMP_IMAGE_GRID_H__ */
+#endif /* __LIGMA_IMAGE_GRID_H__ */

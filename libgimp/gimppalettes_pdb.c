@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppalettes_pdb.c
+ * ligmapalettes_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppalettes
- * @title: gimppalettes
+ * SECTION: ligmapalettes
+ * @title: ligmapalettes
  * @short_description: Operations related to palettes.
  *
  * Operations related to palettes.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_palettes_refresh:
+ * ligma_palettes_refresh:
  *
  * Refreshes current palettes. This function always succeeds.
  *
@@ -47,61 +47,61 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_palettes_refresh (void)
+ligma_palettes_refresh (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palettes-refresh",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palettes-refresh",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palettes_get_list:
+ * ligma_palettes_get_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieves a list of all of the available palettes
  *
  * This procedure returns a complete listing of available palettes.
  * Each name returned can be used as input to the command
- * gimp_context_set_palette().
+ * ligma_context_set_palette().
  *
  * Returns: (array zero-terminated=1) (transfer full):
  *          The list of palette names.
  *          The returned value must be freed with g_strfreev().
  **/
 gchar **
-gimp_palettes_get_list (const gchar *filter)
+ligma_palettes_get_list (const gchar *filter)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **palette_list = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palettes-get-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palettes-get-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    palette_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    palette_list = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return palette_list;
 }

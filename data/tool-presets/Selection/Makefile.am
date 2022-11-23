@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/tool-presets/Selection
+## Makefile.am for ligma/data/tool-presets/Selection
 
-toolpresetsselectiondatadir = $(gimpdatadir)/tool-presets/Selection
+toolpresetsselectiondatadir = $(ligmadatadir)/tool-presets/Selection
 
 toolpresetsselectiondata_DATA = \
 	Circle-200px.gtp	\

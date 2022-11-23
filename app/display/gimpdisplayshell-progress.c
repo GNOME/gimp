@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,125 +22,125 @@
 
 #include "display-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-progress.h"
-#include "gimpstatusbar.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-progress.h"
+#include "ligmastatusbar.h"
 
 
-static GimpProgress *
-gimp_display_shell_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_display_shell_progress_start (LigmaProgress *progress,
                                    gboolean      cancellable,
                                    const gchar  *message)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  return gimp_progress_start (GIMP_PROGRESS (statusbar), cancellable,
+  return ligma_progress_start (LIGMA_PROGRESS (statusbar), cancellable,
                               "%s", message);
 }
 
 static void
-gimp_display_shell_progress_end (GimpProgress *progress)
+ligma_display_shell_progress_end (LigmaProgress *progress)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_progress_end (GIMP_PROGRESS (statusbar));
+  ligma_progress_end (LIGMA_PROGRESS (statusbar));
 }
 
 static gboolean
-gimp_display_shell_progress_is_active (GimpProgress *progress)
+ligma_display_shell_progress_is_active (LigmaProgress *progress)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  return gimp_progress_is_active (GIMP_PROGRESS (statusbar));
+  return ligma_progress_is_active (LIGMA_PROGRESS (statusbar));
 }
 
 static void
-gimp_display_shell_progress_set_text (GimpProgress *progress,
+ligma_display_shell_progress_set_text (LigmaProgress *progress,
                                       const gchar  *message)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_progress_set_text_literal (GIMP_PROGRESS (statusbar), message);
+  ligma_progress_set_text_literal (LIGMA_PROGRESS (statusbar), message);
 }
 
 static void
-gimp_display_shell_progress_set_value (GimpProgress *progress,
+ligma_display_shell_progress_set_value (LigmaProgress *progress,
                                        gdouble       percentage)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_progress_set_value (GIMP_PROGRESS (statusbar), percentage);
+  ligma_progress_set_value (LIGMA_PROGRESS (statusbar), percentage);
 }
 
 static gdouble
-gimp_display_shell_progress_get_value (GimpProgress *progress)
+ligma_display_shell_progress_get_value (LigmaProgress *progress)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  return gimp_progress_get_value (GIMP_PROGRESS (statusbar));
+  return ligma_progress_get_value (LIGMA_PROGRESS (statusbar));
 }
 
 static void
-gimp_display_shell_progress_pulse (GimpProgress *progress)
+ligma_display_shell_progress_pulse (LigmaProgress *progress)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_progress_pulse (GIMP_PROGRESS (statusbar));
+  ligma_progress_pulse (LIGMA_PROGRESS (statusbar));
 }
 
 static guint32
-gimp_display_shell_progress_get_window_id (GimpProgress *progress)
+ligma_display_shell_progress_get_window_id (LigmaProgress *progress)
 {
   GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
   if (GTK_IS_WINDOW (toplevel))
-    return gimp_window_get_native_id (GTK_WINDOW (toplevel));
+    return ligma_window_get_native_id (GTK_WINDOW (toplevel));
 
   return 0;
 }
 
 static gboolean
-gimp_display_shell_progress_message (GimpProgress        *progress,
-                                     Gimp                *gimp,
-                                     GimpMessageSeverity  severity,
+ligma_display_shell_progress_message (LigmaProgress        *progress,
+                                     Ligma                *ligma,
+                                     LigmaMessageSeverity  severity,
                                      const gchar         *domain,
                                      const gchar         *message)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  LigmaDisplayShell *shell     = LIGMA_DISPLAY_SHELL (progress);
+  LigmaStatusbar    *statusbar = ligma_display_shell_get_statusbar (shell);
 
   switch (severity)
     {
-    case GIMP_MESSAGE_ERROR:
-    case GIMP_MESSAGE_BUG_WARNING:
-    case GIMP_MESSAGE_BUG_CRITICAL:
+    case LIGMA_MESSAGE_ERROR:
+    case LIGMA_MESSAGE_BUG_WARNING:
+    case LIGMA_MESSAGE_BUG_CRITICAL:
       /* error messages are never handled here */
       break;
 
-    case GIMP_MESSAGE_WARNING:
+    case LIGMA_MESSAGE_WARNING:
       /* warning messages go to the statusbar, if it's visible */
-      if (! gimp_statusbar_get_visible (statusbar))
+      if (! ligma_statusbar_get_visible (statusbar))
         break;
       else
-        return gimp_progress_message (GIMP_PROGRESS (statusbar), gimp,
+        return ligma_progress_message (LIGMA_PROGRESS (statusbar), ligma,
                                       severity, domain, message);
 
-    case GIMP_MESSAGE_INFO:
+    case LIGMA_MESSAGE_INFO:
       /* info messages go to the statusbar;
        * if they are not handled there, they are swallowed
        */
-      gimp_progress_message (GIMP_PROGRESS (statusbar), gimp,
+      ligma_progress_message (LIGMA_PROGRESS (statusbar), ligma,
                              severity, domain, message);
       return TRUE;
     }
@@ -149,15 +149,15 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 }
 
 void
-gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
+ligma_display_shell_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start         = gimp_display_shell_progress_start;
-  iface->end           = gimp_display_shell_progress_end;
-  iface->is_active     = gimp_display_shell_progress_is_active;
-  iface->set_text      = gimp_display_shell_progress_set_text;
-  iface->set_value     = gimp_display_shell_progress_set_value;
-  iface->get_value     = gimp_display_shell_progress_get_value;
-  iface->pulse         = gimp_display_shell_progress_pulse;
-  iface->get_window_id = gimp_display_shell_progress_get_window_id;
-  iface->message       = gimp_display_shell_progress_message;
+  iface->start         = ligma_display_shell_progress_start;
+  iface->end           = ligma_display_shell_progress_end;
+  iface->is_active     = ligma_display_shell_progress_is_active;
+  iface->set_text      = ligma_display_shell_progress_set_text;
+  iface->set_value     = ligma_display_shell_progress_set_value;
+  iface->get_value     = ligma_display_shell_progress_get_value;
+  iface->pulse         = ligma_display_shell_progress_pulse;
+  iface->get_window_id = ligma_display_shell_progress_get_window_id;
+  iface->message       = ligma_display_shell_progress_message;
 }

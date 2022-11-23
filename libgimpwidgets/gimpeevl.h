@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpeevl.h
+ * ligmaeevl.h
  * Copyright (C) 2008-2009 Fredrik Alstromer <roe@excu.se>
  * Copyright (C) 2008-2009 Martin Nordholts <martinn@svn.gnome.org>
  *
@@ -20,14 +20,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EEVL_H__
-#define __GIMP_EEVL_H__
+#ifndef __LIGMA_EEVL_H__
+#define __LIGMA_EEVL_H__
 
 G_BEGIN_DECLS
 
 
 /**
- * GimpEevlQuantity:
+ * LigmaEevlQuantity:
  * @value:     In reference units.
  * @dimension: in has a dimension of 1, in^2 has a dimension of 2 etc
  */
@@ -35,30 +35,30 @@ typedef struct
 {
   gdouble value;
   gint dimension;
-} GimpEevlQuantity;
+} LigmaEevlQuantity;
 
 
 /**
- * GimpEevlUnitResolverProc:
+ * LigmaEevlUnitResolverProc:
  * @identifier: Identifier of unit to resolve or %NULL if default unit
  *              should be resolved.
- * @factor:     Units per reference unit. For example, in GIMP the
+ * @factor:     Units per reference unit. For example, in LIGMA the
  *              reference unit is inches so resolving "mm" should
  *              return 25.4 since there are 25.4 millimeters per inch.
  * @offset:     Offset to apply after scaling the value according to @factor.
- * @data:       Data given to gimp_eevl_evaluate().
+ * @data:       Data given to ligma_eevl_evaluate().
  *
  * Returns: If the unit was successfully resolved or not.
  *
  */
-typedef gboolean (* GimpEevlUnitResolverProc) (const gchar      *identifier,
-                                               GimpEevlQuantity *factor,
+typedef gboolean (* LigmaEevlUnitResolverProc) (const gchar      *identifier,
+                                               LigmaEevlQuantity *factor,
                                                gdouble          *offset,
                                                gpointer          data);
 
 
 /**
- * GimpEevlOptions:
+ * LigmaEevlOptions:
  * @unit_resolver_proc: Unit resolver callback.
  * @data:               Data passed to unit resolver.
  * @ratio_expressions:  Allow ratio expressions
@@ -67,16 +67,16 @@ typedef gboolean (* GimpEevlUnitResolverProc) (const gchar      *identifier,
  */
 typedef struct
 {
-  GimpEevlUnitResolverProc unit_resolver_proc;
+  LigmaEevlUnitResolverProc unit_resolver_proc;
   gpointer                 data;
 
   gboolean                 ratio_expressions;
   gboolean                 ratio_invert;
-  GimpEevlQuantity         ratio_quantity;
-} GimpEevlOptions;
+  LigmaEevlQuantity         ratio_quantity;
+} LigmaEevlOptions;
 
-#define GIMP_EEVL_OPTIONS_INIT                                                 \
-  ((const GimpEevlOptions)                                                     \
+#define LIGMA_EEVL_OPTIONS_INIT                                                 \
+  ((const LigmaEevlOptions)                                                     \
   {                                                                            \
     .unit_resolver_proc = NULL,                                                \
     .data               = NULL,                                                \
@@ -87,13 +87,13 @@ typedef struct
   })
 
 
-gboolean gimp_eevl_evaluate (const gchar            *string,
-                             const GimpEevlOptions  *options,
-                             GimpEevlQuantity       *result,
+gboolean ligma_eevl_evaluate (const gchar            *string,
+                             const LigmaEevlOptions  *options,
+                             LigmaEevlQuantity       *result,
                              const gchar           **error_pos,
                              GError                **error);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_EEVL_H__ */
+#endif /* __LIGMA_EEVL_H__ */

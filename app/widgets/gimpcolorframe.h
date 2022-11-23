@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_FRAME_H__
-#define __GIMP_COLOR_FRAME_H__
+#ifndef __LIGMA_COLOR_FRAME_H__
+#define __LIGMA_COLOR_FRAME_H__
 
 
-#define GIMP_COLOR_FRAME_ROWS 6
+#define LIGMA_COLOR_FRAME_ROWS 6
 
 
-#define GIMP_TYPE_COLOR_FRAME            (gimp_color_frame_get_type ())
-#define GIMP_COLOR_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_FRAME, GimpColorFrame))
-#define GIMP_COLOR_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_FRAME, GimpColorFrameClass))
-#define GIMP_IS_COLOR_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_FRAME))
-#define GIMP_IS_COLOR_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_FRAME))
-#define GIMP_COLOR_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_FRAME, GimpColorFrameClass))
+#define LIGMA_TYPE_COLOR_FRAME            (ligma_color_frame_get_type ())
+#define LIGMA_COLOR_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_FRAME, LigmaColorFrame))
+#define LIGMA_COLOR_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_FRAME, LigmaColorFrameClass))
+#define LIGMA_IS_COLOR_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_FRAME))
+#define LIGMA_IS_COLOR_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_FRAME))
+#define LIGMA_COLOR_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_FRAME, LigmaColorFrameClass))
 
 
-typedef struct _GimpColorFrameClass GimpColorFrameClass;
+typedef struct _LigmaColorFrameClass LigmaColorFrameClass;
 
-struct _GimpColorFrame
+struct _LigmaColorFrame
 {
-  GimpFrame           parent_instance;
+  LigmaFrame           parent_instance;
 
-  Gimp               *gimp;
+  Ligma               *ligma;
 
   gboolean            sample_valid;
   gboolean            sample_average;
   const Babl         *sample_format;
   gdouble             pixel[4];
-  GimpRGB             color;
+  LigmaRGB             color;
   gint                x;
   gint                y;
 
-  GimpColorPickMode   pick_mode;
+  LigmaColorPickMode   pick_mode;
 
   PangoEllipsizeMode  ellipsize;
 
@@ -62,59 +62,59 @@ struct _GimpColorFrame
   GtkWidget          *coords_box_y;
   GtkWidget          *coords_label_x;
   GtkWidget          *coords_label_y;
-  GtkWidget          *name_labels[GIMP_COLOR_FRAME_ROWS];
-  GtkWidget          *value_labels[GIMP_COLOR_FRAME_ROWS];
+  GtkWidget          *name_labels[LIGMA_COLOR_FRAME_ROWS];
+  GtkWidget          *value_labels[LIGMA_COLOR_FRAME_ROWS];
 
   PangoLayout        *number_layout;
 
-  GimpImage          *image;
+  LigmaImage          *image;
 
-  GimpColorConfig    *config;
-  GimpColorProfile   *view_profile;
-  GimpColorRenderingIntent
+  LigmaColorConfig    *config;
+  LigmaColorProfile   *view_profile;
+  LigmaColorRenderingIntent
                       simulation_intent;
 };
 
-struct _GimpColorFrameClass
+struct _LigmaColorFrameClass
 {
-  GimpFrameClass      parent_class;
+  LigmaFrameClass      parent_class;
 };
 
 
-GType       gimp_color_frame_get_type           (void) G_GNUC_CONST;
+GType       ligma_color_frame_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_frame_new                (Gimp               *gimp);
+GtkWidget * ligma_color_frame_new                (Ligma               *ligma);
 
-void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
-                                                 GimpColorPickMode   mode);
+void        ligma_color_frame_set_mode           (LigmaColorFrame     *frame,
+                                                 LigmaColorPickMode   mode);
 
-void        gimp_color_frame_set_ellipsize      (GimpColorFrame     *frame,
+void        ligma_color_frame_set_ellipsize      (LigmaColorFrame     *frame,
                                                  PangoEllipsizeMode  ellipsize);
 
-void        gimp_color_frame_set_has_number     (GimpColorFrame     *frame,
+void        ligma_color_frame_set_has_number     (LigmaColorFrame     *frame,
                                                  gboolean            has_number);
-void        gimp_color_frame_set_number         (GimpColorFrame     *frame,
+void        ligma_color_frame_set_number         (LigmaColorFrame     *frame,
                                                  gint                number);
 
-void        gimp_color_frame_set_has_color_area (GimpColorFrame     *frame,
+void        ligma_color_frame_set_has_color_area (LigmaColorFrame     *frame,
                                                  gboolean            has_color_area);
-void        gimp_color_frame_set_has_coords     (GimpColorFrame     *frame,
+void        ligma_color_frame_set_has_coords     (LigmaColorFrame     *frame,
                                                  gboolean            has_coords);
 
-void        gimp_color_frame_set_color          (GimpColorFrame     *frame,
+void        ligma_color_frame_set_color          (LigmaColorFrame     *frame,
                                                  gboolean            sample_average,
                                                  const Babl         *format,
                                                  gpointer            pixel,
-                                                 const GimpRGB      *color,
+                                                 const LigmaRGB      *color,
                                                  gint                x,
                                                  gint                y);
-void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);
+void        ligma_color_frame_set_invalid        (LigmaColorFrame     *frame);
 
-void        gimp_color_frame_set_color_config   (GimpColorFrame     *frame,
-                                                 GimpColorConfig    *config);
+void        ligma_color_frame_set_color_config   (LigmaColorFrame     *frame,
+                                                 LigmaColorConfig    *config);
 
-void        gimp_color_frame_set_image          (GimpColorFrame     *frame,
-                                                 GimpImage          *image);
+void        ligma_color_frame_set_image          (LigmaColorFrame     *frame,
+                                                 LigmaImage          *image);
 
 
-#endif  /*  __GIMP_COLOR_FRAME_H__  */
+#endif  /*  __LIGMA_COLOR_FRAME_H__  */

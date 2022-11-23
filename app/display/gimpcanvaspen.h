@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program Copyright (C) 1995
+/* LIGMA - The GNU Image Manipulation Program Copyright (C) 1995
  * Spencer Kimball and Peter Mattis
  *
- * gimpcanvaspen.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvaspen.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,43 +18,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PEN_H__
-#define __GIMP_CANVAS_PEN_H__
+#ifndef __LIGMA_CANVAS_PEN_H__
+#define __LIGMA_CANVAS_PEN_H__
 
 
-#include "gimpcanvaspolygon.h"
+#include "ligmacanvaspolygon.h"
 
 
-#define GIMP_TYPE_CANVAS_PEN            (gimp_canvas_pen_get_type ())
-#define GIMP_CANVAS_PEN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_PEN, GimpCanvasPen))
-#define GIMP_CANVAS_PEN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_PEN, GimpCanvasPenClass))
-#define GIMP_IS_CANVAS_PEN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_PEN))
-#define GIMP_IS_CANVAS_PEN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_PEN))
-#define GIMP_CANVAS_PEN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_PEN, GimpCanvasPenClass))
+#define LIGMA_TYPE_CANVAS_PEN            (ligma_canvas_pen_get_type ())
+#define LIGMA_CANVAS_PEN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_PEN, LigmaCanvasPen))
+#define LIGMA_CANVAS_PEN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_PEN, LigmaCanvasPenClass))
+#define LIGMA_IS_CANVAS_PEN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_PEN))
+#define LIGMA_IS_CANVAS_PEN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_PEN))
+#define LIGMA_CANVAS_PEN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_PEN, LigmaCanvasPenClass))
 
 
-typedef struct _GimpCanvasPen      GimpCanvasPen;
-typedef struct _GimpCanvasPenClass GimpCanvasPenClass;
+typedef struct _LigmaCanvasPen      LigmaCanvasPen;
+typedef struct _LigmaCanvasPenClass LigmaCanvasPenClass;
 
-struct _GimpCanvasPen
+struct _LigmaCanvasPen
 {
-  GimpCanvasPolygon  parent_instance;
+  LigmaCanvasPolygon  parent_instance;
 };
 
-struct _GimpCanvasPenClass
+struct _LigmaCanvasPenClass
 {
-  GimpCanvasPolygonClass  parent_class;
+  LigmaCanvasPolygonClass  parent_class;
 };
 
 
-GType            gimp_canvas_pen_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_pen_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_pen_new      (GimpDisplayShell  *shell,
-                                           const GimpVector2 *points,
+LigmaCanvasItem * ligma_canvas_pen_new      (LigmaDisplayShell  *shell,
+                                           const LigmaVector2 *points,
                                            gint               n_points,
-                                           GimpContext       *context,
-                                           GimpActiveColor    color,
+                                           LigmaContext       *context,
+                                           LigmaActiveColor    color,
                                            gint               width);
 
 
-#endif /* __GIMP_CANVAS_PEN_H__ */
+#endif /* __LIGMA_CANVAS_PEN_H__ */

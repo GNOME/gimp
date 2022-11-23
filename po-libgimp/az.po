@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
+"Project-Id-Version: ligma-libligma\n"
 "POT-Creation-Date: 2001-09-23 20:11-0400\n"
 "PO-Revision-Date: 2001-11-28 16:53GMT+0200\n"
 "Last-Translator: Vasif İsmayıloğlu MD <azerb_linux@hotmail.com>\n"
@@ -15,59 +15,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.5\n"
 
-#: libgimp/gimpcolorbutton.c:121
+#: libligma/ligmacolorbutton.c:121
 msgid "/Use Foreground Color"
 msgstr "/Ön plan Rəngini İşlət"
 
-#: libgimp/gimpcolorbutton.c:122
+#: libligma/ligmacolorbutton.c:122
 msgid "/Use Background Color"
 msgstr "/Arxa plan Rəngini İşlət"
 
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
+#: libligma/ligmaexport.c:160 libligma/ligmaexport.c:187
 msgid "can't handle layers"
 msgstr "laylar dəstəklənmir"
 
-#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
+#: libligma/ligmaexport.c:161 libligma/ligmaexport.c:170
 msgid "Merge Visible Layers"
 msgstr "Görünən Layları Birləşdir"
 
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
+#: libligma/ligmaexport.c:169 libligma/ligmaexport.c:178
 msgid "can only handle layers as animation frames"
 msgstr "layları təkcə animasiya çərçivələri olaraq dəstəkləyir"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
+#: libligma/ligmaexport.c:170 libligma/ligmaexport.c:179
 msgid "Save as Animation"
 msgstr "Animasiya olaraq qeyd et"
 
-#: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libligma/ligmaexport.c:179 libligma/ligmaexport.c:188 libligma/ligmaexport.c:197
 msgid "Flatten Image"
 msgstr "Rəsmi Sər"
 
-#: libgimp/gimpexport.c:196
+#: libligma/ligmaexport.c:196
 msgid "can't handle transparency"
 msgstr "şəffaflığı dəstəklımir"
 
-#: libgimp/gimpexport.c:205
+#: libligma/ligmaexport.c:205
 msgid "can only handle RGB images"
 msgstr "təkcə RGB rəsmləri dəstəkləyir"
 
-#: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: libligma/ligmaexport.c:206 libligma/ligmaexport.c:234 libligma/ligmaexport.c:243
 msgid "Convert to RGB"
 msgstr "RGB-yə dönüşdür"
 
-#: libgimp/gimpexport.c:214
+#: libligma/ligmaexport.c:214
 msgid "can only handle grayscale images"
 msgstr "təkcə ağ-qara rəsmləri dəstəkləyir"
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
+#: libligma/ligmaexport.c:215 libligma/ligmaexport.c:234 libligma/ligmaexport.c:255
 msgid "Convert to Grayscale"
 msgstr "Ağ-qaraya Dönüşdür"
 
-#: libgimp/gimpexport.c:223
+#: libligma/ligmaexport.c:223
 msgid "can only handle indexed images"
 msgstr "təkcə indeksli rəsmləri dəstəkləyir"
 
-#: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
+#: libligma/ligmaexport.c:224 libligma/ligmaexport.c:243 libligma/ligmaexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -75,50 +75,50 @@ msgstr ""
 "Əsas qurğular işlədilərək İndeksliyə çevir\n"
 "(Nəticələri yaxşılaşdırmaq üçün əllə aparın)"
 
-#: libgimp/gimpexport.c:233
+#: libligma/ligmaexport.c:233
 msgid "can only handle RGB or grayscale images"
 msgstr "təkcə RGB və ağ-qara rəsmlər dəstəklənir"
 
-#: libgimp/gimpexport.c:242
+#: libligma/ligmaexport.c:242
 msgid "can only handle RGB or indexed images"
 msgstr "təkcə RGB və indeksli rəsmlər dəstəklənir"
 
-#: libgimp/gimpexport.c:252
+#: libligma/ligmaexport.c:252
 msgid "can only handle grayscale or indexed images"
 msgstr "təkcə ağ-qara və indeksli rəsmlər dəstəklənir"
 
-#: libgimp/gimpexport.c:263
+#: libligma/ligmaexport.c:263
 msgid "needs an alpha channel"
 msgstr "alfa kanlına ehtiyacı var"
 
-#: libgimp/gimpexport.c:264
+#: libligma/ligmaexport.c:264
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Əlavə Et"
 
 #.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Plug-ins have called gtk_init () before calling ligma_export ().
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:333
+#: libligma/ligmaexport.c:333
 msgid "Export File"
 msgstr "Fayl İxrac Et"
 
-#: libgimp/gimpexport.c:338
+#: libligma/ligmaexport.c:338
 msgid "Export"
 msgstr "İxrac Et"
 
-#: libgimp/gimpexport.c:340
+#: libligma/ligmaexport.c:340
 msgid "Ignore"
 msgstr "Nəzərə Alma"
 
-#: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
-#: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
-#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
+#: libligma/ligmaexport.c:342 libligma/ligmaquerybox.c:204
+#: libligma/ligmaquerybox.c:260 libligma/ligmaquerybox.c:318
+#: libligma/ligmaquerybox.c:383 libligma/ligmaunitmenu.c:505
 msgid "Cancel"
 msgstr "Ləğv Et"
 
-#: libgimp/gimpexport.c:357
+#: libligma/ligmaexport.c:357
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -127,84 +127,84 @@ msgstr ""
 "göndərilməlidir:"
 
 #. the footline
-#: libgimp/gimpexport.c:420
+#: libligma/ligmaexport.c:420
 msgid "The export conversion won't modify your original image."
 msgstr "Göndərmə dialoqu sizin əsl rəsminiz üstündə oynamayacaqdır."
 
-#: libgimp/gimpfileselection.c:388
+#: libligma/ligmafileselection.c:388
 msgid "Select File"
 msgstr "Fayl Seç"
 
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:503
+#: libligma/ligmaquerybox.c:204 libligma/ligmaquerybox.c:260
+#: libligma/ligmaquerybox.c:318 libligma/ligmaquerybox.c:383
+#: libligma/ligmaunitmenu.c:503
 msgid "OK"
 msgstr "Oldu"
 
-#: libgimp/gimpunitmenu.c:241
+#: libligma/ligmaunitmenu.c:241
 msgid "More..."
 msgstr "Ətraflı..."
 
-#: libgimp/gimpunitmenu.c:498
+#: libligma/ligmaunitmenu.c:498
 msgid "Unit Selection"
 msgstr "Vahid Seçkisi"
 
-#: libgimp/gimpunitmenu.c:535
+#: libligma/ligmaunitmenu.c:535
 msgid "Unit"
 msgstr "Vahid"
 
-#: libgimp/gimpunitmenu.c:536
+#: libligma/ligmaunitmenu.c:536
 msgid "Factor"
 msgstr "Faktor"
 
 #. pseudo unit
-#: libgimp/gimpunit.c:49
+#: libligma/ligmaunit.c:49
 msgid "pixel"
 msgstr "piksel"
 
-#: libgimp/gimpunit.c:49
+#: libligma/ligmaunit.c:49
 msgid "pixels"
 msgstr "piksel"
 
 #. standard units
-#: libgimp/gimpunit.c:52
+#: libligma/ligmaunit.c:52
 msgid "inch"
 msgstr "inç"
 
-#: libgimp/gimpunit.c:52
+#: libligma/ligmaunit.c:52
 msgid "inches"
 msgstr "inç"
 
-#: libgimp/gimpunit.c:53
+#: libligma/ligmaunit.c:53
 msgid "millimeter"
 msgstr "milimetr"
 
-#: libgimp/gimpunit.c:53
+#: libligma/ligmaunit.c:53
 msgid "millimeters"
 msgstr "milimetr"
 
 #. professional units
-#: libgimp/gimpunit.c:56
+#: libligma/ligmaunit.c:56
 msgid "point"
 msgstr "nöqtə"
 
-#: libgimp/gimpunit.c:56
+#: libligma/ligmaunit.c:56
 msgid "points"
 msgstr "nöqtə"
 
-#: libgimp/gimpunit.c:57
+#: libligma/ligmaunit.c:57
 msgid "pica"
 msgstr "pica"
 
-#: libgimp/gimpunit.c:57
+#: libligma/ligmaunit.c:57
 msgid "picas"
 msgstr "pica"
 
-#: libgimp/gimpunit.c:64
+#: libligma/ligmaunit.c:64
 msgid "percent"
 msgstr "faiz"
 
-#: libgimp/gimpwidgets.c:715
+#: libligma/ligmawidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -212,11 +212,11 @@ msgstr ""
 "\"Vaxt\" düyməsi basılı deyilsə, təsadüfə rəqəm yaradıcısının qiymətini "
 "işlət - bununla verilən \"təsadüfi\" əməliyyatı təkrarlaya bilərsiniz"
 
-#: libgimp/gimpwidgets.c:720
+#: libligma/ligmawidgets.c:720
 msgid "Time"
 msgstr "Vaxt"
 
-#: libgimp/gimpwidgets.c:729
+#: libligma/ligmawidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -224,15 +224,15 @@ msgstr ""
 "Cari vaxtdan təsadüfi rəqəm yaradıcısı ək - bu, uyğun təsadüfləşdirmə "
 "vəd edir"
 
-#: libgimp/gimpwidgets.c:1042
+#: libligma/ligmawidgets.c:1042
 msgid "Bytes"
 msgstr "Bayt"
 
-#: libgimp/gimpwidgets.c:1043
+#: libligma/ligmawidgets.c:1043
 msgid "KiloBytes"
 msgstr "Kilobayt"
 
-#: libgimp/gimpwidgets.c:1044
+#: libligma/ligmawidgets.c:1044
 msgid "MegaBytes"
 msgstr "Meqabayt"
 

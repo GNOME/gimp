@@ -1,5 +1,5 @@
 /*
- *  Goat exercise plug-in by Øyvind Kolås, pippin@gimp.org
+ *  Goat exercise plug-in by Øyvind Kolås, pippin@ligma.org
  */
 
 /*
@@ -19,12 +19,12 @@
 
 #include "config.h"
 
-#define GIMP_DISABLE_COMPAR_CRUFT
+#define LIGMA_DISABLE_COMPAR_CRUFT
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_BINARY "goat-exercise-c"
@@ -32,7 +32,7 @@
 #define PLUG_IN_PROC   "plug-in-goat-exercise-c"
 #define PLUG_IN_ROLE   "goat-exercise-c"
 
-#define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-c.c"
+#define GOAT_URI       "https://gitlab.gnome.org/GNOME/ligma/blob/master/extensions/goat-exercises/goat-exercise-c.c"
 
 
 typedef struct _Goat      Goat;
@@ -40,12 +40,12 @@ typedef struct _GoatClass GoatClass;
 
 struct _Goat
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _GoatClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -57,28 +57,28 @@ struct _GoatClass
 
 GType                   goat_get_type         (void) G_GNUC_CONST;
 
-static GList          * goat_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
+static GList          * goat_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * goat_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * goat_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * goat_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 
-G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Goat, goat, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GOAT_TYPE)
+LIGMA_MAIN (GOAT_TYPE)
 
 
 static void
 goat_class_init (GoatClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = goat_query_procedures;
   plug_in_class->create_procedure = goat_create_procedure;
@@ -90,68 +90,68 @@ goat_init (Goat *goat)
 }
 
 static GList *
-goat_query_procedures (GimpPlugIn *plug_in)
+goat_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-goat_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+goat_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             goat_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_GEGL);
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Goat exercises/");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         N_("Exercise a goat in the C language"),
                                         "Takes a goat for a walk",
                                         PLUG_IN_PROC);
-      gimp_procedure_set_attribution (procedure,
-                                      "Øyvind Kolås <pippin@gimp.org>",
-                                      "Øyvind Kolås <pippin@gimp.org>",
+      ligma_procedure_set_attribution (procedure,
+                                      "Øyvind Kolås <pippin@ligma.org>",
+                                      "Øyvind Kolås <pippin@ligma.org>",
                                       "21 march 2012");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-goat_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+goat_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  LigmaDrawable      *drawable;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
   gint               x, y, width, height;
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -160,7 +160,7 @@ goat_run (GimpProcedure        *procedure,
     }
 
   /* In interactive mode, display a dialog to advertise the exercise. */
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       GtkTextBuffer    *buffer;
       GtkWidget        *dialog;
@@ -176,10 +176,10 @@ goat_run (GimpProcedure        *procedure,
       gssize            read;
       gint              response;
 
-      gimp_ui_init (PLUG_IN_BINARY);
-      dialog = gimp_dialog_new (_("Exercise a goat (C)"), PLUG_IN_ROLE,
+      ligma_ui_init (PLUG_IN_BINARY);
+      dialog = ligma_dialog_new (_("Exercise a goat (C)"), PLUG_IN_ROLE,
                                 NULL, GTK_DIALOG_USE_HEADER_BAR,
-                                gimp_standard_help_func, PLUG_IN_PROC,
+                                ligma_standard_help_func, PLUG_IN_PROC,
 
                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
                                 _("_Source"), GTK_RESPONSE_APPLY,
@@ -213,8 +213,8 @@ goat_run (GimpProcedure        *procedure,
       gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
       gtk_widget_show (scrolled);
 
-      path = g_build_filename (gimp_plug_in_directory (), "extensions",
-                               "org.gimp.extension.goat-exercises", PLUG_IN_SOURCE,
+      path = g_build_filename (ligma_plug_in_directory (), "extensions",
+                               "org.ligma.extension.goat-exercises", PLUG_IN_SOURCE,
                                NULL);
       file = g_file_new_for_path (path);
       g_free (path);
@@ -238,7 +238,7 @@ goat_run (GimpProcedure        *procedure,
       gtk_container_add (GTK_CONTAINER (scrolled), widget);
       gtk_widget_show (widget);
 
-      while ((response = gimp_dialog_run (GIMP_DIALOG (dialog))))
+      while ((response = ligma_dialog_run (LIGMA_DIALOG (dialog))))
         {
           if (response == GTK_RESPONSE_OK)
             {
@@ -254,34 +254,34 @@ goat_run (GimpProcedure        *procedure,
           else /* CANCEL, CLOSE, DELETE_EVENT */
             {
               gtk_widget_destroy (dialog);
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_CANCEL,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_CANCEL,
                                                        NULL);
             }
         }
     }
 
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (ligma_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       GeglBuffer *buffer;
       GeglBuffer *shadow_buffer;
 
       gegl_init (NULL, NULL);
 
-      buffer        = gimp_drawable_get_buffer (drawable);
-      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable);
+      buffer        = ligma_drawable_get_buffer (drawable);
+      shadow_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
       gegl_render_op (buffer, shadow_buffer, "gegl:invert", NULL);
 
       g_object_unref (shadow_buffer); /* flushes the shadow tiles */
       g_object_unref (buffer);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, x, y, width, height);
-      gimp_displays_flush ();
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, x, y, width, height);
+      ligma_displays_flush ();
 
       gegl_exit ();
     }
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }

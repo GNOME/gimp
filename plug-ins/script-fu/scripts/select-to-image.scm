@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Selection to Image
@@ -24,9 +24,9 @@
 
 (define (script-fu-selection-to-image image drawable)
   (let* (
-        (draw-type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-type (car (gimp-image-get-base-type image)))
-        (selection-bounds (gimp-selection-bounds image))
+        (draw-type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-type (car (ligma-image-get-base-type image)))
+        (selection-bounds (ligma-selection-bounds image))
         (select-offset-x (cadr selection-bounds))
         (select-offset-y (caddr selection-bounds))
         (selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -37,54 +37,54 @@
         (new-draw 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-disable image)
+    (ligma-image-undo-disable image)
 
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
+    (if (= (car (ligma-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-          (set! active-selection (car (gimp-selection-save image)))
+          (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (set! active-selection (car (ligma-selection-save image)))
           (set! from-selection FALSE)
         )
         (begin
           (set! from-selection TRUE)
-          (set! active-selection (car (gimp-selection-save image)))
+          (set! active-selection (car (ligma-selection-save image)))
         )
     )
 
-    (gimp-edit-copy 1 (vector drawable))
+    (ligma-edit-copy 1 (vector drawable))
 
-    (set! new-image (car (gimp-image-new selection-width
+    (set! new-image (car (ligma-image-new selection-width
                                          selection-height image-type)))
-    (set! new-draw (car (gimp-layer-new new-image
+    (set! new-draw (car (ligma-layer-new new-image
                                         selection-width selection-height
                                         draw-type "Selection" 100 LAYER-MODE-NORMAL)))
-    (gimp-image-insert-layer new-image new-draw 0 0)
-    (gimp-drawable-fill new-draw FILL-BACKGROUND)
+    (ligma-image-insert-layer new-image new-draw 0 0)
+    (ligma-drawable-fill new-draw FILL-BACKGROUND)
 
     (let* (
-           (pasted (gimp-edit-paste new-draw FALSE))
+           (pasted (ligma-edit-paste new-draw FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-      (gimp-floating-sel-anchor floating-sel)
+      (ligma-floating-sel-anchor floating-sel)
     )
 
-    (gimp-image-undo-enable image)
-    (gimp-image-set-selected-layers image 1 (vector drawable))
-    (gimp-display-new new-image)
-    (gimp-displays-flush)
+    (ligma-image-undo-enable image)
+    (ligma-image-set-selected-layers image 1 (vector drawable))
+    (ligma-display-new new-image)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-selection-to-image"
   _"To _Image"
   _"Convert a selection to an image"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "10/07/97"
   "RGB* GRAY*"

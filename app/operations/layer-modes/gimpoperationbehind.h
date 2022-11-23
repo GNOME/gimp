@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationbehind.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationbehind.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_BEHIND_H__
-#define __GIMP_OPERATION_BEHIND_H__
+#ifndef __LIGMA_OPERATION_BEHIND_H__
+#define __LIGMA_OPERATION_BEHIND_H__
 
 
-#include "gimpoperationlayermode.h"
+#include "ligmaoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_BEHIND            (gimp_operation_behind_get_type ())
-#define GIMP_OPERATION_BEHIND(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_BEHIND, GimpOperationBehind))
-#define GIMP_OPERATION_BEHIND_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_BEHIND, GimpOperationBehindClass))
-#define GIMP_IS_OPERATION_BEHIND(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_BEHIND))
-#define GIMP_IS_OPERATION_BEHIND_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_BEHIND))
-#define GIMP_OPERATION_BEHIND_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_BEHIND, GimpOperationBehindClass))
+#define LIGMA_TYPE_OPERATION_BEHIND            (ligma_operation_behind_get_type ())
+#define LIGMA_OPERATION_BEHIND(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_BEHIND, LigmaOperationBehind))
+#define LIGMA_OPERATION_BEHIND_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_BEHIND, LigmaOperationBehindClass))
+#define LIGMA_IS_OPERATION_BEHIND(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_BEHIND))
+#define LIGMA_IS_OPERATION_BEHIND_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_BEHIND))
+#define LIGMA_OPERATION_BEHIND_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_BEHIND, LigmaOperationBehindClass))
 
 
-typedef struct _GimpOperationBehind      GimpOperationBehind;
-typedef struct _GimpOperationBehindClass GimpOperationBehindClass;
+typedef struct _LigmaOperationBehind      LigmaOperationBehind;
+typedef struct _LigmaOperationBehindClass LigmaOperationBehindClass;
 
-struct _GimpOperationBehind
+struct _LigmaOperationBehind
 {
-  GimpOperationLayerMode  parent_instance;
+  LigmaOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationBehindClass
+struct _LigmaOperationBehindClass
 {
-  GimpOperationLayerModeClass  parent_class;
+  LigmaOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_behind_get_type (void) G_GNUC_CONST;
+GType    ligma_operation_behind_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_BEHIND_H__ */
+#endif /* __LIGMA_OPERATION_BEHIND_H__ */

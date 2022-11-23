@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/brushes/Media
+## Makefile.am for ligma/data/brushes/Media
 
-brushmediadatadir = $(gimpdatadir)/brushes/Media
+brushmediadatadir = $(ligmadatadir)/brushes/Media
 
 brushmediadata_DATA = \
 	Acrylic-01.gih	\

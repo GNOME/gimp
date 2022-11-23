@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwaitable.c
+ * ligmawaitable.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,17 +26,17 @@
 
 #include "core-types.h"
 
-#include "gimpwaitable.h"
+#include "ligmawaitable.h"
 
 
-G_DEFINE_INTERFACE (GimpWaitable, gimp_waitable, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaWaitable, ligma_waitable, G_TYPE_OBJECT)
 
 
 /*  private functions  */
 
 
 static void
-gimp_waitable_default_init (GimpWaitableInterface *iface)
+ligma_waitable_default_init (LigmaWaitableInterface *iface)
 {
 }
 
@@ -45,26 +45,26 @@ gimp_waitable_default_init (GimpWaitableInterface *iface)
 
 
 void
-gimp_waitable_wait (GimpWaitable *waitable)
+ligma_waitable_wait (LigmaWaitable *waitable)
 {
-  GimpWaitableInterface *iface;
+  LigmaWaitableInterface *iface;
 
-  g_return_if_fail (GIMP_IS_WAITABLE (waitable));
+  g_return_if_fail (LIGMA_IS_WAITABLE (waitable));
 
-  iface = GIMP_WAITABLE_GET_IFACE (waitable);
+  iface = LIGMA_WAITABLE_GET_IFACE (waitable);
 
   if (iface->wait)
     iface->wait (waitable);
 }
 
 gboolean
-gimp_waitable_try_wait (GimpWaitable *waitable)
+ligma_waitable_try_wait (LigmaWaitable *waitable)
 {
-  GimpWaitableInterface *iface;
+  LigmaWaitableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
+  g_return_val_if_fail (LIGMA_IS_WAITABLE (waitable), FALSE);
 
-  iface = GIMP_WAITABLE_GET_IFACE (waitable);
+  iface = LIGMA_WAITABLE_GET_IFACE (waitable);
 
   if (iface->try_wait)
     {
@@ -72,21 +72,21 @@ gimp_waitable_try_wait (GimpWaitable *waitable)
     }
   else
     {
-      gimp_waitable_wait (waitable);
+      ligma_waitable_wait (waitable);
 
       return TRUE;
     }
 }
 
 gboolean
-gimp_waitable_wait_until (GimpWaitable *waitable,
+ligma_waitable_wait_until (LigmaWaitable *waitable,
                           gint64        end_time)
 {
-  GimpWaitableInterface *iface;
+  LigmaWaitableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
+  g_return_val_if_fail (LIGMA_IS_WAITABLE (waitable), FALSE);
 
-  iface = GIMP_WAITABLE_GET_IFACE (waitable);
+  iface = LIGMA_WAITABLE_GET_IFACE (waitable);
 
   if (iface->wait_until)
     {
@@ -94,25 +94,25 @@ gimp_waitable_wait_until (GimpWaitable *waitable,
     }
   else
     {
-      gimp_waitable_wait (waitable);
+      ligma_waitable_wait (waitable);
 
       return TRUE;
     }
 }
 
 gboolean
-gimp_waitable_wait_for (GimpWaitable *waitable,
+ligma_waitable_wait_for (LigmaWaitable *waitable,
                         gint64        wait_duration)
 {
-  g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
+  g_return_val_if_fail (LIGMA_IS_WAITABLE (waitable), FALSE);
 
   if (wait_duration <= 0)
     {
-      return gimp_waitable_try_wait (waitable);
+      return ligma_waitable_try_wait (waitable);
     }
   else
     {
-      return gimp_waitable_wait_until (waitable,
+      return ligma_waitable_wait_until (waitable,
                                        g_get_monotonic_time () + wait_duration);
     }
 }

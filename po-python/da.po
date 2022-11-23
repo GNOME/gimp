@@ -1,8 +1,8 @@
-# Danish translation for GIMP-Python.
+# Danish translation for LIGMA-Python.
 # Copyright (C) 2018 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
-# http://wiki.dansk-gruppen.dk/index.php/GIMP
+# http://wiki.dansk-gruppen.dk/index.php/LIGMA
 #
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
@@ -13,8 +13,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-01-27 10:19+0000\n"
 "PO-Revision-Date: 2022-04-24 11:36+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
@@ -438,8 +438,8 @@ msgid "Python _Console"
 msgstr "Python-_konsol"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktiv GIMP-Python-fortolker"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktiv LIGMA-Python-fortolker"
 
 # Ikke en stavefejl: https://en.wikipedia.org/wiki/Spirograph
 #: ../plug-ins/python/spyro-plus.py:50
@@ -788,8 +788,8 @@ msgstr ""
 "gemmes som kurve"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -816,5 +816,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Vent venligst: Mønsteret gentegnes"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spyrogimp …"
+msgid "Spyroligma..."
+msgstr "Spyroligma …"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-#   Gimp-Python - allows the writing of Gimp plugins in Python.
-#   Copyright (C) 2006  Manish Singh <yosh@gimp.org>
+#   Ligma-Python - allows the writing of Ligma plugins in Python.
+#   Copyright (C) 2006  Manish Singh <yosh@ligma.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -30,20 +30,20 @@ def code_eval(procedure, run_mode, code, args, data):
     if code == '-':
         code = sys.stdin.read()
     exec(code, globals())
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
 
-class PythonEval (Gimp.PlugIn):
-    ## GimpPlugIn virtual methods ##
+class PythonEval (Ligma.PlugIn):
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return ['python-fu-eval']
 
     def do_create_procedure(self, name):
-        procedure = Gimp.BatchProcedure.new(self, name, "Python 3",
-                                            Gimp.PDBProcType.PLUGIN,
+        procedure = Ligma.BatchProcedure.new(self, name, "Python 3",
+                                            Ligma.PDBProcType.PLUGIN,
                                             code_eval, None)
         procedure.set_documentation ("Evaluate Python code",
                                      "Evaluate python code under the python interpreter (primarily for batch mode)",
@@ -56,4 +56,4 @@ class PythonEval (Gimp.PlugIn):
         return procedure
 
 
-Gimp.main(PythonEval.__gtype__, sys.argv)
+Ligma.main(PythonEval.__gtype__, sys.argv)

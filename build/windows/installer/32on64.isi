@@ -1,7 +1,7 @@
 #if 0
 [Files]
 #endif
-//process list of 32bit GIMP files that are installed on x64 (for TWAIN support)
+//process list of 32bit LIGMA files that are installed on x64 (for TWAIN support)
 #pragma option -e-
 
 #define protected
@@ -13,17 +13,17 @@
 #define ReplStr
 
 #define Line=0
-#define SRC_DIR GIMP_DIR32
+#define SRC_DIR LIGMA_DIR32
 
 //avoid too much nesting
 #sub DoActualWork
 	#if Copy(FileLine,Len(FileLine),1)=="\"
 		//include whole directory
-Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion
+Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: ligma32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion
 	#else
 		//include files from a certain directory
 		#define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)
-Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace replacesameversion uninsrestartdelete ignoreversion
+Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: ligma32on64; Flags: restartreplace replacesameversion uninsrestartdelete ignoreversion
 	#endif
 #endsub
 
@@ -36,8 +36,8 @@ Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: 
 		#if Copy(FileLine,1,1)=="#" || FileLine==""
 			//skip comments and empty lines
 		#elif Copy(FileLine,1,1)=="!"
-			#if Copy(FileLine,2)=="GIMP"
-				#expr SRC_DIR=GIMP_DIR32
+			#if Copy(FileLine,2)=="LIGMA"
+				#expr SRC_DIR=LIGMA_DIR32
 			#elif Copy(FileLine,2)=="GTK"
 				#expr SRC_DIR=DEPS_DIR32
 			#elif Copy(FileLine,2)=="end"

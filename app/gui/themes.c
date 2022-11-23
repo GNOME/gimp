@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,35 +22,35 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "gui-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
 #include "themes.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   themes_apply_theme         (Gimp                   *gimp,
-                                          GimpGuiConfig          *config);
+static void   themes_apply_theme         (Ligma                   *ligma,
+                                          LigmaGuiConfig          *config);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
 static gint   themes_name_compare        (const void             *p1,
                                           const void             *p2);
-static void   themes_theme_change_notify (GimpGuiConfig          *config,
+static void   themes_theme_change_notify (LigmaGuiConfig          *config,
                                           GParamSpec             *pspec,
-                                          Gimp                   *gimp);
-static void   themes_theme_paths_notify  (GimpExtensionManager   *manager,
+                                          Ligma                   *ligma);
+static void   themes_theme_paths_notify  (LigmaExtensionManager   *manager,
                                           GParamSpec             *pspec,
-                                          Gimp                   *gimp);
+                                          Ligma                   *ligma);
 
 
 /*  private variables  */
@@ -62,19 +62,19 @@ static GtkStyleProvider *themes_style_provider = NULL;
 /*  public functions  */
 
 void
-themes_init (Gimp *gimp)
+themes_init (Ligma *ligma)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
   /* Check for theme extensions. */
-  themes_theme_paths_notify (gimp->extension_manager, NULL, gimp);
-  g_signal_connect (gimp->extension_manager, "notify::theme-paths",
+  themes_theme_paths_notify (ligma->extension_manager, NULL, ligma);
+  g_signal_connect (ligma->extension_manager, "notify::theme-paths",
                     G_CALLBACK (themes_theme_paths_notify),
-                    gimp);
+                    ligma);
 
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
@@ -89,33 +89,33 @@ themes_init (Gimp *gimp)
 
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (config, "notify::prefer-dark-theme",
                     G_CALLBACK (themes_theme_change_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (config, "notify::prefer-symbolic-icons",
                     G_CALLBACK (themes_theme_change_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (config, "notify::override-theme-icon-size",
                     G_CALLBACK (themes_theme_change_notify),
-                    gimp);
+                    ligma);
   g_signal_connect (config, "notify::custom-icon-size",
                     G_CALLBACK (themes_theme_change_notify),
-                    gimp);
+                    ligma);
 
-  themes_theme_change_notify (config, NULL, gimp);
+  themes_theme_change_notify (config, NULL, ligma);
 }
 
 void
-themes_exit (Gimp *gimp)
+themes_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   if (themes_hash)
     {
-      g_signal_handlers_disconnect_by_func (gimp->config,
+      g_signal_handlers_disconnect_by_func (ligma->config,
                                             themes_theme_change_notify,
-                                            gimp);
+                                            ligma);
 
       g_hash_table_destroy (themes_hash);
       themes_hash = NULL;
@@ -125,11 +125,11 @@ themes_exit (Gimp *gimp)
 }
 
 gchar **
-themes_list_themes (Gimp *gimp,
+themes_list_themes (Ligma *ligma,
                     gint *n_themes)
 {
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (n_themes != NULL, NULL);
 
   *n_themes = g_hash_table_size (themes_hash);
@@ -154,33 +154,33 @@ themes_list_themes (Gimp *gimp,
 }
 
 GFile *
-themes_get_theme_dir (Gimp        *gimp,
+themes_get_theme_dir (Ligma        *ligma,
                       const gchar *theme_name)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (! theme_name)
-    theme_name = GIMP_CONFIG_DEFAULT_THEME;
+    theme_name = LIGMA_CONFIG_DEFAULT_THEME;
 
   return g_hash_table_lookup (themes_hash, theme_name);
 }
 
 GFile *
-themes_get_theme_file (Gimp        *gimp,
+themes_get_theme_file (Ligma        *ligma,
                        const gchar *first_component,
                        ...)
 {
-  GimpGuiConfig *gui_config;
+  LigmaGuiConfig *gui_config;
   GFile         *file;
   const gchar   *component;
   va_list        args;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (first_component != NULL, NULL);
 
-  gui_config = GIMP_GUI_CONFIG (gimp->config);
+  gui_config = LIGMA_GUI_CONFIG (ligma->config);
 
-  file      = g_object_ref (themes_get_theme_dir (gimp, gui_config->theme));
+  file      = g_object_ref (themes_get_theme_dir (ligma, gui_config->theme));
   component = first_component;
 
   va_start (args, first_component);
@@ -199,7 +199,7 @@ themes_get_theme_file (Gimp        *gimp,
     {
       g_object_unref (file);
 
-      file      = g_object_ref (themes_get_theme_dir (gimp, NULL));
+      file      = g_object_ref (themes_get_theme_dir (ligma, NULL));
       component = first_component;
 
       va_start (args, first_component);
@@ -222,32 +222,32 @@ themes_get_theme_file (Gimp        *gimp,
 /*  private functions  */
 
 static void
-themes_apply_theme (Gimp          *gimp,
-                    GimpGuiConfig *config)
+themes_apply_theme (Ligma          *ligma,
+                    LigmaGuiConfig *config)
 {
   GFile         *theme_css;
   GOutputStream *output;
   GError        *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_GUI_CONFIG (config));
 
-  theme_css = gimp_directory_file ("theme.css", NULL);
+  theme_css = ligma_directory_file ("theme.css", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (theme_css));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (theme_css));
 
   output = G_OUTPUT_STREAM (g_file_replace (theme_css,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
                                             NULL, &error));
   if (! output)
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
   else
     {
-      GFile  *theme_dir = themes_get_theme_dir (gimp, config->theme);
+      GFile  *theme_dir = themes_get_theme_dir (ligma, config->theme);
       GFile  *css_user;
       GSList *css_files = NULL;
       GSList *iter;
@@ -255,17 +255,17 @@ themes_apply_theme (Gimp          *gimp,
       if (theme_dir)
         {
           css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
-                                                                    "gimp.css"));
+                                                                    "ligma.css"));
           if (config->prefer_dark_theme)
             css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
-                                                                      "gimp-dark.css"));
+                                                                      "ligma-dark.css"));
         }
       else
         {
           gchar *tmp;
 
-          tmp = g_build_filename (gimp_data_directory (),
-                                  "themes", "Default", "gimp.css",
+          tmp = g_build_filename (ligma_data_directory (),
+                                  "themes", "Default", "ligma.css",
                                   NULL);
           css_files = g_slist_prepend (
             css_files, g_file_new_for_path (tmp));
@@ -273,8 +273,8 @@ themes_apply_theme (Gimp          *gimp,
 
           if (config->prefer_dark_theme)
             {
-              tmp = g_build_filename (gimp_data_directory (),
-                                      "themes", "Default", "gimp-dark.css",
+              tmp = g_build_filename (ligma_data_directory (),
+                                      "themes", "Default", "ligma-dark.css",
                                       NULL);
               css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
               g_free (tmp);
@@ -282,9 +282,9 @@ themes_apply_theme (Gimp          *gimp,
         }
 
       css_files = g_slist_prepend (
-        css_files, gimp_sysconf_directory_file ("gimp.css", NULL));
+        css_files, ligma_sysconf_directory_file ("ligma.css", NULL));
 
-      css_user  = gimp_directory_file ("gimp.css", NULL);
+      css_user  = ligma_directory_file ("ligma.css", NULL);
       css_files = g_slist_prepend (
         css_files, css_user);
 
@@ -292,14 +292,14 @@ themes_apply_theme (Gimp          *gimp,
 
       g_output_stream_printf (
         output, NULL, NULL, &error,
-        "/* GIMP theme.css\n"
+        "/* LIGMA theme.css\n"
         " *\n"
-        " * This file is written on GIMP startup and on every theme change.\n"
+        " * This file is written on LIGMA startup and on every theme change.\n"
         " * It is NOT supposed to be edited manually. Edit your personal\n"
-        " * gimp.css file instead (%s).\n"
+        " * ligma.css file instead (%s).\n"
         " */\n"
         "\n",
-        gimp_file_get_utf8_name (css_user));
+        ligma_file_get_utf8_name (css_user));
 
       for (iter = css_files; ! error && iter; iter = g_slist_next (iter))
         {
@@ -340,22 +340,22 @@ themes_apply_theme (Gimp          *gimp,
 
           switch (config->custom_icon_size)
             {
-            case GIMP_ICON_SIZE_SMALL:
+            case LIGMA_ICON_SIZE_SMALL:
               tool_icon_size   = "small-toolbar";
               tab_icon_size    = "small-toolbar";
               button_icon_size = "small-toolbar";
               break;
-            case GIMP_ICON_SIZE_MEDIUM:
+            case LIGMA_ICON_SIZE_MEDIUM:
               tool_icon_size   = "large-toolbar";
               tab_icon_size    = "small-toolbar";
               button_icon_size = "small-toolbar";
               break;
-            case GIMP_ICON_SIZE_LARGE:
+            case LIGMA_ICON_SIZE_LARGE:
               tool_icon_size   = "dnd";
               tab_icon_size    = "large-toolbar";
               button_icon_size = "large-toolbar";
               break;
-            case GIMP_ICON_SIZE_HUGE:
+            case LIGMA_ICON_SIZE_HUGE:
               tool_icon_size   = "dialog";
               tab_icon_size    = "dnd";
               button_icon_size = "dnd";
@@ -365,11 +365,11 @@ themes_apply_theme (Gimp          *gimp,
           g_output_stream_printf (
             output, NULL, NULL, &error,
             "\n"
-            "* { -GimpToolPalette-tool-icon-size: %s; }"
+            "* { -LigmaToolPalette-tool-icon-size: %s; }"
             "\n"
-            "* { -GimpDockbook-tab-icon-size: %s; }"
+            "* { -LigmaDockbook-tab-icon-size: %s; }"
             "\n"
-            "* { -GimpEditor-button-icon-size: %s; }",
+            "* { -LigmaEditor-button-icon-size: %s; }",
             tool_icon_size,
             tab_icon_size,
             button_icon_size);
@@ -387,9 +387,9 @@ themes_apply_theme (Gimp          *gimp,
         {
           GCancellable *cancellable = g_cancellable_new ();
 
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+          ligma_message (ligma, NULL, LIGMA_MESSAGE_ERROR,
                         _("Error writing '%s': %s"),
-                        gimp_file_get_utf8_name (theme_css), error->message);
+                        ligma_file_get_utf8_name (theme_css), error->message);
           g_clear_error (&error);
 
           /* Cancel the overwrite initiated by g_file_replace(). */
@@ -399,9 +399,9 @@ themes_apply_theme (Gimp          *gimp,
         }
       else if (! g_output_stream_close (output, NULL, &error))
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+          ligma_message (ligma, NULL, LIGMA_MESSAGE_ERROR,
                         _("Error closing '%s': %s"),
-                        gimp_file_get_utf8_name (theme_css), error->message);
+                        ligma_file_get_utf8_name (theme_css), error->message);
           g_clear_error (&error);
         }
 
@@ -432,9 +432,9 @@ themes_name_compare (const void *p1,
 }
 
 static void
-themes_theme_change_notify (GimpGuiConfig *config,
+themes_theme_change_notify (LigmaGuiConfig *config,
                             GParamSpec    *pspec,
-                            Gimp          *gimp)
+                            Ligma          *ligma)
 {
   GFile  *theme_css;
   GError *error = NULL;
@@ -443,19 +443,19 @@ themes_theme_change_notify (GimpGuiConfig *config,
                 "gtk-application-prefer-dark-theme", config->prefer_dark_theme,
                 NULL);
 
-  themes_apply_theme (gimp, config);
+  themes_apply_theme (ligma, config);
 
-  theme_css = gimp_directory_file ("theme.css", NULL);
+  theme_css = ligma_directory_file ("theme.css", NULL);
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("Parsing '%s'\n",
-             gimp_file_get_utf8_name (theme_css));
+             ligma_file_get_utf8_name (theme_css));
 
   if (! gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (themes_style_provider),
                                          theme_css, &error))
     {
       g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
-                  gimp_file_get_utf8_name (theme_css), error->message);
+                  ligma_file_get_utf8_name (theme_css), error->message);
       g_clear_error (&error);
     }
 
@@ -465,13 +465,13 @@ themes_theme_change_notify (GimpGuiConfig *config,
 }
 
 static void
-themes_theme_paths_notify (GimpExtensionManager *manager,
+themes_theme_paths_notify (LigmaExtensionManager *manager,
                            GParamSpec           *pspec,
-                           Gimp                 *gimp)
+                           Ligma                 *ligma)
 {
-  GimpGuiConfig *config;
+  LigmaGuiConfig *config;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   if (themes_hash)
     g_hash_table_remove_all (themes_hash);
@@ -481,17 +481,17 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
                                          g_free,
                                          g_object_unref);
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = LIGMA_GUI_CONFIG (ligma->config);
   if (config->theme_path)
     {
       GList *path;
       GList *list;
 
-      g_object_get (gimp->extension_manager,
+      g_object_get (ligma->extension_manager,
                     "theme-paths", &path,
                     NULL);
       path = g_list_copy_deep (path, (GCopyFunc) g_object_ref, NULL);
-      path = g_list_concat (path, gimp_config_path_expand_to_files (config->theme_path, NULL));
+      path = g_list_concat (path, ligma_config_path_expand_to_files (config->theme_path, NULL));
 
       for (list = path; list; list = g_list_next (list))
         {
@@ -521,11 +521,11 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
                       gchar       *basename;
 
                       file = g_file_enumerator_get_child (enumerator, info);
-                      name = gimp_file_get_utf8_name (file);
+                      name = ligma_file_get_utf8_name (file);
 
                       basename = g_path_get_basename (name);
 
-                      if (gimp->be_verbose)
+                      if (ligma->be_verbose)
                         g_print ("Adding theme '%s' (%s)\n",
                                  basename, name);
 

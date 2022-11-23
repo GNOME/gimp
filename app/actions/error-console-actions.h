@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #define __ERROR_CONSOLE_ACIONS_H__
 
 
-void   error_console_actions_setup  (GimpActionGroup *group);
-void   error_console_actions_update (GimpActionGroup *group,
+void   error_console_actions_setup  (LigmaActionGroup *group);
+void   error_console_actions_update (LigmaActionGroup *group,
                                      gpointer         data);
 
 

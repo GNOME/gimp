@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppattern_pdb.c
+ * ligmapattern_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppattern
- * @title: gimppattern
+ * SECTION: ligmapattern
+ * @title: ligmapattern
  * @short_description: Functions operating on a single pattern.
  *
  * Functions operating on a single pattern.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_pattern_get_info:
+ * ligma_pattern_get_info:
  * @name: The pattern name.
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
@@ -53,44 +53,44 @@
  * Since: 2.2
  **/
 gboolean
-gimp_pattern_get_info (const gchar *name,
+ligma_pattern_get_info (const gchar *name,
                        gint        *width,
                        gint        *height,
                        gint        *bpp)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pattern-get-info",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-pattern-get-info",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *bpp = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_pattern_get_pixels:
+ * ligma_pattern_get_pixels:
  * @name: The pattern name.
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
@@ -109,25 +109,25 @@ gimp_pattern_get_info (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_pattern_get_pixels (const gchar  *name,
+ligma_pattern_get_pixels (const gchar  *name,
                          gint         *width,
                          gint         *height,
                          gint         *bpp,
                          gint         *num_color_bytes,
                          guint8      **color_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pattern-get-pixels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-pattern-get-pixels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -135,18 +135,18 @@ gimp_pattern_get_pixels (const gchar  *name,
   *num_color_bytes = 0;
   *color_bytes = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
-      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *num_color_bytes = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *color_bytes = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * kernelgen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org>
+ * kernelgen -- Copyright (C) 2000 Sven Neumann <sven@ligma.org>
  *
  *    Simple hack to create brush subsampling kernels.  If you want to
  *    play with it, change some of the #defines at the top and copy
- *    the output to app/paint/gimpbrushcore-kernels.h.
+ *    the output to app/paint/ligmabrushcore-kernels.h.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,13 +86,13 @@ main (int    argc,
   int    i, j;
   double x, y;
 
-  printf ("/* gimpbrushcore-kernels.h\n"
+  printf ("/* ligmabrushcore-kernels.h\n"
           " *\n"
           " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
-  printf ("#ifndef __GIMP_BRUSH_CORE_KERNELS_H__\n");
-  printf ("#define __GIMP_BRUSH_CORE_KERNELS_H__\n\n");
+  printf ("#ifndef __LIGMA_BRUSH_CORE_KERNELS_H__\n");
+  printf ("#define __LIGMA_BRUSH_CORE_KERNELS_H__\n\n");
   printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
   printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
   printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
@@ -122,7 +122,7 @@ main (int    argc,
 
   printf ("};\n\n");
 
-  printf ("#endif /* __GIMP_BRUSH_CORE_KERNELS_H__ */\n");
+  printf ("#endif /* __LIGMA_BRUSH_CORE_KERNELS_H__ */\n");
 
   return 0;
 }

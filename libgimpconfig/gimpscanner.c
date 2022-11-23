@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpscanner.c
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
- *                     Michael Natterer <mitch@gimp.org>
+ * ligmascanner.c
+ * Copyright (C) 2002  Sven Neumann <sven@ligma.org>
+ *                     Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,19 +29,19 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpconfig-error.h"
-#include "gimpscanner.h"
+#include "ligmaconfig-error.h"
+#include "ligmascanner.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpscanner
- * @title: GimpScanner
+ * SECTION: ligmascanner
+ * @title: LigmaScanner
  * @short_description: A wrapper around #GScanner with some convenience API.
  *
  * A wrapper around #GScanner with some convenience API.
@@ -55,21 +55,21 @@ typedef struct
   GMappedFile  *mapped;
   gchar        *text;
   GError      **error;
-} GimpScannerData;
+} LigmaScannerData;
 
 
-G_DEFINE_BOXED_TYPE (GimpScanner, gimp_scanner,
-                     gimp_scanner_ref, gimp_scanner_unref)
+G_DEFINE_BOXED_TYPE (LigmaScanner, ligma_scanner,
+                     ligma_scanner_ref, ligma_scanner_unref)
 
 
 
 /*  local function prototypes  */
 
-static GimpScanner * gimp_scanner_new     (const gchar  *name,
+static LigmaScanner * ligma_scanner_new     (const gchar  *name,
                                            GMappedFile  *mapped,
                                            gchar        *text,
                                            GError      **error);
-static void          gimp_scanner_message (GimpScanner  *scanner,
+static void          ligma_scanner_message (LigmaScanner  *scanner,
                                            gchar        *message,
                                            gboolean      is_error);
 
@@ -77,19 +77,19 @@ static void          gimp_scanner_message (GimpScanner  *scanner,
 /*  public functions  */
 
 /**
- * gimp_scanner_new_file:
+ * ligma_scanner_new_file:
  * @file: a #GFile
  * @error: return location for #GError, or %NULL
  *
- * Returns: (transfer full): The new #GimpScanner.
+ * Returns: (transfer full): The new #LigmaScanner.
  *
  * Since: 2.10
  **/
-GimpScanner *
-gimp_scanner_new_file (GFile   *file,
+LigmaScanner *
+ligma_scanner_new_file (GFile   *file,
                        GError **error)
 {
-  GimpScanner *scanner;
+  LigmaScanner *scanner;
   gchar       *path;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
@@ -108,17 +108,17 @@ gimp_scanner_new_file (GFile   *file,
         {
           if (error)
             {
-              (*error)->domain = GIMP_CONFIG_ERROR;
+              (*error)->domain = LIGMA_CONFIG_ERROR;
               (*error)->code   = ((*error)->code == G_FILE_ERROR_NOENT ?
-                                  GIMP_CONFIG_ERROR_OPEN_ENOENT :
-                                  GIMP_CONFIG_ERROR_OPEN);
+                                  LIGMA_CONFIG_ERROR_OPEN_ENOENT :
+                                  LIGMA_CONFIG_ERROR_OPEN);
             }
 
           return NULL;
         }
 
-      /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
-      scanner = gimp_scanner_new (gimp_file_get_utf8_name (file),
+      /*  ligma_scanner_new() takes a "name" for the scanner, not a filename  */
+      scanner = ligma_scanner_new (ligma_file_get_utf8_name (file),
                                   mapped, NULL, error);
 
       g_scanner_input_text (scanner,
@@ -135,18 +135,18 @@ gimp_scanner_new_file (GFile   *file,
         {
           if (error)
             {
-              (*error)->domain = GIMP_CONFIG_ERROR;
+              (*error)->domain = LIGMA_CONFIG_ERROR;
               (*error)->code   = ((*error)->code == G_IO_ERROR_NOT_FOUND ?
-                                  GIMP_CONFIG_ERROR_OPEN_ENOENT :
-                                  GIMP_CONFIG_ERROR_OPEN);
+                                  LIGMA_CONFIG_ERROR_OPEN_ENOENT :
+                                  LIGMA_CONFIG_ERROR_OPEN);
             }
 
           return NULL;
         }
 
-      g_object_set_data (G_OBJECT (input), "gimp-data", file);
+      g_object_set_data (G_OBJECT (input), "ligma-data", file);
 
-      scanner = gimp_scanner_new_stream (input, error);
+      scanner = ligma_scanner_new_stream (input, error);
 
       g_object_unref (input);
     }
@@ -155,19 +155,19 @@ gimp_scanner_new_file (GFile   *file,
 }
 
 /**
- * gimp_scanner_new_stream:
+ * ligma_scanner_new_stream:
  * @input: a #GInputStream
  * @error: return location for #GError, or %NULL
  *
- * Returns: (transfer full): The new #GimpScanner.
+ * Returns: (transfer full): The new #LigmaScanner.
  *
  * Since: 2.10
  **/
-GimpScanner *
-gimp_scanner_new_stream (GInputStream  *input,
+LigmaScanner *
+ligma_scanner_new_stream (GInputStream  *input,
                          GError       **error)
 {
-  GimpScanner *scanner;
+  LigmaScanner *scanner;
   GFile       *file;
   const gchar *path;
   GString     *string;
@@ -177,9 +177,9 @@ gimp_scanner_new_stream (GInputStream  *input,
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_object_get_data (G_OBJECT (input), "gimp-file");
+  file = g_object_get_data (G_OBJECT (input), "ligma-file");
   if (file)
-    path = gimp_file_get_utf8_name (file);
+    path = ligma_file_get_utf8_name (file);
   else
     path = "stream";
 
@@ -216,8 +216,8 @@ gimp_scanner_new_stream (GInputStream  *input,
     }
   while (bytes_read == sizeof (buffer));
 
-  /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
-  scanner = gimp_scanner_new (path, NULL, string->str, error);
+  /*  ligma_scanner_new() takes a "name" for the scanner, not a filename  */
+  scanner = ligma_scanner_new (path, NULL, string->str, error);
 
   bytes_read = string->len;
 
@@ -227,21 +227,21 @@ gimp_scanner_new_stream (GInputStream  *input,
 }
 
 /**
- * gimp_scanner_new_string:
+ * ligma_scanner_new_string:
  * @text: (array length=text_len):
  * @text_len: The length of @text, or -1 if NULL-terminated
  * @error: return location for #GError, or %NULL
  *
- * Returns: (transfer full): The new #GimpScanner.
+ * Returns: (transfer full): The new #LigmaScanner.
  *
  * Since: 2.4
  **/
-GimpScanner *
-gimp_scanner_new_string (const gchar  *text,
+LigmaScanner *
+ligma_scanner_new_string (const gchar  *text,
                          gint          text_len,
                          GError      **error)
 {
-  GimpScanner *scanner;
+  LigmaScanner *scanner;
 
   g_return_val_if_fail (text != NULL || text_len <= 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -249,25 +249,25 @@ gimp_scanner_new_string (const gchar  *text,
   if (text_len < 0)
     text_len = text ? strlen (text) : 0;
 
-  scanner = gimp_scanner_new (NULL, NULL, NULL, error);
+  scanner = ligma_scanner_new (NULL, NULL, NULL, error);
 
   g_scanner_input_text (scanner, text, text_len);
 
   return scanner;
 }
 
-static GimpScanner *
-gimp_scanner_new (const gchar  *name,
+static LigmaScanner *
+ligma_scanner_new (const gchar  *name,
                   GMappedFile  *mapped,
                   gchar        *text,
                   GError      **error)
 {
-  GimpScanner     *scanner;
-  GimpScannerData *data;
+  LigmaScanner     *scanner;
+  LigmaScannerData *data;
 
   scanner = g_scanner_new (NULL);
 
-  data = g_slice_new0 (GimpScannerData);
+  data = g_slice_new0 (LigmaScannerData);
 
   data->ref_count = 1;
   data->name      = g_strdup (name);
@@ -276,7 +276,7 @@ gimp_scanner_new (const gchar  *name,
   data->error     = error;
 
   scanner->user_data   = data;
-  scanner->msg_handler = gimp_scanner_message;
+  scanner->msg_handler = ligma_scanner_message;
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z
@@ -289,19 +289,19 @@ gimp_scanner_new (const gchar  *name,
 }
 
 /**
- * gimp_scanner_ref:
- * @scanner: #GimpScanner to ref
+ * ligma_scanner_ref:
+ * @scanner: #LigmaScanner to ref
  *
- * Adds a reference to a #GimpScanner.
+ * Adds a reference to a #LigmaScanner.
  *
  * Returns: the same @scanner.
  *
  * Since: 3.0
  */
-GimpScanner *
-gimp_scanner_ref (GimpScanner *scanner)
+LigmaScanner *
+ligma_scanner_ref (LigmaScanner *scanner)
 {
-  GimpScannerData *data;
+  LigmaScannerData *data;
 
   g_return_val_if_fail (scanner != NULL, NULL);
 
@@ -313,19 +313,19 @@ gimp_scanner_ref (GimpScanner *scanner)
 }
 
 /**
- * gimp_scanner_unref:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_unref:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  *
- * Unref a #GimpScanner. If the reference count drops to zero, the
+ * Unref a #LigmaScanner. If the reference count drops to zero, the
  * scanner is freed.
  *
  * Since: 3.0
  **/
 void
-gimp_scanner_unref (GimpScanner *scanner)
+ligma_scanner_unref (LigmaScanner *scanner)
 {
-  GimpScannerData *data;
+  LigmaScannerData *data;
 
   g_return_if_fail (scanner != NULL);
 
@@ -342,16 +342,16 @@ gimp_scanner_unref (GimpScanner *scanner)
         g_free (data->text);
 
       g_free (data->name);
-      g_slice_free (GimpScannerData, data);
+      g_slice_free (LigmaScannerData, data);
 
       g_scanner_destroy (scanner);
     }
 }
 
 /**
- * gimp_scanner_parse_token:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_token:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @token: the #GTokenType expected as next token.
  *
  * Returns: %TRUE if the next token is @token, %FALSE otherwise.
@@ -359,7 +359,7 @@ gimp_scanner_unref (GimpScanner *scanner)
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_token (GimpScanner *scanner,
+ligma_scanner_parse_token (LigmaScanner *scanner,
                           GTokenType   token)
 {
   if (g_scanner_peek_next_token (scanner) != token)
@@ -371,9 +371,9 @@ gimp_scanner_parse_token (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_identifier:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_identifier:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @identifier: (out): the expected identifier.
  *
  * Returns: %TRUE if the next token is an identifier and if its
@@ -382,7 +382,7 @@ gimp_scanner_parse_token (GimpScanner *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_identifier (GimpScanner *scanner,
+ligma_scanner_parse_identifier (LigmaScanner *scanner,
                                const gchar *identifier)
 {
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
@@ -397,9 +397,9 @@ gimp_scanner_parse_identifier (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_string:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_string:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed string
  *
  * Returns: %TRUE on success
@@ -407,7 +407,7 @@ gimp_scanner_parse_identifier (GimpScanner *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_string (GimpScanner  *scanner,
+ligma_scanner_parse_string (LigmaScanner  *scanner,
                            gchar       **dest)
 {
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
@@ -434,9 +434,9 @@ gimp_scanner_parse_string (GimpScanner  *scanner,
 }
 
 /**
- * gimp_scanner_parse_string_no_validate:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_string_no_validate:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed string
  *
  * Returns: %TRUE on success
@@ -444,7 +444,7 @@ gimp_scanner_parse_string (GimpScanner  *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
+ligma_scanner_parse_string_no_validate (LigmaScanner  *scanner,
                                        gchar       **dest)
 {
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
@@ -461,9 +461,9 @@ gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
 }
 
 /**
- * gimp_scanner_parse_data:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_data:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @length: Length of the data to parse
  * @dest: (out) (array length=length): Return location for the parsed data
  *
@@ -472,7 +472,7 @@ gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_data (GimpScanner  *scanner,
+ligma_scanner_parse_data (LigmaScanner  *scanner,
                          gint          length,
                          guint8      **dest)
 {
@@ -490,9 +490,9 @@ gimp_scanner_parse_data (GimpScanner  *scanner,
 }
 
 /**
- * gimp_scanner_parse_int:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_int:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed integer
  *
  * Returns: %TRUE on success
@@ -500,7 +500,7 @@ gimp_scanner_parse_data (GimpScanner  *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_int (GimpScanner *scanner,
+ligma_scanner_parse_int (LigmaScanner *scanner,
                         gint        *dest)
 {
   gboolean negate = FALSE;
@@ -525,9 +525,9 @@ gimp_scanner_parse_int (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_int64:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_int64:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed integer
  *
  * Returns: %TRUE on success
@@ -535,7 +535,7 @@ gimp_scanner_parse_int (GimpScanner *scanner,
  * Since: 2.8
  **/
 gboolean
-gimp_scanner_parse_int64 (GimpScanner *scanner,
+ligma_scanner_parse_int64 (LigmaScanner *scanner,
                           gint64      *dest)
 {
   gboolean negate = FALSE;
@@ -560,9 +560,9 @@ gimp_scanner_parse_int64 (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_float:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_float:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed float
  *
  * Returns: %TRUE on success
@@ -570,7 +570,7 @@ gimp_scanner_parse_int64 (GimpScanner *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_float (GimpScanner *scanner,
+ligma_scanner_parse_float (LigmaScanner *scanner,
                           gdouble     *dest)
 {
   gboolean negate = FALSE;
@@ -613,9 +613,9 @@ gimp_scanner_parse_float (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_boolean:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_boolean:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out): Return location for the parsed boolean
  *
  * Returns: %TRUE on success
@@ -623,7 +623,7 @@ gimp_scanner_parse_float (GimpScanner *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_boolean (GimpScanner *scanner,
+ligma_scanner_parse_boolean (LigmaScanner *scanner,
                             gboolean    *dest)
 {
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
@@ -664,9 +664,9 @@ enum
 };
 
 /**
- * gimp_scanner_parse_color:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_color:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out caller-allocates): Pointer to a color to store the result
  *
  * Returns: %TRUE on success
@@ -674,15 +674,15 @@ enum
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_color (GimpScanner *scanner,
-                          GimpRGB     *dest)
+ligma_scanner_parse_color (LigmaScanner *scanner,
+                          LigmaRGB     *dest)
 {
   guint      scope_id;
   guint      old_scope_id;
   GTokenType token;
-  GimpRGB    color = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaRGB    color = { 0.0, 0.0, 0.0, 1.0 };
 
-  scope_id = g_quark_from_static_string ("gimp_scanner_parse_color");
+  scope_id = g_quark_from_static_string ("ligma_scanner_parse_color");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
   if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
@@ -736,20 +736,20 @@ gimp_scanner_parse_color (GimpScanner *scanner,
 
             for (i = 0; i < n_channels; i++)
               {
-                if (! gimp_scanner_parse_float (scanner, &col[i]))
+                if (! ligma_scanner_parse_float (scanner, &col[i]))
                   goto finish;
               }
 
             if (is_hsv)
               {
-                GimpHSV hsv;
+                LigmaHSV hsv;
 
-                gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
-                gimp_hsv_to_rgb (&hsv, &color);
+                ligma_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
+                ligma_hsv_to_rgb (&hsv, &color);
               }
             else
               {
-                gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
+                ligma_rgba_set (&color, col[0], col[1], col[2], col[3]);
               }
 
             token = G_TOKEN_RIGHT_PAREN;
@@ -784,9 +784,9 @@ gimp_scanner_parse_color (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_matrix2:
- * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
- *           gimp_scanner_new_string()
+ * ligma_scanner_parse_matrix2:
+ * @scanner: A #LigmaScanner created by ligma_scanner_new_file() or
+ *           ligma_scanner_new_string()
  * @dest: (out caller-allocates): Pointer to a matrix to store the result
  *
  * Returns: %TRUE on success
@@ -794,15 +794,15 @@ gimp_scanner_parse_color (GimpScanner *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_matrix2 (GimpScanner *scanner,
-                            GimpMatrix2 *dest)
+ligma_scanner_parse_matrix2 (LigmaScanner *scanner,
+                            LigmaMatrix2 *dest)
 {
   guint        scope_id;
   guint        old_scope_id;
   GTokenType   token;
-  GimpMatrix2  matrix;
+  LigmaMatrix2  matrix;
 
-  scope_id = g_quark_from_static_string ("gimp_scanner_parse_matrix");
+  scope_id = g_quark_from_static_string ("ligma_scanner_parse_matrix");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
   if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "matrix"))
@@ -825,13 +825,13 @@ gimp_scanner_parse_matrix2 (GimpScanner *scanner,
           {
             token = G_TOKEN_FLOAT;
 
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][0]))
+            if (! ligma_scanner_parse_float (scanner, &matrix.coeff[0][0]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][1]))
+            if (! ligma_scanner_parse_float (scanner, &matrix.coeff[0][1]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][0]))
+            if (! ligma_scanner_parse_float (scanner, &matrix.coeff[1][0]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][1]))
+            if (! ligma_scanner_parse_float (scanner, &matrix.coeff[1][1]))
               goto finish;
 
             token = G_TOKEN_RIGHT_PAREN;
@@ -869,21 +869,21 @@ gimp_scanner_parse_matrix2 (GimpScanner *scanner,
 /*  private functions  */
 
 static void
-gimp_scanner_message (GimpScanner *scanner,
+ligma_scanner_message (LigmaScanner *scanner,
                       gchar       *message,
                       gboolean     is_error)
 {
-  GimpScannerData *data = scanner->user_data;
+  LigmaScannerData *data = scanner->user_data;
 
   /* we don't expect warnings */
   g_return_if_fail (is_error);
 
   if (data->name)
-    g_set_error (data->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+    g_set_error (data->error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
                  _("Error while parsing '%s' in line %d: %s"),
                  data->name, scanner->line, message);
   else
     /*  should never happen, thus not marked for translation  */
-    g_set_error (data->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+    g_set_error (data->error, LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
                  "Error parsing internal buffer: %s", message);
 }

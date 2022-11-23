@@ -16,7 +16,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-tool-desaturate.svg">
+   sodipodi:docname="ligma-tool-desaturate.svg">
   <defs
      id="defs2">
     <linearGradient
@@ -139,7 +139,7 @@
      id="layer1"
      transform="translate(-277.31979,-107.08233)">
     <g
-       id="gimp-tool-desaturate">
+       id="ligma-tool-desaturate">
       <rect
          ry="0.26459318"
          rx="0.26459318"

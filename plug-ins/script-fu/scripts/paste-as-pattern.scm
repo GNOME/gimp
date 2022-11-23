@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; script-fu-paste-as-pattern
@@ -19,14 +19,14 @@
 
 
 (define (script-fu-paste-as-pattern name filename)
-  (let* ((pattern-image (car (gimp-edit-paste-as-new-image)))
+  (let* ((pattern-image (car (ligma-edit-paste-as-new-image)))
          (pattern-draw 0)
          (path 0))
 
-    (if (= TRUE (car (gimp-image-is-valid pattern-image)))
+    (if (= TRUE (car (ligma-image-is-valid pattern-image)))
       (begin
-        (set! pattern-draw (aref (cadr (gimp-image-get-selected-drawables pattern-image)) 0))
-        (set! path (string-append gimp-directory
+        (set! pattern-draw (aref (cadr (ligma-image-get-selected-drawables pattern-image)) 0))
+        (set! path (string-append ligma-directory
                              "/patterns/"
                              filename
                              (number->string pattern-image)
@@ -38,12 +38,12 @@
                        path
                        name)
 
-        (gimp-image-delete pattern-image)
+        (ligma-image-delete pattern-image)
 
-        (gimp-patterns-refresh)
-        (gimp-context-set-pattern name)
+        (ligma-patterns-refresh)
+        (ligma-context-set-pattern name)
       )
-      (gimp-message _"There is no image data in the clipboard to paste.")
+      (ligma-message _"There is no image data in the clipboard to paste.")
     )
   )
 )
@@ -51,7 +51,7 @@
 (script-fu-register "script-fu-paste-as-pattern"
   _"Paste as New _Pattern..."
   _"Paste the clipboard contents into a new pattern"
-  "Michael Natterer <mitch@gimp.org>"
+  "Michael Natterer <mitch@ligma.org>"
   "Michael Natterer"
   "2005-09-25"
   ""

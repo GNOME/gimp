@@ -1,10 +1,10 @@
 /* bmp.c                                          */
 /* Version 0.52                                   */
 /* This is a File input and output filter for the */
-/* Gimp. It loads and saves images in windows(TM) */
+/* Ligma. It loads and saves images in windows(TM) */
 /* bitmap format.                                 */
 /* Some Parts that deal with the interaction with */
-/* GIMP are taken from the GIF plugin by          */
+/* LIGMA are taken from the GIF plugin by          */
 /* Peter Mattis & Spencer Kimball and from the    */
 /* PCX plugin by Francisco Bustamante.            */
 /*                                                */
@@ -33,7 +33,7 @@
 /*                       by p.filiciak@zax.pl     */
 
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,14 +56,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "bmp.h"
 #include "bmp-load.h"
 #include "bmp-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 typedef struct _Bmp      Bmp;
@@ -71,12 +71,12 @@ typedef struct _BmpClass BmpClass;
 
 struct _Bmp
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _BmpClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -85,36 +85,36 @@ struct _BmpClass
 
 GType                   bmp_get_type         (void) G_GNUC_CONST;
 
-static GList          * bmp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * bmp_create_procedure (GimpPlugIn           *plug_in,
+static GList          * bmp_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * bmp_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * bmp_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * bmp_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * bmp_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * bmp_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 
 
-G_DEFINE_TYPE (Bmp, bmp, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Bmp, bmp, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BMP_TYPE)
+LIGMA_MAIN (BMP_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 bmp_class_init (BmpClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = bmp_query_procedures;
   plug_in_class->create_procedure = bmp_create_procedure;
@@ -127,7 +127,7 @@ bmp_init (Bmp *bmp)
 }
 
 static GList *
-bmp_query_procedures (GimpPlugIn *plug_in)
+bmp_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -137,75 +137,75 @@ bmp_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-bmp_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+bmp_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            bmp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
+      ligma_procedure_set_menu_label (procedure, _("Windows BMP image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of Windows BMP file format",
                                         "Loads files of Windows BMP file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Alexander Schulz",
                                       "Alexander Schulz",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/bmp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "bmp");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,BM");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            bmp_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB*");
+      ligma_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB*");
 
-      gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
+      ligma_procedure_set_menu_label (procedure, _("Windows BMP image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in Windows BMP file format",
                                         "Saves files in Windows BMP file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Alexander Schulz",
                                       "Alexander Schulz",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/bmp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "bmp");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-rle",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "use-rle",
                              "Use RLE",
                              "Use run-lengh-encoding compression "
                              "(only valid for 4 and 8-bit indexed images)",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "write-color-space",
                              "Write color space information",
                              "Whether or not to write BITMAPV5HEADER "
                              "color space data",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "rgb-format",
+      LIGMA_PROC_ARG_INT (procedure, "rgb-format",
                          "RGB format",
                          "Export format for RGB images "
                          "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888,"
@@ -217,15 +217,15 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-bmp_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+bmp_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -233,54 +233,54 @@ bmp_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-bmp_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+bmp_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "BMP",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB   |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "BMP",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB   |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY  |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -293,8 +293,8 @@ bmp_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("BMP format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
@@ -302,14 +302,14 @@ bmp_save (GimpProcedure        *procedure,
                        procedure, G_OBJECT (config),
                        &error);
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }

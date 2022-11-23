@@ -7,8 +7,8 @@ xnone = "-xnone"
 endif
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"		\
-	-DGIMP_COMMAND=\"@GIMP_COMMAND@\"	\
+	-DG_LOG_DOMAIN=\"Ligma-GUI\"		\
+	-DLIGMA_COMMAND=\"@LIGMA_COMMAND@\"	\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
@@ -31,12 +31,12 @@ AM_LDFLAGS = \
 noinst_LIBRARIES = libappgui.a
 
 libappgui_a_sources = \
-	gimpapp.c		\
-	gimpapp.h		\
-	gimpdbusservice.c	\
-	gimpdbusservice.h	\
-	gimpuiconfigurer.c	\
-	gimpuiconfigurer.h	\
+	ligmaapp.c		\
+	ligmaapp.h		\
+	ligmadbusservice.c	\
+	ligmadbusservice.h	\
+	ligmauiconfigurer.c	\
+	ligmauiconfigurer.h	\
 	gui.c			\
 	gui.h			\
 	gui-message.c		\
@@ -58,8 +58,8 @@ libappgui_a_sources = \
 	themes.h
 
 libappgui_a_built_sources = \
-	gimpdbusservice-generated.c	\
-	gimpdbusservice-generated.h
+	ligmadbusservice-generated.c	\
+	ligmadbusservice-generated.h
 
 libappgui_a_SOURCES = $(libappgui_a_built_sources) $(libappgui_a_sources)
 
@@ -75,10 +75,10 @@ EXTRA_DIST = \
 gen_sources = $(libappgui_a_built_sources)
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpdbusservice.c: $(libappgui_a_built_sources)
+$(srcdir)/ligmadbusservice.c: $(libappgui_a_built_sources)
 
 $(libappgui_a_built_sources): $(srcdir)/dbus-service.xml
-	$(GDBUS_CODEGEN) --interface-prefix org.gimp.GIMP. \
-			 --generate-c-code gimpdbusservice-generated \
-			 --c-namespace GimpDBusService \
+	$(GDBUS_CODEGEN) --interface-prefix org.ligma.LIGMA. \
+			 --generate-c-code ligmadbusservice-generated \
+			 --c-namespace LigmaDBusService \
 			 $(srcdir)/dbus-service.xml

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,67 +25,67 @@
 #include <gegl.h>
 #include <gexiv2/gexiv2.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimp.h"
-#include "gimp-memsize.h"
-#include "gimp-parasites.h"
-#include "gimp-utils.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-floating-selection.h"
-#include "gimpdrawablestack.h"
-#include "gimpgrid.h"
-#include "gimperror.h"
-#include "gimpguide.h"
-#include "gimpidtable.h"
-#include "gimpimage.h"
-#include "gimpimage-color-profile.h"
-#include "gimpimage-colormap.h"
-#include "gimpimage-guides.h"
-#include "gimpimage-item-list.h"
-#include "gimpimage-metadata.h"
-#include "gimpimage-sample-points.h"
-#include "gimpimage-preview.h"
-#include "gimpimage-private.h"
-#include "gimpimage-quick-mask.h"
-#include "gimpimage-symmetry.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimpitemlist.h"
-#include "gimpitemtree.h"
-#include "gimplayer.h"
-#include "gimplayer-floating-selection.h"
-#include "gimplayermask.h"
-#include "gimplayerstack.h"
-#include "gimpmarshal.h"
-#include "gimppalette.h"
-#include "gimpparasitelist.h"
-#include "gimppickable.h"
-#include "gimpprojectable.h"
-#include "gimpprojection.h"
-#include "gimpsamplepoint.h"
-#include "gimpselection.h"
-#include "gimpsymmetry.h"
-#include "gimptempbuf.h"
-#include "gimptemplate.h"
-#include "gimpundostack.h"
+#include "ligma.h"
+#include "ligma-memsize.h"
+#include "ligma-parasites.h"
+#include "ligma-utils.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-floating-selection.h"
+#include "ligmadrawablestack.h"
+#include "ligmagrid.h"
+#include "ligmaerror.h"
+#include "ligmaguide.h"
+#include "ligmaidtable.h"
+#include "ligmaimage.h"
+#include "ligmaimage-color-profile.h"
+#include "ligmaimage-colormap.h"
+#include "ligmaimage-guides.h"
+#include "ligmaimage-item-list.h"
+#include "ligmaimage-metadata.h"
+#include "ligmaimage-sample-points.h"
+#include "ligmaimage-preview.h"
+#include "ligmaimage-private.h"
+#include "ligmaimage-quick-mask.h"
+#include "ligmaimage-symmetry.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmaitemlist.h"
+#include "ligmaitemtree.h"
+#include "ligmalayer.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmalayermask.h"
+#include "ligmalayerstack.h"
+#include "ligmamarshal.h"
+#include "ligmapalette.h"
+#include "ligmaparasitelist.h"
+#include "ligmapickable.h"
+#include "ligmaprojectable.h"
+#include "ligmaprojection.h"
+#include "ligmasamplepoint.h"
+#include "ligmaselection.h"
+#include "ligmasymmetry.h"
+#include "ligmatempbuf.h"
+#include "ligmatemplate.h"
+#include "ligmaundostack.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 #ifdef DEBUG
@@ -136,7 +136,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_ID,
   PROP_WIDTH,
   PROP_HEIGHT,
@@ -150,483 +150,483 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
-static void     gimp_projectable_iface_init      (GimpProjectableInterface  *iface);
-static void     gimp_pickable_iface_init         (GimpPickableInterface     *iface);
+static void     ligma_color_managed_iface_init    (LigmaColorManagedInterface *iface);
+static void     ligma_projectable_iface_init      (LigmaProjectableInterface  *iface);
+static void     ligma_pickable_iface_init         (LigmaPickableInterface     *iface);
 
-static void     gimp_image_constructed           (GObject           *object);
-static void     gimp_image_set_property          (GObject           *object,
+static void     ligma_image_constructed           (GObject           *object);
+static void     ligma_image_set_property          (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
-static void     gimp_image_get_property          (GObject           *object,
+static void     ligma_image_get_property          (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
-static void     gimp_image_dispose               (GObject           *object);
-static void     gimp_image_finalize              (GObject           *object);
+static void     ligma_image_dispose               (GObject           *object);
+static void     ligma_image_finalize              (GObject           *object);
 
-static void     gimp_image_name_changed          (GimpObject        *object);
-static gint64   gimp_image_get_memsize           (GimpObject        *object,
+static void     ligma_image_name_changed          (LigmaObject        *object);
+static gint64   ligma_image_get_memsize           (LigmaObject        *object,
                                                   gint64            *gui_size);
 
-static gboolean gimp_image_get_size              (GimpViewable      *viewable,
+static gboolean ligma_image_get_size              (LigmaViewable      *viewable,
                                                   gint              *width,
                                                   gint              *height);
-static void     gimp_image_size_changed          (GimpViewable      *viewable);
-static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
+static void     ligma_image_size_changed          (LigmaViewable      *viewable);
+static gchar  * ligma_image_get_description       (LigmaViewable      *viewable,
                                                   gchar            **tooltip);
 
-static void     gimp_image_real_mode_changed     (GimpImage         *image);
-static void     gimp_image_real_precision_changed(GimpImage         *image);
-static void     gimp_image_real_resolution_changed(GimpImage        *image);
-static void     gimp_image_real_size_changed_detailed
-                                                 (GimpImage         *image,
+static void     ligma_image_real_mode_changed     (LigmaImage         *image);
+static void     ligma_image_real_precision_changed(LigmaImage         *image);
+static void     ligma_image_real_resolution_changed(LigmaImage        *image);
+static void     ligma_image_real_size_changed_detailed
+                                                 (LigmaImage         *image,
                                                   gint               previous_origin_x,
                                                   gint               previous_origin_y,
                                                   gint               previous_width,
                                                   gint               previous_height);
-static void     gimp_image_real_unit_changed     (GimpImage         *image);
-static void     gimp_image_real_colormap_changed (GimpImage         *image,
+static void     ligma_image_real_unit_changed     (LigmaImage         *image);
+static void     ligma_image_real_colormap_changed (LigmaImage         *image,
                                                   gint               color_index);
 
 static const guint8 *
-        gimp_image_color_managed_get_icc_profile (GimpColorManaged  *managed,
+        ligma_image_color_managed_get_icc_profile (LigmaColorManaged  *managed,
                                                   gsize             *len);
-static GimpColorProfile *
-      gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
+static LigmaColorProfile *
+      ligma_image_color_managed_get_color_profile (LigmaColorManaged  *managed);
 static void
-        gimp_image_color_managed_profile_changed (GimpColorManaged  *managed);
+        ligma_image_color_managed_profile_changed (LigmaColorManaged  *managed);
 
-static GimpColorProfile *
-      gimp_image_color_managed_get_simulation_profile     (GimpColorManaged  *managed);
+static LigmaColorProfile *
+      ligma_image_color_managed_get_simulation_profile     (LigmaColorManaged  *managed);
 static void
-      gimp_image_color_managed_simulation_profile_changed (GimpColorManaged  *managed);
+      ligma_image_color_managed_simulation_profile_changed (LigmaColorManaged  *managed);
 
-static GimpColorRenderingIntent
-      gimp_image_color_managed_get_simulation_intent      (GimpColorManaged  *managed);
+static LigmaColorRenderingIntent
+      ligma_image_color_managed_get_simulation_intent      (LigmaColorManaged  *managed);
 static void
-      gimp_image_color_managed_simulation_intent_changed  (GimpColorManaged  *managed);
+      ligma_image_color_managed_simulation_intent_changed  (LigmaColorManaged  *managed);
 
 static gboolean
-      gimp_image_color_managed_get_simulation_bpc         (GimpColorManaged  *managed);
+      ligma_image_color_managed_get_simulation_bpc         (LigmaColorManaged  *managed);
 static void
-      gimp_image_color_managed_simulation_bpc_changed     (GimpColorManaged  *managed);
+      ligma_image_color_managed_simulation_bpc_changed     (LigmaColorManaged  *managed);
 
-static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
+static void        ligma_image_projectable_flush  (LigmaProjectable   *projectable,
                                                   gboolean           invalidate_preview);
-static GeglRectangle gimp_image_get_bounding_box (GimpProjectable   *projectable);
-static GeglNode   * gimp_image_get_graph         (GimpProjectable   *projectable);
-static GimpImage  * gimp_image_get_image         (GimpProjectable   *projectable);
-static const Babl * gimp_image_get_proj_format   (GimpProjectable   *projectable);
+static GeglRectangle ligma_image_get_bounding_box (LigmaProjectable   *projectable);
+static GeglNode   * ligma_image_get_graph         (LigmaProjectable   *projectable);
+static LigmaImage  * ligma_image_get_image         (LigmaProjectable   *projectable);
+static const Babl * ligma_image_get_proj_format   (LigmaProjectable   *projectable);
 
-static void         gimp_image_pickable_flush    (GimpPickable      *pickable);
-static GeglBuffer * gimp_image_get_buffer        (GimpPickable      *pickable);
-static gboolean     gimp_image_get_pixel_at      (GimpPickable      *pickable,
+static void         ligma_image_pickable_flush    (LigmaPickable      *pickable);
+static GeglBuffer * ligma_image_get_buffer        (LigmaPickable      *pickable);
+static gboolean     ligma_image_get_pixel_at      (LigmaPickable      *pickable,
                                                   gint               x,
                                                   gint               y,
                                                   const Babl        *format,
                                                   gpointer           pixel);
-static gdouble      gimp_image_get_opacity_at    (GimpPickable      *pickable,
+static gdouble      ligma_image_get_opacity_at    (LigmaPickable      *pickable,
                                                   gint               x,
                                                   gint               y);
-static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
+static void         ligma_image_get_pixel_average (LigmaPickable      *pickable,
                                                   const GeglRectangle *rect,
                                                   const Babl        *format,
                                                   gpointer           pixel);
-static void         gimp_image_pixel_to_srgb     (GimpPickable      *pickable,
+static void         ligma_image_pixel_to_srgb     (LigmaPickable      *pickable,
                                                   const Babl        *format,
                                                   gpointer           pixel,
-                                                  GimpRGB           *color);
-static void         gimp_image_srgb_to_pixel     (GimpPickable      *pickable,
-                                                  const GimpRGB     *color,
+                                                  LigmaRGB           *color);
+static void         ligma_image_srgb_to_pixel     (LigmaPickable      *pickable,
+                                                  const LigmaRGB     *color,
                                                   const Babl        *format,
                                                   gpointer           pixel);
 
-static void     gimp_image_projection_buffer_notify
-                                                 (GimpProjection    *projection,
+static void     ligma_image_projection_buffer_notify
+                                                 (LigmaProjection    *projection,
                                                   const GParamSpec  *pspec,
-                                                  GimpImage         *image);
-static void     gimp_image_mask_update           (GimpDrawable      *drawable,
+                                                  LigmaImage         *image);
+static void     ligma_image_mask_update           (LigmaDrawable      *drawable,
                                                   gint               x,
                                                   gint               y,
                                                   gint               width,
                                                   gint               height,
-                                                  GimpImage         *image);
-static void     gimp_image_layers_changed        (GimpContainer     *container,
-                                                  GimpChannel       *channel,
-                                                  GimpImage         *image);
-static void     gimp_image_layer_offset_changed  (GimpDrawable      *drawable,
+                                                  LigmaImage         *image);
+static void     ligma_image_layers_changed        (LigmaContainer     *container,
+                                                  LigmaChannel       *channel,
+                                                  LigmaImage         *image);
+static void     ligma_image_layer_offset_changed  (LigmaDrawable      *drawable,
                                                   const GParamSpec  *pspec,
-                                                  GimpImage         *image);
-static void     gimp_image_layer_bounding_box_changed
-                                                 (GimpDrawable      *drawable,
-                                                  GimpImage         *image);
-static void     gimp_image_layer_alpha_changed   (GimpDrawable      *drawable,
-                                                  GimpImage         *image);
-static void     gimp_image_channel_add           (GimpContainer     *container,
-                                                  GimpChannel       *channel,
-                                                  GimpImage         *image);
-static void     gimp_image_channel_remove        (GimpContainer     *container,
-                                                  GimpChannel       *channel,
-                                                  GimpImage         *image);
-static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
-                                                  GimpImage         *image);
-static void     gimp_image_channel_color_changed (GimpChannel       *channel,
-                                                  GimpImage         *image);
+                                                  LigmaImage         *image);
+static void     ligma_image_layer_bounding_box_changed
+                                                 (LigmaDrawable      *drawable,
+                                                  LigmaImage         *image);
+static void     ligma_image_layer_alpha_changed   (LigmaDrawable      *drawable,
+                                                  LigmaImage         *image);
+static void     ligma_image_channel_add           (LigmaContainer     *container,
+                                                  LigmaChannel       *channel,
+                                                  LigmaImage         *image);
+static void     ligma_image_channel_remove        (LigmaContainer     *container,
+                                                  LigmaChannel       *channel,
+                                                  LigmaImage         *image);
+static void     ligma_image_channel_name_changed  (LigmaChannel       *channel,
+                                                  LigmaImage         *image);
+static void     ligma_image_channel_color_changed (LigmaChannel       *channel,
+                                                  LigmaImage         *image);
 
-static void     gimp_image_selected_layers_notify   (GimpItemTree      *tree,
+static void     ligma_image_selected_layers_notify   (LigmaItemTree      *tree,
                                                      const GParamSpec  *pspec,
-                                                     GimpImage         *image);
-static void     gimp_image_selected_channels_notify (GimpItemTree      *tree,
+                                                     LigmaImage         *image);
+static void     ligma_image_selected_channels_notify (LigmaItemTree      *tree,
                                                      const GParamSpec  *pspec,
-                                                     GimpImage         *image);
-static void     gimp_image_selected_vectors_notify  (GimpItemTree      *tree,
+                                                     LigmaImage         *image);
+static void     ligma_image_selected_vectors_notify  (LigmaItemTree      *tree,
                                                      const GParamSpec  *pspec,
-                                                     GimpImage         *image);
+                                                     LigmaImage         *image);
 
-static void     gimp_image_freeze_bounding_box   (GimpImage         *image);
-static void     gimp_image_thaw_bounding_box     (GimpImage         *image);
-static void     gimp_image_update_bounding_box   (GimpImage         *image);
+static void     ligma_image_freeze_bounding_box   (LigmaImage         *image);
+static void     ligma_image_thaw_bounding_box     (LigmaImage         *image);
+static void     ligma_image_update_bounding_box   (LigmaImage         *image);
 
-static gint     gimp_image_layer_stack_cmp         (GList           *layers1,
+static gint     ligma_image_layer_stack_cmp         (GList           *layers1,
                                                     GList           *layers2);
-static void gimp_image_rec_remove_layer_stack_dups (GimpImage       *image,
+static void ligma_image_rec_remove_layer_stack_dups (LigmaImage       *image,
                                                     GSList          *start);
-static void     gimp_image_clean_layer_stack       (GimpImage       *image);
-static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
-                                                    GimpLayer       *layer);
-static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
-                                                    GimpViewable    *viewable);
+static void     ligma_image_clean_layer_stack       (LigmaImage       *image);
+static void     ligma_image_remove_from_layer_stack (LigmaImage       *image,
+                                                    LigmaLayer       *layer);
+static gint     ligma_image_selected_is_descendant  (LigmaViewable    *selected,
+                                                    LigmaViewable    *viewable);
 
-G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
-                         G_ADD_PRIVATE (GimpImage)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
-                                                gimp_color_managed_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
-                                                gimp_projectable_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaImage, ligma_image, LIGMA_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (LigmaImage)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_COLOR_MANAGED,
+                                                ligma_color_managed_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROJECTABLE,
+                                                ligma_projectable_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PICKABLE,
+                                                ligma_pickable_iface_init))
 
-#define parent_class gimp_image_parent_class
+#define parent_class ligma_image_parent_class
 
-static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_image_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_image_class_init (GimpImageClass *klass)
+ligma_image_class_init (LigmaImageClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
 
-  gimp_image_signals[MODE_CHANGED] =
+  ligma_image_signals[MODE_CHANGED] =
     g_signal_new ("mode-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, mode_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, mode_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[PRECISION_CHANGED] =
+  ligma_image_signals[PRECISION_CHANGED] =
     g_signal_new ("precision-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, precision_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, precision_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[ALPHA_CHANGED] =
+  ligma_image_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, alpha_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[FLOATING_SELECTION_CHANGED] =
+  ligma_image_signals[FLOATING_SELECTION_CHANGED] =
     g_signal_new ("floating-selection-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, floating_selection_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_LAYERS_CHANGED] =
+  ligma_image_signals[SELECTED_LAYERS_CHANGED] =
     g_signal_new ("selected-layers-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_layers_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, selected_layers_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_CHANNELS_CHANGED] =
+  ligma_image_signals[SELECTED_CHANNELS_CHANGED] =
     g_signal_new ("selected-channels-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_channels_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, selected_channels_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_VECTORS_CHANGED] =
+  ligma_image_signals[SELECTED_VECTORS_CHANGED] =
     g_signal_new ("selected-vectors-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_vectors_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, selected_vectors_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
+  ligma_image_signals[COMPONENT_VISIBILITY_CHANGED] =
     g_signal_new ("component-visibility-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, component_visibility_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_CHANNEL_TYPE);
+                  LIGMA_TYPE_CHANNEL_TYPE);
 
-  gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
+  ligma_image_signals[COMPONENT_ACTIVE_CHANGED] =
     g_signal_new ("component-active-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, component_active_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_CHANNEL_TYPE);
+                  LIGMA_TYPE_CHANNEL_TYPE);
 
-  gimp_image_signals[MASK_CHANGED] =
+  ligma_image_signals[MASK_CHANGED] =
     g_signal_new ("mask-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, mask_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[RESOLUTION_CHANGED] =
+  ligma_image_signals[RESOLUTION_CHANGED] =
     g_signal_new ("resolution-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, resolution_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SIZE_CHANGED_DETAILED] =
+  ligma_image_signals[SIZE_CHANGED_DETAILED] =
     g_signal_new ("size-changed-detailed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, size_changed_detailed),
+                  G_STRUCT_OFFSET (LigmaImageClass, size_changed_detailed),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  ligma_marshal_VOID__INT_INT_INT_INT,
                   G_TYPE_NONE, 4,
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  gimp_image_signals[UNIT_CHANGED] =
+  ligma_image_signals[UNIT_CHANGED] =
     g_signal_new ("unit-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, unit_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[QUICK_MASK_CHANGED] =
+  ligma_image_signals[QUICK_MASK_CHANGED] =
     g_signal_new ("quick-mask-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, quick_mask_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, quick_mask_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTION_INVALIDATE] =
+  ligma_image_signals[SELECTION_INVALIDATE] =
     g_signal_new ("selection-invalidate",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selection_invalidate),
+                  G_STRUCT_OFFSET (LigmaImageClass, selection_invalidate),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[CLEAN] =
+  ligma_image_signals[CLEAN] =
     g_signal_new ("clean",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, clean),
+                  G_STRUCT_OFFSET (LigmaImageClass, clean),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DIRTY_MASK);
+                  LIGMA_TYPE_DIRTY_MASK);
 
-  gimp_image_signals[DIRTY] =
+  ligma_image_signals[DIRTY] =
     g_signal_new ("dirty",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, dirty),
+                  G_STRUCT_OFFSET (LigmaImageClass, dirty),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DIRTY_MASK);
+                  LIGMA_TYPE_DIRTY_MASK);
 
-  gimp_image_signals[SAVING] =
+  ligma_image_signals[SAVING] =
     g_signal_new ("saving",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, saving),
+                  G_STRUCT_OFFSET (LigmaImageClass, saving),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SAVED] =
+  ligma_image_signals[SAVED] =
     g_signal_new ("saved",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, saved),
+                  G_STRUCT_OFFSET (LigmaImageClass, saved),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_FILE);
 
-  gimp_image_signals[EXPORTED] =
+  ligma_image_signals[EXPORTED] =
     g_signal_new ("exported",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, exported),
+                  G_STRUCT_OFFSET (LigmaImageClass, exported),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_FILE);
 
-  gimp_image_signals[GUIDE_ADDED] =
+  ligma_image_signals[GUIDE_ADDED] =
     g_signal_new ("guide-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, guide_added),
+                  G_STRUCT_OFFSET (LigmaImageClass, guide_added),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_GUIDE);
+                  LIGMA_TYPE_GUIDE);
 
-  gimp_image_signals[GUIDE_REMOVED] =
+  ligma_image_signals[GUIDE_REMOVED] =
     g_signal_new ("guide-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, guide_removed),
+                  G_STRUCT_OFFSET (LigmaImageClass, guide_removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_GUIDE);
+                  LIGMA_TYPE_GUIDE);
 
-  gimp_image_signals[GUIDE_MOVED] =
+  ligma_image_signals[GUIDE_MOVED] =
     g_signal_new ("guide-moved",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, guide_moved),
+                  G_STRUCT_OFFSET (LigmaImageClass, guide_moved),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_GUIDE);
+                  LIGMA_TYPE_GUIDE);
 
-  gimp_image_signals[SAMPLE_POINT_ADDED] =
+  ligma_image_signals[SAMPLE_POINT_ADDED] =
     g_signal_new ("sample-point-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, sample_point_added),
+                  G_STRUCT_OFFSET (LigmaImageClass, sample_point_added),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_SAMPLE_POINT);
+                  LIGMA_TYPE_SAMPLE_POINT);
 
-  gimp_image_signals[SAMPLE_POINT_REMOVED] =
+  ligma_image_signals[SAMPLE_POINT_REMOVED] =
     g_signal_new ("sample-point-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, sample_point_removed),
+                  G_STRUCT_OFFSET (LigmaImageClass, sample_point_removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_SAMPLE_POINT);
+                  LIGMA_TYPE_SAMPLE_POINT);
 
-  gimp_image_signals[SAMPLE_POINT_MOVED] =
+  ligma_image_signals[SAMPLE_POINT_MOVED] =
     g_signal_new ("sample-point-moved",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, sample_point_moved),
+                  G_STRUCT_OFFSET (LigmaImageClass, sample_point_moved),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_SAMPLE_POINT);
+                  LIGMA_TYPE_SAMPLE_POINT);
 
-  gimp_image_signals[PARASITE_ATTACHED] =
+  ligma_image_signals[PARASITE_ATTACHED] =
     g_signal_new ("parasite-attached",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, parasite_attached),
+                  G_STRUCT_OFFSET (LigmaImageClass, parasite_attached),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
-  gimp_image_signals[PARASITE_DETACHED] =
+  ligma_image_signals[PARASITE_DETACHED] =
     g_signal_new ("parasite-detached",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, parasite_detached),
+                  G_STRUCT_OFFSET (LigmaImageClass, parasite_detached),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
-  gimp_image_signals[COLORMAP_CHANGED] =
+  ligma_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, colormap_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 
-  gimp_image_signals[UNDO_EVENT] =
+  ligma_image_signals[UNDO_EVENT] =
     g_signal_new ("undo-event",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, undo_event),
+                  G_STRUCT_OFFSET (LigmaImageClass, undo_event),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM_OBJECT,
+                  ligma_marshal_VOID__ENUM_OBJECT,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_UNDO_EVENT,
-                  GIMP_TYPE_UNDO);
+                  LIGMA_TYPE_UNDO_EVENT,
+                  LIGMA_TYPE_UNDO);
 
-  gimp_image_signals[LAYER_SETS_CHANGED] =
+  ligma_image_signals[LAYER_SETS_CHANGED] =
     g_signal_new ("layer-sets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, layer_sets_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, layer_sets_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[CHANNEL_SETS_CHANGED] =
+  ligma_image_signals[CHANNEL_SETS_CHANGED] =
     g_signal_new ("channel-sets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, channel_sets_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, channel_sets_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[VECTORS_SETS_CHANGED] =
+  ligma_image_signals[VECTORS_SETS_CHANGED] =
     g_signal_new ("vectors-sets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, vectors_sets_changed),
+                  G_STRUCT_OFFSET (LigmaImageClass, vectors_sets_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed           = gimp_image_constructed;
-  object_class->set_property          = gimp_image_set_property;
-  object_class->get_property          = gimp_image_get_property;
-  object_class->dispose               = gimp_image_dispose;
-  object_class->finalize              = gimp_image_finalize;
+  object_class->constructed           = ligma_image_constructed;
+  object_class->set_property          = ligma_image_set_property;
+  object_class->get_property          = ligma_image_get_property;
+  object_class->dispose               = ligma_image_dispose;
+  object_class->finalize              = ligma_image_finalize;
 
-  gimp_object_class->name_changed     = gimp_image_name_changed;
-  gimp_object_class->get_memsize      = gimp_image_get_memsize;
+  ligma_object_class->name_changed     = ligma_image_name_changed;
+  ligma_object_class->get_memsize      = ligma_image_get_memsize;
 
-  viewable_class->default_icon_name   = "gimp-image";
-  viewable_class->get_size            = gimp_image_get_size;
-  viewable_class->size_changed        = gimp_image_size_changed;
-  viewable_class->get_preview_size    = gimp_image_get_preview_size;
-  viewable_class->get_popup_size      = gimp_image_get_popup_size;
-  viewable_class->get_new_preview     = gimp_image_get_new_preview;
-  viewable_class->get_new_pixbuf      = gimp_image_get_new_pixbuf;
-  viewable_class->get_description     = gimp_image_get_description;
+  viewable_class->default_icon_name   = "ligma-image";
+  viewable_class->get_size            = ligma_image_get_size;
+  viewable_class->size_changed        = ligma_image_size_changed;
+  viewable_class->get_preview_size    = ligma_image_get_preview_size;
+  viewable_class->get_popup_size      = ligma_image_get_popup_size;
+  viewable_class->get_new_preview     = ligma_image_get_new_preview;
+  viewable_class->get_new_pixbuf      = ligma_image_get_new_pixbuf;
+  viewable_class->get_description     = ligma_image_get_description;
 
-  klass->mode_changed                 = gimp_image_real_mode_changed;
-  klass->precision_changed            = gimp_image_real_precision_changed;
+  klass->mode_changed                 = ligma_image_real_mode_changed;
+  klass->precision_changed            = ligma_image_real_precision_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
   klass->selected_layers_changed      = NULL;
@@ -635,9 +635,9 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
-  klass->resolution_changed           = gimp_image_real_resolution_changed;
-  klass->size_changed_detailed        = gimp_image_real_size_changed_detailed;
-  klass->unit_changed                 = gimp_image_real_unit_changed;
+  klass->resolution_changed           = ligma_image_real_resolution_changed;
+  klass->size_changed_detailed        = ligma_image_real_size_changed_detailed;
+  klass->unit_changed                 = ligma_image_real_unit_changed;
   klass->quick_mask_changed           = NULL;
   klass->selection_invalidate         = NULL;
 
@@ -654,105 +654,105 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->sample_point_moved           = NULL;
   klass->parasite_attached            = NULL;
   klass->parasite_detached            = NULL;
-  klass->colormap_changed             = gimp_image_real_colormap_changed;
+  klass->colormap_changed             = ligma_image_real_colormap_changed;
   klass->undo_event                   = NULL;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
-                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     GIMP_PARAM_READWRITE |
+                                                     1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
-                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     GIMP_PARAM_READWRITE |
+                                                     1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BASE_TYPE,
                                    g_param_spec_enum ("base-type", NULL, NULL,
-                                                      GIMP_TYPE_IMAGE_BASE_TYPE,
-                                                      GIMP_RGB,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_IMAGE_BASE_TYPE,
+                                                      LIGMA_RGB,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PRECISION,
                                    g_param_spec_enum ("precision", NULL, NULL,
-                                                      GIMP_TYPE_PRECISION,
-                                                      GIMP_PRECISION_U8_NON_LINEAR,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_PRECISION,
+                                                      LIGMA_PRECISION_U8_NON_LINEAR,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_METADATA,
                                    g_param_spec_object ("metadata", NULL, NULL,
                                                         GEXIV2_TYPE_METADATA,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_PARAM_READABLE));
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
   g_object_class_install_property (object_class, PROP_SYMMETRY,
                                    g_param_spec_gtype ("symmetry",
                                                        NULL, _("Symmetry"),
-                                                       GIMP_TYPE_SYMMETRY,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_TYPE_SYMMETRY,
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+ligma_color_managed_iface_init (LigmaColorManagedInterface *iface)
 {
-  iface->get_icc_profile            = gimp_image_color_managed_get_icc_profile;
-  iface->get_color_profile          = gimp_image_color_managed_get_color_profile;
-  iface->profile_changed            = gimp_image_color_managed_profile_changed;
-  iface->get_simulation_profile     = gimp_image_color_managed_get_simulation_profile;
-  iface->simulation_profile_changed = gimp_image_color_managed_simulation_profile_changed;
-  iface->get_simulation_intent      = gimp_image_color_managed_get_simulation_intent;
-  iface->simulation_intent_changed  = gimp_image_color_managed_simulation_intent_changed;
-  iface->get_simulation_bpc         = gimp_image_color_managed_get_simulation_bpc;
-  iface->simulation_bpc_changed     = gimp_image_color_managed_simulation_bpc_changed;
+  iface->get_icc_profile            = ligma_image_color_managed_get_icc_profile;
+  iface->get_color_profile          = ligma_image_color_managed_get_color_profile;
+  iface->profile_changed            = ligma_image_color_managed_profile_changed;
+  iface->get_simulation_profile     = ligma_image_color_managed_get_simulation_profile;
+  iface->simulation_profile_changed = ligma_image_color_managed_simulation_profile_changed;
+  iface->get_simulation_intent      = ligma_image_color_managed_get_simulation_intent;
+  iface->simulation_intent_changed  = ligma_image_color_managed_simulation_intent_changed;
+  iface->get_simulation_bpc         = ligma_image_color_managed_get_simulation_bpc;
+  iface->simulation_bpc_changed     = ligma_image_color_managed_simulation_bpc_changed;
 }
 
 static void
-gimp_projectable_iface_init (GimpProjectableInterface *iface)
+ligma_projectable_iface_init (LigmaProjectableInterface *iface)
 {
-  iface->flush              = gimp_image_projectable_flush;
-  iface->get_image          = gimp_image_get_image;
-  iface->get_format         = gimp_image_get_proj_format;
-  iface->get_bounding_box   = gimp_image_get_bounding_box;
-  iface->get_graph          = gimp_image_get_graph;
-  iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
+  iface->flush              = ligma_image_projectable_flush;
+  iface->get_image          = ligma_image_get_image;
+  iface->get_format         = ligma_image_get_proj_format;
+  iface->get_bounding_box   = ligma_image_get_bounding_box;
+  iface->get_graph          = ligma_image_get_graph;
+  iface->invalidate_preview = (void (*) (LigmaProjectable*)) ligma_viewable_invalidate_preview;
 }
 
 static void
-gimp_pickable_iface_init (GimpPickableInterface *iface)
+ligma_pickable_iface_init (LigmaPickableInterface *iface)
 {
-  iface->flush                 = gimp_image_pickable_flush;
-  iface->get_image             = (GimpImage  * (*) (GimpPickable *pickable)) gimp_image_get_image;
-  iface->get_format            = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
-  iface->get_format_with_alpha = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
-  iface->get_buffer            = gimp_image_get_buffer;
-  iface->get_pixel_at          = gimp_image_get_pixel_at;
-  iface->get_opacity_at        = gimp_image_get_opacity_at;
-  iface->get_pixel_average     = gimp_image_get_pixel_average;
-  iface->pixel_to_srgb         = gimp_image_pixel_to_srgb;
-  iface->srgb_to_pixel         = gimp_image_srgb_to_pixel;
+  iface->flush                 = ligma_image_pickable_flush;
+  iface->get_image             = (LigmaImage  * (*) (LigmaPickable *pickable)) ligma_image_get_image;
+  iface->get_format            = (const Babl * (*) (LigmaPickable *pickable)) ligma_image_get_proj_format;
+  iface->get_format_with_alpha = (const Babl * (*) (LigmaPickable *pickable)) ligma_image_get_proj_format;
+  iface->get_buffer            = ligma_image_get_buffer;
+  iface->get_pixel_at          = ligma_image_get_pixel_at;
+  iface->get_opacity_at        = ligma_image_get_opacity_at;
+  iface->get_pixel_average     = ligma_image_get_pixel_average;
+  iface->pixel_to_srgb         = ligma_image_pixel_to_srgb;
+  iface->srgb_to_pixel         = ligma_image_srgb_to_pixel;
 }
 
 static void
-gimp_image_init (GimpImage *image)
+ligma_image_init (LigmaImage *image)
 {
-  GimpImagePrivate *private = gimp_image_get_instance_private (image);
+  LigmaImagePrivate *private = ligma_image_get_instance_private (image);
   gint              i;
 
   image->priv = private;
@@ -767,9 +767,9 @@ gimp_image_init (GimpImage *image)
   private->xresolution         = 1.0;
   private->yresolution         = 1.0;
   private->resolution_set      = FALSE;
-  private->resolution_unit     = GIMP_UNIT_INCH;
-  private->base_type           = GIMP_RGB;
-  private->precision           = GIMP_PRECISION_U8_NON_LINEAR;
+  private->resolution_unit     = LIGMA_UNIT_INCH;
+  private->base_type           = LIGMA_RGB;
+  private->precision           = LIGMA_PRECISION_U8_NON_LINEAR;
   private->new_layer_mode      = -1;
 
   private->show_all            = 0;
@@ -784,7 +784,7 @@ gimp_image_init (GimpImage *image)
   private->metadata            = NULL;
 
   private->simulation_profile  = NULL;
-  private->simulation_intent   = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  private->simulation_intent   = LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   private->simulation_bpc      = FALSE;
 
   private->dirty               = 1;
@@ -798,7 +798,7 @@ gimp_image_init (GimpImage *image)
 
   private->tattoo_state        = 0;
 
-  private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
+  private->projection          = ligma_projection_new (LIGMA_PROJECTABLE (image));
 
   private->symmetries          = NULL;
   private->active_symmetry     = NULL;
@@ -807,15 +807,15 @@ gimp_image_init (GimpImage *image)
   private->grid                = NULL;
   private->sample_points       = NULL;
 
-  private->layers              = gimp_item_tree_new (image,
-                                                     GIMP_TYPE_LAYER_STACK,
-                                                     GIMP_TYPE_LAYER);
-  private->channels            = gimp_item_tree_new (image,
-                                                     GIMP_TYPE_DRAWABLE_STACK,
-                                                     GIMP_TYPE_CHANNEL);
-  private->vectors             = gimp_item_tree_new (image,
-                                                     GIMP_TYPE_ITEM_STACK,
-                                                     GIMP_TYPE_VECTORS);
+  private->layers              = ligma_item_tree_new (image,
+                                                     LIGMA_TYPE_LAYER_STACK,
+                                                     LIGMA_TYPE_LAYER);
+  private->channels            = ligma_item_tree_new (image,
+                                                     LIGMA_TYPE_DRAWABLE_STACK,
+                                                     LIGMA_TYPE_CHANNEL);
+  private->vectors             = ligma_item_tree_new (image,
+                                                     LIGMA_TYPE_ITEM_STACK,
+                                                     LIGMA_TYPE_VECTORS);
   private->layer_stack         = NULL;
 
   private->stored_layer_sets   = NULL;
@@ -823,71 +823,71 @@ gimp_image_init (GimpImage *image)
   private->stored_vectors_sets = NULL;
 
   g_signal_connect (private->projection, "notify::buffer",
-                    G_CALLBACK (gimp_image_projection_buffer_notify),
+                    G_CALLBACK (ligma_image_projection_buffer_notify),
                     image);
 
   g_signal_connect (private->layers, "notify::selected-items",
-                    G_CALLBACK (gimp_image_selected_layers_notify),
+                    G_CALLBACK (ligma_image_selected_layers_notify),
                     image);
   g_signal_connect (private->channels, "notify::selected-items",
-                    G_CALLBACK (gimp_image_selected_channels_notify),
+                    G_CALLBACK (ligma_image_selected_channels_notify),
                     image);
   g_signal_connect (private->vectors, "notify::selected-items",
-                    G_CALLBACK (gimp_image_selected_vectors_notify),
+                    G_CALLBACK (ligma_image_selected_vectors_notify),
                     image);
 
   g_signal_connect_swapped (private->layers->container, "update",
-                            G_CALLBACK (gimp_image_invalidate),
+                            G_CALLBACK (ligma_image_invalidate),
                             image);
 
   private->layer_offset_x_handler =
-    gimp_container_add_handler (private->layers->container, "notify::offset-x",
-                                G_CALLBACK (gimp_image_layer_offset_changed),
+    ligma_container_add_handler (private->layers->container, "notify::offset-x",
+                                G_CALLBACK (ligma_image_layer_offset_changed),
                                 image);
   private->layer_offset_y_handler =
-    gimp_container_add_handler (private->layers->container, "notify::offset-y",
-                                G_CALLBACK (gimp_image_layer_offset_changed),
+    ligma_container_add_handler (private->layers->container, "notify::offset-y",
+                                G_CALLBACK (ligma_image_layer_offset_changed),
                                 image);
   private->layer_bounding_box_handler =
-    gimp_container_add_handler (private->layers->container, "bounding-box-changed",
-                                G_CALLBACK (gimp_image_layer_bounding_box_changed),
+    ligma_container_add_handler (private->layers->container, "bounding-box-changed",
+                                G_CALLBACK (ligma_image_layer_bounding_box_changed),
                                 image);
   private->layer_alpha_handler =
-    gimp_container_add_handler (private->layers->container, "alpha-changed",
-                                G_CALLBACK (gimp_image_layer_alpha_changed),
+    ligma_container_add_handler (private->layers->container, "alpha-changed",
+                                G_CALLBACK (ligma_image_layer_alpha_changed),
                                 image);
 
   g_signal_connect (private->layers->container, "add",
-                    G_CALLBACK (gimp_image_layers_changed),
+                    G_CALLBACK (ligma_image_layers_changed),
                     image);
   g_signal_connect (private->layers->container, "remove",
-                    G_CALLBACK (gimp_image_layers_changed),
+                    G_CALLBACK (ligma_image_layers_changed),
                     image);
 
   g_signal_connect_swapped (private->channels->container, "update",
-                            G_CALLBACK (gimp_image_invalidate),
+                            G_CALLBACK (ligma_image_invalidate),
                             image);
 
   private->channel_name_changed_handler =
-    gimp_container_add_handler (private->channels->container, "name-changed",
-                                G_CALLBACK (gimp_image_channel_name_changed),
+    ligma_container_add_handler (private->channels->container, "name-changed",
+                                G_CALLBACK (ligma_image_channel_name_changed),
                                 image);
   private->channel_color_changed_handler =
-    gimp_container_add_handler (private->channels->container, "color-changed",
-                                G_CALLBACK (gimp_image_channel_color_changed),
+    ligma_container_add_handler (private->channels->container, "color-changed",
+                                G_CALLBACK (ligma_image_channel_color_changed),
                                 image);
 
   g_signal_connect (private->channels->container, "add",
-                    G_CALLBACK (gimp_image_channel_add),
+                    G_CALLBACK (ligma_image_channel_add),
                     image);
   g_signal_connect (private->channels->container, "remove",
-                    G_CALLBACK (gimp_image_channel_remove),
+                    G_CALLBACK (ligma_image_channel_remove),
                     image);
 
   private->floating_sel        = NULL;
   private->selection_mask      = NULL;
 
-  private->parasites           = gimp_parasite_list_new ();
+  private->parasites           = ligma_parasite_list_new ();
 
   for (i = 0; i < MAX_CHANNELS; i++)
     {
@@ -897,12 +897,12 @@ gimp_image_init (GimpImage *image)
 
   private->quick_mask_state    = FALSE;
   private->quick_mask_inverted = FALSE;
-  gimp_rgba_set (&private->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
+  ligma_rgba_set (&private->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
 
-  private->undo_stack          = gimp_undo_stack_new (image);
-  private->redo_stack          = gimp_undo_stack_new (image);
+  private->undo_stack          = ligma_undo_stack_new (image);
+  private->redo_stack          = ligma_undo_stack_new (image);
   private->group_count         = 0;
-  private->pushing_undo_group  = GIMP_UNDO_GROUP_NONE;
+  private->pushing_undo_group  = LIGMA_UNDO_GROUP_NONE;
 
   private->flush_accum.alpha_changed              = FALSE;
   private->flush_accum.mask_changed               = FALSE;
@@ -911,77 +911,77 @@ gimp_image_init (GimpImage *image)
 }
 
 static void
-gimp_image_constructed (GObject *object)
+ligma_image_constructed (GObject *object)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpChannel      *selection;
-  GimpCoreConfig   *config;
-  GimpTemplate     *template;
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
+  LigmaChannel      *selection;
+  LigmaCoreConfig   *config;
+  LigmaTemplate     *template;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (image->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (image->ligma));
 
-  config = image->gimp->config;
+  config = image->ligma->config;
 
-  private->ID = gimp_id_table_insert (image->gimp->image_table, image);
+  private->ID = ligma_id_table_insert (image->ligma->image_table, image);
 
   template = config->default_image;
 
-  private->xresolution     = gimp_template_get_resolution_x (template);
-  private->yresolution     = gimp_template_get_resolution_y (template);
-  private->resolution_unit = gimp_template_get_resolution_unit (template);
+  private->xresolution     = ligma_template_get_resolution_x (template);
+  private->yresolution     = ligma_template_get_resolution_y (template);
+  private->resolution_unit = ligma_template_get_resolution_unit (template);
 
-  private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
+  private->grid = ligma_config_duplicate (LIGMA_CONFIG (config->default_grid));
 
   private->quick_mask_color = config->quick_mask_color;
 
-  gimp_image_update_bounding_box (image);
+  ligma_image_update_bounding_box (image);
 
-  if (private->base_type == GIMP_INDEXED)
-    gimp_image_colormap_init (image);
+  if (private->base_type == LIGMA_INDEXED)
+    ligma_image_colormap_init (image);
 
-  selection = gimp_selection_new (image,
-                                  gimp_image_get_width  (image),
-                                  gimp_image_get_height (image));
-  gimp_image_take_mask (image, selection);
+  selection = ligma_selection_new (image,
+                                  ligma_image_get_width  (image),
+                                  ligma_image_get_height (image));
+  ligma_image_take_mask (image, selection);
 
   g_signal_connect_object (config, "notify::transparency-type",
-                           G_CALLBACK (gimp_item_stack_invalidate_previews),
+                           G_CALLBACK (ligma_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::transparency-size",
-                           G_CALLBACK (gimp_item_stack_invalidate_previews),
+                           G_CALLBACK (ligma_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::transparency-custom-color1",
-                           G_CALLBACK (gimp_item_stack_invalidate_previews),
+                           G_CALLBACK (ligma_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::transparency-custom-color2",
-                           G_CALLBACK (gimp_item_stack_invalidate_previews),
+                           G_CALLBACK (ligma_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::layer-previews",
-                           G_CALLBACK (gimp_viewable_size_changed),
+                           G_CALLBACK (ligma_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::group-layer-previews",
-                           G_CALLBACK (gimp_viewable_size_changed),
+                           G_CALLBACK (ligma_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
 
-  gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
+  ligma_container_add (image->ligma->images, LIGMA_OBJECT (image));
 }
 
 static void
-gimp_image_set_property (GObject      *object,
+ligma_image_set_property (GObject      *object,
                          guint         property_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      image->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      image->ligma = g_value_get_object (value);
       break;
 
     case PROP_WIDTH:
@@ -993,12 +993,12 @@ gimp_image_set_property (GObject      *object,
 
     case PROP_BASE_TYPE:
       private->base_type = g_value_get_enum (value);
-      _gimp_image_free_color_transforms (image);
+      _ligma_image_free_color_transforms (image);
       break;
 
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
-      _gimp_image_free_color_transforms (image);
+      _ligma_image_free_color_transforms (image);
       break;
 
     case PROP_SYMMETRY:
@@ -1014,18 +1014,18 @@ gimp_image_set_property (GObject      *object,
 
         for (iter = private->symmetries; iter; iter = g_list_next (iter))
           {
-            GimpSymmetry *sym = iter->data;
+            LigmaSymmetry *sym = iter->data;
 
             if (type == G_TYPE_FROM_INSTANCE (sym))
               private->active_symmetry = iter->data;
           }
 
         if (! private->active_symmetry &&
-            g_type_is_a (type, GIMP_TYPE_SYMMETRY))
+            g_type_is_a (type, LIGMA_TYPE_SYMMETRY))
           {
-            GimpSymmetry *sym = gimp_image_symmetry_new (image, type);
+            LigmaSymmetry *sym = ligma_image_symmetry_new (image, type);
 
-            gimp_image_symmetry_add (image, sym);
+            ligma_image_symmetry_add (image, sym);
             g_object_unref (sym);
 
             private->active_symmetry = sym;
@@ -1048,18 +1048,18 @@ gimp_image_set_property (GObject      *object,
 }
 
 static void
-gimp_image_get_property (GObject    *object,
+ligma_image_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, image->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, image->ligma);
       break;
     case PROP_ID:
       g_value_set_int (value, private->ID);
@@ -1077,10 +1077,10 @@ gimp_image_get_property (GObject    *object,
       g_value_set_enum (value, private->precision);
       break;
     case PROP_METADATA:
-      g_value_set_object (value, gimp_image_get_metadata (image));
+      g_value_set_object (value, ligma_image_get_metadata (image));
       break;
     case PROP_BUFFER:
-      g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
+      g_value_set_object (value, ligma_image_get_buffer (LIGMA_PICKABLE (image)));
       break;
     case PROP_SYMMETRY:
       g_value_set_gtype (value,
@@ -1095,51 +1095,51 @@ gimp_image_get_property (GObject    *object,
 }
 
 static void
-gimp_image_dispose (GObject *object)
+ligma_image_dispose (GObject *object)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->palette)
-    gimp_image_colormap_dispose (image);
+    ligma_image_colormap_dispose (image);
 
-  gimp_image_undo_free (image);
+  ligma_image_undo_free (image);
 
   g_list_free_full (private->stored_layer_sets, g_object_unref);
   g_list_free_full (private->stored_channel_sets, g_object_unref);
   g_list_free_full (private->stored_vectors_sets, g_object_unref);
 
   g_signal_handlers_disconnect_by_func (private->layers->container,
-                                        gimp_image_invalidate,
+                                        ligma_image_invalidate,
                                         image);
 
-  gimp_container_remove_handler (private->layers->container,
+  ligma_container_remove_handler (private->layers->container,
                                  private->layer_offset_x_handler);
-  gimp_container_remove_handler (private->layers->container,
+  ligma_container_remove_handler (private->layers->container,
                                  private->layer_offset_y_handler);
-  gimp_container_remove_handler (private->layers->container,
+  ligma_container_remove_handler (private->layers->container,
                                  private->layer_bounding_box_handler);
-  gimp_container_remove_handler (private->layers->container,
+  ligma_container_remove_handler (private->layers->container,
                                  private->layer_alpha_handler);
 
   g_signal_handlers_disconnect_by_func (private->layers->container,
-                                        gimp_image_layers_changed,
+                                        ligma_image_layers_changed,
                                         image);
 
   g_signal_handlers_disconnect_by_func (private->channels->container,
-                                        gimp_image_invalidate,
+                                        ligma_image_invalidate,
                                         image);
 
-  gimp_container_remove_handler (private->channels->container,
+  ligma_container_remove_handler (private->channels->container,
                                  private->channel_name_changed_handler);
-  gimp_container_remove_handler (private->channels->container,
+  ligma_container_remove_handler (private->channels->container,
                                  private->channel_color_changed_handler);
 
   g_signal_handlers_disconnect_by_func (private->channels->container,
-                                        gimp_image_channel_add,
+                                        ligma_image_channel_add,
                                         image);
   g_signal_handlers_disconnect_by_func (private->channels->container,
-                                        gimp_image_channel_remove,
+                                        ligma_image_channel_remove,
                                         image);
 
   g_object_run_dispose (G_OBJECT (private->layers));
@@ -1150,19 +1150,19 @@ gimp_image_dispose (GObject *object)
 }
 
 static void
-gimp_image_finalize (GObject *object)
+ligma_image_finalize (GObject *object)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   g_clear_object (&private->projection);
   g_clear_object (&private->graph);
   private->visible_mask = NULL;
 
   if (private->palette)
-    gimp_image_colormap_free (image);
+    ligma_image_colormap_free (image);
 
-  _gimp_image_free_color_profile (image);
+  _ligma_image_free_color_profile (image);
 
   g_clear_object (&private->pickable_buffer);
   g_clear_object (&private->metadata);
@@ -1209,10 +1209,10 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->undo_stack);
   g_clear_object (&private->redo_stack);
 
-  if (image->gimp && image->gimp->image_table)
+  if (image->ligma && image->ligma->image_table)
     {
-      gimp_id_table_remove (image->gimp->image_table, private->ID);
-      image->gimp = NULL;
+      ligma_id_table_remove (image->ligma->image_table, private->ID);
+      image->ligma = NULL;
     }
 
   g_clear_pointer (&private->display_name, g_free);
@@ -1233,14 +1233,14 @@ gimp_image_finalize (GObject *object)
 }
 
 static void
-gimp_image_name_changed (GimpObject *object)
+ligma_image_name_changed (LigmaObject *object)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
   const gchar      *name;
 
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+  if (LIGMA_OBJECT_CLASS (parent_class)->name_changed)
+    LIGMA_OBJECT_CLASS (parent_class)->name_changed (object);
 
   g_clear_pointer (&private->display_name, g_free);
   g_clear_pointer (&private->display_path, g_free);
@@ -1249,10 +1249,10 @@ gimp_image_name_changed (GimpObject *object)
    * to NULL strings (without emitting the "name-changed" signal
    * again)
    */
-  name = gimp_object_get_name (object);
+  name = ligma_object_get_name (object);
   if (name && strlen (name) == 0)
     {
-      gimp_object_name_free (object);
+      ligma_object_name_free (object);
       name = NULL;
     }
 
@@ -1263,282 +1263,282 @@ gimp_image_name_changed (GimpObject *object)
 }
 
 static gint64
-gimp_image_get_memsize (GimpObject *object,
+ligma_image_get_memsize (LigmaObject *object,
                         gint64     *gui_size)
 {
-  GimpImage        *image   = GIMP_IMAGE (object);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (object);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
   gint64            memsize = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->palette),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->palette),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->projection),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->projection),
                                       gui_size);
 
-  memsize += gimp_g_list_get_memsize (gimp_image_get_guides (image),
-                                      sizeof (GimpGuide));
+  memsize += ligma_g_list_get_memsize (ligma_image_get_guides (image),
+                                      sizeof (LigmaGuide));
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->grid), gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->grid), gui_size);
 
-  memsize += gimp_g_list_get_memsize (gimp_image_get_sample_points (image),
-                                      sizeof (GimpSamplePoint));
+  memsize += ligma_g_list_get_memsize (ligma_image_get_sample_points (image),
+                                      sizeof (LigmaSamplePoint));
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->layers),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->layers),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->channels),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->channels),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->vectors),
-                                      gui_size);
-
-  memsize += gimp_g_slist_get_memsize (private->layer_stack, 0);
-
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->selection_mask),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->vectors),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->parasites),
+  memsize += ligma_g_slist_get_memsize (private->layer_stack, 0);
+
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->selection_mask),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->undo_stack),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->redo_stack),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->parasites),
                                       gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->undo_stack),
+                                      gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (private->redo_stack),
+                                      gui_size);
+
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_image_get_size (GimpViewable *viewable,
+ligma_image_get_size (LigmaViewable *viewable,
                      gint         *width,
                      gint         *height)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
+  LigmaImage *image = LIGMA_IMAGE (viewable);
 
-  *width  = gimp_image_get_width  (image);
-  *height = gimp_image_get_height (image);
+  *width  = ligma_image_get_width  (image);
+  *height = ligma_image_get_height (image);
 
   return TRUE;
 }
 
 static void
-gimp_image_size_changed (GimpViewable *viewable)
+ligma_image_size_changed (LigmaViewable *viewable)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
+  LigmaImage *image = LIGMA_IMAGE (viewable);
   GList     *all_items;
   GList     *list;
 
-  if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
-    GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
+  if (LIGMA_VIEWABLE_CLASS (parent_class)->size_changed)
+    LIGMA_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 
-  all_items = gimp_image_get_layer_list (image);
+  all_items = ligma_image_get_layer_list (image);
   for (list = all_items; list; list = g_list_next (list))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
+      LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (list->data));
 
-      gimp_viewable_size_changed (GIMP_VIEWABLE (list->data));
+      ligma_viewable_size_changed (LIGMA_VIEWABLE (list->data));
 
       if (mask)
-        gimp_viewable_size_changed (GIMP_VIEWABLE (mask));
+        ligma_viewable_size_changed (LIGMA_VIEWABLE (mask));
     }
   g_list_free (all_items);
 
-  all_items = gimp_image_get_channel_list (image);
-  g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
+  all_items = ligma_image_get_channel_list (image);
+  g_list_free_full (all_items, (GDestroyNotify) ligma_viewable_size_changed);
 
-  all_items = gimp_image_get_vectors_list (image);
-  g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
+  all_items = ligma_image_get_vectors_list (image);
+  g_list_free_full (all_items, (GDestroyNotify) ligma_viewable_size_changed);
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
+  ligma_viewable_size_changed (LIGMA_VIEWABLE (ligma_image_get_mask (image)));
 
-  gimp_image_metadata_update_pixel_size (image);
+  ligma_image_metadata_update_pixel_size (image);
 
-  g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+  g_clear_object (&LIGMA_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 
-  gimp_image_update_bounding_box (image);
+  ligma_image_update_bounding_box (image);
 }
 
 static gchar *
-gimp_image_get_description (GimpViewable  *viewable,
+ligma_image_get_description (LigmaViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
+  LigmaImage *image = LIGMA_IMAGE (viewable);
 
   if (tooltip)
-    *tooltip = g_strdup (gimp_image_get_display_path (image));
+    *tooltip = g_strdup (ligma_image_get_display_path (image));
 
   return g_strdup_printf ("%s-%d",
-                          gimp_image_get_display_name (image),
-                          gimp_image_get_id (image));
+                          ligma_image_get_display_name (image),
+                          ligma_image_get_id (image));
 }
 
 static void
-gimp_image_real_mode_changed (GimpImage *image)
+ligma_image_real_mode_changed (LigmaImage *image)
 {
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
 }
 
 static void
-gimp_image_real_precision_changed (GimpImage *image)
+ligma_image_real_precision_changed (LigmaImage *image)
 {
-  gimp_image_metadata_update_bits_per_sample (image);
+  ligma_image_metadata_update_bits_per_sample (image);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
 }
 
 static void
-gimp_image_real_resolution_changed (GimpImage *image)
+ligma_image_real_resolution_changed (LigmaImage *image)
 {
-  gimp_image_metadata_update_resolution (image);
+  ligma_image_metadata_update_resolution (image);
 }
 
 static void
-gimp_image_real_size_changed_detailed (GimpImage *image,
+ligma_image_real_size_changed_detailed (LigmaImage *image,
                                        gint       previous_origin_x,
                                        gint       previous_origin_y,
                                        gint       previous_width,
                                        gint       previous_height)
 {
-  /* Whenever GimpImage::size-changed-detailed is emitted, so is
-   * GimpViewable::size-changed. Clients choose what signal to listen
+  /* Whenever LigmaImage::size-changed-detailed is emitted, so is
+   * LigmaViewable::size-changed. Clients choose what signal to listen
    * to depending on how much info they need.
    */
-  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+  ligma_viewable_size_changed (LIGMA_VIEWABLE (image));
 }
 
 static void
-gimp_image_real_unit_changed (GimpImage *image)
+ligma_image_real_unit_changed (LigmaImage *image)
 {
-  gimp_image_metadata_update_resolution (image);
+  ligma_image_metadata_update_resolution (image);
 }
 
 static void
-gimp_image_real_colormap_changed (GimpImage *image,
+ligma_image_real_colormap_changed (LigmaImage *image,
                                   gint       color_index)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  gimp_image_colormap_update_formats (image);
+  ligma_image_colormap_update_formats (image);
 
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+  if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
     {
       /* A colormap alteration affects the whole image */
-      gimp_image_invalidate_all (image);
+      ligma_image_invalidate_all (image);
 
-      gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (private->layers->container));
+      ligma_item_stack_invalidate_previews (LIGMA_ITEM_STACK (private->layers->container));
     }
 }
 
 static const guint8 *
-gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
+ligma_image_color_managed_get_icc_profile (LigmaColorManaged *managed,
                                           gsize            *len)
 {
-  return gimp_image_get_icc_profile (GIMP_IMAGE (managed), len);
+  return ligma_image_get_icc_profile (LIGMA_IMAGE (managed), len);
 }
 
-static GimpColorProfile *
-gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
+static LigmaColorProfile *
+ligma_image_color_managed_get_color_profile (LigmaColorManaged *managed)
 {
-  GimpImage        *image = GIMP_IMAGE (managed);
-  GimpColorProfile *profile;
+  LigmaImage        *image = LIGMA_IMAGE (managed);
+  LigmaColorProfile *profile;
 
-  profile = gimp_image_get_color_profile (image);
+  profile = ligma_image_get_color_profile (image);
 
   if (! profile)
-    profile = gimp_image_get_builtin_color_profile (image);
+    profile = ligma_image_get_builtin_color_profile (image);
 
   return profile;
 }
 
 static void
-gimp_image_color_managed_profile_changed (GimpColorManaged *managed)
+ligma_image_color_managed_profile_changed (LigmaColorManaged *managed)
 {
-  GimpImage     *image  = GIMP_IMAGE (managed);
-  GimpItemStack *layers = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  LigmaImage     *image  = LIGMA_IMAGE (managed);
+  LigmaItemStack *layers = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
 
-  gimp_image_metadata_update_colorspace (image);
+  ligma_image_metadata_update_colorspace (image);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
-  gimp_item_stack_profile_changed (layers);
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (image));
+  ligma_item_stack_profile_changed (layers);
 }
 
-static GimpColorProfile *
-gimp_image_color_managed_get_simulation_profile (GimpColorManaged *managed)
+static LigmaColorProfile *
+ligma_image_color_managed_get_simulation_profile (LigmaColorManaged *managed)
 {
-  GimpImage        *image = GIMP_IMAGE (managed);
-  GimpColorProfile *profile;
+  LigmaImage        *image = LIGMA_IMAGE (managed);
+  LigmaColorProfile *profile;
 
-  profile = gimp_image_get_simulation_profile (image);
+  profile = ligma_image_get_simulation_profile (image);
 
   return profile;
 }
 
 static void
-gimp_image_color_managed_simulation_profile_changed (GimpColorManaged *managed)
+ligma_image_color_managed_simulation_profile_changed (LigmaColorManaged *managed)
 {
-  GimpImage *image = GIMP_IMAGE (managed);
+  LigmaImage *image = LIGMA_IMAGE (managed);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (image));
 }
 
-static GimpColorRenderingIntent
-gimp_image_color_managed_get_simulation_intent (GimpColorManaged *managed)
+static LigmaColorRenderingIntent
+ligma_image_color_managed_get_simulation_intent (LigmaColorManaged *managed)
 {
-  GimpImage *image = GIMP_IMAGE (managed);
+  LigmaImage *image = LIGMA_IMAGE (managed);
 
-  return gimp_image_get_simulation_intent (image);
+  return ligma_image_get_simulation_intent (image);
 }
 
 static void
-gimp_image_color_managed_simulation_intent_changed (GimpColorManaged *managed)
+ligma_image_color_managed_simulation_intent_changed (LigmaColorManaged *managed)
 {
-  GimpImage *image = GIMP_IMAGE (managed);
+  LigmaImage *image = LIGMA_IMAGE (managed);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (image));
 }
 
 static gboolean
-gimp_image_color_managed_get_simulation_bpc (GimpColorManaged *managed)
+ligma_image_color_managed_get_simulation_bpc (LigmaColorManaged *managed)
 {
-  GimpImage *image = GIMP_IMAGE (managed);
+  LigmaImage *image = LIGMA_IMAGE (managed);
 
-  return gimp_image_get_simulation_bpc (image);
+  return ligma_image_get_simulation_bpc (image);
 }
 
 static void
-gimp_image_color_managed_simulation_bpc_changed (GimpColorManaged *managed)
+ligma_image_color_managed_simulation_bpc_changed (LigmaColorManaged *managed)
 {
-  GimpImage *image = GIMP_IMAGE (managed);
+  LigmaImage *image = LIGMA_IMAGE (managed);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  ligma_projectable_structure_changed (LIGMA_PROJECTABLE (image));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (image));
 }
 
 static void
-gimp_image_projectable_flush (GimpProjectable *projectable,
+ligma_image_projectable_flush (LigmaProjectable *projectable,
                               gboolean         invalidate_preview)
 {
-  GimpImage        *image   = GIMP_IMAGE (projectable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (projectable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->flush_accum.alpha_changed)
     {
-      gimp_image_alpha_changed (image);
+      ligma_image_alpha_changed (image);
       private->flush_accum.alpha_changed = FALSE;
     }
 
   if (private->flush_accum.mask_changed)
     {
-      gimp_image_mask_changed (image);
+      ligma_image_mask_changed (image);
       private->flush_accum.mask_changed = FALSE;
     }
 
   if (private->flush_accum.floating_selection_changed)
     {
-      gimp_image_floating_selection_changed (image);
+      ligma_image_floating_selection_changed (image);
       private->flush_accum.floating_selection_changed = FALSE;
     }
 
@@ -1551,54 +1551,54 @@ gimp_image_projectable_flush (GimpProjectable *projectable,
     }
 }
 
-static GimpImage *
-gimp_image_get_image (GimpProjectable *projectable)
+static LigmaImage *
+ligma_image_get_image (LigmaProjectable *projectable)
 {
-  return GIMP_IMAGE (projectable);
+  return LIGMA_IMAGE (projectable);
 }
 
 static const Babl *
-gimp_image_get_proj_format (GimpProjectable *projectable)
+ligma_image_get_proj_format (LigmaProjectable *projectable)
 {
-  GimpImage        *image   = GIMP_IMAGE (projectable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (projectable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   switch (private->base_type)
     {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      return gimp_image_get_format (image, GIMP_RGB,
-                                    gimp_image_get_precision (image), TRUE,
-                                    gimp_image_get_layer_space (image));
+    case LIGMA_RGB:
+    case LIGMA_INDEXED:
+      return ligma_image_get_format (image, LIGMA_RGB,
+                                    ligma_image_get_precision (image), TRUE,
+                                    ligma_image_get_layer_space (image));
 
-    case GIMP_GRAY:
-      return gimp_image_get_format (image, GIMP_GRAY,
-                                    gimp_image_get_precision (image), TRUE,
-                                    gimp_image_get_layer_space (image));
+    case LIGMA_GRAY:
+      return ligma_image_get_format (image, LIGMA_GRAY,
+                                    ligma_image_get_precision (image), TRUE,
+                                    ligma_image_get_layer_space (image));
     }
 
   g_return_val_if_reached (NULL);
 }
 
 static void
-gimp_image_pickable_flush (GimpPickable *pickable)
+ligma_image_pickable_flush (LigmaPickable *pickable)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (pickable);
 
-  return gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+  return ligma_pickable_flush (LIGMA_PICKABLE (private->projection));
 }
 
 static GeglBuffer *
-gimp_image_get_buffer (GimpPickable *pickable)
+ligma_image_get_buffer (LigmaPickable *pickable)
 {
-  GimpImage        *image   = GIMP_IMAGE (pickable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (pickable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (! private->pickable_buffer)
     {
       GeglBuffer *buffer;
 
-      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+      buffer = ligma_pickable_get_buffer (LIGMA_PICKABLE (private->projection));
 
       if (! private->show_all)
         {
@@ -1609,8 +1609,8 @@ gimp_image_get_buffer (GimpPickable *pickable)
           private->pickable_buffer = gegl_buffer_create_sub_buffer (
             buffer,
             GEGL_RECTANGLE (0, 0,
-                            gimp_image_get_width  (image),
-                            gimp_image_get_height (image)));
+                            ligma_image_get_width  (image),
+                            ligma_image_get_height (image)));
         }
     }
 
@@ -1618,21 +1618,21 @@ gimp_image_get_buffer (GimpPickable *pickable)
 }
 
 static gboolean
-gimp_image_get_pixel_at (GimpPickable *pickable,
+ligma_image_get_pixel_at (LigmaPickable *pickable,
                          gint          x,
                          gint          y,
                          const Babl   *format,
                          gpointer      pixel)
 {
-  GimpImage        *image   = GIMP_IMAGE (pickable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (pickable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (x >= 0                            &&
       y >= 0                            &&
-      x < gimp_image_get_width  (image) &&
-      y < gimp_image_get_height (image))
+      x < ligma_image_get_width  (image) &&
+      y < ligma_image_get_height (image))
     {
-      return gimp_pickable_get_pixel_at (GIMP_PICKABLE (private->projection),
+      return ligma_pickable_get_pixel_at (LIGMA_PICKABLE (private->projection),
                                          x, y, format, pixel);
     }
 
@@ -1640,19 +1640,19 @@ gimp_image_get_pixel_at (GimpPickable *pickable,
 }
 
 static gdouble
-gimp_image_get_opacity_at (GimpPickable *pickable,
+ligma_image_get_opacity_at (LigmaPickable *pickable,
                            gint          x,
                            gint          y)
 {
-  GimpImage        *image   = GIMP_IMAGE (pickable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage        *image   = LIGMA_IMAGE (pickable);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (x >= 0                            &&
       y >= 0                            &&
-      x < gimp_image_get_width  (image) &&
-      y < gimp_image_get_height (image))
+      x < ligma_image_get_width  (image) &&
+      y < ligma_image_get_height (image))
     {
-      return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
+      return ligma_pickable_get_opacity_at (LIGMA_PICKABLE (private->projection),
                                            x, y);
     }
 
@@ -1660,54 +1660,54 @@ gimp_image_get_opacity_at (GimpPickable *pickable,
 }
 
 static void
-gimp_image_get_pixel_average (GimpPickable        *pickable,
+ligma_image_get_pixel_average (LigmaPickable        *pickable,
                               const GeglRectangle *rect,
                               const Babl          *format,
                               gpointer             pixel)
 {
-  GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
+  GeglBuffer *buffer = ligma_pickable_get_buffer (pickable);
 
-  return gimp_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
+  return ligma_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
                                   pixel);
 }
 
 static void
-gimp_image_pixel_to_srgb (GimpPickable *pickable,
+ligma_image_pixel_to_srgb (LigmaPickable *pickable,
                           const Babl   *format,
                           gpointer      pixel,
-                          GimpRGB      *color)
+                          LigmaRGB      *color)
 {
-  gimp_image_color_profile_pixel_to_srgb (GIMP_IMAGE (pickable),
+  ligma_image_color_profile_pixel_to_srgb (LIGMA_IMAGE (pickable),
                                           format, pixel, color);
 }
 
 static void
-gimp_image_srgb_to_pixel (GimpPickable  *pickable,
-                          const GimpRGB *color,
+ligma_image_srgb_to_pixel (LigmaPickable  *pickable,
+                          const LigmaRGB *color,
                           const Babl    *format,
                           gpointer       pixel)
 {
-  gimp_image_color_profile_srgb_to_pixel (GIMP_IMAGE (pickable),
+  ligma_image_color_profile_srgb_to_pixel (LIGMA_IMAGE (pickable),
                                           color, format, pixel);
 }
 
 static GeglRectangle
-gimp_image_get_bounding_box (GimpProjectable *projectable)
+ligma_image_get_bounding_box (LigmaProjectable *projectable)
 {
-  GimpImage *image = GIMP_IMAGE (projectable);
+  LigmaImage *image = LIGMA_IMAGE (projectable);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->bounding_box;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->bounding_box;
 }
 
 static GeglNode *
-gimp_image_get_graph (GimpProjectable *projectable)
+ligma_image_get_graph (LigmaProjectable *projectable)
 {
-  GimpImage         *image   = GIMP_IMAGE (projectable);
-  GimpImagePrivate  *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImage         *image   = LIGMA_IMAGE (projectable);
+  LigmaImagePrivate  *private = LIGMA_IMAGE_GET_PRIVATE (image);
   GeglNode          *layers_node;
   GeglNode          *channels_node;
   GeglNode          *output;
-  GimpComponentMask  mask;
+  LigmaComponentMask  mask;
 
   if (private->graph)
     return private->graph;
@@ -1715,15 +1715,15 @@ gimp_image_get_graph (GimpProjectable *projectable)
   private->graph = gegl_node_new ();
 
   layers_node =
-    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->layers->container));
+    ligma_filter_stack_get_graph (LIGMA_FILTER_STACK (private->layers->container));
 
   gegl_node_add_child (private->graph, layers_node);
 
-  mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
+  mask = ~ligma_image_get_visible_mask (image) & LIGMA_COMPONENT_MASK_ALL;
 
   private->visible_mask =
     gegl_node_new_child (private->graph,
-                         "operation", "gimp:mask-components",
+                         "operation", "ligma:mask-components",
                          "mask",      mask,
                          "alpha",     1.0,
                          NULL);
@@ -1732,7 +1732,7 @@ gimp_image_get_graph (GimpProjectable *projectable)
                         private->visible_mask, "input");
 
   channels_node =
-    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->channels->container));
+    ligma_filter_stack_get_graph (LIGMA_FILTER_STACK (private->channels->container));
 
   gegl_node_add_child (private->graph, channels_node);
 
@@ -1748,115 +1748,115 @@ gimp_image_get_graph (GimpProjectable *projectable)
 }
 
 static void
-gimp_image_projection_buffer_notify (GimpProjection   *projection,
+ligma_image_projection_buffer_notify (LigmaProjection   *projection,
                                      const GParamSpec *pspec,
-                                     GimpImage        *image)
+                                     LigmaImage        *image)
 {
-  g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+  g_clear_object (&LIGMA_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 }
 
 static void
-gimp_image_mask_update (GimpDrawable *drawable,
+ligma_image_mask_update (LigmaDrawable *drawable,
                         gint          x,
                         gint          y,
                         gint          width,
                         gint          height,
-                        GimpImage    *image)
+                        LigmaImage    *image)
 {
-  GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.mask_changed = TRUE;
+  LIGMA_IMAGE_GET_PRIVATE (image)->flush_accum.mask_changed = TRUE;
 }
 
 static void
-gimp_image_layers_changed (GimpContainer *container,
-                           GimpChannel   *channel,
-                           GimpImage     *image)
+ligma_image_layers_changed (LigmaContainer *container,
+                           LigmaChannel   *channel,
+                           LigmaImage     *image)
 {
-  gimp_image_update_bounding_box (image);
+  ligma_image_update_bounding_box (image);
 }
 
 static void
-gimp_image_layer_offset_changed (GimpDrawable     *drawable,
+ligma_image_layer_offset_changed (LigmaDrawable     *drawable,
                                  const GParamSpec *pspec,
-                                 GimpImage        *image)
+                                 LigmaImage        *image)
 {
-  gimp_image_update_bounding_box (image);
+  ligma_image_update_bounding_box (image);
 }
 
 static void
-gimp_image_layer_bounding_box_changed (GimpDrawable *drawable,
-                                       GimpImage    *image)
+ligma_image_layer_bounding_box_changed (LigmaDrawable *drawable,
+                                       LigmaImage    *image)
 {
-  gimp_image_update_bounding_box (image);
+  ligma_image_update_bounding_box (image);
 }
 
 static void
-gimp_image_layer_alpha_changed (GimpDrawable *drawable,
-                                GimpImage    *image)
+ligma_image_layer_alpha_changed (LigmaDrawable *drawable,
+                                LigmaImage    *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_container_get_n_children (private->layers->container) == 1)
+  if (ligma_container_get_n_children (private->layers->container) == 1)
     private->flush_accum.alpha_changed = TRUE;
 }
 
 static void
-gimp_image_channel_add (GimpContainer *container,
-                        GimpChannel   *channel,
-                        GimpImage     *image)
+ligma_image_channel_add (LigmaContainer *container,
+                        LigmaChannel   *channel,
+                        LigmaImage     *image)
 {
-  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (channel)))
+  if (! strcmp (LIGMA_IMAGE_QUICK_MASK_NAME,
+                ligma_object_get_name (channel)))
     {
-      gimp_image_set_quick_mask_state (image, TRUE);
+      ligma_image_set_quick_mask_state (image, TRUE);
     }
 }
 
 static void
-gimp_image_channel_remove (GimpContainer *container,
-                           GimpChannel   *channel,
-                           GimpImage     *image)
+ligma_image_channel_remove (LigmaContainer *container,
+                           LigmaChannel   *channel,
+                           LigmaImage     *image)
 {
-  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (channel)))
+  if (! strcmp (LIGMA_IMAGE_QUICK_MASK_NAME,
+                ligma_object_get_name (channel)))
     {
-      gimp_image_set_quick_mask_state (image, FALSE);
+      ligma_image_set_quick_mask_state (image, FALSE);
     }
 }
 
 static void
-gimp_image_channel_name_changed (GimpChannel *channel,
-                                 GimpImage   *image)
+ligma_image_channel_name_changed (LigmaChannel *channel,
+                                 LigmaImage   *image)
 {
-  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (channel)))
+  if (! strcmp (LIGMA_IMAGE_QUICK_MASK_NAME,
+                ligma_object_get_name (channel)))
     {
-      gimp_image_set_quick_mask_state (image, TRUE);
+      ligma_image_set_quick_mask_state (image, TRUE);
     }
-  else if (gimp_image_get_quick_mask_state (image) &&
-           ! gimp_image_get_quick_mask (image))
+  else if (ligma_image_get_quick_mask_state (image) &&
+           ! ligma_image_get_quick_mask (image))
     {
-      gimp_image_set_quick_mask_state (image, FALSE);
+      ligma_image_set_quick_mask_state (image, FALSE);
     }
 }
 
 static void
-gimp_image_channel_color_changed (GimpChannel *channel,
-                                  GimpImage   *image)
+ligma_image_channel_color_changed (LigmaChannel *channel,
+                                  LigmaImage   *image)
 {
-  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (channel)))
+  if (! strcmp (LIGMA_IMAGE_QUICK_MASK_NAME,
+                ligma_object_get_name (channel)))
     {
-      GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
+      LIGMA_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
     }
 }
 
 static void
-gimp_image_selected_layers_notify (GimpItemTree     *tree,
+ligma_image_selected_layers_notify (LigmaItemTree     *tree,
                                    const GParamSpec *pspec,
-                                   GimpImage        *image)
+                                   LigmaImage        *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GList            *layers  = gimp_image_get_selected_layers (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
+  GList            *layers  = ligma_image_get_selected_layers (image);
 
   if (layers)
     {
@@ -1864,7 +1864,7 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       GSList *prev_layers;
 
       while ((prev_layers = g_slist_find_custom (private->layer_stack, layers,
-                                                (GCompareFunc) gimp_image_layer_stack_cmp)))
+                                                (GCompareFunc) ligma_image_layer_stack_cmp)))
         {
           g_list_free (prev_layers->data);
           private->layer_stack = g_slist_delete_link (private->layer_stack,
@@ -1873,45 +1873,45 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       private->layer_stack = g_slist_prepend (private->layer_stack, g_list_copy (layers));
     }
 
-  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[SELECTED_LAYERS_CHANGED], 0);
 
-  if (layers && gimp_image_get_selected_channels (image))
-    gimp_image_set_selected_channels (image, NULL);
+  if (layers && ligma_image_get_selected_channels (image))
+    ligma_image_set_selected_channels (image, NULL);
 }
 
 static void
-gimp_image_selected_channels_notify (GimpItemTree     *tree,
+ligma_image_selected_channels_notify (LigmaItemTree     *tree,
                                      const GParamSpec *pspec,
-                                     GimpImage        *image)
+                                     LigmaImage        *image)
 {
-  GList *channels = gimp_image_get_selected_channels (image);
+  GList *channels = ligma_image_get_selected_channels (image);
 
-  g_signal_emit (image, gimp_image_signals[SELECTED_CHANNELS_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[SELECTED_CHANNELS_CHANGED], 0);
 
-  if (channels && gimp_image_get_selected_layers (image))
-    gimp_image_set_selected_layers (image, NULL);
+  if (channels && ligma_image_get_selected_layers (image))
+    ligma_image_set_selected_layers (image, NULL);
 }
 
 static void
-gimp_image_selected_vectors_notify (GimpItemTree     *tree,
+ligma_image_selected_vectors_notify (LigmaItemTree     *tree,
                                     const GParamSpec *pspec,
-                                    GimpImage        *image)
+                                    LigmaImage        *image)
 {
-  g_signal_emit (image, gimp_image_signals[SELECTED_VECTORS_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[SELECTED_VECTORS_CHANGED], 0);
 }
 
 static void
-gimp_image_freeze_bounding_box (GimpImage *image)
+ligma_image_freeze_bounding_box (LigmaImage *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->bounding_box_freeze_count++;
 }
 
 static void
-gimp_image_thaw_bounding_box (GimpImage *image)
+ligma_image_thaw_bounding_box (LigmaImage *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->bounding_box_freeze_count--;
 
@@ -1920,14 +1920,14 @@ gimp_image_thaw_bounding_box (GimpImage *image)
     {
       private->bounding_box_update_pending = FALSE;
 
-      gimp_image_update_bounding_box (image);
+      ligma_image_update_bounding_box (image);
     }
 }
 
 static void
-gimp_image_update_bounding_box (GimpImage *image)
+ligma_image_update_bounding_box (LigmaImage *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
   GeglRectangle     bounding_box;
 
   if (private->bounding_box_freeze_count > 0)
@@ -1939,26 +1939,26 @@ gimp_image_update_bounding_box (GimpImage *image)
 
   bounding_box.x      = 0;
   bounding_box.y      = 0;
-  bounding_box.width  = gimp_image_get_width  (image);
-  bounding_box.height = gimp_image_get_height (image);
+  bounding_box.width  = ligma_image_get_width  (image);
+  bounding_box.height = ligma_image_get_height (image);
 
   if (private->show_all)
     {
       GList *iter;
 
-      for (iter = gimp_image_get_layer_iter (image);
+      for (iter = ligma_image_get_layer_iter (image);
            iter;
            iter = g_list_next (iter))
         {
-          GimpLayer     *layer = iter->data;
+          LigmaLayer     *layer = iter->data;
           GeglRectangle  layer_bounding_box;
           gint           offset_x;
           gint           offset_y;
 
-          gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+          ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
 
-          layer_bounding_box = gimp_drawable_get_bounding_box (
-            GIMP_DRAWABLE (layer));
+          layer_bounding_box = ligma_drawable_get_bounding_box (
+            LIGMA_DRAWABLE (layer));
 
           layer_bounding_box.x += offset_x;
           layer_bounding_box.y += offset_y;
@@ -1972,12 +1972,12 @@ gimp_image_update_bounding_box (GimpImage *image)
     {
       private->bounding_box = bounding_box;
 
-      gimp_projectable_bounds_changed (GIMP_PROJECTABLE (image), 0, 0);
+      ligma_projectable_bounds_changed (LIGMA_PROJECTABLE (image), 0, 0);
     }
 }
 
 static gint
-gimp_image_layer_stack_cmp (GList *layers1,
+ligma_image_layer_stack_cmp (GList *layers1,
                             GList *layers2)
 {
   if (g_list_length (layers1) != g_list_length (layers2))
@@ -2001,28 +2001,28 @@ gimp_image_layer_stack_cmp (GList *layers1,
 }
 
 /**
- * gimp_image_rec_remove_layer_stack_dups:
+ * ligma_image_rec_remove_layer_stack_dups:
  * @image:
  *
  * Recursively remove duplicates from the layer stack. You should not
- * call this directly, call gimp_image_clean_layer_stack() instead.
+ * call this directly, call ligma_image_clean_layer_stack() instead.
  */
 static void
-gimp_image_rec_remove_layer_stack_dups (GimpImage *image,
+ligma_image_rec_remove_layer_stack_dups (LigmaImage *image,
                                         GSList    *start)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GSList           *dup_layers;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (start == NULL || start->next == NULL)
     return;
 
   while ((dup_layers = g_slist_find_custom (start->next, start->data,
-                                            (GCompareFunc) gimp_image_layer_stack_cmp)))
+                                            (GCompareFunc) ligma_image_layer_stack_cmp)))
     {
       g_list_free (dup_layers->data);
       /* We can safely remove the duplicate then search again because we
@@ -2032,58 +2032,58 @@ gimp_image_rec_remove_layer_stack_dups (GimpImage *image,
                                                   dup_layers);
     }
 
-  gimp_image_rec_remove_layer_stack_dups (image, start->next);
+  ligma_image_rec_remove_layer_stack_dups (image, start->next);
 }
 
 /**
- * gimp_image_clean_layer_stack:
+ * ligma_image_clean_layer_stack:
  * @image:
  *
  * Remove any duplicate and empty selections in the layer stack.
  */
 static void
-gimp_image_clean_layer_stack (GimpImage *image)
+ligma_image_clean_layer_stack (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   /* First remove all empty layer lists. */
   private->layer_stack = g_slist_remove_all (private->layer_stack, NULL);
   /* Then remove all duplicates. */
-  gimp_image_rec_remove_layer_stack_dups (image, private->layer_stack);
+  ligma_image_rec_remove_layer_stack_dups (image, private->layer_stack);
 }
 
 static void
-gimp_image_remove_from_layer_stack (GimpImage *image,
-                                    GimpLayer *layer)
+ligma_image_remove_from_layer_stack (LigmaImage *image,
+                                    LigmaLayer *layer)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GSList           *slist;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   /* Remove layer itself from the MRU layer stack. */
   for (slist = private->layer_stack; slist; slist = slist->next)
     slist->data = g_list_remove (slist->data, layer);
 
   /*  Also remove all children of a group layer from the layer_stack  */
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
     {
-      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      LigmaContainer *stack = ligma_viewable_get_children (LIGMA_VIEWABLE (layer));
       GList         *children;
       GList         *list;
 
-      children = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (stack));
+      children = ligma_item_stack_get_item_list (LIGMA_ITEM_STACK (stack));
 
       for (list = children; list; list = g_list_next (list))
         {
-          GimpLayer *child = list->data;
+          LigmaLayer *child = list->data;
 
           for (slist = private->layer_stack; slist; slist = slist->next)
             slist->data = g_list_remove (slist->data, child);
@@ -2092,17 +2092,17 @@ gimp_image_remove_from_layer_stack (GimpImage *image,
       g_list_free (children);
     }
 
-  gimp_image_clean_layer_stack (image);
+  ligma_image_clean_layer_stack (image);
 }
 
 static gint
-gimp_image_selected_is_descendant (GimpViewable *selected,
-                                   GimpViewable *viewable)
+ligma_image_selected_is_descendant (LigmaViewable *selected,
+                                   LigmaViewable *viewable)
 {
   /* Used as a GCompareFunc to g_list_find_custom() in order to know if
    * one of the selected items is a descendant to @viewable.
    */
-  if (gimp_viewable_is_ancestor (viewable, selected))
+  if (ligma_viewable_is_ancestor (viewable, selected))
     return 0;
   else
     return 1;
@@ -2111,18 +2111,18 @@ gimp_image_selected_is_descendant (GimpViewable *selected,
 
 /*  public functions  */
 
-GimpImage *
-gimp_image_new (Gimp              *gimp,
+LigmaImage *
+ligma_image_new (Ligma              *ligma,
                 gint               width,
                 gint               height,
-                GimpImageBaseType  base_type,
-                GimpPrecision      precision)
+                LigmaImageBaseType  base_type,
+                LigmaPrecision      precision)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (gimp_babl_is_valid (base_type, precision), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (ligma_babl_is_valid (base_type, precision), NULL);
 
-  return g_object_new (GIMP_TYPE_IMAGE,
-                       "gimp",      gimp,
+  return g_object_new (LIGMA_TYPE_IMAGE,
+                       "ligma",      ligma,
                        "width",     width,
                        "height",    height,
                        "base-type", base_type,
@@ -2131,8 +2131,8 @@ gimp_image_new (Gimp              *gimp,
 }
 
 gint64
-gimp_image_estimate_memsize (GimpImage         *image,
-                             GimpComponentType  component_type,
+ligma_image_estimate_memsize (LigmaImage         *image,
+                             LigmaComponentType  component_type,
                              gint               width,
                              gint               height)
 {
@@ -2145,37 +2145,37 @@ gimp_image_estimate_memsize (GimpImage         *image,
   gint64  scaled_size   = 0;
   gint64  new_size;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  current_width  = gimp_image_get_width (image);
-  current_height = gimp_image_get_height (image);
-  current_size   = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
+  current_width  = ligma_image_get_width (image);
+  current_height = ligma_image_get_height (image);
+  current_size   = ligma_object_get_memsize (LIGMA_OBJECT (image), NULL);
 
   /*  the part of the image's memsize that scales linearly with the image  */
-  drawables = gimp_image_item_list_get_list (image,
-                                             GIMP_ITEM_TYPE_LAYERS |
-                                             GIMP_ITEM_TYPE_CHANNELS,
-                                             GIMP_ITEM_SET_ALL);
+  drawables = ligma_image_item_list_get_list (image,
+                                             LIGMA_ITEM_TYPE_LAYERS |
+                                             LIGMA_ITEM_TYPE_CHANNELS,
+                                             LIGMA_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (drawables);
+  ligma_image_item_list_filter (drawables);
 
-  drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
+  drawables = g_list_prepend (drawables, ligma_image_get_mask (image));
 
   for (list = drawables; list; list = g_list_next (list))
     {
-      GimpDrawable *drawable = list->data;
+      LigmaDrawable *drawable = list->data;
       gdouble       drawable_width;
       gdouble       drawable_height;
 
-      drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+      drawable_width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      drawable_height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
-      scalable_size += gimp_drawable_estimate_memsize (drawable,
-                                                       gimp_drawable_get_component_type (drawable),
+      scalable_size += ligma_drawable_estimate_memsize (drawable,
+                                                       ligma_drawable_get_component_type (drawable),
                                                        drawable_width,
                                                        drawable_height);
 
-      scaled_size += gimp_drawable_estimate_memsize (drawable,
+      scaled_size += ligma_drawable_estimate_memsize (drawable,
                                                      component_type,
                                                      drawable_width * width /
                                                      current_width,
@@ -2186,17 +2186,17 @@ gimp_image_estimate_memsize (GimpImage         *image,
   g_list_free (drawables);
 
   scalable_size +=
-    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
-                                      gimp_image_get_component_type (image),
-                                      gimp_image_get_width (image),
-                                      gimp_image_get_height (image));
+    ligma_projection_estimate_memsize (ligma_image_get_base_type (image),
+                                      ligma_image_get_component_type (image),
+                                      ligma_image_get_width (image),
+                                      ligma_image_get_height (image));
 
   scaled_size +=
-    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
+    ligma_projection_estimate_memsize (ligma_image_get_base_type (image),
                                       component_type,
                                       width, height);
 
-  GIMP_LOG (IMAGE_SCALE,
+  LIGMA_LOG (IMAGE_SCALE,
             "scalable_size = %"G_GINT64_FORMAT"  scaled_size = %"G_GINT64_FORMAT,
             scalable_size, scaled_size);
 
@@ -2205,52 +2205,52 @@ gimp_image_estimate_memsize (GimpImage         *image,
   return new_size;
 }
 
-GimpImageBaseType
-gimp_image_get_base_type (GimpImage *image)
+LigmaImageBaseType
+ligma_image_get_base_type (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), -1);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->base_type;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->base_type;
 }
 
-GimpComponentType
-gimp_image_get_component_type (GimpImage *image)
+LigmaComponentType
+ligma_image_get_component_type (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), -1);
 
-  return gimp_babl_component_type (GIMP_IMAGE_GET_PRIVATE (image)->precision);
+  return ligma_babl_component_type (LIGMA_IMAGE_GET_PRIVATE (image)->precision);
 }
 
-GimpPrecision
-gimp_image_get_precision (GimpImage *image)
+LigmaPrecision
+ligma_image_get_precision (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), -1);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->precision;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->precision;
 }
 
 const Babl *
-gimp_image_get_format (GimpImage         *image,
-                       GimpImageBaseType  base_type,
-                       GimpPrecision      precision,
+ligma_image_get_format (LigmaImage         *image,
+                       LigmaImageBaseType  base_type,
+                       LigmaPrecision      precision,
                        gboolean           with_alpha,
                        const Babl        *space)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   switch (base_type)
     {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      return gimp_babl_format (base_type, precision, with_alpha, space);
+    case LIGMA_RGB:
+    case LIGMA_GRAY:
+      return ligma_babl_format (base_type, precision, with_alpha, space);
 
-    case GIMP_INDEXED:
-      if (precision == GIMP_PRECISION_U8_NON_LINEAR)
+    case LIGMA_INDEXED:
+      if (precision == LIGMA_PRECISION_U8_NON_LINEAR)
         {
           if (with_alpha)
-            return gimp_image_colormap_get_rgba_format (image);
+            return ligma_image_colormap_get_rgba_format (image);
           else
-            return gimp_image_colormap_get_rgb_format (image);
+            return ligma_image_colormap_get_rgb_format (image);
         }
     }
 
@@ -2258,63 +2258,63 @@ gimp_image_get_format (GimpImage         *image,
 }
 
 const Babl *
-gimp_image_get_layer_space (GimpImage *image)
+ligma_image_get_layer_space (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->layer_space;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->layer_space;
 }
 
 const Babl *
-gimp_image_get_layer_format (GimpImage *image,
+ligma_image_get_layer_format (LigmaImage *image,
                              gboolean   with_alpha)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return gimp_image_get_format (image,
-                                gimp_image_get_base_type (image),
-                                gimp_image_get_precision (image),
+  return ligma_image_get_format (image,
+                                ligma_image_get_base_type (image),
+                                ligma_image_get_precision (image),
                                 with_alpha,
-                                gimp_image_get_layer_space (image));
+                                ligma_image_get_layer_space (image));
 }
 
 const Babl *
-gimp_image_get_channel_format (GimpImage *image)
+ligma_image_get_channel_format (LigmaImage *image)
 {
-  GimpPrecision precision;
+  LigmaPrecision precision;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  precision = gimp_image_get_precision (image);
+  precision = ligma_image_get_precision (image);
 
-  if (precision == GIMP_PRECISION_U8_NON_LINEAR)
-    return gimp_image_get_format (image, GIMP_GRAY,
-                                  gimp_image_get_precision (image),
+  if (precision == LIGMA_PRECISION_U8_NON_LINEAR)
+    return ligma_image_get_format (image, LIGMA_GRAY,
+                                  ligma_image_get_precision (image),
                                   FALSE, NULL);
 
-  return gimp_babl_mask_format (precision);
+  return ligma_babl_mask_format (precision);
 }
 
 const Babl *
-gimp_image_get_mask_format (GimpImage *image)
+ligma_image_get_mask_format (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return gimp_babl_mask_format (gimp_image_get_precision (image));
+  return ligma_babl_mask_format (ligma_image_get_precision (image));
 }
 
-GimpLayerMode
-gimp_image_get_default_new_layer_mode (GimpImage *image)
+LigmaLayerMode
+ligma_image_get_default_new_layer_mode (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_LAYER_MODE_NORMAL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_LAYER_MODE_NORMAL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->new_layer_mode == -1)
     {
-      GList *layers = gimp_image_get_layer_list (image);
+      GList *layers = ligma_image_get_layer_list (image);
 
       if (layers)
         {
@@ -2322,14 +2322,14 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
 
           for (list = layers; list; list = g_list_next (list))
             {
-              GimpLayer     *layer = list->data;
-              GimpLayerMode  mode  = gimp_layer_get_mode (layer);
+              LigmaLayer     *layer = list->data;
+              LigmaLayerMode  mode  = ligma_layer_get_mode (layer);
 
-              if (! gimp_layer_mode_is_legacy (mode))
+              if (! ligma_layer_mode_is_legacy (mode))
                 {
                   /*  any non-legacy layer switches the mode to non-legacy
                    */
-                  private->new_layer_mode = GIMP_LAYER_MODE_NORMAL;
+                  private->new_layer_mode = LIGMA_LAYER_MODE_NORMAL;
                   break;
                 }
             }
@@ -2337,7 +2337,7 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
           /*  only if all layers are legacy, the mode is also legacy
            */
           if (! list)
-            private->new_layer_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+            private->new_layer_mode = LIGMA_LAYER_MODE_NORMAL_LEGACY;
 
           g_list_free (layers);
         }
@@ -2345,7 +2345,7 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
         {
           /*  empty images are never considered legacy
            */
-          private->new_layer_mode = GIMP_LAYER_MODE_NORMAL;
+          private->new_layer_mode = LIGMA_LAYER_MODE_NORMAL;
         }
     }
 
@@ -2353,64 +2353,64 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
 }
 
 void
-gimp_image_unset_default_new_layer_mode (GimpImage *image)
+ligma_image_unset_default_new_layer_mode (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->new_layer_mode = -1;
+  LIGMA_IMAGE_GET_PRIVATE (image)->new_layer_mode = -1;
 }
 
 gint
-gimp_image_get_id (GimpImage *image)
+ligma_image_get_id (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), -1);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->ID;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->ID;
 }
 
-GimpImage *
-gimp_image_get_by_id (Gimp *gimp,
+LigmaImage *
+ligma_image_get_by_id (Ligma *ligma,
                       gint  image_id)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->image_table == NULL)
+  if (ligma->image_table == NULL)
     return NULL;
 
-  return (GimpImage *) gimp_id_table_lookup (gimp->image_table, image_id);
+  return (LigmaImage *) ligma_id_table_lookup (ligma->image_table, image_id);
 }
 
 void
-gimp_image_set_file (GimpImage *image,
+ligma_image_set_file (LigmaImage *image,
                      GFile     *file)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->file != file)
     {
-      gimp_object_take_name (GIMP_OBJECT (image),
+      ligma_object_take_name (LIGMA_OBJECT (image),
                              file ? g_file_get_uri (file) : NULL);
     }
 }
 
 /**
- * gimp_image_get_untitled_file:
+ * ligma_image_get_untitled_file:
  *
  * Returns: A #GFile saying "Untitled" for newly created images.
  **/
 GFile *
-gimp_image_get_untitled_file (GimpImage *image)
+ligma_image_get_untitled_file (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (! private->untitled_file)
     private->untitled_file = g_file_new_for_uri (_("Untitled"));
@@ -2419,109 +2419,109 @@ gimp_image_get_untitled_file (GimpImage *image)
 }
 
 /**
- * gimp_image_get_file_or_untitled:
- * @image: A #GimpImage.
+ * ligma_image_get_file_or_untitled:
+ * @image: A #LigmaImage.
  *
  * Get the file of the XCF image, or the "Untitled" file if there is no file.
  *
  * Returns: A #GFile.
  **/
 GFile *
-gimp_image_get_file_or_untitled (GimpImage *image)
+ligma_image_get_file_or_untitled (LigmaImage *image)
 {
   GFile *file;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  file = gimp_image_get_file (image);
+  file = ligma_image_get_file (image);
 
   if (! file)
-    file = gimp_image_get_untitled_file (image);
+    file = ligma_image_get_untitled_file (image);
 
   return file;
 }
 
 /**
- * gimp_image_get_file:
- * @image: A #GimpImage.
+ * ligma_image_get_file:
+ * @image: A #LigmaImage.
  *
  * Get the file of the XCF image, or %NULL if there is no file.
  *
  * Returns: (nullable): The file, or %NULL.
  **/
 GFile *
-gimp_image_get_file (GimpImage *image)
+ligma_image_get_file (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->file;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->file;
 }
 
 /**
- * gimp_image_get_imported_file:
- * @image: A #GimpImage.
+ * ligma_image_get_imported_file:
+ * @image: A #LigmaImage.
  *
  * Returns: (nullable): The file of the imported image, or %NULL if the image
  * has been saved as XCF after it was imported.
  **/
 GFile *
-gimp_image_get_imported_file (GimpImage *image)
+ligma_image_get_imported_file (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->imported_file;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->imported_file;
 }
 
 /**
- * gimp_image_get_exported_file:
- * @image: A #GimpImage.
+ * ligma_image_get_exported_file:
+ * @image: A #LigmaImage.
  *
  * Returns: (nullable): The file of the image last exported from this XCF file,
  * or %NULL if the image has never been exported.
  **/
 GFile *
-gimp_image_get_exported_file (GimpImage *image)
+ligma_image_get_exported_file (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->exported_file;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->exported_file;
 }
 
 /**
- * gimp_image_get_save_a_copy_file:
- * @image: A #GimpImage.
+ * ligma_image_get_save_a_copy_file:
+ * @image: A #LigmaImage.
  *
  * Returns: The URI of the last copy that was saved of this XCF file.
  **/
 GFile *
-gimp_image_get_save_a_copy_file (GimpImage *image)
+ligma_image_get_save_a_copy_file (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->save_a_copy_file;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->save_a_copy_file;
 }
 
 /**
- * gimp_image_get_any_file:
- * @image: A #GimpImage.
+ * ligma_image_get_any_file:
+ * @image: A #LigmaImage.
  *
  * Returns: The XCF file, the imported file, or the exported file, in
  * that order of precedence.
  **/
 GFile *
-gimp_image_get_any_file (GimpImage *image)
+ligma_image_get_any_file (LigmaImage *image)
 {
   GFile *file;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  file = gimp_image_get_file (image);
+  file = ligma_image_get_file (image);
   if (! file)
     {
-      file = gimp_image_get_imported_file (image);
+      file = ligma_image_get_imported_file (image);
       if (! file)
         {
-          file = gimp_image_get_exported_file (image);
+          file = ligma_image_get_exported_file (image);
         }
     }
 
@@ -2529,26 +2529,26 @@ gimp_image_get_any_file (GimpImage *image)
 }
 
 /**
- * gimp_image_set_imported_uri:
- * @image: A #GimpImage.
+ * ligma_image_set_imported_uri:
+ * @image: A #LigmaImage.
  * @file:
  *
  * Sets the URI this file was imported from.
  **/
 void
-gimp_image_set_imported_file (GimpImage *image,
+ligma_image_set_imported_file (LigmaImage *image,
                               GFile     *file)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (g_set_object (&private->imported_file, file))
     {
-      gimp_object_name_changed (GIMP_OBJECT (image));
+      ligma_object_name_changed (LIGMA_OBJECT (image));
     }
 
   if (! private->resolution_set && file != NULL)
@@ -2566,59 +2566,59 @@ gimp_image_set_imported_file (GimpImage *image,
        */
       private->xresolution     = 72.0;
       private->yresolution     = 72.0;
-      private->resolution_unit = GIMP_UNIT_INCH;
+      private->resolution_unit = LIGMA_UNIT_INCH;
     }
 }
 
 /**
- * gimp_image_set_exported_file:
- * @image: A #GimpImage.
+ * ligma_image_set_exported_file:
+ * @image: A #LigmaImage.
  * @file:
  *
  * Sets the file this image was last exported to. Note that saving as
  * XCF is not "exporting".
  **/
 void
-gimp_image_set_exported_file (GimpImage *image,
+ligma_image_set_exported_file (LigmaImage *image,
                               GFile     *file)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (g_set_object (&private->exported_file, file))
     {
-      gimp_object_name_changed (GIMP_OBJECT (image));
+      ligma_object_name_changed (LIGMA_OBJECT (image));
     }
 }
 
 /**
- * gimp_image_set_save_a_copy_file:
- * @image: A #GimpImage.
+ * ligma_image_set_save_a_copy_file:
+ * @image: A #LigmaImage.
  * @uri:
  *
  * Set the URI to the last copy this XCF file was saved to through the
  * "save a copy" action.
  **/
 void
-gimp_image_set_save_a_copy_file (GimpImage *image,
+ligma_image_set_save_a_copy_file (LigmaImage *image,
                                  GFile     *file)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   g_set_object (&private->save_a_copy_file, file);
 }
 
 static gchar *
-gimp_image_format_display_uri (GimpImage *image,
+ligma_image_format_display_uri (LigmaImage *image,
                                gboolean   basename)
 {
   const gchar *uri_format    = NULL;
@@ -2633,11 +2633,11 @@ gimp_image_format_display_uri (GimpImage *image,
   gchar       *format_string;
   gchar       *tmp;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  file   = gimp_image_get_file (image);
-  source = gimp_image_get_imported_file (image);
-  dest   = gimp_image_get_exported_file (image);
+  file   = ligma_image_get_file (image);
+  source = ligma_image_get_imported_file (image);
+  dest   = ligma_image_get_exported_file (image);
 
   is_imported = (source != NULL);
   is_exported = (dest   != NULL);
@@ -2653,7 +2653,7 @@ gimp_image_format_display_uri (GimpImage *image,
         display_file = source;
 
       /* Calculate filename suffix */
-      if (! gimp_image_is_export_dirty (image))
+      if (! ligma_image_is_export_dirty (image))
         {
           if (is_exported)
             {
@@ -2675,18 +2675,18 @@ gimp_image_format_display_uri (GimpImage *image,
         }
 
       if (display_file)
-        display_file = gimp_file_with_new_extension (display_file, NULL);
+        display_file = ligma_file_with_new_extension (display_file, NULL);
 
       uri_format = "[%s]";
     }
 
   if (! display_file)
-    display_file = g_object_ref (gimp_image_get_untitled_file (image));
+    display_file = g_object_ref (ligma_image_get_untitled_file (image));
 
   if (basename)
-    display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
+    display_uri = g_path_get_basename (ligma_file_get_utf8_name (display_file));
   else
-    display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
+    display_uri = g_strdup (ligma_file_get_utf8_name (display_file));
 
   g_object_unref (display_file);
 
@@ -2702,90 +2702,90 @@ gimp_image_format_display_uri (GimpImage *image,
 }
 
 const gchar *
-gimp_image_get_display_name (GimpImage *image)
+ligma_image_get_display_name (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (! private->display_name)
-    private->display_name = gimp_image_format_display_uri (image, TRUE);
+    private->display_name = ligma_image_format_display_uri (image, TRUE);
 
   return private->display_name;
 }
 
 const gchar *
-gimp_image_get_display_path (GimpImage *image)
+ligma_image_get_display_path (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (! private->display_path)
-    private->display_path = gimp_image_format_display_uri (image, FALSE);
+    private->display_path = ligma_image_format_display_uri (image, FALSE);
 
   return private->display_path;
 }
 
 void
-gimp_image_set_load_proc (GimpImage           *image,
-                          GimpPlugInProcedure *proc)
+ligma_image_set_load_proc (LigmaImage           *image,
+                          LigmaPlugInProcedure *proc)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->load_proc = proc;
+  LIGMA_IMAGE_GET_PRIVATE (image)->load_proc = proc;
 }
 
-GimpPlugInProcedure *
-gimp_image_get_load_proc (GimpImage *image)
+LigmaPlugInProcedure *
+ligma_image_get_load_proc (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->load_proc;
-}
-
-void
-gimp_image_set_save_proc (GimpImage           *image,
-                          GimpPlugInProcedure *proc)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  GIMP_IMAGE_GET_PRIVATE (image)->save_proc = proc;
-}
-
-GimpPlugInProcedure *
-gimp_image_get_save_proc (GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return GIMP_IMAGE_GET_PRIVATE (image)->save_proc;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->load_proc;
 }
 
 void
-gimp_image_set_export_proc (GimpImage           *image,
-                            GimpPlugInProcedure *proc)
+ligma_image_set_save_proc (LigmaImage           *image,
+                          LigmaPlugInProcedure *proc)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->export_proc = proc;
+  LIGMA_IMAGE_GET_PRIVATE (image)->save_proc = proc;
 }
 
-GimpPlugInProcedure *
-gimp_image_get_export_proc (GimpImage *image)
+LigmaPlugInProcedure *
+ligma_image_get_save_proc (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->export_proc;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->save_proc;
+}
+
+void
+ligma_image_set_export_proc (LigmaImage           *image,
+                            LigmaPlugInProcedure *proc)
+{
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+
+  LIGMA_IMAGE_GET_PRIVATE (image)->export_proc = proc;
+}
+
+LigmaPlugInProcedure *
+ligma_image_get_export_proc (LigmaImage *image)
+{
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+
+  return LIGMA_IMAGE_GET_PRIVATE (image)->export_proc;
 }
 
 gint
-gimp_image_get_xcf_version (GimpImage    *image,
+ligma_image_get_xcf_version (LigmaImage    *image,
                             gboolean      zlib_compression,
-                            gint         *gimp_version,
+                            gint         *ligma_version,
                             const gchar **version_string,
                             gchar       **version_reason)
 {
@@ -2804,191 +2804,191 @@ gimp_image_get_xcf_version (GimpImage    *image,
       reasons = g_list_prepend (reasons, tmp); }
 
   /* need version 1 for colormaps */
-  if (gimp_image_get_colormap_palette (image))
+  if (ligma_image_get_colormap_palette (image))
     version = 1;
 
-  items = gimp_image_get_layer_list (image);
+  items = ligma_image_get_layer_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpLayer *layer = GIMP_LAYER (list->data);
+      LigmaLayer *layer = LIGMA_LAYER (list->data);
 
-      switch (gimp_layer_get_mode (layer))
+      switch (ligma_layer_get_mode (layer))
         {
           /*  Modes that exist since ancient times  */
-        case GIMP_LAYER_MODE_NORMAL_LEGACY:
-        case GIMP_LAYER_MODE_DISSOLVE:
-        case GIMP_LAYER_MODE_BEHIND_LEGACY:
-        case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
-        case GIMP_LAYER_MODE_SCREEN_LEGACY:
-        case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-        case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-        case GIMP_LAYER_MODE_ADDITION_LEGACY:
-        case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
-        case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
-        case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-        case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-        case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-        case GIMP_LAYER_MODE_HSL_COLOR_LEGACY:
-        case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
-        case GIMP_LAYER_MODE_DIVIDE_LEGACY:
-        case GIMP_LAYER_MODE_DODGE_LEGACY:
-        case GIMP_LAYER_MODE_BURN_LEGACY:
-        case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
+        case LIGMA_LAYER_MODE_NORMAL_LEGACY:
+        case LIGMA_LAYER_MODE_DISSOLVE:
+        case LIGMA_LAYER_MODE_BEHIND_LEGACY:
+        case LIGMA_LAYER_MODE_MULTIPLY_LEGACY:
+        case LIGMA_LAYER_MODE_SCREEN_LEGACY:
+        case LIGMA_LAYER_MODE_OVERLAY_LEGACY:
+        case LIGMA_LAYER_MODE_DIFFERENCE_LEGACY:
+        case LIGMA_LAYER_MODE_ADDITION_LEGACY:
+        case LIGMA_LAYER_MODE_SUBTRACT_LEGACY:
+        case LIGMA_LAYER_MODE_DARKEN_ONLY_LEGACY:
+        case LIGMA_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
+        case LIGMA_LAYER_MODE_HSV_HUE_LEGACY:
+        case LIGMA_LAYER_MODE_HSV_SATURATION_LEGACY:
+        case LIGMA_LAYER_MODE_HSL_COLOR_LEGACY:
+        case LIGMA_LAYER_MODE_HSV_VALUE_LEGACY:
+        case LIGMA_LAYER_MODE_DIVIDE_LEGACY:
+        case LIGMA_LAYER_MODE_DODGE_LEGACY:
+        case LIGMA_LAYER_MODE_BURN_LEGACY:
+        case LIGMA_LAYER_MODE_HARDLIGHT_LEGACY:
           break;
 
           /*  Since 2.6  */
-        case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
-        case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
-        case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-        case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
-          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
-                               gimp_layer_get_mode (layer),
+        case LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY:
+        case LIGMA_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
+        case LIGMA_LAYER_MODE_GRAIN_MERGE_LEGACY:
+        case LIGMA_LAYER_MODE_COLOR_ERASE_LEGACY:
+          ligma_enum_get_value (LIGMA_TYPE_LAYER_MODE,
+                               ligma_layer_get_mode (layer),
                                NULL, NULL, &enum_desc, NULL);
           ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
-                                       enum_desc, "GIMP 2.6"));
+                                       enum_desc, "LIGMA 2.6"));
           version = MAX (2, version);
           break;
 
           /*  Since 2.10  */
-        case GIMP_LAYER_MODE_OVERLAY:
-        case GIMP_LAYER_MODE_LCH_HUE:
-        case GIMP_LAYER_MODE_LCH_CHROMA:
-        case GIMP_LAYER_MODE_LCH_COLOR:
-        case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
-                               gimp_layer_get_mode (layer),
+        case LIGMA_LAYER_MODE_OVERLAY:
+        case LIGMA_LAYER_MODE_LCH_HUE:
+        case LIGMA_LAYER_MODE_LCH_CHROMA:
+        case LIGMA_LAYER_MODE_LCH_COLOR:
+        case LIGMA_LAYER_MODE_LCH_LIGHTNESS:
+          ligma_enum_get_value (LIGMA_TYPE_LAYER_MODE,
+                               ligma_layer_get_mode (layer),
                                NULL, NULL, &enum_desc, NULL);
           ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
-                                       enum_desc, "GIMP 2.10"));
+                                       enum_desc, "LIGMA 2.10"));
           version = MAX (9, version);
           break;
 
           /*  Since 2.10  */
-        case GIMP_LAYER_MODE_NORMAL:
-        case GIMP_LAYER_MODE_BEHIND:
-        case GIMP_LAYER_MODE_MULTIPLY:
-        case GIMP_LAYER_MODE_SCREEN:
-        case GIMP_LAYER_MODE_DIFFERENCE:
-        case GIMP_LAYER_MODE_ADDITION:
-        case GIMP_LAYER_MODE_SUBTRACT:
-        case GIMP_LAYER_MODE_DARKEN_ONLY:
-        case GIMP_LAYER_MODE_LIGHTEN_ONLY:
-        case GIMP_LAYER_MODE_HSV_HUE:
-        case GIMP_LAYER_MODE_HSV_SATURATION:
-        case GIMP_LAYER_MODE_HSL_COLOR:
-        case GIMP_LAYER_MODE_HSV_VALUE:
-        case GIMP_LAYER_MODE_DIVIDE:
-        case GIMP_LAYER_MODE_DODGE:
-        case GIMP_LAYER_MODE_BURN:
-        case GIMP_LAYER_MODE_HARDLIGHT:
-        case GIMP_LAYER_MODE_SOFTLIGHT:
-        case GIMP_LAYER_MODE_GRAIN_EXTRACT:
-        case GIMP_LAYER_MODE_GRAIN_MERGE:
-        case GIMP_LAYER_MODE_VIVID_LIGHT:
-        case GIMP_LAYER_MODE_PIN_LIGHT:
-        case GIMP_LAYER_MODE_LINEAR_LIGHT:
-        case GIMP_LAYER_MODE_HARD_MIX:
-        case GIMP_LAYER_MODE_EXCLUSION:
-        case GIMP_LAYER_MODE_LINEAR_BURN:
-        case GIMP_LAYER_MODE_LUMA_DARKEN_ONLY:
-        case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY:
-        case GIMP_LAYER_MODE_LUMINANCE:
-        case GIMP_LAYER_MODE_COLOR_ERASE:
-        case GIMP_LAYER_MODE_ERASE:
-        case GIMP_LAYER_MODE_MERGE:
-        case GIMP_LAYER_MODE_SPLIT:
-        case GIMP_LAYER_MODE_PASS_THROUGH:
-          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
-                               gimp_layer_get_mode (layer),
+        case LIGMA_LAYER_MODE_NORMAL:
+        case LIGMA_LAYER_MODE_BEHIND:
+        case LIGMA_LAYER_MODE_MULTIPLY:
+        case LIGMA_LAYER_MODE_SCREEN:
+        case LIGMA_LAYER_MODE_DIFFERENCE:
+        case LIGMA_LAYER_MODE_ADDITION:
+        case LIGMA_LAYER_MODE_SUBTRACT:
+        case LIGMA_LAYER_MODE_DARKEN_ONLY:
+        case LIGMA_LAYER_MODE_LIGHTEN_ONLY:
+        case LIGMA_LAYER_MODE_HSV_HUE:
+        case LIGMA_LAYER_MODE_HSV_SATURATION:
+        case LIGMA_LAYER_MODE_HSL_COLOR:
+        case LIGMA_LAYER_MODE_HSV_VALUE:
+        case LIGMA_LAYER_MODE_DIVIDE:
+        case LIGMA_LAYER_MODE_DODGE:
+        case LIGMA_LAYER_MODE_BURN:
+        case LIGMA_LAYER_MODE_HARDLIGHT:
+        case LIGMA_LAYER_MODE_SOFTLIGHT:
+        case LIGMA_LAYER_MODE_GRAIN_EXTRACT:
+        case LIGMA_LAYER_MODE_GRAIN_MERGE:
+        case LIGMA_LAYER_MODE_VIVID_LIGHT:
+        case LIGMA_LAYER_MODE_PIN_LIGHT:
+        case LIGMA_LAYER_MODE_LINEAR_LIGHT:
+        case LIGMA_LAYER_MODE_HARD_MIX:
+        case LIGMA_LAYER_MODE_EXCLUSION:
+        case LIGMA_LAYER_MODE_LINEAR_BURN:
+        case LIGMA_LAYER_MODE_LUMA_DARKEN_ONLY:
+        case LIGMA_LAYER_MODE_LUMA_LIGHTEN_ONLY:
+        case LIGMA_LAYER_MODE_LUMINANCE:
+        case LIGMA_LAYER_MODE_COLOR_ERASE:
+        case LIGMA_LAYER_MODE_ERASE:
+        case LIGMA_LAYER_MODE_MERGE:
+        case LIGMA_LAYER_MODE_SPLIT:
+        case LIGMA_LAYER_MODE_PASS_THROUGH:
+          ligma_enum_get_value (LIGMA_TYPE_LAYER_MODE,
+                               ligma_layer_get_mode (layer),
                                NULL, NULL, &enum_desc, NULL);
           ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
-                                       enum_desc, "GIMP 2.10"));
+                                       enum_desc, "LIGMA 2.10"));
           version = MAX (10, version);
           break;
 
           /*  Just here instead of default so we get compiler warnings  */
-        case GIMP_LAYER_MODE_REPLACE:
-        case GIMP_LAYER_MODE_ANTI_ERASE:
-        case GIMP_LAYER_MODE_SEPARATOR:
+        case LIGMA_LAYER_MODE_REPLACE:
+        case LIGMA_LAYER_MODE_ANTI_ERASE:
+        case LIGMA_LAYER_MODE_SEPARATOR:
           break;
         }
 
       /* need version 3 for layer trees */
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+      if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
         {
           ADD_REASON (g_strdup_printf (_("Layer groups were added in %s"),
-                                       "GIMP 2.8"));
+                                       "LIGMA 2.8"));
           version = MAX (3, version);
 
           /* need version 13 for group layers with masks */
-          if (gimp_layer_get_mask (layer))
+          if (ligma_layer_get_mask (layer))
             {
               ADD_REASON (g_strdup_printf (_("Masks on layer groups were "
-                                             "added in %s"), "GIMP 2.10"));
+                                             "added in %s"), "LIGMA 2.10"));
               version = MAX (13, version);
             }
 
-          if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+          if (ligma_item_get_lock_position (LIGMA_ITEM (layer)))
             {
               ADD_REASON (g_strdup_printf (_("Position locks on layer groups were added in %s"),
-                                           "GIMP 3.0"));
+                                           "LIGMA 3.0"));
               version = MAX (17, version);
             }
 
-          if (gimp_layer_get_lock_alpha (layer))
+          if (ligma_layer_get_lock_alpha (layer))
             {
               ADD_REASON (g_strdup_printf (_("Alpha channel locks on layer groups were added in %s"),
-                                           "GIMP 3.0"));
+                                           "LIGMA 3.0"));
               version = MAX (17, version);
             }
         }
 
-      if (gimp_item_get_lock_visibility (GIMP_ITEM (layer)))
+      if (ligma_item_get_lock_visibility (LIGMA_ITEM (layer)))
         {
           ADD_REASON (g_strdup_printf (_("Visibility locks were added in %s"),
-                                       "GIMP 3.0"));
+                                       "LIGMA 3.0"));
           version = MAX (17, version);
         }
     }
   g_list_free (items);
 
-  items = gimp_image_get_channel_list (image);
+  items = ligma_image_get_channel_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpChannel *channel = GIMP_CHANNEL (list->data);
+      LigmaChannel *channel = LIGMA_CHANNEL (list->data);
 
-      if (gimp_item_get_lock_visibility (GIMP_ITEM (channel)))
+      if (ligma_item_get_lock_visibility (LIGMA_ITEM (channel)))
         {
           ADD_REASON (g_strdup_printf (_("Visibility locks were added in %s"),
-                                       "GIMP 3.0"));
+                                       "LIGMA 3.0"));
           version = MAX (17, version);
         }
     }
   g_list_free (items);
 
-  if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+  if (g_list_length (ligma_image_get_selected_vectors (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple path selection was "
-                                     "added in %s"), "GIMP 3.0.0"));
+                                     "added in %s"), "LIGMA 3.0.0"));
       version = MAX (18, version);
     }
 
-  items = gimp_image_get_vectors_list (image);
+  items = ligma_image_get_vectors_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = GIMP_VECTORS (list->data);
+      LigmaVectors *vectors = LIGMA_VECTORS (list->data);
 
-      if (gimp_item_get_color_tag (GIMP_ITEM (vectors)) != GIMP_COLOR_TAG_NONE)
+      if (ligma_item_get_color_tag (LIGMA_ITEM (vectors)) != LIGMA_COLOR_TAG_NONE)
         {
           ADD_REASON (g_strdup_printf (_("Storing color tags in path was "
-                                         "added in %s"), "GIMP 3.0.0"));
+                                         "added in %s"), "LIGMA 3.0.0"));
           version = MAX (18, version);
         }
-      if (gimp_item_get_lock_content (GIMP_ITEM (list->data)) ||
-          gimp_item_get_lock_position (GIMP_ITEM (list->data)))
+      if (ligma_item_get_lock_content (LIGMA_ITEM (list->data)) ||
+          ligma_item_get_lock_position (LIGMA_ITEM (list->data)))
         {
           ADD_REASON (g_strdup_printf (_("Storing locks in path was "
-                                         "added in %s"), "GIMP 3.0.0"));
+                                         "added in %s"), "LIGMA 3.0.0"));
           version = MAX (18, version);
         }
     }
@@ -2999,18 +2999,18 @@ gimp_image_get_xcf_version (GimpImage    *image,
    */
 
   /* need version 7 for != 8-bit gamma images */
-  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_NON_LINEAR)
+  if (ligma_image_get_precision (image) != LIGMA_PRECISION_U8_NON_LINEAR)
     {
       ADD_REASON (g_strdup_printf (_("High bit-depth images were added "
-                                     "in %s"), "GIMP 2.10"));
+                                     "in %s"), "LIGMA 2.10"));
       version = MAX (7, version);
     }
 
   /* need version 12 for > 8-bit images for proper endian swapping */
-  if (gimp_image_get_component_type (image) > GIMP_COMPONENT_TYPE_U8)
+  if (ligma_image_get_component_type (image) > LIGMA_COMPONENT_TYPE_U8)
     {
       ADD_REASON (g_strdup_printf (_("Encoding of high bit-depth images was "
-                                     "fixed in %s"), "GIMP 2.10"));
+                                     "fixed in %s"), "LIGMA 2.10"));
       version = MAX (12, version);
     }
 
@@ -3018,7 +3018,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
   if (zlib_compression)
     {
       ADD_REASON (g_strdup_printf (_("Internal zlib compression was "
-                                     "added in %s"), "GIMP 2.10"));
+                                     "added in %s"), "LIGMA 2.10"));
       version = MAX (8, version);
     }
 
@@ -3032,51 +3032,51 @@ gimp_image_get_xcf_version (GimpImage    *image,
    * need for 64 bit file offsets inside the XCF, this is a *very*
    * conservative estimate and should never fail
    */
-  if (gimp_object_get_memsize (GIMP_OBJECT (image), NULL) >= ((gint64) 1 << 32))
+  if (ligma_object_get_memsize (LIGMA_OBJECT (image), NULL) >= ((gint64) 1 << 32))
     {
       ADD_REASON (g_strdup_printf (_("Support for image files larger than "
-                                     "4GB was added in %s"), "GIMP 2.10"));
+                                     "4GB was added in %s"), "LIGMA 2.10"));
       version = MAX (11, version);
     }
 
-  if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
+  if (g_list_length (ligma_image_get_selected_layers (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple layer selection was "
-                                     "added in %s"), "GIMP 3.0.0"));
+                                     "added in %s"), "LIGMA 3.0.0"));
       version = MAX (14, version);
     }
 
-  if ((list = gimp_image_get_guides (image)))
+  if ((list = ligma_image_get_guides (image)))
     {
       for (; list; list = g_list_next (list))
         {
-          gint32 position = gimp_guide_get_position (list->data);
+          gint32 position = ligma_guide_get_position (list->data);
 
           if (position < 0 ||
-              (gimp_guide_get_orientation (list->data) == GIMP_ORIENTATION_HORIZONTAL &&
-               position > gimp_image_get_height (image)) ||
-              (gimp_guide_get_orientation (list->data) == GIMP_ORIENTATION_VERTICAL &&
-               position > gimp_image_get_width (image)))
+              (ligma_guide_get_orientation (list->data) == LIGMA_ORIENTATION_HORIZONTAL &&
+               position > ligma_image_get_height (image)) ||
+              (ligma_guide_get_orientation (list->data) == LIGMA_ORIENTATION_VERTICAL &&
+               position > ligma_image_get_width (image)))
             {
               ADD_REASON (g_strdup_printf (_("Off-canvas guides "
-                                             "added in %s"), "GIMP 3.0.0"));
+                                             "added in %s"), "LIGMA 3.0.0"));
               version = MAX (15, version);
               break;
             }
         }
     }
 
-  if (gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER) ||
-      gimp_image_get_stored_item_sets (image, GIMP_TYPE_CHANNEL))
+  if (ligma_image_get_stored_item_sets (image, LIGMA_TYPE_LAYER) ||
+      ligma_image_get_stored_item_sets (image, LIGMA_TYPE_CHANNEL))
     {
       ADD_REASON (g_strdup_printf (_("Item set and pattern search in item's name were "
-                                     "added in %s"), "GIMP 3.0.0"));
+                                     "added in %s"), "LIGMA 3.0.0"));
       version = MAX (16, version);
     }
-  if (g_list_length (gimp_image_get_selected_channels (image)) > 1)
+  if (g_list_length (ligma_image_get_selected_channels (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple channel selection was "
-                                     "added in %s"), "GIMP 3.0.0"));
+                                     "added in %s"), "LIGMA 3.0.0"));
       version = MAX (16, version);
     }
 
@@ -3088,13 +3088,13 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 0:
     case 1:
     case 2:
-      if (gimp_version)   *gimp_version   = 206;
-      if (version_string) *version_string = "GIMP 2.6";
+      if (ligma_version)   *ligma_version   = 206;
+      if (version_string) *version_string = "LIGMA 2.6";
       break;
 
     case 3:
-      if (gimp_version)   *gimp_version   = 208;
-      if (version_string) *version_string = "GIMP 2.8";
+      if (ligma_version)   *ligma_version   = 208;
+      if (version_string) *version_string = "LIGMA 2.8";
       break;
 
     case 4:
@@ -3107,16 +3107,16 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 11:
     case 12:
     case 13:
-      if (gimp_version)   *gimp_version   = 210;
-      if (version_string) *version_string = "GIMP 2.10";
+      if (ligma_version)   *ligma_version   = 210;
+      if (version_string) *version_string = "LIGMA 2.10";
       break;
     case 14:
     case 15:
     case 16:
     case 17:
     case 18:
-      if (gimp_version)   *gimp_version   = 300;
-      if (version_string) *version_string = "GIMP 3.0";
+      if (ligma_version)   *ligma_version   = 300;
+      if (version_string) *version_string = "LIGMA 3.0";
       break;
     }
 
@@ -3142,36 +3142,36 @@ gimp_image_get_xcf_version (GimpImage    *image,
 }
 
 void
-gimp_image_set_xcf_compression (GimpImage *image,
+ligma_image_set_xcf_compression (LigmaImage *image,
                                 gboolean   compression)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->xcf_compression = compression;
+  LIGMA_IMAGE_GET_PRIVATE (image)->xcf_compression = compression;
 }
 
 gboolean
-gimp_image_get_xcf_compression (GimpImage *image)
+ligma_image_get_xcf_compression (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->xcf_compression;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->xcf_compression;
 }
 
 void
-gimp_image_set_resolution (GimpImage *image,
+ligma_image_set_resolution (LigmaImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   /* don't allow to set the resolution out of bounds */
-  if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+  if (xresolution < LIGMA_MIN_RESOLUTION || xresolution > LIGMA_MAX_RESOLUTION ||
+      yresolution < LIGMA_MIN_RESOLUTION || yresolution > LIGMA_MAX_RESOLUTION)
     return;
 
   private->resolution_set = TRUE;
@@ -3179,132 +3179,132 @@ gimp_image_set_resolution (GimpImage *image,
   if ((ABS (private->xresolution - xresolution) >= 1e-5) ||
       (ABS (private->yresolution - yresolution) >= 1e-5))
     {
-      gimp_image_undo_push_image_resolution (image,
+      ligma_image_undo_push_image_resolution (image,
                                              C_("undo-type", "Change Image Resolution"));
 
       private->xresolution = xresolution;
       private->yresolution = yresolution;
 
-      gimp_image_resolution_changed (image);
-      gimp_image_size_changed_detailed (image,
+      ligma_image_resolution_changed (image);
+      ligma_image_size_changed_detailed (image,
                                         0,
                                         0,
-                                        gimp_image_get_width (image),
-                                        gimp_image_get_height (image));
+                                        ligma_image_get_width (image),
+                                        ligma_image_get_height (image));
     }
 }
 
 void
-gimp_image_get_resolution (GimpImage *image,
+ligma_image_get_resolution (LigmaImage *image,
                            gdouble   *xresolution,
                            gdouble   *yresolution)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (xresolution != NULL && yresolution != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   *xresolution = private->xresolution;
   *yresolution = private->yresolution;
 }
 
 void
-gimp_image_resolution_changed (GimpImage *image)
+ligma_image_resolution_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[RESOLUTION_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[RESOLUTION_CHANGED], 0);
 }
 
 void
-gimp_image_set_unit (GimpImage *image,
-                     GimpUnit   unit)
+ligma_image_set_unit (LigmaImage *image,
+                     LigmaUnit   unit)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (unit > GIMP_UNIT_PIXEL);
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (unit > LIGMA_UNIT_PIXEL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->resolution_unit != unit)
     {
-      gimp_image_undo_push_image_resolution (image,
+      ligma_image_undo_push_image_resolution (image,
                                              C_("undo-type", "Change Image Unit"));
 
       private->resolution_unit = unit;
-      gimp_image_unit_changed (image);
+      ligma_image_unit_changed (image);
     }
 }
 
-GimpUnit
-gimp_image_get_unit (GimpImage *image)
+LigmaUnit
+ligma_image_get_unit (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_UNIT_INCH);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_UNIT_INCH);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->resolution_unit;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->resolution_unit;
 }
 
 void
-gimp_image_unit_changed (GimpImage *image)
+ligma_image_unit_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[UNIT_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[UNIT_CHANGED], 0);
 }
 
 gint
-gimp_image_get_width (GimpImage *image)
+ligma_image_get_width (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->width;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->width;
 }
 
 gint
-gimp_image_get_height (GimpImage *image)
+ligma_image_get_height (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->height;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->height;
 }
 
 gboolean
-gimp_image_has_alpha (GimpImage *image)
+ligma_image_has_alpha (LigmaImage *image)
 {
-  GimpImagePrivate *private;
-  GimpLayer        *layer;
+  LigmaImagePrivate *private;
+  LigmaLayer        *layer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), TRUE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  layer = GIMP_LAYER (gimp_container_get_first_child (private->layers->container));
+  layer = LIGMA_LAYER (ligma_container_get_first_child (private->layers->container));
 
-  return ((gimp_image_get_n_layers (image) > 1) ||
-          (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
+  return ((ligma_image_get_n_layers (image) > 1) ||
+          (layer && ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer))));
 }
 
 gboolean
-gimp_image_is_empty (GimpImage *image)
+ligma_image_is_empty (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), TRUE);
 
-  return gimp_container_is_empty (GIMP_IMAGE_GET_PRIVATE (image)->layers->container);
+  return ligma_container_is_empty (LIGMA_IMAGE_GET_PRIVATE (image)->layers->container);
 }
 
 void
-gimp_image_set_floating_selection (GimpImage *image,
-                                   GimpLayer *floating_sel)
+ligma_image_set_floating_selection (LigmaImage *image,
+                                   LigmaLayer *floating_sel)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (floating_sel == NULL || GIMP_IS_LAYER (floating_sel));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (floating_sel == NULL || LIGMA_IS_LAYER (floating_sel));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->floating_sel != floating_sel)
     {
@@ -3314,42 +3314,42 @@ gimp_image_set_floating_selection (GimpImage *image,
     }
 }
 
-GimpLayer *
-gimp_image_get_floating_selection (GimpImage *image)
+LigmaLayer *
+ligma_image_get_floating_selection (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->floating_sel;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->floating_sel;
 }
 
 void
-gimp_image_floating_selection_changed (GimpImage *image)
+ligma_image_floating_selection_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[FLOATING_SELECTION_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[FLOATING_SELECTION_CHANGED], 0);
 }
 
-GimpChannel *
-gimp_image_get_mask (GimpImage *image)
+LigmaChannel *
+ligma_image_get_mask (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->selection_mask;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->selection_mask;
 }
 
 void
-gimp_image_mask_changed (GimpImage *image)
+ligma_image_mask_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[MASK_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[MASK_CHANGED], 0);
 }
 
 /**
- * gimp_item_mask_intersect:
- * @image:   the #GimpImage
- * @items:   a list of #GimpItem
+ * ligma_item_mask_intersect:
+ * @image:   the #LigmaImage
+ * @items:   a list of #LigmaItem
  * @x: (out) (optional): return location for x
  * @y: (out) (optional): return location for y
  * @width: (out) (optional): return location for the width
@@ -3368,14 +3368,14 @@ gimp_image_mask_changed (GimpImage *image)
  * Returns: %TRUE if the selection intersects with any of the @items.
  */
 gboolean
-gimp_image_mask_intersect (GimpImage *image,
+ligma_image_mask_intersect (LigmaImage *image,
                            GList     *items,
                            gint      *x,
                            gint      *y,
                            gint      *width,
                            gint      *height)
 {
-  GimpChannel *selection;
+  LigmaChannel *selection;
   GList       *iter;
   gint         sel_x, sel_y, sel_width, sel_height;
   gint         x1 = G_MAXINT;
@@ -3384,45 +3384,45 @@ gimp_image_mask_intersect (GimpImage *image,
   gint         y2 = G_MININT;
   gboolean     intersect = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   for (iter = items; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_ITEM (iter->data), FALSE);
-      g_return_val_if_fail (gimp_item_is_attached (iter->data), FALSE);
-      g_return_val_if_fail (gimp_item_get_image (iter->data) == image, FALSE);
+      g_return_val_if_fail (LIGMA_IS_ITEM (iter->data), FALSE);
+      g_return_val_if_fail (ligma_item_is_attached (iter->data), FALSE);
+      g_return_val_if_fail (ligma_item_get_image (iter->data) == image, FALSE);
     }
 
-  selection = gimp_image_get_mask (image);
+  selection = ligma_image_get_mask (image);
   if (selection)
-    gimp_item_bounds (GIMP_ITEM (selection),
+    ligma_item_bounds (LIGMA_ITEM (selection),
                       &sel_x, &sel_y, &sel_width, &sel_height);
 
   for (iter = items; iter; iter = iter->next)
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
       gboolean  item_intersect;
       gint      tmp_x, tmp_y;
       gint      tmp_width, tmp_height;
 
-      gimp_item_get_offset (item, &tmp_x, &tmp_y);
+      ligma_item_get_offset (item, &tmp_x, &tmp_y);
 
       /* check for is_empty() before intersecting so we ignore the
        * selection if it is suspended (like when stroking)
        */
-      if (GIMP_ITEM (selection) != item       &&
-          ! gimp_channel_is_empty (selection))
+      if (LIGMA_ITEM (selection) != item       &&
+          ! ligma_channel_is_empty (selection))
         {
-          item_intersect = gimp_rectangle_intersect (sel_x, sel_y, sel_width, sel_height,
+          item_intersect = ligma_rectangle_intersect (sel_x, sel_y, sel_width, sel_height,
                                                      tmp_x, tmp_y,
-                                                     gimp_item_get_width  (item),
-                                                     gimp_item_get_height (item),
+                                                     ligma_item_get_width  (item),
+                                                     ligma_item_get_height (item),
                                                      &tmp_x, &tmp_y,
                                                      &tmp_width, &tmp_height);
         }
       else
         {
-          tmp_width  = gimp_item_get_width  (item);
-          tmp_height = gimp_item_get_height (item);
+          tmp_width  = ligma_item_get_width  (item);
+          tmp_height = ligma_item_get_height (item);
 
           item_intersect = TRUE;
         }
@@ -3450,15 +3450,15 @@ gimp_image_mask_intersect (GimpImage *image,
 }
 
 void
-gimp_image_take_mask (GimpImage   *image,
-                      GimpChannel *mask)
+ligma_image_take_mask (LigmaImage   *image,
+                      LigmaChannel *mask)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_SELECTION (mask));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_SELECTION (mask));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (private->selection_mask)
     g_object_unref (private->selection_mask);
@@ -3466,7 +3466,7 @@ gimp_image_take_mask (GimpImage   *image,
   private->selection_mask = g_object_ref_sink (mask);
 
   g_signal_connect (private->selection_mask, "update",
-                    G_CALLBACK (gimp_image_mask_update),
+                    G_CALLBACK (ligma_image_mask_update),
                     image);
 }
 
@@ -3474,39 +3474,39 @@ gimp_image_take_mask (GimpImage   *image,
 /*  image components  */
 
 const Babl *
-gimp_image_get_component_format (GimpImage       *image,
-                                 GimpChannelType  channel)
+ligma_image_get_component_format (LigmaImage       *image,
+                                 LigmaChannelType  channel)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   switch (channel)
     {
-    case GIMP_CHANNEL_RED:
-      return gimp_babl_component_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
+    case LIGMA_CHANNEL_RED:
+      return ligma_babl_component_format (LIGMA_RGB,
+                                         ligma_image_get_precision (image),
                                          RED);
 
-    case GIMP_CHANNEL_GREEN:
-      return gimp_babl_component_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
+    case LIGMA_CHANNEL_GREEN:
+      return ligma_babl_component_format (LIGMA_RGB,
+                                         ligma_image_get_precision (image),
                                          GREEN);
 
-    case GIMP_CHANNEL_BLUE:
-      return gimp_babl_component_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
+    case LIGMA_CHANNEL_BLUE:
+      return ligma_babl_component_format (LIGMA_RGB,
+                                         ligma_image_get_precision (image),
                                          BLUE);
 
-    case GIMP_CHANNEL_ALPHA:
-      return gimp_babl_component_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
+    case LIGMA_CHANNEL_ALPHA:
+      return ligma_babl_component_format (LIGMA_RGB,
+                                         ligma_image_get_precision (image),
                                          ALPHA);
 
-    case GIMP_CHANNEL_GRAY:
-      return gimp_babl_component_format (GIMP_GRAY,
-                                         gimp_image_get_precision (image),
+    case LIGMA_CHANNEL_GRAY:
+      return ligma_babl_component_format (LIGMA_GRAY,
+                                         ligma_image_get_precision (image),
                                          GRAY);
 
-    case GIMP_CHANNEL_INDEXED:
+    case LIGMA_CHANNEL_INDEXED:
       return babl_format ("Y u8"); /* will extract grayscale, the best
                                     * we can do here */
     }
@@ -3515,24 +3515,24 @@ gimp_image_get_component_format (GimpImage       *image,
 }
 
 gint
-gimp_image_get_component_index (GimpImage       *image,
-                                GimpChannelType  channel)
+ligma_image_get_component_index (LigmaImage       *image,
+                                LigmaChannelType  channel)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), -1);
 
   switch (channel)
     {
-    case GIMP_CHANNEL_RED:     return RED;
-    case GIMP_CHANNEL_GREEN:   return GREEN;
-    case GIMP_CHANNEL_BLUE:    return BLUE;
-    case GIMP_CHANNEL_GRAY:    return GRAY;
-    case GIMP_CHANNEL_INDEXED: return INDEXED;
-    case GIMP_CHANNEL_ALPHA:
-      switch (gimp_image_get_base_type (image))
+    case LIGMA_CHANNEL_RED:     return RED;
+    case LIGMA_CHANNEL_GREEN:   return GREEN;
+    case LIGMA_CHANNEL_BLUE:    return BLUE;
+    case LIGMA_CHANNEL_GRAY:    return GRAY;
+    case LIGMA_CHANNEL_INDEXED: return INDEXED;
+    case LIGMA_CHANNEL_ALPHA:
+      switch (ligma_image_get_base_type (image))
         {
-        case GIMP_RGB:     return ALPHA;
-        case GIMP_GRAY:    return ALPHA_G;
-        case GIMP_INDEXED: return ALPHA_I;
+        case LIGMA_RGB:     return ALPHA;
+        case LIGMA_GRAY:    return ALPHA_G;
+        case LIGMA_INDEXED: return ALPHA_I;
         }
     }
 
@@ -3540,18 +3540,18 @@ gimp_image_get_component_index (GimpImage       *image,
 }
 
 void
-gimp_image_set_component_active (GimpImage       *image,
-                                 GimpChannelType  channel,
+ligma_image_set_component_active (LigmaImage       *image,
+                                 LigmaChannelType  channel,
                                  gboolean         active)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   gint              index = -1;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  index = gimp_image_get_component_index (image, channel);
+  index = ligma_image_get_component_index (image, channel);
 
   if (index != -1 && active != private->active[index])
     {
@@ -3560,71 +3560,71 @@ gimp_image_set_component_active (GimpImage       *image,
       /*  If there is an active channel and we mess with the components,
        *  the active channel gets unset...
        */
-      gimp_image_unset_selected_channels (image);
+      ligma_image_unset_selected_channels (image);
 
       g_signal_emit (image,
-                     gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
+                     ligma_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
                      channel);
     }
 }
 
 gboolean
-gimp_image_get_component_active (GimpImage       *image,
-                                 GimpChannelType  channel)
+ligma_image_get_component_active (LigmaImage       *image,
+                                 LigmaChannelType  channel)
 {
   gint index = -1;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  index = gimp_image_get_component_index (image, channel);
+  index = ligma_image_get_component_index (image, channel);
 
   if (index != -1)
-    return GIMP_IMAGE_GET_PRIVATE (image)->active[index];
+    return LIGMA_IMAGE_GET_PRIVATE (image)->active[index];
 
   return FALSE;
 }
 
 void
-gimp_image_get_active_array (GimpImage *image,
+ligma_image_get_active_array (LigmaImage *image,
                              gboolean  *components)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   gint              i;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (components != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   for (i = 0; i < MAX_CHANNELS; i++)
     components[i] = private->active[i];
 }
 
-GimpComponentMask
-gimp_image_get_active_mask (GimpImage *image)
+LigmaComponentMask
+ligma_image_get_active_mask (LigmaImage *image)
 {
-  GimpImagePrivate  *private;
-  GimpComponentMask  mask = 0;
+  LigmaImagePrivate  *private;
+  LigmaComponentMask  mask = 0;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  switch (gimp_image_get_base_type (image))
+  switch (ligma_image_get_base_type (image))
     {
-    case GIMP_RGB:
-      mask |= (private->active[RED])   ? GIMP_COMPONENT_MASK_RED   : 0;
-      mask |= (private->active[GREEN]) ? GIMP_COMPONENT_MASK_GREEN : 0;
-      mask |= (private->active[BLUE])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
-      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
+    case LIGMA_RGB:
+      mask |= (private->active[RED])   ? LIGMA_COMPONENT_MASK_RED   : 0;
+      mask |= (private->active[GREEN]) ? LIGMA_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->active[BLUE])  ? LIGMA_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->active[ALPHA]) ? LIGMA_COMPONENT_MASK_ALPHA : 0;
       break;
 
-    case GIMP_GRAY:
-    case GIMP_INDEXED:
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_RED   : 0;
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_GREEN : 0;
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_BLUE  : 0;
-      mask |= (private->active[ALPHA_G]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
+    case LIGMA_GRAY:
+    case LIGMA_INDEXED:
+      mask |= (private->active[GRAY])    ? LIGMA_COMPONENT_MASK_RED   : 0;
+      mask |= (private->active[GRAY])    ? LIGMA_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->active[GRAY])    ? LIGMA_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->active[ALPHA_G]) ? LIGMA_COMPONENT_MASK_ALPHA : 0;
       break;
     }
 
@@ -3632,18 +3632,18 @@ gimp_image_get_active_mask (GimpImage *image)
 }
 
 void
-gimp_image_set_component_visible (GimpImage       *image,
-                                  GimpChannelType  channel,
+ligma_image_set_component_visible (LigmaImage       *image,
+                                  LigmaChannelType  channel,
                                   gboolean         visible)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   gint              index = -1;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  index = gimp_image_get_component_index (image, channel);
+  index = ligma_image_get_component_index (image, channel);
 
   if (index != -1 && visible != private->visible[index])
     {
@@ -3651,9 +3651,9 @@ gimp_image_set_component_visible (GimpImage       *image,
 
       if (private->visible_mask)
         {
-          GimpComponentMask mask;
+          LigmaComponentMask mask;
 
-          mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
+          mask = ~ligma_image_get_visible_mask (image) & LIGMA_COMPONENT_MASK_ALL;
 
           gegl_node_set (private->visible_mask,
                          "mask", mask,
@@ -3661,70 +3661,70 @@ gimp_image_set_component_visible (GimpImage       *image,
         }
 
       g_signal_emit (image,
-                     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
+                     ligma_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
 
-      gimp_image_invalidate_all (image);
+      ligma_image_invalidate_all (image);
     }
 }
 
 gboolean
-gimp_image_get_component_visible (GimpImage       *image,
-                                  GimpChannelType  channel)
+ligma_image_get_component_visible (LigmaImage       *image,
+                                  LigmaChannelType  channel)
 {
   gint index = -1;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  index = gimp_image_get_component_index (image, channel);
+  index = ligma_image_get_component_index (image, channel);
 
   if (index != -1)
-    return GIMP_IMAGE_GET_PRIVATE (image)->visible[index];
+    return LIGMA_IMAGE_GET_PRIVATE (image)->visible[index];
 
   return FALSE;
 }
 
 void
-gimp_image_get_visible_array (GimpImage *image,
+ligma_image_get_visible_array (LigmaImage *image,
                               gboolean  *components)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   gint              i;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (components != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   for (i = 0; i < MAX_CHANNELS; i++)
     components[i] = private->visible[i];
 }
 
-GimpComponentMask
-gimp_image_get_visible_mask (GimpImage *image)
+LigmaComponentMask
+ligma_image_get_visible_mask (LigmaImage *image)
 {
-  GimpImagePrivate  *private;
-  GimpComponentMask  mask = 0;
+  LigmaImagePrivate  *private;
+  LigmaComponentMask  mask = 0;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  switch (gimp_image_get_base_type (image))
+  switch (ligma_image_get_base_type (image))
     {
-    case GIMP_RGB:
-      mask |= (private->visible[RED])   ? GIMP_COMPONENT_MASK_RED   : 0;
-      mask |= (private->visible[GREEN]) ? GIMP_COMPONENT_MASK_GREEN : 0;
-      mask |= (private->visible[BLUE])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
-      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
+    case LIGMA_RGB:
+      mask |= (private->visible[RED])   ? LIGMA_COMPONENT_MASK_RED   : 0;
+      mask |= (private->visible[GREEN]) ? LIGMA_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->visible[BLUE])  ? LIGMA_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? LIGMA_COMPONENT_MASK_ALPHA : 0;
       break;
 
-    case GIMP_GRAY:
-    case GIMP_INDEXED:
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_RED   : 0;
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_GREEN : 0;
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
-      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
+    case LIGMA_GRAY:
+    case LIGMA_INDEXED:
+      mask |= (private->visible[GRAY])  ? LIGMA_COMPONENT_MASK_RED   : 0;
+      mask |= (private->visible[GRAY])  ? LIGMA_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->visible[GRAY])  ? LIGMA_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? LIGMA_COMPONENT_MASK_ALPHA : 0;
       break;
     }
 
@@ -3735,126 +3735,126 @@ gimp_image_get_visible_mask (GimpImage *image)
 /*  emitting image signals  */
 
 void
-gimp_image_mode_changed (GimpImage *image)
+ligma_image_mode_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[MODE_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[MODE_CHANGED], 0);
 }
 
 void
-gimp_image_precision_changed (GimpImage *image)
+ligma_image_precision_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[PRECISION_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[PRECISION_CHANGED], 0);
 }
 
 void
-gimp_image_alpha_changed (GimpImage *image)
+ligma_image_alpha_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[ALPHA_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[ALPHA_CHANGED], 0);
 }
 
 void
-gimp_image_invalidate (GimpImage *image,
+ligma_image_invalidate (LigmaImage *image,
                        gint       x,
                        gint       y,
                        gint       width,
                        gint       height)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  gimp_projectable_invalidate (GIMP_PROJECTABLE (image),
+  ligma_projectable_invalidate (LIGMA_PROJECTABLE (image),
                                x, y, width, height);
 
-  GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated = TRUE;
+  LIGMA_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated = TRUE;
 }
 
 void
-gimp_image_invalidate_all (GimpImage *image)
+ligma_image_invalidate_all (LigmaImage *image)
 {
   const GeglRectangle *bounding_box;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  bounding_box = &GIMP_IMAGE_GET_PRIVATE (image)->bounding_box;
+  bounding_box = &LIGMA_IMAGE_GET_PRIVATE (image)->bounding_box;
 
-  gimp_image_invalidate (image,
+  ligma_image_invalidate (image,
                          bounding_box->x,     bounding_box->y,
                          bounding_box->width, bounding_box->height);
 }
 
 void
-gimp_image_guide_added (GimpImage *image,
-                        GimpGuide *guide)
+ligma_image_guide_added (LigmaImage *image,
+                        LigmaGuide *guide)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_GUIDE (guide));
 
-  g_signal_emit (image, gimp_image_signals[GUIDE_ADDED], 0,
+  g_signal_emit (image, ligma_image_signals[GUIDE_ADDED], 0,
                  guide);
 }
 
 void
-gimp_image_guide_removed (GimpImage *image,
-                          GimpGuide *guide)
+ligma_image_guide_removed (LigmaImage *image,
+                          LigmaGuide *guide)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_GUIDE (guide));
 
-  g_signal_emit (image, gimp_image_signals[GUIDE_REMOVED], 0,
+  g_signal_emit (image, ligma_image_signals[GUIDE_REMOVED], 0,
                  guide);
 }
 
 void
-gimp_image_guide_moved (GimpImage *image,
-                        GimpGuide *guide)
+ligma_image_guide_moved (LigmaImage *image,
+                        LigmaGuide *guide)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_GUIDE (guide));
 
-  g_signal_emit (image, gimp_image_signals[GUIDE_MOVED], 0,
+  g_signal_emit (image, ligma_image_signals[GUIDE_MOVED], 0,
                  guide);
 }
 
 void
-gimp_image_sample_point_added (GimpImage       *image,
-                               GimpSamplePoint *sample_point)
+ligma_image_sample_point_added (LigmaImage       *image,
+                               LigmaSamplePoint *sample_point)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
 
-  g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_ADDED], 0,
+  g_signal_emit (image, ligma_image_signals[SAMPLE_POINT_ADDED], 0,
                  sample_point);
 }
 
 void
-gimp_image_sample_point_removed (GimpImage       *image,
-                                 GimpSamplePoint *sample_point)
+ligma_image_sample_point_removed (LigmaImage       *image,
+                                 LigmaSamplePoint *sample_point)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
 
-  g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_REMOVED], 0,
+  g_signal_emit (image, ligma_image_signals[SAMPLE_POINT_REMOVED], 0,
                  sample_point);
 }
 
 void
-gimp_image_sample_point_moved (GimpImage       *image,
-                               GimpSamplePoint *sample_point)
+ligma_image_sample_point_moved (LigmaImage       *image,
+                               LigmaSamplePoint *sample_point)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
 
-  g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_MOVED], 0,
+  g_signal_emit (image, ligma_image_signals[SAMPLE_POINT_MOVED], 0,
                  sample_point);
 }
 
 /**
- * gimp_image_size_changed_detailed:
+ * ligma_image_size_changed_detailed:
  * @image:
  * @previous_origin_x:
  * @previous_origin_y:
@@ -3863,18 +3863,18 @@ gimp_image_sample_point_moved (GimpImage       *image,
  * position of the image in the display shell on various operations,
  * e.g. crop.
  *
- * This function makes sure that GimpViewable::size-changed is also emitted.
+ * This function makes sure that LigmaViewable::size-changed is also emitted.
  **/
 void
-gimp_image_size_changed_detailed (GimpImage *image,
+ligma_image_size_changed_detailed (LigmaImage *image,
                                   gint       previous_origin_x,
                                   gint       previous_origin_y,
                                   gint       previous_width,
                                   gint       previous_height)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[SIZE_CHANGED_DETAILED], 0,
+  g_signal_emit (image, ligma_image_signals[SIZE_CHANGED_DETAILED], 0,
                  previous_origin_x,
                  previous_origin_y,
                  previous_width,
@@ -3882,49 +3882,49 @@ gimp_image_size_changed_detailed (GimpImage *image,
 }
 
 void
-gimp_image_colormap_changed (GimpImage *image,
+ligma_image_colormap_changed (LigmaImage *image,
                              gint       color_index)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gint         n_colors;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  palette = GIMP_IMAGE_GET_PRIVATE (image)->palette;
-  n_colors = palette ? gimp_palette_get_n_colors (palette) : 0;
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  palette = LIGMA_IMAGE_GET_PRIVATE (image)->palette;
+  n_colors = palette ? ligma_palette_get_n_colors (palette) : 0;
   g_return_if_fail (color_index >= -1 && color_index < n_colors);
 
-  g_signal_emit (image, gimp_image_signals[COLORMAP_CHANGED], 0,
+  g_signal_emit (image, ligma_image_signals[COLORMAP_CHANGED], 0,
                  color_index);
 }
 
 void
-gimp_image_selection_invalidate (GimpImage *image)
+ligma_image_selection_invalidate (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[SELECTION_INVALIDATE], 0);
+  g_signal_emit (image, ligma_image_signals[SELECTION_INVALIDATE], 0);
 }
 
 void
-gimp_image_quick_mask_changed (GimpImage *image)
+ligma_image_quick_mask_changed (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[QUICK_MASK_CHANGED], 0);
+  g_signal_emit (image, ligma_image_signals[QUICK_MASK_CHANGED], 0);
 }
 
 void
-gimp_image_undo_event (GimpImage     *image,
-                       GimpUndoEvent  event,
-                       GimpUndo      *undo)
+ligma_image_undo_event (LigmaImage     *image,
+                       LigmaUndoEvent  event,
+                       LigmaUndo      *undo)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (((event == GIMP_UNDO_EVENT_UNDO_FREE   ||
-                      event == GIMP_UNDO_EVENT_UNDO_FREEZE ||
-                      event == GIMP_UNDO_EVENT_UNDO_THAW) && undo == NULL) ||
-                    GIMP_IS_UNDO (undo));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (((event == LIGMA_UNDO_EVENT_UNDO_FREE   ||
+                      event == LIGMA_UNDO_EVENT_UNDO_FREEZE ||
+                      event == LIGMA_UNDO_EVENT_UNDO_THAW) && undo == NULL) ||
+                    LIGMA_IS_UNDO (undo));
 
-  g_signal_emit (image, gimp_image_signals[UNDO_EVENT], 0, event, undo);
+  g_signal_emit (image, ligma_image_signals[UNDO_EVENT], 0, event, undo);
 }
 
 
@@ -3945,11 +3945,11 @@ gimp_image_undo_event (GimpImage     *image,
  *   before a saved version, then changing the image (thus destroying
  *   the redo stack).  Once this has happened, it's impossible to get
  *   the image back to the state on disk, since the redo info has been
- *   freed.  See gimpimage-undo.c for the gory details.
+ *   freed.  See ligmaimage-undo.c for the gory details.
  */
 
 /*
- * NEVER CALL gimp_image_dirty() directly!
+ * NEVER CALL ligma_image_dirty() directly!
  *
  * If your code has just dirtied the image, push an undo instead.
  * Failing that, push the trivial undo which tells the user the
@@ -3960,14 +3960,14 @@ gimp_image_undo_event (GimpImage     *image,
  */
 
 gint
-gimp_image_dirty (GimpImage     *image,
-                  GimpDirtyMask  dirty_mask)
+ligma_image_dirty (LigmaImage     *image,
+                  LigmaDirtyMask  dirty_mask)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->dirty++;
   private->export_dirty++;
@@ -3975,7 +3975,7 @@ gimp_image_dirty (GimpImage     *image,
   if (! private->dirty_time)
     private->dirty_time = time (NULL);
 
-  g_signal_emit (image, gimp_image_signals[DIRTY], 0, dirty_mask);
+  g_signal_emit (image, ligma_image_signals[DIRTY], 0, dirty_mask);
 
   TRC (("dirty %d -> %d\n", private->dirty - 1, private->dirty));
 
@@ -3983,19 +3983,19 @@ gimp_image_dirty (GimpImage     *image,
 }
 
 gint
-gimp_image_clean (GimpImage     *image,
-                  GimpDirtyMask  dirty_mask)
+ligma_image_clean (LigmaImage     *image,
+                  LigmaDirtyMask  dirty_mask)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->dirty--;
   private->export_dirty--;
 
-  g_signal_emit (image, gimp_image_signals[CLEAN], 0, dirty_mask);
+  g_signal_emit (image, ligma_image_signals[CLEAN], 0, dirty_mask);
 
   TRC (("clean %d -> %d\n", private->dirty + 1, private->dirty));
 
@@ -4003,91 +4003,91 @@ gimp_image_clean (GimpImage     *image,
 }
 
 void
-gimp_image_clean_all (GimpImage *image)
+ligma_image_clean_all (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->dirty      = 0;
   private->dirty_time = 0;
 
-  g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
+  g_signal_emit (image, ligma_image_signals[CLEAN], 0, LIGMA_DIRTY_ALL);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+  ligma_object_name_changed (LIGMA_OBJECT (image));
 }
 
 void
-gimp_image_export_clean_all (GimpImage *image)
+ligma_image_export_clean_all (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->export_dirty = 0;
 
-  g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
+  g_signal_emit (image, ligma_image_signals[CLEAN], 0, LIGMA_DIRTY_ALL);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+  ligma_object_name_changed (LIGMA_OBJECT (image));
 }
 
 /**
- * gimp_image_is_dirty:
+ * ligma_image_is_dirty:
  * @image:
  *
  * Returns: True if the image is dirty, false otherwise.
  **/
 gint
-gimp_image_is_dirty (GimpImage *image)
+ligma_image_is_dirty (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->dirty != 0;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->dirty != 0;
 }
 
 /**
- * gimp_image_is_export_dirty:
+ * ligma_image_is_export_dirty:
  * @image:
  *
  * Returns: True if the image export is dirty, false otherwise.
  **/
 gboolean
-gimp_image_is_export_dirty (GimpImage *image)
+ligma_image_is_export_dirty (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->export_dirty != 0;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->export_dirty != 0;
 }
 
 gint64
-gimp_image_get_dirty_time (GimpImage *image)
+ligma_image_get_dirty_time (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->dirty_time;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->dirty_time;
 }
 
 /**
- * gimp_image_saving:
+ * ligma_image_saving:
  * @image:
  *
  * Emits the "saving" signal, indicating that @image is about to be saved,
  * or exported.
  */
 void
-gimp_image_saving (GimpImage *image)
+ligma_image_saving (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[SAVING], 0);
+  g_signal_emit (image, ligma_image_signals[SAVING], 0);
 }
 
 /**
- * gimp_image_saved:
+ * ligma_image_saved:
  * @image:
  * @file:
  *
@@ -4095,17 +4095,17 @@ gimp_image_saving (GimpImage *image)
  * location specified by @file.
  */
 void
-gimp_image_saved (GimpImage *image,
+ligma_image_saved (LigmaImage *image,
                   GFile     *file)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[SAVED], 0, file);
+  g_signal_emit (image, ligma_image_signals[SAVED], 0, file);
 }
 
 /**
- * gimp_image_exported:
+ * ligma_image_exported:
  * @image:
  * @file:
  *
@@ -4113,167 +4113,167 @@ gimp_image_saved (GimpImage *image,
  * location specified by @file.
  */
 void
-gimp_image_exported (GimpImage *image,
+ligma_image_exported (LigmaImage *image,
                      GFile     *file)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, file);
+  g_signal_emit (image, ligma_image_signals[EXPORTED], 0, file);
 }
 
 
 /*  flush this image's displays  */
 
 void
-gimp_image_flush (GimpImage *image)
+ligma_image_flush (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  gimp_projectable_flush (GIMP_PROJECTABLE (image),
-                          GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated);
+  ligma_projectable_flush (LIGMA_PROJECTABLE (image),
+                          LIGMA_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated);
 }
 
 
 /*  display / instance counters  */
 
 gint
-gimp_image_get_display_count (GimpImage *image)
+ligma_image_get_display_count (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->disp_count;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->disp_count;
 }
 
 void
-gimp_image_inc_display_count (GimpImage *image)
+ligma_image_inc_display_count (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->disp_count++;
+  LIGMA_IMAGE_GET_PRIVATE (image)->disp_count++;
 }
 
 void
-gimp_image_dec_display_count (GimpImage *image)
+ligma_image_dec_display_count (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->disp_count--;
+  LIGMA_IMAGE_GET_PRIVATE (image)->disp_count--;
 }
 
 gint
-gimp_image_get_instance_count (GimpImage *image)
+ligma_image_get_instance_count (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->instance_count;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->instance_count;
 }
 
 void
-gimp_image_inc_instance_count (GimpImage *image)
+ligma_image_inc_instance_count (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->instance_count++;
+  LIGMA_IMAGE_GET_PRIVATE (image)->instance_count++;
 }
 
 void
-gimp_image_inc_show_all_count (GimpImage *image)
+ligma_image_inc_show_all_count (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->show_all++;
+  LIGMA_IMAGE_GET_PRIVATE (image)->show_all++;
 
-  if (GIMP_IMAGE_GET_PRIVATE (image)->show_all == 1)
+  if (LIGMA_IMAGE_GET_PRIVATE (image)->show_all == 1)
     {
-      g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+      g_clear_object (&LIGMA_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 
-      gimp_image_update_bounding_box (image);
+      ligma_image_update_bounding_box (image);
     }
 }
 
 void
-gimp_image_dec_show_all_count (GimpImage *image)
+ligma_image_dec_show_all_count (LigmaImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->show_all--;
+  LIGMA_IMAGE_GET_PRIVATE (image)->show_all--;
 
-  if (GIMP_IMAGE_GET_PRIVATE (image)->show_all == 0)
+  if (LIGMA_IMAGE_GET_PRIVATE (image)->show_all == 0)
     {
-      g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+      g_clear_object (&LIGMA_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 
-      gimp_image_update_bounding_box (image);
+      ligma_image_update_bounding_box (image);
     }
 }
 
 
 /*  parasites  */
 
-const GimpParasite *
-gimp_image_parasite_find (GimpImage   *image,
+const LigmaParasite *
+ligma_image_parasite_find (LigmaImage   *image,
                           const gchar *name)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return gimp_parasite_list_find (GIMP_IMAGE_GET_PRIVATE (image)->parasites,
+  return ligma_parasite_list_find (LIGMA_IMAGE_GET_PRIVATE (image)->parasites,
                                   name);
 }
 
 static void
 list_func (gchar          *key,
-           GimpParasite   *p,
+           LigmaParasite   *p,
            gchar        ***cur)
 {
   *(*cur)++ = (gchar *) g_strdup (key);
 }
 
 gchar **
-gimp_image_parasite_list (GimpImage *image)
+ligma_image_parasite_list (LigmaImage *image)
 {
-  GimpImagePrivate  *private;
+  LigmaImagePrivate  *private;
   gint               count;
   gchar            **list;
   gchar            **cur;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  count = gimp_parasite_list_length (private->parasites);
+  count = ligma_parasite_list_length (private->parasites);
   cur = list = g_new0 (gchar *, count + 1);
 
-  gimp_parasite_list_foreach (private->parasites, (GHFunc) list_func, &cur);
+  ligma_parasite_list_foreach (private->parasites, (GHFunc) list_func, &cur);
 
   return list;
 }
 
 gboolean
-gimp_image_parasite_validate (GimpImage           *image,
-                              const GimpParasite  *parasite,
+ligma_image_parasite_validate (LigmaImage           *image,
+                              const LigmaParasite  *parasite,
                               GError             **error)
 {
   const gchar *name;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  name = gimp_parasite_get_name (parasite);
+  name = ligma_parasite_get_name (parasite);
 
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0 ||
-      strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, LIGMA_ICC_PROFILE_PARASITE_NAME) == 0 ||
+      strcmp (name, LIGMA_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_parasite (image, parasite,
+      return ligma_image_validate_icc_parasite (image, parasite,
                                                name, NULL, error);
     }
-  else if (strcmp (name, "gimp-comment") == 0)
+  else if (strcmp (name, "ligma-comment") == 0)
     {
       const gchar *data;
       guint32      length;
       gboolean     valid  = FALSE;
 
-      data = gimp_parasite_get_data (parasite, &length);
+      data = ligma_parasite_get_data (parasite, &length);
       if (length > 0)
         {
           if (data[length - 1] == '\0')
@@ -4284,8 +4284,8 @@ gimp_image_parasite_validate (GimpImage           *image,
 
       if (! valid)
         {
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("'gimp-comment' parasite validation failed: "
+          g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
+                       _("'ligma-comment' parasite validation failed: "
                          "comment contains invalid UTF-8"));
           return FALSE;
         }
@@ -4295,40 +4295,40 @@ gimp_image_parasite_validate (GimpImage           *image,
 }
 
 void
-gimp_image_parasite_attach (GimpImage          *image,
-                            const GimpParasite *parasite,
+ligma_image_parasite_attach (LigmaImage          *image,
+                            const LigmaParasite *parasite,
                             gboolean            push_undo)
 {
-  GimpImagePrivate *private;
-  GimpParasite      copy;
+  LigmaImagePrivate *private;
+  LigmaParasite      copy;
   const gchar      *name;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  name = gimp_parasite_get_name (parasite);
+  name = ligma_parasite_get_name (parasite);
 
   /*  this is so ugly and is only for the PDB  */
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0 ||
-      strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, LIGMA_ICC_PROFILE_PARASITE_NAME) == 0 ||
+      strcmp (name, LIGMA_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      GimpColorProfile *profile;
-      GimpColorProfile *builtin;
+      LigmaColorProfile *profile;
+      LigmaColorProfile *builtin;
       const guint8     *parasite_data;
       guint32           parasite_length;
 
-      parasite_data = gimp_parasite_get_data (parasite, &parasite_length);
+      parasite_data = ligma_parasite_get_data (parasite, &parasite_length);
       profile =
-        gimp_color_profile_new_from_icc_profile (parasite_data, parasite_length,
+        ligma_color_profile_new_from_icc_profile (parasite_data, parasite_length,
                                                  NULL);
-      builtin = gimp_image_get_builtin_color_profile (image);
+      builtin = ligma_image_get_builtin_color_profile (image);
 
-      if (gimp_color_profile_is_equal (profile, builtin))
+      if (ligma_color_profile_is_equal (profile, builtin))
         {
           /* setting the builtin profile is equal to removing the profile */
-          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME,
+          ligma_image_parasite_detach (image, LIGMA_ICC_PROFILE_PARASITE_NAME,
                                       push_undo);
           g_object_unref (profile);
           return;
@@ -4337,16 +4337,16 @@ gimp_image_parasite_attach (GimpImage          *image,
       g_object_unref (profile);
     }
 
-  /*  make a temporary copy of the GimpParasite struct because
-   *  gimp_parasite_shift_parent() changes it
+  /*  make a temporary copy of the LigmaParasite struct because
+   *  ligma_parasite_shift_parent() changes it
    */
   copy = *parasite;
 
   /*  only set the dirty bit manually if we can be saved and the new
    *  parasite differs from the current one and we aren't undoable
    */
-  if (push_undo && gimp_parasite_is_undoable (&copy))
-    gimp_image_undo_push_image_parasite (image,
+  if (push_undo && ligma_parasite_is_undoable (&copy))
+    ligma_image_undo_push_image_parasite (image,
                                          C_("undo-type", "Attach Parasite to Image"),
                                          &copy);
 
@@ -4356,68 +4356,68 @@ gimp_image_parasite_attach (GimpImage          *image,
    *  Now we simply attach the parasite without pushing an undo. That way
    *  it's undoable but does not block the undo system.   --Sven
    */
-  gimp_parasite_list_add (private->parasites, &copy);
+  ligma_parasite_list_add (private->parasites, &copy);
 
-  if (push_undo && gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
+  if (push_undo && ligma_parasite_has_flag (&copy, LIGMA_PARASITE_ATTACH_PARENT))
     {
-      gimp_parasite_shift_parent (&copy);
-      gimp_parasite_attach (image->gimp, &copy);
+      ligma_parasite_shift_parent (&copy);
+      ligma_parasite_attach (image->ligma, &copy);
     }
 
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    _gimp_image_update_color_profile (image, parasite);
+  if (strcmp (name, LIGMA_ICC_PROFILE_PARASITE_NAME) == 0)
+    _ligma_image_update_color_profile (image, parasite);
 
-  if (strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
-    _gimp_image_update_simulation_profile (image, parasite);
+  if (strcmp (name, LIGMA_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+    _ligma_image_update_simulation_profile (image, parasite);
 
-  g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
+  g_signal_emit (image, ligma_image_signals[PARASITE_ATTACHED], 0,
                  name);
 }
 
 void
-gimp_image_parasite_detach (GimpImage   *image,
+ligma_image_parasite_detach (LigmaImage   *image,
                             const gchar *name,
                             gboolean     push_undo)
 {
-  GimpImagePrivate   *private;
-  const GimpParasite *parasite;
+  LigmaImagePrivate   *private;
+  const LigmaParasite *parasite;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (name != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (! (parasite = gimp_parasite_list_find (private->parasites, name)))
+  if (! (parasite = ligma_parasite_list_find (private->parasites, name)))
     return;
 
-  if (push_undo && gimp_parasite_is_undoable (parasite))
-    gimp_image_undo_push_image_parasite_remove (image,
+  if (push_undo && ligma_parasite_is_undoable (parasite))
+    ligma_image_undo_push_image_parasite_remove (image,
                                                 C_("undo-type", "Remove Parasite from Image"),
                                                 name);
 
-  gimp_parasite_list_remove (private->parasites, name);
+  ligma_parasite_list_remove (private->parasites, name);
 
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    _gimp_image_update_color_profile (image, NULL);
+  if (strcmp (name, LIGMA_ICC_PROFILE_PARASITE_NAME) == 0)
+    _ligma_image_update_color_profile (image, NULL);
 
-  if (strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
-    _gimp_image_update_simulation_profile (image, NULL);
+  if (strcmp (name, LIGMA_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+    _ligma_image_update_simulation_profile (image, NULL);
 
-  g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
+  g_signal_emit (image, ligma_image_signals[PARASITE_DETACHED], 0,
                  name);
 }
 
 
 /*  tattoos  */
 
-GimpTattoo
-gimp_image_get_new_tattoo (GimpImage *image)
+LigmaTattoo
+ligma_image_get_new_tattoo (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->tattoo_state++;
 
@@ -4427,70 +4427,70 @@ gimp_image_get_new_tattoo (GimpImage *image)
   return private->tattoo_state;
 }
 
-GimpTattoo
-gimp_image_get_tattoo_state (GimpImage *image)
+LigmaTattoo
+ligma_image_get_tattoo_state (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->tattoo_state;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->tattoo_state;
 }
 
 gboolean
-gimp_image_set_tattoo_state (GimpImage  *image,
-                             GimpTattoo  val)
+ligma_image_set_tattoo_state (LigmaImage  *image,
+                             LigmaTattoo  val)
 {
   GList      *all_items;
   GList      *list;
   gboolean    retval = TRUE;
-  GimpTattoo  maxval = 0;
+  LigmaTattoo  maxval = 0;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   /* Check that the layer tattoos don't overlap with channel or vector ones */
-  all_items = gimp_image_get_layer_list (image);
+  all_items = ligma_image_get_layer_list (image);
 
   for (list = all_items; list; list = g_list_next (list))
     {
-      GimpTattoo ltattoo;
+      LigmaTattoo ltattoo;
 
-      ltattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
+      ltattoo = ligma_item_get_tattoo (LIGMA_ITEM (list->data));
       if (ltattoo > maxval)
         maxval = ltattoo;
 
-      if (gimp_image_get_channel_by_tattoo (image, ltattoo))
+      if (ligma_image_get_channel_by_tattoo (image, ltattoo))
         retval = FALSE; /* Oopps duplicated tattoo in channel */
 
-      if (gimp_image_get_vectors_by_tattoo (image, ltattoo))
+      if (ligma_image_get_vectors_by_tattoo (image, ltattoo))
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
   g_list_free (all_items);
 
   /* Now check that the channel and vectors tattoos don't overlap */
-  all_items = gimp_image_get_channel_list (image);
+  all_items = ligma_image_get_channel_list (image);
 
   for (list = all_items; list; list = g_list_next (list))
     {
-      GimpTattoo ctattoo;
+      LigmaTattoo ctattoo;
 
-      ctattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
+      ctattoo = ligma_item_get_tattoo (LIGMA_ITEM (list->data));
       if (ctattoo > maxval)
         maxval = ctattoo;
 
-      if (gimp_image_get_vectors_by_tattoo (image, ctattoo))
+      if (ligma_image_get_vectors_by_tattoo (image, ctattoo))
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
   g_list_free (all_items);
 
   /* Find the max tattoo value in the vectors */
-  all_items = gimp_image_get_vectors_list (image);
+  all_items = ligma_image_get_vectors_list (image);
 
   for (list = all_items; list; list = g_list_next (list))
     {
-      GimpTattoo vtattoo;
+      LigmaTattoo vtattoo;
 
-      vtattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
+      vtattoo = ligma_item_get_tattoo (LIGMA_ITEM (list->data));
       if (vtattoo > maxval)
         maxval = vtattoo;
     }
@@ -4502,7 +4502,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
 
   /* Must check if the state is valid */
   if (retval == TRUE)
-    GIMP_IMAGE_GET_PRIVATE (image)->tattoo_state = val;
+    LIGMA_IMAGE_GET_PRIVATE (image)->tattoo_state = val;
 
   return retval;
 }
@@ -4510,336 +4510,336 @@ gimp_image_set_tattoo_state (GimpImage  *image,
 
 /*  projection  */
 
-GimpProjection *
-gimp_image_get_projection (GimpImage *image)
+LigmaProjection *
+ligma_image_get_projection (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->projection;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->projection;
 }
 
 
 /*  layers / channels / vectors  */
 
-GimpItemTree *
-gimp_image_get_layer_tree (GimpImage *image)
+LigmaItemTree *
+ligma_image_get_layer_tree (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->layers;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->layers;
 }
 
-GimpItemTree *
-gimp_image_get_channel_tree (GimpImage *image)
+LigmaItemTree *
+ligma_image_get_channel_tree (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->channels;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->channels;
 }
 
-GimpItemTree *
-gimp_image_get_vectors_tree (GimpImage *image)
+LigmaItemTree *
+ligma_image_get_vectors_tree (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->vectors;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->vectors;
 }
 
-GimpContainer *
-gimp_image_get_layers (GimpImage *image)
+LigmaContainer *
+ligma_image_get_layers (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->layers->container;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->layers->container;
 }
 
-GimpContainer *
-gimp_image_get_channels (GimpImage *image)
+LigmaContainer *
+ligma_image_get_channels (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->channels->container;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->channels->container;
 }
 
-GimpContainer *
-gimp_image_get_vectors (GimpImage *image)
+LigmaContainer *
+ligma_image_get_vectors (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->vectors->container;
-}
-
-gint
-gimp_image_get_n_layers (GimpImage *image)
-{
-  GimpItemStack *stack;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
-
-  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
-
-  return gimp_item_stack_get_n_items (stack);
+  return LIGMA_IMAGE_GET_PRIVATE (image)->vectors->container;
 }
 
 gint
-gimp_image_get_n_channels (GimpImage *image)
+ligma_image_get_n_layers (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
 
-  return gimp_item_stack_get_n_items (stack);
+  return ligma_item_stack_get_n_items (stack);
 }
 
 gint
-gimp_image_get_n_vectors (GimpImage *image)
+ligma_image_get_n_channels (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_channels (image));
 
-  return gimp_item_stack_get_n_items (stack);
+  return ligma_item_stack_get_n_items (stack);
+}
+
+gint
+ligma_image_get_n_vectors (LigmaImage *image)
+{
+  LigmaItemStack *stack;
+
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), 0);
+
+  stack = LIGMA_ITEM_STACK (ligma_image_get_vectors (image));
+
+  return ligma_item_stack_get_n_items (stack);
 }
 
 GList *
-gimp_image_get_layer_iter (GimpImage *image)
+ligma_image_get_layer_iter (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
 
-  return gimp_item_stack_get_item_iter (stack);
+  return ligma_item_stack_get_item_iter (stack);
 }
 
 GList *
-gimp_image_get_channel_iter (GimpImage *image)
+ligma_image_get_channel_iter (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_channels (image));
 
-  return gimp_item_stack_get_item_iter (stack);
+  return ligma_item_stack_get_item_iter (stack);
 }
 
 GList *
-gimp_image_get_vectors_iter (GimpImage *image)
+ligma_image_get_vectors_iter (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_vectors (image));
 
-  return gimp_item_stack_get_item_iter (stack);
+  return ligma_item_stack_get_item_iter (stack);
 }
 
 GList *
-gimp_image_get_layer_list (GimpImage *image)
+ligma_image_get_layer_list (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
 
-  return gimp_item_stack_get_item_list (stack);
+  return ligma_item_stack_get_item_list (stack);
 }
 
 GList *
-gimp_image_get_channel_list (GimpImage *image)
+ligma_image_get_channel_list (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_channels (image));
 
-  return gimp_item_stack_get_item_list (stack);
+  return ligma_item_stack_get_item_list (stack);
 }
 
 GList *
-gimp_image_get_vectors_list (GimpImage *image)
+ligma_image_get_vectors_list (LigmaImage *image)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_vectors (image));
 
-  return gimp_item_stack_get_item_list (stack);
+  return ligma_item_stack_get_item_list (stack);
 }
 
 
 /*  active drawable, layer, channel, vectors  */
 
-GimpLayer *
-gimp_image_get_active_layer (GimpImage *image)
+LigmaLayer *
+ligma_image_get_active_layer (LigmaImage *image)
 {
   GList *layers;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  layers = gimp_image_get_selected_layers (image);
+  layers = ligma_image_get_selected_layers (image);
   if (g_list_length (layers) == 1)
     return layers->data;
   else
     return NULL;
 }
 
-GimpChannel *
-gimp_image_get_active_channel (GimpImage *image)
+LigmaChannel *
+ligma_image_get_active_channel (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  return GIMP_CHANNEL (gimp_item_tree_get_active_item (private->channels));
+  return LIGMA_CHANNEL (ligma_item_tree_get_active_item (private->channels));
 }
 
-GimpVectors *
-gimp_image_get_active_vectors (GimpImage *image)
+LigmaVectors *
+ligma_image_get_active_vectors (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  return GIMP_VECTORS (gimp_item_tree_get_active_item (private->vectors));
+  return LIGMA_VECTORS (ligma_item_tree_get_active_item (private->vectors));
 }
 
-GimpLayer *
-gimp_image_set_active_layer (GimpImage *image,
-                             GimpLayer *layer)
+LigmaLayer *
+ligma_image_set_active_layer (LigmaImage *image,
+                             LigmaLayer *layer)
 {
   GList     *layers = NULL;
-  GimpLayer *active_layer;
+  LigmaLayer *active_layer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (layer == NULL || LIGMA_IS_LAYER (layer), NULL);
   g_return_val_if_fail (layer == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (layer)) &&
-                         gimp_item_get_image (GIMP_ITEM (layer)) == image),
+                        (ligma_item_is_attached (LIGMA_ITEM (layer)) &&
+                         ligma_item_get_image (LIGMA_ITEM (layer)) == image),
                         NULL);
   if (layer)
     layers = g_list_prepend (NULL, layer);
 
-  gimp_image_set_selected_layers (image, layers);
+  ligma_image_set_selected_layers (image, layers);
   g_list_free (layers);
 
-  layers = gimp_image_get_selected_layers (image);
+  layers = ligma_image_get_selected_layers (image);
   active_layer = g_list_length (layers) == 1 ? layers->data : NULL;
 
   return active_layer;
 }
 
-GimpChannel *
-gimp_image_set_active_channel (GimpImage   *image,
-                               GimpChannel *channel)
+LigmaChannel *
+ligma_image_set_active_channel (LigmaImage   *image,
+                               LigmaChannel *channel)
 {
-  GimpChannel *active_channel;
+  LigmaChannel *active_channel;
   GList       *channels = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (channel == NULL || LIGMA_IS_CHANNEL (channel), NULL);
   g_return_val_if_fail (channel == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (channel)) &&
-                         gimp_item_get_image (GIMP_ITEM (channel)) == image),
+                        (ligma_item_is_attached (LIGMA_ITEM (channel)) &&
+                         ligma_item_get_image (LIGMA_ITEM (channel)) == image),
                         NULL);
 
   /*  Not if there is a floating selection  */
-  if (channel && gimp_image_get_floating_selection (image))
+  if (channel && ligma_image_get_floating_selection (image))
     return NULL;
 
   if (channel)
     channels = g_list_prepend (NULL, channel);
 
-  gimp_image_set_selected_channels (image, channels);
+  ligma_image_set_selected_channels (image, channels);
   g_list_free (channels);
 
-  channels = gimp_image_get_selected_channels (image);
+  channels = ligma_image_get_selected_channels (image);
   active_channel = g_list_length (channels) == 1 ? channels->data : NULL;
 
   return active_channel;
 }
 
 void
-gimp_image_unset_selected_channels (GimpImage *image)
+ligma_image_unset_selected_channels (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *channels;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  channels = gimp_image_get_selected_channels (image);
+  channels = ligma_image_get_selected_channels (image);
 
   if (channels)
     {
-      gimp_image_set_selected_channels (image, NULL);
+      ligma_image_set_selected_channels (image, NULL);
 
       if (private->layer_stack)
-        gimp_image_set_selected_layers (image, private->layer_stack->data);
+        ligma_image_set_selected_layers (image, private->layer_stack->data);
     }
 }
 
-GimpVectors *
-gimp_image_set_active_vectors (GimpImage   *image,
-                               GimpVectors *vectors)
+LigmaVectors *
+ligma_image_set_active_vectors (LigmaImage   *image,
+                               LigmaVectors *vectors)
 {
   GList       *all_vectors = NULL;
-  GimpVectors *active_vectors;
+  LigmaVectors *active_vectors;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (vectors == NULL || LIGMA_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (vectors == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (vectors)) &&
-                         gimp_item_get_image (GIMP_ITEM (vectors)) == image),
+                        (ligma_item_is_attached (LIGMA_ITEM (vectors)) &&
+                         ligma_item_get_image (LIGMA_ITEM (vectors)) == image),
                         NULL);
   if (vectors)
     all_vectors = g_list_prepend (NULL, vectors);
 
-  gimp_image_set_selected_vectors (image, all_vectors);
+  ligma_image_set_selected_vectors (image, all_vectors);
   g_list_free (all_vectors);
 
-  all_vectors = gimp_image_get_selected_vectors (image);
+  all_vectors = ligma_image_get_selected_vectors (image);
   active_vectors = (g_list_length (all_vectors) == 1 ? all_vectors->data : NULL);
 
   return active_vectors;
 }
 
 /**
- * gimp_image_is_selected_drawable:
+ * ligma_image_is_selected_drawable:
  * @image:
  * @drawable:
  *
  * Checks if @drawable belong to the list of currently selected
  * drawables. It doesn't mean this is the only selected drawable (if
  * this is what you want to check, use
- * gimp_image_equal_selected_drawables() with a list containing only
+ * ligma_image_equal_selected_drawables() with a list containing only
  * this drawable).
  *
  * Returns: %TRUE is @drawable is one of the selected drawables.
  */
 gboolean
-gimp_image_is_selected_drawable (GimpImage    *image,
-                                 GimpDrawable *drawable)
+ligma_image_is_selected_drawable (LigmaImage    *image,
+                                 LigmaDrawable *drawable)
 {
   GList    *selected_drawables;
   gboolean  found;
 
-  selected_drawables = gimp_image_get_selected_drawables (image);
+  selected_drawables = ligma_image_get_selected_drawables (image);
   found = (g_list_find (selected_drawables, drawable) != NULL);
   g_list_free (selected_drawables);
 
@@ -4847,24 +4847,24 @@ gimp_image_is_selected_drawable (GimpImage    *image,
 }
 
 /**
- * gimp_image_equal_selected_drawables:
+ * ligma_image_equal_selected_drawables:
  * @image:
  * @drawables:
  *
  * Compare the list of @drawables with the selected drawables in @image
- * (i.e. the result of gimp_image_equal_selected_drawables()).
+ * (i.e. the result of ligma_image_equal_selected_drawables()).
  * The order of the @drawables does not matter, only if the size and
  * contents of the list is the same.
  */
 gboolean
-gimp_image_equal_selected_drawables (GimpImage *image,
+ligma_image_equal_selected_drawables (LigmaImage *image,
                                      GList     *drawables)
 {
   GList    *selected_drawables;
   GList    *iter;
   gboolean  equal = FALSE;
 
-  selected_drawables = gimp_image_get_selected_drawables (image);
+  selected_drawables = ligma_image_get_selected_drawables (image);
 
   if (g_list_length (drawables) == g_list_length (selected_drawables))
     {
@@ -4883,18 +4883,18 @@ gimp_image_equal_selected_drawables (GimpImage *image,
 }
 
 GList *
-gimp_image_get_selected_drawables (GimpImage *image)
+ligma_image_get_selected_drawables (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *selected_channels;
   GList            *selected_layers;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  selected_channels = gimp_item_tree_get_selected_items (private->channels);
-  selected_layers   = gimp_item_tree_get_selected_items (private->layers);
+  selected_channels = ligma_item_tree_get_selected_items (private->channels);
+  selected_layers   = ligma_item_tree_get_selected_items (private->layers);
 
   /*  If there is an active channel (a saved selection, etc.),
    *  we ignore the active layer
@@ -4912,10 +4912,10 @@ gimp_image_get_selected_drawables (GimpImage *image)
            * edit is in progress, we return the mask as selected
            * drawable instead of the layer.
            */
-          GimpLayer     *layer = GIMP_LAYER (selected_layers->data);
-          GimpLayerMask *mask  = gimp_layer_get_mask (layer);
+          LigmaLayer     *layer = LIGMA_LAYER (selected_layers->data);
+          LigmaLayerMask *mask  = ligma_layer_get_mask (layer);
 
-          if (mask && gimp_layer_get_edit_mask (layer))
+          if (mask && ligma_layer_get_edit_mask (layer))
             selected_layers->data = mask;
         }
       return selected_layers;
@@ -4925,77 +4925,77 @@ gimp_image_get_selected_drawables (GimpImage *image)
 }
 
 GList *
-gimp_image_get_selected_layers (GimpImage *image)
+ligma_image_get_selected_layers (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  return gimp_item_tree_get_selected_items (private->layers);
+  return ligma_item_tree_get_selected_items (private->layers);
 }
 
 GList *
-gimp_image_get_selected_channels (GimpImage *image)
+ligma_image_get_selected_channels (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  return gimp_item_tree_get_selected_items (private->channels);
+  return ligma_item_tree_get_selected_items (private->channels);
 }
 
 GList *
-gimp_image_get_selected_vectors (GimpImage *image)
+ligma_image_get_selected_vectors (LigmaImage *image)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  return gimp_item_tree_get_selected_items (private->vectors);
+  return ligma_item_tree_get_selected_items (private->vectors);
 }
 
 void
-gimp_image_set_selected_layers (GimpImage *image,
+ligma_image_set_selected_layers (LigmaImage *image,
                                 GList     *layers)
 {
-  GimpImagePrivate *private;
-  GimpLayer        *floating_sel;
+  LigmaImagePrivate *private;
+  LigmaLayer        *floating_sel;
   GList            *selected_layers;
   GList            *layers2;
   GList            *iter;
   gboolean          selection_changed = TRUE;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   layers2 = g_list_copy (layers);
   for (iter = layers; iter; iter = iter->next)
     {
-      g_return_if_fail (GIMP_IS_LAYER (iter->data));
-      g_return_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
+      g_return_if_fail (LIGMA_IS_LAYER (iter->data));
+      g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (iter->data)) == image);
 
       /* Silently remove non-attached layers from selection. Do not
        * error out on it as it may happen for instance when selection
        * changes while in the process of removing a layer group.
        */
-      if (! gimp_item_is_attached (GIMP_ITEM (iter->data)))
+      if (! ligma_item_is_attached (LIGMA_ITEM (iter->data)))
         layers2 = g_list_remove (layers2, iter->data);
     }
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  floating_sel = gimp_image_get_floating_selection (image);
+  floating_sel = ligma_image_get_floating_selection (image);
 
   /*  Make sure the floating_sel always is the active layer  */
   if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
     return;
 
-  selected_layers = gimp_image_get_selected_layers (image);
+  selected_layers = ligma_image_get_selected_layers (image);
 
   if (g_list_length (layers2) == g_list_length (selected_layers))
     {
@@ -5014,17 +5014,17 @@ gimp_image_set_selected_layers (GimpImage *image,
     {
       /*  Don't cache selection info for the previous active layer  */
       if (selected_layers)
-        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (selected_layers->data));
+        ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (selected_layers->data));
 
-      gimp_item_tree_set_selected_items (private->layers, layers2);
+      ligma_item_tree_set_selected_items (private->layers, layers2);
 
       /* We cannot edit masks with multiple selected layers. */
       if (g_list_length (layers2) > 1)
         {
           for (iter = layers2; iter; iter = iter->next)
             {
-              if (gimp_layer_get_mask (iter->data))
-                gimp_layer_set_edit_mask (iter->data, FALSE);
+              if (ligma_layer_get_mask (iter->data))
+                ligma_layer_set_edit_mask (iter->data, FALSE);
             }
         }
     }
@@ -5035,388 +5035,388 @@ gimp_image_set_selected_layers (GimpImage *image,
 }
 
 void
-gimp_image_set_selected_channels (GimpImage *image,
+ligma_image_set_selected_channels (LigmaImage *image,
                                   GList     *channels)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *iter;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   for (iter = channels; iter; iter = iter->next)
     {
-      g_return_if_fail (GIMP_IS_CHANNEL (iter->data));
-      g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
-                        gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
+      g_return_if_fail (LIGMA_IS_CHANNEL (iter->data));
+      g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (iter->data)) &&
+                        ligma_item_get_image (LIGMA_ITEM (iter->data)) == image);
     }
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   /*  Not if there is a floating selection  */
-  if (g_list_length (channels) > 0 && gimp_image_get_floating_selection (image))
+  if (g_list_length (channels) > 0 && ligma_image_get_floating_selection (image))
     return;
 
-  gimp_item_tree_set_selected_items (private->channels, g_list_copy (channels));
+  ligma_item_tree_set_selected_items (private->channels, g_list_copy (channels));
 }
 
 void
-gimp_image_set_selected_vectors (GimpImage *image,
+ligma_image_set_selected_vectors (LigmaImage *image,
                                  GList     *vectors)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *iter;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   for (iter = vectors; iter; iter = iter->next)
     {
-      g_return_if_fail (GIMP_IS_VECTORS (iter->data));
-      g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
-                        gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
+      g_return_if_fail (LIGMA_IS_VECTORS (iter->data));
+      g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (iter->data)) &&
+                        ligma_item_get_image (LIGMA_ITEM (iter->data)) == image);
     }
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  gimp_item_tree_set_selected_items (private->vectors, g_list_copy (vectors));
+  ligma_item_tree_set_selected_items (private->vectors, g_list_copy (vectors));
 }
 
 
 /*  layer, channel, vectors by tattoo  */
 
-GimpLayer *
-gimp_image_get_layer_by_tattoo (GimpImage  *image,
-                                GimpTattoo  tattoo)
+LigmaLayer *
+ligma_image_get_layer_by_tattoo (LigmaImage  *image,
+                                LigmaTattoo  tattoo)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
+  return LIGMA_LAYER (ligma_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
-GimpChannel *
-gimp_image_get_channel_by_tattoo (GimpImage  *image,
-                                  GimpTattoo  tattoo)
+LigmaChannel *
+ligma_image_get_channel_by_tattoo (LigmaImage  *image,
+                                  LigmaTattoo  tattoo)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_channels (image));
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
+  return LIGMA_CHANNEL (ligma_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
-GimpVectors *
-gimp_image_get_vectors_by_tattoo (GimpImage  *image,
-                                  GimpTattoo  tattoo)
+LigmaVectors *
+ligma_image_get_vectors_by_tattoo (LigmaImage  *image,
+                                  LigmaTattoo  tattoo)
 {
-  GimpItemStack *stack;
+  LigmaItemStack *stack;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = LIGMA_ITEM_STACK (ligma_image_get_vectors (image));
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
+  return LIGMA_VECTORS (ligma_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 
 /*  layer, channel, vectors by name  */
 
-GimpLayer *
-gimp_image_get_layer_by_name (GimpImage   *image,
+LigmaLayer *
+ligma_image_get_layer_by_name (LigmaImage   *image,
                               const gchar *name)
 {
-  GimpItemTree *tree;
+  LigmaItemTree *tree;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  tree = gimp_image_get_layer_tree (image);
+  tree = ligma_image_get_layer_tree (image);
 
-  return GIMP_LAYER (gimp_item_tree_get_item_by_name (tree, name));
+  return LIGMA_LAYER (ligma_item_tree_get_item_by_name (tree, name));
 }
 
-GimpChannel *
-gimp_image_get_channel_by_name (GimpImage   *image,
+LigmaChannel *
+ligma_image_get_channel_by_name (LigmaImage   *image,
                                 const gchar *name)
 {
-  GimpItemTree *tree;
+  LigmaItemTree *tree;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  tree = gimp_image_get_channel_tree (image);
+  tree = ligma_image_get_channel_tree (image);
 
-  return GIMP_CHANNEL (gimp_item_tree_get_item_by_name (tree, name));
+  return LIGMA_CHANNEL (ligma_item_tree_get_item_by_name (tree, name));
 }
 
-GimpVectors *
-gimp_image_get_vectors_by_name (GimpImage   *image,
+LigmaVectors *
+ligma_image_get_vectors_by_name (LigmaImage   *image,
                                 const gchar *name)
 {
-  GimpItemTree *tree;
+  LigmaItemTree *tree;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  tree = gimp_image_get_vectors_tree (image);
+  tree = ligma_image_get_vectors_tree (image);
 
-  return GIMP_VECTORS (gimp_item_tree_get_item_by_name (tree, name));
+  return LIGMA_VECTORS (ligma_item_tree_get_item_by_name (tree, name));
 }
 
 
 /*  items  */
 
 gboolean
-gimp_image_reorder_item (GimpImage   *image,
-                         GimpItem    *item,
-                         GimpItem    *new_parent,
+ligma_image_reorder_item (LigmaImage   *image,
+                         LigmaItem    *item,
+                         LigmaItem    *new_parent,
                          gint         new_index,
                          gboolean     push_undo,
                          const gchar *undo_desc)
 {
-  GimpItemTree *tree;
+  LigmaItemTree *tree;
   gboolean      result;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (ligma_item_get_image (item) == image, FALSE);
 
-  tree = gimp_item_get_tree (item);
+  tree = ligma_item_get_tree (item);
 
   g_return_val_if_fail (tree != NULL, FALSE);
 
   if (push_undo)
     {
       if (! undo_desc)
-        undo_desc = GIMP_ITEM_GET_CLASS (item)->reorder_desc;
+        undo_desc = LIGMA_ITEM_GET_CLASS (item)->reorder_desc;
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_ITEM_REORDER,
                                    undo_desc);
     }
 
-  gimp_image_freeze_bounding_box (image);
+  ligma_image_freeze_bounding_box (image);
 
-  gimp_item_start_move (item, push_undo);
+  ligma_item_start_move (item, push_undo);
 
-  /*  item and new_parent are type-checked in GimpItemTree
+  /*  item and new_parent are type-checked in LigmaItemTree
    */
-  result = gimp_item_tree_reorder_item (tree, item,
+  result = ligma_item_tree_reorder_item (tree, item,
                                         new_parent, new_index,
                                         push_undo, undo_desc);
 
-  gimp_item_end_move (item, push_undo);
+  ligma_item_end_move (item, push_undo);
 
-  gimp_image_thaw_bounding_box (image);
+  ligma_image_thaw_bounding_box (image);
 
   if (push_undo)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 
   return result;
 }
 
 gboolean
-gimp_image_raise_item (GimpImage *image,
-                       GimpItem  *item,
+ligma_image_raise_item (LigmaImage *image,
+                       LigmaItem  *item,
                        GError    **error)
 {
   gint index;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_item_get_index (item);
+  index = ligma_item_get_index (item);
 
   g_return_val_if_fail (index != -1, FALSE);
 
   if (index == 0)
     {
-      g_set_error_literal (error,  GIMP_ERROR, GIMP_FAILED,
-                           GIMP_ITEM_GET_CLASS (item)->raise_failed);
+      g_set_error_literal (error,  LIGMA_ERROR, LIGMA_FAILED,
+                           LIGMA_ITEM_GET_CLASS (item)->raise_failed);
       return FALSE;
     }
 
-  return gimp_image_reorder_item (image, item,
-                                  gimp_item_get_parent (item), index - 1,
-                                  TRUE, GIMP_ITEM_GET_CLASS (item)->raise_desc);
+  return ligma_image_reorder_item (image, item,
+                                  ligma_item_get_parent (item), index - 1,
+                                  TRUE, LIGMA_ITEM_GET_CLASS (item)->raise_desc);
 }
 
 gboolean
-gimp_image_raise_item_to_top (GimpImage *image,
-                              GimpItem  *item)
+ligma_image_raise_item_to_top (LigmaImage *image,
+                              LigmaItem  *item)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
 
-  return gimp_image_reorder_item (image, item,
-                                  gimp_item_get_parent (item), 0,
-                                  TRUE, GIMP_ITEM_GET_CLASS (item)->raise_to_top_desc);
+  return ligma_image_reorder_item (image, item,
+                                  ligma_item_get_parent (item), 0,
+                                  TRUE, LIGMA_ITEM_GET_CLASS (item)->raise_to_top_desc);
 }
 
 gboolean
-gimp_image_lower_item (GimpImage *image,
-                       GimpItem  *item,
+ligma_image_lower_item (LigmaImage *image,
+                       LigmaItem  *item,
                        GError    **error)
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gint           index;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  container = gimp_item_get_container (item);
+  container = ligma_item_get_container (item);
 
   g_return_val_if_fail (container != NULL, FALSE);
 
-  index = gimp_item_get_index (item);
+  index = ligma_item_get_index (item);
 
-  if (index == gimp_container_get_n_children (container) - 1)
+  if (index == ligma_container_get_n_children (container) - 1)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           GIMP_ITEM_GET_CLASS (item)->lower_failed);
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
+                           LIGMA_ITEM_GET_CLASS (item)->lower_failed);
       return FALSE;
     }
 
-  return gimp_image_reorder_item (image, item,
-                                  gimp_item_get_parent (item), index + 1,
-                                  TRUE, GIMP_ITEM_GET_CLASS (item)->lower_desc);
+  return ligma_image_reorder_item (image, item,
+                                  ligma_item_get_parent (item), index + 1,
+                                  TRUE, LIGMA_ITEM_GET_CLASS (item)->lower_desc);
 }
 
 gboolean
-gimp_image_lower_item_to_bottom (GimpImage *image,
-                                  GimpItem *item)
+ligma_image_lower_item_to_bottom (LigmaImage *image,
+                                  LigmaItem *item)
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gint           length;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
 
-  container = gimp_item_get_container (item);
+  container = ligma_item_get_container (item);
 
   g_return_val_if_fail (container != NULL, FALSE);
 
-  length = gimp_container_get_n_children (container);
+  length = ligma_container_get_n_children (container);
 
-  return gimp_image_reorder_item (image, item,
-                                  gimp_item_get_parent (item), length - 1,
-                                  TRUE, GIMP_ITEM_GET_CLASS (item)->lower_to_bottom_desc);
+  return ligma_image_reorder_item (image, item,
+                                  ligma_item_get_parent (item), length - 1,
+                                  TRUE, LIGMA_ITEM_GET_CLASS (item)->lower_to_bottom_desc);
 }
 
 
 /*  layers  */
 
 gboolean
-gimp_image_add_layer (GimpImage *image,
-                      GimpLayer *layer,
-                      GimpLayer *parent,
+ligma_image_add_layer (LigmaImage *image,
+                      LigmaLayer *layer,
+                      LigmaLayer *parent,
                       gint       position,
                       gboolean   push_undo)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *selected_layers;
   gboolean          old_has_alpha;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  /*  item and parent are type-checked in GimpItemTree
+  /*  item and parent are type-checked in LigmaItemTree
    */
-  if (! gimp_item_tree_get_insert_pos (private->layers,
-                                       (GimpItem *) layer,
-                                       (GimpItem **) &parent,
+  if (! ligma_item_tree_get_insert_pos (private->layers,
+                                       (LigmaItem *) layer,
+                                       (LigmaItem **) &parent,
                                        &position))
     return FALSE;
 
-  gimp_image_unset_default_new_layer_mode (image);
+  ligma_image_unset_default_new_layer_mode (image);
 
   /*  If there is a floating selection (and this isn't it!),
    *  make sure the insert position is greater than 0
    */
   if (parent == NULL && position == 0 &&
-      gimp_image_get_floating_selection (image))
+      ligma_image_get_floating_selection (image))
     position = 1;
 
-  old_has_alpha = gimp_image_has_alpha (image);
+  old_has_alpha = ligma_image_has_alpha (image);
 
   if (push_undo)
-    gimp_image_undo_push_layer_add (image, C_("undo-type", "Add Layer"),
+    ligma_image_undo_push_layer_add (image, C_("undo-type", "Add Layer"),
                                     layer,
-                                    gimp_image_get_selected_layers (image));
+                                    ligma_image_get_selected_layers (image));
 
-  gimp_item_tree_add_item (private->layers, GIMP_ITEM (layer),
-                           GIMP_ITEM (parent), position);
+  ligma_item_tree_add_item (private->layers, LIGMA_ITEM (layer),
+                           LIGMA_ITEM (parent), position);
 
   selected_layers = g_list_prepend (NULL, layer);
-  gimp_image_set_selected_layers (image, selected_layers);
+  ligma_image_set_selected_layers (image, selected_layers);
   g_list_free (selected_layers);
 
   /*  If the layer is a floating selection, attach it to the drawable  */
-  if (gimp_layer_is_floating_sel (layer))
-    gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
+  if (ligma_layer_is_floating_sel (layer))
+    ligma_drawable_attach_floating_sel (ligma_layer_get_floating_sel_drawable (layer),
                                        layer);
 
-  if (old_has_alpha != gimp_image_has_alpha (image))
+  if (old_has_alpha != ligma_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
   return TRUE;
 }
 
 void
-gimp_image_remove_layer (GimpImage *image,
-                         GimpLayer *layer,
+ligma_image_remove_layer (LigmaImage *image,
+                         LigmaLayer *layer,
                          gboolean   push_undo,
                          GList     *new_selected)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *selected_layers;
   gboolean          old_has_alpha;
   const gchar      *undo_desc;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image);
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_LAYER (layer));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (layer)));
+  g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (layer)) == image);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  gimp_image_unset_default_new_layer_mode (image);
+  ligma_image_unset_default_new_layer_mode (image);
 
   if (push_undo)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                  C_("undo-type", "Remove Layer"));
 
-  gimp_item_start_move (GIMP_ITEM (layer), push_undo);
+  ligma_item_start_move (LIGMA_ITEM (layer), push_undo);
 
-  if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)))
+  if (ligma_drawable_get_floating_sel (LIGMA_DRAWABLE (layer)))
     {
       if (! push_undo)
         {
           g_warning ("%s() was called from an undo function while the layer "
                      "had a floating selection. Please report this at "
-                     "https://www.gimp.org/bugs/", G_STRFUNC);
+                     "https://www.ligma.org/bugs/", G_STRFUNC);
           return;
         }
 
-      gimp_image_remove_layer (image,
-                               gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)),
+      ligma_image_remove_layer (image,
+                               ligma_drawable_get_floating_sel (LIGMA_DRAWABLE (layer)),
                                TRUE, NULL);
     }
 
-  selected_layers = g_list_copy (gimp_image_get_selected_layers (image));
+  selected_layers = g_list_copy (ligma_image_get_selected_layers (image));
 
-  old_has_alpha = gimp_image_has_alpha (image);
+  old_has_alpha = ligma_image_has_alpha (image);
 
-  if (gimp_layer_is_floating_sel (layer))
+  if (ligma_layer_is_floating_sel (layer))
     {
       undo_desc = C_("undo-type", "Remove Floating Selection");
 
-      gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer));
+      ligma_drawable_detach_floating_sel (ligma_layer_get_floating_sel_drawable (layer));
     }
   else
     {
@@ -5424,25 +5424,25 @@ gimp_image_remove_layer (GimpImage *image,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_remove (image, undo_desc, layer,
-                                       gimp_layer_get_parent (layer),
-                                       gimp_item_get_index (GIMP_ITEM (layer)),
+    ligma_image_undo_push_layer_remove (image, undo_desc, layer,
+                                       ligma_layer_get_parent (layer),
+                                       ligma_item_get_index (LIGMA_ITEM (layer)),
                                        selected_layers);
 
   g_object_ref (layer);
 
   /*  Make sure we're not caching any old selection info  */
   if (g_list_find (selected_layers, layer))
-    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
+    ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (layer));
 
   /* Remove layer and its children from the MRU layer stack. */
-  gimp_image_remove_from_layer_stack (image, layer);
+  ligma_image_remove_from_layer_stack (image, layer);
 
-  new_selected = gimp_item_tree_remove_item (private->layers,
-                                             GIMP_ITEM (layer),
+  new_selected = ligma_item_tree_remove_item (private->layers,
+                                             LIGMA_ITEM (layer),
                                              new_selected);
 
-  if (gimp_layer_is_floating_sel (layer))
+  if (ligma_layer_is_floating_sel (layer))
     {
       /*  If this was the floating selection, activate the underlying drawable
        */
@@ -5451,29 +5451,29 @@ gimp_image_remove_layer (GimpImage *image,
   else if (selected_layers &&
            (g_list_find (selected_layers, layer) ||
             g_list_find_custom (selected_layers, layer,
-                                (GCompareFunc) gimp_image_selected_is_descendant)))
+                                (GCompareFunc) ligma_image_selected_is_descendant)))
     {
-      gimp_image_set_selected_layers (image, new_selected);
+      ligma_image_set_selected_layers (image, new_selected);
     }
 
-  gimp_item_end_move (GIMP_ITEM (layer), push_undo);
+  ligma_item_end_move (LIGMA_ITEM (layer), push_undo);
 
   g_object_unref (layer);
   g_list_free (selected_layers);
   if (new_selected)
     g_list_free (new_selected);
 
-  if (old_has_alpha != gimp_image_has_alpha (image))
+  if (old_has_alpha != ligma_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
   if (push_undo)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 void
-gimp_image_add_layers (GimpImage   *image,
+ligma_image_add_layers (LigmaImage   *image,
                        GList       *layers,
-                       GimpLayer   *parent,
+                       LigmaLayer   *parent,
                        gint         position,
                        gint         x,
                        gint         y,
@@ -5481,7 +5481,7 @@ gimp_image_add_layers (GimpImage   *image,
                        gint         height,
                        const gchar *undo_desc)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *list;
   gint              layers_x      = G_MAXINT;
   gint              layers_y      = G_MAXINT;
@@ -5490,59 +5490,59 @@ gimp_image_add_layers (GimpImage   *image,
   gint              offset_x;
   gint              offset_y;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (layers != NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  /*  item and parent are type-checked in GimpItemTree
+  /*  item and parent are type-checked in LigmaItemTree
    */
-  if (! gimp_item_tree_get_insert_pos (private->layers,
-                                       (GimpItem *) layers->data,
-                                       (GimpItem **) &parent,
+  if (! ligma_item_tree_get_insert_pos (private->layers,
+                                       (LigmaItem *) layers->data,
+                                       (LigmaItem **) &parent,
                                        &position))
     return;
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpItem *item = GIMP_ITEM (list->data);
+      LigmaItem *item = LIGMA_ITEM (list->data);
       gint      off_x, off_y;
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
 
       layers_x = MIN (layers_x, off_x);
       layers_y = MIN (layers_y, off_y);
 
       layers_width  = MAX (layers_width,
-                           off_x + gimp_item_get_width (item)  - layers_x);
+                           off_x + ligma_item_get_width (item)  - layers_x);
       layers_height = MAX (layers_height,
-                           off_y + gimp_item_get_height (item) - layers_y);
+                           off_y + ligma_item_get_height (item) - layers_y);
     }
 
   offset_x = x + (width  - layers_width)  / 2 - layers_x;
   offset_y = y + (height - layers_height) / 2 - layers_y;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD, undo_desc);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_LAYER_ADD, undo_desc);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpItem *new_item = GIMP_ITEM (list->data);
+      LigmaItem *new_item = LIGMA_ITEM (list->data);
 
-      gimp_item_translate (new_item, offset_x, offset_y, FALSE);
+      ligma_item_translate (new_item, offset_x, offset_y, FALSE);
 
-      gimp_image_add_layer (image, GIMP_LAYER (new_item),
+      ligma_image_add_layer (image, LIGMA_LAYER (new_item),
                             parent, position, TRUE);
       position++;
     }
 
   if (layers)
-    gimp_image_set_selected_layers (image, layers);
+    ligma_image_set_selected_layers (image, layers);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 }
 
 /*
- * gimp_image_store_item_set:
+ * ligma_image_store_item_set:
  * @image:
  * @set: (transfer full): a set of items which @images takes ownership
  *                        of.
@@ -5552,33 +5552,33 @@ gimp_image_add_layers (GimpImage   *image,
  * replace it with the new set of layers.
  */
 void
-gimp_image_store_item_set (GimpImage    *image,
-                           GimpItemList *set)
+ligma_image_store_item_set (LigmaImage    *image,
+                           LigmaItemList *set)
 {
-  GimpImagePrivate  *private;
+  LigmaImagePrivate  *private;
   GList            **stored_sets;
   GList             *iter;
   guint              signal;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+  if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_LAYER)
     {
       stored_sets = &private->stored_layer_sets;
-      signal = gimp_image_signals[LAYER_SETS_CHANGED];
+      signal = ligma_image_signals[LAYER_SETS_CHANGED];
     }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+  else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_CHANNEL)
     {
       stored_sets = &private->stored_channel_sets;
-      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
+      signal = ligma_image_signals[CHANNEL_SETS_CHANGED];
     }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+  else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_VECTORS)
     {
       stored_sets = &private->stored_vectors_sets;
-      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
+      signal = ligma_image_signals[VECTORS_SETS_CHANGED];
     }
   else
     {
@@ -5589,15 +5589,15 @@ gimp_image_store_item_set (GimpImage    *image,
     {
       gboolean         is_pattern;
       gboolean         is_pattern2;
-      GimpSelectMethod pattern_syntax;
-      GimpSelectMethod pattern_syntax2;
+      LigmaSelectMethod pattern_syntax;
+      LigmaSelectMethod pattern_syntax2;
 
-      is_pattern  = gimp_item_list_is_pattern (iter->data, &pattern_syntax);
-      is_pattern2 = gimp_item_list_is_pattern (set, &pattern_syntax2);
+      is_pattern  = ligma_item_list_is_pattern (iter->data, &pattern_syntax);
+      is_pattern2 = ligma_item_list_is_pattern (set, &pattern_syntax2);
 
       /* Remove a previous item set of same type and name. */
       if (is_pattern == is_pattern2 && (! is_pattern || pattern_syntax == pattern_syntax2) &&
-          g_strcmp0 (gimp_object_get_name (iter->data), gimp_object_get_name (set)) == 0)
+          g_strcmp0 (ligma_object_get_name (iter->data), ligma_object_get_name (set)) == 0)
         break;
     }
   if (iter)
@@ -5611,7 +5611,7 @@ gimp_image_store_item_set (GimpImage    *image,
 }
 
 /*
- * @gimp_image_unlink_item_set:
+ * @ligma_image_unlink_item_set:
  * @image:
  * @link_name:
  *
@@ -5621,33 +5621,33 @@ gimp_image_store_item_set (GimpImage    *image,
  *          name existed.
  */
 gboolean
-gimp_image_unlink_item_set (GimpImage    *image,
-                            GimpItemList *set)
+ligma_image_unlink_item_set (LigmaImage    *image,
+                            LigmaItemList *set)
 {
-  GimpImagePrivate  *private;
+  LigmaImagePrivate  *private;
   GList             *found;
   GList            **stored_sets;
   guint              signal;
   gboolean           success;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+  if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_LAYER)
     {
       stored_sets = &private->stored_layer_sets;
-      signal = gimp_image_signals[LAYER_SETS_CHANGED];
+      signal = ligma_image_signals[LAYER_SETS_CHANGED];
     }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+  else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_CHANNEL)
     {
       stored_sets = &private->stored_channel_sets;
-      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
+      signal = ligma_image_signals[CHANNEL_SETS_CHANGED];
     }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+  else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_VECTORS)
     {
       stored_sets = &private->stored_vectors_sets;
-      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
+      signal = ligma_image_signals[VECTORS_SETS_CHANGED];
     }
   else
     {
@@ -5667,7 +5667,7 @@ gimp_image_unlink_item_set (GimpImage    *image,
 }
 
 /*
- * @gimp_image_get_stored_item_sets:
+ * @ligma_image_get_stored_item_sets:
  * @image:
  * @item_type:
  *
@@ -5675,27 +5675,27 @@ gimp_image_unlink_item_set (GimpImage    *image,
  *          should not modify). Order of items is relevant.
  */
 GList *
-gimp_image_get_stored_item_sets (GimpImage *image,
+ligma_image_get_stored_item_sets (LigmaImage *image,
                                  GType      item_type)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (item_type == GIMP_TYPE_LAYER)
+  if (item_type == LIGMA_TYPE_LAYER)
     return private->stored_layer_sets;
-  else if (item_type == GIMP_TYPE_CHANNEL)
+  else if (item_type == LIGMA_TYPE_CHANNEL)
     return private->stored_channel_sets;
-  else if (item_type == GIMP_TYPE_VECTORS)
+  else if (item_type == LIGMA_TYPE_VECTORS)
     return private->stored_vectors_sets;
 
   g_return_val_if_reached (FALSE);
 }
 
 /*
- * @gimp_image_select_item_set:
+ * @ligma_image_select_item_set:
  * @image:
  * @set:
  *
@@ -5703,27 +5703,27 @@ gimp_image_get_stored_item_sets (GimpImage *image,
  * to @set.
  */
 void
-gimp_image_select_item_set (GimpImage    *image,
-                            GimpItemList *set)
+ligma_image_select_item_set (LigmaImage    *image,
+                            LigmaItemList *set)
 {
   GList  *items;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
 
-  items = gimp_item_list_get_items (set, &error);
+  items = ligma_item_list_get_items (set, &error);
 
   if (! error)
     {
-      GType item_type = gimp_item_list_get_item_type (set);
+      GType item_type = ligma_item_list_get_item_type (set);
 
-      if (item_type == GIMP_TYPE_LAYER)
-        gimp_image_set_selected_layers (image, items);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        gimp_image_set_selected_channels (image, items);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+      if (item_type == LIGMA_TYPE_LAYER)
+        ligma_image_set_selected_layers (image, items);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        ligma_image_set_selected_channels (image, items);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        ligma_image_set_selected_vectors (image, items);
       else
         g_return_if_reached ();
     }
@@ -5733,7 +5733,7 @@ gimp_image_select_item_set (GimpImage    *image,
 }
 
 /*
- * @gimp_image_add_item_set:
+ * @ligma_image_add_item_set:
  * @image:
  * @set:
  *
@@ -5741,29 +5741,29 @@ gimp_image_select_item_set (GimpImage    *image,
  * @image.
  */
 void
-gimp_image_add_item_set (GimpImage    *image,
-                         GimpItemList *set)
+ligma_image_add_item_set (LigmaImage    *image,
+                         LigmaItemList *set)
 {
   GList  *items;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
 
-  items = gimp_item_list_get_items (set, &error);
+  items = ligma_item_list_get_items (set, &error);
 
   if (! error)
     {
       GList *selected;
       GList *iter;
-      GType  item_type = gimp_item_list_get_item_type (set);
+      GType  item_type = ligma_item_list_get_item_type (set);
 
-      if (item_type == GIMP_TYPE_LAYER)
-        selected = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+      if (item_type == LIGMA_TYPE_LAYER)
+        selected = ligma_image_get_selected_layers (image);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        selected = ligma_image_get_selected_channels (image);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        selected = ligma_image_get_selected_vectors (image);
       else
         g_return_if_reached ();
 
@@ -5774,12 +5774,12 @@ gimp_image_add_item_set (GimpImage    *image,
             selected = g_list_prepend (selected, iter->data);
         }
 
-      if (item_type == GIMP_TYPE_LAYER)
-        gimp_image_set_selected_layers (image, selected);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+      if (item_type == LIGMA_TYPE_LAYER)
+        ligma_image_set_selected_layers (image, selected);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        ligma_image_set_selected_channels (image, selected);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        ligma_image_set_selected_vectors (image, items);
 
       g_list_free (selected);
     }
@@ -5787,7 +5787,7 @@ gimp_image_add_item_set (GimpImage    *image,
 }
 
 /*
- * @gimp_image_remove_item_set:
+ * @ligma_image_remove_item_set:
  * @image:
  * @set:
  *
@@ -5799,29 +5799,29 @@ gimp_image_add_item_set (GimpImage    *image,
  *          name existed.
  */
 void
-gimp_image_remove_item_set (GimpImage    *image,
-                            GimpItemList *set)
+ligma_image_remove_item_set (LigmaImage    *image,
+                            LigmaItemList *set)
 {
   GList  *items;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
 
-  items = gimp_item_list_get_items (set, &error);
+  items = ligma_item_list_get_items (set, &error);
 
   if (! error)
     {
       GList *selected;
       GList *iter;
-      GType  item_type = gimp_item_list_get_item_type (set);
+      GType  item_type = ligma_item_list_get_item_type (set);
 
-      if (item_type == GIMP_TYPE_LAYER)
-        selected = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+      if (item_type == LIGMA_TYPE_LAYER)
+        selected = ligma_image_get_selected_layers (image);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        selected = ligma_image_get_selected_channels (image);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        selected = ligma_image_get_selected_vectors (image);
       else
         g_return_if_reached ();
 
@@ -5834,12 +5834,12 @@ gimp_image_remove_item_set (GimpImage    *image,
             selected = g_list_delete_link (selected, remove);
         }
 
-      if (item_type == GIMP_TYPE_LAYER)
-        gimp_image_set_selected_layers (image, selected);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+      if (item_type == LIGMA_TYPE_LAYER)
+        ligma_image_set_selected_layers (image, selected);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        ligma_image_set_selected_channels (image, selected);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        ligma_image_set_selected_vectors (image, items);
 
       g_list_free (selected);
     }
@@ -5847,7 +5847,7 @@ gimp_image_remove_item_set (GimpImage    *image,
 }
 
 /*
- * @gimp_image_intersect_item_set:
+ * @ligma_image_intersect_item_set:
  * @image:
  * @set:
  *
@@ -5860,30 +5860,30 @@ gimp_image_remove_item_set (GimpImage    *image,
  *          name existed.
  */
 void
-gimp_image_intersect_item_set (GimpImage    *image,
-                               GimpItemList *set)
+ligma_image_intersect_item_set (LigmaImage    *image,
+                               LigmaItemList *set)
 {
   GList *items;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM_LIST (set));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_LIST (set));
 
-  items = gimp_item_list_get_items (set, &error);
+  items = ligma_item_list_get_items (set, &error);
 
   if (! error)
     {
       GList *selected;
       GList *remove = NULL;
       GList *iter;
-      GType  item_type = gimp_item_list_get_item_type (set);
+      GType  item_type = ligma_item_list_get_item_type (set);
 
-      if (item_type == GIMP_TYPE_LAYER)
-        selected = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+      if (item_type == LIGMA_TYPE_LAYER)
+        selected = ligma_image_get_selected_layers (image);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        selected = ligma_image_get_selected_channels (image);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        selected = ligma_image_get_selected_vectors (image);
       else
         g_return_if_reached ();
 
@@ -5900,12 +5900,12 @@ gimp_image_intersect_item_set (GimpImage    *image,
       g_list_free (remove);
 
       /* Finally select the intersection. */
-      if (item_type == GIMP_TYPE_LAYER)
-        gimp_image_set_selected_layers (image, selected);
-      else if (item_type == GIMP_TYPE_CHANNEL)
-        gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+      if (item_type == LIGMA_TYPE_LAYER)
+        ligma_image_set_selected_layers (image, selected);
+      else if (item_type == LIGMA_TYPE_CHANNEL)
+        ligma_image_set_selected_channels (image, selected);
+      else if (item_type == LIGMA_TYPE_VECTORS)
+        ligma_image_set_selected_vectors (image, items);
 
       g_list_free (selected);
     }
@@ -5916,209 +5916,209 @@ gimp_image_intersect_item_set (GimpImage    *image,
 /*  channels  */
 
 gboolean
-gimp_image_add_channel (GimpImage   *image,
-                        GimpChannel *channel,
-                        GimpChannel *parent,
+ligma_image_add_channel (LigmaImage   *image,
+                        LigmaChannel *channel,
+                        LigmaChannel *parent,
                         gint         position,
                         gboolean     push_undo)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *channels;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  /*  item and parent are type-checked in GimpItemTree
+  /*  item and parent are type-checked in LigmaItemTree
    */
-  if (! gimp_item_tree_get_insert_pos (private->channels,
-                                       (GimpItem *) channel,
-                                       (GimpItem **) &parent,
+  if (! ligma_item_tree_get_insert_pos (private->channels,
+                                       (LigmaItem *) channel,
+                                       (LigmaItem **) &parent,
                                        &position))
     return FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_channel_add (image, C_("undo-type", "Add Channel"),
+    ligma_image_undo_push_channel_add (image, C_("undo-type", "Add Channel"),
                                       channel,
-                                      gimp_image_get_selected_channels (image));
+                                      ligma_image_get_selected_channels (image));
 
-  gimp_item_tree_add_item (private->channels, GIMP_ITEM (channel),
-                           GIMP_ITEM (parent), position);
+  ligma_item_tree_add_item (private->channels, LIGMA_ITEM (channel),
+                           LIGMA_ITEM (parent), position);
 
   channels = g_list_prepend (NULL, channel);
-  gimp_image_set_selected_channels (image, channels);
+  ligma_image_set_selected_channels (image, channels);
   g_list_free (channels);
 
   return TRUE;
 }
 
 void
-gimp_image_remove_channel (GimpImage   *image,
-                           GimpChannel *channel,
+ligma_image_remove_channel (LigmaImage   *image,
+                           LigmaChannel *channel,
                            gboolean     push_undo,
                            GList       *new_selected)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *selected_channels;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image);
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (channel)));
+  g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (channel)) == image);
 
   if (push_undo)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                  C_("undo-type", "Remove Channel"));
 
-  gimp_item_start_move (GIMP_ITEM (channel), push_undo);
+  ligma_item_start_move (LIGMA_ITEM (channel), push_undo);
 
-  if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)))
+  if (ligma_drawable_get_floating_sel (LIGMA_DRAWABLE (channel)))
     {
       if (! push_undo)
         {
           g_warning ("%s() was called from an undo function while the channel "
                      "had a floating selection. Please report this at "
-                     "https://www.gimp.org/bugs/", G_STRFUNC);
+                     "https://www.ligma.org/bugs/", G_STRFUNC);
           return;
         }
 
-      gimp_image_remove_layer (image,
-                               gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)),
+      ligma_image_remove_layer (image,
+                               ligma_drawable_get_floating_sel (LIGMA_DRAWABLE (channel)),
                                TRUE, NULL);
     }
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  selected_channels = gimp_image_get_selected_channels (image);
+  selected_channels = ligma_image_get_selected_channels (image);
   selected_channels = g_list_copy (selected_channels);
 
   if (push_undo)
-    gimp_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
-                                         gimp_channel_get_parent (channel),
-                                         gimp_item_get_index (GIMP_ITEM (channel)),
+    ligma_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
+                                         ligma_channel_get_parent (channel),
+                                         ligma_item_get_index (LIGMA_ITEM (channel)),
                                          selected_channels);
 
   g_object_ref (channel);
 
-  new_selected = gimp_item_tree_remove_item (private->channels,
-                                             GIMP_ITEM (channel),
+  new_selected = ligma_item_tree_remove_item (private->channels,
+                                             LIGMA_ITEM (channel),
                                              new_selected);
 
   if (selected_channels &&
       (g_list_find (selected_channels, channel) ||
        g_list_find_custom (selected_channels, channel,
-                           (GCompareFunc) gimp_image_selected_is_descendant)))
+                           (GCompareFunc) ligma_image_selected_is_descendant)))
     {
       if (new_selected)
-        gimp_image_set_selected_channels (image, new_selected);
+        ligma_image_set_selected_channels (image, new_selected);
       else
-        gimp_image_unset_selected_channels (image);
+        ligma_image_unset_selected_channels (image);
     }
 
   g_list_free (selected_channels);
 
-  gimp_item_end_move (GIMP_ITEM (channel), push_undo);
+  ligma_item_end_move (LIGMA_ITEM (channel), push_undo);
 
   g_object_unref (channel);
   if (new_selected)
     g_list_free (new_selected);
 
   if (push_undo)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 
 /*  vectors  */
 
 gboolean
-gimp_image_add_vectors (GimpImage   *image,
-                        GimpVectors *vectors,
-                        GimpVectors *parent,
+ligma_image_add_vectors (LigmaImage   *image,
+                        LigmaVectors *vectors,
+                        LigmaVectors *parent,
                         gint         position,
                         gboolean     push_undo)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  /*  item and parent are type-checked in GimpItemTree
+  /*  item and parent are type-checked in LigmaItemTree
    */
-  if (! gimp_item_tree_get_insert_pos (private->vectors,
-                                       (GimpItem *) vectors,
-                                       (GimpItem **) &parent,
+  if (! ligma_item_tree_get_insert_pos (private->vectors,
+                                       (LigmaItem *) vectors,
+                                       (LigmaItem **) &parent,
                                        &position))
     return FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_vectors_add (image, C_("undo-type", "Add Path"),
+    ligma_image_undo_push_vectors_add (image, C_("undo-type", "Add Path"),
                                       vectors,
-                                      gimp_image_get_selected_vectors (image));
+                                      ligma_image_get_selected_vectors (image));
 
-  gimp_item_tree_add_item (private->vectors, GIMP_ITEM (vectors),
-                           GIMP_ITEM (parent), position);
+  ligma_item_tree_add_item (private->vectors, LIGMA_ITEM (vectors),
+                           LIGMA_ITEM (parent), position);
 
-  gimp_image_set_active_vectors (image, vectors);
+  ligma_image_set_active_vectors (image, vectors);
 
   return TRUE;
 }
 
 void
-gimp_image_remove_vectors (GimpImage   *image,
-                           GimpVectors *vectors,
+ligma_image_remove_vectors (LigmaImage   *image,
+                           LigmaVectors *vectors,
                            gboolean     push_undo,
                            GList       *new_selected)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
   GList            *selected_vectors;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image);
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (vectors)));
+  g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (vectors)) == image);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   if (push_undo)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                  C_("undo-type", "Remove Path"));
 
-  gimp_item_start_move (GIMP_ITEM (vectors), push_undo);
+  ligma_item_start_move (LIGMA_ITEM (vectors), push_undo);
 
-  selected_vectors = gimp_image_get_selected_vectors (image);
+  selected_vectors = ligma_image_get_selected_vectors (image);
   selected_vectors = g_list_copy (selected_vectors);
 
   if (push_undo)
-    gimp_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
-                                         gimp_vectors_get_parent (vectors),
-                                         gimp_item_get_index (GIMP_ITEM (vectors)),
+    ligma_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
+                                         ligma_vectors_get_parent (vectors),
+                                         ligma_item_get_index (LIGMA_ITEM (vectors)),
                                          selected_vectors);
 
   g_object_ref (vectors);
 
-  new_selected = gimp_item_tree_remove_item (private->vectors,
-                                             GIMP_ITEM (vectors),
+  new_selected = ligma_item_tree_remove_item (private->vectors,
+                                             LIGMA_ITEM (vectors),
                                              new_selected);
 
   if (selected_vectors &&
       (g_list_find (selected_vectors, vectors) ||
        g_list_find_custom (selected_vectors, vectors,
-                           (GCompareFunc) gimp_image_selected_is_descendant)))
+                           (GCompareFunc) ligma_image_selected_is_descendant)))
     {
-      gimp_image_set_selected_vectors (image, new_selected);
+      ligma_image_set_selected_vectors (image, new_selected);
     }
 
   g_list_free (selected_vectors);
 
-  gimp_item_end_move (GIMP_ITEM (vectors), push_undo);
+  ligma_item_end_move (LIGMA_ITEM (vectors), push_undo);
 
   g_object_unref (vectors);
   if (new_selected)
     g_list_free (new_selected);
 
   if (push_undo)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 /*  hidden items  */
@@ -6130,21 +6130,21 @@ gimp_image_remove_vectors (GimpImage   *image,
  *
  * Note that you are expected to manage the hidden items properly. In
  * particular, once you are done with them, remove them with
- * gimp_image_remove_hidden_item() and free them.
+ * ligma_image_remove_hidden_item() and free them.
  * @image is not assuming ownership of @item.
  */
 gboolean
-gimp_image_add_hidden_item (GimpImage *image,
-                            GimpItem  *item)
+ligma_image_add_hidden_item (LigmaImage *image,
+                            LigmaItem  *item)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (! gimp_item_is_attached (item), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (! ligma_item_is_attached (item), FALSE);
+  g_return_val_if_fail (ligma_item_get_image (item) == image, FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   private->hidden_items = g_list_prepend (private->hidden_items, item);
 
@@ -6152,16 +6152,16 @@ gimp_image_add_hidden_item (GimpImage *image,
 }
 
 void
-gimp_image_remove_hidden_item (GimpImage *image,
-                               GimpItem  *item)
+ligma_image_remove_hidden_item (LigmaImage *image,
+                               LigmaItem  *item)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_get_image (item) == image);
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM (item));
+  g_return_if_fail (ligma_item_get_image (item) == image);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   g_return_if_fail (g_list_find (private->hidden_items, item) != NULL);
 
@@ -6169,23 +6169,23 @@ gimp_image_remove_hidden_item (GimpImage *image,
 }
 
 gboolean
-gimp_image_is_hidden_item (GimpImage *image,
-                           GimpItem  *item)
+ligma_image_is_hidden_item (LigmaImage *image,
+                           LigmaItem  *item)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (ligma_item_get_image (item) == image, FALSE);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
   return (g_list_find (private->hidden_items, item) != NULL);
 }
 
 gboolean
-gimp_image_coords_in_active_pickable (GimpImage        *image,
-                                      const GimpCoords *coords,
+ligma_image_coords_in_active_pickable (LigmaImage        *image,
+                                      const LigmaCoords *coords,
                                       gboolean          show_all,
                                       gboolean          sample_merged,
                                       gboolean          selected_only)
@@ -6193,37 +6193,37 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
   gint     x, y;
   gboolean in_pickable = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   x = floor (coords->x);
   y = floor (coords->y);
 
   if (sample_merged)
     {
-      if (show_all || (x >= 0 && x < gimp_image_get_width  (image) &&
-                       y >= 0 && y < gimp_image_get_height (image)))
+      if (show_all || (x >= 0 && x < ligma_image_get_width  (image) &&
+                       y >= 0 && y < ligma_image_get_height (image)))
         {
           in_pickable = TRUE;
         }
     }
   else
     {
-      GList *drawables = gimp_image_get_selected_drawables (image);
+      GList *drawables = ligma_image_get_selected_drawables (image);
       GList *iter;
 
       for (iter = drawables; iter; iter = iter->next)
         {
-          GimpItem *item = iter->data;
+          LigmaItem *item = iter->data;
           gint      off_x, off_y;
           gint      d_x, d_y;
 
-          gimp_item_get_offset (item, &off_x, &off_y);
+          ligma_item_get_offset (item, &off_x, &off_y);
 
           d_x = x - off_x;
           d_y = y - off_y;
 
-          if (d_x >= 0 && d_x < gimp_item_get_width  (item) &&
-              d_y >= 0 && d_y < gimp_item_get_height (item))
+          if (d_x >= 0 && d_x < ligma_item_get_width  (item) &&
+              d_y >= 0 && d_y < ligma_item_get_height (item))
             {
               in_pickable = TRUE;
               break;
@@ -6234,10 +6234,10 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 
   if (in_pickable && selected_only)
     {
-      GimpChannel *selection = gimp_image_get_mask (image);
+      LigmaChannel *selection = ligma_image_get_mask (image);
 
-      if (! gimp_channel_is_empty (selection) &&
-          ! gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+      if (! ligma_channel_is_empty (selection) &&
+          ! ligma_pickable_get_opacity_at (LIGMA_PICKABLE (selection),
                                           x, y))
         {
           in_pickable = FALSE;
@@ -6248,16 +6248,16 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 }
 
 void
-gimp_image_invalidate_previews (GimpImage *image)
+ligma_image_invalidate_previews (LigmaImage *image)
 {
-  GimpItemStack *layers;
-  GimpItemStack *channels;
+  LigmaItemStack *layers;
+  LigmaItemStack *channels;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  layers   = GIMP_ITEM_STACK (gimp_image_get_layers (image));
-  channels = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  layers   = LIGMA_ITEM_STACK (ligma_image_get_layers (image));
+  channels = LIGMA_ITEM_STACK (ligma_image_get_channels (image));
 
-  gimp_item_stack_invalidate_previews (layers);
-  gimp_item_stack_invalidate_previews (channels);
+  ligma_item_stack_invalidate_previews (layers);
+  ligma_item_stack_invalidate_previews (channels);
 }

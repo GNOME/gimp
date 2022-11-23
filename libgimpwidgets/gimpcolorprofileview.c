@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorProfileView
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * LigmaColorProfileView
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,57 +25,57 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolorprofileview.h"
+#include "ligmacolorprofileview.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolorprofileview
- * @title: GimpColorProfileView
+ * SECTION: ligmacolorprofileview
+ * @title: LigmaColorProfileView
  * @short_description: A widget for viewing color profile properties
  *
- * A widget for viewing the properties of a #GimpColorProfile.
+ * A widget for viewing the properties of a #LigmaColorProfile.
  **/
 
 
-struct _GimpColorProfileViewPrivate
+struct _LigmaColorProfileViewPrivate
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
 };
 
 
-static void   gimp_color_profile_view_constructed  (GObject *object);
-static void   gimp_color_profile_view_finalize     (GObject *object);
+static void   ligma_color_profile_view_constructed  (GObject *object);
+static void   ligma_color_profile_view_finalize     (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileView, gimp_color_profile_view,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorProfileView, ligma_color_profile_view,
                             GTK_TYPE_TEXT_VIEW)
 
-#define parent_class gimp_color_profile_view_parent_class
+#define parent_class ligma_color_profile_view_parent_class
 
 
 static void
-gimp_color_profile_view_class_init (GimpColorProfileViewClass *klass)
+ligma_color_profile_view_class_init (LigmaColorProfileViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed = gimp_color_profile_view_constructed;
-  object_class->finalize    = gimp_color_profile_view_finalize;
+  object_class->constructed = ligma_color_profile_view_constructed;
+  object_class->finalize    = ligma_color_profile_view_finalize;
 }
 
 static void
-gimp_color_profile_view_init (GimpColorProfileView *view)
+ligma_color_profile_view_init (LigmaColorProfileView *view)
 {
-  view->priv = gimp_color_profile_view_get_instance_private (view);
+  view->priv = ligma_color_profile_view_get_instance_private (view);
 }
 
 static void
-gimp_color_profile_view_constructed (GObject *object)
+ligma_color_profile_view_constructed (GObject *object)
 {
   GtkTextBuffer *buffer;
 
@@ -105,9 +105,9 @@ gimp_color_profile_view_constructed (GObject *object)
 }
 
 static void
-gimp_color_profile_view_finalize (GObject *object)
+ligma_color_profile_view_finalize (GObject *object)
 {
-  GimpColorProfileView *view = GIMP_COLOR_PROFILE_VIEW (object);
+  LigmaColorProfileView *view = LIGMA_COLOR_PROFILE_VIEW (object);
 
   g_clear_object (&view->priv->profile);
 
@@ -115,19 +115,19 @@ gimp_color_profile_view_finalize (GObject *object)
 }
 
 GtkWidget *
-gimp_color_profile_view_new (void)
+ligma_color_profile_view_new (void)
 {
-  return g_object_new (GIMP_TYPE_COLOR_PROFILE_VIEW, NULL);
+  return g_object_new (LIGMA_TYPE_COLOR_PROFILE_VIEW, NULL);
 }
 
 void
-gimp_color_profile_view_set_profile (GimpColorProfileView *view,
-                                     GimpColorProfile     *profile)
+ligma_color_profile_view_set_profile (LigmaColorProfileView *view,
+                                     LigmaColorProfile     *profile)
 {
   GtkTextBuffer *buffer;
 
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE_VIEW (view));
-  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+  g_return_if_fail (LIGMA_IS_COLOR_PROFILE_VIEW (view));
+  g_return_if_fail (profile == NULL || LIGMA_IS_COLOR_PROFILE (profile));
 
   if (profile == view->priv->profile)
     return;
@@ -143,7 +143,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
       gtk_text_buffer_get_start_iter (buffer, &iter);
 
-      text = gimp_color_profile_get_label (profile);
+      text = ligma_color_profile_get_label (profile);
       if (text && strlen (text))
         {
           gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
@@ -152,7 +152,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
           gtk_text_buffer_insert (buffer, &iter, "\n", 1);
         }
 
-      text = gimp_color_profile_get_model (profile);
+      text = ligma_color_profile_get_model (profile);
       if (text && strlen (text))
         {
           gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
@@ -161,7 +161,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
           gtk_text_buffer_insert (buffer, &iter, "\n", 1);
         }
 
-      text = gimp_color_profile_get_manufacturer (profile);
+      text = ligma_color_profile_get_manufacturer (profile);
       if (text && strlen (text))
         {
           gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
@@ -173,7 +173,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
           gtk_text_buffer_insert (buffer, &iter, "\n", 1);
         }
 
-      text = gimp_color_profile_get_copyright (profile);
+      text = ligma_color_profile_get_copyright (profile);
       if (text && strlen (text))
         {
           gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
@@ -188,13 +188,13 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 }
 
 void
-gimp_color_profile_view_set_error (GimpColorProfileView *view,
+ligma_color_profile_view_set_error (LigmaColorProfileView *view,
                                    const gchar          *message)
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
 
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_COLOR_PROFILE_VIEW (view));
   g_return_if_fail (message != NULL);
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));

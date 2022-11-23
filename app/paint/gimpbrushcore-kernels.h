@@ -1,11 +1,11 @@
-/* gimpbrushcore-kernels.h
+/* ligmabrushcore-kernels.h
  *
  *   This file was generated using kernelgen as found in the tools dir.
  *   (threshold = 0.25)
  */
 
-#ifndef __GIMP_BRUSH_CORE_KERNELS_H__
-#define __GIMP_BRUSH_CORE_KERNELS_H__
+#ifndef __LIGMA_BRUSH_CORE_KERNELS_H__
+#define __LIGMA_BRUSH_CORE_KERNELS_H__
 
 
 #define KERNEL_WIDTH     3
@@ -113,4 +113,4 @@ constexpr typename Subsample<T>::kernel_type Subsample<T>::kernel[5][5][9];
 #endif /* __cplusplus */
 
 
-#endif /* __GIMP_BRUSH_CORE_KERNELS_H__ */
+#endif /* __LIGMA_BRUSH_CORE_KERNELS_H__ */

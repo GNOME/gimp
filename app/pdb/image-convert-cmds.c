@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,48 +25,48 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage-convert-indexed.h"
-#include "core/gimpimage-convert-precision.h"
-#include "core/gimpimage-convert-type.h"
-#include "core/gimpimage.h"
-#include "core/gimpitemstack.h"
-#include "core/gimppalette.h"
-#include "core/gimpparamspecs.h"
-#include "gegl/gimp-babl.h"
+#include "core/ligma.h"
+#include "core/ligmaimage-convert-indexed.h"
+#include "core/ligmaimage-convert-precision.h"
+#include "core/ligmaimage-convert-type.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitemstack.h"
+#include "core/ligmapalette.h"
+#include "core/ligmaparamspecs.h"
+#include "gegl/ligma-babl.h"
 
-#include "gimppdb.h"
-#include "gimppdberror.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdberror.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-image_convert_rgb_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+image_convert_rgb_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error) &&
-          gimp_babl_is_valid (GIMP_RGB, gimp_image_get_precision (image)))
+      if (ligma_pdb_image_is_not_base_type (image, LIGMA_RGB, error) &&
+          ligma_babl_is_valid (LIGMA_RGB, ligma_image_get_precision (image)))
         {
-          success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
+          success = ligma_image_convert_type (image, LIGMA_RGB, NULL, NULL, error);
         }
       else
         {
@@ -74,29 +74,29 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_convert_grayscale_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+image_convert_grayscale_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error) &&
-          gimp_babl_is_valid (GIMP_GRAY, gimp_image_get_precision (image)))
+      if (ligma_pdb_image_is_not_base_type (image, LIGMA_GRAY, error) &&
+          ligma_babl_is_valid (LIGMA_GRAY, ligma_image_get_precision (image)))
         {
-          success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
+          success = ligma_image_convert_type (image, LIGMA_GRAY, NULL, NULL, error);
         }
       else
         {
@@ -104,20 +104,20 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_convert_indexed_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+image_convert_indexed_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint dither_type;
   gint palette_type;
   gint num_cols;
@@ -125,32 +125,32 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
   gboolean remove_unused;
   const gchar *palette;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  dither_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  palette_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  num_cols = g_value_get_int (gimp_value_array_index (args, 3));
-  alpha_dither = g_value_get_boolean (gimp_value_array_index (args, 4));
-  remove_unused = g_value_get_boolean (gimp_value_array_index (args, 5));
-  palette = g_value_get_string (gimp_value_array_index (args, 6));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  dither_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  palette_type = g_value_get_enum (ligma_value_array_index (args, 2));
+  num_cols = g_value_get_int (ligma_value_array_index (args, 3));
+  alpha_dither = g_value_get_boolean (ligma_value_array_index (args, 4));
+  remove_unused = g_value_get_boolean (ligma_value_array_index (args, 5));
+  palette = g_value_get_string (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      GimpPalette *pal = NULL;
+      LigmaPalette *pal = NULL;
 
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)             &&
-          gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8_NON_LINEAR, error) &&
-          gimp_babl_is_valid (GIMP_INDEXED, gimp_image_get_precision (image))      &&
-          gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
+      if (ligma_pdb_image_is_not_base_type (image, LIGMA_INDEXED, error)             &&
+          ligma_pdb_image_is_precision (image, LIGMA_PRECISION_U8_NON_LINEAR, error) &&
+          ligma_babl_is_valid (LIGMA_INDEXED, ligma_image_get_precision (image))      &&
+          ligma_item_stack_is_flat (LIGMA_ITEM_STACK (ligma_image_get_layers (image))))
         {
           switch (palette_type)
             {
-            case GIMP_CONVERT_PALETTE_GENERATE:
+            case LIGMA_CONVERT_PALETTE_GENERATE:
               if (num_cols < 1 || num_cols > MAXNUMCOLORS)
                 success = FALSE;
               break;
 
-            case GIMP_CONVERT_PALETTE_CUSTOM:
-              pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+            case LIGMA_CONVERT_PALETTE_CUSTOM:
+              pal = ligma_pdb_get_palette (ligma, palette, FALSE, error);
               if (! pal)
                 {
                   success = FALSE;
@@ -158,8 +158,8 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
               else if (pal->n_colors > MAXNUMCOLORS)
                 {
                   g_set_error_literal (error,
-                                       GIMP_PDB_ERROR,
-                                       GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                       LIGMA_PDB_ERROR,
+                                       LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                                        _("Cannot convert to a palette "
                                          "with more than 256 colors."));
                   success = FALSE;
@@ -176,23 +176,23 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
         }
 
       if (success)
-        success = gimp_image_convert_indexed (image,
+        success = ligma_image_convert_indexed (image,
                                               palette_type, num_cols, remove_unused,
                                               dither_type, alpha_dither, FALSE,
                                               pal,
                                               NULL, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+image_convert_set_dither_matrix_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
@@ -201,52 +201,52 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
   gint matrix_length;
   const guint8 *matrix;
 
-  width = g_value_get_int (gimp_value_array_index (args, 0));
-  height = g_value_get_int (gimp_value_array_index (args, 1));
-  matrix_length = g_value_get_int (gimp_value_array_index (args, 2));
-  matrix = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
+  width = g_value_get_int (ligma_value_array_index (args, 0));
+  height = g_value_get_int (ligma_value_array_index (args, 1));
+  matrix_length = g_value_get_int (ligma_value_array_index (args, 2));
+  matrix = ligma_value_get_uint8_array (ligma_value_array_index (args, 3));
 
   if (success)
     {
       if (width == 0 || height == 0 || matrix_length == width * height)
         {
-          gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
+          ligma_image_convert_indexed_set_dither_matrix (matrix, width, height);
         }
       else
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR,
-                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
+          g_set_error_literal (error, LIGMA_PDB_ERROR,
+                               LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                                "Dither matrix length must be width * height");
           success = FALSE;
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_convert_precision_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+image_convert_precision_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint precision;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  precision = g_value_get_enum (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  precision = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
-          gimp_pdb_image_is_not_precision (image, precision, error)    &&
-          gimp_babl_is_valid (gimp_image_get_base_type (image), precision))
+      if (ligma_pdb_image_is_not_base_type (image, LIGMA_INDEXED, error) &&
+          ligma_pdb_image_is_not_precision (image, precision, error)    &&
+          ligma_babl_is_valid (ligma_image_get_base_type (image), precision))
         {
-          gimp_image_convert_precision (image, precision,
+          ligma_image_convert_precision (image, precision,
                                         GEGL_DITHER_NONE,
                                         GEGL_DITHER_NONE,
                                         GEGL_DITHER_NONE,
@@ -258,190 +258,190 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_image_convert_procs (GimpPDB *pdb)
+register_image_convert_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-image-convert-rgb
+   * ligma-image-convert-rgb
    */
-  procedure = gimp_procedure_new (image_convert_rgb_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-convert-rgb");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_convert_rgb_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-convert-rgb");
+  ligma_procedure_set_static_help (procedure,
                                   "Convert specified image to RGB color",
                                   "This procedure converts the specified image to RGB color. This process requires an image in Grayscale or Indexed color mode. No image content is lost in this process aside from the colormap for an indexed image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-convert-grayscale
+   * ligma-image-convert-grayscale
    */
-  procedure = gimp_procedure_new (image_convert_grayscale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-convert-grayscale");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_convert_grayscale_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-convert-grayscale");
+  ligma_procedure_set_static_help (procedure,
                                   "Convert specified image to grayscale",
                                   "This procedure converts the specified image to grayscale. This process requires an image in RGB or Indexed color mode.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-convert-indexed
+   * ligma-image-convert-indexed
    */
-  procedure = gimp_procedure_new (image_convert_indexed_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-convert-indexed");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_convert_indexed_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-convert-indexed");
+  ligma_procedure_set_static_help (procedure,
                                   "Convert specified image to and Indexed image",
-                                  "This procedure converts the specified image to 'indexed' color. This process requires an image in RGB or Grayscale mode. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).",
+                                  "This procedure converts the specified image to 'indexed' color. This process requires an image in RGB or Grayscale mode. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the ligma palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("dither-type",
                                                   "dither type",
                                                   "The dither type to use",
-                                                  GIMP_TYPE_CONVERT_DITHER_TYPE,
-                                                  GIMP_CONVERT_DITHER_NONE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CONVERT_DITHER_TYPE,
+                                                  LIGMA_CONVERT_DITHER_NONE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("palette-type",
                                                   "palette type",
                                                   "The type of palette to use",
-                                                  GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                                  GIMP_CONVERT_PALETTE_GENERATE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CONVERT_PALETTE_TYPE,
+                                                  LIGMA_CONVERT_PALETTE_GENERATE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-cols",
                                                  "num cols",
-                                                 "The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
+                                                 "The number of colors to quantize to, ignored unless (palette_type == LIGMA_CONVERT_PALETTE_GENERATE)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("alpha-dither",
                                                      "alpha dither",
                                                      "Dither transparency to fake partial opacity",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("remove-unused",
                                                      "remove unused",
-                                                     "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
+                                                     "Remove unused or duplicate color entries from final palette, ignored if (palette_type == LIGMA_CONVERT_PALETTE_GENERATE)",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("palette",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("palette",
                                                        "palette",
-                                                       "The name of the custom palette to use, ignored unless (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)",
+                                                       "The name of the custom palette to use, ignored unless (palette_type == LIGMA_CONVERT_PALETTE_CUSTOM)",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-convert-set-dither-matrix
+   * ligma-image-convert-set-dither-matrix
    */
-  procedure = gimp_procedure_new (image_convert_set_dither_matrix_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-convert-set-dither-matrix");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_convert_set_dither_matrix_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-convert-set-dither-matrix");
+  ligma_procedure_set_static_help (procedure,
                                   "Set dither matrix for conversion to indexed",
                                   "This procedure sets the dither matrix used when converting images to INDEXED mode with positional dithering.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "David Gowers",
                                          "David Gowers",
                                          "2006");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "Width of the matrix (0 to reset to default matrix)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "Height of the matrix (0 to reset to default matrix)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("matrix-length",
                                                  "matrix length",
                                                  "The length of 'matrix'",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("matrix",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_uint8_array ("matrix",
                                                             "matrix",
                                                             "The matrix -- all values must be >= 1",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-convert-precision
+   * ligma-image-convert-precision
    */
-  procedure = gimp_procedure_new (image_convert_precision_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-convert-precision");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_convert_precision_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-convert-precision");
+  ligma_procedure_set_static_help (procedure,
                                   "Convert the image to the specified precision",
-                                  "This procedure converts the image to the specified precision. Note that indexed images cannot be converted and are always in GIMP_PRECISION_U8.",
+                                  "This procedure converts the image to the specified precision. Note that indexed images cannot be converted and are always in LIGMA_PRECISION_U8.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("precision",
                                                   "precision",
                                                   "The new precision",
-                                                  GIMP_TYPE_PRECISION,
-                                                  GIMP_PRECISION_U8_LINEAR,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_PRECISION,
+                                                  LIGMA_PRECISION_U8_LINEAR,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

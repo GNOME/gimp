@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-close-tags.py -- Closes open tags in GIMP performance logs
+performance-log-close-tags.py -- Closes open tags in LIGMA performance logs
 Copyright (C) 2020  Ell
 
 This program is free software: you can redistribute it and/or modify

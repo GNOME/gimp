@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,80 +15,80 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_IMPL_H__
-#define __GIMP_DISPLAY_IMPL_H__
+#ifndef __LIGMA_DISPLAY_IMPL_H__
+#define __LIGMA_DISPLAY_IMPL_H__
 
 
-#include "core/gimpdisplay.h"
+#include "core/ligmadisplay.h"
 
 
-#define GIMP_TYPE_DISPLAY_IMPL            (gimp_display_impl_get_type ())
-#define GIMP_DISPLAY_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImpl))
-#define GIMP_DISPLAY_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImplClass))
-#define GIMP_IS_DISPLAY_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY_IMPL))
-#define GIMP_IS_DISPLAY_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_IMPL))
-#define GIMP_DISPLAY_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImplClass))
+#define LIGMA_TYPE_DISPLAY_IMPL            (ligma_display_impl_get_type ())
+#define LIGMA_DISPLAY_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DISPLAY_IMPL, LigmaDisplayImpl))
+#define LIGMA_DISPLAY_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DISPLAY_IMPL, LigmaDisplayImplClass))
+#define LIGMA_IS_DISPLAY_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DISPLAY_IMPL))
+#define LIGMA_IS_DISPLAY_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DISPLAY_IMPL))
+#define LIGMA_DISPLAY_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DISPLAY_IMPL, LigmaDisplayImplClass))
 
 
-typedef struct _GimpDisplayImpl        GimpDisplayImpl;
-typedef struct _GimpDisplayImplClass   GimpDisplayImplClass;
-typedef struct _GimpDisplayImplPrivate GimpDisplayImplPrivate;
+typedef struct _LigmaDisplayImpl        LigmaDisplayImpl;
+typedef struct _LigmaDisplayImplClass   LigmaDisplayImplClass;
+typedef struct _LigmaDisplayImplPrivate LigmaDisplayImplPrivate;
 
 
-struct _GimpDisplayImpl
+struct _LigmaDisplayImpl
 {
-  GimpDisplay             parent_instance;
+  LigmaDisplay             parent_instance;
 
-  GimpDisplayImplPrivate *priv;
+  LigmaDisplayImplPrivate *priv;
 
 };
 
-struct _GimpDisplayImplClass
+struct _LigmaDisplayImplClass
 {
-  GimpDisplayClass  parent_class;
+  LigmaDisplayClass  parent_class;
 };
 
 
-GType              gimp_display_impl_get_type   (void) G_GNUC_CONST;
+GType              ligma_display_impl_get_type   (void) G_GNUC_CONST;
 
-GimpDisplay      * gimp_display_new             (Gimp              *gimp,
-                                                 GimpImage         *image,
-                                                 GimpUnit           unit,
+LigmaDisplay      * ligma_display_new             (Ligma              *ligma,
+                                                 LigmaImage         *image,
+                                                 LigmaUnit           unit,
                                                  gdouble            scale,
-                                                 GimpUIManager     *popup_manager,
-                                                 GimpDialogFactory *dialog_factory,
+                                                 LigmaUIManager     *popup_manager,
+                                                 LigmaDialogFactory *dialog_factory,
                                                  GdkMonitor        *monitor);
-void               gimp_display_delete          (GimpDisplay       *display);
-void               gimp_display_close           (GimpDisplay       *display);
+void               ligma_display_delete          (LigmaDisplay       *display);
+void               ligma_display_close           (LigmaDisplay       *display);
 
-gchar            * gimp_display_get_action_name (GimpDisplay       *display);
+gchar            * ligma_display_get_action_name (LigmaDisplay       *display);
 
-GimpImage        * gimp_display_get_image       (GimpDisplay       *display);
-void               gimp_display_set_image       (GimpDisplay       *display,
-                                                 GimpImage         *image);
+LigmaImage        * ligma_display_get_image       (LigmaDisplay       *display);
+void               ligma_display_set_image       (LigmaDisplay       *display,
+                                                 LigmaImage         *image);
 
-gint               gimp_display_get_instance    (GimpDisplay       *display);
+gint               ligma_display_get_instance    (LigmaDisplay       *display);
 
-GimpDisplayShell * gimp_display_get_shell       (GimpDisplay       *display);
+LigmaDisplayShell * ligma_display_get_shell       (LigmaDisplay       *display);
 
-void               gimp_display_empty           (GimpDisplay       *display);
-void               gimp_display_fill            (GimpDisplay       *display,
-                                                 GimpImage         *image,
-                                                 GimpUnit           unit,
+void               ligma_display_empty           (LigmaDisplay       *display);
+void               ligma_display_fill            (LigmaDisplay       *display,
+                                                 LigmaImage         *image,
+                                                 LigmaUnit           unit,
                                                  gdouble            scale);
 
-void               gimp_display_update_bounding_box
-                                                (GimpDisplay       *display);
+void               ligma_display_update_bounding_box
+                                                (LigmaDisplay       *display);
 
-void               gimp_display_update_area     (GimpDisplay       *display,
+void               ligma_display_update_area     (LigmaDisplay       *display,
                                                  gboolean           now,
                                                  gint               x,
                                                  gint               y,
                                                  gint               w,
                                                  gint               h);
 
-void               gimp_display_flush           (GimpDisplay       *display);
-void               gimp_display_flush_now       (GimpDisplay       *display);
+void               ligma_display_flush           (LigmaDisplay       *display);
+void               ligma_display_flush_now       (LigmaDisplay       *display);
 
 
-#endif /*  __GIMP_DISPLAY_IMPL_H__  */
+#endif /*  __LIGMA_DISPLAY_IMPL_H__  */

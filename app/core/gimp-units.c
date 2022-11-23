@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpunit.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * ligmaunit.c
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,19 +26,19 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpbase-private.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmabase/ligmabase-private.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-units.h"
-#include "gimpunit.h"
+#include "ligma.h"
+#include "ligma-units.h"
+#include "ligmaunit.h"
 
-#include "config/gimpconfig-file.h"
+#include "config/ligmaconfig-file.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*
@@ -46,27 +46,27 @@
  *  or the GTokenType they would have expected but didn't get.
  */
 
-static GTokenType gimp_unitrc_unit_info_deserialize (GScanner *scanner,
-                                                     Gimp     *gimp);
+static GTokenType ligma_unitrc_unit_info_deserialize (GScanner *scanner,
+                                                     Ligma     *ligma);
 
 
-static Gimp *the_unit_gimp = NULL;
+static Ligma *the_unit_ligma = NULL;
 
 
 static gint
-gimp_units_get_number_of_units (void)
+ligma_units_get_number_of_units (void)
 {
-  return _gimp_unit_get_number_of_units (the_unit_gimp);
+  return _ligma_unit_get_number_of_units (the_unit_ligma);
 }
 
 static gint
-gimp_units_get_number_of_built_in_units (void)
+ligma_units_get_number_of_built_in_units (void)
 {
-  return GIMP_UNIT_END;
+  return LIGMA_UNIT_END;
 }
 
-static GimpUnit
-gimp_units_unit_new (gchar   *identifier,
+static LigmaUnit
+ligma_units_unit_new (gchar   *identifier,
                      gdouble  factor,
                      gint     digits,
                      gchar   *symbol,
@@ -74,7 +74,7 @@ gimp_units_unit_new (gchar   *identifier,
                      gchar   *singular,
                      gchar   *plural)
 {
-  return _gimp_unit_new (the_unit_gimp,
+  return _ligma_unit_new (the_unit_ligma,
                          identifier,
                          factor,
                          digits,
@@ -85,95 +85,95 @@ gimp_units_unit_new (gchar   *identifier,
 }
 
 static gboolean
-gimp_units_unit_get_deletion_flag (GimpUnit unit)
+ligma_units_unit_get_deletion_flag (LigmaUnit unit)
 {
-  return _gimp_unit_get_deletion_flag (the_unit_gimp, unit);
+  return _ligma_unit_get_deletion_flag (the_unit_ligma, unit);
 }
 
 static void
-gimp_units_unit_set_deletion_flag (GimpUnit unit,
+ligma_units_unit_set_deletion_flag (LigmaUnit unit,
                                    gboolean deletion_flag)
 {
-  _gimp_unit_set_deletion_flag (the_unit_gimp, unit, deletion_flag);
+  _ligma_unit_set_deletion_flag (the_unit_ligma, unit, deletion_flag);
 }
 
 static gdouble
-gimp_units_unit_get_factor (GimpUnit unit)
+ligma_units_unit_get_factor (LigmaUnit unit)
 {
-  return _gimp_unit_get_factor (the_unit_gimp, unit);
+  return _ligma_unit_get_factor (the_unit_ligma, unit);
 }
 
 static gint
-gimp_units_unit_get_digits (GimpUnit unit)
+ligma_units_unit_get_digits (LigmaUnit unit)
 {
-  return _gimp_unit_get_digits (the_unit_gimp, unit);
+  return _ligma_unit_get_digits (the_unit_ligma, unit);
 }
 
 static const gchar *
-gimp_units_unit_get_identifier (GimpUnit unit)
+ligma_units_unit_get_identifier (LigmaUnit unit)
 {
-  return _gimp_unit_get_identifier (the_unit_gimp, unit);
+  return _ligma_unit_get_identifier (the_unit_ligma, unit);
 }
 
 static const gchar *
-gimp_units_unit_get_symbol (GimpUnit unit)
+ligma_units_unit_get_symbol (LigmaUnit unit)
 {
-  return _gimp_unit_get_symbol (the_unit_gimp, unit);
+  return _ligma_unit_get_symbol (the_unit_ligma, unit);
 }
 
 static const gchar *
-gimp_units_unit_get_abbreviation (GimpUnit unit)
+ligma_units_unit_get_abbreviation (LigmaUnit unit)
 {
-  return _gimp_unit_get_abbreviation (the_unit_gimp, unit);
+  return _ligma_unit_get_abbreviation (the_unit_ligma, unit);
 }
 
 static const gchar *
-gimp_units_unit_get_singular (GimpUnit unit)
+ligma_units_unit_get_singular (LigmaUnit unit)
 {
-  return _gimp_unit_get_singular (the_unit_gimp, unit);
+  return _ligma_unit_get_singular (the_unit_ligma, unit);
 }
 
 static const gchar *
-gimp_units_unit_get_plural (GimpUnit unit)
+ligma_units_unit_get_plural (LigmaUnit unit)
 {
-  return _gimp_unit_get_plural (the_unit_gimp, unit);
+  return _ligma_unit_get_plural (the_unit_ligma, unit);
 }
 
 void
-gimp_units_init (Gimp *gimp)
+ligma_units_init (Ligma *ligma)
 {
-  GimpUnitVtable vtable;
+  LigmaUnitVtable vtable;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (the_unit_gimp == NULL);
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (the_unit_ligma == NULL);
 
-  the_unit_gimp = gimp;
+  the_unit_ligma = ligma;
 
-  vtable.unit_get_number_of_units          = gimp_units_get_number_of_units;
-  vtable.unit_get_number_of_built_in_units = gimp_units_get_number_of_built_in_units;
-  vtable.unit_new               = gimp_units_unit_new;
-  vtable.unit_get_deletion_flag = gimp_units_unit_get_deletion_flag;
-  vtable.unit_set_deletion_flag = gimp_units_unit_set_deletion_flag;
-  vtable.unit_get_factor        = gimp_units_unit_get_factor;
-  vtable.unit_get_digits        = gimp_units_unit_get_digits;
-  vtable.unit_get_identifier    = gimp_units_unit_get_identifier;
-  vtable.unit_get_symbol        = gimp_units_unit_get_symbol;
-  vtable.unit_get_abbreviation  = gimp_units_unit_get_abbreviation;
-  vtable.unit_get_singular      = gimp_units_unit_get_singular;
-  vtable.unit_get_plural        = gimp_units_unit_get_plural;
+  vtable.unit_get_number_of_units          = ligma_units_get_number_of_units;
+  vtable.unit_get_number_of_built_in_units = ligma_units_get_number_of_built_in_units;
+  vtable.unit_new               = ligma_units_unit_new;
+  vtable.unit_get_deletion_flag = ligma_units_unit_get_deletion_flag;
+  vtable.unit_set_deletion_flag = ligma_units_unit_set_deletion_flag;
+  vtable.unit_get_factor        = ligma_units_unit_get_factor;
+  vtable.unit_get_digits        = ligma_units_unit_get_digits;
+  vtable.unit_get_identifier    = ligma_units_unit_get_identifier;
+  vtable.unit_get_symbol        = ligma_units_unit_get_symbol;
+  vtable.unit_get_abbreviation  = ligma_units_unit_get_abbreviation;
+  vtable.unit_get_singular      = ligma_units_unit_get_singular;
+  vtable.unit_get_plural        = ligma_units_unit_get_plural;
 
-  gimp_base_init (&vtable);
+  ligma_base_init (&vtable);
 
-  gimp->user_units   = NULL;
-  gimp->n_user_units = 0;
+  ligma->user_units   = NULL;
+  ligma->n_user_units = 0;
 }
 
 void
-gimp_units_exit (Gimp *gimp)
+ligma_units_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp_user_units_free (gimp);
+  ligma_user_units_free (ligma);
 }
 
 
@@ -191,30 +191,30 @@ enum
 };
 
 void
-gimp_unitrc_load (Gimp *gimp)
+ligma_unitrc_load (Ligma *ligma)
 {
   GFile      *file;
   GScanner   *scanner;
   GTokenType  token;
   GError     *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  file = gimp_directory_file ("unitrc", NULL);
+  file = ligma_directory_file ("unitrc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (file, &error);
+  scanner = ligma_scanner_new_file (file, &error);
 
-  if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+  if (! scanner && error->code == LIGMA_CONFIG_ERROR_OPEN_ENOENT)
     {
       g_clear_error (&error);
       g_object_unref (file);
 
-      file = gimp_sysconf_directory_file ("unitrc", NULL);
+      file = ligma_sysconf_directory_file ("unitrc", NULL);
 
-      scanner = gimp_scanner_new_file (file, NULL);
+      scanner = ligma_scanner_new_file (file, NULL);
     }
 
   if (! scanner)
@@ -255,7 +255,7 @@ gimp_unitrc_load (Gimp *gimp)
           if (scanner->value.v_symbol == GINT_TO_POINTER (UNIT_INFO))
             {
               g_scanner_set_scope (scanner, UNIT_INFO);
-              token = gimp_unitrc_unit_info_deserialize (scanner, gimp);
+              token = ligma_unitrc_unit_info_deserialize (scanner, ligma);
 
               if (token == G_TOKEN_RIGHT_PAREN)
                 g_scanner_set_scope (scanner, 0);
@@ -277,35 +277,35 @@ gimp_unitrc_load (Gimp *gimp)
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
 
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
-      gimp_config_file_backup_on_error (file, "unitrc", NULL);
+      ligma_config_file_backup_on_error (file, "unitrc", NULL);
     }
 
-  gimp_scanner_unref (scanner);
+  ligma_scanner_unref (scanner);
   g_object_unref (file);
 }
 
 void
-gimp_unitrc_save (Gimp *gimp)
+ligma_unitrc_save (Ligma *ligma)
 {
-  GimpConfigWriter *writer;
+  LigmaConfigWriter *writer;
   GFile            *file;
   gint              i;
   GError           *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  file = gimp_directory_file ("unitrc", NULL);
+  file = ligma_directory_file ("unitrc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_from_file (file,
+    ligma_config_writer_new_from_file (file,
                                       TRUE,
-                                      "GIMP units\n\n"
+                                      "LIGMA units\n\n"
                                       "This file contains the user unit database. "
                                       "You can edit this list with the unit "
                                       "editor. You are not supposed to edit it "
@@ -320,57 +320,57 @@ gimp_unitrc_save (Gimp *gimp)
     return;
 
   /*  save user defined units  */
-  for (i = _gimp_unit_get_number_of_built_in_units (gimp);
-       i < _gimp_unit_get_number_of_units (gimp);
+  for (i = _ligma_unit_get_number_of_built_in_units (ligma);
+       i < _ligma_unit_get_number_of_units (ligma);
        i++)
     {
-      if (_gimp_unit_get_deletion_flag (gimp, i) == FALSE)
+      if (_ligma_unit_get_deletion_flag (ligma, i) == FALSE)
         {
           gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-          gimp_config_writer_open (writer, "unit-info");
-          gimp_config_writer_string (writer,
-                                     _gimp_unit_get_identifier (gimp, i));
+          ligma_config_writer_open (writer, "unit-info");
+          ligma_config_writer_string (writer,
+                                     _ligma_unit_get_identifier (ligma, i));
 
-          gimp_config_writer_open (writer, "factor");
-          gimp_config_writer_print (writer,
+          ligma_config_writer_open (writer, "factor");
+          ligma_config_writer_print (writer,
                                     g_ascii_dtostr (buf, sizeof (buf),
-                                                    _gimp_unit_get_factor (gimp, i)),
+                                                    _ligma_unit_get_factor (ligma, i)),
                                     -1);
-          gimp_config_writer_close (writer);
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "digits");
-          gimp_config_writer_printf (writer,
-                                     "%d", _gimp_unit_get_digits (gimp, i));
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "digits");
+          ligma_config_writer_printf (writer,
+                                     "%d", _ligma_unit_get_digits (ligma, i));
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "symbol");
-          gimp_config_writer_string (writer,
-                                     _gimp_unit_get_symbol (gimp, i));
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "symbol");
+          ligma_config_writer_string (writer,
+                                     _ligma_unit_get_symbol (ligma, i));
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "abbreviation");
-          gimp_config_writer_string (writer,
-                                     _gimp_unit_get_abbreviation (gimp, i));
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "abbreviation");
+          ligma_config_writer_string (writer,
+                                     _ligma_unit_get_abbreviation (ligma, i));
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "singular");
-          gimp_config_writer_string (writer,
-                                     _gimp_unit_get_singular (gimp, i));
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "singular");
+          ligma_config_writer_string (writer,
+                                     _ligma_unit_get_singular (ligma, i));
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "plural");
-          gimp_config_writer_string (writer,
-                                     _gimp_unit_get_plural (gimp, i));
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "plural");
+          ligma_config_writer_string (writer,
+                                     _ligma_unit_get_plural (ligma, i));
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_close (writer);
+          ligma_config_writer_close (writer);
         }
     }
 
-  if (! gimp_config_writer_finish (writer, "end of units", &error))
+  if (! ligma_config_writer_finish (writer, "end of units", &error))
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
 }
@@ -379,8 +379,8 @@ gimp_unitrc_save (Gimp *gimp)
 /*  private functions  */
 
 static GTokenType
-gimp_unitrc_unit_info_deserialize (GScanner *scanner,
-                                   Gimp     *gimp)
+ligma_unitrc_unit_info_deserialize (GScanner *scanner,
+                                   Ligma     *ligma)
 {
   gchar      *identifier   = NULL;
   gdouble     factor       = 1.0;
@@ -391,7 +391,7 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
   gchar      *plural       = NULL;
   GTokenType  token;
 
-  if (! gimp_scanner_parse_string (scanner, &identifier))
+  if (! ligma_scanner_parse_string (scanner, &identifier))
     return G_TOKEN_STRING;
 
   token = G_TOKEN_LEFT_PAREN;
@@ -411,37 +411,37 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
             {
             case UNIT_FACTOR:
               token = G_TOKEN_FLOAT;
-              if (! gimp_scanner_parse_float (scanner, &factor))
+              if (! ligma_scanner_parse_float (scanner, &factor))
                 goto cleanup;
               break;
 
             case UNIT_DIGITS:
               token = G_TOKEN_INT;
-              if (! gimp_scanner_parse_int (scanner, &digits))
+              if (! ligma_scanner_parse_int (scanner, &digits))
                 goto cleanup;
               break;
 
             case UNIT_SYMBOL:
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &symbol))
+              if (! ligma_scanner_parse_string (scanner, &symbol))
                 goto cleanup;
               break;
 
             case UNIT_ABBREV:
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &abbreviation))
+              if (! ligma_scanner_parse_string (scanner, &abbreviation))
                 goto cleanup;
               break;
 
             case UNIT_SINGULAR:
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &singular))
+              if (! ligma_scanner_parse_string (scanner, &singular))
                 goto cleanup;
               break;
 
             case UNIT_PLURAL:
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &plural))
+              if (! ligma_scanner_parse_string (scanner, &plural))
                 goto cleanup;
              break;
 
@@ -466,13 +466,13 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
 
       if (g_scanner_peek_next_token (scanner) == token)
         {
-          GimpUnit unit = _gimp_unit_new (gimp,
+          LigmaUnit unit = _ligma_unit_new (ligma,
                                           identifier, factor, digits,
                                           symbol, abbreviation,
                                           singular, plural);
 
           /*  make the unit definition persistent  */
-          _gimp_unit_set_deletion_flag (gimp, unit, FALSE);
+          _ligma_unit_set_deletion_flag (ligma, unit, FALSE);
         }
     }
 

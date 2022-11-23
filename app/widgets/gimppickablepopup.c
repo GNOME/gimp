@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppickablepopup.c
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmapickablepopup.c
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,23 +24,23 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcontainertreeview.h"
-#include "gimpcontainerview.h"
-#include "gimppickablepopup.h"
-#include "gimpviewrenderer.h"
+#include "ligmacontainertreeview.h"
+#include "ligmacontainerview.h"
+#include "ligmapickablepopup.h"
+#include "ligmaviewrenderer.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -52,10 +52,10 @@ enum
   PROP_VIEW_BORDER_WIDTH
 };
 
-struct _GimpPickablePopupPrivate
+struct _LigmaPickablePopupPrivate
 {
-  GimpPickable *pickable;
-  GimpContext  *context;
+  LigmaPickable *pickable;
+  LigmaContext  *context;
 
   gint          view_size;
   gint          view_border_width;
@@ -67,98 +67,98 @@ struct _GimpPickablePopupPrivate
 };
 
 
-static void   gimp_pickable_popup_constructed    (GObject           *object);
-static void   gimp_pickable_popup_finalize       (GObject           *object);
-static void   gimp_pickable_popup_set_property   (GObject           *object,
+static void   ligma_pickable_popup_constructed    (GObject           *object);
+static void   ligma_pickable_popup_finalize       (GObject           *object);
+static void   ligma_pickable_popup_set_property   (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
-static void   gimp_pickable_popup_get_property   (GObject           *object,
+static void   ligma_pickable_popup_get_property   (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
 
-static void   gimp_pickable_popup_image_changed  (GimpContext       *context,
-                                                  GimpImage         *image,
-                                                  GimpPickablePopup *popup);
-static void   gimp_pickable_popup_item_activate  (GimpContainerView *view,
-                                                  GimpPickable      *pickable,
+static void   ligma_pickable_popup_image_changed  (LigmaContext       *context,
+                                                  LigmaImage         *image,
+                                                  LigmaPickablePopup *popup);
+static void   ligma_pickable_popup_item_activate  (LigmaContainerView *view,
+                                                  LigmaPickable      *pickable,
                                                   gpointer           unused,
-                                                  GimpPickablePopup *popup);
+                                                  LigmaPickablePopup *popup);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPickablePopup, gimp_pickable_popup,
-                            GIMP_TYPE_POPUP)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPickablePopup, ligma_pickable_popup,
+                            LIGMA_TYPE_POPUP)
 
-#define parent_class gimp_pickable_popup_parent_class
+#define parent_class ligma_pickable_popup_parent_class
 
 
 static void
-gimp_pickable_popup_class_init (GimpPickablePopupClass *klass)
+ligma_pickable_popup_class_init (LigmaPickablePopupClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_pickable_popup_constructed;
-  object_class->finalize     = gimp_pickable_popup_finalize;
-  object_class->get_property = gimp_pickable_popup_get_property;
-  object_class->set_property = gimp_pickable_popup_set_property;
+  object_class->constructed  = ligma_pickable_popup_constructed;
+  object_class->finalize     = ligma_pickable_popup_finalize;
+  object_class->get_property = ligma_pickable_popup_get_property;
+  object_class->set_property = ligma_pickable_popup_set_property;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PICKABLE,
                                    g_param_spec_object ("pickable",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_PICKABLE,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_TYPE_PICKABLE,
+                                                        LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_VIEW_SIZE,
                                    g_param_spec_int ("view-size",
                                                      NULL, NULL,
-                                                     1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
-                                                     GIMP_VIEW_SIZE_MEDIUM,
-                                                     GIMP_PARAM_READWRITE |
+                                                     1, LIGMA_VIEWABLE_MAX_PREVIEW_SIZE,
+                                                     LIGMA_VIEW_SIZE_MEDIUM,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_VIEW_BORDER_WIDTH,
                                    g_param_spec_int ("view-border-width",
                                                      NULL, NULL,
                                                      0,
-                                                     GIMP_VIEW_MAX_BORDER_WIDTH,
+                                                     LIGMA_VIEW_MAX_BORDER_WIDTH,
                                                      1,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_pickable_popup_init (GimpPickablePopup *popup)
+ligma_pickable_popup_init (LigmaPickablePopup *popup)
 {
-  popup->priv = gimp_pickable_popup_get_instance_private (popup);
+  popup->priv = ligma_pickable_popup_get_instance_private (popup);
 
-  popup->priv->view_size         = GIMP_VIEW_SIZE_SMALL;
+  popup->priv->view_size         = LIGMA_VIEW_SIZE_SMALL;
   popup->priv->view_border_width = 1;
 
   gtk_window_set_resizable (GTK_WINDOW (popup), FALSE);
 }
 
 static void
-gimp_pickable_popup_constructed (GObject *object)
+ligma_pickable_popup_constructed (GObject *object)
 {
-  GimpPickablePopup *popup = GIMP_PICKABLE_POPUP (object);
+  LigmaPickablePopup *popup = LIGMA_PICKABLE_POPUP (object);
   GtkWidget         *frame;
   GtkWidget         *hbox;
   GtkWidget         *vbox;
   GtkWidget         *label;
   GtkWidget         *notebook;
-  GimpImage         *image;
+  LigmaImage         *image;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_CONTEXT (popup->priv->context));
+  ligma_assert (LIGMA_IS_CONTEXT (popup->priv->context));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -180,11 +180,11 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (label);
 
   popup->priv->image_view =
-    gimp_container_tree_view_new (popup->priv->context->gimp->images,
+    ligma_container_tree_view_new (popup->priv->context->ligma->images,
                                   popup->priv->context,
                                   popup->priv->view_size,
                                   popup->priv->view_border_width);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->priv->image_view),
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (popup->priv->image_view),
                                        4 * (popup->priv->view_size +
                                             2 * popup->priv->view_border_width),
                                        4 * (popup->priv->view_size +
@@ -193,7 +193,7 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (popup->priv->image_view);
 
   g_signal_connect_object (popup->priv->image_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_popup_item_activate),
+                           G_CALLBACK (ligma_pickable_popup_item_activate),
                            G_OBJECT (popup), 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
@@ -212,13 +212,13 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (notebook);
 
   popup->priv->layer_view =
-    gimp_container_tree_view_new (NULL,
+    ligma_container_tree_view_new (NULL,
                                   popup->priv->context,
                                   popup->priv->view_size,
                                   popup->priv->view_border_width);
-  gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (GIMP_CONTAINER_TREE_VIEW (popup->priv->layer_view)->view),
+  gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (LIGMA_CONTAINER_TREE_VIEW (popup->priv->layer_view)->view),
                                     TRUE);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->priv->layer_view),
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (popup->priv->layer_view),
                                        4 * (popup->priv->view_size +
                                             2 * popup->priv->view_border_width),
                                        4 * (popup->priv->view_size +
@@ -229,15 +229,15 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (popup->priv->layer_view);
 
   g_signal_connect_object (popup->priv->layer_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_popup_item_activate),
+                           G_CALLBACK (ligma_pickable_popup_item_activate),
                            G_OBJECT (popup), 0);
 
   popup->priv->channel_view =
-    gimp_container_tree_view_new (NULL,
+    ligma_container_tree_view_new (NULL,
                                   popup->priv->context,
                                   popup->priv->view_size,
                                   popup->priv->view_border_width);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->priv->channel_view),
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (popup->priv->channel_view),
                                        4 * (popup->priv->view_size +
                                             2 * popup->priv->view_border_width),
                                        4 * (popup->priv->view_size +
@@ -248,21 +248,21 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (popup->priv->channel_view);
 
   g_signal_connect_object (popup->priv->channel_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_popup_item_activate),
+                           G_CALLBACK (ligma_pickable_popup_item_activate),
                            G_OBJECT (popup), 0);
 
   g_signal_connect_object (popup->priv->context, "image-changed",
-                           G_CALLBACK (gimp_pickable_popup_image_changed),
+                           G_CALLBACK (ligma_pickable_popup_image_changed),
                            G_OBJECT (popup), 0);
 
-  image = gimp_context_get_image (popup->priv->context);
-  gimp_pickable_popup_image_changed (popup->priv->context, image, popup);
+  image = ligma_context_get_image (popup->priv->context);
+  ligma_pickable_popup_image_changed (popup->priv->context, image, popup);
 }
 
 static void
-gimp_pickable_popup_finalize (GObject *object)
+ligma_pickable_popup_finalize (GObject *object)
 {
-  GimpPickablePopup *popup = GIMP_PICKABLE_POPUP (object);
+  LigmaPickablePopup *popup = LIGMA_PICKABLE_POPUP (object);
 
   g_clear_object (&popup->priv->pickable);
   g_clear_object (&popup->priv->context);
@@ -271,12 +271,12 @@ gimp_pickable_popup_finalize (GObject *object)
 }
 
 static void
-gimp_pickable_popup_set_property (GObject      *object,
+ligma_pickable_popup_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpPickablePopup *popup = GIMP_PICKABLE_POPUP (object);
+  LigmaPickablePopup *popup = LIGMA_PICKABLE_POPUP (object);
 
   switch (property_id)
     {
@@ -302,12 +302,12 @@ gimp_pickable_popup_set_property (GObject      *object,
 }
 
 static void
-gimp_pickable_popup_get_property (GObject    *object,
+ligma_pickable_popup_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpPickablePopup *popup = GIMP_PICKABLE_POPUP (object);
+  LigmaPickablePopup *popup = LIGMA_PICKABLE_POPUP (object);
 
   switch (property_id)
     {
@@ -334,18 +334,18 @@ gimp_pickable_popup_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_pickable_popup_new (GimpContext *context,
+ligma_pickable_popup_new (LigmaContext *context,
                          gint         view_size,
                          gint         view_border_width)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size >  0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+                        view_size <= LIGMA_VIEWABLE_MAX_POPUP_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  return g_object_new (GIMP_TYPE_PICKABLE_POPUP,
+  return g_object_new (LIGMA_TYPE_PICKABLE_POPUP,
                        "type",              GTK_WINDOW_POPUP,
                        "context",           context,
                        "view-size",         view_size,
@@ -353,25 +353,25 @@ gimp_pickable_popup_new (GimpContext *context,
                        NULL);
 }
 
-GimpPickable *
-gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
+LigmaPickable *
+ligma_pickable_popup_get_pickable (LigmaPickablePopup *popup)
 {
   GtkWidget    *focus;
-  GimpPickable *pickable = NULL;
+  LigmaPickable *pickable = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE_POPUP (popup), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE_POPUP (popup), NULL);
 
   focus = gtk_window_get_focus (GTK_WINDOW (popup));
 
   if (focus && gtk_widget_is_ancestor (focus, popup->priv->image_view))
     {
-      pickable = GIMP_PICKABLE (gimp_context_get_image (popup->priv->context));
+      pickable = LIGMA_PICKABLE (ligma_context_get_image (popup->priv->context));
     }
   else if (focus && gtk_widget_is_ancestor (focus, popup->priv->layer_view))
     {
       GList *selected;
 
-      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (popup->priv->layer_view),
+      if (ligma_container_view_get_selected (LIGMA_CONTAINER_VIEW (popup->priv->layer_view),
                                             &selected, NULL))
         {
           pickable = selected->data;
@@ -382,7 +382,7 @@ gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
     {
       GList *selected;
 
-      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (popup->priv->channel_view),
+      if (ligma_container_view_get_selected (LIGMA_CONTAINER_VIEW (popup->priv->channel_view),
                                             &selected, NULL))
         {
           pickable = selected->data;
@@ -397,21 +397,21 @@ gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
 /*  private functions  */
 
 static void
-gimp_pickable_popup_image_changed (GimpContext       *context,
-                                   GimpImage         *image,
-                                   GimpPickablePopup *popup)
+ligma_pickable_popup_image_changed (LigmaContext       *context,
+                                   LigmaImage         *image,
+                                   LigmaPickablePopup *popup)
 {
-  GimpContainer *layers   = NULL;
-  GimpContainer *channels = NULL;
+  LigmaContainer *layers   = NULL;
+  LigmaContainer *channels = NULL;
 
   if (image)
     {
       gchar *desc;
 
-      layers   = gimp_image_get_layers (image);
-      channels = gimp_image_get_channels (image);
+      layers   = ligma_image_get_layers (image);
+      channels = ligma_image_get_channels (image);
 
-      desc = gimp_viewable_get_description (GIMP_VIEWABLE (image), NULL);
+      desc = ligma_viewable_get_description (LIGMA_VIEWABLE (image), NULL);
       gtk_label_set_text (GTK_LABEL (popup->priv->layer_label), desc);
       g_free (desc);
     }
@@ -421,17 +421,17 @@ gimp_pickable_popup_image_changed (GimpContext       *context,
                           _("Select an image in the left pane"));
     }
 
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (popup->priv->layer_view),
+  ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (popup->priv->layer_view),
                                      layers);
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (popup->priv->channel_view),
+  ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (popup->priv->channel_view),
                                      channels);
 }
 
 static void
-gimp_pickable_popup_item_activate (GimpContainerView *view,
-                                   GimpPickable      *pickable,
+ligma_pickable_popup_item_activate (LigmaContainerView *view,
+                                   LigmaPickable      *pickable,
                                    gpointer           unused,
-                                   GimpPickablePopup *popup)
+                                   LigmaPickablePopup *popup)
 {
   g_signal_emit_by_name (popup, "confirm");
 }

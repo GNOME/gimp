@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpseamlesscloneoptions.c
+ * ligmaseamlesscloneoptions.c
  * Copyright (C) 2011 Barak Itkin <lightningismyname@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpseamlesscloneoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmaseamlesscloneoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -43,51 +43,51 @@ enum
 };
 
 
-static void   gimp_seamless_clone_options_set_property (GObject      *object,
+static void   ligma_seamless_clone_options_set_property (GObject      *object,
                                                         guint         property_id,
                                                         const GValue *value,
                                                         GParamSpec   *pspec);
-static void   gimp_seamless_clone_options_get_property (GObject      *object,
+static void   ligma_seamless_clone_options_get_property (GObject      *object,
                                                         guint         property_id,
                                                         GValue       *value,
                                                         GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpSeamlessCloneOptions, gimp_seamless_clone_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaSeamlessCloneOptions, ligma_seamless_clone_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_seamless_clone_options_parent_class
+#define parent_class ligma_seamless_clone_options_parent_class
 
 
 static void
-gimp_seamless_clone_options_class_init (GimpSeamlessCloneOptionsClass *klass)
+ligma_seamless_clone_options_class_init (LigmaSeamlessCloneOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_seamless_clone_options_set_property;
-  object_class->get_property = gimp_seamless_clone_options_get_property;
+  object_class->set_property = ligma_seamless_clone_options_set_property;
+  object_class->get_property = ligma_seamless_clone_options_get_property;
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_MAX_REFINE_SCALE,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_MAX_REFINE_SCALE,
                          "max-refine-scale",
                          _("Refinement scale"),
                          _("Maximal scale of refinement points to be "
                            "used for the interpolation mesh"),
                          0, 50, 5,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_seamless_clone_options_init (GimpSeamlessCloneOptions *options)
+ligma_seamless_clone_options_init (LigmaSeamlessCloneOptions *options)
 {
 }
 
 static void
-gimp_seamless_clone_options_set_property (GObject      *object,
+ligma_seamless_clone_options_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_OPTIONS (object);
+  LigmaSeamlessCloneOptions *options = LIGMA_SEAMLESS_CLONE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -102,12 +102,12 @@ gimp_seamless_clone_options_set_property (GObject      *object,
 }
 
 static void
-gimp_seamless_clone_options_get_property (GObject    *object,
+ligma_seamless_clone_options_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_OPTIONS (object);
+  LigmaSeamlessCloneOptions *options = LIGMA_SEAMLESS_CLONE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -122,15 +122,15 @@ gimp_seamless_clone_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
+ligma_seamless_clone_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "max-refine-scale",
+  scale = ligma_prop_spin_scale_new (config, "max-refine-scale",
                                     1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 50.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 0.0, 50.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   return vbox;

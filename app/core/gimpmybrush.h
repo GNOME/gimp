@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush.h
+ * ligmamybrush.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,50 +17,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_H__
-#define __GIMP_MYBRUSH_H__
+#ifndef __LIGMA_MYBRUSH_H__
+#define __LIGMA_MYBRUSH_H__
 
 
-#include "gimpdata.h"
+#include "ligmadata.h"
 
 
-#define GIMP_TYPE_MYBRUSH            (gimp_mybrush_get_type ())
-#define GIMP_MYBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MYBRUSH, GimpMybrush))
-#define GIMP_MYBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MYBRUSH, GimpMybrushClass))
-#define GIMP_IS_MYBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MYBRUSH))
-#define GIMP_IS_MYBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH))
-#define GIMP_MYBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MYBRUSH, GimpMybrushClass))
+#define LIGMA_TYPE_MYBRUSH            (ligma_mybrush_get_type ())
+#define LIGMA_MYBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MYBRUSH, LigmaMybrush))
+#define LIGMA_MYBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MYBRUSH, LigmaMybrushClass))
+#define LIGMA_IS_MYBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MYBRUSH))
+#define LIGMA_IS_MYBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MYBRUSH))
+#define LIGMA_MYBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MYBRUSH, LigmaMybrushClass))
 
 
-typedef struct _GimpMybrushPrivate GimpMybrushPrivate;
-typedef struct _GimpMybrushClass   GimpMybrushClass;
+typedef struct _LigmaMybrushPrivate LigmaMybrushPrivate;
+typedef struct _LigmaMybrushClass   LigmaMybrushClass;
 
-struct _GimpMybrush
+struct _LigmaMybrush
 {
-  GimpData            parent_instance;
+  LigmaData            parent_instance;
 
-  GimpMybrushPrivate *priv;
+  LigmaMybrushPrivate *priv;
 };
 
-struct _GimpMybrushClass
+struct _LigmaMybrushClass
 {
-  GimpDataClass  parent_class;
+  LigmaDataClass  parent_class;
 };
 
 
-GType         gimp_mybrush_get_type             (void) G_GNUC_CONST;
+GType         ligma_mybrush_get_type             (void) G_GNUC_CONST;
 
-GimpData    * gimp_mybrush_new                  (GimpContext *context,
+LigmaData    * ligma_mybrush_new                  (LigmaContext *context,
                                                  const gchar *name);
-GimpData    * gimp_mybrush_get_standard         (GimpContext *context);
+LigmaData    * ligma_mybrush_get_standard         (LigmaContext *context);
 
-const gchar * gimp_mybrush_get_brush_json       (GimpMybrush *brush);
+const gchar * ligma_mybrush_get_brush_json       (LigmaMybrush *brush);
 
-gdouble       gimp_mybrush_get_radius           (GimpMybrush *brush);
-gdouble       gimp_mybrush_get_opaque           (GimpMybrush *brush);
-gdouble       gimp_mybrush_get_hardness         (GimpMybrush *brush);
-gdouble       gimp_mybrush_get_offset_by_random (GimpMybrush *brush);
-gboolean      gimp_mybrush_get_is_eraser        (GimpMybrush *brush);
+gdouble       ligma_mybrush_get_radius           (LigmaMybrush *brush);
+gdouble       ligma_mybrush_get_opaque           (LigmaMybrush *brush);
+gdouble       ligma_mybrush_get_hardness         (LigmaMybrush *brush);
+gdouble       ligma_mybrush_get_offset_by_random (LigmaMybrush *brush);
+gboolean      ligma_mybrush_get_is_eraser        (LigmaMybrush *brush);
 
 
-#endif /* __GIMP_MYBRUSH_H__ */
+#endif /* __LIGMA_MYBRUSH_H__ */

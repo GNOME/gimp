@@ -1,4 +1,4 @@
-/* tiff for GIMP
+/* tiff for LIGMA
  *  -Peter Mattis
  */
 
@@ -8,18 +8,18 @@
 
 typedef enum
 {
- GIMP_COMPRESSION_NONE,
- GIMP_COMPRESSION_LZW,
- GIMP_COMPRESSION_PACKBITS,
- GIMP_COMPRESSION_ADOBE_DEFLATE,
- GIMP_COMPRESSION_JPEG,
- GIMP_COMPRESSION_CCITTFAX3,
- GIMP_COMPRESSION_CCITTFAX4
-} GimpCompression;
+ LIGMA_COMPRESSION_NONE,
+ LIGMA_COMPRESSION_LZW,
+ LIGMA_COMPRESSION_PACKBITS,
+ LIGMA_COMPRESSION_ADOBE_DEFLATE,
+ LIGMA_COMPRESSION_JPEG,
+ LIGMA_COMPRESSION_CCITTFAX3,
+ LIGMA_COMPRESSION_CCITTFAX4
+} LigmaCompression;
 
 
-gint             gimp_compression_to_tiff_compression (GimpCompression compression);
-GimpCompression  tiff_compression_to_gimp_compression (gint            compression);
+gint             ligma_compression_to_tiff_compression (LigmaCompression compression);
+LigmaCompression  tiff_compression_to_ligma_compression (gint            compression);
 
 
 #endif /* __FILE_TIFF_H__ */

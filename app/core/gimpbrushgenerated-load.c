@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
+ * ligma_brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,30 +24,30 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
-#include "gimpbrushgenerated.h"
-#include "gimpbrushgenerated-load.h"
+#include "ligma-utils.h"
+#include "ligmabrushgenerated.h"
+#include "ligmabrushgenerated-load.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GList *
-gimp_brush_generated_load (GimpContext   *context,
+ligma_brush_generated_load (LigmaContext   *context,
                            GFile         *file,
                            GInputStream  *input,
                            GError       **error)
 {
-  GimpBrush               *brush;
+  LigmaBrush               *brush;
   GDataInputStream        *data_input;
   gchar                   *string;
   gsize                    string_len;
   gint                     linenum;
   gchar                   *name       = NULL;
-  GimpBrushGeneratedShape  shape      = GIMP_BRUSH_GENERATED_CIRCLE;
+  LigmaBrushGeneratedShape  shape      = LIGMA_BRUSH_GENERATED_CIRCLE;
   gboolean                 have_shape = FALSE;
   gint                     spikes     = 2;
   gdouble                  spacing;
@@ -65,15 +65,15 @@ gimp_brush_generated_load (GimpContext   *context,
   /* make sure the file we are reading is the right type */
   linenum = 1;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
 
-  if (! g_str_has_prefix (string, "GIMP-VBR"))
+  if (! g_str_has_prefix (string, "LIGMA-VBR"))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Not a GIMP brush file."));
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
+                   _("Not a LIGMA brush file."));
       g_free (string);
       goto failed;
     }
@@ -83,7 +83,7 @@ gimp_brush_generated_load (GimpContext   *context,
   /* make sure we are reading a compatible version */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
@@ -92,8 +92,8 @@ gimp_brush_generated_load (GimpContext   *context,
     {
       if (! g_str_has_prefix (string, "1.5"))
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Unknown GIMP brush version."));
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
+                       _("Unknown LIGMA brush version."));
           g_free (string);
           goto failed;
         }
@@ -108,7 +108,7 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read name */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
@@ -122,9 +122,9 @@ gimp_brush_generated_load (GimpContext   *context,
     }
   else
     {
-      name = gimp_any_to_utf8 (string, -1,
+      name = ligma_any_to_utf8 (string, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),
-                               gimp_file_get_utf8_name (file));
+                               ligma_file_get_utf8_name (file));
     }
 
   g_free (string);
@@ -134,12 +134,12 @@ gimp_brush_generated_load (GimpContext   *context,
       GEnumClass *enum_class;
       GEnumValue *shape_val;
 
-      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
+      enum_class = g_type_class_peek (LIGMA_TYPE_BRUSH_GENERATED_SHAPE);
 
       /* read shape */
       linenum++;
       string_len = 256;
-      string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+      string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                         NULL, error);
       if (! string)
         goto failed;
@@ -149,8 +149,8 @@ gimp_brush_generated_load (GimpContext   *context,
 
       if (! shape_val)
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Unknown GIMP brush shape."));
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
+                       _("Unknown LIGMA brush shape."));
           g_free (string);
           goto failed;
         }
@@ -163,13 +163,13 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush spacing */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
-  if (! gimp_ascii_strtod (string, NULL, &spacing))
+  if (! ligma_ascii_strtod (string, NULL, &spacing))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid brush spacing."));
       g_free (string);
       goto failed;
@@ -180,13 +180,13 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush radius */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
-  if (! gimp_ascii_strtod (string, NULL, &radius))
+  if (! ligma_ascii_strtod (string, NULL, &radius))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid brush radius."));
       g_free (string);
       goto failed;
@@ -198,14 +198,14 @@ gimp_brush_generated_load (GimpContext   *context,
       /* read number of spikes */
       linenum++;
       string_len = 256;
-      string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+      string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                         NULL, error);
       if (! string)
         goto failed;
-      if (! gimp_ascii_strtoi (string, NULL, 10, &spikes) ||
+      if (! ligma_ascii_strtoi (string, NULL, 10, &spikes) ||
           spikes < 2 || spikes > 20)
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Invalid brush spike count."));
           g_free (string);
           goto failed;
@@ -216,13 +216,13 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush hardness */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
-  if (! gimp_ascii_strtod (string, NULL, &hardness))
+  if (! ligma_ascii_strtod (string, NULL, &hardness))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid brush hardness."));
       g_free (string);
       goto failed;
@@ -232,13 +232,13 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush aspect_ratio */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
-  if (! gimp_ascii_strtod (string, NULL, &aspect_ratio))
+  if (! ligma_ascii_strtod (string, NULL, &aspect_ratio))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid brush aspect ratio."));
       g_free (string);
       goto failed;
@@ -248,13 +248,13 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush angle */
   linenum++;
   string_len = 256;
-  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+  string = ligma_data_input_stream_read_line_always (data_input, &string_len,
                                                     NULL, error);
   if (! string)
     goto failed;
-  if (! gimp_ascii_strtod (string, NULL, &angle))
+  if (! ligma_ascii_strtod (string, NULL, &angle))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid brush angle."));
       g_free (string);
       goto failed;
@@ -263,11 +263,11 @@ gimp_brush_generated_load (GimpContext   *context,
 
   g_object_unref (data_input);
 
-  brush = GIMP_BRUSH (gimp_brush_generated_new (name, shape, radius, spikes,
+  brush = LIGMA_BRUSH (ligma_brush_generated_new (name, shape, radius, spikes,
                                                 hardness, aspect_ratio, angle));
   g_free (name);
 
-  gimp_brush_set_spacing (brush, spacing);
+  ligma_brush_set_spacing (brush, spacing);
 
   return g_list_prepend (NULL, brush);
 

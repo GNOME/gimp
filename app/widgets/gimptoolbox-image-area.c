@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,65 +23,65 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdnd.h"
-#include "gimphelp-ids.h"
-#include "gimptoolbox.h"
-#include "gimptoolbox-image-area.h"
-#include "gimpview.h"
-#include "gimpwindowstrategy.h"
-#include "gimpwidgets-utils.h"
+#include "ligmadnd.h"
+#include "ligmahelp-ids.h"
+#include "ligmatoolbox.h"
+#include "ligmatoolbox-image-area.h"
+#include "ligmaview.h"
+#include "ligmawindowstrategy.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void
 image_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
-                       GimpToolbox     *toolbox)
+                       LigmaToolbox     *toolbox)
 {
-  GimpContext *context = gimp_toolbox_get_context (toolbox);
+  LigmaContext *context = ligma_toolbox_get_context (toolbox);
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
-                                             context->gimp,
-                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gimp_widget_get_monitor (widget),
-                                             "gimp-image-list|gimp-image-grid");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (context->ligma)),
+                                             context->ligma,
+                                             ligma_dock_get_dialog_factory (LIGMA_DOCK (toolbox)),
+                                             ligma_widget_get_monitor (widget),
+                                             "ligma-image-list|ligma-image-grid");
 }
 
 static void
 image_preview_drop_image (GtkWidget    *widget,
                           gint          x,
                           gint          y,
-                          GimpViewable *viewable,
+                          LigmaViewable *viewable,
                           gpointer      data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
+  LigmaContext *context = LIGMA_CONTEXT (data);
 
-  gimp_context_set_image (context, GIMP_IMAGE (viewable));
+  ligma_context_set_image (context, LIGMA_IMAGE (viewable));
 }
 
 static void
-image_preview_set_viewable (GimpView     *view,
-                            GimpViewable *old_viewable,
-                            GimpViewable *new_viewable)
+image_preview_set_viewable (LigmaView     *view,
+                            LigmaViewable *old_viewable,
+                            LigmaViewable *new_viewable)
 {
   if (! old_viewable && new_viewable)
     {
-      gimp_dnd_xds_source_add (GTK_WIDGET (view),
-                               (GimpDndDragViewableFunc) gimp_view_get_viewable,
+      ligma_dnd_xds_source_add (GTK_WIDGET (view),
+                               (LigmaDndDragViewableFunc) ligma_view_get_viewable,
                                NULL);
     }
   else if (old_viewable && ! new_viewable)
     {
-      gimp_dnd_xds_source_remove (GTK_WIDGET (view));
+      ligma_dnd_xds_source_remove (GTK_WIDGET (view));
     }
 }
 
@@ -89,20 +89,20 @@ image_preview_set_viewable (GimpView     *view,
 /*  public functions  */
 
 GtkWidget *
-gimp_toolbox_image_area_create (GimpToolbox *toolbox,
+ligma_toolbox_image_area_create (LigmaToolbox *toolbox,
                                 gint         width,
                                 gint         height)
 {
-  GimpContext *context;
+  LigmaContext *context;
   GtkWidget   *image_view;
   gchar       *tooltip;
 
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOLBOX (toolbox), NULL);
 
-  context = gimp_toolbox_get_context (toolbox);
+  context = ligma_toolbox_get_context (toolbox);
 
-  image_view = gimp_view_new_full_by_types (context,
-                                            GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
+  image_view = ligma_view_new_full_by_types (context,
+                                            LIGMA_TYPE_VIEW, LIGMA_TYPE_IMAGE,
                                             width, height, 0,
                                             FALSE, TRUE, TRUE);
 
@@ -110,8 +110,8 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                     G_CALLBACK (image_preview_set_viewable),
                     NULL);
 
-  gimp_view_set_viewable (GIMP_VIEW (image_view),
-                          GIMP_VIEWABLE (gimp_context_get_image (context)));
+  ligma_view_set_viewable (LIGMA_VIEW (image_view),
+                          LIGMA_VIEWABLE (ligma_context_get_image (context)));
 
   gtk_widget_show (image_view);
 
@@ -126,20 +126,20 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                         "Click to open the Image Dialog."));
 #endif
 
-  gimp_help_set_help_data (image_view, tooltip,
-                           GIMP_HELP_TOOLBOX_IMAGE_AREA);
+  ligma_help_set_help_data (image_view, tooltip,
+                           LIGMA_HELP_TOOLBOX_IMAGE_AREA);
   g_free (tooltip);
 
   g_signal_connect_object (context, "image-changed",
-                           G_CALLBACK (gimp_view_set_viewable),
+                           G_CALLBACK (ligma_view_set_viewable),
                            image_view, G_CONNECT_SWAPPED);
 
   g_signal_connect (image_view, "clicked",
                     G_CALLBACK (image_preview_clicked),
                     toolbox);
 
-  gimp_dnd_viewable_dest_add (image_view,
-                              GIMP_TYPE_IMAGE,
+  ligma_dnd_viewable_dest_add (image_view,
+                              LIGMA_TYPE_IMAGE,
                               image_preview_drop_image,
                               context);
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimp-transform-resize.h"
-#include "gimp-transform-utils.h"
-#include "gimp-utils.h"
+#include "ligma-transform-resize.h"
+#include "ligma-transform-utils.h"
+#include "ligma-utils.h"
 
 
 #define EPSILON 0.00000001
@@ -36,19 +36,19 @@
 
 typedef struct
 {
-  GimpVector2 a, b, c, d;
+  LigmaVector2 a, b, c, d;
   gdouble     area;
   gdouble     aspect;
 } Rectangle;
 
 
-static void      gimp_transform_resize_adjust        (const GimpVector2 *points,
+static void      ligma_transform_resize_adjust        (const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint              *x1,
                                                       gint              *y1,
                                                       gint              *x2,
                                                       gint              *y2);
-static void      gimp_transform_resize_crop          (const GimpVector2 *points,
+static void      ligma_transform_resize_crop          (const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gdouble            aspect,
                                                       gint              *x1,
@@ -56,51 +56,51 @@ static void      gimp_transform_resize_crop          (const GimpVector2 *points,
                                                       gint              *x2,
                                                       gint              *y2);
 
-static void      add_rectangle                       (const GimpVector2 *points,
+static void      add_rectangle                       (const LigmaVector2 *points,
                                                       gint               n_points,
                                                       Rectangle         *r,
-                                                      GimpVector2        a,
-                                                      GimpVector2        b,
-                                                      GimpVector2        c,
-                                                      GimpVector2        d);
-static gboolean  intersect                           (GimpVector2        a,
-                                                      GimpVector2        b,
-                                                      GimpVector2        c,
-                                                      GimpVector2        d,
-                                                      GimpVector2       *i);
-static gboolean  intersect_x                         (GimpVector2        a,
-                                                      GimpVector2        b,
-                                                      GimpVector2        c,
-                                                      GimpVector2       *i);
-static gboolean  intersect_y                         (GimpVector2        a,
-                                                      GimpVector2        b,
-                                                      GimpVector2        c,
-                                                      GimpVector2       *i);
-static gboolean  in_poly                             (const GimpVector2 *points,
+                                                      LigmaVector2        a,
+                                                      LigmaVector2        b,
+                                                      LigmaVector2        c,
+                                                      LigmaVector2        d);
+static gboolean  intersect                           (LigmaVector2        a,
+                                                      LigmaVector2        b,
+                                                      LigmaVector2        c,
+                                                      LigmaVector2        d,
+                                                      LigmaVector2       *i);
+static gboolean  intersect_x                         (LigmaVector2        a,
+                                                      LigmaVector2        b,
+                                                      LigmaVector2        c,
+                                                      LigmaVector2       *i);
+static gboolean  intersect_y                         (LigmaVector2        a,
+                                                      LigmaVector2        b,
+                                                      LigmaVector2        c,
+                                                      LigmaVector2       *i);
+static gboolean  in_poly                             (const LigmaVector2 *points,
                                                       gint               n_points,
-                                                      GimpVector2        p);
-static gboolean  point_on_border                     (const GimpVector2 *points,
+                                                      LigmaVector2        p);
+static gboolean  point_on_border                     (const LigmaVector2 *points,
                                                       gint               n_points,
-                                                      GimpVector2        p);
+                                                      LigmaVector2        p);
 
 static void      find_two_point_rectangle            (Rectangle         *r,
-                                                      const GimpVector2 *points,
+                                                      const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint               p);
 static void      find_three_point_rectangle_corner   (Rectangle         *r,
-                                                      const GimpVector2 *points,
+                                                      const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint               p);
 static void      find_three_point_rectangle          (Rectangle          *r,
-                                                      const GimpVector2 *points,
+                                                      const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint               p);
 static void      find_three_point_rectangle_triangle (Rectangle         *r,
-                                                      const GimpVector2 *points,
+                                                      const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint               p);
 static void      find_maximum_aspect_rectangle       (Rectangle          *r,
-                                                      const GimpVector2 *points,
+                                                      const LigmaVector2 *points,
                                                       gint               n_points,
                                                       gint               p);
 
@@ -109,8 +109,8 @@ static void      find_maximum_aspect_rectangle       (Rectangle          *r,
  * This function wants to be passed the inverse transformation matrix!!
  */
 gboolean
-gimp_transform_resize_boundary (const GimpMatrix3   *inv,
-                                GimpTransformResize  resize,
+ligma_transform_resize_boundary (const LigmaMatrix3   *inv,
+                                LigmaTransformResize  resize,
                                 gdouble              u1,
                                 gdouble              v1,
                                 gdouble              u2,
@@ -120,8 +120,8 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
                                 gint                *x2,
                                 gint                *y2)
 {
-  GimpVector2 bounds[4];
-  GimpVector2 points[5];
+  LigmaVector2 bounds[4];
+  LigmaVector2 points[5];
   gint        n_points;
   gboolean    valid;
   gint        i;
@@ -135,15 +135,15 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
   *y2 = ceil  (v2);
 
   /* if clipping then just return the original rectangle */
-  if (resize == GIMP_TRANSFORM_RESIZE_CLIP)
+  if (resize == LIGMA_TRANSFORM_RESIZE_CLIP)
     return TRUE;
 
-  bounds[0] = (GimpVector2) { u1, v1 };
-  bounds[1] = (GimpVector2) { u2, v1 };
-  bounds[2] = (GimpVector2) { u2, v2 };
-  bounds[3] = (GimpVector2) { u1, v2 };
+  bounds[0] = (LigmaVector2) { u1, v1 };
+  bounds[1] = (LigmaVector2) { u2, v1 };
+  bounds[2] = (LigmaVector2) { u2, v2 };
+  bounds[3] = (LigmaVector2) { u1, v2 };
 
-  gimp_transform_polygon (inv, bounds, 4, TRUE,
+  ligma_transform_polygon (inv, bounds, 4, TRUE,
                           points, &n_points);
 
   valid = (n_points >= 2);
@@ -155,33 +155,33 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
   if (! valid)
     {
       /* since there is no sensible way to deal with this, just do the same as
-       * with GIMP_TRANSFORM_RESIZE_CLIP: return
+       * with LIGMA_TRANSFORM_RESIZE_CLIP: return
        */
       return FALSE;
     }
 
   switch (resize)
     {
-    case GIMP_TRANSFORM_RESIZE_ADJUST:
+    case LIGMA_TRANSFORM_RESIZE_ADJUST:
       /* return smallest rectangle (with sides parallel to x- and y-axis)
        * that surrounds the new points */
-      gimp_transform_resize_adjust (points, n_points,
+      ligma_transform_resize_adjust (points, n_points,
                                     x1, y1, x2, y2);
       break;
 
-    case GIMP_TRANSFORM_RESIZE_CROP:
-      gimp_transform_resize_crop (points, n_points,
+    case LIGMA_TRANSFORM_RESIZE_CROP:
+      ligma_transform_resize_crop (points, n_points,
                                   0.0,
                                   x1, y1, x2, y2);
       break;
 
-    case GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT:
-      gimp_transform_resize_crop (points, n_points,
+    case LIGMA_TRANSFORM_RESIZE_CROP_WITH_ASPECT:
+      ligma_transform_resize_crop (points, n_points,
                                   (u2 - u1) / (v2 - v1),
                                   x1, y1, x2, y2);
       break;
 
-    case GIMP_TRANSFORM_RESIZE_CLIP:
+    case LIGMA_TRANSFORM_RESIZE_CLIP:
       /* Remove warning about not handling all enum values. We handle
        * this case in the beginning of the function
        */
@@ -202,15 +202,15 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
  * y-axis) that contains the points d1 to d4
  */
 static void
-gimp_transform_resize_adjust (const GimpVector2 *points,
+ligma_transform_resize_adjust (const LigmaVector2 *points,
                               gint               n_points,
                               gint              *x1,
                               gint              *y1,
                               gint              *x2,
                               gint              *y2)
 {
-  GimpVector2 top_left;
-  GimpVector2 bottom_right;
+  LigmaVector2 top_left;
+  LigmaVector2 bottom_right;
   gint        i;
 
   top_left = bottom_right = points[0];
@@ -232,7 +232,7 @@ gimp_transform_resize_adjust (const GimpVector2 *points,
 }
 
 static void
-gimp_transform_resize_crop (const GimpVector2 *orig_points,
+ligma_transform_resize_crop (const LigmaVector2 *orig_points,
                             gint               n_points,
                             gdouble            aspect,
                             gint              *x1,
@@ -240,13 +240,13 @@ gimp_transform_resize_crop (const GimpVector2 *orig_points,
                             gint              *x2,
                             gint              *y2)
 {
-  GimpVector2 points[5];
+  LigmaVector2 points[5];
   Rectangle   r;
-  GimpVector2 t,a;
+  LigmaVector2 t,a;
   gint        i, j;
   gint        min;
 
-  memcpy (points, orig_points, sizeof (GimpVector2) * n_points);
+  memcpy (points, orig_points, sizeof (LigmaVector2) * n_points);
 
   /* find lowest, rightmost corner of surrounding rectangle */
   a.x = 0;
@@ -268,7 +268,7 @@ gimp_transform_resize_crop (const GimpVector2 *orig_points,
     }
 
   /* find the convex hull using Jarvis's March as the points are passed
-   * in different orders due to gimp_matrix3_transform_point()
+   * in different orders due to ligma_matrix3_transform_point()
    */
   min = 0;
   for (i = 0; i < n_points; i++)
@@ -354,7 +354,7 @@ gimp_transform_resize_crop (const GimpVector2 *orig_points,
   if (r.area == 0)
     {
       /* saveguard if something went wrong, adjust and give warning */
-      gimp_transform_resize_adjust (orig_points, n_points,
+      ligma_transform_resize_adjust (orig_points, n_points,
                                     x1, y1, x2, y2);
       g_printerr ("no rectangle found by algorithm, no cropping done\n");
       return;
@@ -377,17 +377,17 @@ gimp_transform_resize_crop (const GimpVector2 *orig_points,
 
 static void
 find_three_point_rectangle (Rectangle         *r,
-                            const GimpVector2 *points,
+                            const LigmaVector2 *points,
                             gint               n_points,
                             gint               p)
 {
-  GimpVector2 a = points[p       % n_points];  /* 0 1 2 3 */
-  GimpVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
-  GimpVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
-  GimpVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
-  GimpVector2 i1;                              /* intersection point */
-  GimpVector2 i2;                              /* intersection point */
-  GimpVector2 i3;                              /* intersection point */
+  LigmaVector2 a = points[p       % n_points];  /* 0 1 2 3 */
+  LigmaVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
+  LigmaVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
+  LigmaVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
+  LigmaVector2 i1;                              /* intersection point */
+  LigmaVector2 i2;                              /* intersection point */
+  LigmaVector2 i3;                              /* intersection point */
 
   if (intersect_x (b, c, a,  &i1) &&
       intersect_y (c, d, i1, &i2) &&
@@ -412,16 +412,16 @@ find_three_point_rectangle (Rectangle         *r,
 
 static void
 find_three_point_rectangle_corner (Rectangle         *r,
-                                   const GimpVector2 *points,
+                                   const LigmaVector2 *points,
                                    gint               n_points,
                                    gint               p)
 {
-  GimpVector2 a = points[p       % n_points];  /* 0 1 2 3 */
-  GimpVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
-  GimpVector2 c = points[(p + 2) % n_points];  /* 2 3 0 2 */
-  GimpVector2 d = points[(p + 3) % n_points];  /* 3 0 2 1 */
-  GimpVector2 i1;                              /* intersection point */
-  GimpVector2 i2;                              /* intersection point */
+  LigmaVector2 a = points[p       % n_points];  /* 0 1 2 3 */
+  LigmaVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
+  LigmaVector2 c = points[(p + 2) % n_points];  /* 2 3 0 2 */
+  LigmaVector2 d = points[(p + 3) % n_points];  /* 3 0 2 1 */
+  LigmaVector2 i1;                              /* intersection point */
+  LigmaVector2 i2;                              /* intersection point */
 
   if (intersect_x (b, c, a , &i1) &&
       intersect_y (c, d, i1, &i2))
@@ -442,17 +442,17 @@ find_three_point_rectangle_corner (Rectangle         *r,
 
 static void
 find_two_point_rectangle (Rectangle         *r,
-                          const GimpVector2 *points,
+                          const LigmaVector2 *points,
                           gint               n_points,
                           gint               p)
 {
-  GimpVector2 a = points[ p      % n_points];  /* 0 1 2 3 */
-  GimpVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
-  GimpVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
-  GimpVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
-  GimpVector2 i1;                              /* intersection point */
-  GimpVector2 i2;                              /* intersection point */
-  GimpVector2 mid;                             /* Mid point */
+  LigmaVector2 a = points[ p      % n_points];  /* 0 1 2 3 */
+  LigmaVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
+  LigmaVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
+  LigmaVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
+  LigmaVector2 i1;                              /* intersection point */
+  LigmaVector2 i2;                              /* intersection point */
+  LigmaVector2 mid;                             /* Mid point */
 
   add_rectangle (points, n_points, r, a, a, c, c);
   add_rectangle (points, n_points, r, b, b, d, d);
@@ -469,17 +469,17 @@ find_two_point_rectangle (Rectangle         *r,
 
 static void
 find_three_point_rectangle_triangle (Rectangle         *r,
-                                     const GimpVector2 *points,
+                                     const LigmaVector2 *points,
                                      gint               n_points,
                                      gint               p)
 {
-  GimpVector2 a = points[p       % n_points];  /* 0 1 2 3 */
-  GimpVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
-  GimpVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
-  GimpVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
-  GimpVector2 i1;                              /* intersection point */
-  GimpVector2 i2;                              /* intersection point */
-  GimpVector2 mid;
+  LigmaVector2 a = points[p       % n_points];  /* 0 1 2 3 */
+  LigmaVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
+  LigmaVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
+  LigmaVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
+  LigmaVector2 i1;                              /* intersection point */
+  LigmaVector2 i2;                              /* intersection point */
+  LigmaVector2 mid;
 
   mid.x = (a.x + b.x) / 2.0;
   mid.y = (a.y + b.y) / 2.0;
@@ -503,17 +503,17 @@ find_three_point_rectangle_triangle (Rectangle         *r,
 
 static void
 find_maximum_aspect_rectangle (Rectangle         *r,
-                               const GimpVector2 *points,
+                               const LigmaVector2 *points,
                                gint               n_points,
                                gint               p)
 {
-  GimpVector2 a = points[ p      % n_points];  /* 0 1 2 3 */
-  GimpVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
-  GimpVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
-  GimpVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
-  GimpVector2 i1;                              /* intersection point */
-  GimpVector2 i2;                              /* intersection point */
-  GimpVector2 i3;                              /* intersection point */
+  LigmaVector2 a = points[ p      % n_points];  /* 0 1 2 3 */
+  LigmaVector2 b = points[(p + 1) % n_points];  /* 1 2 3 0 */
+  LigmaVector2 c = points[(p + 2) % n_points];  /* 2 3 0 1 */
+  LigmaVector2 d = points[(p + 3) % n_points];  /* 3 0 1 2 */
+  LigmaVector2 i1;                              /* intersection point */
+  LigmaVector2 i2;                              /* intersection point */
+  LigmaVector2 i3;                              /* intersection point */
 
   if (intersect_x (b, c, a, &i1))
     {
@@ -628,11 +628,11 @@ find_maximum_aspect_rectangle (Rectangle         *r,
  * its still inside.
  */
 static gboolean
-in_poly (const GimpVector2 *points,
+in_poly (const LigmaVector2 *points,
          gint               n_points,
-         GimpVector2        p)
+         LigmaVector2        p)
 {
-  GimpVector2 p1, p2;
+  LigmaVector2 p1, p2;
   gint  counter = 0;
   gint  i;
 
@@ -673,16 +673,16 @@ in_poly (const GimpVector2 *points,
 /* check if the point p lies on the polygon "points"
  */
 static gboolean
-point_on_border (const GimpVector2 *points,
+point_on_border (const LigmaVector2 *points,
                  gint               n_points,
-                 GimpVector2        p)
+                 LigmaVector2        p)
 {
   gint i;
 
   for (i = 0; i <= n_points; i++)
     {
-      GimpVector2   a  = points[i       % n_points];
-      GimpVector2   b  = points[(i + 1) % n_points];
+      LigmaVector2   a  = points[i       % n_points];
+      LigmaVector2   b  = points[(i + 1) % n_points];
       gdouble a1 = (b.y - a.y);
       gdouble b1 = (a.x - b.x);
       gdouble c1 = a1 * a.x + b1 * a.y;
@@ -703,11 +703,11 @@ point_on_border (const GimpVector2 *points,
  * and write it to i, if existing.
  */
 static gboolean
-intersect (GimpVector2  a,
-           GimpVector2  b,
-           GimpVector2  c,
-           GimpVector2  d,
-           GimpVector2 *i)
+intersect (LigmaVector2  a,
+           LigmaVector2  b,
+           LigmaVector2  c,
+           LigmaVector2  d,
+           LigmaVector2 *i)
 {
   gdouble a1  = (b.y - a.y);
   gdouble b1  = (a.x - b.x);
@@ -731,12 +731,12 @@ intersect (GimpVector2  a,
  * through c and write it to i, if existing.
  */
 static gboolean
-intersect_x (GimpVector2  a,
-             GimpVector2  b,
-             GimpVector2  c,
-             GimpVector2 *i)
+intersect_x (LigmaVector2  a,
+             LigmaVector2  b,
+             LigmaVector2  c,
+             LigmaVector2 *i)
 {
-  GimpVector2   d = c;
+  LigmaVector2   d = c;
   d.y += 1;
 
   return intersect(a,b,c,d,i);
@@ -746,12 +746,12 @@ intersect_x (GimpVector2  a,
  * through c and write it to i, if existing.
  */
 static gboolean
-intersect_y (GimpVector2  a,
-             GimpVector2  b,
-             GimpVector2  c,
-             GimpVector2 *i)
+intersect_y (LigmaVector2  a,
+             LigmaVector2  b,
+             LigmaVector2  c,
+             LigmaVector2 *i)
 {
-  GimpVector2   d = c;
+  LigmaVector2   d = c;
   d.x += 1;
 
   return intersect(a,b,c,d,i);
@@ -763,13 +763,13 @@ intersect_y (GimpVector2  a,
  * writes it to r if the area is bigger than the rectangle already stored in r.
  */
 static void
-add_rectangle (const GimpVector2 *points,
+add_rectangle (const LigmaVector2 *points,
                gint               n_points,
                Rectangle         *r,
-               GimpVector2        a,
-               GimpVector2        b,
-               GimpVector2        c,
-               GimpVector2        d)
+               LigmaVector2        a,
+               LigmaVector2        b,
+               LigmaVector2        c,
+               LigmaVector2        d)
 {
   gdouble width;
   gdouble height;

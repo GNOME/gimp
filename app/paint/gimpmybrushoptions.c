@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpmybrush.h"
-#include "core/gimppaintinfo.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmamybrush.h"
+#include "core/ligmapaintinfo.h"
 
-#include "gimpmybrushoptions.h"
+#include "ligmamybrushoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,98 +46,98 @@ enum
 };
 
 
-static void   gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface);
+static void   ligma_mybrush_options_config_iface_init (LigmaConfigInterface *config_iface);
 
-static void   gimp_mybrush_options_set_property     (GObject      *object,
+static void   ligma_mybrush_options_set_property     (GObject      *object,
                                                      guint         property_id,
                                                      const GValue *value,
                                                      GParamSpec   *pspec);
-static void   gimp_mybrush_options_get_property     (GObject      *object,
+static void   ligma_mybrush_options_get_property     (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
-static void    gimp_mybrush_options_mybrush_changed (GimpContext  *context,
-                                                     GimpMybrush  *brush);
+static void    ligma_mybrush_options_mybrush_changed (LigmaContext  *context,
+                                                     LigmaMybrush  *brush);
 
-static void    gimp_mybrush_options_reset           (GimpConfig   *config);
+static void    ligma_mybrush_options_reset           (LigmaConfig   *config);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpMybrushOptions, gimp_mybrush_options,
-                         GIMP_TYPE_PAINT_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_mybrush_options_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaMybrushOptions, ligma_mybrush_options,
+                         LIGMA_TYPE_PAINT_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_mybrush_options_config_iface_init))
 
-static GimpConfigInterface *parent_config_iface = NULL;
+static LigmaConfigInterface *parent_config_iface = NULL;
 
 
 static void
-gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
+ligma_mybrush_options_class_init (LigmaMybrushOptionsClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
+  LigmaContextClass *context_class = LIGMA_CONTEXT_CLASS (klass);
 
-  object_class->set_property     = gimp_mybrush_options_set_property;
-  object_class->get_property     = gimp_mybrush_options_get_property;
+  object_class->set_property     = ligma_mybrush_options_set_property;
+  object_class->get_property     = ligma_mybrush_options_get_property;
 
-  context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
+  context_class->mybrush_changed = ligma_mybrush_options_mybrush_changed;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_RADIUS,
                            "radius",
                            _("Radius"),
                            NULL,
                            -2.0, 6.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OPAQUE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OPAQUE,
                            "opaque",
                            _("Base Opacity"),
                            NULL,
                            0.0, 2.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HARDNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_HARDNESS,
                            "hardness",
                            _("Hardness"),
                            NULL,
                            0.0, 1.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ERASER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ERASER,
                             "eraser",
                             _("Erase with this brush"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING,
                             "no-erasing",
                             _("No erasing effect"),
                             _("Never decrease alpha of existing pixels"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_mybrush_options_config_iface_init (GimpConfigInterface *config_iface)
+ligma_mybrush_options_config_iface_init (LigmaConfigInterface *config_iface)
 {
   parent_config_iface = g_type_interface_peek_parent (config_iface);
 
-  config_iface->reset = gimp_mybrush_options_reset;
+  config_iface->reset = ligma_mybrush_options_reset;
 }
 
 static void
-gimp_mybrush_options_init (GimpMybrushOptions *options)
+ligma_mybrush_options_init (LigmaMybrushOptions *options)
 {
 }
 
 static void
-gimp_mybrush_options_set_property (GObject      *object,
+ligma_mybrush_options_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (object);
+  LigmaMybrushOptions *options = LIGMA_MYBRUSH_OPTIONS (object);
 
   switch (property_id)
     {
@@ -164,12 +164,12 @@ gimp_mybrush_options_set_property (GObject      *object,
 }
 
 static void
-gimp_mybrush_options_get_property (GObject    *object,
+ligma_mybrush_options_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (object);
+  LigmaMybrushOptions *options = LIGMA_MYBRUSH_OPTIONS (object);
 
   switch (property_id)
     {
@@ -196,25 +196,25 @@ gimp_mybrush_options_get_property (GObject    *object,
 }
 
 static void
-gimp_mybrush_options_mybrush_changed (GimpContext *context,
-                                      GimpMybrush *brush)
+ligma_mybrush_options_mybrush_changed (LigmaContext *context,
+                                      LigmaMybrush *brush)
 {
   if (brush)
     g_object_set (context,
-                  "radius",   gimp_mybrush_get_radius (brush),
-                  "opaque",   gimp_mybrush_get_opaque (brush),
-                  "hardness", gimp_mybrush_get_hardness (brush),
-                  "eraser",   gimp_mybrush_get_is_eraser (brush),
+                  "radius",   ligma_mybrush_get_radius (brush),
+                  "opaque",   ligma_mybrush_get_opaque (brush),
+                  "hardness", ligma_mybrush_get_hardness (brush),
+                  "eraser",   ligma_mybrush_get_is_eraser (brush),
                   NULL);
 }
 
 static void
-gimp_mybrush_options_reset (GimpConfig *config)
+ligma_mybrush_options_reset (LigmaConfig *config)
 {
-  GimpContext *context = GIMP_CONTEXT (config);
-  GimpMybrush *brush   = gimp_context_get_mybrush (context);
+  LigmaContext *context = LIGMA_CONTEXT (config);
+  LigmaMybrush *brush   = ligma_context_get_mybrush (context);
 
   parent_config_iface->reset (config);
 
-  gimp_mybrush_options_mybrush_changed (context, brush);
+  ligma_mybrush_options_mybrush_changed (context, brush);
 }

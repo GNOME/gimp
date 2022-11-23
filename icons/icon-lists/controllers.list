@@ -1,14 +1,14 @@
-# grep -rI icon_name modules/controller-* app/widgets/gimpcontroller*
+# grep -rI icon_name modules/controller-* app/widgets/ligmacontroller*
 # Used in:
-# - GimpControllerList as GtkCellRendererPixbuf (16px).
+# - LigmaControllerList as GtkCellRendererPixbuf (16px).
 
 # Default
-gimp-controller
+ligma-controller
 
-gimp-controller-keyboard
-gimp-controller-linux-input
-gimp-controller-midi
-gimp-controller-wheel
+ligma-controller-keyboard
+ligma-controller-linux-input
+ligma-controller-midi
+ligma-controller-wheel
 
-# GIMP_ICON_CONTROLLER_MOUSE == GIMP_ICON_CURSOR
-gimp-cursor
+# LIGMA_ICON_CONTROLLER_MOUSE == LIGMA_ICON_CURSOR
+ligma-cursor

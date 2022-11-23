@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdeviceinfoeditor.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmadeviceinfoeditor.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_INFO_EDITOR_H__
-#define __GIMP_DEVICE_INFO_EDITOR_H__
+#ifndef __LIGMA_DEVICE_INFO_EDITOR_H__
+#define __LIGMA_DEVICE_INFO_EDITOR_H__
 
 
-#define GIMP_TYPE_DEVICE_INFO_EDITOR            (gimp_device_info_editor_get_type ())
-#define GIMP_DEVICE_INFO_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditor))
-#define GIMP_DEVICE_INFO_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditorClass))
-#define GIMP_IS_DEVICE_INFO_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR))
-#define GIMP_IS_DEVICE_INFO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DEVICE_INFO_EDITOR))
-#define GIMP_DEVICE_INFO_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditorClass))
+#define LIGMA_TYPE_DEVICE_INFO_EDITOR            (ligma_device_info_editor_get_type ())
+#define LIGMA_DEVICE_INFO_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DEVICE_INFO_EDITOR, LigmaDeviceInfoEditor))
+#define LIGMA_DEVICE_INFO_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DEVICE_INFO_EDITOR, LigmaDeviceInfoEditorClass))
+#define LIGMA_IS_DEVICE_INFO_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DEVICE_INFO_EDITOR))
+#define LIGMA_IS_DEVICE_INFO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DEVICE_INFO_EDITOR))
+#define LIGMA_DEVICE_INFO_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DEVICE_INFO_EDITOR, LigmaDeviceInfoEditorClass))
 
 
-typedef struct _GimpDeviceInfoEditorClass GimpDeviceInfoEditorClass;
+typedef struct _LigmaDeviceInfoEditorClass LigmaDeviceInfoEditorClass;
 
-struct _GimpDeviceInfoEditor
+struct _LigmaDeviceInfoEditor
 {
   GtkBox  parent_instance;
 };
 
-struct _GimpDeviceInfoEditorClass
+struct _LigmaDeviceInfoEditorClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_device_info_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_device_info_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_device_info_editor_new      (GimpDeviceInfo *info);
+GtkWidget * ligma_device_info_editor_new      (LigmaDeviceInfo *info);
 
 
-#endif /* __GIMP_DEVICE_INFO_EDITOR_H__ */
+#endif /* __LIGMA_DEVICE_INFO_EDITOR_H__ */

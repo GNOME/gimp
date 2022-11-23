@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,26 +16,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_H__
-#define __GIMP_CONFIG_H__
+#ifndef __LIGMA_CONFIG_H__
+#define __LIGMA_CONFIG_H__
 
-#define __GIMP_CONFIG_H_INSIDE__
+#define __LIGMA_CONFIG_H_INSIDE__
 
-#include <libgimpconfig/gimpconfigtypes.h>
+#include <libligmaconfig/ligmaconfigtypes.h>
 
-#include <libgimpconfig/gimpconfig-deserialize.h>
-#include <libgimpconfig/gimpconfig-error.h>
-#include <libgimpconfig/gimpconfig-iface.h>
-#include <libgimpconfig/gimpconfig-params.h>
-#include <libgimpconfig/gimpconfig-path.h>
-#include <libgimpconfig/gimpconfig-register.h>
-#include <libgimpconfig/gimpconfig-serialize.h>
-#include <libgimpconfig/gimpconfig-utils.h>
-#include <libgimpconfig/gimpconfigwriter.h>
-#include <libgimpconfig/gimpscanner.h>
+#include <libligmaconfig/ligmaconfig-deserialize.h>
+#include <libligmaconfig/ligmaconfig-error.h>
+#include <libligmaconfig/ligmaconfig-iface.h>
+#include <libligmaconfig/ligmaconfig-params.h>
+#include <libligmaconfig/ligmaconfig-path.h>
+#include <libligmaconfig/ligmaconfig-register.h>
+#include <libligmaconfig/ligmaconfig-serialize.h>
+#include <libligmaconfig/ligmaconfig-utils.h>
+#include <libligmaconfig/ligmaconfigwriter.h>
+#include <libligmaconfig/ligmascanner.h>
 
-#include <libgimpconfig/gimpcolorconfig.h>
+#include <libligmaconfig/ligmacolorconfig.h>
 
-#undef __GIMP_CONFIG_H_INSIDE__
+#undef __LIGMA_CONFIG_H_INSIDE__
 
-#endif  /* __GIMP_CONFIG_H__ */
+#endif  /* __LIGMA_CONFIG_H__ */

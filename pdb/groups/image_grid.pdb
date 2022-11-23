@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_get (grid,
@@ -74,7 +74,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_set (grid,
@@ -113,7 +113,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_get (grid,
@@ -148,7 +148,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_set (grid,
@@ -184,7 +184,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     fgcolor = grid->fgcolor;
@@ -214,7 +214,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_set (grid, "fgcolor", &fgcolor, NULL);
@@ -247,7 +247,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     bgcolor = grid->bgcolor;
@@ -277,7 +277,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_set (grid, "bgcolor", &bgcolor, NULL);
@@ -303,14 +303,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'style', type => 'enum GimpGridStyle',
+        { name => 'style', type => 'enum LigmaGridStyle',
           desc => "The image's grid style" }
     );
 
     %invoke = (
 	code => <<CODE
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_get (grid, "style", &style, NULL);
@@ -334,14 +334,14 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'style', type => 'enum GimpGridStyle',
+        { name => 'style', type => 'enum LigmaGridStyle',
           desc => "The image's grid style" }
     );
 
     %invoke = (
 	code => <<CODE
 {
-  GimpGrid *grid = gimp_image_get_grid (image);
+  LigmaGrid *grid = ligma_image_get_grid (image);
 
   if (grid)
     g_object_set (grid, "style", style, NULL);
@@ -353,8 +353,8 @@ CODE
 }
 
 
-@headers = qw("core/gimpimage-grid.h" "core/gimpgrid.h"
-              "libgimpbase/gimpbaseenums.h");
+@headers = qw("core/ligmaimage-grid.h" "core/ligmagrid.h"
+              "libligmabase/ligmabaseenums.h");
 
 @procs = qw(image_grid_get_spacing image_grid_set_spacing
             image_grid_get_offset image_grid_set_offset
@@ -365,7 +365,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image grid procedures';
-$doc_title = 'gimpimagegrid';
+$doc_title = 'ligmaimagegrid';
 $doc_short_desc = "Functions manuipulating an image's grid.";
 $doc_long_desc = "Functions manuipulating an image's grid.";
 

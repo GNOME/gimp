@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@
  * NOTE :
  * this is only a exercice for me (my first "plug-in" (extension))
  * so it's very (very) dirty.
- * Btw, hope it gives you some ideas about gimp possibilities.
+ * Btw, hope it gives you some ideas about ligma possibilities.
  *
  * The core of the plugin is not here. See dbbrowser_utils (shared
  * with script-fu-console).
@@ -42,15 +42,15 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-dbbrowser"
 #define PLUG_IN_BINARY "procedure-browser"
-#define PLUG_IN_ROLE   "gimp-procedure-browser"
+#define PLUG_IN_ROLE   "ligma-procedure-browser"
 
 
 typedef struct _Browser      Browser;
@@ -58,12 +58,12 @@ typedef struct _BrowserClass BrowserClass;
 
 struct _Browser
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _BrowserClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -75,25 +75,25 @@ struct _BrowserClass
 
 GType                   browser_get_type         (void) G_GNUC_CONST;
 
-static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
+static GList          * browser_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * browser_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * browser_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+static LigmaValueArray * browser_run              (LigmaProcedure        *procedure,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 
-G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Browser, browser, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BROWSER_TYPE)
+LIGMA_MAIN (BROWSER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 browser_class_init (BrowserClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = browser_query_procedures;
   plug_in_class->create_procedure = browser_create_procedure;
@@ -106,64 +106,64 @@ browser_init (Browser *browser)
 }
 
 static GList *
-browser_query_procedures (GimpPlugIn *plug_in)
+browser_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-browser_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+browser_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       browser_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Procedure _Browser"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
+      ligma_procedure_set_menu_label (procedure, _("Procedure _Browser"));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("List available procedures in the PDB"),
                                         NULL,
                                         PLUG_IN_PROC);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Thomas Noel",
                                       "Thomas Noel",
                                       "23th june 1997");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-browser_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+static LigmaValueArray *
+browser_run (LigmaProcedure        *procedure,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpRunMode run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  LigmaRunMode run_mode = LIGMA_VALUES_GET_ENUM (args, 0);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       {
         GtkWidget *dialog;
 
-        gimp_ui_init (PLUG_IN_BINARY);
+        ligma_ui_init (PLUG_IN_BINARY);
 
         dialog =
-          gimp_proc_browser_dialog_new (_("Procedure Browser"), PLUG_IN_BINARY,
-                                        gimp_standard_help_func, PLUG_IN_PROC,
+          ligma_proc_browser_dialog_new (_("Procedure Browser"), PLUG_IN_BINARY,
+                                        ligma_standard_help_func, PLUG_IN_PROC,
 
                                         _("_Close"), GTK_RESPONSE_CLOSE,
 
@@ -174,12 +174,12 @@ browser_run (GimpProcedure        *procedure,
       }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_NONINTERACTIVE:
       g_printerr (PLUG_IN_PROC " allows only interactive invocation");
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
       break;
 
@@ -187,5 +187,5 @@ browser_run (GimpProcedure        *procedure,
       break;
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }

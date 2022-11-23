@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/ligmadisplayconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpmagnifyoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmamagnifyoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -47,75 +47,75 @@ enum
 };
 
 
-static void   gimp_magnify_options_config_iface_init (GimpConfigInterface *config_iface);
+static void   ligma_magnify_options_config_iface_init (LigmaConfigInterface *config_iface);
 
-static void   gimp_magnify_options_set_property (GObject         *object,
+static void   ligma_magnify_options_set_property (GObject         *object,
                                                  guint            property_id,
                                                  const GValue    *value,
                                                  GParamSpec      *pspec);
-static void   gimp_magnify_options_get_property (GObject         *object,
+static void   ligma_magnify_options_get_property (GObject         *object,
                                                  guint            property_id,
                                                  GValue          *value,
                                                  GParamSpec      *pspec);
 
-static void   gimp_magnify_options_reset        (GimpConfig      *config);
+static void   ligma_magnify_options_reset        (LigmaConfig      *config);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpMagnifyOptions, gimp_magnify_options,
-                         GIMP_TYPE_TOOL_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_magnify_options_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaMagnifyOptions, ligma_magnify_options,
+                         LIGMA_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_magnify_options_config_iface_init))
 
-#define parent_class gimp_magnify_options_parent_class
+#define parent_class ligma_magnify_options_parent_class
 
-static GimpConfigInterface *parent_config_iface = NULL;
+static LigmaConfigInterface *parent_config_iface = NULL;
 
 
 static void
-gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
+ligma_magnify_options_class_init (LigmaMagnifyOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_magnify_options_set_property;
-  object_class->get_property = gimp_magnify_options_get_property;
+  object_class->set_property = ligma_magnify_options_set_property;
+  object_class->get_property = ligma_magnify_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
                             "auto-resize",
                             _("Auto-resize window"),
                             _("Resize image window to accommodate "
                               "new zoom level"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
                          "zoom-type",
                          _("Direction"),
                          _("Direction of magnification"),
-                         GIMP_TYPE_ZOOM_TYPE,
-                         GIMP_ZOOM_IN,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_ZOOM_TYPE,
+                         LIGMA_ZOOM_IN,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_magnify_options_config_iface_init (GimpConfigInterface *config_iface)
+ligma_magnify_options_config_iface_init (LigmaConfigInterface *config_iface)
 {
   parent_config_iface = g_type_interface_peek_parent (config_iface);
 
-  config_iface->reset = gimp_magnify_options_reset;
+  config_iface->reset = ligma_magnify_options_reset;
 }
 
 static void
-gimp_magnify_options_init (GimpMagnifyOptions *options)
+ligma_magnify_options_init (LigmaMagnifyOptions *options)
 {
 }
 
 static void
-gimp_magnify_options_set_property (GObject      *object,
+ligma_magnify_options_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpMagnifyOptions *options = GIMP_MAGNIFY_OPTIONS (object);
+  LigmaMagnifyOptions *options = LIGMA_MAGNIFY_OPTIONS (object);
 
   switch (property_id)
     {
@@ -133,12 +133,12 @@ gimp_magnify_options_set_property (GObject      *object,
 }
 
 static void
-gimp_magnify_options_get_property (GObject    *object,
+ligma_magnify_options_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpMagnifyOptions *options = GIMP_MAGNIFY_OPTIONS (object);
+  LigmaMagnifyOptions *options = LIGMA_MAGNIFY_OPTIONS (object);
 
   switch (property_id)
     {
@@ -156,9 +156,9 @@ gimp_magnify_options_get_property (GObject    *object,
 }
 
 static void
-gimp_magnify_options_reset (GimpConfig *config)
+ligma_magnify_options_reset (LigmaConfig *config)
 {
-  GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
+  LigmaToolOptions *tool_options = LIGMA_TOOL_OPTIONS (config);
   GParamSpec      *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
@@ -166,31 +166,31 @@ gimp_magnify_options_reset (GimpConfig *config)
 
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
-      GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
+      LIGMA_DISPLAY_CONFIG (tool_options->tool_info->ligma->config)->resize_windows_on_zoom;
 
   parent_config_iface->reset (config);
 }
 
 GtkWidget *
-gimp_magnify_options_gui (GimpToolOptions *tool_options)
+ligma_magnify_options_gui (LigmaToolOptions *tool_options)
 {
   GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget       *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget       *frame;
   GtkWidget       *button;
   gchar           *str;
   GdkModifierType  toggle_mask;
 
-  toggle_mask = gimp_get_toggle_behavior_mask ();
+  toggle_mask = ligma_get_toggle_behavior_mask ();
 
   /*  the auto_resize toggle button  */
-  button = gimp_prop_check_button_new (config, "auto-resize", NULL);
+  button = ligma_prop_check_button_new (config, "auto-resize", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Direction  (%s)"),
-                         gimp_get_mod_string (toggle_mask));
-  frame = gimp_prop_enum_radio_frame_new (config, "zoom-type",
+                         ligma_get_mod_string (toggle_mask));
+  frame = ligma_prop_enum_radio_frame_new (config, "zoom-type",
                                           str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   g_free (str);

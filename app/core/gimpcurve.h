@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_H__
-#define __GIMP_CURVE_H__
+#ifndef __LIGMA_CURVE_H__
+#define __LIGMA_CURVE_H__
 
 
-#include "gimpdata.h"
+#include "ligmadata.h"
 
 
-#define GIMP_TYPE_CURVE            (gimp_curve_get_type ())
-#define GIMP_CURVE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURVE, GimpCurve))
-#define GIMP_CURVE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURVE, GimpCurveClass))
-#define GIMP_IS_CURVE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CURVE))
-#define GIMP_IS_CURVE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CURVE))
-#define GIMP_CURVE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CURVE, GimpCurveClass))
+#define LIGMA_TYPE_CURVE            (ligma_curve_get_type ())
+#define LIGMA_CURVE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CURVE, LigmaCurve))
+#define LIGMA_CURVE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CURVE, LigmaCurveClass))
+#define LIGMA_IS_CURVE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CURVE))
+#define LIGMA_IS_CURVE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CURVE))
+#define LIGMA_CURVE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CURVE, LigmaCurveClass))
 
 
-typedef struct _GimpCurvePoint GimpCurvePoint;
-typedef struct _GimpCurveClass GimpCurveClass;
+typedef struct _LigmaCurvePoint LigmaCurvePoint;
+typedef struct _LigmaCurveClass LigmaCurveClass;
 
-struct _GimpCurvePoint
+struct _LigmaCurvePoint
 {
   gdouble            x;
   gdouble            y;
 
-  GimpCurvePointType type;
+  LigmaCurvePointType type;
 };
 
-struct _GimpCurve
+struct _LigmaCurve
 {
-  GimpData        parent_instance;
+  LigmaData        parent_instance;
 
-  GimpCurveType   curve_type;
+  LigmaCurveType   curve_type;
 
   gint            n_points;
-  GimpCurvePoint *points;
+  LigmaCurvePoint *points;
 
   gint            n_samples;
   gdouble        *samples;
@@ -56,69 +56,69 @@ struct _GimpCurve
   gboolean        identity;  /* whether the curve is an identity mapping */
 };
 
-struct _GimpCurveClass
+struct _LigmaCurveClass
 {
-  GimpDataClass  parent_class;
+  LigmaDataClass  parent_class;
 };
 
 
-GType                gimp_curve_get_type          (void) G_GNUC_CONST;
+GType                ligma_curve_get_type          (void) G_GNUC_CONST;
 
-GimpData           * gimp_curve_new               (const gchar        *name);
-GimpData           * gimp_curve_get_standard      (void);
+LigmaData           * ligma_curve_new               (const gchar        *name);
+LigmaData           * ligma_curve_get_standard      (void);
 
-void                 gimp_curve_reset             (GimpCurve          *curve,
+void                 ligma_curve_reset             (LigmaCurve          *curve,
                                                    gboolean            reset_type);
 
-void                 gimp_curve_set_curve_type    (GimpCurve          *curve,
-                                                   GimpCurveType       curve_type);
-GimpCurveType        gimp_curve_get_curve_type    (GimpCurve          *curve);
+void                 ligma_curve_set_curve_type    (LigmaCurve          *curve,
+                                                   LigmaCurveType       curve_type);
+LigmaCurveType        ligma_curve_get_curve_type    (LigmaCurve          *curve);
 
-gint                 gimp_curve_get_n_points      (GimpCurve          *curve);
+gint                 ligma_curve_get_n_points      (LigmaCurve          *curve);
 
-void                 gimp_curve_set_n_samples     (GimpCurve          *curve,
+void                 ligma_curve_set_n_samples     (LigmaCurve          *curve,
                                                    gint                n_samples);
-gint                 gimp_curve_get_n_samples     (GimpCurve          *curve);
+gint                 ligma_curve_get_n_samples     (LigmaCurve          *curve);
 
-gint                 gimp_curve_get_point_at      (GimpCurve          *curve,
+gint                 ligma_curve_get_point_at      (LigmaCurve          *curve,
                                                    gdouble             x);
-gint                 gimp_curve_get_closest_point (GimpCurve          *curve,
+gint                 ligma_curve_get_closest_point (LigmaCurve          *curve,
                                                    gdouble             x,
                                                    gdouble             y,
                                                    gdouble             max_distance);
 
-gint                 gimp_curve_add_point         (GimpCurve          *curve,
+gint                 ligma_curve_add_point         (LigmaCurve          *curve,
                                                    gdouble             x,
                                                    gdouble             y);
-void                 gimp_curve_delete_point      (GimpCurve          *curve,
+void                 ligma_curve_delete_point      (LigmaCurve          *curve,
                                                    gint                point);
-void                 gimp_curve_set_point         (GimpCurve          *curve,
+void                 ligma_curve_set_point         (LigmaCurve          *curve,
                                                    gint                point,
                                                    gdouble             x,
                                                    gdouble             y);
-void                 gimp_curve_move_point        (GimpCurve          *curve,
+void                 ligma_curve_move_point        (LigmaCurve          *curve,
                                                    gint                point,
                                                    gdouble             y);
-void                 gimp_curve_get_point         (GimpCurve          *curve,
+void                 ligma_curve_get_point         (LigmaCurve          *curve,
                                                    gint                point,
                                                    gdouble            *x,
                                                    gdouble            *y);
-void                 gimp_curve_set_point_type    (GimpCurve          *curve,
+void                 ligma_curve_set_point_type    (LigmaCurve          *curve,
                                                    gint                point,
-                                                   GimpCurvePointType  type);
-GimpCurvePointType   gimp_curve_get_point_type    (GimpCurve          *curve,
+                                                   LigmaCurvePointType  type);
+LigmaCurvePointType   ligma_curve_get_point_type    (LigmaCurve          *curve,
                                                    gint                point);
-void                 gimp_curve_clear_points      (GimpCurve          *curve);
+void                 ligma_curve_clear_points      (LigmaCurve          *curve);
 
-void                 gimp_curve_set_curve         (GimpCurve          *curve,
+void                 ligma_curve_set_curve         (LigmaCurve          *curve,
                                                    gdouble             x,
                                                    gdouble             y);
 
-gboolean             gimp_curve_is_identity       (GimpCurve          *curve);
+gboolean             ligma_curve_is_identity       (LigmaCurve          *curve);
 
-void                 gimp_curve_get_uchar         (GimpCurve          *curve,
+void                 ligma_curve_get_uchar         (LigmaCurve          *curve,
                                                    gint                n_samples,
                                                    guchar             *samples);
 
 
-#endif /* __GIMP_CURVE_H__ */
+#endif /* __LIGMA_CURVE_H__ */

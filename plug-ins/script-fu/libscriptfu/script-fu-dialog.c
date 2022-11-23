@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * script-fu-dialog.c
@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <libgimp/gimpui.h>
+#include <libligma/ligmaui.h>
 
 #include "script-fu-types.h"    /* SFScript */
 #include "script-fu-script.h"   /* get_title */
@@ -35,10 +35,10 @@
  * The dialog is modal for the script:
  * OK button hides the dialog then runs the script once.
  *
- * The dialog is non-modal with respect to the GIMP app GUI, which remains responsive.
+ * The dialog is non-modal with respect to the LIGMA app GUI, which remains responsive.
  *
  * When called from plugin extension-script-fu, the dialog is modal on the extension:
- * although GIMP app continues responsive, a user choosing a menu item
+ * although LIGMA app continues responsive, a user choosing a menu item
  * that is also implemented by a script and extension-script-fu
  * will not show a dialog until the first called script finishes.
  */
@@ -48,7 +48,7 @@
 
 #if DEBUG_CONFIG_PROPERTIES
 static void
-dump_properties (GimpProcedureConfig  *config)
+dump_properties (LigmaProcedureConfig  *config)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
@@ -73,50 +73,50 @@ dump_properties (GimpProcedureConfig  *config)
  * Require initial_args is not NULL or empty.
  * A caller must ensure a dialog is needed because args is not empty.
  */
-GimpValueArray*
-script_fu_dialog_run (GimpProcedure        *procedure,
+LigmaValueArray*
+script_fu_dialog_run (LigmaProcedure        *procedure,
                       SFScript             *script,
-                      GimpImage            *image,
+                      LigmaImage            *image,
                       guint                 n_drawables,
-                      GimpDrawable        **drawables,
-                      const GimpValueArray *initial_args)
+                      LigmaDrawable        **drawables,
+                      const LigmaValueArray *initial_args)
 
 {
-  GimpValueArray      *result = NULL;
-  GimpProcedureDialog *dialog = NULL;
-  GimpProcedureConfig *config = NULL;
+  LigmaValueArray      *result = NULL;
+  LigmaProcedureDialog *dialog = NULL;
+  LigmaProcedureConfig *config = NULL;
   gboolean             not_canceled;
 
   if ( (! G_IS_OBJECT (procedure)) || script == NULL)
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR, NULL);
 
-  if ( gimp_value_array_length (initial_args) < 1)
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+  if ( ligma_value_array_length (initial_args) < 1)
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR, NULL);
 
   /* We don't prevent concurrent dialogs as in script-fu-interface.c.
-   * For extension-script-fu, Gimp is already preventing concurrent dialogs.
-   * For gimp-script-fu-interpreter, each plugin is a separate process
+   * For extension-script-fu, Ligma is already preventing concurrent dialogs.
+   * For ligma-script-fu-interpreter, each plugin is a separate process
    * so concurrent dialogs CAN occur.
    */
-  /* There is no progress widget in GimpProcedureDialog.
-   * Also, we don't need to update the progress in Gimp UI,
-   * because Gimp shows progress: the name of all called PDB procedures.
+  /* There is no progress widget in LigmaProcedureDialog.
+   * Also, we don't need to update the progress in Ligma UI,
+   * because Ligma shows progress: the name of all called PDB procedures.
    */
 
   /* Script's menu label */
-  gimp_ui_init (script_fu_script_get_title (script));
+  ligma_ui_init (script_fu_script_get_title (script));
 
-  config = gimp_procedure_create_config (procedure);
+  config = ligma_procedure_create_config (procedure);
 #if DEBUG_CONFIG_PROPERTIES
   dump_properties (config);
-  g_debug ("Len  of initial_args %i", gimp_value_array_length (initial_args) );
+  g_debug ("Len  of initial_args %i", ligma_value_array_length (initial_args) );
 #endif
 
   /* Get saved settings (last values) into the config.
    * Since run mode is INTERACTIVE, initial_args is moot.
    * Instead, last used values or default values populate the config.
    */
-  gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_INTERACTIVE, initial_args);
+  ligma_procedure_config_begin_run (config, NULL, LIGMA_RUN_INTERACTIVE, initial_args);
 
   /* Create a dialog having properties (describing arguments of the procedure)
    * taken from the config.
@@ -124,23 +124,23 @@ script_fu_dialog_run (GimpProcedure        *procedure,
    * Title dialog with the menu item, not the procedure name.
    * Assert menu item is localized.
    */
-  dialog = (GimpProcedureDialog*) gimp_procedure_dialog_new (
+  dialog = (LigmaProcedureDialog*) ligma_procedure_dialog_new (
                                       procedure,
                                       config,
                                       script_fu_script_get_title (script));
   /* dialog has no widgets except standard buttons. */
 
   /* It is possible to create custom widget where the provided widget is not adequate.
-   * Then gimp_procedure_dialog_fill_list will create the rest.
+   * Then ligma_procedure_dialog_fill_list will create the rest.
    * For now, the provided widgets should be adequate.
    */
 
   /* NULL means create widgets for all properties of the procedure
    * that we have not already created widgets for.
    */
-  gimp_procedure_dialog_fill_list (dialog, NULL);
+  ligma_procedure_dialog_fill_list (dialog, NULL);
 
-  not_canceled = gimp_procedure_dialog_run (dialog);
+  not_canceled = ligma_procedure_dialog_run (dialog);
   /* Assert config holds validated arg values from a user interaction. */
   if (not_canceled)
     {
@@ -148,30 +148,30 @@ script_fu_dialog_run (GimpProcedure        *procedure,
        * To avoid compiler warning "discarding const"
        * copy initial_args to a writeable copy.
        */
-      GimpValueArray *final_args = (GimpValueArray*) g_value_array_copy ((GValueArray*) initial_args);
+      LigmaValueArray *final_args = (LigmaValueArray*) g_value_array_copy ((GValueArray*) initial_args);
       /* FIXME the above is deprecated.
        * Non-deprecated, but doesn't work:
-       * GimpValueArray *final_args = (GimpValueArray*) g_array_copy ((GArray*) initial_args);
-       * Maybe we need a gimp_value_array_copy method?
+       * LigmaValueArray *final_args = (LigmaValueArray*) g_array_copy ((GArray*) initial_args);
+       * Maybe we need a ligma_value_array_copy method?
        */
 
       /* Store config's values into final_args. */
-      gimp_procedure_config_get_values (config, final_args);
+      ligma_procedure_config_get_values (config, final_args);
 
       result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, final_args);
     }
   else
     {
-      result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+      result = ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL, NULL);
     }
 
   gtk_widget_destroy ((GtkWidget*) dialog);
 
   /* Persist config aka settings for the next run of the plugin.
-   * Passing the GimpPDBStatus from result[0].
+   * Passing the LigmaPDBStatus from result[0].
    * We must have a matching end_run for the begin_run, regardless of status.
    */
-  gimp_procedure_config_end_run (config, g_value_get_enum (gimp_value_array_index (result, 0)));
+  ligma_procedure_config_end_run (config, g_value_get_enum (ligma_value_array_index (result, 0)));
 
   g_object_unref (config);
 

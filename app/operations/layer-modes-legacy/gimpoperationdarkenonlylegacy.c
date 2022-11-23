@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdarkenonlymode.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationdarkenonlymode.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationdarkenonlylegacy.h"
+#include "ligmaoperationdarkenonlylegacy.h"
 
 
-static gboolean   gimp_operation_darken_only_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_darken_only_legacy_process (GeglOperation       *op,
                                                              void                *in,
                                                              void                *layer,
                                                              void                *mask,
@@ -38,31 +38,31 @@ static gboolean   gimp_operation_darken_only_legacy_process (GeglOperation      
                                                              gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationDarkenOnlyLegacy, gimp_operation_darken_only_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationDarkenOnlyLegacy, ligma_operation_darken_only_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_darken_only_legacy_class_init (GimpOperationDarkenOnlyLegacyClass *klass)
+ligma_operation_darken_only_legacy_class_init (LigmaOperationDarkenOnlyLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:darken-only-legacy",
-                                 "description", "GIMP darken only mode operation",
+                                 "name",        "ligma:darken-only-legacy",
+                                 "description", "LIGMA darken only mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_darken_only_legacy_process;
+  layer_mode_class->process = ligma_operation_darken_only_legacy_process;
 }
 
 static void
-gimp_operation_darken_only_legacy_init (GimpOperationDarkenOnlyLegacy *self)
+ligma_operation_darken_only_legacy_init (LigmaOperationDarkenOnlyLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_darken_only_legacy_process (GeglOperation       *op,
+ligma_operation_darken_only_legacy_process (GeglOperation       *op,
                                            void                *in_p,
                                            void                *layer_p,
                                            void                *mask_p,
@@ -71,7 +71,7 @@ gimp_operation_darken_only_legacy_process (GeglOperation       *op,
                                            const GeglRectangle *roi,
                                            gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;

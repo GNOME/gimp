@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_OPTIONS_H__
-#define __GIMP_TOOL_OPTIONS_H__
+#ifndef __LIGMA_TOOL_OPTIONS_H__
+#define __LIGMA_TOOL_OPTIONS_H__
 
 
-#include "gimpcontext.h"
+#include "ligmacontext.h"
 
 
-#define GIMP_TYPE_TOOL_OPTIONS            (gimp_tool_options_get_type ())
-#define GIMP_TOOL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptions))
-#define GIMP_TOOL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptionsClass))
-#define GIMP_IS_TOOL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_OPTIONS))
-#define GIMP_IS_TOOL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_OPTIONS))
-#define GIMP_TOOL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptionsClass))
+#define LIGMA_TYPE_TOOL_OPTIONS            (ligma_tool_options_get_type ())
+#define LIGMA_TOOL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_OPTIONS, LigmaToolOptions))
+#define LIGMA_TOOL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_OPTIONS, LigmaToolOptionsClass))
+#define LIGMA_IS_TOOL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_OPTIONS))
+#define LIGMA_IS_TOOL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_OPTIONS))
+#define LIGMA_TOOL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_OPTIONS, LigmaToolOptionsClass))
 
 
-typedef struct _GimpToolOptionsClass GimpToolOptionsClass;
+typedef struct _LigmaToolOptionsClass LigmaToolOptionsClass;
 
-struct _GimpToolOptions
+struct _LigmaToolOptions
 {
-  GimpContext   parent_instance;
+  LigmaContext   parent_instance;
 
-  GimpToolInfo *tool_info;
+  LigmaToolInfo *tool_info;
 
   /*  if TRUE this instance is the main tool options object used for
    *  the GUI, this is not exactly clean, but there are some things
@@ -48,26 +48,26 @@ struct _GimpToolOptions
   gboolean      gui_mode;
 };
 
-struct _GimpToolOptionsClass
+struct _LigmaToolOptionsClass
 {
-  GimpContextClass parent_class;
+  LigmaContextClass parent_class;
 };
 
 
-GType      gimp_tool_options_get_type      (void) G_GNUC_CONST;
+GType      ligma_tool_options_get_type      (void) G_GNUC_CONST;
 
-void       gimp_tool_options_set_gui_mode  (GimpToolOptions   *tool_options,
+void       ligma_tool_options_set_gui_mode  (LigmaToolOptions   *tool_options,
                                             gboolean           gui_mode);
-gboolean   gimp_tool_options_get_gui_mode  (GimpToolOptions   *tool_options);
+gboolean   ligma_tool_options_get_gui_mode  (LigmaToolOptions   *tool_options);
 
-gboolean   gimp_tool_options_serialize     (GimpToolOptions   *tool_options,
+gboolean   ligma_tool_options_serialize     (LigmaToolOptions   *tool_options,
                                             GError           **error);
-gboolean   gimp_tool_options_deserialize   (GimpToolOptions   *tool_options,
+gboolean   ligma_tool_options_deserialize   (LigmaToolOptions   *tool_options,
                                             GError           **error);
 
-gboolean   gimp_tool_options_delete        (GimpToolOptions   *tool_options,
+gboolean   ligma_tool_options_delete        (LigmaToolOptions   *tool_options,
                                             GError           **error);
-void       gimp_tool_options_create_folder (void);
+void       ligma_tool_options_create_folder (void);
 
 
-#endif  /*  __GIMP_TOOL_OPTIONS_H__  */
+#endif  /*  __LIGMA_TOOL_OPTIONS_H__  */

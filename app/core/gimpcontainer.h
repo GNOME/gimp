@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcontainer.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmacontainer.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,132 +18,132 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_H__
-#define __GIMP_CONTAINER_H__
+#ifndef __LIGMA_CONTAINER_H__
+#define __LIGMA_CONTAINER_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_CONTAINER            (gimp_container_get_type ())
-#define GIMP_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER, GimpContainer))
-#define GIMP_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER, GimpContainerClass))
-#define GIMP_IS_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER))
-#define GIMP_IS_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER))
-#define GIMP_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER, GimpContainerClass))
+#define LIGMA_TYPE_CONTAINER            (ligma_container_get_type ())
+#define LIGMA_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTAINER, LigmaContainer))
+#define LIGMA_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTAINER, LigmaContainerClass))
+#define LIGMA_IS_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTAINER))
+#define LIGMA_IS_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTAINER))
+#define LIGMA_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTAINER, LigmaContainerClass))
 
 
-typedef gboolean (* GimpContainerSearchFunc) (GimpObject *object,
+typedef gboolean (* LigmaContainerSearchFunc) (LigmaObject *object,
                                               gpointer    user_data);
 
 
-typedef struct _GimpContainerClass   GimpContainerClass;
-typedef struct _GimpContainerPrivate GimpContainerPrivate;
+typedef struct _LigmaContainerClass   LigmaContainerClass;
+typedef struct _LigmaContainerPrivate LigmaContainerPrivate;
 
-struct _GimpContainer
+struct _LigmaContainer
 {
-  GimpObject            parent_instance;
+  LigmaObject            parent_instance;
 
-  GimpContainerPrivate *priv;
+  LigmaContainerPrivate *priv;
 };
 
-struct _GimpContainerClass
+struct _LigmaContainerClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   /*  signals  */
-  void         (* add)                (GimpContainer           *container,
-                                       GimpObject              *object);
-  void         (* remove)             (GimpContainer           *container,
-                                       GimpObject              *object);
-  void         (* reorder)            (GimpContainer           *container,
-                                       GimpObject              *object,
+  void         (* add)                (LigmaContainer           *container,
+                                       LigmaObject              *object);
+  void         (* remove)             (LigmaContainer           *container,
+                                       LigmaObject              *object);
+  void         (* reorder)            (LigmaContainer           *container,
+                                       LigmaObject              *object,
                                        gint                     new_index);
-  void         (* freeze)             (GimpContainer           *container);
-  void         (* thaw)               (GimpContainer           *container);
+  void         (* freeze)             (LigmaContainer           *container);
+  void         (* thaw)               (LigmaContainer           *container);
 
   /*  virtual functions  */
-  void         (* clear)              (GimpContainer           *container);
-  gboolean     (* have)               (GimpContainer           *container,
-                                       GimpObject              *object);
-  void         (* foreach)            (GimpContainer           *container,
+  void         (* clear)              (LigmaContainer           *container);
+  gboolean     (* have)               (LigmaContainer           *container,
+                                       LigmaObject              *object);
+  void         (* foreach)            (LigmaContainer           *container,
                                        GFunc                    func,
                                        gpointer                 user_data);
-  GimpObject * (* search)             (GimpContainer           *container,
-                                       GimpContainerSearchFunc  func,
+  LigmaObject * (* search)             (LigmaContainer           *container,
+                                       LigmaContainerSearchFunc  func,
                                        gpointer                 user_data);
-  gboolean     (* get_unique_names)   (GimpContainer           *container);
-  GimpObject * (* get_child_by_name)  (GimpContainer           *container,
+  gboolean     (* get_unique_names)   (LigmaContainer           *container);
+  LigmaObject * (* get_child_by_name)  (LigmaContainer           *container,
                                        const gchar             *name);
-  GimpObject * (* get_child_by_index) (GimpContainer           *container,
+  LigmaObject * (* get_child_by_index) (LigmaContainer           *container,
                                        gint                     index);
-  gint         (* get_child_index)    (GimpContainer           *container,
-                                       GimpObject              *object);
+  gint         (* get_child_index)    (LigmaContainer           *container,
+                                       LigmaObject              *object);
 };
 
 
-GType        gimp_container_get_type           (void) G_GNUC_CONST;
+GType        ligma_container_get_type           (void) G_GNUC_CONST;
 
-GType        gimp_container_get_children_type  (GimpContainer           *container);
-GimpContainerPolicy gimp_container_get_policy  (GimpContainer           *container);
-gint         gimp_container_get_n_children     (GimpContainer           *container);
+GType        ligma_container_get_children_type  (LigmaContainer           *container);
+LigmaContainerPolicy ligma_container_get_policy  (LigmaContainer           *container);
+gint         ligma_container_get_n_children     (LigmaContainer           *container);
 
-gboolean     gimp_container_add                (GimpContainer           *container,
-                                                GimpObject              *object);
-gboolean     gimp_container_remove             (GimpContainer           *container,
-                                                GimpObject              *object);
-gboolean     gimp_container_insert             (GimpContainer           *container,
-                                                GimpObject              *object,
+gboolean     ligma_container_add                (LigmaContainer           *container,
+                                                LigmaObject              *object);
+gboolean     ligma_container_remove             (LigmaContainer           *container,
+                                                LigmaObject              *object);
+gboolean     ligma_container_insert             (LigmaContainer           *container,
+                                                LigmaObject              *object,
                                                 gint                     new_index);
-gboolean     gimp_container_reorder            (GimpContainer           *container,
-                                                GimpObject              *object,
+gboolean     ligma_container_reorder            (LigmaContainer           *container,
+                                                LigmaObject              *object,
                                                 gint                     new_index);
 
-void         gimp_container_freeze             (GimpContainer           *container);
-void         gimp_container_thaw               (GimpContainer           *container);
-gboolean     gimp_container_frozen             (GimpContainer           *container);
-gint         gimp_container_freeze_count       (GimpContainer           *container);
+void         ligma_container_freeze             (LigmaContainer           *container);
+void         ligma_container_thaw               (LigmaContainer           *container);
+gboolean     ligma_container_frozen             (LigmaContainer           *container);
+gint         ligma_container_freeze_count       (LigmaContainer           *container);
 
-void         gimp_container_clear              (GimpContainer           *container);
-gboolean     gimp_container_is_empty           (GimpContainer           *container);
-gboolean     gimp_container_have               (GimpContainer           *container,
-                                                GimpObject              *object);
-void         gimp_container_foreach            (GimpContainer           *container,
+void         ligma_container_clear              (LigmaContainer           *container);
+gboolean     ligma_container_is_empty           (LigmaContainer           *container);
+gboolean     ligma_container_have               (LigmaContainer           *container,
+                                                LigmaObject              *object);
+void         ligma_container_foreach            (LigmaContainer           *container,
                                                 GFunc                    func,
                                                 gpointer                 user_data);
-GimpObject * gimp_container_search             (GimpContainer           *container,
-                                                GimpContainerSearchFunc  func,
+LigmaObject * ligma_container_search             (LigmaContainer           *container,
+                                                LigmaContainerSearchFunc  func,
                                                 gpointer                 user_data);
 
-gboolean     gimp_container_get_unique_names   (GimpContainer           *container);
+gboolean     ligma_container_get_unique_names   (LigmaContainer           *container);
 
-GimpObject * gimp_container_get_child_by_name  (GimpContainer           *container,
+LigmaObject * ligma_container_get_child_by_name  (LigmaContainer           *container,
                                                 const gchar             *name);
-GimpObject * gimp_container_get_child_by_index (GimpContainer           *container,
+LigmaObject * ligma_container_get_child_by_index (LigmaContainer           *container,
                                                 gint                     index);
-GimpObject * gimp_container_get_first_child    (GimpContainer           *container);
-GimpObject * gimp_container_get_last_child     (GimpContainer           *container);
-gint         gimp_container_get_child_index    (GimpContainer           *container,
-                                                GimpObject              *object);
+LigmaObject * ligma_container_get_first_child    (LigmaContainer           *container);
+LigmaObject * ligma_container_get_last_child     (LigmaContainer           *container);
+gint         ligma_container_get_child_index    (LigmaContainer           *container,
+                                                LigmaObject              *object);
 
-GimpObject * gimp_container_get_neighbor_of    (GimpContainer           *container,
-                                                GimpObject              *object);
+LigmaObject * ligma_container_get_neighbor_of    (LigmaContainer           *container,
+                                                LigmaObject              *object);
 
-gchar     ** gimp_container_get_name_array     (GimpContainer           *container);
+gchar     ** ligma_container_get_name_array     (LigmaContainer           *container);
 
-GQuark       gimp_container_add_handler        (GimpContainer           *container,
+GQuark       ligma_container_add_handler        (LigmaContainer           *container,
                                                 const gchar             *signame,
                                                 GCallback                callback,
                                                 gpointer                 callback_data);
-void         gimp_container_remove_handler     (GimpContainer           *container,
+void         ligma_container_remove_handler     (LigmaContainer           *container,
                                                 GQuark                   id);
-void         gimp_container_remove_handlers_by_func
-                                               (GimpContainer           *container,
+void         ligma_container_remove_handlers_by_func
+                                               (LigmaContainer           *container,
                                                 GCallback                callback,
                                                 gpointer                 callback_data);
-void         gimp_container_remove_handlers_by_data
-                                               (GimpContainer           *container,
+void         ligma_container_remove_handlers_by_data
+                                               (LigmaContainer           *container,
                                                 gpointer                 callback_data);
 
 
-#endif  /* __GIMP_CONTAINER_H__ */
+#endif  /* __LIGMA_CONTAINER_H__ */

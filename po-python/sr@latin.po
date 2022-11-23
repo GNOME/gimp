@@ -1,15 +1,15 @@
-# Serbian translation of gimp
+# Serbian translation of ligma
 # Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003, 2004.
 #
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Maintainer: Miloš Popović <gpopac@gmail.com>
 # Miloš Popović <gpopac@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-12-15 02:11+0000\n"
 "PO-Revision-Date: 2021-01-15 02:29+0100\n"
 "Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
@@ -428,8 +428,8 @@ msgid "Python _Console"
 msgstr "Pitonova _konzola"
 
 #: ../plug-ins/python/python-console/python-console.py:281
-msgid "Interactive GIMP Python interpreter"
-msgstr "Pokreće interaktivni interpreter za Gimpov Piton"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Pokreće interaktivni interpreter za Ligmaov Piton"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -778,7 +778,7 @@ msgstr ""
 "sačuvate kao putanju"
 
 #: ../plug-ins/python/spyro-plus.py:1746
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr "Spirograf"
 
 #: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
@@ -806,7 +806,7 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Sačekajte: Iscrtavam šaru"
 
 #: ../plug-ins/python/spyro-plus.py:2296
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr "Spirograf…"
 
 #~ msgid "Missing exception information"

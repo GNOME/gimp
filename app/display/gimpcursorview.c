@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcursorview.c
- * Copyright (C) 2005-2016 Michael Natterer <mitch@gimp.org>
+ * ligmacursorview.c
+ * Copyright (C) 2005-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,46 +25,46 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-pick-color.h"
-#include "core/gimpitem.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-pick-color.h"
+#include "core/ligmaitem.h"
 
-#include "widgets/gimpcolorframe.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpmenufactory.h"
-#include "widgets/gimpsessioninfo-aux.h"
+#include "widgets/ligmacolorframe.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmamenufactory.h"
+#include "widgets/ligmasessioninfo-aux.h"
 
-#include "gimpcursorview.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
+#include "ligmacursorview.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_SAMPLE_MERGED
 };
 
 
-struct _GimpCursorViewPrivate
+struct _LigmaCursorViewPrivate
 {
-  GimpEditor        parent_instance;
+  LigmaEditor        parent_instance;
 
-  Gimp             *gimp;
+  Ligma             *ligma;
 
   GtkWidget        *coord_hbox;
   GtkWidget        *selection_hbox;
@@ -83,117 +83,117 @@ struct _GimpCursorViewPrivate
 
   gboolean          sample_merged;
 
-  GimpContext      *context;
-  GimpDisplayShell *shell;
-  GimpImage        *image;
+  LigmaContext      *context;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
 
-  GimpUnit          unit;
+  LigmaUnit          unit;
   guint             cursor_idle_id;
-  GimpImage        *cursor_image;
-  GimpUnit          cursor_unit;
+  LigmaImage        *cursor_image;
+  LigmaUnit          cursor_unit;
   gdouble           cursor_x;
   gdouble           cursor_y;
 };
 
 
-static void       gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
+static void       ligma_cursor_view_docked_iface_init     (LigmaDockedInterface *iface);
 
-static void       gimp_cursor_view_dispose               (GObject             *object);
-static void       gimp_cursor_view_constructed           (GObject             *object);
-static void       gimp_cursor_view_set_property          (GObject             *object,
+static void       ligma_cursor_view_dispose               (GObject             *object);
+static void       ligma_cursor_view_constructed           (GObject             *object);
+static void       ligma_cursor_view_set_property          (GObject             *object,
                                                           guint                property_id,
                                                           const GValue        *value,
                                                           GParamSpec          *pspec);
-static void       gimp_cursor_view_get_property          (GObject             *object,
+static void       ligma_cursor_view_get_property          (GObject             *object,
                                                           guint                property_id,
                                                           GValue              *value,
                                                           GParamSpec          *pspec);
 
-static void       gimp_cursor_view_style_updated         (GtkWidget           *widget);
+static void       ligma_cursor_view_style_updated         (GtkWidget           *widget);
 
-static void       gimp_cursor_view_set_aux_info          (GimpDocked          *docked,
+static void       ligma_cursor_view_set_aux_info          (LigmaDocked          *docked,
                                                           GList               *aux_info);
-static GList    * gimp_cursor_view_get_aux_info          (GimpDocked          *docked);
+static GList    * ligma_cursor_view_get_aux_info          (LigmaDocked          *docked);
 
-static void       gimp_cursor_view_set_context           (GimpDocked          *docked,
-                                                          GimpContext         *context);
-static void       gimp_cursor_view_image_changed         (GimpCursorView      *view,
-                                                          GimpImage           *image,
-                                                          GimpContext         *context);
-static void       gimp_cursor_view_mask_changed          (GimpCursorView      *view,
-                                                          GimpImage           *image);
-static void       gimp_cursor_view_diplay_changed        (GimpCursorView      *view,
-                                                          GimpDisplay         *display,
-                                                          GimpContext         *context);
-static void       gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
+static void       ligma_cursor_view_set_context           (LigmaDocked          *docked,
+                                                          LigmaContext         *context);
+static void       ligma_cursor_view_image_changed         (LigmaCursorView      *view,
+                                                          LigmaImage           *image,
+                                                          LigmaContext         *context);
+static void       ligma_cursor_view_mask_changed          (LigmaCursorView      *view,
+                                                          LigmaImage           *image);
+static void       ligma_cursor_view_diplay_changed        (LigmaCursorView      *view,
+                                                          LigmaDisplay         *display,
+                                                          LigmaContext         *context);
+static void       ligma_cursor_view_shell_unit_changed    (LigmaCursorView      *view,
                                                           GParamSpec          *pspec,
-                                                          GimpDisplayShell    *shell);
-static void       gimp_cursor_view_format_as_unit        (GimpUnit             unit,
+                                                          LigmaDisplayShell    *shell);
+static void       ligma_cursor_view_format_as_unit        (LigmaUnit             unit,
                                                           gchar               *output_buf,
                                                           gint                 output_buf_size,
                                                           gdouble              pixel_value,
                                                           gdouble              image_res);
-static void       gimp_cursor_view_set_label_italic      (GtkWidget           *label,
+static void       ligma_cursor_view_set_label_italic      (GtkWidget           *label,
                                                           gboolean             italic);
-static void       gimp_cursor_view_update_selection_info (GimpCursorView      *view,
-                                                          GimpImage           *image,
-                                                          GimpUnit             unit);
-static gboolean   gimp_cursor_view_cursor_idle           (GimpCursorView      *view);
+static void       ligma_cursor_view_update_selection_info (LigmaCursorView      *view,
+                                                          LigmaImage           *image,
+                                                          LigmaUnit             unit);
+static gboolean   ligma_cursor_view_cursor_idle           (LigmaCursorView      *view);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
-                         G_ADD_PRIVATE (GimpCursorView)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_cursor_view_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaCursorView, ligma_cursor_view, LIGMA_TYPE_EDITOR,
+                         G_ADD_PRIVATE (LigmaCursorView)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_cursor_view_docked_iface_init))
 
-#define parent_class gimp_cursor_view_parent_class
+#define parent_class ligma_cursor_view_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_cursor_view_class_init (GimpCursorViewClass* klass)
+ligma_cursor_view_class_init (LigmaCursorViewClass* klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed   = gimp_cursor_view_constructed;
-  object_class->dispose       = gimp_cursor_view_dispose;
-  object_class->get_property  = gimp_cursor_view_get_property;
-  object_class->set_property  = gimp_cursor_view_set_property;
+  object_class->constructed   = ligma_cursor_view_constructed;
+  object_class->dispose       = ligma_cursor_view_dispose;
+  object_class->get_property  = ligma_cursor_view_get_property;
+  object_class->set_property  = ligma_cursor_view_set_property;
 
-  widget_class->style_updated = gimp_cursor_view_style_updated;
+  widget_class->style_updated = ligma_cursor_view_style_updated;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
                                    g_param_spec_boolean ("sample-merged",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_cursor_view_init (GimpCursorView *view)
+ligma_cursor_view_init (LigmaCursorView *view)
 {
   GtkWidget *frame;
   GtkWidget *grid;
   GtkWidget *toggle;
   gint       content_spacing;
 
-  view->priv = gimp_cursor_view_get_instance_private (view);
+  view->priv = ligma_cursor_view_get_instance_private (view);
 
   view->priv->sample_merged  = TRUE;
   view->priv->context        = NULL;
   view->priv->shell          = NULL;
   view->priv->image          = NULL;
-  view->priv->unit           = GIMP_UNIT_PIXEL;
+  view->priv->unit           = LIGMA_UNIT_PIXEL;
   view->priv->cursor_idle_id = 0;
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -220,7 +220,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   /* Pixels */
 
-  frame = gimp_frame_new (_("Pixels"));
+  frame = ligma_frame_new (_("Pixels"));
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -232,20 +232,20 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->pixel_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_x_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("X"), 0.5, 0.5,
                             view->priv->pixel_x_label, 1);
 
   view->priv->pixel_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_y_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Y"), 0.5, 0.5,
                             view->priv->pixel_y_label, 1);
 
 
   /* Units */
 
-  frame = gimp_frame_new (_("Units"));
+  frame = ligma_frame_new (_("Units"));
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -257,24 +257,24 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->unit_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->unit_x_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("X"), 0.5, 0.5,
                             view->priv->unit_x_label, 1);
 
   view->priv->unit_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->unit_y_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Y"), 0.5, 0.5,
                             view->priv->unit_y_label, 1);
 
 
   /* Selection Bounding Box */
 
-  frame = gimp_frame_new (_("Selection"));
+  frame = ligma_frame_new (_("Selection"));
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gimp_help_set_help_data (frame, _("The selection's bounding box"), NULL);
+  ligma_help_set_help_data (frame, _("The selection's bounding box"), NULL);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
@@ -284,17 +284,17 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->selection_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_x_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("X"), 0.5, 0.5,
                             view->priv->selection_x_label, 1);
 
   view->priv->selection_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_y_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Y"), 0.5, 0.5,
                             view->priv->selection_y_label, 1);
 
-  frame = gimp_frame_new ("");
+  frame = ligma_frame_new ("");
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -306,42 +306,42 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->selection_width_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_width_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             /* Width */
                             _("W"), 0.5, 0.5,
                             view->priv->selection_width_label, 1);
 
   view->priv->selection_height_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_height_label), 1.0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             /* Height */
                             _("H"), 0.5, 0.5,
                             view->priv->selection_height_label, 1);
 
   /* sample merged toggle */
 
-  toggle = gimp_prop_check_button_new (G_OBJECT (view), "sample-merged",
+  toggle = ligma_prop_check_button_new (G_OBJECT (view), "sample-merged",
                                        _("_Sample Merged"));
   gtk_box_pack_start (GTK_BOX (view), toggle, FALSE, FALSE, 0);
 }
 
 static void
-gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface)
+ligma_cursor_view_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_aux_info = gimp_cursor_view_set_aux_info;
-  iface->get_aux_info = gimp_cursor_view_get_aux_info;
-  iface->set_context  = gimp_cursor_view_set_context;
+  iface->set_aux_info = ligma_cursor_view_set_aux_info;
+  iface->get_aux_info = ligma_cursor_view_get_aux_info;
+  iface->set_context  = ligma_cursor_view_set_context;
 }
 
 static void
-gimp_cursor_view_constructed (GObject             *object)
+ligma_cursor_view_constructed (GObject             *object)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (object);
   gint            content_spacing;
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -355,18 +355,18 @@ gimp_cursor_view_constructed (GObject             *object)
   gtk_box_pack_start (GTK_BOX (view), view->priv->color_hbox, FALSE, FALSE, 0);
   gtk_widget_show (view->priv->color_hbox);
 
-  view->priv->color_frame_1 = gimp_color_frame_new (view->priv->gimp);
-  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                             GIMP_COLOR_PICK_MODE_PIXEL);
-  gimp_color_frame_set_ellipsize (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+  view->priv->color_frame_1 = ligma_color_frame_new (view->priv->ligma);
+  ligma_color_frame_set_mode (LIGMA_COLOR_FRAME (view->priv->color_frame_1),
+                             LIGMA_COLOR_PICK_MODE_PIXEL);
+  ligma_color_frame_set_ellipsize (LIGMA_COLOR_FRAME (view->priv->color_frame_1),
                                   PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_1,
                       TRUE, TRUE, 0);
   gtk_widget_show (view->priv->color_frame_1);
 
-  view->priv->color_frame_2 = gimp_color_frame_new (view->priv->gimp);
-  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                             GIMP_COLOR_PICK_MODE_RGB_PERCENT);
+  view->priv->color_frame_2 = ligma_color_frame_new (view->priv->ligma);
+  ligma_color_frame_set_mode (LIGMA_COLOR_FRAME (view->priv->color_frame_2),
+                             LIGMA_COLOR_PICK_MODE_RGB_PERCENT);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
                       TRUE, TRUE, 0);
   gtk_widget_show (view->priv->color_frame_2);
@@ -374,12 +374,12 @@ gimp_cursor_view_constructed (GObject             *object)
 }
 
 static void
-gimp_cursor_view_dispose (GObject *object)
+ligma_cursor_view_dispose (GObject *object)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (object);
 
   if (view->priv->context)
-    gimp_docked_set_context (GIMP_DOCKED (view), NULL);
+    ligma_docked_set_context (LIGMA_DOCKED (view), NULL);
 
   if (view->priv->cursor_idle_id)
     {
@@ -396,17 +396,17 @@ gimp_cursor_view_dispose (GObject *object)
 }
 
 static void
-gimp_cursor_view_set_property (GObject      *object,
+ligma_cursor_view_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      view->priv->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      view->priv->ligma = g_value_get_object (value);
       break;
 
     case PROP_SAMPLE_MERGED:
@@ -420,17 +420,17 @@ gimp_cursor_view_set_property (GObject      *object,
 }
 
 static void
-gimp_cursor_view_get_property (GObject    *object,
+ligma_cursor_view_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, view->priv->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, view->priv->ligma);
       break;
 
     case PROP_SAMPLE_MERGED:
@@ -447,17 +447,17 @@ gimp_cursor_view_get_property (GObject    *object,
 #define AUX_INFO_FRAME_2_MODE "frame-2-mode"
 
 static void
-gimp_cursor_view_set_aux_info (GimpDocked *docked,
+ligma_cursor_view_set_aux_info (LigmaDocked *docked,
                                GList      *aux_info)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (docked);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (docked);
   GList          *list;
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux   = list->data;
+      LigmaSessionInfoAux *aux   = list->data;
       GtkWidget          *frame = NULL;
 
       if (! strcmp (aux->name, AUX_INFO_FRAME_1_MODE))
@@ -470,39 +470,39 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
           GEnumClass *enum_class;
           GEnumValue *enum_value;
 
-          enum_class = g_type_class_peek (GIMP_TYPE_COLOR_PICK_MODE);
+          enum_class = g_type_class_peek (LIGMA_TYPE_COLOR_PICK_MODE);
           enum_value = g_enum_get_value_by_nick (enum_class, aux->value);
 
           if (enum_value)
-            gimp_color_frame_set_mode (GIMP_COLOR_FRAME (frame),
+            ligma_color_frame_set_mode (LIGMA_COLOR_FRAME (frame),
                                        enum_value->value);
         }
     }
 }
 
 static GList *
-gimp_cursor_view_get_aux_info (GimpDocked *docked)
+ligma_cursor_view_get_aux_info (LigmaDocked *docked)
 {
-  GimpCursorView     *view = GIMP_CURSOR_VIEW (docked);
+  LigmaCursorView     *view = LIGMA_CURSOR_VIEW (docked);
   GList              *aux_info;
   const gchar        *nick;
-  GimpSessionInfoAux *aux;
+  LigmaSessionInfoAux *aux;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
-  if (gimp_enum_get_value (GIMP_TYPE_COLOR_PICK_MODE,
-                           GIMP_COLOR_FRAME (view->priv->color_frame_1)->pick_mode,
+  if (ligma_enum_get_value (LIGMA_TYPE_COLOR_PICK_MODE,
+                           LIGMA_COLOR_FRAME (view->priv->color_frame_1)->pick_mode,
                            NULL, &nick, NULL, NULL))
     {
-      aux = gimp_session_info_aux_new (AUX_INFO_FRAME_1_MODE, nick);
+      aux = ligma_session_info_aux_new (AUX_INFO_FRAME_1_MODE, nick);
       aux_info = g_list_append (aux_info, aux);
     }
 
-  if (gimp_enum_get_value (GIMP_TYPE_COLOR_PICK_MODE,
-                           GIMP_COLOR_FRAME (view->priv->color_frame_2)->pick_mode,
+  if (ligma_enum_get_value (LIGMA_TYPE_COLOR_PICK_MODE,
+                           LIGMA_COLOR_FRAME (view->priv->color_frame_2)->pick_mode,
                            NULL, &nick, NULL, NULL))
     {
-      aux = gimp_session_info_aux_new (AUX_INFO_FRAME_2_MODE, nick);
+      aux = ligma_session_info_aux_new (AUX_INFO_FRAME_2_MODE, nick);
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -510,7 +510,7 @@ gimp_cursor_view_get_aux_info (GimpDocked *docked)
 }
 
 static void
-gimp_cursor_view_format_as_unit (GimpUnit  unit,
+ligma_cursor_view_format_as_unit (LigmaUnit  unit,
                                  gchar    *output_buf,
                                  gint      output_buf_size,
                                  gdouble   pixel_value,
@@ -521,12 +521,12 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
   gint          unit_digits = 0;
   const gchar  *unit_str = "";
 
-  value = gimp_pixels_to_units (pixel_value, unit, image_res);
+  value = ligma_pixels_to_units (pixel_value, unit, image_res);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != LIGMA_UNIT_PIXEL)
     {
-      unit_digits = gimp_unit_get_scaled_digits (unit, image_res);
-      unit_str    = gimp_unit_get_abbreviation (unit);
+      unit_digits = ligma_unit_get_scaled_digits (unit, image_res);
+      unit_str    = ligma_unit_get_abbreviation (unit);
     }
 
   g_snprintf (format_buf, sizeof (format_buf),
@@ -536,20 +536,20 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
 }
 
 static void
-gimp_cursor_view_set_label_italic (GtkWidget *label,
+ligma_cursor_view_set_label_italic (GtkWidget *label,
                                    gboolean   italic)
 {
   PangoStyle attribute = italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL;
 
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, attribute,
                              -1);
 }
 
 static void
-gimp_cursor_view_style_updated (GtkWidget *widget)
+ligma_cursor_view_style_updated (GtkWidget *widget)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (widget);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (widget);
   gint            content_spacing;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -564,13 +564,13 @@ gimp_cursor_view_style_updated (GtkWidget *widget)
 }
 
 static void
-gimp_cursor_view_set_context (GimpDocked  *docked,
-                              GimpContext *context)
+ligma_cursor_view_set_context (LigmaDocked  *docked,
+                              LigmaContext *context)
 {
-  GimpCursorView  *view    = GIMP_CURSOR_VIEW (docked);
-  GimpColorConfig *config  = NULL;
-  GimpDisplay     *display = NULL;
-  GimpImage       *image   = NULL;
+  LigmaCursorView  *view    = LIGMA_CURSOR_VIEW (docked);
+  LigmaColorConfig *config  = NULL;
+  LigmaDisplay     *display = NULL;
+  LigmaImage       *image   = NULL;
 
   if (context == view->priv->context)
     return;
@@ -578,10 +578,10 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
   if (view->priv->context)
     {
       g_signal_handlers_disconnect_by_func (view->priv->context,
-                                            gimp_cursor_view_diplay_changed,
+                                            ligma_cursor_view_diplay_changed,
                                             view);
       g_signal_handlers_disconnect_by_func (view->priv->context,
-                                            gimp_cursor_view_image_changed,
+                                            ligma_cursor_view_image_changed,
                                             view);
 
       g_object_unref (view->priv->context);
@@ -594,33 +594,33 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
       g_object_ref (view->priv->context);
 
       g_signal_connect_swapped (view->priv->context, "display-changed",
-                                G_CALLBACK (gimp_cursor_view_diplay_changed),
+                                G_CALLBACK (ligma_cursor_view_diplay_changed),
                                 view);
 
       g_signal_connect_swapped (view->priv->context, "image-changed",
-                                G_CALLBACK (gimp_cursor_view_image_changed),
+                                G_CALLBACK (ligma_cursor_view_image_changed),
                                 view);
 
-      config  = context->gimp->config->color_management;
-      display = gimp_context_get_display (context);
-      image   = gimp_context_get_image (context);
+      config  = context->ligma->config->color_management;
+      display = ligma_context_get_display (context);
+      image   = ligma_context_get_image (context);
     }
 
-  gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+  ligma_color_frame_set_color_config (LIGMA_COLOR_FRAME (view->priv->color_frame_1),
                                      config);
-  gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (view->priv->color_frame_2),
+  ligma_color_frame_set_color_config (LIGMA_COLOR_FRAME (view->priv->color_frame_2),
                                      config);
 
-  gimp_cursor_view_diplay_changed (view, display, view->priv->context);
-  gimp_cursor_view_image_changed (view, image, view->priv->context);
+  ligma_cursor_view_diplay_changed (view, display, view->priv->context);
+  ligma_cursor_view_image_changed (view, image, view->priv->context);
 }
 
 static void
-gimp_cursor_view_image_changed (GimpCursorView *view,
-                                GimpImage      *image,
-                                GimpContext    *context)
+ligma_cursor_view_image_changed (LigmaCursorView *view,
+                                LigmaImage      *image,
+                                LigmaContext    *context)
 {
-  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURSOR_VIEW (view));
 
   if (image == view->priv->image)
     return;
@@ -628,7 +628,7 @@ gimp_cursor_view_image_changed (GimpCursorView *view,
   if (view->priv->image)
     {
       g_signal_handlers_disconnect_by_func (view->priv->image,
-                                            gimp_cursor_view_mask_changed,
+                                            ligma_cursor_view_mask_changed,
                                             view);
     }
 
@@ -637,36 +637,36 @@ gimp_cursor_view_image_changed (GimpCursorView *view,
   if (view->priv->image)
     {
       g_signal_connect_swapped (view->priv->image, "mask-changed",
-                                G_CALLBACK (gimp_cursor_view_mask_changed),
+                                G_CALLBACK (ligma_cursor_view_mask_changed),
                                 view);
     }
 
-  gimp_cursor_view_mask_changed (view, view->priv->image);
+  ligma_cursor_view_mask_changed (view, view->priv->image);
 }
 
 static void
-gimp_cursor_view_mask_changed (GimpCursorView *view,
-                               GimpImage      *image)
+ligma_cursor_view_mask_changed (LigmaCursorView *view,
+                               LigmaImage      *image)
 {
-  gimp_cursor_view_update_selection_info (view,
+  ligma_cursor_view_update_selection_info (view,
                                           view->priv->image,
                                           view->priv->unit);
 }
 
 static void
-gimp_cursor_view_diplay_changed (GimpCursorView *view,
-                                 GimpDisplay    *display,
-                                 GimpContext    *context)
+ligma_cursor_view_diplay_changed (LigmaCursorView *view,
+                                 LigmaDisplay    *display,
+                                 LigmaContext    *context)
 {
-  GimpDisplayShell *shell = NULL;
+  LigmaDisplayShell *shell = NULL;
 
   if (display)
-    shell = gimp_display_get_shell (display);
+    shell = ligma_display_get_shell (display);
 
   if (view->priv->shell)
     {
       g_signal_handlers_disconnect_by_func (view->priv->shell,
-                                            gimp_cursor_view_shell_unit_changed,
+                                            ligma_cursor_view_shell_unit_changed,
                                             view);
     }
 
@@ -675,60 +675,60 @@ gimp_cursor_view_diplay_changed (GimpCursorView *view,
   if (view->priv->shell)
     {
       g_signal_connect_swapped (view->priv->shell, "notify::unit",
-                                G_CALLBACK (gimp_cursor_view_shell_unit_changed),
+                                G_CALLBACK (ligma_cursor_view_shell_unit_changed),
                                 view);
     }
 
-  gimp_cursor_view_shell_unit_changed (view,
+  ligma_cursor_view_shell_unit_changed (view,
                                        NULL,
                                        view->priv->shell);
 }
 
 static void
-gimp_cursor_view_shell_unit_changed (GimpCursorView   *view,
+ligma_cursor_view_shell_unit_changed (LigmaCursorView   *view,
                                      GParamSpec       *pspec,
-                                     GimpDisplayShell *shell)
+                                     LigmaDisplayShell *shell)
 {
-  GimpUnit new_unit = GIMP_UNIT_PIXEL;
+  LigmaUnit new_unit = LIGMA_UNIT_PIXEL;
 
   if (shell)
     {
-      new_unit = gimp_display_shell_get_unit (shell);
+      new_unit = ligma_display_shell_get_unit (shell);
     }
 
   if (view->priv->unit != new_unit)
     {
-      gimp_cursor_view_update_selection_info (view, view->priv->image, new_unit);
+      ligma_cursor_view_update_selection_info (view, view->priv->image, new_unit);
       view->priv->unit = new_unit;
     }
 }
 
 static void
-gimp_cursor_view_update_selection_info (GimpCursorView *view,
-                                        GimpImage      *image,
-                                        GimpUnit        unit)
+ligma_cursor_view_update_selection_info (LigmaCursorView *view,
+                                        LigmaImage      *image,
+                                        LigmaUnit        unit)
 {
   gint x, y, width, height;
 
   if (image &&
-      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+      ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                         &x, &y, &width, &height))
     {
       gdouble xres, yres;
       gchar   buf[32];
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_x_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_y_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), width, xres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), width, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_width_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), height, yres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), height, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_height_label), buf);
     }
   else
@@ -745,74 +745,74 @@ gimp_cursor_view_update_selection_info (GimpCursorView *view,
 }
 
 static gboolean
-gimp_cursor_view_cursor_idle (GimpCursorView *view)
+ligma_cursor_view_cursor_idle (LigmaCursorView *view)
 {
 
   if (view->priv->cursor_image)
     {
-      GimpImage  *image = view->priv->cursor_image;
-      GimpUnit    unit  = view->priv->cursor_unit;
+      LigmaImage  *image = view->priv->cursor_image;
+      LigmaUnit    unit  = view->priv->cursor_unit;
       gdouble     x     = view->priv->cursor_x;
       gdouble     y     = view->priv->cursor_y;
       gboolean    in_image;
       gchar       buf[32];
       const Babl *sample_format;
       gdouble     pixel[4];
-      GimpRGB     color;
+      LigmaRGB     color;
       gdouble     xres;
       gdouble     yres;
       gint        int_x;
       gint        int_y;
 
-      if (unit == GIMP_UNIT_PIXEL)
-        unit = gimp_image_get_unit (image);
+      if (unit == LIGMA_UNIT_PIXEL)
+        unit = ligma_image_get_unit (image);
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
-                  y >= 0.0 && y < gimp_image_get_height (image));
+      in_image = (x >= 0.0 && x < ligma_image_get_width  (image) &&
+                  y >= 0.0 && y < ligma_image_get_height (image));
 
       g_snprintf (buf, sizeof (buf), "%d", (gint) floor (x));
       gtk_label_set_text (GTK_LABEL (view->priv->pixel_x_label), buf);
-      gimp_cursor_view_set_label_italic (view->priv->pixel_x_label, ! in_image);
+      ligma_cursor_view_set_label_italic (view->priv->pixel_x_label, ! in_image);
 
       g_snprintf (buf, sizeof (buf), "%d", (gint) floor (y));
       gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), buf);
-      gimp_cursor_view_set_label_italic (view->priv->pixel_y_label, ! in_image);
+      ligma_cursor_view_set_label_italic (view->priv->pixel_y_label, ! in_image);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label), buf);
-      gimp_cursor_view_set_label_italic (view->priv->unit_x_label, ! in_image);
+      ligma_cursor_view_set_label_italic (view->priv->unit_x_label, ! in_image);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
+      ligma_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label), buf);
-      gimp_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
+      ligma_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
 
       int_x = (gint) floor (x);
       int_y = (gint) floor (y);
 
-      if (gimp_image_pick_color (image, NULL,
+      if (ligma_image_pick_color (image, NULL,
                                  int_x, int_y,
                                  view->priv->shell->show_all,
                                  view->priv->sample_merged,
                                  FALSE, 0.0,
                                  &sample_format, pixel, &color))
         {
-          gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+          ligma_color_frame_set_color (LIGMA_COLOR_FRAME (view->priv->color_frame_1),
                                       FALSE, sample_format, pixel, &color,
                                       int_x, int_y);
-          gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
+          ligma_color_frame_set_color (LIGMA_COLOR_FRAME (view->priv->color_frame_2),
                                       FALSE, sample_format, pixel, &color,
                                       int_x, int_y);
         }
       else
         {
-          gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
-          gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
+          ligma_color_frame_set_invalid (LIGMA_COLOR_FRAME (view->priv->color_frame_1));
+          ligma_color_frame_set_invalid (LIGMA_COLOR_FRAME (view->priv->color_frame_2));
         }
 
       /* Show the selection info from the image under the cursor if any */
-      gimp_cursor_view_update_selection_info (view,
+      ligma_cursor_view_update_selection_info (view,
                                               image,
                                               view->priv->cursor_unit);
 
@@ -825,11 +825,11 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
       gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label),  _("n/a"));
       gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label),  _("n/a"));
 
-      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
-      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
+      ligma_color_frame_set_invalid (LIGMA_COLOR_FRAME (view->priv->color_frame_1));
+      ligma_color_frame_set_invalid (LIGMA_COLOR_FRAME (view->priv->color_frame_2));
 
       /* Start showing selection info from the active image again */
-      gimp_cursor_view_update_selection_info (view,
+      ligma_cursor_view_update_selection_info (view,
                                               view->priv->image,
                                               view->priv->unit);
     }
@@ -843,13 +843,13 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
 /*  public functions  */
 
 GtkWidget *
-gimp_cursor_view_new (Gimp            *gimp,
-                      GimpMenuFactory *menu_factory)
+ligma_cursor_view_new (Ligma            *ligma,
+                      LigmaMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  return g_object_new (GIMP_TYPE_CURSOR_VIEW,
-                       "gimp",            gimp,
+  return g_object_new (LIGMA_TYPE_CURSOR_VIEW,
+                       "ligma",            ligma,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<CursorInfo>",
                        "ui-path",         "/cursor-info-popup",
@@ -857,10 +857,10 @@ gimp_cursor_view_new (Gimp            *gimp,
 }
 
 void
-gimp_cursor_view_set_sample_merged (GimpCursorView *view,
+ligma_cursor_view_set_sample_merged (LigmaCursorView *view,
                                     gboolean        sample_merged)
 {
-  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURSOR_VIEW (view));
 
   sample_merged = sample_merged ? TRUE : FALSE;
 
@@ -873,22 +873,22 @@ gimp_cursor_view_set_sample_merged (GimpCursorView *view,
 }
 
 gboolean
-gimp_cursor_view_get_sample_merged (GimpCursorView *view)
+ligma_cursor_view_get_sample_merged (LigmaCursorView *view)
 {
-  g_return_val_if_fail (GIMP_IS_CURSOR_VIEW (view), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CURSOR_VIEW (view), FALSE);
 
   return view->priv->sample_merged;
 }
 
 void
-gimp_cursor_view_update_cursor (GimpCursorView   *view,
-                                GimpImage        *image,
-                                GimpUnit          shell_unit,
+ligma_cursor_view_update_cursor (LigmaCursorView   *view,
+                                LigmaImage        *image,
+                                LigmaUnit          shell_unit,
                                 gdouble           x,
                                 gdouble           y)
 {
-  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CURSOR_VIEW (view));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
   g_clear_object (&view->priv->cursor_image);
 
@@ -900,20 +900,20 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   if (view->priv->cursor_idle_id == 0)
     {
       view->priv->cursor_idle_id =
-        g_idle_add ((GSourceFunc) gimp_cursor_view_cursor_idle, view);
+        g_idle_add ((GSourceFunc) ligma_cursor_view_cursor_idle, view);
     }
 }
 
 void
-gimp_cursor_view_clear_cursor (GimpCursorView *view)
+ligma_cursor_view_clear_cursor (LigmaCursorView *view)
 {
-  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURSOR_VIEW (view));
 
   g_clear_object (&view->priv->cursor_image);
 
   if (view->priv->cursor_idle_id == 0)
     {
       view->priv->cursor_idle_id =
-        g_idle_add ((GSourceFunc) gimp_cursor_view_cursor_idle, view);
+        g_idle_add ((GSourceFunc) ligma_cursor_view_cursor_idle, view);
     }
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,33 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_H__
-#define __GIMP_PALETTE_H__
+#ifndef __LIGMA_PALETTE_H__
+#define __LIGMA_PALETTE_H__
 
 
-#include "gimpdata.h"
+#include "ligmadata.h"
 
 
-#define GIMP_TYPE_PALETTE            (gimp_palette_get_type ())
-#define GIMP_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE, GimpPalette))
-#define GIMP_PALETTE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE, GimpPaletteClass))
-#define GIMP_IS_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PALETTE))
-#define GIMP_IS_PALETTE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE))
-#define GIMP_PALETTE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE, GimpPaletteClass))
+#define LIGMA_TYPE_PALETTE            (ligma_palette_get_type ())
+#define LIGMA_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PALETTE, LigmaPalette))
+#define LIGMA_PALETTE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PALETTE, LigmaPaletteClass))
+#define LIGMA_IS_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PALETTE))
+#define LIGMA_IS_PALETTE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PALETTE))
+#define LIGMA_PALETTE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PALETTE, LigmaPaletteClass))
 
 
-struct _GimpPaletteEntry
+struct _LigmaPaletteEntry
 {
-  GimpRGB  color;
+  LigmaRGB  color;
   gchar   *name;
 };
 
 
-typedef struct _GimpPaletteClass GimpPaletteClass;
+typedef struct _LigmaPaletteClass LigmaPaletteClass;
 
-struct _GimpPalette
+struct _LigmaPalette
 {
-  GimpData  parent_instance;
+  LigmaData  parent_instance;
 
   GList    *colors;
   gint      n_colors;
@@ -49,54 +49,54 @@ struct _GimpPalette
   gint      n_columns;
 };
 
-struct _GimpPaletteClass
+struct _LigmaPaletteClass
 {
-  GimpDataClass  parent_class;
+  LigmaDataClass  parent_class;
 };
 
 
-GType              gimp_palette_get_type        (void) G_GNUC_CONST;
+GType              ligma_palette_get_type        (void) G_GNUC_CONST;
 
-GimpData         * gimp_palette_new             (GimpContext      *context,
+LigmaData         * ligma_palette_new             (LigmaContext      *context,
                                                  const gchar      *name);
-GimpData         * gimp_palette_get_standard    (GimpContext      *context);
+LigmaData         * ligma_palette_get_standard    (LigmaContext      *context);
 
-GList            * gimp_palette_get_colors      (GimpPalette      *palette);
-gint               gimp_palette_get_n_colors    (GimpPalette      *palette);
+GList            * ligma_palette_get_colors      (LigmaPalette      *palette);
+gint               ligma_palette_get_n_colors    (LigmaPalette      *palette);
 
-void               gimp_palette_move_entry      (GimpPalette      *palette,
-                                                 GimpPaletteEntry *entry,
+void               ligma_palette_move_entry      (LigmaPalette      *palette,
+                                                 LigmaPaletteEntry *entry,
                                                  gint              position);
 
-GimpPaletteEntry * gimp_palette_add_entry       (GimpPalette      *palette,
+LigmaPaletteEntry * ligma_palette_add_entry       (LigmaPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name,
-                                                 const GimpRGB    *color);
-void               gimp_palette_delete_entry    (GimpPalette      *palette,
-                                                 GimpPaletteEntry *entry);
+                                                 const LigmaRGB    *color);
+void               ligma_palette_delete_entry    (LigmaPalette      *palette,
+                                                 LigmaPaletteEntry *entry);
 
-gboolean           gimp_palette_set_entry       (GimpPalette      *palette,
+gboolean           ligma_palette_set_entry       (LigmaPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name,
-                                                 const GimpRGB    *color);
-gboolean           gimp_palette_set_entry_color (GimpPalette      *palette,
+                                                 const LigmaRGB    *color);
+gboolean           ligma_palette_set_entry_color (LigmaPalette      *palette,
                                                  gint              position,
-                                                 const GimpRGB    *color);
-gboolean           gimp_palette_set_entry_name  (GimpPalette      *palette,
+                                                 const LigmaRGB    *color);
+gboolean           ligma_palette_set_entry_name  (LigmaPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name);
-GimpPaletteEntry * gimp_palette_get_entry       (GimpPalette      *palette,
+LigmaPaletteEntry * ligma_palette_get_entry       (LigmaPalette      *palette,
                                                  gint              position);
-gint               gimp_palette_get_entry_position (GimpPalette   *palette,
-                                                 GimpPaletteEntry *entry);
+gint               ligma_palette_get_entry_position (LigmaPalette   *palette,
+                                                 LigmaPaletteEntry *entry);
 
-void               gimp_palette_set_columns     (GimpPalette      *palette,
+void               ligma_palette_set_columns     (LigmaPalette      *palette,
                                                  gint              columns);
-gint               gimp_palette_get_columns     (GimpPalette      *palette);
+gint               ligma_palette_get_columns     (LigmaPalette      *palette);
 
-GimpPaletteEntry * gimp_palette_find_entry      (GimpPalette      *palette,
-                                                 const GimpRGB    *color,
-                                                 GimpPaletteEntry *start_from);
+LigmaPaletteEntry * ligma_palette_find_entry      (LigmaPalette      *palette,
+                                                 const LigmaRGB    *color,
+                                                 LigmaPaletteEntry *start_from);
 
 
-#endif /* __GIMP_PALETTE_H__ */
+#endif /* __LIGMA_PALETTE_H__ */

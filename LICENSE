@@ -1,29 +1,29 @@
-* The GIMP application core, and other portions of the official GIMP
+* The LIGMA application core, and other portions of the official LIGMA
   distribution not explicitly licensed otherwise, are licensed under
   the GNU GENERAL PUBLIC LICENSE -- see the 'COPYING' file in this
   directory for details.
 
-[ The below explicit exemption, we hope, clears up the GIMP
+[ The below explicit exemption, we hope, clears up the LIGMA
   developers' position concerning an ambiguity with the GNU General
   Public License concerning what constitutes a 'mere aggregation'
   versus a combined or derived work.  The intention is to make it
-  clear that arbitrarily-licensed programs such as GIMP plug-ins do
+  clear that arbitrarily-licensed programs such as LIGMA plug-ins do
   not automatically assume the GNU General Public License (GPL)
   themselves simply because of their invocation of (or by) procedures
-  implemented in GPL-licensed code, via libgimp or a similar interface
+  implemented in GPL-licensed code, via libligma or a similar interface
   to methods provided by the pdb: ]
 
 * If you create a program which invokes (or provides) methods within
-  (or for) the GPL GIMP application core through the medium of libgimp
+  (or for) the GPL LIGMA application core through the medium of libligma
   or another implementation of the 'procedural database' (pdb) serial
-  protocol, then the GIMP developers' position is that this is a 'mere
+  protocol, then the LIGMA developers' position is that this is a 'mere
   aggregation' of the program invoking the method and the program
   implementing the method as per section 2 of the GNU General Public
   License.
 
-* 'libgimp' and the other GIMP libraries are licensed under the
+* 'libligma' and the other LIGMA libraries are licensed under the
   GNU LESSER GENERAL PUBLIC LICENSE -- see the 'COPYING' file in the
-  libgimp directory for details.
+  libligma directory for details.
 
 * Icon themes are licensed under Creative Commons by-sa 3.0 or 4.0. See
   the 'COPYING' files in icons/Symbolic and icons/Color respectively.

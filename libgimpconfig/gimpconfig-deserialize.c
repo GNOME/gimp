@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Object properties deserialization routines
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,28 +25,28 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpconfigtypes.h"
+#include "ligmaconfigtypes.h"
 
-#include "gimpconfigwriter.h"
-#include "gimpconfig-iface.h"
-#include "gimpconfig-deserialize.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-path.h"
-#include "gimpscanner.h"
+#include "ligmaconfigwriter.h"
+#include "ligmaconfig-iface.h"
+#include "ligmaconfig-deserialize.h"
+#include "ligmaconfig-params.h"
+#include "ligmaconfig-path.h"
+#include "ligmascanner.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpconfig-deserialize
- * @title: GimpConfig-deserialize
- * @short_description: Deserializing code for libgimpconfig.
+ * SECTION: ligmaconfig-deserialize
+ * @title: LigmaConfig-deserialize
+ * @short_description: Deserializing code for libligmaconfig.
  *
- * Deserializing code for libgimpconfig.
+ * Deserializing code for libligmaconfig.
  **/
 
 
@@ -57,50 +57,50 @@
  *  couldn't parse it.
  */
 
-static GTokenType  gimp_config_deserialize_value          (GValue     *value,
-                                                           GimpConfig *config,
+static GTokenType  ligma_config_deserialize_value          (GValue     *value,
+                                                           LigmaConfig *config,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_fundamental    (GValue     *value,
+static GTokenType  ligma_config_deserialize_fundamental    (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_enum           (GValue     *value,
+static GTokenType  ligma_config_deserialize_enum           (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_memsize        (GValue     *value,
+static GTokenType  ligma_config_deserialize_memsize        (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_path           (GValue     *value,
+static GTokenType  ligma_config_deserialize_path           (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_rgb            (GValue     *value,
+static GTokenType  ligma_config_deserialize_rgb            (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_matrix2        (GValue     *value,
+static GTokenType  ligma_config_deserialize_matrix2        (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_object         (GValue     *value,
-                                                           GimpConfig *config,
+static GTokenType  ligma_config_deserialize_object         (GValue     *value,
+                                                           LigmaConfig *config,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner,
                                                            gint        nest_level);
-static GTokenType  gimp_config_deserialize_value_array    (GValue     *value,
-                                                           GimpConfig *config,
+static GTokenType  ligma_config_deserialize_value_array    (GValue     *value,
+                                                           LigmaConfig *config,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_unit           (GValue     *value,
+static GTokenType  ligma_config_deserialize_unit           (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_file_value     (GValue     *value,
+static GTokenType  ligma_config_deserialize_file_value     (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_parasite_value (GValue     *value,
+static GTokenType  ligma_config_deserialize_parasite_value (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_any            (GValue     *value,
+static GTokenType  ligma_config_deserialize_any            (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
-static GTokenType  gimp_config_skip_unknown_property      (GScanner   *scanner);
+static GTokenType  ligma_config_skip_unknown_property      (GScanner   *scanner);
 
 static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
@@ -120,8 +120,8 @@ scanner_string_utf8_valid (GScanner    *scanner,
 }
 
 /**
- * gimp_config_deserialize_properties:
- * @config: a #GimpConfig.
+ * ligma_config_deserialize_properties:
+ * @config: a #LigmaConfig.
  * @scanner: a #GScanner.
  * @nest_level: the nest level
  *
@@ -132,7 +132,7 @@ scanner_string_utf8_valid (GScanner    *scanner,
  * Since: 2.4
  **/
 gboolean
-gimp_config_deserialize_properties (GimpConfig *config,
+ligma_config_deserialize_properties (LigmaConfig *config,
                                     GScanner   *scanner,
                                     gint        nest_level)
 {
@@ -144,7 +144,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
   guint          old_scope_id;
   GTokenType     token;
 
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONFIG (config), FALSE);
 
   klass = G_OBJECT_GET_CLASS (config);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -159,7 +159,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE)
+      if (prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id,
                                       prop_spec->name, prop_spec);
@@ -195,11 +195,11 @@ gimp_config_deserialize_properties (GimpConfig *config,
           break;
 
         case G_TOKEN_IDENTIFIER:
-          token = gimp_config_skip_unknown_property (scanner);
+          token = ligma_config_skip_unknown_property (scanner);
           break;
 
         case G_TOKEN_SYMBOL:
-          token = gimp_config_deserialize_property (config,
+          token = ligma_config_deserialize_property (config,
                                                     scanner, nest_level);
           break;
 
@@ -219,18 +219,18 @@ gimp_config_deserialize_properties (GimpConfig *config,
   if (token == G_TOKEN_NONE)
     return FALSE;
 
-  return gimp_config_deserialize_return (scanner, token, nest_level);
+  return ligma_config_deserialize_return (scanner, token, nest_level);
 }
 
 /**
- * gimp_config_deserialize_property:
- * @config: a #GimpConfig.
+ * ligma_config_deserialize_property:
+ * @config: a #LigmaConfig.
  * @scanner: a #GScanner.
  * @nest_level: the nest level
  *
  * This function deserializes a single property of @config. You
  * shouldn't need to call this function directly. If possible, use
- * gimp_config_deserialize_properties() instead.
+ * ligma_config_deserialize_properties() instead.
  *
  * Returns: %G_TOKEN_RIGHT_PAREN on success, otherwise the
  * expected #GTokenType or %G_TOKEN_NONE if the expected token was
@@ -239,12 +239,12 @@ gimp_config_deserialize_properties (GimpConfig *config,
  * Since: 2.4
  **/
 GTokenType
-gimp_config_deserialize_property (GimpConfig *config,
+ligma_config_deserialize_property (LigmaConfig *config,
                                   GScanner   *scanner,
                                   gint        nest_level)
 {
-  GimpConfigInterface *config_iface = NULL;
-  GimpConfigInterface *parent_iface = NULL;
+  LigmaConfigInterface *config_iface = NULL;
+  LigmaConfigInterface *parent_iface = NULL;
   GParamSpec          *prop_spec;
   GTokenType           token        = G_TOKEN_RIGHT_PAREN;
   GValue               value        = G_VALUE_INIT;
@@ -260,17 +260,17 @@ gimp_config_deserialize_property (GimpConfig *config,
     {
       GTypeClass *owner_class = g_type_class_peek (prop_spec->owner_type);
 
-      config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
+      config_iface = g_type_interface_peek (owner_class, LIGMA_TYPE_CONFIG);
 
       /*  We must call deserialize_property() *only* if the *exact* class
        *  which implements it is param_spec->owner_type's class.
        *
        *  Therefore, we ask param_spec->owner_type's immediate parent class
-       *  for it's GimpConfigInterface and check if we get a different
+       *  for it's LigmaConfigInterface and check if we get a different
        *  pointer.
        *
        *  (if the pointers are the same, param_spec->owner_type's
-       *   GimpConfigInterface is inherited from one of it's parent classes
+       *   LigmaConfigInterface is inherited from one of it's parent classes
        *   and thus not able to handle param_spec->owner_type's properties).
        */
       if (config_iface)
@@ -280,7 +280,7 @@ gimp_config_deserialize_property (GimpConfig *config,
           owner_parent_class = g_type_class_peek_parent (owner_class);
 
           parent_iface = g_type_interface_peek (owner_parent_class,
-                                                GIMP_TYPE_CONFIG);
+                                                LIGMA_TYPE_CONFIG);
         }
     }
 
@@ -301,13 +301,13 @@ gimp_config_deserialize_property (GimpConfig *config,
       if (G_VALUE_HOLDS_OBJECT (&value) &&
           G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {
-          token = gimp_config_deserialize_object (&value,
+          token = ligma_config_deserialize_object (&value,
                                                   config, prop_spec,
                                                   scanner, nest_level);
         }
       else
         {
-          token = gimp_config_deserialize_value (&value,
+          token = ligma_config_deserialize_value (&value,
                                                  config, prop_spec, scanner);
         }
     }
@@ -316,7 +316,7 @@ gimp_config_deserialize_property (GimpConfig *config,
       g_scanner_peek_next_token (scanner) == token)
     {
       if (! (G_VALUE_HOLDS_OBJECT (&value) &&
-             (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE)))
+             (prop_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE)))
         g_object_set_property (G_OBJECT (config), prop_spec->name, &value);
     }
 #ifdef CONFIG_DEBUG
@@ -338,61 +338,61 @@ gimp_config_deserialize_property (GimpConfig *config,
 }
 
 static GTokenType
-gimp_config_deserialize_value (GValue     *value,
-                               GimpConfig *config,
+ligma_config_deserialize_value (GValue     *value,
+                               LigmaConfig *config,
                                GParamSpec *prop_spec,
                                GScanner   *scanner)
 {
   if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
     {
-      return gimp_config_deserialize_enum (value, prop_spec, scanner);
+      return ligma_config_deserialize_enum (value, prop_spec, scanner);
     }
   else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
     {
-      return gimp_config_deserialize_fundamental (value, prop_spec, scanner);
+      return ligma_config_deserialize_fundamental (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
+  else if (prop_spec->value_type == LIGMA_TYPE_MEMSIZE)
     {
-      return gimp_config_deserialize_memsize (value, prop_spec, scanner);
+      return ligma_config_deserialize_memsize (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_CONFIG_PATH)
+  else if (prop_spec->value_type == LIGMA_TYPE_CONFIG_PATH)
     {
-      return  gimp_config_deserialize_path (value, prop_spec, scanner);
+      return  ligma_config_deserialize_path (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_RGB)
+  else if (prop_spec->value_type == LIGMA_TYPE_RGB)
     {
-      return gimp_config_deserialize_rgb (value, prop_spec, scanner);
+      return ligma_config_deserialize_rgb (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_MATRIX2)
+  else if (prop_spec->value_type == LIGMA_TYPE_MATRIX2)
     {
-      return gimp_config_deserialize_matrix2 (value, prop_spec, scanner);
+      return ligma_config_deserialize_matrix2 (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_VALUE_ARRAY)
+  else if (prop_spec->value_type == LIGMA_TYPE_VALUE_ARRAY)
     {
-      return gimp_config_deserialize_value_array (value,
+      return ligma_config_deserialize_value_array (value,
                                                   config, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_UNIT)
+  else if (prop_spec->value_type == LIGMA_TYPE_UNIT)
     {
-      return gimp_config_deserialize_unit (value, prop_spec, scanner);
+      return ligma_config_deserialize_unit (value, prop_spec, scanner);
     }
   else if (prop_spec->value_type == G_TYPE_FILE)
     {
-      return gimp_config_deserialize_file_value (value, prop_spec, scanner);
+      return ligma_config_deserialize_file_value (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_PARASITE)
+  else if (prop_spec->value_type == LIGMA_TYPE_PARASITE)
     {
-      return gimp_config_deserialize_parasite_value (value, prop_spec, scanner);
+      return ligma_config_deserialize_parasite_value (value, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
    *  can be transformed from a string value.
    */
-  return gimp_config_deserialize_any (value, prop_spec, scanner);
+  return ligma_config_deserialize_any (value, prop_spec, scanner);
 }
 
 static GTokenType
-gimp_config_deserialize_fundamental (GValue     *value,
+ligma_config_deserialize_fundamental (GValue     *value,
                                      GParamSpec *prop_spec,
                                      GScanner   *scanner)
 {
@@ -541,7 +541,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_enum (GValue     *value,
+ligma_config_deserialize_enum (GValue     *value,
                               GParamSpec *prop_spec,
                               GScanner   *scanner)
 {
@@ -565,7 +565,7 @@ gimp_config_deserialize_enum (GValue     *value,
           /*  if the value was not found, check if we have a compat
            *  enum to find the ideitifier
            */
-          GQuark quark       = g_quark_from_static_string ("gimp-compat-enum");
+          GQuark quark       = g_quark_from_static_string ("ligma-compat-enum");
           GType  compat_type = (GType) g_type_get_qdata (G_VALUE_TYPE (value),
                                                          quark);
 
@@ -623,7 +623,7 @@ gimp_config_deserialize_enum (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_memsize (GValue     *value,
+ligma_config_deserialize_memsize (GValue     *value,
                                  GParamSpec *prop_spec,
                                  GScanner   *scanner)
 {
@@ -642,7 +642,7 @@ gimp_config_deserialize_memsize (GValue     *value,
   scanner->config->cset_identifier_first = orig_cset_first;
   scanner->config->cset_identifier_nth   = orig_cset_nth;
 
-  if (! gimp_memsize_deserialize (scanner->value.v_identifier, &memsize))
+  if (! ligma_memsize_deserialize (scanner->value.v_identifier, &memsize))
     return G_TOKEN_NONE;
 
   g_value_set_uint64 (value, memsize);
@@ -651,7 +651,7 @@ gimp_config_deserialize_memsize (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_path (GValue     *value,
+ligma_config_deserialize_path (GValue     *value,
                               GParamSpec *prop_spec,
                               GScanner   *scanner)
 {
@@ -670,7 +670,7 @@ gimp_config_deserialize_path (GValue     *value,
       /*  Check if the string can be expanded
        *  and converted to the filesystem encoding.
        */
-      gchar *expand = gimp_config_path_expand (scanner->value.v_string,
+      gchar *expand = ligma_config_path_expand (scanner->value.v_string,
                                                TRUE, &error);
 
       if (!expand)
@@ -692,13 +692,13 @@ gimp_config_deserialize_path (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_rgb (GValue     *value,
+ligma_config_deserialize_rgb (GValue     *value,
                              GParamSpec *prop_spec,
                              GScanner   *scanner)
 {
-  GimpRGB rgb;
+  LigmaRGB rgb;
 
-  if (! gimp_scanner_parse_color (scanner, &rgb))
+  if (! ligma_scanner_parse_color (scanner, &rgb))
     return G_TOKEN_NONE;
 
   g_value_set_boxed (value, &rgb);
@@ -707,13 +707,13 @@ gimp_config_deserialize_rgb (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_matrix2 (GValue     *value,
+ligma_config_deserialize_matrix2 (GValue     *value,
                                  GParamSpec *prop_spec,
                                  GScanner   *scanner)
 {
-  GimpMatrix2 matrix;
+  LigmaMatrix2 matrix;
 
-  if (! gimp_scanner_parse_matrix2 (scanner, &matrix))
+  if (! ligma_scanner_parse_matrix2 (scanner, &matrix))
     return G_TOKEN_NONE;
 
   g_value_set_boxed (value, &matrix);
@@ -722,14 +722,14 @@ gimp_config_deserialize_matrix2 (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_object (GValue     *value,
-                                GimpConfig *config,
+ligma_config_deserialize_object (GValue     *value,
+                                LigmaConfig *config,
                                 GParamSpec *prop_spec,
                                 GScanner   *scanner,
                                 gint        nest_level)
 {
-  GimpConfigInterface *config_iface;
-  GimpConfig          *prop_object;
+  LigmaConfigInterface *config_iface;
+  LigmaConfig          *prop_object;
 
   g_object_get_property (G_OBJECT (config), prop_spec->name, value);
 
@@ -737,15 +737,15 @@ gimp_config_deserialize_object (GValue     *value,
 
   if (! prop_object)
     {
-      /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE, read
+      /*  if the object property is not LIGMA_CONFIG_PARAM_AGGREGATE, read
        *  the type of the object and create it
        */
-      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
+      if (! (prop_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE))
         {
           gchar *type_name;
           GType  type;
 
-          if (! gimp_scanner_parse_string (scanner, &type_name))
+          if (! ligma_scanner_parse_string (scanner, &type_name))
             return G_TOKEN_STRING;
 
           if (! (type_name && *type_name))
@@ -771,10 +771,10 @@ gimp_config_deserialize_object (GValue     *value,
         }
     }
 
-  config_iface = GIMP_CONFIG_GET_IFACE (prop_object);
+  config_iface = LIGMA_CONFIG_GET_IFACE (prop_object);
 
   if (! config_iface)
-    return gimp_config_deserialize_any (value, prop_spec, scanner);
+    return ligma_config_deserialize_any (value, prop_spec, scanner);
 
   if (! config_iface->deserialize (prop_object, scanner, nest_level + 1, NULL))
     return G_TOKEN_NONE;
@@ -783,42 +783,42 @@ gimp_config_deserialize_object (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_value_array (GValue     *value,
-                                     GimpConfig *config,
+ligma_config_deserialize_value_array (GValue     *value,
+                                     LigmaConfig *config,
                                      GParamSpec *prop_spec,
                                      GScanner   *scanner)
 {
-  GimpParamSpecValueArray *array_spec;
-  GimpValueArray          *array;
+  LigmaParamSpecValueArray *array_spec;
+  LigmaValueArray          *array;
   GValue                   array_value = G_VALUE_INIT;
   gint                     n_values;
   GTokenType               token;
   gint                     i;
 
-  array_spec = GIMP_PARAM_SPEC_VALUE_ARRAY (prop_spec);
+  array_spec = LIGMA_PARAM_SPEC_VALUE_ARRAY (prop_spec);
 
-  if (! gimp_scanner_parse_int (scanner, &n_values))
+  if (! ligma_scanner_parse_int (scanner, &n_values))
     return G_TOKEN_INT;
 
-  array = gimp_value_array_new (n_values);
+  array = ligma_value_array_new (n_values);
 
   for (i = 0; i < n_values; i++)
     {
       g_value_init (&array_value, array_spec->element_spec->value_type);
 
-      token = gimp_config_deserialize_value (&array_value,
+      token = ligma_config_deserialize_value (&array_value,
                                              config,
                                              array_spec->element_spec,
                                              scanner);
 
       if (token == G_TOKEN_RIGHT_PAREN)
-        gimp_value_array_append (array, &array_value);
+        ligma_value_array_append (array, &array_value);
 
       g_value_unset (&array_value);
 
       if (token != G_TOKEN_RIGHT_PAREN)
         {
-          gimp_value_array_unref (array);
+          ligma_value_array_unref (array);
           return token;
         }
     }
@@ -834,12 +834,12 @@ gimp_config_deserialize_value_array (GValue     *value,
  * unit's "identifier" is really an identifier in the C-ish sense,
  * when in fact it's just a random user entered string.
  *
- * Here, we try to parse at least the default units shipped with gimp,
+ * Here, we try to parse at least the default units shipped with ligma,
  * and we add code to parse (unit "foo bar") in order to be compatible
  * with future correct unit serializing.
  */
 static GTokenType
-gimp_config_deserialize_unit (GValue     *value,
+ligma_config_deserialize_unit (GValue     *value,
                               GParamSpec *prop_spec,
                               GScanner   *scanner)
 {
@@ -856,7 +856,7 @@ gimp_config_deserialize_unit (GValue     *value,
   token = g_scanner_peek_next_token (scanner);
 
   if (token == G_TOKEN_STRING)
-    return gimp_config_deserialize_any (value, prop_spec, scanner);
+    return ligma_config_deserialize_any (value, prop_spec, scanner);
 
   old_cset_skip_characters  = scanner->config->cset_skip_characters;
   old_cset_identifier_first = scanner->config->cset_identifier_first;
@@ -914,7 +914,7 @@ gimp_config_deserialize_unit (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_file_value (GValue     *value,
+ligma_config_deserialize_file_value (GValue     *value,
                                     GParamSpec *prop_spec,
                                     GScanner   *scanner)
 {
@@ -937,7 +937,7 @@ gimp_config_deserialize_file_value (GValue     *value,
     }
   else
     {
-      gchar *path = gimp_config_path_expand (scanner->value.v_string, TRUE,
+      gchar *path = ligma_config_path_expand (scanner->value.v_string, TRUE,
                                              NULL);
 
       if (path)
@@ -957,23 +957,23 @@ gimp_config_deserialize_file_value (GValue     *value,
 }
 
 /*
- * Note: this is different from gimp_config_deserialize_parasite()
+ * Note: this is different from ligma_config_deserialize_parasite()
  * which is a public API to deserialize random properties into a config
  * object from a parasite. Here we are deserializing the contents of a
  * parasite itself in @scanner.
  */
 static GTokenType
-gimp_config_deserialize_parasite_value (GValue     *value,
+ligma_config_deserialize_parasite_value (GValue     *value,
                                         GParamSpec *prop_spec,
                                         GScanner   *scanner)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   gchar        *name;
   guint8       *data;
   gint          data_length;
   gint64        flags;
 
-  if (! gimp_scanner_parse_string (scanner, &name))
+  if (! ligma_scanner_parse_string (scanner, &name))
     return G_TOKEN_STRING;
 
   if (! (name && *name))
@@ -983,16 +983,16 @@ gimp_config_deserialize_parasite_value (GValue     *value,
       return G_TOKEN_NONE;
     }
 
-  if (! gimp_scanner_parse_int64 (scanner, &flags))
+  if (! ligma_scanner_parse_int64 (scanner, &flags))
     return G_TOKEN_INT;
 
-  if (! gimp_scanner_parse_int (scanner, &data_length))
+  if (! ligma_scanner_parse_int (scanner, &data_length))
     return G_TOKEN_INT;
 
-  if (! gimp_scanner_parse_data (scanner, data_length, &data))
+  if (! ligma_scanner_parse_data (scanner, data_length, &data))
     return G_TOKEN_STRING;
 
-  parasite = gimp_parasite_new (name, flags, data_length, data);
+  parasite = ligma_parasite_new (name, flags, data_length, data);
 
   g_value_take_boxed (value, parasite);
 
@@ -1000,7 +1000,7 @@ gimp_config_deserialize_parasite_value (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_any (GValue     *value,
+ligma_config_deserialize_any (GValue     *value,
                              GParamSpec *prop_spec,
                              GScanner   *scanner)
 {
@@ -1039,7 +1039,7 @@ gimp_config_deserialize_any (GValue     *value,
 }
 
 static GTokenType
-gimp_config_skip_unknown_property (GScanner *scanner)
+ligma_config_skip_unknown_property (GScanner *scanner)
 {
   gint open_paren = 0;
 

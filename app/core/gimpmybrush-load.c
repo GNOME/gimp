@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush-load.c
+ * ligmamybrush-load.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,26 +24,26 @@
 
 #include <mypaint-brush.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpmybrush.h"
-#include "gimpmybrush-load.h"
-#include "gimpmybrush-private.h"
+#include "ligmamybrush.h"
+#include "ligmamybrush-load.h"
+#include "ligmamybrush-private.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 GList *
-gimp_mybrush_load (GimpContext   *context,
+ligma_mybrush_load (LigmaContext   *context,
                    GFile         *file,
                    GInputStream  *input,
                    GError       **error)
 {
-  GimpMybrush  *brush = NULL;
+  LigmaMybrush  *brush = NULL;
   MyPaintBrush *mypaint_brush;
   GdkPixbuf    *pixbuf;
   GFileInfo    *info;
@@ -71,7 +71,7 @@ gimp_mybrush_load (GimpContext   *context,
 
   if (size > 32768)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("MyPaint brush file is unreasonably large, skipping."));
       return NULL;
     }
@@ -89,7 +89,7 @@ gimp_mybrush_load (GimpContext   *context,
 
   if (! mypaint_brush_from_string (mypaint_brush, (const gchar *) buffer))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Failed to deserialize MyPaint brush."));
       mypaint_brush_unref (mypaint_brush);
       g_free (buffer);
@@ -107,16 +107,16 @@ gimp_mybrush_load (GimpContext   *context,
                                              48, 48, error);
   g_free (preview_filename);
 
-  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+  basename = g_path_get_basename (ligma_file_get_utf8_name (file));
 
   basename[strlen (basename) - 4] = '\0';
   for (p = basename; *p; p++)
     if (*p == '_' || *p == '-')
       *p = ' ';
 
-  brush = g_object_new (GIMP_TYPE_MYBRUSH,
+  brush = g_object_new (LIGMA_TYPE_MYBRUSH,
                         "name",        basename,
-                        "mime-type",   "image/x-gimp-myb",
+                        "mime-type",   "image/x-ligma-myb",
                         "icon-pixbuf", pixbuf,
                         NULL);
 

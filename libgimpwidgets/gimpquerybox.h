@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpquerybox.h
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * ligmaquerybox.h
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_QUERY_BOX_H__
-#define __GIMP_QUERY_BOX_H__
+#ifndef __LIGMA_QUERY_BOX_H__
+#define __LIGMA_QUERY_BOX_H__
 
 G_BEGIN_DECLS
 
@@ -32,95 +32,95 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpQueryStringCallback:
+ * LigmaQueryStringCallback:
  * @query_box: The query box.
  * @string:    The entered string.
  * @data: (closure): user data.
  *
  * Note that you must not g_free() the passed string.
  **/
-typedef void (* GimpQueryStringCallback)  (GtkWidget   *query_box,
+typedef void (* LigmaQueryStringCallback)  (GtkWidget   *query_box,
                                            const gchar *string,
                                            gpointer     data);
 
 /**
- * GimpQueryIntCallback:
+ * LigmaQueryIntCallback:
  * @query_box: The query box.
  * @value:     The entered integer value.
  * @data: (closure): user data.
  *
  * The callback for an int query box.
  **/
-typedef void (* GimpQueryIntCallback)     (GtkWidget   *query_box,
+typedef void (* LigmaQueryIntCallback)     (GtkWidget   *query_box,
                                            gint         value,
                                            gpointer     data);
 
 /**
- * GimpQueryDoubleCallback:
+ * LigmaQueryDoubleCallback:
  * @query_box: The query box.
  * @value:     The entered double value.
  * @data: (closure): user data.
  *
  * The callback for a double query box.
  **/
-typedef void (* GimpQueryDoubleCallback)  (GtkWidget   *query_box,
+typedef void (* LigmaQueryDoubleCallback)  (GtkWidget   *query_box,
                                            gdouble      value,
                                            gpointer     data);
 
 /**
- * GimpQuerySizeCallback:
+ * LigmaQuerySizeCallback:
  * @query_box: The query box.
  * @size:      The entered size in pixels.
- * @unit:      The selected unit from the #GimpUnitMenu.
+ * @unit:      The selected unit from the #LigmaUnitMenu.
  * @data: (closure): user data.
  *
  * The callback for a size query box.
  **/
-typedef void (* GimpQuerySizeCallback)    (GtkWidget   *query_box,
+typedef void (* LigmaQuerySizeCallback)    (GtkWidget   *query_box,
                                            gdouble      size,
-                                           GimpUnit     unit,
+                                           LigmaUnit     unit,
                                            gpointer     data);
 
 /**
- * GimpQueryBooleanCallback:
+ * LigmaQueryBooleanCallback:
  * @query_box: The query box.
  * @value:     The entered boolean value.
  * @data: (closure): user data.
  *
  * The callback for a boolean query box.
  **/
-typedef void (* GimpQueryBooleanCallback) (GtkWidget   *query_box,
+typedef void (* LigmaQueryBooleanCallback) (GtkWidget   *query_box,
                                            gboolean     value,
                                            gpointer     data);
 
 
 /**
- * GIMP_QUERY_BOX_VBOX:
+ * LIGMA_QUERY_BOX_VBOX:
  * @qbox: The query box.
  *
- * A macro to access the vertical #GtkBox in a #libgimpwidgets-gimpquerybox.
+ * A macro to access the vertical #GtkBox in a #libligmawidgets-ligmaquerybox.
  * Useful if you want to add more widgets.
  **/
-#define GIMP_QUERY_BOX_VBOX(qbox) g_object_get_data (G_OBJECT (qbox), \
-                                                     "gimp-query-box-vbox")
+#define LIGMA_QUERY_BOX_VBOX(qbox) g_object_get_data (G_OBJECT (qbox), \
+                                                     "ligma-query-box-vbox")
 
 
 /*  some simple query dialogs  */
-GtkWidget * gimp_query_string_box  (const gchar              *title,
+GtkWidget * ligma_query_string_box  (const gchar              *title,
                                     GtkWidget                *parent,
-                                    GimpHelpFunc              help_func,
+                                    LigmaHelpFunc              help_func,
                                     const gchar              *help_id,
                                     const gchar              *message,
                                     const gchar              *initial,
                                     GObject                  *object,
                                     const gchar              *signal,
-                                    GimpQueryStringCallback   callback,
+                                    LigmaQueryStringCallback   callback,
                                     gpointer                  data,
                                     GDestroyNotify            data_destroy);
 
-GtkWidget * gimp_query_int_box     (const gchar              *title,
+GtkWidget * ligma_query_int_box     (const gchar              *title,
                                     GtkWidget                *parent,
-                                    GimpHelpFunc              help_func,
+                                    LigmaHelpFunc              help_func,
                                     const gchar              *help_id,
                                     const gchar              *message,
                                     gint                      initial,
@@ -128,13 +128,13 @@ GtkWidget * gimp_query_int_box     (const gchar              *title,
                                     gint                      upper,
                                     GObject                  *object,
                                     const gchar              *signal,
-                                    GimpQueryIntCallback      callback,
+                                    LigmaQueryIntCallback      callback,
                                     gpointer                  data,
                                     GDestroyNotify            data_destroy);
 
-GtkWidget * gimp_query_double_box  (const gchar              *title,
+GtkWidget * ligma_query_double_box  (const gchar              *title,
                                     GtkWidget                *parent,
-                                    GimpHelpFunc              help_func,
+                                    LigmaHelpFunc              help_func,
                                     const gchar              *help_id,
                                     const gchar              *message,
                                     gdouble                   initial,
@@ -143,31 +143,31 @@ GtkWidget * gimp_query_double_box  (const gchar              *title,
                                     gint                      digits,
                                     GObject                  *object,
                                     const gchar              *signal,
-                                    GimpQueryDoubleCallback   callback,
+                                    LigmaQueryDoubleCallback   callback,
                                     gpointer                  data,
                                     GDestroyNotify            data_destroy);
 
-GtkWidget * gimp_query_size_box    (const gchar              *title,
+GtkWidget * ligma_query_size_box    (const gchar              *title,
                                     GtkWidget                *parent,
-                                    GimpHelpFunc              help_func,
+                                    LigmaHelpFunc              help_func,
                                     const gchar              *help_id,
                                     const gchar              *message,
                                     gdouble                   initial,
                                     gdouble                   lower,
                                     gdouble                   upper,
                                     gint                      digits,
-                                    GimpUnit                  unit,
+                                    LigmaUnit                  unit,
                                     gdouble                   resolution,
                                     gboolean                  dot_for_dot,
                                     GObject                  *object,
                                     const gchar              *signal,
-                                    GimpQuerySizeCallback     callback,
+                                    LigmaQuerySizeCallback     callback,
                                     gpointer                  data,
                                     GDestroyNotify            data_destroy);
 
-GtkWidget * gimp_query_boolean_box (const gchar              *title,
+GtkWidget * ligma_query_boolean_box (const gchar              *title,
                                     GtkWidget                *parent,
-                                    GimpHelpFunc              help_func,
+                                    LigmaHelpFunc              help_func,
                                     const gchar              *help_id,
                                     const gchar              *icon_name,
                                     const gchar              *message,
@@ -175,11 +175,11 @@ GtkWidget * gimp_query_boolean_box (const gchar              *title,
                                     const gchar              *false_button,
                                     GObject                  *object,
                                     const gchar              *signal,
-                                    GimpQueryBooleanCallback  callback,
+                                    LigmaQueryBooleanCallback  callback,
                                     gpointer                  data,
                                     GDestroyNotify            data_destroy);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_QUERY_BOX_H__ */
+#endif /* __LIGMA_QUERY_BOX_H__ */

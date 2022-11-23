@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorhexentry.h
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmacolorhexentry.h
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,62 +19,62 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_HEX_ENTRY_H__
-#define __GIMP_COLOR_HEX_ENTRY_H__
+#ifndef __LIGMA_COLOR_HEX_ENTRY_H__
+#define __LIGMA_COLOR_HEX_ENTRY_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_HEX_ENTRY            (gimp_color_hex_entry_get_type ())
-#define GIMP_COLOR_HEX_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_HEX_ENTRY, GimpColorHexEntry))
-#define GIMP_COLOR_HEX_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_HEX_ENTRY, GimpColorHexEntryClass))
-#define GIMP_IS_COLOR_HEX_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_HEX_ENTRY))
-#define GIMP_IS_COLOR_HEX_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_HEX_ENTRY))
-#define GIMP_COLOR_HEX_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_HEX_AREA, GimpColorHexEntryClass))
+#define LIGMA_TYPE_COLOR_HEX_ENTRY            (ligma_color_hex_entry_get_type ())
+#define LIGMA_COLOR_HEX_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_HEX_ENTRY, LigmaColorHexEntry))
+#define LIGMA_COLOR_HEX_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_HEX_ENTRY, LigmaColorHexEntryClass))
+#define LIGMA_IS_COLOR_HEX_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_HEX_ENTRY))
+#define LIGMA_IS_COLOR_HEX_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_HEX_ENTRY))
+#define LIGMA_COLOR_HEX_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_HEX_AREA, LigmaColorHexEntryClass))
 
 
-typedef struct _GimpColorHexEntryPrivate GimpColorHexEntryPrivate;
-typedef struct _GimpColorHexEntryClass   GimpColorHexEntryClass;
+typedef struct _LigmaColorHexEntryPrivate LigmaColorHexEntryPrivate;
+typedef struct _LigmaColorHexEntryClass   LigmaColorHexEntryClass;
 
-struct _GimpColorHexEntry
+struct _LigmaColorHexEntry
 {
   GtkEntry                  parent_instance;
 
-  GimpColorHexEntryPrivate *priv;
+  LigmaColorHexEntryPrivate *priv;
 };
 
-struct _GimpColorHexEntryClass
+struct _LigmaColorHexEntryClass
 {
   GtkEntryClass   parent_class;
 
-  void (* color_changed) (GimpColorHexEntry *entry);
+  void (* color_changed) (LigmaColorHexEntry *entry);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_hex_entry_get_type  (void) G_GNUC_CONST;
+GType       ligma_color_hex_entry_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_hex_entry_new       (void);
+GtkWidget * ligma_color_hex_entry_new       (void);
 
-void        gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
-                                            const GimpRGB     *color);
-void        gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
-                                            GimpRGB           *color);
+void        ligma_color_hex_entry_set_color (LigmaColorHexEntry *entry,
+                                            const LigmaRGB     *color);
+void        ligma_color_hex_entry_get_color (LigmaColorHexEntry *entry,
+                                            LigmaRGB           *color);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_HEX_ENTRY_H__ */
+#endif /* __LIGMA_COLOR_HEX_ENTRY_H__ */

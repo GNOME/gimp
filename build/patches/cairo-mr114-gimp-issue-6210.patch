@@ -9,7 +9,7 @@ is perfectly normal to switch to CAIRO_ANTIALIAS_SUBPIXEL.
 But when the calling application specifically requested
 CAIRO_ANTIALIAS_GRAY then Cairo should honor the request.
 
-This is an issue we have had for years in GIMP, where text on images
+This is an issue we have had for years in LIGMA, where text on images
 would render differently depending on the system the file is opened on.
 This is obviously not right as a graphics work should be system
 independant and allow the creator to decide if one wants a text to have

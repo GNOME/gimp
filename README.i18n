@@ -1,9 +1,9 @@
 This file contains some important hints for translators.
 
 
-The current status of the GIMP translation can be checked at
+The current status of the LIGMA translation can be checked at
 
-  https://l10n.gnome.org/module/gimp
+  https://l10n.gnome.org/module/ligma
 
 
 Translation of the GNU Image Manipulation Program is handled by the
@@ -12,37 +12,37 @@ help, we suggest that you get in touch with the translation team of
 your language (see https://l10n.gnome.org/teams/).
 
 
-GIMP is different
+LIGMA is different
 
- GIMP is a complex application which has a bunch of scripts and
+ LIGMA is a complex application which has a bunch of scripts and
  plug-ins that all want to be internationalized. Therefore there is
- not one catalog but many. For a full translation of GIMP's UI, you
+ not one catalog but many. For a full translation of LIGMA's UI, you
  will have to add translations for the following catalogs:
 
-   po/gimp20.po                                       --  the core
-   po-libgimp/gimp20-libgimp.pot                      --  the libgimp library
-   po-plugins/gimp20-std-plugins.pot                  --  the C plug-ins
-   po-python/gimp20-python.pot                        --  the pygimp plug-ins
-   po-script-fu/gimp20-script-fu.pot                  --  the script-fu scripts
-   po-tips/gimp20-tips.pot                            --  the startup tips
-   po-windows-installer/gimp20-windows-installer.pot  --  the windows installer
+   po/ligma20.po                                       --  the core
+   po-libligma/ligma20-libligma.pot                      --  the libligma library
+   po-plugins/ligma20-std-plugins.pot                  --  the C plug-ins
+   po-python/ligma20-python.pot                        --  the pyligma plug-ins
+   po-script-fu/ligma20-script-fu.pot                  --  the script-fu scripts
+   po-tips/ligma20-tips.pot                            --  the startup tips
+   po-windows-installer/ligma20-windows-installer.pot  --  the windows installer
 
- If you are looking for the translations of gimp-perl, please note that
- gimp-perl has been moved into it's own git module called
- gimp-perl.
+ If you are looking for the translations of ligma-perl, please note that
+ ligma-perl has been moved into it's own git module called
+ ligma-perl.
 
 
-GIMP Tips dialog
+LIGMA Tips dialog
 
- In addition to message catalogs GIMP provides a file with tips that
+ In addition to message catalogs LIGMA provides a file with tips that
  are displayed in the Tips dialog. This file is in XML format and can
  be found in the tips directory. The english tips messages are
- extracted from gimp-tips.xml.in so translators can use the usual
+ extracted from ligma-tips.xml.in so translators can use the usual
  tools to create a <lang>.po file that holds the translations. All
- translations are then merged into gimp-tips.xml with language
+ translations are then merged into ligma-tips.xml with language
  identifiers taken from the po filename.
 
- GIMP needs to know what language it should select from gimp-tips.xml.
+ LIGMA needs to know what language it should select from ligma-tips.xml.
  Therefore, there's the special message "tips-locale:C" in the main
  message catalog that needs to be translated correctly. For a german
  translation of the tips this would look like this:
@@ -54,12 +54,12 @@ GIMP Tips dialog
 
 Localization of third-party plug-ins
 
- Third-party plug-ins (plug-ins that are not distributed with GIMP)
- can't have their messages in the gimp-std-plugins textdomain.  We
+ Third-party plug-ins (plug-ins that are not distributed with LIGMA)
+ can't have their messages in the ligma-std-plugins textdomain.  We
  have therefore provided a mechanism that allows plug-ins to install
- their own message catalogs and tell GIMP to bind to that
- textdomain. This is necessary so that GIMP can correctly translate
+ their own message catalogs and tell LIGMA to bind to that
+ textdomain. This is necessary so that LIGMA can correctly translate
  the menu paths the plug-in registers. Basically the plug-in has to
- call gimp_plugin_domain_add() or gimp_domain_plugin_add_with_path()
+ call ligma_plugin_domain_add() or ligma_domain_plugin_add_with_path()
  before it registers any functions. Have a look at the script-fu
  plug-in to see how this is done in detail.

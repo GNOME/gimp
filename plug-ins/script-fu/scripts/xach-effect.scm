@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; xach effect script
@@ -38,10 +38,10 @@
         (ds-blur (max ds-blur 0))
         (ds-opacity (min ds-opacity 100))
         (ds-opacity (max ds-opacity 0))
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-get-width image)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-width (car (ligma-image-get-width image)))
         (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
-        (image-height (car (gimp-image-get-height image)))
+        (image-height (car (ligma-image-get-height image)))
         (active-selection 0)
         (from-selection 0)
         (theLayer 0)
@@ -50,77 +50,77 @@
         (mask 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-group-start image)
-    (gimp-layer-add-alpha drawable)
+    (ligma-image-undo-group-start image)
+    (ligma-layer-add-alpha drawable)
 
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
+    (if (= (car (ligma-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-          (set! active-selection (car (gimp-selection-save image)))
+          (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (set! active-selection (car (ligma-selection-save image)))
           (set! from-selection FALSE))
         (begin
           (set! from-selection TRUE)
-          (set! active-selection (car (gimp-selection-save image)))))
+          (set! active-selection (car (ligma-selection-save image)))))
 
-    (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 LAYER-MODE-NORMAL)))
-    (gimp-image-insert-layer image hl-layer 0 -1)
+    (set! hl-layer (car (ligma-layer-new image image-width image-height type _"Highlight" 100 LAYER-MODE-NORMAL)))
+    (ligma-image-insert-layer image hl-layer 0 -1)
 
-    (gimp-selection-none image)
-    (gimp-drawable-edit-clear hl-layer)
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-selection-none image)
+    (ligma-drawable-edit-clear hl-layer)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
-    (gimp-context-set-background hl-color)
-    (gimp-drawable-edit-fill hl-layer FILL-BACKGROUND)
-    (gimp-selection-translate image hl-offset-x hl-offset-y)
-    (gimp-drawable-edit-fill hl-layer FILL-BACKGROUND)
-    (gimp-selection-none image)
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-context-set-background hl-color)
+    (ligma-drawable-edit-fill hl-layer FILL-BACKGROUND)
+    (ligma-selection-translate image hl-offset-x hl-offset-y)
+    (ligma-drawable-edit-fill hl-layer FILL-BACKGROUND)
+    (ligma-selection-none image)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
-    (set! mask (car (gimp-layer-create-mask hl-layer ADD-MASK-WHITE)))
-    (gimp-layer-add-mask hl-layer mask)
+    (set! mask (car (ligma-layer-create-mask hl-layer ADD-MASK-WHITE)))
+    (ligma-layer-add-mask hl-layer mask)
 
-    (gimp-context-set-background hl-opacity)
-    (gimp-drawable-edit-fill mask FILL-BACKGROUND)
+    (ligma-context-set-background hl-opacity)
+    (ligma-drawable-edit-fill mask FILL-BACKGROUND)
 
-    (set! shadow-layer (car (gimp-layer-new image
+    (set! shadow-layer (car (ligma-layer-new image
                                             image-width
                                             image-height
                                             type
                                             _"Shadow"
                                             ds-opacity
                                             LAYER-MODE-NORMAL)))
-    (gimp-image-insert-layer image shadow-layer 0 -1)
-    (gimp-selection-none image)
-    (gimp-drawable-edit-clear shadow-layer)
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-    (gimp-selection-translate image ds-offset-x ds-offset-y)
-    (gimp-context-set-background ds-color)
-    (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
-    (gimp-selection-none image)
+    (ligma-image-insert-layer image shadow-layer 0 -1)
+    (ligma-selection-none image)
+    (ligma-drawable-edit-clear shadow-layer)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-selection-translate image ds-offset-x ds-offset-y)
+    (ligma-context-set-background ds-color)
+    (ligma-drawable-edit-fill shadow-layer FILL-BACKGROUND)
+    (ligma-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image shadow-layer ds-blur TRUE TRUE)
-    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-    (gimp-drawable-edit-clear shadow-layer)
-    (gimp-image-lower-item image shadow-layer)
+    (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+    (ligma-drawable-edit-clear shadow-layer)
+    (ligma-image-lower-item image shadow-layer)
 
     (if (= keep-selection FALSE)
-        (gimp-selection-none image))
+        (ligma-selection-none image))
 
-    (gimp-image-set-selected-layers image 1 (vector drawable))
-    (gimp-image-remove-channel image active-selection)
-    (gimp-image-undo-group-end image)
-    (gimp-displays-flush)
+    (ligma-image-set-selected-layers image 1 (vector drawable))
+    (ligma-image-remove-channel image active-selection)
+    (ligma-image-undo-group-end image)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-xach-effect"
   _"_Xach-Effect..."
   _"Add a subtle translucent 3D effect to the selected region (or alpha)"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "9/28/97"
   "RGB* GRAY*"

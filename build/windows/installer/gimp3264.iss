@@ -22,7 +22,7 @@
 ;      distribution.                                                    ;
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.;
 ;
-;Install script for GIMP and GTK+
+;Install script for LIGMA and GTK+
 ;requires Inno Setup 6
 ;
 ;See directories.isi
@@ -39,7 +39,7 @@
 ;- clean gegl's DLLs on install as some files have changed names
 ;
 ;2011-08-30
-;- only uninstall previous GIMP version when installing over existing installation
+;- only uninstall previous LIGMA version when installing over existing installation
 ;  TODO: offer the option to uninstall 32bit version when installing on x64 system
 ;- install 32bit plugins to same directory as 64bit plugins on x64 installs to
 ;  avoid problems when upgrading
@@ -63,18 +63,18 @@
 ;
 ;2010-05-15
 ;- rewrote script mostly from scratch
-;- combine 32 and 64bit GIMP versions to a single installer
+;- combine 32 and 64bit LIGMA versions to a single installer
 ;  - install enough 32bit support files even with 64bit version to allow running 32bit
 ;    plug-ins on 64bit version (used by Python scriptin support [as there's no 64-bit
 ;    PyGTK+ on Windows available yet] and TWAIN plug-in, which only works in 32-bit
 ;    version)
 ;- Python with PyGTK is included in the installer now
-;- install GIMP to new directory by default ({pf}\GIMP 2 instead of {pf}\GIMP-2.0)
-;- uninstall previous GIMP versions as the first step of install (both 32 and 64-bit)
-;  - require reboot if installing to directory from which GIMP was just uninstalled,
+;- install LIGMA to new directory by default ({pf}\LIGMA 2 instead of {pf}\LIGMA-2.0)
+;- uninstall previous LIGMA versions as the first step of install (both 32 and 64-bit)
+;  - require reboot if installing to directory from which LIGMA was just uninstalled,
 ;    and this directory wasn't removed by the uninstaller; the installer will continue
 ;    automatically after reboot
-;- fixed a long standing bug where "Open with GIMP" menu entries would be left after
+;- fixed a long standing bug where "Open with LIGMA" menu entries would be left after
 ;  uninstalling
 ;
 #pragma option -e+
@@ -82,8 +82,8 @@
 #ifndef VERSION
 	#error VERSION must be defined
 #endif
-#ifndef GIMP_DIR
-	#error GIMP_DIR must be defined
+#ifndef LIGMA_DIR
+	#error LIGMA_DIR must be defined
 #endif
 #ifndef DIR32
 	#error DIR32 must be defined
@@ -107,22 +107,22 @@
 #include "version.isi"
 
 [Setup]
-AppName=GIMP
+AppName=LIGMA
 #if Defined(DEVEL) && DEVEL != ""
-AppID=GIMP-{#MAJOR}.{#MINOR}
+AppID=LIGMA-{#MAJOR}.{#MINOR}
 #else
-AppID=GIMP-{#MAJOR}
+AppID=LIGMA-{#MAJOR}
 #endif
 VersionInfoVersion={#VERSION}
 #if !defined(REVISION)
-AppVerName=GIMP {#VERSION}
+AppVerName=LIGMA {#VERSION}
 #else
-AppVerName=GIMP {#VERSION}-{#REVISION}
+AppVerName=LIGMA {#VERSION}-{#REVISION}
 #endif
-AppPublisherURL=https://www.gimp.org/
-AppSupportURL=https://www.gimp.org/docs/
-AppUpdatesURL=https://www.gimp.org/
-AppPublisher=The GIMP Team
+AppPublisherURL=https://www.ligma.org/
+AppSupportURL=https://www.ligma.org/docs/
+AppUpdatesURL=https://www.ligma.org/
+AppPublisher=The LIGMA Team
 AppVersion={#VERSION}
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
@@ -131,11 +131,11 @@ AlwaysShowDirOnReadyPage=yes
 ChangesEnvironment=yes
 
 #if Defined(DEVEL) && DEVEL != ""
-DefaultDirName={autopf}\GIMP {#MAJOR}.{#MINOR}
+DefaultDirName={autopf}\LIGMA {#MAJOR}.{#MINOR}
 LZMANumBlockThreads=4
 LZMABlockSize=76800
 #else
-DefaultDirName={autopf}\GIMP {#MAJOR}
+DefaultDirName={autopf}\LIGMA {#MAJOR}
 #endif
 
 ;AllowNoIcons=true
@@ -147,7 +147,7 @@ WizardImageFile=windows-installer-intro-big.bmp
 WizardImageStretch=yes
 WizardSmallImageFile=wilber.bmp
 
-UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
+UninstallDisplayIcon={app}\bin\ligma-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
 MinVersion=6.1
@@ -176,11 +176,11 @@ LZMANumFastBytes=273
 #endif //NOCOMPRESSION
 
 #if !defined(REVISION)
-OutputBaseFileName=gimp-{#VERSION}-setup
-OutputManifestFile=gimp-{#VERSION}-setup.txt
+OutputBaseFileName=ligma-{#VERSION}-setup
+OutputManifestFile=ligma-{#VERSION}-setup.txt
 #else
-OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
-OutputManifestFile=gimp-{#VERSION}-{#REVISION}-setup.txt
+OutputBaseFileName=ligma-{#VERSION}-{#REVISION}-setup
+OutputManifestFile=ligma-{#VERSION}-{#REVISION}-setup.txt
 #endif
 
 PrivilegesRequiredOverridesAllowed=dialog
@@ -236,8 +236,8 @@ Name: compact; Description: "{cm:TypeCompact}"
 Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 
 [Components]
-Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
+Name: ligma32; Description: "{cm:ComponentsLigma,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+Name: ligma64; Description: "{cm:ComponentsLigma,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
 
 Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
 Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
@@ -259,15 +259,15 @@ Name: py; Description: "{cm:ComponentsPython}"; Types: full custom
 Name: lua; Description: "{cm:ComponentsLua}"; Types: full custom
 #endif
 
-Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
+Name: ligma32on64; Description: "{cm:ComponentsLigma32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
 
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
 #define ICON_VERSION=MAJOR + "." + MINOR + "." + MICRO
-Name: "{autoprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
-Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
+Name: "{autoprograms}\LIGMA {#ICON_VERSION}"; Filename: "{app}\bin\ligma-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "LIGMA {#VERSION}"
+Name: "{autodesktop}\LIGMA {#ICON_VERSION}"; Filename: "{app}\bin\ligma-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "LIGMA {#VERSION}"; Tasks: desktopicon
 
 [Files]
 ;setup files
@@ -283,11 +283,11 @@ Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Fl
 
 #ifndef NOFILES
 ;files common to both 32 and 64-bit versions
-Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: ligma32 or ligma64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\lib\ligma\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\ligma\{#DIR_VER}\environ"; Components: ligma32 or ligma64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\lib\ligma\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\ligma\{#DIR_VER}\interpreters"; Components: ligma32 or ligma64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\share\ligma\*"; DestDir: "{app}\share\ligma"; Components: ligma32 or ligma64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: ligma32 or ligma64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\share\glib-2.0\schemas\*"; DestDir: "{app}\share\glib-2.0\schemas"; Components: deps32 or deps64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
 ;Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
@@ -299,20 +299,20 @@ Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Compo
 Source: "{#DEPS_DIR32}\share\libthai\*"; DestDir: "{app}\share\libthai"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
-;configure gimp with --enable-bundled-mypaint-brushes for the correct path to
-;be picked by gimp
+;configure ligma with --enable-bundled-mypaint-brushes for the correct path to
+;be picked by ligma
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\etc\gtk-3.0"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
-Source: "{#DEPS_DIR32}\share\ghostscript\*"; Excludes: "*\doc\*"; DestDir: "{app}\share\ghostscript"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\*"; Excludes: "*\doc\*"; DestDir: "{app}\share\ghostscript"; Components: gs and (ligma32 or ligma64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #ifdef PYTHON
 ;*.py files are the same on 32 and 64-bit
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\lib\ligma\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\ligma\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 ;64bit
@@ -323,20 +323,20 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\g
 #define PLATFORM 32
 #include "files.isi"
 ;special case, since 64bit version doesn't work, and is excluded in files.isi
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\lib\ligma\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\lib\ligma\{#DIR_VER}\plug-ins"; Components: ligma32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;32-on-64bit
 #include "32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR32}\lib\ligma\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\ligma\{#DIR_VER}\plug-ins\twain"; Components: ligma32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR64}\lib\ligma\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\ligma\{#DIR_VER}\plug-ins\twain"; Components: (not ligma32on64) and ligma64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 ;special case due to MS-Windows engine
-Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: ligma32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
-Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: ligma32 or ligma64; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: ligma64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
 
 ;overridden configuration files
 #include "configoverride.isi"
@@ -344,15 +344,15 @@ Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Fla
 #endif //NOFILES
 
 [InstallDelete]
-Type: files; Name: "{app}\bin\gimp-?.?.exe"
-Type: files; Name: "{app}\bin\gimp-?.??.exe"
-Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
-Type: files; Name: "{app}\bin\gimp-console-?.??.exe"
+Type: files; Name: "{app}\bin\ligma-?.?.exe"
+Type: files; Name: "{app}\bin\ligma-?.??.exe"
+Type: files; Name: "{app}\bin\ligma-console-?.?.exe"
+Type: files; Name: "{app}\bin\ligma-console-?.??.exe"
 Type: files; Name: "{app}\lib\gegl-0.1\*.dll"
-;obsolete plugins from gimp 2.6
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee-zoom.exe"
+;obsolete plugins from ligma 2.6
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pdf.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gee.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gee-zoom.exe"
 ;old Python
 Type: filesandordirs; Name: "{app}\Python\*"
 Type: dirifempty; Name: "{app}\Python"
@@ -361,235 +361,235 @@ Type: files; Name: "{app}\bin\zlib1.dll"
 Type: files; Name: "{app}\32\bin\zlib1.dll"
 ;old ghostscript
 Type: filesandordirs; Name: "{app}\share\ghostscript\*"
-;obsolete plugins from gimp 2.8
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\alien-map.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\antialias.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\apply-canvas.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\blur-gauss.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\blur-gauss-selective.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\blur-motion.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\bump-map.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\channel-mixer.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\color-exchange.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\color-rotate.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\color-to-alpha.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\contrast-stretch.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\contrast-stretch-hsv.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\convolution-matrix.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\crop-auto.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\cubism.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\deinterlace.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\diffraction.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\displace.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\edge.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\edge-laplace.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\edge-sobel.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\engrave.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-raw.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-tiff-load.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-tiff-save.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-uri.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\illusion.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\iwarp.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\lcms.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\lens-apply.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\lens-distortion.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\lens-flare.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\maze.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\mosaic.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\noise-hsv.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\noise-randomize.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\noise-rgb.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\noise-solid.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\noise-spread.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\nova.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pixelize.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\plasma.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\polar-coords.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\red-eye-removal.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\ripple.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\rotate.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\semi-flatten.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\shift.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\sinus.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\threshold-alpha.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\tile-glass.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\tile-paper.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\tile-seamless.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\value-invert.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\value-propagate.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\video.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\waves.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\whirl-pinch.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\win-snap.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\wind.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\text-brush.py"
+;obsolete plugins from ligma 2.8
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\pyconsole.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\python-console.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\metadata.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-psd-save.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-psd-load.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\alien-map.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\antialias.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\apply-canvas.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\blur-gauss.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\blur-gauss-selective.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\blur-motion.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\bump-map.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\channel-mixer.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\color-exchange.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\color-rotate.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\color-to-alpha.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\contrast-stretch.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\contrast-stretch-hsv.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\convolution-matrix.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\crop-auto.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\cubism.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\deinterlace.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\diffraction.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\displace.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\edge.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\edge-laplace.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\edge-sobel.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\engrave.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-raw.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-tiff-load.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-tiff-save.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-uri.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\illusion.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\iwarp.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\lcms.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\lens-apply.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\lens-distortion.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\lens-flare.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\maze.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\mosaic.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\noise-hsv.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\noise-randomize.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\noise-rgb.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\noise-solid.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\noise-spread.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\nova.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\pixelize.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\plasma.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\polar-coords.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\red-eye-removal.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\ripple.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\rotate.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\semi-flatten.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\shift.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\sinus.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\threshold-alpha.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\tile-glass.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\tile-paper.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\tile-seamless.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\value-invert.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\value-propagate.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\video.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\waves.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\whirl-pinch.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\win-snap.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\wind.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\text-brush.py"
 ;<2.10.6 plug-ins
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\align-layers.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\animation-optimize.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\animation-play.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\blinds.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\blur.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\border-average.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\busy-dialog.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\cartoon.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\checkerboard.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\cml-explorer.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\color-cube-analyze.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\color-enhance.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\colorify.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\colormap-remap.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\compose.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\contrast-normalize.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\contrast-retinex.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\crop-zealous.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\curve-bend.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\decompose.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\depth-merge.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\despeckle.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\destripe.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\edge-dog.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\edge-neon.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\emboss.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-bmp.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-cel.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-compressor.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-csource.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-darktable.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-desktop-link.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-dicom.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-exr.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-faxg3.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-fits.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-fli.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-gbr.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-gegl.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-gif-load.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-gif-save.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-gih.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-glob.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-header.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-heif.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-html-table.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-ico.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-jp2-load.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-jpeg.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-mng.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pat.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pcx.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf-load.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf-save.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pix.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-png.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pnm.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-ps.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psp.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-raw-data.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-raw-placeholder.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-rawtherapee.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-sgi.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-sunras.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-svg.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-tga.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-tiff.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-webp.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-wmf.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-xbm.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-xpm.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-xwd.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\film.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\filter-pack.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\flame.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\fractal-explorer.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\fractal-trace.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gfig.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gimpressionist.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\goat-exercise.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gradient-flare.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gradient-map.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\grid.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\guillotine.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\help-browser.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\help.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\hot.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\ifs-compose.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\imagemap.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\jigsaw.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\lighting.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\map-object.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\max-rgb.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata-editor.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata-viewer.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\newsprint.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\nl-filter.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\oilify.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pagecurl.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\photocopy.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\plugin-browser.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\print.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\procedure-browser.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\qbist.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\sample-colorize.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\screenshot.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\script-fu.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\selection-to-path.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\sharpen.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\smooth-palette.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\softglow.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\sparkle.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\sphere-designer.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\tile-small.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\tile.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\twain.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\unit-editor.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\unsharp-mask.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\van-gogh-lic.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\warp.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\wavelet-decompose.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\web-browser.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\web-page.exe"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\colorxhtml.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-openraster.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\foggify.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gradients-save-as-css.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\histogram-export.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\palette-offset.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\palette-sort.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\palette-to-gradient.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\py-slice.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-eval.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\pyconsole.py"
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\python-console.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\align-layers.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\animation-optimize.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\animation-play.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\blinds.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\blur.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\border-average.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\busy-dialog.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\cartoon.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\checkerboard.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\cml-explorer.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\color-cube-analyze.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\color-enhance.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\colorify.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\colormap-remap.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\compose.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\contrast-normalize.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\contrast-retinex.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\crop-zealous.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\curve-bend.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\decompose.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\depth-merge.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\despeckle.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\destripe.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\edge-dog.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\edge-neon.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\emboss.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-bmp.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-cel.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-compressor.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-csource.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-darktable.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-desktop-link.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-dicom.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-exr.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-faxg3.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-fits.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-fli.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-gbr.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-gegl.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-gif-load.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-gif-save.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-gih.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-glob.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-header.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-heif.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-html-table.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-ico.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-jp2-load.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-jpeg.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-mng.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pat.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pcx.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pdf-load.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pdf-save.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pix.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-png.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-pnm.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-ps.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-psd.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-psp.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-raw-data.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-raw-placeholder.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-rawtherapee.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-sgi.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-sunras.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-svg.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-tga.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-tiff.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-webp.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-wmf.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-xbm.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-xpm.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-xwd.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\film.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\filter-pack.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\flame.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\fractal-explorer.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\fractal-trace.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gfig.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\ligmaressionist.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\goat-exercise.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gradient-flare.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gradient-map.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\grid.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\guillotine.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\help-browser.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\help.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\hot.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\ifs-compose.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\imagemap.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\jigsaw.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\lighting.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\map-object.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\max-rgb.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\metadata-editor.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\metadata-viewer.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\newsprint.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\nl-filter.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\oilify.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\pagecurl.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\photocopy.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\plugin-browser.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\print.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\procedure-browser.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\qbist.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\sample-colorize.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\screenshot.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\script-fu.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\selection-to-path.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\sharpen.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\smooth-palette.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\softglow.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\sparkle.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\sphere-designer.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\tile-small.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\tile.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\twain.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\unit-editor.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\unsharp-mask.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\van-gogh-lic.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\warp.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\wavelet-decompose.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\web-browser.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\web-page.exe"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\colorxhtml.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\file-openraster.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\foggify.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\gradients-save-as-css.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\histogram-export.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\palette-offset.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\palette-sort.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\palette-to-gradient.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\py-slice.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\python-eval.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\python-console\pyconsole.py"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\python-console\python-console.py"
 ;<2.99.14 plug-ins and modules
-Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\py-slice\py-slice.py"
-Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\benchmark-foreground-extract\benchmark-foreground-extract.py"
-;Some typo in meson which we used for GIMP 2.99.12 installer.
-Type: files; Name: "{app}\lib\gimp\2.99\modules\libcontroller-dx-input.dll"
+Type: files; Name: "{app}\lib\ligma\2.99\plug-ins\py-slice\py-slice.py"
+Type: files; Name: "{app}\lib\ligma\2.99\plug-ins\benchmark-foreground-extract\benchmark-foreground-extract.py"
+;Some typo in meson which we used for LIGMA 2.99.12 installer.
+Type: files; Name: "{app}\lib\ligma\2.99\modules\libcontroller-dx-input.dll"
 ;DLLs in plug-ins directory (see bug 796225)
-Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
+Type: files; Name: "{app}\lib\ligma\2.0\plug-ins\*.dll"
 ;gegl 0.2
 Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
 #ifndef DEVEL
-Type: files; Name: "{autoprograms}\GIMP 2.lnk"
-Type: files; Name: "{autodesktop}\GIMP 2.lnk"
+Type: files; Name: "{autoprograms}\LIGMA 2.lnk"
+Type: files; Name: "{autodesktop}\LIGMA 2.lnk"
 #endif
-;get previous GIMP icon name from uninstall name in Registry
+;get previous LIGMA icon name from uninstall name in Registry
 #if Defined(DEVEL) && DEVEL != ""
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
+Type: files; Name: "{autoprograms}\LIGMA {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}.{#MINOR}_is1,DisplayVersion|LIGMA {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\LIGMA {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}.{#MINOR}_is1,DisplayVersion|LIGMA {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
 #else
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
+Type: files; Name: "{autoprograms}\LIGMA {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}_is1,DisplayVersion|LIGMA {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\LIGMA {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}_is1,DisplayVersion|LIGMA {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\LIGMA-{#MAJOR}_is1','DisplayVersion')
 #endif
 ;32-bit Python
-Type: filesandordirs; Name: "{app}\32\lib\gimp\2.0\python"
+Type: filesandordirs; Name: "{app}\32\lib\ligma\2.0\python"
 Type: files; Name: "{app}\32\bin\python2w.exe"
 Type: files; Name: "{app}\32\bin\python2.exe"
 Type: files; Name: "{app}\32\bin\libpython2.7.dll"
@@ -605,8 +605,8 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env"
+Type: files; Name: "{app}\lib\ligma\{#DIR_VER}\interpreters\lua.interp"
+Type: files; Name: "{app}\lib\ligma\{#DIR_VER}\environ\pyligma.env"
 ;need to clean out all the generated .pyc files
 Type: filesandordirs; Name: "{app}\Python\*"
 
@@ -649,13 +649,13 @@ const
 	BITSPIXEL = 12;
 	PLANES = 14;
 
-	GIMP_URL = 'https://www.gimp.org/';
+	LIGMA_URL = 'https://www.ligma.org/';
 
 	RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Tahoma;}{\f1\fnil\fcharset2 Symbol;}}\viewkind4\uc1\fs16';
 	//RTFBullet = '{\pntext\f1\''B7\tab}';
 	RTFPara	  = '\par ';
 
-	RunOnceName = 'Resume GIMP {#VERSION} install';
+	RunOnceName = 'Resume LIGMA {#VERSION} install';
 
 	CONFIG_OVERRIDE_PARAM = 'configoverride';
 
@@ -663,7 +663,7 @@ const
 	UNINSTALL_CHECK_TIME    =   250;
 
 type
-	TRemoveOldGIMPResult = (rogContinue, rogRestartRequired, rogUninstallFailed, rogCantUninstall);
+	TRemoveOldLIGMAResult = (rogContinue, rogRestartRequired, rogUninstallFailed, rogCantUninstall);
 
 var
 	lblComponentDescription: TNewStaticText;
@@ -808,10 +808,10 @@ begin
 #ifdef PYTHON
 	if IsComponentSelected('py') then
 	begin
-		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
+		StatusLabel(CustomMessage('SettingUpPyLigma'),'');
 
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\pygimp.interp');
-        DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
+		InterpFile := ExpandConstant('{app}\lib\ligma\{#DIR_VER}\interpreters\pyligma.interp');
+        DebugMsg('PrepareInterp','Writing interpreter file for ligma-python: ' + InterpFile);
 
 #ifdef DEVEL
 	#define PYTHON="python.exe"
@@ -837,7 +837,7 @@ begin
 #ifdef LUA
 	if IsComponentSelected('lua') then
 	begin
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
+		InterpFile := ExpandConstant('{app}\lib\ligma\{#DIR_VER}\interpreters\lua.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
 		InterpContent := 'lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
@@ -857,13 +857,13 @@ begin
 // not optional
 // !!! use comma for binfmt delimiter and full Windows path in interpreter field of binfmt
 begin
-	InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\gimp-script-fu-interpreter.interp');
-			DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
+	InterpFile := ExpandConstant('{app}\lib\ligma\{#DIR_VER}\interpreters\ligma-script-fu-interpreter.interp');
+			DebugMsg('PrepareInterp','Writing interpreter file for ligma-script-fu-interpreter: ' + InterpFile);
 
-	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						'gimp-script-fu-interpreter-3.0=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						'/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + ','#10;
+	InterpContent := 'ligma-script-fu-interpreter=' + ExpandConstant('{app}\bin\ligma-script-fu-interpreter-3.0.exe') + #10 +
+						'ligma-script-fu-interpreter-3.0=' + ExpandConstant('{app}\bin\ligma-script-fu-interpreter-3.0.exe') + #10 +
+						'/usr/bin/ligma-script-fu-interpreter=' + ExpandConstant('{app}\bin\ligma-script-fu-interpreter-3.0.exe') + #10 +
+						',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\ligma-script-fu-interpreter-3.0.exe') + ','#10;
 
 	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 	begin
@@ -875,22 +875,22 @@ end;
 end;
 
 
-procedure PrepareGimpEnvironment();
+procedure PrepareLigmaEnvironment();
 var EnvFile,Env: String;
 begin
 
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\default.env');
-	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+	EnvFile := ExpandConstant('{app}\lib\ligma\{#DIR_VER}\environ\default.env');
+	DebugMsg('PrepareLigmaEnvironment','Setting environment in ' + EnvFile);
 
-	Env := #10'PATH=${gimp_installation_dir}\bin';
+	Env := #10'PATH=${ligma_installation_dir}\bin';
 
-	if IsComponentSelected('gimp32on64') then
+	if IsComponentSelected('ligma32on64') then
 	begin
 
-		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
+		Env := Env + ';${ligma_installation_dir}\32\bin' + #10;
 
 	end else
 	begin
@@ -899,25 +899,25 @@ begin
 
 	end;
 
-	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
+	DebugMsg('PrepareLigmaEnvironment','Appending ' + Env);
 
 	if not SaveStringToUTF8File(EnvFile,Env,True) then
 	begin
-		DebugMsg('PrepareGimpEnvironment','Problem appending');
+		DebugMsg('PrepareLigmaEnvironment','Problem appending');
 		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 	end;
 
 	//workaround for high-DPI awareness of Python plug-ins
 	if IsComponentSelected('py') then
 	begin
-		EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env');
-		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+		EnvFile := ExpandConstant('{app}\lib\ligma\{#DIR_VER}\environ\pyligma.env');
+		DebugMsg('PrepareLigmaEnvironment','Setting environment in ' + EnvFile);
 
 		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
 
 		if not SaveStringToUTF8File(EnvFile,Env,True) then
 		begin
-			DebugMsg('PrepareGimpEnvironment','Problem appending');
+			DebugMsg('PrepareLigmaEnvironment','Problem appending');
 			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 		end;
 	end;
@@ -925,14 +925,14 @@ begin
 	// Disable check-update when run with specific option
         if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
 	begin
-		EnvFile := ExpandConstant('{app}\share\gimp\{#DIR_VER}\gimp-release');
+		EnvFile := ExpandConstant('{app}\share\ligma\{#DIR_VER}\ligma-release');
 		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
 
                 Env := 'check-update=false'
 
 		if not SaveStringToUTF8File(EnvFile,Env,True) then
 		begin
-			DebugMsg('PrepareGimpEnvironment','Problem appending');
+			DebugMsg('PrepareLigmaEnvironment','Problem appending');
 			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 		end;
 	end;
@@ -1136,7 +1136,7 @@ end;
 procedure lblURL_OnClick(Sender: TObject);
 var ErrorCode: Integer;
 begin
-	ShellExecAsOriginalUser('',GIMP_URL,'','',SW_SHOW,ewNoWait,ErrorCode);
+	ShellExecAsOriginalUser('',LIGMA_URL,'','',SW_SHOW,ewNoWait,ErrorCode);
 end;
 
 
@@ -1202,7 +1202,7 @@ begin
 
 		OnClick := @lblURL_OnClick;
 
-		Caption := GIMP_URL;
+		Caption := LIGMA_URL;
 
 		Left := Integer(WizardForm.InstallingPage.ClientWidth / 2 - Width / 2);
 	end;
@@ -1236,7 +1236,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug','Translations','MyPaint','Python','Ghostscript','Lua','Gimp32'];
+	Components := ['Ligma','Deps','Debug','Translations','MyPaint','Python','Ghostscript','Lua','Ligma32'];
 	ComponentDesc := '';
 
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
@@ -1374,8 +1374,8 @@ begin
 end;
 
 
-procedure DoUninstall(const UninstStr, InstallDir: String; const pInfoLabel: TNewStaticText; var oResult: TRemoveOldGIMPResult);
-var InResult: TRemoveOldGIMPResult;
+procedure DoUninstall(const UninstStr, InstallDir: String; const pInfoLabel: TNewStaticText; var oResult: TRemoveOldLIGMAResult);
+var InResult: TRemoveOldLIGMAResult;
 	ResultCode, i: Integer;
 begin
 	InResult := oResult;
@@ -1414,7 +1414,7 @@ begin
 	begin
 		if not DirExists(ExpandConstant('{app}')) then
 		begin
-			DebugMsg('DoUninstall','Existing GIMP directory removed, restoring previous restart requirement');
+			DebugMsg('DoUninstall','Existing LIGMA directory removed, restoring previous restart requirement');
 			oResult := InResult; //restore previous result
 			break;
 		end;
@@ -1425,7 +1425,7 @@ begin
 end;
 
 
-function RemoveOldGIMPVersions(): TRemoveOldGIMPResult;
+function RemoveOldLIGMAVersions(): TRemoveOldLIGMAResult;
 var lblInfo1,lblInfo2: TNewStaticText;
 	RootKey: Integer;
 	OldPath, UninstallString, WhichStr: String;
@@ -1463,18 +1463,18 @@ begin
 	else
 		RootKey := HKLM;
 
-	if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+	if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLigma-2.0_is1',
 	                  'Inno Setup: App Path') then
 	begin
-		if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+		if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLigma-2.0_is1',
 		                       'Inno Setup: App Path',OldPath) then
 		begin
-			DebugMsg('RemoveOldGIMPVersions','Found legacy GIMP install, removing');
+			DebugMsg('RemoveOldLIGMAVersions','Found legacy LIGMA install, removing');
 
-			if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLigma-2.0_is1',
 			                  'QuietUninstallString') then
 				WhichStr := 'QuietUninstallString'
-			else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLigma-2.0_is1',
 			                       'UninstallString') then
 				WhichStr := 'UninstallString'
 			else
@@ -1483,7 +1483,7 @@ begin
 				exit;
 			end;
 
-			if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinLigma-2.0_is1',
 			                           WhichStr,UninstallString) then
 			begin
 				Result := rogCantUninstall;
@@ -1627,7 +1627,7 @@ begin
 		ssPostInstall:
 		begin
 			PrepareInterp();
-			PrepareGimpEnvironment();
+			PrepareLigmaEnvironment();
 		end;
 	end;
 end;
@@ -1635,17 +1635,17 @@ end;
 
 function PrepareToInstall(var pNeedsRestart: Boolean): String;
 var	ChecksumBefore, ChecksumAfter: String;
-	RemoveResult: TRemoveOldGIMPResult;
+	RemoveResult: TRemoveOldLIGMAResult;
 begin
 
 	ChecksumBefore := MakePendingFileRenameOperationsChecksum;
 
-	RemoveResult := RemoveOldGIMPVersions;
+	RemoveResult := RemoveOldLIGMAVersions;
 
 	if RemoveResult = rogRestartRequired then //old version was uninstalled, but something was left behind, so to be safe a reboot
 	begin                                     //is enforced - this can only happen when reusing install directory
 
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions requires restart');
+		DebugMsg('PrepareToInstall','RemoveOldLIGMAVersions requires restart');
 
 		ChecksumAfter := MakePendingFileRenameOperationsChecksum;
 		if (ChecksumBefore <> ChecksumAfter) or (ExpandConstant('{param:debugresume|0}') = '1') then
@@ -1657,17 +1657,17 @@ begin
 	end else
 	if RemoveResult = rogContinue then
 	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions finished successfully');
+		DebugMsg('PrepareToInstall','RemoveOldLIGMAVersions finished successfully');
 		Result := ''; //old version was uninstalled successfully, nothing was left behind, so install can continue immediately
 	end else
 	if RemoveResult = rogUninstallFailed then
 	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version');
+		DebugMsg('PrepareToInstall','RemoveOldLIGMAVersions failed to uninstall old LIGMA version');
 		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#VERSION}',ExpandConstant('{app}')]);
 	end else
 	if RemoveResult = rogCantUninstall then
 	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version [1]');
+		DebugMsg('PrepareToInstall','RemoveOldLIGMAVersions failed to uninstall old LIGMA version [1]');
 		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#VERSION}',ExpandConstant('{app}')]);
 	end else
 	begin
@@ -1813,7 +1813,7 @@ begin
 		                            '#'#13#10+
 		                            '#Empty lines and lines beginning with # are ignored'#13#10+
 		                            '#'#13#10+
-		                            '#Add uninstallers for GIMP add-ons that should be removed together with GIMP like this:'#13#10+
+		                            '#Add uninstallers for LIGMA add-ons that should be removed together with LIGMA like this:'#13#10+
 		                            '#Run:<description>/<full path to uninstaller>/<parameters for automatic uninstall>'#13#10+
 		                            '#'#13#10+
 		                            '#The file is parsed in reverse order' + #13#10 +

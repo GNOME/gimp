@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimptextlayer_pdb.c
+ * ligmatextlayer_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimptextlayer
- * @title: gimptextlayer
+ * SECTION: ligmatextlayer
+ * @title: ligmatextlayer
  * @short_description: Functions for querying and manipulating text layers.
  *
  * Functions for querying and manipulating text layers.
@@ -37,7 +37,7 @@
 
 
 /**
- * _gimp_text_layer_new:
+ * _ligma_text_layer_new:
  * @image: The image.
  * @text: The text to generate (in UTF-8 encoding).
  * @fontname: The name of the font.
@@ -49,48 +49,48 @@
  * This procedure creates a new text layer. The arguments are kept as
  * simple as necessary for the normal case. All text attributes,
  * however, can be modified with the appropriate
- * gimp_text_layer_set_*() procedures. The new layer still needs to be
+ * ligma_text_layer_set_*() procedures. The new layer still needs to be
  * added to the image, as this is not automatic. Add the new layer
- * using gimp_image_insert_layer().
+ * using ligma_image_insert_layer().
  *
  * Returns: (transfer none): The new text layer.
  *
  * Since: 2.6
  **/
-GimpTextLayer *
-_gimp_text_layer_new (GimpImage   *image,
+LigmaTextLayer *
+_ligma_text_layer_new (LigmaImage   *image,
                       const gchar *text,
                       const gchar *fontname,
                       gdouble      size,
-                      GimpUnit     unit)
+                      LigmaUnit     unit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTextLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, text,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_UNIT, unit,
+                                          LIGMA_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_TEXT_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_TEXT_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_text_layer_get_text:
+ * ligma_text_layer_get_text:
  * @layer: The text layer.
  *
  * Get the text from a text layer as string.
@@ -103,31 +103,31 @@ _gimp_text_layer_new (GimpImage   *image,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_text (GimpTextLayer *layer)
+ligma_text_layer_get_text (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *text = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-text",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-text",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    text = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    text = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return text;
 }
 
 /**
- * gimp_text_layer_set_text:
+ * ligma_text_layer_set_text:
  * @layer: The text layer.
  * @text: The new text to set.
  *
@@ -140,32 +140,32 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_text (GimpTextLayer *layer,
+ligma_text_layer_set_text (LigmaTextLayer *layer,
                           const gchar   *text)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, text,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-text",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-text",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_markup:
+ * ligma_text_layer_get_markup:
  * @layer: The text layer.
  *
  * Get the markup from a text layer as string.
@@ -182,31 +182,31 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
  * Since: 2.8
  **/
 gchar *
-gimp_text_layer_get_markup (GimpTextLayer *layer)
+ligma_text_layer_get_markup (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *markup = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-markup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-markup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    markup = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    markup = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return markup;
 }
 
 /**
- * gimp_text_layer_set_markup:
+ * ligma_text_layer_set_markup:
  * @layer: The text layer.
  * @markup: The new markup to set.
  *
@@ -215,7 +215,7 @@ gimp_text_layer_get_markup (GimpTextLayer *layer)
  * This procedure sets the markup of the styles for a text layer. The
  * markup should be in the form of Pango's markup - See
  * https://docs.gtk.org/Pango/pango_markup.html for a reference.
- * Note that GIMP's text tool does not support all of Pango markup. Any
+ * Note that LIGMA's text tool does not support all of Pango markup. Any
  * unsupported markup will still be applied to your text layer, yet
  * would be dropped as soon as you edit text with the tool.
  *
@@ -224,32 +224,32 @@ gimp_text_layer_get_markup (GimpTextLayer *layer)
  * Since: 3.0
  **/
 gboolean
-gimp_text_layer_set_markup (GimpTextLayer *layer,
+ligma_text_layer_set_markup (LigmaTextLayer *layer,
                             const gchar   *markup)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, markup,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-markup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-markup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_font:
+ * ligma_text_layer_get_font:
  * @layer: The text layer.
  *
  * Get the font from a text layer as string.
@@ -263,31 +263,31 @@ gimp_text_layer_set_markup (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_font (GimpTextLayer *layer)
+ligma_text_layer_get_font (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *font = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-font",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-font",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    font = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    font = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return font;
 }
 
 /**
- * gimp_text_layer_set_font:
+ * ligma_text_layer_set_font:
  * @layer: The text layer.
  * @font: The new font to use.
  *
@@ -300,32 +300,32 @@ gimp_text_layer_get_font (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_font (GimpTextLayer *layer,
+ligma_text_layer_set_font (LigmaTextLayer *layer,
                           const gchar   *font)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, font,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-font",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-font",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_font_size:
+ * ligma_text_layer_get_font_size:
  * @layer: The text layer.
  * @unit: (out) (transfer none): The unit used for the font size.
  *
@@ -340,35 +340,35 @@ gimp_text_layer_set_font (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_font_size (GimpTextLayer *layer,
-                               GimpUnit      *unit)
+ligma_text_layer_get_font_size (LigmaTextLayer *layer,
+                               LigmaUnit      *unit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble font_size = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-font-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-font-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      font_size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *unit = GIMP_VALUES_GET_INT (return_vals, 2);
+      font_size = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *unit = LIGMA_VALUES_GET_INT (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return font_size;
 }
 
 /**
- * gimp_text_layer_set_font_size:
+ * ligma_text_layer_set_font_size:
  * @layer: The text layer.
  * @font_size: The font size.
  * @unit: The unit to use for the font size.
@@ -383,34 +383,34 @@ gimp_text_layer_get_font_size (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_font_size (GimpTextLayer *layer,
+ligma_text_layer_set_font_size (LigmaTextLayer *layer,
                                gdouble        font_size,
-                               GimpUnit       unit)
+                               LigmaUnit       unit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, font_size,
-                                          GIMP_TYPE_UNIT, unit,
+                                          LIGMA_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-font-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-font-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_antialias:
+ * ligma_text_layer_get_antialias:
  * @layer: The text layer.
  *
  * Check if antialiasing is used in the text layer.
@@ -423,31 +423,31 @@ gimp_text_layer_set_font_size (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_antialias (GimpTextLayer *layer)
+ligma_text_layer_get_antialias (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean antialias = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-antialias",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-antialias",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    antialias = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    antialias = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return antialias;
 }
 
 /**
- * gimp_text_layer_set_antialias:
+ * ligma_text_layer_set_antialias:
  * @layer: The text layer.
  * @antialias: Enable/disable antialiasing of the text.
  *
@@ -461,32 +461,32 @@ gimp_text_layer_get_antialias (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_antialias (GimpTextLayer *layer,
+ligma_text_layer_set_antialias (LigmaTextLayer *layer,
                                gboolean       antialias)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-antialias",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-antialias",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_hint_style:
+ * ligma_text_layer_get_hint_style:
  * @layer: The text layer.
  *
  * Get information about hinting in the specified text layer.
@@ -499,32 +499,32 @@ gimp_text_layer_set_antialias (GimpTextLayer *layer,
  *
  * Since: 2.8
  **/
-GimpTextHintStyle
-gimp_text_layer_get_hint_style (GimpTextLayer *layer)
+LigmaTextHintStyle
+ligma_text_layer_get_hint_style (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextHintStyle style = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTextHintStyle style = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-hint-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-hint-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    style = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return style;
 }
 
 /**
- * gimp_text_layer_set_hint_style:
+ * ligma_text_layer_set_hint_style:
  * @layer: The text layer.
  * @style: The new hint style.
  *
@@ -539,32 +539,32 @@ gimp_text_layer_get_hint_style (GimpTextLayer *layer)
  * Since: 2.8
  **/
 gboolean
-gimp_text_layer_set_hint_style (GimpTextLayer     *layer,
-                                GimpTextHintStyle  style)
+ligma_text_layer_set_hint_style (LigmaTextLayer     *layer,
+                                LigmaTextHintStyle  style)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
-                                          GIMP_TYPE_TEXT_HINT_STYLE, style,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
+                                          LIGMA_TYPE_TEXT_HINT_STYLE, style,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-hint-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-hint-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_kerning:
+ * ligma_text_layer_get_kerning:
  * @layer: The text layer.
  *
  * Check if kerning is used in the text layer.
@@ -577,31 +577,31 @@ gimp_text_layer_set_hint_style (GimpTextLayer     *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_kerning (GimpTextLayer *layer)
+ligma_text_layer_get_kerning (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean kerning = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-kerning",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-kerning",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    kerning = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    kerning = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return kerning;
 }
 
 /**
- * gimp_text_layer_set_kerning:
+ * ligma_text_layer_set_kerning:
  * @layer: The text layer.
  * @kerning: Enable/disable kerning in the text.
  *
@@ -614,32 +614,32 @@ gimp_text_layer_get_kerning (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_kerning (GimpTextLayer *layer,
+ligma_text_layer_set_kerning (LigmaTextLayer *layer,
                              gboolean       kerning)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_BOOLEAN, kerning,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-kerning",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-kerning",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_language:
+ * ligma_text_layer_get_language:
  * @layer: The text layer.
  *
  * Get the language used in the text layer.
@@ -653,31 +653,31 @@ gimp_text_layer_set_kerning (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_language (GimpTextLayer *layer)
+ligma_text_layer_get_language (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *language = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-language",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-language",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    language = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    language = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return language;
 }
 
 /**
- * gimp_text_layer_set_language:
+ * ligma_text_layer_set_language:
  * @layer: The text layer.
  * @language: The new language to use for the text layer.
  *
@@ -691,32 +691,32 @@ gimp_text_layer_get_language (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_language (GimpTextLayer *layer,
+ligma_text_layer_set_language (LigmaTextLayer *layer,
                               const gchar   *language)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, language,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-language",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-language",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_base_direction:
+ * ligma_text_layer_get_base_direction:
  * @layer: The text layer.
  *
  * Get the base direction used for rendering the text layer.
@@ -728,32 +728,32 @@ gimp_text_layer_set_language (GimpTextLayer *layer,
  *
  * Since: 2.6
  **/
-GimpTextDirection
-gimp_text_layer_get_base_direction (GimpTextLayer *layer)
+LigmaTextDirection
+ligma_text_layer_get_base_direction (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextDirection direction = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTextDirection direction = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-base-direction",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-base-direction",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    direction = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    direction = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return direction;
 }
 
 /**
- * gimp_text_layer_set_base_direction:
+ * ligma_text_layer_set_base_direction:
  * @layer: The text layer.
  * @direction: The base direction of the text.
  *
@@ -767,32 +767,32 @@ gimp_text_layer_get_base_direction (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_base_direction (GimpTextLayer     *layer,
-                                    GimpTextDirection  direction)
+ligma_text_layer_set_base_direction (LigmaTextLayer     *layer,
+                                    LigmaTextDirection  direction)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
-                                          GIMP_TYPE_TEXT_DIRECTION, direction,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
+                                          LIGMA_TYPE_TEXT_DIRECTION, direction,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-base-direction",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-base-direction",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_justification:
+ * ligma_text_layer_get_justification:
  * @layer: The text layer.
  *
  * Get the text justification information of the text layer.
@@ -804,32 +804,32 @@ gimp_text_layer_set_base_direction (GimpTextLayer     *layer,
  *
  * Since: 2.6
  **/
-GimpTextJustification
-gimp_text_layer_get_justification (GimpTextLayer *layer)
+LigmaTextJustification
+ligma_text_layer_get_justification (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextJustification justify = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaTextJustification justify = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-justification",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-justification",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    justify = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    justify = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return justify;
 }
 
 /**
- * gimp_text_layer_set_justification:
+ * ligma_text_layer_set_justification:
  * @layer: The text layer.
  * @justify: The justification for your text.
  *
@@ -843,32 +843,32 @@ gimp_text_layer_get_justification (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_justification (GimpTextLayer         *layer,
-                                   GimpTextJustification  justify)
+ligma_text_layer_set_justification (LigmaTextLayer         *layer,
+                                   LigmaTextJustification  justify)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
-                                          GIMP_TYPE_TEXT_JUSTIFICATION, justify,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
+                                          LIGMA_TYPE_TEXT_JUSTIFICATION, justify,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-justification",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-justification",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_color:
+ * ligma_text_layer_get_color:
  * @layer: The text layer.
  * @color: (out caller-allocates): The color of the text.
  *
@@ -881,34 +881,34 @@ gimp_text_layer_set_justification (GimpTextLayer         *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_color (GimpTextLayer *layer,
-                           GimpRGB       *color)
+ligma_text_layer_get_color (LigmaTextLayer *layer,
+                           LigmaRGB       *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*color);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_set_color:
+ * ligma_text_layer_set_color:
  * @layer: The text layer.
  * @color: The color to use for the text.
  *
@@ -921,32 +921,32 @@ gimp_text_layer_get_color (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_color (GimpTextLayer *layer,
-                           const GimpRGB *color)
+ligma_text_layer_set_color (LigmaTextLayer *layer,
+                           const LigmaRGB *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
-                                          GIMP_TYPE_RGB, color,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_indent:
+ * ligma_text_layer_get_indent:
  * @layer: The text layer.
  *
  * Get the line indentation of text layer.
@@ -959,31 +959,31 @@ gimp_text_layer_set_color (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_indent (GimpTextLayer *layer)
+ligma_text_layer_get_indent (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble indent = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-indent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-indent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    indent = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    indent = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return indent;
 }
 
 /**
- * gimp_text_layer_set_indent:
+ * ligma_text_layer_set_indent:
  * @layer: The text layer.
  * @indent: The indentation for the first line.
  *
@@ -997,32 +997,32 @@ gimp_text_layer_get_indent (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_indent (GimpTextLayer *layer,
+ligma_text_layer_set_indent (LigmaTextLayer *layer,
                             gdouble        indent)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, indent,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-indent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-indent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_line_spacing:
+ * ligma_text_layer_get_line_spacing:
  * @layer: The text layer.
  *
  * Get the spacing between lines of text.
@@ -1035,31 +1035,31 @@ gimp_text_layer_set_indent (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_line_spacing (GimpTextLayer *layer)
+ligma_text_layer_get_line_spacing (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble line_spacing = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-line-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-line-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    line_spacing = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return line_spacing;
 }
 
 /**
- * gimp_text_layer_set_line_spacing:
+ * ligma_text_layer_set_line_spacing:
  * @layer: The text layer.
  * @line_spacing: The additional line spacing to use.
  *
@@ -1073,32 +1073,32 @@ gimp_text_layer_get_line_spacing (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_line_spacing (GimpTextLayer *layer,
+ligma_text_layer_set_line_spacing (LigmaTextLayer *layer,
                                   gdouble        line_spacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, line_spacing,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-line-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-line-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_get_letter_spacing:
+ * ligma_text_layer_get_letter_spacing:
  * @layer: The text layer.
  *
  * Get the letter spacing used in a text layer.
@@ -1111,31 +1111,31 @@ gimp_text_layer_set_line_spacing (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_letter_spacing (GimpTextLayer *layer)
+ligma_text_layer_get_letter_spacing (LigmaTextLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble letter_spacing = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-get-letter-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-get-letter-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    letter_spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    letter_spacing = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return letter_spacing;
 }
 
 /**
- * gimp_text_layer_set_letter_spacing:
+ * ligma_text_layer_set_letter_spacing:
  * @layer: The text layer.
  * @letter_spacing: The additional letter spacing to use.
  *
@@ -1149,32 +1149,32 @@ gimp_text_layer_get_letter_spacing (GimpTextLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
+ligma_text_layer_set_letter_spacing (LigmaTextLayer *layer,
                                     gdouble        letter_spacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, letter_spacing,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-set-letter-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-set-letter-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_text_layer_resize:
+ * ligma_text_layer_resize:
  * @layer: The text layer.
  * @width: The new box width in pixels.
  * @height: The new box height in pixels.
@@ -1183,35 +1183,35 @@ gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
  *
  * This procedure changes the width and height of a text layer while
  * keeping it as a text layer and not converting it to a bitmap like
- * gimp_layer_resize() would do.
+ * ligma_layer_resize() would do.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_text_layer_resize (GimpTextLayer *layer,
+ligma_text_layer_resize (LigmaTextLayer *layer,
                         gdouble        width,
                         gdouble        height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_TEXT_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-layer-resize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-layer-resize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

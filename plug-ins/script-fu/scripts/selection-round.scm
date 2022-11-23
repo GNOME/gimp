@@ -1,6 +1,6 @@
 ; selection-rounded-rectangle.scm -*-scheme-*-
 
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -33,14 +33,14 @@
 ; full ownership of this script belongs to Sven Neumann.
 
 (define (script-fu-selection-rounded-rectangle image drawable radius concave)
-  (gimp-image-undo-group-start image)
+  (ligma-image-undo-group-start image)
 
-  (if (= (car (gimp-selection-is-empty image)) TRUE) (gimp-selection-all image))
+  (if (= (car (ligma-selection-is-empty image)) TRUE) (ligma-selection-all image))
   (let* (
         (radius (/ radius 100)) ; convert from percentages
         (radius (min radius 1.0))
         (radius (max radius 0.0))
-        (select-bounds (gimp-selection-bounds image))
+        (select-bounds (ligma-selection-bounds image))
         (has-selection (car select-bounds))
         (select-x1 (cadr select-bounds))
         (select-y1 (caddr select-bounds))
@@ -52,12 +52,12 @@
         (ellipse-radius 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
     ;; select to the full bounds of the selection,
     ;; fills in irregular shapes or holes.
-    (gimp-image-select-rectangle image CHANNEL-OP-ADD
+    (ligma-image-select-rectangle image CHANNEL-OP-ADD
               select-x1 select-y1 select-width select-height)
 
     (if (> select-width select-height)
@@ -66,28 +66,28 @@
     )
     (set! ellipse-radius (* cut-radius 2))
 
-    (gimp-context-set-antialias TRUE)
+    (ligma-context-set-antialias TRUE)
     ;; cut away rounded (concave) corners
     ; top right
-    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+    (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT
                                (- select-x1 cut-radius)
                                (- select-y1 cut-radius)
                                (* cut-radius 2)
                                (* cut-radius 2))
     ; lower left
-    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+    (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT
                                (- select-x1 cut-radius)
                                (- select-y2 cut-radius)
                                (* cut-radius 2)
                                (* cut-radius 2))
     ; top right
-    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+    (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT
                                (- select-x2 cut-radius)
                                (- select-y1 cut-radius)
                                (* cut-radius 2)
                                (* cut-radius 2))
     ; bottom left
-    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+    (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT
                                (- select-x2 cut-radius)
                                (- select-y2 cut-radius)
                                (* cut-radius 2)
@@ -96,25 +96,25 @@
     ;; add in rounded (convex) corners
     (if (= concave FALSE)
       (begin
-        (gimp-image-select-ellipse image
+        (ligma-image-select-ellipse image
                                    CHANNEL-OP-ADD
                                    select-x1
                                    select-y1
                                    ellipse-radius
                                    ellipse-radius)
-        (gimp-image-select-ellipse image
+        (ligma-image-select-ellipse image
                                    CHANNEL-OP-ADD
                                    select-x1
                                    (- select-y2 ellipse-radius)
                                    ellipse-radius
                                    ellipse-radius)
-        (gimp-image-select-ellipse image
+        (ligma-image-select-ellipse image
                                    CHANNEL-OP-ADD
                                    (- select-x2 ellipse-radius)
                                    select-y1
                                    ellipse-radius
                                    ellipse-radius)
-        (gimp-image-select-ellipse image
+        (ligma-image-select-ellipse image
                                    CHANNEL-OP-ADD
                                    (- select-x2 ellipse-radius)
                                    (- select-y2 ellipse-radius)
@@ -123,9 +123,9 @@
       )
     )
 
-    (gimp-image-undo-group-end image)
-    (gimp-displays-flush)
-    (gimp-context-pop)
+    (ligma-image-undo-group-end image)
+    (ligma-displays-flush)
+    (ligma-context-pop)
   )
 )
 

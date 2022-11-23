@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpenvirontable.c
- * (C) 2002 Manish Singh <yosh@gimp.org>
+ * ligmaenvirontable.c
+ * (C) 2002 Manish Singh <yosh@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,77 +24,77 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "plug-in-types.h"
 
-#include "gimpenvirontable.h"
+#include "ligmaenvirontable.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-typedef struct _GimpEnvironValue GimpEnvironValue;
+typedef struct _LigmaEnvironValue LigmaEnvironValue;
 
-struct _GimpEnvironValue
+struct _LigmaEnvironValue
 {
   gchar *value;
   gchar *separator;
 };
 
 
-static void     gimp_environ_table_finalize       (GObject               *object);
+static void     ligma_environ_table_finalize       (GObject               *object);
 
-static void     gimp_environ_table_load_env_file  (GimpEnvironTable      *environ_table,
+static void     ligma_environ_table_load_env_file  (LigmaEnvironTable      *environ_table,
                                                    GFile                 *file);
-static gboolean gimp_environ_table_legal_name     (gchar                 *name);
+static gboolean ligma_environ_table_legal_name     (gchar                 *name);
 
-static void     gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
-static void     gimp_environ_table_populate_one   (const gchar           *name,
-                                                   GimpEnvironValue      *val,
+static void     ligma_environ_table_populate       (LigmaEnvironTable      *environ_table);
+static void     ligma_environ_table_populate_one   (const gchar           *name,
+                                                   LigmaEnvironValue      *val,
                                                    GPtrArray             *env_array);
-static gboolean gimp_environ_table_pass_through   (GimpEnvironTable      *environ_table,
+static gboolean ligma_environ_table_pass_through   (LigmaEnvironTable      *environ_table,
                                                    const gchar           *name);
 
-static void     gimp_environ_table_clear_vars     (GimpEnvironTable      *environ_table);
-static void     gimp_environ_table_clear_internal (GimpEnvironTable      *environ_table);
-static void     gimp_environ_table_clear_envp     (GimpEnvironTable      *environ_table);
+static void     ligma_environ_table_clear_vars     (LigmaEnvironTable      *environ_table);
+static void     ligma_environ_table_clear_internal (LigmaEnvironTable      *environ_table);
+static void     ligma_environ_table_clear_envp     (LigmaEnvironTable      *environ_table);
 
-static void     gimp_environ_table_free_value     (GimpEnvironValue      *val);
+static void     ligma_environ_table_free_value     (LigmaEnvironValue      *val);
 
 
-G_DEFINE_TYPE (GimpEnvironTable, gimp_environ_table, G_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaEnvironTable, ligma_environ_table, G_TYPE_OBJECT)
 
-#define parent_class gimp_environ_table_parent_class
+#define parent_class ligma_environ_table_parent_class
 
 
 static void
-gimp_environ_table_class_init (GimpEnvironTableClass *class)
+ligma_environ_table_class_init (LigmaEnvironTableClass *class)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (class);
 
-  object_class->finalize = gimp_environ_table_finalize;
+  object_class->finalize = ligma_environ_table_finalize;
 }
 
 static void
-gimp_environ_table_init (GimpEnvironTable *environ_table)
+ligma_environ_table_init (LigmaEnvironTable *environ_table)
 {
 }
 
 static void
-gimp_environ_table_finalize (GObject *object)
+ligma_environ_table_finalize (GObject *object)
 {
-  GimpEnvironTable *environ_table = GIMP_ENVIRON_TABLE (object);
+  LigmaEnvironTable *environ_table = LIGMA_ENVIRON_TABLE (object);
 
-  gimp_environ_table_clear_all (environ_table);
+  ligma_environ_table_clear_all (environ_table);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GimpEnvironTable *
-gimp_environ_table_new (gboolean verbose)
+LigmaEnvironTable *
+ligma_environ_table_new (gboolean verbose)
 {
-  GimpEnvironTable *table = g_object_new (GIMP_TYPE_ENVIRON_TABLE, NULL);
+  LigmaEnvironTable *table = g_object_new (LIGMA_TYPE_ENVIRON_TABLE, NULL);
 
   table->verbose = verbose;
 
@@ -102,7 +102,7 @@ gimp_environ_table_new (gboolean verbose)
 }
 
 static guint
-gimp_environ_table_str_hash (gconstpointer v)
+ligma_environ_table_str_hash (gconstpointer v)
 {
 #ifdef G_OS_WIN32
   gchar *p      = g_ascii_strup ((const gchar *) v, -1);
@@ -117,7 +117,7 @@ gimp_environ_table_str_hash (gconstpointer v)
 }
 
 static gboolean
-gimp_environ_table_str_equal (gconstpointer v1,
+ligma_environ_table_str_equal (gconstpointer v1,
                               gconstpointer v2)
 {
 #ifdef G_OS_WIN32
@@ -135,20 +135,20 @@ gimp_environ_table_str_equal (gconstpointer v1,
 }
 
 void
-gimp_environ_table_load (GimpEnvironTable *environ_table,
+ligma_environ_table_load (LigmaEnvironTable *environ_table,
                          GList            *path)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+  g_return_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table));
 
-  gimp_environ_table_clear (environ_table);
+  ligma_environ_table_clear (environ_table);
 
   environ_table->vars =
-    g_hash_table_new_full (gimp_environ_table_str_hash,
-                           gimp_environ_table_str_equal,
+    g_hash_table_new_full (ligma_environ_table_str_hash,
+                           ligma_environ_table_str_equal,
                            g_free,
-                           (GDestroyNotify) gimp_environ_table_free_value);
+                           (GDestroyNotify) ligma_environ_table_free_value);
 
   for (list = path; list; list = g_list_next (list))
     {
@@ -175,7 +175,7 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
                 {
                   GFile *file = g_file_enumerator_get_child (enumerator, info);
 
-                  gimp_environ_table_load_env_file (environ_table, file);
+                  ligma_environ_table_load_env_file (environ_table, file);
 
                   g_object_unref (file);
                 }
@@ -189,24 +189,24 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
 }
 
 void
-gimp_environ_table_add (GimpEnvironTable *environ_table,
+ligma_environ_table_add (LigmaEnvironTable *environ_table,
                         const gchar      *name,
                         const gchar      *value,
                         const gchar      *separator)
 {
-  GimpEnvironValue *val;
+  LigmaEnvironValue *val;
 
-  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+  g_return_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table));
 
-  gimp_environ_table_clear_envp (environ_table);
+  ligma_environ_table_clear_envp (environ_table);
 
   if (! environ_table->internal)
     environ_table->internal =
       g_hash_table_new_full (g_str_hash, g_str_equal,
                              g_free,
-                             (GDestroyNotify) gimp_environ_table_free_value);
+                             (GDestroyNotify) ligma_environ_table_free_value);
 
-  val = g_slice_new (GimpEnvironValue);
+  val = g_slice_new (LigmaEnvironValue);
 
   val->value     = g_strdup (value);
   val->separator = g_strdup (separator);
@@ -215,54 +215,54 @@ gimp_environ_table_add (GimpEnvironTable *environ_table,
 }
 
 void
-gimp_environ_table_remove (GimpEnvironTable *environ_table,
+ligma_environ_table_remove (LigmaEnvironTable *environ_table,
                            const gchar      *name)
 {
-  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+  g_return_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table));
 
   if (! environ_table->internal)
     return;
 
-  gimp_environ_table_clear_envp (environ_table);
+  ligma_environ_table_clear_envp (environ_table);
 
   g_hash_table_remove (environ_table->internal, name);
 
   if (g_hash_table_size (environ_table->internal) == 0)
-    gimp_environ_table_clear_internal (environ_table);
+    ligma_environ_table_clear_internal (environ_table);
 }
 
 void
-gimp_environ_table_clear (GimpEnvironTable *environ_table)
+ligma_environ_table_clear (LigmaEnvironTable *environ_table)
 {
-  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+  g_return_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table));
 
-  gimp_environ_table_clear_envp (environ_table);
+  ligma_environ_table_clear_envp (environ_table);
 
-  gimp_environ_table_clear_vars (environ_table);
+  ligma_environ_table_clear_vars (environ_table);
 }
 
 void
-gimp_environ_table_clear_all (GimpEnvironTable *environ_table)
+ligma_environ_table_clear_all (LigmaEnvironTable *environ_table)
 {
-  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+  g_return_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table));
 
-  gimp_environ_table_clear_envp (environ_table);
+  ligma_environ_table_clear_envp (environ_table);
 
-  gimp_environ_table_clear_vars (environ_table);
-  gimp_environ_table_clear_internal (environ_table);
+  ligma_environ_table_clear_vars (environ_table);
+  ligma_environ_table_clear_internal (environ_table);
 }
 
 gchar **
-gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
+ligma_environ_table_get_envp (LigmaEnvironTable *environ_table)
 {
-  g_return_val_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table), NULL);
+  g_return_val_if_fail (LIGMA_IS_ENVIRON_TABLE (environ_table), NULL);
 
   /* Hmm.. should we return a copy here in the future? Not thread safe atm,
    * but the rest of it isn't either.
    */
 
   if (! environ_table->envp)
-    gimp_environ_table_populate (environ_table);
+    ligma_environ_table_populate (environ_table);
 
   return environ_table->envp;
 }
@@ -271,7 +271,7 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
 /* private */
 
 static void
-gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
+ligma_environ_table_load_env_file (LigmaEnvironTable *environ_table,
                                   GFile            *file)
 {
   GInputStream     *input;
@@ -281,13 +281,13 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
   GError           *error = NULL;
 
   if (environ_table->verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
   if (! input)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_file_get_utf8_name (file),
+                 ligma_file_get_utf8_name (file),
                  error->message);
       g_clear_error (&error);
       return;
@@ -327,7 +327,7 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
       if (name[0] == '\0')
         {
           g_message (_("Empty variable name in environment file %s"),
-                     gimp_file_get_utf8_name (file));
+                     ligma_file_get_utf8_name (file));
           g_free (buffer);
           continue;
         }
@@ -343,19 +343,19 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
           name = q + 1;
         }
 
-      if (! gimp_environ_table_legal_name (name))
+      if (! ligma_environ_table_legal_name (name))
         {
           g_message (_("Illegal variable name in environment file %s: %s"),
-                     gimp_file_get_utf8_name (file), name);
+                     ligma_file_get_utf8_name (file), name);
           g_free (buffer);
           continue;
         }
 
       if (! g_hash_table_lookup (environ_table->vars, name))
         {
-          GimpEnvironValue *val = g_slice_new (GimpEnvironValue);
+          LigmaEnvironValue *val = g_slice_new (LigmaEnvironValue);
 
-          val->value     = gimp_config_path_expand (value, FALSE, NULL);
+          val->value     = ligma_config_path_expand (value, FALSE, NULL);
           val->separator = g_strdup (separator);
 
           g_hash_table_insert (environ_table->vars, g_strdup (name), val);
@@ -367,7 +367,7 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
   if (error)
     {
       g_message (_("Error reading '%s': %s"),
-                 gimp_file_get_utf8_name (file),
+                 ligma_file_get_utf8_name (file),
                  error->message);
       g_clear_error (&error);
     }
@@ -376,7 +376,7 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
 }
 
 static gboolean
-gimp_environ_table_legal_name (gchar *name)
+ligma_environ_table_legal_name (gchar *name)
 {
   gchar *s;
 
@@ -391,7 +391,7 @@ gimp_environ_table_legal_name (gchar *name)
 }
 
 static void
-gimp_environ_table_populate (GimpEnvironTable *environ_table)
+ligma_environ_table_populate (LigmaEnvironTable *environ_table)
 {
   gchar     **env = g_listenv ();
   gchar     **var;
@@ -407,7 +407,7 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
        * array (Unix) or the process environment string table (Win32).
        */
 
-      if (gimp_environ_table_pass_through (environ_table, *var))
+      if (ligma_environ_table_pass_through (environ_table, *var))
         g_ptr_array_add (env_array, g_strconcat (*var, "=", g_getenv (*var), NULL));
 
       var++;
@@ -417,12 +417,12 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 
   if (environ_table->vars)
     g_hash_table_foreach (environ_table->vars,
-                          (GHFunc) gimp_environ_table_populate_one,
+                          (GHFunc) ligma_environ_table_populate_one,
                           env_array);
 
   if (environ_table->internal)
     g_hash_table_foreach (environ_table->internal,
-                          (GHFunc) gimp_environ_table_populate_one,
+                          (GHFunc) ligma_environ_table_populate_one,
                           env_array);
 
   g_ptr_array_add (env_array, NULL);
@@ -432,7 +432,7 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 #ifdef ENVP_DEBUG
   var = environ_table->envp;
 
-  g_print ("GimpEnvironTable:\n");
+  g_print ("LigmaEnvironTable:\n");
   while (*var)
     {
       g_print ("%s\n", *var);
@@ -442,8 +442,8 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_populate_one (const gchar      *name,
-                                 GimpEnvironValue *val,
+ligma_environ_table_populate_one (const gchar      *name,
+                                 LigmaEnvironValue *val,
                                  GPtrArray        *env_array)
 {
   const gchar *old;
@@ -464,7 +464,7 @@ gimp_environ_table_populate_one (const gchar      *name,
 }
 
 static gboolean
-gimp_environ_table_pass_through (GimpEnvironTable *environ_table,
+ligma_environ_table_pass_through (LigmaEnvironTable *environ_table,
                                  const gchar      *name)
 {
   gboolean vars, internal;
@@ -479,7 +479,7 @@ gimp_environ_table_pass_through (GimpEnvironTable *environ_table,
 }
 
 static void
-gimp_environ_table_clear_vars (GimpEnvironTable *environ_table)
+ligma_environ_table_clear_vars (LigmaEnvironTable *environ_table)
 {
   if (environ_table->vars)
     {
@@ -489,7 +489,7 @@ gimp_environ_table_clear_vars (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_clear_internal (GimpEnvironTable *environ_table)
+ligma_environ_table_clear_internal (LigmaEnvironTable *environ_table)
 {
   if (environ_table->internal)
     {
@@ -499,7 +499,7 @@ gimp_environ_table_clear_internal (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_clear_envp (GimpEnvironTable *environ_table)
+ligma_environ_table_clear_envp (LigmaEnvironTable *environ_table)
 {
   if (environ_table->envp)
     {
@@ -509,10 +509,10 @@ gimp_environ_table_clear_envp (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_free_value (GimpEnvironValue *val)
+ligma_environ_table_free_value (LigmaEnvironValue *val)
 {
   g_free (val->value);
   g_free (val->separator);
 
-  g_slice_free (GimpEnvironValue, val);
+  g_slice_free (LigmaEnvironValue, val);
 }

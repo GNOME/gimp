@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpoperationcagecoefcalc.h
+ * ligmaoperationcagecoefcalc.h
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_CAGE_COEF_CALC_H__
-#define __GIMP_OPERATION_CAGE_COEF_CALC_H__
+#ifndef __LIGMA_OPERATION_CAGE_COEF_CALC_H__
+#define __LIGMA_OPERATION_CAGE_COEF_CALC_H__
 
 
 #include <gegl-plugin.h>
@@ -27,36 +27,36 @@
 
 enum
 {
-  GIMP_OPERATION_CAGE_COEF_CALC_PROP_0,
-  GIMP_OPERATION_CAGE_COEF_CALC_PROP_CONFIG
+  LIGMA_OPERATION_CAGE_COEF_CALC_PROP_0,
+  LIGMA_OPERATION_CAGE_COEF_CALC_PROP_CONFIG
 };
 
 
-#define GIMP_TYPE_OPERATION_CAGE_COEF_CALC            (gimp_operation_cage_coef_calc_get_type ())
-#define GIMP_OPERATION_CAGE_COEF_CALC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CAGE_COEF_CALC, GimpOperationCageCoefCalc))
-#define GIMP_OPERATION_CAGE_COEF_CALC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_CAGE_COEF_CALC, GimpOperationCageCoefCalcClass))
-#define GIMP_IS_OPERATION_CAGE_COEF_CALC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_CAGE_COEF_CALC))
-#define GIMP_IS_OPERATION_CAGE_COEF_CALC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_CAGE_COEF_CALC))
-#define GIMP_OPERATION_CAGE_COEF_CALC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_CAGE_COEF_CALC, GimpOperationCageCoefCalcClass))
+#define LIGMA_TYPE_OPERATION_CAGE_COEF_CALC            (ligma_operation_cage_coef_calc_get_type ())
+#define LIGMA_OPERATION_CAGE_COEF_CALC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_CAGE_COEF_CALC, LigmaOperationCageCoefCalc))
+#define LIGMA_OPERATION_CAGE_COEF_CALC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_CAGE_COEF_CALC, LigmaOperationCageCoefCalcClass))
+#define LIGMA_IS_OPERATION_CAGE_COEF_CALC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_CAGE_COEF_CALC))
+#define LIGMA_IS_OPERATION_CAGE_COEF_CALC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_CAGE_COEF_CALC))
+#define LIGMA_OPERATION_CAGE_COEF_CALC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_CAGE_COEF_CALC, LigmaOperationCageCoefCalcClass))
 
 
-typedef struct _GimpOperationCageCoefCalc      GimpOperationCageCoefCalc;
-typedef struct _GimpOperationCageCoefCalcClass GimpOperationCageCoefCalcClass;
+typedef struct _LigmaOperationCageCoefCalc      LigmaOperationCageCoefCalc;
+typedef struct _LigmaOperationCageCoefCalcClass LigmaOperationCageCoefCalcClass;
 
-struct _GimpOperationCageCoefCalc
+struct _LigmaOperationCageCoefCalc
 {
   GeglOperationSource  parent_instance;
 
-  GimpCageConfig      *config;
+  LigmaCageConfig      *config;
 };
 
-struct _GimpOperationCageCoefCalcClass
+struct _LigmaOperationCageCoefCalcClass
 {
   GeglOperationSourceClass  parent_class;
 };
 
 
-GType   gimp_operation_cage_coef_calc_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_cage_coef_calc_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_CAGE_COEF_CALC_H__ */
+#endif /* __LIGMA_OPERATION_CAGE_COEF_CALC_H__ */

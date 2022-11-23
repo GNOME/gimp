@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,31 +20,31 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdata.h"
-#include "core/gimpdatafactory.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadata.h"
+#include "core/ligmadatafactory.h"
 
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
 
 #include "data-delete-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _DataDeleteDialog DataDeleteDialog;
 
 struct _DataDeleteDialog
 {
-  GimpDataFactory *factory;
-  GimpData        *data;
-  GimpContext     *context;
+  LigmaDataFactory *factory;
+  LigmaData        *data;
+  LigmaContext     *context;
   GtkWidget       *parent;
 };
 
@@ -59,17 +59,17 @@ static void  data_delete_dialog_response (GtkWidget        *dialog,
 /*  public functions  */
 
 GtkWidget *
-data_delete_dialog_new (GimpDataFactory *factory,
-                        GimpData        *data,
-                        GimpContext     *context,
+data_delete_dialog_new (LigmaDataFactory *factory,
+                        LigmaData        *data,
+                        LigmaContext     *context,
                         GtkWidget       *parent)
 {
   DataDeleteDialog *private;
   GtkWidget        *dialog;
 
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   private = g_slice_new0 (DataDeleteDialog);
@@ -79,16 +79,16 @@ data_delete_dialog_new (GimpDataFactory *factory,
   private->context = context;
   private->parent  = parent;
 
-  dialog = gimp_message_dialog_new (_("Delete Object"), "edit-delete",
+  dialog = ligma_message_dialog_new (_("Delete Object"), "edit-delete",
                                     gtk_widget_get_toplevel (parent), 0,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("_Delete"), GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -101,13 +101,13 @@ data_delete_dialog_new (GimpDataFactory *factory,
                     G_CALLBACK (data_delete_dialog_response),
                     private);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Delete '%s'?"),
-                                     gimp_object_get_name (data));
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     ligma_object_get_name (data));
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              _("Are you sure you want to remove '%s' "
                                "from the list and delete it on disk?"),
-                             gimp_object_get_name (data));
+                             ligma_object_get_name (data));
 
   return dialog;
 }
@@ -124,34 +124,34 @@ data_delete_dialog_response (GtkWidget        *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpDataFactory *factory    = private->factory;
-      GimpData        *data       = private->data;
-      GimpContainer   *container;
-      GimpObject      *new_active = NULL;
+      LigmaDataFactory *factory    = private->factory;
+      LigmaData        *data       = private->data;
+      LigmaContainer   *container;
+      LigmaObject      *new_active = NULL;
       GError          *error      = NULL;
 
-      container = gimp_data_factory_get_container (factory);
+      container = ligma_data_factory_get_container (factory);
 
       if (private->context &&
-          GIMP_OBJECT (data) ==
-          gimp_context_get_by_type (private->context,
-                                    gimp_container_get_children_type (container)))
+          LIGMA_OBJECT (data) ==
+          ligma_context_get_by_type (private->context,
+                                    ligma_container_get_children_type (container)))
         {
-          new_active = gimp_container_get_neighbor_of (container,
-                                                       GIMP_OBJECT (data));
+          new_active = ligma_container_get_neighbor_of (container,
+                                                       LIGMA_OBJECT (data));
         }
 
-      if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
+      if (! ligma_data_factory_data_delete (factory, data, TRUE, &error))
         {
-          gimp_message (gimp_data_factory_get_gimp (factory),
-                        G_OBJECT (private->parent), GIMP_MESSAGE_ERROR,
+          ligma_message (ligma_data_factory_get_ligma (factory),
+                        G_OBJECT (private->parent), LIGMA_MESSAGE_ERROR,
                         "%s", error->message);
           g_clear_error (&error);
         }
 
       if (new_active)
-        gimp_context_set_by_type (private->context,
-                                  gimp_container_get_children_type (container),
+        ligma_context_set_by_type (private->context,
+                                  ligma_container_get_children_type (container),
                                   new_active);
     }
 

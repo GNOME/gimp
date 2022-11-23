@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,15 +27,15 @@
    Unfortunately glib returns a SUCCESS when you skip tests, which is
    not a reliable test feedback. So we hard-code the SKIPPED return
    value. */
-#define GIMP_EXIT_TEST_SKIPPED 77
+#define LIGMA_EXIT_TEST_SKIPPED 77
 
-Gimp * gimp_init_for_testing             (void);
-Gimp * gimp_init_for_gui_testing         (gboolean  show_gui);
-Gimp * gimp_init_for_gui_testing_with_rc (gboolean  show_gui,
-                                          GFile    *gimprc);
-void   gimp_test_run_temp_mainloop       (guint32   running_time);
-void   gimp_test_run_mainloop_until_idle (void);
-void   gimp_test_bail_if_no_display      (void);
+Ligma * ligma_init_for_testing             (void);
+Ligma * ligma_init_for_gui_testing         (gboolean  show_gui);
+Ligma * ligma_init_for_gui_testing_with_rc (gboolean  show_gui,
+                                          GFile    *ligmarc);
+void   ligma_test_run_temp_mainloop       (guint32   running_time);
+void   ligma_test_run_mainloop_until_idle (void);
+void   ligma_test_bail_if_no_display      (void);
 
 
 #endif /* __TESTS_H__ */

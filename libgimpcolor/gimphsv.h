@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_HSV_H__
-#define __GIMP_HSV_H__
+#ifndef __LIGMA_HSV_H__
+#define __LIGMA_HSV_H__
 
 G_BEGIN_DECLS
 
@@ -29,20 +29,20 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_HSV
+ * LIGMA_TYPE_HSV
  */
 
-#define GIMP_TYPE_HSV       (gimp_hsv_get_type ())
+#define LIGMA_TYPE_HSV       (ligma_hsv_get_type ())
 
-GType   gimp_hsv_get_type   (void) G_GNUC_CONST;
+GType   ligma_hsv_get_type   (void) G_GNUC_CONST;
 
-void    gimp_hsv_set        (GimpHSV       *hsv,
+void    ligma_hsv_set        (LigmaHSV       *hsv,
                              gdouble        hue,
                              gdouble        saturation,
                              gdouble        value);
-void    gimp_hsv_clamp      (GimpHSV       *hsv);
+void    ligma_hsv_clamp      (LigmaHSV       *hsv);
 
-void    gimp_hsva_set       (GimpHSV       *hsva,
+void    ligma_hsva_set       (LigmaHSV       *hsva,
                              gdouble        hue,
                              gdouble        saturation,
                              gdouble        value,
@@ -51,4 +51,4 @@ void    gimp_hsva_set       (GimpHSV       *hsva,
 
 G_END_DECLS
 
-#endif  /* __GIMP_HSV_H__ */
+#endif  /* __LIGMA_HSV_H__ */

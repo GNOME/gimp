@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_IMAGE_PICK_COLOR_H__
-#define  __GIMP_IMAGE_PICK_COLOR_H__
+#ifndef  __LIGMA_IMAGE_PICK_COLOR_H__
+#define  __LIGMA_IMAGE_PICK_COLOR_H__
 
 
-gboolean   gimp_image_pick_color (GimpImage     *image,
+gboolean   ligma_image_pick_color (LigmaImage     *image,
                                   GList         *drawables,
                                   gint           x,
                                   gint           y,
@@ -29,7 +29,7 @@ gboolean   gimp_image_pick_color (GimpImage     *image,
                                   gdouble        average_radius,
                                   const Babl   **sample_format,
                                   gpointer       pixel,
-                                  GimpRGB       *color);
+                                  LigmaRGB       *color);
 
 
-#endif  /* __GIMP_IMAGE_PICK_COLOR_H__ */
+#endif  /* __LIGMA_IMAGE_PICK_COLOR_H__ */

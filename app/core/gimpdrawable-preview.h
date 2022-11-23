@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,43 +15,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE__PREVIEW_H__
-#define __GIMP_DRAWABLE__PREVIEW_H__
+#ifndef __LIGMA_DRAWABLE__PREVIEW_H__
+#define __LIGMA_DRAWABLE__PREVIEW_H__
 
 
 /*
- *  virtual functions of GimpDrawable -- don't call directly
+ *  virtual functions of LigmaDrawable -- don't call directly
  */
-GimpTempBuf * gimp_drawable_get_new_preview       (GimpViewable *viewable,
-                                                   GimpContext  *context,
+LigmaTempBuf * ligma_drawable_get_new_preview       (LigmaViewable *viewable,
+                                                   LigmaContext  *context,
                                                    gint          width,
                                                    gint          height);
-GdkPixbuf   * gimp_drawable_get_new_pixbuf        (GimpViewable *viewable,
-                                                   GimpContext  *context,
+GdkPixbuf   * ligma_drawable_get_new_pixbuf        (LigmaViewable *viewable,
+                                                   LigmaContext  *context,
                                                    gint          width,
                                                    gint          height);
 
 /*
  *  normal functions (no virtuals)
  */
-const Babl  * gimp_drawable_get_preview_format    (GimpDrawable *drawable);
+const Babl  * ligma_drawable_get_preview_format    (LigmaDrawable *drawable);
 
-GimpTempBuf * gimp_drawable_get_sub_preview       (GimpDrawable *drawable,
+LigmaTempBuf * ligma_drawable_get_sub_preview       (LigmaDrawable *drawable,
                                                    gint          src_x,
                                                    gint          src_y,
                                                    gint          src_width,
                                                    gint          src_height,
                                                    gint          dest_width,
                                                    gint          dest_height);
-GdkPixbuf   * gimp_drawable_get_sub_pixbuf        (GimpDrawable *drawable,
-                                                   gint          src_x,
-                                                   gint          src_y,
-                                                   gint          src_width,
-                                                   gint          src_height,
-                                                   gint          dest_width,
-                                                   gint          dest_height);
-
-GimpAsync   * gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
+GdkPixbuf   * ligma_drawable_get_sub_pixbuf        (LigmaDrawable *drawable,
                                                    gint          src_x,
                                                    gint          src_y,
                                                    gint          src_width,
@@ -59,5 +51,13 @@ GimpAsync   * gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                                    gint          dest_width,
                                                    gint          dest_height);
 
+LigmaAsync   * ligma_drawable_get_sub_preview_async (LigmaDrawable *drawable,
+                                                   gint          src_x,
+                                                   gint          src_y,
+                                                   gint          src_width,
+                                                   gint          src_height,
+                                                   gint          dest_width,
+                                                   gint          dest_height);
 
-#endif /* __GIMP_DRAWABLE__PREVIEW_H__ */
+
+#endif /* __LIGMA_DRAWABLE__PREVIEW_H__ */

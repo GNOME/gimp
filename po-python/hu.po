@@ -1,6 +1,6 @@
-# Hungarian translation for gimp-python.
+# Hungarian translation for ligma-python.
 # Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021, 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp-python package.
+# This file is distributed under the same license as the ligma-python package.
 #
 # Andras Timar <timar at gnome dot hu>, 2001, 2003.
 # Emese Kovacs <emese at gnome dot hu>, 2001.
@@ -11,8 +11,8 @@
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020, 2021, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-09-10 12:56+0000\n"
 "PO-Revision-Date: 2022-09-20 01:02+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
@@ -490,8 +490,8 @@ msgid "Python _Console"
 msgstr "Python-_konzol"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktív GIMP-Python-fordító"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktív LIGMA-Python-fordító"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -847,8 +847,8 @@ msgstr ""
 "rétegen vagy útvonalba mentse"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spirogimp"
+msgid "Spyroligma"
+msgstr "Spiroligma"
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -955,5 +955,5 @@ msgstr ""
 "minta mérete és helye a jelenlegi kijelölésen múlik."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Spirogimp…"
+msgid "Spyroligma..."
+msgstr "Spiroligma…"

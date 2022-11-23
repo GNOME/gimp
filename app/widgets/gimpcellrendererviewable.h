@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrendererviewable.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacellrendererviewable.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CELL_RENDERER_VIEWABLE_H__
-#define __GIMP_CELL_RENDERER_VIEWABLE_H__
+#ifndef __LIGMA_CELL_RENDERER_VIEWABLE_H__
+#define __LIGMA_CELL_RENDERER_VIEWABLE_H__
 
 
-#define GIMP_TYPE_CELL_RENDERER_VIEWABLE            (gimp_cell_renderer_viewable_get_type ())
-#define GIMP_CELL_RENDERER_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CELL_RENDERER_VIEWABLE, GimpCellRendererViewable))
-#define GIMP_CELL_RENDERER_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CELL_RENDERER_VIEWABLE, GimpCellRendererViewableClass))
-#define GIMP_IS_CELL_RENDERER_VIEWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CELL_RENDERER_VIEWABLE))
-#define GIMP_IS_CELL_RENDERER_VIEWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CELL_RENDERER_VIEWABLE))
-#define GIMP_CELL_RENDERER_VIEWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CELL_RENDERER_VIEWABLE, GimpCellRendererViewableClass))
+#define LIGMA_TYPE_CELL_RENDERER_VIEWABLE            (ligma_cell_renderer_viewable_get_type ())
+#define LIGMA_CELL_RENDERER_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CELL_RENDERER_VIEWABLE, LigmaCellRendererViewable))
+#define LIGMA_CELL_RENDERER_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CELL_RENDERER_VIEWABLE, LigmaCellRendererViewableClass))
+#define LIGMA_IS_CELL_RENDERER_VIEWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CELL_RENDERER_VIEWABLE))
+#define LIGMA_IS_CELL_RENDERER_VIEWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CELL_RENDERER_VIEWABLE))
+#define LIGMA_CELL_RENDERER_VIEWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CELL_RENDERER_VIEWABLE, LigmaCellRendererViewableClass))
 
 
-typedef struct _GimpCellRendererViewableClass GimpCellRendererViewableClass;
+typedef struct _LigmaCellRendererViewableClass LigmaCellRendererViewableClass;
 
-struct _GimpCellRendererViewable
+struct _LigmaCellRendererViewable
 {
   GtkCellRenderer   parent_instance;
 
-  GimpViewRenderer *renderer;
+  LigmaViewRenderer *renderer;
 };
 
-struct _GimpCellRendererViewableClass
+struct _LigmaCellRendererViewableClass
 {
   GtkCellRendererClass  parent_class;
 
-  gboolean (* pre_clicked) (GimpCellRendererViewable *cell,
+  gboolean (* pre_clicked) (LigmaCellRendererViewable *cell,
                             const gchar              *path,
                             GdkModifierType           state);
-  void     (* clicked)     (GimpCellRendererViewable *cell,
+  void     (* clicked)     (LigmaCellRendererViewable *cell,
                             const gchar              *path,
                             GdkModifierType           state);
 };
 
 
-GType             gimp_cell_renderer_viewable_get_type    (void) G_GNUC_CONST;
-GtkCellRenderer * gimp_cell_renderer_viewable_new         (void);
-gboolean          gimp_cell_renderer_viewable_pre_clicked (GimpCellRendererViewable *cell,
+GType             ligma_cell_renderer_viewable_get_type    (void) G_GNUC_CONST;
+GtkCellRenderer * ligma_cell_renderer_viewable_new         (void);
+gboolean          ligma_cell_renderer_viewable_pre_clicked (LigmaCellRendererViewable *cell,
                                                            const gchar              *path,
                                                            GdkModifierType           state);
-void              gimp_cell_renderer_viewable_clicked     (GimpCellRendererViewable *cell,
+void              ligma_cell_renderer_viewable_clicked     (LigmaCellRendererViewable *cell,
                                                            const gchar              *path,
                                                            GdkModifierType           state);
 
 
-#endif /* __GIMP_CELL_RENDERER_VIEWABLE_H__ */
+#endif /* __LIGMA_CELL_RENDERER_VIEWABLE_H__ */

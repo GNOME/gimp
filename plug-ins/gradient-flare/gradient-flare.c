@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GFlare plug-in -- lense flare effect by using custom gradients
@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * A fair proportion of this code was taken from GIMP & Script-fu
+ * A fair proportion of this code was taken from LIGMA & Script-fu
  * copyrighted by Spencer Kimball and Peter Mattis, and from Gradient
  * Editor copyrighted by Federico Mena Quintero. (See copyright notice
- * below) Thanks for senior GIMP hackers!!
+ * below) Thanks for senior LIGMA hackers!!
  *
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero
@@ -44,10 +44,10 @@
 
 #include <glib-object.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /* #define DEBUG */
 
@@ -57,19 +57,19 @@
 #define DEBUG_PRINT(X)
 #endif
 
-#define LUMINOSITY(PIX) (GIMP_RGB_LUMINANCE (PIX[0], PIX[1], PIX[2]) + 0.5)
+#define LUMINOSITY(PIX) (LIGMA_RGB_LUMINANCE (PIX[0], PIX[1], PIX[2]) + 0.5)
 
 #define RESPONSE_RESCAN     1
 
 #define PLUG_IN_PROC        "plug-in-gflare"
 #define PLUG_IN_BINARY      "gradient-flare"
-#define PLUG_IN_ROLE        "gimp-gradient-flare"
+#define PLUG_IN_ROLE        "ligma-gradient-flare"
 
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
 
 #define GFLARE_NAME_MAX     256
-#define GFLARE_FILE_HEADER  "GIMP GFlare 0.25\n"
+#define GFLARE_FILE_HEADER  "LIGMA GFlare 0.25\n"
 #define SFLARE_NUM           30
 
 #define DLG_PREVIEW_WIDTH   256
@@ -372,12 +372,12 @@ typedef struct _GflareClass GflareClass;
 
 struct _Gflare
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _GflareClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -386,16 +386,16 @@ struct _GflareClass
 
 GType                   gflare_get_type         (void) G_GNUC_CONST;
 
-static GList          * gflare_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * gflare_create_procedure (GimpPlugIn           *plug_in,
+static GList          * gflare_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * gflare_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * gflare_run              (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
+static LigmaValueArray * gflare_run              (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
+                                                 LigmaImage            *image,
                                                  gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
-                                                 const GimpValueArray *args,
+                                                 LigmaDrawable        **drawables,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
 
 static GFlare * gflare_new_with_default (const gchar *new_name);
@@ -494,11 +494,11 @@ static void plugin_do_asupsample        (GeglBuffer   *src_buffer,
                                          GeglBuffer   *dest_buffer);
 static void plugin_render_func          (gdouble       x,
                                          gdouble       y,
-                                         GimpRGB      *color,
+                                         LigmaRGB      *color,
                                          gpointer      data);
 static void plugin_put_pixel_func       (gint          ix,
                                          gint          iy,
-                                         GimpRGB      *color,
+                                         LigmaRGB      *color,
                                          gpointer      data);
 static void plugin_progress_func        (gint          y1,
                                          gint          y2,
@@ -663,15 +663,15 @@ static void gradient_get_values_real_external   (const gchar *gradient_name,
 static GradientCacheItem *gradient_cache_lookup (const gchar *name,
                                                  gboolean    *found);
 static void gradient_cache_zorch                (void);
-static void gradient_scale_entry_update_double  (GimpLabelSpin  *entry,
+static void gradient_scale_entry_update_double  (LigmaLabelSpin  *entry,
                                                  gdouble        *value);
-static void gradient_scale_entry_update_int     (GimpLabelSpin  *entry,
+static void gradient_scale_entry_update_int     (LigmaLabelSpin  *entry,
                                                  gint           *value);
 
 
-G_DEFINE_TYPE (Gflare, gflare, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Gflare, gflare, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GFLARE_TYPE)
+LIGMA_MAIN (GFLARE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -752,8 +752,8 @@ static const gchar *gflare_menu_modes[] =
   N_("Screen")
 };
 
-static GimpImage          *image;
-static GimpDrawable       *drawable;
+static LigmaImage          *image;
+static LigmaDrawable       *drawable;
 static DrawableInfo        dinfo;
 static GFlareDialog       *dlg = NULL;
 static GFlareEditor       *ed = NULL;
@@ -782,7 +782,7 @@ static clock_t  get_values_external_clock = 0;
 static void
 gflare_class_init (GflareClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = gflare_query_procedures;
   plug_in_class->create_procedure = gflare_create_procedure;
@@ -795,32 +795,32 @@ gflare_init (Gflare *gflare)
 }
 
 static GList *
-gflare_query_procedures (GimpPlugIn *plug_in)
+gflare_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-gflare_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+gflare_create_procedure (LigmaPlugIn  *plug_in,
                          const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             gflare_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Gradient Flare..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_Gradient Flare..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Light and Shadow/Light");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Produce a lense flare effect "
                                           "using gradients"),
                                         "This plug-in produces a lense flare "
@@ -830,79 +830,79 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
                                         "(GFlare) and render it. Edited "
                                         "gflare is saved automatically to "
                                         "the folder in gflare-path, if it is "
-                                        "defined in gimprc. In "
+                                        "defined in ligmarc. In "
                                         "non-interactive call, the user can "
                                         "only render one of GFlare "
                                         "which has been stored in "
                                         "gflare-path already.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Eiichi Takamori",
-                                      "Eiichi Takamori, and a lot of GIMP people",
+                                      "Eiichi Takamori, and a lot of LIGMA people",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "gflare-name",
+      LIGMA_PROC_ARG_STRING (procedure, "gflare-name",
                             "GFlare name",
                             "Name of the GFlare to render",
                             "Default",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "center-x",
+      LIGMA_PROC_ARG_INT (procedure, "center-x",
                          "Center X",
                          "X coordinate of center of GFlare",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                         -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 128,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "center-y",
+      LIGMA_PROC_ARG_INT (procedure, "center-y",
                          "Center Y",
                          "Y coordinate of center of GFlare",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                         -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 128,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "radius",
                             "Radius",
                             "Radius of GFlare (pixel)",
-                            1, GIMP_MAX_IMAGE_SIZE, 100,
+                            1, LIGMA_MAX_IMAGE_SIZE, 100,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "rotation",
                             "Rotation",
                             "Rotation of GFlare (degree)",
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hue",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "hue",
                             "Hue",
                             "Hue rotation of GFlare (degree)",
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "vector-angle",
                             "Vector angle",
                             "Vector angle for second flares (degree)",
                             0, 360, 60,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-length",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "vector-length",
                             "Vector length",
                             "Vector length for second flares "
                             "(percentage of Radius)",
                             0, 10000, 400,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
                              "Use asupsample",
                              "Use adaptive supersampling while rendering",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "asupsample-max-depth",
+      LIGMA_PROC_ARG_INT (procedure, "asupsample-max-depth",
                          "Asupsample max depth",
                          "Max depth for adaptive supersampling",
                          0, 10, 3,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
                             "Asupsample threshold",
                             "Threshold for adaptive supersampling",
                             0.0, 1.0, 0.2,
@@ -912,13 +912,13 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-gflare_run (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *_image,
+static LigmaValueArray *
+gflare_run (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
+            LigmaImage            *_image,
             gint                  n_drawables,
-            GimpDrawable        **drawables,
-            const GimpValueArray *args,
+            LigmaDrawable        **drawables,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
   gchar *path;
@@ -931,12 +931,12 @@ gflare_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -944,8 +944,8 @@ gflare_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  dinfo.is_color  = gimp_drawable_is_rgb (drawable);
-  dinfo.has_alpha = gimp_drawable_has_alpha (drawable);
+  dinfo.is_color  = ligma_drawable_is_rgb (drawable);
+  dinfo.has_alpha = ligma_drawable_has_alpha (drawable);
 
   if (dinfo.is_color)
     {
@@ -964,11 +964,11 @@ gflare_run (GimpProcedure        *procedure,
 
   dinfo.bpp = babl_format_get_bytes_per_pixel (dinfo.format);
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &dinfo.x, &dinfo.y, &dinfo.w, &dinfo.h))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_SUCCESS,
                                                NULL);
     }
 
@@ -979,10 +979,10 @@ gflare_run (GimpProcedure        *procedure,
   gradient_init ();
 
   /*
-   *    Parse gflare path from gimprc and load gflares
+   *    Parse gflare path from ligmarc and load gflares
    */
 
-  path = gimp_gimprc_query ("gflare-path");
+  path = ligma_ligmarc_query ("gflare-path");
   if (path)
     {
       gflare_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
@@ -990,19 +990,19 @@ gflare_run (GimpProcedure        *procedure,
     }
   else
     {
-      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
-      gchar *full_path = gimp_config_build_data_path ("gflare");
+      GFile *ligmarc    = ligma_directory_file ("ligmarc", NULL);
+      gchar *full_path = ligma_config_build_data_path ("gflare");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
-      g_message (_("No %s in gimprc:\n"
+      g_message (_("No %s in ligmarc:\n"
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
                  "gflare-path", "gflare-path",
-                 esc_path, gimp_file_get_utf8_name (gimprc));
+                 esc_path, ligma_file_get_utf8_name (ligmarc));
 
-      g_object_unref (gimprc);
+      g_object_unref (ligmarc);
       g_free (esc_path);
     }
 
@@ -1010,50 +1010,50 @@ gflare_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &pvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &pvals);
 
       if (! dlg_run ())
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       gflare_name_copy (pvals.gflare_name,
-                        GIMP_VALUES_GET_STRING (args, 0));
+                        LIGMA_VALUES_GET_STRING (args, 0));
 
-      pvals.xcenter              = GIMP_VALUES_GET_INT     (args, 1);
-      pvals.ycenter              = GIMP_VALUES_GET_INT     (args, 2);
-      pvals.radius               = GIMP_VALUES_GET_DOUBLE  (args, 3);
-      pvals.rotation             = GIMP_VALUES_GET_DOUBLE  (args, 4);
-      pvals.hue                  = GIMP_VALUES_GET_DOUBLE  (args, 5);
-      pvals.vangle               = GIMP_VALUES_GET_DOUBLE  (args, 6);
-      pvals.vlength              = GIMP_VALUES_GET_DOUBLE  (args, 7);
-      pvals.use_asupsample       = GIMP_VALUES_GET_BOOLEAN (args, 8);
-      pvals.asupsample_max_depth = GIMP_VALUES_GET_INT     (args, 9);
-      pvals.asupsample_threshold = GIMP_VALUES_GET_DOUBLE  (args, 10);
+      pvals.xcenter              = LIGMA_VALUES_GET_INT     (args, 1);
+      pvals.ycenter              = LIGMA_VALUES_GET_INT     (args, 2);
+      pvals.radius               = LIGMA_VALUES_GET_DOUBLE  (args, 3);
+      pvals.rotation             = LIGMA_VALUES_GET_DOUBLE  (args, 4);
+      pvals.hue                  = LIGMA_VALUES_GET_DOUBLE  (args, 5);
+      pvals.vangle               = LIGMA_VALUES_GET_DOUBLE  (args, 6);
+      pvals.vlength              = LIGMA_VALUES_GET_DOUBLE  (args, 7);
+      pvals.use_asupsample       = LIGMA_VALUES_GET_BOOLEAN (args, 8);
+      pvals.asupsample_max_depth = LIGMA_VALUES_GET_INT     (args, 9);
+      pvals.asupsample_threshold = LIGMA_VALUES_GET_DOUBLE  (args, 10);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &pvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &pvals);
       break;
     }
 
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb  (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
-      gimp_progress_init (_("Gradient Flare"));
+      ligma_progress_init (_("Gradient Flare"));
 
       plugin_do ();
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
     }
   else
     {
@@ -1061,8 +1061,8 @@ gflare_run (GimpProcedure        *procedure,
         g_error_new_literal (0, 0,
                              _("Cannot operate on indexed color images."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                error);
     }
 
@@ -1071,7 +1071,7 @@ gflare_run (GimpProcedure        *procedure,
    */
   gradient_free ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
@@ -1096,8 +1096,8 @@ plugin_do (void)
                     pvals.vangle, pvals.vlength);
   while (calc_init_progress ()) ;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   /* Render it ! */
   if (pvals.use_asupsample)
@@ -1108,13 +1108,13 @@ plugin_do (void)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   /* Clean up */
   calc_deinit ();
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, dinfo.x, dinfo.y, dinfo.w, dinfo.h);
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, dinfo.x, dinfo.y, dinfo.w, dinfo.h);
 }
 
 /* these routines should be almost rewritten anyway */
@@ -1194,7 +1194,7 @@ plugin_do_non_asupsample (GeglBuffer   *src_buffer,
 
       /* Update progress */
       progress += iter->items[0].roi.width * iter->items[0].roi.height;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      ligma_progress_update ((double) progress / (double) max_progress);
     }
 }
 
@@ -1202,7 +1202,7 @@ static void
 plugin_do_asupsample (GeglBuffer   *src_buffer,
                       GeglBuffer   *dest_buffer)
 {
-  gimp_adaptive_supersample_area (dinfo.x, dinfo.y,
+  ligma_adaptive_supersample_area (dinfo.x, dinfo.y,
                                   dinfo.x + dinfo.w - 1, dinfo.y + dinfo.h - 1,
                                   pvals.asupsample_max_depth,
                                   pvals.asupsample_threshold,
@@ -1224,7 +1224,7 @@ plugin_do_asupsample (GeglBuffer   *src_buffer,
 static void
 plugin_render_func (gdouble   x,
                     gdouble   y,
-                    GimpRGB  *color,
+                    LigmaRGB  *color,
                     gpointer  data)
 {
   GeglBuffer *src_buffer = data;
@@ -1257,7 +1257,7 @@ plugin_render_func (gdouble   x,
 static void
 plugin_put_pixel_func (gint      ix,
                        gint      iy,
-                       GimpRGB  *color,
+                       LigmaRGB  *color,
                        gpointer  data)
 {
   GeglBuffer *dest_buffer = data;
@@ -1271,7 +1271,7 @@ plugin_put_pixel_func (gint      ix,
     }
   else
     {
-      dest[0] = gimp_rgb_luminance_uchar (color);
+      dest[0] = ligma_rgb_luminance_uchar (color);
     }
 
   if (dinfo.has_alpha)
@@ -1287,7 +1287,7 @@ plugin_progress_func (gint     y1,
                       gint     curr_y,
                       gpointer data)
 {
-  gimp_progress_update ((double) curr_y / (double) (y2 - y1));
+  ligma_progress_update ((double) curr_y / (double) (y2 - y1));
 }
 
 /*************************************************************************/
@@ -1298,7 +1298,7 @@ plugin_progress_func (gint     y1,
 
 /*
  *      These code are more or less based on Quartic's gradient.c,
- *      other gimp sources, and script-fu.
+ *      other ligma sources, and script-fu.
  */
 
 static GFlare *
@@ -1373,7 +1373,7 @@ gflare_load (const gchar *filename,
   if (!fp)
     {
       g_message (_("Failed to open GFlare file '%s': %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+                  ligma_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -1381,7 +1381,7 @@ gflare_load (const gchar *filename,
       || strcmp (header, GFLARE_FILE_HEADER) != 0)
     {
       g_warning (_("'%s' is not a valid GFlare file."),
-                  gimp_filename_to_utf8 (filename));
+                  ligma_filename_to_utf8 (filename));
       fclose (fp);
       return NULL;
     }
@@ -1552,12 +1552,12 @@ gflare_save (GFlare *gflare)
         {
           if (! message_ok)
             {
-              GFile *gimprc = gimp_directory_file ("gimprc", NULL);
-              GFile *dir    = gimp_directory_file ("gflare", NULL);
+              GFile *ligmarc = ligma_directory_file ("ligmarc", NULL);
+              GFile *dir    = ligma_directory_file ("gflare", NULL);
               gchar *gflare_dir;
 
               gflare_dir =
-                g_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare", NULL);
+                g_strescape ("${ligma_dir}" G_DIR_SEPARATOR_S "gflare", NULL);
 
               g_message (_("GFlare '%s' is not saved. If you add a new entry "
                            "in '%s', like:\n"
@@ -1565,11 +1565,11 @@ gflare_save (GFlare *gflare)
                            "and make a folder '%s', then you can save "
                            "your own GFlares into that folder."),
                          gflare->name,
-                         gimp_file_get_utf8_name (gimprc),
+                         ligma_file_get_utf8_name (ligmarc),
                          gflare_dir,
-                         gimp_file_get_utf8_name (dir));
+                         ligma_file_get_utf8_name (dir));
 
-              g_object_unref (gimprc);
+              g_object_unref (ligmarc);
               g_object_unref (dir);
               g_free (gflare_dir);
 
@@ -1579,12 +1579,12 @@ gflare_save (GFlare *gflare)
           return;
         }
 
-      list = gimp_path_parse (gflare_path, 256, FALSE, NULL);
-      path = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+      list = ligma_path_parse (gflare_path, 256, FALSE, NULL);
+      path = ligma_path_get_user_writable_dir (list);
+      ligma_path_free (list);
 
       if (! path)
-        path = g_strdup (gimp_directory ());
+        path = g_strdup (ligma_directory ());
 
       gflare->filename = g_build_filename (path, gflare->name, NULL);
 
@@ -1595,7 +1595,7 @@ gflare_save (GFlare *gflare)
   if (!fp)
     {
       g_message (_("Failed to write GFlare file '%s': %s"),
-                  gimp_filename_to_utf8 (gflare->filename), g_strerror (errno));
+                  ligma_filename_to_utf8 (gflare->filename), g_strerror (errno));
       return;
     }
 
@@ -1753,7 +1753,7 @@ gflares_list_load_all (void)
   /*  Make sure to clear any existing gflares  */
   gflares_list_free_all ();
 
-  path = gimp_config_path_expand_to_files (gflare_path, NULL);
+  path = ligma_config_path_expand_to_files (gflare_path, NULL);
 
   for (list = path; list; list = g_list_next (list))
     {
@@ -2008,20 +2008,20 @@ calc_sample_one_gradient (void)
                 {
                   for (j = 0; j < GRADIENT_RESOLUTION; j++)
                     {
-                      GimpRGB rgb;
-                      GimpHSV hsv;
+                      LigmaRGB rgb;
+                      LigmaHSV hsv;
 
                       rgb.r = (gdouble) gradient[j*4]   / 255.0;
                       rgb.g = (gdouble) gradient[j*4+1] / 255.0;
                       rgb.b = (gdouble) gradient[j*4+2] / 255.0;
 
-                      gimp_rgb_to_hsv (&rgb, &hsv);
+                      ligma_rgb_to_hsv (&rgb, &hsv);
 
                       hsv.h = (hsv.h + ((gdouble) hue / 255.0));
                       if (hsv.h > 1.0)
                         hsv.h -= 1.0;
 
-                      gimp_hsv_to_rgb (&hsv, &rgb);
+                      ligma_hsv_to_rgb (&hsv, &rgb);
 
                       gradient[j*4]   = ROUND (rgb.r * 255.0);
                       gradient[j*4+1] = ROUND (rgb.g * 255.0);
@@ -2489,7 +2489,7 @@ dlg_run (void)
   GtkWidget  *notebook;
   gboolean    run = FALSE;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   /*
    *    Init Main Dialog
@@ -2510,16 +2510,16 @@ dlg_run (void)
    *    Dialog Shell
    */
 
-  shell = dlg->shell = gimp_dialog_new (_("Gradient Flare"), PLUG_IN_ROLE,
+  shell = dlg->shell = ligma_dialog_new (_("Gradient Flare"), PLUG_IN_ROLE,
                                         NULL, 0,
-                                        gimp_standard_help_func, PLUG_IN_PROC,
+                                        ligma_standard_help_func, PLUG_IN_PROC,
 
                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
                                         _("_OK"),     GTK_RESPONSE_OK,
 
                                         NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (shell),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -2548,7 +2548,7 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
                               dlg_preview_init_func, NULL,
@@ -2595,7 +2595,7 @@ dlg_run (void)
   dlg->init = FALSE;
   dlg_preview_update ();
 
-  if (gimp_dialog_run (GIMP_DIALOG (shell)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (shell)) == GTK_RESPONSE_OK)
     {
       gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
 
@@ -2640,8 +2640,8 @@ dlg_setup_gflare (void)
 void
 dlg_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_get_width  (drawable);
-  gint     height = gimp_drawable_get_height (drawable);
+  gint     width  = ligma_drawable_get_width  (drawable);
+  gint     height = ligma_drawable_get_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2671,8 +2671,8 @@ dlg_preview_calc_window (void)
 void
 ed_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_get_width  (drawable);
-  gint     height = gimp_drawable_get_height (drawable);
+  gint     width  = ligma_drawable_get_width  (drawable);
+  gint     height = ligma_drawable_get_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2733,13 +2733,13 @@ dlg_preview_handle_event (GtkWidget *widget,
           if (x != pvals.xcenter)
             {
               pvals.xcenter = x;
-              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+              ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (dlg->sizeentry),
                                           0, x);
             }
           if (y != pvals.ycenter)
             {
               pvals.ycenter = y;
-              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+              ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (dlg->sizeentry),
                                           1, y);
             }
           dlg_preview_update ();
@@ -2789,8 +2789,8 @@ dlg_preview_render_func (Preview  *preview,
                          gpointer  data)
 {
   GeglBuffer *src_buffer = data;
-  gint        width      = gimp_drawable_get_width  (drawable);
-  gint        height     = gimp_drawable_get_height (drawable);
+  gint        width      = ligma_drawable_get_width  (drawable);
+  gint        height     = ligma_drawable_get_height (drawable);
   gint        x;
   gint        dx, dy;         /* drawable x, y */
   guchar     *src_row, *src;
@@ -2875,27 +2875,27 @@ dlg_make_page_settings (GFlareDialog *dlg,
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 
-  frame = gimp_frame_new (_("Center"));
+  frame = ligma_frame_new (_("Center"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   center = dlg->sizeentry =
-    gimp_coordinates_new (gimp_image_get_unit (image), "%a",
-                          TRUE, TRUE, 75, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+    ligma_coordinates_new (ligma_image_get_unit (image), "%a",
+                          TRUE, TRUE, 75, LIGMA_SIZE_ENTRY_UPDATE_SIZE,
 
                           FALSE, FALSE,
 
                           _("_X:"), pvals.xcenter, xres,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_get_width (drawable),
+                          -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
+                          0, ligma_drawable_get_width (drawable),
 
                           _("_Y:"), pvals.ycenter, yres,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_get_height (drawable));
+                          -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
+                          0, ligma_drawable_get_height (drawable));
 
-  chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
+  chain = GTK_WIDGET (LIGMA_COORDINATES_CHAINBUTTON (center));
 
   gtk_container_add (GTK_CONTAINER (frame), center);
   g_signal_connect (center, "value-changed",
@@ -2907,7 +2907,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_hide (chain);
   gtk_widget_show (center);
 
-  frame = gimp_frame_new (_("Parameters"));
+  frame = ligma_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2919,8 +2919,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   row = 0;
 
-  scale = gimp_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_get_width (drawable) / 2, TRUE);
+  scale = ligma_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, LIGMA_MAX_IMAGE_SIZE, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 0.0, ligma_drawable_get_width (drawable) / 2, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.radius);
@@ -2930,8 +2930,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.rotation);
@@ -2941,8 +2941,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.hue);
@@ -2952,8 +2952,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.vangle);
@@ -2963,8 +2963,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Vector _length:"), pvals.vlength, 1, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1, 1000, TRUE);
+  scale = ligma_scale_entry_new (_("Vector _length:"), pvals.vlength, 1, LIGMA_MAX_IMAGE_SIZE, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 1, 1000, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.vlength);
@@ -2976,11 +2976,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   /**
   ***   Asupsample settings
-  ***   This code is stolen from gimp-0.99.x/app/blend.c
+  ***   This code is stolen from ligma-0.99.x/app/blend.c
   **/
 
   /*  asupsample frame */
-  frame = dlg->asupsample_frame = gimp_frame_new (NULL);
+  frame = dlg->asupsample_frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2997,22 +2997,22 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (asup_grid);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &pvals.use_asupsample);
 
   g_object_bind_property (button,    "active",
                           asup_grid, "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  scale = gimp_scale_entry_new (_("_Max depth:"), pvals.asupsample_max_depth, 1.0, 10.0, 0);
+  scale = ligma_scale_entry_new (_("_Max depth:"), pvals.asupsample_max_depth, 1.0, 10.0, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_int),
                     &pvals.asupsample_max_depth);
   gtk_grid_attach (GTK_GRID (asup_grid), scale, 0, 0, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
+  scale = ligma_scale_entry_new (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.01, 0.1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &pvals.asupsample_threshold);
@@ -3029,8 +3029,8 @@ dlg_position_entry_callback (GtkWidget *widget, gpointer data)
 {
   gint x, y;
 
-  x = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  y = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
+  x = RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 0));
+  y = RINT (ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 1));
 
   DEBUG_PRINT (("dlg_position_entry_callback\n"));
 
@@ -3048,7 +3048,7 @@ static void
 dlg_update_preview_callback (GtkWidget *widget,
                              gpointer   data)
 {
-  gimp_toggle_button_update (widget, data);
+  ligma_toggle_button_update (widget, data);
 
   dlg_preview_update ();
 }
@@ -3212,9 +3212,9 @@ dlg_selector_new_callback (GtkWidget *widget,
 {
   GtkWidget *query_box;
 
-  query_box = gimp_query_string_box (_("New Gradient Flare"),
+  query_box = ligma_query_string_box (_("New Gradient Flare"),
                                      gtk_widget_get_toplevel (widget),
-                                     gimp_standard_help_func, PLUG_IN_PROC,
+                                     ligma_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the new GFlare"),
                                      _("Unnamed"),
                                      NULL, NULL,
@@ -3292,9 +3292,9 @@ dlg_selector_copy_callback (GtkWidget *widget,
 
   name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
-  query_box = gimp_query_string_box (_("Copy Gradient Flare"),
+  query_box = ligma_query_string_box (_("Copy Gradient Flare"),
                                      gtk_widget_get_toplevel (widget),
-                                     gimp_standard_help_func, PLUG_IN_PROC,
+                                     ligma_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the copied GFlare"),
                                      name,
                                      NULL, NULL,
@@ -3359,10 +3359,10 @@ dlg_selector_delete_callback (GtkWidget *widget,
                            "\"%s\" from the list and from disk?"),
                          dlg->gflare->name);
 
-  dialog = gimp_query_boolean_box (_("Delete Gradient Flare"),
+  dialog = ligma_query_boolean_box (_("Delete Gradient Flare"),
                                    dlg->shell,
-                                   gimp_standard_help_func, PLUG_IN_PROC,
-                                   GIMP_ICON_DIALOG_QUESTION,
+                                   ligma_standard_help_func, PLUG_IN_PROC,
+                                   LIGMA_ICON_DIALOG_QUESTION,
                                    str,
                                    _("_Delete"), _("_Cancel"),
                                    NULL, NULL,
@@ -3471,9 +3471,9 @@ ed_run (GtkWindow            *parent,
    *    Dialog Shell
    */
   ed->shell =
-    shell = gimp_dialog_new (_("Gradient Flare Editor"), PLUG_IN_ROLE,
+    shell = ligma_dialog_new (_("Gradient Flare Editor"), PLUG_IN_ROLE,
                              GTK_WIDGET (parent), 0,
-                             gimp_standard_help_func, PLUG_IN_PROC,
+                             ligma_standard_help_func, PLUG_IN_PROC,
 
                              _("_Rescan Gradients"), RESPONSE_RESCAN,
                              _("_Cancel"),           GTK_RESPONSE_CANCEL,
@@ -3481,7 +3481,7 @@ ed_run (GtkWindow            *parent,
 
                              NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (shell),
                                            RESPONSE_RESCAN,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -3597,7 +3597,7 @@ ed_make_page_general (GFlareEditor *ed,
 
   /*  Glow  */
 
-  frame = gimp_frame_new (_("Glow Paint Options"));
+  frame = ligma_frame_new (_("Glow Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3607,7 +3607,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("Opacity:"), gflare->glow_opacity, 0.0, 100.0, 1);
+  scale = ligma_scale_entry_new (_("Opacity:"), gflare->glow_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_opacity);
@@ -3618,12 +3618,12 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   combo = ed_mode_menu_new (&gflare->glow_mode);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   /*  Rays  */
 
-  frame = gimp_frame_new (_("Rays Paint Options"));
+  frame = ligma_frame_new (_("Rays Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3633,7 +3633,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("Opacity:"), gflare->rays_opacity, 0.0, 100.0, 1);
+  scale = ligma_scale_entry_new (_("Opacity:"), gflare->rays_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_opacity);
@@ -3644,12 +3644,12 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   combo = ed_mode_menu_new (&gflare->rays_mode);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   /*  Rays  */
 
-  frame = gimp_frame_new (_("Second Flares Paint Options"));
+  frame = ligma_frame_new (_("Second Flares Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3659,7 +3659,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("Opacity:"), gflare->sflare_opacity, 0.0, 100.0, 1);
+  scale = ligma_scale_entry_new (_("Opacity:"), gflare->sflare_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_opacity);
@@ -3670,7 +3670,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (scale);
 
   combo = ed_mode_menu_new (&gflare->sflare_mode);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
@@ -3700,7 +3700,7 @@ ed_make_page_glow (GFlareEditor *ed,
    *  Gradient Menus
    */
 
-  frame = gimp_frame_new (_("Gradients"));
+  frame = ligma_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3727,7 +3727,7 @@ ed_make_page_glow (GFlareEditor *ed,
    *  Scales
    */
 
-  frame = gimp_frame_new (_("Parameters"));
+  frame = ligma_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3738,8 +3738,8 @@ ed_make_page_glow (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new (_("Size (%):"), gflare->glow_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
+  scale = ligma_scale_entry_new (_("Size (%):"), gflare->glow_size, 0.0, G_MAXINT, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_size);
@@ -3749,8 +3749,8 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_rotation);
@@ -3760,8 +3760,8 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->glow_hue);
@@ -3800,7 +3800,7 @@ ed_make_page_rays (GFlareEditor *ed,
    *  Gradient Menus
    */
 
-  frame = gimp_frame_new (_("Gradients"));
+  frame = ligma_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3829,7 +3829,7 @@ ed_make_page_rays (GFlareEditor *ed,
    *    Scales
    */
 
-  frame = gimp_frame_new (_("Parameters"));
+  frame = ligma_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3840,8 +3840,8 @@ ed_make_page_rays (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new (_("Size (%):"), gflare->rays_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
+  scale = ligma_scale_entry_new (_("Size (%):"), gflare->rays_size, 0.0, G_MAXINT, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 0.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_size);
@@ -3851,8 +3851,8 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_rotation);
@@ -3862,8 +3862,8 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_hue);
@@ -3873,8 +3873,8 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
+  scale = ligma_scale_entry_new (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_int),
                     &gflare->rays_nspikes);
@@ -3884,8 +3884,8 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Spike thickness:"), gflare->rays_thickness, 1.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
+  scale = ligma_scale_entry_new (_("Spike thickness:"), gflare->rays_thickness, 1.0, LIGMA_MAX_IMAGE_SIZE, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->rays_thickness);
@@ -3933,7 +3933,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    *  Gradient Menus
    */
 
-  frame = gimp_frame_new (_("Gradients"));
+  frame = ligma_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3960,7 +3960,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    *    Scales
    */
 
-  frame = gimp_frame_new (_("Parameters"));
+  frame = ligma_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -3971,8 +3971,8 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   row = 0;
 
-  scale = gimp_scale_entry_new (_("Size (%):"), gflare->sflare_size, 0.0, G_MAXINT, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 200.0, TRUE);
+  scale = ligma_scale_entry_new (_("Size (%):"), gflare->sflare_size, 0.0, G_MAXINT, 1);
+  ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scale), 1.0, 200.0, TRUE);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_size);
@@ -3982,8 +3982,8 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_rotation);
@@ -3993,8 +3993,8 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gradient_scale_entry_update_double),
                     &gflare->sflare_hue);
@@ -4010,7 +4010,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    *    Shape Radio Button Frame
    */
 
-  frame = gimp_frame_new (_("Shape of Second Flares"));
+  frame = ligma_frame_new (_("Shape of Second Flares"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -4020,7 +4020,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   toggle = gtk_radio_button_new_with_label (shape_group, _("Circle"));
   shape_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (GF_CIRCLE));
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (ed_shape_radio_callback),
@@ -4037,7 +4037,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   toggle = ed->polygon_toggle =
     gtk_radio_button_new_with_label (shape_group, _("Polygon"));
   shape_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (GF_POLYGON));
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (ed_shape_radio_callback),
@@ -4074,11 +4074,11 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed, &gflare->random_seed);
+  seed = ligma_random_seed_new (&gflare->sflare_seed, &gflare->random_seed);
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
-  g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value-changed",
+  g_signal_connect (LIGMA_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -4093,10 +4093,10 @@ ed_make_page_sflare (GFlareEditor *ed,
 GtkWidget *
 ed_mode_menu_new (GFlareMode *mode_var)
 {
-  GtkWidget *combo = gimp_int_combo_box_new_array (GF_NUM_MODES,
+  GtkWidget *combo = ligma_int_combo_box_new_array (GF_NUM_MODES,
                                                    gflare_menu_modes);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), *mode_var,
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), *mode_var,
                               G_CALLBACK (ed_mode_menu_callback),
                               mode_var, NULL);
 
@@ -4129,7 +4129,7 @@ static void
 ed_mode_menu_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), (gint *) data);
 
   ed_preview_update ();
 }
@@ -4149,7 +4149,7 @@ static void
 ed_shape_radio_callback (GtkWidget *widget,
                          gpointer   data)
 {
-  gimp_radio_button_update (widget, data);
+  ligma_radio_button_update (widget, data);
 
   ed_preview_update ();
 }
@@ -4356,7 +4356,7 @@ preview_new (gint                  width,
 
   preview = g_new0 (Preview, 1);
 
-  preview->widget = gimp_preview_area_new ();
+  preview->widget = ligma_preview_area_new ();
   gtk_widget_set_size_request (preview->widget, width, height);
   gtk_widget_show (preview->widget);
 
@@ -4461,9 +4461,9 @@ preview_handle_idle (Preview *preview)
 
   if (done)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->widget),
+      ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview->widget),
                               0, 0, preview->width, preview->height,
-                              GIMP_RGB_IMAGE,
+                              LIGMA_RGB_IMAGE,
                               preview->full_image_buffer,
                               preview->width * 3);
 
@@ -4501,11 +4501,11 @@ preview_rgba_to_rgb (guchar *dest,
     }
   else
     {
-      if ((x % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM) ^
-          (y % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM))
-        check = GIMP_CHECK_LIGHT * 255;
+      if ((x % (LIGMA_CHECK_SIZE) < LIGMA_CHECK_SIZE_SM) ^
+          (y % (LIGMA_CHECK_SIZE) < LIGMA_CHECK_SIZE_SM))
+        check = LIGMA_CHECK_LIGHT * 255;
       else
-        check = GIMP_CHECK_DARK * 255;
+        check = LIGMA_CHECK_DARK * 255;
 
       if (src_a == 0)   /* full transparent */
         {
@@ -4574,11 +4574,11 @@ gradient_menu_new (GradientMenuCallback callback,
   gm->callback = callback;
   gm->callback_data = callback_data;
 
-  gm->preview = gimp_preview_area_new ();
+  gm->preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (gm->preview,
                                GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT);
 
-  gm->combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  gm->combo = g_object_new (LIGMA_TYPE_INT_COMBO_BOX, NULL);
 
   g_signal_connect (gm->combo, "changed",
                     G_CALLBACK (gm_gradient_combo_callback),
@@ -4630,13 +4630,13 @@ gm_gradient_combo_fill (GradientMenu *gm,
       if (strcmp (name, default_gradient) == 0)
         active = i;
 
-      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (gm->combo),
-                                 GIMP_INT_STORE_VALUE, i,
-                                 GIMP_INT_STORE_LABEL, name,
+      ligma_int_combo_box_append (LIGMA_INT_COMBO_BOX (gm->combo),
+                                 LIGMA_INT_STORE_VALUE, i,
+                                 LIGMA_INT_STORE_LABEL, name,
                                  -1);
     }
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gm->combo), active);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (gm->combo), active);
 }
 
 static void
@@ -4647,7 +4647,7 @@ gm_gradient_combo_callback (GtkWidget *widget,
   const gchar  *gradient_name;
   gint          index;
 
-  if (! gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &index) ||
+  if (! ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &index) ||
       index < 0 ||
       index >= num_gradient_names)
     return;
@@ -4683,7 +4683,7 @@ gm_preview_draw (GtkWidget   *preview,
   dest_total_preview_buffer = g_new (guchar,
                                      GM_PREVIEW_HEIGHT * GM_PREVIEW_WIDTH * 3);
 
-  for (row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM)
+  for (row = 0; row < GM_PREVIEW_HEIGHT; row += LIGMA_CHECK_SIZE_SM)
     {
       for (col = 0; col < GM_PREVIEW_WIDTH; col++)
         {
@@ -4699,14 +4699,14 @@ gm_preview_draw (GtkWidget   *preview,
           else
             {
               /* more or less transparent */
-              if((col % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM) ^
-                  (row % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM))
+              if((col % (LIGMA_CHECK_SIZE) < LIGMA_CHECK_SIZE_SM) ^
+                  (row % (LIGMA_CHECK_SIZE) < LIGMA_CHECK_SIZE_SM))
                 {
-                  check = GIMP_CHECK_LIGHT * 255;
+                  check = LIGMA_CHECK_LIGHT * 255;
                 }
               else
                 {
-                  check = GIMP_CHECK_DARK * 255;
+                  check = LIGMA_CHECK_DARK * 255;
                 }
 
               if (src[alpha] == 0)
@@ -4726,7 +4726,7 @@ gm_preview_draw (GtkWidget   *preview,
         }
 
       for (irow = 0;
-           irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT;
+           irow < LIGMA_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT;
            irow++)
         {
           memcpy (dest_total_preview_buffer + (row+irow) * 3 * GM_PREVIEW_WIDTH,
@@ -4735,9 +4735,9 @@ gm_preview_draw (GtkWidget   *preview,
         }
     }
 
-    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+    ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview),
                             0, 0, GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT,
-                            GIMP_RGB_IMAGE,
+                            LIGMA_RGB_IMAGE,
                             (const guchar *) dest_total_preview_buffer,
                             GM_PREVIEW_WIDTH * 3);
 
@@ -4841,7 +4841,7 @@ gradient_get_list (gint *num_gradients)
   gint    i, n;
 
   gradient_cache_flush ();
-  external_gradients = gimp_gradients_get_list (NULL);
+  external_gradients = ligma_gradients_get_list (NULL);
   external_ngradients = g_strv_length (external_gradients);
 
   *num_gradients = G_N_ELEMENTS (internal_gradients) + external_ngradients;
@@ -5062,7 +5062,7 @@ gradient_get_values_real_external (const gchar *gradient_name,
   gint     i;
   gint     j;
 
-  gimp_gradient_get_uniform_samples (gradient_name, nvalues, reverse,
+  ligma_gradient_get_uniform_samples (gradient_name, nvalues, reverse,
                                      &n_tmp_values, &tmp_values);
 
   for (i = 0; i < nvalues; i++)
@@ -5158,17 +5158,17 @@ gradient_cache_zorch (void)
 }
 
 static void
-gradient_scale_entry_update_double (GimpLabelSpin *entry,
+gradient_scale_entry_update_double (LigmaLabelSpin *entry,
                                     gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }
 
 static void
-gradient_scale_entry_update_int (GimpLabelSpin *entry,
+gradient_scale_entry_update_int (LigmaLabelSpin *entry,
                                  gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }
 
 #ifdef DEBUG

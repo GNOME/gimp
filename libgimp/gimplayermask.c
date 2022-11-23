@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplayermask.c
+ * ligmalayermask.c
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -21,52 +21,52 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
-struct _GimpLayerMask
+struct _LigmaLayerMask
 {
-  GimpChannel parent_instance;
+  LigmaChannel parent_instance;
 };
 
 
-G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
+G_DEFINE_TYPE (LigmaLayerMask, ligma_layer_mask, LIGMA_TYPE_CHANNEL)
 
-#define parent_class gimp_layer_mask_parent_class
+#define parent_class ligma_layer_mask_parent_class
 
 
 static void
-gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
+ligma_layer_mask_class_init (LigmaLayerMaskClass *klass)
 {
 }
 
 static void
-gimp_layer_mask_init (GimpLayerMask *layer_mask)
+ligma_layer_mask_init (LigmaLayerMask *layer_mask)
 {
 }
 
 /**
- * gimp_layer_mask_get_by_id:
+ * ligma_layer_mask_get_by_id:
  * @layer_mask_id: The layer_mask id.
  *
- * Returns a #GimpLayerMask representing @layer_mask_id. This function
- * calls gimp_item_get_by_id() and returns the item if it is
+ * Returns a #LigmaLayerMask representing @layer_mask_id. This function
+ * calls ligma_item_get_by_id() and returns the item if it is
  * layer_mask or %NULL otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpLayerMask for
+ * Returns: (nullable) (transfer none): a #LigmaLayerMask for
  *          @layer_mask_id or %NULL if @layer_mask_id does not
  *          represent a valid layer_mask. The object belongs to
- *          libgimp and you must not modify or unref it.
+ *          libligma and you must not modify or unref it.
  *
  * Since: 3.0
  **/
-GimpLayerMask *
-gimp_layer_mask_get_by_id (gint32 layer_mask_id)
+LigmaLayerMask *
+ligma_layer_mask_get_by_id (gint32 layer_mask_id)
 {
-  GimpItem *item = gimp_item_get_by_id (layer_mask_id);
+  LigmaItem *item = ligma_item_get_by_id (layer_mask_id);
 
-  if (GIMP_IS_LAYER_MASK (item))
-    return (GimpLayerMask *) item;
+  if (LIGMA_IS_LAYER_MASK (item))
+    return (LigmaLayerMask *) item;
 
   return NULL;
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,50 +23,50 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "gimp-version.h"
+#include "ligma-version.h"
 
-#include "config/gimprc.h"
+#include "config/ligmarc.h"
 
-#include "core/gimp.h"
-#include "core/gimptemplate.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligmatemplate.h"
+#include "core/ligma-utils.h"
 
-#include "display/gimpmodifiersmanager.h"
+#include "display/ligmamodifiersmanager.h"
 
-#include "plug-in/gimppluginmanager.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "widgets/gimpaction-history.h"
-#include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontrollerlist.h"
-#include "widgets/gimpdevices.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpgrideditor.h"
-#include "widgets/gimphelp.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimplanguagecombobox.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimppluginview.h"
-#include "widgets/gimpprefsbox.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpmodifierseditor.h"
-#include "widgets/gimpstrokeeditor.h"
-#include "widgets/gimptemplateeditor.h"
-#include "widgets/gimptooleditor.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaaction-history.h"
+#include "widgets/ligmacolorpanel.h"
+#include "widgets/ligmacontainercombobox.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmacontrollerlist.h"
+#include "widgets/ligmadevices.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmagrideditor.h"
+#include "widgets/ligmahelp.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmalanguagecombobox.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmapluginview.h"
+#include "widgets/ligmaprefsbox.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmamodifierseditor.h"
+#include "widgets/ligmastrokeeditor.h"
+#include "widgets/ligmatemplateeditor.h"
+#include "widgets/ligmatooleditor.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "menus/menus.h"
 
-#include "tools/gimp-tools.h"
+#include "tools/ligma-tools.h"
 
 #include "gui/icon-themes.h"
 #include "gui/session.h"
@@ -77,7 +77,7 @@
 #include "preferences-dialog-utils.h"
 #include "resolution-calibrate-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -85,8 +85,8 @@
 
 /*  preferences local functions  */
 
-static GtkWidget * prefs_dialog_new                (Gimp       *gimp,
-                                                    GimpConfig *config);
+static GtkWidget * prefs_dialog_new                (Ligma       *ligma,
+                                                    LigmaConfig *config);
 static void        prefs_config_notify             (GObject    *config,
                                                     GParamSpec *param_spec,
                                                     GObject    *config_copy);
@@ -117,33 +117,33 @@ static void   prefs_resolution_source_callback     (GtkWidget    *widget,
 static void   prefs_resolution_calibrate_callback  (GtkWidget    *widget,
                                                     GtkWidget    *entry);
 static void   prefs_input_devices_dialog           (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_keyboard_shortcuts_dialog      (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_menus_save_callback            (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_menus_clear_callback           (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_menus_remove_callback          (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_session_save_callback          (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_session_clear_callback         (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_devices_save_callback          (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_devices_clear_callback         (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_modifiers_clear_callback       (GtkWidget    *widget,
-                                                    GimpModifiersEditor *editor);
+                                                    LigmaModifiersEditor *editor);
 static void   prefs_search_clear_callback          (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_tool_options_save_callback     (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_tool_options_clear_callback    (GtkWidget    *widget,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_help_language_change_callback  (GtkComboBox  *combo,
-                                                    Gimp         *gimp);
+                                                    Ligma         *ligma);
 static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
                                                     GtkContainer *box);
 static void   prefs_check_style_callback           (GObject      *config,
@@ -154,7 +154,7 @@ static void   prefs_gui_config_notify_icon_size    (GObject       *config,
                                                     GParamSpec    *pspec,
                                                     GtkRange      *range);
 static void   prefs_icon_size_value_changed        (GtkRange      *range,
-                                                    GimpGuiConfig *config);
+                                                    LigmaGuiConfig *config);
 
 
 /*  private variables  */
@@ -166,23 +166,23 @@ static GtkWidget *tool_editor  = NULL;
 /*  public function  */
 
 GtkWidget *
-preferences_dialog_create (Gimp *gimp)
+preferences_dialog_create (Ligma *ligma)
 {
-  GimpConfig *config;
-  GimpConfig *config_copy;
-  GimpConfig *config_orig;
+  LigmaConfig *config;
+  LigmaConfig *config_copy;
+  LigmaConfig *config_orig;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (prefs_dialog)
     return prefs_dialog;
 
   /*  turn off autosaving while the prefs dialog is open  */
-  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), FALSE);
+  ligma_rc_set_autosave (LIGMA_RC (ligma->edit_config), FALSE);
 
-  config       = GIMP_CONFIG (gimp->edit_config);
-  config_copy  = gimp_config_duplicate (config);
-  config_orig  = gimp_config_duplicate (config);
+  config       = LIGMA_CONFIG (ligma->edit_config);
+  config_copy  = ligma_config_duplicate (config);
+  config_orig  = ligma_config_duplicate (config);
 
   g_signal_connect_object (config, "notify",
                            G_CALLBACK (prefs_config_notify),
@@ -191,12 +191,12 @@ preferences_dialog_create (Gimp *gimp)
                            G_CALLBACK (prefs_config_copy_notify),
                            config, 0);
 
-  prefs_dialog = prefs_dialog_new (gimp, config_copy);
+  prefs_dialog = prefs_dialog_new (ligma, config_copy);
 
   g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
                              (gpointer) &prefs_dialog);
 
-  g_object_set_data (G_OBJECT (prefs_dialog), "gimp", gimp);
+  g_object_set_data (G_OBJECT (prefs_dialog), "ligma", ligma);
 
   g_object_set_data_full (G_OBJECT (prefs_dialog), "config-copy", config_copy,
                           (GDestroyNotify) g_object_unref);
@@ -256,9 +256,9 @@ prefs_config_copy_notify (GObject    *config_copy,
 
   if (g_param_values_cmp (param_spec, &copy_value, &global_value))
     {
-      if (param_spec->flags & GIMP_CONFIG_PARAM_CONFIRM)
+      if (param_spec->flags & LIGMA_CONFIG_PARAM_CONFIRM)
         {
-#ifdef GIMP_CONFIG_DEBUG
+#ifdef LIGMA_CONFIG_DEBUG
           g_print ("NOT Applying prefs change of '%s' to edit_config "
                    "because it needs confirmation\n",
                    param_spec->name);
@@ -266,7 +266,7 @@ prefs_config_copy_notify (GObject    *config_copy,
         }
       else
         {
-#ifdef GIMP_CONFIG_DEBUG
+#ifdef LIGMA_CONFIG_DEBUG
           g_print ("Applying prefs change of '%s' to edit_config\n",
                    param_spec->name);
 #endif
@@ -291,7 +291,7 @@ prefs_response (GtkWidget *widget,
                 gint       response_id,
                 GtkWidget *dialog)
 {
-  Gimp *gimp = g_object_get_data (G_OBJECT (dialog), "gimp");
+  Ligma *ligma = g_object_get_data (G_OBJECT (dialog), "ligma");
 
   switch (response_id)
     {
@@ -299,41 +299,41 @@ prefs_response (GtkWidget *widget,
       {
         GtkWidget *confirm;
 
-        confirm = gimp_message_dialog_new (_("Reset All Preferences"),
-                                           GIMP_ICON_DIALOG_QUESTION,
+        confirm = ligma_message_dialog_new (_("Reset All Preferences"),
+                                           LIGMA_ICON_DIALOG_QUESTION,
                                            dialog,
                                            GTK_DIALOG_MODAL |
                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                                           gimp_standard_help_func, NULL,
+                                           ligma_standard_help_func, NULL,
 
                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
                                            _("_Reset"),  GTK_RESPONSE_OK,
 
                                            NULL);
 
-        gimp_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
+        ligma_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
                                                  GTK_RESPONSE_OK,
                                                  GTK_RESPONSE_CANCEL,
                                                  -1);
 
-        gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (confirm)->box,
+        ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (confirm)->box,
                                            _("Do you really want to reset all "
                                              "preferences to default values?"));
 
-        if (gimp_dialog_run (GIMP_DIALOG (confirm)) == GTK_RESPONSE_OK)
+        if (ligma_dialog_run (LIGMA_DIALOG (confirm)) == GTK_RESPONSE_OK)
           {
-            GimpConfig *config_copy;
+            LigmaConfig *config_copy;
 
             config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
-            gimp_config_reset (config_copy);
-            gimp_rc_load_system (GIMP_RC (config_copy));
+            ligma_config_reset (config_copy);
+            ligma_rc_load_system (LIGMA_RC (config_copy));
 
             /* don't use the default value if there is no help browser */
-            if (! gimp_help_browser_is_installed (gimp))
+            if (! ligma_help_browser_is_installed (ligma))
               {
                 g_object_set (config_copy,
-                              "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+                              "help-browser", LIGMA_HELP_BROWSER_WEB_BROWSER,
                               NULL);
               }
           }
@@ -358,11 +358,11 @@ prefs_response (GtkWidget *widget,
 
         gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
-        confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+        confirm_diff = ligma_config_diff (G_OBJECT (ligma->edit_config),
                                          config_copy,
-                                         GIMP_CONFIG_PARAM_CONFIRM);
+                                         LIGMA_CONFIG_PARAM_CONFIRM);
 
-        g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+        g_object_freeze_notify (G_OBJECT (ligma->edit_config));
 
         for (list = confirm_diff; list; list = g_list_next (list))
           {
@@ -373,30 +373,30 @@ prefs_response (GtkWidget *widget,
 
             g_object_get_property (config_copy,
                                    param_spec->name, &value);
-            g_object_set_property (G_OBJECT (gimp->edit_config),
+            g_object_set_property (G_OBJECT (ligma->edit_config),
                                    param_spec->name, &value);
 
             g_value_unset (&value);
           }
 
-        g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+        g_object_thaw_notify (G_OBJECT (ligma->edit_config));
 
         g_list_free (confirm_diff);
 
-        gimp_rc_save (GIMP_RC (gimp->edit_config));
+        ligma_rc_save (LIGMA_RC (ligma->edit_config));
 
         /*  spit out a solely informational warning about changed values
          *  which need restart
          */
-        restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
-                                         G_OBJECT (gimp->config),
-                                         GIMP_CONFIG_PARAM_RESTART);
+        restart_diff = ligma_config_diff (G_OBJECT (ligma->edit_config),
+                                         G_OBJECT (ligma->config),
+                                         LIGMA_CONFIG_PARAM_RESTART);
 
         if (restart_diff)
           {
             GString *string;
 
-            string = g_string_new (_("You will have to restart GIMP for "
+            string = g_string_new (_("You will have to restart LIGMA for "
                                      "the following changes to take effect:"));
             g_string_append (string, "\n\n");
 
@@ -432,11 +432,11 @@ prefs_response (GtkWidget *widget,
 
         gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
-        diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+        diff = ligma_config_diff (G_OBJECT (ligma->edit_config),
                                  config_orig,
-                                 GIMP_CONFIG_PARAM_SERIALIZE);
+                                 LIGMA_CONFIG_PARAM_SERIALIZE);
 
-        g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+        g_object_freeze_notify (G_OBJECT (ligma->edit_config));
 
         for (list = diff; list; list = g_list_next (list))
           {
@@ -447,15 +447,15 @@ prefs_response (GtkWidget *widget,
 
             g_object_get_property (config_orig,
                                    param_spec->name, &value);
-            g_object_set_property (G_OBJECT (gimp->edit_config),
+            g_object_set_property (G_OBJECT (ligma->edit_config),
                                    param_spec->name, &value);
 
             g_value_unset (&value);
           }
 
-        gimp_tool_editor_revert_changes (GIMP_TOOL_EDITOR (tool_editor));
+        ligma_tool_editor_revert_changes (LIGMA_TOOL_EDITOR (tool_editor));
 
-        g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+        g_object_thaw_notify (G_OBJECT (ligma->edit_config));
 
         g_list_free (diff);
       }
@@ -464,7 +464,7 @@ prefs_response (GtkWidget *widget,
     }
 
   /*  enable autosaving again  */
-  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
+  ligma_rc_set_autosave (LIGMA_RC (ligma->edit_config), TRUE);
 
   gtk_widget_destroy (dialog);
 }
@@ -473,11 +473,11 @@ static void
 prefs_color_management_reset (GtkWidget *widget,
                               GObject   *config)
 {
-  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (config);
+  LigmaCoreConfig *core_config = LIGMA_CORE_CONFIG (config);
 
-  gimp_config_reset (GIMP_CONFIG (core_config->color_management));
-  gimp_config_reset_property (config, "color-profile-policy");
-  gimp_config_reset_property (config, "filter-tool-show-color-options");
+  ligma_config_reset (LIGMA_CONFIG (core_config->color_management));
+  ligma_config_reset_property (config, "color-profile-policy");
+  ligma_config_reset_property (config, "filter-tool-show-color-options");
 }
 
 static void
@@ -497,13 +497,13 @@ prefs_dialog_defaults_reset (GtkWidget *widget,
     {
       GParamSpec *pspec = pspecs[i];
 
-      if (pspec->owner_type == GIMP_TYPE_DIALOG_CONFIG)
-        gimp_config_reset_property (config, pspec->name);
+      if (pspec->owner_type == LIGMA_TYPE_DIALOG_CONFIG)
+        ligma_config_reset_property (config, pspec->name);
     }
 
-  gimp_config_reset_property (config, "filter-tool-max-recent");
-  gimp_config_reset_property (config, "filter-tool-use-last-settings");
-  gimp_config_reset_property (config, "filter-tool-show-color-options");
+  ligma_config_reset_property (config, "filter-tool-max-recent");
+  ligma_config_reset_property (config, "filter-tool-use-last-settings");
+  ligma_config_reset_property (config, "filter-tool-show-color-options");
 
   g_object_thaw_notify (config);
 
@@ -514,8 +514,8 @@ static void
 prefs_folders_reset (GtkWidget *widget,
                      GObject   *config)
 {
-  gimp_config_reset_property (config, "temp-path");
-  gimp_config_reset_property (config, "swap-path");
+  ligma_config_reset_property (config, "temp-path");
+  ligma_config_reset_property (config, "swap-path");
 }
 
 static void
@@ -528,26 +528,26 @@ prefs_path_reset (GtkWidget *widget,
   path_property     = g_object_get_data (G_OBJECT (widget), "path");
   writable_property = g_object_get_data (G_OBJECT (widget), "path-writable");
 
-  gimp_config_reset_property (config, path_property);
+  ligma_config_reset_property (config, path_property);
 
   if (writable_property)
-    gimp_config_reset_property (config, writable_property);
+    ligma_config_reset_property (config, writable_property);
 }
 
 static gboolean
-prefs_template_select_callback (GimpContainerView *view,
+prefs_template_select_callback (LigmaContainerView *view,
                                 GList             *templates,
                                 GList             *paths,
-                                GimpTemplate      *edit_template)
+                                LigmaTemplate      *edit_template)
 {
   g_return_val_if_fail (g_list_length (templates) < 2, FALSE);
 
   if (templates)
     {
       /*  make sure the resolution values are copied first (see bug #546924)  */
-      gimp_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
-                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
-      gimp_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
+      ligma_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
+                        LIGMA_TEMPLATE_PARAM_COPY_FIRST);
+      ligma_config_sync (G_OBJECT (templates->data), G_OBJECT (edit_template),
                         0);
     }
 
@@ -560,7 +560,7 @@ prefs_import_raw_procedure_callback (GtkWidget *widget,
 {
   gchar *raw_plug_in;
 
-  raw_plug_in = gimp_plug_in_view_get_plug_in (GIMP_PLUG_IN_VIEW (widget));
+  raw_plug_in = ligma_plug_in_view_get_plug_in (LIGMA_PLUG_IN_VIEW (widget));
 
   g_object_set (config,
                 "import-raw-plug-in", raw_plug_in,
@@ -581,18 +581,18 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
   if (from_gdk)
     {
-      gimp_get_monitor_resolution (gimp_widget_get_monitor (widget),
+      ligma_get_monitor_resolution (ligma_widget_get_monitor (widget),
                                    &xres, &yres);
     }
   else
     {
-      GimpSizeEntry *entry = g_object_get_data (G_OBJECT (widget),
+      LigmaSizeEntry *entry = g_object_get_data (G_OBJECT (widget),
                                                 "monitor_resolution_sizeentry");
 
-      g_return_if_fail (GIMP_IS_SIZE_ENTRY (entry));
+      g_return_if_fail (LIGMA_IS_SIZE_ENTRY (entry));
 
-      xres = gimp_size_entry_get_refval (entry, 0);
-      yres = gimp_size_entry_get_refval (entry, 1);
+      xres = ligma_size_entry_get_refval (entry, 0);
+      yres = ligma_size_entry_get_refval (entry, 1);
     }
 
   g_object_set (config,
@@ -613,38 +613,38 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
   dialog = gtk_widget_get_toplevel (entry);
 
   prefs_box = g_object_get_data (G_OBJECT (dialog), "prefs-box");
-  icon_name = gimp_prefs_box_get_current_icon_name (GIMP_PREFS_BOX (prefs_box));
+  icon_name = ligma_prefs_box_get_current_icon_name (LIGMA_PREFS_BOX (prefs_box));
 
   resolution_calibrate_dialog (entry, icon_name);
 }
 
 static void
 prefs_input_devices_dialog (GtkWidget *widget,
-                            Gimp      *gimp)
+                            Ligma      *ligma)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gimp_widget_get_monitor (widget),
+  ligma_dialog_factory_dialog_raise (ligma_dialog_factory_get_singleton (),
+                                    ligma_widget_get_monitor (widget),
                                     widget,
-                                    "gimp-input-devices-dialog", 0);
+                                    "ligma-input-devices-dialog", 0);
 }
 
 static void
 prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
-                                 Gimp      *gimp)
+                                 Ligma      *ligma)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gimp_widget_get_monitor (widget),
+  ligma_dialog_factory_dialog_raise (ligma_dialog_factory_get_singleton (),
+                                    ligma_widget_get_monitor (widget),
                                     widget,
-                                    "gimp-keyboard-shortcuts-dialog", 0);
+                                    "ligma-keyboard-shortcuts-dialog", 0);
 }
 
 static void
 prefs_menus_save_callback (GtkWidget *widget,
-                           Gimp      *gimp)
+                           Ligma      *ligma)
 {
   GtkWidget *clear_button;
 
-  menus_save (gimp, TRUE);
+  menus_save (ligma, TRUE);
 
   clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
 
@@ -654,11 +654,11 @@ prefs_menus_save_callback (GtkWidget *widget,
 
 static void
 prefs_menus_clear_callback (GtkWidget *widget,
-                            Gimp      *gimp)
+                            Ligma      *ligma)
 {
   GError *error = NULL;
 
-  if (! menus_clear (gimp, &error))
+  if (! menus_clear (ligma, &error))
     {
       prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
@@ -669,29 +669,29 @@ prefs_menus_clear_callback (GtkWidget *widget,
 
       prefs_message (GTK_MESSAGE_INFO, TRUE,
                      _("Your keyboard shortcuts will be reset to "
-                       "default values the next time you start GIMP."));
+                       "default values the next time you start LIGMA."));
     }
 }
 
 static void
 prefs_menus_remove_callback (GtkWidget *widget,
-                             Gimp      *gimp)
+                             Ligma      *ligma)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_message_dialog_new (_("Remove all Keyboard Shortcuts"),
-                                    GIMP_ICON_DIALOG_QUESTION,
+  dialog = ligma_message_dialog_new (_("Remove all Keyboard Shortcuts"),
+                                    LIGMA_ICON_DIALOG_QUESTION,
                                     gtk_widget_get_toplevel (widget),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("Cl_ear"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -700,13 +700,13 @@ prefs_menus_remove_callback (GtkWidget *widget,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Do you really want to remove all "
                                        "keyboard shortcuts from all menus?"));
 
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      menus_remove (gimp);
+      menus_remove (ligma);
     }
 
   gtk_widget_destroy (dialog);
@@ -714,11 +714,11 @@ prefs_menus_remove_callback (GtkWidget *widget,
 
 static void
 prefs_session_save_callback (GtkWidget *widget,
-                             Gimp      *gimp)
+                             Ligma      *ligma)
 {
   GtkWidget *clear_button;
 
-  session_save (gimp, TRUE);
+  session_save (ligma, TRUE);
 
   clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
 
@@ -728,11 +728,11 @@ prefs_session_save_callback (GtkWidget *widget,
 
 static void
 prefs_session_clear_callback (GtkWidget *widget,
-                              Gimp      *gimp)
+                              Ligma      *ligma)
 {
   GError *error = NULL;
 
-  if (! session_clear (gimp, &error))
+  if (! session_clear (ligma, &error))
     {
       prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
@@ -743,17 +743,17 @@ prefs_session_clear_callback (GtkWidget *widget,
 
       prefs_message (GTK_MESSAGE_INFO, TRUE,
                      _("Your window setup will be reset to "
-                       "default values the next time you start GIMP."));
+                       "default values the next time you start LIGMA."));
     }
 }
 
 static void
 prefs_devices_save_callback (GtkWidget *widget,
-                             Gimp      *gimp)
+                             Ligma      *ligma)
 {
   GtkWidget *clear_button;
 
-  gimp_devices_save (gimp, TRUE);
+  ligma_devices_save (ligma, TRUE);
 
   clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
 
@@ -763,11 +763,11 @@ prefs_devices_save_callback (GtkWidget *widget,
 
 static void
 prefs_devices_clear_callback (GtkWidget *widget,
-                              Gimp      *gimp)
+                              Ligma      *ligma)
 {
   GError *error = NULL;
 
-  if (! gimp_devices_clear (gimp, &error))
+  if (! ligma_devices_clear (ligma, &error))
     {
       prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
@@ -778,15 +778,15 @@ prefs_devices_clear_callback (GtkWidget *widget,
 
       prefs_message (GTK_MESSAGE_INFO, TRUE,
                      _("Your input device settings will be reset to "
-                       "default values the next time you start GIMP."));
+                       "default values the next time you start LIGMA."));
     }
 }
 
 static void
 prefs_modifiers_clear_callback (GtkWidget           *widget,
-                                GimpModifiersEditor *editor)
+                                LigmaModifiersEditor *editor)
 {
-  gimp_modifiers_editor_clear (editor);
+  ligma_modifiers_editor_clear (editor);
 }
 
 #ifdef G_OS_WIN32
@@ -801,17 +801,17 @@ prefs_devices_api_sensitivity_func (gint      value,
 
   if (!inited)
     {
-      have_wintab      = gimp_win32_have_wintab ();
-      have_windows_ink = gimp_win32_have_windows_ink ();
+      have_wintab      = ligma_win32_have_wintab ();
+      have_windows_ink = ligma_win32_have_windows_ink ();
 
       inited = TRUE;
     }
 
   switch (value)
     {
-    case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
+    case LIGMA_WIN32_POINTER_INPUT_API_WINTAB:
       return have_wintab;
-    case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
+    case LIGMA_WIN32_POINTER_INPUT_API_WINDOWS_INK:
       return have_windows_ink;
     default:
       return TRUE;
@@ -822,18 +822,18 @@ prefs_devices_api_sensitivity_func (gint      value,
 
 static void
 prefs_search_clear_callback (GtkWidget *widget,
-                             Gimp      *gimp)
+                             Ligma      *ligma)
 {
-  gimp_action_history_clear (gimp);
+  ligma_action_history_clear (ligma);
 }
 
 static void
 prefs_tool_options_save_callback (GtkWidget *widget,
-                                  Gimp      *gimp)
+                                  Ligma      *ligma)
 {
   GtkWidget *clear_button;
 
-  gimp_tools_save (gimp, TRUE, TRUE);
+  ligma_tools_save (ligma, TRUE, TRUE);
 
   clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
 
@@ -843,11 +843,11 @@ prefs_tool_options_save_callback (GtkWidget *widget,
 
 static void
 prefs_tool_options_clear_callback (GtkWidget *widget,
-                                   Gimp      *gimp)
+                                   Ligma      *ligma)
 {
   GError *error = NULL;
 
-  if (! gimp_tools_clear (gimp, &error))
+  if (! ligma_tools_clear (ligma, &error))
     {
       prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
@@ -858,23 +858,23 @@ prefs_tool_options_clear_callback (GtkWidget *widget,
 
       prefs_message (GTK_MESSAGE_INFO, TRUE,
                      _("Your tool options will be reset to "
-                       "default values the next time you start GIMP."));
+                       "default values the next time you start LIGMA."));
     }
 }
 
 static void
 prefs_help_language_change_callback (GtkComboBox *combo,
-                                     Gimp        *gimp)
+                                     Ligma        *ligma)
 {
   gchar *help_locales = NULL;
   gchar *code;
 
-  code = gimp_language_combo_box_get_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+  code = ligma_language_combo_box_get_code (LIGMA_LANGUAGE_COMBO_BOX (combo));
   if (code && g_strcmp0 ("", code) != 0)
     {
       help_locales = g_strdup_printf ("%s:", code);
     }
-  g_object_set (gimp->config,
+  g_object_set (ligma->config,
                 "help-locales", help_locales? help_locales : "",
                 NULL);
   g_free (code);
@@ -886,7 +886,7 @@ static void
 prefs_help_language_change_callback2 (GtkComboBox  *combo,
                                       GtkContainer *box)
 {
-  Gimp        *gimp;
+  Ligma        *ligma;
   GtkLabel    *label = NULL;
   GtkImage    *icon  = NULL;
   GList       *children;
@@ -894,7 +894,7 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
   const gchar *text;
   const gchar *icon_name;
 
-  gimp = g_object_get_data (G_OBJECT (box), "gimp");
+  ligma = g_object_get_data (G_OBJECT (box), "ligma");
   children = gtk_container_get_children (box);
   for (iter = children; iter; iter = iter->next)
     {
@@ -907,15 +907,15 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
           icon = iter->data;
         }
     }
-  if (gimp_help_user_manual_is_installed (gimp))
+  if (ligma_help_user_manual_is_installed (ligma))
     {
       text = _("There's a local installation of the user manual.");
-      icon_name = GIMP_ICON_DIALOG_INFORMATION;
+      icon_name = LIGMA_ICON_DIALOG_INFORMATION;
     }
   else
     {
       text = _("The user manual is not installed locally.");
-      icon_name = GIMP_ICON_DIALOG_WARNING;
+      icon_name = LIGMA_ICON_DIALOG_WARNING;
     }
   if (label)
     {
@@ -935,15 +935,15 @@ prefs_check_style_callback (GObject    *config,
                             GParamSpec *pspec,
                             GtkWidget  *widget)
 {
-  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (config);
+  LigmaDisplayConfig *display_config = LIGMA_DISPLAY_CONFIG (config);
 
   gtk_widget_set_sensitive (widget,
-                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+                            display_config->transparency_type == LIGMA_CHECK_TYPE_CUSTOM_CHECKS);
 }
 
 static void
 prefs_icon_size_value_changed (GtkRange      *range,
-                               GimpGuiConfig *config)
+                               LigmaGuiConfig *config)
 {
   gint value = (gint) gtk_range_get_value (range);
 
@@ -951,7 +951,7 @@ prefs_icon_size_value_changed (GtkRange      *range,
                                    G_CALLBACK (prefs_gui_config_notify_icon_size),
                                    range);
   g_object_set (G_OBJECT (config),
-                "custom-icon-size", (GimpIconSize) value,
+                "custom-icon-size", (LigmaIconSize) value,
                 NULL);
   g_signal_handlers_unblock_by_func (config,
                                      G_CALLBACK (prefs_gui_config_notify_icon_size),
@@ -963,7 +963,7 @@ prefs_gui_config_notify_icon_size (GObject    *config,
                                    GParamSpec *pspec,
                                    GtkRange   *range)
 {
-  GimpIconSize size = GIMP_GUI_CONFIG (config)->custom_icon_size;
+  LigmaIconSize size = LIGMA_GUI_CONFIG (config)->custom_icon_size;
 
   g_signal_handlers_block_by_func (range,
                                    G_CALLBACK (prefs_icon_size_value_changed),
@@ -986,7 +986,7 @@ prefs_format_string_select_callback (GtkListBox    *listbox,
 
 static void
 prefs_theme_select_callback (GtkTreeSelection *sel,
-                             Gimp             *gimp)
+                             Ligma             *ligma)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -996,39 +996,39 @@ prefs_theme_select_callback (GtkTreeSelection *sel,
       GValue val = G_VALUE_INIT;
 
       gtk_tree_model_get_value (model, &iter, 0, &val);
-      g_object_set_property (G_OBJECT (gimp->config), "theme", &val);
+      g_object_set_property (G_OBJECT (ligma->config), "theme", &val);
       g_value_unset (&val);
     }
 }
 
 static void
 prefs_theme_reload_callback (GtkWidget *button,
-                             Gimp      *gimp)
+                             Ligma      *ligma)
 {
-  g_object_notify (G_OBJECT (gimp->config), "theme");
+  g_object_notify (G_OBJECT (ligma->config), "theme");
 }
 
 static void
 prefs_icon_theme_select_callback (GtkListBox    *listbox,
                                   GtkListBoxRow *row,
-                                  Gimp          *gimp)
+                                  Ligma          *ligma)
 {
   const char *icon_theme;
 
   icon_theme = g_object_get_data (G_OBJECT (row), "icon-theme");
-  g_object_set (gimp->config, "icon-theme", icon_theme, NULL);
+  g_object_set (ligma->config, "icon-theme", icon_theme, NULL);
 }
 
 static void
 prefs_canvas_padding_color_changed (GtkWidget *button,
                                     GtkWidget *combo)
 {
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 GIMP_CANVAS_PADDING_MODE_CUSTOM);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
+                                 LIGMA_CANVAS_PADDING_MODE_CUSTOM);
 }
 
 static void
-prefs_display_options_frame_add (Gimp         *gimp,
+prefs_display_options_frame_add (Ligma         *ligma,
                                  GObject      *object,
                                  const gchar  *label,
                                  GtkContainer *parent)
@@ -1099,7 +1099,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
                                    _("Custom p_adding color:"),
                                    _("Select Custom Canvas Padding Color"),
                                    GTK_GRID (grid), 1, NULL,
-                                   gimp_get_user_context (gimp));
+                                   ligma_get_user_context (ligma));
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (prefs_canvas_padding_color_changed),
@@ -1111,7 +1111,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
 }
 
 static void
-prefs_behavior_options_frame_add (Gimp         *gimp,
+prefs_behavior_options_frame_add (Ligma         *ligma,
                                   GObject      *object,
                                   const gchar  *label,
                                   GtkContainer *parent)
@@ -1157,9 +1157,9 @@ prefs_help_func (const gchar *help_id,
 
   prefs_box = g_object_get_data (G_OBJECT (help_data), "prefs-box");
 
-  help_id = gimp_prefs_box_get_current_help_id (GIMP_PREFS_BOX (prefs_box));
+  help_id = ligma_prefs_box_get_current_help_id (LIGMA_PREFS_BOX (prefs_box));
 
-  gimp_standard_help_func (help_id, NULL);
+  ligma_standard_help_func (help_id, NULL);
 }
 
 static void
@@ -1181,8 +1181,8 @@ prefs_message (GtkMessageType  type,
 }
 
 static GtkWidget *
-prefs_dialog_new (Gimp       *gimp,
-                  GimpConfig *config)
+prefs_dialog_new (Ligma       *ligma,
+                  LigmaConfig *config)
 {
   GtkWidget         *dialog;
   GtkTreeIter        top_iter;
@@ -1206,21 +1206,21 @@ prefs_dialog_new (Gimp       *gimp,
   gint               i;
 
   GObject           *object;
-  GimpCoreConfig    *core_config;
-  GimpDisplayConfig *display_config;
+  LigmaCoreConfig    *core_config;
+  LigmaDisplayConfig *display_config;
   GList             *manuals;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONFIG (config), NULL);
 
   object         = G_OBJECT (config);
-  core_config    = GIMP_CORE_CONFIG (config);
-  display_config = GIMP_DISPLAY_CONFIG (config);
+  core_config    = LIGMA_CORE_CONFIG (config);
+  display_config = LIGMA_DISPLAY_CONFIG (config);
 
-  dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
+  dialog = ligma_dialog_new (_("Preferences"), "ligma-preferences",
                             NULL, 0,
                             prefs_help_func,
-                            GIMP_HELP_PREFS_DIALOG,
+                            LIGMA_HELP_PREFS_DIALOG,
 
                             _("_Reset"),  RESPONSE_RESET,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -1228,7 +1228,7 @@ prefs_dialog_new (Gimp       *gimp,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -1239,7 +1239,7 @@ prefs_dialog_new (Gimp       *gimp,
                     dialog);
 
   /* The prefs box */
-  prefs_box = gimp_prefs_box_new ();
+  prefs_box = ligma_prefs_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       prefs_box, TRUE, TRUE, 0);
@@ -1251,14 +1251,14 @@ prefs_dialog_new (Gimp       *gimp,
   /**********************/
   /*  System Resources  */
   /**********************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-system-resources",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-system-resources",
                                   _("System Resources"),
                                   _("System Resources"),
-                                  GIMP_HELP_PREFS_SYSTEM_RESOURCES,
+                                  LIGMA_HELP_PREFS_SYSTEM_RESOURCES,
                                   NULL,
                                   &top_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1292,7 +1292,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  Internet access  */
 #ifdef CHECK_UPDATE
-  if (gimp_version_check_update ())
+  if (ligma_version_check_update ())
     {
       vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
                                FALSE);
@@ -1331,24 +1331,24 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Debugging  */
   /***************/
-  /* No debugging preferences are needed on win32. Either GIMP has been
+  /* No debugging preferences are needed on win32. Either LIGMA has been
    * built with DrMinGW support (HAVE_EXCHNDL) or not. If it has, then
    * the backtracing is enabled and can't be disabled. It assume it will
    * work only upon a crash.
    */
 #ifndef G_OS_WIN32
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-wilber-eek", /* TODO: icon needed. */
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-wilber-eek", /* TODO: icon needed. */
                                   _("Debugging"),
                                   _("Debugging"),
-                                  GIMP_HELP_PREFS_DEBUGGING,
+                                  LIGMA_HELP_PREFS_DEBUGGING,
                                   NULL,
                                   &top_iter);
 
-  hbox = g_object_new (GIMP_TYPE_HINT_BOX,
-                       "icon-name", GIMP_ICON_DIALOG_WARNING,
+  hbox = g_object_new (LIGMA_TYPE_HINT_BOX,
+                       "icon-name", LIGMA_ICON_DIALOG_WARNING,
                        "hint",      _("We hope you will never need these "
-                                      "settings, but as all software, GIMP "
+                                      "settings, but as all software, LIGMA "
                                       "has bugs, and crashes can occur. If it "
                                       "happens, you can help us by reporting "
                                       "bugs."),
@@ -1370,14 +1370,14 @@ prefs_dialog_new (Gimp       *gimp,
    * which case the feature is always available.
    */
   hbox = NULL;
-  if (! gimp_stack_trace_available (TRUE))
+  if (! ligma_stack_trace_available (TRUE))
     {
 #ifndef HAVE_EXECINFO_H
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
                                  _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
       gtk_widget_set_sensitive (button, FALSE);
 #else
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
                                  _("This feature is more efficient with \"gdb\" or \"lldb\" installed on your system."));
 #endif /* ! HAVE_EXECINFO_H */
     }
@@ -1389,17 +1389,17 @@ prefs_dialog_new (Gimp       *gimp,
   /**********************/
   /*  Color Management  */
   /**********************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-color-management",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-color-management",
                                   _("Color Management"),
                                   _("Color Management"),
-                                  GIMP_HELP_PREFS_COLOR_MANAGEMENT,
+                                  LIGMA_HELP_PREFS_COLOR_MANAGEMENT,
                                   NULL,
                                   &top_iter);
 
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
-  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+  button = ligma_prefs_box_set_page_resettable (LIGMA_PREFS_BOX (prefs_box),
                                                vbox,
                                                _("R_eset Color Management"));
   g_signal_connect (button, "clicked",
@@ -1412,11 +1412,11 @@ prefs_dialog_new (Gimp       *gimp,
     GFile        *file;
     gint          row = 0;
 
-    file = gimp_directory_file ("profilerc", NULL);
-    store = gimp_color_profile_store_new (file);
+    file = ligma_directory_file ("profilerc", NULL);
+    store = ligma_color_profile_store_new (file);
     g_object_unref (file);
 
-    gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
+    ligma_color_profile_store_add_file (LIGMA_COLOR_PROFILE_STORE (store),
                                        NULL, NULL);
 
     size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1442,7 +1442,7 @@ prefs_dialog_new (Gimp       *gimp,
                                  GTK_GRID (grid), row++, size_group,
                                  object, "color-profile-path");
 
-    button = gimp_prop_check_button_new (color_config,
+    button = ligma_prop_check_button_new (color_config,
                                          "display-profile-from-gdk",
                                          _("_Try to use the system monitor "
                                            "profile"));
@@ -1454,7 +1454,7 @@ prefs_dialog_new (Gimp       *gimp,
                               _("_Rendering intent:"),
                               GTK_GRID (grid), row++, size_group);
 
-    button = gimp_prop_check_button_new (color_config,
+    button = ligma_prop_check_button_new (color_config,
                                          "display-use-black-point-compensation",
                                          _("Use _black point compensation"));
     gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
@@ -1487,19 +1487,19 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_show (hbox);
     row++;
 
-    button = gimp_prop_check_button_new (color_config, "simulation-gamut-check",
+    button = ligma_prop_check_button_new (color_config, "simulation-gamut-check",
                                          _("Mar_k out of gamut colors"));
     gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-    button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
+    button = ligma_prop_color_button_new (color_config, "out-of-gamut-color",
                                          _("Select Warning Color"),
                                          PREFS_COLOR_BUTTON_WIDTH,
                                          PREFS_COLOR_BUTTON_HEIGHT,
-                                         GIMP_COLOR_AREA_FLAT);
+                                         LIGMA_COLOR_AREA_FLAT);
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-    gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                  gimp_get_user_context (gimp));
+    ligma_color_panel_set_context (LIGMA_COLOR_PANEL (button),
+                                  ligma_get_user_context (ligma));
 
     /*  Preferred profiles  */
     vbox2 = prefs_frame_new (_("Preferred Profiles"), GTK_CONTAINER (vbox),
@@ -1558,15 +1558,15 @@ prefs_dialog_new (Gimp       *gimp,
   /***************************/
   /*  Image Import / Export  */
   /***************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-import-export",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-import-export",
                                   _("Image Import & Export"),
                                   _("Image Import & Export"),
-                                  GIMP_HELP_PREFS_IMPORT_EXPORT,
+                                  LIGMA_HELP_PREFS_IMPORT_EXPORT,
                                   NULL,
                                   &top_iter);
 
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1637,7 +1637,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     */
                                    _("Export _IPTC metadata by default when available"),
                                    GTK_BOX (vbox2));
-  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+  hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
                              _("Metadata can contain sensitive information."));
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
@@ -1665,8 +1665,8 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_window, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_window);
 
-    view = gimp_plug_in_view_new (gimp->plug_in_manager->display_raw_load_procs);
-    gimp_plug_in_view_set_plug_in (GIMP_PLUG_IN_VIEW (view),
+    view = ligma_plug_in_view_new (ligma->plug_in_manager->display_raw_load_procs);
+    ligma_plug_in_view_set_plug_in (LIGMA_PLUG_IN_VIEW (view),
                                    core_config->import_raw_plug_in);
     gtk_container_add (GTK_CONTAINER (scrolled_window), view);
     gtk_widget_show (view);
@@ -1682,20 +1682,20 @@ prefs_dialog_new (Gimp       *gimp,
   /****************/
   /*  Playground  */
   /****************/
-  if (gimp->show_playground)
+  if (ligma->show_playground)
     {
-      vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                      "gimp-prefs-playground",
+      vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                      "ligma-prefs-playground",
                                       _("Experimental Playground"),
                                       _("Playground"),
-                                      GIMP_HELP_PREFS_PLAYGROUND,
+                                      LIGMA_HELP_PREFS_PLAYGROUND,
                                       NULL,
                                       &top_iter);
 
-      hbox = g_object_new (GIMP_TYPE_HINT_BOX,
-                           "icon-name", GIMP_ICON_DIALOG_WARNING,
+      hbox = g_object_new (LIGMA_TYPE_HINT_BOX,
+                           "icon-name", LIGMA_ICON_DIALOG_WARNING,
                            "hint",      _("These features are unfinished, buggy "
-                                          "and may crash GIMP. It is unadvised to "
+                                          "and may crash LIGMA. It is unadvised to "
                                           "use them unless you really know what "
                                           "you are doing or you intend to contribute "
                                           "patches."),
@@ -1707,7 +1707,7 @@ prefs_dialog_new (Gimp       *gimp,
       vbox2 = prefs_frame_new (_("Hardware Acceleration"), GTK_CONTAINER (vbox),
                                FALSE);
 
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
                                  _("OpenCL drivers and support are experimental, "
                                    "expect slowdowns and possible crashes "
                                    "(please report)."));
@@ -1741,7 +1741,7 @@ prefs_dialog_new (Gimp       *gimp,
            * dev-release testers, but no need to bother translators with
            * a temporary string otherwise.
            */
-          gimp_help_set_help_data (button, "Missing GEGL operation 'gegl:paint-select'.", NULL);
+          ligma_help_set_help_data (button, "Missing GEGL operation 'gegl:paint-select'.", NULL);
         }
     }
 
@@ -1749,14 +1749,14 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Tool Options  */
   /******************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-tool-options",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-tool-options",
                                   C_("preferences", "Tool Options"),
                                   C_("preferences", "Tool Options"),
-                                  GIMP_HELP_PREFS_TOOL_OPTIONS,
+                                  LIGMA_HELP_PREFS_TOOL_OPTIONS,
                                   NULL,
                                   &top_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1771,20 +1771,20 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save tool options on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
+  button = prefs_button_add (LIGMA_ICON_DOCUMENT_SAVE,
                              _("Save Tool Options _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_tool_options_save_callback),
-                    gimp);
+                    ligma);
 
-  button2 = prefs_button_add (GIMP_ICON_RESET,
+  button2 = prefs_button_add (LIGMA_ICON_RESET,
                               _("_Reset Saved Tool Options to "
                                 "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_tool_options_clear_callback),
-                    gimp);
+                    ligma);
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
@@ -1805,16 +1805,16 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "global-brush",
-                                    _("_Brush"),    GIMP_ICON_BRUSH,
+                                    _("_Brush"),    LIGMA_ICON_BRUSH,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-dynamics",
-                                    _("_Dynamics"), GIMP_ICON_DYNAMICS,
+                                    _("_Dynamics"), LIGMA_ICON_DYNAMICS,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-pattern",
-                                    _("_Pattern"),  GIMP_ICON_PATTERN,
+                                    _("_Pattern"),  LIGMA_ICON_PATTERN,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-gradient",
-                                    _("_Gradient"), GIMP_ICON_GRADIENT,
+                                    _("_Gradient"), LIGMA_ICON_GRADIENT,
                                     GTK_BOX (vbox2), size_group);
 
   /*  Move Tool */
@@ -1823,7 +1823,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add_with_icon (object, "move-tool-changes-active",
                                     _("Set _layer or path as active"),
-                                    GIMP_ICON_TOOL_MOVE,
+                                    LIGMA_ICON_TOOL_MOVE,
                                     GTK_BOX (vbox2), size_group);
 
   g_clear_object (&size_group);
@@ -1832,38 +1832,38 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Default Image  */
   /*******************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-new-image",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-new-image",
                                   _("Default New Image"),
                                   _("Default Image"),
-                                  GIMP_HELP_PREFS_NEW_IMAGE,
+                                  LIGMA_HELP_PREFS_NEW_IMAGE,
                                   NULL,
                                   &top_iter);
 
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   grid = prefs_grid_new (GTK_CONTAINER (vbox));
 
   {
     GtkWidget *combo;
 
-    combo = gimp_container_combo_box_new (gimp->templates,
-                                          gimp_get_user_context (gimp),
+    combo = ligma_container_combo_box_new (ligma->templates,
+                                          ligma_get_user_context (ligma),
                                           16, 0);
-    gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+    ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                _("_Template:"),  0.0, 0.5,
                                combo, 1);
 
-    gimp_container_view_select_items (GIMP_CONTAINER_VIEW (combo), NULL);
+    ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (combo), NULL);
 
     g_signal_connect (combo, "select-items",
                       G_CALLBACK (prefs_template_select_callback),
                       core_config->default_image);
   }
 
-  editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
+  editor = ligma_template_editor_new (core_config->default_image, ligma, FALSE);
   gtk_widget_set_vexpand (editor, FALSE);
-  gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
+  ligma_template_editor_show_advanced (LIGMA_TEMPLATE_EDITOR (editor), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
@@ -1875,26 +1875,26 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Quick Mask color:"),
                           _("Set the default Quick Mask color"),
                           GTK_GRID (grid), 0, NULL,
-                          gimp_get_user_context (gimp));
+                          ligma_get_user_context (ligma));
 
 
   /**********************************/
   /*  Default Image / Default Grid  */
   /**********************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-default-grid",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-default-grid",
                                   _("Default Image Grid"),
                                   _("Default Grid"),
-                                  GIMP_HELP_PREFS_DEFAULT_GRID,
+                                  LIGMA_HELP_PREFS_DEFAULT_GRID,
                                   &top_iter,
                                   &child_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   /*  Grid  */
-  editor = gimp_grid_editor_new (core_config->default_grid,
-                                 gimp_get_user_context (gimp),
-                                 gimp_template_get_resolution_x (core_config->default_image),
-                                 gimp_template_get_resolution_y (core_config->default_image));
+  editor = ligma_grid_editor_new (core_config->default_grid,
+                                 ligma_get_user_context (ligma),
+                                 ligma_template_get_resolution_x (core_config->default_image),
+                                 ligma_template_get_resolution_y (core_config->default_image));
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
@@ -1902,14 +1902,14 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Interface  */
   /***************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-interface",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-interface",
                                   _("User Interface"),
                                   _("Interface"),
-                                  GIMP_HELP_PREFS_INTERFACE,
+                                  LIGMA_HELP_PREFS_INTERFACE,
                                   NULL,
                                   &top_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   /*  Language  */
 
@@ -1962,49 +1962,49 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_PREFERENCES_SYSTEM,
+  button = prefs_button_add (LIGMA_ICON_PREFERENCES_SYSTEM,
                              _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_keyboard_shortcuts_dialog),
-                    gimp);
+                    ligma);
 
   prefs_check_button_add (object, "save-accels",
                           _("_Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
+  button = prefs_button_add (LIGMA_ICON_DOCUMENT_SAVE,
                              _("Save Keyboard Shortcuts _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_menus_save_callback),
-                    gimp);
+                    ligma);
 
-  button2 = prefs_button_add (GIMP_ICON_RESET,
+  button2 = prefs_button_add (LIGMA_ICON_RESET,
                               _("_Reset Keyboard Shortcuts to Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_menus_clear_callback),
-                    gimp);
+                    ligma);
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-  button = prefs_button_add (GIMP_ICON_EDIT_CLEAR,
+  button = prefs_button_add (LIGMA_ICON_EDIT_CLEAR,
                              _("Remove _All Keyboard Shortcuts"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_menus_remove_callback),
-                    gimp);
+                    ligma);
 
 
   /***********************/
   /*  Interface / Theme  */
   /***********************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-theme",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-theme",
                                   _("Theme"),
                                   _("Theme"),
-                                  GIMP_HELP_PREFS_THEME,
+                                  LIGMA_HELP_PREFS_THEME,
                                   &top_iter,
                                   &child_iter);
 
@@ -2051,21 +2051,21 @@ prefs_dialog_new (Gimp       *gimp,
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-    themes = themes_list_themes (gimp, &n_themes);
+    themes = themes_list_themes (ligma, &n_themes);
 
     for (i = 0; i < n_themes; i++)
       {
         GtkTreeIter  iter;
-        GFile       *theme_dir = themes_get_theme_dir (gimp, themes[i]);
+        GFile       *theme_dir = themes_get_theme_dir (ligma, themes[i]);
 
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
                             0, themes[i],
-                            1, gimp_file_get_utf8_name (theme_dir),
+                            1, ligma_file_get_utf8_name (theme_dir),
                             -1);
 
-        if (GIMP_GUI_CONFIG (object)->theme &&
-            ! strcmp (GIMP_GUI_CONFIG (object)->theme, themes[i]))
+        if (LIGMA_GUI_CONFIG (object)->theme &&
+            ! strcmp (LIGMA_GUI_CONFIG (object)->theme, themes[i]))
           {
             GtkTreePath *path;
 
@@ -2083,7 +2083,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_theme_select_callback),
-                      gimp);
+                      ligma);
 
     prefs_check_button_add (object, "prefer-dark-theme",
                             _("Use dark theme variant if available"),
@@ -2112,10 +2112,10 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_scale_add_mark (GTK_SCALE (scale), 3.0, GTK_POS_BOTTOM,
                         _("Huge"));
     gtk_range_set_value (GTK_RANGE (scale),
-                         (gdouble) GIMP_GUI_CONFIG (object)->custom_icon_size);
+                         (gdouble) LIGMA_GUI_CONFIG (object)->custom_icon_size);
     g_signal_connect (G_OBJECT (scale), "value-changed",
                       G_CALLBACK (prefs_icon_size_value_changed),
-                      GIMP_GUI_CONFIG (object));
+                      LIGMA_GUI_CONFIG (object));
     g_signal_connect (G_OBJECT (object), "notify::custom-icon-size",
                       G_CALLBACK (prefs_gui_config_notify_icon_size),
                       scale);
@@ -2127,22 +2127,22 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    button = prefs_button_add (GIMP_ICON_VIEW_REFRESH,
+    button = prefs_button_add (LIGMA_ICON_VIEW_REFRESH,
                                _("Reload C_urrent Theme"),
                                GTK_BOX (hbox));
     g_signal_connect (button, "clicked",
                       G_CALLBACK (prefs_theme_reload_callback),
-                      gimp);
+                      ligma);
   }
 
   /****************************/
   /*  Interface / Icon Theme  */
   /****************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-icon-theme",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-icon-theme",
                                   _("Icon Theme"),
                                   _("Icon Theme"),
-                                  GIMP_HELP_PREFS_ICON_THEME,
+                                  LIGMA_HELP_PREFS_ICON_THEME,
                                   &top_iter,
                                   &child_iter);
 
@@ -2176,7 +2176,7 @@ prefs_dialog_new (Gimp       *gimp,
      /* _("Folder"), */
 
     scale_factor = gtk_widget_get_scale_factor (scrolled_win);
-    icon_themes = icon_themes_list_themes (gimp, &n_icon_themes);
+    icon_themes = icon_themes_list_themes (ligma, &n_icon_themes);
 
     for (i = 0; i < n_icon_themes; i++)
       {
@@ -2184,7 +2184,7 @@ prefs_dialog_new (Gimp       *gimp,
         GtkWidget       *grid;
         GtkWidget       *image;
         GtkWidget       *name_label, *folder_label;
-        GFile           *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+        GFile           *icon_theme_dir = icon_themes_get_theme_dir (ligma, icon_themes[i]);
         GFile           *icon_theme_search_path = g_file_get_parent (icon_theme_dir);
         GtkIconTheme    *theme;
         gchar           *example;
@@ -2192,7 +2192,7 @@ prefs_dialog_new (Gimp       *gimp,
 
         theme = gtk_icon_theme_new ();
         gtk_icon_theme_prepend_search_path (theme,
-                                            gimp_file_get_utf8_name (icon_theme_search_path));
+                                            ligma_file_get_utf8_name (icon_theme_search_path));
         g_object_unref (icon_theme_search_path);
         gtk_icon_theme_set_custom_theme (theme, icon_themes[i]);
 
@@ -2200,9 +2200,9 @@ prefs_dialog_new (Gimp       *gimp,
         if (! example)
           {
             /* If the icon theme didn't explicitly specify an example
-             * icon, try "gimp-wilber".
+             * icon, try "ligma-wilber".
              */
-            example = g_strdup ("gimp-wilber-symbolic");
+            example = g_strdup ("ligma-wilber-symbolic");
           }
         surface = gtk_icon_theme_load_surface (theme, example, 30,
                                                scale_factor, NULL,
@@ -2226,7 +2226,7 @@ prefs_dialog_new (Gimp       *gimp,
         g_object_set (name_label, "xalign", 0.0, NULL);
         gtk_grid_attach (GTK_GRID (grid), name_label, 1, 0, 1, 1);
 
-        folder_label = gtk_label_new (gimp_file_get_utf8_name (icon_theme_dir));
+        folder_label = gtk_label_new (ligma_file_get_utf8_name (icon_theme_dir));
         g_object_set (folder_label, "xalign", 0.0, NULL);
         gtk_style_context_add_class (gtk_widget_get_style_context (folder_label),
                                      "dim-label");
@@ -2239,8 +2239,8 @@ prefs_dialog_new (Gimp       *gimp,
         cairo_surface_destroy (surface);
         g_free (example);
 
-        if (GIMP_GUI_CONFIG (object)->icon_theme &&
-            ! strcmp (GIMP_GUI_CONFIG (object)->icon_theme, icon_themes[i]))
+        if (LIGMA_GUI_CONFIG (object)->icon_theme &&
+            ! strcmp (LIGMA_GUI_CONFIG (object)->icon_theme, icon_themes[i]))
           {
             gtk_list_box_select_row (GTK_LIST_BOX (listbox),
                                      GTK_LIST_BOX_ROW (row));
@@ -2252,7 +2252,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     g_signal_connect (listbox, "row-selected",
                       G_CALLBACK (prefs_icon_theme_select_callback),
-                      gimp);
+                      ligma);
 
     prefs_check_button_add (object, "prefer-symbolic-icons",
                             _("Use symbolic icons if available"),
@@ -2263,11 +2263,11 @@ prefs_dialog_new (Gimp       *gimp,
   /*************************/
   /*  Interface / Toolbox  */
   /*************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-toolbox",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-toolbox",
                                   _("Toolbox"),
                                   _("Toolbox"),
-                                  GIMP_HELP_PREFS_TOOLBOX,
+                                  LIGMA_HELP_PREFS_TOOLBOX,
                                   &top_iter,
                                   &child_iter);
 
@@ -2278,20 +2278,20 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "toolbox-wilber",
-                                    _("Show GIMP _logo (drag-and-drop target)"),
-                                    GIMP_ICON_WILBER,
+                                    _("Show LIGMA _logo (drag-and-drop target)"),
+                                    LIGMA_ICON_WILBER,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-color-area",
                                     _("Show _foreground & background color"),
-                                    GIMP_ICON_COLORS_DEFAULT,
+                                    LIGMA_ICON_COLORS_DEFAULT,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-foo-area",
                                     _("Show active _brush, pattern & gradient"),
-                                    GIMP_ICON_BRUSH,
+                                    LIGMA_ICON_BRUSH,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-image-area",
                                     _("Show active _image"),
-                                    GIMP_ICON_IMAGE,
+                                    LIGMA_ICON_IMAGE,
                                     GTK_BOX (vbox2), size_group);
 
   separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
@@ -2308,8 +2308,8 @@ prefs_dialog_new (Gimp       *gimp,
   /* Tool Editor */
   vbox2 = prefs_frame_new (_("Tools Configuration"),
                            GTK_CONTAINER (vbox), TRUE);
-  tool_editor = gimp_tool_editor_new (gimp->tool_item_list, gimp->user_context,
-                                      GIMP_VIEW_SIZE_SMALL, 1);
+  tool_editor = ligma_tool_editor_new (ligma->tool_item_list, ligma->user_context,
+                                      LIGMA_VIEW_SIZE_SMALL, 1);
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool_editor, TRUE, TRUE, 0);
   gtk_widget_show (tool_editor);
@@ -2318,18 +2318,18 @@ prefs_dialog_new (Gimp       *gimp,
   /*********************************/
   /*  Interface / Dialog Defaults  */
   /*********************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
                                   /* FIXME need an icon */
-                                  "gimp-prefs-controllers",
+                                  "ligma-prefs-controllers",
                                   _("Dialog Defaults"),
                                   _("Dialog Defaults"),
-                                  GIMP_HELP_PREFS_DIALOG_DEFAULTS,
+                                  LIGMA_HELP_PREFS_DIALOG_DEFAULTS,
                                   &top_iter,
                                   &child_iter);
 
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
-  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+  button = ligma_prefs_box_set_page_resettable (LIGMA_PREFS_BOX (prefs_box),
                                                vbox,
                                                _("Reset Dialog _Defaults"));
   g_signal_connect (button, "clicked",
@@ -2493,8 +2493,8 @@ prefs_dialog_new (Gimp       *gimp,
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "layer-merge-type",
-                            GIMP_EXPAND_AS_NECESSARY,
-                            GIMP_CLIP_TO_BOTTOM_LAYER,
+                            LIGMA_EXPAND_AS_NECESSARY,
+                            LIGMA_CLIP_TO_BOTTOM_LAYER,
                             _("Merged layer size:"),
                             GTK_GRID (grid), 0, size_group);
 
@@ -2518,7 +2518,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Color and opacity:"),
                           _("Default New Channel Color and Opacity"),
                           GTK_GRID (grid), 1, size_group,
-                          gimp_get_user_context (gimp));
+                          ligma_get_user_context (ligma));
 
   /*  New Path Dialog  */
   vbox2 = prefs_frame_new (_("New Path Dialog"),
@@ -2616,7 +2616,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Fill Selection Outline & Fill Path Dialogs"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  editor = gimp_fill_editor_new (GIMP_DIALOG_CONFIG (object)->fill_options,
+  editor = ligma_fill_editor_new (LIGMA_DIALOG_CONFIG (object)->fill_options,
                                  FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
@@ -2631,8 +2631,8 @@ prefs_dialog_new (Gimp       *gimp,
    * uses the y resolution on the opened image. So using the y resolution
    * of the default image seems like the best compromise in the preferences.
    */
-  editor = gimp_stroke_editor_new (GIMP_DIALOG_CONFIG (object)->stroke_options,
-                                   gimp_template_get_resolution_y (core_config->default_image),
+  editor = ligma_stroke_editor_new (LIGMA_DIALOG_CONFIG (object)->stroke_options,
+                                   ligma_template_get_resolution_y (core_config->default_image),
                                    FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
@@ -2643,11 +2643,11 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************************/
   /*  Interface / Help System  */
   /*****************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-help-system",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-help-system",
                                   _("Help System"),
                                   _("Help System"),
-                                  GIMP_HELP_PREFS_HELP,
+                                  LIGMA_HELP_PREFS_HELP,
                                   &top_iter,
                                   &child_iter);
 
@@ -2666,15 +2666,15 @@ prefs_dialog_new (Gimp       *gimp,
                                         _("Use a locally installed copy"),
                                         _("U_ser manual:"),
                                         GTK_GRID (grid), 0, size_group);
-  gimp_help_set_help_data (button, NULL, NULL);
+  ligma_help_set_help_data (button, NULL, NULL);
 
-  manuals = gimp_help_get_installed_languages ();
+  manuals = ligma_help_get_installed_languages ();
   entry   = NULL;
   if (manuals != NULL)
     {
       gchar *help_locales = NULL;
 
-      entry = gimp_language_combo_box_new (TRUE,
+      entry = ligma_language_combo_box_new (TRUE,
                                            _("User interface language"));
 
       g_object_get (config, "help-locales", &help_locales, NULL);
@@ -2688,37 +2688,37 @@ prefs_dialog_new (Gimp       *gimp,
         }
       if (help_locales)
         {
-          gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+          ligma_language_combo_box_set_code (LIGMA_LANGUAGE_COMBO_BOX (entry),
                                             help_locales);
           g_free (help_locales);
         }
       else
         {
-          gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+          ligma_language_combo_box_set_code (LIGMA_LANGUAGE_COMBO_BOX (entry),
                                             "");
         }
       g_signal_connect (entry, "changed",
                         G_CALLBACK (prefs_help_language_change_callback),
-                        gimp);
+                        ligma);
       gtk_grid_attach (GTK_GRID (grid), entry, 1, 1, 1, 1);
       gtk_widget_show (entry);
     }
 
-  if (gimp_help_user_manual_is_installed (gimp))
+  if (ligma_help_user_manual_is_installed (ligma))
     {
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_INFORMATION,
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_INFORMATION,
                                  _("There's a local installation "
                                    "of the user manual."));
     }
   else
     {
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
                                  _("The user manual is not installed "
                                    "locally."));
     }
   if (manuals)
     {
-      g_object_set_data (G_OBJECT (hbox), "gimp", gimp);
+      g_object_set_data (G_OBJECT (hbox), "ligma", ligma);
       g_signal_connect (entry, "changed",
                         G_CALLBACK (prefs_help_language_change_callback2),
                         hbox);
@@ -2736,7 +2736,7 @@ prefs_dialog_new (Gimp       *gimp,
    */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
 
-  if (gimp_help_browser_is_installed (gimp))
+  if (ligma_help_browser_is_installed (ligma))
     {
       grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 
@@ -2746,20 +2746,20 @@ prefs_dialog_new (Gimp       *gimp,
     }
   else
     {
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
-                                 _("The GIMP help browser doesn't seem to "
+      hbox = prefs_hint_box_new (LIGMA_ICON_DIALOG_WARNING,
+                                 _("The LIGMA help browser doesn't seem to "
                                    "be installed. Using the web browser "
                                    "instead."));
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       g_object_set (config,
-                    "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+                    "help-browser", LIGMA_HELP_BROWSER_WEB_BROWSER,
                     NULL);
     }
 #else
   g_object_set (config,
-                "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+                "help-browser", LIGMA_HELP_BROWSER_WEB_BROWSER,
                 NULL);
 #endif /* HAVE_WEBKIT */
 
@@ -2771,12 +2771,12 @@ prefs_dialog_new (Gimp       *gimp,
                          _("_Maximum History Size:"),
                          GTK_GRID (grid), 0, size_group);
 
-  button = prefs_button_add (GIMP_ICON_SHRED,
+  button = prefs_button_add (LIGMA_ICON_SHRED,
                              _("C_lear Action History"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_search_clear_callback),
-                    gimp);
+                    ligma);
 
   g_clear_object (&size_group);
 
@@ -2784,14 +2784,14 @@ prefs_dialog_new (Gimp       *gimp,
   /*************************/
   /*  Interface / Display  */
   /*************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-display",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-display",
                                   _("Display"),
                                   _("Display"),
-                                  GIMP_HELP_PREFS_DISPLAY,
+                                  LIGMA_HELP_PREFS_DISPLAY,
                                   &top_iter,
                                   &child_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -2803,32 +2803,32 @@ prefs_dialog_new (Gimp       *gimp,
                             _("_Check style:"),
                             GTK_GRID (grid), 0, size_group);
 
-  button = gimp_prop_label_color_new (object,
+  button = ligma_prop_label_color_new (object,
                                       "transparency-custom-color1",
                                       TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             NULL, 0.0, 0.5,
                             button, 1);
   gtk_widget_set_hexpand (button, FALSE);
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (button))),
-                                      gimp->config->color_management);
+  ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (ligma_label_color_get_color_widget (LIGMA_LABEL_COLOR (button))),
+                                      ligma->config->color_management);
   gtk_widget_set_sensitive (button,
-                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+                            display_config->transparency_type == LIGMA_CHECK_TYPE_CUSTOM_CHECKS);
   g_signal_connect (object, "notify::transparency-type",
                     G_CALLBACK (prefs_check_style_callback),
                     button);
 
-  button = gimp_prop_label_color_new (object,
+  button = ligma_prop_label_color_new (object,
                                       "transparency-custom-color2",
                                       TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             NULL, 0.0, 0.5,
                             button, 1);
   gtk_widget_set_hexpand (button, FALSE);
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (button))),
-                                      gimp->config->color_management);
+  ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (ligma_label_color_get_color_widget (LIGMA_LABEL_COLOR (button))),
+                                      ligma->config->color_management);
   gtk_widget_set_sensitive (button,
-                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+                            display_config->transparency_type == LIGMA_CHECK_TYPE_CUSTOM_CHECKS);
   g_signal_connect (object, "notify::transparency-type",
                     G_CALLBACK (prefs_check_style_callback),
                     button);
@@ -2852,12 +2852,12 @@ prefs_dialog_new (Gimp       *gimp,
   {
     gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
-    entry = gimp_prop_coordinates_new (object,
+    entry = ligma_prop_coordinates_new (object,
                                        "monitor-xresolution",
                                        "monitor-yresolution",
                                        NULL,
                                        pixels_per_unit,
-                                       GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
+                                       LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION,
                                        0.0, 0.0,
                                        TRUE);
 
@@ -2867,11 +2867,11 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_grid_set_column_spacing (GTK_GRID (entry), 2);
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                 _("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                 _("Vertical"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                 _("ppi"), 1, 4, 0.0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -2887,7 +2887,7 @@ prefs_dialog_new (Gimp       *gimp,
     gdouble  yres;
     gchar   *str;
 
-    gimp_get_monitor_resolution (gdk_display_get_monitor (gdk_display_get_default (), 0),
+    ligma_get_monitor_resolution (gdk_display_get_monitor (gdk_display_get_default (), 0),
                                  &xres, &yres);
 
     str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),
@@ -2951,11 +2951,11 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************************/
   /*  Interface / Window Management  */
   /***********************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-window-management",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-window-management",
                                   _("Window Management"),
                                   _("Window Management"),
-                                  GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
+                                  LIGMA_HELP_PREFS_WINDOW_MANAGEMENT,
                                   &top_iter,
                                   &child_iter);
 
@@ -2985,20 +2985,20 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Open windows on the same _monitor they were open before"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
+  button = prefs_button_add (LIGMA_ICON_DOCUMENT_SAVE,
                              _("Save Window Positions _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_session_save_callback),
-                    gimp);
+                    ligma);
 
-  button2 = prefs_button_add (GIMP_ICON_RESET,
+  button2 = prefs_button_add (LIGMA_ICON_RESET,
                               _("_Reset Saved Window Positions to "
                                 "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_session_clear_callback),
-                    gimp);
+                    ligma);
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
@@ -3006,14 +3006,14 @@ prefs_dialog_new (Gimp       *gimp,
   /************************/
   /*  Canvas Interaction  */
   /************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-image-windows",
                                   _("Canvas Interaction"),
                                   _("Canvas Interaction"),
-                                  GIMP_HELP_PREFS_CANVAS_INTERACTION,
+                                  LIGMA_HELP_PREFS_CANVAS_INTERACTION,
                                   NULL,
                                   &top_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -3047,20 +3047,20 @@ prefs_dialog_new (Gimp       *gimp,
   /************************************/
   /*  Canvas Interaction / Modifiers  */
   /************************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
                                   /* TODO: custom icon. */
-                                  "gimp-prefs-image-windows",
+                                  "ligma-prefs-image-windows",
                                   _("Modifiers"),
                                   _("Modifiers"),
-                                  GIMP_HELP_PREFS_CANVAS_MODIFIERS,
+                                  LIGMA_HELP_PREFS_CANVAS_MODIFIERS,
                                   &top_iter,
                                   &child_iter);
 
-  vbox2 = gimp_modifiers_editor_new (GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager));
+  vbox2 = ligma_modifiers_editor_new (LIGMA_MODIFIERS_MANAGER (display_config->modifiers_manager));
   gtk_widget_show (vbox2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
 
-  button2 = prefs_button_add (GIMP_ICON_RESET,
+  button2 = prefs_button_add (LIGMA_ICON_RESET,
                               _("_Reset Saved Modifiers Settings to "
                                 "Default Values"),
                               GTK_BOX (vbox));
@@ -3073,19 +3073,19 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************************/
   /*  Canvas Interaction / Snapping  */
   /***********************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows-snapping",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-image-windows-snapping",
                                   _("Snapping Behavior"),
                                   _("Snapping"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW_SNAPPING,
+                                  LIGMA_HELP_PREFS_IMAGE_WINDOW_SNAPPING,
                                   &top_iter,
                                   &child_iter);
 
-  prefs_behavior_options_frame_add (gimp,
+  prefs_behavior_options_frame_add (ligma,
                                     G_OBJECT (display_config->default_view),
                                     _("Default Behavior in Normal Mode"),
                                     GTK_CONTAINER (vbox));
-  prefs_behavior_options_frame_add (gimp,
+  prefs_behavior_options_frame_add (ligma,
                                     G_OBJECT (display_config->default_fullscreen_view),
                                     _("Default Behavior in Fullscreen Mode"),
                                     GTK_CONTAINER (vbox));
@@ -3103,14 +3103,14 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Image Windows  */
   /*******************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-image-windows",
                                   _("Image Windows"),
                                   _("Image Windows"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW,
+                                  LIGMA_HELP_PREFS_IMAGE_WINDOW,
                                   NULL,
                                   &top_iter);
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -3153,22 +3153,22 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Appearance  */
   /********************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows-appearance",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-image-windows-appearance",
                                   _("Image Window Appearance"),
                                   _("Appearance"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
+                                  LIGMA_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
                                   &top_iter,
                                   &child_iter);
 
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+  ligma_prefs_box_set_page_scrollable (LIGMA_PREFS_BOX (prefs_box), vbox, TRUE);
 
-  prefs_display_options_frame_add (gimp,
+  prefs_display_options_frame_add (ligma,
                                    G_OBJECT (display_config->default_view),
                                    _("Default Appearance in Normal Mode"),
                                    GTK_CONTAINER (vbox));
 
-  prefs_display_options_frame_add (gimp,
+  prefs_display_options_frame_add (ligma,
                                    G_OBJECT (display_config->default_fullscreen_view),
                                    _("Default Appearance in Fullscreen Mode"),
                                    GTK_CONTAINER (vbox));
@@ -3177,11 +3177,11 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************************************/
   /*  Image Windows / Image Title & Statusbar Format  */
   /****************************************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-title",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-image-title",
                                   _("Image Title & Statusbar Format"),
                                   _("Title & Status"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE,
+                                  LIGMA_HELP_PREFS_IMAGE_WINDOW_TITLE,
                                   &top_iter,
                                   &child_iter);
 
@@ -3215,15 +3215,15 @@ prefs_dialog_new (Gimp       *gimp,
     }
     formats[] =
     {
-      { NULL, GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
+      { NULL, LIGMA_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
         N_("Image Title Format"),     "image-title-format"  },
-      { NULL, GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
+      { NULL, LIGMA_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
         N_("Image Statusbar Format"), "image-status-format" }
     };
 
     gint format;
 
-    gimp_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (format_names));
+    ligma_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (format_names));
 
     formats[0].current_setting = display_config->image_title_format;
     formats[1].current_setting = display_config->image_status_format;
@@ -3241,7 +3241,7 @@ prefs_dialog_new (Gimp       *gimp,
         vbox2 = prefs_frame_new (gettext (formats[format].title),
                                  GTK_CONTAINER (vbox), TRUE);
 
-        entry = gimp_prop_entry_new (object, formats[format].property_name, 0);
+        entry = ligma_prop_entry_new (object, formats[format].property_name, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), entry, FALSE, FALSE, 0);
 
         scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -3310,11 +3310,11 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Input Devices  */
   /*******************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-input-devices",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-input-devices",
                                   _("Input Devices"),
                                   _("Input Devices"),
-                                  GIMP_HELP_PREFS_INPUT_DEVICES,
+                                  LIGMA_HELP_PREFS_INPUT_DEVICES,
                                   NULL,
                                   &top_iter);
 
@@ -3377,7 +3377,7 @@ prefs_dialog_new (Gimp       *gimp,
                                         _("Pointer Input API:"),
                                         GTK_GRID (grid), 0, NULL);
 
-      gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (combo),
                                           prefs_devices_api_sensitivity_func,
                                           NULL, NULL);
     }
@@ -3388,31 +3388,31 @@ prefs_dialog_new (Gimp       *gimp,
                           _("S_hare tool and tool options between input devices"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_PREFERENCES_SYSTEM,
+  button = prefs_button_add (LIGMA_ICON_PREFERENCES_SYSTEM,
                              _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_input_devices_dialog),
-                    gimp);
+                    ligma);
 
   prefs_check_button_add (object, "save-device-status",
                           _("_Save input device settings on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
+  button = prefs_button_add (LIGMA_ICON_DOCUMENT_SAVE,
                              _("Save Input Device Settings _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_devices_save_callback),
-                    gimp);
+                    ligma);
 
-  button2 = prefs_button_add (GIMP_ICON_RESET,
+  button2 = prefs_button_add (LIGMA_ICON_RESET,
                               _("_Reset Saved Input Device Settings to "
                                 "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_devices_clear_callback),
-                    gimp);
+                    ligma);
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
@@ -3420,15 +3420,15 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************/
   /*  Additional Controllers  */
   /****************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-controllers",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-controllers",
                                   _("Additional Input Controllers"),
                                   _("Input Controllers"),
-                                  GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+                                  LIGMA_HELP_PREFS_INPUT_CONTROLLERS,
                                   &top_iter,
                                   &child_iter);
 
-  vbox2 = gimp_controller_list_new (gimp);
+  vbox2 = ligma_controller_list_new (ligma);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
@@ -3436,15 +3436,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Folders  */
   /*************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-folders",
+  vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
+                                  "ligma-prefs-folders",
                                   _("Folders"),
                                   _("Folders"),
-                                  GIMP_HELP_PREFS_FOLDERS,
+                                  LIGMA_HELP_PREFS_FOLDERS,
                                   NULL,
                                   &top_iter);
 
-  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+  button = ligma_prefs_box_set_page_resettable (LIGMA_PREFS_BOX (prefs_box),
                                                vbox,
                                                _("Reset _Folders"));
   g_signal_connect (button, "clicked",
@@ -3503,91 +3503,91 @@ prefs_dialog_new (Gimp       *gimp,
     {
       { N_("Brushes"), N_("Brush Folders"),
         "folders-brushes",
-        GIMP_HELP_PREFS_FOLDERS_BRUSHES,
+        LIGMA_HELP_PREFS_FOLDERS_BRUSHES,
         N_("Reset Brush _Folders"),
         N_("Select Brush Folders"),
         "brush-path", "brush-path-writable" },
       { N_("Dynamics"), N_("Dynamics Folders"),
         "folders-dynamics",
-        GIMP_HELP_PREFS_FOLDERS_DYNAMICS,
+        LIGMA_HELP_PREFS_FOLDERS_DYNAMICS,
         N_("Reset Dynamics _Folders"),
         N_("Select Dynamics Folders"),
         "dynamics-path", "dynamics-path-writable" },
       { N_("Patterns"), N_("Pattern Folders"),
         "folders-patterns",
-        GIMP_HELP_PREFS_FOLDERS_PATTERNS,
+        LIGMA_HELP_PREFS_FOLDERS_PATTERNS,
         N_("Reset Pattern _Folders"),
         N_("Select Pattern Folders"),
         "pattern-path", "pattern-path-writable" },
       { N_("Palettes"), N_("Palette Folders"),
         "folders-palettes",
-        GIMP_HELP_PREFS_FOLDERS_PALETTES,
+        LIGMA_HELP_PREFS_FOLDERS_PALETTES,
         N_("Reset Palette _Folders"),
         N_("Select Palette Folders"),
         "palette-path", "palette-path-writable" },
       { N_("Gradients"), N_("Gradient Folders"),
         "folders-gradients",
-        GIMP_HELP_PREFS_FOLDERS_GRADIENTS,
+        LIGMA_HELP_PREFS_FOLDERS_GRADIENTS,
         N_("Reset Gradient _Folders"),
         N_("Select Gradient Folders"),
         "gradient-path", "gradient-path-writable" },
       { N_("Fonts"), N_("Font Folders"),
         "folders-fonts",
-        GIMP_HELP_PREFS_FOLDERS_FONTS,
+        LIGMA_HELP_PREFS_FOLDERS_FONTS,
         N_("Reset Font _Folders"),
         N_("Select Font Folders"),
         "font-path", NULL },
       { N_("Tool Presets"), N_("Tool Preset Folders"),
         "folders-tool-presets",
-        GIMP_HELP_PREFS_FOLDERS_TOOL_PRESETS,
+        LIGMA_HELP_PREFS_FOLDERS_TOOL_PRESETS,
         N_("Reset Tool Preset _Folders"),
         N_("Select Tool Preset Folders"),
         "tool-preset-path", "tool-preset-path-writable" },
       { N_("MyPaint Brushes"), N_("MyPaint Brush Folders"),
         "folders-mypaint-brushes",
-        GIMP_HELP_PREFS_FOLDERS_MYPAINT_BRUSHES,
+        LIGMA_HELP_PREFS_FOLDERS_MYPAINT_BRUSHES,
         N_("Reset MyPaint Brush _Folders"),
         N_("Select MyPaint Brush Folders"),
         "mypaint-brush-path", "mypaint-brush-path-writable" },
       { N_("Plug-ins"), N_("Plug-in Folders"),
         "folders-plug-ins",
-        GIMP_HELP_PREFS_FOLDERS_PLUG_INS,
+        LIGMA_HELP_PREFS_FOLDERS_PLUG_INS,
         N_("Reset plug-in _Folders"),
         N_("Select plug-in Folders"),
         "plug-in-path", NULL },
       { N_("Scripts"), N_("Script-Fu Folders"),
         "folders-scripts",
-        GIMP_HELP_PREFS_FOLDERS_SCRIPTS,
+        LIGMA_HELP_PREFS_FOLDERS_SCRIPTS,
         N_("Reset Script-Fu _Folders"),
         N_("Select Script-Fu Folders"),
         "script-fu-path", NULL },
       { N_("Modules"), N_("Module Folders"),
         "folders-modules",
-        GIMP_HELP_PREFS_FOLDERS_MODULES,
+        LIGMA_HELP_PREFS_FOLDERS_MODULES,
         N_("Reset Module _Folders"),
         N_("Select Module Folders"),
         "module-path", NULL },
       { N_("Interpreters"), N_("Interpreter Folders"),
         "folders-interp",
-        GIMP_HELP_PREFS_FOLDERS_INTERPRETERS,
+        LIGMA_HELP_PREFS_FOLDERS_INTERPRETERS,
         N_("Reset Interpreter _Folders"),
         N_("Select Interpreter Folders"),
         "interpreter-path", NULL },
       { N_("Environment"), N_("Environment Folders"),
         "folders-environ",
-        GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT,
+        LIGMA_HELP_PREFS_FOLDERS_ENVIRONMENT,
         N_("Reset Environment _Folders"),
         N_("Select Environment Folders"),
         "environ-path", NULL },
       { N_("Themes"), N_("Theme Folders"),
         "folders-themes",
-        GIMP_HELP_PREFS_FOLDERS_THEMES,
+        LIGMA_HELP_PREFS_FOLDERS_THEMES,
         N_("Reset Theme _Folders"),
         N_("Select Theme Folders"),
         "theme-path", NULL },
       { N_("Icon Themes"), N_("Icon Theme Folders"),
         "folders-icon-themes",
-        GIMP_HELP_PREFS_FOLDERS_ICON_THEMES,
+        LIGMA_HELP_PREFS_FOLDERS_ICON_THEMES,
         N_("Reset Icon Theme _Folders"),
         N_("Select Icon Theme Folders"),
         "icon-theme-path", NULL }
@@ -3598,8 +3598,8 @@ prefs_dialog_new (Gimp       *gimp,
         GtkWidget *editor;
         gchar     *icon_name;
 
-        icon_name = g_strconcat ("gimp-prefs-", paths[i].icon, NULL);
-        vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+        icon_name = g_strconcat ("ligma-prefs-", paths[i].icon, NULL);
+        vbox = ligma_prefs_box_add_page (LIGMA_PREFS_BOX (prefs_box),
                                         icon_name,
                                         gettext (paths[i].label),
                                         gettext (paths[i].tree_label),
@@ -3608,7 +3608,7 @@ prefs_dialog_new (Gimp       *gimp,
                                         &child_iter);
         g_free (icon_name);
 
-        button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+        button = ligma_prefs_box_set_page_resettable (LIGMA_PREFS_BOX (prefs_box),
                                                      vbox,
                                                      gettext (paths[i].reset_label));
         g_object_set_data (G_OBJECT (button), "path",
@@ -3619,7 +3619,7 @@ prefs_dialog_new (Gimp       *gimp,
                           G_CALLBACK (prefs_path_reset),
                           config);
 
-        editor = gimp_prop_path_editor_new (object,
+        editor = ligma_prop_path_editor_new (object,
                                             paths[i].path_property_name,
                                             paths[i].writable_property_name,
                                             gettext (paths[i].fs_label));
@@ -3632,7 +3632,7 @@ prefs_dialog_new (Gimp       *gimp,
     GtkTreeModel *model;
     GtkTreePath  *path;
 
-    tv = gimp_prefs_box_get_tree_view (GIMP_PREFS_BOX (prefs_box));
+    tv = ligma_prefs_box_get_tree_view (LIGMA_PREFS_BOX (prefs_box));
     gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
     /*  collapse the Folders subtree */

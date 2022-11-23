@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpopendialog.c
+ * ligmaopendialog.c
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,50 +23,50 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
 
-#include "gimphelp-ids.h"
-#include "gimpopendialog.h"
+#include "ligmahelp-ids.h"
+#include "ligmaopendialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_open_dialog_dispose (GObject *object);
+static void   ligma_open_dialog_dispose (GObject *object);
 
 
-G_DEFINE_TYPE (GimpOpenDialog, gimp_open_dialog,
-               GIMP_TYPE_FILE_DIALOG)
+G_DEFINE_TYPE (LigmaOpenDialog, ligma_open_dialog,
+               LIGMA_TYPE_FILE_DIALOG)
 
-#define parent_class gimp_open_dialog_parent_class
+#define parent_class ligma_open_dialog_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_open_dialog_class_init (GimpOpenDialogClass *klass)
+ligma_open_dialog_class_init (LigmaOpenDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_open_dialog_dispose;
+  object_class->dispose = ligma_open_dialog_dispose;
 }
 
 static void
-gimp_open_dialog_init (GimpOpenDialog *dialog)
+ligma_open_dialog_init (LigmaOpenDialog *dialog)
 {
 }
 
 static void
-gimp_open_dialog_dispose (GObject *object)
+ligma_open_dialog_dispose (GObject *object)
 {
-  gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (object), NULL, FALSE);
+  ligma_open_dialog_set_image (LIGMA_OPEN_DIALOG (object), NULL, FALSE);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -75,38 +75,38 @@ gimp_open_dialog_dispose (GObject *object)
 /*  public functions  */
 
 GtkWidget *
-gimp_open_dialog_new (Gimp *gimp)
+ligma_open_dialog_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_OPEN_DIALOG,
-                       "gimp",                  gimp,
+  return g_object_new (LIGMA_TYPE_OPEN_DIALOG,
+                       "ligma",                  ligma,
                        "title",                 _("Open Image"),
-                       "role",                  "gimp-file-open",
-                       "help-id",               GIMP_HELP_FILE_OPEN,
+                       "role",                  "ligma-file-open",
+                       "help-id",               LIGMA_HELP_FILE_OPEN,
                        "ok-button-label",       _("_Open"),
 
                        "automatic-label",       _("Automatically Detected"),
-                       "automatic-help-id",     GIMP_HELP_FILE_OPEN_BY_EXTENSION,
+                       "automatic-help-id",     LIGMA_HELP_FILE_OPEN_BY_EXTENSION,
 
                        "action",                GTK_FILE_CHOOSER_ACTION_OPEN,
-                       "file-procs",            GIMP_FILE_PROCEDURE_GROUP_OPEN,
-                       "file-procs-all-images", GIMP_FILE_PROCEDURE_GROUP_NONE,
+                       "file-procs",            LIGMA_FILE_PROCEDURE_GROUP_OPEN,
+                       "file-procs-all-images", LIGMA_FILE_PROCEDURE_GROUP_NONE,
                        "file-filter-label",     NULL,
                        NULL);
 }
 
 void
-gimp_open_dialog_set_image (GimpOpenDialog *dialog,
-                            GimpImage      *image,
+ligma_open_dialog_set_image (LigmaOpenDialog *dialog,
+                            LigmaImage      *image,
                             gboolean        open_as_layers)
 {
-  GimpFileDialog *file_dialog;
+  LigmaFileDialog *file_dialog;
 
-  g_return_if_fail (GIMP_IS_OPEN_DIALOG (dialog));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_OPEN_DIALOG (dialog));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
-  file_dialog = GIMP_FILE_DIALOG (dialog);
+  file_dialog = LIGMA_FILE_DIALOG (dialog);
 
   if (file_dialog->image)
     {

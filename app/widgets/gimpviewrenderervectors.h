@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderervectors.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- *                    Simon Budig <simon@gimp.org>
+ * ligmaviewrenderervectors.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
+ *                    Simon Budig <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,33 +19,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_VECTORS_H__
-#define __GIMP_VIEW_RENDERER_VECTORS_H__
+#ifndef __LIGMA_VIEW_RENDERER_VECTORS_H__
+#define __LIGMA_VIEW_RENDERER_VECTORS_H__
 
-#include "gimpviewrenderer.h"
+#include "ligmaviewrenderer.h"
 
-#define GIMP_TYPE_VIEW_RENDERER_VECTORS            (gimp_view_renderer_vectors_get_type ())
-#define GIMP_VIEW_RENDERER_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectors))
-#define GIMP_VIEW_RENDERER_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectorsClass))
-#define GIMP_IS_VIEW_RENDERER_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_VECTORS))
-#define GIMP_IS_VIEW_RENDERER_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_VECTORS))
-#define GIMP_VIEW_RENDERER_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectorsClass))
+#define LIGMA_TYPE_VIEW_RENDERER_VECTORS            (ligma_view_renderer_vectors_get_type ())
+#define LIGMA_VIEW_RENDERER_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW_RENDERER_VECTORS, LigmaViewRendererVectors))
+#define LIGMA_VIEW_RENDERER_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW_RENDERER_VECTORS, LigmaViewRendererVectorsClass))
+#define LIGMA_IS_VIEW_RENDERER_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW_RENDERER_VECTORS))
+#define LIGMA_IS_VIEW_RENDERER_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW_RENDERER_VECTORS))
+#define LIGMA_VIEW_RENDERER_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW_RENDERER_VECTORS, LigmaViewRendererVectorsClass))
 
 
-typedef struct _GimpViewRendererVectorsClass  GimpViewRendererVectorsClass;
+typedef struct _LigmaViewRendererVectorsClass  LigmaViewRendererVectorsClass;
 
-struct _GimpViewRendererVectors
+struct _LigmaViewRendererVectors
 {
-  GimpViewRenderer  parent_instance;
+  LigmaViewRenderer  parent_instance;
 };
 
-struct _GimpViewRendererVectorsClass
+struct _LigmaViewRendererVectorsClass
 {
-  GimpViewRendererClass  parent_class;
+  LigmaViewRendererClass  parent_class;
 };
 
 
-GType   gimp_view_renderer_vectors_get_type (void) G_GNUC_CONST;
+GType   ligma_view_renderer_vectors_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_VIEW_RENDERER_VECTORS_H__ */
+#endif /* __LIGMA_VIEW_RENDERER_VECTORS_H__ */

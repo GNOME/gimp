@@ -17,7 +17,7 @@ pagecurl_icons_images = [
 resourcename = 'pagecurl-icons'
 xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 xml_content += '<gresources>\n'
-xml_content += '  <gresource prefix="/org/gimp/pagecurl-icons">\n'
+xml_content += '  <gresource prefix="/org/ligma/pagecurl-icons">\n'
 foreach file : pagecurl_icons_images
   xml_content+='    <file preprocess="to-pixdata">'+ file +'</file>\n'
 endforeach
@@ -39,7 +39,7 @@ plugin_sources += gnome.compile_resources(
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    ligma_plugins_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
@@ -54,9 +54,9 @@ endif
 executable(plugin_name,
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

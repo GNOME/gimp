@@ -1,9 +1,9 @@
 ; The Scheme code in this file provides some compatibility with
 ; scripts that were originally written for use with older versions of
-; GIMP.
+; LIGMA.
 ;
 ; It provides PDB procedures that used to be provided by plug-ins that
-; were since then removed from the GIMP distribution. You should not
+; were since then removed from the LIGMA distribution. You should not
 ; use these in newly written scripts as the functions defined here may
 ; be removed at some later date.
 
@@ -11,16 +11,16 @@
 (define (plug-in-color-map run-mode img layer
 			   src-color-1 src-color-2 dest-color-1 dest-color-2
 			   map-mode)
-  (gimp-levels layer HISTOGRAM-RED
+  (ligma-levels layer HISTOGRAM-RED
 	       (car src-color-1) (car src-color-2) 1.0
 	       (- 255 (car dest-color-1)) (- 255 (car dest-color-2)))
-  (gimp-levels layer  HISTOGRAM-GREEN
+  (ligma-levels layer  HISTOGRAM-GREEN
 	       (cadr 	src-color-1) (cadr src-color-2) 1.0
 	       (- 255 (cadr dest-color-1)) (- 255 (cadr dest-color-2)))
-  (gimp-levels layer HISTOGRAM-BLUE
+  (ligma-levels layer HISTOGRAM-BLUE
 	       (caddr src-color-1) (caddr src-color-2) 1.0
 	       (- 255 (caddr dest-color-1)) (- 255 (caddr dest-color-2)))
-  (gimp-levels layer HISTOGRAM-VALUE 0 255 1.0 255 0)
+  (ligma-levels layer HISTOGRAM-VALUE 0 255 1.0 255 0)
 )
 
 ; since 3.0 a layer selection can be many,
@@ -29,9 +29,9 @@
 ; and the word "active" changed to "selected".
 ; Formerly, such PDB methods returned a list of one element, the ID of a layer.
 
-; A compatible replacement for gimp-image-get-active-layer.
+; A compatible replacement for ligma-image-get-active-layer.
 ; This should be used only when you know the image has only one layer.
 ; In other situations, you may break a contract to process all selected layers.
-(define (gimp-image-get-active-layer img)
-  (list (aref (cadr (gimp-image-get-selected-layers img)) 0))
+(define (ligma-image-get-active-layer img)
+  (list (aref (cadr (ligma-image-get-selected-layers img)) 0))
 )

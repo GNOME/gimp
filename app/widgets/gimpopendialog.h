@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpopendialog.h
+ * ligmaopendialog.h
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,44 +18,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPEN_DIALOG_H__
-#define __GIMP_OPEN_DIALOG_H__
+#ifndef __LIGMA_OPEN_DIALOG_H__
+#define __LIGMA_OPEN_DIALOG_H__
 
-#include "gimpfiledialog.h"
+#include "ligmafiledialog.h"
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_OPEN_DIALOG            (gimp_open_dialog_get_type ())
-#define GIMP_OPEN_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPEN_DIALOG, GimpOpenDialog))
-#define GIMP_OPEN_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OPEN_DIALOG, GimpOpenDialogClass))
-#define GIMP_IS_OPEN_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPEN_DIALOG))
-#define GIMP_IS_OPEN_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OPEN_DIALOG))
-#define GIMP_OPEN_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OPEN_DIALOG, GimpOpenDialogClass))
+#define LIGMA_TYPE_OPEN_DIALOG            (ligma_open_dialog_get_type ())
+#define LIGMA_OPEN_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPEN_DIALOG, LigmaOpenDialog))
+#define LIGMA_OPEN_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OPEN_DIALOG, LigmaOpenDialogClass))
+#define LIGMA_IS_OPEN_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPEN_DIALOG))
+#define LIGMA_IS_OPEN_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OPEN_DIALOG))
+#define LIGMA_OPEN_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OPEN_DIALOG, LigmaOpenDialogClass))
 
 
-typedef struct _GimpOpenDialogClass GimpOpenDialogClass;
+typedef struct _LigmaOpenDialogClass LigmaOpenDialogClass;
 
-struct _GimpOpenDialog
+struct _LigmaOpenDialog
 {
-  GimpFileDialog       parent_instance;
+  LigmaFileDialog       parent_instance;
 
   gboolean             open_as_layers;
 };
 
-struct _GimpOpenDialogClass
+struct _LigmaOpenDialogClass
 {
-  GimpFileDialogClass  parent_class;
+  LigmaFileDialogClass  parent_class;
 };
 
 
-GType       gimp_open_dialog_get_type   (void) G_GNUC_CONST;
+GType       ligma_open_dialog_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_open_dialog_new        (Gimp           *gimp);
+GtkWidget * ligma_open_dialog_new        (Ligma           *ligma);
 
-void        gimp_open_dialog_set_image  (GimpOpenDialog *dialog,
-                                         GimpImage      *image,
+void        ligma_open_dialog_set_image  (LigmaOpenDialog *dialog,
+                                         LigmaImage      *image,
                                          gboolean        open_as_layers);
 
 G_END_DECLS
 
-#endif /* __GIMP_OPEN_DIALOG_H__ */
+#endif /* __LIGMA_OPEN_DIALOG_H__ */

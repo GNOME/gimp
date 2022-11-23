@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,49 +15,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MOVE_TOOL_H__
-#define __GIMP_MOVE_TOOL_H__
+#ifndef __LIGMA_MOVE_TOOL_H__
+#define __LIGMA_MOVE_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_MOVE_TOOL            (gimp_move_tool_get_type ())
-#define GIMP_MOVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MOVE_TOOL, GimpMoveTool))
-#define GIMP_MOVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MOVE_TOOL, GimpMoveToolClass))
-#define GIMP_IS_MOVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MOVE_TOOL))
-#define GIMP_IS_MOVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MOVE_TOOL))
-#define GIMP_MOVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MOVE_TOOL, GimpMoveToolClass))
+#define LIGMA_TYPE_MOVE_TOOL            (ligma_move_tool_get_type ())
+#define LIGMA_MOVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MOVE_TOOL, LigmaMoveTool))
+#define LIGMA_MOVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MOVE_TOOL, LigmaMoveToolClass))
+#define LIGMA_IS_MOVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MOVE_TOOL))
+#define LIGMA_IS_MOVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MOVE_TOOL))
+#define LIGMA_MOVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MOVE_TOOL, LigmaMoveToolClass))
 
-#define GIMP_MOVE_TOOL_GET_OPTIONS(t)  (GIMP_MOVE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_MOVE_TOOL_GET_OPTIONS(t)  (LIGMA_MOVE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpMoveTool      GimpMoveTool;
-typedef struct _GimpMoveToolClass GimpMoveToolClass;
+typedef struct _LigmaMoveTool      LigmaMoveTool;
+typedef struct _LigmaMoveToolClass LigmaMoveToolClass;
 
-struct _GimpMoveTool
+struct _LigmaMoveTool
 {
-  GimpDrawTool         parent_instance;
+  LigmaDrawTool         parent_instance;
 
-  GimpLayer           *floating_layer;
+  LigmaLayer           *floating_layer;
   GList               *guides;
 
-  GimpTransformType    saved_type;
+  LigmaTransformType    saved_type;
 
   GList               *old_selected_layers;
   GList               *old_selected_vectors;
 };
 
-struct _GimpMoveToolClass
+struct _LigmaMoveToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 };
 
 
-void    gimp_move_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_move_tool_register (LigmaToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_move_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_move_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_MOVE_TOOL_H__  */
+#endif  /*  __LIGMA_MOVE_TOOL_H__  */

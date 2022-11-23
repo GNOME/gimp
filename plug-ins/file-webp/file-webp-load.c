@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -31,36 +31,36 @@
 
 #include <gegl.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-webp-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static void
-create_layer (GimpImage *image,
+create_layer (LigmaImage *image,
               uint8_t   *layer_data,
               gint32     position,
               gchar     *name,
               gint       width,
               gint       height)
 {
-  GimpLayer     *layer;
+  LigmaLayer     *layer;
   GeglBuffer    *buffer;
   GeglRectangle  extent;
 
-  layer = gimp_layer_new (image, name,
+  layer = ligma_layer_new (image, name,
                           width, height,
-                          GIMP_RGBA_IMAGE,
+                          LIGMA_RGBA_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image, layer, NULL, position);
+  ligma_image_insert_layer (image, layer, NULL, position);
 
   /* Retrieve the buffer for the layer */
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   /* Copy the image data to the region */
   gegl_rectangle_set (&extent, 0, 0, width, height);
@@ -72,7 +72,7 @@ create_layer (GimpImage *image,
   g_object_unref (buffer);
 }
 
-GimpImage *
+LigmaImage *
 load_image (GFile    *file,
             gboolean  interactive,
             GError   **error)
@@ -81,10 +81,10 @@ load_image (GFile    *file,
   gsize             indatalen;
   gint              width;
   gint              height;
-  GimpImage        *image;
+  LigmaImage        *image;
   WebPMux          *mux;
   WebPData          wp_data;
-  GimpColorProfile *profile   = NULL;
+  LigmaColorProfile *profile   = NULL;
   uint32_t          flags;
   gboolean          animation = FALSE;
   gboolean          icc       = FALSE;
@@ -105,7 +105,7 @@ load_image (GFile    *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Invalid WebP file '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -136,17 +136,17 @@ load_image (GFile    *file,
   /* TODO: check if an alpha channel is present */
 
   /* Create the new image and associated layer */
-  image = gimp_image_new (width, height, GIMP_RGB);
+  image = ligma_image_new (width, height, LIGMA_RGB);
 
   if (icc)
     {
       WebPData icc_profile;
 
       WebPMuxGetChunk (mux, "ICCP", &icc_profile);
-      profile = gimp_color_profile_new_from_icc_profile (icc_profile.bytes,
+      profile = ligma_color_profile_new_from_icc_profile (icc_profile.bytes,
                                                          icc_profile.size, NULL);
       if (profile)
-        gimp_image_set_color_profile (image, profile);
+        ligma_image_set_color_profile (image, profile);
     }
 
   if (! animation)
@@ -200,7 +200,7 @@ load_image (GFile    *file,
         {
           g_set_error (error, G_FILE_ERROR, 0,
                        _("Failed to decode animated WebP file '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto error;
         }
 
@@ -208,7 +208,7 @@ load_image (GFile    *file,
         {
           g_set_error (error, G_FILE_ERROR, 0,
                        _("Failed to decode animated WebP information from '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto error;
         }
 
@@ -227,7 +227,7 @@ load_image (GFile    *file,
             {
               g_set_error (error, G_FILE_ERROR, 0,
                            _("Failed to decode animated WebP frame from '%s'"),
-                           gimp_file_get_utf8_name (file));
+                           ligma_file_get_utf8_name (file));
               goto error;
             }
 
@@ -249,7 +249,7 @@ load_image (GFile    *file,
 
   if (exif || xmp)
     {
-      GimpMetadata *metadata;
+      LigmaMetadata *metadata;
 
       if (exif)
         {
@@ -265,16 +265,16 @@ load_image (GFile    *file,
           WebPMuxGetChunk (mux, "XMP ", &xmp);
         }
 
-      metadata = gimp_image_metadata_load_prepare (image, "image/webp",
+      metadata = ligma_image_metadata_load_prepare (image, "image/webp",
                                                    file, NULL);
       if (metadata)
         {
-          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+          LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
           if (profile)
-            flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+            flags &= ~LIGMA_METADATA_LOAD_COLORSPACE;
 
-          gimp_image_metadata_load_finish (image, "image/webp",
+          ligma_image_metadata_load_finish (image, "image/webp",
                                            metadata, flags);
           g_object_unref (metadata);
         }
@@ -282,7 +282,7 @@ load_image (GFile    *file,
 
   WebPMuxDelete (mux);
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
   if (profile)
     g_object_unref (profile);

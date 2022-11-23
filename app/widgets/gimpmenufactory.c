@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmenufactory.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * ligmamenufactory.c
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,59 +25,59 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpaction.h"
-#include "gimpactionfactory.h"
-#include "gimpactiongroup.h"
-#include "gimpmenufactory.h"
-#include "gimpuimanager.h"
+#include "ligmaaction.h"
+#include "ligmaactionfactory.h"
+#include "ligmaactiongroup.h"
+#include "ligmamenufactory.h"
+#include "ligmauimanager.h"
 
 
-struct _GimpMenuFactoryPrivate
+struct _LigmaMenuFactoryPrivate
 {
-  Gimp              *gimp;
-  GimpActionFactory *action_factory;
+  Ligma              *ligma;
+  LigmaActionFactory *action_factory;
   GList             *registered_menus;
 };
 
 
-static void   gimp_menu_factory_finalize (GObject *object);
+static void   ligma_menu_factory_finalize (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuFactory, gimp_menu_factory,
-                            GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaMenuFactory, ligma_menu_factory,
+                            LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_menu_factory_parent_class
+#define parent_class ligma_menu_factory_parent_class
 
 
 static void
-gimp_menu_factory_class_init (GimpMenuFactoryClass *klass)
+ligma_menu_factory_class_init (LigmaMenuFactoryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_menu_factory_finalize;
+  object_class->finalize = ligma_menu_factory_finalize;
 }
 
 static void
-gimp_menu_factory_init (GimpMenuFactory *factory)
+ligma_menu_factory_init (LigmaMenuFactory *factory)
 {
-  factory->p = gimp_menu_factory_get_instance_private (factory);
+  factory->p = ligma_menu_factory_get_instance_private (factory);
 }
 
 static void
-gimp_menu_factory_finalize (GObject *object)
+ligma_menu_factory_finalize (GObject *object)
 {
-  GimpMenuFactory *factory = GIMP_MENU_FACTORY (object);
+  LigmaMenuFactory *factory = LIGMA_MENU_FACTORY (object);
   GList           *list;
 
   for (list = factory->p->registered_menus; list; list = g_list_next (list))
     {
-      GimpMenuFactoryEntry *entry = list->data;
+      LigmaMenuFactoryEntry *entry = list->data;
       GList                *uis;
 
       g_free (entry->identifier);
@@ -86,17 +86,17 @@ gimp_menu_factory_finalize (GObject *object)
 
       for (uis = entry->managed_uis; uis; uis = g_list_next (uis))
         {
-          GimpUIManagerUIEntry *ui_entry = uis->data;
+          LigmaUIManagerUIEntry *ui_entry = uis->data;
 
           g_free (ui_entry->ui_path);
           g_free (ui_entry->basename);
 
-          g_slice_free (GimpUIManagerUIEntry, ui_entry);
+          g_slice_free (LigmaUIManagerUIEntry, ui_entry);
         }
 
       g_list_free (entry->managed_uis);
 
-      g_slice_free (GimpMenuFactoryEntry, entry);
+      g_slice_free (LigmaMenuFactoryEntry, entry);
     }
 
   g_list_free (factory->p->registered_menus);
@@ -105,39 +105,39 @@ gimp_menu_factory_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GimpMenuFactory *
-gimp_menu_factory_new (Gimp              *gimp,
-                       GimpActionFactory *action_factory)
+LigmaMenuFactory *
+ligma_menu_factory_new (Ligma              *ligma,
+                       LigmaActionFactory *action_factory)
 {
-  GimpMenuFactory *factory;
+  LigmaMenuFactory *factory;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_ACTION_FACTORY (action_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACTION_FACTORY (action_factory), NULL);
 
-  factory = g_object_new (GIMP_TYPE_MENU_FACTORY, NULL);
+  factory = g_object_new (LIGMA_TYPE_MENU_FACTORY, NULL);
 
-  factory->p->gimp           = gimp;
+  factory->p->ligma           = ligma;
   factory->p->action_factory = action_factory;
 
   return factory;
 }
 
 void
-gimp_menu_factory_manager_register (GimpMenuFactory *factory,
+ligma_menu_factory_manager_register (LigmaMenuFactory *factory,
                                     const gchar     *identifier,
                                     const gchar     *first_group,
                                     ...)
 {
-  GimpMenuFactoryEntry *entry;
+  LigmaMenuFactoryEntry *entry;
   const gchar          *group;
   const gchar          *ui_path;
   va_list               args;
 
-  g_return_if_fail (GIMP_IS_MENU_FACTORY (factory));
+  g_return_if_fail (LIGMA_IS_MENU_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (first_group != NULL);
 
-  entry = g_slice_new0 (GimpMenuFactoryEntry);
+  entry = g_slice_new0 (LigmaMenuFactoryEntry);
 
   entry->identifier = g_strdup (identifier);
 
@@ -160,13 +160,13 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
   while (ui_path)
     {
       const gchar            *ui_basename;
-      GimpUIManagerSetupFunc  setup_func;
-      GimpUIManagerUIEntry   *ui_entry;
+      LigmaUIManagerSetupFunc  setup_func;
+      LigmaUIManagerUIEntry   *ui_entry;
 
       ui_basename = va_arg (args, const gchar *);
-      setup_func  = va_arg (args, GimpUIManagerSetupFunc);
+      setup_func  = va_arg (args, LigmaUIManagerSetupFunc);
 
-      ui_entry = g_slice_new0 (GimpUIManagerUIEntry);
+      ui_entry = g_slice_new0 (LigmaUIManagerUIEntry);
 
       ui_entry->ui_path    = g_strdup (ui_path);
       ui_entry->basename   = g_strdup (ui_basename);
@@ -183,80 +183,80 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
 }
 
 GList *
-gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
+ligma_menu_factory_get_registered_menus (LigmaMenuFactory *factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (factory), NULL);
 
   return factory->p->registered_menus;
 }
 
 static void
-gimp_menu_factory_manager_action_added (GimpActionGroup *group,
-                                        GimpAction      *action,
+ligma_menu_factory_manager_action_added (LigmaActionGroup *group,
+                                        LigmaAction      *action,
                                         GtkAccelGroup   *accel_group)
 {
-  gimp_action_set_accel_group (action, accel_group);
-  gimp_action_connect_accelerator (action);
+  ligma_action_set_accel_group (action, accel_group);
+  ligma_action_connect_accelerator (action);
 }
 
-GimpUIManager *
-gimp_menu_factory_manager_new (GimpMenuFactory *factory,
+LigmaUIManager *
+ligma_menu_factory_manager_new (LigmaMenuFactory *factory,
                                const gchar     *identifier,
                                gpointer         callback_data)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
   for (list = factory->p->registered_menus; list; list = g_list_next (list))
     {
-      GimpMenuFactoryEntry *entry = list->data;
+      LigmaMenuFactoryEntry *entry = list->data;
 
       if (! strcmp (entry->identifier, identifier))
         {
-          GimpUIManager *manager;
+          LigmaUIManager *manager;
           GtkAccelGroup *accel_group;
           GList         *list;
 
-          manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-          accel_group = gimp_ui_manager_get_accel_group (manager);
+          manager = ligma_ui_manager_new (factory->p->ligma, entry->identifier);
+          accel_group = ligma_ui_manager_get_accel_group (manager);
 
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
-              GimpActionGroup *group;
+              LigmaActionGroup *group;
               GList           *actions;
               GList           *list2;
 
-              group = gimp_action_factory_group_new (factory->p->action_factory,
+              group = ligma_action_factory_group_new (factory->p->action_factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
 
-              actions = gimp_action_group_list_actions (group);
+              actions = ligma_action_group_list_actions (group);
 
               for (list2 = actions; list2; list2 = g_list_next (list2))
                 {
-                  GimpAction *action = list2->data;
+                  LigmaAction *action = list2->data;
 
-                  gimp_action_set_accel_group (action, accel_group);
-                  gimp_action_connect_accelerator (action);
+                  ligma_action_set_accel_group (action, accel_group);
+                  ligma_action_connect_accelerator (action);
                 }
 
               g_list_free (actions);
 
               g_signal_connect_object (group, "action-added",
-                                       G_CALLBACK (gimp_menu_factory_manager_action_added),
+                                       G_CALLBACK (ligma_menu_factory_manager_action_added),
                                        accel_group, 0);
 
-              gimp_ui_manager_insert_action_group (manager, group, -1);
+              ligma_ui_manager_insert_action_group (manager, group, -1);
               g_object_unref (group);
             }
 
           for (list = entry->managed_uis; list; list = g_list_next (list))
             {
-              GimpUIManagerUIEntry *ui_entry = list->data;
+              LigmaUIManagerUIEntry *ui_entry = list->data;
 
-              gimp_ui_manager_ui_register (manager,
+              ligma_ui_manager_ui_register (manager,
                                            ui_entry->ui_path,
                                            ui_entry->basename,
                                            ui_entry->setup_func);

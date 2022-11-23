@@ -4,7 +4,7 @@ pushd checkout
 rm -rf *-*/
 find . -maxdepth 1 -type f -atime +25 -print -delete
 
-for gitdir in babl gegl gimp; do
+for gitdir in babl gegl ligma; do
 	pushd $gitdir
 	git clean -xdf
 	popd

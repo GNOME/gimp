@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpchannel.c
+ * ligmachannel.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,52 +20,52 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
-G_DEFINE_TYPE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE)
+G_DEFINE_TYPE (LigmaChannel, ligma_channel, LIGMA_TYPE_DRAWABLE)
 
-#define parent_class gimp_drawable_parent_class
+#define parent_class ligma_drawable_parent_class
 
 
 static void
-gimp_channel_class_init (GimpChannelClass *klass)
+ligma_channel_class_init (LigmaChannelClass *klass)
 {
 }
 
 static void
-gimp_channel_init (GimpChannel *channel)
+ligma_channel_init (LigmaChannel *channel)
 {
 }
 
 /**
- * gimp_channel_get_by_id:
+ * ligma_channel_get_by_id:
  * @channel_id: The channel id.
  *
- * Returns a #GimpChannel representing @channel_id. This function
- * calls gimp_item_get_by_id() and returns the item if it is channel
+ * Returns a #LigmaChannel representing @channel_id. This function
+ * calls ligma_item_get_by_id() and returns the item if it is channel
  * or %NULL otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpChannel for @channel_id
+ * Returns: (nullable) (transfer none): a #LigmaChannel for @channel_id
  *          or %NULL if @channel_id does not represent a valid
- *          channel. The object belongs to libgimp and you must not
+ *          channel. The object belongs to libligma and you must not
  *          modify or unref it.
  *
  * Since: 3.0
  **/
-GimpChannel *
-gimp_channel_get_by_id (gint32 channel_id)
+LigmaChannel *
+ligma_channel_get_by_id (gint32 channel_id)
 {
-  GimpItem *item = gimp_item_get_by_id (channel_id);
+  LigmaItem *item = ligma_item_get_by_id (channel_id);
 
-  if (GIMP_IS_CHANNEL (item))
-    return (GimpChannel *) item;
+  if (LIGMA_IS_CHANNEL (item))
+    return (LigmaChannel *) item;
 
   return NULL;
 }
 
 /**
- * gimp_channel_new:
+ * ligma_channel_new:
  * @image:   The image to which to add the channel.
  * @name:    The channel name.
  * @width:   The channel width.
@@ -78,23 +78,23 @@ gimp_channel_get_by_id (gint32 channel_id)
  * This procedure creates a new channel with the specified width and
  * height. Name, opacity, and color are also supplied parameters. The
  * new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with the gimp_image_insert_channel()
+ * automatic. Add the new channel with the ligma_image_insert_channel()
  * command. Other attributes such as channel show masked, should be
  * set with explicit procedure calls. The channel's contents are
  * undefined initially.
  *
  * Returns: (transfer none): The newly created channel.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  */
-GimpChannel *
-gimp_channel_new (GimpImage     *image,
+LigmaChannel *
+ligma_channel_new (LigmaImage     *image,
                   const gchar   *name,
                   guint          width,
                   guint          height,
                   gdouble        opacity,
-                  const GimpRGB *color)
+                  const LigmaRGB *color)
 {
-  return _gimp_channel_new (image,
+  return _ligma_channel_new (image,
                             width,
                             height,
                             name,

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,46 +21,46 @@
 
 #include "core-types.h"
 
-#include "gimpcontainer.h"
-#include "gimpobject.h"
-#include "gimpobjectqueue.h"
-#include "gimpprogress.h"
+#include "ligmacontainer.h"
+#include "ligmaobject.h"
+#include "ligmaobjectqueue.h"
+#include "ligmaprogress.h"
 
 
 typedef struct
 {
-  GimpObject *object;
+  LigmaObject *object;
   gint64      memsize;
 } Item;
 
 
-static void   gimp_object_queue_dispose      (GObject         *object);
+static void   ligma_object_queue_dispose      (GObject         *object);
 
-static void   gimp_object_queue_push_swapped (gpointer         object,
-                                              GimpObjectQueue *queue);
+static void   ligma_object_queue_push_swapped (gpointer         object,
+                                              LigmaObjectQueue *queue);
 
-static Item * gimp_object_queue_item_new     (GimpObject      *object);
-static void   gimp_object_queue_item_free    (Item            *item);
+static Item * ligma_object_queue_item_new     (LigmaObject      *object);
+static void   ligma_object_queue_item_free    (Item            *item);
 
 
-G_DEFINE_TYPE (GimpObjectQueue, gimp_object_queue, GIMP_TYPE_SUB_PROGRESS);
+G_DEFINE_TYPE (LigmaObjectQueue, ligma_object_queue, LIGMA_TYPE_SUB_PROGRESS);
 
-#define parent_class gimp_object_queue_parent_class
+#define parent_class ligma_object_queue_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_object_queue_class_init (GimpObjectQueueClass *klass)
+ligma_object_queue_class_init (LigmaObjectQueueClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_object_queue_dispose;
+  object_class->dispose = ligma_object_queue_dispose;
 }
 
 static void
-gimp_object_queue_init (GimpObjectQueue *queue)
+ligma_object_queue_init (LigmaObjectQueue *queue)
 {
   g_queue_init (&queue->items);
 
@@ -69,33 +69,33 @@ gimp_object_queue_init (GimpObjectQueue *queue)
 }
 
 static void
-gimp_object_queue_dispose (GObject *object)
+ligma_object_queue_dispose (GObject *object)
 {
-  gimp_object_queue_clear (GIMP_OBJECT_QUEUE (object));
+  ligma_object_queue_clear (LIGMA_OBJECT_QUEUE (object));
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_object_queue_push_swapped (gpointer         object,
-                                GimpObjectQueue *queue)
+ligma_object_queue_push_swapped (gpointer         object,
+                                LigmaObjectQueue *queue)
 {
-  gimp_object_queue_push (queue, object);
+  ligma_object_queue_push (queue, object);
 }
 
 static Item *
-gimp_object_queue_item_new (GimpObject *object)
+ligma_object_queue_item_new (LigmaObject *object)
 {
   Item *item = g_slice_new (Item);
 
   item->object  = object;
-  item->memsize = gimp_object_get_memsize (object, NULL);
+  item->memsize = ligma_object_get_memsize (object, NULL);
 
   return item;
 }
 
 static void
-gimp_object_queue_item_free (Item *item)
+ligma_object_queue_item_free (Item *item)
 {
   g_slice_free (Item, item);
 }
@@ -104,42 +104,42 @@ gimp_object_queue_item_free (Item *item)
 /*  public functions  */
 
 
-GimpObjectQueue *
-gimp_object_queue_new (GimpProgress *progress)
+LigmaObjectQueue *
+ligma_object_queue_new (LigmaProgress *progress)
 {
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
-  return g_object_new (GIMP_TYPE_OBJECT_QUEUE,
+  return g_object_new (LIGMA_TYPE_OBJECT_QUEUE,
                        "progress", progress,
                        NULL);
 }
 
 void
-gimp_object_queue_clear (GimpObjectQueue *queue)
+ligma_object_queue_clear (LigmaObjectQueue *queue)
 {
   Item *item;
 
-  g_return_if_fail (GIMP_IS_OBJECT_QUEUE (queue));
+  g_return_if_fail (LIGMA_IS_OBJECT_QUEUE (queue));
 
   while ((item = g_queue_pop_head (&queue->items)))
-    gimp_object_queue_item_free (item);
+    ligma_object_queue_item_free (item);
 
   queue->processed_memsize = 0;
   queue->total_memsize     = 0;
 
-  gimp_sub_progress_set_range (GIMP_SUB_PROGRESS (queue), 0.0, 1.0);
+  ligma_sub_progress_set_range (LIGMA_SUB_PROGRESS (queue), 0.0, 1.0);
 }
 
 void
-gimp_object_queue_push (GimpObjectQueue *queue,
+ligma_object_queue_push (LigmaObjectQueue *queue,
                         gpointer         object)
 {
   Item *item;
 
-  g_return_if_fail (GIMP_IS_OBJECT_QUEUE (queue));
-  g_return_if_fail (GIMP_IS_OBJECT (object));
+  g_return_if_fail (LIGMA_IS_OBJECT_QUEUE (queue));
+  g_return_if_fail (LIGMA_IS_OBJECT (object));
 
-  item = gimp_object_queue_item_new (GIMP_OBJECT (object));
+  item = ligma_object_queue_item_new (LIGMA_OBJECT (object));
 
   g_queue_push_tail (&queue->items, item);
 
@@ -147,35 +147,35 @@ gimp_object_queue_push (GimpObjectQueue *queue,
 }
 
 void
-gimp_object_queue_push_container (GimpObjectQueue *queue,
-                                  GimpContainer   *container)
+ligma_object_queue_push_container (LigmaObjectQueue *queue,
+                                  LigmaContainer   *container)
 {
-  g_return_if_fail (GIMP_IS_OBJECT_QUEUE (queue));
-  g_return_if_fail (GIMP_IS_CONTAINER (container));
+  g_return_if_fail (LIGMA_IS_OBJECT_QUEUE (queue));
+  g_return_if_fail (LIGMA_IS_CONTAINER (container));
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_object_queue_push_swapped,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_object_queue_push_swapped,
                           queue);
 }
 
 void
-gimp_object_queue_push_list (GimpObjectQueue *queue,
+ligma_object_queue_push_list (LigmaObjectQueue *queue,
                              GList           *list)
 {
-  g_return_if_fail (GIMP_IS_OBJECT_QUEUE (queue));
+  g_return_if_fail (LIGMA_IS_OBJECT_QUEUE (queue));
 
   g_list_foreach (list,
-                  (GFunc) gimp_object_queue_push_swapped,
+                  (GFunc) ligma_object_queue_push_swapped,
                   queue);
 }
 
 gpointer
-gimp_object_queue_pop (GimpObjectQueue *queue)
+ligma_object_queue_pop (LigmaObjectQueue *queue)
 {
   Item       *item;
-  GimpObject *object;
+  LigmaObject *object;
 
-  g_return_val_if_fail (GIMP_IS_OBJECT_QUEUE (queue), NULL);
+  g_return_val_if_fail (LIGMA_IS_OBJECT_QUEUE (queue), NULL);
 
   item = g_queue_pop_head (&queue->items);
 
@@ -184,7 +184,7 @@ gimp_object_queue_pop (GimpObjectQueue *queue)
 
   object = item->object;
 
-  gimp_sub_progress_set_range (GIMP_SUB_PROGRESS (queue),
+  ligma_sub_progress_set_range (LIGMA_SUB_PROGRESS (queue),
                                (gdouble) queue->processed_memsize  /
                                (gdouble) queue->total_memsize,
                                (gdouble) (queue->processed_memsize +
@@ -192,7 +192,7 @@ gimp_object_queue_pop (GimpObjectQueue *queue)
                                (gdouble) queue->total_memsize);
   queue->processed_memsize += item->memsize;
 
-  gimp_object_queue_item_free (item);
+  ligma_object_queue_item_free (item);
 
   return object;
 }

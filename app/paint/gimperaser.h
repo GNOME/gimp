@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERASER_H__
-#define __GIMP_ERASER_H__
+#ifndef __LIGMA_ERASER_H__
+#define __LIGMA_ERASER_H__
 
 
-#include "gimppaintbrush.h"
+#include "ligmapaintbrush.h"
 
 
-#define GIMP_TYPE_ERASER            (gimp_eraser_get_type ())
-#define GIMP_ERASER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERASER, GimpEraser))
-#define GIMP_ERASER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER, GimpEraserClass))
-#define GIMP_IS_ERASER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER))
-#define GIMP_IS_ERASER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER))
-#define GIMP_ERASER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER, GimpEraserClass))
+#define LIGMA_TYPE_ERASER            (ligma_eraser_get_type ())
+#define LIGMA_ERASER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ERASER, LigmaEraser))
+#define LIGMA_ERASER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ERASER, LigmaEraserClass))
+#define LIGMA_IS_ERASER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ERASER))
+#define LIGMA_IS_ERASER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ERASER))
+#define LIGMA_ERASER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ERASER, LigmaEraserClass))
 
 
-typedef struct _GimpEraserClass GimpEraserClass;
+typedef struct _LigmaEraserClass LigmaEraserClass;
 
-struct _GimpEraser
+struct _LigmaEraser
 {
-  GimpPaintbrush  parent_instance;
+  LigmaPaintbrush  parent_instance;
 };
 
-struct _GimpEraserClass
+struct _LigmaEraserClass
 {
-  GimpPaintbrushClass  parent_class;
+  LigmaPaintbrushClass  parent_class;
 };
 
 
-void    gimp_eraser_register (Gimp                      *gimp,
-                              GimpPaintRegisterCallback  callback);
+void    ligma_eraser_register (Ligma                      *ligma,
+                              LigmaPaintRegisterCallback  callback);
 
-GType   gimp_eraser_get_type (void) G_GNUC_CONST;
+GType   ligma_eraser_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_ERASER_H__  */
+#endif  /*  __LIGMA_ERASER_H__  */

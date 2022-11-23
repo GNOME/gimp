@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpitem.h"
+#include "core/ligma.h"
+#include "core/ligmaitem.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "items-actions.h"
 
 
 void
-items_actions_setup (GimpActionGroup *group,
+items_actions_setup (LigmaActionGroup *group,
                      const gchar     *prefix)
 {
   GEnumClass *enum_class;
   GEnumValue *value;
 
-  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_TAG);
+  enum_class = g_type_class_ref (LIGMA_TYPE_COLOR_TAG);
 
   for (value = enum_class->values; value->value_name; value++)
     {
@@ -49,19 +49,19 @@ items_actions_setup (GimpActionGroup *group,
       g_snprintf (action, sizeof (action),
                   "%s-color-tag-%s", prefix, value->value_nick);
 
-      if (value->value == GIMP_COLOR_TAG_NONE)
+      if (value->value == LIGMA_COLOR_TAG_NONE)
         {
-          gimp_action_group_set_action_always_show_image (group, action, TRUE);
+          ligma_action_group_set_action_always_show_image (group, action, TRUE);
         }
       else
         {
-          GimpRGB color;
+          LigmaRGB color;
 
-          gimp_action_group_set_action_context (group, action,
-                                                gimp_get_user_context (group->gimp));
+          ligma_action_group_set_action_context (group, action,
+                                                ligma_get_user_context (group->ligma));
 
-          gimp_get_color_tag_color (value->value, &color, FALSE);
-          gimp_action_group_set_action_color (group, action, &color, FALSE);
+          ligma_get_color_tag_color (value->value, &color, FALSE);
+          ligma_action_group_set_action_color (group, action, &color, FALSE);
         }
     }
 
@@ -69,7 +69,7 @@ items_actions_setup (GimpActionGroup *group,
 }
 
 void
-items_actions_update (GimpActionGroup *group,
+items_actions_update (LigmaActionGroup *group,
                       const gchar     *prefix,
                       GList           *items)
 {
@@ -82,12 +82,12 @@ items_actions_update (GimpActionGroup *group,
   gboolean    can_lock_content  = FALSE;
   gboolean    lock_position     = TRUE;
   gboolean    can_lock_position = FALSE;
-  GimpRGB     tag_color;
+  LigmaRGB     tag_color;
   GList       *iter;
 
   for (iter = items; iter; iter = iter->next)
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
 
       /* With possible multi-selected items, toggle states may be
        * inconsistent (e.g. some items of the selection may be visible,
@@ -97,33 +97,33 @@ items_actions_update (GimpActionGroup *group,
        * It's mostly arbitrary and doesn't actually change much to the
        * action.
        */
-      visible = (visible || gimp_item_get_visible (item));
+      visible = (visible || ligma_item_get_visible (item));
 
-      if (gimp_item_can_lock_content (item))
+      if (ligma_item_can_lock_content (item))
         {
-          if (! gimp_item_get_lock_content (item))
+          if (! ligma_item_get_lock_content (item))
             lock_content = FALSE;
           can_lock_content = TRUE;
         }
 
-      if (gimp_item_can_lock_position (item))
+      if (ligma_item_can_lock_position (item))
         {
-          if (! gimp_item_get_lock_position (item))
+          if (! ligma_item_get_lock_position (item))
             lock_position = FALSE;
           can_lock_position = TRUE;
         }
 
       has_color_tag = (has_color_tag ||
-                       gimp_get_color_tag_color (gimp_item_get_color_tag (item),
+                       ligma_get_color_tag_color (ligma_item_get_color_tag (item),
                                                  &tag_color, FALSE));
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_COLOR(action,color) \
-        gimp_action_group_set_action_color (group, action, color, FALSE)
+        ligma_action_group_set_action_color (group, action, color, FALSE)
 
   g_snprintf (action, sizeof (action), "%s-visible", prefix);
   SET_SENSITIVE (action, items);
@@ -140,7 +140,7 @@ items_actions_update (GimpActionGroup *group,
   g_snprintf (action, sizeof (action), "%s-color-tag-menu", prefix);
   SET_COLOR (action, has_color_tag ? &tag_color : NULL);
 
-  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_TAG);
+  enum_class = g_type_class_ref (LIGMA_TYPE_COLOR_TAG);
 
   for (value = enum_class->values; value->value_name; value++)
     {

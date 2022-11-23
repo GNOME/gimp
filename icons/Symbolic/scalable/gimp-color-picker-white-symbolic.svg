@@ -15,7 +15,7 @@
    width="18.000002"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-color-picker-white.svg">
+   sodipodi:docname="ligma-color-picker-white.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -149,7 +149,7 @@
      id="stock">
     <g
        transform="translate(332.99633,-1075.9533)"
-       id="gimp-color-picker-white">
+       id="ligma-color-picker-white">
       <path
          style="display:inline;fill:url(#linearGradient7869);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99862194"
          id="path12979"

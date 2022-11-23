@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationadditionlegacy.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationadditionlegacy.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_ADDITION_LEGACY_H__
-#define __GIMP_OPERATION_ADDITION_LEGACY_H__
+#ifndef __LIGMA_OPERATION_ADDITION_LEGACY_H__
+#define __LIGMA_OPERATION_ADDITION_LEGACY_H__
 
 
-#include "operations/layer-modes/gimpoperationlayermode.h"
+#include "operations/layer-modes/ligmaoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_ADDITION_LEGACY            (gimp_operation_addition_legacy_get_type ())
-#define GIMP_OPERATION_ADDITION_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_ADDITION_LEGACY, GimpOperationAdditionLegacy))
-#define GIMP_OPERATION_ADDITION_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_ADDITION_LEGACY, GimpOperationAdditionLegacyClass))
-#define GIMP_IS_OPERATION_ADDITION_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_ADDITION_LEGACY))
-#define GIMP_IS_OPERATION_ADDITION_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_ADDITION_LEGACY))
-#define GIMP_OPERATION_ADDITION_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ADDITION_LEGACY, GimpOperationAdditionLegacyClass))
+#define LIGMA_TYPE_OPERATION_ADDITION_LEGACY            (ligma_operation_addition_legacy_get_type ())
+#define LIGMA_OPERATION_ADDITION_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_ADDITION_LEGACY, LigmaOperationAdditionLegacy))
+#define LIGMA_OPERATION_ADDITION_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_ADDITION_LEGACY, LigmaOperationAdditionLegacyClass))
+#define LIGMA_IS_OPERATION_ADDITION_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_ADDITION_LEGACY))
+#define LIGMA_IS_OPERATION_ADDITION_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_ADDITION_LEGACY))
+#define LIGMA_OPERATION_ADDITION_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_ADDITION_LEGACY, LigmaOperationAdditionLegacyClass))
 
 
-typedef struct _GimpOperationAdditionLegacy      GimpOperationAdditionLegacy;
-typedef struct _GimpOperationAdditionLegacyClass GimpOperationAdditionLegacyClass;
+typedef struct _LigmaOperationAdditionLegacy      LigmaOperationAdditionLegacy;
+typedef struct _LigmaOperationAdditionLegacyClass LigmaOperationAdditionLegacyClass;
 
-struct _GimpOperationAdditionLegacy
+struct _LigmaOperationAdditionLegacy
 {
-  GimpOperationLayerMode  parent_instance;
+  LigmaOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationAdditionLegacyClass
+struct _LigmaOperationAdditionLegacyClass
 {
-  GimpOperationLayerModeClass  parent_class;
+  LigmaOperationLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_addition_legacy_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_addition_legacy_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_ADDITION_LEGACY_H__ */
+#endif /* __LIGMA_OPERATION_ADDITION_LEGACY_H__ */

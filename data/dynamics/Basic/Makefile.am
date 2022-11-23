@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/dynamics/Basic
+## Makefile.am for ligma/data/dynamics/Basic
 
-dynamicsbasicdatadir = $(gimpdatadir)/dynamics/Basic
+dynamicsbasicdatadir = $(ligmadatadir)/dynamics/Basic
 
 dynamicsbasicdata_DATA = \
 	Basic-Simple.gdyn           \

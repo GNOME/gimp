@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,51 +20,51 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "paint/gimppenciloptions.h"
+#include "paint/ligmapenciloptions.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "gimppenciltool.h"
-#include "gimppaintoptions-gui.h"
-#include "gimptoolcontrol.h"
+#include "ligmapenciltool.h"
+#include "ligmapaintoptions-gui.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpPencilTool, gimp_pencil_tool, GIMP_TYPE_PAINTBRUSH_TOOL)
+G_DEFINE_TYPE (LigmaPencilTool, ligma_pencil_tool, LIGMA_TYPE_PAINTBRUSH_TOOL)
 
 
 void
-gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
+ligma_pencil_tool_register (LigmaToolRegisterCallback  callback,
                            gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_PENCIL_TOOL,
-                GIMP_TYPE_PENCIL_OPTIONS,
-                gimp_paint_options_gui,
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_PROP_MASK_GRADIENT,
-                "gimp-pencil-tool",
+  (* callback) (LIGMA_TYPE_PENCIL_TOOL,
+                LIGMA_TYPE_PENCIL_OPTIONS,
+                ligma_paint_options_gui,
+                LIGMA_PAINT_OPTIONS_CONTEXT_MASK |
+                LIGMA_CONTEXT_PROP_MASK_GRADIENT,
+                "ligma-pencil-tool",
                 _("Pencil"),
                 _("Pencil Tool: Hard edge painting using a brush"),
                 N_("Pe_ncil"), "N",
-                NULL, GIMP_HELP_TOOL_PENCIL,
-                GIMP_ICON_TOOL_PENCIL,
+                NULL, LIGMA_HELP_TOOL_PENCIL,
+                LIGMA_ICON_TOOL_PENCIL,
                 data);
 }
 
 static void
-gimp_pencil_tool_class_init (GimpPencilToolClass *klass)
+ligma_pencil_tool_class_init (LigmaPencilToolClass *klass)
 {
 }
 
 static void
-gimp_pencil_tool_init (GimpPencilTool *pencil)
+ligma_pencil_tool_init (LigmaPencilTool *pencil)
 {
-  GimpTool *tool = GIMP_TOOL (pencil);
+  LigmaTool *tool = LIGMA_TOOL (pencil);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_PENCIL);
+  ligma_tool_control_set_tool_cursor (tool->control, LIGMA_TOOL_CURSOR_PENCIL);
 }

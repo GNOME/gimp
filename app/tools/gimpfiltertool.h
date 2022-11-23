@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,48 +15,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_TOOL_H__
-#define __GIMP_FILTER_TOOL_H__
+#ifndef __LIGMA_FILTER_TOOL_H__
+#define __LIGMA_FILTER_TOOL_H__
 
 
-#include "gimpcolortool.h"
+#include "ligmacolortool.h"
 
 
-#define GIMP_TYPE_FILTER_TOOL            (gimp_filter_tool_get_type ())
-#define GIMP_FILTER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILTER_TOOL, GimpFilterTool))
-#define GIMP_FILTER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILTER_TOOL, GimpFilterToolClass))
-#define GIMP_IS_FILTER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILTER_TOOL))
-#define GIMP_IS_FILTER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILTER_TOOL))
-#define GIMP_FILTER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTER_TOOL, GimpFilterToolClass))
+#define LIGMA_TYPE_FILTER_TOOL            (ligma_filter_tool_get_type ())
+#define LIGMA_FILTER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILTER_TOOL, LigmaFilterTool))
+#define LIGMA_FILTER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILTER_TOOL, LigmaFilterToolClass))
+#define LIGMA_IS_FILTER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILTER_TOOL))
+#define LIGMA_IS_FILTER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILTER_TOOL))
+#define LIGMA_FILTER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILTER_TOOL, LigmaFilterToolClass))
 
-#define GIMP_FILTER_TOOL_GET_OPTIONS(t)  (GIMP_FILTER_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_FILTER_TOOL_GET_OPTIONS(t)  (LIGMA_FILTER_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpFilterToolClass GimpFilterToolClass;
+typedef struct _LigmaFilterToolClass LigmaFilterToolClass;
 
-struct _GimpFilterTool
+struct _LigmaFilterTool
 {
-  GimpColorTool       parent_instance;
+  LigmaColorTool       parent_instance;
 
   GeglNode           *operation;
   GObject            *config;
   GObject            *default_config;
-  GimpContainer      *settings;
+  LigmaContainer      *settings;
 
   gchar              *description;
 
   gboolean            has_settings;
 
-  GimpDrawableFilter *filter;
+  LigmaDrawableFilter *filter;
 
-  GimpGuide          *preview_guide;
+  LigmaGuide          *preview_guide;
 
   gpointer            pick_identifier;
   gboolean            pick_abyss;
 
   /* dialog */
   gboolean            overlay;
-  GimpToolGui        *gui;
+  LigmaToolGui        *gui;
   GtkWidget          *settings_box;
   GtkWidget          *controller_toggle;
   GtkWidget          *operation_settings_box;
@@ -65,85 +65,85 @@ struct _GimpFilterTool
   GtkWidget          *active_picker;
 
   /* widget */
-  GimpToolWidget     *widget;
-  GimpToolWidget     *grab_widget;
+  LigmaToolWidget     *widget;
+  LigmaToolWidget     *grab_widget;
 };
 
-struct _GimpFilterToolClass
+struct _LigmaFilterToolClass
 {
-  GimpColorToolClass  parent_class;
+  LigmaColorToolClass  parent_class;
 
   /* virtual functions */
-  gchar     * (* get_operation)   (GimpFilterTool    *filter_tool,
+  gchar     * (* get_operation)   (LigmaFilterTool    *filter_tool,
                                    gchar            **description);
-  void        (* dialog)          (GimpFilterTool    *filter_tool);
-  void        (* reset)           (GimpFilterTool    *filter_tool);
-  void        (* set_config)      (GimpFilterTool    *filter_tool,
-                                   GimpConfig        *config);
-  void        (* config_notify)   (GimpFilterTool    *filter_tool,
-                                   GimpConfig        *config,
+  void        (* dialog)          (LigmaFilterTool    *filter_tool);
+  void        (* reset)           (LigmaFilterTool    *filter_tool);
+  void        (* set_config)      (LigmaFilterTool    *filter_tool,
+                                   LigmaConfig        *config);
+  void        (* config_notify)   (LigmaFilterTool    *filter_tool,
+                                   LigmaConfig        *config,
                                    const GParamSpec  *pspec);
 
-  gboolean    (* settings_import) (GimpFilterTool    *filter_tool,
+  gboolean    (* settings_import) (LigmaFilterTool    *filter_tool,
                                    GInputStream      *input,
                                    GError           **error);
-  gboolean    (* settings_export) (GimpFilterTool    *filter_tool,
+  gboolean    (* settings_export) (LigmaFilterTool    *filter_tool,
                                    GOutputStream     *output,
                                    GError           **error);
 
-  void        (* region_changed)  (GimpFilterTool    *filter_tool);
-  void        (* color_picked)    (GimpFilterTool    *filter_tool,
+  void        (* region_changed)  (LigmaFilterTool    *filter_tool);
+  void        (* color_picked)    (LigmaFilterTool    *filter_tool,
                                    gpointer           identifier,
                                    gdouble            x,
                                    gdouble            y,
                                    const Babl        *sample_format,
-                                   const GimpRGB     *color);
+                                   const LigmaRGB     *color);
 };
 
 
-GType       gimp_filter_tool_get_type              (void) G_GNUC_CONST;
+GType       ligma_filter_tool_get_type              (void) G_GNUC_CONST;
 
-void        gimp_filter_tool_get_operation         (GimpFilterTool     *filter_tool);
+void        ligma_filter_tool_get_operation         (LigmaFilterTool     *filter_tool);
 
-void        gimp_filter_tool_set_config            (GimpFilterTool     *filter_tool,
-                                                    GimpConfig         *config);
+void        ligma_filter_tool_set_config            (LigmaFilterTool     *filter_tool,
+                                                    LigmaConfig         *config);
 
-void        gimp_filter_tool_edit_as               (GimpFilterTool     *filter_tool,
+void        ligma_filter_tool_edit_as               (LigmaFilterTool     *filter_tool,
                                                     const gchar        *new_tool_id,
-                                                    GimpConfig         *config);
+                                                    LigmaConfig         *config);
 
-gboolean    gimp_filter_tool_on_guide              (GimpFilterTool     *filter_tool,
-                                                    const GimpCoords   *coords,
-                                                    GimpDisplay        *display);
+gboolean    ligma_filter_tool_on_guide              (LigmaFilterTool     *filter_tool,
+                                                    const LigmaCoords   *coords,
+                                                    LigmaDisplay        *display);
 
-GtkWidget * gimp_filter_tool_dialog_get_vbox       (GimpFilterTool     *filter_tool);
+GtkWidget * ligma_filter_tool_dialog_get_vbox       (LigmaFilterTool     *filter_tool);
 
-void        gimp_filter_tool_enable_color_picking  (GimpFilterTool     *filter_tool,
+void        ligma_filter_tool_enable_color_picking  (LigmaFilterTool     *filter_tool,
                                                     gpointer            identifier,
                                                     gboolean            pick_abyss);
-void        gimp_filter_tool_disable_color_picking (GimpFilterTool     *filter_tool);
+void        ligma_filter_tool_disable_color_picking (LigmaFilterTool     *filter_tool);
 
-GtkWidget * gimp_filter_tool_add_color_picker      (GimpFilterTool     *filter_tool,
+GtkWidget * ligma_filter_tool_add_color_picker      (LigmaFilterTool     *filter_tool,
                                                     gpointer            identifier,
                                                     const gchar        *icon_name,
                                                     const gchar        *tooltip,
                                                     gboolean            pick_abyss,
-                                                    GimpPickerCallback  callback,
+                                                    LigmaPickerCallback  callback,
                                                     gpointer            callback_data);
-GCallback   gimp_filter_tool_add_controller        (GimpFilterTool     *filter_tool,
-                                                    GimpControllerType  controller_type,
+GCallback   ligma_filter_tool_add_controller        (LigmaFilterTool     *filter_tool,
+                                                    LigmaControllerType  controller_type,
                                                     const gchar        *status_title,
                                                     GCallback           callback,
                                                     gpointer            callback_data,
                                                     gpointer           *set_func_data);
 
-void        gimp_filter_tool_set_widget            (GimpFilterTool     *filter_tool,
-                                                    GimpToolWidget     *widget);
+void        ligma_filter_tool_set_widget            (LigmaFilterTool     *filter_tool,
+                                                    LigmaToolWidget     *widget);
 
-gboolean    gimp_filter_tool_get_drawable_area     (GimpFilterTool     *filter_tool,
+gboolean    ligma_filter_tool_get_drawable_area     (LigmaFilterTool     *filter_tool,
                                                     gint               *drawable_offset_x,
                                                     gint               *drawable_offset_y,
                                                     GeglRectangle      *drawable_area);
 
 
-#endif /* __GIMP_FILTER_TOOL_H__ */
+#endif /* __LIGMA_FILTER_TOOL_H__ */

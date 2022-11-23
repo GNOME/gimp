@@ -1,11 +1,11 @@
-# Introspectable sources for libgimpmodule
+# Introspectable sources for libligmamodule
 
-libgimpmodule_introspectable_headers =	\
-	../libgimpmodule/gimpmoduletypes.h	\
-	../libgimpmodule/gimpmodule.h	\
-	../libgimpmodule/gimpmoduledb.h
+libligmamodule_introspectable_headers =	\
+	../libligmamodule/ligmamoduletypes.h	\
+	../libligmamodule/ligmamodule.h	\
+	../libligmamodule/ligmamoduledb.h
 
-libgimpmodule_introspectable =	\
-	../libgimpmodule/gimpmodule.c	\
-	../libgimpmodule/gimpmoduledb.c	\
-	$(libgimpmodule_introspectable_headers)
+libligmamodule_introspectable =	\
+	../libligmamodule/ligmamodule.c	\
+	../libligmamodule/ligmamoduledb.c	\
+	$(libligmamodule_introspectable_headers)

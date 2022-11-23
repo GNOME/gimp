@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__
-#define __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__
+#ifndef __LIGMA_DISPLAY_SHELL_AUTOSCROLL_H__
+#define __LIGMA_DISPLAY_SHELL_AUTOSCROLL_H__
 
 
-void   gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
+void   ligma_display_shell_autoscroll_start (LigmaDisplayShell *shell,
                                             GdkModifierType   state,
                                             GdkEventMotion   *mevent);
-void   gimp_display_shell_autoscroll_stop  (GimpDisplayShell *shell);
+void   ligma_display_shell_autoscroll_stop  (LigmaDisplayShell *shell);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_AUTOSCROLL_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_AUTOSCROLL_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLONE_H__
-#define __GIMP_CLONE_H__
+#ifndef __LIGMA_CLONE_H__
+#define __LIGMA_CLONE_H__
 
 
-#include "gimpsourcecore.h"
+#include "ligmasourcecore.h"
 
 
-#define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
-#define GIMP_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE, GimpClone))
-#define GIMP_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE, GimpCloneClass))
-#define GIMP_IS_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE))
-#define GIMP_IS_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE))
-#define GIMP_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE, GimpCloneClass))
+#define LIGMA_TYPE_CLONE            (ligma_clone_get_type ())
+#define LIGMA_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CLONE, LigmaClone))
+#define LIGMA_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CLONE, LigmaCloneClass))
+#define LIGMA_IS_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CLONE))
+#define LIGMA_IS_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CLONE))
+#define LIGMA_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CLONE, LigmaCloneClass))
 
 
-typedef struct _GimpCloneClass GimpCloneClass;
+typedef struct _LigmaCloneClass LigmaCloneClass;
 
-struct _GimpClone
+struct _LigmaClone
 {
-  GimpSourceCore  parent_instance;
+  LigmaSourceCore  parent_instance;
 };
 
-struct _GimpCloneClass
+struct _LigmaCloneClass
 {
-  GimpSourceCoreClass  parent_class;
+  LigmaSourceCoreClass  parent_class;
 };
 
 
-void    gimp_clone_register (Gimp                      *gimp,
-                             GimpPaintRegisterCallback  callback);
+void    ligma_clone_register (Ligma                      *ligma,
+                             LigmaPaintRegisterCallback  callback);
 
-GType   gimp_clone_get_type (void) G_GNUC_CONST;
+GType   ligma_clone_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CLONE_H__  */
+#endif  /*  __LIGMA_CLONE_H__  */

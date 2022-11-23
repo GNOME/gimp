@@ -21,7 +21,7 @@ foreach plugin : plugins
   name = plugin.get('name')
   srcs = plugin.get('srcs', name + '.py')
 
-  install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
+  install_data(srcs, install_dir: ligmaplugindir / 'plug-ins' / name,
                install_mode: 'rwxr-xr-x')
 endforeach
 
@@ -31,10 +31,10 @@ if python.found()
   python_config.set('PYTHON_PATH', python.full_path())
 
   configure_file(
-    input : 'pygimp.interp.in',
-    output: 'pygimp.interp',
+    input : 'pyligma.interp.in',
+    output: 'pyligma.interp',
     configuration: python_config,
     install: true,
-    install_dir: gimpplugindir / 'interpreters',
+    install_dir: ligmaplugindir / 'interpreters',
   )
 endif

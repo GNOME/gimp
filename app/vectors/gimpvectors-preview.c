@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,59 +24,59 @@
 
 #include "vectors-types.h"
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "core/gimpimage.h"
-#include "core/gimptempbuf.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpstroke.h"
-#include "gimpvectors.h"
-#include "gimpvectors-preview.h"
+#include "ligmastroke.h"
+#include "ligmavectors.h"
+#include "ligmavectors-preview.h"
 
 
 /*  public functions  */
 
-GimpTempBuf *
-gimp_vectors_get_new_preview (GimpViewable *viewable,
-                              GimpContext  *context,
+LigmaTempBuf *
+ligma_vectors_get_new_preview (LigmaViewable *viewable,
+                              LigmaContext  *context,
                               gint          width,
                               gint          height)
 {
-  GimpVectors *vectors;
-  GimpItem    *item;
-  GimpStroke  *cur_stroke;
+  LigmaVectors *vectors;
+  LigmaItem    *item;
+  LigmaStroke  *cur_stroke;
   gdouble      xscale, yscale;
   guchar      *data;
-  GimpTempBuf *temp_buf;
+  LigmaTempBuf *temp_buf;
 
-  vectors = GIMP_VECTORS (viewable);
-  item    = GIMP_ITEM (viewable);
+  vectors = LIGMA_VECTORS (viewable);
+  item    = LIGMA_ITEM (viewable);
 
-  xscale = ((gdouble) width)  / gimp_image_get_width  (gimp_item_get_image (item));
-  yscale = ((gdouble) height) / gimp_image_get_height (gimp_item_get_image (item));
+  xscale = ((gdouble) width)  / ligma_image_get_width  (ligma_item_get_image (item));
+  yscale = ((gdouble) height) / ligma_image_get_height (ligma_item_get_image (item));
 
-  temp_buf = gimp_temp_buf_new (width, height, babl_format ("Y' u8"));
-  data = gimp_temp_buf_get_data (temp_buf);
+  temp_buf = ligma_temp_buf_new (width, height, babl_format ("Y' u8"));
+  data = ligma_temp_buf_get_data (temp_buf);
   memset (data, 255, width * height);
 
-  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+  for (cur_stroke = ligma_vectors_stroke_get_next (vectors, NULL);
        cur_stroke;
-       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+       cur_stroke = ligma_vectors_stroke_get_next (vectors, cur_stroke))
     {
       GArray   *coords;
       gboolean  closed;
       gint      i;
 
-      coords = gimp_stroke_interpolate (cur_stroke, 0.5, &closed);
+      coords = ligma_stroke_interpolate (cur_stroke, 0.5, &closed);
 
       if (coords)
         {
           for (i = 0; i < coords->len; i++)
             {
-              GimpCoords point;
+              LigmaCoords point;
               gint       x, y;
 
-              point = g_array_index (coords, GimpCoords, i);
+              point = g_array_index (coords, LigmaCoords, i);
 
               x = ROUND (point.x * xscale);
               y = ROUND (point.y * yscale);

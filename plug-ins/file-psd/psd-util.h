@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,13 +90,13 @@ gchar                 * encode_packbits        (const gchar         *src,
                                                 guint32              unpacked_len,
                                                 guint16             *packed_len);
 
-void                    psd_to_gimp_blend_mode (PSDlayer             *psd_layer,
+void                    psd_to_ligma_blend_mode (PSDlayer             *psd_layer,
                                                 LayerModeInfo        *mode_info);
 
-const gchar *           gimp_to_psd_blend_mode (const LayerModeInfo  *mode_info);
+const gchar *           ligma_to_psd_blend_mode (const LayerModeInfo  *mode_info);
 
-GimpColorTag            psd_to_gimp_layer_color_tag (guint16          layer_color_tag);
+LigmaColorTag            psd_to_ligma_layer_color_tag (guint16          layer_color_tag);
 
-guint16                 gimp_to_psd_layer_color_tag (GimpColorTag     layer_color_tag);
+guint16                 ligma_to_psd_layer_color_tag (LigmaColorTag     layer_color_tag);
 
 #endif /* __PSD_UTIL_H__ */

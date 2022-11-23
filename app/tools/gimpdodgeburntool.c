@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,99 +20,99 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "paint/gimpdodgeburnoptions.h"
+#include "paint/ligmadodgeburnoptions.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpdodgeburntool.h"
-#include "gimppaintoptions-gui.h"
-#include "gimptoolcontrol.h"
+#include "ligmadodgeburntool.h"
+#include "ligmapaintoptions-gui.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   gimp_dodge_burn_tool_modifier_key  (GimpTool          *tool,
+static void   ligma_dodge_burn_tool_modifier_key  (LigmaTool          *tool,
                                                   GdkModifierType    key,
                                                   gboolean           press,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static void   gimp_dodge_burn_tool_cursor_update (GimpTool          *tool,
-                                                  const GimpCoords  *coords,
+                                                  LigmaDisplay       *display);
+static void   ligma_dodge_burn_tool_cursor_update (LigmaTool          *tool,
+                                                  const LigmaCoords  *coords,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static void   gimp_dodge_burn_tool_oper_update   (GimpTool          *tool,
-                                                  const GimpCoords  *coords,
+                                                  LigmaDisplay       *display);
+static void   ligma_dodge_burn_tool_oper_update   (LigmaTool          *tool,
+                                                  const LigmaCoords  *coords,
                                                   GdkModifierType    state,
                                                   gboolean           proximity,
-                                                  GimpDisplay       *display);
-static void   gimp_dodge_burn_tool_status_update (GimpTool          *tool,
-                                                  GimpDodgeBurnType  type);
+                                                  LigmaDisplay       *display);
+static void   ligma_dodge_burn_tool_status_update (LigmaTool          *tool,
+                                                  LigmaDodgeBurnType  type);
 
-static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions   *tool_options);
+static GtkWidget * ligma_dodge_burn_options_gui   (LigmaToolOptions   *tool_options);
 
 
-G_DEFINE_TYPE (GimpDodgeBurnTool, gimp_dodge_burn_tool, GIMP_TYPE_BRUSH_TOOL)
+G_DEFINE_TYPE (LigmaDodgeBurnTool, ligma_dodge_burn_tool, LIGMA_TYPE_BRUSH_TOOL)
 
-#define parent_class gimp_dodge_burn_tool_parent_class
+#define parent_class ligma_dodge_burn_tool_parent_class
 
 
 void
-gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
+ligma_dodge_burn_tool_register (LigmaToolRegisterCallback  callback,
                                gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_DODGE_BURN_TOOL,
-                GIMP_TYPE_DODGE_BURN_OPTIONS,
-                gimp_dodge_burn_options_gui,
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
-                "gimp-dodge-burn-tool",
+  (* callback) (LIGMA_TYPE_DODGE_BURN_TOOL,
+                LIGMA_TYPE_DODGE_BURN_OPTIONS,
+                ligma_dodge_burn_options_gui,
+                LIGMA_PAINT_OPTIONS_CONTEXT_MASK,
+                "ligma-dodge-burn-tool",
                 _("Dodge / Burn"),
                 _("Dodge / Burn Tool: Selectively lighten or darken using a brush"),
                 N_("Dod_ge / Burn"), "<shift>D",
-                NULL, GIMP_HELP_TOOL_DODGE_BURN,
-                GIMP_ICON_TOOL_DODGE,
+                NULL, LIGMA_HELP_TOOL_DODGE_BURN,
+                LIGMA_ICON_TOOL_DODGE,
                 data);
 }
 
 static void
-gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
+ligma_dodge_burn_tool_class_init (LigmaDodgeBurnToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class = LIGMA_TOOL_CLASS (klass);
 
-  tool_class->modifier_key  = gimp_dodge_burn_tool_modifier_key;
-  tool_class->cursor_update = gimp_dodge_burn_tool_cursor_update;
-  tool_class->oper_update   = gimp_dodge_burn_tool_oper_update;
+  tool_class->modifier_key  = ligma_dodge_burn_tool_modifier_key;
+  tool_class->cursor_update = ligma_dodge_burn_tool_cursor_update;
+  tool_class->oper_update   = ligma_dodge_burn_tool_oper_update;
 }
 
 static void
-gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
+ligma_dodge_burn_tool_init (LigmaDodgeBurnTool *dodgeburn)
 {
-  GimpTool *tool = GIMP_TOOL (dodgeburn);
+  LigmaTool *tool = LIGMA_TOOL (dodgeburn);
 
-  gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_TOOL_CURSOR_DODGE);
-  gimp_tool_control_set_toggle_tool_cursor (tool->control,
-                                            GIMP_TOOL_CURSOR_BURN);
+  ligma_tool_control_set_tool_cursor        (tool->control,
+                                            LIGMA_TOOL_CURSOR_DODGE);
+  ligma_tool_control_set_toggle_tool_cursor (tool->control,
+                                            LIGMA_TOOL_CURSOR_BURN);
 
-  gimp_dodge_burn_tool_status_update (tool, GIMP_DODGE_BURN_TYPE_BURN);
+  ligma_dodge_burn_tool_status_update (tool, LIGMA_DODGE_BURN_TYPE_BURN);
 }
 
 static void
-gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
+ligma_dodge_burn_tool_modifier_key (LigmaTool        *tool,
                                    GdkModifierType  key,
                                    gboolean         press,
                                    GdkModifierType  state,
-                                   GimpDisplay     *display)
+                                   LigmaDisplay     *display)
 {
-  GimpDodgeBurnTool    *dodgeburn   = GIMP_DODGE_BURN_TOOL (tool);
-  GimpDodgeBurnOptions *options     = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
-  GdkModifierType       line_mask   = GIMP_PAINT_TOOL_LINE_MASK;
-  GdkModifierType       toggle_mask = gimp_get_toggle_behavior_mask ();
+  LigmaDodgeBurnTool    *dodgeburn   = LIGMA_DODGE_BURN_TOOL (tool);
+  LigmaDodgeBurnOptions *options     = LIGMA_DODGE_BURN_TOOL_GET_OPTIONS (tool);
+  GdkModifierType       line_mask   = LIGMA_PAINT_TOOL_LINE_MASK;
+  GdkModifierType       toggle_mask = ligma_get_toggle_behavior_mask ();
 
   if ((key == toggle_mask   &&
       ! (state & line_mask) && /* leave stuff untouched in line draw mode */
@@ -129,12 +129,12 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
 
       switch (options->type)
         {
-        case GIMP_DODGE_BURN_TYPE_DODGE:
-          g_object_set (options, "type", GIMP_DODGE_BURN_TYPE_BURN, NULL);
+        case LIGMA_DODGE_BURN_TYPE_DODGE:
+          g_object_set (options, "type", LIGMA_DODGE_BURN_TYPE_BURN, NULL);
           break;
 
-        case GIMP_DODGE_BURN_TYPE_BURN:
-          g_object_set (options, "type", GIMP_DODGE_BURN_TYPE_DODGE, NULL);
+        case LIGMA_DODGE_BURN_TYPE_BURN:
+          g_object_set (options, "type", LIGMA_DODGE_BURN_TYPE_DODGE, NULL);
           break;
 
         default:
@@ -142,55 +142,55 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+  LIGMA_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
 }
 
 static void
-gimp_dodge_burn_tool_cursor_update (GimpTool         *tool,
-                                    const GimpCoords *coords,
+ligma_dodge_burn_tool_cursor_update (LigmaTool         *tool,
+                                    const LigmaCoords *coords,
                                     GdkModifierType   state,
-                                    GimpDisplay      *display)
+                                    LigmaDisplay      *display)
 {
-  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
+  LigmaDodgeBurnOptions *options = LIGMA_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
-  gimp_tool_control_set_toggled (tool->control,
-                                 options->type == GIMP_DODGE_BURN_TYPE_BURN);
+  ligma_tool_control_set_toggled (tool->control,
+                                 options->type == LIGMA_DODGE_BURN_TYPE_BURN);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+  LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
 }
 
 static void
-gimp_dodge_burn_tool_oper_update (GimpTool         *tool,
-                                  const GimpCoords *coords,
+ligma_dodge_burn_tool_oper_update (LigmaTool         *tool,
+                                  const LigmaCoords *coords,
                                   GdkModifierType   state,
                                   gboolean          proximity,
-                                  GimpDisplay      *display)
+                                  LigmaDisplay      *display)
 {
-  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
+  LigmaDodgeBurnOptions *options = LIGMA_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
-  gimp_dodge_burn_tool_status_update (tool, options->type);
+  ligma_dodge_burn_tool_status_update (tool, options->type);
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+  LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 }
 
 static void
-gimp_dodge_burn_tool_status_update (GimpTool          *tool,
-                                    GimpDodgeBurnType  type)
+ligma_dodge_burn_tool_status_update (LigmaTool          *tool,
+                                    LigmaDodgeBurnType  type)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (tool);
 
   switch (type)
     {
-    case GIMP_DODGE_BURN_TYPE_DODGE:
+    case LIGMA_DODGE_BURN_TYPE_DODGE:
       paint_tool->status      = _("Click to dodge");
       paint_tool->status_line = _("Click to dodge the line");
       paint_tool->status_ctrl = _("%s to burn");
       break;
 
-    case GIMP_DODGE_BURN_TYPE_BURN:
+    case LIGMA_DODGE_BURN_TYPE_BURN:
       paint_tool->status      = _("Click to burn");
       paint_tool->status_line = _("Click to burn the line");
       paint_tool->status_ctrl = _("%s to dodge");
@@ -205,32 +205,32 @@ gimp_dodge_burn_tool_status_update (GimpTool          *tool,
 /*  tool options stuff  */
 
 static GtkWidget *
-gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
+ligma_dodge_burn_options_gui (LigmaToolOptions *tool_options)
 {
   GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget       *vbox   = ligma_paint_options_gui (tool_options);
   GtkWidget       *frame;
   GtkWidget       *scale;
   gchar           *str;
   GdkModifierType  toggle_mask;
 
-  toggle_mask = gimp_get_toggle_behavior_mask ();
+  toggle_mask = ligma_get_toggle_behavior_mask ();
 
   /* the type (dodge or burn) */
   str = g_strdup_printf (_("Type  (%s)"),
-                         gimp_get_mod_string (toggle_mask));
-  frame = gimp_prop_enum_radio_frame_new (config, "type",
+                         ligma_get_mod_string (toggle_mask));
+  frame = ligma_prop_enum_radio_frame_new (config, "type",
                                           str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   g_free (str);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame = gimp_prop_enum_radio_frame_new (config, "mode", NULL,
+  frame = ligma_prop_enum_radio_frame_new (config, "mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   /*  the exposure scale  */
-  scale = gimp_prop_spin_scale_new (config, "exposure",
+  scale = ligma_prop_spin_scale_new (config, "exposure",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

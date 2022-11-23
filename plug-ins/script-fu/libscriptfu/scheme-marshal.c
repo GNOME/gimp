@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  */
 
 #include "config.h"
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 #include "tinyscheme/scheme-private.h"
 #include "scheme-marshal.h"
 #include "script-fu-errors.h"
@@ -29,16 +29,16 @@
  * For each marshalling function:
  *   - a returned "pointer" is a scheme pointer to a foreign error or NULL.
  *   - marshal into a GValue holding a designated type,
- *     usually a GIMP type but also GLib types, e.g. GFile.
+ *     usually a LIGMA type but also GLib types, e.g. GFile.
  *     The GValue's held type is already set, but value is uninitialized.
  *
- * When marshalling into a GimpObjectArray, arbitrarily say the contained type is GIMP_TYPE_DRAWABLE.
+ * When marshalling into a LigmaObjectArray, arbitrarily say the contained type is LIGMA_TYPE_DRAWABLE.
  * The actual contained type is opaque to the PDB calling mechanism.
  * Setting the GValue's value does not check the contained type.
- * But we do call gimp_drawable_get_by_id.
- * GIMP_TYPE_DRAWABLE is a superclass of most common uses.
- * But perhaps we should call gimp_item_get_by_id
- * and arbitrarily say GIMP_TYPE_ITEM, a superclass of drawable.
+ * But we do call ligma_drawable_get_by_id.
+ * LIGMA_TYPE_DRAWABLE is a superclass of most common uses.
+ * But perhaps we should call ligma_item_get_by_id
+ * and arbitrarily say LIGMA_TYPE_ITEM, a superclass of drawable.
  */
 
 
@@ -51,7 +51,7 @@ marshal_ID_to_drawable (scheme   *sc,
                         gint      id,
                         GValue   *value)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   pointer error = get_drawable_from_script (sc, a, id, &drawable);
   if (error)
@@ -64,21 +64,21 @@ marshal_ID_to_drawable (scheme   *sc,
   return NULL;  /* no error */
 }
 
-/* Marshal a vector of ID into GimpObjectArray of same length. */
+/* Marshal a vector of ID into LigmaObjectArray of same length. */
 pointer
 marshal_vector_to_drawable_array (scheme   *sc,
                                   pointer   vector,
                                   GValue   *value)
 {
-  GimpDrawable **drawable_array;
+  LigmaDrawable **drawable_array;
   gint           id;
   pointer        error;
 
   guint num_elements = sc->vptr->vector_length (vector);
   g_debug ("vector has %d elements", num_elements);
-  /* empty vector will produce empty GimpObjectArray */
+  /* empty vector will produce empty LigmaObjectArray */
 
-  drawable_array = g_new0 (GimpDrawable*, num_elements);
+  drawable_array = g_new0 (LigmaDrawable*, num_elements);
 
   for (int j = 0; j < num_elements; ++j)
     {
@@ -103,7 +103,7 @@ marshal_vector_to_drawable_array (scheme   *sc,
     }
 
   /* Shallow copy. */
-  gimp_value_set_object_array (value, GIMP_TYPE_DRAWABLE, (GObject**)drawable_array, num_elements);
+  ligma_value_set_object_array (value, LIGMA_TYPE_DRAWABLE, (GObject**)drawable_array, num_elements);
 
   g_free (drawable_array);
 
@@ -155,11 +155,11 @@ marshal_path_string_to_gfile (scheme     *sc,
 }
 
 
-/* Marshal a GimpObjectArray into a Scheme list of ID's.
+/* Marshal a LigmaObjectArray into a Scheme list of ID's.
  *
  * Before v3.0, PDB procedure's return type was say INT32ARRAY,
  * preceded by a type INT32 designating array length.
- * Now return type is GimpObjectArray preceded by length.
+ * Now return type is LigmaObjectArray preceded by length.
  *
  * Returns a vector, since most arrays in Scriptfu are returned as vectors.
  * An alternate implementation would be return list.
@@ -177,9 +177,9 @@ marshal_returned_object_array_to_vector (scheme   *sc,
   gint32    n;
   pointer   vector;
 
-  object_array = gimp_value_get_object_array (value);
+  object_array = ligma_value_get_object_array (value);
   /* array knows own length, ignore length in preceding return value */
-  n = ((GimpObjectArray*)g_value_get_boxed (value))->length;
+  n = ((LigmaObjectArray*)g_value_get_boxed (value))->length;
 
   vector = sc->vptr->mk_vector (sc, n);
 
@@ -214,7 +214,7 @@ pointer
 get_drawable_from_script (scheme        *sc,
                           pointer        a,
                           gint           id,
-                          GimpDrawable **drawable_handle)
+                          LigmaDrawable **drawable_handle)
 {
   if (id == -1)
     {
@@ -223,7 +223,7 @@ get_drawable_from_script (scheme        *sc,
     }
   else
     {
-      *drawable_handle = gimp_drawable_get_by_id (id);
+      *drawable_handle = ligma_drawable_get_by_id (id);
       if (! *drawable_handle)
           return script_error (sc, "Invalid drawable ID", a);
     }

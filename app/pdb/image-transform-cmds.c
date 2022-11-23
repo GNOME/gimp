@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,424 +25,424 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpimage-crop.h"
-#include "core/gimpimage-flip.h"
-#include "core/gimpimage-resize.h"
-#include "core/gimpimage-rotate.h"
-#include "core/gimpimage-scale.h"
-#include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligmaimage-crop.h"
+#include "core/ligmaimage-flip.h"
+#include "core/ligmaimage-resize.h"
+#include "core/ligmaimage-rotate.h"
+#include "core/ligmaimage-scale.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "gimppdb.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-image_resize_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+image_resize_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint new_width;
   gint new_height;
   gint offx;
   gint offy;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  offx = g_value_get_int (gimp_value_array_index (args, 3));
-  offy = g_value_get_int (gimp_value_array_index (args, 4));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  new_width = g_value_get_int (ligma_value_array_index (args, 1));
+  new_height = g_value_get_int (ligma_value_array_index (args, 2));
+  offx = g_value_get_int (ligma_value_array_index (args, 3));
+  offy = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      gimp_image_resize (image, context,
+      ligma_image_resize (image, context,
                          new_width, new_height, offx, offy, NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_resize_to_layers_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+image_resize_to_layers_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
+      ligma_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_scale_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
+static LigmaValueArray *
+image_scale_invoker (LigmaProcedure         *procedure,
+                     Ligma                  *ligma,
+                     LigmaContext           *context,
+                     LigmaProgress          *progress,
+                     const LigmaValueArray  *args,
                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint new_width;
   gint new_height;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  new_width = g_value_get_int (ligma_value_array_index (args, 1));
+  new_height = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Scaling"));
+        ligma_progress_start (progress, FALSE, _("Scaling"));
 
-      gimp_image_scale (image, new_width, new_height,
+      ligma_image_scale (image, new_width, new_height,
                         pdb_context->interpolation,
                         progress);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_crop_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+image_crop_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint new_width;
   gint new_height;
   gint offx;
   gint offy;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  offx = g_value_get_int (gimp_value_array_index (args, 3));
-  offy = g_value_get_int (gimp_value_array_index (args, 4));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  new_width = g_value_get_int (ligma_value_array_index (args, 1));
+  new_height = g_value_get_int (ligma_value_array_index (args, 2));
+  offx = g_value_get_int (ligma_value_array_index (args, 3));
+  offy = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (new_width  >  gimp_image_get_width  (image)              ||
-          new_height >  gimp_image_get_height (image)              ||
-          offx       > (gimp_image_get_width  (image) - new_width) ||
-          offy       > (gimp_image_get_height (image) - new_height))
+      if (new_width  >  ligma_image_get_width  (image)              ||
+          new_height >  ligma_image_get_height (image)              ||
+          offx       > (ligma_image_get_width  (image) - new_width) ||
+          offy       > (ligma_image_get_height (image) - new_height))
         success = FALSE;
       else
-        gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+        ligma_image_crop (image, context, LIGMA_FILL_TRANSPARENT,
                          offx, offy, new_width, new_height,
                          TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_flip_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+image_flip_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint flip_type;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  flip_type = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_image_flip (image, context, flip_type, NULL);
+      ligma_image_flip (image, context, flip_type, NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_rotate_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+image_rotate_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint rotate_type;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  rotate_type = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Rotating"));
+        ligma_progress_start (progress, FALSE, _("Rotating"));
 
-      gimp_image_rotate (image, context, rotate_type, progress);
+      ligma_image_rotate (image, context, rotate_type, progress);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_image_transform_procs (GimpPDB *pdb)
+register_image_transform_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-image-resize
+   * ligma-image-resize
    */
-  procedure = gimp_procedure_new (image_resize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-resize");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_resize_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-resize");
+  ligma_procedure_set_static_help (procedure,
                                   "Resize the image to the specified extents.",
                                   "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
                                                  "New image width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-height",
                                                  "new height",
                                                  "New image height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "x offset between upper left corner of old and new images: (new - old)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "y offset between upper left corner of old and new images: (new - old)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-resize-to-layers
+   * ligma-image-resize-to-layers
    */
-  procedure = gimp_procedure_new (image_resize_to_layers_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-resize-to-layers");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_resize_to_layers_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-resize-to-layers");
+  ligma_procedure_set_static_help (procedure,
                                   "Resize the image to fit all layers.",
                                   "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-scale
+   * ligma-image-scale
    */
-  procedure = gimp_procedure_new (image_scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-scale");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_scale_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-scale");
+  ligma_procedure_set_static_help (procedure,
                                   "Scale the image using the default interpolation method.",
-                                  "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
+                                  "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'ligma-context-set-interpolation'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
                                                  "New image width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-height",
                                                  "new height",
                                                  "New image height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-crop
+   * ligma-image-crop
    */
-  procedure = gimp_procedure_new (image_crop_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-crop");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_crop_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-crop");
+  ligma_procedure_set_static_help (procedure,
                                   "Crop the image to the specified extents.",
                                   "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
                                                  "New image width: (0 < new_width <= width)",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("new-height",
                                                  "new height",
                                                  "New image height: (0 < new_height <= height)",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "X offset: (0 <= offx <= (width - new_width))",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "Y offset: (0 <= offy <= (height - new_height))",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-flip
+   * ligma-image-flip
    */
-  procedure = gimp_procedure_new (image_flip_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-flip");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_flip_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-flip");
+  ligma_procedure_set_static_help (procedure,
                                   "Flips the image horizontally or vertically.",
                                   "This procedure flips (mirrors) the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("flip-type",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("flip-type",
                                                      "flip type",
                                                      "Type of flip",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
-                                      GIMP_ORIENTATION_UNKNOWN);
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_TYPE_ORIENTATION_TYPE,
+                                                     LIGMA_ORIENTATION_HORIZONTAL,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[1]),
+                                      LIGMA_ORIENTATION_UNKNOWN);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-rotate
+   * ligma-image-rotate
    */
-  procedure = gimp_procedure_new (image_rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-rotate");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_rotate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-rotate");
+  ligma_procedure_set_static_help (procedure,
                                   "Rotates the image by the specified degrees.",
                                   "This procedure rotates the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2003");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
                                                   "rotate type",
                                                   "Angle of rotation",
-                                                  GIMP_TYPE_ROTATION_TYPE,
-                                                  GIMP_ROTATE_90,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_ROTATION_TYPE,
+                                                  LIGMA_ROTATE_90,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

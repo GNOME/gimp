@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_PROGRESS_H__
-#define __GIMP_HELP_PROGRESS_H__
+#ifndef __LIGMA_HELP_PROGRESS_H__
+#define __LIGMA_HELP_PROGRESS_H__
 
 
 typedef struct
@@ -34,18 +34,18 @@ typedef struct
                              gpointer     user_data);
 
   /* Padding for future expansion. Must be initialized with NULL! */
-  void  (* _gimp_reserved1) (void);
-  void  (* _gimp_reserved2) (void);
-  void  (* _gimp_reserved3) (void);
-  void  (* _gimp_reserved4) (void);
-} GimpHelpProgressVTable;
+  void  (* _ligma_reserved1) (void);
+  void  (* _ligma_reserved2) (void);
+  void  (* _ligma_reserved3) (void);
+  void  (* _ligma_reserved4) (void);
+} LigmaHelpProgressVTable;
 
 
-GimpHelpProgress * gimp_help_progress_new    (const GimpHelpProgressVTable *vtable,
+LigmaHelpProgress * ligma_help_progress_new    (const LigmaHelpProgressVTable *vtable,
                                               gpointer                      user_data);
-void               gimp_help_progress_free   (GimpHelpProgress *progress);
+void               ligma_help_progress_free   (LigmaHelpProgress *progress);
 
-void               gimp_help_progress_cancel (GimpHelpProgress *progress);
+void               ligma_help_progress_cancel (LigmaHelpProgress *progress);
 
 
-#endif /* ! __GIMP_HELP_PROGRESS_H__ */
+#endif /* ! __LIGMA_HELP_PROGRESS_H__ */

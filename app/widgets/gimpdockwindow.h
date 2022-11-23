@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockwindow.h
- * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
+ * ligmadockwindow.h
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@ligma.org>
  * Copyright (C)      2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,67 +19,67 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_WINDOW_H__
-#define __GIMP_DOCK_WINDOW_H__
+#ifndef __LIGMA_DOCK_WINDOW_H__
+#define __LIGMA_DOCK_WINDOW_H__
 
 
-#include "widgets/gimpwindow.h"
+#include "widgets/ligmawindow.h"
 
 
-#define GIMP_TYPE_DOCK_WINDOW            (gimp_dock_window_get_type ())
-#define GIMP_DOCK_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCK_WINDOW, GimpDockWindow))
-#define GIMP_DOCK_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCK_WINDOW, GimpDockWindowClass))
-#define GIMP_IS_DOCK_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCK_WINDOW))
-#define GIMP_IS_DOCK_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCK_WINDOW))
-#define GIMP_DOCK_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK_WINDOW, GimpDockWindowClass))
+#define LIGMA_TYPE_DOCK_WINDOW            (ligma_dock_window_get_type ())
+#define LIGMA_DOCK_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCK_WINDOW, LigmaDockWindow))
+#define LIGMA_DOCK_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCK_WINDOW, LigmaDockWindowClass))
+#define LIGMA_IS_DOCK_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCK_WINDOW))
+#define LIGMA_IS_DOCK_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCK_WINDOW))
+#define LIGMA_DOCK_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DOCK_WINDOW, LigmaDockWindowClass))
 
 
-typedef struct _GimpDockWindowClass    GimpDockWindowClass;
-typedef struct _GimpDockWindowPrivate  GimpDockWindowPrivate;
+typedef struct _LigmaDockWindowClass    LigmaDockWindowClass;
+typedef struct _LigmaDockWindowPrivate  LigmaDockWindowPrivate;
 
 /**
- * GimpDockWindow:
+ * LigmaDockWindow:
  *
- * A top-level window containing GimpDocks.
+ * A top-level window containing LigmaDocks.
  */
-struct _GimpDockWindow
+struct _LigmaDockWindow
 {
-  GimpWindow  parent_instance;
+  LigmaWindow  parent_instance;
 
-  GimpDockWindowPrivate *p;
+  LigmaDockWindowPrivate *p;
 };
 
-struct _GimpDockWindowClass
+struct _LigmaDockWindowClass
 {
-  GimpWindowClass  parent_class;
+  LigmaWindowClass  parent_class;
 };
 
 
-GType               gimp_dock_window_get_type               (void) G_GNUC_CONST;
-GtkWidget         * gimp_dock_window_new                    (const gchar       *role,
+GType               ligma_dock_window_get_type               (void) G_GNUC_CONST;
+GtkWidget         * ligma_dock_window_new                    (const gchar       *role,
                                                              const gchar       *ui_manager_name,
                                                              gboolean           allow_dockbook_absence,
-                                                             GimpDialogFactory *factory,
-                                                             GimpContext       *context);
-gint                gimp_dock_window_get_id                 (GimpDockWindow    *dock_window);
-void                gimp_dock_window_add_dock               (GimpDockWindow    *dock_window,
-                                                             GimpDock          *dock,
+                                                             LigmaDialogFactory *factory,
+                                                             LigmaContext       *context);
+gint                ligma_dock_window_get_id                 (LigmaDockWindow    *dock_window);
+void                ligma_dock_window_add_dock               (LigmaDockWindow    *dock_window,
+                                                             LigmaDock          *dock,
                                                              gint               index);
-void                gimp_dock_window_remove_dock            (GimpDockWindow    *dock_window,
-                                                             GimpDock          *dock);
-GimpContext       * gimp_dock_window_get_context            (GimpDockWindow    *dock);
-gboolean            gimp_dock_window_get_auto_follow_active (GimpDockWindow    *menu_dock);
-void                gimp_dock_window_set_auto_follow_active (GimpDockWindow    *menu_dock,
+void                ligma_dock_window_remove_dock            (LigmaDockWindow    *dock_window,
+                                                             LigmaDock          *dock);
+LigmaContext       * ligma_dock_window_get_context            (LigmaDockWindow    *dock);
+gboolean            ligma_dock_window_get_auto_follow_active (LigmaDockWindow    *menu_dock);
+void                ligma_dock_window_set_auto_follow_active (LigmaDockWindow    *menu_dock,
                                                              gboolean           show);
-gboolean            gimp_dock_window_get_show_image_menu    (GimpDockWindow    *menu_dock);
-void                gimp_dock_window_set_show_image_menu    (GimpDockWindow    *menu_dock,
+gboolean            ligma_dock_window_get_show_image_menu    (LigmaDockWindow    *menu_dock);
+void                ligma_dock_window_set_show_image_menu    (LigmaDockWindow    *menu_dock,
                                                              gboolean           show);
-void                gimp_dock_window_setup                  (GimpDockWindow    *dock_window,
-                                                             GimpDockWindow    *template);
-gboolean            gimp_dock_window_has_toolbox            (GimpDockWindow    *dock_window);
+void                ligma_dock_window_setup                  (LigmaDockWindow    *dock_window,
+                                                             LigmaDockWindow    *template);
+gboolean            ligma_dock_window_has_toolbox            (LigmaDockWindow    *dock_window);
 
-GimpDockWindow    * gimp_dock_window_from_dock              (GimpDock          *dock);
+LigmaDockWindow    * ligma_dock_window_from_dock              (LigmaDock          *dock);
 
 
 
-#endif /* __GIMP_DOCK_WINDOW_H__ */
+#endif /* __LIGMA_DOCK_WINDOW_H__ */

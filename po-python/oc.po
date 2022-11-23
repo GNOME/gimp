@@ -1,13 +1,13 @@
-# translation of gimp20.po to Occitan (lengadocian)
-# Occitan (post 1500) translation for gimp
+# translation of ligma20.po to Occitan (lengadocian)
+# Occitan (post 1500) translation for ligma
 # Copyright (c) 2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007, 2008.
 # Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma20\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-10-11 22:25+0000\n"
 "PO-Revision-Date: 2016-10-16 14:21+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
@@ -23,433 +23,433 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-05-20 15:16+0000\n"
 "X-Project-Style: gnome\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pyligma/ligmafu.py:395
 msgid "Missing exception information"
 msgstr "Informacions mancantas sus l'excepcion"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pyligma/ligmafu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Una error s'es produita pendent l'execucion de %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pyligma/ligmafu.py:415
 msgid "_More Information"
 msgstr "_Mai d'informacions"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:528 ../plug-ins/pyligma/ligmafu.py:540
+#: ../plug-ins/pyligma/ligmafu.py:546
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pyligma/ligmafu.py:538 ../plug-ins/pyligma/ligmafu.py:546
 msgid "Yes"
 msgstr "Òc"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:599 ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleccion del fichièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pyligma/ligmafu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Seleccion del dorsièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pyligma/ligmafu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada invalida per « %s »"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "Seleccion de la color Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Enregistrament en XHTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Enregistrar en XHTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "XHTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Font caractèr"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Còdi font"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Fichièr tèxte"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Bóstia d'entrada"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Fichièr de legir o caractèrs d'utilizar"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_Talha de poliça en pixèls"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "Es_criure separadament un fichièr CSS"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "Degradat d'utilizar"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Nom de fichièr"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:93
 msgid "_Export histogram..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:95
 msgid "_Image"
 msgstr "_Imatge"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:96
 msgid "_Drawable"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:97
 msgid "Histogram _File"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:98
 msgid "_Bucket Size"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:99
 msgid "Sample _Average"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:100
 msgid "Output format"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:101
 msgid "Pixel count"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:102
 msgid "Normalized"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pyligma/plug-ins/histogram-export.py:103
 msgid "Percent"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Apondre un calc de bruma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_Bruma..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "_Nom de calc"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "Nívols"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "_Color de bruma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "_Turbuléncia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "Op_acitat"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Descalar las colors dins una paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "_Descalatge de paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:334
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "Descalat_ge"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Red"
 msgstr "Roge"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Green"
 msgstr "Verd"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Blue"
 msgstr "Blau"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Hue"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Saturation"
 msgstr "Saturacion"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Value"
 msgstr "Valor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
 msgstr "Saturacion (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:29
 msgid "Index"
 msgstr "Indèx"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:30
 msgid "Random"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "A-color"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:82
 msgid "B-color"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
 msgstr "Triar las colors dins una paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
 msgstr "_Triar la paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "All"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:337
 msgid "Partitioned"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
 msgstr "Canal de _triar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:341
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "_Ascendent"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:342
 msgid "Secondary Channel to s_ort"
 msgstr "Canal segondari de _triar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:345
 msgid "_Quantization"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Crèa un degradat repetitiu en utilizant las colors de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta cap a degradat _repetitiu"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Crear un degradat en utilizant las colors eissidas de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Paleta cap a _degradat"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Jaç"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Decopa un imatge segon sos guidas, crèa los imatges e una taula HTML "
 "associada"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Jaç..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Camin per l'exportacion HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Nom del fichièr per l'exportacion"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Prefix de nom d'imatge"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Format de l'imatge"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Dorsièr separat pels imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Dorsièr per l'exportacion dels imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Espaçament entre los elements de la taula"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "JavaScript per onmouseover e clicked"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Sautar l'animacion pels bòrds de la taula"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pyligma/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "Consòla Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pyligma/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_Percórrer..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:144
+#: ../plug-ins/pyligma/plug-ins/python-console.py:144
 msgid "Python Procedure Browser"
 msgstr "Navigador de proceduras python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:173
+#: ../plug-ins/pyligma/plug-ins/python-console.py:173
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible de dobrir « %s » per escriure : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:188
+#: ../plug-ins/pyligma/plug-ins/python-console.py:188
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Impossible d'escriure cap a « %s » : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:196
+#: ../plug-ins/pyligma/plug-ins/python-console.py:196
 msgid "Save Python-Fu Console Output"
 msgstr "Enregistrar las sortidas de la consòla python-fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
-#| msgid "Interactiva GIMP Python interpreter"
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interpretador interactiu GIMP Python"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:222
+#| msgid "Interactiva LIGMA Python interpreter"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interpretador interactiu LIGMA Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:227
+#: ../plug-ins/pyligma/plug-ins/python-console.py:227
 msgid "_Console"
 msgstr "_Consòla"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Apond una ombra portada sus un calc amb opcionalament un bisèu"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Ombra portada e bisèu..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "Fosc de l'_ombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_Bisèu"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "Ombra _portada"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "Desplaçament _X de l'ombra portada"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Desplaçament _Y de l'ombra portada"
 

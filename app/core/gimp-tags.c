@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-tags.c
+ * ligma-tags.c
  * Copyright (C) 2009 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,40 +23,40 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "gimp-utils.h"
-#include "gimp-tags.h"
+#include "ligma-utils.h"
+#include "ligma-tags.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_TAGS_FILE "tags.xml"
+#define LIGMA_TAGS_FILE "tags.xml"
 
 typedef struct
 {
   const gchar *locale;
   GString     *buf;
   gboolean     locale_matches;
-} GimpTagsInstaller;
+} LigmaTagsInstaller;
 
 
-static  void        gimp_tags_installer_load_start_element (GMarkupParseContext *context,
+static  void        ligma_tags_installer_load_start_element (GMarkupParseContext *context,
                                                             const gchar         *element_name,
                                                             const gchar        **attribute_names,
                                                             const gchar        **attribute_values,
                                                             gpointer             user_data,
                                                             GError             **error);
-static void         gimp_tags_installer_load_end_element   (GMarkupParseContext *context,
+static void         ligma_tags_installer_load_end_element   (GMarkupParseContext *context,
                                                             const gchar         *element_name,
                                                             gpointer             user_data,
                                                             GError             **error);
-static void         gimp_tags_installer_load_text          (GMarkupParseContext *context,
+static void         ligma_tags_installer_load_text          (GMarkupParseContext *context,
                                                             const gchar         *text,
                                                             gsize                text_len,
                                                             gpointer             user_data,
@@ -67,21 +67,21 @@ static const gchar* attribute_name_to_value                (const gchar        *
 
 
 gboolean
-gimp_tags_user_install (void)
+ligma_tags_user_install (void)
 {
   GFile             *file;
   GOutputStream     *output;
   GMarkupParser      markup_parser;
-  GimpXmlParser     *xml_parser;
+  LigmaXmlParser     *xml_parser;
   const char        *tags_locale;
-  GimpTagsInstaller  tags_installer = { 0, };
+  LigmaTagsInstaller  tags_installer = { 0, };
   GError            *error          = NULL;
   gboolean           result         = TRUE;
 
   /* This is a special string to specify the language identifier to
-   * look for in the gimp-tags-default.xml file. Please translate the
+   * look for in the ligma-tags-default.xml file. Please translate the
    * C in it according to the name of the po file used for
-   * gimp-tags-default.xml. E.g. lithuanian for the translation,
+   * ligma-tags-default.xml. E.g. lithuanian for the translation,
    * that would be "tags-locale:lt".
    */
   tags_locale = _("tags-locale:C");
@@ -103,19 +103,19 @@ gimp_tags_user_install (void)
   g_string_append (tags_installer.buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (tags_installer.buf, "<tags>\n");
 
-  markup_parser.start_element = gimp_tags_installer_load_start_element;
-  markup_parser.end_element   = gimp_tags_installer_load_end_element;
-  markup_parser.text          = gimp_tags_installer_load_text;
+  markup_parser.start_element = ligma_tags_installer_load_start_element;
+  markup_parser.end_element   = ligma_tags_installer_load_end_element;
+  markup_parser.text          = ligma_tags_installer_load_text;
   markup_parser.passthrough   = NULL;
   markup_parser.error         = NULL;
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, &tags_installer);
+  xml_parser = ligma_xml_parser_new (&markup_parser, &tags_installer);
 
-  file = gimp_data_directory_file ("tags", "gimp-tags-default.xml", NULL);
-  result = gimp_xml_parser_parse_gfile (xml_parser, file, &error);
+  file = ligma_data_directory_file ("tags", "ligma-tags-default.xml", NULL);
+  result = ligma_xml_parser_parse_gfile (xml_parser, file, &error);
   g_object_unref (file);
 
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
 
   if (! result)
     {
@@ -125,7 +125,7 @@ gimp_tags_user_install (void)
 
   g_string_append (tags_installer.buf, "\n</tags>\n");
 
-  file = gimp_directory_file (GIMP_TAGS_FILE, NULL);
+  file = ligma_directory_file (LIGMA_TAGS_FILE, NULL);
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -143,7 +143,7 @@ gimp_tags_user_install (void)
       GCancellable *cancellable = g_cancellable_new ();
 
       g_printerr (_("Error writing '%s': %s"),
-                  gimp_file_get_utf8_name (file), error->message);
+                  ligma_file_get_utf8_name (file), error->message);
       result = FALSE;
 
       /* Cancel the overwrite initiated by g_file_replace(). */
@@ -154,7 +154,7 @@ gimp_tags_user_install (void)
   else if (! g_output_stream_close (output, NULL, &error))
     {
       g_printerr (_("Error closing '%s': %s"),
-                  gimp_file_get_utf8_name (file), error->message);
+                  ligma_file_get_utf8_name (file), error->message);
       result = FALSE;
     }
 
@@ -169,14 +169,14 @@ gimp_tags_user_install (void)
 }
 
 static  void
-gimp_tags_installer_load_start_element (GMarkupParseContext  *context,
+ligma_tags_installer_load_start_element (GMarkupParseContext  *context,
                                         const gchar          *element_name,
                                         const gchar         **attribute_names,
                                         const gchar         **attribute_values,
                                         gpointer              user_data,
                                         GError              **error)
 {
-  GimpTagsInstaller *tags_installer = user_data;
+  LigmaTagsInstaller *tags_installer = user_data;
 
   if (! strcmp (element_name, "resource"))
     {
@@ -214,12 +214,12 @@ gimp_tags_installer_load_start_element (GMarkupParseContext  *context,
 }
 
 static void
-gimp_tags_installer_load_end_element (GMarkupParseContext  *context,
+ligma_tags_installer_load_end_element (GMarkupParseContext  *context,
                                       const gchar          *element_name,
                                       gpointer              user_data,
                                       GError              **error)
 {
-  GimpTagsInstaller *tags_installer = user_data;
+  LigmaTagsInstaller *tags_installer = user_data;
 
   if (strcmp (element_name, "resource") == 0)
     {
@@ -228,13 +228,13 @@ gimp_tags_installer_load_end_element (GMarkupParseContext  *context,
 }
 
 static void
-gimp_tags_installer_load_text (GMarkupParseContext  *context,
+ligma_tags_installer_load_text (GMarkupParseContext  *context,
                                const gchar          *text,
                                gsize                 text_len,
                                gpointer              user_data,
                                GError              **error)
 {
-  GimpTagsInstaller *tags_installer = user_data;
+  LigmaTagsInstaller *tags_installer = user_data;
   const gchar       *current_element;
   gchar             *tag_string;
 

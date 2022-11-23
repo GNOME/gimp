@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -30,7 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-imagemap"
 #define PLUG_IN_BINARY "imagemap"
-#define PLUG_IN_ROLE   "gimp-imagemap"
+#define PLUG_IN_ROLE   "ligma-imagemap"
 
 typedef enum {NCSA, CERN, CSIM} MapFormat_t;
 
@@ -115,7 +115,7 @@ void            do_move_up                 (void);
 void            do_move_down               (void);
 void            do_move_to_front           (void);
 void            do_send_to_back            (void);
-void            do_use_gimp_guides_dialog  (void);
+void            do_use_ligma_guides_dialog  (void);
 void            do_create_guides_dialog    (void);
 void            save                       (void);
 void            imap_help                  (void);

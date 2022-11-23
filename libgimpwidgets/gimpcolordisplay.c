@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolordisplay.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolordisplay.c
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,23 +26,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolordisplay.h"
-#include "gimpicons.h"
+#include "ligmacolordisplay.h"
+#include "ligmaicons.h"
 
 
 /**
- * SECTION: gimpcolordisplay
- * @title: GimpColorDisplay
- * @short_description: Pluggable GIMP display color correction modules.
- * @see_also: #GModule, #GTypeModule, #GimpModule
+ * SECTION: ligmacolordisplay
+ * @title: LigmaColorDisplay
+ * @short_description: Pluggable LIGMA display color correction modules.
+ * @see_also: #GModule, #GTypeModule, #LigmaModule
  *
- * Functions and definitions for creating pluggable GIMP
+ * Functions and definitions for creating pluggable LIGMA
  * display color correction modules.
  **/
 
@@ -62,88 +62,88 @@ enum
 };
 
 
-struct _GimpColorDisplayPrivate
+struct _LigmaColorDisplayPrivate
 {
   gboolean          enabled;
-  GimpColorConfig  *config;
-  GimpColorManaged *managed;
+  LigmaColorConfig  *config;
+  LigmaColorManaged *managed;
 };
 
-#define GET_PRIVATE(obj) (((GimpColorDisplay *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaColorDisplay *) (obj))->priv)
 
 
 
-static void       gimp_color_display_constructed (GObject       *object);
-static void       gimp_color_display_dispose      (GObject      *object);
-static void       gimp_color_display_set_property (GObject      *object,
+static void       ligma_color_display_constructed (GObject       *object);
+static void       ligma_color_display_dispose      (GObject      *object);
+static void       ligma_color_display_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
                                                   GParamSpec    *pspec);
-static void       gimp_color_display_get_property (GObject      *object,
+static void       ligma_color_display_get_property (GObject      *object,
                                                    guint         property_id,
                                                    GValue       *value,
                                                    GParamSpec   *pspec);
 
-static void  gimp_color_display_set_color_config  (GimpColorDisplay *display,
-                                                   GimpColorConfig  *config);
-static void  gimp_color_display_set_color_managed (GimpColorDisplay *display,
-                                                   GimpColorManaged *managed);
+static void  ligma_color_display_set_color_config  (LigmaColorDisplay *display,
+                                                   LigmaColorConfig  *config);
+static void  ligma_color_display_set_color_managed (LigmaColorDisplay *display,
+                                                   LigmaColorManaged *managed);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpColorDisplay)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaColorDisplay, ligma_color_display, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (LigmaColorDisplay)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-#define parent_class gimp_color_display_parent_class
+#define parent_class ligma_color_display_parent_class
 
 static guint display_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_color_display_class_init (GimpColorDisplayClass *klass)
+ligma_color_display_class_init (LigmaColorDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_color_display_constructed;
-  object_class->dispose      = gimp_color_display_dispose;
-  object_class->set_property = gimp_color_display_set_property;
-  object_class->get_property = gimp_color_display_get_property;
+  object_class->constructed  = ligma_color_display_constructed;
+  object_class->dispose      = ligma_color_display_dispose;
+  object_class->set_property = ligma_color_display_set_property;
+  object_class->get_property = ligma_color_display_get_property;
 
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled",
                                                          "Enabled",
                                                          "Whether this display filter is enabled",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_COLOR_CONFIG,
                                    g_param_spec_object ("color-config",
                                                         "Color Config",
                                                         "The color config used for this filter",
-                                                        GIMP_TYPE_COLOR_CONFIG,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_COLOR_CONFIG,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_COLOR_MANAGED,
                                    g_param_spec_object ("color-managed",
                                                         "Color Managed",
                                                         "The color managed pixel source that is filtered",
-                                                        GIMP_TYPE_COLOR_MANAGED,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_COLOR_MANAGED,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   display_signals[CHANGED] =
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorDisplayClass, changed),
+                  G_STRUCT_OFFSET (LigmaColorDisplayClass, changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   klass->name            = "Unnamed";
   klass->help_id         = NULL;
-  klass->icon_name       = GIMP_ICON_DISPLAY_FILTER;
+  klass->icon_name       = LIGMA_ICON_DISPLAY_FILTER;
 
   klass->convert_buffer  = NULL;
   klass->configure       = NULL;
@@ -152,29 +152,29 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 }
 
 static void
-gimp_color_display_init (GimpColorDisplay *display)
+ligma_color_display_init (LigmaColorDisplay *display)
 {
-  display->priv = gimp_color_display_get_instance_private (display);
+  display->priv = ligma_color_display_get_instance_private (display);
 }
 
 static void
-gimp_color_display_constructed (GObject *object)
+ligma_color_display_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* emit an initial "changed" signal after all construct properties are set */
-  gimp_color_display_changed (GIMP_COLOR_DISPLAY (object));
+  ligma_color_display_changed (LIGMA_COLOR_DISPLAY (object));
 }
 
 static void
-gimp_color_display_dispose (GObject *object)
+ligma_color_display_dispose (GObject *object)
 {
-  GimpColorDisplayPrivate *private = GET_PRIVATE (object);
+  LigmaColorDisplayPrivate *private = GET_PRIVATE (object);
 
   if (private->config)
     {
       g_signal_handlers_disconnect_by_func (private->config,
-                                            gimp_color_display_changed,
+                                            ligma_color_display_changed,
                                             object);
       g_object_unref (private->config);
       private->config = NULL;
@@ -183,7 +183,7 @@ gimp_color_display_dispose (GObject *object)
   if (private->managed)
     {
       g_signal_handlers_disconnect_by_func (private->managed,
-                                            gimp_color_display_changed,
+                                            ligma_color_display_changed,
                                             object);
       g_object_unref (private->managed);
       private->managed = NULL;
@@ -193,13 +193,13 @@ gimp_color_display_dispose (GObject *object)
 }
 
 static void
-gimp_color_display_set_property (GObject      *object,
+ligma_color_display_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpColorDisplay        *display = GIMP_COLOR_DISPLAY (object);
-  GimpColorDisplayPrivate *private = GET_PRIVATE (object);
+  LigmaColorDisplay        *display = LIGMA_COLOR_DISPLAY (object);
+  LigmaColorDisplayPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -208,12 +208,12 @@ gimp_color_display_set_property (GObject      *object,
       break;
 
     case PROP_COLOR_CONFIG:
-      gimp_color_display_set_color_config (display,
+      ligma_color_display_set_color_config (display,
                                            g_value_get_object (value));
       break;
 
     case PROP_COLOR_MANAGED:
-      gimp_color_display_set_color_managed (display,
+      ligma_color_display_set_color_managed (display,
                                             g_value_get_object (value));
       break;
 
@@ -224,12 +224,12 @@ gimp_color_display_set_property (GObject      *object,
 }
 
 static void
-gimp_color_display_get_property (GObject    *object,
+ligma_color_display_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpColorDisplayPrivate *private = GET_PRIVATE (object);
+  LigmaColorDisplayPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -252,10 +252,10 @@ gimp_color_display_get_property (GObject    *object,
 }
 
 static void
-gimp_color_display_set_color_config (GimpColorDisplay *display,
-                                     GimpColorConfig  *config)
+ligma_color_display_set_color_config (LigmaColorDisplay *display,
+                                     LigmaColorConfig  *config)
 {
-  GimpColorDisplayPrivate *private = GET_PRIVATE (display);
+  LigmaColorDisplayPrivate *private = GET_PRIVATE (display);
 
   g_return_if_fail (private->config == NULL);
 
@@ -264,16 +264,16 @@ gimp_color_display_set_color_config (GimpColorDisplay *display,
       private->config = g_object_ref (config);
 
       g_signal_connect_swapped (private->config, "notify",
-                                G_CALLBACK (gimp_color_display_changed),
+                                G_CALLBACK (ligma_color_display_changed),
                                 display);
     }
 }
 
 static void
-gimp_color_display_set_color_managed (GimpColorDisplay *display,
-                                      GimpColorManaged *managed)
+ligma_color_display_set_color_managed (LigmaColorDisplay *display,
+                                      LigmaColorManaged *managed)
 {
-  GimpColorDisplayPrivate *private = GET_PRIVATE (display);
+  LigmaColorDisplayPrivate *private = GET_PRIVATE (display);
 
   g_return_if_fail (private->managed == NULL);
 
@@ -282,14 +282,14 @@ gimp_color_display_set_color_managed (GimpColorDisplay *display,
       private->managed = g_object_ref (managed);
 
       g_signal_connect_swapped (private->managed, "profile-changed",
-                                G_CALLBACK (gimp_color_display_changed),
+                                G_CALLBACK (ligma_color_display_changed),
                                 display);
     }
 }
 
 /**
- * gimp_color_display_clone:
- * @display: a #GimpColorDisplay
+ * ligma_color_display_clone:
+ * @display: a #LigmaColorDisplay
  *
  * Creates a copy of @display.
  *
@@ -297,17 +297,17 @@ gimp_color_display_set_color_managed (GimpColorDisplay *display,
  *
  * Since: 2.0
  **/
-GimpColorDisplay *
-gimp_color_display_clone (GimpColorDisplay *display)
+LigmaColorDisplay *
+ligma_color_display_clone (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), NULL);
 
-  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
+  return LIGMA_COLOR_DISPLAY (ligma_config_duplicate (LIGMA_CONFIG (display)));
 }
 
 /**
- * gimp_color_display_convert_buffer:
- * @display: a #GimpColorDisplay
+ * ligma_color_display_convert_buffer:
+ * @display: a #LigmaColorDisplay
  * @buffer:  a #GeglBuffer
  * @area:    area in @buffer to convert
  *
@@ -316,72 +316,72 @@ gimp_color_display_clone (GimpColorDisplay *display)
  * Since: 2.10
  **/
 void
-gimp_color_display_convert_buffer (GimpColorDisplay *display,
+ligma_color_display_convert_buffer (LigmaColorDisplay *display,
                                    GeglBuffer       *buffer,
                                    GeglRectangle    *area)
 {
-  GimpColorDisplayPrivate *private;
+  LigmaColorDisplayPrivate *private;
 
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_COLOR_DISPLAY (display));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
   private = GET_PRIVATE (display);
 
   if (private->enabled &&
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_buffer)
+      LIGMA_COLOR_DISPLAY_GET_CLASS (display)->convert_buffer)
     {
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_buffer (display, buffer,
+      LIGMA_COLOR_DISPLAY_GET_CLASS (display)->convert_buffer (display, buffer,
                                                               area);
     }
 }
 
 /**
- * gimp_color_display_load_state:
- * @display: a #GimpColorDisplay
- * @state:   a #GimpParasite
+ * ligma_color_display_load_state:
+ * @display: a #LigmaColorDisplay
+ * @state:   a #LigmaParasite
  *
  * Configures @display from the contents of the parasite @state.
  * @state must be a properly serialized configuration for a
- * #GimpColorDisplay, such as saved by gimp_color_display_save_state().
+ * #LigmaColorDisplay, such as saved by ligma_color_display_save_state().
  *
  * Since: 2.0
  **/
 void
-gimp_color_display_load_state (GimpColorDisplay *display,
-                               GimpParasite     *state)
+ligma_color_display_load_state (LigmaColorDisplay *display,
+                               LigmaParasite     *state)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_COLOR_DISPLAY (display));
   g_return_if_fail (state != NULL);
 
-  gimp_config_deserialize_parasite (GIMP_CONFIG (display),
+  ligma_config_deserialize_parasite (LIGMA_CONFIG (display),
                                     state,
                                     NULL, NULL);
 }
 
 /**
- * gimp_color_display_save_state:
- * @display: a #GimpColorDisplay
+ * ligma_color_display_save_state:
+ * @display: a #LigmaColorDisplay
  *
  * Saves the configuration state of @display as a new parasite.
  *
- * Returns: (transfer full): a #GimpParasite
+ * Returns: (transfer full): a #LigmaParasite
  *
  * Since: 2.0
  **/
-GimpParasite *
-gimp_color_display_save_state (GimpColorDisplay *display)
+LigmaParasite *
+ligma_color_display_save_state (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), NULL);
 
-  return gimp_config_serialize_to_parasite (GIMP_CONFIG (display),
+  return ligma_config_serialize_to_parasite (LIGMA_CONFIG (display),
                                             "Display/Proof",
-                                            GIMP_PARASITE_PERSISTENT,
+                                            LIGMA_PARASITE_PERSISTENT,
                                             NULL);
 }
 
 /**
- * gimp_color_display_configure:
- * @display: a #GimpColorDisplay
+ * ligma_color_display_configure:
+ * @display: a #LigmaColorDisplay
  *
  * Creates a configuration widget for @display which can be added to a
  * container widget.
@@ -392,39 +392,39 @@ gimp_color_display_save_state (GimpColorDisplay *display)
  * Since: 2.0
  **/
 GtkWidget *
-gimp_color_display_configure (GimpColorDisplay *display)
+ligma_color_display_configure (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), NULL);
 
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure)
-    return GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure (display);
+  if (LIGMA_COLOR_DISPLAY_GET_CLASS (display)->configure)
+    return LIGMA_COLOR_DISPLAY_GET_CLASS (display)->configure (display);
 
   return NULL;
 }
 
 void
-gimp_color_display_configure_reset (GimpColorDisplay *display)
+ligma_color_display_configure_reset (LigmaColorDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_COLOR_DISPLAY (display));
 
-  gimp_config_reset (GIMP_CONFIG (display));
+  ligma_config_reset (LIGMA_CONFIG (display));
 }
 
 void
-gimp_color_display_changed (GimpColorDisplay *display)
+ligma_color_display_changed (LigmaColorDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_COLOR_DISPLAY (display));
 
   g_signal_emit (display, display_signals[CHANGED], 0);
 }
 
 void
-gimp_color_display_set_enabled (GimpColorDisplay *display,
+ligma_color_display_set_enabled (LigmaColorDisplay *display,
                                 gboolean          enabled)
 {
-  GimpColorDisplayPrivate *private;
+  LigmaColorDisplayPrivate *private;
 
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_COLOR_DISPLAY (display));
 
   private = GET_PRIVATE (display);
 
@@ -437,43 +437,43 @@ gimp_color_display_set_enabled (GimpColorDisplay *display,
 }
 
 gboolean
-gimp_color_display_get_enabled (GimpColorDisplay *display)
+ligma_color_display_get_enabled (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), FALSE);
 
   return GET_PRIVATE (display)->enabled;
 }
 
 /**
- * gimp_color_display_get_config:
+ * ligma_color_display_get_config:
  * @display:
  *
- * Returns: (transfer none): a pointer to the #GimpColorConfig
+ * Returns: (transfer none): a pointer to the #LigmaColorConfig
  *               object or %NULL.
  *
  * Since: 2.4
  **/
-GimpColorConfig *
-gimp_color_display_get_config (GimpColorDisplay *display)
+LigmaColorConfig *
+ligma_color_display_get_config (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), NULL);
 
   return GET_PRIVATE (display)->config;
 }
 
 /**
- * gimp_color_display_get_managed:
+ * ligma_color_display_get_managed:
  * @display:
  *
- * Returns: (transfer none): a pointer to the #GimpColorManaged
+ * Returns: (transfer none): a pointer to the #LigmaColorManaged
  *               object or %NULL.
  *
  * Since: 2.4
  **/
-GimpColorManaged *
-gimp_color_display_get_managed (GimpColorDisplay *display)
+LigmaColorManaged *
+ligma_color_display_get_managed (LigmaColorDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_DISPLAY (display), NULL);
 
   return GET_PRIVATE (display)->managed;
 }

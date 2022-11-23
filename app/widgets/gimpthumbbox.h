@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_BOX_H__
-#define __GIMP_THUMB_BOX_H__
+#ifndef __LIGMA_THUMB_BOX_H__
+#define __LIGMA_THUMB_BOX_H__
 
 
-#define GIMP_TYPE_THUMB_BOX            (gimp_thumb_box_get_type ())
-#define GIMP_THUMB_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_THUMB_BOX, GimpThumbBox))
-#define GIMP_THUMB_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_THUMB_BOX, GimpThumbBoxClass))
-#define GIMP_IS_THUMB_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_THUMB_BOX))
-#define GIMP_IS_THUMB_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_THUMB_BOX))
-#define GIMP_THUMB_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_THUMB_BOX, GimpThumbBoxClass))
+#define LIGMA_TYPE_THUMB_BOX            (ligma_thumb_box_get_type ())
+#define LIGMA_THUMB_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_THUMB_BOX, LigmaThumbBox))
+#define LIGMA_THUMB_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_THUMB_BOX, LigmaThumbBoxClass))
+#define LIGMA_IS_THUMB_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_THUMB_BOX))
+#define LIGMA_IS_THUMB_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_THUMB_BOX))
+#define LIGMA_THUMB_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_THUMB_BOX, LigmaThumbBoxClass))
 
 
-typedef struct _GimpThumbBoxClass GimpThumbBoxClass;
+typedef struct _LigmaThumbBoxClass LigmaThumbBoxClass;
 
-struct _GimpThumbBox
+struct _LigmaThumbBox
 {
   GtkFrame       parent_instance;
 
-  GimpContext   *context;
-  GimpImagefile *imagefile;
+  LigmaContext   *context;
+  LigmaImagefile *imagefile;
   GSList        *files;
 
   GtkWidget     *preview;
@@ -47,20 +47,20 @@ struct _GimpThumbBox
   guint          idle_id;
 };
 
-struct _GimpThumbBoxClass
+struct _LigmaThumbBoxClass
 {
   GtkFrameClass  parent_class;
 };
 
 
-GType       gimp_thumb_box_get_type  (void) G_GNUC_CONST;
+GType       ligma_thumb_box_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_thumb_box_new        (GimpContext  *context);
+GtkWidget * ligma_thumb_box_new        (LigmaContext  *context);
 
-void        gimp_thumb_box_take_file  (GimpThumbBox *box,
+void        ligma_thumb_box_take_file  (LigmaThumbBox *box,
                                        GFile        *file);
-void        gimp_thumb_box_take_files (GimpThumbBox *box,
+void        ligma_thumb_box_take_files (LigmaThumbBox *box,
                                        GSList       *files);
 
 
-#endif  /*  __GIMP_THUMB_BOX_H__  */
+#endif  /*  __LIGMA_THUMB_BOX_H__  */

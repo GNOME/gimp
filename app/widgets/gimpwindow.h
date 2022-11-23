@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwindow.h
+ * ligmawindow.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,42 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WINDOW_H__
-#define __GIMP_WINDOW_H__
+#ifndef __LIGMA_WINDOW_H__
+#define __LIGMA_WINDOW_H__
 
 
-#define GIMP_TYPE_WINDOW            (gimp_window_get_type ())
-#define GIMP_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_WINDOW, GimpWindow))
-#define GIMP_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_WINDOW, GimpWindowClass))
-#define GIMP_IS_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_WINDOW))
-#define GIMP_IS_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_WINDOW))
-#define GIMP_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_WINDOW, GimpWindowClass))
+#define LIGMA_TYPE_WINDOW            (ligma_window_get_type ())
+#define LIGMA_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_WINDOW, LigmaWindow))
+#define LIGMA_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_WINDOW, LigmaWindowClass))
+#define LIGMA_IS_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_WINDOW))
+#define LIGMA_IS_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_WINDOW))
+#define LIGMA_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_WINDOW, LigmaWindowClass))
 
 
-typedef struct _GimpWindowClass   GimpWindowClass;
-typedef struct _GimpWindowPrivate GimpWindowPrivate;
+typedef struct _LigmaWindowClass   LigmaWindowClass;
+typedef struct _LigmaWindowPrivate LigmaWindowPrivate;
 
-struct _GimpWindow
+struct _LigmaWindow
 {
   GtkApplicationWindow  parent_instance;
 
-  GimpWindowPrivate    *private;
+  LigmaWindowPrivate    *private;
 };
 
-struct _GimpWindowClass
+struct _LigmaWindowClass
 {
   GtkApplicationWindowClass  parent_class;
 
-  void (* monitor_changed) (GimpWindow *window,
+  void (* monitor_changed) (LigmaWindow *window,
                             GdkMonitor *monitor);
 };
 
 
-GType       gimp_window_get_type                 (void) G_GNUC_CONST;
+GType       ligma_window_get_type                 (void) G_GNUC_CONST;
 
-void        gimp_window_set_primary_focus_widget (GimpWindow *window,
+void        ligma_window_set_primary_focus_widget (LigmaWindow *window,
                                                   GtkWidget  *primary_focus);
-GtkWidget * gimp_window_get_primary_focus_widget (GimpWindow *window);
+GtkWidget * ligma_window_get_primary_focus_widget (LigmaWindow *window);
 
 
-#endif /* __GIMP_WINDOW_H__ */
+#endif /* __LIGMA_WINDOW_H__ */

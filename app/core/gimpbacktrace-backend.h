@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbacktrace-backend.h
+ * ligmabacktrace-backend.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BACKTRACE_BACKEND_H__
-#define __GIMP_BACKTRACE_BACKEND_H__
+#ifndef __LIGMA_BACKTRACE_BACKEND_H__
+#define __LIGMA_BACKTRACE_BACKEND_H__
 
 
 #ifdef __gnu_linux__
-# define GIMP_BACKTRACE_BACKEND_LINUX
+# define LIGMA_BACKTRACE_BACKEND_LINUX
 #elif defined (G_OS_WIN32) && defined (ARCH_X86)
-# define GIMP_BACKTRACE_BACKEND_WINDOWS
+# define LIGMA_BACKTRACE_BACKEND_WINDOWS
 #else
-# define GIMP_BACKTRACE_BACKEND_NONE
+# define LIGMA_BACKTRACE_BACKEND_NONE
 #endif
 
 
-#endif  /*  __GIMP_BACKTRACE_BACKEND_H__  */
+#endif  /*  __LIGMA_BACKTRACE_BACKEND_H__  */

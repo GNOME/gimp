@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub fonts_refresh {
     $blurb = 'Refresh current fonts. This function always succeeds.';
@@ -30,8 +30,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_data_factory_data_refresh (gimp->font_factory, context);
-  gimp_data_factory_data_wait (gimp->font_factory);
+  ligma_data_factory_data_refresh (ligma->font_factory, context);
+  ligma_data_factory_data_wait (ligma->font_factory);
 }
 CODE
     );
@@ -57,15 +57,15 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpcontainer-filter.h") ],
+        headers => [ qw("core/ligmacontainer-filter.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_data_factory_data_wait (gimp->font_factory))
+  if (! ligma_data_factory_data_wait (ligma->font_factory))
     success = FALSE;
 
   if (success)
     {
-      font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
+      font_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->font_factory),
                                                           filter);
     }
 }
@@ -74,9 +74,9 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpcontainer.h"
-              "core/gimpdatafactory.h");
+@headers = qw("core/ligma.h"
+              "core/ligmacontainer.h"
+              "core/ligmadatafactory.h");
 
 @procs = qw(fonts_refresh
             fonts_get_list);
@@ -84,7 +84,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Fonts';
-$doc_title = 'gimpfonts';
+$doc_title = 'ligmafonts';
 $doc_short_desc = 'Operations related to fonts.';
 $doc_long_desc = 'Operations related to fonts.';
 

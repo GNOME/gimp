@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,34 +20,34 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimpmarshal.h"
-#include "core/gimppalette.h"
-#include "core/gimpprojection.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-colormap.h"
+#include "core/ligmamarshal.h"
+#include "core/ligmapalette.h"
+#include "core/ligmaprojection.h"
 
-#include "gimpcolordialog.h"
-#include "gimpcolormapselection.h"
-#include "gimpdialogfactory.h"
-#include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimpmenufactory.h"
-#include "gimppaletteview.h"
-#include "gimpuimanager.h"
-#include "gimpviewrendererpalette.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacolordialog.h"
+#include "ligmacolormapselection.h"
+#include "ligmadialogfactory.h"
+#include "ligmadnd.h"
+#include "ligmadocked.h"
+#include "ligmamenufactory.h"
+#include "ligmapaletteview.h"
+#include "ligmauimanager.h"
+#include "ligmaviewrendererpalette.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -68,67 +68,67 @@ enum
 
 #define HAVE_COLORMAP(image) \
         (image != NULL && \
-         gimp_image_get_base_type (image) == GIMP_INDEXED && \
-         gimp_image_get_colormap_palette (image) != NULL)
+         ligma_image_get_base_type (image) == LIGMA_INDEXED && \
+         ligma_image_get_colormap_palette (image) != NULL)
 
 
-static void   gimp_colormap_selection_set_property    (GObject               *object,
+static void   ligma_colormap_selection_set_property    (GObject               *object,
                                                        guint                  property_id,
                                                        const GValue          *value,
                                                        GParamSpec            *pspec);
-static void   gimp_colormap_selection_get_property    (GObject               *object,
+static void   ligma_colormap_selection_get_property    (GObject               *object,
                                                        guint                  property_id,
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
-static void   gimp_colormap_selection_dispose         (GObject               *object);
-static void   gimp_colormap_selection_finalize        (GObject               *object);
+static void   ligma_colormap_selection_dispose         (GObject               *object);
+static void   ligma_colormap_selection_finalize        (GObject               *object);
 
-static void   gimp_colormap_selection_unmap           (GtkWidget             *widget);
+static void   ligma_colormap_selection_unmap           (GtkWidget             *widget);
 
 static PangoLayout *
-              gimp_colormap_selection_create_layout   (GtkWidget             *widget);
+              ligma_colormap_selection_create_layout   (GtkWidget             *widget);
 
-static void   gimp_colormap_selection_update_entries  (GimpColormapSelection *selection);
+static void   ligma_colormap_selection_update_entries  (LigmaColormapSelection *selection);
 
 static gboolean
-              gimp_colormap_selection_preview_draw    (GtkWidget             *widget,
+              ligma_colormap_selection_preview_draw    (GtkWidget             *widget,
                                                        cairo_t               *cr,
-                                                       GimpColormapSelection *selection);
+                                                       LigmaColormapSelection *selection);
 
-static void   gimp_colormap_selection_entry_clicked   (GimpPaletteView       *view,
-                                                       GimpPaletteEntry      *entry,
+static void   ligma_colormap_selection_entry_clicked   (LigmaPaletteView       *view,
+                                                       LigmaPaletteEntry      *entry,
                                                        GdkModifierType       state,
-                                                       GimpColormapSelection *selection);
-static void   gimp_colormap_selection_entry_selected  (GimpPaletteView       *view,
-                                                       GimpPaletteEntry      *entry,
-                                                       GimpColormapSelection *selection);
-static void   gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
-                                                       GimpPaletteEntry      *entry,
-                                                       GimpColormapSelection *selection);
-static void   gimp_colormap_selection_color_dropped   (GimpPaletteView       *view,
-                                                       GimpPaletteEntry      *entry,
-                                                       const GimpRGB         *color,
-                                                       GimpColormapSelection *selection);
+                                                       LigmaColormapSelection *selection);
+static void   ligma_colormap_selection_entry_selected  (LigmaPaletteView       *view,
+                                                       LigmaPaletteEntry      *entry,
+                                                       LigmaColormapSelection *selection);
+static void   ligma_colormap_selection_entry_activated (LigmaPaletteView       *view,
+                                                       LigmaPaletteEntry      *entry,
+                                                       LigmaColormapSelection *selection);
+static void   ligma_colormap_selection_color_dropped   (LigmaPaletteView       *view,
+                                                       LigmaPaletteEntry      *entry,
+                                                       const LigmaRGB         *color,
+                                                       LigmaColormapSelection *selection);
 
-static void   gimp_colormap_adjustment_changed        (GtkAdjustment         *adjustment,
-                                                       GimpColormapSelection *selection);
-static void   gimp_colormap_hex_entry_changed         (GimpColorHexEntry     *entry,
-                                                       GimpColormapSelection *selection);
+static void   ligma_colormap_adjustment_changed        (GtkAdjustment         *adjustment,
+                                                       LigmaColormapSelection *selection);
+static void   ligma_colormap_hex_entry_changed         (LigmaColorHexEntry     *entry,
+                                                       LigmaColormapSelection *selection);
 
-static void   gimp_colormap_selection_set_context     (GimpColormapSelection *selection,
-                                                       GimpContext           *context);
-static void   gimp_colormap_selection_image_changed   (GimpColormapSelection *selection,
-                                                       GimpImage             *image);
-static void   gimp_colormap_selection_set_palette     (GimpColormapSelection *selection);
+static void   ligma_colormap_selection_set_context     (LigmaColormapSelection *selection,
+                                                       LigmaContext           *context);
+static void   ligma_colormap_selection_image_changed   (LigmaColormapSelection *selection,
+                                                       LigmaImage             *image);
+static void   ligma_colormap_selection_set_palette     (LigmaColormapSelection *selection);
 
-G_DEFINE_TYPE (GimpColormapSelection, gimp_colormap_selection, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaColormapSelection, ligma_colormap_selection, GTK_TYPE_BOX)
 
-#define parent_class gimp_colormap_selection_parent_class
+#define parent_class ligma_colormap_selection_parent_class
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
+ligma_colormap_selection_class_init (LigmaColormapSelectionClass* klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -137,9 +137,9 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
     g_signal_new ("color-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColormapSelectionClass, color_clicked),
+                  G_STRUCT_OFFSET (LigmaColormapSelectionClass, color_clicked),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER_ENUM,
+                  ligma_marshal_VOID__POINTER_ENUM,
                   G_TYPE_NONE, 2,
                   G_TYPE_POINTER,
                   GDK_TYPE_MODIFIER_TYPE);
@@ -147,28 +147,28 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
     g_signal_new ("color-activated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColormapSelectionClass, color_activated),
+                  G_STRUCT_OFFSET (LigmaColormapSelectionClass, color_activated),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  object_class->set_property    = gimp_colormap_selection_set_property;
-  object_class->get_property    = gimp_colormap_selection_get_property;
-  object_class->dispose         = gimp_colormap_selection_dispose;
-  object_class->finalize        = gimp_colormap_selection_finalize;
+  object_class->set_property    = ligma_colormap_selection_set_property;
+  object_class->get_property    = ligma_colormap_selection_get_property;
+  object_class->dispose         = ligma_colormap_selection_dispose;
+  object_class->finalize        = ligma_colormap_selection_finalize;
 
-  widget_class->unmap           = gimp_colormap_selection_unmap;
+  widget_class->unmap           = ligma_colormap_selection_unmap;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_colormap_selection_init (GimpColormapSelection *selection)
+ligma_colormap_selection_init (LigmaColormapSelection *selection)
 {
   GtkWidget *frame;
   GtkWidget *grid;
@@ -181,30 +181,30 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
   gtk_box_pack_start (GTK_BOX (selection), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  selection->view = gimp_view_new_full_by_types (NULL,
-                                                 GIMP_TYPE_PALETTE_VIEW,
-                                                 GIMP_TYPE_PALETTE,
+  selection->view = ligma_view_new_full_by_types (NULL,
+                                                 LIGMA_TYPE_PALETTE_VIEW,
+                                                 LIGMA_TYPE_PALETTE,
                                                  1, 1, 0,
                                                  FALSE, TRUE, FALSE);
-  gimp_view_set_expand (GIMP_VIEW (selection->view), TRUE);
+  ligma_view_set_expand (LIGMA_VIEW (selection->view), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), selection->view);
   gtk_widget_show (selection->view);
 
   g_signal_connect (selection->view, "draw",
-                    G_CALLBACK (gimp_colormap_selection_preview_draw),
+                    G_CALLBACK (ligma_colormap_selection_preview_draw),
                     selection);
 
   g_signal_connect (selection->view, "entry-clicked",
-                    G_CALLBACK (gimp_colormap_selection_entry_clicked),
+                    G_CALLBACK (ligma_colormap_selection_entry_clicked),
                     selection);
   g_signal_connect (selection->view, "entry-selected",
-                    G_CALLBACK (gimp_colormap_selection_entry_selected),
+                    G_CALLBACK (ligma_colormap_selection_entry_selected),
                     selection);
   g_signal_connect (selection->view, "entry-activated",
-                    G_CALLBACK (gimp_colormap_selection_entry_activated),
+                    G_CALLBACK (ligma_colormap_selection_entry_activated),
                     selection);
   g_signal_connect (selection->view, "color-dropped",
-                    G_CALLBACK (gimp_colormap_selection_color_dropped),
+                    G_CALLBACK (ligma_colormap_selection_color_dropped),
                     selection);
 
   /* Bottom horizontal box for additional widgets. */
@@ -223,43 +223,43 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
 
   selection->index_adjustment = (GtkAdjustment *)
     gtk_adjustment_new (0, 0, 0, 1, 10, 0);
-  selection->index_spinbutton = gimp_spin_button_new (selection->index_adjustment,
+  selection->index_spinbutton = ligma_spin_button_new (selection->index_adjustment,
                                                       1.0, 0);
   gtk_widget_set_halign (selection->index_spinbutton, GTK_ALIGN_START);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (selection->index_spinbutton),
                                TRUE);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Color index:"), 0.0, 0.5,
                             selection->index_spinbutton, 1);
 
   g_signal_connect (selection->index_adjustment, "value-changed",
-                    G_CALLBACK (gimp_colormap_adjustment_changed),
+                    G_CALLBACK (ligma_colormap_adjustment_changed),
                     selection);
 
-  selection->color_entry = gimp_color_hex_entry_new ();
+  selection->color_entry = ligma_color_hex_entry_new ();
   gtk_widget_set_halign (selection->color_entry, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("HTML notation:"), 0.0, 0.5,
                             selection->color_entry, 1);
 
   g_signal_connect (selection->color_entry, "color-changed",
-                    G_CALLBACK (gimp_colormap_hex_entry_changed),
+                    G_CALLBACK (ligma_colormap_hex_entry_changed),
                     selection);
 }
 
 static void
-gimp_colormap_selection_set_property (GObject      *object,
+ligma_colormap_selection_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
+  LigmaColormapSelection *selection = LIGMA_COLORMAP_SELECTION (object);
 
   switch (property_id)
     {
     case PROP_CONTEXT:
-      gimp_colormap_selection_set_context (selection, g_value_get_object (value));
+      ligma_colormap_selection_set_context (selection, g_value_get_object (value));
       break;
 
     default:
@@ -269,12 +269,12 @@ gimp_colormap_selection_set_property (GObject      *object,
 }
 
 static void
-gimp_colormap_selection_get_property (GObject    *object,
+ligma_colormap_selection_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
+  LigmaColormapSelection *selection = LIGMA_COLORMAP_SELECTION (object);
 
   switch (property_id)
     {
@@ -289,9 +289,9 @@ gimp_colormap_selection_get_property (GObject    *object,
 }
 
 static void
-gimp_colormap_selection_dispose (GObject *object)
+ligma_colormap_selection_dispose (GObject *object)
 {
-  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
+  LigmaColormapSelection *selection = LIGMA_COLORMAP_SELECTION (object);
 
   g_clear_pointer (&selection->color_dialog, gtk_widget_destroy);
 
@@ -299,9 +299,9 @@ gimp_colormap_selection_dispose (GObject *object)
 }
 
 static void
-gimp_colormap_selection_finalize (GObject *object)
+ligma_colormap_selection_finalize (GObject *object)
 {
-  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
+  LigmaColormapSelection *selection = LIGMA_COLORMAP_SELECTION (object);
 
   if (selection->context)
     {
@@ -309,7 +309,7 @@ gimp_colormap_selection_finalize (GObject *object)
                                             gtk_widget_queue_draw,
                                             selection);
       g_signal_handlers_disconnect_by_func (selection->context,
-                                            G_CALLBACK (gimp_colormap_selection_image_changed),
+                                            G_CALLBACK (ligma_colormap_selection_image_changed),
                                             selection);
     }
   if (selection->active_image)
@@ -318,7 +318,7 @@ gimp_colormap_selection_finalize (GObject *object)
                                             G_CALLBACK (gtk_widget_queue_draw),
                                             selection);
       g_signal_handlers_disconnect_by_func (selection->active_image,
-                                            G_CALLBACK (gimp_colormap_selection_set_palette),
+                                            G_CALLBACK (ligma_colormap_selection_set_palette),
                                             selection);
     }
   if (selection->active_palette)
@@ -335,9 +335,9 @@ gimp_colormap_selection_finalize (GObject *object)
 }
 
 static void
-gimp_colormap_selection_unmap (GtkWidget *widget)
+ligma_colormap_selection_unmap (GtkWidget *widget)
 {
-  GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (widget);
+  LigmaColormapSelection *selection = LIGMA_COLORMAP_SELECTION (widget);
 
   if (selection->color_dialog)
     gtk_widget_hide (selection->color_dialog);
@@ -348,26 +348,26 @@ gimp_colormap_selection_unmap (GtkWidget *widget)
 /*  public functions  */
 
 GtkWidget *
-gimp_colormap_selection_new (GimpContext *context)
+ligma_colormap_selection_new (LigmaContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_COLORMAP_SELECTION,
+  return g_object_new (LIGMA_TYPE_COLORMAP_SELECTION,
                        "context",     context,
                        "orientation", GTK_ORIENTATION_VERTICAL,
                        NULL);
 }
 
 gint
-gimp_colormap_selection_get_index (GimpColormapSelection *selection,
-                                   const GimpRGB         *search)
+ligma_colormap_selection_get_index (LigmaColormapSelection *selection,
+                                   const LigmaRGB         *search)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gint       index;
 
-  g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), 0);
+  g_return_val_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection), 0);
 
-  image = gimp_context_get_image (selection->context);
+  image = ligma_context_get_image (selection->context);
 
   if (! HAVE_COLORMAP (image))
     return -1;
@@ -376,20 +376,20 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
 
   if (search)
     {
-      GimpRGB temp;
+      LigmaRGB temp;
 
-      gimp_image_get_colormap_entry (image, index, &temp);
+      ligma_image_get_colormap_entry (image, index, &temp);
 
-      if (gimp_rgb_distance (&temp, search) > RGB_EPSILON)
+      if (ligma_rgb_distance (&temp, search) > RGB_EPSILON)
         {
-          gint n_colors = gimp_image_get_colormap_size (image);
+          gint n_colors = ligma_image_get_colormap_size (image);
           gint i;
 
           for (i = 0; i < n_colors; i++)
             {
-              gimp_image_get_colormap_entry (image, i, &temp);
+              ligma_image_get_colormap_entry (image, i, &temp);
 
-              if (gimp_rgb_distance (&temp, search) < RGB_EPSILON)
+              if (ligma_rgb_distance (&temp, search) < RGB_EPSILON)
                 {
                   index = i;
                   break;
@@ -402,21 +402,21 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
 }
 
 gboolean
-gimp_colormap_selection_set_index (GimpColormapSelection *selection,
+ligma_colormap_selection_set_index (LigmaColormapSelection *selection,
                                    gint                   index,
-                                   GimpRGB               *color)
+                                   LigmaRGB               *color)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gint       size;
 
-  g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection), FALSE);
 
-  image = gimp_context_get_image (selection->context);
+  image = ligma_context_get_image (selection->context);
 
   if (! HAVE_COLORMAP (image))
     return FALSE;
 
-  size = gimp_image_get_colormap_size (image);
+  size = ligma_image_get_colormap_size (image);
 
   if (size < 1)
     return FALSE;
@@ -425,57 +425,57 @@ gimp_colormap_selection_set_index (GimpColormapSelection *selection,
 
   if (index != selection->col_index)
     {
-      GimpPalette *palette = gimp_image_get_colormap_palette (image);
+      LigmaPalette *palette = ligma_image_get_colormap_palette (image);
 
       selection->col_index = index;
 
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (selection->view),
-                                      gimp_palette_get_entry (palette, index));
+      ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (selection->view),
+                                      ligma_palette_get_entry (palette, index));
 
-      gimp_colormap_selection_update_entries (selection);
+      ligma_colormap_selection_update_entries (selection);
     }
 
   if (color)
-    gimp_image_get_colormap_entry (image, index, color);
+    ligma_image_get_colormap_entry (image, index, color);
 
   return TRUE;
 }
 
 gint
-gimp_colormap_selection_max_index (GimpColormapSelection *selection)
+ligma_colormap_selection_max_index (LigmaColormapSelection *selection)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), -1);
+  g_return_val_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection), -1);
 
-  image = gimp_context_get_image (selection->context);
+  image = ligma_context_get_image (selection->context);
 
   if (! HAVE_COLORMAP (image))
     return -1;
 
-  return MAX (0, gimp_image_get_colormap_size (image) - 1);
+  return MAX (0, ligma_image_get_colormap_size (image) - 1);
 }
 
-GimpPaletteEntry *
-gimp_colormap_selection_get_selected_entry (GimpColormapSelection *selection)
+LigmaPaletteEntry *
+ligma_colormap_selection_get_selected_entry (LigmaColormapSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection), NULL);
 
-  return gimp_palette_view_get_selected_entry (GIMP_PALETTE_VIEW (selection->view));
+  return ligma_palette_view_get_selected_entry (LIGMA_PALETTE_VIEW (selection->view));
 }
 
 void
-gimp_colormap_selection_get_entry_rect (GimpColormapSelection *selection,
-                                        GimpPaletteEntry      *entry,
+ligma_colormap_selection_get_entry_rect (LigmaColormapSelection *selection,
+                                        LigmaPaletteEntry      *entry,
                                         GdkRectangle          *rect)
 {
   GtkAllocation allocation;
 
-  g_return_if_fail (GIMP_IS_COLORMAP_SELECTION (selection));
+  g_return_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection));
   g_return_if_fail (entry);
   g_return_if_fail (rect);
 
-  gimp_palette_view_get_entry_rect (GIMP_PALETTE_VIEW (selection->view),
+  ligma_palette_view_get_entry_rect (LIGMA_PALETTE_VIEW (selection->view),
                                     entry, rect);
   gtk_widget_get_allocation (GTK_WIDGET (selection), &allocation);
   /* rect->x += allocation.x; */
@@ -486,7 +486,7 @@ gimp_colormap_selection_get_entry_rect (GimpColormapSelection *selection,
 /*  private functions  */
 
 static PangoLayout *
-gimp_colormap_selection_create_layout (GtkWidget *widget)
+ligma_colormap_selection_create_layout (GtkWidget *widget)
 {
   PangoLayout    *layout;
   PangoAttrList  *attrs;
@@ -512,20 +512,20 @@ gimp_colormap_selection_create_layout (GtkWidget *widget)
 }
 
 static gboolean
-gimp_colormap_selection_preview_draw (GtkWidget             *widget,
+ligma_colormap_selection_preview_draw (GtkWidget             *widget,
                                       cairo_t               *cr,
-                                      GimpColormapSelection *selection)
+                                      LigmaColormapSelection *selection)
 {
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
-  GimpImage       *image;
+  LigmaImage       *image;
   GtkAllocation    allocation;
   GdkRGBA          color;
   gint             width, height;
   gint             y;
 
-  image = gimp_context_get_image (selection->context);
+  image = ligma_context_get_image (selection->context);
 
-  if (image == NULL || gimp_image_get_base_type (image) == GIMP_INDEXED)
+  if (image == NULL || ligma_image_get_base_type (image) == LIGMA_INDEXED)
     return FALSE;
 
   gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
@@ -535,7 +535,7 @@ gimp_colormap_selection_preview_draw (GtkWidget             *widget,
   gtk_widget_get_allocation (widget, &allocation);
 
   if (! selection->layout)
-    selection->layout = gimp_colormap_selection_create_layout (selection->view);
+    selection->layout = ligma_colormap_selection_create_layout (selection->view);
 
   pango_layout_set_width (selection->layout,
                           PANGO_SCALE * (allocation.width - 2 * BORDER));
@@ -551,12 +551,12 @@ gimp_colormap_selection_preview_draw (GtkWidget             *widget,
 }
 
 static void
-gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
+ligma_colormap_selection_update_entries (LigmaColormapSelection *selection)
 {
-  GimpImage *image = gimp_context_get_image (selection->context);
+  LigmaImage *image = ligma_context_get_image (selection->context);
 
   if (! HAVE_COLORMAP (image) ||
-      ! gimp_image_get_colormap_size (image))
+      ! ligma_image_get_colormap_size (image))
     {
       gtk_widget_set_sensitive (selection->index_spinbutton, FALSE);
       gtk_widget_set_sensitive (selection->color_entry, FALSE);
@@ -566,14 +566,14 @@ gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
     }
   else
     {
-      GimpRGB  color;
+      LigmaRGB  color;
       guchar   r, g, b;
       gchar   *string;
 
       gtk_adjustment_set_value (selection->index_adjustment,
                                 selection->col_index);
-      gimp_image_get_colormap_entry (image, selection->col_index, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
+      ligma_image_get_colormap_entry (image, selection->col_index, &color);
+      ligma_rgb_get_uchar (&color, &r, &g, &b);
 
       string = g_strdup_printf ("%02x%02x%02x", r, g, b);
       gtk_entry_set_text (GTK_ENTRY (selection->color_entry), string);
@@ -585,98 +585,98 @@ gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
 }
 
 static void
-gimp_colormap_selection_entry_clicked (GimpPaletteView       *view,
-                                       GimpPaletteEntry      *entry,
+ligma_colormap_selection_entry_clicked (LigmaPaletteView       *view,
+                                       LigmaPaletteEntry      *entry,
                                        GdkModifierType        state,
-                                       GimpColormapSelection *selection)
+                                       LigmaColormapSelection *selection)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gint         index;
 
-  palette = gimp_image_get_colormap_palette (selection->active_image);
-  index = gimp_palette_get_entry_position (palette, entry);
-  gimp_colormap_selection_set_index (selection, index, NULL);
+  palette = ligma_image_get_colormap_palette (selection->active_image);
+  index = ligma_palette_get_entry_position (palette, entry);
+  ligma_colormap_selection_set_index (selection, index, NULL);
 
   g_signal_emit (selection, signals[COLOR_CLICKED], 0, entry, state);
 }
 
 static void
-gimp_colormap_selection_entry_selected (GimpPaletteView       *view,
-                                        GimpPaletteEntry      *entry,
-                                        GimpColormapSelection *selection)
+ligma_colormap_selection_entry_selected (LigmaPaletteView       *view,
+                                        LigmaPaletteEntry      *entry,
+                                        LigmaColormapSelection *selection)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gint         index = 0;
 
-  palette = gimp_image_get_colormap_palette (selection->active_image);
+  palette = ligma_image_get_colormap_palette (selection->active_image);
   if (entry)
-    index = gimp_palette_get_entry_position (palette, entry);
+    index = ligma_palette_get_entry_position (palette, entry);
 
-  gimp_colormap_selection_set_index (selection, index, NULL);
+  ligma_colormap_selection_set_index (selection, index, NULL);
 }
 
 static void
-gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
-                                         GimpPaletteEntry      *entry,
-                                         GimpColormapSelection *selection)
+ligma_colormap_selection_entry_activated (LigmaPaletteView       *view,
+                                         LigmaPaletteEntry      *entry,
+                                         LigmaColormapSelection *selection)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   gint         index;
 
-  palette = gimp_image_get_colormap_palette (selection->active_image);
-  index = gimp_palette_get_entry_position (palette, entry);
-  gimp_colormap_selection_set_index (selection, index, NULL);
+  palette = ligma_image_get_colormap_palette (selection->active_image);
+  index = ligma_palette_get_entry_position (palette, entry);
+  ligma_colormap_selection_set_index (selection, index, NULL);
 
   g_signal_emit (selection, signals[COLOR_ACTIVATED], 0, entry);
 }
 
 static void
-gimp_colormap_selection_color_dropped (GimpPaletteView       *view,
-                                       GimpPaletteEntry      *entry,
-                                       const GimpRGB         *color,
-                                       GimpColormapSelection *selection)
+ligma_colormap_selection_color_dropped (LigmaPaletteView       *view,
+                                       LigmaPaletteEntry      *entry,
+                                       const LigmaRGB         *color,
+                                       LigmaColormapSelection *selection)
 {
 }
 
 static void
-gimp_colormap_adjustment_changed (GtkAdjustment         *adjustment,
-                                  GimpColormapSelection *selection)
+ligma_colormap_adjustment_changed (GtkAdjustment         *adjustment,
+                                  LigmaColormapSelection *selection)
 {
-  GimpImage *image = gimp_context_get_image (selection->context);
+  LigmaImage *image = ligma_context_get_image (selection->context);
 
   if (HAVE_COLORMAP (image))
     {
       gint index = ROUND (gtk_adjustment_get_value (adjustment));
 
-      gimp_colormap_selection_set_index (selection, index, NULL);
+      ligma_colormap_selection_set_index (selection, index, NULL);
 
-      gimp_colormap_selection_update_entries (selection);
+      ligma_colormap_selection_update_entries (selection);
     }
 }
 
 static void
-gimp_colormap_hex_entry_changed (GimpColorHexEntry     *entry,
-                                 GimpColormapSelection *selection)
+ligma_colormap_hex_entry_changed (LigmaColorHexEntry     *entry,
+                                 LigmaColormapSelection *selection)
 {
-  GimpImage *image = gimp_context_get_image (selection->context);
+  LigmaImage *image = ligma_context_get_image (selection->context);
 
   if (image)
     {
-      GimpRGB color;
+      LigmaRGB color;
 
-      gimp_color_hex_entry_get_color (entry, &color);
+      ligma_color_hex_entry_get_color (entry, &color);
 
-      gimp_image_set_colormap_entry (image, selection->col_index, &color, TRUE);
-      gimp_image_flush (image);
+      ligma_image_set_colormap_entry (image, selection->col_index, &color, TRUE);
+      ligma_image_flush (image);
     }
 }
 
 static void
-gimp_colormap_selection_set_context (GimpColormapSelection *selection,
-                                     GimpContext           *context)
+ligma_colormap_selection_set_context (LigmaColormapSelection *selection,
+                                     LigmaContext           *context)
 {
-  g_return_if_fail (GIMP_IS_COLORMAP_SELECTION (selection));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_COLORMAP_SELECTION (selection));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
   if (context != selection->context)
     {
@@ -686,7 +686,7 @@ gimp_colormap_selection_set_context (GimpColormapSelection *selection,
                                                 gtk_widget_queue_draw,
                                                 selection);
           g_signal_handlers_disconnect_by_func (selection->context,
-                                                G_CALLBACK (gimp_colormap_selection_image_changed),
+                                                G_CALLBACK (ligma_colormap_selection_image_changed),
                                                 selection);
           g_object_unref (selection->context);
         }
@@ -704,20 +704,20 @@ gimp_colormap_selection_set_context (GimpColormapSelection *selection,
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     selection);
           g_signal_connect_swapped (context, "image-changed",
-                                    G_CALLBACK (gimp_colormap_selection_image_changed),
+                                    G_CALLBACK (ligma_colormap_selection_image_changed),
                                     selection);
-          gimp_colormap_selection_image_changed (selection, gimp_context_get_image (context));
+          ligma_colormap_selection_image_changed (selection, ligma_context_get_image (context));
         }
 
-      gimp_view_renderer_set_context (GIMP_VIEW (selection->view)->renderer,
+      ligma_view_renderer_set_context (LIGMA_VIEW (selection->view)->renderer,
                                       context);
       g_object_notify (G_OBJECT (selection), "context");
     }
 }
 
 static void
-gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
-                                       GimpImage             *image)
+ligma_colormap_selection_image_changed (LigmaColormapSelection *selection,
+                                       LigmaImage             *image)
 {
   if (selection->active_image)
     {
@@ -727,13 +727,13 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
                                             G_CALLBACK (gtk_widget_queue_draw),
                                             selection);
       g_signal_handlers_disconnect_by_func (selection->active_image,
-                                            G_CALLBACK (gimp_colormap_selection_set_palette),
+                                            G_CALLBACK (ligma_colormap_selection_set_palette),
                                             selection);
-      if (gimp_image_get_base_type (selection->active_image) == GIMP_INDEXED)
+      if (ligma_image_get_base_type (selection->active_image) == LIGMA_INDEXED)
         {
-          GimpPalette *palette;
+          LigmaPalette *palette;
 
-          palette = gimp_image_get_colormap_palette (selection->active_image);
+          palette = ligma_image_get_colormap_palette (selection->active_image);
           g_signal_handlers_disconnect_by_func (palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 selection);
@@ -752,7 +752,7 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
                 g_signal_handlers_disconnect_by_func (selection->active_palette,
                                                       G_CALLBACK (gtk_widget_queue_draw),
                                                       selection);
-              gimp_view_set_viewable (GIMP_VIEW (selection->view), NULL);
+              ligma_view_set_viewable (LIGMA_VIEW (selection->view), NULL);
               gtk_adjustment_set_upper (selection->index_adjustment, 0);
               selection->active_palette = NULL;
             }
@@ -767,20 +767,20 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 selection);
       g_signal_connect_swapped (image, "mode-changed",
-                                G_CALLBACK (gimp_colormap_selection_set_palette),
+                                G_CALLBACK (ligma_colormap_selection_set_palette),
                                 selection);
     }
-  gimp_colormap_selection_set_palette (selection);
+  ligma_colormap_selection_set_palette (selection);
   gtk_widget_queue_draw (GTK_WIDGET (selection));
 }
 
 static void
-gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
+ligma_colormap_selection_set_palette (LigmaColormapSelection *selection)
 {
-  GimpPalette *palette = NULL;
+  LigmaPalette *palette = NULL;
 
   if (selection->active_image)
-    palette = gimp_image_get_colormap_palette (selection->active_image);
+    palette = ligma_image_get_colormap_palette (selection->active_image);
 
   if (palette != selection->active_palette)
     {
@@ -791,7 +791,7 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
           g_signal_handlers_disconnect_by_func (selection->active_palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 selection);
-          gimp_view_set_viewable (GIMP_VIEW (selection->view), NULL);
+          ligma_view_set_viewable (LIGMA_VIEW (selection->view), NULL);
           gtk_adjustment_set_upper (selection->index_adjustment, 0);
         }
       selection->active_palette = palette;
@@ -802,11 +802,11 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
           g_signal_connect_swapped (palette, "dirty",
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     selection);
-          gimp_view_set_viewable (GIMP_VIEW (selection->view),
-                                  GIMP_VIEWABLE (palette));
+          ligma_view_set_viewable (LIGMA_VIEW (selection->view),
+                                  LIGMA_VIEWABLE (palette));
 
           gtk_adjustment_set_upper (selection->index_adjustment,
-                                    gimp_image_get_colormap_size (selection->active_image) - 1);
+                                    ligma_image_get_colormap_size (selection->active_image) - 1);
         }
     }
 }

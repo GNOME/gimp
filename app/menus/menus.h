@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,20 @@
 #define __MENUS_H__
 
 
-extern GimpMenuFactory *global_menu_factory;
+extern LigmaMenuFactory *global_menu_factory;
 
 
-void       menus_init    (Gimp               *gimp,
-                          GimpActionFactory  *action_factory);
-void       menus_exit    (Gimp               *gimp);
+void       menus_init    (Ligma               *ligma,
+                          LigmaActionFactory  *action_factory);
+void       menus_exit    (Ligma               *ligma);
 
-void       menus_restore (Gimp               *gimp);
-void       menus_save    (Gimp               *gimp,
+void       menus_restore (Ligma               *ligma);
+void       menus_save    (Ligma               *ligma,
                           gboolean            always_save);
 
-gboolean   menus_clear   (Gimp               *gimp,
+gboolean   menus_clear   (Ligma               *ligma,
                           GError            **error);
-void       menus_remove  (Gimp               *gimp);
+void       menus_remove  (Ligma               *ligma);
 
 
 #endif /* __MENUS_H__ */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimptaggedcontainer.h
+ * ligmataggedcontainer.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,50 +18,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAGGED_CONTAINER_H__
-#define __GIMP_TAGGED_CONTAINER_H__
+#ifndef __LIGMA_TAGGED_CONTAINER_H__
+#define __LIGMA_TAGGED_CONTAINER_H__
 
 
-#include "gimpfilteredcontainer.h"
+#include "ligmafilteredcontainer.h"
 
 
-#define GIMP_TYPE_TAGGED_CONTAINER            (gimp_tagged_container_get_type ())
-#define GIMP_TAGGED_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAGGED_CONTAINER, GimpTaggedContainer))
-#define GIMP_TAGGED_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAGGED_CONTAINER, GimpTaggedContainerClass))
-#define GIMP_IS_TAGGED_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAGGED_CONTAINER))
-#define GIMP_IS_TAGGED_CONTAINER_CLASS(class) (G_TYPE_CHECK_CLASS_TYPE ((class), GIMP_TYPE_TAGGED_CONTAINER))
-#define GIMP_TAGGED_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAGGED_CONTAINER, GimpTaggedContainerClass))
+#define LIGMA_TYPE_TAGGED_CONTAINER            (ligma_tagged_container_get_type ())
+#define LIGMA_TAGGED_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TAGGED_CONTAINER, LigmaTaggedContainer))
+#define LIGMA_TAGGED_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TAGGED_CONTAINER, LigmaTaggedContainerClass))
+#define LIGMA_IS_TAGGED_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TAGGED_CONTAINER))
+#define LIGMA_IS_TAGGED_CONTAINER_CLASS(class) (G_TYPE_CHECK_CLASS_TYPE ((class), LIGMA_TYPE_TAGGED_CONTAINER))
+#define LIGMA_TAGGED_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TAGGED_CONTAINER, LigmaTaggedContainerClass))
 
 
-typedef struct _GimpTaggedContainerClass GimpTaggedContainerClass;
+typedef struct _LigmaTaggedContainerClass LigmaTaggedContainerClass;
 
-struct _GimpTaggedContainer
+struct _LigmaTaggedContainer
 {
-  GimpFilteredContainer  parent_instance;
+  LigmaFilteredContainer  parent_instance;
 
   GList                 *filter;
   GHashTable            *tag_ref_counts;
   gint                   tag_count;
 };
 
-struct _GimpTaggedContainerClass
+struct _LigmaTaggedContainerClass
 {
-  GimpFilteredContainerClass  parent_class;
+  LigmaFilteredContainerClass  parent_class;
 
-  void (* tag_count_changed) (GimpTaggedContainer *container,
+  void (* tag_count_changed) (LigmaTaggedContainer *container,
                               gint                 count);
 };
 
 
-GType           gimp_tagged_container_get_type      (void) G_GNUC_CONST;
+GType           ligma_tagged_container_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_tagged_container_new           (GimpContainer       *src_container);
+LigmaContainer * ligma_tagged_container_new           (LigmaContainer       *src_container);
 
-void            gimp_tagged_container_set_filter    (GimpTaggedContainer *tagged_container,
+void            ligma_tagged_container_set_filter    (LigmaTaggedContainer *tagged_container,
                                                      GList               *tags);
-const GList   * gimp_tagged_container_get_filter    (GimpTaggedContainer *tagged_container);
+const GList   * ligma_tagged_container_get_filter    (LigmaTaggedContainer *tagged_container);
 
-gint            gimp_tagged_container_get_tag_count (GimpTaggedContainer *container);
+gint            ligma_tagged_container_get_tag_count (LigmaTaggedContainer *container);
 
 
-#endif  /* __GIMP_TAGGED_CONTAINER_H__ */
+#endif  /* __LIGMA_TAGGED_CONTAINER_H__ */

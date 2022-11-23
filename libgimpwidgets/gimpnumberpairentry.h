@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpratioentry.h
- * Copyright (C) 2006  Simon Budig       <simon@gimp.org>
- * Copyright (C) 2007  Sven Neumann      <sven@gimp.org>
+ * ligmaratioentry.h
+ * Copyright (C) 2006  Simon Budig       <simon@ligma.org>
+ * Copyright (C) 2007  Sven Neumann      <sven@ligma.org>
  * Copyright (C) 2007  Martin Nordholts  <martin@svn.gnome.org>
  *
  * This library is free software: you can redistribute it and/or
@@ -21,89 +21,89 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_NUMBER_PAIR_ENTRY_H__
-#define __GIMP_NUMBER_PAIR_ENTRY_H__
+#ifndef __LIGMA_NUMBER_PAIR_ENTRY_H__
+#define __LIGMA_NUMBER_PAIR_ENTRY_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_NUMBER_PAIR_ENTRY            (gimp_number_pair_entry_get_type ())
-#define GIMP_NUMBER_PAIR_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NUMBER_PAIR_ENTRY, GimpNumberPairEntry))
-#define GIMP_NUMBER_PAIR_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NUMBER_PAIR_ENTRY, GimpNumberPairEntryClass))
-#define GIMP_IS_NUMBER_PAIR_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NUMBER_PAIR_ENTRY))
-#define GIMP_IS_NUMBER_PAIR_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NUMBER_PAIR_ENTRY))
-#define GIMP_NUMBER_PAIR_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NUMBER_PAIR_AREA, GimpNumberPairEntryClass))
+#define LIGMA_TYPE_NUMBER_PAIR_ENTRY            (ligma_number_pair_entry_get_type ())
+#define LIGMA_NUMBER_PAIR_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_NUMBER_PAIR_ENTRY, LigmaNumberPairEntry))
+#define LIGMA_NUMBER_PAIR_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_NUMBER_PAIR_ENTRY, LigmaNumberPairEntryClass))
+#define LIGMA_IS_NUMBER_PAIR_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_NUMBER_PAIR_ENTRY))
+#define LIGMA_IS_NUMBER_PAIR_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_NUMBER_PAIR_ENTRY))
+#define LIGMA_NUMBER_PAIR_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_NUMBER_PAIR_AREA, LigmaNumberPairEntryClass))
 
 
-typedef struct _GimpNumberPairEntryPrivate GimpNumberPairEntryPrivate;
-typedef struct _GimpNumberPairEntryClass   GimpNumberPairEntryClass;
+typedef struct _LigmaNumberPairEntryPrivate LigmaNumberPairEntryPrivate;
+typedef struct _LigmaNumberPairEntryClass   LigmaNumberPairEntryClass;
 
 
-struct _GimpNumberPairEntry
+struct _LigmaNumberPairEntry
 {
   GtkEntry                    parent_instance;
 
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 };
 
-struct _GimpNumberPairEntryClass
+struct _LigmaNumberPairEntryClass
 {
   GtkEntryClass  parent_class;
 
-  void (* numbers_changed) (GimpNumberPairEntry *entry);
-  void (* ratio_changed)   (GimpNumberPairEntry *entry);
+  void (* numbers_changed) (LigmaNumberPairEntry *entry);
+  void (* ratio_changed)   (LigmaNumberPairEntry *entry);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_number_pair_entry_get_type           (void) G_GNUC_CONST;
-GtkWidget *    gimp_number_pair_entry_new                (const gchar         *separators,
+GType          ligma_number_pair_entry_get_type           (void) G_GNUC_CONST;
+GtkWidget *    ligma_number_pair_entry_new                (const gchar         *separators,
                                                           gboolean             allow_simplification,
                                                           gdouble              min_valid_value,
                                                           gdouble              max_valid_value);
-void           gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_set_default_values (LigmaNumberPairEntry *entry,
                                                           gdouble              left,
                                                           gdouble              right);
-void           gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_get_default_values (LigmaNumberPairEntry *entry,
                                                           gdouble             *left,
                                                           gdouble             *right);
-void           gimp_number_pair_entry_set_values         (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_set_values         (LigmaNumberPairEntry *entry,
                                                           gdouble              left,
                                                           gdouble              right);
-void           gimp_number_pair_entry_get_values         (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_get_values         (LigmaNumberPairEntry *entry,
                                                           gdouble             *left,
                                                           gdouble             *right);
 
-void           gimp_number_pair_entry_set_default_text   (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_set_default_text   (LigmaNumberPairEntry *entry,
                                                           const gchar         *string);
-const gchar *  gimp_number_pair_entry_get_default_text   (GimpNumberPairEntry *entry);
+const gchar *  ligma_number_pair_entry_get_default_text   (LigmaNumberPairEntry *entry);
 
-void           gimp_number_pair_entry_set_ratio          (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_set_ratio          (LigmaNumberPairEntry *entry,
                                                           gdouble              ratio);
-gdouble        gimp_number_pair_entry_get_ratio          (GimpNumberPairEntry *entry);
+gdouble        ligma_number_pair_entry_get_ratio          (LigmaNumberPairEntry *entry);
 
-void           gimp_number_pair_entry_set_aspect         (GimpNumberPairEntry *entry,
-                                                          GimpAspectType       aspect);
-GimpAspectType gimp_number_pair_entry_get_aspect         (GimpNumberPairEntry *entry);
+void           ligma_number_pair_entry_set_aspect         (LigmaNumberPairEntry *entry,
+                                                          LigmaAspectType       aspect);
+LigmaAspectType ligma_number_pair_entry_get_aspect         (LigmaNumberPairEntry *entry);
 
-void           gimp_number_pair_entry_set_user_override  (GimpNumberPairEntry *entry,
+void           ligma_number_pair_entry_set_user_override  (LigmaNumberPairEntry *entry,
                                                           gboolean             user_override);
-gboolean       gimp_number_pair_entry_get_user_override  (GimpNumberPairEntry *entry);
+gboolean       ligma_number_pair_entry_get_user_override  (LigmaNumberPairEntry *entry);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_NUMBER_PAIR_ENTRY_H__ */
+#endif /* __LIGMA_NUMBER_PAIR_ENTRY_H__ */

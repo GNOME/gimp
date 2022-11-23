@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,54 +19,54 @@
 #define __CHANNELS_COMMANDS_H__
 
 
-void   channels_edit_attributes_cmd_callback (GimpAction *action,
+void   channels_edit_attributes_cmd_callback (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-void   channels_new_cmd_callback             (GimpAction *action,
+void   channels_new_cmd_callback             (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-void   channels_new_last_vals_cmd_callback   (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-
-void   channels_raise_cmd_callback           (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-void   channels_raise_to_top_cmd_callback    (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-void   channels_lower_cmd_callback           (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-void   channels_lower_to_bottom_cmd_callback (GimpAction *action,
+void   channels_new_last_vals_cmd_callback   (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
 
-void   channels_duplicate_cmd_callback       (GimpAction *action,
+void   channels_raise_cmd_callback           (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-void   channels_delete_cmd_callback          (GimpAction *action,
+void   channels_raise_to_top_cmd_callback    (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-void   channels_to_selection_cmd_callback    (GimpAction *action,
+void   channels_lower_cmd_callback           (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
-
-void   channels_visible_cmd_callback         (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-void   channels_lock_content_cmd_callback    (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data);
-void   channels_lock_position_cmd_callback   (GimpAction *action,
+void   channels_lower_to_bottom_cmd_callback (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
 
-void   channels_color_tag_cmd_callback       (GimpAction *action,
+void   channels_duplicate_cmd_callback       (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_delete_cmd_callback          (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_to_selection_cmd_callback    (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
 
-void   channels_select_cmd_callback          (GimpAction *action,
+void   channels_visible_cmd_callback         (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lock_content_cmd_callback    (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lock_position_cmd_callback   (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+
+void   channels_color_tag_cmd_callback       (LigmaAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+
+void   channels_select_cmd_callback          (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data);
 

@@ -2,7 +2,7 @@
 PARASITE REGISTRY
 =================
 
-This document describes parasites in GIMP. 
+This document describes parasites in LIGMA. 
 
 
 Table of contents
@@ -26,12 +26,12 @@ Parasite registry
 
 Audience
 --------
-This document is designed for the convenience of GIMP developers.
+This document is designed for the convenience of LIGMA developers.
 It does not need to concern users.
 
 >>>> If your plug-in or script writes parasites, please
 >>>> amend this file in the Git repository or submit patches to
->>>> gimp-developer-list@gnome.org
+>>>> ligma-developer-list@gnome.org
 
 
 1. NAMESPACE
@@ -50,11 +50,11 @@ Global data follows no strict rules.
 2. KNOWN PREFIXES
 =================
 
-"tiff"    : The standard GIMP TIFF plugin
-"jpeg"    : The standard GIMP JPEG plugin
-"png"     : The standard GIMP PNG plugin
-"dcm"     : The standard GIMP DICOM plugin
-"gimp"    : For common and standard parasites
+"tiff"    : The standard LIGMA TIFF plugin
+"jpeg"    : The standard LIGMA JPEG plugin
+"png"     : The standard LIGMA PNG plugin
+"dcm"     : The standard LIGMA DICOM plugin
+"ligma"    : For common and standard parasites
 
 
 3. KNOWN GLOBAL PARASITES
@@ -67,7 +67,7 @@ Global data follows no strict rules.
         Default save parameters used by the PNG plug-in.
 
 "<plug-in>/_fu_data" (GLOBAL, IMAGE, DRAWABLE, PERSISTENT)
-        The Gimp::Fu module (Perl) might store the arguments of the
+        The Ligma::Fu module (Perl) might store the arguments of the
         last plug-in invocation. It is usually attached to images,
         but might also be found globally. The data format is either
         pure character data (Data::Dumper) or a serialized data
@@ -84,25 +84,25 @@ Global data follows no strict rules.
 4. KNOWN IMAGE PARASITES
 ========================
 
-"gimp-comment" (IMAGE, PERSISTENT)
+"ligma-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
         human-readable text in UTF-8 encoding.  A trailing \0 might
         be included and is not part of the comment.  Note that image
-        comments may also be present in the "gimp-metadata" parasite.
+        comments may also be present in the "ligma-metadata" parasite.
 
-"gimp-brush-name" (IMAGE, PERSISTENT)
-        A string in UTF-8 encoding specifying the name of a GIMP brush.
+"ligma-brush-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a LIGMA brush.
         Currently, the gbr plug-in uses this parasite when loading and
         saving .gbr files. A trailing \0 might be included and is not
         part of the name.
 
-"gimp-brush-pipe-name" (IMAGE, PERSISTENT)
-        A string in UTF-8 encoding specifying the name of a GIMP brush
+"ligma-brush-pipe-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a LIGMA brush
         pipe. Currently, the gih plug-in uses this parasite when loading and
         saving .gih files. A trailing \0 might be included and is not
         part of the name.
 
-"gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
+"ligma-brush-pipe-parameters" (IMAGE, PERSISTENT)
 	This is all very preliminary:
 
 	A string, containing parameters describing how an brush pipe
@@ -123,7 +123,7 @@ Global data follows no strict rules.
 		in the pipe should be equal to the product
 		of the ranks of each dimension.
 	cols: number of columns in each layer of the image,
-		to be used when editing the pipe as a GIMP image
+		to be used when editing the pipe as a LIGMA image
 	rows: ditto for rows. Note that the number of columns and rows
 		not necessarily are identical to the ranks of the
 		dimensions of a pipe, but in the case of two-
@@ -141,14 +141,14 @@ Global data follows no strict rules.
 		think of ;-) Determines how one index from each dimension is
 		selected (until we have pinpointed the brush to use).
 
-"gimp-image-grid" (IMAGE, PERSISTENT)
-        The GimpGrid object serialized to a string. Saved as parasite
-        to keep the XCF files backwards compatible. Although gimp-1.2
+"ligma-image-grid" (IMAGE, PERSISTENT)
+        The LigmaGrid object serialized to a string. Saved as parasite
+        to keep the XCF files backwards compatible. Although ligma-1.2
         does not know how to handle the image grid, it keeps the grid
         information intact.
 
-"gimp-pattern-name" (IMAGE, PERSISTENT)
-        A string in UTF-8 encoding specifying the name of a GIMP pattern.
+"ligma-pattern-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a LIGMA pattern.
         Currently, the pat plug-in uses this parasite when loading and
         saving .pat files. A trailing \0 might be included and is not
         part of the name.
@@ -171,7 +171,7 @@ Global data follows no strict rules.
 
 "gamma" (IMAGE, PERSISTENT)
 	The original gamma this image was created/saved. For JPEG; this is
-        always one, for PNG it's usually taken from the image data. GIMP
+        always one, for PNG it's usually taken from the image data. LIGMA
         might use and modify this. The format is an ascii string with the
         gamma exponent as a flotingpoint value.
 
@@ -203,10 +203,10 @@ Global data follows no strict rules.
 
 "exif-data" (IMAGE, PERSISTENT)
         The ExifData structure serialized into a character array by
-        libexif (using exif_data_save_data). If a "gimp-metadata"
+        libexif (using exif_data_save_data). If a "ligma-metadata"
         parasite is present, it should take precedence over this one.
 
-"gimp-metadata" (IMAGE, PERSISTENT)
+"ligma-metadata" (IMAGE, PERSISTENT)
 	The metadata associated with the image, serialized as one XMP
 	packet.  This metadata includes the contents of any XMP, EXIF
 	and IPTC blocks from the original image, as well as
@@ -228,7 +228,7 @@ Global data follows no strict rules.
         for use as a parasite.
 
 "decompose-data" (IMAGE, NONPERSISTENT) 
-        Starting with GIMP 2.4, this is added to images produced by
+        Starting with LIGMA 2.4, this is added to images produced by
         the decompose plug-in, and contains information necessary to
         recompose the original source RGB layer from the resulting
         grayscale layers.  It is ascii; a typical example would be
@@ -238,16 +238,16 @@ Global data follows no strict rules.
 "print-settings" (IMAGE, NONPERSISTENT) 
         This parasite is stored by the Print plug-in and holds settings
         done in the Print dialog. It also has a version field so that
-        changes to the parasite can be done. GIMP 2.4 used version 0.3.
+        changes to the parasite can be done. LIGMA 2.4 used version 0.3.
         The format is GKeyFile. A lot of the contents are identical to
-        what is stored in ~/.gimp-2.x/print-settings but the parasite
+        what is stored in ~/.ligma-2.x/print-settings but the parasite
         has some additional image-related fields.
 
 "print-page-setup" (IMAGE, NONPERSISTENT) 
         This parasite is stored by the Print plug-in and holds settings
         done in the Page Setup dialog. The format is GKeyFile as created
         from GtkPageSetup. The content is identical to what is stored in
-	~/.gimp-2.x/print-page-setup.
+	~/.ligma-2.x/print-page-setup.
 
 "dcm/XXXX-XXXX-AA" (IMAGE, PERSISTENT)
         These parasites are stored by the Dicom plug-in and hold the DICOM
@@ -261,15 +261,15 @@ Global data follows no strict rules.
 5. KNOWN LAYER/DRAWABLE PARASITES
 =================================
 
-"gimp-text-layer" (LAYER, PERSISTENT)
-        The associated GimpText object serialized to a string. For
+"ligma-text-layer" (LAYER, PERSISTENT)
+        The associated LigmaText object serialized to a string. For
         convenience the string is terminated by a trailing '\0'.
         The idea of using a parasite for text layers is to keep the XCF
-        files backward compatible. Although gimp-1.2 doesn't know how
+        files backward compatible. Although ligma-1.2 doesn't know how
         to handle the text layer, it keeps the parasite intact.
 
 "gfig" (LAYER, PERSISTENT)
-        As of GIMP 2.2, the gfig plug-in creates its own layers, and
+        As of LIGMA 2.2, the gfig plug-in creates its own layers, and
         stores a representation of the figure as a layer parasite.
         The parasite contains a GFig save file, in an ascii format.
         If gfig is started while the active layer contains a "gfig"
@@ -281,7 +281,7 @@ Global data follows no strict rules.
 
 The parasite data format is not rigidly specified. For non-persistent
 parasites you are entirely free, as the parasite data does not survive the
-current gimp session. If you need persistent data, you basically have to
+current ligma session. If you need persistent data, you basically have to
 choose between the following alternatives (also, having some standard for
 non-persistent data might be fine as well):
 
@@ -307,10 +307,10 @@ non-persistent data might be fine as well):
   You could also use one parasite per field you store, i.e. foo-size,
   foo-offset-x, foo-offset-y etc...
 
-- Use the libgimpconfig serialize functions
+- Use the libligmaconfig serialize functions
 
   This is a special case of the previous one, using the convenience
-  functions provided by libgimpconfig.  If you are not concerned about
+  functions provided by libligmaconfig.  If you are not concerned about
   the size of the string representation of your data, you can use
-  gimp_config_serialize_to_string() and other functions to easily
+  ligma_config_serialize_to_string() and other functions to easily
   convert your data to/from a character string.

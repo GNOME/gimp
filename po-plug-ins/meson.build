@@ -4,6 +4,6 @@ i18n.gettext(gettext_package + '-std-plug-ins', preset: 'glib')
 # Special-casing, we just reuse the same locale dictionnary for our demo
 # extension. We could have separated the strings but just for the sake
 # of demo on code-side, it's simpler to do it this way.
-extension_i18n = 'org.gimp.extension.goat-exercises'
+extension_i18n = 'org.ligma.extension.goat-exercises'
 i18n.gettext(extension_i18n, preset: 'glib',
-             install_dir: gimpplugindir /  'extensions' / extension_i18n / 'locale')
+             install_dir: ligmaplugindir /  'extensions' / extension_i18n / 'locale')

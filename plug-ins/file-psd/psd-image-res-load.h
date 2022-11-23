@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ gint  get_image_resource_header (PSDimageres   *res_a,
                                  GError       **error);
 
 gint  load_image_resource       (PSDimageres   *res_a,
-                                 GimpImage     *image,
+                                 LigmaImage     *image,
                                  PSDimage      *img_a,
                                  GInputStream  *input,
                                  gboolean      *resolution_loaded,
@@ -35,7 +35,7 @@ gint  load_image_resource       (PSDimageres   *res_a,
                                  GError       **error);
 
 gint  load_thumbnail_resource   (PSDimageres   *res_a,
-                                 GimpImage     *image,
+                                 LigmaImage     *image,
                                  GFile         *file,
                                  GInputStream  *input,
                                  GError       **error);

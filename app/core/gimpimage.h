@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,210 +15,210 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_H__
-#define __GIMP_IMAGE_H__
+#ifndef __LIGMA_IMAGE_H__
+#define __LIGMA_IMAGE_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_IMAGE_ACTIVE_PARENT ((gpointer) 1)
+#define LIGMA_IMAGE_ACTIVE_PARENT ((gpointer) 1)
 
 
-#define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
-#define GIMP_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE, GimpImage))
-#define GIMP_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE, GimpImageClass))
-#define GIMP_IS_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE))
-#define GIMP_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE))
-#define GIMP_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE, GimpImageClass))
+#define LIGMA_TYPE_IMAGE            (ligma_image_get_type ())
+#define LIGMA_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE, LigmaImage))
+#define LIGMA_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE, LigmaImageClass))
+#define LIGMA_IS_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE))
+#define LIGMA_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE))
+#define LIGMA_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE, LigmaImageClass))
 
 
-typedef struct _GimpImageClass   GimpImageClass;
-typedef struct _GimpImagePrivate GimpImagePrivate;
+typedef struct _LigmaImageClass   LigmaImageClass;
+typedef struct _LigmaImagePrivate LigmaImagePrivate;
 
-struct _GimpImage
+struct _LigmaImage
 {
-  GimpViewable      parent_instance;
+  LigmaViewable      parent_instance;
 
-  Gimp             *gimp;  /*  the GIMP the image belongs to  */
+  Ligma             *ligma;  /*  the LIGMA the image belongs to  */
 
-  GimpImagePrivate *priv;
+  LigmaImagePrivate *priv;
 };
 
-struct _GimpImageClass
+struct _LigmaImageClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
   /*  signals  */
-  void (* mode_changed)                 (GimpImage            *image);
-  void (* precision_changed)            (GimpImage            *image);
-  void (* alpha_changed)                (GimpImage            *image);
-  void (* floating_selection_changed)   (GimpImage            *image);
-  void (* selected_channels_changed)    (GimpImage            *image);
-  void (* selected_vectors_changed)     (GimpImage            *image);
-  void (* selected_layers_changed)      (GimpImage            *image);
-  void (* component_visibility_changed) (GimpImage            *image,
-                                         GimpChannelType       channel);
-  void (* component_active_changed)     (GimpImage            *image,
-                                         GimpChannelType       channel);
-  void (* mask_changed)                 (GimpImage            *image);
-  void (* resolution_changed)           (GimpImage            *image);
-  void (* size_changed_detailed)        (GimpImage            *image,
+  void (* mode_changed)                 (LigmaImage            *image);
+  void (* precision_changed)            (LigmaImage            *image);
+  void (* alpha_changed)                (LigmaImage            *image);
+  void (* floating_selection_changed)   (LigmaImage            *image);
+  void (* selected_channels_changed)    (LigmaImage            *image);
+  void (* selected_vectors_changed)     (LigmaImage            *image);
+  void (* selected_layers_changed)      (LigmaImage            *image);
+  void (* component_visibility_changed) (LigmaImage            *image,
+                                         LigmaChannelType       channel);
+  void (* component_active_changed)     (LigmaImage            *image,
+                                         LigmaChannelType       channel);
+  void (* mask_changed)                 (LigmaImage            *image);
+  void (* resolution_changed)           (LigmaImage            *image);
+  void (* size_changed_detailed)        (LigmaImage            *image,
                                          gint                  previous_origin_x,
                                          gint                  previous_origin_y,
                                          gint                  previous_width,
                                          gint                  previous_height);
-  void (* unit_changed)                 (GimpImage            *image);
-  void (* quick_mask_changed)           (GimpImage            *image);
-  void (* selection_invalidate)         (GimpImage            *image);
+  void (* unit_changed)                 (LigmaImage            *image);
+  void (* quick_mask_changed)           (LigmaImage            *image);
+  void (* selection_invalidate)         (LigmaImage            *image);
 
-  void (* clean)                        (GimpImage            *image,
-                                         GimpDirtyMask         dirty_mask);
-  void (* dirty)                        (GimpImage            *image,
-                                         GimpDirtyMask         dirty_mask);
-  void (* saving)                       (GimpImage            *image);
-  void (* saved)                        (GimpImage            *image,
+  void (* clean)                        (LigmaImage            *image,
+                                         LigmaDirtyMask         dirty_mask);
+  void (* dirty)                        (LigmaImage            *image,
+                                         LigmaDirtyMask         dirty_mask);
+  void (* saving)                       (LigmaImage            *image);
+  void (* saved)                        (LigmaImage            *image,
                                          GFile                *file);
-  void (* exported)                     (GimpImage            *image,
+  void (* exported)                     (LigmaImage            *image,
                                          GFile                *file);
 
-  void (* guide_added)                  (GimpImage            *image,
-                                         GimpGuide            *guide);
-  void (* guide_removed)                (GimpImage            *image,
-                                         GimpGuide            *guide);
-  void (* guide_moved)                  (GimpImage            *image,
-                                         GimpGuide            *guide);
-  void (* sample_point_added)           (GimpImage            *image,
-                                         GimpSamplePoint      *sample_point);
-  void (* sample_point_removed)         (GimpImage            *image,
-                                         GimpSamplePoint      *sample_point);
-  void (* sample_point_moved)           (GimpImage            *image,
-                                         GimpSamplePoint      *sample_point);
-  void (* parasite_attached)            (GimpImage            *image,
+  void (* guide_added)                  (LigmaImage            *image,
+                                         LigmaGuide            *guide);
+  void (* guide_removed)                (LigmaImage            *image,
+                                         LigmaGuide            *guide);
+  void (* guide_moved)                  (LigmaImage            *image,
+                                         LigmaGuide            *guide);
+  void (* sample_point_added)           (LigmaImage            *image,
+                                         LigmaSamplePoint      *sample_point);
+  void (* sample_point_removed)         (LigmaImage            *image,
+                                         LigmaSamplePoint      *sample_point);
+  void (* sample_point_moved)           (LigmaImage            *image,
+                                         LigmaSamplePoint      *sample_point);
+  void (* parasite_attached)            (LigmaImage            *image,
                                          const gchar          *name);
-  void (* parasite_detached)            (GimpImage            *image,
+  void (* parasite_detached)            (LigmaImage            *image,
                                          const gchar          *name);
-  void (* colormap_changed)             (GimpImage            *image,
+  void (* colormap_changed)             (LigmaImage            *image,
                                          gint                  color_index);
-  void (* undo_event)                   (GimpImage            *image,
-                                         GimpUndoEvent         event,
-                                         GimpUndo             *undo);
-  void (* layer_sets_changed)           (GimpImage            *image);
-  void (* channel_sets_changed)         (GimpImage            *image);
-  void (* vectors_sets_changed)         (GimpImage            *image);
+  void (* undo_event)                   (LigmaImage            *image,
+                                         LigmaUndoEvent         event,
+                                         LigmaUndo             *undo);
+  void (* layer_sets_changed)           (LigmaImage            *image);
+  void (* channel_sets_changed)         (LigmaImage            *image);
+  void (* vectors_sets_changed)         (LigmaImage            *image);
 };
 
 
-GType           gimp_image_get_type              (void) G_GNUC_CONST;
+GType           ligma_image_get_type              (void) G_GNUC_CONST;
 
-GimpImage     * gimp_image_new                   (Gimp               *gimp,
+LigmaImage     * ligma_image_new                   (Ligma               *ligma,
                                                   gint                width,
                                                   gint                height,
-                                                  GimpImageBaseType   base_type,
-                                                  GimpPrecision       precision);
+                                                  LigmaImageBaseType   base_type,
+                                                  LigmaPrecision       precision);
 
-gint64          gimp_image_estimate_memsize      (GimpImage          *image,
-                                                  GimpComponentType   component_type,
+gint64          ligma_image_estimate_memsize      (LigmaImage          *image,
+                                                  LigmaComponentType   component_type,
                                                   gint                width,
                                                   gint                height);
 
-GimpImageBaseType  gimp_image_get_base_type      (GimpImage          *image);
-GimpComponentType  gimp_image_get_component_type (GimpImage          *image);
-GimpPrecision      gimp_image_get_precision      (GimpImage          *image);
+LigmaImageBaseType  ligma_image_get_base_type      (LigmaImage          *image);
+LigmaComponentType  ligma_image_get_component_type (LigmaImage          *image);
+LigmaPrecision      ligma_image_get_precision      (LigmaImage          *image);
 
-const Babl    * gimp_image_get_format            (GimpImage          *image,
-                                                  GimpImageBaseType   base_type,
-                                                  GimpPrecision       precision,
+const Babl    * ligma_image_get_format            (LigmaImage          *image,
+                                                  LigmaImageBaseType   base_type,
+                                                  LigmaPrecision       precision,
                                                   gboolean            with_alpha,
                                                   const Babl         *space);
 
-const Babl    * gimp_image_get_layer_space       (GimpImage          *image);
-const Babl    * gimp_image_get_layer_format      (GimpImage          *image,
+const Babl    * ligma_image_get_layer_space       (LigmaImage          *image);
+const Babl    * ligma_image_get_layer_format      (LigmaImage          *image,
                                                   gboolean            with_alpha);
-const Babl    * gimp_image_get_channel_format    (GimpImage          *image);
-const Babl    * gimp_image_get_mask_format       (GimpImage          *image);
+const Babl    * ligma_image_get_channel_format    (LigmaImage          *image);
+const Babl    * ligma_image_get_mask_format       (LigmaImage          *image);
 
-GimpLayerMode   gimp_image_get_default_new_layer_mode
-                                                 (GimpImage          *image);
-void            gimp_image_unset_default_new_layer_mode
-                                                 (GimpImage          *image);
+LigmaLayerMode   ligma_image_get_default_new_layer_mode
+                                                 (LigmaImage          *image);
+void            ligma_image_unset_default_new_layer_mode
+                                                 (LigmaImage          *image);
 
-gint            gimp_image_get_id                (GimpImage          *image);
-GimpImage     * gimp_image_get_by_id             (Gimp               *gimp,
+gint            ligma_image_get_id                (LigmaImage          *image);
+LigmaImage     * ligma_image_get_by_id             (Ligma               *ligma,
                                                   gint                id);
 
-GFile         * gimp_image_get_file              (GimpImage          *image);
-GFile         * gimp_image_get_untitled_file     (GimpImage          *image);
-GFile         * gimp_image_get_file_or_untitled  (GimpImage          *image);
-GFile         * gimp_image_get_imported_file     (GimpImage          *image);
-GFile         * gimp_image_get_exported_file     (GimpImage          *image);
-GFile         * gimp_image_get_save_a_copy_file  (GimpImage          *image);
-GFile         * gimp_image_get_any_file          (GimpImage          *image);
+GFile         * ligma_image_get_file              (LigmaImage          *image);
+GFile         * ligma_image_get_untitled_file     (LigmaImage          *image);
+GFile         * ligma_image_get_file_or_untitled  (LigmaImage          *image);
+GFile         * ligma_image_get_imported_file     (LigmaImage          *image);
+GFile         * ligma_image_get_exported_file     (LigmaImage          *image);
+GFile         * ligma_image_get_save_a_copy_file  (LigmaImage          *image);
+GFile         * ligma_image_get_any_file          (LigmaImage          *image);
 
-void            gimp_image_set_file              (GimpImage          *image,
+void            ligma_image_set_file              (LigmaImage          *image,
                                                   GFile              *file);
-void            gimp_image_set_imported_file     (GimpImage          *image,
+void            ligma_image_set_imported_file     (LigmaImage          *image,
                                                   GFile              *file);
-void            gimp_image_set_exported_file     (GimpImage          *image,
+void            ligma_image_set_exported_file     (LigmaImage          *image,
                                                   GFile              *file);
-void            gimp_image_set_save_a_copy_file  (GimpImage          *image,
-                                                  GFile              *file);
-
-const gchar   * gimp_image_get_display_name      (GimpImage          *image);
-const gchar   * gimp_image_get_display_path      (GimpImage          *image);
-
-void            gimp_image_set_load_proc         (GimpImage          *image,
-                                                  GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_load_proc   (GimpImage          *image);
-void            gimp_image_set_save_proc         (GimpImage          *image,
-                                                  GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_save_proc   (GimpImage          *image);
-void            gimp_image_saving                (GimpImage          *image);
-void            gimp_image_saved                 (GimpImage          *image,
-                                                  GFile              *file);
-void            gimp_image_set_export_proc       (GimpImage          *image,
-                                                  GimpPlugInProcedure *proc);
-GimpPlugInProcedure * gimp_image_get_export_proc (GimpImage          *image);
-void            gimp_image_exported              (GimpImage          *image,
+void            ligma_image_set_save_a_copy_file  (LigmaImage          *image,
                                                   GFile              *file);
 
-gint            gimp_image_get_xcf_version       (GimpImage          *image,
+const gchar   * ligma_image_get_display_name      (LigmaImage          *image);
+const gchar   * ligma_image_get_display_path      (LigmaImage          *image);
+
+void            ligma_image_set_load_proc         (LigmaImage          *image,
+                                                  LigmaPlugInProcedure *proc);
+LigmaPlugInProcedure * ligma_image_get_load_proc   (LigmaImage          *image);
+void            ligma_image_set_save_proc         (LigmaImage          *image,
+                                                  LigmaPlugInProcedure *proc);
+LigmaPlugInProcedure * ligma_image_get_save_proc   (LigmaImage          *image);
+void            ligma_image_saving                (LigmaImage          *image);
+void            ligma_image_saved                 (LigmaImage          *image,
+                                                  GFile              *file);
+void            ligma_image_set_export_proc       (LigmaImage          *image,
+                                                  LigmaPlugInProcedure *proc);
+LigmaPlugInProcedure * ligma_image_get_export_proc (LigmaImage          *image);
+void            ligma_image_exported              (LigmaImage          *image,
+                                                  GFile              *file);
+
+gint            ligma_image_get_xcf_version       (LigmaImage          *image,
                                                   gboolean            zlib_compression,
-                                                  gint               *gimp_version,
+                                                  gint               *ligma_version,
                                                   const gchar       **version_string,
                                                   gchar             **version_reason);
 
-void            gimp_image_set_xcf_compression   (GimpImage          *image,
+void            ligma_image_set_xcf_compression   (LigmaImage          *image,
                                                   gboolean            compression);
-gboolean        gimp_image_get_xcf_compression   (GimpImage          *image);
+gboolean        ligma_image_get_xcf_compression   (LigmaImage          *image);
 
-void            gimp_image_set_resolution        (GimpImage          *image,
+void            ligma_image_set_resolution        (LigmaImage          *image,
                                                   gdouble             xres,
                                                   gdouble             yres);
-void            gimp_image_get_resolution        (GimpImage          *image,
+void            ligma_image_get_resolution        (LigmaImage          *image,
                                                   gdouble            *xres,
                                                   gdouble            *yres);
-void            gimp_image_resolution_changed    (GimpImage          *image);
+void            ligma_image_resolution_changed    (LigmaImage          *image);
 
-void            gimp_image_set_unit              (GimpImage          *image,
-                                                  GimpUnit            unit);
-GimpUnit        gimp_image_get_unit              (GimpImage          *image);
-void            gimp_image_unit_changed          (GimpImage          *image);
+void            ligma_image_set_unit              (LigmaImage          *image,
+                                                  LigmaUnit            unit);
+LigmaUnit        ligma_image_get_unit              (LigmaImage          *image);
+void            ligma_image_unit_changed          (LigmaImage          *image);
 
-gint            gimp_image_get_width             (GimpImage          *image);
-gint            gimp_image_get_height            (GimpImage          *image);
+gint            ligma_image_get_width             (LigmaImage          *image);
+gint            ligma_image_get_height            (LigmaImage          *image);
 
-gboolean        gimp_image_has_alpha             (GimpImage          *image);
-gboolean        gimp_image_is_empty              (GimpImage          *image);
+gboolean        ligma_image_has_alpha             (LigmaImage          *image);
+gboolean        ligma_image_is_empty              (LigmaImage          *image);
 
-void           gimp_image_set_floating_selection (GimpImage          *image,
-                                                  GimpLayer          *floating_sel);
-GimpLayer    * gimp_image_get_floating_selection (GimpImage          *image);
-void       gimp_image_floating_selection_changed (GimpImage          *image);
+void           ligma_image_set_floating_selection (LigmaImage          *image,
+                                                  LigmaLayer          *floating_sel);
+LigmaLayer    * ligma_image_get_floating_selection (LigmaImage          *image);
+void       ligma_image_floating_selection_changed (LigmaImage          *image);
 
-GimpChannel   * gimp_image_get_mask              (GimpImage          *image);
-void            gimp_image_mask_changed          (GimpImage          *image);
-gboolean        gimp_image_mask_intersect        (GimpImage          *image,
+LigmaChannel   * ligma_image_get_mask              (LigmaImage          *image);
+void            ligma_image_mask_changed          (LigmaImage          *image);
+gboolean        ligma_image_mask_intersect        (LigmaImage          *image,
                                                   GList              *items,
                                                   gint               *x,
                                                   gint               *y,
@@ -228,223 +228,223 @@ gboolean        gimp_image_mask_intersect        (GimpImage          *image,
 
 /*  image components  */
 
-const Babl    * gimp_image_get_component_format  (GimpImage          *image,
-                                                  GimpChannelType     channel);
-gint            gimp_image_get_component_index   (GimpImage          *image,
-                                                  GimpChannelType     channel);
+const Babl    * ligma_image_get_component_format  (LigmaImage          *image,
+                                                  LigmaChannelType     channel);
+gint            ligma_image_get_component_index   (LigmaImage          *image,
+                                                  LigmaChannelType     channel);
 
-void            gimp_image_set_component_active  (GimpImage          *image,
-                                                  GimpChannelType     type,
+void            ligma_image_set_component_active  (LigmaImage          *image,
+                                                  LigmaChannelType     type,
                                                   gboolean            active);
-gboolean        gimp_image_get_component_active  (GimpImage          *image,
-                                                  GimpChannelType     type);
-void            gimp_image_get_active_array      (GimpImage          *image,
+gboolean        ligma_image_get_component_active  (LigmaImage          *image,
+                                                  LigmaChannelType     type);
+void            ligma_image_get_active_array      (LigmaImage          *image,
                                                   gboolean           *components);
-GimpComponentMask gimp_image_get_active_mask     (GimpImage          *image);
+LigmaComponentMask ligma_image_get_active_mask     (LigmaImage          *image);
 
-void            gimp_image_set_component_visible (GimpImage          *image,
-                                                  GimpChannelType     type,
+void            ligma_image_set_component_visible (LigmaImage          *image,
+                                                  LigmaChannelType     type,
                                                   gboolean            visible);
-gboolean        gimp_image_get_component_visible (GimpImage          *image,
-                                                  GimpChannelType     type);
-void            gimp_image_get_visible_array     (GimpImage          *image,
+gboolean        ligma_image_get_component_visible (LigmaImage          *image,
+                                                  LigmaChannelType     type);
+void            ligma_image_get_visible_array     (LigmaImage          *image,
                                                   gboolean           *components);
-GimpComponentMask gimp_image_get_visible_mask    (GimpImage          *image);
+LigmaComponentMask ligma_image_get_visible_mask    (LigmaImage          *image);
 
 
 /*  emitting image signals  */
 
-void            gimp_image_mode_changed          (GimpImage          *image);
-void            gimp_image_precision_changed     (GimpImage          *image);
-void            gimp_image_alpha_changed         (GimpImage          *image);
-void            gimp_image_invalidate            (GimpImage          *image,
+void            ligma_image_mode_changed          (LigmaImage          *image);
+void            ligma_image_precision_changed     (LigmaImage          *image);
+void            ligma_image_alpha_changed         (LigmaImage          *image);
+void            ligma_image_invalidate            (LigmaImage          *image,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_image_invalidate_all        (GimpImage          *image);
-void            gimp_image_guide_added           (GimpImage          *image,
-                                                  GimpGuide          *guide);
-void            gimp_image_guide_removed         (GimpImage          *image,
-                                                  GimpGuide          *guide);
-void            gimp_image_guide_moved           (GimpImage          *image,
-                                                  GimpGuide          *guide);
+void            ligma_image_invalidate_all        (LigmaImage          *image);
+void            ligma_image_guide_added           (LigmaImage          *image,
+                                                  LigmaGuide          *guide);
+void            ligma_image_guide_removed         (LigmaImage          *image,
+                                                  LigmaGuide          *guide);
+void            ligma_image_guide_moved           (LigmaImage          *image,
+                                                  LigmaGuide          *guide);
 
-void            gimp_image_sample_point_added    (GimpImage          *image,
-                                                  GimpSamplePoint    *sample_point);
-void            gimp_image_sample_point_removed  (GimpImage          *image,
-                                                  GimpSamplePoint    *sample_point);
-void            gimp_image_sample_point_moved    (GimpImage          *image,
-                                                  GimpSamplePoint    *sample_point);
-void            gimp_image_colormap_changed      (GimpImage          *image,
+void            ligma_image_sample_point_added    (LigmaImage          *image,
+                                                  LigmaSamplePoint    *sample_point);
+void            ligma_image_sample_point_removed  (LigmaImage          *image,
+                                                  LigmaSamplePoint    *sample_point);
+void            ligma_image_sample_point_moved    (LigmaImage          *image,
+                                                  LigmaSamplePoint    *sample_point);
+void            ligma_image_colormap_changed      (LigmaImage          *image,
                                                   gint                col);
-void            gimp_image_selection_invalidate  (GimpImage          *image);
-void            gimp_image_quick_mask_changed    (GimpImage          *image);
-void            gimp_image_size_changed_detailed (GimpImage          *image,
+void            ligma_image_selection_invalidate  (LigmaImage          *image);
+void            ligma_image_quick_mask_changed    (LigmaImage          *image);
+void            ligma_image_size_changed_detailed (LigmaImage          *image,
                                                   gint                previous_origin_x,
                                                   gint                previous_origin_y,
                                                   gint                previous_width,
                                                   gint                previous_height);
-void            gimp_image_undo_event            (GimpImage          *image,
-                                                  GimpUndoEvent       event,
-                                                  GimpUndo           *undo);
+void            ligma_image_undo_event            (LigmaImage          *image,
+                                                  LigmaUndoEvent       event,
+                                                  LigmaUndo           *undo);
 
 
 /*  dirty counters  */
 
-gint            gimp_image_dirty                 (GimpImage          *image,
-                                                  GimpDirtyMask       dirty_mask);
-gint            gimp_image_clean                 (GimpImage          *image,
-                                                  GimpDirtyMask       dirty_mask);
-void            gimp_image_clean_all             (GimpImage          *image);
-void            gimp_image_export_clean_all      (GimpImage          *image);
-gint            gimp_image_is_dirty              (GimpImage          *image);
-gboolean        gimp_image_is_export_dirty       (GimpImage          *image);
-gint64          gimp_image_get_dirty_time        (GimpImage          *image);
+gint            ligma_image_dirty                 (LigmaImage          *image,
+                                                  LigmaDirtyMask       dirty_mask);
+gint            ligma_image_clean                 (LigmaImage          *image,
+                                                  LigmaDirtyMask       dirty_mask);
+void            ligma_image_clean_all             (LigmaImage          *image);
+void            ligma_image_export_clean_all      (LigmaImage          *image);
+gint            ligma_image_is_dirty              (LigmaImage          *image);
+gboolean        ligma_image_is_export_dirty       (LigmaImage          *image);
+gint64          ligma_image_get_dirty_time        (LigmaImage          *image);
 
 
 /*  flush this image's displays  */
 
-void            gimp_image_flush                 (GimpImage          *image);
+void            ligma_image_flush                 (LigmaImage          *image);
 
 
 /*  display / instance counters  */
 
-gint            gimp_image_get_display_count     (GimpImage          *image);
-void            gimp_image_inc_display_count     (GimpImage          *image);
-void            gimp_image_dec_display_count     (GimpImage          *image);
+gint            ligma_image_get_display_count     (LigmaImage          *image);
+void            ligma_image_inc_display_count     (LigmaImage          *image);
+void            ligma_image_dec_display_count     (LigmaImage          *image);
 
-gint            gimp_image_get_instance_count    (GimpImage          *image);
-void            gimp_image_inc_instance_count    (GimpImage          *image);
+gint            ligma_image_get_instance_count    (LigmaImage          *image);
+void            ligma_image_inc_instance_count    (LigmaImage          *image);
 
-void            gimp_image_inc_show_all_count    (GimpImage          *image);
-void            gimp_image_dec_show_all_count    (GimpImage          *image);
+void            ligma_image_inc_show_all_count    (LigmaImage          *image);
+void            ligma_image_dec_show_all_count    (LigmaImage          *image);
 
 
 /*  parasites  */
 
-const GimpParasite * gimp_image_parasite_find    (GimpImage          *image,
+const LigmaParasite * ligma_image_parasite_find    (LigmaImage          *image,
                                                   const gchar        *name);
-gchar        ** gimp_image_parasite_list         (GimpImage          *image);
-gboolean        gimp_image_parasite_validate     (GimpImage          *image,
-                                                  const GimpParasite *parasite,
+gchar        ** ligma_image_parasite_list         (LigmaImage          *image);
+gboolean        ligma_image_parasite_validate     (LigmaImage          *image,
+                                                  const LigmaParasite *parasite,
                                                   GError            **error);
-void            gimp_image_parasite_attach       (GimpImage          *image,
-                                                  const GimpParasite *parasite,
+void            ligma_image_parasite_attach       (LigmaImage          *image,
+                                                  const LigmaParasite *parasite,
                                                   gboolean            push_undo);
-void            gimp_image_parasite_detach       (GimpImage          *image,
+void            ligma_image_parasite_detach       (LigmaImage          *image,
                                                   const gchar        *name,
                                                   gboolean            push_undo);
 
 
 /*  tattoos  */
 
-GimpTattoo      gimp_image_get_new_tattoo        (GimpImage          *image);
-gboolean        gimp_image_set_tattoo_state      (GimpImage          *image,
-                                                  GimpTattoo          val);
-GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
+LigmaTattoo      ligma_image_get_new_tattoo        (LigmaImage          *image);
+gboolean        ligma_image_set_tattoo_state      (LigmaImage          *image,
+                                                  LigmaTattoo          val);
+LigmaTattoo      ligma_image_get_tattoo_state      (LigmaImage          *image);
 
 
 /*  projection  */
 
-GimpProjection * gimp_image_get_projection       (GimpImage          *image);
+LigmaProjection * ligma_image_get_projection       (LigmaImage          *image);
 
 
 /*  layers / channels / vectors  */
 
-GimpItemTree  * gimp_image_get_layer_tree        (GimpImage          *image);
-GimpItemTree  * gimp_image_get_channel_tree      (GimpImage          *image);
-GimpItemTree  * gimp_image_get_vectors_tree      (GimpImage          *image);
+LigmaItemTree  * ligma_image_get_layer_tree        (LigmaImage          *image);
+LigmaItemTree  * ligma_image_get_channel_tree      (LigmaImage          *image);
+LigmaItemTree  * ligma_image_get_vectors_tree      (LigmaImage          *image);
 
-GimpContainer * gimp_image_get_layers            (GimpImage          *image);
-GimpContainer * gimp_image_get_channels          (GimpImage          *image);
-GimpContainer * gimp_image_get_vectors           (GimpImage          *image);
+LigmaContainer * ligma_image_get_layers            (LigmaImage          *image);
+LigmaContainer * ligma_image_get_channels          (LigmaImage          *image);
+LigmaContainer * ligma_image_get_vectors           (LigmaImage          *image);
 
-gint            gimp_image_get_n_layers          (GimpImage          *image);
-gint            gimp_image_get_n_channels        (GimpImage          *image);
-gint            gimp_image_get_n_vectors         (GimpImage          *image);
+gint            ligma_image_get_n_layers          (LigmaImage          *image);
+gint            ligma_image_get_n_channels        (LigmaImage          *image);
+gint            ligma_image_get_n_vectors         (LigmaImage          *image);
 
-GList         * gimp_image_get_layer_iter        (GimpImage          *image);
-GList         * gimp_image_get_channel_iter      (GimpImage          *image);
-GList         * gimp_image_get_vectors_iter      (GimpImage          *image);
+GList         * ligma_image_get_layer_iter        (LigmaImage          *image);
+GList         * ligma_image_get_channel_iter      (LigmaImage          *image);
+GList         * ligma_image_get_vectors_iter      (LigmaImage          *image);
 
-GList         * gimp_image_get_layer_list        (GimpImage          *image);
-GList         * gimp_image_get_channel_list      (GimpImage          *image);
-GList         * gimp_image_get_vectors_list      (GimpImage          *image);
+GList         * ligma_image_get_layer_list        (LigmaImage          *image);
+GList         * ligma_image_get_channel_list      (LigmaImage          *image);
+GList         * ligma_image_get_vectors_list      (LigmaImage          *image);
 
-GimpLayer     * gimp_image_get_active_layer      (GimpImage          *image);
-GimpChannel   * gimp_image_get_active_channel    (GimpImage          *image);
-GimpVectors   * gimp_image_get_active_vectors    (GimpImage          *image);
+LigmaLayer     * ligma_image_get_active_layer      (LigmaImage          *image);
+LigmaChannel   * ligma_image_get_active_channel    (LigmaImage          *image);
+LigmaVectors   * ligma_image_get_active_vectors    (LigmaImage          *image);
 
-GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
-                                                  GimpLayer          *layer);
-GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
-                                                  GimpChannel        *channel);
-void          gimp_image_unset_selected_channels (GimpImage          *image);
-GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
-                                                  GimpVectors        *vectors);
+LigmaLayer     * ligma_image_set_active_layer      (LigmaImage          *image,
+                                                  LigmaLayer          *layer);
+LigmaChannel   * ligma_image_set_active_channel    (LigmaImage          *image,
+                                                  LigmaChannel        *channel);
+void          ligma_image_unset_selected_channels (LigmaImage          *image);
+LigmaVectors   * ligma_image_set_active_vectors    (LigmaImage          *image,
+                                                  LigmaVectors        *vectors);
 
-gboolean        gimp_image_is_selected_drawable  (GimpImage          *image,
-                                                  GimpDrawable       *drawable);
-gboolean     gimp_image_equal_selected_drawables (GimpImage          *image,
+gboolean        ligma_image_is_selected_drawable  (LigmaImage          *image,
+                                                  LigmaDrawable       *drawable);
+gboolean     ligma_image_equal_selected_drawables (LigmaImage          *image,
                                                   GList              *drawables);
 
-GList        * gimp_image_get_selected_drawables (GimpImage          *image);
-GList         * gimp_image_get_selected_layers   (GimpImage          *image);
-GList         * gimp_image_get_selected_channels (GimpImage          *image);
-GList         * gimp_image_get_selected_vectors  (GimpImage          *image);
+GList        * ligma_image_get_selected_drawables (LigmaImage          *image);
+GList         * ligma_image_get_selected_layers   (LigmaImage          *image);
+GList         * ligma_image_get_selected_channels (LigmaImage          *image);
+GList         * ligma_image_get_selected_vectors  (LigmaImage          *image);
 
-void            gimp_image_set_selected_layers   (GimpImage          *image,
+void            ligma_image_set_selected_layers   (LigmaImage          *image,
                                                   GList              *layers);
-void            gimp_image_set_selected_channels (GimpImage          *image,
+void            ligma_image_set_selected_channels (LigmaImage          *image,
                                                   GList              *channels);
-void            gimp_image_set_selected_vectors  (GimpImage          *image,
+void            ligma_image_set_selected_vectors  (LigmaImage          *image,
                                                   GList              *vectors);
 
-GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
-                                                  GimpTattoo          tattoo);
-GimpChannel   * gimp_image_get_channel_by_tattoo (GimpImage          *image,
-                                                  GimpTattoo          tattoo);
-GimpVectors   * gimp_image_get_vectors_by_tattoo (GimpImage          *image,
-                                                  GimpTattoo          tattoo);
+LigmaLayer     * ligma_image_get_layer_by_tattoo   (LigmaImage          *image,
+                                                  LigmaTattoo          tattoo);
+LigmaChannel   * ligma_image_get_channel_by_tattoo (LigmaImage          *image,
+                                                  LigmaTattoo          tattoo);
+LigmaVectors   * ligma_image_get_vectors_by_tattoo (LigmaImage          *image,
+                                                  LigmaTattoo          tattoo);
 
-GimpLayer     * gimp_image_get_layer_by_name     (GimpImage          *image,
+LigmaLayer     * ligma_image_get_layer_by_name     (LigmaImage          *image,
                                                   const gchar        *name);
-GimpChannel   * gimp_image_get_channel_by_name   (GimpImage          *image,
+LigmaChannel   * ligma_image_get_channel_by_name   (LigmaImage          *image,
                                                   const gchar        *name);
-GimpVectors   * gimp_image_get_vectors_by_name   (GimpImage          *image,
+LigmaVectors   * ligma_image_get_vectors_by_name   (LigmaImage          *image,
                                                   const gchar        *name);
 
-gboolean        gimp_image_reorder_item          (GimpImage          *image,
-                                                  GimpItem           *item,
-                                                  GimpItem           *new_parent,
+gboolean        ligma_image_reorder_item          (LigmaImage          *image,
+                                                  LigmaItem           *item,
+                                                  LigmaItem           *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
-gboolean        gimp_image_raise_item            (GimpImage          *image,
-                                                  GimpItem           *item,
+gboolean        ligma_image_raise_item            (LigmaImage          *image,
+                                                  LigmaItem           *item,
                                                   GError            **error);
-gboolean        gimp_image_raise_item_to_top     (GimpImage          *image,
-                                                  GimpItem           *item);
-gboolean        gimp_image_lower_item            (GimpImage          *image,
-                                                  GimpItem           *item,
+gboolean        ligma_image_raise_item_to_top     (LigmaImage          *image,
+                                                  LigmaItem           *item);
+gboolean        ligma_image_lower_item            (LigmaImage          *image,
+                                                  LigmaItem           *item,
                                                   GError            **error);
-gboolean        gimp_image_lower_item_to_bottom  (GimpImage          *image,
-                                                  GimpItem           *item);
+gboolean        ligma_image_lower_item_to_bottom  (LigmaImage          *image,
+                                                  LigmaItem           *item);
 
-gboolean        gimp_image_add_layer             (GimpImage          *image,
-                                                  GimpLayer          *layer,
-                                                  GimpLayer          *parent,
+gboolean        ligma_image_add_layer             (LigmaImage          *image,
+                                                  LigmaLayer          *layer,
+                                                  LigmaLayer          *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
-void            gimp_image_remove_layer          (GimpImage          *image,
-                                                  GimpLayer          *layer,
+void            ligma_image_remove_layer          (LigmaImage          *image,
+                                                  LigmaLayer          *layer,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 
-void            gimp_image_add_layers            (GimpImage          *image,
+void            ligma_image_add_layers            (LigmaImage          *image,
                                                   GList              *layers,
-                                                  GimpLayer          *parent,
+                                                  LigmaLayer          *parent,
                                                   gint                position,
                                                   gint                x,
                                                   gint                y,
@@ -452,55 +452,55 @@ void            gimp_image_add_layers            (GimpImage          *image,
                                                   gint                height,
                                                   const gchar        *undo_desc);
 
-void            gimp_image_store_item_set        (GimpImage          *image,
-                                                  GimpItemList       *set);
-gboolean        gimp_image_unlink_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-GList         * gimp_image_get_stored_item_sets   (GimpImage         *image,
+void            ligma_image_store_item_set        (LigmaImage          *image,
+                                                  LigmaItemList       *set);
+gboolean        ligma_image_unlink_item_set       (LigmaImage          *image,
+                                                  LigmaItemList       *set);
+GList         * ligma_image_get_stored_item_sets   (LigmaImage         *image,
                                                    GType              item_type);
-void            gimp_image_select_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_add_item_set          (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_remove_item_set       (GimpImage          *image,
-                                                  GimpItemList       *set);
-void            gimp_image_intersect_item_set    (GimpImage        *image,
-                                                  GimpItemList       *set);
+void            ligma_image_select_item_set       (LigmaImage          *image,
+                                                  LigmaItemList       *set);
+void            ligma_image_add_item_set          (LigmaImage          *image,
+                                                  LigmaItemList       *set);
+void            ligma_image_remove_item_set       (LigmaImage          *image,
+                                                  LigmaItemList       *set);
+void            ligma_image_intersect_item_set    (LigmaImage        *image,
+                                                  LigmaItemList       *set);
 
-gboolean        gimp_image_add_channel           (GimpImage          *image,
-                                                  GimpChannel        *channel,
-                                                  GimpChannel        *parent,
+gboolean        ligma_image_add_channel           (LigmaImage          *image,
+                                                  LigmaChannel        *channel,
+                                                  LigmaChannel        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
-void            gimp_image_remove_channel        (GimpImage          *image,
-                                                  GimpChannel        *channel,
+void            ligma_image_remove_channel        (LigmaImage          *image,
+                                                  LigmaChannel        *channel,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 
-gboolean        gimp_image_add_vectors           (GimpImage          *image,
-                                                  GimpVectors        *vectors,
-                                                  GimpVectors        *parent,
+gboolean        ligma_image_add_vectors           (LigmaImage          *image,
+                                                  LigmaVectors        *vectors,
+                                                  LigmaVectors        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
-void            gimp_image_remove_vectors        (GimpImage          *image,
-                                                  GimpVectors        *vectors,
+void            ligma_image_remove_vectors        (LigmaImage          *image,
+                                                  LigmaVectors        *vectors,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 
-gboolean        gimp_image_add_hidden_item       (GimpImage          *image,
-                                                  GimpItem           *item);
-void            gimp_image_remove_hidden_item    (GimpImage          *image,
-                                                  GimpItem           *item);
-gboolean        gimp_image_is_hidden_item        (GimpImage          *image,
-                                                  GimpItem           *item);
+gboolean        ligma_image_add_hidden_item       (LigmaImage          *image,
+                                                  LigmaItem           *item);
+void            ligma_image_remove_hidden_item    (LigmaImage          *image,
+                                                  LigmaItem           *item);
+gboolean        ligma_image_is_hidden_item        (LigmaImage          *image,
+                                                  LigmaItem           *item);
 
-gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
-                                                  const GimpCoords   *coords,
+gboolean    ligma_image_coords_in_active_pickable (LigmaImage          *image,
+                                                  const LigmaCoords   *coords,
                                                   gboolean            show_all,
                                                   gboolean            sample_merged,
                                                   gboolean            selected_only);
 
-void            gimp_image_invalidate_previews   (GimpImage          *image);
+void            ligma_image_invalidate_previews   (LigmaImage          *image);
 
 
-#endif /* __GIMP_IMAGE_H__ */
+#endif /* __LIGMA_IMAGE_H__ */

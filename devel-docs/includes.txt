@@ -36,16 +36,16 @@ The include order of all .c files of a module is as follows:
 
 #include <glib-object.h>
 
-#include "libgimpfoo/gimpfoo.h" /* as needed, e.g. "libgimpbase/gimpbase.h"  */
-#include "libgimpbar/gimpbar.h"
+#include "libligmafoo/ligmafoo.h" /* as needed, e.g. "libligmabase/ligmabase.h"  */
+#include "libligmabar/ligmabar.h"
 
 #include "core-types.h"         /* and _no_ other foo-types.h file           */
 
 #include "base/foo.h"           /* files from modules below this one         */
 #include "base/bar.h"
 
-#include "gimp.h"               /* files from this module                    */
-#include "gimpimage.h"
-#include "gimpwhatever.h"
+#include "ligma.h"               /* files from this module                    */
+#include "ligmaimage.h"
+#include "ligmawhatever.h"
 
-#include "gimp-intl.h"          /* if needed, *must* be the last include     */
+#include "ligma-intl.h"          /* if needed, *must* be the last include     */

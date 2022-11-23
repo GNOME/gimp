@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-constructors.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-constructors.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "core/gimptooloptions.h"
-#include "gimppaintselectoptions.h"
-#include "gimptooloptions-gui.h"
+#include "core/ligmatooloptions.h"
+#include "ligmapaintselectoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,64 +46,64 @@ enum
 };
 
 
-static void   gimp_paint_select_options_set_property      (GObject      *object,
+static void   ligma_paint_select_options_set_property      (GObject      *object,
                                                            guint         property_id,
                                                            const GValue *value,
                                                            GParamSpec   *pspec);
-static void   gimp_paint_select_options_get_property      (GObject      *object,
+static void   ligma_paint_select_options_get_property      (GObject      *object,
                                                            guint         property_id,
                                                            GValue       *value,
                                                            GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPaintSelectOptions, gimp_paint_select_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaPaintSelectOptions, ligma_paint_select_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
 
 static void
-gimp_paint_select_options_class_init (GimpPaintSelectOptionsClass *klass)
+ligma_paint_select_options_class_init (LigmaPaintSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_paint_select_options_set_property;
-  object_class->get_property = gimp_paint_select_options_get_property;
+  object_class->set_property = ligma_paint_select_options_set_property;
+  object_class->get_property = ligma_paint_select_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_MODE,
                          "mode",
                          _("Mode"),
                          _("Paint over areas to mark pixels for "
                            "inclusion or exclusion from selection"),
-                         GIMP_TYPE_PAINT_SELECT_MODE,
-                         GIMP_PAINT_SELECT_MODE_ADD,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_PAINT_SELECT_MODE,
+                         LIGMA_PAINT_SELECT_MODE_ADD,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
                          "stroke-width",
                          _("Stroke width"),
                          _("Size of the brush used for refinements"),
                          1, 6000, 50,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN  (object_class, PROP_SHOW_SCRIBBLES,
+  LIGMA_CONFIG_PROP_BOOLEAN  (object_class, PROP_SHOW_SCRIBBLES,
                          "show-scribbles",
                          _("Show scribbles"),
                          _("Show scribbles"),
                          FALSE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_paint_select_options_init (GimpPaintSelectOptions *options)
+ligma_paint_select_options_init (LigmaPaintSelectOptions *options)
 {
 }
 
 static void
-gimp_paint_select_options_set_property (GObject      *object,
+ligma_paint_select_options_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_OPTIONS (object);
+  LigmaPaintSelectOptions *options = LIGMA_PAINT_SELECT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -126,12 +126,12 @@ gimp_paint_select_options_set_property (GObject      *object,
 }
 
 static void
-gimp_paint_select_options_get_property (GObject    *object,
+ligma_paint_select_options_get_property (GObject    *object,
                                         guint       property_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_OPTIONS (object);
+  LigmaPaintSelectOptions *options = LIGMA_PAINT_SELECT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -154,23 +154,23 @@ gimp_paint_select_options_get_property (GObject    *object,
 }
 
 static void
-gimp_paint_select_options_reset_stroke_width (GtkWidget       *button,
-                                              GimpToolOptions *tool_options)
+ligma_paint_select_options_reset_stroke_width (GtkWidget       *button,
+                                              LigmaToolOptions *tool_options)
 {
   g_object_set (tool_options, "stroke-width", 10, NULL);
 }
 
 GtkWidget *
-gimp_paint_select_options_gui (GimpToolOptions *tool_options)
+ligma_paint_select_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *scale;
 
-  frame = gimp_prop_enum_radio_frame_new (config, "mode", NULL,
+  frame = ligma_prop_enum_radio_frame_new (config, "mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -179,28 +179,28 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
 
   /* stroke width */
-  scale = gimp_prop_spin_scale_new (config, "stroke-width",
+  scale = ligma_prop_spin_scale_new (config, "stroke-width",
                                     1.0, 10.0, 2);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
-  gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 1.0, 1000.0);
+  ligma_spin_scale_set_gamma (LIGMA_SPIN_SCALE (scale), 1.7);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
 
-  button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
+  button = ligma_icon_button_new (LIGMA_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
+                                LIGMA_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_paint_select_options_reset_stroke_width),
+                    G_CALLBACK (ligma_paint_select_options_reset_stroke_width),
                     tool_options);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Reset stroke width native size"), NULL);
 
   /* show scribbles */
-  button = gimp_prop_check_button_new (config, "show-scribbles", "Show scribbles");
+  button = ligma_prop_check_button_new (config, "show-scribbles", "Show scribbles");
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

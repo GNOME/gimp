@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HANDLE_BAR_H__
-#define __GIMP_HANDLE_BAR_H__
+#ifndef __LIGMA_HANDLE_BAR_H__
+#define __LIGMA_HANDLE_BAR_H__
 
 
-#define GIMP_TYPE_HANDLE_BAR            (gimp_handle_bar_get_type ())
-#define GIMP_HANDLE_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HANDLE_BAR, GimpHandleBar))
-#define GIMP_HANDLE_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HANDLE_BAR, GimpHandleBarClass))
-#define GIMP_IS_HANDLE_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HANDLE_BAR))
-#define GIMP_IS_HANDLE_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HANDLE_BAR))
-#define GIMP_HANDLE_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HANDLE_BAR, GimpHandleBarClass))
+#define LIGMA_TYPE_HANDLE_BAR            (ligma_handle_bar_get_type ())
+#define LIGMA_HANDLE_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HANDLE_BAR, LigmaHandleBar))
+#define LIGMA_HANDLE_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HANDLE_BAR, LigmaHandleBarClass))
+#define LIGMA_IS_HANDLE_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HANDLE_BAR))
+#define LIGMA_IS_HANDLE_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HANDLE_BAR))
+#define LIGMA_HANDLE_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HANDLE_BAR, LigmaHandleBarClass))
 
 
-typedef struct _GimpHandleBarClass  GimpHandleBarClass;
+typedef struct _LigmaHandleBarClass  LigmaHandleBarClass;
 
-struct _GimpHandleBar
+struct _LigmaHandleBar
 {
   GtkEventBox     parent_class;
 
@@ -44,30 +44,30 @@ struct _GimpHandleBar
   gint            active_slider;
 };
 
-struct _GimpHandleBarClass
+struct _LigmaHandleBarClass
 {
   GtkEventBoxClass   parent_class;
 };
 
 
-GType       gimp_handle_bar_get_type       (void) G_GNUC_CONST;
+GType       ligma_handle_bar_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_handle_bar_new            (GtkOrientation  orientation);
+GtkWidget * ligma_handle_bar_new            (GtkOrientation  orientation);
 
-void        gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
+void        ligma_handle_bar_set_adjustment (LigmaHandleBar  *bar,
                                             gint            handle_no,
                                             GtkAdjustment  *adjustment);
 
-void        gimp_handle_bar_set_limits     (GimpHandleBar  *bar,
+void        ligma_handle_bar_set_limits     (LigmaHandleBar  *bar,
                                             gdouble         lower,
                                             gdouble         upper);
-void        gimp_handle_bar_unset_limits   (GimpHandleBar  *bar);
-gboolean    gimp_handle_bar_get_limits     (GimpHandleBar  *bar,
+void        ligma_handle_bar_unset_limits   (LigmaHandleBar  *bar);
+gboolean    ligma_handle_bar_get_limits     (LigmaHandleBar  *bar,
                                             gdouble        *lower,
                                             gdouble        *upper);
 
-void        gimp_handle_bar_connect_events (GimpHandleBar  *bar,
+void        ligma_handle_bar_connect_events (LigmaHandleBar  *bar,
                                             GtkWidget      *event_source);
 
 
-#endif  /*  __GIMP_HANDLE_BAR_H__  */
+#endif  /*  __LIGMA_HANDLE_BAR_H__  */

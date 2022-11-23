@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppaletteselect.h
+ * ligmapaletteselect.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,29 +18,29 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PALETTE_SELECT_H__
-#define __GIMP_PALETTE_SELECT_H__
+#ifndef __LIGMA_PALETTE_SELECT_H__
+#define __LIGMA_PALETTE_SELECT_H__
 
 G_BEGIN_DECLS
 
 
-typedef void (* GimpRunPaletteCallback)   (const gchar *palette_name,
+typedef void (* LigmaRunPaletteCallback)   (const gchar *palette_name,
                                            gboolean     dialog_closing,
                                            gpointer     user_data);
 
 
-const gchar * gimp_palette_select_new     (const gchar            *title,
+const gchar * ligma_palette_select_new     (const gchar            *title,
                                            const gchar            *palette_name,
-                                           GimpRunPaletteCallback  callback,
+                                           LigmaRunPaletteCallback  callback,
                                            gpointer                data,
                                            GDestroyNotify          data_destroy);
-void          gimp_palette_select_destroy (const gchar            *palette_callback);
+void          ligma_palette_select_destroy (const gchar            *palette_callback);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PALETTE_SELECT_H__ */
+#endif /* __LIGMA_PALETTE_SELECT_H__ */

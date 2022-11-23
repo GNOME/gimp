@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,22 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
-sub gimprc_query {
+sub ligmarc_query {
     $blurb = <<'BLURB';
-Queries the gimprc file parser for information on a specified token.
+Queries the ligmarc file parser for information on a specified token.
 BLURB
 
     $help = <<'HELP';
-This procedure is used to locate additional information contained in the gimprc
-file considered extraneous to the operation of GIMP. Plug-ins that need
-configuration information can expect it will be stored in the user gimprc
+This procedure is used to locate additional information contained in the ligmarc
+file considered extraneous to the operation of LIGMA. Plug-ins that need
+configuration information can expect it will be stored in the user ligmarc
 file and can use this procedure to retrieve it. This query procedure will
 return the value associated with the specified token. This corresponds _only_
 to entries with the format: (<token> <value>). The value must be a string.
 Entries not corresponding to this format will cause warnings to be issued on
-gimprc parsing and will not be queryable.
+ligmarc parsing and will not be queryable.
 HELP
 
     &std_pdb_misc;
@@ -51,7 +51,7 @@ HELP
   if (strlen (token))
     {
       /*  use edit_config because unknown tokens are set there  */
-      value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+      value = ligma_rc_query (LIGMA_RC (ligma->edit_config), token);
 
       if (! value)
         success = FALSE;
@@ -63,14 +63,14 @@ CODE
     );
 }
 
-sub gimprc_set {
-    $blurb = 'Sets a gimprc token to a value and saves it in the gimprc.';
+sub ligmarc_set {
+    $blurb = 'Sets a ligmarc token to a value and saves it in the ligmarc.';
 
     $help = <<'HELP';
-This procedure is used to add or change additional information in the gimprc
-file that is considered extraneous to the operation of GIMP. Plug-ins that
+This procedure is used to add or change additional information in the ligmarc
+file that is considered extraneous to the operation of LIGMA. Plug-ins that
 need configuration information can use this function to store it, and
-gimp_gimprc_query() to retrieve it.  This will accept _only_ string values in
+ligma_ligmarc_query() to retrieve it.  This will accept _only_ string values in
 UTF-8 encoding.
 HELP
 
@@ -89,7 +89,7 @@ HELP
   if (strlen (token))
     {
       /*  use edit_config because that's the one that gets saved  */
-      gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+      ligma_rc_set_unknown_token (LIGMA_RC (ligma->edit_config), token, value);
     }
   else
     success = FALSE;
@@ -119,8 +119,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
-  yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
+  xres = LIGMA_DISPLAY_CONFIG (ligma->config)->monitor_xres;
+  yres = LIGMA_DISPLAY_CONFIG (ligma->config)->monitor_yres;
 }
 CODE
     );
@@ -138,10 +138,10 @@ sub get_default_comment {
     );
 
     %invoke = (
-	headers => [ qw("core/gimptemplate.h") ],
+	headers => [ qw("core/ligmatemplate.h") ],
 	code => <<'CODE'
 {
-  comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
+  comment = g_strdup (ligma_template_get_comment (ligma->config->default_image));
 }
 CODE
     );
@@ -160,11 +160,11 @@ sub get_default_unit {
     );
 
     %invoke = (
-	headers => [ qw("libgimpbase/gimpbase.h"
-                        "core/gimp-utils.h") ],
+	headers => [ qw("libligmabase/ligmabase.h"
+                        "core/ligma-utils.h") ],
 	code => <<'CODE'
 {
-  unit_id = gimp_get_default_unit ();
+  unit_id = ligma_get_default_unit ();
 }
 CODE
     );
@@ -172,7 +172,7 @@ CODE
 
 sub get_color_configuration {
     $blurb = 'Get a serialized version of the color management configuration.';
-    $help = 'Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.';
+    $help = 'Returns a string that can be deserialized into a LigmaColorConfig object representing the current color management configuration.';
 
     &neo_pdb_misc('2005', '2.4');
 
@@ -184,10 +184,10 @@ sub get_color_configuration {
     );
 
     %invoke = (
-	headers => [ qw("libgimpconfig/gimpconfig.h") ],
+	headers => [ qw("libligmaconfig/ligmaconfig.h") ],
 	code => <<'CODE'
 {
-  config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
+  config = ligma_config_serialize_to_string (LIGMA_CONFIG (ligma->config->color_management), NULL);
 }
 CODE
     );
@@ -205,10 +205,10 @@ sub get_module_load_inhibit {
     );
 
     %invoke = (
-	headers => [ qw("libgimpmodule/gimpmodule.h") ],
+	headers => [ qw("libligmamodule/ligmamodule.h") ],
 	code => <<'CODE'
 {
-  load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
+  load_inhibit = g_strdup (ligma_module_db_get_load_inhibit (ligma->module_db));
 }
 CODE
     );
@@ -216,11 +216,11 @@ CODE
 
 
 @headers = qw(<string.h>
-              "config/gimprc.h"
-              "core/gimp.h");
+              "config/ligmarc.h"
+              "core/ligma.h");
 
-@procs = qw(gimprc_query
-            gimprc_set 
+@procs = qw(ligmarc_query
+            ligmarc_set 
             get_default_comment
             get_default_unit
             get_monitor_resolution
@@ -229,9 +229,9 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Gimprc procedures';
-$doc_title = 'gimpgimprc';
-$doc_short_desc = 'Interactions with settings from gimprc.';
-$doc_long_desc = 'Interactions with settings from gimprc.';
+$desc = 'Ligmarc procedures';
+$doc_title = 'ligmaligmarc';
+$doc_short_desc = 'Interactions with settings from ligmarc.';
+$doc_long_desc = 'Interactions with settings from ligmarc.';
 
 1;

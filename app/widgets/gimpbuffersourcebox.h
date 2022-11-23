@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbuffersourcebox.h
- * Copyright (C) 2015  Michael Natterer <mitch@gimp.org>
+ * ligmabuffersourcebox.h
+ * Copyright (C) 2015  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BUFFER_SOURCE_BOX_H__
-#define __GIMP_BUFFER_SOURCE_BOX_H__
+#ifndef __LIGMA_BUFFER_SOURCE_BOX_H__
+#define __LIGMA_BUFFER_SOURCE_BOX_H__
 
 
-#define GIMP_TYPE_BUFFER_SOURCE_BOX            (gimp_buffer_source_box_get_type ())
-#define GIMP_BUFFER_SOURCE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUFFER_SOURCE_BOX, GimpBufferSourceBox))
-#define GIMP_BUFFER_SOURCE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_SOURCE_BOX, GimpBufferSourceBoxClass))
-#define GIMP_IS_BUFFER_SOURCE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUFFER_SOURCE_BOX))
-#define GIMP_IS_BUFFER_SOURCE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_SOURCE_BOX))
-#define GIMP_BUFFER_SOURCE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUFFER_SOURCE_BOX, GimpBufferSourceBoxClass))
+#define LIGMA_TYPE_BUFFER_SOURCE_BOX            (ligma_buffer_source_box_get_type ())
+#define LIGMA_BUFFER_SOURCE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUFFER_SOURCE_BOX, LigmaBufferSourceBox))
+#define LIGMA_BUFFER_SOURCE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUFFER_SOURCE_BOX, LigmaBufferSourceBoxClass))
+#define LIGMA_IS_BUFFER_SOURCE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUFFER_SOURCE_BOX))
+#define LIGMA_IS_BUFFER_SOURCE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUFFER_SOURCE_BOX))
+#define LIGMA_BUFFER_SOURCE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUFFER_SOURCE_BOX, LigmaBufferSourceBoxClass))
 
 
-typedef struct _GimpBufferSourceBoxPrivate GimpBufferSourceBoxPrivate;
-typedef struct _GimpBufferSourceBoxClass   GimpBufferSourceBoxClass;
+typedef struct _LigmaBufferSourceBoxPrivate LigmaBufferSourceBoxPrivate;
+typedef struct _LigmaBufferSourceBoxClass   LigmaBufferSourceBoxClass;
 
-struct _GimpBufferSourceBox
+struct _LigmaBufferSourceBox
 {
   GtkBox                      parent_instance;
 
-  GimpBufferSourceBoxPrivate *priv;
+  LigmaBufferSourceBoxPrivate *priv;
 };
 
-struct _GimpBufferSourceBoxClass
+struct _LigmaBufferSourceBoxClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_buffer_source_box_get_type (void) G_GNUC_CONST;
+GType       ligma_buffer_source_box_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_buffer_source_box_new        (GimpContext         *context,
+GtkWidget * ligma_buffer_source_box_new        (LigmaContext         *context,
                                                GeglNode            *source_node,
                                                const gchar         *name);
 
-GtkWidget * gimp_buffer_source_box_get_toggle (GimpBufferSourceBox *box);
+GtkWidget * ligma_buffer_source_box_get_toggle (LigmaBufferSourceBox *box);
 
 
-#endif  /*  __GIMP_BUFFER_SOURCE_BOX_H__  */
+#endif  /*  __LIGMA_BUFFER_SOURCE_BOX_H__  */

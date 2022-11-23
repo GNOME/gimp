@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,28 +22,28 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp-palettes.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma-palettes.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpinkoptions.h"
-#include "gimpink.h"
-#include "gimpink-blob.h"
-#include "gimpinkundo.h"
+#include "ligmainkoptions.h"
+#include "ligmaink.h"
+#include "ligmaink-blob.h"
+#include "ligmainkundo.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SUBSAMPLE 8
@@ -51,86 +51,86 @@
 
 /*  local function prototypes  */
 
-static void         gimp_ink_finalize         (GObject           *object);
+static void         ligma_ink_finalize         (GObject           *object);
 
-static void         gimp_ink_paint            (GimpPaintCore     *paint_core,
+static void         ligma_ink_paint            (LigmaPaintCore     *paint_core,
                                                GList             *drawables,
-                                               GimpPaintOptions  *paint_options,
-                                               GimpSymmetry      *sym,
-                                               GimpPaintState     paint_state,
+                                               LigmaPaintOptions  *paint_options,
+                                               LigmaSymmetry      *sym,
+                                               LigmaPaintState     paint_state,
                                                guint32            time);
-static GeglBuffer * gimp_ink_get_paint_buffer (GimpPaintCore     *paint_core,
-                                               GimpDrawable      *drawable,
-                                               GimpPaintOptions  *paint_options,
-                                               GimpLayerMode      paint_mode,
-                                               const GimpCoords  *coords,
+static GeglBuffer * ligma_ink_get_paint_buffer (LigmaPaintCore     *paint_core,
+                                               LigmaDrawable      *drawable,
+                                               LigmaPaintOptions  *paint_options,
+                                               LigmaLayerMode      paint_mode,
+                                               const LigmaCoords  *coords,
                                                gint              *paint_buffer_x,
                                                gint              *paint_buffer_y,
                                                gint              *paint_width,
                                                gint              *paint_height);
-static GimpUndo   * gimp_ink_push_undo        (GimpPaintCore     *core,
-                                               GimpImage         *image,
+static LigmaUndo   * ligma_ink_push_undo        (LigmaPaintCore     *core,
+                                               LigmaImage         *image,
                                                const gchar       *undo_desc);
 
-static void         gimp_ink_motion           (GimpPaintCore     *paint_core,
-                                               GimpDrawable      *drawable,
-                                               GimpPaintOptions  *paint_options,
-                                               GimpSymmetry      *sym,
+static void         ligma_ink_motion           (LigmaPaintCore     *paint_core,
+                                               LigmaDrawable      *drawable,
+                                               LigmaPaintOptions  *paint_options,
+                                               LigmaSymmetry      *sym,
                                                guint32            time);
 
-static GimpBlob   * ink_pen_ellipse           (GimpInkOptions    *options,
+static LigmaBlob   * ink_pen_ellipse           (LigmaInkOptions    *options,
                                                gdouble            x_center,
                                                gdouble            y_center,
                                                gdouble            pressure,
                                                gdouble            xtilt,
                                                gdouble            ytilt,
                                                gdouble            velocity,
-                                               const GimpMatrix3 *transform);
+                                               const LigmaMatrix3 *transform);
 
 static void         render_blob               (GeglBuffer        *buffer,
                                                GeglRectangle     *rect,
-                                               GimpBlob          *blob);
+                                               LigmaBlob          *blob);
 
 
-G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE)
+G_DEFINE_TYPE (LigmaInk, ligma_ink, LIGMA_TYPE_PAINT_CORE)
 
-#define parent_class gimp_ink_parent_class
+#define parent_class ligma_ink_parent_class
 
 
 void
-gimp_ink_register (Gimp                      *gimp,
-                   GimpPaintRegisterCallback  callback)
+ligma_ink_register (Ligma                      *ligma,
+                   LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_INK,
-                GIMP_TYPE_INK_OPTIONS,
-                "gimp-ink",
+  (* callback) (ligma,
+                LIGMA_TYPE_INK,
+                LIGMA_TYPE_INK_OPTIONS,
+                "ligma-ink",
                 _("Ink"),
-                "gimp-tool-ink");
+                "ligma-tool-ink");
 }
 
 static void
-gimp_ink_class_init (GimpInkClass *klass)
+ligma_ink_class_init (LigmaInkClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
 
-  object_class->finalize             = gimp_ink_finalize;
+  object_class->finalize             = ligma_ink_finalize;
 
-  paint_core_class->paint            = gimp_ink_paint;
-  paint_core_class->get_paint_buffer = gimp_ink_get_paint_buffer;
-  paint_core_class->push_undo        = gimp_ink_push_undo;
+  paint_core_class->paint            = ligma_ink_paint;
+  paint_core_class->get_paint_buffer = ligma_ink_get_paint_buffer;
+  paint_core_class->push_undo        = ligma_ink_push_undo;
 }
 
 static void
-gimp_ink_init (GimpInk *ink)
+ligma_ink_init (LigmaInk *ink)
 {
 }
 
 static void
-gimp_ink_finalize (GObject *object)
+ligma_ink_finalize (GObject *object)
 {
-  GimpInk *ink = GIMP_INK (object);
+  LigmaInk *ink = LIGMA_INK (object);
 
   if (ink->start_blobs)
     {
@@ -148,32 +148,32 @@ gimp_ink_finalize (GObject *object)
 }
 
 static void
-gimp_ink_paint (GimpPaintCore    *paint_core,
+ligma_ink_paint (LigmaPaintCore    *paint_core,
                 GList            *drawables,
-                GimpPaintOptions *paint_options,
-                GimpSymmetry     *sym,
-                GimpPaintState    paint_state,
+                LigmaPaintOptions *paint_options,
+                LigmaSymmetry     *sym,
+                LigmaPaintState    paint_state,
                 guint32           time)
 {
-  GimpInk    *ink = GIMP_INK (paint_core);
-  GimpCoords *cur_coords;
-  GimpCoords  last_coords;
+  LigmaInk    *ink = LIGMA_INK (paint_core);
+  LigmaCoords *cur_coords;
+  LigmaCoords  last_coords;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
-  gimp_paint_core_get_last_coords (paint_core, &last_coords);
-  cur_coords = gimp_symmetry_get_origin (sym);
+  ligma_paint_core_get_last_coords (paint_core, &last_coords);
+  cur_coords = ligma_symmetry_get_origin (sym);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
+    case LIGMA_PAINT_STATE_INIT:
         {
-          GimpContext *context = GIMP_CONTEXT (paint_options);
-          GimpRGB      foreground;
+          LigmaContext *context = LIGMA_CONTEXT (paint_options);
+          LigmaRGB      foreground;
 
-          gimp_symmetry_set_stateful (sym, TRUE);
-          gimp_context_get_foreground (context, &foreground);
-          gimp_palettes_add_color_history (context->gimp,
+          ligma_symmetry_set_stateful (sym, TRUE);
+          ligma_context_get_foreground (context, &foreground);
+          ligma_palettes_add_color_history (context->ligma,
                                            &foreground);
 
           if (cur_coords->x == last_coords.x &&
@@ -193,7 +193,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
             }
           else if (ink->last_blobs)
             {
-              GimpBlob *last_blob;
+              LigmaBlob *last_blob;
               GList    *iter;
               gint      i;
 
@@ -209,45 +209,45 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
                   last_blob = g_list_nth_data (ink->last_blobs, i);
 
                   ink->start_blobs = g_list_prepend (ink->start_blobs,
-                                                     gimp_blob_duplicate (last_blob));
+                                                     ligma_blob_duplicate (last_blob));
                 }
               ink->start_blobs = g_list_reverse (ink->start_blobs);
             }
         }
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
+    case LIGMA_PAINT_STATE_MOTION:
       for (GList *iter = drawables; iter; iter = iter->next)
-        gimp_ink_motion (paint_core, iter->data, paint_options, sym, time);
+        ligma_ink_motion (paint_core, iter->data, paint_options, sym, time);
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
-      gimp_symmetry_set_stateful (sym, FALSE);
+    case LIGMA_PAINT_STATE_FINISH:
+      ligma_symmetry_set_stateful (sym, FALSE);
       break;
     }
 }
 
 static GeglBuffer *
-gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
-                           GimpDrawable     *drawable,
-                           GimpPaintOptions *paint_options,
-                           GimpLayerMode     paint_mode,
-                           const GimpCoords *coords,
+ligma_ink_get_paint_buffer (LigmaPaintCore    *paint_core,
+                           LigmaDrawable     *drawable,
+                           LigmaPaintOptions *paint_options,
+                           LigmaLayerMode     paint_mode,
+                           const LigmaCoords *coords,
                            gint             *paint_buffer_x,
                            gint             *paint_buffer_y,
                            gint             *paint_width,
                            gint             *paint_height)
 {
-  GimpInk *ink = GIMP_INK (paint_core);
+  LigmaInk *ink = LIGMA_INK (paint_core);
   gint     x, y;
   gint     width, height;
   gint     dwidth, dheight;
   gint     x1, y1, x2, y2;
 
-  gimp_blob_bounds (ink->cur_blob, &x, &y, &width, &height);
+  ligma_blob_bounds (ink->cur_blob, &x, &y, &width, &height);
 
-  dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
-  dheight = gimp_item_get_height (GIMP_ITEM (drawable));
+  dwidth  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+  dheight = ligma_item_get_height (LIGMA_ITEM (drawable));
 
   x1 = CLAMP (x / SUBSAMPLE - 1,            0, dwidth);
   y1 = CLAMP (y / SUBSAMPLE - 1,            0, dheight);
@@ -262,19 +262,19 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
     {
-      GimpTempBuf            *temp_buf;
+      LigmaTempBuf            *temp_buf;
       const Babl             *format;
-      GimpLayerCompositeMode  composite_mode;
+      LigmaLayerCompositeMode  composite_mode;
 
-      composite_mode = gimp_layer_mode_get_paint_composite_mode (paint_mode);
+      composite_mode = ligma_layer_mode_get_paint_composite_mode (paint_mode);
 
-      format = gimp_layer_mode_get_format (paint_mode,
-                                           GIMP_LAYER_COLOR_SPACE_AUTO,
-                                           GIMP_LAYER_COLOR_SPACE_AUTO,
+      format = ligma_layer_mode_get_format (paint_mode,
+                                           LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                           LIGMA_LAYER_COLOR_SPACE_AUTO,
                                            composite_mode,
-                                           gimp_drawable_get_format (drawable));
+                                           ligma_drawable_get_format (drawable));
 
-      temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
+      temp_buf = ligma_temp_buf_new ((x2 - x1), (y2 - y1),
                                     format);
 
       *paint_buffer_x = x1;
@@ -283,9 +283,9 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf);
+      paint_core->paint_buffer = ligma_temp_buf_create_buffer (temp_buf);
 
-      gimp_temp_buf_unref (temp_buf);
+      ligma_temp_buf_unref (temp_buf);
 
       return paint_core->paint_buffer;
     }
@@ -293,44 +293,44 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
   return NULL;
 }
 
-static GimpUndo *
-gimp_ink_push_undo (GimpPaintCore *core,
-                    GimpImage     *image,
+static LigmaUndo *
+ligma_ink_push_undo (LigmaPaintCore *core,
+                    LigmaImage     *image,
                     const gchar   *undo_desc)
 {
-  return gimp_image_undo_push (image, GIMP_TYPE_INK_UNDO,
-                               GIMP_UNDO_INK, undo_desc,
+  return ligma_image_undo_push (image, LIGMA_TYPE_INK_UNDO,
+                               LIGMA_UNDO_INK, undo_desc,
                                0,
                                "paint-core", core,
                                NULL);
 }
 
 static void
-gimp_ink_motion (GimpPaintCore    *paint_core,
-                 GimpDrawable     *drawable,
-                 GimpPaintOptions *paint_options,
-                 GimpSymmetry     *sym,
+ligma_ink_motion (LigmaPaintCore    *paint_core,
+                 LigmaDrawable     *drawable,
+                 LigmaPaintOptions *paint_options,
+                 LigmaSymmetry     *sym,
                  guint32           time)
 {
-  GimpInk        *ink             = GIMP_INK (paint_core);
-  GimpInkOptions *options         = GIMP_INK_OPTIONS (paint_options);
-  GimpContext    *context         = GIMP_CONTEXT (paint_options);
+  LigmaInk        *ink             = LIGMA_INK (paint_core);
+  LigmaInkOptions *options         = LIGMA_INK_OPTIONS (paint_options);
+  LigmaContext    *context         = LIGMA_CONTEXT (paint_options);
   GList          *blob_unions     = NULL;
   GList          *blobs_to_render = NULL;
   GeglBuffer     *paint_buffer;
   gint            paint_buffer_x;
   gint            paint_buffer_y;
-  GimpLayerMode   paint_mode;
-  GimpRGB         foreground;
+  LigmaLayerMode   paint_mode;
+  LigmaRGB         foreground;
   GeglColor      *color;
-  GimpBlob       *last_blob;
-  GimpCoords      coords;
+  LigmaBlob       *last_blob;
+  LigmaCoords      coords;
   gint            off_x, off_y;
   gint            n_strokes;
   gint            i;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-  n_strokes = gimp_symmetry_get_size (sym);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
+  n_strokes = ligma_symmetry_get_size (sym);
 
   if (ink->last_blobs &&
       g_list_length (ink->last_blobs) != n_strokes)
@@ -349,13 +349,13 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
       for (i = 0; i < n_strokes; i++)
         {
-          GimpMatrix3 transform;
+          LigmaMatrix3 transform;
 
-          coords    = *(gimp_symmetry_get_coords (sym, i));
+          coords    = *(ligma_symmetry_get_coords (sym, i));
           coords.x -= off_x;
           coords.y -= off_y;
 
-          gimp_symmetry_get_matrix (sym, i, &transform);
+          ligma_symmetry_get_matrix (sym, i, &transform);
 
           last_blob = ink_pen_ellipse (options,
                                        coords.x,
@@ -369,7 +369,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           ink->last_blobs = g_list_prepend (ink->last_blobs,
                                             last_blob);
           ink->start_blobs = g_list_prepend (ink->start_blobs,
-                                             gimp_blob_duplicate (last_blob));
+                                             ligma_blob_duplicate (last_blob));
           blobs_to_render = g_list_prepend (blobs_to_render, last_blob);
         }
       ink->start_blobs = g_list_reverse (ink->start_blobs);
@@ -380,15 +380,15 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
     {
       for (i = 0; i < n_strokes; i++)
         {
-          GimpBlob    *blob;
-          GimpBlob    *blob_union = NULL;
-          GimpMatrix3  transform;
+          LigmaBlob    *blob;
+          LigmaBlob    *blob_union = NULL;
+          LigmaMatrix3  transform;
 
-          coords    = *(gimp_symmetry_get_coords (sym, i));
+          coords    = *(ligma_symmetry_get_coords (sym, i));
           coords.x -= off_x;
           coords.y -= off_y;
 
-          gimp_symmetry_get_matrix (sym, i, &transform);
+          ligma_symmetry_get_matrix (sym, i, &transform);
 
           blob = ink_pen_ellipse (options,
                                   coords.x,
@@ -400,7 +400,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                   &transform);
 
           last_blob = g_list_nth_data (ink->last_blobs, i);
-          blob_union = gimp_blob_convex_union (last_blob, blob);
+          blob_union = ligma_blob_convex_union (last_blob, blob);
 
           g_free (last_blob);
           g_list_nth (ink->last_blobs, i)->data = blob;
@@ -411,23 +411,23 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       blobs_to_render = g_list_reverse (blobs_to_render);
     }
 
-  paint_mode = gimp_context_get_paint_mode (context);
+  paint_mode = ligma_context_get_paint_mode (context);
 
-  gimp_context_get_foreground (context, &foreground);
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+  ligma_context_get_foreground (context, &foreground);
+  ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                      &foreground, &foreground);
-  color = gimp_gegl_color_new (&foreground, gimp_drawable_get_space (drawable));
+  color = ligma_gegl_color_new (&foreground, ligma_drawable_get_space (drawable));
 
   for (i = 0; i < n_strokes; i++)
     {
-      GimpBlob *blob_to_render = g_list_nth_data (blobs_to_render, i);
+      LigmaBlob *blob_to_render = g_list_nth_data (blobs_to_render, i);
 
-      coords    = *(gimp_symmetry_get_coords (sym, i));
+      coords    = *(ligma_symmetry_get_coords (sym, i));
       coords.x -= off_x;
       coords.y -= off_y;
 
       ink->cur_blob = blob_to_render;
-      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+      paint_buffer = ligma_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        paint_mode,
                                                        &coords,
@@ -450,15 +450,15 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                    blob_to_render);
 
       /*  draw the paint_area using the just rendered canvas_buffer as mask */
-      gimp_paint_core_paste (paint_core,
+      ligma_paint_core_paste (paint_core,
                              NULL,
                              paint_core->paint_buffer_x,
                              paint_core->paint_buffer_y,
                              drawable,
-                             GIMP_OPACITY_OPAQUE,
-                             gimp_context_get_opacity (context),
+                             LIGMA_OPACITY_OPAQUE,
+                             ligma_context_get_opacity (context),
                              paint_mode,
-                             GIMP_PAINT_CONSTANT);
+                             LIGMA_PAINT_CONSTANT);
 
     }
 
@@ -468,17 +468,17 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   g_list_free (blobs_to_render);
 }
 
-static GimpBlob *
-ink_pen_ellipse (GimpInkOptions    *options,
+static LigmaBlob *
+ink_pen_ellipse (LigmaInkOptions    *options,
                  gdouble            x_center,
                  gdouble            y_center,
                  gdouble            pressure,
                  gdouble            xtilt,
                  gdouble            ytilt,
                  gdouble            velocity,
-                 const GimpMatrix3 *transform)
+                 const LigmaMatrix3 *transform)
 {
-  GimpBlobFunc blob_function;
+  LigmaBlobFunc blob_function;
   gdouble      size;
   gdouble      tsin, tcos;
   gdouble      aspect, radmin;
@@ -529,8 +529,8 @@ ink_pen_ellipse (GimpInkOptions    *options,
    */
 
   tscale   = options->tilt_sensitivity * 10.0;
-  tscale_c = tscale * cos (gimp_deg_to_rad (options->tilt_angle));
-  tscale_s = tscale * sin (gimp_deg_to_rad (options->tilt_angle));
+  tscale_c = tscale * cos (ligma_deg_to_rad (options->tilt_angle));
+  tscale_s = tscale * sin (ligma_deg_to_rad (options->tilt_angle));
 
   x = (options->blob_aspect * cos (options->blob_angle) +
        xtilt * tscale_c - ytilt * tscale_s);
@@ -556,7 +556,7 @@ ink_pen_ellipse (GimpInkOptions    *options,
       tsin = sin (options->blob_angle);
     }
 
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tcos,  tsin,
                                 &tcos, &tsin);
 
@@ -566,16 +566,16 @@ ink_pen_ellipse (GimpInkOptions    *options,
 
   switch (options->blob_type)
     {
-    case GIMP_INK_BLOB_TYPE_CIRCLE:
-      blob_function = gimp_blob_ellipse;
+    case LIGMA_INK_BLOB_TYPE_CIRCLE:
+      blob_function = ligma_blob_ellipse;
       break;
 
-    case GIMP_INK_BLOB_TYPE_SQUARE:
-      blob_function = gimp_blob_square;
+    case LIGMA_INK_BLOB_TYPE_SQUARE:
+      blob_function = ligma_blob_square;
       break;
 
-    case GIMP_INK_BLOB_TYPE_DIAMOND:
-      blob_function = gimp_blob_diamond;
+    case LIGMA_INK_BLOB_TYPE_DIAMOND:
+      blob_function = ligma_blob_diamond;
       break;
 
     default:
@@ -665,7 +665,7 @@ fill_run (gfloat *dest,
 }
 
 static void
-render_blob_line (GimpBlob *blob,
+render_blob_line (LigmaBlob *blob,
                   gfloat   *dest,
                   gint      x,
                   gint      y,
@@ -774,7 +774,7 @@ render_blob_line (GimpBlob *blob,
 static void
 render_blob (GeglBuffer    *buffer,
              GeglRectangle *rect,
-             GimpBlob      *blob)
+             LigmaBlob      *blob)
 {
   GeglBufferIterator *iter;
   GeglRectangle      *roi;

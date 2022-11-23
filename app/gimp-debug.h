@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-debug.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligma-debug.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEBUG_H__
-#define __GIMP_DEBUG_H__
+#ifndef __LIGMA_DEBUG_H__
+#define __LIGMA_DEBUG_H__
 
 
-void  gimp_debug_enable_instances (void);
+void  ligma_debug_enable_instances (void);
 
-void  gimp_debug_add_instance     (GObject      *instance,
+void  ligma_debug_add_instance     (GObject      *instance,
                                    GObjectClass *klass);
-void  gimp_debug_remove_instance  (GObject      *instance);
+void  ligma_debug_remove_instance  (GObject      *instance);
 
-void  gimp_debug_instances        (void);
+void  ligma_debug_instances        (void);
 
 
-#endif /* __GIMP_DEBUG_H__ */
+#endif /* __LIGMA_DEBUG_H__ */

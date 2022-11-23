@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-01-27 21:40+0000\n"
 "PO-Revision-Date: 2015-02-14 22:23+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
@@ -18,25 +18,25 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-03-14 13:28+0000\n"
 "X-Generator: Launchpad (build 17389)\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Možete dobiti pomoć ovisnu o kontekstu, za većinu GIMP-a osobina pritisnite "
+"Možete dobiti pomoć ovisnu o kontekstu, za većinu LIGMA-a osobina pritisnite "
 "na tipku F1. To radi i unutar menija."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP koristi slojeve da vam dopusti da organizirate svoju sliku. Smatrajte "
+"LIGMA koristi slojeve da vam dopusti da organizirate svoju sliku. Smatrajte "
 "ih  kao gomilu slajdova ili filtera, tako da prolazeći kroz njih vidite "
 "mješavinu njihovog sadržaja."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -44,19 +44,19 @@ msgstr ""
 "Možete izvesti mnogo operacija nad slojevima desnim klikom na tekstualnu "
 "oznaku sloja u prozoru Slojevi."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and many aspects of your work-in-progress. Once a project is "
 "completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Kada spremite sliku za naknadno korištenje, pokušajte koristiti XCF, GIMP-ov "
+"Kada spremite sliku za naknadno korištenje, pokušajte koristiti XCF, LIGMA-ov "
 "standardni format datoteke (koristite ekstenziju <tt>.xcf</tt>). To čuva "
 "slojeva i mnoge aspekte vašeg rada koji je pokrenut. Kada projekt bude "
 "završen, možete ga preuzeti kao JPEG, PNG, GIF, itd"
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -66,7 +66,7 @@ msgstr ""
 "ćete spojiti sve slojeve (Slika → poravnajte slike) ako želite plug-in za "
 "rad na cijeloj slici."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -76,7 +76,7 @@ msgstr ""
 "alfa-kanal. Možete dodati alfa-kanal pomoću using Layer→Transparency→Add "
 "Alpha Channel."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -88,7 +88,7 @@ msgstr ""
 "(Image → Mode → RGB), dodajte alfa-kanal (Layer → Transparency → AddAlpha "
 "Channel) ili izravnajte ga (Slika → Flatten Image)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -100,17 +100,17 @@ msgstr ""
 "prozor menadžera se može konfigurirati da zanemari <tt> Alt </tt> kraticu "
 "ili koristiti <tt> Super </tt> klraticu (ili \"Windows logo\") umjesto toga."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Možete povlačiti i ispustiti mnoge stvari u GIMP. Na primjer,povlačeći boju "
+"Možete povlačiti i ispustiti mnoge stvari u LIGMA. Na primjer,povlačeći boju "
 "iz alatnog okvira ili iz palete boja i premještanjem u sliku ćete popuniti "
 "trenutni izbor sa tom bojom."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -118,7 +118,7 @@ msgstr ""
 "Možete koristiti srednju tipku miša da kružite oko slike (ili opcionalno "
 "držite <tt> Sapcebar </tt> dok pomjerate miš)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -128,7 +128,7 @@ msgstr ""
 "selekcije će naleći na vodilice. Možete ukloniti vodilicu odvlačeći je sa "
 "slike pomoću Alata za pomjeranje."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -136,7 +136,7 @@ msgstr ""
 "Možete prevući sloj iz prozora Slojevi i spustiti ga na paletu alata. Na taj "
 "način će se napraviti nova slika koja sadrži samo taj sloj."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -148,17 +148,17 @@ msgstr ""
 "sloj&quot; ili &quot;Usidreni sloj&quot; u prozoru Slojevi ili koristite "
 "meni za obavljanje ovih akcija."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
 "will be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP podržava gzip kompresije. Samo dodajte <tt> .gz </tt> (ili <tt> .bz2 "
+"LIGMA podržava gzip kompresije. Samo dodajte <tt> .gz </tt> (ili <tt> .bz2 "
 "</tt>, ako ste instalirali bzip2) za datoteke i vaša slika će biti sačuvana "
 "kompresovana. Naravno loading komprimirane slike poslovima."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using "
@@ -169,7 +169,7 @@ msgstr ""
 "novom. Koristite <tt>Ctrl</tt> prije pravljenja selekcije da bi novu "
 "izdvojili iz već postojeće selekcije."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -179,7 +179,7 @@ msgstr ""
 "Selection. To udara na ugao vašeg trenutnog izbora. Složeniji oblici se mogu "
 "izvući pomoću Path alat ili Filteri → Render → Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -189,7 +189,7 @@ msgstr ""
 "svojim trenutnim postavkama. Možete koristiti Paintbrush u gradijent modu "
 "ili čak Eraser ili Smudge alat."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -198,7 +198,7 @@ msgstr ""
 "Možete napraviti i uređivati složene izbore pomoću alata za putanje. Prozor "
 "za putanje dozvoljava rad sa više putanja i pretvaranje istih u izbore."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the "
 "&quot;Quick Mask&quot; button at the bottom left of an image window. Change "
@@ -210,7 +210,7 @@ msgstr ""
 "Izmijenite izbor po želji bojenjem po slici i ponovo kliknite na ovo dugme "
 "da bi se maska pretvorila nazad u običan izbor."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -221,13 +221,13 @@ msgstr ""
 "ovaj kanal sa bilo kojim alatima za boje. Koristeći tipke u dijalogu kanala, "
 "možete prebacivati vidljivost tog novog kanala ili ga pretvoriti u izbor."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If "
 "&quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved "
-"when you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"when you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -235,11 +235,11 @@ msgstr ""
 "dijalogu, možete rasporediti tipke kratica. Da tako dovođenjem u meni "
 "omogućite  odabir stavke izbornika i odaberete  na željeni taster za "
 "kombinaciju. ako&quot;Save Keyboard Shortcuts&quot; je omogućen, povezanost "
-"kratica je spašena kada napustite GIMP. Trebali biste onemogućiti  "
+"kratica je spašena kada napustite LIGMA. Trebali biste onemogućiti  "
 "&quot;Dynamic Keyboard Shortcuts&quot; nakon čega ćete spriječiti "
 "dodjeljivanje/dodavanje kratica;"
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -247,7 +247,7 @@ msgstr ""
 "Ako je ekran  prenatrpan, možete pritisnuti <tt> Tab </tt> u prozoru sa "
 "slikom za prebacivanje vidljivosti alatne trake i drugih dijaloga."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -256,7 +256,7 @@ msgstr ""
 "svih slojeva izuzev tekućeg. <tt>Shift</tt>-klik ponovo prikazuje sve "
 "slojeve."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -266,7 +266,7 @@ msgstr ""
 "prebacuje efekat maske sloja. <tt> Alt </tt> -clicking na pregledni sloj "
 "maske u Layers isključuje izravan prikaz maske."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -274,7 +274,7 @@ msgstr ""
 "Možete koristiti <tt> Ctrl </tt> - <tt> Tab </tt> da biste prošli kroz sve "
 "slojeve na slici (ako window manager ne zaustavlja te ključeve ...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -285,7 +285,7 @@ msgstr ""
 "umjesto boje teksta. Slično tome, <tt> Ctrl </tt> -clicking sa  alatom za "
 "farbanje postavlja boju umjesto  boje pozadine."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -293,7 +293,7 @@ msgstr ""
 "<tt>Ctrl</tt>-prevlačenje sa alatom za rotaciju će ograničiti rotaciju na "
 "uglove za svakih 15 stepeni."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "

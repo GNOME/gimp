@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Blinds plug-in. Distort an image as though it was stuck to
  * window blinds and the blinds where opened/closed.
@@ -33,16 +33,16 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /***** Magic numbers *****/
 
 #define PLUG_IN_PROC   "plug-in-blinds"
 #define PLUG_IN_BINARY "blinds"
-#define PLUG_IN_ROLE   "gimp-blinds"
+#define PLUG_IN_ROLE   "ligma-blinds"
 
 #define MAX_FANS       100
 
@@ -51,7 +51,7 @@ typedef struct data
 {
   gint                 angledsp;
   gint                 numsegs;
-  GimpOrientationType  orientation;
+  LigmaOrientationType  orientation;
   gboolean bg_trans;
 } BlindVals;
 
@@ -61,12 +61,12 @@ typedef struct _BlindsClass BlindsClass;
 
 struct _Blinds
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _BlindsClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -75,30 +75,30 @@ struct _BlindsClass
 
 GType                   blinds_get_type         (void) G_GNUC_CONST;
 
-static GList          * blinds_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * blinds_create_procedure (GimpPlugIn           *plug_in,
+static GList          * blinds_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * blinds_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * blinds_run              (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
+static LigmaValueArray * blinds_run              (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
+                                                 LigmaImage            *image,
                                                  gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
-                                                 const GimpValueArray *args,
+                                                 LigmaDrawable        **drawables,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
 
-static gboolean         blinds_dialog           (GimpDrawable         *drawable);
-static void       blinds_scale_entry_update_int (GimpLabelSpin        *entry,
+static gboolean         blinds_dialog           (LigmaDrawable         *drawable);
+static void       blinds_scale_entry_update_int (LigmaLabelSpin        *entry,
                                                  gint                 *value);
 
-static void             dialog_update_preview   (GimpDrawable         *drawable,
-                                                 GimpPreview          *preview);
-static void             apply_blinds            (GimpDrawable         *drawable);
+static void             dialog_update_preview   (LigmaDrawable         *drawable,
+                                                 LigmaPreview          *preview);
+static void             apply_blinds            (LigmaDrawable         *drawable);
 
 
-G_DEFINE_TYPE (Blinds, blinds, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Blinds, blinds, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BLINDS_TYPE)
+LIGMA_MAIN (BLINDS_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -113,7 +113,7 @@ static BlindVals bvals =
 {
   30,
   3,
-  GIMP_ORIENTATION_HORIZONTAL,
+  LIGMA_ORIENTATION_HORIZONTAL,
   FALSE
 };
 
@@ -121,7 +121,7 @@ static BlindVals bvals =
 static void
 blinds_class_init (BlindsClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = blinds_query_procedures;
   plug_in_class->create_procedure = blinds_create_procedure;
@@ -134,60 +134,60 @@ blinds_init (Blinds *blinds)
 }
 
 static GList *
-blinds_query_procedures (GimpPlugIn *plug_in)
+blinds_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-blinds_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+blinds_create_procedure (LigmaPlugIn  *plug_in,
                          const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             blinds_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Blinds..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
+      ligma_procedure_set_menu_label (procedure, _("_Blinds..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Simulate an image painted on "
                                           "window blinds"),
                                         "More here later",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "angle-displacement",
+      LIGMA_PROC_ARG_INT (procedure, "angle-displacement",
                          "Angle displacement",
                          "Angle of Displacement",
                          0, 360, 30,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "num-segments",
+      LIGMA_PROC_ARG_INT (procedure, "num-segments",
                          "Num segments",
                          "Number of segments in blinds",
                          1, 1024, 3,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_ENUM (procedure, "orientation",
+      LIGMA_PROC_ARG_ENUM (procedure, "orientation",
                           "Orientation",
                           "The orientation",
-                          GIMP_TYPE_ORIENTATION_TYPE,
-                          GIMP_ORIENTATION_HORIZONTAL,
+                          LIGMA_TYPE_ORIENTATION_TYPE,
+                          LIGMA_ORIENTATION_HORIZONTAL,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bg-transparent",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "bg-transparent",
                              "BG transparent",
                              "Background transparent",
                              FALSE,
@@ -197,16 +197,16 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-blinds_run (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
+static LigmaValueArray *
+blinds_run (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
+            LigmaImage            *image,
             gint                  n_drawables,
-            GimpDrawable        **drawables,
-            const GimpValueArray *args,
+            LigmaDrawable        **drawables,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -214,12 +214,12 @@ blinds_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -229,56 +229,56 @@ blinds_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &bvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &bvals);
 
       if (! blinds_dialog (drawable))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      bvals.angledsp    = GIMP_VALUES_GET_INT     (args, 0);
-      bvals.numsegs     = GIMP_VALUES_GET_INT     (args, 1);
-      bvals.orientation = GIMP_VALUES_GET_ENUM    (args, 2);
-      bvals.bg_trans    = GIMP_VALUES_GET_BOOLEAN (args, 3);
+    case LIGMA_RUN_NONINTERACTIVE:
+      bvals.angledsp    = LIGMA_VALUES_GET_INT     (args, 0);
+      bvals.numsegs     = LIGMA_VALUES_GET_INT     (args, 1);
+      bvals.orientation = LIGMA_VALUES_GET_ENUM    (args, 2);
+      bvals.bg_trans    = LIGMA_VALUES_GET_BOOLEAN (args, 3);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &bvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &bvals);
       break;
 
     default:
       break;
     }
 
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb  (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
-      gimp_progress_init (_("Adding blinds"));
+      ligma_progress_init (_("Adding blinds"));
 
       apply_blinds (drawable);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &bvals, sizeof (BlindVals));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &bvals, sizeof (BlindVals));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 
 static gboolean
-blinds_dialog (GimpDrawable *drawable)
+blinds_dialog (LigmaDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -292,23 +292,23 @@ blinds_dialog (GimpDrawable *drawable)
   GtkWidget *vertical;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Blinds"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Blinds"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -316,7 +316,7 @@ blinds_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new_from_drawable (drawable);
+  preview = ligma_aspect_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -329,14 +329,14 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   frame =
-    gimp_int_radio_group_new (TRUE, _("Orientation"),
-                              G_CALLBACK (gimp_radio_button_update),
+    ligma_int_radio_group_new (TRUE, _("Orientation"),
+                              G_CALLBACK (ligma_radio_button_update),
                               &bvals.orientation, NULL, bvals.orientation,
 
-                              _("_Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
+                              _("_Horizontal"), LIGMA_ORIENTATION_HORIZONTAL,
                               &horizontal,
 
-                              _("_Vertical"),   GIMP_ORIENTATION_VERTICAL,
+                              _("_Vertical"),   LIGMA_ORIENTATION_VERTICAL,
                               &vertical,
 
                               NULL);
@@ -344,13 +344,13 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   g_signal_connect_swapped (horizontal, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   g_signal_connect_swapped (vertical, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
-  frame = gimp_frame_new (_("Background"));
+  frame = ligma_frame_new (_("Background"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -359,15 +359,15 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &bvals.bg_trans);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.bg_trans);
 
-  if (! gimp_drawable_has_alpha (drawable))
+  if (! ligma_drawable_has_alpha (drawable))
     {
       gtk_widget_set_sensitive (toggle, FALSE);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
@@ -379,30 +379,30 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
+  scale = ligma_scale_entry_new (_("_Displacement:"), bvals.angledsp, 1, 90, 0);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 15.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.angledsp);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 2);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Number of segments:"), bvals.numsegs, 1, MAX_FANS, 0);
+  scale = ligma_scale_entry_new (_("_Number of segments:"), bvals.numsegs, 1, MAX_FANS, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (blinds_scale_entry_update_int),
                     &bvals.numsegs);
   g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 2);
   gtk_widget_show (scale);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -410,10 +410,10 @@ blinds_dialog (GimpDrawable *drawable)
 }
 
 static void
-blinds_scale_entry_update_int (GimpLabelSpin *entry,
+blinds_scale_entry_update_int (LigmaLabelSpin *entry,
                                gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }
 
 static void
@@ -522,38 +522,38 @@ blindsapply (guchar *srow,
 }
 
 static void
-dialog_update_preview (GimpDrawable *drawable,
-                       GimpPreview  *preview)
+dialog_update_preview (LigmaDrawable *drawable,
+                       LigmaPreview  *preview)
 {
   gint     y;
   guchar  *p, *buffer, *cache;
-  GimpRGB  background;
+  LigmaRGB  background;
   guchar   bg[4];
   gint     width, height, bpp;
 
-  gimp_preview_get_size (preview, &width, &height);
-  cache = gimp_drawable_get_thumbnail_data (drawable,
+  ligma_preview_get_size (preview, &width, &height);
+  cache = ligma_drawable_get_thumbnail_data (drawable,
                                             &width, &height, &bpp);
   p = cache;
 
-  gimp_context_get_background (&background);
+  ligma_context_get_background (&background);
 
   if (bvals.bg_trans)
-    gimp_rgb_set_alpha (&background, 0.0);
+    ligma_rgb_set_alpha (&background, 0.0);
 
-  if (gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_gray (drawable))
     {
-      bg[0] = gimp_rgb_luminance_uchar (&background);
-      gimp_rgba_get_uchar (&background, NULL, NULL, NULL, bg + 3);
+      bg[0] = ligma_rgb_luminance_uchar (&background);
+      ligma_rgba_get_uchar (&background, NULL, NULL, NULL, bg + 3);
     }
   else
     {
-      gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
+      ligma_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
     }
 
   buffer = g_new (guchar, width * height * bpp);
 
-  if (bvals.orientation == GIMP_ORIENTATION_VERTICAL)
+  if (bvals.orientation == LIGMA_ORIENTATION_VERTICAL)
     {
       for (y = 0; y < height; y++)
         {
@@ -622,7 +622,7 @@ dialog_update_preview (GimpDrawable *drawable,
       g_free (dr);
     }
 
-  gimp_preview_draw_buffer (preview, buffer, width * bpp);
+  ligma_preview_draw_buffer (preview, buffer, width * bpp);
 
   g_free (buffer);
   g_free (cache);
@@ -636,7 +636,7 @@ dialog_update_preview (GimpDrawable *drawable,
 #define STEP 40
 
 static void
-apply_blinds (GimpDrawable *drawable)
+apply_blinds (LigmaDrawable *drawable)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -644,37 +644,37 @@ apply_blinds (GimpDrawable *drawable)
   guchar     *src_rows, *des_rows;
   gint        bytes;
   gint        x, y;
-  GimpRGB     background;
+  LigmaRGB     background;
   guchar      bg[4];
   gint        sel_x1, sel_y1;
   gint        sel_width, sel_height;
 
-  gimp_context_get_background (&background);
+  ligma_context_get_background (&background);
 
   if (bvals.bg_trans)
-    gimp_rgb_set_alpha (&background, 0.0);
+    ligma_rgb_set_alpha (&background, 0.0);
 
-  gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
+  ligma_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     return;
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
 
   bytes = babl_format_get_bytes_per_pixel (format);
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   src_rows = g_new (guchar, MAX (sel_width, sel_height) * bytes * STEP);
   des_rows = g_new (guchar, MAX (sel_width, sel_height) * bytes * STEP);
 
-  if (bvals.orientation == GIMP_ORIENTATION_VERTICAL)
+  if (bvals.orientation == LIGMA_ORIENTATION_VERTICAL)
     {
       for (y = 0; y < sel_height; y += STEP)
         {
@@ -704,7 +704,7 @@ apply_blinds (GimpDrawable *drawable)
                            format, des_rows,
                            GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update ((double) y / (double) sel_height);
+          ligma_progress_update ((double) y / (double) sel_height);
         }
     }
   else
@@ -787,7 +787,7 @@ apply_blinds (GimpDrawable *drawable)
                            format, des_rows,
                            GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update ((double) x / (double) sel_width);
+          ligma_progress_update ((double) x / (double) sel_width);
         }
 
       g_free (dst);
@@ -801,9 +801,9 @@ apply_blinds (GimpDrawable *drawable)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable,
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable,
                         sel_x1, sel_y1, sel_width, sel_height);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "print-preview.h"
 
@@ -44,7 +44,7 @@ struct _PrintPreview
   gboolean         dragging;
   gboolean         inside;
 
-  GimpDrawable    *drawable;
+  LigmaDrawable    *drawable;
 
   gdouble          image_offset_x;
   gdouble          image_offset_y;
@@ -111,7 +111,7 @@ static void      print_preview_get_page_margins     (PrintPreview     *preview,
                                                      gdouble          *right_margin,
                                                      gdouble          *top_margin,
                                                      gdouble          *bottom_margin);
-static cairo_surface_t * print_preview_get_thumbnail (GimpDrawable    *drawable,
+static cairo_surface_t * print_preview_get_thumbnail (LigmaDrawable    *drawable,
                                                       gint             width,
                                                       gint             height);
 
@@ -509,7 +509,7 @@ print_preview_draw (GtkWidget *widget,
     }
 
   if (preview->thumbnail == NULL &&
-      gimp_item_is_valid (GIMP_ITEM (preview->drawable)))
+      ligma_item_is_valid (LIGMA_ITEM (preview->drawable)))
     {
       preview->thumbnail =
         print_preview_get_thumbnail (preview->drawable,
@@ -549,7 +549,7 @@ print_preview_draw (GtkWidget *widget,
  **/
 GtkWidget *
 print_preview_new (GtkPageSetup *page,
-                   GimpDrawable *drawable)
+                   LigmaDrawable *drawable)
 {
   PrintPreview *preview;
 
@@ -584,8 +584,8 @@ print_preview_set_image_dpi (PrintPreview *preview,
   g_return_if_fail (PRINT_IS_PREVIEW (preview));
   g_return_if_fail (xres > 0.0 && yres > 0.0);
 
-  width  = gimp_drawable_get_width  (preview->drawable) * 72.0 / xres;
-  height = gimp_drawable_get_height (preview->drawable) * 72.0 / yres;
+  width  = ligma_drawable_get_width  (preview->drawable) * 72.0 / xres;
+  height = ligma_drawable_get_height (preview->drawable) * 72.0 / yres;
 
   if (width != preview->image_width || height != preview->image_height)
     {
@@ -807,10 +807,10 @@ print_preview_get_page_margins (PrintPreview *preview,
 }
 
 
-/*  This thumbnail code should eventually end up in libgimpui.  */
+/*  This thumbnail code should eventually end up in libligmaui.  */
 
 static cairo_surface_t *
-print_preview_get_thumbnail (GimpDrawable *drawable,
+print_preview_get_thumbnail (LigmaDrawable *drawable,
                              gint          width,
                              gint          height)
 {
@@ -827,7 +827,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
-  data = gimp_drawable_get_thumbnail_data (drawable,
+  data = ligma_drawable_get_thumbnail_data (drawable,
                                            &width, &height, &bpp);
 
   switch (bpp)
@@ -866,7 +866,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
         case 1:
           while (w--)
             {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[0], s[0]);
+              LIGMA_CAIRO_RGB24_SET_PIXEL (d, s[0], s[0], s[0]);
               s += 1;
               d += 4;
             }
@@ -875,7 +875,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
         case 2:
           while (w--)
             {
-              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[0], s[0], s[1]);
+              LIGMA_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[0], s[0], s[1]);
               s += 2;
               d += 4;
             }
@@ -884,7 +884,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
         case 3:
           while (w--)
             {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
+              LIGMA_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
               s += 3;
               d += 4;
             }
@@ -893,7 +893,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
         case 4:
           while (w--)
             {
-              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
+              LIGMA_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
               s += 4;
               d += 4;
             }

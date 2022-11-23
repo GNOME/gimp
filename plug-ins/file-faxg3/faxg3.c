@@ -1,4 +1,4 @@
-/* This is a plugin for GIMP.
+/* This is a plugin for LIGMA.
  *
  * Copyright (C) 1997 Jochen Friedrich
  * Parts Copyright (C) 1995 Gert Doering
@@ -41,11 +41,11 @@
 #define _O_BINARY 0
 #endif
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "g3.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC "file-faxg3-load"
@@ -57,12 +57,12 @@ typedef struct _Faxg3Class Faxg3Class;
 
 struct _Faxg3
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _Faxg3Class
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -71,20 +71,20 @@ struct _Faxg3Class
 
 GType                   faxg3_get_type         (void) G_GNUC_CONST;
 
-static GList          * faxg3_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * faxg3_create_procedure (GimpPlugIn           *plug_in,
+static GList          * faxg3_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * faxg3_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * faxg3_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
+static LigmaValueArray * faxg3_load             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
-static GimpImage      * load_image             (GFile                *file,
+static LigmaImage      * load_image             (GFile                *file,
                                                 GError              **error);
 
-static GimpImage      *  emitgimp              (gint                  hcol,
+static LigmaImage      *  emitligma              (gint                  hcol,
                                                 gint                  row,
                                                 const gchar          *bitmap,
                                                 gint                  bperrow,
@@ -92,16 +92,16 @@ static GimpImage      *  emitgimp              (gint                  hcol,
                                                 GError              **error);
 
 
-G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Faxg3, faxg3, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (FAXG3_TYPE)
+LIGMA_MAIN (FAXG3_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 faxg3_class_init (Faxg3Class *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = faxg3_query_procedures;
   plug_in_class->create_procedure = faxg3_create_procedure;
@@ -114,55 +114,55 @@ faxg3_init (Faxg3 *faxg3)
 }
 
 static GList *
-faxg3_query_procedures (GimpPlugIn *plug_in)
+faxg3_query_procedures (LigmaPlugIn *plug_in)
 {
   return  g_list_append (NULL, g_strdup (LOAD_PROC));
 }
 
-static GimpProcedure *
-faxg3_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+faxg3_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            faxg3_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("G3 fax image"));
+      ligma_procedure_set_menu_label (procedure, _("G3 fax image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads g3 fax files",
                                         "This plug-in loads Fax G3 Image files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jochen Friedrich",
                                       "Jochen Friedrich, Gert Doering, "
                                       "Spencer Kimball & Peter Mattis",
                                       NULL);
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/g3-fax");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "g3");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "4,string,Research");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-faxg3_load (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
+static LigmaValueArray *
+faxg3_load (LigmaProcedure        *procedure,
+            LigmaRunMode           run_mode,
             GFile                *file,
-            const GimpValueArray *args,
+            const LigmaValueArray *args,
             gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -170,15 +170,15 @@ faxg3_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -215,7 +215,7 @@ static  int  rs;                /* read buffer size */
 #define MAX_COLS 1728           /* !! FIXME - command line parameter */
 
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
@@ -229,7 +229,7 @@ load_image (GFile   *file,
   int             cons_eol;
   int             last_eol_row;
 
-  GimpImage      *image   = NULL;
+  LigmaImage      *image   = NULL;
   gint            bperrow = MAX_COLS/8;  /* bytes per bit row */
   gchar          *bitmap;                /* MAX_ROWS by (bperrow) bytes */
   gchar          *bp;                    /* bitmap pointer */
@@ -237,8 +237,8 @@ load_image (GFile   *file,
   gint            max_rows;              /* max. rows allocated */
   gint            col, hcol;             /* column, highest column ever used */
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* initialize lookup trees */
   build_tree (&white, t_white);
@@ -254,7 +254,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -275,11 +275,11 @@ load_image (GFile   *file,
     {
       perror ("read");
       close (fd);
-      gimp_quit ();
+      ligma_quit ();
     }
 
   rr += rs;
-  gimp_progress_update ((float) rr / rsize / 2.0);
+  ligma_progress_update ((float) rr / rsize / 2.0);
 
                         /* skip GhostScript header */
   rp = (rs >= 64 && strcmp (rbuf + 1, "PC Research, Inc") == 0) ? 64 : 0;
@@ -318,7 +318,7 @@ load_image (GFile   *file,
                   break;
                 }
               rr += rs;
-              gimp_progress_update ((float) rr / rsize / 2.0);
+              ligma_progress_update ((float) rr / rsize / 2.0);
               rp = 0;
               if (rs == 0)
                 goto do_write;
@@ -366,7 +366,7 @@ load_image (GFile   *file,
                         }
 
                       rr += rs;
-                      gimp_progress_update ((float) rr / rsize / 2.0);
+                      ligma_progress_update ((float) rr / rsize / 2.0);
                       rp = 0;
                       if (rs == 0)
                         goto do_write;
@@ -422,7 +422,7 @@ load_image (GFile   *file,
                           break;
                         }
                       rr += rs;
-                      gimp_progress_update ((float) rr / rsize / 2.0);
+                      ligma_progress_update ((float) rr / rsize / 2.0);
                       rp = 0;
                       if (rs == 0)
                         goto do_write;
@@ -515,7 +515,7 @@ load_image (GFile   *file,
   g_printerr ("consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol);
 #endif
 
-  image = emitgimp (hcol, row, bitmap, bperrow, file, error);
+  image = emitligma (hcol, row, bitmap, bperrow, file, error);
 
   g_free (bitmap);
 
@@ -528,8 +528,8 @@ load_image (GFile   *file,
  * than 1728 pixels wide]
  */
 
-static GimpImage *
-emitgimp (gint         hcol,
+static LigmaImage *
+emitligma (gint         hcol,
           gint         row,
           const gchar *bitmap,
           gint         bperrow,
@@ -537,8 +537,8 @@ emitgimp (gint         hcol,
           GError     **error)
 {
   GeglBuffer *buffer;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   guchar     *buf;
   guchar      tmp;
   gint        x, y;
@@ -550,11 +550,11 @@ emitgimp (gint         hcol,
   tmp = 0;
 
 #ifdef DEBUG
-  g_printerr ("emit gimp: %d x %d\n", hcol, row);
+  g_printerr ("emit ligma: %d x %d\n", hcol, row);
 #endif
 
-  if (hcol > GIMP_MAX_IMAGE_SIZE || hcol <= 0 ||
-      row > GIMP_MAX_IMAGE_SIZE || row <= 0)
+  if (hcol > LIGMA_MAX_IMAGE_SIZE || hcol <= 0 ||
+      row > LIGMA_MAX_IMAGE_SIZE || row <= 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid image dimensions (%d x %d). "
@@ -563,26 +563,26 @@ emitgimp (gint         hcol,
       return NULL;
     }
 
-  image = gimp_image_new (hcol, row, GIMP_GRAY);
+  image = ligma_image_new (hcol, row, LIGMA_GRAY);
   if (! image)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not create image."));
       return NULL;
     }
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
-  layer = gimp_layer_new (image, _("Background"),
+  layer = ligma_layer_new (image, _("Background"),
                           hcol,
                           row,
-                          GIMP_GRAY_IMAGE,
+                          LIGMA_GRAY_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 #ifdef DEBUG
   g_printerr ("tile height: %d\n", tile_height);
 #endif
@@ -593,7 +593,7 @@ emitgimp (gint         hcol,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not create buffer to process image data."));
       g_object_unref (buffer);
-      gimp_image_delete(image);
+      ligma_image_delete(image);
       return NULL;
     }
 
@@ -619,7 +619,7 @@ emitgimp (gint         hcol,
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, yy, hcol, tile_height), 0,
                            NULL, buf, GEGL_AUTO_ROWSTRIDE);
 
-          gimp_progress_update (0.5 + (float) y / row / 2.0);
+          ligma_progress_update (0.5 + (float) y / row / 2.0);
 
           xx = 0;
           yy += tile_height;
@@ -636,7 +636,7 @@ emitgimp (gint         hcol,
                        NULL, buf, GEGL_AUTO_ROWSTRIDE);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_free (buf);
 

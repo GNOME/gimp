@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplayermaskundo.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayermask.h"
+#include "ligmalayermaskundo.h"
 
 
 enum
@@ -37,77 +37,77 @@ enum
 };
 
 
-static void     gimp_layer_mask_undo_constructed  (GObject             *object);
-static void     gimp_layer_mask_undo_set_property (GObject             *object,
+static void     ligma_layer_mask_undo_constructed  (GObject             *object);
+static void     ligma_layer_mask_undo_set_property (GObject             *object,
                                                    guint                property_id,
                                                    const GValue        *value,
                                                    GParamSpec          *pspec);
-static void     gimp_layer_mask_undo_get_property (GObject             *object,
+static void     ligma_layer_mask_undo_get_property (GObject             *object,
                                                    guint                property_id,
                                                    GValue              *value,
                                                    GParamSpec          *pspec);
 
-static gint64   gimp_layer_mask_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_layer_mask_undo_get_memsize  (LigmaObject          *object,
                                                    gint64              *gui_size);
 
-static void     gimp_layer_mask_undo_pop          (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode,
-                                                   GimpUndoAccumulator *accum);
-static void     gimp_layer_mask_undo_free         (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode);
+static void     ligma_layer_mask_undo_pop          (LigmaUndo            *undo,
+                                                   LigmaUndoMode         undo_mode,
+                                                   LigmaUndoAccumulator *accum);
+static void     ligma_layer_mask_undo_free         (LigmaUndo            *undo,
+                                                   LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpLayerMaskUndo, gimp_layer_mask_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaLayerMaskUndo, ligma_layer_mask_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_layer_mask_undo_parent_class
+#define parent_class ligma_layer_mask_undo_parent_class
 
 
 static void
-gimp_layer_mask_undo_class_init (GimpLayerMaskUndoClass *klass)
+ligma_layer_mask_undo_class_init (LigmaLayerMaskUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_layer_mask_undo_constructed;
-  object_class->set_property     = gimp_layer_mask_undo_set_property;
-  object_class->get_property     = gimp_layer_mask_undo_get_property;
+  object_class->constructed      = ligma_layer_mask_undo_constructed;
+  object_class->set_property     = ligma_layer_mask_undo_set_property;
+  object_class->get_property     = ligma_layer_mask_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_layer_mask_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_layer_mask_undo_get_memsize;
 
-  undo_class->pop                = gimp_layer_mask_undo_pop;
-  undo_class->free               = gimp_layer_mask_undo_free;
+  undo_class->pop                = ligma_layer_mask_undo_pop;
+  undo_class->free               = ligma_layer_mask_undo_free;
 
   g_object_class_install_property (object_class, PROP_LAYER_MASK,
                                    g_param_spec_object ("layer-mask", NULL, NULL,
-                                                        GIMP_TYPE_LAYER_MASK,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LAYER_MASK,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_layer_mask_undo_init (GimpLayerMaskUndo *undo)
+ligma_layer_mask_undo_init (LigmaLayerMaskUndo *undo)
 {
 }
 
 static void
-gimp_layer_mask_undo_constructed (GObject *object)
+ligma_layer_mask_undo_constructed (GObject *object)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (object);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
-  gimp_assert (GIMP_IS_LAYER_MASK (layer_mask_undo->layer_mask));
+  ligma_assert (LIGMA_IS_LAYER (LIGMA_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_LAYER_MASK (layer_mask_undo->layer_mask));
 }
 
 static void
-gimp_layer_mask_undo_set_property (GObject      *object,
+ligma_layer_mask_undo_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (object);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (object);
 
   switch (property_id)
     {
@@ -122,12 +122,12 @@ gimp_layer_mask_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_layer_mask_undo_get_property (GObject    *object,
+ligma_layer_mask_undo_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (object);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (object);
 
   switch (property_id)
     {
@@ -142,56 +142,56 @@ gimp_layer_mask_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_layer_mask_undo_get_memsize (GimpObject *object,
+ligma_layer_mask_undo_get_memsize (LigmaObject *object,
                                   gint64     *gui_size)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (object);
-  GimpLayer         *layer           = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (object);
+  LigmaLayer         *layer           = LIGMA_LAYER (LIGMA_ITEM_UNDO (object)->item);
   gint64             memsize         = 0;
 
-  /* don't use !gimp_item_is_attached() here */
-  if (gimp_layer_get_mask (layer) != layer_mask_undo->layer_mask)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (layer_mask_undo->layer_mask),
+  /* don't use !ligma_item_is_attached() here */
+  if (ligma_layer_get_mask (layer) != layer_mask_undo->layer_mask)
+    memsize += ligma_object_get_memsize (LIGMA_OBJECT (layer_mask_undo->layer_mask),
                                         gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_layer_mask_undo_pop (GimpUndo            *undo,
-                          GimpUndoMode         undo_mode,
-                          GimpUndoAccumulator *accum)
+ligma_layer_mask_undo_pop (LigmaUndo            *undo,
+                          LigmaUndoMode         undo_mode,
+                          LigmaUndoAccumulator *accum)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (undo);
-  GimpLayer         *layer           = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (undo);
+  LigmaLayer         *layer           = LIGMA_LAYER (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
-       undo->undo_type == GIMP_UNDO_LAYER_MASK_ADD) ||
-      (undo_mode       == GIMP_UNDO_MODE_REDO &&
-       undo->undo_type == GIMP_UNDO_LAYER_MASK_REMOVE))
+  if ((undo_mode       == LIGMA_UNDO_MODE_UNDO &&
+       undo->undo_type == LIGMA_UNDO_LAYER_MASK_ADD) ||
+      (undo_mode       == LIGMA_UNDO_MODE_REDO &&
+       undo->undo_type == LIGMA_UNDO_LAYER_MASK_REMOVE))
     {
       /*  remove layer mask  */
 
-      gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
+      ligma_layer_apply_mask (layer, LIGMA_MASK_DISCARD, FALSE);
     }
   else
     {
       /*  restore layer mask  */
 
-      gimp_layer_add_mask (layer, layer_mask_undo->layer_mask, FALSE, NULL);
+      ligma_layer_add_mask (layer, layer_mask_undo->layer_mask, FALSE, NULL);
     }
 }
 
 static void
-gimp_layer_mask_undo_free (GimpUndo     *undo,
-                           GimpUndoMode  undo_mode)
+ligma_layer_mask_undo_free (LigmaUndo     *undo,
+                           LigmaUndoMode  undo_mode)
 {
-  GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (undo);
+  LigmaLayerMaskUndo *layer_mask_undo = LIGMA_LAYER_MASK_UNDO (undo);
 
   g_clear_object (&layer_mask_undo->layer_mask);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

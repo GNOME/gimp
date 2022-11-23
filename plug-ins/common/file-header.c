@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-header-save"
 #define PLUG_IN_BINARY "file-header"
-#define PLUG_IN_ROLE   "gimp-file-header"
+#define PLUG_IN_ROLE   "ligma-file-header"
 
 
 typedef struct _Header      Header;
@@ -35,12 +35,12 @@ typedef struct _HeaderClass HeaderClass;
 
 struct _Header
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _HeaderClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -49,22 +49,22 @@ struct _HeaderClass
 
 GType                   header_get_type         (void) G_GNUC_CONST;
 
-static GList          * header_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * header_create_procedure (GimpPlugIn           *plug_in,
+static GList          * header_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * header_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * header_save             (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
+static LigmaValueArray * header_save             (LigmaProcedure        *procedure,
+                                                 LigmaRunMode           run_mode,
+                                                 LigmaImage            *image,
                                                  gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
+                                                 LigmaDrawable        **drawables,
                                                  GFile                *file,
-                                                 const GimpValueArray *args,
+                                                 const LigmaValueArray *args,
                                                  gpointer              run_data);
 
 static gboolean         save_image              (GFile                *file,
-                                                 GimpImage            *image,
-                                                 GimpDrawable         *drawable,
+                                                 LigmaImage            *image,
+                                                 LigmaDrawable         *drawable,
                                                  GError              **error);
 
 static gboolean         print                   (GOutputStream        *output,
@@ -73,16 +73,16 @@ static gboolean         print                   (GOutputStream        *output,
                                                  ...) G_GNUC_PRINTF (3, 4);
 
 
-G_DEFINE_TYPE (Header, header, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Header, header, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (HEADER_TYPE)
+LIGMA_MAIN (HEADER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 header_class_init (HeaderClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = header_query_procedures;
   plug_in_class->create_procedure = header_create_procedure;
@@ -95,77 +95,77 @@ header_init (Header *header)
 }
 
 static GList *
-header_query_procedures (GimpPlugIn *plug_in)
+header_query_procedures (LigmaPlugIn *plug_in)
 {
   return  g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-header_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+header_create_procedure (LigmaPlugIn  *plug_in,
                          const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            header_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED, RGB");
+      ligma_procedure_set_image_types (procedure, "INDEXED, RGB");
 
-      gimp_procedure_set_menu_label (procedure, _("C source code header"));
+      ligma_procedure_set_menu_label (procedure, _("C source code header"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "saves files as C unsigned character "
                                         "array",
                                         "FIXME: write help",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-chdr");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "h");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-header_save (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+header_save (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
+             LigmaDrawable        **drawables,
              GFile                *file,
-             const GimpValueArray *args,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export = LIGMA_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "Header",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "Header",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -178,35 +178,35 @@ header_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("Header plug-in does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   if (! save_image (file, image, drawables[0],
                     &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GError       **error)
 {
   GeglBuffer    *buffer;
   const Babl    *format;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   GOutputStream *output;
   gint           x, y, b, c;
   const gchar   *backslash = "\\\\";
@@ -238,17 +238,17 @@ save_image (GFile         *file,
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
   if (! print (output, error,
-               "/*  GIMP header image file format (%s): %s  */\n\n",
-               GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED",
-               gimp_file_get_utf8_name (file)) ||
+               "/*  LIGMA header image file format (%s): %s  */\n\n",
+               LIGMA_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED",
+               ligma_file_get_utf8_name (file)) ||
       ! print (output, error,
                "static unsigned int width = %d;\n", width) ||
       ! print (output, error,
@@ -261,7 +261,7 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       if (! print (output, error,
                    "#define HEADER_PIXEL(data,pixel) {\\\n"
                    "pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n"
@@ -328,7 +328,7 @@ save_image (GFile         *file,
         goto fail;
       break;
 
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       if (! print (output, error,
                    "#define HEADER_PIXEL(data,pixel) {\\\n"
                    "pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n"
@@ -340,7 +340,7 @@ save_image (GFile         *file,
         }
 
       /* save colormap */
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = ligma_image_get_colormap (image, &colors);
 
       if (! print (output, error,
                    "static unsigned char header_data_cmap[256][3] = {") ||

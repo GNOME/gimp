@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,36 +25,36 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
-#include "text/gimptext-compat.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaparamspecs.h"
+#include "text/ligmatext-compat.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-text_fontname_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+text_fontname_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaDrawable *drawable;
   gdouble x;
   gdouble y;
   const gchar *text;
@@ -62,24 +62,24 @@ text_fontname_invoker (GimpProcedure         *procedure,
   gboolean antialias;
   gdouble size;
   const gchar *fontname;
-  GimpLayer *text_layer = NULL;
+  LigmaLayer *text_layer = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  drawable = g_value_get_object (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
-  text = g_value_get_string (gimp_value_array_index (args, 4));
-  border = g_value_get_int (gimp_value_array_index (args, 5));
-  antialias = g_value_get_boolean (gimp_value_array_index (args, 6));
-  size = g_value_get_double (gimp_value_array_index (args, 7));
-  fontname = g_value_get_string (gimp_value_array_index (args, 9));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 1));
+  x = g_value_get_double (ligma_value_array_index (args, 2));
+  y = g_value_get_double (ligma_value_array_index (args, 3));
+  text = g_value_get_string (ligma_value_array_index (args, 4));
+  border = g_value_get_int (ligma_value_array_index (args, 5));
+  antialias = g_value_get_boolean (ligma_value_array_index (args, 6));
+  size = g_value_get_double (ligma_value_array_index (args, 7));
+  fontname = g_value_get_string (ligma_value_array_index (args, 9));
 
   if (success)
     {
       if (drawable &&
-          (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image,
-                                        GIMP_PDB_ITEM_CONTENT, error) ||
-           ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error)))
+          (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), image,
+                                        LIGMA_PDB_ITEM_CONTENT, error) ||
+           ! ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error)))
         success = FALSE;
 
       if (success)
@@ -94,25 +94,25 @@ text_fontname_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), text_layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), text_layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-text_get_extents_fontname_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+text_get_extents_fontname_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *text;
   gdouble size;
   const gchar *fontname;
@@ -121,15 +121,15 @@ text_get_extents_fontname_invoker (GimpProcedure         *procedure,
   gint ascent = 0;
   gint descent = 0;
 
-  text = g_value_get_string (gimp_value_array_index (args, 0));
-  size = g_value_get_double (gimp_value_array_index (args, 1));
-  fontname = g_value_get_string (gimp_value_array_index (args, 3));
+  text = g_value_get_string (ligma_value_array_index (args, 0));
+  size = g_value_get_double (ligma_value_array_index (args, 1));
+  fontname = g_value_get_string (ligma_value_array_index (args, 3));
 
   if (success)
     {
       gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-      success = text_get_extents (gimp,
+      success = text_get_extents (ligma,
                                   real_fontname, text,
                                   &width, &height,
                                   &ascent, &descent);
@@ -137,176 +137,176 @@ text_get_extents_fontname_invoker (GimpProcedure         *procedure,
       g_free (real_fontname);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), ascent);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), descent);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), ascent);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), descent);
     }
 
   return return_vals;
 }
 
 void
-register_text_tool_procs (GimpPDB *pdb)
+register_text_tool_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-text-fontname
+   * ligma-text-fontname
    */
-  procedure = gimp_procedure_new (text_fontname_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-fontname");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (text_fontname_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-text-fontname");
+  ligma_procedure_set_static_help (procedure,
                                   "Add text at the specified location as a floating selection or a new layer.",
                                   "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Martin Edlman & Sven Neumann",
                                          "Spencer Kimball & Peter Mattis",
                                          "1998- 2001");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable: (%NULL for a new text layer)",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "The x coordinate for the left of the text bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "The y coordinate for the top of the text bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("text",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("text",
                                                        "text",
                                                        "The text to generate (in UTF-8 encoding)",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("border",
                                                  "border",
                                                  "The size of the border",
                                                  -1, G_MAXINT32, -1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
                                                      "Antialiasing",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
                                                     "The size of text in either pixels or points",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
                                                   "The units of specified size",
-                                                  GIMP_TYPE_SIZE_TYPE,
-                                                  GIMP_PIXELS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("fontname",
+                                                  LIGMA_TYPE_SIZE_TYPE,
+                                                  LIGMA_PIXELS,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("fontname",
                                                        "fontname",
                                                        "The name of the font",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("text-layer",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("text-layer",
                                                           "text layer",
                                                           "The new text layer or %NULL if no layer was created.",
                                                           TRUE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-text-get-extents-fontname
+   * ligma-text-get-extents-fontname
    */
-  procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-get-extents-fontname");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (text_get_extents_fontname_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-text-get-extents-fontname");
+  ligma_procedure_set_static_help (procedure,
                                   "Get extents of the bounding box for the specified text.",
                                   "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Martin Edlman & Sven Neumann",
                                          "Spencer Kimball & Peter Mattis",
                                          "1998- 2001");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("text",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("text",
                                                        "text",
                                                        "The text to generate (in UTF-8 encoding)",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
                                                     "The size of text in either pixels or points",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
                                                   "The units of specified size",
-                                                  GIMP_TYPE_SIZE_TYPE,
-                                                  GIMP_PIXELS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("fontname",
+                                                  LIGMA_TYPE_SIZE_TYPE,
+                                                  LIGMA_PIXELS,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("fontname",
                                                        "fontname",
                                                        "The name of the font",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The width of the specified font",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The height of the specified font",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("ascent",
                                                      "ascent",
                                                      "The ascent of the specified font",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("descent",
                                                      "descent",
                                                      "The descent of the specified font",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

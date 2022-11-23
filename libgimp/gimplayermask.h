@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimplayermask.h
+ * ligmalayermask.h
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,25 +19,25 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LAYER_MASK_H__
-#define __GIMP_LAYER_MASK_H__
+#ifndef __LIGMA_LAYER_MASK_H__
+#define __LIGMA_LAYER_MASK_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_LAYER_MASK (gimp_layer_mask_get_type ())
-G_DECLARE_FINAL_TYPE (GimpLayerMask, gimp_layer_mask, GIMP, LAYER_MASK, GimpChannel)
+#define LIGMA_TYPE_LAYER_MASK (ligma_layer_mask_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaLayerMask, ligma_layer_mask, LIGMA, LAYER_MASK, LigmaChannel)
 
 
-GimpLayerMask * gimp_layer_mask_get_by_id (gint32 layer_mask_id);
+LigmaLayerMask * ligma_layer_mask_get_by_id (gint32 layer_mask_id);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_LAYER_MASK_H__ */
+#endif /* __LIGMA_LAYER_MASK_H__ */

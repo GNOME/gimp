@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,10 +33,10 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "jpeg.h"
 #include "jpeg-icc.h"
@@ -66,14 +66,14 @@ typedef struct
 } PreviewPersistent;
 
 
-static void  make_preview              (GimpProcedureConfig *config);
+static void  make_preview              (LigmaProcedureConfig *config);
 
-static void  quality_changed           (GimpProcedureConfig *config);
-static void  subsampling_changed       (GimpProcedureConfig *config,
+static void  quality_changed           (LigmaProcedureConfig *config);
+static void  subsampling_changed       (LigmaProcedureConfig *config,
                                         const GParamSpec    *pspec,
                                         GtkWidget           *smoothing_scale);
-static void  use_orig_qual_changed     (GimpProcedureConfig *config);
-static void  use_orig_qual_changed_rgb (GimpProcedureConfig *config);
+static void  use_orig_qual_changed     (LigmaProcedureConfig *config);
+static void  use_orig_qual_changed_rgb (LigmaProcedureConfig *config);
 
 
 static GtkWidget         *preview_size  = NULL;
@@ -151,7 +151,7 @@ background_jpeg_save (PreviewPersistent *pp)
           g_free (text);
 
           /* and load the preview */
-          load_image (pp->file, GIMP_RUN_NONINTERACTIVE,
+          load_image (pp->file, LIGMA_RUN_NONINTERACTIVE,
                       TRUE, NULL, NULL);
         }
 
@@ -162,7 +162,7 @@ background_jpeg_save (PreviewPersistent *pp)
       g_free (pp);
       prev_p = NULL;
 
-      gimp_displays_flush ();
+      ligma_displays_flush ();
       gdk_display_flush (gdk_display_get_default ());
 
       return FALSE;
@@ -194,17 +194,17 @@ background_jpeg_save (PreviewPersistent *pp)
 
 gboolean
 save_image (GFile                *file,
-            GimpProcedureConfig  *config,
-            GimpImage            *image,
-            GimpDrawable         *drawable,
-            GimpImage            *orig_image,
+            LigmaProcedureConfig  *config,
+            LigmaImage            *image,
+            LigmaDrawable         *drawable,
+            LigmaImage            *orig_image,
             gboolean              preview,
             GError              **error)
 {
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
 
-  GimpImageType     drawable_type;
+  LigmaImageType     drawable_type;
   GeglBuffer       *buffer;
   const gchar      *encoding;
   const Babl       *format;
@@ -213,8 +213,8 @@ save_image (GFile                *file,
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
-  GimpColorProfile *profile      = NULL;
-  GimpColorProfile *cmyk_profile = NULL;
+  LigmaColorProfile *profile      = NULL;
+  LigmaColorProfile *cmyk_profile = NULL;
 
   gboolean         has_alpha;
   gboolean         out_linear = FALSE;
@@ -258,19 +258,19 @@ save_image (GFile                *file,
 
                 "save-color-profile",        &save_profile,
                 "save-comment",              &save_comment,
-                "gimp-comment",              &comment,
+                "ligma-comment",              &comment,
 
                 NULL);
 
   quality = (gint) (dquality * 100.0 + 0.5);
 
-  drawable_type = gimp_drawable_type (drawable);
-  buffer = gimp_drawable_get_buffer (drawable);
-  space = gimp_drawable_get_format (drawable);
+  drawable_type = ligma_drawable_type (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
+  space = ligma_drawable_get_format (drawable);
 
   if (! preview)
-    gimp_progress_init_printf (_("Exporting '%s'"),
-                               gimp_file_get_utf8_name (file));
+    ligma_progress_init_printf (_("Exporting '%s'"),
+                               ligma_file_get_utf8_name (file));
 
   /* Step 1: allocate and initialize JPEG compression object */
 
@@ -315,7 +315,7 @@ save_image (GFile                *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -327,26 +327,26 @@ save_image (GFile                *file,
    */
   if (save_profile)
     {
-      profile = gimp_image_get_color_profile (orig_image);
+      profile = ligma_image_get_color_profile (orig_image);
 
       /* If a profile is explicitly set, follow its TRC, whatever the
        * storage format.
        */
-      if (profile && gimp_color_profile_is_linear (profile))
+      if (profile && ligma_color_profile_is_linear (profile))
         out_linear = TRUE;
 
       if (! profile)
         {
           /* There is always an effective profile. */
-          profile = gimp_image_get_effective_color_profile (orig_image);
+          profile = ligma_image_get_effective_color_profile (orig_image);
 
-          if (gimp_color_profile_is_linear (profile))
+          if (ligma_color_profile_is_linear (profile))
             {
-              if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR)
+              if (ligma_image_get_precision (image) != LIGMA_PRECISION_U8_LINEAR)
                 {
-                  GimpColorProfile *saved_profile;
+                  LigmaColorProfile *saved_profile;
 
-                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  saved_profile = ligma_color_profile_new_srgb_trc_from_color_profile (profile);
                   g_object_unref (profile);
                   profile = saved_profile;
                 }
@@ -357,8 +357,8 @@ save_image (GFile                *file,
                 }
             }
         }
-      space = gimp_color_profile_get_space (profile,
-                                            gimp_image_get_simulation_intent (image),
+      space = ligma_color_profile_get_space (profile,
+                                            ligma_image_get_simulation_intent (image),
                                             error);
       if (error && *error)
         {
@@ -371,7 +371,7 @@ save_image (GFile                *file,
           g_printerr ("%s: error getting the profile space: %s",
                      G_STRFUNC, (*error)->message);
           g_clear_error (error);
-          space = gimp_drawable_get_format (drawable);
+          space = ligma_drawable_get_format (drawable);
         }
     }
 
@@ -381,7 +381,7 @@ save_image (GFile                *file,
    */
   switch (drawable_type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = 3;
       has_alpha = FALSE;
@@ -392,7 +392,7 @@ save_image (GFile                *file,
         encoding = "R'G'B' u8";
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = 1;
       has_alpha = FALSE;
@@ -403,8 +403,8 @@ save_image (GFile                *file,
         encoding = "Y' u8";
       break;
 
-    case GIMP_RGBA_IMAGE:
-      /* # of color components per pixel (minus the GIMP alpha channel) */
+    case LIGMA_RGBA_IMAGE:
+      /* # of color components per pixel (minus the LIGMA alpha channel) */
       cinfo.input_components = 4 - 1;
       has_alpha = TRUE;
 
@@ -414,8 +414,8 @@ save_image (GFile                *file,
         encoding = "R'G'B' u8";
       break;
 
-    case GIMP_GRAYA_IMAGE:
-      /* # of color components per pixel (minus the GIMP alpha channel) */
+    case LIGMA_GRAYA_IMAGE:
+      /* # of color components per pixel (minus the LIGMA alpha channel) */
       cinfo.input_components = 2 - 1;
       has_alpha = TRUE;
       if (out_linear)
@@ -424,7 +424,7 @@ save_image (GFile                *file,
         encoding = "Y' u8";
       break;
 
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
     default:
       return FALSE;
     }
@@ -435,11 +435,11 @@ save_image (GFile                *file,
         {
           GError *err = NULL;
 
-          cmyk_profile = gimp_image_get_simulation_profile (image);
+          cmyk_profile = ligma_image_get_simulation_profile (image);
           if (! cmyk_profile && err)
             g_printerr ("%s: no soft-proof profile: %s\n", G_STRFUNC, err->message);
 
-          if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
+          if (cmyk_profile && ! ligma_color_profile_is_cmyk (cmyk_profile))
             g_clear_object (&cmyk_profile);
 
           g_clear_error (&err);
@@ -458,8 +458,8 @@ save_image (GFile                *file,
       encoding = "cmyk u8";
 
       if (cmyk_profile)
-        space = gimp_color_profile_get_space (cmyk_profile,
-                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+        space = ligma_color_profile_get_space (cmyk_profile,
+                                              LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                               error);
       else
         /* The NULL space will fallback to a naive CMYK conversion. */
@@ -485,8 +485,8 @@ save_image (GFile                *file,
     }
   else
     {
-      cinfo.in_color_space = (drawable_type == GIMP_RGB_IMAGE ||
-                              drawable_type == GIMP_RGBA_IMAGE)
+      cinfo.in_color_space = (drawable_type == LIGMA_RGB_IMAGE ||
+                              drawable_type == LIGMA_RGBA_IMAGE)
         ? JCS_RGB : JCS_GRAYSCALE;
     }
   /* Now use the library's routine to set default compression parameters.
@@ -527,7 +527,7 @@ save_image (GFile                *file,
   cinfo.optimize_coding = optimize;
 #endif
 
-  subsampling = (gimp_drawable_is_rgb (drawable) ?
+  subsampling = (ligma_drawable_is_rgb (drawable) ?
                  subsmp : JPEG_SUBSAMPLING_1x1_1x1_1x1);
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
@@ -605,13 +605,13 @@ save_image (GFile                *file,
     gdouble xresolution;
     gdouble yresolution;
 
-    gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
+    ligma_image_get_resolution (orig_image, &xresolution, &yresolution);
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
       {
         gdouble factor;
 
-        factor = gimp_unit_get_factor (gimp_image_get_unit (orig_image));
+        factor = ligma_unit_get_factor (ligma_image_get_unit (orig_image));
 
         if (factor == 2.54 /* cm */ ||
             factor == 25.4 /* mm */)
@@ -641,7 +641,7 @@ save_image (GFile                *file,
   /* Step 4.1: Write the comment out - pw */
   if (save_comment && comment && *comment)
     {
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
       g_print ("jpeg-save: saving image comment (%d bytes)\n",
                (int) strlen (comment));
 #endif
@@ -662,7 +662,7 @@ save_image (GFile                *file,
       const guint8 *icc_data;
       gsize         icc_length;
 
-      icc_data = gimp_color_profile_get_icc_profile (cmyk_profile ? cmyk_profile : profile, &icc_length);
+      icc_data = ligma_color_profile_get_icc_profile (cmyk_profile ? cmyk_profile : profile, &icc_length);
       jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
     }
   g_clear_object (&profile);
@@ -678,10 +678,10 @@ save_image (GFile                *file,
    */
   /* JSAMPLEs per row in image_buffer */
   rowstride = cinfo.input_components * cinfo.image_width;
-  data = g_new (guchar, rowstride * gimp_tile_height ());
+  data = g_new (guchar, rowstride * ligma_tile_height ());
 
   /* fault if cinfo.next_scanline isn't initially a multiple of
-   * gimp_tile_height */
+   * ligma_tile_height */
   src = NULL;
 
   /*
@@ -695,7 +695,7 @@ save_image (GFile                *file,
 
       /* pass all the information we need */
       pp->cinfo       = cinfo;
-      pp->tile_height = gimp_tile_height();
+      pp->tile_height = ligma_tile_height();
       pp->data        = data;
       pp->outfile     = outfile;
       pp->has_alpha   = has_alpha;
@@ -724,9 +724,9 @@ save_image (GFile                *file,
 
   while (cinfo.next_scanline < cinfo.image_height)
     {
-      if ((cinfo.next_scanline % gimp_tile_height ()) == 0)
+      if ((cinfo.next_scanline % ligma_tile_height ()) == 0)
         {
-          yend = cinfo.next_scanline + gimp_tile_height ();
+          yend = cinfo.next_scanline + ligma_tile_height ();
           yend = MIN (yend, cinfo.image_height);
           gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (0, cinfo.next_scanline,
@@ -744,7 +744,7 @@ save_image (GFile                *file,
       src += rowstride;
 
       if ((cinfo.next_scanline % 32) == 0)
-        gimp_progress_update ((gdouble) cinfo.next_scanline /
+        ligma_progress_update ((gdouble) cinfo.next_scanline /
                               (gdouble) cinfo.image_height);
     }
 
@@ -762,7 +762,7 @@ save_image (GFile                *file,
   g_free (data);
 
   /* And we're done! */
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_object_unref (buffer);
 
@@ -770,7 +770,7 @@ save_image (GFile                *file,
 }
 
 static void
-make_preview (GimpProcedureConfig *config)
+make_preview (LigmaProcedureConfig *config)
 {
   gboolean show_preview;
 
@@ -780,13 +780,13 @@ make_preview (GimpProcedureConfig *config)
 
   if (show_preview)
     {
-      GFile *file = gimp_temp_file ("jpeg");
+      GFile *file = ligma_temp_file ("jpeg");
 
       if (! undo_touched)
         {
           /* we freeze undo saving so that we can avoid sucking up
            * tile cache with our unneeded preview steps. */
-          gimp_image_undo_freeze (preview_image);
+          ligma_image_undo_freeze (preview_image);
 
           undo_touched = TRUE;
         }
@@ -800,13 +800,13 @@ make_preview (GimpProcedureConfig *config)
       g_object_unref (file);
 
       if (separate_display && ! display)
-        display = gimp_display_new (preview_image);
+        display = ligma_display_new (preview_image);
     }
   else
     {
       gtk_label_set_text (GTK_LABEL (preview_size), _("File size: unknown"));
 
-      gimp_displays_flush ();
+      ligma_displays_flush ();
     }
 }
 
@@ -821,30 +821,30 @@ destroy_preview (void)
       g_source_remove (id);
     }
 
-  if (gimp_image_is_valid (preview_image) &&
-      gimp_item_is_valid (GIMP_ITEM (preview_layer)))
+  if (ligma_image_is_valid (preview_image) &&
+      ligma_item_is_valid (LIGMA_ITEM (preview_layer)))
     {
       /* assuming that reference counting is working correctly, we do
        * not need to delete the layer, removing it from the image
        * should be sufficient
        */
-      gimp_image_remove_layer (preview_image, preview_layer);
+      ligma_image_remove_layer (preview_image, preview_layer);
 
       preview_layer = NULL;
     }
 }
 
 gboolean
-save_dialog (GimpProcedure       *procedure,
-             GimpProcedureConfig *config,
-             GimpDrawable        *drawable,
-             GimpImage           *image)
+save_dialog (LigmaProcedure       *procedure,
+             LigmaProcedureConfig *config,
+             LigmaDrawable        *drawable,
+             LigmaImage           *image)
 {
   GtkWidget        *dialog;
   GtkWidget        *widget;
   GtkWidget        *profile_label;
   GtkListStore     *store;
-  GimpColorProfile *cmyk_profile = NULL;
+  LigmaColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
   gint              restart;
   gboolean          run;
@@ -854,17 +854,17 @@ save_dialog (GimpProcedure       *procedure,
                 "restart",          &restart,
                 NULL);
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           gimp_item_get_image (GIMP_ITEM (drawable)));
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
+                                           ligma_item_get_image (LIGMA_ITEM (drawable)));
 
   /* custom quantization tables - now used also for original quality */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "use-original-quality",
                                        (orig_quality > 0), NULL, NULL, FALSE);
 
-  /* Quality as a GimpScaleEntry. */
-  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "quality", 100.0);
+  /* Quality as a LigmaScaleEntry. */
+  ligma_procedure_dialog_get_spin_scale (LIGMA_PROCEDURE_DIALOG (dialog), "quality", 100.0);
 
   /* changing quality disables custom quantization tables, and vice-versa */
   g_signal_connect (config, "notify::quality",
@@ -875,41 +875,41 @@ save_dialog (GimpProcedure       *procedure,
                     NULL);
 
   /* File size label. */
-  preview_size = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  preview_size = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                   "preview-size", _("File size: unknown"));
   gtk_label_set_xalign (GTK_LABEL (preview_size), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (preview_size),
+  ligma_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gimp_help_set_help_data (preview_size,
+  ligma_help_set_help_data (preview_size,
                            _("Enable preview to obtain the file size."), NULL);
 
 
   /* Profile label. */
-  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  profile_label = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                    "profile-label", _("No soft-proofing profile"));
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (profile_label),
+  ligma_label_set_attributes (GTK_LABEL (profile_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gimp_help_set_help_data (profile_label,
+  ligma_help_set_help_data (profile_label,
                            _("Name of the color profile used for CMYK export."), NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "cmyk-frame", "cmyk", FALSE,
                                     "profile-label");
-  cmyk_profile = gimp_image_get_simulation_profile (image);
+  cmyk_profile = ligma_image_get_simulation_profile (image);
   if (cmyk_profile)
     {
-      if (gimp_color_profile_is_cmyk (cmyk_profile))
+      if (ligma_color_profile_is_cmyk (cmyk_profile))
         {
           gchar *label_text;
 
           label_text = g_strdup_printf (_("Profile: %s"),
-                                        gimp_color_profile_get_label (cmyk_profile));
+                                        ligma_color_profile_get_label (cmyk_profile));
           gtk_label_set_text (GTK_LABEL (profile_label), label_text);
-          gimp_label_set_attributes (GTK_LABEL (profile_label),
+          ligma_label_set_attributes (GTK_LABEL (profile_label),
                                      PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
                                      -1);
           g_free (label_text);
@@ -918,7 +918,7 @@ save_dialog (GimpProcedure       *procedure,
     }
 
 #ifdef C_ARITH_CODING_SUPPORTED
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "arithmetic-frame", "use-arithmetic-coding", TRUE,
                                     "optimize");
 #endif
@@ -927,7 +927,7 @@ save_dialog (GimpProcedure       *procedure,
   /* TODO: apparently when toggle is unchecked, we want to show the
    * scale as 0.
    */
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "restart-frame", "use-restart", FALSE,
                                     "restart");
   if (restart == 0)
@@ -937,7 +937,7 @@ save_dialog (GimpProcedure       *procedure,
                   NULL);
 
   /* Subsampling */
-  store = gimp_int_store_new (_("4:4:4 (best quality)"),
+  store = ligma_int_store_new (_("4:4:4 (best quality)"),
                               JPEG_SUBSAMPLING_1x1_1x1_1x1,
                               _("4:2:2 horizontal (chroma halved)"),
                               JPEG_SUBSAMPLING_2x1_1x1_1x1,
@@ -946,32 +946,32 @@ save_dialog (GimpProcedure       *procedure,
                               _("4:2:0 (chroma quartered)"),
                               JPEG_SUBSAMPLING_2x2_1x1_1x1,
                               NULL);
-  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "sub-sampling", GIMP_INT_STORE (store));
-  widget = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
+  widget = ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                               "sub-sampling", LIGMA_INT_STORE (store));
+  widget = ligma_label_int_widget_get_widget (LIGMA_LABEL_INT_WIDGET (widget));
 
-  if (! gimp_drawable_is_rgb (drawable))
+  if (! ligma_drawable_is_rgb (drawable))
     {
       g_object_set (config, "sub-sampling", JPEG_SUBSAMPLING_1x1_1x1_1x1, NULL);
       gtk_widget_set_sensitive (widget, FALSE);
     }
 
   /* DCT method */
-  store = gimp_int_store_new (_("Fast Integer"),   1,
+  store = ligma_int_store_new (_("Fast Integer"),   1,
                               _("Integer"),        0,
                               _("Floating-Point"), 2,
                               NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "dct", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "dct", LIGMA_INT_STORE (store));
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                    "advanced-title", _("Advanced Options"));
-  widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                             "smoothing", GIMP_TYPE_SPIN_SCALE);
-  gimp_help_set_help_data (widget, NULL, "file-jpeg-save-smoothing");
+  widget = ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
+                                             "smoothing", LIGMA_TYPE_SPIN_SCALE);
+  ligma_help_set_help_data (widget, NULL, "file-jpeg-save-smoothing");
 
   /* Add some logics for "Use original quality". */
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
       g_signal_connect (config, "notify::sub-sampling",
                         G_CALLBACK (subsampling_changed),
@@ -982,7 +982,7 @@ save_dialog (GimpProcedure       *procedure,
                         NULL);
     }
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "advanced-options",
                                   "smoothing",
                                   "progressive",
@@ -996,11 +996,11 @@ save_dialog (GimpProcedure       *procedure,
                                   "sub-sampling",
                                   "dct",
                                   NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                               "quality", "use-original-quality",
                               "preview-size", "show-preview",
                               "advanced-frame",
@@ -1015,7 +1015,7 @@ save_dialog (GimpProcedure       *procedure,
 
   make_preview (config);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
   destroy_preview ();
@@ -1024,7 +1024,7 @@ save_dialog (GimpProcedure       *procedure,
 }
 
 static void
-quality_changed (GimpProcedureConfig *config)
+quality_changed (LigmaProcedureConfig *config)
 {
   gboolean use_orig_quality;
   gdouble  quality;
@@ -1041,7 +1041,7 @@ quality_changed (GimpProcedureConfig *config)
 }
 
 static void
-subsampling_changed (GimpProcedureConfig *config,
+subsampling_changed (LigmaProcedureConfig *config,
                      const GParamSpec    *pspec,
                      GtkWidget           *smoothing_scale)
 {
@@ -1065,7 +1065,7 @@ subsampling_changed (GimpProcedureConfig *config,
 }
 
 static void
-use_orig_qual_changed (GimpProcedureConfig *config)
+use_orig_qual_changed (LigmaProcedureConfig *config)
 {
   gboolean use_orig_quality;
   gint     orig_quality;
@@ -1084,7 +1084,7 @@ use_orig_qual_changed (GimpProcedureConfig *config)
 }
 
 static void
-use_orig_qual_changed_rgb (GimpProcedureConfig *config)
+use_orig_qual_changed_rgb (LigmaProcedureConfig *config)
 {
   gboolean use_orig_quality;
   gint     orig_quality;

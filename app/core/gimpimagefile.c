@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimagefile.c
+ * ligmaimagefile.c
  *
- * Copyright (C) 2001-2004  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,27 +27,27 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpthumb/gimpthumb.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmathumb/ligmathumb.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
-#include "gimpimagefile.h"
-#include "gimppickable.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmacontainer.h"
+#include "ligmacontext.h"
+#include "ligmaimage.h"
+#include "ligmaimagefile.h"
+#include "ligmapickable.h"
+#include "ligmaprogress.h"
 
 #include "file/file-open.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -57,14 +57,14 @@ enum
 };
 
 
-typedef struct _GimpImagefilePrivate GimpImagefilePrivate;
+typedef struct _LigmaImagefilePrivate LigmaImagefilePrivate;
 
-struct _GimpImagefilePrivate
+struct _LigmaImagefilePrivate
 {
-  Gimp          *gimp;
+  Ligma          *ligma;
 
   GFile         *file;
-  GimpThumbnail *thumbnail;
+  LigmaThumbnail *thumbnail;
   GIcon         *icon;
   GCancellable  *icon_cancellable;
 
@@ -72,42 +72,42 @@ struct _GimpImagefilePrivate
   gboolean       static_desc;
 };
 
-#define GET_PRIVATE(imagefile) ((GimpImagefilePrivate *) gimp_imagefile_get_instance_private ((GimpImagefile *) (imagefile)))
+#define GET_PRIVATE(imagefile) ((LigmaImagefilePrivate *) ligma_imagefile_get_instance_private ((LigmaImagefile *) (imagefile)))
 
 
-static void        gimp_imagefile_dispose          (GObject        *object);
-static void        gimp_imagefile_finalize         (GObject        *object);
+static void        ligma_imagefile_dispose          (GObject        *object);
+static void        ligma_imagefile_finalize         (GObject        *object);
 
-static void        gimp_imagefile_name_changed     (GimpObject     *object);
+static void        ligma_imagefile_name_changed     (LigmaObject     *object);
 
-static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
-                                                    GimpContext    *context,
+static GdkPixbuf * ligma_imagefile_get_new_pixbuf   (LigmaViewable   *viewable,
+                                                    LigmaContext    *context,
                                                     gint            width,
                                                     gint            height);
-static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
+static gchar     * ligma_imagefile_get_description  (LigmaViewable   *viewable,
                                                     gchar         **tooltip);
 
-static void        gimp_imagefile_info_changed     (GimpImagefile  *imagefile);
-static void        gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
+static void        ligma_imagefile_info_changed     (LigmaImagefile  *imagefile);
+static void        ligma_imagefile_notify_thumbnail (LigmaImagefile  *imagefile,
                                                     GParamSpec     *pspec);
 
-static void        gimp_imagefile_icon_callback    (GObject        *source_object,
+static void        ligma_imagefile_icon_callback    (GObject        *source_object,
                                                     GAsyncResult   *result,
                                                     gpointer        data);
 
-static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
+static GdkPixbuf * ligma_imagefile_load_thumb       (LigmaImagefile  *imagefile,
                                                     gint            width,
                                                     gint            height);
-static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
-                                                    GimpImage      *image,
+static gboolean    ligma_imagefile_save_thumb       (LigmaImagefile  *imagefile,
+                                                    LigmaImage      *image,
                                                     gint            size,
                                                     gboolean        replace,
                                                     GError        **error);
 
-static void     gimp_thumbnail_set_info_from_image (GimpThumbnail  *thumbnail,
+static void     ligma_thumbnail_set_info_from_image (LigmaThumbnail  *thumbnail,
                                                     const gchar    *mime_type,
-                                                    GimpImage      *image);
-static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
+                                                    LigmaImage      *image);
+static void     ligma_thumbnail_set_info            (LigmaThumbnail  *thumbnail,
                                                     const gchar    *mime_type,
                                                     gint            width,
                                                     gint            height,
@@ -115,64 +115,64 @@ static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     gint            num_layers);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaImagefile, ligma_imagefile, LIGMA_TYPE_VIEWABLE)
 
-#define parent_class gimp_imagefile_parent_class
+#define parent_class ligma_imagefile_parent_class
 
-static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_imagefile_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_imagefile_class_init (GimpImagefileClass *klass)
+ligma_imagefile_class_init (LigmaImagefileClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
   gchar             *creator;
 
-  gimp_imagefile_signals[INFO_CHANGED] =
+  ligma_imagefile_signals[INFO_CHANGED] =
     g_signal_new ("info-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImagefileClass, info_changed),
+                  G_STRUCT_OFFSET (LigmaImagefileClass, info_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose               = gimp_imagefile_dispose;
-  object_class->finalize              = gimp_imagefile_finalize;
+  object_class->dispose               = ligma_imagefile_dispose;
+  object_class->finalize              = ligma_imagefile_finalize;
 
-  gimp_object_class->name_changed     = gimp_imagefile_name_changed;
+  ligma_object_class->name_changed     = ligma_imagefile_name_changed;
 
   viewable_class->name_changed_signal = "info-changed";
-  viewable_class->get_new_pixbuf      = gimp_imagefile_get_new_pixbuf;
-  viewable_class->get_description     = gimp_imagefile_get_description;
+  viewable_class->get_new_pixbuf      = ligma_imagefile_get_new_pixbuf;
+  viewable_class->get_description     = ligma_imagefile_get_description;
 
-  g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
+  g_type_class_ref (LIGMA_TYPE_IMAGE_TYPE);
 
-  creator = g_strdup_printf ("gimp-%d.%d",
-                             GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+  creator = g_strdup_printf ("ligma-%d.%d",
+                             LIGMA_MAJOR_VERSION, LIGMA_MINOR_VERSION);
 
-  gimp_thumb_init (creator, NULL);
+  ligma_thumb_init (creator, NULL);
 
   g_free (creator);
 }
 
 static void
-gimp_imagefile_init (GimpImagefile *imagefile)
+ligma_imagefile_init (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private = GET_PRIVATE (imagefile);
+  LigmaImagefilePrivate *private = GET_PRIVATE (imagefile);
 
-  private->thumbnail = gimp_thumbnail_new ();
+  private->thumbnail = ligma_thumbnail_new ();
 
   g_signal_connect_object (private->thumbnail, "notify",
-                           G_CALLBACK (gimp_imagefile_notify_thumbnail),
+                           G_CALLBACK (ligma_imagefile_notify_thumbnail),
                            imagefile, G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_imagefile_dispose (GObject *object)
+ligma_imagefile_dispose (GObject *object)
 {
-  GimpImagefilePrivate *private = GET_PRIVATE (object);
+  LigmaImagefilePrivate *private = GET_PRIVATE (object);
 
   if (private->icon_cancellable)
     {
@@ -184,9 +184,9 @@ gimp_imagefile_dispose (GObject *object)
 }
 
 static void
-gimp_imagefile_finalize (GObject *object)
+ligma_imagefile_finalize (GObject *object)
 {
-  GimpImagefilePrivate *private = GET_PRIVATE (object);
+  LigmaImagefilePrivate *private = GET_PRIVATE (object);
 
   if (private->description)
     {
@@ -204,42 +204,42 @@ gimp_imagefile_finalize (GObject *object)
 }
 
 static void
-gimp_imagefile_name_changed (GimpObject *object)
+ligma_imagefile_name_changed (LigmaObject *object)
 {
-  GimpImagefilePrivate *private = GET_PRIVATE (object);
+  LigmaImagefilePrivate *private = GET_PRIVATE (object);
 
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+  if (LIGMA_OBJECT_CLASS (parent_class)->name_changed)
+    LIGMA_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  gimp_thumbnail_set_uri (private->thumbnail, gimp_object_get_name (object));
+  ligma_thumbnail_set_uri (private->thumbnail, ligma_object_get_name (object));
 
   g_clear_object (&private->file);
 
-  if (gimp_object_get_name (object))
-    private->file = g_file_new_for_uri (gimp_object_get_name (object));
+  if (ligma_object_get_name (object))
+    private->file = g_file_new_for_uri (ligma_object_get_name (object));
 }
 
 static GdkPixbuf *
-gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
-                               GimpContext  *context,
+ligma_imagefile_get_new_pixbuf (LigmaViewable *viewable,
+                               LigmaContext  *context,
                                gint          width,
                                gint          height)
 {
-  GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
+  LigmaImagefile *imagefile = LIGMA_IMAGEFILE (viewable);
 
-  if (! gimp_object_get_name (imagefile))
+  if (! ligma_object_get_name (imagefile))
     return NULL;
 
-  return gimp_imagefile_load_thumb (imagefile, width, height);
+  return ligma_imagefile_load_thumb (imagefile, width, height);
 }
 
 static gchar *
-gimp_imagefile_get_description (GimpViewable   *viewable,
+ligma_imagefile_get_description (LigmaViewable   *viewable,
                                 gchar         **tooltip)
 {
-  GimpImagefile        *imagefile = GIMP_IMAGEFILE (viewable);
-  GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
-  GimpThumbnail        *thumbnail = private->thumbnail;
+  LigmaImagefile        *imagefile = LIGMA_IMAGEFILE (viewable);
+  LigmaImagefilePrivate *private   = GET_PRIVATE (imagefile);
+  LigmaThumbnail        *thumbnail = private->thumbnail;
   gchar                *basename;
 
   if (! private->file)
@@ -250,8 +250,8 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
       const gchar *name;
       const gchar *desc;
 
-      name = gimp_file_get_utf8_name (private->file);
-      desc = gimp_imagefile_get_desc_string (imagefile);
+      name = ligma_file_get_utf8_name (private->file);
+      desc = ligma_imagefile_get_desc_string (imagefile);
 
       if (desc)
         *tooltip = g_strdup_printf ("%s\n%s", name, desc);
@@ -259,7 +259,7 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
         *tooltip = g_strdup (name);
     }
 
-  basename = g_path_get_basename (gimp_file_get_utf8_name (private->file));
+  basename = g_path_get_basename (ligma_file_get_utf8_name (private->file));
 
   if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
     {
@@ -278,65 +278,65 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
 
 /*  public functions  */
 
-GimpImagefile *
-gimp_imagefile_new (Gimp  *gimp,
+LigmaImagefile *
+ligma_imagefile_new (Ligma  *ligma,
                     GFile *file)
 {
-  GimpImagefile *imagefile;
+  LigmaImagefile *imagefile;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
 
-  imagefile = g_object_new (GIMP_TYPE_IMAGEFILE, NULL);
+  imagefile = g_object_new (LIGMA_TYPE_IMAGEFILE, NULL);
 
-  GET_PRIVATE (imagefile)->gimp = gimp;
+  GET_PRIVATE (imagefile)->ligma = ligma;
 
   if (file)
     {
-      gimp_object_take_name (GIMP_OBJECT (imagefile), g_file_get_uri (file));
+      ligma_object_take_name (LIGMA_OBJECT (imagefile), g_file_get_uri (file));
 
-      /* file member gets created by gimp_imagefile_name_changed() */
+      /* file member gets created by ligma_imagefile_name_changed() */
     }
 
   return imagefile;
 }
 
 GFile *
-gimp_imagefile_get_file (GimpImagefile *imagefile)
+ligma_imagefile_get_file (LigmaImagefile *imagefile)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), NULL);
 
   return GET_PRIVATE (imagefile)->file;
 }
 
 void
-gimp_imagefile_set_file (GimpImagefile *imagefile,
+ligma_imagefile_set_file (LigmaImagefile *imagefile,
                          GFile         *file)
 {
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (LIGMA_IS_IMAGEFILE (imagefile));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
   if (GET_PRIVATE (imagefile)->file != file)
     {
-      gimp_object_take_name (GIMP_OBJECT (imagefile),
+      ligma_object_take_name (LIGMA_OBJECT (imagefile),
                              file ? g_file_get_uri (file) : NULL);
     }
 }
 
-GimpThumbnail *
-gimp_imagefile_get_thumbnail (GimpImagefile *imagefile)
+LigmaThumbnail *
+ligma_imagefile_get_thumbnail (LigmaImagefile *imagefile)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), NULL);
 
   return GET_PRIVATE (imagefile)->thumbnail;
 }
 
 GIcon *
-gimp_imagefile_get_gicon (GimpImagefile *imagefile)
+ligma_imagefile_get_gicon (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private;
+  LigmaImagefilePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), NULL);
 
   private = GET_PRIVATE (imagefile);
 
@@ -351,7 +351,7 @@ gimp_imagefile_get_gicon (GimpImagefile *imagefile)
                                G_FILE_QUERY_INFO_NONE,
                                G_PRIORITY_DEFAULT,
                                private->icon_cancellable,
-                               gimp_imagefile_icon_callback,
+                               ligma_imagefile_icon_callback,
                                imagefile);
     }
 
@@ -359,10 +359,10 @@ gimp_imagefile_get_gicon (GimpImagefile *imagefile)
 }
 
 void
-gimp_imagefile_set_mime_type (GimpImagefile *imagefile,
+ligma_imagefile_set_mime_type (LigmaImagefile *imagefile,
                               const gchar   *mime_type)
 {
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (LIGMA_IS_IMAGEFILE (imagefile));
 
   g_object_set (GET_PRIVATE (imagefile)->thumbnail,
                 "image-mimetype", mime_type,
@@ -370,16 +370,16 @@ gimp_imagefile_set_mime_type (GimpImagefile *imagefile,
 }
 
 void
-gimp_imagefile_update (GimpImagefile *imagefile)
+ligma_imagefile_update (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private;
+  LigmaImagefilePrivate *private;
   gchar                *uri;
 
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (LIGMA_IS_IMAGEFILE (imagefile));
 
   private = GET_PRIVATE (imagefile);
 
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (imagefile));
 
   g_object_get (private->thumbnail,
                 "image-uri", &uri,
@@ -387,32 +387,32 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 
   if (uri)
     {
-      GimpImagefile *documents_imagefile = (GimpImagefile *)
-        gimp_container_get_child_by_name (private->gimp->documents, uri);
+      LigmaImagefile *documents_imagefile = (LigmaImagefile *)
+        ligma_container_get_child_by_name (private->ligma->documents, uri);
 
       if (documents_imagefile != imagefile &&
-          GIMP_IS_IMAGEFILE (documents_imagefile))
-        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (documents_imagefile));
+          LIGMA_IS_IMAGEFILE (documents_imagefile))
+        ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (documents_imagefile));
 
       g_free (uri);
     }
 }
 
 gboolean
-gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
-                                 GimpContext    *context,
-                                 GimpProgress   *progress,
+ligma_imagefile_create_thumbnail (LigmaImagefile  *imagefile,
+                                 LigmaContext    *context,
+                                 LigmaProgress   *progress,
                                  gint            size,
                                  gboolean        replace,
                                  GError        **error)
 {
-  GimpImagefilePrivate *private;
-  GimpThumbnail        *thumbnail;
-  GimpThumbState        image_state;
+  LigmaImagefilePrivate *private;
+  LigmaThumbnail        *thumbnail;
+  LigmaThumbState        image_state;
 
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   /* thumbnailing is disabled, we successfully did nothing */
@@ -423,15 +423,15 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
 
   thumbnail = private->thumbnail;
 
-  gimp_thumbnail_set_uri (thumbnail,
-                          gimp_object_get_name (imagefile));
+  ligma_thumbnail_set_uri (thumbnail,
+                          ligma_object_get_name (imagefile));
 
-  image_state = gimp_thumbnail_peek_image (thumbnail);
+  image_state = ligma_thumbnail_peek_image (thumbnail);
 
-  if (image_state == GIMP_THUMB_STATE_REMOTE ||
-      image_state >= GIMP_THUMB_STATE_EXISTS)
+  if (image_state == LIGMA_THUMB_STATE_REMOTE ||
+      image_state >= LIGMA_THUMB_STATE_EXISTS)
     {
-      GimpImage     *image;
+      LigmaImage     *image;
       gboolean       success;
       gint           width      = 0;
       gint           height     = 0;
@@ -464,20 +464,20 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
 
       g_object_ref (imagefile);
 
-      image = file_open_thumbnail (private->gimp, context, progress,
+      image = file_open_thumbnail (private->ligma, context, progress,
                                    private->file, size,
                                    &mime_type, &width, &height,
                                    &format, &num_layers, error);
 
       if (image)
         {
-          gimp_thumbnail_set_info (private->thumbnail,
+          ligma_thumbnail_set_info (private->thumbnail,
                                    mime_type, width, height,
                                    format, num_layers);
         }
       else
         {
-          GimpPDBStatusType  status;
+          LigmaPDBStatusType  status;
 
           if (error && *error)
             {
@@ -487,19 +487,19 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
               g_clear_error (error);
             }
 
-          image = file_open_image (private->gimp, context, progress,
+          image = file_open_image (private->ligma, context, progress,
                                    private->file,
-                                   FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
+                                   FALSE, NULL, LIGMA_RUN_NONINTERACTIVE,
                                    &status, &mime_type, error);
 
           if (image)
-            gimp_thumbnail_set_info_from_image (private->thumbnail,
+            ligma_thumbnail_set_info_from_image (private->thumbnail,
                                                 mime_type, image);
         }
 
       if (image)
         {
-          success = gimp_imagefile_save_thumb (imagefile,
+          success = ligma_imagefile_save_thumb (imagefile,
                                                image, size, replace,
                                                error);
 
@@ -512,10 +512,10 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
            * error we want to return. Ignore any error from failed
            * thumbnail saving.
            */
-          gimp_thumbnail_save_failure (thumbnail,
-                                       "GIMP " GIMP_VERSION,
+          ligma_thumbnail_save_failure (thumbnail,
+                                       "LIGMA " LIGMA_VERSION,
                                        error && *error ? NULL : error);
-          gimp_imagefile_update (imagefile);
+          ligma_imagefile_update (imagefile);
           success = FALSE;
         }
 
@@ -524,7 +524,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
       if (! success)
         {
           g_object_set (thumbnail,
-                        "thumb-state", GIMP_THUMB_STATE_FAILED,
+                        "thumb-state", LIGMA_THUMB_STATE_FAILED,
                         NULL);
         }
 
@@ -540,16 +540,16 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
  *  block the user interface.
  */
 void
-gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
-                                      GimpContext   *context,
-                                      GimpProgress  *progress,
+ligma_imagefile_create_thumbnail_weak (LigmaImagefile *imagefile,
+                                      LigmaContext   *context,
+                                      LigmaProgress  *progress,
                                       gint           size,
                                       gboolean       replace)
 {
-  GimpImagefilePrivate *private;
-  GimpImagefile        *local;
+  LigmaImagefilePrivate *private;
+  LigmaImagefile        *local;
 
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (LIGMA_IS_IMAGEFILE (imagefile));
 
   if (size < 1)
     return;
@@ -559,30 +559,30 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
   if (! private->file)
     return;
 
-  local = gimp_imagefile_new (private->gimp, private->file);
+  local = ligma_imagefile_new (private->ligma, private->file);
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
-  if (! gimp_imagefile_create_thumbnail (local, context, progress, size, replace,
+  if (! ligma_imagefile_create_thumbnail (local, context, progress, size, replace,
                                          NULL))
     {
       /* The weak version works on a local copy so the thumbnail
        * status of the actual image is not properly updated in case of
        * creation failure, thus it would end up in a generic
-       * GIMP_THUMB_STATE_NOT_FOUND, which is less informative.
+       * LIGMA_THUMB_STATE_NOT_FOUND, which is less informative.
        */
       g_object_set (private->thumbnail,
-                    "thumb-state", GIMP_THUMB_STATE_FAILED,
+                    "thumb-state", LIGMA_THUMB_STATE_FAILED,
                     NULL);
     }
 
   if (imagefile)
     {
-      GFile *file = gimp_imagefile_get_file (imagefile);
+      GFile *file = ligma_imagefile_get_file (imagefile);
 
-      if (file && g_file_equal (file, gimp_imagefile_get_file (local)))
+      if (file && g_file_equal (file, ligma_imagefile_get_file (local)))
         {
-          gimp_imagefile_update (imagefile);
+          ligma_imagefile_update (imagefile);
         }
 
       g_object_remove_weak_pointer (G_OBJECT (imagefile),
@@ -593,53 +593,53 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 }
 
 gboolean
-gimp_imagefile_check_thumbnail (GimpImagefile *imagefile)
+ligma_imagefile_check_thumbnail (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private;
+  LigmaImagefilePrivate *private;
   gint                  size;
 
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), FALSE);
 
   private = GET_PRIVATE (imagefile);
 
-  size = private->gimp->config->thumbnail_size;
+  size = private->ligma->config->thumbnail_size;
 
   if (size > 0)
     {
-      GimpThumbState  state;
+      LigmaThumbState  state;
 
-      state = gimp_thumbnail_check_thumb (private->thumbnail, size);
+      state = ligma_thumbnail_check_thumb (private->thumbnail, size);
 
-      return (state == GIMP_THUMB_STATE_OK);
+      return (state == LIGMA_THUMB_STATE_OK);
     }
 
   return TRUE;
 }
 
 gboolean
-gimp_imagefile_save_thumbnail (GimpImagefile  *imagefile,
+ligma_imagefile_save_thumbnail (LigmaImagefile  *imagefile,
                                const gchar    *mime_type,
-                               GimpImage      *image,
+                               LigmaImage      *image,
                                GError        **error)
 {
-  GimpImagefilePrivate *private;
+  LigmaImagefilePrivate *private;
   gint                  size;
   gboolean              success = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   private = GET_PRIVATE (imagefile);
 
-  size = private->gimp->config->thumbnail_size;
+  size = private->ligma->config->thumbnail_size;
 
   if (size > 0)
     {
-      gimp_thumbnail_set_info_from_image (private->thumbnail,
+      ligma_thumbnail_set_info_from_image (private->thumbnail,
                                           mime_type, image);
 
-      success = gimp_imagefile_save_thumb (imagefile,
+      success = ligma_imagefile_save_thumb (imagefile,
                                            image, size, FALSE,
                                            error);
     }
@@ -651,9 +651,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile  *imagefile,
 /*  private functions  */
 
 static void
-gimp_imagefile_info_changed (GimpImagefile *imagefile)
+ligma_imagefile_info_changed (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private = GET_PRIVATE (imagefile);
+  LigmaImagefilePrivate *private = GET_PRIVATE (imagefile);
 
   if (private->description)
     {
@@ -665,27 +665,27 @@ gimp_imagefile_info_changed (GimpImagefile *imagefile)
 
   g_clear_object (&private->icon);
 
-  g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);
+  g_signal_emit (imagefile, ligma_imagefile_signals[INFO_CHANGED], 0);
 }
 
 static void
-gimp_imagefile_notify_thumbnail (GimpImagefile *imagefile,
+ligma_imagefile_notify_thumbnail (LigmaImagefile *imagefile,
                                  GParamSpec    *pspec)
 {
   if (strcmp (pspec->name, "image-state") == 0 ||
       strcmp (pspec->name, "thumb-state") == 0)
     {
-      gimp_imagefile_info_changed (imagefile);
+      ligma_imagefile_info_changed (imagefile);
     }
 }
 
 static void
-gimp_imagefile_icon_callback (GObject      *source_object,
+ligma_imagefile_icon_callback (GObject      *source_object,
                               GAsyncResult *result,
                               gpointer      data)
 {
-  GimpImagefile        *imagefile;
-  GimpImagefilePrivate *private;
+  LigmaImagefile        *imagefile;
+  LigmaImagefilePrivate *private;
   GFile                *file  = G_FILE (source_object);
   GError               *error = NULL;
   GFileInfo            *file_info;
@@ -703,14 +703,14 @@ gimp_imagefile_icon_callback (GObject      *source_object,
           return;
         }
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
       g_printerr ("%s: %s\n", G_STRFUNC, error->message);
 #endif
 
       g_clear_error (&error);
     }
 
-  imagefile = GIMP_IMAGEFILE (data);
+  imagefile = LIGMA_IMAGEFILE (data);
   private   = GET_PRIVATE (imagefile);
 
   if (file_info)
@@ -722,16 +722,16 @@ gimp_imagefile_icon_callback (GObject      *source_object,
   g_clear_object (&private->icon_cancellable);
 
   if (private->icon)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
+    ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (imagefile));
 }
 
 const gchar *
-gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
+ligma_imagefile_get_desc_string (LigmaImagefile *imagefile)
 {
-  GimpImagefilePrivate *private;
-  GimpThumbnail        *thumbnail;
+  LigmaImagefilePrivate *private;
+  LigmaThumbnail        *thumbnail;
 
-  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGEFILE (imagefile), NULL);
 
   private = GET_PRIVATE (imagefile);
 
@@ -742,22 +742,22 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
   switch (thumbnail->image_state)
     {
-    case GIMP_THUMB_STATE_UNKNOWN:
+    case LIGMA_THUMB_STATE_UNKNOWN:
       private->description = NULL;
       private->static_desc = TRUE;
       break;
 
-    case GIMP_THUMB_STATE_FOLDER:
+    case LIGMA_THUMB_STATE_FOLDER:
       private->description = (gchar *) _("Folder");
       private->static_desc = TRUE;
       break;
 
-    case GIMP_THUMB_STATE_SPECIAL:
+    case LIGMA_THUMB_STATE_SPECIAL:
       private->description = (gchar *) _("Special File");
       private->static_desc = TRUE;
       break;
 
-    case GIMP_THUMB_STATE_NOT_FOUND:
+    case LIGMA_THUMB_STATE_NOT_FOUND:
       private->description =
         (gchar *) g_strerror (thumbnail->image_not_found_errno);
       private->static_desc = TRUE;
@@ -767,7 +767,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       {
         GString *str = g_string_new (NULL);
 
-        if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
+        if (thumbnail->image_state == LIGMA_THUMB_STATE_REMOTE)
           {
             g_string_append (str, _("Remote File"));
           }
@@ -785,33 +785,33 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
         switch (thumbnail->thumb_state)
           {
-          case GIMP_THUMB_STATE_NOT_FOUND:
+          case LIGMA_THUMB_STATE_NOT_FOUND:
             if (str->len > 0)
               g_string_append_c (str, '\n');
             g_string_append (str, _("Click to create preview"));
             break;
 
-          case GIMP_THUMB_STATE_EXISTS:
+          case LIGMA_THUMB_STATE_EXISTS:
             if (str->len > 0)
               g_string_append_c (str, '\n');
             g_string_append (str, _("Loading preview..."));
             break;
 
-          case GIMP_THUMB_STATE_OLD:
+          case LIGMA_THUMB_STATE_OLD:
             if (str->len > 0)
               g_string_append_c (str, '\n');
             g_string_append (str, _("Preview is out of date"));
             break;
 
-          case GIMP_THUMB_STATE_FAILED:
+          case LIGMA_THUMB_STATE_FAILED:
             if (str->len > 0)
               g_string_append_c (str, '\n');
             g_string_append (str, _("Cannot create preview"));
             break;
 
-          case GIMP_THUMB_STATE_OK:
+          case LIGMA_THUMB_STATE_OK:
             {
-              if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
+              if (thumbnail->image_state == LIGMA_THUMB_STATE_REMOTE)
                 {
                   if (str->len > 0)
                     g_string_append_c (str, '\n');
@@ -869,12 +869,12 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 }
 
 static GdkPixbuf *
-gimp_imagefile_load_thumb (GimpImagefile *imagefile,
+ligma_imagefile_load_thumb (LigmaImagefile *imagefile,
                            gint           width,
                            gint           height)
 {
-  GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
-  GimpThumbnail        *thumbnail = private->thumbnail;
+  LigmaImagefilePrivate *private   = GET_PRIVATE (imagefile);
+  LigmaThumbnail        *thumbnail = private->thumbnail;
   GdkPixbuf            *pixbuf    = NULL;
   GError               *error     = NULL;
   gint                  size      = MAX (width, height);
@@ -883,19 +883,19 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
   gint                  preview_width;
   gint                  preview_height;
 
-  if (gimp_thumbnail_peek_thumb (thumbnail, size) < GIMP_THUMB_STATE_EXISTS)
+  if (ligma_thumbnail_peek_thumb (thumbnail, size) < LIGMA_THUMB_STATE_EXISTS)
     return NULL;
 
-  if (thumbnail->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+  if (thumbnail->image_state == LIGMA_THUMB_STATE_NOT_FOUND)
     return NULL;
 
-  pixbuf = gimp_thumbnail_load_thumb (thumbnail, size, &error);
+  pixbuf = ligma_thumbnail_load_thumb (thumbnail, size, &error);
 
   if (! pixbuf)
     {
       if (error)
         {
-          gimp_message (private->gimp, NULL, GIMP_MESSAGE_ERROR,
+          ligma_message (private->ligma, NULL, LIGMA_MESSAGE_ERROR,
                         _("Could not open thumbnail '%s': %s"),
                         thumbnail->thumb_filename, error->message);
           g_clear_error (&error);
@@ -907,7 +907,7 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
   pixbuf_width  = gdk_pixbuf_get_width  (pixbuf);
   pixbuf_height = gdk_pixbuf_get_height (pixbuf);
 
-  gimp_viewable_calc_preview_size (pixbuf_width,
+  ligma_viewable_calc_preview_size (pixbuf_width,
                                    pixbuf_height,
                                    width,
                                    height,
@@ -938,7 +938,7 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                                   0, 0, pixbuf_width, pixbuf_height,
                                   0.0, 0.0, 1.0, 1.0,
                                   GDK_INTERP_NEAREST, 255,
-                                  0, 0, GIMP_CHECK_SIZE_SM,
+                                  0, 0, LIGMA_CHECK_SIZE_SM,
                                   0x66666666, 0x99999999);
 
       g_object_unref (pixbuf);
@@ -949,14 +949,14 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
 }
 
 static gboolean
-gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
-                           GimpImage      *image,
+ligma_imagefile_save_thumb (LigmaImagefile  *imagefile,
+                           LigmaImage      *image,
                            gint            size,
                            gboolean        replace,
                            GError        **error)
 {
-  GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
-  GimpThumbnail        *thumbnail = private->thumbnail;
+  LigmaImagefilePrivate *private   = GET_PRIVATE (imagefile);
+  LigmaThumbnail        *thumbnail = private->thumbnail;
   GdkPixbuf            *pixbuf;
   gint                  width, height;
   gboolean              success = FALSE;
@@ -964,45 +964,45 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (size < 1)
     return TRUE;
 
-  if (gimp_image_get_width  (image) <= size &&
-      gimp_image_get_height (image) <= size)
+  if (ligma_image_get_width  (image) <= size &&
+      ligma_image_get_height (image) <= size)
     {
-      width  = gimp_image_get_width  (image);
-      height = gimp_image_get_height (image);
+      width  = ligma_image_get_width  (image);
+      height = ligma_image_get_height (image);
 
       size = MAX (width, height);
     }
   else
     {
-      if (gimp_image_get_width (image) < gimp_image_get_height (image))
+      if (ligma_image_get_width (image) < ligma_image_get_height (image))
         {
           height = size;
-          width  = MAX (1, (size * gimp_image_get_width (image) /
-                            gimp_image_get_height (image)));
+          width  = MAX (1, (size * ligma_image_get_width (image) /
+                            ligma_image_get_height (image)));
         }
       else
         {
           width  = size;
-          height = MAX (1, (size * gimp_image_get_height (image) /
-                            gimp_image_get_width (image)));
+          height = MAX (1, (size * ligma_image_get_height (image) /
+                            ligma_image_get_width (image)));
         }
     }
 
   /*  we need the projection constructed NOW, not some time later  */
-  gimp_pickable_flush (GIMP_PICKABLE (image));
+  ligma_pickable_flush (LIGMA_PICKABLE (image));
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
+  pixbuf = ligma_viewable_get_new_pixbuf (LIGMA_VIEWABLE (image),
                                          /* random context, unused */
-                                         gimp_get_user_context (image->gimp),
+                                         ligma_get_user_context (image->ligma),
                                          width, height);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)
     return TRUE;
 
-  success = gimp_thumbnail_save_thumb (thumbnail,
+  success = ligma_thumbnail_save_thumb (thumbnail,
                                        pixbuf,
-                                       "GIMP " GIMP_VERSION,
+                                       "LIGMA " LIGMA_VERSION,
                                        error);
 
   g_object_unref (pixbuf);
@@ -1010,41 +1010,41 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (success)
     {
       if (replace)
-        gimp_thumbnail_delete_others (thumbnail, size);
+        ligma_thumbnail_delete_others (thumbnail, size);
       else
-        gimp_thumbnail_delete_failure (thumbnail);
+        ligma_thumbnail_delete_failure (thumbnail);
 
-      gimp_imagefile_update (imagefile);
+      ligma_imagefile_update (imagefile);
     }
 
   return success;
 }
 
 static void
-gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
+ligma_thumbnail_set_info_from_image (LigmaThumbnail *thumbnail,
                                     const gchar   *mime_type,
-                                    GimpImage     *image)
+                                    LigmaImage     *image)
 {
   const Babl *format;
 
   /*  peek the thumbnail to make sure that mtime and filesize are set  */
-  gimp_thumbnail_peek_image (thumbnail);
+  ligma_thumbnail_peek_image (thumbnail);
 
-  format = gimp_image_get_layer_format (image,
-                                        gimp_image_has_alpha (image));
+  format = ligma_image_get_layer_format (image,
+                                        ligma_image_has_alpha (image));
 
   g_object_set (thumbnail,
                 "image-mimetype",   mime_type,
-                "image-width",      gimp_image_get_width  (image),
-                "image-height",     gimp_image_get_height (image),
-                "image-type",       gimp_babl_format_get_description (format),
-                "image-num-layers", gimp_image_get_n_layers (image),
+                "image-width",      ligma_image_get_width  (image),
+                "image-height",     ligma_image_get_height (image),
+                "image-type",       ligma_babl_format_get_description (format),
+                "image-num-layers", ligma_image_get_n_layers (image),
                 NULL);
 }
 
 /**
- * gimp_thumbnail_set_info:
- * @thumbnail: #GimpThumbnail object
+ * ligma_thumbnail_set_info:
+ * @thumbnail: #LigmaThumbnail object
  * @mime_type:  MIME type of the image associated with this thumbnail
  * @width:      width of the image associated with this thumbnail
  * @height:     height of the image associated with this thumbnail
@@ -1055,7 +1055,7 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
  * Set information about the image associated with the @thumbnail object.
  */
 static void
-gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
+ligma_thumbnail_set_info (LigmaThumbnail *thumbnail,
                          const gchar   *mime_type,
                          gint           width,
                          gint           height,
@@ -1063,7 +1063,7 @@ gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
                          gint           num_layers)
 {
   /*  peek the thumbnail to make sure that mtime and filesize are set  */
-  gimp_thumbnail_peek_image (thumbnail);
+  ligma_thumbnail_peek_image (thumbnail);
 
   g_object_set (thumbnail,
                 "image-mimetype", mime_type,
@@ -1073,7 +1073,7 @@ gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
 
   if (format)
     g_object_set (thumbnail,
-                  "image-type", gimp_babl_format_get_description (format),
+                  "image-type", ligma_babl_format_get_description (format),
                   NULL);
 
   if (num_layers != -1)

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns-save.c
@@ -25,30 +25,30 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-icns.h"
 #include "file-icns-data.h"
 #include "file-icns-load.h"
 #include "file-icns-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 GtkWidget *        icns_dialog_new       (IcnsSaveInfo *info);
 
 static gboolean    icns_save_dialog      (IcnsSaveInfo *info,
-                                          GimpImage    *image);
+                                          LigmaImage    *image);
 
 void               icns_dialog_add_icon  (GtkWidget    *dialog,
-                                          GimpDrawable *layer,
+                                          LigmaDrawable *layer,
                                           gint          layer_num,
                                           gint          duplicates[]);
 
-static GtkWidget * icns_preview_new      (GimpDrawable *layer);
+static GtkWidget * icns_preview_new      (LigmaDrawable *layer);
 
 static GtkWidget * icns_create_icon_item (GtkWidget    *icon_preview,
-                                          GimpDrawable *layer,
+                                          LigmaDrawable *layer,
                                           gint          layer_num,
                                           IcnsSaveInfo *info,
                                           gint          duplicates[]);
@@ -60,9 +60,9 @@ static gboolean    icns_check_dimensions (gint          width,
 static gboolean    icns_check_compat     (GtkWidget    *dialog,
                                           IcnsSaveInfo *info);
 
-GimpPDBStatusType  icns_export_image     (GFile        *file,
+LigmaPDBStatusType  icns_export_image     (GFile        *file,
                                           IcnsSaveInfo *info,
-                                          GimpImage    *image,
+                                          LigmaImage    *image,
                                           GError      **error);
 
 static void        icns_save_info_free   (IcnsSaveInfo *info);
@@ -70,7 +70,7 @@ static void        icns_save_info_free   (IcnsSaveInfo *info);
 /* Referenced from plug-ins/file-ico/ico-dialog.c */
 void
 icns_dialog_add_icon (GtkWidget    *dialog,
-                      GimpDrawable *layer,
+                      LigmaDrawable *layer,
                       gint          layer_num,
                       gint          duplicates[])
 {
@@ -91,23 +91,23 @@ icns_dialog_add_icon (GtkWidget    *dialog,
 
   /* Let's make the vbox_item accessible through the layer ID */
   g_snprintf (key, sizeof (key), "layer_%i_hbox",
-              gimp_item_get_id (GIMP_ITEM (layer)));
+              ligma_item_get_id (LIGMA_ITEM (layer)));
   g_object_set_data (G_OBJECT (dialog), key, vbox_item);
 
   icns_check_compat (dialog, info);
 }
 
 static GtkWidget *
-icns_preview_new (GimpDrawable *layer)
+icns_preview_new (LigmaDrawable *layer)
 {
   GtkWidget *image;
   GdkPixbuf *pixbuf;
-  gint       width  = gimp_drawable_get_width (layer);
-  gint       height = gimp_drawable_get_height (layer);
+  gint       width  = ligma_drawable_get_width (layer);
+  gint       height = ligma_drawable_get_height (layer);
 
-  pixbuf = gimp_drawable_get_thumbnail (layer,
+  pixbuf = ligma_drawable_get_thumbnail (layer,
                                         MIN (width, 128), MIN (height, 128),
-                                        GIMP_PIXBUF_SMALL_CHECKS);
+                                        LIGMA_PIXBUF_SMALL_CHECKS);
   image = gtk_image_new_from_pixbuf (pixbuf);
 
   g_object_unref (pixbuf);
@@ -174,7 +174,7 @@ icns_check_dimensions (gint width,
 
 static GtkWidget *
 icns_create_icon_item (GtkWidget    *icon_preview,
-                       GimpDrawable *layer,
+                       LigmaDrawable *layer,
                        gint          layer_num,
                        IcnsSaveInfo *info,
                        gint          duplicates[])
@@ -185,8 +185,8 @@ icns_create_icon_item (GtkWidget    *icon_preview,
   GtkWidget *frame;
   gchar     *frame_header;
   gint       match  = -1;
-  gint       width  = gimp_drawable_get_width (layer);
-  gint       height = gimp_drawable_get_height (layer);
+  gint       width  = ligma_drawable_get_width (layer);
+  gint       height = ligma_drawable_get_height (layer);
 
   vbox_item = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
@@ -200,7 +200,7 @@ icns_create_icon_item (GtkWidget    *icon_preview,
 
   frame_header = g_strdup_printf ("%dx%d", width, height);
 
-  frame = gimp_frame_new (frame_header);
+  frame = ligma_frame_new (frame_header);
   gtk_box_pack_start (GTK_BOX (vbox_item), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
   g_free (frame_header);
@@ -214,8 +214,8 @@ icns_create_icon_item (GtkWidget    *icon_preview,
 
   gtk_size_group_add_widget (size, icon_preview);
 
-  match = icns_find_type (gimp_drawable_get_width (layer),
-                          gimp_drawable_get_height (layer));
+  match = icns_find_type (ligma_drawable_get_width (layer),
+                          ligma_drawable_get_height (layer));
 
   if (! icns_check_dimensions (width, height) ||
       (match != -1 && duplicates[match] != 0))
@@ -261,8 +261,8 @@ icns_check_compat (GtkWidget    *dialog,
 
   for (iter = info->layers, i = 0; iter; iter = iter->next, i++)
     {
-      gint width  = gimp_drawable_get_width (iter->data);
-      gint height = gimp_drawable_get_height (iter->data);
+      gint width  = ligma_drawable_get_width (iter->data);
+      gint height = ligma_drawable_get_height (iter->data);
 
       warn = ! icns_check_dimensions (width, height);
       if (warn)
@@ -289,7 +289,7 @@ icns_dialog_new (IcnsSaveInfo *info)
   GtkWidget     *flowbox;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (_("Apple Icon Image"),
+  dialog = ligma_export_dialog_new (_("Apple Icon Image"),
                                    PLUG_IN_BINARY,
                                    "plug-in-icns-save");
 
@@ -297,12 +297,12 @@ icns_dialog_new (IcnsSaveInfo *info)
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  warning = g_object_new (GIMP_TYPE_HINT_BOX,
-                          "icon-name", GIMP_ICON_DIALOG_WARNING,
+  warning = g_object_new (LIGMA_TYPE_HINT_BOX,
+                          "icon-name", LIGMA_ICON_DIALOG_WARNING,
                           "hint",
                           _("Valid ICNS icons sizes are:\n "
                             "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -312,7 +312,7 @@ icns_dialog_new (IcnsSaveInfo *info)
   gtk_box_pack_end (GTK_BOX (main_vbox), warning, FALSE, FALSE, 12);
   /* Don't show warning by default */
 
-  frame = gimp_frame_new (_("Export Icons"));
+  frame = ligma_frame_new (_("Export Icons"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 4);
   gtk_widget_show (frame);
 
@@ -341,7 +341,7 @@ icns_dialog_new (IcnsSaveInfo *info)
 
 static gboolean
 icns_save_dialog (IcnsSaveInfo *info,
-                  GimpImage    *image)
+                  LigmaImage    *image)
 {
   GtkWidget *dialog;
   GList     *iter;
@@ -352,7 +352,7 @@ icns_save_dialog (IcnsSaveInfo *info,
   gint       ordered[12] =
     {12, 16, 18, 24, 32, 36, 48, 64, 128, 256, 512, 1024};
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   for (i = 0; i < ICNS_TYPE_NUM; i++)
     duplicates[i] = 0;
@@ -367,8 +367,8 @@ icns_save_dialog (IcnsSaveInfo *info,
            iter = g_list_next (iter), j++)
         {
           /* Put the icons in order in dialog */
-          gint width  = gimp_drawable_get_width (iter->data);
-          gint height = gimp_drawable_get_height (iter->data);
+          gint width  = ligma_drawable_get_width (iter->data);
+          gint height = ligma_drawable_get_height (iter->data);
 
           if (height != ordered[i] || ! icns_check_dimensions (width, height))
             continue;
@@ -382,8 +382,8 @@ icns_save_dialog (IcnsSaveInfo *info,
        iter;
        iter = g_list_next (iter), i++)
     {
-      if (! icns_check_dimensions (gimp_drawable_get_width (iter->data),
-                                   gimp_drawable_get_height (iter->data)))
+      if (! icns_check_dimensions (ligma_drawable_get_width (iter->data),
+                                   ligma_drawable_get_height (iter->data)))
         icns_dialog_add_icon (dialog, iter->data, i, duplicates);
     }
 
@@ -396,24 +396,24 @@ icns_save_dialog (IcnsSaveInfo *info,
 
   gtk_widget_show (dialog);
 
-  response = gimp_dialog_run (GIMP_DIALOG (dialog));
+  response = ligma_dialog_run (LIGMA_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return (response == GTK_RESPONSE_OK);
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 icns_export_image (GFile        *file,
                    IcnsSaveInfo *info,
-                   GimpImage    *image,
+                   LigmaImage    *image,
                    GError      **error)
 {
   FILE           *fp;
   GList          *iter;
   gint            i;
   guint32         file_size   = 8;
-  GimpValueArray *return_vals = NULL;
+  LigmaValueArray *return_vals = NULL;
   gint            duplicates[ICNS_TYPE_NUM];
 
   for (i = 0; i < ICNS_TYPE_NUM; i++)
@@ -426,8 +426,8 @@ icns_export_image (GFile        *file,
       icns_save_info_free (info);
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* Write Header */
@@ -440,8 +440,8 @@ icns_export_image (GFile        *file,
        iter = g_list_next (iter), i++)
     {
       gint match  = -1;
-      gint width  = gimp_drawable_get_width (iter->data);
-      gint height = gimp_drawable_get_height (iter->data);
+      gint width  = ligma_drawable_get_width (iter->data);
+      gint height = ligma_drawable_get_height (iter->data);
 
       /* Don't export icons with invalid dimensions */
       if (! icns_check_dimensions (width, height))
@@ -452,27 +452,27 @@ icns_export_image (GFile        *file,
       /* MacOS X format icons */
       if (match != -1 && duplicates[match] == 0)
         {
-          GimpDrawable   **drawables = NULL;
+          LigmaDrawable   **drawables = NULL;
           GFile           *temp_file = NULL;
-          GimpObjectArray *args;
+          LigmaObjectArray *args;
           FILE            *temp_fp;
           gint             temp_size;
           gint             macos_size;
 
-          temp_file = gimp_temp_file ("png");
+          temp_file = ligma_temp_file ("png");
 
-          drawables    = g_new (GimpDrawable *, 1);
+          drawables    = g_new (LigmaDrawable *, 1);
           drawables[0] = iter->data;
 
-          args = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables, 1, FALSE);
+          args = ligma_object_array_new (LIGMA_TYPE_DRAWABLE, (GObject **) drawables, 1, FALSE);
 
           return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
+            ligma_pdb_run_procedure (ligma_get_pdb (),
                                     "file-png-save",
-                                    GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                    GIMP_TYPE_IMAGE,        image,
+                                    LIGMA_TYPE_RUN_MODE,     LIGMA_RUN_NONINTERACTIVE,
+                                    LIGMA_TYPE_IMAGE,        image,
                                     G_TYPE_INT,             1,
-                                    GIMP_TYPE_OBJECT_ARRAY, args,
+                                    LIGMA_TYPE_OBJECT_ARRAY, args,
                                     G_TYPE_FILE,            temp_file,
                                     G_TYPE_BOOLEAN,         FALSE,
                                     G_TYPE_INT,             9,
@@ -484,18 +484,18 @@ icns_export_image (GFile        *file,
                                     G_TYPE_BOOLEAN,         FALSE,
                                     G_TYPE_NONE);
 
-          gimp_object_array_free (args);
+          ligma_object_array_free (args);
           g_clear_pointer (&drawables, g_free);
 
-          if (GIMP_VALUES_GET_ENUM (return_vals, 0) != GIMP_PDB_SUCCESS)
+          if (LIGMA_VALUES_GET_ENUM (return_vals, 0) != LIGMA_PDB_SUCCESS)
             {
               icns_save_info_free (info);
               g_set_error (error, 0, 0,
                            "Running procedure 'file-png-save' "
                            "for icns export failed: %s",
-                           gimp_pdb_get_last_error (gimp_get_pdb ()));
+                           ligma_pdb_get_last_error (ligma_get_pdb ()));
 
-              return GIMP_PDB_EXECUTION_ERROR;
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
 
           temp_fp = g_fopen (g_file_peek_path (temp_file), "rb");
@@ -523,7 +523,7 @@ icns_export_image (GFile        *file,
                                g_file_error_from_errno (errno),
                                _("Error writing icns: %s"),
                                g_strerror (errno));
-                  return GIMP_PDB_EXECUTION_ERROR;
+                  return LIGMA_PDB_EXECUTION_ERROR;
                 }
             }
           fclose (temp_fp);
@@ -532,7 +532,7 @@ icns_export_image (GFile        *file,
           duplicates[match] = 1;
         }
 
-      gimp_progress_update (i / info->num_icons);
+      ligma_progress_update (i / info->num_icons);
     }
 
   /* Update header with full file size */
@@ -540,11 +540,11 @@ icns_export_image (GFile        *file,
   fseek (fp, 4L, SEEK_SET);
   fwrite (&file_size, sizeof (file_size), 1, fp);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   icns_save_info_free (info);
   fclose (fp);
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 static void
@@ -554,9 +554,9 @@ icns_save_info_free (IcnsSaveInfo *info)
   memset (info, 0, sizeof (IcnsSaveInfo));
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 icns_save_image (GFile      *file,
-                 GimpImage  *image,
+                 LigmaImage  *image,
                  gint32      run_mode,
                  GError    **error)
 {
@@ -565,14 +565,14 @@ icns_save_image (GFile      *file,
   gboolean      isValidLayers = FALSE;
   gint          i;
 
-  info.layers    = gimp_image_list_layers (image);
+  info.layers    = ligma_image_list_layers (image);
   info.num_icons = g_list_length (info.layers);
 
   /* Initial check if we have any valid layers to export */
   for (iter = info.layers, i = 0; iter; iter = iter->next, i++)
     {
-      gint width  = gimp_drawable_get_width (iter->data);
-      gint height = gimp_drawable_get_height (iter->data);
+      gint width  = ligma_drawable_get_width (iter->data);
+      gint height = ligma_drawable_get_height (iter->data);
 
       if (icns_check_dimensions (width, height))
         {
@@ -587,16 +587,16 @@ icns_save_image (GFile      *file,
                      "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,"
                      "64x64, 128x128, 256x256, 512x512, or 1024x1024."));
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       /* Allow user to override default values */
       if (! icns_save_dialog (&info, image))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
-  else if (run_mode == GIMP_RUN_NONINTERACTIVE)
+  else if (run_mode == LIGMA_RUN_NONINTERACTIVE)
     {
       if (! icns_check_compat (NULL, &info))
         {
@@ -605,12 +605,12 @@ icns_save_image (GFile      *file,
                          "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,"
                          "64x64, 128x128, 256x256, 512x512, or 1024x1024."));
 
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   return icns_export_image (file, &info, image, error);
 }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginprocframe.h
+ * ligmapluginprocframe.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PROC_FRAME_H__
-#define __GIMP_PLUG_IN_PROC_FRAME_H__
+#ifndef __LIGMA_PLUG_IN_PROC_FRAME_H__
+#define __LIGMA_PLUG_IN_PROC_FRAME_H__
 
 
-struct _GimpPlugInProcFrame
+struct _LigmaPlugInProcFrame
 {
   gint                 ref_count;
 
-  GimpContext         *main_context;
+  LigmaContext         *main_context;
   GList               *context_stack;
 
-  GimpProcedure       *procedure;
+  LigmaProcedure       *procedure;
   GMainLoop           *main_loop;
 
-  GimpValueArray      *return_vals;
+  LigmaValueArray      *return_vals;
 
-  GimpProgress        *progress;
+  LigmaProgress        *progress;
   gboolean             progress_created;
   gulong               progress_cancel_id;
 
-  GimpPDBErrorHandler  error_handler;
+  LigmaPDBErrorHandler  error_handler;
 
   /*  lists of things to clean up on dispose  */
   GList               *image_cleanups;
@@ -45,23 +45,23 @@ struct _GimpPlugInProcFrame
 };
 
 
-GimpPlugInProcFrame * gimp_plug_in_proc_frame_new     (GimpContext         *context,
-                                                       GimpProgress        *progress,
-                                                       GimpPlugInProcedure *procedure);
-void                  gimp_plug_in_proc_frame_init    (GimpPlugInProcFrame *proc_frame,
-                                                       GimpContext         *context,
-                                                       GimpProgress        *progress,
-                                                       GimpPlugInProcedure *procedure);
+LigmaPlugInProcFrame * ligma_plug_in_proc_frame_new     (LigmaContext         *context,
+                                                       LigmaProgress        *progress,
+                                                       LigmaPlugInProcedure *procedure);
+void                  ligma_plug_in_proc_frame_init    (LigmaPlugInProcFrame *proc_frame,
+                                                       LigmaContext         *context,
+                                                       LigmaProgress        *progress,
+                                                       LigmaPlugInProcedure *procedure);
 
-void                  gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
-                                                       GimpPlugIn          *plug_in);
+void                  ligma_plug_in_proc_frame_dispose (LigmaPlugInProcFrame *proc_frame,
+                                                       LigmaPlugIn          *plug_in);
 
-GimpPlugInProcFrame * gimp_plug_in_proc_frame_ref     (GimpPlugInProcFrame *proc_frame);
-void                  gimp_plug_in_proc_frame_unref   (GimpPlugInProcFrame *proc_frame,
-                                                       GimpPlugIn          *plug_in);
+LigmaPlugInProcFrame * ligma_plug_in_proc_frame_ref     (LigmaPlugInProcFrame *proc_frame);
+void                  ligma_plug_in_proc_frame_unref   (LigmaPlugInProcFrame *proc_frame,
+                                                       LigmaPlugIn          *plug_in);
 
-GimpValueArray      * gimp_plug_in_proc_frame_get_return_values
-                                                      (GimpPlugInProcFrame *proc_frame);
+LigmaValueArray      * ligma_plug_in_proc_frame_get_return_values
+                                                      (LigmaPlugInProcFrame *proc_frame);
 
 
-#endif /* __GIMP_PLUG_IN_PROC_FRAME_H__ */
+#endif /* __LIGMA_PLUG_IN_PROC_FRAME_H__ */

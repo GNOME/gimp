@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * file-remote.h
- * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2014  Michael Natterer <mitch@ligma.org>
  *
  * Based on: URI plug-in, GIO/GVfs backend
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,24 +25,24 @@
 #define __FILE_REMOTE_H__
 
 
-gboolean   file_remote_mount_file           (Gimp          *gimp,
+gboolean   file_remote_mount_file           (Ligma          *ligma,
                                              GFile         *file,
-                                             GimpProgress  *progress,
+                                             LigmaProgress  *progress,
                                              GError       **error);
 
-GFile    * file_remote_download_image       (Gimp          *gimp,
+GFile    * file_remote_download_image       (Ligma          *ligma,
                                              GFile         *file,
-                                             GimpProgress  *progress,
+                                             LigmaProgress  *progress,
                                              GError       **error);
 
-GFile    * file_remote_upload_image_prepare (Gimp          *gimp,
+GFile    * file_remote_upload_image_prepare (Ligma          *ligma,
                                              GFile         *file,
-                                             GimpProgress  *progress,
+                                             LigmaProgress  *progress,
                                              GError       **error);
-gboolean   file_remote_upload_image_finish  (Gimp          *gimp,
+gboolean   file_remote_upload_image_finish  (Ligma          *ligma,
                                              GFile         *file,
                                              GFile         *local_file,
-                                             GimpProgress  *progress,
+                                             LigmaProgress  *progress,
                                              GError       **error);
 
 #endif /* __FILE_REMOTE_H__ */

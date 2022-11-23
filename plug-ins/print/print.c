@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "print.h"
 #include "print-settings.h"
@@ -28,11 +28,11 @@
 #include "print-page-setup.h"
 #include "print-draw-page.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_BINARY       "print"
-#define PLUG_IN_ROLE         "gimp-print"
+#define PLUG_IN_ROLE         "ligma-print"
 #define PRINT_PROC_NAME      "file-print-gtk"
 
 #ifndef EMBED_PAGE_SETUP
@@ -41,7 +41,7 @@
 #endif
 
 
-G_DEFINE_QUARK (gimp-plugin-print-error-quark, gimp_plugin_print_error)
+G_DEFINE_QUARK (ligma-plugin-print-error-quark, ligma_plugin_print_error)
 
 
 typedef struct _Print      Print;
@@ -49,12 +49,12 @@ typedef struct _PrintClass PrintClass;
 
 struct _Print
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PrintClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -63,35 +63,35 @@ struct _PrintClass
 
 GType                     print_get_type         (void) G_GNUC_CONST;
 
-static GList            * print_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,
+static GList            * print_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure    * print_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray   * print_run              (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray   * print_run              (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  LigmaDrawable        **drawables,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
-static GimpPDBStatusType  print_image            (GimpImage         *image,
+static LigmaPDBStatusType  print_image            (LigmaImage         *image,
                                                   gboolean           interactive,
                                                   GError           **error);
 #ifndef EMBED_PAGE_SETUP
-static GimpPDBStatusType  page_setup             (GimpImage         *image);
+static LigmaPDBStatusType  page_setup             (LigmaImage         *image);
 #endif
 
 static void        print_show_error         (const gchar       *message);
 static void        print_operation_set_name (GtkPrintOperation *operation,
-                                             GimpImage         *image);
+                                             LigmaImage         *image);
 
 static void        begin_print              (GtkPrintOperation *operation,
                                              GtkPrintContext   *context,
                                              PrintData         *data);
 static void        end_print                (GtkPrintOperation *operation,
                                              GtkPrintContext   *context,
-                                             GimpLayer        **layer);
+                                             LigmaLayer        **layer);
 static void        draw_page                (GtkPrintOperation *print,
                                              GtkPrintContext   *context,
                                              gint               page_nr,
@@ -101,8 +101,8 @@ static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
                                              PrintData         *data);
 
 #ifndef EMBED_PAGE_SETUP
-static gchar     * print_temp_proc_name     (GimpImage         *image);
-static gchar     * print_temp_proc_install  (GimpImage         *image);
+static gchar     * print_temp_proc_name     (LigmaImage         *image);
+static gchar     * print_temp_proc_install  (LigmaImage         *image);
 
 /*  Keep a reference to the current GtkPrintOperation
  *  for access by the temporary procedure.
@@ -111,16 +111,16 @@ static GtkPrintOperation *print_operation = NULL;
 #endif
 
 
-G_DEFINE_TYPE (Print, print, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Print, print, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PRINT_TYPE)
+LIGMA_MAIN (PRINT_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 print_class_init (PrintClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = print_query_procedures;
   plug_in_class->create_procedure = print_create_procedure;
@@ -133,7 +133,7 @@ print_init (Print *print)
 }
 
 static GList *
-print_query_procedures (GimpPlugIn *plug_in)
+print_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -146,34 +146,34 @@ print_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-print_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+print_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PRINT_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             print_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Print..."));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PRINT);
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
+      ligma_procedure_set_menu_label (procedure, _("_Print..."));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_DOCUMENT_PRINT);
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Print the image"),
                                         "Print the image using the "
                                         "GTK+ Print API.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Bill Skaggs, Sven Neumann, Stefan Röllin",
                                       "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                       "2006 - 2008");
@@ -182,26 +182,26 @@ print_create_procedure (GimpPlugIn  *plug_in,
 #ifndef EMBED_PAGE_SETUP
   else if (! strcmp (name, PAGE_SETUP_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             print_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Page Set_up..."));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PAGE_SETUP);
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
+      ligma_procedure_set_menu_label (procedure, _("Page Set_up..."));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_DOCUMENT_PAGE_SETUP);
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Adjust page size and orientation "
                                           "for printing"),
                                         "Adjust page size and orientation "
                                         "for printing the image using the "
                                         "GTK+ Print API.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Bill Skaggs, Sven Neumann, Stefan Röllin",
-                                      "Sven Neumann <sven@gimp.org>",
+                                      "Sven Neumann <sven@ligma.org>",
                                       "2008");
     }
 #endif
@@ -209,67 +209,67 @@ print_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-print_run (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+print_run (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           LigmaDrawable        **drawables,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (strcmp (gimp_procedure_get_name (procedure),
+  if (strcmp (ligma_procedure_get_name (procedure),
               PRINT_PROC_NAME) == 0)
     {
-      status = print_image (image, run_mode == GIMP_RUN_INTERACTIVE, &error);
+      status = print_image (image, run_mode == LIGMA_RUN_INTERACTIVE, &error);
 
-      if (error && run_mode == GIMP_RUN_INTERACTIVE)
+      if (error && run_mode == LIGMA_RUN_INTERACTIVE)
         {
           print_show_error (error->message);
         }
     }
 #ifndef EMBED_PAGE_SETUP
-  else if (strcmp (gimp_procedure_get_name (procedure),
+  else if (strcmp (ligma_procedure_get_name (procedure),
                    PAGE_SETUP_PROC_NAME) == 0)
     {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         {
           status = page_setup (image);
         }
       else
         {
-          status = GIMP_PDB_CALLING_ERROR;
+          status = LIGMA_PDB_CALLING_ERROR;
         }
     }
 #endif
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      status = LIGMA_PDB_CALLING_ERROR;
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpPDBStatusType
-print_image (GimpImage *image,
+static LigmaPDBStatusType
+print_image (LigmaImage *image,
              gboolean   interactive,
              GError   **error)
 {
   GtkPrintOperation       *operation;
   GtkPrintOperationResult  result;
-  GimpLayer               *layer;
+  LigmaLayer               *layer;
   PrintData                data;
 #ifndef EMBED_PAGE_SETUP
   gchar                   *temp_proc;
 #endif
 
   /*  create a print layer from the projection  */
-  layer = gimp_layer_new_from_visible (image, image, PRINT_PROC_NAME);
+  layer = ligma_layer_new_from_visible (image, image, PRINT_PROC_NAME);
 
   operation = gtk_print_operation_new ();
 
@@ -280,9 +280,9 @@ print_image (GimpImage *image,
 
   /* fill in the PrintData struct */
   data.image           = image;
-  data.drawable        = GIMP_DRAWABLE (layer);
-  data.unit            = gimp_get_default_unit ();
-  data.image_unit      = gimp_image_get_unit (image);
+  data.drawable        = LIGMA_DRAWABLE (layer);
+  data.unit            = ligma_get_default_unit ();
+  data.image_unit      = ligma_image_get_unit (image);
   data.offset_x        = 0;
   data.offset_y        = 0;
   data.center          = CENTER_BOTH;
@@ -290,7 +290,7 @@ print_image (GimpImage *image,
   data.draw_crop_marks = FALSE;
   data.operation       = operation;
 
-  gimp_image_get_resolution (image, &data.xres, &data.yres);
+  ligma_image_get_resolution (image, &data.xres, &data.yres);
 
   print_settings_load (&data);
 
@@ -309,12 +309,12 @@ print_image (GimpImage *image,
 #ifndef EMBED_PAGE_SETUP
   print_operation = operation;
   temp_proc = print_temp_proc_install (image);
-  gimp_plug_in_extension_enable (gimp_get_plug_in ());
+  ligma_plug_in_extension_enable (ligma_get_plug_in ());
 #endif
 
   if (interactive)
     {
-      gimp_ui_init (PLUG_IN_BINARY);
+      ligma_ui_init (PLUG_IN_BINARY);
 
       g_signal_connect_swapped (operation, "end-print",
                                 G_CALLBACK (print_settings_save),
@@ -348,41 +348,41 @@ print_image (GimpImage *image,
     }
 
 #ifndef EMBED_PAGE_SETUP
-  gimp_plug_in_remove_temp_procedure (gimp_get_plug_in (), temp_proc);
+  ligma_plug_in_remove_temp_procedure (ligma_get_plug_in (), temp_proc);
   g_free (temp_proc);
   print_operation = NULL;
 #endif
 
   g_object_unref (operation);
 
-  if (gimp_item_is_valid (GIMP_ITEM (layer)))
-    gimp_item_delete (GIMP_ITEM (layer));
+  if (ligma_item_is_valid (LIGMA_ITEM (layer)))
+    ligma_item_delete (LIGMA_ITEM (layer));
 
   switch (result)
     {
     case GTK_PRINT_OPERATION_RESULT_APPLY:
     case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
-      return GIMP_PDB_SUCCESS;
+      return LIGMA_PDB_SUCCESS;
 
     case GTK_PRINT_OPERATION_RESULT_CANCEL:
-      return GIMP_PDB_CANCEL;
+      return LIGMA_PDB_CANCEL;
 
     case GTK_PRINT_OPERATION_RESULT_ERROR:
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  return GIMP_PDB_EXECUTION_ERROR;
+  return LIGMA_PDB_EXECUTION_ERROR;
 }
 
 #ifndef EMBED_PAGE_SETUP
-static GimpPDBStatusType
-page_setup (GimpImage *image)
+static LigmaPDBStatusType
+page_setup (LigmaImage *image)
 {
   GtkPrintOperation  *operation;
-  GimpValueArray     *return_vals;
+  LigmaValueArray     *return_vals;
   gchar              *name;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   operation = gtk_print_operation_new ();
 
@@ -398,18 +398,18 @@ page_setup (GimpImage *image)
   /* we don't want the core to show an error message if the
    * temporary procedure does not exist
    */
-  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
-  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
+  return_vals = ligma_pdb_run_procedure (ligma_get_pdb (),
                                         name,
-                                        GIMP_TYPE_IMAGE, image,
+                                        LIGMA_TYPE_IMAGE, image,
                                         G_TYPE_NONE);
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   g_free (name);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 #endif
 
@@ -433,9 +433,9 @@ print_show_error (const gchar *message)
 
 static void
 print_operation_set_name (GtkPrintOperation *operation,
-                          GimpImage         *image)
+                          LigmaImage         *image)
 {
-  gchar *name = gimp_image_get_name (image);
+  gchar *name = ligma_image_get_name (image);
 
   gtk_print_operation_set_job_name (operation, name);
 
@@ -449,22 +449,22 @@ begin_print (GtkPrintOperation *operation,
 {
   gtk_print_operation_set_use_full_page (operation, data->use_full_page);
 
-  gimp_progress_init (_("Printing"));
+  ligma_progress_init (_("Printing"));
 }
 
 static void
 end_print (GtkPrintOperation *operation,
            GtkPrintContext   *context,
-           GimpLayer        **layer)
+           LigmaLayer        **layer)
 {
   /* we don't need the print layer any longer, delete it */
-  if (gimp_item_is_valid (GIMP_ITEM (*layer)))
+  if (ligma_item_is_valid (LIGMA_ITEM (*layer)))
     {
-      gimp_item_delete (GIMP_ITEM (*layer));
+      ligma_item_delete (LIGMA_ITEM (*layer));
       *layer = NULL;
     }
 
-  gimp_progress_end ();
+  ligma_progress_end ();
 
   /* generate events to solve the problems described in bug #466928 */
   g_timeout_add_seconds (1, (GSourceFunc) gtk_true, NULL);
@@ -480,7 +480,7 @@ draw_page (GtkPrintOperation *operation,
 
   if (print_draw_page (context, data, &error))
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
     }
   else
     {
@@ -502,54 +502,54 @@ create_custom_widget (GtkPrintOperation *operation,
 }
 
 #ifndef EMBED_PAGE_SETUP
-static GimpValueArray *
-print_temp_proc_run (GimpProcedure        *procedure,
-                     const GimpValueArray *args,
+static LigmaValueArray *
+print_temp_proc_run (LigmaProcedure        *procedure,
+                     const LigmaValueArray *args,
                      gpointer              run_data)
 {
-  GimpImage *image = GIMP_VALUES_GET_IMAGE (args, 0);
+  LigmaImage *image = LIGMA_VALUES_GET_IMAGE (args, 0);
 
   if (print_operation)
     print_page_setup_load (print_operation, image);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gchar *
-print_temp_proc_name (GimpImage *image)
+print_temp_proc_name (LigmaImage *image)
 {
   return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d", image);
 }
 
 static gchar *
-print_temp_proc_install (GimpImage *image)
+print_temp_proc_install (LigmaImage *image)
 {
-  GimpPlugIn    *plug_in = gimp_get_plug_in ();
+  LigmaPlugIn    *plug_in = ligma_get_plug_in ();
   gchar         *name    = print_temp_proc_name (image);
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, name,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+  procedure = ligma_procedure_new (plug_in, name,
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
                                   print_temp_proc_run, NULL, NULL);
 
-  gimp_procedure_set_documentation (procedure,
+  ligma_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",
                                     "Temporary procedure to notify the "
                                     "Print plug-in about changes to the "
                                     "Page Setup.",
                                     NULL);
-  gimp_procedure_set_attribution (procedure,
+  ligma_procedure_set_attribution (procedure,
                                   "Sven Neumann",
                                   "Sven Neumann",
                                   "2008");
 
-  GIMP_PROC_ARG_IMAGE (procedure, "image",
+  LIGMA_PROC_ARG_IMAGE (procedure, "image",
                        "Image",
                        "The image to notify about",
                        FALSE,
                        G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 
   return name;

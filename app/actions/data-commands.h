@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,28 @@
 #define __DATA_COMMANDS_H__
 
 
-void   data_open_as_image_cmd_callback        (GimpAction *action,
+void   data_open_as_image_cmd_callback        (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_new_cmd_callback                  (GimpAction *action,
+void   data_new_cmd_callback                  (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_duplicate_cmd_callback            (GimpAction *action,
+void   data_duplicate_cmd_callback            (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_copy_location_cmd_callback        (GimpAction *action,
+void   data_copy_location_cmd_callback        (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_show_in_file_manager_cmd_callback (GimpAction *action,
+void   data_show_in_file_manager_cmd_callback (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_delete_cmd_callback               (GimpAction *action,
+void   data_delete_cmd_callback               (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_refresh_cmd_callback              (GimpAction *action,
+void   data_refresh_cmd_callback              (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   data_edit_cmd_callback                 (GimpAction *action,
+void   data_edit_cmd_callback                 (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 

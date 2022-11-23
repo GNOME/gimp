@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton-win32.c
+ * ligmapickbutton-win32.c
  * Copyright (C) 2022 Luca Bacci <luca.bacci@outlook.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -19,12 +19,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
-#include "gimppickbutton.h"
-#include "gimppickbutton-private.h"
-#include "gimppickbutton-win32.h"
+#include "ligmawidgetstypes.h"
+#include "ligmapickbutton.h"
+#include "ligmapickbutton-private.h"
+#include "ligmapickbutton-win32.h"
 
 #include <sdkddkver.h>
 #include <windows.h>
@@ -135,7 +135,7 @@ static BOOL CALLBACK      enum_monitor_callback            (HMONITOR        hMon
                                                             LPARAM          lParam);
 static GArray*            enumerate_monitors               (void);
 
-/* GimpPickButtonWin32 */
+/* LigmaPickButtonWin32 */
 static void               ensure_input_windows             (void);
 static void               remove_input_windows             (void);
 static void               ensure_monitors                  (void);
@@ -145,10 +145,10 @@ static void               remove_screen_data               (void);
 static void               screen_changed                   (void);
 static void               ensure_screen_tracking           (void);
 static void               remove_screen_tracking           (void);
-static GimpRGB            pick_color_with_gdi              (POINT           physical_point);
+static LigmaRGB            pick_color_with_gdi              (POINT           physical_point);
 static void               user_picked                      (MonitorData    *monitor,
                                                             POINT           physical_point);
-void                      _gimp_pick_button_win32_pick     (GimpPickButton *button);
+void                      _ligma_pick_button_win32_pick     (LigmaPickButton *button);
 static void                stop_picking                    (void);
 
 /* {{{ Utils */
@@ -409,7 +409,7 @@ create_cursor (void)
   GError    *error   = NULL;
   HCURSOR    cursor  = NULL;
 
-  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/color-picker-cursors/cursor-color-picker.png",
+  pixbuf = gdk_pixbuf_new_from_resource ("/org/ligma/color-picker-cursors/cursor-color-picker.png",
                                          &error);
   if (!pixbuf)
     {
@@ -696,7 +696,7 @@ ensure_input_window_class (void)
       memset (&wndclassex, 0, sizeof (wndclassex));
       wndclassex.cbSize        = sizeof (wndclassex);
       wndclassex.hInstance     = this_module ();
-      wndclassex.lpszClassName = L"GimpPickButtonInputWindowClass";
+      wndclassex.lpszClassName = L"LigmaPickButtonInputWindowClass";
       wndclassex.lpfnWndProc   = input_window_procedure;
       wndclassex.hbrBackground = GetStockObject (NULL_BRUSH);
       wndclassex.hCursor       = cursor ?
@@ -742,7 +742,7 @@ create_input_window (POINT origin,
 {
   DWORD   stylex  = WS_EX_NOACTIVATE | WS_EX_TOPMOST;
   LPCWSTR wclass;
-  LPCWSTR title   = L"Gimp Input Window";
+  LPCWSTR title   = L"Ligma Input Window";
   DWORD   style   = WS_POPUP;
   HWND    hwnd;
 
@@ -802,7 +802,7 @@ ensure_notif_window_class (void)
       memset (&wndclassex, 0, sizeof (wndclassex));
       wndclassex.cbSize        = sizeof (wndclassex);
       wndclassex.hInstance     = this_module ();
-      wndclassex.lpszClassName = L"GimpPickButtonNotifWindowClass";
+      wndclassex.lpszClassName = L"LigmaPickButtonNotifWindowClass";
       wndclassex.lpfnWndProc   = notif_window_procedure;
 
       notif_window_class = RegisterClassExW (&wndclassex);
@@ -838,7 +838,7 @@ ensure_notif_window (void)
     {
       DWORD   stylex = 0;
       LPCWSTR wclass = (LPCWSTR)(guintptr)notif_window_class;
-      LPCWSTR title  = L"Gimp Notifications Window";
+      LPCWSTR title  = L"Ligma Notifications Window";
       DWORD   style  = WS_POPUP;
 
       notif_window_handle = CreateWindowExW (stylex, wclass,
@@ -1062,17 +1062,17 @@ remove_screen_tracking (void)
 }
 
 /* }}}
- * {{{ GimpPickButtonWin32 */
+ * {{{ LigmaPickButtonWin32 */
 
 /* pick_color_with_gdi is based on the GDI GetPixel() function.
  * Note that GDI only returns 8bit per-channel color data, but
  * as of today there's no documented method to retrieve colors
  * at higher bit depths. */
 
-static GimpRGB
+static LigmaRGB
 pick_color_with_gdi (POINT physical_point)
 {
-  GimpRGB  rgb;
+  LigmaRGB  rgb;
   COLORREF color;
   HDC      hdc;
 
@@ -1083,7 +1083,7 @@ pick_color_with_gdi (POINT physical_point)
 
   color = GetPixel (hdc, physical_point.x, physical_point.y);
 
-  gimp_rgba_set_uchar (&rgb, GetRValue (color), GetGValue (color), GetBValue (color), 255);
+  ligma_rgba_set_uchar (&rgb, GetRValue (color), GetGValue (color), GetBValue (color), 255);
 
   ReleaseDC (HWND_DESKTOP, hdc);
 
@@ -1094,7 +1094,7 @@ static void
 user_picked (MonitorData *monitor,
              POINT        physical_point)
 {
-  GimpRGB rgb;
+  LigmaRGB rgb;
   GList *l;
 
   /* Currently unused */
@@ -1104,14 +1104,14 @@ user_picked (MonitorData *monitor,
 
   for (l = pickers; l != NULL; l = l->next)
     {
-      GimpPickButton *button = GIMP_PICK_BUTTON (l->data);
+      LigmaPickButton *button = LIGMA_PICK_BUTTON (l->data);
       g_signal_emit_by_name (button, "color-picked", &rgb);
     }
 }
 
-/* entry point to this file, called from gimppickbutton.c */
+/* entry point to this file, called from ligmapickbutton.c */
 void
-_gimp_pick_button_win32_pick (GimpPickButton *button)
+_ligma_pick_button_win32_pick (LigmaPickButton *button)
 {
   ensure_mouse_hook ();
   ensure_keyboard_hook ();

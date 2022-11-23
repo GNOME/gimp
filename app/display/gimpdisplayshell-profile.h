@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_PROFILE_H__
-#define __GIMP_DISPLAY_SHELL_PROFILE_H__
+#ifndef __LIGMA_DISPLAY_SHELL_PROFILE_H__
+#define __LIGMA_DISPLAY_SHELL_PROFILE_H__
 
 
-void     gimp_display_shell_profile_init              (GimpDisplayShell *shell);
-void     gimp_display_shell_profile_finalize          (GimpDisplayShell *shell);
+void     ligma_display_shell_profile_init              (LigmaDisplayShell *shell);
+void     ligma_display_shell_profile_finalize          (LigmaDisplayShell *shell);
 
-void     gimp_display_shell_profile_update            (GimpDisplayShell *shell);
+void     ligma_display_shell_profile_update            (LigmaDisplayShell *shell);
 
-gboolean gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell);
+gboolean ligma_display_shell_profile_can_convert_to_u8 (LigmaDisplayShell *shell);
 
 
-#endif /*  __GIMP_DISPLAY_SHELL_PROFILE_H__  */
+#endif /*  __LIGMA_DISPLAY_SHELL_PROFILE_H__  */

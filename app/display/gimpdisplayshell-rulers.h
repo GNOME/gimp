@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_RULERS_H__
-#define __GIMP_DISPLAY_SHELL_RULERS_H__
+#ifndef __LIGMA_DISPLAY_SHELL_RULERS_H__
+#define __LIGMA_DISPLAY_SHELL_RULERS_H__
 
 
-void   gimp_display_shell_rulers_update (GimpDisplayShell *shell);
+void   ligma_display_shell_rulers_update (LigmaDisplayShell *shell);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_RULERS_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_RULERS_H__  */

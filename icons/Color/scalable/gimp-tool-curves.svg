@@ -15,8 +15,8 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-curves.svg"
-   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
+   sodipodi:docname="ligma-tool-curves.svg"
+   inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/ligma-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
   <defs
@@ -88,7 +88,7 @@
       <g
          inkscape:transform-center-y="0.025736985"
          inkscape:transform-center-x="-4.7441149"
-         id="gimp-grid"
+         id="ligma-grid"
          transform="matrix(0.96327079,0,0,0.96336725,0.2938523,1036.6552)">
         <rect
            style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#d3d7cf;fill-opacity:1;fill-rule:nonzero;stroke:#888a85;stroke-width:0.99999905;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
@@ -103,7 +103,7 @@
       <g
          inkscape:export-ydpi="134.99994"
          inkscape:export-xdpi="134.99994"
-         id="gimp-display-filter-gamma"
+         id="ligma-display-filter-gamma"
          transform="matrix(0.99296003,0,0,0.90940295,-22.175367,1035.7342)"
          style="display:inline">
         <path

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsettingseditor.c
- * Copyright (C) 2008-2017 Michael Natterer <mitch@gimp.org>
+ * ligmasettingseditor.c
+ * Copyright (C) 2008-2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,44 +25,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "operations/gimp-operation-config.h"
+#include "operations/ligma-operation-config.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcontainertreestore.h"
-#include "gimpcontainertreeview.h"
-#include "gimpcontainerview.h"
-#include "gimpsettingseditor.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainertreeview.h"
+#include "ligmacontainerview.h"
+#include "ligmasettingseditor.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_CONFIG,
   PROP_CONTAINER
 };
 
 
-typedef struct _GimpSettingsEditorPrivate GimpSettingsEditorPrivate;
+typedef struct _LigmaSettingsEditorPrivate LigmaSettingsEditorPrivate;
 
-struct _GimpSettingsEditorPrivate
+struct _LigmaSettingsEditorPrivate
 {
-  Gimp          *gimp;
+  Ligma          *ligma;
   GObject       *config;
-  GimpContainer *container;
+  LigmaContainer *container;
   GObject       *selected_setting;
 
   GtkWidget     *view;
@@ -71,80 +71,80 @@ struct _GimpSettingsEditorPrivate
   GtkWidget     *delete_button;
 };
 
-#define GET_PRIVATE(item) ((GimpSettingsEditorPrivate *) gimp_settings_editor_get_instance_private ((GimpSettingsEditor *) (item)))
+#define GET_PRIVATE(item) ((LigmaSettingsEditorPrivate *) ligma_settings_editor_get_instance_private ((LigmaSettingsEditor *) (item)))
 
 
-static void   gimp_settings_editor_constructed    (GObject             *object);
-static void   gimp_settings_editor_finalize       (GObject             *object);
-static void   gimp_settings_editor_set_property   (GObject             *object,
+static void   ligma_settings_editor_constructed    (GObject             *object);
+static void   ligma_settings_editor_finalize       (GObject             *object);
+static void   ligma_settings_editor_set_property   (GObject             *object,
                                                    guint                property_id,
                                                    const GValue        *value,
                                                    GParamSpec          *pspec);
-static void   gimp_settings_editor_get_property   (GObject             *object,
+static void   ligma_settings_editor_get_property   (GObject             *object,
                                                    guint                property_id,
                                                    GValue              *value,
                                                    GParamSpec          *pspec);
 
 static gboolean
-          gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
+          ligma_settings_editor_row_separator_func (GtkTreeModel        *model,
                                                    GtkTreeIter         *iter,
                                                    gpointer             data);
-static gboolean gimp_settings_editor_select_items (GimpContainerView   *view,
+static gboolean ligma_settings_editor_select_items (LigmaContainerView   *view,
                                                    GList               *viewables,
                                                    GList               *paths,
-                                                   GimpSettingsEditor  *editor);
-static void   gimp_settings_editor_import_clicked (GtkWidget           *widget,
-                                                   GimpSettingsEditor  *editor);
-static void   gimp_settings_editor_export_clicked (GtkWidget           *widget,
-                                                   GimpSettingsEditor  *editor);
-static void   gimp_settings_editor_delete_clicked (GtkWidget           *widget,
-                                                   GimpSettingsEditor  *editor);
-static void   gimp_settings_editor_name_edited    (GtkCellRendererText *cell,
+                                                   LigmaSettingsEditor  *editor);
+static void   ligma_settings_editor_import_clicked (GtkWidget           *widget,
+                                                   LigmaSettingsEditor  *editor);
+static void   ligma_settings_editor_export_clicked (GtkWidget           *widget,
+                                                   LigmaSettingsEditor  *editor);
+static void   ligma_settings_editor_delete_clicked (GtkWidget           *widget,
+                                                   LigmaSettingsEditor  *editor);
+static void   ligma_settings_editor_name_edited    (GtkCellRendererText *cell,
                                                    const gchar         *path_str,
                                                    const gchar         *new_name,
-                                                   GimpSettingsEditor  *editor);
+                                                   LigmaSettingsEditor  *editor);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSettingsEditor, gimp_settings_editor,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSettingsEditor, ligma_settings_editor,
                             GTK_TYPE_BOX)
 
-#define parent_class gimp_settings_editor_parent_class
+#define parent_class ligma_settings_editor_parent_class
 
 
 static void
-gimp_settings_editor_class_init (GimpSettingsEditorClass *klass)
+ligma_settings_editor_class_init (LigmaSettingsEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_settings_editor_constructed;
-  object_class->finalize     = gimp_settings_editor_finalize;
-  object_class->set_property = gimp_settings_editor_set_property;
-  object_class->get_property = gimp_settings_editor_get_property;
+  object_class->constructed  = ligma_settings_editor_constructed;
+  object_class->finalize     = ligma_settings_editor_finalize;
+  object_class->set_property = ligma_settings_editor_set_property;
+  object_class->get_property = ligma_settings_editor_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONFIG,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONFIG,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONTAINER,
                                    g_param_spec_object ("container",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTAINER,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_settings_editor_init (GimpSettingsEditor *editor)
+ligma_settings_editor_init (LigmaSettingsEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -153,63 +153,63 @@ gimp_settings_editor_init (GimpSettingsEditor *editor)
 }
 
 static void
-gimp_settings_editor_constructed (GObject *object)
+ligma_settings_editor_constructed (GObject *object)
 {
-  GimpSettingsEditor        *editor  = GIMP_SETTINGS_EDITOR (object);
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
-  GimpContainerTreeView     *tree_view;
+  LigmaSettingsEditor        *editor  = LIGMA_SETTINGS_EDITOR (object);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (object);
+  LigmaContainerTreeView     *tree_view;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (private->gimp));
-  gimp_assert (GIMP_IS_CONFIG (private->config));
-  gimp_assert (GIMP_IS_CONTAINER (private->container));
+  ligma_assert (LIGMA_IS_LIGMA (private->ligma));
+  ligma_assert (LIGMA_IS_CONFIG (private->config));
+  ligma_assert (LIGMA_IS_CONTAINER (private->container));
 
-  private->view = gimp_container_tree_view_new (private->container,
-                                                gimp_get_user_context (private->gimp),
+  private->view = ligma_container_tree_view_new (private->container,
+                                                ligma_get_user_context (private->ligma),
                                                16, 0);
   gtk_widget_set_size_request (private->view, 200, 200);
   gtk_box_pack_start (GTK_BOX (editor), private->view, TRUE, TRUE, 0);
   gtk_widget_show (private->view);
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (private->view);
+  tree_view = LIGMA_CONTAINER_TREE_VIEW (private->view);
 
   gtk_tree_view_set_row_separator_func (tree_view->view,
-                                        gimp_settings_editor_row_separator_func,
+                                        ligma_settings_editor_row_separator_func,
                                         private->view, NULL);
 
   g_signal_connect (tree_view, "select-items",
-                    G_CALLBACK (gimp_settings_editor_select_items),
+                    G_CALLBACK (ligma_settings_editor_select_items),
                     editor);
 
-  gimp_container_tree_view_connect_name_edited (tree_view,
-                                                G_CALLBACK (gimp_settings_editor_name_edited),
+  ligma_container_tree_view_connect_name_edited (tree_view,
+                                                G_CALLBACK (ligma_settings_editor_name_edited),
                                                 editor);
 
   private->import_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            GIMP_ICON_DOCUMENT_OPEN,
+    ligma_editor_add_button (LIGMA_EDITOR (tree_view),
+                            LIGMA_ICON_DOCUMENT_OPEN,
                             _("Import presets from a file"),
                             NULL,
-                            G_CALLBACK (gimp_settings_editor_import_clicked),
+                            G_CALLBACK (ligma_settings_editor_import_clicked),
                             NULL,
                             editor);
 
   private->export_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            GIMP_ICON_DOCUMENT_SAVE,
+    ligma_editor_add_button (LIGMA_EDITOR (tree_view),
+                            LIGMA_ICON_DOCUMENT_SAVE,
                             _("Export the selected presets to a file"),
                             NULL,
-                            G_CALLBACK (gimp_settings_editor_export_clicked),
+                            G_CALLBACK (ligma_settings_editor_export_clicked),
                             NULL,
                             editor);
 
   private->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            GIMP_ICON_EDIT_DELETE,
+    ligma_editor_add_button (LIGMA_EDITOR (tree_view),
+                            LIGMA_ICON_EDIT_DELETE,
                             _("Delete the selected preset"),
                             NULL,
-                            G_CALLBACK (gimp_settings_editor_delete_clicked),
+                            G_CALLBACK (ligma_settings_editor_delete_clicked),
                             NULL,
                             editor);
 
@@ -217,9 +217,9 @@ gimp_settings_editor_constructed (GObject *object)
 }
 
 static void
-gimp_settings_editor_finalize (GObject *object)
+ligma_settings_editor_finalize (GObject *object)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->config);
   g_clear_object (&private->container);
@@ -228,17 +228,17 @@ gimp_settings_editor_finalize (GObject *object)
 }
 
 static void
-gimp_settings_editor_set_property (GObject      *object,
+ligma_settings_editor_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value); /* don't dup */
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value); /* don't dup */
       break;
 
     case PROP_CONFIG:
@@ -256,17 +256,17 @@ gimp_settings_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_settings_editor_get_property (GObject    *object,
+ligma_settings_editor_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
 
     case PROP_CONFIG:
@@ -284,14 +284,14 @@ gimp_settings_editor_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_settings_editor_row_separator_func (GtkTreeModel *model,
+ligma_settings_editor_row_separator_func (GtkTreeModel *model,
                                          GtkTreeIter  *iter,
                                          gpointer      data)
 {
   gchar *name = NULL;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, &name,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, &name,
                       -1);
   g_free (name);
 
@@ -299,12 +299,12 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
 }
 
 static gboolean
-gimp_settings_editor_select_items (GimpContainerView  *view,
+ligma_settings_editor_select_items (LigmaContainerView  *view,
                                    GList              *viewables,
                                    GList              *paths,
-                                   GimpSettingsEditor *editor)
+                                   LigmaSettingsEditor *editor)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (editor);
   gboolean                   sensitive;
 
   g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
@@ -312,7 +312,7 @@ gimp_settings_editor_select_items (GimpContainerView  *view,
   private->selected_setting = viewables ? G_OBJECT (viewables->data) : NULL;
 
   sensitive = (private->selected_setting != NULL &&
-               gimp_object_get_name (private->selected_setting));
+               ligma_object_get_name (private->selected_setting));
 
   gtk_widget_set_sensitive (private->export_button, sensitive);
   gtk_widget_set_sensitive (private->delete_button, sensitive);
@@ -321,73 +321,73 @@ gimp_settings_editor_select_items (GimpContainerView  *view,
 }
 
 static void
-gimp_settings_editor_import_clicked (GtkWidget          *widget,
-                                     GimpSettingsEditor *editor)
+ligma_settings_editor_import_clicked (GtkWidget          *widget,
+                                     LigmaSettingsEditor *editor)
 {
 }
 
 static void
-gimp_settings_editor_export_clicked (GtkWidget          *widget,
-                                     GimpSettingsEditor *editor)
+ligma_settings_editor_export_clicked (GtkWidget          *widget,
+                                     LigmaSettingsEditor *editor)
 {
 }
 
 static void
-gimp_settings_editor_delete_clicked (GtkWidget          *widget,
-                                     GimpSettingsEditor *editor)
+ligma_settings_editor_delete_clicked (GtkWidget          *widget,
+                                     LigmaSettingsEditor *editor)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (editor);
 
   if (private->selected_setting)
     {
-      GimpObject *new;
+      LigmaObject *new;
 
-      new = gimp_container_get_neighbor_of (private->container,
-                                            GIMP_OBJECT (private->selected_setting));
+      new = ligma_container_get_neighbor_of (private->container,
+                                            LIGMA_OBJECT (private->selected_setting));
 
       /*  don't select the separator  */
-      if (new && ! gimp_object_get_name (new))
+      if (new && ! ligma_object_get_name (new))
         new = NULL;
 
-      gimp_container_remove (private->container,
-                             GIMP_OBJECT (private->selected_setting));
+      ligma_container_remove (private->container,
+                             LIGMA_OBJECT (private->selected_setting));
 
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->view),
-                                       GIMP_VIEWABLE (new));
+      ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (private->view),
+                                       LIGMA_VIEWABLE (new));
 
-      gimp_operation_config_serialize (private->gimp, private->container, NULL);
+      ligma_operation_config_serialize (private->ligma, private->container, NULL);
     }
 }
 
 static void
-gimp_settings_editor_name_edited (GtkCellRendererText *cell,
+ligma_settings_editor_name_edited (GtkCellRendererText *cell,
                                   const gchar         *path_str,
                                   const gchar         *new_name,
-                                  GimpSettingsEditor  *editor)
+                                  LigmaSettingsEditor  *editor)
 {
-  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
-  GimpContainerTreeView     *tree_view;
+  LigmaSettingsEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaContainerTreeView     *tree_view;
   GtkTreePath               *path;
   GtkTreeIter                iter;
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (private->view);
+  tree_view = LIGMA_CONTAINER_TREE_VIEW (private->view);
 
   path = gtk_tree_path_new_from_string (path_str);
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpObject       *object;
+      LigmaViewRenderer *renderer;
+      LigmaObject       *object;
       const gchar      *old_name;
       gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
-      object = GIMP_OBJECT (renderer->viewable);
+      object = LIGMA_OBJECT (renderer->viewable);
 
-      old_name = gimp_object_get_name (object);
+      old_name = ligma_object_get_name (object);
 
       if (! old_name) old_name = "";
       if (! new_name) new_name = "";
@@ -408,18 +408,18 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
                           NULL);
 
           /*  set name after time so the object is reordered correctly  */
-          gimp_object_take_name (object, name);
+          ligma_object_take_name (object, name);
 
-          gimp_operation_config_serialize (private->gimp, private->container,
+          ligma_operation_config_serialize (private->ligma, private->container,
                                            NULL);
         }
       else
         {
           g_free (name);
 
-          name = gimp_viewable_get_description (renderer->viewable, NULL);
+          name = ligma_viewable_get_description (renderer->viewable, NULL);
           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
+                              LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }
@@ -434,16 +434,16 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
 /*  public functions  */
 
 GtkWidget *
-gimp_settings_editor_new (Gimp          *gimp,
+ligma_settings_editor_new (Ligma          *ligma,
                           GObject       *config,
-                          GimpContainer *container)
+                          LigmaContainer *container)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
 
-  return g_object_new (GIMP_TYPE_SETTINGS_EDITOR,
-                       "gimp",      gimp,
+  return g_object_new (LIGMA_TYPE_SETTINGS_EDITOR,
+                       "ligma",      ligma,
                        "config",    config,
                        "container", container,
                        NULL);

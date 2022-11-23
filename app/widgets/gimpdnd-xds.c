@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpdnd-xds.c
- * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
+ * ligmadnd-xds.c
+ * Copyright (C) 2005  Sven Neumann <sven@ligma.org>
  *
  * Saving Files via Drag-and-Drop:
  * The Direct Save Protocol for the X Window System
@@ -31,26 +31,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
 #include "file/file-save.h"
 
-#include "gimpdnd-xds.h"
-#include "gimpfiledialog.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
+#include "ligmadnd-xds.h"
+#include "ligmafiledialog.h"
+#include "ligmamessagebox.h"
+#include "ligmamessagedialog.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 #define MAX_URI_LEN 4096
@@ -58,22 +58,22 @@
 
 /*  local function prototypes  */
 
-static gboolean   gimp_file_overwrite_dialog (GtkWidget *parent,
+static gboolean   ligma_file_overwrite_dialog (GtkWidget *parent,
                                               GFile     *file);
 
 
 /*  public functions  */
 
 void
-gimp_dnd_xds_source_set (GdkDragContext *context,
-                         GimpImage      *image)
+ligma_dnd_xds_source_set (GdkDragContext *context,
+                         LigmaImage      *image)
 {
   GdkAtom  property;
 
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
   property = gdk_atom_intern_static_string ("XdndDirectSave0");
 
@@ -88,11 +88,11 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
       untitled = g_file_new_for_path (basename);
       g_free (basename);
 
-      file = gimp_image_get_any_file (image);
+      file = ligma_image_get_any_file (image);
 
       if (file)
         {
-          GFile *xcf_file = gimp_file_with_new_extension (file, untitled);
+          GFile *xcf_file = ligma_file_with_new_extension (file, untitled);
           basename = g_file_get_basename (xcf_file);
           g_object_unref (xcf_file);
         }
@@ -118,11 +118,11 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
 }
 
 void
-gimp_dnd_xds_save_image (GdkDragContext   *context,
-                         GimpImage        *image,
+ligma_dnd_xds_save_image (GdkDragContext   *context,
+                         LigmaImage        *image,
                          GtkSelectionData *selection)
 {
-  GimpPlugInProcedure *proc;
+  LigmaPlugInProcedure *proc;
   GdkAtom              property;
   GdkAtom              type;
   gint                 length;
@@ -133,9 +133,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   GError              *error  = NULL;
 
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  GIMP_LOG (DND, NULL);
+  LIGMA_LOG (DND, NULL);
 
   property = gdk_atom_intern_static_string ("XdndDirectSave0");
   type     = gdk_atom_intern_static_string ("text/plain");
@@ -152,13 +152,13 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
   file = g_file_new_for_uri (uri);
 
-  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                   GIMP_FILE_PROCEDURE_GROUP_SAVE,
+  proc = ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                   LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                                                    file, NULL);
   if (! proc)
     {
-      proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                       GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+      proc = ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                       LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                        file, NULL);
       export = TRUE;
     }
@@ -166,13 +166,13 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   if (proc)
     {
       if (! g_file_query_exists (file, NULL) ||
-          gimp_file_overwrite_dialog (NULL, file))
+          ligma_file_overwrite_dialog (NULL, file))
         {
-          if (file_save (image->gimp,
+          if (file_save (image->ligma,
                          image, NULL,
-                         file, proc, GIMP_RUN_INTERACTIVE,
+                         file, proc, LIGMA_RUN_INTERACTIVE,
                          ! export, FALSE, export,
-                         &error) == GIMP_PDB_SUCCESS)
+                         &error) == LIGMA_PDB_SUCCESS)
             {
               gtk_selection_data_set (selection,
                                       gtk_selection_data_get_target (selection),
@@ -186,9 +186,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
               if (error)
                 {
-                  gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                  ligma_message (image->ligma, NULL, LIGMA_MESSAGE_ERROR,
                                 _("Saving '%s' failed:\n\n%s"),
-                                gimp_file_get_utf8_name (file),
+                                ligma_file_get_utf8_name (file),
                                 error->message);
                   g_clear_error (&error);
                 }
@@ -201,7 +201,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                               gtk_selection_data_get_target (selection),
                               8, (const guchar *) "E", 1);
 
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_ERROR,
                             _("The given filename does not have any known "
                               "file extension."));
     }
@@ -214,32 +214,32 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 /*  private functions  */
 
 static gboolean
-gimp_file_overwrite_dialog (GtkWidget *parent,
+ligma_file_overwrite_dialog (GtkWidget *parent,
                             GFile     *file)
 {
   GtkWidget *dialog;
   gboolean   overwrite = FALSE;
 
-  dialog = gimp_message_dialog_new (_("File Exists"),
-                                    GIMP_ICON_DIALOG_WARNING,
+  dialog = ligma_message_dialog_new (_("File Exists"),
+                                    LIGMA_ICON_DIALOG_WARNING,
                                     parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"),  GTK_RESPONSE_CANCEL,
                                     _("_Replace"), GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("A file named '%s' already exists."),
-                                     gimp_file_get_utf8_name (file));
+                                     ligma_file_get_utf8_name (file));
 
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              _("Do you want to replace it with the image "
                                "you are saving?"));
 
@@ -249,7 +249,7 @@ gimp_file_overwrite_dialog (GtkWidget *parent,
 
   g_object_ref (dialog);
 
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  overwrite = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
   g_object_unref (dialog);

@@ -5,5 +5,5 @@ install_data([
     'texture2.jpg',
     'texture3.jpg',
   ],
-  install_dir: gimpdatadir / 'scripts' / 'images',
+  install_dir: ligmadatadir / 'scripts' / 'images',
 )

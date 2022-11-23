@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-focus-blur.c
+ * ligmapropgui-focus-blur.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-focus-blur.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-focus-blur.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static gint
@@ -56,7 +56,7 @@ find_param (GParamSpec  **param_specs,
 static void
 focus_callback (GObject       *config,
                 GeglRectangle *area,
-                GimpLimitType  type,
+                LigmaLimitType  type,
                 gdouble        x,
                 gdouble        y,
                 gdouble        radius,
@@ -89,9 +89,9 @@ config_notify (GObject          *config,
                const GParamSpec *pspec,
                gpointer          set_data)
 {
-  GimpControllerFocusCallback  set_func;
+  LigmaControllerFocusCallback  set_func;
   GeglRectangle               *area;
-  GimpLimitType                shape;
+  LigmaLimitType                shape;
   gdouble                      radius;
   gdouble                      focus;
   gdouble                      midpoint;
@@ -125,13 +125,13 @@ config_notify (GObject          *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_focus_blur (GObject                  *config,
+_ligma_prop_gui_new_focus_blur (GObject                  *config,
                                GParamSpec              **param_specs,
                                guint                     n_param_specs,
                                GeglRectangle            *area,
-                               GimpContext              *context,
-                               GimpCreatePickerFunc      create_picker_func,
-                               GimpCreateControllerFunc  create_controller_func,
+                               LigmaContext              *context,
+                               LigmaCreatePickerFunc      create_picker_func,
+                               LigmaCreateControllerFunc  create_controller_func,
                                gpointer                  creator)
 {
   GtkWidget *vbox;
@@ -141,7 +141,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   first_geometry_param = find_param (param_specs, n_param_specs,
                                      "shape") + 1;
@@ -150,7 +150,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
 
   if (last_geometry_param <= first_geometry_param)
     {
-      vbox = _gimp_prop_gui_new_generic (config,
+      vbox = _ligma_prop_gui_new_generic (config,
                                          param_specs, n_param_specs,
                                          area, context,
                                          create_picker_func,
@@ -166,7 +166,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
-      widget = gimp_prop_widget_new (config,
+      widget = ligma_prop_widget_new (config,
                                      "shape",
                                      area, context,
                                      create_picker_func,
@@ -176,7 +176,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
       gtk_widget_show (widget);
 
-      widget = _gimp_prop_gui_new_generic (config,
+      widget = _ligma_prop_gui_new_generic (config,
                                            param_specs,
                                            first_geometry_param - 1,
                                            area, context,
@@ -186,7 +186,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
       gtk_widget_show (widget);
 
-      widget = _gimp_prop_gui_new_generic (config,
+      widget = _ligma_prop_gui_new_generic (config,
                                            param_specs + last_geometry_param,
                                            n_param_specs - last_geometry_param,
                                            area, context,
@@ -200,11 +200,11 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
       gtk_widget_show (expander);
 
-      frame = gimp_frame_new (NULL);
+      frame = ligma_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (expander), frame);
       gtk_widget_show (frame);
 
-      widget = _gimp_prop_gui_new_generic (config,
+      widget = _ligma_prop_gui_new_generic (config,
                                            param_specs + first_geometry_param,
                                            last_geometry_param -
                                            first_geometry_param,
@@ -222,7 +222,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
       gpointer  set_data;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_FOCUS,
+                                         LIGMA_CONTROLLER_TYPE_FOCUS,
                                          _("Focus Blur: "),
                                          (GCallback) focus_callback,
                                          config,

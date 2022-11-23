@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,409 +25,409 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp-parasites.h"
-#include "core/gimp-utils.h"
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma-parasites.h"
+#include "core/ligma-utils.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-version_invoker (GimpProcedure         *procedure,
-                 Gimp                  *gimp,
-                 GimpContext           *context,
-                 GimpProgress          *progress,
-                 const GimpValueArray  *args,
+static LigmaValueArray *
+version_invoker (LigmaProcedure         *procedure,
+                 Ligma                  *ligma,
+                 LigmaContext           *context,
+                 LigmaProgress          *progress,
+                 const LigmaValueArray  *args,
                  GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *version = NULL;
 
-  version = g_strdup (GIMP_VERSION);
+  version = g_strdup (LIGMA_VERSION);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (gimp_value_array_index (return_vals, 1), version);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_string (ligma_value_array_index (return_vals, 1), version);
 
   return return_vals;
 }
 
-static GimpValueArray *
-getpid_invoker (GimpProcedure         *procedure,
-                Gimp                  *gimp,
-                GimpContext           *context,
-                GimpProgress          *progress,
-                const GimpValueArray  *args,
+static LigmaValueArray *
+getpid_invoker (LigmaProcedure         *procedure,
+                Ligma                  *ligma,
+                LigmaContext           *context,
+                LigmaProgress          *progress,
+                const LigmaValueArray  *args,
                 GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint pid = 0;
 
-  pid = gimp_get_pid ();
+  pid = ligma_get_pid ();
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), pid);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (ligma_value_array_index (return_vals, 1), pid);
 
   return return_vals;
 }
 
-static GimpValueArray *
-quit_invoker (GimpProcedure         *procedure,
-              Gimp                  *gimp,
-              GimpContext           *context,
-              GimpProgress          *progress,
-              const GimpValueArray  *args,
+static LigmaValueArray *
+quit_invoker (LigmaProcedure         *procedure,
+              Ligma                  *ligma,
+              LigmaContext           *context,
+              LigmaProgress          *progress,
+              const LigmaValueArray  *args,
               GError               **error)
 {
   gboolean success = TRUE;
   gboolean force;
 
-  force = g_value_get_boolean (gimp_value_array_index (args, 0));
+  force = g_value_get_boolean (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_exit (gimp, force);
+      ligma_exit (ligma, force);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-attach_parasite_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+attach_parasite_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  const GimpParasite *parasite;
+  const LigmaParasite *parasite;
 
-  parasite = g_value_get_boxed (gimp_value_array_index (args, 0));
+  parasite = g_value_get_boxed (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_parasite_validate (gimp, parasite, error))
-        gimp_parasite_attach (gimp, parasite);
+      if (ligma_parasite_validate (ligma, parasite, error))
+        ligma_parasite_attach (ligma, parasite);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-detach_parasite_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+detach_parasite_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_parasite_detach (gimp, name);
+      ligma_parasite_detach (ligma, name);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-get_parasite_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+get_parasite_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
-  GimpParasite *parasite = NULL;
+  LigmaParasite *parasite = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
+      parasite = ligma_parasite_copy (ligma_parasite_find (ligma, name));
 
       if (! parasite)
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_boxed (gimp_value_array_index (return_vals, 1), parasite);
+    g_value_take_boxed (ligma_value_array_index (return_vals, 1), parasite);
 
   return return_vals;
 }
 
-static GimpValueArray *
-get_parasite_list_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+get_parasite_list_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar **parasites = NULL;
 
-  parasites = gimp_parasite_list (gimp);
+  parasites = ligma_parasite_list (ligma);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_boxed (gimp_value_array_index (return_vals, 1), parasites);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_boxed (ligma_value_array_index (return_vals, 1), parasites);
 
   return return_vals;
 }
 
-static GimpValueArray *
-temp_file_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+temp_file_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *extension;
   GFile *file = NULL;
 
-  extension = g_value_get_string (gimp_value_array_index (args, 0));
+  extension = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      file = gimp_get_temp_file (gimp, extension);
+      file = ligma_get_temp_file (ligma, extension);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), file);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), file);
 
   return return_vals;
 }
 
 void
-register_gimp_procs (GimpPDB *pdb)
+register_ligma_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-version
+   * ligma-version
    */
-  procedure = gimp_procedure_new (version_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-version");
-  gimp_procedure_set_static_help (procedure,
-                                  "Returns the host GIMP version.",
-                                  "This procedure returns the version number of the currently running GIMP.",
+  procedure = ligma_procedure_new (version_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-version");
+  ligma_procedure_set_static_help (procedure,
+                                  "Returns the host LIGMA version.",
+                                  "This procedure returns the version number of the currently running LIGMA.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Manish Singh",
                                          "Manish Singh",
                                          "1999");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("version",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("version",
                                                            "version",
-                                                           "GIMP version number",
+                                                           "LIGMA version number",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-getpid
+   * ligma-getpid
    */
-  procedure = gimp_procedure_new (getpid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-getpid");
-  gimp_procedure_set_static_help (procedure,
-                                  "Returns the PID of the host GIMP process.",
-                                  "This procedure returns the process ID of the currently running GIMP.",
+  procedure = ligma_procedure_new (getpid_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-getpid");
+  ligma_procedure_set_static_help (procedure,
+                                  "Returns the PID of the host LIGMA process.",
+                                  "This procedure returns the process ID of the currently running LIGMA.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("pid",
                                                      "pid",
                                                      "The PID",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-quit
+   * ligma-quit
    */
-  procedure = gimp_procedure_new (quit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-quit");
-  gimp_procedure_set_static_help (procedure,
-                                  "Causes GIMP to exit gracefully.",
-                                  "If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
+  procedure = ligma_procedure_new (quit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-quit");
+  ligma_procedure_set_static_help (procedure,
+                                  "Causes LIGMA to exit gracefully.",
+                                  "If there are unsaved images in an interactive LIGMA session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("force",
                                                      "force",
-                                                     "Force GIMP to quit without asking",
+                                                     "Force LIGMA to quit without asking",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-attach-parasite
+   * ligma-attach-parasite
    */
-  procedure = gimp_procedure_new (attach_parasite_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-attach-parasite");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (attach_parasite_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-attach-parasite");
+  ligma_procedure_set_static_help (procedure,
                                   "Add a global parasite.",
                                   "This procedure attaches a global parasite. It has no return values.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jay Cox",
                                          "Jay Cox",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_parasite ("parasite",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_parasite ("parasite",
                                                          "parasite",
                                                          "The parasite to attach",
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-detach-parasite
+   * ligma-detach-parasite
    */
-  procedure = gimp_procedure_new (detach_parasite_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-detach-parasite");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (detach_parasite_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-detach-parasite");
+  ligma_procedure_set_static_help (procedure,
                                   "Removes a global parasite.",
                                   "This procedure detaches a global parasite from. It has no return values.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jay Cox",
                                          "Jay Cox",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the parasite to detach.",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-parasite
+   * ligma-get-parasite
    */
-  procedure = gimp_procedure_new (get_parasite_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-parasite");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_parasite_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-parasite");
+  ligma_procedure_set_static_help (procedure,
                                   "Look up a global parasite.",
                                   "Finds and returns the global parasite that was previously attached.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Jay Cox",
                                          "Jay Cox",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The name of the parasite to find",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_parasite ("parasite",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_parasite ("parasite",
                                                              "parasite",
                                                              "The found parasite",
-                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                             LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-parasite-list
+   * ligma-get-parasite-list
    */
-  procedure = gimp_procedure_new (get_parasite_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-parasite-list");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_parasite_list_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-parasite-list");
+  ligma_procedure_set_static_help (procedure,
                                   "List all parasites.",
                                   "Returns a list of all currently attached global parasites.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Marc Lehmann",
                                          "Marc Lehmann",
                                          "1999");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("parasites",
                                                        "parasites",
                                                        "The names of currently attached parasites",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-temp-file
+   * ligma-temp-file
    */
-  procedure = gimp_procedure_new (temp_file_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-temp-file");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (temp_file_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-temp-file");
+  ligma_procedure_set_static_help (procedure,
                                   "Generates a unique temporary file.",
-                                  "Generates a unique file using the temp path supplied in the user's gimprc.",
+                                  "Generates a unique file using the temp path supplied in the user's ligmarc.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
                                          "Josh MacDonald",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("extension",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("extension",
                                                        "extension",
                                                        "The extension the file will have",
                                                        TRUE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_object ("file",
                                                         "file",
                                                         "The new temp file",
                                                         G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

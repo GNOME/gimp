@@ -4,9 +4,9 @@
 ; Change the colormap of an image to the colors in a specified palette.
 ; Included is script-fu-make-cmap-array (available for use in scripts) which
 ; returns an INT8ARRAY containing the colors from a specified palette.
-; This array can be used as the cmap argument for gimp-image-set-colormap.
+; This array can be used as the cmap argument for ligma-image-set-colormap.
 
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -24,14 +24,14 @@
 
 (define (script-fu-make-cmap-array palette)
   (let* (
-        (num-colors (car (gimp-palette-get-info palette)))
+        (num-colors (car (ligma-palette-get-info palette)))
         (cmap (cons-array (* num-colors 3) 'byte))
         (color 0)
         (i 0)
         )
 
     (while (< i num-colors)
-      (set! color (car (gimp-palette-entry-get-color palette i)))
+      (set! color (car (ligma-palette-entry-get-color palette i)))
       (aset cmap (* i 3) (car color))
       (aset cmap (+ (* i 3) 1) (cadr color))
       (aset cmap (+ (* i 3) 2) (caddr color))
@@ -43,10 +43,10 @@
 )
 
 (define (script-fu-set-cmap img drawable palette)
-  (gimp-image-set-colormap img
-                           (* (car (gimp-palette-get-info palette)) 3)
+  (ligma-image-set-colormap img
+                           (* (car (ligma-palette-get-info palette)) 3)
                            (script-fu-make-cmap-array palette))
-  (gimp-displays-flush)
+  (ligma-displays-flush)
 )
 
 (script-fu-register "script-fu-set-cmap"

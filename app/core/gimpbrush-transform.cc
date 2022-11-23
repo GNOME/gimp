@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-transform.c
+ * ligmabrush-transform.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 extern "C"
 {
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-mipmap.h"
-#include "gimpbrush-transform.h"
-#include "gimptempbuf.h"
+#include "ligmabrush.h"
+#include "ligmabrush-mipmap.h"
+#include "ligmabrush-transform.h"
+#include "ligmatempbuf.h"
 
 
 #define PIXELS_PER_THREAD \
@@ -45,28 +45,28 @@ extern "C"
 
 /*  local function prototypes  */
 
-static void    gimp_brush_transform_bounding_box           (const GimpTempBuf *temp_buf,
-                                                            const GimpMatrix3 *matrix,
+static void    ligma_brush_transform_bounding_box           (const LigmaTempBuf *temp_buf,
+                                                            const LigmaMatrix3 *matrix,
                                                             gint              *x,
                                                             gint              *y,
                                                             gint              *width,
                                                             gint              *height);
 
-static void    gimp_brush_transform_blur                   (GimpTempBuf       *buf,
+static void    ligma_brush_transform_blur                   (LigmaTempBuf       *buf,
                                                             gint               r);
-static gint    gimp_brush_transform_blur_radius            (gint               height,
+static gint    ligma_brush_transform_blur_radius            (gint               height,
                                                             gint               width,
                                                             gdouble            hardness);
-static void    gimp_brush_transform_adjust_hardness_matrix (gdouble            width,
+static void    ligma_brush_transform_adjust_hardness_matrix (gdouble            width,
                                                             gdouble            height,
                                                             gdouble            blur_radius,
-                                                            GimpMatrix3       *matrix);
+                                                            LigmaMatrix3       *matrix);
 
 
 /*  public functions  */
 
 void
-gimp_brush_real_transform_size (GimpBrush *brush,
+ligma_brush_real_transform_size (LigmaBrush *brush,
                                 gdouble    scale,
                                 gdouble    aspect_ratio,
                                 gdouble    angle,
@@ -74,21 +74,21 @@ gimp_brush_real_transform_size (GimpBrush *brush,
                                 gint      *width,
                                 gint      *height)
 {
-  const GimpTempBuf *source;
-  GimpMatrix3        matrix;
+  const LigmaTempBuf *source;
+  LigmaMatrix3        matrix;
   gdouble            scale_x, scale_y;
   gint               x, y;
 
-  gimp_brush_transform_get_scale (scale, aspect_ratio,
+  ligma_brush_transform_get_scale (scale, aspect_ratio,
                                   &scale_x, &scale_y);
 
-  source = gimp_brush_mipmap_get_mask (brush, &scale_x, &scale_y);
+  source = ligma_brush_mipmap_get_mask (brush, &scale_x, &scale_y);
 
-  gimp_brush_transform_matrix (gimp_temp_buf_get_width  (source),
-                               gimp_temp_buf_get_height (source),
+  ligma_brush_transform_matrix (ligma_temp_buf_get_width  (source),
+                               ligma_temp_buf_get_height (source),
                                scale_x, scale_y, angle, reflect, &matrix);
 
-  gimp_brush_transform_bounding_box (source, &matrix, &x, &y, width, height);
+  ligma_brush_transform_bounding_box (source, &matrix, &x, &y, width, height);
 }
 
 /*
@@ -117,18 +117,18 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  * Some variables end with the suffix _i to indicate they have been
  * premultiplied by int_multiple
  */
-GimpTempBuf *
-gimp_brush_real_transform_mask (GimpBrush *brush,
+LigmaTempBuf *
+ligma_brush_real_transform_mask (LigmaBrush *brush,
                                 gdouble    scale,
                                 gdouble    aspect_ratio,
                                 gdouble    angle,
                                 gboolean   reflect,
                                 gdouble    hardness)
 {
-  GimpTempBuf       *result;
-  const GimpTempBuf *source;
+  LigmaTempBuf       *result;
+  const LigmaTempBuf *source;
   const guchar      *src;
-  GimpMatrix3        matrix;
+  LigmaMatrix3        matrix;
   gdouble            scale_x, scale_y;
   gint               src_width;
   gint               src_height;
@@ -183,61 +183,61 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
-  gimp_brush_transform_get_scale (scale, aspect_ratio,
+  ligma_brush_transform_get_scale (scale, aspect_ratio,
                                   &scale_x, &scale_y);
 
-  source = gimp_brush_mipmap_get_mask (brush, &scale_x, &scale_y);
+  source = ligma_brush_mipmap_get_mask (brush, &scale_x, &scale_y);
 
-  src_width  = gimp_temp_buf_get_width  (source);
-  src_height = gimp_temp_buf_get_height (source);
+  src_width  = ligma_temp_buf_get_width  (source);
+  src_height = ligma_temp_buf_get_height (source);
 
-  gimp_brush_transform_matrix (src_width, src_height,
+  ligma_brush_transform_matrix (src_width, src_height,
                                scale_x, scale_y, angle, reflect, &matrix);
 
-  if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
-    return gimp_temp_buf_copy (source);
+  if (ligma_matrix3_is_identity (&matrix) && hardness == 1.0)
+    return ligma_temp_buf_copy (source);
 
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
-  gimp_brush_transform_bounding_box (source, &matrix,
+  ligma_brush_transform_bounding_box (source, &matrix,
                                      &x, &y, &dest_width, &dest_height);
 
   blur_radius = 0;
 
   if (hardness < 1.0)
     {
-      GimpMatrix3 unrotated_matrix;
+      LigmaMatrix3 unrotated_matrix;
       gint        unrotated_x;
       gint        unrotated_y;
       gint        unrotated_dest_width;
       gint        unrotated_dest_height;
 
-      gimp_brush_transform_matrix (src_width, src_height,
+      ligma_brush_transform_matrix (src_width, src_height,
                                    scale_x, scale_y, 0.0, FALSE,
                                    &unrotated_matrix);
 
-      gimp_brush_transform_bounding_box (source, &unrotated_matrix,
+      ligma_brush_transform_bounding_box (source, &unrotated_matrix,
                                          &unrotated_x, &unrotated_y,
                                          &unrotated_dest_width,
                                          &unrotated_dest_height);
 
-      blur_radius = gimp_brush_transform_blur_radius (unrotated_dest_width,
+      blur_radius = ligma_brush_transform_blur_radius (unrotated_dest_width,
                                                       unrotated_dest_height,
                                                       hardness);
 
-      gimp_brush_transform_adjust_hardness_matrix (dest_width, dest_height,
+      ligma_brush_transform_adjust_hardness_matrix (dest_width, dest_height,
                                                    blur_radius, &matrix);
     }
 
-  gimp_matrix3_translate (&matrix, -x, -y);
-  gimp_matrix3_invert (&matrix);
-  gimp_matrix3_translate (&matrix, -0.5, -0.5);
+  ligma_matrix3_translate (&matrix, -x, -y);
+  ligma_matrix3_invert (&matrix);
+  ligma_matrix3_translate (&matrix, -0.5, -0.5);
 
-  result = gimp_temp_buf_new (dest_width, dest_height,
-                              gimp_temp_buf_get_format (source));
+  result = ligma_temp_buf_new (dest_width, dest_height,
+                              ligma_temp_buf_get_format (source));
 
-  src = gimp_temp_buf_get_data (source);
+  src = ligma_temp_buf_get_data (source);
 
   /* prevent disappearance of 1x1 pixel brush at some rotations when
      scaling < 1 */
@@ -248,16 +248,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       return result;
     }*/
 
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 0.5,              0.5,
                                 &t_lx,            &t_ly);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 dest_width - 0.5, 0.5,
                                 &t_rx,            &t_ry);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 0.5,              dest_height - 0.5,
                                 &b_lx,            &b_ly);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 dest_width - 0.5, dest_height - 0.5,
                                 &b_rx,            &b_ry);
 
@@ -308,7 +308,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       gint          opposite_y, distance_from_true_y;
       gint          u, v;
 
-      dest = gimp_temp_buf_get_data (result) +
+      dest = ligma_temp_buf_get_data (result) +
              dest_width * area->y + area->x;
 
       /* initialize current position in source space to the start position (tl)
@@ -396,7 +396,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
         } /* end for y */
     });
 
-  gimp_brush_transform_blur (result, blur_radius);
+  ligma_brush_transform_blur (result, blur_radius);
 
   return result;
 }
@@ -405,7 +405,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  * Transforms the brush pixmap with bilinear interpolation.
  *
  * The algorithm used is exactly the same as for the brush mask
- * (gimp_brush_real_transform_mask) except it accounts for 3 color channels
+ * (ligma_brush_real_transform_mask) except it accounts for 3 color channels
  *  instead of 1 grayscale channel.
  *
  * Rather than calculating the inverse transform for each point in the
@@ -431,18 +431,18 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  * Some variables end with the suffix _i to indicate they have been
  * premultiplied by int_multiple
  */
-GimpTempBuf *
-gimp_brush_real_transform_pixmap (GimpBrush *brush,
+LigmaTempBuf *
+ligma_brush_real_transform_pixmap (LigmaBrush *brush,
                                   gdouble    scale,
                                   gdouble    aspect_ratio,
                                   gdouble    angle,
                                   gboolean   reflect,
                                   gdouble    hardness)
 {
-  GimpTempBuf       *result;
-  const GimpTempBuf *source;
+  LigmaTempBuf       *result;
+  const LigmaTempBuf *source;
   const guchar      *src;
-  GimpMatrix3        matrix;
+  LigmaMatrix3        matrix;
   gdouble            scale_x, scale_y;
   gint               src_width;
   gint               src_height;
@@ -497,61 +497,61 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
-  gimp_brush_transform_get_scale (scale, aspect_ratio,
+  ligma_brush_transform_get_scale (scale, aspect_ratio,
                                   &scale_x, &scale_y);
 
-  source = gimp_brush_mipmap_get_pixmap (brush, &scale_x, &scale_y);
+  source = ligma_brush_mipmap_get_pixmap (brush, &scale_x, &scale_y);
 
-  src_width  = gimp_temp_buf_get_width  (source);
-  src_height = gimp_temp_buf_get_height (source);
+  src_width  = ligma_temp_buf_get_width  (source);
+  src_height = ligma_temp_buf_get_height (source);
 
-  gimp_brush_transform_matrix (src_width, src_height,
+  ligma_brush_transform_matrix (src_width, src_height,
                                scale_x, scale_y, angle, reflect, &matrix);
 
-  if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
-    return gimp_temp_buf_copy (source);
+  if (ligma_matrix3_is_identity (&matrix) && hardness == 1.0)
+    return ligma_temp_buf_copy (source);
 
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
-  gimp_brush_transform_bounding_box (source, &matrix,
+  ligma_brush_transform_bounding_box (source, &matrix,
                                      &x, &y, &dest_width, &dest_height);
 
   blur_radius = 0;
 
   if (hardness < 1.0)
     {
-      GimpMatrix3 unrotated_matrix;
+      LigmaMatrix3 unrotated_matrix;
       gint        unrotated_x;
       gint        unrotated_y;
       gint        unrotated_dest_width;
       gint        unrotated_dest_height;
 
-      gimp_brush_transform_matrix (src_width, src_height,
+      ligma_brush_transform_matrix (src_width, src_height,
                                    scale_x, scale_y, 0.0, FALSE,
                                    &unrotated_matrix);
 
-      gimp_brush_transform_bounding_box (source, &unrotated_matrix,
+      ligma_brush_transform_bounding_box (source, &unrotated_matrix,
                                          &unrotated_x, &unrotated_y,
                                          &unrotated_dest_width,
                                          &unrotated_dest_height);
 
-      blur_radius = gimp_brush_transform_blur_radius (unrotated_dest_width,
+      blur_radius = ligma_brush_transform_blur_radius (unrotated_dest_width,
                                                       unrotated_dest_height,
                                                       hardness);
 
-      gimp_brush_transform_adjust_hardness_matrix (dest_width, dest_height,
+      ligma_brush_transform_adjust_hardness_matrix (dest_width, dest_height,
                                                    blur_radius, &matrix);
     }
 
-  gimp_matrix3_translate (&matrix, -x, -y);
-  gimp_matrix3_invert (&matrix);
-  gimp_matrix3_translate (&matrix, -0.5, -0.5);
+  ligma_matrix3_translate (&matrix, -x, -y);
+  ligma_matrix3_invert (&matrix);
+  ligma_matrix3_translate (&matrix, -0.5, -0.5);
 
-  result = gimp_temp_buf_new (dest_width, dest_height,
-                              gimp_temp_buf_get_format (source));
+  result = ligma_temp_buf_new (dest_width, dest_height,
+                              ligma_temp_buf_get_format (source));
 
-  src = gimp_temp_buf_get_data (source);
+  src = ligma_temp_buf_get_data (source);
 
   /* prevent disappearance of 1x1 pixel brush at some rotations when
      scaling < 1 */
@@ -562,16 +562,16 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       return result;
     }*/
 
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 0.5,              0.5,
                                 &t_lx,            &t_ly);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 dest_width - 0.5, 0.5,
                                 &t_rx,            &t_ry);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 0.5,              dest_height - 0.5,
                                 &b_lx,            &b_ly);
-  gimp_matrix3_transform_point (&matrix,
+  ligma_matrix3_transform_point (&matrix,
                                 dest_width - 0.5, dest_height - 0.5,
                                 &b_rx,            &b_ry);
 
@@ -622,7 +622,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       gint          opposite_y, distance_from_true_y;
       gint          u, v;
 
-      dest = gimp_temp_buf_get_data (result) +
+      dest = ligma_temp_buf_get_data (result) +
              3 * (dest_width * area->y + area->x);
 
       /* initialize current position in source space to the start position (tl)
@@ -724,13 +724,13 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
         } /* end for y */
     });
 
-  gimp_brush_transform_blur (result, blur_radius);
+  ligma_brush_transform_blur (result, blur_radius);
 
   return result;
 }
 
 void
-gimp_brush_transform_get_scale (gdouble  scale,
+ligma_brush_transform_get_scale (gdouble  scale,
                                 gdouble  aspect_ratio,
                                 gdouble *scale_x,
                                 gdouble *scale_y)
@@ -748,45 +748,45 @@ gimp_brush_transform_get_scale (gdouble  scale,
 }
 
 void
-gimp_brush_transform_matrix (gdouble      width,
+ligma_brush_transform_matrix (gdouble      width,
                              gdouble      height,
                              gdouble      scale_x,
                              gdouble      scale_y,
                              gdouble      angle,
                              gboolean     reflect,
-                             GimpMatrix3 *matrix)
+                             LigmaMatrix3 *matrix)
 {
   const gdouble center_x = width  / 2;
   const gdouble center_y = height / 2;
 
-  gimp_matrix3_identity (matrix);
-  gimp_matrix3_scale (matrix, scale_x, scale_y);
-  gimp_matrix3_translate (matrix, - center_x * scale_x, - center_y * scale_y);
-  gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
+  ligma_matrix3_identity (matrix);
+  ligma_matrix3_scale (matrix, scale_x, scale_y);
+  ligma_matrix3_translate (matrix, - center_x * scale_x, - center_y * scale_y);
+  ligma_matrix3_rotate (matrix, -2 * G_PI * angle);
   if (reflect)
-    gimp_matrix3_scale (matrix, -1.0, 1.0);
-  gimp_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
+    ligma_matrix3_scale (matrix, -1.0, 1.0);
+  ligma_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
 }
 
 /*  private functions  */
 
 static void
-gimp_brush_transform_bounding_box (const GimpTempBuf *temp_buf,
-                                   const GimpMatrix3 *matrix,
+ligma_brush_transform_bounding_box (const LigmaTempBuf *temp_buf,
+                                   const LigmaMatrix3 *matrix,
                                    gint              *x,
                                    gint              *y,
                                    gint              *width,
                                    gint              *height)
 {
-  const gdouble  w = gimp_temp_buf_get_width  (temp_buf);
-  const gdouble  h = gimp_temp_buf_get_height (temp_buf);
+  const gdouble  w = ligma_temp_buf_get_width  (temp_buf);
+  const gdouble  h = ligma_temp_buf_get_height (temp_buf);
   gdouble        x1, x2, x3, x4;
   gdouble        y1, y2, y3, y4;
 
-  gimp_matrix3_transform_point (matrix, 0, 0, &x1, &y1);
-  gimp_matrix3_transform_point (matrix, w, 0, &x2, &y2);
-  gimp_matrix3_transform_point (matrix, 0, h, &x3, &y3);
-  gimp_matrix3_transform_point (matrix, w, h, &x4, &y4);
+  ligma_matrix3_transform_point (matrix, 0, 0, &x1, &y1);
+  ligma_matrix3_transform_point (matrix, w, 0, &x2, &y2);
+  ligma_matrix3_transform_point (matrix, 0, h, &x3, &y3);
+  ligma_matrix3_transform_point (matrix, w, h, &x4, &y4);
 
   *x = (gint) ceil (MIN (MIN (x1, x2), MIN (x3, x4)) - 0.5);
   *y = (gint) ceil (MIN (MIN (y1, y2), MIN (y3, y4)) - 0.5);
@@ -812,7 +812,7 @@ gimp_brush_transform_bounding_box (const GimpTempBuf *temp_buf,
  * convolution kernel's radius.
  */
 static void
-gimp_brush_transform_blur (GimpTempBuf *buf,
+ligma_brush_transform_blur (LigmaTempBuf *buf,
                            gint         r)
 {
   typedef struct
@@ -822,14 +822,14 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
     gint middle_sum;
   } Sums;
 
-  const Babl *format       = gimp_temp_buf_get_format (buf);
+  const Babl *format       = ligma_temp_buf_get_format (buf);
   gint        components   = babl_format_get_n_components (format);
   gint        components_r = components * r;
-  gint        width        = gimp_temp_buf_get_width (buf);
-  gint        height       = gimp_temp_buf_get_height (buf);
+  gint        width        = ligma_temp_buf_get_width (buf);
+  gint        height       = ligma_temp_buf_get_height (buf);
   gint        stride       = components * width;
   gint        stride_r     = stride * r;
-  guchar     *data         = gimp_temp_buf_get_data (buf);
+  guchar     *data         = ligma_temp_buf_get_data (buf);
   gint        rw           = MIN (r, width - 1);
   gint        rh           = MIN (r, height - 1);
   gfloat      n            = 2 * r + 1;
@@ -1014,7 +1014,7 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 }
 
 static gint
-gimp_brush_transform_blur_radius (gint    height,
+ligma_brush_transform_blur_radius (gint    height,
                                   gint    width,
                                   gdouble hardness)
 {
@@ -1022,10 +1022,10 @@ gimp_brush_transform_blur_radius (gint    height,
 }
 
 static void
-gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
+ligma_brush_transform_adjust_hardness_matrix (gdouble      width,
                                              gdouble      height,
                                              gdouble      blur_radius,
-                                             GimpMatrix3 *matrix)
+                                             LigmaMatrix3 *matrix)
 {
   gdouble scale;
 
@@ -1034,8 +1034,8 @@ gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
 
   scale = (MIN (width, height) - 2.0 * blur_radius) / MIN (width, height);
 
-  gimp_matrix3_scale (matrix, scale, scale);
-  gimp_matrix3_translate (matrix,
+  ligma_matrix3_scale (matrix, scale, scale);
+  ligma_matrix3_translate (matrix,
                           (1.0 - scale) * width  / 2.0,
                           (1.0 - scale) * height / 2.0);
 }

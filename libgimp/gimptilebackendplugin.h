@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptilebackendplugin.h
- * Copyright (C) 2011-2019 Øyvind Kolås <pippin@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
+ * ligmatilebackendplugin.h
+ * Copyright (C) 2011-2019 Øyvind Kolås <pippin@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,42 +19,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_BACKEND_PLUGIN_H__
-#define __GIMP_TILE_BACKEND_PLUGIN_H__
+#ifndef __LIGMA_TILE_BACKEND_PLUGIN_H__
+#define __LIGMA_TILE_BACKEND_PLUGIN_H__
 
 #include <gegl-buffer-backend.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_TILE_BACKEND_PLUGIN            (_gimp_tile_backend_plugin_get_type ())
-#define GIMP_TILE_BACKEND_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPlugin))
-#define GIMP_TILE_BACKEND_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPluginClass))
-#define GIMP_IS_TILE_BACKEND_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILE_BACKEND_PLUGIN))
-#define GIMP_IS_TILE_BACKEND_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_TILE_BACKEND_PLUGIN))
-#define GIMP_TILE_BACKEND_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPluginClass))
+#define LIGMA_TYPE_TILE_BACKEND_PLUGIN            (_ligma_tile_backend_plugin_get_type ())
+#define LIGMA_TILE_BACKEND_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TILE_BACKEND_PLUGIN, LigmaTileBackendPlugin))
+#define LIGMA_TILE_BACKEND_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_TILE_BACKEND_PLUGIN, LigmaTileBackendPluginClass))
+#define LIGMA_IS_TILE_BACKEND_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TILE_BACKEND_PLUGIN))
+#define LIGMA_IS_TILE_BACKEND_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_TILE_BACKEND_PLUGIN))
+#define LIGMA_TILE_BACKEND_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_TILE_BACKEND_PLUGIN, LigmaTileBackendPluginClass))
 
 
-typedef struct _GimpTileBackendPlugin        GimpTileBackendPlugin;
-typedef struct _GimpTileBackendPluginClass   GimpTileBackendPluginClass;
-typedef struct _GimpTileBackendPluginPrivate GimpTileBackendPluginPrivate;
+typedef struct _LigmaTileBackendPlugin        LigmaTileBackendPlugin;
+typedef struct _LigmaTileBackendPluginClass   LigmaTileBackendPluginClass;
+typedef struct _LigmaTileBackendPluginPrivate LigmaTileBackendPluginPrivate;
 
-struct _GimpTileBackendPlugin
+struct _LigmaTileBackendPlugin
 {
   GeglTileBackend               parent_instance;
 
-  GimpTileBackendPluginPrivate *priv;
+  LigmaTileBackendPluginPrivate *priv;
 };
 
-struct _GimpTileBackendPluginClass
+struct _LigmaTileBackendPluginClass
 {
   GeglTileBackendClass parent_class;
 };
 
-GType             _gimp_tile_backend_plugin_get_type (void) G_GNUC_CONST;
+GType             _ligma_tile_backend_plugin_get_type (void) G_GNUC_CONST;
 
-GeglTileBackend * _gimp_tile_backend_plugin_new      (GimpDrawable *drawable,
+GeglTileBackend * _ligma_tile_backend_plugin_new      (LigmaDrawable *drawable,
                                                       gint          shadow);
 
 G_END_DECLS
 
-#endif /* __GIMP_TILE_BACKEND_PLUGIN_H__ */
+#endif /* __LIGMA_TILE_BACKEND_PLUGIN_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorselectorpalette.c
- * Copyright (C) 2006 Michael Natterer <mitch@gimp.org>
+ * ligmacolorselectorpalette.c
+ * Copyright (C) 2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,118 +23,118 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimppalette.h"
+#include "core/ligmacontext.h"
+#include "core/ligmapalette.h"
 
-#include "gimpcolorselectorpalette.h"
-#include "gimppaletteview.h"
-#include "gimpviewrendererpalette.h"
+#include "ligmacolorselectorpalette.h"
+#include "ligmapaletteview.h"
+#include "ligmaviewrendererpalette.h"
 
-#include "gimp-intl.h"
-
-
-static void   gimp_color_selector_palette_set_color  (GimpColorSelector *selector,
-                                                      const GimpRGB     *rgb,
-                                                      const GimpHSV     *hsv);
-static void   gimp_color_selector_palette_set_config (GimpColorSelector *selector,
-                                                      GimpColorConfig   *config);
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpColorSelectorPalette, gimp_color_selector_palette,
-               GIMP_TYPE_COLOR_SELECTOR)
+static void   ligma_color_selector_palette_set_color  (LigmaColorSelector *selector,
+                                                      const LigmaRGB     *rgb,
+                                                      const LigmaHSV     *hsv);
+static void   ligma_color_selector_palette_set_config (LigmaColorSelector *selector,
+                                                      LigmaColorConfig   *config);
 
-#define parent_class gimp_color_selector_palette_parent_class
+
+G_DEFINE_TYPE (LigmaColorSelectorPalette, ligma_color_selector_palette,
+               LIGMA_TYPE_COLOR_SELECTOR)
+
+#define parent_class ligma_color_selector_palette_parent_class
 
 
 static void
-gimp_color_selector_palette_class_init (GimpColorSelectorPaletteClass *klass)
+ligma_color_selector_palette_class_init (LigmaColorSelectorPaletteClass *klass)
 {
-  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  LigmaColorSelectorClass *selector_class = LIGMA_COLOR_SELECTOR_CLASS (klass);
 
   selector_class->name       = _("Palette");
-  selector_class->help_id    = "gimp-colorselector-palette";
-  selector_class->icon_name  = GIMP_ICON_PALETTE;
-  selector_class->set_color  = gimp_color_selector_palette_set_color;
-  selector_class->set_config = gimp_color_selector_palette_set_config;
+  selector_class->help_id    = "ligma-colorselector-palette";
+  selector_class->icon_name  = LIGMA_ICON_PALETTE;
+  selector_class->set_color  = ligma_color_selector_palette_set_color;
+  selector_class->set_config = ligma_color_selector_palette_set_config;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass),
-                                 "GimpColorSelectorPalette");
+                                 "LigmaColorSelectorPalette");
 }
 
 static void
-gimp_color_selector_palette_init (GimpColorSelectorPalette *select)
+ligma_color_selector_palette_init (LigmaColorSelectorPalette *select)
 {
 }
 
 static void
-gimp_color_selector_palette_set_color (GimpColorSelector *selector,
-                                       const GimpRGB     *rgb,
-                                       const GimpHSV     *hsv)
+ligma_color_selector_palette_set_color (LigmaColorSelector *selector,
+                                       const LigmaRGB     *rgb,
+                                       const LigmaHSV     *hsv)
 {
-  GimpColorSelectorPalette *select = GIMP_COLOR_SELECTOR_PALETTE (selector);
+  LigmaColorSelectorPalette *select = LIGMA_COLOR_SELECTOR_PALETTE (selector);
 
   if (select->context)
     {
-      GimpPalette *palette = gimp_context_get_palette (select->context);
+      LigmaPalette *palette = ligma_context_get_palette (select->context);
 
-      if (palette && gimp_palette_get_n_colors (palette) > 0)
+      if (palette && ligma_palette_get_n_colors (palette) > 0)
         {
-          GimpPaletteEntry *entry;
+          LigmaPaletteEntry *entry;
 
-          entry = gimp_palette_find_entry (palette, rgb,
-                                           GIMP_PALETTE_VIEW (select->view)->selected);
+          entry = ligma_palette_find_entry (palette, rgb,
+                                           LIGMA_PALETTE_VIEW (select->view)->selected);
 
           if (entry)
-            gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
+            ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (select->view),
                                             entry);
         }
     }
 }
 
 static void
-gimp_color_selector_palette_palette_changed (GimpContext              *context,
-                                             GimpPalette              *palette,
-                                             GimpColorSelectorPalette *select)
+ligma_color_selector_palette_palette_changed (LigmaContext              *context,
+                                             LigmaPalette              *palette,
+                                             LigmaColorSelectorPalette *select)
 {
-  gimp_view_set_viewable (GIMP_VIEW (select->view), GIMP_VIEWABLE (palette));
+  ligma_view_set_viewable (LIGMA_VIEW (select->view), LIGMA_VIEWABLE (palette));
 }
 
 static void
-gimp_color_selector_palette_entry_clicked (GimpPaletteView   *view,
-                                           GimpPaletteEntry  *entry,
+ligma_color_selector_palette_entry_clicked (LigmaPaletteView   *view,
+                                           LigmaPaletteEntry  *entry,
                                            GdkModifierType    state,
-                                           GimpColorSelector *selector)
+                                           LigmaColorSelector *selector)
 {
   selector->rgb = entry->color;
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  gimp_color_selector_emit_color_changed (selector);
+  ligma_color_selector_emit_color_changed (selector);
 }
 
 static void
-gimp_color_selector_palette_set_config (GimpColorSelector *selector,
-                                        GimpColorConfig   *config)
+ligma_color_selector_palette_set_config (LigmaColorSelector *selector,
+                                        LigmaColorConfig   *config)
 {
-  GimpColorSelectorPalette *select = GIMP_COLOR_SELECTOR_PALETTE (selector);
+  LigmaColorSelectorPalette *select = LIGMA_COLOR_SELECTOR_PALETTE (selector);
 
   if (select->context)
     {
       g_signal_handlers_disconnect_by_func (select->context,
-                                            gimp_color_selector_palette_palette_changed,
+                                            ligma_color_selector_palette_palette_changed,
                                             select);
-      gimp_view_renderer_set_context (GIMP_VIEW (select->view)->renderer,
+      ligma_view_renderer_set_context (LIGMA_VIEW (select->view)->renderer,
                                       NULL);
 
       g_clear_object (&select->context);
     }
 
   if (config)
-    select->context = g_object_get_data (G_OBJECT (config), "gimp-context");
+    select->context = g_object_get_data (G_OBJECT (config), "ligma-context");
 
   if (select->context)
     {
@@ -142,37 +142,37 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
       if (! select->view)
         {
-          select->view = gimp_view_new_full_by_types (select->context,
-                                                      GIMP_TYPE_PALETTE_VIEW,
-                                                      GIMP_TYPE_PALETTE,
+          select->view = ligma_view_new_full_by_types (select->context,
+                                                      LIGMA_TYPE_PALETTE_VIEW,
+                                                      LIGMA_TYPE_PALETTE,
                                                       100, 100, 0,
                                                       FALSE, TRUE, FALSE);
-          gimp_view_set_expand (GIMP_VIEW (select->view), TRUE);
-          gimp_view_renderer_palette_set_cell_size
-            (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (select->view)->renderer),
+          ligma_view_set_expand (LIGMA_VIEW (select->view), TRUE);
+          ligma_view_renderer_palette_set_cell_size
+            (LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (select->view)->renderer),
              -1);
-          gimp_view_renderer_palette_set_draw_grid
-            (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (select->view)->renderer),
+          ligma_view_renderer_palette_set_draw_grid
+            (LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (select->view)->renderer),
              TRUE);
           gtk_box_pack_start (GTK_BOX (select), select->view, TRUE, TRUE, 0);
           gtk_widget_show (select->view);
 
           g_signal_connect (select->view, "entry-clicked",
-                            G_CALLBACK (gimp_color_selector_palette_entry_clicked),
+                            G_CALLBACK (ligma_color_selector_palette_entry_clicked),
                             select);
         }
       else
         {
-          gimp_view_renderer_set_context (GIMP_VIEW (select->view)->renderer,
+          ligma_view_renderer_set_context (LIGMA_VIEW (select->view)->renderer,
                                           select->context);
         }
 
       g_signal_connect_object (select->context, "palette-changed",
-                               G_CALLBACK (gimp_color_selector_palette_palette_changed),
+                               G_CALLBACK (ligma_color_selector_palette_palette_changed),
                                select, 0);
 
-      gimp_color_selector_palette_palette_changed (select->context,
-                                                   gimp_context_get_palette (select->context),
+      ligma_color_selector_palette_palette_changed (select->context,
+                                                   ligma_context_get_palette (select->context),
                                                    select);
     }
 }

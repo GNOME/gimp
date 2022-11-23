@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmaviewable.h"
 
-#include "widgets/gimpdial.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmadial.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-rotate.h"
-#include "gimpdisplayshell-rotate-dialog.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-rotate.h"
+#include "ligmadisplayshell-rotate-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -45,7 +45,7 @@
 
 typedef struct
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
   GtkAdjustment    *rotate_adj;
   gdouble           old_angle;
 } RotateDialogData;
@@ -53,14 +53,14 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void  gimp_display_shell_rotate_dialog_response (GtkWidget         *widget,
+static void  ligma_display_shell_rotate_dialog_response (GtkWidget         *widget,
                                                         gint               response_id,
                                                         RotateDialogData  *dialog);
-static void      gimp_display_shell_rotate_dialog_free (RotateDialogData  *dialog);
+static void      ligma_display_shell_rotate_dialog_free (RotateDialogData  *dialog);
 
 static void      rotate_adjustment_changed             (GtkAdjustment     *adj,
                                                         RotateDialogData  *dialog);
-static void      display_shell_rotated                 (GimpDisplayShell  *shell,
+static void      display_shell_rotated                 (LigmaDisplayShell  *shell,
                                                         RotateDialogData  *dialog);
 
 static gboolean  deg_to_rad                            (GBinding          *binding,
@@ -76,24 +76,24 @@ static gboolean  rad_to_deg                            (GBinding          *bindi
 /*  public functions  */
 
 /**
- * gimp_display_shell_rotate_dialog:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_rotate_dialog:
+ * @shell: the #LigmaDisplayShell
  *
  * Constructs and displays a dialog allowing the user to enter a
  * custom display rotate.
  **/
 void
-gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
+ligma_display_shell_rotate_dialog (LigmaDisplayShell *shell)
 {
   RotateDialogData *data;
-  GimpImage        *image;
+  LigmaImage        *image;
   GtkWidget        *toplevel;
   GtkWidget        *hbox;
   GtkWidget        *spin;
   GtkWidget        *dial;
   GtkWidget        *label;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->rotate_dialog)
     {
@@ -101,7 +101,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
       return;
     }
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   data = g_slice_new (RotateDialogData);
 
@@ -109,14 +109,14 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   data->old_angle = shell->rotate_angle;
 
   shell->rotate_dialog =
-    gimp_viewable_dialog_new (g_list_prepend (NULL, image),
-                              gimp_get_user_context (shell->display->gimp),
+    ligma_viewable_dialog_new (g_list_prepend (NULL, image),
+                              ligma_get_user_context (shell->display->ligma),
                               _("Rotate View"), "display-rotate",
-                              GIMP_ICON_OBJECT_ROTATE_180,
+                              LIGMA_ICON_OBJECT_ROTATE_180,
                               _("Select Rotation Angle"),
                               GTK_WIDGET (shell),
-                              gimp_standard_help_func,
-                              GIMP_HELP_VIEW_ROTATE_OTHER,
+                              ligma_standard_help_func,
+                              LIGMA_HELP_VIEW_ROTATE_OTHER,
 
                               _("_Reset"),  RESPONSE_RESET,
                               _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -124,13 +124,13 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 
                               NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   g_object_weak_ref (G_OBJECT (shell->rotate_dialog),
-                     (GWeakNotify) gimp_display_shell_rotate_dialog_free, data);
+                     (GWeakNotify) ligma_display_shell_rotate_dialog_free, data);
 
   g_object_add_weak_pointer (G_OBJECT (shell->rotate_dialog),
                              (gpointer) &shell->rotate_dialog);
@@ -142,7 +142,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->rotate_dialog), TRUE);
 
   g_signal_connect (shell->rotate_dialog, "response",
-                    G_CALLBACK (gimp_display_shell_rotate_dialog_response),
+                    G_CALLBACK (ligma_display_shell_rotate_dialog_response),
                     data);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -157,7 +157,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 
   data->rotate_adj = gtk_adjustment_new (shell->rotate_angle,
                                          0.0, 360.0, 1, 15, 0);
-  spin = gimp_spin_button_new (data->rotate_adj, 1.0, 2);
+  spin = ligma_spin_button_new (data->rotate_adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
@@ -168,10 +168,10 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  dial = gimp_dial_new ();
+  dial = ligma_dial_new ();
   g_object_set (dial,
                 "size",       32,
-                "background", GIMP_CIRCLE_BACKGROUND_PLAIN,
+                "background", LIGMA_CIRCLE_BACKGROUND_PLAIN,
                 "draw-beta",  FALSE,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
@@ -196,7 +196,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 }
 
 static void
-gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
+ligma_display_shell_rotate_dialog_response (GtkWidget        *widget,
                                            gint              response_id,
                                            RotateDialogData *dialog)
 {
@@ -217,7 +217,7 @@ gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
 }
 
 static void
-gimp_display_shell_rotate_dialog_free (RotateDialogData *dialog)
+ligma_display_shell_rotate_dialog_free (RotateDialogData *dialog)
 {
   g_signal_handlers_disconnect_by_func (dialog->shell,
                                         display_shell_rotated,
@@ -236,7 +236,7 @@ rotate_adjustment_changed (GtkAdjustment    *adj,
                                    display_shell_rotated,
                                    dialog);
 
-  gimp_display_shell_rotate_to (dialog->shell, angle);
+  ligma_display_shell_rotate_to (dialog->shell, angle);
 
   g_signal_handlers_unblock_by_func (dialog->shell,
                                      display_shell_rotated,
@@ -244,7 +244,7 @@ rotate_adjustment_changed (GtkAdjustment    *adj,
 }
 
 static void
-display_shell_rotated (GimpDisplayShell  *shell,
+display_shell_rotated (LigmaDisplayShell  *shell,
                        RotateDialogData  *dialog)
 {
   g_signal_handlers_block_by_func (dialog->rotate_adj,

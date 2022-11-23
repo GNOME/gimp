@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpchannel.h
+ * ligmachannel.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,50 +18,50 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CHANNEL_H__
-#define __GIMP_CHANNEL_H__
+#ifndef __LIGMA_CHANNEL_H__
+#define __LIGMA_CHANNEL_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#include <libgimp/gimpdrawable.h>
+#include <libligma/ligmadrawable.h>
 
 
-#define GIMP_TYPE_CHANNEL (gimp_channel_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpChannel, gimp_channel, GIMP, CHANNEL, GimpDrawable)
+#define LIGMA_TYPE_CHANNEL (ligma_channel_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaChannel, ligma_channel, LIGMA, CHANNEL, LigmaDrawable)
 
 
-struct _GimpChannelClass
+struct _LigmaChannelClass
 {
-  GimpDrawableClass parent_class;
+  LigmaDrawableClass parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-GimpChannel * gimp_channel_get_by_id (gint32         channel_id);
+LigmaChannel * ligma_channel_get_by_id (gint32         channel_id);
 
-GimpChannel * gimp_channel_new       (GimpImage     *image,
+LigmaChannel * ligma_channel_new       (LigmaImage     *image,
                                       const gchar   *name,
                                       guint          width,
                                       guint          height,
                                       gdouble        opacity,
-                                      const GimpRGB *color);
+                                      const LigmaRGB *color);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CHANNEL_H__ */
+#endif /* __LIGMA_CHANNEL_H__ */

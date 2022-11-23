@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Wood
+## Makefile.am for ligma/data/patterns/Wood
 
-patternswooddatadir = $(gimpdatadir)/patterns/Wood
+patternswooddatadir = $(ligmadatadir)/patterns/Wood
 
 patternswooddata_DATA = \
 	bark.pat		\

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #ifndef __SANITY_H__
 #define __SANITY_H__
 
-#ifndef GIMP_APP_GLUE_COMPILATION
+#ifndef LIGMA_APP_GLUE_COMPILATION
 #error You must not #include "sanity.h" from an app/ subdir
 #endif
 

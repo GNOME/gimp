@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Layer-Modes-Legacy\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Layer-Modes-Legacy\"	\
 	-I$(top_builddir)				\
 	-I$(top_srcdir)					\
 	-I$(top_builddir)/app				\
@@ -15,40 +15,40 @@ noinst_LIBRARIES = \
 	libapplayermodeslegacy.a
 
 libapplayermodeslegacy_a_SOURCES = \
-	gimpoperationadditionlegacy.c		\
-	gimpoperationadditionlegacy.h		\
-	gimpoperationburnlegacy.c		\
-	gimpoperationburnlegacy.h		\
-	gimpoperationdarkenonlylegacy.c		\
-	gimpoperationdarkenonlylegacy.h		\
-	gimpoperationdifferencelegacy.c		\
-	gimpoperationdifferencelegacy.h		\
-	gimpoperationdividelegacy.c		\
-	gimpoperationdividelegacy.h		\
-	gimpoperationdodgelegacy.c		\
-	gimpoperationdodgelegacy.h		\
-	gimpoperationgrainextractlegacy.c	\
-	gimpoperationgrainextractlegacy.h	\
-	gimpoperationgrainmergelegacy.c		\
-	gimpoperationgrainmergelegacy.h		\
-	gimpoperationhardlightlegacy.c		\
-	gimpoperationhardlightlegacy.h		\
-	gimpoperationhslcolorlegacy.c		\
-	gimpoperationhslcolorlegacy.h		\
-	gimpoperationhsvhuelegacy.c		\
-	gimpoperationhsvhuelegacy.h		\
-	gimpoperationhsvsaturationlegacy.c	\
-	gimpoperationhsvsaturationlegacy.h	\
-	gimpoperationhsvvaluelegacy.c		\
-	gimpoperationhsvvaluelegacy.h		\
-	gimpoperationlightenonlylegacy.c	\
-	gimpoperationlightenonlylegacy.h	\
-	gimpoperationmultiplylegacy.c		\
-	gimpoperationmultiplylegacy.h		\
-	gimpoperationscreenlegacy.c		\
-	gimpoperationscreenlegacy.h		\
-	gimpoperationsoftlightlegacy.c		\
-	gimpoperationsoftlightlegacy.h		\
-	gimpoperationsubtractlegacy.c		\
-	gimpoperationsubtractlegacy.h
+	ligmaoperationadditionlegacy.c		\
+	ligmaoperationadditionlegacy.h		\
+	ligmaoperationburnlegacy.c		\
+	ligmaoperationburnlegacy.h		\
+	ligmaoperationdarkenonlylegacy.c		\
+	ligmaoperationdarkenonlylegacy.h		\
+	ligmaoperationdifferencelegacy.c		\
+	ligmaoperationdifferencelegacy.h		\
+	ligmaoperationdividelegacy.c		\
+	ligmaoperationdividelegacy.h		\
+	ligmaoperationdodgelegacy.c		\
+	ligmaoperationdodgelegacy.h		\
+	ligmaoperationgrainextractlegacy.c	\
+	ligmaoperationgrainextractlegacy.h	\
+	ligmaoperationgrainmergelegacy.c		\
+	ligmaoperationgrainmergelegacy.h		\
+	ligmaoperationhardlightlegacy.c		\
+	ligmaoperationhardlightlegacy.h		\
+	ligmaoperationhslcolorlegacy.c		\
+	ligmaoperationhslcolorlegacy.h		\
+	ligmaoperationhsvhuelegacy.c		\
+	ligmaoperationhsvhuelegacy.h		\
+	ligmaoperationhsvsaturationlegacy.c	\
+	ligmaoperationhsvsaturationlegacy.h	\
+	ligmaoperationhsvvaluelegacy.c		\
+	ligmaoperationhsvvaluelegacy.h		\
+	ligmaoperationlightenonlylegacy.c	\
+	ligmaoperationlightenonlylegacy.h	\
+	ligmaoperationmultiplylegacy.c		\
+	ligmaoperationmultiplylegacy.h		\
+	ligmaoperationscreenlegacy.c		\
+	ligmaoperationscreenlegacy.h		\
+	ligmaoperationsoftlightlegacy.c		\
+	ligmaoperationsoftlightlegacy.h		\
+	ligmaoperationsubtractlegacy.c		\
+	ligmaoperationsubtractlegacy.h
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 #define __IMAGE_SCALE_DIALOG_H__
 
 
-GtkWidget * image_scale_dialog_new (GimpImage             *image,
-                                    GimpContext           *context,
+GtkWidget * image_scale_dialog_new (LigmaImage             *image,
+                                    LigmaContext           *context,
                                     GtkWidget             *parent,
-                                    GimpUnit               unit,
-                                    GimpInterpolationType  interpolation,
-                                    GimpScaleCallback      callback,
+                                    LigmaUnit               unit,
+                                    LigmaInterpolationType  interpolation,
+                                    LigmaScaleCallback      callback,
                                     gpointer               user_data);
 
 

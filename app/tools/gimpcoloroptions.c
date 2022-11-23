@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpcoloroptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmacoloroptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -43,64 +43,64 @@ enum
 };
 
 
-static void   gimp_color_options_set_property (GObject      *object,
+static void   ligma_color_options_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_color_options_get_property (GObject      *object,
+static void   ligma_color_options_get_property (GObject      *object,
                                                guint         property_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpColorOptions, gimp_color_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaColorOptions, ligma_color_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
 
 static void
-gimp_color_options_class_init (GimpColorOptionsClass *klass)
+ligma_color_options_class_init (LigmaColorOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_color_options_set_property;
-  object_class->get_property = gimp_color_options_get_property;
+  object_class->set_property = ligma_color_options_set_property;
+  object_class->get_property = ligma_color_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
                             _("Use merged color value from "
                               "all composited visible layers"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                             "sample-average",
                             _("Sample average"),
                             _("Use averaged color value from "
                               "nearby pixels"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
                            "average-radius",
                            _("Radius"),
                            _("Color Picker Average Radius"),
                            1.0, 300.0, 3.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_color_options_init (GimpColorOptions *options)
+ligma_color_options_init (LigmaColorOptions *options)
 {
 }
 
 static void
-gimp_color_options_set_property (GObject      *object,
+ligma_color_options_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
+  LigmaColorOptions *options = LIGMA_COLOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -120,12 +120,12 @@ gimp_color_options_set_property (GObject      *object,
 }
 
 static void
-gimp_color_options_get_property (GObject    *object,
+ligma_color_options_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
+  LigmaColorOptions *options = LIGMA_COLOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -145,24 +145,24 @@ gimp_color_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_color_options_gui (GimpToolOptions *tool_options)
+ligma_color_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *scale;
 
   /*  the sample average options  */
-  scale = gimp_prop_spin_scale_new (config, "average-radius",
+  scale = ligma_prop_spin_scale_new (config, "average-radius",
                                     1.0, 10.0, 0);
 
-  frame = gimp_prop_expanding_frame_new (config, "sample-average", NULL,
+  frame = ligma_prop_expanding_frame_new (config, "sample-average", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   /* The Sample merged checkbox. */
-  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  button = ligma_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   return vbox;

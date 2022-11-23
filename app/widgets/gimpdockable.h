@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockable.h
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * ligmadockable.h
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,81 +18,81 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKABLE_H__
-#define __GIMP_DOCKABLE_H__
+#ifndef __LIGMA_DOCKABLE_H__
+#define __LIGMA_DOCKABLE_H__
 
 
-#define GIMP_DOCKABLE_DRAG_OFFSET (-6)
+#define LIGMA_DOCKABLE_DRAG_OFFSET (-6)
 
 
-#define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
-#define GIMP_DOCKABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKABLE, GimpDockable))
-#define GIMP_DOCKABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKABLE, GimpDockableClass))
-#define GIMP_IS_DOCKABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKABLE))
-#define GIMP_IS_DOCKABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKABLE))
-#define GIMP_DOCKABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCKABLE, GimpDockableClass))
+#define LIGMA_TYPE_DOCKABLE            (ligma_dockable_get_type ())
+#define LIGMA_DOCKABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCKABLE, LigmaDockable))
+#define LIGMA_DOCKABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCKABLE, LigmaDockableClass))
+#define LIGMA_IS_DOCKABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCKABLE))
+#define LIGMA_IS_DOCKABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCKABLE))
+#define LIGMA_DOCKABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DOCKABLE, LigmaDockableClass))
 
 
-typedef struct _GimpDockablePrivate GimpDockablePrivate;
-typedef struct _GimpDockableClass   GimpDockableClass;
+typedef struct _LigmaDockablePrivate LigmaDockablePrivate;
+typedef struct _LigmaDockableClass   LigmaDockableClass;
 
 /**
- * GimpDockable:
+ * LigmaDockable:
  *
  * A kind of adapter to make other widgets dockable. The widget to
- * dock is put inside the GimpDockable, which is put in a
- * GimpDockbook.
+ * dock is put inside the LigmaDockable, which is put in a
+ * LigmaDockbook.
  */
-struct _GimpDockable
+struct _LigmaDockable
 {
   GtkBin               parent_instance;
 
-  GimpDockablePrivate *p;
+  LigmaDockablePrivate *p;
 };
 
-struct _GimpDockableClass
+struct _LigmaDockableClass
 {
   GtkBinClass  parent_class;
 };
 
 
-GType           gimp_dockable_get_type          (void) G_GNUC_CONST;
+GType           ligma_dockable_get_type          (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_dockable_new               (const gchar   *name,
+GtkWidget     * ligma_dockable_new               (const gchar   *name,
                                                  const gchar   *blurb,
                                                  const gchar   *icon_name,
                                                  const gchar   *help_id);
 
-void            gimp_dockable_set_dockbook      (GimpDockable  *dockable,
-                                                 GimpDockbook  *dockbook);
-GimpDockbook  * gimp_dockable_get_dockbook      (GimpDockable  *dockable);
+void            ligma_dockable_set_dockbook      (LigmaDockable  *dockable,
+                                                 LigmaDockbook  *dockbook);
+LigmaDockbook  * ligma_dockable_get_dockbook      (LigmaDockable  *dockable);
 
-void            gimp_dockable_set_tab_style     (GimpDockable  *dockable,
-                                                 GimpTabStyle   tab_style);
-GimpTabStyle    gimp_dockable_get_tab_style     (GimpDockable  *dockable);
+void            ligma_dockable_set_tab_style     (LigmaDockable  *dockable,
+                                                 LigmaTabStyle   tab_style);
+LigmaTabStyle    ligma_dockable_get_tab_style     (LigmaDockable  *dockable);
 
-void            gimp_dockable_set_locked        (GimpDockable  *dockable,
+void            ligma_dockable_set_locked        (LigmaDockable  *dockable,
                                                  gboolean       lock);
-gboolean        gimp_dockable_get_locked        (GimpDockable  *dockable);
+gboolean        ligma_dockable_get_locked        (LigmaDockable  *dockable);
 
-const gchar   * gimp_dockable_get_name          (GimpDockable  *dockable);
-const gchar   * gimp_dockable_get_blurb         (GimpDockable  *dockable);
-const gchar   * gimp_dockable_get_help_id       (GimpDockable  *dockable);
-const gchar   * gimp_dockable_get_icon_name     (GimpDockable  *dockable);
-GtkWidget     * gimp_dockable_get_icon          (GimpDockable  *dockable,
+const gchar   * ligma_dockable_get_name          (LigmaDockable  *dockable);
+const gchar   * ligma_dockable_get_blurb         (LigmaDockable  *dockable);
+const gchar   * ligma_dockable_get_help_id       (LigmaDockable  *dockable);
+const gchar   * ligma_dockable_get_icon_name     (LigmaDockable  *dockable);
+GtkWidget     * ligma_dockable_get_icon          (LigmaDockable  *dockable,
                                                  GtkIconSize    size);
 
-GtkWidget     * gimp_dockable_create_tab_widget (GimpDockable  *dockable,
-                                                 GimpContext   *context,
-                                                 GimpTabStyle   tab_style,
+GtkWidget     * ligma_dockable_create_tab_widget (LigmaDockable  *dockable,
+                                                 LigmaContext   *context,
+                                                 LigmaTabStyle   tab_style,
                                                  GtkIconSize    size);
-void            gimp_dockable_set_context       (GimpDockable  *dockable,
-                                                 GimpContext   *context);
-GimpUIManager * gimp_dockable_get_menu          (GimpDockable  *dockable,
+void            ligma_dockable_set_context       (LigmaDockable  *dockable,
+                                                 LigmaContext   *context);
+LigmaUIManager * ligma_dockable_get_menu          (LigmaDockable  *dockable,
                                                  const gchar  **ui_path,
                                                  gpointer      *popup_data);
 
-void            gimp_dockable_detach            (GimpDockable  *dockable);
+void            ligma_dockable_detach            (LigmaDockable  *dockable);
 
 
-#endif /* __GIMP_DOCKABLE_H__ */
+#endif /* __LIGMA_DOCKABLE_H__ */

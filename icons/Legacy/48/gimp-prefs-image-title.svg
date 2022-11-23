@@ -14,9 +14,9 @@
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.44+devel"
-   sodipodi:docbase="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/preferences"
+   sodipodi:docbase="/home/jimmac/src/cvs/gnome/ligma/themes/Default/images/preferences"
    sodipodi:docname="image-title.svg"
-   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/preferences/image-title.png"
+   inkscape:export-filename="/home/jimmac/src/cvs/gnome/ligma/themes/Default/images/preferences/image-title.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -1609,7 +1609,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>New GIMP Image</dc:title>
+        <dc:title>New LIGMA Image</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Jakub Steiner, Andreas Nilsson</dc:title>

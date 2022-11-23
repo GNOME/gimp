@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -34,7 +34,7 @@
 #include "imap_object_popup.h"
 #include "imap_ui_grid.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static gboolean circle_is_valid(Object_t *obj);
 static Object_t *circle_clone(Object_t *obj);

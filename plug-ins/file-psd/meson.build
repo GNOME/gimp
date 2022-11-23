@@ -12,7 +12,7 @@ plugin_sources = [
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    ligma_plugins_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
@@ -28,11 +28,11 @@ executable(plugin_name,
   plugin_sources,
   c_args: '-DG_LOG_DOMAIN="file-psd"',
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     libjpeg,
     math,
     zlib,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

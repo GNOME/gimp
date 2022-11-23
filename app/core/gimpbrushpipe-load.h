@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1999 Adrian Likins and Tor Lillqvist
  *
@@ -16,17 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_PIPE_LOAD_H__
-#define __GIMP_BRUSH_PIPE_LOAD_H__
+#ifndef __LIGMA_BRUSH_PIPE_LOAD_H__
+#define __LIGMA_BRUSH_PIPE_LOAD_H__
 
 
-#define GIMP_BRUSH_PIPE_FILE_EXTENSION ".gih"
+#define LIGMA_BRUSH_PIPE_FILE_EXTENSION ".gih"
 
 
-GList * gimp_brush_pipe_load (GimpContext   *context,
+GList * ligma_brush_pipe_load (LigmaContext   *context,
                               GFile         *file,
                               GInputStream  *input,
                               GError       **error);
 
 
-#endif  /* __GIMP_BRUSH_PIPE_LOAD_H__ */
+#endif  /* __LIGMA_BRUSH_PIPE_LOAD_H__ */

@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = ./libgimp-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligma = ./libligma-$(LIGMA_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -23,56 +23,56 @@ if HAVE_EXCHNDL
 exchndl = -lexchndl
 endif
 
-gimp_def = gimp.def
-gimpui_def = gimpui.def
-libgimp_export_symbols = -export-symbols $(srcdir)/gimp.def
-libgimpui_export_symbols = -export-symbols $(srcdir)/gimpui.def
+ligma_def = ligma.def
+ligmaui_def = ligmaui.def
+libligma_export_symbols = -export-symbols $(srcdir)/ligma.def
+libligmaui_export_symbols = -export-symbols $(srcdir)/ligmaui.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimp-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) .libs/libgimpui-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimp.def $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gimpui.def $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligma-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libligmaui-$(LIGMA_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligma.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/ligmaui.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimp-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/libgimpui-$(GIMP_API_VERSION).dll.a
-	-rm $(DESTDIR)$(libdir)/gimp.def
-	-rm $(DESTDIR)$(libdir)/gimpui.def
+	-rm $(DESTDIR)$(libdir)/libligma-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/libligmaui-$(LIGMA_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/ligma.def
+	-rm $(DESTDIR)$(libdir)/ligmaui.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimp-$(GIMP_API_VERSION).lib gimpui-$(GIMP_API_VERSION).lib
+noinst_DATA = ligma-$(LIGMA_API_VERSION).lib ligmaui-$(LIGMA_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimp-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
-	$(INSTALL) gimpui-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligma-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) ligmaui-$(LIGMA_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimp-$(GIMP_API_VERSION).lib
-	-rm $(DESTDIR)$(libdir)/gimpui-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligma-$(LIGMA_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/ligmaui-$(LIGMA_API_VERSION).lib
 
-gimp-@GIMP_API_VERSION@.lib: gimp.def
-	lib -name:libgimp-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
+ligma-@LIGMA_API_VERSION@.lib: ligma.def
+	lib -name:libligma-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligma.def -out:$@
 
-gimpui-@GIMP_API_VERSION@.lib: gimpui.def
-	lib -name:libgimpui-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
+ligmaui-@LIGMA_API_VERSION@.lib: ligmaui.def
+	lib -name:libligmaui-$(LIGMA_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:ligmaui.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-gimpincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimp
+ligmaincludedir = $(includedir)/ligma-$(LIGMA_API_VERSION)/libligma
 
 AM_CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"			\
-	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
-	-DG_LOG_DOMAIN=\"LibGimp\"	\
-	-DGIMP_COMPILATION		\
+	-DLIGMADIR=\""$(ligmadir)"\"			\
+	-DLIGMA_USER_VERSION=\"$(LIGMA_USER_VERSION)\"	\
+	-DG_LOG_DOMAIN=\"LibLigma\"	\
+	-DLIGMA_COMPILATION		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/pdb		\
 	$(GTK_CFLAGS)			\
@@ -89,88 +89,88 @@ AM_CXXFLAGS = \
 AM_LDFLAGS = \
 	$(xnone)
 
-lib_LTLIBRARIES = libgimp-@GIMP_API_VERSION@.la libgimpui-@GIMP_API_VERSION@.la
+lib_LTLIBRARIES = libligma-@LIGMA_API_VERSION@.la libligmaui-@LIGMA_API_VERSION@.la
 
 # Add all sources which are introspectable in this file for reuse.
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimp/Makefile.gi
+include $(top_srcdir)/libligma/Makefile.gi
 
-libgimp_sources = \
-	$(libgimp_introspectable)	\
-	gimpprocedure-params.h		\
-	gimptilebackendplugin.c 	\
-	gimptilebackendplugin.h 	\
-	gimpunitcache.c			\
-	gimpunitcache.h			\
+libligma_sources = \
+	$(libligma_introspectable)	\
+	ligmaprocedure-params.h		\
+	ligmatilebackendplugin.c 	\
+	ligmatilebackendplugin.h 	\
+	ligmaunitcache.c			\
+	ligmaunitcache.h			\
 	stdplugins-intl.h		\
-	libgimp-intl.h
+	libligma-intl.h
 
-libgimp_private_sources = \
-	gimp-debug.c			\
-	gimp-debug.h			\
-	gimp-private.h			\
-	gimp-shm.c			\
-	gimp-shm.h			\
-	gimpgpparams.c			\
-	gimpgpparams.h			\
-	gimpparamspecs-desc.c		\
-	gimpparamspecs-desc.h		\
-	gimppdb-private.h		\
-	gimppdbprocedure.c		\
-	gimppdbprocedure.h		\
-	gimppixbuf.c			\
-	gimppixbuf.h			\
-	gimpplugin-private.h		\
-	gimpprocedure-private.h	        \
-	gimpprocedureconfig-private.h	\
+libligma_private_sources = \
+	ligma-debug.c			\
+	ligma-debug.h			\
+	ligma-private.h			\
+	ligma-shm.c			\
+	ligma-shm.h			\
+	ligmagpparams.c			\
+	ligmagpparams.h			\
+	ligmaparamspecs-desc.c		\
+	ligmaparamspecs-desc.h		\
+	ligmapdb-private.h		\
+	ligmapdbprocedure.c		\
+	ligmapdbprocedure.h		\
+	ligmapixbuf.c			\
+	ligmapixbuf.h			\
+	ligmaplugin-private.h		\
+	ligmaprocedure-private.h	        \
+	ligmaprocedureconfig-private.h	\
 	\
-	gimpunit_pdb.c			\
-	gimpunit_pdb.h			\
-	gimppdb_pdb.c			\
-	gimppdb_pdb.h			\
-	gimpplugin_pdb.c		\
-	gimpplugin_pdb.h
+	ligmaunit_pdb.c			\
+	ligmaunit_pdb.h			\
+	ligmapdb_pdb.c			\
+	ligmapdb_pdb.h			\
+	ligmaplugin_pdb.c		\
+	ligmaplugin_pdb.h
 
-libgimp_extra_sources = \
-	gimpenums.c.tail	\
-	gimpgpparams-body.c	\
-	gimpparamspecs-body.c
+libligma_extra_sources = \
+	ligmaenums.c.tail	\
+	ligmagpparams-body.c	\
+	ligmaparamspecs-body.c
 
-libgimp_@GIMP_API_VERSION@_la_SOURCES = \
-	$(libgimp_private_sources)	\
-	$(libgimp_sources)
+libligma_@LIGMA_API_VERSION@_la_SOURCES = \
+	$(libligma_private_sources)	\
+	$(libligma_sources)
 
-libgimpui_sources = \
-	$(libgimpui_introspectable)
+libligmaui_sources = \
+	$(libligmaui_introspectable)
 
-libgimpui_built_sources = \
-	gimpuimarshal.c			\
-	gimpuimarshal.h
+libligmaui_built_sources = \
+	ligmauimarshal.c			\
+	ligmauimarshal.h
 
-libgimpui_extra_sources = gimpuimarshal.list
+libligmaui_extra_sources = ligmauimarshal.list
 
-libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
-	$(libgimpui_built_sources)	\
-	$(libgimpui_sources)
+libligmaui_@LIGMA_API_VERSION@_la_SOURCES = \
+	$(libligmaui_built_sources)	\
+	$(libligmaui_sources)
 
-gimpinclude_HEADERS = \
-	$(libgimp_introspectable_headers)	\
-	gimpprocedure-params.h			\
-	$(libgimpui_introspectable_headers)
+ligmainclude_HEADERS = \
+	$(libligma_introspectable_headers)	\
+	ligmaprocedure-params.h			\
+	$(libligmaui_introspectable_headers)
 
-libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligma_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimp_export_symbols)		\
+	$(libligma_export_symbols)		\
 	$(framework_cocoa)			\
 	$(xnone)
 
-EXTRA_libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimp_def)
+EXTRA_libligma_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(ligma_def)
 
-libgimp_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+libligma_@LIGMA_API_VERSION@_la_LIBADD = \
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(exchndl)		\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
@@ -178,37 +178,37 @@ libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 
-libgimpui_@GIMP_API_VERSION@_la_LDFLAGS = \
+libligmaui_@LIGMA_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimpui_export_symbols)		\
+	$(libligmaui_export_symbols)		\
 	$(framework_cocoa)			\
 	$(xnone)
 
-EXTRA_libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
+EXTRA_libligmaui_@LIGMA_API_VERSION@_la_DEPENDENCIES = $(ligmaui_def)
 
-libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimp)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(libgimpmodule)	\
-	$(libgimpwidgets)	\
+libligmaui_@LIGMA_API_VERSION@_la_LIBADD = \
+	$(libligma)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
+	$(libligmamodule)	\
+	$(libligmawidgets)	\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
 
 BUILT_SOURCES = \
-	$(libgimp_built_sources) \
-	$(libgimpui_built_sources)
+	$(libligma_built_sources) \
+	$(libligmaui_built_sources)
 
 EXTRA_DIST = \
 	COPYING				\
-	gimp.def			\
-	gimpui.def			\
-	$(libgimp_extra_sources)	\
-	$(libgimpui_extra_sources)
+	ligma.def			\
+	ligmaui.def			\
+	$(libligma_extra_sources)	\
+	$(libligmaui_extra_sources)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 
@@ -221,28 +221,28 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 gen_sources = xgen-cec xgen-umh xgen-umc
 CLEANFILES = $(gen_sources)
 
-gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include <gegl.h>\n#undef GIMP_DISABLE_DEPRECATED\n#include \"libgimpbase/gimpbase.h\"\n#include \"libgimpbase/gimpbase-private.h\"\n#include \"libgimpconfig/gimpconfigenums.h\"\n#include \"gimpenums.h\"" \
+ligmaenums.c: $(srcdir)/ligmaenums.h $(srcdir)/ligmaenums.c.tail $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include <gegl.h>\n#undef LIGMA_DISABLE_DEPRECATED\n#include \"libligmabase/ligmabase.h\"\n#include \"libligmabase/ligmabase-private.h\"\n#include \"libligmaconfig/ligmaconfigenums.h\"\n#include \"ligmaenums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libligma\");\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > xgen-cec \
-	&& cat $(srcdir)/gimpenums.c.tail >> xgen-cec \
+	&& cat $(srcdir)/ligmaenums.c.tail >> xgen-cec \
 	&& cp xgen-cec $(@F) \
 	&& rm -f xgen-cec
 
-gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
-	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header >> xgen-umh \
+ligmauimarshal.h: $(srcdir)/ligmauimarshal.list
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_ligmaui_marshal $(srcdir)/ligmauimarshal.list --header >> xgen-umh \
 	&& (cmp -s xgen-umh $(@F) || cp xgen-umh $(@F)) \
 	&& rm -f xgen-umh xgen-umh~
 
-gimpuimarshal.c: gimpuimarshal.h
-	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --prototypes --body >> xgen-umc \
+ligmauimarshal.c: ligmauimarshal.h
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_ligmaui_marshal $(srcdir)/ligmauimarshal.list --prototypes --body >> xgen-umc \
 	&& cp xgen-umc $(@F) \
 	&& rm -f xgen-umc xgen-umc~
 
@@ -251,15 +251,15 @@ gimpuimarshal.c: gimpuimarshal.h
 if HAVE_INTROSPECTION
 
 -include $(INTROSPECTION_MAKEFILE)
-include ../libgimpbase/Makefile.gi
-include ../libgimpcolor/Makefile.gi
-include ../libgimpconfig/Makefile.gi
-include ../libgimpmath/Makefile.gi
-include ../libgimpmodule/Makefile.gi
-include ../libgimpthumb/Makefile.gi
-include ../libgimpwidgets/Makefile.gi
+include ../libligmabase/Makefile.gi
+include ../libligmacolor/Makefile.gi
+include ../libligmaconfig/Makefile.gi
+include ../libligmamath/Makefile.gi
+include ../libligmamodule/Makefile.gi
+include ../libligmathumb/Makefile.gi
+include ../libligmawidgets/Makefile.gi
 
-INTROSPECTION_GIRS = Gimp-@GIMP_API_VERSION@.gir GimpUi-@GIMP_API_VERSION@.gir
+INTROSPECTION_GIRS = Ligma-@LIGMA_API_VERSION@.gir LigmaUi-@LIGMA_API_VERSION@.gir
 
 INTROSPECTION_SCANNER_ARGS = \
 	--warn-all			\
@@ -272,24 +272,24 @@ INTROSPECTION_COMPILER_ARGS = \
 
 INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
 
-### First GIR: Gimp
-Gimp-@GIMP_API_VERSION@.gir: \
-	libgimp-@GIMP_API_VERSION@.la				\
-	libgimpui-@GIMP_API_VERSION@.la				\
-	../libgimpbase/libgimpbase-@GIMP_API_VERSION@.la	\
-	../libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la	\
-	../libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
-	../libgimpmath/libgimpmath-@GIMP_API_VERSION@.la	\
-	../libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
-	../libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la	\
-	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la	\
+### First GIR: Ligma
+Ligma-@LIGMA_API_VERSION@.gir: \
+	libligma-@LIGMA_API_VERSION@.la				\
+	libligmaui-@LIGMA_API_VERSION@.la				\
+	../libligmabase/libligmabase-@LIGMA_API_VERSION@.la	\
+	../libligmacolor/libligmacolor-@LIGMA_API_VERSION@.la	\
+	../libligmaconfig/libligmaconfig-@LIGMA_API_VERSION@.la	\
+	../libligmamath/libligmamath-@LIGMA_API_VERSION@.la	\
+	../libligmamodule/libligmamodule-@LIGMA_API_VERSION@.la	\
+	../libligmathumb/libligmathumb-@LIGMA_API_VERSION@.la	\
+	../libligmawidgets/libligmawidgets-@LIGMA_API_VERSION@.la	\
 	Makefile
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = gimp-@GIMP_API_VERSION@
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = ligma-@LIGMA_API_VERSION@
 
 # The various other GObject-Introspected libraries our API references
 # (i.e. types used in parameters or returned values).
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_INCLUDES = \
 	Babl-0.1	\
 	cairo-1.0	\
 	GdkPixbuf-2.0	\
@@ -299,15 +299,15 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
 	GObject-2.0	\
 	Gtk-3.0
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
-	-DGIMP_COMPILATION		\
-	-DGIMP_BASE_COMPILATION		\
-	-DGIMP_COLOR_COMPILATION	\
-	-DGIMP_CONFIG_COMPILATION	\
-	-DGIMP_MATH_COMPILATION		\
-	-DGIMP_MODULE_COMPILATION	\
-	-DGIMP_THUMB_COMPILATION	\
-	-DGIMP_WIDGETS_COMPILATION	\
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_CFLAGS = \
+	-DLIGMA_COMPILATION		\
+	-DLIGMA_BASE_COMPILATION		\
+	-DLIGMA_COLOR_COMPILATION	\
+	-DLIGMA_CONFIG_COMPILATION	\
+	-DLIGMA_MATH_COMPILATION		\
+	-DLIGMA_MODULE_COMPILATION	\
+	-DLIGMA_THUMB_COMPILATION	\
+	-DLIGMA_WIDGETS_COMPILATION	\
 	$(AM_CFLAGS)			\
 	$(AM_CPPFLAGS)			\
 	-I$(top_builddir)		\
@@ -318,40 +318,40 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
-	../libgimp/libgimp-@GIMP_API_VERSION@.la	      	\
-	../libgimpbase/libgimpbase-@GIMP_API_VERSION@.la  	\
-	../libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la	\
-	../libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
-	../libgimpmath/libgimpmath-@GIMP_API_VERSION@.la	\
-	../libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_LIBS = \
+	../libligma/libligma-@LIGMA_API_VERSION@.la	      	\
+	../libligmabase/libligmabase-@LIGMA_API_VERSION@.la  	\
+	../libligmacolor/libligmacolor-@LIGMA_API_VERSION@.la	\
+	../libligmaconfig/libligmaconfig-@LIGMA_API_VERSION@.la	\
+	../libligmamath/libligmamath-@LIGMA_API_VERSION@.la	\
+	../libligmamodule/libligmamodule-@LIGMA_API_VERSION@.la
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
-	$(libgimp_introspectable)					\
-	../libgimp/gimpparamspecs-body.c				\
-	$(libgimpbase_introspectable)					\
-	$(libgimpcolor_introspectable)					\
-	$(libgimpconfig_introspectable)					\
-	$(libgimpmath_introspectable)					\
-	$(libgimpmodule_introspectable)
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_FILES = 	\
+	$(libligma_introspectable)					\
+	../libligma/ligmaparamspecs-body.c				\
+	$(libligmabase_introspectable)					\
+	$(libligmacolor_introspectable)					\
+	$(libligmaconfig_introspectable)					\
+	$(libligmamath_introspectable)					\
+	$(libligmamodule_introspectable)
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
-	--identifier-prefix Gimp	\
-	--symbol-prefix gimp		\
-	--c-include="libgimp/gimp.h"
+Ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
+	--identifier-prefix Ligma	\
+	--symbol-prefix ligma		\
+	--c-include="libligma/ligma.h"
 
-### Second GIR: GimpUi
-GimpUi-@GIMP_API_VERSION@.gir: \
-	Gimp-@GIMP_API_VERSION@.gir	\
-	libgimpui-@GIMP_API_VERSION@.la				\
-	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la	\
+### Second GIR: LigmaUi
+LigmaUi-@LIGMA_API_VERSION@.gir: \
+	Ligma-@LIGMA_API_VERSION@.gir	\
+	libligmaui-@LIGMA_API_VERSION@.la				\
+	../libligmawidgets/libligmawidgets-@LIGMA_API_VERSION@.la	\
 	Makefile
 
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = gimp-ui-@GIMP_API_VERSION@
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = ligma-ui-@LIGMA_API_VERSION@
 
 # The various other GObject-Introspected libraries our API references
 # (i.e. types used in parameters or returned values).
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_INCLUDES = \
 	Babl-0.1	\
 	cairo-1.0	\
 	GdkPixbuf-2.0	\
@@ -361,15 +361,15 @@ GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
 	GObject-2.0	\
 	Gtk-3.0
 
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
-	-DGIMP_COMPILATION		\
-	-DGIMP_BASE_COMPILATION		\
-	-DGIMP_COLOR_COMPILATION	\
-	-DGIMP_CONFIG_COMPILATION	\
-	-DGIMP_MATH_COMPILATION		\
-	-DGIMP_MODULE_COMPILATION	\
-	-DGIMP_THUMB_COMPILATION	\
-	-DGIMP_WIDGETS_COMPILATION	\
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_CFLAGS = \
+	-DLIGMA_COMPILATION		\
+	-DLIGMA_BASE_COMPILATION		\
+	-DLIGMA_COLOR_COMPILATION	\
+	-DLIGMA_CONFIG_COMPILATION	\
+	-DLIGMA_MATH_COMPILATION		\
+	-DLIGMA_MODULE_COMPILATION	\
+	-DLIGMA_THUMB_COMPILATION	\
+	-DLIGMA_WIDGETS_COMPILATION	\
 	$(AM_CFLAGS)			\
 	$(AM_CPPFLAGS)			\
 	-I$(top_builddir)		\
@@ -380,21 +380,21 @@ GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)
 
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
-	../libgimp/libgimpui-@GIMP_API_VERSION@.la	       	\
-	../libgimp/libgimp-@GIMP_API_VERSION@.la	       	\
-	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_LIBS = \
+	../libligma/libligmaui-@LIGMA_API_VERSION@.la	       	\
+	../libligma/libligma-@LIGMA_API_VERSION@.la	       	\
+	../libligmawidgets/libligmawidgets-@LIGMA_API_VERSION@.la
 
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
-	$(libgimpui_introspectable)					\
-	$(libgimpwidgets_introspectable)
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_FILES = 	\
+	$(libligmaui_introspectable)					\
+	$(libligmawidgets_introspectable)
 
-GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
-	--identifier-prefix Gimp	\
-	--symbol-prefix=gimp_ui		\
-	--symbol-prefix=gimp		\
-	--include-uninstalled=Gimp-@GIMP_API_VERSION@.gir	\
-	--c-include="libgimp/gimpui.h"
+LigmaUi_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
+	--identifier-prefix Ligma	\
+	--symbol-prefix=ligma_ui		\
+	--symbol-prefix=ligma		\
+	--include-uninstalled=Ligma-@LIGMA_API_VERSION@.gir	\
+	--c-include="libligma/ligmaui.h"
 
 
 girdir = $(datadir)/gir-1.0
@@ -410,13 +410,13 @@ if ENABLE_VAPIGEN
 
 -include $(VAPIGEN_MAKEFILE)
 
-gimp-@GIMP_API_VERSION@.vapi: Gimp-@GIMP_API_VERSION@.gir gimp-@GIMP_API_VERSION@.deps
-gimp-ui-@GIMP_API_VERSION@.vapi: GimpUi-@GIMP_API_VERSION@.gir GimpUi-@GIMP_API_VERSION@.metadata gimp-ui-@GIMP_API_VERSION@.deps gimp-@GIMP_API_VERSION@.vapi
+ligma-@LIGMA_API_VERSION@.vapi: Ligma-@LIGMA_API_VERSION@.gir ligma-@LIGMA_API_VERSION@.deps
+ligma-ui-@LIGMA_API_VERSION@.vapi: LigmaUi-@LIGMA_API_VERSION@.gir LigmaUi-@LIGMA_API_VERSION@.metadata ligma-ui-@LIGMA_API_VERSION@.deps ligma-@LIGMA_API_VERSION@.vapi
 
-VAPIGEN_VAPIS = gimp-@GIMP_API_VERSION@.vapi gimp-ui-@GIMP_API_VERSION@.vapi
+VAPIGEN_VAPIS = ligma-@LIGMA_API_VERSION@.vapi ligma-ui-@LIGMA_API_VERSION@.vapi
 
-# gimp VAPI
-gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
+# ligma VAPI
+ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_DEPS = \
 	babl-@BABL_MAJOR_MINOR_VERSION@ \
 	cairo \
 	gdk-pixbuf-2.0 \
@@ -424,18 +424,18 @@ gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
 	glib-2.0 \
 	gio-2.0 \
 	gtk+-3.0
-gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
-gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
-gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_FILES = Gimp-@GIMP_API_VERSION@.gir
+ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
+ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
+ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_FILES = Ligma-@LIGMA_API_VERSION@.gir
 
-gimp-$(GIMP_API_VERSION).deps: Makefile.am
-	$(AM_V_GEN) for pkg in $(gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS); do \
+ligma-$(LIGMA_API_VERSION).deps: Makefile.am
+	$(AM_V_GEN) for pkg in $(ligma_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_DEPS); do \
 		echo $$pkg >> $@; \
 	done
 
-# gimp-ui VAPI
-gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
+# ligma-ui VAPI
+ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_DEPS = \
 	babl-@BABL_MAJOR_MINOR_VERSION@ \
 	cairo \
 	gdk-pixbuf-2.0 \
@@ -443,29 +443,29 @@ gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
 	glib-2.0 \
 	gio-2.0 \
 	gtk+-3.0 \
-	gimp-@GIMP_API_VERSION@
+	ligma-@LIGMA_API_VERSION@
 
-gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_FILES = GimpUi-@GIMP_API_VERSION@.gir
+ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
+ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
+ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_FILES = LigmaUi-@LIGMA_API_VERSION@.gir
 
-gimp-ui-$(GIMP_API_VERSION).deps: Makefile.am
-	$(AM_V_GEN) for pkg in $(gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS); do \
+ligma-ui-$(LIGMA_API_VERSION).deps: Makefile.am
+	$(AM_V_GEN) for pkg in $(ligma_ui_@LIGMA_API_MAJOR_VERSION@_@LIGMA_API_MINOR_VERSION@_vapi_DEPS); do \
 		echo $$pkg >> $@; \
 	done
 
 vapidir = $(datadir)/vala/vapi
 vapi_DATA = \
-	gimp-@GIMP_API_VERSION@.vapi \
-	gimp-@GIMP_API_VERSION@.deps \
-	gimp-ui-@GIMP_API_VERSION@.vapi \
-	gimp-ui-@GIMP_API_VERSION@.deps
+	ligma-@LIGMA_API_VERSION@.vapi \
+	ligma-@LIGMA_API_VERSION@.deps \
+	ligma-ui-@LIGMA_API_VERSION@.vapi \
+	ligma-ui-@LIGMA_API_VERSION@.deps
 
 CLEANFILES += $(vapi_DATA)
 
 EXTRA_DIST += \
-	GimpUi-@GIMP_API_VERSION@.metadata
+	LigmaUi-@LIGMA_API_VERSION@.metadata
 
 endif # ENABLE_VAPIGEN
 endif # HAVE_INTROSPECTION

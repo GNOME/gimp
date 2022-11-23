@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpnpointdeformationoptions.h
+ * ligmanpointdeformationoptions.h
  * Copyright (C) 2013 Marek Dvoroznak <dvoromar@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,27 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_N_POINT_DEFORMATION_OPTIONS_H__
-#define __GIMP_N_POINT_DEFORMATION_OPTIONS_H__
+#ifndef __LIGMA_N_POINT_DEFORMATION_OPTIONS_H__
+#define __LIGMA_N_POINT_DEFORMATION_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS            (gimp_n_point_deformation_options_get_type ())
-#define GIMP_N_POINT_DEFORMATION_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS, GimpNPointDeformationOptions))
-#define GIMP_N_POINT_DEFORMATION_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS, GimpNPointDeformationOptionsClass))
-#define GIMP_IS_N_POINT_DEFORMATION_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS))
-#define GIMP_IS_N_POINT_DEFORMATION_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS))
-#define GIMP_N_POINT_DEFORMATION_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS, GimpNPointDeformationOptionsClass))
+#define LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS            (ligma_n_point_deformation_options_get_type ())
+#define LIGMA_N_POINT_DEFORMATION_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS, LigmaNPointDeformationOptions))
+#define LIGMA_N_POINT_DEFORMATION_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS, LigmaNPointDeformationOptionsClass))
+#define LIGMA_IS_N_POINT_DEFORMATION_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS))
+#define LIGMA_IS_N_POINT_DEFORMATION_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS))
+#define LIGMA_N_POINT_DEFORMATION_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_N_POINT_DEFORMATION_OPTIONS, LigmaNPointDeformationOptionsClass))
 
 
-typedef struct _GimpNPointDeformationOptions      GimpNPointDeformationOptions;
-typedef struct _GimpNPointDeformationOptionsClass GimpNPointDeformationOptionsClass;
+typedef struct _LigmaNPointDeformationOptions      LigmaNPointDeformationOptions;
+typedef struct _LigmaNPointDeformationOptionsClass LigmaNPointDeformationOptionsClass;
 
-struct _GimpNPointDeformationOptions
+struct _LigmaNPointDeformationOptions
 {
-  GimpToolOptions  parent_instance;
+  LigmaToolOptions  parent_instance;
 
   gdouble          square_size;
   gdouble          rigidity;
@@ -50,18 +50,18 @@ struct _GimpNPointDeformationOptions
   GtkWidget       *check_mesh_visible;
 };
 
-struct _GimpNPointDeformationOptionsClass
+struct _LigmaNPointDeformationOptionsClass
 {
-  GimpToolOptionsClass  parent_class;
+  LigmaToolOptionsClass  parent_class;
 };
 
 
-GType       gimp_n_point_deformation_options_get_type (void) G_GNUC_CONST;
+GType       ligma_n_point_deformation_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_n_point_deformation_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_n_point_deformation_options_gui      (LigmaToolOptions *tool_options);
 
-void        gimp_n_point_deformation_options_set_sensitivity (GimpNPointDeformationOptions *npd_options,
+void        ligma_n_point_deformation_options_set_sensitivity (LigmaNPointDeformationOptions *npd_options,
                                                               gboolean                      tool_active);
 
 
-#endif  /*  __GIMP_N_POINT_DEFORMATION_OPTIONS_H__  */
+#endif  /*  __LIGMA_N_POINT_DEFORMATION_OPTIONS_H__  */

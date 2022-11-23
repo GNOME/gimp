@@ -1,4 +1,4 @@
-# Chinese (Hong Kong) translation for gimp-script-fu.
+# Chinese (Hong Kong) translation for ligma-script-fu.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -6,8 +6,8 @@
 # Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.1.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu 2.1.6\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2011-01-01 19:45+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
@@ -36,8 +36,8 @@ msgid "_Start Server..."
 msgstr "啟動伺服器(_S)..."
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
-msgstr "_GIMP 網上"
+msgid "_LIGMA Online"
+msgstr "_LIGMA 網上"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
@@ -76,8 +76,8 @@ msgid "_Beveled Pattern"
 msgstr "斜邊圖樣(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
@@ -290,7 +290,7 @@ msgid "Delta value on color"
 msgstr "顏色的 Delta 數值"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 #, fuzzy
 msgid "Frame"
 msgstr "編號"
@@ -644,7 +644,7 @@ msgstr "模糊半徑"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "顏色"
 
@@ -781,70 +781,70 @@ msgstr "陰影分量(%)"
 msgid "Flatten image"
 msgstr "將圖片平面化"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "使用路徑(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "開啟書籤以連結到使用者手冊"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "準備你要上傳至網站的圖片(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "數碼相機照片的處理(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "建立，開啟和儲存檔案(_F)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "基本概念(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "如何使用對話框(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "繪製簡單物件(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 #, fuzzy
 msgid "Create and Use _Selections"
 msgstr "建立及設定(_C)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "主要網站(_M)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
-msgstr "開啟書籤以連結到 GIMP 網站"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
+msgstr "開啟書籤以連結到 LIGMA 網站"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "開發者網站(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr "使用者手冊網站(_U)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "插件註冊處(_R)"
 
@@ -972,7 +972,7 @@ msgid "Roughness"
 msgstr "粗糙度"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "漸變色"
 
@@ -1390,129 +1390,129 @@ msgstr "透明背景"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "減少至 n 種顏色(0 = 保持 RGB 模式)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 #, fuzzy
 msgid "Rendering Spyro"
 msgstr "繪製目標"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
 msgstr "螺線圖(_S)..."
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "添加螺線圖，外旋輪線，和李沙傑曲線到目前圖層"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "類型"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "旋輪線"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "外旋輪線"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "形狀"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "圓形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "三角形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "正方形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "正五邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "正六邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "正七邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "正八邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "正九邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "正十邊形"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "外齒"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "內齒"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 #, fuzzy
 msgid "Margin (pixels)"
 msgstr "頂端邊界（以像素計）"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 #, fuzzy
 msgid "Hole ratio"
 msgstr "壓縮率："
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "開始角度"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "工具"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "鉛筆"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "筆刷"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "噴槍"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "着色方式"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "單色"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 #, fuzzy
 msgid "Gradient: Loop Sawtooth"
 msgstr "OpenStreetBugs 下載迴圈"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 #, fuzzy
 msgid "Gradient: Loop Triangle"
 msgstr "OpenStreetBugs 下載迴圈"

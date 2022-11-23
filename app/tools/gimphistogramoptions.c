@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "tools-types.h"
 
-#include "gimphistogramoptions.h"
+#include "ligmahistogramoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -37,49 +37,49 @@ enum
 };
 
 
-static void   gimp_histogram_options_set_property (GObject      *object,
+static void   ligma_histogram_options_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
                                                    GParamSpec   *pspec);
-static void   gimp_histogram_options_get_property (GObject      *object,
+static void   ligma_histogram_options_get_property (GObject      *object,
                                                    guint         property_id,
                                                    GValue       *value,
                                                    GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpHistogramOptions, gimp_histogram_options,
-               GIMP_TYPE_FILTER_OPTIONS)
+G_DEFINE_TYPE (LigmaHistogramOptions, ligma_histogram_options,
+               LIGMA_TYPE_FILTER_OPTIONS)
 
 
 static void
-gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
+ligma_histogram_options_class_init (LigmaHistogramOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_histogram_options_set_property;
-  object_class->get_property = gimp_histogram_options_get_property;
+  object_class->set_property = ligma_histogram_options_set_property;
+  object_class->get_property = ligma_histogram_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SCALE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_SCALE,
                          "histogram-scale",
                          _("Histogram Scale"),
                          NULL,
-                         GIMP_TYPE_HISTOGRAM_SCALE,
-                         GIMP_HISTOGRAM_SCALE_LINEAR,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_HISTOGRAM_SCALE,
+                         LIGMA_HISTOGRAM_SCALE_LINEAR,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_histogram_options_init (GimpHistogramOptions *options)
+ligma_histogram_options_init (LigmaHistogramOptions *options)
 {
 }
 
 static void
-gimp_histogram_options_set_property (GObject      *object,
+ligma_histogram_options_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpHistogramOptions *options = GIMP_HISTOGRAM_OPTIONS (object);
+  LigmaHistogramOptions *options = LIGMA_HISTOGRAM_OPTIONS (object);
 
   switch (property_id)
     {
@@ -94,12 +94,12 @@ gimp_histogram_options_set_property (GObject      *object,
 }
 
 static void
-gimp_histogram_options_get_property (GObject    *object,
+ligma_histogram_options_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpHistogramOptions *options = GIMP_HISTOGRAM_OPTIONS (object);
+  LigmaHistogramOptions *options = LIGMA_HISTOGRAM_OPTIONS (object);
 
   switch (property_id)
     {

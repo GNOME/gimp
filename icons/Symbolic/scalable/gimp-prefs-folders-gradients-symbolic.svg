@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-prefs-folders-gradients.svg">
+   sodipodi:docname="ligma-prefs-folders-gradients.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -230,7 +230,7 @@
      id="preferences">
     <g
        transform="translate(166.49624,281.52469)"
-       id="gimp-prefs-folders-gradients">
+       id="ligma-prefs-folders-gradients">
       <path
          style="display:inline;fill:url(#linearGradient8322);fill-opacity:1;stroke:none"
          d="M 75.53125,-40 C 75.24212,-40 75,-39.75788 75,-39.46875 l 0,14.9375 C 75,-24.23275 75.23264,-24 75.53125,-24 l 14.9375,0 C 90.76735,-24 91,-24.23265 91,-24.53125 l 0,-9.9375 C 91,-34.75785 90.75788,-35 90.46875,-35 L 78,-35 l 0,8.5 c 0,0.277 -0.223,0.5 -0.5,0.5 -0.277,0 -0.5,-0.223 -0.5,-0.5 l 0,-9 c 0,-0.277 0.223,-0.5 0.5,-0.5 l 2.96875,0 8.53125,0 0,-1.40625 C 89,-37.73345 88.73334,-38 88.40625,-38 L 81,-38 81,-39.46875 C 81,-39.7579 80.75788,-40 80.46875,-40 Z M 79,-33 l 11,0 0,6 -11,0 z"

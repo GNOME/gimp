@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontrollerinfo.h
- * Copyright (C) 2004-2005 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerinfo.h
+ * Copyright (C) 2004-2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,65 +18,65 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_INFO_H__
-#define __GIMP_CONTROLLER_INFO_H__
+#ifndef __LIGMA_CONTROLLER_INFO_H__
+#define __LIGMA_CONTROLLER_INFO_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/ligmaviewable.h"
 
 
-typedef gboolean (* GimpControllerEventSnooper) (GimpControllerInfo        *info,
-                                                 GimpController            *controller,
-                                                 const GimpControllerEvent *event,
+typedef gboolean (* LigmaControllerEventSnooper) (LigmaControllerInfo        *info,
+                                                 LigmaController            *controller,
+                                                 const LigmaControllerEvent *event,
                                                  gpointer                   user_data);
 
 
-#define GIMP_TYPE_CONTROLLER_INFO            (gimp_controller_info_get_type ())
-#define GIMP_CONTROLLER_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER_INFO, GimpControllerInfo))
-#define GIMP_CONTROLLER_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER_INFO, GimpControllerInfoClass))
-#define GIMP_IS_CONTROLLER_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTROLLER_INFO))
-#define GIMP_IS_CONTROLLER_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTROLLER_INFO))
-#define GIMP_CONTROLLER_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTROLLER_INFO, GimpControllerInfoClass))
+#define LIGMA_TYPE_CONTROLLER_INFO            (ligma_controller_info_get_type ())
+#define LIGMA_CONTROLLER_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTROLLER_INFO, LigmaControllerInfo))
+#define LIGMA_CONTROLLER_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTROLLER_INFO, LigmaControllerInfoClass))
+#define LIGMA_IS_CONTROLLER_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTROLLER_INFO))
+#define LIGMA_IS_CONTROLLER_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTROLLER_INFO))
+#define LIGMA_CONTROLLER_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTROLLER_INFO, LigmaControllerInfoClass))
 
 
-typedef struct _GimpControllerInfoClass GimpControllerInfoClass;
+typedef struct _LigmaControllerInfoClass LigmaControllerInfoClass;
 
-struct _GimpControllerInfo
+struct _LigmaControllerInfo
 {
-  GimpViewable                parent_instance;
+  LigmaViewable                parent_instance;
 
   gboolean                    enabled;
   gboolean                    debug_events;
 
-  GimpController             *controller;
+  LigmaController             *controller;
   GHashTable                 *mapping;
 
-  GimpControllerEventSnooper  snooper;
+  LigmaControllerEventSnooper  snooper;
   gpointer                    snooper_data;
 };
 
-struct _GimpControllerInfoClass
+struct _LigmaControllerInfoClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
-  gboolean (* event_mapped) (GimpControllerInfo        *info,
-                             GimpController            *controller,
-                             const GimpControllerEvent *event,
+  gboolean (* event_mapped) (LigmaControllerInfo        *info,
+                             LigmaController            *controller,
+                             const LigmaControllerEvent *event,
                              const gchar               *action_name);
 };
 
 
-GType    gimp_controller_info_get_type          (void) G_GNUC_CONST;
+GType    ligma_controller_info_get_type          (void) G_GNUC_CONST;
 
-GimpControllerInfo * gimp_controller_info_new   (GType                       type);
+LigmaControllerInfo * ligma_controller_info_new   (GType                       type);
 
-void     gimp_controller_info_set_enabled       (GimpControllerInfo         *info,
+void     ligma_controller_info_set_enabled       (LigmaControllerInfo         *info,
                                                  gboolean                    enabled);
-gboolean gimp_controller_info_get_enabled       (GimpControllerInfo         *info);
+gboolean ligma_controller_info_get_enabled       (LigmaControllerInfo         *info);
 
-void     gimp_controller_info_set_event_snooper (GimpControllerInfo         *info,
-                                                 GimpControllerEventSnooper  snooper,
+void     ligma_controller_info_set_event_snooper (LigmaControllerInfo         *info,
+                                                 LigmaControllerEventSnooper  snooper,
                                                  gpointer                    snooper_data);
 
 
-#endif /* __GIMP_CONTROLLER_INFO_H__ */
+#endif /* __LIGMA_CONTROLLER_INFO_H__ */

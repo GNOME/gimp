@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcolordialog.h
+ * ligmacolordialog.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_DIALOG_H__
-#define __GIMP_COLOR_DIALOG_H__
+#ifndef __LIGMA_COLOR_DIALOG_H__
+#define __LIGMA_COLOR_DIALOG_H__
 
 
-#include "gimpviewabledialog.h"
+#include "ligmaviewabledialog.h"
 
 
-#define GIMP_COLOR_DIALOG_HISTORY_SIZE 12
+#define LIGMA_COLOR_DIALOG_HISTORY_SIZE 12
 
 
-#define GIMP_TYPE_COLOR_DIALOG            (gimp_color_dialog_get_type ())
-#define GIMP_COLOR_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_DIALOG, GimpColorDialog))
-#define GIMP_COLOR_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_DIALOG, GimpColorDialogClass))
-#define GIMP_IS_COLOR_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_DIALOG))
-#define GIMP_IS_COLOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_DIALOG))
-#define GIMP_COLOR_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DIALOG, GimpColorDialogClass))
+#define LIGMA_TYPE_COLOR_DIALOG            (ligma_color_dialog_get_type ())
+#define LIGMA_COLOR_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_DIALOG, LigmaColorDialog))
+#define LIGMA_COLOR_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_DIALOG, LigmaColorDialogClass))
+#define LIGMA_IS_COLOR_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_DIALOG))
+#define LIGMA_IS_COLOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_DIALOG))
+#define LIGMA_COLOR_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_DIALOG, LigmaColorDialogClass))
 
 
-typedef struct _GimpColorDialogClass GimpColorDialogClass;
+typedef struct _LigmaColorDialogClass LigmaColorDialogClass;
 
-struct _GimpColorDialog
+struct _LigmaColorDialog
 {
-  GimpViewableDialog   parent_instance;
+  LigmaViewableDialog   parent_instance;
 
   gboolean             wants_updates;
   gboolean             user_context_aware;
@@ -48,39 +48,39 @@ struct _GimpColorDialog
   GtkWidget           *selection;
   GtkWidget           *colormap_selection;
 
-  GimpImage           *active_image;
+  LigmaImage           *active_image;
   gboolean             colormap_editing;
 };
 
-struct _GimpColorDialogClass
+struct _LigmaColorDialogClass
 {
-  GimpViewableDialogClass  parent_class;
+  LigmaViewableDialogClass  parent_class;
 
-  void (* update) (GimpColorDialog      *dialog,
-                   const GimpRGB        *color,
-                   GimpColorDialogState  state);
+  void (* update) (LigmaColorDialog      *dialog,
+                   const LigmaRGB        *color,
+                   LigmaColorDialogState  state);
 };
 
 
-GType       gimp_color_dialog_get_type  (void) G_GNUC_CONST;
+GType       ligma_color_dialog_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
-                                         GimpContext       *context,
+GtkWidget * ligma_color_dialog_new       (LigmaViewable      *viewable,
+                                         LigmaContext       *context,
                                          gboolean           context_aware,
                                          const gchar       *title,
                                          const gchar       *icon_name,
                                          const gchar       *desc,
                                          GtkWidget         *parent,
-                                         GimpDialogFactory *dialog_factory,
+                                         LigmaDialogFactory *dialog_factory,
                                          const gchar       *dialog_identifier,
-                                         const GimpRGB     *color,
+                                         const LigmaRGB     *color,
                                          gboolean           wants_update,
                                          gboolean           show_alpha);
 
-void        gimp_color_dialog_set_color (GimpColorDialog   *dialog,
-                                         const GimpRGB     *color);
-void        gimp_color_dialog_get_color (GimpColorDialog   *dialog,
-                                         GimpRGB           *color);
+void        ligma_color_dialog_set_color (LigmaColorDialog   *dialog,
+                                         const LigmaRGB     *color);
+void        ligma_color_dialog_get_color (LigmaColorDialog   *dialog,
+                                         LigmaRGB           *color);
 
 
-#endif /* __GIMP_COLOR_DIALOG_H__ */
+#endif /* __LIGMA_COLOR_DIALOG_H__ */

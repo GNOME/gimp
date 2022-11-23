@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MASK_UNDO_H__
-#define __GIMP_MASK_UNDO_H__
+#ifndef __LIGMA_MASK_UNDO_H__
+#define __LIGMA_MASK_UNDO_H__
 
 
-#include "gimpitemundo.h"
+#include "ligmaitemundo.h"
 
 
-#define GIMP_TYPE_MASK_UNDO            (gimp_mask_undo_get_type ())
-#define GIMP_MASK_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MASK_UNDO, GimpMaskUndo))
-#define GIMP_MASK_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MASK_UNDO, GimpMaskUndoClass))
-#define GIMP_IS_MASK_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MASK_UNDO))
-#define GIMP_IS_MASK_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MASK_UNDO))
-#define GIMP_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MASK_UNDO, GimpMaskUndoClass))
+#define LIGMA_TYPE_MASK_UNDO            (ligma_mask_undo_get_type ())
+#define LIGMA_MASK_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MASK_UNDO, LigmaMaskUndo))
+#define LIGMA_MASK_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MASK_UNDO, LigmaMaskUndoClass))
+#define LIGMA_IS_MASK_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MASK_UNDO))
+#define LIGMA_IS_MASK_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MASK_UNDO))
+#define LIGMA_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MASK_UNDO, LigmaMaskUndoClass))
 
 
-typedef struct _GimpMaskUndo      GimpMaskUndo;
-typedef struct _GimpMaskUndoClass GimpMaskUndoClass;
+typedef struct _LigmaMaskUndo      LigmaMaskUndo;
+typedef struct _LigmaMaskUndoClass LigmaMaskUndoClass;
 
-struct _GimpMaskUndo
+struct _LigmaMaskUndo
 {
-  GimpItemUndo   parent_instance;
+  LigmaItemUndo   parent_instance;
 
   gboolean       convert_format;
 
@@ -46,13 +46,13 @@ struct _GimpMaskUndo
   gint           y;
 };
 
-struct _GimpMaskUndoClass
+struct _LigmaMaskUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  LigmaItemUndoClass  parent_class;
 };
 
 
-GType   gimp_mask_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_mask_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_MASK_UNDO_H__ */
+#endif /* __LIGMA_MASK_UNDO_H__ */

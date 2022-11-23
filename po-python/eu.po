@@ -1,4 +1,4 @@
-# Basque translation for gimp-python
+# Basque translation for ligma-python
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -9,8 +9,8 @@
 # Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2018, 2020, 2021, 2022.
 #
 msgid ""
-msgstr "Project-Id-Version: gimp-python master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+msgstr "Project-Id-Version: ligma-python master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-07-22 14:36+0000\n"
 "PO-Revision-Date: 2022-07-24 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
@@ -475,8 +475,8 @@ msgid "Python _Console"
 msgstr "Python _kontsola"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "GIMP Python interpretatzaile interaktiboa"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "LIGMA Python interpretatzaile interaktiboa"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -790,8 +790,8 @@ msgid ""
 msgstr "Aukeratu geruza berri gisa gordeko den, aktibo egon den azken geruzan berriro marraztuko den, edo bide gisa gordeko den"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -881,8 +881,8 @@ msgid ""
 msgstr "Tresnaren uneko ezarpenak erabiltzen ditu espirografo-ereduak marrazteko. Ereduaren tamaina eta kokalekua uneko hautapenean oinarrituta dago."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."
 
 #~ msgid "Fog _color"
 #~ msgstr "Lainoaren _kolorea"

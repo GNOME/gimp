@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,44 +20,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpgradient.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmagradient.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpgradienteditor.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmagradienteditor.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "data-editor-commands.h"
 #include "gradient-editor-actions.h"
 #include "gradient-editor-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry gradient_editor_actions[] =
+static const LigmaActionEntry gradient_editor_actions[] =
 {
-  { "gradient-editor-popup", GIMP_ICON_GRADIENT,
+  { "gradient-editor-popup", LIGMA_ICON_GRADIENT,
     NC_("gradient-editor-action", "Gradient Editor Menu"), NULL, NULL, NULL,
-    GIMP_HELP_GRADIENT_EDITOR_DIALOG },
+    LIGMA_HELP_GRADIENT_EDITOR_DIALOG },
 
   { "gradient-editor-left-color-type", NULL,
     NC_("gradient-editor-action", "Left Color Type") },
-  { "gradient-editor-load-left-color", GIMP_ICON_DOCUMENT_REVERT,
+  { "gradient-editor-load-left-color", LIGMA_ICON_DOCUMENT_REVERT,
     NC_("gradient-editor-action", "_Load Left Color From") },
-  { "gradient-editor-save-left-color", GIMP_ICON_DOCUMENT_SAVE,
+  { "gradient-editor-save-left-color", LIGMA_ICON_DOCUMENT_SAVE,
     NC_("gradient-editor-action", "_Save Left Color To") },
 
   { "gradient-editor-right-color-type", NULL,
     NC_("gradient-editor-action", "Right Color Type") },
-  { "gradient-editor-load-right-color", GIMP_ICON_DOCUMENT_REVERT,
+  { "gradient-editor-load-right-color", LIGMA_ICON_DOCUMENT_REVERT,
     NC_("gradient-editor-action", "Load Right Color Fr_om") },
-  { "gradient-editor-save-right-color", GIMP_ICON_DOCUMENT_SAVE,
+  { "gradient-editor-save-right-color", LIGMA_ICON_DOCUMENT_SAVE,
     NC_("gradient-editor-action", "Sa_ve Right Color To") },
 
   { "gradient-editor-blending-func", NULL, "blending-function" },
@@ -66,66 +66,66 @@ static const GimpActionEntry gradient_editor_actions[] =
   { "gradient-editor-left-color", NULL,
     NC_("gradient-editor-action", "L_eft Endpoint's Color..."), NULL, NULL,
     gradient_editor_left_color_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-right-color", NULL,
     NC_("gradient-editor-action", "R_ight Endpoint's Color..."), NULL, NULL,
     gradient_editor_right_color_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
-  { "gradient-editor-flip", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
+  { "gradient-editor-flip", LIGMA_ICON_OBJECT_FLIP_HORIZONTAL,
     "flip", NULL, NULL,
     gradient_editor_flip_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_FLIP },
+    LIGMA_HELP_GRADIENT_EDITOR_FLIP },
 
-  { "gradient-editor-replicate", GIMP_ICON_OBJECT_DUPLICATE,
+  { "gradient-editor-replicate", LIGMA_ICON_OBJECT_DUPLICATE,
     "replicate", NULL, NULL,
     gradient_editor_replicate_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_FLIP },
+    LIGMA_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-split-midpoint", NULL,
     "splitmidpoint", NULL, NULL,
     gradient_editor_split_midpoint_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT },
+    LIGMA_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT },
 
   { "gradient-editor-split-uniform", NULL,
     "splituniform", NULL, NULL,
     gradient_editor_split_uniformly_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
+    LIGMA_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
-  { "gradient-editor-delete", GIMP_ICON_EDIT_DELETE,
+  { "gradient-editor-delete", LIGMA_ICON_EDIT_DELETE,
     "delete", "", NULL,
     gradient_editor_delete_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_DELETE },
+    LIGMA_HELP_GRADIENT_EDITOR_DELETE },
 
   { "gradient-editor-recenter", NULL,
     "recenter", NULL, NULL,
     gradient_editor_recenter_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_RECENTER },
+    LIGMA_HELP_GRADIENT_EDITOR_RECENTER },
 
   { "gradient-editor-redistribute", NULL,
     "redistribute", NULL, NULL,
     gradient_editor_redistribute_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_REDISTRIBUTE },
+    LIGMA_HELP_GRADIENT_EDITOR_REDISTRIBUTE },
 
   { "gradient-editor-blend-color", NULL,
     NC_("gradient-editor-action", "Ble_nd Endpoints' Colors"), NULL, NULL,
     gradient_editor_blend_color_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_BLEND_COLOR },
+    LIGMA_HELP_GRADIENT_EDITOR_BLEND_COLOR },
 
   { "gradient-editor-blend-opacity", NULL,
     NC_("gradient-editor-action", "Blend Endpoints' Opacit_y"), NULL, NULL,
     gradient_editor_blend_opacity_cmd_callback,
-    GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
+    LIGMA_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
 };
 
-static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
+static const LigmaToggleActionEntry gradient_editor_toggle_actions[] =
 {
-  { "gradient-editor-edit-active", GIMP_ICON_LINKED,
+  { "gradient-editor-edit-active", LIGMA_ICON_LINKED,
     NC_("gradient-editor-action", "Edit Active Gradient"), NULL, NULL,
     data_editor_edit_active_cmd_callback,
     FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_EDIT_ACTIVE }
+    LIGMA_HELP_GRADIENT_EDITOR_EDIT_ACTIVE }
 };
 
 
@@ -133,44 +133,44 @@ static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
   { "gradient-editor-load-left-" num, NULL, \
     num, NULL, NULL, \
     (magic), FALSE, \
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD }
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_LOAD }
 #define SAVE_LEFT_TO(num,magic) \
   { "gradient-editor-save-left-" num, NULL, \
     num, NULL, NULL, \
     (magic), FALSE, \
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_SAVE }
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_SAVE }
 #define LOAD_RIGHT_FROM(num,magic) \
   { "gradient-editor-load-right-" num, NULL, \
     num, NULL, NULL, \
     (magic), FALSE, \
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD }
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_LOAD }
 #define SAVE_RIGHT_TO(num,magic) \
   { "gradient-editor-save-right-" num, NULL, \
     num, NULL, NULL, \
     (magic), FALSE, \
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_SAVE }
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_SAVE }
 
-static const GimpEnumActionEntry gradient_editor_load_left_actions[] =
+static const LigmaEnumActionEntry gradient_editor_load_left_actions[] =
 {
   { "gradient-editor-load-left-left-neighbor", NULL,
     NC_("gradient-editor-action", "_Left Neighbor's Right Endpoint"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-right-endpoint", NULL,
     NC_("gradient-editor-action", "_Right Endpoint"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-fg", NULL,
     NC_("gradient-editor-action", "_Foreground Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-bg", NULL,
     NC_("gradient-editor-action", "_Background Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   LOAD_LEFT_FROM ("01", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 0),
   LOAD_LEFT_FROM ("02", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 1),
@@ -184,7 +184,7 @@ static const GimpEnumActionEntry gradient_editor_load_left_actions[] =
   LOAD_LEFT_FROM ("10", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 9)
 };
 
-static const GimpEnumActionEntry gradient_editor_save_left_actions[] =
+static const LigmaEnumActionEntry gradient_editor_save_left_actions[] =
 {
   SAVE_LEFT_TO ("01", 0),
   SAVE_LEFT_TO ("02", 1),
@@ -198,27 +198,27 @@ static const GimpEnumActionEntry gradient_editor_save_left_actions[] =
   SAVE_LEFT_TO ("10", 9)
 };
 
-static const GimpEnumActionEntry gradient_editor_load_right_actions[] =
+static const LigmaEnumActionEntry gradient_editor_load_right_actions[] =
 {
   { "gradient-editor-load-right-right-neighbor", NULL,
     NC_("gradient-editor-action", "_Right Neighbor's Left Endpoint"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-left-endpoint", NULL,
     NC_("gradient-editor-action", "_Left Endpoint"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-fg", NULL,
     NC_("gradient-editor-action", "_Foreground Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-bg", NULL,
     NC_("gradient-editor-action", "_Background Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   LOAD_RIGHT_FROM ("01", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 0),
   LOAD_RIGHT_FROM ("02", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 1),
@@ -232,7 +232,7 @@ static const GimpEnumActionEntry gradient_editor_load_right_actions[] =
   LOAD_RIGHT_FROM ("10", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 9)
 };
 
-static const GimpEnumActionEntry gradient_editor_save_right_actions[] =
+static const LigmaEnumActionEntry gradient_editor_save_right_actions[] =
 {
   SAVE_RIGHT_TO ("01", 0),
   SAVE_RIGHT_TO ("02", 1),
@@ -252,229 +252,229 @@ static const GimpEnumActionEntry gradient_editor_save_right_actions[] =
 #undef SAVE_RIGHT_TO
 
 
-static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
+static const LigmaRadioActionEntry gradient_editor_left_color_type_actions[] =
 {
   { "gradient-editor-left-color-fixed", NULL,
     NC_("gradient-editor-color-type", "_Fixed"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FIXED,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+    LIGMA_GRADIENT_COLOR_FIXED,
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-foreground", NULL,
     NC_("gradient-editor-color-type", "F_oreground Color"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FOREGROUND,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+    LIGMA_GRADIENT_COLOR_FOREGROUND,
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-foreground-transparent", NULL,
     NC_("gradient-editor-color-type",
         "Fo_reground Color (Transparent)"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+    LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-background", NULL,
     NC_("gradient-editor-color-type", "_Background Color"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_BACKGROUND,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+    LIGMA_GRADIENT_COLOR_BACKGROUND,
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-background-transparent", NULL,
     NC_("gradient-editor-color-type",
         "B_ackground Color (Transparent)"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
-    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR }
+    LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
+    LIGMA_HELP_GRADIENT_EDITOR_LEFT_COLOR }
 };
 
-static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
+static const LigmaRadioActionEntry gradient_editor_right_color_type_actions[] =
 {
   { "gradient-editor-right-color-fixed", NULL,
     NC_("gradient-editor-color-type", "_Fixed"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FIXED,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+    LIGMA_GRADIENT_COLOR_FIXED,
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-foreground", NULL,
     NC_("gradient-editor-color-type", "F_oreground Color"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FOREGROUND,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+    LIGMA_GRADIENT_COLOR_FOREGROUND,
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-foreground-transparent", NULL,
     NC_("gradient-editor-color-type",
         "Fo_reground Color (Transparent)"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+    LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-background", NULL,
     NC_("gradient-editor-color-type", "_Background Color"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_BACKGROUND,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+    LIGMA_GRADIENT_COLOR_BACKGROUND,
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-background-transparent", NULL,
     NC_("gradient-editor-color-type",
         "B_ackground Color (Transparent)"), NULL, NULL,
-    GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
-    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR }
+    LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
+    LIGMA_HELP_GRADIENT_EDITOR_RIGHT_COLOR }
 };
 
-static const GimpRadioActionEntry gradient_editor_blending_actions[] =
+static const LigmaRadioActionEntry gradient_editor_blending_actions[] =
 {
   { "gradient-editor-blending-linear", NULL,
     NC_("gradient-editor-blending", "_Linear"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_LINEAR,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_LINEAR,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-curved", NULL,
     NC_("gradient-editor-blending", "_Curved"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_CURVED,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_CURVED,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sine", NULL,
     NC_("gradient-editor-blending", "_Sinusoidal"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_SINE,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_SINE,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-increasing", NULL,
     NC_("gradient-editor-blending", "Spherical (i_ncreasing)"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-decreasing", NULL,
     NC_("gradient-editor-blending", "Spherical (_decreasing)"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-step", NULL,
     NC_("gradient-editor-blending", "S_tep"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_STEP,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+    LIGMA_GRADIENT_SEGMENT_STEP,
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-varies", NULL,
     NC_("gradient-editor-blending", "(Varies)"), NULL, NULL,
     -1,
-    GIMP_HELP_GRADIENT_EDITOR_BLENDING }
+    LIGMA_HELP_GRADIENT_EDITOR_BLENDING }
 };
 
-static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
+static const LigmaRadioActionEntry gradient_editor_coloring_actions[] =
 {
   { "gradient-editor-coloring-rgb", NULL,
     NC_("gradient-editor-coloring", "_RGB"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_RGB,
-    GIMP_HELP_GRADIENT_EDITOR_COLORING },
+    LIGMA_GRADIENT_SEGMENT_RGB,
+    LIGMA_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-ccw", NULL,
     NC_("gradient-editor-coloring", "HSV (_counter-clockwise hue)"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_HSV_CCW,
-    GIMP_HELP_GRADIENT_EDITOR_COLORING },
+    LIGMA_GRADIENT_SEGMENT_HSV_CCW,
+    LIGMA_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-cw", NULL,
     NC_("gradient-editor-coloring", "HSV (clockwise _hue)"), NULL, NULL,
-    GIMP_GRADIENT_SEGMENT_HSV_CW,
-    GIMP_HELP_GRADIENT_EDITOR_COLORING },
+    LIGMA_GRADIENT_SEGMENT_HSV_CW,
+    LIGMA_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-varies", NULL,
     NC_("gradient-editor-coloring", "(Varies)"), NULL, NULL,
     -1,
-    GIMP_HELP_GRADIENT_EDITOR_COLORING }
+    LIGMA_HELP_GRADIENT_EDITOR_COLORING }
 };
 
-static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
+static const LigmaEnumActionEntry gradient_editor_zoom_actions[] =
 {
-  { "gradient-editor-zoom-in", GIMP_ICON_ZOOM_IN,
+  { "gradient-editor-zoom-in", LIGMA_ICON_ZOOM_IN,
     N_("Zoom In"), NULL,
     N_("Zoom in"),
-    GIMP_ZOOM_IN, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
+    LIGMA_ZOOM_IN, FALSE,
+    LIGMA_HELP_GRADIENT_EDITOR_ZOOM_IN },
 
-  { "gradient-editor-zoom-out", GIMP_ICON_ZOOM_OUT,
+  { "gradient-editor-zoom-out", LIGMA_ICON_ZOOM_OUT,
     N_("Zoom Out"), NULL,
     N_("Zoom out"),
-    GIMP_ZOOM_OUT, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
+    LIGMA_ZOOM_OUT, FALSE,
+    LIGMA_HELP_GRADIENT_EDITOR_ZOOM_OUT },
 
-  { "gradient-editor-zoom-all", GIMP_ICON_ZOOM_FIT_BEST,
+  { "gradient-editor-zoom-all", LIGMA_ICON_ZOOM_FIT_BEST,
     N_("Zoom All"), NULL,
     N_("Zoom all"),
-    GIMP_ZOOM_OUT_MAX, FALSE,
-    GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL }
+    LIGMA_ZOOM_OUT_MAX, FALSE,
+    LIGMA_HELP_GRADIENT_EDITOR_ZOOM_ALL }
 };
 
 
 void
-gradient_editor_actions_setup (GimpActionGroup *group)
+gradient_editor_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "gradient-editor-action",
+  ligma_action_group_add_actions (group, "gradient-editor-action",
                                  gradient_editor_actions,
                                  G_N_ELEMENTS (gradient_editor_actions));
 
-  gimp_action_group_add_toggle_actions (group, "gradient-editor-action",
+  ligma_action_group_add_toggle_actions (group, "gradient-editor-action",
                                         gradient_editor_toggle_actions,
                                         G_N_ELEMENTS (gradient_editor_toggle_actions));
 
-  gimp_action_group_add_enum_actions (group, "gradient-editor-action",
+  ligma_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_load_left_actions,
                                       G_N_ELEMENTS (gradient_editor_load_left_actions),
                                       gradient_editor_load_left_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "gradient-editor-action",
+  ligma_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_save_left_actions,
                                       G_N_ELEMENTS (gradient_editor_save_left_actions),
                                       gradient_editor_save_left_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "gradient-editor-action",
+  ligma_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_load_right_actions,
                                       G_N_ELEMENTS (gradient_editor_load_right_actions),
                                       gradient_editor_load_right_cmd_callback);
 
 
-  gimp_action_group_add_enum_actions (group, "gradient-editor-action",
+  ligma_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_save_right_actions,
                                       G_N_ELEMENTS (gradient_editor_save_right_actions),
                                       gradient_editor_save_right_cmd_callback);
 
-  gimp_action_group_add_radio_actions (group, "gradient-editor-color-type",
+  ligma_action_group_add_radio_actions (group, "gradient-editor-color-type",
                                        gradient_editor_left_color_type_actions,
                                        G_N_ELEMENTS (gradient_editor_left_color_type_actions),
                                        NULL,
                                        0,
                                        gradient_editor_left_color_type_cmd_callback);
 
-  gimp_action_group_add_radio_actions (group, "gradient-editor-color-type",
+  ligma_action_group_add_radio_actions (group, "gradient-editor-color-type",
                                        gradient_editor_right_color_type_actions,
                                        G_N_ELEMENTS (gradient_editor_right_color_type_actions),
                                        NULL,
                                        0,
                                        gradient_editor_right_color_type_cmd_callback);
 
-  gimp_action_group_add_radio_actions (group, "gradient-editor-blending",
+  ligma_action_group_add_radio_actions (group, "gradient-editor-blending",
                                        gradient_editor_blending_actions,
                                        G_N_ELEMENTS (gradient_editor_blending_actions),
                                        NULL,
                                        0,
                                        gradient_editor_blending_func_cmd_callback);
 
-  gimp_action_group_add_radio_actions (group, "gradient-editor-coloring",
+  ligma_action_group_add_radio_actions (group, "gradient-editor-coloring",
                                        gradient_editor_coloring_actions,
                                        G_N_ELEMENTS (gradient_editor_coloring_actions),
                                        NULL,
                                        0,
                                        gradient_editor_coloring_type_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  ligma_action_group_add_enum_actions (group, NULL,
                                       gradient_editor_zoom_actions,
                                       G_N_ELEMENTS (gradient_editor_zoom_actions),
                                       gradient_editor_zoom_cmd_callback);
 }
 
 void
-gradient_editor_actions_update (GimpActionGroup *group,
+gradient_editor_actions_update (LigmaActionGroup *group,
                                 gpointer         data)
 {
-  GimpGradientEditor  *editor         = GIMP_GRADIENT_EDITOR (data);
-  GimpDataEditor      *data_editor    = GIMP_DATA_EDITOR (data);
-  GimpGradient        *gradient;
+  LigmaGradientEditor  *editor         = LIGMA_GRADIENT_EDITOR (data);
+  LigmaDataEditor      *data_editor    = LIGMA_DATA_EDITOR (data);
+  LigmaGradient        *gradient;
   gboolean             editable       = FALSE;
-  GimpRGB              left_color;
-  GimpRGB              right_color;
-  GimpRGB              left_seg_color;
-  GimpRGB              right_seg_color;
-  GimpRGB              fg;
-  GimpRGB              bg;
+  LigmaRGB              left_color;
+  LigmaRGB              right_color;
+  LigmaRGB              left_seg_color;
+  LigmaRGB              right_seg_color;
+  LigmaRGB              fg;
+  LigmaRGB              bg;
   gboolean             blending_equal = TRUE;
   gboolean             coloring_equal = TRUE;
   gboolean             left_editable  = TRUE;
@@ -483,20 +483,20 @@ gradient_editor_actions_update (GimpActionGroup *group,
   gboolean             delete         = FALSE;
   gboolean             edit_active    = FALSE;
 
-  gradient = GIMP_GRADIENT (data_editor->data);
+  gradient = LIGMA_GRADIENT (data_editor->data);
 
   if (gradient)
     {
-      GimpGradientSegmentType  type;
-      GimpGradientSegmentColor color;
-      GimpGradientSegment     *left_seg;
-      GimpGradientSegment     *right_seg;
-      GimpGradientSegment     *seg, *aseg;
+      LigmaGradientSegmentType  type;
+      LigmaGradientSegmentColor color;
+      LigmaGradientSegment     *left_seg;
+      LigmaGradientSegment     *right_seg;
+      LigmaGradientSegment     *seg, *aseg;
 
       if (data_editor->data_editable)
         editable = TRUE;
 
-      gimp_gradient_segment_get_left_flat_color (gradient,
+      ligma_gradient_segment_get_left_flat_color (gradient,
                                                  data_editor->context,
                                                  editor->control_sel_l,
                                                  &left_color);
@@ -504,14 +504,14 @@ gradient_editor_actions_update (GimpActionGroup *group,
       if (editor->control_sel_l->prev)
         left_seg = editor->control_sel_l->prev;
       else
-        left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
+        left_seg = ligma_gradient_segment_get_last (editor->control_sel_l);
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
+      ligma_gradient_segment_get_right_flat_color (gradient,
                                                   data_editor->context,
                                                   left_seg,
                                                   &left_seg_color);
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
+      ligma_gradient_segment_get_right_flat_color (gradient,
                                                   data_editor->context,
                                                   editor->control_sel_r,
                                                   &right_color);
@@ -519,17 +519,17 @@ gradient_editor_actions_update (GimpActionGroup *group,
       if (editor->control_sel_r->next)
         right_seg = editor->control_sel_r->next;
       else
-        right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
+        right_seg = ligma_gradient_segment_get_first (editor->control_sel_r);
 
-      gimp_gradient_segment_get_left_flat_color (gradient,
+      ligma_gradient_segment_get_left_flat_color (gradient,
                                                  data_editor->context,
                                                  right_seg,
                                                  &right_seg_color);
 
       left_editable  = (editor->control_sel_l->left_color_type ==
-                        GIMP_GRADIENT_COLOR_FIXED);
+                        LIGMA_GRADIENT_COLOR_FIXED);
       right_editable = (editor->control_sel_r->right_color_type ==
-                        GIMP_GRADIENT_COLOR_FIXED);
+                        LIGMA_GRADIENT_COLOR_FIXED);
 
       type  = editor->control_sel_l->type;
       color = editor->control_sel_l->color;
@@ -552,8 +552,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   if (data_editor->context)
     {
-      gimp_context_get_foreground (data_editor->context, &fg);
-      gimp_context_get_background (data_editor->context, &bg);
+      ligma_context_get_foreground (data_editor->context, &fg);
+      ligma_context_get_background (data_editor->context, &bg);
     }
 
   /*  pretend the gradient not being editable while the dialog is
@@ -569,18 +569,18 @@ gradient_editor_actions_update (GimpActionGroup *group,
       right_editable = FALSE;
     }
 
-  edit_active = gimp_data_editor_get_edit_active (data_editor);
+  edit_active = ligma_data_editor_get_edit_active (data_editor);
 
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_COLOR(action,color,set_label) \
-        gimp_action_group_set_action_color (group, action, (color), (set_label))
+        ligma_action_group_set_action_color (group, action, (color), (set_label))
 #define SET_LABEL(action,label) \
-        gimp_action_group_set_action_label (group, action, (label))
+        ligma_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+        ligma_action_group_set_action_visible (group, action, (condition) != 0)
 
   SET_SENSITIVE ("gradient-editor-left-color-fixed",                  editable);
   SET_SENSITIVE ("gradient-editor-left-color-foreground",             editable);
@@ -592,19 +592,19 @@ gradient_editor_actions_update (GimpActionGroup *group,
     {
       switch (editor->control_sel_l->left_color_type)
         {
-        case GIMP_GRADIENT_COLOR_FIXED:
+        case LIGMA_GRADIENT_COLOR_FIXED:
           SET_ACTIVE ("gradient-editor-left-color-fixed", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_FOREGROUND:
+        case LIGMA_GRADIENT_COLOR_FOREGROUND:
           SET_ACTIVE ("gradient-editor-left-color-foreground", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+        case LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
           SET_ACTIVE ("gradient-editor-left-color-foreground-transparent", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_BACKGROUND:
+        case LIGMA_GRADIENT_COLOR_BACKGROUND:
           SET_ACTIVE ("gradient-editor-left-color-background", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+        case LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
           SET_ACTIVE ("gradient-editor-left-color-background-transparent", TRUE);
           break;
         }
@@ -686,19 +686,19 @@ gradient_editor_actions_update (GimpActionGroup *group,
     {
       switch (editor->control_sel_r->right_color_type)
         {
-        case GIMP_GRADIENT_COLOR_FIXED:
+        case LIGMA_GRADIENT_COLOR_FIXED:
           SET_ACTIVE ("gradient-editor-right-color-fixed", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_FOREGROUND:
+        case LIGMA_GRADIENT_COLOR_FOREGROUND:
           SET_ACTIVE ("gradient-editor-right-color-foreground", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+        case LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
           SET_ACTIVE ("gradient-editor-right-color-foreground-transparent", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_BACKGROUND:
+        case LIGMA_GRADIENT_COLOR_BACKGROUND:
           SET_ACTIVE ("gradient-editor-right-color-background", TRUE);
           break;
-        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+        case LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
           SET_ACTIVE ("gradient-editor-right-color-background-transparent", TRUE);
           break;
         }
@@ -837,22 +837,22 @@ gradient_editor_actions_update (GimpActionGroup *group,
     {
       switch (editor->control_sel_l->type)
         {
-        case GIMP_GRADIENT_SEGMENT_LINEAR:
+        case LIGMA_GRADIENT_SEGMENT_LINEAR:
           SET_ACTIVE ("gradient-editor-blending-linear", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_CURVED:
+        case LIGMA_GRADIENT_SEGMENT_CURVED:
           SET_ACTIVE ("gradient-editor-blending-curved", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_SINE:
+        case LIGMA_GRADIENT_SEGMENT_SINE:
           SET_ACTIVE ("gradient-editor-blending-sine", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
+        case LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-increasing", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
+        case LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-decreasing", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_STEP:
+        case LIGMA_GRADIENT_SEGMENT_STEP:
           SET_ACTIVE ("gradient-editor-blending-step", TRUE);
           break;
         }
@@ -873,13 +873,13 @@ gradient_editor_actions_update (GimpActionGroup *group,
     {
       switch (editor->control_sel_l->color)
         {
-        case GIMP_GRADIENT_SEGMENT_RGB:
+        case LIGMA_GRADIENT_SEGMENT_RGB:
           SET_ACTIVE ("gradient-editor-coloring-rgb", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
+        case LIGMA_GRADIENT_SEGMENT_HSV_CCW:
           SET_ACTIVE ("gradient-editor-coloring-hsv-ccw", TRUE);
           break;
-        case GIMP_GRADIENT_SEGMENT_HSV_CW:
+        case LIGMA_GRADIENT_SEGMENT_HSV_CW:
           SET_ACTIVE ("gradient-editor-coloring-hsv-cw", TRUE);
           break;
         }

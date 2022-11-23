@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationsettings.h
+ * ligmaoperationsettings.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,57 +18,57 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_SETTINGS_H__
-#define __GIMP_OPERATION_SETTINGS_H__
+#ifndef __LIGMA_OPERATION_SETTINGS_H__
+#define __LIGMA_OPERATION_SETTINGS_H__
 
 
-#include "core/gimpsettings.h"
+#include "core/ligmasettings.h"
 
 
-#define GIMP_TYPE_OPERATION_SETTINGS            (gimp_operation_settings_get_type ())
-#define GIMP_OPERATION_SETTINGS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_SETTINGS, GimpOperationSettings))
-#define GIMP_OPERATION_SETTINGS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_SETTINGS, GimpOperationSettingsClass))
-#define GIMP_IS_OPERATION_SETTINGS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_SETTINGS))
-#define GIMP_IS_OPERATION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_SETTINGS))
-#define GIMP_OPERATION_SETTINGS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SETTINGS, GimpOperationSettingsClass))
+#define LIGMA_TYPE_OPERATION_SETTINGS            (ligma_operation_settings_get_type ())
+#define LIGMA_OPERATION_SETTINGS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_SETTINGS, LigmaOperationSettings))
+#define LIGMA_OPERATION_SETTINGS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_SETTINGS, LigmaOperationSettingsClass))
+#define LIGMA_IS_OPERATION_SETTINGS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_SETTINGS))
+#define LIGMA_IS_OPERATION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_SETTINGS))
+#define LIGMA_OPERATION_SETTINGS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_SETTINGS, LigmaOperationSettingsClass))
 
 
-typedef struct _GimpOperationSettingsClass GimpOperationSettingsClass;
+typedef struct _LigmaOperationSettingsClass LigmaOperationSettingsClass;
 
-struct _GimpOperationSettings
+struct _LigmaOperationSettings
 {
-  GimpSettings         parent_instance;
+  LigmaSettings         parent_instance;
 
-  GimpTransformResize  clip;
-  GimpFilterRegion     region;
-  GimpLayerMode        mode;
+  LigmaTransformResize  clip;
+  LigmaFilterRegion     region;
+  LigmaLayerMode        mode;
   gdouble              opacity;
   gboolean             gamma_hack;
 };
 
-struct _GimpOperationSettingsClass
+struct _LigmaOperationSettingsClass
 {
-  GimpSettingsClass  parent_class;
+  LigmaSettingsClass  parent_class;
 };
 
 
-GType      gimp_operation_settings_get_type              (void) G_GNUC_CONST;
+GType      ligma_operation_settings_get_type              (void) G_GNUC_CONST;
 
-void       gimp_operation_settings_sync_drawable_filter  (GimpOperationSettings *settings,
-                                                          GimpDrawableFilter    *filter);
+void       ligma_operation_settings_sync_drawable_filter  (LigmaOperationSettings *settings,
+                                                          LigmaDrawableFilter    *filter);
 
 
 /*  protected  */
 
-gboolean   gimp_operation_settings_config_serialize_base (GimpConfig            *config,
-                                                          GimpConfigWriter      *writer,
+gboolean   ligma_operation_settings_config_serialize_base (LigmaConfig            *config,
+                                                          LigmaConfigWriter      *writer,
                                                           gpointer               data);
-gboolean   gimp_operation_settings_config_equal_base     (GimpConfig            *a,
-                                                          GimpConfig            *b);
-void       gimp_operation_settings_config_reset_base     (GimpConfig            *config);
-gboolean   gimp_operation_settings_config_copy_base      (GimpConfig            *src,
-                                                          GimpConfig            *dest,
+gboolean   ligma_operation_settings_config_equal_base     (LigmaConfig            *a,
+                                                          LigmaConfig            *b);
+void       ligma_operation_settings_config_reset_base     (LigmaConfig            *config);
+gboolean   ligma_operation_settings_config_copy_base      (LigmaConfig            *src,
+                                                          LigmaConfig            *dest,
                                                           GParamFlags            flags);
 
 
-#endif /* __GIMP_OPERATION_SETTINGS_H__ */
+#endif /* __LIGMA_OPERATION_SETTINGS_H__ */

@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Largely based on gimpdrawable-gradient.c
+ * Largely based on ligmadrawable-gradient.c
  *
- * gimpoperationgradient.c
+ * ligmaoperationgradient.c
  * Copyright (C) 2014 Michael Henning <drawoc@darkrefraction.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,18 +26,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "core/gimpgradient.h"
+#include "core/ligmagradient.h"
 
-#include "gimpoperationgradient.h"
+#include "ligmaoperationgradient.h"
 
 
 #define GRADIENT_CACHE_N_SUPERSAMPLES 4
-#define GRADIENT_CACHE_MAX_SIZE       ((1 << 20) / sizeof (GimpRGB))
+#define GRADIENT_CACHE_MAX_SIZE       ((1 << 20) / sizeof (LigmaRGB))
 
 
 enum
@@ -62,18 +62,18 @@ enum
 
 typedef struct
 {
-  GimpGradient                *gradient;
+  LigmaGradient                *gradient;
   gboolean                     reverse;
-  GimpGradientBlendColorSpace  blend_color_space;
-  GimpRGB                     *gradient_cache;
+  LigmaGradientBlendColorSpace  blend_color_space;
+  LigmaRGB                     *gradient_cache;
   gint                         gradient_cache_size;
-  GimpGradientSegment         *last_seg;
+  LigmaGradientSegment         *last_seg;
   gdouble                      offset;
   gdouble                      sx, sy;
-  GimpGradientType             gradient_type;
+  LigmaGradientType             gradient_type;
   gdouble                      dist;
   gdouble                      vec[2];
-  GimpRepeatMode               repeat;
+  LigmaRepeatMode               repeat;
   GeglSampler                 *dist_sampler;
 } RenderBlendData;
 
@@ -88,20 +88,20 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void            gimp_operation_gradient_dispose           (GObject               *gobject);
-static void            gimp_operation_gradient_finalize          (GObject               *gobject);
-static void            gimp_operation_gradient_get_property      (GObject               *object,
+static void            ligma_operation_gradient_dispose           (GObject               *gobject);
+static void            ligma_operation_gradient_finalize          (GObject               *gobject);
+static void            ligma_operation_gradient_get_property      (GObject               *object,
                                                                   guint                  property_id,
                                                                   GValue                *value,
                                                                   GParamSpec            *pspec);
-static void            gimp_operation_gradient_set_property      (GObject               *object,
+static void            ligma_operation_gradient_set_property      (GObject               *object,
                                                                   guint                  property_id,
                                                                   const GValue          *value,
                                                                   GParamSpec            *pspec);
 
-static void            gimp_operation_gradient_prepare           (GeglOperation         *operation);
+static void            ligma_operation_gradient_prepare           (GeglOperation         *operation);
 
-static GeglRectangle   gimp_operation_gradient_get_bounding_box  (GeglOperation         *operation);
+static GeglRectangle   ligma_operation_gradient_get_bounding_box  (GeglOperation         *operation);
 
 static gdouble         gradient_calc_conical_sym_factor          (gdouble                dist,
                                                                   gdouble               *axis,
@@ -153,70 +153,70 @@ static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglSampler   
 
 static void            gradient_render_pixel                     (gdouble                x,
                                                                   gdouble                y,
-                                                                  GimpRGB               *color,
+                                                                  LigmaRGB               *color,
                                                                   gpointer               render_data);
 
 static void            gradient_put_pixel                        (gint                   x,
                                                                   gint                   y,
-                                                                  GimpRGB               *color,
+                                                                  LigmaRGB               *color,
                                                                   gpointer               put_pixel_data);
 
-static void            gradient_dither_pixel                     (GimpRGB               *color,
+static void            gradient_dither_pixel                     (LigmaRGB               *color,
                                                                   GRand                 *dither_rand,
                                                                   gfloat                *dest);
 
-static gboolean        gimp_operation_gradient_process           (GeglOperation         *operation,
+static gboolean        ligma_operation_gradient_process           (GeglOperation         *operation,
                                                                   GeglBuffer            *input,
                                                                   GeglBuffer            *output,
                                                                   const GeglRectangle   *result,
                                                                   gint                   level);
 
-static void            gimp_operation_gradient_invalidate_cache  (GimpOperationGradient *self);
-static void            gimp_operation_gradient_validate_cache    (GimpOperationGradient *self);
+static void            ligma_operation_gradient_invalidate_cache  (LigmaOperationGradient *self);
+static void            ligma_operation_gradient_validate_cache    (LigmaOperationGradient *self);
 
 
-G_DEFINE_TYPE (GimpOperationGradient, gimp_operation_gradient,
+G_DEFINE_TYPE (LigmaOperationGradient, ligma_operation_gradient,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_gradient_parent_class
+#define parent_class ligma_operation_gradient_parent_class
 
 
 static void
-gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
+ligma_operation_gradient_class_init (LigmaOperationGradientClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  object_class->dispose             = gimp_operation_gradient_dispose;
-  object_class->finalize            = gimp_operation_gradient_finalize;
-  object_class->set_property        = gimp_operation_gradient_set_property;
-  object_class->get_property        = gimp_operation_gradient_get_property;
+  object_class->dispose             = ligma_operation_gradient_dispose;
+  object_class->finalize            = ligma_operation_gradient_finalize;
+  object_class->set_property        = ligma_operation_gradient_set_property;
+  object_class->get_property        = ligma_operation_gradient_get_property;
 
-  operation_class->prepare          = gimp_operation_gradient_prepare;
-  operation_class->get_bounding_box = gimp_operation_gradient_get_bounding_box;
+  operation_class->prepare          = ligma_operation_gradient_prepare;
+  operation_class->get_bounding_box = ligma_operation_gradient_get_bounding_box;
 
-  filter_class->process             = gimp_operation_gradient_process;
+  filter_class->process             = ligma_operation_gradient_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:gradient",
-                                 "categories",  "gimp",
-                                 "description", "GIMP Gradient operation",
+                                 "name",        "ligma:gradient",
+                                 "categories",  "ligma",
+                                 "description", "LIGMA Gradient operation",
                                  NULL);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         "Context",
-                                                        "A GimpContext",
-                                                        GIMP_TYPE_OBJECT,
+                                                        "A LigmaContext",
+                                                        LIGMA_TYPE_OBJECT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_GRADIENT,
                                    g_param_spec_object ("gradient",
                                                         "Gradient",
-                                                        "A GimpGradient to render",
-                                                        GIMP_TYPE_OBJECT,
+                                                        "A LigmaGradient to render",
+                                                        LIGMA_TYPE_OBJECT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -256,8 +256,8 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
                                    g_param_spec_enum ("gradient-type",
                                                       "Gradient Type",
                                                       "The type of gradient to render",
-                                                      GIMP_TYPE_GRADIENT_TYPE,
-                                                      GIMP_GRADIENT_LINEAR,
+                                                      LIGMA_TYPE_GRADIENT_TYPE,
+                                                      LIGMA_GRADIENT_LINEAR,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -265,8 +265,8 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
                                    g_param_spec_enum ("gradient-repeat",
                                                       "Repeat mode",
                                                       "Repeat mode",
-                                                      GIMP_TYPE_REPEAT_MODE,
-                                                      GIMP_REPEAT_NONE,
+                                                      LIGMA_TYPE_REPEAT_MODE,
+                                                      LIGMA_REPEAT_NONE,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -291,8 +291,8 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
                                    g_param_spec_enum ("gradient-blend-color-space",
                                                       "Blend Color Space",
                                                       "Which color space to use when blending RGB gradient segments",
-                                                      GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
-                                                      GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                      LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                      LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -330,17 +330,17 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
 }
 
 static void
-gimp_operation_gradient_init (GimpOperationGradient *self)
+ligma_operation_gradient_init (LigmaOperationGradient *self)
 {
   g_mutex_init (&self->gradient_cache_mutex);
 }
 
 static void
-gimp_operation_gradient_dispose (GObject *object)
+ligma_operation_gradient_dispose (GObject *object)
 {
-  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
+  LigmaOperationGradient *self = LIGMA_OPERATION_GRADIENT (object);
 
-  gimp_operation_gradient_invalidate_cache (self);
+  ligma_operation_gradient_invalidate_cache (self);
 
   g_clear_object (&self->gradient);
   g_clear_object (&self->context);
@@ -349,9 +349,9 @@ gimp_operation_gradient_dispose (GObject *object)
 }
 
 static void
-gimp_operation_gradient_finalize (GObject *object)
+ligma_operation_gradient_finalize (GObject *object)
 {
-  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
+  LigmaOperationGradient *self = LIGMA_OPERATION_GRADIENT (object);
 
   g_mutex_clear (&self->gradient_cache_mutex);
 
@@ -359,12 +359,12 @@ gimp_operation_gradient_finalize (GObject *object)
 }
 
 static void
-gimp_operation_gradient_get_property (GObject    *object,
+ligma_operation_gradient_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
- GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
+ LigmaOperationGradient *self = LIGMA_OPERATION_GRADIENT (object);
 
   switch (property_id)
     {
@@ -435,12 +435,12 @@ gimp_operation_gradient_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_gradient_set_property (GObject      *object,
+ligma_operation_gradient_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
+  LigmaOperationGradient *self = LIGMA_OPERATION_GRADIENT (object);
 
   switch (property_id)
     {
@@ -453,44 +453,44 @@ gimp_operation_gradient_set_property (GObject      *object,
 
     case PROP_GRADIENT:
       {
-        GimpGradient *gradient = g_value_get_object (value);
+        LigmaGradient *gradient = g_value_get_object (value);
 
         g_clear_object (&self->gradient);
 
         if (gradient)
           {
-            if (gimp_gradient_has_fg_bg_segments (gradient))
-              self->gradient = gimp_gradient_flatten (gradient, self->context);
+            if (ligma_gradient_has_fg_bg_segments (gradient))
+              self->gradient = ligma_gradient_flatten (gradient, self->context);
             else
               self->gradient = g_object_ref (gradient);
           }
 
-        gimp_operation_gradient_invalidate_cache (self);
+        ligma_operation_gradient_invalidate_cache (self);
       }
       break;
 
     case PROP_START_X:
       self->start_x = g_value_get_double (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_START_Y:
       self->start_y = g_value_get_double (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_END_X:
       self->end_x = g_value_get_double (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_END_Y:
       self->end_y = g_value_get_double (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_TYPE:
@@ -508,13 +508,13 @@ gimp_operation_gradient_set_property (GObject      *object,
     case PROP_GRADIENT_REVERSE:
       self->gradient_reverse = g_value_get_boolean (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_BLEND_COLOR_SPACE:
       self->gradient_blend_color_space = g_value_get_enum (value);
 
-      gimp_operation_gradient_invalidate_cache (self);
+      ligma_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_SUPERSAMPLE:
@@ -540,13 +540,13 @@ gimp_operation_gradient_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_gradient_prepare (GeglOperation *operation)
+ligma_operation_gradient_prepare (GeglOperation *operation)
 {
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
 }
 
 static GeglRectangle
-gimp_operation_gradient_get_bounding_box (GeglOperation *operation)
+ligma_operation_gradient_get_bounding_box (GeglOperation *operation)
 {
   return gegl_rectangle_infinite_plane ();
 }
@@ -877,7 +877,7 @@ gradient_calc_shapeburst_dimpled_factor (GeglSampler *dist_sampler,
 static void
 gradient_render_pixel (gdouble   x,
                        gdouble   y,
-                       GimpRGB  *color,
+                       LigmaRGB  *color,
                        gpointer  render_data)
 {
   RenderBlendData *rbd = render_data;
@@ -891,66 +891,66 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->gradient_type)
     {
-    case GIMP_GRADIENT_LINEAR:
+    case LIGMA_GRADIENT_LINEAR:
       factor = gradient_calc_linear_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
                                             x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_BILINEAR:
+    case LIGMA_GRADIENT_BILINEAR:
       factor = gradient_calc_bilinear_factor (rbd->dist,
                                               rbd->vec, rbd->offset,
                                               x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_RADIAL:
+    case LIGMA_GRADIENT_RADIAL:
       factor = gradient_calc_radial_factor (rbd->dist,
                                             rbd->offset,
                                             x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_SQUARE:
+    case LIGMA_GRADIENT_SQUARE:
       factor = gradient_calc_square_factor (rbd->dist, rbd->offset,
                                             x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
+    case LIGMA_GRADIENT_CONICAL_SYMMETRIC:
       factor = gradient_calc_conical_sym_factor (rbd->dist,
                                                  rbd->vec, rbd->offset,
                                                  x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
+    case LIGMA_GRADIENT_CONICAL_ASYMMETRIC:
       factor = gradient_calc_conical_asym_factor (rbd->dist,
                                                   rbd->vec, rbd->offset,
                                                   x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
+    case LIGMA_GRADIENT_SHAPEBURST_ANGULAR:
       factor = gradient_calc_shapeburst_angular_factor (rbd->dist_sampler,
                                                         rbd->offset,
                                                         x, y);
       break;
 
-    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
+    case LIGMA_GRADIENT_SHAPEBURST_SPHERICAL:
       factor = gradient_calc_shapeburst_spherical_factor (rbd->dist_sampler,
                                                           rbd->offset,
                                                           x, y);
       break;
 
-    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
+    case LIGMA_GRADIENT_SHAPEBURST_DIMPLED:
       factor = gradient_calc_shapeburst_dimpled_factor (rbd->dist_sampler,
                                                         rbd->offset,
                                                         x, y);
       break;
 
-    case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
+    case LIGMA_GRADIENT_SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
                                             x - rbd->sx, y - rbd->sy, TRUE);
       break;
 
-    case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
+    case LIGMA_GRADIENT_SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
                                             x - rbd->sx, y - rbd->sy, FALSE);
@@ -965,14 +965,14 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->repeat)
     {
-    case GIMP_REPEAT_NONE:
+    case LIGMA_REPEAT_NONE:
       break;
 
-    case GIMP_REPEAT_SAWTOOTH:
+    case LIGMA_REPEAT_SAWTOOTH:
       factor = factor - floor (factor);
       break;
 
-    case GIMP_REPEAT_TRIANGULAR:
+    case LIGMA_REPEAT_TRIANGULAR:
       {
         guint ifactor;
 
@@ -987,10 +987,10 @@ gradient_render_pixel (gdouble   x,
       }
       break;
 
-    case GIMP_REPEAT_TRUNCATE:
+    case LIGMA_REPEAT_TRUNCATE:
       if (factor < 0.0 || factor > 1.0)
         {
-          gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
+          ligma_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
           return;
         }
       break;
@@ -1007,7 +1007,7 @@ gradient_render_pixel (gdouble   x,
     }
   else
     {
-      rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
+      rbd->last_seg = ligma_gradient_get_color_at (rbd->gradient, NULL,
                                                   rbd->last_seg, factor,
                                                   rbd->reverse,
                                                   rbd->blend_color_space,
@@ -1018,7 +1018,7 @@ gradient_render_pixel (gdouble   x,
 static void
 gradient_put_pixel (gint      x,
                     gint      y,
-                    GimpRGB  *color,
+                    LigmaRGB  *color,
                     gpointer  put_pixel_data)
 {
   PutPixelData *ppd   = put_pixel_data;
@@ -1041,7 +1041,7 @@ gradient_put_pixel (gint      x,
 }
 
 static void
-gradient_dither_pixel (GimpRGB *color,
+gradient_dither_pixel (LigmaRGB *color,
                        GRand   *dither_rand,
                        gfloat  *dest)
 {
@@ -1066,13 +1066,13 @@ gradient_dither_pixel (GimpRGB *color,
 }
 
 static gboolean
-gimp_operation_gradient_process (GeglOperation       *operation,
+ligma_operation_gradient_process (GeglOperation       *operation,
                                  GeglBuffer          *input,
                                  GeglBuffer          *output,
                                  const GeglRectangle *result,
                                  gint                 level)
 {
-  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
+  LigmaOperationGradient *self = LIGMA_OPERATION_GRADIENT (operation);
 
   const gdouble sx = self->start_x;
   const gdouble sy = self->start_y;
@@ -1088,7 +1088,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   if (! self->gradient)
     return TRUE;
 
-  gimp_operation_gradient_validate_cache (self);
+  ligma_operation_gradient_validate_cache (self);
 
   rbd.gradient            = self->gradient;
   rbd.reverse             = self->gradient_reverse;
@@ -1100,20 +1100,20 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
   switch (self->gradient_type)
     {
-    case GIMP_GRADIENT_RADIAL:
+    case LIGMA_GRADIENT_RADIAL:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       break;
 
-    case GIMP_GRADIENT_SQUARE:
+    case LIGMA_GRADIENT_SQUARE:
       rbd.dist = MAX (fabs (ex - sx), fabs (ey - sy));
       break;
 
-    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
-    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
-    case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
-    case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
-    case GIMP_GRADIENT_LINEAR:
-    case GIMP_GRADIENT_BILINEAR:
+    case LIGMA_GRADIENT_CONICAL_SYMMETRIC:
+    case LIGMA_GRADIENT_CONICAL_ASYMMETRIC:
+    case LIGMA_GRADIENT_SPIRAL_CLOCKWISE:
+    case LIGMA_GRADIENT_SPIRAL_ANTICLOCKWISE:
+    case LIGMA_GRADIENT_LINEAR:
+    case LIGMA_GRADIENT_BILINEAR:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
 
       if (rbd.dist > 0.0)
@@ -1124,9 +1124,9 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
       break;
 
-    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
-    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
-    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
+    case LIGMA_GRADIENT_SHAPEBURST_ANGULAR:
+    case LIGMA_GRADIENT_SHAPEBURST_SPHERICAL:
+    case LIGMA_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       rbd.dist_sampler = gegl_buffer_sampler_new_at_level (
         input, babl_format ("Y float"), GEGL_SAMPLER_NEAREST, level);
@@ -1166,7 +1166,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
           ppd.data = iter->items[0].data;
           ppd.roi  = *roi;
 
-          gimp_adaptive_supersample_area (roi->x, roi->y,
+          ligma_adaptive_supersample_area (roi->x, roi->y,
                                           roi->x + roi->width  - 1,
                                           roi->y + roi->height - 1,
                                           self->supersample_depth,
@@ -1191,7 +1191,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
+                    LigmaRGB  color = { 0.0, 0.0, 0.0, 1.0 };
 
                     gradient_render_pixel (x, y, &color, &rbd);
                     gradient_dither_pixel (&color, dither_rand, dest);
@@ -1204,7 +1204,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
+                    LigmaRGB  color = { 0.0, 0.0, 0.0, 1.0 };
 
                     gradient_render_pixel (x, y, &color, &rbd);
 
@@ -1226,15 +1226,15 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 }
 
 static void
-gimp_operation_gradient_invalidate_cache (GimpOperationGradient *self)
+ligma_operation_gradient_invalidate_cache (LigmaOperationGradient *self)
 {
   g_clear_pointer (&self->gradient_cache, g_free);
 }
 
 static void
-gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
+ligma_operation_gradient_validate_cache (LigmaOperationGradient *self)
 {
-  GimpGradientSegment *last_seg = NULL;
+  LigmaGradientSegment *last_seg = NULL;
   gint                 cache_size;
   gint                 i;
 
@@ -1265,14 +1265,14 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
       return;
     }
 
-  self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+  self->gradient_cache      = g_new0 (LigmaRGB, cache_size);
   self->gradient_cache_size = cache_size;
 
   for (i = 0; i < self->gradient_cache_size; i++)
     {
       gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
 
-      last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
+      last_seg = ligma_gradient_get_color_at (self->gradient, NULL, last_seg,
                                              factor,
                                              self->gradient_reverse,
                                              self->gradient_blend_color_space,

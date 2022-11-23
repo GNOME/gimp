@@ -1,15 +1,15 @@
 EXPORTS
-	_gimp_unit_get_abbreviation
-	_gimp_unit_get_deletion_flag
-	_gimp_unit_get_digits
-	_gimp_unit_get_factor
-	_gimp_unit_get_identifier
-	_gimp_unit_get_number_of_units
-	_gimp_unit_get_plural
-	_gimp_unit_get_singular
-	_gimp_unit_get_symbol
-	_gimp_unit_new
-	_gimp_unit_set_deletion_flag
+	_ligma_unit_get_abbreviation
+	_ligma_unit_get_deletion_flag
+	_ligma_unit_get_digits
+	_ligma_unit_get_factor
+	_ligma_unit_get_identifier
+	_ligma_unit_get_number_of_units
+	_ligma_unit_get_plural
+	_ligma_unit_get_singular
+	_ligma_unit_get_symbol
+	_ligma_unit_new
+	_ligma_unit_set_deletion_flag
 	base_exit
 	base_init
 	blob_diamond
@@ -36,565 +36,565 @@ EXPORTS
 	floating_sel_anchor
 	floating_sel_remove
 	floating_sel_to_layer
-	gimp_add_mask_type_get_type
-	gimp_airbrush_options_get_type
-	gimp_area_list_free
-	gimp_area_list_process
-	gimp_area_new
-	gimp_base_config_get_type
-	gimp_bezier_stroke_extend
-	gimp_bezier_stroke_new
-	gimp_brush_core_get_type
-	gimp_brush_core_set_brush
-	gimp_brush_generated_get_angle
-	gimp_brush_generated_get_aspect_ratio
-	gimp_brush_generated_get_hardness
-	gimp_brush_generated_get_radius
-	gimp_brush_generated_get_shape
-	gimp_brush_generated_get_spikes
-	gimp_brush_generated_get_type
-	gimp_brush_generated_set_angle
-	gimp_brush_generated_set_aspect_ratio
-	gimp_brush_generated_set_hardness
-	gimp_brush_generated_set_radius
-	gimp_brush_generated_set_shape
-	gimp_brush_generated_set_spikes
-	gimp_brush_generated_shape_get_type
-	gimp_brush_get_mask
-	gimp_brush_get_spacing
-	gimp_brush_get_standard
-	gimp_brush_get_type
-	gimp_brush_pipe_get_type
-	gimp_brush_set_spacing
-	gimp_bucket_fill_mode_get_type
-	gimp_buffer_get_height
-	gimp_buffer_get_type
-	gimp_buffer_get_width
-	gimp_buffer_new
-	gimp_channel_all
-	gimp_channel_border
-	gimp_channel_boundary
-	gimp_channel_bounds
-	gimp_channel_clear
-	gimp_channel_feather
-	gimp_channel_flood
-	gimp_channel_get_type
-	gimp_channel_grow
-	gimp_channel_invert
-	gimp_channel_is_empty
-	gimp_channel_new
-	gimp_channel_new_from_component
-	gimp_channel_new_mask
-	gimp_channel_ops_get_type
-	gimp_channel_push_undo
-	gimp_channel_select_alpha
-	gimp_channel_select_by_color
-	gimp_channel_select_channel
-	gimp_channel_select_component
-	gimp_channel_select_ellipse
-	gimp_channel_select_polygon
-	gimp_channel_select_rectangle
-	gimp_channel_select_vectors
-	gimp_channel_set_color
-	gimp_channel_sharpen
-	gimp_channel_shrink
-	gimp_channel_type_get_type
-;	gimp_channel_value
-	gimp_clone_get_type
-	gimp_clone_options_get_type
-	gimp_config_connect
-	gimp_config_connect_full
-	gimp_config_dump
-	gimp_config_file_backup_on_error
-	gimp_config_file_copy
-	gimp_container_add
-	gimp_container_add_handler
-	gimp_container_foreach
-	gimp_container_freeze
-	gimp_container_frozen
-	gimp_container_get_child_by_index
-	gimp_container_get_child_by_name
-	gimp_container_get_child_index
-	gimp_container_get_type
-	gimp_container_have
-	gimp_container_insert
-	gimp_container_num_children
-	gimp_container_remove
-	gimp_container_remove_handler
-	gimp_container_reorder
-	gimp_container_thaw
-	gimp_context_copy_properties
-	gimp_context_copy_property
-	gimp_context_define_properties
-	gimp_context_define_property
-	gimp_context_get_background
-	gimp_context_get_brush
-	gimp_context_get_buffer
-	gimp_context_get_by_type
-	gimp_context_get_display
-	gimp_context_get_font
-	gimp_context_get_font_name
-	gimp_context_get_foreground
-	gimp_context_get_gradient
-	gimp_context_get_image
-	gimp_context_get_imagefile
-	gimp_context_get_opacity
-	gimp_context_get_paint_mode
-	gimp_context_get_palette
-	gimp_context_get_pattern
-	gimp_context_get_template
-	gimp_context_get_tool
-	gimp_context_get_type
-	gimp_context_new
-	gimp_context_set_background
-	gimp_context_set_brush
-	gimp_context_set_by_type
-	gimp_context_set_default_colors
-	gimp_context_set_display
-	gimp_context_set_font_name
-	gimp_context_set_foreground
-	gimp_context_set_gradient
-	gimp_context_set_image
-	gimp_context_set_opacity
-	gimp_context_set_paint_mode
-	gimp_context_set_parent
-	gimp_context_set_pattern
-	gimp_context_set_serialize_properties
-	gimp_context_set_template
-	gimp_context_set_tool
-	gimp_context_swap_colors
-	gimp_context_tool_changed
-	gimp_context_type_to_prop_name
-	gimp_context_type_to_signal_name
-	gimp_convert_dither_type_get_type
-	gimp_convolve_options_get_type
-	gimp_core_config_get_type
-	gimp_create_display
-	gimp_create_image
-	gimp_curve_type_get_type
-	gimp_dash_preset_get_type
-	gimp_data_dirty
-	gimp_data_factory_data_delete
-	gimp_data_factory_data_duplicate
-	gimp_data_factory_data_init
-	gimp_data_factory_data_new
-	gimp_data_factory_data_save
-	gimp_data_factory_data_save_single
-	gimp_data_factory_get_type
-	gimp_data_freeze
-	gimp_data_get_type
-	gimp_data_thaw
-	gimp_debug_memsize
-	gimp_display_config_get_type
-	gimp_dodge_burn_options_get_type
-	gimp_drawable_blend
-	gimp_drawable_bucket_fill
-	gimp_drawable_bucket_fill_full
-	gimp_drawable_bytes
-	gimp_drawable_calculate_histogram
-	gimp_drawable_desaturate
-	gimp_drawable_equalize
-	gimp_drawable_fill_by_type
-	gimp_drawable_foreground_extract_siox_done
-	gimp_drawable_foreground_extract_siox_init
-	gimp_drawable_get_type
-	gimp_drawable_has_alpha
-	gimp_drawable_invert
-	gimp_drawable_is_indexed
-	gimp_drawable_is_rgb
-	gimp_drawable_mask_bounds
-	gimp_drawable_offset
-	gimp_drawable_set_tiles
-	gimp_drawable_transform_cut
-	gimp_drawable_transform_paste
-	gimp_drawable_transform_tiles_affine
-	gimp_drawable_transform_tiles_flip
-	gimp_drawable_type
-	gimp_edit_clear
-	gimp_edit_copy
-	gimp_edit_cut
-	gimp_edit_fill
-	gimp_edit_paste
-	gimp_edit_paste_as_new
-	gimp_environ_table_add
-	gimp_eraser_options_get_type
-	gimp_exit
-	gimp_fill_type_get_type
-	gimp_font_get_standard
-	gimp_font_get_type
-	gimp_fonts_load
-	gimp_get_default_language
-	gimp_get_type
-	gimp_get_user_context
-	gimp_gradient_get_color_at
-	gimp_gradient_get_segment_at
-	gimp_gradient_get_standard
-	gimp_gradient_get_type
-	gimp_gradient_segment_get_first
-	gimp_gradient_segment_get_last
-	gimp_gradient_segment_get_left_color
-	gimp_gradient_segment_get_right_color
-	gimp_gradient_segment_new
-	gimp_gradient_segment_range_blend
-	gimp_gradient_segment_range_compress
-	gimp_gradient_segment_range_delete
-	gimp_gradient_segment_range_flip
-	gimp_gradient_segment_range_move
-	gimp_gradient_segment_range_recenter_handles
-	gimp_gradient_segment_range_redistribute_handles
-	gimp_gradient_segment_range_replicate
-	gimp_gradient_segment_range_set_blending_function
-	gimp_gradient_segment_range_set_coloring_type
-	gimp_gradient_segment_range_split_midpoint
-	gimp_gradient_segment_range_split_uniform
-	gimp_gradient_segment_set_left_pos
-	gimp_gradient_segment_set_middle_pos
-	gimp_gradient_segments_free
-	gimp_gradient_type_get_type
-	gimp_grid_get_type
-	gimp_gui_config_get_type
-	gimp_help
-	gimp_histogram_calculate
-	gimp_histogram_channel_get_type
-	gimp_histogram_get_count
-	gimp_histogram_get_maximum
-	gimp_histogram_get_mean
-	gimp_histogram_get_median
-	gimp_histogram_get_std_dev
-	gimp_histogram_get_value
-	gimp_histogram_n_components
-	gimp_histogram_new
-	gimp_image_add_channel
-	gimp_image_add_colormap_entry
-	gimp_image_add_hguide
-	gimp_image_add_layer
-	gimp_image_add_vectors
-	gimp_image_add_vguide
-	gimp_image_base_type
-	gimp_image_base_type_with_alpha
-	gimp_image_contiguous_region_by_seed
-	gimp_image_convert
-	gimp_image_crop
-	gimp_image_crop_auto_shrink
-	gimp_image_duplicate
-	gimp_image_find_guide
-	gimp_image_flatten
-	gimp_image_flip
-	gimp_image_floating_sel
-	gimp_image_flush
-	gimp_image_get_active_channel
-	gimp_image_get_active_layer
-	gimp_image_get_active_vectors
-	gimp_image_get_by_ID
-	gimp_image_get_channels
-	gimp_image_get_colormap
-	gimp_image_get_colormap_entry
-	gimp_image_get_colormap_size
-	gimp_image_get_component_active
-	gimp_image_get_component_index
-	gimp_image_get_component_visible
-	gimp_image_get_filename
-	gimp_image_get_grid
-	gimp_image_get_height
-	gimp_image_get_ID
-	gimp_image_get_layer_index
-	gimp_image_get_layers
-	gimp_image_get_mask
-	gimp_image_get_quick_mask_color
-	gimp_image_get_quick_mask_state
-	gimp_image_get_type
-	gimp_image_get_uri_or_untitled
-	gimp_image_get_vectors
-	gimp_image_get_vectors_index
-	gimp_image_get_width
-	gimp_image_has_alpha
-	gimp_image_is_empty
-	gimp_image_layer_boundary
-	gimp_image_lower_channel
-	gimp_image_lower_channel_to_bottom
-	gimp_image_lower_layer
-	gimp_image_lower_layer_to_bottom
-	gimp_image_lower_vectors
-	gimp_image_lower_vectors_to_bottom
-	gimp_image_map_abort
-	gimp_image_map_apply
-	gimp_image_map_clear
-	gimp_image_map_commit
-	gimp_image_map_new
-	gimp_image_merge_down
-	gimp_image_merge_visible_layers
-	gimp_image_merge_visible_vectors
-	gimp_image_move_guide
-	gimp_image_new_get_last_template
-	gimp_image_new_set_last_template
-	gimp_image_pick_color
-	gimp_image_pick_correlate_layer
-	gimp_image_position_channel
-	gimp_image_position_layer
-	gimp_image_position_vectors
-	gimp_image_quick_mask_invert
-	gimp_image_raise_channel
-	gimp_image_raise_channel_to_top
-	gimp_image_raise_layer
-	gimp_image_raise_layer_to_top
-	gimp_image_raise_vectors
-	gimp_image_raise_vectors_to_top
-	gimp_image_redo
-	gimp_image_remove_channel
-	gimp_image_remove_guide
-	gimp_image_remove_layer
-	gimp_image_remove_vectors
-	gimp_image_resize
-	gimp_image_rotate
-	gimp_image_scale
-	gimp_image_scale_check
-	gimp_image_selection_control
-	gimp_image_set_active_channel
-	gimp_image_set_active_layer
-	gimp_image_set_active_vectors
-	gimp_image_set_colormap
-	gimp_image_set_colormap_entry
-	gimp_image_set_component_active
-	gimp_image_set_component_visible
-	gimp_image_set_grid
-	gimp_image_set_quick_mask_color
-	gimp_image_set_quick_mask_state
-	gimp_image_set_resolution
-	gimp_image_set_unit
-	gimp_image_snap_point
-	gimp_image_snap_rectangle
-	gimp_image_undo
-	gimp_image_undo_can_compress
-	gimp_image_undo_disable
-	gimp_image_undo_enable
-	gimp_image_undo_event
-	gimp_image_undo_group_end
-	gimp_image_undo_group_start
-	gimp_image_undo_is_enabled
-	gimp_image_undo_push
-	gimp_image_undo_push_drawable_mod
-	gimp_image_undo_push_image_grid
-	gimp_image_undo_push_item_visibility
-	gimp_image_undo_push_text_layer
-	gimp_image_undo_push_text_layer_modified
-	gimp_image_undo_push_vectors_mod
-	gimp_image_update_guide
-	gimp_imagefile_create_thumbnail
-	gimp_imagefile_get_desc_string
-	gimp_imagefile_get_type
-	gimp_imagefile_new
-	gimp_imagefile_update
-	gimp_initialize
-	gimp_ink_blob_type_get_type
-	gimp_ink_options_get_type
-	gimp_interpolation_type_get_type
-	gimp_item_convert
-	gimp_item_duplicate
-	gimp_item_flip
-	gimp_item_get_by_ID
-	gimp_item_get_ID
-	gimp_item_get_image
-	gimp_item_get_type
-	gimp_item_get_visible
-	gimp_item_height
-	gimp_item_is_text_layer
-	gimp_item_offsets
-	gimp_item_rename
-	gimp_item_resize
-	gimp_item_rotate
-	gimp_item_scale_by_origin
-	gimp_item_set_visible
-	gimp_item_stroke
-	gimp_item_transform
-	gimp_item_translate
-	gimp_item_undo_get_type
-	gimp_item_width
-	gimp_layer_add_alpha
-	gimp_layer_add_mask
-	gimp_layer_apply_mask
-	gimp_layer_create_mask
-	gimp_layer_get_mask
-	gimp_layer_get_mode
-	gimp_layer_get_opacity
-;	gimp_layer_get_preserve_trans
-	gimp_layer_get_type
-	gimp_layer_is_floating_sel
-	gimp_layer_mask_get_apply
-	gimp_layer_mask_get_edit
-	gimp_layer_mask_get_layer
-	gimp_layer_mask_get_show
-	gimp_layer_mask_get_type
-	gimp_layer_mask_set_apply
-	gimp_layer_mask_set_edit
-	gimp_layer_mask_set_show
-	gimp_layer_mode_effects_get_type
-	gimp_layer_new
-	gimp_layer_resize_to_image
-	gimp_layer_set_mode
-	gimp_layer_set_opacity
-;	gimp_layer_set_preserve_trans
-	gimp_list_get_type
-	gimp_list_new
-	gimp_list_new_weak
-	gimp_list_reverse
-	gimp_load_config
-	gimp_lut_free
-	gimp_lut_new
-	gimp_lut_setup
-	gimp_marshal_BOOLEAN__ENUM_INT
-	gimp_marshal_BOOLEAN__OBJECT_POINTER
-	gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING
-	gimp_marshal_VOID__DOUBLE_DOUBLE
-	gimp_marshal_VOID__ENUM_ENUM_BOXED_INT
-	gimp_marshal_VOID__INT_INT
-	gimp_marshal_VOID__OBJECT_OBJECT
-	gimp_marshal_VOID__OBJECT_POINTER
-	gimp_marshal_VOID__POINTER_BOXED
-	gimp_marshal_VOID__POINTER_ENUM 
-	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
-	gimp_marshal_VOID__STRING_FLAGS
-	gimp_message
-	gimp_modules_refresh
-	gimp_new
-	gimp_object_get_memsize
-	gimp_object_get_name
-	gimp_object_get_type
-	gimp_object_set_name
-	gimp_orientation_type_get_type
-	gimp_paint_core_cancel
-	gimp_paint_core_cleanup
-	gimp_paint_core_finish
-	gimp_paint_core_interpolate
-	gimp_paint_core_paint
-	gimp_paint_core_start
-	gimp_paint_info_get_type
-	gimp_paint_options_get_brush_mode
-	gimp_paint_options_get_type
-	gimp_palette_add_entry
-	gimp_palette_delete_entry
-	gimp_palette_get_standard
-	gimp_palette_get_type
-	gimp_palette_import_from_file
-	gimp_palette_import_from_gradient
-	gimp_palette_import_from_image
-	gimp_palette_import_from_indexed_image
-	gimp_param_memsize_get_type
-	gimp_param_rgb_get_type
-	gimp_param_spec_rgb
-	gimp_param_spec_unit
-	gimp_param_unit_get_type
-	gimp_parameters_append
-	gimp_parameters_append_valist
-	gimp_parameters_free
-	gimp_pattern_get_standard
-	gimp_pattern_get_type
-	gimp_pencil_options_get_type
-	gimp_pickable_get_color_at
-	gimp_pickable_get_image_type
-	gimp_pickable_interface_get_type
-	gimp_pickable_pick_color
-	gimp_projection_flush
-	gimp_projection_flush_now
-	gimp_projection_get_bytes
-	gimp_projection_get_image_type
-	gimp_projection_get_tiles
-	gimp_rc_get_type
-	gimp_rc_new
-	gimp_rc_save
-	gimp_rc_set_autosave
-	gimp_rectangle_intersect
-	gimp_repeat_mode_get_type
-	gimp_restore
-	gimp_scan_convert_free
-	gimp_scan_convert_new
-	gimp_scan_convert_render
-	gimp_selection_float
-	gimp_selection_get_type
-	gimp_selection_save
-	gimp_set_busy
-	gimp_smudge_options_get_type
-	gimp_stroke_anchor_convert
-	gimp_stroke_anchor_delete
-	gimp_stroke_anchor_insert
-	gimp_stroke_anchor_is_insertable
-	gimp_stroke_anchor_move_absolute
-	gimp_stroke_anchor_move_relative
-	gimp_stroke_connect_stroke
-	gimp_stroke_get_draw_anchors
-	gimp_stroke_get_draw_controls
-	gimp_stroke_get_draw_lines
-	gimp_stroke_interpolate
-	gimp_stroke_is_empty
-	gimp_stroke_is_extendable
-	gimp_stroke_nearest_point_get
-	gimp_stroke_open
-	gimp_stroke_options_get_type
-	gimp_stroke_point_is_movable
-	gimp_stroke_point_move_absolute
-	gimp_stroke_translate
-	gimp_template_create_image
-	gimp_template_get_type
-	gimp_template_new
-	gimp_template_set_from_image
-	gimp_text_direction_get_type
-	gimp_text_get_type
-	gimp_text_justification_get_type
-	gimp_text_layer_discard
-	gimp_text_layer_get_text
-	gimp_text_layer_get_type
-	gimp_text_layer_new
-	gimp_text_layer_set
-	gimp_text_undo_get_type
-	gimp_text_vectors_new
-	gimp_tool_info_get_standard
-	gimp_tool_info_get_type
-	gimp_tool_info_new
-	gimp_tool_info_set_standard
-	gimp_tool_options_deserialize
-	gimp_tool_options_get_type
-	gimp_tool_options_reset
-	gimp_tool_options_serialize
-	gimp_tool_presets_new
-	gimp_transfer_mode_get_type
-	gimp_transform_direction_get_type
-	gimp_transform_matrix_perspective
-	gimp_transform_matrix_rotate_center
-	gimp_transform_matrix_scale
-	gimp_transform_matrix_shear
-	gimp_undo_create_preview
-	gimp_undo_free
-	gimp_undo_get_type
-	gimp_undo_refresh_preview
-	gimp_undo_stack_get_type
-	gimp_undo_stack_peek
-	gimp_undo_stack_pop_undo
-	gimp_unset_busy
-	gimp_vectors_anchor_select
-	gimp_vectors_bounds
-	gimp_vectors_export_file
-	gimp_vectors_export_string
-	gimp_vectors_freeze
-	gimp_vectors_get_type
-	gimp_vectors_import_buffer
-	gimp_vectors_import_file
-	gimp_vectors_new
-	gimp_vectors_stroke_add
-	gimp_vectors_stroke_get_next
-	gimp_vectors_stroke_remove
-	gimp_vectors_thaw
-	gimp_viewable_calc_preview_size
-	gimp_viewable_get_description
-	gimp_viewable_get_new_preview
-	gimp_viewable_get_pixbuf
-	gimp_viewable_get_popup_size
-	gimp_viewable_get_preview
-	gimp_viewable_get_preview_size
-	gimp_viewable_get_stock_id
-	gimp_viewable_get_type
-	gimp_viewable_invalidate_preview
-	gimp_xml_parser_free
-	gimp_xml_parser_new
-	gimp_xml_parser_parse_file
+	ligma_add_mask_type_get_type
+	ligma_airbrush_options_get_type
+	ligma_area_list_free
+	ligma_area_list_process
+	ligma_area_new
+	ligma_base_config_get_type
+	ligma_bezier_stroke_extend
+	ligma_bezier_stroke_new
+	ligma_brush_core_get_type
+	ligma_brush_core_set_brush
+	ligma_brush_generated_get_angle
+	ligma_brush_generated_get_aspect_ratio
+	ligma_brush_generated_get_hardness
+	ligma_brush_generated_get_radius
+	ligma_brush_generated_get_shape
+	ligma_brush_generated_get_spikes
+	ligma_brush_generated_get_type
+	ligma_brush_generated_set_angle
+	ligma_brush_generated_set_aspect_ratio
+	ligma_brush_generated_set_hardness
+	ligma_brush_generated_set_radius
+	ligma_brush_generated_set_shape
+	ligma_brush_generated_set_spikes
+	ligma_brush_generated_shape_get_type
+	ligma_brush_get_mask
+	ligma_brush_get_spacing
+	ligma_brush_get_standard
+	ligma_brush_get_type
+	ligma_brush_pipe_get_type
+	ligma_brush_set_spacing
+	ligma_bucket_fill_mode_get_type
+	ligma_buffer_get_height
+	ligma_buffer_get_type
+	ligma_buffer_get_width
+	ligma_buffer_new
+	ligma_channel_all
+	ligma_channel_border
+	ligma_channel_boundary
+	ligma_channel_bounds
+	ligma_channel_clear
+	ligma_channel_feather
+	ligma_channel_flood
+	ligma_channel_get_type
+	ligma_channel_grow
+	ligma_channel_invert
+	ligma_channel_is_empty
+	ligma_channel_new
+	ligma_channel_new_from_component
+	ligma_channel_new_mask
+	ligma_channel_ops_get_type
+	ligma_channel_push_undo
+	ligma_channel_select_alpha
+	ligma_channel_select_by_color
+	ligma_channel_select_channel
+	ligma_channel_select_component
+	ligma_channel_select_ellipse
+	ligma_channel_select_polygon
+	ligma_channel_select_rectangle
+	ligma_channel_select_vectors
+	ligma_channel_set_color
+	ligma_channel_sharpen
+	ligma_channel_shrink
+	ligma_channel_type_get_type
+;	ligma_channel_value
+	ligma_clone_get_type
+	ligma_clone_options_get_type
+	ligma_config_connect
+	ligma_config_connect_full
+	ligma_config_dump
+	ligma_config_file_backup_on_error
+	ligma_config_file_copy
+	ligma_container_add
+	ligma_container_add_handler
+	ligma_container_foreach
+	ligma_container_freeze
+	ligma_container_frozen
+	ligma_container_get_child_by_index
+	ligma_container_get_child_by_name
+	ligma_container_get_child_index
+	ligma_container_get_type
+	ligma_container_have
+	ligma_container_insert
+	ligma_container_num_children
+	ligma_container_remove
+	ligma_container_remove_handler
+	ligma_container_reorder
+	ligma_container_thaw
+	ligma_context_copy_properties
+	ligma_context_copy_property
+	ligma_context_define_properties
+	ligma_context_define_property
+	ligma_context_get_background
+	ligma_context_get_brush
+	ligma_context_get_buffer
+	ligma_context_get_by_type
+	ligma_context_get_display
+	ligma_context_get_font
+	ligma_context_get_font_name
+	ligma_context_get_foreground
+	ligma_context_get_gradient
+	ligma_context_get_image
+	ligma_context_get_imagefile
+	ligma_context_get_opacity
+	ligma_context_get_paint_mode
+	ligma_context_get_palette
+	ligma_context_get_pattern
+	ligma_context_get_template
+	ligma_context_get_tool
+	ligma_context_get_type
+	ligma_context_new
+	ligma_context_set_background
+	ligma_context_set_brush
+	ligma_context_set_by_type
+	ligma_context_set_default_colors
+	ligma_context_set_display
+	ligma_context_set_font_name
+	ligma_context_set_foreground
+	ligma_context_set_gradient
+	ligma_context_set_image
+	ligma_context_set_opacity
+	ligma_context_set_paint_mode
+	ligma_context_set_parent
+	ligma_context_set_pattern
+	ligma_context_set_serialize_properties
+	ligma_context_set_template
+	ligma_context_set_tool
+	ligma_context_swap_colors
+	ligma_context_tool_changed
+	ligma_context_type_to_prop_name
+	ligma_context_type_to_signal_name
+	ligma_convert_dither_type_get_type
+	ligma_convolve_options_get_type
+	ligma_core_config_get_type
+	ligma_create_display
+	ligma_create_image
+	ligma_curve_type_get_type
+	ligma_dash_preset_get_type
+	ligma_data_dirty
+	ligma_data_factory_data_delete
+	ligma_data_factory_data_duplicate
+	ligma_data_factory_data_init
+	ligma_data_factory_data_new
+	ligma_data_factory_data_save
+	ligma_data_factory_data_save_single
+	ligma_data_factory_get_type
+	ligma_data_freeze
+	ligma_data_get_type
+	ligma_data_thaw
+	ligma_debug_memsize
+	ligma_display_config_get_type
+	ligma_dodge_burn_options_get_type
+	ligma_drawable_blend
+	ligma_drawable_bucket_fill
+	ligma_drawable_bucket_fill_full
+	ligma_drawable_bytes
+	ligma_drawable_calculate_histogram
+	ligma_drawable_desaturate
+	ligma_drawable_equalize
+	ligma_drawable_fill_by_type
+	ligma_drawable_foreground_extract_siox_done
+	ligma_drawable_foreground_extract_siox_init
+	ligma_drawable_get_type
+	ligma_drawable_has_alpha
+	ligma_drawable_invert
+	ligma_drawable_is_indexed
+	ligma_drawable_is_rgb
+	ligma_drawable_mask_bounds
+	ligma_drawable_offset
+	ligma_drawable_set_tiles
+	ligma_drawable_transform_cut
+	ligma_drawable_transform_paste
+	ligma_drawable_transform_tiles_affine
+	ligma_drawable_transform_tiles_flip
+	ligma_drawable_type
+	ligma_edit_clear
+	ligma_edit_copy
+	ligma_edit_cut
+	ligma_edit_fill
+	ligma_edit_paste
+	ligma_edit_paste_as_new
+	ligma_environ_table_add
+	ligma_eraser_options_get_type
+	ligma_exit
+	ligma_fill_type_get_type
+	ligma_font_get_standard
+	ligma_font_get_type
+	ligma_fonts_load
+	ligma_get_default_language
+	ligma_get_type
+	ligma_get_user_context
+	ligma_gradient_get_color_at
+	ligma_gradient_get_segment_at
+	ligma_gradient_get_standard
+	ligma_gradient_get_type
+	ligma_gradient_segment_get_first
+	ligma_gradient_segment_get_last
+	ligma_gradient_segment_get_left_color
+	ligma_gradient_segment_get_right_color
+	ligma_gradient_segment_new
+	ligma_gradient_segment_range_blend
+	ligma_gradient_segment_range_compress
+	ligma_gradient_segment_range_delete
+	ligma_gradient_segment_range_flip
+	ligma_gradient_segment_range_move
+	ligma_gradient_segment_range_recenter_handles
+	ligma_gradient_segment_range_redistribute_handles
+	ligma_gradient_segment_range_replicate
+	ligma_gradient_segment_range_set_blending_function
+	ligma_gradient_segment_range_set_coloring_type
+	ligma_gradient_segment_range_split_midpoint
+	ligma_gradient_segment_range_split_uniform
+	ligma_gradient_segment_set_left_pos
+	ligma_gradient_segment_set_middle_pos
+	ligma_gradient_segments_free
+	ligma_gradient_type_get_type
+	ligma_grid_get_type
+	ligma_gui_config_get_type
+	ligma_help
+	ligma_histogram_calculate
+	ligma_histogram_channel_get_type
+	ligma_histogram_get_count
+	ligma_histogram_get_maximum
+	ligma_histogram_get_mean
+	ligma_histogram_get_median
+	ligma_histogram_get_std_dev
+	ligma_histogram_get_value
+	ligma_histogram_n_components
+	ligma_histogram_new
+	ligma_image_add_channel
+	ligma_image_add_colormap_entry
+	ligma_image_add_hguide
+	ligma_image_add_layer
+	ligma_image_add_vectors
+	ligma_image_add_vguide
+	ligma_image_base_type
+	ligma_image_base_type_with_alpha
+	ligma_image_contiguous_region_by_seed
+	ligma_image_convert
+	ligma_image_crop
+	ligma_image_crop_auto_shrink
+	ligma_image_duplicate
+	ligma_image_find_guide
+	ligma_image_flatten
+	ligma_image_flip
+	ligma_image_floating_sel
+	ligma_image_flush
+	ligma_image_get_active_channel
+	ligma_image_get_active_layer
+	ligma_image_get_active_vectors
+	ligma_image_get_by_ID
+	ligma_image_get_channels
+	ligma_image_get_colormap
+	ligma_image_get_colormap_entry
+	ligma_image_get_colormap_size
+	ligma_image_get_component_active
+	ligma_image_get_component_index
+	ligma_image_get_component_visible
+	ligma_image_get_filename
+	ligma_image_get_grid
+	ligma_image_get_height
+	ligma_image_get_ID
+	ligma_image_get_layer_index
+	ligma_image_get_layers
+	ligma_image_get_mask
+	ligma_image_get_quick_mask_color
+	ligma_image_get_quick_mask_state
+	ligma_image_get_type
+	ligma_image_get_uri_or_untitled
+	ligma_image_get_vectors
+	ligma_image_get_vectors_index
+	ligma_image_get_width
+	ligma_image_has_alpha
+	ligma_image_is_empty
+	ligma_image_layer_boundary
+	ligma_image_lower_channel
+	ligma_image_lower_channel_to_bottom
+	ligma_image_lower_layer
+	ligma_image_lower_layer_to_bottom
+	ligma_image_lower_vectors
+	ligma_image_lower_vectors_to_bottom
+	ligma_image_map_abort
+	ligma_image_map_apply
+	ligma_image_map_clear
+	ligma_image_map_commit
+	ligma_image_map_new
+	ligma_image_merge_down
+	ligma_image_merge_visible_layers
+	ligma_image_merge_visible_vectors
+	ligma_image_move_guide
+	ligma_image_new_get_last_template
+	ligma_image_new_set_last_template
+	ligma_image_pick_color
+	ligma_image_pick_correlate_layer
+	ligma_image_position_channel
+	ligma_image_position_layer
+	ligma_image_position_vectors
+	ligma_image_quick_mask_invert
+	ligma_image_raise_channel
+	ligma_image_raise_channel_to_top
+	ligma_image_raise_layer
+	ligma_image_raise_layer_to_top
+	ligma_image_raise_vectors
+	ligma_image_raise_vectors_to_top
+	ligma_image_redo
+	ligma_image_remove_channel
+	ligma_image_remove_guide
+	ligma_image_remove_layer
+	ligma_image_remove_vectors
+	ligma_image_resize
+	ligma_image_rotate
+	ligma_image_scale
+	ligma_image_scale_check
+	ligma_image_selection_control
+	ligma_image_set_active_channel
+	ligma_image_set_active_layer
+	ligma_image_set_active_vectors
+	ligma_image_set_colormap
+	ligma_image_set_colormap_entry
+	ligma_image_set_component_active
+	ligma_image_set_component_visible
+	ligma_image_set_grid
+	ligma_image_set_quick_mask_color
+	ligma_image_set_quick_mask_state
+	ligma_image_set_resolution
+	ligma_image_set_unit
+	ligma_image_snap_point
+	ligma_image_snap_rectangle
+	ligma_image_undo
+	ligma_image_undo_can_compress
+	ligma_image_undo_disable
+	ligma_image_undo_enable
+	ligma_image_undo_event
+	ligma_image_undo_group_end
+	ligma_image_undo_group_start
+	ligma_image_undo_is_enabled
+	ligma_image_undo_push
+	ligma_image_undo_push_drawable_mod
+	ligma_image_undo_push_image_grid
+	ligma_image_undo_push_item_visibility
+	ligma_image_undo_push_text_layer
+	ligma_image_undo_push_text_layer_modified
+	ligma_image_undo_push_vectors_mod
+	ligma_image_update_guide
+	ligma_imagefile_create_thumbnail
+	ligma_imagefile_get_desc_string
+	ligma_imagefile_get_type
+	ligma_imagefile_new
+	ligma_imagefile_update
+	ligma_initialize
+	ligma_ink_blob_type_get_type
+	ligma_ink_options_get_type
+	ligma_interpolation_type_get_type
+	ligma_item_convert
+	ligma_item_duplicate
+	ligma_item_flip
+	ligma_item_get_by_ID
+	ligma_item_get_ID
+	ligma_item_get_image
+	ligma_item_get_type
+	ligma_item_get_visible
+	ligma_item_height
+	ligma_item_is_text_layer
+	ligma_item_offsets
+	ligma_item_rename
+	ligma_item_resize
+	ligma_item_rotate
+	ligma_item_scale_by_origin
+	ligma_item_set_visible
+	ligma_item_stroke
+	ligma_item_transform
+	ligma_item_translate
+	ligma_item_undo_get_type
+	ligma_item_width
+	ligma_layer_add_alpha
+	ligma_layer_add_mask
+	ligma_layer_apply_mask
+	ligma_layer_create_mask
+	ligma_layer_get_mask
+	ligma_layer_get_mode
+	ligma_layer_get_opacity
+;	ligma_layer_get_preserve_trans
+	ligma_layer_get_type
+	ligma_layer_is_floating_sel
+	ligma_layer_mask_get_apply
+	ligma_layer_mask_get_edit
+	ligma_layer_mask_get_layer
+	ligma_layer_mask_get_show
+	ligma_layer_mask_get_type
+	ligma_layer_mask_set_apply
+	ligma_layer_mask_set_edit
+	ligma_layer_mask_set_show
+	ligma_layer_mode_effects_get_type
+	ligma_layer_new
+	ligma_layer_resize_to_image
+	ligma_layer_set_mode
+	ligma_layer_set_opacity
+;	ligma_layer_set_preserve_trans
+	ligma_list_get_type
+	ligma_list_new
+	ligma_list_new_weak
+	ligma_list_reverse
+	ligma_load_config
+	ligma_lut_free
+	ligma_lut_new
+	ligma_lut_setup
+	ligma_marshal_BOOLEAN__ENUM_INT
+	ligma_marshal_BOOLEAN__OBJECT_POINTER
+	ligma_marshal_BOOLEAN__OBJECT_POINTER_STRING
+	ligma_marshal_VOID__DOUBLE_DOUBLE
+	ligma_marshal_VOID__ENUM_ENUM_BOXED_INT
+	ligma_marshal_VOID__INT_INT
+	ligma_marshal_VOID__OBJECT_OBJECT
+	ligma_marshal_VOID__OBJECT_POINTER
+	ligma_marshal_VOID__POINTER_BOXED
+	ligma_marshal_VOID__POINTER_ENUM 
+	ligma_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
+	ligma_marshal_VOID__STRING_FLAGS
+	ligma_message
+	ligma_modules_refresh
+	ligma_new
+	ligma_object_get_memsize
+	ligma_object_get_name
+	ligma_object_get_type
+	ligma_object_set_name
+	ligma_orientation_type_get_type
+	ligma_paint_core_cancel
+	ligma_paint_core_cleanup
+	ligma_paint_core_finish
+	ligma_paint_core_interpolate
+	ligma_paint_core_paint
+	ligma_paint_core_start
+	ligma_paint_info_get_type
+	ligma_paint_options_get_brush_mode
+	ligma_paint_options_get_type
+	ligma_palette_add_entry
+	ligma_palette_delete_entry
+	ligma_palette_get_standard
+	ligma_palette_get_type
+	ligma_palette_import_from_file
+	ligma_palette_import_from_gradient
+	ligma_palette_import_from_image
+	ligma_palette_import_from_indexed_image
+	ligma_param_memsize_get_type
+	ligma_param_rgb_get_type
+	ligma_param_spec_rgb
+	ligma_param_spec_unit
+	ligma_param_unit_get_type
+	ligma_parameters_append
+	ligma_parameters_append_valist
+	ligma_parameters_free
+	ligma_pattern_get_standard
+	ligma_pattern_get_type
+	ligma_pencil_options_get_type
+	ligma_pickable_get_color_at
+	ligma_pickable_get_image_type
+	ligma_pickable_interface_get_type
+	ligma_pickable_pick_color
+	ligma_projection_flush
+	ligma_projection_flush_now
+	ligma_projection_get_bytes
+	ligma_projection_get_image_type
+	ligma_projection_get_tiles
+	ligma_rc_get_type
+	ligma_rc_new
+	ligma_rc_save
+	ligma_rc_set_autosave
+	ligma_rectangle_intersect
+	ligma_repeat_mode_get_type
+	ligma_restore
+	ligma_scan_convert_free
+	ligma_scan_convert_new
+	ligma_scan_convert_render
+	ligma_selection_float
+	ligma_selection_get_type
+	ligma_selection_save
+	ligma_set_busy
+	ligma_smudge_options_get_type
+	ligma_stroke_anchor_convert
+	ligma_stroke_anchor_delete
+	ligma_stroke_anchor_insert
+	ligma_stroke_anchor_is_insertable
+	ligma_stroke_anchor_move_absolute
+	ligma_stroke_anchor_move_relative
+	ligma_stroke_connect_stroke
+	ligma_stroke_get_draw_anchors
+	ligma_stroke_get_draw_controls
+	ligma_stroke_get_draw_lines
+	ligma_stroke_interpolate
+	ligma_stroke_is_empty
+	ligma_stroke_is_extendable
+	ligma_stroke_nearest_point_get
+	ligma_stroke_open
+	ligma_stroke_options_get_type
+	ligma_stroke_point_is_movable
+	ligma_stroke_point_move_absolute
+	ligma_stroke_translate
+	ligma_template_create_image
+	ligma_template_get_type
+	ligma_template_new
+	ligma_template_set_from_image
+	ligma_text_direction_get_type
+	ligma_text_get_type
+	ligma_text_justification_get_type
+	ligma_text_layer_discard
+	ligma_text_layer_get_text
+	ligma_text_layer_get_type
+	ligma_text_layer_new
+	ligma_text_layer_set
+	ligma_text_undo_get_type
+	ligma_text_vectors_new
+	ligma_tool_info_get_standard
+	ligma_tool_info_get_type
+	ligma_tool_info_new
+	ligma_tool_info_set_standard
+	ligma_tool_options_deserialize
+	ligma_tool_options_get_type
+	ligma_tool_options_reset
+	ligma_tool_options_serialize
+	ligma_tool_presets_new
+	ligma_transfer_mode_get_type
+	ligma_transform_direction_get_type
+	ligma_transform_matrix_perspective
+	ligma_transform_matrix_rotate_center
+	ligma_transform_matrix_scale
+	ligma_transform_matrix_shear
+	ligma_undo_create_preview
+	ligma_undo_free
+	ligma_undo_get_type
+	ligma_undo_refresh_preview
+	ligma_undo_stack_get_type
+	ligma_undo_stack_peek
+	ligma_undo_stack_pop_undo
+	ligma_unset_busy
+	ligma_vectors_anchor_select
+	ligma_vectors_bounds
+	ligma_vectors_export_file
+	ligma_vectors_export_string
+	ligma_vectors_freeze
+	ligma_vectors_get_type
+	ligma_vectors_import_buffer
+	ligma_vectors_import_file
+	ligma_vectors_new
+	ligma_vectors_stroke_add
+	ligma_vectors_stroke_get_next
+	ligma_vectors_stroke_remove
+	ligma_vectors_thaw
+	ligma_viewable_calc_preview_size
+	ligma_viewable_get_description
+	ligma_viewable_get_new_preview
+	ligma_viewable_get_pixbuf
+	ligma_viewable_get_popup_size
+	ligma_viewable_get_preview
+	ligma_viewable_get_preview_size
+	ligma_viewable_get_stock_id
+	ligma_viewable_get_type
+	ligma_viewable_invalidate_preview
+	ligma_xml_parser_free
+	ligma_xml_parser_new
+	ligma_xml_parser_parse_file
 	hue_saturation
 	hue_saturation_calculate_transfers
 	hue_saturation_init
@@ -629,334 +629,334 @@ EXPORTS
 	tile_manager_width
 	tile_release
 ; widget-enums.obj, display-enums.obj
-	gimp_active_color_get_type
-	gimp_aspect_type_get_type
-	gimp_canvas_padding_mode_get_type
-	gimp_color_frame_mode_get_type
-	gimp_color_pick_state_get_type
-	gimp_histogram_scale_get_type
-	gimp_tab_style_get_type
-	gimp_view_type_get_type
-;	gimp_zoom_type_get_type
-; gimpdisplayoptions.obj
-	gimp_display_options_fullscreen_get_type
-	gimp_display_options_get_type
+	ligma_active_color_get_type
+	ligma_aspect_type_get_type
+	ligma_canvas_padding_mode_get_type
+	ligma_color_frame_mode_get_type
+	ligma_color_pick_state_get_type
+	ligma_histogram_scale_get_type
+	ligma_tab_style_get_type
+	ligma_view_type_get_type
+;	ligma_zoom_type_get_type
+; ligmadisplayoptions.obj
+	ligma_display_options_fullscreen_get_type
+	ligma_display_options_get_type
 
-gimp_color_dialog_state_get_type
-gimp_container_filter
-gimp_context_set_palette
-gimp_convert_palette_type_get_type
-gimp_drawable_levels_stretch
-gimp_image_get_resolution
-gimp_image_get_unit
-gimp_image_parasite_find
-gimp_image_resize_to_layers
-gimp_imagefile_create_thumbnail_weak
-gimp_marshal_VOID__BOXED_ENUM
-gimp_progress_cancel
-gimp_progress_end
-gimp_progress_get_value
-gimp_progress_interface_get_type
-gimp_progress_is_active
-gimp_progress_set_text
-gimp_progress_set_value
-gimp_progress_start
-gimp_stroke_desc_new
-gimp_view_size_get_type
-gimp_templates_migrate
+ligma_color_dialog_state_get_type
+ligma_container_filter
+ligma_context_set_palette
+ligma_convert_palette_type_get_type
+ligma_drawable_levels_stretch
+ligma_image_get_resolution
+ligma_image_get_unit
+ligma_image_parasite_find
+ligma_image_resize_to_layers
+ligma_imagefile_create_thumbnail_weak
+ligma_marshal_VOID__BOXED_ENUM
+ligma_progress_cancel
+ligma_progress_end
+ligma_progress_get_value
+ligma_progress_interface_get_type
+ligma_progress_is_active
+ligma_progress_set_text
+ligma_progress_set_value
+ligma_progress_start
+ligma_stroke_desc_new
+ligma_view_size_get_type
+ligma_templates_migrate
 file_utils_filename_from_uri
-gimp_drawable_get_sub_preview
-gimp_drawable_preview_bytes
-gimp_edit_copy_visible
-gimp_image_get_channel_index
-gimp_image_get_save_proc
-gimp_lut_process
-gimp_progress_pulse
-gimp_image_find_sample_point
-gimp_image_move_sample_point
-gimp_image_remove_sample_point
-gimp_image_add_sample_point_at_pos
-gimp_gradient_segment_split_midpoint
-gimp_image_resize_with_layers
-gimp_image_update_sample_point
-gimp_palette_set_columns
-gimp_vectors_warp_vectors
-gimp_buffer_new_from_pixbuf
-gimp_container_is_empty
-gimp_data_factory_data_refresh
-gimp_layer_new_from_pixbuf
-gimp_viewable_get_new_pixbuf
-gimp_viewable_get_size
-gimp_container_clear
-gimp_dash_pattern_free
-gimp_dash_pattern_new_from_preset
-gimp_dash_pattern_copy
-gimp_dash_pattern_new_from_segments
+ligma_drawable_get_sub_preview
+ligma_drawable_preview_bytes
+ligma_edit_copy_visible
+ligma_image_get_channel_index
+ligma_image_get_save_proc
+ligma_lut_process
+ligma_progress_pulse
+ligma_image_find_sample_point
+ligma_image_move_sample_point
+ligma_image_remove_sample_point
+ligma_image_add_sample_point_at_pos
+ligma_gradient_segment_split_midpoint
+ligma_image_resize_with_layers
+ligma_image_update_sample_point
+ligma_palette_set_columns
+ligma_vectors_warp_vectors
+ligma_buffer_new_from_pixbuf
+ligma_container_is_empty
+ligma_data_factory_data_refresh
+ligma_layer_new_from_pixbuf
+ligma_viewable_get_new_pixbuf
+ligma_viewable_get_size
+ligma_container_clear
+ligma_dash_pattern_free
+ligma_dash_pattern_new_from_preset
+ligma_dash_pattern_copy
+ligma_dash_pattern_new_from_segments
 boundary_find
 boundary_sort
-gimp_contexts_clear
-gimp_contexts_load
-gimp_contexts_save
-gimp_edit_named_copy
-gimp_edit_named_copy_visible
-gimp_edit_named_cut
-gimp_get_default_unit
-gimp_layer_flatten
-gimp_layer_get_lock_alpha
-gimp_layer_set_lock_alpha
-gimp_pickable_get_opacity_at
-gimp_undo_stack_get_depth
+ligma_contexts_clear
+ligma_contexts_load
+ligma_contexts_save
+ligma_edit_named_copy
+ligma_edit_named_copy_visible
+ligma_edit_named_cut
+ligma_get_default_unit
+ligma_layer_flatten
+ligma_layer_get_lock_alpha
+ligma_layer_set_lock_alpha
+ligma_pickable_get_opacity_at
+ligma_undo_stack_get_depth
 pixel_region_init_data
 pixel_region_init_temp_buf
-gimp_drawable_foreground_extract_siox
-gimp_scan_convert_add_polyline
-gimp_scan_convert_compose
-gimp_scan_convert_render_value
-gimp_scan_convert_stroke
+ligma_drawable_foreground_extract_siox
+ligma_scan_convert_add_polyline
+ligma_scan_convert_compose
+ligma_scan_convert_render_value
+ligma_scan_convert_stroke
 
-gimp_array_free
-gimp_array_new
-gimp_drawable_get_colormap
-gimp_drawable_get_tiles
-gimp_drawable_id_get_type
-gimp_float_array_get_type
-gimp_histogram_get_threshold
-gimp_image_id_get_type
-gimp_int32_get_type
-gimp_int8_array_get_type
-gimp_object_set_static_name
-gimp_object_take_name
-gimp_param_drawable_id_get_type
-gimp_param_image_id_get_type
-gimp_pdb_execute_procedure_by_name
-gimp_pdb_execute_procedure_by_name_args
-gimp_pdb_get_type
-gimp_pdb_lookup_procedure
-gimp_pickable_flush
-gimp_pickable_get_bytes
-gimp_pickable_get_tiles
-gimp_plug_in_manager_data_free
-gimp_plug_in_manager_get_help_domain
-gimp_plug_in_manager_get_help_domains
-gimp_procedure_execute_async
-gimp_procedure_get_arguments
-gimp_procedure_get_type
-gimp_user_install_free
-gimp_user_install_new
-gimp_user_install_run
-gimp_user_install_set_log_handler
-gimp_value_array_truncate
-gimp_value_set_drawable
-gimp_value_set_image
+ligma_array_free
+ligma_array_new
+ligma_drawable_get_colormap
+ligma_drawable_get_tiles
+ligma_drawable_id_get_type
+ligma_float_array_get_type
+ligma_histogram_get_threshold
+ligma_image_id_get_type
+ligma_int32_get_type
+ligma_int8_array_get_type
+ligma_object_set_static_name
+ligma_object_take_name
+ligma_param_drawable_id_get_type
+ligma_param_image_id_get_type
+ligma_pdb_execute_procedure_by_name
+ligma_pdb_execute_procedure_by_name_args
+ligma_pdb_get_type
+ligma_pdb_lookup_procedure
+ligma_pickable_flush
+ligma_pickable_get_bytes
+ligma_pickable_get_tiles
+ligma_plug_in_manager_data_free
+ligma_plug_in_manager_get_help_domain
+ligma_plug_in_manager_get_help_domains
+ligma_procedure_execute_async
+ligma_procedure_get_arguments
+ligma_procedure_get_type
+ligma_user_install_free
+ligma_user_install_new
+ligma_user_install_run
+ligma_user_install_set_log_handler
+ligma_value_array_truncate
+ligma_value_set_drawable
+ligma_value_set_image
 
-gimp_brush_clipboard_new
-gimp_guide_get_ID
-gimp_guide_get_orientation
-gimp_guide_get_position
-gimp_guide_get_type
-gimp_guide_new
-gimp_guide_removed
-gimp_guide_set_orientation
-gimp_guide_set_position
-gimp_image_item_list_flip
-gimp_image_item_list_get_list
-gimp_image_item_list_rotate
-gimp_image_item_list_transform
-gimp_image_item_list_translate
-gimp_param_spec_get_desc
-gimp_pattern_clipboard_new
-gimp_plug_in_manager_history_clear
-gimp_plug_in_manager_history_remove
-gimp_plug_in_procedure_add_menu_path
-gimp_plug_in_procedure_find
-gimp_plug_in_procedure_get_label
-gimp_plug_in_procedure_get_type
-gimp_plug_in_procedure_new
-gimp_plug_in_procedure_set_file_proc
-gimp_plug_in_procedure_set_icon
-gimp_plug_in_procedure_set_image_types
-gimp_plug_in_procedure_set_mime_type
-gimp_plug_in_procedure_set_thumb_loader
-gimp_temporary_procedure_get_type
-gimp_temporary_procedure_new
-gimp_align_reference_type_get_type
-gimp_drawable_mask_intersect
-gimp_image_arrange_objects
-gimp_image_contiguous_region_by_color
-gimp_image_coords_in_active_pickable
-gimp_image_strong_redo
-gimp_image_strong_undo
-gimp_item_id_get_type
-gimp_item_set_get_type
-gimp_palette_import_from_drawable
-gimp_plug_in_manager_history_add
-gimp_plug_in_manager_history_length
-gimp_plug_in_manager_history_nth
-gimp_plug_in_manager_history_size
-gimp_plug_in_procedure_get_help_id
-gimp_plug_in_procedure_get_pixbuf
-gimp_plug_in_procedure_get_progname
-gimp_plug_in_procedure_get_sensitive
-gimp_plug_in_procedure_get_stock_id
-gimp_progress_get_window
-gimp_select_criterion_get_type
-gimp_show_message
-gimp_value_set_item
-gimp_gradient_has_fg_bg_segments
-gimp_gradient_segment_set_left_color
-gimp_gradient_segment_set_left_color_type
-gimp_gradient_segment_set_right_color
-gimp_gradient_segment_set_right_color_type
-gimp_heal_get_type
-gimp_paint_core_get_type
-gimp_source_core_get_type
-gimp_source_options_get_type
-gimp_perspective_clone_get_source_point
-gimp_perspective_clone_get_type
-gimp_perspective_clone_options_get_type
+ligma_brush_clipboard_new
+ligma_guide_get_ID
+ligma_guide_get_orientation
+ligma_guide_get_position
+ligma_guide_get_type
+ligma_guide_new
+ligma_guide_removed
+ligma_guide_set_orientation
+ligma_guide_set_position
+ligma_image_item_list_flip
+ligma_image_item_list_get_list
+ligma_image_item_list_rotate
+ligma_image_item_list_transform
+ligma_image_item_list_translate
+ligma_param_spec_get_desc
+ligma_pattern_clipboard_new
+ligma_plug_in_manager_history_clear
+ligma_plug_in_manager_history_remove
+ligma_plug_in_procedure_add_menu_path
+ligma_plug_in_procedure_find
+ligma_plug_in_procedure_get_label
+ligma_plug_in_procedure_get_type
+ligma_plug_in_procedure_new
+ligma_plug_in_procedure_set_file_proc
+ligma_plug_in_procedure_set_icon
+ligma_plug_in_procedure_set_image_types
+ligma_plug_in_procedure_set_mime_type
+ligma_plug_in_procedure_set_thumb_loader
+ligma_temporary_procedure_get_type
+ligma_temporary_procedure_new
+ligma_align_reference_type_get_type
+ligma_drawable_mask_intersect
+ligma_image_arrange_objects
+ligma_image_contiguous_region_by_color
+ligma_image_coords_in_active_pickable
+ligma_image_strong_redo
+ligma_image_strong_undo
+ligma_item_id_get_type
+ligma_item_set_get_type
+ligma_palette_import_from_drawable
+ligma_plug_in_manager_history_add
+ligma_plug_in_manager_history_length
+ligma_plug_in_manager_history_nth
+ligma_plug_in_manager_history_size
+ligma_plug_in_procedure_get_help_id
+ligma_plug_in_procedure_get_pixbuf
+ligma_plug_in_procedure_get_progname
+ligma_plug_in_procedure_get_sensitive
+ligma_plug_in_procedure_get_stock_id
+ligma_progress_get_window
+ligma_select_criterion_get_type
+ligma_show_message
+ligma_value_set_item
+ligma_gradient_has_fg_bg_segments
+ligma_gradient_segment_set_left_color
+ligma_gradient_segment_set_left_color_type
+ligma_gradient_segment_set_right_color
+ligma_gradient_segment_set_right_color_type
+ligma_heal_get_type
+ligma_paint_core_get_type
+ligma_source_core_get_type
+ligma_source_options_get_type
+ligma_perspective_clone_get_source_point
+ligma_perspective_clone_get_type
+ligma_perspective_clone_options_get_type
 
-gimp_brush_generated_load
-gimp_brush_generated_save
-gimp_brush_pipe_load
-gimp_palette_load
-gimp_palette_load_act
-gimp_palette_load_detect_format
-gimp_palette_load_psp
-gimp_palette_load_riff
-gimp_palette_save
-gimp_pattern_load
-gimp_pattern_load_pixbuf
-gimp_get_tool_info
-gimp_gradient_save_pov
-gimp_message_valist
-gimp_viewable_set_stock_id
+ligma_brush_generated_load
+ligma_brush_generated_save
+ligma_brush_pipe_load
+ligma_palette_load
+ligma_palette_load_act
+ligma_palette_load_detect_format
+ligma_palette_load_psp
+ligma_palette_load_riff
+ligma_palette_save
+ligma_pattern_load
+ligma_pattern_load_pixbuf
+ligma_get_tool_info
+ligma_gradient_save_pov
+ligma_message_valist
+ligma_viewable_set_stock_id
 
-gimp_plug_in_procedure_get_blurb
+ligma_plug_in_procedure_get_blurb
 
-gimp_channel_select_round_rect
-gimp_drawable_undo_get_type
-gimp_message_severity_get_type
-gimp_progress_message
+ligma_channel_select_round_rect
+ligma_drawable_undo_get_type
+ligma_message_severity_get_type
+ligma_progress_message
 plug_in_icc_profile_info
 
 file_open_layers
-gimp_brush_core_create_bound_segs
-gimp_image_add_layers
-gimp_palette_find_entry
-gimp_param_int32_get_type
-gimp_param_item_id_get_type
-gimp_param_string_get_type
-gimp_tool_options_create_folder
-gimp_tool_options_delete
-gimp_tool_presets_get_options
-gimp_tool_presets_load
-gimp_tool_presets_save
+ligma_brush_core_create_bound_segs
+ligma_image_add_layers
+ligma_palette_find_entry
+ligma_param_int32_get_type
+ligma_param_item_id_get_type
+ligma_param_string_get_type
+ligma_tool_options_create_folder
+ligma_tool_options_delete
+ligma_tool_presets_get_options
+ligma_tool_presets_load
+ligma_tool_presets_save
 plug_in_icc_profile_file_info
 
-gimp_dash_pattern_get_type
-gimp_dash_pattern_fill_segments
+ligma_dash_pattern_get_type
+ligma_dash_pattern_fill_segments
 
 file_open_from_command_line
-gimp_color_pick_mode_get_type
-gimp_undo_get_age
-gimp_undo_reset_age
+ligma_color_pick_mode_get_type
+ligma_undo_get_age
+ligma_undo_reset_age
 
 file_procedure_find
 file_procedure_find_by_extension
-gimp_container_get_neighbor_of_active
-gimp_image_resize_to_selection
-gimp_param_display_id_get_type
-gimp_projection_get_level
-gimp_projection_get_tiles_at_level
-gimp_projection_get_type
-gimp_sub_progress_get_type
-gimp_sub_progress_new
-gimp_sub_progress_set_step
-gimp_value_set_display
+ligma_container_get_neighbor_of_active
+ligma_image_resize_to_selection
+ligma_param_display_id_get_type
+ligma_projection_get_level
+ligma_projection_get_tiles_at_level
+ligma_projection_get_type
+ligma_sub_progress_get_type
+ligma_sub_progress_new
+ligma_sub_progress_set_step
+ligma_value_set_display
 tile_swap_exit
 
-gimp_image_parasite_attach
-gimp_image_parasite_detach
+ligma_image_parasite_attach
+ligma_image_parasite_detach
 
-gimp_image_get_load_proc
+ligma_image_get_load_proc
 
-gimp_log
-gimp_logv
-gimp_log_flags
-gimp_log_init
-gimp_viewable_preview_is_frozen
-gimp_curve_new
-gimp_curve_get_type
-gimp_curve_reset
-gimp_curve_set_point
-gimp_curve_get_uchar
-gimp_curve_move_point
-gimp_curve_set_curve
-gimp_curve_set_curve_type
-gimp_curve_get_closest_point
-gimp_gegl_init
-gimp_image_get_guides
-gimp_image_get_sample_points
-gimp_plug_in_manager_get_menu_branches
+ligma_log
+ligma_logv
+ligma_log_flags
+ligma_log_init
+ligma_viewable_preview_is_frozen
+ligma_curve_new
+ligma_curve_get_type
+ligma_curve_reset
+ligma_curve_set_point
+ligma_curve_get_uchar
+ligma_curve_move_point
+ligma_curve_set_curve
+ligma_curve_set_curve_type
+ligma_curve_get_closest_point
+ligma_gegl_init
+ligma_image_get_guides
+ligma_image_get_sample_points
+ligma_plug_in_manager_get_menu_branches
 desaturate_region
 file_utils_filename_is_uri
 get_pid
-gimp_brightness_contrast_config_get_type
-gimp_brightness_contrast_config_set_node
-gimp_brightness_contrast_config_to_levels_config
-gimp_buffer_get_tiles
-gimp_color_balance_config_get_type
-gimp_color_balance_config_reset_range
-gimp_color_balance_config_to_cruft
-gimp_colorize_config_get_type
-gimp_colorize_config_to_cruft
-gimp_container_get_first_child
-gimp_context_display_changed
-gimp_curve_get_curve_type
-gimp_curve_get_n_points
-gimp_curve_get_n_samples
-gimp_curve_get_point
-gimp_curve_map_value
-gimp_curves_config_get_type
-gimp_curves_config_load_cruft
-gimp_curves_config_save_cruft
-gimp_curves_config_to_cruft
-gimp_desaturate_config_get_type
-gimp_display_options_no_image_get_type
-gimp_histogram_duplicate
-gimp_histogram_ref
-gimp_histogram_unref
-gimp_hue_saturation_config_get_type
-gimp_hue_saturation_config_reset_range
-gimp_hue_saturation_config_to_cruft
-gimp_image_get_projection
-gimp_image_map_config_compare
-gimp_image_map_config_get_type
-gimp_imagefile_set_mime_type
-gimp_is_restored
-gimp_item_is_attached
-gimp_layer_new_from_tiles
-gimp_levels_config_adjust_by_colors
-gimp_levels_config_get_type
-gimp_levels_config_load_cruft
-gimp_levels_config_reset_channel
-gimp_levels_config_save_cruft
-gimp_levels_config_stretch
-gimp_levels_config_to_cruft
-gimp_levels_config_to_curves_config
-gimp_list_set_sort_func
-gimp_marshal_BOOLEAN__STRING
-gimp_marshal_VOID__DOUBLE
-gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE
-gimp_operation_hue_saturation_map
-gimp_operation_levels_map_input
-gimp_perspective_clone_set_transform
-gimp_posterize_config_get_type
-gimp_recent_list_load
-gimp_scan_convert_compose_value
-gimp_stroke_options_take_dash_pattern
-gimp_threshold_config_get_type
-gimp_threshold_config_to_cruft
-gimp_tool_info_build_options_filename
-gimp_use_gegl
-gimp_vectors_make_bezier
+ligma_brightness_contrast_config_get_type
+ligma_brightness_contrast_config_set_node
+ligma_brightness_contrast_config_to_levels_config
+ligma_buffer_get_tiles
+ligma_color_balance_config_get_type
+ligma_color_balance_config_reset_range
+ligma_color_balance_config_to_cruft
+ligma_colorize_config_get_type
+ligma_colorize_config_to_cruft
+ligma_container_get_first_child
+ligma_context_display_changed
+ligma_curve_get_curve_type
+ligma_curve_get_n_points
+ligma_curve_get_n_samples
+ligma_curve_get_point
+ligma_curve_map_value
+ligma_curves_config_get_type
+ligma_curves_config_load_cruft
+ligma_curves_config_save_cruft
+ligma_curves_config_to_cruft
+ligma_desaturate_config_get_type
+ligma_display_options_no_image_get_type
+ligma_histogram_duplicate
+ligma_histogram_ref
+ligma_histogram_unref
+ligma_hue_saturation_config_get_type
+ligma_hue_saturation_config_reset_range
+ligma_hue_saturation_config_to_cruft
+ligma_image_get_projection
+ligma_image_map_config_compare
+ligma_image_map_config_get_type
+ligma_imagefile_set_mime_type
+ligma_is_restored
+ligma_item_is_attached
+ligma_layer_new_from_tiles
+ligma_levels_config_adjust_by_colors
+ligma_levels_config_get_type
+ligma_levels_config_load_cruft
+ligma_levels_config_reset_channel
+ligma_levels_config_save_cruft
+ligma_levels_config_stretch
+ligma_levels_config_to_cruft
+ligma_levels_config_to_curves_config
+ligma_list_set_sort_func
+ligma_marshal_BOOLEAN__STRING
+ligma_marshal_VOID__DOUBLE
+ligma_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE
+ligma_operation_hue_saturation_map
+ligma_operation_levels_map_input
+ligma_perspective_clone_set_transform
+ligma_posterize_config_get_type
+ligma_recent_list_load
+ligma_scan_convert_compose_value
+ligma_stroke_options_take_dash_pattern
+ligma_threshold_config_get_type
+ligma_threshold_config_to_cruft
+ligma_tool_info_build_options_filename
+ligma_use_gegl
+ligma_vectors_make_bezier

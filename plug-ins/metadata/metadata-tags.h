@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2016, 2017 Ben Touchette
@@ -28,12 +28,12 @@
 
 enum
 {
-  GIMP_XMP_NONE = 0,
-  GIMP_XMP_TEXT,
-  GIMP_XMP_BAG,
-  GIMP_XMP_SEQ,
-  GIMP_XMP_LANG,
-  GIMP_XMP_ALT
+  LIGMA_XMP_NONE = 0,
+  LIGMA_XMP_TEXT,
+  LIGMA_XMP_BAG,
+  LIGMA_XMP_SEQ,
+  LIGMA_XMP_LANG,
+  LIGMA_XMP_ALT
 };
 
 enum

@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolcompass.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolcompass.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * Measure tool
- * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2003 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,27 +26,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
+#include "core/ligmamarshal.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvashandle.h"
-#include "gimpcanvasline.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpdisplayshell-utils.h"
-#include "gimptoolcompass.h"
+#include "ligmacanvashandle.h"
+#include "ligmacanvasline.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-appearance.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmadisplayshell-utils.h"
+#include "ligmatoolcompass.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define ARC_RADIUS 30
@@ -87,19 +87,19 @@ enum
   LAST_SIGNAL
 };
 
-struct _GimpToolCompassPrivate
+struct _LigmaToolCompassPrivate
 {
-  GimpCompassOrientation  orientation;
+  LigmaCompassOrientation  orientation;
   gint                    n_points;
   gint                    x[3];
   gint                    y[3];
 
-  GimpVector2             radius1;
-  GimpVector2             radius2;
+  LigmaVector2             radius1;
+  LigmaVector2             radius2;
   gdouble                 display_angle;
   gdouble                 pixel_angle;
   gdouble                 unit_angle;
-  GimpCompassOrientation  effective_orientation;
+  LigmaCompassOrientation  effective_orientation;
 
   CompassFunction         function;
   gdouble                 mouse_x;
@@ -108,96 +108,96 @@ struct _GimpToolCompassPrivate
   gint                    last_y;
   gint                    point;
 
-  GimpCanvasItem         *line1;
-  GimpCanvasItem         *line2;
-  GimpCanvasItem         *arc;
-  GimpCanvasItem         *arc_line;
-  GimpCanvasItem         *handles[3];
+  LigmaCanvasItem         *line1;
+  LigmaCanvasItem         *line2;
+  LigmaCanvasItem         *arc;
+  LigmaCanvasItem         *arc_line;
+  LigmaCanvasItem         *handles[3];
 };
 
 
 /*  local function prototypes  */
 
-static void     gimp_tool_compass_constructed     (GObject                *object);
-static void     gimp_tool_compass_set_property    (GObject                *object,
+static void     ligma_tool_compass_constructed     (GObject                *object);
+static void     ligma_tool_compass_set_property    (GObject                *object,
                                                    guint                   property_id,
                                                    const GValue           *value,
                                                    GParamSpec             *pspec);
-static void     gimp_tool_compass_get_property    (GObject                *object,
+static void     ligma_tool_compass_get_property    (GObject                *object,
                                                    guint                   property_id,
                                                    GValue                 *value,
                                                    GParamSpec             *pspec);
 
-static void     gimp_tool_compass_changed         (GimpToolWidget         *widget);
-static gint     gimp_tool_compass_button_press    (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+static void     ligma_tool_compass_changed         (LigmaToolWidget         *widget);
+static gint     ligma_tool_compass_button_press    (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    guint32                 time,
                                                    GdkModifierType         state,
-                                                   GimpButtonPressType     press_type);
-static void     gimp_tool_compass_button_release  (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+                                                   LigmaButtonPressType     press_type);
+static void     ligma_tool_compass_button_release  (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    guint32                 time,
                                                    GdkModifierType         state,
-                                                   GimpButtonReleaseType   release_type);
-static void     gimp_tool_compass_motion          (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+                                                   LigmaButtonReleaseType   release_type);
+static void     ligma_tool_compass_motion          (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    guint32                 time,
                                                    GdkModifierType         state);
-static GimpHit  gimp_tool_compass_hit             (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+static LigmaHit  ligma_tool_compass_hit             (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    GdkModifierType         state,
                                                    gboolean                proximity);
-static void     gimp_tool_compass_hover           (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+static void     ligma_tool_compass_hover           (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    GdkModifierType         state,
                                                    gboolean                proximity);
-static void     gimp_tool_compass_leave_notify    (GimpToolWidget         *widget);
-static void     gimp_tool_compass_motion_modifier (GimpToolWidget         *widget,
+static void     ligma_tool_compass_leave_notify    (LigmaToolWidget         *widget);
+static void     ligma_tool_compass_motion_modifier (LigmaToolWidget         *widget,
                                                    GdkModifierType         key,
                                                    gboolean                press,
                                                    GdkModifierType         state);
-static gboolean gimp_tool_compass_get_cursor      (GimpToolWidget         *widget,
-                                                   const GimpCoords       *coords,
+static gboolean ligma_tool_compass_get_cursor      (LigmaToolWidget         *widget,
+                                                   const LigmaCoords       *coords,
                                                    GdkModifierType         state,
-                                                   GimpCursorType         *cursor,
-                                                   GimpToolCursorType     *tool_cursor,
-                                                   GimpCursorModifier     *modifier);
+                                                   LigmaCursorType         *cursor,
+                                                   LigmaToolCursorType     *tool_cursor,
+                                                   LigmaCursorModifier     *modifier);
 
-static gint     gimp_tool_compass_get_point       (GimpToolCompass        *compass,
-                                                   const GimpCoords       *coords);
-static void     gimp_tool_compass_update_hilight  (GimpToolCompass        *compass);
-static void     gimp_tool_compass_update_angle    (GimpToolCompass        *compass,
-                                                   GimpCompassOrientation  orientation,
+static gint     ligma_tool_compass_get_point       (LigmaToolCompass        *compass,
+                                                   const LigmaCoords       *coords);
+static void     ligma_tool_compass_update_hilight  (LigmaToolCompass        *compass);
+static void     ligma_tool_compass_update_angle    (LigmaToolCompass        *compass,
+                                                   LigmaCompassOrientation  orientation,
                                                    gboolean                flip);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolCompass, gimp_tool_compass,
-                            GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolCompass, ligma_tool_compass,
+                            LIGMA_TYPE_TOOL_WIDGET)
 
-#define parent_class gimp_tool_compass_parent_class
+#define parent_class ligma_tool_compass_parent_class
 
 static guint compass_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_tool_compass_class_init (GimpToolCompassClass *klass)
+ligma_tool_compass_class_init (LigmaToolCompassClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed      = gimp_tool_compass_constructed;
-  object_class->set_property     = gimp_tool_compass_set_property;
-  object_class->get_property     = gimp_tool_compass_get_property;
+  object_class->constructed      = ligma_tool_compass_constructed;
+  object_class->set_property     = ligma_tool_compass_set_property;
+  object_class->get_property     = ligma_tool_compass_get_property;
 
-  widget_class->changed          = gimp_tool_compass_changed;
-  widget_class->button_press     = gimp_tool_compass_button_press;
-  widget_class->button_release   = gimp_tool_compass_button_release;
-  widget_class->motion           = gimp_tool_compass_motion;
-  widget_class->hit              = gimp_tool_compass_hit;
-  widget_class->hover            = gimp_tool_compass_hover;
-  widget_class->leave_notify     = gimp_tool_compass_leave_notify;
-  widget_class->motion_modifier  = gimp_tool_compass_motion_modifier;
-  widget_class->get_cursor       = gimp_tool_compass_get_cursor;
+  widget_class->changed          = ligma_tool_compass_changed;
+  widget_class->button_press     = ligma_tool_compass_button_press;
+  widget_class->button_release   = ligma_tool_compass_button_release;
+  widget_class->motion           = ligma_tool_compass_motion;
+  widget_class->hit              = ligma_tool_compass_hit;
+  widget_class->hover            = ligma_tool_compass_hover;
+  widget_class->leave_notify     = ligma_tool_compass_leave_notify;
+  widget_class->motion_modifier  = ligma_tool_compass_motion_modifier;
+  widget_class->get_cursor       = ligma_tool_compass_get_cursor;
   widget_class->update_on_scale  = TRUE;
   widget_class->update_on_rotate = TRUE;
 
@@ -205,9 +205,9 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
     g_signal_new ("create-guides",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolCompassClass, create_guides),
+                  G_STRUCT_OFFSET (LigmaToolCompassClass, create_guides),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_BOOLEAN_BOOLEAN,
+                  ligma_marshal_VOID__INT_INT_BOOLEAN_BOOLEAN,
                   G_TYPE_NONE, 4,
                   G_TYPE_INT,
                   G_TYPE_INT,
@@ -216,151 +216,151 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation", NULL, NULL,
-                                                      GIMP_TYPE_COMPASS_ORIENTATION,
-                                                      GIMP_COMPASS_ORIENTATION_AUTO,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_COMPASS_ORIENTATION,
+                                                      LIGMA_COMPASS_ORIENTATION_AUTO,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_N_POINTS,
                                    g_param_spec_int ("n-points", NULL, NULL,
                                                      1, 3, 1,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X1,
                                    g_param_spec_int ("x1", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y1,
                                    g_param_spec_int ("y1", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X2,
                                    g_param_spec_int ("x2", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y2,
                                    g_param_spec_int ("y2", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X3,
                                    g_param_spec_int ("x3", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y3,
                                    g_param_spec_int ("y3", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIXEL_ANGLE,
                                    g_param_spec_double ("pixel-angle", NULL, NULL,
                                                         -G_PI, G_PI, 0.0,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_UNIT_ANGLE,
                                    g_param_spec_double ("unit-angle", NULL, NULL,
                                                         -G_PI, G_PI, 0.0,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_EFFECTIVE_ORIENTATION,
                                    g_param_spec_enum ("effective-orientation", NULL, NULL,
-                                                      GIMP_TYPE_COMPASS_ORIENTATION,
-                                                      GIMP_COMPASS_ORIENTATION_AUTO,
-                                                      GIMP_PARAM_READABLE));
+                                                      LIGMA_TYPE_COMPASS_ORIENTATION,
+                                                      LIGMA_COMPASS_ORIENTATION_AUTO,
+                                                      LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_tool_compass_init (GimpToolCompass *compass)
+ligma_tool_compass_init (LigmaToolCompass *compass)
 {
-  compass->private = gimp_tool_compass_get_instance_private (compass);
+  compass->private = ligma_tool_compass_get_instance_private (compass);
 
   compass->private->point = -1;
 }
 
 static void
-gimp_tool_compass_constructed (GObject *object)
+ligma_tool_compass_constructed (GObject *object)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (object);
-  GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolCompassPrivate *private = compass->private;
-  GimpCanvasGroup        *stroke_group;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (object);
+  LigmaToolWidget         *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolCompassPrivate *private = compass->private;
+  LigmaCanvasGroup        *stroke_group;
   gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  stroke_group = gimp_tool_widget_add_stroke_group (widget);
+  stroke_group = ligma_tool_widget_add_stroke_group (widget);
 
-  gimp_tool_widget_push_group (widget, stroke_group);
+  ligma_tool_widget_push_group (widget, stroke_group);
 
-  private->line1 = gimp_tool_widget_add_line (widget,
+  private->line1 = ligma_tool_widget_add_line (widget,
                                               private->x[0],
                                               private->y[0],
                                               private->x[1],
                                               private->y[1]);
 
-  private->line2 = gimp_tool_widget_add_line (widget,
+  private->line2 = ligma_tool_widget_add_line (widget,
                                               private->x[0],
                                               private->y[0],
                                               private->x[2],
                                               private->y[2]);
 
-  private->arc = gimp_tool_widget_add_handle (widget,
-                                              GIMP_HANDLE_CIRCLE,
+  private->arc = ligma_tool_widget_add_handle (widget,
+                                              LIGMA_HANDLE_CIRCLE,
                                               private->x[0],
                                               private->y[0],
                                               ARC_RADIUS * 2 + 1,
                                               ARC_RADIUS * 2 + 1,
-                                              GIMP_HANDLE_ANCHOR_CENTER);
+                                              LIGMA_HANDLE_ANCHOR_CENTER);
 
-  private->arc_line = gimp_tool_widget_add_line (widget,
+  private->arc_line = ligma_tool_widget_add_line (widget,
                                                  private->x[0],
                                                  private->y[0],
                                                  private->x[0] + 10,
                                                  private->y[0]);
 
-  gimp_tool_widget_pop_group (widget);
+  ligma_tool_widget_pop_group (widget);
 
   for (i = 0; i < 3; i++)
     {
       private->handles[i] =
-        gimp_tool_widget_add_handle (widget,
+        ligma_tool_widget_add_handle (widget,
                                      i == 0 ?
-                                     GIMP_HANDLE_CIRCLE : GIMP_HANDLE_CROSS,
+                                     LIGMA_HANDLE_CIRCLE : LIGMA_HANDLE_CROSS,
                                      private->x[i],
                                      private->y[i],
-                                     GIMP_CANVAS_HANDLE_SIZE_CROSS,
-                                     GIMP_CANVAS_HANDLE_SIZE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+                                     LIGMA_CANVAS_HANDLE_SIZE_CROSS,
+                                     LIGMA_CANVAS_HANDLE_SIZE_CROSS,
+                                     LIGMA_HANDLE_ANCHOR_CENTER);
     }
 
-  gimp_tool_compass_changed (widget);
+  ligma_tool_compass_changed (widget);
 }
 
 static void
-gimp_tool_compass_set_property (GObject      *object,
+ligma_tool_compass_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (object);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (object);
+  LigmaToolCompassPrivate *private = compass->private;
 
   switch (property_id)
     {
@@ -396,13 +396,13 @@ gimp_tool_compass_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_compass_get_property (GObject    *object,
+ligma_tool_compass_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (object);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (object);
+  LigmaToolCompassPrivate *private = compass->private;
 
   switch (property_id)
     {
@@ -447,11 +447,11 @@ gimp_tool_compass_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_compass_changed (GimpToolWidget *widget)
+ligma_tool_compass_changed (LigmaToolWidget *widget)
 {
-  GimpToolCompass        *compass       = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private       = compass->private;
-  GimpDisplayShell       *shell         = gimp_tool_widget_get_shell (widget);
+  LigmaToolCompass        *compass       = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private       = compass->private;
+  LigmaDisplayShell       *shell         = ligma_tool_widget_get_shell (widget);
   gdouble                 angle1;
   gdouble                 angle2;
   gint                    draw_arc      = 0;
@@ -459,20 +459,20 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
   gdouble                 arc_line_display_length;
   gdouble                 arc_line_length;
 
-  gimp_tool_compass_update_angle (compass, private->orientation, FALSE);
+  ligma_tool_compass_update_angle (compass, private->orientation, FALSE);
 
   angle1 = -atan2 (private->radius1.y * shell->scale_y,
                    private->radius1.x * shell->scale_x);
   angle2 = -private->display_angle;
 
-  gimp_canvas_line_set (private->line1,
+  ligma_canvas_line_set (private->line1,
                         private->x[0],
                         private->y[0],
                         private->x[1],
                         private->y[1]);
-  gimp_canvas_item_set_visible (private->line1, private->n_points > 1);
+  ligma_canvas_item_set_visible (private->line1, private->n_points > 1);
   if (private->n_points > 1 &&
-      gimp_canvas_item_transform_distance (private->line1,
+      ligma_canvas_item_transform_distance (private->line1,
                                            private->x[0],
                                            private->y[0],
                                            private->x[1],
@@ -483,7 +483,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
 
 
   arc_line_display_length = ARC_RADIUS                           +
-                            (GIMP_CANVAS_HANDLE_SIZE_CROSS >> 1) +
+                            (LIGMA_CANVAS_HANDLE_SIZE_CROSS >> 1) +
                             ARC_GAP;
   arc_line_length         = arc_line_display_length              /
                             hypot (private->radius2.x * shell->scale_x,
@@ -491,7 +491,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
 
   if (private->n_points > 2)
     {
-      gdouble length = gimp_canvas_item_transform_distance (private->line2,
+      gdouble length = ligma_canvas_item_transform_distance (private->line2,
                                                             private->x[0],
                                                             private->y[0],
                                                             private->x[2],
@@ -504,82 +504,82 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
 
           if (length > arc_line_display_length)
             {
-              gimp_canvas_line_set (
+              ligma_canvas_line_set (
                 private->line2,
                 private->x[0] + private->radius2.x * arc_line_length,
                 private->y[0] + private->radius2.y * arc_line_length,
                 private->x[2],
                 private->y[2]);
-              gimp_canvas_item_set_visible (private->line2, TRUE);
+              ligma_canvas_item_set_visible (private->line2, TRUE);
             }
           else
             {
-              gimp_canvas_item_set_visible (private->line2, FALSE);
+              ligma_canvas_item_set_visible (private->line2, FALSE);
             }
         }
       else
         {
-          gimp_canvas_line_set (private->line2,
+          ligma_canvas_line_set (private->line2,
                                 private->x[0],
                                 private->y[0],
                                 private->x[2],
                                 private->y[2]);
-          gimp_canvas_item_set_visible (private->line2, TRUE);
+          ligma_canvas_item_set_visible (private->line2, TRUE);
         }
     }
   else
     {
-      gimp_canvas_item_set_visible (private->line2, FALSE);
+      ligma_canvas_item_set_visible (private->line2, FALSE);
     }
 
-  gimp_canvas_handle_set_position (private->arc,
+  ligma_canvas_handle_set_position (private->arc,
                                    private->x[0], private->y[0]);
-  gimp_canvas_handle_set_angles (private->arc, angle1, angle2);
-  gimp_canvas_item_set_visible (private->arc,
+  ligma_canvas_handle_set_angles (private->arc, angle1, angle2);
+  ligma_canvas_item_set_visible (private->arc,
                                 private->n_points > 1             &&
                                 draw_arc == private->n_points - 1 &&
                                 fabs (angle2) > EPSILON);
 
-  arc_line_length = (ARC_RADIUS + (GIMP_CANVAS_HANDLE_SIZE_CROSS >> 1)) /
+  arc_line_length = (ARC_RADIUS + (LIGMA_CANVAS_HANDLE_SIZE_CROSS >> 1)) /
                     hypot (private->radius2.x * shell->scale_x,
                            private->radius2.y * shell->scale_y);
 
-  gimp_canvas_line_set (private->arc_line,
+  ligma_canvas_line_set (private->arc_line,
                         private->x[0],
                         private->y[0],
                         private->x[0] + private->radius2.x * arc_line_length,
                         private->y[0] + private->radius2.y * arc_line_length);
-  gimp_canvas_item_set_visible (private->arc_line,
+  ligma_canvas_item_set_visible (private->arc_line,
                                 (private->n_points == 2 || draw_arc_line) &&
                                 fabs (angle2) > EPSILON);
 
-  gimp_canvas_handle_set_position (private->handles[0],
+  ligma_canvas_handle_set_position (private->handles[0],
                                    private->x[0], private->y[0]);
-  gimp_canvas_item_set_visible (private->handles[0],
+  ligma_canvas_item_set_visible (private->handles[0],
                                 private->n_points > 0);
 
-  gimp_canvas_handle_set_position (private->handles[1],
+  ligma_canvas_handle_set_position (private->handles[1],
                                    private->x[1], private->y[1]);
-  gimp_canvas_item_set_visible (private->handles[1],
+  ligma_canvas_item_set_visible (private->handles[1],
                                 private->n_points > 1);
 
-  gimp_canvas_handle_set_position (private->handles[2],
+  ligma_canvas_handle_set_position (private->handles[2],
                                    private->x[2], private->y[2]);
-  gimp_canvas_item_set_visible (private->handles[2],
+  ligma_canvas_item_set_visible (private->handles[2],
                                 private->n_points > 2);
 
-  gimp_tool_compass_update_hilight (compass);
+  ligma_tool_compass_update_hilight (compass);
 }
 
 gint
-gimp_tool_compass_button_press (GimpToolWidget      *widget,
-                                const GimpCoords    *coords,
+ligma_tool_compass_button_press (LigmaToolWidget      *widget,
+                                const LigmaCoords    *coords,
                                 guint32              time,
                                 GdkModifierType      state,
-                                GimpButtonPressType  press_type)
+                                LigmaButtonPressType  press_type)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
 
   private->function = CREATING;
 
@@ -591,8 +591,8 @@ gimp_tool_compass_button_press (GimpToolWidget      *widget,
    */
   if (private->point != -1)
     {
-      GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
-      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+      GdkModifierType extend_mask = ligma_get_extend_selection_mask ();
+      GdkModifierType toggle_mask = ligma_get_toggle_behavior_mask ();
 
       if (state & (toggle_mask | GDK_MOD1_MASK))
         {
@@ -657,26 +657,26 @@ gimp_tool_compass_button_press (GimpToolWidget      *widget,
 }
 
 void
-gimp_tool_compass_button_release (GimpToolWidget        *widget,
-                                  const GimpCoords      *coords,
+ligma_tool_compass_button_release (LigmaToolWidget        *widget,
+                                  const LigmaCoords      *coords,
                                   guint32                time,
                                   GdkModifierType        state,
-                                  GimpButtonReleaseType  release_type)
+                                  LigmaButtonReleaseType  release_type)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
 
   private->function = FINISHED;
 }
 
 void
-gimp_tool_compass_motion (GimpToolWidget   *widget,
-                          const GimpCoords *coords,
+ligma_tool_compass_motion (LigmaToolWidget   *widget,
+                          const LigmaCoords *coords,
                           guint32           time,
                           GdkModifierType   state)
 {
-  GimpToolCompass        *compass  = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private  = compass->private;
+  LigmaToolCompass        *compass  = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private  = compass->private;
   gint                    new_n_points;
   gint                    new_x[3];
   gint                    new_y[3];
@@ -758,15 +758,15 @@ gimp_tool_compass_motion (GimpToolWidget   *widget,
       new_x[private->point] = ROUND (coords->x);
       new_y[private->point] = ROUND (coords->y);
 
-      if (state & gimp_get_constrain_behavior_mask ())
+      if (state & ligma_get_constrain_behavior_mask ())
         {
           gdouble  x = new_x[private->point];
           gdouble  y = new_y[private->point];
 
-          gimp_display_shell_constrain_line (gimp_tool_widget_get_shell (widget),
+          ligma_display_shell_constrain_line (ligma_tool_widget_get_shell (widget),
                                              new_x[0], new_y[0],
                                              &x, &y,
-                                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+                                             LIGMA_CONSTRAIN_LINE_15_DEGREES);
 
           new_x[private->point] = ROUND (x);
           new_y[private->point] = ROUND (y);
@@ -805,46 +805,46 @@ gimp_tool_compass_motion (GimpToolWidget   *widget,
     }
 }
 
-GimpHit
-gimp_tool_compass_hit (GimpToolWidget   *widget,
-                       const GimpCoords *coords,
+LigmaHit
+ligma_tool_compass_hit (LigmaToolWidget   *widget,
+                       const LigmaCoords *coords,
                        GdkModifierType   state,
                        gboolean          proximity)
 {
-  GimpToolCompass *compass = GIMP_TOOL_COMPASS (widget);
+  LigmaToolCompass *compass = LIGMA_TOOL_COMPASS (widget);
 
-  if (gimp_tool_compass_get_point (compass, coords) >= 0)
-    return GIMP_HIT_DIRECT;
+  if (ligma_tool_compass_get_point (compass, coords) >= 0)
+    return LIGMA_HIT_DIRECT;
   else
-    return GIMP_HIT_INDIRECT;
+    return LIGMA_HIT_INDIRECT;
 }
 
 void
-gimp_tool_compass_hover (GimpToolWidget   *widget,
-                         const GimpCoords *coords,
+ligma_tool_compass_hover (LigmaToolWidget   *widget,
+                         const LigmaCoords *coords,
                          GdkModifierType   state,
                          gboolean          proximity)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
   gint                    point;
 
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
-  point = gimp_tool_compass_get_point (compass, coords);
+  point = ligma_tool_compass_get_point (compass, coords);
 
   if (point >= 0)
     {
-      GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
-      GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+      GdkModifierType  extend_mask = ligma_get_extend_selection_mask ();
+      GdkModifierType  toggle_mask = ligma_get_toggle_behavior_mask ();
       gchar           *status;
 
       if (state & toggle_mask)
         {
           if (state & GDK_MOD1_MASK)
             {
-              status = gimp_suggest_modifiers (_("Click to place "
+              status = ligma_suggest_modifiers (_("Click to place "
                                                  "vertical and "
                                                  "horizontal guides"),
                                                0,
@@ -852,7 +852,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
             }
           else
             {
-              status = gimp_suggest_modifiers (_("Click to place a "
+              status = ligma_suggest_modifiers (_("Click to place a "
                                                  "horizontal guide"),
                                                GDK_MOD1_MASK & ~state,
                                                NULL, NULL, NULL);
@@ -860,7 +860,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
         }
       else if (state & GDK_MOD1_MASK)
         {
-          status = gimp_suggest_modifiers (_("Click to place a "
+          status = ligma_suggest_modifiers (_("Click to place a "
                                              "vertical guide"),
                                            toggle_mask & ~state,
                                            NULL, NULL, NULL);
@@ -868,7 +868,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
       else if ((state & extend_mask) &&
                ! ((point == 0) && (private->n_points == 3)))
         {
-          status = gimp_suggest_modifiers (_("Click-Drag to add a "
+          status = ligma_suggest_modifiers (_("Click-Drag to add a "
                                              "new point"),
                                            (toggle_mask |
                                             GDK_MOD1_MASK) & ~state,
@@ -879,7 +879,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
           if ((point == 0) && (private->n_points == 3))
             state |= extend_mask;
 
-          status = gimp_suggest_modifiers (_("Click-Drag to move this "
+          status = ligma_suggest_modifiers (_("Click-Drag to move this "
                                              "point"),
                                            (extend_mask |
                                             toggle_mask |
@@ -887,7 +887,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
                                            NULL, NULL, NULL);
         }
 
-      gimp_tool_widget_set_status (widget, status);
+      ligma_tool_widget_set_status (widget, status);
 
       g_free (status);
     }
@@ -895,12 +895,12 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
     {
       if ((private->n_points > 1) && (state & GDK_MOD1_MASK))
         {
-          gimp_tool_widget_set_status (widget,
+          ligma_tool_widget_set_status (widget,
                                        _("Click-Drag to move all points"));
         }
       else
         {
-          gimp_tool_widget_set_status (widget, NULL);
+          ligma_tool_widget_set_status (widget, NULL);
         }
     }
 
@@ -908,36 +908,36 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
     {
       private->point = point;
 
-      gimp_tool_compass_update_hilight (compass);
+      ligma_tool_compass_update_hilight (compass);
     }
 }
 
 void
-gimp_tool_compass_leave_notify (GimpToolWidget *widget)
+ligma_tool_compass_leave_notify (LigmaToolWidget *widget)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
 
   if (private->point != -1)
     {
       private->point = -1;
 
-      gimp_tool_compass_update_hilight (compass);
+      ligma_tool_compass_update_hilight (compass);
     }
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static void
-gimp_tool_compass_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_compass_motion_modifier (LigmaToolWidget  *widget,
                                    GdkModifierType  key,
                                    gboolean         press,
                                    GdkModifierType  state)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
 
-  if (key == gimp_get_constrain_behavior_mask () &&
+  if (key == ligma_get_constrain_behavior_mask () &&
       private->function == MOVING)
     {
       gint    new_x[3];
@@ -954,10 +954,10 @@ gimp_tool_compass_motion_modifier (GimpToolWidget  *widget,
 
       if (press)
         {
-          gimp_display_shell_constrain_line (gimp_tool_widget_get_shell (widget),
+          ligma_display_shell_constrain_line (ligma_tool_widget_get_shell (widget),
                                              private->x[0], private->y[0],
                                              &x, &y,
-                                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+                                             LIGMA_CONSTRAIN_LINE_15_DEGREES);
         }
 
       new_x[private->point] = ROUND (x);
@@ -975,49 +975,49 @@ gimp_tool_compass_motion_modifier (GimpToolWidget  *widget,
 }
 
 static gboolean
-gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
-                              const GimpCoords   *coords,
+ligma_tool_compass_get_cursor (LigmaToolWidget     *widget,
+                              const LigmaCoords   *coords,
                               GdkModifierType     state,
-                              GimpCursorType     *cursor,
-                              GimpToolCursorType *tool_cursor,
-                              GimpCursorModifier *modifier)
+                              LigmaCursorType     *cursor,
+                              LigmaToolCursorType *tool_cursor,
+                              LigmaCursorModifier *modifier)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompass        *compass = LIGMA_TOOL_COMPASS (widget);
+  LigmaToolCompassPrivate *private = compass->private;
 
   if (private->point != -1)
     {
-      GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
-      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+      GdkModifierType extend_mask = ligma_get_extend_selection_mask ();
+      GdkModifierType toggle_mask = ligma_get_toggle_behavior_mask ();
 
       if (state & toggle_mask)
         {
           if (state & GDK_MOD1_MASK)
             {
-              *cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+              *cursor = LIGMA_CURSOR_CORNER_BOTTOM_RIGHT;
               return TRUE;
             }
           else
             {
-              *cursor = GIMP_CURSOR_SIDE_BOTTOM;
+              *cursor = LIGMA_CURSOR_SIDE_BOTTOM;
               return TRUE;
             }
         }
       else if (state & GDK_MOD1_MASK)
         {
-          *cursor = GIMP_CURSOR_SIDE_RIGHT;
+          *cursor = LIGMA_CURSOR_SIDE_RIGHT;
           return TRUE;
         }
       else if ((state & extend_mask) &&
                ! ((private->point == 0) &&
                   (private->n_points == 3)))
         {
-          *modifier = GIMP_CURSOR_MODIFIER_PLUS;
+          *modifier = LIGMA_CURSOR_MODIFIER_PLUS;
           return TRUE;
         }
       else
         {
-          *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
           return TRUE;
         }
     }
@@ -1025,7 +1025,7 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
     {
       if ((private->n_points > 1) && (state & GDK_MOD1_MASK))
         {
-          *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
           return TRUE;
         }
     }
@@ -1034,15 +1034,15 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
 }
 
 static gint
-gimp_tool_compass_get_point (GimpToolCompass  *compass,
-                             const GimpCoords *coords)
+ligma_tool_compass_get_point (LigmaToolCompass  *compass,
+                             const LigmaCoords *coords)
 {
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompassPrivate *private = compass->private;
   gint                    i;
 
   for (i = 0; i < private->n_points; i++)
     {
-      if (gimp_canvas_item_hit (private->handles[i],
+      if (ligma_canvas_item_hit (private->handles[i],
                                 coords->x, coords->y))
         {
           return i;
@@ -1053,45 +1053,45 @@ gimp_tool_compass_get_point (GimpToolCompass  *compass,
 }
 
 static void
-gimp_tool_compass_update_hilight (GimpToolCompass *compass)
+ligma_tool_compass_update_hilight (LigmaToolCompass *compass)
 {
-  GimpToolCompassPrivate *private = compass->private;
+  LigmaToolCompassPrivate *private = compass->private;
   gint                    i;
 
   for (i = 0; i < private->n_points; i++)
     {
       if (private->handles[i])
         {
-          gimp_canvas_item_set_highlight (private->handles[i],
+          ligma_canvas_item_set_highlight (private->handles[i],
                                           private->point == i);
         }
     }
 }
 
 static void
-gimp_tool_compass_update_angle (GimpToolCompass        *compass,
-                                GimpCompassOrientation  orientation,
+ligma_tool_compass_update_angle (LigmaToolCompass        *compass,
+                                LigmaCompassOrientation  orientation,
                                 gboolean                flip)
 {
-  GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (compass);
-  GimpToolCompassPrivate *private = compass->private;
-  GimpDisplayShell       *shell   = gimp_tool_widget_get_shell (widget);
-  GimpImage              *image   = gimp_display_get_image (shell->display);
-  GimpVector2             radius1;
-  GimpVector2             radius2;
+  LigmaToolWidget         *widget  = LIGMA_TOOL_WIDGET (compass);
+  LigmaToolCompassPrivate *private = compass->private;
+  LigmaDisplayShell       *shell   = ligma_tool_widget_get_shell (widget);
+  LigmaImage              *image   = ligma_display_get_image (shell->display);
+  LigmaVector2             radius1;
+  LigmaVector2             radius2;
   gdouble                 pixel_angle;
   gdouble                 unit_angle;
   gdouble                 xres;
   gdouble                 yres;
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   private->radius1.x = private->x[1] - private->x[0];
   private->radius1.y = private->y[1] - private->y[0];
 
   if (private->n_points == 3)
     {
-      orientation = GIMP_COMPASS_ORIENTATION_AUTO;
+      orientation = LIGMA_COMPASS_ORIENTATION_AUTO;
 
       private->radius2.x = private->x[2] - private->x[0];
       private->radius2.y = private->y[2] - private->y[0];
@@ -1100,7 +1100,7 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
     {
       gdouble angle = -shell->rotate_angle * G_PI / 180.0;
 
-      if (orientation == GIMP_COMPASS_ORIENTATION_VERTICAL)
+      if (orientation == LIGMA_COMPASS_ORIENTATION_VERTICAL)
         angle -= G_PI / 2.0;
 
       if (flip)
@@ -1119,15 +1119,15 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
           private->radius2.x *= xres;
           private->radius2.y *= yres;
 
-          gimp_vector2_normalize (&private->radius2);
+          ligma_vector2_normalize (&private->radius2);
         }
     }
 
   radius1 = private->radius1;
   radius2 = private->radius2;
 
-  pixel_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
-                       gimp_vector2_inner_product (&radius1, &radius2));
+  pixel_angle = atan2 (ligma_vector2_cross_product (&radius1, &radius2).x,
+                       ligma_vector2_inner_product (&radius1, &radius2));
 
   radius1.x /= xres;
   radius1.y /= yres;
@@ -1135,8 +1135,8 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
   radius2.x /= xres;
   radius2.y /= yres;
 
-  unit_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
-                      gimp_vector2_inner_product (&radius1, &radius2));
+  unit_angle = atan2 (ligma_vector2_cross_product (&radius1, &radius2).x,
+                      ligma_vector2_inner_product (&radius1, &radius2));
 
   if (shell->dot_for_dot)
     private->display_angle = pixel_angle;
@@ -1147,20 +1147,20 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
     {
       if (! flip && fabs (private->display_angle) > G_PI / 2.0 + EPSILON)
         {
-          gimp_tool_compass_update_angle (compass, orientation, TRUE);
+          ligma_tool_compass_update_angle (compass, orientation, TRUE);
 
           return;
         }
-      else if (orientation == GIMP_COMPASS_ORIENTATION_AUTO)
+      else if (orientation == LIGMA_COMPASS_ORIENTATION_AUTO)
         {
           if (fabs (private->display_angle) <= G_PI / 4.0 + EPSILON)
             {
-              orientation = GIMP_COMPASS_ORIENTATION_HORIZONTAL;
+              orientation = LIGMA_COMPASS_ORIENTATION_HORIZONTAL;
             }
           else
             {
-              gimp_tool_compass_update_angle (compass,
-                                              GIMP_COMPASS_ORIENTATION_VERTICAL,
+              ligma_tool_compass_update_angle (compass,
+                                              LIGMA_COMPASS_ORIENTATION_VERTICAL,
                                               FALSE);
 
               return;
@@ -1193,9 +1193,9 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_compass_new (GimpDisplayShell       *shell,
-                       GimpCompassOrientation  orientation,
+LigmaToolWidget *
+ligma_tool_compass_new (LigmaDisplayShell       *shell,
+                       LigmaCompassOrientation  orientation,
                        gint                    n_points,
                        gint                    x1,
                        gint                    y1,
@@ -1204,9 +1204,9 @@ gimp_tool_compass_new (GimpDisplayShell       *shell,
                        gint                    x3,
                        gint                    y3)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_COMPASS,
+  return g_object_new (LIGMA_TYPE_TOOL_COMPASS,
                        "shell",       shell,
                        "orientation", orientation,
                        "n-points",    n_points,

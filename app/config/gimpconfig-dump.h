@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_DUMP_H__
-#define __GIMP_CONFIG_DUMP_H__
+#ifndef __LIGMA_CONFIG_DUMP_H__
+#define __LIGMA_CONFIG_DUMP_H__
 
 
 typedef enum
 {
-  GIMP_CONFIG_DUMP_NONE,
-  GIMP_CONFIG_DUMP_GIMPRC,
-  GIMP_CONFIG_DUMP_GIMPRC_SYSTEM,
-  GIMP_CONFIG_DUMP_GIMPRC_MANPAGE
-} GimpConfigDumpFormat;
+  LIGMA_CONFIG_DUMP_NONE,
+  LIGMA_CONFIG_DUMP_LIGMARC,
+  LIGMA_CONFIG_DUMP_LIGMARC_SYSTEM,
+  LIGMA_CONFIG_DUMP_LIGMARC_MANPAGE
+} LigmaConfigDumpFormat;
 
 
-gboolean  gimp_config_dump (GObject              *gimp,
-                            GimpConfigDumpFormat  format);
+gboolean  ligma_config_dump (GObject              *ligma,
+                            LigmaConfigDumpFormat  format);
 
 
-#endif  /* __GIMP_CONFIG_DUMP_H__ */
+#endif  /* __LIGMA_CONFIG_DUMP_H__ */

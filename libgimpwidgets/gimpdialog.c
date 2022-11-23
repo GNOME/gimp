@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdialog.c
- * Copyright (C) 2000-2003 Michael Natterer <mitch@gimp.org>
+ * ligmadialog.c
+ * Copyright (C) 2000-2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,19 +23,19 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpdialog.h"
-#include "gimphelpui.h"
+#include "ligmadialog.h"
+#include "ligmahelpui.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpdialog
- * @title: GimpDialog
+ * SECTION: ligmadialog
+ * @title: LigmaDialog
  * @short_description: Constructors for #GtkDialog's and action_areas as
  *                     well as other dialog-related stuff.
  *
@@ -53,65 +53,65 @@ enum
 };
 
 
-struct _GimpDialogPrivate
+struct _LigmaDialogPrivate
 {
-  GimpHelpFunc  help_func;
+  LigmaHelpFunc  help_func;
   gchar        *help_id;
   GtkWidget    *help_button;
 };
 
-#define GET_PRIVATE(obj) (((GimpDialog *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaDialog *) (obj))->priv)
 
 
-static void       gimp_dialog_constructed  (GObject      *object);
-static void       gimp_dialog_dispose      (GObject      *object);
-static void       gimp_dialog_finalize     (GObject      *object);
-static void       gimp_dialog_set_property (GObject      *object,
+static void       ligma_dialog_constructed  (GObject      *object);
+static void       ligma_dialog_dispose      (GObject      *object);
+static void       ligma_dialog_finalize     (GObject      *object);
+static void       ligma_dialog_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
-static void       gimp_dialog_get_property (GObject      *object,
+static void       ligma_dialog_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
-static void       gimp_dialog_hide         (GtkWidget    *widget);
-static gboolean   gimp_dialog_delete_event (GtkWidget    *widget,
+static void       ligma_dialog_hide         (GtkWidget    *widget);
+static gboolean   ligma_dialog_delete_event (GtkWidget    *widget,
                                             GdkEventAny  *event);
 
-static void       gimp_dialog_close        (GtkDialog    *dialog);
+static void       ligma_dialog_close        (GtkDialog    *dialog);
 
-static void       gimp_dialog_response     (GtkDialog    *dialog,
+static void       ligma_dialog_response     (GtkDialog    *dialog,
                                             gint          response_id);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDialog, ligma_dialog, GTK_TYPE_DIALOG)
 
-#define parent_class gimp_dialog_parent_class
+#define parent_class ligma_dialog_parent_class
 
 static gboolean show_help_button = TRUE;
 
 
 static void
-gimp_dialog_class_init (GimpDialogClass *klass)
+ligma_dialog_class_init (LigmaDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->constructed  = gimp_dialog_constructed;
-  object_class->dispose      = gimp_dialog_dispose;
-  object_class->finalize     = gimp_dialog_finalize;
-  object_class->set_property = gimp_dialog_set_property;
-  object_class->get_property = gimp_dialog_get_property;
+  object_class->constructed  = ligma_dialog_constructed;
+  object_class->dispose      = ligma_dialog_dispose;
+  object_class->finalize     = ligma_dialog_finalize;
+  object_class->set_property = ligma_dialog_set_property;
+  object_class->get_property = ligma_dialog_get_property;
 
-  widget_class->hide         = gimp_dialog_hide;
-  widget_class->delete_event = gimp_dialog_delete_event;
+  widget_class->hide         = ligma_dialog_hide;
+  widget_class->delete_event = ligma_dialog_delete_event;
 
-  dialog_class->close        = gimp_dialog_close;
+  dialog_class->close        = ligma_dialog_close;
 
   /**
-   * GimpDialog:help-func:
+   * LigmaDialog:help-func:
    *
    * Since: 2.2
    **/
@@ -119,11 +119,11 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                    g_param_spec_pointer ("help-func",
                                                          "Help Func",
                                                          "The help function to call when F1 is hit",
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GimpDialog:help-id:
+   * LigmaDialog:help-id:
    *
    * Since: 2.2
    **/
@@ -132,11 +132,11 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         "Help ID",
                                                         "The help ID to pass to help-func",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   /**
-   * GimpDialog:parent:
+   * LigmaDialog:parent:
    *
    * Since: 2.8
    **/
@@ -145,29 +145,29 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         "Parent",
                                                         "The dialog's parent widget",
                                                         GTK_TYPE_WIDGET,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_dialog_init (GimpDialog *dialog)
+ligma_dialog_init (LigmaDialog *dialog)
 {
-  dialog->priv = gimp_dialog_get_instance_private (dialog);
+  dialog->priv = ligma_dialog_get_instance_private (dialog);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gimp_dialog_response),
+                    G_CALLBACK (ligma_dialog_response),
                     NULL);
 }
 
 static void
-gimp_dialog_constructed (GObject *object)
+ligma_dialog_constructed (GObject *object)
 {
-  GimpDialogPrivate *private = GET_PRIVATE (object);
+  LigmaDialogPrivate *private = GET_PRIVATE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (private->help_func)
-    gimp_help_connect (GTK_WIDGET (object),
+    ligma_help_connect (GTK_WIDGET (object),
                        private->help_func, private->help_id,
                        object, NULL);
 
@@ -180,7 +180,7 @@ gimp_dialog_constructed (GObject *object)
 }
 
 static void
-gimp_dialog_dispose (GObject *object)
+ligma_dialog_dispose (GObject *object)
 {
   GdkDisplay *display = NULL;
 
@@ -200,9 +200,9 @@ gimp_dialog_dispose (GObject *object)
 }
 
 static void
-gimp_dialog_finalize (GObject *object)
+ligma_dialog_finalize (GObject *object)
 {
-  GimpDialogPrivate *private = GET_PRIVATE (object);
+  LigmaDialogPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->help_id, g_free);
 
@@ -210,12 +210,12 @@ gimp_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_dialog_set_property (GObject      *object,
+ligma_dialog_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpDialogPrivate *private = GET_PRIVATE (object);
+  LigmaDialogPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -226,7 +226,7 @@ gimp_dialog_set_property (GObject      *object,
     case PROP_HELP_ID:
       g_free (private->help_id);
       private->help_id = g_value_dup_string (value);
-      gimp_help_set_help_data (GTK_WIDGET (object), NULL, private->help_id);
+      ligma_help_set_help_data (GTK_WIDGET (object), NULL, private->help_id);
       break;
 
     case PROP_PARENT:
@@ -258,12 +258,12 @@ gimp_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_dialog_get_property (GObject    *object,
+ligma_dialog_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpDialogPrivate *private = GET_PRIVATE (object);
+  LigmaDialogPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -282,7 +282,7 @@ gimp_dialog_get_property (GObject    *object,
 }
 
 static void
-gimp_dialog_hide (GtkWidget *widget)
+ligma_dialog_hide (GtkWidget *widget)
 {
   /*  set focus to NULL so focus_out callbacks are invoked synchronously  */
   gtk_window_set_focus (GTK_WINDOW (widget), NULL);
@@ -291,14 +291,14 @@ gimp_dialog_hide (GtkWidget *widget)
 }
 
 static gboolean
-gimp_dialog_delete_event (GtkWidget   *widget,
+ligma_dialog_delete_event (GtkWidget   *widget,
                           GdkEventAny *event)
 {
   return TRUE;
 }
 
 static void
-gimp_dialog_close (GtkDialog *dialog)
+ligma_dialog_close (GtkDialog *dialog)
 {
   /* Synthesize delete_event to close dialog. */
 
@@ -317,10 +317,10 @@ gimp_dialog_close (GtkDialog *dialog)
 }
 
 static void
-gimp_dialog_response (GtkDialog *dialog,
+ligma_dialog_response (GtkDialog *dialog,
                       gint       response_id)
 {
-  GimpDialogPrivate *private = GET_PRIVATE (dialog);
+  LigmaDialogPrivate *private = GET_PRIVATE (dialog);
   GtkWidget         *widget  = gtk_dialog_get_widget_for_response (dialog,
                                                                    response_id);
 
@@ -346,7 +346,7 @@ gimp_dialog_response (GtkDialog *dialog,
 
 
 /**
- * gimp_dialog_new: (skip)
+ * ligma_dialog_new: (skip)
  * @title:        The dialog's title which will be set with
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
@@ -358,22 +358,22 @@ gimp_dialog_response (GtkDialog *dialog,
  * @...:          A %NULL-terminated @va_list destribing the
  *                action_area buttons.
  *
- * Creates a new @GimpDialog widget.
+ * Creates a new @LigmaDialog widget.
  *
  * This function simply packs the action_area arguments passed in "..."
- * into a @va_list variable and passes everything to gimp_dialog_new_valist().
+ * into a @va_list variable and passes everything to ligma_dialog_new_valist().
  *
  * For a description of the format of the @va_list describing the
  * action_area buttons see gtk_dialog_new_with_buttons().
  *
- * Returns: A #GimpDialog.
+ * Returns: A #LigmaDialog.
  **/
 GtkWidget *
-gimp_dialog_new (const gchar    *title,
+ligma_dialog_new (const gchar    *title,
                  const gchar    *role,
                  GtkWidget      *parent,
                  GtkDialogFlags  flags,
-                 GimpHelpFunc    help_func,
+                 LigmaHelpFunc    help_func,
                  const gchar    *help_id,
                  ...)
 {
@@ -386,7 +386,7 @@ gimp_dialog_new (const gchar    *title,
 
   va_start (args, help_id);
 
-  dialog = gimp_dialog_new_valist (title, role,
+  dialog = ligma_dialog_new_valist (title, role,
                                    parent, flags,
                                    help_func, help_id,
                                    args);
@@ -397,7 +397,7 @@ gimp_dialog_new (const gchar    *title,
 }
 
 /**
- * gimp_dialog_new_valist: (skip)
+ * ligma_dialog_new_valist: (skip)
  * @title:        The dialog's title which will be set with
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
@@ -408,20 +408,20 @@ gimp_dialog_new (const gchar    *title,
  * @help_id:      The help_id which will be passed to @help_func.
  * @args:         A @va_list destribing the action_area buttons.
  *
- * Creates a new @GimpDialog widget. If a GtkWindow is specified as
+ * Creates a new @LigmaDialog widget. If a GtkWindow is specified as
  * @parent then the dialog will be made transient for this window.
  *
  * For a description of the format of the @va_list describing the
  * action_area buttons see gtk_dialog_new_with_buttons().
  *
- * Returns: A #GimpDialog.
+ * Returns: A #LigmaDialog.
  **/
 GtkWidget *
-gimp_dialog_new_valist (const gchar    *title,
+ligma_dialog_new_valist (const gchar    *title,
                         const gchar    *role,
                         GtkWidget      *parent,
                         GtkDialogFlags  flags,
-                        GimpHelpFunc    help_func,
+                        LigmaHelpFunc    help_func,
                         const gchar    *help_id,
                         va_list         args)
 {
@@ -436,7 +436,7 @@ gimp_dialog_new_valist (const gchar    *title,
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
-  dialog = g_object_new (GIMP_TYPE_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_DIALOG,
                          "title",          title,
                          "role",           role,
                          "modal",          (flags & GTK_DIALOG_MODAL),
@@ -450,17 +450,17 @@ gimp_dialog_new_valist (const gchar    *title,
     {
       if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
         g_signal_connect_object (parent, "destroy",
-                                 G_CALLBACK (gimp_dialog_close),
+                                 G_CALLBACK (ligma_dialog_close),
                                  dialog, G_CONNECT_SWAPPED);
     }
 
-  gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
+  ligma_dialog_add_buttons_valist (LIGMA_DIALOG (dialog), args);
 
   return dialog;
 }
 
 /**
- * gimp_dialog_add_button:
+ * ligma_dialog_add_button:
  * @dialog: The @dialog to add a button to.
  * @button_text: text of button, or stock ID.
  * @response_id: response ID for the button.
@@ -472,7 +472,7 @@ gimp_dialog_new_valist (const gchar    *title,
  * Returns: (type Gtk.Widget) (transfer none): the button widget that was added.
  **/
 GtkWidget *
-gimp_dialog_add_button (GimpDialog  *dialog,
+ligma_dialog_add_button (LigmaDialog  *dialog,
                         const gchar *button_text,
                         gint         response_id)
 {
@@ -482,7 +482,7 @@ gimp_dialog_add_button (GimpDialog  *dialog,
   /*  hide the automatically added help button if another one is added  */
   if (response_id == GTK_RESPONSE_HELP)
     {
-      GimpDialogPrivate *private = GET_PRIVATE (dialog);
+      LigmaDialogPrivate *private = GET_PRIVATE (dialog);
 
       if (private->help_button)
         {
@@ -518,48 +518,48 @@ gimp_dialog_add_button (GimpDialog  *dialog,
 }
 
 /**
- * gimp_dialog_add_buttons: (skip)
+ * ligma_dialog_add_buttons: (skip)
  * @dialog: The @dialog to add buttons to.
  * @...: button_text-response_id pairs.
  *
  * This function is essentially the same as gtk_dialog_add_buttons()
- * except it calls gimp_dialog_add_button() instead of gtk_dialog_add_button()
+ * except it calls ligma_dialog_add_button() instead of gtk_dialog_add_button()
  **/
 void
-gimp_dialog_add_buttons (GimpDialog *dialog,
+ligma_dialog_add_buttons (LigmaDialog *dialog,
                          ...)
 {
   va_list args;
 
   va_start (args, dialog);
 
-  gimp_dialog_add_buttons_valist (dialog, args);
+  ligma_dialog_add_buttons_valist (dialog, args);
 
   va_end (args);
 }
 
 /**
- * gimp_dialog_add_buttons_valist: (skip)
+ * ligma_dialog_add_buttons_valist: (skip)
  * @dialog: The @dialog to add buttons to.
  * @args:   The buttons as va_list.
  *
- * This function is essentially the same as gimp_dialog_add_buttons()
+ * This function is essentially the same as ligma_dialog_add_buttons()
  * except it takes a va_list instead of '...'
  **/
 void
-gimp_dialog_add_buttons_valist (GimpDialog *dialog,
+ligma_dialog_add_buttons_valist (LigmaDialog *dialog,
                                 va_list     args)
 {
   const gchar *button_text;
   gint         response_id;
 
-  g_return_if_fail (GIMP_IS_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_DIALOG (dialog));
 
   while ((button_text = va_arg (args, const gchar *)))
     {
       response_id = va_arg (args, gint);
 
-      gimp_dialog_add_button (dialog, button_text, response_id);
+      ligma_dialog_add_button (dialog, button_text, response_id);
     }
 }
 
@@ -616,8 +616,8 @@ run_destroy_handler (GtkDialog *dialog,
 }
 
 /**
- * gimp_dialog_run:
- * @dialog: a #GimpDialog
+ * ligma_dialog_run:
+ * @dialog: a #LigmaDialog
  *
  * This function does exactly the same as gtk_dialog_run() except it
  * does not make the dialog modal while the #GMainLoop is running.
@@ -625,7 +625,7 @@ run_destroy_handler (GtkDialog *dialog,
  * Returns: response ID
  **/
 gint
-gimp_dialog_run (GimpDialog *dialog)
+ligma_dialog_run (LigmaDialog *dialog)
 {
   RunInfo ri = { NULL, GTK_RESPONSE_NONE, NULL };
   gulong  response_handler;
@@ -633,7 +633,7 @@ gimp_dialog_run (GimpDialog *dialog)
   gulong  destroy_handler;
   gulong  delete_handler;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG (dialog), -1);
+  g_return_val_if_fail (LIGMA_IS_DIALOG (dialog), -1);
 
   g_object_ref (dialog);
 
@@ -675,8 +675,8 @@ gimp_dialog_run (GimpDialog *dialog)
 }
 
 /**
- * gimp_dialog_set_alternative_button_order_from_array:
- * @dialog:                          The #GimpDialog
+ * ligma_dialog_set_alternative_button_order_from_array:
+ * @dialog:                          The #LigmaDialog
  * @n_buttons:                       The size of @order
  * @order: (array length=n_buttons): array of buttons' response ids.
  *
@@ -688,7 +688,7 @@ gimp_dialog_run (GimpDialog *dialog)
  * Since: 3.0
  **/
 void
-gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
+ligma_dialog_set_alternative_button_order_from_array (LigmaDialog *dialog,
                                                      gint        n_buttons,
                                                      gint       *order)
 {
@@ -701,15 +701,15 @@ gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
 }
 
 /**
- * gimp_dialogs_show_help_button: (skip)
- * @show: whether a help button should be added when creating a GimpDialog
+ * ligma_dialogs_show_help_button: (skip)
+ * @show: whether a help button should be added when creating a LigmaDialog
  *
  * This function is for internal use only.
  *
  * Since: 2.2
  **/
 void
-gimp_dialogs_show_help_button (gboolean  show)
+ligma_dialogs_show_help_button (gboolean  show)
 {
   show_help_button = show ? TRUE : FALSE;
 }

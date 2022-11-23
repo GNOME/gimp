@@ -1,15 +1,15 @@
-# 'gimp/po-python
-# Slovenian translation of gimp-python.
-# Copyright (C) 2004-2007 THE GIMP'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the GIMP package.
+# 'ligma/po-python
+# Slovenian translation of ligma-python.
+# Copyright (C) 2004-2007 THE LIGMA'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the LIGMA package.
 #
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
 # Martin Srebotnjak <miles@filmsi.net>, 2007–2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP-Python master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA-Python master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-07 07:45+0000\n"
 "PO-Revision-Date: 2022-06-07 16:52+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -489,8 +489,8 @@ msgid "Python _Console"
 msgstr "_Konzola Pythona"
 
 #: ../plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktivni tolmač GIMP za Python"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktivni tolmač LIGMA za Python"
 
 #: ../plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -841,8 +841,8 @@ msgstr ""
 "dejavni plasti ali shraniti v pot."
 
 #: ../plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spiro-gimp"
+msgid "Spyroligma"
+msgstr "Spiro-ligma"
 
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -944,5 +944,5 @@ msgstr ""
 "Velikost in mesto vzorca temeljita na trenutnem izboru."
 
 #: ../plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Spiro-gimp ..."
+msgid "Spyroligma..."
+msgstr "Spiro-ligma ..."

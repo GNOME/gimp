@@ -23,10 +23,10 @@
 # functions and HSV colors
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -62,21 +62,21 @@ def format_text(text):
 def gradient_css_save(procedure, args, data):
     if args.length() != 3:
         error = 'Wrong parameters given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
     runmode = args.index(0)
     gradient = args.index(1)
     file = args.index(2)
 
-    if runmode == Gimp.RunMode.INTERACTIVE:
+    if runmode == Ligma.RunMode.INTERACTIVE:
         # Interactive mode works on active gradient.
-        gradient = Gimp.context_get_gradient()
+        gradient = Ligma.context_get_gradient()
 
         # Pop-up a file chooser for target file.
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        GimpUi.init ("gradients-save-as-css.py")
+        LigmaUi.init ("gradients-save-as-css.py")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
@@ -88,23 +88,23 @@ def gradient_css_save(procedure, args, data):
         if dialog.run() == Gtk.ResponseType.OK:
             file = dialog.get_file()
         else:
-            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
+            return procedure.new_return_values(Ligma.PDBStatusType.CANCEL,
                                                GLib.Error())
 
     if file is None:
         error = 'No file given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
     stops = []
     wk_stops = []
-    n_segments = Gimp.gradient_get_number_of_segments(gradient)
+    n_segments = Ligma.gradient_get_number_of_segments(gradient)
     last_stop = None
     for index in range(n_segments):
-        success, lcolor, lopacity = Gimp.gradient_segment_get_left_color(gradient, index)
-        success, rcolor, ropacity = Gimp.gradient_segment_get_right_color(gradient, index)
-        success, lpos = Gimp.gradient_segment_get_left_pos(gradient, index)
-        success, rpos = Gimp.gradient_segment_get_right_pos(gradient, index)
+        success, lcolor, lopacity = Ligma.gradient_segment_get_left_color(gradient, index)
+        success, rcolor, ropacity = Ligma.gradient_segment_get_right_color(gradient, index)
+        success, lpos = Ligma.gradient_segment_get_left_pos(gradient, index)
+        success, rpos = Ligma.gradient_segment_get_right_pos(gradient, index)
 
         lstop = color_to_html(lcolor) + " %d%%" % int(100 * lpos)
         wk_lstop = "color-stop(%.03f, %s)" %(lpos, color_to_html(lcolor))
@@ -129,18 +129,18 @@ def gradient_css_save(procedure, args, data):
                                           flags=Gio.FileCreateFlags.REPLACE_DESTINATION,
                                           cancellable=None)
     if success:
-        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+        return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
     else:
-        return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error('File saving failed: {}'.format(file.get_path())))
 
-class GradientsSaveAsCSS (Gimp.PlugIn):
+class GradientsSaveAsCSS (Ligma.PlugIn):
    ## Parameters ##
     __gproperties__ = {
-        "run-mode": (Gimp.RunMode,
+        "run-mode": (Ligma.RunMode,
                      _("Run mode"),
                      _("The run mode"),
-                     Gimp.RunMode.NONINTERACTIVE,
+                     Ligma.RunMode.NONINTERACTIVE,
                      GObject.ParamFlags.READWRITE),
         "gradient": (str,
                      _("Gradient to use"), "", "",
@@ -150,9 +150,9 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                  GObject.ParamFlags.READWRITE),
     }
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ 'gradient-save-as-css' ]
@@ -160,8 +160,8 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
     def do_create_procedure(self, name):
         procedure = None
         if name == 'gradient-save-as-css':
-            procedure = Gimp.Procedure.new(self, name,
-                                           Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.Procedure.new(self, name,
+                                           Ligma.PDBProcType.PLUGIN,
                                            gradient_css_save, None)
             procedure.set_image_types("*")
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
@@ -178,4 +178,4 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
             procedure.add_argument_from_property(self, "file")
         return procedure
 
-Gimp.main(GradientsSaveAsCSS.__gtype__, sys.argv)
+Ligma.main(GradientsSaveAsCSS.__gtype__, sys.argv)

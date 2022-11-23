@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub stroke_arg () {
     { name => 'strokes', type => 'floatarray',
@@ -52,22 +52,22 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-airbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-airbrush");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "pressure", pressure,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -86,7 +86,7 @@ time-dependent.
 BLURB
 
     $help = <<'HELP';
-This tool simulates the use of an airbrush. It is similar to gimp_airbrush()
+This tool simulates the use of an airbrush. It is similar to ligma_airbrush()
 except that the pressure is derived from the airbrush tools options box.
 It the option has not been set the default for the option will be used.
 HELP
@@ -102,18 +102,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-airbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-airbrush");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -151,7 +151,7 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
-	{ name => 'clone_type', type => 'enum GimpCloneType',
+	{ name => 'clone_type', type => 'enum LigmaCloneType',
 	  desc => 'The type of clone' },
 	{ name => 'src_x', type => 'float',
 	  desc => 'The x coordinate in the source image' },
@@ -163,18 +163,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-clone");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-clone");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GList *src_drawables;
 
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
       src_drawables = g_list_prepend (NULL, src_drawable);
 
       g_object_set (options,
@@ -182,7 +182,7 @@ HELP
                     "src-drawables", src_drawables,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
                                     "undo-desc", options->paint_info->blurb,
                                     "src-x",     (gint) floor (src_x),
@@ -205,7 +205,7 @@ BLURB
     $help = <<'HELP';
 This tool clones (copies) from the source drawable starting at the specified
 source coordinates to the dest drawable. This function performs exactly
-the same as the gimp_clone() function except that the tools arguments are
+the same as the ligma_clone() function except that the tools arguments are
 obtained from the clones option dialog. It this dialog has not been activated
 then the dialogs default values will be used.
 HELP
@@ -221,18 +221,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-clone");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-clone");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -250,7 +250,7 @@ sub convolve_default {
 
     $help = <<'HELP';
 This tool convolves the specified drawable with either a sharpening or blurring
-kernel. This function performs exactly the same as the gimp_convolve()
+kernel. This function performs exactly the same as the ligma_convolve()
 function except that the tools arguments are obtained from the convolve
 option dialog. It this dialog has not been activated then the dialogs
 default values will be used.
@@ -267,18 +267,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-convolve");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-convolve");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -307,7 +307,7 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
 	  desc => 'The pressure' },
-	{ name => 'convolve_type', type => 'enum GimpConvolveType',
+	{ name => 'convolve_type', type => 'enum LigmaConvolveType',
 	  desc => 'Convolve type' },
 	&stroke_arg
     );
@@ -315,23 +315,23 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-convolve");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-convolve");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "type", convolve_type,
                     "rate", pressure,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -348,7 +348,7 @@ sub eraser_default {
 
     $help = <<'HELP';
 This tool erases using the current brush mask. This function performs exactly
-the same as the gimp_eraser() function except that the tools arguments are
+the same as the ligma_eraser() function except that the tools arguments are
 obtained from the eraser option dialog. It this dialog has not been activated
 then the dialogs default values will be used.
 HELP
@@ -364,18 +364,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-eraser");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-eraser");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -404,32 +404,32 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	&stroke_arg,
-	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
+	{ name => 'hardness', type => 'enum LigmaBrushApplicationMode',
 	  desc => 'How to apply the brush' },
-	{ name => 'method', type => 'enum GimpPaintApplicationMode',
+	{ name => 'method', type => 'enum LigmaPaintApplicationMode',
 	  desc => 'The paint method to use' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-eraser");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-eraser");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "application-mode", method,
                     "hard",             hardness,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -458,25 +458,25 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	&stroke_arg,
-	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
+	{ name => 'hardness', type => 'enum LigmaBrushApplicationMode',
 	  desc => 'How to apply the brush' },
-	{ name => 'method', type => 'enum GimpPaintApplicationMode',
+	{ name => 'method', type => 'enum LigmaPaintApplicationMode',
 	  desc => 'The paint method to use' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-eraser");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-eraser");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "application-mode", method,
@@ -484,7 +484,7 @@ HELP
                     "anti-erase",       TRUE,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -526,25 +526,25 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-heal");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-heal");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GList *src_drawables;
 
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
       src_drawables = g_list_prepend (NULL, src_drawable);
 
       g_object_set (options,
                     "src-drawables", src_drawables,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
                                     "undo-desc", options->paint_info->blurb,
                                     "src-x",     (gint) floor (src_x),
@@ -567,7 +567,7 @@ BLURB
     $help = <<'HELP';
 This tool heals from the source drawable starting at the specified
 source coordinates to the dest drawable. This function performs exactly
-the same as the gimp_heal() function except that the tools arguments are
+the same as the ligma_heal() function except that the tools arguments are
 obtained from the healing option dialog. It this dialog has not been activated
 then the dialogs default values will be used.
 HELP
@@ -583,18 +583,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-heal");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-heal");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -631,7 +631,7 @@ HELP
 	{ name => 'fade_out', type => '0 <= float',
 	  desc => 'Fade out parameter' },
 	  &stroke_arg,
-	{ name => 'method', type => 'enum GimpPaintApplicationMode',
+	{ name => 'method', type => 'enum LigmaPaintApplicationMode',
 	  desc => 'The paint method to use' },
 	{ name => 'gradient_length', type => '0 <= float',
 	  desc => 'Length of gradient to draw' }
@@ -640,19 +640,19 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpDynamics *pdb_dynamics  = GIMP_DYNAMICS (gimp_dynamics_new (context, "pdb"));
-      GimpDynamics *user_dynamics = gimp_context_get_dynamics (context);
+      LigmaDynamics *pdb_dynamics  = LIGMA_DYNAMICS (ligma_dynamics_new (context, "pdb"));
+      LigmaDynamics *user_dynamics = ligma_context_get_dynamics (context);
 
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "application-mode", method,
@@ -661,9 +661,9 @@ HELP
 
       if (fade_out > 0)
         {
-           GimpDynamicsOutput *opacity_output =
-             gimp_dynamics_get_output (pdb_dynamics,
-                                       GIMP_DYNAMICS_OUTPUT_OPACITY);
+           LigmaDynamicsOutput *opacity_output =
+             ligma_dynamics_get_output (pdb_dynamics,
+                                       LIGMA_DYNAMICS_OUTPUT_OPACITY);
 
            g_object_set (opacity_output,
                          "use-fade", TRUE,
@@ -672,23 +672,23 @@ HELP
 
       if (gradient_length > 0)
         {
-          GimpDynamicsOutput *color_output =
-            gimp_dynamics_get_output (pdb_dynamics,
-                                      GIMP_DYNAMICS_OUTPUT_COLOR);
+          LigmaDynamicsOutput *color_output =
+            ligma_dynamics_get_output (pdb_dynamics,
+                                      LIGMA_DYNAMICS_OUTPUT_COLOR);
 
           g_object_set (color_output,
                         "use-fade", TRUE,
                         NULL);
         }
 
-      gimp_context_set_dynamics (context, pdb_dynamics);
+      ligma_context_set_dynamics (context, pdb_dynamics);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
 
-      gimp_context_set_dynamics (context, user_dynamics);
+      ligma_context_set_dynamics (context, user_dynamics);
 
       g_object_unref (pdb_dynamics);
     }
@@ -730,18 +730,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -775,18 +775,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-pencil");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-pencil");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -819,22 +819,22 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-smudge");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-smudge");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "rate", pressure,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -853,7 +853,7 @@ BLURB
 
     $help = <<'HELP';
 This tool simulates a smudge using the current brush. It behaves exactly
-the same as gimp_smudge() except that the pressure value is taken from the
+the same as ligma_smudge() except that the pressure value is taken from the
 smudge tool options or the options default if the tools option dialog has
 not been activated.
 HELP
@@ -869,18 +869,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-smudge");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-smudge");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -908,9 +908,9 @@ HELP
 	  desc => 'The affected drawable' },
 	 { name => 'exposure', type => '0 <= float <= 100',
 	   desc => 'The exposure of the  strokes' },
-        { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
+        { name => 'dodgeburn_type', type => 'enum LigmaDodgeBurnType',
 	  desc => 'The type either dodge or burn' },
-        { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
+        { name => 'dodgeburn_mode', type => 'enum LigmaTransferMode',
 	  desc => 'The mode' },
 	&stroke_arg
     );
@@ -918,16 +918,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-dodge-burn");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-dodge-burn");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
       g_object_set (options,
                     "type",     dodgeburn_type,
@@ -935,7 +935,7 @@ HELP
                     "exposure", exposure,
                     NULL);
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -950,7 +950,7 @@ CODE
 sub dodgeburn_default {
     $blurb  = <<'BLURB';
 Dodgeburn image with varying exposure. This is the same as the
-gimp_dodgeburn() function except that the exposure, type and mode are
+ligma_dodgeburn() function except that the exposure, type and mode are
 taken from the tools option dialog. If the dialog has not been
 activated then the defaults as used by the dialog will be used.
 BLURB
@@ -970,18 +970,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-dodge-burn");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-dodge-burn");
 
   if (options &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      options = gimp_config_duplicate (GIMP_CONFIG (options));
+      options = ligma_config_duplicate (LIGMA_CONFIG (options));
 
-      success = paint_tools_stroke (gimp, context, options, drawable,
+      success = paint_tools_stroke (ligma, context, options, drawable,
                                     num_strokes, strokes, error,
 				    "undo-desc", options->paint_info->blurb,
 				    NULL);
@@ -995,21 +995,21 @@ CODE
 
 
 $extra{app}->{code} = <<'CODE';
-static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+static const LigmaCoords default_coords = LIGMA_COORDS_DEFAULT_VALUES;
 
 static gboolean
-paint_tools_stroke (Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpPaintOptions  *options,
-                    GimpDrawable      *drawable,
+paint_tools_stroke (Ligma              *ligma,
+                    LigmaContext       *context,
+                    LigmaPaintOptions  *options,
+                    LigmaDrawable      *drawable,
                     gint               n_strokes,
                     const gdouble     *strokes,
                     GError           **error,
                     const gchar       *first_property_name,
                     ...)
 {
-  GimpPaintCore *core;
-  GimpCoords    *coords;
+  LigmaPaintCore *core;
+  LigmaCoords    *coords;
   gboolean       retval;
   gint           i;
   va_list        args;
@@ -1019,17 +1019,17 @@ paint_tools_stroke (Gimp              *gimp,
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
    */
-  gimp_context_define_properties (GIMP_CONTEXT (options),
-                                  GIMP_CONTEXT_PROP_MASK_PAINT,
+  ligma_context_define_properties (LIGMA_CONTEXT (options),
+                                  LIGMA_CONTEXT_PROP_MASK_PAINT,
                                   FALSE);
-  gimp_context_set_parent (GIMP_CONTEXT (options), context);
+  ligma_context_set_parent (LIGMA_CONTEXT (options), context);
 
   va_start (args, first_property_name);
-  core = GIMP_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
+  core = LIGMA_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
                                                first_property_name, args));
   va_end (args);
 
-  coords = g_new (GimpCoords, n_strokes);
+  coords = g_new (LigmaCoords, n_strokes);
 
   for (i = 0; i < n_strokes; i++)
     {
@@ -1038,7 +1038,7 @@ paint_tools_stroke (Gimp              *gimp,
       coords[i].y = strokes[2 * i + 1];
     }
 
-  retval = gimp_paint_core_stroke (core, drawable, options,
+  retval = ligma_paint_core_stroke (core, drawable, options,
                                    coords, n_strokes, TRUE,
                                    error);
 
@@ -1052,15 +1052,15 @@ paint_tools_stroke (Gimp              *gimp,
 CODE
 
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "libgimpconfig/gimpconfig.h"
-              "core/gimpdynamics.h"
-              "core/gimppaintinfo.h"
-              "paint/gimppaintcore.h"
-              "paint/gimppaintcore-stroke.h"
-              "paint/gimppaintoptions.h"
-              "gimppdbcontext.h"
-              "gimppdb-utils.h");
+@headers = qw("libligmamath/ligmamath.h"
+              "libligmaconfig/ligmaconfig.h"
+              "core/ligmadynamics.h"
+              "core/ligmapaintinfo.h"
+              "paint/ligmapaintcore.h"
+              "paint/ligmapaintcore-stroke.h"
+              "paint/ligmapaintoptions.h"
+              "ligmapdbcontext.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(airbrush airbrush_default
             clone clone_default
@@ -1075,7 +1075,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paint Tool procedures';
-$doc_title = 'gimppainttools';
+$doc_title = 'ligmapainttools';
 $doc_short_desc = 'Access to toolbox paint tools.';
 $doc_long_desc = 'Functions giving access to toolbox paint tools.';
 

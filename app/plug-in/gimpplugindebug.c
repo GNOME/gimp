@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpplugindebug.c
+ * ligmaplugindebug.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@
 
 #include "plug-in-types.h"
 
-#include "gimpplugindebug.h"
+#include "ligmaplugindebug.h"
 
 
-struct _GimpPlugInDebug
+struct _LigmaPlugInDebug
 {
   gchar  *name;
   guint   flags;
@@ -36,26 +36,26 @@ struct _GimpPlugInDebug
 };
 
 
-static const GDebugKey gimp_debug_wrap_keys[] =
+static const GDebugKey ligma_debug_wrap_keys[] =
 {
-  { "query", GIMP_DEBUG_WRAP_QUERY   },
-  { "init",  GIMP_DEBUG_WRAP_INIT    },
-  { "run",   GIMP_DEBUG_WRAP_RUN     },
-  { "on",    GIMP_DEBUG_WRAP_DEFAULT }
+  { "query", LIGMA_DEBUG_WRAP_QUERY   },
+  { "init",  LIGMA_DEBUG_WRAP_INIT    },
+  { "run",   LIGMA_DEBUG_WRAP_RUN     },
+  { "on",    LIGMA_DEBUG_WRAP_DEFAULT }
 };
 
 
-GimpPlugInDebug *
-gimp_plug_in_debug_new (void)
+LigmaPlugInDebug *
+ligma_plug_in_debug_new (void)
 {
-  GimpPlugInDebug  *debug;
+  LigmaPlugInDebug  *debug;
   const gchar      *wrap, *wrapper;
   gchar            *debug_string;
   gchar           **args;
   GError           *error = NULL;
 
-  wrap = g_getenv ("GIMP_PLUGIN_DEBUG_WRAP");
-  wrapper = g_getenv ("GIMP_PLUGIN_DEBUG_WRAPPER");
+  wrap = g_getenv ("LIGMA_PLUGIN_DEBUG_WRAP");
+  wrapper = g_getenv ("LIGMA_PLUGIN_DEBUG_WRAPPER");
 
   if (!(wrap && wrapper))
     return NULL;
@@ -68,7 +68,7 @@ gimp_plug_in_debug_new (void)
       return NULL;
     }
 
-  debug = g_slice_new (GimpPlugInDebug);
+  debug = g_slice_new (LigmaPlugInDebug);
 
   debug->args  = args;
 
@@ -78,20 +78,20 @@ gimp_plug_in_debug_new (void)
     {
       debug->name = g_strndup (wrap, debug_string - wrap);
       debug->flags = g_parse_debug_string (debug_string + 1,
-                                           gimp_debug_wrap_keys,
-                                           G_N_ELEMENTS (gimp_debug_wrap_keys));
+                                           ligma_debug_wrap_keys,
+                                           G_N_ELEMENTS (ligma_debug_wrap_keys));
     }
   else
     {
       debug->name = g_strdup (wrap);
-      debug->flags = GIMP_DEBUG_WRAP_DEFAULT;
+      debug->flags = LIGMA_DEBUG_WRAP_DEFAULT;
     }
 
   return debug;
 }
 
 void
-gimp_plug_in_debug_free (GimpPlugInDebug *debug)
+ligma_plug_in_debug_free (LigmaPlugInDebug *debug)
 {
   g_return_if_fail (debug != NULL);
 
@@ -101,13 +101,13 @@ gimp_plug_in_debug_free (GimpPlugInDebug *debug)
   if (debug->args)
     g_strfreev (debug->args);
 
-  g_slice_free (GimpPlugInDebug, debug);
+  g_slice_free (LigmaPlugInDebug, debug);
 }
 
 gchar **
-gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
+ligma_plug_in_debug_argv (LigmaPlugInDebug    *debug,
                          const gchar        *name,
-                         GimpDebugWrapFlag   flag,
+                         LigmaDebugWrapFlag   flag,
                          const gchar       **args)
 {
   GPtrArray  *argv;

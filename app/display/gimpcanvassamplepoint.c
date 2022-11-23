@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvassamplepoint.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvassamplepoint.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "gimpcanvas.h"
-#include "gimpcanvas-style.h"
-#include "gimpcanvassamplepoint.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvas.h"
+#include "ligmacanvas-style.h"
+#include "ligmacanvassamplepoint.h"
+#include "ligmadisplayshell.h"
 
 
-#define GIMP_SAMPLE_POINT_DRAW_SIZE 14
+#define LIGMA_SAMPLE_POINT_DRAW_SIZE 14
 
 
 enum
@@ -47,9 +47,9 @@ enum
 };
 
 
-typedef struct _GimpCanvasSamplePointPrivate GimpCanvasSamplePointPrivate;
+typedef struct _LigmaCanvasSamplePointPrivate LigmaCanvasSamplePointPrivate;
 
-struct _GimpCanvasSamplePointPrivate
+struct _LigmaCanvasSamplePointPrivate
 {
   gint     x;
   gint     y;
@@ -58,84 +58,84 @@ struct _GimpCanvasSamplePointPrivate
 };
 
 #define GET_PRIVATE(sample_point) \
-        ((GimpCanvasSamplePointPrivate *) gimp_canvas_sample_point_get_instance_private ((GimpCanvasSamplePoint *) (sample_point)))
+        ((LigmaCanvasSamplePointPrivate *) ligma_canvas_sample_point_get_instance_private ((LigmaCanvasSamplePoint *) (sample_point)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_sample_point_set_property (GObject        *object,
+static void             ligma_canvas_sample_point_set_property (GObject        *object,
                                                                guint           property_id,
                                                                const GValue   *value,
                                                                GParamSpec     *pspec);
-static void             gimp_canvas_sample_point_get_property (GObject        *object,
+static void             ligma_canvas_sample_point_get_property (GObject        *object,
                                                                guint           property_id,
                                                                GValue         *value,
                                                                GParamSpec     *pspec);
-static void             gimp_canvas_sample_point_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_sample_point_draw         (LigmaCanvasItem *item,
                                                                cairo_t        *cr);
-static cairo_region_t * gimp_canvas_sample_point_get_extents  (GimpCanvasItem *item);
-static void             gimp_canvas_sample_point_stroke       (GimpCanvasItem *item,
+static cairo_region_t * ligma_canvas_sample_point_get_extents  (LigmaCanvasItem *item);
+static void             ligma_canvas_sample_point_stroke       (LigmaCanvasItem *item,
                                                                cairo_t        *cr);
-static void             gimp_canvas_sample_point_fill         (GimpCanvasItem *item,
+static void             ligma_canvas_sample_point_fill         (LigmaCanvasItem *item,
                                                                cairo_t        *cr);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasSamplePoint, gimp_canvas_sample_point,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasSamplePoint, ligma_canvas_sample_point,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_sample_point_parent_class
+#define parent_class ligma_canvas_sample_point_parent_class
 
 
 static void
-gimp_canvas_sample_point_class_init (GimpCanvasSamplePointClass *klass)
+ligma_canvas_sample_point_class_init (LigmaCanvasSamplePointClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_sample_point_set_property;
-  object_class->get_property = gimp_canvas_sample_point_get_property;
+  object_class->set_property = ligma_canvas_sample_point_set_property;
+  object_class->get_property = ligma_canvas_sample_point_get_property;
 
-  item_class->draw           = gimp_canvas_sample_point_draw;
-  item_class->get_extents    = gimp_canvas_sample_point_get_extents;
-  item_class->stroke         = gimp_canvas_sample_point_stroke;
-  item_class->fill           = gimp_canvas_sample_point_fill;
+  item_class->draw           = ligma_canvas_sample_point_draw;
+  item_class->get_extents    = ligma_canvas_sample_point_get_extents;
+  item_class->stroke         = ligma_canvas_sample_point_stroke;
+  item_class->fill           = ligma_canvas_sample_point_fill;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_int ("y", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_INDEX,
                                    g_param_spec_int ("index", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SAMPLE_POINT_STYLE,
                                    g_param_spec_boolean ("sample-point-style",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_sample_point_init (GimpCanvasSamplePoint *sample_point)
+ligma_canvas_sample_point_init (LigmaCanvasSamplePoint *sample_point)
 {
 }
 
 static void
-gimp_canvas_sample_point_set_property (GObject      *object,
+ligma_canvas_sample_point_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -159,12 +159,12 @@ gimp_canvas_sample_point_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_sample_point_get_property (GObject    *object,
+ligma_canvas_sample_point_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -188,13 +188,13 @@ gimp_canvas_sample_point_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_sample_point_transform (GimpCanvasItem *item,
+ligma_canvas_sample_point_transform (LigmaCanvasItem *item,
                                     gdouble        *x,
                                     gdouble        *y)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    private->x + 0.5,
                                    private->y + 0.5,
                                    x, y);
@@ -203,24 +203,24 @@ gimp_canvas_sample_point_transform (GimpCanvasItem *item,
   *y = floor (*y) + 0.5;
 }
 
-#define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
+#define HALF_SIZE (LIGMA_SAMPLE_POINT_DRAW_SIZE / 2)
 
 static void
-gimp_canvas_sample_point_draw (GimpCanvasItem *item,
+ligma_canvas_sample_point_draw (LigmaCanvasItem *item,
                                cairo_t        *cr)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
-  GtkWidget                    *canvas  = gimp_canvas_item_get_canvas (item);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  GtkWidget                    *canvas  = ligma_canvas_item_get_canvas (item);
   PangoLayout                  *layout;
   gdouble                       x, y;
   gint                          x1, x2, y1, y2;
 
-  gimp_canvas_sample_point_transform (item, &x, &y);
+  ligma_canvas_sample_point_transform (item, &x, &y);
 
-  x1 = x - GIMP_SAMPLE_POINT_DRAW_SIZE;
-  x2 = x + GIMP_SAMPLE_POINT_DRAW_SIZE;
-  y1 = y - GIMP_SAMPLE_POINT_DRAW_SIZE;
-  y2 = y + GIMP_SAMPLE_POINT_DRAW_SIZE;
+  x1 = x - LIGMA_SAMPLE_POINT_DRAW_SIZE;
+  x2 = x + LIGMA_SAMPLE_POINT_DRAW_SIZE;
+  y1 = y - LIGMA_SAMPLE_POINT_DRAW_SIZE;
+  y2 = y + LIGMA_SAMPLE_POINT_DRAW_SIZE;
 
   cairo_move_to (cr, x, y1);
   cairo_line_to (cr, x, y1 + HALF_SIZE);
@@ -236,36 +236,36 @@ gimp_canvas_sample_point_draw (GimpCanvasItem *item,
 
   cairo_arc_negative (cr, x, y, HALF_SIZE, 0.0, 0.5 * G_PI);
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 
-  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas),
+  layout = ligma_canvas_get_layout (LIGMA_CANVAS (canvas),
                                    "%d", private->index);
 
   cairo_move_to (cr, x + 3, y + 3);
   pango_cairo_show_layout (cr, layout);
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
+ligma_canvas_sample_point_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
-  GtkWidget                    *canvas  = gimp_canvas_item_get_canvas (item);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  GtkWidget                    *canvas  = ligma_canvas_item_get_canvas (item);
   cairo_rectangle_int_t         rectangle;
   PangoLayout                  *layout;
   PangoRectangle                ink;
   gdouble                       x, y;
   gint                          x1, x2, y1, y2;
 
-  gimp_canvas_sample_point_transform (item, &x, &y);
+  ligma_canvas_sample_point_transform (item, &x, &y);
 
-  x1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  x2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  x1 = floor (x - LIGMA_SAMPLE_POINT_DRAW_SIZE);
+  x2 = ceil  (x + LIGMA_SAMPLE_POINT_DRAW_SIZE);
+  y1 = floor (y - LIGMA_SAMPLE_POINT_DRAW_SIZE);
+  y2 = ceil  (y + LIGMA_SAMPLE_POINT_DRAW_SIZE);
 
-  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas),
+  layout = ligma_canvas_get_layout (LIGMA_CANVAS (canvas),
                                    "%d", private->index);
 
   pango_layout_get_extents (layout, &ink, NULL);
@@ -282,54 +282,54 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
 }
 
 static void
-gimp_canvas_sample_point_stroke (GimpCanvasItem *item,
+ligma_canvas_sample_point_stroke (LigmaCanvasItem *item,
                                  cairo_t        *cr)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
   if (private->sample_point_style)
     {
-      gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
+      ligma_canvas_set_tool_bg_style (ligma_canvas_item_get_canvas (item), cr);
       cairo_stroke_preserve (cr);
 
-      gimp_canvas_set_sample_point_style (gimp_canvas_item_get_canvas (item), cr,
-                                          gimp_canvas_item_get_highlight (item));
+      ligma_canvas_set_sample_point_style (ligma_canvas_item_get_canvas (item), cr,
+                                          ligma_canvas_item_get_highlight (item));
       cairo_stroke (cr);
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
+      LIGMA_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
     }
 }
 
 static void
-gimp_canvas_sample_point_fill (GimpCanvasItem *item,
+ligma_canvas_sample_point_fill (LigmaCanvasItem *item,
                                cairo_t        *cr)
 {
-  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
   if (private->sample_point_style)
     {
-      gimp_canvas_set_sample_point_style (gimp_canvas_item_get_canvas (item), cr,
-                                          gimp_canvas_item_get_highlight (item));
+      ligma_canvas_set_sample_point_style (ligma_canvas_item_get_canvas (item), cr,
+                                          ligma_canvas_item_get_highlight (item));
       cairo_fill (cr);
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->fill (item, cr);
+      LIGMA_CANVAS_ITEM_CLASS (parent_class)->fill (item, cr);
     }
 }
 
-GimpCanvasItem *
-gimp_canvas_sample_point_new (GimpDisplayShell *shell,
+LigmaCanvasItem *
+ligma_canvas_sample_point_new (LigmaDisplayShell *shell,
                               gint              x,
                               gint              y,
                               gint              index,
                               gboolean          sample_point_style)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_SAMPLE_POINT,
+  return g_object_new (LIGMA_TYPE_CANVAS_SAMPLE_POINT,
                        "shell",              shell,
                        "x",                  x,
                        "y",                  y,
@@ -339,18 +339,18 @@ gimp_canvas_sample_point_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_canvas_sample_point_set (GimpCanvasItem *sample_point,
+ligma_canvas_sample_point_set (LigmaCanvasItem *sample_point,
                               gint            x,
                               gint            y)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_CANVAS_SAMPLE_POINT (sample_point));
 
-  gimp_canvas_item_begin_change (sample_point);
+  ligma_canvas_item_begin_change (sample_point);
 
   g_object_set (sample_point,
                 "x", x,
                 "y", y,
                 NULL);
 
-  gimp_canvas_item_end_change (sample_point);
+  ligma_canvas_item_end_change (sample_point);
 }

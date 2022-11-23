@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/dynamics/FX
+## Makefile.am for ligma/data/dynamics/FX
 
-dynamicsfxdatadir = $(gimpdatadir)/dynamics/FX
+dynamicsfxdatadir = $(ligmadatadir)/dynamics/FX
 
 dynamicsfxdata_DATA = \
 	Confetti.gdyn		\

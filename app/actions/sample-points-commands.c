@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include "actions-types.h"
 
-#include "widgets/gimpsamplepointeditor.h"
+#include "widgets/ligmasamplepointeditor.h"
 
 #include "sample-points-commands.h"
 
@@ -30,12 +30,12 @@
 /*  public functions  */
 
 void
-sample_points_sample_merged_cmd_callback (GimpAction *action,
+sample_points_sample_merged_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data)
 {
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
+  LigmaSamplePointEditor *editor = LIGMA_SAMPLE_POINT_EDITOR (data);
   gboolean               active = g_variant_get_boolean (value);
 
-  gimp_sample_point_editor_set_sample_merged (editor, active);
+  ligma_sample_point_editor_set_sample_merged (editor, active);
 }

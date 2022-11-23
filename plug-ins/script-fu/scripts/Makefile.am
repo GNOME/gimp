@@ -2,7 +2,7 @@
 
 SUBDIRS = images
 
-scriptdatadir = $(gimpdatadir)/scripts
+scriptdatadir = $(ligmadatadir)/scripts
 
 scripts = \
 	script-fu.init			\
@@ -24,7 +24,7 @@ scripts = \
 	erase-rows.scm			\
 	font-map.scm			\
 	fuzzyborder.scm			\
-	gimp-online.scm			\
+	ligma-online.scm			\
 	gradient-example.scm		\
 	grid-system.scm			\
 	guides-from-selection.scm	\
@@ -66,22 +66,22 @@ test_scripts = \
 	clothify-v3.scm
 
 
-# scripts interpreted by gimp-script-fu-interpreter
+# scripts interpreted by ligma-script-fu-interpreter
 # Each installs to a subdir of /plug-ins
 # Each should have a shebang and execute permission
 independent_scripts = \
 	ts-helloworld.scm   \
 	test-sphere-v3.scm
 
-ts_helloworlddir = $(gimpplugindir)/plug-ins/ts-helloworld
+ts_helloworlddir = $(ligmaplugindir)/plug-ins/ts-helloworld
 ts_helloworld_SCRIPTS = ts-helloworld.scm
-test_sphere_v3dir = $(gimpplugindir)/plug-ins/test-sphere-v3
+test_sphere_v3dir = $(ligmaplugindir)/plug-ins/test-sphere-v3
 test_sphere_v3_SCRIPTS = test-sphere-v3.scm
 
 
 scriptdata_DATA = $(scripts)
 
-if GIMP_UNSTABLE
+if LIGMA_UNSTABLE
 scriptdata_DATA += $(test_scripts)
 endif
 

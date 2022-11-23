@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,20 @@
 #define __JPEG_SAVE_H__
 
 
-extern GimpImage       *orig_image_global;
-extern GimpDrawable    *drawable_global;
+extern LigmaImage       *orig_image_global;
+extern LigmaDrawable    *drawable_global;
 
 
 gboolean    save_image         (GFile                *file,
-                                GimpProcedureConfig *config,
-                                GimpImage            *image,
-                                GimpDrawable         *drawable,
-                                GimpImage            *orig_image,
+                                LigmaProcedureConfig *config,
+                                LigmaImage            *image,
+                                LigmaDrawable         *drawable,
+                                LigmaImage            *orig_image,
                                 gboolean              preview,
                                 GError              **error);
-gboolean    save_dialog        (GimpProcedure        *procedure,
-                                GimpProcedureConfig  *config,
-                                GimpDrawable         *drawable,
-                                GimpImage            *image);
+gboolean    save_dialog        (LigmaProcedure        *procedure,
+                                LigmaProcedureConfig  *config,
+                                LigmaDrawable         *drawable,
+                                LigmaImage            *image);
 
 #endif /* __JPEG_SAVE_H__ */

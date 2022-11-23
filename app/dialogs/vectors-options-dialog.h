@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,21 @@
 #define __VECTORS_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpVectorsOptionsCallback) (GtkWidget    *dialog,
-                                             GimpImage    *image,
-                                             GimpVectors  *vectors,
-                                             GimpContext  *context,
+typedef void (* LigmaVectorsOptionsCallback) (GtkWidget    *dialog,
+                                             LigmaImage    *image,
+                                             LigmaVectors  *vectors,
+                                             LigmaContext  *context,
                                              const gchar  *vectors_name,
                                              gboolean      vectors_visible,
-                                             GimpColorTag  vectors_color_tag,
+                                             LigmaColorTag  vectors_color_tag,
                                              gboolean      vectors_lock_content,
                                              gboolean      vectors_lock_position,
                                              gpointer      user_data);
 
 
-GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
-                                        GimpVectors                *vectors,
-                                        GimpContext                *context,
+GtkWidget * vectors_options_dialog_new (LigmaImage                  *image,
+                                        LigmaVectors                *vectors,
+                                        LigmaContext                *context,
                                         GtkWidget                  *parent,
                                         const gchar                *title,
                                         const gchar                *role,
@@ -42,10 +42,10 @@ GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
                                         const gchar                *help_id,
                                         const gchar                *vectors_name,
                                         gboolean                    vectors_visible,
-                                        GimpColorTag                vectors_color_tag,
+                                        LigmaColorTag                vectors_color_tag,
                                         gboolean                    vectors_lock_content,
                                         gboolean                    vectors_lock_position,
-                                        GimpVectorsOptionsCallback  callback,
+                                        LigmaVectorsOptionsCallback  callback,
                                         gpointer                    user_data);
 
 

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_convert_rgb {
     $blurb = 'Convert specified image to RGB color';
@@ -35,10 +35,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error) &&
-      gimp_babl_is_valid (GIMP_RGB, gimp_image_get_precision (image)))
+  if (ligma_pdb_image_is_not_base_type (image, LIGMA_RGB, error) &&
+      ligma_babl_is_valid (LIGMA_RGB, ligma_image_get_precision (image)))
     {
-      success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
+      success = ligma_image_convert_type (image, LIGMA_RGB, NULL, NULL, error);
     }
   else
     {
@@ -67,10 +67,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error) &&
-      gimp_babl_is_valid (GIMP_GRAY, gimp_image_get_precision (image)))
+  if (ligma_pdb_image_is_not_base_type (image, LIGMA_GRAY, error) &&
+      ligma_babl_is_valid (LIGMA_GRAY, ligma_image_get_precision (image)))
     {
-      success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
+      success = ligma_image_convert_type (image, LIGMA_GRAY, NULL, NULL, error);
     }
   else
     {
@@ -92,7 +92,7 @@ optimal palette of 'num_cols' generated from the colors in the
 image. A type of '1' means to re-use the previous palette (not
 currently implemented). A type of '2' means to use the so-called
 WWW-optimized palette. Type '3' means to use only black and white
-colors. A type of '4' means to use a palette from the gimp palettes
+colors. A type of '4' means to use a palette from the ligma palettes
 directories.  The 'dither type' specifies what kind of dithering to
 use.  '0' means no dithering, '1' means standard Floyd-Steinberg error
 diffusion, '2' means Floyd-Steinberg error diffusion with reduced
@@ -105,43 +105,43 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
+	{ name => 'dither_type', type => 'enum LigmaConvertDitherType',
 	  desc => 'The dither type to use' },
-	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
+	{ name => 'palette_type', type => 'enum LigmaConvertPaletteType',
 	  desc => 'The type of palette to use' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'The number of colors to quantize to, ignored unless
-		   (palette_type == GIMP_CONVERT_PALETTE_GENERATE)' },
+		   (palette_type == LIGMA_CONVERT_PALETTE_GENERATE)' },
 	{ name => 'alpha_dither', type => 'boolean',
 	  desc => 'Dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
 	  desc => 'Remove unused or duplicate color entries from final
 		   palette, ignored if (palette_type ==
-		   GIMP_CONVERT_PALETTE_GENERATE)' },
+		   LIGMA_CONVERT_PALETTE_GENERATE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)' }
+		   (palette_type == LIGMA_CONVERT_PALETTE_CUSTOM)' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *pal = NULL;
+  LigmaPalette *pal = NULL;
 
-  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)             &&
-      gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8_NON_LINEAR, error) &&
-      gimp_babl_is_valid (GIMP_INDEXED, gimp_image_get_precision (image))      &&
-      gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
+  if (ligma_pdb_image_is_not_base_type (image, LIGMA_INDEXED, error)             &&
+      ligma_pdb_image_is_precision (image, LIGMA_PRECISION_U8_NON_LINEAR, error) &&
+      ligma_babl_is_valid (LIGMA_INDEXED, ligma_image_get_precision (image))      &&
+      ligma_item_stack_is_flat (LIGMA_ITEM_STACK (ligma_image_get_layers (image))))
     {
       switch (palette_type)
 	{
-	case GIMP_CONVERT_PALETTE_GENERATE:
+	case LIGMA_CONVERT_PALETTE_GENERATE:
 	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	    success = FALSE;
 	  break;
 
-	case GIMP_CONVERT_PALETTE_CUSTOM:
-          pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+	case LIGMA_CONVERT_PALETTE_CUSTOM:
+          pal = ligma_pdb_get_palette (ligma, palette, FALSE, error);
 	  if (! pal)
             {
               success = FALSE;
@@ -149,8 +149,8 @@ HELP
           else if (pal->n_colors > MAXNUMCOLORS)
             {
               g_set_error_literal (error,
-	                           GIMP_PDB_ERROR,
-                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
+	                           LIGMA_PDB_ERROR,
+                                   LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                                    _("Cannot convert to a palette "
                                      "with more than 256 colors."));
               success = FALSE;
@@ -167,7 +167,7 @@ HELP
     }
 
   if (success)
-    success = gimp_image_convert_indexed (image,
+    success = ligma_image_convert_indexed (image,
                                           palette_type, num_cols, remove_unused,
                                           dither_type, alpha_dither, FALSE,
                                           pal,
@@ -204,12 +204,12 @@ HELP
 {
   if (width == 0 || height == 0 || matrix_length == width * height)
     {
-      gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
+      ligma_image_convert_indexed_set_dither_matrix (matrix, width, height);
     }
   else
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR,
-                           GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error_literal (error, LIGMA_PDB_ERROR,
+                           LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                            "Dither matrix length must be width * height");
       success = FALSE;
     }
@@ -224,7 +224,7 @@ sub image_convert_precision {
     $help = <<'HELP';
 This procedure converts the image to the specified precision. Note
 that indexed images cannot be converted and are always in
-GIMP_PRECISION_U8.
+LIGMA_PRECISION_U8.
 HELP
 
     &mitch_pdb_misc('2012', '2.10');
@@ -232,18 +232,18 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'precision', type => 'enum GimpPrecision',
+	{ name => 'precision', type => 'enum LigmaPrecision',
 	  desc => 'The new precision' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
-      gimp_pdb_image_is_not_precision (image, precision, error)    &&
-      gimp_babl_is_valid (gimp_image_get_base_type (image), precision))
+  if (ligma_pdb_image_is_not_base_type (image, LIGMA_INDEXED, error) &&
+      ligma_pdb_image_is_not_precision (image, precision, error)    &&
+      ligma_babl_is_valid (ligma_image_get_base_type (image), precision))
     {
-      gimp_image_convert_precision (image, precision,
+      ligma_image_convert_precision (image, precision,
                                     GEGL_DITHER_NONE,
                                     GEGL_DITHER_NONE,
                                     GEGL_DITHER_NONE,
@@ -258,17 +258,17 @@ CODE
     );
 }
 
-@headers = qw("gegl/gimp-babl.h"
-              "core/gimp.h"
-              "core/gimpimage.h"
-              "core/gimpimage-convert-indexed.h"
-              "core/gimpimage-convert-precision.h"
-              "core/gimpimage-convert-type.h"
-              "core/gimpitemstack.h"
-              "core/gimppalette.h"
-              "gimppdberror.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+@headers = qw("gegl/ligma-babl.h"
+              "core/ligma.h"
+              "core/ligmaimage.h"
+              "core/ligmaimage-convert-indexed.h"
+              "core/ligmaimage-convert-precision.h"
+              "core/ligmaimage-convert-type.h"
+              "core/ligmaitemstack.h"
+              "core/ligmapalette.h"
+              "ligmapdberror.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(image_convert_rgb
             image_convert_grayscale
@@ -279,7 +279,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Convert';
-$doc_title = 'gimpimageconvert';
+$doc_title = 'ligmaimageconvert';
 $doc_short_desc = 'Conversions between RGB, indexed, and grayscale modes.';
 $doc_long_desc = 'Conversions between RGB, indexed, and grayscale modes.';
 

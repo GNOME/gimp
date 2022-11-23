@@ -1,4 +1,4 @@
-/* tiff loading for GIMP
+/* tiff loading for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -40,15 +40,15 @@ typedef struct
   gint                    n_filtered_pages;
   gint                    n_reducedimage_pages;
   GtkWidget              *selector;
-  GimpPageSelectorTarget  target;
+  LigmaPageSelectorTarget  target;
   gboolean                keep_empty_space;
   gboolean                show_reduced;
 } TiffSelectedPages;
 
 
-GimpPDBStatusType load_image  (GFile        *file,
-                               GimpRunMode   run_mode,
-                               GimpImage   **image,
+LigmaPDBStatusType load_image  (GFile        *file,
+                               LigmaRunMode   run_mode,
+                               LigmaImage   **image,
                                gboolean     *resolution_loaded,
                                gboolean     *profile_loaded,
                                GError      **error);

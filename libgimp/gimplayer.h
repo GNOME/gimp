@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimplayer.h
+ * ligmalayer.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,66 +18,66 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LAYER_H__
-#define __GIMP_LAYER_H__
+#ifndef __LIGMA_LAYER_H__
+#define __LIGMA_LAYER_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_LAYER (gimp_layer_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLayer, gimp_layer, GIMP, LAYER, GimpDrawable)
+#define LIGMA_TYPE_LAYER (ligma_layer_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLayer, ligma_layer, LIGMA, LAYER, LigmaDrawable)
 
-struct _GimpLayerClass
+struct _LigmaLayerClass
 {
-  GimpDrawableClass parent_class;
+  LigmaDrawableClass parent_class;
 
   /*  virtual functions  */
-  GimpLayer * (* copy) (GimpLayer *layer);
+  LigmaLayer * (* copy) (LigmaLayer *layer);
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
+  void (*_ligma_reserved9) (void);
 };
 
-GimpLayer * gimp_layer_get_by_id          (gint32           layer_id);
+LigmaLayer * ligma_layer_get_by_id          (gint32           layer_id);
 
-GimpLayer * gimp_layer_new                (GimpImage       *image,
+LigmaLayer * ligma_layer_new                (LigmaImage       *image,
                                            const gchar     *name,
                                            gint             width,
                                            gint             height,
-                                           GimpImageType    type,
+                                           LigmaImageType    type,
                                            gdouble          opacity,
-                                           GimpLayerMode    mode);
+                                           LigmaLayerMode    mode);
 
-GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
+LigmaLayer * ligma_layer_new_from_pixbuf    (LigmaImage       *image,
                                            const gchar     *name,
                                            GdkPixbuf       *pixbuf,
                                            gdouble          opacity,
-                                           GimpLayerMode    mode,
+                                           LigmaLayerMode    mode,
                                            gdouble          progress_start,
                                            gdouble          progress_end);
-GimpLayer * gimp_layer_new_from_surface   (GimpImage       *image,
+LigmaLayer * ligma_layer_new_from_surface   (LigmaImage       *image,
                                            const gchar     *name,
                                            cairo_surface_t *surface,
                                            gdouble          progress_start,
                                            gdouble          progress_end);
 
-GimpLayer * gimp_layer_copy               (GimpLayer       *layer);
+LigmaLayer * ligma_layer_copy               (LigmaLayer       *layer);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_LAYER_H__ */
+#endif /* __LIGMA_LAYER_H__ */

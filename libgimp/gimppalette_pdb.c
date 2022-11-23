@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppalette_pdb.c
+ * ligmapalette_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppalette
- * @title: gimppalette
+ * SECTION: ligmapalette
+ * @title: ligmapalette
  * @short_description: Functions operating on a single palette.
  *
  * Functions operating on a single palette.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_palette_new:
+ * ligma_palette_new:
  * @name: The requested name of the new palette.
  *
  * Creates a new palette
@@ -50,31 +50,31 @@
  * Since: 2.2
  **/
 gchar *
-gimp_palette_new (const gchar *name)
+ligma_palette_new (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    actual_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return actual_name;
 }
 
 /**
- * gimp_palette_duplicate:
+ * ligma_palette_duplicate:
  * @name: The palette name.
  *
  * Duplicates a palette
@@ -87,31 +87,31 @@ gimp_palette_new (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_palette_duplicate (const gchar *name)
+ligma_palette_duplicate (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-duplicate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-duplicate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    copy_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return copy_name;
 }
 
 /**
- * gimp_palette_rename:
+ * ligma_palette_rename:
  * @name: The palette name.
  * @new_name: The new name of the palette.
  *
@@ -125,33 +125,33 @@ gimp_palette_duplicate (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_palette_rename (const gchar *name,
+ligma_palette_rename (const gchar *name,
                      const gchar *new_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-rename",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-rename",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    actual_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return actual_name;
 }
 
 /**
- * gimp_palette_delete:
+ * ligma_palette_delete:
  * @name: The palette name.
  *
  * Deletes a palette
@@ -163,30 +163,30 @@ gimp_palette_rename (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_delete (const gchar *name)
+ligma_palette_delete (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_is_editable:
+ * ligma_palette_is_editable:
  * @name: The palette name.
  *
  * Tests if palette can be edited
@@ -198,31 +198,31 @@ gimp_palette_delete (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_palette_is_editable (const gchar *name)
+ligma_palette_is_editable (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean editable = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-is-editable",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-is-editable",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    editable = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return editable;
 }
 
 /**
- * gimp_palette_get_info:
+ * ligma_palette_get_info:
  * @name: The palette name.
  * @num_colors: (out): The number of colors in the palette.
  *
@@ -236,36 +236,36 @@ gimp_palette_is_editable (const gchar *name)
  * Since: 2.2
  **/
 gboolean
-gimp_palette_get_info (const gchar *name,
+ligma_palette_get_info (const gchar *name,
                        gint        *num_colors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-get-info",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-get-info",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_colors = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
+    *num_colors = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_get_colors:
+ * ligma_palette_get_colors:
  * @name: The palette name.
  * @num_colors: (out): Length of the colors array.
  *
@@ -273,44 +273,44 @@ gimp_palette_get_info (const gchar *name,
  *
  * This procedure retrieves all color entries of the specified palette.
  *
- * Returns: (array length=num_colors) (element-type GimpRGB) (transfer full):
+ * Returns: (array length=num_colors) (element-type LigmaRGB) (transfer full):
  *          The colors in the palette.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/
-GimpRGB *
-gimp_palette_get_colors (const gchar *name,
+LigmaRGB *
+ligma_palette_get_colors (const gchar *name,
                          gint        *num_colors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpRGB *colors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaRGB *colors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-get-colors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-get-colors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_colors = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
-      colors = GIMP_VALUES_DUP_RGB_ARRAY (return_vals, 2);
+      *num_colors = LIGMA_VALUES_GET_INT (return_vals, 1);
+      colors = LIGMA_VALUES_DUP_RGB_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return colors;
 }
 
 /**
- * gimp_palette_get_columns:
+ * ligma_palette_get_columns:
  * @name: The palette name.
  *
  * Retrieves the number of columns to use to display this palette
@@ -323,31 +323,31 @@ gimp_palette_get_colors (const gchar *name,
  * Since: 2.4
  **/
 gint
-gimp_palette_get_columns (const gchar *name)
+ligma_palette_get_columns (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint num_columns = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-get-columns",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-get-columns",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_columns = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    num_columns = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return num_columns;
 }
 
 /**
- * gimp_palette_set_columns:
+ * ligma_palette_set_columns:
  * @name: The palette name.
  * @columns: The new number of columns.
  *
@@ -362,32 +362,32 @@ gimp_palette_get_columns (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_palette_set_columns (const gchar *name,
+ligma_palette_set_columns (const gchar *name,
                           gint         columns)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, columns,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-set-columns",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-set-columns",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_add_entry:
+ * ligma_palette_add_entry:
  * @name: The palette name.
  * @entry_name: The name of the entry.
  * @color: The new entry's color color.
@@ -403,40 +403,40 @@ gimp_palette_set_columns (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_add_entry (const gchar   *name,
+ligma_palette_add_entry (const gchar   *name,
                         const gchar   *entry_name,
-                        const GimpRGB *color,
+                        const LigmaRGB *color,
                         gint          *entry_num)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_STRING, entry_name,
-                                          GIMP_TYPE_RGB, color,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-add-entry",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-add-entry",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *entry_num = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    *entry_num = GIMP_VALUES_GET_INT (return_vals, 1);
+    *entry_num = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_delete_entry:
+ * ligma_palette_delete_entry:
  * @name: The palette name.
  * @entry_num: The index of the added entry.
  *
@@ -450,32 +450,32 @@ gimp_palette_add_entry (const gchar   *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_delete_entry (const gchar *name,
+ligma_palette_delete_entry (const gchar *name,
                            gint         entry_num)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-delete-entry",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-delete-entry",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_entry_get_color:
+ * ligma_palette_entry_get_color:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @color: (out caller-allocates): The color requested.
@@ -491,36 +491,36 @@ gimp_palette_delete_entry (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_get_color (const gchar *name,
+ligma_palette_entry_get_color (const gchar *name,
                               gint         entry_num,
-                              GimpRGB     *color)
+                              LigmaRGB     *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-entry-get-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-entry-get-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*color);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_entry_set_color:
+ * ligma_palette_entry_set_color:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @color: The new color.
@@ -536,34 +536,34 @@ gimp_palette_entry_get_color (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_color (const gchar   *name,
+ligma_palette_entry_set_color (const gchar   *name,
                               gint           entry_num,
-                              const GimpRGB *color)
+                              const LigmaRGB *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, entry_num,
-                                          GIMP_TYPE_RGB, color,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-entry-set-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-entry-set-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_entry_get_name:
+ * ligma_palette_entry_get_name:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @entry_name: (out) (transfer full): The name requested.
@@ -579,38 +579,38 @@ gimp_palette_entry_set_color (const gchar   *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_get_name (const gchar  *name,
+ligma_palette_entry_get_name (const gchar  *name,
                              gint          entry_num,
                              gchar       **entry_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-entry-get-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-entry-get-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *entry_name = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    *entry_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    *entry_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_palette_entry_set_name:
+ * ligma_palette_entry_set_name:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @entry_name: The new name.
@@ -626,28 +626,28 @@ gimp_palette_entry_get_name (const gchar  *name,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_name (const gchar *name,
+ligma_palette_entry_set_name (const gchar *name,
                              gint         entry_num,
                              const gchar *entry_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_STRING, entry_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-entry-set-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-palette-entry-set-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,37 +22,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpthumb/gimpthumb.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmathumb/ligmathumb.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimagefile.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimagefile.h"
 
 #include "file/file-open.h"
 
-#include "widgets/gimpclipboard.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontainerview-utils.h"
-#include "widgets/gimpdocumentview.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaclipboard.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmacontainerview-utils.h"
+#include "widgets/ligmadocumentview.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplay-foreach.h"
+#include "display/ligmadisplayshell.h"
 
 #include "documents-commands.h"
 #include "file-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct
@@ -65,9 +65,9 @@ typedef struct
 /*  local function prototypes  */
 
 static void   documents_open_image    (GtkWidget     *editor,
-                                       GimpContext   *context,
-                                       GimpImagefile *imagefile);
-static void   documents_raise_display (GimpDisplay   *display,
+                                       LigmaContext   *context,
+                                       LigmaImagefile *imagefile);
+static void   documents_raise_display (LigmaDisplay   *display,
                                        RaiseClosure  *closure);
 
 
@@ -75,53 +75,53 @@ static void   documents_raise_display (GimpDisplay   *display,
 /*  public functions */
 
 void
-documents_open_cmd_callback (GimpAction *action,
+documents_open_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaContainer       *container;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  imagefile = gimp_context_get_imagefile (context);
+  imagefile = ligma_context_get_imagefile (context);
 
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+  if (imagefile && ligma_container_have (container, LIGMA_OBJECT (imagefile)))
     {
       documents_open_image (GTK_WIDGET (editor), context, imagefile);
     }
   else
     {
-      file_file_open_dialog (context->gimp, NULL, GTK_WIDGET (editor));
+      file_file_open_dialog (context->ligma, NULL, GTK_WIDGET (editor));
     }
 }
 
 void
-documents_raise_or_open_cmd_callback (GimpAction *action,
+documents_raise_or_open_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaContainer       *container;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  imagefile = gimp_context_get_imagefile (context);
+  imagefile = ligma_context_get_imagefile (context);
 
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+  if (imagefile && ligma_container_have (container, LIGMA_OBJECT (imagefile)))
     {
       RaiseClosure closure;
 
-      closure.name  = gimp_object_get_name (imagefile);
+      closure.name  = ligma_object_get_name (imagefile);
       closure.found = FALSE;
 
-      gimp_container_foreach (context->gimp->displays,
+      ligma_container_foreach (context->ligma->displays,
                               (GFunc) documents_raise_display,
                               &closure);
 
@@ -131,66 +131,66 @@ documents_raise_or_open_cmd_callback (GimpAction *action,
 }
 
 void
-documents_file_open_dialog_cmd_callback (GimpAction *action,
+documents_file_open_dialog_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaContainer       *container;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  imagefile = gimp_context_get_imagefile (context);
+  imagefile = ligma_context_get_imagefile (context);
 
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+  if (imagefile && ligma_container_have (container, LIGMA_OBJECT (imagefile)))
     {
-      file_file_open_dialog (context->gimp,
-                             gimp_imagefile_get_file (imagefile),
+      file_file_open_dialog (context->ligma,
+                             ligma_imagefile_get_file (imagefile),
                              GTK_WIDGET (editor));
     }
 }
 
 void
-documents_copy_location_cmd_callback (GimpAction *action,
+documents_copy_location_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  imagefile = gimp_context_get_imagefile (context);
+  context   = ligma_container_view_get_context (editor->view);
+  imagefile = ligma_context_get_imagefile (context);
 
   if (imagefile)
-    gimp_clipboard_set_text (context->gimp,
-                             gimp_object_get_name (imagefile));
+    ligma_clipboard_set_text (context->ligma,
+                             ligma_object_get_name (imagefile));
 }
 
 void
-documents_show_in_file_manager_cmd_callback (GimpAction *action,
+documents_show_in_file_manager_cmd_callback (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  imagefile = gimp_context_get_imagefile (context);
+  context   = ligma_container_view_get_context (editor->view);
+  imagefile = ligma_context_get_imagefile (context);
 
   if (imagefile)
     {
-      GFile  *file  = g_file_new_for_uri (gimp_object_get_name (imagefile));
+      GFile  *file  = g_file_new_for_uri (ligma_object_get_name (imagefile));
       GError *error = NULL;
 
-      if (! gimp_file_show_in_file_manager (file, &error))
+      if (! ligma_file_show_in_file_manager (file, &error))
         {
-          gimp_message (context->gimp, G_OBJECT (editor),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (context->ligma, G_OBJECT (editor),
+                        LIGMA_MESSAGE_ERROR,
                         _("Can't show file in file manager: %s"),
                         error->message);
           g_clear_error (&error);
@@ -201,45 +201,45 @@ documents_show_in_file_manager_cmd_callback (GimpAction *action,
 }
 
 void
-documents_remove_cmd_callback (GimpAction *action,
+documents_remove_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context = gimp_container_view_get_context (editor->view);
-  GimpImagefile       *imagefile = gimp_context_get_imagefile (context);
+  LigmaContainerEditor *editor  = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context = ligma_container_view_get_context (editor->view);
+  LigmaImagefile       *imagefile = ligma_context_get_imagefile (context);
   const gchar         *uri;
 
-  uri = gimp_object_get_name (imagefile);
+  uri = ligma_object_get_name (imagefile);
 
   gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
 
-  gimp_container_view_remove_active (editor->view);
+  ligma_container_view_remove_active (editor->view);
 }
 
 void
-documents_clear_cmd_callback (GimpAction *action,
+documents_clear_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context = gimp_container_view_get_context (editor->view);
-  Gimp                *gimp    = context->gimp;
+  LigmaContainerEditor *editor  = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context = ligma_container_view_get_context (editor->view);
+  Ligma                *ligma    = context->ligma;
   GtkWidget           *dialog;
 
-  dialog = gimp_message_dialog_new (_("Clear Document History"),
-                                    GIMP_ICON_SHRED,
+  dialog = ligma_message_dialog_new (_("Clear Document History"),
+                                    LIGMA_ICON_SHRED,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("Cl_ear"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -249,15 +249,15 @@ documents_clear_cmd_callback (GimpAction *action,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Clear the Recent Documents list?"));
 
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              _("Clearing the document history will "
                                "permanently remove all images from "
                                "the recent documents list."));
 
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       GtkRecentManager *manager = gtk_recent_manager_get_default ();
       GList            *items;
@@ -282,38 +282,38 @@ documents_clear_cmd_callback (GimpAction *action,
 
       g_list_free (items);
 
-      gimp_container_clear (gimp->documents);
+      ligma_container_clear (ligma->documents);
     }
 
   gtk_widget_destroy (dialog);
 }
 
 void
-documents_recreate_preview_cmd_callback (GimpAction *action,
+documents_recreate_preview_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaContainer       *container;
+  LigmaImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  imagefile = gimp_context_get_imagefile (context);
+  imagefile = ligma_context_get_imagefile (context);
 
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+  if (imagefile && ligma_container_have (container, LIGMA_OBJECT (imagefile)))
     {
       GError *error = NULL;
 
-      if (! gimp_imagefile_create_thumbnail (imagefile,
+      if (! ligma_imagefile_create_thumbnail (imagefile,
                                              context, NULL,
-                                             context->gimp->config->thumbnail_size,
+                                             context->ligma->config->thumbnail_size,
                                              FALSE, &error))
         {
-          gimp_message_literal (context->gimp,
-                                NULL , GIMP_MESSAGE_ERROR,
+          ligma_message_literal (context->ligma,
+                                NULL , LIGMA_MESSAGE_ERROR,
                                 error->message);
           g_clear_error (&error);
         }
@@ -321,48 +321,48 @@ documents_recreate_preview_cmd_callback (GimpAction *action,
 }
 
 void
-documents_reload_previews_cmd_callback (GimpAction *action,
+documents_reload_previews_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
 
-  container = gimp_container_view_get_container (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_imagefile_update,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_imagefile_update,
                           editor->view);
 }
 
 static void
-documents_remove_dangling_foreach (GimpImagefile *imagefile,
-                                   GimpContainer *container)
+documents_remove_dangling_foreach (LigmaImagefile *imagefile,
+                                   LigmaContainer *container)
 {
-  GimpThumbnail *thumbnail = gimp_imagefile_get_thumbnail (imagefile);
+  LigmaThumbnail *thumbnail = ligma_imagefile_get_thumbnail (imagefile);
 
-  if (gimp_thumbnail_peek_image (thumbnail) == GIMP_THUMB_STATE_NOT_FOUND)
+  if (ligma_thumbnail_peek_image (thumbnail) == LIGMA_THUMB_STATE_NOT_FOUND)
     {
-      const gchar *uri = gimp_object_get_name (imagefile);
+      const gchar *uri = ligma_object_get_name (imagefile);
 
       gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri,
                                       NULL);
 
-      gimp_container_remove (container, GIMP_OBJECT (imagefile));
+      ligma_container_remove (container, LIGMA_OBJECT (imagefile));
     }
 }
 
 void
-documents_remove_dangling_cmd_callback (GimpAction *action,
+documents_remove_dangling_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
 
-  container = gimp_container_view_get_container (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  gimp_container_foreach (container,
+  ligma_container_foreach (container,
                           (GFunc) documents_remove_dangling_foreach,
                           container);
 }
@@ -372,38 +372,38 @@ documents_remove_dangling_cmd_callback (GimpAction *action,
 
 static void
 documents_open_image (GtkWidget     *editor,
-                      GimpContext   *context,
-                      GimpImagefile *imagefile)
+                      LigmaContext   *context,
+                      LigmaImagefile *imagefile)
 {
   GFile              *file;
-  GimpImage          *image;
-  GimpPDBStatusType   status;
+  LigmaImage          *image;
+  LigmaPDBStatusType   status;
   GError             *error = NULL;
 
-  file = gimp_imagefile_get_file (imagefile);
+  file = ligma_imagefile_get_file (imagefile);
 
-  image = file_open_with_display (context->gimp, context, NULL, file, FALSE,
-                                  G_OBJECT (gimp_widget_get_monitor (editor)),
+  image = file_open_with_display (context->ligma, context, NULL, file, FALSE,
+                                  G_OBJECT (ligma_widget_get_monitor (editor)),
                                   &status, &error);
 
-  if (! image && status != GIMP_PDB_CANCEL)
+  if (! image && status != LIGMA_PDB_CANCEL)
     {
-      gimp_message (context->gimp, G_OBJECT (editor), GIMP_MESSAGE_ERROR,
+      ligma_message (context->ligma, G_OBJECT (editor), LIGMA_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
+                    ligma_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
 }
 
 static void
-documents_raise_display (GimpDisplay  *display,
+documents_raise_display (LigmaDisplay  *display,
                          RaiseClosure *closure)
 {
-  const gchar *uri = gimp_object_get_name (gimp_display_get_image (display));
+  const gchar *uri = ligma_object_get_name (ligma_display_get_image (display));
 
   if (! g_strcmp0 (closure->name, uri))
     {
       closure->found = TRUE;
-      gimp_display_shell_present (gimp_display_get_shell (display));
+      ligma_display_shell_present (ligma_display_get_shell (display));
     }
 }

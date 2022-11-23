@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,68 +22,68 @@
 
 #include "core-types.h"
 
-#include "gimpprojectable.h"
+#include "ligmaprojectable.h"
 
-#include "gimptilehandlerprojectable.h"
-
-
-static void   gimp_tile_handler_projectable_begin_validate (GimpTileHandlerValidate *validate);
-static void   gimp_tile_handler_projectable_end_validate   (GimpTileHandlerValidate *validate);
+#include "ligmatilehandlerprojectable.h"
 
 
-G_DEFINE_TYPE (GimpTileHandlerProjectable, gimp_tile_handler_projectable,
-               GIMP_TYPE_TILE_HANDLER_VALIDATE)
+static void   ligma_tile_handler_projectable_begin_validate (LigmaTileHandlerValidate *validate);
+static void   ligma_tile_handler_projectable_end_validate   (LigmaTileHandlerValidate *validate);
 
-#define parent_class gimp_tile_handler_projectable_parent_class
+
+G_DEFINE_TYPE (LigmaTileHandlerProjectable, ligma_tile_handler_projectable,
+               LIGMA_TYPE_TILE_HANDLER_VALIDATE)
+
+#define parent_class ligma_tile_handler_projectable_parent_class
 
 
 static void
-gimp_tile_handler_projectable_class_init (GimpTileHandlerProjectableClass *klass)
+ligma_tile_handler_projectable_class_init (LigmaTileHandlerProjectableClass *klass)
 {
-  GimpTileHandlerValidateClass *validate_class;
+  LigmaTileHandlerValidateClass *validate_class;
 
-  validate_class = GIMP_TILE_HANDLER_VALIDATE_CLASS (klass);
+  validate_class = LIGMA_TILE_HANDLER_VALIDATE_CLASS (klass);
 
-  validate_class->begin_validate = gimp_tile_handler_projectable_begin_validate;
-  validate_class->end_validate   = gimp_tile_handler_projectable_end_validate;
+  validate_class->begin_validate = ligma_tile_handler_projectable_begin_validate;
+  validate_class->end_validate   = ligma_tile_handler_projectable_end_validate;
 }
 
 static void
-gimp_tile_handler_projectable_init (GimpTileHandlerProjectable *projectable)
+ligma_tile_handler_projectable_init (LigmaTileHandlerProjectable *projectable)
 {
 }
 
 static void
-gimp_tile_handler_projectable_begin_validate (GimpTileHandlerValidate *validate)
+ligma_tile_handler_projectable_begin_validate (LigmaTileHandlerValidate *validate)
 {
-  GimpTileHandlerProjectable *handler = GIMP_TILE_HANDLER_PROJECTABLE (validate);
+  LigmaTileHandlerProjectable *handler = LIGMA_TILE_HANDLER_PROJECTABLE (validate);
 
-  GIMP_TILE_HANDLER_VALIDATE_CLASS (parent_class)->begin_validate (validate);
+  LIGMA_TILE_HANDLER_VALIDATE_CLASS (parent_class)->begin_validate (validate);
 
-  gimp_projectable_begin_render (handler->projectable);
+  ligma_projectable_begin_render (handler->projectable);
 }
 
 static void
-gimp_tile_handler_projectable_end_validate (GimpTileHandlerValidate *validate)
+ligma_tile_handler_projectable_end_validate (LigmaTileHandlerValidate *validate)
 {
-  GimpTileHandlerProjectable *handler = GIMP_TILE_HANDLER_PROJECTABLE (validate);
+  LigmaTileHandlerProjectable *handler = LIGMA_TILE_HANDLER_PROJECTABLE (validate);
 
-  gimp_projectable_end_render (handler->projectable);
+  ligma_projectable_end_render (handler->projectable);
 
-  GIMP_TILE_HANDLER_VALIDATE_CLASS (parent_class)->end_validate (validate);
+  LIGMA_TILE_HANDLER_VALIDATE_CLASS (parent_class)->end_validate (validate);
 }
 
 GeglTileHandler *
-gimp_tile_handler_projectable_new (GimpProjectable *projectable)
+ligma_tile_handler_projectable_new (LigmaProjectable *projectable)
 {
-  GimpTileHandlerProjectable *handler;
+  LigmaTileHandlerProjectable *handler;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), NULL);
 
-  handler = g_object_new (GIMP_TYPE_TILE_HANDLER_PROJECTABLE, NULL);
+  handler = g_object_new (LIGMA_TYPE_TILE_HANDLER_PROJECTABLE, NULL);
 
-  GIMP_TILE_HANDLER_VALIDATE (handler)->graph =
-    g_object_ref (gimp_projectable_get_graph (projectable));
+  LIGMA_TILE_HANDLER_VALIDATE (handler)->graph =
+    g_object_ref (ligma_projectable_get_graph (projectable));
 
   handler->projectable = projectable;
 

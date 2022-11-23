@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager-file.h
+ * ligmapluginmanager-file.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,35 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_FILE_H__
-#define __GIMP_PLUG_IN_MANAGER_FILE_H__
+#ifndef __LIGMA_PLUG_IN_MANAGER_FILE_H__
+#define __LIGMA_PLUG_IN_MANAGER_FILE_H__
 
 
-void       gimp_plug_in_manager_add_load_procedure    (GimpPlugInManager      *manager,
-                                                       GimpPlugInProcedure    *proc);
-void       gimp_plug_in_manager_add_save_procedure    (GimpPlugInManager      *manager,
-                                                       GimpPlugInProcedure    *proc);
+void       ligma_plug_in_manager_add_load_procedure    (LigmaPlugInManager      *manager,
+                                                       LigmaPlugInProcedure    *proc);
+void       ligma_plug_in_manager_add_save_procedure    (LigmaPlugInManager      *manager,
+                                                       LigmaPlugInProcedure    *proc);
 
-GSList   * gimp_plug_in_manager_get_file_procedures   (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group);
+GSList   * ligma_plug_in_manager_get_file_procedures   (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group);
 
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find              (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find              (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        GFile                  *file,
                                                        GError                **error);
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_prefix    (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_prefix    (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        GFile                  *file);
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_extension (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_extension (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        GFile                  *file);
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_mime_type (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        const gchar            *mime_type);
 
 
-#endif /* __GIMP_PLUG_IN_MANAGER_FILE_H__ */
+#endif /* __LIGMA_PLUG_IN_MANAGER_FILE_H__ */

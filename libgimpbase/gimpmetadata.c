@@ -1,9 +1,9 @@
-/* LIBGIMPBASE - The GIMP Basic Library
+/* LIBLIGMABASE - The LIGMA Basic Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpmetadata.c
+ * ligmametadata.c
  * Copyright (C) 2013 Hartmut Kuhse <hartmutkuhse@src.gnome.org>
- *                    Michael Natterer <mitch@gimp.org>
+ *                    Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,69 +28,69 @@
 #include <gio/gio.h>
 #include <gexiv2/gexiv2.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
-#include "gimplimits.h"
-#include "gimpmetadata.h"
-#include "gimpunit.h"
+#include "ligmalimits.h"
+#include "ligmametadata.h"
+#include "ligmaunit.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
-typedef struct _GimpMetadataPrivate GimpMetadataPrivate;
-typedef struct _GimpMetadataClass   GimpMetadataClass;
+typedef struct _LigmaMetadataPrivate LigmaMetadataPrivate;
+typedef struct _LigmaMetadataClass   LigmaMetadataClass;
 
-struct _GimpMetadata
+struct _LigmaMetadata
 {
   GExiv2Metadata parent_instance;
 };
 
-struct _GimpMetadataPrivate
+struct _LigmaMetadataPrivate
 {
   /* dummy entry to avoid a critical warning due to size 0 */
-  gpointer _gimp_reserved1;
+  gpointer _ligma_reserved1;
 };
 
-struct _GimpMetadataClass
+struct _LigmaMetadataClass
 {
   GExiv2MetadataClass parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 /**
- * SECTION: gimpmetadata
- * @title: GimpMetadata
- * @short_description: Basic functions for handling #GimpMetadata objects.
- * @see_also: gimp_image_metadata_load_prepare(),
- *            gimp_image_metadata_load_finish(),
- *            gimp_image_metadata_save_prepare(),
- *            gimp_image_metadata_save_finish().
+ * SECTION: ligmametadata
+ * @title: LigmaMetadata
+ * @short_description: Basic functions for handling #LigmaMetadata objects.
+ * @see_also: ligma_image_metadata_load_prepare(),
+ *            ligma_image_metadata_load_finish(),
+ *            ligma_image_metadata_save_prepare(),
+ *            ligma_image_metadata_save_finish().
  *
- * Basic functions for handling #GimpMetadata objects.
+ * Basic functions for handling #LigmaMetadata objects.
  **/
 
 
-#define GIMP_METADATA_ERROR gimp_metadata_error_quark ()
+#define LIGMA_METADATA_ERROR ligma_metadata_error_quark ()
 
-static GQuark   gimp_metadata_error_quark (void);
-static void     gimp_metadata_copy_tag    (GExiv2Metadata  *src,
+static GQuark   ligma_metadata_error_quark (void);
+static void     ligma_metadata_copy_tag    (GExiv2Metadata  *src,
                                            GExiv2Metadata  *dest,
                                            const gchar     *tag);
-static void     gimp_metadata_copy_tags   (GExiv2Metadata  *src,
+static void     ligma_metadata_copy_tags   (GExiv2Metadata  *src,
                                            GExiv2Metadata  *dest,
                                            const gchar    **tags);
-static void     gimp_metadata_add         (GimpMetadata    *src,
-                                           GimpMetadata    *dest);
+static void     ligma_metadata_add         (LigmaMetadata    *src,
+                                           LigmaMetadata    *dest);
 
 
 static const gchar *tiff_tags[] =
@@ -196,11 +196,11 @@ static const guint8 wilber_jpg[] =
 
 static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMetadata, gimp_metadata, GEXIV2_TYPE_METADATA)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaMetadata, ligma_metadata, GEXIV2_TYPE_METADATA)
 
 
 static void
-gimp_metadata_class_init (GimpMetadataClass *klass)
+ligma_metadata_class_init (LigmaMetadataClass *klass)
 {
   GError *error = NULL;
 
@@ -218,22 +218,22 @@ gimp_metadata_class_init (GimpMetadataClass *klass)
       g_clear_error (&error);
     }
 
-  /* Usage example Xmp.GIMP.tagname */
-  if (! gexiv2_metadata_try_register_xmp_namespace ("http://www.gimp.org/xmp/",
-                                                    "GIMP", &error))
+  /* Usage example Xmp.LIGMA.tagname */
+  if (! gexiv2_metadata_try_register_xmp_namespace ("http://www.ligma.org/xmp/",
+                                                    "LIGMA", &error))
     {
-      g_printerr ("Failed to register XMP namespace 'GIMP': %s\n", error->message);
+      g_printerr ("Failed to register XMP namespace 'LIGMA': %s\n", error->message);
       g_clear_error (&error);
     }
 }
 
 static void
-gimp_metadata_init (GimpMetadata *metadata)
+ligma_metadata_init (LigmaMetadata *metadata)
 {
 }
 
 /**
- * gimp_metadata_get_guid:
+ * ligma_metadata_get_guid:
  *
  * Generate Version 4 UUID/GUID.
  *
@@ -242,7 +242,7 @@ gimp_metadata_init (GimpMetadata *metadata)
  * Since: 2.10
  */
 gchar *
-gimp_metadata_get_guid (void)
+ligma_metadata_get_guid (void)
 {
   GRand       *rand;
   gint         bake;
@@ -291,14 +291,14 @@ gimp_metadata_get_guid (void)
 }
 
 /**
- * gimp_metadata_add_history:
+ * ligma_metadata_add_history:
  *
  * Add XMP mm History data to file metadata.
  *
  * Since: 2.10
  */
 void
-gimp_metadata_add_xmp_history (GimpMetadata *metadata,
+ligma_metadata_add_xmp_history (LigmaMetadata *metadata,
                                gchar        *state_status)
 {
   time_t     now;
@@ -336,10 +336,10 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
     "/stEvt:changed"
   };
 
-  g_return_if_fail (GIMP_IS_METADATA (metadata));
+  g_return_if_fail (LIGMA_IS_METADATA (metadata));
 
   /* Update new Instance ID */
-  uuid = gimp_metadata_get_guid ();
+  uuid = ligma_metadata_get_guid ();
 
   strcpy (iid_data, "xmp.iid:");
   strcat (iid_data, uuid);
@@ -355,9 +355,9 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
     {
       gchar did_data[256];
 
-      uuid = gimp_metadata_get_guid ();
+      uuid = ligma_metadata_get_guid ();
 
-      strcpy (did_data, "gimp:docid:gimp:");
+      strcpy (did_data, "ligma:docid:ligma:");
       strcat (did_data, uuid);
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
@@ -371,7 +371,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   if (! odid || ! strlen (odid))
     {
       gchar  did_data[256];
-      gchar *uuid = gimp_metadata_get_guid ();
+      gchar *uuid = ligma_metadata_get_guid ();
 
       strcpy (did_data, "xmp.did:");
       strcat (did_data, uuid);
@@ -431,7 +431,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   memset (tagstr, 0, sizeof (tagstr));
   memset (strdata, 0, sizeof (strdata));
 
-  uuid = gimp_metadata_get_guid ();
+  uuid = ligma_metadata_get_guid ();
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[1]);
@@ -526,22 +526,22 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
 }
 
 /**
- * gimp_metadata_new:
+ * ligma_metadata_new:
  *
- * Creates a new #GimpMetadata instance.
+ * Creates a new #LigmaMetadata instance.
  *
- * Returns: (transfer full): The new #GimpMetadata.
+ * Returns: (transfer full): The new #LigmaMetadata.
  *
  * Since: 2.10
  */
-GimpMetadata *
-gimp_metadata_new (void)
+LigmaMetadata *
+ligma_metadata_new (void)
 {
-  GimpMetadata *metadata = NULL;
+  LigmaMetadata *metadata = NULL;
 
   if (gexiv2_initialize ())
     {
-      metadata = g_object_new (GIMP_TYPE_METADATA, NULL);
+      metadata = g_object_new (LIGMA_TYPE_METADATA, NULL);
 
       if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (metadata),
                                       wilber_jpg, wilber_jpg_len,
@@ -557,29 +557,29 @@ gimp_metadata_new (void)
 }
 
 /**
- * gimp_metadata_duplicate:
+ * ligma_metadata_duplicate:
  * @metadata: The object to duplicate, or %NULL.
  *
- * Duplicates a #GimpMetadata instance.
+ * Duplicates a #LigmaMetadata instance.
  *
  * Returns: (transfer full):
- *               The new #GimpMetadata, or %NULL if @metadata is %NULL.
+ *               The new #LigmaMetadata, or %NULL if @metadata is %NULL.
  *
  * Since: 2.10
  */
-GimpMetadata *
-gimp_metadata_duplicate (GimpMetadata *metadata)
+LigmaMetadata *
+ligma_metadata_duplicate (LigmaMetadata *metadata)
 {
-  GimpMetadata *new_metadata = NULL;
+  LigmaMetadata *new_metadata = NULL;
 
-  g_return_val_if_fail (metadata == NULL || GIMP_IS_METADATA (metadata), NULL);
+  g_return_val_if_fail (metadata == NULL || LIGMA_IS_METADATA (metadata), NULL);
 
   if (metadata)
     {
       gchar *xml;
 
-      xml = gimp_metadata_serialize (metadata);
-      new_metadata = gimp_metadata_deserialize (xml);
+      xml = ligma_metadata_serialize (metadata);
+      new_metadata = ligma_metadata_deserialize (xml);
       g_free (xml);
     }
 
@@ -591,11 +591,11 @@ typedef struct
   gchar         name[1024];
   gboolean      base64;
   gboolean      excessive_message_shown;
-  GimpMetadata *metadata;
-} GimpMetadataParseData;
+  LigmaMetadata *metadata;
+} LigmaMetadataParseData;
 
 static const gchar*
-gimp_metadata_attribute_name_to_value (const gchar **attribute_names,
+ligma_metadata_attribute_name_to_value (const gchar **attribute_names,
                                        const gchar **attribute_values,
                                        const gchar  *name)
 {
@@ -614,30 +614,30 @@ gimp_metadata_attribute_name_to_value (const gchar **attribute_names,
 }
 
 static void
-gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
+ligma_metadata_deserialize_start_element (GMarkupParseContext *context,
                                          const gchar         *element_name,
                                          const gchar        **attribute_names,
                                          const gchar        **attribute_values,
                                          gpointer             user_data,
                                          GError             **error)
 {
-  GimpMetadataParseData *parse_data = user_data;
+  LigmaMetadataParseData *parse_data = user_data;
 
   if (! strcmp (element_name, "tag"))
     {
       const gchar *name;
       const gchar *encoding;
 
-      name = gimp_metadata_attribute_name_to_value (attribute_names,
+      name = ligma_metadata_attribute_name_to_value (attribute_names,
                                                     attribute_values,
                                                     "name");
-      encoding = gimp_metadata_attribute_name_to_value (attribute_names,
+      encoding = ligma_metadata_attribute_name_to_value (attribute_names,
                                                         attribute_values,
                                                         "encoding");
 
       if (! name)
         {
-          g_set_error (error, GIMP_METADATA_ERROR, 1001,
+          g_set_error (error, LIGMA_METADATA_ERROR, 1001,
                        "Element 'tag' does not contain required attribute 'name'.");
           return;
         }
@@ -649,7 +649,7 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
 }
 
 static void
-gimp_metadata_deserialize_end_element (GMarkupParseContext *context,
+ligma_metadata_deserialize_end_element (GMarkupParseContext *context,
                                        const gchar         *element_name,
                                        gpointer             user_data,
                                        GError             **error)
@@ -657,13 +657,13 @@ gimp_metadata_deserialize_end_element (GMarkupParseContext *context,
 }
 
 static void
-gimp_metadata_deserialize_text (GMarkupParseContext  *context,
+ligma_metadata_deserialize_text (GMarkupParseContext  *context,
                                 const gchar          *text,
                                 gsize                 text_len,
                                 gpointer              user_data,
                                 GError              **error)
 {
-  GimpMetadataParseData *parse_data = user_data;
+  LigmaMetadataParseData *parse_data = user_data;
   const gchar           *current_element;
 
   current_element = g_markup_parse_context_get_element (context);
@@ -764,7 +764,7 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
 }
 
 static  void
-gimp_metadata_deserialize_error (GMarkupParseContext *context,
+ligma_metadata_deserialize_error (GMarkupParseContext *context,
                                  GError              *error,
                                  gpointer             user_data)
 {
@@ -772,36 +772,36 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
 }
 
 /**
- * gimp_metadata_deserialize:
+ * ligma_metadata_deserialize:
  * @metadata_xml: A string of serialized metadata XML.
  *
  * Deserializes a string of XML that has been created by
- * gimp_metadata_serialize().
+ * ligma_metadata_serialize().
  *
- * Returns: (transfer full): The new #GimpMetadata.
+ * Returns: (transfer full): The new #LigmaMetadata.
  *
  * Since: 2.10
  */
-GimpMetadata *
-gimp_metadata_deserialize (const gchar *metadata_xml)
+LigmaMetadata *
+ligma_metadata_deserialize (const gchar *metadata_xml)
 {
-  GimpMetadata          *metadata;
+  LigmaMetadata          *metadata;
   GMarkupParser          markup_parser;
-  GimpMetadataParseData  parse_data;
+  LigmaMetadataParseData  parse_data;
   GMarkupParseContext   *context;
 
   g_return_val_if_fail (metadata_xml != NULL, NULL);
 
-  metadata = gimp_metadata_new ();
+  metadata = ligma_metadata_new ();
 
   parse_data.metadata = metadata;
   parse_data.excessive_message_shown = FALSE;
 
-  markup_parser.start_element = gimp_metadata_deserialize_start_element;
-  markup_parser.end_element   = gimp_metadata_deserialize_end_element;
-  markup_parser.text          = gimp_metadata_deserialize_text;
+  markup_parser.start_element = ligma_metadata_deserialize_start_element;
+  markup_parser.end_element   = ligma_metadata_deserialize_end_element;
+  markup_parser.text          = ligma_metadata_deserialize_text;
   markup_parser.passthrough   = NULL;
-  markup_parser.error         = gimp_metadata_deserialize_error;
+  markup_parser.error         = ligma_metadata_deserialize_error;
 
   context = g_markup_parse_context_new (&markup_parser, 0, &parse_data, NULL);
 
@@ -815,7 +815,7 @@ gimp_metadata_deserialize (const gchar *metadata_xml)
 }
 
 static gchar *
-gimp_metadata_escape (const gchar *name,
+ligma_metadata_escape (const gchar *name,
                       const gchar *value,
                       gboolean    *base64)
 {
@@ -839,7 +839,7 @@ gimp_metadata_escape (const gchar *name,
 }
 
 static void
-gimp_metadata_append_tag (GString     *string,
+ligma_metadata_append_tag (GString     *string,
                           const gchar *name,
                           gchar       *value,
                           gboolean     base64)
@@ -862,18 +862,18 @@ gimp_metadata_append_tag (GString     *string,
 }
 
 /**
- * gimp_metadata_serialize:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_serialize:
+ * @metadata: A #LigmaMetadata instance.
  *
  * Serializes @metadata into an XML string that can later be deserialized
- * using gimp_metadata_deserialize().
+ * using ligma_metadata_deserialize().
  *
  * Returns: The serialized XML string.
  *
  * Since: 2.10
  */
 gchar *
-gimp_metadata_serialize (GimpMetadata *metadata)
+ligma_metadata_serialize (LigmaMetadata *metadata)
 {
   GString  *string;
   gchar   **exif_data = NULL;
@@ -885,7 +885,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
   gboolean  base64;
   gint      i;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), NULL);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), NULL);
 
   string = g_string_new (NULL);
 
@@ -902,10 +902,10 @@ gimp_metadata_serialize (GimpMetadata *metadata)
                                                       exif_data[i], &error);
           if (value)
             {
-              escaped = gimp_metadata_escape (exif_data[i], value, &base64);
+              escaped = ligma_metadata_escape (exif_data[i], value, &base64);
               g_free (value);
 
-              gimp_metadata_append_tag (string, exif_data[i], escaped, base64);
+              ligma_metadata_append_tag (string, exif_data[i], escaped, base64);
             }
           else if (error)
             {
@@ -933,10 +933,10 @@ gimp_metadata_serialize (GimpMetadata *metadata)
                                                           xmp_data[i], &error);
               if (value)
                 {
-                  escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
+                  escaped = ligma_metadata_escape (xmp_data[i], value, &base64);
                   g_free (value);
 
-                  gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+                  ligma_metadata_append_tag (string, xmp_data[i], escaped, base64);
                 }
               else if (error)
                 {
@@ -976,8 +976,8 @@ gimp_metadata_serialize (GimpMetadata *metadata)
 
                   for (vi = 0; values[vi] != NULL && (cnt <= 1000 || vi < 1000); vi++)
                     {
-                      escaped = gimp_metadata_escape (xmp_data[i], values[vi], &base64);
-                      gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+                      escaped = ligma_metadata_escape (xmp_data[i], values[vi], &base64);
+                      ligma_metadata_append_tag (string, xmp_data[i], escaped, base64);
                     }
 
                   g_strfreev (values);
@@ -1018,8 +1018,8 @@ gimp_metadata_serialize (GimpMetadata *metadata)
             {
               for (i = 0; values[i] != NULL; i++)
                 {
-                  escaped = gimp_metadata_escape (*iptc_tags, values[i], &base64);
-                  gimp_metadata_append_tag (string, *iptc_tags, escaped, base64);
+                  escaped = ligma_metadata_escape (*iptc_tags, values[i], &base64);
+                  ligma_metadata_append_tag (string, *iptc_tags, escaped, base64);
                 }
 
               g_strfreev (values);
@@ -1043,21 +1043,21 @@ gimp_metadata_serialize (GimpMetadata *metadata)
 }
 
 /**
- * gimp_metadata_load_from_file:
+ * ligma_metadata_load_from_file:
  * @file:  The #GFile to load the metadata from
  * @error: Return location for error message
  *
- * Loads #GimpMetadata from @file.
+ * Loads #LigmaMetadata from @file.
  *
- * Returns: (transfer full): The loaded #GimpMetadata.
+ * Returns: (transfer full): The loaded #LigmaMetadata.
  *
  * Since: 2.10
  */
-GimpMetadata  *
-gimp_metadata_load_from_file (GFile   *file,
+LigmaMetadata  *
+ligma_metadata_load_from_file (GFile   *file,
                               GError **error)
 {
-  GimpMetadata *meta = NULL;
+  LigmaMetadata *meta = NULL;
   gchar        *path;
   gchar        *filename;
 
@@ -1068,7 +1068,7 @@ gimp_metadata_load_from_file (GFile   *file,
 
   if (! path)
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Can load metadata only from local files"));
       return NULL;
     }
@@ -1079,7 +1079,7 @@ gimp_metadata_load_from_file (GFile   *file,
 
   if (gexiv2_initialize ())
     {
-      meta = g_object_new (GIMP_TYPE_METADATA, NULL);
+      meta = g_object_new (LIGMA_TYPE_METADATA, NULL);
 
       if (! gexiv2_metadata_open_path (GEXIV2_METADATA (meta), filename, error))
         {
@@ -1096,8 +1096,8 @@ gimp_metadata_load_from_file (GFile   *file,
 }
 
 /**
- * gimp_metadata_save_to_file:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_save_to_file:
+ * @metadata: A #LigmaMetadata instance.
  * @file:     The file to save the metadata to
  * @error:    Return location for error message
  *
@@ -1108,7 +1108,7 @@ gimp_metadata_load_from_file (GFile   *file,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_save_to_file (GimpMetadata  *metadata,
+ligma_metadata_save_to_file (LigmaMetadata  *metadata,
                             GFile         *file,
                             GError       **error)
 {
@@ -1116,7 +1116,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
   gchar    *filename;
   gboolean  success;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -1124,7 +1124,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 
   if (! path)
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Can save metadata only to local files"));
       return FALSE;
     }
@@ -1142,8 +1142,8 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 }
 
 /**
- * gimp_metadata_set_from_exif:
- * @metadata:         A #GimpMetadata instance.
+ * ligma_metadata_set_from_exif:
+ * @metadata:         A #LigmaMetadata instance.
  * @exif_data: (array length=exif_data_length): The blob of Exif data to set
  * @exif_data_length: Length of @exif_data, in bytes
  * @error:            Return location for error message
@@ -1155,24 +1155,24 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_set_from_exif (GimpMetadata  *metadata,
+ligma_metadata_set_from_exif (LigmaMetadata  *metadata,
                              const guchar  *exif_data,
                              gint           exif_data_length,
                              GError       **error)
 {
 
   GByteArray   *exif_bytes;
-  GimpMetadata *exif_metadata;
+  LigmaMetadata *exif_metadata;
   guint8        data_size[2] = { 0, };
   const guint8  eoi[2] = { 0xff, 0xd9 };
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (exif_data != NULL || exif_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (exif_data_length < 0 || exif_data_length + 2 >= 65536)
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Invalid Exif data size."));
       return FALSE;
     }
@@ -1189,7 +1189,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
                                     (guint8 *) exif_data, exif_data_length);
   exif_bytes = g_byte_array_append (exif_bytes, eoi, 2);
 
-  exif_metadata = gimp_metadata_new ();
+  exif_metadata = ligma_metadata_new ();
 
   if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (exif_metadata),
                                   exif_bytes->data, exif_bytes->len, error))
@@ -1201,14 +1201,14 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_exif (GEXIV2_METADATA (exif_metadata)))
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Parsing Exif data failed."));
       g_object_unref (exif_metadata);
       g_byte_array_free (exif_bytes, TRUE);
       return FALSE;
     }
 
-  gimp_metadata_add (exif_metadata, metadata);
+  ligma_metadata_add (exif_metadata, metadata);
   g_object_unref (exif_metadata);
   g_byte_array_free (exif_bytes, TRUE);
 
@@ -1216,8 +1216,8 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 }
 
 /**
- * gimp_metadata_set_from_iptc:
- * @metadata:        A #GimpMetadata instance.
+ * ligma_metadata_set_from_iptc:
+ * @metadata:        A #LigmaMetadata instance.
  * @iptc_data: (array length=iptc_data_length): The blob of Iptc data to set
  * @iptc_data_length:Length of @iptc_data, in bytes
  * @error:           Return location for error message
@@ -1229,18 +1229,18 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
+ligma_metadata_set_from_iptc (LigmaMetadata  *metadata,
                              const guchar  *iptc_data,
                              gint           iptc_data_length,
                              GError       **error)
 {
-  GimpMetadata *iptc_metadata;
+  LigmaMetadata *iptc_metadata;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (iptc_data != NULL || iptc_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  iptc_metadata = gimp_metadata_new ();
+  iptc_metadata = ligma_metadata_new ();
 
   if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (iptc_metadata),
                                   iptc_data, iptc_data_length, error))
@@ -1251,21 +1251,21 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_iptc (GEXIV2_METADATA (iptc_metadata)))
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Parsing IPTC data failed."));
       g_object_unref (iptc_metadata);
       return FALSE;
     }
 
-  gimp_metadata_add (iptc_metadata, metadata);
+  ligma_metadata_add (iptc_metadata, metadata);
   g_object_unref (iptc_metadata);
 
   return TRUE;
 }
 
 /**
- * gimp_metadata_set_from_xmp:
- * @metadata:        A #GimpMetadata instance.
+ * ligma_metadata_set_from_xmp:
+ * @metadata:        A #LigmaMetadata instance.
  * @xmp_data: (array length=xmp_data_length): The blob of XMP data to set
  * @xmp_data_length: Length of @xmp_data, in bytes
  * @error:           Return location for error message
@@ -1277,18 +1277,18 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
+ligma_metadata_set_from_xmp (LigmaMetadata  *metadata,
                             const guchar  *xmp_data,
                             gint           xmp_data_length,
                             GError       **error)
 {
-  GimpMetadata *xmp_metadata;
+  LigmaMetadata *xmp_metadata;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (xmp_data != NULL || xmp_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  xmp_metadata = gimp_metadata_new ();
+  xmp_metadata = ligma_metadata_new ();
 
   if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (xmp_metadata),
                                   xmp_data, xmp_data_length, error))
@@ -1299,21 +1299,21 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_xmp (GEXIV2_METADATA (xmp_metadata)))
     {
-      g_set_error (error, GIMP_METADATA_ERROR, 0,
+      g_set_error (error, LIGMA_METADATA_ERROR, 0,
                    _("Parsing XMP data failed."));
       g_object_unref (xmp_metadata);
       return FALSE;
     }
 
-  gimp_metadata_add (xmp_metadata, metadata);
+  ligma_metadata_add (xmp_metadata, metadata);
   g_object_unref (xmp_metadata);
 
   return TRUE;
 }
 
 /**
- * gimp_metadata_set_pixel_size:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_set_pixel_size:
+ * @metadata: A #LigmaMetadata instance.
  * @width:    Width in pixels
  * @height:   Height in pixels
  *
@@ -1322,13 +1322,13 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
  * Since: 2.10
  */
 void
-gimp_metadata_set_pixel_size (GimpMetadata *metadata,
+ligma_metadata_set_pixel_size (LigmaMetadata *metadata,
                               gint          width,
                               gint          height)
 {
   gchar buffer[32];
 
-  g_return_if_fail (GIMP_IS_METADATA (metadata));
+  g_return_if_fail (LIGMA_IS_METADATA (metadata));
 
   g_snprintf (buffer, sizeof (buffer), "%d", width);
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
@@ -1340,8 +1340,8 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
 }
 
 /**
- * gimp_metadata_set_bits_per_sample:
- * @metadata:        A #GimpMetadata instance.
+ * ligma_metadata_set_bits_per_sample:
+ * @metadata:        A #LigmaMetadata instance.
  * @bits_per_sample: Bits per pixel, per component
  *
  * Sets Exif.Image.BitsPerSample on @metadata.
@@ -1349,12 +1349,12 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
  * Since: 2.10
  */
 void
-gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
+ligma_metadata_set_bits_per_sample (LigmaMetadata *metadata,
                                    gint          bits_per_sample)
 {
   gchar buffer[32];
 
-  g_return_if_fail (GIMP_IS_METADATA (metadata));
+  g_return_if_fail (LIGMA_IS_METADATA (metadata));
 
   g_snprintf (buffer, sizeof (buffer), "%d %d %d",
               bits_per_sample, bits_per_sample, bits_per_sample);
@@ -1363,8 +1363,8 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
 }
 
 /**
- * gimp_metadata_get_resolution:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_get_resolution:
+ * @metadata: A #LigmaMetadata instance.
  * @xres: (out) (optional): Return location for the X Resolution, in ppi
  * @yres: (out) (optional): Return location for the Y Resolution, in ppi
  * @unit: (out) (optional): Return location for the unit unit
@@ -1377,15 +1377,15 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_get_resolution (GimpMetadata *metadata,
+ligma_metadata_get_resolution (LigmaMetadata *metadata,
                               gdouble      *xres,
                               gdouble      *yres,
-                              GimpUnit     *unit)
+                              LigmaUnit     *unit)
 {
   gint xnom, xdenom;
   gint ynom, ydenom;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata), FALSE);
 
   if (gexiv2_metadata_try_get_exif_tag_rational (GEXIV2_METADATA (metadata),
                                                  "Exif.Image.XResolution",
@@ -1417,10 +1417,10 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
               yresolution *= 2.54;
             }
 
-         if (xresolution >= GIMP_MIN_RESOLUTION &&
-             xresolution <= GIMP_MAX_RESOLUTION &&
-             yresolution >= GIMP_MIN_RESOLUTION &&
-             yresolution <= GIMP_MAX_RESOLUTION)
+         if (xresolution >= LIGMA_MIN_RESOLUTION &&
+             xresolution <= LIGMA_MAX_RESOLUTION &&
+             yresolution >= LIGMA_MIN_RESOLUTION &&
+             yresolution <= LIGMA_MAX_RESOLUTION)
            {
              if (xres)
                *xres = xresolution;
@@ -1431,9 +1431,9 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
              if (unit)
                {
                  if (exif_unit == 3)
-                   *unit = GIMP_UNIT_MM;
+                   *unit = LIGMA_UNIT_MM;
                  else
-                   *unit = GIMP_UNIT_INCH;
+                   *unit = LIGMA_UNIT_INCH;
                }
 
              return TRUE;
@@ -1445,8 +1445,8 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
 }
 
 /**
- * gimp_metadata_set_resolution:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_set_resolution:
+ * @metadata: A #LigmaMetadata instance.
  * @xres:     The image's X Resolution, in ppi
  * @yres:     The image's Y Resolution, in ppi
  * @unit:     The image's unit
@@ -1457,18 +1457,18 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
  * Since: 2.10
  */
 void
-gimp_metadata_set_resolution (GimpMetadata *metadata,
+ligma_metadata_set_resolution (LigmaMetadata *metadata,
                               gdouble       xres,
                               gdouble       yres,
-                              GimpUnit      unit)
+                              LigmaUnit      unit)
 {
   gchar buffer[32];
   gint  exif_unit;
   gint  factor;
 
-  g_return_if_fail (GIMP_IS_METADATA (metadata));
+  g_return_if_fail (LIGMA_IS_METADATA (metadata));
 
-  if (gimp_unit_is_metric (unit))
+  if (ligma_unit_is_metric (unit))
     {
       xres /= 2.54;
       yres /= 2.54;
@@ -1501,8 +1501,8 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
 }
 
 /**
- * gimp_metadata_get_colorspace:
- * @metadata: A #GimpMetadata instance.
+ * ligma_metadata_get_colorspace:
+ * @metadata: A #LigmaMetadata instance.
  *
  * Returns values based on Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
  * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
@@ -1512,13 +1512,13 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
  *
  * Since: 2.10
  */
-GimpMetadataColorspace
-gimp_metadata_get_colorspace (GimpMetadata *metadata)
+LigmaMetadataColorspace
+ligma_metadata_get_colorspace (LigmaMetadata *metadata)
 {
   glong exif_cs = -1;
 
-  g_return_val_if_fail (GIMP_IS_METADATA (metadata),
-                        GIMP_METADATA_COLORSPACE_UNSPECIFIED);
+  g_return_val_if_fail (LIGMA_IS_METADATA (metadata),
+                        LIGMA_METADATA_COLORSPACE_UNSPECIFIED);
 
   /*  the logic here was mostly taken from darktable and libkexiv2  */
 
@@ -1537,11 +1537,11 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 
   if (exif_cs == 0x01)
     {
-      return GIMP_METADATA_COLORSPACE_SRGB;
+      return LIGMA_METADATA_COLORSPACE_SRGB;
     }
   else if (exif_cs == 0x02)
     {
-      return GIMP_METADATA_COLORSPACE_ADOBERGB;
+      return LIGMA_METADATA_COLORSPACE_ADOBERGB;
     }
   else
     {
@@ -1556,13 +1556,13 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
             {
               g_free (iop_index);
 
-              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+              return LIGMA_METADATA_COLORSPACE_ADOBERGB;
             }
           else if (! g_strcmp0 (iop_index, "R98"))
             {
               g_free (iop_index);
 
-              return GIMP_METADATA_COLORSPACE_SRGB;
+              return LIGMA_METADATA_COLORSPACE_SRGB;
             }
 
           g_free (iop_index);
@@ -1578,11 +1578,11 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 
           if (nikon_cs == 0x01)
             {
-              return GIMP_METADATA_COLORSPACE_SRGB;
+              return LIGMA_METADATA_COLORSPACE_SRGB;
             }
           else if (nikon_cs == 0x02)
             {
-              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+              return LIGMA_METADATA_COLORSPACE_ADOBERGB;
             }
         }
 
@@ -1596,24 +1596,24 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 
           if (canon_cs == 0x01)
             {
-              return GIMP_METADATA_COLORSPACE_SRGB;
+              return LIGMA_METADATA_COLORSPACE_SRGB;
             }
           else if (canon_cs == 0x02)
             {
-              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+              return LIGMA_METADATA_COLORSPACE_ADOBERGB;
             }
         }
 
       if (exif_cs == 0xffff)
-        return GIMP_METADATA_COLORSPACE_UNCALIBRATED;
+        return LIGMA_METADATA_COLORSPACE_UNCALIBRATED;
     }
 
-  return GIMP_METADATA_COLORSPACE_UNSPECIFIED;
+  return LIGMA_METADATA_COLORSPACE_UNSPECIFIED;
 }
 
 /**
- * gimp_metadata_set_colorspace:
- * @metadata:   A #GimpMetadata instance.
+ * ligma_metadata_set_colorspace:
+ * @metadata:   A #LigmaMetadata instance.
  * @colorspace: The color space.
  *
  * Sets Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
@@ -1623,14 +1623,14 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
  * Since: 2.10
  */
 void
-gimp_metadata_set_colorspace (GimpMetadata           *metadata,
-                              GimpMetadataColorspace  colorspace)
+ligma_metadata_set_colorspace (LigmaMetadata           *metadata,
+                              LigmaMetadataColorspace  colorspace)
 {
   GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
   switch (colorspace)
     {
-    case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
+    case LIGMA_METADATA_COLORSPACE_UNSPECIFIED:
       gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Photo.ColorSpace", NULL);
       gexiv2_metadata_try_clear_tag (g2metadata, "Xmp.exif.ColorSpace", NULL);
       gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex", NULL);
@@ -1638,7 +1638,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
       gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Canon.ColorSpace", NULL);
       break;
 
-    case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
+    case LIGMA_METADATA_COLORSPACE_UNCALIBRATED:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0xffff, NULL);
       if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0xffff, NULL);
@@ -1647,7 +1647,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
       gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Canon.ColorSpace", NULL);
       break;
 
-    case GIMP_METADATA_COLORSPACE_SRGB:
+    case LIGMA_METADATA_COLORSPACE_SRGB:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x01, NULL);
 
       if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
@@ -1665,7 +1665,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
         gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Canon.ColorSpace", 0x01, NULL);
       break;
 
-    case GIMP_METADATA_COLORSPACE_ADOBERGB:
+    case LIGMA_METADATA_COLORSPACE_ADOBERGB:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x02, NULL);
 
       if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
@@ -1686,7 +1686,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
 }
 
 /**
- * gimp_metadata_is_tag_supported:
+ * ligma_metadata_is_tag_supported:
  * @tag:       A metadata tag name
  * @mime_type: A mime type
  *
@@ -1697,7 +1697,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_is_tag_supported (const gchar *tag,
+ligma_metadata_is_tag_supported (const gchar *tag,
                                 const gchar *mime_type)
 {
   gint j;
@@ -1741,18 +1741,18 @@ gimp_metadata_is_tag_supported (const gchar *tag,
 /* private functions */
 
 static GQuark
-gimp_metadata_error_quark (void)
+ligma_metadata_error_quark (void)
 {
   static GQuark quark = 0;
 
   if (G_UNLIKELY (quark == 0))
-    quark = g_quark_from_static_string ("gimp-metadata-error-quark");
+    quark = g_quark_from_static_string ("ligma-metadata-error-quark");
 
   return quark;
 }
 
 static void
-gimp_metadata_copy_tag (GExiv2Metadata *src,
+ligma_metadata_copy_tag (GExiv2Metadata *src,
                         GExiv2Metadata *dest,
                         const gchar    *tag)
 {
@@ -1804,7 +1804,7 @@ gimp_metadata_copy_tag (GExiv2Metadata *src,
 }
 
 static void
-gimp_metadata_copy_tags (GExiv2Metadata  *src,
+ligma_metadata_copy_tags (GExiv2Metadata  *src,
                          GExiv2Metadata  *dest,
                          const gchar    **tags)
 {
@@ -1816,13 +1816,13 @@ gimp_metadata_copy_tags (GExiv2Metadata  *src,
       if (i > 0 && ! strcmp (tags[i], tags[i - 1]))
         continue;
 
-      gimp_metadata_copy_tag (src, dest, tags[i]);
+      ligma_metadata_copy_tag (src, dest, tags[i]);
     }
  }
 
 static void
-gimp_metadata_add (GimpMetadata *src,
-                   GimpMetadata *dest)
+ligma_metadata_add (LigmaMetadata *src,
+                   LigmaMetadata *dest)
 {
   GExiv2Metadata *g2src  = GEXIV2_METADATA (src);
   GExiv2Metadata *g2dest = GEXIV2_METADATA (dest);
@@ -1834,7 +1834,7 @@ gimp_metadata_add (GimpMetadata *src,
 
       if (exif_tags)
         {
-          gimp_metadata_copy_tags (g2src, g2dest,
+          ligma_metadata_copy_tags (g2src, g2dest,
                                    (const gchar **) exif_tags);
           g_strfreev (exif_tags);
         }
@@ -1847,7 +1847,7 @@ gimp_metadata_add (GimpMetadata *src,
 
       if (xmp_tags)
         {
-          gimp_metadata_copy_tags (g2src, g2dest,
+          ligma_metadata_copy_tags (g2src, g2dest,
                                    (const gchar **) xmp_tags);
           g_strfreev (xmp_tags);
         }
@@ -1860,7 +1860,7 @@ gimp_metadata_add (GimpMetadata *src,
 
       if (iptc_tags)
         {
-          gimp_metadata_copy_tags (g2src, g2dest,
+          ligma_metadata_copy_tags (g2src, g2dest,
                                    (const gchar **) iptc_tags);
           g_strfreev (iptc_tags);
         }

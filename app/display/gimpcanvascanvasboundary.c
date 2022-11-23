@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvascanvasboundary.c
+ * ligmacanvascanvasboundary.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,16 +23,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcanvas-style.h"
-#include "gimpcanvascanvasboundary.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvas-style.h"
+#include "ligmacanvascanvasboundary.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -42,70 +42,70 @@ enum
 };
 
 
-typedef struct _GimpCanvasCanvasBoundaryPrivate GimpCanvasCanvasBoundaryPrivate;
+typedef struct _LigmaCanvasCanvasBoundaryPrivate LigmaCanvasCanvasBoundaryPrivate;
 
-struct _GimpCanvasCanvasBoundaryPrivate
+struct _LigmaCanvasCanvasBoundaryPrivate
 {
-  GimpImage *image;
+  LigmaImage *image;
 };
 
 #define GET_PRIVATE(canvas_boundary) \
-        ((GimpCanvasCanvasBoundaryPrivate *) gimp_canvas_canvas_boundary_get_instance_private ((GimpCanvasCanvasBoundary *) (canvas_boundary)))
+        ((LigmaCanvasCanvasBoundaryPrivate *) ligma_canvas_canvas_boundary_get_instance_private ((LigmaCanvasCanvasBoundary *) (canvas_boundary)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_canvas_boundary_set_property (GObject        *object,
+static void             ligma_canvas_canvas_boundary_set_property (GObject        *object,
                                                                   guint           property_id,
                                                                   const GValue   *value,
                                                                   GParamSpec     *pspec);
-static void             gimp_canvas_canvas_boundary_get_property (GObject        *object,
+static void             ligma_canvas_canvas_boundary_get_property (GObject        *object,
                                                                   guint           property_id,
                                                                   GValue         *value,
                                                                   GParamSpec     *pspec);
-static void             gimp_canvas_canvas_boundary_finalize     (GObject        *object);
-static void             gimp_canvas_canvas_boundary_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_canvas_boundary_finalize     (GObject        *object);
+static void             ligma_canvas_canvas_boundary_draw         (LigmaCanvasItem *item,
                                                                   cairo_t        *cr);
-static cairo_region_t * gimp_canvas_canvas_boundary_get_extents  (GimpCanvasItem *item);
-static void             gimp_canvas_canvas_boundary_stroke       (GimpCanvasItem *item,
+static cairo_region_t * ligma_canvas_canvas_boundary_get_extents  (LigmaCanvasItem *item);
+static void             ligma_canvas_canvas_boundary_stroke       (LigmaCanvasItem *item,
                                                                   cairo_t        *cr);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasCanvasBoundary, gimp_canvas_canvas_boundary,
-                            GIMP_TYPE_CANVAS_RECTANGLE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasCanvasBoundary, ligma_canvas_canvas_boundary,
+                            LIGMA_TYPE_CANVAS_RECTANGLE)
 
-#define parent_class gimp_canvas_canvas_boundary_parent_class
+#define parent_class ligma_canvas_canvas_boundary_parent_class
 
 
 static void
-gimp_canvas_canvas_boundary_class_init (GimpCanvasCanvasBoundaryClass *klass)
+ligma_canvas_canvas_boundary_class_init (LigmaCanvasCanvasBoundaryClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_canvas_boundary_set_property;
-  object_class->get_property = gimp_canvas_canvas_boundary_get_property;
-  object_class->finalize     = gimp_canvas_canvas_boundary_finalize;
+  object_class->set_property = ligma_canvas_canvas_boundary_set_property;
+  object_class->get_property = ligma_canvas_canvas_boundary_get_property;
+  object_class->finalize     = ligma_canvas_canvas_boundary_finalize;
 
-  item_class->draw           = gimp_canvas_canvas_boundary_draw;
-  item_class->get_extents    = gimp_canvas_canvas_boundary_get_extents;
-  item_class->stroke         = gimp_canvas_canvas_boundary_stroke;
+  item_class->draw           = ligma_canvas_canvas_boundary_draw;
+  item_class->get_extents    = ligma_canvas_canvas_boundary_get_extents;
+  item_class->stroke         = ligma_canvas_canvas_boundary_stroke;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_canvas_boundary_init (GimpCanvasCanvasBoundary *canvas_boundary)
+ligma_canvas_canvas_boundary_init (LigmaCanvasCanvasBoundary *canvas_boundary)
 {
 }
 
 static void
-gimp_canvas_canvas_boundary_finalize (GObject *object)
+ligma_canvas_canvas_boundary_finalize (GObject *object)
 {
-  GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   if (private->image)
     g_object_remove_weak_pointer (G_OBJECT (private->image),
@@ -115,12 +115,12 @@ gimp_canvas_canvas_boundary_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_canvas_boundary_set_property (GObject      *object,
+ligma_canvas_canvas_boundary_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -141,12 +141,12 @@ gimp_canvas_canvas_boundary_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_canvas_boundary_get_property (GObject    *object,
+ligma_canvas_canvas_boundary_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -161,69 +161,69 @@ gimp_canvas_canvas_boundary_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_canvas_boundary_draw (GimpCanvasItem *item,
+ligma_canvas_canvas_boundary_draw (LigmaCanvasItem *item,
                                   cairo_t        *cr)
 {
-  GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (item);
 
   if (private->image)
-    GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, cr);
+    LIGMA_CANVAS_ITEM_CLASS (parent_class)->draw (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_canvas_boundary_get_extents (GimpCanvasItem *item)
+ligma_canvas_canvas_boundary_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (item);
 
   if (private->image)
-    return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item);
+    return LIGMA_CANVAS_ITEM_CLASS (parent_class)->get_extents (item);
 
   return NULL;
 }
 
 static void
-gimp_canvas_canvas_boundary_stroke (GimpCanvasItem *item,
+ligma_canvas_canvas_boundary_stroke (LigmaCanvasItem *item,
                                     cairo_t        *cr)
 {
-  GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+  LigmaDisplayShell *shell = ligma_canvas_item_get_shell (item);
 
-  gimp_canvas_set_canvas_style (gimp_canvas_item_get_canvas (item), cr,
+  ligma_canvas_set_canvas_style (ligma_canvas_item_get_canvas (item), cr,
                                 shell->offset_x, shell->offset_y);
   cairo_stroke (cr);
 }
 
-GimpCanvasItem *
-gimp_canvas_canvas_boundary_new (GimpDisplayShell *shell)
+LigmaCanvasItem *
+ligma_canvas_canvas_boundary_new (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_CANVAS_BOUNDARY,
+  return g_object_new (LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY,
                        "shell", shell,
                        NULL);
 }
 
 void
-gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
-                                       GimpImage                *image)
+ligma_canvas_canvas_boundary_set_image (LigmaCanvasCanvasBoundary *boundary,
+                                       LigmaImage                *image)
 {
-  GimpCanvasCanvasBoundaryPrivate *private;
+  LigmaCanvasCanvasBoundaryPrivate *private;
 
-  g_return_if_fail (GIMP_IS_CANVAS_CANVAS_BOUNDARY (boundary));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CANVAS_CANVAS_BOUNDARY (boundary));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
   private = GET_PRIVATE (boundary);
 
   if (image != private->image)
     {
-      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (boundary));
+      ligma_canvas_item_begin_change (LIGMA_CANVAS_ITEM (boundary));
 
       if (image)
         {
           g_object_set (boundary,
                         "x",      (gdouble) 0,
                         "y",      (gdouble) 0,
-                        "width",  (gdouble) gimp_image_get_width  (image),
-                        "height", (gdouble) gimp_image_get_height (image),
+                        "width",  (gdouble) ligma_image_get_width  (image),
+                        "height", (gdouble) ligma_image_get_height (image),
                         NULL);
         }
 
@@ -231,7 +231,7 @@ gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
                     "image", image,
                     NULL);
 
-      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (boundary));
+      ligma_canvas_item_end_change (LIGMA_CANVAS_ITEM (boundary));
     }
   else if (image && image == private->image)
     {
@@ -240,8 +240,8 @@ gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
 
       lx = 0;
       ly = 0;
-      lw = gimp_image_get_width  (image);
-      lh = gimp_image_get_height (image);
+      lw = ligma_image_get_width  (image);
+      lh = ligma_image_get_height (image);
 
       g_object_get (boundary,
                     "x",      &x,
@@ -255,7 +255,7 @@ gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
           lw != (gint) w ||
           lh != (gint) h)
         {
-          gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (boundary));
+          ligma_canvas_item_begin_change (LIGMA_CANVAS_ITEM (boundary));
 
           g_object_set (boundary,
                         "x",      (gdouble) lx,
@@ -264,7 +264,7 @@ gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
                         "height", (gdouble) lh,
                         NULL);
 
-          gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (boundary));
+          ligma_canvas_item_end_change (LIGMA_CANVAS_ITEM (boundary));
         }
     }
 }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhistogramsink.c
+ * ligmaoperationhistogramsink.c
  * Copyright (C) 2012 Øyvind Kolås
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,9 +24,9 @@
 
 #include "operations-types.h"
 
-#include "core/gimphistogram.h"
+#include "core/ligmahistogram.h"
 
-#include "gimpoperationhistogramsink.h"
+#include "ligmaoperationhistogramsink.h"
 
 
 enum
@@ -37,55 +37,55 @@ enum
 };
 
 
-static void     gimp_operation_histogram_sink_finalize     (GObject             *object);
-static void     gimp_operation_histogram_sink_get_property (GObject             *object,
+static void     ligma_operation_histogram_sink_finalize     (GObject             *object);
+static void     ligma_operation_histogram_sink_get_property (GObject             *object,
                                                             guint                prop_id,
                                                             GValue              *value,
                                                             GParamSpec          *pspec);
-static void     gimp_operation_histogram_sink_set_property (GObject             *object,
+static void     ligma_operation_histogram_sink_set_property (GObject             *object,
                                                             guint                prop_id,
                                                             const GValue        *value,
                                                             GParamSpec          *pspec);
 
-static void     gimp_operation_histogram_sink_attach       (GeglOperation       *operation);
-static void     gimp_operation_histogram_sink_prepare      (GeglOperation       *operation);
+static void     ligma_operation_histogram_sink_attach       (GeglOperation       *operation);
+static void     ligma_operation_histogram_sink_prepare      (GeglOperation       *operation);
 static GeglRectangle
-     gimp_operation_histogram_sink_get_required_for_output (GeglOperation        *self,
+     ligma_operation_histogram_sink_get_required_for_output (GeglOperation        *self,
                                                             const gchar         *input_pad,
                                                             const GeglRectangle *roi);
-static gboolean gimp_operation_histogram_sink_process      (GeglOperation       *operation,
+static gboolean ligma_operation_histogram_sink_process      (GeglOperation       *operation,
                                                             GeglOperationContext     *context,
                                                             const gchar         *output_prop,
                                                             const GeglRectangle *result,
                                                             gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationHistogramSink, gimp_operation_histogram_sink,
+G_DEFINE_TYPE (LigmaOperationHistogramSink, ligma_operation_histogram_sink,
                GEGL_TYPE_OPERATION_SINK)
 
-#define parent_class gimp_operation_histogram_sink_parent_class
+#define parent_class ligma_operation_histogram_sink_parent_class
 
 
 static void
-gimp_operation_histogram_sink_class_init (GimpOperationHistogramSinkClass *klass)
+ligma_operation_histogram_sink_class_init (LigmaOperationHistogramSinkClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass *operation_class = GEGL_OPERATION_CLASS (klass);
 
-  object_class->finalize     = gimp_operation_histogram_sink_finalize;
-  object_class->set_property = gimp_operation_histogram_sink_set_property;
-  object_class->get_property = gimp_operation_histogram_sink_get_property;
+  object_class->finalize     = ligma_operation_histogram_sink_finalize;
+  object_class->set_property = ligma_operation_histogram_sink_set_property;
+  object_class->get_property = ligma_operation_histogram_sink_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name"       , "gimp:histogram-sink",
+                                 "name"       , "ligma:histogram-sink",
                                  "categories" , "color",
-                                 "description", "GIMP Histogram sink operation",
+                                 "description", "LIGMA Histogram sink operation",
                                  NULL);
 
-  operation_class->attach                  = gimp_operation_histogram_sink_attach;
-  operation_class->prepare                 = gimp_operation_histogram_sink_prepare;
-  operation_class->get_required_for_output = gimp_operation_histogram_sink_get_required_for_output;
-  operation_class->process                 = gimp_operation_histogram_sink_process;
+  operation_class->attach                  = ligma_operation_histogram_sink_attach;
+  operation_class->prepare                 = ligma_operation_histogram_sink_prepare;
+  operation_class->get_required_for_output = ligma_operation_histogram_sink_get_required_for_output;
+  operation_class->process                 = ligma_operation_histogram_sink_process;
 
   g_object_class_install_property (object_class, PROP_AUX,
                                    g_param_spec_object ("aux",
@@ -99,19 +99,19 @@ gimp_operation_histogram_sink_class_init (GimpOperationHistogramSinkClass *klass
                                    g_param_spec_object ("histogram",
                                                         "Histogram",
                                                         "The result histogram",
-                                                        GIMP_TYPE_HISTOGRAM,
+                                                        LIGMA_TYPE_HISTOGRAM,
                                                         G_PARAM_READWRITE));
 }
 
 static void
-gimp_operation_histogram_sink_init (GimpOperationHistogramSink *self)
+ligma_operation_histogram_sink_init (LigmaOperationHistogramSink *self)
 {
 }
 
 static void
-gimp_operation_histogram_sink_finalize (GObject *object)
+ligma_operation_histogram_sink_finalize (GObject *object)
 {
-  GimpOperationHistogramSink *sink = GIMP_OPERATION_HISTOGRAM_SINK (object);
+  LigmaOperationHistogramSink *sink = LIGMA_OPERATION_HISTOGRAM_SINK (object);
 
   g_clear_object (&sink->histogram);
 
@@ -119,12 +119,12 @@ gimp_operation_histogram_sink_finalize (GObject *object)
 }
 
 static void
-gimp_operation_histogram_sink_get_property (GObject    *object,
+ligma_operation_histogram_sink_get_property (GObject    *object,
                                             guint       prop_id,
                                             GValue     *value,
                                             GParamSpec *pspec)
 {
-  GimpOperationHistogramSink *sink = GIMP_OPERATION_HISTOGRAM_SINK (object);
+  LigmaOperationHistogramSink *sink = LIGMA_OPERATION_HISTOGRAM_SINK (object);
 
   switch (prop_id)
     {
@@ -142,12 +142,12 @@ gimp_operation_histogram_sink_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_histogram_sink_set_property (GObject      *object,
+ligma_operation_histogram_sink_set_property (GObject      *object,
                                             guint         prop_id,
                                             const GValue *value,
                                             GParamSpec   *pspec)
 {
-  GimpOperationHistogramSink *sink = GIMP_OPERATION_HISTOGRAM_SINK (object);
+  LigmaOperationHistogramSink *sink = LIGMA_OPERATION_HISTOGRAM_SINK (object);
 
   switch (prop_id)
     {
@@ -167,7 +167,7 @@ gimp_operation_histogram_sink_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_histogram_sink_attach (GeglOperation *self)
+ligma_operation_histogram_sink_attach (GeglOperation *self)
 {
   GeglOperation *operation    = GEGL_OPERATION (self);
   GObjectClass  *object_class = G_OBJECT_GET_CLASS (self);
@@ -180,14 +180,14 @@ gimp_operation_histogram_sink_attach (GeglOperation *self)
 }
 
 static void
-gimp_operation_histogram_sink_prepare (GeglOperation *operation)
+ligma_operation_histogram_sink_prepare (GeglOperation *operation)
 {
   /* XXX gegl_operation_set_format (operation, "input", babl_format ("Y u8")); */
   gegl_operation_set_format (operation, "aux",   babl_format ("Y float"));
 }
 
 static GeglRectangle
-gimp_operation_histogram_sink_get_required_for_output (GeglOperation       *self,
+ligma_operation_histogram_sink_get_required_for_output (GeglOperation       *self,
                                                        const gchar         *input_pad,
                                                        const GeglRectangle *roi)
 {
@@ -196,7 +196,7 @@ gimp_operation_histogram_sink_get_required_for_output (GeglOperation       *self
 }
 
 static gboolean
-gimp_operation_histogram_sink_process (GeglOperation        *operation,
+ligma_operation_histogram_sink_process (GeglOperation        *operation,
                                        GeglOperationContext *context,
                                        const gchar          *output_prop,
                                        const GeglRectangle  *result,

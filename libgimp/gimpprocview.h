@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprocview.h
+ * ligmaprocview.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PROC_VIEW_H__
-#define __GIMP_PROC_VIEW_H__
+#ifndef __LIGMA_PROC_VIEW_H__
+#define __LIGMA_PROC_VIEW_H__
 
 G_BEGIN_DECLS
 
@@ -31,9 +31,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GtkWidget * gimp_proc_view_new (const gchar *procedure_name);
+GtkWidget * ligma_proc_view_new (const gchar *procedure_name);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_PROC_VIEW_H__ */
+#endif  /* __LIGMA_PROC_VIEW_H__ */

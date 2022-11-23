@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,52 +15,52 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OBJECT_QUEUE_H__
-#define __GIMP_OBJECT_QUEUE_H__
+#ifndef __LIGMA_OBJECT_QUEUE_H__
+#define __LIGMA_OBJECT_QUEUE_H__
 
 
-#include "gimpsubprogress.h"
+#include "ligmasubprogress.h"
 
 
-#define GIMP_TYPE_OBJECT_QUEUE            (gimp_object_queue_get_type ())
-#define GIMP_OBJECT_QUEUE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OBJECT_QUEUE, GimpObjectQueue))
-#define GIMP_OBJECT_QUEUE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT_QUEUE, GimpObjectQueueClass))
-#define GIMP_IS_OBJECT_QUEUE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OBJECT_QUEUE))
-#define GIMP_IS_OBJECT_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT_QUEUE))
-#define GIMP_OBJECT_QUEUE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT_QUEUE, GimpObjectQueueClass))
+#define LIGMA_TYPE_OBJECT_QUEUE            (ligma_object_queue_get_type ())
+#define LIGMA_OBJECT_QUEUE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OBJECT_QUEUE, LigmaObjectQueue))
+#define LIGMA_OBJECT_QUEUE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OBJECT_QUEUE, LigmaObjectQueueClass))
+#define LIGMA_IS_OBJECT_QUEUE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OBJECT_QUEUE))
+#define LIGMA_IS_OBJECT_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OBJECT_QUEUE))
+#define LIGMA_OBJECT_QUEUE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OBJECT_QUEUE, LigmaObjectQueueClass))
 
 
-typedef struct _GimpObjectQueueClass GimpObjectQueueClass;
+typedef struct _LigmaObjectQueueClass LigmaObjectQueueClass;
 
-struct _GimpObjectQueue
+struct _LigmaObjectQueue
 {
-  GimpSubProgress  parent_instance;
+  LigmaSubProgress  parent_instance;
 
   GQueue           items;
   gint64           processed_memsize;
   gint64           total_memsize;
 };
 
-struct _GimpObjectQueueClass
+struct _LigmaObjectQueueClass
 {
-  GimpSubProgressClass  parent_class;
+  LigmaSubProgressClass  parent_class;
 };
 
 
-GType             gimp_object_queue_get_type       (void) G_GNUC_CONST;
+GType             ligma_object_queue_get_type       (void) G_GNUC_CONST;
 
-GimpObjectQueue * gimp_object_queue_new            (GimpProgress    *progress);
+LigmaObjectQueue * ligma_object_queue_new            (LigmaProgress    *progress);
 
-void              gimp_object_queue_clear          (GimpObjectQueue *queue);
+void              ligma_object_queue_clear          (LigmaObjectQueue *queue);
 
-void              gimp_object_queue_push           (GimpObjectQueue *queue,
+void              ligma_object_queue_push           (LigmaObjectQueue *queue,
                                                     gpointer         object);
-void              gimp_object_queue_push_container (GimpObjectQueue *queue,
-                                                    GimpContainer   *container);
-void              gimp_object_queue_push_list      (GimpObjectQueue *queue,
+void              ligma_object_queue_push_container (LigmaObjectQueue *queue,
+                                                    LigmaContainer   *container);
+void              ligma_object_queue_push_list      (LigmaObjectQueue *queue,
                                                     GList           *list);
 
-gpointer          gimp_object_queue_pop            (GimpObjectQueue *queue);
+gpointer          ligma_object_queue_pop            (LigmaObjectQueue *queue);
 
 
-#endif /* __GIMP_OBJECT_QUEUE_H__ */
+#endif /* __LIGMA_OBJECT_QUEUE_H__ */

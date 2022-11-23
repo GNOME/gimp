@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationshrink.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationshrink.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationshrink.h"
+#include "ligmaoperationshrink.h"
 
 
 enum
@@ -41,59 +41,59 @@ enum
 };
 
 
-static void     gimp_operation_shrink_get_property (GObject             *object,
+static void     ligma_operation_shrink_get_property (GObject             *object,
                                                     guint                property_id,
                                                     GValue              *value,
                                                     GParamSpec          *pspec);
-static void     gimp_operation_shrink_set_property (GObject             *object,
+static void     ligma_operation_shrink_set_property (GObject             *object,
                                                     guint                property_id,
                                                     const GValue        *value,
                                                     GParamSpec          *pspec);
 
-static void          gimp_operation_shrink_prepare (GeglOperation       *operation);
+static void          ligma_operation_shrink_prepare (GeglOperation       *operation);
 static GeglRectangle
-     gimp_operation_shrink_get_required_for_output (GeglOperation       *self,
+     ligma_operation_shrink_get_required_for_output (GeglOperation       *self,
                                                     const gchar         *input_pad,
                                                     const GeglRectangle *roi);
 static GeglRectangle
-           gimp_operation_shrink_get_cached_region (GeglOperation       *self,
+           ligma_operation_shrink_get_cached_region (GeglOperation       *self,
                                                     const GeglRectangle *roi);
 
-static gboolean      gimp_operation_shrink_process (GeglOperation       *operation,
+static gboolean      ligma_operation_shrink_process (GeglOperation       *operation,
                                                     GeglBuffer          *input,
                                                     GeglBuffer          *output,
                                                     const GeglRectangle *roi,
                                                     gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationShrink, gimp_operation_shrink,
+G_DEFINE_TYPE (LigmaOperationShrink, ligma_operation_shrink,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_shrink_parent_class
+#define parent_class ligma_operation_shrink_parent_class
 
 
 static void
-gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
+ligma_operation_shrink_class_init (LigmaOperationShrinkClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_shrink_set_property;
-  object_class->get_property   = gimp_operation_shrink_get_property;
+  object_class->set_property   = ligma_operation_shrink_set_property;
+  object_class->get_property   = ligma_operation_shrink_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:shrink",
-                                 "categories",  "gimp",
-                                 "description", "GIMP Shrink operation",
+                                 "name",        "ligma:shrink",
+                                 "categories",  "ligma",
+                                 "description", "LIGMA Shrink operation",
                                  NULL);
 
-  operation_class->prepare                 = gimp_operation_shrink_prepare;
-  operation_class->get_required_for_output = gimp_operation_shrink_get_required_for_output;
-  operation_class->get_cached_region       = gimp_operation_shrink_get_cached_region;
+  operation_class->prepare                 = ligma_operation_shrink_prepare;
+  operation_class->get_required_for_output = ligma_operation_shrink_get_required_for_output;
+  operation_class->get_cached_region       = ligma_operation_shrink_get_cached_region;
   operation_class->threaded                = FALSE;
 
-  filter_class->process                    = gimp_operation_shrink_process;
+  filter_class->process                    = ligma_operation_shrink_process;
 
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",
@@ -121,17 +121,17 @@ gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
 }
 
 static void
-gimp_operation_shrink_init (GimpOperationShrink *self)
+ligma_operation_shrink_init (LigmaOperationShrink *self)
 {
 }
 
 static void
-gimp_operation_shrink_get_property (GObject    *object,
+ligma_operation_shrink_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
- GimpOperationShrink *self = GIMP_OPERATION_SHRINK (object);
+ LigmaOperationShrink *self = LIGMA_OPERATION_SHRINK (object);
 
   switch (property_id)
     {
@@ -154,12 +154,12 @@ gimp_operation_shrink_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_shrink_set_property (GObject      *object,
+ligma_operation_shrink_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpOperationShrink *self = GIMP_OPERATION_SHRINK (object);
+  LigmaOperationShrink *self = LIGMA_OPERATION_SHRINK (object);
 
   switch (property_id)
     {
@@ -182,7 +182,7 @@ gimp_operation_shrink_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_shrink_prepare (GeglOperation *operation)
+ligma_operation_shrink_prepare (GeglOperation *operation)
 {
   const Babl *space = gegl_operation_get_source_space (operation, "input");
   gegl_operation_set_format (operation, "input",  babl_format_with_space ("Y float", space));
@@ -190,7 +190,7 @@ gimp_operation_shrink_prepare (GeglOperation *operation)
 }
 
 static GeglRectangle
-gimp_operation_shrink_get_required_for_output (GeglOperation       *self,
+ligma_operation_shrink_get_required_for_output (GeglOperation       *self,
                                                const gchar         *input_pad,
                                                const GeglRectangle *roi)
 {
@@ -198,7 +198,7 @@ gimp_operation_shrink_get_required_for_output (GeglOperation       *self,
 }
 
 static GeglRectangle
-gimp_operation_shrink_get_cached_region (GeglOperation       *self,
+ligma_operation_shrink_get_cached_region (GeglOperation       *self,
                                          const GeglRectangle *roi)
 {
   return *gegl_operation_source_get_bounding_box (self, "input");
@@ -243,20 +243,20 @@ rotate_pointers (gfloat  **p,
 }
 
 static gboolean
-gimp_operation_shrink_process (GeglOperation       *operation,
+ligma_operation_shrink_process (GeglOperation       *operation,
                                GeglBuffer          *input,
                                GeglBuffer          *output,
                                const GeglRectangle *roi,
                                gint                 level)
 {
   /* Pretty much the same as fatten_region only different.
-   * Blame all bugs in this function on jaycox@gimp.org
+   * Blame all bugs in this function on jaycox@ligma.org
    *
    * If edge_lock is true we assume that pixels outside the region we
    * are passed are identical to the edge pixels.  If edge_lock is
    * false, we assume that pixels outside the region are 0
    */
-  GimpOperationShrink *self          = GIMP_OPERATION_SHRINK (operation);
+  LigmaOperationShrink *self          = LIGMA_OPERATION_SHRINK (operation);
   const Babl          *input_format  = babl_format ("Y float");
   const Babl          *output_format = babl_format ("Y float");
   gint32               i, j, x, y;

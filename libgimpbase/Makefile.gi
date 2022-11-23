@@ -1,35 +1,35 @@
-# Introspectable sources for libgimpbase
+# Introspectable sources for libligmabase
 
-libgimpbase_introspectable = \
-	../libgimpbase/gimpbaseenums.h		\
-	../libgimpbase/gimpbasetypes.h		\
-	../libgimpbase/gimpbasetypes.c		\
-	../libgimpbase/gimplimits.h			\
-	../libgimpbase/gimpversion.h		\
+libligmabase_introspectable = \
+	../libligmabase/ligmabaseenums.h		\
+	../libligmabase/ligmabasetypes.h		\
+	../libligmabase/ligmabasetypes.c		\
+	../libligmabase/ligmalimits.h			\
+	../libligmabase/ligmaversion.h		\
 	\
-	../libgimpbase/gimpchecks.c           	\
-	../libgimpbase/gimpchecks.h           	\
-	../libgimpbase/gimpcpuaccel.c		\
-	../libgimpbase/gimpcpuaccel.h		\
-	../libgimpbase/gimpenv.c			\
-	../libgimpbase/gimpenv.h			\
-	../libgimpbase/gimpmemsize.c			\
-	../libgimpbase/gimpmemsize.h			\
-	../libgimpbase/gimpmetadata.c		\
-	../libgimpbase/gimpmetadata.h		\
-	../libgimpbase/gimpparamspecs.c		\
-	../libgimpbase/gimpparamspecs.h		\
-	../libgimpbase/gimpparasite.c		\
-	../libgimpbase/gimpparasite.h		\
-	../libgimpbase/gimpparasiteio.c		\
-	../libgimpbase/gimpparasiteio.h		\
-	../libgimpbase/gimprectangle.c		\
-	../libgimpbase/gimprectangle.h		\
-	../libgimpbase/gimpsignal.c			\
-	../libgimpbase/gimpsignal.h			\
-	../libgimpbase/gimpunit.c			\
-	../libgimpbase/gimpunit.h			\
-	../libgimpbase/gimputils.c            	\
-	../libgimpbase/gimputils.h            	\
-	../libgimpbase/gimpvaluearray.c		\
-	../libgimpbase/gimpvaluearray.h
+	../libligmabase/ligmachecks.c           	\
+	../libligmabase/ligmachecks.h           	\
+	../libligmabase/ligmacpuaccel.c		\
+	../libligmabase/ligmacpuaccel.h		\
+	../libligmabase/ligmaenv.c			\
+	../libligmabase/ligmaenv.h			\
+	../libligmabase/ligmamemsize.c			\
+	../libligmabase/ligmamemsize.h			\
+	../libligmabase/ligmametadata.c		\
+	../libligmabase/ligmametadata.h		\
+	../libligmabase/ligmaparamspecs.c		\
+	../libligmabase/ligmaparamspecs.h		\
+	../libligmabase/ligmaparasite.c		\
+	../libligmabase/ligmaparasite.h		\
+	../libligmabase/ligmaparasiteio.c		\
+	../libligmabase/ligmaparasiteio.h		\
+	../libligmabase/ligmarectangle.c		\
+	../libligmabase/ligmarectangle.h		\
+	../libligmabase/ligmasignal.c			\
+	../libligmabase/ligmasignal.h			\
+	../libligmabase/ligmaunit.c			\
+	../libligmabase/ligmaunit.h			\
+	../libligmabase/ligmautils.c            	\
+	../libligmabase/ligmautils.h            	\
+	../libligmabase/ligmavaluearray.c		\
+	../libligmabase/ligmavaluearray.h

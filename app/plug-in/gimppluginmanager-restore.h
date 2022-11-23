@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager-restore.h
+ * ligmapluginmanager-restore.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MANAGER_RESTORE_H__
-#define __GIMP_PLUG_IN_MANAGER_RESTORE_H__
+#ifndef __LIGMA_PLUG_IN_MANAGER_RESTORE_H__
+#define __LIGMA_PLUG_IN_MANAGER_RESTORE_H__
 
 
-void    gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
-                                      GimpContext        *context,
-                                      GimpInitStatusFunc  status_callback);
+void    ligma_plug_in_manager_restore (LigmaPlugInManager  *manager,
+                                      LigmaContext        *context,
+                                      LigmaInitStatusFunc  status_callback);
 
 
-#endif  /* __GIMP_PLUG_IN_MANAGER_RESTORE_H__ */
+#endif  /* __LIGMA_PLUG_IN_MANAGER_RESTORE_H__ */

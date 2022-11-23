@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimpperspectivecloneoptions.h"
+#include "ligmaperspectivecloneoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -37,48 +37,48 @@ enum
 };
 
 
-static void   gimp_perspective_clone_options_set_property (GObject      *object,
+static void   ligma_perspective_clone_options_set_property (GObject      *object,
                                                            guint         property_id,
                                                            const GValue *value,
                                                            GParamSpec   *pspec);
-static void   gimp_perspective_clone_options_get_property (GObject      *object,
+static void   ligma_perspective_clone_options_get_property (GObject      *object,
                                                            guint         property_id,
                                                            GValue       *value,
                                                            GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPerspectiveCloneOptions, gimp_perspective_clone_options,
-               GIMP_TYPE_CLONE_OPTIONS)
+G_DEFINE_TYPE (LigmaPerspectiveCloneOptions, ligma_perspective_clone_options,
+               LIGMA_TYPE_CLONE_OPTIONS)
 
 
 static void
-gimp_perspective_clone_options_class_init (GimpPerspectiveCloneOptionsClass *klass)
+ligma_perspective_clone_options_class_init (LigmaPerspectiveCloneOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_perspective_clone_options_set_property;
-  object_class->get_property = gimp_perspective_clone_options_get_property;
+  object_class->set_property = ligma_perspective_clone_options_set_property;
+  object_class->get_property = ligma_perspective_clone_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLONE_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CLONE_MODE,
                          "clone-mode",
                          NULL, NULL,
-                         GIMP_TYPE_PERSPECTIVE_CLONE_MODE,
-                         GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_PERSPECTIVE_CLONE_MODE,
+                         LIGMA_PERSPECTIVE_CLONE_MODE_ADJUST,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_perspective_clone_options_init (GimpPerspectiveCloneOptions *options)
+ligma_perspective_clone_options_init (LigmaPerspectiveCloneOptions *options)
 {
 }
 
 static void
-gimp_perspective_clone_options_set_property (GObject      *object,
+ligma_perspective_clone_options_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec)
 {
-  GimpPerspectiveCloneOptions *options = GIMP_PERSPECTIVE_CLONE_OPTIONS (object);
+  LigmaPerspectiveCloneOptions *options = LIGMA_PERSPECTIVE_CLONE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -93,12 +93,12 @@ gimp_perspective_clone_options_set_property (GObject      *object,
 }
 
 static void
-gimp_perspective_clone_options_get_property (GObject    *object,
+ligma_perspective_clone_options_get_property (GObject    *object,
                                              guint       property_id,
                                              GValue     *value,
                                              GParamSpec *pspec)
 {
-  GimpPerspectiveCloneOptions *options = GIMP_PERSPECTIVE_CLONE_OPTIONS (object);
+  LigmaPerspectiveCloneOptions *options = LIGMA_PERSPECTIVE_CLONE_OPTIONS (object);
 
   switch (property_id)
     {

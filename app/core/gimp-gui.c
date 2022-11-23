@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,173 +20,173 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-gui.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdisplay.h"
-#include "gimpimage.h"
-#include "gimpprogress.h"
-#include "gimpwaitable.h"
+#include "ligma.h"
+#include "ligma-gui.h"
+#include "ligmacontainer.h"
+#include "ligmacontext.h"
+#include "ligmadisplay.h"
+#include "ligmaimage.h"
+#include "ligmaprogress.h"
+#include "ligmawaitable.h"
 
 #include "about.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_gui_init (Gimp *gimp)
+ligma_gui_init (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp->gui.ungrab                 = NULL;
-  gimp->gui.set_busy               = NULL;
-  gimp->gui.unset_busy             = NULL;
-  gimp->gui.show_message           = NULL;
-  gimp->gui.help                   = NULL;
-  gimp->gui.get_program_class      = NULL;
-  gimp->gui.get_display_name       = NULL;
-  gimp->gui.get_user_time          = NULL;
-  gimp->gui.get_theme_dir          = NULL;
-  gimp->gui.get_icon_theme_dir     = NULL;
-  gimp->gui.display_get_window_id  = NULL;
-  gimp->gui.display_create         = NULL;
-  gimp->gui.display_delete         = NULL;
-  gimp->gui.displays_reconnect     = NULL;
-  gimp->gui.progress_new           = NULL;
-  gimp->gui.progress_free          = NULL;
-  gimp->gui.pdb_dialog_set         = NULL;
-  gimp->gui.pdb_dialog_close       = NULL;
-  gimp->gui.recent_list_add_file   = NULL;
-  gimp->gui.recent_list_load       = NULL;
-  gimp->gui.get_mount_operation    = NULL;
-  gimp->gui.query_profile_policy   = NULL;
-  gimp->gui.query_rotation_policy  = NULL;
+  ligma->gui.ungrab                 = NULL;
+  ligma->gui.set_busy               = NULL;
+  ligma->gui.unset_busy             = NULL;
+  ligma->gui.show_message           = NULL;
+  ligma->gui.help                   = NULL;
+  ligma->gui.get_program_class      = NULL;
+  ligma->gui.get_display_name       = NULL;
+  ligma->gui.get_user_time          = NULL;
+  ligma->gui.get_theme_dir          = NULL;
+  ligma->gui.get_icon_theme_dir     = NULL;
+  ligma->gui.display_get_window_id  = NULL;
+  ligma->gui.display_create         = NULL;
+  ligma->gui.display_delete         = NULL;
+  ligma->gui.displays_reconnect     = NULL;
+  ligma->gui.progress_new           = NULL;
+  ligma->gui.progress_free          = NULL;
+  ligma->gui.pdb_dialog_set         = NULL;
+  ligma->gui.pdb_dialog_close       = NULL;
+  ligma->gui.recent_list_add_file   = NULL;
+  ligma->gui.recent_list_load       = NULL;
+  ligma->gui.get_mount_operation    = NULL;
+  ligma->gui.query_profile_policy   = NULL;
+  ligma->gui.query_rotation_policy  = NULL;
 }
 
 void
-gimp_gui_ungrab (Gimp *gimp)
+ligma_gui_ungrab (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->gui.ungrab)
-    gimp->gui.ungrab (gimp);
+  if (ligma->gui.ungrab)
+    ligma->gui.ungrab (ligma);
 }
 
 void
-gimp_set_busy (Gimp *gimp)
+ligma_set_busy (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  /* FIXME: gimp_busy HACK */
-  gimp->busy++;
+  /* FIXME: ligma_busy HACK */
+  ligma->busy++;
 
-  if (gimp->busy == 1)
+  if (ligma->busy == 1)
     {
-      if (gimp->gui.set_busy)
-        gimp->gui.set_busy (gimp);
+      if (ligma->gui.set_busy)
+        ligma->gui.set_busy (ligma);
     }
 }
 
 static gboolean
-gimp_idle_unset_busy (gpointer data)
+ligma_idle_unset_busy (gpointer data)
 {
-  Gimp *gimp = data;
+  Ligma *ligma = data;
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
-  gimp->busy_idle_id = 0;
+  ligma->busy_idle_id = 0;
 
   return FALSE;
 }
 
 void
-gimp_set_busy_until_idle (Gimp *gimp)
+ligma_set_busy_until_idle (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (! gimp->busy_idle_id)
+  if (! ligma->busy_idle_id)
     {
-      gimp_set_busy (gimp);
+      ligma_set_busy (ligma);
 
-      gimp->busy_idle_id = g_idle_add_full (G_PRIORITY_HIGH,
-                                            gimp_idle_unset_busy, gimp,
+      ligma->busy_idle_id = g_idle_add_full (G_PRIORITY_HIGH,
+                                            ligma_idle_unset_busy, ligma,
                                             NULL);
     }
 }
 
 void
-gimp_unset_busy (Gimp *gimp)
+ligma_unset_busy (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp->busy > 0);
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (ligma->busy > 0);
 
-  /* FIXME: gimp_busy HACK */
-  gimp->busy--;
+  /* FIXME: ligma_busy HACK */
+  ligma->busy--;
 
-  if (gimp->busy == 0)
+  if (ligma->busy == 0)
     {
-      if (gimp->gui.unset_busy)
-        gimp->gui.unset_busy (gimp);
+      if (ligma->gui.unset_busy)
+        ligma->gui.unset_busy (ligma);
     }
 }
 
 void
-gimp_show_message (Gimp                *gimp,
+ligma_show_message (Ligma                *ligma,
                    GObject             *handler,
-                   GimpMessageSeverity  severity,
+                   LigmaMessageSeverity  severity,
                    const gchar         *domain,
                    const gchar         *message)
 {
-  const gchar *desc = (severity == GIMP_MESSAGE_ERROR) ? "Error" : "Message";
+  const gchar *desc = (severity == LIGMA_MESSAGE_ERROR) ? "Error" : "Message";
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (message != NULL);
 
   if (! domain)
-    domain = GIMP_ACRONYM;
+    domain = LIGMA_ACRONYM;
 
-  if (! gimp->console_messages)
+  if (! ligma->console_messages)
     {
-      if (gimp->gui.show_message)
+      if (ligma->gui.show_message)
         {
-          gimp->gui.show_message (gimp, handler, severity,
+          ligma->gui.show_message (ligma, handler, severity,
                                   domain, message);
           return;
         }
-      else if (GIMP_IS_PROGRESS (handler) &&
-               gimp_progress_message (GIMP_PROGRESS (handler), gimp,
+      else if (LIGMA_IS_PROGRESS (handler) &&
+               ligma_progress_message (LIGMA_PROGRESS (handler), ligma,
                                       severity, domain, message))
         {
-          /* message has been handled by GimpProgress */
+          /* message has been handled by LigmaProgress */
           return;
         }
     }
 
-  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+  ligma_enum_get_value (LIGMA_TYPE_MESSAGE_SEVERITY, severity,
                        NULL, NULL, &desc, NULL);
   g_printerr ("%s-%s: %s\n\n", domain, desc, message);
 }
 
 void
-gimp_wait (Gimp         *gimp,
-           GimpWaitable *waitable,
+ligma_wait (Ligma         *ligma,
+           LigmaWaitable *waitable,
            const gchar  *format,
            ...)
 {
   va_list  args;
   gchar   *message;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_WAITABLE (waitable));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_WAITABLE (waitable));
   g_return_if_fail (format != NULL);
 
-  if (gimp_waitable_wait_for (waitable, 0.5 * G_TIME_SPAN_SECOND))
+  if (ligma_waitable_wait_for (waitable, 0.5 * G_TIME_SPAN_SECOND))
     return;
 
   va_start (args, format);
@@ -195,60 +195,60 @@ gimp_wait (Gimp         *gimp,
 
   va_end (args);
 
-  if (! gimp->console_messages &&
-      gimp->gui.wait           &&
-      gimp->gui.wait (gimp, waitable, message))
+  if (! ligma->console_messages &&
+      ligma->gui.wait           &&
+      ligma->gui.wait (ligma, waitable, message))
     {
       return;
     }
 
-  /* Translator:  This message is displayed while GIMP is waiting for
+  /* Translator:  This message is displayed while LIGMA is waiting for
    * some operation to finish.  The %s argument is a message describing
    * the operation.
    */
   g_printerr (_("Please wait: %s\n"), message);
 
-  gimp_waitable_wait (waitable);
+  ligma_waitable_wait (waitable);
 
   g_free (message);
 }
 
 void
-gimp_help (Gimp         *gimp,
-           GimpProgress *progress,
+ligma_help (Ligma         *ligma,
+           LigmaProgress *progress,
            const gchar  *help_domain,
            const gchar  *help_id)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  if (gimp->gui.help)
-    gimp->gui.help (gimp, progress, help_domain, help_id);
+  if (ligma->gui.help)
+    ligma->gui.help (ligma, progress, help_domain, help_id);
 }
 
 const gchar *
-gimp_get_program_class (Gimp *gimp)
+ligma_get_program_class (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->gui.get_program_class)
-    return gimp->gui.get_program_class (gimp);
+  if (ligma->gui.get_program_class)
+    return ligma->gui.get_program_class (ligma);
 
   return NULL;
 }
 
 gchar *
-gimp_get_display_name (Gimp     *gimp,
+ligma_get_display_name (Ligma     *ligma,
                        gint      display_id,
                        GObject **monitor,
                        gint     *monitor_number)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (monitor != NULL, NULL);
   g_return_val_if_fail (monitor_number != NULL, NULL);
 
-  if (gimp->gui.get_display_name)
-    return gimp->gui.get_display_name (gimp, display_id,
+  if (ligma->gui.get_display_name)
+    return ligma->gui.get_display_name (ligma, display_id,
                                        monitor, monitor_number);
 
   *monitor = NULL;
@@ -257,8 +257,8 @@ gimp_get_display_name (Gimp     *gimp,
 }
 
 /**
- * gimp_get_user_time:
- * @gimp:
+ * ligma_get_user_time:
+ * @ligma:
  *
  * Returns the timestamp of the last user interaction. The timestamp is
  * taken from events caused by user interaction such as key presses or
@@ -267,143 +267,143 @@ gimp_get_display_name (Gimp     *gimp,
  * Returns: the timestamp of the last user interaction
  */
 guint32
-gimp_get_user_time (Gimp *gimp)
+ligma_get_user_time (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), 0);
 
-  if (gimp->gui.get_user_time)
-    return gimp->gui.get_user_time (gimp);
+  if (ligma->gui.get_user_time)
+    return ligma->gui.get_user_time (ligma);
 
   return 0;
 }
 
 GFile *
-gimp_get_theme_dir (Gimp *gimp)
+ligma_get_theme_dir (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->gui.get_theme_dir)
-    return gimp->gui.get_theme_dir (gimp);
+  if (ligma->gui.get_theme_dir)
+    return ligma->gui.get_theme_dir (ligma);
 
   return NULL;
 }
 
 GFile *
-gimp_get_icon_theme_dir (Gimp *gimp)
+ligma_get_icon_theme_dir (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->gui.get_icon_theme_dir)
-    return gimp->gui.get_icon_theme_dir (gimp);
+  if (ligma->gui.get_icon_theme_dir)
+    return ligma->gui.get_icon_theme_dir (ligma);
 
   return NULL;
 }
 
-GimpObject *
-gimp_get_window_strategy (Gimp *gimp)
+LigmaObject *
+ligma_get_window_strategy (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->gui.get_window_strategy)
-    return gimp->gui.get_window_strategy (gimp);
+  if (ligma->gui.get_window_strategy)
+    return ligma->gui.get_window_strategy (ligma);
 
   return NULL;
 }
 
-GimpDisplay *
-gimp_get_empty_display (Gimp *gimp)
+LigmaDisplay *
+ligma_get_empty_display (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp->gui.get_empty_display)
-    return gimp->gui.get_empty_display (gimp);
+  if (ligma->gui.get_empty_display)
+    return ligma->gui.get_empty_display (ligma);
 
   return NULL;
 }
 
 guint32
-gimp_get_display_window_id (Gimp        *gimp,
-                            GimpDisplay *display)
+ligma_get_display_window_id (Ligma        *ligma,
+                            LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), -1);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), -1);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), -1);
 
-  if (gimp->gui.display_get_window_id)
-    return gimp->gui.display_get_window_id (display);
+  if (ligma->gui.display_get_window_id)
+    return ligma->gui.display_get_window_id (display);
 
   return -1;
 }
 
-GimpDisplay *
-gimp_create_display (Gimp      *gimp,
-                     GimpImage *image,
-                     GimpUnit   unit,
+LigmaDisplay *
+ligma_create_display (Ligma      *ligma,
+                     LigmaImage *image,
+                     LigmaUnit   unit,
                      gdouble    scale,
                      GObject   *monitor)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (image == NULL || LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
 
-  if (gimp->gui.display_create)
-    return gimp->gui.display_create (gimp, image, unit, scale, monitor);
+  if (ligma->gui.display_create)
+    return ligma->gui.display_create (ligma, image, unit, scale, monitor);
 
   return NULL;
 }
 
 void
-gimp_delete_display (Gimp        *gimp,
-                     GimpDisplay *display)
+ligma_delete_display (Ligma        *ligma,
+                     LigmaDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
-  if (gimp->gui.display_delete)
-    gimp->gui.display_delete (display);
+  if (ligma->gui.display_delete)
+    ligma->gui.display_delete (display);
 }
 
 void
-gimp_reconnect_displays (Gimp      *gimp,
-                         GimpImage *old_image,
-                         GimpImage *new_image)
+ligma_reconnect_displays (Ligma      *ligma,
+                         LigmaImage *old_image,
+                         LigmaImage *new_image)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_IMAGE (old_image));
-  g_return_if_fail (GIMP_IS_IMAGE (new_image));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_IMAGE (old_image));
+  g_return_if_fail (LIGMA_IS_IMAGE (new_image));
 
-  if (gimp->gui.displays_reconnect)
-    gimp->gui.displays_reconnect (gimp, old_image, new_image);
+  if (ligma->gui.displays_reconnect)
+    ligma->gui.displays_reconnect (ligma, old_image, new_image);
 }
 
-GimpProgress *
-gimp_new_progress (Gimp        *gimp,
-                   GimpDisplay *display)
+LigmaProgress *
+ligma_new_progress (Ligma        *ligma,
+                   LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (display == NULL || LIGMA_IS_DISPLAY (display), NULL);
 
-  if (gimp->gui.progress_new)
-    return gimp->gui.progress_new (gimp, display);
+  if (ligma->gui.progress_new)
+    return ligma->gui.progress_new (ligma, display);
 
   return NULL;
 }
 
 void
-gimp_free_progress (Gimp         *gimp,
-                    GimpProgress *progress)
+ligma_free_progress (Ligma         *ligma,
+                    LigmaProgress *progress)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
-  if (gimp->gui.progress_free)
-    gimp->gui.progress_free (gimp, progress);
+  if (ligma->gui.progress_free)
+    ligma->gui.progress_free (ligma, progress);
 }
 
 gboolean
-gimp_pdb_dialog_new (Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpContainer *container,
+ligma_pdb_dialog_new (Ligma          *ligma,
+                     LigmaContext   *context,
+                     LigmaProgress  *progress,
+                     LigmaContainer *container,
                      const gchar   *title,
                      const gchar   *callback_name,
                      const gchar   *object_name,
@@ -411,20 +411,20 @@ gimp_pdb_dialog_new (Gimp          *gimp,
 {
   gboolean retval = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (title != NULL, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
-  if (gimp->gui.pdb_dialog_new)
+  if (ligma->gui.pdb_dialog_new)
     {
       va_list args;
 
       va_start (args, object_name);
 
-      retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
+      retval = ligma->gui.pdb_dialog_new (ligma, context, progress,
                                          container, title,
                                          callback_name, object_name,
                                          args);
@@ -436,26 +436,26 @@ gimp_pdb_dialog_new (Gimp          *gimp,
 }
 
 gboolean
-gimp_pdb_dialog_set (Gimp          *gimp,
-                     GimpContainer *container,
+ligma_pdb_dialog_set (Ligma          *ligma,
+                     LigmaContainer *container,
                      const gchar   *callback_name,
                      const gchar   *object_name,
                      ...)
 {
   gboolean retval = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
   g_return_val_if_fail (object_name != NULL, FALSE);
 
-  if (gimp->gui.pdb_dialog_set)
+  if (ligma->gui.pdb_dialog_set)
     {
       va_list args;
 
       va_start (args, object_name);
 
-      retval = gimp->gui.pdb_dialog_set (gimp, container, callback_name,
+      retval = ligma->gui.pdb_dialog_set (ligma, container, callback_name,
                                          object_name, args);
 
       va_end (args);
@@ -465,91 +465,91 @@ gimp_pdb_dialog_set (Gimp          *gimp,
 }
 
 gboolean
-gimp_pdb_dialog_close (Gimp          *gimp,
-                       GimpContainer *container,
+ligma_pdb_dialog_close (Ligma          *ligma,
+                       LigmaContainer *container,
                        const gchar   *callback_name)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
-  if (gimp->gui.pdb_dialog_close)
-    return gimp->gui.pdb_dialog_close (gimp, container, callback_name);
+  if (ligma->gui.pdb_dialog_close)
+    return ligma->gui.pdb_dialog_close (ligma, container, callback_name);
 
   return FALSE;
 }
 
 gboolean
-gimp_recent_list_add_file (Gimp        *gimp,
+ligma_recent_list_add_file (Ligma        *ligma,
                            GFile       *file,
                            const gchar *mime_type)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
-  if (gimp->gui.recent_list_add_file)
-    return gimp->gui.recent_list_add_file (gimp, file, mime_type);
+  if (ligma->gui.recent_list_add_file)
+    return ligma->gui.recent_list_add_file (ligma, file, mime_type);
 
   return FALSE;
 }
 
 void
-gimp_recent_list_load (Gimp *gimp)
+ligma_recent_list_load (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->gui.recent_list_load)
-    gimp->gui.recent_list_load (gimp);
+  if (ligma->gui.recent_list_load)
+    ligma->gui.recent_list_load (ligma);
 }
 
 GMountOperation *
-gimp_get_mount_operation (Gimp         *gimp,
-                          GimpProgress *progress)
+ligma_get_mount_operation (Ligma         *ligma,
+                          LigmaProgress *progress)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), FALSE);
 
-  if (gimp->gui.get_mount_operation)
-    return gimp->gui.get_mount_operation (gimp, progress);
+  if (ligma->gui.get_mount_operation)
+    return ligma->gui.get_mount_operation (ligma, progress);
 
   return g_mount_operation_new ();
 }
 
-GimpColorProfilePolicy
-gimp_query_profile_policy (Gimp                      *gimp,
-                           GimpImage                 *image,
-                           GimpContext               *context,
-                           GimpColorProfile         **dest_profile,
-                           GimpColorRenderingIntent  *intent,
+LigmaColorProfilePolicy
+ligma_query_profile_policy (Ligma                      *ligma,
+                           LigmaImage                 *image,
+                           LigmaContext               *context,
+                           LigmaColorProfile         **dest_profile,
+                           LigmaColorRenderingIntent  *intent,
                            gboolean                  *bpc,
                            gboolean                  *dont_ask)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_COLOR_PROFILE_POLICY_KEEP);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_COLOR_PROFILE_POLICY_KEEP);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_COLOR_PROFILE_POLICY_KEEP);
-  g_return_val_if_fail (dest_profile != NULL, GIMP_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), LIGMA_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), LIGMA_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (dest_profile != NULL, LIGMA_COLOR_PROFILE_POLICY_KEEP);
 
-  if (gimp->gui.query_profile_policy)
-    return gimp->gui.query_profile_policy (gimp, image, context,
+  if (ligma->gui.query_profile_policy)
+    return ligma->gui.query_profile_policy (ligma, image, context,
                                            dest_profile,
                                            intent, bpc,
                                            dont_ask);
 
-  return GIMP_COLOR_PROFILE_POLICY_KEEP;
+  return LIGMA_COLOR_PROFILE_POLICY_KEEP;
 }
 
-GimpMetadataRotationPolicy
-gimp_query_rotation_policy (Gimp        *gimp,
-                            GimpImage   *image,
-                            GimpContext *context,
+LigmaMetadataRotationPolicy
+ligma_query_rotation_policy (Ligma        *ligma,
+                            LigmaImage   *image,
+                            LigmaContext *context,
                             gboolean    *dont_ask)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_METADATA_ROTATION_POLICY_ROTATE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_METADATA_ROTATION_POLICY_ROTATE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_METADATA_ROTATION_POLICY_ROTATE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), LIGMA_METADATA_ROTATION_POLICY_ROTATE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_METADATA_ROTATION_POLICY_ROTATE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), LIGMA_METADATA_ROTATION_POLICY_ROTATE);
 
-  if (gimp->gui.query_rotation_policy)
-    return gimp->gui.query_rotation_policy (gimp, image, context, dont_ask);
+  if (ligma->gui.query_rotation_policy)
+    return ligma->gui.query_rotation_policy (ligma, image, context, dont_ask);
 
-  return GIMP_METADATA_ROTATION_POLICY_ROTATE;
+  return LIGMA_METADATA_ROTATION_POLICY_ROTATE;
 }

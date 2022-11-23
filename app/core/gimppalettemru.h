@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppalettemru.h
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmapalettemru.h
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_MRU_H__
-#define __GIMP_PALETTE_MRU_H__
+#ifndef __LIGMA_PALETTE_MRU_H__
+#define __LIGMA_PALETTE_MRU_H__
 
 
-#include "gimppalette.h"
+#include "ligmapalette.h"
 
 
-#define GIMP_TYPE_PALETTE_MRU            (gimp_palette_mru_get_type ())
-#define GIMP_PALETTE_MRU(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_MRU, GimpPaletteMru))
-#define GIMP_PALETTE_MRU_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_MRU, GimpPaletteMruClass))
-#define GIMP_IS_PALETTE_MRU(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PALETTE_MRU))
-#define GIMP_IS_PALETTE_MRU_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_MRU))
-#define GIMP_PALETTE_MRU_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE_MRU, GimpPaletteMruClass))
+#define LIGMA_TYPE_PALETTE_MRU            (ligma_palette_mru_get_type ())
+#define LIGMA_PALETTE_MRU(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PALETTE_MRU, LigmaPaletteMru))
+#define LIGMA_PALETTE_MRU_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PALETTE_MRU, LigmaPaletteMruClass))
+#define LIGMA_IS_PALETTE_MRU(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PALETTE_MRU))
+#define LIGMA_IS_PALETTE_MRU_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PALETTE_MRU))
+#define LIGMA_PALETTE_MRU_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PALETTE_MRU, LigmaPaletteMruClass))
 
 
-typedef struct _GimpPaletteMruClass GimpPaletteMruClass;
+typedef struct _LigmaPaletteMruClass LigmaPaletteMruClass;
 
-struct _GimpPaletteMru
+struct _LigmaPaletteMru
 {
-  GimpPalette  parent_instance;
+  LigmaPalette  parent_instance;
 };
 
-struct _GimpPaletteMruClass
+struct _LigmaPaletteMruClass
 {
-  GimpPaletteClass  parent_class;
+  LigmaPaletteClass  parent_class;
 };
 
 
-GType      gimp_palette_mru_get_type (void) G_GNUC_CONST;
+GType      ligma_palette_mru_get_type (void) G_GNUC_CONST;
 
-GimpData * gimp_palette_mru_new      (const gchar    *name);
+LigmaData * ligma_palette_mru_new      (const gchar    *name);
 
-void       gimp_palette_mru_load     (GimpPaletteMru *mru,
+void       ligma_palette_mru_load     (LigmaPaletteMru *mru,
                                       GFile          *file);
-void       gimp_palette_mru_save     (GimpPaletteMru *mru,
+void       ligma_palette_mru_save     (LigmaPaletteMru *mru,
                                       GFile          *file);
 
-void       gimp_palette_mru_add      (GimpPaletteMru *mru,
-                                      const GimpRGB  *color);
+void       ligma_palette_mru_add      (LigmaPaletteMru *mru,
+                                      const LigmaRGB  *color);
 
 
-#endif  /*  __GIMP_PALETTE_MRU_H__  */
+#endif  /*  __LIGMA_PALETTE_MRU_H__  */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolwidget.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolwidget.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,25 +26,25 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "display-types.h"
 
-#include "core/gimpmarshal.h"
+#include "core/ligmamarshal.h"
 
-#include "gimpcanvasarc.h"
-#include "gimpcanvascorner.h"
-#include "gimpcanvasgroup.h"
-#include "gimpcanvashandle.h"
-#include "gimpcanvaslimit.h"
-#include "gimpcanvasline.h"
-#include "gimpcanvaspath.h"
-#include "gimpcanvaspolygon.h"
-#include "gimpcanvasrectangle.h"
-#include "gimpcanvasrectangleguides.h"
-#include "gimpcanvastransformguides.h"
-#include "gimpdisplayshell.h"
-#include "gimptoolwidget.h"
+#include "ligmacanvasarc.h"
+#include "ligmacanvascorner.h"
+#include "ligmacanvasgroup.h"
+#include "ligmacanvashandle.h"
+#include "ligmacanvaslimit.h"
+#include "ligmacanvasline.h"
+#include "ligmacanvaspath.h"
+#include "ligmacanvaspolygon.h"
+#include "ligmacanvasrectangle.h"
+#include "ligmacanvasrectangleguides.h"
+#include "ligmacanvastransformguides.h"
+#include "ligmadisplayshell.h"
+#include "ligmatoolwidget.h"
 
 
 enum
@@ -66,10 +66,10 @@ enum
   LAST_SIGNAL
 };
 
-struct _GimpToolWidgetPrivate
+struct _LigmaToolWidgetPrivate
 {
-  GimpDisplayShell *shell;
-  GimpCanvasItem   *item;
+  LigmaDisplayShell *shell;
+  LigmaCanvasItem   *item;
   GList            *group_stack;
 
   gint              snap_offset_x;
@@ -84,51 +84,51 @@ struct _GimpToolWidgetPrivate
 
 /*  local function prototypes  */
 
-static void     gimp_tool_widget_finalize           (GObject         *object);
-static void     gimp_tool_widget_constructed        (GObject         *object);
-static void     gimp_tool_widget_set_property       (GObject         *object,
+static void     ligma_tool_widget_finalize           (GObject         *object);
+static void     ligma_tool_widget_constructed        (GObject         *object);
+static void     ligma_tool_widget_set_property       (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
                                                      GParamSpec      *pspec);
-static void     gimp_tool_widget_get_property       (GObject         *object,
+static void     ligma_tool_widget_get_property       (GObject         *object,
                                                      guint            property_id,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
-static void     gimp_tool_widget_properties_changed (GObject         *object,
+static void     ligma_tool_widget_properties_changed (GObject         *object,
                                                      guint            n_pspecs,
                                                      GParamSpec     **pspecs);
 
-static void     gimp_tool_widget_real_leave_notify  (GimpToolWidget  *widget);
-static gboolean gimp_tool_widget_real_key_press     (GimpToolWidget  *widget,
+static void     ligma_tool_widget_real_leave_notify  (LigmaToolWidget  *widget);
+static gboolean ligma_tool_widget_real_key_press     (LigmaToolWidget  *widget,
                                                      GdkEventKey     *kevent);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolWidget, gimp_tool_widget, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolWidget, ligma_tool_widget, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_tool_widget_parent_class
+#define parent_class ligma_tool_widget_parent_class
 
 static guint widget_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
+ligma_tool_widget_class_init (LigmaToolWidgetClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize                    = gimp_tool_widget_finalize;
-  object_class->constructed                 = gimp_tool_widget_constructed;
-  object_class->set_property                = gimp_tool_widget_set_property;
-  object_class->get_property                = gimp_tool_widget_get_property;
-  object_class->dispatch_properties_changed = gimp_tool_widget_properties_changed;
+  object_class->finalize                    = ligma_tool_widget_finalize;
+  object_class->constructed                 = ligma_tool_widget_constructed;
+  object_class->set_property                = ligma_tool_widget_set_property;
+  object_class->get_property                = ligma_tool_widget_get_property;
+  object_class->dispatch_properties_changed = ligma_tool_widget_properties_changed;
 
-  klass->leave_notify                       = gimp_tool_widget_real_leave_notify;
-  klass->key_press                          = gimp_tool_widget_real_key_press;
+  klass->leave_notify                       = ligma_tool_widget_real_leave_notify;
+  klass->key_press                          = ligma_tool_widget_real_key_press;
 
   widget_signals[CHANGED] =
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, changed),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -136,7 +136,7 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("response",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, response),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, response),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
@@ -145,9 +145,9 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("snap-offsets",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, snap_offsets),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, snap_offsets),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  ligma_marshal_VOID__INT_INT_INT_INT,
                   G_TYPE_NONE, 4,
                   G_TYPE_INT,
                   G_TYPE_INT,
@@ -158,7 +158,7 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("status",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, status),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, status),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
@@ -167,9 +167,9 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("status-coords",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, status_coords),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, status_coords),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING_DOUBLE_STRING_DOUBLE_STRING,
+                  ligma_marshal_VOID__STRING_DOUBLE_STRING_DOUBLE_STRING,
                   G_TYPE_NONE, 5,
                   G_TYPE_STRING,
                   G_TYPE_DOUBLE,
@@ -181,7 +181,7 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("message",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, message),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, message),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
@@ -190,46 +190,46 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
     g_signal_new ("focus-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolWidgetClass, focus_changed),
+                  G_STRUCT_OFFSET (LigmaToolWidgetClass, focus_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DISPLAY_SHELL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DISPLAY_SHELL,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ITEM,
                                    g_param_spec_object ("item",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CANVAS_ITEM,
-                                                        GIMP_PARAM_READABLE));
+                                                        LIGMA_TYPE_CANVAS_ITEM,
+                                                        LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_tool_widget_init (GimpToolWidget *widget)
+ligma_tool_widget_init (LigmaToolWidget *widget)
 {
-  widget->private = gimp_tool_widget_get_instance_private (widget);
+  widget->private = ligma_tool_widget_get_instance_private (widget);
 
   widget->private->visible = TRUE;
 }
 
 static void
-gimp_tool_widget_constructed (GObject *object)
+ligma_tool_widget_constructed (GObject *object)
 {
-  GimpToolWidget        *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolWidgetPrivate *private = widget->private;
-  GimpToolWidgetClass   *klass   = GIMP_TOOL_WIDGET_GET_CLASS (widget);
+  LigmaToolWidget        *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolWidgetPrivate *private = widget->private;
+  LigmaToolWidgetClass   *klass   = LIGMA_TOOL_WIDGET_GET_CLASS (widget);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
+  ligma_assert (LIGMA_IS_DISPLAY_SHELL (private->shell));
 
-  private->item = gimp_canvas_group_new (private->shell);
+  private->item = ligma_canvas_group_new (private->shell);
 
-  gimp_canvas_item_set_visible (private->item, private->visible);
+  ligma_canvas_item_set_visible (private->item, private->visible);
 
   if (klass->changed)
     {
@@ -260,10 +260,10 @@ gimp_tool_widget_constructed (GObject *object)
 }
 
 static void
-gimp_tool_widget_finalize (GObject *object)
+ligma_tool_widget_finalize (GObject *object)
 {
-  GimpToolWidget        *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolWidgetPrivate *private = widget->private;
+  LigmaToolWidget        *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolWidgetPrivate *private = widget->private;
 
   g_clear_object (&private->item);
 
@@ -271,13 +271,13 @@ gimp_tool_widget_finalize (GObject *object)
 }
 
 static void
-gimp_tool_widget_set_property (GObject      *object,
+ligma_tool_widget_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpToolWidget        *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolWidgetPrivate *private = widget->private;
+  LigmaToolWidget        *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolWidgetPrivate *private = widget->private;
 
   switch (property_id)
     {
@@ -292,13 +292,13 @@ gimp_tool_widget_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_widget_get_property (GObject    *object,
+ligma_tool_widget_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpToolWidget        *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolWidgetPrivate *private = widget->private;
+  LigmaToolWidget        *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolWidgetPrivate *private = widget->private;
 
   switch (property_id)
     {
@@ -317,27 +317,27 @@ gimp_tool_widget_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_widget_properties_changed (GObject     *object,
+ligma_tool_widget_properties_changed (GObject     *object,
                                      guint        n_pspecs,
                                      GParamSpec **pspecs)
 {
-  GimpToolWidget *widget = GIMP_TOOL_WIDGET (object);
+  LigmaToolWidget *widget = LIGMA_TOOL_WIDGET (object);
 
   G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
                                                               n_pspecs,
                                                               pspecs);
 
-  gimp_tool_widget_changed (widget);
+  ligma_tool_widget_changed (widget);
 }
 
 static void
-gimp_tool_widget_real_leave_notify (GimpToolWidget *widget)
+ligma_tool_widget_real_leave_notify (LigmaToolWidget *widget)
 {
-  gimp_tool_widget_set_status (widget, NULL);
+  ligma_tool_widget_set_status (widget, NULL);
 }
 
 static gboolean
-gimp_tool_widget_real_key_press (GimpToolWidget *widget,
+ligma_tool_widget_real_key_press (LigmaToolWidget *widget,
                                  GdkEventKey    *kevent)
 {
   switch (kevent->keyval)
@@ -345,15 +345,15 @@ gimp_tool_widget_real_key_press (GimpToolWidget *widget,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+      ligma_tool_widget_response (widget, LIGMA_TOOL_WIDGET_RESPONSE_CONFIRM);
       return TRUE;
 
     case GDK_KEY_Escape:
-      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CANCEL);
+      ligma_tool_widget_response (widget, LIGMA_TOOL_WIDGET_RESPONSE_CANCEL);
       return TRUE;
 
     case GDK_KEY_BackSpace:
-      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_RESET);
+      ligma_tool_widget_response (widget, LIGMA_TOOL_WIDGET_RESPONSE_RESET);
       return TRUE;
 
     default:
@@ -366,53 +366,53 @@ gimp_tool_widget_real_key_press (GimpToolWidget *widget,
 
 /*  public functions  */
 
-GimpDisplayShell *
-gimp_tool_widget_get_shell (GimpToolWidget *widget)
+LigmaDisplayShell *
+ligma_tool_widget_get_shell (LigmaToolWidget *widget)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->shell;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_get_item (GimpToolWidget *widget)
+LigmaCanvasItem *
+ligma_tool_widget_get_item (LigmaToolWidget *widget)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
 }
 
 void
-gimp_tool_widget_set_visible (GimpToolWidget *widget,
+ligma_tool_widget_set_visible (LigmaToolWidget *widget,
                               gboolean        visible)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   if (visible != widget->private->visible)
     {
       widget->private->visible = visible;
 
       if (widget->private->item)
-        gimp_canvas_item_set_visible (widget->private->item, visible);
+        ligma_canvas_item_set_visible (widget->private->item, visible);
 
       if (! visible)
-        gimp_tool_widget_set_status (widget, NULL);
+        ligma_tool_widget_set_status (widget, NULL);
     }
 }
 
 gboolean
-gimp_tool_widget_get_visible (GimpToolWidget *widget)
+ligma_tool_widget_get_visible (LigmaToolWidget *widget)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), FALSE);
 
   return widget->private->visible;
 }
 
 void
-gimp_tool_widget_set_focus (GimpToolWidget *widget,
+ligma_tool_widget_set_focus (LigmaToolWidget *widget,
                             gboolean        focus)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   if (focus != widget->private->focus)
     {
@@ -423,41 +423,41 @@ gimp_tool_widget_set_focus (GimpToolWidget *widget,
 }
 
 gboolean
-gimp_tool_widget_get_focus (GimpToolWidget *widget)
+ligma_tool_widget_get_focus (LigmaToolWidget *widget)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), FALSE);
 
   return widget->private->focus;
 }
 
 void
-gimp_tool_widget_changed (GimpToolWidget *widget)
+ligma_tool_widget_changed (LigmaToolWidget *widget)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   g_signal_emit (widget, widget_signals[CHANGED], 0);
 }
 
 void
-gimp_tool_widget_response (GimpToolWidget *widget,
+ligma_tool_widget_response (LigmaToolWidget *widget,
                            gint            response_id)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   g_signal_emit (widget, widget_signals[RESPONSE], 0,
                  response_id);
 }
 
 void
-gimp_tool_widget_set_snap_offsets (GimpToolWidget *widget,
+ligma_tool_widget_set_snap_offsets (LigmaToolWidget *widget,
                                    gint            offset_x,
                                    gint            offset_y,
                                    gint            width,
                                    gint            height)
 {
-  GimpToolWidgetPrivate *private;
+  LigmaToolWidgetPrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   private = widget->private;
 
@@ -477,15 +477,15 @@ gimp_tool_widget_set_snap_offsets (GimpToolWidget *widget,
 }
 
 void
-gimp_tool_widget_get_snap_offsets (GimpToolWidget *widget,
+ligma_tool_widget_get_snap_offsets (LigmaToolWidget *widget,
                                    gint           *offset_x,
                                    gint           *offset_y,
                                    gint           *width,
                                    gint           *height)
 {
-  GimpToolWidgetPrivate *private;
+  LigmaToolWidgetPrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   private = widget->private;
 
@@ -496,38 +496,38 @@ gimp_tool_widget_get_snap_offsets (GimpToolWidget *widget,
 }
 
 void
-gimp_tool_widget_set_status (GimpToolWidget *widget,
+ligma_tool_widget_set_status (LigmaToolWidget *widget,
                              const gchar    *status)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   g_signal_emit (widget, widget_signals[STATUS], 0,
                  status);
 }
 
 void
-gimp_tool_widget_set_status_coords (GimpToolWidget *widget,
+ligma_tool_widget_set_status_coords (LigmaToolWidget *widget,
                                     const gchar    *title,
                                     gdouble         x,
                                     const gchar    *separator,
                                     gdouble         y,
                                     const gchar    *help)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   g_signal_emit (widget, widget_signals[STATUS_COORDS], 0,
                  title, x, separator, y, help);
 }
 
 void
-gimp_tool_widget_message (GimpToolWidget *widget,
+ligma_tool_widget_message (LigmaToolWidget *widget,
                           const gchar    *format,
                           ...)
 {
   va_list  args;
   gchar   *message;
 
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
@@ -536,16 +536,16 @@ gimp_tool_widget_message (GimpToolWidget *widget,
 
   va_end (args);
 
-  gimp_tool_widget_message_literal (widget, message);
+  ligma_tool_widget_message_literal (widget, message);
 
   g_free (message);
 }
 
 void
-gimp_tool_widget_message_literal (GimpToolWidget *widget,
+ligma_tool_widget_message_literal (LigmaToolWidget *widget,
                                   const gchar    *message)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (message != NULL);
 
   g_signal_emit (widget, widget_signals[MESSAGE], 0,
@@ -553,89 +553,89 @@ gimp_tool_widget_message_literal (GimpToolWidget *widget,
 }
 
 void
-gimp_tool_widget_add_item (GimpToolWidget *widget,
-                           GimpCanvasItem *item)
+ligma_tool_widget_add_item (LigmaToolWidget *widget,
+                           LigmaCanvasItem *item)
 {
-  GimpCanvasGroup *group;
+  LigmaCanvasGroup *group;
 
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_CANVAS_ITEM (item));
 
-  group = GIMP_CANVAS_GROUP (widget->private->item);
+  group = LIGMA_CANVAS_GROUP (widget->private->item);
 
   if (widget->private->group_stack)
     group = widget->private->group_stack->data;
 
-  gimp_canvas_group_add_item (group, item);
+  ligma_canvas_group_add_item (group, item);
 }
 
 void
-gimp_tool_widget_remove_item (GimpToolWidget *widget,
-                              GimpCanvasItem *item)
+ligma_tool_widget_remove_item (LigmaToolWidget *widget,
+                              LigmaCanvasItem *item)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_CANVAS_ITEM (item));
 
-  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (widget->private->item),
+  ligma_canvas_group_remove_item (LIGMA_CANVAS_GROUP (widget->private->item),
                                  item);
 }
 
-GimpCanvasGroup *
-gimp_tool_widget_add_group (GimpToolWidget *widget)
+LigmaCanvasGroup *
+ligma_tool_widget_add_group (LigmaToolWidget *widget)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_group_new (widget->private->shell);
+  item = ligma_canvas_group_new (widget->private->shell);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
-  return GIMP_CANVAS_GROUP (item);
+  return LIGMA_CANVAS_GROUP (item);
 }
 
-GimpCanvasGroup *
-gimp_tool_widget_add_stroke_group (GimpToolWidget *widget)
+LigmaCanvasGroup *
+ligma_tool_widget_add_stroke_group (LigmaToolWidget *widget)
 {
-  GimpCanvasGroup *group;
+  LigmaCanvasGroup *group;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  group = gimp_tool_widget_add_group (widget);
-  gimp_canvas_group_set_group_stroking (group, TRUE);
+  group = ligma_tool_widget_add_group (widget);
+  ligma_canvas_group_set_group_stroking (group, TRUE);
 
   return group;
 }
 
-GimpCanvasGroup *
-gimp_tool_widget_add_fill_group (GimpToolWidget *widget)
+LigmaCanvasGroup *
+ligma_tool_widget_add_fill_group (LigmaToolWidget *widget)
 {
-  GimpCanvasGroup *group;
+  LigmaCanvasGroup *group;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  group = gimp_tool_widget_add_group (widget);
-  gimp_canvas_group_set_group_filling (group, TRUE);
+  group = ligma_tool_widget_add_group (widget);
+  ligma_canvas_group_set_group_filling (group, TRUE);
 
   return group;
 }
 
 void
-gimp_tool_widget_push_group (GimpToolWidget  *widget,
-                             GimpCanvasGroup *group)
+ligma_tool_widget_push_group (LigmaToolWidget  *widget,
+                             LigmaCanvasGroup *group)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
-  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_CANVAS_GROUP (group));
 
   widget->private->group_stack = g_list_prepend (widget->private->group_stack,
                                                  group);
 }
 
 void
-gimp_tool_widget_pop_group (GimpToolWidget *widget)
+ligma_tool_widget_pop_group (LigmaToolWidget *widget)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (widget->private->group_stack != NULL);
 
   widget->private->group_stack = g_list_remove (widget->private->group_stack,
@@ -643,58 +643,58 @@ gimp_tool_widget_pop_group (GimpToolWidget *widget)
 }
 
 /**
- * gimp_tool_widget_add_line:
- * @widget: the #GimpToolWidget
+ * ligma_tool_widget_add_line:
+ * @widget: the #LigmaToolWidget
  * @x1:     start point X in image coordinates
  * @y1:     start point Y in image coordinates
  * @x2:     end point X in image coordinates
  * @y2:     end point Y in image coordinates
  *
- * This function adds a #GimpCanvasLine to @widget.
+ * This function adds a #LigmaCanvasLine to @widget.
  **/
-GimpCanvasItem *
-gimp_tool_widget_add_line (GimpToolWidget *widget,
+LigmaCanvasItem *
+ligma_tool_widget_add_line (LigmaToolWidget *widget,
                            gdouble         x1,
                            gdouble         y1,
                            gdouble         x2,
                            gdouble         y2)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_line_new (widget->private->shell,
+  item = ligma_canvas_line_new (widget->private->shell,
                                x1, y1, x2, y2);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_rectangle (GimpToolWidget *widget,
+LigmaCanvasItem *
+ligma_tool_widget_add_rectangle (LigmaToolWidget *widget,
                                 gdouble         x,
                                 gdouble         y,
                                 gdouble         width,
                                 gdouble         height,
                                 gboolean        filled)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_rectangle_new (widget->private->shell,
+  item = ligma_canvas_rectangle_new (widget->private->shell,
                                     x, y, width, height, filled);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_arc (GimpToolWidget *widget,
+LigmaCanvasItem *
+ligma_tool_widget_add_arc (LigmaToolWidget *widget,
                           gdouble         center_x,
                           gdouble         center_y,
                           gdouble         radius_x,
@@ -703,25 +703,25 @@ gimp_tool_widget_add_arc (GimpToolWidget *widget,
                           gdouble         slice_angle,
                           gboolean        filled)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_arc_new (widget->private->shell,
+  item = ligma_canvas_arc_new (widget->private->shell,
                               center_x, center_y,
                               radius_x, radius_y,
                               start_angle, slice_angle,
                               filled);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_limit (GimpToolWidget *widget,
-                            GimpLimitType   type,
+LigmaCanvasItem *
+ligma_tool_widget_add_limit (LigmaToolWidget *widget,
+                            LigmaLimitType   type,
                             gdouble         x,
                             gdouble         y,
                             gdouble         radius,
@@ -729,11 +729,11 @@ gimp_tool_widget_add_limit (GimpToolWidget *widget,
                             gdouble         angle,
                             gboolean        dashed)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_limit_new (widget->private->shell,
+  item = ligma_canvas_limit_new (widget->private->shell,
                                 type,
                                 x, y,
                                 radius,
@@ -741,181 +741,181 @@ gimp_tool_widget_add_limit (GimpToolWidget *widget,
                                 angle,
                                 dashed);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_polygon (GimpToolWidget    *widget,
-                              GimpMatrix3       *transform,
-                              const GimpVector2 *points,
+LigmaCanvasItem *
+ligma_tool_widget_add_polygon (LigmaToolWidget    *widget,
+                              LigmaMatrix3       *transform,
+                              const LigmaVector2 *points,
                               gint               n_points,
                               gboolean           filled)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
   g_return_val_if_fail (points == NULL || n_points > 0, NULL);
 
-  item = gimp_canvas_polygon_new (widget->private->shell,
+  item = ligma_canvas_polygon_new (widget->private->shell,
                                   points, n_points,
                                   transform, filled);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_polygon_from_coords (GimpToolWidget    *widget,
-                                          GimpMatrix3       *transform,
-                                          const GimpCoords  *points,
+LigmaCanvasItem *
+ligma_tool_widget_add_polygon_from_coords (LigmaToolWidget    *widget,
+                                          LigmaMatrix3       *transform,
+                                          const LigmaCoords  *points,
                                           gint               n_points,
                                           gboolean           filled)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
   g_return_val_if_fail (points == NULL || n_points > 0, NULL);
 
-  item = gimp_canvas_polygon_new_from_coords (widget->private->shell,
+  item = ligma_canvas_polygon_new_from_coords (widget->private->shell,
                                               points, n_points,
                                               transform, filled);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_path (GimpToolWidget       *widget,
-                           const GimpBezierDesc *desc)
+LigmaCanvasItem *
+ligma_tool_widget_add_path (LigmaToolWidget       *widget,
+                           const LigmaBezierDesc *desc)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_path_new (widget->private->shell,
-                               desc, 0, 0, FALSE, GIMP_PATH_STYLE_DEFAULT);
+  item = ligma_canvas_path_new (widget->private->shell,
+                               desc, 0, 0, FALSE, LIGMA_PATH_STYLE_DEFAULT);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_handle (GimpToolWidget   *widget,
-                             GimpHandleType    type,
+LigmaCanvasItem *
+ligma_tool_widget_add_handle (LigmaToolWidget   *widget,
+                             LigmaHandleType    type,
                              gdouble           x,
                              gdouble           y,
                              gint              width,
                              gint              height,
-                             GimpHandleAnchor  anchor)
+                             LigmaHandleAnchor  anchor)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_handle_new (widget->private->shell,
+  item = ligma_canvas_handle_new (widget->private->shell,
                                  type, anchor, x, y, width, height);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_corner (GimpToolWidget   *widget,
+LigmaCanvasItem *
+ligma_tool_widget_add_corner (LigmaToolWidget   *widget,
                              gdouble           x,
                              gdouble           y,
                              gdouble           width,
                              gdouble           height,
-                             GimpHandleAnchor  anchor,
+                             LigmaHandleAnchor  anchor,
                              gint              corner_width,
                              gint              corner_height,
                              gboolean          outside)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_corner_new (widget->private->shell,
+  item = ligma_canvas_corner_new (widget->private->shell,
                                  x, y, width, height,
                                  anchor, corner_width, corner_height,
                                  outside);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_rectangle_guides (GimpToolWidget *widget,
+LigmaCanvasItem *
+ligma_tool_widget_add_rectangle_guides (LigmaToolWidget *widget,
                                        gdouble         x,
                                        gdouble         y,
                                        gdouble         width,
                                        gdouble         height,
-                                       GimpGuidesType  type)
+                                       LigmaGuidesType  type)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_rectangle_guides_new (widget->private->shell,
+  item = ligma_canvas_rectangle_guides_new (widget->private->shell,
                                            x, y, width, height, type, 4);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
-                                       const GimpMatrix3 *transform,
+LigmaCanvasItem *
+ligma_tool_widget_add_transform_guides (LigmaToolWidget    *widget,
+                                       const LigmaMatrix3 *transform,
                                        gdouble            x1,
                                        gdouble            y1,
                                        gdouble            x2,
                                        gdouble            y2,
-                                       GimpGuidesType     type,
+                                       LigmaGuidesType     type,
                                        gint               n_guides,
                                        gboolean           clip)
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_transform_guides_new (widget->private->shell,
+  item = ligma_canvas_transform_guides_new (widget->private->shell,
                                            transform, x1, y1, x2, y2,
                                            type, n_guides, clip);
 
-  gimp_tool_widget_add_item (widget, item);
+  ligma_tool_widget_add_item (widget, item);
   g_object_unref (item);
 
   return item;
 }
 
 gint
-gimp_tool_widget_button_press (GimpToolWidget      *widget,
-                               const GimpCoords    *coords,
+ligma_tool_widget_button_press (LigmaToolWidget      *widget,
+                               const LigmaCoords    *coords,
                                guint32              time,
                                GdkModifierType      state,
-                               GimpButtonPressType  press_type)
+                               LigmaButtonPressType  press_type)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), 0);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), 0);
   g_return_val_if_fail (coords != NULL, 0);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->button_press)
     {
-      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press (widget,
+      return LIGMA_TOOL_WIDGET_GET_CLASS (widget)->button_press (widget,
                                                                 coords, time,
                                                                 state,
                                                                 press_type);
@@ -925,178 +925,178 @@ gimp_tool_widget_button_press (GimpToolWidget      *widget,
 }
 
 void
-gimp_tool_widget_button_release (GimpToolWidget        *widget,
-                                 const GimpCoords      *coords,
+ligma_tool_widget_button_release (LigmaToolWidget        *widget,
+                                 const LigmaCoords      *coords,
                                  guint32                time,
                                  GdkModifierType        state,
-                                 GimpButtonReleaseType  release_type)
+                                 LigmaButtonReleaseType  release_type)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->button_release)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release (widget,
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->button_release (widget,
                                                            coords, time, state,
                                                            release_type);
     }
 }
 
 void
-gimp_tool_widget_motion (GimpToolWidget   *widget,
-                         const GimpCoords *coords,
+ligma_tool_widget_motion (LigmaToolWidget   *widget,
+                         const LigmaCoords *coords,
                          guint32           time,
                          GdkModifierType   state)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->motion)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion (widget,
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->motion (widget,
                                                    coords, time, state);
     }
 }
 
-GimpHit
-gimp_tool_widget_hit (GimpToolWidget   *widget,
-                      const GimpCoords *coords,
+LigmaHit
+ligma_tool_widget_hit (LigmaToolWidget   *widget,
+                      const LigmaCoords *coords,
                       GdkModifierType   state,
                       gboolean          proximity)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), GIMP_HIT_NONE);
-  g_return_val_if_fail (coords != NULL, GIMP_HIT_NONE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), LIGMA_HIT_NONE);
+  g_return_val_if_fail (coords != NULL, LIGMA_HIT_NONE);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hit)
     {
-      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit (widget,
+      return LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hit (widget,
                                                        coords, state,
                                                        proximity);
     }
 
-  return GIMP_HIT_NONE;
+  return LIGMA_HIT_NONE;
 }
 
 void
-gimp_tool_widget_hover (GimpToolWidget   *widget,
-                        const GimpCoords *coords,
+ligma_tool_widget_hover (LigmaToolWidget   *widget,
+                        const LigmaCoords *coords,
                         GdkModifierType   state,
                         gboolean          proximity)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hover)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover (widget,
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hover (widget,
                                                   coords, state, proximity);
     }
 }
 
 void
-gimp_tool_widget_leave_notify (GimpToolWidget *widget)
+ligma_tool_widget_leave_notify (LigmaToolWidget *widget)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->leave_notify)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify (widget);
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->leave_notify (widget);
     }
 }
 
 gboolean
-gimp_tool_widget_key_press (GimpToolWidget *widget,
+ligma_tool_widget_key_press (LigmaToolWidget *widget,
                             GdkEventKey    *kevent)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (kevent != NULL, FALSE);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->key_press)
     {
-      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press (widget, kevent);
+      return LIGMA_TOOL_WIDGET_GET_CLASS (widget)->key_press (widget, kevent);
     }
 
   return FALSE;
 }
 
 gboolean
-gimp_tool_widget_key_release (GimpToolWidget *widget,
+ligma_tool_widget_key_release (LigmaToolWidget *widget,
                               GdkEventKey    *kevent)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (kevent != NULL, FALSE);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->key_release)
     {
-      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release (widget, kevent);
+      return LIGMA_TOOL_WIDGET_GET_CLASS (widget)->key_release (widget, kevent);
     }
 
   return FALSE;
 }
 
 void
-gimp_tool_widget_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_widget_motion_modifier (LigmaToolWidget  *widget,
                                   GdkModifierType  key,
                                   gboolean         press,
                                   GdkModifierType  state)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier (widget,
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier (widget,
                                                             key, press, state);
     }
 }
 
 void
-gimp_tool_widget_hover_modifier (GimpToolWidget  *widget,
+ligma_tool_widget_hover_modifier (LigmaToolWidget  *widget,
                                  GdkModifierType  key,
                                  gboolean         press,
                                  GdkModifierType  state)
 {
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier)
     {
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier (widget,
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier (widget,
                                                            key, press, state);
     }
 }
 
 gboolean
-gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
-                             const GimpCoords    *coords,
+ligma_tool_widget_get_cursor (LigmaToolWidget      *widget,
+                             const LigmaCoords    *coords,
                              GdkModifierType      state,
-                             GimpCursorType      *cursor,
-                             GimpToolCursorType  *tool_cursor,
-                             GimpCursorModifier  *modifier)
+                             LigmaCursorType      *cursor,
+                             LigmaToolCursorType  *tool_cursor,
+                             LigmaCursorModifier  *modifier)
 
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_cursor)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->get_cursor)
     {
-      GimpCursorType     my_cursor;
-      GimpToolCursorType my_tool_cursor;
-      GimpCursorModifier my_modifier;
+      LigmaCursorType     my_cursor;
+      LigmaToolCursorType my_tool_cursor;
+      LigmaCursorModifier my_modifier;
 
       if (cursor)      my_cursor      = *cursor;
       if (tool_cursor) my_tool_cursor = *tool_cursor;
       if (modifier)    my_modifier    = *modifier;
 
-      if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_cursor (widget, coords,
+      if (LIGMA_TOOL_WIDGET_GET_CLASS (widget)->get_cursor (widget, coords,
                                                            state,
                                                            &my_cursor,
                                                            &my_tool_cursor,
@@ -1113,19 +1113,19 @@ gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
   return FALSE;
 }
 
-GimpUIManager *
-gimp_tool_widget_get_popup (GimpToolWidget        *widget,
-                            const GimpCoords      *coords,
+LigmaUIManager *
+ligma_tool_widget_get_popup (LigmaToolWidget        *widget,
+                            const LigmaCoords      *coords,
                             GdkModifierType        state,
                             const gchar          **ui_path)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_WIDGET (widget), NULL);
   g_return_val_if_fail (coords != NULL, NULL);
 
   if (widget->private->visible &&
-      GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup)
+      LIGMA_TOOL_WIDGET_GET_CLASS (widget)->get_popup)
     {
-      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup (widget, coords,
+      return LIGMA_TOOL_WIDGET_GET_CLASS (widget)->get_popup (widget, coords,
                                                              state, ui_path);
     }
 

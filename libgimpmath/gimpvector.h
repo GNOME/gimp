@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpvector.h
+ * ligmavector.h
  *
- * The gimp_vector* functions were taken from:
+ * The ligma_vector* functions were taken from:
  * GCK - The General Convenience Kit
  * Copyright (C) 1996 Tom Bech
  *
@@ -22,12 +22,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
-#error "Only <libgimpmath/gimpmath.h> can be included directly."
+#if !defined (__LIGMA_MATH_H_INSIDE__) && !defined (LIGMA_MATH_COMPILATION)
+#error "Only <libligmamath/ligmamath.h> can be included directly."
 #endif
 
-#ifndef __GIMP_VECTOR_H__
-#define __GIMP_VECTOR_H__
+#ifndef __LIGMA_VECTOR_H__
+#define __LIGMA_VECTOR_H__
 
 G_BEGIN_DECLS
 
@@ -37,89 +37,89 @@ G_BEGIN_DECLS
 /* Two dimensional vector functions */
 /* ================================ */
 
-GimpVector2 gimp_vector2_new               (gdouble            x,
+LigmaVector2 ligma_vector2_new               (gdouble            x,
                                             gdouble            y);
-void        gimp_vector2_set               (GimpVector2       *vector,
+void        ligma_vector2_set               (LigmaVector2       *vector,
                                             gdouble            x,
                                             gdouble            y);
-gdouble     gimp_vector2_length            (const GimpVector2 *vector);
-gdouble     gimp_vector2_length_val        (GimpVector2        vector);
-void        gimp_vector2_mul               (GimpVector2       *vector,
+gdouble     ligma_vector2_length            (const LigmaVector2 *vector);
+gdouble     ligma_vector2_length_val        (LigmaVector2        vector);
+void        ligma_vector2_mul               (LigmaVector2       *vector,
                                             gdouble            factor);
-GimpVector2 gimp_vector2_mul_val           (GimpVector2        vector,
+LigmaVector2 ligma_vector2_mul_val           (LigmaVector2        vector,
                                             gdouble            factor);
-void        gimp_vector2_normalize         (GimpVector2       *vector);
-GimpVector2 gimp_vector2_normalize_val     (GimpVector2        vector);
-void        gimp_vector2_neg               (GimpVector2       *vector);
-GimpVector2 gimp_vector2_neg_val           (GimpVector2        vector);
-void        gimp_vector2_add               (GimpVector2       *result,
-                                            const GimpVector2 *vector1,
-                                            const GimpVector2 *vector2);
-GimpVector2 gimp_vector2_add_val           (GimpVector2        vector1,
-                                            GimpVector2        vector2);
-void        gimp_vector2_sub               (GimpVector2       *result,
-                                            const GimpVector2 *vector1,
-                                            const GimpVector2 *vector2);
-GimpVector2 gimp_vector2_sub_val           (GimpVector2        vector1,
-                                            GimpVector2        vector2);
-gdouble     gimp_vector2_inner_product     (const GimpVector2 *vector1,
-                                            const GimpVector2 *vector2);
-gdouble     gimp_vector2_inner_product_val (GimpVector2        vector1,
-                                            GimpVector2        vector2);
-GimpVector2 gimp_vector2_cross_product     (const GimpVector2 *vector1,
-                                            const GimpVector2 *vector2);
-GimpVector2 gimp_vector2_cross_product_val (GimpVector2        vector1,
-                                            GimpVector2        vector2);
-void        gimp_vector2_rotate            (GimpVector2       *vector,
+void        ligma_vector2_normalize         (LigmaVector2       *vector);
+LigmaVector2 ligma_vector2_normalize_val     (LigmaVector2        vector);
+void        ligma_vector2_neg               (LigmaVector2       *vector);
+LigmaVector2 ligma_vector2_neg_val           (LigmaVector2        vector);
+void        ligma_vector2_add               (LigmaVector2       *result,
+                                            const LigmaVector2 *vector1,
+                                            const LigmaVector2 *vector2);
+LigmaVector2 ligma_vector2_add_val           (LigmaVector2        vector1,
+                                            LigmaVector2        vector2);
+void        ligma_vector2_sub               (LigmaVector2       *result,
+                                            const LigmaVector2 *vector1,
+                                            const LigmaVector2 *vector2);
+LigmaVector2 ligma_vector2_sub_val           (LigmaVector2        vector1,
+                                            LigmaVector2        vector2);
+gdouble     ligma_vector2_inner_product     (const LigmaVector2 *vector1,
+                                            const LigmaVector2 *vector2);
+gdouble     ligma_vector2_inner_product_val (LigmaVector2        vector1,
+                                            LigmaVector2        vector2);
+LigmaVector2 ligma_vector2_cross_product     (const LigmaVector2 *vector1,
+                                            const LigmaVector2 *vector2);
+LigmaVector2 ligma_vector2_cross_product_val (LigmaVector2        vector1,
+                                            LigmaVector2        vector2);
+void        ligma_vector2_rotate            (LigmaVector2       *vector,
                                             gdouble            alpha);
-GimpVector2 gimp_vector2_rotate_val        (GimpVector2        vector,
+LigmaVector2 ligma_vector2_rotate_val        (LigmaVector2        vector,
                                             gdouble            alpha);
-GimpVector2 gimp_vector2_normal            (GimpVector2       *vector);
-GimpVector2 gimp_vector2_normal_val        (GimpVector2        vector);
+LigmaVector2 ligma_vector2_normal            (LigmaVector2       *vector);
+LigmaVector2 ligma_vector2_normal_val        (LigmaVector2        vector);
 
 /* Three dimensional vector functions */
 /* ================================== */
 
-GimpVector3 gimp_vector3_new               (gdouble            x,
+LigmaVector3 ligma_vector3_new               (gdouble            x,
                                             gdouble            y,
                                             gdouble            z);
-void        gimp_vector3_set               (GimpVector3       *vector,
+void        ligma_vector3_set               (LigmaVector3       *vector,
                                             gdouble            x,
                                             gdouble            y,
                                             gdouble            z);
-gdouble     gimp_vector3_length            (const GimpVector3 *vector);
-gdouble     gimp_vector3_length_val        (GimpVector3        vector);
-void        gimp_vector3_mul               (GimpVector3       *vector,
+gdouble     ligma_vector3_length            (const LigmaVector3 *vector);
+gdouble     ligma_vector3_length_val        (LigmaVector3        vector);
+void        ligma_vector3_mul               (LigmaVector3       *vector,
                                             gdouble            factor);
-GimpVector3 gimp_vector3_mul_val           (GimpVector3        vector,
+LigmaVector3 ligma_vector3_mul_val           (LigmaVector3        vector,
                                             gdouble            factor);
-void        gimp_vector3_normalize         (GimpVector3       *vector);
-GimpVector3 gimp_vector3_normalize_val     (GimpVector3        vector);
-void        gimp_vector3_neg               (GimpVector3       *vector);
-GimpVector3 gimp_vector3_neg_val           (GimpVector3        vector);
-void        gimp_vector3_add               (GimpVector3       *result,
-                                            const GimpVector3 *vector1,
-                                            const GimpVector3 *vector2);
-GimpVector3 gimp_vector3_add_val           (GimpVector3        vector1,
-                                            GimpVector3        vector2);
-void        gimp_vector3_sub               (GimpVector3       *result,
-                                            const GimpVector3 *vector1,
-                                            const GimpVector3 *vector2);
-GimpVector3 gimp_vector3_sub_val           (GimpVector3        vector1,
-                                            GimpVector3        vector2);
-gdouble     gimp_vector3_inner_product     (const GimpVector3 *vector1,
-                                            const GimpVector3 *vector2);
-gdouble     gimp_vector3_inner_product_val (GimpVector3        vector1,
-                                            GimpVector3        vector2);
-GimpVector3 gimp_vector3_cross_product     (const GimpVector3 *vector1,
-                                            const GimpVector3 *vector2);
-GimpVector3 gimp_vector3_cross_product_val (GimpVector3        vector1,
-                                            GimpVector3        vector2);
-void        gimp_vector3_rotate            (GimpVector3       *vector,
+void        ligma_vector3_normalize         (LigmaVector3       *vector);
+LigmaVector3 ligma_vector3_normalize_val     (LigmaVector3        vector);
+void        ligma_vector3_neg               (LigmaVector3       *vector);
+LigmaVector3 ligma_vector3_neg_val           (LigmaVector3        vector);
+void        ligma_vector3_add               (LigmaVector3       *result,
+                                            const LigmaVector3 *vector1,
+                                            const LigmaVector3 *vector2);
+LigmaVector3 ligma_vector3_add_val           (LigmaVector3        vector1,
+                                            LigmaVector3        vector2);
+void        ligma_vector3_sub               (LigmaVector3       *result,
+                                            const LigmaVector3 *vector1,
+                                            const LigmaVector3 *vector2);
+LigmaVector3 ligma_vector3_sub_val           (LigmaVector3        vector1,
+                                            LigmaVector3        vector2);
+gdouble     ligma_vector3_inner_product     (const LigmaVector3 *vector1,
+                                            const LigmaVector3 *vector2);
+gdouble     ligma_vector3_inner_product_val (LigmaVector3        vector1,
+                                            LigmaVector3        vector2);
+LigmaVector3 ligma_vector3_cross_product     (const LigmaVector3 *vector1,
+                                            const LigmaVector3 *vector2);
+LigmaVector3 ligma_vector3_cross_product_val (LigmaVector3        vector1,
+                                            LigmaVector3        vector2);
+void        ligma_vector3_rotate            (LigmaVector3       *vector,
                                             gdouble            alpha,
                                             gdouble            beta,
                                             gdouble            gamma);
-GimpVector3 gimp_vector3_rotate_val        (GimpVector3        vector,
+LigmaVector3 ligma_vector3_rotate_val        (LigmaVector3        vector,
                                             gdouble            alpha,
                                             gdouble            beta,
                                             gdouble            gamma);
@@ -127,34 +127,34 @@ GimpVector3 gimp_vector3_rotate_val        (GimpVector3        vector,
 /* 2d <-> 3d Vector projection functions */
 /* ===================================== */
 
-void        gimp_vector_2d_to_3d           (gint               sx,
+void        ligma_vector_2d_to_3d           (gint               sx,
                                             gint               sy,
                                             gint               w,
                                             gint               h,
                                             gint               x,
                                             gint               y,
-                                            const GimpVector3 *vp,
-                                            GimpVector3       *p);
+                                            const LigmaVector3 *vp,
+                                            LigmaVector3       *p);
 
-GimpVector3 gimp_vector_2d_to_3d_val       (gint               sx,
+LigmaVector3 ligma_vector_2d_to_3d_val       (gint               sx,
                                             gint               sy,
                                             gint               w,
                                             gint               h,
                                             gint               x,
                                             gint               y,
-                                            GimpVector3        vp,
-                                            GimpVector3        p);
+                                            LigmaVector3        vp,
+                                            LigmaVector3        p);
 
-void        gimp_vector_3d_to_2d           (gint               sx,
+void        ligma_vector_3d_to_2d           (gint               sx,
                                             gint               sy,
                                             gint               w,
                                             gint               h,
                                             gdouble           *x,
                                             gdouble           *y,
-                                            const GimpVector3 *vp,
-                                            const GimpVector3 *p);
+                                            const LigmaVector3 *vp,
+                                            const LigmaVector3 *p);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_VECTOR_H__ */
+#endif  /* __LIGMA_VECTOR_H__ */

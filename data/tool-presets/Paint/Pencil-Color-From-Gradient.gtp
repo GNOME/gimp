@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-pencil")
+(icon-name "ligma-tool-pencil")
 (name "Pencil (Color From Gradient)")
-(tool-options "GimpPencilOptions"
-    (tool "gimp-pencil-tool")
+(tool-options "LigmaPencilOptions"
+    (tool "ligma-pencil-tool")
     (foreground (color-rgb 0.572549 0.363737 0.363737))
     (brush "2. Hardness 050")
     (dynamics "Color From Gradient")
@@ -20,4 +20,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

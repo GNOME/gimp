@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,248 +20,248 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcomponenteditor.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmacomponenteditor.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "channels-actions.h"
 #include "channels-commands.h"
 #include "items-actions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry channels_actions[] =
+static const LigmaActionEntry channels_actions[] =
 {
-  { "channels-popup", GIMP_ICON_DIALOG_CHANNELS,
+  { "channels-popup", LIGMA_ICON_DIALOG_CHANNELS,
     NC_("channels-action", "Channels Menu"), NULL, NULL, NULL,
-    GIMP_HELP_CHANNEL_DIALOG },
+    LIGMA_HELP_CHANNEL_DIALOG },
 
   { "channels-color-tag-menu", NULL,
     NC_("channels-action", "Color Tag"), NULL, NULL, NULL,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
-  { "channels-edit-attributes", GIMP_ICON_EDIT,
+  { "channels-edit-attributes", LIGMA_ICON_EDIT,
     NC_("channels-action", "_Edit Channel Attributes..."), NULL,
     NC_("channels-action", "Edit the channel's name, color and opacity"),
     channels_edit_attributes_cmd_callback,
-    GIMP_HELP_CHANNEL_EDIT },
+    LIGMA_HELP_CHANNEL_EDIT },
 
-  { "channels-new", GIMP_ICON_DOCUMENT_NEW,
+  { "channels-new", LIGMA_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel..."), NULL,
     NC_("channels-action", "Create a new channel"),
     channels_new_cmd_callback,
-    GIMP_HELP_CHANNEL_NEW },
+    LIGMA_HELP_CHANNEL_NEW },
 
-  { "channels-new-last-values", GIMP_ICON_DOCUMENT_NEW,
+  { "channels-new-last-values", LIGMA_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel"), NULL,
     NC_("channels-action", "Create a new channel with last used values"),
     channels_new_last_vals_cmd_callback,
-    GIMP_HELP_CHANNEL_NEW },
+    LIGMA_HELP_CHANNEL_NEW },
 
-  { "channels-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
+  { "channels-duplicate", LIGMA_ICON_OBJECT_DUPLICATE,
     NC_("channels-action", "D_uplicate Channels"), NULL,
     NC_("channels-action",
         "Create duplicates of selected channels and add them to the image"),
     channels_duplicate_cmd_callback,
-    GIMP_HELP_CHANNEL_DUPLICATE },
+    LIGMA_HELP_CHANNEL_DUPLICATE },
 
-  { "channels-delete", GIMP_ICON_EDIT_DELETE,
+  { "channels-delete", LIGMA_ICON_EDIT_DELETE,
     NC_("channels-action", "_Delete Channels"), NULL,
     NC_("channels-action", "Delete selected channels"),
     channels_delete_cmd_callback,
-    GIMP_HELP_CHANNEL_DELETE },
+    LIGMA_HELP_CHANNEL_DELETE },
 
-  { "channels-raise", GIMP_ICON_GO_UP,
+  { "channels-raise", LIGMA_ICON_GO_UP,
     NC_("channels-action", "_Raise Channels"), NULL,
     NC_("channels-action", "Raise these channels one step in the channel stack"),
     channels_raise_cmd_callback,
-    GIMP_HELP_CHANNEL_RAISE },
+    LIGMA_HELP_CHANNEL_RAISE },
 
-  { "channels-raise-to-top", GIMP_ICON_GO_TOP,
+  { "channels-raise-to-top", LIGMA_ICON_GO_TOP,
     NC_("channels-action", "Raise Channels to _Top"), NULL,
     NC_("channels-action",
         "Raise these channels to the top of the channel stack"),
     channels_raise_to_top_cmd_callback,
-    GIMP_HELP_CHANNEL_RAISE_TO_TOP },
+    LIGMA_HELP_CHANNEL_RAISE_TO_TOP },
 
-  { "channels-lower", GIMP_ICON_GO_DOWN,
+  { "channels-lower", LIGMA_ICON_GO_DOWN,
     NC_("channels-action", "_Lower Channels"), NULL,
     NC_("channels-action", "Lower these channels one step in the channel stack"),
     channels_lower_cmd_callback,
-    GIMP_HELP_CHANNEL_LOWER },
+    LIGMA_HELP_CHANNEL_LOWER },
 
-  { "channels-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
+  { "channels-lower-to-bottom", LIGMA_ICON_GO_BOTTOM,
     NC_("channels-action", "Lower Channels to _Bottom"), NULL,
     NC_("channels-action",
         "Lower these channels to the bottom of the channel stack"),
     channels_lower_to_bottom_cmd_callback,
-    GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
+    LIGMA_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
 
-static const GimpToggleActionEntry channels_toggle_actions[] =
+static const LigmaToggleActionEntry channels_toggle_actions[] =
 {
-  { "channels-visible", GIMP_ICON_VISIBLE,
+  { "channels-visible", LIGMA_ICON_VISIBLE,
     NC_("channels-action", "Toggle Channel _Visibility"), NULL, NULL,
     channels_visible_cmd_callback,
     FALSE,
-    GIMP_HELP_CHANNEL_VISIBLE },
+    LIGMA_HELP_CHANNEL_VISIBLE },
 
-  { "channels-lock-content", GIMP_ICON_LOCK_CONTENT,
+  { "channels-lock-content", LIGMA_ICON_LOCK_CONTENT,
     NC_("channels-action", "L_ock Pixels of Channel"), NULL, NULL,
     channels_lock_content_cmd_callback,
     FALSE,
-    GIMP_HELP_CHANNEL_LOCK_PIXELS },
+    LIGMA_HELP_CHANNEL_LOCK_PIXELS },
 
-  { "channels-lock-position", GIMP_ICON_LOCK_POSITION,
+  { "channels-lock-position", LIGMA_ICON_LOCK_POSITION,
     NC_("channels-action", "L_ock Position of Channel"), NULL, NULL,
     channels_lock_position_cmd_callback,
     FALSE,
-    GIMP_HELP_CHANNEL_LOCK_POSITION }
+    LIGMA_HELP_CHANNEL_LOCK_POSITION }
 };
 
-static const GimpEnumActionEntry channels_color_tag_actions[] =
+static const LigmaEnumActionEntry channels_color_tag_actions[] =
 {
-  { "channels-color-tag-none", GIMP_ICON_EDIT_CLEAR,
+  { "channels-color-tag-none", LIGMA_ICON_EDIT_CLEAR,
     NC_("channels-action", "None"), NULL,
     NC_("channels-action", "Channel Color Tag: Clear"),
-    GIMP_COLOR_TAG_NONE, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_NONE, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-blue", NULL,
     NC_("channels-action", "Blue"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Blue"),
-    GIMP_COLOR_TAG_BLUE, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_BLUE, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-green", NULL,
     NC_("channels-action", "Green"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Green"),
-    GIMP_COLOR_TAG_GREEN, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_GREEN, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-yellow", NULL,
     NC_("channels-action", "Yellow"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Yellow"),
-    GIMP_COLOR_TAG_YELLOW, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_YELLOW, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-orange", NULL,
     NC_("channels-action", "Orange"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Orange"),
-    GIMP_COLOR_TAG_ORANGE, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_ORANGE, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-brown", NULL,
     NC_("channels-action", "Brown"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Brown"),
-    GIMP_COLOR_TAG_BROWN, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_BROWN, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-red", NULL,
     NC_("channels-action", "Red"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Red"),
-    GIMP_COLOR_TAG_RED, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_RED, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-violet", NULL,
     NC_("channels-action", "Violet"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Violet"),
-    GIMP_COLOR_TAG_VIOLET, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
+    LIGMA_COLOR_TAG_VIOLET, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-gray", NULL,
     NC_("channels-action", "Gray"), NULL,
     NC_("channels-action", "Channel Color Tag: Set to Gray"),
-    GIMP_COLOR_TAG_GRAY, FALSE,
-    GIMP_HELP_CHANNEL_COLOR_TAG }
+    LIGMA_COLOR_TAG_GRAY, FALSE,
+    LIGMA_HELP_CHANNEL_COLOR_TAG }
 };
 
-static const GimpEnumActionEntry channels_to_selection_actions[] =
+static const LigmaEnumActionEntry channels_to_selection_actions[] =
 {
-  { "channels-selection-replace", GIMP_ICON_SELECTION_REPLACE,
+  { "channels-selection-replace", LIGMA_ICON_SELECTION_REPLACE,
     NC_("channels-action", "Channel to Sele_ction"), NULL,
     NC_("channels-action", "Replace the selection with this channel"),
-    GIMP_CHANNEL_OP_REPLACE, FALSE,
-    GIMP_HELP_CHANNEL_SELECTION_REPLACE },
+    LIGMA_CHANNEL_OP_REPLACE, FALSE,
+    LIGMA_HELP_CHANNEL_SELECTION_REPLACE },
 
-  { "channels-selection-add", GIMP_ICON_SELECTION_ADD,
+  { "channels-selection-add", LIGMA_ICON_SELECTION_ADD,
     NC_("channels-action", "_Add to Selection"), NULL,
     NC_("channels-action", "Add this channel to the current selection"),
-    GIMP_CHANNEL_OP_ADD, FALSE,
-    GIMP_HELP_CHANNEL_SELECTION_ADD },
+    LIGMA_CHANNEL_OP_ADD, FALSE,
+    LIGMA_HELP_CHANNEL_SELECTION_ADD },
 
-  { "channels-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
+  { "channels-selection-subtract", LIGMA_ICON_SELECTION_SUBTRACT,
     NC_("channels-action", "_Subtract from Selection"), NULL,
     NC_("channels-action", "Subtract this channel from the current selection"),
-    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
-    GIMP_HELP_CHANNEL_SELECTION_SUBTRACT },
+    LIGMA_CHANNEL_OP_SUBTRACT, FALSE,
+    LIGMA_HELP_CHANNEL_SELECTION_SUBTRACT },
 
-  { "channels-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
+  { "channels-selection-intersect", LIGMA_ICON_SELECTION_INTERSECT,
     NC_("channels-action", "_Intersect with Selection"), NULL,
     NC_("channels-action", "Intersect this channel with the current selection"),
-    GIMP_CHANNEL_OP_INTERSECT, FALSE,
-    GIMP_HELP_CHANNEL_SELECTION_INTERSECT }
+    LIGMA_CHANNEL_OP_INTERSECT, FALSE,
+    LIGMA_HELP_CHANNEL_SELECTION_INTERSECT }
 };
 
-static const GimpEnumActionEntry channels_select_actions[] =
+static const LigmaEnumActionEntry channels_select_actions[] =
 {
   { "channels-select-top", NULL,
     NC_("channels-action", "Select _Top Channel"), NULL,
     NC_("channels-action", "Select the topmost channel"),
-    GIMP_ACTION_SELECT_FIRST, FALSE,
-    GIMP_HELP_CHANNEL_TOP },
+    LIGMA_ACTION_SELECT_FIRST, FALSE,
+    LIGMA_HELP_CHANNEL_TOP },
 
   { "channels-select-bottom", NULL,
     NC_("channels-action", "Select _Bottom Channel"), NULL,
     NC_("channels-action", "Select the bottommost channel"),
-    GIMP_ACTION_SELECT_LAST, FALSE,
-    GIMP_HELP_CHANNEL_BOTTOM },
+    LIGMA_ACTION_SELECT_LAST, FALSE,
+    LIGMA_HELP_CHANNEL_BOTTOM },
 
   { "channels-select-previous", NULL,
     NC_("channels-action", "Select _Previous Channels"), NULL,
     NC_("channels-action", "Select the channels above the selected channels"),
-    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
-    GIMP_HELP_CHANNEL_PREVIOUS },
+    LIGMA_ACTION_SELECT_PREVIOUS, FALSE,
+    LIGMA_HELP_CHANNEL_PREVIOUS },
 
   { "channels-select-next", NULL,
     NC_("channels-action", "Select _Next Channels"), NULL,
     NC_("channels-action", "Select the channels below the selected channels"),
-    GIMP_ACTION_SELECT_NEXT, FALSE,
-    GIMP_HELP_CHANNEL_NEXT }
+    LIGMA_ACTION_SELECT_NEXT, FALSE,
+    LIGMA_HELP_CHANNEL_NEXT }
 };
 
 
 void
-channels_actions_setup (GimpActionGroup *group)
+channels_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "channels-action",
+  ligma_action_group_add_actions (group, "channels-action",
                                  channels_actions,
                                  G_N_ELEMENTS (channels_actions));
 
-  gimp_action_group_add_toggle_actions (group, "channels-action",
+  ligma_action_group_add_toggle_actions (group, "channels-action",
                                         channels_toggle_actions,
                                         G_N_ELEMENTS (channels_toggle_actions));
 
-  gimp_action_group_add_enum_actions (group, "channels-action",
+  ligma_action_group_add_enum_actions (group, "channels-action",
                                       channels_color_tag_actions,
                                       G_N_ELEMENTS (channels_color_tag_actions),
                                       channels_color_tag_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "channels-action",
+  ligma_action_group_add_enum_actions (group, "channels-action",
                                       channels_to_selection_actions,
                                       G_N_ELEMENTS (channels_to_selection_actions),
                                       channels_to_selection_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "channels-action",
+  ligma_action_group_add_enum_actions (group, "channels-action",
                                       channels_select_actions,
                                       G_N_ELEMENTS (channels_select_actions),
                                       channels_select_cmd_callback);
@@ -270,10 +270,10 @@ channels_actions_setup (GimpActionGroup *group)
 }
 
 void
-channels_actions_update (GimpActionGroup *group,
+channels_actions_update (LigmaActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image               = action_data_get_image (data);
+  LigmaImage   *image               = action_data_get_image (data);
   gboolean     fs                  = FALSE;
   gboolean     component           = FALSE;
   GList       *selected_channels   = NULL;
@@ -284,27 +284,27 @@ channels_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      fs = (gimp_image_get_floating_selection (image) != NULL);
+      fs = (ligma_image_get_floating_selection (image) != NULL);
 
-      if (GIMP_IS_COMPONENT_EDITOR (data))
+      if (LIGMA_IS_COMPONENT_EDITOR (data))
         {
-          if (GIMP_COMPONENT_EDITOR (data)->clicked_component != -1)
+          if (LIGMA_COMPONENT_EDITOR (data)->clicked_component != -1)
             component = TRUE;
         }
       else
         {
           GList *iter;
 
-          selected_channels   = gimp_image_get_selected_channels (image);
+          selected_channels   = ligma_image_get_selected_channels (image);
           n_selected_channels = g_list_length (selected_channels);
-          n_channels          = gimp_image_get_n_channels (image);
+          n_channels          = ligma_image_get_n_channels (image);
 
           for (iter = selected_channels; iter; iter = iter->next)
             {
               GList *channel_list;
               GList *list;
 
-              channel_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+              channel_list = ligma_item_get_container_iter (LIGMA_ITEM (iter->data));
 
               list = g_list_find (channel_list, iter->data);
 
@@ -323,7 +323,7 @@ channels_actions_update (GimpActionGroup *group,
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("channels-edit-attributes", !fs && n_selected_channels == 1);
 

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfileentry.h
- * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
+ * ligmafileentry.h
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,72 +19,72 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GIMP_DISABLE_DEPRECATED
+#ifndef LIGMA_DISABLE_DEPRECATED
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_FILE_ENTRY_H__
-#define __GIMP_FILE_ENTRY_H__
+#ifndef __LIGMA_FILE_ENTRY_H__
+#define __LIGMA_FILE_ENTRY_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_FILE_ENTRY            (gimp_file_entry_get_type ())
-#define GIMP_FILE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_ENTRY, GimpFileEntry))
-#define GIMP_FILE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_ENTRY, GimpFileEntryClass))
-#define GIMP_IS_FILE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_FILE_ENTRY))
-#define GIMP_IS_FILE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_ENTRY))
-#define GIMP_FILE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_ENTRY, GimpFileEntryClass))
+#define LIGMA_TYPE_FILE_ENTRY            (ligma_file_entry_get_type ())
+#define LIGMA_FILE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILE_ENTRY, LigmaFileEntry))
+#define LIGMA_FILE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILE_ENTRY, LigmaFileEntryClass))
+#define LIGMA_IS_FILE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_FILE_ENTRY))
+#define LIGMA_IS_FILE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILE_ENTRY))
+#define LIGMA_FILE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILE_ENTRY, LigmaFileEntryClass))
 
 
-typedef struct _GimpFileEntryPrivate GimpFileEntryPrivate;
-typedef struct _GimpFileEntryClass   GimpFileEntryClass;
+typedef struct _LigmaFileEntryPrivate LigmaFileEntryPrivate;
+typedef struct _LigmaFileEntryClass   LigmaFileEntryClass;
 
-struct _GimpFileEntry
+struct _LigmaFileEntry
 {
   GtkBox                parent_instance;
 
-  GimpFileEntryPrivate *priv;
+  LigmaFileEntryPrivate *priv;
 };
 
-struct _GimpFileEntryClass
+struct _LigmaFileEntryClass
 {
   GtkBoxClass  parent_class;
 
-  void (* filename_changed) (GimpFileEntry *entry);
+  void (* filename_changed) (LigmaFileEntry *entry);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_file_entry_get_type     (void) G_GNUC_CONST;
+GType       ligma_file_entry_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_file_entry_new          (const gchar   *title,
+GtkWidget * ligma_file_entry_new          (const gchar   *title,
                                           const gchar   *filename,
                                           gboolean       dir_only,
                                           gboolean       check_valid);
 
-gchar     * gimp_file_entry_get_filename (GimpFileEntry *entry);
-void        gimp_file_entry_set_filename (GimpFileEntry *entry,
+gchar     * ligma_file_entry_get_filename (LigmaFileEntry *entry);
+void        ligma_file_entry_set_filename (LigmaFileEntry *entry,
                                           const gchar   *filename);
 
-GtkWidget * gimp_file_entry_get_entry    (GimpFileEntry *entry);
+GtkWidget * ligma_file_entry_get_entry    (LigmaFileEntry *entry);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_FILE_ENTRY_H__ */
+#endif /* __LIGMA_FILE_ENTRY_H__ */
 
-#endif /* GIMP_DISABLE_DEPRECATED */
+#endif /* LIGMA_DISABLE_DEPRECATED */

@@ -1,10 +1,10 @@
 /*
- * gimp-thumbnail-list.c
+ * ligma-thumbnail-list.c
  */
 
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libgimpthumb/gimpthumb.h>
+#include <libligmathumb/ligmathumb.h>
 
 
 #define STATE_NONE  -1
@@ -23,7 +23,7 @@ static void      process_folder     (const gchar  *folder);
 static void      process_thumbnail  (const gchar  *filename);
 
 
-static GimpThumbState  option_state   = STATE_NONE;
+static LigmaThumbState  option_state   = STATE_NONE;
 static gboolean        option_verbose = FALSE;
 static gchar          *option_path    = NULL;
 
@@ -62,9 +62,9 @@ main (gint   argc,
   const gchar    *folder;
   GError         *error = NULL;
 
-  gimp_thumb_init ("gimp-thumbnail-list", NULL);
+  ligma_thumb_init ("ligma-thumbnail-list", NULL);
 
-  thumb_folder = gimp_thumb_get_thumb_base_dir ();
+  thumb_folder = ligma_thumb_get_thumb_base_dir ();
 
   context = g_option_context_new (NULL);
   g_option_context_add_main_entries (context, main_entries, NULL);
@@ -104,23 +104,23 @@ parse_option_state (const gchar  *option_name,
                     GError      **error)
 {
   if (strcmp (value, "unknown") == 0)
-    option_state = GIMP_THUMB_STATE_UNKNOWN;
+    option_state = LIGMA_THUMB_STATE_UNKNOWN;
   else if (strcmp (value, "remote") == 0)
-    option_state = GIMP_THUMB_STATE_REMOTE;
+    option_state = LIGMA_THUMB_STATE_REMOTE;
   else if (strcmp (value, "folder") == 0)
-    option_state = GIMP_THUMB_STATE_FOLDER;
+    option_state = LIGMA_THUMB_STATE_FOLDER;
   else if (strcmp (value, "special") == 0)
-    option_state = GIMP_THUMB_STATE_SPECIAL;
+    option_state = LIGMA_THUMB_STATE_SPECIAL;
   else if (strcmp (value, "not-found") == 0)
-    option_state = GIMP_THUMB_STATE_NOT_FOUND;
+    option_state = LIGMA_THUMB_STATE_NOT_FOUND;
   else if (strcmp (value, "exists") == 0)
-    option_state = GIMP_THUMB_STATE_EXISTS;
+    option_state = LIGMA_THUMB_STATE_EXISTS;
   else if (strcmp (value, "old") == 0)
-    option_state = GIMP_THUMB_STATE_OLD;
+    option_state = LIGMA_THUMB_STATE_OLD;
   else if (strcmp (value, "failed") == 0)
-    option_state = GIMP_THUMB_STATE_FAILED;
+    option_state = LIGMA_THUMB_STATE_FAILED;
   else if (strcmp (value, "ok") == 0)
-    option_state = GIMP_THUMB_STATE_OK;
+    option_state = LIGMA_THUMB_STATE_OK;
   else if (strcmp (value, "error") == 0)
     option_state = STATE_ERROR;
   else
@@ -179,12 +179,12 @@ process_folder (const gchar *folder)
 static void
 process_thumbnail (const gchar *filename)
 {
-  GimpThumbnail *thumbnail;
+  LigmaThumbnail *thumbnail;
   GError        *error = NULL;
 
-  thumbnail = gimp_thumbnail_new ();
+  thumbnail = ligma_thumbnail_new ();
 
-  if (! gimp_thumbnail_set_from_thumb (thumbnail, filename, &error))
+  if (! ligma_thumbnail_set_from_thumb (thumbnail, filename, &error))
     {
       if (option_state == STATE_ERROR)
         {
@@ -198,7 +198,7 @@ process_thumbnail (const gchar *filename)
     }
   else
     {
-      GimpThumbState state = gimp_thumbnail_peek_image (thumbnail);
+      LigmaThumbState state = ligma_thumbnail_peek_image (thumbnail);
 
       if ((option_state == STATE_NONE || state == option_state)
 
@@ -216,27 +216,27 @@ process_thumbnail (const gchar *filename)
 #if 0
       switch (foo)
         {
-        case GIMP_THUMB_STATE_REMOTE:
+        case LIGMA_THUMB_STATE_REMOTE:
           g_print ("%s Remote image '%s'\n", filename, thumbnail->image_uri);
           break;
 
-        case GIMP_THUMB_STATE_FOLDER:
+        case LIGMA_THUMB_STATE_FOLDER:
           g_print ("%s Folder '%s'\n", filename, thumbnail->image_uri);
           break;
 
-        case GIMP_THUMB_STATE_SPECIAL:
+        case LIGMA_THUMB_STATE_SPECIAL:
           g_print ("%s Special file '%s'\n", filename, thumbnail->image_uri);
           break;
 
-        case GIMP_THUMB_STATE_NOT_FOUND:
+        case LIGMA_THUMB_STATE_NOT_FOUND:
           g_print ("%s Image not found '%s'\n", filename, thumbnail->image_uri);
           break;
 
-        case GIMP_THUMB_STATE_OLD:
+        case LIGMA_THUMB_STATE_OLD:
           g_print ("%s Thumbnail old '%s'\n", filename, thumbnail->image_uri);
           break;
 
-        case GIMP_THUMB_STATE_FAILED:
+        case LIGMA_THUMB_STATE_FAILED:
           g_print ("%s EEEEEEEEK '%s'\n", filename, thumbnail->image_uri);
           break;
 

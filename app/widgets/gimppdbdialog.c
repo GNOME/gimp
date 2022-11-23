@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdbdialog.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapdbdialog.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "gimpmenufactory.h"
-#include "gimppdbdialog.h"
-#include "gimpwidgets-utils.h"
+#include "ligmamenufactory.h"
+#include "ligmapdbdialog.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -54,133 +54,133 @@ enum
 };
 
 
-static void   gimp_pdb_dialog_constructed     (GObject            *object);
-static void   gimp_pdb_dialog_dispose         (GObject            *object);
-static void   gimp_pdb_dialog_set_property    (GObject            *object,
+static void   ligma_pdb_dialog_constructed     (GObject            *object);
+static void   ligma_pdb_dialog_dispose         (GObject            *object);
+static void   ligma_pdb_dialog_set_property    (GObject            *object,
                                                guint               property_id,
                                                const GValue       *value,
                                                GParamSpec         *pspec);
 
-static void   gimp_pdb_dialog_response        (GtkDialog          *dialog,
+static void   ligma_pdb_dialog_response        (GtkDialog          *dialog,
                                                gint                response_id);
 
-static void   gimp_pdb_dialog_context_changed (GimpContext        *context,
-                                               GimpObject         *object,
-                                               GimpPdbDialog      *dialog);
-static void   gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
-                                               GimpPlugIn         *plug_in,
-                                               GimpPdbDialog      *dialog);
+static void   ligma_pdb_dialog_context_changed (LigmaContext        *context,
+                                               LigmaObject         *object,
+                                               LigmaPdbDialog      *dialog);
+static void   ligma_pdb_dialog_plug_in_closed  (LigmaPlugInManager  *manager,
+                                               LigmaPlugIn         *plug_in,
+                                               LigmaPdbDialog      *dialog);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpPdbDialog, gimp_pdb_dialog, GIMP_TYPE_DIALOG)
+G_DEFINE_ABSTRACT_TYPE (LigmaPdbDialog, ligma_pdb_dialog, LIGMA_TYPE_DIALOG)
 
-#define parent_class gimp_pdb_dialog_parent_class
+#define parent_class ligma_pdb_dialog_parent_class
 
 
 static void
-gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
+ligma_pdb_dialog_class_init (LigmaPdbDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructed  = gimp_pdb_dialog_constructed;
-  object_class->dispose      = gimp_pdb_dialog_dispose;
-  object_class->set_property = gimp_pdb_dialog_set_property;
+  object_class->constructed  = ligma_pdb_dialog_constructed;
+  object_class->dispose      = ligma_pdb_dialog_dispose;
+  object_class->set_property = ligma_pdb_dialog_set_property;
 
-  dialog_class->response     = gimp_pdb_dialog_response;
+  dialog_class->response     = ligma_pdb_dialog_response;
 
   klass->run_callback        = NULL;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PDB,
                                    g_param_spec_object ("pdb", NULL, NULL,
-                                                        GIMP_TYPE_PDB,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_PDB,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SELECT_TYPE,
                                    g_param_spec_gtype ("select-type",
                                                        NULL, NULL,
-                                                       GIMP_TYPE_OBJECT,
-                                                       GIMP_PARAM_WRITABLE |
+                                                       LIGMA_TYPE_OBJECT,
+                                                       LIGMA_PARAM_WRITABLE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_INITIAL_OBJECT,
                                    g_param_spec_object ("initial-object",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_OBJECT,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_OBJECT,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CALLBACK_NAME,
                                    g_param_spec_string ("callback-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_MENU_FACTORY,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_MENU_FACTORY,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_pdb_dialog_init (GimpPdbDialog *dialog)
+ligma_pdb_dialog_init (LigmaPdbDialog *dialog)
 {
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          _("_Close"), GTK_RESPONSE_CLOSE);
 }
 
 static void
-gimp_pdb_dialog_constructed (GObject *object)
+ligma_pdb_dialog_constructed (GObject *object)
 {
-  GimpPdbDialog      *dialog = GIMP_PDB_DIALOG (object);
-  GimpPdbDialogClass *klass  = GIMP_PDB_DIALOG_GET_CLASS (object);
+  LigmaPdbDialog      *dialog = LIGMA_PDB_DIALOG (object);
+  LigmaPdbDialogClass *klass  = LIGMA_PDB_DIALOG_GET_CLASS (object);
   const gchar        *signal_name;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   klass->dialogs = g_list_prepend (klass->dialogs, dialog);
 
-  gimp_assert (GIMP_IS_PDB (dialog->pdb));
-  gimp_assert (GIMP_IS_CONTEXT (dialog->caller_context));
-  gimp_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
+  ligma_assert (LIGMA_IS_PDB (dialog->pdb));
+  ligma_assert (LIGMA_IS_CONTEXT (dialog->caller_context));
+  ligma_assert (g_type_is_a (dialog->select_type, LIGMA_TYPE_OBJECT));
 
-  dialog->context = gimp_context_new (dialog->caller_context->gimp,
+  dialog->context = ligma_context_new (dialog->caller_context->ligma,
                                       G_OBJECT_TYPE_NAME (object),
                                       NULL);
 
-  gimp_context_set_by_type (dialog->context, dialog->select_type,
+  ligma_context_set_by_type (dialog->context, dialog->select_type,
                             dialog->initial_object);
 
   dialog->initial_object = NULL;
 
-  signal_name = gimp_context_type_to_signal_name (dialog->select_type);
+  signal_name = ligma_context_type_to_signal_name (dialog->select_type);
 
   g_signal_connect_object (dialog->context, signal_name,
-                           G_CALLBACK (gimp_pdb_dialog_context_changed),
+                           G_CALLBACK (ligma_pdb_dialog_context_changed),
                            dialog, 0);
-  g_signal_connect_object (dialog->context->gimp->plug_in_manager,
+  g_signal_connect_object (dialog->context->ligma->plug_in_manager,
                            "plug-in-closed",
-                           G_CALLBACK (gimp_pdb_dialog_plug_in_closed),
+                           G_CALLBACK (ligma_pdb_dialog_plug_in_closed),
                            dialog, 0);
 }
 
 static void
-gimp_pdb_dialog_dispose (GObject *object)
+ligma_pdb_dialog_dispose (GObject *object)
 {
-  GimpPdbDialog      *dialog = GIMP_PDB_DIALOG (object);
-  GimpPdbDialogClass *klass  = GIMP_PDB_DIALOG_GET_CLASS (object);
+  LigmaPdbDialog      *dialog = LIGMA_PDB_DIALOG (object);
+  LigmaPdbDialogClass *klass  = LIGMA_PDB_DIALOG_GET_CLASS (object);
 
   klass->dialogs = g_list_remove (klass->dialogs, object);
 
@@ -196,12 +196,12 @@ gimp_pdb_dialog_dispose (GObject *object)
 }
 
 static void
-gimp_pdb_dialog_set_property (GObject      *object,
+ligma_pdb_dialog_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+  LigmaPdbDialog *dialog = LIGMA_PDB_DIALOG (object);
 
   switch (property_id)
     {
@@ -239,25 +239,25 @@ gimp_pdb_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_pdb_dialog_response (GtkDialog *gtk_dialog,
+ligma_pdb_dialog_response (GtkDialog *gtk_dialog,
                           gint       response_id)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (gtk_dialog);
+  LigmaPdbDialog *dialog = LIGMA_PDB_DIALOG (gtk_dialog);
 
-  gimp_pdb_dialog_run_callback (&dialog, TRUE);
+  ligma_pdb_dialog_run_callback (&dialog, TRUE);
   if (dialog)
     gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 void
-gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
+ligma_pdb_dialog_run_callback (LigmaPdbDialog **dialog,
                               gboolean        closing)
 {
-  GimpPdbDialogClass *klass = GIMP_PDB_DIALOG_GET_CLASS (*dialog);
-  GimpObject         *object;
+  LigmaPdbDialogClass *klass = LIGMA_PDB_DIALOG_GET_CLASS (*dialog);
+  LigmaObject         *object;
 
   g_object_add_weak_pointer (G_OBJECT (*dialog), (gpointer) dialog);
-  object = gimp_context_get_by_type ((*dialog)->context, (*dialog)->select_type);
+  object = ligma_context_get_by_type ((*dialog)->context, (*dialog)->select_type);
 
   if (*dialog && object        &&
       klass->run_callback      &&
@@ -266,16 +266,16 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
     {
       (*dialog)->callback_busy = TRUE;
 
-      if (gimp_pdb_lookup_procedure ((*dialog)->pdb, (*dialog)->callback_name))
+      if (ligma_pdb_lookup_procedure ((*dialog)->pdb, (*dialog)->callback_name))
         {
-          GimpValueArray *return_vals;
+          LigmaValueArray *return_vals;
           GError         *error = NULL;
 
           return_vals = klass->run_callback (*dialog, object, closing, &error);
 
           if (*dialog &&
-              g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
-              GIMP_PDB_SUCCESS)
+              g_value_get_enum (ligma_value_array_index (return_vals, 0)) !=
+              LIGMA_PDB_SUCCESS)
             {
               const gchar *message;
 
@@ -284,21 +284,21 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
               else
                 message = _("The corresponding plug-in may have crashed.");
 
-              gimp_message ((*dialog)->context->gimp, G_OBJECT (*dialog),
-                            GIMP_MESSAGE_ERROR,
+              ligma_message ((*dialog)->context->ligma, G_OBJECT (*dialog),
+                            LIGMA_MESSAGE_ERROR,
                             _("Unable to run %s callback.\n%s"),
                             g_type_name (G_TYPE_FROM_INSTANCE (*dialog)),
                             message);
             }
           else if (*dialog && error)
             {
-              gimp_message_literal ((*dialog)->context->gimp, G_OBJECT (*dialog),
-                                    GIMP_MESSAGE_ERROR,
+              ligma_message_literal ((*dialog)->context->ligma, G_OBJECT (*dialog),
+                                    LIGMA_MESSAGE_ERROR,
                                     error->message);
               g_error_free (error);
             }
 
-          gimp_value_array_unref (return_vals);
+          ligma_value_array_unref (return_vals);
         }
 
       if (*dialog)
@@ -309,18 +309,18 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
     g_object_remove_weak_pointer (G_OBJECT (*dialog), (gpointer) dialog);
 }
 
-GimpPdbDialog *
-gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
+LigmaPdbDialog *
+ligma_pdb_dialog_get_by_callback (LigmaPdbDialogClass *klass,
                                  const gchar        *callback_name)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_PDB_DIALOG_CLASS (klass), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB_DIALOG_CLASS (klass), NULL);
   g_return_val_if_fail (callback_name != NULL, NULL);
 
   for (list = klass->dialogs; list; list = g_list_next (list))
     {
-      GimpPdbDialog *dialog = list->data;
+      LigmaPdbDialog *dialog = list->data;
 
       if (dialog->callback_name &&
           ! strcmp (callback_name, dialog->callback_name))
@@ -334,22 +334,22 @@ gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
 /*  private functions  */
 
 static void
-gimp_pdb_dialog_context_changed (GimpContext   *context,
-                                 GimpObject    *object,
-                                 GimpPdbDialog *dialog)
+ligma_pdb_dialog_context_changed (LigmaContext   *context,
+                                 LigmaObject    *object,
+                                 LigmaPdbDialog *dialog)
 {
   if (object)
-    gimp_pdb_dialog_run_callback (&dialog, FALSE);
+    ligma_pdb_dialog_run_callback (&dialog, FALSE);
 }
 
 static void
-gimp_pdb_dialog_plug_in_closed (GimpPlugInManager *manager,
-                                GimpPlugIn        *plug_in,
-                                GimpPdbDialog     *dialog)
+ligma_pdb_dialog_plug_in_closed (LigmaPlugInManager *manager,
+                                LigmaPlugIn        *plug_in,
+                                LigmaPdbDialog     *dialog)
 {
   if (dialog->caller_context && dialog->callback_name)
     {
-      if (! gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
+      if (! ligma_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
         {
           gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
         }

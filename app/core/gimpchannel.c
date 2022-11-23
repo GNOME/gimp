@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,40 +23,40 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintcore-stroke.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-mask.h"
-#include "gegl/gimp-gegl-nodes.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-mask.h"
+#include "gegl/ligma-gegl-nodes.h"
 
-#include "gimp.h"
-#include "gimp-utils.h"
-#include "gimpboundary.h"
-#include "gimpcontainer.h"
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimpimage-quick-mask.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimpchannel.h"
-#include "gimpchannel-select.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-fill.h"
-#include "gimpdrawable-stroke.h"
-#include "gimppaintinfo.h"
-#include "gimppickable.h"
-#include "gimpstrokeoptions.h"
+#include "ligma.h"
+#include "ligma-utils.h"
+#include "ligmaboundary.h"
+#include "ligmacontainer.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmaimage-quick-mask.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmachannel.h"
+#include "ligmachannel-select.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-fill.h"
+#include "ligmadrawable-stroke.h"
+#include "ligmapaintinfo.h"
+#include "ligmapickable.h"
+#include "ligmastrokeoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RGBA_EPSILON 1e-6
@@ -68,189 +68,189 @@ enum
 };
 
 
-static void gimp_channel_pickable_iface_init (GimpPickableInterface *iface);
+static void ligma_channel_pickable_iface_init (LigmaPickableInterface *iface);
 
-static void       gimp_channel_finalize      (GObject           *object);
+static void       ligma_channel_finalize      (GObject           *object);
 
-static gint64     gimp_channel_get_memsize   (GimpObject        *object,
+static gint64     ligma_channel_get_memsize   (LigmaObject        *object,
                                               gint64            *gui_size);
 
-static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
+static gchar  * ligma_channel_get_description (LigmaViewable      *viewable,
                                               gchar            **tooltip);
 
-static GeglNode * gimp_channel_get_node      (GimpFilter        *filter);
+static GeglNode * ligma_channel_get_node      (LigmaFilter        *filter);
 
-static gboolean   gimp_channel_is_attached   (GimpItem          *item);
-static GimpItemTree * gimp_channel_get_tree  (GimpItem          *item);
-static gboolean   gimp_channel_bounds        (GimpItem          *item,
+static gboolean   ligma_channel_is_attached   (LigmaItem          *item);
+static LigmaItemTree * ligma_channel_get_tree  (LigmaItem          *item);
+static gboolean   ligma_channel_bounds        (LigmaItem          *item,
                                               gdouble           *x,
                                               gdouble           *y,
                                               gdouble           *width,
                                               gdouble           *height);
-static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
+static LigmaItem * ligma_channel_duplicate     (LigmaItem          *item,
                                               GType              new_type);
-static void       gimp_channel_convert       (GimpItem          *item,
-                                              GimpImage         *dest_image,
+static void       ligma_channel_convert       (LigmaItem          *item,
+                                              LigmaImage         *dest_image,
                                               GType              old_type);
-static void       gimp_channel_translate     (GimpItem          *item,
+static void       ligma_channel_translate     (LigmaItem          *item,
                                               gdouble            off_x,
                                               gdouble            off_y,
                                               gboolean           push_undo);
-static void       gimp_channel_scale         (GimpItem          *item,
+static void       ligma_channel_scale         (LigmaItem          *item,
                                               gint               new_width,
                                               gint               new_height,
                                               gint               new_offset_x,
                                               gint               new_offset_y,
-                                              GimpInterpolationType interp_type,
-                                              GimpProgress      *progress);
-static void       gimp_channel_resize        (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpFillType       fill_type,
+                                              LigmaInterpolationType interp_type,
+                                              LigmaProgress      *progress);
+static void       ligma_channel_resize        (LigmaItem          *item,
+                                              LigmaContext       *context,
+                                              LigmaFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
                                               gint               offset_x,
                                               gint               offset_y);
-static GimpTransformResize
-                  gimp_channel_get_clip      (GimpItem          *item,
-                                              GimpTransformResize clip_result);
-static gboolean   gimp_channel_fill          (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpFillOptions   *fill_options,
+static LigmaTransformResize
+                  ligma_channel_get_clip      (LigmaItem          *item,
+                                              LigmaTransformResize clip_result);
+static gboolean   ligma_channel_fill          (LigmaItem          *item,
+                                              LigmaDrawable      *drawable,
+                                              LigmaFillOptions   *fill_options,
                                               gboolean           push_undo,
-                                              GimpProgress      *progress,
+                                              LigmaProgress      *progress,
                                               GError           **error);
-static gboolean   gimp_channel_stroke        (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpStrokeOptions *stroke_options,
+static gboolean   ligma_channel_stroke        (LigmaItem          *item,
+                                              LigmaDrawable      *drawable,
+                                              LigmaStrokeOptions *stroke_options,
                                               gboolean           push_undo,
-                                              GimpProgress      *progress,
+                                              LigmaProgress      *progress,
                                               GError           **error);
-static void       gimp_channel_to_selection  (GimpItem          *item,
-                                              GimpChannelOps     op,
+static void       ligma_channel_to_selection  (LigmaItem          *item,
+                                              LigmaChannelOps     op,
                                               gboolean           antialias,
                                               gboolean           feather,
                                               gdouble            feather_radius_x,
                                               gdouble            feather_radius_y);
 
-static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
-                                              GimpImage         *dest_image,
+static void       ligma_channel_convert_type  (LigmaDrawable      *drawable,
+                                              LigmaImage         *dest_image,
                                               const Babl        *new_format,
-                                              GimpColorProfile  *src_profile,
-                                              GimpColorProfile  *dest_profile,
+                                              LigmaColorProfile  *src_profile,
+                                              LigmaColorProfile  *dest_profile,
                                               GeglDitherMethod   layer_dither_type,
                                               GeglDitherMethod   mask_dither_type,
                                               gboolean           push_undo,
-                                              GimpProgress      *progress);
-static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
-static void gimp_channel_get_active_components (GimpDrawable       *drawable,
+                                              LigmaProgress      *progress);
+static void ligma_channel_invalidate_boundary   (LigmaDrawable       *drawable);
+static void ligma_channel_get_active_components (LigmaDrawable       *drawable,
                                                 gboolean           *active);
 
-static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
+static void      ligma_channel_set_buffer     (LigmaDrawable        *drawable,
                                               gboolean             push_undo,
                                               const gchar         *undo_desc,
                                               GeglBuffer          *buffer,
                                               const GeglRectangle *bounds);
 
-static gdouble   gimp_channel_get_opacity_at (GimpPickable        *pickable,
+static gdouble   ligma_channel_get_opacity_at (LigmaPickable        *pickable,
                                               gint                 x,
                                               gint                 y);
 
-static gboolean   gimp_channel_real_boundary (GimpChannel         *channel,
-                                              const GimpBoundSeg **segs_in,
-                                              const GimpBoundSeg **segs_out,
+static gboolean   ligma_channel_real_boundary (LigmaChannel         *channel,
+                                              const LigmaBoundSeg **segs_in,
+                                              const LigmaBoundSeg **segs_out,
                                               gint                *num_segs_in,
                                               gint                *num_segs_out,
                                               gint                 x1,
                                               gint                 y1,
                                               gint                 x2,
                                               gint                 y2);
-static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
-static void       gimp_channel_real_feather  (GimpChannel         *channel,
+static gboolean   ligma_channel_real_is_empty (LigmaChannel         *channel);
+static void       ligma_channel_real_feather  (LigmaChannel         *channel,
                                               gdouble              radius_x,
                                               gdouble              radius_y,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
-static void       gimp_channel_real_sharpen  (GimpChannel         *channel,
+static void       ligma_channel_real_sharpen  (LigmaChannel         *channel,
                                               gboolean             push_undo);
-static void       gimp_channel_real_clear    (GimpChannel         *channel,
+static void       ligma_channel_real_clear    (LigmaChannel         *channel,
                                               const gchar         *undo_desc,
                                               gboolean             push_undo);
-static void       gimp_channel_real_all      (GimpChannel         *channel,
+static void       ligma_channel_real_all      (LigmaChannel         *channel,
                                               gboolean             push_undo);
-static void       gimp_channel_real_invert   (GimpChannel         *channel,
+static void       ligma_channel_real_invert   (LigmaChannel         *channel,
                                               gboolean             push_undo);
-static void       gimp_channel_real_border   (GimpChannel         *channel,
+static void       ligma_channel_real_border   (LigmaChannel         *channel,
                                               gint                 radius_x,
                                               gint                 radius_y,
-                                              GimpChannelBorderStyle style,
+                                              LigmaChannelBorderStyle style,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
-static void       gimp_channel_real_grow     (GimpChannel         *channel,
+static void       ligma_channel_real_grow     (LigmaChannel         *channel,
                                               gint                 radius_x,
                                               gint                 radius_y,
                                               gboolean             push_undo);
-static void       gimp_channel_real_shrink   (GimpChannel         *channel,
+static void       ligma_channel_real_shrink   (LigmaChannel         *channel,
                                               gint                 radius_x,
                                               gint                 radius_y,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
-static void       gimp_channel_real_flood    (GimpChannel         *channel,
+static void       ligma_channel_real_flood    (LigmaChannel         *channel,
                                               gboolean             push_undo);
 
 
-static void      gimp_channel_buffer_changed (GeglBuffer          *buffer,
+static void      ligma_channel_buffer_changed (GeglBuffer          *buffer,
                                               const GeglRectangle *rect,
-                                              GimpChannel         *channel);
+                                              LigmaChannel         *channel);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_channel_pickable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaChannel, ligma_channel, LIGMA_TYPE_DRAWABLE,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PICKABLE,
+                                                ligma_channel_pickable_iface_init))
 
-#define parent_class gimp_channel_parent_class
+#define parent_class ligma_channel_parent_class
 
 static guint channel_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_channel_class_init (GimpChannelClass *klass)
+ligma_channel_class_init (LigmaChannelClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpFilterClass   *filter_class      = GIMP_FILTER_CLASS (klass);
-  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
-  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaFilterClass   *filter_class      = LIGMA_FILTER_CLASS (klass);
+  LigmaItemClass     *item_class        = LIGMA_ITEM_CLASS (klass);
+  LigmaDrawableClass *drawable_class    = LIGMA_DRAWABLE_CLASS (klass);
 
   channel_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpChannelClass, color_changed),
+                  G_STRUCT_OFFSET (LigmaChannelClass, color_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize            = gimp_channel_finalize;
+  object_class->finalize            = ligma_channel_finalize;
 
-  gimp_object_class->get_memsize    = gimp_channel_get_memsize;
+  ligma_object_class->get_memsize    = ligma_channel_get_memsize;
 
-  viewable_class->get_description   = gimp_channel_get_description;
-  viewable_class->default_icon_name = "gimp-channel";
+  viewable_class->get_description   = ligma_channel_get_description;
+  viewable_class->default_icon_name = "ligma-channel";
 
-  filter_class->get_node            = gimp_channel_get_node;
+  filter_class->get_node            = ligma_channel_get_node;
 
-  item_class->is_attached          = gimp_channel_is_attached;
-  item_class->get_tree             = gimp_channel_get_tree;
-  item_class->bounds               = gimp_channel_bounds;
-  item_class->duplicate            = gimp_channel_duplicate;
-  item_class->convert              = gimp_channel_convert;
-  item_class->translate            = gimp_channel_translate;
-  item_class->scale                = gimp_channel_scale;
-  item_class->resize               = gimp_channel_resize;
-  item_class->get_clip             = gimp_channel_get_clip;
-  item_class->fill                 = gimp_channel_fill;
-  item_class->stroke               = gimp_channel_stroke;
-  item_class->to_selection         = gimp_channel_to_selection;
+  item_class->is_attached          = ligma_channel_is_attached;
+  item_class->get_tree             = ligma_channel_get_tree;
+  item_class->bounds               = ligma_channel_bounds;
+  item_class->duplicate            = ligma_channel_duplicate;
+  item_class->convert              = ligma_channel_convert;
+  item_class->translate            = ligma_channel_translate;
+  item_class->scale                = ligma_channel_scale;
+  item_class->resize               = ligma_channel_resize;
+  item_class->get_clip             = ligma_channel_get_clip;
+  item_class->fill                 = ligma_channel_fill;
+  item_class->stroke               = ligma_channel_stroke;
+  item_class->to_selection         = ligma_channel_to_selection;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = C_("undo-type", "Rename Channel");
   item_class->translate_desc       = C_("undo-type", "Move Channel");
@@ -270,22 +270,22 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->raise_failed         = _("Channel cannot be raised higher.");
   item_class->lower_failed         = _("Channel cannot be lowered more.");
 
-  drawable_class->convert_type          = gimp_channel_convert_type;
-  drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
-  drawable_class->get_active_components = gimp_channel_get_active_components;
-  drawable_class->set_buffer            = gimp_channel_set_buffer;
+  drawable_class->convert_type          = ligma_channel_convert_type;
+  drawable_class->invalidate_boundary   = ligma_channel_invalidate_boundary;
+  drawable_class->get_active_components = ligma_channel_get_active_components;
+  drawable_class->set_buffer            = ligma_channel_set_buffer;
 
-  klass->boundary       = gimp_channel_real_boundary;
-  klass->is_empty       = gimp_channel_real_is_empty;
-  klass->feather        = gimp_channel_real_feather;
-  klass->sharpen        = gimp_channel_real_sharpen;
-  klass->clear          = gimp_channel_real_clear;
-  klass->all            = gimp_channel_real_all;
-  klass->invert         = gimp_channel_real_invert;
-  klass->border         = gimp_channel_real_border;
-  klass->grow           = gimp_channel_real_grow;
-  klass->shrink         = gimp_channel_real_shrink;
-  klass->flood          = gimp_channel_real_flood;
+  klass->boundary       = ligma_channel_real_boundary;
+  klass->is_empty       = ligma_channel_real_is_empty;
+  klass->feather        = ligma_channel_real_feather;
+  klass->sharpen        = ligma_channel_real_sharpen;
+  klass->clear          = ligma_channel_real_clear;
+  klass->all            = ligma_channel_real_all;
+  klass->invert         = ligma_channel_real_invert;
+  klass->border         = ligma_channel_real_border;
+  klass->grow           = ligma_channel_real_grow;
+  klass->shrink         = ligma_channel_real_shrink;
+  klass->flood          = ligma_channel_real_flood;
 
   klass->feather_desc   = C_("undo-type", "Feather Channel");
   klass->sharpen_desc   = C_("undo-type", "Sharpen Channel");
@@ -299,9 +299,9 @@ gimp_channel_class_init (GimpChannelClass *klass)
 }
 
 static void
-gimp_channel_init (GimpChannel *channel)
+ligma_channel_init (LigmaChannel *channel)
 {
-  gimp_rgba_set (&channel->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&channel->color, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
 
   channel->show_masked    = FALSE;
 
@@ -320,15 +320,15 @@ gimp_channel_init (GimpChannel *channel)
 }
 
 static void
-gimp_channel_pickable_iface_init (GimpPickableInterface *iface)
+ligma_channel_pickable_iface_init (LigmaPickableInterface *iface)
 {
-  iface->get_opacity_at = gimp_channel_get_opacity_at;
+  iface->get_opacity_at = ligma_channel_get_opacity_at;
 }
 
 static void
-gimp_channel_finalize (GObject *object)
+ligma_channel_finalize (GObject *object)
 {
-  GimpChannel *channel = GIMP_CHANNEL (object);
+  LigmaChannel *channel = LIGMA_CHANNEL (object);
 
   g_clear_pointer (&channel->segs_in,  g_free);
   g_clear_pointer (&channel->segs_out, g_free);
@@ -337,59 +337,59 @@ gimp_channel_finalize (GObject *object)
 }
 
 static gint64
-gimp_channel_get_memsize (GimpObject *object,
+ligma_channel_get_memsize (LigmaObject *object,
                           gint64     *gui_size)
 {
-  GimpChannel *channel = GIMP_CHANNEL (object);
+  LigmaChannel *channel = LIGMA_CHANNEL (object);
 
-  *gui_size += channel->num_segs_in  * sizeof (GimpBoundSeg);
-  *gui_size += channel->num_segs_out * sizeof (GimpBoundSeg);
+  *gui_size += channel->num_segs_in  * sizeof (LigmaBoundSeg);
+  *gui_size += channel->num_segs_out * sizeof (LigmaBoundSeg);
 
-  return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
+  return LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
 }
 
 static gchar *
-gimp_channel_get_description (GimpViewable  *viewable,
+ligma_channel_get_description (LigmaViewable  *viewable,
                               gchar        **tooltip)
 {
-  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (viewable)))
+  if (! strcmp (LIGMA_IMAGE_QUICK_MASK_NAME,
+                ligma_object_get_name (viewable)))
     {
       return g_strdup (_("Quick Mask"));
     }
 
-  return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
+  return LIGMA_VIEWABLE_CLASS (parent_class)->get_description (viewable,
                                                               tooltip);
 }
 
 static GeglNode *
-gimp_channel_get_node (GimpFilter *filter)
+ligma_channel_get_node (LigmaFilter *filter)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (filter);
-  GimpChannel  *channel  = GIMP_CHANNEL (filter);
+  LigmaDrawable *drawable = LIGMA_DRAWABLE (filter);
+  LigmaChannel  *channel  = LIGMA_CHANNEL (filter);
   GeglNode     *node;
   GeglNode     *source;
   GeglNode     *mode_node;
   const Babl   *color_format;
 
-  node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
+  node = LIGMA_FILTER_CLASS (parent_class)->get_node (filter);
 
-  source = gimp_drawable_get_source_node (drawable);
+  source = ligma_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
 
   g_warn_if_fail (channel->color_node == NULL);
 
   color_format =
-    gimp_babl_format (GIMP_RGB,
-                      gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                           gimp_drawable_get_trc (drawable)),
+    ligma_babl_format (LIGMA_RGB,
+                      ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
+                                           ligma_drawable_get_trc (drawable)),
                       TRUE, NULL);
 
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
                                              "format",    color_format,
                                              NULL);
-  gimp_gegl_node_set_color (channel->color_node,
+  ligma_gegl_node_set_color (channel->color_node,
                             &channel->color, NULL);
 
   g_warn_if_fail (channel->mask_node == NULL);
@@ -419,7 +419,7 @@ gimp_channel_get_node (GimpFilter *filter)
                             channel->mask_node, "aux");
     }
 
-  mode_node = gimp_drawable_get_mode_node (drawable);
+  mode_node = ligma_drawable_get_mode_node (drawable);
 
   gegl_node_connect_to (channel->mask_node, "output",
                         mode_node,          "aux");
@@ -428,42 +428,42 @@ gimp_channel_get_node (GimpFilter *filter)
 }
 
 static gboolean
-gimp_channel_is_attached (GimpItem *item)
+ligma_channel_is_attached (LigmaItem *item)
 {
-  GimpImage *image = gimp_item_get_image (item);
+  LigmaImage *image = ligma_item_get_image (item);
 
-  return (GIMP_IS_IMAGE (image) &&
-          gimp_container_have (gimp_image_get_channels (image),
-                               GIMP_OBJECT (item)));
+  return (LIGMA_IS_IMAGE (image) &&
+          ligma_container_have (ligma_image_get_channels (image),
+                               LIGMA_OBJECT (item)));
 }
 
-static GimpItemTree *
-gimp_channel_get_tree (GimpItem *item)
+static LigmaItemTree *
+ligma_channel_get_tree (LigmaItem *item)
 {
-  if (gimp_item_is_attached (item))
+  if (ligma_item_is_attached (item))
     {
-      GimpImage *image = gimp_item_get_image (item);
+      LigmaImage *image = ligma_item_get_image (item);
 
-      return gimp_image_get_channel_tree (image);
+      return ligma_image_get_channel_tree (image);
     }
 
   return NULL;
 }
 
 static gboolean
-gimp_channel_bounds (GimpItem *item,
+ligma_channel_bounds (LigmaItem *item,
                      gdouble  *x,
                      gdouble  *y,
                      gdouble  *width,
                      gdouble  *height)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
+  LigmaChannel *channel = LIGMA_CHANNEL (item);
 
   if (! channel->bounds_known)
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+      GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
-      channel->empty = ! gimp_gegl_mask_bounds (buffer,
+      channel->empty = ! ligma_gegl_mask_bounds (buffer,
                                                 &channel->x1,
                                                 &channel->y1,
                                                 &channel->x2,
@@ -480,20 +480,20 @@ gimp_channel_bounds (GimpItem *item,
   return ! channel->empty;
 }
 
-static GimpItem *
-gimp_channel_duplicate (GimpItem *item,
+static LigmaItem *
+ligma_channel_duplicate (LigmaItem *item,
                         GType     new_type)
 {
-  GimpItem *new_item;
+  LigmaItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, LIGMA_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
+  new_item = LIGMA_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
-  if (GIMP_IS_CHANNEL (new_item))
+  if (LIGMA_IS_CHANNEL (new_item))
     {
-      GimpChannel *channel     = GIMP_CHANNEL (item);
-      GimpChannel *new_channel = GIMP_CHANNEL (new_item);
+      LigmaChannel *channel     = LIGMA_CHANNEL (item);
+      LigmaChannel *new_channel = LIGMA_CHANNEL (new_item);
 
       new_channel->color        = channel->color;
       new_channel->show_masked  = channel->show_masked;
@@ -506,34 +506,34 @@ gimp_channel_duplicate (GimpItem *item,
       new_channel->x2           = channel->x2;
       new_channel->y2           = channel->y2;
 
-      if (new_type == GIMP_TYPE_CHANNEL)
+      if (new_type == LIGMA_TYPE_CHANNEL)
         {
           /*  8-bit channel hack: make sure pixels between all sorts
            *  of channels of an image is always copied without any
            *  gamma conversion
            */
-          GimpDrawable *new_drawable = GIMP_DRAWABLE (new_item);
-          GimpImage    *image        = gimp_item_get_image (item);
-          const Babl   *format       = gimp_image_get_channel_format (image);
+          LigmaDrawable *new_drawable = LIGMA_DRAWABLE (new_item);
+          LigmaImage    *image        = ligma_item_get_image (item);
+          const Babl   *format       = ligma_image_get_channel_format (image);
 
-          if (format != gimp_drawable_get_format (new_drawable))
+          if (format != ligma_drawable_get_format (new_drawable))
             {
               GeglBuffer *new_buffer;
 
               new_buffer =
                 gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 gimp_item_get_width  (new_item),
-                                                 gimp_item_get_height (new_item)),
+                                                 ligma_item_get_width  (new_item),
+                                                 ligma_item_get_height (new_item)),
                                  format);
 
               gegl_buffer_set_format (new_buffer,
-                                      gimp_drawable_get_format (new_drawable));
-              gimp_gegl_buffer_copy (gimp_drawable_get_buffer (new_drawable),
+                                      ligma_drawable_get_format (new_drawable));
+              ligma_gegl_buffer_copy (ligma_drawable_get_buffer (new_drawable),
                                      NULL, GEGL_ABYSS_NONE,
                                      new_buffer, NULL);
               gegl_buffer_set_format (new_buffer, NULL);
 
-              gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
+              ligma_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
               g_object_unref (new_buffer);
             }
         }
@@ -543,97 +543,97 @@ gimp_channel_duplicate (GimpItem *item,
 }
 
 static void
-gimp_channel_convert (GimpItem  *item,
-                      GimpImage *dest_image,
+ligma_channel_convert (LigmaItem  *item,
+                      LigmaImage *dest_image,
                       GType      old_type)
 {
-  GimpChannel  *channel  = GIMP_CHANNEL (item);
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  LigmaChannel  *channel  = LIGMA_CHANNEL (item);
+  LigmaDrawable *drawable = LIGMA_DRAWABLE (item);
 
-  if (! gimp_drawable_is_gray (drawable))
+  if (! ligma_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_type (drawable, dest_image,
-                                  GIMP_GRAY,
-                                  gimp_image_get_precision (dest_image),
-                                  gimp_drawable_has_alpha (drawable),
+      ligma_drawable_convert_type (drawable, dest_image,
+                                  LIGMA_GRAY,
+                                  ligma_image_get_precision (dest_image),
+                                  ligma_drawable_has_alpha (drawable),
                                   NULL, NULL,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
     }
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       GeglBuffer *new_buffer;
       const Babl *format;
-      GimpRGB     background;
+      LigmaRGB     background;
 
-      format = gimp_drawable_get_format_without_alpha (drawable);
+      format = ligma_drawable_get_format_without_alpha (drawable);
 
       new_buffer =
         gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gimp_item_get_width (item),
-                                         gimp_item_get_height (item)),
+                                         ligma_item_get_width (item),
+                                         ligma_item_get_height (item)),
                          format);
 
-      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      ligma_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
 
-      gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
+      ligma_gegl_apply_flatten (ligma_drawable_get_buffer (drawable),
                                NULL, NULL,
                                new_buffer, &background, NULL,
-                               GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
+                               LIGMA_LAYER_COLOR_SPACE_RGB_LINEAR);
 
-      gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
+      ligma_drawable_set_buffer_full (drawable, FALSE, NULL,
                                      new_buffer,
                                      GEGL_RECTANGLE (
-                                       gimp_item_get_offset_x (item),
-                                       gimp_item_get_offset_y (item),
+                                       ligma_item_get_offset_x (item),
+                                       ligma_item_get_offset_y (item),
                                        0, 0),
                                      TRUE);
       g_object_unref (new_buffer);
     }
 
-  if (G_TYPE_FROM_INSTANCE (channel) == GIMP_TYPE_CHANNEL)
+  if (G_TYPE_FROM_INSTANCE (channel) == LIGMA_TYPE_CHANNEL)
     {
-      gint width  = gimp_image_get_width  (dest_image);
-      gint height = gimp_image_get_height (dest_image);
+      gint width  = ligma_image_get_width  (dest_image);
+      gint height = ligma_image_get_height (dest_image);
 
-      gimp_item_set_offset (item, 0, 0);
+      ligma_item_set_offset (item, 0, 0);
 
-      if (gimp_item_get_width  (item) != width ||
-          gimp_item_get_height (item) != height)
+      if (ligma_item_get_width  (item) != width ||
+          ligma_item_get_height (item) != height)
         {
-          gimp_item_resize (item, gimp_get_user_context (dest_image->gimp),
-                            GIMP_FILL_TRANSPARENT,
+          ligma_item_resize (item, ligma_get_user_context (dest_image->ligma),
+                            LIGMA_FILL_TRANSPARENT,
                             width, height, 0, 0);
         }
     }
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
+  LIGMA_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void
-gimp_channel_translate (GimpItem *item,
+ligma_channel_translate (LigmaItem *item,
                         gdouble   off_x,
                         gdouble   off_y,
                         gboolean  push_undo)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
+  LigmaChannel *channel = LIGMA_CHANNEL (item);
   gint         x, y, width, height;
 
-  gimp_item_bounds (GIMP_ITEM (channel), &x, &y, &width, &height);
+  ligma_item_bounds (LIGMA_ITEM (channel), &x, &y, &width, &height);
 
   /*  update the old area  */
-  gimp_drawable_update (GIMP_DRAWABLE (item), x, y, width, height);
+  ligma_drawable_update (LIGMA_DRAWABLE (item), x, y, width, height);
 
   if (push_undo)
-    gimp_channel_push_undo (channel, NULL);
+    ligma_channel_push_undo (channel, NULL);
 
-  if (gimp_rectangle_intersect (x + SIGNED_ROUND (off_x),
+  if (ligma_rectangle_intersect (x + SIGNED_ROUND (off_x),
                                 y + SIGNED_ROUND (off_y),
                                 width, height,
                                 0, 0,
-                                gimp_item_get_width  (GIMP_ITEM (channel)),
-                                gimp_item_get_height (GIMP_ITEM (channel)),
+                                ligma_item_get_width  (LIGMA_ITEM (channel)),
+                                ligma_item_get_height (LIGMA_ITEM (channel)),
                                 &x, &y, &width, &height))
     {
       /*  copy the portion of the mask we will keep to a temporary
@@ -641,9 +641,9 @@ gimp_channel_translate (GimpItem *item,
        */
       GeglBuffer *tmp_buffer =
         gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                         gimp_drawable_get_format (GIMP_DRAWABLE (channel)));
+                         ligma_drawable_get_format (LIGMA_DRAWABLE (channel)));
 
-      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+      ligma_gegl_buffer_copy (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                              GEGL_RECTANGLE (x - SIGNED_ROUND (off_x),
                                              y - SIGNED_ROUND (off_y),
                                              width, height),
@@ -652,12 +652,12 @@ gimp_channel_translate (GimpItem *item,
                              GEGL_RECTANGLE (0, 0, 0, 0));
 
       /*  clear the mask  */
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+      gegl_buffer_clear (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                          NULL);
 
       /*  copy the temp mask back to the mask  */
-      gimp_gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+      ligma_gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
+                             ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                              GEGL_RECTANGLE (x, y, 0, 0));
 
       /*  free the temporary mask  */
@@ -671,35 +671,35 @@ gimp_channel_translate (GimpItem *item,
   else
     {
       /*  clear the mask  */
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+      gegl_buffer_clear (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                          NULL);
 
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
-      channel->x2    = gimp_item_get_width  (GIMP_ITEM (channel));
-      channel->y2    = gimp_item_get_height (GIMP_ITEM (channel));
+      channel->x2    = ligma_item_get_width  (LIGMA_ITEM (channel));
+      channel->y2    = ligma_item_get_height (LIGMA_ITEM (channel));
     }
 
   /*  update the new area  */
-  gimp_drawable_update (GIMP_DRAWABLE (item),
+  ligma_drawable_update (LIGMA_DRAWABLE (item),
                         channel->x1, channel->y1,
                         channel->x2 - channel->x1,
                         channel->y2 - channel->y1);
 }
 
 static void
-gimp_channel_scale (GimpItem              *item,
+ligma_channel_scale (LigmaItem              *item,
                     gint                   new_width,
                     gint                   new_height,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
-                    GimpInterpolationType  interpolation_type,
-                    GimpProgress          *progress)
+                    LigmaInterpolationType  interpolation_type,
+                    LigmaProgress          *progress)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
+  LigmaChannel *channel = LIGMA_CHANNEL (item);
 
-  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+  if (G_TYPE_FROM_INSTANCE (item) == LIGMA_TYPE_CHANNEL)
     {
       new_offset_x = 0;
       new_offset_y = 0;
@@ -708,84 +708,84 @@ gimp_channel_scale (GimpItem              *item,
   /*  don't waste CPU cycles scaling an empty channel  */
   if (channel->bounds_known && channel->empty)
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (item);
+      LigmaDrawable *drawable = LIGMA_DRAWABLE (item);
       GeglBuffer   *new_buffer;
 
       new_buffer =
         gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
-                         gimp_drawable_get_format (drawable));
+                         ligma_drawable_get_format (drawable));
 
-      gimp_drawable_set_buffer_full (drawable,
-                                     gimp_item_is_attached (item), NULL,
+      ligma_drawable_set_buffer_full (drawable,
+                                     ligma_item_is_attached (item), NULL,
                                      new_buffer,
                                      GEGL_RECTANGLE (new_offset_x, new_offset_y,
                                                      0,            0),
                                      TRUE);
       g_object_unref (new_buffer);
 
-      gimp_channel_clear (GIMP_CHANNEL (item), NULL, FALSE);
+      ligma_channel_clear (LIGMA_CHANNEL (item), NULL, FALSE);
     }
   else
     {
-      GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+      LIGMA_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                              new_offset_x, new_offset_y,
                                              interpolation_type, progress);
     }
 }
 
 static void
-gimp_channel_resize (GimpItem     *item,
-                     GimpContext  *context,
-                     GimpFillType  fill_type,
+ligma_channel_resize (LigmaItem     *item,
+                     LigmaContext  *context,
+                     LigmaFillType  fill_type,
                      gint          new_width,
                      gint          new_height,
                      gint          offset_x,
                      gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+  LIGMA_ITEM_CLASS (parent_class)->resize (item, context, LIGMA_FILL_TRANSPARENT,
                                           new_width, new_height,
                                           offset_x, offset_y);
 
-  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+  if (G_TYPE_FROM_INSTANCE (item) == LIGMA_TYPE_CHANNEL)
     {
-      gimp_item_set_offset (item, 0, 0);
+      ligma_item_set_offset (item, 0, 0);
     }
 }
 
-static GimpTransformResize
-gimp_channel_get_clip (GimpItem            *item,
-                       GimpTransformResize  clip_result)
+static LigmaTransformResize
+ligma_channel_get_clip (LigmaItem            *item,
+                       LigmaTransformResize  clip_result)
 {
-  return GIMP_TRANSFORM_RESIZE_CLIP;
+  return LIGMA_TRANSFORM_RESIZE_CLIP;
 }
 
 static gboolean
-gimp_channel_fill (GimpItem         *item,
-                   GimpDrawable     *drawable,
-                   GimpFillOptions  *fill_options,
+ligma_channel_fill (LigmaItem         *item,
+                   LigmaDrawable     *drawable,
+                   LigmaFillOptions  *fill_options,
                    gboolean          push_undo,
-                   GimpProgress     *progress,
+                   LigmaProgress     *progress,
                    GError          **error)
 {
-  GimpChannel        *channel = GIMP_CHANNEL (item);
-  const GimpBoundSeg *segs_in;
-  const GimpBoundSeg *segs_out;
+  LigmaChannel        *channel = LIGMA_CHANNEL (item);
+  const LigmaBoundSeg *segs_in;
+  const LigmaBoundSeg *segs_out;
   gint                n_segs_in;
   gint                n_segs_out;
   gint                offset_x, offset_y;
 
-  if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
+  if (! ligma_channel_boundary (channel, &segs_in, &segs_out,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot fill empty channel."));
       return FALSE;
     }
 
-  gimp_item_get_offset (item, &offset_x, &offset_y);
+  ligma_item_get_offset (item, &offset_x, &offset_y);
 
-  gimp_drawable_fill_boundary (drawable,
+  ligma_drawable_fill_boundary (drawable,
                                fill_options,
                                segs_in, n_segs_in,
                                offset_x, offset_y,
@@ -795,36 +795,36 @@ gimp_channel_fill (GimpItem         *item,
 }
 
 static gboolean
-gimp_channel_stroke (GimpItem           *item,
-                     GimpDrawable       *drawable,
-                     GimpStrokeOptions  *stroke_options,
+ligma_channel_stroke (LigmaItem           *item,
+                     LigmaDrawable       *drawable,
+                     LigmaStrokeOptions  *stroke_options,
                      gboolean            push_undo,
-                     GimpProgress       *progress,
+                     LigmaProgress       *progress,
                      GError            **error)
 {
-  GimpChannel        *channel = GIMP_CHANNEL (item);
-  const GimpBoundSeg *segs_in;
-  const GimpBoundSeg *segs_out;
+  LigmaChannel        *channel = LIGMA_CHANNEL (item);
+  const LigmaBoundSeg *segs_in;
+  const LigmaBoundSeg *segs_out;
   gint                n_segs_in;
   gint                n_segs_out;
   gboolean            retval = FALSE;
   gint                offset_x, offset_y;
 
-  if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
+  if (! ligma_channel_boundary (channel, &segs_in, &segs_out,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot stroke empty channel."));
       return FALSE;
     }
 
-  gimp_item_get_offset (item, &offset_x, &offset_y);
+  ligma_item_get_offset (item, &offset_x, &offset_y);
 
-  switch (gimp_stroke_options_get_method (stroke_options))
+  switch (ligma_stroke_options_get_method (stroke_options))
     {
-    case GIMP_STROKE_LINE:
-      gimp_drawable_stroke_boundary (drawable,
+    case LIGMA_STROKE_LINE:
+      ligma_drawable_stroke_boundary (drawable,
                                      stroke_options,
                                      n_segs_in > 0 ? segs_in   : segs_out,
                                      n_segs_in > 0 ? n_segs_in : n_segs_out,
@@ -833,21 +833,21 @@ gimp_channel_stroke (GimpItem           *item,
       retval = TRUE;
       break;
 
-    case GIMP_STROKE_PAINT_METHOD:
+    case LIGMA_STROKE_PAINT_METHOD:
       {
-        GimpPaintInfo    *paint_info;
-        GimpPaintCore    *core;
-        GimpPaintOptions *paint_options;
+        LigmaPaintInfo    *paint_info;
+        LigmaPaintCore    *core;
+        LigmaPaintOptions *paint_options;
         gboolean          emulate_dynamics;
 
-        paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
+        paint_info = ligma_context_get_paint_info (LIGMA_CONTEXT (stroke_options));
 
         core = g_object_new (paint_info->paint_type, NULL);
 
-        paint_options = gimp_stroke_options_get_paint_options (stroke_options);
-        emulate_dynamics = gimp_stroke_options_get_emulate_dynamics (stroke_options);
+        paint_options = ligma_stroke_options_get_paint_options (stroke_options);
+        emulate_dynamics = ligma_stroke_options_get_emulate_dynamics (stroke_options);
 
-        retval = gimp_paint_core_stroke_boundary (core, drawable,
+        retval = ligma_paint_core_stroke_boundary (core, drawable,
                                                   paint_options,
                                                   emulate_dynamics,
                                                   n_segs_in > 0 ? segs_in   : segs_out,
@@ -867,48 +867,48 @@ gimp_channel_stroke (GimpItem           *item,
 }
 
 static void
-gimp_channel_to_selection (GimpItem       *item,
-                           GimpChannelOps  op,
+ligma_channel_to_selection (LigmaItem       *item,
+                           LigmaChannelOps  op,
                            gboolean        antialias,
                            gboolean        feather,
                            gdouble         feather_radius_x,
                            gdouble         feather_radius_y)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  LigmaChannel *channel = LIGMA_CHANNEL (item);
+  LigmaImage   *image   = ligma_item_get_image (item);
   gint         off_x, off_y;
 
-  gimp_item_get_offset (item, &off_x, &off_y);
+  ligma_item_get_offset (item, &off_x, &off_y);
 
-  gimp_channel_select_channel (gimp_image_get_mask (image),
-                               GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
+  ligma_channel_select_channel (ligma_image_get_mask (image),
+                               LIGMA_ITEM_GET_CLASS (item)->to_selection_desc,
                                channel, off_x, off_y,
                                op,
                                feather, feather_radius_x, feather_radius_x);
 }
 
 static void
-gimp_channel_convert_type (GimpDrawable     *drawable,
-                           GimpImage        *dest_image,
+ligma_channel_convert_type (LigmaDrawable     *drawable,
+                           LigmaImage        *dest_image,
                            const Babl       *new_format,
-                           GimpColorProfile *src_profile,
-                           GimpColorProfile *dest_profile,
+                           LigmaColorProfile *src_profile,
+                           LigmaColorProfile *dest_profile,
                            GeglDitherMethod  layer_dither_type,
                            GeglDitherMethod  mask_dither_type,
                            gboolean          push_undo,
-                           GimpProgress     *progress)
+                           LigmaProgress     *progress)
 {
   GeglBuffer *dest_buffer;
 
   dest_buffer =
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable))),
+                                     ligma_item_get_width  (LIGMA_ITEM (drawable)),
+                                     ligma_item_get_height (LIGMA_ITEM (drawable))),
                      new_format);
 
   if (mask_dither_type == GEGL_DITHER_NONE)
     {
-      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+      ligma_gegl_buffer_copy (ligma_drawable_get_buffer (drawable), NULL,
                              GEGL_ABYSS_NONE,
                              dest_buffer, NULL);
     }
@@ -919,26 +919,26 @@ gimp_channel_convert_type (GimpDrawable     *drawable,
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
+      ligma_gegl_apply_dither (ligma_drawable_get_buffer (drawable),
                               NULL, NULL,
                               dest_buffer, 1 << bits, mask_dither_type);
     }
 
-  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+  ligma_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
 }
 
 static void
-gimp_channel_invalidate_boundary (GimpDrawable *drawable)
+ligma_channel_invalidate_boundary (LigmaDrawable *drawable)
 {
-  GimpChannel *channel = GIMP_CHANNEL (drawable);
+  LigmaChannel *channel = LIGMA_CHANNEL (drawable);
 
   channel->boundary_known = FALSE;
   channel->bounds_known   = FALSE;
 }
 
 static void
-gimp_channel_get_active_components (GimpDrawable *drawable,
+ligma_channel_get_active_components (LigmaDrawable *drawable,
                                     gboolean     *active)
 {
   /*  Make sure that the alpha channel is not valid.  */
@@ -947,36 +947,36 @@ gimp_channel_get_active_components (GimpDrawable *drawable,
 }
 
 static void
-gimp_channel_set_buffer (GimpDrawable        *drawable,
+ligma_channel_set_buffer (LigmaDrawable        *drawable,
                          gboolean             push_undo,
                          const gchar         *undo_desc,
                          GeglBuffer          *buffer,
                          const GeglRectangle *bounds)
 {
-  GimpChannel *channel    = GIMP_CHANNEL (drawable);
-  GeglBuffer  *old_buffer = gimp_drawable_get_buffer (drawable);
+  LigmaChannel *channel    = LIGMA_CHANNEL (drawable);
+  GeglBuffer  *old_buffer = ligma_drawable_get_buffer (drawable);
 
   if (old_buffer)
     {
       g_signal_handlers_disconnect_by_func (old_buffer,
-                                            gimp_channel_buffer_changed,
+                                            ligma_channel_buffer_changed,
                                             channel);
     }
 
-  GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
+  LIGMA_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
                                                   buffer, bounds);
 
   gegl_buffer_signal_connect (buffer, "changed",
-                              G_CALLBACK (gimp_channel_buffer_changed),
+                              G_CALLBACK (ligma_channel_buffer_changed),
                               channel);
 
-  if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+  if (ligma_filter_peek_node (LIGMA_FILTER (channel)))
     {
       const Babl *color_format =
-        gimp_babl_format (GIMP_RGB,
-                          gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                               gimp_drawable_get_trc (drawable)),
+        ligma_babl_format (LIGMA_RGB,
+                          ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
+                                               ligma_drawable_get_trc (drawable)),
                           TRUE, NULL);
 
       gegl_node_set (channel->color_node,
@@ -986,15 +986,15 @@ gimp_channel_set_buffer (GimpDrawable        *drawable,
 }
 
 static gdouble
-gimp_channel_get_opacity_at (GimpPickable *pickable,
+ligma_channel_get_opacity_at (LigmaPickable *pickable,
                              gint          x,
                              gint          y)
 {
-  GimpChannel *channel = GIMP_CHANNEL (pickable);
-  gdouble      value   = GIMP_OPACITY_TRANSPARENT;
+  LigmaChannel *channel = LIGMA_CHANNEL (pickable);
+  gdouble      value   = LIGMA_OPACITY_TRANSPARENT;
 
-  if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (channel)) &&
-      y >= 0 && y < gimp_item_get_height (GIMP_ITEM (channel)))
+  if (x >= 0 && x < ligma_item_get_width  (LIGMA_ITEM (channel)) &&
+      y >= 0 && y < ligma_item_get_height (LIGMA_ITEM (channel)))
     {
       if (! channel->bounds_known ||
           (! channel->empty &&
@@ -1003,7 +1003,7 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
            y >= channel->y1 &&
            y <  channel->y2))
         {
-          gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+          gegl_buffer_sample (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                               x, y, NULL, &value, babl_format ("Y double"),
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
@@ -1013,9 +1013,9 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
 }
 
 static gboolean
-gimp_channel_real_boundary (GimpChannel         *channel,
-                            const GimpBoundSeg **segs_in,
-                            const GimpBoundSeg **segs_out,
+ligma_channel_real_boundary (LigmaChannel         *channel,
+                            const LigmaBoundSeg **segs_in,
+                            const LigmaBoundSeg **segs_out,
                             gint                *num_segs_in,
                             gint                *num_segs_out,
                             gint                 x1,
@@ -1031,7 +1031,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
       g_free (channel->segs_in);
       g_free (channel->segs_out);
 
-      if (gimp_item_bounds (GIMP_ITEM (channel), &x3, &y3, &x4, &y4))
+      if (ligma_item_bounds (LIGMA_ITEM (channel), &x3, &y3, &x4, &y4))
         {
           GeglBuffer    *buffer;
           GeglRectangle  rect = { x3, y3, x4, y4 };
@@ -1039,13 +1039,13 @@ gimp_channel_real_boundary (GimpChannel         *channel,
           x4 += x3;
           y4 += y3;
 
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
-          channel->segs_out = gimp_boundary_find (buffer, &rect,
+          channel->segs_out = ligma_boundary_find (buffer, &rect,
                                                   babl_format ("Y float"),
-                                                  GIMP_BOUNDARY_IGNORE_BOUNDS,
+                                                  LIGMA_BOUNDARY_IGNORE_BOUNDS,
                                                   x1, y1, x2, y2,
-                                                  GIMP_BOUNDARY_HALF_WAY,
+                                                  LIGMA_BOUNDARY_HALF_WAY,
                                                   &channel->num_segs_out);
           x1 = MAX (x1, x3);
           y1 = MAX (y1, y3);
@@ -1054,11 +1054,11 @@ gimp_channel_real_boundary (GimpChannel         *channel,
 
           if (x2 > x1 && y2 > y1)
             {
-              channel->segs_in = gimp_boundary_find (buffer, NULL,
+              channel->segs_in = ligma_boundary_find (buffer, NULL,
                                                      babl_format ("Y float"),
-                                                     GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                                     LIGMA_BOUNDARY_WITHIN_BOUNDS,
                                                      x1, y1, x2, y2,
-                                                     GIMP_BOUNDARY_HALF_WAY,
+                                                     LIGMA_BOUNDARY_HALF_WAY,
                                                      &channel->num_segs_in);
             }
           else
@@ -1087,16 +1087,16 @@ gimp_channel_real_boundary (GimpChannel         *channel,
 }
 
 static gboolean
-gimp_channel_real_is_empty (GimpChannel *channel)
+ligma_channel_real_is_empty (LigmaChannel *channel)
 {
   GeglBuffer *buffer;
 
   if (channel->bounds_known)
     return channel->empty;
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
-  if (! gimp_gegl_mask_is_empty (buffer))
+  if (! ligma_gegl_mask_is_empty (buffer))
     return FALSE;
 
   /*  The mask is empty, meaning we can set the bounds as known  */
@@ -1110,14 +1110,14 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   channel->boundary_known = TRUE;
   channel->x1             = 0;
   channel->y1             = 0;
-  channel->x2             = gimp_item_get_width  (GIMP_ITEM (channel));
-  channel->y2             = gimp_item_get_height (GIMP_ITEM (channel));
+  channel->x2             = ligma_item_get_width  (LIGMA_ITEM (channel));
+  channel->y2             = ligma_item_get_height (LIGMA_ITEM (channel));
 
   return TRUE;
 }
 
 static void
-gimp_channel_real_feather (GimpChannel *channel,
+ligma_channel_real_feather (LigmaChannel *channel,
                            gdouble      radius_x,
                            gdouble      radius_y,
                            gboolean     edge_lock,
@@ -1128,56 +1128,56 @@ gimp_channel_real_feather (GimpChannel *channel,
   if (radius_x <= 0.0 && radius_y <= 0.0)
     return;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! ligma_item_bounds (LIGMA_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
 
   x2 += x1;
   y2 += y1;
 
-  if (gimp_channel_is_empty (channel))
+  if (ligma_channel_is_empty (channel))
     return;
 
   x1 = MAX (0, x1 - ceil (radius_x));
   y1 = MAX (0, y1 - ceil (radius_y));
 
-  x2 = MIN (gimp_item_get_width  (GIMP_ITEM (channel)), x2 + ceil (radius_x));
-  y2 = MIN (gimp_item_get_height (GIMP_ITEM (channel)), y2 + ceil (radius_y));
+  x2 = MIN (ligma_item_get_width  (LIGMA_ITEM (channel)), x2 + ceil (radius_x));
+  y2 = MIN (ligma_item_get_height (LIGMA_ITEM (channel)), y2 + ceil (radius_y));
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->feather_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->feather_desc);
 
-  gimp_gegl_apply_feather (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_gegl_apply_feather (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                            NULL, NULL,
-                           gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                           ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                            GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                            radius_x,
                            radius_y,
                            edge_lock);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_sharpen (GimpChannel *channel,
+ligma_channel_real_sharpen (LigmaChannel *channel,
                            gboolean     push_undo)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (channel);
+  LigmaDrawable *drawable = LIGMA_DRAWABLE (channel);
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->sharpen_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->sharpen_desc);
 
-  gimp_gegl_apply_threshold (gimp_drawable_get_buffer (drawable),
+  ligma_gegl_apply_threshold (ligma_drawable_get_buffer (drawable),
                              NULL, NULL,
-                             gimp_drawable_get_buffer (drawable),
+                             ligma_drawable_get_buffer (drawable),
                              0.5);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_clear (GimpChannel *channel,
+ligma_channel_real_clear (LigmaChannel *channel,
                          const gchar *undo_desc,
                          gboolean     push_undo)
 {
@@ -1191,12 +1191,12 @@ gimp_channel_real_clear (GimpChannel *channel,
   if (push_undo)
     {
       if (! undo_desc)
-        undo_desc = GIMP_CHANNEL_GET_CLASS (channel)->clear_desc;
+        undo_desc = LIGMA_CHANNEL_GET_CLASS (channel)->clear_desc;
 
-      gimp_channel_push_undo (channel, undo_desc);
+      ligma_channel_push_undo (channel, undo_desc);
     }
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
   if (channel->bounds_known)
     {
@@ -1209,8 +1209,8 @@ gimp_channel_real_clear (GimpChannel *channel,
     {
       rect.x      = 0;
       rect.y      = 0;
-      rect.width  = gimp_item_get_width  (GIMP_ITEM (channel));
-      rect.height = gimp_item_get_height (GIMP_ITEM (channel));
+      rect.width  = ligma_item_get_width  (LIGMA_ITEM (channel));
+      rect.height = ligma_item_get_height (LIGMA_ITEM (channel));
     }
 
   gegl_rectangle_align_to_buffer (&aligned_rect, &rect, buffer,
@@ -1223,26 +1223,26 @@ gimp_channel_real_clear (GimpChannel *channel,
   channel->empty        = TRUE;
   channel->x1           = 0;
   channel->y1           = 0;
-  channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
-  channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
+  channel->x2           = ligma_item_get_width  (LIGMA_ITEM (channel));
+  channel->y2           = ligma_item_get_height (LIGMA_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
+  ligma_drawable_update (LIGMA_DRAWABLE (channel),
                         rect.x, rect.y, rect.width, rect.height);
 }
 
 static void
-gimp_channel_real_all (GimpChannel *channel,
+ligma_channel_real_all (LigmaChannel *channel,
                        gboolean     push_undo)
 {
   GeglColor *color;
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->all_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->all_desc);
 
   /*  clear the channel  */
   color = gegl_color_new ("#fff");
-  gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_set_color (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                          NULL, color);
   g_object_unref (color);
 
@@ -1251,41 +1251,41 @@ gimp_channel_real_all (GimpChannel *channel,
   channel->empty        = FALSE;
   channel->x1           = 0;
   channel->y1           = 0;
-  channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
-  channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
+  channel->x2           = ligma_item_get_width  (LIGMA_ITEM (channel));
+  channel->y2           = ligma_item_get_height (LIGMA_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_invert (GimpChannel *channel,
+ligma_channel_real_invert (LigmaChannel *channel,
                           gboolean     push_undo)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (channel);
+  LigmaDrawable *drawable = LIGMA_DRAWABLE (channel);
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->invert_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->invert_desc);
 
   if (channel->bounds_known && channel->empty)
     {
-      gimp_channel_all (channel, FALSE);
+      ligma_channel_all (channel, FALSE);
     }
   else
     {
-      gimp_gegl_apply_invert_linear (gimp_drawable_get_buffer (drawable),
+      ligma_gegl_apply_invert_linear (ligma_drawable_get_buffer (drawable),
                                      NULL, NULL,
-                                     gimp_drawable_get_buffer (drawable));
+                                     ligma_drawable_get_buffer (drawable));
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+      ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
     }
 }
 
 static void
-gimp_channel_real_border (GimpChannel            *channel,
+ligma_channel_real_border (LigmaChannel            *channel,
                           gint                    radius_x,
                           gint                    radius_y,
-                          GimpChannelBorderStyle  style,
+                          LigmaChannelBorderStyle  style,
                           gboolean                edge_lock,
                           gboolean                push_undo)
 {
@@ -1297,8 +1297,8 @@ gimp_channel_real_border (GimpChannel            *channel,
        * When both are 0 (currently can only be achieved by the user through
        * PDB), the effect should be to clear the channel.
        */
-      gimp_channel_clear (channel,
-                          GIMP_CHANNEL_GET_CLASS (channel)->border_desc,
+      ligma_channel_clear (channel,
+                          LIGMA_CHANNEL_GET_CLASS (channel)->border_desc,
                           push_undo);
       return;
     }
@@ -1310,13 +1310,13 @@ gimp_channel_real_border (GimpChannel            *channel,
       g_return_if_reached();
     }
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! ligma_item_bounds (LIGMA_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
 
   x2 += x1;
   y2 += y1;
 
-  if (gimp_channel_is_empty (channel))
+  if (ligma_channel_is_empty (channel))
     return;
 
   if (x1 - radius_x < 0)
@@ -1324,8 +1324,8 @@ gimp_channel_real_border (GimpChannel            *channel,
   else
     x1 -= radius_x;
 
-  if (x2 + radius_x > gimp_item_get_width (GIMP_ITEM (channel)))
-    x2 = gimp_item_get_width (GIMP_ITEM (channel));
+  if (x2 + radius_x > ligma_item_get_width (LIGMA_ITEM (channel)))
+    x2 = ligma_item_get_width (LIGMA_ITEM (channel));
   else
     x2 += radius_x;
 
@@ -1334,26 +1334,26 @@ gimp_channel_real_border (GimpChannel            *channel,
   else
     y1 -= radius_y;
 
-  if (y2 + radius_y > gimp_item_get_height (GIMP_ITEM (channel)))
-    y2 = gimp_item_get_height (GIMP_ITEM (channel));
+  if (y2 + radius_y > ligma_item_get_height (LIGMA_ITEM (channel)))
+    y2 = ligma_item_get_height (LIGMA_ITEM (channel));
   else
     y2 += radius_y;
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->border_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->border_desc);
 
-  gimp_gegl_apply_border (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_gegl_apply_border (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                           NULL, NULL,
-                          gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                          ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                           GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                           radius_x, radius_y, style, edge_lock);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_grow (GimpChannel *channel,
+ligma_channel_real_grow (LigmaChannel *channel,
                         gint         radius_x,
                         gint         radius_y,
                         gboolean     push_undo)
@@ -1365,20 +1365,20 @@ gimp_channel_real_grow (GimpChannel *channel,
 
   if (radius_x <= 0 && radius_y <= 0)
     {
-      gimp_channel_shrink (channel, -radius_x, -radius_y, FALSE, push_undo);
+      ligma_channel_shrink (channel, -radius_x, -radius_y, FALSE, push_undo);
       return;
     }
 
   if (radius_x < 0 || radius_y < 0)
     return;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! ligma_item_bounds (LIGMA_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
 
   x2 += x1;
   y2 += y1;
 
-  if (gimp_channel_is_empty (channel))
+  if (ligma_channel_is_empty (channel))
     return;
 
   if (x1 - radius_x > 0)
@@ -1391,31 +1391,31 @@ gimp_channel_real_grow (GimpChannel *channel,
   else
     y1 = 0;
 
-  if (x2 + radius_x < gimp_item_get_width (GIMP_ITEM (channel)))
+  if (x2 + radius_x < ligma_item_get_width (LIGMA_ITEM (channel)))
     x2 = x2 + radius_x;
   else
-    x2 = gimp_item_get_width (GIMP_ITEM (channel));
+    x2 = ligma_item_get_width (LIGMA_ITEM (channel));
 
-  if (y2 + radius_y < gimp_item_get_height (GIMP_ITEM (channel)))
+  if (y2 + radius_y < ligma_item_get_height (LIGMA_ITEM (channel)))
     y2 = y2 + radius_y;
   else
-    y2 = gimp_item_get_height (GIMP_ITEM (channel));
+    y2 = ligma_item_get_height (LIGMA_ITEM (channel));
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->grow_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->grow_desc);
 
-  gimp_gegl_apply_grow (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_gegl_apply_grow (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                         NULL, NULL,
-                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                         radius_x, radius_y);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_shrink (GimpChannel *channel,
+ligma_channel_real_shrink (LigmaChannel *channel,
                           gint         radius_x,
                           gint         radius_y,
                           gboolean     edge_lock,
@@ -1428,95 +1428,95 @@ gimp_channel_real_shrink (GimpChannel *channel,
 
   if (radius_x <= 0 && radius_y <= 0)
     {
-      gimp_channel_grow (channel, -radius_x, -radius_y, push_undo);
+      ligma_channel_grow (channel, -radius_x, -radius_y, push_undo);
       return;
     }
 
   if (radius_x < 0 || radius_y < 0)
     return;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
+  if (! ligma_item_bounds (LIGMA_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
 
   x2 += x1;
   y2 += y1;
 
-  if (gimp_channel_is_empty (channel))
+  if (ligma_channel_is_empty (channel))
     return;
 
   if (x1 > 0)
     x1--;
   if (y1 > 0)
     y1--;
-  if (x2 < gimp_item_get_width (GIMP_ITEM (channel)))
+  if (x2 < ligma_item_get_width (LIGMA_ITEM (channel)))
     x2++;
-  if (y2 < gimp_item_get_height (GIMP_ITEM (channel)))
+  if (y2 < ligma_item_get_height (LIGMA_ITEM (channel)))
     y2++;
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->shrink_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->shrink_desc);
 
-  gimp_gegl_apply_shrink (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_gegl_apply_shrink (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                           NULL, NULL,
-                          gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                          ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                           GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                           radius_x, radius_y, edge_lock);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
-gimp_channel_real_flood (GimpChannel *channel,
+ligma_channel_real_flood (LigmaChannel *channel,
                          gboolean     push_undo)
 {
   gint x, y, width, height;
 
-  if (! gimp_item_bounds (GIMP_ITEM (channel), &x, &y, &width, &height))
+  if (! ligma_item_bounds (LIGMA_ITEM (channel), &x, &y, &width, &height))
     return;
 
-  if (gimp_channel_is_empty (channel))
+  if (ligma_channel_is_empty (channel))
     return;
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->flood_desc);
+    ligma_channel_push_undo (channel,
+                            LIGMA_CHANNEL_GET_CLASS (channel)->flood_desc);
 
-  gimp_gegl_apply_flood (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_gegl_apply_flood (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                          NULL, NULL,
-                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                         ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                          GEGL_RECTANGLE (x, y, width, height));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), x, y, width, height);
+  ligma_drawable_update (LIGMA_DRAWABLE (channel), x, y, width, height);
 }
 
 static void
-gimp_channel_buffer_changed (GeglBuffer          *buffer,
+ligma_channel_buffer_changed (GeglBuffer          *buffer,
                              const GeglRectangle *rect,
-                             GimpChannel         *channel)
+                             LigmaChannel         *channel)
 {
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+  ligma_drawable_invalidate_boundary (LIGMA_DRAWABLE (channel));
 }
 
 
 /*  public functions  */
 
-GimpChannel *
-gimp_channel_new (GimpImage     *image,
+LigmaChannel *
+ligma_channel_new (LigmaImage     *image,
                   gint           width,
                   gint           height,
                   const gchar   *name,
-                  const GimpRGB *color)
+                  const LigmaRGB *color)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   channel =
-    GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_CHANNEL,
+    LIGMA_CHANNEL (ligma_drawable_new (LIGMA_TYPE_CHANNEL,
                                      image, name,
                                      0, 0, width, height,
-                                     gimp_image_get_channel_format (image)));
+                                     ligma_image_get_channel_format (image)));
 
   if (color)
     channel->color = *color;
@@ -1530,57 +1530,57 @@ gimp_channel_new (GimpImage     *image,
   return channel;
 }
 
-GimpChannel *
-gimp_channel_new_from_buffer (GimpImage     *image,
+LigmaChannel *
+ligma_channel_new_from_buffer (LigmaImage     *image,
                               GeglBuffer    *buffer,
                               const gchar   *name,
-                              const GimpRGB *color)
+                              const LigmaRGB *color)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
   GeglBuffer  *dest;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
-  channel = gimp_channel_new (image,
+  channel = ligma_channel_new (image,
                               gegl_buffer_get_width  (buffer),
                               gegl_buffer_get_height (buffer),
                               name, color);
 
-  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
+  dest = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
+  ligma_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   return channel;
 }
 
-GimpChannel *
-gimp_channel_new_from_alpha (GimpImage     *image,
-                             GimpDrawable  *drawable,
+LigmaChannel *
+ligma_channel_new_from_alpha (LigmaImage     *image,
+                             LigmaDrawable  *drawable,
                              const gchar   *name,
-                             const GimpRGB *color)
+                             const LigmaRGB *color)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
   GeglBuffer  *dest_buffer;
   gint         width;
   gint         height;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_drawable_has_alpha (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_drawable_has_alpha (drawable), NULL);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-  height = gimp_item_get_height (GIMP_ITEM (drawable));
+  width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+  height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
-  channel = gimp_channel_new (image, width, height, name, color);
+  channel = ligma_channel_new (image, width, height, name, color);
 
-  gimp_channel_clear (channel, NULL, FALSE);
+  ligma_channel_clear (channel, NULL, FALSE);
 
-  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+  dest_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
   gegl_buffer_set_format (dest_buffer,
-                          gimp_drawable_get_component_format (drawable,
-                                                              GIMP_CHANNEL_ALPHA));
-  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                          ligma_drawable_get_component_format (drawable,
+                                                              LIGMA_CHANNEL_ALPHA));
+  ligma_gegl_buffer_copy (ligma_drawable_get_buffer (drawable), NULL,
                          GEGL_ABYSS_NONE,
                          dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
@@ -1588,146 +1588,146 @@ gimp_channel_new_from_alpha (GimpImage     *image,
   return channel;
 }
 
-GimpChannel *
-gimp_channel_new_from_component (GimpImage       *image,
-                                 GimpChannelType  type,
+LigmaChannel *
+ligma_channel_new_from_component (LigmaImage       *image,
+                                 LigmaChannelType  type,
                                  const gchar     *name,
-                                 const GimpRGB   *color)
+                                 const LigmaRGB   *color)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
   GeglBuffer  *src_buffer;
   GeglBuffer  *dest_buffer;
   gint         width;
   gint         height;
   const Babl  *format;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  format = gimp_image_get_component_format (image, type);
+  format = ligma_image_get_component_format (image, type);
 
   g_return_val_if_fail (format != NULL, NULL);
 
-  gimp_pickable_flush (GIMP_PICKABLE (image));
+  ligma_pickable_flush (LIGMA_PICKABLE (image));
 
-  src_buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+  src_buffer = ligma_pickable_get_buffer (LIGMA_PICKABLE (image));
   width  = gegl_buffer_get_width  (src_buffer);
   height = gegl_buffer_get_height (src_buffer);
 
-  channel = gimp_channel_new (image, width, height, name, color);
+  channel = ligma_channel_new (image, width, height, name, color);
 
-  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+  dest_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
 
   gegl_buffer_set_format (dest_buffer, format);
-  gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+  ligma_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
   return channel;
 }
 
-GimpChannel *
-gimp_channel_get_parent (GimpChannel *channel)
+LigmaChannel *
+ligma_channel_get_parent (LigmaChannel *channel)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
+  g_return_val_if_fail (LIGMA_IS_CHANNEL (channel), NULL);
 
-  return GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
+  return LIGMA_CHANNEL (ligma_viewable_get_parent (LIGMA_VIEWABLE (channel)));
 }
 
 void
-gimp_channel_set_color (GimpChannel   *channel,
-                        const GimpRGB *color,
+ligma_channel_set_color (LigmaChannel   *channel,
+                        const LigmaRGB *color,
                         gboolean       push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgba_distance (&channel->color, color) > RGBA_EPSILON)
+  if (ligma_rgba_distance (&channel->color, color) > RGBA_EPSILON)
     {
-      if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
+      if (push_undo && ligma_item_is_attached (LIGMA_ITEM (channel)))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
+          LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Color"),
+          ligma_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Color"),
                                               channel);
         }
 
       channel->color = *color;
 
-      if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+      if (ligma_filter_peek_node (LIGMA_FILTER (channel)))
         {
-          gimp_gegl_node_set_color (channel->color_node,
+          ligma_gegl_node_set_color (channel->color_node,
                                     &channel->color, NULL);
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+      ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 
       g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
 }
 
 void
-gimp_channel_get_color (GimpChannel *channel,
-                        GimpRGB     *color)
+ligma_channel_get_color (LigmaChannel *channel,
+                        LigmaRGB     *color)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
   *color = channel->color;
 }
 
 gdouble
-gimp_channel_get_opacity (GimpChannel *channel)
+ligma_channel_get_opacity (LigmaChannel *channel)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), GIMP_OPACITY_TRANSPARENT);
+  g_return_val_if_fail (LIGMA_IS_CHANNEL (channel), LIGMA_OPACITY_TRANSPARENT);
 
   return channel->color.a;
 }
 
 void
-gimp_channel_set_opacity (GimpChannel *channel,
+ligma_channel_set_opacity (LigmaChannel *channel,
                           gdouble      opacity,
                           gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
+  opacity = CLAMP (opacity, LIGMA_OPACITY_TRANSPARENT, LIGMA_OPACITY_OPAQUE);
 
   if (channel->color.a != opacity)
     {
-      if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
+      if (push_undo && ligma_item_is_attached (LIGMA_ITEM (channel)))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
+          LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Opacity"),
+          ligma_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Opacity"),
                                               channel);
         }
 
       channel->color.a = opacity;
 
-      if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+      if (ligma_filter_peek_node (LIGMA_FILTER (channel)))
         {
-          gimp_gegl_node_set_color (channel->color_node,
+          ligma_gegl_node_set_color (channel->color_node,
                                     &channel->color, NULL);
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+      ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
 
       g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
 }
 
 gboolean
-gimp_channel_get_show_masked (GimpChannel *channel)
+ligma_channel_get_show_masked (LigmaChannel *channel)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CHANNEL (channel), FALSE);
 
   return channel->show_masked;
 }
 
 void
-gimp_channel_set_show_masked (GimpChannel *channel,
+ligma_channel_set_show_masked (LigmaChannel *channel,
                               gboolean     show_masked)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
   if (show_masked != channel->show_masked)
     {
@@ -1737,7 +1737,7 @@ gimp_channel_set_show_masked (GimpChannel *channel,
         {
           GeglNode *source;
 
-          source = gimp_drawable_get_source_node (GIMP_DRAWABLE (channel));
+          source = ligma_drawable_get_source_node (LIGMA_DRAWABLE (channel));
 
           if (channel->show_masked)
             {
@@ -1755,18 +1755,18 @@ gimp_channel_set_show_masked (GimpChannel *channel,
             }
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+      ligma_drawable_update (LIGMA_DRAWABLE (channel), 0, 0, -1, -1);
     }
 }
 
 void
-gimp_channel_push_undo (GimpChannel *channel,
+ligma_channel_push_undo (LigmaChannel *channel,
                         const gchar *undo_desc)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (channel)));
 
-  gimp_image_undo_push_mask (gimp_item_get_image (GIMP_ITEM (channel)),
+  ligma_image_undo_push_mask (ligma_item_get_image (LIGMA_ITEM (channel)),
                              undo_desc, channel);
 }
 
@@ -1775,35 +1775,35 @@ gimp_channel_push_undo (GimpChannel *channel,
 /*  selection mask functions  */
 /******************************/
 
-GimpChannel *
-gimp_channel_new_mask (GimpImage *image,
+LigmaChannel *
+ligma_channel_new_mask (LigmaImage *image,
                        gint       width,
                        gint       height)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   channel =
-    GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_CHANNEL,
+    LIGMA_CHANNEL (ligma_drawable_new (LIGMA_TYPE_CHANNEL,
                                      image, _("Selection Mask"),
                                      0, 0, width, height,
-                                     gimp_image_get_mask_format (image)));
+                                     ligma_image_get_mask_format (image)));
 
   channel->show_masked = TRUE;
   channel->x2          = width;
   channel->y2          = height;
 
-  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_clear (ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                      NULL);
 
   return channel;
 }
 
 gboolean
-gimp_channel_boundary (GimpChannel         *channel,
-                       const GimpBoundSeg **segs_in,
-                       const GimpBoundSeg **segs_out,
+ligma_channel_boundary (LigmaChannel         *channel,
+                       const LigmaBoundSeg **segs_in,
+                       const LigmaBoundSeg **segs_out,
                        gint                *num_segs_in,
                        gint                *num_segs_out,
                        gint                 x1,
@@ -1811,13 +1811,13 @@ gimp_channel_boundary (GimpChannel         *channel,
                        gint                 x2,
                        gint                 y2)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (segs_in != NULL, FALSE);
   g_return_val_if_fail (segs_out != NULL, FALSE);
   g_return_val_if_fail (num_segs_in != NULL, FALSE);
   g_return_val_if_fail (num_segs_out != NULL, FALSE);
 
-  return GIMP_CHANNEL_GET_CLASS (channel)->boundary (channel,
+  return LIGMA_CHANNEL_GET_CLASS (channel)->boundary (channel,
                                                      segs_in, segs_out,
                                                      num_segs_in, num_segs_out,
                                                      x1, y1,
@@ -1825,135 +1825,135 @@ gimp_channel_boundary (GimpChannel         *channel,
 }
 
 gboolean
-gimp_channel_is_empty (GimpChannel *channel)
+ligma_channel_is_empty (LigmaChannel *channel)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), TRUE);
+  g_return_val_if_fail (LIGMA_IS_CHANNEL (channel), TRUE);
 
-  return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
+  return LIGMA_CHANNEL_GET_CLASS (channel)->is_empty (channel);
 }
 
 void
-gimp_channel_feather (GimpChannel *channel,
+ligma_channel_feather (LigmaChannel *channel,
                       gdouble      radius_x,
                       gdouble      radius_y,
                       gboolean     edge_lock,
                       gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
+  LIGMA_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
                                              edge_lock, push_undo);
 }
 
 void
-gimp_channel_sharpen (GimpChannel *channel,
+ligma_channel_sharpen (LigmaChannel *channel,
                       gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->sharpen (channel, push_undo);
+  LIGMA_CHANNEL_GET_CLASS (channel)->sharpen (channel, push_undo);
 }
 
 void
-gimp_channel_clear (GimpChannel *channel,
+ligma_channel_clear (LigmaChannel *channel,
                     const gchar *undo_desc,
                     gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->clear (channel, undo_desc, push_undo);
+  LIGMA_CHANNEL_GET_CLASS (channel)->clear (channel, undo_desc, push_undo);
 }
 
 void
-gimp_channel_all (GimpChannel *channel,
+ligma_channel_all (LigmaChannel *channel,
                   gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->all (channel, push_undo);
+  LIGMA_CHANNEL_GET_CLASS (channel)->all (channel, push_undo);
 }
 
 void
-gimp_channel_invert (GimpChannel *channel,
+ligma_channel_invert (LigmaChannel *channel,
                      gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->invert (channel, push_undo);
+  LIGMA_CHANNEL_GET_CLASS (channel)->invert (channel, push_undo);
 }
 
 void
-gimp_channel_border (GimpChannel            *channel,
+ligma_channel_border (LigmaChannel            *channel,
                      gint                    radius_x,
                      gint                    radius_y,
-                     GimpChannelBorderStyle  style,
+                     LigmaChannelBorderStyle  style,
                      gboolean                edge_lock,
                      gboolean                push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->border (channel,
+  LIGMA_CHANNEL_GET_CLASS (channel)->border (channel,
                                             radius_x, radius_y, style, edge_lock,
                                             push_undo);
 }
 
 void
-gimp_channel_grow (GimpChannel *channel,
+ligma_channel_grow (LigmaChannel *channel,
                    gint         radius_x,
                    gint         radius_y,
                    gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->grow (channel, radius_x, radius_y,
+  LIGMA_CHANNEL_GET_CLASS (channel)->grow (channel, radius_x, radius_y,
                                           push_undo);
 }
 
 void
-gimp_channel_shrink (GimpChannel  *channel,
+ligma_channel_shrink (LigmaChannel  *channel,
                      gint          radius_x,
                      gint          radius_y,
                      gboolean      edge_lock,
                      gboolean      push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
+  LIGMA_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
                                             edge_lock, push_undo);
 }
 
 void
-gimp_channel_flood (GimpChannel *channel,
+ligma_channel_flood (LigmaChannel *channel,
                     gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (LIGMA_IS_CHANNEL (channel));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+  if (! ligma_item_is_attached (LIGMA_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->flood (channel, push_undo);
+  LIGMA_CHANNEL_GET_CLASS (channel)->flood (channel, push_undo);
 }

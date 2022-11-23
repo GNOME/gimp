@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimp-gradients.h
- * Copyright (C) 2002 Michael Natterer  <mitch@gimp.org>
+ * ligma-gradients.h
+ * Copyright (C) 2002 Michael Natterer  <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENTS__
-#define __GIMP_GRADIENTS__
+#ifndef __LIGMA_GRADIENTS__
+#define __LIGMA_GRADIENTS__
 
 
-void           gimp_gradients_init               (Gimp *gimp);
+void           ligma_gradients_init               (Ligma *ligma);
 
-GimpGradient * gimp_gradients_get_custom         (Gimp *gimp);
-GimpGradient * gimp_gradients_get_fg_bg_rgb      (Gimp *gimp);
-GimpGradient * gimp_gradients_get_fg_bg_hsv_ccw  (Gimp *gimp);
-GimpGradient * gimp_gradients_get_fg_bg_hsv_cw   (Gimp *gimp);
-GimpGradient * gimp_gradients_get_fg_transparent (Gimp *gimp);
+LigmaGradient * ligma_gradients_get_custom         (Ligma *ligma);
+LigmaGradient * ligma_gradients_get_fg_bg_rgb      (Ligma *ligma);
+LigmaGradient * ligma_gradients_get_fg_bg_hsv_ccw  (Ligma *ligma);
+LigmaGradient * ligma_gradients_get_fg_bg_hsv_cw   (Ligma *ligma);
+LigmaGradient * ligma_gradients_get_fg_transparent (Ligma *ligma);
 
 
-#endif /* __GIMP_GRADIENTS__ */
+#endif /* __LIGMA_GRADIENTS__ */

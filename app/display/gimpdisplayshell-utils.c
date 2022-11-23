@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,28 +20,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
-#include "core/gimpunit.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaunit.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-utils.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 void
-gimp_display_shell_get_constrained_line_params (GimpDisplayShell *shell,
+ligma_display_shell_get_constrained_line_params (LigmaDisplayShell *shell,
                                                 gdouble          *offset_angle,
                                                 gdouble          *xres,
                                                 gdouble          *yres)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (offset_angle != NULL);
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
@@ -56,15 +56,15 @@ gimp_display_shell_get_constrained_line_params (GimpDisplayShell *shell,
 
   if (! shell->dot_for_dot)
     {
-      GimpImage *image = gimp_display_get_image (shell->display);
+      LigmaImage *image = ligma_display_get_image (shell->display);
 
       if (image)
-        gimp_image_get_resolution (image, xres, yres);
+        ligma_image_get_resolution (image, xres, yres);
     }
 }
 
 void
-gimp_display_shell_constrain_line (GimpDisplayShell *shell,
+ligma_display_shell_constrain_line (LigmaDisplayShell *shell,
                                    gdouble           start_x,
                                    gdouble           start_y,
                                    gdouble          *end_x,
@@ -74,15 +74,15 @@ gimp_display_shell_constrain_line (GimpDisplayShell *shell,
   gdouble offset_angle;
   gdouble xres, yres;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (end_x != NULL);
   g_return_if_fail (end_y != NULL);
 
-  gimp_display_shell_get_constrained_line_params (shell,
+  ligma_display_shell_get_constrained_line_params (shell,
                                                   &offset_angle,
                                                   &xres, &yres);
 
-  gimp_constrain_line (start_x, start_y,
+  ligma_constrain_line (start_x, start_y,
                        end_x,   end_y,
                        n_snap_lines,
                        offset_angle,
@@ -90,18 +90,18 @@ gimp_display_shell_constrain_line (GimpDisplayShell *shell,
 }
 
 gdouble
-gimp_display_shell_constrain_angle (GimpDisplayShell *shell,
+ligma_display_shell_constrain_angle (LigmaDisplayShell *shell,
                                     gdouble           angle,
                                     gint              n_snap_lines)
 {
   gdouble x, y;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0.0);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), 0.0);
 
   x = cos (angle);
   y = sin (angle);
 
-  gimp_display_shell_constrain_line (shell,
+  ligma_display_shell_constrain_line (shell,
                                      0.0, 0.0,
                                      &x,  &y,
                                      n_snap_lines);
@@ -110,10 +110,10 @@ gimp_display_shell_constrain_angle (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_get_line_status:
+ * ligma_display_shell_get_line_status:
  * @status:    initial status text.
  * @separator: separator text between the line information and @status.
- * @shell:     #GimpDisplayShell this status text will be displayed for.
+ * @shell:     #LigmaDisplayShell this status text will be displayed for.
  * @x1:        abscissa of first point.
  * @y1:        ordinate of first point.
  * @x2:        abscissa of second point.
@@ -132,7 +132,7 @@ gimp_display_shell_constrain_angle (GimpDisplayShell *shell,
  * Returns: a newly allocated string containing the enhanced status.
  **/
 gchar *
-gimp_display_shell_get_line_status (GimpDisplayShell *shell,
+ligma_display_shell_get_line_status (LigmaDisplayShell *shell,
                                     const gchar      *status,
                                     const gchar      *separator,
                                     gdouble           x1,
@@ -140,14 +140,14 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
                                     gdouble           x2,
                                     gdouble           y2)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gchar     *enhanced_status;
   gdouble    xres;
   gdouble    yres;
   gdouble    dx, dy, pixel_dist;
   gdouble    angle;
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
   if (! image)
     {
       /* This makes no sense to add line information when no image is
@@ -155,10 +155,10 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
       return g_strdup (status);
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     xres = yres = 1.0;
   else
-    gimp_image_get_resolution (image, &xres, &yres);
+    ligma_image_get_resolution (image, &xres, &yres);
 
   dx = x2 - x1;
   dy = y2 - y1;
@@ -166,7 +166,7 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
 
   if (dx)
     {
-      angle = gimp_rad_to_deg (atan ((dy/yres) / (dx/xres)));
+      angle = ligma_rad_to_deg (atan ((dy/yres) / (dx/xres)));
       if (dx > 0)
         {
           if (dy > 0)
@@ -188,7 +188,7 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
       angle = 0.0;
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
       enhanced_status = g_strdup_printf ("%.1f %s, %.2f\302\260%s%s",
                                          pixel_dist, _("pixels"), angle,
@@ -202,16 +202,16 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
 
       /* The distance in unit. */
       inch_dist = sqrt (SQR (dx / xres) + SQR (dy / yres));
-      unit_dist = gimp_unit_get_factor (shell->unit) * inch_dist;
+      unit_dist = ligma_unit_get_factor (shell->unit) * inch_dist;
 
       /* The ideal digit precision for unit in current resolution. */
       if (inch_dist)
-        digits = gimp_unit_get_scaled_digits (shell->unit,
+        digits = ligma_unit_get_scaled_digits (shell->unit,
                                               pixel_dist / inch_dist);
 
       enhanced_status = g_strdup_printf ("%.*f %s, %.2f\302\260%s%s",
                                          digits, unit_dist,
-                                         gimp_unit_get_symbol (shell->unit),
+                                         ligma_unit_get_symbol (shell->unit),
                                          angle, separator, status);
 
     }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * hello-world.vala
@@ -22,13 +22,13 @@ private const string PLUG_IN_PROC = "plug-in-goat-exercise-vala";
 private const string PLUG_IN_ROLE = "goat-exercise-vala";
 private const string PLUG_IN_BINARY = "goat-exercise-vala";
 private const string PLUG_IN_SOURCE = PLUG_IN_BINARY + ".vala";
-private const string URL = "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-vala.vala";
+private const string URL = "https://gitlab.gnome.org/GNOME/ligma/blob/master/extensions/goat-exercises/goat-exercise-vala.vala";
 
 public int main(string[] args) {
-  return Gimp.main(typeof(Goat), args);
+  return Ligma.main(typeof(Goat), args);
 }
 
-public class Goat : Gimp.PlugIn {
+public class Goat : Ligma.PlugIn {
 
   public override GLib.List<string> query_procedures() {
     GLib.List<string> procs = null;
@@ -36,39 +36,39 @@ public class Goat : Gimp.PlugIn {
     return procs;
   }
 
-  public override Gimp.Procedure create_procedure(string name) {
+  public override Ligma.Procedure create_procedure(string name) {
     assert(name == PLUG_IN_PROC);
 
-    var procedure = new Gimp.ImageProcedure(this, name, Gimp.PDBProcType.PLUGIN, this.run);
+    var procedure = new Ligma.ImageProcedure(this, name, Ligma.PDBProcType.PLUGIN, this.run);
     procedure.set_image_types("RGB*, INDEXED*, GRAY*");
-    procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
+    procedure.set_sensitivity_mask(Ligma.ProcedureSensitivityMask.DRAWABLE);
     procedure.set_menu_label(N_("Exercise a Vala goat"));
     procedure.set_documentation(N_("Exercise a goat in the Vala language"),
                                 N_("Takes a goat for a walk in Vala"),
                                 PLUG_IN_PROC);
     procedure.add_menu_path("<Image>/Filters/Development/Goat exercises/");
     procedure.set_attribution("Niels De Graef", "Niels De Graef", "2020");
-    procedure.set_icon_name(GimpUi.ICON_GEGL);
+    procedure.set_icon_name(LigmaUi.ICON_GEGL);
 
     return procedure;
   }
 
-  public Gimp.ValueArray run(Gimp.Procedure procedure,
-                             Gimp.RunMode run_mode,
-                             Gimp.Image image,
-                             Gimp.Drawable[] drawables,
-                             Gimp.ValueArray args) {
+  public Ligma.ValueArray run(Ligma.Procedure procedure,
+                             Ligma.RunMode run_mode,
+                             Ligma.Image image,
+                             Ligma.Drawable[] drawables,
+                             Ligma.ValueArray args) {
     var drawable = drawables[0];
 
-    if (run_mode == Gimp.RunMode.INTERACTIVE) {
-      GimpUi.init(PLUG_IN_BINARY);
+    if (run_mode == Ligma.RunMode.INTERACTIVE) {
+      LigmaUi.init(PLUG_IN_BINARY);
 
       var dialog =
-          new GimpUi.Dialog(_("Exercise a goat (Vala)"),
+          new LigmaUi.Dialog(_("Exercise a goat (Vala)"),
                           PLUG_IN_ROLE,
                           null,
                           Gtk.DialogFlags.USE_HEADER_BAR,
-                          GimpUi.standard_help_func,
+                          LigmaUi.standard_help_func,
                           PLUG_IN_PROC,
                           _("_Cancel"), Gtk.ResponseType.CANCEL,
                           _("_Source"), Gtk.ResponseType.APPLY,
@@ -94,7 +94,7 @@ public class Goat : Gimp.PlugIn {
       label.show();
 
 
-      string file = Path.build_filename(Gimp.PlugIn.directory(), "extensions", "org.gimp.extension.goat-exercises", PLUG_IN_SOURCE);
+      string file = Path.build_filename(Ligma.PlugIn.directory(), "extensions", "org.ligma.extension.goat-exercises", PLUG_IN_SOURCE);
       string contents;
       try {
         FileUtils.get_contents(file, out contents);
@@ -129,7 +129,7 @@ public class Goat : Gimp.PlugIn {
           continue;
         } else {
           dialog.destroy();
-          return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, null);
+          return procedure.new_return_values(Ligma.PDBStatusType.CANCEL, null);
         }
       }
     }
@@ -138,7 +138,7 @@ public class Goat : Gimp.PlugIn {
     if (!drawable.mask_intersect(out x, out y, out width, out height)) {
       var error = new GLib.Error.literal(GLib.Quark.from_string("goat-error-quark"), 0,
                          "No pixels to process in the selected area.");
-      return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error);
+      return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR, error);
     }
 
     unowned string[]? argv = null;
@@ -156,9 +156,9 @@ public class Goat : Gimp.PlugIn {
 
     drawable.merge_shadow(true);
     drawable.update(x, y, width, height);
-    Gimp.displays_flush();
+    Ligma.displays_flush();
     Gegl.exit();
 
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, null);
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, null);
   }
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,81 +19,81 @@
 
 #include "glib-object.h"
 
-#include "gimp-debug.h"
-#include "gimp-log.h"
+#include "ligma-debug.h"
+#include "ligma-log.h"
 
 
 static const GDebugKey log_keys[] =
 {
-  { "tool-events",        GIMP_LOG_TOOL_EVENTS        },
-  { "tool-focus",         GIMP_LOG_TOOL_FOCUS         },
-  { "dnd",                GIMP_LOG_DND                },
-  { "help",               GIMP_LOG_HELP               },
-  { "dialog-factory",     GIMP_LOG_DIALOG_FACTORY     },
-  { "menus",              GIMP_LOG_MENUS              },
-  { "save-dialog",        GIMP_LOG_SAVE_DIALOG        },
-  { "image-scale",        GIMP_LOG_IMAGE_SCALE        },
-  { "shadow-tiles",       GIMP_LOG_SHADOW_TILES       },
-  { "scale",              GIMP_LOG_SCALE              },
-  { "wm",                 GIMP_LOG_WM                 },
-  { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
-  { "shm",                GIMP_LOG_SHM                },
-  { "text-editing",       GIMP_LOG_TEXT_EDITING       },
-  { "key-events",         GIMP_LOG_KEY_EVENTS         },
-  { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
-  { "instances",          GIMP_LOG_INSTANCES          },
-  { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
-  { "brush-cache",        GIMP_LOG_BRUSH_CACHE        },
-  { "projection",         GIMP_LOG_PROJECTION         },
-  { "xcf",                GIMP_LOG_XCF                }
+  { "tool-events",        LIGMA_LOG_TOOL_EVENTS        },
+  { "tool-focus",         LIGMA_LOG_TOOL_FOCUS         },
+  { "dnd",                LIGMA_LOG_DND                },
+  { "help",               LIGMA_LOG_HELP               },
+  { "dialog-factory",     LIGMA_LOG_DIALOG_FACTORY     },
+  { "menus",              LIGMA_LOG_MENUS              },
+  { "save-dialog",        LIGMA_LOG_SAVE_DIALOG        },
+  { "image-scale",        LIGMA_LOG_IMAGE_SCALE        },
+  { "shadow-tiles",       LIGMA_LOG_SHADOW_TILES       },
+  { "scale",              LIGMA_LOG_SCALE              },
+  { "wm",                 LIGMA_LOG_WM                 },
+  { "floating-selection", LIGMA_LOG_FLOATING_SELECTION },
+  { "shm",                LIGMA_LOG_SHM                },
+  { "text-editing",       LIGMA_LOG_TEXT_EDITING       },
+  { "key-events",         LIGMA_LOG_KEY_EVENTS         },
+  { "auto-tab-style",     LIGMA_LOG_AUTO_TAB_STYLE     },
+  { "instances",          LIGMA_LOG_INSTANCES          },
+  { "rectangle-tool",     LIGMA_LOG_RECTANGLE_TOOL     },
+  { "brush-cache",        LIGMA_LOG_BRUSH_CACHE        },
+  { "projection",         LIGMA_LOG_PROJECTION         },
+  { "xcf",                LIGMA_LOG_XCF                }
 };
 
 static const gchar * const log_domains[] =
 {
-  "Gimp",
-  "Gimp-Actions",
-  "Gimp-Base",
-  "Gimp-Composite",
-  "Gimp-Config",
-  "Gimp-Core",
-  "Gimp-Dialogs",
-  "Gimp-Display",
-  "Gimp-File",
-  "Gimp-GEGL",
-  "Gimp-GUI",
-  "Gimp-Menus",
-  "Gimp-Operations",
-  "Gimp-PDB",
-  "Gimp-Paint",
-  "Gimp-Paint-Funcs",
-  "Gimp-Plug-In",
-  "Gimp-Text",
-  "Gimp-Tools",
-  "Gimp-Vectors",
-  "Gimp-Widgets",
-  "Gimp-XCF",
-  "LibGimpBase",
-  "LibGimpColor",
-  "LibGimpConfig",
-  "LibGimpMath",
-  "LibGimpModule",
-  "LibGimpThumb",
-  "LibGimpWidgets",
+  "Ligma",
+  "Ligma-Actions",
+  "Ligma-Base",
+  "Ligma-Composite",
+  "Ligma-Config",
+  "Ligma-Core",
+  "Ligma-Dialogs",
+  "Ligma-Display",
+  "Ligma-File",
+  "Ligma-GEGL",
+  "Ligma-GUI",
+  "Ligma-Menus",
+  "Ligma-Operations",
+  "Ligma-PDB",
+  "Ligma-Paint",
+  "Ligma-Paint-Funcs",
+  "Ligma-Plug-In",
+  "Ligma-Text",
+  "Ligma-Tools",
+  "Ligma-Vectors",
+  "Ligma-Widgets",
+  "Ligma-XCF",
+  "LibLigmaBase",
+  "LibLigmaColor",
+  "LibLigmaConfig",
+  "LibLigmaMath",
+  "LibLigmaModule",
+  "LibLigmaThumb",
+  "LibLigmaWidgets",
   "GEGL",
   NULL
 };
 
 
-GimpLogFlags gimp_log_flags = 0;
+LigmaLogFlags ligma_log_flags = 0;
 
 
 void
-gimp_log_init (void)
+ligma_log_init (void)
 {
-  const gchar *env_log_val = g_getenv ("GIMP_LOG");
+  const gchar *env_log_val = g_getenv ("LIGMA_LOG");
 
   if (! env_log_val)
-    env_log_val = g_getenv ("GIMP_DEBUG");
+    env_log_val = g_getenv ("LIGMA_DEBUG");
 
   if (env_log_val)
     g_setenv ("G_MESSAGES_DEBUG", env_log_val, TRUE);
@@ -101,31 +101,31 @@ gimp_log_init (void)
   if (env_log_val)
     {
       /*  g_parse_debug_string() has special treatment of the string 'help',
-       *  but we want to use it for the GIMP_LOG_HELP domain. "list-all"
-       *  is a replacement for "help" in GIMP.
+       *  but we want to use it for the LIGMA_LOG_HELP domain. "list-all"
+       *  is a replacement for "help" in LIGMA.
        */
       if (g_ascii_strcasecmp (env_log_val, "list-all") == 0)
-        gimp_log_flags = g_parse_debug_string ("help",
+        ligma_log_flags = g_parse_debug_string ("help",
                                                log_keys,
                                                G_N_ELEMENTS (log_keys));
       else if (g_ascii_strcasecmp (env_log_val, "help") == 0)
-        gimp_log_flags = GIMP_LOG_HELP;
+        ligma_log_flags = LIGMA_LOG_HELP;
       else
-        gimp_log_flags = g_parse_debug_string (env_log_val,
+        ligma_log_flags = g_parse_debug_string (env_log_val,
                                                log_keys,
                                                G_N_ELEMENTS (log_keys));
 
-      if (gimp_log_flags & GIMP_LOG_INSTANCES)
+      if (ligma_log_flags & LIGMA_LOG_INSTANCES)
         {
-          gimp_debug_enable_instances ();
+          ligma_debug_enable_instances ();
         }
-      else if (! gimp_log_flags)
+      else if (! ligma_log_flags)
         {
           /* If the environment variable was set but no log flags are
            * set as a result, let's assume one is not sure how to use
            * the log flags and output the list of keys as a helper.
            */
-          gimp_log_flags = g_parse_debug_string ("help",
+          ligma_log_flags = g_parse_debug_string ("help",
                                                  log_keys,
                                                  G_N_ELEMENTS (log_keys));
         }
@@ -133,7 +133,7 @@ gimp_log_init (void)
 }
 
 void
-gimp_log (GimpLogFlags  flags,
+ligma_log (LigmaLogFlags  flags,
           const gchar  *function,
           gint          line,
           const gchar  *format,
@@ -142,12 +142,12 @@ gimp_log (GimpLogFlags  flags,
   va_list args;
 
   va_start (args, format);
-  gimp_logv (flags, function, line, format, args);
+  ligma_logv (flags, function, line, format, args);
   va_end (args);
 }
 
 void
-gimp_logv (GimpLogFlags  flags,
+ligma_logv (LigmaLogFlags  flags,
            const gchar  *function,
            gint          line,
            const gchar  *format,
@@ -175,13 +175,13 @@ gimp_logv (GimpLogFlags  flags,
   g_free (message);
 }
 
-GimpLogHandler
-gimp_log_set_handler (gboolean       global,
+LigmaLogHandler
+ligma_log_set_handler (gboolean       global,
                       GLogLevelFlags log_levels,
                       GLogFunc       log_func,
                       gpointer       user_data)
 {
-  GimpLogHandler handler;
+  LigmaLogHandler handler;
   gint           n;
   gint           i;
 
@@ -203,7 +203,7 @@ gimp_log_set_handler (gboolean       global,
 }
 
 void
-gimp_log_remove_handler (GimpLogHandler handler)
+ligma_log_remove_handler (LigmaLogHandler handler)
 {
   gint n;
   gint i;

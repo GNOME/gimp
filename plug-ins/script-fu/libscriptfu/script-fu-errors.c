@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ script_error (scheme        *sc,
   /* Logs to domain "scriptfu" since G_LOG_DOMAIN is set to that. */
   g_debug ("%s", error_message);
 
-  /* Return message that will cross the GimpProtocol in a GError in return values
+  /* Return message that will cross the LigmaProtocol in a GError in return values
    * to be displayed to GUI user.
    */
    /* FUTURE prefix with "ScriptFu: in script," */
@@ -223,7 +223,7 @@ debug_in_arg (scheme           *sc,
 }
 
 /* Log GValue: its value and its GType
- * FUTURE: for Gimp types, gimp_item_get_id (GIMP_ITEM (<value>)));
+ * FUTURE: for Ligma types, ligma_item_get_id (LIGMA_ITEM (<value>)));
  */
 void
 debug_gvalue (const GValue     *value)

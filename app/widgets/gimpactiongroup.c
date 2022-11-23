@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactiongroup.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaactiongroup.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,28 +23,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpviewable.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaviewable.h"
 
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "gimpaction.h"
-#include "gimpactiongroup.h"
-#include "gimpactionimpl.h"
-#include "gimpdoubleaction.h"
-#include "gimpenumaction.h"
-#include "gimpprocedureaction.h"
-#include "gimpradioaction.h"
-#include "gimpstringaction.h"
-#include "gimptoggleaction.h"
+#include "ligmaaction.h"
+#include "ligmaactiongroup.h"
+#include "ligmaactionimpl.h"
+#include "ligmadoubleaction.h"
+#include "ligmaenumaction.h"
+#include "ligmaprocedureaction.h"
+#include "ligmaradioaction.h"
+#include "ligmastringaction.h"
+#include "ligmatoggleaction.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -55,62 +55,62 @@ enum
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_LABEL,
   PROP_ICON_NAME
 };
 
 
-static void   gimp_action_group_constructed   (GObject      *object);
-static void   gimp_action_group_dispose       (GObject      *object);
-static void   gimp_action_group_finalize      (GObject      *object);
-static void   gimp_action_group_set_property  (GObject      *object,
+static void   ligma_action_group_constructed   (GObject      *object);
+static void   ligma_action_group_dispose       (GObject      *object);
+static void   ligma_action_group_finalize      (GObject      *object);
+static void   ligma_action_group_set_property  (GObject      *object,
                                                guint         prop_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_action_group_get_property  (GObject      *object,
+static void   ligma_action_group_get_property  (GObject      *object,
                                                guint         prop_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP)
+G_DEFINE_TYPE (LigmaActionGroup, ligma_action_group, GTK_TYPE_ACTION_GROUP)
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
-#define parent_class gimp_action_group_parent_class
+#define parent_class ligma_action_group_parent_class
 
 
 static void
-gimp_action_group_class_init (GimpActionGroupClass *klass)
+ligma_action_group_class_init (LigmaActionGroupClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_action_group_constructed;
-  object_class->dispose      = gimp_action_group_dispose;
-  object_class->finalize     = gimp_action_group_finalize;
-  object_class->set_property = gimp_action_group_set_property;
-  object_class->get_property = gimp_action_group_get_property;
+  object_class->constructed  = ligma_action_group_constructed;
+  object_class->dispose      = ligma_action_group_dispose;
+  object_class->finalize     = ligma_action_group_finalize;
+  object_class->set_property = ligma_action_group_set_property;
+  object_class->get_property = ligma_action_group_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_LABEL,
                                    g_param_spec_string ("label",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
@@ -119,35 +119,35 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
     g_signal_new ("action-added",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpActionGroupClass, action_added),
+                  G_STRUCT_OFFSET (LigmaActionGroupClass, action_added),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_ACTION);
+                  LIGMA_TYPE_ACTION);
 }
 
 static void
-gimp_action_group_init (GimpActionGroup *group)
+ligma_action_group_init (LigmaActionGroup *group)
 {
 }
 
 static void
-gimp_action_group_constructed (GObject *object)
+ligma_action_group_constructed (GObject *object)
 {
-  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+  LigmaActionGroup *group = LIGMA_ACTION_GROUP (object);
   const gchar     *name;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (group->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (group->ligma));
 
-  name = gimp_action_group_get_name (group);
+  name = ligma_action_group_get_name (group);
 
   if (name)
     {
-      GimpActionGroupClass *group_class;
+      LigmaActionGroupClass *group_class;
       GList                *list;
 
-      group_class = GIMP_ACTION_GROUP_GET_CLASS (object);
+      group_class = LIGMA_ACTION_GROUP_GET_CLASS (object);
 
       list = g_hash_table_lookup (group_class->groups, name);
 
@@ -159,16 +159,16 @@ gimp_action_group_constructed (GObject *object)
 }
 
 static void
-gimp_action_group_dispose (GObject *object)
+ligma_action_group_dispose (GObject *object)
 {
-  const gchar *name = gimp_action_group_get_name (GIMP_ACTION_GROUP (object));
+  const gchar *name = ligma_action_group_get_name (LIGMA_ACTION_GROUP (object));
 
   if (name)
     {
-      GimpActionGroupClass *group_class;
+      LigmaActionGroupClass *group_class;
       GList                *list;
 
-      group_class = GIMP_ACTION_GROUP_GET_CLASS (object);
+      group_class = LIGMA_ACTION_GROUP_GET_CLASS (object);
 
       list = g_hash_table_lookup (group_class->groups, name);
 
@@ -188,9 +188,9 @@ gimp_action_group_dispose (GObject *object)
 }
 
 static void
-gimp_action_group_finalize (GObject *object)
+ligma_action_group_finalize (GObject *object)
 {
-  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+  LigmaActionGroup *group = LIGMA_ACTION_GROUP (object);
 
   g_clear_pointer (&group->label,     g_free);
   g_clear_pointer (&group->icon_name, g_free);
@@ -199,17 +199,17 @@ gimp_action_group_finalize (GObject *object)
 }
 
 static void
-gimp_action_group_set_property (GObject      *object,
+ligma_action_group_set_property (GObject      *object,
                                 guint         prop_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+  LigmaActionGroup *group = LIGMA_ACTION_GROUP (object);
 
   switch (prop_id)
     {
-    case PROP_GIMP:
-      group->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      group->ligma = g_value_get_object (value);
       break;
     case PROP_LABEL:
       group->label = g_value_dup_string (value);
@@ -225,17 +225,17 @@ gimp_action_group_set_property (GObject      *object,
 }
 
 static void
-gimp_action_group_get_property (GObject    *object,
+ligma_action_group_get_property (GObject    *object,
                                 guint       prop_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+  LigmaActionGroup *group = LIGMA_ACTION_GROUP (object);
 
   switch (prop_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, group->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, group->ligma);
       break;
     case PROP_LABEL:
       g_value_set_string (value, group->label);
@@ -251,13 +251,13 @@ gimp_action_group_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_action_group_check_unique_action (GimpActionGroup *group,
+ligma_action_group_check_unique_action (LigmaActionGroup *group,
                                        const gchar     *action_name)
 {
-  if (G_UNLIKELY (gimp_action_group_get_action (group, action_name)))
+  if (G_UNLIKELY (ligma_action_group_get_action (group, action_name)))
     {
       g_printerr ("Refusing to add non-unique action '%s' to action group '%s'\n",
-                  action_name, gimp_action_group_get_name (group));
+                  action_name, ligma_action_group_get_name (group));
       return FALSE;
     }
 
@@ -266,36 +266,36 @@ gimp_action_group_check_unique_action (GimpActionGroup *group,
 }
 
 /**
- * gimp_action_group_new:
- * @gimp:        the @Gimp instance this action group belongs to
+ * ligma_action_group_new:
+ * @ligma:        the @Ligma instance this action group belongs to
  * @name:        the name of the action group.
  * @label:       the user visible label of the action group.
  * @icon_name:   the icon of the action group.
  * @user_data:   the user_data for #GtkAction callbacks.
  * @update_func: the function that will be called on
- *               gimp_action_group_update().
+ *               ligma_action_group_update().
  *
- * Creates a new #GimpActionGroup object. The name of the action group
+ * Creates a new #LigmaActionGroup object. The name of the action group
  * is used when associating <link linkend="Action-Accel">keybindings</link>
  * with the actions.
  *
- * Returns: the new #GimpActionGroup
+ * Returns: the new #LigmaActionGroup
  */
-GimpActionGroup *
-gimp_action_group_new (Gimp                      *gimp,
+LigmaActionGroup *
+ligma_action_group_new (Ligma                      *ligma,
                        const gchar               *name,
                        const gchar               *label,
                        const gchar               *icon_name,
                        gpointer                   user_data,
-                       GimpActionGroupUpdateFunc  update_func)
+                       LigmaActionGroupUpdateFunc  update_func)
 {
-  GimpActionGroup *group;
+  LigmaActionGroup *group;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  group = g_object_new (GIMP_TYPE_ACTION_GROUP,
-                        "gimp",      gimp,
+  group = g_object_new (LIGMA_TYPE_ACTION_GROUP,
+                        "ligma",      ligma,
                         "name",      name,
                         "label",     label,
                         "icon-name", icon_name,
@@ -308,22 +308,22 @@ gimp_action_group_new (Gimp                      *gimp,
 }
 
 const gchar *
-gimp_action_group_get_name (GimpActionGroup *group)
+ligma_action_group_get_name (LigmaActionGroup *group)
 {
   return gtk_action_group_get_name ((GtkActionGroup *) group);
 }
 
 void
-gimp_action_group_add_action (GimpActionGroup *action_group,
-                              GimpAction      *action)
+ligma_action_group_add_action (LigmaActionGroup *action_group,
+                              LigmaAction      *action)
 {
   gtk_action_group_add_action ((GtkActionGroup *) action_group,
                                (GtkAction *) action);
 }
 
 void
-gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
-                                         GimpAction      *action,
+ligma_action_group_add_action_with_accel (LigmaActionGroup *action_group,
+                                         LigmaAction      *action,
                                          const gchar     *accelerator)
 {
   gtk_action_group_add_action_with_accel ((GtkActionGroup *) action_group,
@@ -332,36 +332,36 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
 }
 
 void
-gimp_action_group_remove_action (GimpActionGroup *action_group,
-                                 GimpAction      *action)
+ligma_action_group_remove_action (LigmaActionGroup *action_group,
+                                 LigmaAction      *action)
 {
   gtk_action_group_remove_action ((GtkActionGroup *) action_group,
                                   (GtkAction *) action);
 }
 
-GimpAction *
-gimp_action_group_get_action (GimpActionGroup *group,
+LigmaAction *
+ligma_action_group_get_action (LigmaActionGroup *group,
                               const gchar     *action_name)
 {
-  return (GimpAction *) gtk_action_group_get_action ((GtkActionGroup *) group,
+  return (LigmaAction *) gtk_action_group_get_action ((GtkActionGroup *) group,
                                                      action_name);
 }
 
 GList *
-gimp_action_group_list_actions (GimpActionGroup *group)
+ligma_action_group_list_actions (LigmaActionGroup *group)
 {
   return gtk_action_group_list_actions ((GtkActionGroup *) group);
 }
 
 GList *
-gimp_action_groups_from_name (const gchar *name)
+ligma_action_groups_from_name (const gchar *name)
 {
-  GimpActionGroupClass *group_class;
+  LigmaActionGroupClass *group_class;
   GList                *list;
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  group_class = g_type_class_ref (GIMP_TYPE_ACTION_GROUP);
+  group_class = g_type_class_ref (LIGMA_TYPE_ACTION_GROUP);
 
   list = g_hash_table_lookup (group_class->groups, name);
 
@@ -371,32 +371,32 @@ gimp_action_groups_from_name (const gchar *name)
 }
 
 void
-gimp_action_group_update (GimpActionGroup *group,
+ligma_action_group_update (LigmaActionGroup *group,
                           gpointer         update_data)
 {
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   if (group->update_func)
     group->update_func (group, update_data);
 }
 
 void
-gimp_action_group_add_actions (GimpActionGroup       *group,
+ligma_action_group_add_actions (LigmaActionGroup       *group,
                                const gchar           *msg_context,
-                               const GimpActionEntry *entries,
+                               const LigmaActionEntry *entries,
                                guint                  n_entries)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpAction  *action;
+      LigmaAction  *action;
       const gchar *label;
       const gchar *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -413,16 +413,16 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_action_impl_new (entries[i].name, label, tooltip,
+      action = ligma_action_impl_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id);
 
       if (entries[i].callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "ligma-activate",
                           G_CALLBACK (entries[i].callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -431,14 +431,14 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 }
 
 void
-gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
+ligma_action_group_add_toggle_actions (LigmaActionGroup             *group,
                                       const gchar                 *msg_context,
-                                      const GimpToggleActionEntry *entries,
+                                      const LigmaToggleActionEntry *entries,
                                       guint                        n_entries)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
@@ -446,7 +446,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       const gchar     *label;
       const gchar     *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -463,19 +463,19 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_toggle_action_new (entries[i].name, label, tooltip,
+      action = ligma_toggle_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id);
 
-      gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+      ligma_toggle_action_set_active (LIGMA_TOGGLE_ACTION (action),
                                      entries[i].is_active);
 
       if (entries[i].callback)
-        g_signal_connect (action, "gimp-change-state",
+        g_signal_connect (action, "ligma-change-state",
                           G_CALLBACK (entries[i].callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -484,18 +484,18 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 }
 
 GSList *
-gimp_action_group_add_radio_actions (GimpActionGroup            *group,
+ligma_action_group_add_radio_actions (LigmaActionGroup            *group,
                                      const gchar                *msg_context,
-                                     const GimpRadioActionEntry *entries,
+                                     const LigmaRadioActionEntry *entries,
                                      guint                       n_entries,
                                      GSList                     *radio_group,
                                      gint                        value,
-                                     GimpActionCallback          callback)
+                                     LigmaActionCallback          callback)
 {
   GtkRadioAction *first_action = NULL;
   gint            i;
 
-  g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACTION_GROUP (group), NULL);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -503,7 +503,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       const gchar    *label;
       const gchar    *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -520,7 +520,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_radio_action_new (entries[i].name, label, tooltip,
+      action = ligma_radio_action_new (entries[i].name, label, tooltip,
                                       entries[i].icon_name,
                                       entries[i].help_id,
                                       entries[i].value);
@@ -534,7 +534,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (value == entries[i].value)
         gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -542,7 +542,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
     }
 
   if (callback && first_action)
-    g_signal_connect (first_action, "gimp-change-state",
+    g_signal_connect (first_action, "ligma-change-state",
                       G_CALLBACK (callback),
                       group->user_data);
 
@@ -550,23 +550,23 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
 }
 
 void
-gimp_action_group_add_enum_actions (GimpActionGroup           *group,
+ligma_action_group_add_enum_actions (LigmaActionGroup           *group,
                                     const gchar               *msg_context,
-                                    const GimpEnumActionEntry *entries,
+                                    const LigmaEnumActionEntry *entries,
                                     guint                      n_entries,
-                                    GimpActionCallback         callback)
+                                    LigmaActionCallback         callback)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpEnumAction *action;
+      LigmaEnumAction *action;
       const gchar    *label;
       const gchar    *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -583,18 +583,18 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_enum_action_new (entries[i].name, label, tooltip,
+      action = ligma_enum_action_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id,
                                      entries[i].value,
                                      entries[i].value_variable);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "ligma-activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -603,23 +603,23 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 }
 
 void
-gimp_action_group_add_string_actions (GimpActionGroup             *group,
+ligma_action_group_add_string_actions (LigmaActionGroup             *group,
                                       const gchar                 *msg_context,
-                                      const GimpStringActionEntry *entries,
+                                      const LigmaStringActionEntry *entries,
                                       guint                        n_entries,
-                                      GimpActionCallback           callback)
+                                      LigmaActionCallback           callback)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpStringAction *action;
+      LigmaStringAction *action;
       const gchar      *label;
       const gchar      *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -636,17 +636,17 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_string_action_new (entries[i].name, label, tooltip,
+      action = ligma_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
                                        entries[i].value);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "ligma-activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -655,23 +655,23 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
 }
 
 void
-gimp_action_group_add_double_actions (GimpActionGroup             *group,
+ligma_action_group_add_double_actions (LigmaActionGroup             *group,
                                       const gchar                 *msg_context,
-                                      const GimpDoubleActionEntry *entries,
+                                      const LigmaDoubleActionEntry *entries,
                                       guint                        n_entries,
-                                      GimpActionCallback           callback)
+                                      LigmaActionCallback           callback)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpDoubleAction *action;
+      LigmaDoubleAction *action;
       const gchar      *label;
       const gchar      *tooltip = NULL;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         continue;
 
       if (msg_context)
@@ -688,17 +688,17 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_double_action_new (entries[i].name, label, tooltip,
+      action = ligma_double_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
                                        entries[i].value);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "ligma-activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -707,27 +707,27 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
 }
 
 void
-gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
-                                         const GimpProcedureActionEntry *entries,
+ligma_action_group_add_procedure_actions (LigmaActionGroup                *group,
+                                         const LigmaProcedureActionEntry *entries,
                                          guint                           n_entries,
-                                         GimpActionCallback              callback)
+                                         LigmaActionCallback              callback)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
 
   for (i = 0; i < n_entries; i++)
     {
-      GimpProcedureAction *action;
+      LigmaProcedureAction *action;
 
-      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+      if (! ligma_action_group_check_unique_action (group, entries[i].name))
         {
           if (entries[i].procedure != NULL &&
-              GIMP_IS_PLUG_IN_PROCEDURE (entries[i].procedure))
+              LIGMA_IS_PLUG_IN_PROCEDURE (entries[i].procedure))
             {
               GFile *file;
 
-              file = gimp_plug_in_procedure_get_file (GIMP_PLUG_IN_PROCEDURE (entries[i].procedure));
+              file = ligma_plug_in_procedure_get_file (LIGMA_PLUG_IN_PROCEDURE (entries[i].procedure));
 
               g_printerr ("Discarded action '%s' was registered in plug-in: '%s'\n",
                           entries[i].name, g_file_peek_path (file));
@@ -735,7 +735,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
           continue;
         }
 
-      action = gimp_procedure_action_new (entries[i].name,
+      action = ligma_procedure_action_new (entries[i].name,
                                           entries[i].label,
                                           entries[i].tooltip,
                                           entries[i].icon_name,
@@ -743,11 +743,11 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                           entries[i].procedure);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "ligma-activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+      ligma_action_group_add_action_with_accel (group, LIGMA_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -756,44 +756,44 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
 }
 
 /**
- * gimp_action_group_remove_action_and_accel:
- * @group:  the #GimpActionGroup to which @action belongs.
- * @action: the #GimpAction.
+ * ligma_action_group_remove_action_and_accel:
+ * @group:  the #LigmaActionGroup to which @action belongs.
+ * @action: the #LigmaAction.
  *
  * This function removes @action from @group and clean any
  * accelerator this action may have set.
  * If you wish to only remove the action from the group, use
- * gimp_action_group_remove_action() instead.
+ * ligma_action_group_remove_action() instead.
  */
 void
-gimp_action_group_remove_action_and_accel (GimpActionGroup *group,
-                                           GimpAction      *action)
+ligma_action_group_remove_action_and_accel (LigmaActionGroup *group,
+                                           LigmaAction      *action)
 {
   const gchar *action_name;
   const gchar *group_name;
   gchar       *accel_path;
 
-  action_name = gimp_action_get_name (action);
-  group_name  = gimp_action_group_get_name (group);
+  action_name = ligma_action_get_name (action);
+  group_name  = ligma_action_group_get_name (group);
   accel_path = g_strconcat ("<Actions>/", group_name, "/",
                             action_name, NULL);
 
   gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
 
-  gimp_action_group_remove_action (group, action);
+  ligma_action_group_remove_action (group, action);
   g_free (accel_path);
 }
 
 void
-gimp_action_group_activate_action (GimpActionGroup *group,
+ligma_action_group_activate_action (LigmaActionGroup *group,
                                    const gchar     *action_name)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -802,20 +802,20 @@ gimp_action_group_activate_action (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_activate (action);
+  ligma_action_activate (action);
 }
 
 void
-gimp_action_group_set_action_visible (GimpActionGroup *group,
+ligma_action_group_set_action_visible (LigmaActionGroup *group,
                                       const gchar     *action_name,
                                       gboolean         visible)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -825,21 +825,21 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_set_visible (action, visible);
+  ligma_action_set_visible (action, visible);
 }
 
 void
-gimp_action_group_set_action_sensitive (GimpActionGroup *group,
+ligma_action_group_set_action_sensitive (LigmaActionGroup *group,
                                         const gchar     *action_name,
                                         gboolean         sensitive,
                                         const gchar     *reason)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -849,20 +849,20 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_set_sensitive (action, sensitive, reason);
+  ligma_action_set_sensitive (action, sensitive, reason);
 }
 
 void
-gimp_action_group_set_action_active (GimpActionGroup *group,
+ligma_action_group_set_action_active (LigmaActionGroup *group,
                                      const gchar     *action_name,
                                      gboolean         active)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -885,16 +885,16 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_label (GimpActionGroup *group,
+ligma_action_group_set_action_label (LigmaActionGroup *group,
                                     const gchar     *action_name,
                                     const gchar     *label)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -904,20 +904,20 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_set_label (action, label);
+  ligma_action_set_label (action, label);
 }
 
 void
-gimp_action_group_set_action_pixbuf (GimpActionGroup *group,
+ligma_action_group_set_action_pixbuf (LigmaActionGroup *group,
                                      const gchar     *action_name,
                                      GdkPixbuf       *pixbuf)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -927,21 +927,21 @@ gimp_action_group_set_action_pixbuf (GimpActionGroup *group,
       return;
     }
 
-  gimp_action_set_gicon (action, G_ICON (pixbuf));
+  ligma_action_set_gicon (action, G_ICON (pixbuf));
 }
 
 
 void
-gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
+ligma_action_group_set_action_tooltip (LigmaActionGroup     *group,
                                       const gchar         *action_name,
                                       const gchar         *tooltip)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -951,19 +951,19 @@ gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
       return;
     }
 
-  gimp_action_set_tooltip (action, tooltip);
+  ligma_action_set_tooltip (action, tooltip);
 }
 
 const gchar *
-gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
+ligma_action_group_get_action_tooltip (LigmaActionGroup     *group,
                                       const gchar         *action_name)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACTION_GROUP (group), NULL);
   g_return_val_if_fail (action_name != NULL, NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -973,21 +973,21 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
       return NULL;
     }
 
-  return gimp_action_get_tooltip (action);
+  return ligma_action_get_tooltip (action);
 }
 
 void
-gimp_action_group_set_action_context (GimpActionGroup *group,
+ligma_action_group_set_action_context (LigmaActionGroup *group,
                                       const gchar     *action_name,
-                                      GimpContext     *context)
+                                      LigmaContext     *context)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -997,10 +997,10 @@ gimp_action_group_set_action_context (GimpActionGroup *group,
       return;
     }
 
-  if (! GIMP_IS_ACTION (action))
+  if (! LIGMA_IS_ACTION (action))
     {
       g_warning ("%s: Unable to set \"context\" of action "
-                 "which is not a GimpAction: %s",
+                 "which is not a LigmaAction: %s",
                  G_STRFUNC, action_name);
       return;
     }
@@ -1009,17 +1009,17 @@ gimp_action_group_set_action_context (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_color (GimpActionGroup *group,
+ligma_action_group_set_action_color (LigmaActionGroup *group,
                                     const gchar     *action_name,
-                                    const GimpRGB   *color,
+                                    const LigmaRGB   *color,
                                     gboolean         set_label)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1029,10 +1029,10 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
       return;
     }
 
-  if (! GIMP_IS_ACTION (action))
+  if (! LIGMA_IS_ACTION (action))
     {
       g_warning ("%s: Unable to set \"color\" of action "
-                 "which is not a GimpAction: %s",
+                 "which is not a LigmaAction: %s",
                  G_STRFUNC, action_name);
       return;
     }
@@ -1060,17 +1060,17 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_viewable (GimpActionGroup *group,
+ligma_action_group_set_action_viewable (LigmaActionGroup *group,
                                        const gchar     *action_name,
-                                       GimpViewable    *viewable)
+                                       LigmaViewable    *viewable)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
-  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || LIGMA_IS_VIEWABLE (viewable));
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1080,10 +1080,10 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
       return;
     }
 
-  if (! GIMP_IS_ACTION (action))
+  if (! LIGMA_IS_ACTION (action))
     {
       g_warning ("%s: Unable to set \"viewable\" of action "
-                 "which is not a GimpAction: %s",
+                 "which is not a LigmaAction: %s",
                  G_STRFUNC, action_name);
       return;
     }
@@ -1092,16 +1092,16 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
+ligma_action_group_set_action_hide_empty (LigmaActionGroup *group,
                                          const gchar     *action_name,
                                          gboolean         hide_empty)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1115,16 +1115,16 @@ gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
+ligma_action_group_set_action_always_show_image (LigmaActionGroup *group,
                                                 const gchar     *action_name,
                                                 gboolean         always_show_image)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (LIGMA_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gimp_action_group_get_action (group, action_name);
+  action = ligma_action_group_get_action (group, action_name);
 
   if (! action)
     {

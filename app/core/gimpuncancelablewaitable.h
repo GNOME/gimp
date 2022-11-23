@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpuncancelablewaitable.h
+ * ligmauncancelablewaitable.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNCANCELABLE_WAITABLE_H__
-#define __GIMP_UNCANCELABLE_WAITABLE_H__
+#ifndef __LIGMA_UNCANCELABLE_WAITABLE_H__
+#define __LIGMA_UNCANCELABLE_WAITABLE_H__
 
 
-#define GIMP_TYPE_UNCANCELABLE_WAITABLE            (gimp_uncancelable_waitable_get_type ())
-#define GIMP_UNCANCELABLE_WAITABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNCANCELABLE_WAITABLE, GimpUncancelableWaitable))
-#define GIMP_UNCANCELABLE_WAITABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNCANCELABLE_WAITABLE, GimpUncancelableWaitableClass))
-#define GIMP_IS_UNCANCELABLE_WAITABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNCANCELABLE_WAITABLE))
-#define GIMP_IS_UNCANCELABLE_WAITABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNCANCELABLE_WAITABLE))
-#define GIMP_UNCANCELABLE_WAITABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNCANCELABLE_WAITABLE, GimpUncancelableWaitableClass))
+#define LIGMA_TYPE_UNCANCELABLE_WAITABLE            (ligma_uncancelable_waitable_get_type ())
+#define LIGMA_UNCANCELABLE_WAITABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_UNCANCELABLE_WAITABLE, LigmaUncancelableWaitable))
+#define LIGMA_UNCANCELABLE_WAITABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_UNCANCELABLE_WAITABLE, LigmaUncancelableWaitableClass))
+#define LIGMA_IS_UNCANCELABLE_WAITABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_UNCANCELABLE_WAITABLE))
+#define LIGMA_IS_UNCANCELABLE_WAITABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_UNCANCELABLE_WAITABLE))
+#define LIGMA_UNCANCELABLE_WAITABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_UNCANCELABLE_WAITABLE, LigmaUncancelableWaitableClass))
 
 
-typedef struct _GimpUncancelableWaitablePrivate GimpUncancelableWaitablePrivate;
-typedef struct _GimpUncancelableWaitableClass   GimpUncancelableWaitableClass;
+typedef struct _LigmaUncancelableWaitablePrivate LigmaUncancelableWaitablePrivate;
+typedef struct _LigmaUncancelableWaitableClass   LigmaUncancelableWaitableClass;
 
-struct _GimpUncancelableWaitable
+struct _LigmaUncancelableWaitable
 {
   GObject       parent_instance;
 
-  GimpWaitable *waitable;
+  LigmaWaitable *waitable;
 };
 
-struct _GimpUncancelableWaitableClass
+struct _LigmaUncancelableWaitableClass
 {
   GObjectClass  parent_class;
 };
 
 
-GType          gimp_uncancelable_waitable_get_type (void) G_GNUC_CONST;
+GType          ligma_uncancelable_waitable_get_type (void) G_GNUC_CONST;
 
-GimpWaitable * gimp_uncancelable_waitable_new      (GimpWaitable *waitable);
+LigmaWaitable * ligma_uncancelable_waitable_new      (LigmaWaitable *waitable);
 
 
-#endif /* __GIMP_UNCANCELABLE_WAITABLE_H__ */
+#endif /* __LIGMA_UNCANCELABLE_WAITABLE_H__ */

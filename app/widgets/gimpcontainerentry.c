@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainerentry.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacontainerentry.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,108 +25,108 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcellrendererviewable.h"
-#include "gimpcontainerentry.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpviewrenderer.h"
+#include "ligmacellrendererviewable.h"
+#include "ligmacontainerentry.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmaviewrenderer.h"
 
 
-static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface);
+static void     ligma_container_entry_view_iface_init (LigmaContainerViewInterface *iface);
 
-static void     gimp_container_entry_finalize     (GObject                *object);
+static void     ligma_container_entry_finalize     (GObject                *object);
 
-static void     gimp_container_entry_set_context  (GimpContainerView      *view,
-                                                   GimpContext            *context);
-static gpointer gimp_container_entry_insert_item  (GimpContainerView      *view,
-                                                   GimpViewable           *viewable,
+static void     ligma_container_entry_set_context  (LigmaContainerView      *view,
+                                                   LigmaContext            *context);
+static gpointer ligma_container_entry_insert_item  (LigmaContainerView      *view,
+                                                   LigmaViewable           *viewable,
                                                    gpointer                parent_insert_data,
                                                    gint                    index);
-static void     gimp_container_entry_remove_item  (GimpContainerView      *view,
-                                                   GimpViewable           *viewable,
+static void     ligma_container_entry_remove_item  (LigmaContainerView      *view,
+                                                   LigmaViewable           *viewable,
                                                    gpointer                insert_data);
-static void     gimp_container_entry_reorder_item (GimpContainerView      *view,
-                                                   GimpViewable           *viewable,
+static void     ligma_container_entry_reorder_item (LigmaContainerView      *view,
+                                                   LigmaViewable           *viewable,
                                                    gint                    new_index,
                                                    gpointer                insert_data);
-static void     gimp_container_entry_rename_item  (GimpContainerView      *view,
-                                                   GimpViewable           *viewable,
+static void     ligma_container_entry_rename_item  (LigmaContainerView      *view,
+                                                   LigmaViewable           *viewable,
                                                    gpointer                insert_data);
-static gboolean  gimp_container_entry_select_items(GimpContainerView      *view,
+static gboolean  ligma_container_entry_select_items(LigmaContainerView      *view,
                                                    GList                  *items,
                                                    GList                  *paths);
-static void     gimp_container_entry_clear_items  (GimpContainerView      *view);
-static void    gimp_container_entry_set_view_size (GimpContainerView      *view);
-static gint     gimp_container_entry_get_selected (GimpContainerView      *view,
+static void     ligma_container_entry_clear_items  (LigmaContainerView      *view);
+static void    ligma_container_entry_set_view_size (LigmaContainerView      *view);
+static gint     ligma_container_entry_get_selected (LigmaContainerView      *view,
                                                    GList                 **items,
                                                    GList                 **items_data);
 
-static void     gimp_container_entry_changed      (GtkEntry               *entry,
-                                                   GimpContainerView      *view);
-static void   gimp_container_entry_match_selected (GtkEntryCompletion     *widget,
+static void     ligma_container_entry_changed      (GtkEntry               *entry,
+                                                   LigmaContainerView      *view);
+static void   ligma_container_entry_match_selected (GtkEntryCompletion     *widget,
                                                    GtkTreeModel           *model,
                                                    GtkTreeIter            *iter,
-                                                   GimpContainerView      *view);
+                                                   LigmaContainerView      *view);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpContainerEntry, gimp_container_entry,
+G_DEFINE_TYPE_WITH_CODE (LigmaContainerEntry, ligma_container_entry,
                          GTK_TYPE_ENTRY,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_entry_view_iface_init))
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_container_entry_view_iface_init))
 
-#define parent_class gimp_container_entry_parent_class
+#define parent_class ligma_container_entry_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static LigmaContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
-gimp_container_entry_class_init (GimpContainerEntryClass *klass)
+ligma_container_entry_class_init (LigmaContainerEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_container_view_set_property;
-  object_class->get_property = gimp_container_view_get_property;
-  object_class->finalize     = gimp_container_entry_finalize;
+  object_class->set_property = ligma_container_view_set_property;
+  object_class->get_property = ligma_container_view_get_property;
+  object_class->finalize     = ligma_container_entry_finalize;
 
-  gimp_container_view_install_properties (object_class);
+  ligma_container_view_install_properties (object_class);
 }
 
 static void
-gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
+ligma_container_entry_view_iface_init (LigmaContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_view_iface)
-    parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
+    parent_view_iface = g_type_default_interface_peek (LIGMA_TYPE_CONTAINER_VIEW);
 
-  iface->set_context   = gimp_container_entry_set_context;
-  iface->insert_item   = gimp_container_entry_insert_item;
-  iface->remove_item   = gimp_container_entry_remove_item;
-  iface->reorder_item  = gimp_container_entry_reorder_item;
-  iface->rename_item   = gimp_container_entry_rename_item;
-  iface->select_items  = gimp_container_entry_select_items;
-  iface->clear_items   = gimp_container_entry_clear_items;
-  iface->set_view_size = gimp_container_entry_set_view_size;
-  iface->get_selected  = gimp_container_entry_get_selected;
+  iface->set_context   = ligma_container_entry_set_context;
+  iface->insert_item   = ligma_container_entry_insert_item;
+  iface->remove_item   = ligma_container_entry_remove_item;
+  iface->reorder_item  = ligma_container_entry_reorder_item;
+  iface->rename_item   = ligma_container_entry_rename_item;
+  iface->select_items  = ligma_container_entry_select_items;
+  iface->clear_items   = ligma_container_entry_clear_items;
+  iface->set_view_size = ligma_container_entry_set_view_size;
+  iface->get_selected  = ligma_container_entry_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
 
 static void
-gimp_container_entry_init (GimpContainerEntry *entry)
+ligma_container_entry_init (LigmaContainerEntry *entry)
 {
   GtkEntryCompletion *completion;
   GtkTreeModel       *model;
   GtkCellRenderer    *cell;
-  GType               types[GIMP_CONTAINER_TREE_STORE_N_COLUMNS];
+  GType               types[LIGMA_CONTAINER_TREE_STORE_N_COLUMNS];
   gint                n_types = 0;
 
   entry->viewable = NULL;
@@ -137,11 +137,11 @@ gimp_container_entry_init (GimpContainerEntry *entry)
                              "popup-set-width",    FALSE,
                              NULL);
 
-  gimp_container_tree_store_columns_init (types, &n_types);
+  ligma_container_tree_store_columns_init (types, &n_types);
 
-  model = gimp_container_tree_store_new (GIMP_CONTAINER_VIEW (entry),
+  model = ligma_container_tree_store_new (LIGMA_CONTAINER_VIEW (entry),
                                          n_types, types);
-  gimp_container_tree_store_set_use_name (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_set_use_name (LIGMA_CONTAINER_TREE_STORE (model),
                                           TRUE);
 
   gtk_entry_completion_set_model (completion, model);
@@ -150,64 +150,64 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 
   g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_container_entry_match_selected),
+                    G_CALLBACK (ligma_container_entry_match_selected),
                     entry);
 
   g_object_unref (completion);
 
   /*  FIXME: This can be done better with GTK+ 2.6.  */
 
-  cell = gimp_cell_renderer_viewable_new ();
+  cell = ligma_cell_renderer_viewable_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (completion), cell, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (completion), cell,
                                   "renderer",
-                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
+                                  LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   NULL);
 
-  gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_add_renderer_cell (LIGMA_CONTAINER_TREE_STORE (model),
                                                cell, -1);
 
   gtk_entry_completion_set_text_column (completion,
-                                        GIMP_CONTAINER_TREE_STORE_COLUMN_NAME);
+                                        LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gimp_container_entry_changed),
+                    G_CALLBACK (ligma_container_entry_changed),
                     entry);
 }
 
 GtkWidget *
-gimp_container_entry_new (GimpContainer *container,
-                          GimpContext   *context,
+ligma_container_entry_new (LigmaContainer *container,
+                          LigmaContext   *context,
                           gint           view_size,
                           gint           view_border_width)
 {
   GtkWidget         *entry;
-  GimpContainerView *view;
+  LigmaContainerView *view;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
 
-  entry = g_object_new (GIMP_TYPE_CONTAINER_ENTRY, NULL);
+  entry = g_object_new (LIGMA_TYPE_CONTAINER_ENTRY, NULL);
 
-  view = GIMP_CONTAINER_VIEW (entry);
+  view = LIGMA_CONTAINER_VIEW (entry);
 
-  gimp_container_view_set_view_size (view, view_size, view_border_width);
+  ligma_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
-    gimp_container_view_set_container (view, container);
+    ligma_container_view_set_container (view, container);
 
   if (context)
-    gimp_container_view_set_context (view, context);
+    ligma_container_view_set_context (view, context);
 
   return entry;
 }
 
 
-/*  GimpContainerView methods  */
+/*  LigmaContainerView methods  */
 
 static GtkTreeModel *
-gimp_container_entry_get_model (GimpContainerView *view)
+ligma_container_entry_get_model (LigmaContainerView *view)
 {
   GtkEntryCompletion *completion;
 
@@ -220,9 +220,9 @@ gimp_container_entry_get_model (GimpContainerView *view)
 }
 
 static void
-gimp_container_entry_finalize (GObject *object)
+ligma_container_entry_finalize (GObject *object)
 {
-  GimpContainerEntry *entry = GIMP_CONTAINER_ENTRY (object);
+  LigmaContainerEntry *entry = LIGMA_CONTAINER_ENTRY (object);
 
   if (entry->viewable)
     {
@@ -235,100 +235,100 @@ gimp_container_entry_finalize (GObject *object)
 }
 
 static void
-gimp_container_entry_set_context (GimpContainerView *view,
-                                  GimpContext       *context)
+ligma_container_entry_set_context (LigmaContainerView *view,
+                                  LigmaContext       *context)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
   parent_view_iface->set_context (view, context);
 
   if (model)
-    gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (model),
+    ligma_container_tree_store_set_context (LIGMA_CONTAINER_TREE_STORE (model),
                                            context);
 }
 
 static gpointer
-gimp_container_entry_insert_item (GimpContainerView *view,
-                                  GimpViewable      *viewable,
+ligma_container_entry_insert_item (LigmaContainerView *view,
+                                  LigmaViewable      *viewable,
                                   gpointer           parent_insert_data,
                                   gint               index)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
-  return gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
+  return ligma_container_tree_store_insert_item (LIGMA_CONTAINER_TREE_STORE (model),
                                                 viewable,
                                                 parent_insert_data,
                                                 index);
 }
 
 static void
-gimp_container_entry_remove_item (GimpContainerView *view,
-                                  GimpViewable      *viewable,
+ligma_container_entry_remove_item (LigmaContainerView *view,
+                                  LigmaViewable      *viewable,
                                   gpointer           insert_data)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
-  gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_remove_item (LIGMA_CONTAINER_TREE_STORE (model),
                                          viewable,
                                          insert_data);
 }
 
 static void
-gimp_container_entry_reorder_item (GimpContainerView *view,
-                                   GimpViewable      *viewable,
+ligma_container_entry_reorder_item (LigmaContainerView *view,
+                                   LigmaViewable      *viewable,
                                    gint               new_index,
                                    gpointer           insert_data)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
-  gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_reorder_item (LIGMA_CONTAINER_TREE_STORE (model),
                                           viewable,
                                           new_index,
                                           insert_data);
 }
 
 static void
-gimp_container_entry_rename_item (GimpContainerView *view,
-                                  GimpViewable      *viewable,
+ligma_container_entry_rename_item (LigmaContainerView *view,
+                                  LigmaViewable      *viewable,
                                   gpointer           insert_data)
 {
-  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+  LigmaContainerEntry *container_entry = LIGMA_CONTAINER_ENTRY (view);
   GtkEntry           *entry           = GTK_ENTRY (view);
-  GtkTreeModel       *model           = gimp_container_entry_get_model (view);
+  GtkTreeModel       *model           = ligma_container_entry_get_model (view);
 
   if (viewable == container_entry->viewable)
     {
       g_signal_handlers_block_by_func (entry,
-                                       gimp_container_entry_changed,
+                                       ligma_container_entry_changed,
                                        view);
 
-      gtk_entry_set_text (entry, gimp_object_get_name (viewable));
+      gtk_entry_set_text (entry, ligma_object_get_name (viewable));
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_container_entry_changed,
+                                         ligma_container_entry_changed,
                                          view);
     }
 
-  gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
+  ligma_container_tree_store_rename_item (LIGMA_CONTAINER_TREE_STORE (model),
                                          viewable,
                                          insert_data);
 }
 
 static gboolean
-gimp_container_entry_select_items (GimpContainerView   *view,
+ligma_container_entry_select_items (LigmaContainerView   *view,
                                    GList               *viewables,
                                    GList               *paths)
 {
-  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+  LigmaContainerEntry *container_entry = LIGMA_CONTAINER_ENTRY (view);
   GtkEntry           *entry           = GTK_ENTRY (view);
-  GimpViewable       *viewable        = NULL;
+  LigmaViewable       *viewable        = NULL;
 
   /* XXX Only support 1 selected viewable for now. */
   if (viewables)
     viewable = viewables->data;
 
   g_signal_handlers_block_by_func (entry,
-                                   gimp_container_entry_changed,
+                                   ligma_container_entry_changed,
                                    view);
 
   if (container_entry->viewable)
@@ -353,44 +353,44 @@ gimp_container_entry_select_items (GimpContainerView   *view,
       /* The selected item does not exist. */
       gtk_entry_set_icon_from_icon_name (entry,
                                          GTK_ENTRY_ICON_SECONDARY,
-                                         GIMP_ICON_WILBER_EEK);
+                                         LIGMA_ICON_WILBER_EEK);
     }
 
-  gtk_entry_set_text (entry, viewable? gimp_object_get_name (viewable) : "");
+  gtk_entry_set_text (entry, viewable? ligma_object_get_name (viewable) : "");
 
   g_signal_handlers_unblock_by_func (entry,
-                                     gimp_container_entry_changed,
+                                     ligma_container_entry_changed,
                                      view);
 
   return TRUE;
 }
 
 static void
-gimp_container_entry_clear_items (GimpContainerView *view)
+ligma_container_entry_clear_items (LigmaContainerView *view)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
   /* model is NULL in dispose() */
   if (model)
-    gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
+    ligma_container_tree_store_clear_items (LIGMA_CONTAINER_TREE_STORE (model));
 
   parent_view_iface->clear_items (view);
 }
 
 static void
-gimp_container_entry_set_view_size (GimpContainerView *view)
+ligma_container_entry_set_view_size (LigmaContainerView *view)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GtkTreeModel *model = ligma_container_entry_get_model (view);
 
-  gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
+  ligma_container_tree_store_set_view_size (LIGMA_CONTAINER_TREE_STORE (model));
 }
 
 static gint
-gimp_container_entry_get_selected (GimpContainerView  *view,
+ligma_container_entry_get_selected (LigmaContainerView  *view,
                                    GList             **items,
                                    GList             **items_data)
 {
-  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+  LigmaContainerEntry *container_entry = LIGMA_CONTAINER_ENTRY (view);
 
   if (items)
     {
@@ -404,12 +404,12 @@ gimp_container_entry_get_selected (GimpContainerView  *view,
 }
 
 static void
-gimp_container_entry_changed (GtkEntry          *entry,
-                              GimpContainerView *view)
+ligma_container_entry_changed (GtkEntry          *entry,
+                              LigmaContainerView *view)
 {
-  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (entry);
-  GimpContainer      *container       = gimp_container_view_get_container (view);
-  GimpObject         *object;
+  LigmaContainerEntry *container_entry = LIGMA_CONTAINER_ENTRY (entry);
+  LigmaContainer      *container       = ligma_container_view_get_container (view);
+  LigmaObject         *object;
   const gchar        *text;
 
   if (! container)
@@ -424,15 +424,15 @@ gimp_container_entry_changed (GtkEntry          *entry,
 
   text = gtk_entry_get_text (entry);
 
-  object = gimp_container_get_child_by_name (container, text);
+  object = ligma_container_get_child_by_name (container, text);
 
   if (object)
     {
-      container_entry->viewable = GIMP_VIEWABLE (object);
+      container_entry->viewable = LIGMA_VIEWABLE (object);
       g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
                                  (gpointer) &container_entry->viewable);
 
-      gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+      ligma_container_view_item_selected (view, LIGMA_VIEWABLE (object));
 
       gtk_entry_set_icon_from_icon_name (entry,
                                          GTK_ENTRY_ICON_SECONDARY,
@@ -443,22 +443,22 @@ gimp_container_entry_changed (GtkEntry          *entry,
       /* While editing the entry, show EEK for non-existent item. */
       gtk_entry_set_icon_from_icon_name (entry,
                                          GTK_ENTRY_ICON_SECONDARY,
-                                         GIMP_ICON_WILBER_EEK);
+                                         LIGMA_ICON_WILBER_EEK);
     }
 }
 
 static void
-gimp_container_entry_match_selected (GtkEntryCompletion *widget,
+ligma_container_entry_match_selected (GtkEntryCompletion *widget,
                                      GtkTreeModel       *model,
                                      GtkTreeIter        *iter,
-                                     GimpContainerView  *view)
+                                     LigmaContainerView  *view)
 {
-  GimpViewRenderer *renderer;
+  LigmaViewRenderer *renderer;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
-  gimp_container_view_item_selected (view, renderer->viewable);
+  ligma_container_view_item_selected (view, renderer->viewable);
   g_object_unref (renderer);
 }

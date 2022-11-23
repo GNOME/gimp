@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_H__
-#define __GIMP_DISPLAY_SHELL_H__
+#ifndef __LIGMA_DISPLAY_SHELL_H__
+#define __LIGMA_DISPLAY_SHELL_H__
 
 
 /* Apply to a float the same rounding mode used in the renderer */
@@ -35,30 +35,30 @@
 #define  FUNSCALEY(s,y)   ((y) / (s)->scale_y)
 
 
-#define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
-#define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))
-#define GIMP_DISPLAY_SHELL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
-#define GIMP_IS_DISPLAY_SHELL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY_SHELL))
-#define GIMP_IS_DISPLAY_SHELL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_SHELL))
-#define GIMP_DISPLAY_SHELL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
+#define LIGMA_TYPE_DISPLAY_SHELL            (ligma_display_shell_get_type ())
+#define LIGMA_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DISPLAY_SHELL, LigmaDisplayShell))
+#define LIGMA_DISPLAY_SHELL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DISPLAY_SHELL, LigmaDisplayShellClass))
+#define LIGMA_IS_DISPLAY_SHELL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DISPLAY_SHELL))
+#define LIGMA_IS_DISPLAY_SHELL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DISPLAY_SHELL))
+#define LIGMA_DISPLAY_SHELL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DISPLAY_SHELL, LigmaDisplayShellClass))
 
 
-typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
+typedef struct _LigmaDisplayShellClass  LigmaDisplayShellClass;
 
-struct _GimpDisplayShell
+struct _LigmaDisplayShell
 {
   GtkEventBox        parent_instance;
 
-  GimpDisplay       *display;
+  LigmaDisplay       *display;
 
-  GimpUIManager     *popup_manager;
+  LigmaUIManager     *popup_manager;
   GdkMonitor        *initial_monitor;
 
-  GimpDisplayOptions *options;
-  GimpDisplayOptions *fullscreen_options;
-  GimpDisplayOptions *no_image_options;
+  LigmaDisplayOptions *options;
+  LigmaDisplayOptions *fullscreen_options;
+  LigmaDisplayOptions *no_image_options;
 
-  GimpUnit           unit;
+  LigmaUnit           unit;
 
   gint               offset_x;         /*  offset of display image            */
   gint               offset_y;
@@ -76,7 +76,7 @@ struct _GimpDisplayShell
   gdouble            monitor_yres;
   gboolean           dot_for_dot;      /*  ignore monitor resolution          */
 
-  GimpZoomModel     *zoom;
+  LigmaZoomModel     *zoom;
 
   gdouble            last_scale;       /*  scale used when reverting zoom     */
   guint              last_scale_time;  /*  time when last_scale was set       */
@@ -99,7 +99,7 @@ struct _GimpDisplayShell
 
   GList             *children;
 
-  GtkWidget         *canvas;           /*  GimpCanvas widget                  */
+  GtkWidget         *canvas;           /*  LigmaCanvas widget                  */
   GtkGesture        *zoom_gesture;     /*  Zoom gesture handler for the canvas*/
   GtkGesture        *rotate_gesture;   /*  Rotation gesture handler           */
 
@@ -118,18 +118,18 @@ struct _GimpDisplayShell
 
   GtkWidget         *statusbar;        /*  statusbar                          */
 
-  GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
-  GimpCanvasItem    *unrotated_item;   /*  unrotated items for e.g. cursor    */
-  GimpCanvasItem    *passe_partout;    /*  item for the highlight             */
-  GimpCanvasItem    *preview_items;    /*  item for previews                  */
-  GimpCanvasItem    *vectors;          /*  item proxy of vectors              */
-  GimpCanvasItem    *grid;             /*  item proxy of the grid             */
-  GimpCanvasItem    *guides;           /*  item proxies of guides             */
-  GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
-  GimpCanvasItem    *canvas_boundary;  /*  item for the cabvas boundary       */
-  GimpCanvasItem    *layer_boundary;   /*  item for the layer boundary        */
-  GimpCanvasItem    *tool_items;       /*  tools items, below the cursor      */
-  GimpCanvasItem    *cursor;           /*  item for the software cursor       */
+  LigmaCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  LigmaCanvasItem    *unrotated_item;   /*  unrotated items for e.g. cursor    */
+  LigmaCanvasItem    *passe_partout;    /*  item for the highlight             */
+  LigmaCanvasItem    *preview_items;    /*  item for previews                  */
+  LigmaCanvasItem    *vectors;          /*  item proxy of vectors              */
+  LigmaCanvasItem    *grid;             /*  item proxy of the grid             */
+  LigmaCanvasItem    *guides;           /*  item proxies of guides             */
+  LigmaCanvasItem    *sample_points;    /*  item proxies of sample points      */
+  LigmaCanvasItem    *canvas_boundary;  /*  item for the cabvas boundary       */
+  LigmaCanvasItem    *layer_boundary;   /*  item for the layer boundary        */
+  LigmaCanvasItem    *tool_items;       /*  tools items, below the cursor      */
+  LigmaCanvasItem    *cursor;           /*  item for the software cursor       */
 
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */
@@ -137,12 +137,12 @@ struct _GimpDisplayShell
 
   guint              fill_idle_id;     /*  display_shell_fill() idle ID       */
 
-  GimpHandedness     cursor_handedness;/*  Handedness for cursor display      */
-  GimpCursorType     current_cursor;   /*  Currently installed main cursor    */
-  GimpToolCursorType tool_cursor;      /*  Current Tool cursor                */
-  GimpCursorModifier cursor_modifier;  /*  Cursor modifier (plus, minus, ...) */
+  LigmaHandedness     cursor_handedness;/*  Handedness for cursor display      */
+  LigmaCursorType     current_cursor;   /*  Currently installed main cursor    */
+  LigmaToolCursorType tool_cursor;      /*  Current Tool cursor                */
+  LigmaCursorModifier cursor_modifier;  /*  Cursor modifier (plus, minus, ...) */
 
-  GimpCursorType     override_cursor;  /*  Overriding cursor                  */
+  LigmaCursorType     override_cursor;  /*  Overriding cursor                  */
   gboolean           using_override_cursor;
   gboolean           draw_cursor;      /* should we draw software cursor ?    */
 
@@ -151,20 +151,20 @@ struct _GimpDisplayShell
   GtkWidget         *rotate_dialog;    /*  rotate dialog                      */
   GtkWidget         *nav_popup;        /*  navigation popup                   */
 
-  GimpColorConfig   *color_config;     /*  color management settings          */
+  LigmaColorConfig   *color_config;     /*  color management settings          */
   gboolean           color_config_set; /*  settings changed from defaults     */
 
-  GimpColorTransform *profile_transform;
+  LigmaColorTransform *profile_transform;
   GeglBuffer         *profile_buffer;  /*  buffer for profile transform       */
   guchar             *profile_data;    /*  profile_buffer's pixels            */
   gint                profile_stride;  /*  profile_buffer's stride            */
 
-  GimpColorDisplayStack *filter_stack; /*  color display conversion stuff     */
+  LigmaColorDisplayStack *filter_stack; /*  color display conversion stuff     */
   guint                  filter_idle_id;
 
-  GimpColorTransform *filter_transform;
+  LigmaColorTransform *filter_transform;
   const Babl         *filter_format;   /*  filter_buffer's format             */
-  GimpColorProfile   *filter_profile;  /*  filter_format's profile            */
+  LigmaColorProfile   *filter_profile;  /*  filter_format's profile            */
   GeglBuffer         *filter_buffer;   /*  buffer for display filters         */
   guchar             *filter_data;     /*  filter_buffer's pixels             */
   gint                filter_stride;   /*  filter_buffer's stride             */
@@ -183,25 +183,25 @@ struct _GimpDisplayShell
 
   gint               paused_count;
 
-  GimpTreeHandler   *vectors_freeze_handler;
-  GimpTreeHandler   *vectors_thaw_handler;
-  GimpTreeHandler   *vectors_visible_handler;
+  LigmaTreeHandler   *vectors_freeze_handler;
+  LigmaTreeHandler   *vectors_thaw_handler;
+  LigmaTreeHandler   *vectors_visible_handler;
 
   gboolean           zoom_on_resize;
 
   gboolean           size_allocate_from_configure_event;
   gboolean           size_allocate_center_image;
 
-  /*  the state of gimp_display_shell_tool_events()  */
+  /*  the state of ligma_display_shell_tool_events()  */
   GdkDevice         *grab_pointer;
   GdkDevice         *grab_pointer_source;
   guint32            grab_pointer_time;
 
-  /*  the state of gimp_display_shell_zoom_gesture_*() */
+  /*  the state of ligma_display_shell_zoom_gesture_*() */
   gdouble            last_zoom_scale;
   gboolean           zoom_gesture_active;
 
-  /*  the state of gimp_display_shell_rotate_gesture_*() */
+  /*  the state of ligma_display_shell_rotate_gesture_*() */
   guint              last_gesture_rotate_state;
   gdouble            initial_gesture_rotate_angle;
   gboolean           rotate_gesture_active;
@@ -216,7 +216,7 @@ struct _GimpDisplayShell
   const gchar       *space_shaded_tool;
 
   /* Modifier action currently ON. */
-  GimpModifierAction mod_action;
+  LigmaModifierAction mod_action;
   gchar             *mod_action_desc;
 
   gint               scroll_start_x;
@@ -225,15 +225,15 @@ struct _GimpDisplayShell
   gint               scroll_last_y;
   gdouble            rotate_drag_angle;
   gpointer           scroll_info;
-  GimpLayer         *picked_layer;
+  LigmaLayer         *picked_layer;
 
   GeglBuffer        *mask;
   gint               mask_offset_x;
   gint               mask_offset_y;
-  GimpRGB            mask_color;
+  LigmaRGB            mask_color;
   gboolean           mask_inverted;
 
-  GimpMotionBuffer  *motion_buffer;
+  LigmaMotionBuffer  *motion_buffer;
 
   GdkPoint          *zoom_focus_point;
 
@@ -241,109 +241,109 @@ struct _GimpDisplayShell
   guint              blink_timeout_id;
 };
 
-struct _GimpDisplayShellClass
+struct _LigmaDisplayShellClass
 {
   GtkEventBoxClass  parent_class;
 
-  void (* scaled)    (GimpDisplayShell *shell);
-  void (* scrolled)  (GimpDisplayShell *shell);
-  void (* rotated)   (GimpDisplayShell *shell);
-  void (* reconnect) (GimpDisplayShell *shell);
+  void (* scaled)    (LigmaDisplayShell *shell);
+  void (* scrolled)  (LigmaDisplayShell *shell);
+  void (* rotated)   (LigmaDisplayShell *shell);
+  void (* reconnect) (LigmaDisplayShell *shell);
 };
 
 
-GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
+GType             ligma_display_shell_get_type      (void) G_GNUC_CONST;
 
-GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
-                                                    GimpUnit            unit,
+GtkWidget       * ligma_display_shell_new           (LigmaDisplay        *display,
+                                                    LigmaUnit            unit,
                                                     gdouble             scale,
-                                                    GimpUIManager      *popup_manager,
+                                                    LigmaUIManager      *popup_manager,
                                                     GdkMonitor         *monitor);
 
-void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
+void              ligma_display_shell_add_overlay   (LigmaDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GimpHandleAnchor    anchor,
+                                                    LigmaHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
-void              gimp_display_shell_move_overlay  (GimpDisplayShell   *shell,
+void              ligma_display_shell_move_overlay  (LigmaDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GimpHandleAnchor    anchor,
+                                                    LigmaHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
 
-GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
-GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);
+LigmaImageWindow * ligma_display_shell_get_window    (LigmaDisplayShell   *shell);
+LigmaStatusbar   * ligma_display_shell_get_statusbar (LigmaDisplayShell   *shell);
 
-GimpColorConfig * gimp_display_shell_get_color_config
-                                                   (GimpDisplayShell   *shell);
+LigmaColorConfig * ligma_display_shell_get_color_config
+                                                   (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_present       (GimpDisplayShell   *shell);
+void              ligma_display_shell_present       (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
+void              ligma_display_shell_reconnect     (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_empty         (GimpDisplayShell   *shell);
-void              gimp_display_shell_fill          (GimpDisplayShell   *shell,
-                                                    GimpImage          *image,
-                                                    GimpUnit            unit,
+void              ligma_display_shell_empty         (LigmaDisplayShell   *shell);
+void              ligma_display_shell_fill          (LigmaDisplayShell   *shell,
+                                                    LigmaImage          *image,
+                                                    LigmaUnit            unit,
                                                     gdouble             scale);
 
-void              gimp_display_shell_scaled        (GimpDisplayShell   *shell);
-void              gimp_display_shell_scrolled      (GimpDisplayShell   *shell);
-void              gimp_display_shell_rotated       (GimpDisplayShell   *shell);
+void              ligma_display_shell_scaled        (LigmaDisplayShell   *shell);
+void              ligma_display_shell_scrolled      (LigmaDisplayShell   *shell);
+void              ligma_display_shell_rotated       (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_set_unit      (GimpDisplayShell   *shell,
-                                                    GimpUnit            unit);
-GimpUnit          gimp_display_shell_get_unit      (GimpDisplayShell   *shell);
+void              ligma_display_shell_set_unit      (LigmaDisplayShell   *shell,
+                                                    LigmaUnit            unit);
+LigmaUnit          ligma_display_shell_get_unit      (LigmaDisplayShell   *shell);
 
-gboolean          gimp_display_shell_snap_coords   (GimpDisplayShell   *shell,
-                                                    GimpCoords         *coords,
+gboolean          ligma_display_shell_snap_coords   (LigmaDisplayShell   *shell,
+                                                    LigmaCoords         *coords,
                                                     gint                snap_offset_x,
                                                     gint                snap_offset_y,
                                                     gint                snap_width,
                                                     gint                snap_height);
 
-gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
+gboolean          ligma_display_shell_mask_bounds   (LigmaDisplayShell   *shell,
                                                     gint               *x,
                                                     gint               *y,
                                                     gint               *width,
                                                     gint               *height);
 
-void              gimp_display_shell_set_show_image
-                                                   (GimpDisplayShell   *shell,
+void              ligma_display_shell_set_show_image
+                                                   (LigmaDisplayShell   *shell,
                                                     gboolean            show_image);
 
-void              gimp_display_shell_set_show_all  (GimpDisplayShell   *shell,
+void              ligma_display_shell_set_show_all  (LigmaDisplayShell   *shell,
                                                     gboolean            show_all);
 
-GimpPickable    * gimp_display_shell_get_pickable  (GimpDisplayShell   *shell);
-GimpPickable    * gimp_display_shell_get_canvas_pickable
-                                                   (GimpDisplayShell   *shell);
-GeglRectangle     gimp_display_shell_get_bounding_box
-                                                   (GimpDisplayShell   *shell);
-gboolean          gimp_display_shell_get_infinite_canvas
-                                                   (GimpDisplayShell   *shell);
+LigmaPickable    * ligma_display_shell_get_pickable  (LigmaDisplayShell   *shell);
+LigmaPickable    * ligma_display_shell_get_canvas_pickable
+                                                   (LigmaDisplayShell   *shell);
+GeglRectangle     ligma_display_shell_get_bounding_box
+                                                   (LigmaDisplayShell   *shell);
+gboolean          ligma_display_shell_get_infinite_canvas
+                                                   (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_update_priority_rect
-                                                   (GimpDisplayShell *shell);
+void              ligma_display_shell_update_priority_rect
+                                                   (LigmaDisplayShell *shell);
 
-void              gimp_display_shell_flush         (GimpDisplayShell   *shell);
+void              ligma_display_shell_flush         (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
-void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
+void              ligma_display_shell_pause         (LigmaDisplayShell   *shell);
+void              ligma_display_shell_resume        (LigmaDisplayShell   *shell);
 
-void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
+void              ligma_display_shell_set_highlight (LigmaDisplayShell   *shell,
                                                     const GdkRectangle *highlight,
                                                     double              opacity);
-void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
+void              ligma_display_shell_set_mask      (LigmaDisplayShell   *shell,
                                                     GeglBuffer         *mask,
                                                     gint                offset_x,
                                                     gint                offset_y,
-                                                    const GimpRGB      *color,
+                                                    const LigmaRGB      *color,
                                                     gboolean            inverted);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_H__ */

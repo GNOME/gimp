@@ -19,8 +19,8 @@ pdb_groups = \
 	groups/floating_sel.pdb		\
 	groups/font_select.pdb		\
 	groups/fonts.pdb		\
-	groups/gimp.pdb			\
-	groups/gimprc.pdb		\
+	groups/ligma.pdb			\
+	groups/ligmarc.pdb		\
 	groups/gradient.pdb		\
 	groups/gradient_select.pdb	\
 	groups/gradients.pdb		\
@@ -72,8 +72,8 @@ EXTRA_DIST = \
 	$(pdb_groups)
 
 enum_headers = \
-	../libgimpbase/gimpbaseenums.h		\
-	../libgimpconfig/gimpconfigenums.h	\
+	../libligmabase/ligmabaseenums.h		\
+	../libligmaconfig/ligmaconfigenums.h	\
 	../app/operations/operations-enums.h	\
 	../app/core/core-enums.h		\
 	../app/paint/paint-enums.h

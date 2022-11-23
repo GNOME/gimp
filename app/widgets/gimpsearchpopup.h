@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsearchpopup.h
+ * ligmasearchpopup.h
  * Copyright (C) 2015 Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,57 +18,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SEARCH_POPUP_H__
-#define __GIMP_SEARCH_POPUP_H__
+#ifndef __LIGMA_SEARCH_POPUP_H__
+#define __LIGMA_SEARCH_POPUP_H__
 
-#include "gimppopup.h"
+#include "ligmapopup.h"
 
-#define GIMP_TYPE_SEARCH_POPUP            (gimp_search_popup_get_type ())
-#define GIMP_SEARCH_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SEARCH_POPUP, GimpSearchPopup))
-#define GIMP_SEARCH_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SEARCH_POPUP, GimpSearchPopupClass))
-#define GIMP_IS_SEARCH_POPUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SEARCH_POPUP))
-#define GIMP_IS_SEARCH_POPUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SEARCH_POPUP))
-#define GIMP_SEARCH_POPUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SEARCH_POPUP, GimpSearchPopupClass))
+#define LIGMA_TYPE_SEARCH_POPUP            (ligma_search_popup_get_type ())
+#define LIGMA_SEARCH_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SEARCH_POPUP, LigmaSearchPopup))
+#define LIGMA_SEARCH_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SEARCH_POPUP, LigmaSearchPopupClass))
+#define LIGMA_IS_SEARCH_POPUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SEARCH_POPUP))
+#define LIGMA_IS_SEARCH_POPUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SEARCH_POPUP))
+#define LIGMA_SEARCH_POPUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SEARCH_POPUP, LigmaSearchPopupClass))
 
 /**
- * GimpSearchPopupCallback:
- * @popup:  the #GimpSearchPopup to operate on.
+ * LigmaSearchPopupCallback:
+ * @popup:  the #LigmaSearchPopup to operate on.
  * @search: the text searched.
  *
  * Callback used by @popup to fill in its result list.
- * It should make use of gimp_search_popup_add_result() to fill in
+ * It should make use of ligma_search_popup_add_result() to fill in
  * results.
  */
-typedef struct _GimpSearchPopup           GimpSearchPopup;
-typedef struct _GimpSearchPopupClass      GimpSearchPopupClass;
-typedef struct _GimpSearchPopupPrivate    GimpSearchPopupPrivate;
+typedef struct _LigmaSearchPopup           LigmaSearchPopup;
+typedef struct _LigmaSearchPopupClass      LigmaSearchPopupClass;
+typedef struct _LigmaSearchPopupPrivate    LigmaSearchPopupPrivate;
 
-typedef void   (*GimpSearchPopupCallback) (GimpSearchPopup  *popup,
+typedef void   (*LigmaSearchPopupCallback) (LigmaSearchPopup  *popup,
                                            const gchar      *search,
                                            gpointer          data);
 
-struct _GimpSearchPopup
+struct _LigmaSearchPopup
 {
-  GimpPopup               parent_instance;
+  LigmaPopup               parent_instance;
 
-  GimpSearchPopupPrivate *priv;
+  LigmaSearchPopupPrivate *priv;
 };
 
-struct _GimpSearchPopupClass
+struct _LigmaSearchPopupClass
 {
-  GimpPopupClass          parent_class;
+  LigmaPopupClass          parent_class;
 };
 
-GType       gimp_search_popup_get_type   (void);
+GType       ligma_search_popup_get_type   (void);
 
-GtkWidget * gimp_search_popup_new        (Gimp                    *gimp,
+GtkWidget * ligma_search_popup_new        (Ligma                    *ligma,
                                           const gchar             *role,
                                           const gchar             *title,
-                                          GimpSearchPopupCallback  callback,
+                                          LigmaSearchPopupCallback  callback,
                                           gpointer                 callback_data);
 
-void        gimp_search_popup_add_result (GimpSearchPopup *popup,
-                                          GimpAction      *action,
+void        ligma_search_popup_add_result (LigmaSearchPopup *popup,
+                                          LigmaAction      *action,
                                           gint             section);
 
-#endif  /*  __GIMP_SEARCH_POPUP_H__  */
+#endif  /*  __LIGMA_SEARCH_POPUP_H__  */

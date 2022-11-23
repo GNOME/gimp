@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 #define __TOOL_PRESETS_COMMANDS_H__
 
 
-void   tool_presets_save_cmd_callback    (GimpAction *action,
+void   tool_presets_save_cmd_callback    (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data);
-void   tool_presets_restore_cmd_callback (GimpAction *action,
+void   tool_presets_restore_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data);
 

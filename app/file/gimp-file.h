@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-file.h
+ * ligma-file.h
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_H__
-#define __GIMP_FILE_H__
+#ifndef __LIGMA_FILE_H__
+#define __LIGMA_FILE_H__
 
-/* Data keys for Gimp */
-#define GIMP_FILE_OPEN_LAST_FILE_KEY     "gimp-file-open-last-file"
-#define GIMP_FILE_SAVE_LAST_FILE_KEY     "gimp-file-save-last-file"
-#define GIMP_FILE_EXPORT_LAST_FILE_KEY   "gimp-file-export-last-file"
+/* Data keys for Ligma */
+#define LIGMA_FILE_OPEN_LAST_FILE_KEY     "ligma-file-open-last-file"
+#define LIGMA_FILE_SAVE_LAST_FILE_KEY     "ligma-file-save-last-file"
+#define LIGMA_FILE_EXPORT_LAST_FILE_KEY   "ligma-file-export-last-file"
 
 
-#endif /* __GIMP_FILE_H__ */
+#endif /* __LIGMA_FILE_H__ */

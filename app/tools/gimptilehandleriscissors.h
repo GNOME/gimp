@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,45 +15,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_HANDLER_ISCISSORS_H__
-#define __GIMP_TILE_HANDLER_ISCISSORS_H__
+#ifndef __LIGMA_TILE_HANDLER_ISCISSORS_H__
+#define __LIGMA_TILE_HANDLER_ISCISSORS_H__
 
 
-#include "gegl/gimptilehandlervalidate.h"
+#include "gegl/ligmatilehandlervalidate.h"
 
 
 /***
- * GimpTileHandlerIscissors is a GeglTileHandler that renders the
+ * LigmaTileHandlerIscissors is a GeglTileHandler that renders the
  * Iscissors tool's gradmap.
  */
 
-#define GIMP_TYPE_TILE_HANDLER_ISCISSORS            (gimp_tile_handler_iscissors_get_type ())
-#define GIMP_TILE_HANDLER_ISCISSORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_HANDLER_ISCISSORS, GimpTileHandlerIscissors))
-#define GIMP_TILE_HANDLER_ISCISSORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_TILE_HANDLER_ISCISSORS, GimpTileHandlerIscissorsClass))
-#define GIMP_IS_TILE_HANDLER_ISCISSORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILE_HANDLER_ISCISSORS))
-#define GIMP_IS_TILE_HANDLER_ISCISSORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_TILE_HANDLER_ISCISSORS))
-#define GIMP_TILE_HANDLER_ISCISSORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_HANDLER_ISCISSORS, GimpTileHandlerIscissorsClass))
+#define LIGMA_TYPE_TILE_HANDLER_ISCISSORS            (ligma_tile_handler_iscissors_get_type ())
+#define LIGMA_TILE_HANDLER_ISCISSORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TILE_HANDLER_ISCISSORS, LigmaTileHandlerIscissors))
+#define LIGMA_TILE_HANDLER_ISCISSORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_TILE_HANDLER_ISCISSORS, LigmaTileHandlerIscissorsClass))
+#define LIGMA_IS_TILE_HANDLER_ISCISSORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TILE_HANDLER_ISCISSORS))
+#define LIGMA_IS_TILE_HANDLER_ISCISSORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_TILE_HANDLER_ISCISSORS))
+#define LIGMA_TILE_HANDLER_ISCISSORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_TILE_HANDLER_ISCISSORS, LigmaTileHandlerIscissorsClass))
 
 
-typedef struct _GimpTileHandlerIscissors      GimpTileHandlerIscissors;
-typedef struct _GimpTileHandlerIscissorsClass GimpTileHandlerIscissorsClass;
+typedef struct _LigmaTileHandlerIscissors      LigmaTileHandlerIscissors;
+typedef struct _LigmaTileHandlerIscissorsClass LigmaTileHandlerIscissorsClass;
 
-struct _GimpTileHandlerIscissors
+struct _LigmaTileHandlerIscissors
 {
-  GimpTileHandlerValidate  parent_instance;
+  LigmaTileHandlerValidate  parent_instance;
 
-  GimpPickable            *pickable;
+  LigmaPickable            *pickable;
 };
 
-struct _GimpTileHandlerIscissorsClass
+struct _LigmaTileHandlerIscissorsClass
 {
-  GimpTileHandlerValidateClass  parent_class;
+  LigmaTileHandlerValidateClass  parent_class;
 };
 
 
-GType             gimp_tile_handler_iscissors_get_type (void) G_GNUC_CONST;
+GType             ligma_tile_handler_iscissors_get_type (void) G_GNUC_CONST;
 
-GeglTileHandler * gimp_tile_handler_iscissors_new      (GimpPickable *pickable);
+GeglTileHandler * ligma_tile_handler_iscissors_new      (LigmaPickable *pickable);
 
 
-#endif /* __GIMP_TILE_HANDLER_ISCISSORS_H__ */
+#endif /* __LIGMA_TILE_HANDLER_ISCISSORS_H__ */

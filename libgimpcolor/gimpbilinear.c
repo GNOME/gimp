@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -20,16 +20,16 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimpbilinear.h"
+#include "ligmabilinear.h"
 
 
 /**
- * SECTION: gimpbilinear
- * @title: GimpBilinear
+ * SECTION: ligmabilinear
+ * @title: LigmaBilinear
  * @short_description: Utility functions for bilinear interpolation.
  *
  * Utility functions for bilinear interpolation.
@@ -37,13 +37,13 @@
 
 
 /**
- * gimp_bilinear:
+ * ligma_bilinear:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
 gdouble
-gimp_bilinear (gdouble  x,
+ligma_bilinear (gdouble  x,
                gdouble  y,
                gdouble *values)
 {
@@ -66,13 +66,13 @@ gimp_bilinear (gdouble  x,
 }
 
 /**
- * gimp_bilinear_8:
+ * ligma_bilinear_8:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
 guchar
-gimp_bilinear_8 (gdouble x,
+ligma_bilinear_8 (gdouble x,
                  gdouble y,
                  guchar *values)
 {
@@ -95,13 +95,13 @@ gimp_bilinear_8 (gdouble x,
 }
 
 /**
- * gimp_bilinear_16:
+ * ligma_bilinear_16:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
 guint16
-gimp_bilinear_16 (gdouble  x,
+ligma_bilinear_16 (gdouble  x,
                   gdouble  y,
                   guint16 *values)
 {
@@ -124,13 +124,13 @@ gimp_bilinear_16 (gdouble  x,
 }
 
 /**
- * gimp_bilinear_32:
+ * ligma_bilinear_32:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
 guint32
-gimp_bilinear_32 (gdouble  x,
+ligma_bilinear_32 (gdouble  x,
                   gdouble  y,
                   guint32 *values)
 {
@@ -153,19 +153,19 @@ gimp_bilinear_32 (gdouble  x,
 }
 
 /**
- * gimp_bilinear_rgb:
+ * ligma_bilinear_rgb:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
-GimpRGB
-gimp_bilinear_rgb (gdouble  x,
+LigmaRGB
+ligma_bilinear_rgb (gdouble  x,
                    gdouble  y,
-                   GimpRGB *values)
+                   LigmaRGB *values)
 {
   gdouble m0, m1;
   gdouble ix, iy;
-  GimpRGB v = { 0, };
+  LigmaRGB v = { 0, };
 
   g_return_val_if_fail (values != NULL, v);
 
@@ -205,20 +205,20 @@ gimp_bilinear_rgb (gdouble  x,
 }
 
 /**
- * gimp_bilinear_rgba:
+ * ligma_bilinear_rgba:
  * @x:
  * @y:
  * @values: (array fixed-size=4):
  */
-GimpRGB
-gimp_bilinear_rgba (gdouble  x,
+LigmaRGB
+ligma_bilinear_rgba (gdouble  x,
                     gdouble  y,
-                    GimpRGB *values)
+                    LigmaRGB *values)
 {
   gdouble m0, m1;
   gdouble ix, iy;
   gdouble a0, a1, a2, a3, alpha;
-  GimpRGB v = { 0, };
+  LigmaRGB v = { 0, };
 
   g_return_val_if_fail (values != NULL, v);
 

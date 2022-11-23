@@ -2,8 +2,8 @@
 /.libs
 /Makefile
 /Makefile.in
-/gimp-2.*
-/gimp-console-2.*
-/gimp.rc
+/ligma-2.*
+/ligma-console-2.*
+/ligma.rc
 /libapp.a
 /makefile.mingw

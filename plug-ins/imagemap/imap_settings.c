@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include "imap_browse.h"
 #include "imap_main.h"
@@ -31,7 +31,7 @@
 #include "imap_string.h"
 #include "imap_ui_grid.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 typedef struct {
   DefaultDialog_t *dialog;
@@ -124,7 +124,7 @@ create_settings_dialog(void)
    gtk_widget_show(swin);
    gtk_container_add(GTK_CONTAINER(swin), view);
 
-   frame = gimp_frame_new(_("Map File Format"));
+   frame = ligma_frame_new(_("Map File Format"));
    gtk_widget_show(frame);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 9, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

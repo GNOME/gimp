@@ -1,8 +1,8 @@
-# Turkish translation for GIMP
+# Turkish translation for LIGMA
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2002-2022 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 #
 # Fatih Demir <kabalak@gtranslator>, 2001.
 # Alper Ersoy <aersoy@tfz.net>, 2001.
@@ -14,8 +14,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP libgimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA libligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-18 19:44+0000\n"
 "PO-Revision-Date: 2022-08-21 20:38+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
@@ -30,86 +30,86 @@ msgstr ""
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
+#: libligma/ligmabrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "Fırça Seçimi"
 
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libligma/ligmabrushselectbutton.c:887 libligma/ligmapatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
+#: libligma/ligmaexport.c:332 libligma/ligmaexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s eklentisi katmanları kullanamaz"
 
-#: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
-#: libgimp/gimpexport.c:369
+#: libligma/ligmaexport.c:333 libligma/ligmaexport.c:342 libligma/ligmaexport.c:351
+#: libligma/ligmaexport.c:369
 msgid "Merge Visible Layers"
 msgstr "Görünen Katmanları Birleştir"
 
-#: libgimp/gimpexport.c:341
+#: libligma/ligmaexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kullanamaz"
 
-#: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
+#: libligma/ligmaexport.c:350 libligma/ligmaexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
-#: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
+#: libligma/ligmaexport.c:351 libligma/ligmaexport.c:360
 msgid "Save as Animation"
 msgstr "Canlandırma olarak kaydet"
 
-#: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
-#: libgimp/gimpexport.c:387
+#: libligma/ligmaexport.c:360 libligma/ligmaexport.c:369 libligma/ligmaexport.c:378
+#: libligma/ligmaexport.c:387
 msgid "Flatten Image"
 msgstr "Görüntüyü Düzleştir"
 
-#: libgimp/gimpexport.c:377
+#: libligma/ligmaexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s eklentisi saydamlığı kullanamaz"
 
-#: libgimp/gimpexport.c:386
+#: libligma/ligmaexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s eklentisi saydam katmanları kullanamaz"
 
-#: libgimp/gimpexport.c:395
+#: libligma/ligmaexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s eklentisi katman maskelerini kullanamaz"
 
-#: libgimp/gimpexport.c:396
+#: libligma/ligmaexport.c:396
 msgid "Apply Layer Masks"
 msgstr "Katman Maskelerini Uygula"
 
-#: libgimp/gimpexport.c:404
+#: libligma/ligmaexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s eklentisi yalnızca RGB görüntülerini kullanabilir"
 
-#: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
+#: libligma/ligmaexport.c:405 libligma/ligmaexport.c:443 libligma/ligmaexport.c:452
 msgid "Convert to RGB"
 msgstr "RGBʼye dönüştür"
 
-#: libgimp/gimpexport.c:413
+#: libligma/ligmaexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s eklentisi yalnızca gri tonlamalı görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
+#: libligma/ligmaexport.c:414 libligma/ligmaexport.c:443 libligma/ligmaexport.c:464
 msgid "Convert to Grayscale"
 msgstr "Gri Tonlamaya dönüştür"
 
-#: libgimp/gimpexport.c:422
+#: libligma/ligmaexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s eklentisi yalnızca indekslenmiş görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
+#: libligma/ligmaexport.c:423 libligma/ligmaexport.c:452 libligma/ligmaexport.c:462
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -117,13 +117,13 @@ msgstr ""
 "Varsayılan ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: libgimp/gimpexport.c:432
+#: libligma/ligmaexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s eklentisi yalnızca bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:433
+#: libligma/ligmaexport.c:433
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -131,77 +131,77 @@ msgstr ""
 "Bit eşlem varsayılan ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: libgimp/gimpexport.c:442
+#: libligma/ligmaexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s eklentisi yalnızca RGB ya da gri tonlamalı görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:451
+#: libligma/ligmaexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s eklentisi yalnızca RGB ya da indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:461
+#: libligma/ligmaexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s eklentisi yalnızca gri tonlamalı ya da indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:472
+#: libligma/ligmaexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s eklentisi bir alfa kanalına gereksiniyor"
 
-#: libgimp/gimpexport.c:473
+#: libligma/ligmaexport.c:473
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: libgimp/gimpexport.c:481
+#: libligma/ligmaexport.c:481
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "%s eklentisi, katmanları görüntü sınırlarına kırpması gerekiyor"
 
-#: libgimp/gimpexport.c:482
+#: libligma/ligmaexport.c:482
 msgid "Crop Layers"
 msgstr "Katmanları Kırp"
 
-#: libgimp/gimpexport.c:482
+#: libligma/ligmaexport.c:482
 msgid "Resize Image to Layers"
 msgstr "Görüntüyü Katmanlara Yeniden Boyutlandır"
 
-#: libgimp/gimpexport.c:541
+#: libligma/ligmaexport.c:541
 msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
-#: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:303 libgimpwidgets/gimpcolorbutton.c:553
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libligma/ligmaexport.c:546 libligma/ligmaexport.c:628 libligma/ligmaexport.c:1199
+#: libligma/ligmaproceduredialog.c:303 libligmawidgets/ligmacolorbutton.c:553
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:173
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:183
+#: libligmawidgets/ligmafileentry.c:466 libligmawidgets/ligmaquerybox.c:274
+#: libligmawidgets/ligmaquerybox.c:337 libligmawidgets/ligmaquerybox.c:403
+#: libligmawidgets/ligmaquerybox.c:479
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: libgimp/gimpexport.c:547
+#: libligma/ligmaexport.c:547
 msgid "C_onfirm"
 msgstr "_Onayla"
 
-#: libgimp/gimpexport.c:623
+#: libligma/ligmaexport.c:623
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: libgimp/gimpexport.c:627
+#: libligma/ligmaexport.c:627
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:275
+#: libligma/ligmaexport.c:629 libligma/ligmaexport.c:1200
+#: libligma/ligmaproceduredialog.c:275
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
 #. the headline
-#: libgimp/gimpexport.c:659
+#: libligma/ligmaexport.c:659
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -211,11 +211,11 @@ msgstr ""
 "aktarılmalıdır:"
 
 #. the footline
-#: libgimp/gimpexport.c:733
+#: libligma/ligmaexport.c:733
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal özgün görüntüde değişiklik yapmaz."
 
-#: libgimp/gimpexport.c:853
+#: libligma/ligmaexport.c:853
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -224,7 +224,7 @@ msgstr ""
 "Bir katman maskesini %s olarak imlemek üzeresiniz.\n"
 "Bu işlem görünebilir katmanları kaydetmeyecektir."
 
-#: libgimp/gimpexport.c:859
+#: libligma/ligmaexport.c:859
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -235,147 +235,147 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:388
+#: libligma/ligmaexport.c:1193 libligma/ligmasaveproceduredialog.c:388
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
 
-#: libgimp/gimpfontselectbutton.c:137
+#: libligma/ligmafontselectbutton.c:137
 msgid "Font Selection"
 msgstr "Yazı Tipi Seçimi"
 
-#: libgimp/gimpgradientselectbutton.c:155
+#: libligma/ligmagradientselectbutton.c:155
 msgid "Gradient Selection"
 msgstr "Renk Geçişi Seçimi"
 
-#: libgimp/gimpimagemetadata.c:306
+#: libligma/ligmaimagemetadata.c:306
 msgid "Background"
 msgstr "Artalan"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
+#: libligma/ligmaimagemetadata-save.c:654 modules/controller-midi.c:426
+msgid "LIGMA"
+msgstr "LIGMA"
 
-#: libgimp/gimppaletteselectbutton.c:136
+#: libligma/ligmapaletteselectbutton.c:136
 msgid "Palette Selection"
 msgstr "Palet Seçimi"
 
-#: libgimp/gimppatternselectbutton.c:165
+#: libligma/ligmapatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Desen Seçimi"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libligma/ligmapdb.c:552
 msgid "success"
 msgstr "başarılı"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libligma/ligmapdb.c:556
 msgid "execution error"
 msgstr "uygulama hatası"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libligma/ligmapdb.c:560
 msgid "calling error"
 msgstr "çağırma hatası"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libligma/ligmapdb.c:564
 msgid "cancelled"
 msgstr "iptal edildi"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libligma/ligmaprocbrowserdialog.c:162
 msgid "by name"
 msgstr "ada göre"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libligma/ligmaprocbrowserdialog.c:163
 msgid "by description"
 msgstr "açıklamaya göre"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libligma/ligmaprocbrowserdialog.c:164
 msgid "by help"
 msgstr "yardıma göre"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libligma/ligmaprocbrowserdialog.c:165
 msgid "by authors"
 msgstr "yazara göre"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libligma/ligmaprocbrowserdialog.c:166
 msgid "by copyright"
 msgstr "telif hakkına göre"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libligma/ligmaprocbrowserdialog.c:167
 msgid "by date"
 msgstr "tarihe göre"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libligma/ligmaprocbrowserdialog.c:168
 msgid "by type"
 msgstr "türe göre"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
-#: libgimpwidgets/gimpbrowser.c:168
+#: libligma/ligmaprocbrowserdialog.c:369 libligma/ligmaprocbrowserdialog.c:527
+#: libligmawidgets/ligmabrowser.c:168
 msgid "No matches"
 msgstr "Eşleşme yok"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libligma/ligmaprocbrowserdialog.c:372
 msgid "Search term invalid or incomplete"
 msgstr "Arama terimi geçersiz ya da eksik"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libligma/ligmaprocbrowserdialog.c:381
 msgid "Searching"
 msgstr "Aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libligma/ligmaprocbrowserdialog.c:393
 msgid "Searching by name"
 msgstr "Ada göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libligma/ligmaprocbrowserdialog.c:414
 msgid "Searching by description"
 msgstr "Açıklamaya göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libligma/ligmaprocbrowserdialog.c:422
 msgid "Searching by help"
 msgstr "Yardıma göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libligma/ligmaprocbrowserdialog.c:430
 msgid "Searching by authors"
 msgstr "Yazara göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libligma/ligmaprocbrowserdialog.c:438
 msgid "Searching by copyright"
 msgstr "Telif hakkına göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libligma/ligmaprocbrowserdialog.c:446
 msgid "Searching by date"
 msgstr "Tarihe göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libligma/ligmaprocbrowserdialog.c:454
 msgid "Searching by type"
 msgstr "Türe göre aranıyor"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libligma/ligmaprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d yordam"
 
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libligma/ligmaprocbrowserdialog.c:476
 msgid "No matches for your query"
 msgstr "Sorgulamanız için uygun eşleşme yok"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libligma/ligmaprocbrowserdialog.c:480
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d yordam sorgulamanız ile eşleşiyor"
 
-#: libgimp/gimpprocedure.c:1906
+#: libligma/ligmaprocedure.c:1906
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' yordamı dönüş değeri döndürmedi"
 
-#: libgimp/gimpprocedure.c:1997
+#: libligma/ligmaprocedure.c:1997
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -384,7 +384,7 @@ msgstr ""
 "'%s' yordamı, '%s' dönüş değeri için yanlış bir değer türünü döndürdü (#%d). "
 "%s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2009
+#: libligma/ligmaprocedure.c:2009
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -393,7 +393,7 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2044
+#: libligma/ligmaprocedure.c:2044
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -402,7 +402,7 @@ msgstr ""
 "'%s' yordamı, '%s' e, '%s' dönüş değeri olarak dönüştü (#%d, %s türü). Bu "
 "değer, istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2058
+#: libligma/ligmaprocedure.c:2058
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -411,13 +411,13 @@ msgstr ""
 "'%s' yordamı, '%s' ile, '%s' bağımsız değişkeni için çağrıldı (#%d,%s türü). "
 "Bu değer istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2102
+#: libligma/ligmaprocedure.c:2102
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisi döndürdü."
 
-#: libgimp/gimpprocedure.c:2112
+#: libligma/ligmaprocedure.c:2112
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -426,1281 +426,1281 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisiyle "
 "çağrıldı."
 
-#: libgimp/gimpproceduredialog.c:273
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: libligma/ligmaproceduredialog.c:273
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Aç"
 
-#: libgimp/gimpproceduredialog.c:277 libgimpwidgets/gimpcolorbutton.c:554
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libligma/ligmaproceduredialog.c:277 libligmawidgets/ligmacolorbutton.c:554
+#: libligmawidgets/ligmafileentry.c:467 libligmawidgets/ligmaquerybox.c:274
+#: libligmawidgets/ligmaquerybox.c:337 libligmawidgets/ligmaquerybox.c:403
+#: libligmawidgets/ligmaquerybox.c:479
 msgid "_OK"
 msgstr "_Tamam"
 
-#: libgimp/gimpproceduredialog.c:285 libgimpwidgets/gimpcolorbutton.c:552
+#: libligma/ligmaproceduredialog.c:285 libligmawidgets/ligmacolorbutton.c:552
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:337
+#: libligma/ligmaproceduredialog.c:337
 msgid "_Load Saved Settings"
 msgstr "Kaydedilmiş Ayarları _Yükle"
 
-#: libgimp/gimpproceduredialog.c:338
+#: libligma/ligmaproceduredialog.c:338
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "\"Ayarları Kaydet\" düğmesiyle kaydedilen ayarları yükle"
 
-#: libgimp/gimpproceduredialog.c:350
+#: libligma/ligmaproceduredialog.c:350
 msgid "_Save Settings"
 msgstr "Ayarları _Kaydet"
 
-#: libgimp/gimpproceduredialog.c:351
+#: libligma/ligmaproceduredialog.c:351
 msgid "Store current settings for later reuse"
 msgstr "Geçerli ayarları daha sonra yeniden kullanmak için depola"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libligma/ligmaproceduredialog.c:1964
 msgid "Reset to _Initial Values"
 msgstr "_Başlangıç Değerlerine Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libligma/ligmaproceduredialog.c:1973
 msgid "Reset to _Factory Defaults"
 msgstr "_Fabrika Öntanımlılarına Sıfırla"
 
-#: libgimp/gimpprocview.c:176
+#: libligma/ligmaprocview.c:176
 msgid "Image types:"
 msgstr "Görüntü türleri:"
 
-#: libgimp/gimpprocview.c:179
+#: libligma/ligmaprocview.c:179
 msgid "Menu label:"
 msgstr "Menü etiketi:"
 
-#: libgimp/gimpprocview.c:187
+#: libligma/ligmaprocview.c:187
 msgid "Menu path:"
 msgstr "Menü yolu:"
 
-#: libgimp/gimpprocview.c:202
+#: libligma/ligmaprocview.c:202
 msgid "Parameters"
 msgstr "Parametreler"
 
-#: libgimp/gimpprocview.c:216
+#: libligma/ligmaprocview.c:216
 msgid "Return Values"
 msgstr "Dönüş Değerleri"
 
-#: libgimp/gimpprocview.c:231
+#: libligma/ligmaprocview.c:231
 msgid "Additional Information"
 msgstr "Ek Bilgi"
 
-#: libgimp/gimpprocview.c:263
+#: libligma/ligmaprocview.c:263
 msgid "Authors:"
 msgstr "Yazarlar:"
 
-#: libgimp/gimpprocview.c:266
+#: libligma/ligmaprocview.c:266
 msgid "Date:"
 msgstr "Tarih:"
 
-#: libgimp/gimpprocview.c:269
+#: libligma/ligmaprocview.c:269
 msgid "Copyright:"
 msgstr "Telif Hakkı:"
 
-#: libgimp/gimpsaveproceduredialog.c:166
+#: libligma/ligmasaveproceduredialog.c:166
 msgid "Metadata"
 msgstr "Üst Veri"
 
-#: libgimp/gimpsaveproceduredialog.c:175
+#: libligma/ligmasaveproceduredialog.c:175
 msgid "Edit Metadata"
 msgstr "Üst Veri Düzenle"
 
-#: libgimp/gimpsaveproceduredialog.c:175
+#: libligma/ligmasaveproceduredialog.c:175
 msgid "(edit)"
 msgstr "(düzenle)"
 
-#: libgimp/gimpunitcache.c:54
+#: libligma/ligmaunitcache.c:54
 msgid "percent"
 msgstr "yüzdelik"
 
-#: libgimpbase/gimpbaseenums.c:31
+#: libligmabase/ligmabaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Beyaz (tam matlık)"
 
-#: libgimpbase/gimpbaseenums.c:32
+#: libligmabase/ligmabaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Siyah (tam saydamlık)"
 
-#: libgimpbase/gimpbaseenums.c:33
+#: libligmabase/ligmabaseenums.c:33
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Katmanın _alfa kanalı"
 
-#: libgimpbase/gimpbaseenums.c:34
+#: libligmabase/ligmabaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "Katmanın alfa kanalını ak_tar"
 
-#: libgimpbase/gimpbaseenums.c:35
+#: libligmabase/ligmabaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Seçim"
 
-#: libgimpbase/gimpbaseenums.c:36
+#: libligmabase/ligmabaseenums.c:36
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Katmanın _gri tonlamalı kopyası"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libligmabase/ligmabaseenums.c:37
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "Ka_tman"
 
-#: libgimpbase/gimpbaseenums.c:67
+#: libligmabase/ligmabaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Daire"
 
-#: libgimpbase/gimpbaseenums.c:68
+#: libligmabase/ligmabaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Kare"
 
-#: libgimpbase/gimpbaseenums.c:69
+#: libligmabase/ligmabaseenums.c:69
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Karo"
 
-#: libgimpbase/gimpbaseenums.c:99
+#: libligmabase/ligmabaseenums.c:99
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Maskara"
 
-#: libgimpbase/gimpbaseenums.c:100
+#: libligmabase/ligmabaseenums.c:100
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Yuvarla"
 
-#: libgimpbase/gimpbaseenums.c:101
+#: libligmabase/ligmabaseenums.c:101
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Kare"
 
-#: libgimpbase/gimpbaseenums.c:132
+#: libligmabase/ligmabaseenums.c:132
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Geçerli seçime ekle"
 
-#: libgimpbase/gimpbaseenums.c:133
+#: libligmabase/ligmabaseenums.c:133
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Geçerli seçimden çıkar"
 
-#: libgimpbase/gimpbaseenums.c:134
+#: libligmabase/ligmabaseenums.c:134
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Geçerli seçimin yerine koy"
 
-#: libgimpbase/gimpbaseenums.c:135
+#: libligmabase/ligmabaseenums.c:135
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Geçerli seçimle kesiştir"
 
-#: libgimpbase/gimpbaseenums.c:168
+#: libligmabase/ligmabaseenums.c:168
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Kırmızı"
 
-#: libgimpbase/gimpbaseenums.c:169
+#: libligmabase/ligmabaseenums.c:169
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Yeşil"
 
-#: libgimpbase/gimpbaseenums.c:170
+#: libligmabase/ligmabaseenums.c:170
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Mavi"
 
-#: libgimpbase/gimpbaseenums.c:171
+#: libligmabase/ligmabaseenums.c:171
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Gri"
 
-#: libgimpbase/gimpbaseenums.c:172
+#: libligmabase/ligmabaseenums.c:172
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "İndeksli"
 
-#: libgimpbase/gimpbaseenums.c:173
+#: libligmabase/ligmabaseenums.c:173
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpbase/gimpbaseenums.c:203
+#: libligmabase/ligmabaseenums.c:203
 msgctxt "check-size"
 msgid "Small"
 msgstr "Küçük"
 
-#: libgimpbase/gimpbaseenums.c:204
+#: libligmabase/ligmabaseenums.c:204
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Orta"
 
-#: libgimpbase/gimpbaseenums.c:205
+#: libligmabase/ligmabaseenums.c:205
 msgctxt "check-size"
 msgid "Large"
 msgstr "Büyük"
 
-#: libgimpbase/gimpbaseenums.c:239
+#: libligmabase/ligmabaseenums.c:239
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Açık renk denetimler"
 
-#: libgimpbase/gimpbaseenums.c:240
+#: libligmabase/ligmabaseenums.c:240
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Orta tonda denetimler"
 
-#: libgimpbase/gimpbaseenums.c:241
+#: libligmabase/ligmabaseenums.c:241
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Koyu denetimler"
 
-#: libgimpbase/gimpbaseenums.c:242
+#: libligmabase/ligmabaseenums.c:242
 msgctxt "check-type"
 msgid "White only"
 msgstr "Yalnızca beyaz"
 
-#: libgimpbase/gimpbaseenums.c:243
+#: libligmabase/ligmabaseenums.c:243
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Yalnızca gri"
 
-#: libgimpbase/gimpbaseenums.c:244
+#: libligmabase/ligmabaseenums.c:244
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Yalnızca siyah"
 
-#: libgimpbase/gimpbaseenums.c:245
+#: libligmabase/ligmabaseenums.c:245
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Özel denetimler"
 
-#: libgimpbase/gimpbaseenums.c:274
+#: libligmabase/ligmabaseenums.c:274
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Görüntü"
 
-#: libgimpbase/gimpbaseenums.c:275
+#: libligmabase/ligmabaseenums.c:275
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Desen"
 
-#: libgimpbase/gimpbaseenums.c:311
+#: libligmabase/ligmabaseenums.c:311
 msgctxt "color-tag"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: libgimpbase/gimpbaseenums.c:312
+#: libligmabase/ligmabaseenums.c:312
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Mavi"
 
-#: libgimpbase/gimpbaseenums.c:313
+#: libligmabase/ligmabaseenums.c:313
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Yeşil"
 
-#: libgimpbase/gimpbaseenums.c:314
+#: libligmabase/ligmabaseenums.c:314
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Sarı"
 
-#: libgimpbase/gimpbaseenums.c:315
+#: libligmabase/ligmabaseenums.c:315
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Turuncu"
 
-#: libgimpbase/gimpbaseenums.c:316
+#: libligmabase/ligmabaseenums.c:316
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Kahverengi"
 
-#: libgimpbase/gimpbaseenums.c:317
+#: libligmabase/ligmabaseenums.c:317
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Kırmızı"
 
-#: libgimpbase/gimpbaseenums.c:318
+#: libligmabase/ligmabaseenums.c:318
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Eflatun"
 
-#: libgimpbase/gimpbaseenums.c:319
+#: libligmabase/ligmabaseenums.c:319
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Gri"
 
-#: libgimpbase/gimpbaseenums.c:352
+#: libligmabase/ligmabaseenums.c:352
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8-bit tamsayı"
 
-#: libgimpbase/gimpbaseenums.c:353
+#: libligmabase/ligmabaseenums.c:353
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16-bit tamsayı"
 
-#: libgimpbase/gimpbaseenums.c:354
+#: libligmabase/ligmabaseenums.c:354
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32-bit tamsayı"
 
-#: libgimpbase/gimpbaseenums.c:355
+#: libligmabase/ligmabaseenums.c:355
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16-bit kayan noktalı sayı"
 
-#: libgimpbase/gimpbaseenums.c:356
+#: libligmabase/ligmabaseenums.c:356
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32-bit kayan noktalı sayı"
 
-#: libgimpbase/gimpbaseenums.c:357
+#: libligmabase/ligmabaseenums.c:357
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64-bit kayan noktalı sayı"
 
-#: libgimpbase/gimpbaseenums.c:388
+#: libligmabase/ligmabaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "En uygun paleti oluştur"
 
 # Web ve optimized kelimeleri çevirileri web-optimized için farklı tutuldu
-#: libgimpbase/gimpbaseenums.c:389
+#: libligmabase/ligmabaseenums.c:389
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Web odaklı palet kullan"
 
-#: libgimpbase/gimpbaseenums.c:390
+#: libligmabase/ligmabaseenums.c:390
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Siyah ve beyaz (1 bit) palet kullan"
 
-#: libgimpbase/gimpbaseenums.c:391
+#: libligmabase/ligmabaseenums.c:391
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Özel palet kullan"
 
-#: libgimpbase/gimpbaseenums.c:420
+#: libligmabase/ligmabaseenums.c:420
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Bulanıklık"
 
-#: libgimpbase/gimpbaseenums.c:421
+#: libligmabase/ligmabaseenums.c:421
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Keskinleştir"
 
-#: libgimpbase/gimpbaseenums.c:453
+#: libligmabase/ligmabaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Açıklık (HSL)"
 
 # Luma metodunun Luminance metodundan farkı var,
-# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
-#: libgimpbase/gimpbaseenums.c:454
+# https://docs.ligma.org/2.10/en/ligma-filter-desaturate.html
+#: libligmabase/ligmabaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma"
 
-#: libgimpbase/gimpbaseenums.c:455
+#: libligmabase/ligmabaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Ortalama (HSI Yoğunluğu)"
 
 # Luma metodunun Luminance metodundan farkı var,
 # o sebeple "Renk Parlaklığı" olarak çevirdim
-# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
-#: libgimpbase/gimpbaseenums.c:456
+# https://docs.ligma.org/2.10/en/ligma-filter-desaturate.html
+#: libligmabase/ligmabaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Renk Parlaklığı"
 
-#: libgimpbase/gimpbaseenums.c:457
+#: libligmabase/ligmabaseenums.c:457
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Değer (HSV)"
 
-#: libgimpbase/gimpbaseenums.c:486
+#: libligmabase/ligmabaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Soldurma"
 
-#: libgimpbase/gimpbaseenums.c:487
+#: libligmabase/ligmabaseenums.c:487
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Yakma"
 
-#: libgimpbase/gimpbaseenums.c:519
+#: libligmabase/ligmabaseenums.c:519
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Önalan rengi"
 
-#: libgimpbase/gimpbaseenums.c:520
+#: libligmabase/ligmabaseenums.c:520
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Artalan rengi"
 
-#: libgimpbase/gimpbaseenums.c:521
+#: libligmabase/ligmabaseenums.c:521
 msgctxt "fill-type"
 msgid "White"
 msgstr "Beyaz"
 
-#: libgimpbase/gimpbaseenums.c:522
+#: libligmabase/ligmabaseenums.c:522
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Saydamlık"
 
-#: libgimpbase/gimpbaseenums.c:523
+#: libligmabase/ligmabaseenums.c:523
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Desen"
 
-#: libgimpbase/gimpbaseenums.c:581
+#: libligmabase/ligmabaseenums.c:581
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Algısal RGB"
 
-#: libgimpbase/gimpbaseenums.c:582
+#: libligmabase/ligmabaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Doğrusal RGB"
 
-#: libgimpbase/gimpbaseenums.c:583
+#: libligmabase/ligmabaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE Lab"
 
-#: libgimpbase/gimpbaseenums.c:613
+#: libligmabase/ligmabaseenums.c:613
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:614
+#: libligmabase/ligmabaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (saat yönünün tersinde renk tonu)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:617
+#: libligmabase/ligmabaseenums.c:617
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (syt)"
 
-#: libgimpbase/gimpbaseenums.c:618
+#: libligmabase/ligmabaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (saat yönünde renk tonu)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:621
+#: libligmabase/ligmabaseenums.c:621
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (sy)"
 
-#: libgimpbase/gimpbaseenums.c:654
+#: libligmabase/ligmabaseenums.c:654
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: libgimpbase/gimpbaseenums.c:655
+#: libligmabase/ligmabaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Eğri"
 
-#: libgimpbase/gimpbaseenums.c:656
+#: libligmabase/ligmabaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "Sinüs biçimli"
 
-#: libgimpbase/gimpbaseenums.c:657
+#: libligmabase/ligmabaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Küresel (artan)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:660
+#: libligmabase/ligmabaseenums.c:660
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Küresel (art)"
 
-#: libgimpbase/gimpbaseenums.c:661
+#: libligmabase/ligmabaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Küresel (azalan)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:664
+#: libligmabase/ligmabaseenums.c:664
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Küresel (azl)"
 
-#: libgimpbase/gimpbaseenums.c:665
+#: libligmabase/ligmabaseenums.c:665
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Adım"
 
-#: libgimpbase/gimpbaseenums.c:703
+#: libligmabase/ligmabaseenums.c:703
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: libgimpbase/gimpbaseenums.c:704
+#: libligmabase/ligmabaseenums.c:704
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Çift doğrusal"
 
-#: libgimpbase/gimpbaseenums.c:705
+#: libligmabase/ligmabaseenums.c:705
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radyal"
 
-#: libgimpbase/gimpbaseenums.c:706
+#: libligmabase/ligmabaseenums.c:706
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Kare"
 
-#: libgimpbase/gimpbaseenums.c:707
+#: libligmabase/ligmabaseenums.c:707
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Konik (simetrik)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:710
+#: libligmabase/ligmabaseenums.c:710
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Konik (sim)"
 
-#: libgimpbase/gimpbaseenums.c:711
+#: libligmabase/ligmabaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Konik (asimetrik)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:714
+#: libligmabase/ligmabaseenums.c:714
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Konik (asim)"
 
-#: libgimpbase/gimpbaseenums.c:715
+#: libligmabase/ligmabaseenums.c:715
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Şekillendirilmiş (açısal)"
 
-#: libgimpbase/gimpbaseenums.c:716
+#: libligmabase/ligmabaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Şekillendirilmiş (küresel)"
 
-#: libgimpbase/gimpbaseenums.c:717
+#: libligmabase/ligmabaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Şekillendirilmiş (çukurlu)"
 
-#: libgimpbase/gimpbaseenums.c:718
+#: libligmabase/ligmabaseenums.c:718
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Sarmal (saat yönünde)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:721
+#: libligmabase/ligmabaseenums.c:721
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Sarmal (sy)"
 
-#: libgimpbase/gimpbaseenums.c:722
+#: libligmabase/ligmabaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Sarmal (saat yönünün tersinde)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:725
+#: libligmabase/ligmabaseenums.c:725
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Sarmal (syt)"
 
-#: libgimpbase/gimpbaseenums.c:757
+#: libligmabase/ligmabaseenums.c:757
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Kesişimler (noktalar)"
 
-#: libgimpbase/gimpbaseenums.c:758
+#: libligmabase/ligmabaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Kesişimler (artı işaretleri)"
 
-#: libgimpbase/gimpbaseenums.c:759
+#: libligmabase/ligmabaseenums.c:759
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Kesikli"
 
-#: libgimpbase/gimpbaseenums.c:760
+#: libligmabase/ligmabaseenums.c:760
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Çift tire"
 
-#: libgimpbase/gimpbaseenums.c:761
+#: libligmabase/ligmabaseenums.c:761
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Katı"
 
-#: libgimpbase/gimpbaseenums.c:831
+#: libligmabase/ligmabaseenums.c:831
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Simge adı"
 
-#: libgimpbase/gimpbaseenums.c:832
+#: libligmabase/ligmabaseenums.c:832
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Pixbuf"
 
-#: libgimpbase/gimpbaseenums.c:833
+#: libligmabase/ligmabaseenums.c:833
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Görüntü dosyası"
 
-#: libgimpbase/gimpbaseenums.c:863
+#: libligmabase/ligmabaseenums.c:863
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB rengi"
 
-#: libgimpbase/gimpbaseenums.c:864
+#: libligmabase/ligmabaseenums.c:864
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Gri tonlama"
 
-#: libgimpbase/gimpbaseenums.c:865
+#: libligmabase/ligmabaseenums.c:865
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "İndeksli renk"
 
-#: libgimpbase/gimpbaseenums.c:898
+#: libligmabase/ligmabaseenums.c:898
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:899
+#: libligmabase/ligmabaseenums.c:899
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: libgimpbase/gimpbaseenums.c:900
+#: libligmabase/ligmabaseenums.c:900
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Gri tonlama"
 
-#: libgimpbase/gimpbaseenums.c:901
+#: libligmabase/ligmabaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Gri tonlamalı-alfa"
 
-#: libgimpbase/gimpbaseenums.c:902
+#: libligmabase/ligmabaseenums.c:902
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "İndeksli"
 
-#: libgimpbase/gimpbaseenums.c:903
+#: libligmabase/ligmabaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "İndeksli-alfa"
 
-#: libgimpbase/gimpbaseenums.c:933
+#: libligmabase/ligmabaseenums.c:933
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Daire"
 
-#: libgimpbase/gimpbaseenums.c:934
+#: libligmabase/ligmabaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Kare"
 
-#: libgimpbase/gimpbaseenums.c:935
+#: libligmabase/ligmabaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Karo"
 
-#: libgimpbase/gimpbaseenums.c:967
+#: libligmabase/ligmabaseenums.c:967
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: libgimpbase/gimpbaseenums.c:968
+#: libligmabase/ligmabaseenums.c:968
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: libgimpbase/gimpbaseenums.c:969
+#: libligmabase/ligmabaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kübik"
 
-#: libgimpbase/gimpbaseenums.c:970
+#: libligmabase/ligmabaseenums.c:970
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "NoHalo"
 
-#: libgimpbase/gimpbaseenums.c:971
+#: libligmabase/ligmabaseenums.c:971
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo"
 
-#: libgimpbase/gimpbaseenums.c:1001
+#: libligmabase/ligmabaseenums.c:1001
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Köşe"
 
-#: libgimpbase/gimpbaseenums.c:1002
+#: libligmabase/ligmabaseenums.c:1002
 msgctxt "join-style"
 msgid "Round"
 msgstr "Yuvarla"
 
-#: libgimpbase/gimpbaseenums.c:1003
+#: libligmabase/ligmabaseenums.c:1003
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Eğim"
 
-#: libgimpbase/gimpbaseenums.c:1064
+#: libligmabase/ligmabaseenums.c:1064
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Gerektiği gibi genişletilmiş"
 
-#: libgimpbase/gimpbaseenums.c:1065
+#: libligmabase/ligmabaseenums.c:1065
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Görüntüye kırpılmış"
 
-#: libgimpbase/gimpbaseenums.c:1066
+#: libligmabase/ligmabaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "En alt katmana kırpılmış"
 
-#: libgimpbase/gimpbaseenums.c:1067
+#: libligmabase/ligmabaseenums.c:1067
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Düzleştir"
 
-#: libgimpbase/gimpbaseenums.c:1161
+#: libligmabase/ligmabaseenums.c:1161
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Yatay"
 
-#: libgimpbase/gimpbaseenums.c:1162
+#: libligmabase/ligmabaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Dikey"
 
-#: libgimpbase/gimpbaseenums.c:1163
+#: libligmabase/ligmabaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: libgimpbase/gimpbaseenums.c:1192
+#: libligmabase/ligmabaseenums.c:1192
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Sabit"
 
-#: libgimpbase/gimpbaseenums.c:1193
+#: libligmabase/ligmabaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Artan"
 
-#: libgimpbase/gimpbaseenums.c:1254
+#: libligmabase/ligmabaseenums.c:1254
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
-msgstr "Dahili GIMP yordamı"
+msgid "Internal LIGMA procedure"
+msgstr "Dahili LIGMA yordamı"
 
-#: libgimpbase/gimpbaseenums.c:1255
+#: libligmabase/ligmabaseenums.c:1255
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
-msgstr "GIMP Eklentisi"
+msgid "LIGMA Plug-In"
+msgstr "LIGMA Eklentisi"
 
-#: libgimpbase/gimpbaseenums.c:1256
+#: libligmabase/ligmabaseenums.c:1256
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "GIMP Uzantısı"
+msgid "LIGMA Extension"
+msgstr "LIGMA Uzantısı"
 
-#: libgimpbase/gimpbaseenums.c:1257
+#: libligmabase/ligmabaseenums.c:1257
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Geçici Yordam"
 
-#: libgimpbase/gimpbaseenums.c:1344
+#: libligmabase/ligmabaseenums.c:1344
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bit doğrusal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1345
+#: libligmabase/ligmabaseenums.c:1345
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8-bit doğrusal olmayan tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1346
+#: libligmabase/ligmabaseenums.c:1346
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8-bit algısal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1347
+#: libligmabase/ligmabaseenums.c:1347
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bit doğrusal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1348
+#: libligmabase/ligmabaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16-bit doğrusal olmayan tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1349
+#: libligmabase/ligmabaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16-bit algısal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1350
+#: libligmabase/ligmabaseenums.c:1350
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bit doğrusal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1351
+#: libligmabase/ligmabaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32-bit doğrusal olmayan tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1352
+#: libligmabase/ligmabaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32-bit algısal tam sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1353
+#: libligmabase/ligmabaseenums.c:1353
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16-bit doğrusal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1354
+#: libligmabase/ligmabaseenums.c:1354
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16-bit doğrusal olmayan kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1355
+#: libligmabase/ligmabaseenums.c:1355
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16-bit algısal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1356
+#: libligmabase/ligmabaseenums.c:1356
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32-bit doğrusal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1357
+#: libligmabase/ligmabaseenums.c:1357
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32-bit doğrusal olmayan kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1358
+#: libligmabase/ligmabaseenums.c:1358
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32-bit algısal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1359
+#: libligmabase/ligmabaseenums.c:1359
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64-bit doğrusal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1360
+#: libligmabase/ligmabaseenums.c:1360
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64-bit doğrusal olmayan kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1361
+#: libligmabase/ligmabaseenums.c:1361
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64-bit algısal kayan noktalı sayı değeri"
 
-#: libgimpbase/gimpbaseenums.c:1472
+#: libligmabase/ligmabaseenums.c:1472
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Hiçbiri (büyüt)"
 
-#: libgimpbase/gimpbaseenums.c:1473
+#: libligmabase/ligmabaseenums.c:1473
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Testere dişi dalga"
 
-#: libgimpbase/gimpbaseenums.c:1474
+#: libligmabase/ligmabaseenums.c:1474
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Üçgensel dalga"
 
-#: libgimpbase/gimpbaseenums.c:1475
+#: libligmabase/ligmabaseenums.c:1475
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Kırp"
 
-#: libgimpbase/gimpbaseenums.c:1537
+#: libligmabase/ligmabaseenums.c:1537
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Etkileşimli çalıştır"
 
-#: libgimpbase/gimpbaseenums.c:1538
+#: libligmabase/ligmabaseenums.c:1538
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Etkileşimsiz çalıştır"
 
-#: libgimpbase/gimpbaseenums.c:1539
+#: libligmabase/ligmabaseenums.c:1539
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Kullanılmış son değerlerle çalıştır"
 
-#: libgimpbase/gimpbaseenums.c:1577
+#: libligmabase/ligmabaseenums.c:1577
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Bileşik"
 
-#: libgimpbase/gimpbaseenums.c:1578
+#: libligmabase/ligmabaseenums.c:1578
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Kırmızı"
 
-#: libgimpbase/gimpbaseenums.c:1579
+#: libligmabase/ligmabaseenums.c:1579
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Yeşil"
 
-#: libgimpbase/gimpbaseenums.c:1580
+#: libligmabase/ligmabaseenums.c:1580
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Mavi"
 
-#: libgimpbase/gimpbaseenums.c:1581
+#: libligmabase/ligmabaseenums.c:1581
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV Renk Tonu"
 
-#: libgimpbase/gimpbaseenums.c:1582
+#: libligmabase/ligmabaseenums.c:1582
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV Doygunluğu"
 
-#: libgimpbase/gimpbaseenums.c:1583
+#: libligmabase/ligmabaseenums.c:1583
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV Değeri"
 
-#: libgimpbase/gimpbaseenums.c:1584
+#: libligmabase/ligmabaseenums.c:1584
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh Açıklığı"
 
-#: libgimpbase/gimpbaseenums.c:1585
+#: libligmabase/ligmabaseenums.c:1585
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh Renk Saflığı"
 
-#: libgimpbase/gimpbaseenums.c:1586
+#: libligmabase/ligmabaseenums.c:1586
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh Renk Tonu"
 
-#: libgimpbase/gimpbaseenums.c:1587
+#: libligmabase/ligmabaseenums.c:1587
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpbase/gimpbaseenums.c:1616
+#: libligmabase/ligmabaseenums.c:1616
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Piksel"
 
-#: libgimpbase/gimpbaseenums.c:1617
+#: libligmabase/ligmabaseenums.c:1617
 msgctxt "size-type"
 msgid "Points"
 msgstr "Nokta"
 
-#: libgimpbase/gimpbaseenums.c:1678
+#: libligmabase/ligmabaseenums.c:1678
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Darbe çizgisi"
 
-#: libgimpbase/gimpbaseenums.c:1679
+#: libligmabase/ligmabaseenums.c:1679
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Bir boya aracıyla darbele"
 
-#: libgimpbase/gimpbaseenums.c:1712
+#: libligmabase/ligmabaseenums.c:1712
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Soldan sağa"
 
-#: libgimpbase/gimpbaseenums.c:1713
+#: libligmabase/ligmabaseenums.c:1713
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Sağdan sola"
 
-#: libgimpbase/gimpbaseenums.c:1714
+#: libligmabase/ligmabaseenums.c:1714
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Dikey, sağdan sola (karışık yönelim)"
 
-#: libgimpbase/gimpbaseenums.c:1715
+#: libligmabase/ligmabaseenums.c:1715
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Dikey, sağdan sola (dik yönelim)"
 
-#: libgimpbase/gimpbaseenums.c:1716
+#: libligmabase/ligmabaseenums.c:1716
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Dikey, sağdan sola (karışık yönelim)"
 
-#: libgimpbase/gimpbaseenums.c:1717
+#: libligmabase/ligmabaseenums.c:1717
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Dikey, soldan sağa (dik yönelim)"
 
-#: libgimpbase/gimpbaseenums.c:1748
+#: libligmabase/ligmabaseenums.c:1748
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: libgimpbase/gimpbaseenums.c:1749
+#: libligmabase/ligmabaseenums.c:1749
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Düşük"
 
-#: libgimpbase/gimpbaseenums.c:1750
+#: libligmabase/ligmabaseenums.c:1750
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Orta"
 
-#: libgimpbase/gimpbaseenums.c:1751
+#: libligmabase/ligmabaseenums.c:1751
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Tam"
 
-#: libgimpbase/gimpbaseenums.c:1782
+#: libligmabase/ligmabaseenums.c:1782
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Sola hizalı"
 
-#: libgimpbase/gimpbaseenums.c:1783
+#: libligmabase/ligmabaseenums.c:1783
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Sağa hizalı"
 
-#: libgimpbase/gimpbaseenums.c:1784
+#: libligmabase/ligmabaseenums.c:1784
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Ortalanmış"
 
-#: libgimpbase/gimpbaseenums.c:1785
+#: libligmabase/ligmabaseenums.c:1785
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Doldurulmuş"
 
-#: libgimpbase/gimpbaseenums.c:1815
+#: libligmabase/ligmabaseenums.c:1815
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Gölgeler"
 
-#: libgimpbase/gimpbaseenums.c:1816
+#: libligmabase/ligmabaseenums.c:1816
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Orta tonlar"
 
-#: libgimpbase/gimpbaseenums.c:1817
+#: libligmabase/ligmabaseenums.c:1817
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Vurgular"
 
-#: libgimpbase/gimpbaseenums.c:1846
+#: libligmabase/ligmabaseenums.c:1846
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (İleri)"
 
-#: libgimpbase/gimpbaseenums.c:1847
+#: libligmabase/ligmabaseenums.c:1847
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Düzeltici (Geri)"
 
-#: libgimpbase/gimpbaseenums.c:1878
+#: libligmabase/ligmabaseenums.c:1878
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ayarla"
 
-#: libgimpbase/gimpbaseenums.c:1879
+#: libligmabase/ligmabaseenums.c:1879
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Kırp"
 
-#: libgimpbase/gimpbaseenums.c:1880
+#: libligmabase/ligmabaseenums.c:1880
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Sonuca kırp"
 
-#: libgimpbase/gimpbaseenums.c:1881
+#: libligmabase/ligmabaseenums.c:1881
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "En boy oranı ile kırp"
 
-#: libgimpbase/gimpmetadata.c:1072
+#: libligmabase/ligmametadata.c:1072
 msgid "Can load metadata only from local files"
 msgstr "Üst veriler yalnızca yerel dosyalardan yüklenebilir"
 
-#: libgimpbase/gimpmetadata.c:1128
+#: libligmabase/ligmametadata.c:1128
 msgid "Can save metadata only to local files"
 msgstr "Üst veriler yalnızca yerel dosyalara kaydedilebilir"
 
-#: libgimpbase/gimpmetadata.c:1176
+#: libligmabase/ligmametadata.c:1176
 msgid "Invalid Exif data size."
 msgstr "Geçersiz Exif veri boyutu."
 
-#: libgimpbase/gimpmetadata.c:1205
+#: libligmabase/ligmametadata.c:1205
 msgid "Parsing Exif data failed."
 msgstr "Exif veri ayrıştırma işlemi başarısız oldu."
 
-#: libgimpbase/gimpmetadata.c:1255
+#: libligmabase/ligmametadata.c:1255
 msgid "Parsing IPTC data failed."
 msgstr "IPTC veri ayrıştırma işlemi başarısız oldu."
 
-#: libgimpbase/gimpmetadata.c:1303
+#: libligmabase/ligmametadata.c:1303
 msgid "Parsing XMP data failed."
 msgstr "XMP veri ayrıştırma işlemi başarısız oldu."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libligmabase/ligmautils.c:219 libligmabase/ligmautils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(geçersiz UTF-8 satırı)"
 
-#: libgimpbase/gimputils.c:394
+#: libligmabase/ligmautils.c:394
 msgid "File path is NULL"
 msgstr "Dosya yolu BOŞ"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libligmabase/ligmautils.c:403 libligmabase/ligmautils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "UTF-8 dosya adı büyük karaktere dönüştürülürken hata"
 
-#: libgimpbase/gimputils.c:422
+#: libligmabase/ligmautils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() başarısız oldu"
 
-#: libgimpbase/gimputils.c:459
+#: libligmabase/ligmautils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "'%s' geçerli bir NSURL değerine dönüştürülemiyor."
 
-#: libgimpbase/gimputils.c:487
+#: libligmabase/ligmautils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Ne yazık ki org.freedesktop.FileManager1 bağlantısı başarısız oldu: "
 
-#: libgimpbase/gimputils.c:511
+#: libligmabase/ligmautils.c:511
 msgid "Calling ShowItems failed: "
 msgstr "ShowItems çağırma işlemi başarısız oldu: "
 
-#: libgimpcolor/gimpcolorprofile.c:258
+#: libligmacolor/ligmacolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' bir ICC renk profili olarak görünmüyor"
 
-#: libgimpcolor/gimpcolorprofile.c:304
+#: libligmacolor/ligmacolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Veriler bir ICC renk profili olarak görünmüyor"
 
-#: libgimpcolor/gimpcolorprofile.c:361
+#: libligmacolor/ligmacolorprofile.c:361
 msgid "Could not save color profile to memory"
 msgstr "Renk profili belleğe kaydedilemedi"
 
-#: libgimpcolor/gimpcolorprofile.c:578
+#: libligmacolor/ligmacolorprofile.c:578
 msgid "(unnamed profile)"
 msgstr "(adlandırılmamış profil)"
 
-#: libgimpcolor/gimpcolorprofile.c:620
+#: libligmacolor/ligmacolorprofile.c:620
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:629
+#: libligmacolor/ligmacolorprofile.c:629
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Üretici: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:638
+#: libligmacolor/ligmacolorprofile.c:638
 #, c-format
 msgid "Copyright: %s"
 msgstr "Telif Hakkı: %s"
 
-#: libgimpconfig/gimpconfigenums.c:25
+#: libligmaconfig/ligmaconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Renk yönetimi yok"
 
-#: libgimpconfig/gimpconfigenums.c:26
+#: libligmaconfig/ligmaconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Renk yönetimli ekran"
 
-#: libgimpconfig/gimpconfigenums.c:27
+#: libligmaconfig/ligmaconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "Ekran provası"
 
-#: libgimpconfig/gimpconfigenums.c:58
+#: libligmaconfig/ligmaconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Algısal"
 
-#: libgimpconfig/gimpconfigenums.c:59
+#: libligmaconfig/ligmaconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Bağıl renk ölçümsel"
 
-#: libgimpconfig/gimpconfigenums.c:60
+#: libligmaconfig/ligmaconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Doygunluk"
 
-#: libgimpconfig/gimpconfigenums.c:61
+#: libligmaconfig/ligmaconfigenums.c:61
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Mutlak renk ölçümsel"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
 #. *
-#: libgimpconfig/gimpcolorconfig.c:52
+#: libligmaconfig/ligmacolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr "Görüntüler ekranda nasıl gösterilecek."
 
-#: libgimpconfig/gimpcolorconfig.c:55
+#: libligmaconfig/ligmacolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Birincil ekranınızın renk profili."
 
-#: libgimpconfig/gimpcolorconfig.c:58
+#: libligmaconfig/ligmacolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Etkin olduğunda, GIMP, pencere sistemindeki ekran renk profilini kullanmayı "
+"Etkin olduğunda, LIGMA, pencere sistemindeki ekran renk profilini kullanmayı "
 "deneyecek. Sonra yapılandırılmış monitör profili yalnızca geri alınmış gibi "
 "kullanılır."
 
-#: libgimpconfig/gimpcolorconfig.c:63
+#: libligmaconfig/ligmacolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1708,7 +1708,7 @@ msgstr ""
 "Yeğlenen RGB çalışma alanı renk profili. Bir renk profili seçildiğinde, "
 "dahili RGB profilin yanında sunulur."
 
-#: libgimpconfig/gimpcolorconfig.c:67
+#: libligmaconfig/ligmacolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
@@ -1716,11 +1716,11 @@ msgstr ""
 "Yeğlenen gri tonlamalı çalışma alanı renk profili. Bir renk profili "
 "seçildiğinde, dahili gri tonlamalı profilin yanında sunulur."
 
-#: libgimpconfig/gimpcolorconfig.c:71
+#: libligmaconfig/ligmacolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK renk profili, RGB ve CMYK arasında dönüştürmek için kullanılır."
 
-#: libgimpconfig/gimpcolorconfig.c:74
+#: libligmaconfig/ligmacolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1730,7 +1730,7 @@ msgstr ""
 "kullanılacak renk profili, bir yazıcıya ya da diğer çıktı aygıt profiline "
 "ekran provası dahildir."
 
-#: libgimpconfig/gimpcolorconfig.c:79
+#: libligmaconfig/ligmacolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1742,20 +1742,20 @@ msgstr ""
 "kullandığınız sürece (çoğu ekran profilleri matristir), algısal aralık "
 "seçmeniz size gerçekten bağıl renk ölçümü verir."
 
-#: libgimpconfig/gimpcolorconfig.c:86
+#: libligmaconfig/ligmacolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 "Siyah nokta dengelemesi kullan (kullanmamak için bildiğiniz bir neden yoksa)."
 
-#: libgimpconfig/gimpcolorconfig.c:90
+#: libligmaconfig/ligmacolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
 "Pasifleştirildiğinde, görüntü gösterimi hız pahasına daha iyi kalitede "
 "olabilir."
 
-#: libgimpconfig/gimpcolorconfig.c:94
+#: libligmaconfig/ligmacolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1765,20 +1765,20 @@ msgstr ""
 "ekranınız) renklerin nasıl dönüştürüleceği. Tümünü deneyin ve en iyi "
 "görüneni seçin."
 
-#: libgimpconfig/gimpcolorconfig.c:99
+#: libligmaconfig/ligmacolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr ""
 "Siyah nokta dengelemeyle ve dengeleme olmadan deneyin ve en iyi görüneni "
 "seçin."
 
-#: libgimpconfig/gimpcolorconfig.c:103
+#: libligmaconfig/ligmacolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 "Pasifleştirildiğinde, ekran provası hız pahasına daha iyi kalitede olabilir."
 
-#: libgimpconfig/gimpcolorconfig.c:107
+#: libligmaconfig/ligmacolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
@@ -1786,187 +1786,187 @@ msgstr ""
 "Etkin olduğunda, ekran provası hedef renk alanı içinde temsil edilemeyen "
 "renkleri işaretler."
 
-#: libgimpconfig/gimpcolorconfig.c:111
+#: libligmaconfig/ligmacolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Takımın dışındaki renkleri işaretlemek için kullanılacak renk."
 
-#: libgimpconfig/gimpcolorconfig.c:210
+#: libligmaconfig/ligmacolorconfig.c:210
 msgid "Mode of operation"
 msgstr "İşlem kipi"
 
-#: libgimpconfig/gimpcolorconfig.c:218
+#: libligmaconfig/ligmacolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Yeğlenen GRB profili"
 
-#: libgimpconfig/gimpcolorconfig.c:225
+#: libligmaconfig/ligmacolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Yeğlenen gri tonlamalı profil"
 
-#: libgimpconfig/gimpcolorconfig.c:232
+#: libligmaconfig/ligmacolorconfig.c:232
 msgid "CMYK profile"
 msgstr "CMYK profili"
 
-#: libgimpconfig/gimpcolorconfig.c:239
+#: libligmaconfig/ligmacolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Ekran profili"
 
-#: libgimpconfig/gimpcolorconfig.c:246
+#: libligmaconfig/ligmacolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Sistem ekran profilini kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:253
+#: libligmaconfig/ligmacolorconfig.c:253
 msgid "Simulation profile for soft-proofing"
 msgstr "Ekran provası için benzetim profili"
 
-#: libgimpconfig/gimpcolorconfig.c:260
+#: libligmaconfig/ligmacolorconfig.c:260
 msgid "Display rendering intent"
 msgstr "Ekran görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:268
+#: libligmaconfig/ligmacolorconfig.c:268
 msgid "Use black point compensation for the display"
 msgstr "Ekran için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:275
+#: libligmaconfig/ligmacolorconfig.c:275
 msgid "Optimize display color transformations"
 msgstr "Ekran rengi dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:282
+#: libligmaconfig/ligmacolorconfig.c:282
 msgid "Soft-proofing rendering intent"
 msgstr "Ekran provası görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:290
+#: libligmaconfig/ligmacolorconfig.c:290
 msgid "Use black point compensation for soft-proofing"
 msgstr "Ekran provası için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:297
+#: libligmaconfig/ligmacolorconfig.c:297
 msgid "Optimize soft-proofing color transformations"
 msgstr "Ekran provası renk dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:304
+#: libligmaconfig/ligmacolorconfig.c:304
 msgid "Mark out of gamut colors"
 msgstr "Dizi renklerinin dışındakileri işaretle"
 
-#: libgimpconfig/gimpcolorconfig.c:311
+#: libligmaconfig/ligmacolorconfig.c:311
 msgid "Out of gamut warning color"
 msgstr "Dizi dışı uyarı rengi"
 
-#: libgimpconfig/gimpcolorconfig.c:661 libgimpconfig/gimpcolorconfig.c:854
+#: libligmaconfig/ligmacolorconfig.c:661 libligmaconfig/ligmacolorconfig.c:854
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "'%s' renk profili RGB renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:705 libgimpconfig/gimpcolorconfig.c:904
+#: libligmaconfig/ligmacolorconfig.c:705 libligmaconfig/ligmacolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "'%s' renk profili GRİ renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:954
+#: libligmaconfig/ligmacolorconfig.c:749 libligmaconfig/ligmacolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "'%s' renk profili CMYK renk uzayı için değildir."
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libligmaconfig/ligmaconfig-deserialize.c:116
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s için alınan değer geçerli bir UTF-8 dizgisi değil"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libligmaconfig/ligmaconfig-deserialize.c:480
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "%s boolean anahtarı için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libligmaconfig/ligmaconfig-deserialize.c:595
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "geçersiz değer '%s' (anahtar %s)"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libligmaconfig/ligmaconfig-deserialize.c:610
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "geçersiz değer '%ld' (anahtar %s)"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libligmaconfig/ligmaconfig-deserialize.c:679
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' belirteci ayrıştırılırken: '%s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:774 libgimpconfig/gimpscanner.c:856
-#: libgimpwidgets/gimpcolorprofilestore.c:761
+#: libligmaconfig/ligmaconfig-iface.c:664 libligmaconfig/ligmaconfig-iface.c:677
+#: libligmaconfig/ligmascanner.c:774 libligmaconfig/ligmascanner.c:856
+#: libligmawidgets/ligmacolorprofilestore.c:761
 msgid "fatal parse error"
 msgstr "ölümcül ayrıştırma hatası"
 
-#: libgimpconfig/gimpconfig-path.c:506
+#: libligmaconfig/ligmaconfig-path.c:506
 msgid "File has no path representation"
 msgstr "Dosya yol gösterimine sahip değil"
 
-#: libgimpconfig/gimpconfig-path.c:593
+#: libligmaconfig/ligmaconfig-path.c:593
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} genişletilemiyor"
 
-#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:725
+#: libligmaconfig/ligmaconfigwriter.c:95 libligmaconfig/ligmaconfigwriter.c:725
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "'%s' üzerine yazılırken hata: %s"
 
-#: libgimpconfig/gimpconfigwriter.c:153
+#: libligmaconfig/ligmaconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "'%2$s' için '%1$s' dizini oluşturulamadı: "
 
-#: libgimpconfig/gimpconfigwriter.c:169
+#: libligmaconfig/ligmaconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "'%s' için geçici dosya oluşturulamadı: "
 
-#: libgimpconfig/gimpconfigwriter.c:835
+#: libligmaconfig/ligmaconfigwriter.c:835
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "'%s' üzerine yazarken hata: %s"
 
-#: libgimpconfig/gimpscanner.c:422
+#: libligmaconfig/ligmascanner.c:422
 msgid "invalid UTF-8 string"
 msgstr "geçersiz UTF-8 dizgisi"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpscanner.c:649
+#: libligmaconfig/ligmascanner.c:649
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: libgimpconfig/gimpscanner.c:883
+#: libligmaconfig/ligmascanner.c:883
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s' ayrıştırılırken %d satırı içinde hata: %s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libligmamodule/ligmamodule.c:172 libligmamodule/ligmamodule.c:190
+#: libligmamodule/ligmamodule.c:451 libligmamodule/ligmamodule.c:474
+#: libligmamodule/ligmamodule.c:524
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "'%s' modülü yükleme hatası: %s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libligmamodule/ligmamoduledb.c:500
 msgid "Module error"
 msgstr "Modül hatası"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libligmamodule/ligmamoduledb.c:501
 msgid "Loaded"
 msgstr "Yüklendi"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libligmamodule/ligmamoduledb.c:502
 msgid "Load failed"
 msgstr "Yükleme başarısız"
 
-#: libgimpmodule/gimpmoduledb.c:503
+#: libligmamodule/ligmamoduledb.c:503
 msgid "Not loaded"
 msgstr "Yüklenmedi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpthumb/gimpthumb-utils.c:153
+#: libligmathumb/ligmathumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
@@ -1976,41 +1976,41 @@ msgstr ""
 "Küçük resimler (%s) geçici dosyaları yerine dizinde depolanacaktır."
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
+#: libligmathumb/ligmathumb-utils.c:299 libligmathumb/ligmathumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "'%s' küçük resim klasörü oluşturmada hata."
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libligmathumb/ligmathumbnail.c:481
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Küçük resim içeriğinde Thumb::URI etiketi yok"
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libligmathumb/ligmathumbnail.c:878
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "%s için küçük resim oluşturulamadı: %s"
 
-#: libgimpwidgets/gimpbrowser.c:141
+#: libligmawidgets/ligmabrowser.c:141
 msgid "_Search:"
 msgstr "_Ara:"
 
-#: libgimpwidgets/gimpcolorbutton.c:152
+#: libligmawidgets/ligmacolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "Ö_nalan Rengi"
 
-#: libgimpwidgets/gimpcolorbutton.c:156
+#: libligmawidgets/ligmacolorbutton.c:156
 msgid "_Background Color"
 msgstr "_Artalan Rengi"
 
-#: libgimpwidgets/gimpcolorbutton.c:160
+#: libligmawidgets/ligmacolorbutton.c:160
 msgid "Blac_k"
 msgstr "Siya_h"
 
-#: libgimpwidgets/gimpcolorbutton.c:164
+#: libligmawidgets/ligmacolorbutton.c:164
 msgid "_White"
 msgstr "_Beyaz"
 
-#: libgimpwidgets/gimpcolorhexentry.c:134
+#: libligmawidgets/ligmacolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2018,194 +2018,194 @@ msgstr ""
 "HTML ve CSS içinde kullanılıan onaltılı renk gösterimi. Bu giriş ayrıca CSS "
 "renk adlarını da kabul eder."
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:108
 msgid "All files (*.*)"
 msgstr "Tüm dosyalar (*.*)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:113
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC renk profili (*.icc, *.icm)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:174
 msgid "_Save"
 msgstr "_Kaydet"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: libgimpwidgets/gimppatheditor.c:267
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:346
+#: libligmawidgets/ligmapatheditor.c:267
 msgid "Folder"
 msgstr "Klasör"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: libligmawidgets/ligmacolorprofilechooserdialog.c:351
 msgid "Not a regular file."
 msgstr "Düzenli bir dosya değil."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:160
+#: libligmawidgets/ligmacolorprofilestore.c:160
 msgid "Select color profile from disk..."
 msgstr "Diskten renk profili seç..."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:289
+#: libligmawidgets/ligmacolorprofilestore.c:289
 msgctxt "profile"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: libgimpwidgets/gimpcolorprofileview.c:168
+#: libligmawidgets/ligmacolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Üretici: "
 
-#: libgimpwidgets/gimpcolorprofileview.c:180
+#: libligmawidgets/ligmacolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Telif Hakkı: "
 
-#: libgimpwidgets/gimpcolorscales.c:205
+#: libligmawidgets/ligmacolorscales.c:205
 msgid "Scales"
 msgstr "Ölçekler"
 
-#: libgimpwidgets/gimpcolorscales.c:434
+#: libligmawidgets/ligmacolorscales.c:434
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:436
+#: libligmawidgets/ligmacolorscales.c:436
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:457
+#: libligmawidgets/ligmacolorscales.c:457
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libligmawidgets/ligmacolorscales.c:459
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorselection.c:247
+#: libligmawidgets/ligmacolorselection.c:247
 msgid "Current:"
 msgstr "Geçerli:"
 
-#: libgimpwidgets/gimpcolorselection.c:256
+#: libligmawidgets/ligmacolorselection.c:256
 msgid "Old:"
 msgstr "Eski:"
 
-#: libgimpwidgets/gimpcolorselection.c:343
+#: libligmawidgets/ligmacolorselection.c:343
 msgid "HTML _notation:"
 msgstr "HTML _gösterimi:"
 
-#: libgimpwidgets/gimpfileentry.c:167
+#: libligmawidgets/ligmafileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Dosya yöneticisinde dosya konumunu göster"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimpfileentry.c:238
+#: libligmawidgets/ligmafileentry.c:238
 msgid "Open a file selector to browse your folders"
 msgstr "Klasörlerinize göz atmak için bir dosya seçici açın"
 
-#: libgimpwidgets/gimpfileentry.c:239
+#: libligmawidgets/ligmafileentry.c:239
 msgid "Open a file selector to browse your files"
 msgstr "Dosyalarınıza göz atmak için bir dosya seçici açın"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimpfileentry.c:251
+#: libligmawidgets/ligmafileentry.c:251
 msgid "Indicates whether or not the folder exists"
 msgstr "Klasörün var olup olmadığını göster"
 
-#: libgimpwidgets/gimpfileentry.c:252
+#: libligmawidgets/ligmafileentry.c:252
 msgid "Indicates whether or not the file exists"
 msgstr "Dosyanın var olup olmadığını göster"
 
-#: libgimpwidgets/gimpfileentry.c:428
+#: libligmawidgets/ligmafileentry.c:428
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Dosya, dosya yöneticisinde gösterilemiyor: %s"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimpfileentry.c:455
+#: libligmawidgets/ligmafileentry.c:455
 msgid "Select Folder"
 msgstr "Klasör Seç"
 
-#: libgimpwidgets/gimpfileentry.c:457
+#: libligmawidgets/ligmafileentry.c:457
 msgid "Select File"
 msgstr "Dosya Seç"
 
-#: libgimpwidgets/gimphelpui.c:384
+#: libligmawidgets/ligmahelpui.c:384
 msgid "Press F1 for more help"
 msgstr "Daha çok yardım için F1'e basın"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libligmawidgets/ligmaintstore.c:255
 msgid "(Empty)"
 msgstr "(Boş)"
 
-#: libgimpwidgets/gimpmemsizeentry.c:252
+#: libligmawidgets/ligmamemsizeentry.c:252
 msgid "Kibibyte"
 msgstr "Kibibayt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:253
+#: libligmawidgets/ligmamemsizeentry.c:253
 msgid "Mebibyte"
 msgstr "Mebibayt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:254
+#: libligmawidgets/ligmamemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Gibibayt"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
+#: libligmawidgets/ligmapageselector.c:283 libligmawidgets/ligmapageselector.c:1079
 msgid "Nothing selected"
 msgstr "Hiçbir şey seçilmedi"
 
-#: libgimpwidgets/gimppageselector.c:301
+#: libligmawidgets/ligmapageselector.c:301
 msgid "Select _All"
 msgstr "Tü_münü Seç"
 
-#: libgimpwidgets/gimppageselector.c:321
+#: libligmawidgets/ligmapageselector.c:321
 msgid "Select _range:"
 msgstr "Seçim _erimi:"
 
-#: libgimpwidgets/gimppageselector.c:333
+#: libligmawidgets/ligmapageselector.c:333
 msgid "Open _pages as"
 msgstr "_Sayfaları böyle aç"
 
-#: libgimpwidgets/gimppageselector.c:461 libgimpwidgets/gimppageselector.c:659
+#: libligmawidgets/ligmapageselector.c:461 libligmawidgets/ligmapageselector.c:659
 #, c-format
 msgid "Page %d"
 msgstr "Sayfa %d"
 
-#: libgimpwidgets/gimppageselector.c:1084
+#: libligmawidgets/ligmapageselector.c:1084
 msgid "One page selected"
 msgstr "Bir sayfa seçildi"
 
-#: libgimpwidgets/gimppageselector.c:1091
-#: libgimpwidgets/gimppageselector.c:1095
+#: libligmawidgets/ligmapageselector.c:1091
+#: libligmawidgets/ligmapageselector.c:1095
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d sayfa seçildi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimppatheditor.c:178
+#: libligmawidgets/ligmapatheditor.c:178
 msgid "Add a new folder"
 msgstr "Yeni klasör ekle"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimppatheditor.c:196
+#: libligmawidgets/ligmapatheditor.c:196
 msgid "Move the selected folder up"
 msgstr "Seçili klasörü yukarı taşı"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimppatheditor.c:214
+#: libligmawidgets/ligmapatheditor.c:214
 msgid "Move the selected folder down"
 msgstr "Seçili klasörü aşağı taşı"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: libgimpwidgets/gimppatheditor.c:232
+#: libligmawidgets/ligmapatheditor.c:232
 msgid "Remove the selected folder from the list"
 msgstr "Seçilen klasörü listeden kaldır"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libligmawidgets/ligmapatheditor.c:258
 msgid "Writable"
 msgstr "Yazılabilir"
 
-#: libgimpwidgets/gimppickbutton.c:120
+#: libligmawidgets/ligmapickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2214,33 +2214,33 @@ msgstr ""
 "rengi seçebilirsiniz."
 
 #. toggle button to (de)activate the instant preview
-#: libgimpwidgets/gimppreview.c:288
+#: libligmawidgets/ligmapreview.c:288
 msgid "_Preview"
 msgstr "Öniz_leme"
 
-#: libgimpwidgets/gimppreviewarea.c:146
+#: libligmawidgets/ligmapreviewarea.c:146
 msgid "Check Size"
 msgstr "Denetleme Boyutu"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libligmawidgets/ligmapreviewarea.c:154
 msgid "Check Style"
 msgstr "Denetleme Biçemi"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libligmawidgets/ligmapreviewarea.c:162
 msgid "Custom Checks Color 1"
 msgstr "Özel Denetimler Rengi 1"
 
-#: libgimpwidgets/gimppreviewarea.c:169
+#: libligmawidgets/ligmapreviewarea.c:169
 msgid "Custom Checks Color 2"
 msgstr "Özel Denetimler Rengi 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libligmawidgets/ligmapropwidgets.c:2475
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Metin girdi alanı %d karakter ile sınırlandırılmış."
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libligmawidgets/ligmawidgets.c:259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2248,181 +2248,181 @@ msgstr ""
 "Rastgele sayı oluştur parçacığı için bu değeri kullanın. Bu, \"rastgele\" "
 "işlem tekrarı yapmanızı sağlar"
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libligmawidgets/ligmawidgets.c:263
 msgid "_New Seed"
 msgstr "_Yeni Parçacık"
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libligmawidgets/ligmawidgets.c:279
 msgid "Seed random number generator with a generated random number"
 msgstr "Rastgele oluşturulan sayı ile rastgele parçacık sayısı oluşturucu"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libligmawidgets/ligmawidgets.c:283
 msgid "_Randomize"
 msgstr "_Rastgele"
 
-#: libgimpwidgets/gimpwidgets-private.c:50
+#: libligmawidgets/ligmawidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Pasif"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libligmawidgets/ligmawidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ekran"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libligmawidgets/ligmawidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Pencere"
 
-#: libgimpwidgets/gimpwidgetsenums.c:25
+#: libligmawidgets/ligmawidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Kare"
 
-#: libgimpwidgets/gimpwidgetsenums.c:26
+#: libligmawidgets/ligmawidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Dikey"
 
-#: libgimpwidgets/gimpwidgetsenums.c:27
+#: libligmawidgets/ligmawidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Yatay"
 
-#: libgimpwidgets/gimpwidgetsenums.c:130
+#: libligmawidgets/ligmawidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpwidgetsenums.c:130
+#: libligmawidgets/ligmawidgetsenums.c:130
 msgid "HSV Hue"
 msgstr "HSV Renk Tonu"
 
-#: libgimpwidgets/gimpwidgetsenums.c:131
+#: libligmawidgets/ligmawidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpwidgetsenums.c:131
+#: libligmawidgets/ligmawidgetsenums.c:131
 msgid "HSV Saturation"
 msgstr "HSV Doygunluğu"
 
-#: libgimpwidgets/gimpwidgetsenums.c:132
+#: libligmawidgets/ligmawidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpwidgetsenums.c:132
+#: libligmawidgets/ligmawidgetsenums.c:132
 msgid "HSV Value"
 msgstr "HSV Değeri"
 
-#: libgimpwidgets/gimpwidgetsenums.c:133
+#: libligmawidgets/ligmawidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpwidgetsenums.c:133
+#: libligmawidgets/ligmawidgetsenums.c:133
 msgid "Red"
 msgstr "Kırmızı"
 
-#: libgimpwidgets/gimpwidgetsenums.c:134
+#: libligmawidgets/ligmawidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpwidgetsenums.c:134
+#: libligmawidgets/ligmawidgetsenums.c:134
 msgid "Green"
 msgstr "Yeşil"
 
-#: libgimpwidgets/gimpwidgetsenums.c:135
+#: libligmawidgets/ligmawidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpwidgetsenums.c:135
+#: libligmawidgets/ligmawidgetsenums.c:135
 msgid "Blue"
 msgstr "Mavi"
 
-#: libgimpwidgets/gimpwidgetsenums.c:136
+#: libligmawidgets/ligmawidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpwidgetsenums.c:136
+#: libligmawidgets/ligmawidgetsenums.c:136
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpwidgetsenums.c:137
+#: libligmawidgets/ligmawidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr "_L"
 
-#: libgimpwidgets/gimpwidgetsenums.c:137
+#: libligmawidgets/ligmawidgetsenums.c:137
 msgid "LCh Lightness"
 msgstr "LCh Açıklığı"
 
-#: libgimpwidgets/gimpwidgetsenums.c:138
+#: libligmawidgets/ligmawidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: libgimpwidgets/gimpwidgetsenums.c:138
+#: libligmawidgets/ligmawidgetsenums.c:138
 msgid "LCh Chroma"
 msgstr "LCh Renk Saflığı"
 
-#: libgimpwidgets/gimpwidgetsenums.c:139
+#: libligmawidgets/ligmawidgetsenums.c:139
 msgctxt "color-selector-channel"
 msgid "_h"
 msgstr "_h"
 
-#: libgimpwidgets/gimpwidgetsenums.c:139
+#: libligmawidgets/ligmawidgetsenums.c:139
 msgid "LCh Hue"
 msgstr "LCh Renk Tonu"
 
-#: libgimpwidgets/gimpwidgetsenums.c:169
+#: libligmawidgets/ligmawidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpwidgets/gimpwidgetsenums.c:169
+#: libligmawidgets/ligmawidgetsenums.c:169
 msgid "RGB color model"
 msgstr "RGB renk modeli"
 
-#: libgimpwidgets/gimpwidgetsenums.c:170
+#: libligmawidgets/ligmawidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr "LCH"
 
-#: libgimpwidgets/gimpwidgetsenums.c:170
+#: libligmawidgets/ligmawidgetsenums.c:170
 msgid "CIE LCh color model"
 msgstr "CIE LCh renk modeli"
 
-#: libgimpwidgets/gimpwidgetsenums.c:171
+#: libligmawidgets/ligmawidgetsenums.c:171
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpwidgetsenums.c:171
+#: libligmawidgets/ligmawidgetsenums.c:171
 msgid "HSV color model"
 msgstr "HSV renk modeli"
 
-#: libgimpwidgets/gimpwidgetsenums.c:232
+#: libligmawidgets/ligmawidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Katmanlar"
 
-#: libgimpwidgets/gimpwidgetsenums.c:233
+#: libligmawidgets/ligmawidgetsenums.c:233
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Görüntüler"
 
-#: libgimpwidgets/gimpwidgetsenums.c:294
+#: libligmawidgets/ligmawidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Yakınlaştır"
 
-#: libgimpwidgets/gimpwidgetsenums.c:295
+#: libligmawidgets/ligmawidgetsenums.c:295
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Uzaklaştır"
@@ -2827,8 +2827,8 @@ msgid "MIDI Events"
 msgstr "MIDI Olayları"
 
 #: modules/controller-midi.c:428
-msgid "GIMP MIDI Input Controller"
-msgstr "GIMP MIDI Girdi Denetleyicisi"
+msgid "LIGMA MIDI Input Controller"
+msgstr "LIGMA MIDI Girdi Denetleyicisi"
 
 #: modules/display-filter-aces-rrt.c:84
 msgid ""

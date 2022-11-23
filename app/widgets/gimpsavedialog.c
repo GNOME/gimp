@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsavedialog.c
+ * ligmasavedialog.c
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,142 +23,142 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-metadata.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-metadata.h"
 
-#include "file/gimp-file.h"
+#include "file/ligma-file.h"
 
-#include "gimphelp-ids.h"
-#include "gimpsavedialog.h"
+#include "ligmahelp-ids.h"
+#include "ligmasavedialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-typedef struct _GimpSaveDialogState GimpSaveDialogState;
+typedef struct _LigmaSaveDialogState LigmaSaveDialogState;
 
-struct _GimpSaveDialogState
+struct _LigmaSaveDialogState
 {
   gchar    *filter_name;
   gboolean  compression;
 };
 
 
-static void     gimp_save_dialog_constructed       (GObject             *object);
+static void     ligma_save_dialog_constructed       (GObject             *object);
 
-static void     gimp_save_dialog_save_state        (GimpFileDialog      *dialog,
+static void     ligma_save_dialog_save_state        (LigmaFileDialog      *dialog,
                                                     const gchar         *state_name);
-static void     gimp_save_dialog_load_state        (GimpFileDialog      *dialog,
+static void     ligma_save_dialog_load_state        (LigmaFileDialog      *dialog,
                                                     const gchar         *state_name);
 
-static void     gimp_save_dialog_add_extra_widgets (GimpSaveDialog      *dialog);
-static void     gimp_save_dialog_compression_toggled
+static void     ligma_save_dialog_add_extra_widgets (LigmaSaveDialog      *dialog);
+static void     ligma_save_dialog_compression_toggled
                                                    (GtkToggleButton     *button,
-                                                    GimpSaveDialog      *dialog);
+                                                    LigmaSaveDialog      *dialog);
 
-static GimpSaveDialogState
-              * gimp_save_dialog_get_state         (GimpSaveDialog      *dialog);
-static void     gimp_save_dialog_set_state         (GimpSaveDialog      *dialog,
-                                                    GimpSaveDialogState *state);
-static void     gimp_save_dialog_state_destroy     (GimpSaveDialogState *state);
+static LigmaSaveDialogState
+              * ligma_save_dialog_get_state         (LigmaSaveDialog      *dialog);
+static void     ligma_save_dialog_set_state         (LigmaSaveDialog      *dialog,
+                                                    LigmaSaveDialogState *state);
+static void     ligma_save_dialog_state_destroy     (LigmaSaveDialogState *state);
 
 
-G_DEFINE_TYPE (GimpSaveDialog, gimp_save_dialog,
-               GIMP_TYPE_FILE_DIALOG)
+G_DEFINE_TYPE (LigmaSaveDialog, ligma_save_dialog,
+               LIGMA_TYPE_FILE_DIALOG)
 
-#define parent_class gimp_save_dialog_parent_class
+#define parent_class ligma_save_dialog_parent_class
 
 
 static void
-gimp_save_dialog_class_init (GimpSaveDialogClass *klass)
+ligma_save_dialog_class_init (LigmaSaveDialogClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpFileDialogClass *fd_class     = GIMP_FILE_DIALOG_CLASS (klass);
+  LigmaFileDialogClass *fd_class     = LIGMA_FILE_DIALOG_CLASS (klass);
 
-  object_class->constructed = gimp_save_dialog_constructed;
+  object_class->constructed = ligma_save_dialog_constructed;
 
-  fd_class->save_state      = gimp_save_dialog_save_state;
-  fd_class->load_state      = gimp_save_dialog_load_state;
+  fd_class->save_state      = ligma_save_dialog_save_state;
+  fd_class->load_state      = ligma_save_dialog_load_state;
 }
 
 static void
-gimp_save_dialog_init (GimpSaveDialog *dialog)
+ligma_save_dialog_init (LigmaSaveDialog *dialog)
 {
 }
 
 static void
-gimp_save_dialog_constructed (GObject *object)
+ligma_save_dialog_constructed (GObject *object)
 {
-  GimpSaveDialog *dialog = GIMP_SAVE_DIALOG (object);
+  LigmaSaveDialog *dialog = LIGMA_SAVE_DIALOG (object);
 
-  /* GimpFileDialog's constructed() is doing a few initialization
+  /* LigmaFileDialog's constructed() is doing a few initialization
    * common to all file dialogs.
    */
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_save_dialog_add_extra_widgets (dialog);
+  ligma_save_dialog_add_extra_widgets (dialog);
 }
 
 static void
-gimp_save_dialog_save_state (GimpFileDialog *dialog,
+ligma_save_dialog_save_state (LigmaFileDialog *dialog,
                              const gchar    *state_name)
 {
-  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
-                          gimp_save_dialog_get_state (GIMP_SAVE_DIALOG (dialog)),
-                          (GDestroyNotify) gimp_save_dialog_state_destroy);
+  g_object_set_data_full (G_OBJECT (dialog->ligma), state_name,
+                          ligma_save_dialog_get_state (LIGMA_SAVE_DIALOG (dialog)),
+                          (GDestroyNotify) ligma_save_dialog_state_destroy);
 }
 
 static void
-gimp_save_dialog_load_state (GimpFileDialog *dialog,
+ligma_save_dialog_load_state (LigmaFileDialog *dialog,
                              const gchar    *state_name)
 {
-  GimpSaveDialogState *state;
+  LigmaSaveDialogState *state;
 
-  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
+  state = g_object_get_data (G_OBJECT (dialog->ligma), state_name);
 
   if (state)
-    gimp_save_dialog_set_state (GIMP_SAVE_DIALOG (dialog), state);
+    ligma_save_dialog_set_state (LIGMA_SAVE_DIALOG (dialog), state);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_save_dialog_new (Gimp *gimp)
+ligma_save_dialog_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_SAVE_DIALOG,
-                       "gimp",                  gimp,
+  return g_object_new (LIGMA_TYPE_SAVE_DIALOG,
+                       "ligma",                  ligma,
                        "title",                 _("Save Image"),
-                       "role",                  "gimp-file-save",
-                       "help-id",               GIMP_HELP_FILE_SAVE,
+                       "role",                  "ligma-file-save",
+                       "help-id",               LIGMA_HELP_FILE_SAVE,
                        "ok-button-label",       _("_Save"),
 
                        "automatic-label",       _("By Extension"),
-                       "automatic-help-id",     GIMP_HELP_FILE_SAVE_BY_EXTENSION,
+                       "automatic-help-id",     LIGMA_HELP_FILE_SAVE_BY_EXTENSION,
 
                        "action",                GTK_FILE_CHOOSER_ACTION_SAVE,
-                       "file-procs",            GIMP_FILE_PROCEDURE_GROUP_SAVE,
-                       "file-procs-all-images", GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+                       "file-procs",            LIGMA_FILE_PROCEDURE_GROUP_SAVE,
+                       "file-procs-all-images", LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                        "file-filter-label",     _("All XCF images"),
                        NULL);
 }
 
 void
-gimp_save_dialog_set_image (GimpSaveDialog *dialog,
-                            GimpImage      *image,
+ligma_save_dialog_set_image (LigmaSaveDialog *dialog,
+                            LigmaImage      *image,
                             gboolean        save_a_copy,
                             gboolean        close_after_saving,
-                            GimpObject     *display)
+                            LigmaObject     *display)
 {
-  GimpFileDialog *file_dialog;
+  LigmaFileDialog *file_dialog;
   GtkWidget      *compression_toggle;
   GFile          *dir_file  = NULL;
   GFile          *name_file = NULL;
@@ -168,17 +168,17 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   gint            rle_version;
   gint            zlib_version;
 
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_SAVE_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  file_dialog = GIMP_FILE_DIALOG (dialog);
+  file_dialog = LIGMA_FILE_DIALOG (dialog);
 
   file_dialog->image         = image;
   dialog->save_a_copy        = save_a_copy;
   dialog->close_after_saving = close_after_saving;
   dialog->display_to_close   = display;
 
-  gimp_file_dialog_set_file_proc (file_dialog, NULL);
+  ligma_file_dialog_set_file_proc (file_dialog, NULL);
 
   /*
    * Priority of default paths for Save:
@@ -187,29 +187,29 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
    *   2. Last Save path
    *   3. Path of source XCF
    *   4. Path of Import source
-   *   5. Last Save path of any GIMP document
+   *   5. Last Save path of any LIGMA document
    *   6. The default path (usually the OS 'Documents' path)
    */
 
   if (save_a_copy)
-    dir_file = gimp_image_get_save_a_copy_file (image);
+    dir_file = ligma_image_get_save_a_copy_file (image);
 
   if (! dir_file)
-    dir_file = gimp_image_get_file (image);
+    dir_file = ligma_image_get_file (image);
 
   if (! dir_file)
     dir_file = g_object_get_data (G_OBJECT (image),
-                                  "gimp-image-source-file");
+                                  "ligma-image-source-file");
 
   if (! dir_file)
-    dir_file = gimp_image_get_imported_file (image);
+    dir_file = ligma_image_get_imported_file (image);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
-                                  GIMP_FILE_SAVE_LAST_FILE_KEY);
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->ligma),
+                                  LIGMA_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = gimp_file_dialog_get_default_folder (file_dialog);
+    dir_file = ligma_file_dialog_get_default_folder (file_dialog);
 
 
   /* Priority of default basenames for Save:
@@ -222,19 +222,19 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
    */
 
   if (save_a_copy)
-    name_file = gimp_image_get_save_a_copy_file (image);
+    name_file = ligma_image_get_save_a_copy_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_file (image);
+    name_file = ligma_image_get_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_exported_file (image);
+    name_file = ligma_image_get_exported_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_imported_file (image);
+    name_file = ligma_image_get_imported_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_untitled_file (image);
+    name_file = ligma_image_get_untitled_file (image);
 
 
   /* Priority of default type/extension for Save:
@@ -243,16 +243,16 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
    *   2. .xcf (which we don't explicitly append)
    */
 
-  ext_file = gimp_image_get_file (image);
+  ext_file = ligma_image_get_file (image);
 
   if (ext_file)
     g_object_ref (ext_file);
   else
     ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
 
-  gimp_image_get_xcf_version (image, FALSE, &rle_version,
+  ligma_image_get_xcf_version (image, FALSE, &rle_version,
                               &version_string, NULL);
-  gimp_image_get_xcf_version (image, TRUE,  &zlib_version,
+  ligma_image_get_xcf_version (image, TRUE,  &zlib_version,
                               NULL, NULL);
   if (rle_version != zlib_version)
     {
@@ -264,7 +264,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                               version_string);
       label = gtk_label_new (text);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
       gtk_container_add (GTK_CONTAINER (dialog->compression_frame),
@@ -275,7 +275,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   compression_toggle = gtk_frame_get_label_widget (GTK_FRAME (dialog->compression_frame));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (compression_toggle),
-                                gimp_image_get_xcf_compression (image));
+                                ligma_image_get_xcf_compression (image));
   /* Force a "toggled" signal since gtk_toggle_button_set_active() won't
    * send it if the button status doesn't change.
    */
@@ -283,14 +283,14 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   if (ext_file)
     {
-      GFile *tmp_file = gimp_file_with_new_extension (name_file, ext_file);
-      basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
+      GFile *tmp_file = ligma_file_with_new_extension (name_file, ext_file);
+      basename = g_path_get_basename (ligma_file_get_utf8_name (tmp_file));
       g_object_unref (tmp_file);
       g_object_unref (ext_file);
     }
   else
     {
-      basename = g_path_get_basename (gimp_file_get_utf8_name (name_file));
+      basename = g_path_get_basename (ligma_file_get_utf8_name (name_file));
     }
 
   if (g_file_query_file_type (dir_file, G_FILE_QUERY_INFO_NONE, NULL) ==
@@ -315,7 +315,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 /*  private functions  */
 
 static void
-gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
+ligma_save_dialog_add_extra_widgets (LigmaSaveDialog *dialog)
 {
   GtkWidget *label;
   GtkWidget *reasons;
@@ -328,10 +328,10 @@ gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
                                _("On edge cases, better compression algorithms might still "
                                  "end up on bigger file size; manual check recommended"));
 
-  dialog->compression_frame = gimp_frame_new (NULL);
+  dialog->compression_frame = ligma_frame_new (NULL);
   gtk_frame_set_label_widget (GTK_FRAME (dialog->compression_frame), compression_toggle);
   gtk_widget_show (compression_toggle);
-  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog), dialog->compression_frame,
+  ligma_file_dialog_add_extra_widget (LIGMA_FILE_DIALOG (dialog), dialog->compression_frame,
                                      FALSE, FALSE, 0);
   gtk_widget_show (dialog->compression_frame);
 
@@ -348,22 +348,22 @@ gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
   gtk_container_add (GTK_CONTAINER (dialog->compat_info), reasons);
   gtk_widget_show (reasons);
 
-  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
+  ligma_file_dialog_add_extra_widget (LIGMA_FILE_DIALOG (dialog),
                                      dialog->compat_info,
                                      FALSE, FALSE, 0);
   gtk_widget_show (dialog->compat_info);
 
   g_signal_connect (compression_toggle, "toggled",
-                    G_CALLBACK (gimp_save_dialog_compression_toggled),
+                    G_CALLBACK (ligma_save_dialog_compression_toggled),
                     dialog);
 }
 
 static void
-gimp_save_dialog_compression_toggled (GtkToggleButton *button,
-                                      GimpSaveDialog  *dialog)
+ligma_save_dialog_compression_toggled (GtkToggleButton *button,
+                                      LigmaSaveDialog  *dialog)
 {
   const gchar    *version_string = NULL;
-  GimpFileDialog *file_dialog    = GIMP_FILE_DIALOG (dialog);
+  LigmaFileDialog *file_dialog    = LIGMA_FILE_DIALOG (dialog);
   gchar          *compat_hint    = NULL;
   gchar          *reason         = NULL;
   GtkWidget      *widget;
@@ -376,13 +376,13 @@ gimp_save_dialog_compression_toggled (GtkToggleButton *button,
   dialog->compression = gtk_toggle_button_get_active (button);
 
   if (dialog->compression)
-    gimp_image_get_xcf_version (file_dialog->image, TRUE,  &version,
+    ligma_image_get_xcf_version (file_dialog->image, TRUE,  &version,
                                 &version_string, &reason);
   else
-    gimp_image_get_xcf_version (file_dialog->image, FALSE, &version,
+    ligma_image_get_xcf_version (file_dialog->image, FALSE, &version,
                                 &version_string, &reason);
 
-  /* Only show compatibility information for GIMP over 2.6. The reason
+  /* Only show compatibility information for LIGMA over 2.6. The reason
    * is mostly that we don't have details to make a compatibility list
    * with this older version.
    * It's anyway so prehistorical that we are not really caring about
@@ -396,15 +396,15 @@ gimp_save_dialog_compression_toggled (GtkToggleButton *button,
   /* Set the compatibility label. */
   compat_hint =
     g_strdup_printf (_("The image uses features from %s and "
-                       "won't be readable by older GIMP versions."),
+                       "won't be readable by older LIGMA versions."),
                      version_string);
 
-  if (gimp_image_get_metadata (file_dialog->image))
+  if (ligma_image_get_metadata (file_dialog->image))
     {
       gchar *temp_hint;
 
       temp_hint = g_strconcat (compat_hint, "\n",
-                               _("Metadata won't be visible in GIMP "
+                               _("Metadata won't be visible in LIGMA "
                                  "older than version 2.10."), NULL);
       g_free (compat_hint);
       compat_hint = temp_hint;
@@ -422,13 +422,13 @@ gimp_save_dialog_compression_toggled (GtkToggleButton *button,
     g_free (reason);
 }
 
-static GimpSaveDialogState *
-gimp_save_dialog_get_state (GimpSaveDialog *dialog)
+static LigmaSaveDialogState *
+ligma_save_dialog_get_state (LigmaSaveDialog *dialog)
 {
-  GimpSaveDialogState *state;
+  LigmaSaveDialogState *state;
   GtkFileFilter       *filter;
 
-  state = g_slice_new0 (GimpSaveDialogState);
+  state = g_slice_new0 (LigmaSaveDialogState);
 
   filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
 
@@ -441,8 +441,8 @@ gimp_save_dialog_get_state (GimpSaveDialog *dialog)
 }
 
 static void
-gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
-                            GimpSaveDialogState *state)
+ligma_save_dialog_set_state (LigmaSaveDialog      *dialog,
+                            LigmaSaveDialogState *state)
 {
   if (state->filter_name)
     {
@@ -470,8 +470,8 @@ gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
 }
 
 static void
-gimp_save_dialog_state_destroy (GimpSaveDialogState *state)
+ligma_save_dialog_state_destroy (LigmaSaveDialogState *state)
 {
   g_free (state->filter_name);
-  g_slice_free (GimpSaveDialogState, state);
+  g_slice_free (LigmaSaveDialogState, state);
 }

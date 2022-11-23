@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppatternselectbutton.h
+ * ligmapatternselectbutton.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,44 +18,44 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PATTERN_SELECT_BUTTON_H__
-#define __GIMP_PATTERN_SELECT_BUTTON_H__
+#ifndef __LIGMA_PATTERN_SELECT_BUTTON_H__
+#define __LIGMA_PATTERN_SELECT_BUTTON_H__
 
-#include <libgimp/gimpselectbutton.h>
+#include <libligma/ligmaselectbutton.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PATTERN_SELECT_BUTTON            (gimp_pattern_select_button_get_type ())
-#define GIMP_PATTERN_SELECT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN_SELECT_BUTTON, GimpPatternSelectButton))
-#define GIMP_PATTERN_SELECT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN_SELECT_BUTTON, GimpPatternSelectButtonClass))
-#define GIMP_IS_PATTERN_SELECT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATTERN_SELECT_BUTTON))
-#define GIMP_IS_PATTERN_SELECT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN_SELECT_BUTTON))
-#define GIMP_PATTERN_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATTERN_SELECT_BUTTON, GimpPatternSelectButtonClass))
+#define LIGMA_TYPE_PATTERN_SELECT_BUTTON            (ligma_pattern_select_button_get_type ())
+#define LIGMA_PATTERN_SELECT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PATTERN_SELECT_BUTTON, LigmaPatternSelectButton))
+#define LIGMA_PATTERN_SELECT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PATTERN_SELECT_BUTTON, LigmaPatternSelectButtonClass))
+#define LIGMA_IS_PATTERN_SELECT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PATTERN_SELECT_BUTTON))
+#define LIGMA_IS_PATTERN_SELECT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PATTERN_SELECT_BUTTON))
+#define LIGMA_PATTERN_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PATTERN_SELECT_BUTTON, LigmaPatternSelectButtonClass))
 
 
-typedef struct _GimpPatternSelectButtonPrivate GimpPatternSelectButtonPrivate;
-typedef struct _GimpPatternSelectButtonClass   GimpPatternSelectButtonClass;
+typedef struct _LigmaPatternSelectButtonPrivate LigmaPatternSelectButtonPrivate;
+typedef struct _LigmaPatternSelectButtonClass   LigmaPatternSelectButtonClass;
 
-struct _GimpPatternSelectButton
+struct _LigmaPatternSelectButton
 {
-  GimpSelectButton                parent_instance;
+  LigmaSelectButton                parent_instance;
 
-  GimpPatternSelectButtonPrivate *priv;
+  LigmaPatternSelectButtonPrivate *priv;
 };
 
-struct _GimpPatternSelectButtonClass
+struct _LigmaPatternSelectButtonClass
 {
-  GimpSelectButtonClass  parent_class;
+  LigmaSelectButtonClass  parent_class;
 
   /* pattern_set signal is emitted when pattern is chosen */
-  void (* pattern_set) (GimpPatternSelectButton *button,
+  void (* pattern_set) (LigmaPatternSelectButton *button,
                         const gchar             *pattern_name,
                         gint                     width,
                         gint                     height,
@@ -64,27 +64,27 @@ struct _GimpPatternSelectButtonClass
                         gboolean                 dialog_closing);
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-GType         gimp_pattern_select_button_get_type    (void) G_GNUC_CONST;
+GType         ligma_pattern_select_button_get_type    (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_pattern_select_button_new         (const gchar *title,
+GtkWidget   * ligma_pattern_select_button_new         (const gchar *title,
                                                       const gchar *pattern_name);
 
-const gchar * gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button);
-void          gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
+const gchar * ligma_pattern_select_button_get_pattern (LigmaPatternSelectButton *button);
+void          ligma_pattern_select_button_set_pattern (LigmaPatternSelectButton *button,
                                                       const gchar             *pattern_name);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PATTERN_SELECT_BUTTON_H__ */
+#endif /* __LIGMA_PATTERN_SELECT_BUTTON_H__ */

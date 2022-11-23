@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpchannel_pdb.c
+ * ligmachannel_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpchannel
- * @title: gimpchannel
+ * SECTION: ligmachannel
+ * @title: ligmachannel
  * @short_description: Functions for manipulating channels.
  *
  * Functions for manipulating channels.
@@ -37,7 +37,7 @@
 
 
 /**
- * _gimp_channel_new:
+ * _ligma_channel_new:
  * @image: The image to which to add the channel.
  * @width: The channel width.
  * @height: The channel height.
@@ -50,49 +50,49 @@
  * This procedure creates a new channel with the specified width,
  * height, name, opacity and color.
  * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * automatic. Add the new channel with ligma_image_insert_channel().
  * Other attributes, such as channel visibility, should be set with
  * explicit procedure calls.
  * The channel's contents are undefined initially.
  *
  * Returns: (transfer none): The newly created channel.
  **/
-GimpChannel *
-_gimp_channel_new (GimpImage     *image,
+LigmaChannel *
+_ligma_channel_new (LigmaImage     *image,
                    gint           width,
                    gint           height,
                    const gchar   *name,
                    gdouble        opacity,
-                   const GimpRGB *color)
+                   const LigmaRGB *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel *channel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_RGB, color,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel = LIGMA_VALUES_GET_CHANNEL (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel;
 }
 
 /**
- * gimp_channel_new_from_component:
+ * ligma_channel_new_from_component:
  * @image: The image to which to add the channel.
  * @component: The image component.
  * @name: The channel name.
@@ -101,7 +101,7 @@ _gimp_channel_new (GimpImage     *image,
  *
  * This procedure creates a new channel from a color component.
  * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * automatic. Add the new channel with ligma_image_insert_channel().
  * Other attributes, such as channel visibility, should be set with
  * explicit procedure calls.
  *
@@ -109,72 +109,72 @@ _gimp_channel_new (GimpImage     *image,
  *
  * Since: 2.4
  **/
-GimpChannel *
-gimp_channel_new_from_component (GimpImage       *image,
-                                 GimpChannelType  component,
+LigmaChannel *
+ligma_channel_new_from_component (LigmaImage       *image,
+                                 LigmaChannelType  component,
                                  const gchar     *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel *channel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_TYPE, component,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-new-from-component",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-new-from-component",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel = LIGMA_VALUES_GET_CHANNEL (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel;
 }
 
 /**
- * gimp_channel_copy:
+ * ligma_channel_copy:
  * @channel: The channel to copy.
  *
  * Copy a channel.
  *
  * This procedure copies the specified channel and returns the copy.
  * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * automatic. Add the new channel with ligma_image_insert_channel().
  *
  * Returns: (transfer none): The newly copied channel.
  **/
-GimpChannel *
-gimp_channel_copy (GimpChannel *channel)
+LigmaChannel *
+ligma_channel_copy (LigmaChannel *channel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel *channel_copy = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel_copy = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-copy",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-copy",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel_copy = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel_copy = LIGMA_VALUES_GET_CHANNEL (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel_copy;
 }
 
 /**
- * gimp_channel_combine_masks:
+ * ligma_channel_combine_masks:
  * @channel1: The channel1.
  * @channel2: The channel2.
  * @operation: The selection operation.
@@ -189,38 +189,38 @@ gimp_channel_copy (GimpChannel *channel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_combine_masks (GimpChannel    *channel1,
-                            GimpChannel    *channel2,
-                            GimpChannelOps  operation,
+ligma_channel_combine_masks (LigmaChannel    *channel1,
+                            LigmaChannel    *channel2,
+                            LigmaChannelOps  operation,
                             gint            offx,
                             gint            offy)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel1,
-                                          GIMP_TYPE_CHANNEL, channel2,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel1,
+                                          LIGMA_TYPE_CHANNEL, channel2,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-combine-masks",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-combine-masks",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_channel_get_show_masked:
+ * ligma_channel_get_show_masked:
  * @channel: The channel.
  *
  * Get the composite method of the specified channel.
@@ -232,31 +232,31 @@ gimp_channel_combine_masks (GimpChannel    *channel1,
  * Returns: The channel composite method.
  **/
 gboolean
-gimp_channel_get_show_masked (GimpChannel *channel)
+ligma_channel_get_show_masked (LigmaChannel *channel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean show_masked = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-get-show-masked",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-get-show-masked",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    show_masked = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    show_masked = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return show_masked;
 }
 
 /**
- * gimp_channel_set_show_masked:
+ * ligma_channel_set_show_masked:
  * @channel: The channel.
  * @show_masked: The new channel composite method.
  *
@@ -269,32 +269,32 @@ gimp_channel_get_show_masked (GimpChannel *channel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_set_show_masked (GimpChannel *channel,
+ligma_channel_set_show_masked (LigmaChannel *channel,
                               gboolean     show_masked)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_BOOLEAN, show_masked,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-set-show-masked",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-set-show-masked",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_channel_get_opacity:
+ * ligma_channel_get_opacity:
  * @channel: The channel.
  *
  * Get the opacity of the specified channel.
@@ -304,31 +304,31 @@ gimp_channel_set_show_masked (GimpChannel *channel,
  * Returns: The channel opacity.
  **/
 gdouble
-gimp_channel_get_opacity (GimpChannel *channel)
+ligma_channel_get_opacity (LigmaChannel *channel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble opacity = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-get-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-get-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    opacity = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return opacity;
 }
 
 /**
- * gimp_channel_set_opacity:
+ * ligma_channel_set_opacity:
  * @channel: The channel.
  * @opacity: The new channel opacity.
  *
@@ -339,32 +339,32 @@ gimp_channel_get_opacity (GimpChannel *channel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_set_opacity (GimpChannel *channel,
+ligma_channel_set_opacity (LigmaChannel *channel,
                           gdouble      opacity)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-set-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-set-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_channel_get_color:
+ * ligma_channel_get_color:
  * @channel: The channel.
  * @color: (out caller-allocates): The channel compositing color.
  *
@@ -375,34 +375,34 @@ gimp_channel_set_opacity (GimpChannel *channel,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_get_color (GimpChannel *channel,
-                        GimpRGB     *color)
+ligma_channel_get_color (LigmaChannel *channel,
+                        LigmaRGB     *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-get-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-get-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*color);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_channel_set_color:
+ * ligma_channel_set_color:
  * @channel: The channel.
  * @color: The new channel compositing color.
  *
@@ -413,26 +413,26 @@ gimp_channel_get_color (GimpChannel *channel,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_set_color (GimpChannel   *channel,
-                        const GimpRGB *color)
+ligma_channel_set_color (LigmaChannel   *channel,
+                        const LigmaRGB *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL, channel,
-                                          GIMP_TYPE_RGB, color,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_CHANNEL, channel,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-channel-set-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-channel-set-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

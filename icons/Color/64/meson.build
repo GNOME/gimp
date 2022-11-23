@@ -10,8 +10,8 @@ if have_vector_icons
     install: false,
   )
   icon_wilber_eek = custom_target('icon-wilber-eek',
-    input : [ '../scalable/gimp-wilber-eek.svg' ],
-    output: [ 'gimp-wilber-eek.png' ],
+    input : [ '../scalable/ligma-wilber-eek.svg' ],
+    output: [ 'ligma-wilber-eek.png' ],
     command: [
       colorsvg2png, '@INPUT@', '@OUTPUT@', size,
     ],
@@ -29,12 +29,12 @@ else
         colorsvg2png, '@INPUT@', '@OUTPUT@', size,
       ],
       install: true,
-      install_dir: gimpiconsdir / theme / icons_dir / 'apps',
+      install_dir: ligmaiconsdir / theme / icons_dir / 'apps',
     )
 
     if icon == 'dialog-question'
       icon_dialog_question = icon_tgt
-    elif icon == 'gimp-wilber-eek'
+    elif icon == 'ligma-wilber-eek'
       icon_wilber_eek = icon_tgt
     endif
   endforeach

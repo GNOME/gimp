@@ -8,7 +8,7 @@ themes = [
 
 foreach theme : themes
   install_data(
-    theme / 'gimp.css',
-    install_dir: gimpdatadir / 'themes' / theme,
+    theme / 'ligma.css',
+    install_dir: ligmadatadir / 'themes' / theme,
   )
 endforeach

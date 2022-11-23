@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolordisplaystack.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacolordisplaystack.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,84 +19,84 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_DISPLAY_STACK_H__
-#define __GIMP_COLOR_DISPLAY_STACK_H__
+#ifndef __LIGMA_COLOR_DISPLAY_STACK_H__
+#define __LIGMA_COLOR_DISPLAY_STACK_H__
 
 G_BEGIN_DECLS
 
 /* For information look at the html documentation */
 
 
-#define GIMP_TYPE_COLOR_DISPLAY_STACK            (gimp_color_display_stack_get_type ())
-#define GIMP_COLOR_DISPLAY_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStack))
-#define GIMP_COLOR_DISPLAY_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStackClass))
-#define GIMP_IS_COLOR_DISPLAY_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK))
-#define GIMP_IS_COLOR_DISPLAY_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_DISPLAY_STACK))
-#define GIMP_COLOR_DISPLAY_STACK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStackClass))
+#define LIGMA_TYPE_COLOR_DISPLAY_STACK            (ligma_color_display_stack_get_type ())
+#define LIGMA_COLOR_DISPLAY_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_DISPLAY_STACK, LigmaColorDisplayStack))
+#define LIGMA_COLOR_DISPLAY_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_DISPLAY_STACK, LigmaColorDisplayStackClass))
+#define LIGMA_IS_COLOR_DISPLAY_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_DISPLAY_STACK))
+#define LIGMA_IS_COLOR_DISPLAY_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_DISPLAY_STACK))
+#define LIGMA_COLOR_DISPLAY_STACK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_DISPLAY_STACK, LigmaColorDisplayStackClass))
 
 
-typedef struct _GimpColorDisplayStackPrivate GimpColorDisplayStackPrivate;
-typedef struct _GimpColorDisplayStackClass   GimpColorDisplayStackClass;
+typedef struct _LigmaColorDisplayStackPrivate LigmaColorDisplayStackPrivate;
+typedef struct _LigmaColorDisplayStackClass   LigmaColorDisplayStackClass;
 
-struct _GimpColorDisplayStack
+struct _LigmaColorDisplayStack
 {
   GObject                       parent_instance;
 
-  GimpColorDisplayStackPrivate *priv;
+  LigmaColorDisplayStackPrivate *priv;
 };
 
-struct _GimpColorDisplayStackClass
+struct _LigmaColorDisplayStackClass
 {
   GObjectClass  parent_class;
 
-  void (* changed)   (GimpColorDisplayStack *stack);
+  void (* changed)   (LigmaColorDisplayStack *stack);
 
-  void (* added)     (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display,
+  void (* added)     (LigmaColorDisplayStack *stack,
+                      LigmaColorDisplay      *display,
                       gint                   position);
-  void (* removed)   (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display);
-  void (* reordered) (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display,
+  void (* removed)   (LigmaColorDisplayStack *stack,
+                      LigmaColorDisplay      *display);
+  void (* reordered) (LigmaColorDisplayStack *stack,
+                      LigmaColorDisplay      *display,
                       gint                   position);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType                   gimp_color_display_stack_get_type (void) G_GNUC_CONST;
-GimpColorDisplayStack * gimp_color_display_stack_new      (void);
-GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
+GType                   ligma_color_display_stack_get_type (void) G_GNUC_CONST;
+LigmaColorDisplayStack * ligma_color_display_stack_new      (void);
+LigmaColorDisplayStack * ligma_color_display_stack_clone    (LigmaColorDisplayStack *stack);
 
-void    gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
+void    ligma_color_display_stack_changed         (LigmaColorDisplayStack *stack);
 
-GList * gimp_color_display_stack_get_filters     (GimpColorDisplayStack *stack);
+GList * ligma_color_display_stack_get_filters     (LigmaColorDisplayStack *stack);
 
-void    gimp_color_display_stack_add             (GimpColorDisplayStack *stack,
-                                                  GimpColorDisplay      *display);
-void    gimp_color_display_stack_remove          (GimpColorDisplayStack *stack,
-                                                  GimpColorDisplay      *display);
-void    gimp_color_display_stack_reorder_up      (GimpColorDisplayStack *stack,
-                                                  GimpColorDisplay      *display);
-void    gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
-                                                  GimpColorDisplay      *display);
-void    gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
+void    ligma_color_display_stack_add             (LigmaColorDisplayStack *stack,
+                                                  LigmaColorDisplay      *display);
+void    ligma_color_display_stack_remove          (LigmaColorDisplayStack *stack,
+                                                  LigmaColorDisplay      *display);
+void    ligma_color_display_stack_reorder_up      (LigmaColorDisplayStack *stack,
+                                                  LigmaColorDisplay      *display);
+void    ligma_color_display_stack_reorder_down    (LigmaColorDisplayStack *stack,
+                                                  LigmaColorDisplay      *display);
+void    ligma_color_display_stack_convert_buffer  (LigmaColorDisplayStack *stack,
                                                   GeglBuffer            *buffer,
                                                   GeglRectangle         *area);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_DISPLAY_STACK_H__ */
+#endif /* __LIGMA_COLOR_DISPLAY_STACK_H__ */

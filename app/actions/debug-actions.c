@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpactiongroup.h"
+#include "widgets/ligmaactiongroup.h"
 
 #include "debug-actions.h"
 #include "debug-commands.h"
 
 
-static const GimpActionEntry debug_actions[] =
+static const LigmaActionEntry debug_actions[] =
 {
   { "debug-menu", NULL, "_Debug" },
 
@@ -82,29 +82,29 @@ static const GimpActionEntry debug_actions[] =
 };
 
 void
-debug_actions_setup (GimpActionGroup *group)
+debug_actions_setup (LigmaActionGroup *group)
 {
   gint i;
 
-  gimp_action_group_add_actions (group, NULL,
+  ligma_action_group_add_actions (group, NULL,
                                  debug_actions,
                                  G_N_ELEMENTS (debug_actions));
 
 #define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+        ligma_action_group_set_action_visible (group, action, (condition) != 0)
 
   for (i = 0; i < G_N_ELEMENTS (debug_actions); i++)
-    SET_VISIBLE (debug_actions[i].name, group->gimp->show_debug_menu);
+    SET_VISIBLE (debug_actions[i].name, group->ligma->show_debug_menu);
 
 #undef SET_VISIBLE
 }
 
 void
-debug_actions_update (GimpActionGroup *group,
+debug_actions_update (LigmaActionGroup *group,
                       gpointer         data)
 {
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("debug-show-image-graph", gegl_has_operation ("gegl:introspect"));
 

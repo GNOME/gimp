@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,52 +25,52 @@
 
 /*  paint cores  */
 
-typedef struct _GimpPaintCore        GimpPaintCore;
-typedef struct _GimpBrushCore        GimpBrushCore;
-typedef struct _GimpSourceCore       GimpSourceCore;
+typedef struct _LigmaPaintCore        LigmaPaintCore;
+typedef struct _LigmaBrushCore        LigmaBrushCore;
+typedef struct _LigmaSourceCore       LigmaSourceCore;
 
-typedef struct _GimpAirbrush         GimpAirbrush;
-typedef struct _GimpClone            GimpClone;
-typedef struct _GimpConvolve         GimpConvolve;
-typedef struct _GimpDodgeBurn        GimpDodgeBurn;
-typedef struct _GimpEraser           GimpEraser;
-typedef struct _GimpHeal             GimpHeal;
-typedef struct _GimpInk              GimpInk;
-typedef struct _GimpMybrushCore      GimpMybrushCore;
-typedef struct _GimpPaintbrush       GimpPaintbrush;
-typedef struct _GimpPencil           GimpPencil;
-typedef struct _GimpPerspectiveClone GimpPerspectiveClone;
-typedef struct _GimpSmudge           GimpSmudge;
+typedef struct _LigmaAirbrush         LigmaAirbrush;
+typedef struct _LigmaClone            LigmaClone;
+typedef struct _LigmaConvolve         LigmaConvolve;
+typedef struct _LigmaDodgeBurn        LigmaDodgeBurn;
+typedef struct _LigmaEraser           LigmaEraser;
+typedef struct _LigmaHeal             LigmaHeal;
+typedef struct _LigmaInk              LigmaInk;
+typedef struct _LigmaMybrushCore      LigmaMybrushCore;
+typedef struct _LigmaPaintbrush       LigmaPaintbrush;
+typedef struct _LigmaPencil           LigmaPencil;
+typedef struct _LigmaPerspectiveClone LigmaPerspectiveClone;
+typedef struct _LigmaSmudge           LigmaSmudge;
 
 
 /*  paint options  */
 
-typedef struct _GimpPaintOptions            GimpPaintOptions;
-typedef struct _GimpSourceOptions           GimpSourceOptions;
+typedef struct _LigmaPaintOptions            LigmaPaintOptions;
+typedef struct _LigmaSourceOptions           LigmaSourceOptions;
 
-typedef struct _GimpAirbrushOptions         GimpAirbrushOptions;
-typedef struct _GimpCloneOptions            GimpCloneOptions;
-typedef struct _GimpConvolveOptions         GimpConvolveOptions;
-typedef struct _GimpDodgeBurnOptions        GimpDodgeBurnOptions;
-typedef struct _GimpEraserOptions           GimpEraserOptions;
-typedef struct _GimpInkOptions              GimpInkOptions;
-typedef struct _GimpMybrushOptions          GimpMybrushOptions;
-typedef struct _GimpPencilOptions           GimpPencilOptions;
-typedef struct _GimpPerspectiveCloneOptions GimpPerspectiveCloneOptions;
-typedef struct _GimpSmudgeOptions           GimpSmudgeOptions;
+typedef struct _LigmaAirbrushOptions         LigmaAirbrushOptions;
+typedef struct _LigmaCloneOptions            LigmaCloneOptions;
+typedef struct _LigmaConvolveOptions         LigmaConvolveOptions;
+typedef struct _LigmaDodgeBurnOptions        LigmaDodgeBurnOptions;
+typedef struct _LigmaEraserOptions           LigmaEraserOptions;
+typedef struct _LigmaInkOptions              LigmaInkOptions;
+typedef struct _LigmaMybrushOptions          LigmaMybrushOptions;
+typedef struct _LigmaPencilOptions           LigmaPencilOptions;
+typedef struct _LigmaPerspectiveCloneOptions LigmaPerspectiveCloneOptions;
+typedef struct _LigmaSmudgeOptions           LigmaSmudgeOptions;
 
 
 /*  functions  */
 
-typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
+typedef void (* LigmaPaintRegisterCallback) (Ligma        *ligma,
                                             GType        paint_type,
                                             GType        paint_options_type,
                                             const gchar *identifier,
                                             const gchar *blurb,
                                             const gchar *icon_name);
 
-typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
-                                            GimpPaintRegisterCallback  callback);
+typedef void (* LigmaPaintRegisterFunc)     (Ligma                      *ligma,
+                                            LigmaPaintRegisterCallback  callback);
 
 
 #endif /* __PAINT_TYPES_H__ */

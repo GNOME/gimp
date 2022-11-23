@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PERSPECTIVE_CLONE_H__
-#define __GIMP_PERSPECTIVE_CLONE_H__
+#ifndef __LIGMA_PERSPECTIVE_CLONE_H__
+#define __LIGMA_PERSPECTIVE_CLONE_H__
 
 
-#include "gimpclone.h"
+#include "ligmaclone.h"
 
 
-#define GIMP_TYPE_PERSPECTIVE_CLONE            (gimp_perspective_clone_get_type ())
-#define GIMP_PERSPECTIVE_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PERSPECTIVE_CLONE, GimpPerspectiveClone))
-#define GIMP_PERSPECTIVE_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_CLONE, GimpPerspectiveCloneClass))
-#define GIMP_IS_PERSPECTIVE_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PERSPECTIVE_CLONE))
-#define GIMP_IS_PERSPECTIVE_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PERSPECTIVE_CLONE))
-#define GIMP_PERSPECTIVE_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_CLONE, GimpPerspectiveCloneClass))
+#define LIGMA_TYPE_PERSPECTIVE_CLONE            (ligma_perspective_clone_get_type ())
+#define LIGMA_PERSPECTIVE_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE, LigmaPerspectiveClone))
+#define LIGMA_PERSPECTIVE_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE, LigmaPerspectiveCloneClass))
+#define LIGMA_IS_PERSPECTIVE_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE))
+#define LIGMA_IS_PERSPECTIVE_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE))
+#define LIGMA_PERSPECTIVE_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE, LigmaPerspectiveCloneClass))
 
 
-typedef struct _GimpPerspectiveCloneClass GimpPerspectiveCloneClass;
+typedef struct _LigmaPerspectiveCloneClass LigmaPerspectiveCloneClass;
 
-struct _GimpPerspectiveClone
+struct _LigmaPerspectiveClone
 {
-  GimpClone      parent_instance;
+  LigmaClone      parent_instance;
 
   gdouble        src_x_fv;     /* source coords in front_view perspective */
   gdouble        src_y_fv;
@@ -42,8 +42,8 @@ struct _GimpPerspectiveClone
   gdouble        dest_x_fv;    /* destination coords in front_view perspective */
   gdouble        dest_y_fv;
 
-  GimpMatrix3    transform;
-  GimpMatrix3    transform_inv;
+  LigmaMatrix3    transform;
+  LigmaMatrix3    transform_inv;
 
   GeglNode      *node;
   GeglNode      *crop;
@@ -52,24 +52,24 @@ struct _GimpPerspectiveClone
   GeglNode      *dest_node;
 };
 
-struct _GimpPerspectiveCloneClass
+struct _LigmaPerspectiveCloneClass
 {
-  GimpCloneClass  parent_class;
+  LigmaCloneClass  parent_class;
 };
 
 
-void    gimp_perspective_clone_register      (Gimp                      *gimp,
-                                              GimpPaintRegisterCallback  callback);
+void    ligma_perspective_clone_register      (Ligma                      *ligma,
+                                              LigmaPaintRegisterCallback  callback);
 
-GType   gimp_perspective_clone_get_type         (void) G_GNUC_CONST;
+GType   ligma_perspective_clone_get_type         (void) G_GNUC_CONST;
 
-void    gimp_perspective_clone_set_transform    (GimpPerspectiveClone   *clone,
-                                                 GimpMatrix3            *transform);
-void    gimp_perspective_clone_get_source_point (GimpPerspectiveClone   *clone,
+void    ligma_perspective_clone_set_transform    (LigmaPerspectiveClone   *clone,
+                                                 LigmaMatrix3            *transform);
+void    ligma_perspective_clone_get_source_point (LigmaPerspectiveClone   *clone,
                                                  gdouble                 x,
                                                  gdouble                 y,
                                                  gdouble                *newx,
                                                  gdouble                *newy);
 
 
-#endif  /*  __GIMP_PERSPECTIVE_CLONE_H__  */
+#endif  /*  __LIGMA_PERSPECTIVE_CLONE_H__  */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpRc
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaRc
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,60 +18,60 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_H__
-#define __GIMP_RC_H__
+#ifndef __LIGMA_RC_H__
+#define __LIGMA_RC_H__
 
-#include "config/gimppluginconfig.h"
-
-
-#define GIMP_TYPE_RC            (gimp_rc_get_type ())
-#define GIMP_RC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RC, GimpRc))
-#define GIMP_RC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RC, GimpRcClass))
-#define GIMP_IS_RC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RC))
-#define GIMP_IS_RC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RC))
+#include "config/ligmapluginconfig.h"
 
 
-typedef struct _GimpRcClass GimpRcClass;
+#define LIGMA_TYPE_RC            (ligma_rc_get_type ())
+#define LIGMA_RC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_RC, LigmaRc))
+#define LIGMA_RC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_RC, LigmaRcClass))
+#define LIGMA_IS_RC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_RC))
+#define LIGMA_IS_RC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_RC))
 
-struct _GimpRc
+
+typedef struct _LigmaRcClass LigmaRcClass;
+
+struct _LigmaRc
 {
-  GimpPluginConfig  parent_instance;
+  LigmaPluginConfig  parent_instance;
 
-  GFile            *user_gimprc;
-  GFile            *system_gimprc;
+  GFile            *user_ligmarc;
+  GFile            *system_ligmarc;
   gboolean          verbose;
   gboolean          autosave;
   guint             save_idle_id;
 };
 
-struct _GimpRcClass
+struct _LigmaRcClass
 {
-  GimpPluginConfigClass  parent_class;
+  LigmaPluginConfigClass  parent_class;
 };
 
 
-GType     gimp_rc_get_type          (void) G_GNUC_CONST;
+GType     ligma_rc_get_type          (void) G_GNUC_CONST;
 
-GimpRc  * gimp_rc_new               (GObject     *gimp,
-                                     GFile       *system_gimprc,
-                                     GFile       *user_gimprc,
+LigmaRc  * ligma_rc_new               (GObject     *ligma,
+                                     GFile       *system_ligmarc,
+                                     GFile       *user_ligmarc,
                                      gboolean     verbose);
 
-void      gimp_rc_load_system       (GimpRc      *rc);
-void      gimp_rc_load_user         (GimpRc      *rc);
+void      ligma_rc_load_system       (LigmaRc      *rc);
+void      ligma_rc_load_user         (LigmaRc      *rc);
 
-void      gimp_rc_set_autosave      (GimpRc      *rc,
+void      ligma_rc_set_autosave      (LigmaRc      *rc,
                                      gboolean     autosave);
-void      gimp_rc_save              (GimpRc      *rc);
+void      ligma_rc_save              (LigmaRc      *rc);
 
-gchar   * gimp_rc_query             (GimpRc      *rc,
+gchar   * ligma_rc_query             (LigmaRc      *rc,
                                      const gchar *key);
 
-void      gimp_rc_set_unknown_token (GimpRc      *rc,
+void      ligma_rc_set_unknown_token (LigmaRc      *rc,
                                      const gchar *token,
                                      const gchar *value);
 
-void      gimp_rc_migrate           (GimpRc      *rc);
+void      ligma_rc_migrate           (LigmaRc      *rc);
 
 
-#endif /* GIMP_RC_H__ */
+#endif /* LIGMA_RC_H__ */

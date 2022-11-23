@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvascorner.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvascorner.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "gimpcanvascorner.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvascorner.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -46,115 +46,115 @@ enum
 };
 
 
-typedef struct _GimpCanvasCornerPrivate GimpCanvasCornerPrivate;
+typedef struct _LigmaCanvasCornerPrivate LigmaCanvasCornerPrivate;
 
-struct _GimpCanvasCornerPrivate
+struct _LigmaCanvasCornerPrivate
 {
   gdouble          x;
   gdouble          y;
   gdouble          width;
   gdouble          height;
-  GimpHandleAnchor anchor;
+  LigmaHandleAnchor anchor;
   gint             corner_width;
   gint             corner_height;
   gboolean         outside;
 };
 
 #define GET_PRIVATE(corner) \
-        ((GimpCanvasCornerPrivate *) gimp_canvas_corner_get_instance_private ((GimpCanvasCorner *) (corner)))
+        ((LigmaCanvasCornerPrivate *) ligma_canvas_corner_get_instance_private ((LigmaCanvasCorner *) (corner)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_corner_set_property (GObject        *object,
+static void             ligma_canvas_corner_set_property (GObject        *object,
                                                          guint           property_id,
                                                          const GValue   *value,
                                                          GParamSpec     *pspec);
-static void             gimp_canvas_corner_get_property (GObject        *object,
+static void             ligma_canvas_corner_get_property (GObject        *object,
                                                          guint           property_id,
                                                          GValue         *value,
                                                          GParamSpec     *pspec);
-static void             gimp_canvas_corner_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_corner_draw         (LigmaCanvasItem *item,
                                                          cairo_t        *cr);
-static cairo_region_t * gimp_canvas_corner_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_corner_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasCorner, gimp_canvas_corner,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasCorner, ligma_canvas_corner,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_corner_parent_class
+#define parent_class ligma_canvas_corner_parent_class
 
 
 static void
-gimp_canvas_corner_class_init (GimpCanvasCornerClass *klass)
+ligma_canvas_corner_class_init (LigmaCanvasCornerClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_corner_set_property;
-  object_class->get_property = gimp_canvas_corner_get_property;
+  object_class->set_property = ligma_canvas_corner_set_property;
+  object_class->get_property = ligma_canvas_corner_get_property;
 
-  item_class->draw           = gimp_canvas_corner_draw;
-  item_class->get_extents    = gimp_canvas_corner_get_extents;
+  item_class->draw           = ligma_canvas_corner_draw;
+  item_class->get_extents    = ligma_canvas_corner_get_extents;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_double ("x", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_double ("y", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_double ("width", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_double ("height", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
-                                                      GIMP_TYPE_HANDLE_ANCHOR,
-                                                      GIMP_HANDLE_ANCHOR_CENTER,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_HANDLE_ANCHOR,
+                                                      LIGMA_HANDLE_ANCHOR_CENTER,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CORNER_WIDTH,
                                    g_param_spec_int ("corner-width", NULL, NULL,
-                                                     3, GIMP_MAX_IMAGE_SIZE, 3,
-                                                     GIMP_PARAM_READWRITE));
+                                                     3, LIGMA_MAX_IMAGE_SIZE, 3,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CORNER_HEIGHT,
                                    g_param_spec_int ("corner-height", NULL, NULL,
-                                                     3, GIMP_MAX_IMAGE_SIZE, 3,
-                                                     GIMP_PARAM_READWRITE));
+                                                     3, LIGMA_MAX_IMAGE_SIZE, 3,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OUTSIDE,
                                    g_param_spec_boolean ("outside", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_corner_init (GimpCanvasCorner *corner)
+ligma_canvas_corner_init (LigmaCanvasCorner *corner)
 {
 }
 
 static void
-gimp_canvas_corner_set_property (GObject      *object,
+ligma_canvas_corner_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpCanvasCornerPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasCornerPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -190,12 +190,12 @@ gimp_canvas_corner_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_corner_get_property (GObject    *object,
+ligma_canvas_corner_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpCanvasCornerPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasCornerPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -231,25 +231,25 @@ gimp_canvas_corner_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_corner_transform (GimpCanvasItem *item,
+ligma_canvas_corner_transform (LigmaCanvasItem *item,
                               gdouble        *x,
                               gdouble        *y,
                               gdouble        *w,
                               gdouble        *h)
 {
-  GimpCanvasCornerPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasCornerPrivate *private = GET_PRIVATE (item);
   gdouble                  rx, ry;
   gdouble                  rw, rh;
   gint                     top_and_bottom_handle_x_offset;
   gint                     left_and_right_handle_y_offset;
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MIN (private->x,
                                         private->x + private->width),
                                    MIN (private->y,
                                         private->y + private->height),
                                    &rx, &ry);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MAX (private->x,
                                         private->x + private->width),
                                    MAX (private->y,
@@ -272,10 +272,10 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
 
   switch (private->anchor)
     {
-    case GIMP_HANDLE_ANCHOR_CENTER:
+    case LIGMA_HANDLE_ANCHOR_CENTER:
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -288,7 +288,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_NORTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -301,7 +301,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -314,7 +314,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
+    case LIGMA_HANDLE_ANCHOR_SOUTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -327,7 +327,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_NORTH:
+    case LIGMA_HANDLE_ANCHOR_NORTH:
       if (private->outside)
         {
           *x = rx;
@@ -341,7 +341,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_SOUTH:
+    case LIGMA_HANDLE_ANCHOR_SOUTH:
       if (private->outside)
         {
           *x = rx;
@@ -355,7 +355,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_WEST:
+    case LIGMA_HANDLE_ANCHOR_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -369,7 +369,7 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_HANDLE_ANCHOR_EAST:
+    case LIGMA_HANDLE_ANCHOR_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -386,27 +386,27 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_corner_draw (GimpCanvasItem *item,
+ligma_canvas_corner_draw (LigmaCanvasItem *item,
                          cairo_t        *cr)
 {
   gdouble x, y;
   gdouble w, h;
 
-  gimp_canvas_corner_transform (item, &x, &y, &w, &h);
+  ligma_canvas_corner_transform (item, &x, &y, &w, &h);
 
   cairo_rectangle (cr, x, y, w, h);
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_corner_get_extents (GimpCanvasItem *item)
+ligma_canvas_corner_get_extents (LigmaCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x, y;
   gdouble               w, h;
 
-  gimp_canvas_corner_transform (item, &x, &y, &w, &h);
+  ligma_canvas_corner_transform (item, &x, &y, &w, &h);
 
   rectangle.x      = floor (x - 1.5);
   rectangle.y      = floor (y - 1.5);
@@ -416,20 +416,20 @@ gimp_canvas_corner_get_extents (GimpCanvasItem *item)
   return cairo_region_create_rectangle (&rectangle);
 }
 
-GimpCanvasItem *
-gimp_canvas_corner_new (GimpDisplayShell *shell,
+LigmaCanvasItem *
+ligma_canvas_corner_new (LigmaDisplayShell *shell,
                         gdouble           x,
                         gdouble           y,
                         gdouble           width,
                         gdouble           height,
-                        GimpHandleAnchor  anchor,
+                        LigmaHandleAnchor  anchor,
                         gint              corner_width,
                         gint              corner_height,
                         gboolean          outside)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_CORNER,
+  return g_object_new (LIGMA_TYPE_CANVAS_CORNER,
                        "shell",         shell,
                        "x",             x,
                        "y",             y,
@@ -443,7 +443,7 @@ gimp_canvas_corner_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_canvas_corner_set (GimpCanvasItem *corner,
+ligma_canvas_corner_set (LigmaCanvasItem *corner,
                         gdouble         x,
                         gdouble         y,
                         gdouble         width,
@@ -452,9 +452,9 @@ gimp_canvas_corner_set (GimpCanvasItem *corner,
                         gint            corner_height,
                         gboolean        outside)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_CORNER (corner));
+  g_return_if_fail (LIGMA_IS_CANVAS_CORNER (corner));
 
-  gimp_canvas_item_begin_change (corner);
+  ligma_canvas_item_begin_change (corner);
   g_object_set (corner,
                 "x",             x,
                 "y",             y,
@@ -464,5 +464,5 @@ gimp_canvas_corner_set (GimpCanvasItem *corner,
                 "corner-height", corner_height,
                 "outside",       outside,
                 NULL);
-  gimp_canvas_item_end_change (corner);
+  ligma_canvas_item_end_change (corner);
 }

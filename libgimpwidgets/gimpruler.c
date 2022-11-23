@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -22,17 +22,17 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpruler.h"
+#include "ligmaruler.h"
 
 
 /**
- * SECTION: gimpruler
- * @title: GimpRuler
+ * SECTION: ligmaruler
+ * @title: LigmaRuler
  * @short_description: A ruler widget with configurable unit and orientation.
  *
  * A ruler widget with configurable unit and orientation.
@@ -60,10 +60,10 @@ static GParamSpec *object_props[N_PROPS] = { NULL, };
 /* All distances below are in 1/72nd's of an inch. (According to
  * Adobe that's a point, but points are really 1/72.27 in.)
  */
-struct _GimpRulerPrivate
+struct _LigmaRulerPrivate
 {
   GtkOrientation   orientation;
-  GimpUnit         unit;
+  LigmaUnit         unit;
   gdouble          lower;
   gdouble          upper;
   gdouble          position;
@@ -79,7 +79,7 @@ struct _GimpRulerPrivate
   GList           *track_widgets;
 };
 
-#define GET_PRIVATE(obj) (((GimpRuler *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaRuler *) (obj))->priv)
 
 
 typedef struct
@@ -124,87 +124,87 @@ static const RulerMetric ruler_metric_yards =
 };
 
 
-static void          gimp_ruler_dispose               (GObject        *object);
-static void          gimp_ruler_set_property          (GObject        *object,
+static void          ligma_ruler_dispose               (GObject        *object);
+static void          ligma_ruler_set_property          (GObject        *object,
                                                        guint           prop_id,
                                                        const GValue   *value,
                                                        GParamSpec     *pspec);
-static void          gimp_ruler_get_property          (GObject        *object,
+static void          ligma_ruler_get_property          (GObject        *object,
                                                        guint           prop_id,
                                                        GValue         *value,
                                                        GParamSpec     *pspec);
 
-static void          gimp_ruler_realize               (GtkWidget      *widget);
-static void          gimp_ruler_unrealize             (GtkWidget      *widget);
-static void          gimp_ruler_map                   (GtkWidget      *widget);
-static void          gimp_ruler_unmap                 (GtkWidget      *widget);
-static void          gimp_ruler_size_allocate         (GtkWidget      *widget,
+static void          ligma_ruler_realize               (GtkWidget      *widget);
+static void          ligma_ruler_unrealize             (GtkWidget      *widget);
+static void          ligma_ruler_map                   (GtkWidget      *widget);
+static void          ligma_ruler_unmap                 (GtkWidget      *widget);
+static void          ligma_ruler_size_allocate         (GtkWidget      *widget,
                                                        GtkAllocation  *allocation);
-static void          gimp_ruler_get_preferred_width   (GtkWidget      *widget,
+static void          ligma_ruler_get_preferred_width   (GtkWidget      *widget,
                                                        gint           *minimum_width,
                                                        gint           *natural_width);
-static void          gimp_ruler_get_preferred_height  (GtkWidget      *widget,
+static void          ligma_ruler_get_preferred_height  (GtkWidget      *widget,
                                                        gint           *minimum_height,
                                                        gint           *natural_height);
-static void          gimp_ruler_style_updated         (GtkWidget      *widget);
-static gboolean      gimp_ruler_motion_notify         (GtkWidget      *widget,
+static void          ligma_ruler_style_updated         (GtkWidget      *widget);
+static gboolean      ligma_ruler_motion_notify         (GtkWidget      *widget,
                                                        GdkEventMotion *event);
-static gboolean      gimp_ruler_draw                  (GtkWidget      *widget,
+static gboolean      ligma_ruler_draw                  (GtkWidget      *widget,
                                                        cairo_t        *cr);
 
-static void          gimp_ruler_draw_ticks            (GimpRuler      *ruler);
-static GdkRectangle  gimp_ruler_get_pos_rect          (GimpRuler      *ruler,
+static void          ligma_ruler_draw_ticks            (LigmaRuler      *ruler);
+static GdkRectangle  ligma_ruler_get_pos_rect          (LigmaRuler      *ruler,
                                                        gdouble         position);
-static gboolean      gimp_ruler_idle_queue_pos_redraw (gpointer        data);
-static void          gimp_ruler_queue_pos_redraw      (GimpRuler      *ruler);
-static void          gimp_ruler_draw_pos              (GimpRuler      *ruler,
+static gboolean      ligma_ruler_idle_queue_pos_redraw (gpointer        data);
+static void          ligma_ruler_queue_pos_redraw      (LigmaRuler      *ruler);
+static void          ligma_ruler_draw_pos              (LigmaRuler      *ruler,
                                                        cairo_t        *cr);
-static void          gimp_ruler_make_pixmap           (GimpRuler      *ruler);
-static PangoLayout * gimp_ruler_get_layout            (GtkWidget      *widget,
+static void          ligma_ruler_make_pixmap           (LigmaRuler      *ruler);
+static PangoLayout * ligma_ruler_get_layout            (GtkWidget      *widget,
                                                        const gchar    *text);
 static const RulerMetric *
-                     gimp_ruler_get_metric            (GimpUnit        unit);
+                     ligma_ruler_get_metric            (LigmaUnit        unit);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaRuler, ligma_ruler, GTK_TYPE_WIDGET)
 
-#define parent_class gimp_ruler_parent_class
+#define parent_class ligma_ruler_parent_class
 
 
 static void
-gimp_ruler_class_init (GimpRulerClass *klass)
+ligma_ruler_class_init (LigmaRulerClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose              = gimp_ruler_dispose;
-  object_class->set_property         = gimp_ruler_set_property;
-  object_class->get_property         = gimp_ruler_get_property;
+  object_class->dispose              = ligma_ruler_dispose;
+  object_class->set_property         = ligma_ruler_set_property;
+  object_class->get_property         = ligma_ruler_get_property;
 
-  widget_class->realize              = gimp_ruler_realize;
-  widget_class->unrealize            = gimp_ruler_unrealize;
-  widget_class->map                  = gimp_ruler_map;
-  widget_class->unmap                = gimp_ruler_unmap;
-  widget_class->get_preferred_width  = gimp_ruler_get_preferred_width;
-  widget_class->get_preferred_height = gimp_ruler_get_preferred_height;
-  widget_class->size_allocate        = gimp_ruler_size_allocate;
-  widget_class->style_updated        = gimp_ruler_style_updated;
-  widget_class->motion_notify_event  = gimp_ruler_motion_notify;
-  widget_class->draw                 = gimp_ruler_draw;
+  widget_class->realize              = ligma_ruler_realize;
+  widget_class->unrealize            = ligma_ruler_unrealize;
+  widget_class->map                  = ligma_ruler_map;
+  widget_class->unmap                = ligma_ruler_unmap;
+  widget_class->get_preferred_width  = ligma_ruler_get_preferred_width;
+  widget_class->get_preferred_height = ligma_ruler_get_preferred_height;
+  widget_class->size_allocate        = ligma_ruler_size_allocate;
+  widget_class->style_updated        = ligma_ruler_style_updated;
+  widget_class->motion_notify_event  = ligma_ruler_motion_notify;
+  widget_class->draw                 = ligma_ruler_draw;
 
   object_props[PROP_ORIENTATION] = g_param_spec_enum ("orientation",
                                                       "Orientation",
                                                       "The orientation of the ruler",
                                                       GTK_TYPE_ORIENTATION,
                                                       GTK_ORIENTATION_HORIZONTAL,
-                                                      GIMP_PARAM_READWRITE);
+                                                      LIGMA_PARAM_READWRITE);
 
-  object_props[PROP_UNIT] = gimp_param_spec_unit ("unit",
+  object_props[PROP_UNIT] = ligma_param_spec_unit ("unit",
                                                   "Unit",
                                                   "Unit of ruler",
                                                   TRUE, TRUE,
-                                                  GIMP_UNIT_PIXEL,
-                                                  GIMP_PARAM_READWRITE);
+                                                  LIGMA_UNIT_PIXEL,
+                                                  LIGMA_PARAM_READWRITE);
 
   object_props[PROP_LOWER] = g_param_spec_double ("lower",
                                                   "Lower",
@@ -212,7 +212,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                   -G_MAXDOUBLE,
                                                   G_MAXDOUBLE,
                                                   0.0,
-                                                  GIMP_PARAM_READWRITE);
+                                                  LIGMA_PARAM_READWRITE);
 
   object_props[PROP_UPPER] = g_param_spec_double ("upper",
                                                   "Upper",
@@ -220,7 +220,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                   -G_MAXDOUBLE,
                                                   G_MAXDOUBLE,
                                                   0.0,
-                                                  GIMP_PARAM_READWRITE);
+                                                  LIGMA_PARAM_READWRITE);
 
   object_props[PROP_POSITION] = g_param_spec_double ("position",
                                                      "Position",
@@ -228,7 +228,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                      -G_MAXDOUBLE,
                                                      G_MAXDOUBLE,
                                                      0.0,
-                                                     GIMP_PARAM_READWRITE);
+                                                     LIGMA_PARAM_READWRITE);
 
   object_props[PROP_MAX_SIZE] = g_param_spec_double ("max-size",
                                                      "Max Size",
@@ -236,36 +236,36 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                      -G_MAXDOUBLE,
                                                      G_MAXDOUBLE,
                                                      0.0,
-                                                     GIMP_PARAM_READWRITE);
+                                                     LIGMA_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, object_props);
 
-  gtk_widget_class_set_css_name (widget_class, "GimpRuler");
+  gtk_widget_class_set_css_name (widget_class, "LigmaRuler");
 }
 
 static void
-gimp_ruler_init (GimpRuler *ruler)
+ligma_ruler_init (LigmaRuler *ruler)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  ruler->priv = gimp_ruler_get_instance_private (ruler);
+  ruler->priv = ligma_ruler_get_instance_private (ruler);
 
   priv = ruler->priv;
 
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit        = GIMP_UNIT_PIXEL;
+  priv->unit        = LIGMA_UNIT_PIXEL;
 }
 
 static void
-gimp_ruler_dispose (GObject *object)
+ligma_ruler_dispose (GObject *object)
 {
-  GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (object);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   while (priv->track_widgets)
-    gimp_ruler_remove_track_widget (ruler, priv->track_widgets->data);
+    ligma_ruler_remove_track_widget (ruler, priv->track_widgets->data);
 
   if (priv->pos_redraw_idle_id)
     {
@@ -277,13 +277,13 @@ gimp_ruler_dispose (GObject *object)
 }
 
 static void
-gimp_ruler_set_property (GObject      *object,
+ligma_ruler_set_property (GObject      *object,
                          guint         prop_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (object);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   switch (prop_id)
     {
@@ -293,28 +293,28 @@ gimp_ruler_set_property (GObject      *object,
       break;
 
     case PROP_UNIT:
-      gimp_ruler_set_unit (ruler, g_value_get_int (value));
+      ligma_ruler_set_unit (ruler, g_value_get_int (value));
       break;
 
     case PROP_LOWER:
-      gimp_ruler_set_range (ruler,
+      ligma_ruler_set_range (ruler,
                             g_value_get_double (value),
                             priv->upper,
                             priv->max_size);
       break;
     case PROP_UPPER:
-      gimp_ruler_set_range (ruler,
+      ligma_ruler_set_range (ruler,
                             priv->lower,
                             g_value_get_double (value),
                             priv->max_size);
       break;
 
     case PROP_POSITION:
-      gimp_ruler_set_position (ruler, g_value_get_double (value));
+      ligma_ruler_set_position (ruler, g_value_get_double (value));
       break;
 
     case PROP_MAX_SIZE:
-      gimp_ruler_set_range (ruler,
+      ligma_ruler_set_range (ruler,
                             priv->lower,
                             priv->upper,
                             g_value_get_double (value));
@@ -327,13 +327,13 @@ gimp_ruler_set_property (GObject      *object,
 }
 
 static void
-gimp_ruler_get_property (GObject    *object,
+ligma_ruler_get_property (GObject    *object,
                          guint       prop_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (object);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   switch (prop_id)
     {
@@ -368,45 +368,45 @@ gimp_ruler_get_property (GObject    *object,
 }
 
 /**
- * gimp_ruler_new:
+ * ligma_ruler_new:
  * @orientation: the ruler's orientation.
  *
  * Creates a new ruler.
  *
- * Returns: a new #GimpRuler widget.
+ * Returns: a new #LigmaRuler widget.
  *
  * Since: 2.8
  **/
 GtkWidget *
-gimp_ruler_new (GtkOrientation orientation)
+ligma_ruler_new (GtkOrientation orientation)
 {
-  return g_object_new (GIMP_TYPE_RULER,
+  return g_object_new (LIGMA_TYPE_RULER,
                        "orientation", orientation,
                        NULL);
 }
 
 static void
-gimp_ruler_update_position (GimpRuler *ruler,
+ligma_ruler_update_position (LigmaRuler *ruler,
                             gdouble    x,
                             gdouble    y)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (ruler);
+  LigmaRulerPrivate *priv = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   gdouble           lower;
   gdouble           upper;
 
   gtk_widget_get_allocation (GTK_WIDGET (ruler), &allocation);
-  gimp_ruler_get_range (ruler, &lower, &upper, NULL);
+  ligma_ruler_get_range (ruler, &lower, &upper, NULL);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      gimp_ruler_set_position (ruler,
+      ligma_ruler_set_position (ruler,
                                lower +
                                (upper - lower) * x / allocation.width);
     }
   else
     {
-      gimp_ruler_set_position (ruler,
+      ligma_ruler_set_position (ruler,
                                lower +
                                (upper - lower) * y / allocation.height);
     }
@@ -461,7 +461,7 @@ gtk_widget_get_translation_to_window (GtkWidget *widget,
 }
 
 static void
-gimp_ruler_event_to_widget_coords (GtkWidget *widget,
+ligma_ruler_event_to_widget_coords (GtkWidget *widget,
                                    GdkWindow *window,
                                    gdouble    event_x,
                                    gdouble    event_y,
@@ -481,9 +481,9 @@ gimp_ruler_event_to_widget_coords (GtkWidget *widget,
 }
 
 static gboolean
-gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
+ligma_ruler_track_widget_motion_notify (GtkWidget      *widget,
                                        GdkEventMotion *mevent,
-                                       GimpRuler      *ruler)
+                                       LigmaRuler      *ruler)
 {
   gint widget_x;
   gint widget_y;
@@ -492,7 +492,7 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
 
   widget = gtk_get_event_widget ((GdkEvent *) mevent);
 
-  gimp_ruler_event_to_widget_coords (widget, mevent->window,
+  ligma_ruler_event_to_widget_coords (widget, mevent->window,
                                      mevent->x, mevent->y,
                                      &widget_x, &widget_y);
 
@@ -500,15 +500,15 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
                                         widget_x, widget_y,
                                         &ruler_x, &ruler_y))
     {
-      gimp_ruler_update_position (ruler, ruler_x, ruler_y);
+      ligma_ruler_update_position (ruler, ruler_x, ruler_y);
     }
 
   return FALSE;
 }
 
 /**
- * gimp_ruler_add_track_widget:
- * @ruler: a #GimpRuler
+ * ligma_ruler_add_track_widget:
+ * @ruler: a #LigmaRuler
  * @widget: the track widget to add
  *
  * Adds a "track widget" to the ruler. The ruler will connect to
@@ -520,12 +520,12 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
  * Since: 2.8
  */
 void
-gimp_ruler_add_track_widget (GimpRuler *ruler,
+ligma_ruler_add_track_widget (LigmaRuler *ruler,
                              GtkWidget *widget)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
   g_return_if_fail (GTK_IS_WIDGET (ruler));
 
   priv = GET_PRIVATE (ruler);
@@ -535,30 +535,30 @@ gimp_ruler_add_track_widget (GimpRuler *ruler,
   priv->track_widgets = g_list_prepend (priv->track_widgets, widget);
 
   g_signal_connect (widget, "motion-notify-event",
-                    G_CALLBACK (gimp_ruler_track_widget_motion_notify),
+                    G_CALLBACK (ligma_ruler_track_widget_motion_notify),
                     ruler);
   g_signal_connect_swapped (widget, "destroy",
-                            G_CALLBACK (gimp_ruler_remove_track_widget),
+                            G_CALLBACK (ligma_ruler_remove_track_widget),
                             ruler);
 }
 
 /**
- * gimp_ruler_remove_track_widget:
- * @ruler: a #GimpRuler
+ * ligma_ruler_remove_track_widget:
+ * @ruler: a #LigmaRuler
  * @widget: the track widget to remove
  *
  * Removes a previously added track widget from the ruler. See
- * gimp_ruler_add_track_widget().
+ * ligma_ruler_add_track_widget().
  *
  * Since: 2.8
  */
 void
-gimp_ruler_remove_track_widget (GimpRuler *ruler,
+ligma_ruler_remove_track_widget (LigmaRuler *ruler,
                                 GtkWidget *widget)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
   g_return_if_fail (GTK_IS_WIDGET (ruler));
 
   priv = GET_PRIVATE (ruler);
@@ -568,29 +568,29 @@ gimp_ruler_remove_track_widget (GimpRuler *ruler,
   priv->track_widgets = g_list_remove (priv->track_widgets, widget);
 
   g_signal_handlers_disconnect_by_func (widget,
-                                        gimp_ruler_track_widget_motion_notify,
+                                        ligma_ruler_track_widget_motion_notify,
                                         ruler);
   g_signal_handlers_disconnect_by_func (widget,
-                                        gimp_ruler_remove_track_widget,
+                                        ligma_ruler_remove_track_widget,
                                         ruler);
 }
 
 /**
- * gimp_ruler_set_unit:
- * @ruler: a #GimpRuler
- * @unit:  the #GimpUnit to set the ruler to
+ * ligma_ruler_set_unit:
+ * @ruler: a #LigmaRuler
+ * @unit:  the #LigmaUnit to set the ruler to
  *
  * This sets the unit of the ruler.
  *
  * Since: 2.8
  */
 void
-gimp_ruler_set_unit (GimpRuler *ruler,
-                     GimpUnit   unit)
+ligma_ruler_set_unit (LigmaRuler *ruler,
+                     LigmaUnit   unit)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
 
   priv = GET_PRIVATE (ruler);
 
@@ -605,24 +605,24 @@ gimp_ruler_set_unit (GimpRuler *ruler,
 }
 
 /**
- * gimp_ruler_get_unit:
- * @ruler: a #GimpRuler
+ * ligma_ruler_get_unit:
+ * @ruler: a #LigmaRuler
  *
  * Returns: (transfer none): the unit currently used in the @ruler widget.
  *
  * Since: 2.8
  **/
-GimpUnit
-gimp_ruler_get_unit (GimpRuler *ruler)
+LigmaUnit
+ligma_ruler_get_unit (LigmaRuler *ruler)
 {
-  g_return_val_if_fail (GIMP_IS_RULER (ruler), 0);
+  g_return_val_if_fail (LIGMA_IS_RULER (ruler), 0);
 
   return GET_PRIVATE (ruler)->unit;
 }
 
 /**
- * gimp_ruler_set_position:
- * @ruler: a #GimpRuler
+ * ligma_ruler_set_position:
+ * @ruler: a #LigmaRuler
  * @position: the position to set the ruler to
  *
  * This sets the position of the ruler.
@@ -630,12 +630,12 @@ gimp_ruler_get_unit (GimpRuler *ruler)
  * Since: 2.8
  */
 void
-gimp_ruler_set_position (GimpRuler *ruler,
+ligma_ruler_set_position (LigmaRuler *ruler,
                          gdouble    position)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
 
   priv = GET_PRIVATE (ruler);
 
@@ -647,7 +647,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
       priv->position = position;
       g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_POSITION]);
 
-      rect = gimp_ruler_get_pos_rect (ruler, priv->position);
+      rect = ligma_ruler_get_pos_rect (ruler, priv->position);
 
       xdiff = rect.x - priv->last_pos_rect.x;
       ydiff = rect.y - priv->last_pos_rect.y;
@@ -672,7 +672,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
               priv->pos_redraw_idle_id = 0;
             }
 
-          gimp_ruler_queue_pos_redraw (ruler);
+          ligma_ruler_queue_pos_redraw (ruler);
         }
       else if (! priv->pos_redraw_idle_id)
 #else
@@ -687,31 +687,31 @@ gimp_ruler_set_position (GimpRuler *ruler,
         {
           priv->pos_redraw_idle_id =
             g_idle_add_full (G_PRIORITY_LOW,
-                             gimp_ruler_idle_queue_pos_redraw,
+                             ligma_ruler_idle_queue_pos_redraw,
                              ruler, NULL);
         }
     }
 }
 
 /**
- * gimp_ruler_get_position:
- * @ruler: a #GimpRuler
+ * ligma_ruler_get_position:
+ * @ruler: a #LigmaRuler
  *
  * Returns: the current position of the @ruler widget.
  *
  * Since: 2.8
  **/
 gdouble
-gimp_ruler_get_position (GimpRuler *ruler)
+ligma_ruler_get_position (LigmaRuler *ruler)
 {
-  g_return_val_if_fail (GIMP_IS_RULER (ruler), 0.0);
+  g_return_val_if_fail (LIGMA_IS_RULER (ruler), 0.0);
 
   return GET_PRIVATE (ruler)->position;
 }
 
 /**
- * gimp_ruler_set_range:
- * @ruler: a #GimpRuler
+ * ligma_ruler_set_range:
+ * @ruler: a #LigmaRuler
  * @lower: the lower limit of the ruler
  * @upper: the upper limit of the ruler
  * @max_size: the maximum size of the ruler used when calculating the space to
@@ -722,14 +722,14 @@ gimp_ruler_get_position (GimpRuler *ruler)
  * Since: 2.8
  */
 void
-gimp_ruler_set_range (GimpRuler *ruler,
+ligma_ruler_set_range (LigmaRuler *ruler,
                       gdouble    lower,
                       gdouble    upper,
                       gdouble    max_size)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
 
   priv = GET_PRIVATE (ruler);
 
@@ -756,8 +756,8 @@ gimp_ruler_set_range (GimpRuler *ruler,
 }
 
 /**
- * gimp_ruler_get_range:
- * @ruler: a #GimpRuler
+ * ligma_ruler_get_range:
+ * @ruler: a #LigmaRuler
  * @lower: (out) (optional): location to store lower limit of the ruler,
  *                           or %NULL
  * @upper: (out) (optional): location to store upper limit of the ruler,
@@ -766,20 +766,20 @@ gimp_ruler_set_range (GimpRuler *ruler,
  *                              used when calculating the space to leave for
  *                              the text, or %NULL.
  *
- * Retrieves values indicating the range and current position of a #GimpRuler.
- * See gimp_ruler_set_range().
+ * Retrieves values indicating the range and current position of a #LigmaRuler.
+ * See ligma_ruler_set_range().
  *
  * Since: 2.8
  **/
 void
-gimp_ruler_get_range (GimpRuler *ruler,
+ligma_ruler_get_range (LigmaRuler *ruler,
                       gdouble   *lower,
                       gdouble   *upper,
                       gdouble   *max_size)
 {
-  GimpRulerPrivate *priv;
+  LigmaRulerPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (LIGMA_IS_RULER (ruler));
 
   priv = GET_PRIVATE (ruler);
 
@@ -792,15 +792,15 @@ gimp_ruler_get_range (GimpRuler *ruler,
 }
 
 static void
-gimp_ruler_realize (GtkWidget *widget)
+ligma_ruler_realize (GtkWidget *widget)
 {
-  GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (widget);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   GdkWindowAttr     attributes;
   gint              attributes_mask;
 
-  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (ligma_ruler_parent_class)->realize (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -820,14 +820,14 @@ gimp_ruler_realize (GtkWidget *widget)
                                        &attributes, attributes_mask);
   gdk_window_set_user_data (priv->input_window, ruler);
 
-  gimp_ruler_make_pixmap (ruler);
+  ligma_ruler_make_pixmap (ruler);
 }
 
 static void
-gimp_ruler_unrealize (GtkWidget *widget)
+ligma_ruler_unrealize (GtkWidget *widget)
 {
-  GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (widget);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   g_clear_pointer (&priv->backing_store, cairo_surface_destroy);
   priv->backing_store_valid = FALSE;
@@ -836,13 +836,13 @@ gimp_ruler_unrealize (GtkWidget *widget)
 
   g_clear_pointer (&priv->input_window, gdk_window_destroy);
 
-  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->unrealize (widget);
+  GTK_WIDGET_CLASS (ligma_ruler_parent_class)->unrealize (widget);
 }
 
 static void
-gimp_ruler_map (GtkWidget *widget)
+ligma_ruler_map (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (widget);
+  LigmaRulerPrivate *priv = GET_PRIVATE (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -851,9 +851,9 @@ gimp_ruler_map (GtkWidget *widget)
 }
 
 static void
-gimp_ruler_unmap (GtkWidget *widget)
+ligma_ruler_unmap (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (widget);
+  LigmaRulerPrivate *priv = GET_PRIVATE (widget);
 
   if (priv->input_window)
     gdk_window_hide (priv->input_window);
@@ -862,11 +862,11 @@ gimp_ruler_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_ruler_size_allocate (GtkWidget     *widget,
+ligma_ruler_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
-  GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler = LIGMA_RULER (widget);
+  LigmaRulerPrivate *priv  = GET_PRIVATE (ruler);
   GtkAllocation     widget_allocation;
   gboolean          resized;
 
@@ -884,22 +884,22 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
                               allocation->width, allocation->height);
 
       if (resized)
-        gimp_ruler_make_pixmap (ruler);
+        ligma_ruler_make_pixmap (ruler);
     }
 }
 
 static void
-gimp_ruler_size_request (GtkWidget      *widget,
+ligma_ruler_size_request (GtkWidget      *widget,
                          GtkRequisition *requisition)
 {
-  GimpRulerPrivate *priv    = GET_PRIVATE (widget);
+  LigmaRulerPrivate *priv    = GET_PRIVATE (widget);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
   PangoLayout      *layout;
   PangoRectangle    ink_rect;
   GtkBorder         border;
   gint              size;
 
-  layout = gimp_ruler_get_layout (widget, "0123456789");
+  layout = ligma_ruler_get_layout (widget, "0123456789");
   pango_layout_get_pixel_extents (layout, &ink_rect, NULL);
 
   size = 2 + ink_rect.height * 1.7;
@@ -922,35 +922,35 @@ gimp_ruler_size_request (GtkWidget      *widget,
 }
 
 static void
-gimp_ruler_get_preferred_width (GtkWidget *widget,
+ligma_ruler_get_preferred_width (GtkWidget *widget,
                                 gint      *minimum_width,
                                 gint      *natural_width)
 {
   GtkRequisition requisition;
 
-  gimp_ruler_size_request (widget, &requisition);
+  ligma_ruler_size_request (widget, &requisition);
 
   *minimum_width = *natural_width = requisition.width;
 }
 
 static void
-gimp_ruler_get_preferred_height (GtkWidget *widget,
+ligma_ruler_get_preferred_height (GtkWidget *widget,
                                  gint      *minimum_height,
                                  gint      *natural_height)
 {
   GtkRequisition requisition;
 
-  gimp_ruler_size_request (widget, &requisition);
+  ligma_ruler_size_request (widget, &requisition);
 
   *minimum_height = *natural_height = requisition.height;
 }
 
 static void
-gimp_ruler_style_updated (GtkWidget *widget)
+ligma_ruler_style_updated (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (widget);
+  LigmaRulerPrivate *priv = GET_PRIVATE (widget);
 
-  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_updated (widget);
+  GTK_WIDGET_CLASS (ligma_ruler_parent_class)->style_updated (widget);
 
   priv->backing_store_valid = FALSE;
 
@@ -958,22 +958,22 @@ gimp_ruler_style_updated (GtkWidget *widget)
 }
 
 static gboolean
-gimp_ruler_motion_notify (GtkWidget      *widget,
+ligma_ruler_motion_notify (GtkWidget      *widget,
                           GdkEventMotion *event)
 {
-  GimpRuler *ruler = GIMP_RULER (widget);
+  LigmaRuler *ruler = LIGMA_RULER (widget);
 
-  gimp_ruler_update_position (ruler, event->x, event->y);
+  ligma_ruler_update_position (ruler, event->x, event->y);
 
   return FALSE;
 }
 
 static gboolean
-gimp_ruler_draw (GtkWidget *widget,
+ligma_ruler_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
-  GimpRuler        *ruler   = GIMP_RULER (widget);
-  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler   = LIGMA_RULER (widget);
+  LigmaRulerPrivate *priv    = GET_PRIVATE (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
   GtkAllocation     allocation;
 
@@ -982,22 +982,22 @@ gimp_ruler_draw (GtkWidget *widget,
   gtk_render_frame (context, cr, 0, 0, allocation.width, allocation.height);
 
   if (! priv->backing_store_valid)
-    gimp_ruler_draw_ticks (ruler);
+    ligma_ruler_draw_ticks (ruler);
 
   cairo_set_source_surface (cr, priv->backing_store, 0, 0);
   cairo_paint (cr);
 
-  gimp_ruler_draw_pos (ruler, cr);
+  ligma_ruler_draw_pos (ruler, cr);
 
   return FALSE;
 }
 
 static void
-gimp_ruler_draw_ticks (GimpRuler *ruler)
+ligma_ruler_draw_ticks (LigmaRuler *ruler)
 {
   GtkWidget         *widget  = GTK_WIDGET (ruler);
   GtkStyleContext   *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate  *priv    = GET_PRIVATE (ruler);
+  LigmaRulerPrivate  *priv    = GET_PRIVATE (ruler);
   GtkAllocation      allocation;
   GtkBorder          border;
   GdkRGBA            color;
@@ -1015,7 +1015,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   gint               text_size;
   gint               pos;
   gdouble            max_size;
-  GimpUnit           unit;
+  LigmaUnit           unit;
   PangoLayout       *layout;
   PangoRectangle     logical_rect, ink_rect;
   const RulerMetric *ruler_metric;
@@ -1026,7 +1026,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   gtk_widget_get_allocation (widget, &allocation);
   gtk_style_context_get_border (context, gtk_widget_get_state_flags (widget), &border);
 
-  layout = gimp_ruler_get_layout (widget, "0123456789");
+  layout = ligma_ruler_get_layout (widget, "0123456789");
   pango_layout_get_extents (layout, &ink_rect, &logical_rect);
 
   digit_height = PANGO_PIXELS (ink_rect.height) + 2;
@@ -1070,7 +1070,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                        allocation.height - (border.top + border.bottom));
     }
 
-  gimp_ruler_get_range (ruler, &lower, &upper, &max_size);
+  ligma_ruler_get_range (ruler, &lower, &upper, &max_size);
 
   if ((upper - lower) == 0)
     goto out;
@@ -1091,9 +1091,9 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
   text_size = strlen (unit_str) * digit_height + 1;
 
-  unit = gimp_ruler_get_unit (ruler);
+  unit = ligma_ruler_get_unit (ruler);
 
-  ruler_metric = gimp_ruler_get_metric (unit);
+  ruler_metric = ligma_ruler_get_metric (unit);
 
   for (scale = 0; scale < G_N_ELEMENTS (ruler_metric->ruler_scale); scale++)
     if (ruler_metric->ruler_scale[scale] * fabs (increment) > 2 * text_size)
@@ -1109,7 +1109,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
       gdouble subd_incr;
 
       /* hack to get proper subdivisions at full pixels */
-      if (unit == GIMP_UNIT_PIXEL && scale == 1 && i == 1)
+      if (unit == LIGMA_UNIT_PIXEL && scale == 1 && i == 1)
         subd_incr = 1.0;
       else
         subd_incr = ((gdouble) ruler_metric->ruler_scale[scale] /
@@ -1119,7 +1119,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
         continue;
 
       /* don't subdivide pixels */
-      if (unit == GIMP_UNIT_PIXEL && subd_incr < 1.0)
+      if (unit == LIGMA_UNIT_PIXEL && subd_incr < 1.0)
         continue;
 
       /* Calculate the length of the tickmarks. Make sure that
@@ -1200,12 +1200,12 @@ out:
 }
 
 static GdkRectangle
-gimp_ruler_get_pos_rect (GimpRuler *ruler,
+ligma_ruler_get_pos_rect (LigmaRuler *ruler,
                          gdouble    position)
 {
   GtkWidget        *widget  = GTK_WIDGET (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
+  LigmaRulerPrivate *priv    = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   GtkBorder         border;
   gint              width, height;
@@ -1238,7 +1238,7 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
       rect.width = rect.height / 2 + 1;
     }
 
-  gimp_ruler_get_range (ruler, &lower, &upper, NULL);
+  ligma_ruler_get_range (ruler, &lower, &upper, NULL);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -1259,12 +1259,12 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
 }
 
 static gboolean
-gimp_ruler_idle_queue_pos_redraw (gpointer data)
+ligma_ruler_idle_queue_pos_redraw (gpointer data)
 {
-  GimpRuler        *ruler     = data;
-  GimpRulerPrivate *priv      = GET_PRIVATE (ruler);
+  LigmaRuler        *ruler     = data;
+  LigmaRulerPrivate *priv      = GET_PRIVATE (ruler);
 
-  gimp_ruler_queue_pos_redraw (ruler);
+  ligma_ruler_queue_pos_redraw (ruler);
 
   /*
     * pos_redraw_idle_id being set can be counted on to mean
@@ -1278,10 +1278,10 @@ gimp_ruler_idle_queue_pos_redraw (gpointer data)
 }
 
 static void
-gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
+ligma_ruler_queue_pos_redraw (LigmaRuler *ruler)
 {
-  GimpRulerPrivate  *priv = GET_PRIVATE (ruler);
-  const GdkRectangle rect = gimp_ruler_get_pos_rect (ruler, priv->position);
+  LigmaRulerPrivate  *priv = GET_PRIVATE (ruler);
+  const GdkRectangle rect = ligma_ruler_get_pos_rect (ruler, priv->position);
   GtkAllocation      allocation;
 
   gtk_widget_get_allocation (GTK_WIDGET(ruler), &allocation);
@@ -1309,18 +1309,18 @@ gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
 }
 
 static void
-gimp_ruler_draw_pos (GimpRuler *ruler,
+ligma_ruler_draw_pos (LigmaRuler *ruler,
                      cairo_t   *cr)
 {
   GtkWidget        *widget  = GTK_WIDGET (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
+  LigmaRulerPrivate *priv    = GET_PRIVATE (ruler);
   GdkRectangle      pos_rect;
 
   if (! gtk_widget_is_drawable (widget))
     return;
 
-  pos_rect = gimp_ruler_get_pos_rect (ruler, gimp_ruler_get_position (ruler));
+  pos_rect = ligma_ruler_get_pos_rect (ruler, ligma_ruler_get_position (ruler));
 
   if ((pos_rect.width > 0) && (pos_rect.height > 0))
     {
@@ -1364,10 +1364,10 @@ gimp_ruler_draw_pos (GimpRuler *ruler,
 }
 
 static void
-gimp_ruler_make_pixmap (GimpRuler *ruler)
+ligma_ruler_make_pixmap (LigmaRuler *ruler)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
-  GimpRulerPrivate *priv   = GET_PRIVATE (ruler);
+  LigmaRulerPrivate *priv   = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -1385,10 +1385,10 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
 }
 
 static PangoLayout *
-gimp_ruler_get_layout (GtkWidget   *widget,
+ligma_ruler_get_layout (GtkWidget   *widget,
                        const gchar *text)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (widget);
+  LigmaRulerPrivate *priv = GET_PRIVATE (widget);
 
   if (priv->layout)
     {
@@ -1402,12 +1402,12 @@ gimp_ruler_get_layout (GtkWidget   *widget,
 }
 
 #define FACTOR_EPSILON  0.0000001
-#define FACTOR_EQUAL(u, f) (ABS (f - gimp_unit_get_factor (u)) < FACTOR_EPSILON)
+#define FACTOR_EQUAL(u, f) (ABS (f - ligma_unit_get_factor (u)) < FACTOR_EPSILON)
 
 static const RulerMetric *
-gimp_ruler_get_metric (GimpUnit unit)
+ligma_ruler_get_metric (LigmaUnit unit)
 {
-  if (unit == GIMP_UNIT_INCH)
+  if (unit == LIGMA_UNIT_INCH)
     {
       return  &ruler_metric_inches;
     }

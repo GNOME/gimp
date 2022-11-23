@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -34,13 +34,13 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
+#include <libligmabase/ligmawin32-io.h>
 #endif
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "gfig.h"
 #include "gfig-style.h"
@@ -112,7 +112,7 @@ SelectItVals selvals =
 
 selection_option selopt =
 {
-  GIMP_CHANNEL_OP_ADD, /* type */
+  LIGMA_CHANNEL_OP_ADD, /* type */
   FALSE,               /* Antia */
   FALSE,               /* Feather */
   10.0,                /* feather radius */
@@ -191,9 +191,9 @@ static void     toggle_obj_type              (GtkRadioAction *action,
 
 static GtkUIManager *create_ui_manager       (GtkWidget *window);
 
-static void   gfig_scale_entry_update_double (GimpLabelSpin  *entry,
+static void   gfig_scale_entry_update_double (LigmaLabelSpin  *entry,
                                               gdouble        *value);
-static void   gfig_scale_entry_update_int    (GimpLabelSpin  *entry,
+static void   gfig_scale_entry_update_int    (LigmaLabelSpin  *entry,
                                               gint           *value);
 
 
@@ -203,15 +203,15 @@ gfig_dialog (void)
   GtkWidget    *main_hbox;
   GtkWidget    *vbox;
   GFigObj      *gfig;
-  GimpParasite *parasite;
-  GimpLayer    *newlayer;
+  LigmaParasite *parasite;
+  LigmaLayer    *newlayer;
   GtkWidget    *menubar;
   GtkWidget    *toolbar;
   GtkWidget    *combo;
   GtkWidget    *frame;
   gint          img_width;
   gint          img_height;
-  GimpImageType img_type;
+  LigmaImageType img_type;
   GtkWidget    *toggle;
   GtkWidget    *right_vbox;
   GtkWidget    *hbox;
@@ -219,11 +219,11 @@ gfig_dialog (void)
   GtkWidget    *empty_label;
   gchar        *path;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  img_width  = gimp_drawable_get_width (gfig_context->drawable);
-  img_height = gimp_drawable_get_height (gfig_context->drawable);
-  img_type   = gimp_drawable_type_with_alpha (gfig_context->drawable);
+  img_width  = ligma_drawable_get_width (gfig_context->drawable);
+  img_height = ligma_drawable_get_height (gfig_context->drawable);
+  img_type   = ligma_drawable_type_with_alpha (gfig_context->drawable);
 
   /*
    * See if there is a "gfig" parasite.  If so, this is a gfig layer,
@@ -232,38 +232,38 @@ gfig_dialog (void)
    */
   gfig_list = NULL;
   undo_level = -1;
-  parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable), "gfig");
+  parasite = ligma_item_get_parasite (LIGMA_ITEM (gfig_context->drawable), "gfig");
   gfig_context->enable_repaint = FALSE;
 
   /* debug */
   gfig_context->debug_styles = FALSE;
 
   /* initial default style */
-  gfig_read_gimp_style (&gfig_context->default_style, "Base");
+  gfig_read_ligma_style (&gfig_context->default_style, "Base");
   gfig_context->default_style.paint_type = selvals.painttype;
 
   if (parasite)
     {
-      gimp_drawable_fill (gfig_context->drawable, GIMP_FILL_TRANSPARENT);
+      ligma_drawable_fill (gfig_context->drawable, LIGMA_FILL_TRANSPARENT);
       gfig_context->using_new_layer = FALSE;
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
   else
     {
-      newlayer = gimp_layer_new (gfig_context->image, "GFig",
+      newlayer = ligma_layer_new (gfig_context->image, "GFig",
                                  img_width, img_height,
                                  img_type,
                                  100.0,
-                                 gimp_image_get_default_new_layer_mode (gfig_context->image));
-      gimp_drawable_fill (GIMP_DRAWABLE (newlayer), GIMP_FILL_TRANSPARENT);
-      gimp_image_insert_layer (gfig_context->image, newlayer, NULL, -1);
-      gfig_context->drawable = GIMP_DRAWABLE (newlayer);
+                                 ligma_image_get_default_new_layer_mode (gfig_context->image));
+      ligma_drawable_fill (LIGMA_DRAWABLE (newlayer), LIGMA_FILL_TRANSPARENT);
+      ligma_image_insert_layer (gfig_context->image, newlayer, NULL, -1);
+      gfig_context->drawable = LIGMA_DRAWABLE (newlayer);
       gfig_context->using_new_layer = TRUE;
     }
 
   gfig_icons_init ();
 
-  path = gimp_gimprc_query ("gfig-path");
+  path = ligma_ligmarc_query ("gfig-path");
 
   if (path)
     {
@@ -272,33 +272,33 @@ gfig_dialog (void)
     }
   else
     {
-      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
-      gchar *full_path = gimp_config_build_data_path ("gfig");
+      GFile *ligmarc    = ligma_directory_file ("ligmarc", NULL);
+      gchar *full_path = ligma_config_build_data_path ("gfig");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
-      g_message (_("No %s in gimprc:\n"
+      g_message (_("No %s in ligmarc:\n"
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
                    "gfig-path", "gfig-path", esc_path,
-                   gimp_file_get_utf8_name (gimprc));
+                   ligma_file_get_utf8_name (ligmarc));
 
-      g_object_unref (gimprc);
+      g_object_unref (ligmarc);
       g_free (esc_path);
     }
 
   /* Start building the dialog up */
-  top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_ROLE,
+  top_level_dlg = ligma_dialog_new (_("Gfig"), PLUG_IN_ROLE,
                                    NULL, 0,
-                                   gimp_standard_help_func, PLUG_IN_PROC,
+                                   ligma_standard_help_func, PLUG_IN_PROC,
 
                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
                                    _("_Close"),  GTK_RESPONSE_OK,
 
                                    NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -339,7 +339,7 @@ gfig_dialog (void)
   gtk_widget_show (right_vbox);
 
   /* Tool options notebook */
-  frame = gimp_frame_new ( _("Tool Options"));
+  frame = ligma_frame_new ( _("Tool Options"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -351,7 +351,7 @@ gfig_dialog (void)
   create_notebook_pages (tool_options_notebook);
 
   /* Stroke frame on right side */
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -376,16 +376,16 @@ gfig_dialog (void)
                     vbox);
 
   /* foreground color button in Stroke frame*/
-  gfig_context->fg_color = g_new0 (GimpRGB, 1);
-  gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
+  gfig_context->fg_color = g_new0 (LigmaRGB, 1);
+  gfig_context->fg_color_button = ligma_color_button_new ("Foreground",
                                                     SEL_BUTTON_WIDTH,
                                                     SEL_BUTTON_HEIGHT,
                                                     gfig_context->fg_color,
-                                                    GIMP_COLOR_AREA_SMALL_CHECKS);
+                                                    LIGMA_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->fg_color_button, "color-changed",
                     G_CALLBACK (set_foreground_callback),
                     gfig_context->fg_color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (gfig_context->fg_color_button),
                                &gfig_context->default_style.foreground);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button,
                       FALSE, FALSE, 0);
@@ -393,7 +393,7 @@ gfig_dialog (void)
 
   /* brush selector in Stroke frame */
   gfig_context->brush_select
-    = gimp_brush_select_button_new ("Brush",
+    = ligma_brush_select_button_new ("Brush",
                                     gfig_context->default_style.brush_name,
                                     -1.0, -1, -1);
   g_signal_connect (gfig_context->brush_select, "brush-set",
@@ -403,7 +403,7 @@ gfig_dialog (void)
   gtk_widget_show (gfig_context->brush_select);
 
   /* Fill frame on right side */
-  frame = gimp_frame_new (_("Fill"));
+  frame = ligma_frame_new (_("Fill"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -417,14 +417,14 @@ gfig_dialog (void)
 
   /* fill style combo box in Style frame  */
   gfig_context->fillstyle_combo = combo
-    = gimp_int_combo_box_new (_("No fill"),             FILL_NONE,
+    = ligma_int_combo_box_new (_("No fill"),             FILL_NONE,
                               _("Color fill"),          FILL_COLOR,
                               _("Pattern fill"),        FILL_PATTERN,
                               _("Shape gradient"),      FILL_GRADIENT,
                               _("Vertical gradient"),   FILL_VERTICAL,
                               _("Horizontal gradient"), FILL_HORIZONTAL,
                               NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), 0);
   g_signal_connect (combo, "changed",
                     G_CALLBACK (select_filltype_callback),
                     NULL);
@@ -444,15 +444,15 @@ gfig_dialog (void)
                             empty_label, NULL);
 
   /* A page for the fill color button */
-  gfig_context->bg_color = g_new0 (GimpRGB, 1);
-  gfig_context->bg_color_button = gimp_color_button_new ("Background",
+  gfig_context->bg_color = g_new0 (LigmaRGB, 1);
+  gfig_context->bg_color_button = ligma_color_button_new ("Background",
                                            SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
                                            gfig_context->bg_color,
-                                           GIMP_COLOR_AREA_SMALL_CHECKS);
+                                           LIGMA_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->bg_color_button, "color-changed",
                     G_CALLBACK (set_background_callback),
                     gfig_context->bg_color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (gfig_context->bg_color_button),
                                &gfig_context->default_style.background);
   gtk_widget_show (gfig_context->bg_color_button);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
@@ -460,7 +460,7 @@ gfig_dialog (void)
 
   /* A page for the pattern selector */
   gfig_context->pattern_select
-    = gimp_pattern_select_button_new ("Pattern", gfig_context->default_style.pattern);
+    = ligma_pattern_select_button_new ("Pattern", gfig_context->default_style.pattern);
   g_signal_connect (gfig_context->pattern_select, "pattern-set",
                     G_CALLBACK (gfig_pattern_changed_callback), NULL);
   gtk_widget_show (gfig_context->pattern_select);
@@ -469,7 +469,7 @@ gfig_dialog (void)
 
   /* A page for the gradient selector */
   gfig_context->gradient_select
-    = gimp_gradient_select_button_new ("Gradient", gfig_context->default_style.gradient);
+    = ligma_gradient_select_button_new ("Gradient", gfig_context->default_style.gradient);
   g_signal_connect (gfig_context->gradient_select, "gradient-set",
                     G_CALLBACK (gfig_gradient_changed_callback), NULL);
   gtk_widget_show (gfig_context->gradient_select);
@@ -487,7 +487,7 @@ gfig_dialog (void)
                                 gfig_context->show_background);
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &gfig_context->show_background);
   g_signal_connect_swapped (toggle, "toggled",
                     G_CALLBACK (gtk_widget_queue_draw),
@@ -498,7 +498,7 @@ gfig_dialog (void)
   toggle = gtk_check_button_new_with_label (C_("checkbutton", "Snap to grid"));
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &selvals.opts.snap2grid);
   gtk_widget_show (toggle);
   gfig_opt_widget.snap2grid = toggle;
@@ -507,7 +507,7 @@ gfig_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Show grid"));
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &selvals.opts.drawgrid);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (draw_grid_clear),
@@ -519,8 +519,8 @@ gfig_dialog (void)
   gfig_list_load_all (gfig_path);
 
   /* Setup initial brush settings */
-  gfig_context->bdesc.name = gimp_context_get_brush ();
-  mygimp_brush_info (&gfig_context->bdesc.width, &gfig_context->bdesc.height);
+  gfig_context->bdesc.name = ligma_context_get_brush ();
+  myligma_brush_info (&gfig_context->bdesc.width, &gfig_context->bdesc.height);
 
   gtk_widget_show (main_hbox);
 
@@ -558,8 +558,8 @@ gfig_response (GtkWidget *widget,
       /* if we created a new layer, delete it */
       if (gfig_context->using_new_layer)
         {
-          gimp_image_remove_layer (gfig_context->image,
-                                   GIMP_LAYER (gfig_context->drawable));
+          ligma_image_remove_layer (gfig_context->image,
+                                   LIGMA_LAYER (gfig_context->drawable));
         }
       else /* revert back to the original figure */
         {
@@ -618,14 +618,14 @@ gfig_get_user_writable_dir (void)
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (gfig_path, 256, FALSE, NULL);
-      dir = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+      list = ligma_path_parse (gfig_path, 256, FALSE, NULL);
+      dir = ligma_path_get_user_writable_dir (list);
+      ligma_path_free (list);
 
       return dir;
     }
 
-  return g_strdup (gimp_directory ());
+  return g_strdup (ligma_directory ());
 }
 
 static void
@@ -648,7 +648,7 @@ gfig_load_action_callback (GtkAction *action,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -697,7 +697,7 @@ gfig_save_action_callback (GtkAction *action,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -875,57 +875,57 @@ create_ui_manager (GtkWidget *window)
 
     { "gfig-file-menu", NULL, "_File" },
 
-    { "open", GIMP_ICON_DOCUMENT_OPEN,
+    { "open", LIGMA_ICON_DOCUMENT_OPEN,
       N_("_Open..."), "<control>O", NULL,
       G_CALLBACK (gfig_load_action_callback) },
 
-    { "save", GIMP_ICON_DOCUMENT_SAVE,
+    { "save", LIGMA_ICON_DOCUMENT_SAVE,
       N_("_Save..."), "<control>S", NULL,
       G_CALLBACK (gfig_save_action_callback) },
 
-    { "close", GIMP_ICON_CLOSE,
+    { "close", LIGMA_ICON_CLOSE,
       N_("_Close"), "<control>C", NULL,
       G_CALLBACK (gfig_close_action_callback) },
 
     { "gfig-edit-menu", NULL, "_Edit" },
 
-    { "undo", GIMP_ICON_EDIT_UNDO,
+    { "undo", LIGMA_ICON_EDIT_UNDO,
       N_("_Undo"), "<control>Z", NULL,
       G_CALLBACK (gfig_undo_action_callback) },
 
-    { "clear", GIMP_ICON_EDIT_CLEAR,
+    { "clear", LIGMA_ICON_EDIT_CLEAR,
       N_("_Clear"), NULL, NULL,
       G_CALLBACK (gfig_clear_action_callback) },
 
-    { "grid", GIMP_ICON_GRID,
+    { "grid", LIGMA_ICON_GRID,
       N_("_Grid"), "<control>G", NULL,
       G_CALLBACK (gfig_grid_action_callback) },
 
-    { "prefs", GIMP_ICON_PREFERENCES_SYSTEM,
+    { "prefs", LIGMA_ICON_PREFERENCES_SYSTEM,
       N_("_Preferences..."), "<control>P", NULL,
       G_CALLBACK (gfig_prefs_action_callback) },
 
-    { "raise", GIMP_ICON_GO_UP,
+    { "raise", LIGMA_ICON_GO_UP,
       N_("_Raise"), "<control>U", N_("Raise selected object"),
       G_CALLBACK (raise_selected_obj) },
 
-    { "lower", GIMP_ICON_GO_DOWN,
+    { "lower", LIGMA_ICON_GO_DOWN,
       N_("_Lower"), "<control>D", N_("Lower selected object"),
       G_CALLBACK (lower_selected_obj) },
 
-    { "top", GIMP_ICON_GO_TOP,
+    { "top", LIGMA_ICON_GO_TOP,
       N_("Raise to _top"), "<control>T", N_("Raise selected object to top"),
       G_CALLBACK (raise_selected_obj_to_top) },
 
-    { "bottom", GIMP_ICON_GO_BOTTOM,
+    { "bottom", LIGMA_ICON_GO_BOTTOM,
       N_("Lower to _bottom"), "<control>B", N_("Lower selected object to bottom"),
       G_CALLBACK (lower_selected_obj_to_bottom) },
 
-    { "show_previous", GIMP_ICON_GO_PREVIOUS,
+    { "show_previous", LIGMA_ICON_GO_PREVIOUS,
       N_("_Previous"), "<control>H", N_("Show previous object"),
       G_CALLBACK (select_button_clicked_lt) },
 
-    { "show_next", GIMP_ICON_GO_NEXT,
+    { "show_next", LIGMA_ICON_GO_NEXT,
       N_("_Next"), "<control>L", N_("Show next object"),
       G_CALLBACK (select_button_clicked_gt) },
 
@@ -1203,7 +1203,7 @@ select_filltype_callback (GtkWidget *widget)
 {
   gint value;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value);
   gtk_notebook_set_current_page (GTK_NOTEBOOK (fill_type_notebook),
                                  MIN (value, FILL_GRADIENT));
 
@@ -1247,7 +1247,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       GtkWidget     *scale;
       GtkAdjustment *scale_data;
 
-      dialog = gimp_dialog_new (_("Options"), "gimp-gfig-options",
+      dialog = ligma_dialog_new (_("Options"), "ligma-gfig-options",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
                                 _("_Close"),  GTK_RESPONSE_CLOSE,
@@ -1274,7 +1274,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     selvals.showpos);
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &selvals.showpos);
       g_signal_connect_after (toggle, "toggled",
                               G_CALLBACK (gfig_pos_enable),
@@ -1286,7 +1286,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     selvals.opts.showcontrol);
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &selvals.opts.showcontrol);
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (toggle_show_image),
@@ -1301,7 +1301,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selopt.antia);
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &selopt.antia);
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gfig_paint_callback),
@@ -1314,39 +1314,39 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 6);
       gtk_widget_show (grid);
 
-      undo_scale = gimp_scale_entry_new (_("Max undo:"), selvals.maxundo, MIN_UNDO, MAX_UNDO, 0);
+      undo_scale = ligma_scale_entry_new (_("Max undo:"), selvals.maxundo, MIN_UNDO, MAX_UNDO, 0);
       g_signal_connect (undo_scale, "value-changed",
                         G_CALLBACK (gfig_scale_entry_update_int),
                         &selvals.maxundo);
       gtk_grid_attach (GTK_GRID (grid), undo_scale, 0, 0, 3, 1);
       gtk_widget_show (undo_scale);
 
-      page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
+      page_menu_bg = ligma_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
                                              _("Background"),  LAYER_BG_BG,
                                              _("Foreground"),  LAYER_FG_BG,
                                              _("White"),       LAYER_WHITE_BG,
                                              _("Copy"),        LAYER_COPY_BG,
                                              NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), selvals.onlayerbg);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (page_menu_bg), selvals.onlayerbg);
 
       g_signal_connect (page_menu_bg, "changed",
                         G_CALLBACK (paint_combo_callback),
                         GINT_TO_POINTER (PAINT_BGS_MENU));
 
-      gimp_help_set_help_data (page_menu_bg,
+      ligma_help_set_help_data (page_menu_bg,
                                _("Layer background type. Copy causes the "
                                  "previous layer to be copied before the "
                                  "draw is performed."),
                                NULL);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("Background:"), 0.0, 0.5,
                                 page_menu_bg, 2);
 
       toggle = gtk_check_button_new_with_label (_("Feather"));
       gtk_grid_attach (GTK_GRID (grid), toggle, 2, 2, 1, 1);
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &selopt.feather);
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gfig_paint_callback),
@@ -1359,12 +1359,12 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
 
       g_signal_connect (scale_data, "value-changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
+                        G_CALLBACK (ligma_double_adjustment_update),
                         &selopt.feather_radius);
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gfig_paint_delayed),
                         NULL);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                 _("Radius:"), 0.0, 1.0, scale, 1);
 
       gtk_widget_show (dialog);
@@ -1391,7 +1391,7 @@ gfig_grid_action_callback (GtkAction *action,
       GtkWidget *sectors_scale;
       GtkWidget *radius_scale;
 
-      dialog = gimp_dialog_new (_("Grid"), "gimp-gfig-grid",
+      dialog = ligma_dialog_new (_("Grid"), "ligma-gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
                                 _("_Close"),  GTK_RESPONSE_CLOSE,
@@ -1422,7 +1422,7 @@ gfig_grid_action_callback (GtkAction *action,
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
       gtk_widget_show (grid);
 
-      grid_scale = gimp_scale_entry_new (_("Grid spacing:"),
+      grid_scale = ligma_scale_entry_new (_("Grid spacing:"),
                                          selvals.opts.gridspacing,
                                          MIN_GRID, MAX_GRID, 0);
       g_signal_connect (grid_scale, "value-changed",
@@ -1438,7 +1438,7 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
-      sectors_scale = gimp_scale_entry_new (_("Polar grid sectors desired:"),
+      sectors_scale = ligma_scale_entry_new (_("Polar grid sectors desired:"),
                                             selvals.opts.grid_sectors_desired,
                                             5, 360, 0);
       g_signal_connect (sectors_scale, "value-changed",
@@ -1455,7 +1455,7 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_sectors_desired),
                                  (gpointer) &gfig_opt_widget.grid_sectors_desired);
 
-      radius_scale = gimp_scale_entry_new (_("Polar grid radius interval:"),
+      radius_scale = ligma_scale_entry_new (_("Polar grid radius interval:"),
                                            selvals.opts.grid_radius_interval,
                                            5, 50, 0);
       g_signal_connect (radius_scale, "value-changed",
@@ -1471,17 +1471,17 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_radius_interval),
                                  (gpointer) &gfig_opt_widget.grid_radius_interval);
 
-      combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
+      combo = ligma_int_combo_box_new (_("Rectangle"), RECT_GRID,
                                       _("Polar"),     POLAR_GRID,
                                       _("Isometric"), ISO_GRID,
                                       NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), selvals.opts.gridtype);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), selvals.opts.gridtype);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gridtype_combo_callback),
                         GINT_TO_POINTER (GRID_TYPE_MENU));
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("Grid type:"), 0.0, 0.5,
                                 combo, 2);
 
@@ -1489,7 +1489,7 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridtypemenu),
                                  (gpointer) &gfig_opt_widget.gridtypemenu);
 
-      combo = gimp_int_combo_box_new (_("Normal"),    GFIG_NORMAL_GC,
+      combo = ligma_int_combo_box_new (_("Normal"),    GFIG_NORMAL_GC,
                                       _("Black"),     GFIG_BLACK_GC,
                                       _("White"),     GFIG_WHITE_GC,
                                       _("Grey"),      GFIG_GREY_GC,
@@ -1497,13 +1497,13 @@ gfig_grid_action_callback (GtkAction *action,
                                       _("Lighter"),   GFIG_LIGHTER_GC,
                                       _("Very dark"), GFIG_VERY_DARK_GC,
                                       NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), grid_gc_type);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), grid_gc_type);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gridtype_combo_callback),
                         GINT_TO_POINTER (GRID_RENDER_MENU));
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                 _("Grid color:"), 0.0, 0.5,
                                 combo, 2);
 
@@ -1556,25 +1556,25 @@ options_update (GFigObj *old_obj)
   if (selvals.opts.gridspacing != gfig_context->current_obj->opts.gridspacing)
     {
       if (gfig_opt_widget.gridspacing)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.gridspacing),
+        ligma_label_spin_set_value (LIGMA_LABEL_SPIN (gfig_opt_widget.gridspacing),
                                    gfig_context->current_obj->opts.gridspacing);
     }
   if (selvals.opts.grid_sectors_desired != gfig_context->current_obj->opts.grid_sectors_desired)
     {
       if (gfig_opt_widget.grid_sectors_desired)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_sectors_desired),
+        ligma_label_spin_set_value (LIGMA_LABEL_SPIN (gfig_opt_widget.grid_sectors_desired),
                                    gfig_context->current_obj->opts.grid_sectors_desired);
     }
   if (selvals.opts.grid_radius_interval != gfig_context->current_obj->opts.grid_radius_interval)
     {
       if (gfig_opt_widget.grid_radius_interval)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_radius_interval),
+        ligma_label_spin_set_value (LIGMA_LABEL_SPIN (gfig_opt_widget.grid_radius_interval),
                                    gfig_context->current_obj->opts.grid_radius_interval);
     }
   if (selvals.opts.gridtype != gfig_context->current_obj->opts.gridtype)
     {
       if (gfig_opt_widget.gridtypemenu)
-        gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
+        ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
                                        gfig_context->current_obj->opts.gridtype);
     }
   if (selvals.opts.drawgrid != gfig_context->current_obj->opts.drawgrid)
@@ -1723,7 +1723,7 @@ num_sides_widget (const gchar *d_title,
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_widget_show (grid);
 
-  scale = gimp_scale_entry_new (_("Sides:"), *num_sides, adj_min, adj_max, 0);
+  scale = ligma_scale_entry_new (_("Sides:"), *num_sides, adj_min, adj_max, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gfig_scale_entry_update_int),
                     num_sides);
@@ -1732,17 +1732,17 @@ num_sides_widget (const gchar *d_title,
 
   if (which_way)
     {
-      GtkWidget *combo = gimp_int_combo_box_new (_("Right"),      0,
+      GtkWidget *combo = ligma_int_combo_box_new (_("Right"),      0,
                                                  _("Left"), 1,
                                                  NULL);
 
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), *which_way);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), *which_way);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         which_way);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("Orientation:"), 0.0, 0.5,
                                 combo, 1);
     }
@@ -1751,35 +1751,35 @@ num_sides_widget (const gchar *d_title,
 
 void
 gfig_paint (BrushType     brush_type,
-            GimpDrawable *drawable,
+            LigmaDrawable *drawable,
             gint          seg_count,
             gdouble       line_pnts[])
 {
   switch (brush_type)
     {
     case BRUSH_BRUSH_TYPE:
-      gimp_paintbrush (drawable,
+      ligma_paintbrush (drawable,
                        selvals.brushfade,
                        seg_count, line_pnts,
-                       GIMP_PAINT_CONSTANT,
+                       LIGMA_PAINT_CONSTANT,
                        selvals.brushgradient);
       break;
 
     case BRUSH_PENCIL_TYPE:
-      gimp_pencil (drawable,
+      ligma_pencil (drawable,
                    seg_count, line_pnts);
       break;
 
     case BRUSH_AIRBRUSH_TYPE:
-      gimp_airbrush (drawable,
+      ligma_airbrush (drawable,
                      selvals.airbrushpressure,
                      seg_count, line_pnts);
       break;
 
     case BRUSH_PATTERN_TYPE:
-      gimp_clone (drawable,
+      ligma_clone (drawable,
                   drawable,
-                  GIMP_CLONE_PATTERN,
+                  LIGMA_CLONE_PATTERN,
                   0.0, 0.0,
                   seg_count, line_pnts);
       break;
@@ -1794,7 +1794,7 @@ paint_combo_callback (GtkWidget *widget,
   gint mtype = GPOINTER_TO_INT (data);
   gint value;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value);
 
   switch (mtype)
     {
@@ -1818,7 +1818,7 @@ gridtype_combo_callback (GtkWidget *widget,
   gint mtype = GPOINTER_TO_INT (data);
   gint value;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value);
 
   switch (mtype)
     {
@@ -1840,7 +1840,7 @@ gridtype_combo_callback (GtkWidget *widget,
 
 /*
  *  The edit gfig name attributes dialog
- *  Modified from Gimp source - layer edit.
+ *  Modified from Ligma source - layer edit.
  */
 
 typedef struct _GfigListOptions
@@ -1896,17 +1896,17 @@ load_file_chooser_response (GtkFileChooser *chooser,
 void
 paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-  GimpFillType fill_type = GIMP_FILL_FOREGROUND;
+  LigmaFillType fill_type = LIGMA_FILL_FOREGROUND;
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
 
-  gimp_context_push ();
+  ligma_context_push ();
 
-  gimp_context_set_paint_mode (GIMP_LAYER_MODE_NORMAL_LEGACY);
-  gimp_context_set_opacity (100.0);
-  gimp_context_set_gradient_repeat_mode (GIMP_REPEAT_NONE);
-  gimp_context_set_gradient_reverse (FALSE);
+  ligma_context_set_paint_mode (LIGMA_LAYER_MODE_NORMAL_LEGACY);
+  ligma_context_set_opacity (100.0);
+  ligma_context_set_gradient_repeat_mode (LIGMA_REPEAT_NONE);
+  ligma_context_set_gradient_reverse (FALSE);
 
   switch (current_style->fill_type)
     {
@@ -1914,16 +1914,16 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
 
     case FILL_COLOR:
-      fill_type = GIMP_FILL_BACKGROUND;
+      fill_type = LIGMA_FILL_BACKGROUND;
       break;
 
     case FILL_PATTERN:
-      fill_type = GIMP_FILL_PATTERN;
+      fill_type = LIGMA_FILL_PATTERN;
       break;
 
     case FILL_GRADIENT:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
-                                        GIMP_GRADIENT_SHAPEBURST_DIMPLED,
+      ligma_drawable_edit_gradient_fill (gfig_context->drawable,
+                                        LIGMA_GRADIENT_SHAPEBURST_DIMPLED,
                                         0.0,       /* offset             */
                                         FALSE,     /* supersampling      */
                                         0,         /* max_depth          */
@@ -1933,8 +1933,8 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
                                         0.0, 0.0); /* (x2, y2) - ignored */
       return;
     case FILL_VERTICAL:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
-                                        GIMP_GRADIENT_LINEAR,
+      ligma_drawable_edit_gradient_fill (gfig_context->drawable,
+                                        LIGMA_GRADIENT_LINEAR,
                                         0.0,
                                         FALSE,
                                         0,
@@ -1944,8 +1944,8 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
                                         x1, y2);
       return;
     case FILL_HORIZONTAL:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
-                                        GIMP_GRADIENT_LINEAR,
+      ligma_drawable_edit_gradient_fill (gfig_context->drawable,
+                                        LIGMA_GRADIENT_LINEAR,
                                         0.0,
                                         FALSE,
                                         0,
@@ -1956,12 +1956,12 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
     }
 
-  gimp_context_set_opacity (current_style->fill_opacity);
+  ligma_context_set_opacity (current_style->fill_opacity);
 
-  gimp_drawable_edit_fill (gfig_context->drawable,
+  ligma_drawable_edit_fill (gfig_context->drawable,
                            fill_type);
 
-  gimp_context_pop ();
+  ligma_context_pop ();
 }
 
 void
@@ -1976,7 +1976,7 @@ gfig_paint_callback (void)
 
   objs = gfig_context->current_obj->obj_list;
 
-  gimp_drawable_fill (gfig_context->drawable, GIMP_FILL_TRANSPARENT);
+  ligma_drawable_fill (gfig_context->drawable, LIGMA_FILL_TRANSPARENT);
 
   while (objs)
     {
@@ -1999,7 +1999,7 @@ gfig_paint_callback (void)
       ccount++;
     }
 
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 
   if (back_pixbuf)
     {
@@ -2187,15 +2187,15 @@ gfig_draw_line (gint x0, gint y0, gint x1, gint y1, cairo_t *cr)
 }
 
 static void
-gfig_scale_entry_update_double (GimpLabelSpin *entry,
+gfig_scale_entry_update_double (LigmaLabelSpin *entry,
                                 gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }
 
 static void
-gfig_scale_entry_update_int (GimpLabelSpin *entry,
+gfig_scale_entry_update_int (LigmaLabelSpin *entry,
                              gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (entry);
+  *value = (gint) ligma_label_spin_get_value (entry);
 }

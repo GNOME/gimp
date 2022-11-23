@@ -1,6 +1,6 @@
 /* Watercolor color_select_module, Raph Levien <raph@acm.org>, February 1998
  *
- * Ported to loadable color-selector, Sven Neumann <sven@gimp.org>, May 1999
+ * Ported to loadable color-selector, Sven Neumann <sven@ligma.org>, May 1999
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 #define COLORSEL_TYPE_WATER            (colorsel_water_get_type ())
@@ -44,7 +44,7 @@ typedef struct _ColorselWaterClass ColorselWaterClass;
 
 struct _ColorselWater
 {
-  GimpColorSelector   parent_instance;
+  LigmaColorSelector   parent_instance;
 
   GtkWidget          *area;
 
@@ -54,13 +54,13 @@ struct _ColorselWater
   gfloat              pressure_adjust;
   guint32             motion_time;
 
-  GimpColorConfig    *config;
-  GimpColorTransform *transform;
+  LigmaColorConfig    *config;
+  LigmaColorTransform *transform;
 };
 
 struct _ColorselWaterClass
 {
-  GimpColorSelectorClass  parent_class;
+  LigmaColorSelectorClass  parent_class;
 };
 
 
@@ -68,8 +68,8 @@ static GType      colorsel_water_get_type          (void);
 
 static void       colorsel_water_dispose           (GObject           *object);
 
-static void       colorsel_water_set_config        (GimpColorSelector *selector,
-                                                    GimpColorConfig   *config);
+static void       colorsel_water_set_config        (LigmaColorSelector *selector,
+                                                    LigmaColorConfig   *config);
 
 static void       colorsel_water_create_transform  (ColorselWater     *water);
 static void       colorsel_water_destroy_transform (ColorselWater     *water);
@@ -90,11 +90,11 @@ static void       pressure_adjust_update           (GtkAdjustment     *adj,
                                                     ColorselWater     *water);
 
 
-static const GimpModuleInfo colorsel_water_info =
+static const LigmaModuleInfo colorsel_water_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("Watercolor style color selector"),
-  "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
+  "Raph Levien <raph@acm.org>, Sven Neumann <sven@ligma.org>",
   "v0.4",
   "released under the GPL",
   "1998-2006"
@@ -102,17 +102,17 @@ static const GimpModuleInfo colorsel_water_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (ColorselWater, colorsel_water,
-                       GIMP_TYPE_COLOR_SELECTOR)
+                       LIGMA_TYPE_COLOR_SELECTOR)
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &colorsel_water_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   colorsel_water_register_type (module);
 
@@ -123,13 +123,13 @@ static void
 colorsel_water_class_init (ColorselWaterClass *klass)
 {
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
-  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  LigmaColorSelectorClass *selector_class = LIGMA_COLOR_SELECTOR_CLASS (klass);
 
   object_class->dispose      = colorsel_water_dispose;
 
   selector_class->name       = _("Watercolor");
-  selector_class->help_id    = "gimp-colorselector-watercolor";
-  selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_WATER;
+  selector_class->help_id    = "ligma-colorselector-watercolor";
+  selector_class->icon_name  = LIGMA_ICON_COLOR_SELECTOR_WATER;
   selector_class->set_config = colorsel_water_set_config;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselWater");
@@ -195,12 +195,12 @@ colorsel_water_init (ColorselWater *water)
   scale = gtk_scale_new (GTK_ORIENTATION_VERTICAL, adj);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gimp_help_set_help_data (scale, _("Pressure"), NULL);
+  ligma_help_set_help_data (scale, _("Pressure"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (hbox);
 
-  gimp_widget_track_monitor (GTK_WIDGET (water),
+  ligma_widget_track_monitor (GTK_WIDGET (water),
                              G_CALLBACK (colorsel_water_destroy_transform),
                              NULL, NULL);
 }
@@ -219,14 +219,14 @@ calc (gdouble x,
 static void
 colorsel_water_dispose (GObject *object)
 {
-  colorsel_water_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+  colorsel_water_set_config (LIGMA_COLOR_SELECTOR (object), NULL);
 
   G_OBJECT_CLASS (colorsel_water_parent_class)->dispose (object);
 }
 
 static void
-colorsel_water_set_config (GimpColorSelector *selector,
-                           GimpColorConfig   *config)
+colorsel_water_set_config (LigmaColorSelector *selector,
+                           LigmaColorConfig   *config)
 {
   ColorselWater *water = COLORSEL_WATER (selector);
 
@@ -257,20 +257,20 @@ colorsel_water_create_transform (ColorselWater *water)
 {
   if (water->config)
     {
-      static GimpColorProfile *profile = NULL;
+      static LigmaColorProfile *profile = NULL;
 
       const Babl *format = babl_format ("cairo-RGB24");
 
       if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
+        profile = ligma_color_profile_new_rgb_srgb ();
 
-      water->transform = gimp_widget_get_color_transform (water->area,
+      water->transform = ligma_widget_get_color_transform (water->area,
                                                           water->config,
                                                           profile,
                                                           format,
                                                           format,
                                                           NULL,
-                                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                          LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                           FALSE);
     }
 }
@@ -345,7 +345,7 @@ select_area_draw (GtkWidget     *widget,
 
       for (i = 0; i < area.width; i++)
         {
-          GIMP_CAIRO_RGB24_SET_PIXEL (d,
+          LIGMA_CAIRO_RGB24_SET_PIXEL (d,
                                       CLAMP ((gint) r, 0, 255),
                                       CLAMP ((gint) g, 0, 255),
                                       CLAMP ((gint) b, 0, 255));
@@ -358,7 +358,7 @@ select_area_draw (GtkWidget     *widget,
         }
 
       if (water->transform)
-        gimp_color_transform_process_pixels (water->transform,
+        ligma_color_transform_process_pixels (water->transform,
                                              babl_format ("cairo-RGB24"),
                                              dest,
                                              babl_format ("cairo-RGB24"),
@@ -384,7 +384,7 @@ add_pigment (ColorselWater *water,
              gdouble        y,
              gdouble        much)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (water);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (water);
 
   much *= (gdouble) water->pressure_adjust;
 
@@ -405,11 +405,11 @@ add_pigment (ColorselWater *water,
       selector->rgb.b *= (1.0 - (1.0 - b) * much);
     }
 
-  gimp_rgb_clamp (&selector->rgb);
+  ligma_rgb_clamp (&selector->rgb);
 
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  gimp_color_selector_emit_color_changed (selector);
+  ligma_color_selector_emit_color_changed (selector);
 }
 
 static void

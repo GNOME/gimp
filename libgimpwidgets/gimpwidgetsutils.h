@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgetsutils.h
+ * ligmawidgetsutils.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,22 +18,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_WIDGETS_UTILS_H__
-#define __GIMP_WIDGETS_UTILS_H__
+#ifndef __LIGMA_WIDGETS_UTILS_H__
+#define __LIGMA_WIDGETS_UTILS_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-gboolean             gimp_event_triggers_context_menu (const GdkEvent   *event,
+gboolean             ligma_event_triggers_context_menu (const GdkEvent   *event,
                                                        gboolean          on_release);
 
-GtkWidget          * gimp_grid_attach_aligned        (GtkGrid           *grid,
+GtkWidget          * ligma_grid_attach_aligned        (GtkGrid           *grid,
                                                       gint               left,
                                                       gint               top,
                                                       const gchar       *label_text,
@@ -42,30 +42,30 @@ GtkWidget          * gimp_grid_attach_aligned        (GtkGrid           *grid,
                                                       GtkWidget         *widget,
                                                       gint               columns);
 
-void                 gimp_label_set_attributes       (GtkLabel          *label,
+void                 ligma_label_set_attributes       (GtkLabel          *label,
                                                       ...);
 
-GdkMonitor         * gimp_widget_get_monitor         (GtkWidget         *widget);
-GdkMonitor         * gimp_get_monitor_at_pointer     (void);
+GdkMonitor         * ligma_widget_get_monitor         (GtkWidget         *widget);
+GdkMonitor         * ligma_get_monitor_at_pointer     (void);
 
-void                 gimp_widget_track_monitor       (GtkWidget         *widget,
+void                 ligma_widget_track_monitor       (GtkWidget         *widget,
                                                       GCallback          monitor_changed_callback,
                                                       gpointer           user_data,
                                                       GDestroyNotify     user_data_destroy);
 
-GimpColorProfile   * gimp_monitor_get_color_profile  (GdkMonitor        *monitor);
-GimpColorProfile   * gimp_widget_get_color_profile   (GtkWidget         *widget);
+LigmaColorProfile   * ligma_monitor_get_color_profile  (GdkMonitor        *monitor);
+LigmaColorProfile   * ligma_widget_get_color_profile   (GtkWidget         *widget);
 
-GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
-                                                      GimpColorConfig   *config,
-                                                      GimpColorProfile  *src_profile,
+LigmaColorTransform * ligma_widget_get_color_transform (GtkWidget         *widget,
+                                                      LigmaColorConfig   *config,
+                                                      LigmaColorProfile  *src_profile,
                                                       const Babl        *src_format,
                                                       const Babl        *dest_format,
-                                                      GimpColorProfile  *softproof_profile,
-                                                      GimpColorRenderingIntent proof_intent,
+                                                      LigmaColorProfile  *softproof_profile,
+                                                      LigmaColorRenderingIntent proof_intent,
                                                       gboolean           proof_bpc);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_WIDGETS_UTILS_H__ */
+#endif /* __LIGMA_WIDGETS_UTILS_H__ */

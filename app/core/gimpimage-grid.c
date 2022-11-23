@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGrid
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,45 +23,45 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpgrid.h"
-#include "gimpimage.h"
-#include "gimpimage-grid.h"
-#include "gimpimage-private.h"
-#include "gimpimage-undo-push.h"
+#include "ligmagrid.h"
+#include "ligmaimage.h"
+#include "ligmaimage-grid.h"
+#include "ligmaimage-private.h"
+#include "ligmaimage-undo-push.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-GimpGrid *
-gimp_image_get_grid (GimpImage *image)
+LigmaGrid *
+ligma_image_get_grid (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->grid;
+  return LIGMA_IMAGE_GET_PRIVATE (image)->grid;
 }
 
 void
-gimp_image_set_grid (GimpImage *image,
-                     GimpGrid  *grid,
+ligma_image_set_grid (LigmaImage *image,
+                     LigmaGrid  *grid,
                      gboolean   push_undo)
 {
-  GimpImagePrivate *private;
+  LigmaImagePrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_GRID (grid));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_config_is_equal_to (GIMP_CONFIG (private->grid), GIMP_CONFIG (grid)))
+  if (ligma_config_is_equal_to (LIGMA_CONFIG (private->grid), LIGMA_CONFIG (grid)))
     return;
 
   if (push_undo)
-    gimp_image_undo_push_image_grid (image,
+    ligma_image_undo_push_image_grid (image,
                                      C_("undo-type", "Grid"), private->grid);
 
-  gimp_config_sync (G_OBJECT (grid), G_OBJECT (private->grid), 0);
+  ligma_config_sync (G_OBJECT (grid), G_OBJECT (private->grid), 0);
 }

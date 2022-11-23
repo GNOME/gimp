@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-rawtherapee.c -- raw file format plug-in that uses RawTherapee
- * Copyright (C) 2012 Simon Budig <simon@gimp.org>
+ * Copyright (C) 2012 Simon Budig <simon@ligma.org>
  * Copyright (C) 2016 Tobias Ellinghaus <me@houz.org>
  * Copyright (C) 2017 Alberto Griggio <alberto.griggio@gmail.com>
  *
@@ -24,9 +24,9 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "file-raw-formats.h"
 #include "file-raw-utils.h"
@@ -41,12 +41,12 @@ typedef struct _RawtherapeeClass RawtherapeeClass;
 
 struct _Rawtherapee
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _RawtherapeeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -55,39 +55,39 @@ struct _RawtherapeeClass
 
 GType                   rawtherapee_get_type         (void) G_GNUC_CONST;
 
-static GList          * rawtherapee_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * rawtherapee_create_procedure (GimpPlugIn           *plug_in,
+static GList          * rawtherapee_init_procedures  (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * rawtherapee_create_procedure (LigmaPlugIn           *plug_in,
                                                       const gchar          *name);
 
-static GimpValueArray * rawtherapee_load             (GimpProcedure        *procedure,
-                                                      GimpRunMode           run_mode,
+static LigmaValueArray * rawtherapee_load             (LigmaProcedure        *procedure,
+                                                      LigmaRunMode           run_mode,
                                                       GFile                *file,
-                                                      const GimpValueArray *args,
+                                                      const LigmaValueArray *args,
                                                       gpointer              run_data);
-static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * rawtherapee_load_thumb       (LigmaProcedure        *procedure,
                                                       GFile                *file,
                                                       gint                  size,
-                                                      const GimpValueArray *args,
+                                                      const LigmaValueArray *args,
                                                       gpointer              run_data);
 
-static GimpImage      * load_image                   (GFile                *file,
-                                                      GimpRunMode           run_mode,
+static LigmaImage      * load_image                   (GFile                *file,
+                                                      LigmaRunMode           run_mode,
                                                       GError              **error);
-static GimpImage      * load_thumbnail_image         (GFile                *file,
+static LigmaImage      * load_thumbnail_image         (GFile                *file,
                                                       gint                  thumb_size,
                                                       GError              **error);
 
 
-G_DEFINE_TYPE (Rawtherapee, rawtherapee, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Rawtherapee, rawtherapee, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (RAWTHERAPEE_TYPE)
+LIGMA_MAIN (RAWTHERAPEE_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 rawtherapee_class_init (RawtherapeeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->init_procedures  = rawtherapee_init_procedures;
   plug_in_class->create_procedure = rawtherapee_create_procedure;
@@ -100,7 +100,7 @@ rawtherapee_init (Rawtherapee *rawtherapee)
 }
 
 static GList *
-rawtherapee_init_procedures (GimpPlugIn *plug_in)
+rawtherapee_init_procedures (LigmaPlugIn *plug_in)
 {
   /* check if rawtherapee is installed
    * TODO: allow setting the location of the executable in preferences
@@ -171,26 +171,26 @@ rawtherapee_init_procedures (GimpPlugIn *plug_in)
   return NULL;
 }
 
-static GimpProcedure *
-rawtherapee_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+rawtherapee_create_procedure (LigmaPlugIn  *plug_in,
                             const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 rawtherapee_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load thumbnail from a raw image "
                                         "via rawtherapee",
                                         "This plug-in loads a thumbnail "
                                         "from a raw image by calling "
                                         "rawtherapee-cli.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Alberto Griggio",
                                       "Alberto Griggio",
                                       "2017");
@@ -217,28 +217,28 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
           load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
           load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
 
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+          procedure = ligma_load_procedure_new (plug_in, name,
+                                               LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                rawtherapee_load,
                                                (gpointer) format, NULL);
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             load_blurb, load_help, name);
-          gimp_procedure_set_attribution (procedure,
+          ligma_procedure_set_attribution (procedure,
                                           "Alberto Griggio",
                                           "Alberto Griggio",
                                           "2017");
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               format->mime_type);
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               format->extensions);
-          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                           format->magic);
 
-          gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
+          ligma_load_procedure_set_handles_raw (LIGMA_LOAD_PROCEDURE (procedure),
                                                TRUE);
-          gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+          ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                     LOAD_THUMB_PROC);
 
           g_free (load_proc);
@@ -252,73 +252,73 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-rawtherapee_load (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
+static LigmaValueArray *
+rawtherapee_load (LigmaProcedure        *procedure,
+                  LigmaRunMode           run_mode,
                   GFile                *file,
-                  const GimpValueArray *args,
+                  const LigmaValueArray *args,
                   gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   image = load_image (file, run_mode, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-rawtherapee_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+rawtherapee_load_thumb (LigmaProcedure        *procedure,
                         GFile                *file,
                         gint                  size,
-                        const GimpValueArray *args,
+                        const LigmaValueArray *args,
                         gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   image = load_thumbnail_image (file, size, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, 0);
-  GIMP_VALUES_SET_INT   (return_vals, 3, 0);
-  GIMP_VALUES_SET_ENUM  (return_vals, 4, GIMP_RGB_IMAGE);
-  GIMP_VALUES_SET_INT   (return_vals, 5, 1);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, 0);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, 0);
+  LIGMA_VALUES_SET_ENUM  (return_vals, 4, LIGMA_RGB_IMAGE);
+  LIGMA_VALUES_SET_INT   (return_vals, 5, 1);
 
-  gimp_value_array_truncate (return_vals, 6);
+  ligma_value_array_truncate (return_vals, 6);
 
   return return_vals;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile        *file,
-            GimpRunMode   run_mode,
+            LigmaRunMode   run_mode,
             GError      **error)
 {
-  GimpImage *image              = NULL;
-  GFile     *file_out           = gimp_temp_file ("tif");
+  LigmaImage *image              = NULL;
+  GFile     *file_out           = ligma_temp_file ("tif");
   gchar     *rawtherapee_stdout = NULL;
 
   gboolean   search_path        = FALSE;
@@ -328,18 +328,18 @@ load_image (GFile        *file,
                                                                REGISTRY_KEY_BASE,
                                                                &search_path);
 
-  /* linear sRGB for now as GIMP uses that internally in many places anyway */
+  /* linear sRGB for now as LIGMA uses that internally in many places anyway */
   gchar *argv[] =
     {
       exec_path,
-      "-gimp",
+      "-ligma",
       (gchar *) g_file_peek_path (file),
       (gchar *) g_file_peek_path (file_out),
       NULL
     };
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   if (g_spawn_sync (NULL,
                     argv,
@@ -354,9 +354,9 @@ load_image (GFile        *file,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, file_out);
+      image = ligma_file_load (run_mode, file_out);
       if (image)
-        gimp_image_set_file (image, file);
+        ligma_image_set_file (image, file);
     }
 
   /*if (rawtherapee_stdout) printf ("%s\n", rawtherapee_stdout);*/
@@ -365,19 +365,19 @@ load_image (GFile        *file,
 
   g_file_delete (file_out, NULL, NULL);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
 
-static GimpImage *
+static LigmaImage *
 load_thumbnail_image (GFile   *file,
                       gint     thumb_size,
                       GError **error)
 {
-  GimpImage *image            = NULL;
-  GFile     *file_out         = gimp_temp_file ("jpg");
-  GFile     *thumb_pp3_file   = gimp_temp_file ("pp3");
+  LigmaImage *image            = NULL;
+  GFile     *file_out         = ligma_temp_file ("jpg");
+  GFile     *thumb_pp3_file   = ligma_temp_file ("pp3");
   FILE      *thumb_pp3_f      = fopen (g_file_peek_path (thumb_pp3_file), "w");
   gchar     *rawtherapee_stdout = NULL;
   const char *pp3_content =
@@ -454,8 +454,8 @@ load_thumbnail_image (GFile   *file,
         }
     }
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   if (thumb_pp3_f &&
       g_spawn_sync (NULL,
@@ -470,17 +470,17 @@ load_thumbnail_image (GFile   *file,
                     NULL,
                     error))
     {
-      gimp_progress_update (0.5);
+      ligma_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
+      image = ligma_file_load (LIGMA_RUN_NONINTERACTIVE, file_out);
       if (image)
         {
           /* is this needed for thumbnails? */
-          gimp_image_set_file (image, file);
+          ligma_image_set_file (image, file);
         }
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (thumb_pp3_f)
     fclose (thumb_pp3_f);

@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-03-08 17:30+0000\n"
 "PO-Revision-Date: 2012-03-09 04:35+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
@@ -21,24 +21,24 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"언제라도 F1키를 누르면 GIMP의 대부분의 기능들에 대해서 문맥에 맞는 도움말을 "
+"언제라도 F1키를 누르면 LIGMA의 대부분의 기능들에 대해서 문맥에 맞는 도움말을 "
 "볼 수 있습니다. 물론 메뉴 안에서도 됩니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
 "김프는 레이어를 이용해 이미지를 구성합니다. 레이어는 내용물을 볼 수 있는 슬라"
 "이드나 필터의 모음과 같습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -46,9 +46,9 @@ msgstr ""
 "레이어 대화상자의 텍스트 레이블에서 오른쪽-클릭을 하면 많은 레이어 관련 작업"
 "을 수행할 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and many aspects of your work-in-progress. Once a project is "
 "completed, you can export it as JPEG, PNG, GIF, etc."
@@ -58,7 +58,7 @@ msgstr ""
 "인 모든 상태들을 보존합니다. 프로젝트를 완료했을 때, JPEG, PNG, GIF 등으로 내"
 "보낼 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -68,7 +68,7 @@ msgstr ""
 "플러그인이 전체 이미지를 조작하도록 하려면 모든 레이어를 합쳐야(이미지-&gt;배"
 "경으로 이미지 합치기) 할 수도 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -78,7 +78,7 @@ msgstr ""
 "채널을 가지고 있지 않은 것입니다. 알파채널은 레이어 -> 투명 -> 알파 채널 추"
 "가 를 통해 추가할 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -90,7 +90,7 @@ msgstr ""
 "RGB), 알파 채널을 더하거나(레이어-&gt;투명도-&gt;알파 채널 더하기), 배경으로 "
 "합쳐야(이미지-&gt;배경으로 합치기) 할 수도 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -101,9 +101,9 @@ msgstr ""
 "했더니 창이 움직인다면, 사용 중인 창 관리자가 <tt>Alt</tt>를 사용하고 있는 겁"
 "니다. 그럴 땐 <tt>Shift</tt>키도 같이 눌러 주십시오."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
@@ -111,7 +111,7 @@ msgstr ""
 "레트에서 색상을 드래그해서 이미지에 드롭하면 현재 이미지나 선택을 그 색상으"
 "로 채웁니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -120,7 +120,7 @@ msgstr ""
 "른 부분들을 살펴볼 수 있습니다(혹은 <tt>스페이스바</tt>를 누르고 마우스를 이"
 "동시켜도 됩니다)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -130,7 +130,7 @@ msgstr ""
 "용하는 모든 선택은 안내선에 자동으로 맞춰집니다. 이동 도구로 안내선을 이미지 "
 "밖으로 드래그하면 없어집니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -138,7 +138,7 @@ msgstr ""
 "레이어 대화상자에서 레이어를 드래그해서 도구 상자에 드롭하면, 그 레이어만 가"
 "진 새 이미지가 만들어 집니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -149,9 +149,9 @@ msgstr ""
 "에 고정해야 합니다. 레이어 대화상자의 &quot;새 레이어&quot;나 &quot;떠있는 레"
 "이어 고정&quot; 단추를 클릭하거나, 같은 기능을 하는 메뉴를 사용하십시오."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
@@ -159,7 +159,7 @@ msgstr ""
 "<tt>.bz2</tt>로 지정해주면 이미지를 압축해서 저장합니다. 이는 압축된 이미지"
 "를 읽어올 때도 동일하게 동작합니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -168,7 +168,7 @@ msgstr ""
 "<tt>Shift</tt>키를 누른 채로 선택을 만들면 현재 선택을 바꾸는 대신 더합니다. "
 "<tt>Ctrl</tt>를 누른 채로 선택을 만들면 현재 선택에서 뺍니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -178,7 +178,7 @@ msgstr ""
 "현재 선택의 모서리를 따라 그립니다. 더 복잡한 도형은 경로 도구나 필터-&gt;렌"
 "더-&gt;Gfig를 사용해서 그릴 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -188,7 +188,7 @@ msgstr ""
 "로 사용할 수 있습니다. 그라디언트 모드의 붓 도구는 물론이고 심지어 지우개나 "
 "문지르기 도구도 사용할 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -197,7 +197,7 @@ msgstr ""
 "경로 도구를 이용해서 복잡한 선택을 만들고 고칠 수 있습니다. 경로 대화상자에"
 "서 여러 개의 경로를 조작하여, 선택으로 변환할 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -208,7 +208,7 @@ msgstr ""
 "있는 &quot;퀵마스크&quot; 단추를 클릭하십시오. 이미지에 그리기만 하면 선택이 "
 "되고 단추를 한번 더 클릭하면 보통의 선택으로 바뀝니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -219,13 +219,13 @@ msgstr ""
 "고칠 수 있습니다. 채널 대화상자의 단추들을 이용해서 채널을 표시하거나 숨길 "
 "수 있고, 선택으로 변환할 수도 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -236,7 +236,7 @@ msgstr ""
 "간의 충돌을 방지하기 위해  &quot;동적인 키보드 단축키&quot;를 비활성화시킬 수"
 "도 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -244,7 +244,7 @@ msgstr ""
 "화면이 너무 어지럽다면, 이미지 창에서 <tt>Tab</tt>을 여러 번 눌러서, 도구 상"
 "자나 다른 대화상자들을 표시하거나 숨길 수 있습니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -253,7 +253,7 @@ msgstr ""
 "외한 모든 레이어를 숨깁니다. 다시 <tt>Shift</tt>-클릭하면 모든 레이어를 표시"
 "합니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -263,7 +263,7 @@ msgstr ""
 "어 마스크의 효과의 적용/미적용 상태를 전환시킵니다. 그리고 <tt>Alt</tt>-클릭"
 "하면 마스크의 내용을 직접 보여줍니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -271,7 +271,7 @@ msgstr ""
 "<tt>Alt</tt>-<tt>Tab</tt>를 누르면 이미지의 모든 레이어를 돌아가면서 선택합니"
 "다(창관리자가 이 키를 가로채지 않는다면 말이죠...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -282,14 +282,14 @@ msgstr ""
 "마찬가지로 색상추출 도구에서 <tt>Ctrl</tt>-클릭하면 추출한 색을 전경색이 아"
 "닌 배경색으로 설정합니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "회전 도구에서 <tt>Ctrl</tt>-드래그하면, 회전 각을 15도 단위로 제한합니다."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -305,7 +305,7 @@ msgstr ""
 #~ msgstr "<big>김프에 오신것을 환영합니다!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
 #~ "김프는 실행취소 기능을 제공합니다. 따라서 걱정말고 이것저것 실행해 보십시"

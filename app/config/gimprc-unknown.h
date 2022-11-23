@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GimpRc serialization and deserialization helpers
- * Copyright (C) 2001-2005  Sven Neumann <sven@gimp.org>
+ * LigmaRc serialization and deserialization helpers
+ * Copyright (C) 2001-2005  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RC_UNKNOWN_H__
-#define __GIMP_RC_UNKNOWN_H__
+#ifndef __LIGMA_RC_UNKNOWN_H__
+#define __LIGMA_RC_UNKNOWN_H__
 
 
-typedef void  (* GimpConfigForeachFunc) (const gchar *key,
+typedef void  (* LigmaConfigForeachFunc) (const gchar *key,
                                          const gchar *value,
                                          gpointer     user_data);
 
 
-void          gimp_rc_add_unknown_token     (GimpConfig            *config,
+void          ligma_rc_add_unknown_token     (LigmaConfig            *config,
                                              const gchar           *key,
                                              const gchar           *value);
-const gchar * gimp_rc_lookup_unknown_token  (GimpConfig            *config,
+const gchar * ligma_rc_lookup_unknown_token  (LigmaConfig            *config,
                                              const gchar           *key);
-void          gimp_rc_foreach_unknown_token (GimpConfig            *config,
-                                             GimpConfigForeachFunc  func,
+void          ligma_rc_foreach_unknown_token (LigmaConfig            *config,
+                                             LigmaConfigForeachFunc  func,
                                              gpointer               user_data);
 
 
-#endif  /* __GIMP_RC_UNKNOWN_H__ */
+#endif  /* __LIGMA_RC_UNKNOWN_H__ */

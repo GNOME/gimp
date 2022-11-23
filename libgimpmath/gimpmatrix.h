@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpmatrix.h
- * Copyright (C) 1998 Jay Cox <jaycox@gimp.org>
+ * ligmamatrix.h
+ * Copyright (C) 1998 Jay Cox <jaycox@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
-#error "Only <libgimpmath/gimpmath.h> can be included directly."
+#if !defined (__LIGMA_MATH_H_INSIDE__) && !defined (LIGMA_MATH_COMPILATION)
+#error "Only <libligmamath/ligmamath.h> can be included directly."
 #endif
 
-#ifndef __GIMP_MATRIX_H__
-#define __GIMP_MATRIX_H__
+#ifndef __LIGMA_MATRIX_H__
+#define __LIGMA_MATRIX_H__
 
 G_BEGIN_DECLS
 
@@ -32,35 +32,35 @@ G_BEGIN_DECLS
 
 
 /*****************/
-/*  GimpMatrix2  */
+/*  LigmaMatrix2  */
 /*****************/
 
-#define GIMP_TYPE_MATRIX2               (gimp_matrix2_get_type ())
-#define GIMP_VALUE_HOLDS_MATRIX2(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX2))
+#define LIGMA_TYPE_MATRIX2               (ligma_matrix2_get_type ())
+#define LIGMA_VALUE_HOLDS_MATRIX2(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_MATRIX2))
 
-GType         gimp_matrix2_get_type        (void) G_GNUC_CONST;
+GType         ligma_matrix2_get_type        (void) G_GNUC_CONST;
 
 
-#define GIMP_TYPE_PARAM_MATRIX2            (gimp_param_matrix2_get_type ())
-#define GIMP_IS_PARAM_SPEC_MATRIX2(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX2))
+#define LIGMA_TYPE_PARAM_MATRIX2            (ligma_param_matrix2_get_type ())
+#define LIGMA_IS_PARAM_SPEC_MATRIX2(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_MATRIX2))
 
-GType         gimp_param_matrix2_get_type  (void) G_GNUC_CONST;
+GType         ligma_param_matrix2_get_type  (void) G_GNUC_CONST;
 
-GParamSpec *  gimp_param_spec_matrix2      (const gchar        *name,
+GParamSpec *  ligma_param_spec_matrix2      (const gchar        *name,
                                             const gchar        *nick,
                                             const gchar        *blurb,
-                                            const GimpMatrix2  *default_value,
+                                            const LigmaMatrix2  *default_value,
                                             GParamFlags         flags);
 
 
-void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
-void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1,
-                                            GimpMatrix2       *matrix2);
+void          ligma_matrix2_identity        (LigmaMatrix2       *matrix);
+void          ligma_matrix2_mult            (const LigmaMatrix2 *matrix1,
+                                            LigmaMatrix2       *matrix2);
 
-gdouble       gimp_matrix2_determinant     (const GimpMatrix2 *matrix);
-void          gimp_matrix2_invert          (GimpMatrix2       *matrix);
+gdouble       ligma_matrix2_determinant     (const LigmaMatrix2 *matrix);
+void          ligma_matrix2_invert          (LigmaMatrix2       *matrix);
 
-void          gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
+void          ligma_matrix2_transform_point (const LigmaMatrix2 *matrix,
                                             gdouble            x,
                                             gdouble            y,
                                             gdouble           *newx,
@@ -68,43 +68,43 @@ void          gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
 
 
 /*****************/
-/*  GimpMatrix3  */
+/*  LigmaMatrix3  */
 /*****************/
 
-#define GIMP_TYPE_MATRIX3               (gimp_matrix3_get_type ())
-#define GIMP_VALUE_HOLDS_MATRIX3(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX3))
+#define LIGMA_TYPE_MATRIX3               (ligma_matrix3_get_type ())
+#define LIGMA_VALUE_HOLDS_MATRIX3(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_MATRIX3))
 
-GType         gimp_matrix3_get_type        (void) G_GNUC_CONST;
+GType         ligma_matrix3_get_type        (void) G_GNUC_CONST;
 
 
-#define GIMP_TYPE_PARAM_MATRIX3            (gimp_param_matrix3_get_type ())
-#define GIMP_IS_PARAM_SPEC_MATRIX3(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX3))
+#define LIGMA_TYPE_PARAM_MATRIX3            (ligma_param_matrix3_get_type ())
+#define LIGMA_IS_PARAM_SPEC_MATRIX3(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_MATRIX3))
 
-GType         gimp_param_matrix3_get_type  (void) G_GNUC_CONST;
+GType         ligma_param_matrix3_get_type  (void) G_GNUC_CONST;
 
-GParamSpec *  gimp_param_spec_matrix3      (const gchar        *name,
+GParamSpec *  ligma_param_spec_matrix3      (const gchar        *name,
                                             const gchar        *nick,
                                             const gchar        *blurb,
-                                            const GimpMatrix3  *default_value,
+                                            const LigmaMatrix3  *default_value,
                                             GParamFlags         flags);
 
 
-void          gimp_matrix3_identity        (GimpMatrix3       *matrix);
-void          gimp_matrix3_mult            (const GimpMatrix3 *matrix1,
-                                            GimpMatrix3       *matrix2);
-void          gimp_matrix3_translate       (GimpMatrix3       *matrix,
+void          ligma_matrix3_identity        (LigmaMatrix3       *matrix);
+void          ligma_matrix3_mult            (const LigmaMatrix3 *matrix1,
+                                            LigmaMatrix3       *matrix2);
+void          ligma_matrix3_translate       (LigmaMatrix3       *matrix,
                                             gdouble            x,
                                             gdouble            y);
-void          gimp_matrix3_scale           (GimpMatrix3       *matrix,
+void          ligma_matrix3_scale           (LigmaMatrix3       *matrix,
                                             gdouble            x,
                                             gdouble            y);
-void          gimp_matrix3_rotate          (GimpMatrix3       *matrix,
+void          ligma_matrix3_rotate          (LigmaMatrix3       *matrix,
                                             gdouble            theta);
-void          gimp_matrix3_xshear          (GimpMatrix3       *matrix,
+void          ligma_matrix3_xshear          (LigmaMatrix3       *matrix,
                                             gdouble            amount);
-void          gimp_matrix3_yshear          (GimpMatrix3       *matrix,
+void          ligma_matrix3_yshear          (LigmaMatrix3       *matrix,
                                             gdouble            amount);
-void          gimp_matrix3_affine          (GimpMatrix3       *matrix,
+void          ligma_matrix3_affine          (LigmaMatrix3       *matrix,
                                             gdouble            a,
                                             gdouble            b,
                                             gdouble            c,
@@ -112,18 +112,18 @@ void          gimp_matrix3_affine          (GimpMatrix3       *matrix,
                                             gdouble            e,
                                             gdouble            f);
 
-gdouble       gimp_matrix3_determinant     (const GimpMatrix3 *matrix);
-void          gimp_matrix3_invert          (GimpMatrix3       *matrix);
+gdouble       ligma_matrix3_determinant     (const LigmaMatrix3 *matrix);
+void          ligma_matrix3_invert          (LigmaMatrix3       *matrix);
 
-gboolean      gimp_matrix3_is_identity     (const GimpMatrix3 *matrix);
-gboolean      gimp_matrix3_is_diagonal     (const GimpMatrix3 *matrix);
-gboolean      gimp_matrix3_is_affine       (const GimpMatrix3 *matrix);
-gboolean      gimp_matrix3_is_simple       (const GimpMatrix3 *matrix);
+gboolean      ligma_matrix3_is_identity     (const LigmaMatrix3 *matrix);
+gboolean      ligma_matrix3_is_diagonal     (const LigmaMatrix3 *matrix);
+gboolean      ligma_matrix3_is_affine       (const LigmaMatrix3 *matrix);
+gboolean      ligma_matrix3_is_simple       (const LigmaMatrix3 *matrix);
 
-gboolean      gimp_matrix3_equal           (const GimpMatrix3 *matrix1,
-                                            const GimpMatrix3 *matrix2);
+gboolean      ligma_matrix3_equal           (const LigmaMatrix3 *matrix1,
+                                            const LigmaMatrix3 *matrix2);
 
-void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
+void          ligma_matrix3_transform_point (const LigmaMatrix3 *matrix,
                                             gdouble            x,
                                             gdouble            y,
                                             gdouble           *newx,
@@ -131,19 +131,19 @@ void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 
 
 /*****************/
-/*  GimpMatrix4  */
+/*  LigmaMatrix4  */
 /*****************/
 
-void          gimp_matrix4_identity        (GimpMatrix4       *matrix);
-void          gimp_matrix4_mult            (const GimpMatrix4 *matrix1,
-                                            GimpMatrix4       *matrix2);
+void          ligma_matrix4_identity        (LigmaMatrix4       *matrix);
+void          ligma_matrix4_mult            (const LigmaMatrix4 *matrix1,
+                                            LigmaMatrix4       *matrix2);
 
-void          gimp_matrix4_to_deg          (const GimpMatrix4 *matrix,
+void          ligma_matrix4_to_deg          (const LigmaMatrix4 *matrix,
                                             gdouble           *a,
                                             gdouble           *b,
                                             gdouble           *c);
 
-gdouble       gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
+gdouble       ligma_matrix4_transform_point (const LigmaMatrix4 *matrix,
                                             gdouble            x,
                                             gdouble            y,
                                             gdouble            z,
@@ -154,4 +154,4 @@ gdouble       gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
 
 G_END_DECLS
 
-#endif /* __GIMP_MATRIX_H__ */
+#endif /* __LIGMA_MATRIX_H__ */

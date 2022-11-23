@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationnormal-sse2.c
+ * ligmaoperationnormal-sse2.c
  * Copyright (C) 2013 Daniel Sabo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 
 #include "operations/operations-types.h"
 
-#include "gimpoperationnormal.h"
+#include "ligmaoperationnormal.h"
 
 
 #if COMPILE_SSE2_INTRINISICS
@@ -34,7 +34,7 @@
 
 
 gboolean
-gimp_operation_normal_process_sse2 (GeglOperation       *op,
+ligma_operation_normal_process_sse2 (GeglOperation       *op,
                                     void                *in_p,
                                     void                *layer_p,
                                     void                *mask_p,
@@ -46,13 +46,13 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
   /* check alignment */
   if ((((uintptr_t)in_p) | ((uintptr_t)layer_p) | ((uintptr_t)out_p)) & 0x0F)
     {
-      return gimp_operation_normal_process (op,
+      return ligma_operation_normal_process (op,
                                             in_p, layer_p, mask_p, out_p,
                                             samples, roi, level);
     }
   else
     {
-      GimpOperationLayerMode *layer_mode      = (gpointer) op;
+      LigmaOperationLayerMode *layer_mode      = (gpointer) op;
       gfloat                  opacity         = layer_mode->opacity;
       gfloat                 *mask            = mask_p;
       const                   __v4sf *v_in    = (const __v4sf*) in_p;
@@ -64,8 +64,8 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
 
       switch (layer_mode->composite_mode)
         {
-        case GIMP_LAYER_COMPOSITE_UNION:
-        case GIMP_LAYER_COMPOSITE_AUTO:
+        case LIGMA_LAYER_COMPOSITE_UNION:
+        case LIGMA_LAYER_COMPOSITE_AUTO:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;
@@ -121,7 +121,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+        case LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;
@@ -168,7 +168,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+        case LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;
@@ -210,7 +210,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_INTERSECTION:
+        case LIGMA_LAYER_COMPOSITE_INTERSECTION:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;

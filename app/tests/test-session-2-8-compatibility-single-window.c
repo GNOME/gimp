@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2011 Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,26 +24,26 @@
 
 #include "tests.h"
 
-#include "gimp-test-session-utils.h"
-#include "gimp-app-test-utils.h"
+#include "ligma-test-session-utils.h"
+#include "ligma-app-test-utils.h"
 
 
 #define ADD_TEST(function) \
-  g_test_add_func ("/gimp-session-2-8-compatibility-single-window/" #function, \
+  g_test_add_func ("/ligma-session-2-8-compatibility-single-window/" #function, \
                    function);
 
 #define SKIP_TEST(function) \
-  g_test_add_func ("/gimp-session-2-8-compatibility-single-window/subprocess/" #function, \
+  g_test_add_func ("/ligma-session-2-8-compatibility-single-window/subprocess/" #function, \
                    function);
 
 /**
- * Tests that a multi-window sessionrc in GIMP 2.8 format is loaded
+ * Tests that a multi-window sessionrc in LIGMA 2.8 format is loaded
  * and written (thus also interpreted) like we expect.
  **/
 static void
 read_and_write_session_files (void)
 {
-  gimp_test_session_load_and_write_session_files ("sessionrc-2-8-single-window",
+  ligma_test_session_load_and_write_session_files ("sessionrc-2-8-single-window",
                                                   "dockrc-2-8",
                                                   "sessionrc-expected-single-window",
                                                   "dockrc-expected",
@@ -52,7 +52,7 @@ read_and_write_session_files (void)
 
 int main(int argc, char **argv)
 {
-  gimp_test_bail_if_no_display ();
+  ligma_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
 #ifdef HAVE_XVFB_RUN
@@ -65,6 +65,6 @@ int main(int argc, char **argv)
 #ifdef HAVE_XVFB_RUN
   return g_test_run ();
 #else
-  return GIMP_EXIT_TEST_SKIPPED;
+  return LIGMA_EXIT_TEST_SKIPPED;
 #endif
 }

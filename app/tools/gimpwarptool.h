@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpwarptool.h
+ * ligmawarptool.h
  * Copyright (C) 2011 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,35 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WARP_TOOL_H__
-#define __GIMP_WARP_TOOL_H__
+#ifndef __LIGMA_WARP_TOOL_H__
+#define __LIGMA_WARP_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_WARP_TOOL            (gimp_warp_tool_get_type ())
-#define GIMP_WARP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_WARP_TOOL, GimpWarpTool))
-#define GIMP_WARP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_WARP_TOOL, GimpWarpToolClass))
-#define GIMP_IS_WARP_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_WARP_TOOL))
-#define GIMP_IS_WARP_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_WARP_TOOL))
-#define GIMP_WARP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_WARP_TOOL, GimpWarpToolClass))
+#define LIGMA_TYPE_WARP_TOOL            (ligma_warp_tool_get_type ())
+#define LIGMA_WARP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_WARP_TOOL, LigmaWarpTool))
+#define LIGMA_WARP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_WARP_TOOL, LigmaWarpToolClass))
+#define LIGMA_IS_WARP_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_WARP_TOOL))
+#define LIGMA_IS_WARP_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_WARP_TOOL))
+#define LIGMA_WARP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_WARP_TOOL, LigmaWarpToolClass))
 
-#define GIMP_WARP_TOOL_GET_OPTIONS(t)  (GIMP_WARP_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_WARP_TOOL_GET_OPTIONS(t)  (LIGMA_WARP_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpWarpTool      GimpWarpTool;
-typedef struct _GimpWarpToolClass GimpWarpToolClass;
+typedef struct _LigmaWarpTool      LigmaWarpTool;
+typedef struct _LigmaWarpToolClass LigmaWarpToolClass;
 
-struct _GimpWarpTool
+struct _LigmaWarpTool
 {
-  GimpDrawTool        parent_instance;
+  LigmaDrawTool        parent_instance;
 
   gboolean            show_cursor;
   gboolean            draw_brush;
   gboolean            snap_brush;
 
-  GimpVector2         cursor_pos;    /* Hold the cursor position */
+  LigmaVector2         cursor_pos;    /* Hold the cursor position */
 
   GeglBuffer         *coords_buffer; /* Buffer where coordinates are stored */
 
@@ -55,24 +55,24 @@ struct _GimpWarpTool
   GeglPath           *current_stroke;
   guint               stroke_timer;
 
-  GimpVector2         last_pos;
+  LigmaVector2         last_pos;
   gdouble             total_dist;
 
-  GimpDrawableFilter *filter;
+  LigmaDrawableFilter *filter;
 
   GList              *redo_stack;
 };
 
-struct _GimpWarpToolClass
+struct _LigmaWarpToolClass
 {
-  GimpDrawToolClass parent_class;
+  LigmaDrawToolClass parent_class;
 };
 
 
-void    gimp_warp_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_warp_tool_register (LigmaToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_warp_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_warp_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_WARP_TOOL_H__  */
+#endif  /*  __LIGMA_WARP_TOOL_H__  */

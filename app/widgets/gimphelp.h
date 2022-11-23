@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphelp.h
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * ligmahelp.h
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_H__
-#define __GIMP_HELP_H__
+#ifndef __LIGMA_HELP_H__
+#define __LIGMA_HELP_H__
 
 
 /*  the main help function
  *
  *  there should be no need to use it directly
  */
-void       gimp_help_show (Gimp         *gimp,
-                           GimpProgress *progress,
+void       ligma_help_show (Ligma         *ligma,
+                           LigmaProgress *progress,
                            const gchar  *help_domain,
                            const gchar  *help_id);
 
 
 /*  checks if the help browser is available
  */
-gboolean   gimp_help_browser_is_installed     (Gimp *gimp);
+gboolean   ligma_help_browser_is_installed     (Ligma *ligma);
 
 /*  checks if the user manual is installed locally
  */
-gboolean   gimp_help_user_manual_is_installed (Gimp *gimp);
+gboolean   ligma_help_user_manual_is_installed (Ligma *ligma);
 
 /*  the configuration changed with respect to the location
  *  of the user manual, invalidate the cached information
  */
-void       gimp_help_user_manual_changed      (Gimp *gimp);
+void       ligma_help_user_manual_changed      (Ligma *ligma);
 
 
-GList    * gimp_help_get_installed_languages  (void);
+GList    * ligma_help_get_installed_languages  (void);
 
-#endif /* __GIMP_HELP_H__ */
+#endif /* __LIGMA_HELP_H__ */

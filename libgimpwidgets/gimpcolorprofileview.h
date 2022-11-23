@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpColorProfileView
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * LigmaColorProfileView
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,55 +18,55 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_PROFILE_VIEW_H__
-#define __GIMP_COLOR_PROFILE_VIEW_H__
+#ifndef __LIGMA_COLOR_PROFILE_VIEW_H__
+#define __LIGMA_COLOR_PROFILE_VIEW_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_PROFILE_VIEW            (gimp_color_profile_view_get_type ())
-#define GIMP_COLOR_PROFILE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileView))
-#define GIMP_COLOR_PROFILE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileViewClass))
-#define GIMP_IS_COLOR_PROFILE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW))
-#define GIMP_IS_COLOR_PROFILE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE_VIEW))
-#define GIMP_COLOR_PROFILE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileViewClass))
+#define LIGMA_TYPE_COLOR_PROFILE_VIEW            (ligma_color_profile_view_get_type ())
+#define LIGMA_COLOR_PROFILE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_PROFILE_VIEW, LigmaColorProfileView))
+#define LIGMA_COLOR_PROFILE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_PROFILE_VIEW, LigmaColorProfileViewClass))
+#define LIGMA_IS_COLOR_PROFILE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_PROFILE_VIEW))
+#define LIGMA_IS_COLOR_PROFILE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_PROFILE_VIEW))
+#define LIGMA_COLOR_PROFILE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_PROFILE_VIEW, LigmaColorProfileViewClass))
 
 
-typedef struct _GimpColorProfileViewClass   GimpColorProfileViewClass;
-typedef struct _GimpColorProfileViewPrivate GimpColorProfileViewPrivate;
+typedef struct _LigmaColorProfileViewClass   LigmaColorProfileViewClass;
+typedef struct _LigmaColorProfileViewPrivate LigmaColorProfileViewPrivate;
 
-struct _GimpColorProfileView
+struct _LigmaColorProfileView
 {
   GtkTextView                  parent_instance;
 
-  GimpColorProfileViewPrivate *priv;
+  LigmaColorProfileViewPrivate *priv;
 };
 
-struct _GimpColorProfileViewClass
+struct _LigmaColorProfileViewClass
 {
   GtkTextViewClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_color_profile_view_get_type    (void) G_GNUC_CONST;
+GType       ligma_color_profile_view_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_profile_view_new         (void);
+GtkWidget * ligma_color_profile_view_new         (void);
 
-void        gimp_color_profile_view_set_profile (GimpColorProfileView *view,
-                                                 GimpColorProfile     *profile);
-void        gimp_color_profile_view_set_error   (GimpColorProfileView *view,
+void        ligma_color_profile_view_set_profile (LigmaColorProfileView *view,
+                                                 LigmaColorProfile     *profile);
+void        ligma_color_profile_view_set_error   (LigmaColorProfileView *view,
                                                  const gchar          *message);
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_PROFILE_VIEW_H__ */
+#endif /* __LIGMA_COLOR_PROFILE_VIEW_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
 #include "config.h"
 #include <glib.h>
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "libscriptfu/script-fu-lib.h"
 
@@ -29,9 +29,9 @@
  */
 
 /* We don't need to load (into the interpreter) any .scm files handled by extension-script-fu.
- * Namely, the .scm in the GIMP installation /scripts or in the user local /scripts dirs.
+ * Namely, the .scm in the LIGMA installation /scripts or in the user local /scripts dirs.
  *
- * During startup, GIMP might call gimp-script-fu-interpreter
+ * During startup, LIGMA might call ligma-script-fu-interpreter
  * to query new files such as /plug-ins/fu/fu.scm.
  * This is before extension-script-fu starts.
  * But all the .scm files handled by extension-script-fu are type TEMPORARY and not needed
@@ -68,7 +68,7 @@ static void   script_fu_free_path_list         (GList      **list);
  * Caller must free the list.
  */
 GList *
-script_fu_interpreter_list_defined_proc_names (GimpPlugIn  *plug_in,
+script_fu_interpreter_list_defined_proc_names (LigmaPlugIn  *plug_in,
                                                const gchar *path_to_this_script)
 {
   GList *name_list = NULL;  /* list of strings */
@@ -78,7 +78,7 @@ script_fu_interpreter_list_defined_proc_names (GimpPlugIn  *plug_in,
    * second argument TRUE means define script-fu-register into the interpreter.
    */
   path_list = script_fu_search_path ();
-  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE);
+  script_fu_init_embedded_interpreter (path_list, TRUE, LIGMA_RUN_NONINTERACTIVE);
   script_fu_free_path_list (&path_list);
 
   /* Reuse path_list, now a list of one path, the parent dir of the queried script. */
@@ -88,7 +88,7 @@ script_fu_interpreter_list_defined_proc_names (GimpPlugIn  *plug_in,
   script_fu_free_path_list (&path_list);
 
   /* Usually name_list is not NULL i.e. not empty.
-   * But an .scm file that is not an actual GIMP plugin, or broken, may yield empty list.
+   * But an .scm file that is not an actual LIGMA plugin, or broken, may yield empty list.
    */
   return name_list;
 }
@@ -97,24 +97,24 @@ script_fu_interpreter_list_defined_proc_names (GimpPlugIn  *plug_in,
 /* Create a PDB proc of type PLUGIN with the given name.
  * Unlike extension-script-fu, create proc of type PLUGIN.
  *
- * We are in "create procedure" phase of call from GIMP.
+ * We are in "create procedure" phase of call from LIGMA.
  * Create a PDB procedure that the script-fu-interpreter wraps.
  *
- * A GimpPDBProcedure has a run function, here script_fu_script_proc()
+ * A LigmaPDBProcedure has a run function, here script_fu_script_proc()
  * of this outer interpreter.
- * Sometime after the create, GIMP calls the run func, passing a name aka command.
+ * Sometime after the create, LIGMA calls the run func, passing a name aka command.
  * In ScriptFu, the same name is used for the PDB proc and the Scheme function
  * which is the inner run func defined in the script.
  * script_fu_script_proc calls the TinyScheme interpreter to evaluate
  * the inner run func in the script.
  */
-GimpProcedure *
-script_fu_interpreter_create_proc_at_path (GimpPlugIn  *plug_in,
+LigmaProcedure *
+script_fu_interpreter_create_proc_at_path (LigmaPlugIn  *plug_in,
                                            const gchar *proc_name,
                                            const gchar *path_to_this_script
                                           )
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
   GList         *path_list = NULL;  /* list of GFile */
 
   g_debug ("script_fu_interpreter_create_proc_at_path, name: %s", proc_name);
@@ -137,7 +137,7 @@ script_fu_interpreter_create_proc_at_path (GimpPlugIn  *plug_in,
   /* path_list are the /scripts dir, for .init and compat.scm, plus the path to this.
    * second arg TRUE means define script-fu-register so it is effective.
    */
-  script_fu_init_embedded_interpreter (path_list, TRUE, GIMP_RUN_NONINTERACTIVE);
+  script_fu_init_embedded_interpreter (path_list, TRUE, LIGMA_RUN_NONINTERACTIVE);
 
   /* Reuse path_list, now a list of only the path to this script. */
   script_fu_free_path_list (&path_list);
@@ -150,10 +150,10 @@ script_fu_interpreter_create_proc_at_path (GimpPlugIn  *plug_in,
   /* When procedure is not NULL, assert:
    *    some .scm was evaluated.
    *    the script defined many PDB procedures locally, i.e. in script-tree
-   *    we created a single PDB procedure (but not put it in the GIMP PDB)
+   *    we created a single PDB procedure (but not put it in the LIGMA PDB)
    *
-   * Ensure procedure is-a GimpProcedure or NULL.
-   * GIMP is the caller and will put non-NULL procedure in the PDB.
+   * Ensure procedure is-a LigmaProcedure or NULL.
+   * LIGMA is the caller and will put non-NULL procedure in the PDB.
    */
   return procedure;
 }
@@ -169,9 +169,9 @@ script_fu_get_plugin_parent_path (const gchar *path_to_this_script)
   GFile *path        = NULL;
   GFile *parent_path = NULL;
 
-  /* A libgimp GimpPlugin does not know its path,
+  /* A libligma LigmaPlugin does not know its path,
    * but its path was passed in argv to this interpreter.
-   * The path is to a file being queried e.g. "~/.config/GIMP/2.99/plug-ins/fu/fu.scm"
+   * The path is to a file being queried e.g. "~/.config/LIGMA/2.99/plug-ins/fu/fu.scm"
    */
   g_debug ("path to this plugin %s", path_to_this_script);
   path = g_file_new_for_path (path_to_this_script);

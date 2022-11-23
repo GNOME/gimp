@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-eval.c
+ * ligmapropgui-eval.c
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,72 +90,72 @@
 
 #include "propgui-types.h"
 
-#include "gimppropgui-eval.h"
+#include "ligmapropgui-eval.h"
 
 
 typedef enum
 {
-  GIMP_PROP_EVAL_FAILED  /* generic error condition */
-} GimpPropEvalErrorCode;
+  LIGMA_PROP_EVAL_FAILED  /* generic error condition */
+} LigmaPropEvalErrorCode;
 
 
-static gboolean   gimp_prop_eval_boolean_impl     (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_impl     (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar    *key,
                                                    gint            default_value,
                                                    GError        **error,
                                                    gint            depth);
-static gboolean   gimp_prop_eval_boolean_or       (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_or       (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
-static gboolean   gimp_prop_eval_boolean_and      (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_and      (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
-static gboolean   gimp_prop_eval_boolean_not      (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_not      (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
-static gboolean   gimp_prop_eval_boolean_group    (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_group    (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
-static gboolean   gimp_prop_eval_boolean_simple   (GObject        *config,
+static gboolean   ligma_prop_eval_boolean_simple   (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
 
-static gchar    * gimp_prop_eval_string_impl      (GObject        *config,
+static gchar    * ligma_prop_eval_string_impl      (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar    *key,
                                                    const gchar    *default_value,
                                                    GError        **error,
                                                    gint            depth);
-static gchar    * gimp_prop_eval_string_selection (GObject        *config,
+static gchar    * ligma_prop_eval_string_selection (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
-static gchar    * gimp_prop_eval_string_simple    (GObject        *config,
+static gchar    * ligma_prop_eval_string_simple    (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error,
                                                    gint            depth);
 
-static gboolean   gimp_prop_eval_parse_reference  (GObject        *config,
+static gboolean   ligma_prop_eval_parse_reference  (GObject        *config,
                                                    GParamSpec     *pspec,
                                                    const gchar   **expr,
                                                    gchar         **t,
@@ -163,23 +163,23 @@ static gboolean   gimp_prop_eval_parse_reference  (GObject        *config,
                                                    GParamSpec    **ref_pspec,
                                                    gchar         **ref_key);
 
-static gboolean   gimp_prop_eval_depth_test       (gint            depth,
+static gboolean   ligma_prop_eval_depth_test       (gint            depth,
                                                    GError        **error);
 
-static gchar    * gimp_prop_eval_read_token       (const gchar   **expr,
+static gchar    * ligma_prop_eval_read_token       (const gchar   **expr,
                                                    gchar         **t,
                                                    GError        **error);
-static gboolean   gimp_prop_eval_is_name          (const gchar    *token);
+static gboolean   ligma_prop_eval_is_name          (const gchar    *token);
 
-#define GIMP_PROP_EVAL_ERROR (gimp_prop_eval_error_quark ())
+#define LIGMA_PROP_EVAL_ERROR (ligma_prop_eval_error_quark ())
 
-static GQuark     gimp_prop_eval_error_quark      (void);
+static GQuark     ligma_prop_eval_error_quark      (void);
 
 
 /*  public functions  */
 
 gboolean
-gimp_prop_eval_boolean (GObject     *config,
+ligma_prop_eval_boolean (GObject     *config,
                         GParamSpec  *pspec,
                         const gchar *key,
                         gboolean     default_value)
@@ -187,7 +187,7 @@ gimp_prop_eval_boolean (GObject     *config,
   GError   *error = NULL;
   gboolean  result;
 
-  result = gimp_prop_eval_boolean_impl (config, pspec,
+  result = ligma_prop_eval_boolean_impl (config, pspec,
                                         key, default_value, &error, 0);
 
   if (error)
@@ -205,7 +205,7 @@ gimp_prop_eval_boolean (GObject     *config,
 }
 
 gchar *
-gimp_prop_eval_string (GObject     *config,
+ligma_prop_eval_string (GObject     *config,
                        GParamSpec  *pspec,
                        const gchar *key,
                        const gchar *default_value)
@@ -213,7 +213,7 @@ gimp_prop_eval_string (GObject     *config,
   GError *error = NULL;
   gchar  *result;
 
-  result = gimp_prop_eval_string_impl (config, pspec,
+  result = ligma_prop_eval_string_impl (config, pspec,
                                        key, default_value, &error, 0);
 
   if (error)
@@ -234,7 +234,7 @@ gimp_prop_eval_string (GObject     *config,
 /*  private functions  */
 
 static gboolean
-gimp_prop_eval_boolean_impl (GObject      *config,
+ligma_prop_eval_boolean_impl (GObject      *config,
                              GParamSpec   *pspec,
                              const gchar  *key,
                              gint          default_value,
@@ -245,7 +245,7 @@ gimp_prop_eval_boolean_impl (GObject      *config,
   gchar       *t      = NULL;
   gboolean     result = FALSE;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
   expr = gegl_param_spec_get_property_key (pspec, key);
@@ -255,7 +255,7 @@ gimp_prop_eval_boolean_impl (GObject      *config,
       /* we use `default_value < 0` to specify that the key must exist */
       if (default_value < 0)
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "key '%s' of property '%s' not found",
                        key,
                        g_param_spec_get_name (pspec));
@@ -266,18 +266,18 @@ gimp_prop_eval_boolean_impl (GObject      *config,
       return default_value;
     }
 
-  gimp_prop_eval_read_token (&expr, &t, error);
+  ligma_prop_eval_read_token (&expr, &t, error);
 
   if (! *error)
     {
-      result = gimp_prop_eval_boolean_or (config, pspec,
+      result = ligma_prop_eval_boolean_or (config, pspec,
                                           &expr, &t, error, depth);
     }
 
   /* check for trailing tokens at the end of the expression */
   if (! *error && t)
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid expression");
     }
 
@@ -297,7 +297,7 @@ gimp_prop_eval_boolean_impl (GObject      *config,
 }
 
 static gboolean
-gimp_prop_eval_boolean_or (GObject      *config,
+ligma_prop_eval_boolean_or (GObject      *config,
                            GParamSpec   *pspec,
                            const gchar **expr,
                            gchar       **t,
@@ -306,15 +306,15 @@ gimp_prop_eval_boolean_or (GObject      *config,
 {
   gboolean result;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
-  result = gimp_prop_eval_boolean_and (config, pspec,
+  result = ligma_prop_eval_boolean_and (config, pspec,
                                        expr, t, error, depth);
 
   while (! *error && ! g_strcmp0 (*t, "|"))
     {
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return FALSE;
@@ -322,7 +322,7 @@ gimp_prop_eval_boolean_or (GObject      *config,
       /* keep evaluating even if `result` is TRUE, because we still need to
        * parse the rest of the subexpression.
        */
-      result |= gimp_prop_eval_boolean_and (config, pspec,
+      result |= ligma_prop_eval_boolean_and (config, pspec,
                                             expr, t, error, depth);
     }
 
@@ -330,7 +330,7 @@ gimp_prop_eval_boolean_or (GObject      *config,
 }
 
 static gboolean
-gimp_prop_eval_boolean_and (GObject      *config,
+ligma_prop_eval_boolean_and (GObject      *config,
                             GParamSpec   *pspec,
                             const gchar **expr,
                             gchar       **t,
@@ -339,15 +339,15 @@ gimp_prop_eval_boolean_and (GObject      *config,
 {
   gboolean result;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
-  result = gimp_prop_eval_boolean_not (config, pspec,
+  result = ligma_prop_eval_boolean_not (config, pspec,
                                        expr, t, error, depth);
 
   while (! *error && ! g_strcmp0 (*t, "&"))
     {
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return FALSE;
@@ -355,7 +355,7 @@ gimp_prop_eval_boolean_and (GObject      *config,
       /* keep evaluating even if `result` is FALSE, because we still need to
        * parse the rest of the subexpression.
        */
-      result &= gimp_prop_eval_boolean_not (config, pspec,
+      result &= ligma_prop_eval_boolean_not (config, pspec,
                                             expr, t, error, depth);
     }
 
@@ -363,52 +363,52 @@ gimp_prop_eval_boolean_and (GObject      *config,
 }
 
 static gboolean
-gimp_prop_eval_boolean_not (GObject      *config,
+ligma_prop_eval_boolean_not (GObject      *config,
                             GParamSpec   *pspec,
                             const gchar **expr,
                             gchar       **t,
                             GError      **error,
                             gint          depth)
 {
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
   if (! g_strcmp0 (*t, "!"))
     {
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return FALSE;
 
-      return ! gimp_prop_eval_boolean_not (config, pspec,
+      return ! ligma_prop_eval_boolean_not (config, pspec,
                                            expr, t, error, depth + 1);
     }
 
-  return gimp_prop_eval_boolean_group (config, pspec,
+  return ligma_prop_eval_boolean_group (config, pspec,
                                        expr, t, error, depth);
 }
 
 static gboolean
-gimp_prop_eval_boolean_group (GObject      *config,
+ligma_prop_eval_boolean_group (GObject      *config,
                               GParamSpec   *pspec,
                               const gchar **expr,
                               gchar       **t,
                               GError      **error,
                               gint          depth)
 {
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
   if (! g_strcmp0 (*t, "("))
     {
       gboolean result;
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return FALSE;
 
-      result = gimp_prop_eval_boolean_or (config, pspec,
+      result = ligma_prop_eval_boolean_or (config, pspec,
                                           expr, t, error, depth + 1);
 
       if (*error)
@@ -416,23 +416,23 @@ gimp_prop_eval_boolean_group (GObject      *config,
 
       if (g_strcmp0 (*t, ")"))
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "unterminated group");
 
           return FALSE;
         }
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       return result;
     }
 
-  return gimp_prop_eval_boolean_simple (config, pspec,
+  return ligma_prop_eval_boolean_simple (config, pspec,
                                         expr, t, error, depth);
 }
 
 static gboolean
-gimp_prop_eval_boolean_simple (GObject      *config,
+ligma_prop_eval_boolean_simple (GObject      *config,
                                GParamSpec   *pspec,
                                const gchar **expr,
                                gchar       **t,
@@ -441,12 +441,12 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 {
   gboolean result;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return FALSE;
 
   if (! *t)
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid expression");
 
       return FALSE;
@@ -457,35 +457,35 @@ gimp_prop_eval_boolean_simple (GObject      *config,
     {
       result = FALSE;
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
     }
   else if (! strcmp (*t, "1"))
     {
       result = TRUE;
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
     }
   /* reference */
   else if (! strcmp (*t, "$"))
     {
       gchar *key;
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return FALSE;
 
-      if (! gimp_prop_eval_parse_reference (config, pspec,
+      if (! ligma_prop_eval_parse_reference (config, pspec,
                                             expr, t, error, &pspec, &key))
         return FALSE;
 
-      result = gimp_prop_eval_boolean_impl (config, pspec,
+      result = ligma_prop_eval_boolean_impl (config, pspec,
                                             key, -1, error, depth + 1);
 
       g_free (key);
     }
   /* dependency */
-  else if (gimp_prop_eval_is_name (*t))
+  else if (ligma_prop_eval_is_name (*t))
     {
       const gchar *property_name;
       GParamSpec  *pspec;
@@ -498,7 +498,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
       if (! pspec)
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "property '%s' not found",
                        property_name);
 
@@ -517,14 +517,14 @@ gimp_prop_eval_boolean_simple (GObject      *config,
           GEnumClass *enum_class;
           gint        value;
 
-          gimp_prop_eval_read_token (expr, t, error);
+          ligma_prop_eval_read_token (expr, t, error);
 
           if (*error)
             return FALSE;
 
           if (g_strcmp0 (*t , "{"))
             {
-              g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+              g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                            "missing enum value set "
                            "for property '%s'",
                            property_name);
@@ -538,8 +538,8 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
           result = FALSE;
 
-          while (gimp_prop_eval_read_token (expr, t, error) &&
-                 gimp_prop_eval_is_name (*t))
+          while (ligma_prop_eval_read_token (expr, t, error) &&
+                 ligma_prop_eval_is_name (*t))
             {
               const gchar *nick;
               GEnumValue  *enum_value;
@@ -549,7 +549,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
               if (! enum_value)
                 {
-                  g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+                  g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                                "invalid enum value '%s' "
                                "for property '%s'",
                                nick,
@@ -561,7 +561,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
               if (value == enum_value->value)
                 result = TRUE;
 
-              gimp_prop_eval_read_token (expr, t, error);
+              ligma_prop_eval_read_token (expr, t, error);
 
               if (*error)
                 return FALSE;
@@ -576,7 +576,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
                 }
               else
                 {
-                  g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+                  g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                                "invalid enum value set "
                                "for property '%s'",
                                property_name);
@@ -590,7 +590,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 
           if (g_strcmp0 (*t, "}"))
             {
-              g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+              g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                            "unterminated enum value set "
                            "for property '%s'",
                            property_name);
@@ -600,7 +600,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
         }
       else
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "invalid type "
                        "for property '%s'",
                        property_name);
@@ -608,11 +608,11 @@ gimp_prop_eval_boolean_simple (GObject      *config,
           return FALSE;
         }
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
     }
   else
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid expression");
 
       return FALSE;
@@ -622,7 +622,7 @@ gimp_prop_eval_boolean_simple (GObject      *config,
 }
 
 static gchar *
-gimp_prop_eval_string_impl (GObject      *config,
+ligma_prop_eval_string_impl (GObject      *config,
                             GParamSpec   *pspec,
                             const gchar  *key,
                             const gchar  *default_value,
@@ -633,7 +633,7 @@ gimp_prop_eval_string_impl (GObject      *config,
   gchar       *t      = NULL;
   gchar       *result = NULL;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return NULL;
 
   expr = gegl_param_spec_get_property_key (pspec, key);
@@ -641,18 +641,18 @@ gimp_prop_eval_string_impl (GObject      *config,
   if (! expr)
     return g_strdup (default_value);
 
-  gimp_prop_eval_read_token (&expr, &t, error);
+  ligma_prop_eval_read_token (&expr, &t, error);
 
   if (! *error)
     {
-      result = gimp_prop_eval_string_selection (config, pspec,
+      result = ligma_prop_eval_string_selection (config, pspec,
                                                 &expr, &t, error, depth);
     }
 
   /* check for trailing tokens at the end of the expression */
   if (! *error && t)
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid expression");
 
       g_clear_pointer (&result, g_free);
@@ -677,14 +677,14 @@ gimp_prop_eval_string_impl (GObject      *config,
 }
 
 static gchar *
-gimp_prop_eval_string_selection (GObject      *config,
+ligma_prop_eval_string_selection (GObject      *config,
                                  GParamSpec   *pspec,
                                  const gchar **expr,
                                  gchar       **t,
                                  GError      **error,
                                  gint          depth)
 {
-  if (! gimp_prop_eval_depth_test (depth, error) || ! t)
+  if (! ligma_prop_eval_depth_test (depth, error) || ! t)
     return NULL;
 
   if (! g_strcmp0 (*t, "["))
@@ -692,7 +692,7 @@ gimp_prop_eval_string_selection (GObject      *config,
       gboolean  match  = FALSE;
       gchar    *result = NULL;
 
-      if (! g_strcmp0 (gimp_prop_eval_read_token (expr, t, error), "]"))
+      if (! g_strcmp0 (ligma_prop_eval_read_token (expr, t, error), "]"))
         return NULL;
 
       while (! *error)
@@ -700,7 +700,7 @@ gimp_prop_eval_string_selection (GObject      *config,
           gboolean  cond;
           gchar    *value;
 
-          cond = gimp_prop_eval_boolean_or (config, pspec,
+          cond = ligma_prop_eval_boolean_or (config, pspec,
                                             expr, t, error, depth + 1);
 
           if (*error)
@@ -708,18 +708,18 @@ gimp_prop_eval_string_selection (GObject      *config,
 
           if (g_strcmp0 (*t, ":"))
             {
-              g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+              g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                            "missing string selection value");
 
               break;
             }
 
-          gimp_prop_eval_read_token (expr, t, error);
+          ligma_prop_eval_read_token (expr, t, error);
 
           if (*error)
             break;
 
-          value = gimp_prop_eval_string_selection (config, pspec,
+          value = ligma_prop_eval_string_selection (config, pspec,
                                                    expr, t, error, depth + 1);
 
           if (*error)
@@ -737,13 +737,13 @@ gimp_prop_eval_string_selection (GObject      *config,
 
           if (! g_strcmp0 (*t, ","))
             {
-              gimp_prop_eval_read_token (expr, t, error);
+              ligma_prop_eval_read_token (expr, t, error);
 
               continue;
             }
           else if (! g_strcmp0 (*t, "]"))
             {
-              gimp_prop_eval_read_token (expr, t, error);
+              ligma_prop_eval_read_token (expr, t, error);
 
               break;
             }
@@ -751,12 +751,12 @@ gimp_prop_eval_string_selection (GObject      *config,
             {
               if (*t)
                 {
-                  g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+                  g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                                "invalid string selection");
                 }
               else
                 {
-                  g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+                  g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                                "unterminated string selection");
                 }
 
@@ -774,12 +774,12 @@ gimp_prop_eval_string_selection (GObject      *config,
       return result;
     }
 
-  return gimp_prop_eval_string_simple (config,
+  return ligma_prop_eval_string_simple (config,
                                        pspec, expr, t, error, depth);
 }
 
 static gchar *
-gimp_prop_eval_string_simple (GObject      *config,
+ligma_prop_eval_string_simple (GObject      *config,
                               GParamSpec   *pspec,
                               const gchar **expr,
                               gchar       **t,
@@ -788,7 +788,7 @@ gimp_prop_eval_string_simple (GObject      *config,
 {
   gchar *result = NULL;
 
-  if (! gimp_prop_eval_depth_test (depth, error))
+  if (! ligma_prop_eval_depth_test (depth, error))
     return NULL;
 
   /* literal */
@@ -802,7 +802,7 @@ gimp_prop_eval_string_simple (GObject      *config,
 
       g_free (escaped);
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         {
@@ -816,28 +816,28 @@ gimp_prop_eval_string_simple (GObject      *config,
     {
       gchar *key;
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         return NULL;
 
-      if (! gimp_prop_eval_parse_reference (config, pspec,
+      if (! ligma_prop_eval_parse_reference (config, pspec,
                                             expr, t, error, &pspec, &key))
         return NULL;
 
-      result = gimp_prop_eval_string_impl (config, pspec,
+      result = ligma_prop_eval_string_impl (config, pspec,
                                            key, NULL, error, depth + 1);
 
       g_free (key);
     }
   /* deferred literal */
-  else if (gimp_prop_eval_is_name (*t))
+  else if (ligma_prop_eval_is_name (*t))
     {
       GParamSpec  *str_pspec;
       gchar       *str_key;
       const gchar *str;
 
-      if (! gimp_prop_eval_parse_reference (config, pspec,
+      if (! ligma_prop_eval_parse_reference (config, pspec,
                                             expr, t, error,
                                             &str_pspec, &str_key))
         return NULL;
@@ -846,7 +846,7 @@ gimp_prop_eval_string_simple (GObject      *config,
 
       if (! str)
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "key '%s' of property '%s' not found",
                        str_key,
                        g_param_spec_get_name (str_pspec));
@@ -862,7 +862,7 @@ gimp_prop_eval_string_simple (GObject      *config,
     }
   else
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid expression");
 
       return NULL;
@@ -872,7 +872,7 @@ gimp_prop_eval_string_simple (GObject      *config,
 }
 
 static gboolean
-gimp_prop_eval_parse_reference (GObject      *config,
+ligma_prop_eval_parse_reference (GObject      *config,
                                 GParamSpec   *pspec,
                                 const gchar **expr,
                                 gchar       **t,
@@ -880,9 +880,9 @@ gimp_prop_eval_parse_reference (GObject      *config,
                                 GParamSpec  **ref_pspec,
                                 gchar       **ref_key)
 {
-  if (! gimp_prop_eval_is_name (*t))
+  if (! ligma_prop_eval_is_name (*t))
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "invalid reference");
 
       return FALSE;
@@ -891,7 +891,7 @@ gimp_prop_eval_parse_reference (GObject      *config,
   *ref_pspec = pspec;
   *ref_key   = g_strdup (*t);
 
-  gimp_prop_eval_read_token (expr, t, error);
+  ligma_prop_eval_read_token (expr, t, error);
 
   if (*error)
     {
@@ -906,12 +906,12 @@ gimp_prop_eval_parse_reference (GObject      *config,
 
       property_name = *ref_key;
 
-      if (! gimp_prop_eval_read_token (expr, t, error) ||
-          ! gimp_prop_eval_is_name (*t))
+      if (! ligma_prop_eval_read_token (expr, t, error) ||
+          ! ligma_prop_eval_is_name (*t))
         {
           if (! *error)
             {
-              g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+              g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                            "invalid reference");
             }
 
@@ -925,7 +925,7 @@ gimp_prop_eval_parse_reference (GObject      *config,
 
       if (! *ref_pspec)
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "property '%s' not found",
                        property_name);
 
@@ -938,7 +938,7 @@ gimp_prop_eval_parse_reference (GObject      *config,
 
       *ref_key = g_strdup (*t);
 
-      gimp_prop_eval_read_token (expr, t, error);
+      ligma_prop_eval_read_token (expr, t, error);
 
       if (*error)
         {
@@ -952,7 +952,7 @@ gimp_prop_eval_parse_reference (GObject      *config,
 }
 
 static gboolean
-gimp_prop_eval_depth_test (gint     depth,
+ligma_prop_eval_depth_test (gint     depth,
                            GError **error)
 {
   /* make sure we don't recurse too deep.  in particular, guard against
@@ -960,7 +960,7 @@ gimp_prop_eval_depth_test (gint     depth,
    */
   if (depth == 100)
     {
-      g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+      g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                    "maximal nesting level exceeded");
 
       return FALSE;
@@ -970,7 +970,7 @@ gimp_prop_eval_depth_test (gint     depth,
 }
 
 static gchar *
-gimp_prop_eval_read_token (const gchar **expr,
+ligma_prop_eval_read_token (const gchar **expr,
                            gchar       **t,
                            GError      **error)
 {
@@ -989,7 +989,7 @@ gimp_prop_eval_read_token (const gchar **expr,
     return NULL;
 
   /* name */
-  if (gimp_prop_eval_is_name (token))
+  if (ligma_prop_eval_is_name (token))
     {
       do { ++*expr; } while (g_ascii_isalnum (**expr) ||
                              **expr == '_'            ||
@@ -1011,7 +1011,7 @@ gimp_prop_eval_read_token (const gchar **expr,
 
       if (**expr == '\0')
         {
-          g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
+          g_set_error (error, LIGMA_PROP_EVAL_ERROR, LIGMA_PROP_EVAL_FAILED,
                        "unterminated string literal");
 
           return NULL;
@@ -1031,13 +1031,13 @@ gimp_prop_eval_read_token (const gchar **expr,
 }
 
 static gboolean
-gimp_prop_eval_is_name (const gchar *token)
+ligma_prop_eval_is_name (const gchar *token)
 {
   return token && (g_ascii_isalpha (*token) || *token == '_');
 }
 
 static GQuark
-gimp_prop_eval_error_quark (void)
+ligma_prop_eval_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-prop-eval-error-quark");
+  return g_quark_from_static_string ("ligma-prop-eval-error-quark");
 }

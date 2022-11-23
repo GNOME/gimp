@@ -1,6 +1,6 @@
 # C version
 
-extension_name = 'org.gimp.extension.goat-exercises'
+extension_name = 'org.ligma.extension.goat-exercises'
 plug_in_name   = 'goat-exercise'
 
 plugin_sources = [
@@ -9,7 +9,7 @@ plugin_sources = [
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    ligma_plugins_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plug_in_name + '-c.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plug_in_name),
@@ -24,11 +24,11 @@ endif
 exe = executable(plug_in_name + '-c',
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
   ],
   install: true,
-  install_dir: gimpplugindir /  'extensions' / extension_name,
+  install_dir: ligmaplugindir /  'extensions' / extension_name,
 )
 
 # XXX This is so ugly!
@@ -37,7 +37,7 @@ plug_ins = exe.full_path().split('/')[-1].split('\\')[-1]
 
 install_data(
   'goat-exercise-c.c',
-  install_dir: gimpplugindir /  'extensions' / extension_name,
+  install_dir: ligmaplugindir /  'extensions' / extension_name,
 )
 
 # Vala version
@@ -47,19 +47,19 @@ if have_vala and have_gobject_introspection
     'goat-exercise-vala.vala',
     include_directories: [ rootInclude, ],
     dependencies: [
-      libgimp_vapi, libgimpui_vapi, gtk3, gegl, math,
+      libligma_vapi, libligmaui_vapi, gtk3, gegl, math,
     ],
     c_args: [
-      '-DGETTEXT_PACKAGE="@0@"'.format('org.gimp.extension.goat-exercises'),
+      '-DGETTEXT_PACKAGE="@0@"'.format('org.ligma.extension.goat-exercises'),
     ],
     install: true,
-    install_dir: gimpplugindir /  'extensions' / extension_name,
+    install_dir: ligmaplugindir /  'extensions' / extension_name,
   )
   plug_ins = plug_ins + ':' + exe.full_path().split('/')[-1].split('\\')[-1]
 
   install_data(
     'goat-exercise-vala.vala',
-    install_dir: gimpplugindir /  'extensions' / extension_name,
+    install_dir: ligmaplugindir /  'extensions' / extension_name,
   )
 endif
 
@@ -68,7 +68,7 @@ endif
 if have_python
   install_data(
     'goat-exercise-py3.py',
-    install_dir: gimpplugindir /  'extensions' / extension_name,
+    install_dir: ligmaplugindir /  'extensions' / extension_name,
   )
   plug_ins = plug_ins + ':goat-exercise-py3.py'
 endif
@@ -78,7 +78,7 @@ endif
 if have_javascript
   install_data(
     'goat-exercise-gjs.js',
-    install_dir: gimpplugindir /  'extensions' / extension_name,
+    install_dir: ligmaplugindir /  'extensions' / extension_name,
   )
   plug_ins = plug_ins + ':goat-exercise-gjs.js'
 endif
@@ -88,7 +88,7 @@ endif
 if have_lua
   install_data(
     'goat-exercise-lua.lua',
-    install_dir: gimpplugindir /  'extensions' / extension_name,
+    install_dir: ligmaplugindir /  'extensions' / extension_name,
   )
   plug_ins = plug_ins + ':goat-exercise-lua.lua'
 endif
@@ -98,7 +98,7 @@ endif
 conf = configuration_data()
 conf.set('GOAT_EXERCISES', plug_ins)
 
-appdatafilename = 'org.gimp.extension.goat-exercises.metainfo.xml'
+appdatafilename = 'org.ligma.extension.goat-exercises.metainfo.xml'
 appdatafilein = configure_file(
   input : appdatafilename + '.in.in',
   output: appdatafilename + '.in',
@@ -110,5 +110,5 @@ appdatafile = i18n.merge_file(
   output: appdatafilename,
   po_dir: po_plug_ins_dir,
   install: true,
-  install_dir: gimpplugindir /  'extensions' / extension_name,
+  install_dir: ligmaplugindir /  'extensions' / extension_name,
 )

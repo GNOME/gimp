@@ -1,10 +1,10 @@
-## Makefile.am for gimp/data/dynamics
+## Makefile.am for ligma/data/dynamics
 
 SUBDIRS = \
 	Basic \
 	FX
 
-dynamicsdatadir = $(gimpdatadir)/dynamics
+dynamicsdatadir = $(ligmadatadir)/dynamics
 
 dynamicsdata_DATA = \
 	Basic-Dynamics.gdyn		\

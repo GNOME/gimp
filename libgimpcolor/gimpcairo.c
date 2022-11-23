@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcairo.c
- * Copyright (C) 2007      Sven Neumann <sven@gimp.org>
- *               2010-2012 Michael Natterer <mitch@gimp.org>
+ * ligmacairo.c
+ * Copyright (C) 2007      Sven Neumann <sven@ligma.org>
+ *               2010-2012 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,27 +26,27 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimpcairo.h"
+#include "ligmacairo.h"
 
 
 /**
- * SECTION: gimpcairo
- * @title: GimpCairo
+ * SECTION: ligmacairo
+ * @title: LigmaCairo
  * @short_description: Color utility functions for cairo
  *
- * Utility functions that make cairo easier to use with GIMP color
+ * Utility functions that make cairo easier to use with LIGMA color
  * data types.
  **/
 
 
 /**
- * gimp_cairo_set_source_rgb:
+ * ligma_cairo_set_source_rgb:
  * @cr:    Cairo context
- * @color: GimpRGB color
+ * @color: LigmaRGB color
  *
  * Sets the source pattern within @cr to the solid opaque color
  * described by @color.
@@ -56,16 +56,16 @@
  * Since: 2.6
  **/
 void
-gimp_cairo_set_source_rgb (cairo_t       *cr,
-                           const GimpRGB *color)
+ligma_cairo_set_source_rgb (cairo_t       *cr,
+                           const LigmaRGB *color)
 {
   cairo_set_source_rgb (cr, color->r, color->g, color->b);
 }
 
 /**
- * gimp_cairo_set_source_rgba:
+ * ligma_cairo_set_source_rgba:
  * @cr:    Cairo context
- * @color: GimpRGB color
+ * @color: LigmaRGB color
  *
  * Sets the source pattern within @cr to the solid translucent color
  * described by @color.
@@ -75,14 +75,14 @@ gimp_cairo_set_source_rgb (cairo_t       *cr,
  * Since: 2.6
  **/
 void
-gimp_cairo_set_source_rgba (cairo_t       *cr,
-                            const GimpRGB *color)
+ligma_cairo_set_source_rgba (cairo_t       *cr,
+                            const LigmaRGB *color)
 {
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
 }
 
 /**
- * gimp_cairo_checkerboard_create:
+ * ligma_cairo_checkerboard_create:
  * @cr:    Cairo context
  * @size:  check size
  * @light: light check color or %NULL to use the default light gray
@@ -95,10 +95,10 @@ gimp_cairo_set_source_rgba (cairo_t       *cr,
  * Since: 2.6
  **/
 cairo_pattern_t *
-gimp_cairo_checkerboard_create (cairo_t       *cr,
+ligma_cairo_checkerboard_create (cairo_t       *cr,
                                 gint           size,
-                                const GimpRGB *light,
-                                const GimpRGB *dark)
+                                const LigmaRGB *light,
+                                const LigmaRGB *dark)
 {
   cairo_t         *context;
   cairo_surface_t *surface;
@@ -113,20 +113,20 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
   context = cairo_create (surface);
 
   if (light)
-    gimp_cairo_set_source_rgb (context, light);
+    ligma_cairo_set_source_rgb (context, light);
   else
     cairo_set_source_rgb (context,
-                          GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+                          LIGMA_CHECK_LIGHT, LIGMA_CHECK_LIGHT, LIGMA_CHECK_LIGHT);
 
   cairo_rectangle (context, 0,    0,    size, size);
   cairo_rectangle (context, size, size, size, size);
   cairo_fill (context);
 
   if (dark)
-    gimp_cairo_set_source_rgb (context, dark);
+    ligma_cairo_set_source_rgb (context, dark);
   else
     cairo_set_source_rgb (context,
-                          GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+                          LIGMA_CHECK_DARK, LIGMA_CHECK_DARK, LIGMA_CHECK_DARK);
 
   cairo_rectangle (context, 0,    size, size, size);
   cairo_rectangle (context, size, 0,    size, size);
@@ -143,7 +143,7 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
 }
 
 /**
- * gimp_cairo_surface_get_format:
+ * ligma_cairo_surface_get_format:
  * @surface: a Cairo surface
  *
  * This function returns a #Babl format that corresponds to @surface's
@@ -154,7 +154,7 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
  * Since: 2.10
  **/
 const Babl *
-gimp_cairo_surface_get_format (cairo_surface_t *surface)
+ligma_cairo_surface_get_format (cairo_surface_t *surface)
 {
   g_return_val_if_fail (surface != NULL, NULL);
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
@@ -174,7 +174,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
 }
 
 /**
- * gimp_cairo_surface_create_buffer:
+ * ligma_cairo_surface_create_buffer:
  * @surface: a Cairo surface
  *
  * This function returns a #GeglBuffer which wraps @surface's pixels.
@@ -186,7 +186,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  * Since: 2.10
  **/
 GeglBuffer *
-gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
+ligma_cairo_surface_create_buffer (cairo_surface_t *surface)
 {
   const Babl *format;
   gint        width;
@@ -196,7 +196,7 @@ gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, NULL);
 
-  format = gimp_cairo_surface_get_format  (surface);
+  format = ligma_cairo_surface_get_format  (surface);
   width  = cairo_image_surface_get_width  (surface);
   height = cairo_image_surface_get_height (surface);
 

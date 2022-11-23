@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,19 +22,19 @@
 
 #include "display-types.h"
 
-#include "widgets/gimpdeviceinfo.h"
-#include "widgets/gimpdeviceinfo-coords.h"
+#include "widgets/ligmadeviceinfo.h"
+#include "widgets/ligmadeviceinfo-coords.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-autoscroll.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-transform.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-autoscroll.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-transform.h"
 
 #include "tools/tools-types.h"
 #include "tools/tool_manager.h"
-#include "tools/gimptool.h"
-#include "tools/gimptoolcontrol.h"
+#include "tools/ligmatool.h"
+#include "tools/ligmatoolcontrol.h"
 
 
 #define AUTOSCROLL_DT  20
@@ -44,7 +44,7 @@
 typedef struct
 {
   GdkEventMotion  *mevent;
-  GimpDeviceInfo  *device;
+  LigmaDeviceInfo  *device;
   guint32          time;
   GdkModifierType  state;
   guint            timeout_id;
@@ -53,19 +53,19 @@ typedef struct
 
 /*  local function prototypes  */
 
-static gboolean gimp_display_shell_autoscroll_timeout (gpointer data);
+static gboolean ligma_display_shell_autoscroll_timeout (gpointer data);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
+ligma_display_shell_autoscroll_start (LigmaDisplayShell *shell,
                                      GdkModifierType   state,
                                      GdkEventMotion   *mevent)
 {
   ScrollInfo *info;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->scroll_info)
     return;
@@ -73,22 +73,22 @@ gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
   info = g_slice_new0 (ScrollInfo);
 
   info->mevent     = mevent;
-  info->device     = gimp_device_info_get_by_device (mevent->device);
+  info->device     = ligma_device_info_get_by_device (mevent->device);
   info->time       = gdk_event_get_time ((GdkEvent *) mevent);
   info->state      = state;
   info->timeout_id = g_timeout_add (AUTOSCROLL_DT,
-                                    gimp_display_shell_autoscroll_timeout,
+                                    ligma_display_shell_autoscroll_timeout,
                                     shell);
 
   shell->scroll_info = info;
 }
 
 void
-gimp_display_shell_autoscroll_stop (GimpDisplayShell *shell)
+ligma_display_shell_autoscroll_stop (LigmaDisplayShell *shell)
 {
   ScrollInfo *info;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->scroll_info)
     return;
@@ -109,16 +109,16 @@ gimp_display_shell_autoscroll_stop (GimpDisplayShell *shell)
 /*  private functions  */
 
 static gboolean
-gimp_display_shell_autoscroll_timeout (gpointer data)
+ligma_display_shell_autoscroll_timeout (gpointer data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
+  LigmaDisplayShell *shell = LIGMA_DISPLAY_SHELL (data);
   ScrollInfo       *info  = shell->scroll_info;
-  GimpCoords        device_coords;
-  GimpCoords        image_coords;
+  LigmaCoords        device_coords;
+  LigmaCoords        image_coords;
   gint              dx = 0;
   gint              dy = 0;
 
-  gimp_device_info_get_device_coords (info->device,
+  ligma_device_info_get_device_coords (info->device,
                                       gtk_widget_get_window (shell->canvas),
                                       &device_coords);
 
@@ -134,40 +134,40 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
   if (dx || dy)
     {
-      GimpDisplay *display         = shell->display;
-      GimpTool    *active_tool     = tool_manager_get_active (display->gimp);
+      LigmaDisplay *display         = shell->display;
+      LigmaTool    *active_tool     = tool_manager_get_active (display->ligma);
       gint         scroll_amount_x = AUTOSCROLL_DX * dx;
       gint         scroll_amount_y = AUTOSCROLL_DX * dy;
 
       info->time += AUTOSCROLL_DT;
 
-      gimp_display_shell_scroll_unoverscrollify (shell,
+      ligma_display_shell_scroll_unoverscrollify (shell,
                                                  scroll_amount_x,
                                                  scroll_amount_y,
                                                  &scroll_amount_x,
                                                  &scroll_amount_y);
 
-      gimp_display_shell_scroll (shell,
+      ligma_display_shell_scroll (shell,
                                  scroll_amount_x,
                                  scroll_amount_y);
 
-      gimp_display_shell_untransform_coords (shell,
+      ligma_display_shell_untransform_coords (shell,
                                              &device_coords,
                                              &image_coords);
 
-      if (gimp_tool_control_get_snap_to (active_tool->control))
+      if (ligma_tool_control_get_snap_to (active_tool->control))
         {
           gint x, y, width, height;
 
-          gimp_tool_control_get_snap_offsets (active_tool->control,
+          ligma_tool_control_get_snap_offsets (active_tool->control,
                                               &x, &y, &width, &height);
 
-          gimp_display_shell_snap_coords (shell,
+          ligma_display_shell_snap_coords (shell,
                                           &image_coords,
                                           x, y, width, height);
         }
 
-      tool_manager_motion_active (display->gimp,
+      tool_manager_motion_active (display->ligma,
                                   &image_coords,
                                   info->time, info->state,
                                   display);

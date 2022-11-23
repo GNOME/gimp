@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,35 +20,35 @@
 
 #include "widgets/widgets-types.h"
 
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmauimanager.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-new.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-new.h"
 
-#include "operations/gimplevelsconfig.h"
+#include "operations/ligmalevelsconfig.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 
-#define GIMP_TEST_IMAGE_SIZE 100
+#define LIGMA_TEST_IMAGE_SIZE 100
 
 #define ADD_IMAGE_TEST(function) \
-  g_test_add ("/gimp-core/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              gimp_test_image_setup, \
+  g_test_add ("/ligma-core/" #function, \
+              LigmaTestFixture, \
+              ligma, \
+              ligma_test_image_setup, \
               function, \
-              gimp_test_image_teardown);
+              ligma_test_image_teardown);
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-core/" #function, \
-              GimpTestFixture, \
-              gimp, \
+  g_test_add ("/ligma-core/" #function, \
+              LigmaTestFixture, \
+              ligma, \
               NULL, \
               function, \
               NULL);
@@ -56,45 +56,45 @@
 
 typedef struct
 {
-  GimpImage *image;
-} GimpTestFixture;
+  LigmaImage *image;
+} LigmaTestFixture;
 
 
-static void gimp_test_image_setup    (GimpTestFixture *fixture,
+static void ligma_test_image_setup    (LigmaTestFixture *fixture,
                                       gconstpointer    data);
-static void gimp_test_image_teardown (GimpTestFixture *fixture,
+static void ligma_test_image_teardown (LigmaTestFixture *fixture,
                                       gconstpointer    data);
 
 
 /**
- * gimp_test_image_setup:
+ * ligma_test_image_setup:
  * @fixture:
  * @data:
  *
  * Test fixture setup for a single image.
  **/
 static void
-gimp_test_image_setup (GimpTestFixture *fixture,
+ligma_test_image_setup (LigmaTestFixture *fixture,
                        gconstpointer    data)
 {
-  Gimp *gimp = GIMP (data);
+  Ligma *ligma = LIGMA (data);
 
-  fixture->image = gimp_image_new (gimp,
-                                   GIMP_TEST_IMAGE_SIZE,
-                                   GIMP_TEST_IMAGE_SIZE,
-                                   GIMP_RGB,
-                                   GIMP_PRECISION_FLOAT_LINEAR);
+  fixture->image = ligma_image_new (ligma,
+                                   LIGMA_TEST_IMAGE_SIZE,
+                                   LIGMA_TEST_IMAGE_SIZE,
+                                   LIGMA_RGB,
+                                   LIGMA_PRECISION_FLOAT_LINEAR);
 }
 
 /**
- * gimp_test_image_teardown:
+ * ligma_test_image_teardown:
  * @fixture:
  * @data:
  *
  * Test fixture teardown for a single image.
  **/
 static void
-gimp_test_image_teardown (GimpTestFixture *fixture,
+ligma_test_image_teardown (LigmaTestFixture *fixture,
                           gconstpointer    data)
 {
   g_object_unref (fixture->image);
@@ -106,41 +106,41 @@ gimp_test_image_teardown (GimpTestFixture *fixture,
  * @data:
  *
  * Super basic test that makes sure we can add a layer
- * and call gimp_item_rotate with center at (0, -10)
+ * and call ligma_item_rotate with center at (0, -10)
  * without triggering a failed assertion .
  **/
 static void
-rotate_non_overlapping (GimpTestFixture *fixture,
+rotate_non_overlapping (LigmaTestFixture *fixture,
                         gconstpointer    data)
 {
-  Gimp        *gimp    = GIMP (data);
-  GimpImage   *image   = fixture->image;
-  GimpLayer   *layer;
-  GimpContext *context = gimp_context_new (gimp, "Test", NULL /*template*/);
+  Ligma        *ligma    = LIGMA (data);
+  LigmaImage   *image   = fixture->image;
+  LigmaLayer   *layer;
+  LigmaContext *context = ligma_context_new (ligma, "Test", NULL /*template*/);
   gboolean     result;
 
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 0);
 
-  layer = gimp_layer_new (image,
-                          GIMP_TEST_IMAGE_SIZE,
-                          GIMP_TEST_IMAGE_SIZE,
+  layer = ligma_layer_new (image,
+                          LIGMA_TEST_IMAGE_SIZE,
+                          LIGMA_TEST_IMAGE_SIZE,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
-                          GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_OPACITY_OPAQUE,
+                          LIGMA_LAYER_MODE_NORMAL);
 
-  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+  g_assert_cmpint (LIGMA_IS_LAYER (layer), ==, TRUE);
 
-  result = gimp_image_add_layer (image,
+  result = ligma_image_add_layer (image,
                                  layer,
-                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 LIGMA_IMAGE_ACTIVE_PARENT,
                                  0,
                                  FALSE);
 
-  gimp_item_rotate (GIMP_ITEM (layer), context, GIMP_ROTATE_90, 0., -10., TRUE);
+  ligma_item_rotate (LIGMA_ITEM (layer), context, LIGMA_ROTATE_90, 0., -10., TRUE);
 
   g_assert_cmpint (result, ==, TRUE);
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 1);
   g_object_unref (context);
 }
 
@@ -152,33 +152,33 @@ rotate_non_overlapping (GimpTestFixture *fixture,
  * Super basic test that makes sure we can add a layer.
  **/
 static void
-add_layer (GimpTestFixture *fixture,
+add_layer (LigmaTestFixture *fixture,
            gconstpointer    data)
 {
-  GimpImage *image = fixture->image;
-  GimpLayer *layer;
+  LigmaImage *image = fixture->image;
+  LigmaLayer *layer;
   gboolean   result;
 
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 0);
 
-  layer = gimp_layer_new (image,
-                          GIMP_TEST_IMAGE_SIZE,
-                          GIMP_TEST_IMAGE_SIZE,
+  layer = ligma_layer_new (image,
+                          LIGMA_TEST_IMAGE_SIZE,
+                          LIGMA_TEST_IMAGE_SIZE,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
-                          GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_OPACITY_OPAQUE,
+                          LIGMA_LAYER_MODE_NORMAL);
 
-  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+  g_assert_cmpint (LIGMA_IS_LAYER (layer), ==, TRUE);
 
-  result = gimp_image_add_layer (image,
+  result = ligma_image_add_layer (image,
                                  layer,
-                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 LIGMA_IMAGE_ACTIVE_PARENT,
                                  0,
                                  FALSE);
 
   g_assert_cmpint (result, ==, TRUE);
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 1);
 }
 
 /**
@@ -189,40 +189,40 @@ add_layer (GimpTestFixture *fixture,
  * Super basic test that makes sure we can remove a layer.
  **/
 static void
-remove_layer (GimpTestFixture *fixture,
+remove_layer (LigmaTestFixture *fixture,
               gconstpointer    data)
 {
-  GimpImage *image = fixture->image;
-  GimpLayer *layer;
+  LigmaImage *image = fixture->image;
+  LigmaLayer *layer;
   gboolean   result;
 
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 0);
 
-  layer = gimp_layer_new (image,
-                          GIMP_TEST_IMAGE_SIZE,
-                          GIMP_TEST_IMAGE_SIZE,
+  layer = ligma_layer_new (image,
+                          LIGMA_TEST_IMAGE_SIZE,
+                          LIGMA_TEST_IMAGE_SIZE,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
-                          GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_OPACITY_OPAQUE,
+                          LIGMA_LAYER_MODE_NORMAL);
 
-  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+  g_assert_cmpint (LIGMA_IS_LAYER (layer), ==, TRUE);
 
-  result = gimp_image_add_layer (image,
+  result = ligma_image_add_layer (image,
                                  layer,
-                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 LIGMA_IMAGE_ACTIVE_PARENT,
                                  0,
                                  FALSE);
 
   g_assert_cmpint (result, ==, TRUE);
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 1);
 
-  gimp_image_remove_layer (image,
+  ligma_image_remove_layer (image,
                            layer,
                            FALSE,
                            NULL);
 
-  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+  g_assert_cmpint (ligma_image_get_n_layers (image), ==, 0);
 }
 
 /**
@@ -235,18 +235,18 @@ remove_layer (GimpTestFixture *fixture,
  * calculate what gamma will give a white graypoint.
  **/
 static void
-white_graypoint_in_red_levels (GimpTestFixture *fixture,
+white_graypoint_in_red_levels (LigmaTestFixture *fixture,
                                gconstpointer    data)
 {
-  GimpRGB              black   = { 0, 0, 0, 0 };
-  GimpRGB              gray    = { 1, 1, 1, 1 };
-  GimpRGB              white   = { 1, 1, 1, 1 };
-  GimpHistogramChannel channel = GIMP_HISTOGRAM_RED;
-  GimpLevelsConfig    *config;
+  LigmaRGB              black   = { 0, 0, 0, 0 };
+  LigmaRGB              gray    = { 1, 1, 1, 1 };
+  LigmaRGB              white   = { 1, 1, 1, 1 };
+  LigmaHistogramChannel channel = LIGMA_HISTOGRAM_RED;
+  LigmaLevelsConfig    *config;
 
-  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+  config = g_object_new (LIGMA_TYPE_LEVELS_CONFIG, NULL);
 
-  gimp_levels_config_adjust_by_colors (config,
+  ligma_levels_config_adjust_by_colors (config,
                                        channel,
                                        &black,
                                        &gray,
@@ -262,16 +262,16 @@ int
 main (int    argc,
       char **argv)
 {
-  Gimp *gimp;
+  Ligma *ligma;
   int   result;
 
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/ligmadir");
 
   /* We share the same application instance across all tests */
-  gimp = gimp_init_for_testing ();
+  ligma = ligma_init_for_testing ();
 
   /* Add tests */
   ADD_IMAGE_TEST (add_layer);
@@ -283,11 +283,11 @@ main (int    argc,
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/ligmadir-output");
 
   /* Exit so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  ligma_exit (ligma, TRUE);
 
   return result;
 }

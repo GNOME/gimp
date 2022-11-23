@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumstore.c
- * Copyright (C) 2004-2007  Sven Neumann <sven@gimp.org>
+ * ligmaenumstore.c
+ * Copyright (C) 2004-2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,19 +23,19 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpenumstore.h"
+#include "ligmaenumstore.h"
 
 
 /**
- * SECTION: gimpenumstore
- * @title: GimpEnumStore
- * @short_description: A #GimpIntStore subclass that keeps enum values.
+ * SECTION: ligmaenumstore
+ * @title: LigmaEnumStore
+ * @short_description: A #LigmaIntStore subclass that keeps enum values.
  *
- * A #GimpIntStore subclass that keeps enum values.
+ * A #LigmaIntStore subclass that keeps enum values.
  **/
 
 
@@ -46,44 +46,44 @@ enum
 };
 
 
-struct _GimpEnumStorePrivate
+struct _LigmaEnumStorePrivate
 {
   GEnumClass *enum_class;
 };
 
-#define GET_PRIVATE(obj) (((GimpEnumStore *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaEnumStore *) (obj))->priv)
 
 
-static void   gimp_enum_store_finalize     (GObject      *object);
-static void   gimp_enum_store_set_property (GObject      *object,
+static void   ligma_enum_store_finalize     (GObject      *object);
+static void   ligma_enum_store_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
-static void   gimp_enum_store_get_property (GObject      *object,
+static void   ligma_enum_store_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
-static void   gimp_enum_store_add_value    (GtkListStore *store,
+static void   ligma_enum_store_add_value    (GtkListStore *store,
                                             GEnumValue   *value);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaEnumStore, ligma_enum_store, LIGMA_TYPE_INT_STORE)
 
-#define parent_class gimp_enum_store_parent_class
+#define parent_class ligma_enum_store_parent_class
 
 
 static void
-gimp_enum_store_class_init (GimpEnumStoreClass *klass)
+ligma_enum_store_class_init (LigmaEnumStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_enum_store_finalize;
-  object_class->set_property = gimp_enum_store_set_property;
-  object_class->get_property = gimp_enum_store_get_property;
+  object_class->finalize     = ligma_enum_store_finalize;
+  object_class->set_property = ligma_enum_store_set_property;
+  object_class->get_property = ligma_enum_store_get_property;
 
   /**
-   * GimpEnumStore:enum-type:
+   * LigmaEnumStore:enum-type:
    *
    * Sets the #GType of the enum to be used in the store.
    *
@@ -96,19 +96,19 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
                                                        "The type of the enum",
                                                        G_TYPE_ENUM,
                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_enum_store_init (GimpEnumStore *store)
+ligma_enum_store_init (LigmaEnumStore *store)
 {
-  store->priv = gimp_enum_store_get_instance_private (store);
+  store->priv = ligma_enum_store_get_instance_private (store);
 }
 
 static void
-gimp_enum_store_finalize (GObject *object)
+ligma_enum_store_finalize (GObject *object)
 {
-  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
+  LigmaEnumStorePrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->enum_class, g_type_class_unref);
 
@@ -116,12 +116,12 @@ gimp_enum_store_finalize (GObject *object)
 }
 
 static void
-gimp_enum_store_set_property (GObject      *object,
+ligma_enum_store_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
+  LigmaEnumStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -137,12 +137,12 @@ gimp_enum_store_set_property (GObject      *object,
 }
 
 static void
-gimp_enum_store_get_property (GObject    *object,
+ligma_enum_store_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
+  LigmaEnumStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -159,26 +159,26 @@ gimp_enum_store_get_property (GObject    *object,
 }
 
 static void
-gimp_enum_store_add_value (GtkListStore *store,
+ligma_enum_store_add_value (GtkListStore *store,
                            GEnumValue   *value)
 {
-  GimpEnumStorePrivate *priv = GET_PRIVATE (store);
+  LigmaEnumStorePrivate *priv = GET_PRIVATE (store);
   GtkTreeIter           iter = { 0, };
   const gchar          *desc;
   const gchar          *abbrev;
   gchar                *stripped;
 
-  desc   = gimp_enum_value_get_desc   (priv->enum_class, value);
-  abbrev = gimp_enum_value_get_abbrev (priv->enum_class, value);
+  desc   = ligma_enum_value_get_desc   (priv->enum_class, value);
+  abbrev = ligma_enum_value_get_abbrev (priv->enum_class, value);
 
   /* no mnemonics in combo boxes */
-  stripped = gimp_strip_uline (desc);
+  stripped = ligma_strip_uline (desc);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
-                      GIMP_INT_STORE_VALUE,  value->value,
-                      GIMP_INT_STORE_LABEL,  stripped,
-                      GIMP_INT_STORE_ABBREV, abbrev,
+                      LIGMA_INT_STORE_VALUE,  value->value,
+                      LIGMA_INT_STORE_LABEL,  stripped,
+                      LIGMA_INT_STORE_ABBREV, abbrev,
                       -1);
 
   g_free (stripped);
@@ -186,19 +186,19 @@ gimp_enum_store_add_value (GtkListStore *store,
 
 
 /**
- * gimp_enum_store_new:
+ * ligma_enum_store_new:
  * @enum_type: the #GType of an enum.
  *
- * Creates a new #GimpEnumStore, derived from #GtkListStore and fills
+ * Creates a new #LigmaEnumStore, derived from #GtkListStore and fills
  * it with enum values. The enum needs to be registered to the type
  * system and should have translatable value names.
  *
- * Returns: a new #GimpEnumStore.
+ * Returns: a new #LigmaEnumStore.
  *
  * Since: 2.4
  **/
 GtkListStore *
-gimp_enum_store_new (GType enum_type)
+ligma_enum_store_new (GType enum_type)
 {
   GtkListStore *store;
   GEnumClass   *enum_class;
@@ -207,7 +207,7 @@ gimp_enum_store_new (GType enum_type)
 
   enum_class = g_type_class_ref (enum_type);
 
-  store = gimp_enum_store_new_with_range (enum_type,
+  store = ligma_enum_store_new_with_range (enum_type,
                                           enum_class->minimum,
                                           enum_class->maximum);
 
@@ -217,31 +217,31 @@ gimp_enum_store_new (GType enum_type)
 }
 
 /**
- * gimp_enum_store_new_with_range:
+ * ligma_enum_store_new_with_range:
  * @enum_type: the #GType of an enum.
  * @minimum: the minimum value to include
  * @maximum: the maximum value to include
  *
- * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
+ * Creates a new #LigmaEnumStore like ligma_enum_store_new() but allows
  * to limit the enum values to a certain range. Values smaller than
  * @minimum or larger than @maximum are not added to the store.
  *
- * Returns: a new #GimpEnumStore.
+ * Returns: a new #LigmaEnumStore.
  *
  * Since: 2.4
  **/
 GtkListStore *
-gimp_enum_store_new_with_range (GType  enum_type,
+ligma_enum_store_new_with_range (GType  enum_type,
                                 gint   minimum,
                                 gint   maximum)
 {
-  GimpEnumStorePrivate *priv;
+  LigmaEnumStorePrivate *priv;
   GtkListStore         *store;
   GEnumValue           *value;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+  store = g_object_new (LIGMA_TYPE_ENUM_STORE,
                         "enum-type", enum_type,
                         NULL);
 
@@ -254,28 +254,28 @@ gimp_enum_store_new_with_range (GType  enum_type,
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      gimp_enum_store_add_value (store, value);
+      ligma_enum_store_add_value (store, value);
     }
 
   return store;
 }
 
 /**
- * gimp_enum_store_new_with_values: (skip)
+ * ligma_enum_store_new_with_values: (skip)
  * @enum_type: the #GType of an enum.
  * @n_values:  the number of enum values to include
  * @...:       a list of enum values (exactly @n_values)
  *
- * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
+ * Creates a new #LigmaEnumStore like ligma_enum_store_new() but allows
  * to explicitly list the enum values that should be added to the
  * store.
  *
- * Returns: a new #GimpEnumStore.
+ * Returns: a new #LigmaEnumStore.
  *
  * Since: 2.4
  **/
 GtkListStore *
-gimp_enum_store_new_with_values (GType enum_type,
+ligma_enum_store_new_with_values (GType enum_type,
                                  gint  n_values,
                                  ...)
 {
@@ -284,7 +284,7 @@ gimp_enum_store_new_with_values (GType enum_type,
 
   va_start (args, n_values);
 
-  store = gimp_enum_store_new_with_values_valist (enum_type, n_values, args);
+  store = ligma_enum_store_new_with_values_valist (enum_type, n_values, args);
 
   va_end (args);
 
@@ -292,23 +292,23 @@ gimp_enum_store_new_with_values (GType enum_type,
 }
 
 /**
- * gimp_enum_store_new_with_values_valist: (skip)
+ * ligma_enum_store_new_with_values_valist: (skip)
  * @enum_type: the #GType of an enum.
  * @n_values:  the number of enum values to include
  * @args:      a va_list of enum values (exactly @n_values)
  *
- * See gimp_enum_store_new_with_values().
+ * See ligma_enum_store_new_with_values().
  *
- * Returns: a new #GimpEnumStore.
+ * Returns: a new #LigmaEnumStore.
  *
  * Since: 2.4
  **/
 GtkListStore *
-gimp_enum_store_new_with_values_valist (GType     enum_type,
+ligma_enum_store_new_with_values_valist (GType     enum_type,
                                         gint      n_values,
                                         va_list   args)
 {
-  GimpEnumStorePrivate *priv;
+  LigmaEnumStorePrivate *priv;
   GtkListStore         *store;
   GEnumValue           *value;
   gint                  i;
@@ -316,7 +316,7 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
   g_return_val_if_fail (n_values > 1, NULL);
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+  store = g_object_new (LIGMA_TYPE_ENUM_STORE,
                         "enum-type", enum_type,
                         NULL);
 
@@ -328,34 +328,34 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
                                 va_arg (args, gint));
 
       if (value)
-        gimp_enum_store_add_value (store, value);
+        ligma_enum_store_add_value (store, value);
     }
 
   return store;
 }
 
 /**
- * gimp_enum_store_set_icon_prefix:
- * @store:       a #GimpEnumStore
+ * ligma_enum_store_set_icon_prefix:
+ * @store:       a #LigmaEnumStore
  * @icon_prefix: a prefix to create icon names from enum values
  *
  * Creates an icon name for each enum value in the @store by appending
  * the value's nick to the given @icon_prefix, separated by a hyphen.
  *
- * See also: gimp_enum_combo_box_set_icon_prefix().
+ * See also: ligma_enum_combo_box_set_icon_prefix().
  *
  * Since: 2.10
  **/
 void
-gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
+ligma_enum_store_set_icon_prefix (LigmaEnumStore *store,
                                  const gchar   *icon_prefix)
 {
-  GimpEnumStorePrivate *priv;
+  LigmaEnumStorePrivate *priv;
   GtkTreeModel         *model;
   GtkTreeIter           iter;
   gboolean              iter_valid;
 
-  g_return_if_fail (GIMP_IS_ENUM_STORE (store));
+  g_return_if_fail (LIGMA_IS_ENUM_STORE (store));
 
   priv  = GET_PRIVATE (store);
   model = GTK_TREE_MODEL (store);
@@ -372,7 +372,7 @@ gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
           gint        value;
 
           gtk_tree_model_get (model, &iter,
-                              GIMP_INT_STORE_VALUE, &value,
+                              LIGMA_INT_STORE_VALUE, &value,
                               -1);
 
           enum_value = g_enum_get_value (priv->enum_class, value);
@@ -386,7 +386,7 @@ gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
         }
 
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                          GIMP_INT_STORE_ICON_NAME, icon_name,
+                          LIGMA_INT_STORE_ICON_NAME, icon_name,
                           -1);
 
       if (icon_name)

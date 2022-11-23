@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,115 +27,115 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer-filter.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimppalette.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer-filter.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmapalette.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-palettes_refresh_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+palettes_refresh_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
-  gimp_data_factory_data_refresh (gimp->palette_factory, context);
+  ligma_data_factory_data_refresh (ligma->palette_factory, context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-palettes_get_list_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+palettes_get_list_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *filter;
   gchar **palette_list = NULL;
 
-  filter = g_value_get_string (gimp_value_array_index (args, 0));
+  filter = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      palette_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->palette_factory),
+      palette_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->palette_factory),
                                                              filter);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_boxed (gimp_value_array_index (return_vals, 1), palette_list);
+    g_value_take_boxed (ligma_value_array_index (return_vals, 1), palette_list);
 
   return return_vals;
 }
 
 void
-register_palettes_procs (GimpPDB *pdb)
+register_palettes_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-palettes-refresh
+   * ligma-palettes-refresh
    */
-  procedure = gimp_procedure_new (palettes_refresh_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palettes-refresh");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (palettes_refresh_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-palettes-refresh");
+  ligma_procedure_set_static_help (procedure,
                                   "Refreshes current palettes. This function always succeeds.",
                                   "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Adrian Likins <adrian@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Adrian Likins <adrian@ligma.org>",
                                          "Adrian Likins",
                                          "1998");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-palettes-get-list
+   * ligma-palettes-get-list
    */
-  procedure = gimp_procedure_new (palettes_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palettes-get-list");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (palettes_get_list_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-palettes-get-list");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieves a list of all of the available palettes",
-                                  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
+                                  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'ligma-context-set-palette'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Nathan Summers <rock@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Nathan Summers <rock@ligma.org>",
                                          "Nathan Summers",
                                          "2001");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filter",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("palette-list",
                                                        "palette list",
                                                        "The list of palette names",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

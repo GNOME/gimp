@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 #define FILE_SAVE_RESPONSE_OTHER_DIALOG -23
 
 
-GtkWidget * file_save_dialog_new        (Gimp                *gimp,
+GtkWidget * file_save_dialog_new        (Ligma                *ligma,
                                          gboolean             export);
 
-gboolean    file_save_dialog_save_image (GimpProgress        *progress_and_handler,
-                                         Gimp                *gimp,
-                                         GimpImage           *image,
+gboolean    file_save_dialog_save_image (LigmaProgress        *progress_and_handler,
+                                         Ligma                *ligma,
+                                         LigmaImage           *image,
                                          GFile               *file,
-                                         GimpPlugInProcedure *write_proc,
-                                         GimpRunMode          run_mode,
+                                         LigmaPlugInProcedure *write_proc,
+                                         LigmaRunMode          run_mode,
                                          gboolean             save_a_copy,
                                          gboolean             export_backward,
                                          gboolean             export_forward,

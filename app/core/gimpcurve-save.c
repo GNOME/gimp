@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpcurve.h"
-#include "gimpcurve-save.h"
+#include "ligmacurve.h"
+#include "ligmacurve-save.h"
 
 
 gboolean
-gimp_curve_save (GimpData       *data,
+ligma_curve_save (LigmaData       *data,
                  GOutputStream  *output,
                  GError        **error)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CURVE (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+  return ligma_config_serialize_to_stream (LIGMA_CONFIG (data),
                                           output,
-                                          "GIMP curve file",
-                                          "end of GIMP curve file",
+                                          "LIGMA curve file",
+                                          "end of LIGMA curve file",
                                           NULL, error);
 }

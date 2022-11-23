@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpwarpoptions.c
+ * ligmawarpoptions.c
  * Copyright (C) 2011 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpwarpoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmawarpoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -55,137 +55,137 @@ enum
 };
 
 
-static void       gimp_warp_options_set_property (GObject      *object,
+static void       ligma_warp_options_set_property (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
                                                   GParamSpec   *pspec);
-static void       gimp_warp_options_get_property (GObject      *object,
+static void       ligma_warp_options_get_property (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpWarpOptions, gimp_warp_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaWarpOptions, ligma_warp_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_warp_options_parent_class
+#define parent_class ligma_warp_options_parent_class
 
 
 static void
-gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
+ligma_warp_options_class_init (LigmaWarpOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_warp_options_set_property;
-  object_class->get_property = gimp_warp_options_get_property;
+  object_class->set_property = ligma_warp_options_set_property;
+  object_class->get_property = ligma_warp_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BEHAVIOR,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BEHAVIOR,
                          "behavior",
                          _("Behavior"),
                          _("Behavior"),
-                         GIMP_TYPE_WARP_BEHAVIOR,
-                         GIMP_WARP_BEHAVIOR_MOVE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_WARP_BEHAVIOR,
+                         LIGMA_WARP_BEHAVIOR_MOVE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
                            "effect-size",
                            _("Size"),
                            _("Effect Size"),
                            1.0, 10000.0, 40.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
                            "effect-hardness",
                            _("Hardness"),
                            _("Effect Hardness"),
                            0.0, 100.0, 50.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
                            "effect-strength",
                            _("Strength"),
                            _("Effect Strength"),
                            1.0, 100.0, 50.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_SPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_SPACING,
                            "stroke-spacing",
                            _("Spacing"),
                            _("Stroke Spacing"),
                            1.0, 100.0, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
                          "interpolation",
                          _("Interpolation"),
                          _("Interpolation method"),
-                         GIMP_TYPE_INTERPOLATION_TYPE,
-                         GIMP_INTERPOLATION_CUBIC,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_INTERPOLATION_TYPE,
+                         LIGMA_INTERPOLATION_CUBIC,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ABYSS_POLICY,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ABYSS_POLICY,
                          "abyss-policy",
                          _("Abyss policy"),
                          _("Out-of-bounds sampling behavior"),
                          GEGL_TYPE_ABYSS_POLICY,
                          GEGL_ABYSS_NONE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HIGH_QUALITY_PREVIEW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_HIGH_QUALITY_PREVIEW,
                             "high-quality-preview",
                             _("High quality preview"),
                             _("Use an accurate but slower preview"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_REAL_TIME_PREVIEW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_REAL_TIME_PREVIEW,
                             "real-time-preview",
                             _("Real-time preview"),
                             _("Render preview in real time (slower)"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_DURING_MOTION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_DURING_MOTION,
                             "stroke-during-motion",
                             _("During motion"),
                             _("Apply effect during motion"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_PERIODICALLY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_PERIODICALLY,
                             "stroke-periodically",
                             _("Periodically"),
                             _("Apply effect periodically"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_PERIODICALLY_RATE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_PERIODICALLY_RATE,
                            "stroke-periodically-rate",
                            _("Rate"),
                            _("Periodic stroke rate"),
                            0.0, 100.0, 50.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
                         "n-animation-frames",
                         _("Frames"),
                         _("Number of animation frames"),
                         3, 1000, 10,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_warp_options_init (GimpWarpOptions *options)
+ligma_warp_options_init (LigmaWarpOptions *options)
 {
 }
 
 static void
-gimp_warp_options_set_property (GObject      *object,
+ligma_warp_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpWarpOptions *options = GIMP_WARP_OPTIONS (object);
+  LigmaWarpOptions *options = LIGMA_WARP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -236,12 +236,12 @@ gimp_warp_options_set_property (GObject      *object,
 }
 
 static void
-gimp_warp_options_get_property (GObject    *object,
+ligma_warp_options_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpWarpOptions *options = GIMP_WARP_OPTIONS (object);
+  LigmaWarpOptions *options = LIGMA_WARP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -292,62 +292,62 @@ gimp_warp_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_warp_options_gui (GimpToolOptions *tool_options)
+ligma_warp_options_gui (LigmaToolOptions *tool_options)
 {
-  GimpWarpOptions *options = GIMP_WARP_OPTIONS (tool_options);
+  LigmaWarpOptions *options = LIGMA_WARP_OPTIONS (tool_options);
   GObject         *config  = G_OBJECT (tool_options);
-  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget       *vbox    = ligma_tool_options_gui (tool_options);
   GtkWidget       *frame;
   GtkWidget       *vbox2;
   GtkWidget       *button;
   GtkWidget       *combo;
   GtkWidget       *scale;
 
-  combo = gimp_prop_enum_combo_box_new (config, "behavior", 0, 0);
+  combo = ligma_prop_enum_combo_box_new (config, "behavior", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
   options->behavior_combo = combo;
 
-  scale = gimp_prop_spin_scale_new (config, "effect-size",
+  scale = ligma_prop_spin_scale_new (config, "effect-size",
                                     0.01, 1.0, 2);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-hardness",
+  scale = ligma_prop_spin_scale_new (config, "effect-hardness",
                                     1, 10, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 0.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-strength",
+  scale = ligma_prop_spin_scale_new (config, "effect-strength",
                                     1, 10, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "stroke-spacing",
+  scale = ligma_prop_spin_scale_new (config, "stroke-spacing",
                                     1, 10, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
+  combo = ligma_prop_enum_combo_box_new (config, "interpolation", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Interpolation"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
-  combo = gimp_prop_enum_combo_box_new (config, "abyss-policy",
+  combo = ligma_prop_enum_combo_box_new (config, "abyss-policy",
                                         GEGL_ABYSS_NONE, GEGL_ABYSS_LOOP);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Abyss policy"));
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Abyss policy"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
-  button = gimp_prop_check_button_new (config, "high-quality-preview", NULL);
+  button = ligma_prop_check_button_new (config, "high-quality-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-  button = gimp_prop_check_button_new (config, "real-time-preview", NULL);
+  button = ligma_prop_check_button_new (config, "real-time-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  the stroke frame  */
-  frame = gimp_frame_new (_("Stroke"));
+  frame = ligma_frame_new (_("Stroke"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -357,19 +357,19 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  button = gimp_prop_check_button_new (config, "stroke-during-motion", NULL);
+  button = ligma_prop_check_button_new (config, "stroke-during-motion", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "stroke-periodically-rate",
+  scale = ligma_prop_spin_scale_new (config, "stroke-periodically-rate",
                                     1, 10, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 0.0, 100.0);
 
-  frame = gimp_prop_expanding_frame_new (config, "stroke-periodically", NULL,
+  frame = ligma_prop_expanding_frame_new (config, "stroke-periodically", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
 
   /*  the animation frame  */
-  frame = gimp_frame_new (_("Animate"));
+  frame = ligma_frame_new (_("Animate"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -377,9 +377,9 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  scale = gimp_prop_spin_scale_new (config, "n-animation-frames",
+  scale = ligma_prop_spin_scale_new (config, "n-animation-frames",
                                     1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 3.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   options->animate_button = gtk_button_new_with_label (_("Create Animation"));

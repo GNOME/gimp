@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphistogram module Copyright (C) 1999 Jay Cox <jaycox@gimp.org>
+ * ligmahistogram module Copyright (C) 1999 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimp-atomic.h"
-#include "gimp-parallel.h"
-#include "gimpasync.h"
-#include "gimphistogram.h"
-#include "gimpwaitable.h"
+#include "ligma-atomic.h"
+#include "ligma-parallel.h"
+#include "ligmaasync.h"
+#include "ligmahistogram.h"
+#include "ligmawaitable.h"
 
 
 #define MAX_N_COMPONENTS   4
@@ -55,19 +55,19 @@ enum
   PROP_VALUES
 };
 
-struct _GimpHistogramPrivate
+struct _LigmaHistogramPrivate
 {
-  GimpTRCType  trc;
+  LigmaTRCType  trc;
   gint         n_channels;
   gint         n_bins;
   gdouble     *values;
-  GimpAsync   *calculate_async;
+  LigmaAsync   *calculate_async;
 };
 
 typedef struct
 {
   /*  input  */
-  GimpHistogram *histogram;
+  LigmaHistogram *histogram;
   GeglBuffer    *buffer;
   GeglRectangle  buffer_rect;
   GeglBuffer    *mask;
@@ -81,7 +81,7 @@ typedef struct
 
 typedef struct
 {
-  GimpAsync        *async;
+  LigmaAsync        *async;
   CalculateContext *context;
 
   const Babl       *format;
@@ -91,61 +91,61 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void       gimp_histogram_finalize                 (GObject              *object);
-static void       gimp_histogram_set_property             (GObject              *object,
+static void       ligma_histogram_finalize                 (GObject              *object);
+static void       ligma_histogram_set_property             (GObject              *object,
                                                            guint                 property_id,
                                                            const GValue         *value,
                                                            GParamSpec           *pspec);
-static void       gimp_histogram_get_property             (GObject              *object,
+static void       ligma_histogram_get_property             (GObject              *object,
                                                            guint                 property_id,
                                                            GValue               *value,
                                                            GParamSpec           *pspec);
 
-static gint64     gimp_histogram_get_memsize              (GimpObject           *object,
+static gint64     ligma_histogram_get_memsize              (LigmaObject           *object,
                                                            gint64               *gui_size);
 
-static gboolean   gimp_histogram_map_channel              (GimpHistogram        *histogram,
-                                                           GimpHistogramChannel *channel);
+static gboolean   ligma_histogram_map_channel              (LigmaHistogram        *histogram,
+                                                           LigmaHistogramChannel *channel);
 
-static void       gimp_histogram_set_values               (GimpHistogram        *histogram,
+static void       ligma_histogram_set_values               (LigmaHistogram        *histogram,
                                                            gint                  n_components,
                                                            gint                  n_bins,
                                                            gdouble              *values);
 
-static void       gimp_histogram_calculate_internal       (GimpAsync            *async,
+static void       ligma_histogram_calculate_internal       (LigmaAsync            *async,
                                                            CalculateContext     *context);
-static void       gimp_histogram_calculate_area           (const GeglRectangle  *area,
+static void       ligma_histogram_calculate_area           (const GeglRectangle  *area,
                                                            CalculateData        *data);
-static void       gimp_histogram_calculate_async_callback (GimpAsync            *async,
+static void       ligma_histogram_calculate_async_callback (LigmaAsync            *async,
                                                            CalculateContext     *context);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaHistogram, ligma_histogram, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_histogram_parent_class
+#define parent_class ligma_histogram_parent_class
 
 
 static void
-gimp_histogram_class_init (GimpHistogramClass *klass)
+ligma_histogram_class_init (LigmaHistogramClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
-  object_class->finalize         = gimp_histogram_finalize;
-  object_class->set_property     = gimp_histogram_set_property;
-  object_class->get_property     = gimp_histogram_get_property;
+  object_class->finalize         = ligma_histogram_finalize;
+  object_class->set_property     = ligma_histogram_set_property;
+  object_class->get_property     = ligma_histogram_get_property;
 
-  gimp_object_class->get_memsize = gimp_histogram_get_memsize;
+  ligma_object_class->get_memsize = ligma_histogram_get_memsize;
 
   g_object_class_install_property (object_class, PROP_N_COMPONENTS,
                                    g_param_spec_int ("n-components", NULL, NULL,
                                                      0, MAX_N_COMPONENTS, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     LIGMA_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_N_BINS,
                                    g_param_spec_int ("n-bins", NULL, NULL,
                                                      256, 1024, 1024,
-                                                     GIMP_PARAM_READABLE));
+                                                     LIGMA_PARAM_READABLE));
 
   /* this is just for notifications */
   g_object_class_install_property (object_class, PROP_VALUES,
@@ -155,23 +155,23 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
 }
 
 static void
-gimp_histogram_init (GimpHistogram *histogram)
+ligma_histogram_init (LigmaHistogram *histogram)
 {
-  histogram->priv = gimp_histogram_get_instance_private (histogram);
+  histogram->priv = ligma_histogram_get_instance_private (histogram);
 }
 
 static void
-gimp_histogram_finalize (GObject *object)
+ligma_histogram_finalize (GObject *object)
 {
-  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+  LigmaHistogram *histogram = LIGMA_HISTOGRAM (object);
 
-  gimp_histogram_clear_values (histogram, 0);
+  ligma_histogram_clear_values (histogram, 0);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_histogram_set_property (GObject      *object,
+ligma_histogram_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
@@ -185,17 +185,17 @@ gimp_histogram_set_property (GObject      *object,
 }
 
 static void
-gimp_histogram_get_property (GObject    *object,
+ligma_histogram_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+  LigmaHistogram *histogram = LIGMA_HISTOGRAM (object);
 
   switch (property_id)
     {
     case PROP_N_COMPONENTS:
-      g_value_set_int (value, gimp_histogram_n_components (histogram));
+      g_value_set_int (value, ligma_histogram_n_components (histogram));
       break;
 
     case PROP_N_BINS:
@@ -214,26 +214,26 @@ gimp_histogram_get_property (GObject    *object,
 }
 
 static gint64
-gimp_histogram_get_memsize (GimpObject *object,
+ligma_histogram_get_memsize (LigmaObject *object,
                             gint64     *gui_size)
 {
-  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+  LigmaHistogram *histogram = LIGMA_HISTOGRAM (object);
   gint64         memsize   = 0;
 
   if (histogram->priv->values)
     memsize += (histogram->priv->n_channels *
                 histogram->priv->n_bins * sizeof (gdouble));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 /*  public functions  */
 
-GimpHistogram *
-gimp_histogram_new (GimpTRCType trc)
+LigmaHistogram *
+ligma_histogram_new (LigmaTRCType trc)
 {
-  GimpHistogram *histogram = g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
+  LigmaHistogram *histogram = g_object_new (LIGMA_TYPE_HISTOGRAM, NULL);
 
   histogram->priv->trc = trc;
 
@@ -241,25 +241,25 @@ gimp_histogram_new (GimpTRCType trc)
 }
 
 /**
- * gimp_histogram_duplicate:
- * @histogram: a %GimpHistogram
+ * ligma_histogram_duplicate:
+ * @histogram: a %LigmaHistogram
  *
  * Creates a duplicate of @histogram. The duplicate has a reference
  * count of 1 and contains the values from @histogram.
  *
- * Returns: a newly allocated %GimpHistogram
+ * Returns: a newly allocated %LigmaHistogram
  **/
-GimpHistogram *
-gimp_histogram_duplicate (GimpHistogram *histogram)
+LigmaHistogram *
+ligma_histogram_duplicate (LigmaHistogram *histogram)
 {
-  GimpHistogram *dup;
+  LigmaHistogram *dup;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), NULL);
 
   if (histogram->priv->calculate_async)
-    gimp_waitable_wait (GIMP_WAITABLE (histogram->priv->calculate_async));
+    ligma_waitable_wait (LIGMA_WAITABLE (histogram->priv->calculate_async));
 
-  dup = gimp_histogram_new (histogram->priv->trc);
+  dup = ligma_histogram_new (histogram->priv->trc);
 
   dup->priv->n_channels = histogram->priv->n_channels;
   dup->priv->n_bins     = histogram->priv->n_bins;
@@ -272,7 +272,7 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 }
 
 void
-gimp_histogram_calculate (GimpHistogram       *histogram,
+ligma_histogram_calculate (LigmaHistogram       *histogram,
                           GeglBuffer          *buffer,
                           const GeglRectangle *buffer_rect,
                           GeglBuffer          *mask,
@@ -280,12 +280,12 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 {
   CalculateContext context = {};
 
-  g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM (histogram));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
   if (histogram->priv->calculate_async)
-    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
+    ligma_async_cancel_and_wait (histogram->priv->calculate_async);
 
   context.histogram   = histogram;
   context.buffer      = buffer;
@@ -301,15 +301,15 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         context.mask_rect = *gegl_buffer_get_extent (mask);
     }
 
-  gimp_histogram_calculate_internal (NULL, &context);
+  ligma_histogram_calculate_internal (NULL, &context);
 
-  gimp_histogram_set_values (histogram,
+  ligma_histogram_set_values (histogram,
                              context.n_components, context.n_bins,
                              context.values);
 }
 
-GimpAsync *
-gimp_histogram_calculate_async (GimpHistogram       *histogram,
+LigmaAsync *
+ligma_histogram_calculate_async (LigmaHistogram       *histogram,
                                 GeglBuffer          *buffer,
                                 const GeglRectangle *buffer_rect,
                                 GeglBuffer          *mask,
@@ -318,12 +318,12 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
   CalculateContext *context;
   GeglRectangle     rect;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (buffer_rect != NULL, NULL);
 
   if (histogram->priv->calculate_async)
-    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
+    ligma_async_cancel_and_wait (histogram->priv->calculate_async);
 
   gegl_rectangle_align_to_buffer (&rect, buffer_rect, buffer,
                                   GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
@@ -335,7 +335,7 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
                                           gegl_buffer_get_format (buffer));
   context->buffer_rect = *buffer_rect;
 
-  gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+  ligma_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                          context->buffer, NULL);
 
   if (mask)
@@ -350,32 +350,32 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
 
       context->mask = gegl_buffer_new (&rect, gegl_buffer_get_format (mask));
 
-      gimp_gegl_buffer_copy (mask, &rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (mask, &rect, GEGL_ABYSS_NONE,
                              context->mask, NULL);
     }
 
-  histogram->priv->calculate_async = gimp_parallel_run_async (
-    (GimpRunAsyncFunc) gimp_histogram_calculate_internal,
+  histogram->priv->calculate_async = ligma_parallel_run_async (
+    (LigmaRunAsyncFunc) ligma_histogram_calculate_internal,
     context);
 
-  gimp_async_add_callback (
+  ligma_async_add_callback (
     histogram->priv->calculate_async,
-    (GimpAsyncCallback) gimp_histogram_calculate_async_callback,
+    (LigmaAsyncCallback) ligma_histogram_calculate_async_callback,
     context);
 
   return histogram->priv->calculate_async;
 }
 
 void
-gimp_histogram_clear_values (GimpHistogram *histogram,
+ligma_histogram_clear_values (LigmaHistogram *histogram,
                              gint           n_components)
 {
-  g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
+  g_return_if_fail (LIGMA_IS_HISTOGRAM (histogram));
 
   if (histogram->priv->calculate_async)
-    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
+    ligma_async_cancel_and_wait (histogram->priv->calculate_async);
 
-  gimp_histogram_set_values (histogram, n_components, 0, NULL);
+  ligma_histogram_set_values (histogram, n_components, 0, NULL);
 }
 
 
@@ -383,30 +383,30 @@ gimp_histogram_clear_values (GimpHistogram *histogram,
 
 
 gdouble
-gimp_histogram_get_maximum (GimpHistogram        *histogram,
-                            GimpHistogramChannel  channel)
+ligma_histogram_get_maximum (LigmaHistogram        *histogram,
+                            LigmaHistogramChannel  channel)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gdouble               max = 0.0;
   gint                  x;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
   priv = histogram->priv;
 
   if (! priv->values ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
 
-  if (channel == GIMP_HISTOGRAM_RGB)
+  if (channel == LIGMA_HISTOGRAM_RGB)
     {
       for (x = 0; x < priv->n_bins; x++)
         {
-          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
-          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
-          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
+          max = MAX (max, HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED,   x));
+          max = MAX (max, HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, x));
+          max = MAX (max, HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE,  x));
         }
     }
   else
@@ -421,30 +421,30 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_value (GimpHistogram        *histogram,
-                          GimpHistogramChannel  channel,
+ligma_histogram_get_value (LigmaHistogram        *histogram,
+                          LigmaHistogramChannel  channel,
                           gint                  bin)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
   priv = histogram->priv;
 
   if (! priv->values                   ||
       (bin < 0 || bin >= priv->n_bins) ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
 
-  if (channel == GIMP_HISTOGRAM_RGB)
+  if (channel == LIGMA_HISTOGRAM_RGB)
     {
-      gdouble min = HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED, bin);
+      gdouble min = HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED, bin);
 
-      min = MIN (min, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, bin));
+      min = MIN (min, HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, bin));
 
-      return MIN (min, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE, bin));
+      return MIN (min, HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE, bin));
     }
   else
     {
@@ -453,22 +453,22 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_component (GimpHistogram *histogram,
+ligma_histogram_get_component (LigmaHistogram *histogram,
                               gint           component,
                               gint           bin)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
-  if (gimp_histogram_n_components (histogram) > 2)
+  if (ligma_histogram_n_components (histogram) > 2)
     component++;
 
-  return gimp_histogram_get_value (histogram, component, bin);
+  return ligma_histogram_get_value (histogram, component, bin);
 }
 
 gint
-gimp_histogram_n_components (GimpHistogram *histogram)
+ligma_histogram_n_components (LigmaHistogram *histogram)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0);
 
   if (histogram->priv->n_channels > 0)
     return histogram->priv->n_channels - N_DERIVED_CHANNELS;
@@ -477,67 +477,67 @@ gimp_histogram_n_components (GimpHistogram *histogram)
 }
 
 gint
-gimp_histogram_n_bins (GimpHistogram *histogram)
+ligma_histogram_n_bins (LigmaHistogram *histogram)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0);
 
   return histogram->priv->n_bins;
 }
 
 gboolean
-gimp_histogram_has_channel (GimpHistogram        *histogram,
-                            GimpHistogramChannel  channel)
+ligma_histogram_has_channel (LigmaHistogram        *histogram,
+                            LigmaHistogramChannel  channel)
 {
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), FALSE);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), FALSE);
 
   switch (channel)
     {
-    case GIMP_HISTOGRAM_VALUE:
+    case LIGMA_HISTOGRAM_VALUE:
       return TRUE;
 
-    case GIMP_HISTOGRAM_RED:
-    case GIMP_HISTOGRAM_GREEN:
-    case GIMP_HISTOGRAM_BLUE:
-    case GIMP_HISTOGRAM_LUMINANCE:
-    case GIMP_HISTOGRAM_RGB:
-      return gimp_histogram_n_components (histogram) >= 3;
+    case LIGMA_HISTOGRAM_RED:
+    case LIGMA_HISTOGRAM_GREEN:
+    case LIGMA_HISTOGRAM_BLUE:
+    case LIGMA_HISTOGRAM_LUMINANCE:
+    case LIGMA_HISTOGRAM_RGB:
+      return ligma_histogram_n_components (histogram) >= 3;
 
-    case GIMP_HISTOGRAM_ALPHA:
-      return gimp_histogram_n_components (histogram) == 2 ||
-             gimp_histogram_n_components (histogram) == 4;
+    case LIGMA_HISTOGRAM_ALPHA:
+      return ligma_histogram_n_components (histogram) == 2 ||
+             ligma_histogram_n_components (histogram) == 4;
     }
 
   g_return_val_if_reached (FALSE);
 }
 
 gdouble
-gimp_histogram_get_count (GimpHistogram        *histogram,
-                          GimpHistogramChannel  channel,
+ligma_histogram_get_count (LigmaHistogram        *histogram,
+                          LigmaHistogramChannel  channel,
                           gint                  start,
                           gint                  end)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gint                  i;
   gdouble               count = 0.0;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
   priv = histogram->priv;
 
   if (! priv->values ||
       start > end    ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
 
-  if (channel == GIMP_HISTOGRAM_RGB)
-    return (gimp_histogram_get_count (histogram,
-                                      GIMP_HISTOGRAM_RED, start, end)   +
-            gimp_histogram_get_count (histogram,
-                                      GIMP_HISTOGRAM_GREEN, start, end) +
-            gimp_histogram_get_count (histogram,
-                                      GIMP_HISTOGRAM_BLUE, start, end));
+  if (channel == LIGMA_HISTOGRAM_RGB)
+    return (ligma_histogram_get_count (histogram,
+                                      LIGMA_HISTOGRAM_RED, start, end)   +
+            ligma_histogram_get_count (histogram,
+                                      LIGMA_HISTOGRAM_GREEN, start, end) +
+            ligma_histogram_get_count (histogram,
+                                      LIGMA_HISTOGRAM_BLUE, start, end));
 
   start = CLAMP (start, 0, priv->n_bins - 1);
   end   = CLAMP (end,   0, priv->n_bins - 1);
@@ -549,23 +549,23 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_mean (GimpHistogram        *histogram,
-                         GimpHistogramChannel  channel,
+ligma_histogram_get_mean (LigmaHistogram        *histogram,
+                         LigmaHistogramChannel  channel,
                          gint                  start,
                          gint                  end)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gint                  i;
   gdouble               mean = 0.0;
   gdouble               count;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
   priv = histogram->priv;
 
   if (! priv->values ||
       start > end    ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
@@ -573,15 +573,15 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   start = CLAMP (start, 0, priv->n_bins - 1);
   end   = CLAMP (end,   0, priv->n_bins - 1);
 
-  if (channel == GIMP_HISTOGRAM_RGB)
+  if (channel == LIGMA_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
         {
           gdouble factor = (gdouble) i / (gdouble)  (priv->n_bins - 1);
 
-          mean += (factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                   factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                   factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+          mean += (factor * HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED,   i) +
+                   factor * HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, i) +
+                   factor * HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE,  i));
         }
     }
   else
@@ -594,7 +594,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
         }
     }
 
-  count = gimp_histogram_get_count (histogram, channel, start, end);
+  count = ligma_histogram_get_count (histogram, channel, start, end);
 
   if (count > 0.0)
     return mean / count;
@@ -603,23 +603,23 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_median (GimpHistogram         *histogram,
-                           GimpHistogramChannel   channel,
+ligma_histogram_get_median (LigmaHistogram         *histogram,
+                           LigmaHistogramChannel   channel,
                            gint                   start,
                            gint                   end)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gint                  i;
   gdouble               sum = 0.0;
   gdouble               count;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), -1.0);
 
   priv = histogram->priv;
 
   if (! priv->values ||
       start > end    ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
@@ -627,15 +627,15 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   start = CLAMP (start, 0, priv->n_bins - 1);
   end   = CLAMP (end,   0, priv->n_bins - 1);
 
-  count = gimp_histogram_get_count (histogram, channel, start, end);
+  count = ligma_histogram_get_count (histogram, channel, start, end);
 
-  if (channel == GIMP_HISTOGRAM_RGB)
+  if (channel == LIGMA_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
         {
-          sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                  HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                  HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+          sum += (HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED,   i) +
+                  HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, i) +
+                  HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE,  i));
 
           if (sum * 2 > count)
             return ((gdouble) i / (gdouble)  (priv->n_bins - 1));
@@ -662,12 +662,12 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
  *  IEEE Trans. Systems, Man, and Cybernetics, vol. 9, no. 1, pp. 62-66, 1979.
  */
 gdouble
-gimp_histogram_get_threshold (GimpHistogram        *histogram,
-                              GimpHistogramChannel  channel,
+ligma_histogram_get_threshold (LigmaHistogram        *histogram,
+                              LigmaHistogramChannel  channel,
                               gint                  start,
                               gint                  end)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gint                 i;
   gint                 maxval;
   gdouble             *hist      = NULL;
@@ -679,13 +679,13 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   gdouble              bvar_max  = 0.0;
   gint                 threshold = 127;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), -1);
 
   priv = histogram->priv;
 
   if (! priv->values ||
       start > end    ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0;
     }
@@ -699,12 +699,12 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   chist = g_newa (gdouble, maxval + 1);
   cmom  = g_newa (gdouble, maxval + 1);
 
-  if (channel == GIMP_HISTOGRAM_RGB)
+  if (channel == LIGMA_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
-        hist[i - start] = (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                           HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                           HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        hist[i - start] = (HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED,   i) +
+                           HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, i) +
+                           HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE,  i));
     }
   else
     {
@@ -753,30 +753,30 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_std_dev (GimpHistogram        *histogram,
-                            GimpHistogramChannel  channel,
+ligma_histogram_get_std_dev (LigmaHistogram        *histogram,
+                            LigmaHistogramChannel  channel,
                             gint                  start,
                             gint                  end)
 {
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   gint                  i;
   gdouble               dev = 0.0;
   gdouble               count;
   gdouble               mean;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+  g_return_val_if_fail (LIGMA_IS_HISTOGRAM (histogram), 0.0);
 
   priv = histogram->priv;
 
   if (! priv->values ||
       start > end    ||
-      ! gimp_histogram_map_channel (histogram, &channel))
+      ! ligma_histogram_map_channel (histogram, &channel))
     {
       return 0.0;
     }
 
-  mean  = gimp_histogram_get_mean  (histogram, channel, start, end);
-  count = gimp_histogram_get_count (histogram, channel, start, end);
+  mean  = ligma_histogram_get_mean  (histogram, channel, start, end);
+  count = ligma_histogram_get_count (histogram, channel, start, end);
 
   if (count == 0.0)
     count = 1.0;
@@ -785,15 +785,15 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
     {
       gdouble value;
 
-      if (channel == GIMP_HISTOGRAM_RGB)
+      if (channel == LIGMA_HISTOGRAM_RGB)
         {
-          value = (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                   HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                   HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+          value = (HISTOGRAM_VALUE (LIGMA_HISTOGRAM_RED,   i) +
+                   HISTOGRAM_VALUE (LIGMA_HISTOGRAM_GREEN, i) +
+                   HISTOGRAM_VALUE (LIGMA_HISTOGRAM_BLUE,  i));
         }
       else
         {
-          value = gimp_histogram_get_value (histogram, channel, i);
+          value = ligma_histogram_get_value (histogram, channel, i);
         }
 
       dev += value * SQR (((gdouble) i / (gdouble)  (priv->n_bins - 1)) - mean);
@@ -806,23 +806,23 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 /*  private functions  */
 
 static gboolean
-gimp_histogram_map_channel (GimpHistogram        *histogram,
-                            GimpHistogramChannel *channel)
+ligma_histogram_map_channel (LigmaHistogram        *histogram,
+                            LigmaHistogramChannel *channel)
 {
-  GimpHistogramPrivate *priv = histogram->priv;
+  LigmaHistogramPrivate *priv = histogram->priv;
 
-  if (*channel == GIMP_HISTOGRAM_RGB)
-    return gimp_histogram_n_components (histogram) >= 3;
+  if (*channel == LIGMA_HISTOGRAM_RGB)
+    return ligma_histogram_n_components (histogram) >= 3;
 
   switch (*channel)
     {
-    case GIMP_HISTOGRAM_ALPHA:
-      if (gimp_histogram_n_components (histogram) == 2)
+    case LIGMA_HISTOGRAM_ALPHA:
+      if (ligma_histogram_n_components (histogram) == 2)
         *channel = 1;
       break;
 
-    case GIMP_HISTOGRAM_LUMINANCE:
-      *channel = gimp_histogram_n_components (histogram) + 1;
+    case LIGMA_HISTOGRAM_LUMINANCE:
+      *channel = ligma_histogram_n_components (histogram) + 1;
       break;
 
     default:
@@ -833,12 +833,12 @@ gimp_histogram_map_channel (GimpHistogram        *histogram,
 }
 
 static void
-gimp_histogram_set_values (GimpHistogram *histogram,
+ligma_histogram_set_values (LigmaHistogram *histogram,
                            gint           n_components,
                            gint           n_bins,
                            gdouble       *values)
 {
-  GimpHistogramPrivate *priv                = histogram->priv;
+  LigmaHistogramPrivate *priv                = histogram->priv;
   gint                  n_channels          = n_components;
   gboolean              notify_n_components = FALSE;
   gboolean              notify_n_bins       = FALSE;
@@ -878,11 +878,11 @@ gimp_histogram_set_values (GimpHistogram *histogram,
 }
 
 static void
-gimp_histogram_calculate_internal (GimpAsync        *async,
+ligma_histogram_calculate_internal (LigmaAsync        *async,
                                    CalculateContext *context)
 {
   CalculateData         data;
-  GimpHistogramPrivate *priv;
+  LigmaHistogramPrivate *priv;
   const Babl           *format;
   const Babl           *space;
 
@@ -896,20 +896,20 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
   else
     context->n_bins = 1024;
 
-  switch (gimp_babl_format_get_base_type (format))
+  switch (ligma_babl_format_get_base_type (format))
     {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      format = gimp_babl_format (GIMP_RGB,
-                                 gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+    case LIGMA_RGB:
+    case LIGMA_INDEXED:
+      format = ligma_babl_format (LIGMA_RGB,
+                                 ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
                                                       priv->trc),
                                  babl_format_has_alpha (format),
                                  space);
       break;
 
-    case GIMP_GRAY:
-      format = gimp_babl_format (GIMP_GRAY,
-                                 gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+    case LIGMA_GRAY:
+      format = ligma_babl_format (LIGMA_GRAY,
+                                 ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
                                                       priv->trc),
                                  babl_format_has_alpha (format),
                                  space);
@@ -917,7 +917,7 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
 
     default:
       if (async)
-        gimp_async_abort (async);
+        ligma_async_abort (async);
 
       g_return_if_reached ();
     }
@@ -931,10 +931,10 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
 
   gegl_parallel_distribute_area (
     &context->buffer_rect, PIXELS_PER_THREAD, GEGL_SPLIT_STRATEGY_AUTO,
-    (GeglParallelDistributeAreaFunc) gimp_histogram_calculate_area,
+    (GeglParallelDistributeAreaFunc) ligma_histogram_calculate_area,
     &data);
 
-  if (! async || ! gimp_async_is_canceled (async))
+  if (! async || ! ligma_async_is_canceled (async))
     {
       gdouble *total_values = NULL;
       gint     n_values     = (context->n_components + N_DERIVED_CHANNELS) *
@@ -965,22 +965,22 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
       context->values = total_values;
 
       if (async)
-        gimp_async_finish (async, NULL);
+        ligma_async_finish (async, NULL);
     }
   else
     {
       g_slist_free_full (data.values_list, g_free);
 
       if (async)
-        gimp_async_abort (async);
+        ligma_async_abort (async);
     }
 }
 
 static void
-gimp_histogram_calculate_area (const GeglRectangle *area,
+ligma_histogram_calculate_area (const GeglRectangle *area,
                                CalculateData       *data)
 {
-  GimpAsync            *async;
+  LigmaAsync            *async;
   CalculateContext     *context;
   GeglBufferIterator   *iter;
   gdouble              *values;
@@ -996,7 +996,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
   n_components = context->n_components;
 
   values = g_new0 (gdouble, (n_components + N_DERIVED_CHANNELS) * n_bins);
-  gimp_atomic_slist_push_head (&data->values_list, values);
+  ligma_atomic_slist_push_head (&data->values_list, values);
 
   iter = gegl_buffer_iterator_new (context->buffer, area, 0,
                                    data->format,
@@ -1025,7 +1025,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 #define CHECK_CANCELED(length)                                                 \
   G_STMT_START                                                                 \
     {                                                                          \
-      if ((length) % 128 == 0 && async && gimp_async_is_canceled (async))      \
+      if ((length) % 128 == 0 && async && ligma_async_is_canceled (async))      \
         {                                                                      \
           gegl_buffer_iterator_stop (iter);                                    \
                                                                                \
@@ -1092,7 +1092,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += masked;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  luminance = LIGMA_RGB_LUMINANCE (data[0], data[1], data[2]);
                   VALUE (4, luminance) += masked;
 
                   data += n_components;
@@ -1117,7 +1117,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += weight * masked;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  luminance = LIGMA_RGB_LUMINANCE (data[0], data[1], data[2]);
                   VALUE (5, luminance) += weight * masked;
 
                   data += n_components;
@@ -1168,7 +1168,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += 1.0;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  luminance = LIGMA_RGB_LUMINANCE (data[0], data[1], data[2]);
                   VALUE (4, luminance) += 1.0;
 
                   data += n_components;
@@ -1191,7 +1191,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += weight;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  luminance = LIGMA_RGB_LUMINANCE (data[0], data[1], data[2]);
                   VALUE (5, luminance) += weight;
 
                   data += n_components;
@@ -1208,14 +1208,14 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 }
 
 static void
-gimp_histogram_calculate_async_callback (GimpAsync        *async,
+ligma_histogram_calculate_async_callback (LigmaAsync        *async,
                                          CalculateContext *context)
 {
   context->histogram->priv->calculate_async = NULL;
 
-  if (gimp_async_is_finished (async))
+  if (ligma_async_is_finished (async))
     {
-      gimp_histogram_set_values (context->histogram,
+      ligma_histogram_set_values (context->histogram,
                                  context->n_components, context->n_bins,
                                  context->values);
     }

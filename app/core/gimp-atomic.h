@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-atomic.h
+ * ligma-atomic.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,15 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ATOMIC_H__
-#define __GIMP_ATOMIC_H__
+#ifndef __LIGMA_ATOMIC_H__
+#define __LIGMA_ATOMIC_H__
 
 
 /*  GSList  */
 
-void       gimp_atomic_slist_push_head (GSList   * volatile *list,
+void       ligma_atomic_slist_push_head (GSList   * volatile *list,
                                         gpointer             data);
-gpointer   gimp_atomic_slist_pop_head  (GSList   * volatile *list);
+gpointer   ligma_atomic_slist_pop_head  (GSList   * volatile *list);
 
 
-#endif /* __GIMP_ATOMIC_H__ */
+#endif /* __LIGMA_ATOMIC_H__ */

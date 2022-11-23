@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsaveproceduredialog.h
+ * ligmasaveproceduredialog.h
  * Copyright (C) 2020 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,62 +18,62 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_SAVE_PROCEDURE_DIALOG_H__
-#define __GIMP_SAVE_PROCEDURE_DIALOG_H__
+#ifndef __LIGMA_SAVE_PROCEDURE_DIALOG_H__
+#define __LIGMA_SAVE_PROCEDURE_DIALOG_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_SAVE_PROCEDURE_DIALOG            (gimp_save_procedure_dialog_get_type ())
-#define GIMP_SAVE_PROCEDURE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAVE_PROCEDURE_DIALOG, GimpSaveProcedureDialog))
-#define GIMP_SAVE_PROCEDURE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAVE_PROCEDURE_DIALOG, GimpSaveProcedureDialogClass))
-#define GIMP_IS_SAVE_PROCEDURE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAVE_PROCEDURE_DIALOG))
-#define GIMP_IS_SAVE_PROCEDURE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAVE_PROCEDURE_DIALOG))
-#define GIMP_SAVE_PROCEDURE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAVE_PROCEDURE_DIALOG, GimpSaveProcedureDialogClass))
+#define LIGMA_TYPE_SAVE_PROCEDURE_DIALOG            (ligma_save_procedure_dialog_get_type ())
+#define LIGMA_SAVE_PROCEDURE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAVE_PROCEDURE_DIALOG, LigmaSaveProcedureDialog))
+#define LIGMA_SAVE_PROCEDURE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAVE_PROCEDURE_DIALOG, LigmaSaveProcedureDialogClass))
+#define LIGMA_IS_SAVE_PROCEDURE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAVE_PROCEDURE_DIALOG))
+#define LIGMA_IS_SAVE_PROCEDURE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAVE_PROCEDURE_DIALOG))
+#define LIGMA_SAVE_PROCEDURE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAVE_PROCEDURE_DIALOG, LigmaSaveProcedureDialogClass))
 
 
-typedef struct _GimpSaveProcedureDialogClass   GimpSaveProcedureDialogClass;
-typedef struct _GimpSaveProcedureDialogPrivate GimpSaveProcedureDialogPrivate;
+typedef struct _LigmaSaveProcedureDialogClass   LigmaSaveProcedureDialogClass;
+typedef struct _LigmaSaveProcedureDialogPrivate LigmaSaveProcedureDialogPrivate;
 
-struct _GimpSaveProcedureDialog
+struct _LigmaSaveProcedureDialog
 {
-  GimpProcedureDialog             parent_instance;
+  LigmaProcedureDialog             parent_instance;
 
-  GimpSaveProcedureDialogPrivate *priv;
+  LigmaSaveProcedureDialogPrivate *priv;
 };
 
-struct _GimpSaveProcedureDialogClass
+struct _LigmaSaveProcedureDialogClass
 {
-  GimpProcedureDialogClass  parent_class;
+  LigmaProcedureDialogClass  parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-GType       gimp_save_procedure_dialog_get_type          (void) G_GNUC_CONST;
+GType       ligma_save_procedure_dialog_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_save_procedure_dialog_new               (GimpSaveProcedure   *procedure,
-                                                          GimpProcedureConfig *config,
-                                                          GimpImage           *image);
+GtkWidget * ligma_save_procedure_dialog_new               (LigmaSaveProcedure   *procedure,
+                                                          LigmaProcedureConfig *config,
+                                                          LigmaImage           *image);
 
-void        gimp_save_procedure_dialog_add_metadata      (GimpSaveProcedureDialog *dialog,
+void        ligma_save_procedure_dialog_add_metadata      (LigmaSaveProcedureDialog *dialog,
                                                           const gchar             *property);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_SAVE_PROCEDURE_DIALOG_H__ */
+#endif /* __LIGMA_SAVE_PROCEDURE_DIALOG_H__ */

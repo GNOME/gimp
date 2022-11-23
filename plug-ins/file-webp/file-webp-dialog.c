@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -21,15 +21,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <webp/encode.h>
 
 #include "file-webp.h"
 #include "file-webp-dialog.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static void
@@ -58,8 +58,8 @@ show_maxkeyframe_hints (GObject          *config,
 }
 
 gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget     *dialog;
@@ -68,53 +68,53 @@ save_dialog (GimpImage     *image,
   gboolean       animation_supported = FALSE;
   gboolean       run;
 
-  g_free (gimp_image_get_layers (image, &nlayers));
+  g_free (ligma_image_get_layers (image, &nlayers));
 
   animation_supported = nlayers > 1;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
   /* Create the combobox containing the presets */
-  store = gimp_int_store_new ("Default", WEBP_PRESET_DEFAULT,
+  store = ligma_int_store_new ("Default", WEBP_PRESET_DEFAULT,
                               "Picture", WEBP_PRESET_PICTURE,
                               "Photo",   WEBP_PRESET_PHOTO,
                               "Drawing", WEBP_PRESET_DRAWING,
                               "Icon",    WEBP_PRESET_ICON,
                               "Text",    WEBP_PRESET_TEXT,
                               NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "preset", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "preset", LIGMA_INT_STORE (store));
 
   /* Create scale for image and alpha quality */
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "quality", GIMP_TYPE_SPIN_SCALE);
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "alpha-quality", GIMP_TYPE_SPIN_SCALE);
+  ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
+                                    "quality", LIGMA_TYPE_SPIN_SCALE);
+  ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
+                                    "alpha-quality", LIGMA_TYPE_SPIN_SCALE);
 
   /* Create frame for quality options */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "quality-options",
                                   "quality", "alpha-quality",
                                   NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "quality-frame", "lossless", TRUE,
                                     "quality-options");
 
   /* Create frame for additional features like Sharp YUV */
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                    "advanced-title", _("Advanced Options"));
 
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "use-sharp-yuv",
                                        TRUE, config, "lossless", TRUE);
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "advanced-options",
                                   "use-sharp-yuv",
                                   NULL);
 
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
 
@@ -123,11 +123,11 @@ save_dialog (GimpImage     *image,
       GtkWidget      *label_kf;
 
       /* Hint for some special values of keyframe-distance. */
-      label_kf = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+      label_kf = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                   "keyframe-hint", NULL);
       gtk_label_set_xalign (GTK_LABEL (label_kf), 1.0);
       gtk_label_set_ellipsize (GTK_LABEL (label_kf), PANGO_ELLIPSIZE_END);
-      gimp_label_set_attributes (GTK_LABEL (label_kf),
+      ligma_label_set_attributes (GTK_LABEL (label_kf),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
       g_signal_connect (config, "notify::keyframe-distance",
@@ -136,15 +136,15 @@ save_dialog (GimpImage     *image,
       show_maxkeyframe_hints (config, NULL, GTK_LABEL (label_kf));
 
       /* when minimize-size is true, keyframe-distance and hint are insensitive. */
-      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "keyframe-distance",
                                            TRUE, config, "minimize-size", TRUE);
-      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "keyframe-hint",
                                            TRUE, config, "minimize-size", TRUE);
 
       /* Create frame for animation options */
-      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                       "animation-options",
                                       "animation-loop",
                                       "minimize-size",
@@ -153,12 +153,12 @@ save_dialog (GimpImage     *image,
                                       "default-delay",
                                       "force-delay",
                                       NULL);
-      gimp_procedure_dialog_fill_expander (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill_expander (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "animation-frame", "animation", FALSE,
                                            "animation-options");
 
       /* Fill dialog with containers*/
-      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "preset", "quality-frame",
                                   "advanced-frame", "animation-frame",
                                   NULL);
@@ -166,12 +166,12 @@ save_dialog (GimpImage     *image,
   else
     {
       /* Fill dialog with containers*/
-      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "preset", "quality-frame", "advanced-frame",
                                   NULL);
     }
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

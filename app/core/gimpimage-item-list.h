@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,49 +15,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ITEM_LIST_H__
-#define __GIMP_IMAGE_ITEM_LIST_H__
+#ifndef __LIGMA_IMAGE_ITEM_LIST_H__
+#define __LIGMA_IMAGE_ITEM_LIST_H__
 
 
-gboolean   gimp_image_item_list_bounds    (GimpImage              *image,
+gboolean   ligma_image_item_list_bounds    (LigmaImage              *image,
                                            GList                  *list,
                                            gint                   *x,
                                            gint                   *y,
                                            gint                   *width,
                                            gint                   *height);
 
-void       gimp_image_item_list_translate (GimpImage              *image,
+void       ligma_image_item_list_translate (LigmaImage              *image,
                                            GList                  *list,
                                            gint                    offset_x,
                                            gint                    offset_y,
                                            gboolean                push_undo);
-void       gimp_image_item_list_flip      (GimpImage              *image,
+void       ligma_image_item_list_flip      (LigmaImage              *image,
                                            GList                  *list,
-                                           GimpContext            *context,
-                                           GimpOrientationType     flip_type,
+                                           LigmaContext            *context,
+                                           LigmaOrientationType     flip_type,
                                            gdouble                 axis,
-                                           GimpTransformResize     expected_clip_result);
-void       gimp_image_item_list_rotate    (GimpImage              *image,
+                                           LigmaTransformResize     expected_clip_result);
+void       ligma_image_item_list_rotate    (LigmaImage              *image,
                                            GList                  *list,
-                                           GimpContext            *context,
-                                           GimpRotationType        rotate_type,
+                                           LigmaContext            *context,
+                                           LigmaRotationType        rotate_type,
                                            gdouble                 center_x,
                                            gdouble                 center_y,
                                            gboolean                clip_result);
-void       gimp_image_item_list_transform (GimpImage              *image,
+void       ligma_image_item_list_transform (LigmaImage              *image,
                                            GList                  *list,
-                                           GimpContext            *context,
-                                           const GimpMatrix3      *matrix,
-                                           GimpTransformDirection  direction,
-                                           GimpInterpolationType   interpolation_type,
-                                           GimpTransformResize     clip_result,
-                                           GimpProgress           *progress);
+                                           LigmaContext            *context,
+                                           const LigmaMatrix3      *matrix,
+                                           LigmaTransformDirection  direction,
+                                           LigmaInterpolationType   interpolation_type,
+                                           LigmaTransformResize     clip_result,
+                                           LigmaProgress           *progress);
 
-GList    * gimp_image_item_list_get_list  (GimpImage              *image,
-                                           GimpItemTypeMask        type,
-                                           GimpItemSet             set);
+GList    * ligma_image_item_list_get_list  (LigmaImage              *image,
+                                           LigmaItemTypeMask        type,
+                                           LigmaItemSet             set);
 
-GList    * gimp_image_item_list_filter    (GList                  *list);
+GList    * ligma_image_item_list_filter    (GList                  *list);
 
 
-#endif /* __GIMP_IMAGE_ITEM_LIST_H__ */
+#endif /* __LIGMA_IMAGE_ITEM_LIST_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimp-utils.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligma-utils.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "print-size-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -45,13 +45,13 @@ typedef struct _PrintSizeDialog PrintSizeDialog;
 
 struct _PrintSizeDialog
 {
-  GimpImage              *image;
-  GimpSizeEntry          *size_entry;
-  GimpSizeEntry          *resolution_entry;
-  GimpChainButton        *chain;
+  LigmaImage              *image;
+  LigmaSizeEntry          *size_entry;
+  LigmaSizeEntry          *resolution_entry;
+  LigmaChainButton        *chain;
   gdouble                 xres;
   gdouble                 yres;
-  GimpResolutionCallback  callback;
+  LigmaResolutionCallback  callback;
   gpointer                user_data;
 };
 
@@ -79,14 +79,14 @@ static void   print_size_dialog_set_resolution     (PrintSizeDialog *private,
 /*  public functions  */
 
 GtkWidget *
-print_size_dialog_new (GimpImage              *image,
-                       GimpContext            *context,
+print_size_dialog_new (LigmaImage              *image,
+                       LigmaContext            *context,
                        const gchar            *title,
                        const gchar            *role,
                        GtkWidget              *parent,
-                       GimpHelpFunc            help_func,
+                       LigmaHelpFunc            help_func,
                        const gchar            *help_id,
-                       GimpResolutionCallback  callback,
+                       LigmaResolutionCallback  callback,
                        gpointer                user_data)
 {
   PrintSizeDialog *private;
@@ -102,8 +102,8 @@ print_size_dialog_new (GimpImage              *image,
   GtkAdjustment   *adj;
   GList           *focus_chain = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   private = g_slice_new0 (PrintSizeDialog);
@@ -112,11 +112,11 @@ print_size_dialog_new (GimpImage              *image,
   private->callback  = callback;
   private->user_data = user_data;
 
-  gimp_image_get_resolution (image, &private->xres, &private->yres);
+  ligma_image_get_resolution (image, &private->xres, &private->yres);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      title, role,
-                                     GIMP_ICON_DOCUMENT_PRINT_RESOLUTION, title,
+                                     LIGMA_ICON_DOCUMENT_PRINT_RESOLUTION, title,
                                      parent,
                                      help_func, help_id,
 
@@ -126,7 +126,7 @@ print_size_dialog_new (GimpImage              *image,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -141,7 +141,7 @@ print_size_dialog_new (GimpImage              *image,
                     G_CALLBACK (print_size_dialog_response),
                     private);
 
-  frame = gimp_frame_new (_("Print Size"));
+  frame = ligma_frame_new (_("Print Size"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, FALSE, FALSE, 0);
@@ -155,19 +155,19 @@ print_size_dialog_new (GimpImage              *image,
   /*  the print size entry  */
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  width = gimp_spin_button_new (adj, 1.0, 2);
+  width = ligma_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gimp_spin_button_new (adj, 1.0, 2);
+  height = ligma_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
-  entry = gimp_size_entry_new (0, gimp_get_default_unit (), "%p",
+  entry = ligma_size_entry_new (0, ligma_get_default_unit (), "%p",
                                FALSE, FALSE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  private->size_entry = GIMP_SIZE_ENTRY (entry);
+                               LIGMA_SIZE_ENTRY_UPDATE_SIZE);
+  private->size_entry = LIGMA_SIZE_ENTRY (entry);
 
   label = gtk_label_new_with_mnemonic (_("_Width:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -188,40 +188,40 @@ print_size_dialog_new (GimpImage              *image,
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0,
                                   private->xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1,
                                   private->yres, FALSE);
 
-  gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (entry), 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (entry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries
+    (LIGMA_SIZE_ENTRY (entry), 0, LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries
+    (LIGMA_SIZE_ENTRY (entry), 1, LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0,
-                              gimp_image_get_width  (image));
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1,
-                              gimp_image_get_height (image));
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0,
+                              ligma_image_get_width  (image));
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 1,
+                              ligma_image_get_height (image));
 
   /*  the resolution entry  */
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  width = gimp_spin_button_new (adj, 1.0, 2);
+  width = ligma_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gimp_spin_button_new (adj, 1.0, 2);
+  height = ligma_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
@@ -241,43 +241,43 @@ print_size_dialog_new (GimpImage              *image,
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 2);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (0, gimp_image_get_unit (image), _("pixels/%a"),
+  entry = ligma_size_entry_new (0, ligma_image_get_unit (image), _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-  private->resolution_entry = GIMP_SIZE_ENTRY (entry);
+                               LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION);
+  private->resolution_entry = LIGMA_SIZE_ENTRY (entry);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
-                                         GIMP_MIN_RESOLUTION,
-                                         GIMP_MAX_RESOLUTION);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 1,
-                                         GIMP_MIN_RESOLUTION,
-                                         GIMP_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 0,
+                                         LIGMA_MIN_RESOLUTION,
+                                         LIGMA_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 1,
+                                         LIGMA_MIN_RESOLUTION,
+                                         LIGMA_MAX_RESOLUTION);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, private->xres);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, private->yres);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0, private->xres);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 1, private->yres);
 
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if (ABS (private->xres - private->yres) < GIMP_MIN_RESOLUTION)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+  chain = ligma_chain_button_new (LIGMA_CHAIN_RIGHT);
+  if (ABS (private->xres - private->yres) < LIGMA_MIN_RESOLUTION)
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain), TRUE);
   gtk_grid_attach (GTK_GRID (entry), chain, 1, 0, 1, 2);
   gtk_widget_show (chain);
 
-  private->chain = GIMP_CHAIN_BUTTON (chain);
+  private->chain = LIGMA_CHAIN_BUTTON (chain);
 
-  focus_chain = g_list_prepend (focus_chain, gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (entry)));
+  focus_chain = g_list_prepend (focus_chain, ligma_size_entry_get_unit_combo (LIGMA_SIZE_ENTRY (entry)));
   focus_chain = g_list_prepend (focus_chain, chain);
   focus_chain = g_list_prepend (focus_chain, height);
   focus_chain = g_list_prepend (focus_chain, width);
@@ -309,7 +309,7 @@ print_size_dialog_response (GtkWidget       *dialog,
                             gint             response_id,
                             PrintSizeDialog *private)
 {
-  GimpSizeEntry *entry = private->resolution_entry;
+  LigmaSizeEntry *entry = private->resolution_entry;
 
   switch (response_id)
     {
@@ -320,9 +320,9 @@ print_size_dialog_response (GtkWidget       *dialog,
     case GTK_RESPONSE_OK:
       private->callback (dialog,
                          private->image,
-                         gimp_size_entry_get_refval (entry, 0),
-                         gimp_size_entry_get_refval (entry, 1),
-                         gimp_size_entry_get_unit (entry),
+                         ligma_size_entry_get_refval (entry, 0),
+                         ligma_size_entry_get_refval (entry, 1),
+                         ligma_size_entry_get_unit (entry),
                          private->user_data);
       break;
 
@@ -337,10 +337,10 @@ print_size_dialog_reset (PrintSizeDialog *private)
 {
   gdouble  xres, yres;
 
-  gimp_size_entry_set_unit (private->resolution_entry,
-                            gimp_get_default_unit ());
+  ligma_size_entry_set_unit (private->resolution_entry,
+                            ligma_get_default_unit ());
 
-  gimp_image_get_resolution (private->image, &xres, &yres);
+  ligma_image_get_resolution (private->image, &xres, &yres);
   print_size_dialog_set_resolution (private, xres, yres);
 }
 
@@ -348,37 +348,37 @@ static void
 print_size_dialog_size_changed (GtkWidget       *widget,
                                 PrintSizeDialog *private)
 {
-  GimpImage *image = private->image;
+  LigmaImage *image = private->image;
   gdouble    width;
   gdouble    height;
   gdouble    xres;
   gdouble    yres;
   gdouble    scale;
 
-  scale = gimp_unit_get_factor (gimp_size_entry_get_unit (private->size_entry));
+  scale = ligma_unit_get_factor (ligma_size_entry_get_unit (private->size_entry));
 
-  width  = gimp_size_entry_get_value (private->size_entry, 0);
-  height = gimp_size_entry_get_value (private->size_entry, 1);
+  width  = ligma_size_entry_get_value (private->size_entry, 0);
+  height = ligma_size_entry_get_value (private->size_entry, 1);
 
-  xres = scale * gimp_image_get_width  (image) / MAX (0.001, width);
-  yres = scale * gimp_image_get_height (image) / MAX (0.001, height);
+  xres = scale * ligma_image_get_width  (image) / MAX (0.001, width);
+  yres = scale * ligma_image_get_height (image) / MAX (0.001, height);
 
-  xres = CLAMP (xres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-  yres = CLAMP (yres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  xres = CLAMP (xres, LIGMA_MIN_RESOLUTION, LIGMA_MAX_RESOLUTION);
+  yres = CLAMP (yres, LIGMA_MIN_RESOLUTION, LIGMA_MAX_RESOLUTION);
 
   print_size_dialog_set_resolution (private, xres, yres);
   print_size_dialog_set_size (private,
-                              gimp_image_get_width  (image),
-                              gimp_image_get_height (image));
+                              ligma_image_get_width  (image),
+                              ligma_image_get_height (image));
 }
 
 static void
 print_size_dialog_resolution_changed (GtkWidget       *widget,
                                       PrintSizeDialog *private)
 {
-  GimpSizeEntry *entry = private->resolution_entry;
-  gdouble        xres  = gimp_size_entry_get_refval (entry, 0);
-  gdouble        yres  = gimp_size_entry_get_refval (entry, 1);
+  LigmaSizeEntry *entry = private->resolution_entry;
+  gdouble        xres  = ligma_size_entry_get_refval (entry, 0);
+  gdouble        yres  = ligma_size_entry_get_refval (entry, 1);
 
   print_size_dialog_set_resolution (private, xres, yres);
 }
@@ -392,8 +392,8 @@ print_size_dialog_set_size (PrintSizeDialog *private,
                                    print_size_dialog_size_changed,
                                    private);
 
-  gimp_size_entry_set_refval (private->size_entry, 0, width);
-  gimp_size_entry_set_refval (private->size_entry, 1, height);
+  ligma_size_entry_set_refval (private->size_entry, 0, width);
+  ligma_size_entry_set_refval (private->size_entry, 1, height);
 
   g_signal_handlers_unblock_by_func (private->size_entry,
                                      print_size_dialog_size_changed,
@@ -405,7 +405,7 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
                                   gdouble          xres,
                                   gdouble          yres)
 {
-  if (private->chain && gimp_chain_button_get_active (private->chain))
+  if (private->chain && ligma_chain_button_get_active (private->chain))
     {
       if (xres != private->xres)
         yres = xres;
@@ -420,8 +420,8 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
                                    print_size_dialog_resolution_changed,
                                    private);
 
-  gimp_size_entry_set_refval (private->resolution_entry, 0, xres);
-  gimp_size_entry_set_refval (private->resolution_entry, 1, yres);
+  ligma_size_entry_set_refval (private->resolution_entry, 0, xres);
+  ligma_size_entry_set_refval (private->resolution_entry, 1, yres);
 
   g_signal_handlers_unblock_by_func (private->resolution_entry,
                                      print_size_dialog_resolution_changed,
@@ -431,8 +431,8 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
                                    print_size_dialog_size_changed,
                                    private);
 
-  gimp_size_entry_set_resolution (private->size_entry, 0, xres, TRUE);
-  gimp_size_entry_set_resolution (private->size_entry, 1, yres, TRUE);
+  ligma_size_entry_set_resolution (private->size_entry, 0, xres, TRUE);
+  ligma_size_entry_set_resolution (private->size_entry, 1, yres, TRUE);
 
   g_signal_handlers_unblock_by_func (private->size_entry,
                                      print_size_dialog_size_changed,

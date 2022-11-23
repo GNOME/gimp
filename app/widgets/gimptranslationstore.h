@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptranslationstore.h
- * Copyright (C) 2009  Sven Neumann <sven@gimp.org>
+ * ligmatranslationstore.h
+ * Copyright (C) 2009  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSLATION_STORE_H__
-#define __GIMP_TRANSLATION_STORE_H__
+#ifndef __LIGMA_TRANSLATION_STORE_H__
+#define __LIGMA_TRANSLATION_STORE_H__
 
 
-#include "gimplanguagestore.h"
+#include "ligmalanguagestore.h"
 
 
-#define GIMP_TYPE_TRANSLATION_STORE            (gimp_translation_store_get_type ())
-#define GIMP_TRANSLATION_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSLATION_STORE, GimpTranslationStore))
-#define GIMP_TRANSLATION_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSLATION_STORE, GimpTranslationStoreClass))
-#define GIMP_IS_TRANSLATION_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSLATION_STORE))
-#define GIMP_IS_TRANSLATION_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSLATION_STORE))
-#define GIMP_TRANSLATION_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSLATION_STORE, GimpTranslationStoreClass))
+#define LIGMA_TYPE_TRANSLATION_STORE            (ligma_translation_store_get_type ())
+#define LIGMA_TRANSLATION_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRANSLATION_STORE, LigmaTranslationStore))
+#define LIGMA_TRANSLATION_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRANSLATION_STORE, LigmaTranslationStoreClass))
+#define LIGMA_IS_TRANSLATION_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRANSLATION_STORE))
+#define LIGMA_IS_TRANSLATION_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRANSLATION_STORE))
+#define LIGMA_TRANSLATION_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRANSLATION_STORE, LigmaTranslationStoreClass))
 
 
-typedef struct _GimpTranslationStoreClass  GimpTranslationStoreClass;
+typedef struct _LigmaTranslationStoreClass  LigmaTranslationStoreClass;
 
 
-GType          gimp_translation_store_get_type (void) G_GNUC_CONST;
+GType          ligma_translation_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_translation_store_new      (gboolean     manual_l18n,
+GtkListStore * ligma_translation_store_new      (gboolean     manual_l18n,
                                                 const gchar *empty_label);
 
 
-#endif  /* __GIMP_TRANSLATION_STORE_H__ */
+#endif  /* __LIGMA_TRANSLATION_STORE_H__ */

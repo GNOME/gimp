@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,21 @@
  */
 
 /*  This code is written so that it can also be compiled standalone.
- *  It shouldn't depend on libgimp.
+ *  It shouldn't depend on libligma.
  */
 
 #include "config.h"
 
 #include <string.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
-#include "gimphelp.h"
+#include "ligmahelp.h"
 
 #ifdef DISABLE_NLS
 #define _(String)  (String)
 #else
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 #endif
 
 
@@ -47,7 +47,7 @@ static GHashTable  *domain_hash = NULL;
 /*  public functions  */
 
 gboolean
-gimp_help_init (const gchar **domain_names,
+ligma_help_init (const gchar **domain_names,
                 const gchar **domain_uris)
 {
   gint i;
@@ -63,13 +63,13 @@ gimp_help_init (const gchar **domain_names,
     }
 
   for (i = 0; i < num_domain_names; i++)
-    gimp_help_register_domain (domain_names[i], domain_uris[i]);
+    ligma_help_register_domain (domain_names[i], domain_uris[i]);
 
   return TRUE;
 }
 
 void
-gimp_help_exit (void)
+ligma_help_exit (void)
 {
   if (domain_hash)
     {
@@ -79,13 +79,13 @@ gimp_help_exit (void)
 }
 
 void
-gimp_help_register_domain (const gchar *domain_name,
+ligma_help_register_domain (const gchar *domain_name,
                            const gchar *domain_uri)
 {
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (domain_uri != NULL);
 
-#ifdef GIMP_HELP_DEBUG
+#ifdef LIGMA_HELP_DEBUG
   g_printerr ("help: registering help domain \"%s\" with base uri \"%s\"\n",
               domain_name, domain_uri);
 #endif
@@ -93,15 +93,15 @@ gimp_help_register_domain (const gchar *domain_name,
   if (! domain_hash)
     domain_hash = g_hash_table_new_full (g_str_hash, g_str_equal,
                                          g_free,
-                                         (GDestroyNotify) gimp_help_domain_free);
+                                         (GDestroyNotify) ligma_help_domain_free);
 
   g_hash_table_insert (domain_hash,
                        g_strdup (domain_name),
-                       gimp_help_domain_new (domain_name, domain_uri));
+                       ligma_help_domain_new (domain_name, domain_uri));
 }
 
-GimpHelpDomain *
-gimp_help_lookup_domain (const gchar *domain_name)
+LigmaHelpDomain *
+ligma_help_lookup_domain (const gchar *domain_name)
 {
   g_return_val_if_fail (domain_name, NULL);
 
@@ -112,7 +112,7 @@ gimp_help_lookup_domain (const gchar *domain_name)
 }
 
 GList *
-gimp_help_parse_locales (const gchar *help_locales)
+ligma_help_parse_locales (const gchar *help_locales)
 {
   GList       *locales = NULL;
   GList       *list;
@@ -135,13 +135,13 @@ gimp_help_parse_locales (const gchar *help_locales)
 
   /*  if the list doesn't contain the default locale yet, append it  */
   for (list = locales; list; list = list->next)
-    if (strcmp ((const gchar *) list->data, GIMP_HELP_DEFAULT_LOCALE) == 0)
+    if (strcmp ((const gchar *) list->data, LIGMA_HELP_DEFAULT_LOCALE) == 0)
       break;
 
   if (! list)
-    locales = g_list_append (locales, g_strdup (GIMP_HELP_DEFAULT_LOCALE));
+    locales = g_list_append (locales, g_strdup (LIGMA_HELP_DEFAULT_LOCALE));
 
-#ifdef GIMP_HELP_DEBUG
+#ifdef LIGMA_HELP_DEBUG
   g_printerr ("help: locales: ");
   for (list = locales; list; list = list->next)
     g_printerr ("%s ", (const gchar *) list->data);

@@ -15,7 +15,7 @@
    width="16.000002"
    version="1.1"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-prefs-color-management.svg">
+   sodipodi:docname="ligma-prefs-color-management.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -172,8 +172,8 @@
   </defs>
   <g
      style="display:inline"
-     id="gimp-prefs-color-management"
-     inkscape:label="gimp-prefs-color-management"
+     id="ligma-prefs-color-management"
+     inkscape:label="ligma-prefs-color-management"
      transform="translate(-35.04513,19.93072)">
     <g
        id="g14498">

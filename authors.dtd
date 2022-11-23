@@ -1,7 +1,7 @@
-<!-- simple DTD for GIMP authors -->
+<!-- simple DTD for LIGMA authors -->
 
-<!ELEMENT gimp-authors (creator+, maintainer+, contributor+)>
-<!ATTLIST gimp-authors xmlns CDATA #FIXED "http://purl.org/dc/elements/1.1/">
+<!ELEMENT ligma-authors (creator+, maintainer+, contributor+)>
+<!ATTLIST ligma-authors xmlns CDATA #FIXED "http://purl.org/dc/elements/1.1/">
 
 <!ELEMENT creator (#PCDATA)>
 <!ATTLIST creator role CDATA #REQUIRED>

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,12 +20,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "paint-types.h"
 
-#include "gimppaintcore.h"
-#include "gimppaintcoreundo.h"
+#include "ligmapaintcore.h"
+#include "ligmapaintcoreundo.h"
 
 
 enum
@@ -35,61 +35,61 @@ enum
 };
 
 
-static void   gimp_paint_core_undo_constructed  (GObject             *object);
-static void   gimp_paint_core_undo_set_property (GObject             *object,
+static void   ligma_paint_core_undo_constructed  (GObject             *object);
+static void   ligma_paint_core_undo_set_property (GObject             *object,
                                                  guint                property_id,
                                                  const GValue        *value,
                                                  GParamSpec          *pspec);
-static void   gimp_paint_core_undo_get_property (GObject             *object,
+static void   ligma_paint_core_undo_get_property (GObject             *object,
                                                  guint                property_id,
                                                  GValue              *value,
                                                  GParamSpec          *pspec);
 
-static void   gimp_paint_core_undo_pop          (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode,
-                                                 GimpUndoAccumulator *accum);
-static void   gimp_paint_core_undo_free         (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode);
+static void   ligma_paint_core_undo_pop          (LigmaUndo            *undo,
+                                                 LigmaUndoMode         undo_mode,
+                                                 LigmaUndoAccumulator *accum);
+static void   ligma_paint_core_undo_free         (LigmaUndo            *undo,
+                                                 LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpPaintCoreUndo, gimp_paint_core_undo, GIMP_TYPE_UNDO)
+G_DEFINE_TYPE (LigmaPaintCoreUndo, ligma_paint_core_undo, LIGMA_TYPE_UNDO)
 
-#define parent_class gimp_paint_core_undo_parent_class
+#define parent_class ligma_paint_core_undo_parent_class
 
 
 static void
-gimp_paint_core_undo_class_init (GimpPaintCoreUndoClass *klass)
+ligma_paint_core_undo_class_init (LigmaPaintCoreUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed  = gimp_paint_core_undo_constructed;
-  object_class->set_property = gimp_paint_core_undo_set_property;
-  object_class->get_property = gimp_paint_core_undo_get_property;
+  object_class->constructed  = ligma_paint_core_undo_constructed;
+  object_class->set_property = ligma_paint_core_undo_set_property;
+  object_class->get_property = ligma_paint_core_undo_get_property;
 
-  undo_class->pop            = gimp_paint_core_undo_pop;
-  undo_class->free           = gimp_paint_core_undo_free;
+  undo_class->pop            = ligma_paint_core_undo_pop;
+  undo_class->free           = ligma_paint_core_undo_free;
 
   g_object_class_install_property (object_class, PROP_PAINT_CORE,
                                    g_param_spec_object ("paint-core", NULL, NULL,
-                                                        GIMP_TYPE_PAINT_CORE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_PAINT_CORE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_paint_core_undo_init (GimpPaintCoreUndo *undo)
+ligma_paint_core_undo_init (LigmaPaintCoreUndo *undo)
 {
 }
 
 static void
-gimp_paint_core_undo_constructed (GObject *object)
+ligma_paint_core_undo_constructed (GObject *object)
 {
-  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
+  LigmaPaintCoreUndo *paint_core_undo = LIGMA_PAINT_CORE_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
+  ligma_assert (LIGMA_IS_PAINT_CORE (paint_core_undo->paint_core));
 
   paint_core_undo->last_coords = paint_core_undo->paint_core->start_coords;
 
@@ -98,12 +98,12 @@ gimp_paint_core_undo_constructed (GObject *object)
 }
 
 static void
-gimp_paint_core_undo_set_property (GObject      *object,
+ligma_paint_core_undo_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
+  LigmaPaintCoreUndo *paint_core_undo = LIGMA_PAINT_CORE_UNDO (object);
 
   switch (property_id)
     {
@@ -118,12 +118,12 @@ gimp_paint_core_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_paint_core_undo_get_property (GObject    *object,
+ligma_paint_core_undo_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
+  LigmaPaintCoreUndo *paint_core_undo = LIGMA_PAINT_CORE_UNDO (object);
 
   switch (property_id)
     {
@@ -138,18 +138,18 @@ gimp_paint_core_undo_get_property (GObject    *object,
 }
 
 static void
-gimp_paint_core_undo_pop (GimpUndo              *undo,
-                          GimpUndoMode           undo_mode,
-                          GimpUndoAccumulator   *accum)
+ligma_paint_core_undo_pop (LigmaUndo              *undo,
+                          LigmaUndoMode           undo_mode,
+                          LigmaUndoAccumulator   *accum)
 {
-  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (undo);
+  LigmaPaintCoreUndo *paint_core_undo = LIGMA_PAINT_CORE_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   /*  only pop if the core still exists  */
   if (paint_core_undo->paint_core)
     {
-      GimpCoords tmp_coords;
+      LigmaCoords tmp_coords;
 
       tmp_coords = paint_core_undo->paint_core->last_coords;
       paint_core_undo->paint_core->last_coords = paint_core_undo->last_coords;
@@ -158,10 +158,10 @@ gimp_paint_core_undo_pop (GimpUndo              *undo,
 }
 
 static void
-gimp_paint_core_undo_free (GimpUndo     *undo,
-                           GimpUndoMode  undo_mode)
+ligma_paint_core_undo_free (LigmaUndo     *undo,
+                           LigmaUndoMode  undo_mode)
 {
-  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (undo);
+  LigmaPaintCoreUndo *paint_core_undo = LIGMA_PAINT_CORE_UNDO (undo);
 
   if (paint_core_undo->paint_core)
     {
@@ -170,5 +170,5 @@ gimp_paint_core_undo_free (GimpUndo     *undo,
       paint_core_undo->paint_core = NULL;
     }
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub pdb_temp_name {
     $blurb = 'Generates a unique temporary PDB name.';
@@ -68,7 +68,7 @@ HELP
 	code => <<'CODE'
 {
   if (file)
-    success = gimp_pdb_dump (gimp->pdb, file, error);
+    success = ligma_pdb_dump (ligma->pdb, file, error);
   else
     success = FALSE;
 }
@@ -113,8 +113,8 @@ HELP
 	{ name => 'date', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure date' },
 	{ name => 'proc_type', type => 'string', allow_non_utf8 => 1,
-	  desc => 'The regex for procedure type: { \'Internal GIMP procedure\',
-		   \'GIMP Plug-in\', \'GIMP Extension\',
+	  desc => 'The regex for procedure type: { \'Internal LIGMA procedure\',
+		   \'LIGMA Plug-in\', \'LIGMA Extension\',
 		   \'Temporary Procedure\' }' }
     );
 
@@ -126,7 +126,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  success = gimp_pdb_query (gimp->pdb,
+  success = ligma_pdb_query (ligma->pdb,
                             name, blurb, help, authors,
                             copyright, date, proc_type,
                             &procedure_names,
@@ -163,18 +163,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = gimp_pdb_lookup_procedure (gimp->pdb,
+      LigmaProcedure *proc = ligma_pdb_lookup_procedure (ligma->pdb,
                                                        procedure_name);
 
       if (! proc)
         {
-          procedure_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
+          procedure_name = ligma_pdb_lookup_compat_proc_name (ligma->pdb,
 	                                                     procedure_name);
 
           if (procedure_name)
-            proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+            proc = ligma_pdb_lookup_procedure (ligma->pdb, procedure_name);
         }
 
       exists = (proc != NULL);
@@ -195,8 +195,8 @@ BLURB
 This procedure returns information on the specified procedure.  The
 procedure type, number of input, and number of return values are
 returned. For specific information on each input argument and return
-value, use the gimp_pdb_db_proc_argument() and
-gimp_pdb_db_proc_return_value() procedures.
+value, use the ligma_pdb_db_proc_argument() and
+ligma_pdb_db_proc_return_value() procedures.
 HELP
 
     &std_pdb_misc;
@@ -210,7 +210,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'proc_type', type => 'enum GimpPDBProcType', void_ret => 1,
+        { name => 'proc_type', type => 'enum LigmaPDBProcType', void_ret => 1,
 	  desc => 'The procedure type' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
@@ -221,9 +221,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
       if (proc)
@@ -273,9 +273,9 @@ HELP
    %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
@@ -323,9 +323,9 @@ HELP
    %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
       if (proc && (val_num >= 0 && val_num < proc->num_values))
@@ -363,12 +363,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_image_types (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_image_types (plug_in, procedure_name,
                                                    image_types, error);
     }
   else
@@ -405,14 +405,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
-      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+      if (LIGMA_IS_PLUG_IN_PROCEDURE (proc))
         {
-          image_types = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->image_types);
+          image_types = g_strdup (LIGMA_PLUG_IN_PROCEDURE (proc)->image_types);
         }
       else
         success = FALSE;
@@ -445,12 +445,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_sensitivity_mask (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_sensitivity_mask (plug_in, procedure_name,
                                                         mask, error);
     }
   else
@@ -481,12 +481,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_menu_label (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_menu_label (plug_in, procedure_name,
                                                   menu_label, error);
     }
   else
@@ -522,14 +522,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
-      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+      if (LIGMA_IS_PLUG_IN_PROCEDURE (proc))
         {
-          menu_label = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->menu_label);
+          menu_label = g_strdup (LIGMA_PLUG_IN_PROCEDURE (proc)->menu_label);
         }
       else
         success = FALSE;
@@ -562,12 +562,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_add_proc_menu_path (plug_in, procedure_name,
+      success = ligma_plug_in_add_proc_menu_path (plug_in, procedure_name,
                                                  menu_path, error);
     }
   else
@@ -603,14 +603,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
-      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+      if (LIGMA_IS_PLUG_IN_PROCEDURE (proc))
         {
-          GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+          LigmaPlugInProcedure *plug_in_proc = LIGMA_PLUG_IN_PROCEDURE (proc);
           guint num_menu_paths;
 
           num_menu_paths = g_list_length (plug_in_proc->menu_paths);
@@ -654,7 +654,7 @@ HELP
     @inargs = (
 	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the icon' },
-        { name => 'icon_type', type => 'enum GimpIconType',
+        { name => 'icon_type', type => 'enum LigmaIconType',
           desc => 'The type of the icon' },
 	{ name => 'icon_data', type => 'int8array',
 	  desc => "The procedure's icon. The format depends on the
@@ -666,12 +666,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_icon (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_icon (plug_in, procedure_name,
                                             icon_type,
                                             icon_data, icon_data_length,
                                             error);
@@ -708,12 +708,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_help (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_help (plug_in, procedure_name,
                                             blurb, help, help_id, error);
     }
   else
@@ -754,16 +754,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
       if (proc)
         {
-          blurb   = g_strdup (gimp_procedure_get_blurb   (proc));
-          help    = g_strdup (gimp_procedure_get_help    (proc));
-          help_id = g_strdup (gimp_procedure_get_help_id (proc));
+          blurb   = g_strdup (ligma_procedure_get_blurb   (proc));
+          help    = g_strdup (ligma_procedure_get_help    (proc));
+          help_id = g_strdup (ligma_procedure_get_help_id (proc));
         }
       else
         success = FALSE;
@@ -800,12 +800,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_proc_attribution (plug_in, procedure_name,
+      success = ligma_plug_in_set_proc_attribution (plug_in, procedure_name,
                                                    authors, copyright, date,
                                                    error);
     }
@@ -848,9 +848,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+  if (ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+      LigmaProcedure *proc = lookup_procedure (ligma->pdb, procedure_name,
                                               error);
 
       if (proc)
@@ -898,12 +898,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_load_handler (plug_in,
+      success = ligma_plug_in_set_file_proc_load_handler (plug_in,
                                                          procedure_name,
                                                          extensions, prefixes,
                                                          magics, error);
@@ -941,12 +941,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_save_handler (plug_in,
+      success = ligma_plug_in_set_file_proc_save_handler (plug_in,
                                                          procedure_name,
                                                          extensions, prefixes,
                                                          error);
@@ -983,12 +983,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_priority (plug_in,
+      success = ligma_plug_in_set_file_proc_priority (plug_in,
                                                      procedure_name,
                                                      priority, error);
     }
@@ -1003,10 +1003,10 @@ sub pdb_set_file_proc_mime_types {
     $blurb = 'Associates MIME types with a file handler procedure.';
 
     $help = <<'HELP';
-Registers MIME types for a file handler procedure. This allows GIMP to
+Registers MIME types for a file handler procedure. This allows LIGMA to
 determine the MIME type of the file opened or saved using this
 procedure. It is recommended that only one MIME type is registered per
-file procedure; when registering more than one MIME type, GIMP will
+file procedure; when registering more than one MIME type, LIGMA will
 associate the first one with files opened or saved with this procedure.
 HELP
 
@@ -1024,12 +1024,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_mime_types (plug_in,
+      success = ligma_plug_in_set_file_proc_mime_types (plug_in,
                                                        procedure_name,
                                                        mime_types, error);
     }
@@ -1045,7 +1045,7 @@ sub pdb_set_file_proc_handles_remote {
 
     $help = <<'HELP';
 Registers a file handler procedure as capable of handling remote
-URIs. This allows GIMP to call the procedure directly for all kinds of
+URIs. This allows LIGMA to call the procedure directly for all kinds of
 URIs, not only on local file:// URIs.
 HELP
 
@@ -1061,12 +1061,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_handles_remote (plug_in,
+      success = ligma_plug_in_set_file_proc_handles_remote (plug_in,
                                                            procedure_name,
                                                            error);
     }
@@ -1098,12 +1098,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_file_proc_handles_raw (plug_in,
+      success = ligma_plug_in_set_file_proc_handles_raw (plug_in,
                                                         procedure_name,
                                                         error);
     }
@@ -1121,7 +1121,7 @@ sub pdb_set_file_proc_thumbnail_loader {
 Some file formats allow for embedded thumbnails, other file formats
 contain a scalable image or provide the image data in different
 resolutions. A file plug-in for such a format may register a special
-procedure that allows GIMP to load a thumbnail preview of the
+procedure that allows LIGMA to load a thumbnail preview of the
 image. This procedure is then associated with the standard load
 procedure using this function.
 HELP
@@ -1139,13 +1139,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (load_proc, error) &&
-      gimp_pdb_is_canonical_procedure (thumb_proc, error))
+      ligma_pdb_is_canonical_procedure (load_proc, error) &&
+      ligma_pdb_is_canonical_procedure (thumb_proc, error))
     {
-      success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
+      success = ligma_plug_in_set_file_proc_thumb_loader (plug_in,
                                                          load_proc, thumb_proc,
                                                          error);
     }
@@ -1178,12 +1178,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in &&
-      gimp_pdb_is_canonical_procedure (procedure_name, error))
+      ligma_pdb_is_canonical_procedure (procedure_name, error))
     {
-      success = gimp_plug_in_set_batch_interpreter (plug_in,
+      success = ligma_plug_in_set_batch_interpreter (plug_in,
                                                     procedure_name,
                                                     interpreter_name,
                                                     error);
@@ -1224,11 +1224,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_is_canonical_identifier (identifier))
+  if (ligma_is_canonical_identifier (identifier))
     {
       const guint8 *orig_data;
 
-      orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+      orig_data = ligma_plug_in_manager_get_data (ligma->plug_in_manager,
                                                  identifier, &bytes);
 
       if (orig_data)
@@ -1238,7 +1238,7 @@ HELP
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Data label '%s' is not a canonical identifier"),
                    identifier);
       success = FALSE;
@@ -1274,15 +1274,15 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_is_canonical_identifier (identifier))
+  if (ligma_is_canonical_identifier (identifier))
     {
-      if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+      if (! ligma_plug_in_manager_get_data (ligma->plug_in_manager,
                                            identifier, &bytes))
         success = FALSE;
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Data label '%s' is not a canonical identifier"),
                    identifier);
       success = FALSE;
@@ -1317,14 +1317,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_is_canonical_identifier (identifier))
+  if (ligma_is_canonical_identifier (identifier))
     {
-      gimp_plug_in_manager_set_data (gimp->plug_in_manager,
+      ligma_plug_in_manager_set_data (ligma->plug_in_manager,
                                      identifier, bytes, data);
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Data label '%s' is not a canonical identifier"),
                    identifier);
       success = FALSE;
@@ -1335,42 +1335,42 @@ CODE
 }
 
 $extra{app}->{code} = <<'CODE';
-static GimpProcedure *
-lookup_procedure (GimpPDB          *pdb,
+static LigmaProcedure *
+lookup_procedure (LigmaPDB          *pdb,
                   const gchar      *proc_name,
                   GError          **error)
 {
-  GimpProcedure *proc = gimp_pdb_lookup_procedure (pdb, proc_name);
+  LigmaProcedure *proc = ligma_pdb_lookup_procedure (pdb, proc_name);
 
   if (! proc)
     {
-      const gchar *compat_name = gimp_pdb_lookup_compat_proc_name (pdb,
+      const gchar *compat_name = ligma_pdb_lookup_compat_proc_name (pdb,
                                                                    proc_name);
 
       if (compat_name)
-        proc = gimp_pdb_lookup_procedure (pdb, compat_name);
+        proc = ligma_pdb_lookup_procedure (pdb, compat_name);
     }
 
   if (! proc)
-    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
+    g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_PROCEDURE_NOT_FOUND,
                  _("Procedure '%s' not found"), proc_name);
 
   return proc;
 }
 CODE
 
-@headers = qw("libgimpbase/gimpbase.h"
-              "core/gimp.h"
-              "core/gimpparamspecs-desc.h"
-              "plug-in/gimpplugin-proc.h"
-              "plug-in/gimppluginmanager.h"
-              "plug-in/gimppluginmanager-data.h"
-              "plug-in/gimppluginprocedure.h"
-              "gimppdb-query.h"
-              "gimppdb-utils.h"
-              "gimppdberror.h"
-              "gimp-pdb-compat.h"
-              "gimp-intl.h");
+@headers = qw("libligmabase/ligmabase.h"
+              "core/ligma.h"
+              "core/ligmaparamspecs-desc.h"
+              "plug-in/ligmaplugin-proc.h"
+              "plug-in/ligmapluginmanager.h"
+              "plug-in/ligmapluginmanager-data.h"
+              "plug-in/ligmapluginprocedure.h"
+              "ligmapdb-query.h"
+              "ligmapdb-utils.h"
+              "ligmapdberror.h"
+              "ligma-pdb-compat.h"
+              "ligma-intl.h");
 
 @procs = qw(pdb_temp_name
             pdb_dump

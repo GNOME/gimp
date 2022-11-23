@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HISTOGRAM_BOX_H__
-#define __GIMP_HISTOGRAM_BOX_H__
+#ifndef __LIGMA_HISTOGRAM_BOX_H__
+#define __LIGMA_HISTOGRAM_BOX_H__
 
 
-#define GIMP_TYPE_HISTOGRAM_BOX            (gimp_histogram_box_get_type ())
-#define GIMP_HISTOGRAM_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_BOX, GimpHistogramBox))
-#define GIMP_HISTOGRAM_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_BOX, GimpHistogramBoxClass))
-#define GIMP_IS_HISTOGRAM_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_BOX))
-#define GIMP_IS_HISTOGRAM_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_BOX))
-#define GIMP_HISTOGRAM_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_BOX, GimpHistogramBoxClass))
+#define LIGMA_TYPE_HISTOGRAM_BOX            (ligma_histogram_box_get_type ())
+#define LIGMA_HISTOGRAM_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HISTOGRAM_BOX, LigmaHistogramBox))
+#define LIGMA_HISTOGRAM_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HISTOGRAM_BOX, LigmaHistogramBoxClass))
+#define LIGMA_IS_HISTOGRAM_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HISTOGRAM_BOX))
+#define LIGMA_IS_HISTOGRAM_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HISTOGRAM_BOX))
+#define LIGMA_HISTOGRAM_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HISTOGRAM_BOX, LigmaHistogramBoxClass))
 
 
-typedef struct _GimpHistogramBoxClass GimpHistogramBoxClass;
+typedef struct _LigmaHistogramBoxClass LigmaHistogramBoxClass;
 
-struct _GimpHistogramBox
+struct _LigmaHistogramBox
 {
   GtkBox             parent_instance;
 
-  GimpHistogramView *view;
+  LigmaHistogramView *view;
   GtkWidget         *color_bar;
   GtkWidget         *slider_bar;
 
@@ -46,17 +46,17 @@ struct _GimpHistogramBox
   GtkWidget         *high_spinbutton;
 };
 
-struct _GimpHistogramBoxClass
+struct _LigmaHistogramBoxClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_histogram_box_get_type    (void) G_GNUC_CONST;
+GType       ligma_histogram_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_box_new         (void);
-void        gimp_histogram_box_set_channel (GimpHistogramBox     *box,
-                                            GimpHistogramChannel  channel);
+GtkWidget * ligma_histogram_box_new         (void);
+void        ligma_histogram_box_set_channel (LigmaHistogramBox     *box,
+                                            LigmaHistogramChannel  channel);
 
 
-#endif  /*  __GIMP_HISTOGRAM_BOX_H__  */
+#endif  /*  __LIGMA_HISTOGRAM_BOX_H__  */

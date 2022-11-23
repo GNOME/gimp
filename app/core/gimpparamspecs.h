@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_PARAM_SPECS_H__
-#define __APP_GIMP_PARAM_SPECS_H__
+#ifndef __APP_LIGMA_PARAM_SPECS_H__
+#define __APP_LIGMA_PARAM_SPECS_H__
 
 
 /*
- * GIMP_TYPE_PARAM_STRING
+ * LIGMA_TYPE_PARAM_STRING
  */
 
-#define GIMP_TYPE_PARAM_STRING           (gimp_param_string_get_type ())
-#define GIMP_PARAM_SPEC_STRING(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_STRING, GimpParamSpecString))
-#define GIMP_IS_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_STRING))
+#define LIGMA_TYPE_PARAM_STRING           (ligma_param_string_get_type ())
+#define LIGMA_PARAM_SPEC_STRING(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), LIGMA_TYPE_PARAM_STRING, LigmaParamSpecString))
+#define LIGMA_IS_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_STRING))
 
-typedef struct _GimpParamSpecString GimpParamSpecString;
+typedef struct _LigmaParamSpecString LigmaParamSpecString;
 
-struct _GimpParamSpecString
+struct _LigmaParamSpecString
 {
   GParamSpecString parent_instance;
 
@@ -37,9 +37,9 @@ struct _GimpParamSpecString
   guint            non_empty      : 1;
 };
 
-GType        gimp_param_string_get_type (void) G_GNUC_CONST;
+GType        ligma_param_string_get_type (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_string     (const gchar *name,
+GParamSpec * ligma_param_spec_string     (const gchar *name,
                                          const gchar *nick,
                                          const gchar *blurb,
                                          gboolean     allow_non_utf8,
@@ -50,42 +50,42 @@ GParamSpec * gimp_param_spec_string     (const gchar *name,
 
 
 /*
- * GIMP_TYPE_PARAM_ENUM
+ * LIGMA_TYPE_PARAM_ENUM
  */
 
-#define GIMP_TYPE_PARAM_ENUM           (gimp_param_enum_get_type ())
-#define GIMP_PARAM_SPEC_ENUM(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ENUM, GimpParamSpecEnum))
+#define LIGMA_TYPE_PARAM_ENUM           (ligma_param_enum_get_type ())
+#define LIGMA_PARAM_SPEC_ENUM(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), LIGMA_TYPE_PARAM_ENUM, LigmaParamSpecEnum))
 
-#define GIMP_IS_PARAM_SPEC_ENUM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ENUM))
+#define LIGMA_IS_PARAM_SPEC_ENUM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_ENUM))
 
-typedef struct _GimpParamSpecEnum GimpParamSpecEnum;
+typedef struct _LigmaParamSpecEnum LigmaParamSpecEnum;
 
-struct _GimpParamSpecEnum
+struct _LigmaParamSpecEnum
 {
   GParamSpecEnum  parent_instance;
 
   GSList         *excluded_values;
 };
 
-GType        gimp_param_enum_get_type     (void) G_GNUC_CONST;
+GType        ligma_param_enum_get_type     (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_enum         (const gchar       *name,
+GParamSpec * ligma_param_spec_enum         (const gchar       *name,
                                            const gchar       *nick,
                                            const gchar       *blurb,
                                            GType              enum_type,
                                            gint               default_value,
                                            GParamFlags        flags);
 
-void   gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
+void   ligma_param_spec_enum_exclude_value (LigmaParamSpecEnum *espec,
                                            gint               value);
 
 
 /*  include the declaration of the remaining paramspecs, they are
- *  identical app/ and libgimp/.
+ *  identical app/ and libligma/.
  */
-#define GIMP_COMPILATION
-#include "../../libgimp/gimpparamspecs.h"
-#undef GIMP_COMPILATION
+#define LIGMA_COMPILATION
+#include "../../libligma/ligmaparamspecs.h"
+#undef LIGMA_COMPILATION
 
 
-#endif  /*  __APP_GIMP_PARAM_SPECS_H__  */
+#endif  /*  __APP_LIGMA_PARAM_SPECS_H__  */

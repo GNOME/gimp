@@ -1,4 +1,4 @@
-# Dutch translation of the GIMP's script-fu strings.
+# Dutch translation of the LIGMA's script-fu strings.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Branko Collin <collin@xs4all.nl>, 2001-2004.
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005.
@@ -11,8 +11,8 @@
 # render         renderen/tekenen
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA 2.0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-03-25 19:11+0000\n"
 "PO-Revision-Date: 2022-03-29 17:57+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
@@ -40,8 +40,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Server voor Script-Fu-bewerkingen op afstand"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "_GIMP online"
+msgid "_LIGMA Online"
+msgstr "_LIGMA online"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -80,8 +80,8 @@ msgid "_Beveled Pattern"
 msgstr "_Afgeschuind patroon"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "_Klassiek.Gimp.org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Klassiek.Ligma.org"
 
 #: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
@@ -830,88 +830,88 @@ msgstr "Schaduwgewicht (%)"
 msgid "Flatten image"
 msgstr "Alle lagen samenvoegen"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Paden gebruiken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Bladwijzer naar de gebruikershandleiding"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Uw afbeeldingen voorbereiden voor het web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Werken met foto’s van een digitale camera"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "_Bestanden aanmaken, openen en opslaan"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Basisconcepten"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Hoe _dialoogvensters gebruiken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "_Eenvoudige objecten tekenen"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "_Selecties aanmaken en gebruiken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Hoofdwebsite"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Bladwijzer naar de GIMP-website"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Bladwijzer naar de LIGMA-website"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "_Ontwikkelaarswebsite"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Routekaart"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Bladwijzer naar de routekaart van GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Bladwijzer naar de routekaart van LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Bladwijzer naar de wiki van GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Bladwijzer naar de wiki van LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Bugmeldingen en verzoeken om nieuwe functies"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Bladwijzer naar de bug-tracker van GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Bladwijzer naar de bug-tracker van LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "_Gebruikershandleidingwebsite"
 
@@ -1655,13 +1655,13 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Rendering Spyro"
 
-#~ msgid "_Spyrogimp (older script-fu version)..."
-#~ msgstr "_Spirogimp (oudere script-fu-versie)..."
+#~ msgid "_Spyroligma (older script-fu version)..."
+#~ msgstr "_Spiroligma (oudere script-fu-versie)..."
 
-#~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+#~ msgid "This procedure is deprecated! Use 'plug-in-spyroligma' instead."
 #~ msgstr ""
 #~ "Deze procedure is verouderd! Gebruik in plaats hiervan 'plug-in-"
-#~ "spyrogimp'."
+#~ "spyroligma'."
 
 #~ msgid "Type"
 #~ msgstr "Type"
@@ -1747,8 +1747,8 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "Plug-in _Registry"
 #~ msgstr "Plug-in_register"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "_Spyroligma..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
@@ -2206,15 +2206,15 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "Autocrop"
 #~ msgstr "Autosnijden"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Een afbeelding van een grote kop aanmaken op basis van het klassieke "
-#~ "thema van de gimp.org-webpagina"
+#~ "thema van de ligma.org-webpagina"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Een afbeelding van een kleine kop aanmaken op basis van het klassieke "
-#~ "thema van de gimp.org-webpagina"
+#~ "thema van de ligma.org-webpagina"
 
 #~ msgid "Dark color"
 #~ msgstr "Donkere kleur"
@@ -2241,31 +2241,31 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgstr "_Kleine kop..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
 #~ "Een afbeelding aanmaken met de kop van een label van een buisknop op "
-#~ "basis van het klassieke thema van de gimp.org-webpagina"
+#~ "basis van het klassieke thema van de ligma.org-webpagina"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Een afbeelding aanmaken met het label van een buisknop op basis van het "
-#~ "klassieke thema van de gimp.org-webpagina"
+#~ "klassieke thema van de ligma.org-webpagina"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Een afbeelding aanmaken met het label van een buisknop (op het tweede "
-#~ "niveau) op basis van het klassieke thema van de gimp.org-webpagina"
+#~ "niveau) op basis van het klassieke thema van de ligma.org-webpagina"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Een afbeelding aanmaken met het label van een buisknop (op het derde "
-#~ "niveau) op basis van het klassieke thema van de gimp.org-webpagina"
+#~ "niveau) op basis van het klassieke thema van de ligma.org-webpagina"
 
 # buis
 #~ msgid "T_ube Sub-Button Label..."
@@ -2894,11 +2894,11 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "_Search:"
 #~ msgstr "_Zoeken:"
 
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "Interne GIMP-procedure"
+#~ msgid "Internal LIGMA procedure"
+#~ msgstr "Interne LIGMA-procedure"
 
-#~ msgid "GIMP Plug-In"
-#~ msgstr "GIMP Plug-In"
+#~ msgid "LIGMA Plug-In"
+#~ msgstr "LIGMA Plug-In"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "Tijdelijke procedure"
@@ -2951,8 +2951,8 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Hulpprogramma's"
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
+#~ msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Ligma.Org"
 
 #~ msgid "<Image>/Script-Fu/Utils"
 #~ msgstr "<Image>/Script-Fu/Hulpprogramma's"
@@ -2972,8 +2972,8 @@ msgstr "Y-verschuiving slagschadow"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Misc"
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Overig"
 
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Toolbox>/Hulp/De GIMP Online (Engels)"
+#~ msgid "<Toolbox>/Help/The LIGMA Online"
+#~ msgstr "<Toolbox>/Hulp/De LIGMA Online (Engels)"
 
 #~ msgid "Buffer amount (% height of text)"
 #~ msgstr "Bufferhoeveelheid (% hoogte van tekst)"

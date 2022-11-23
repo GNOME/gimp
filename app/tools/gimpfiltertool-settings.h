@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfiltertool-settings.h
+ * ligmafiltertool-settings.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_TOOL_SETTINGS_H__
-#define __GIMP_FILTER_TOOL_SETTINGS_H__
+#ifndef __LIGMA_FILTER_TOOL_SETTINGS_H__
+#define __LIGMA_FILTER_TOOL_SETTINGS_H__
 
 
-GtkWidget * gimp_filter_tool_get_settings_box     (GimpFilterTool  *filter_tool);
+GtkWidget * ligma_filter_tool_get_settings_box     (LigmaFilterTool  *filter_tool);
 
 
-/*  virtual functions of GimpSettingsTool, don't call directly  */
+/*  virtual functions of LigmaSettingsTool, don't call directly  */
 
-gboolean    gimp_filter_tool_real_settings_import (GimpFilterTool  *filter_tool,
+gboolean    ligma_filter_tool_real_settings_import (LigmaFilterTool  *filter_tool,
                                                    GInputStream    *input,
                                                    GError         **error);
-gboolean    gimp_filter_tool_real_settings_export (GimpFilterTool  *filter_tool,
+gboolean    ligma_filter_tool_real_settings_export (LigmaFilterTool  *filter_tool,
                                                    GOutputStream   *output,
                                                    GError         **error);
 
 
-#endif /* __GIMP_FILTER_TOOL_SETTINGS_H__ */
+#endif /* __LIGMA_FILTER_TOOL_SETTINGS_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,56 +27,56 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-image_select_color_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_color_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
-  GimpDrawable *drawable;
-  GimpRGB color;
+  LigmaDrawable *drawable;
+  LigmaRGB color;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  ligma_value_get_rgb (ligma_value_array_index (args, 3), &color);
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
       if (pdb_context->sample_merged ||
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, 0, error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), image, 0, error))
         {
           GList *drawables = g_list_prepend (NULL, drawable);
-          gimp_channel_select_by_color (gimp_image_get_mask (image), drawables,
+          ligma_channel_select_by_color (ligma_image_get_mask (image), drawables,
                                         pdb_context->sample_merged,
                                         &color,
                                         pdb_context->sample_threshold,
@@ -93,40 +93,40 @@ image_select_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_contiguous_color_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_contiguous_color_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gdouble x;
   gdouble y;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  x = g_value_get_double (gimp_value_array_index (args, 3));
-  y = g_value_get_double (gimp_value_array_index (args, 4));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  x = g_value_get_double (ligma_value_array_index (args, 3));
+  y = g_value_get_double (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
       if (pdb_context->sample_merged ||
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, 0, error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), image, 0, error))
         {
 
-          gimp_channel_select_fuzzy (gimp_image_get_mask (image),
+          ligma_channel_select_fuzzy (ligma_image_get_mask (image),
                                      drawable,
                                      pdb_context->sample_merged,
                                      x, y,
@@ -144,38 +144,38 @@ image_select_contiguous_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_rectangle_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_rectangle_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
-  width = g_value_get_double (gimp_value_array_index (args, 4));
-  height = g_value_get_double (gimp_value_array_index (args, 5));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  x = g_value_get_double (ligma_value_array_index (args, 2));
+  y = g_value_get_double (ligma_value_array_index (args, 3));
+  width = g_value_get_double (ligma_value_array_index (args, 4));
+  height = g_value_get_double (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
-      gimp_channel_select_rectangle (gimp_image_get_mask (image),
+      ligma_channel_select_rectangle (ligma_image_get_mask (image),
                                      (gint) x, (gint) y,
                                      (gint) width, (gint) height,
                                      operation,
@@ -185,20 +185,20 @@ image_select_rectangle_invoker (GimpProcedure         *procedure,
                                      TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_round_rectangle_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_round_rectangle_invoker (LigmaProcedure         *procedure,
+                                      Ligma                  *ligma,
+                                      LigmaContext           *context,
+                                      LigmaProgress          *progress,
+                                      const LigmaValueArray  *args,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
   gdouble x;
   gdouble y;
@@ -207,20 +207,20 @@ image_select_round_rectangle_invoker (GimpProcedure         *procedure,
   gdouble corner_radius_x;
   gdouble corner_radius_y;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
-  width = g_value_get_double (gimp_value_array_index (args, 4));
-  height = g_value_get_double (gimp_value_array_index (args, 5));
-  corner_radius_x = g_value_get_double (gimp_value_array_index (args, 6));
-  corner_radius_y = g_value_get_double (gimp_value_array_index (args, 7));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  x = g_value_get_double (ligma_value_array_index (args, 2));
+  y = g_value_get_double (ligma_value_array_index (args, 3));
+  width = g_value_get_double (ligma_value_array_index (args, 4));
+  height = g_value_get_double (ligma_value_array_index (args, 5));
+  corner_radius_x = g_value_get_double (ligma_value_array_index (args, 6));
+  corner_radius_y = g_value_get_double (ligma_value_array_index (args, 7));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
-      gimp_channel_select_round_rect (gimp_image_get_mask (image),
+      ligma_channel_select_round_rect (ligma_image_get_mask (image),
                                       (gint) x, (gint) y,
                                       (gint) width, (gint) height,
                                       corner_radius_x,
@@ -233,38 +233,38 @@ image_select_round_rectangle_invoker (GimpProcedure         *procedure,
                                       TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_ellipse_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_ellipse_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
-  width = g_value_get_double (gimp_value_array_index (args, 4));
-  height = g_value_get_double (gimp_value_array_index (args, 5));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  x = g_value_get_double (ligma_value_array_index (args, 2));
+  y = g_value_get_double (ligma_value_array_index (args, 3));
+  width = g_value_get_double (ligma_value_array_index (args, 4));
+  height = g_value_get_double (ligma_value_array_index (args, 5));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
-      gimp_channel_select_ellipse (gimp_image_get_mask (image),
+      ligma_channel_select_ellipse (ligma_image_get_mask (image),
                                    (gint) x, (gint) y,
                                    (gint) width, (gint) height,
                                    operation,
@@ -275,37 +275,37 @@ image_select_ellipse_invoker (GimpProcedure         *procedure,
                                    TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_polygon_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_polygon_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
   gint num_segs;
   const gdouble *segs;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_segs = g_value_get_int (gimp_value_array_index (args, 2));
-  segs = gimp_value_get_float_array (gimp_value_array_index (args, 3));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  num_segs = g_value_get_int (ligma_value_array_index (args, 2));
+  segs = ligma_value_get_float_array (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
-      gimp_channel_select_polygon (gimp_image_get_mask (image),
+      ligma_channel_select_polygon (ligma_image_get_mask (image),
                                    _("Free Select"),
                                    num_segs / 2,
-                                   (GimpVector2 *) segs,
+                                   (LigmaVector2 *) segs,
                                    operation,
                                    pdb_context->antialias,
                                    pdb_context->feather,
@@ -314,34 +314,34 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
                                    TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_select_item_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+image_select_item_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint operation;
-  GimpItem *item;
+  LigmaItem *item;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  item = g_value_get_object (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  operation = g_value_get_enum (ligma_value_array_index (args, 1));
+  item = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (item, image, 0, error))
+      if (ligma_pdb_item_is_attached (item, image, 0, error))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
-          gimp_item_to_selection (item, operation,
+          ligma_item_to_selection (item, operation,
                                   pdb_context->antialias,
                                   pdb_context->feather,
                                   pdb_context->feather_radius_x,
@@ -351,372 +351,372 @@ image_select_item_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_image_select_procs (GimpPDB *pdb)
+register_image_select_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-image-select-color
+   * ligma-image-select-color
    */
-  procedure = gimp_procedure_new (image_select_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
                                   "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'.\n"
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius', 'ligma-context-set-sample-merged', 'ligma-context-set-sample-criterion', 'ligma-context-set-sample-threshold', 'ligma-context-set-sample-transparent'.\n"
                                   "\n"
                                   "In the case of a merged sampling, the supplied drawable is ignored.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "David Gowers",
                                          "David Gowers",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The affected image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to select",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-contiguous-color
+   * ligma-image-select-contiguous-color
    */
-  procedure = gimp_procedure_new (image_select_contiguous_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-contiguous-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_contiguous_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-contiguous-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a selection by selecting all pixels around specified coordinates with the same (or similar) color to that at the coordinates.",
                                   "This tool creates a contiguous selection over the specified image. A contiguous color selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent', 'gimp-context-set-diagonal-neighbors'.\n"
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius', 'ligma-context-set-sample-merged', 'ligma-context-set-sample-criterion', 'ligma-context-set-sample-threshold', 'ligma-context-set-sample-transparent', 'ligma-context-set-diagonal-neighbors'.\n"
                                   "\n"
                                   "In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "David Gowers",
                                          "David Gowers",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The affected image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of initial seed fill point: (image coordinates)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "y coordinate of initial seed fill point: (image coordinates)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-rectangle
+   * ligma-image-select-rectangle
    */
-  procedure = gimp_procedure_new (image_select_rectangle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-rectangle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_rectangle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-rectangle");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a rectangular selection over the specified image;",
                                   "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-feather', 'ligma-context-set-feather-radius'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of upper-left corner of rectangle",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "y coordinate of upper-left corner of rectangle",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("width",
                                                     "width",
                                                     "The width of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("height",
                                                     "height",
                                                     "The height of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-round-rectangle
+   * ligma-image-select-round-rectangle
    */
-  procedure = gimp_procedure_new (image_select_round_rectangle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-round-rectangle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_round_rectangle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-round-rectangle");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a rectangular selection with round corners over the specified image;",
                                   "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Martin Nordholts",
                                          "Martin Nordholts",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of upper-left corner of rectangle",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "y coordinate of upper-left corner of rectangle",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("width",
                                                     "width",
                                                     "The width of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("height",
                                                     "height",
                                                     "The height of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("corner-radius-x",
                                                     "corner radius x",
                                                     "The corner radius in X direction",
-                                                    0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("corner-radius-y",
                                                     "corner radius y",
                                                     "The corner radius in Y direction",
-                                                    0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-ellipse
+   * ligma-image-select-ellipse
    */
-  procedure = gimp_procedure_new (image_select_ellipse_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-ellipse");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_ellipse_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-ellipse");
+  ligma_procedure_set_static_help (procedure,
                                   "Create an elliptical selection over the specified image.",
                                   "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of upper-left corner of ellipse bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "y coordinate of upper-left corner of ellipse bounding box",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("width",
                                                     "width",
                                                     "The width of the ellipse",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("height",
                                                     "height",
                                                     "The height of the ellipse",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-polygon
+   * ligma-image-select-polygon
    */
-  procedure = gimp_procedure_new (image_select_polygon_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-polygon");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_polygon_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-polygon");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a polygonal selection over the specified image.",
                                   "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-segs",
                                                  "num segs",
                                                  "Number of points (count 1 coordinate as two points)",
                                                  2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("segs",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_float_array ("segs",
                                                             "segs",
                                                             "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-item
+   * ligma-image-select-item
    */
-  procedure = gimp_procedure_new (image_select_item_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-item");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_select_item_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-select-item");
+  ligma_procedure_set_static_help (procedure,
                                   "Transforms the specified item into a selection",
                                   "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-antialias', 'ligma-context-set-feather', 'ligma-context-set-feather-radius'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The desired operation with current selection",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The item to render to the selection",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

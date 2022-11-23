@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-curve-free.svg">
+   sodipodi:docname="ligma-curve-free.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -139,7 +139,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-curve-free"
+       id="ligma-curve-free"
        transform="translate(67.053712,-1029.3829)">
       <g
          id="g7349">
@@ -161,7 +161,7 @@
       <g
          transform="translate(-196.5002,516.5497)"
          style="display:inline"
-         id="gimp-curve-free-0">
+         id="ligma-curve-free-0">
         <path
            id="path7154-7"
            d="m 199.1147,532.35385 1.95137,-7.60191 2.04419,5 1.91161,-4 3.06066,6 1.90717,-8.67496"

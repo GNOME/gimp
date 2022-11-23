@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_INK_OPTIONS_H__
-#define  __GIMP_INK_OPTIONS_H__
+#ifndef  __LIGMA_INK_OPTIONS_H__
+#define  __LIGMA_INK_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_INK_OPTIONS            (gimp_ink_options_get_type ())
-#define GIMP_INK_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INK_OPTIONS, GimpInkOptions))
-#define GIMP_INK_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INK_OPTIONS, GimpInkOptionsClass))
-#define GIMP_IS_INK_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INK_OPTIONS))
-#define GIMP_IS_INK_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INK_OPTIONS))
-#define GIMP_INK_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK_OPTIONS, GimpInkOptionsClass))
+#define LIGMA_TYPE_INK_OPTIONS            (ligma_ink_options_get_type ())
+#define LIGMA_INK_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_INK_OPTIONS, LigmaInkOptions))
+#define LIGMA_INK_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_INK_OPTIONS, LigmaInkOptionsClass))
+#define LIGMA_IS_INK_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_INK_OPTIONS))
+#define LIGMA_IS_INK_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_INK_OPTIONS))
+#define LIGMA_INK_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_INK_OPTIONS, LigmaInkOptionsClass))
 
 
-typedef struct _GimpInkOptionsClass GimpInkOptionsClass;
+typedef struct _LigmaInkOptionsClass LigmaInkOptionsClass;
 
-struct _GimpInkOptions
+struct _LigmaInkOptions
 {
-  GimpPaintOptions  parent_instance;
+  LigmaPaintOptions  parent_instance;
 
   gdouble           size;
   gdouble           tilt_angle;
@@ -43,18 +43,18 @@ struct _GimpInkOptions
   gdouble           vel_sensitivity;
   gdouble           tilt_sensitivity;
 
-  GimpInkBlobType   blob_type;
+  LigmaInkBlobType   blob_type;
   gdouble           blob_aspect;
   gdouble           blob_angle;
 };
 
-struct _GimpInkOptionsClass
+struct _LigmaInkOptionsClass
 {
-  GimpPaintOptionsClass  parent_instance;
+  LigmaPaintOptionsClass  parent_instance;
 };
 
 
-GType   gimp_ink_options_get_type (void) G_GNUC_CONST;
+GType   ligma_ink_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_INK_OPTIONS_H__  */
+#endif  /*  __LIGMA_INK_OPTIONS_H__  */

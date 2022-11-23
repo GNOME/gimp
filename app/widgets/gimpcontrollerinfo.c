@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontrollerinfo.c
- * Copyright (C) 2004-2005 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerinfo.c
+ * Copyright (C) 2004-2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,20 +25,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#include "libgimpwidgets/gimpcontroller.h"
+#define LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "libligmawidgets/ligmacontroller.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
+#include "core/ligmamarshal.h"
 
-#include "gimpcontrollerinfo.h"
+#include "ligmacontrollerinfo.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -57,92 +57,92 @@ enum
 };
 
 
-static void     gimp_controller_info_config_iface_init (GimpConfigInterface *iface);
+static void     ligma_controller_info_config_iface_init (LigmaConfigInterface *iface);
 
-static void     gimp_controller_info_finalize     (GObject          *object);
-static void     gimp_controller_info_set_property (GObject          *object,
+static void     ligma_controller_info_finalize     (GObject          *object);
+static void     ligma_controller_info_set_property (GObject          *object,
                                                    guint             property_id,
                                                    const GValue     *value,
                                                    GParamSpec       *pspec);
-static void     gimp_controller_info_get_property (GObject          *object,
+static void     ligma_controller_info_get_property (GObject          *object,
                                                    guint             property_id,
                                                    GValue           *value,
                                                    GParamSpec       *pspec);
 
-static gboolean gimp_controller_info_serialize_property   (GimpConfig       *config,
+static gboolean ligma_controller_info_serialize_property   (LigmaConfig       *config,
                                                            guint             property_id,
                                                            const GValue     *value,
                                                            GParamSpec       *pspec,
-                                                           GimpConfigWriter *writer);
-static gboolean gimp_controller_info_deserialize_property (GimpConfig       *config,
+                                                           LigmaConfigWriter *writer);
+static gboolean ligma_controller_info_deserialize_property (LigmaConfig       *config,
                                                            guint             property_id,
                                                            GValue           *value,
                                                            GParamSpec       *pspec,
                                                            GScanner         *scanner,
                                                            GTokenType       *expected);
 
-static gboolean gimp_controller_info_event (GimpController            *controller,
-                                            const GimpControllerEvent *event,
-                                            GimpControllerInfo        *info);
+static gboolean ligma_controller_info_event (LigmaController            *controller,
+                                            const LigmaControllerEvent *event,
+                                            LigmaControllerInfo        *info);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpControllerInfo, gimp_controller_info,
-                         GIMP_TYPE_VIEWABLE,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_controller_info_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaControllerInfo, ligma_controller_info,
+                         LIGMA_TYPE_VIEWABLE,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_controller_info_config_iface_init))
 
-#define parent_class gimp_controller_info_parent_class
+#define parent_class ligma_controller_info_parent_class
 
 static guint info_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_controller_info_class_init (GimpControllerInfoClass *klass)
+ligma_controller_info_class_init (LigmaControllerInfoClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->finalize            = gimp_controller_info_finalize;
-  object_class->set_property        = gimp_controller_info_set_property;
-  object_class->get_property        = gimp_controller_info_get_property;
+  object_class->finalize            = ligma_controller_info_finalize;
+  object_class->set_property        = ligma_controller_info_set_property;
+  object_class->get_property        = ligma_controller_info_get_property;
 
-  viewable_class->default_icon_name = GIMP_ICON_CONTROLLER;
+  viewable_class->default_icon_name = LIGMA_ICON_CONTROLLER;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLED,
                             "enabled",
                             _("Enabled"),
                             NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
                             "debug-events",
                             _("Debug events"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_CONTROLLER,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_CONTROLLER,
                            "controller",
                            "Controller",
                            NULL,
-                           GIMP_TYPE_CONTROLLER,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_TYPE_CONTROLLER,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOXED (object_class, PROP_MAPPING,
+  LIGMA_CONFIG_PROP_BOXED (object_class, PROP_MAPPING,
                           "mapping",
                           "Mapping",
                           NULL,
                           G_TYPE_HASH_TABLE,
-                          GIMP_PARAM_STATIC_STRINGS);
+                          LIGMA_PARAM_STATIC_STRINGS);
 
   info_signals[EVENT_MAPPED] =
     g_signal_new ("event-mapped",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpControllerInfoClass, event_mapped),
+                  G_STRUCT_OFFSET (LigmaControllerInfoClass, event_mapped),
                   g_signal_accumulator_true_handled, NULL,
-                  gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING,
+                  ligma_marshal_BOOLEAN__OBJECT_POINTER_STRING,
                   G_TYPE_BOOLEAN, 3,
                   G_TYPE_OBJECT,
                   G_TYPE_POINTER,
@@ -150,7 +150,7 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
 }
 
 static void
-gimp_controller_info_init (GimpControllerInfo *info)
+ligma_controller_info_init (LigmaControllerInfo *info)
 {
   info->controller = NULL;
   info->mapping    = g_hash_table_new_full (g_str_hash,
@@ -160,16 +160,16 @@ gimp_controller_info_init (GimpControllerInfo *info)
 }
 
 static void
-gimp_controller_info_config_iface_init (GimpConfigInterface *iface)
+ligma_controller_info_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize_property   = gimp_controller_info_serialize_property;
-  iface->deserialize_property = gimp_controller_info_deserialize_property;
+  iface->serialize_property   = ligma_controller_info_serialize_property;
+  iface->deserialize_property = ligma_controller_info_deserialize_property;
 }
 
 static void
-gimp_controller_info_finalize (GObject *object)
+ligma_controller_info_finalize (GObject *object)
 {
-  GimpControllerInfo *info = GIMP_CONTROLLER_INFO (object);
+  LigmaControllerInfo *info = LIGMA_CONTROLLER_INFO (object);
 
   g_clear_object (&info->controller);
   g_clear_pointer (&info->mapping, g_hash_table_unref);
@@ -178,12 +178,12 @@ gimp_controller_info_finalize (GObject *object)
 }
 
 static void
-gimp_controller_info_set_property (GObject      *object,
+ligma_controller_info_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpControllerInfo *info = GIMP_CONTROLLER_INFO (object);
+  LigmaControllerInfo *info = LIGMA_CONTROLLER_INFO (object);
 
   switch (property_id)
     {
@@ -197,7 +197,7 @@ gimp_controller_info_set_property (GObject      *object,
       if (info->controller)
         {
           g_signal_handlers_disconnect_by_func (info->controller,
-                                                gimp_controller_info_event,
+                                                ligma_controller_info_event,
                                                 info);
           g_object_unref (info->controller);
         }
@@ -206,15 +206,15 @@ gimp_controller_info_set_property (GObject      *object,
 
       if (info->controller)
         {
-          GimpControllerClass *controller_class;
+          LigmaControllerClass *controller_class;
 
           g_signal_connect_object (info->controller, "event",
-                                   G_CALLBACK (gimp_controller_info_event),
+                                   G_CALLBACK (ligma_controller_info_event),
                                    G_OBJECT (info),
                                    0);
 
-          controller_class = GIMP_CONTROLLER_GET_CLASS (info->controller);
-          gimp_viewable_set_icon_name (GIMP_VIEWABLE (info),
+          controller_class = LIGMA_CONTROLLER_GET_CLASS (info->controller);
+          ligma_viewable_set_icon_name (LIGMA_VIEWABLE (info),
                                        controller_class->icon_name);
         }
       break;
@@ -231,12 +231,12 @@ gimp_controller_info_set_property (GObject      *object,
 }
 
 static void
-gimp_controller_info_get_property (GObject    *object,
+ligma_controller_info_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpControllerInfo *info = GIMP_CONTROLLER_INFO (object);
+  LigmaControllerInfo *info = LIGMA_CONTROLLER_INFO (object);
 
   switch (property_id)
     {
@@ -260,26 +260,26 @@ gimp_controller_info_get_property (GObject    *object,
 }
 
 static void
-gimp_controller_info_serialize_mapping (gpointer key,
+ligma_controller_info_serialize_mapping (gpointer key,
                                         gpointer value,
                                         gpointer data)
 {
   const gchar      *event_name  = key;
   const gchar      *action_name = value;
-  GimpConfigWriter *writer      = data;
+  LigmaConfigWriter *writer      = data;
 
-  gimp_config_writer_open (writer, "map");
-  gimp_config_writer_string (writer, event_name);
-  gimp_config_writer_string (writer, action_name);
-  gimp_config_writer_close (writer);
+  ligma_config_writer_open (writer, "map");
+  ligma_config_writer_string (writer, event_name);
+  ligma_config_writer_string (writer, action_name);
+  ligma_config_writer_close (writer);
 }
 
 static gboolean
-gimp_controller_info_serialize_property (GimpConfig       *config,
+ligma_controller_info_serialize_property (LigmaConfig       *config,
                                          guint             property_id,
                                          const GValue     *value,
                                          GParamSpec       *pspec,
-                                         GimpConfigWriter *writer)
+                                         LigmaConfigWriter *writer)
 {
   GHashTable *mapping;
 
@@ -290,20 +290,20 @@ gimp_controller_info_serialize_property (GimpConfig       *config,
 
   if (mapping)
     {
-      gimp_config_writer_open (writer, pspec->name);
+      ligma_config_writer_open (writer, pspec->name);
 
       g_hash_table_foreach (mapping,
-                            (GHFunc) gimp_controller_info_serialize_mapping,
+                            (GHFunc) ligma_controller_info_serialize_mapping,
                             writer);
 
-      gimp_config_writer_close (writer);
+      ligma_config_writer_close (writer);
     }
 
   return TRUE;
 }
 
 static gboolean
-gimp_controller_info_deserialize_property (GimpConfig *config,
+ligma_controller_info_deserialize_property (LigmaConfig *config,
                                            guint       property_id,
                                            GValue     *value,
                                            GParamSpec *pspec,
@@ -340,11 +340,11 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
               gchar *action_name;
 
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &event_name))
+              if (! ligma_scanner_parse_string (scanner, &event_name))
                 goto error;
 
               token = G_TOKEN_STRING;
-              if (! gimp_scanner_parse_string (scanner, &action_name))
+              if (! ligma_scanner_parse_string (scanner, &action_name))
                 goto error;
 
               g_hash_table_insert (mapping, event_name, action_name);
@@ -388,19 +388,19 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
 
 /*  public functions  */
 
-GimpControllerInfo *
-gimp_controller_info_new (GType type)
+LigmaControllerInfo *
+ligma_controller_info_new (GType type)
 {
-  GimpControllerClass *controller_class;
-  GimpController      *controller;
-  GimpControllerInfo  *info;
+  LigmaControllerClass *controller_class;
+  LigmaController      *controller;
+  LigmaControllerInfo  *info;
 
-  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_CONTROLLER), NULL);
+  g_return_val_if_fail (g_type_is_a (type, LIGMA_TYPE_CONTROLLER), NULL);
 
   controller_class = g_type_class_ref (type);
 
-  controller = gimp_controller_new (type);
-  info = g_object_new (GIMP_TYPE_CONTROLLER_INFO,
+  controller = ligma_controller_new (type);
+  info = g_object_new (LIGMA_TYPE_CONTROLLER_INFO,
                        "name",       controller_class->name,
                        "controller", controller,
                        NULL);
@@ -412,29 +412,29 @@ gimp_controller_info_new (GType type)
 }
 
 void
-gimp_controller_info_set_enabled (GimpControllerInfo *info,
+ligma_controller_info_set_enabled (LigmaControllerInfo *info,
                                   gboolean            enabled)
 {
-  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+  g_return_if_fail (LIGMA_IS_CONTROLLER_INFO (info));
 
   if (enabled != info->enabled)
     g_object_set (info, "enabled", enabled, NULL);
 }
 
 gboolean
-gimp_controller_info_get_enabled (GimpControllerInfo *info)
+ligma_controller_info_get_enabled (LigmaControllerInfo *info)
 {
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_INFO (info), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER_INFO (info), FALSE);
 
   return info->enabled;
 }
 
 void
-gimp_controller_info_set_event_snooper (GimpControllerInfo         *info,
-                                        GimpControllerEventSnooper  snooper,
+ligma_controller_info_set_event_snooper (LigmaControllerInfo         *info,
+                                        LigmaControllerEventSnooper  snooper,
                                         gpointer                    snooper_data)
 {
-  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+  g_return_if_fail (LIGMA_IS_CONTROLLER_INFO (info));
 
   info->snooper      = snooper;
   info->snooper_data = snooper_data;
@@ -444,33 +444,33 @@ gimp_controller_info_set_event_snooper (GimpControllerInfo         *info,
 /*  private functions  */
 
 static gboolean
-gimp_controller_info_event (GimpController            *controller,
-                            const GimpControllerEvent *event,
-                            GimpControllerInfo        *info)
+ligma_controller_info_event (LigmaController            *controller,
+                            const LigmaControllerEvent *event,
+                            LigmaControllerInfo        *info)
 {
   const gchar *event_name;
   const gchar *event_blurb;
   const gchar *action_name = NULL;
 
-  event_name = gimp_controller_get_event_name (controller,
+  event_name = ligma_controller_get_event_name (controller,
                                                event->any.event_id);
-  event_blurb = gimp_controller_get_event_blurb (controller,
+  event_blurb = ligma_controller_get_event_blurb (controller,
                                                  event->any.event_id);
 
   if (info->debug_events)
     {
       g_print ("Received '%s' (class '%s')\n"
                "    controller event '%s (%s)'\n",
-               controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
+               controller->name, LIGMA_CONTROLLER_GET_CLASS (controller)->name,
                event_name, event_blurb);
 
       switch (event->any.type)
         {
-        case GIMP_CONTROLLER_EVENT_TRIGGER:
+        case LIGMA_CONTROLLER_EVENT_TRIGGER:
           g_print ("    (trigger event)\n");
           break;
 
-        case GIMP_CONTROLLER_EVENT_VALUE:
+        case LIGMA_CONTROLLER_EVENT_VALUE:
           if (G_VALUE_HOLDS_DOUBLE (&event->value.value))
             g_print ("    (value event, value = %f)\n",
                      g_value_get_double (&event->value.value));

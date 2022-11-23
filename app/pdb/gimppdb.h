@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,76 +15,76 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_H__
-#define __GIMP_PDB_H__
+#ifndef __LIGMA_PDB_H__
+#define __LIGMA_PDB_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_PDB            (gimp_pdb_get_type ())
-#define GIMP_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB, GimpPDB))
-#define GIMP_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB, GimpPDBClass))
-#define GIMP_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB))
-#define GIMP_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB))
-#define GIMP_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB, GimpPDBClass))
+#define LIGMA_TYPE_PDB            (ligma_pdb_get_type ())
+#define LIGMA_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PDB, LigmaPDB))
+#define LIGMA_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PDB, LigmaPDBClass))
+#define LIGMA_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PDB))
+#define LIGMA_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PDB))
+#define LIGMA_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PDB, LigmaPDBClass))
 
 
-typedef struct _GimpPDBClass GimpPDBClass;
+typedef struct _LigmaPDBClass LigmaPDBClass;
 
-struct _GimpPDB
+struct _LigmaPDB
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 
-  Gimp       *gimp;
+  Ligma       *ligma;
 
   GHashTable *procedures;
   GHashTable *compat_proc_names;
 };
 
-struct _GimpPDBClass
+struct _LigmaPDBClass
 {
-  GimpObjectClass parent_class;
+  LigmaObjectClass parent_class;
 
-  void (* register_procedure)   (GimpPDB       *pdb,
-                                 GimpProcedure *procedure);
-  void (* unregister_procedure) (GimpPDB       *pdb,
-                                 GimpProcedure *procedure);
+  void (* register_procedure)   (LigmaPDB       *pdb,
+                                 LigmaProcedure *procedure);
+  void (* unregister_procedure) (LigmaPDB       *pdb,
+                                 LigmaProcedure *procedure);
 };
 
 
-GType            gimp_pdb_get_type                       (void) G_GNUC_CONST;
+GType            ligma_pdb_get_type                       (void) G_GNUC_CONST;
 
-GimpPDB        * gimp_pdb_new                            (Gimp           *gimp);
+LigmaPDB        * ligma_pdb_new                            (Ligma           *ligma);
 
-void             gimp_pdb_register_procedure             (GimpPDB        *pdb,
-                                                          GimpProcedure  *procedure);
-void             gimp_pdb_unregister_procedure           (GimpPDB        *pdb,
-                                                          GimpProcedure  *procedure);
+void             ligma_pdb_register_procedure             (LigmaPDB        *pdb,
+                                                          LigmaProcedure  *procedure);
+void             ligma_pdb_unregister_procedure           (LigmaPDB        *pdb,
+                                                          LigmaProcedure  *procedure);
 
-GimpProcedure  * gimp_pdb_lookup_procedure               (GimpPDB        *pdb,
+LigmaProcedure  * ligma_pdb_lookup_procedure               (LigmaPDB        *pdb,
                                                           const gchar    *name);
 
-void             gimp_pdb_register_compat_proc_name      (GimpPDB        *pdb,
+void             ligma_pdb_register_compat_proc_name      (LigmaPDB        *pdb,
                                                           const gchar    *old_name,
                                                           const gchar    *new_name);
-const gchar    * gimp_pdb_lookup_compat_proc_name        (GimpPDB        *pdb,
+const gchar    * ligma_pdb_lookup_compat_proc_name        (LigmaPDB        *pdb,
                                                           const gchar    *old_name);
 
-GimpValueArray * gimp_pdb_execute_procedure_by_name_args (GimpPDB        *pdb,
-                                                          GimpContext    *context,
-                                                          GimpProgress   *progress,
+LigmaValueArray * ligma_pdb_execute_procedure_by_name_args (LigmaPDB        *pdb,
+                                                          LigmaContext    *context,
+                                                          LigmaProgress   *progress,
                                                           GError        **error,
                                                           const gchar    *name,
-                                                          GimpValueArray *args);
-GimpValueArray * gimp_pdb_execute_procedure_by_name      (GimpPDB        *pdb,
-                                                          GimpContext    *context,
-                                                          GimpProgress   *progress,
+                                                          LigmaValueArray *args);
+LigmaValueArray * ligma_pdb_execute_procedure_by_name      (LigmaPDB        *pdb,
+                                                          LigmaContext    *context,
+                                                          LigmaProgress   *progress,
                                                           GError        **error,
                                                           const gchar    *name,
                                                           ...);
 
-GList          * gimp_pdb_get_deprecated_procedures      (GimpPDB        *pdb);
+GList          * ligma_pdb_get_deprecated_procedures      (LigmaPDB        *pdb);
 
 
-#endif  /*  __GIMP_PDB_H__  */
+#endif  /*  __LIGMA_PDB_H__  */

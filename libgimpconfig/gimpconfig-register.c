@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpconfig-register.c
- * Copyright (C) 2008-2019 Michael Natterer <mitch@gimp.org>
+ * ligmaconfig-register.c
+ * Copyright (C) 2008-2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,34 +26,34 @@
 
 #include <gegl-paramspecs.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpconfig.h"
+#include "ligmaconfig.h"
 
 
 /*  local function prototypes  */
 
-static void     gimp_config_class_init   (GObjectClass  *klass,
+static void     ligma_config_class_init   (GObjectClass  *klass,
                                           GParamSpec   **pspecs);
-static void     gimp_config_set_property (GObject       *object,
+static void     ligma_config_set_property (GObject       *object,
                                           guint          property_id,
                                           const GValue  *value,
                                           GParamSpec    *pspec);
-static void     gimp_config_get_property (GObject       *object,
+static void     ligma_config_get_property (GObject       *object,
                                           guint          property_id,
                                           GValue        *value,
                                           GParamSpec    *pspec);
 
-static GValue * gimp_config_value_get    (GObject       *object,
+static GValue * ligma_config_value_get    (GObject       *object,
                                           GParamSpec    *pspec);
-static GValue * gimp_config_value_new    (GParamSpec    *pspec);
-static void     gimp_config_value_free   (GValue        *value);
+static GValue * ligma_config_value_new    (GParamSpec    *pspec);
+static void     ligma_config_value_free   (GValue        *value);
 
 
 /*  public functions  */
 
 /**
- * gimp_config_type_register:
+ * ligma_config_type_register:
  * @parent_type: type from which this type will be derived
  * @type_name:   string used as the name of the new type
  * @pspecs: (array length=n_pspecs): array of #GParamSpec to install as properties on the new type
@@ -61,7 +61,7 @@ static void     gimp_config_value_free   (GValue        *value);
  *
  * This function is a fancy wrapper around g_type_register_static().
  * It creates a new object type as subclass of @parent_type, installs
- * @pspecs on it and makes the new type implement the #GimpConfig
+ * @pspecs on it and makes the new type implement the #LigmaConfig
  * interface.
  *
  * Returns: the newly registered #GType
@@ -69,7 +69,7 @@ static void     gimp_config_value_free   (GValue        *value);
  * Since: 3.0
  **/
 GType
-gimp_config_type_register (GType         parent_type,
+ligma_config_type_register (GType         parent_type,
                            const gchar  *type_name,
                            GParamSpec  **pspecs,
                            gint          n_pspecs)
@@ -94,7 +94,7 @@ gimp_config_type_register (GType         parent_type,
       query.class_size,
       (GBaseInitFunc) NULL,
       (GBaseFinalizeFunc) NULL,
-      (GClassInitFunc) gimp_config_class_init,
+      (GClassInitFunc) ligma_config_class_init,
       NULL,           /* class_finalize */
       terminated_pspecs,
       query.instance_size,
@@ -105,7 +105,7 @@ gimp_config_type_register (GType         parent_type,
     config_type = g_type_register_static (parent_type, type_name,
                                           &info, 0);
 
-    if (! g_type_is_a (parent_type, GIMP_TYPE_CONFIG))
+    if (! g_type_is_a (parent_type, LIGMA_TYPE_CONFIG))
       {
         const GInterfaceInfo config_info =
         {
@@ -114,7 +114,7 @@ gimp_config_type_register (GType         parent_type,
           NULL  /* interface_data     */
         };
 
-        g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
+        g_type_add_interface_static (config_type, LIGMA_TYPE_CONFIG,
                                      &config_info);
       }
   }
@@ -126,18 +126,18 @@ gimp_config_type_register (GType         parent_type,
 /*  private functions  */
 
 static void
-gimp_config_class_init (GObjectClass  *klass,
+ligma_config_class_init (GObjectClass  *klass,
                         GParamSpec   **pspecs)
 {
   gint i;
 
-  klass->set_property = gimp_config_set_property;
-  klass->get_property = gimp_config_get_property;
+  klass->set_property = ligma_config_set_property;
+  klass->get_property = ligma_config_get_property;
 
   for (i = 0; pspecs[i] != NULL; i++)
     {
       GParamSpec *pspec = pspecs[i];
-      GParamSpec *copy  = gimp_config_param_spec_duplicate (pspec);
+      GParamSpec *copy  = ligma_config_param_spec_duplicate (pspec);
 
       if (copy)
         {
@@ -150,14 +150,14 @@ gimp_config_class_init (GObjectClass  *klass,
 
           /* There are some properties that we don't care to copy because they
            * are not serializable anyway (or we don't want them to be).
-           * GimpContext properties are one such property type. We can find them
-           * e.g. in some custom GEGL ops, such as "gimp:offset". So we silently
+           * LigmaContext properties are one such property type. We can find them
+           * e.g. in some custom GEGL ops, such as "ligma:offset". So we silently
            * ignore these.
            * We might add more types of properties to the list as we discover
            * more cases. We keep warnings for all the other types which we
            * explicitly don't support.
            */
-          if (g_strcmp0 (type_name, "GimpContext") != 0 &&
+          if (g_strcmp0 (type_name, "LigmaContext") != 0 &&
               /* Format specs are a GParamSpecPointer. There might be other
                * pointer specs we might be able to serialize, but BablFormat are
                * not one of these (there might be easy serializable formats, but
@@ -172,35 +172,35 @@ gimp_config_class_init (GObjectClass  *klass,
 }
 
 static void
-gimp_config_set_property (GObject      *object,
+ligma_config_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GValue *val = gimp_config_value_get (object, pspec);
+  GValue *val = ligma_config_value_get (object, pspec);
 
   g_value_copy (value, val);
 }
 
 static void
-gimp_config_get_property (GObject    *object,
+ligma_config_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GValue *val = gimp_config_value_get (object, pspec);
+  GValue *val = ligma_config_value_get (object, pspec);
 
   g_value_copy (val, value);
 }
 
 static GValue *
-gimp_config_value_get (GObject    *object,
+ligma_config_value_get (GObject    *object,
                        GParamSpec *pspec)
 {
   GHashTable *properties;
   GValue     *value;
 
-  properties = g_object_get_data (object, "gimp-config-properties");
+  properties = g_object_get_data (object, "ligma-config-properties");
 
   if (! properties)
     {
@@ -208,9 +208,9 @@ gimp_config_value_get (GObject    *object,
         g_hash_table_new_full (g_str_hash,
                                g_str_equal,
                                (GDestroyNotify) g_free,
-                               (GDestroyNotify) gimp_config_value_free);
+                               (GDestroyNotify) ligma_config_value_free);
 
-      g_object_set_data_full (object, "gimp-config-properties", properties,
+      g_object_set_data_full (object, "ligma-config-properties", properties,
                               (GDestroyNotify) g_hash_table_unref);
     }
 
@@ -218,7 +218,7 @@ gimp_config_value_get (GObject    *object,
 
   if (! value)
     {
-      value = gimp_config_value_new (pspec);
+      value = ligma_config_value_new (pspec);
       g_hash_table_insert (properties, g_strdup (pspec->name), value);
     }
 
@@ -226,7 +226,7 @@ gimp_config_value_get (GObject    *object,
 }
 
 static GValue *
-gimp_config_value_new (GParamSpec *pspec)
+ligma_config_value_new (GParamSpec *pspec)
 {
   GValue *value = g_slice_new0 (GValue);
 
@@ -237,7 +237,7 @@ gimp_config_value_new (GParamSpec *pspec)
 }
 
 static void
-gimp_config_value_free (GValue *value)
+ligma_config_value_free (GValue *value)
 {
   g_value_unset (value);
   g_slice_free (GValue, value);

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,57 +46,57 @@ compat_procs[] =
    *
    * With respect to Python using GI, some old names are *NOT* obsolete.
    * (Where "some" means those dealing with ID.)
-   * I.E. Gimp.Image.is_valid() exists but takes a GObject *, not an int ID.
+   * I.E. Ligma.Image.is_valid() exists but takes a GObject *, not an int ID.
    *
    * Original data was constructed more or less by hand, partially automated.
    */
-   { "gimp-brightness-contrast"               , "gimp-drawable-brightness-contrast"      },
-   { "gimp-brushes-get-brush"                 , "gimp-context-get-brush"                 },
-   { "gimp-drawable-is-channel"               , "gimp-item-id-is-channel"                },
-   { "gimp-drawable-is-layer"                 , "gimp-item-id-is-layer"                  },
-   { "gimp-drawable-is-layer-mask"            , "gimp-item-id-is-layer-mask"             },
-   { "gimp-drawable-is-text-layer"            , "gimp-item-id-is-text-layer"             },
-   { "gimp-drawable-is-valid"                 , "gimp-item-id-is-valid"                  },
-   { "gimp-drawable-transform-2d"             , "gimp-item-transform-2d"                 },
-   { "gimp-drawable-transform-flip"           , "gimp-item-transform-flip"               },
-   { "gimp-drawable-transform-flip-simple"    , "gimp-item-transform-flip-simple"        },
-   { "gimp-drawable-transform-matrix"         , "gimp-item-transform-matrix"             },
-   { "gimp-drawable-transform-perspective"    , "gimp-item-transform-perspective"        },
-   { "gimp-drawable-transform-rotate"         , "gimp-item-transform-rotate"             },
-   { "gimp-drawable-transform-rotate-simple"  , "gimp-item-transform-rotate-simple"      },
-   { "gimp-drawable-transform-scale"          , "gimp-item-transform-scale"              },
-   { "gimp-drawable-transform-shear"          , "gimp-item-transform-shear"              },
-   { "gimp-display-is-valid"                  , "gimp-display-id-is-valid"               },
-   { "gimp-image-is-valid"                    , "gimp-image-id-is-valid"                 },
-   { "gimp-item-is-channel"                   , "gimp-item-id-is-channel"                },
-   { "gimp-item-is-drawable"                  , "gimp-item-id-is-drawable"               },
-   { "gimp-item-is-layer"                     , "gimp-item-id-is-layer"                  },
-   { "gimp-item-is-layer-mask"                , "gimp-item-id-is-layer-mask"             },
-   { "gimp-item-is-selection"                 , "gimp-item-id-is-selection"              },
-   { "gimp-item-is-text-layer"                , "gimp-item-id-is-text-layer"             },
-   { "gimp-item-is-valid"                     , "gimp-item-id-is-valid"                  },
-   { "gimp-item-is-vectors"                   , "gimp-item-id-is-vectors"                },
-   { "gimp-procedural-db-dump"                , "gimp-pdb-dump"                          },
-   { "gimp-procedural-db-get-data"            , "gimp-pdb-get-data"                      },
-   { "gimp-procedural-db-set-data"            , "gimp-pdb-set-data"                      },
-   { "gimp-procedural-db-get-data-size"       , "gimp-pdb-get-data-size"                 },
-   { "gimp-procedural-db-proc-arg"            , "gimp-pdb-get-proc-argument"             },
-   { "gimp-procedural-db-proc-info"           , "gimp-pdb-get-proc-info"                 },
-   { "gimp-procedural-db-proc-val"            , "gimp-pdb-get-proc-return-value"         },
-   { "gimp-procedural-db-proc-exists"         , "gimp-pdb-proc-exists"                   },
-   { "gimp-procedural-db-query"               , "gimp-pdb-query"                         },
-   { "gimp-procedural-db-temp-name"           , "gimp-pdb-temp-name"                     },
-   { "gimp-image-get-exported-uri"            , "gimp-image-get-exported-file"           },
-   { "gimp-image-get-imported-uri"            , "gimp-image-get-imported-file"           },
-   { "gimp-image-get-xcf-uri"                 , "gimp-image-get-xcf-file"                },
-   { "gimp-image-get-filename"                , "gimp-image-get-file"                    },
-   { "gimp-image-set-filename"                , "gimp-image-set-file"                    },
-   { "gimp-plugin-menu-register"              , "gimp-pdb-add-proc-menu-path"            },
-   { "gimp-plugin-get-pdb-error-handler"      , "gimp-plug-in-get-pdb-error-handler"     },
-   { "gimp-plugin-help-register"              , "gimp-plug-in-help-register"             },
-   { "gimp-plugin-menu-branch-register"       , "gimp-plug-in-menu-branch-register"      },
-   { "gimp-plugin-set-pdb-error-handler"      , "gimp-plug-in-set-pdb-error-handler"     },
-   { "gimp-plugins-query"                     , "gimp-plug-ins-query"                    },
+   { "ligma-brightness-contrast"               , "ligma-drawable-brightness-contrast"      },
+   { "ligma-brushes-get-brush"                 , "ligma-context-get-brush"                 },
+   { "ligma-drawable-is-channel"               , "ligma-item-id-is-channel"                },
+   { "ligma-drawable-is-layer"                 , "ligma-item-id-is-layer"                  },
+   { "ligma-drawable-is-layer-mask"            , "ligma-item-id-is-layer-mask"             },
+   { "ligma-drawable-is-text-layer"            , "ligma-item-id-is-text-layer"             },
+   { "ligma-drawable-is-valid"                 , "ligma-item-id-is-valid"                  },
+   { "ligma-drawable-transform-2d"             , "ligma-item-transform-2d"                 },
+   { "ligma-drawable-transform-flip"           , "ligma-item-transform-flip"               },
+   { "ligma-drawable-transform-flip-simple"    , "ligma-item-transform-flip-simple"        },
+   { "ligma-drawable-transform-matrix"         , "ligma-item-transform-matrix"             },
+   { "ligma-drawable-transform-perspective"    , "ligma-item-transform-perspective"        },
+   { "ligma-drawable-transform-rotate"         , "ligma-item-transform-rotate"             },
+   { "ligma-drawable-transform-rotate-simple"  , "ligma-item-transform-rotate-simple"      },
+   { "ligma-drawable-transform-scale"          , "ligma-item-transform-scale"              },
+   { "ligma-drawable-transform-shear"          , "ligma-item-transform-shear"              },
+   { "ligma-display-is-valid"                  , "ligma-display-id-is-valid"               },
+   { "ligma-image-is-valid"                    , "ligma-image-id-is-valid"                 },
+   { "ligma-item-is-channel"                   , "ligma-item-id-is-channel"                },
+   { "ligma-item-is-drawable"                  , "ligma-item-id-is-drawable"               },
+   { "ligma-item-is-layer"                     , "ligma-item-id-is-layer"                  },
+   { "ligma-item-is-layer-mask"                , "ligma-item-id-is-layer-mask"             },
+   { "ligma-item-is-selection"                 , "ligma-item-id-is-selection"              },
+   { "ligma-item-is-text-layer"                , "ligma-item-id-is-text-layer"             },
+   { "ligma-item-is-valid"                     , "ligma-item-id-is-valid"                  },
+   { "ligma-item-is-vectors"                   , "ligma-item-id-is-vectors"                },
+   { "ligma-procedural-db-dump"                , "ligma-pdb-dump"                          },
+   { "ligma-procedural-db-get-data"            , "ligma-pdb-get-data"                      },
+   { "ligma-procedural-db-set-data"            , "ligma-pdb-set-data"                      },
+   { "ligma-procedural-db-get-data-size"       , "ligma-pdb-get-data-size"                 },
+   { "ligma-procedural-db-proc-arg"            , "ligma-pdb-get-proc-argument"             },
+   { "ligma-procedural-db-proc-info"           , "ligma-pdb-get-proc-info"                 },
+   { "ligma-procedural-db-proc-val"            , "ligma-pdb-get-proc-return-value"         },
+   { "ligma-procedural-db-proc-exists"         , "ligma-pdb-proc-exists"                   },
+   { "ligma-procedural-db-query"               , "ligma-pdb-query"                         },
+   { "ligma-procedural-db-temp-name"           , "ligma-pdb-temp-name"                     },
+   { "ligma-image-get-exported-uri"            , "ligma-image-get-exported-file"           },
+   { "ligma-image-get-imported-uri"            , "ligma-image-get-imported-file"           },
+   { "ligma-image-get-xcf-uri"                 , "ligma-image-get-xcf-file"                },
+   { "ligma-image-get-filename"                , "ligma-image-get-file"                    },
+   { "ligma-image-set-filename"                , "ligma-image-set-file"                    },
+   { "ligma-plugin-menu-register"              , "ligma-pdb-add-proc-menu-path"            },
+   { "ligma-plugin-get-pdb-error-handler"      , "ligma-plug-in-get-pdb-error-handler"     },
+   { "ligma-plugin-help-register"              , "ligma-plug-in-help-register"             },
+   { "ligma-plugin-menu-branch-register"       , "ligma-plug-in-menu-branch-register"      },
+   { "ligma-plugin-set-pdb-error-handler"      , "ligma-plug-in-set-pdb-error-handler"     },
+   { "ligma-plugins-query"                     , "ligma-plug-ins-query"                    },
    { "file-gtm-save"                          , "file-html-table-save"                   },
    { "python-fu-histogram-export"             , "histogram-export"                       },
    { "python-fu-gradient-save-as-css"         , "gradient-save-as-css"                   }
@@ -115,7 +115,7 @@ define_deprecated_scheme_func (const char   *old_name,
   /* Creates a definition in Scheme of a function that calls a PDB procedure.
    *
    * The magic below that makes it deprecated:
-   * - the "--gimp-proc-db-call"
+   * - the "--ligma-proc-db-call"
    * - defining under the old_name but calling the new_name
 
    * See scheme-wrapper.c, where this was copied from.
@@ -126,7 +126,7 @@ define_deprecated_scheme_func (const char   *old_name,
    * load_string is more typically called eval().
    */
   buff = g_strdup_printf (" (define (%s . args)"
-                          " (apply --gimp-proc-db-call \"%s\" args))",
+                          " (apply --ligma-proc-db-call \"%s\" args))",
                           old_name, new_name);
 
   sc->vptr->load_string ((scheme *) sc, buff);

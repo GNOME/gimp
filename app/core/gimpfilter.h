@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfilter.h
+ * ligmafilter.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,57 +17,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_H__
-#define __GIMP_FILTER_H__
+#ifndef __LIGMA_FILTER_H__
+#define __LIGMA_FILTER_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_FILTER            (gimp_filter_get_type ())
-#define GIMP_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILTER, GimpFilter))
-#define GIMP_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILTER, GimpFilterClass))
-#define GIMP_IS_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILTER))
-#define GIMP_IS_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILTER))
-#define GIMP_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTER, GimpFilterClass))
+#define LIGMA_TYPE_FILTER            (ligma_filter_get_type ())
+#define LIGMA_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILTER, LigmaFilter))
+#define LIGMA_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILTER, LigmaFilterClass))
+#define LIGMA_IS_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILTER))
+#define LIGMA_IS_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILTER))
+#define LIGMA_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILTER, LigmaFilterClass))
 
 
-typedef struct _GimpFilterClass GimpFilterClass;
+typedef struct _LigmaFilterClass LigmaFilterClass;
 
-struct _GimpFilter
+struct _LigmaFilter
 {
-  GimpViewable  parent_instance;
+  LigmaViewable  parent_instance;
 };
 
-struct _GimpFilterClass
+struct _LigmaFilterClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 
   /*  signals  */
-  void       (* active_changed) (GimpFilter *filter);
+  void       (* active_changed) (LigmaFilter *filter);
 
   /*  virtual functions  */
-  GeglNode * (* get_node)       (GimpFilter *filter);
+  GeglNode * (* get_node)       (LigmaFilter *filter);
 };
 
 
-GType            gimp_filter_get_type         (void) G_GNUC_CONST;
-GimpFilter     * gimp_filter_new              (const gchar    *name);
+GType            ligma_filter_get_type         (void) G_GNUC_CONST;
+LigmaFilter     * ligma_filter_new              (const gchar    *name);
 
-GeglNode       * gimp_filter_get_node         (GimpFilter     *filter);
-GeglNode       * gimp_filter_peek_node        (GimpFilter     *filter);
+GeglNode       * ligma_filter_get_node         (LigmaFilter     *filter);
+GeglNode       * ligma_filter_peek_node        (LigmaFilter     *filter);
 
-void             gimp_filter_set_active       (GimpFilter     *filter,
+void             ligma_filter_set_active       (LigmaFilter     *filter,
                                                gboolean        active);
-gboolean         gimp_filter_get_active       (GimpFilter     *filter);
+gboolean         ligma_filter_get_active       (LigmaFilter     *filter);
 
-void             gimp_filter_set_is_last_node (GimpFilter     *filter,
+void             ligma_filter_set_is_last_node (LigmaFilter     *filter,
                                                gboolean        is_last_node);
-gboolean         gimp_filter_get_is_last_node (GimpFilter     *filter);
+gboolean         ligma_filter_get_is_last_node (LigmaFilter     *filter);
 
-void             gimp_filter_set_applicator   (GimpFilter     *filter,
-                                               GimpApplicator *applicator);
-GimpApplicator * gimp_filter_get_applicator   (GimpFilter     *filter);
+void             ligma_filter_set_applicator   (LigmaFilter     *filter,
+                                               LigmaApplicator *applicator);
+LigmaApplicator * ligma_filter_get_applicator   (LigmaFilter     *filter);
 
 
-#endif /* __GIMP_FILTER_H__ */
+#endif /* __LIGMA_FILTER_H__ */

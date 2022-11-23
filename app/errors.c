@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,22 +31,22 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaparamspecs.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
 #include "errors.h"
-#include "gimp-log.h"
+#include "ligma-log.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -54,29 +54,29 @@
 
 /*  private variables  */
 
-static Gimp                *the_errors_gimp    = NULL;
+static Ligma                *the_errors_ligma    = NULL;
 static gboolean             use_debug_handler  = FALSE;
-static GimpStackTraceMode   stack_trace_mode   = GIMP_STACK_TRACE_QUERY;
+static LigmaStackTraceMode   stack_trace_mode   = LIGMA_STACK_TRACE_QUERY;
 static gchar               *full_prog_name     = NULL;
 static gchar               *backtrace_file     = NULL;
 static gchar               *backup_path        = NULL;
 static GFile               *backup_file        = NULL;
-static GimpLogHandler       log_domain_handler = 0;
+static LigmaLogHandler       log_domain_handler = 0;
 static guint                global_handler_id  = 0;
 
 
 /*  local function prototypes  */
 
-static void    gimp_message_log_func             (const gchar        *log_domain,
+static void    ligma_message_log_func             (const gchar        *log_domain,
                                                   GLogLevelFlags      flags,
                                                   const gchar        *message,
                                                   gpointer            data);
-static void    gimp_error_log_func               (const gchar        *domain,
+static void    ligma_error_log_func               (const gchar        *domain,
                                                   GLogLevelFlags      flags,
                                                   const gchar        *message,
                                                   gpointer            data) G_GNUC_NORETURN;
 
-static G_GNUC_NORETURN void  gimp_eek            (const gchar        *reason,
+static G_GNUC_NORETURN void  ligma_eek            (const gchar        *reason,
                                                   const gchar        *message,
                                                   gboolean            use_handler);
 
@@ -84,29 +84,29 @@ static G_GNUC_NORETURN void  gimp_eek            (const gchar        *reason,
 /*  public functions  */
 
 void
-errors_init (Gimp               *gimp,
+errors_init (Ligma               *ligma,
              const gchar        *_full_prog_name,
              gboolean            _use_debug_handler,
-             GimpStackTraceMode  _stack_trace_mode,
+             LigmaStackTraceMode  _stack_trace_mode,
              const gchar        *_backtrace_file)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (_full_prog_name != NULL);
   g_return_if_fail (full_prog_name == NULL);
 
-#ifdef GIMP_UNSTABLE
-  g_printerr ("This is a development version of GIMP.  "
+#ifdef LIGMA_UNSTABLE
+  g_printerr ("This is a development version of LIGMA.  "
               "Debug messages may appear here.\n\n");
-#endif /* GIMP_UNSTABLE */
+#endif /* LIGMA_UNSTABLE */
 
-  the_errors_gimp   = gimp;
+  the_errors_ligma   = ligma;
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
 
   /* Create parent directories for both the crash and backup files. */
   backtrace_file    = g_path_get_dirname (_backtrace_file);
-  backup_path       = g_build_filename (gimp_directory (), "backups", NULL);
+  backup_path       = g_build_filename (ligma_directory (), "backups", NULL);
 
   g_mkdir_with_parents (backtrace_file, S_IRUSR | S_IWUSR | S_IXUSR);
   g_free (backtrace_file);
@@ -114,20 +114,20 @@ errors_init (Gimp               *gimp,
 
   g_mkdir_with_parents (backup_path, S_IRUSR | S_IWUSR | S_IXUSR);
   g_free (backup_path);
-  backup_path = g_build_filename (gimp_directory (), "backups",
+  backup_path = g_build_filename (ligma_directory (), "backups",
                                   "backup-XXX.xcf", NULL);
 
   backup_file = g_file_new_for_path (backup_path);
 
-  log_domain_handler = gimp_log_set_handler (FALSE,
+  log_domain_handler = ligma_log_set_handler (FALSE,
                                              G_LOG_LEVEL_WARNING |
                                              G_LOG_LEVEL_MESSAGE |
                                              G_LOG_LEVEL_CRITICAL,
-                                             gimp_message_log_func, gimp);
+                                             ligma_message_log_func, ligma);
 
   global_handler_id = g_log_set_handler (NULL,
                                          G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                                         gimp_error_log_func, gimp);
+                                         ligma_error_log_func, ligma);
 }
 
 void
@@ -135,7 +135,7 @@ errors_exit (void)
 {
   if (log_domain_handler)
     {
-      gimp_log_remove_handler (log_domain_handler);
+      ligma_log_remove_handler (log_domain_handler);
 
       log_domain_handler = 0;
     }
@@ -147,7 +147,7 @@ errors_exit (void)
       global_handler_id = 0;
     }
 
-  the_errors_gimp = NULL;
+  the_errors_ligma = NULL;
 
   if (backtrace_file)
     g_free (backtrace_file);
@@ -163,7 +163,7 @@ GList *
 errors_recovered (void)
 {
   GList *recovered   = NULL;
-  gchar *backup_path = g_build_filename (gimp_directory (), "backups", NULL);
+  gchar *backup_path = g_build_filename (ligma_directory (), "backups", NULL);
   GDir  *backup_dir  = NULL;
 
   if ((backup_dir = g_dir_open (backup_path, 0, NULL)))
@@ -201,40 +201,40 @@ errors_recovered (void)
 }
 
 void
-gimp_fatal_error (const gchar *message)
+ligma_fatal_error (const gchar *message)
 {
-  gimp_eek ("fatal error", message, TRUE);
+  ligma_eek ("fatal error", message, TRUE);
 }
 
 void
-gimp_terminate (const gchar *message)
+ligma_terminate (const gchar *message)
 {
-  gimp_eek ("terminated", message, use_debug_handler);
+  ligma_eek ("terminated", message, use_debug_handler);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_message_log_func (const gchar    *log_domain,
+ligma_message_log_func (const gchar    *log_domain,
                        GLogLevelFlags  flags,
                        const gchar    *message,
                        gpointer        data)
 {
-  Gimp                *gimp        = data;
-  GimpCoreConfig      *config      = gimp->config;
+  Ligma                *ligma        = data;
+  LigmaCoreConfig      *config      = ligma->config;
   const gchar         *msg_domain  = NULL;
-  GimpMessageSeverity  severity    = GIMP_MESSAGE_WARNING;
+  LigmaMessageSeverity  severity    = LIGMA_MESSAGE_WARNING;
   gboolean             gui_message = TRUE;
-  GimpDebugPolicy      debug_policy;
+  LigmaDebugPolicy      debug_policy;
 
-  /* All GIMP messages are processed under the same domain, but
+  /* All LIGMA messages are processed under the same domain, but
    * we need to keep the log domain information for third party
    * messages.
    */
   if (! log_domain ||
-      (! g_str_has_prefix (log_domain, "Gimp") &&
-       ! g_str_has_prefix (log_domain, "LibGimp")))
+      (! g_str_has_prefix (log_domain, "Ligma") &&
+       ! g_str_has_prefix (log_domain, "LibLigma")))
     msg_domain = log_domain;
 
   /* If debug policy requires it, WARNING and CRITICAL errors must be
@@ -247,56 +247,56 @@ gimp_message_log_func (const gchar    *log_domain,
   switch (flags & G_LOG_LEVEL_MASK)
     {
     case G_LOG_LEVEL_WARNING:
-      severity = GIMP_MESSAGE_BUG_WARNING;
-      if (debug_policy > GIMP_DEBUG_POLICY_WARNING)
+      severity = LIGMA_MESSAGE_BUG_WARNING;
+      if (debug_policy > LIGMA_DEBUG_POLICY_WARNING)
         gui_message = FALSE;
       break;
     case G_LOG_LEVEL_CRITICAL:
-      severity = GIMP_MESSAGE_BUG_CRITICAL;
-      if (debug_policy > GIMP_DEBUG_POLICY_CRITICAL)
+      severity = LIGMA_MESSAGE_BUG_CRITICAL;
+      if (debug_policy > LIGMA_DEBUG_POLICY_CRITICAL)
         gui_message = FALSE;
       break;
     }
 
-  if (gimp && gui_message)
+  if (ligma && gui_message)
     {
-      gimp_show_message (gimp, NULL, severity, msg_domain, message);
+      ligma_show_message (ligma, NULL, severity, msg_domain, message);
     }
   else
     {
       const gchar *reason = "Message";
 
-      gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+      ligma_enum_get_value (LIGMA_TYPE_MESSAGE_SEVERITY, severity,
                            NULL, NULL, &reason, NULL);
 
       g_printerr ("%s: %s-%s: %s\n",
-                  gimp_filename_to_utf8 (full_prog_name),
+                  ligma_filename_to_utf8 (full_prog_name),
                   log_domain, reason, message);
     }
 }
 
 static void
-gimp_error_log_func (const gchar    *domain,
+ligma_error_log_func (const gchar    *domain,
                      GLogLevelFlags  flags,
                      const gchar    *message,
                      gpointer        data)
 {
-  gimp_fatal_error (message);
+  ligma_fatal_error (message);
 }
 
 static void
-gimp_eek (const gchar *reason,
+ligma_eek (const gchar *reason,
           const gchar *message,
           gboolean     use_handler)
 {
-  GimpCoreConfig  *config        = the_errors_gimp->config;
+  LigmaCoreConfig  *config        = the_errors_ligma->config;
   gboolean         eek_handled   = FALSE;
-  GimpDebugPolicy  debug_policy;
+  LigmaDebugPolicy  debug_policy;
   GList           *iter;
   gint             num_idx;
   gint             i = 0;
 
-  /* GIMP has 2 ways to handle termination signals and fatal errors: one
+  /* LIGMA has 2 ways to handle termination signals and fatal errors: one
    * is the stack trace mode which is set at start as command line
    * option --stack-trace-mode, this won't change for the length of the
    * session and outputs a trace in terminal; the other is set in
@@ -316,9 +316,9 @@ gimp_eek (const gchar *reason,
 
   if (use_handler)
     {
-#ifndef GIMP_CONSOLE_COMPILATION
-      if (debug_policy != GIMP_DEBUG_POLICY_NEVER &&
-          ! the_errors_gimp->no_interface         &&
+#ifndef LIGMA_CONSOLE_COMPILATION
+      if (debug_policy != LIGMA_DEBUG_POLICY_NEVER &&
+          ! the_errors_ligma->no_interface         &&
           backtrace_file)
         {
           FILE     *fd;
@@ -328,15 +328,15 @@ gimp_eek (const gchar *reason,
            * takes precedence over the command line argument.
            */
 #ifdef G_OS_WIN32
-          const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION ".exe";
+          const gchar *ligmadebug = "ligma-debug-tool-" LIGMA_TOOL_VERSION ".exe";
 #elif defined (PLATFORM_OSX)
-          const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION;
+          const gchar *ligmadebug = "ligma-debug-tool-" LIGMA_TOOL_VERSION;
 #else
-          const gchar *gimpdebug = LIBEXECDIR "/gimp-debug-tool-" GIMP_TOOL_VERSION;
+          const gchar *ligmadebug = LIBEXECDIR "/ligma-debug-tool-" LIGMA_TOOL_VERSION;
 #endif
-          gchar *args[9] = { (gchar *) gimpdebug, full_prog_name, NULL,
+          gchar *args[9] = { (gchar *) ligmadebug, full_prog_name, NULL,
                              (gchar *) reason, (gchar *) message,
-                             backtrace_file, the_errors_gimp->config->last_known_release,
+                             backtrace_file, the_errors_ligma->config->last_known_release,
                              NULL, NULL };
           gchar  pid[16];
           gchar  timestamp[16];
@@ -344,7 +344,7 @@ gimp_eek (const gchar *reason,
           g_snprintf (pid, 16, "%u", (guint) getpid ());
           args[2] = pid;
 
-          g_snprintf (timestamp, 16, "%"G_GINT64_FORMAT, the_errors_gimp->config->last_release_timestamp);
+          g_snprintf (timestamp, 16, "%"G_GINT64_FORMAT, the_errors_ligma->config->last_release_timestamp);
           args[7] = timestamp;
 
 #ifndef G_OS_WIN32
@@ -352,7 +352,7 @@ gimp_eek (const gchar *reason,
            * and is waiting for us in a text file.
            */
           fd = g_fopen (backtrace_file, "w");
-          has_backtrace = gimp_stack_trace_print ((const gchar *) full_prog_name,
+          has_backtrace = ligma_stack_trace_print ((const gchar *) full_prog_name,
                                                   fd, NULL);
           fclose (fd);
 #endif
@@ -360,7 +360,7 @@ gimp_eek (const gchar *reason,
           /* We don't care about any return value. If it fails, too
            * bad, we just won't have any stack trace.
            * We still need to use the sync() variant because we have
-           * to keep GIMP up long enough for the debugger to get its
+           * to keep LIGMA up long enough for the debugger to get its
            * trace.
            */
           if (has_backtrace &&
@@ -370,38 +370,38 @@ gimp_eek (const gchar *reason,
                              NULL, NULL, NULL, NULL))
             eek_handled = TRUE;
         }
-#endif /* !GIMP_CONSOLE_COMPILATION */
+#endif /* !LIGMA_CONSOLE_COMPILATION */
 
 #ifndef G_OS_WIN32
       if (! eek_handled)
         {
           switch (stack_trace_mode)
             {
-            case GIMP_STACK_TRACE_NEVER:
+            case LIGMA_STACK_TRACE_NEVER:
               break;
 
-            case GIMP_STACK_TRACE_QUERY:
+            case LIGMA_STACK_TRACE_QUERY:
                 {
                   sigset_t sigset;
 
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  if (the_errors_gimp)
-                    gimp_gui_ungrab (the_errors_gimp);
+                  if (the_errors_ligma)
+                    ligma_gui_ungrab (the_errors_ligma);
 
-                  gimp_stack_trace_query ((const gchar *) full_prog_name);
+                  ligma_stack_trace_query ((const gchar *) full_prog_name);
                 }
               break;
 
-            case GIMP_STACK_TRACE_ALWAYS:
+            case LIGMA_STACK_TRACE_ALWAYS:
                 {
                   sigset_t sigset;
 
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  gimp_stack_trace_print ((const gchar *) full_prog_name,
+                  ligma_stack_trace_print ((const gchar *) full_prog_name,
                                           stdout, NULL);
                 }
               break;
@@ -414,9 +414,9 @@ gimp_eek (const gchar *reason,
     }
 #endif /* ! G_OS_WIN32 || HAVE_EXCHNDL */
 
-#if defined (G_OS_WIN32) && ! defined (GIMP_CONSOLE_COMPILATION)
+#if defined (G_OS_WIN32) && ! defined (LIGMA_CONSOLE_COMPILATION)
   /* g_on_error_* don't do anything reasonable on Win32. */
-  if (! eek_handled && ! the_errors_gimp->no_interface)
+  if (! eek_handled && ! the_errors_ligma->no_interface)
     MessageBox (NULL, g_strdup_printf ("%s: %s", reason, message),
                 full_prog_name, MB_OK|MB_ICONERROR);
 #endif
@@ -425,7 +425,7 @@ gimp_eek (const gchar *reason,
    * It is not 100%: when I tested with various bugs created on purpose,
    * I had cases where saving failed. I am not sure if this is because
    * of some memory management along the way to XCF saving or some other
-   * messed up state of GIMP, but this is normal not to expect too much
+   * messed up state of LIGMA, but this is normal not to expect too much
    * during a crash.
    * Nevertheless in various test cases, I had successful backups XCF of
    * the work in progress. Yeah!
@@ -433,20 +433,20 @@ gimp_eek (const gchar *reason,
   if (backup_path)
     {
       /* increase the busy counter, so XCF saving calling
-       * gimp_set_busy() and gimp_unset_busy() won't call the GUI
+       * ligma_set_busy() and ligma_unset_busy() won't call the GUI
        * layer and do whatever windowing system calls to set cursors.
        */
-      the_errors_gimp->busy++;
+      the_errors_ligma->busy++;
 
       /* The index of 'XXX' in backup_path string. */
       num_idx = strlen (backup_path) - 7;
 
-      iter = gimp_get_image_iter (the_errors_gimp);
+      iter = ligma_get_image_iter (the_errors_ligma);
       for (; iter && i < 1000; iter = iter->next)
         {
-          GimpImage *image = iter->data;
+          LigmaImage *image = iter->data;
 
-          if (! gimp_image_is_dirty (image))
+          if (! ligma_image_is_dirty (image))
             continue;
 
           /* This is a trick because we want to avoid any memory
@@ -459,14 +459,14 @@ gimp_eek (const gchar *reason,
           backup_path[num_idx]     = '0' + ((i/100) % 10);
 
           /* Saving. */
-          gimp_pdb_execute_procedure_by_name (the_errors_gimp->pdb,
-                                              gimp_get_user_context (the_errors_gimp),
+          ligma_pdb_execute_procedure_by_name (the_errors_ligma->pdb,
+                                              ligma_get_user_context (the_errors_ligma),
                                               NULL, NULL,
-                                              "gimp-xcf-save",
-                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,        image,
+                                              "ligma-xcf-save",
+                                              LIGMA_TYPE_RUN_MODE,     LIGMA_RUN_NONINTERACTIVE,
+                                              LIGMA_TYPE_IMAGE,        image,
                                               G_TYPE_INT,             0,
-                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                              LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                               G_TYPE_FILE,            backup_file,
                                               G_TYPE_NONE);
           g_rename (g_file_peek_path (backup_file), backup_path);

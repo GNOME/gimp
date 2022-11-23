@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FLOATING_SELECTION_H__
-#define __GIMP_DRAWABLE_FLOATING_SELECTION_H__
+#ifndef __LIGMA_DRAWABLE_FLOATING_SELECTION_H__
+#define __LIGMA_DRAWABLE_FLOATING_SELECTION_H__
 
 
-GimpLayer  * gimp_drawable_get_floating_sel          (GimpDrawable *drawable);
-void         gimp_drawable_attach_floating_sel       (GimpDrawable *drawable,
-                                                      GimpLayer    *floating_sel);
-void         gimp_drawable_detach_floating_sel       (GimpDrawable *drawable);
-GimpFilter * gimp_drawable_get_floating_sel_filter   (GimpDrawable *drawable);
+LigmaLayer  * ligma_drawable_get_floating_sel          (LigmaDrawable *drawable);
+void         ligma_drawable_attach_floating_sel       (LigmaDrawable *drawable,
+                                                      LigmaLayer    *floating_sel);
+void         ligma_drawable_detach_floating_sel       (LigmaDrawable *drawable);
+LigmaFilter * ligma_drawable_get_floating_sel_filter   (LigmaDrawable *drawable);
 
-void         _gimp_drawable_add_floating_sel_filter  (GimpDrawable *drawable);
+void         _ligma_drawable_add_floating_sel_filter  (LigmaDrawable *drawable);
 
 
-#endif /* __GIMP_DRAWABLE_FLOATING_SELECTION_H__ */
+#endif /* __LIGMA_DRAWABLE_FLOATING_SELECTION_H__ */

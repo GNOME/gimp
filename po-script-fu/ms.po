@@ -1,12 +1,12 @@
-# Malay Translation of Gimp-script-fu HEAD.
+# Malay Translation of Ligma-script-fu HEAD.
 # Copyright (C) 2003 MIMOS Open Source Developement Group
 # This file is distributed under the same license as the PACKAGE package.
 # MIMOS Open Source Development Group <opensource@mimos.my>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-script-fu HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma-script-fu HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
@@ -34,7 +34,7 @@ msgid "_Start Server..."
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
+msgid "_LIGMA Online"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:308
@@ -77,7 +77,7 @@ msgid "_Beveled Pattern"
 msgstr "Corak"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:332
@@ -308,7 +308,7 @@ msgid "Delta value on color"
 msgstr "Nilai Delta pada Warna"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "Bingkai"
 
@@ -688,7 +688,7 @@ msgstr "Jejari Kabur"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "Warna"
 
@@ -840,70 +840,70 @@ msgstr "Tinggi Bayang (%)"
 msgid "Flatten image"
 msgstr "Imej Rata"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 #, fuzzy
 msgid "Create and Use _Selections"
 msgstr "Kekalkan Pemilihan"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr ""
 
@@ -1036,7 +1036,7 @@ msgid "Roughness"
 msgstr "Kekasaran"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "Kecerunan"
 
@@ -1474,134 +1474,134 @@ msgstr "Latar belakang Lut sinar"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indeks ke Warna n (0 = Baki RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
 #, fuzzy
-msgid "_Spyrogimp..."
+msgid "_Spyroligma..."
 msgstr "Spyrograf"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 #, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Melukis Spirographs, Epitrochoids and Lengkung Lissajous. Lebih banyak "
-"maklumat di http://netword.com*spyrogimp"
+"maklumat di http://netword.com*spyroligma"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "Jenis"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "Spyrograf"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "Bentuk"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "Bulatan"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "Segi tiga"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "Segi empat sama"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "Pentagon"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "Heksagon"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "Poligon: 7 sisi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "Poligon: 8 sisi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "Poligon: 9 sisi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "Poligon: 10 sisi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 #, fuzzy
 msgid "Outer teeth"
 msgstr "Gigi Luar"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 #, fuzzy
 msgid "Inner teeth"
 msgstr "Gigi Dalam"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "Jidar (piksel)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 #, fuzzy
 msgid "Hole ratio"
 msgstr "Nisbah Lubang"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 #, fuzzy
 msgid "Start angle"
 msgstr "Sudut Mula"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "Alat"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "Pensel"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "Berus"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "Penyembur"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 #, fuzzy
 msgid "Color method"
 msgstr "Kaedah Warna"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "Warna Pejal"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "Kecerunan: Gelung Sawtooth"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "Kecerunan: Segi tiga Gelung"
 
@@ -2179,8 +2179,8 @@ msgstr "Gugurkan Ofset Bayang Y"
 #~ msgstr "Layari..."
 
 #, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Tajuk _Besar..."
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Tajuk _Besar..."
 
 #, fuzzy
 #~ msgid "Autocrop"
@@ -2531,8 +2531,8 @@ msgstr "Gugurkan Ofset Bayang Y"
 #~ msgstr "Warna Latar Depan"
 
 #, fuzzy
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Toolbox>/Bantuan/GIMP dalam talian/Laman Web _Utama"
+#~ msgid "<Toolbox>/Help/The LIGMA Online"
+#~ msgstr "<Toolbox>/Bantuan/LIGMA dalam talian/Laman Web _Utama"
 
 #, fuzzy
 #~ msgid "Buffer amount (% height of text)"
@@ -2702,36 +2702,36 @@ msgstr "Gugurkan Ofset Bayang Y"
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Tajuk _Kecil..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Small Header..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Tajuk _Kecil..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/T_ube Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Sub-Butang T_iub..."
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Label Sub-Butang T_iub..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/Tub_e Sub-Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Sub-Sub-Butang T_iub..."
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Sub-Sub-Butang T_iub..."
 #~ "Label..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_General Tube "
 #~ "Labels..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Tiub _Am..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Label Tiub _Am..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Tube Button "
 #~ "Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Butang _Tiub..."
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Ligma.Org/Label Butang _Tiub..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
 #~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Ber_kilat..."
@@ -2824,8 +2824,8 @@ msgstr "Gugurkan Ofset Bayang Y"
 #~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
 #~ msgstr "<Image>/Script-Fu/Juruanimasi/Glob _Berputar..."
 
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-#~ msgstr "<Image>/Script-Fu/Render/_Spyrogimp..."
+#~ msgid "<Image>/Script-Fu/Render/_Spyroligma..."
+#~ msgstr "<Image>/Script-Fu/Render/_Spyroligma..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
 #~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Bintang _Bertaburan..."
@@ -2872,11 +2872,11 @@ msgstr "Gugurkan Ofset Bayang Y"
 #~ msgid "<Image>/Script-Fu/Animators/_Waves..."
 #~ msgstr "<Image>/Script-Fu/Juruanimasi/_Gelombang..."
 
-#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+#~ msgid "<Toolbox>/Help/The LIGMA Online/Plug-in _Registry"
 #~ msgstr "<Toolbox>/Xtns/Pelayar Web/_Pendaftaran Plug-In"
 
-#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-#~ msgstr "<Toolbox>/Bantuan/GIMP dalam talian/Laman Web _Pembangun"
+#~ msgid "<Toolbox>/Help/The LIGMA Online/_Developer Web Site"
+#~ msgstr "<Toolbox>/Bantuan/LIGMA dalam talian/Laman Web _Pembangun"
 
 #~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 #~ msgstr "<Image>/Script-Fu/Bayang/Kesan _Xach..."
@@ -2995,47 +2995,47 @@ msgstr "Gugurkan Ofset Bayang Y"
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pembangun"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Pepijat GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Bugs"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Pepijat LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Manual GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Manual"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Manual LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Berita GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA News"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Berita LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Tutorial GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Tutorials"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Tutorial LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Dokumentasi"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Documenation"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Dokumentasi"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Muat turun "
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Download"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Muat turun "
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Seni GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/LIGMA Art"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Seni LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/GTK"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/GTK"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Links"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Pautan"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Pautan"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Sumber"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Resources"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/Sumber"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/The LIGMA"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/LIGMA.ORG/LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Ligma-Savvy.com"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Ligma-Savvy.com"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Memahamkan GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the LIGMA"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Memahamkan LIGMA"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 #~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pengguna"

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimptypes.h
+ * ligmatypes.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,53 +18,53 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TYPES_H__
-#define __GIMP_TYPES_H__
+#ifndef __LIGMA_TYPES_H__
+#define __LIGMA_TYPES_H__
 
-#include <libgimpbase/gimpbasetypes.h>
+#include <libligmabase/ligmabasetypes.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
 
-typedef struct _GimpPDB             GimpPDB;
-typedef struct _GimpPlugIn          GimpPlugIn;
-typedef struct _GimpProcedure       GimpProcedure;
-typedef struct _GimpProcedureConfig GimpProcedureConfig;
+typedef struct _LigmaPDB             LigmaPDB;
+typedef struct _LigmaPlugIn          LigmaPlugIn;
+typedef struct _LigmaProcedure       LigmaProcedure;
+typedef struct _LigmaProcedureConfig LigmaProcedureConfig;
 
-typedef struct _GimpImage           GimpImage;
-typedef struct _GimpItem            GimpItem;
-typedef struct _GimpDrawable        GimpDrawable;
-typedef struct _GimpLayer           GimpLayer;
-typedef struct _GimpChannel         GimpChannel;
-typedef struct _GimpLayerMask       GimpLayerMask;
-typedef struct _GimpSelection       GimpSelection;
-typedef struct _GimpTextLayer       GimpTextLayer;
-typedef struct _GimpVectors         GimpVectors;
+typedef struct _LigmaImage           LigmaImage;
+typedef struct _LigmaItem            LigmaItem;
+typedef struct _LigmaDrawable        LigmaDrawable;
+typedef struct _LigmaLayer           LigmaLayer;
+typedef struct _LigmaChannel         LigmaChannel;
+typedef struct _LigmaLayerMask       LigmaLayerMask;
+typedef struct _LigmaSelection       LigmaSelection;
+typedef struct _LigmaTextLayer       LigmaTextLayer;
+typedef struct _LigmaVectors         LigmaVectors;
 
-typedef struct _GimpDisplay         GimpDisplay;
+typedef struct _LigmaDisplay         LigmaDisplay;
 
 
 /* FIXME move somewhere else */
 
 /**
- * GimpPixbufTransparency:
- * @GIMP_PIXBUF_KEEP_ALPHA:   Create a pixbuf with alpha
- * @GIMP_PIXBUF_SMALL_CHECKS: Show transparency as small checks
- * @GIMP_PIXBUF_LARGE_CHECKS: Show transparency as large checks
+ * LigmaPixbufTransparency:
+ * @LIGMA_PIXBUF_KEEP_ALPHA:   Create a pixbuf with alpha
+ * @LIGMA_PIXBUF_SMALL_CHECKS: Show transparency as small checks
+ * @LIGMA_PIXBUF_LARGE_CHECKS: Show transparency as large checks
  *
  * How to deal with transparency when creating thubnail pixbufs from
  * images and drawables.
  **/
 typedef enum
 {
-  GIMP_PIXBUF_KEEP_ALPHA,
-  GIMP_PIXBUF_SMALL_CHECKS,
-  GIMP_PIXBUF_LARGE_CHECKS
-} GimpPixbufTransparency;
+  LIGMA_PIXBUF_KEEP_ALPHA,
+  LIGMA_PIXBUF_SMALL_CHECKS,
+  LIGMA_PIXBUF_LARGE_CHECKS
+} LigmaPixbufTransparency;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_TYPES_H__ */
+#endif /* __LIGMA_TYPES_H__ */

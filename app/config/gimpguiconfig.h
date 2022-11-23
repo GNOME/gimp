@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGuiConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaGuiConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GUI_CONFIG_H__
-#define __GIMP_GUI_CONFIG_H__
+#ifndef __LIGMA_GUI_CONFIG_H__
+#define __LIGMA_GUI_CONFIG_H__
 
-#include "config/gimpdisplayconfig.h"
-
-
-#define GIMP_CONFIG_DEFAULT_THEME          "Default"
-#define GIMP_CONFIG_DEFAULT_ICON_THEME     "Symbolic"
+#include "config/ligmadisplayconfig.h"
 
 
-#define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())
-#define GIMP_GUI_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GUI_CONFIG, GimpGuiConfig))
-#define GIMP_GUI_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GUI_CONFIG, GimpGuiConfigClass))
-#define GIMP_IS_GUI_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GUI_CONFIG))
-#define GIMP_IS_GUI_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GUI_CONFIG))
+#define LIGMA_CONFIG_DEFAULT_THEME          "Default"
+#define LIGMA_CONFIG_DEFAULT_ICON_THEME     "Symbolic"
 
 
-typedef struct _GimpGuiConfigClass GimpGuiConfigClass;
+#define LIGMA_TYPE_GUI_CONFIG            (ligma_gui_config_get_type ())
+#define LIGMA_GUI_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GUI_CONFIG, LigmaGuiConfig))
+#define LIGMA_GUI_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GUI_CONFIG, LigmaGuiConfigClass))
+#define LIGMA_IS_GUI_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GUI_CONFIG))
+#define LIGMA_IS_GUI_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GUI_CONFIG))
 
-struct _GimpGuiConfig
+
+typedef struct _LigmaGuiConfigClass LigmaGuiConfigClass;
+
+struct _LigmaGuiConfig
 {
-  GimpDisplayConfig    parent_instance;
+  LigmaDisplayConfig    parent_instance;
 
   gboolean             edit_non_visible;
   gboolean             move_tool_changes_active;
@@ -70,16 +70,16 @@ struct _GimpGuiConfig
   gchar               *icon_theme;
   gboolean             prefer_symbolic_icons;
   gboolean             override_icon_size;
-  GimpIconSize         custom_icon_size;
+  LigmaIconSize         custom_icon_size;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
-  GimpHelpBrowserType  help_browser;
+  LigmaHelpBrowserType  help_browser;
   gboolean             user_manual_online;
   gchar               *user_manual_online_uri;
   gint                 action_history_size;
-  GimpWindowHint       dock_window_hint;
-  GimpHandedness       cursor_handedness;
+  LigmaWindowHint       dock_window_hint;
+  LigmaHandedness       cursor_handedness;
 
   /* experimental playground */
   gboolean             playground_npd_tool;
@@ -90,17 +90,17 @@ struct _GimpGuiConfig
   gboolean             hide_docks;
   gboolean             single_window_mode;
   gboolean             show_tabs;
-  GimpPosition         tabs_position;
+  LigmaPosition         tabs_position;
   gint                 last_tip_shown;
 };
 
-struct _GimpGuiConfigClass
+struct _LigmaGuiConfigClass
 {
-  GimpDisplayConfigClass  parent_class;
+  LigmaDisplayConfigClass  parent_class;
 };
 
 
-GType  gimp_gui_config_get_type (void) G_GNUC_CONST;
+GType  ligma_gui_config_get_type (void) G_GNUC_CONST;
 
 
-#endif /* GIMP_GUI_CONFIG_H__ */
+#endif /* LIGMA_GUI_CONFIG_H__ */

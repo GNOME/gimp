@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,32 +24,32 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp.h"
-#include "gimp-memsize.h"
-#include "gimpchunkiterator.h"
-#include "gimpimage.h"
-#include "gimpmarshal.h"
-#include "gimppickable.h"
-#include "gimpprojectable.h"
-#include "gimpprojection.h"
-#include "gimptilehandlerprojectable.h"
+#include "ligma.h"
+#include "ligma-memsize.h"
+#include "ligmachunkiterator.h"
+#include "ligmaimage.h"
+#include "ligmamarshal.h"
+#include "ligmapickable.h"
+#include "ligmaprojectable.h"
+#include "ligmaprojection.h"
+#include "ligmatilehandlerprojectable.h"
 
-#include "gimp-log.h"
-#include "gimp-priorities.h"
+#include "ligma-log.h"
+#include "ligma-priorities.h"
 
 
 /*  chunk size for area updates  */
-#define GIMP_PROJECTION_UPDATE_CHUNK_WIDTH  32
-#define GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT 32
+#define LIGMA_PROJECTION_UPDATE_CHUNK_WIDTH  32
+#define LIGMA_PROJECTION_UPDATE_CHUNK_HEIGHT 32
 
 
 enum
@@ -65,18 +65,18 @@ enum
 };
 
 
-struct _GimpProjectionPrivate
+struct _LigmaProjectionPrivate
 {
-  GimpProjectable           *projectable;
+  LigmaProjectable           *projectable;
 
   GeglBuffer                *buffer;
-  GimpTileHandlerValidate   *validate_handler;
+  LigmaTileHandlerValidate   *validate_handler;
 
   gint                       priority;
 
   cairo_region_t            *update_region;
   GeglRectangle              priority_rect;
-  GimpChunkIterator         *iter;
+  LigmaChunkIterator         *iter;
   guint                      idle_id;
 
   gboolean                   invalidate_preview;
@@ -85,110 +85,110 @@ struct _GimpProjectionPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_projection_pickable_iface_init (GimpPickableInterface  *iface);
+static void   ligma_projection_pickable_iface_init (LigmaPickableInterface  *iface);
 
-static void        gimp_projection_finalize              (GObject         *object);
-static void        gimp_projection_set_property          (GObject         *object,
+static void        ligma_projection_finalize              (GObject         *object);
+static void        ligma_projection_set_property          (GObject         *object,
                                                           guint            property_id,
                                                           const GValue    *value,
                                                           GParamSpec      *pspec);
-static void        gimp_projection_get_property          (GObject         *object,
+static void        ligma_projection_get_property          (GObject         *object,
                                                           guint            property_id,
                                                           GValue          *value,
                                                           GParamSpec      *pspec);
 
-static gint64      gimp_projection_get_memsize           (GimpObject      *object,
+static gint64      ligma_projection_get_memsize           (LigmaObject      *object,
                                                           gint64          *gui_size);
 
-static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
-static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
-static const Babl * gimp_projection_get_format           (GimpPickable    *pickable);
-static GeglBuffer * gimp_projection_get_buffer           (GimpPickable    *pickable);
-static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
+static void        ligma_projection_pickable_flush        (LigmaPickable    *pickable);
+static LigmaImage * ligma_projection_get_image             (LigmaPickable    *pickable);
+static const Babl * ligma_projection_get_format           (LigmaPickable    *pickable);
+static GeglBuffer * ligma_projection_get_buffer           (LigmaPickable    *pickable);
+static gboolean    ligma_projection_get_pixel_at          (LigmaPickable    *pickable,
                                                           gint             x,
                                                           gint             y,
                                                           const Babl      *format,
                                                           gpointer         pixel);
-static gdouble     gimp_projection_get_opacity_at        (GimpPickable    *pickable,
+static gdouble     ligma_projection_get_opacity_at        (LigmaPickable    *pickable,
                                                           gint             x,
                                                           gint             y);
-static void        gimp_projection_get_pixel_average     (GimpPickable    *pickable,
+static void        ligma_projection_get_pixel_average     (LigmaPickable    *pickable,
                                                           const GeglRectangle *rect,
                                                           const Babl      *format,
                                                           gpointer         pixel);
-static void        gimp_projection_pixel_to_srgb         (GimpPickable    *pickable,
+static void        ligma_projection_pixel_to_srgb         (LigmaPickable    *pickable,
                                                           const Babl      *format,
                                                           gpointer         pixel,
-                                                          GimpRGB         *color);
-static void        gimp_projection_srgb_to_pixel         (GimpPickable    *pickable,
-                                                          const GimpRGB   *color,
+                                                          LigmaRGB         *color);
+static void        ligma_projection_srgb_to_pixel         (LigmaPickable    *pickable,
+                                                          const LigmaRGB   *color,
                                                           const Babl      *format,
                                                           gpointer         pixel);
 
-static void        gimp_projection_allocate_buffer       (GimpProjection  *proj);
-static void        gimp_projection_free_buffer           (GimpProjection  *proj);
-static void        gimp_projection_add_update_area       (GimpProjection  *proj,
+static void        ligma_projection_allocate_buffer       (LigmaProjection  *proj);
+static void        ligma_projection_free_buffer           (LigmaProjection  *proj);
+static void        ligma_projection_add_update_area       (LigmaProjection  *proj,
                                                           gint             x,
                                                           gint             y,
                                                           gint             w,
                                                           gint             h);
-static void        gimp_projection_flush_whenever        (GimpProjection  *proj,
+static void        ligma_projection_flush_whenever        (LigmaProjection  *proj,
                                                           gboolean         now,
                                                           gboolean         direct);
-static void        gimp_projection_update_priority_rect  (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_start    (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj,
+static void        ligma_projection_update_priority_rect  (LigmaProjection  *proj);
+static void        ligma_projection_chunk_render_start    (LigmaProjection  *proj);
+static void        ligma_projection_chunk_render_stop     (LigmaProjection  *proj,
                                                           gboolean         merge);
-static gboolean    gimp_projection_chunk_render_callback (GimpProjection  *proj);
-static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj);
-static void        gimp_projection_paint_area            (GimpProjection  *proj,
+static gboolean    ligma_projection_chunk_render_callback (LigmaProjection  *proj);
+static gboolean    ligma_projection_chunk_render_iteration(LigmaProjection  *proj);
+static void        ligma_projection_paint_area            (LigmaProjection  *proj,
                                                           gboolean         now,
                                                           gint             x,
                                                           gint             y,
                                                           gint             w,
                                                           gint             h);
 
-static void        gimp_projection_projectable_invalidate(GimpProjectable *projectable,
+static void        ligma_projection_projectable_invalidate(LigmaProjectable *projectable,
                                                           gint             x,
                                                           gint             y,
                                                           gint             w,
                                                           gint             h,
-                                                          GimpProjection  *proj);
-static void        gimp_projection_projectable_flush     (GimpProjectable *projectable,
+                                                          LigmaProjection  *proj);
+static void        ligma_projection_projectable_flush     (LigmaProjectable *projectable,
                                                           gboolean         invalidate_preview,
-                                                          GimpProjection  *proj);
+                                                          LigmaProjection  *proj);
 static void
-           gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
-                                                          GimpProjection  *proj);
-static void   gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
+           ligma_projection_projectable_structure_changed (LigmaProjectable *projectable,
+                                                          LigmaProjection  *proj);
+static void   ligma_projection_projectable_bounds_changed (LigmaProjectable *projectable,
                                                           gint             old_x,
                                                           gint             old_y,
-                                                          GimpProjection  *proj);
+                                                          LigmaProjection  *proj);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpProjection)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_projection_pickable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaProjection, ligma_projection, LIGMA_TYPE_OBJECT,
+                         G_ADD_PRIVATE (LigmaProjection)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PICKABLE,
+                                                ligma_projection_pickable_iface_init))
 
-#define parent_class gimp_projection_parent_class
+#define parent_class ligma_projection_parent_class
 
 static guint projection_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_projection_class_init (GimpProjectionClass *klass)
+ligma_projection_class_init (LigmaProjectionClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
   projection_signals[UPDATE] =
     g_signal_new ("update",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProjectionClass, update),
+                  G_STRUCT_OFFSET (LigmaProjectionClass, update),
                   NULL, NULL,
-                  gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT,
+                  ligma_marshal_VOID__BOOLEAN_INT_INT_INT_INT,
                   G_TYPE_NONE, 5,
                   G_TYPE_BOOLEAN,
                   G_TYPE_INT,
@@ -196,48 +196,48 @@ gimp_projection_class_init (GimpProjectionClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->finalize         = gimp_projection_finalize;
-  object_class->set_property     = gimp_projection_set_property;
-  object_class->get_property     = gimp_projection_get_property;
+  object_class->finalize         = ligma_projection_finalize;
+  object_class->set_property     = ligma_projection_set_property;
+  object_class->get_property     = ligma_projection_get_property;
 
-  gimp_object_class->get_memsize = gimp_projection_get_memsize;
+  ligma_object_class->get_memsize = ligma_projection_get_memsize;
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 }
 
 static void
-gimp_projection_init (GimpProjection *proj)
+ligma_projection_init (LigmaProjection *proj)
 {
-  proj->priv = gimp_projection_get_instance_private (proj);
+  proj->priv = ligma_projection_get_instance_private (proj);
 }
 
 static void
-gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
+ligma_projection_pickable_iface_init (LigmaPickableInterface *iface)
 {
-  iface->flush                 = gimp_projection_pickable_flush;
-  iface->get_image             = gimp_projection_get_image;
-  iface->get_format            = gimp_projection_get_format;
-  iface->get_format_with_alpha = gimp_projection_get_format; /* sic */
-  iface->get_buffer            = gimp_projection_get_buffer;
-  iface->get_pixel_at          = gimp_projection_get_pixel_at;
-  iface->get_opacity_at        = gimp_projection_get_opacity_at;
-  iface->get_pixel_average     = gimp_projection_get_pixel_average;
-  iface->pixel_to_srgb         = gimp_projection_pixel_to_srgb;
-  iface->srgb_to_pixel         = gimp_projection_srgb_to_pixel;
+  iface->flush                 = ligma_projection_pickable_flush;
+  iface->get_image             = ligma_projection_get_image;
+  iface->get_format            = ligma_projection_get_format;
+  iface->get_format_with_alpha = ligma_projection_get_format; /* sic */
+  iface->get_buffer            = ligma_projection_get_buffer;
+  iface->get_pixel_at          = ligma_projection_get_pixel_at;
+  iface->get_opacity_at        = ligma_projection_get_opacity_at;
+  iface->get_pixel_average     = ligma_projection_get_pixel_average;
+  iface->pixel_to_srgb         = ligma_projection_pixel_to_srgb;
+  iface->srgb_to_pixel         = ligma_projection_srgb_to_pixel;
 }
 
 static void
-gimp_projection_finalize (GObject *object)
+ligma_projection_finalize (GObject *object)
 {
-  GimpProjection *proj = GIMP_PROJECTION (object);
+  LigmaProjection *proj = LIGMA_PROJECTION (object);
 
-  gimp_projection_free_buffer (proj);
+  ligma_projection_free_buffer (proj);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_projection_set_property (GObject      *object,
+ligma_projection_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
@@ -252,12 +252,12 @@ gimp_projection_set_property (GObject      *object,
 }
 
 static void
-gimp_projection_get_property (GObject    *object,
+ligma_projection_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpProjection *projection = GIMP_PROJECTION (object);
+  LigmaProjection *projection = LIGMA_PROJECTION (object);
 
   switch (property_id)
     {
@@ -272,20 +272,20 @@ gimp_projection_get_property (GObject    *object,
 }
 
 static gint64
-gimp_projection_get_memsize (GimpObject *object,
+ligma_projection_get_memsize (LigmaObject *object,
                              gint64     *gui_size)
 {
-  GimpProjection *projection = GIMP_PROJECTION (object);
+  LigmaProjection *projection = LIGMA_PROJECTION (object);
   gint64          memsize    = 0;
 
-  memsize += gimp_gegl_pyramid_get_memsize (projection->priv->buffer);
+  memsize += ligma_gegl_pyramid_get_memsize (projection->priv->buffer);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 /**
- * gimp_projection_estimate_memsize:
+ * ligma_projection_estimate_memsize:
  * @type:           the projectable's base type
  * @component_type: the projectable's component type
  * @width:          projection width
@@ -297,19 +297,19 @@ gimp_projection_get_memsize (GimpObject *object,
  * Returns: a rough estimate of the memory requirements.
  **/
 gint64
-gimp_projection_estimate_memsize (GimpImageBaseType type,
-                                  GimpComponentType component_type,
+ligma_projection_estimate_memsize (LigmaImageBaseType type,
+                                  LigmaComponentType component_type,
                                   gint              width,
                                   gint              height)
 {
   const Babl *format;
   gint64      bytes;
 
-  if (type == GIMP_INDEXED)
-    type = GIMP_RGB;
+  if (type == LIGMA_INDEXED)
+    type = LIGMA_RGB;
 
-  format = gimp_babl_format (type,
-                             gimp_babl_precision (component_type, FALSE),
+  format = ligma_babl_format (type,
+                             ligma_babl_precision (component_type, FALSE),
                              TRUE, NULL);
   bytes  = babl_format_get_bytes_per_pixel (format);
 
@@ -319,15 +319,15 @@ gimp_projection_estimate_memsize (GimpImageBaseType type,
 
 
 static void
-gimp_projection_pickable_flush (GimpPickable *pickable)
+ligma_projection_pickable_flush (LigmaPickable *pickable)
 {
-  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  LigmaProjection *proj = LIGMA_PROJECTION (pickable);
 
   /* create the buffer if it doesn't exist */
-  gimp_projection_get_buffer (pickable);
+  ligma_projection_get_buffer (pickable);
 
-  gimp_projection_finish_draw (proj);
-  gimp_projection_flush_now (proj, FALSE);
+  ligma_projection_finish_draw (proj);
+  ligma_projection_flush_now (proj, FALSE);
 
   if (proj->priv->invalidate_preview)
     {
@@ -336,69 +336,69 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
        */
       proj->priv->invalidate_preview = FALSE;
 
-      gimp_projectable_invalidate_preview (proj->priv->projectable);
+      ligma_projectable_invalidate_preview (proj->priv->projectable);
     }
 }
 
-static GimpImage *
-gimp_projection_get_image (GimpPickable *pickable)
+static LigmaImage *
+ligma_projection_get_image (LigmaPickable *pickable)
 {
-  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  LigmaProjection *proj = LIGMA_PROJECTION (pickable);
 
-  return gimp_projectable_get_image (proj->priv->projectable);
+  return ligma_projectable_get_image (proj->priv->projectable);
 }
 
 static const Babl *
-gimp_projection_get_format (GimpPickable *pickable)
+ligma_projection_get_format (LigmaPickable *pickable)
 {
-  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  LigmaProjection *proj = LIGMA_PROJECTION (pickable);
 
-  return gimp_projectable_get_format (proj->priv->projectable);
+  return ligma_projectable_get_format (proj->priv->projectable);
 }
 
 static GeglBuffer *
-gimp_projection_get_buffer (GimpPickable *pickable)
+ligma_projection_get_buffer (LigmaPickable *pickable)
 {
-  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  LigmaProjection *proj = LIGMA_PROJECTION (pickable);
 
   if (! proj->priv->buffer)
     {
       GeglRectangle bounding_box;
 
       bounding_box =
-        gimp_projectable_get_bounding_box (proj->priv->projectable);
+        ligma_projectable_get_bounding_box (proj->priv->projectable);
 
-      gimp_projection_allocate_buffer (proj);
+      ligma_projection_allocate_buffer (proj);
 
-      /*  This used to call gimp_tile_handler_validate_invalidate()
+      /*  This used to call ligma_tile_handler_validate_invalidate()
        *  which forced the entire projection to be constructed in one
        *  go for new images, causing a potentially huge delay. Now we
        *  initially validate stuff the normal way, which makes the
        *  image appear incrementally, but it keeps everything
        *  responsive.
        */
-      gimp_projection_add_update_area (proj,
+      ligma_projection_add_update_area (proj,
                                        bounding_box.x,     bounding_box.y,
                                        bounding_box.width, bounding_box.height);
       proj->priv->invalidate_preview = TRUE;
-      gimp_projection_flush (proj);
+      ligma_projection_flush (proj);
     }
 
   return proj->priv->buffer;
 }
 
 static gboolean
-gimp_projection_get_pixel_at (GimpPickable *pickable,
+ligma_projection_get_pixel_at (LigmaPickable *pickable,
                               gint          x,
                               gint          y,
                               const Babl   *format,
                               gpointer      pixel)
 {
-  GimpProjection *proj   = GIMP_PROJECTION (pickable);
-  GeglBuffer     *buffer = gimp_projection_get_buffer (pickable);
+  LigmaProjection *proj   = LIGMA_PROJECTION (pickable);
+  GeglBuffer     *buffer = ligma_projection_get_buffer (pickable);
   GeglRectangle   bounding_box;
 
-  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
+  bounding_box = ligma_projectable_get_bounding_box (proj->priv->projectable);
 
   if (x <  bounding_box.x                      ||
       y <  bounding_box.y                      ||
@@ -415,153 +415,153 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
 }
 
 static gdouble
-gimp_projection_get_opacity_at (GimpPickable *pickable,
+ligma_projection_get_opacity_at (LigmaPickable *pickable,
                                 gint          x,
                                 gint          y)
 {
-  return GIMP_OPACITY_OPAQUE;
+  return LIGMA_OPACITY_OPAQUE;
 }
 
 static void
-gimp_projection_get_pixel_average (GimpPickable        *pickable,
+ligma_projection_get_pixel_average (LigmaPickable        *pickable,
                                    const GeglRectangle *rect,
                                    const Babl          *format,
                                    gpointer             pixel)
 {
-  GeglBuffer *buffer = gimp_projection_get_buffer (pickable);
+  GeglBuffer *buffer = ligma_projection_get_buffer (pickable);
 
-  return gimp_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
+  return ligma_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
                                   pixel);
 }
 
 static void
-gimp_projection_pixel_to_srgb (GimpPickable *pickable,
+ligma_projection_pixel_to_srgb (LigmaPickable *pickable,
                                const Babl   *format,
                                gpointer      pixel,
-                               GimpRGB      *color)
+                               LigmaRGB      *color)
 {
-  GimpProjection *proj  = GIMP_PROJECTION (pickable);
-  GimpImage      *image = gimp_projectable_get_image (proj->priv->projectable);
+  LigmaProjection *proj  = LIGMA_PROJECTION (pickable);
+  LigmaImage      *image = ligma_projectable_get_image (proj->priv->projectable);
 
-  gimp_pickable_pixel_to_srgb (GIMP_PICKABLE (image), format, pixel, color);
+  ligma_pickable_pixel_to_srgb (LIGMA_PICKABLE (image), format, pixel, color);
 }
 
 static void
-gimp_projection_srgb_to_pixel (GimpPickable  *pickable,
-                               const GimpRGB *color,
+ligma_projection_srgb_to_pixel (LigmaPickable  *pickable,
+                               const LigmaRGB *color,
                                const Babl    *format,
                                gpointer       pixel)
 {
-  GimpProjection *proj  = GIMP_PROJECTION (pickable);
-  GimpImage      *image = gimp_projectable_get_image (proj->priv->projectable);
+  LigmaProjection *proj  = LIGMA_PROJECTION (pickable);
+  LigmaImage      *image = ligma_projectable_get_image (proj->priv->projectable);
 
-  gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
+  ligma_pickable_srgb_to_pixel (LIGMA_PICKABLE (image), color, format, pixel);
 }
 
 
 /*  public functions  */
 
-GimpProjection *
-gimp_projection_new (GimpProjectable *projectable)
+LigmaProjection *
+ligma_projection_new (LigmaProjectable *projectable)
 {
-  GimpProjection *proj;
+  LigmaProjection *proj;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), NULL);
 
-  proj = g_object_new (GIMP_TYPE_PROJECTION, NULL);
+  proj = g_object_new (LIGMA_TYPE_PROJECTION, NULL);
 
   proj->priv->projectable = projectable;
 
   g_signal_connect_object (projectable, "invalidate",
-                           G_CALLBACK (gimp_projection_projectable_invalidate),
+                           G_CALLBACK (ligma_projection_projectable_invalidate),
                            proj, 0);
   g_signal_connect_object (projectable, "flush",
-                           G_CALLBACK (gimp_projection_projectable_flush),
+                           G_CALLBACK (ligma_projection_projectable_flush),
                            proj, 0);
   g_signal_connect_object (projectable, "structure-changed",
-                           G_CALLBACK (gimp_projection_projectable_structure_changed),
+                           G_CALLBACK (ligma_projection_projectable_structure_changed),
                            proj, 0);
   g_signal_connect_object (projectable, "bounds-changed",
-                           G_CALLBACK (gimp_projection_projectable_bounds_changed),
+                           G_CALLBACK (ligma_projection_projectable_bounds_changed),
                            proj, 0);
 
   return proj;
 }
 
 void
-gimp_projection_set_priority (GimpProjection *proj,
+ligma_projection_set_priority (LigmaProjection *proj,
                               gint            priority)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
   proj->priv->priority = priority;
 }
 
 gint
-gimp_projection_get_priority (GimpProjection *proj)
+ligma_projection_get_priority (LigmaProjection *proj)
 {
-  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), 0);
+  g_return_val_if_fail (LIGMA_IS_PROJECTION (proj), 0);
 
   return proj->priv->priority;
 }
 
 void
-gimp_projection_set_priority_rect (GimpProjection *proj,
+ligma_projection_set_priority_rect (LigmaProjection *proj,
                                    gint            x,
                                    gint            y,
                                    gint            w,
                                    gint            h)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
   proj->priv->priority_rect = *GEGL_RECTANGLE (x, y, w, h);
 
-  gimp_projection_update_priority_rect (proj);
+  ligma_projection_update_priority_rect (proj);
 }
 
 void
-gimp_projection_stop_rendering (GimpProjection *proj)
+ligma_projection_stop_rendering (LigmaProjection *proj)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
-  gimp_projection_chunk_render_stop (proj, TRUE);
+  ligma_projection_chunk_render_stop (proj, TRUE);
 }
 
 void
-gimp_projection_flush (GimpProjection *proj)
+ligma_projection_flush (LigmaProjection *proj)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
   /* Construct in chunks */
-  gimp_projection_flush_whenever (proj, FALSE, FALSE);
+  ligma_projection_flush_whenever (proj, FALSE, FALSE);
 }
 
 void
-gimp_projection_flush_now (GimpProjection *proj,
+ligma_projection_flush_now (LigmaProjection *proj,
                            gboolean        direct)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
   /* Construct NOW */
-  gimp_projection_flush_whenever (proj, TRUE, direct);
+  ligma_projection_flush_whenever (proj, TRUE, direct);
 }
 
 void
-gimp_projection_finish_draw (GimpProjection *proj)
+ligma_projection_finish_draw (LigmaProjection *proj)
 {
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (LIGMA_IS_PROJECTION (proj));
 
   if (proj->priv->iter)
     {
-      gimp_chunk_iterator_set_priority_rect (proj->priv->iter, NULL);
+      ligma_chunk_iterator_set_priority_rect (proj->priv->iter, NULL);
 
-      gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
+      ligma_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
-      while (gimp_projection_chunk_render_iteration (proj));
+      while (ligma_projection_chunk_render_iteration (proj));
 
-      gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
+      ligma_tile_handler_validate_end_validate (proj->priv->validate_handler);
 
-      gimp_projection_chunk_render_stop (proj, FALSE);
+      ligma_projection_chunk_render_stop (proj, FALSE);
     }
 }
 
@@ -569,7 +569,7 @@ gimp_projection_finish_draw (GimpProjection *proj)
 /*  private functions  */
 
 static void
-gimp_projection_allocate_buffer (GimpProjection *proj)
+ligma_projection_allocate_buffer (LigmaProjection *proj)
 {
   const Babl    *format;
   GeglRectangle  bounding_box;
@@ -577,32 +577,32 @@ gimp_projection_allocate_buffer (GimpProjection *proj)
   if (proj->priv->buffer)
     return;
 
-  format       = gimp_projection_get_format (GIMP_PICKABLE (proj));
+  format       = ligma_projection_get_format (LIGMA_PICKABLE (proj));
   bounding_box =
-    gimp_projectable_get_bounding_box (proj->priv->projectable);
+    ligma_projectable_get_bounding_box (proj->priv->projectable);
 
   proj->priv->buffer = gegl_buffer_new (&bounding_box, format);
 
   proj->priv->validate_handler =
-    GIMP_TILE_HANDLER_VALIDATE (
-      gimp_tile_handler_projectable_new (proj->priv->projectable));
+    LIGMA_TILE_HANDLER_VALIDATE (
+      ligma_tile_handler_projectable_new (proj->priv->projectable));
 
-  gimp_tile_handler_validate_assign (proj->priv->validate_handler,
+  ligma_tile_handler_validate_assign (proj->priv->validate_handler,
                                      proj->priv->buffer);
 
   g_object_notify (G_OBJECT (proj), "buffer");
 }
 
 static void
-gimp_projection_free_buffer (GimpProjection  *proj)
+ligma_projection_free_buffer (LigmaProjection  *proj)
 {
-  gimp_projection_chunk_render_stop (proj, FALSE);
+  ligma_projection_chunk_render_stop (proj, FALSE);
 
   g_clear_pointer (&proj->priv->update_region, cairo_region_destroy);
 
   if (proj->priv->buffer)
     {
-      gimp_tile_handler_validate_unassign (proj->priv->validate_handler,
+      ligma_tile_handler_validate_unassign (proj->priv->validate_handler,
                                            proj->priv->buffer);
 
       g_clear_object (&proj->priv->buffer);
@@ -613,7 +613,7 @@ gimp_projection_free_buffer (GimpProjection  *proj)
 }
 
 static void
-gimp_projection_add_update_area (GimpProjection *proj,
+ligma_projection_add_update_area (LigmaProjection *proj,
                                  gint            x,
                                  gint            y,
                                  gint            w,
@@ -622,15 +622,15 @@ gimp_projection_add_update_area (GimpProjection *proj,
   cairo_rectangle_int_t rect;
   GeglRectangle         bounding_box;
 
-  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
+  bounding_box = ligma_projectable_get_bounding_box (proj->priv->projectable);
 
   /*  align the rectangle to the UPDATE_CHUNK_WIDTH x UPDATE_CHUNK_HEIGHT grid,
    *  to decrease the complexity of the update area.
    */
-  w = ceil  ((gdouble) (x + w) / GIMP_PROJECTION_UPDATE_CHUNK_WIDTH ) * GIMP_PROJECTION_UPDATE_CHUNK_WIDTH;
-  h = ceil  ((gdouble) (y + h) / GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT) * GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT;
-  x = floor ((gdouble) x       / GIMP_PROJECTION_UPDATE_CHUNK_WIDTH ) * GIMP_PROJECTION_UPDATE_CHUNK_WIDTH;
-  y = floor ((gdouble) y       / GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT) * GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT;
+  w = ceil  ((gdouble) (x + w) / LIGMA_PROJECTION_UPDATE_CHUNK_WIDTH ) * LIGMA_PROJECTION_UPDATE_CHUNK_WIDTH;
+  h = ceil  ((gdouble) (y + h) / LIGMA_PROJECTION_UPDATE_CHUNK_HEIGHT) * LIGMA_PROJECTION_UPDATE_CHUNK_HEIGHT;
+  x = floor ((gdouble) x       / LIGMA_PROJECTION_UPDATE_CHUNK_WIDTH ) * LIGMA_PROJECTION_UPDATE_CHUNK_WIDTH;
+  y = floor ((gdouble) y       / LIGMA_PROJECTION_UPDATE_CHUNK_HEIGHT) * LIGMA_PROJECTION_UPDATE_CHUNK_HEIGHT;
 
   w -= x;
   h -= y;
@@ -646,14 +646,14 @@ gimp_projection_add_update_area (GimpProjection *proj,
 }
 
 static void
-gimp_projection_flush_whenever (GimpProjection *proj,
+ligma_projection_flush_whenever (LigmaProjection *proj,
                                 gboolean        now,
                                 gboolean        direct)
 {
   if (proj->priv->update_region)
     {
       /* Make sure we have a buffer */
-      gimp_projection_allocate_buffer (proj);
+      ligma_projection_allocate_buffer (proj);
 
       if (now)  /* Synchronous */
         {
@@ -667,7 +667,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
               cairo_region_get_rectangle (proj->priv->update_region,
                                           i, &rect);
 
-              gimp_projection_paint_area (proj,
+              ligma_projection_paint_area (proj,
                                           direct,
                                           rect.x,
                                           rect.y,
@@ -681,7 +681,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
       else  /* Asynchronous */
         {
           /*  Consumes the update region  */
-          gimp_projection_chunk_render_start (proj);
+          ligma_projection_chunk_render_start (proj);
         }
     }
   else if (! now && ! proj->priv->iter && proj->priv->invalidate_preview)
@@ -691,12 +691,12 @@ gimp_projection_flush_whenever (GimpProjection *proj,
        */
       proj->priv->invalidate_preview = FALSE;
 
-      gimp_projectable_invalidate_preview (proj->priv->projectable);
+      ligma_projectable_invalidate_preview (proj->priv->projectable);
     }
 }
 
 static void
-gimp_projection_update_priority_rect (GimpProjection *proj)
+ligma_projection_update_priority_rect (LigmaProjection *proj)
 {
   if (proj->priv->iter)
     {
@@ -706,8 +706,8 @@ gimp_projection_update_priority_rect (GimpProjection *proj)
 
       rect = proj->priv->priority_rect;
 
-      gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-      bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
+      ligma_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+      bounding_box = ligma_projectable_get_bounding_box (proj->priv->projectable);
 
       /*  subtract the projectable's offsets because the list of update
        *  areas is in tile-pyramid coordinates, but our external API is
@@ -718,19 +718,19 @@ gimp_projection_update_priority_rect (GimpProjection *proj)
 
       gegl_rectangle_intersect (&rect, &rect, &bounding_box);
 
-      gimp_chunk_iterator_set_priority_rect (proj->priv->iter, &rect);
+      ligma_chunk_iterator_set_priority_rect (proj->priv->iter, &rect);
     }
 }
 
 static void
-gimp_projection_chunk_render_start (GimpProjection *proj)
+ligma_projection_chunk_render_start (LigmaProjection *proj)
 {
   cairo_region_t *region             = proj->priv->update_region;
   gboolean        invalidate_preview = FALSE;
 
   if (proj->priv->iter)
     {
-      region = gimp_chunk_iterator_stop (proj->priv->iter, FALSE);
+      region = ligma_chunk_iterator_stop (proj->priv->iter, FALSE);
 
       proj->priv->iter = NULL;
 
@@ -749,15 +749,15 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
 
   if (region && ! cairo_region_is_empty (region))
     {
-      proj->priv->iter = gimp_chunk_iterator_new (region);
+      proj->priv->iter = ligma_chunk_iterator_new (region);
 
-      gimp_projection_update_priority_rect (proj);
+      ligma_projection_update_priority_rect (proj);
 
       if (! proj->priv->idle_id)
         {
           proj->priv->idle_id = g_idle_add_full (
-            GIMP_PRIORITY_PROJECTION_IDLE + proj->priv->priority,
-            (GSourceFunc) gimp_projection_chunk_render_callback,
+            LIGMA_PRIORITY_PROJECTION_IDLE + proj->priv->priority,
+            (GSourceFunc) ligma_projection_chunk_render_callback,
             proj, NULL);
         }
     }
@@ -779,13 +779,13 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
            */
           proj->priv->invalidate_preview = FALSE;
 
-          gimp_projectable_invalidate_preview (proj->priv->projectable);
+          ligma_projectable_invalidate_preview (proj->priv->projectable);
         }
     }
 }
 
 static void
-gimp_projection_chunk_render_stop (GimpProjection *proj,
+ligma_projection_chunk_render_stop (LigmaProjection *proj,
                                    gboolean        merge)
 {
   if (proj->priv->idle_id)
@@ -800,7 +800,7 @@ gimp_projection_chunk_render_stop (GimpProjection *proj,
         {
           cairo_region_t *region;
 
-          region = gimp_chunk_iterator_stop (proj->priv->iter, FALSE);
+          region = ligma_chunk_iterator_stop (proj->priv->iter, FALSE);
 
           if (proj->priv->update_region)
             {
@@ -815,7 +815,7 @@ gimp_projection_chunk_render_stop (GimpProjection *proj,
         }
       else
         {
-          gimp_chunk_iterator_stop (proj->priv->iter, TRUE);
+          ligma_chunk_iterator_stop (proj->priv->iter, TRUE);
         }
 
       proj->priv->iter = NULL;
@@ -823,9 +823,9 @@ gimp_projection_chunk_render_stop (GimpProjection *proj,
 }
 
 static gboolean
-gimp_projection_chunk_render_callback (GimpProjection *proj)
+ligma_projection_chunk_render_callback (LigmaProjection *proj)
 {
-  if (gimp_projection_chunk_render_iteration (proj))
+  if (ligma_projection_chunk_render_iteration (proj))
     {
       return G_SOURCE_CONTINUE;
     }
@@ -838,21 +838,21 @@ gimp_projection_chunk_render_callback (GimpProjection *proj)
 }
 
 static gboolean
-gimp_projection_chunk_render_iteration (GimpProjection *proj)
+ligma_projection_chunk_render_iteration (LigmaProjection *proj)
 {
-  if (gimp_chunk_iterator_next (proj->priv->iter))
+  if (ligma_chunk_iterator_next (proj->priv->iter))
     {
       GeglRectangle rect;
 
-      gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
+      ligma_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
-      while (gimp_chunk_iterator_get_rect (proj->priv->iter, &rect))
+      while (ligma_chunk_iterator_get_rect (proj->priv->iter, &rect))
         {
-          gimp_projection_paint_area (proj, TRUE,
+          ligma_projection_paint_area (proj, TRUE,
                                       rect.x, rect.y, rect.width, rect.height);
         }
 
-      gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
+      ligma_tile_handler_validate_end_validate (proj->priv->validate_handler);
 
       /* Still work to do. */
       return TRUE;
@@ -868,7 +868,7 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj)
            */
           proj->priv->invalidate_preview = FALSE;
 
-          gimp_projectable_invalidate_preview (proj->priv->projectable);
+          ligma_projectable_invalidate_preview (proj->priv->projectable);
         }
 
       /* FINISHED */
@@ -877,7 +877,7 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj)
 }
 
 static void
-gimp_projection_paint_area (GimpProjection *proj,
+ligma_projection_paint_area (LigmaProjection *proj,
                             gboolean        now,
                             gint            x,
                             gint            y,
@@ -888,15 +888,15 @@ gimp_projection_paint_area (GimpProjection *proj,
   GeglRectangle bounding_box;
   GeglRectangle rect;
 
-  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
+  ligma_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+  bounding_box = ligma_projectable_get_bounding_box (proj->priv->projectable);
 
   if (gegl_rectangle_intersect (&rect,
                                 GEGL_RECTANGLE (x, y, w, h), &bounding_box))
     {
       if (now)
         {
-          gimp_tile_handler_validate_validate (
+          ligma_tile_handler_validate_validate (
             proj->priv->validate_handler,
             proj->priv->buffer,
             &rect,
@@ -904,7 +904,7 @@ gimp_projection_paint_area (GimpProjection *proj,
         }
       else
         {
-          gimp_tile_handler_validate_invalidate (
+          ligma_tile_handler_validate_invalidate (
             proj->priv->validate_handler,
             &rect);
         }
@@ -926,16 +926,16 @@ gimp_projection_paint_area (GimpProjection *proj,
 /*  image callbacks  */
 
 static void
-gimp_projection_projectable_invalidate (GimpProjectable *projectable,
+ligma_projection_projectable_invalidate (LigmaProjectable *projectable,
                                         gint             x,
                                         gint             y,
                                         gint             w,
                                         gint             h,
-                                        GimpProjection  *proj)
+                                        LigmaProjection  *proj)
 {
   gint off_x, off_y;
 
-  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+  ligma_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
 
   /*  subtract the projectable's offsets because the list of update
    *  areas is in tile-pyramid coordinates, but our external API is
@@ -944,43 +944,43 @@ gimp_projection_projectable_invalidate (GimpProjectable *projectable,
   x -= off_x;
   y -= off_y;
 
-  gimp_projection_add_update_area (proj, x, y, w, h);
+  ligma_projection_add_update_area (proj, x, y, w, h);
 }
 
 static void
-gimp_projection_projectable_flush (GimpProjectable *projectable,
+ligma_projection_projectable_flush (LigmaProjectable *projectable,
                                    gboolean         invalidate_preview,
-                                   GimpProjection  *proj)
+                                   LigmaProjection  *proj)
 {
   if (invalidate_preview)
     proj->priv->invalidate_preview = TRUE;
 
-  gimp_projection_flush (proj);
+  ligma_projection_flush (proj);
 }
 
 static void
-gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
-                                               GimpProjection  *proj)
+ligma_projection_projectable_structure_changed (LigmaProjectable *projectable,
+                                               LigmaProjection  *proj)
 {
   GeglRectangle bounding_box;
 
-  gimp_projection_free_buffer (proj);
+  ligma_projection_free_buffer (proj);
 
-  bounding_box = gimp_projectable_get_bounding_box (projectable);
+  bounding_box = ligma_projectable_get_bounding_box (projectable);
 
-  gimp_projection_add_update_area (proj,
+  ligma_projection_add_update_area (proj,
                                    bounding_box.x,     bounding_box.y,
                                    bounding_box.width, bounding_box.height);
 }
 
 static void
-gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
+ligma_projection_projectable_bounds_changed (LigmaProjectable *projectable,
                                             gint             old_x,
                                             gint             old_y,
-                                            GimpProjection  *proj)
+                                            LigmaProjection  *proj)
 {
   GeglBuffer              *old_buffer = proj->priv->buffer;
-  GimpTileHandlerValidate *old_validate_handler;
+  LigmaTileHandlerValidate *old_validate_handler;
   GeglRectangle            old_bounding_box;
   GeglRectangle            bounding_box;
   GeglRectangle            old_bounds;
@@ -991,15 +991,15 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
   if (! old_buffer)
     {
-      gimp_projection_projectable_structure_changed (projectable, proj);
+      ligma_projection_projectable_structure_changed (projectable, proj);
 
       return;
     }
 
   old_bounding_box = *gegl_buffer_get_extent (old_buffer);
 
-  gimp_projectable_get_offset (projectable, &x, &y);
-  bounding_box = gimp_projectable_get_bounding_box (projectable);
+  ligma_projectable_get_offset (projectable, &x, &y);
+  bounding_box = ligma_projectable_get_bounding_box (projectable);
 
   if (x == old_x && y == old_y &&
       gegl_rectangle_equal (&bounding_box, &old_bounding_box))
@@ -1017,7 +1017,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
   if (! gegl_rectangle_intersect (&int_bounds, &bounds, &old_bounds))
     {
-      gimp_projection_projectable_structure_changed (projectable, proj);
+      ligma_projection_projectable_structure_changed (projectable, proj);
 
       return;
     }
@@ -1027,10 +1027,10 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
 #if 1
   /* FIXME:  when there's an offset between the new bounds and the old bounds,
-   * use gimp_projection_projectable_structure_changed(), instead of copying a
+   * use ligma_projection_projectable_structure_changed(), instead of copying a
    * shifted version of the old buffer, since the synchronous copy can take a
    * notable amount of time for big buffers, when the offset is such that tiles
-   * are not COW-ed.  while gimp_projection_projectable_structure_changed()
+   * are not COW-ed.  while ligma_projection_projectable_structure_changed()
    * causes the projection to be re-rendered, which is overall slower, it's
    * done asynchronously.
    *
@@ -1038,7 +1038,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
    */
   if (dx || dy)
     {
-      gimp_projection_projectable_structure_changed (projectable, proj);
+      ligma_projection_projectable_structure_changed (projectable, proj);
 
       return;
     }
@@ -1048,11 +1048,11 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
    * region of the new buffer.
    */
 
-  gimp_projection_chunk_render_stop (proj, TRUE);
+  ligma_projection_chunk_render_stop (proj, TRUE);
 
   if (dx == 0 && dy == 0)
     {
-      gimp_tile_handler_validate_buffer_set_extent (old_buffer, &bounding_box);
+      ligma_tile_handler_validate_buffer_set_extent (old_buffer, &bounding_box);
     }
   else
     {
@@ -1061,9 +1061,9 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
       proj->priv->buffer           = NULL;
       proj->priv->validate_handler = NULL;
 
-      gimp_projection_allocate_buffer (proj);
+      ligma_projection_allocate_buffer (proj);
 
-      gimp_tile_handler_validate_buffer_copy (
+      ligma_tile_handler_validate_buffer_copy (
         old_buffer,
         GEGL_RECTANGLE (int_bounds.x - old_x,
                         int_bounds.y - old_y,
@@ -1075,7 +1075,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
                         int_bounds.width,
                         int_bounds.height));
 
-      gimp_tile_handler_validate_unassign (old_validate_handler,
+      ligma_tile_handler_validate_unassign (old_validate_handler,
                                            old_buffer);
 
       g_object_unref (old_validate_handler);
@@ -1095,7 +1095,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
   if (int_bounds.x > bounding_box.x)
     {
-      gimp_projection_add_update_area (proj,
+      ligma_projection_add_update_area (proj,
                                        bounding_box.x,
                                        bounding_box.y,
                                        int_bounds.x - bounding_box.x,
@@ -1103,7 +1103,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
     }
   if (int_bounds.y > bounding_box.y)
     {
-      gimp_projection_add_update_area (proj,
+      ligma_projection_add_update_area (proj,
                                        bounding_box.x,
                                        bounding_box.y,
                                        bounding_box.width,
@@ -1111,7 +1111,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
     }
   if (int_bounds.x + int_bounds.width < bounding_box.x + bounding_box.width)
     {
-      gimp_projection_add_update_area (proj,
+      ligma_projection_add_update_area (proj,
                                        int_bounds.x + int_bounds.width,
                                        bounding_box.y,
                                        bounding_box.x + bounding_box.width -
@@ -1120,7 +1120,7 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
     }
   if (int_bounds.y + int_bounds.height < bounding_box.y + bounding_box.height)
     {
-      gimp_projection_add_update_area (proj,
+      ligma_projection_add_update_area (proj,
                                        bounding_box.x,
                                        int_bounds.y + int_bounds.height,
                                        bounding_box.width,

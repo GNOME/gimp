@@ -1,7 +1,7 @@
 This file contains manual test cases
 ------------------------------------
 
-/gimp-manual-tests/opened_image_stays_on_top
+/ligma-manual-tests/opened_image_stays_on_top
 
   Step-by-step:
     1. Create a new image, make the image window almost as big as the screen

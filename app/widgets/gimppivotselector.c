@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppivotselector.c
+ * ligmapivotselector.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimppivotselector.h"
+#include "ligmapivotselector.h"
 
 
 #define EPSILON 1e-6
@@ -53,7 +53,7 @@ enum
 };
 
 
-struct _GimpPivotSelectorPrivate
+struct _LigmaPivotSelectorPrivate
 {
   gdouble    left;
   gdouble    top;
@@ -70,32 +70,32 @@ struct _GimpPivotSelectorPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_pivot_selector_set_property         (GObject           *object,
+static void        ligma_pivot_selector_set_property         (GObject           *object,
                                                              guint              property_id,
                                                              const GValue      *value,
                                                              GParamSpec        *pspec);
-static void        gimp_pivot_selector_get_property         (GObject           *object,
+static void        ligma_pivot_selector_get_property         (GObject           *object,
                                                              guint              property_id,
                                                              GValue            *value,
                                                              GParamSpec        *pspec);
 
-static void        gimp_pivot_selector_button_toggled       (GtkToggleButton   *button,
-                                                             GimpPivotSelector *selector);
+static void        ligma_pivot_selector_button_toggled       (GtkToggleButton   *button,
+                                                             LigmaPivotSelector *selector);
 
-static GtkWidget * gimp_pivot_selector_position_to_button   (GimpPivotSelector *selector,
+static GtkWidget * ligma_pivot_selector_position_to_button   (LigmaPivotSelector *selector,
                                                              gdouble            x,
                                                              gdouble            y);
-static void        gimp_pivot_selector_button_to_position   (GimpPivotSelector *selector,
+static void        ligma_pivot_selector_button_to_position   (LigmaPivotSelector *selector,
                                                              GtkWidget         *button,
                                                              gdouble           *x,
                                                              gdouble           *y);
 
-static void        gimp_pivot_selector_update_active_button (GimpPivotSelector *selector);
+static void        ligma_pivot_selector_update_active_button (LigmaPivotSelector *selector);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPivotSelector, gimp_pivot_selector, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPivotSelector, ligma_pivot_selector, GTK_TYPE_GRID)
 
-#define parent_class gimp_pivot_selector_parent_class
+#define parent_class ligma_pivot_selector_parent_class
 
 static guint pivot_selector_signals[LAST_SIGNAL];
 
@@ -104,7 +104,7 @@ static guint pivot_selector_signals[LAST_SIGNAL];
 
 
 static void
-gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
+ligma_pivot_selector_class_init (LigmaPivotSelectorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -112,12 +112,12 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPivotSelectorClass, changed),
+                  G_STRUCT_OFFSET (LigmaPivotSelectorClass, changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->get_property = gimp_pivot_selector_get_property;
-  object_class->set_property = gimp_pivot_selector_set_property;
+  object_class->get_property = ligma_pivot_selector_get_property;
+  object_class->set_property = ligma_pivot_selector_set_property;
 
   g_object_class_install_property (object_class, PROP_LEFT,
                                    g_param_spec_double ("left",
@@ -125,7 +125,7 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TOP,
@@ -134,7 +134,7 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RIGHT,
@@ -143,7 +143,7 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BOTTOM,
@@ -152,7 +152,7 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X,
@@ -161,7 +161,7 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y,
@@ -170,18 +170,18 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_pivot_selector_init (GimpPivotSelector *selector)
+ligma_pivot_selector_init (LigmaPivotSelector *selector)
 {
   GtkWidget *widget = GTK_WIDGET (selector);
   GtkGrid   *grid   = GTK_GRID (selector);
   gint       i;
 
-  selector->priv = gimp_pivot_selector_get_instance_private (selector);
+  selector->priv = ligma_pivot_selector_get_instance_private (selector);
 
   gtk_widget_set_halign (widget, GTK_ALIGN_CENTER);
   gtk_widget_set_valign (widget, GTK_ALIGN_CENTER);
@@ -192,17 +192,17 @@ gimp_pivot_selector_init (GimpPivotSelector *selector)
   for (i = 0; i < 9; i++)
     {
       static const gchar *icon_names[9] = {
-        GIMP_ICON_PIVOT_NORTH_WEST,
-        GIMP_ICON_PIVOT_NORTH,
-        GIMP_ICON_PIVOT_NORTH_EAST,
+        LIGMA_ICON_PIVOT_NORTH_WEST,
+        LIGMA_ICON_PIVOT_NORTH,
+        LIGMA_ICON_PIVOT_NORTH_EAST,
 
-        GIMP_ICON_PIVOT_WEST,
-        GIMP_ICON_PIVOT_CENTER,
-        GIMP_ICON_PIVOT_EAST,
+        LIGMA_ICON_PIVOT_WEST,
+        LIGMA_ICON_PIVOT_CENTER,
+        LIGMA_ICON_PIVOT_EAST,
 
-        GIMP_ICON_PIVOT_SOUTH_WEST,
-        GIMP_ICON_PIVOT_SOUTH,
-        GIMP_ICON_PIVOT_SOUTH_EAST
+        LIGMA_ICON_PIVOT_SOUTH_WEST,
+        LIGMA_ICON_PIVOT_SOUTH,
+        LIGMA_ICON_PIVOT_SOUTH_EAST
       };
 
       GtkWidget *button;
@@ -221,7 +221,7 @@ gimp_pivot_selector_init (GimpPivotSelector *selector)
       selector->priv->buttons[i] = button;
 
       g_signal_connect (button, "toggled",
-                        G_CALLBACK (gimp_pivot_selector_button_toggled),
+                        G_CALLBACK (ligma_pivot_selector_button_toggled),
                         selector);
 
       image = gtk_image_new_from_icon_name (icon_names[i], GTK_ICON_SIZE_MENU);
@@ -232,38 +232,38 @@ gimp_pivot_selector_init (GimpPivotSelector *selector)
 }
 
 static void
-gimp_pivot_selector_set_property (GObject      *object,
+ligma_pivot_selector_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpPivotSelector *selector = GIMP_PIVOT_SELECTOR (object);
+  LigmaPivotSelector *selector = LIGMA_PIVOT_SELECTOR (object);
 
   switch (property_id)
     {
     case PROP_LEFT:
-      gimp_pivot_selector_set_bounds (selector,
+      ligma_pivot_selector_set_bounds (selector,
                                       g_value_get_double (value),
                                       selector->priv->top,
                                       selector->priv->right,
                                       selector->priv->bottom);
       break;
     case PROP_TOP:
-      gimp_pivot_selector_set_bounds (selector,
+      ligma_pivot_selector_set_bounds (selector,
                                       selector->priv->left,
                                       g_value_get_double (value),
                                       selector->priv->right,
                                       selector->priv->bottom);
       break;
     case PROP_RIGHT:
-      gimp_pivot_selector_set_bounds (selector,
+      ligma_pivot_selector_set_bounds (selector,
                                       selector->priv->left,
                                       selector->priv->top,
                                       g_value_get_double (value),
                                       selector->priv->bottom);
       break;
     case PROP_BOTTOM:
-      gimp_pivot_selector_set_bounds (selector,
+      ligma_pivot_selector_set_bounds (selector,
                                       selector->priv->left,
                                       selector->priv->top,
                                       selector->priv->right,
@@ -271,12 +271,12 @@ gimp_pivot_selector_set_property (GObject      *object,
       break;
 
     case PROP_X:
-      gimp_pivot_selector_set_position (selector,
+      ligma_pivot_selector_set_position (selector,
                                         g_value_get_double (value),
                                         selector->priv->y);
       break;
     case PROP_Y:
-      gimp_pivot_selector_set_position (selector,
+      ligma_pivot_selector_set_position (selector,
                                         selector->priv->x,
                                         g_value_get_double (value));
       break;
@@ -288,12 +288,12 @@ gimp_pivot_selector_set_property (GObject      *object,
 }
 
 static void
-gimp_pivot_selector_get_property (GObject    *object,
+ligma_pivot_selector_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpPivotSelector *selector = GIMP_PIVOT_SELECTOR (object);
+  LigmaPivotSelector *selector = LIGMA_PIVOT_SELECTOR (object);
 
   switch (property_id)
     {
@@ -324,8 +324,8 @@ gimp_pivot_selector_get_property (GObject    *object,
 }
 
 static void
-gimp_pivot_selector_button_toggled (GtkToggleButton   *button,
-                                    GimpPivotSelector *selector)
+ligma_pivot_selector_button_toggled (GtkToggleButton   *button,
+                                    LigmaPivotSelector *selector)
 {
   if (GTK_WIDGET (button) == selector->priv->active_button)
     {
@@ -335,15 +335,15 @@ gimp_pivot_selector_button_toggled (GtkToggleButton   *button,
     {
       gdouble x, y;
 
-      gimp_pivot_selector_button_to_position (selector, GTK_WIDGET (button),
+      ligma_pivot_selector_button_to_position (selector, GTK_WIDGET (button),
                                               &x, &y);
 
-      gimp_pivot_selector_set_position (selector, x, y);
+      ligma_pivot_selector_set_position (selector, x, y);
     }
 }
 
 static GtkWidget *
-gimp_pivot_selector_position_to_button (GimpPivotSelector *selector,
+ligma_pivot_selector_position_to_button (LigmaPivotSelector *selector,
                                         gdouble            x,
                                         gdouble            y)
 {
@@ -374,7 +374,7 @@ gimp_pivot_selector_position_to_button (GimpPivotSelector *selector,
 }
 
 static void
-gimp_pivot_selector_button_to_position (GimpPivotSelector *selector,
+ligma_pivot_selector_button_to_position (LigmaPivotSelector *selector,
                                         GtkWidget         *button,
                                         gdouble           *x,
                                         gdouble           *y)
@@ -390,11 +390,11 @@ gimp_pivot_selector_button_to_position (GimpPivotSelector *selector,
 }
 
 static void
-gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
+ligma_pivot_selector_update_active_button (LigmaPivotSelector *selector)
 {
   GtkWidget *button;
 
-  button = gimp_pivot_selector_position_to_button (selector,
+  button = ligma_pivot_selector_position_to_button (selector,
                                                    selector->priv->x,
                                                    selector->priv->y);
 
@@ -404,7 +404,7 @@ gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
         {
           g_signal_handlers_block_by_func (
             selector->priv->active_button,
-            gimp_pivot_selector_button_toggled,
+            ligma_pivot_selector_button_toggled,
             selector);
 
           gtk_toggle_button_set_active (
@@ -412,7 +412,7 @@ gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
 
           g_signal_handlers_unblock_by_func (
             selector->priv->active_button,
-            gimp_pivot_selector_button_toggled,
+            ligma_pivot_selector_button_toggled,
             selector);
         }
 
@@ -422,7 +422,7 @@ gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
         {
           g_signal_handlers_block_by_func (
             selector->priv->active_button,
-            gimp_pivot_selector_button_toggled,
+            ligma_pivot_selector_button_toggled,
             selector);
 
           gtk_toggle_button_set_active (
@@ -430,7 +430,7 @@ gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
 
           g_signal_handlers_unblock_by_func (
             selector->priv->active_button,
-            gimp_pivot_selector_button_toggled,
+            ligma_pivot_selector_button_toggled,
             selector);
         }
     }
@@ -441,12 +441,12 @@ gimp_pivot_selector_update_active_button (GimpPivotSelector *selector)
 
 
 GtkWidget *
-gimp_pivot_selector_new (gdouble left,
+ligma_pivot_selector_new (gdouble left,
                          gdouble top,
                          gdouble right,
                          gdouble bottom)
 {
-  return g_object_new (GIMP_TYPE_PIVOT_SELECTOR,
+  return g_object_new (LIGMA_TYPE_PIVOT_SELECTOR,
 
                        "left",   left,
                        "top",    top,
@@ -460,13 +460,13 @@ gimp_pivot_selector_new (gdouble left,
 }
 
 void
-gimp_pivot_selector_set_bounds (GimpPivotSelector *selector,
+ligma_pivot_selector_set_bounds (LigmaPivotSelector *selector,
                                 gdouble            left,
                                 gdouble            top,
                                 gdouble            right,
                                 gdouble            bottom)
 {
-  g_return_if_fail (GIMP_IS_PIVOT_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PIVOT_SELECTOR (selector));
 
   if (left  != selector->priv->left  || top    != selector->priv->top ||
       right != selector->priv->right || bottom != selector->priv->bottom)
@@ -478,7 +478,7 @@ gimp_pivot_selector_set_bounds (GimpPivotSelector *selector,
       selector->priv->right  = right;
       selector->priv->bottom = bottom;
 
-      gimp_pivot_selector_update_active_button (selector);
+      ligma_pivot_selector_update_active_button (selector);
 
       if (left != selector->priv->left)
         g_object_notify (G_OBJECT (selector), "left");
@@ -494,13 +494,13 @@ gimp_pivot_selector_set_bounds (GimpPivotSelector *selector,
 }
 
 void
-gimp_pivot_selector_get_bounds (GimpPivotSelector *selector,
+ligma_pivot_selector_get_bounds (LigmaPivotSelector *selector,
                                 gdouble           *left,
                                 gdouble           *top,
                                 gdouble           *right,
                                 gdouble           *bottom)
 {
-  g_return_if_fail (GIMP_IS_PIVOT_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PIVOT_SELECTOR (selector));
 
   if (left)   *left   = selector->priv->left;
   if (top)    *top    = selector->priv->top;
@@ -509,11 +509,11 @@ gimp_pivot_selector_get_bounds (GimpPivotSelector *selector,
 }
 
 void
-gimp_pivot_selector_set_position (GimpPivotSelector *selector,
+ligma_pivot_selector_set_position (LigmaPivotSelector *selector,
                                   gdouble            x,
                                   gdouble            y)
 {
-  g_return_if_fail (GIMP_IS_PIVOT_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PIVOT_SELECTOR (selector));
 
   if (x != selector->priv->x || y != selector->priv->y)
     {
@@ -522,7 +522,7 @@ gimp_pivot_selector_set_position (GimpPivotSelector *selector,
       selector->priv->x = x;
       selector->priv->y = y;
 
-      gimp_pivot_selector_update_active_button (selector);
+      ligma_pivot_selector_update_active_button (selector);
 
       g_signal_emit (selector, pivot_selector_signals[CHANGED], 0);
 
@@ -536,11 +536,11 @@ gimp_pivot_selector_set_position (GimpPivotSelector *selector,
 }
 
 void
-gimp_pivot_selector_get_position (GimpPivotSelector *selector,
+ligma_pivot_selector_get_position (LigmaPivotSelector *selector,
                                   gdouble           *x,
                                   gdouble           *y)
 {
-  g_return_if_fail (GIMP_IS_PIVOT_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PIVOT_SELECTOR (selector));
 
   if (x) *x = selector->priv->x;
   if (y) *y = selector->priv->y;

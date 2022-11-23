@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,54 +22,54 @@
 
 #include "core-types.h"
 
-#include "operations/gimplevelsconfig.h"
+#include "operations/ligmalevelsconfig.h"
 
-#include "gimpdrawable.h"
-#include "gimpdrawable-histogram.h"
-#include "gimpdrawable-levels.h"
-#include "gimpdrawable-operation.h"
-#include "gimphistogram.h"
-#include "gimpprogress.h"
+#include "ligmadrawable.h"
+#include "ligmadrawable-histogram.h"
+#include "ligmadrawable-levels.h"
+#include "ligmadrawable-operation.h"
+#include "ligmahistogram.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-gimp_drawable_levels_stretch (GimpDrawable *drawable,
-                              GimpProgress *progress)
+ligma_drawable_levels_stretch (LigmaDrawable *drawable,
+                              LigmaProgress *progress)
 {
-  GimpLevelsConfig *config;
-  GimpHistogram    *histogram;
+  LigmaLevelsConfig *config;
+  LigmaHistogram    *histogram;
   GeglNode         *levels;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable), NULL, NULL, NULL, NULL))
     return;
 
-  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+  config = g_object_new (LIGMA_TYPE_LEVELS_CONFIG, NULL);
 
-  histogram = gimp_histogram_new (FALSE);
-  gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+  histogram = ligma_histogram_new (FALSE);
+  ligma_drawable_calculate_histogram (drawable, histogram, FALSE);
 
-  gimp_levels_config_stretch (config, histogram,
-                              gimp_drawable_is_rgb (drawable));
+  ligma_levels_config_stretch (config, histogram,
+                              ligma_drawable_is_rgb (drawable));
 
   g_object_unref (histogram);
 
   levels = g_object_new (GEGL_TYPE_NODE,
-                         "operation", "gimp:levels",
+                         "operation", "ligma:levels",
                          NULL);
 
   gegl_node_set (levels,
                  "config", config,
                  NULL);
 
-  gimp_drawable_apply_operation (drawable, progress, _("Levels"),
+  ligma_drawable_apply_operation (drawable, progress, _("Levels"),
                                  levels);
 
   g_object_unref (levels);

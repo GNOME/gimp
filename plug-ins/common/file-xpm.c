@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,16 +60,16 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include <X11/xpm.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-xpm-load"
 #define SAVE_PROC      "file-xpm-save"
 #define PLUG_IN_BINARY "file-xpm"
-#define PLUG_IN_ROLE   "gimp-file-xpm"
+#define PLUG_IN_ROLE   "ligma-file-xpm"
 #define SCALE_WIDTH    125
 
 
@@ -86,12 +86,12 @@ typedef struct _XpmClass XpmClass;
 
 struct _Xpm
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _XpmClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -100,42 +100,42 @@ struct _XpmClass
 
 GType                   xpm_get_type         (void) G_GNUC_CONST;
 
-static GList          * xpm_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xpm_create_procedure (GimpPlugIn           *plug_in,
+static GList          * xpm_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * xpm_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * xpm_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * xpm_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * xpm_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * xpm_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile               *file,
+static LigmaImage      * load_image           (GFile               *file,
                                               GError              **error);
 static guchar         * parse_colors         (XpmImage             *xpm_image);
-static void             parse_image          (GimpImage            *image,
+static void             parse_image          (LigmaImage            *image,
                                               XpmImage             *xpm_image,
                                               guchar               *cmap);
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaProcedure        *procedure,
                                               GObject              *config);
 
 
-G_DEFINE_TYPE (Xpm, xpm, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Xpm, xpm, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (XPM_TYPE)
+LIGMA_MAIN (XPM_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -157,7 +157,7 @@ static gint       cpp;
 static void
 xpm_class_init (XpmClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = xpm_query_procedures;
   plug_in_class->create_procedure = xpm_create_procedure;
@@ -170,7 +170,7 @@ xpm_init (Xpm *xpm)
 }
 
 static GList *
-xpm_query_procedures (GimpPlugIn *plug_in)
+xpm_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -180,21 +180,21 @@ xpm_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-xpm_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+xpm_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xpm_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
+      ligma_procedure_set_menu_label (procedure, _("X PixMap image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load files in XPM (X11 Pixmap) format.",
                                         "Load files in XPM (X11 Pixmap) format. "
                                         "XPM is a portable image format "
@@ -206,30 +206,30 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
                                         "unlike the XBM format which XPM was "
                                         "designed to replace.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis & "
                                       "Ray Lehtiniemi",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-pixmap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "xpm");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0, string,/*\\040XPM\\040*/");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xpm_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
+      ligma_procedure_set_menu_label (procedure, _("X PixMap image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Export files in XPM (X11 Pixmap) format.",
                                         "Export files in XPM (X11 Pixmap) format. "
                                         "XPM is a portable image format "
@@ -241,18 +241,18 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
                                         "unlike the XBM format which XPM was "
                                         "designed to replace.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis & "
                                       "Ray Lehtiniemi & Nathan Summers",
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-pixmap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "xpm");
 
-      GIMP_PROC_ARG_INT (procedure, "threshold",
+      LIGMA_PROC_ARG_INT (procedure, "threshold",
                          "Threshold",
                          "Alpha threshold",
                          0, 255, 127,
@@ -262,15 +262,15 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-xpm_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+xpm_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -278,54 +278,54 @@ xpm_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-xpm_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+xpm_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "XPM",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "XPM",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -338,49 +338,49 @@ xpm_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("XPM format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
-      if (gimp_drawable_has_alpha (drawables[0]))
+      if (ligma_drawable_has_alpha (drawables[0]))
         if (! save_dialog (procedure, G_OBJECT (config)))
-          status = GIMP_PDB_CANCEL;
+          status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError  **error)
 {
   XpmImage   xpm_image;
   guchar    *cmap;
-  GimpImage *image;
+  LigmaImage *image;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* read the raw file */
   switch (XpmReadFileToXpmImage (g_file_peek_path (file), &xpm_image, NULL))
@@ -391,7 +391,7 @@ load_image (GFile   *file,
     case XpmOpenFailed:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
 
     case XpmFileInvalid:
@@ -405,11 +405,11 @@ load_image (GFile   *file,
 
   cmap = parse_colors (&xpm_image);
 
-  image = gimp_image_new (xpm_image.width,
+  image = ligma_image_new (xpm_image.width,
                           xpm_image.height,
-                          GIMP_RGB);
+                          LIGMA_RGB);
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
   /* fill it */
   parse_image (image, &xpm_image, cmap);
@@ -489,7 +489,7 @@ parse_colors (XpmImage *xpm_image)
 }
 
 static void
-parse_image (GimpImage *image,
+parse_image (LigmaImage *image,
              XpmImage  *xpm_image,
              guchar    *cmap)
 {
@@ -500,22 +500,22 @@ parse_image (GimpImage *image,
   guchar     *buf;
   guchar     *dest;
   guint      *src;
-  GimpLayer  *layer;
+  LigmaLayer  *layer;
   gint        i;
 
-  layer = gimp_layer_new (image,
+  layer = ligma_layer_new (image,
                           _("Color"),
                           xpm_image->width,
                           xpm_image->height,
-                          GIMP_RGBA_IMAGE,
+                          LIGMA_RGBA_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   buf  = g_new (guchar, tile_height * xpm_image->width * 4);
 
@@ -539,7 +539,7 @@ parse_image (GimpImage *image,
           }
 
           if ((j % 100) == 0)
-            gimp_progress_update ((double) i / (double) xpm_image->height);
+            ligma_progress_update ((double) i / (double) xpm_image->height);
         }
 
       gegl_buffer_set (buffer,
@@ -550,7 +550,7 @@ parse_image (GimpImage *image,
   g_free (buf);
   g_object_unref (buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static guint
@@ -626,8 +626,8 @@ decrement_hash_values (gpointer gkey,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GObject       *config,
             GError       **error)
 {
@@ -654,35 +654,35 @@ save_image (GFile         *file,
                 "threshold", &threshold,
                 NULL);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  alpha   = gimp_drawable_has_alpha (drawable);
-  color   = ! gimp_drawable_is_gray (drawable);
-  indexed = gimp_drawable_is_indexed (drawable);
+  alpha   = ligma_drawable_has_alpha (drawable);
+  color   = ! ligma_drawable_is_gray (drawable);
+  indexed = ligma_drawable_is_indexed (drawable);
 
-  switch (gimp_drawable_type (drawable))
+  switch (ligma_drawable_type (drawable))
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
       break;
 
@@ -698,23 +698,23 @@ save_image (GFile         *file,
 
   hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   ncolors = alpha ? 1 : 0;
 
   /* allocate a pixel region to work with */
   buf = g_new (guchar,
-               gimp_tile_height () * width *
+               ligma_tile_height () * width *
                babl_format_get_bytes_per_pixel (format));
 
   /* process each row of tiles */
-  for (i = 0; i < height; i += gimp_tile_height ())
+  for (i = 0; i < height; i += ligma_tile_height ())
     {
       gint scanlines;
 
       /* read the next row of tiles */
-      scanlines = MIN (gimp_tile_height(), height - i);
+      scanlines = MIN (ligma_tile_height(), height - i);
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scanlines), 1.0,
                        format, buf,
@@ -767,7 +767,7 @@ save_image (GFile         *file,
             }
 
           /* kick the progress bar */
-          gimp_progress_update ((gdouble) (i+j) / (gdouble) height);
+          ligma_progress_update ((gdouble) (i+j) / (gdouble) height);
         }
     }
 
@@ -786,7 +786,7 @@ save_image (GFile         *file,
 
   if (indexed)
     {
-      guchar *cmap = gimp_image_get_colormap (image, &ncolors);
+      guchar *cmap = ligma_image_get_colormap (image, &ncolors);
       guchar *c;
 
       c = cmap;
@@ -848,7 +848,7 @@ save_image (GFile         *file,
     case XpmOpenFailed:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       break;
 
     case XpmFileInvalid:
@@ -866,30 +866,30 @@ save_image (GFile         *file,
   if (hash)
     g_hash_table_destroy (hash);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return success;
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *scale;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as XPM"));
 
-  scale = gimp_prop_scale_entry_new (config, "threshold", NULL, 1.0, FALSE, 0, 0);
+  scale = ligma_prop_scale_entry_new (config, "threshold", NULL, 1.0, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       scale, TRUE, TRUE, 6);
   gtk_widget_show (scale);
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

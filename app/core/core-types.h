@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 #define __CORE_TYPES_H__
 
 
-#include "libgimpbase/gimpbasetypes.h"
-#include "libgimpmath/gimpmathtypes.h"
-#include "libgimpcolor/gimpcolortypes.h"
-#include "libgimpmodule/gimpmoduletypes.h"
-#include "libgimpthumb/gimpthumb-types.h"
+#include "libligmabase/ligmabasetypes.h"
+#include "libligmamath/ligmamathtypes.h"
+#include "libligmacolor/ligmacolortypes.h"
+#include "libligmamodule/ligmamoduletypes.h"
+#include "libligmathumb/ligmathumb-types.h"
 
 #include "config/config-types.h"
 
@@ -48,195 +48,195 @@
 
 /*  defines  */
 
-#define GIMP_COORDS_MIN_PRESSURE      0.0
-#define GIMP_COORDS_MAX_PRESSURE      1.0
-#define GIMP_COORDS_DEFAULT_PRESSURE  1.0
+#define LIGMA_COORDS_MIN_PRESSURE      0.0
+#define LIGMA_COORDS_MAX_PRESSURE      1.0
+#define LIGMA_COORDS_DEFAULT_PRESSURE  1.0
 
-#define GIMP_COORDS_MIN_TILT         -1.0
-#define GIMP_COORDS_MAX_TILT          1.0
-#define GIMP_COORDS_DEFAULT_TILT      0.0
+#define LIGMA_COORDS_MIN_TILT         -1.0
+#define LIGMA_COORDS_MAX_TILT          1.0
+#define LIGMA_COORDS_DEFAULT_TILT      0.0
 
-#define GIMP_COORDS_MIN_WHEEL         0.0
-#define GIMP_COORDS_MAX_WHEEL         1.0
-#define GIMP_COORDS_DEFAULT_WHEEL     0.5
+#define LIGMA_COORDS_MIN_WHEEL         0.0
+#define LIGMA_COORDS_MAX_WHEEL         1.0
+#define LIGMA_COORDS_DEFAULT_WHEEL     0.5
 
-#define GIMP_COORDS_DEFAULT_DISTANCE  0.0
-#define GIMP_COORDS_DEFAULT_ROTATION  0.0
-#define GIMP_COORDS_DEFAULT_SLIDER    0.0
+#define LIGMA_COORDS_DEFAULT_DISTANCE  0.0
+#define LIGMA_COORDS_DEFAULT_ROTATION  0.0
+#define LIGMA_COORDS_DEFAULT_SLIDER    0.0
 
-#define GIMP_COORDS_DEFAULT_VELOCITY  0.0
+#define LIGMA_COORDS_DEFAULT_VELOCITY  0.0
 
-#define GIMP_COORDS_DEFAULT_DIRECTION 0.0
+#define LIGMA_COORDS_DEFAULT_DIRECTION 0.0
 
-#define GIMP_COORDS_DEFAULT_XSCALE    1.0
-#define GIMP_COORDS_DEFAULT_YSCALE    1.0
+#define LIGMA_COORDS_DEFAULT_XSCALE    1.0
+#define LIGMA_COORDS_DEFAULT_YSCALE    1.0
 
-#define GIMP_COORDS_DEFAULT_VALUES    { 0.0, 0.0, \
-                                        GIMP_COORDS_DEFAULT_PRESSURE, \
-                                        GIMP_COORDS_DEFAULT_TILT,     \
-                                        GIMP_COORDS_DEFAULT_TILT,     \
-                                        GIMP_COORDS_DEFAULT_WHEEL,    \
-                                        GIMP_COORDS_DEFAULT_DISTANCE, \
-                                        GIMP_COORDS_DEFAULT_ROTATION, \
-                                        GIMP_COORDS_DEFAULT_SLIDER,   \
-                                        GIMP_COORDS_DEFAULT_VELOCITY, \
-                                        GIMP_COORDS_DEFAULT_DIRECTION,\
-                                        GIMP_COORDS_DEFAULT_XSCALE,   \
-                                        GIMP_COORDS_DEFAULT_YSCALE }
+#define LIGMA_COORDS_DEFAULT_VALUES    { 0.0, 0.0, \
+                                        LIGMA_COORDS_DEFAULT_PRESSURE, \
+                                        LIGMA_COORDS_DEFAULT_TILT,     \
+                                        LIGMA_COORDS_DEFAULT_TILT,     \
+                                        LIGMA_COORDS_DEFAULT_WHEEL,    \
+                                        LIGMA_COORDS_DEFAULT_DISTANCE, \
+                                        LIGMA_COORDS_DEFAULT_ROTATION, \
+                                        LIGMA_COORDS_DEFAULT_SLIDER,   \
+                                        LIGMA_COORDS_DEFAULT_VELOCITY, \
+                                        LIGMA_COORDS_DEFAULT_DIRECTION,\
+                                        LIGMA_COORDS_DEFAULT_XSCALE,   \
+                                        LIGMA_COORDS_DEFAULT_YSCALE }
 
 
 /*  base classes  */
 
-typedef struct _GimpObject                      GimpObject;
-typedef struct _GimpViewable                    GimpViewable;
-typedef struct _GimpFilter                      GimpFilter;
-typedef struct _GimpItem                        GimpItem;
-typedef struct _GimpAuxItem                     GimpAuxItem;
+typedef struct _LigmaObject                      LigmaObject;
+typedef struct _LigmaViewable                    LigmaViewable;
+typedef struct _LigmaFilter                      LigmaFilter;
+typedef struct _LigmaItem                        LigmaItem;
+typedef struct _LigmaAuxItem                     LigmaAuxItem;
 
-typedef struct _Gimp                            Gimp;
-typedef struct _GimpImage                       GimpImage;
+typedef struct _Ligma                            Ligma;
+typedef struct _LigmaImage                       LigmaImage;
 
-typedef struct _GimpDisplay                     GimpDisplay;
+typedef struct _LigmaDisplay                     LigmaDisplay;
 
 
 /*  containers  */
 
-typedef struct _GimpContainer                   GimpContainer;
-typedef struct _GimpList                        GimpList;
-typedef struct _GimpDocumentList                GimpDocumentList;
-typedef struct _GimpDrawableStack               GimpDrawableStack;
-typedef struct _GimpFilteredContainer           GimpFilteredContainer;
-typedef struct _GimpFilterStack                 GimpFilterStack;
-typedef struct _GimpItemList                    GimpItemList;
-typedef struct _GimpItemStack                   GimpItemStack;
-typedef struct _GimpLayerStack                  GimpLayerStack;
-typedef struct _GimpTaggedContainer             GimpTaggedContainer;
-typedef struct _GimpTreeProxy                   GimpTreeProxy;
+typedef struct _LigmaContainer                   LigmaContainer;
+typedef struct _LigmaList                        LigmaList;
+typedef struct _LigmaDocumentList                LigmaDocumentList;
+typedef struct _LigmaDrawableStack               LigmaDrawableStack;
+typedef struct _LigmaFilteredContainer           LigmaFilteredContainer;
+typedef struct _LigmaFilterStack                 LigmaFilterStack;
+typedef struct _LigmaItemList                    LigmaItemList;
+typedef struct _LigmaItemStack                   LigmaItemStack;
+typedef struct _LigmaLayerStack                  LigmaLayerStack;
+typedef struct _LigmaTaggedContainer             LigmaTaggedContainer;
+typedef struct _LigmaTreeProxy                   LigmaTreeProxy;
 
 
 /*  not really a container  */
 
-typedef struct _GimpItemTree                    GimpItemTree;
+typedef struct _LigmaItemTree                    LigmaItemTree;
 
 
 /*  context objects  */
 
-typedef struct _GimpContext                     GimpContext;
-typedef struct _GimpFillOptions                 GimpFillOptions;
-typedef struct _GimpStrokeOptions               GimpStrokeOptions;
-typedef struct _GimpToolOptions                 GimpToolOptions;
+typedef struct _LigmaContext                     LigmaContext;
+typedef struct _LigmaFillOptions                 LigmaFillOptions;
+typedef struct _LigmaStrokeOptions               LigmaStrokeOptions;
+typedef struct _LigmaToolOptions                 LigmaToolOptions;
 
 
 /*  info objects  */
 
-typedef struct _GimpPaintInfo                   GimpPaintInfo;
-typedef struct _GimpToolGroup                   GimpToolGroup;
-typedef struct _GimpToolInfo                    GimpToolInfo;
-typedef struct _GimpToolItem                    GimpToolItem;
+typedef struct _LigmaPaintInfo                   LigmaPaintInfo;
+typedef struct _LigmaToolGroup                   LigmaToolGroup;
+typedef struct _LigmaToolInfo                    LigmaToolInfo;
+typedef struct _LigmaToolItem                    LigmaToolItem;
 
 
 /*  data objects  */
 
-typedef struct _GimpDataFactory                 GimpDataFactory;
-typedef struct _GimpDataLoaderFactory           GimpDataLoaderFactory;
-typedef struct _GimpData                        GimpData;
-typedef struct _GimpBrush                       GimpBrush;
-typedef struct _GimpBrushCache                  GimpBrushCache;
-typedef struct _GimpBrushClipboard              GimpBrushClipboard;
-typedef struct _GimpBrushGenerated              GimpBrushGenerated;
-typedef struct _GimpBrushPipe                   GimpBrushPipe;
-typedef struct _GimpCurve                       GimpCurve;
-typedef struct _GimpDynamics                    GimpDynamics;
-typedef struct _GimpDynamicsOutput              GimpDynamicsOutput;
-typedef struct _GimpGradient                    GimpGradient;
-typedef struct _GimpMybrush                     GimpMybrush;
-typedef struct _GimpPalette                     GimpPalette;
-typedef struct _GimpPaletteMru                  GimpPaletteMru;
-typedef struct _GimpPattern                     GimpPattern;
-typedef struct _GimpPatternClipboard            GimpPatternClipboard;
-typedef struct _GimpToolPreset                  GimpToolPreset;
-typedef struct _GimpTagCache                    GimpTagCache;
+typedef struct _LigmaDataFactory                 LigmaDataFactory;
+typedef struct _LigmaDataLoaderFactory           LigmaDataLoaderFactory;
+typedef struct _LigmaData                        LigmaData;
+typedef struct _LigmaBrush                       LigmaBrush;
+typedef struct _LigmaBrushCache                  LigmaBrushCache;
+typedef struct _LigmaBrushClipboard              LigmaBrushClipboard;
+typedef struct _LigmaBrushGenerated              LigmaBrushGenerated;
+typedef struct _LigmaBrushPipe                   LigmaBrushPipe;
+typedef struct _LigmaCurve                       LigmaCurve;
+typedef struct _LigmaDynamics                    LigmaDynamics;
+typedef struct _LigmaDynamicsOutput              LigmaDynamicsOutput;
+typedef struct _LigmaGradient                    LigmaGradient;
+typedef struct _LigmaMybrush                     LigmaMybrush;
+typedef struct _LigmaPalette                     LigmaPalette;
+typedef struct _LigmaPaletteMru                  LigmaPaletteMru;
+typedef struct _LigmaPattern                     LigmaPattern;
+typedef struct _LigmaPatternClipboard            LigmaPatternClipboard;
+typedef struct _LigmaToolPreset                  LigmaToolPreset;
+typedef struct _LigmaTagCache                    LigmaTagCache;
 
 
 /*  drawable objects  */
 
-typedef struct _GimpDrawable                    GimpDrawable;
-typedef struct _GimpChannel                     GimpChannel;
-typedef struct _GimpLayerMask                   GimpLayerMask;
-typedef struct _GimpSelection                   GimpSelection;
-typedef struct _GimpLayer                       GimpLayer;
-typedef struct _GimpGroupLayer                  GimpGroupLayer;
+typedef struct _LigmaDrawable                    LigmaDrawable;
+typedef struct _LigmaChannel                     LigmaChannel;
+typedef struct _LigmaLayerMask                   LigmaLayerMask;
+typedef struct _LigmaSelection                   LigmaSelection;
+typedef struct _LigmaLayer                       LigmaLayer;
+typedef struct _LigmaGroupLayer                  LigmaGroupLayer;
 
 
 /*  auxiliary image items  */
 
-typedef struct _GimpGuide                       GimpGuide;
-typedef struct _GimpSamplePoint                 GimpSamplePoint;
+typedef struct _LigmaGuide                       LigmaGuide;
+typedef struct _LigmaSamplePoint                 LigmaSamplePoint;
 
 
 /*  undo objects  */
 
-typedef struct _GimpUndo                        GimpUndo;
-typedef struct _GimpUndoStack                   GimpUndoStack;
-typedef struct _GimpUndoAccumulator             GimpUndoAccumulator;
+typedef struct _LigmaUndo                        LigmaUndo;
+typedef struct _LigmaUndoStack                   LigmaUndoStack;
+typedef struct _LigmaUndoAccumulator             LigmaUndoAccumulator;
 
 
 /* Symmetry transformations */
 
-typedef struct _GimpSymmetry                    GimpSymmetry;
-typedef struct _GimpMirror                      GimpMirror;
-typedef struct _GimpTiling                      GimpTiling;
-typedef struct _GimpMandala                     GimpMandala;
+typedef struct _LigmaSymmetry                    LigmaSymmetry;
+typedef struct _LigmaMirror                      LigmaMirror;
+typedef struct _LigmaTiling                      LigmaTiling;
+typedef struct _LigmaMandala                     LigmaMandala;
 
 
 /*  misc objects  */
 
-typedef struct _GimpAsync                       GimpAsync;
-typedef struct _GimpAsyncSet                    GimpAsyncSet;
-typedef struct _GimpBuffer                      GimpBuffer;
-typedef struct _GimpDrawableFilter              GimpDrawableFilter;
-typedef struct _GimpEnvironTable                GimpEnvironTable;
-typedef struct _GimpExtension                   GimpExtension;
-typedef struct _GimpExtensionManager            GimpExtensionManager;
-typedef struct _GimpHistogram                   GimpHistogram;
-typedef struct _GimpIdTable                     GimpIdTable;
-typedef struct _GimpImagefile                   GimpImagefile;
-typedef struct _GimpImageProxy                  GimpImageProxy;
-typedef struct _GimpInterpreterDB               GimpInterpreterDB;
-typedef struct _GimpLineArt                     GimpLineArt;
-typedef struct _GimpObjectQueue                 GimpObjectQueue;
-typedef struct _GimpParasiteList                GimpParasiteList;
-typedef struct _GimpPdbProgress                 GimpPdbProgress;
-typedef struct _GimpProjection                  GimpProjection;
-typedef struct _GimpSettings                    GimpSettings;
-typedef struct _GimpSubProgress                 GimpSubProgress;
-typedef struct _GimpTag                         GimpTag;
-typedef struct _GimpTreeHandler                 GimpTreeHandler;
-typedef struct _GimpTriviallyCancelableWaitable GimpTriviallyCancelableWaitable;
-typedef struct _GimpUncancelableWaitable        GimpUncancelableWaitable;
+typedef struct _LigmaAsync                       LigmaAsync;
+typedef struct _LigmaAsyncSet                    LigmaAsyncSet;
+typedef struct _LigmaBuffer                      LigmaBuffer;
+typedef struct _LigmaDrawableFilter              LigmaDrawableFilter;
+typedef struct _LigmaEnvironTable                LigmaEnvironTable;
+typedef struct _LigmaExtension                   LigmaExtension;
+typedef struct _LigmaExtensionManager            LigmaExtensionManager;
+typedef struct _LigmaHistogram                   LigmaHistogram;
+typedef struct _LigmaIdTable                     LigmaIdTable;
+typedef struct _LigmaImagefile                   LigmaImagefile;
+typedef struct _LigmaImageProxy                  LigmaImageProxy;
+typedef struct _LigmaInterpreterDB               LigmaInterpreterDB;
+typedef struct _LigmaLineArt                     LigmaLineArt;
+typedef struct _LigmaObjectQueue                 LigmaObjectQueue;
+typedef struct _LigmaParasiteList                LigmaParasiteList;
+typedef struct _LigmaPdbProgress                 LigmaPdbProgress;
+typedef struct _LigmaProjection                  LigmaProjection;
+typedef struct _LigmaSettings                    LigmaSettings;
+typedef struct _LigmaSubProgress                 LigmaSubProgress;
+typedef struct _LigmaTag                         LigmaTag;
+typedef struct _LigmaTreeHandler                 LigmaTreeHandler;
+typedef struct _LigmaTriviallyCancelableWaitable LigmaTriviallyCancelableWaitable;
+typedef struct _LigmaUncancelableWaitable        LigmaUncancelableWaitable;
 
 
 /*  interfaces  */
 
-typedef struct _GimpCancelable                  GimpCancelable;  /* dummy typedef */
-typedef struct _GimpPickable                    GimpPickable;    /* dummy typedef */
-typedef struct _GimpProgress                    GimpProgress;    /* dummy typedef */
-typedef struct _GimpProjectable                 GimpProjectable; /* dummy typedef */
-typedef struct _GimpTagged                      GimpTagged;      /* dummy typedef */
-typedef struct _GimpWaitable                    GimpWaitable;    /* dummy typedef */
+typedef struct _LigmaCancelable                  LigmaCancelable;  /* dummy typedef */
+typedef struct _LigmaPickable                    LigmaPickable;    /* dummy typedef */
+typedef struct _LigmaProgress                    LigmaProgress;    /* dummy typedef */
+typedef struct _LigmaProjectable                 LigmaProjectable; /* dummy typedef */
+typedef struct _LigmaTagged                      LigmaTagged;      /* dummy typedef */
+typedef struct _LigmaWaitable                    LigmaWaitable;    /* dummy typedef */
 
 
 /*  non-object types  */
 
-typedef struct _GimpBacktrace                   GimpBacktrace;
-typedef struct _GimpBoundSeg                    GimpBoundSeg;
-typedef struct _GimpChunkIterator               GimpChunkIterator;
-typedef struct _GimpCoords                      GimpCoords;
-typedef struct _GimpGradientSegment             GimpGradientSegment;
-typedef struct _GimpPaletteEntry                GimpPaletteEntry;
-typedef struct _GimpScanConvert                 GimpScanConvert;
-typedef struct _GimpTempBuf                     GimpTempBuf;
-typedef         guint32                         GimpTattoo;
+typedef struct _LigmaBacktrace                   LigmaBacktrace;
+typedef struct _LigmaBoundSeg                    LigmaBoundSeg;
+typedef struct _LigmaChunkIterator               LigmaChunkIterator;
+typedef struct _LigmaCoords                      LigmaCoords;
+typedef struct _LigmaGradientSegment             LigmaGradientSegment;
+typedef struct _LigmaPaletteEntry                LigmaPaletteEntry;
+typedef struct _LigmaScanConvert                 LigmaScanConvert;
+typedef struct _LigmaTempBuf                     LigmaTempBuf;
+typedef         guint32                         LigmaTattoo;
 
 /* The following hack is made so that we can reuse the definition
  * the cairo definition of cairo_path_t without having to translate
@@ -246,35 +246,35 @@ typedef         guint32                         GimpTattoo;
  * including this file we only use the "real" definition when cairo.h
  * already has been included and use something else.
  *
- * Note that if you really want to work with GimpBezierDesc (except just
+ * Note that if you really want to work with LigmaBezierDesc (except just
  * passing pointers to it around) you also need to include <cairo.h>.
  */
 #ifdef CAIRO_VERSION
-typedef cairo_path_t GimpBezierDesc;
+typedef cairo_path_t LigmaBezierDesc;
 #else
-typedef void * GimpBezierDesc;
+typedef void * LigmaBezierDesc;
 #endif
 
 
 /*  functions  */
 
-typedef void     (* GimpInitStatusFunc)    (const gchar *text1,
+typedef void     (* LigmaInitStatusFunc)    (const gchar *text1,
                                             const gchar *text2,
                                             gdouble      percentage);
 
-typedef gboolean (* GimpObjectFilterFunc)  (GimpObject  *object,
+typedef gboolean (* LigmaObjectFilterFunc)  (LigmaObject  *object,
                                             gpointer     user_data);
 
-typedef gint64   (* GimpMemsizeFunc)       (gpointer     instance,
+typedef gint64   (* LigmaMemsizeFunc)       (gpointer     instance,
                                             gint64      *gui_size);
 
-typedef void     (* GimpRunAsyncFunc)      (GimpAsync   *async,
+typedef void     (* LigmaRunAsyncFunc)      (LigmaAsync   *async,
                                             gpointer     user_data);
 
 
 /*  structs  */
 
-struct _GimpCoords
+struct _LigmaCoords
 {
   /* axes as reported by the device */
   gdouble  x;
@@ -300,9 +300,9 @@ struct _GimpCoords
 
 /*  temp hack as replacement for GdkSegment  */
 
-typedef struct _GimpSegment GimpSegment;
+typedef struct _LigmaSegment LigmaSegment;
 
-struct _GimpSegment
+struct _LigmaSegment
 {
   gint x1;
   gint y1;
@@ -311,7 +311,7 @@ struct _GimpSegment
 };
 
 
-#include "gegl/gimp-gegl-types.h"
+#include "gegl/ligma-gegl-types.h"
 #include "paint/paint-types.h"
 #include "text/text-types.h"
 #include "vectors/vectors-types.h"

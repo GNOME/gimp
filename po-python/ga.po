@@ -1,12 +1,12 @@
-# Irish Translations for gimp po script fu 
+# Irish Translations for ligma po script fu 
 # Copyright (C) 2000,2004 Free Software Foundation, Inc.
 # Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 # Alastair McKinstry <mckinstry@computer.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2006-09-13 21:07+0200\n"
 "PO-Revision-Date: 2004-01-20 0740+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
@@ -16,21 +16,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:43
 #, fuzzy
 msgid "Python Console"
 msgstr "Python: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:75
 #, fuzzy
 msgid "_Browse..."
 msgstr "Brábhsáil...."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:217
 #, fuzzy
-msgid "Gimp-Python Console"
+msgid "Ligma-Python Console"
 msgstr "Python: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:218
 msgid "Interactive Python Development"
 msgstr ""

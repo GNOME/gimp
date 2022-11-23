@@ -1,13 +1,13 @@
-# Dutch translation for gimp.
-# Copyright (C) 2016 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Dutch translation for ligma.
+# Copyright (C) 2016 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Nathan Follens <nthn@unseen.is>, 2016.
 # Justin van Steijn <justin50@live.nl>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-08-15 13:12+0000\n"
 "PO-Revision-Date: 2016-09-16 21:30+0100\n"
 "Last-Translator: Justin van Steijn <justin50@live.nl>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "rond"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "wazig"

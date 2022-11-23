@@ -1,12 +1,12 @@
-# Lithuanian translation for gimp.
-# Copyright (C) 2012 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Lithuanian translation for ligma.
+# Copyright (C) 2012 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Aurimas Černius <aurisc4@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-12-31 18:30+0000\n"
 "PO-Revision-Date: 2012-01-01 23:14+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "neaiškus"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "apvalus"
 

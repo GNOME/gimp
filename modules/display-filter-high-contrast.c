@@ -1,5 +1,5 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1999 Manish Singh <yosh@gimp.org>
+/* LIGMA - The GNU Image Manipulation Program
+ * Copyright (C) 1999 Manish Singh <yosh@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 #define DEFAULT_CONTRAST 1.0
@@ -44,14 +44,14 @@ typedef struct _CdisplayContrastClass CdisplayContrastClass;
 
 struct _CdisplayContrast
 {
-  GimpColorDisplay  parent_instance;
+  LigmaColorDisplay  parent_instance;
 
   gdouble           contrast;
 };
 
 struct _CdisplayContrastClass
 {
-  GimpColorDisplayClass  parent_instance;
+  LigmaColorDisplayClass  parent_instance;
 };
 
 
@@ -73,18 +73,18 @@ static void        cdisplay_contrast_get_property    (GObject          *object,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
-static void        cdisplay_contrast_convert_buffer  (GimpColorDisplay *display,
+static void        cdisplay_contrast_convert_buffer  (LigmaColorDisplay *display,
                                                       GeglBuffer       *buffer,
                                                       GeglRectangle    *area);
 static void        cdisplay_contrast_set_contrast    (CdisplayContrast *contrast,
                                                       gdouble           value);
 
 
-static const GimpModuleInfo cdisplay_contrast_info =
+static const LigmaModuleInfo cdisplay_contrast_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("High Contrast color display filter"),
-  "Jay Cox <jaycox@gimp.org>",
+  "Jay Cox <jaycox@ligma.org>",
   "v0.2",
   "(c) 2000, released under the GPL",
   "October 14, 2000"
@@ -92,17 +92,17 @@ static const GimpModuleInfo cdisplay_contrast_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (CdisplayContrast, cdisplay_contrast,
-                       GIMP_TYPE_COLOR_DISPLAY)
+                       LIGMA_TYPE_COLOR_DISPLAY)
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &cdisplay_contrast_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   cdisplay_contrast_register_type (module);
 
@@ -113,12 +113,12 @@ static void
 cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  LigmaColorDisplayClass *display_class = LIGMA_COLOR_DISPLAY_CLASS (klass);
 
   object_class->get_property     = cdisplay_contrast_get_property;
   object_class->set_property     = cdisplay_contrast_set_property;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
                            "contrast",
                            _("Contrast cycles"),
                            NULL,
@@ -126,8 +126,8 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
                            0);
 
   display_class->name            = _("Contrast");
-  display_class->help_id         = "gimp-colordisplay-contrast";
-  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_CONTRAST;
+  display_class->help_id         = "ligma-colordisplay-contrast";
+  display_class->icon_name       = LIGMA_ICON_DISPLAY_FILTER_CONTRAST;
 
   display_class->convert_buffer  = cdisplay_contrast_convert_buffer;
 }
@@ -181,7 +181,7 @@ cdisplay_contrast_set_property (GObject      *object,
 }
 
 static void
-cdisplay_contrast_convert_buffer (GimpColorDisplay *display,
+cdisplay_contrast_convert_buffer (LigmaColorDisplay *display,
                                   GeglBuffer       *buffer,
                                   GeglRectangle    *area)
 {
@@ -223,6 +223,6 @@ cdisplay_contrast_set_contrast (CdisplayContrast *contrast,
       contrast->contrast = value;
 
       g_object_notify (G_OBJECT (contrast), "contrast");
-      gimp_color_display_changed (GIMP_COLOR_DISPLAY (contrast));
+      ligma_color_display_changed (LIGMA_COLOR_DISPLAY (contrast));
     }
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasitem-utils.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasitem-utils.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,58 +18,58 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ITEM_UTILS_H__
-#define __GIMP_CANVAS_ITEM_UTILS_H__
+#ifndef __LIGMA_CANVAS_ITEM_UTILS_H__
+#define __LIGMA_CANVAS_ITEM_UTILS_H__
 
 
-gboolean   gimp_canvas_item_on_handle           (GimpCanvasItem    *item,
+gboolean   ligma_canvas_item_on_handle           (LigmaCanvasItem    *item,
                                                  gdouble            x,
                                                  gdouble            y,
-                                                 GimpHandleType     type,
+                                                 LigmaHandleType     type,
                                                  gdouble            handle_x,
                                                  gdouble            handle_y,
                                                  gint               width,
                                                  gint               height,
-                                                 GimpHandleAnchor   anchor);
+                                                 LigmaHandleAnchor   anchor);
 
-gboolean   gimp_canvas_item_on_vectors_handle   (GimpCanvasItem    *item,
-                                                 GimpVectors       *vectors,
-                                                 const GimpCoords  *coord,
+gboolean   ligma_canvas_item_on_vectors_handle   (LigmaCanvasItem    *item,
+                                                 LigmaVectors       *vectors,
+                                                 const LigmaCoords  *coord,
                                                  gint               width,
                                                  gint               height,
-                                                 GimpAnchorType     preferred,
+                                                 LigmaAnchorType     preferred,
                                                  gboolean           exclusive,
-                                                 GimpAnchor       **ret_anchor,
-                                                 GimpStroke       **ret_stroke);
-gboolean   gimp_canvas_item_on_vectors_curve    (GimpCanvasItem    *item,
-                                                 GimpVectors       *vectors,
-                                                 const GimpCoords  *coord,
+                                                 LigmaAnchor       **ret_anchor,
+                                                 LigmaStroke       **ret_stroke);
+gboolean   ligma_canvas_item_on_vectors_curve    (LigmaCanvasItem    *item,
+                                                 LigmaVectors       *vectors,
+                                                 const LigmaCoords  *coord,
                                                  gint               width,
                                                  gint               height,
-                                                 GimpCoords        *ret_coords,
+                                                 LigmaCoords        *ret_coords,
                                                  gdouble           *ret_pos,
-                                                 GimpAnchor       **ret_segment_start,
-                                                 GimpAnchor       **ret_segment_end,
-                                                 GimpStroke       **ret_stroke);
-gboolean   gimp_canvas_item_on_vectors          (GimpCanvasItem    *item,
-                                                 const GimpCoords  *coords,
+                                                 LigmaAnchor       **ret_segment_start,
+                                                 LigmaAnchor       **ret_segment_end,
+                                                 LigmaStroke       **ret_stroke);
+gboolean   ligma_canvas_item_on_vectors          (LigmaCanvasItem    *item,
+                                                 const LigmaCoords  *coords,
                                                  gint               width,
                                                  gint               height,
-                                                 GimpCoords        *ret_coords,
+                                                 LigmaCoords        *ret_coords,
                                                  gdouble           *ret_pos,
-                                                 GimpAnchor       **ret_segment_start,
-                                                 GimpAnchor       **ret_segment_end,
-                                                 GimpStroke       **ret_stroke,
-                                                 GimpVectors      **ret_vectors);
+                                                 LigmaAnchor       **ret_segment_start,
+                                                 LigmaAnchor       **ret_segment_end,
+                                                 LigmaStroke       **ret_stroke,
+                                                 LigmaVectors      **ret_vectors);
 
-void       gimp_canvas_item_shift_to_north_west (GimpHandleAnchor   anchor,
+void       ligma_canvas_item_shift_to_north_west (LigmaHandleAnchor   anchor,
                                                  gdouble            x,
                                                  gdouble            y,
                                                  gint               width,
                                                  gint               height,
                                                  gdouble           *shifted_x,
                                                  gdouble           *shifted_y);
-void       gimp_canvas_item_shift_to_center     (GimpHandleAnchor   anchor,
+void       ligma_canvas_item_shift_to_center     (LigmaHandleAnchor   anchor,
                                                  gdouble            x,
                                                  gdouble            y,
                                                  gint               width,
@@ -78,4 +78,4 @@ void       gimp_canvas_item_shift_to_center     (GimpHandleAnchor   anchor,
                                                  gdouble           *shifted_y);
 
 
-#endif /* __GIMP_CANVAS_ITEM_UTILS_H__ */
+#endif /* __LIGMA_CANVAS_ITEM_UTILS_H__ */

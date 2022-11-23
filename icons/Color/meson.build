@@ -8,7 +8,7 @@ else
 endif
 
 install_data('index.theme',
-  install_dir: gimpiconsdir / theme,
+  install_dir: ligmaiconsdir / theme,
 )
 
 foreach install : install_icons
@@ -35,16 +35,16 @@ foreach install : install_icons
     endif
   endforeach
 
-  install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+  install_data(icons, install_dir: ligmaiconsdir / theme / outdir / 'apps')
 endforeach
 
 icons_core = [ '64/dialog-question.png', ]
-icons_imgs = [ '64/gimp-wilber-eek.png', ]
+icons_imgs = [ '64/ligma-wilber-eek.png', ]
 
-resourcename = 'gimp-core-pixbufs'
+resourcename = 'ligma-core-pixbufs'
 xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 xml_content += '<gresources>\n'
-xml_content += '  <gresource prefix="/org/gimp/icons">\n'
+xml_content += '  <gresource prefix="/org/ligma/icons">\n'
 foreach file : icons_core
   xml_content+='    <file preprocess="to-pixdata">'+ file +'</file>\n'
 endforeach
@@ -65,10 +65,10 @@ icons_core_sources = gnome.compile_resources(
 )
 
 
-resourcename = 'gimp-icon-pixbufs'
+resourcename = 'ligma-icon-pixbufs'
 xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 xml_content += '<gresources>\n'
-xml_content += '  <gresource prefix="/org/gimp/icons">\n'
+xml_content += '  <gresource prefix="/org/ligma/icons">\n'
 foreach file : icons_imgs
   xml_content+='    <file preprocess="to-pixdata">'+ file +'</file>\n'
 endforeach

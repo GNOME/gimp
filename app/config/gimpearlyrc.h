@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpEarlyRc: pre-parsing of gimprc suitable for use during early
- * initialization, when the gimp singleton is not constructed yet
+ * LigmaEarlyRc: pre-parsing of ligmarc suitable for use during early
+ * initialization, when the ligma singleton is not constructed yet
  *
- * Copyright (C) 2017  Jehan <jehan@gimp.org>
+ * Copyright (C) 2017  Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,52 +20,52 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EARLY_RC_H__
-#define __GIMP_EARLY_RC_H__
+#ifndef __LIGMA_EARLY_RC_H__
+#define __LIGMA_EARLY_RC_H__
 
 #include "core/core-enums.h"
 
-#define GIMP_TYPE_EARLY_RC            (gimp_early_rc_get_type ())
-#define GIMP_EARLY_RC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EARLY_RC, GimpEarlyRc))
-#define GIMP_EARLY_RC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EARLY_RC, GimpEarlyRcClass))
-#define GIMP_IS_EARLY_RC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EARLY_RC))
-#define GIMP_IS_EARLY_RC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EARLY_RC))
+#define LIGMA_TYPE_EARLY_RC            (ligma_early_rc_get_type ())
+#define LIGMA_EARLY_RC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_EARLY_RC, LigmaEarlyRc))
+#define LIGMA_EARLY_RC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_EARLY_RC, LigmaEarlyRcClass))
+#define LIGMA_IS_EARLY_RC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_EARLY_RC))
+#define LIGMA_IS_EARLY_RC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_EARLY_RC))
 
 
-typedef struct _GimpEarlyRcClass GimpEarlyRcClass;
+typedef struct _LigmaEarlyRcClass LigmaEarlyRcClass;
 
-struct _GimpEarlyRc
+struct _LigmaEarlyRc
 {
   GObject        parent_instance;
 
-  GFile         *user_gimprc;
-  GFile         *system_gimprc;
+  GFile         *user_ligmarc;
+  GFile         *system_ligmarc;
   gboolean       verbose;
 
   gchar         *language;
 
 #ifdef G_OS_WIN32
-  GimpWin32PointerInputAPI win32_pointer_input_api;
+  LigmaWin32PointerInputAPI win32_pointer_input_api;
 #endif
 };
 
-struct _GimpEarlyRcClass
+struct _LigmaEarlyRcClass
 {
   GObjectClass   parent_class;
 };
 
 
-GType          gimp_early_rc_get_type     (void) G_GNUC_CONST;
+GType          ligma_early_rc_get_type     (void) G_GNUC_CONST;
 
-GimpEarlyRc  * gimp_early_rc_new          (GFile      *system_gimprc,
-                                           GFile      *user_gimprc,
+LigmaEarlyRc  * ligma_early_rc_new          (GFile      *system_ligmarc,
+                                           GFile      *user_ligmarc,
                                            gboolean    verbose);
-gchar        * gimp_early_rc_get_language (GimpEarlyRc *rc);
+gchar        * ligma_early_rc_get_language (LigmaEarlyRc *rc);
 
 #ifdef G_OS_WIN32
-GimpWin32PointerInputAPI gimp_early_rc_get_win32_pointer_input_api (GimpEarlyRc *rc);
+LigmaWin32PointerInputAPI ligma_early_rc_get_win32_pointer_input_api (LigmaEarlyRc *rc);
 #endif
 
 
-#endif /* GIMP_EARLY_RC_H__ */
+#endif /* LIGMA_EARLY_RC_H__ */
 

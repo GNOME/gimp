@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpcontrollerlist.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerlist.c
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,40 +25,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#include "libgimpwidgets/gimpcontroller.h"
+#define LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "libligmawidgets/ligmacontroller.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
 
-#include "gimpcontainertreeview.h"
-#include "gimpcontainerview.h"
-#include "gimpcontrollereditor.h"
-#include "gimpcontrollerlist.h"
-#include "gimpcontrollerinfo.h"
-#include "gimpcontrollerkeyboard.h"
-#include "gimpcontrollerwheel.h"
-#include "gimpcontrollers.h"
-#include "gimpdialogfactory.h"
-#include "gimphelp-ids.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
-#include "gimppropwidgets.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacontainertreeview.h"
+#include "ligmacontainerview.h"
+#include "ligmacontrollereditor.h"
+#include "ligmacontrollerlist.h"
+#include "ligmacontrollerinfo.h"
+#include "ligmacontrollerkeyboard.h"
+#include "ligmacontrollerwheel.h"
+#include "ligmacontrollers.h"
+#include "ligmadialogfactory.h"
+#include "ligmahelp-ids.h"
+#include "ligmamessagebox.h"
+#include "ligmamessagedialog.h"
+#include "ligmapropwidgets.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 enum
@@ -70,73 +70,73 @@ enum
 };
 
 
-static void gimp_controller_list_constructed     (GObject            *object);
-static void gimp_controller_list_finalize        (GObject            *object);
-static void gimp_controller_list_set_property    (GObject            *object,
+static void ligma_controller_list_constructed     (GObject            *object);
+static void ligma_controller_list_finalize        (GObject            *object);
+static void ligma_controller_list_set_property    (GObject            *object,
                                                   guint               property_id,
                                                   const GValue       *value,
                                                   GParamSpec         *pspec);
-static void gimp_controller_list_get_property    (GObject            *object,
+static void ligma_controller_list_get_property    (GObject            *object,
                                                   guint               property_id,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static void gimp_controller_list_src_sel_changed (GtkTreeSelection   *sel,
-                                                  GimpControllerList *list);
-static void gimp_controller_list_row_activated   (GtkTreeView        *tv,
+static void ligma_controller_list_src_sel_changed (GtkTreeSelection   *sel,
+                                                  LigmaControllerList *list);
+static void ligma_controller_list_row_activated   (GtkTreeView        *tv,
                                                   GtkTreePath        *path,
                                                   GtkTreeViewColumn  *column,
-                                                  GimpControllerList *list);
+                                                  LigmaControllerList *list);
 
-static gboolean gimp_controller_list_select_items(GimpContainerView  *view,
+static gboolean ligma_controller_list_select_items(LigmaContainerView  *view,
                                                   GList              *viewables,
                                                   GList              *paths,
-                                                  GimpControllerList *list);
-static void gimp_controller_list_activate_item   (GimpContainerView  *view,
-                                                  GimpViewable       *viewable,
+                                                  LigmaControllerList *list);
+static void ligma_controller_list_activate_item   (LigmaContainerView  *view,
+                                                  LigmaViewable       *viewable,
                                                   gpointer            insert_data,
-                                                  GimpControllerList *list);
+                                                  LigmaControllerList *list);
 
-static void gimp_controller_list_add_clicked     (GtkWidget          *button,
-                                                  GimpControllerList *list);
-static void gimp_controller_list_remove_clicked  (GtkWidget          *button,
-                                                  GimpControllerList *list);
+static void ligma_controller_list_add_clicked     (GtkWidget          *button,
+                                                  LigmaControllerList *list);
+static void ligma_controller_list_remove_clicked  (GtkWidget          *button,
+                                                  LigmaControllerList *list);
 
-static void gimp_controller_list_edit_clicked    (GtkWidget          *button,
-                                                  GimpControllerList *list);
-static void gimp_controller_list_edit_destroy    (GtkWidget          *widget,
-                                                  GimpControllerInfo *info);
-static void gimp_controller_list_up_clicked      (GtkWidget          *button,
-                                                  GimpControllerList *list);
-static void gimp_controller_list_down_clicked    (GtkWidget          *button,
-                                                  GimpControllerList *list);
+static void ligma_controller_list_edit_clicked    (GtkWidget          *button,
+                                                  LigmaControllerList *list);
+static void ligma_controller_list_edit_destroy    (GtkWidget          *widget,
+                                                  LigmaControllerInfo *info);
+static void ligma_controller_list_up_clicked      (GtkWidget          *button,
+                                                  LigmaControllerList *list);
+static void ligma_controller_list_down_clicked    (GtkWidget          *button,
+                                                  LigmaControllerList *list);
 
 
-G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaControllerList, ligma_controller_list, GTK_TYPE_BOX)
 
-#define parent_class gimp_controller_list_parent_class
+#define parent_class ligma_controller_list_parent_class
 
 
 static void
-gimp_controller_list_class_init (GimpControllerListClass *klass)
+ligma_controller_list_class_init (LigmaControllerListClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_controller_list_constructed;
-  object_class->finalize     = gimp_controller_list_finalize;
-  object_class->set_property = gimp_controller_list_set_property;
-  object_class->get_property = gimp_controller_list_get_property;
+  object_class->constructed  = ligma_controller_list_constructed;
+  object_class->finalize     = ligma_controller_list_finalize;
+  object_class->set_property = ligma_controller_list_set_property;
+  object_class->get_property = ligma_controller_list_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_controller_list_init (GimpControllerList *list)
+ligma_controller_list_init (LigmaControllerList *list)
 {
   GtkWidget         *hbox;
   GtkWidget         *sw;
@@ -155,7 +155,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (list),
                                   GTK_ORIENTATION_VERTICAL);
 
-  list->gimp = NULL;
+  list->ligma = NULL;
 
   list->hbox = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (list), hbox, TRUE, TRUE, 0);
@@ -201,22 +201,22 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_show (tv);
 
   g_signal_connect_object (tv, "row-activated",
-                           G_CALLBACK (gimp_controller_list_row_activated),
+                           G_CALLBACK (ligma_controller_list_row_activated),
                            G_OBJECT (list), 0);
 
   list->src_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   gtk_tree_selection_set_mode (list->src_sel, GTK_SELECTION_BROWSE);
 
   g_signal_connect_object (list->src_sel, "changed",
-                           G_CALLBACK (gimp_controller_list_src_sel_changed),
+                           G_CALLBACK (ligma_controller_list_src_sel_changed),
                            G_OBJECT (list), 0);
 
-  controller_types = g_type_children (GIMP_TYPE_CONTROLLER,
+  controller_types = g_type_children (LIGMA_TYPE_CONTROLLER,
                                       &n_controller_types);
 
   for (i = 0; i < n_controller_types; i++)
     {
-      GimpControllerClass *controller_class;
+      LigmaControllerClass *controller_class;
       GtkTreeIter          iter;
 
       controller_class = g_type_class_ref (controller_types[i]);
@@ -243,13 +243,13 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_GO_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
 
   g_signal_connect (list->add_button, "clicked",
-                    G_CALLBACK (gimp_controller_list_add_clicked),
+                    G_CALLBACK (ligma_controller_list_add_clicked),
                     list);
 
   g_object_add_weak_pointer (G_OBJECT (list->add_button),
@@ -260,56 +260,56 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_GO_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
 
   g_signal_connect (list->remove_button, "clicked",
-                    G_CALLBACK (gimp_controller_list_remove_clicked),
+                    G_CALLBACK (ligma_controller_list_remove_clicked),
                     list);
 
   g_object_add_weak_pointer (G_OBJECT (list->remove_button),
                              (gpointer) &list->remove_button);
 
   gtk_icon_size_lookup (icon_size, &icon_width, &icon_height);
-  list->dest = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
-  gimp_container_tree_view_set_main_column_title (GIMP_CONTAINER_TREE_VIEW (list->dest),
+  list->dest = ligma_container_tree_view_new (NULL, NULL, icon_height, 0);
+  ligma_container_tree_view_set_main_column_title (LIGMA_CONTAINER_TREE_VIEW (list->dest),
                                                   _("Active Controllers"));
-  gtk_tree_view_set_headers_visible (GIMP_CONTAINER_TREE_VIEW (list->dest)->view,
+  gtk_tree_view_set_headers_visible (LIGMA_CONTAINER_TREE_VIEW (list->dest)->view,
                                      TRUE);
   gtk_box_pack_start (GTK_BOX (list->hbox), list->dest, TRUE, TRUE, 0);
   gtk_widget_show (list->dest);
 
   g_signal_connect_object (list->dest, "select-items",
-                           G_CALLBACK (gimp_controller_list_select_items),
+                           G_CALLBACK (ligma_controller_list_select_items),
                            G_OBJECT (list), 0);
   g_signal_connect_object (list->dest, "activate-item",
-                           G_CALLBACK (gimp_controller_list_activate_item),
+                           G_CALLBACK (ligma_controller_list_activate_item),
                            G_OBJECT (list), 0);
 
   list->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GIMP_ICON_DOCUMENT_PROPERTIES,
+    ligma_editor_add_button (LIGMA_EDITOR (list->dest),
+                            LIGMA_ICON_DOCUMENT_PROPERTIES,
                             _("Configure the selected controller"),
                             NULL,
-                            G_CALLBACK (gimp_controller_list_edit_clicked),
+                            G_CALLBACK (ligma_controller_list_edit_clicked),
                             NULL,
                             list);
   list->up_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GIMP_ICON_GO_UP,
+    ligma_editor_add_button (LIGMA_EDITOR (list->dest),
+                            LIGMA_ICON_GO_UP,
                             _("Move the selected controller up"),
                             NULL,
-                            G_CALLBACK (gimp_controller_list_up_clicked),
+                            G_CALLBACK (ligma_controller_list_up_clicked),
                             NULL,
                             list);
   list->down_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GIMP_ICON_GO_DOWN,
+    ligma_editor_add_button (LIGMA_EDITOR (list->dest),
+                            LIGMA_ICON_GO_DOWN,
                             _("Move the selected controller down"),
                             NULL,
-                            G_CALLBACK (gimp_controller_list_down_clicked),
+                            G_CALLBACK (ligma_controller_list_down_clicked),
                             NULL,
                             list);
 
@@ -319,43 +319,43 @@ gimp_controller_list_init (GimpControllerList *list)
 }
 
 static void
-gimp_controller_list_constructed (GObject *object)
+ligma_controller_list_constructed (GObject *object)
 {
-  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
+  LigmaControllerList *list = LIGMA_CONTROLLER_LIST (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (list->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (list->ligma));
 
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (list->dest),
-                                     gimp_controllers_get_list (list->gimp));
+  ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (list->dest),
+                                     ligma_controllers_get_list (list->ligma));
 
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (list->dest),
-                                   gimp_get_user_context (list->gimp));
+  ligma_container_view_set_context (LIGMA_CONTAINER_VIEW (list->dest),
+                                   ligma_get_user_context (list->ligma));
 }
 
 static void
-gimp_controller_list_finalize (GObject *object)
+ligma_controller_list_finalize (GObject *object)
 {
-  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
+  LigmaControllerList *list = LIGMA_CONTROLLER_LIST (object);
 
-  g_clear_object (&list->gimp);
+  g_clear_object (&list->ligma);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_controller_list_set_property (GObject      *object,
+ligma_controller_list_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
+  LigmaControllerList *list = LIGMA_CONTROLLER_LIST (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      list->gimp = g_value_dup_object (value);
+    case PROP_LIGMA:
+      list->ligma = g_value_dup_object (value);
       break;
 
     default:
@@ -365,17 +365,17 @@ gimp_controller_list_set_property (GObject      *object,
 }
 
 static void
-gimp_controller_list_get_property (GObject    *object,
+ligma_controller_list_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
+  LigmaControllerList *list = LIGMA_CONTROLLER_LIST (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, list->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, list->ligma);
       break;
 
     default:
@@ -388,12 +388,12 @@ gimp_controller_list_get_property (GObject    *object,
 /*  public functions  */
 
 GtkWidget *
-gimp_controller_list_new (Gimp *gimp)
+ligma_controller_list_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_CONTROLLER_LIST,
-                       "gimp", gimp,
+  return g_object_new (LIGMA_TYPE_CONTROLLER_LIST,
+                       "ligma", ligma,
                        NULL);
 }
 
@@ -401,8 +401,8 @@ gimp_controller_list_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-gimp_controller_list_src_sel_changed (GtkTreeSelection   *sel,
-                                      GimpControllerList *list)
+ligma_controller_list_src_sel_changed (GtkTreeSelection   *sel,
+                                      LigmaControllerList *list)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -435,38 +435,38 @@ gimp_controller_list_src_sel_changed (GtkTreeSelection   *sel,
 
   if (list->add_button)
     {
-      gimp_help_set_help_data (list->add_button, tip, NULL);
+      ligma_help_set_help_data (list->add_button, tip, NULL);
       g_free (tip);
     }
 }
 
 static void
-gimp_controller_list_row_activated (GtkTreeView        *tv,
+ligma_controller_list_row_activated (GtkTreeView        *tv,
                                     GtkTreePath        *path,
                                     GtkTreeViewColumn  *column,
-                                    GimpControllerList *list)
+                                    LigmaControllerList *list)
 {
   if (gtk_widget_is_sensitive (list->add_button))
     gtk_button_clicked (GTK_BUTTON (list->add_button));
 }
 
 static gboolean
-gimp_controller_list_select_items (GimpContainerView  *view,
+ligma_controller_list_select_items (LigmaContainerView  *view,
                                    GList              *viewables,
                                    GList              *paths,
-                                   GimpControllerList *list)
+                                   LigmaControllerList *list)
 {
   gboolean selected;
 
   g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
 
-  list->dest_info = viewables ? GIMP_CONTROLLER_INFO (viewables->data) : NULL;
+  list->dest_info = viewables ? LIGMA_CONTROLLER_INFO (viewables->data) : NULL;
 
-  selected = GIMP_IS_CONTROLLER_INFO (list->dest_info);
+  selected = LIGMA_IS_CONTROLLER_INFO (list->dest_info);
 
   if (list->remove_button)
     {
-      GimpObject *object = GIMP_OBJECT (list->dest_info);
+      LigmaObject *object = LIGMA_OBJECT (list->dest_info);
       gchar      *tip    = NULL;
 
       gtk_widget_set_sensitive (list->remove_button, selected);
@@ -474,9 +474,9 @@ gimp_controller_list_select_items (GimpContainerView  *view,
       if (selected)
         tip =
           g_strdup_printf (_("Remove '%s' from the list of active controllers"),
-                           gimp_object_get_name (object));
+                           ligma_object_get_name (object));
 
-      gimp_help_set_help_data (list->remove_button, tip, NULL);
+      ligma_help_set_help_data (list->remove_button, tip, NULL);
       g_free (tip);
     }
 
@@ -488,38 +488,38 @@ gimp_controller_list_select_items (GimpContainerView  *view,
 }
 
 static void
-gimp_controller_list_activate_item (GimpContainerView  *view,
-                                    GimpViewable       *viewable,
+ligma_controller_list_activate_item (LigmaContainerView  *view,
+                                    LigmaViewable       *viewable,
                                     gpointer            insert_data,
-                                    GimpControllerList *list)
+                                    LigmaControllerList *list)
 {
   if (gtk_widget_is_sensitive (list->edit_button))
     gtk_button_clicked (GTK_BUTTON (list->edit_button));
 }
 
 static void
-gimp_controller_list_add_clicked (GtkWidget          *button,
-                                  GimpControllerList *list)
+ligma_controller_list_add_clicked (GtkWidget          *button,
+                                  LigmaControllerList *list)
 {
-  GimpControllerInfo *info;
-  GimpContainer      *container;
+  LigmaControllerInfo *info;
+  LigmaContainer      *container;
 
-  if (list->src_gtype == GIMP_TYPE_CONTROLLER_KEYBOARD &&
-      gimp_controllers_get_keyboard (list->gimp) != NULL)
+  if (list->src_gtype == LIGMA_TYPE_CONTROLLER_KEYBOARD &&
+      ligma_controllers_get_keyboard (list->ligma) != NULL)
     {
-      gimp_message_literal (list->gimp,
-                            G_OBJECT (button), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (list->ligma,
+                            G_OBJECT (button), LIGMA_MESSAGE_WARNING,
                             _("There can only be one active keyboard "
                               "controller.\n\n"
                               "You already have a keyboard controller in "
                               "your list of active controllers."));
       return;
     }
-  else if (list->src_gtype == GIMP_TYPE_CONTROLLER_WHEEL &&
-           gimp_controllers_get_wheel (list->gimp) != NULL)
+  else if (list->src_gtype == LIGMA_TYPE_CONTROLLER_WHEEL &&
+           ligma_controllers_get_wheel (list->ligma) != NULL)
     {
-      gimp_message_literal (list->gimp,
-                            G_OBJECT (button), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (list->ligma,
+                            G_OBJECT (button), LIGMA_MESSAGE_WARNING,
                             _("There can only be one active wheel "
                               "controller.\n\n"
                               "You already have a wheel controller in "
@@ -527,27 +527,27 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
       return;
     }
 
-  info = gimp_controller_info_new (list->src_gtype);
-  container = gimp_controllers_get_list (list->gimp);
-  gimp_container_add (container, GIMP_OBJECT (info));
+  info = ligma_controller_info_new (list->src_gtype);
+  container = ligma_controllers_get_list (list->ligma);
+  ligma_container_add (container, LIGMA_OBJECT (info));
   g_object_unref (info);
 
-  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (list->dest),
-                                   GIMP_VIEWABLE (info));
-  gimp_controller_list_edit_clicked (list->edit_button, list);
+  ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (list->dest),
+                                   LIGMA_VIEWABLE (info));
+  ligma_controller_list_edit_clicked (list->edit_button, list);
 }
 
 static void
-gimp_controller_list_remove_clicked (GtkWidget          *button,
-                                     GimpControllerList *list)
+ligma_controller_list_remove_clicked (GtkWidget          *button,
+                                     LigmaControllerList *list)
 {
   GtkWidget   *dialog;
   const gchar *name;
 
 #define RESPONSE_DISABLE 1
 
-  dialog = gimp_message_dialog_new (_("Remove Controller?"),
-                                    GIMP_ICON_DIALOG_WARNING,
+  dialog = ligma_message_dialog_new (_("Remove Controller?"),
+                                    LIGMA_ICON_DIALOG_WARNING,
                                     GTK_WIDGET (list), GTK_DIALOG_MODAL,
                                     NULL, NULL,
 
@@ -557,17 +557,17 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            RESPONSE_DISABLE,
                                            -1);
 
-  name = gimp_object_get_name (list->dest_info);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  name = ligma_object_get_name (list->dest_info);
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Remove Controller '%s'?"), name);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              "%s",
                              _("Removing this controller from the list of "
                                "active controllers will permanently delete "
@@ -575,26 +575,26 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                "Selecting \"Disable Controller\" will disable "
                                "the controller without removing it."));
 
-  switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
+  switch (ligma_dialog_run (LIGMA_DIALOG (dialog)))
     {
     case RESPONSE_DISABLE:
-      gimp_controller_info_set_enabled (list->dest_info, FALSE);
+      ligma_controller_info_set_enabled (list->dest_info, FALSE);
       break;
 
     case GTK_RESPONSE_OK:
       {
         GtkWidget     *editor_dialog;
-        GimpContainer *container;
+        LigmaContainer *container;
 
         editor_dialog = g_object_get_data (G_OBJECT (list->dest_info),
-                                           "gimp-controller-editor-dialog");
+                                           "ligma-controller-editor-dialog");
 
         if (editor_dialog)
           gtk_dialog_response (GTK_DIALOG (editor_dialog),
                                GTK_RESPONSE_DELETE_EVENT);
 
-        container = gimp_controllers_get_list (list->gimp);
-        gimp_container_remove (container, GIMP_OBJECT (list->dest_info));
+        container = ligma_controllers_get_list (list->ligma);
+        ligma_container_remove (container, LIGMA_OBJECT (list->dest_info));
       }
       break;
 
@@ -606,14 +606,14 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
 }
 
 static void
-gimp_controller_list_edit_clicked (GtkWidget          *button,
-                                   GimpControllerList *list)
+ligma_controller_list_edit_clicked (GtkWidget          *button,
+                                   LigmaControllerList *list)
 {
   GtkWidget *dialog;
   GtkWidget *editor;
 
   dialog = g_object_get_data (G_OBJECT (list->dest_info),
-                              "gimp-controller-editor-dialog");
+                              "ligma-controller-editor-dialog");
 
   if (dialog)
     {
@@ -621,38 +621,38 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
       return;
     }
 
-  dialog = gimp_dialog_new (_("Configure Input Controller"),
-                            "gimp-controller-editor-dialog",
+  dialog = ligma_dialog_new (_("Configure Input Controller"),
+                            "ligma-controller-editor-dialog",
                             gtk_widget_get_toplevel (GTK_WIDGET (list)),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
-                            gimp_standard_help_func,
-                            GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+                            ligma_standard_help_func,
+                            LIGMA_HELP_PREFS_INPUT_CONTROLLERS,
 
                             _("_Close"), GTK_RESPONSE_CLOSE,
 
                             NULL);
 
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
-                                   "gimp-controller-editor-dialog",
+  ligma_dialog_factory_add_foreign (ligma_dialog_factory_get_singleton (),
+                                   "ligma-controller-editor-dialog",
                                    dialog,
-                                   gimp_widget_get_monitor (button));
+                                   ligma_widget_get_monitor (button));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
-  editor = gimp_controller_editor_new (list->dest_info,
-                                       gimp_get_user_context (list->gimp));
+  editor = ligma_controller_editor_new (list->dest_info,
+                                       ligma_get_user_context (list->ligma));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
-  g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor-dialog",
+  g_object_set_data (G_OBJECT (list->dest_info), "ligma-controller-editor-dialog",
                      dialog);
 
   g_signal_connect_object (dialog, "destroy",
-                           G_CALLBACK (gimp_controller_list_edit_destroy),
+                           G_CALLBACK (ligma_controller_list_edit_destroy),
                            G_OBJECT (list->dest_info), 0);
 
   g_signal_connect_object (list, "destroy",
@@ -668,42 +668,42 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
 }
 
 static void
-gimp_controller_list_edit_destroy (GtkWidget          *widget,
-                                   GimpControllerInfo *info)
+ligma_controller_list_edit_destroy (GtkWidget          *widget,
+                                   LigmaControllerInfo *info)
 {
-  g_object_set_data (G_OBJECT (info), "gimp-controller-editor-dialog", NULL);
+  g_object_set_data (G_OBJECT (info), "ligma-controller-editor-dialog", NULL);
 }
 
 static void
-gimp_controller_list_up_clicked (GtkWidget          *button,
-                                 GimpControllerList *list)
+ligma_controller_list_up_clicked (GtkWidget          *button,
+                                 LigmaControllerList *list)
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gint           index;
 
-  container = gimp_controllers_get_list (list->gimp);
+  container = ligma_controllers_get_list (list->ligma);
 
-  index = gimp_container_get_child_index (container,
-                                          GIMP_OBJECT (list->dest_info));
+  index = ligma_container_get_child_index (container,
+                                          LIGMA_OBJECT (list->dest_info));
 
   if (index > 0)
-    gimp_container_reorder (container, GIMP_OBJECT (list->dest_info),
+    ligma_container_reorder (container, LIGMA_OBJECT (list->dest_info),
                             index - 1);
 }
 
 static void
-gimp_controller_list_down_clicked (GtkWidget          *button,
-                                   GimpControllerList *list)
+ligma_controller_list_down_clicked (GtkWidget          *button,
+                                   LigmaControllerList *list)
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gint           index;
 
-  container = gimp_controllers_get_list (list->gimp);
+  container = ligma_controllers_get_list (list->ligma);
 
-  index = gimp_container_get_child_index (container,
-                                          GIMP_OBJECT (list->dest_info));
+  index = ligma_container_get_child_index (container,
+                                          LIGMA_OBJECT (list->dest_info));
 
-  if (index < gimp_container_get_n_children (container) - 1)
-    gimp_container_reorder (container, GIMP_OBJECT (list->dest_info),
+  if (index < ligma_container_get_n_children (container) - 1)
+    ligma_container_reorder (container, LIGMA_OBJECT (list->dest_info),
                             index + 1);
 }

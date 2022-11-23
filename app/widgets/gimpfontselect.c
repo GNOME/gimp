@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfontselect.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmafontselect.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,71 +23,71 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaparamspecs.h"
 
-#include "text/gimpfont.h"
+#include "text/ligmafont.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "gimpcontainerbox.h"
-#include "gimpfontfactoryview.h"
-#include "gimpfontselect.h"
+#include "ligmacontainerbox.h"
+#include "ligmafontfactoryview.h"
+#include "ligmafontselect.h"
 
 
-static void             gimp_font_select_constructed  (GObject        *object);
+static void             ligma_font_select_constructed  (GObject        *object);
 
-static GimpValueArray * gimp_font_select_run_callback (GimpPdbDialog  *dialog,
-                                                       GimpObject     *object,
+static LigmaValueArray * ligma_font_select_run_callback (LigmaPdbDialog  *dialog,
+                                                       LigmaObject     *object,
                                                        gboolean        closing,
                                                        GError        **error);
 
 
-G_DEFINE_TYPE (GimpFontSelect, gimp_font_select, GIMP_TYPE_PDB_DIALOG)
+G_DEFINE_TYPE (LigmaFontSelect, ligma_font_select, LIGMA_TYPE_PDB_DIALOG)
 
-#define parent_class gimp_font_select_parent_class
+#define parent_class ligma_font_select_parent_class
 
 
 static void
-gimp_font_select_class_init (GimpFontSelectClass *klass)
+ligma_font_select_class_init (LigmaFontSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
-  GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
+  LigmaPdbDialogClass *pdb_class    = LIGMA_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructed = gimp_font_select_constructed;
+  object_class->constructed = ligma_font_select_constructed;
 
-  pdb_class->run_callback   = gimp_font_select_run_callback;
+  pdb_class->run_callback   = ligma_font_select_run_callback;
 }
 
 static void
-gimp_font_select_init (GimpFontSelect *select)
+ligma_font_select_init (LigmaFontSelect *select)
 {
 }
 
 static void
-gimp_font_select_constructed (GObject *object)
+ligma_font_select_constructed (GObject *object)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+  LigmaPdbDialog *dialog = LIGMA_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view =
-    gimp_font_factory_view_new (GIMP_VIEW_TYPE_LIST,
-                                dialog->context->gimp->font_factory,
+    ligma_font_factory_view_new (LIGMA_VIEW_TYPE_LIST,
+                                dialog->context->ligma->font_factory,
                                 dialog->context,
-                                GIMP_VIEW_SIZE_MEDIUM, 1,
+                                LIGMA_VIEW_SIZE_MEDIUM, 1,
                                 dialog->menu_factory);
 
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
-                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2),
-                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2));
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (LIGMA_CONTAINER_EDITOR (dialog->view)->view),
+                                       6 * (LIGMA_VIEW_SIZE_MEDIUM + 2),
+                                       6 * (LIGMA_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
 
@@ -96,17 +96,17 @@ gimp_font_select_constructed (GObject *object)
   gtk_widget_show (dialog->view);
 }
 
-static GimpValueArray *
-gimp_font_select_run_callback (GimpPdbDialog  *dialog,
-                               GimpObject     *object,
+static LigmaValueArray *
+ligma_font_select_run_callback (LigmaPdbDialog  *dialog,
+                               LigmaObject     *object,
                                gboolean        closing,
                                GError        **error)
 {
-  return gimp_pdb_execute_procedure_by_name (dialog->pdb,
+  return ligma_pdb_execute_procedure_by_name (dialog->pdb,
                                              dialog->caller_context,
                                              NULL, error,
                                              dialog->callback_name,
-                                             G_TYPE_STRING,  gimp_object_get_name (object),
+                                             G_TYPE_STRING,  ligma_object_get_name (object),
                                              G_TYPE_BOOLEAN, closing,
                                              G_TYPE_NONE);
 }

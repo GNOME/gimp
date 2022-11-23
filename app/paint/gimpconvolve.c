@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,21 +22,21 @@
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpconvolve.h"
-#include "gimpconvolveoptions.h"
+#include "ligmaconvolve.h"
+#include "ligmaconvolveoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define FIELD_COLS    4
@@ -46,50 +46,50 @@
 #define MAX_SHARPEN   -64
 
 
-static void    gimp_convolve_paint            (GimpPaintCore    *paint_core,
+static void    ligma_convolve_paint            (LigmaPaintCore    *paint_core,
                                                GList            *drawables,
-                                               GimpPaintOptions *paint_options,
-                                               GimpSymmetry     *sym,
-                                               GimpPaintState    paint_state,
+                                               LigmaPaintOptions *paint_options,
+                                               LigmaSymmetry     *sym,
+                                               LigmaPaintState    paint_state,
                                                guint32           time);
-static void    gimp_convolve_motion           (GimpPaintCore    *paint_core,
-                                               GimpDrawable     *drawable,
-                                               GimpPaintOptions *paint_options,
-                                               GimpSymmetry     *sym);
+static void    ligma_convolve_motion           (LigmaPaintCore    *paint_core,
+                                               LigmaDrawable     *drawable,
+                                               LigmaPaintOptions *paint_options,
+                                               LigmaSymmetry     *sym);
 
-static void    gimp_convolve_calculate_matrix (GimpConvolve     *convolve,
-                                               GimpConvolveType  type,
+static void    ligma_convolve_calculate_matrix (LigmaConvolve     *convolve,
+                                               LigmaConvolveType  type,
                                                gint              radius_x,
                                                gint              radius_y,
                                                gdouble           rate);
-static gdouble gimp_convolve_sum_matrix       (const gfloat     *matrix);
+static gdouble ligma_convolve_sum_matrix       (const gfloat     *matrix);
 
 
-G_DEFINE_TYPE (GimpConvolve, gimp_convolve, GIMP_TYPE_BRUSH_CORE)
+G_DEFINE_TYPE (LigmaConvolve, ligma_convolve, LIGMA_TYPE_BRUSH_CORE)
 
 
 void
-gimp_convolve_register (Gimp                      *gimp,
-                        GimpPaintRegisterCallback  callback)
+ligma_convolve_register (Ligma                      *ligma,
+                        LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_CONVOLVE,
-                GIMP_TYPE_CONVOLVE_OPTIONS,
-                "gimp-convolve",
+  (* callback) (ligma,
+                LIGMA_TYPE_CONVOLVE,
+                LIGMA_TYPE_CONVOLVE_OPTIONS,
+                "ligma-convolve",
                 _("Convolve"),
-                "gimp-tool-blur");
+                "ligma-tool-blur");
 }
 
 static void
-gimp_convolve_class_init (GimpConvolveClass *klass)
+ligma_convolve_class_init (LigmaConvolveClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
 
-  paint_core_class->paint = gimp_convolve_paint;
+  paint_core_class->paint = ligma_convolve_paint;
 }
 
 static void
-gimp_convolve_init (GimpConvolve *convolve)
+ligma_convolve_init (LigmaConvolve *convolve)
 {
   gint i;
 
@@ -100,20 +100,20 @@ gimp_convolve_init (GimpConvolve *convolve)
 }
 
 static void
-gimp_convolve_paint (GimpPaintCore    *paint_core,
+ligma_convolve_paint (LigmaPaintCore    *paint_core,
                      GList            *drawables,
-                     GimpPaintOptions *paint_options,
-                     GimpSymmetry     *sym,
-                     GimpPaintState    paint_state,
+                     LigmaPaintOptions *paint_options,
+                     LigmaSymmetry     *sym,
+                     LigmaPaintState    paint_state,
                      guint32           time)
 {
   g_return_if_fail (g_list_length (drawables) == 1);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_MOTION:
+    case LIGMA_PAINT_STATE_MOTION:
       for (GList *iter = drawables; iter; iter = iter->next)
-        gimp_convolve_motion (paint_core, iter->data, paint_options, sym);
+        ligma_convolve_motion (paint_core, iter->data, paint_options, sym);
       break;
 
     default:
@@ -122,63 +122,63 @@ gimp_convolve_paint (GimpPaintCore    *paint_core,
 }
 
 static void
-gimp_convolve_motion (GimpPaintCore    *paint_core,
-                      GimpDrawable     *drawable,
-                      GimpPaintOptions *paint_options,
-                      GimpSymmetry     *sym)
+ligma_convolve_motion (LigmaPaintCore    *paint_core,
+                      LigmaDrawable     *drawable,
+                      LigmaPaintOptions *paint_options,
+                      LigmaSymmetry     *sym)
 {
-  GimpConvolve        *convolve   = GIMP_CONVOLVE (paint_core);
-  GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
-  GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
-  GimpContext         *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics        *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage           *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaConvolve        *convolve   = LIGMA_CONVOLVE (paint_core);
+  LigmaBrushCore       *brush_core = LIGMA_BRUSH_CORE (paint_core);
+  LigmaConvolveOptions *options    = LIGMA_CONVOLVE_OPTIONS (paint_options);
+  LigmaContext         *context    = LIGMA_CONTEXT (paint_options);
+  LigmaDynamics        *dynamics   = LIGMA_BRUSH_CORE (paint_core)->dynamics;
+  LigmaImage           *image      = ligma_item_get_image (LIGMA_ITEM (drawable));
   GeglBuffer          *paint_buffer;
   gint                 paint_buffer_x;
   gint                 paint_buffer_y;
-  GimpTempBuf         *temp_buf;
+  LigmaTempBuf         *temp_buf;
   GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
   gdouble              opacity;
   gdouble              rate;
-  GimpCoords           coords;
+  LigmaCoords           coords;
   gint                 off_x, off_y;
   gint                 paint_width, paint_height;
   gint                 n_strokes;
   gint                 i;
 
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
+  fade_point = ligma_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-  coords = *(gimp_symmetry_get_origin (sym));
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
+  coords = *(ligma_symmetry_get_origin (sym));
   coords.x -= off_x;
   coords.y -= off_y;
 
-  opacity = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+  opacity = ligma_dynamics_get_linear_value (dynamics,
+                                            LIGMA_DYNAMICS_OUTPUT_OPACITY,
                                             &coords,
                                             paint_options,
                                             fade_point);
   if (opacity == 0.0)
     return;
 
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  ligma_brush_core_eval_transform_dynamics (LIGMA_BRUSH_CORE (paint_core),
                                            image,
                                            paint_options,
                                            &coords);
-  n_strokes = gimp_symmetry_get_size (sym);
+  n_strokes = ligma_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      coords = *(gimp_symmetry_get_coords (sym, i));
+      coords = *(ligma_symmetry_get_coords (sym, i));
       coords.x -= off_x;
       coords.y -= off_y;
 
-      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+      ligma_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
-      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+      paint_buffer = ligma_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
-                                                       GIMP_LAYER_MODE_NORMAL,
+                                                       LIGMA_LAYER_MODE_NORMAL,
                                                        &coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
@@ -188,26 +188,26 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
         continue;
 
       rate = (options->rate *
-              gimp_dynamics_get_linear_value (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_RATE,
+              ligma_dynamics_get_linear_value (dynamics,
+                                              LIGMA_DYNAMICS_OUTPUT_RATE,
                                               &coords,
                                               paint_options,
                                               fade_point));
 
-      gimp_convolve_calculate_matrix (convolve, options->type,
-                                      gimp_brush_get_width  (brush_core->brush) / 2,
-                                      gimp_brush_get_height (brush_core->brush) / 2,
+      ligma_convolve_calculate_matrix (convolve, options->type,
+                                      ligma_brush_get_width  (brush_core->brush) / 2,
+                                      ligma_brush_get_height (brush_core->brush) / 2,
                                       rate);
 
-      /*  need a linear buffer for gimp_gegl_convolve()  */
-      temp_buf = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
+      /*  need a linear buffer for ligma_gegl_convolve()  */
+      temp_buf = ligma_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer),
                                     gegl_buffer_get_format (paint_buffer));
-      convolve_buffer = gimp_temp_buf_create_buffer (temp_buf);
-      gimp_temp_buf_unref (temp_buf);
+      convolve_buffer = ligma_temp_buf_create_buffer (temp_buf);
+      ligma_temp_buf_unref (temp_buf);
 
-      gimp_gegl_buffer_copy (
-        gimp_drawable_get_buffer (drawable),
+      ligma_gegl_buffer_copy (
+        ligma_drawable_get_buffer (drawable),
         GEGL_RECTANGLE (paint_buffer_x,
                         paint_buffer_y,
                         gegl_buffer_get_width  (paint_buffer),
@@ -216,7 +216,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
         convolve_buffer,
         GEGL_RECTANGLE (0, 0, 0, 0));
 
-      gimp_gegl_convolve (convolve_buffer,
+      ligma_gegl_convolve (convolve_buffer,
                           GEGL_RECTANGLE (0, 0,
                                           gegl_buffer_get_width  (convolve_buffer),
                                           gegl_buffer_get_height (convolve_buffer)),
@@ -225,23 +225,23 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                           gegl_buffer_get_width  (paint_buffer),
                                           gegl_buffer_get_height (paint_buffer)),
                           convolve->matrix, 3, convolve->matrix_divisor,
-                          GIMP_NORMAL_CONVOL, TRUE);
+                          LIGMA_NORMAL_CONVOL, TRUE);
 
       g_object_unref (convolve_buffer);
 
-      gimp_brush_core_replace_canvas (brush_core, drawable,
+      ligma_brush_core_replace_canvas (brush_core, drawable,
                                       &coords,
-                                      MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                      gimp_context_get_opacity (context),
-                                      gimp_paint_options_get_brush_mode (paint_options),
+                                      MIN (opacity, LIGMA_OPACITY_OPAQUE),
+                                      ligma_context_get_opacity (context),
+                                      ligma_paint_options_get_brush_mode (paint_options),
                                       1.0,
-                                      GIMP_PAINT_INCREMENTAL);
+                                      LIGMA_PAINT_INCREMENTAL);
     }
 }
 
 static void
-gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
-                                GimpConvolveType type,
+ligma_convolve_calculate_matrix (LigmaConvolve    *convolve,
+                                LigmaConvolveType type,
                                 gint             radius_x,
                                 gint             radius_y,
                                 gdouble          rate)
@@ -257,11 +257,11 @@ gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
     {
-    case GIMP_CONVOLVE_BLUR:
+    case LIGMA_CONVOLVE_BLUR:
       convolve->matrix[4] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       break;
 
-    case GIMP_CONVOLVE_SHARPEN:
+    case LIGMA_CONVOLVE_SHARPEN:
       convolve->matrix[4] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       break;
     }
@@ -271,11 +271,11 @@ gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
   convolve->matrix[7] = (radius_y)             ? 1.0 : 0.0;
   convolve->matrix[8] = (radius_x && radius_y) ? 1.0 : 0.0;
 
-  convolve->matrix_divisor = gimp_convolve_sum_matrix (convolve->matrix);
+  convolve->matrix_divisor = ligma_convolve_sum_matrix (convolve->matrix);
 }
 
 static gdouble
-gimp_convolve_sum_matrix (const gfloat *matrix)
+ligma_convolve_sum_matrix (const gfloat *matrix)
 {
   gdouble sum = 0.0;
   gint    i;

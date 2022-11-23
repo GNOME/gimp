@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE tags SYSTEM "gimp-tags.dtd">
+<!DOCTYPE tags SYSTEM "ligma-tags.dtd">
 
-<!-- This is a list of default tags for GIMP resources.                    -->
+<!-- This is a list of default tags for LIGMA resources.                    -->
 <!--                                                                       -->
 <!-- Please do not use separator characters, such as comma, in tags.       -->
 
 <tags>
-  <resource identifier="${gimp_data_dir}/brushes/Round.vbr" checksum="a7f02530d3bc7484c8f9240cbe9c65b1">
+  <resource identifier="${ligma_data_dir}/brushes/Round.vbr" checksum="a7f02530d3bc7484c8f9240cbe9c65b1">
     <tag>
       <thetag>round</thetag>
     </tag>
   </resource>
 
-  <resource identifier="${gimp_data_dir}/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
+  <resource identifier="${ligma_data_dir}/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
     <tag>
       <!-- fuzzy as in a feathered, blurred, unfocused, soft brush -->
       <thetag>fuzzy</thetag>

@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpnumberpairentry.c
- * Copyright (C) 2006  Simon Budig       <simon@gimp.org>
- * Copyright (C) 2007  Sven Neumann      <sven@gimp.org>
+ * ligmanumberpairentry.c
+ * Copyright (C) 2006  Simon Budig       <simon@ligma.org>
+ * Copyright (C) 2007  Sven Neumann      <sven@ligma.org>
  * Copyright (C) 2007  Martin Nordholts  <martin@svn.gnome.org>
  *
  * This library is free software: you can redistribute it and/or
@@ -29,18 +29,18 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpicons.h"
-#include "gimpnumberpairentry.h"
+#include "ligmaicons.h"
+#include "ligmanumberpairentry.h"
 
 
 /**
- * SECTION: gimpnumberpairentry
- * @title: GimpNumberPairEntry
+ * SECTION: ligmanumberpairentry
+ * @title: LigmaNumberPairEntry
  * @short_description: A #GtkEntry subclass to enter ratios.
  *
  * A #GtkEntry subclass to enter ratios.
@@ -82,7 +82,7 @@ typedef enum
 } ParseResult;
 
 
-struct _GimpNumberPairEntryPrivate
+struct _LigmaNumberPairEntryPrivate
 {
   /* The current number pair displayed in the widget. */
   gdouble      left_number;
@@ -121,52 +121,52 @@ struct _GimpNumberPairEntryPrivate
   gdouble      max_valid_value;
 };
 
-#define GET_PRIVATE(obj) (((GimpNumberPairEntry *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaNumberPairEntry *) (obj))->priv)
 
 
-static void         gimp_number_pair_entry_finalize          (GObject             *entry);
+static void         ligma_number_pair_entry_finalize          (GObject             *entry);
 
-static gboolean     gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
+static gboolean     ligma_number_pair_entry_valid_separator   (LigmaNumberPairEntry *entry,
                                                               gunichar             candidate);
-static void         gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
+static void         ligma_number_pair_entry_ratio_to_fraction (gdouble              ratio,
                                                               gdouble             *numerator,
                                                               gdouble             *denominator);
 
-static void         gimp_number_pair_entry_set_property      (GObject             *object,
+static void         ligma_number_pair_entry_set_property      (GObject             *object,
                                                               guint                property_id,
                                                               const GValue        *value,
                                                               GParamSpec          *pspec);
-static void         gimp_number_pair_entry_get_property      (GObject             *object,
+static void         ligma_number_pair_entry_get_property      (GObject             *object,
                                                               guint                property_id,
                                                               GValue              *value,
                                                               GParamSpec          *pspec);
-static void         gimp_number_pair_entry_changed           (GimpNumberPairEntry *entry);
-static void         gimp_number_pair_entry_icon_press        (GimpNumberPairEntry *entry);
-static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widget,
+static void         ligma_number_pair_entry_changed           (LigmaNumberPairEntry *entry);
+static void         ligma_number_pair_entry_icon_press        (LigmaNumberPairEntry *entry);
+static gboolean     ligma_number_pair_entry_events            (GtkWidget           *widget,
                                                               GdkEvent            *event);
 
-static void         gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
+static void         ligma_number_pair_entry_update_text       (LigmaNumberPairEntry *entry);
 
-static ParseResult  gimp_number_pair_entry_parse_text        (GimpNumberPairEntry *entry,
+static ParseResult  ligma_number_pair_entry_parse_text        (LigmaNumberPairEntry *entry,
                                                               const gchar         *text,
                                                               gdouble             *left_value,
                                                               gdouble             *right_value);
-static gboolean     gimp_number_pair_entry_numbers_in_range  (GimpNumberPairEntry *entry,
+static gboolean     ligma_number_pair_entry_numbers_in_range  (LigmaNumberPairEntry *entry,
                                                               gdouble              left_number,
                                                               gdouble              right_number);
 
-static gchar *      gimp_number_pair_entry_strdup_number_pair_string
-                                                             (GimpNumberPairEntry *entry,
+static gchar *      ligma_number_pair_entry_strdup_number_pair_string
+                                                             (LigmaNumberPairEntry *entry,
                                                               gdouble left_number,
                                                               gdouble right_number);
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpNumberPairEntry, gimp_number_pair_entry,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaNumberPairEntry, ligma_number_pair_entry,
                             GTK_TYPE_ENTRY)
 
 
-#define parent_class gimp_number_pair_entry_parent_class
+#define parent_class ligma_number_pair_entry_parent_class
 
 /* What the user shall end the input with when simplification is desired. */
 #define SIMPLIFICATION_CHAR  ((gunichar) '=')
@@ -178,7 +178,7 @@ static guint entry_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
+ligma_number_pair_entry_class_init (LigmaNumberPairEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -186,7 +186,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
     g_signal_new ("numbers-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNumberPairEntryClass, numbers_changed),
+                  G_STRUCT_OFFSET (LigmaNumberPairEntryClass, numbers_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -194,13 +194,13 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
     g_signal_new ("ratio-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNumberPairEntryClass, ratio_changed),
+                  G_STRUCT_OFFSET (LigmaNumberPairEntryClass, ratio_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->set_property = gimp_number_pair_entry_set_property;
-  object_class->get_property = gimp_number_pair_entry_get_property;
-  object_class->finalize     = gimp_number_pair_entry_finalize;
+  object_class->set_property = ligma_number_pair_entry_set_property;
+  object_class->get_property = ligma_number_pair_entry_get_property;
+  object_class->finalize     = ligma_number_pair_entry_finalize;
 
   klass->numbers_changed = NULL;
   klass->ratio_changed   = NULL;
@@ -211,7 +211,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "The left number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_RIGHT_NUMBER,
                                    g_param_spec_double ("right-number",
@@ -219,7 +219,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "The right number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DEFAULT_LEFT_NUMBER,
                                    g_param_spec_double ("default-left-number",
@@ -227,7 +227,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "The default left number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DEFAULT_RIGHT_NUMBER,
                                    g_param_spec_double ("default-right-number",
@@ -235,21 +235,21 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "The default right number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_USER_OVERRIDE,
                                    g_param_spec_boolean ("user-override",
                                                          "User override",
                                                          "Whether the widget is in 'user override' mode",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SEPARATORS,
                                    g_param_spec_string ("separators",
                                                         "Separators",
                                                         "A string of valid separators",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DEFAULT_TEXT,
@@ -257,14 +257,14 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "Default text",
                                                         "String to show when in automatic mode",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ALLOW_SIMPLIFICATION,
                                    g_param_spec_boolean ("allow-simplification",
                                                          "Allow simplification",
                                                          "Whether to allow simplification",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_MIN_VALID_VALUE,
                                    g_param_spec_double ("min-valid-value",
@@ -272,7 +272,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "Minimum value valid when parsing input",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         G_MINDOUBLE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_MAX_VALID_VALUE,
                                    g_param_spec_double ("max-valid-value",
@@ -280,7 +280,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "Maximum value valid when parsing input",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_RATIO,
                                    g_param_spec_double ("ratio",
@@ -288,23 +288,23 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         "The value as ratio",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         1.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ASPECT,
                                    g_param_spec_enum ("aspect",
                                                       "Aspect",
                                                       "The value as aspect",
-                                                      GIMP_TYPE_ASPECT_TYPE,
-                                                      GIMP_ASPECT_SQUARE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_ASPECT_TYPE,
+                                                      LIGMA_ASPECT_SQUARE,
+                                                      LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_init (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  entry->priv = gimp_number_pair_entry_get_instance_private (entry);
+  entry->priv = ligma_number_pair_entry_get_instance_private (entry);
 
   priv = GET_PRIVATE (entry);
 
@@ -322,29 +322,29 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
   priv->max_valid_value      = G_MAXDOUBLE;
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gimp_number_pair_entry_changed),
+                    G_CALLBACK (ligma_number_pair_entry_changed),
                     NULL);
   g_signal_connect (entry, "icon-press",
-                    G_CALLBACK (gimp_number_pair_entry_icon_press),
+                    G_CALLBACK (ligma_number_pair_entry_icon_press),
                     NULL);
   g_signal_connect (entry, "focus-out-event",
-                    G_CALLBACK (gimp_number_pair_entry_events),
+                    G_CALLBACK (ligma_number_pair_entry_events),
                     NULL);
   g_signal_connect (entry, "key-press-event",
-                    G_CALLBACK (gimp_number_pair_entry_events),
+                    G_CALLBACK (ligma_number_pair_entry_events),
                     NULL);
 
   gtk_widget_set_direction (GTK_WIDGET (entry), GTK_TEXT_DIR_LTR);
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
                                      GTK_ENTRY_ICON_SECONDARY,
-                                     GIMP_ICON_EDIT_CLEAR);
+                                     LIGMA_ICON_EDIT_CLEAR);
 }
 
 static void
-gimp_number_pair_entry_finalize (GObject *object)
+ligma_number_pair_entry_finalize (GObject *object)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (object);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->separators, g_free);
   priv->num_separators = 0;
@@ -355,13 +355,13 @@ gimp_number_pair_entry_finalize (GObject *object)
 }
 
 /**
- * gimp_number_pair_entry_new:
+ * ligma_number_pair_entry_new:
  * @separators:           The allowed separators.
  * @allow_simplification: Whether to do simplification on the entered term.
  * @min_valid_value:      The minimum allowed result value.
  * @max_valid_value:      The maximum allowed result value.
  *
- * Creates a new #GimpNumberPairEntry widget, which is a GtkEntry that
+ * Creates a new #LigmaNumberPairEntry widget, which is a GtkEntry that
  * accepts two numbers separated by a separator. Typical input example
  * with a 'x' separator: "377x233".
  *
@@ -379,17 +379,17 @@ gimp_number_pair_entry_finalize (GObject *object)
  * The first separator of @separators is used to display the current
  * value.
  *
- * Returns: The new #GimpNumberPairEntry widget.
+ * Returns: The new #LigmaNumberPairEntry widget.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_number_pair_entry_new (const gchar *separators,
+ligma_number_pair_entry_new (const gchar *separators,
                             gboolean     allow_simplification,
                             gdouble      min_valid_value,
                             gdouble      max_valid_value)
 {
-  return g_object_new (GIMP_TYPE_NUMBER_PAIR_ENTRY,
+  return g_object_new (LIGMA_TYPE_NUMBER_PAIR_ENTRY,
                        "separators",           separators,
                        "allow-simplification", allow_simplification,
                        "min-valid-value",      min_valid_value,
@@ -398,7 +398,7 @@ gimp_number_pair_entry_new (const gchar *separators,
 }
 
 static void
-gimp_number_pair_entry_ratio_to_fraction (gdouble  ratio,
+ligma_number_pair_entry_ratio_to_fraction (gdouble  ratio,
                                           gdouble *numerator,
                                           gdouble *denominator)
 {
@@ -448,11 +448,11 @@ gimp_number_pair_entry_ratio_to_fraction (gdouble  ratio,
 }
 
 /**
- * gimp_number_pair_entry_set_ratio:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_ratio:
+ * @entry: A #LigmaNumberPairEntry widget.
  * @ratio: Ratio to set in the widget.
  *
- * Sets the numbers of the #GimpNumberPairEntry to have the desired
+ * Sets the numbers of the #LigmaNumberPairEntry to have the desired
  * ratio. If the new ratio is different than the previous ratio, the
  * "ratio-changed" signal is emitted.
  *
@@ -462,35 +462,35 @@ gimp_number_pair_entry_ratio_to_fraction (gdouble  ratio,
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_set_ratio (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_set_ratio (LigmaNumberPairEntry *entry,
                                   gdouble              ratio)
 {
   gdouble numerator;
   gdouble denominator;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
-  gimp_number_pair_entry_ratio_to_fraction (ratio, &numerator, &denominator);
+  ligma_number_pair_entry_ratio_to_fraction (ratio, &numerator, &denominator);
 
-  gimp_number_pair_entry_set_values (entry, numerator, denominator);
+  ligma_number_pair_entry_set_values (entry, numerator, denominator);
 }
 
 /**
- * gimp_number_pair_entry_get_ratio:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_ratio:
+ * @entry: A #LigmaNumberPairEntry widget.
  *
- * Retrieves the ratio of the numbers displayed by a #GimpNumberPairEntry.
+ * Retrieves the ratio of the numbers displayed by a #LigmaNumberPairEntry.
  *
  * Returns: The ratio value.
  *
  * Since: 2.4
  **/
 gdouble
-gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_get_ratio (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), 1.0);
+  g_return_val_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry), 1.0);
 
   priv = GET_PRIVATE (entry);
 
@@ -498,31 +498,31 @@ gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
 }
 
 /**
- * gimp_number_pair_entry_set_values:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_values:
+ * @entry: A #LigmaNumberPairEntry widget.
  * @left:  Left number in the entry.
  * @right: Right number in the entry.
  *
- * Forces setting the numbers displayed by a #GimpNumberPairEntry,
+ * Forces setting the numbers displayed by a #LigmaNumberPairEntry,
  * ignoring if the user has set their own value. The state of
  * user-override will not be changed.
  *
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_set_values (LigmaNumberPairEntry *entry,
                                    gdouble              left,
                                    gdouble              right)
 {
-  GimpNumberPairEntryPrivate *priv;
-  GimpAspectType              old_aspect;
+  LigmaNumberPairEntryPrivate *priv;
+  LigmaAspectType              old_aspect;
   gdouble                     old_ratio;
   gdouble                     old_left_number;
   gdouble                     old_right_number;
   gboolean                    numbers_changed = FALSE;
   gboolean                    ratio_changed   = FALSE;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
@@ -530,8 +530,8 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
 
   old_left_number  = priv->left_number;
   old_right_number = priv->right_number;
-  old_ratio        = gimp_number_pair_entry_get_ratio (entry);
-  old_aspect       = gimp_number_pair_entry_get_aspect (entry);
+  old_ratio        = ligma_number_pair_entry_get_ratio (entry);
+  old_aspect       = ligma_number_pair_entry_get_aspect (entry);
 
 
   /* Freeze notification */
@@ -547,18 +547,18 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
   g_object_notify (G_OBJECT (entry), "left-number");
   g_object_notify (G_OBJECT (entry), "right-number");
 
-  gimp_number_pair_entry_update_text (entry);
+  ligma_number_pair_entry_update_text (entry);
 
 
   /* Find out what has changed */
 
-  if (fabs (old_ratio - gimp_number_pair_entry_get_ratio (entry)) > EPSILON)
+  if (fabs (old_ratio - ligma_number_pair_entry_get_ratio (entry)) > EPSILON)
     {
       g_object_notify (G_OBJECT (entry), "ratio");
 
       ratio_changed = TRUE;
 
-      if (old_aspect != gimp_number_pair_entry_get_aspect (entry))
+      if (old_aspect != ligma_number_pair_entry_get_aspect (entry))
         g_object_notify (G_OBJECT (entry), "aspect");
     }
 
@@ -584,23 +584,23 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
 }
 
 /**
- * gimp_number_pair_entry_get_values:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_values:
+ * @entry: A #LigmaNumberPairEntry widget.
  * @left:  (out) (optional): Location to store the left number (may be %NULL).
  * @right: (out) (optional): Location to store the right number (may be %NULL).
  *
- * Gets the numbers displayed by a #GimpNumberPairEntry.
+ * Gets the numbers displayed by a #LigmaNumberPairEntry.
  *
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_get_values (LigmaNumberPairEntry *entry,
                                    gdouble             *left,
                                    gdouble             *right)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
@@ -612,13 +612,13 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
 }
 
 /**
- * gimp_number_pair_entry_set_default_text:
- * @entry:  A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_default_text:
+ * @entry:  A #LigmaNumberPairEntry widget.
  * @string: Default string.
  *
  * Causes the entry to show a given string when in automatic mode,
  * instead of the default numbers. The only thing this does is making
- * the #GimpNumberPairEntry showing this string, the internal state
+ * the #LigmaNumberPairEntry showing this string, the internal state
  * and API calls are not affected.
  *
  * Set the default string to %NULL to display default values as
@@ -627,26 +627,26 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
  * Since: 2.4
  */
 void
-gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_set_default_text (LigmaNumberPairEntry *entry,
                                          const gchar         *string)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
   g_free (priv->default_text);
   priv->default_text = g_strdup (string);
 
-  gimp_number_pair_entry_update_text (entry);
+  ligma_number_pair_entry_update_text (entry);
 
   g_object_notify (G_OBJECT (entry), "default-text");
 }
 
 /**
- * gimp_number_pair_entry_get_default_text:
- * @entry:  A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_default_text:
+ * @entry:  A #LigmaNumberPairEntry widget.
  *
  * Returns: (nullable): the string manually set to be shown,
  *          or %NULL if values are shown in a normal fashion.
@@ -654,11 +654,11 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
  * Since: 2.4
  */
 const gchar *
-gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_get_default_text (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), NULL);
+  g_return_val_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry), NULL);
 
   priv = GET_PRIVATE (entry);
 
@@ -666,40 +666,40 @@ gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
 }
 
 /**
- * gimp_number_pair_entry_set_aspect:
- * @entry:  A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_aspect:
+ * @entry:  A #LigmaNumberPairEntry widget.
  * @aspect: The new aspect.
  *
  * Sets the aspect of the ratio by swapping the left_number and
  * right_number if necessary (or setting them to 1.0 in case that
- * @aspect is %GIMP_ASPECT_SQUARE).
+ * @aspect is %LIGMA_ASPECT_SQUARE).
  *
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
-                                   GimpAspectType       aspect)
+ligma_number_pair_entry_set_aspect (LigmaNumberPairEntry *entry,
+                                   LigmaAspectType       aspect)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
-  if (gimp_number_pair_entry_get_aspect (entry) == aspect)
+  if (ligma_number_pair_entry_get_aspect (entry) == aspect)
     return;
 
   priv = GET_PRIVATE (entry);
 
   switch (aspect)
     {
-    case GIMP_ASPECT_SQUARE:
-      gimp_number_pair_entry_set_values (entry,
+    case LIGMA_ASPECT_SQUARE:
+      ligma_number_pair_entry_set_values (entry,
                                          priv->left_number,
                                          priv->left_number);
       break;
 
-    case GIMP_ASPECT_LANDSCAPE:
-    case GIMP_ASPECT_PORTRAIT:
-      gimp_number_pair_entry_set_values (entry,
+    case LIGMA_ASPECT_LANDSCAPE:
+    case LIGMA_ASPECT_PORTRAIT:
+      ligma_number_pair_entry_set_values (entry,
                                          priv->right_number,
                                          priv->left_number);
       break;
@@ -707,43 +707,43 @@ gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
 }
 
 /**
- * gimp_number_pair_entry_get_aspect:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_aspect:
+ * @entry: A #LigmaNumberPairEntry widget.
  *
- * Gets the aspect of the ratio displayed by a #GimpNumberPairEntry.
+ * Gets the aspect of the ratio displayed by a #LigmaNumberPairEntry.
  *
  * Returns: The entry's current aspect.
  *
  * Since: 2.4
  **/
-GimpAspectType
-gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
+LigmaAspectType
+ligma_number_pair_entry_get_aspect (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), GIMP_ASPECT_SQUARE);
+  g_return_val_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry), LIGMA_ASPECT_SQUARE);
 
   priv = GET_PRIVATE (entry);
 
   if (priv->left_number > priv->right_number)
     {
-      return GIMP_ASPECT_LANDSCAPE;
+      return LIGMA_ASPECT_LANDSCAPE;
     }
   else if (priv->left_number < priv->right_number)
     {
-      return GIMP_ASPECT_PORTRAIT;
+      return LIGMA_ASPECT_PORTRAIT;
     }
   else
     {
-      return GIMP_ASPECT_SQUARE;
+      return LIGMA_ASPECT_SQUARE;
     }
 }
 
 static void
-gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_modify_font (LigmaNumberPairEntry *entry,
                                     gboolean             italic)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
   GtkStyleContext            *style;
 
   if (priv->font_italic == italic)
@@ -765,8 +765,8 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
 
 
 /**
- * gimp_number_pair_entry_set_user_override:
- * @entry:         A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_user_override:
+ * @entry:         A #LigmaNumberPairEntry widget.
  * @user_override: %TRUE sets the entry in user overridden mode,
  *                 %FALSE disables.
  *
@@ -777,12 +777,12 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_set_user_override (LigmaNumberPairEntry *entry,
                                           gboolean             user_override)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
@@ -790,30 +790,30 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
 
   if (! user_override)
     {
-      gimp_number_pair_entry_set_default_values (entry,
+      ligma_number_pair_entry_set_default_values (entry,
                                                  priv->default_left_number,
                                                  priv->default_right_number);
     }
 
-  gimp_number_pair_entry_modify_font (entry, ! user_override);
+  ligma_number_pair_entry_modify_font (entry, ! user_override);
 
   g_object_notify (G_OBJECT (entry), "user-override");
 }
 
 /**
- * gimp_number_pair_entry_get_user_override:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_user_override:
+ * @entry: A #LigmaNumberPairEntry widget.
  *
  * Returns: Whether or not the the widget is in user overridden mode.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_get_user_override (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), FALSE);
+  g_return_val_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry), FALSE);
 
   priv = GET_PRIVATE (entry);
 
@@ -821,25 +821,25 @@ gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
 }
 
 static void
-gimp_number_pair_entry_changed (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_changed (LigmaNumberPairEntry *entry)
 {
-  gimp_number_pair_entry_modify_font (entry, FALSE);
+  ligma_number_pair_entry_modify_font (entry, FALSE);
 }
 
 static void
-gimp_number_pair_entry_icon_press (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_icon_press (LigmaNumberPairEntry *entry)
 {
-  gimp_number_pair_entry_set_user_override (entry, FALSE);
+  ligma_number_pair_entry_set_user_override (entry, FALSE);
 
   gtk_editable_set_position (GTK_EDITABLE (entry), -1);
 }
 
 static gboolean
-gimp_number_pair_entry_events (GtkWidget *widget,
+ligma_number_pair_entry_events (GtkWidget *widget,
                                GdkEvent  *event)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (widget);
-  GimpNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
+  LigmaNumberPairEntry        *entry = LIGMA_NUMBER_PAIR_ENTRY (widget);
+  LigmaNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
   gboolean                    force_user_override;
 
   force_user_override = FALSE;
@@ -872,7 +872,7 @@ gimp_number_pair_entry_events (GtkWidget *widget,
 
         text = gtk_entry_get_text (GTK_ENTRY (entry));
 
-        parse_result = gimp_number_pair_entry_parse_text (entry,
+        parse_result = ligma_number_pair_entry_parse_text (entry,
                                                           text,
                                                           &left_value,
                                                           &right_value);
@@ -884,17 +884,17 @@ gimp_number_pair_entry_events (GtkWidget *widget,
                   priv->right_number != right_value ||
                   force_user_override)
                 {
-                  gimp_number_pair_entry_set_values (entry,
+                  ligma_number_pair_entry_set_values (entry,
                                                      left_value,
                                                      right_value);
 
-                  gimp_number_pair_entry_set_user_override (entry, TRUE);
+                  ligma_number_pair_entry_set_user_override (entry, TRUE);
                 }
             }
             break;
 
           case PARSE_CLEAR:
-            gimp_number_pair_entry_set_user_override (entry, FALSE);
+            ligma_number_pair_entry_set_user_override (entry, FALSE);
             break;
 
           default:
@@ -903,7 +903,7 @@ gimp_number_pair_entry_events (GtkWidget *widget,
 
         /* Make sure the entry text is up to date */
 
-        gimp_number_pair_entry_update_text (entry);
+        ligma_number_pair_entry_update_text (entry);
 
         gtk_editable_set_position (GTK_EDITABLE (entry), -1);
       }
@@ -917,7 +917,7 @@ gimp_number_pair_entry_events (GtkWidget *widget,
 }
 
 /**
- * gimp_number_pair_entry_strdup_number_pair_string:
+ * ligma_number_pair_entry_strdup_number_pair_string:
  * @entry:
  * @left_number:
  * @right_number:
@@ -925,11 +925,11 @@ gimp_number_pair_entry_events (GtkWidget *widget,
  * Returns: allocated data, must be g_free:d.
  **/
 static gchar *
-gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_strdup_number_pair_string (LigmaNumberPairEntry *entry,
                                                   gdouble              left_number,
                                                   gdouble              right_number)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
   gchar                       sep[8];
   gint                        len;
 
@@ -944,9 +944,9 @@ gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
 }
 
 static void
-gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
+ligma_number_pair_entry_update_text (LigmaNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
   gchar                      *buffer;
 
   if (! priv->user_override &&
@@ -959,28 +959,28 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
     }
   else
     {
-      buffer = gimp_number_pair_entry_strdup_number_pair_string (entry,
+      buffer = ligma_number_pair_entry_strdup_number_pair_string (entry,
                                                                  priv->left_number,
                                                                  priv->right_number);
     }
 
   g_signal_handlers_block_by_func (entry,
-                                   gimp_number_pair_entry_changed, NULL);
+                                   ligma_number_pair_entry_changed, NULL);
 
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   g_free (buffer);
 
   g_signal_handlers_unblock_by_func (entry,
-                                     gimp_number_pair_entry_changed, NULL);
+                                     ligma_number_pair_entry_changed, NULL);
 
-  gimp_number_pair_entry_modify_font (entry, ! priv->user_override);
+  ligma_number_pair_entry_modify_font (entry, ! priv->user_override);
 }
 
 static gboolean
-gimp_number_pair_entry_valid_separator (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_valid_separator (LigmaNumberPairEntry *entry,
                                         gunichar             candidate)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
 
   if (priv->num_separators > 0)
     {
@@ -999,12 +999,12 @@ gimp_number_pair_entry_valid_separator (GimpNumberPairEntry *entry,
 }
 
 static ParseResult
-gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_parse_text (LigmaNumberPairEntry *entry,
                                    const gchar         *text,
                                    gdouble             *left_value,
                                    gdouble             *right_value)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
 
   gdouble   new_left_number;
   gdouble   new_right_number;
@@ -1032,7 +1032,7 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
     text = g_utf8_next_char (text);
 
   /* check for a valid separator */
-  if (! gimp_number_pair_entry_valid_separator (entry, g_utf8_get_char (text)))
+  if (! ligma_number_pair_entry_valid_separator (entry, g_utf8_get_char (text)))
     return PARSE_INVALID;
   else
     text = g_utf8_next_char (text);
@@ -1064,14 +1064,14 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
   if (*text)
     return PARSE_INVALID;
 
-  if (! gimp_number_pair_entry_numbers_in_range (entry,
+  if (! ligma_number_pair_entry_numbers_in_range (entry,
                                                  new_left_number,
                                                  new_right_number))
     return PARSE_INVALID;
 
   if (simplify && new_right_number != 0.0)
     {
-      gimp_number_pair_entry_ratio_to_fraction (new_left_number /
+      ligma_number_pair_entry_ratio_to_fraction (new_left_number /
                                                 new_right_number,
                                                 left_value,
                                                 right_value);
@@ -1086,38 +1086,38 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
 }
 
 static void
-gimp_number_pair_entry_set_property (GObject      *object,
+ligma_number_pair_entry_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (object);
-  GimpNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
+  LigmaNumberPairEntry        *entry = LIGMA_NUMBER_PAIR_ENTRY (object);
+  LigmaNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
 
   switch (property_id)
     {
     case PROP_LEFT_NUMBER:
-      gimp_number_pair_entry_set_values (entry,
+      ligma_number_pair_entry_set_values (entry,
                                          g_value_get_double (value),
                                          priv->right_number);
       break;
     case PROP_RIGHT_NUMBER:
-      gimp_number_pair_entry_set_values (entry,
+      ligma_number_pair_entry_set_values (entry,
                                          priv->left_number,
                                          g_value_get_double (value));
       break;
     case PROP_DEFAULT_LEFT_NUMBER:
-      gimp_number_pair_entry_set_default_values (entry,
+      ligma_number_pair_entry_set_default_values (entry,
                                                  g_value_get_double (value),
                                                  priv->default_right_number);
       break;
     case PROP_DEFAULT_RIGHT_NUMBER:
-      gimp_number_pair_entry_set_default_values (entry,
+      ligma_number_pair_entry_set_default_values (entry,
                                                  priv->default_left_number,
                                                  g_value_get_double (value));
       break;
     case PROP_USER_OVERRIDE:
-      gimp_number_pair_entry_set_user_override (entry,
+      ligma_number_pair_entry_set_user_override (entry,
                                                 g_value_get_boolean (value));
       break;
     case PROP_SEPARATORS:
@@ -1130,7 +1130,7 @@ gimp_number_pair_entry_set_property (GObject      *object,
         priv->separators = NULL;
       break;
     case PROP_DEFAULT_TEXT:
-      gimp_number_pair_entry_set_default_text (entry,
+      ligma_number_pair_entry_set_default_text (entry,
                                                g_value_get_string (value));
       break;
     case PROP_ALLOW_SIMPLIFICATION:
@@ -1143,10 +1143,10 @@ gimp_number_pair_entry_set_property (GObject      *object,
       priv->max_valid_value = g_value_get_double (value);
       break;
     case PROP_RATIO:
-      gimp_number_pair_entry_set_ratio (entry, g_value_get_double (value));
+      ligma_number_pair_entry_set_ratio (entry, g_value_get_double (value));
       break;
     case PROP_ASPECT:
-      gimp_number_pair_entry_set_aspect (entry, g_value_get_enum (value));
+      ligma_number_pair_entry_set_aspect (entry, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1155,13 +1155,13 @@ gimp_number_pair_entry_set_property (GObject      *object,
 }
 
 static void
-gimp_number_pair_entry_get_property (GObject    *object,
+ligma_number_pair_entry_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (object);
-  GimpNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
+  LigmaNumberPairEntry        *entry = LIGMA_NUMBER_PAIR_ENTRY (object);
+  LigmaNumberPairEntryPrivate *priv  = GET_PRIVATE (entry);
 
   switch (property_id)
     {
@@ -1199,10 +1199,10 @@ gimp_number_pair_entry_get_property (GObject    *object,
       g_value_set_double (value, priv->max_valid_value);
       break;
     case PROP_RATIO:
-      g_value_set_double (value, gimp_number_pair_entry_get_ratio (entry));
+      g_value_set_double (value, ligma_number_pair_entry_get_ratio (entry));
       break;
     case PROP_ASPECT:
-      g_value_set_enum (value, gimp_number_pair_entry_get_aspect (entry));
+      g_value_set_enum (value, ligma_number_pair_entry_get_aspect (entry));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1211,21 +1211,21 @@ gimp_number_pair_entry_get_property (GObject    *object,
 }
 
 /**
- * gimp_number_pair_entry_set_default_values:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_set_default_values:
+ * @entry: A #LigmaNumberPairEntry widget.
  * @left:  Default left value in the entry.
  * @right: Default right value in the entry.
  *
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_set_default_values (LigmaNumberPairEntry *entry,
                                            gdouble              left,
                                            gdouble              right)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
@@ -1234,28 +1234,28 @@ gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
 
   if (! priv->user_override)
     {
-      gimp_number_pair_entry_set_values (entry,
+      ligma_number_pair_entry_set_values (entry,
                                          priv->default_left_number,
                                          priv->default_right_number);
     }
 }
 
 /**
- * gimp_number_pair_entry_get_default_values:
- * @entry: A #GimpNumberPairEntry widget.
+ * ligma_number_pair_entry_get_default_values:
+ * @entry: A #LigmaNumberPairEntry widget.
  * @left:  (out) (optional): Location to put the default left value, or %NULL.
  * @right: (out) (optional): Location to put the default right value, or %NULL.
  *
  * Since: 2.4
  **/
 void
-gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_get_default_values (LigmaNumberPairEntry *entry,
                                            gdouble             *left,
                                            gdouble             *right)
 {
-  GimpNumberPairEntryPrivate *priv;
+  LigmaNumberPairEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_NUMBER_PAIR_ENTRY (entry));
 
   priv = GET_PRIVATE (entry);
 
@@ -1267,11 +1267,11 @@ gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,
 }
 
 static gboolean
-gimp_number_pair_entry_numbers_in_range (GimpNumberPairEntry *entry,
+ligma_number_pair_entry_numbers_in_range (LigmaNumberPairEntry *entry,
                                          gdouble              left_number,
                                          gdouble              right_number)
 {
-  GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
+  LigmaNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
 
   return (left_number  >= priv->min_valid_value &&
           left_number  <= priv->max_valid_value &&

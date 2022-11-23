@@ -1,8 +1,8 @@
 /Makefile.in
 /Makefile
-/org.gimp.GIMP.appdata.xml.in
-/org.gimp.GIMP.appdata.xml
-/gimp.desktop.in
-/gimp.desktop
+/org.ligma.LIGMA.appdata.xml.in
+/org.ligma.LIGMA.appdata.xml
+/ligma.desktop.in
+/ligma.desktop
 /test-appdata.sh
 /.thumbnails

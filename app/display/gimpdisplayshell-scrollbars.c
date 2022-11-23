@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,26 +24,26 @@
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scrollbars.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmadisplayshell-scrollbars.h"
 
 
 #define MINIMUM_STEP_AMOUNT 1.0
 
 
 /**
- * gimp_display_shell_scrollbars_update:
+ * ligma_display_shell_scrollbars_update:
  * @shell:
  *
  **/
 void
-gimp_display_shell_scrollbars_update (GimpDisplayShell *shell)
+ligma_display_shell_scrollbars_update (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display)
     return;
@@ -53,7 +53,7 @@ gimp_display_shell_scrollbars_update (GimpDisplayShell *shell)
   g_object_freeze_notify (G_OBJECT (shell->hsbdata));
 
   /* Update upper and lower value before we set the new value */
-  gimp_display_shell_scrollbars_setup_horizontal (shell, shell->offset_x);
+  ligma_display_shell_scrollbars_setup_horizontal (shell, shell->offset_x);
 
   g_object_set (shell->hsbdata,
                 "value",          (gdouble) shell->offset_x,
@@ -69,7 +69,7 @@ gimp_display_shell_scrollbars_update (GimpDisplayShell *shell)
   g_object_freeze_notify (G_OBJECT (shell->vsbdata));
 
   /* Update upper and lower value before we set the new value */
-  gimp_display_shell_scrollbars_setup_vertical (shell, shell->offset_y);
+  ligma_display_shell_scrollbars_setup_vertical (shell, shell->offset_y);
 
   g_object_set (shell->vsbdata,
                 "value",          (gdouble) shell->offset_y,
@@ -81,14 +81,14 @@ gimp_display_shell_scrollbars_update (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scrollbars_setup_horizontal:
+ * ligma_display_shell_scrollbars_setup_horizontal:
  * @shell:
  * @value:
  *
  * Setup the limits of the horizontal scrollbar
  **/
 void
-gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
+ligma_display_shell_scrollbars_setup_horizontal (LigmaDisplayShell *shell,
                                                 gdouble           value)
 {
   gint    bounds_x;
@@ -101,23 +101,23 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
   gdouble upper;
   gdouble scale_x;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display || ! gimp_display_get_image (shell->display))
+  if (! shell->display || ! ligma_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_scale_get_image_bounds (shell,
+  ligma_display_shell_scale_get_image_bounds (shell,
                                              &bounds_x,     NULL,
                                              &bounds_width, NULL);
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       bounding_box_x     = bounds_x;
       bounding_box_width = bounds_width;
     }
   else
     {
-      gimp_display_shell_scale_get_image_bounding_box (
+      ligma_display_shell_scale_get_image_bounding_box (
         shell,
         &bounding_box_x,     NULL,
         &bounding_box_width, NULL);
@@ -132,7 +132,7 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
   lower = MIN (value,                     x1);
   upper = MAX (value + shell->disp_width, x2);
 
-  gimp_display_shell_get_rotated_scale (shell, &scale_x, NULL);
+  ligma_display_shell_get_rotated_scale (shell, &scale_x, NULL);
 
   g_object_set (shell->hsbdata,
                 "lower",          lower,
@@ -142,14 +142,14 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scrollbars_setup_vertical:
+ * ligma_display_shell_scrollbars_setup_vertical:
  * @shell:
  * @value:
  *
  * Setup the limits of the vertical scrollbar
  **/
 void
-gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
+ligma_display_shell_scrollbars_setup_vertical (LigmaDisplayShell *shell,
                                               gdouble           value)
 {
   gint    bounds_y;
@@ -162,23 +162,23 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
   gdouble upper;
   gdouble scale_y;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display || ! gimp_display_get_image (shell->display))
+  if (! shell->display || ! ligma_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_scale_get_image_bounds (shell,
+  ligma_display_shell_scale_get_image_bounds (shell,
                                              NULL, &bounds_y,
                                              NULL, &bounds_height);
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       bounding_box_y      = bounds_y;
       bounding_box_height = bounds_height;
     }
   else
     {
-      gimp_display_shell_scale_get_image_bounding_box (
+      ligma_display_shell_scale_get_image_bounding_box (
         shell,
         NULL, &bounding_box_y,
         NULL, &bounding_box_height);
@@ -193,7 +193,7 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
   lower = MIN (value,                      y1);
   upper = MAX (value + shell->disp_height, y2);
 
-  gimp_display_shell_get_rotated_scale (shell, NULL, &scale_y);
+  ligma_display_shell_get_rotated_scale (shell, NULL, &scale_y);
 
   g_object_set (shell->vsbdata,
                 "lower",          lower,
@@ -203,7 +203,7 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scrollbars_update_steppers:
+ * ligma_display_shell_scrollbars_update_steppers:
  * @shell:
  * @min_offset_x:
  * @max_offset_x:
@@ -214,13 +214,13 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
  * from its adjustment limits because we support overscrolling.
  **/
 void
-gimp_display_shell_scrollbars_update_steppers (GimpDisplayShell *shell,
+ligma_display_shell_scrollbars_update_steppers (LigmaDisplayShell *shell,
                                                gint              min_offset_x,
                                                gint              max_offset_x,
                                                gint              min_offset_y,
                                                gint              max_offset_y)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb),
                                            min_offset_x < shell->offset_x ?

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppickablebutton.h
- * Copyright (C) 2013 Michael Natterer <mitch@gimp.org>
+ * ligmapickablebutton.h
+ * Copyright (C) 2013 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,43 +18,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_BUTTON_H__
-#define __GIMP_PICKABLE_BUTTON_H__
+#ifndef __LIGMA_PICKABLE_BUTTON_H__
+#define __LIGMA_PICKABLE_BUTTON_H__
 
 
-#define GIMP_TYPE_PICKABLE_BUTTON            (gimp_pickable_button_get_type ())
-#define GIMP_PICKABLE_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PICKABLE_BUTTON, GimpPickableButton))
-#define GIMP_PICKABLE_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PICKABLE_BUTTON, GimpPickableButtonClass))
-#define GIMP_IS_PICKABLE_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PICKABLE_BUTTON))
-#define GIMP_IS_PICKABLE_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PICKABLE_BUTTON))
-#define GIMP_PICKABLE_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PICKABLE_BUTTON, GimpPickableButtonClass))
+#define LIGMA_TYPE_PICKABLE_BUTTON            (ligma_pickable_button_get_type ())
+#define LIGMA_PICKABLE_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PICKABLE_BUTTON, LigmaPickableButton))
+#define LIGMA_PICKABLE_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PICKABLE_BUTTON, LigmaPickableButtonClass))
+#define LIGMA_IS_PICKABLE_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PICKABLE_BUTTON))
+#define LIGMA_IS_PICKABLE_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PICKABLE_BUTTON))
+#define LIGMA_PICKABLE_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PICKABLE_BUTTON, LigmaPickableButtonClass))
 
 
-typedef struct _GimpPickableButtonPrivate GimpPickableButtonPrivate;
-typedef struct _GimpPickableButtonClass   GimpPickableButtonClass;
+typedef struct _LigmaPickableButtonPrivate LigmaPickableButtonPrivate;
+typedef struct _LigmaPickableButtonClass   LigmaPickableButtonClass;
 
-struct _GimpPickableButton
+struct _LigmaPickableButton
 {
-  GimpButton                 parent_instance;
+  LigmaButton                 parent_instance;
 
-  GimpPickableButtonPrivate *private;
+  LigmaPickableButtonPrivate *private;
 };
 
-struct _GimpPickableButtonClass
+struct _LigmaPickableButtonClass
 {
-  GimpButtonClass  parent_class;
+  LigmaButtonClass  parent_class;
 };
 
 
-GType          gimp_pickable_button_get_type     (void) G_GNUC_CONST;
+GType          ligma_pickable_button_get_type     (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_pickable_button_new          (GimpContext        *context,
+GtkWidget    * ligma_pickable_button_new          (LigmaContext        *context,
                                                   gint                view_size,
                                                   gint                view_border_width);
 
-GimpPickable * gimp_pickable_button_get_pickable (GimpPickableButton *button);
-void           gimp_pickable_button_set_pickable (GimpPickableButton *button,
-                                                  GimpPickable       *pickable);
+LigmaPickable * ligma_pickable_button_get_pickable (LigmaPickableButton *button);
+void           ligma_pickable_button_set_pickable (LigmaPickableButton *button,
+                                                  LigmaPickable       *pickable);
 
 
-#endif /* __GIMP_PICKABLE_BUTTON_H__ */
+#endif /* __LIGMA_PICKABLE_BUTTON_H__ */

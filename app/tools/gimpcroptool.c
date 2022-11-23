@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,340 +20,340 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-crop.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpitem.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-crop.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaitem.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimptoolrectangle.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmatoolrectangle.h"
 
-#include "gimpcropoptions.h"
-#include "gimpcroptool.h"
-#include "gimprectangleoptions.h"
-#include "gimptoolcontrol.h"
-#include "gimptools-utils.h"
+#include "ligmacropoptions.h"
+#include "ligmacroptool.h"
+#include "ligmarectangleoptions.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatools-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void      gimp_crop_tool_constructed                (GObject              *object);
-static void      gimp_crop_tool_dispose                    (GObject              *object);
+static void      ligma_crop_tool_constructed                (GObject              *object);
+static void      ligma_crop_tool_dispose                    (GObject              *object);
 
-static void      gimp_crop_tool_control                    (GimpTool             *tool,
-                                                            GimpToolAction        action,
-                                                            GimpDisplay          *display);
-static void      gimp_crop_tool_button_press               (GimpTool             *tool,
-                                                            const GimpCoords     *coords,
+static void      ligma_crop_tool_control                    (LigmaTool             *tool,
+                                                            LigmaToolAction        action,
+                                                            LigmaDisplay          *display);
+static void      ligma_crop_tool_button_press               (LigmaTool             *tool,
+                                                            const LigmaCoords     *coords,
                                                             guint32               time,
                                                             GdkModifierType       state,
-                                                            GimpButtonPressType   press_type,
-                                                            GimpDisplay          *display);
-static void      gimp_crop_tool_button_release             (GimpTool             *tool,
-                                                            const GimpCoords     *coords,
+                                                            LigmaButtonPressType   press_type,
+                                                            LigmaDisplay          *display);
+static void      ligma_crop_tool_button_release             (LigmaTool             *tool,
+                                                            const LigmaCoords     *coords,
                                                             guint32               time,
                                                             GdkModifierType       state,
-                                                            GimpButtonReleaseType release_type,
-                                                            GimpDisplay          *display);
-static void     gimp_crop_tool_motion                      (GimpTool             *tool,
-                                                            const GimpCoords     *coords,
+                                                            LigmaButtonReleaseType release_type,
+                                                            LigmaDisplay          *display);
+static void     ligma_crop_tool_motion                      (LigmaTool             *tool,
+                                                            const LigmaCoords     *coords,
                                                             guint32               time,
                                                             GdkModifierType       state,
-                                                            GimpDisplay          *display);
-static void      gimp_crop_tool_options_notify             (GimpTool             *tool,
-                                                            GimpToolOptions      *options,
+                                                            LigmaDisplay          *display);
+static void      ligma_crop_tool_options_notify             (LigmaTool             *tool,
+                                                            LigmaToolOptions      *options,
                                                             const GParamSpec     *pspec);
 
-static void      gimp_crop_tool_rectangle_changed          (GimpToolWidget       *rectangle,
-                                                            GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_rectangle_response         (GimpToolWidget       *rectangle,
+static void      ligma_crop_tool_rectangle_changed          (LigmaToolWidget       *rectangle,
+                                                            LigmaCropTool         *crop_tool);
+static void      ligma_crop_tool_rectangle_response         (LigmaToolWidget       *rectangle,
                                                             gint                  response_id,
-                                                            GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_rectangle_change_complete  (GimpToolRectangle    *rectangle,
-                                                            GimpCropTool         *crop_tool);
+                                                            LigmaCropTool         *crop_tool);
+static void      ligma_crop_tool_rectangle_change_complete  (LigmaToolRectangle    *rectangle,
+                                                            LigmaCropTool         *crop_tool);
 
-static void      gimp_crop_tool_start                      (GimpCropTool         *crop_tool,
-                                                            GimpDisplay          *display);
-static void      gimp_crop_tool_commit                     (GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_halt                       (GimpCropTool         *crop_tool);
+static void      ligma_crop_tool_start                      (LigmaCropTool         *crop_tool,
+                                                            LigmaDisplay          *display);
+static void      ligma_crop_tool_commit                     (LigmaCropTool         *crop_tool);
+static void      ligma_crop_tool_halt                       (LigmaCropTool         *crop_tool);
 
-static void      gimp_crop_tool_update_option_defaults     (GimpCropTool         *crop_tool,
+static void      ligma_crop_tool_update_option_defaults     (LigmaCropTool         *crop_tool,
                                                             gboolean              ignore_pending);
-static GimpRectangleConstraint
-                 gimp_crop_tool_get_constraint             (GimpCropTool         *crop_tool);
+static LigmaRectangleConstraint
+                 ligma_crop_tool_get_constraint             (LigmaCropTool         *crop_tool);
 
-static void      gimp_crop_tool_image_changed              (GimpCropTool         *crop_tool,
-                                                            GimpImage            *image,
-                                                            GimpContext          *context);
-static void      gimp_crop_tool_image_size_changed         (GimpCropTool         *crop_tool);
-static void   gimp_crop_tool_image_selected_layers_changed (GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_layer_size_changed         (GimpCropTool         *crop_tool);
+static void      ligma_crop_tool_image_changed              (LigmaCropTool         *crop_tool,
+                                                            LigmaImage            *image,
+                                                            LigmaContext          *context);
+static void      ligma_crop_tool_image_size_changed         (LigmaCropTool         *crop_tool);
+static void   ligma_crop_tool_image_selected_layers_changed (LigmaCropTool         *crop_tool);
+static void      ligma_crop_tool_layer_size_changed         (LigmaCropTool         *crop_tool);
 
-static void      gimp_crop_tool_auto_shrink                (GimpCropTool         *crop_tool);
+static void      ligma_crop_tool_auto_shrink                (LigmaCropTool         *crop_tool);
 
 
-G_DEFINE_TYPE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL)
+G_DEFINE_TYPE (LigmaCropTool, ligma_crop_tool, LIGMA_TYPE_DRAW_TOOL)
 
-#define parent_class gimp_crop_tool_parent_class
+#define parent_class ligma_crop_tool_parent_class
 
 
 /*  public functions  */
 
 void
-gimp_crop_tool_register (GimpToolRegisterCallback  callback,
+ligma_crop_tool_register (LigmaToolRegisterCallback  callback,
                          gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_CROP_TOOL,
-                GIMP_TYPE_CROP_OPTIONS,
-                gimp_crop_options_gui,
-                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND |
-                GIMP_CONTEXT_PROP_MASK_PATTERN,
-                "gimp-crop-tool",
+  (* callback) (LIGMA_TYPE_CROP_TOOL,
+                LIGMA_TYPE_CROP_OPTIONS,
+                ligma_crop_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_FOREGROUND |
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND |
+                LIGMA_CONTEXT_PROP_MASK_PATTERN,
+                "ligma-crop-tool",
                 _("Crop"),
                 _("Crop Tool: Remove edge areas from image or layer"),
                 N_("_Crop"), "<shift>C",
-                NULL, GIMP_HELP_TOOL_CROP,
-                GIMP_ICON_TOOL_CROP,
+                NULL, LIGMA_HELP_TOOL_CROP,
+                LIGMA_ICON_TOOL_CROP,
                 data);
 }
 
 static void
-gimp_crop_tool_class_init (GimpCropToolClass *klass)
+ligma_crop_tool_class_init (LigmaCropToolClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class   = LIGMA_TOOL_CLASS (klass);
 
-  object_class->constructed  = gimp_crop_tool_constructed;
-  object_class->dispose      = gimp_crop_tool_dispose;
+  object_class->constructed  = ligma_crop_tool_constructed;
+  object_class->dispose      = ligma_crop_tool_dispose;
 
-  tool_class->control        = gimp_crop_tool_control;
-  tool_class->button_press   = gimp_crop_tool_button_press;
-  tool_class->button_release = gimp_crop_tool_button_release;
-  tool_class->motion         = gimp_crop_tool_motion;
-  tool_class->options_notify = gimp_crop_tool_options_notify;
+  tool_class->control        = ligma_crop_tool_control;
+  tool_class->button_press   = ligma_crop_tool_button_press;
+  tool_class->button_release = ligma_crop_tool_button_release;
+  tool_class->motion         = ligma_crop_tool_motion;
+  tool_class->options_notify = ligma_crop_tool_options_notify;
 }
 
 static void
-gimp_crop_tool_init (GimpCropTool *crop_tool)
+ligma_crop_tool_init (LigmaCropTool *crop_tool)
 {
-  GimpTool *tool = GIMP_TOOL (crop_tool);
+  LigmaTool *tool = LIGMA_TOOL (crop_tool);
 
-  gimp_tool_control_set_wants_click      (tool->control, TRUE);
-  gimp_tool_control_set_active_modifiers (tool->control,
-                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
-  gimp_tool_control_set_precision        (tool->control,
-                                          GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-  gimp_tool_control_set_cursor           (tool->control,
-                                          GIMP_CURSOR_CROSSHAIR_SMALL);
-  gimp_tool_control_set_tool_cursor      (tool->control,
-                                          GIMP_TOOL_CURSOR_CROP);
+  ligma_tool_control_set_wants_click      (tool->control, TRUE);
+  ligma_tool_control_set_active_modifiers (tool->control,
+                                          LIGMA_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  ligma_tool_control_set_precision        (tool->control,
+                                          LIGMA_CURSOR_PRECISION_PIXEL_BORDER);
+  ligma_tool_control_set_cursor           (tool->control,
+                                          LIGMA_CURSOR_CROSSHAIR_SMALL);
+  ligma_tool_control_set_tool_cursor      (tool->control,
+                                          LIGMA_TOOL_CURSOR_CROP);
 
-  gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
+  ligma_draw_tool_set_default_status (LIGMA_DRAW_TOOL (tool),
                                      _("Click-Drag to draw a crop rectangle"));
 }
 
 static void
-gimp_crop_tool_constructed (GObject *object)
+ligma_crop_tool_constructed (GObject *object)
 {
-  GimpCropTool    *crop_tool = GIMP_CROP_TOOL (object);
-  GimpContext     *context;
-  GimpToolInfo    *tool_info;
+  LigmaCropTool    *crop_tool = LIGMA_CROP_TOOL (object);
+  LigmaContext     *context;
+  LigmaToolInfo    *tool_info;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  tool_info = GIMP_TOOL (crop_tool)->tool_info;
+  tool_info = LIGMA_TOOL (crop_tool)->tool_info;
 
-  context = gimp_get_user_context (tool_info->gimp);
+  context = ligma_get_user_context (tool_info->ligma);
 
   g_signal_connect_object (context, "image-changed",
-                           G_CALLBACK (gimp_crop_tool_image_changed),
+                           G_CALLBACK (ligma_crop_tool_image_changed),
                            crop_tool,
                            G_CONNECT_SWAPPED);
 
   /* Make sure we are connected to "size-changed" for the initial
    * image.
    */
-  gimp_crop_tool_image_changed (crop_tool,
-                                gimp_context_get_image (context),
+  ligma_crop_tool_image_changed (crop_tool,
+                                ligma_context_get_image (context),
                                 context);
 }
 
 static void
-gimp_crop_tool_dispose (GObject *object)
+ligma_crop_tool_dispose (GObject *object)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (object);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (object);
 
   /* Clean up current_image and current_layers. */
-  gimp_crop_tool_image_changed (crop_tool, NULL, NULL);
+  ligma_crop_tool_image_changed (crop_tool, NULL, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_crop_tool_control (GimpTool       *tool,
-                        GimpToolAction  action,
-                        GimpDisplay    *display)
+ligma_crop_tool_control (LigmaTool       *tool,
+                        LigmaToolAction  action,
+                        LigmaDisplay    *display)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_crop_tool_halt (crop_tool);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_crop_tool_halt (crop_tool);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_crop_tool_commit (crop_tool);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_crop_tool_commit (crop_tool);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_crop_tool_button_press (GimpTool            *tool,
-                             const GimpCoords    *coords,
+ligma_crop_tool_button_press (LigmaTool            *tool,
+                             const LigmaCoords    *coords,
                              guint32              time,
                              GdkModifierType      state,
-                             GimpButtonPressType  press_type,
-                             GimpDisplay         *display)
+                             LigmaButtonPressType  press_type,
+                             LigmaDisplay         *display)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (tool);
 
   if (tool->display && display != tool->display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
 
   if (! tool->display)
     {
-      gimp_crop_tool_start (crop_tool, display);
+      ligma_crop_tool_start (crop_tool, display);
 
-      gimp_tool_widget_hover (crop_tool->widget, coords, state, TRUE);
+      ligma_tool_widget_hover (crop_tool->widget, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
        * property bindings would cause the rectangle to start with the
        * size from tool options.
        */
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (crop_tool->widget),
-                                        GIMP_TOOL_RECTANGLE_CREATING);
+      ligma_tool_rectangle_set_function (LIGMA_TOOL_RECTANGLE (crop_tool->widget),
+                                        LIGMA_TOOL_RECTANGLE_CREATING);
     }
 
-  if (gimp_tool_widget_button_press (crop_tool->widget, coords, time, state,
+  if (ligma_tool_widget_button_press (crop_tool->widget, coords, time, state,
                                      press_type))
     {
       crop_tool->grab_widget = crop_tool->widget;
     }
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
 }
 
 static void
-gimp_crop_tool_button_release (GimpTool              *tool,
-                               const GimpCoords      *coords,
+ligma_crop_tool_button_release (LigmaTool              *tool,
+                               const LigmaCoords      *coords,
                                guint32                time,
                                GdkModifierType        state,
-                               GimpButtonReleaseType  release_type,
-                               GimpDisplay           *display)
+                               LigmaButtonReleaseType  release_type,
+                               LigmaDisplay           *display)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (tool);
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
   if (crop_tool->grab_widget)
     {
-      gimp_tool_widget_button_release (crop_tool->grab_widget,
+      ligma_tool_widget_button_release (crop_tool->grab_widget,
                                        coords, time, state, release_type);
       crop_tool->grab_widget = NULL;
     }
 
-  gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
+  ligma_tool_push_status (tool, display, _("Click or press Enter to crop"));
 }
 
 static void
-gimp_crop_tool_motion (GimpTool         *tool,
-                       const GimpCoords *coords,
+ligma_crop_tool_motion (LigmaTool         *tool,
+                       const LigmaCoords *coords,
                        guint32           time,
                        GdkModifierType   state,
-                       GimpDisplay      *display)
+                       LigmaDisplay      *display)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (tool);
 
   if (crop_tool->grab_widget)
     {
-      gimp_tool_widget_motion (crop_tool->grab_widget, coords, time, state);
+      ligma_tool_widget_motion (crop_tool->grab_widget, coords, time, state);
     }
 }
 
 static void
-gimp_crop_tool_options_notify (GimpTool         *tool,
-                               GimpToolOptions  *options,
+ligma_crop_tool_options_notify (LigmaTool         *tool,
+                               LigmaToolOptions  *options,
                                const GParamSpec *pspec)
 {
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  LigmaCropTool *crop_tool = LIGMA_CROP_TOOL (tool);
 
   if (! strcmp (pspec->name, "layer-only") ||
       ! strcmp (pspec->name, "allow-growing"))
     {
       if (crop_tool->widget)
         {
-          gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (crop_tool->widget),
-                                              gimp_crop_tool_get_constraint (crop_tool));
+          ligma_tool_rectangle_set_constraint (LIGMA_TOOL_RECTANGLE (crop_tool->widget),
+                                              ligma_crop_tool_get_constraint (crop_tool));
         }
       else
         {
-          gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+          ligma_crop_tool_update_option_defaults (crop_tool, FALSE);
         }
     }
 }
 
 static void
-gimp_crop_tool_rectangle_changed (GimpToolWidget *rectangle,
-                                  GimpCropTool   *crop_tool)
+ligma_crop_tool_rectangle_changed (LigmaToolWidget *rectangle,
+                                  LigmaCropTool   *crop_tool)
 {
 }
 
 static void
-gimp_crop_tool_rectangle_response (GimpToolWidget *rectangle,
+ligma_crop_tool_rectangle_response (LigmaToolWidget *rectangle,
                                    gint            response_id,
-                                   GimpCropTool   *crop_tool)
+                                   LigmaCropTool   *crop_tool)
 {
-  GimpTool *tool = GIMP_TOOL (crop_tool);
+  LigmaTool *tool = LIGMA_TOOL (crop_tool);
 
   switch (response_id)
     {
-    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+    case LIGMA_TOOL_WIDGET_RESPONSE_CONFIRM:
+      ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, tool->display);
       break;
 
-    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+    case LIGMA_TOOL_WIDGET_RESPONSE_CANCEL:
+      ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
       break;
     }
 }
 
 static void
-gimp_crop_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
-                                          GimpCropTool      *crop_tool)
+ligma_crop_tool_rectangle_change_complete (LigmaToolRectangle *rectangle,
+                                          LigmaCropTool      *crop_tool)
 {
-  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+  ligma_crop_tool_update_option_defaults (crop_tool, FALSE);
 }
 
 static void
-gimp_crop_tool_start (GimpCropTool *crop_tool,
-                      GimpDisplay  *display)
+ligma_crop_tool_start (LigmaCropTool *crop_tool,
+                      LigmaDisplay  *display)
 {
   static const gchar *properties[] =
   {
@@ -375,21 +375,21 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
     "fixed-center"
   };
 
-  GimpTool         *tool    = GIMP_TOOL (crop_tool);
-  GimpDisplayShell *shell   = gimp_display_get_shell (display);
-  GimpCropOptions  *options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
-  GimpToolWidget   *widget;
+  LigmaTool         *tool    = LIGMA_TOOL (crop_tool);
+  LigmaDisplayShell *shell   = ligma_display_get_shell (display);
+  LigmaCropOptions  *options = LIGMA_CROP_TOOL_GET_OPTIONS (crop_tool);
+  LigmaToolWidget   *widget;
   gint              i;
 
   tool->display = display;
 
-  crop_tool->widget = widget = gimp_tool_rectangle_new (shell);
+  crop_tool->widget = widget = ligma_tool_rectangle_new (shell);
 
   g_object_set (widget,
                 "status-title", _("Crop to: "),
                 NULL);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), widget);
 
   for (i = 0; i < G_N_ELEMENTS (properties); i++)
     {
@@ -402,127 +402,127 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
       crop_tool->bindings = g_list_prepend (crop_tool->bindings, binding);
     }
 
-  gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
-                                  gimp_display_get_image (shell->display),
-                                  G_CALLBACK (gimp_crop_tool_auto_shrink),
+  ligma_rectangle_options_connect (LIGMA_RECTANGLE_OPTIONS (options),
+                                  ligma_display_get_image (shell->display),
+                                  G_CALLBACK (ligma_crop_tool_auto_shrink),
                                   crop_tool);
 
-  gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (widget),
-                                      gimp_crop_tool_get_constraint (crop_tool));
+  ligma_tool_rectangle_set_constraint (LIGMA_TOOL_RECTANGLE (widget),
+                                      ligma_crop_tool_get_constraint (crop_tool));
 
   g_signal_connect (widget, "changed",
-                    G_CALLBACK (gimp_crop_tool_rectangle_changed),
+                    G_CALLBACK (ligma_crop_tool_rectangle_changed),
                     crop_tool);
   g_signal_connect (widget, "response",
-                    G_CALLBACK (gimp_crop_tool_rectangle_response),
+                    G_CALLBACK (ligma_crop_tool_rectangle_response),
                     crop_tool);
   g_signal_connect (widget, "change-complete",
-                    G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
+                    G_CALLBACK (ligma_crop_tool_rectangle_change_complete),
                     crop_tool);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+  ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
 }
 
 static void
-gimp_crop_tool_commit (GimpCropTool *crop_tool)
+ligma_crop_tool_commit (LigmaCropTool *crop_tool)
 {
-  GimpTool *tool = GIMP_TOOL (crop_tool);
+  LigmaTool *tool = LIGMA_TOOL (crop_tool);
 
   if (tool->display)
     {
-      GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
-      GimpImage       *image   = gimp_display_get_image (tool->display);
+      LigmaCropOptions *options = LIGMA_CROP_TOOL_GET_OPTIONS (tool);
+      LigmaImage       *image   = ligma_display_get_image (tool->display);
       gdouble          x, y;
       gdouble          x2, y2;
       gint             w, h;
 
-      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (crop_tool->widget),
+      ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (crop_tool->widget),
                                            &x, &y, &x2, &y2);
       w = x2 - x;
       h = y2 - y;
 
-      gimp_tool_pop_status (tool, tool->display);
+      ligma_tool_pop_status (tool, tool->display);
 
       /* if rectangle exists, crop it */
       if (w > 0 && h > 0)
         {
           if (options->layer_only)
             {
-              GList *layers = gimp_image_get_selected_layers (image);
+              GList *layers = ligma_image_get_selected_layers (image);
               GList *iter;
               gint   off_x, off_y;
               gchar *undo_text;
 
               if (! layers)
                 {
-                  gimp_tool_message_literal (tool, tool->display,
+                  ligma_tool_message_literal (tool, tool->display,
                                              _("There are no selected layers to crop."));
                   return;
                 }
 
               for (iter = layers; iter; iter = iter->next)
-                if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+                if (! ligma_item_is_content_locked (LIGMA_ITEM (iter->data), NULL))
                   break;
 
               if (iter == NULL)
                 {
-                  gimp_tool_message_literal (tool, tool->display,
+                  ligma_tool_message_literal (tool, tool->display,
                                              _("All selected layers' pixels are locked."));
-                  gimp_tools_blink_lock_box (tool->display->gimp, GIMP_ITEM (layers->data));
+                  ligma_tools_blink_lock_box (tool->display->ligma, LIGMA_ITEM (layers->data));
                   return;
                 }
 
               undo_text = ngettext ("Resize Layer", "Resize %d layers",
                                     g_list_length (layers));
               undo_text = g_strdup_printf (undo_text, g_list_length (layers));
-              gimp_image_undo_group_start (image,
-                                           GIMP_UNDO_GROUP_IMAGE_CROP,
+              ligma_image_undo_group_start (image,
+                                           LIGMA_UNDO_GROUP_IMAGE_CROP,
                                            undo_text);
               g_free (undo_text);
               for (iter = layers; iter; iter = iter->next)
                 {
-                  gimp_item_get_offset (GIMP_ITEM (iter->data), &off_x, &off_y);
+                  ligma_item_get_offset (LIGMA_ITEM (iter->data), &off_x, &off_y);
 
                   off_x -= x;
                   off_y -= y;
 
-                  gimp_item_resize (GIMP_ITEM (iter->data),
-                                    GIMP_CONTEXT (options), options->fill_type,
+                  ligma_item_resize (LIGMA_ITEM (iter->data),
+                                    LIGMA_CONTEXT (options), options->fill_type,
                                     w, h, off_x, off_y);
                 }
-              gimp_image_undo_group_end (image);
+              ligma_image_undo_group_end (image);
             }
           else
             {
-              gimp_image_crop (image,
-                               GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
+              ligma_image_crop (image,
+                               LIGMA_CONTEXT (options), LIGMA_FILL_TRANSPARENT,
                                x, y, w, h, options->delete_pixels);
             }
 
-          gimp_image_flush (image);
+          ligma_image_flush (image);
         }
     }
 }
 
 static void
-gimp_crop_tool_halt (GimpCropTool *crop_tool)
+ligma_crop_tool_halt (LigmaCropTool *crop_tool)
 {
-  GimpTool         *tool    = GIMP_TOOL (crop_tool);
-  GimpCropOptions  *options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
+  LigmaTool         *tool    = LIGMA_TOOL (crop_tool);
+  LigmaCropOptions  *options = LIGMA_CROP_TOOL_GET_OPTIONS (crop_tool);
 
   if (tool->display)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
 
-      gimp_display_shell_set_highlight (shell, NULL, 0.0);
+      ligma_display_shell_set_highlight (shell, NULL, 0.0);
 
-      gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
-                                         G_CALLBACK (gimp_crop_tool_auto_shrink),
+      ligma_rectangle_options_disconnect (LIGMA_RECTANGLE_OPTIONS (options),
+                                         G_CALLBACK (ligma_crop_tool_auto_shrink),
                                          crop_tool);
     }
 
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+  if (ligma_draw_tool_is_active (LIGMA_DRAW_TOOL (tool)))
+    ligma_draw_tool_stop (LIGMA_DRAW_TOOL (tool));
 
   /*  disconnect bindings manually so they are really gone *now*, we
    *  might be in the middle of a signal emission that keeps the
@@ -531,18 +531,18 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
   g_list_free_full (crop_tool->bindings, (GDestroyNotify) g_object_unref);
   crop_tool->bindings = NULL;
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), NULL);
   g_clear_object (&crop_tool->widget);
 
   tool->display   = NULL;
   g_list_free (tool->drawables);
   tool->drawables = NULL;
 
-  gimp_crop_tool_update_option_defaults (crop_tool, TRUE);
+  ligma_crop_tool_update_option_defaults (crop_tool, TRUE);
 }
 
 /**
- * gimp_crop_tool_update_option_defaults:
+ * ligma_crop_tool_update_option_defaults:
  * @crop_tool:
  * @ignore_pending: %TRUE to ignore any pending crop rectangle.
  *
@@ -550,14 +550,14 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
  * properties.
  */
 static void
-gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
+ligma_crop_tool_update_option_defaults (LigmaCropTool *crop_tool,
                                        gboolean      ignore_pending)
 {
-  GimpTool             *tool      = GIMP_TOOL (crop_tool);
-  GimpToolRectangle    *rectangle = GIMP_TOOL_RECTANGLE (crop_tool->widget);
-  GimpRectangleOptions *options;
+  LigmaTool             *tool      = LIGMA_TOOL (crop_tool);
+  LigmaToolRectangle    *rectangle = LIGMA_TOOL_RECTANGLE (crop_tool->widget);
+  LigmaRectangleOptions *options;
 
-  options = GIMP_RECTANGLE_OPTIONS (GIMP_TOOL_GET_OPTIONS (tool));
+  options = LIGMA_RECTANGLE_OPTIONS (LIGMA_TOOL_GET_OPTIONS (tool));
 
   if (rectangle && ! ignore_pending)
     {
@@ -566,7 +566,7 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
        * pending rectangle width/height.
        */
 
-      gimp_tool_rectangle_pending_size_set (rectangle,
+      ligma_tool_rectangle_pending_size_set (rectangle,
                                             G_OBJECT (options),
                                             "default-aspect-numerator",
                                             "default-aspect-denominator");
@@ -585,26 +585,26 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
         {
           /* ugly hack: if we don't have a widget, construct a temporary one
            * so that we can use it to call
-           * gimp_tool_rectangle_constraint_size_set().
+           * ligma_tool_rectangle_constraint_size_set().
            */
 
-          GimpContext *context = gimp_get_user_context (tool->tool_info->gimp);
-          GimpDisplay *display = gimp_context_get_display (context);
+          LigmaContext *context = ligma_get_user_context (tool->tool_info->ligma);
+          LigmaDisplay *display = ligma_context_get_display (context);
 
           if (display)
             {
-              GimpDisplayShell *shell = gimp_display_get_shell (display);
+              LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
-              rectangle = GIMP_TOOL_RECTANGLE (gimp_tool_rectangle_new (shell));
+              rectangle = LIGMA_TOOL_RECTANGLE (ligma_tool_rectangle_new (shell));
 
-              gimp_tool_rectangle_set_constraint (
-                rectangle, gimp_crop_tool_get_constraint (crop_tool));
+              ligma_tool_rectangle_set_constraint (
+                rectangle, ligma_crop_tool_get_constraint (crop_tool));
             }
         }
 
       if (rectangle)
         {
-          gimp_tool_rectangle_constraint_size_set (rectangle,
+          ligma_tool_rectangle_constraint_size_set (rectangle,
                                                    G_OBJECT (options),
                                                    "default-aspect-numerator",
                                                    "default-aspect-denominator");
@@ -619,34 +619,34 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
     }
 }
 
-static GimpRectangleConstraint
-gimp_crop_tool_get_constraint (GimpCropTool *crop_tool)
+static LigmaRectangleConstraint
+ligma_crop_tool_get_constraint (LigmaCropTool *crop_tool)
 {
-  GimpCropOptions *crop_options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
+  LigmaCropOptions *crop_options = LIGMA_CROP_TOOL_GET_OPTIONS (crop_tool);
 
   if (crop_options->allow_growing)
     {
-      return GIMP_RECTANGLE_CONSTRAIN_NONE;
+      return LIGMA_RECTANGLE_CONSTRAIN_NONE;
     }
   else
     {
-      return crop_options->layer_only ? GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
-                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE;
+      return crop_options->layer_only ? LIGMA_RECTANGLE_CONSTRAIN_DRAWABLE :
+                                        LIGMA_RECTANGLE_CONSTRAIN_IMAGE;
     }
 }
 
 static void
-gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
-                              GimpImage    *image,
-                              GimpContext  *context)
+ligma_crop_tool_image_changed (LigmaCropTool *crop_tool,
+                              LigmaImage    *image,
+                              LigmaContext  *context)
 {
   if (crop_tool->current_image)
     {
       g_signal_handlers_disconnect_by_func (crop_tool->current_image,
-                                            gimp_crop_tool_image_size_changed,
+                                            ligma_crop_tool_image_size_changed,
                                             NULL);
       g_signal_handlers_disconnect_by_func (crop_tool->current_image,
-                                            gimp_crop_tool_image_selected_layers_changed,
+                                            ligma_crop_tool_image_selected_layers_changed,
                                             NULL);
 
       g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_image),
@@ -661,11 +661,11 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                                  (gpointer) &crop_tool->current_image);
 
       g_signal_connect_object (crop_tool->current_image, "size-changed",
-                               G_CALLBACK (gimp_crop_tool_image_size_changed),
+                               G_CALLBACK (ligma_crop_tool_image_size_changed),
                                crop_tool,
                                G_CONNECT_SWAPPED);
       g_signal_connect_object (crop_tool->current_image, "selected-layers-changed",
-                               G_CALLBACK (gimp_crop_tool_image_selected_layers_changed),
+                               G_CALLBACK (ligma_crop_tool_image_selected_layers_changed),
                                crop_tool,
                                G_CONNECT_SWAPPED);
     }
@@ -673,19 +673,19 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
   /* Make sure we are connected to "size-changed" for the initial
    * layer.
    */
-  gimp_crop_tool_image_selected_layers_changed (crop_tool);
+  ligma_crop_tool_image_selected_layers_changed (crop_tool);
 
-  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (crop_tool), FALSE);
+  ligma_crop_tool_update_option_defaults (LIGMA_CROP_TOOL (crop_tool), FALSE);
 }
 
 static void
-gimp_crop_tool_image_size_changed (GimpCropTool *crop_tool)
+ligma_crop_tool_image_size_changed (LigmaCropTool *crop_tool)
 {
-  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+  ligma_crop_tool_update_option_defaults (crop_tool, FALSE);
 }
 
 static void
-gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
+ligma_crop_tool_image_selected_layers_changed (LigmaCropTool *crop_tool)
 {
   GList *iter;
 
@@ -696,7 +696,7 @@ gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
           if (iter->data)
             {
               g_signal_handlers_disconnect_by_func (iter->data,
-                                                    gimp_crop_tool_layer_size_changed,
+                                                    ligma_crop_tool_layer_size_changed,
                                                     NULL);
 
               g_object_remove_weak_pointer (G_OBJECT (iter->data),
@@ -709,7 +709,7 @@ gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
 
   if (crop_tool->current_image)
     {
-      crop_tool->current_layers = gimp_image_get_selected_layers (crop_tool->current_image);
+      crop_tool->current_layers = ligma_image_get_selected_layers (crop_tool->current_image);
       crop_tool->current_layers = g_list_copy (crop_tool->current_layers);
     }
   else
@@ -725,30 +725,30 @@ gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
                                      (gpointer) &iter->data);
 
           g_signal_connect_object (iter->data, "size-changed",
-                                   G_CALLBACK (gimp_crop_tool_layer_size_changed),
+                                   G_CALLBACK (ligma_crop_tool_layer_size_changed),
                                    crop_tool,
                                    G_CONNECT_SWAPPED);
         }
     }
 
-  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+  ligma_crop_tool_update_option_defaults (crop_tool, FALSE);
 }
 
 static void
-gimp_crop_tool_layer_size_changed (GimpCropTool *crop_tool)
+ligma_crop_tool_layer_size_changed (LigmaCropTool *crop_tool)
 {
-  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+  ligma_crop_tool_update_option_defaults (crop_tool, FALSE);
 }
 
 static void
-gimp_crop_tool_auto_shrink (GimpCropTool *crop_tool)
+ligma_crop_tool_auto_shrink (LigmaCropTool *crop_tool)
 {
   gboolean shrink_merged ;
 
-  g_object_get (gimp_tool_get_options (GIMP_TOOL (crop_tool)),
+  g_object_get (ligma_tool_get_options (LIGMA_TOOL (crop_tool)),
                 "shrink-merged", &shrink_merged,
                 NULL);
 
-  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (crop_tool->widget),
+  ligma_tool_rectangle_auto_shrink (LIGMA_TOOL_RECTANGLE (crop_tool->widget),
                                    shrink_merged);
 }

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagecolorprofile.h
+ * ligmaimagecolorprofile.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,34 +18,34 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
-#define __GIMP_IMAGE_COLOR_PROFILE_H__
+#ifndef __LIGMA_IMAGE_COLOR_PROFILE_H__
+#define __LIGMA_IMAGE_COLOR_PROFILE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-GimpColorProfile * gimp_image_get_color_profile           (GimpImage                 *image);
-gboolean           gimp_image_set_color_profile           (GimpImage                 *image,
-                                                           GimpColorProfile          *profile);
+LigmaColorProfile * ligma_image_get_color_profile           (LigmaImage                 *image);
+gboolean           ligma_image_set_color_profile           (LigmaImage                 *image,
+                                                           LigmaColorProfile          *profile);
 
-GimpColorProfile * gimp_image_get_simulation_profile      (GimpImage                 *image);
-gboolean           gimp_image_set_simulation_profile      (GimpImage                 *image,
-                                                           GimpColorProfile          *profile);
+LigmaColorProfile * ligma_image_get_simulation_profile      (LigmaImage                 *image);
+gboolean           ligma_image_set_simulation_profile      (LigmaImage                 *image,
+                                                           LigmaColorProfile          *profile);
 
-GimpColorProfile * gimp_image_get_effective_color_profile (GimpImage                 *image);
+LigmaColorProfile * ligma_image_get_effective_color_profile (LigmaImage                 *image);
 
-gboolean           gimp_image_convert_color_profile       (GimpImage                 *image,
-                                                           GimpColorProfile          *profile,
-                                                           GimpColorRenderingIntent   intent,
+gboolean           ligma_image_convert_color_profile       (LigmaImage                 *image,
+                                                           LigmaColorProfile          *profile,
+                                                           LigmaColorRenderingIntent   intent,
                                                            gboolean                   bpc);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */
+#endif /* __LIGMA_IMAGE_COLOR_PROFILE_H__ */

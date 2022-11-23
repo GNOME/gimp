@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,16 +21,16 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpparamspecs.h"
-#include "gimpparamspecs-desc.h"
+#include "ligmaparamspecs.h"
+#include "ligmaparamspecs-desc.h"
 
 
 static inline const gchar *
-gimp_param_spec_get_blurb (GParamSpec *pspec)
+ligma_param_spec_get_blurb (GParamSpec *pspec)
 {
   const gchar *blurb = g_param_spec_get_blurb (pspec);
 
@@ -38,18 +38,18 @@ gimp_param_spec_get_blurb (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_boolean_desc (GParamSpec *pspec)
+ligma_param_spec_boolean_desc (GParamSpec *pspec)
 {
-  const gchar *blurb = gimp_param_spec_get_blurb (pspec);
+  const gchar *blurb = ligma_param_spec_get_blurb (pspec);
 
   return g_strconcat (blurb, " (TRUE or FALSE)", NULL);
 }
 
 static gchar *
-gimp_param_spec_int_desc (GParamSpec *pspec)
+ligma_param_spec_int_desc (GParamSpec *pspec)
 {
   GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
-  const gchar   *blurb = gimp_param_spec_get_blurb (pspec);
+  const gchar   *blurb = ligma_param_spec_get_blurb (pspec);
 
   if (ispec->minimum == G_MININT32 && ispec->maximum == G_MAXINT32)
     return g_strdup (blurb);
@@ -71,10 +71,10 @@ gimp_param_spec_int_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_double_desc (GParamSpec *pspec)
+ligma_param_spec_double_desc (GParamSpec *pspec)
 {
   GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
-  const gchar      *blurb = gimp_param_spec_get_blurb (pspec);
+  const gchar      *blurb = ligma_param_spec_get_blurb (pspec);
 
   if (dspec->minimum == - G_MAXDOUBLE && dspec->maximum == G_MAXDOUBLE)
     return g_strdup (blurb);
@@ -96,17 +96,17 @@ gimp_param_spec_double_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_enum_desc (GParamSpec *pspec)
+ligma_param_spec_enum_desc (GParamSpec *pspec)
 {
-  const gchar    *blurb      = gimp_param_spec_get_blurb (pspec);
+  const gchar    *blurb      = ligma_param_spec_get_blurb (pspec);
   GString        *str        = g_string_new (blurb);
   GEnumClass     *enum_class = g_type_class_peek (pspec->value_type);
   GEnumValue     *enum_value;
   GSList         *excluded;
   gint            i, n;
 
-  if (GIMP_IS_PARAM_SPEC_ENUM (pspec))
-    excluded = GIMP_PARAM_SPEC_ENUM (pspec)->excluded_values;
+  if (LIGMA_IS_PARAM_SPEC_ENUM (pspec))
+    excluded = LIGMA_PARAM_SPEC_ENUM (pspec)->excluded_values;
   else
     excluded = NULL;
 
@@ -133,10 +133,10 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
       if (n > 0)
         g_string_append (str, ", ");
 
-      if (G_LIKELY (g_str_has_prefix (enum_value->value_name, "GIMP_")))
-        name = gimp_canonicalize_identifier (enum_value->value_name + 5);
+      if (G_LIKELY (g_str_has_prefix (enum_value->value_name, "LIGMA_")))
+        name = ligma_canonicalize_identifier (enum_value->value_name + 5);
       else
-        name = gimp_canonicalize_identifier (enum_value->value_name);
+        name = ligma_canonicalize_identifier (enum_value->value_name);
 
       g_string_append (str, name);
       g_free (name);
@@ -152,7 +152,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
 }
 
 /**
- * gimp_param_spec_get_desc:
+ * ligma_param_spec_get_desc:
  * @pspec: a #GParamSpec
  *
  * This function creates a description of the passed @pspec, which is
@@ -163,29 +163,29 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
  * Returns: A newly allocated string describing the parameter.
  */
 gchar *
-gimp_param_spec_get_desc (GParamSpec *pspec)
+ligma_param_spec_get_desc (GParamSpec *pspec)
 {
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
 
-  if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
+  if (LIGMA_IS_PARAM_SPEC_UNIT (pspec))
     {
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
-      return gimp_param_spec_int_desc (pspec);
+      return ligma_param_spec_int_desc (pspec);
     }
   else
     {
       switch (G_TYPE_FUNDAMENTAL (pspec->value_type))
         {
         case G_TYPE_BOOLEAN:
-          return gimp_param_spec_boolean_desc (pspec);
+          return ligma_param_spec_boolean_desc (pspec);
 
         case G_TYPE_DOUBLE:
-          return gimp_param_spec_double_desc (pspec);
+          return ligma_param_spec_double_desc (pspec);
 
         case G_TYPE_ENUM:
-          return gimp_param_spec_enum_desc (pspec);
+          return ligma_param_spec_enum_desc (pspec);
         }
     }
 

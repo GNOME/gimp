@@ -163,10 +163,10 @@ color_picker_cursors = [
   'cursor-color-picker.png',
 ]
 
-cursors_resourcename = 'gimp-tool-cursors'
+cursors_resourcename = 'ligma-tool-cursors'
 cursors_xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 cursors_xml_content += '<gresources>\n'
-cursors_xml_content += '  <gresource prefix="/org/gimp/tool-cursors">\n'
+cursors_xml_content += '  <gresource prefix="/org/ligma/tool-cursors">\n'
 foreach cursor : tool_cursors
   cursors_xml_content+='    <file preprocess="to-pixdata">'+ cursor +'</file>\n'
 endforeach
@@ -182,15 +182,15 @@ cursors_xml = configure_file(
 )
 
 
-pickers_resourcename = 'gimp-color-picker-cursors'
+pickers_resourcename = 'ligma-color-picker-cursors'
 pickers_xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 pickers_xml_content += '<gresources>\n'
-pickers_xml_content += '  <gresource prefix="/org/gimp/color-picker-cursors">\n'
+pickers_xml_content += '  <gresource prefix="/org/ligma/color-picker-cursors">\n'
 foreach cursor : color_picker_cursors
   pickers_xml_content+='    <file preprocess="to-pixdata">'+ cursor +'</file>\n'
 endforeach
 pickers_xml_content += '  </gresource>\n'
-pickers_xml_content += '  <gresource prefix="/org/gimp/color-picker-cursors-raw">\n'
+pickers_xml_content += '  <gresource prefix="/org/ligma/color-picker-cursors-raw">\n'
 foreach cursor : color_picker_cursors
   pickers_xml_content+='    <file                        >'+ cursor +'</file>\n'
 endforeach

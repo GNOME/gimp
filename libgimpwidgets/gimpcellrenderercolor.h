@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcellrenderercolor.h
- * Copyright (C) 2004  Sven Neuman <sven1@gimp.org>
+ * ligmacellrenderercolor.h
+ * Copyright (C) 2004  Sven Neuman <sven1@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,55 +19,55 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CELL_RENDERER_COLOR_H__
-#define __GIMP_CELL_RENDERER_COLOR_H__
+#ifndef __LIGMA_CELL_RENDERER_COLOR_H__
+#define __LIGMA_CELL_RENDERER_COLOR_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_CELL_RENDERER_COLOR            (gimp_cell_renderer_color_get_type ())
-#define GIMP_CELL_RENDERER_COLOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CELL_RENDERER_COLOR, GimpCellRendererColor))
-#define GIMP_CELL_RENDERER_COLOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CELL_RENDERER_COLOR, GimpCellRendererColorClass))
-#define GIMP_IS_CELL_RENDERER_COLOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CELL_RENDERER_COLOR))
-#define GIMP_IS_CELL_RENDERER_COLOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CELL_RENDERER_COLOR))
-#define GIMP_CELL_RENDERER_COLOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CELL_RENDERER_COLOR, GimpCellRendererColorClass))
+#define LIGMA_TYPE_CELL_RENDERER_COLOR            (ligma_cell_renderer_color_get_type ())
+#define LIGMA_CELL_RENDERER_COLOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CELL_RENDERER_COLOR, LigmaCellRendererColor))
+#define LIGMA_CELL_RENDERER_COLOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CELL_RENDERER_COLOR, LigmaCellRendererColorClass))
+#define LIGMA_IS_CELL_RENDERER_COLOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CELL_RENDERER_COLOR))
+#define LIGMA_IS_CELL_RENDERER_COLOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CELL_RENDERER_COLOR))
+#define LIGMA_CELL_RENDERER_COLOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CELL_RENDERER_COLOR, LigmaCellRendererColorClass))
 
 
-typedef struct _GimpCellRendererColorPrivate GimpCellRendererColorPrivate;
-typedef struct _GimpCellRendererColorClass   GimpCellRendererColorClass;
+typedef struct _LigmaCellRendererColorPrivate LigmaCellRendererColorPrivate;
+typedef struct _LigmaCellRendererColorClass   LigmaCellRendererColorClass;
 
-struct _GimpCellRendererColor
+struct _LigmaCellRendererColor
 {
   GtkCellRenderer               parent_instance;
 
-  GimpCellRendererColorPrivate *priv;
+  LigmaCellRendererColorPrivate *priv;
 };
 
-struct _GimpCellRendererColorClass
+struct _LigmaCellRendererColorClass
 {
   GtkCellRendererClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType             gimp_cell_renderer_color_get_type (void) G_GNUC_CONST;
+GType             ligma_cell_renderer_color_get_type (void) G_GNUC_CONST;
 
-GtkCellRenderer * gimp_cell_renderer_color_new      (void);
+GtkCellRenderer * ligma_cell_renderer_color_new      (void);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CELL_RENDERER_COLOR_H__ */
+#endif /* __LIGMA_CELL_RENDERER_COLOR_H__ */

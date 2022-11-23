@@ -1,4 +1,4 @@
-# translation of gimp-libgimp.HEAD.ne.po to Nepali
+# translation of ligma-libligma.HEAD.ne.po to Nepali
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -11,8 +11,8 @@
 # Nabin Gautam <nabin@mpp.org.np>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD.ne\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma.HEAD.ne\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-05-08 03:37+0100\n"
 "PO-Revision-Date: 2007-07-27 11:51+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
@@ -24,85 +24,85 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2;plural=(n!=1)\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:170
+#: ../libligma/ligmabrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "ब्रुस चयन"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libligma/ligmabrushselectbutton.c:911
+#: ../libligma/ligmapatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "ब्राउज गर्नुहोस्..."
 
-#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
+#: ../libligma/ligmaexport.c:217 ../libligma/ligmaexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s प्लगइनले तह ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
+#: ../libligma/ligmaexport.c:218 ../libligma/ligmaexport.c:227
+#: ../libligma/ligmaexport.c:236 ../libligma/ligmaexport.c:254
 msgid "Merge Visible Layers"
 msgstr "दृश्यात्मक तह गाभ्नुहोस्"
 
-#: ../libgimp/gimpexport.c:226
+#: ../libligma/ligmaexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s प्लगइनले अफसेट, साइज वा अस्पष्टता ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
+#: ../libligma/ligmaexport.c:235 ../libligma/ligmaexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s प्लगइनले एनिमेसन फ्रेमका रुपमा मात्र तहहरू ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
+#: ../libligma/ligmaexport.c:236 ../libligma/ligmaexport.c:245
 msgid "Save as Animation"
 msgstr "एनिमेसनको रुपमा बचत गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
-#: ../libgimp/gimpexport.c:263
+#: ../libligma/ligmaexport.c:245 ../libligma/ligmaexport.c:254
+#: ../libligma/ligmaexport.c:263
 msgid "Flatten Image"
 msgstr "चौडा पारिएको छवि"
 
-#: ../libgimp/gimpexport.c:262
+#: ../libligma/ligmaexport.c:262
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s प्लगइनले पारदर्शीता ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:271
+#: ../libligma/ligmaexport.c:271
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s प्लगइनले तह मास्क ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:272
+#: ../libligma/ligmaexport.c:272
 msgid "Apply Layer Masks"
 msgstr "तह मास्क लागू गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:280
+#: ../libligma/ligmaexport.c:280
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s प्लगइनले केबल RGB छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
-#: ../libgimp/gimpexport.c:328
+#: ../libligma/ligmaexport.c:281 ../libligma/ligmaexport.c:319
+#: ../libligma/ligmaexport.c:328
 msgid "Convert to RGB"
 msgstr "RGB मा रुपान्तरण गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:289
+#: ../libligma/ligmaexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s प्लगइनले ग्रेस्केल छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
-#: ../libgimp/gimpexport.c:340
+#: ../libligma/ligmaexport.c:290 ../libligma/ligmaexport.c:319
+#: ../libligma/ligmaexport.c:340
 msgid "Convert to Grayscale"
 msgstr "ग्रेस्केलमा रुपान्तरण गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:298
+#: ../libligma/ligmaexport.c:298
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s प्लगइनले केबल अनुक्रमण गरिएको छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
-#: ../libgimp/gimpexport.c:338
+#: ../libligma/ligmaexport.c:299 ../libligma/ligmaexport.c:328
+#: ../libligma/ligmaexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -110,12 +110,12 @@ msgstr ""
 "पूर्वनिर्धारित सेटिङ प्रयोग गरेर अनुक्रमण गरिएकोमा रुपान्तरण गर्नुहोस्\n"
 "(परिणाम ट्युन गर्न यसलाई म्यानुअल्ली गर्नुहोस्)"
 
-#: ../libgimp/gimpexport.c:308
+#: ../libligma/ligmaexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s प्लगइनले केबल बिटम्याप (दुइ रङ) अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:309
+#: ../libligma/ligmaexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -123,52 +123,52 @@ msgstr ""
 "बिटम्याप पूर्वनिर्धारित सेटिङ प्रयोग गर्दे अनुक्रमण गरिएकोमा रुपान्तरण गर्नुहोस्\n"
 "(परिणाम ट्युन गर्न यसलाई म्यानुअल्ली गर्नुहोस्)"
 
-#: ../libgimp/gimpexport.c:318
+#: ../libligma/ligmaexport.c:318
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s प्लगइनले केवल RGB वा ग्रेस्केल छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:327
+#: ../libligma/ligmaexport.c:327
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s प्लगइनले  RGB वा अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:337
+#: ../libligma/ligmaexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s प्लगइनले ग्रेस्केल वा अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:348
+#: ../libligma/ligmaexport.c:348
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s प्लगइनलाई एउटा अल्फा च्यानल आवश्यक पर्दछ"
 
-#: ../libgimp/gimpexport.c:349
+#: ../libligma/ligmaexport.c:349
 msgid "Add Alpha Channel"
 msgstr "अल्फा च्यानल थप्नुहोस्"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libligma/ligmaexport.c:383
 msgid "Confirm Save"
 msgstr "बचत यकिन गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libligma/ligmaexport.c:389
 msgid "Confirm"
 msgstr "यकिन गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:464
+#: ../libligma/ligmaexport.c:464
 msgid "Export File"
 msgstr "फाइल निर्यात गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libligma/ligmaexport.c:468
 msgid "_Ignore"
 msgstr "उपेक्षा गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:470
+#: ../libligma/ligmaexport.c:470
 msgid "_Export"
 msgstr "निर्यात"
 
 #. the headline
-#: ../libgimp/gimpexport.c:499
+#: ../libligma/ligmaexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -176,11 +176,11 @@ msgid ""
 msgstr "निम्न कारणहरूले गर्दा %s को रुपमा बचत हुनु अगाडि तपाईँको छवि निर्यात गरिनु पर्दछ:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:573
+#: ../libligma/ligmaexport.c:573
 msgid "The export conversion won't modify your original image."
 msgstr "निर्यात रुपान्तरणले तपाईँको मौलिक छवि परिमार्जन गर्दैन।"
 
-#: ../libgimp/gimpexport.c:673
+#: ../libligma/ligmaexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -189,7 +189,7 @@ msgstr ""
 "तपाईँले लगभग तह मास्क %s को रुपमा बचत गर्नुभयो\n"
 "यसले पारदर्शी तहहरू बचत गर्नेछैन।"
 
-#: ../libgimp/gimpexport.c:679
+#: ../libligma/ligmaexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -198,102 +198,102 @@ msgstr ""
 "तपाईँले च्यानल %s(बचत गरिएको चयन)को रुपमा गर्नुभयो।\n"
 "यसले पारदर्शी तहहरू बचत गर्नेछैन।"
 
-#: ../libgimp/gimpfontselectbutton.c:130
+#: ../libligma/ligmafontselectbutton.c:130
 msgid "Font Selection"
 msgstr "फन्ट चयन"
 
-#: ../libgimp/gimpfontselectbutton.c:145
+#: ../libligma/ligmafontselectbutton.c:145
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientselectbutton.c:148
+#: ../libligma/ligmagradientselectbutton.c:148
 msgid "Gradient Selection"
 msgstr "ग्रेडियन्ट चयन"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
+#: ../libligma/ligmamenu.c:450 ../libligmawidgets/ligmaintstore.c:239
 msgid "(Empty)"
 msgstr "(खाली)"
 
-#: ../libgimp/gimppaletteselectbutton.c:130
+#: ../libligma/ligmapaletteselectbutton.c:130
 msgid "Palette Selection"
 msgstr "रङदानी चयन"
 
-#: ../libgimp/gimppatternselectbutton.c:156
+#: ../libligma/ligmapatternselectbutton.c:156
 msgid "Pattern Selection"
 msgstr "रङदानी चयन"
 
-#: ../libgimp/gimpprocbrowserdialog.c:140
+#: ../libligma/ligmaprocbrowserdialog.c:140
 msgid "by name"
 msgstr "नाम द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:141
+#: ../libligma/ligmaprocbrowserdialog.c:141
 msgid "by description"
 msgstr "वर्णन द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:142
+#: ../libligma/ligmaprocbrowserdialog.c:142
 msgid "by help"
 msgstr "मद्दत द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:143
+#: ../libligma/ligmaprocbrowserdialog.c:143
 msgid "by author"
 msgstr "लेखक द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:144
+#: ../libligma/ligmaprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "प्रतिलिपिअधिकार द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:145
+#: ../libligma/ligmaprocbrowserdialog.c:145
 msgid "by date"
 msgstr "मिति द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:146
+#: ../libligma/ligmaprocbrowserdialog.c:146
 msgid "by type"
 msgstr "टाइप द्वारा"
 
-#: ../libgimp/gimpprocbrowserdialog.c:377
+#: ../libligma/ligmaprocbrowserdialog.c:377
 msgid "Searching"
 msgstr "खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:388
+#: ../libligma/ligmaprocbrowserdialog.c:388
 msgid "Searching by name"
 msgstr "नाम द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:409
+#: ../libligma/ligmaprocbrowserdialog.c:409
 msgid "Searching by description"
 msgstr "वर्णनद्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:416
+#: ../libligma/ligmaprocbrowserdialog.c:416
 msgid "Searching by help"
 msgstr "मद्दत द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:423
+#: ../libligma/ligmaprocbrowserdialog.c:423
 msgid "Searching by author"
 msgstr "लेखक द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
+#: ../libligma/ligmaprocbrowserdialog.c:430
 msgid "Searching by copyright"
 msgstr "प्रतिलिपिअधिकार द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:437
+#: ../libligma/ligmaprocbrowserdialog.c:437
 msgid "Searching by date"
 msgstr "मिति द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:444
+#: ../libligma/ligmaprocbrowserdialog.c:444
 msgid "Searching by type"
 msgstr "टाइप द्वारा खोजी गर्दैछ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libligma/ligmaprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d कार्यविधि"
 msgstr[1] "%d कार्यविधिहरू"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
+#: ../libligma/ligmaprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "तपाईँको क्वेरीका कुनै पनि मिल्दो छैन"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libligma/ligmaprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -301,582 +301,582 @@ msgstr[0] "%d कार्यविधि तपाईँको क्वेर�
 msgstr[1] "%d कार्यविधिहरू तपाईँको क्वेरीसँग मिल्दछ"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libligma/ligmaprocbrowserdialog.c:516 ../libligmawidgets/ligmabrowser.c:114
 msgid "No matches"
 msgstr "मिल्दोहरू छैन"
 
-#: ../libgimp/gimpprocview.c:143
+#: ../libligma/ligmaprocview.c:143
 msgid "Parameters"
 msgstr "परामितिहरू"
 
-#: ../libgimp/gimpprocview.c:156
+#: ../libligma/ligmaprocview.c:156
 msgid "Return Values"
 msgstr "मानहरू फिर्ता गर्नुहोस्"
 
-#: ../libgimp/gimpprocview.c:169
+#: ../libligma/ligmaprocview.c:169
 msgid "Additional Information"
 msgstr "थप सूचना"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libligma/ligmaprocview.c:210
 msgid "Author:"
 msgstr "लेखक:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libligma/ligmaprocview.c:222
 msgid "Date:"
 msgstr "मिति:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libligma/ligmaprocview.c:234
 msgid "Copyright:"
 msgstr "प्रतिलिपिअधिकार:"
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libligma/ligmaunitcache.c:57
 msgid "percent"
 msgstr "प्रतिशत"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libligmabase/ligmabaseenums.c:27
 msgid "_White (full opacity)"
 msgstr "सेतो (पूर्ण अस्पष्टता)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgid "_Black (full transparency)"
 msgstr "कालो (पूर्ण पारदर्शीता)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgid "Layer's _alpha channel"
 msgstr "तहको अल्फा च्यानल"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgid "_Transfer layer's alpha channel"
 msgstr "तहको अल्फा च्यानल स्थानन्तरण गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgid "_Selection"
 msgstr "चयन"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgid "_Grayscale copy of layer"
 msgstr "तहको ग्रेस्केल प्रतिलिपि"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgid "C_hannel"
 msgstr "च्यानल"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libligmabase/ligmabaseenums.c:63
 msgid "FG to BG (RGB)"
 msgstr "FG देखि BG (RGB) सम्म"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libligmabase/ligmabaseenums.c:64
 msgid "FG to BG (HSV)"
 msgstr "FG देखि BG (HSV) सम्म"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgid "FG to transparent"
 msgstr "पारदर्शीतामा FG"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgid "Custom gradient"
 msgstr "अनुकूल ग्रेडियन्ट"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libligmabase/ligmabaseenums.c:95
 msgid "FG color fill"
 msgstr "FG रङ भर्ने"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libligmabase/ligmabaseenums.c:96
 msgid "BG color fill"
 msgstr "BG रङ भर्ने"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libligmabase/ligmabaseenums.c:97
 msgid "Pattern fill"
 msgstr "बाँन्की भर्ने"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libligmabase/ligmabaseenums.c:127
 msgid "Add to the current selection"
 msgstr "हालको चयनमा थप्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libligmabase/ligmabaseenums.c:128
 msgid "Subtract from the current selection"
 msgstr "हालको चयनबाट घटाउनुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libligmabase/ligmabaseenums.c:129
 msgid "Replace the current selection"
 msgstr "हालको चयन बदल्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libligmabase/ligmabaseenums.c:130
 msgid "Intersect with the current selection"
 msgstr "हालको चयनसँग प्रतिच्छेद"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmabase/ligmabaseenums.c:162 ../libligmawidgets/ligmawidgetsenums.c:126
 msgid "Red"
 msgstr "रातो"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmabase/ligmabaseenums.c:163 ../libligmawidgets/ligmawidgetsenums.c:127
 msgid "Green"
 msgstr "हरियो"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmabase/ligmabaseenums.c:164 ../libligmawidgets/ligmawidgetsenums.c:128
 msgid "Blue"
 msgstr "नीलो"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libligmabase/ligmabaseenums.c:165
 msgid "Gray"
 msgstr "खैरो"
 
-#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
+#: ../libligmabase/ligmabaseenums.c:166 ../libligmabase/ligmabaseenums.c:531
 msgid "Indexed"
 msgstr "अनुक्रमण गरिएको"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmabase/ligmabaseenums.c:167 ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "Alpha"
 msgstr "अल्फा"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libligmabase/ligmabaseenums.c:196
 msgid "Small"
 msgstr "सानो"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libligmabase/ligmabaseenums.c:197
 msgid "Medium"
 msgstr "मध्यम"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libligmabase/ligmabaseenums.c:198
 msgid "Large"
 msgstr "ठूलो"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libligmabase/ligmabaseenums.c:230
 msgid "Light checks"
 msgstr "उज्यालो जाँचहरू"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libligmabase/ligmabaseenums.c:231
 msgid "Mid-tone checks"
 msgstr "मिड-टोन जाँचहरू"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libligmabase/ligmabaseenums.c:232
 msgid "Dark checks"
 msgstr "अध्यारो जाँचहरू"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libligmabase/ligmabaseenums.c:233
 msgid "White only"
 msgstr "सेतो मात्र"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libligmabase/ligmabaseenums.c:234
 msgid "Gray only"
 msgstr "खैरो मात्र"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libligmabase/ligmabaseenums.c:235
 msgid "Black only"
 msgstr "कालो मात्र"
 
-#: ../libgimpbase/gimpbaseenums.c:263
+#: ../libligmabase/ligmabaseenums.c:263
 msgid "Image"
 msgstr "छवि"
 
-#: ../libgimpbase/gimpbaseenums.c:264
+#: ../libligmabase/ligmabaseenums.c:264
 msgid "Pattern"
 msgstr "बाँन्की"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libligmabase/ligmabaseenums.c:293
 msgid "Lightness"
 msgstr "उज्यालोपना"
 
-#: ../libgimpbase/gimpbaseenums.c:294
+#: ../libligmabase/ligmabaseenums.c:294
 msgid "Luminosity"
 msgstr "लुनिनोसिटि"
 
-#: ../libgimpbase/gimpbaseenums.c:295
+#: ../libligmabase/ligmabaseenums.c:295
 msgid "Average"
 msgstr "औसत"
 
-#: ../libgimpbase/gimpbaseenums.c:323
+#: ../libligmabase/ligmabaseenums.c:323
 msgid "Dodge"
 msgstr "डोर्ज"
 
-#: ../libgimpbase/gimpbaseenums.c:324
+#: ../libligmabase/ligmabaseenums.c:324
 msgid "Burn"
 msgstr "बर्न"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libligmabase/ligmabaseenums.c:388
 msgid "gradient|Linear"
 msgstr "रेखात्मक"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libligmabase/ligmabaseenums.c:389
 msgid "Bi-linear"
 msgstr "द्वि-रेखात्मक"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libligmabase/ligmabaseenums.c:390
 msgid "Radial"
 msgstr "पुन:डायल गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmabase/ligmabaseenums.c:391 ../libligmawidgets/ligmawidgetsenums.c:24
 msgid "Square"
 msgstr "वर्ग"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libligmabase/ligmabaseenums.c:392
 msgid "Conical (sym)"
 msgstr "कोनिकल (sym)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libligmabase/ligmabaseenums.c:393
 msgid "Conical (asym)"
 msgstr "कोनिकल (asym)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libligmabase/ligmabaseenums.c:394
 msgid "Shaped (angular)"
 msgstr "आकार दिएको (angular)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libligmabase/ligmabaseenums.c:395
 msgid "Shaped (spherical)"
 msgstr "आकार दिएको (spherical)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libligmabase/ligmabaseenums.c:396
 msgid "Shaped (dimpled)"
 msgstr "आकार दिएको (dimpled)"
 
-#: ../libgimpbase/gimpbaseenums.c:397
+#: ../libligmabase/ligmabaseenums.c:397
 msgid "Spiral (cw)"
 msgstr "स्पाइरल (cw)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libligmabase/ligmabaseenums.c:398
 msgid "Spiral (ccw)"
 msgstr "स्पाइरल (ccw)"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libligmabase/ligmabaseenums.c:429
 msgid "Intersections (dots)"
 msgstr "प्रतिच्छेदनहरू (dots)"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libligmabase/ligmabaseenums.c:430
 msgid "Intersections (crosshairs)"
 msgstr "प्रतिच्छेदनहरू (crosshairs)"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libligmabase/ligmabaseenums.c:431
 msgid "Dashed"
 msgstr "ड्यास गरिएको"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libligmabase/ligmabaseenums.c:432
 msgid "Double dashed"
 msgstr "दोहरो ड्यास"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libligmabase/ligmabaseenums.c:433
 msgid "Solid"
 msgstr "ठोस"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libligmabase/ligmabaseenums.c:462
 msgid "Stock ID"
 msgstr "स्टक ID"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libligmabase/ligmabaseenums.c:463
 msgid "Inline pixbuf"
 msgstr "इनलाइन पिक्सबफ"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libligmabase/ligmabaseenums.c:464
 msgid "Image file"
 msgstr "छवि फाइल"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libligmabase/ligmabaseenums.c:493
 msgid "RGB color"
 msgstr "RGB रङ"
 
-#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
+#: ../libligmabase/ligmabaseenums.c:494 ../libligmabase/ligmabaseenums.c:529
 msgid "Grayscale"
 msgstr "ग्रेस्केल"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libligmabase/ligmabaseenums.c:495
 msgid "Indexed color"
 msgstr "अनुक्रमण गरिएको रङ"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libligmabase/ligmabaseenums.c:527
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libligmabase/ligmabaseenums.c:528
 msgid "RGB-alpha"
 msgstr "RGB-अल्फा"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libligmabase/ligmabaseenums.c:530
 msgid "Grayscale-alpha"
 msgstr "ग्रेस्केल-अल्फा"
 
-#: ../libgimpbase/gimpbaseenums.c:532
+#: ../libligmabase/ligmabaseenums.c:532
 msgid "Indexed-alpha"
 msgstr "अनुक्रमण गरिएको-अल्फा"
 
-#: ../libgimpbase/gimpbaseenums.c:562
+#: ../libligmabase/ligmabaseenums.c:562
 msgid "interpolation|None"
 msgstr "कुनै होइन"
 
-#: ../libgimpbase/gimpbaseenums.c:563
+#: ../libligmabase/ligmabaseenums.c:563
 msgid "interpolation|Linear"
 msgstr "रेखात्मक"
 
-#: ../libgimpbase/gimpbaseenums.c:564
+#: ../libligmabase/ligmabaseenums.c:564
 msgid "Cubic"
 msgstr "घनाकार"
 
-#: ../libgimpbase/gimpbaseenums.c:565
+#: ../libligmabase/ligmabaseenums.c:565
 msgid "Sinc (Lanczos3)"
 msgstr "समक्रमण (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:593
+#: ../libligmabase/ligmabaseenums.c:593
 msgid "Constant"
 msgstr "स्थिर"
 
-#: ../libgimpbase/gimpbaseenums.c:594
+#: ../libligmabase/ligmabaseenums.c:594
 msgid "Incremental"
 msgstr "बढोत्तरीत"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libligmabase/ligmabaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "कुनै पनि होइन"
 
-#: ../libgimpbase/gimpbaseenums.c:624
+#: ../libligmabase/ligmabaseenums.c:624
 msgid "Sawtooth wave"
 msgstr "स्वाटुथ तरङ्ग"
 
-#: ../libgimpbase/gimpbaseenums.c:625
+#: ../libligmabase/ligmabaseenums.c:625
 msgid "Triangular wave"
 msgstr "त्रिकोणीय तरङ्ग"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libligmabase/ligmabaseenums.c:654
 msgid "Run interactively"
 msgstr "अन्तरक्रियात्मक रुपमा चलाउनुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libligmabase/ligmabaseenums.c:655
 msgid "Run non-interactively"
 msgstr "अन्तरक्रियात्मक-विहिन रुपमा चलाउनुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libligmabase/ligmabaseenums.c:656
 msgid "Run with last used values"
 msgstr "अन्तिममा प्रयोग गरिएको मानहरू चलाउनुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libligmabase/ligmabaseenums.c:684
 msgid "Pixels"
 msgstr "पिक्सेल"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libligmabase/ligmabaseenums.c:685
 msgid "Points"
 msgstr "बिन्दुहरू"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libligmabase/ligmabaseenums.c:714
 msgid "Shadows"
 msgstr "छायाँ"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libligmabase/ligmabaseenums.c:715
 msgid "Midtones"
 msgstr "मिडटोनहरू"
 
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libligmabase/ligmabaseenums.c:716
 msgid "Highlights"
 msgstr "हाइलाइट"
 
-#: ../libgimpbase/gimpbaseenums.c:744
+#: ../libligmabase/ligmabaseenums.c:744
 msgid "Normal (Forward)"
 msgstr "सामान्य (अगाडि)"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libligmabase/ligmabaseenums.c:745
 msgid "Corrective (Backward)"
 msgstr "सुधारात्मक (पछाडि)"
 
-#: ../libgimpbase/gimpbaseenums.c:775
+#: ../libligmabase/ligmabaseenums.c:775
 msgid "Adjust"
 msgstr "समायोजन गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:776
+#: ../libligmabase/ligmabaseenums.c:776
 msgid "Clip"
 msgstr "क्लिप"
 
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libligmabase/ligmabaseenums.c:777
 msgid "Crop to result"
 msgstr "नतिजा काँटछाँट गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libligmabase/ligmabaseenums.c:778
 msgid "Crop with aspect"
 msgstr "आकारलाई काँटछाँट गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:881
-msgid "Internal GIMP procedure"
+#: ../libligmabase/ligmabaseenums.c:881
+msgid "Internal LIGMA procedure"
 msgstr "आन्तरिक गिम्प कार्यविधि"
 
-#: ../libgimpbase/gimpbaseenums.c:882
-msgid "GIMP Plug-In"
+#: ../libligmabase/ligmabaseenums.c:882
+msgid "LIGMA Plug-In"
 msgstr "गिम्प प्लगइन"
 
-#: ../libgimpbase/gimpbaseenums.c:883
-msgid "GIMP Extension"
+#: ../libligmabase/ligmabaseenums.c:883
+msgid "LIGMA Extension"
 msgstr "गिम्प विस्तार"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libligmabase/ligmabaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "अस्थायी कार्यविधि"
 
-#: ../libgimpbase/gimpmemsize.c:180
+#: ../libligmabase/ligmamemsize.c:180
 #, c-format
 msgid "%d Byte"
 msgid_plural "%d Bytes"
 msgstr[0] "%d बाइट"
 msgstr[1] "%d बाइट्स"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libligmabase/ligmamemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libligmabase/ligmamemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:194
+#: ../libligmabase/ligmamemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libligmabase/ligmamemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libligmabase/ligmamemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:209
+#: ../libligmabase/ligmamemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libligmabase/ligmamemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libligmabase/ligmamemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:224
+#: ../libligmabase/ligmamemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../libligmabase/ligmautils.c:170 ../libligmabase/ligmautils.c:175
 #: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(अवैध UTF-8 स्ट्रिङ)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libligmaconfig/ligmacolorconfig.c:40
 msgid "Mode of operation for color management."
 msgstr "रङ व्यवस्थापनका लागि सञ्चालन मोड"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libligmaconfig/ligmacolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
 msgstr "तपाईँको (प्राथमिक) मोनिटरको रङ प्रोफाइल"
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libligmaconfig/ligmacolorconfig.c:44
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "सक्षम पारिएको बेलामा, गिम्पले सञ्झ्याल प्रणालीबाट प्रदर्शन रङ प्रोफाइल प्रयोग गर्न"
 "प्रयास गर्नेछ ।  त्यसपछि कन्फिगरेसन गरिएको मोनिटर प्रोफाइल हुन्छ त्यसपछि मात्र फलब्याकको रुपमा प्रयोग गरिन्छ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libligmaconfig/ligmacolorconfig.c:48
 msgid "The default RGB working space color profile."
 msgstr "पूर्वनिर्धारित RGB कार्यस्थान रङ प्रोफाइल ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libligmaconfig/ligmacolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK रङ प्रोफाइले RGB र CMYK बीचमा परिवर्तन गरिन्छ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "मुद्रण गरिएको संस्करण (सफ्टपुर्फ)का लागि रङ प्रोफाइलले नक्कल गर्न प्रयोग गरिन्छ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libligmaconfig/ligmacolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "तपाईँको प्रदर्शनका मानचित्रित गरिने रङहरू सेट गर्दछ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libligmaconfig/ligmacolorconfig.c:56
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr "कसरी रङ कार्यस्थानबाट मुद्रण सिमुलेशन यन्त्रमा परिवर्तन गरिन्छन् सेट गर्दछ ।"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+#: ../libligmaconfig/ligmacolorconfig-enums.c:24
 msgid "No color management"
 msgstr "रङ व्यावस्थापन छैन"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+#: ../libligmaconfig/ligmacolorconfig-enums.c:25
 msgid "Color managed display"
 msgstr "रङ व्यवस्थापन गरिएको प्रदर्शन"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+#: ../libligmaconfig/ligmacolorconfig-enums.c:26
 msgid "Print simulation"
 msgstr "सिमुलेशन मुद्रण गर्नुहोस्"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56
+#: ../libligmaconfig/ligmacolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "बोधात्मक"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+#: ../libligmaconfig/ligmacolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "सम्बन्धित कलोरिमेर्ट्रिक"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libligmaconfig/ligmacolorconfig-enums.c:58
 msgid "intent|Saturation"
 msgstr "अतितृप्त"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+#: ../libligmaconfig/ligmacolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "निश्चित कलोरिमेर्ट्रिक"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libligmaconfig/ligmaconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "टोकन %s का लागि UTF-8 स्ट्रिङ वैध छैन"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libligmaconfig/ligmaconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "आशा गरिएको 'हो' वा 'होइन' का लागि बुलियन टोकन %s, प्राप्त भयो '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libligmaconfig/ligmaconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "अवैध मान '%s' टोकन %s का लागि"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libligmaconfig/ligmaconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "अवैध मान '%ld' टोकन %s का लागि"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libligmaconfig/ligmaconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "पद वर्णन गर्ने बेलाको टोकन '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
-#: ../libgimpconfig/gimpscanner.c:579
+#: ../libligmaconfig/ligmaconfig-iface.c:454
+#: ../libligmaconfig/ligmaconfig-iface.c:467 ../libligmaconfig/ligmascanner.c:498
+#: ../libligmaconfig/ligmascanner.c:579
 msgid "fatal parse error"
 msgstr "घातक पद वर्णन त्रुटि"
 
-#: ../libgimpconfig/gimpconfig-path.c:377
+#: ../libligmaconfig/ligmaconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} विस्तार गर्न सकिँदैन"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libligmaconfig/ligmaconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "'%s' का लागि अस्थायी फाइल सिर्जना गर्न सकेन: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libligmaconfig/ligmaconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "लेख्नका लागि '%s' खोल्न सकेन: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libligmaconfig/ligmaconfigwriter.c:667
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -885,7 +885,7 @@ msgstr ""
 "'%s'का लागि अस्थायी फाइलमा लेख्दा त्रुटि: %s\n"
 "मौलिक फाइल छोइएको छैन।"
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libligmaconfig/ligmaconfigwriter.c:675
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -894,49 +894,49 @@ msgstr ""
 "'%s'का लागि अस्थायी फाइलमा लेख्दा त्रुटि: %s\n"
 "कुनै पनि फाइलहरू सिर्जना गरिएको छैन।"
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
+#: ../libligmaconfig/ligmaconfigwriter.c:686
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "'%s' मा लेख्दा त्रुटि: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libligmaconfig/ligmaconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "'%s' सिर्जना गर्न सकेन: %s"
 
-#: ../libgimpconfig/gimpscanner.c:255
+#: ../libligmaconfig/ligmascanner.c:255
 msgid "invalid UTF-8 string"
 msgstr "अवैध UTF-8 स्ट्रिङ"
 
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libligmaconfig/ligmascanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s' पद वर्णन गर्दा %d  लाइनमा त्रुटि: %s"
 
-#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
-#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
-#: ../libgimpmodule/gimpmodule.c:418
+#: ../libligmamodule/ligmamodule.c:153 ../libligmamodule/ligmamodule.c:171
+#: ../libligmamodule/ligmamodule.c:280 ../libligmamodule/ligmamodule.c:307
+#: ../libligmamodule/ligmamodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "मोड्युल '%s' लोड गर्दा त्रुटि: %s"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libligmamodule/ligmamodule.c:375
 msgid "Module error"
 msgstr "मोड्युल त्रुटि"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libligmamodule/ligmamodule.c:376
 msgid "Loaded"
 msgstr "लोड गरिएको"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libligmamodule/ligmamodule.c:377
 msgid "Load failed"
 msgstr "लोड असफल"
 
-#: ../libgimpmodule/gimpmodule.c:378
+#: ../libligmamodule/ligmamodule.c:378
 msgid "Not loaded"
 msgstr "लोड नगरिएको"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libligmathumb/ligmathumb-utils.c:125
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -945,139 +945,139 @@ msgstr ""
 "वैध गृह डाइरेक्टरी निर्धारण गर्न सकिँदैन।\n"
 "साट्टोमा थम्बनेलहरू अस्थायी फाइल (%s) का लागि फोल्डरहरूमा भण्डारण गरिनेछ।"
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libligmathumb/ligmathumb-utils.c:249 ../libligmathumb/ligmathumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "थम्बनेल फोल्डर '%s' सिर्जना गर्न असफल"
 
-#: ../libgimpthumb/gimpthumbnail.c:498
+#: ../libligmathumb/ligmathumbnail.c:498
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "थम्बनेलले थम्ब समाविष्ट गर्दैन::URI ट्याग"
 
-#: ../libgimpthumb/gimpthumbnail.c:898
+#: ../libligmathumb/ligmathumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "%s का लागि थम्बनेल सिर्जना गर्न सकेन: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:98
+#: ../libligmawidgets/ligmabrowser.c:98
 msgid "_Search:"
 msgstr "खोजी गर्नुहोस्:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:118
+#: ../libligmawidgets/ligmacolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "अग्रभूमी रङ"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:122
+#: ../libligmawidgets/ligmacolorbutton.c:122
 msgid "_Background Color"
 msgstr "पृष्ठभूमी रङ"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:126
+#: ../libligmawidgets/ligmacolorbutton.c:126
 msgid "Blac_k"
 msgstr "कालो"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:130
+#: ../libligmawidgets/ligmacolorbutton.c:130
 msgid "_White"
 msgstr "सेतो"
 
-#: ../libgimpwidgets/gimpcolorscales.c:98
+#: ../libligmawidgets/ligmacolorscales.c:98
 msgid "Scales"
 msgstr "स्केलहरू"
 
-#: ../libgimpwidgets/gimpcolorselection.c:210
+#: ../libligmawidgets/ligmacolorselection.c:210
 msgid "Current:"
 msgstr "हालको:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:232
+#: ../libligmawidgets/ligmacolorselection.c:232
 msgid "Old:"
 msgstr "पुरानो:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libligmawidgets/ligmacolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr "HTML र CSS मा प्रयोग गरिए अनुरुपको हेक्साडेसिमल रङ नोटेसन ।  यो प्रविष्टिले CSS रङ नाम पनि प्रविष्ट गर्दछ ।"
 
-#: ../libgimpwidgets/gimpcolorselection.c:292
+#: ../libligmawidgets/ligmacolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML नोटेसन:"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libligmawidgets/ligmafileentry.c:174
 msgid "Open a file selector to browse your folders"
 msgstr "तपाईँको फोल्डर ब्राउज गर्न एउटा फाइल चयनकर्ता खोल्नुहोस्"
 
-#: ../libgimpwidgets/gimpfileentry.c:175
+#: ../libligmawidgets/ligmafileentry.c:175
 msgid "Open a file selector to browse your files"
 msgstr "तपाईँको फाइल ब्राउज गर्न एउटा फाइल चयनकर्ता खोल्नुहोस्"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libligmawidgets/ligmafileentry.c:335
 msgid "Select Folder"
 msgstr "फाइल चयन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpfileentry.c:337
+#: ../libligmawidgets/ligmafileentry.c:337
 msgid "Select File"
 msgstr "फाइल चयन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libligmawidgets/ligmamemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "किलो बाइट्स"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libligmawidgets/ligmamemsizeentry.c:205
 msgid "Megabytes"
 msgstr "मेगा बाइट्स"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libligmawidgets/ligmamemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "गिगा बाइट्स"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libligmawidgets/ligmapageselector.c:269
+#: ../libligmawidgets/ligmapageselector.c:1171
 msgid "Nothing selected"
 msgstr "केही चयन गरिएको छैन"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libligmawidgets/ligmapageselector.c:287
 msgid "Select _All"
 msgstr "सबै चयन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libligmawidgets/ligmapageselector.c:307
 msgid "Select _range:"
 msgstr "दायरा चयन गर्नुहोस्:"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libligmawidgets/ligmapageselector.c:319
 msgid "Open _pages as"
 msgstr "यस रुपमा पृष्ठहरू खोल्नुहोस्"
 
-#: ../libgimpwidgets/gimppageselector.c:420
+#: ../libligmawidgets/ligmapageselector.c:420
 msgid "Page 000"
 msgstr "पृष्ठ ०००"
 
-#: ../libgimpwidgets/gimppageselector.c:512
-#: ../libgimpwidgets/gimppageselector.c:749
+#: ../libligmawidgets/ligmapageselector.c:512
+#: ../libligmawidgets/ligmapageselector.c:749
 #, c-format
 msgid "Page %d"
 msgstr "पृष्ठ %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1176
+#: ../libligmawidgets/ligmapageselector.c:1176
 msgid "One page selected"
 msgstr "एउटा पृष्ठ चयन गरियो"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
-#: ../libgimpwidgets/gimppageselector.c:1187
+#: ../libligmawidgets/ligmapageselector.c:1183
+#: ../libligmawidgets/ligmapageselector.c:1187
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d पृष्ठ चयन गरियो"
 msgstr[1] "%d पृष्ठ चयन गरियो"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: ../libligmawidgets/ligmapatheditor.c:214
 msgid "Writable"
 msgstr "लेख्नयोग्य"
 
-#: ../libgimpwidgets/gimppatheditor.c:223
+#: ../libligmawidgets/ligmapatheditor.c:223
 msgid "Folder"
 msgstr "फोल्डर"
 
-#: ../libgimpwidgets/gimppickbutton.c:107
+#: ../libligmawidgets/ligmapickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1085,115 +1085,115 @@ msgstr ""
 "आइड्रपरमा क्लिक गर्नुहोस्, त्यसपछि यो रङ चयन गर्न तपाईँको स्क्रिनमा कतै पनि एउटा रङमा "
 "क्लिक गर्नुहोस्।"
 
-#: ../libgimpwidgets/gimppreviewarea.c:94
+#: ../libligmawidgets/ligmapreviewarea.c:94
 msgid "Check Size"
 msgstr "साइज जाँच गर्नुहोस्"
 
-#: ../libgimpwidgets/gimppreviewarea.c:101
+#: ../libligmawidgets/ligmapreviewarea.c:101
 msgid "Check Style"
 msgstr "शैली जाँच गर्नुहोस्"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:277
+#: ../libligmawidgets/ligmapreview.c:277
 msgid "_Preview"
 msgstr "पूर्वावलोकन"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1901
+#: ../libligmawidgets/ligmapropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "यो पाठ आगत फाँट %d क्यारेक्टरमा सिमित गरिएको छ।"
 msgstr[1] "यो पाठ आगत फाँट %d क्यारेक्टरहरूमा सिमित गरिएको छ।"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libligmawidgets/ligmastock.c:113
 msgid "Anchor"
 msgstr "एङ्कर"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libligmawidgets/ligmastock.c:114
 msgid "C_enter"
 msgstr "केन्द्र"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libligmawidgets/ligmastock.c:115
 msgid "_Duplicate"
 msgstr "नक्कल गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libligmawidgets/ligmastock.c:116
 msgid "_Edit"
 msgstr "सम्पादन"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libligmawidgets/ligmastock.c:117
 msgid "Linked"
 msgstr "लिङ्क गरिएको"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libligmawidgets/ligmastock.c:118
 msgid "Paste as New"
 msgstr "नयाँ रुपमा टास्नुँहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libligmawidgets/ligmastock.c:119
 msgid "Paste Into"
 msgstr "यसभित्र टाँस्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libligmawidgets/ligmastock.c:120
 msgid "_Reset"
 msgstr "रिसेट गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libligmawidgets/ligmastock.c:121
 msgid "Visible"
 msgstr "दृश्यात्मक"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libligmawidgets/ligmastock.c:157 ../libligmawidgets/ligmastock.c:161
 msgid "_Stroke"
 msgstr "स्ट्रोक"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libligmawidgets/ligmastock.c:173
 msgid "L_etter Spacing"
 msgstr "अक्षर खाली स्थान"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libligmawidgets/ligmastock.c:174
 msgid "L_ine Spacing"
 msgstr "लाइन खाली स्थान"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libligmawidgets/ligmastock.c:190
 msgid "_Resize"
 msgstr "रिसाइज गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
+#: ../libligmawidgets/ligmastock.c:191 ../libligmawidgets/ligmastock.c:319
 msgid "_Scale"
 msgstr "मापन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libligmawidgets/ligmastock.c:295
 msgid "Cr_op"
 msgstr "काटछाँट गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libligmawidgets/ligmastock.c:314
 msgid "_Transform"
 msgstr "रुपान्तरण गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libligmawidgets/ligmastock.c:318
 msgid "_Rotate"
 msgstr "घुमाउनुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libligmawidgets/ligmastock.c:320
 msgid "_Shear"
 msgstr "काट्नुहोस्"
 
-#: ../libgimpwidgets/gimpunitmenu.c:266
+#: ../libligmawidgets/ligmaunitmenu.c:266
 msgid "More..."
 msgstr "बढी..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libligmawidgets/ligmaunitmenu.c:577
 msgid "Unit Selection"
 msgstr "एकाइ चयन"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libligmawidgets/ligmaunitmenu.c:626
 msgid "Unit"
 msgstr "एकाइ"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libligmawidgets/ligmaunitmenu.c:630
 msgid "Factor"
 msgstr "तत्व"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libligmawidgets/ligmawidgets.c:1005
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1201,79 +1201,79 @@ msgstr ""
 "अनियमित नम्बर उत्पन्नकर्ता सिडका लागि यो मान प्रयोग गर्नुहोस् - एउटा दिएको \"random"
 "\" सञ्चालन दोहोर्याउन यसले तपाईँलाई अनुमति दिन्छ"
 
-#: ../libgimpwidgets/gimpwidgets.c:1009
+#: ../libligmawidgets/ligmawidgets.c:1009
 msgid "_New Seed"
 msgstr "नयाँ सिड"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libligmawidgets/ligmawidgets.c:1022
 msgid "Seed random number generator with a generated random number"
 msgstr "उत्पन्न गरिएको अनियमित नम्बरसँग सिड अनियमित नम्बर जेनेरेटर"
 
-#: ../libgimpwidgets/gimpwidgets.c:1026
+#: ../libligmawidgets/ligmawidgets.c:1026
 msgid "_Randomize"
 msgstr "अनियमित गर्नुहोस्ी"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgid "Portrait"
 msgstr "पोर्ट्रेट"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgid "Landscape"
 msgstr "ल्यान्डस्केप"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:123
+#: ../libligmawidgets/ligmawidgetsenums.c:123
 msgid "_H"
 msgstr "H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:123
+#: ../libligmawidgets/ligmawidgetsenums.c:123
 msgid "Hue"
 msgstr "ह्यु"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:124
+#: ../libligmawidgets/ligmawidgetsenums.c:124
 msgid "_S"
 msgstr "S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:124
+#: ../libligmawidgets/ligmawidgetsenums.c:124
 msgid "Saturation"
 msgstr "अतितृप्त"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:125
+#: ../libligmawidgets/ligmawidgetsenums.c:125
 msgid "_V"
 msgstr "V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:125
+#: ../libligmawidgets/ligmawidgetsenums.c:125
 msgid "Value"
 msgstr "मान"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmawidgets/ligmawidgetsenums.c:126
 msgid "_R"
 msgstr "R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmawidgets/ligmawidgetsenums.c:127
 msgid "_G"
 msgstr "G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmawidgets/ligmawidgetsenums.c:128
 msgid "_B"
 msgstr "B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "_A"
 msgstr "A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:157
+#: ../libligmawidgets/ligmawidgetsenums.c:157
 msgid "Layers"
 msgstr "तहहरू"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:158
+#: ../libligmawidgets/ligmawidgetsenums.c:158
 msgid "Images"
 msgstr "छविहरू"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:217
+#: ../libligmawidgets/ligmawidgetsenums.c:217
 msgid "Zoom in"
 msgstr "जुम बढाउनुहोस्"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:218
+#: ../libligmawidgets/ligmawidgetsenums.c:218
 msgid "Zoom out"
 msgstr "जुम घटाउनुहोस्"
 
@@ -1785,9 +1785,9 @@ msgid "MIDI Events"
 msgstr "MIDI घटनाहरू"
 
 #: ../modules/controller_midi.c:454
-msgid "GIMP"
+msgid "LIGMA"
 msgstr "गिम्प"
 
 #: ../modules/controller_midi.c:456
-msgid "GIMP MIDI Input Controller"
+msgid "LIGMA MIDI Input Controller"
 msgstr "गिम्प MIDI आगत नियन्त्रक"

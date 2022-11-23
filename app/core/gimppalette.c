@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,19 +23,19 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimppalette.h"
-#include "gimppalette-load.h"
-#include "gimppalette-save.h"
-#include "gimptagged.h"
-#include "gimptempbuf.h"
+#include "ligma-memsize.h"
+#include "ligmapalette.h"
+#include "ligmapalette-load.h"
+#include "ligmapalette-save.h"
+#include "ligmatagged.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RGB_EPSILON 1e-6
@@ -43,79 +43,79 @@
 
 /*  local function prototypes  */
 
-static void          gimp_palette_tagged_iface_init (GimpTaggedInterface  *iface);
+static void          ligma_palette_tagged_iface_init (LigmaTaggedInterface  *iface);
 
-static void          gimp_palette_finalize          (GObject              *object);
+static void          ligma_palette_finalize          (GObject              *object);
 
-static gint64        gimp_palette_get_memsize       (GimpObject           *object,
+static gint64        ligma_palette_get_memsize       (LigmaObject           *object,
                                                      gint64               *gui_size);
 
-static void          gimp_palette_get_preview_size  (GimpViewable         *viewable,
+static void          ligma_palette_get_preview_size  (LigmaViewable         *viewable,
                                                      gint                  size,
                                                      gboolean              popup,
                                                      gboolean              dot_for_dot,
                                                      gint                 *width,
                                                      gint                 *height);
-static gboolean      gimp_palette_get_popup_size    (GimpViewable         *viewable,
+static gboolean      ligma_palette_get_popup_size    (LigmaViewable         *viewable,
                                                      gint                  width,
                                                      gint                  height,
                                                      gboolean              dot_for_dot,
                                                      gint                 *popup_width,
                                                      gint                 *popup_height);
-static GimpTempBuf * gimp_palette_get_new_preview   (GimpViewable         *viewable,
-                                                     GimpContext          *context,
+static LigmaTempBuf * ligma_palette_get_new_preview   (LigmaViewable         *viewable,
+                                                     LigmaContext          *context,
                                                      gint                  width,
                                                      gint                  height);
-static gchar       * gimp_palette_get_description   (GimpViewable         *viewable,
+static gchar       * ligma_palette_get_description   (LigmaViewable         *viewable,
                                                      gchar               **tooltip);
-static const gchar * gimp_palette_get_extension     (GimpData             *data);
-static void          gimp_palette_copy              (GimpData             *data,
-                                                     GimpData             *src_data);
+static const gchar * ligma_palette_get_extension     (LigmaData             *data);
+static void          ligma_palette_copy              (LigmaData             *data,
+                                                     LigmaData             *src_data);
 
-static void          gimp_palette_entry_free        (GimpPaletteEntry     *entry);
-static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry     *entry,
+static void          ligma_palette_entry_free        (LigmaPaletteEntry     *entry);
+static gint64        ligma_palette_entry_get_memsize (LigmaPaletteEntry     *entry,
                                                      gint64               *gui_size);
-static gchar       * gimp_palette_get_checksum      (GimpTagged           *tagged);
+static gchar       * ligma_palette_get_checksum      (LigmaTagged           *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpPalette, gimp_palette, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_palette_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaPalette, ligma_palette, LIGMA_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_palette_tagged_iface_init))
 
-#define parent_class gimp_palette_parent_class
+#define parent_class ligma_palette_parent_class
 
 
 static void
-gimp_palette_class_init (GimpPaletteClass *klass)
+ligma_palette_class_init (LigmaPaletteClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
 
-  object_class->finalize            = gimp_palette_finalize;
+  object_class->finalize            = ligma_palette_finalize;
 
-  gimp_object_class->get_memsize    = gimp_palette_get_memsize;
+  ligma_object_class->get_memsize    = ligma_palette_get_memsize;
 
   viewable_class->default_icon_name = "gtk-select-color";
-  viewable_class->get_preview_size  = gimp_palette_get_preview_size;
-  viewable_class->get_popup_size    = gimp_palette_get_popup_size;
-  viewable_class->get_new_preview   = gimp_palette_get_new_preview;
-  viewable_class->get_description   = gimp_palette_get_description;
+  viewable_class->get_preview_size  = ligma_palette_get_preview_size;
+  viewable_class->get_popup_size    = ligma_palette_get_popup_size;
+  viewable_class->get_new_preview   = ligma_palette_get_new_preview;
+  viewable_class->get_description   = ligma_palette_get_description;
 
-  data_class->save                  = gimp_palette_save;
-  data_class->get_extension         = gimp_palette_get_extension;
-  data_class->copy                  = gimp_palette_copy;
+  data_class->save                  = ligma_palette_save;
+  data_class->get_extension         = ligma_palette_get_extension;
+  data_class->copy                  = ligma_palette_copy;
 }
 
 static void
-gimp_palette_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_palette_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->get_checksum = gimp_palette_get_checksum;
+  iface->get_checksum = ligma_palette_get_checksum;
 }
 
 static void
-gimp_palette_init (GimpPalette *palette)
+ligma_palette_init (LigmaPalette *palette)
 {
   palette->colors    = NULL;
   palette->n_colors  = 0;
@@ -123,14 +123,14 @@ gimp_palette_init (GimpPalette *palette)
 }
 
 static void
-gimp_palette_finalize (GObject *object)
+ligma_palette_finalize (GObject *object)
 {
-  GimpPalette *palette = GIMP_PALETTE (object);
+  LigmaPalette *palette = LIGMA_PALETTE (object);
 
   if (palette->colors)
     {
       g_list_free_full (palette->colors,
-                        (GDestroyNotify) gimp_palette_entry_free);
+                        (GDestroyNotify) ligma_palette_entry_free);
       palette->colors = NULL;
     }
 
@@ -138,23 +138,23 @@ gimp_palette_finalize (GObject *object)
 }
 
 static gint64
-gimp_palette_get_memsize (GimpObject *object,
+ligma_palette_get_memsize (LigmaObject *object,
                           gint64     *gui_size)
 {
-  GimpPalette *palette = GIMP_PALETTE (object);
+  LigmaPalette *palette = LIGMA_PALETTE (object);
   gint64       memsize = 0;
 
-  memsize += gimp_g_list_get_memsize_foreach (palette->colors,
-                                              (GimpMemsizeFunc)
-                                              gimp_palette_entry_get_memsize,
+  memsize += ligma_g_list_get_memsize_foreach (palette->colors,
+                                              (LigmaMemsizeFunc)
+                                              ligma_palette_entry_get_memsize,
                                               gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_palette_get_preview_size (GimpViewable *viewable,
+ligma_palette_get_preview_size (LigmaViewable *viewable,
                                gint          size,
                                gboolean      popup,
                                gboolean      dot_for_dot,
@@ -166,14 +166,14 @@ gimp_palette_get_preview_size (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_palette_get_popup_size (GimpViewable *viewable,
+ligma_palette_get_popup_size (LigmaViewable *viewable,
                              gint          width,
                              gint          height,
                              gboolean      dot_for_dot,
                              gint         *popup_width,
                              gint         *popup_height)
 {
-  GimpPalette *palette = GIMP_PALETTE (viewable);
+  LigmaPalette *palette = LIGMA_PALETTE (viewable);
   gint         p_width;
   gint         p_height;
 
@@ -198,14 +198,14 @@ gimp_palette_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-static GimpTempBuf *
-gimp_palette_get_new_preview (GimpViewable *viewable,
-                              GimpContext  *context,
+static LigmaTempBuf *
+ligma_palette_get_new_preview (LigmaViewable *viewable,
+                              LigmaContext  *context,
                               gint          width,
                               gint          height)
 {
-  GimpPalette *palette  = GIMP_PALETTE (viewable);
-  GimpTempBuf *temp_buf;
+  LigmaPalette *palette  = LIGMA_PALETTE (viewable);
+  LigmaTempBuf *temp_buf;
   guchar      *buf;
   guchar      *b;
   GList       *list;
@@ -214,8 +214,8 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   gint         cell_size;
   gint         x, y;
 
-  temp_buf = gimp_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
-  memset (gimp_temp_buf_get_data (temp_buf), 255, width * height * 3);
+  temp_buf = ligma_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
+  memset (ligma_temp_buf_get_data (temp_buf), 255, width * height * 3);
 
   if (palette->n_columns > 1)
     cell_size = MAX (4, width / palette->n_columns);
@@ -225,7 +225,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   columns = width  / cell_size;
   rows    = height / cell_size;
 
-  buf = gimp_temp_buf_get_data (temp_buf);
+  buf = ligma_temp_buf_get_data (temp_buf);
   b   = g_new (guchar, width * 3);
 
   list = palette->colors;
@@ -238,11 +238,11 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 
       for (x = 0; x < columns && list; x++)
         {
-          GimpPaletteEntry *entry = list->data;
+          LigmaPaletteEntry *entry = list->data;
 
           list = g_list_next (list);
 
-          gimp_rgb_get_uchar (&entry->color,
+          ligma_rgb_get_uchar (&entry->color,
                               &b[x * cell_size * 3 + 0],
                               &b[x * cell_size * 3 + 1],
                               &b[x * cell_size * 3 + 2]);
@@ -265,39 +265,39 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 }
 
 static gchar *
-gimp_palette_get_description (GimpViewable  *viewable,
+ligma_palette_get_description (LigmaViewable  *viewable,
                               gchar        **tooltip)
 {
-  GimpPalette *palette = GIMP_PALETTE (viewable);
+  LigmaPalette *palette = LIGMA_PALETTE (viewable);
 
   return g_strdup_printf ("%s (%d)",
-                          gimp_object_get_name (palette),
+                          ligma_object_get_name (palette),
                           palette->n_colors);
 }
 
-GimpData *
-gimp_palette_new (GimpContext *context,
+LigmaData *
+ligma_palette_new (LigmaContext *context,
                   const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  return g_object_new (GIMP_TYPE_PALETTE,
+  return g_object_new (LIGMA_TYPE_PALETTE,
                        "name", name,
                        NULL);
 }
 
-GimpData *
-gimp_palette_get_standard (GimpContext *context)
+LigmaData *
+ligma_palette_get_standard (LigmaContext *context)
 {
-  static GimpData *standard_palette = NULL;
+  static LigmaData *standard_palette = NULL;
 
   if (! standard_palette)
     {
-      standard_palette = gimp_palette_new (context, "Standard");
+      standard_palette = ligma_palette_new (context, "Standard");
 
-      gimp_data_clean (standard_palette);
-      gimp_data_make_internal (standard_palette, "gimp-palette-standard");
+      ligma_data_clean (standard_palette);
+      ligma_data_make_internal (standard_palette, "ligma-palette-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_palette),
                                  (gpointer *) &standard_palette);
@@ -307,25 +307,25 @@ gimp_palette_get_standard (GimpContext *context)
 }
 
 static const gchar *
-gimp_palette_get_extension (GimpData *data)
+ligma_palette_get_extension (LigmaData *data)
 {
-  return GIMP_PALETTE_FILE_EXTENSION;
+  return LIGMA_PALETTE_FILE_EXTENSION;
 }
 
 static void
-gimp_palette_copy (GimpData *data,
-                   GimpData *src_data)
+ligma_palette_copy (LigmaData *data,
+                   LigmaData *src_data)
 {
-  GimpPalette *palette     = GIMP_PALETTE (data);
-  GimpPalette *src_palette = GIMP_PALETTE (src_data);
+  LigmaPalette *palette     = LIGMA_PALETTE (data);
+  LigmaPalette *src_palette = LIGMA_PALETTE (src_data);
   GList       *list;
 
-  gimp_data_freeze (data);
+  ligma_data_freeze (data);
 
   if (palette->colors)
     {
       g_list_free_full (palette->colors,
-                        (GDestroyNotify) gimp_palette_entry_free);
+                        (GDestroyNotify) ligma_palette_entry_free);
       palette->colors = NULL;
     }
 
@@ -334,18 +334,18 @@ gimp_palette_copy (GimpData *data,
 
   for (list = src_palette->colors; list; list = g_list_next (list))
     {
-      GimpPaletteEntry *entry = list->data;
+      LigmaPaletteEntry *entry = list->data;
 
-      gimp_palette_add_entry (palette, -1, entry->name, &entry->color);
+      ligma_palette_add_entry (palette, -1, entry->name, &entry->color);
     }
 
-  gimp_data_thaw (data);
+  ligma_data_thaw (data);
 }
 
 static gchar *
-gimp_palette_get_checksum (GimpTagged *tagged)
+ligma_palette_get_checksum (LigmaTagged *tagged)
 {
-  GimpPalette *palette         = GIMP_PALETTE (tagged);
+  LigmaPalette *palette         = LIGMA_PALETTE (tagged);
   gchar       *checksum_string = NULL;
 
   if (palette->n_colors > 0)
@@ -358,7 +358,7 @@ gimp_palette_get_checksum (GimpTagged *tagged)
 
       while (color_iterator)
         {
-          GimpPaletteEntry *entry = (GimpPaletteEntry *) color_iterator->data;
+          LigmaPaletteEntry *entry = (LigmaPaletteEntry *) color_iterator->data;
 
           g_checksum_update (checksum, (const guchar *) &entry->color, sizeof (entry->color));
           if (entry->name)
@@ -379,27 +379,27 @@ gimp_palette_get_checksum (GimpTagged *tagged)
 /*  public functions  */
 
 GList *
-gimp_palette_get_colors (GimpPalette *palette)
+ligma_palette_get_colors (LigmaPalette *palette)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), NULL);
 
   return palette->colors;
 }
 
 gint
-gimp_palette_get_n_colors (GimpPalette *palette)
+ligma_palette_get_n_colors (LigmaPalette *palette)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), 0);
 
   return palette->n_colors;
 }
 
 void
-gimp_palette_move_entry (GimpPalette      *palette,
-                         GimpPaletteEntry *entry,
+ligma_palette_move_entry (LigmaPalette      *palette,
+                         LigmaPaletteEntry *entry,
                          gint              position)
 {
-  g_return_if_fail (GIMP_IS_PALETTE (palette));
+  g_return_if_fail (LIGMA_IS_PALETTE (palette));
   g_return_if_fail (entry != NULL);
 
   if (g_list_find (palette->colors, entry))
@@ -409,22 +409,22 @@ gimp_palette_move_entry (GimpPalette      *palette,
       palette->colors = g_list_insert (palette->colors,
                                        entry, position);
 
-      gimp_data_dirty (GIMP_DATA (palette));
+      ligma_data_dirty (LIGMA_DATA (palette));
     }
 }
 
-GimpPaletteEntry *
-gimp_palette_add_entry (GimpPalette   *palette,
+LigmaPaletteEntry *
+ligma_palette_add_entry (LigmaPalette   *palette,
                         gint           position,
                         const gchar   *name,
-                        const GimpRGB *color)
+                        const LigmaRGB *color)
 {
-  GimpPaletteEntry *entry;
+  LigmaPaletteEntry *entry;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  entry = g_slice_new0 (GimpPaletteEntry);
+  entry = g_slice_new0 (LigmaPaletteEntry);
 
   entry->color = *color;
   entry->name  = g_strdup (name ? name : _("Untitled"));
@@ -440,42 +440,42 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   palette->n_colors += 1;
 
-  gimp_data_dirty (GIMP_DATA (palette));
+  ligma_data_dirty (LIGMA_DATA (palette));
 
   return entry;
 }
 
 void
-gimp_palette_delete_entry (GimpPalette      *palette,
-                           GimpPaletteEntry *entry)
+ligma_palette_delete_entry (LigmaPalette      *palette,
+                           LigmaPaletteEntry *entry)
 {
-  g_return_if_fail (GIMP_IS_PALETTE (palette));
+  g_return_if_fail (LIGMA_IS_PALETTE (palette));
   g_return_if_fail (entry != NULL);
 
   if (g_list_find (palette->colors, entry))
     {
-      gimp_palette_entry_free (entry);
+      ligma_palette_entry_free (entry);
 
       palette->colors = g_list_remove (palette->colors, entry);
 
       palette->n_colors--;
 
-      gimp_data_dirty (GIMP_DATA (palette));
+      ligma_data_dirty (LIGMA_DATA (palette));
     }
 }
 
 gboolean
-gimp_palette_set_entry (GimpPalette   *palette,
+ligma_palette_set_entry (LigmaPalette   *palette,
                         gint           position,
                         const gchar   *name,
-                        const GimpRGB *color)
+                        const LigmaRGB *color)
 {
-  GimpPaletteEntry *entry;
+  LigmaPaletteEntry *entry;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
-  entry = gimp_palette_get_entry (palette, position);
+  entry = ligma_palette_get_entry (palette, position);
 
   if (! entry)
     return FALSE;
@@ -487,43 +487,43 @@ gimp_palette_set_entry (GimpPalette   *palette,
 
   entry->name = g_strdup (name);
 
-  gimp_data_dirty (GIMP_DATA (palette));
+  ligma_data_dirty (LIGMA_DATA (palette));
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_set_entry_color (GimpPalette   *palette,
+ligma_palette_set_entry_color (LigmaPalette   *palette,
                               gint           position,
-                              const GimpRGB *color)
+                              const LigmaRGB *color)
 {
-  GimpPaletteEntry *entry;
+  LigmaPaletteEntry *entry;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
-  entry = gimp_palette_get_entry (palette, position);
+  entry = ligma_palette_get_entry (palette, position);
 
   if (! entry)
     return FALSE;
 
   entry->color = *color;
 
-  gimp_data_dirty (GIMP_DATA (palette));
+  ligma_data_dirty (LIGMA_DATA (palette));
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_set_entry_name (GimpPalette *palette,
+ligma_palette_set_entry_name (LigmaPalette *palette,
                              gint         position,
                              const gchar *name)
 {
-  GimpPaletteEntry *entry;
+  LigmaPaletteEntry *entry;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), FALSE);
 
-  entry = gimp_palette_get_entry (palette, position);
+  entry = ligma_palette_get_entry (palette, position);
 
   if (! entry)
     return FALSE;
@@ -533,35 +533,35 @@ gimp_palette_set_entry_name (GimpPalette *palette,
 
   entry->name = g_strdup (name);
 
-  gimp_data_dirty (GIMP_DATA (palette));
+  ligma_data_dirty (LIGMA_DATA (palette));
 
   return TRUE;
 }
 
-GimpPaletteEntry *
-gimp_palette_get_entry (GimpPalette *palette,
+LigmaPaletteEntry *
+ligma_palette_get_entry (LigmaPalette *palette,
                         gint         position)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), NULL);
 
   return g_list_nth_data (palette->colors, position);
 }
 
 gint
-gimp_palette_get_entry_position (GimpPalette      *palette,
-                                 GimpPaletteEntry *entry)
+ligma_palette_get_entry_position (LigmaPalette      *palette,
+                                 LigmaPaletteEntry *entry)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), -1);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), -1);
   g_return_val_if_fail (entry != NULL, -1);
 
   return g_list_index (palette->colors, entry);
 }
 
 void
-gimp_palette_set_columns (GimpPalette *palette,
+ligma_palette_set_columns (LigmaPalette *palette,
                           gint         columns)
 {
-  g_return_if_fail (GIMP_IS_PALETTE (palette));
+  g_return_if_fail (LIGMA_IS_PALETTE (palette));
 
   columns = CLAMP (columns, 0, 64);
 
@@ -569,26 +569,26 @@ gimp_palette_set_columns (GimpPalette *palette,
     {
       palette->n_columns = columns;
 
-      gimp_data_dirty (GIMP_DATA (palette));
+      ligma_data_dirty (LIGMA_DATA (palette));
     }
 }
 
 gint
-gimp_palette_get_columns (GimpPalette *palette)
+ligma_palette_get_columns (LigmaPalette *palette)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), 0);
 
   return palette->n_columns;
 }
 
-GimpPaletteEntry *
-gimp_palette_find_entry (GimpPalette      *palette,
-                         const GimpRGB    *color,
-                         GimpPaletteEntry *start_from)
+LigmaPaletteEntry *
+ligma_palette_find_entry (LigmaPalette      *palette,
+                         const LigmaRGB    *color,
+                         LigmaPaletteEntry *start_from)
 {
-  GimpPaletteEntry *entry;
+  LigmaPaletteEntry *entry;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE (palette), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   if (! start_from)
@@ -599,12 +599,12 @@ gimp_palette_find_entry (GimpPalette      *palette,
 
       for (list = palette->colors; list; list = g_list_next (list))
         {
-          entry = (GimpPaletteEntry *) list->data;
-          if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+          entry = (LigmaPaletteEntry *) list->data;
+          if (ligma_rgb_distance (&entry->color, color) < RGB_EPSILON)
             return entry;
         }
     }
-  else if (gimp_rgb_distance (&start_from->color, color) < RGB_EPSILON)
+  else if (ligma_rgb_distance (&start_from->color, color) < RGB_EPSILON)
     {
       return start_from;
     }
@@ -625,8 +625,8 @@ gimp_palette_find_entry (GimpPalette      *palette,
         {
           if (next)
             {
-              entry = (GimpPaletteEntry *) next->data;
-              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+              entry = (LigmaPaletteEntry *) next->data;
+              if (ligma_rgb_distance (&entry->color, color) < RGB_EPSILON)
                 return entry;
 
               next = next->next;
@@ -634,8 +634,8 @@ gimp_palette_find_entry (GimpPalette      *palette,
 
           if (prev)
             {
-              entry = (GimpPaletteEntry *) prev->data;
-              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+              entry = (LigmaPaletteEntry *) prev->data;
+              if (ligma_rgb_distance (&entry->color, color) < RGB_EPSILON)
                 return entry;
 
               prev = prev->prev;
@@ -650,22 +650,22 @@ gimp_palette_find_entry (GimpPalette      *palette,
 /*  private functions  */
 
 static void
-gimp_palette_entry_free (GimpPaletteEntry *entry)
+ligma_palette_entry_free (LigmaPaletteEntry *entry)
 {
   g_return_if_fail (entry != NULL);
 
   g_free (entry->name);
 
-  g_slice_free (GimpPaletteEntry, entry);
+  g_slice_free (LigmaPaletteEntry, entry);
 }
 
 static gint64
-gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
+ligma_palette_entry_get_memsize (LigmaPaletteEntry *entry,
                                 gint64           *gui_size)
 {
-  gint64 memsize = sizeof (GimpPaletteEntry);
+  gint64 memsize = sizeof (LigmaPaletteEntry);
 
-  memsize += gimp_string_get_memsize (entry->name);
+  memsize += ligma_string_get_memsize (entry->name);
 
   return memsize;
 }

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -33,11 +33,11 @@ sub gradient_new {
     %invoke = (
         code => <<'CODE'
 {
-  GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory,
+  LigmaData *data = ligma_data_factory_data_new (ligma->gradient_factory,
                                                context, name);
 
   if (data)
-    actual_name = g_strdup (gimp_object_get_name (data));
+    actual_name = g_strdup (ligma_object_get_name (data));
   else
     success = FALSE;
 }
@@ -64,16 +64,16 @@ sub gradient_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (gradient)
     {
-      GimpGradient *gradient_copy = (GimpGradient *)
-        gimp_data_factory_data_duplicate (gimp->gradient_factory,
-                                          GIMP_DATA (gradient));
+      LigmaGradient *gradient_copy = (LigmaGradient *)
+        ligma_data_factory_data_duplicate (ligma->gradient_factory,
+                                          LIGMA_DATA (gradient));
 
       if (gradient_copy)
-        copy_name = g_strdup (gimp_object_get_name (gradient_copy));
+        copy_name = g_strdup (ligma_object_get_name (gradient_copy));
       else
         success = FALSE;
     }
@@ -103,10 +103,10 @@ sub gradient_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (gradient)
-    editable = gimp_data_is_writable (GIMP_DATA (gradient));
+    editable = ligma_data_is_writable (LIGMA_DATA (gradient));
   else
     success = FALSE;
 }
@@ -135,12 +135,12 @@ sub gradient_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_RENAME, error);
 
   if (gradient)
     {
-      gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-      actual_name = g_strdup (gimp_object_get_name (gradient));
+      ligma_object_set_name (LIGMA_OBJECT (gradient), new_name);
+      actual_name = g_strdup (ligma_object_get_name (gradient));
     }
   else
     success = FALSE;
@@ -163,11 +163,11 @@ sub gradient_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
-  if (gradient && gimp_data_is_deletable (GIMP_DATA (gradient)))
-    success = gimp_data_factory_data_delete (gimp->gradient_factory,
-                                             GIMP_DATA (gradient),
+  if (gradient && ligma_data_is_deletable (LIGMA_DATA (gradient)))
+    success = ligma_data_factory_data_delete (ligma->gradient_factory,
+                                             LIGMA_DATA (gradient),
                                              TRUE, error);
   else
     success = FALSE;
@@ -201,10 +201,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (gradient)
     {
@@ -251,13 +251,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name,
-                                                  GIMP_PDB_DATA_ACCESS_READ,
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name,
+                                                  LIGMA_PDB_DATA_ACCESS_READ,
                                                   error);
 
   if (gradient)
     {
-      GimpGradientSegment *seg   = NULL;
+      LigmaGradientSegment *seg   = NULL;
       gdouble              pos   = 0.0;
       gdouble              delta = 1.0 / (num_samples - 1);
       gdouble             *sample;
@@ -268,11 +268,11 @@ HELP
 
       while (num_samples--)
         {
-          GimpRGB color;
+          LigmaRGB color;
 
-	  seg = gimp_gradient_get_color_at (gradient, context, seg,
+	  seg = ligma_gradient_get_color_at (gradient, context, seg,
                                             pos, reverse,
-                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                             &color);
 
           *sample++ = color.r;
@@ -325,13 +325,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name,
-                                                  GIMP_PDB_DATA_ACCESS_READ,
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name,
+                                                  LIGMA_PDB_DATA_ACCESS_READ,
                                                   error);
 
   if (gradient)
     {
-      GimpGradientSegment *seg = NULL;
+      LigmaGradientSegment *seg = NULL;
       gdouble             *sample;
 
       num_color_samples = num_samples * 4;
@@ -340,12 +340,12 @@ HELP
 
       while (num_samples--)
         {
-          GimpRGB color;
+          LigmaRGB color;
 
-          seg = gimp_gradient_get_color_at (gradient, context,
+          seg = ligma_gradient_get_color_at (gradient, context,
                                             seg, *positions,
                                             reverse,
-                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                             &color);
 
           *sample++ = color.r;
@@ -390,15 +390,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      gimp_gradient_segment_get_left_color (gradient, seg, &color);
+      ligma_gradient_segment_get_left_color (gradient, seg, &color);
       opacity = color.a * 100.0;
     }
   else
@@ -435,15 +435,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      gimp_gradient_segment_get_right_color (gradient, seg, &color);
+      ligma_gradient_segment_get_right_color (gradient, seg, &color);
       opacity = color.a * 100.0;
     }
   else
@@ -477,16 +477,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, segment,
                            &seg, error);
 
   if (seg)
     {
       color.a = opacity / 100.0;
-      gimp_gradient_segment_set_left_color (gradient, seg, &color);
+      ligma_gradient_segment_set_left_color (gradient, seg, &color);
     }
   else
     success = FALSE;
@@ -519,16 +519,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, segment,
                            &seg, error);
 
   if (seg)
     {
       color.a = opacity / 100.0;
-      gimp_gradient_segment_set_right_color (gradient, seg, &color);
+      ligma_gradient_segment_set_right_color (gradient, seg, &color);
     }
   else
     success = FALSE;
@@ -562,15 +562,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      pos = gimp_gradient_segment_get_left_pos (gradient, seg);
+      pos = ligma_gradient_segment_get_left_pos (gradient, seg);
     }
   else
     success = FALSE;
@@ -604,15 +604,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      pos = gimp_gradient_segment_get_right_pos (gradient, seg);
+      pos = ligma_gradient_segment_get_right_pos (gradient, seg);
     }
   else
     success = FALSE;
@@ -646,15 +646,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
+      pos = ligma_gradient_segment_get_middle_pos (gradient, seg);
     }
   else
     success = FALSE;
@@ -694,15 +694,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, segment,
                            &seg, error);
 
   if (seg)
     {
-      final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
+      final_pos = ligma_gradient_segment_set_left_pos (gradient, seg, pos);
     }
   else
     success = FALSE;
@@ -742,16 +742,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, segment,
                            &seg, error);
 
   if (seg)
     {
       final_pos =
-        gimp_gradient_segment_set_right_pos (gradient, seg, pos);
+        ligma_gradient_segment_set_right_pos (gradient, seg, pos);
     }
   else
     success = FALSE;
@@ -790,16 +790,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, segment,
                            &seg, error);
 
   if (seg)
     {
       final_pos =
-        gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
+        ligma_gradient_segment_set_middle_pos (gradient, seg, pos);
     }
   else
     success = FALSE;
@@ -826,7 +826,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'blend_func', type => 'enum GimpGradientSegmentType',
+        { name => 'blend_func', type => 'enum LigmaGradientSegmentType',
           void_ret => 1,
 	  desc => 'The blending function of the segment' }
     );
@@ -834,15 +834,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
+      blend_func = ligma_gradient_segment_get_blending_function (gradient, seg);
     }
   else
     success = FALSE;
@@ -869,7 +869,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
+        { name => 'coloring_type', type => 'enum LigmaGradientSegmentColor',
           void_ret => 1,
 	  desc => 'The coloring type of the segment' }
     );
@@ -877,15 +877,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+  gradient = gradient_get (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, segment,
                            &seg, error);
 
   if (seg)
     {
-      coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
+      coloring_type = ligma_gradient_segment_get_coloring_type (gradient, seg);
     }
   else
     success = FALSE;
@@ -912,23 +912,23 @@ HELP
         { name => 'end_segment', type => 'int32',
           desc => 'The index of the last segment to operate on. If negative,
                    the selection will extend to the end of the string.' },
-        { name => 'blending_function', type => 'enum GimpGradientSegmentType',
+        { name => 'blending_function', type => 'enum LigmaGradientSegmentType',
           desc => 'The blending function' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_set_blending_function (gradient,
+      ligma_gradient_segment_range_set_blending_function (gradient,
                                                          start_seg, end_seg,
                                                          blending_function);
     }
@@ -957,23 +957,23 @@ HELP
         { name => 'end_segment', type => 'int32',
           desc => 'The index of the last segment to operate on. If negative,
                    the selection will extend to the end of the string.' },
-        { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
+        { name => 'coloring_type', type => 'enum LigmaGradientSegmentColor',
           desc => 'The coloring type' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_set_coloring_type (gradient,
+      ligma_gradient_segment_range_set_coloring_type (gradient,
                                                      start_seg, end_seg,
                                                      coloring_type);
     }
@@ -1003,16 +1003,16 @@ sub gradient_segment_range_flip {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_flip (gradient,
+      ligma_gradient_segment_range_flip (gradient,
                                         start_seg, end_seg,
                                         NULL, NULL);
     }
@@ -1049,16 +1049,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
-  if (start_seg && gimp_data_is_writable (GIMP_DATA (gradient)))
+  if (start_seg && ligma_data_is_writable (LIGMA_DATA (gradient)))
     {
-      gimp_gradient_segment_range_replicate (gradient,
+      ligma_gradient_segment_range_replicate (gradient,
                                              start_seg, end_seg,
                                              replicate_times,
                                              NULL, NULL);
@@ -1092,18 +1092,18 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_split_midpoint (gradient, context,
+      ligma_gradient_segment_range_split_midpoint (gradient, context,
                                                   start_seg, end_seg,
-                                                  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                  LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                   NULL, NULL);
     }
   else
@@ -1138,19 +1138,19 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_split_uniform (gradient, context,
+      ligma_gradient_segment_range_split_uniform (gradient, context,
                                                  start_seg, end_seg,
                                                  split_parts,
-                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                 LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                  NULL, NULL);
     }
   else
@@ -1179,16 +1179,16 @@ sub gradient_segment_range_delete {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_delete (gradient,
+      ligma_gradient_segment_range_delete (gradient,
                                           start_seg, end_seg,
                                           NULL, NULL);
     }
@@ -1222,16 +1222,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      gimp_gradient_segment_range_redistribute_handles (gradient,
+      ligma_gradient_segment_range_redistribute_handles (gradient,
                                                         start_seg, end_seg);
     }
   else
@@ -1265,19 +1265,19 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
       if (!end_seg)
-        end_seg = gimp_gradient_segment_get_last (start_seg);
+        end_seg = ligma_gradient_segment_get_last (start_seg);
 
-      gimp_gradient_segment_range_blend (gradient,
+      ligma_gradient_segment_range_blend (gradient,
                                          start_seg, end_seg,
                                          &start_seg->left_color,
                                          &end_seg->right_color,
@@ -1314,19 +1314,19 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
       if (!end_seg)
-        end_seg = gimp_gradient_segment_get_last (start_seg);
+        end_seg = ligma_gradient_segment_get_last (start_seg);
 
-      gimp_gradient_segment_range_blend (gradient,
+      ligma_gradient_segment_range_blend (gradient,
                                          start_seg, end_seg,
                                          &start_seg->left_color,
                                          &end_seg->right_color,
@@ -1372,16 +1372,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient        *gradient;
-  GimpGradientSegment *start_seg;
-  GimpGradientSegment *end_seg;
+  LigmaGradient        *gradient;
+  LigmaGradientSegment *start_seg;
+  LigmaGradientSegment *end_seg;
 
-  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+  gradient = gradient_get_range (ligma, name, start_segment, end_segment,
                                  &start_seg, &end_seg, error);
 
   if (start_seg)
     {
-      final_delta = gimp_gradient_segment_range_move (gradient,
+      final_delta = ligma_gradient_segment_range_move (gradient,
                                                       start_seg, end_seg,
                                                       delta,
                                                       control_compress);
@@ -1394,34 +1394,34 @@ CODE
 }
 
 $extra{app}->{code} = <<'CODE';
-static GimpGradient *
-gradient_get (Gimp                 *gimp,
+static LigmaGradient *
+gradient_get (Ligma                 *ligma,
               const gchar          *name,
-              GimpPDBDataAccess     access,
+              LigmaPDBDataAccess     access,
               gint                  segment,
-              GimpGradientSegment **seg,
+              LigmaGradientSegment **seg,
               GError              **error)
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, access, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, access, error);
 
   *seg = NULL;
 
   if (gradient)
-    *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
+    *seg = ligma_gradient_segment_get_nth (gradient->segments, segment);
 
   return gradient;
 }
 
-static GimpGradient *
-gradient_get_range (Gimp                 *gimp,
+static LigmaGradient *
+gradient_get_range (Ligma                 *ligma,
                     const gchar          *name,
                     gint                  start_segment,
                     gint                  end_segment,
-                    GimpGradientSegment **start_seg,
-                    GimpGradientSegment **end_seg,
+                    LigmaGradientSegment **start_seg,
+                    LigmaGradientSegment **end_seg,
                     GError              **error)
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   *start_seg = NULL;
   *end_seg   = NULL;
@@ -1431,11 +1431,11 @@ gradient_get_range (Gimp                 *gimp,
 
   if (gradient)
     {
-      *start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+      *start_seg = ligma_gradient_segment_get_nth (gradient->segments,
                                                   start_segment);
 
       if (*start_seg && end_segment >= 0)
-        *end_seg = gimp_gradient_segment_get_nth (*start_seg,
+        *end_seg = ligma_gradient_segment_get_nth (*start_seg,
                                                   end_segment -
                                                   start_segment);
     }
@@ -1446,11 +1446,11 @@ CODE
 
 
 @headers = qw(<string.h>
-              "core/gimp.h"
-              "core/gimpcontext.h"
-              "core/gimpgradient.h"
-              "core/gimpdatafactory.h"
-              "gimppdb-utils.h");
+              "core/ligma.h"
+              "core/ligmacontext.h"
+              "core/ligmagradient.h"
+              "core/ligmadatafactory.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(gradient_new
             gradient_duplicate
@@ -1481,7 +1481,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient';
-$doc_title = 'gimpgradient';
+$doc_title = 'ligmagradient';
 $doc_short_desc = 'Functions operating on a single gradient.';
 $doc_long_desc = 'Functions operating on a single gradient.';
 

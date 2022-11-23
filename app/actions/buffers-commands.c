@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,51 +20,51 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-edit.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligma-edit.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontainerview-utils.h"
+#include "widgets/ligmacontainereditor.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmacontainerview-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-transform.h"
 
 #include "buffers-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions */
 
 void
-buffers_paste_cmd_callback (GimpAction *action,
+buffers_paste_cmd_callback (LigmaAction *action,
                             GVariant   *value,
                             gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
-  GimpPasteType        paste_type = (GimpPasteType) g_variant_get_int32 (value);
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaBuffer          *buffer;
+  LigmaPasteType        paste_type = (LigmaPasteType) g_variant_get_int32 (value);
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  buffer = gimp_context_get_buffer (context);
+  buffer = ligma_context_get_buffer (context);
 
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
+  if (buffer && ligma_container_have (container, LIGMA_OBJECT (buffer)))
     {
-      GimpDisplay *display = gimp_context_get_display (context);
-      GimpImage   *image   = NULL;
+      LigmaDisplay *display = ligma_context_get_display (context);
+      LigmaImage   *image   = NULL;
       gint         x       = -1;
       gint         y       = -1;
       gint         width   = -1;
@@ -72,71 +72,71 @@ buffers_paste_cmd_callback (GimpAction *action,
 
       if (display)
         {
-          GimpDisplayShell *shell = gimp_display_get_shell (display);
+          LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
-          gimp_display_shell_untransform_viewport (
+          ligma_display_shell_untransform_viewport (
             shell,
-            ! gimp_display_shell_get_infinite_canvas (shell),
+            ! ligma_display_shell_get_infinite_canvas (shell),
             &x, &y, &width, &height);
 
-          image = gimp_display_get_image (display);
+          image = ligma_display_get_image (display);
         }
       else
         {
-          image = gimp_context_get_image (context);
+          image = ligma_context_get_image (context);
         }
 
       if (image)
         {
-          GList *drawables = gimp_image_get_selected_drawables (image);
+          GList *drawables = ligma_image_get_selected_drawables (image);
 
-          g_list_free (gimp_edit_paste (image,
+          g_list_free (ligma_edit_paste (image,
                                         g_list_length (drawables) == 1 ? drawables->data : NULL,
-                                        GIMP_OBJECT (buffer), paste_type,
+                                        LIGMA_OBJECT (buffer), paste_type,
                                         context, FALSE,
                                         x, y, width, height));
 
-          gimp_image_flush (image);
+          ligma_image_flush (image);
           g_list_free (drawables);
         }
     }
 }
 
 void
-buffers_paste_as_new_image_cmd_callback (GimpAction *action,
+buffers_paste_as_new_image_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaBuffer          *buffer;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  buffer = gimp_context_get_buffer (context);
+  buffer = ligma_context_get_buffer (context);
 
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
+  if (buffer && ligma_container_have (container, LIGMA_OBJECT (buffer)))
     {
       GtkWidget *widget = GTK_WIDGET (editor);
-      GimpImage *new_image;
+      LigmaImage *new_image;
 
-      new_image = gimp_edit_paste_as_new_image (context->gimp,
-                                                GIMP_OBJECT (buffer));
-      gimp_create_display (context->gimp, new_image,
-                           GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      new_image = ligma_edit_paste_as_new_image (context->ligma,
+                                                LIGMA_OBJECT (buffer));
+      ligma_create_display (context->ligma, new_image,
+                           LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (new_image);
     }
 }
 
 void
-buffers_delete_cmd_callback (GimpAction *action,
+buffers_delete_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
 
-  gimp_container_view_remove_active (editor->view);
+  ligma_container_view_remove_active (editor->view);
 }

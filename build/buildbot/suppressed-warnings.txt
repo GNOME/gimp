@@ -10,15 +10,15 @@
 :    .*warning: Section .* is not defined in the .* file.*
 :    .*warning: Value descriptions for .* are missing in source code comment block.*
 
-# This will die in GIMP 3.0, don't bother fixing...
-:    .*gimp-composite-.* warning: function declaration isn.*t a prototype.*
-:    .*gimp-composite-.* warning: unused variable .*
+# This will die in LIGMA 3.0, don't bother fixing...
+:    .*ligma-composite-.* warning: function declaration isn.*t a prototype.*
+:    .*ligma-composite-.* warning: unused variable .*
 
 # Well-known harmless warnings
 :    .*gtkitemfactory.h:47: warning: function declaration isn.*t a prototype.*
 
 # Who cares
-:    .*gimp.desktop: warning: value .* contains .* more than once.*
+:    .*ligma.desktop: warning: value .* contains .* more than once.*
 :    ^libtool: install: warning:.*
 
 # Annoying plug-ins/imagemap warnings in generated files, not easily

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,116 +15,116 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEVICE_INFO_H__
-#define __GIMP_DEVICE_INFO_H__
+#ifndef __LIGMA_DEVICE_INFO_H__
+#define __LIGMA_DEVICE_INFO_H__
 
 
-#include "core/gimptoolpreset.h"
+#include "core/ligmatoolpreset.h"
 
 
 G_BEGIN_DECLS
 
 
-typedef struct _GimpDeviceKey GimpDeviceKey;
+typedef struct _LigmaDeviceKey LigmaDeviceKey;
 
-struct _GimpDeviceKey
+struct _LigmaDeviceKey
 {
   guint           keyval;
   GdkModifierType modifiers;
 };
 
 
-#define GIMP_TYPE_DEVICE_INFO            (gimp_device_info_get_type ())
-#define GIMP_DEVICE_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfo))
-#define GIMP_DEVICE_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfoClass))
-#define GIMP_IS_DEVICE_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DEVICE_INFO))
-#define GIMP_IS_DEVICE_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DEVICE_INFO))
-#define GIMP_DEVICE_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfoClass))
+#define LIGMA_TYPE_DEVICE_INFO            (ligma_device_info_get_type ())
+#define LIGMA_DEVICE_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DEVICE_INFO, LigmaDeviceInfo))
+#define LIGMA_DEVICE_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DEVICE_INFO, LigmaDeviceInfoClass))
+#define LIGMA_IS_DEVICE_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DEVICE_INFO))
+#define LIGMA_IS_DEVICE_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DEVICE_INFO))
+#define LIGMA_DEVICE_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DEVICE_INFO, LigmaDeviceInfoClass))
 
 
-typedef struct _GimpDeviceInfoPrivate GimpDeviceInfoPrivate;
-typedef struct _GimpDeviceInfoClass   GimpDeviceInfoClass;
+typedef struct _LigmaDeviceInfoPrivate LigmaDeviceInfoPrivate;
+typedef struct _LigmaDeviceInfoClass   LigmaDeviceInfoClass;
 
-struct _GimpDeviceInfo
+struct _LigmaDeviceInfo
 {
-  GimpToolPreset  parent_instance;
+  LigmaToolPreset  parent_instance;
 
-  GimpDeviceInfoPrivate *priv;
+  LigmaDeviceInfoPrivate *priv;
 };
 
-struct _GimpDeviceInfoClass
+struct _LigmaDeviceInfoClass
 {
-  GimpToolPresetClass  parent_class;
+  LigmaToolPresetClass  parent_class;
 };
 
 
-GType             gimp_device_info_get_type             (void) G_GNUC_CONST;
+GType             ligma_device_info_get_type             (void) G_GNUC_CONST;
 
-GimpDeviceInfo  * gimp_device_info_new                  (Gimp            *gimp,
+LigmaDeviceInfo  * ligma_device_info_new                  (Ligma            *ligma,
                                                          GdkDevice       *device,
                                                          GdkDisplay      *display);
 
-GdkDevice       * gimp_device_info_get_device           (GimpDeviceInfo  *info,
+GdkDevice       * ligma_device_info_get_device           (LigmaDeviceInfo  *info,
                                                          GdkDisplay     **display);
-gboolean          gimp_device_info_set_device           (GimpDeviceInfo  *info,
+gboolean          ligma_device_info_set_device           (LigmaDeviceInfo  *info,
                                                          GdkDevice       *device,
                                                          GdkDisplay      *display);
 
-void              gimp_device_info_set_default_tool     (GimpDeviceInfo  *info);
+void              ligma_device_info_set_default_tool     (LigmaDeviceInfo  *info);
 
-void              gimp_device_info_save_tool            (GimpDeviceInfo  *info);
-void              gimp_device_info_restore_tool         (GimpDeviceInfo  *info);
+void              ligma_device_info_save_tool            (LigmaDeviceInfo  *info);
+void              ligma_device_info_restore_tool         (LigmaDeviceInfo  *info);
 
-GdkInputMode      gimp_device_info_get_mode             (GimpDeviceInfo  *info);
-void              gimp_device_info_set_mode             (GimpDeviceInfo  *info,
+GdkInputMode      ligma_device_info_get_mode             (LigmaDeviceInfo  *info);
+void              ligma_device_info_set_mode             (LigmaDeviceInfo  *info,
                                                          GdkInputMode     mode);
 
-gboolean          gimp_device_info_has_cursor           (GimpDeviceInfo  *info);
+gboolean          ligma_device_info_has_cursor           (LigmaDeviceInfo  *info);
 
-GdkInputSource    gimp_device_info_get_source           (GimpDeviceInfo  *info);
+GdkInputSource    ligma_device_info_get_source           (LigmaDeviceInfo  *info);
 
-const gchar     * gimp_device_info_get_vendor_id        (GimpDeviceInfo  *info);
-const gchar     * gimp_device_info_get_product_id       (GimpDeviceInfo  *info);
+const gchar     * ligma_device_info_get_vendor_id        (LigmaDeviceInfo  *info);
+const gchar     * ligma_device_info_get_product_id       (LigmaDeviceInfo  *info);
 
-GdkDeviceToolType gimp_device_info_get_tool_type        (GimpDeviceInfo  *info);
-guint64           gimp_device_info_get_tool_serial      (GimpDeviceInfo  *info);
-guint64           gimp_device_info_get_tool_hardware_id (GimpDeviceInfo  *info);
+GdkDeviceToolType ligma_device_info_get_tool_type        (LigmaDeviceInfo  *info);
+guint64           ligma_device_info_get_tool_serial      (LigmaDeviceInfo  *info);
+guint64           ligma_device_info_get_tool_hardware_id (LigmaDeviceInfo  *info);
 
-gint             gimp_device_info_get_n_axes            (GimpDeviceInfo  *info);
-gboolean         gimp_device_info_ignore_axis           (GimpDeviceInfo  *info,
+gint             ligma_device_info_get_n_axes            (LigmaDeviceInfo  *info);
+gboolean         ligma_device_info_ignore_axis           (LigmaDeviceInfo  *info,
                                                          gint             axis);
-const gchar    * gimp_device_info_get_axis_name         (GimpDeviceInfo  *info,
+const gchar    * ligma_device_info_get_axis_name         (LigmaDeviceInfo  *info,
                                                          gint             axis);
-GdkAxisUse       gimp_device_info_get_axis_use          (GimpDeviceInfo  *info,
+GdkAxisUse       ligma_device_info_get_axis_use          (LigmaDeviceInfo  *info,
                                                          gint             axis);
-void             gimp_device_info_set_axis_use          (GimpDeviceInfo  *info,
+void             ligma_device_info_set_axis_use          (LigmaDeviceInfo  *info,
                                                          gint             axis,
                                                          GdkAxisUse       use);
 
-gint             gimp_device_info_get_n_keys            (GimpDeviceInfo  *info);
-void             gimp_device_info_get_key               (GimpDeviceInfo  *info,
+gint             ligma_device_info_get_n_keys            (LigmaDeviceInfo  *info);
+void             ligma_device_info_get_key               (LigmaDeviceInfo  *info,
                                                          gint             key,
                                                          guint           *keyval,
                                                          GdkModifierType *modifiers);
-void             gimp_device_info_set_key               (GimpDeviceInfo  *info,
+void             ligma_device_info_set_key               (LigmaDeviceInfo  *info,
                                                          gint             key,
                                                          guint            keyval,
                                                          GdkModifierType  modifiers);
 
-GimpCurve      * gimp_device_info_get_curve             (GimpDeviceInfo  *info,
+LigmaCurve      * ligma_device_info_get_curve             (LigmaDeviceInfo  *info,
                                                          GdkAxisUse       use);
-gdouble          gimp_device_info_map_axis              (GimpDeviceInfo  *info,
+gdouble          ligma_device_info_map_axis              (LigmaDeviceInfo  *info,
                                                          GdkAxisUse       use,
                                                          gdouble          value);
 
-void             gimp_device_info_changed               (GimpDeviceInfo  *info);
+void             ligma_device_info_changed               (LigmaDeviceInfo  *info);
 
-GimpDeviceInfo * gimp_device_info_get_by_device         (GdkDevice       *device);
+LigmaDeviceInfo * ligma_device_info_get_by_device         (GdkDevice       *device);
 
-gint             gimp_device_info_compare               (GimpDeviceInfo  *a,
-                                                         GimpDeviceInfo  *b);
+gint             ligma_device_info_compare               (LigmaDeviceInfo  *a,
+                                                         LigmaDeviceInfo  *b);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_DEVICE_INFO_H__ */
+#endif /* __LIGMA_DEVICE_INFO_H__ */

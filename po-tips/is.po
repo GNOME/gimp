@@ -1,13 +1,13 @@
-# translation of gimp-tips.gimp-2-8.is.po to
-# Icelandic translation of The GIMP. This is a compendium.
+# translation of ligma-tips.ligma-2-8.is.po to
+# Icelandic translation of The LIGMA. This is a compendium.
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
 # Sveinn í Felli <sv1@fellsnet.is>, 2015, 2018, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips.ligma-2-8.is\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-07-07 18:06+0000\n"
 "PO-Revision-Date: 2022-09-08 16:44+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
@@ -19,25 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Generator: Lokalize 21.12.3\n"
 
-#: data/tips/gimp-tips.xml.in:18
+#: data/tips/ligma-tips.xml.in:18
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Hvenær sem er, getur þú fengið leiðbeiningar í réttu samhengi fyrir flest "
-"tól í GIMP með því að ýta á F1 lykilinn. Þetta virkar einnig í valmyndum."
+"tól í LIGMA með því að ýta á F1 lykilinn. Þetta virkar einnig í valmyndum."
 
-#: data/tips/gimp-tips.xml.in:24
+#: data/tips/ligma-tips.xml.in:24
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP notar lög sem hjálpa þér að skipuleggja myndina þína. Hugsaðu um þær "
+"LIGMA notar lög sem hjálpa þér að skipuleggja myndina þína. Hugsaðu um þær "
 "sem stafla af skyggnum eða síum, þannig að þegar þú horfir í gegn um þær, "
 "sérðu samansett innihald þeirra."
 
-#: data/tips/gimp-tips.xml.in:31
+#: data/tips/ligma-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -45,19 +45,19 @@ msgstr ""
 "Þú getur framkvæmt margar aðgerðir á lögum með því að hægri-smella á "
 "textamerki þess lags í glugganum fyrir Lög."
 
-#: data/tips/gimp-tips.xml.in:37
+#: data/tips/ligma-tips.xml.in:37
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Myndir eru vistaðar á XCF skráasniði; það er skráasnið sem er eiginlegt GIMP "
+"Myndir eru vistaðar á XCF skráasniði; það er skráasnið sem er eiginlegt LIGMA "
 "(notar skráarendinguna <tt>.xcf</tt>). Þannig varðveitast lög og ýmsir aðrir "
 "eiginleikar í verkinu þínu. Þegar verkefni er lokið, getur þú flutt það út í "
 "skráasnið eins og JPEG, PNG, GIF, o.s.frv."
 
-#: data/tips/gimp-tips.xml.in:45
+#: data/tips/ligma-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -67,7 +67,7 @@ msgstr ""
 "tilfellum þarftu að setja öll lögin saman í eitt (Mynd→Fletja Mynd) ef þú "
 "vilt að hjálparforritið virki á myndina í heild."
 
-#: data/tips/gimp-tips.xml.in:52
+#: data/tips/ligma-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -77,7 +77,7 @@ msgstr ""
 "lag enga alfa-gegnsæislitrás. Þú getur bætt við alfa-gegnsæislitrás með því "
 "að nota Lag→Gegnsæi→Bæta við alfa-gegnsæislitrás."
 
-#: data/tips/gimp-tips.xml.in:59
+#: data/tips/ligma-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -89,7 +89,7 @@ msgstr ""
 "(Mynd→Hamur→RGB), bæta við alfa rás (Lag→Gegnsæi→Bæta við alfa rás) eða "
 "fletja hana (Mynd→Fletja Mynd)."
 
-#: data/tips/gimp-tips.xml.in:68
+#: data/tips/ligma-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -102,17 +102,17 @@ msgstr ""
 "<tt>Alt</tt> lykilinn eða að þeir noti <tt>Super</tt> lykilinn (eða "
 "\"Windows logo\") í staðinn."
 
-#: data/tips/gimp-tips.xml.in:82
+#: data/tips/ligma-tips.xml.in:82
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Þú getur dregið og sleppt mörgum hlutum í GIMP. Til dæmis, að draga lit frá "
+"Þú getur dregið og sleppt mörgum hlutum í LIGMA. Til dæmis, að draga lit frá "
 "verkfærakassanum eða frá litavali og sleppa honum á mynd, myndvalið með þeim "
 "lit."
 
-#: data/tips/gimp-tips.xml.in:89
+#: data/tips/ligma-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -120,7 +120,7 @@ msgstr ""
 "Þú getur notað miðju-músahnappinn til að flakka um myndina, (eða ýta á "
 "<tt>bilslána</tt> meðan þú hreyfir músina)."
 
-#: data/tips/gimp-tips.xml.in:95
+#: data/tips/ligma-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -130,7 +130,7 @@ msgstr ""
 "dregið myndval mun dragast að stoðínunni. Þú getur fjarlægt stoðínur með því "
 "að draga þær af myndinni með Flytja-verkfærinu."
 
-#: data/tips/gimp-tips.xml.in:102
+#: data/tips/ligma-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -138,7 +138,7 @@ msgstr ""
 "Þú getur dregið lag frá valmyndinni fyrir Lög og sleppt því á "
 "verkfærakassann. Þetta býr til nýja mynd sem inniheldur eingöngu þetta lag."
 
-#: data/tips/gimp-tips.xml.in:108
+#: data/tips/ligma-tips.xml.in:108
 #| msgid ""
 #| "A floating selection must be anchored to a new layer or to the last "
 #| "active layer before doing other operations on the image. Click on the "
@@ -155,18 +155,18 @@ msgstr ""
 "hnappinn \"Nýtt lag\" eða á \"Festa lag\" í  valmyndinni "
 "Lög, eða notaðu valmyndirnar til að gera það sama."
 
-#: data/tips/gimp-tips.xml.in:116
+#: data/tips/ligma-tips.xml.in:116
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP styður rauntíma gzip þjöppun. Bættu bara við <tt>.gz</tt> (eða <tt>."
+"LIGMA styður rauntíma gzip þjöppun. Bættu bara við <tt>.gz</tt> (eða <tt>."
 "bz2</tt>, ef þú ert með bzip2 forritið uppsett) við skráarheitið og verður "
 "myndin þín vistuð þjöppuð. Að sjálfsögðu er einnig hægt að opna þjappaðar "
 "myndir."
 
-#: data/tips/gimp-tips.xml.in:124
+#: data/tips/ligma-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -177,7 +177,7 @@ msgstr ""
 "því út. Með því að nota <tt>Ctrl</tt> hnappinn áður en myndval er gert má "
 "draga frá núverandi myndvali."
 
-#: data/tips/gimp-tips.xml.in:132
+#: data/tips/ligma-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -187,7 +187,7 @@ msgstr ""
 "myndval. Það teiknar jaðarinn á núverandi myndvali. Flóknari lögun er hægt "
 "að draga með því að nota Ferlatólið eða með Síur→Myndgera→Gfig."
 
-#: data/tips/gimp-tips.xml.in:139
+#: data/tips/ligma-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -197,7 +197,7 @@ msgstr ""
 "málunarverkfærin með núverandi stillingum þeirra. Þú getur notað pensilinn í "
 "litstigulsham eða jafnvel Strokleðrið eða Kámáhaldið."
 
-#: data/tips/gimp-tips.xml.in:146
+#: data/tips/ligma-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -207,7 +207,7 @@ msgstr ""
 "Ferlavalmyndin, gerir þér kleift að vinna með marga ferla og breyta þeim í "
 "myndval."
 
-#: data/tips/gimp-tips.xml.in:153
+#: data/tips/ligma-tips.xml.in:153
 #| msgid ""
 #| "You can use the paint tools to change the selection. Click on the &quot;"
 #| "Quick Mask&quot; button at the bottom left of an image window. Change "
@@ -224,7 +224,7 @@ msgstr ""
 " með því að mála ofan í myndina og smelltu aftur á hnappinn til að breyta"
 " aftur í venjulegt myndval."
 
-#: data/tips/gimp-tips.xml.in:161
+#: data/tips/ligma-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -236,20 +236,20 @@ msgstr ""
 "valmyndinni fyrir Rásir, getur þú víxlað sýnileika nýju rásarinnar eða "
 "breytt henni í myndval."
 
-#: data/tips/gimp-tips.xml.in:175
+#: data/tips/ligma-tips.xml.in:175
 #| msgid ""
 #| "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the "
 #| "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
 #| "the menu, selecting a menu item, and pressing the desired key "
 #| "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
-#| "bindings are saved when you exit GIMP. You should probably disable &quot;"
+#| "bindings are saved when you exit LIGMA. You should probably disable &quot;"
 #| "Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally "
 #| "assigning/reassigning shortcuts."
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
+"Shortcuts\" is enabled, the key bindings are saved when you exit LIGMA. You "
 "should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
 "prevent accidentally assigning/reassigning shortcuts."
 msgstr ""
@@ -257,11 +257,11 @@ msgstr ""
 "kjörstillingum, getur þú ráðið virkni flýtilykla. Gerðu þetta með því að fá "
 "upp valmyndina, velja þar atriði og, ýta á þá samsetningu flýtilykla sem þú "
 "óskar að nota. Ef \"Vista flýtilykla við lokun\" er virkt, mun nýju "
-"stillingarnar verða vistaðar þegar þú lokar GIMP. Þú ættir svo líklega að "
+"stillingarnar verða vistaðar þegar þú lokar LIGMA. Þú ættir svo líklega að "
 "taka hakið úr \"Nota breytilega flýtilykla\", til að hindra að "
 "flýtilyklum verði breytt fyrir slysni."
 
-#: data/tips/gimp-tips.xml.in:186
+#: data/tips/ligma-tips.xml.in:186
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -270,7 +270,7 @@ msgstr ""
 "<tt>Tab</tt> hnappinn í myndglugga, til að fela eða sýna verkfærakassa og "
 "aðrar valmyndir."
 
-#: data/tips/gimp-tips.xml.in:193
+#: data/tips/ligma-tips.xml.in:193
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -279,7 +279,7 @@ msgstr ""
 "lögin nema einmitt þetta lag. <tt>Shift</tt>-smelltu aftur til að sýna öll "
 "lögin."
 
-#: data/tips/gimp-tips.xml.in:199
+#: data/tips/ligma-tips.xml.in:199
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -289,7 +289,7 @@ msgstr ""
 "víxlar virkninni á hulu lagsins. <tt>Alt</tt>-smellur á forsýnina á hulu "
 "lagsins í glugganum fyrir Lög, víxlar sýn á sjálfa huluna."
 
-#: data/tips/gimp-tips.xml.in:206
+#: data/tips/ligma-tips.xml.in:206
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -297,7 +297,7 @@ msgstr ""
 "Þú getur notað <tt>Alt</tt>-<tt>Tab</tt> til að fletta í gegn um öll lögin í "
 "mynd (ef gluggastjórinn þinn notar ekki nú þegar þessa lykla í annað...)."
 
-#: data/tips/gimp-tips.xml.in:212
+#: data/tips/ligma-tips.xml.in:212
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -308,7 +308,7 @@ msgstr ""
 "bakgrunnslitinn í staðinn fyrir forgrunnslitinn. <tt>Ctrl</tt>-smella með "
 "litplokkaranum stillir bakgrunnslit í stað forgrunnslitar."
 
-#: data/tips/gimp-tips.xml.in:220
+#: data/tips/ligma-tips.xml.in:220
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -316,7 +316,7 @@ msgstr ""
 "<tt>Ctrl</tt>-draga með Snúningstólinu, takmarkar snúninginn við næsta 15 "
 "gráðu bil."
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/ligma-tips.xml.in:226
 #| msgid ""
 #| "If some of your scanned photos do not look colorful enough, you can "
 #| "easily improve their tonal range with the &quot;Auto&quot; button in the "

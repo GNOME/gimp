@@ -20,38 +20,38 @@
   (let* (
         (theImage inImage)
         (theLayer inLayer)
-        (theHeight (car (gimp-drawable-get-height theLayer)))
-        (theWidth (car (gimp-drawable-get-width theLayer)))
+        (theHeight (car (ligma-drawable-get-height theLayer)))
+        (theWidth (car (ligma-drawable-get-width theLayer)))
         )
 
     (define (pasteat xoff yoff)
       (let* (
-             (pasted (gimp-edit-paste theLayer FALSE))
+             (pasted (ligma-edit-paste theLayer FALSE))
              (num-pasted (car pasted))
              (floating-sel (aref (cadr pasted) (- num-pasted 1)))
             )
-        (gimp-layer-set-offsets floating-sel (* xoff theWidth) (* yoff theHeight) )
-        (gimp-floating-sel-anchor floating-sel)
+        (ligma-layer-set-offsets floating-sel (* xoff theWidth) (* yoff theHeight) )
+        (ligma-floating-sel-anchor floating-sel)
       )
     )
 
-    (gimp-context-push)
-    (gimp-context-set-feather FALSE)
-    (gimp-image-undo-group-start theImage)
+    (ligma-context-push)
+    (ligma-context-set-feather FALSE)
+    (ligma-image-undo-group-start theImage)
 
-    (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
+    (ligma-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
-    (gimp-image-select-rectangle theImage CHANNEL-OP-REPLACE 0 0 theWidth theHeight)
-    (gimp-edit-cut 1 (vector theLayer))
+    (ligma-image-select-rectangle theImage CHANNEL-OP-REPLACE 0 0 theWidth theHeight)
+    (ligma-edit-cut 1 (vector theLayer))
 
-    (gimp-selection-none theImage)
-    (gimp-layer-set-offsets theLayer theWidth theHeight)
+    (ligma-selection-none theImage)
+    (ligma-layer-set-offsets theLayer theWidth theHeight)
 
     (pasteat 1 1) (pasteat 1 2) (pasteat 1 3)
     (pasteat 2 1) (pasteat 2 2) (pasteat 2 3)
     (pasteat 3 1) (pasteat 3 2) (pasteat 3 3)
 
-    (gimp-selection-none theImage)
+    (ligma-selection-none theImage)
     (if (= inType 0)
         (plug-in-gauss-iir RUN-NONINTERACTIVE
                            theImage theLayer inRadius inHoriz inVert)
@@ -59,12 +59,12 @@
                            theImage theLayer inRadius inHoriz inVert)
     )
 
-    (gimp-layer-resize theLayer
+    (ligma-layer-resize theLayer
                        theWidth theHeight (- 0 theWidth) (- 0 theHeight))
-    (gimp-layer-set-offsets theLayer 0 0)
-    (gimp-image-undo-group-end theImage)
-    (gimp-displays-flush)
-    (gimp-context-pop)
+    (ligma-layer-set-offsets theLayer 0 0)
+    (ligma-image-undo-group-end theImage)
+    (ligma-displays-flush)
+    (ligma-context-pop)
   )
 )
 

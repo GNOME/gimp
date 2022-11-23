@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * busy-dialog.c
@@ -20,15 +20,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-busy-dialog"
 #define PLUG_IN_BINARY "busy-dialog"
-#define PLUG_IN_ROLE   "gimp-busy-dialog"
+#define PLUG_IN_ROLE   "ligma-busy-dialog"
 
 
 typedef struct
@@ -43,12 +43,12 @@ typedef struct _BusyDialogClass BusyDialogClass;
 
 struct _BusyDialog
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _BusyDialogClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -58,14 +58,14 @@ struct _BusyDialogClass
 GType                     busy_dialog_get_type         (void) G_GNUC_CONST;
 
 
-static GList             * busy_dialog_query_procedures    (GimpPlugIn           *plug_in);
-static GimpProcedure     * busy_dialog_create_procedure    (GimpPlugIn           *plug_in,
+static GList             * busy_dialog_query_procedures    (LigmaPlugIn           *plug_in);
+static LigmaProcedure     * busy_dialog_create_procedure    (LigmaPlugIn           *plug_in,
                                                             const gchar          *name);
-static GimpValueArray    * busy_dialog_run                 (GimpProcedure        *procedure,
-                                                            const GimpValueArray *args,
+static LigmaValueArray    * busy_dialog_run                 (LigmaProcedure        *procedure,
+                                                            const LigmaValueArray *args,
                                                             gpointer              run_data);
 
-static GimpPDBStatusType   busy_dialog                     (gint              read_fd,
+static LigmaPDBStatusType   busy_dialog                     (gint              read_fd,
                                                             gint              write_fd,
                                                             const gchar      *message,
                                                             gboolean          cancelable);
@@ -82,15 +82,15 @@ static void                busy_dialog_response            (GtkDialog        *di
                                                             Context          *context);
 
 
-G_DEFINE_TYPE (BusyDialog, busy_dialog, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (BusyDialog, busy_dialog, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BUSY_DIALOG_TYPE)
+LIGMA_MAIN (BUSY_DIALOG_TYPE)
 DEFINE_STD_SET_I18N
 
 static void
 busy_dialog_class_init (BusyDialogClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = busy_dialog_query_procedures;
   plug_in_class->create_procedure = busy_dialog_create_procedure;
@@ -103,27 +103,27 @@ busy_dialog_init (BusyDialog *busy_dialog)
 }
 
 static GList *
-busy_dialog_query_procedures (GimpPlugIn *plug_in)
+busy_dialog_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-busy_dialog_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+busy_dialog_create_procedure (LigmaPlugIn  *plug_in,
                               const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       busy_dialog_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Show a dialog while waiting for an "
                                         "operation to finish",
-                                        "Used by GIMP to display a dialog, "
+                                        "Used by LIGMA to display a dialog, "
                                         "containing a spinner and a custom "
                                         "message, while waiting for an "
                                         "ongoing operation to finish. "
@@ -131,37 +131,37 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
                                         "a \"Cancel\" button, which can be used "
                                         "to cancel the operation.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Ell",
                                       "Ell",
                                       "2018");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "read-fd",
+      LIGMA_PROC_ARG_INT (procedure, "read-fd",
                          "The read file descriptor",
                          "The read file descriptor",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "write-fd",
+      LIGMA_PROC_ARG_INT (procedure, "write-fd",
                          "The write file descriptor",
                          "The write file descriptor",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "message",
+      LIGMA_PROC_ARG_STRING (procedure, "message",
                             "The message",
                             "The message",
                             NULL,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cancelable",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "cancelable",
                              "Whether the dialog is cancelable",
                              "Whether the dialog is cancelable",
                              FALSE,
@@ -171,45 +171,45 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-busy_dialog_run (GimpProcedure        *procedure,
-                 const GimpValueArray *args,
+static LigmaValueArray *
+busy_dialog_run (LigmaProcedure        *procedure,
+                 const LigmaValueArray *args,
                  gpointer              run_data)
 {
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  LigmaValueArray    *return_vals = NULL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaRunMode        run_mode;
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  run_mode = LIGMA_VALUES_GET_ENUM (args, 0);
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_NONINTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      if (gimp_value_array_length (args) != 5)
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      if (ligma_value_array_length (args) != 5)
         {
-          status = GIMP_PDB_CALLING_ERROR;
+          status = LIGMA_PDB_CALLING_ERROR;
         }
       else
         {
-          status = busy_dialog (GIMP_VALUES_GET_INT (args, 1),
-                                GIMP_VALUES_GET_INT (args, 2),
-                                GIMP_VALUES_GET_STRING (args, 3),
-                                GIMP_VALUES_GET_BOOLEAN (args, 4));
+          status = busy_dialog (LIGMA_VALUES_GET_INT (args, 1),
+                                LIGMA_VALUES_GET_INT (args, 2),
+                                LIGMA_VALUES_GET_STRING (args, 3),
+                                LIGMA_VALUES_GET_BOOLEAN (args, 4));
         }
       break;
 
     default:
-      status = GIMP_PDB_CALLING_ERROR;
+      status = LIGMA_PDB_CALLING_ERROR;
       break;
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+  return_vals = ligma_procedure_new_return_values (procedure, status, NULL);
 
   return return_vals;
 }
 
-static GimpPDBStatusType
+static LigmaPDBStatusType
 busy_dialog (gint         read_fd,
              gint         write_fd,
              const gchar *message,
@@ -240,13 +240,13 @@ busy_dialog (gint         read_fd,
                   (GIOFunc) busy_dialog_read_channel_notify,
                   &context);
 
-  /* call gtk_init() before gimp_ui_init(), to avoid DESKTOP_STARTUP_ID from
+  /* call gtk_init() before ligma_ui_init(), to avoid DESKTOP_STARTUP_ID from
    * taking effect -- we want the dialog to be prominently displayed above
    * other plug-in windows.
    */
   gtk_init (NULL, NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   /* the main window */
   if (! cancelable)
@@ -256,7 +256,7 @@ busy_dialog (gint         read_fd,
                              "skip-taskbar-hint", TRUE,
                              "deletable",         FALSE,
                              "resizable",         FALSE,
-                             "role",              "gimp-busy-dialog",
+                             "role",              "ligma-busy-dialog",
                              "type-hint",         GDK_WINDOW_TYPE_HINT_DIALOG,
                              "window-position",   GTK_WIN_POS_CENTER,
                              NULL);
@@ -271,7 +271,7 @@ busy_dialog (gint         read_fd,
                              "title",             _("Please Wait"),
                              "skip-taskbar-hint", TRUE,
                              "resizable",         FALSE,
-                             "role",              "gimp-busy-dialog",
+                             "role",              "ligma-busy-dialog",
                              "window-position",   GTK_WIN_POS_CENTER,
                              NULL);
 
@@ -297,14 +297,14 @@ busy_dialog (gint         read_fd,
 
   /* the title label */
   label = gtk_label_new (_("Please wait for the operation to complete"));
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /* the busy box */
-  box = gimp_busy_box_new (message);
+  box = ligma_busy_box_new (message);
   gtk_container_set_border_width (GTK_CONTAINER (box), 8);
   gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
@@ -318,7 +318,7 @@ busy_dialog (gint         read_fd,
   g_clear_pointer (&context.read_channel,  g_io_channel_unref);
   g_clear_pointer (&context.write_channel, g_io_channel_unref);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 static gboolean

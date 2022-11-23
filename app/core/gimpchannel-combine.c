@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,22 +22,22 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-mask-combine.h"
+#include "gegl/ligma-gegl-mask-combine.h"
 
-#include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpchannel-combine.h"
-#include "gimpimage.h"
-#include "gimpimage-merge.h"
-#include "gimpimage-new.h"
-#include "gimplayer.h"
+#include "ligma.h"
+#include "ligmachannel.h"
+#include "ligmachannel-combine.h"
+#include "ligmaimage.h"
+#include "ligmaimage-merge.h"
+#include "ligmaimage-new.h"
+#include "ligmalayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
 
 typedef struct
@@ -47,30 +47,30 @@ typedef struct
   gboolean      bounds_known;
   gboolean      empty;
   GeglRectangle bounds;
-} GimpChannelCombineData;
+} LigmaChannelCombineData;
 
 
 /*  local function prototypes  */
 
-static void       gimp_channel_combine_clear            (GimpChannel            *mask,
+static void       ligma_channel_combine_clear            (LigmaChannel            *mask,
                                                          const GeglRectangle    *rect);
-static void       gimp_channel_combine_clear_complement (GimpChannel            *mask,
+static void       ligma_channel_combine_clear_complement (LigmaChannel            *mask,
                                                          const GeglRectangle    *rect);
 
-static gboolean   gimp_channel_combine_start            (GimpChannel            *mask,
-                                                         GimpChannelOps          op,
+static gboolean   ligma_channel_combine_start            (LigmaChannel            *mask,
+                                                         LigmaChannelOps          op,
                                                          const GeglRectangle    *rect,
                                                          gboolean                full_extent,
                                                          gboolean                full_value,
-                                                         GimpChannelCombineData *data);
-static void       gimp_channel_combine_end              (GimpChannel            *mask,
-                                                         GimpChannelCombineData *data);
+                                                         LigmaChannelCombineData *data);
+static void       ligma_channel_combine_end              (LigmaChannel            *mask,
+                                                         LigmaChannelCombineData *data);
 
 
 /*  private functions  */
 
 static void
-gimp_channel_combine_clear (GimpChannel         *mask,
+ligma_channel_combine_clear (LigmaChannel         *mask,
                             const GeglRectangle *rect)
 {
   GeglBuffer    *buffer;
@@ -80,7 +80,7 @@ gimp_channel_combine_clear (GimpChannel         *mask,
   if (mask->bounds_known && mask->empty)
     return;
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
   if (rect)
     {
@@ -119,8 +119,8 @@ gimp_channel_combine_clear (GimpChannel         *mask,
         {
           area.x      = 0;
           area.y      = 0;
-          area.width  = gimp_item_get_width  (GIMP_ITEM (mask));
-          area.height = gimp_item_get_height (GIMP_ITEM (mask));
+          area.width  = ligma_item_get_width  (LIGMA_ITEM (mask));
+          area.height = ligma_item_get_height (LIGMA_ITEM (mask));
         }
 
       update_area = area;
@@ -131,40 +131,40 @@ gimp_channel_combine_clear (GimpChannel         *mask,
 
   gegl_buffer_clear (buffer, &area);
 
-  gimp_drawable_update (GIMP_DRAWABLE (mask),
+  ligma_drawable_update (LIGMA_DRAWABLE (mask),
                         update_area.x, update_area.y,
                         update_area.width, update_area.height);
 }
 
 static void
-gimp_channel_combine_clear_complement (GimpChannel         *mask,
+ligma_channel_combine_clear_complement (LigmaChannel         *mask,
                                        const GeglRectangle *rect)
 {
-  gint width  = gimp_item_get_width  (GIMP_ITEM (mask));
-  gint height = gimp_item_get_height (GIMP_ITEM (mask));
+  gint width  = ligma_item_get_width  (LIGMA_ITEM (mask));
+  gint height = ligma_item_get_height (LIGMA_ITEM (mask));
 
-  gimp_channel_combine_clear (
+  ligma_channel_combine_clear (
     mask,
     GEGL_RECTANGLE (0,
                     0,
                     width,
                     rect->y));
 
-  gimp_channel_combine_clear (
+  ligma_channel_combine_clear (
     mask,
     GEGL_RECTANGLE (0,
                     rect->y + rect->height,
                     width,
                     height - (rect->y + rect->height)));
 
-  gimp_channel_combine_clear (
+  ligma_channel_combine_clear (
     mask,
     GEGL_RECTANGLE (0,
                     rect->y,
                     rect->x,
                     rect->height));
 
-  gimp_channel_combine_clear (
+  ligma_channel_combine_clear (
     mask,
     GEGL_RECTANGLE (rect->x + rect->width,
                     rect->y,
@@ -173,21 +173,21 @@ gimp_channel_combine_clear_complement (GimpChannel         *mask,
 }
 
 static gboolean
-gimp_channel_combine_start (GimpChannel            *mask,
-                            GimpChannelOps          op,
+ligma_channel_combine_start (LigmaChannel            *mask,
+                            LigmaChannelOps          op,
                             const GeglRectangle    *rect,
                             gboolean                full_extent,
                             gboolean                full_value,
-                            GimpChannelCombineData *data)
+                            LigmaChannelCombineData *data)
 {
-  GeglBuffer    *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  GeglBuffer    *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
   GeglRectangle  extent;
   gboolean       intersects;
 
   extent.x      = 0;
   extent.y      = 0;
-  extent.width  = gimp_item_get_width  (GIMP_ITEM (mask));
-  extent.height = gimp_item_get_height (GIMP_ITEM (mask));
+  extent.width  = ligma_item_get_width  (LIGMA_ITEM (mask));
+  extent.height = ligma_item_get_height (LIGMA_ITEM (mask));
 
   intersects = gegl_rectangle_intersect (&data->rect, rect, &extent);
 
@@ -204,8 +204,8 @@ gimp_channel_combine_start (GimpChannel            *mask,
   /*  Determine new boundary  */
   switch (op)
     {
-    case GIMP_CHANNEL_OP_REPLACE:
-      gimp_channel_combine_clear (mask, NULL);
+    case LIGMA_CHANNEL_OP_REPLACE:
+      ligma_channel_combine_clear (mask, NULL);
 
       if (! intersects)
         {
@@ -225,7 +225,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
         }
       break;
 
-    case GIMP_CHANNEL_OP_ADD:
+    case LIGMA_CHANNEL_OP_ADD:
       if (! intersects)
         return FALSE;
 
@@ -249,7 +249,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
         }
       break;
 
-    case GIMP_CHANNEL_OP_SUBTRACT:
+    case LIGMA_CHANNEL_OP_SUBTRACT:
       if (intersects && mask->bounds_known)
         {
           if (mask->empty)
@@ -272,7 +272,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
                                    mask->bounds_known ? &data->bounds :
                                                         &extent))
         {
-          gimp_channel_combine_clear (mask, NULL);
+          ligma_channel_combine_clear (mask, NULL);
 
           data->bounds_known = TRUE;
           data->empty        = TRUE;
@@ -285,7 +285,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
       gegl_buffer_set_abyss (buffer, &data->rect);
       break;
 
-    case GIMP_CHANNEL_OP_INTERSECT:
+    case LIGMA_CHANNEL_OP_INTERSECT:
       if (intersects && mask->bounds_known)
         {
           if (mask->empty)
@@ -302,7 +302,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
 
       if (! intersects)
         {
-          gimp_channel_combine_clear (mask, NULL);
+          ligma_channel_combine_clear (mask, NULL);
 
           data->bounds_known = TRUE;
           data->empty        = TRUE;
@@ -318,7 +318,7 @@ gimp_channel_combine_start (GimpChannel            *mask,
 
       data->bounds_known = FALSE;
 
-      gimp_channel_combine_clear_complement (mask, &data->rect);
+      ligma_channel_combine_clear_complement (mask, &data->rect);
 
       gegl_buffer_set_abyss (buffer, &data->rect);
       break;
@@ -328,10 +328,10 @@ gimp_channel_combine_start (GimpChannel            *mask,
 }
 
 static void
-gimp_channel_combine_end (GimpChannel            *mask,
-                          GimpChannelCombineData *data)
+ligma_channel_combine_end (LigmaChannel            *mask,
+                          LigmaChannelCombineData *data)
 {
-  GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
   gegl_buffer_set_abyss (buffer, gegl_buffer_get_extent (buffer));
 
@@ -347,8 +347,8 @@ gimp_channel_combine_end (GimpChannel            *mask,
         {
           mask->x1 = 0;
           mask->y1 = 0;
-          mask->x2 = gimp_item_get_width  (GIMP_ITEM (mask));
-          mask->y2 = gimp_item_get_height (GIMP_ITEM (mask));
+          mask->x2 = ligma_item_get_width  (LIGMA_ITEM (mask));
+          mask->y2 = ligma_item_get_height (LIGMA_ITEM (mask));
         }
       else
         {
@@ -359,7 +359,7 @@ gimp_channel_combine_end (GimpChannel            *mask,
         }
     }
 
-  gimp_drawable_update (GIMP_DRAWABLE (mask),
+  ligma_drawable_update (LIGMA_DRAWABLE (mask),
                         data->rect.x, data->rect.y,
                         data->rect.width, data->rect.height);
 }
@@ -368,44 +368,44 @@ gimp_channel_combine_end (GimpChannel            *mask,
 /*  public functions  */
 
 void
-gimp_channel_combine_rect (GimpChannel    *mask,
-                           GimpChannelOps  op,
+ligma_channel_combine_rect (LigmaChannel    *mask,
+                           LigmaChannelOps  op,
                            gint            x,
                            gint            y,
                            gint            w,
                            gint            h)
 {
-  GimpChannelCombineData data;
+  LigmaChannelCombineData data;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (LIGMA_IS_CHANNEL (mask));
 
-  if (gimp_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
+  if (ligma_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
                                   TRUE, TRUE, &data))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
-      gimp_gegl_mask_combine_rect (buffer, op, x, y, w, h);
+      ligma_gegl_mask_combine_rect (buffer, op, x, y, w, h);
     }
 
-  gimp_channel_combine_end (mask, &data);
+  ligma_channel_combine_end (mask, &data);
 }
 
 void
-gimp_channel_combine_ellipse (GimpChannel    *mask,
-                              GimpChannelOps  op,
+ligma_channel_combine_ellipse (LigmaChannel    *mask,
+                              LigmaChannelOps  op,
                               gint            x,
                               gint            y,
                               gint            w,
                               gint            h,
                               gboolean        antialias)
 {
-  gimp_channel_combine_ellipse_rect (mask, op, x, y, w, h,
+  ligma_channel_combine_ellipse_rect (mask, op, x, y, w, h,
                                      w / 2.0, h / 2.0, antialias);
 }
 
 void
-gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
-                                   GimpChannelOps  op,
+ligma_channel_combine_ellipse_rect (LigmaChannel    *mask,
+                                   LigmaChannelOps  op,
                                    gint            x,
                                    gint            y,
                                    gint            w,
@@ -414,53 +414,53 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    gdouble         ry,
                                    gboolean        antialias)
 {
-  GimpChannelCombineData data;
+  LigmaChannelCombineData data;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (LIGMA_IS_CHANNEL (mask));
 
-  if (gimp_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
+  if (ligma_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
                                   TRUE, FALSE, &data))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
-      gimp_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
+      ligma_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
                                            rx, ry, antialias);
     }
 
-  gimp_channel_combine_end (mask, &data);
+  ligma_channel_combine_end (mask, &data);
 }
 
 void
-gimp_channel_combine_mask (GimpChannel    *mask,
-                           GimpChannel    *add_on,
-                           GimpChannelOps  op,
+ligma_channel_combine_mask (LigmaChannel    *mask,
+                           LigmaChannel    *add_on,
+                           LigmaChannelOps  op,
                            gint            off_x,
                            gint            off_y)
 {
   GeglBuffer *add_on_buffer;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (GIMP_IS_CHANNEL (add_on));
+  g_return_if_fail (LIGMA_IS_CHANNEL (mask));
+  g_return_if_fail (LIGMA_IS_CHANNEL (add_on));
 
-  add_on_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on));
+  add_on_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (add_on));
 
-  gimp_channel_combine_buffer (mask, add_on_buffer,
+  ligma_channel_combine_buffer (mask, add_on_buffer,
                                op, off_x, off_y);
 }
 
 void
-gimp_channel_combine_buffer (GimpChannel    *mask,
+ligma_channel_combine_buffer (LigmaChannel    *mask,
                              GeglBuffer     *add_on_buffer,
-                             GimpChannelOps  op,
+                             LigmaChannelOps  op,
                              gint            off_x,
                              gint            off_y)
 {
-  GimpChannelCombineData data;
+  LigmaChannelCombineData data;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (LIGMA_IS_CHANNEL (mask));
   g_return_if_fail (GEGL_IS_BUFFER (add_on_buffer));
 
-  if (gimp_channel_combine_start (mask, op,
+  if (ligma_channel_combine_start (mask, op,
                                   GEGL_RECTANGLE (
                                     off_x + gegl_buffer_get_x (add_on_buffer),
                                     off_y + gegl_buffer_get_y (add_on_buffer),
@@ -468,17 +468,17 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
                                     gegl_buffer_get_height (add_on_buffer)),
                                   FALSE, FALSE, &data))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
 
-      gimp_gegl_mask_combine_buffer (buffer, add_on_buffer, op,
+      ligma_gegl_mask_combine_buffer (buffer, add_on_buffer, op,
                                      off_x, off_y);
     }
 
-  gimp_channel_combine_end (mask, &data);
+  ligma_channel_combine_end (mask, &data);
 }
 
 /**
- * gimp_channel_combine_items:
+ * ligma_channel_combine_items:
  * @channel:
  * @items:
  * @op:
@@ -494,105 +494,105 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
  * the resulting layer used alone).
  * If @items contain channels or vectors, they will be added as a set
  * (i.e. as a single item which is an union of other items). E.g. an
- * combine in GIMP_CHANNEL_OP_INTERSECT mode does not intersect all
+ * combine in LIGMA_CHANNEL_OP_INTERSECT mode does not intersect all
  * @items with each other and @channel. It first adds-alike all @items
  * together, then intersects the result with @channel.
  */
 void
-gimp_channel_combine_items (GimpChannel    *mask,
+ligma_channel_combine_items (LigmaChannel    *mask,
                             GList          *items,
-                            GimpChannelOps  op)
+                            LigmaChannelOps  op)
 {
-  GimpImage   *image;
-  GimpImage   *items_image = NULL;
-  GimpImage   *temp_image  = NULL;
+  LigmaImage   *image;
+  LigmaImage   *items_image = NULL;
+  LigmaImage   *temp_image  = NULL;
 
-  GimpChannel *channel     = NULL;
+  LigmaChannel *channel     = NULL;
   GList       *layers      = NULL;
   GList       *iter;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (LIGMA_IS_CHANNEL (mask));
   g_return_if_fail (g_list_length (items) > 0);
 
   for (iter = items; iter; iter = iter->next)
     {
-      g_return_if_fail (GIMP_IS_LAYER (iter->data)   ||
-                        GIMP_IS_CHANNEL (iter->data) ||
-                        GIMP_IS_VECTORS (iter->data));
+      g_return_if_fail (LIGMA_IS_LAYER (iter->data)   ||
+                        LIGMA_IS_CHANNEL (iter->data) ||
+                        LIGMA_IS_VECTORS (iter->data));
 
       if (items_image == NULL)
-        items_image = gimp_item_get_image (iter->data);
+        items_image = ligma_item_get_image (iter->data);
       else
-        g_return_if_fail (items_image == gimp_item_get_image (iter->data));
+        g_return_if_fail (items_image == ligma_item_get_image (iter->data));
 
-      if (GIMP_IS_LAYER (iter->data))
+      if (LIGMA_IS_LAYER (iter->data))
         layers = g_list_prepend (layers, iter->data);
     }
 
-  image = gimp_item_get_image (GIMP_ITEM (mask));
+  image = ligma_item_get_image (LIGMA_ITEM (mask));
   if (g_list_length (layers) > 1)
     {
       GList *merged_layers;
 
-      temp_image = gimp_image_new_from_drawables (image->gimp, items, FALSE, FALSE);
-      merged_layers = gimp_image_merge_visible_layers (temp_image,
-                                                       gimp_get_user_context (temp_image->gimp),
-                                                       GIMP_CLIP_TO_IMAGE,
+      temp_image = ligma_image_new_from_drawables (image->ligma, items, FALSE, FALSE);
+      merged_layers = ligma_image_merge_visible_layers (temp_image,
+                                                       ligma_get_user_context (temp_image->ligma),
+                                                       LIGMA_CLIP_TO_IMAGE,
                                                        FALSE, TRUE, NULL);
       g_return_if_fail (g_list_length (merged_layers) == 1);
-      gimp_item_to_selection (GIMP_ITEM (merged_layers->data),
-                              GIMP_CHANNEL_OP_REPLACE,
+      ligma_item_to_selection (LIGMA_ITEM (merged_layers->data),
+                              LIGMA_CHANNEL_OP_REPLACE,
                               TRUE, FALSE, 0.0, 0.0);
-      channel = gimp_image_get_mask (temp_image);
+      channel = ligma_image_get_mask (temp_image);
     }
 
   if (! channel)
     {
-      channel = gimp_channel_new (image,
-                                  gimp_image_get_width (image),
-                                  gimp_image_get_height (image),
+      channel = ligma_channel_new (image,
+                                  ligma_image_get_width (image),
+                                  ligma_image_get_height (image),
                                   NULL, NULL);
-      gimp_channel_clear (channel, NULL, FALSE);
+      ligma_channel_clear (channel, NULL, FALSE);
 
       if (g_list_length (layers) == 1)
         {
-          if (gimp_drawable_has_alpha (layers->data))
+          if (ligma_drawable_has_alpha (layers->data))
             {
-              GimpChannel *alpha;
+              LigmaChannel *alpha;
               gint         offset_x;
               gint         offset_y;
 
-              alpha = gimp_channel_new_from_alpha (image,
+              alpha = ligma_channel_new_from_alpha (image,
                                                    layers->data, NULL, NULL);
-              gimp_item_get_offset (layers->data, &offset_x, &offset_y);
-              gimp_channel_combine_mask (channel, alpha,
-                                         GIMP_CHANNEL_OP_REPLACE,
+              ligma_item_get_offset (layers->data, &offset_x, &offset_y);
+              ligma_channel_combine_mask (channel, alpha,
+                                         LIGMA_CHANNEL_OP_REPLACE,
                                          offset_x, offset_y);
               g_object_unref (alpha);
             }
           else
             {
-              gimp_channel_all (channel, FALSE);
+              ligma_channel_all (channel, FALSE);
             }
         }
     }
 
   for (iter = items; iter; iter = iter->next)
     {
-      if (! GIMP_IS_LAYER (iter->data))
+      if (! LIGMA_IS_LAYER (iter->data))
         {
           gint offset_x;
           gint offset_y;
 
-          gimp_item_get_offset (iter->data, &offset_x, &offset_y);
-          gimp_channel_combine_buffer (channel,
-                                       gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)),
-                                       GIMP_CHANNEL_OP_ADD, offset_x, offset_y);
+          ligma_item_get_offset (iter->data, &offset_x, &offset_y);
+          ligma_channel_combine_buffer (channel,
+                                       ligma_drawable_get_buffer (LIGMA_DRAWABLE (iter->data)),
+                                       LIGMA_CHANNEL_OP_ADD, offset_x, offset_y);
         }
     }
 
-  gimp_channel_combine_buffer (mask,
-                               gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+  ligma_channel_combine_buffer (mask,
+                               ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                                op, 0, 0);
 
   if (temp_image)

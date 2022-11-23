@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpImageParasiteView
- * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
+ * LigmaImageParasiteView
+ * Copyright (C) 2006  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,15 +25,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
 
-#include "gimpimageparasiteview.h"
+#include "ligmaimageparasiteview.h"
 
 
 enum
@@ -50,31 +50,31 @@ enum
 };
 
 
-static void   gimp_image_parasite_view_constructed  (GObject     *object);
-static void   gimp_image_parasite_view_finalize     (GObject     *object);
-static void   gimp_image_parasite_view_set_property (GObject     *object,
+static void   ligma_image_parasite_view_constructed  (GObject     *object);
+static void   ligma_image_parasite_view_finalize     (GObject     *object);
+static void   ligma_image_parasite_view_set_property (GObject     *object,
                                                      guint         property_id,
                                                      const GValue *value,
                                                      GParamSpec   *pspec);
-static void   gimp_image_parasite_view_get_property (GObject     *object,
+static void   ligma_image_parasite_view_get_property (GObject     *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
-static void   gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
+static void   ligma_image_parasite_view_parasite_changed (LigmaImageParasiteView *view,
                                                          const gchar          *name);
-static void   gimp_image_parasite_view_update           (GimpImageParasiteView *view);
+static void   ligma_image_parasite_view_update           (LigmaImageParasiteView *view);
 
 
-G_DEFINE_TYPE (GimpImageParasiteView, gimp_image_parasite_view, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaImageParasiteView, ligma_image_parasite_view, GTK_TYPE_BOX)
 
-#define parent_class gimp_image_parasite_view_parent_class
+#define parent_class ligma_image_parasite_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
+ligma_image_parasite_view_class_init (LigmaImageParasiteViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -82,31 +82,31 @@ gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
     g_signal_new ("update",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageParasiteViewClass, update),
+                  G_STRUCT_OFFSET (LigmaImageParasiteViewClass, update),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed  = gimp_image_parasite_view_constructed;
-  object_class->finalize     = gimp_image_parasite_view_finalize;
-  object_class->set_property = gimp_image_parasite_view_set_property;
-  object_class->get_property = gimp_image_parasite_view_get_property;
+  object_class->constructed  = ligma_image_parasite_view_constructed;
+  object_class->finalize     = ligma_image_parasite_view_finalize;
+  object_class->set_property = ligma_image_parasite_view_set_property;
+  object_class->get_property = ligma_image_parasite_view_get_property;
 
   klass->update              = NULL;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_PARASITE,
                                    g_param_spec_string ("parasite", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_image_parasite_view_init (GimpImageParasiteView *view)
+ligma_image_parasite_view_init (LigmaImageParasiteView *view)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (view),
                                   GTK_ORIENTATION_VERTICAL);
@@ -115,31 +115,31 @@ gimp_image_parasite_view_init (GimpImageParasiteView *view)
 }
 
 static void
-gimp_image_parasite_view_constructed (GObject *object)
+ligma_image_parasite_view_constructed (GObject *object)
 {
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+  LigmaImageParasiteView *view = LIGMA_IMAGE_PARASITE_VIEW (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (view->parasite != NULL);
-  gimp_assert (view->image != NULL);
+  ligma_assert (view->parasite != NULL);
+  ligma_assert (view->image != NULL);
 
   g_signal_connect_object (view->image, "parasite-attached",
-                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_CALLBACK (ligma_image_parasite_view_parasite_changed),
                            G_OBJECT (view),
                            G_CONNECT_SWAPPED);
   g_signal_connect_object (view->image, "parasite-detached",
-                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_CALLBACK (ligma_image_parasite_view_parasite_changed),
                            G_OBJECT (view),
                            G_CONNECT_SWAPPED);
 
-  gimp_image_parasite_view_update (view);
+  ligma_image_parasite_view_update (view);
 }
 
 static void
-gimp_image_parasite_view_finalize (GObject *object)
+ligma_image_parasite_view_finalize (GObject *object)
 {
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+  LigmaImageParasiteView *view = LIGMA_IMAGE_PARASITE_VIEW (object);
 
   g_clear_pointer (&view->parasite, g_free);
 
@@ -147,12 +147,12 @@ gimp_image_parasite_view_finalize (GObject *object)
 }
 
 static void
-gimp_image_parasite_view_set_property (GObject      *object,
+ligma_image_parasite_view_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+  LigmaImageParasiteView *view = LIGMA_IMAGE_PARASITE_VIEW (object);
 
   switch (property_id)
     {
@@ -169,12 +169,12 @@ gimp_image_parasite_view_set_property (GObject      *object,
 }
 
 static void
-gimp_image_parasite_view_get_property (GObject    *object,
+ligma_image_parasite_view_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+  LigmaImageParasiteView *view = LIGMA_IMAGE_PARASITE_VIEW (object);
 
   switch (property_id)
     {
@@ -191,48 +191,48 @@ gimp_image_parasite_view_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_image_parasite_view_new (GimpImage   *image,
+ligma_image_parasite_view_new (LigmaImage   *image,
                               const gchar *parasite)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (parasite != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_IMAGE_PARASITE_VIEW,
+  return g_object_new (LIGMA_TYPE_IMAGE_PARASITE_VIEW,
                        "image",    image,
                        "parasite", parasite,
                        NULL);
 }
 
 
-GimpImage *
-gimp_image_parasite_view_get_image (GimpImageParasiteView *view)
+LigmaImage *
+ligma_image_parasite_view_get_image (LigmaImageParasiteView *view)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_PARASITE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_PARASITE_VIEW (view), NULL);
 
   return view->image;
 }
 
-const GimpParasite *
-gimp_image_parasite_view_get_parasite (GimpImageParasiteView *view)
+const LigmaParasite *
+ligma_image_parasite_view_get_parasite (LigmaImageParasiteView *view)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_PARASITE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_PARASITE_VIEW (view), NULL);
 
-  return gimp_image_parasite_find (view->image, view->parasite);
+  return ligma_image_parasite_find (view->image, view->parasite);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
+ligma_image_parasite_view_parasite_changed (LigmaImageParasiteView *view,
                                            const gchar           *name)
 {
   if (name && view->parasite && strcmp (name, view->parasite) == 0)
-    gimp_image_parasite_view_update (view);
+    ligma_image_parasite_view_update (view);
 }
 
 static void
-gimp_image_parasite_view_update (GimpImageParasiteView *view)
+ligma_image_parasite_view_update (LigmaImageParasiteView *view)
 {
   g_signal_emit (view, view_signals[UPDATE], 0);
 }

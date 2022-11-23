@@ -1,4 +1,4 @@
-# GIMP dynamics file
+# LIGMA dynamics file
 
 (name "Velocity Tapering")
 (opacity-output
@@ -58,4 +58,4 @@
     (use-random no)
     (use-fade no))
 
-# end of GIMP dynamics file
+# end of LIGMA dynamics file

@@ -15,7 +15,7 @@
    width="16.014223"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-undo-history-symbolic.svg">
+   sodipodi:docname="ligma-undo-history-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -188,8 +188,8 @@
   <g
      transform="matrix(1.0008752,0,0,0.99993875,-101.0886,-418.95126)"
      style="display:inline"
-     id="gimp-undo-history"
-     inkscape:label="gimp-undo-history">
+     id="ligma-undo-history"
+     inkscape:label="ligma-undo-history">
     <path
        style="fill:url(#linearGradient7161-2);fill-opacity:1;stroke:none"
        d="m 101.0002,429 4.00001,-4.02308 v 8 z"

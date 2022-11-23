@@ -54,14 +54,14 @@ languages = \
 	zh_CN:zh_CN	\
 	zh_TW:zh_TW
 
-stamp-isl: setup.isl.xml gimp-ms-installer-config.xsl.in Makefile.am
+stamp-isl: setup.isl.xml ligma-ms-installer-config.xsl.in Makefile.am
 	@										\
 	for lang in $(languages); do							\
 		code=`echo $$lang | cut -d: -f1`;					\
 		prefix=`echo $$lang | cut -d: -f2`;		\
 		lang_check=`[ "$$prefix" ] && echo "value[lang('$$code')]" || echo "value"`;	\
-		xslin="$(srcdir)/gimp-ms-installer-config.xsl.in";				\
-		xsl="$(builddir)/gimp-ms-installer-config.xsl";					\
+		xslin="$(srcdir)/ligma-ms-installer-config.xsl.in";				\
+		xsl="$(builddir)/ligma-ms-installer-config.xsl";					\
 		isl="$(builddir)/$$code.setup.isl";					\
 		echo "  GEN      $$isl";						\
 		sed "s/@LANG_CHECK@/$$lang_check/" "$$xslin"  > "$$xsl";	\
@@ -81,6 +81,6 @@ clean-local:
 	done
 
 TESTS_ENVIRONMENT = \
-	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@
+	LIGMA_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@
 
 TESTS = test-installer-langs.sh

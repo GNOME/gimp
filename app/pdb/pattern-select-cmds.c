@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,25 +25,25 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-patterns_popup_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+patterns_popup_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
@@ -51,175 +51,175 @@ patterns_popup_invoker (GimpProcedure         *procedure,
   const gchar *popup_title;
   const gchar *initial_pattern;
 
-  pattern_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_pattern = g_value_get_string (gimp_value_array_index (args, 2));
+  pattern_callback = g_value_get_string (ligma_value_array_index (args, 0));
+  popup_title = g_value_get_string (ligma_value_array_index (args, 1));
+  initial_pattern = g_value_get_string (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_data_factory_get_container (gimp->pattern_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, pattern_callback) ||
+          ! ligma_pdb_dialog_new (ligma, context, progress,
+                                 ligma_data_factory_get_container (ligma->pattern_factory),
                                  popup_title, pattern_callback, initial_pattern,
                                  NULL))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-patterns_close_popup_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+patterns_close_popup_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
 
-  pattern_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  pattern_callback = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, pattern_callback) ||
+          ! ligma_pdb_dialog_close (ligma, ligma_data_factory_get_container (ligma->pattern_factory),
                                    pattern_callback))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-patterns_set_popup_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+patterns_set_popup_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
   const gchar *pattern_name;
 
-  pattern_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  pattern_name = g_value_get_string (gimp_value_array_index (args, 1));
+  pattern_callback = g_value_get_string (ligma_value_array_index (args, 0));
+  pattern_name = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, pattern_callback) ||
+          ! ligma_pdb_dialog_set (ligma, ligma_data_factory_get_container (ligma->pattern_factory),
                                  pattern_callback, pattern_name,
                                  NULL))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_pattern_select_procs (GimpPDB *pdb)
+register_pattern_select_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-patterns-popup
+   * ligma-patterns-popup
    */
-  procedure = gimp_procedure_new (patterns_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-patterns-popup");
-  gimp_procedure_set_static_help (procedure,
-                                  "Invokes the Gimp pattern selection.",
+  procedure = ligma_procedure_new (patterns_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-patterns-popup");
+  ligma_procedure_set_static_help (procedure,
+                                  "Invokes the Ligma pattern selection.",
                                   "This procedure opens the pattern selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("pattern-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The callback PDB proc to call when pattern selection is made",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("popup-title",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title of the pattern selection dialog",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-pattern",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("initial-pattern",
                                                        "initial pattern",
                                                        "The name of the pattern to set as the first selected",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-patterns-close-popup
+   * ligma-patterns-close-popup
    */
-  procedure = gimp_procedure_new (patterns_close_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-patterns-close-popup");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (patterns_close_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-patterns-close-popup");
+  ligma_procedure_set_static_help (procedure,
                                   "Close the pattern selection dialog.",
                                   "This procedure closes an opened pattern selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("pattern-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-patterns-set-popup
+   * ligma-patterns-set-popup
    */
-  procedure = gimp_procedure_new (patterns_set_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-patterns-set-popup");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (patterns_set_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-patterns-set-popup");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the current pattern in a pattern selection dialog.",
                                   "Sets the current pattern in a pattern selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("pattern-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("pattern-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("pattern-name",
                                                        "pattern name",
                                                        "The name of the pattern to set as selected",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

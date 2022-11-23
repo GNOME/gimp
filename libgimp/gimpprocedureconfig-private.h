@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpprocedureconfig-private.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaprocedureconfig-private.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,28 +19,28 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
-#define __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
+#ifndef __LIGMA_PROCEDURE_CONFIG_PRIVATE_H__
+#define __LIGMA_PROCEDURE_CONFIG_PRIVATE_H__
 
 
-gboolean   gimp_procedure_config_has_default   (GimpProcedureConfig  *config);
+gboolean   ligma_procedure_config_has_default   (LigmaProcedureConfig  *config);
 
-gboolean   gimp_procedure_config_load_default  (GimpProcedureConfig  *config,
+gboolean   ligma_procedure_config_load_default  (LigmaProcedureConfig  *config,
                                                 GError              **error);
-gboolean   gimp_procedure_config_save_default  (GimpProcedureConfig  *config,
-                                                GError              **error);
-
-gboolean   gimp_procedure_config_load_last     (GimpProcedureConfig  *config,
-                                                GError              **error);
-gboolean   gimp_procedure_config_save_last     (GimpProcedureConfig  *config,
+gboolean   ligma_procedure_config_save_default  (LigmaProcedureConfig  *config,
                                                 GError              **error);
 
-gboolean   gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
-                                                GimpImage            *image,
+gboolean   ligma_procedure_config_load_last     (LigmaProcedureConfig  *config,
                                                 GError              **error);
-gboolean   gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
-                                                GimpImage            *image,
+gboolean   ligma_procedure_config_save_last     (LigmaProcedureConfig  *config,
+                                                GError              **error);
+
+gboolean   ligma_procedure_config_load_parasite (LigmaProcedureConfig  *config,
+                                                LigmaImage            *image,
+                                                GError              **error);
+gboolean   ligma_procedure_config_save_parasite (LigmaProcedureConfig  *config,
+                                                LigmaImage            *image,
                                                 GError              **error);
 
 
-#endif /* __GIMP_PROCEDURE_CONFIG_PRIVATE_H__ */
+#endif /* __LIGMA_PROCEDURE_CONFIG_PRIVATE_H__ */

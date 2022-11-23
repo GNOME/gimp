@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcurves.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcurves.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_CURVES_H__
-#define __GIMP_OPERATION_CURVES_H__
+#ifndef __LIGMA_OPERATION_CURVES_H__
+#define __LIGMA_OPERATION_CURVES_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_CURVES            (gimp_operation_curves_get_type ())
-#define GIMP_OPERATION_CURVES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CURVES, GimpOperationCurves))
-#define GIMP_OPERATION_CURVES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_CURVES, GimpOperationCurvesClass))
-#define GIMP_IS_OPERATION_CURVES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_CURVES))
-#define GIMP_IS_OPERATION_CURVES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_CURVES))
-#define GIMP_OPERATION_CURVES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_CURVES, GimpOperationCurvesClass))
+#define LIGMA_TYPE_OPERATION_CURVES            (ligma_operation_curves_get_type ())
+#define LIGMA_OPERATION_CURVES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_CURVES, LigmaOperationCurves))
+#define LIGMA_OPERATION_CURVES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_CURVES, LigmaOperationCurvesClass))
+#define LIGMA_IS_OPERATION_CURVES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_CURVES))
+#define LIGMA_IS_OPERATION_CURVES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_CURVES))
+#define LIGMA_OPERATION_CURVES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_CURVES, LigmaOperationCurvesClass))
 
 
-typedef struct _GimpOperationCurves      GimpOperationCurves;
-typedef struct _GimpOperationCurvesClass GimpOperationCurvesClass;
+typedef struct _LigmaOperationCurves      LigmaOperationCurves;
+typedef struct _LigmaOperationCurvesClass LigmaOperationCurvesClass;
 
-struct _GimpOperationCurves
+struct _LigmaOperationCurves
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 };
 
-struct _GimpOperationCurvesClass
+struct _LigmaOperationCurvesClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_curves_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_curves_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_CURVES_H__ */
+#endif /* __LIGMA_OPERATION_CURVES_H__ */

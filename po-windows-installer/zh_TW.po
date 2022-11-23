@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.10\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.10\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2018-04-29 16:49+0800\n"
 "Last-Translator: \n"
@@ -23,15 +23,15 @@ msgid "License Agreement"
 msgstr "許可協議"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "安裝程式由 Jernej Simoncic, jernej-gimp@ena.si 所建立"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "安裝程式由 Jernej Simoncic, jernej-ligma@ena.si 所建立"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
 #, fuzzy
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
 msgstr ""
-"此版本的 GIMP 需要帶有 Service Pack 3 的 Windows XP 或較新版本的 Windows 。"
+"此版本的 LIGMA 需要帶有 Service Pack 3 的 Windows XP 或較新版本的 Windows 。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -40,18 +40,18 @@ msgstr "開發版本"
 #: build/windows/installer/lang/setup.isl.xml.in:28
 #, fuzzy
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"這是 GIMP 的開發版，其中某些功能可能還沒有完成，或者可能不穩定。%n此版本的"
-"GIMP不適用於日常工作，因為它可能不穩定，並且可能會害您白忙一場。%n如果您遇到"
-"任何問題，請在聯繫開發人員或在 GIMP bugzilla 中回報之前，先確認它們尚未在 "
-"GIT 中被修正：%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%n您"
+"這是 LIGMA 的開發版，其中某些功能可能還沒有完成，或者可能不穩定。%n此版本的"
+"LIGMA不適用於日常工作，因為它可能不穩定，並且可能會害您白忙一場。%n如果您遇到"
+"任何問題，請在聯繫開發人員或在 LIGMA bugzilla 中回報之前，先確認它們尚未在 "
+"GIT 中被修正：%n_https://bugzilla.gnome.org/enter_bug.cgi?product=LIGMA%n%n您"
 "是否希望繼續安裝呢？"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
@@ -65,8 +65,8 @@ msgstr "離開"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "此版本的 GIMP 需要支援 SSE 指令的處理器。"
+"This version of LIGMA requires a processor that supports SSE instructions."
+msgstr "此版本的 LIGMA 需要支援 SSE 指令的處理器。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -75,11 +75,11 @@ msgstr "顯示設定問題"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"安裝程式檢測到您的 Windows 未以每像素 32 位元顯示模式運行。這已知會導致 GIMP "
+"安裝程式檢測到您的 Windows 未以每像素 32 位元顯示模式運行。這已知會導致 LIGMA "
 "穩定性的問題，因此建議在繼續之前將顯示顏色深度變更為 32 BPP（bits per pixel："
 "每儲存1像素圖點所需要的位元數）。"
 
@@ -89,11 +89,11 @@ msgstr "離開(&X)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP 現在已準備好安裝。現在就點擊「安裝」按鈕可使用預設設定進行安裝，或者如果"
+"LIGMA 現在已準備好安裝。現在就點擊「安裝」按鈕可使用預設設定進行安裝，或者如果"
 "您想要更精確地控制安裝內容，請單擊「自訂」按鈕。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
@@ -121,12 +121,12 @@ msgid "Description"
 msgstr "描述"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP 和所有預設外掛程式"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA 和所有預設外掛程式"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -134,15 +134,15 @@ msgstr "執行時期函式庫"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "被 GIMP 使用的執行時期函式庫包括有 GTK+ Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
+msgstr "被 LIGMA 使用的執行時期函式庫包括有 GTK+ Run-time Environment"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
+msgid "Include information to help with debugging LIGMA"
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
@@ -151,8 +151,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "GTK+ 的 MS-Window 引擎"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "GIMP 的原生 Windows 外觀"
+msgid "Native Windows look for LIGMA"
+msgstr "LIGMA 的原生 Windows 外觀"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -172,8 +172,8 @@ msgid "Python scripting"
 msgstr "Python 腳本"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr "允許您使用以 Python 腳本語言編寫的 GIMP 外掛程式。"
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
+msgstr "允許您使用以 Python 腳本語言編寫的 LIGMA 外掛程式。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
 #, fuzzy
@@ -182,8 +182,8 @@ msgstr "Python 腳本"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
 #, fuzzy
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
-msgstr "允許您使用以 Python 腳本語言編寫的 GIMP 外掛程式。"
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
+msgstr "允許您使用以 Python 腳本語言編寫的 LIGMA 外掛程式。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
@@ -198,8 +198,8 @@ msgid "PostScript support"
 msgstr "PostScript 支援"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "允許 GIMP 載入 PostScript 檔案"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "允許 LIGMA 載入 PostScript 檔案"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -224,16 +224,16 @@ msgid "Create a &Quick Launch icon"
 msgstr "建立一個快速啟動圖示(&Q)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "移除先前的 GIMP 版本"
+msgid "Remove previous LIGMA version"
+msgstr "移除先前的 LIGMA 版本"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"在 %1 中更新 GIMP 的環境時出現問題。如果您在載入外掛程式時遇到任何錯誤，請嘗"
-"試卸載並重新安裝 GIMP。"
+"在 %1 中更新 LIGMA 的環境時出現問題。如果您在載入外掛程式時遇到任何錯誤，請嘗"
+"試卸載並重新安裝 LIGMA。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
@@ -252,12 +252,12 @@ msgid "There was an error updating %1."
 msgstr "更新 %1 時發生錯誤。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "更新 GIMP 的配置檔「%1」時出錯。"
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "更新 LIGMA 的配置檔「%1」時出錯。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "用 GIMP 編輯"
+msgid "Edit with LIGMA"
+msgstr "用 LIGMA 編輯"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -268,14 +268,14 @@ msgid "Extensions:"
 msgstr "副檔名："
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "選擇您希望與 GIMP 關聯的檔案類型"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "選擇您希望與 LIGMA 關聯的檔案類型"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
-msgstr "當您在檔案總管中雙擊它們時，這將使選定的檔案在 GIMP 中開啟。"
+msgstr "當您在檔案總管中雙擊它們時，這將使選定的檔案在 LIGMA 中開啟。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
 msgid "Select &All"
@@ -290,44 +290,44 @@ msgid "Select &Unused"
 msgstr "選取未使用的(&U)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "與 GIMP 關聯的檔案類型："
+msgid "File types to associate with LIGMA:"
+msgstr "與 LIGMA 關聯的檔案類型："
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "正在移除先前的 GIMP 版本："
+msgid "Removing previous version of LIGMA:"
+msgstr "正在移除先前的 LIGMA 版本："
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 無法安裝在目前安裝的 GIMP 版本上，舊版本的自動解除安裝失敗。%n%n請您"
-"在 %2 中安裝此版本之前，自行移除先前的 GIMP 版本，或者選擇自訂安裝，然後選擇"
+"LIGMA %1 無法安裝在目前安裝的 LIGMA 版本上，舊版本的自動解除安裝失敗。%n%n請您"
+"在 %2 中安裝此版本之前，自行移除先前的 LIGMA 版本，或者選擇自訂安裝，然後選擇"
 "一個不同的安裝資料夾。%n%n安裝程式現在將退出。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 無法安裝在目前安裝的 GIMP 版本上，並且安裝程式無法確定如何自動移除舊"
-"版本。%n%n請在將本版本安裝到 %2 之前自行移除先前版本的 GIMP 和任何附加程式，"
+"LIGMA %1 無法安裝在目前安裝的 LIGMA 版本上，並且安裝程式無法確定如何自動移除舊"
+"版本。%n%n請在將本版本安裝到 %2 之前自行移除先前版本的 LIGMA 和任何附加程式，"
 "或選擇自訂安裝，然後選擇不同的安裝資料夾。%n%n安裝程式現在將退出。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"先前的 GIMP 版本已成功移除，但必須重新啟動 Windows 才能繼續安裝。%n%n重新啟動"
+"先前的 LIGMA 版本已成功移除，但必須重新啟動 Windows 才能繼續安裝。%n%n重新啟動"
 "電腦後，安裝程式必須以管理員身分登入 Windows 後才能繼續。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:275
@@ -339,8 +339,8 @@ msgid "Cleaning up old files..."
 msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "記住：GIMP是自由軟體。%n%n請參觀"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "記住：LIGMA是自由軟體。%n%n請參觀"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -351,24 +351,24 @@ msgid "Setting up file associations..."
 msgstr "正在設定檔案關聯…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "正在設定 GIMP Python 的擴展環境…"
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "正在設定 LIGMA Python 的擴展環境…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "正在設定 MyPaint 筆刷…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "正在設定 GIMP 環境…"
+msgid "Setting up LIGMA environment..."
+msgstr "正在設定 LIGMA 環境…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "正在設定 GIMP 對 32 位元外掛程式支援的配置…"
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "正在設定 LIGMA 對 32 位元外掛程式支援的配置…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "啟動 GIMP"
+msgid "Launch LIGMA"
+msgstr "啟動 LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -380,6 +380,6 @@ msgstr "內部錯誤 (%1)。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
-msgstr "GIMP 似乎沒有安裝在選定的目錄中。 要繼續嗎？"
+msgstr "LIGMA 似乎沒有安裝在選定的目錄中。 要繼續嗎？"

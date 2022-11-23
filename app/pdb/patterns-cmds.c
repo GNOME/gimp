@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,116 +27,116 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer-filter.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppattern.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer-filter.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapattern.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-patterns_refresh_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+patterns_refresh_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
-  gimp_data_factory_data_refresh (gimp->pattern_factory, context);
+  ligma_data_factory_data_refresh (ligma->pattern_factory, context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-patterns_get_list_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+patterns_get_list_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *filter;
   gchar **pattern_list = NULL;
 
-  filter = g_value_get_string (gimp_value_array_index (args, 0));
+  filter = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
+      pattern_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->pattern_factory),
                                                              filter);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_boxed (gimp_value_array_index (return_vals, 1), pattern_list);
+    g_value_take_boxed (ligma_value_array_index (return_vals, 1), pattern_list);
 
   return return_vals;
 }
 
 void
-register_patterns_procs (GimpPDB *pdb)
+register_patterns_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-patterns-refresh
+   * ligma-patterns-refresh
    */
-  procedure = gimp_procedure_new (patterns_refresh_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-patterns-refresh");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (patterns_refresh_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-patterns-refresh");
+  ligma_procedure_set_static_help (procedure,
                                   "Refresh current patterns. This function always succeeds.",
                                   "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2002");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-patterns-get-list
+   * ligma-patterns-get-list
    */
-  procedure = gimp_procedure_new (patterns_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-patterns-get-list");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (patterns_get_list_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-patterns-get-list");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve a complete listing of the available patterns.",
-                                  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
+                                  "This procedure returns a complete listing of available LIGMA patterns. Each name returned can be used as input to the 'ligma-context-set-pattern'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filter",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("pattern-list",
                                                        "pattern list",
                                                        "The list of pattern names",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

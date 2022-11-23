@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,27 +22,27 @@
 
 #include "display-types.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-expose.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-expose.h"
 
 
 void
-gimp_display_shell_expose_area (GimpDisplayShell *shell,
+ligma_display_shell_expose_area (LigmaDisplayShell *shell,
                                 gint              x,
                                 gint              y,
                                 gint              w,
                                 gint              h)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   gtk_widget_queue_draw_area (shell->canvas, x, y, w, h);
 }
 
 void
-gimp_display_shell_expose_region (GimpDisplayShell *shell,
+ligma_display_shell_expose_region (LigmaDisplayShell *shell,
                                   cairo_region_t   *region)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (region != NULL);
 
   if (! gtk_widget_get_realized (shell->canvas))
@@ -53,9 +53,9 @@ gimp_display_shell_expose_region (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_expose_full (GimpDisplayShell *shell)
+ligma_display_shell_expose_full (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   gtk_widget_queue_draw (shell->canvas);
 }

@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-clone")
+(icon-name "ligma-tool-clone")
 (name "Smooth Clone (Press.Ctrl)")
-(tool-options "GimpCloneOptions"
-    (tool "gimp-clone-tool")
+(tool-options "LigmaCloneOptions"
+    (tool "ligma-clone-tool")
     (foreground (color-rgb 0.318741 0.318741 0.318741))
     (brush "2. Hardness 050")
     (enable-dynamics no)
@@ -18,4 +18,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

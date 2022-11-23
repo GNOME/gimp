@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcoords-interpolate.h
+ * ligmacoords-interpolate.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COORDS_INTERPOLATE_H__
-#define __GIMP_COORDS_INTERPOLATE_H__
+#ifndef __LIGMA_COORDS_INTERPOLATE_H__
+#define __LIGMA_COORDS_INTERPOLATE_H__
 
-void       gimp_coords_interpolate_bezier    (const GimpCoords  bezier_pt[4],
+void       ligma_coords_interpolate_bezier    (const LigmaCoords  bezier_pt[4],
                                               gdouble           precision,
                                               GArray           *ret_coords,
                                               GArray           *ret_params);
 
-void       gimp_coords_interpolate_bezier_at (const GimpCoords  bezier_pt[4],
+void       ligma_coords_interpolate_bezier_at (const LigmaCoords  bezier_pt[4],
                                               gdouble           t,
-                                              GimpCoords       *position,
-                                              GimpCoords       *velocity);
+                                              LigmaCoords       *position,
+                                              LigmaCoords       *velocity);
 
-gboolean   gimp_coords_bezier_is_straight    (const GimpCoords  bezier_pt[4],
+gboolean   ligma_coords_bezier_is_straight    (const LigmaCoords  bezier_pt[4],
                                               gdouble           precision);
 
-void       gimp_coords_interpolate_catmull   (const GimpCoords  catmull_pt[4],
+void       ligma_coords_interpolate_catmull   (const LigmaCoords  catmull_pt[4],
                                               gdouble           precision,
                                               GArray           *ret_coords,
                                               GArray           *ret_params);
 
-#endif /* __GIMP_COORDS_INTERPOLATE_H__ */
+#endif /* __LIGMA_COORDS_INTERPOLATE_H__ */

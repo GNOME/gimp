@@ -1,13 +1,13 @@
-# Ukrainian tranlation to gimp tips
+# Ukrainian tranlation to ligma tips
 # Copyright (C) 2004 Free Software Foundation
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2008.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 # Yuri Chornoivan <yurchor@ukr.net>, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-25 11:34+0000\n"
 "PO-Revision-Date: 2022-06-25 23:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
@@ -20,25 +20,25 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: data/tips/gimp-tips.xml.in:18
+#: data/tips/ligma-tips.xml.in:18
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Контекстну довідку для більшості функцій та меню GIMP можна викликати "
+"Контекстну довідку для більшості функцій та меню LIGMA можна викликати "
 "клавішею F1."
 
-#: data/tips/gimp-tips.xml.in:24
+#: data/tips/ligma-tips.xml.in:24
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"Для створення складного зображення у GIMP використовує шари. Щоб отримати "
+"Для створення складного зображення у LIGMA використовує шари. Щоб отримати "
 "про них уяву, уявіть стопку прозорих плівок із зображеннями, так що при "
 "перегляді видимий вміст одразу всіх плівок."
 
-#: data/tips/gimp-tips.xml.in:31
+#: data/tips/ligma-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -47,11 +47,11 @@ msgstr ""
 "відкривається при натисканні правої кнопки миші на назві шару у діалоговому "
 "вікні &quot;Шари&quot;."
 
-#: data/tips/gimp-tips.xml.in:39
+#: data/tips/ligma-tips.xml.in:39
 msgid ".xcf"
 msgstr ".xcf"
 
-#: data/tips/gimp-tips.xml.in:45
+#: data/tips/ligma-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -61,11 +61,11 @@ msgstr ""
 "необхідно об'єднувати всі шари (Зображення→Звести зображення), якщо бажаєте "
 "щоб доповнення діяло на все зображення."
 
-#: data/tips/gimp-tips.xml.in:53
+#: data/tips/ligma-tips.xml.in:53
 msgid "bold"
 msgstr "жирний"
 
-#: data/tips/gimp-tips.xml.in:59
+#: data/tips/ligma-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -78,30 +78,30 @@ msgstr ""
 "(Шар→Прозорість→Додати альфа-канал) або об'єднати шари зображення "
 "(Зображення→Звести зображення)."
 
-#: data/tips/gimp-tips.xml.in:69 data/tips/gimp-tips.xml.in:71
-#: data/tips/gimp-tips.xml.in:72 data/tips/gimp-tips.xml.in:201
+#: data/tips/ligma-tips.xml.in:69 data/tips/ligma-tips.xml.in:71
+#: data/tips/ligma-tips.xml.in:72 data/tips/ligma-tips.xml.in:201
 msgid "Alt"
 msgstr "Alt"
 
-#: data/tips/gimp-tips.xml.in:73
+#: data/tips/ligma-tips.xml.in:73
 msgid "Super"
 msgstr "Super"
 
-#: data/tips/gimp-tips.xml.in:82
+#: data/tips/ligma-tips.xml.in:82
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"У GIMP можна перетягувати мишею багато елементів. Наприклад, перетягування "
+"У LIGMA можна перетягувати мишею багато елементів. Наприклад, перетягування "
 "кольору з панелі інструментів або з палітри на зображення призводить до "
 "заповнення цим кольором зображення (або його виділеної ділянки)."
 
-#: data/tips/gimp-tips.xml.in:91
+#: data/tips/ligma-tips.xml.in:91
 msgid "Spacebar"
 msgstr "Пробіл"
 
-#: data/tips/gimp-tips.xml.in:95
+#: data/tips/ligma-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -112,7 +112,7 @@ msgstr ""
 "напрямних. Видалити напрямні можна перетягнувши їх за межі зображення за "
 "допомогою інструменту «Переміщення»."
 
-#: data/tips/gimp-tips.xml.in:102
+#: data/tips/ligma-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -120,7 +120,7 @@ msgstr ""
 "Можна перемістити шар з діалогового вікна «Шари» на панель інструментів. Це "
 "призведе до створення нового зображення, яке буде містити лише цей шар."
 
-#: data/tips/gimp-tips.xml.in:108
+#: data/tips/ligma-tips.xml.in:108
 #| msgid ""
 #| "A floating selection must be anchored to a new layer or to the last "
 #| "active layer before doing other operations on the image. Click on the "
@@ -138,26 +138,26 @@ msgstr ""
 " діалоговому вікні "
 "«Шари» чи скористайтеся меню для виконання тих самих дій."
 
-#: data/tips/gimp-tips.xml.in:117
+#: data/tips/ligma-tips.xml.in:117
 msgid ".gz"
 msgstr ".gz"
 
-#: data/tips/gimp-tips.xml.in:118
+#: data/tips/ligma-tips.xml.in:118
 msgid ".bz2"
 msgstr ".bz2"
 
-#: data/tips/gimp-tips.xml.in:125 data/tips/gimp-tips.xml.in:194
-#: data/tips/gimp-tips.xml.in:195
+#: data/tips/ligma-tips.xml.in:125 data/tips/ligma-tips.xml.in:194
+#: data/tips/ligma-tips.xml.in:195
 msgid "Shift"
 msgstr "Shift"
 
-#: data/tips/gimp-tips.xml.in:127 data/tips/gimp-tips.xml.in:200
-#: data/tips/gimp-tips.xml.in:207 data/tips/gimp-tips.xml.in:213
-#: data/tips/gimp-tips.xml.in:215 data/tips/gimp-tips.xml.in:221
+#: data/tips/ligma-tips.xml.in:127 data/tips/ligma-tips.xml.in:200
+#: data/tips/ligma-tips.xml.in:207 data/tips/ligma-tips.xml.in:213
+#: data/tips/ligma-tips.xml.in:215 data/tips/ligma-tips.xml.in:221
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: data/tips/gimp-tips.xml.in:132
+#: data/tips/ligma-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -169,7 +169,7 @@ msgstr ""
 "намалювати використовуючи інструмент «Контур» або "
 "«Фільтри→Візуалізація→Gfig»."
 
-#: data/tips/gimp-tips.xml.in:139
+#: data/tips/ligma-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -180,7 +180,7 @@ msgstr ""
 "«Пензель» у режимі градієнта, «Штамп» з джерелом з шаблону, або навіть "
 "інструменти «Гумка» чи «Палець»."
 
-#: data/tips/gimp-tips.xml.in:146
+#: data/tips/ligma-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -190,7 +190,7 @@ msgstr ""
 "інструмент «Контур». У діалоговому вікні «Контур»; можна працювати з "
 "кількома контурами та перетворювати їх у виділення."
 
-#: data/tips/gimp-tips.xml.in:153
+#: data/tips/ligma-tips.xml.in:153
 #| msgid ""
 #| "You can use the paint tools to change the selection. Click on the &quot;"
 #| "Quick Mask&quot; button at the bottom left of an image window. Change "
@@ -207,7 +207,7 @@ msgstr ""
 "лівому куті вінка зображення, відредагувати виділену ділянку інструментом "
 "малювання, потім ще раз натиснути кнопку для переходу у звичайний режим."
 
-#: data/tips/gimp-tips.xml.in:161
+#: data/tips/ligma-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -219,20 +219,20 @@ msgstr ""
 "вікні \"Канали\", можна змінити видимість каналу або перетворити його у "
 "виділену ділянку."
 
-#: data/tips/gimp-tips.xml.in:175
+#: data/tips/ligma-tips.xml.in:175
 #| msgid ""
 #| "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the "
 #| "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
 #| "the menu, selecting a menu item, and pressing the desired key "
 #| "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
-#| "bindings are saved when you exit GIMP. You should probably disable &quot;"
+#| "bindings are saved when you exit LIGMA. You should probably disable &quot;"
 #| "Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally "
 #| "assigning/reassigning shortcuts."
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
+"Shortcuts\" is enabled, the key bindings are saved when you exit LIGMA. You "
 "should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
 "prevent accidentally assigning/reassigning shortcuts."
 msgstr ""
@@ -241,15 +241,15 @@ msgstr ""
 " меню, "
 "наведіть вказівник на потрібний пункт меню та натисніть бажану комбінацію "
 "клавіш. Якщо ввімкнено «Зберігати комбінації клавіш при виході», комбінацію"
-" буде збережено під час виходу з програми GIMP. Після встановлення всіх "
+" буде збережено під час виходу з програми LIGMA. Після встановлення всіх "
 "комбінацій, можливо, варто вимкнути динамічне запам'ятовування, щоб "
 "випадково нічого не перепризначити."
 
-#: data/tips/gimp-tips.xml.in:187 data/tips/gimp-tips.xml.in:207
+#: data/tips/ligma-tips.xml.in:187 data/tips/ligma-tips.xml.in:207
 msgid "Tab"
 msgstr "Tab"
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/ligma-tips.xml.in:226
 #| msgid ""
 #| "If some of your scanned photos do not look colorful enough, you can "
 #| "easily improve their tonal range with the &quot;Auto&quot; button in the "
@@ -267,17 +267,17 @@ msgstr ""
 "«Криві» (Колір→Криві)."
 
 #~| msgid ""
-#~| "When you save an image to work on it again later, try using XCF, GIMP's "
+#~| "When you save an image to work on it again later, try using XCF, LIGMA's "
 #~| "native file format (use the file extension <tt>.xcf</tt>). This "
 #~| "preserves the layers and many aspects of your work-in-progress. Once a "
 #~| "project is completed, you can export it as JPEG, PNG, GIF, etc."
 #~ msgid ""
-#~ "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+#~ "Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 #~ "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 #~ "progress, allowing to work on it again later. Once a project is "
 #~ "completed, you can export it as JPEG, PNG, GIF, etc."
 #~ msgstr ""
-#~ "Для збереження зображення використовується XCF, власний формат файла GIMP "
+#~ "Для збереження зображення використовується XCF, власний формат файла LIGMA "
 #~ "(розширення файла <tt>.xcf</tt>). При цьому зберігаються шари і багато "
 #~ "інших аспектів вашої роботи, що дозволяє продовжити роботу пізніше. Коли "
 #~ "проект буде завершено, можете його експортувати у JPEG, PNG, GIF тощо."
@@ -314,11 +314,11 @@ msgstr ""
 #~ "переміщувати курсор миші."
 
 #~ msgid ""
-#~ "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+#~ "LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 #~ "bz2</tt>, if you have bzip2 installed) to the filename and your image "
 #~ "will be saved compressed. Of course loading compressed images works too."
 #~ msgstr ""
-#~ "GIMP підтримує стискання gzip «на ходу». Просто додайте <tt>.gz</tt> (чи "
+#~ "LIGMA підтримує стискання gzip «на ходу». Просто додайте <tt>.gz</tt> (чи "
 #~ "<tt>.bz2</tt>, якщо у вас встановлено bzip2) до назви файлу, та ваше "
 #~ "зображення буде збережено стисненим. Звичайно, стиснені зображення можна "
 #~ "відкривати як звичайні."
@@ -384,13 +384,13 @@ msgstr ""
 #~ "обертанні, призводить до повороту на кут кратний 15 градусам."
 
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-#~ msgstr "<big>Ласкаво просимо до GIMP!</big>"
+#~ msgstr "<big>Ласкаво просимо до LIGMA!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
-#~ "У GIMP можна скасувати більшість внесених змін, тому можете сміливо "
+#~ "У LIGMA можна скасувати більшість внесених змін, тому можете сміливо "
 #~ "експериментувати."
 
 #~ msgid ""

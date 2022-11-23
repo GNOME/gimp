@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,37 +14,37 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub version {
-    $blurb = 'Returns the host GIMP version.';
+    $blurb = 'Returns the host LIGMA version.';
 
     $help = <<'HELP';
-This procedure returns the version number of the currently running GIMP.
+This procedure returns the version number of the currently running LIGMA.
 HELP
 
     &yosh_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'version', type => 'string',
-	  desc => 'GIMP version number' }
+	  desc => 'LIGMA version number' }
     );
 
     %invoke = (
-	headers => [ qw("libgimpbase/gimpbase.h") ],
+	headers => [ qw("libligmabase/ligmabase.h") ],
 	code    => <<'CODE'
 {
-  version = g_strdup (GIMP_VERSION);
+  version = g_strdup (LIGMA_VERSION);
 }
 CODE
     );
 }
 
 sub getpid {
-    $blurb = 'Returns the PID of the host GIMP process.';
+    $blurb = 'Returns the PID of the host LIGMA process.';
 
     $help = <<'HELP';
-This procedure returns the process ID of the currently running GIMP.
+This procedure returns the process ID of the currently running LIGMA.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');
@@ -55,20 +55,20 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp-utils.h") ],
+	headers => [ qw("core/ligma-utils.h") ],
 	code    => <<'CODE'
 {
-  pid = gimp_get_pid ();
+  pid = ligma_get_pid ();
 }
 CODE
     );
 }
 
 sub quit {
-    $blurb = 'Causes GIMP to exit gracefully.';
+    $blurb = 'Causes LIGMA to exit gracefully.';
 
     $help = <<'HELP';
-If there are unsaved images in an interactive GIMP session, the user
+If there are unsaved images in an interactive LIGMA session, the user
 will be asked for confirmation. If force is TRUE, the application is
 quit without querying the user to save any dirty images.
 HELP
@@ -77,13 +77,13 @@ HELP
 
     @inargs = (
 	{ name => 'force', type => 'boolean',
-	  desc => 'Force GIMP to quit without asking' }
+	  desc => 'Force LIGMA to quit without asking' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_exit (gimp, force);
+  ligma_exit (ligma, force);
 }
 CODE
     );
@@ -106,8 +106,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_parasite_validate (gimp, parasite, error))
-    gimp_parasite_attach (gimp, parasite);
+  if (ligma_parasite_validate (ligma, parasite, error))
+    ligma_parasite_attach (ligma, parasite);
   else
     success = FALSE;
 }
@@ -132,7 +132,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_parasite_detach (gimp, name);
+  ligma_parasite_detach (ligma, name);
 }
 CODE
     );
@@ -160,7 +160,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
+  parasite = ligma_parasite_copy (ligma_parasite_find (ligma, name));
 
   if (! parasite)
     success = FALSE;
@@ -183,7 +183,7 @@ sub get_parasite_list {
     %invoke = (
 	code => <<'CODE'
 {
-  parasites = gimp_parasite_list (gimp);
+  parasites = ligma_parasite_list (ligma);
 }
 CODE
     );
@@ -193,7 +193,7 @@ sub temp_file {
     $blurb = 'Generates a unique temporary file.';
 
     $help = <<'HELP';
-Generates a unique file using the temp path supplied in the user's gimprc.
+Generates a unique file using the temp path supplied in the user's ligmarc.
 HELP
 
     &josh_pdb_misc('1997');
@@ -212,15 +212,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_get_temp_file (gimp, extension);
+  file = ligma_get_temp_file (ligma, extension);
 }
 CODE
     );
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimp-parasites.h");
+@headers = qw("core/ligma.h"
+              "core/ligma-parasites.h");
 
 @procs = qw(version
             getpid
@@ -233,12 +233,12 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs[0..1,3..7]]);
 
-$desc = 'Gimp';
-$doc_title = 'gimp';
-$doc_short_desc = 'Main functions needed for building a GIMP plug-in.';
+$desc = 'Ligma';
+$doc_title = 'ligma';
+$doc_short_desc = 'Main functions needed for building a LIGMA plug-in.';
 $doc_long_desc = <<'DESC';
-Main functions needed for building a GIMP plug-in.
-This header includes all other GIMP Library headers.
+Main functions needed for building a LIGMA plug-in.
+This header includes all other LIGMA Library headers.
 
 Also contains some miscellaneous procedures that don't fit in any
 other category.

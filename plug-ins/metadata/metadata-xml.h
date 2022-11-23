@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2016, 2017 Ben Touchette
@@ -22,12 +22,12 @@
 
 #include "metadata-misc.h"
 
-struct _GimpXmlParser
+struct _LigmaXmlParser
 {
   GMarkupParseContext *context;
 };
 
-typedef struct _GimpXmlParser GimpXmlParser;
+typedef struct _LigmaXmlParser LigmaXmlParser;
 
 void
 xml_parser_start_element                     (GMarkupParseContext   *context,
@@ -73,12 +73,12 @@ xml_parser_end_element                       (GMarkupParseContext  *context,
                                               GError              **error);
 
 gboolean
-xml_parser_parse_file                        (GimpXmlParser        *parser,
+xml_parser_parse_file                        (LigmaXmlParser        *parser,
                                               const gchar          *filename,
                                               GError              **error);
 
 void
-xml_parser_free                              (GimpXmlParser        *parser);
+xml_parser_free                              (LigmaXmlParser        *parser);
 
 gboolean
 parse_encoding                               (const gchar          *text,
@@ -86,11 +86,11 @@ parse_encoding                               (const gchar          *text,
                                               gchar               **encoding);
 
 gboolean
-xml_parser_parse_io_channel                  (GimpXmlParser        *parser,
+xml_parser_parse_io_channel                  (LigmaXmlParser        *parser,
                                               GIOChannel           *io,
                                               GError              **error);
 
-GimpXmlParser *
+LigmaXmlParser *
 xml_parser_new                               (const GMarkupParser  *markup_parser,
                                               gpointer              user_data);
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasitem.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasitem.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,115 +18,115 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ITEM_H__
-#define __GIMP_CANVAS_ITEM_H__
+#ifndef __LIGMA_CANVAS_ITEM_H__
+#define __LIGMA_CANVAS_ITEM_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_CANVAS_ITEM            (gimp_canvas_item_get_type ())
-#define GIMP_CANVAS_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_ITEM, GimpCanvasItem))
-#define GIMP_CANVAS_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_ITEM, GimpCanvasItemClass))
-#define GIMP_IS_CANVAS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_ITEM))
-#define GIMP_IS_CANVAS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_ITEM))
-#define GIMP_CANVAS_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_ITEM, GimpCanvasItemClass))
+#define LIGMA_TYPE_CANVAS_ITEM            (ligma_canvas_item_get_type ())
+#define LIGMA_CANVAS_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_ITEM, LigmaCanvasItem))
+#define LIGMA_CANVAS_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_ITEM, LigmaCanvasItemClass))
+#define LIGMA_IS_CANVAS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_ITEM))
+#define LIGMA_IS_CANVAS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_ITEM))
+#define LIGMA_CANVAS_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_ITEM, LigmaCanvasItemClass))
 
 
-typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
-typedef struct _GimpCanvasItemClass   GimpCanvasItemClass;
+typedef struct _LigmaCanvasItemPrivate LigmaCanvasItemPrivate;
+typedef struct _LigmaCanvasItemClass   LigmaCanvasItemClass;
 
-struct _GimpCanvasItem
+struct _LigmaCanvasItem
 {
-  GimpObject             parent_instance;
+  LigmaObject             parent_instance;
 
-  GimpCanvasItemPrivate *private;
+  LigmaCanvasItemPrivate *private;
 };
 
-struct _GimpCanvasItemClass
+struct _LigmaCanvasItemClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   /*  signals  */
-  void             (* update)      (GimpCanvasItem   *item,
+  void             (* update)      (LigmaCanvasItem   *item,
                                     cairo_region_t   *region);
 
   /*  virtual functions  */
-  void             (* draw)        (GimpCanvasItem   *item,
+  void             (* draw)        (LigmaCanvasItem   *item,
                                     cairo_t          *cr);
-  cairo_region_t * (* get_extents) (GimpCanvasItem   *item);
+  cairo_region_t * (* get_extents) (LigmaCanvasItem   *item);
 
-  void             (* stroke)      (GimpCanvasItem   *item,
+  void             (* stroke)      (LigmaCanvasItem   *item,
                                     cairo_t          *cr);
-  void             (* fill)        (GimpCanvasItem   *item,
+  void             (* fill)        (LigmaCanvasItem   *item,
                                     cairo_t          *cr);
 
-  gboolean         (* hit)         (GimpCanvasItem   *item,
+  gboolean         (* hit)         (LigmaCanvasItem   *item,
                                     gdouble           x,
                                     gdouble           y);
 };
 
 
-GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
+GType            ligma_canvas_item_get_type         (void) G_GNUC_CONST;
 
-GimpDisplayShell * gimp_canvas_item_get_shell      (GimpCanvasItem   *item);
-GimpImage      * gimp_canvas_item_get_image        (GimpCanvasItem   *item);
-GtkWidget      * gimp_canvas_item_get_canvas       (GimpCanvasItem   *item);
+LigmaDisplayShell * ligma_canvas_item_get_shell      (LigmaCanvasItem   *item);
+LigmaImage      * ligma_canvas_item_get_image        (LigmaCanvasItem   *item);
+GtkWidget      * ligma_canvas_item_get_canvas       (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_draw             (GimpCanvasItem   *item,
+void             ligma_canvas_item_draw             (LigmaCanvasItem   *item,
                                                     cairo_t          *cr);
-cairo_region_t * gimp_canvas_item_get_extents      (GimpCanvasItem   *item);
+cairo_region_t * ligma_canvas_item_get_extents      (LigmaCanvasItem   *item);
 
-gboolean         gimp_canvas_item_hit              (GimpCanvasItem   *item,
+gboolean         ligma_canvas_item_hit              (LigmaCanvasItem   *item,
                                                     gdouble           x,
                                                     gdouble           y);
 
-void             gimp_canvas_item_set_visible      (GimpCanvasItem   *item,
+void             ligma_canvas_item_set_visible      (LigmaCanvasItem   *item,
                                                     gboolean          visible);
-gboolean         gimp_canvas_item_get_visible      (GimpCanvasItem   *item);
+gboolean         ligma_canvas_item_get_visible      (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
+void             ligma_canvas_item_set_line_cap     (LigmaCanvasItem   *item,
                                                     cairo_line_cap_t  line_cap);
 
-void             gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
+void             ligma_canvas_item_set_highlight    (LigmaCanvasItem   *item,
                                                     gboolean          highlight);
-gboolean         gimp_canvas_item_get_highlight    (GimpCanvasItem   *item);
+gboolean         ligma_canvas_item_get_highlight    (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_begin_change     (GimpCanvasItem   *item);
-void             gimp_canvas_item_end_change       (GimpCanvasItem   *item);
+void             ligma_canvas_item_begin_change     (LigmaCanvasItem   *item);
+void             ligma_canvas_item_end_change       (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
-void             gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
+void             ligma_canvas_item_suspend_stroking (LigmaCanvasItem   *item);
+void             ligma_canvas_item_resume_stroking  (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_suspend_filling  (GimpCanvasItem   *item);
-void             gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
+void             ligma_canvas_item_suspend_filling  (LigmaCanvasItem   *item);
+void             ligma_canvas_item_resume_filling   (LigmaCanvasItem   *item);
 
-void             gimp_canvas_item_transform        (GimpCanvasItem   *item,
+void             ligma_canvas_item_transform        (LigmaCanvasItem   *item,
                                                     cairo_t          *cr);
-void             gimp_canvas_item_transform_xy     (GimpCanvasItem   *item,
+void             ligma_canvas_item_transform_xy     (LigmaCanvasItem   *item,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     gint             *tx,
                                                     gint             *ty);
-void             gimp_canvas_item_transform_xy_f   (GimpCanvasItem   *item,
+void             ligma_canvas_item_transform_xy_f   (LigmaCanvasItem   *item,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     gdouble          *tx,
                                                     gdouble          *ty);
-gdouble          gimp_canvas_item_transform_distance
-                                                   (GimpCanvasItem   *item,
+gdouble          ligma_canvas_item_transform_distance
+                                                   (LigmaCanvasItem   *item,
                                                     gdouble           x1,
                                                     gdouble           y1,
                                                     gdouble           x2,
                                                     gdouble           y2);
-gdouble          gimp_canvas_item_transform_distance_square
-                                                   (GimpCanvasItem   *item,
+gdouble          ligma_canvas_item_transform_distance_square
+                                                   (LigmaCanvasItem   *item,
                                                     gdouble           x1,
                                                     gdouble           y1,
                                                     gdouble           x2,
                                                     gdouble           y2);
-void             gimp_canvas_item_untransform_viewport
-                                                   (GimpCanvasItem   *item,
+void             ligma_canvas_item_untransform_viewport
+                                                   (LigmaCanvasItem   *item,
                                                     gint             *x,
                                                     gint             *y,
                                                     gint             *w,
@@ -135,13 +135,13 @@ void             gimp_canvas_item_untransform_viewport
 
 /*  protected  */
 
-void             _gimp_canvas_item_update          (GimpCanvasItem   *item,
+void             _ligma_canvas_item_update          (LigmaCanvasItem   *item,
                                                     cairo_region_t   *region);
-gboolean         _gimp_canvas_item_needs_update    (GimpCanvasItem   *item);
-void             _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
+gboolean         _ligma_canvas_item_needs_update    (LigmaCanvasItem   *item);
+void             _ligma_canvas_item_stroke          (LigmaCanvasItem   *item,
                                                     cairo_t          *cr);
-void             _gimp_canvas_item_fill            (GimpCanvasItem   *item,
+void             _ligma_canvas_item_fill            (LigmaCanvasItem   *item,
                                                     cairo_t          *cr);
 
 
-#endif /* __GIMP_CANVAS_ITEM_H__ */
+#endif /* __LIGMA_CANVAS_ITEM_H__ */

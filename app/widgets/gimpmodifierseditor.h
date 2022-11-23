@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmodifierseditor.h
+ * ligmamodifierseditor.h
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODIFIERS_EDITOR_H__
-#define __GIMP_MODIFIERS_EDITOR_H__
+#ifndef __LIGMA_MODIFIERS_EDITOR_H__
+#define __LIGMA_MODIFIERS_EDITOR_H__
 
 
-#define GIMP_TYPE_MODIFIERS_EDITOR            (gimp_modifiers_editor_get_type ())
-#define GIMP_MODIFIERS_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODIFIERS_EDITOR, GimpModifiersEditor))
-#define GIMP_MODIFIERS_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODIFIERS_EDITOR, GimpModifiersEditorClass))
-#define GIMP_IS_MODIFIERS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODIFIERS_EDITOR))
-#define GIMP_IS_MODIFIERS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODIFIERS_EDITOR))
-#define GIMP_MODIFIERS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODIFIERS_EDITOR, GimpModifiersEditorClass))
+#define LIGMA_TYPE_MODIFIERS_EDITOR            (ligma_modifiers_editor_get_type ())
+#define LIGMA_MODIFIERS_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MODIFIERS_EDITOR, LigmaModifiersEditor))
+#define LIGMA_MODIFIERS_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MODIFIERS_EDITOR, LigmaModifiersEditorClass))
+#define LIGMA_IS_MODIFIERS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MODIFIERS_EDITOR))
+#define LIGMA_IS_MODIFIERS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MODIFIERS_EDITOR))
+#define LIGMA_MODIFIERS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MODIFIERS_EDITOR, LigmaModifiersEditorClass))
 
 
-typedef struct _GimpModifiersEditorPrivate GimpModifiersEditorPrivate;
-typedef struct _GimpModifiersEditorClass   GimpModifiersEditorClass;
+typedef struct _LigmaModifiersEditorPrivate LigmaModifiersEditorPrivate;
+typedef struct _LigmaModifiersEditorClass   LigmaModifiersEditorClass;
 
-struct _GimpModifiersEditor
+struct _LigmaModifiersEditor
 {
-  GimpFrame                  parent_instance;
+  LigmaFrame                  parent_instance;
 
-  GimpModifiersEditorPrivate *priv;
+  LigmaModifiersEditorPrivate *priv;
 };
 
-struct _GimpModifiersEditorClass
+struct _LigmaModifiersEditorClass
 {
-  GimpFrameClass             parent_class;
+  LigmaFrameClass             parent_class;
 };
 
 
-GType          gimp_modifiers_editor_get_type (void) G_GNUC_CONST;
+GType          ligma_modifiers_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_modifiers_editor_new      (GimpModifiersManager *manager);
+GtkWidget    * ligma_modifiers_editor_new      (LigmaModifiersManager *manager);
 
-void           gimp_modifiers_editor_clear    (GimpModifiersEditor  *editor);
+void           ligma_modifiers_editor_clear    (LigmaModifiersEditor  *editor);
 
 
-#endif /* __GIMP_MODIFIERS_EDITOR_H__ */
+#endif /* __LIGMA_MODIFIERS_EDITOR_H__ */

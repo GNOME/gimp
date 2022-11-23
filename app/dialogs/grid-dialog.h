@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 #define __GRID_DIALOG_H__
 
 
-GtkWidget * grid_dialog_new (GimpImage   *image,
-                             GimpContext *context,
+GtkWidget * grid_dialog_new (LigmaImage   *image,
+                             LigmaContext *context,
                              GtkWidget   *parent);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,173 +21,173 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimp.h"
-#include "gimpcontext.h"
-#include "gimpdrawable-edit.h"
-#include "gimpdrawable-private.h"
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimpimage-new.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimplayer-new.h"
-#include "gimplayermask.h"
-#include "gimplayer-floating-selection.h"
-#include "gimppickable.h"
-#include "gimpselection.h"
+#include "ligma.h"
+#include "ligmacontext.h"
+#include "ligmadrawable-edit.h"
+#include "ligmadrawable-private.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmaimage-new.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmalayer.h"
+#include "ligmalayer-new.h"
+#include "ligmalayermask.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmapickable.h"
+#include "ligmaselection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean   gimp_selection_is_attached   (GimpItem            *item);
-static GimpItemTree * gimp_selection_get_tree  (GimpItem            *item);
-static void       gimp_selection_translate     (GimpItem            *item,
+static gboolean   ligma_selection_is_attached   (LigmaItem            *item);
+static LigmaItemTree * ligma_selection_get_tree  (LigmaItem            *item);
+static void       ligma_selection_translate     (LigmaItem            *item,
                                                 gdouble              offset_x,
                                                 gdouble              offset_y,
                                                 gboolean             push_undo);
-static void       gimp_selection_scale         (GimpItem            *item,
+static void       ligma_selection_scale         (LigmaItem            *item,
                                                 gint                 new_width,
                                                 gint                 new_height,
                                                 gint                 new_offset_x,
                                                 gint                 new_offset_y,
-                                                GimpInterpolationType interp_type,
-                                                GimpProgress        *progress);
-static void       gimp_selection_resize        (GimpItem            *item,
-                                                GimpContext         *context,
-                                                GimpFillType         fill_type,
+                                                LigmaInterpolationType interp_type,
+                                                LigmaProgress        *progress);
+static void       ligma_selection_resize        (LigmaItem            *item,
+                                                LigmaContext         *context,
+                                                LigmaFillType         fill_type,
                                                 gint                 new_width,
                                                 gint                 new_height,
                                                 gint                 offset_x,
                                                 gint                 offset_y);
-static void       gimp_selection_flip          (GimpItem            *item,
-                                                GimpContext         *context,
-                                                GimpOrientationType  flip_type,
+static void       ligma_selection_flip          (LigmaItem            *item,
+                                                LigmaContext         *context,
+                                                LigmaOrientationType  flip_type,
                                                 gdouble              axis,
                                                 gboolean             clip_result);
-static void       gimp_selection_rotate        (GimpItem            *item,
-                                                GimpContext         *context,
-                                                GimpRotationType     rotation_type,
+static void       ligma_selection_rotate        (LigmaItem            *item,
+                                                LigmaContext         *context,
+                                                LigmaRotationType     rotation_type,
                                                 gdouble              center_x,
                                                 gdouble              center_y,
                                                 gboolean             clip_result);
-static gboolean   gimp_selection_fill          (GimpItem            *item,
-                                                GimpDrawable        *drawable,
-                                                GimpFillOptions     *fill_options,
+static gboolean   ligma_selection_fill          (LigmaItem            *item,
+                                                LigmaDrawable        *drawable,
+                                                LigmaFillOptions     *fill_options,
                                                 gboolean             push_undo,
-                                                GimpProgress        *progress,
+                                                LigmaProgress        *progress,
                                                 GError             **error);
-static gboolean   gimp_selection_stroke        (GimpItem            *item,
-                                                GimpDrawable        *drawable,
-                                                GimpStrokeOptions   *stroke_options,
+static gboolean   ligma_selection_stroke        (LigmaItem            *item,
+                                                LigmaDrawable        *drawable,
+                                                LigmaStrokeOptions   *stroke_options,
                                                 gboolean             push_undo,
-                                                GimpProgress        *progress,
+                                                LigmaProgress        *progress,
                                                 GError             **error);
-static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
-                                                GimpImage           *dest_image,
+static void       ligma_selection_convert_type  (LigmaDrawable        *drawable,
+                                                LigmaImage           *dest_image,
                                                 const Babl          *new_format,
-                                                GimpColorProfile    *src_profile,
-                                                GimpColorProfile    *dest_profile,
+                                                LigmaColorProfile    *src_profile,
+                                                LigmaColorProfile    *dest_profile,
                                                 GeglDitherMethod     layer_dither_type,
                                                 GeglDitherMethod     mask_dither_type,
                                                 gboolean             push_undo,
-                                                GimpProgress        *progress);
-static void gimp_selection_invalidate_boundary (GimpDrawable        *drawable);
+                                                LigmaProgress        *progress);
+static void ligma_selection_invalidate_boundary (LigmaDrawable        *drawable);
 
-static gboolean   gimp_selection_boundary      (GimpChannel         *channel,
-                                                const GimpBoundSeg **segs_in,
-                                                const GimpBoundSeg **segs_out,
+static gboolean   ligma_selection_boundary      (LigmaChannel         *channel,
+                                                const LigmaBoundSeg **segs_in,
+                                                const LigmaBoundSeg **segs_out,
                                                 gint                *num_segs_in,
                                                 gint                *num_segs_out,
                                                 gint                 x1,
                                                 gint                 y1,
                                                 gint                 x2,
                                                 gint                 y2);
-static gboolean   gimp_selection_is_empty      (GimpChannel         *channel);
-static void       gimp_selection_feather       (GimpChannel         *channel,
+static gboolean   ligma_selection_is_empty      (LigmaChannel         *channel);
+static void       ligma_selection_feather       (LigmaChannel         *channel,
                                                 gdouble              radius_x,
                                                 gdouble              radius_y,
                                                 gboolean             edge_lock,
                                                 gboolean             push_undo);
-static void       gimp_selection_sharpen       (GimpChannel         *channel,
+static void       ligma_selection_sharpen       (LigmaChannel         *channel,
                                                 gboolean             push_undo);
-static void       gimp_selection_clear         (GimpChannel         *channel,
+static void       ligma_selection_clear         (LigmaChannel         *channel,
                                                 const gchar         *undo_desc,
                                                 gboolean             push_undo);
-static void       gimp_selection_all           (GimpChannel         *channel,
+static void       ligma_selection_all           (LigmaChannel         *channel,
                                                 gboolean             push_undo);
-static void       gimp_selection_invert        (GimpChannel         *channel,
+static void       ligma_selection_invert        (LigmaChannel         *channel,
                                                 gboolean             push_undo);
-static void       gimp_selection_border        (GimpChannel         *channel,
+static void       ligma_selection_border        (LigmaChannel         *channel,
                                                 gint                 radius_x,
                                                 gint                 radius_y,
-                                                GimpChannelBorderStyle style,
+                                                LigmaChannelBorderStyle style,
                                                 gboolean             edge_lock,
                                                 gboolean             push_undo);
-static void       gimp_selection_grow          (GimpChannel         *channel,
+static void       ligma_selection_grow          (LigmaChannel         *channel,
                                                 gint                 radius_x,
                                                 gint                 radius_y,
                                                 gboolean             push_undo);
-static void       gimp_selection_shrink        (GimpChannel         *channel,
+static void       ligma_selection_shrink        (LigmaChannel         *channel,
                                                 gint                 radius_x,
                                                 gint                 radius_y,
                                                 gboolean             edge_lock,
                                                 gboolean             push_undo);
-static void       gimp_selection_flood         (GimpChannel         *channel,
+static void       ligma_selection_flood         (LigmaChannel         *channel,
                                                 gboolean             push_undo);
 
 
-G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
+G_DEFINE_TYPE (LigmaSelection, ligma_selection, LIGMA_TYPE_CHANNEL)
 
-#define parent_class gimp_selection_parent_class
+#define parent_class ligma_selection_parent_class
 
 
 static void
-gimp_selection_class_init (GimpSelectionClass *klass)
+ligma_selection_class_init (LigmaSelectionClass *klass)
 {
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
-  GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
-  GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
-  GimpChannelClass  *channel_class  = GIMP_CHANNEL_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaItemClass     *item_class     = LIGMA_ITEM_CLASS (klass);
+  LigmaDrawableClass *drawable_class = LIGMA_DRAWABLE_CLASS (klass);
+  LigmaChannelClass  *channel_class  = LIGMA_CHANNEL_CLASS (klass);
 
-  viewable_class->default_icon_name   = "gimp-selection";
+  viewable_class->default_icon_name   = "ligma-selection";
 
-  item_class->is_attached             = gimp_selection_is_attached;
-  item_class->get_tree                = gimp_selection_get_tree;
-  item_class->translate               = gimp_selection_translate;
-  item_class->scale                   = gimp_selection_scale;
-  item_class->resize                  = gimp_selection_resize;
-  item_class->flip                    = gimp_selection_flip;
-  item_class->rotate                  = gimp_selection_rotate;
-  item_class->fill                    = gimp_selection_fill;
-  item_class->stroke                  = gimp_selection_stroke;
+  item_class->is_attached             = ligma_selection_is_attached;
+  item_class->get_tree                = ligma_selection_get_tree;
+  item_class->translate               = ligma_selection_translate;
+  item_class->scale                   = ligma_selection_scale;
+  item_class->resize                  = ligma_selection_resize;
+  item_class->flip                    = ligma_selection_flip;
+  item_class->rotate                  = ligma_selection_rotate;
+  item_class->fill                    = ligma_selection_fill;
+  item_class->stroke                  = ligma_selection_stroke;
   item_class->default_name            = _("Selection Mask");
   item_class->translate_desc          = C_("undo-type", "Move Selection");
   item_class->fill_desc               = C_("undo-type", "Fill Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
-  drawable_class->convert_type        = gimp_selection_convert_type;
-  drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
+  drawable_class->convert_type        = ligma_selection_convert_type;
+  drawable_class->invalidate_boundary = ligma_selection_invalidate_boundary;
 
-  channel_class->boundary             = gimp_selection_boundary;
-  channel_class->is_empty             = gimp_selection_is_empty;
-  channel_class->feather              = gimp_selection_feather;
-  channel_class->sharpen              = gimp_selection_sharpen;
-  channel_class->clear                = gimp_selection_clear;
-  channel_class->all                  = gimp_selection_all;
-  channel_class->invert               = gimp_selection_invert;
-  channel_class->border               = gimp_selection_border;
-  channel_class->grow                 = gimp_selection_grow;
-  channel_class->shrink               = gimp_selection_shrink;
-  channel_class->flood                = gimp_selection_flood;
+  channel_class->boundary             = ligma_selection_boundary;
+  channel_class->is_empty             = ligma_selection_is_empty;
+  channel_class->feather              = ligma_selection_feather;
+  channel_class->sharpen              = ligma_selection_sharpen;
+  channel_class->clear                = ligma_selection_clear;
+  channel_class->all                  = ligma_selection_all;
+  channel_class->invert               = ligma_selection_invert;
+  channel_class->border               = ligma_selection_border;
+  channel_class->grow                 = ligma_selection_grow;
+  channel_class->shrink               = ligma_selection_shrink;
+  channel_class->flood                = ligma_selection_flood;
 
   channel_class->feather_desc         = C_("undo-type", "Feather Selection");
   channel_class->sharpen_desc         = C_("undo-type", "Sharpen Selection");
@@ -201,176 +201,176 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 }
 
 static void
-gimp_selection_init (GimpSelection *selection)
+ligma_selection_init (LigmaSelection *selection)
 {
 }
 
 static gboolean
-gimp_selection_is_attached (GimpItem *item)
+ligma_selection_is_attached (LigmaItem *item)
 {
-  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_image_get_mask (gimp_item_get_image (item)) ==
-          GIMP_CHANNEL (item));
+  return (LIGMA_IS_IMAGE (ligma_item_get_image (item)) &&
+          ligma_image_get_mask (ligma_item_get_image (item)) ==
+          LIGMA_CHANNEL (item));
 }
 
-static GimpItemTree *
-gimp_selection_get_tree (GimpItem *item)
+static LigmaItemTree *
+ligma_selection_get_tree (LigmaItem *item)
 {
   return NULL;
 }
 
 static void
-gimp_selection_translate (GimpItem *item,
+ligma_selection_translate (LigmaItem *item,
                           gdouble   offset_x,
                           gdouble   offset_y,
                           gboolean  push_undo)
 {
-  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
+  LIGMA_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
 }
 
 static void
-gimp_selection_scale (GimpItem              *item,
+ligma_selection_scale (LigmaItem              *item,
                       gint                   new_width,
                       gint                   new_height,
                       gint                   new_offset_x,
                       gint                   new_offset_y,
-                      GimpInterpolationType  interp_type,
-                      GimpProgress          *progress)
+                      LigmaInterpolationType  interp_type,
+                      LigmaProgress          *progress)
 {
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+  LIGMA_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
                                          interp_type, progress);
 
-  gimp_item_set_offset (item, 0, 0);
+  ligma_item_set_offset (item, 0, 0);
 }
 
 static void
-gimp_selection_resize (GimpItem     *item,
-                       GimpContext  *context,
-                       GimpFillType  fill_type,
+ligma_selection_resize (LigmaItem     *item,
+                       LigmaContext  *context,
+                       LigmaFillType  fill_type,
                        gint          new_width,
                        gint          new_height,
                        gint          offset_x,
                        gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+  LIGMA_ITEM_CLASS (parent_class)->resize (item, context, LIGMA_FILL_TRANSPARENT,
                                           new_width, new_height,
                                           offset_x, offset_y);
 
-  gimp_item_set_offset (item, 0, 0);
+  ligma_item_set_offset (item, 0, 0);
 }
 
 static void
-gimp_selection_flip (GimpItem            *item,
-                     GimpContext         *context,
-                     GimpOrientationType  flip_type,
+ligma_selection_flip (LigmaItem            *item,
+                     LigmaContext         *context,
+                     LigmaOrientationType  flip_type,
                      gdouble              axis,
                      gboolean             clip_result)
 {
-  GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis, TRUE);
+  LIGMA_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis, TRUE);
 }
 
 static void
-gimp_selection_rotate (GimpItem         *item,
-                       GimpContext      *context,
-                       GimpRotationType  rotation_type,
+ligma_selection_rotate (LigmaItem         *item,
+                       LigmaContext      *context,
+                       LigmaRotationType  rotation_type,
                        gdouble           center_x,
                        gdouble           center_y,
                        gboolean          clip_result)
 {
-  GIMP_ITEM_CLASS (parent_class)->rotate (item, context, rotation_type,
+  LIGMA_ITEM_CLASS (parent_class)->rotate (item, context, rotation_type,
                                           center_x, center_y,
                                           clip_result);
 }
 
 static gboolean
-gimp_selection_fill (GimpItem         *item,
-                     GimpDrawable     *drawable,
-                     GimpFillOptions  *fill_options,
+ligma_selection_fill (LigmaItem         *item,
+                     LigmaDrawable     *drawable,
+                     LigmaFillOptions  *fill_options,
                      gboolean          push_undo,
-                     GimpProgress     *progress,
+                     LigmaProgress     *progress,
                      GError          **error)
 {
-  GimpSelection      *selection = GIMP_SELECTION (item);
-  const GimpBoundSeg *dummy_in;
-  const GimpBoundSeg *dummy_out;
+  LigmaSelection      *selection = LIGMA_SELECTION (item);
+  const LigmaBoundSeg *dummy_in;
+  const LigmaBoundSeg *dummy_out;
   gint                num_dummy_in;
   gint                num_dummy_out;
   gboolean            retval;
 
-  if (! gimp_channel_boundary (GIMP_CHANNEL (selection),
+  if (! ligma_channel_boundary (LIGMA_CHANNEL (selection),
                                &dummy_in, &dummy_out,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("There is no selection to fill."));
       return FALSE;
     }
 
-  gimp_selection_suspend (selection);
+  ligma_selection_suspend (selection);
 
-  retval = GIMP_ITEM_CLASS (parent_class)->fill (item, drawable,
+  retval = LIGMA_ITEM_CLASS (parent_class)->fill (item, drawable,
                                                  fill_options,
                                                  push_undo, progress, error);
 
-  gimp_selection_resume (selection);
+  ligma_selection_resume (selection);
 
   return retval;
 }
 
 static gboolean
-gimp_selection_stroke (GimpItem           *item,
-                       GimpDrawable       *drawable,
-                       GimpStrokeOptions  *stroke_options,
+ligma_selection_stroke (LigmaItem           *item,
+                       LigmaDrawable       *drawable,
+                       LigmaStrokeOptions  *stroke_options,
                        gboolean            push_undo,
-                       GimpProgress       *progress,
+                       LigmaProgress       *progress,
                        GError            **error)
 {
-  GimpSelection      *selection = GIMP_SELECTION (item);
-  const GimpBoundSeg *dummy_in;
-  const GimpBoundSeg *dummy_out;
+  LigmaSelection      *selection = LIGMA_SELECTION (item);
+  const LigmaBoundSeg *dummy_in;
+  const LigmaBoundSeg *dummy_out;
   gint                num_dummy_in;
   gint                num_dummy_out;
   gboolean            retval;
 
-  if (! gimp_channel_boundary (GIMP_CHANNEL (selection),
+  if (! ligma_channel_boundary (LIGMA_CHANNEL (selection),
                                &dummy_in, &dummy_out,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("There is no selection to stroke."));
       return FALSE;
     }
 
-  gimp_selection_suspend (selection);
+  ligma_selection_suspend (selection);
 
-  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable,
+  retval = LIGMA_ITEM_CLASS (parent_class)->stroke (item, drawable,
                                                    stroke_options,
                                                    push_undo, progress, error);
 
-  gimp_selection_resume (selection);
+  ligma_selection_resume (selection);
 
   return retval;
 }
 
 static void
-gimp_selection_convert_type (GimpDrawable      *drawable,
-                             GimpImage         *dest_image,
+ligma_selection_convert_type (LigmaDrawable      *drawable,
+                             LigmaImage         *dest_image,
                              const Babl        *new_format,
-                             GimpColorProfile  *src_profile,
-                             GimpColorProfile  *dest_profile,
+                             LigmaColorProfile  *src_profile,
+                             LigmaColorProfile  *dest_profile,
                              GeglDitherMethod   layer_dither_type,
                              GeglDitherMethod   mask_dither_type,
                              gboolean           push_undo,
-                             GimpProgress      *progress)
+                             LigmaProgress      *progress)
 {
   new_format =
-    gimp_babl_mask_format (gimp_babl_format_get_precision (new_format));
+    ligma_babl_mask_format (ligma_babl_format_get_precision (new_format));
 
-  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+  LIGMA_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
                                                     src_profile,
                                                     dest_profile,
@@ -381,25 +381,25 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
 }
 
 static void
-gimp_selection_invalidate_boundary (GimpDrawable *drawable)
+ligma_selection_invalidate_boundary (LigmaDrawable *drawable)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (drawable));
   GList     *layers;
 
   /*  Turn the current selection off  */
-  gimp_image_selection_invalidate (image);
+  ligma_image_selection_invalidate (image);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->invalidate_boundary (drawable);
+  LIGMA_DRAWABLE_CLASS (parent_class)->invalidate_boundary (drawable);
 
   /*  If there is a floating selection, update it's area...
    *  we need to do this since this selection mask can act as an additional
    *  mask in the composition of the floating selection
    */
-  layers = gimp_image_get_selected_layers (image);
+  layers = ligma_image_get_selected_layers (image);
 
-  if (g_list_length (layers) == 1 && gimp_layer_is_floating_sel (layers->data))
+  if (g_list_length (layers) == 1 && ligma_layer_is_floating_sel (layers->data))
     {
-      gimp_drawable_update (GIMP_DRAWABLE (layers->data), 0, 0, -1, -1);
+      ligma_drawable_update (LIGMA_DRAWABLE (layers->data), 0, 0, -1, -1);
     }
 
 #if 0
@@ -409,9 +409,9 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
 }
 
 static gboolean
-gimp_selection_boundary (GimpChannel         *channel,
-                         const GimpBoundSeg **segs_in,
-                         const GimpBoundSeg **segs_out,
+ligma_selection_boundary (LigmaChannel         *channel,
+                         const LigmaBoundSeg **segs_in,
+                         const LigmaBoundSeg **segs_out,
                          gint                *num_segs_in,
                          gint                *num_segs_out,
                          gint                 unused1,
@@ -419,17 +419,17 @@ gimp_selection_boundary (GimpChannel         *channel,
                          gint                 unused3,
                          gint                 unused4)
 {
-  GimpImage    *image = gimp_item_get_image (GIMP_ITEM (channel));
-  GimpLayer    *floating_selection;
+  LigmaImage    *image = ligma_item_get_image (LIGMA_ITEM (channel));
+  LigmaLayer    *floating_selection;
   GList        *drawables;
   GList        *layers;
   gboolean      channel_selected;
 
-  drawables = gimp_image_get_selected_drawables (image);
-  channel_selected = (drawables && GIMP_IS_CHANNEL (drawables->data));
+  drawables = ligma_image_get_selected_drawables (image);
+  channel_selected = (drawables && LIGMA_IS_CHANNEL (drawables->data));
   g_list_free (drawables);
 
-  if ((floating_selection = gimp_image_get_floating_selection (image)))
+  if ((floating_selection = ligma_image_get_floating_selection (image)))
     {
       /*  If there is a floating selection, then
        *  we need to do some slightly different boundaries.
@@ -441,7 +441,7 @@ gimp_selection_boundary (GimpChannel         *channel,
        */
 
       /*  Find the selection mask boundary  */
-      GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
+      LIGMA_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                    segs_in, segs_out,
                                                    num_segs_in, num_segs_out,
                                                    0, 0, 0, 0);
@@ -455,15 +455,15 @@ gimp_selection_boundary (GimpChannel         *channel,
     {
       /*  Otherwise, return the boundary...if a channels are selected  */
 
-      return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
+      return LIGMA_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                           segs_in, segs_out,
                                                           num_segs_in,
                                                           num_segs_out,
                                                           0, 0,
-                                                          gimp_image_get_width  (image),
-                                                          gimp_image_get_height (image));
+                                                          ligma_image_get_width  (image),
+                                                          ligma_image_get_height (image));
     }
-  else if ((layers = gimp_image_get_selected_layers (image)))
+  else if ((layers = ligma_image_get_selected_layers (image)))
     {
       /*  If layers are selected, we return multiple boundaries based
        *  on the extents
@@ -480,22 +480,22 @@ gimp_selection_boundary (GimpChannel         *channel,
           gint item_off_x, item_off_y;
           gint item_x2, item_y2;
 
-          gimp_item_get_offset (iter->data, &item_off_x, &item_off_y);
+          ligma_item_get_offset (iter->data, &item_off_x, &item_off_y);
           offset_x = MIN (offset_x, item_off_x);
           offset_y = MIN (offset_y, item_off_y);
 
-          item_x2 = item_off_x + gimp_item_get_width (GIMP_ITEM (iter->data));
-          item_y2 = item_off_y + gimp_item_get_height (GIMP_ITEM (iter->data));
+          item_x2 = item_off_x + ligma_item_get_width (LIGMA_ITEM (iter->data));
+          item_y2 = item_off_y + ligma_item_get_height (LIGMA_ITEM (iter->data));
           x2 = MAX (x2, item_x2);
           y2 = MAX (y2, item_y2);
         }
 
-      x1 = CLAMP (offset_x, 0, gimp_image_get_width  (image));
-      y1 = CLAMP (offset_y, 0, gimp_image_get_height (image));
-      x2 = CLAMP (x2, 0, gimp_image_get_width (image));
-      y2 = CLAMP (y2, 0, gimp_image_get_height (image));
+      x1 = CLAMP (offset_x, 0, ligma_image_get_width  (image));
+      y1 = CLAMP (offset_y, 0, ligma_image_get_height (image));
+      x2 = CLAMP (x2, 0, ligma_image_get_width (image));
+      y2 = CLAMP (y2, 0, ligma_image_get_height (image));
 
-      return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
+      return LIGMA_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                           segs_in, segs_out,
                                                           num_segs_in,
                                                           num_segs_out,
@@ -511,9 +511,9 @@ gimp_selection_boundary (GimpChannel         *channel,
 }
 
 static gboolean
-gimp_selection_is_empty (GimpChannel *channel)
+ligma_selection_is_empty (LigmaChannel *channel)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
+  LigmaSelection *selection = LIGMA_SELECTION (channel);
 
   /*  in order to allow stroking of selections, we need to pretend here
    *  that the selection mask is empty so that it doesn't mask the paint
@@ -522,114 +522,114 @@ gimp_selection_is_empty (GimpChannel *channel)
   if (selection->suspend_count > 0)
     return TRUE;
 
-  return GIMP_CHANNEL_CLASS (parent_class)->is_empty (channel);
+  return LIGMA_CHANNEL_CLASS (parent_class)->is_empty (channel);
 }
 
 static void
-gimp_selection_feather (GimpChannel *channel,
+ligma_selection_feather (LigmaChannel *channel,
                         gdouble      radius_x,
                         gdouble      radius_y,
                         gboolean     edge_lock,
                         gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
+  LIGMA_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
                                               edge_lock, push_undo);
 }
 
 static void
-gimp_selection_sharpen (GimpChannel *channel,
+ligma_selection_sharpen (LigmaChannel *channel,
                         gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->sharpen (channel, push_undo);
+  LIGMA_CHANNEL_CLASS (parent_class)->sharpen (channel, push_undo);
 }
 
 static void
-gimp_selection_clear (GimpChannel *channel,
+ligma_selection_clear (LigmaChannel *channel,
                       const gchar *undo_desc,
                       gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->clear (channel, undo_desc, push_undo);
+  LIGMA_CHANNEL_CLASS (parent_class)->clear (channel, undo_desc, push_undo);
 }
 
 static void
-gimp_selection_all (GimpChannel *channel,
+ligma_selection_all (LigmaChannel *channel,
                     gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->all (channel, push_undo);
+  LIGMA_CHANNEL_CLASS (parent_class)->all (channel, push_undo);
 }
 
 static void
-gimp_selection_invert (GimpChannel *channel,
+ligma_selection_invert (LigmaChannel *channel,
                        gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->invert (channel, push_undo);
+  LIGMA_CHANNEL_CLASS (parent_class)->invert (channel, push_undo);
 }
 
 static void
-gimp_selection_border (GimpChannel            *channel,
+ligma_selection_border (LigmaChannel            *channel,
                        gint                    radius_x,
                        gint                    radius_y,
-                       GimpChannelBorderStyle  style,
+                       LigmaChannelBorderStyle  style,
                        gboolean                edge_lock,
                        gboolean                push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->border (channel,
+  LIGMA_CHANNEL_CLASS (parent_class)->border (channel,
                                              radius_x, radius_y,
                                              style, edge_lock,
                                              push_undo);
 }
 
 static void
-gimp_selection_grow (GimpChannel *channel,
+ligma_selection_grow (LigmaChannel *channel,
                      gint         radius_x,
                      gint         radius_y,
                      gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->grow (channel,
+  LIGMA_CHANNEL_CLASS (parent_class)->grow (channel,
                                            radius_x, radius_y,
                                            push_undo);
 }
 
 static void
-gimp_selection_shrink (GimpChannel *channel,
+ligma_selection_shrink (LigmaChannel *channel,
                        gint         radius_x,
                        gint         radius_y,
                        gboolean     edge_lock,
                        gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->shrink (channel,
+  LIGMA_CHANNEL_CLASS (parent_class)->shrink (channel,
                                              radius_x, radius_y, edge_lock,
                                              push_undo);
 }
 
 static void
-gimp_selection_flood (GimpChannel *channel,
+ligma_selection_flood (LigmaChannel *channel,
                       gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->flood (channel, push_undo);
+  LIGMA_CHANNEL_CLASS (parent_class)->flood (channel, push_undo);
 }
 
 
 /*  public functions  */
 
-GimpChannel *
-gimp_selection_new (GimpImage *image,
+LigmaChannel *
+ligma_selection_new (LigmaImage *image,
                     gint       width,
                     gint       height)
 {
-  GimpRGB      black = { 0.0, 0.0, 0.0, 0.5 };
-  GimpChannel *channel;
+  LigmaRGB      black = { 0.0, 0.0, 0.0, 0.5 };
+  LigmaChannel *channel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
-  channel = GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_SELECTION,
+  channel = LIGMA_CHANNEL (ligma_drawable_new (LIGMA_TYPE_SELECTION,
                                              image, NULL,
                                              0, 0, width, height,
-                                             gimp_image_get_mask_format (image)));
+                                             ligma_image_get_mask_format (image)));
 
-  gimp_channel_set_color (channel, &black, FALSE);
-  gimp_channel_set_show_masked (channel, TRUE);
+  ligma_channel_set_color (channel, &black, FALSE);
+  ligma_channel_set_show_masked (channel, TRUE);
 
   channel->x2 = width;
   channel->y2 = height;
@@ -638,9 +638,9 @@ gimp_selection_new (GimpImage *image,
 }
 
 gint
-gimp_selection_suspend (GimpSelection *selection)
+ligma_selection_suspend (LigmaSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_SELECTION (selection), 0);
+  g_return_val_if_fail (LIGMA_IS_SELECTION (selection), 0);
 
   selection->suspend_count++;
 
@@ -648,9 +648,9 @@ gimp_selection_suspend (GimpSelection *selection)
 }
 
 gint
-gimp_selection_resume (GimpSelection *selection)
+ligma_selection_resume (LigmaSelection *selection)
 {
-  g_return_val_if_fail (GIMP_IS_SELECTION (selection), 0);
+  g_return_val_if_fail (LIGMA_IS_SELECTION (selection), 0);
   g_return_val_if_fail (selection->suspend_count > 0, 0);
 
   selection->suspend_count--;
@@ -659,9 +659,9 @@ gimp_selection_resume (GimpSelection *selection)
 }
 
 GeglBuffer *
-gimp_selection_extract (GimpSelection *selection,
+ligma_selection_extract (LigmaSelection *selection,
                         GList         *pickables,
-                        GimpContext   *context,
+                        LigmaContext   *context,
                         gboolean       cut_image,
                         gboolean       keep_indexed,
                         gboolean       add_alpha,
@@ -669,9 +669,9 @@ gimp_selection_extract (GimpSelection *selection,
                         gint          *offset_y,
                         GError       **error)
 {
-  GimpImage    *image      = NULL;
-  GimpImage    *temp_image = NULL;
-  GimpPickable *pickable   = NULL;
+  LigmaImage    *image      = NULL;
+  LigmaImage    *temp_image = NULL;
+  LigmaPickable *pickable   = NULL;
   GeglBuffer   *src_buffer;
   GeglBuffer   *dest_buffer;
   GList        *iter;
@@ -681,22 +681,22 @@ gimp_selection_extract (GimpSelection *selection,
   gboolean      non_empty;
   gint          off_x, off_y;
 
-  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_SELECTION (selection), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
   g_return_val_if_fail (pickables != NULL, NULL);
 
   for (iter = pickables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_PICKABLE (iter->data), NULL);
+      g_return_val_if_fail (LIGMA_IS_PICKABLE (iter->data), NULL);
 
-      if (GIMP_IS_ITEM (iter->data))
-        g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+      if (LIGMA_IS_ITEM (iter->data))
+        g_return_val_if_fail (ligma_item_is_attached (iter->data), NULL);
 
       if (! image)
-        image = gimp_pickable_get_image (iter->data);
+        image = ligma_pickable_get_image (iter->data);
       else
-        g_return_val_if_fail (image == gimp_pickable_get_image (iter->data), NULL);
+        g_return_val_if_fail (image == ligma_pickable_get_image (iter->data), NULL);
     }
 
   if (g_list_length (pickables) == 1)
@@ -706,12 +706,12 @@ gimp_selection_extract (GimpSelection *selection,
   else
     {
       for (iter = pickables; iter; iter = iter->next)
-        g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+        g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), NULL);
 
-      temp_image = gimp_image_new_from_drawables (image->gimp, pickables, TRUE, FALSE);
-      selection  = GIMP_SELECTION (gimp_image_get_mask (temp_image));
+      temp_image = ligma_image_new_from_drawables (image->ligma, pickables, TRUE, FALSE);
+      selection  = LIGMA_SELECTION (ligma_image_get_mask (temp_image));
 
-      pickable   = GIMP_PICKABLE (temp_image);
+      pickable   = LIGMA_PICKABLE (temp_image);
 
       /* Don't cut from the temporary image. */
       cut_image = FALSE;
@@ -723,16 +723,16 @@ gimp_selection_extract (GimpSelection *selection,
    *  a small layer and expect it to work, even though there is no
    *  actual selection mask
    */
-  if (GIMP_IS_DRAWABLE (pickable))
+  if (LIGMA_IS_DRAWABLE (pickable))
     {
-      non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
+      non_empty = ligma_item_mask_bounds (LIGMA_ITEM (pickable),
                                          &x1, &y1, &x2, &y2);
 
-      gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (pickable), &off_x, &off_y);
     }
   else
     {
-      non_empty = gimp_item_bounds (GIMP_ITEM (selection),
+      non_empty = ligma_item_bounds (LIGMA_ITEM (selection),
                                     &x1, &y1, &x2, &y2);
       x2 += x1;
       y2 += y1;
@@ -746,7 +746,7 @@ gimp_selection_extract (GimpSelection *selection,
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Unable to cut or copy because the "
                              "selected region is empty."));
 
@@ -762,13 +762,13 @@ gimp_selection_extract (GimpSelection *selection,
   if (non_empty)
     add_alpha = TRUE;
 
-  src_format = gimp_pickable_get_format (pickable);
+  src_format = ligma_pickable_get_format (pickable);
 
   /*  How many bytes in the temp buffer?  */
   if (babl_format_is_palette (src_format) && ! keep_indexed)
     {
-      dest_format = gimp_image_get_format (image, GIMP_RGB,
-                                           gimp_image_get_precision (image),
+      dest_format = ligma_image_get_format (image, LIGMA_RGB,
+                                           ligma_image_get_precision (image),
                                            add_alpha ||
                                            babl_format_has_alpha (src_format),
                                            babl_format_get_space (src_format));
@@ -776,21 +776,21 @@ gimp_selection_extract (GimpSelection *selection,
   else
     {
       if (add_alpha)
-        dest_format = gimp_pickable_get_format_with_alpha (pickable);
+        dest_format = ligma_pickable_get_format_with_alpha (pickable);
       else
         dest_format = src_format;
     }
 
-  gimp_pickable_flush (pickable);
+  ligma_pickable_flush (pickable);
 
-  src_buffer = gimp_pickable_get_buffer (pickable);
+  src_buffer = ligma_pickable_get_buffer (pickable);
 
   /*  Allocate the temp buffer  */
   dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                  dest_format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
-  gimp_gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+  ligma_gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                          GEGL_ABYSS_NONE,
                          dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
@@ -800,9 +800,9 @@ gimp_selection_extract (GimpSelection *selection,
 
       GeglBuffer *mask_buffer;
 
-      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
+      mask_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (selection));
 
-      gimp_gegl_apply_opacity (dest_buffer, NULL, NULL, dest_buffer,
+      ligma_gegl_apply_opacity (dest_buffer, NULL, NULL, dest_buffer,
                                mask_buffer,
                                - (off_x + x1),
                                - (off_y + y1),
@@ -810,7 +810,7 @@ gimp_selection_extract (GimpSelection *selection,
 
       if (cut_image)
         {
-          gimp_drawable_edit_clear (GIMP_DRAWABLE (pickable), context);
+          ligma_drawable_edit_clear (LIGMA_DRAWABLE (pickable), context);
         }
     }
   else if (cut_image)
@@ -818,19 +818,19 @@ gimp_selection_extract (GimpSelection *selection,
       /*  If we're cutting without selection, remove either the layer
        *  (or floating selection), the layer mask, or the channel
        */
-      if (GIMP_IS_LAYER (pickable))
+      if (LIGMA_IS_LAYER (pickable))
         {
-          gimp_image_remove_layer (image, GIMP_LAYER (pickable),
+          ligma_image_remove_layer (image, LIGMA_LAYER (pickable),
                                    TRUE, NULL);
         }
-      else if (GIMP_IS_LAYER_MASK (pickable))
+      else if (LIGMA_IS_LAYER_MASK (pickable))
         {
-          gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
-                                 GIMP_MASK_DISCARD, TRUE);
+          ligma_layer_apply_mask (ligma_layer_mask_get_layer (LIGMA_LAYER_MASK (pickable)),
+                                 LIGMA_MASK_DISCARD, TRUE);
         }
-      else if (GIMP_IS_CHANNEL (pickable))
+      else if (LIGMA_IS_CHANNEL (pickable))
         {
-          gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
+          ligma_image_remove_channel (image, LIGMA_CHANNEL (pickable),
                                      TRUE, NULL);
         }
     }
@@ -844,84 +844,84 @@ gimp_selection_extract (GimpSelection *selection,
   return dest_buffer;
 }
 
-GimpLayer *
-gimp_selection_float (GimpSelection *selection,
+LigmaLayer *
+ligma_selection_float (LigmaSelection *selection,
                       GList         *drawables,
-                      GimpContext   *context,
+                      LigmaContext   *context,
                       gboolean       cut_image,
                       gint           off_x,
                       gint           off_y,
                       GError       **error)
 {
-  GimpImage        *image;
-  GimpLayer        *layer;
+  LigmaImage        *image;
+  LigmaLayer        *layer;
   GeglBuffer       *buffer;
-  GimpColorProfile *profile;
-  GimpImage        *temp_image = NULL;
+  LigmaColorProfile *profile;
+  LigmaImage        *temp_image = NULL;
   const Babl       *format     = NULL;
   GList            *iter;
   gint              x1, y1;
   gint              x2, y2;
 
-  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_SELECTION (selection), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (iter->data), NULL);
 
       if (! format)
-        format = gimp_drawable_get_format_with_alpha (iter->data);
+        format = ligma_drawable_get_format_with_alpha (iter->data);
       else
-        g_return_val_if_fail (format == gimp_drawable_get_format_with_alpha (iter->data),
+        g_return_val_if_fail (format == ligma_drawable_get_format_with_alpha (iter->data),
                               NULL);
     }
 
-  image = gimp_item_get_image (GIMP_ITEM (selection));
+  image = ligma_item_get_image (LIGMA_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
   for (iter = drawables; iter; iter = iter->next)
     {
-      if (gimp_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) &&
+      if (ligma_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) &&
           x1 != x2 && y1 != y2)
         break;
     }
   if (iter == NULL)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot float selection because the selected "
                              "region is empty."));
       return NULL;
     }
 
   /*  Start an undo group  */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_FS_FLOAT,
                                C_("undo-type", "Float Selection"));
 
   /*  Cut or copy the selected region  */
-  buffer = gimp_selection_extract (selection, drawables, context,
+  buffer = ligma_selection_extract (selection, drawables, context,
                                    cut_image, FALSE, TRUE,
                                    &x1, &y1, NULL);
 
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawables->data));
+  profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (drawables->data));
 
   /*  Clear the selection  */
-  gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
+  ligma_channel_clear (LIGMA_CHANNEL (selection), NULL, TRUE);
 
   /* Create a new layer from the buffer, using the drawables' type
    *  because it may be different from the image's type if we cut from
    *  a channel or layer mask
    */
-  layer = gimp_layer_new_from_gegl_buffer (buffer, image, format,
+  layer = ligma_layer_new_from_gegl_buffer (buffer, image, format,
                                            _("Floated Layer"),
-                                           GIMP_OPACITY_OPAQUE,
-                                           gimp_image_get_default_new_layer_mode (image),
+                                           LIGMA_OPACITY_OPAQUE,
+                                           ligma_image_get_default_new_layer_mode (image),
                                            profile);
 
   /*  Set the offsets  */
-  gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);
+  ligma_item_set_offset (LIGMA_ITEM (layer), x1 + off_x, y1 + off_y);
 
   /*  Free the temp buffer  */
   g_object_unref (buffer);
@@ -930,10 +930,10 @@ gimp_selection_float (GimpSelection *selection,
   floating_sel_attach (layer, drawables->data);
 
   /*  End an undo group  */
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   /*  invalidate the image's boundary variables  */
-  GIMP_CHANNEL (selection)->boundary_known = FALSE;
+  LIGMA_CHANNEL (selection)->boundary_known = FALSE;
 
   if (temp_image)
     g_object_unref (temp_image);

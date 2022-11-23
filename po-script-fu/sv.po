@@ -1,4 +1,4 @@
-# Swedish messages for GIMP Script-Fu.
+# Swedish messages for LIGMA Script-Fu.
 # Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2022 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-11-12 21:38+0000\n"
 "PO-Revision-Date: 2022-11-13 00:13+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
@@ -30,8 +30,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Interaktiv konsol för Script-Fu-utveckling"
 
 #: plug-ins/script-fu/script-fu.c:310
-msgid "_GIMP Online"
-msgstr "_GIMP på nätet"
+msgid "_LIGMA Online"
+msgstr "_LIGMA på nätet"
 
 #: plug-ins/script-fu/script-fu.c:311
 msgid "_User Manual"
@@ -70,8 +70,8 @@ msgid "_Beveled Pattern"
 msgstr "Av_fasat mönster"
 
 #: plug-ins/script-fu/script-fu.c:332
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: plug-ins/script-fu/script-fu.c:335
 msgid "Alpha to _Logo"
@@ -780,88 +780,88 @@ msgstr "Skuggvikt (%)"
 msgid "Flatten image"
 msgstr "Platta till bilden"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Användning av _banor"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/ligma-online.scm:60
+#: plug-ins/script-fu/scripts/ligma-online.scm:73
+#: plug-ins/script-fu/scripts/ligma-online.scm:86
+#: plug-ins/script-fu/scripts/ligma-online.scm:99
+#: plug-ins/script-fu/scripts/ligma-online.scm:112
+#: plug-ins/script-fu/scripts/ligma-online.scm:125
+#: plug-ins/script-fu/scripts/ligma-online.scm:138
+#: plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Bokmärke till användarhandboken"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Förbered dina bilder för webben"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "Arbeta med digital_kamerabilder"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Skapa, öppna och spara _filer"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Grundläggande koncept"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Hur man använder _dialogrutor"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Rita _enkla objekt"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Skapa och använd _markeringar"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Huvudwebbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Bokmärke till GIMP:s webbplats"
+#: plug-ins/script-fu/scripts/ligma-online.scm:191
+#: plug-ins/script-fu/scripts/ligma-online.scm:204
+#: plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Bokmärke till LIGMA:s webbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Webbplats för _utvecklare"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "Färd_plan"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Bokmärke till GIMP:s färdplan"
+#: plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Bokmärke till LIGMA:s färdplan"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Bokmärke till GIMP:s wiki"
+#: plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Bokmärke till LIGMA:s wiki"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Felrapporter och önskemål om funktionalitet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Bokmärke till GIMP:s felrapporteringssystem"
+#: plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Bokmärke till LIGMA:s felrapporteringssystem"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "Webbplats för _användarhandbok"
 
@@ -1544,11 +1544,11 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Renderar spiro"
 
-#~ msgid "_Spyrogimp (older script-fu version)..."
-#~ msgstr "_Spirogimp (äldre script-fu-version)…"
+#~ msgid "_Spyroligma (older script-fu version)..."
+#~ msgstr "_Spiroligma (äldre script-fu-version)…"
 
-#~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
-#~ msgstr "Denna procedur är föråldrad! Använd ”plug-in-spyrogimp” istället."
+#~ msgid "This procedure is deprecated! Use 'plug-in-spyroligma' instead."
+#~ msgstr "Denna procedur är föråldrad! Använd ”plug-in-spyroligma” istället."
 
 #~ msgid "Type"
 #~ msgstr "Typ"
@@ -1631,8 +1631,8 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "Gradient: Loop Triangle"
 #~ msgstr "Gradient: repetera triangel"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spirogimp…"
+#~ msgid "_Spyroligma..."
+#~ msgstr "_Spiroligma…"
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
@@ -2407,11 +2407,11 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "Autocrop"
 #~ msgstr "Beskär automatiskt"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr "Skapa en bild med en stor rubrik med webbsidetemat från gimp.org"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
+#~ msgstr "Skapa en bild med en stor rubrik med webbsidetemat från ligma.org"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr "Skapa en bild med en liten rubrik med webbsidetemat från gimp.org"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
+#~ msgstr "Skapa en bild med en liten rubrik med webbsidetemat från ligma.org"
 
 #~ msgid "Dark color"
 #~ msgstr "Mörk färg"
@@ -2438,30 +2438,30 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "_Liten rubrik..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
 #~ "Skapa en bild av en rubrik för en tubknappsetikett med webbsidetemat från "
-#~ "gimp.org"
+#~ "ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "Skapa en bild av en tubknappsetikett med webbsidetemat från gimp.org"
+#~ "Skapa en bild av en tubknappsetikett med webbsidetemat från ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Skapa en bild av en andranivås tubknappsetikett med webbsidetemat från "
-#~ "gimp.org"
+#~ "ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
 #~ "Skapa en bild av en tredjenivås tubknappsetikett med webbsidetemat från "
-#~ "gimp.org"
+#~ "ligma.org"
 
 #~ msgid "T_ube Sub-Button Label..."
 #~ msgstr "T_ub underknappsetikett..."
@@ -2683,11 +2683,11 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "Additional Information"
 #~ msgstr "Mer information"
 
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "Intern GIMP-procedur"
+#~ msgid "Internal LIGMA procedure"
+#~ msgstr "Intern LIGMA-procedur"
 
-#~ msgid "GIMP Plug-In"
-#~ msgstr "GIMP insticksmodul"
+#~ msgid "LIGMA Plug-In"
+#~ msgstr "LIGMA insticksmodul"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "Tillfällig procedur"
@@ -2746,8 +2746,8 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "_Font Map..."
 #~ msgstr "_Typsnittskarta..."
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Gimp.org"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
+#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Ligma.org"
 
 #~ msgid "Blend gradient (Text)"
 #~ msgstr "Färgtoningsskala (text)"
@@ -2803,8 +2803,8 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "_Unsharp Mask..."
 #~ msgstr "_Oskarp mask..."
 
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Toolbox>/Hjälp/GIMP på nätet"
+#~ msgid "<Toolbox>/Help/The LIGMA Online"
+#~ msgstr "<Toolbox>/Hjälp/LIGMA på nätet"
 
 #~ msgid "Cubic"
 #~ msgstr "Kubisk"
@@ -3001,37 +3001,37 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "<Image>/Script-Fu/Dekor/_Suddig kant..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Small Header..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/iKlassisk.Gimp.org/_Liten "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/iKlassisk.Ligma.org/_Liten "
 #~ "rubrik..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/T_ube Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Gimp.org/Etikett för "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Ligma.org/Etikett för "
 #~ "_rörunderknapp..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/Tub_e Sub-Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Gimp.org/Etikett för "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Ligma.org/Etikett för "
 #~ "r_örunderunderknapp..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_General Tube "
 #~ "Labels..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Gimp.org/_Generella "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Ligma.org/_Generella "
 #~ "röretiketter..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Tube Button "
 #~ "Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Gimp.org/Etikett för "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Klassisk.Ligma.org/Etikett för "
 #~ "_rörknapp..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -3142,8 +3142,8 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
 #~ msgstr "<Image>/Script-Fu/Animatörer/_Roterande jordglob..."
 
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-#~ msgstr "<Image>/Script-Fu/Rendering/_Spirogimp..."
+#~ msgid "<Image>/Script-Fu/Render/_Spyroligma..."
+#~ msgstr "<Image>/Script-Fu/Rendering/_Spiroligma..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
 #~ msgstr "<Image>/Script-Fu/Alfa till logotyp/Stjärn_utbrott..."
@@ -3193,11 +3193,11 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "<Image>/Script-Fu/Alchemy/_Weave..."
 #~ msgstr "<Image>/Script-Fu/Alkemi/_Väv..."
 
-#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-#~ msgstr "<Toolbox>/Hjälp/GIMP på nätet/Register över insticksmoduler"
+#~ msgid "<Toolbox>/Help/The LIGMA Online/Plug-in _Registry"
+#~ msgstr "<Toolbox>/Hjälp/LIGMA på nätet/Register över insticksmoduler"
 
-#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-#~ msgstr "<Toolbox>/Hjälp/GIMP på nätet/_Utvecklarnas webbsajt"
+#~ msgid "<Toolbox>/Help/The LIGMA Online/_Developer Web Site"
+#~ msgstr "<Toolbox>/Hjälp/LIGMA på nätet/_Utvecklarnas webbsajt"
 
 #~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 #~ msgstr "<Image>/Script-Fu/Skugga/_Xach-effekt..."
@@ -3303,47 +3303,47 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Tillägg/Webbläsare/Frågor och svar för utvecklare"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Fel i GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Bugs"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Fel i LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP-manual"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Manual"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA-manual"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP-nyheter"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA News"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA-nyheter"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Kom igång med GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Tutorials"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Kom igång med LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Dokumentation"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Documenation"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Dokumentation"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Hämta"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Download"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Hämta"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/GIMP-grafik"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/LIGMA Art"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/LIGMA-grafik"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/GTK"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/GTK"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Länkar"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Links"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Länkar"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Sändlistor"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Sändlistor"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Resurser"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Resources"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Resurser"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/The LIGMA"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Ligma-Savvy.com"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Ligma-Savvy.com"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Förstå GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the LIGMA"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/Förstå LIGMA"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 #~ msgstr "<Toolbox>/Tillägg/Webbläsare/Frågor och svar för användare"
@@ -3513,35 +3513,35 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
 #~ msgstr "<Image>/Script-Fu/Dekor/Suddig kant..."
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Stor rubrik..."
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/Big Header..."
+#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Stor rubrik..."
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Liten rubrik..."
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/Small Header..."
+#~ msgstr "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Liten rubrik..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/Tube Sub-Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Etikett för "
 #~ "rörunderknapp..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/Tube Sub-Sub-Button "
 #~ "Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Etikett för "
 #~ "rörunderunderknapp..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/General Tube Labels..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Generella "
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Generella "
 #~ "röretiketter..."
 
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Ligma.Org/Tube Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Gimp.org/Etikett för rörknapp..."
+#~ "<Toolbox>/Tillägg/Script-Fu/Webbsideteman/Ligma.org/Etikett för rörknapp..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
 #~ msgstr "<Image>/Script-Fu/Alfa till logotyp/Glansig..."
@@ -3712,5 +3712,5 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "NOT SET"
 #~ msgstr "INTE SATT"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentation"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Dokumentation"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Documentation"
+#~ msgstr "<Toolbox>/Tillägg/Webbläsare/LIGMA.ORG/Dokumentation"

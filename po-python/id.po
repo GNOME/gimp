@@ -1,13 +1,13 @@
-# Indonesian translation of gimp-python
-# Copyright (C) 2009 THE gimp'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Indonesian translation of ligma-python
+# Copyright (C) 2009 THE ligma'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Imam Musthaqim <userindesign@gmail.com>, 2009.
 # Andika Triwidada <andika@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
 "PO-Revision-Date: 2020-09-06 16:25+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
@@ -257,8 +257,8 @@ msgid "Python _Console"
 msgstr "_Konsol Python"
 
 #: ../plug-ins/python/python-console/python-console.py:281
-msgid "Interactive GIMP Python interpreter"
-msgstr "Penerjemah Python GIMP Interaktif"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Penerjemah Python LIGMA Interaktif"
 
 #: ../plug-ins/python/spyro-plus.py:60
 msgid "Spyro Layer"
@@ -628,8 +628,8 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1740
 #, fuzzy
-msgid "Spyrogimp"
-msgstr "Spyrogimp (Di dekat Spyrogimp)"
+msgid "Spyroligma"
+msgstr "Spyroligma (Di dekat Spyroligma)"
 
 #: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
 #, fuzzy
@@ -660,5 +660,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Silakan tunggu : Rendering Pola"
 
 #: ../plug-ins/python/spyro-plus.py:2286
-msgid "Spyrogimp..."
-msgstr "Spyrogimp..."
+msgid "Spyroligma..."
+msgstr "Spyroligma..."

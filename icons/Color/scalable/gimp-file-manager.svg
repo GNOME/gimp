@@ -14,7 +14,7 @@
    id="svg2"
    viewBox="0 0 16 15.999999"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-file-manager.svg">
+   sodipodi:docname="ligma-file-manager.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -53,7 +53,7 @@
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -222,7 +222,7 @@
         <g
            style="enable-background:new"
            transform="matrix(0.18716422,0,0,0.17557411,341.45688,-65.660281)"
-           id="gimp-prefs-default-comment" />
+           id="ligma-prefs-default-comment" />
       </g>
       <path
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient5780);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient5782);stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"

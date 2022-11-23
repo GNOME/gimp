@@ -11,7 +11,7 @@
    id="svg2"
    viewBox="0 0 256.00003 256.00043"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-undo-history.svg"
+   sodipodi:docname="ligma-undo-history.svg"
    height="16"
    width="16">
   <sodipodi:namedview
@@ -53,7 +53,7 @@
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,38 +23,38 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-batch.h"
-#include "gimpparamspecs.h"
+#include "ligma.h"
+#include "ligma-batch.h"
+#include "ligmaparamspecs.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligmaprocedure.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void  gimp_batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
+static void  ligma_batch_exit_after_callback (Ligma          *ligma) G_GNUC_NORETURN;
 
-static gint  gimp_batch_run_cmd             (Gimp          *gimp,
+static gint  ligma_batch_run_cmd             (Ligma          *ligma,
                                              const gchar   *proc_name,
-                                             GimpProcedure *procedure,
-                                             GimpRunMode    run_mode,
+                                             LigmaProcedure *procedure,
+                                             LigmaRunMode    run_mode,
                                              const gchar   *cmd);
 
 
 gint
-gimp_batch_run (Gimp         *gimp,
+ligma_batch_run (Ligma         *ligma,
                 const gchar  *batch_interpreter,
                 const gchar **batch_commands)
 {
-  GimpProcedure *eval_proc;
+  LigmaProcedure *eval_proc;
   GSList        *batch_procedures;
   GSList        *iter;
   gulong         exit_id;
@@ -63,7 +63,7 @@ gimp_batch_run (Gimp         *gimp,
   if (! batch_commands || ! batch_commands[0])
     return retval;
 
-  batch_procedures = gimp_plug_in_manager_get_batch_procedures (gimp->plug_in_manager);
+  batch_procedures = ligma_plug_in_manager_get_batch_procedures (ligma->plug_in_manager);
   if (g_slist_length (batch_procedures) == 0)
     {
       g_message (_("No batch interpreters are available. "
@@ -74,15 +74,15 @@ gimp_batch_run (Gimp         *gimp,
 
   if (! batch_interpreter)
     {
-      batch_interpreter = g_getenv ("GIMP_BATCH_INTERPRETER");
+      batch_interpreter = g_getenv ("LIGMA_BATCH_INTERPRETER");
 
       if (! batch_interpreter)
         {
           if (g_slist_length (batch_procedures) == 1)
             {
-              batch_interpreter = gimp_object_get_name (batch_procedures->data);;
+              batch_interpreter = ligma_object_get_name (batch_procedures->data);;
 
-              if (gimp->be_verbose)
+              if (ligma->be_verbose)
                 g_printerr (_("No batch interpreter specified, using "
                               "'%s'.\n"), batch_interpreter);
             }
@@ -95,14 +95,14 @@ gimp_batch_run (Gimp         *gimp,
 
               for (iter = batch_procedures; iter; iter = iter->next)
                 {
-                  GimpPlugInProcedure *proc = iter->data;
+                  LigmaPlugInProcedure *proc = iter->data;
                   gchar               *locale_name;
 
                   locale_name = g_locale_from_utf8 (proc->batch_interpreter_name,
                                                     -1, NULL, NULL, NULL);
 
                   g_print ("- %s (%s)\n",
-                           gimp_object_get_name (iter->data),
+                           ligma_object_get_name (iter->data),
                            locale_name ? locale_name : proc->batch_interpreter_name);
 
                   g_free (locale_name);
@@ -117,7 +117,7 @@ gimp_batch_run (Gimp         *gimp,
     }
   for (iter = batch_procedures; iter; iter = iter->next)
     {
-      if (g_strcmp0 (gimp_object_get_name (iter->data),
+      if (g_strcmp0 (ligma_object_get_name (iter->data),
                      batch_interpreter) == 0)
         break;
     }
@@ -133,14 +133,14 @@ gimp_batch_run (Gimp         *gimp,
 
       for (iter = batch_procedures; iter; iter = iter->next)
         {
-          GimpPlugInProcedure *proc = iter->data;
+          LigmaPlugInProcedure *proc = iter->data;
           gchar               *locale_name;
 
           locale_name = g_locale_from_utf8 (proc->batch_interpreter_name,
                                             -1, NULL, NULL, NULL);
 
           g_print ("- %s (%s)\n",
-                   gimp_object_get_name (iter->data),
+                   ligma_object_get_name (iter->data),
                    locale_name ? locale_name : proc->batch_interpreter_name);
 
           g_free (locale_name);
@@ -152,11 +152,11 @@ gimp_batch_run (Gimp         *gimp,
       return retval;
     }
 
-  exit_id = g_signal_connect_after (gimp, "exit",
-                                    G_CALLBACK (gimp_batch_exit_after_callback),
+  exit_id = g_signal_connect_after (ligma, "exit",
+                                    G_CALLBACK (ligma_batch_exit_after_callback),
                                     NULL);
 
-  eval_proc = gimp_pdb_lookup_procedure (gimp->pdb, batch_interpreter);
+  eval_proc = ligma_pdb_lookup_procedure (ligma->pdb, batch_interpreter);
   if (eval_proc)
     {
       gint i;
@@ -164,8 +164,8 @@ gimp_batch_run (Gimp         *gimp,
       retval = EXIT_SUCCESS;
       for (i = 0; batch_commands[i]; i++)
         {
-          retval = gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
-                                       GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+          retval = ligma_batch_run_cmd (ligma, batch_interpreter, eval_proc,
+                                       LIGMA_RUN_NONINTERACTIVE, batch_commands[i]);
 
           /* In case of several commands, stop and return last
            * failed command.
@@ -185,22 +185,22 @@ gimp_batch_run (Gimp         *gimp,
                    "Batch mode disabled."), batch_interpreter);
     }
 
-  g_signal_handler_disconnect (gimp, exit_id);
+  g_signal_handler_disconnect (ligma, exit_id);
 
   return retval;
 }
 
 
 /*
- * The purpose of this handler is to exit GIMP cleanly when the batch
- * procedure calls the gimp-exit procedure. Without this callback, the
+ * The purpose of this handler is to exit LIGMA cleanly when the batch
+ * procedure calls the ligma-exit procedure. Without this callback, the
  * message "batch command experienced an execution error" would appear
- * and gimp would hang forever.
+ * and ligma would hang forever.
  */
 static void
-gimp_batch_exit_after_callback (Gimp *gimp)
+ligma_batch_exit_after_callback (Ligma *ligma)
 {
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   gegl_exit ();
@@ -209,48 +209,48 @@ gimp_batch_exit_after_callback (Gimp *gimp)
 }
 
 static inline gboolean
-GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
+LIGMA_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
 {
   return (G_IS_PARAM_SPEC_ENUM (pspec) &&
-          pspec->value_type == GIMP_TYPE_RUN_MODE);
+          pspec->value_type == LIGMA_TYPE_RUN_MODE);
 }
 
 static gint
-gimp_batch_run_cmd (Gimp          *gimp,
+ligma_batch_run_cmd (Ligma          *ligma,
                     const gchar   *proc_name,
-                    GimpProcedure *procedure,
-                    GimpRunMode    run_mode,
+                    LigmaProcedure *procedure,
+                    LigmaRunMode    run_mode,
                     const gchar   *cmd)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GError         *error  = NULL;
   gint            i      = 0;
   gint            retval = EXIT_SUCCESS;
 
-  args = gimp_procedure_get_arguments (procedure);
+  args = ligma_procedure_get_arguments (procedure);
 
   if (procedure->num_args > i &&
-      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[i]))
+      LIGMA_IS_PARAM_SPEC_RUN_MODE (procedure->args[i]))
     {
-      g_value_set_enum (gimp_value_array_index (args, i++), run_mode);
+      g_value_set_enum (ligma_value_array_index (args, i++), run_mode);
     }
 
   if (procedure->num_args > i &&
       G_IS_PARAM_SPEC_STRING (procedure->args[i]))
     {
-      g_value_set_static_string (gimp_value_array_index (args, i++), cmd);
+      g_value_set_static_string (ligma_value_array_index (args, i++), cmd);
     }
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                             gimp_get_user_context (gimp),
+    ligma_pdb_execute_procedure_by_name_args (ligma->pdb,
+                                             ligma_get_user_context (ligma),
                                              NULL, &error,
                                              proc_name, args);
 
-  switch (g_value_get_enum (gimp_value_array_index (return_vals, 0)))
+  switch (g_value_get_enum (ligma_value_array_index (return_vals, 0)))
     {
-    case GIMP_PDB_EXECUTION_ERROR:
+    case LIGMA_PDB_EXECUTION_ERROR:
       /* Using Linux's standard exit code as found in /usr/include/sysexits.h
        * Since other platforms may not have the header, I simply
        * hardcode the few cases.
@@ -267,7 +267,7 @@ gimp_batch_run_cmd (Gimp          *gimp,
         }
       break;
 
-    case GIMP_PDB_CALLING_ERROR:
+    case LIGMA_PDB_CALLING_ERROR:
       retval = 64; /* EX_USAGE - command line usage error */
       if (error)
         {
@@ -280,25 +280,25 @@ gimp_batch_run_cmd (Gimp          *gimp,
         }
       break;
 
-    case GIMP_PDB_SUCCESS:
+    case LIGMA_PDB_SUCCESS:
       retval = EXIT_SUCCESS;
       g_printerr ("batch command executed successfully\n");
       break;
 
-    case GIMP_PDB_CANCEL:
+    case LIGMA_PDB_CANCEL:
       /* Not in sysexits.h, but usually used for 'Script terminated by
        * Control-C'. See: https://tldp.org/LDP/abs/html/exitcodes.html
        */
       retval = 130;
       break;
 
-    case GIMP_PDB_PASS_THROUGH:
+    case LIGMA_PDB_PASS_THROUGH:
       retval = EXIT_FAILURE; /* Catchall. */
       break;
     }
 
-  gimp_value_array_unref (return_vals);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (return_vals);
+  ligma_value_array_unref (args);
 
   if (error)
     g_error_free (error);

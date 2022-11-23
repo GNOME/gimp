@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpimage.h"
-#include "gimpdrawable.h"
-#include "gimpdrawableundo.h"
+#include "ligma-memsize.h"
+#include "ligmaimage.h"
+#include "ligmadrawable.h"
+#include "ligmadrawableundo.h"
 
 
 enum
@@ -39,89 +39,89 @@ enum
 };
 
 
-static void     gimp_drawable_undo_constructed  (GObject             *object);
-static void     gimp_drawable_undo_set_property (GObject             *object,
+static void     ligma_drawable_undo_constructed  (GObject             *object);
+static void     ligma_drawable_undo_set_property (GObject             *object,
                                                  guint                property_id,
                                                  const GValue        *value,
                                                  GParamSpec          *pspec);
-static void     gimp_drawable_undo_get_property (GObject             *object,
+static void     ligma_drawable_undo_get_property (GObject             *object,
                                                  guint                property_id,
                                                  GValue              *value,
                                                  GParamSpec          *pspec);
 
-static gint64   gimp_drawable_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_drawable_undo_get_memsize  (LigmaObject          *object,
                                                  gint64              *gui_size);
 
-static void     gimp_drawable_undo_pop          (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode,
-                                                 GimpUndoAccumulator *accum);
-static void     gimp_drawable_undo_free         (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode);
+static void     ligma_drawable_undo_pop          (LigmaUndo            *undo,
+                                                 LigmaUndoMode         undo_mode,
+                                                 LigmaUndoAccumulator *accum);
+static void     ligma_drawable_undo_free         (LigmaUndo            *undo,
+                                                 LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpDrawableUndo, gimp_drawable_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaDrawableUndo, ligma_drawable_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_drawable_undo_parent_class
+#define parent_class ligma_drawable_undo_parent_class
 
 
 static void
-gimp_drawable_undo_class_init (GimpDrawableUndoClass *klass)
+ligma_drawable_undo_class_init (LigmaDrawableUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_drawable_undo_constructed;
-  object_class->set_property     = gimp_drawable_undo_set_property;
-  object_class->get_property     = gimp_drawable_undo_get_property;
+  object_class->constructed      = ligma_drawable_undo_constructed;
+  object_class->set_property     = ligma_drawable_undo_set_property;
+  object_class->get_property     = ligma_drawable_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_drawable_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_drawable_undo_get_memsize;
 
-  undo_class->pop                = gimp_drawable_undo_pop;
-  undo_class->free               = gimp_drawable_undo_free;
+  undo_class->pop                = ligma_drawable_undo_pop;
+  undo_class->free               = ligma_drawable_undo_free;
 
   g_object_class_install_property (object_class, PROP_BUFFER,
                                    g_param_spec_object ("buffer", NULL, NULL,
                                                         GEGL_TYPE_BUFFER,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_int ("y", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     0, LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_drawable_undo_init (GimpDrawableUndo *undo)
+ligma_drawable_undo_init (LigmaDrawableUndo *undo)
 {
 }
 
 static void
-gimp_drawable_undo_constructed (GObject *object)
+ligma_drawable_undo_constructed (GObject *object)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (object);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
-  gimp_assert (GEGL_IS_BUFFER (drawable_undo->buffer));
+  ligma_assert (LIGMA_IS_DRAWABLE (LIGMA_ITEM_UNDO (object)->item));
+  ligma_assert (GEGL_IS_BUFFER (drawable_undo->buffer));
 }
 
 static void
-gimp_drawable_undo_set_property (GObject      *object,
+ligma_drawable_undo_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (object);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (object);
 
   switch (property_id)
     {
@@ -142,12 +142,12 @@ gimp_drawable_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_drawable_undo_get_property (GObject    *object,
+ligma_drawable_undo_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (object);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (object);
 
   switch (property_id)
     {
@@ -168,40 +168,40 @@ gimp_drawable_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_drawable_undo_get_memsize (GimpObject *object,
+ligma_drawable_undo_get_memsize (LigmaObject *object,
                                 gint64     *gui_size)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (object);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (object);
   gint64            memsize       = 0;
 
-  memsize += gimp_gegl_buffer_get_memsize (drawable_undo->buffer);
+  memsize += ligma_gegl_buffer_get_memsize (drawable_undo->buffer);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_drawable_undo_pop (GimpUndo            *undo,
-                        GimpUndoMode         undo_mode,
-                        GimpUndoAccumulator *accum)
+ligma_drawable_undo_pop (LigmaUndo            *undo,
+                        LigmaUndoMode         undo_mode,
+                        LigmaUndoAccumulator *accum)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (undo);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  gimp_drawable_swap_pixels (GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item),
+  ligma_drawable_swap_pixels (LIGMA_DRAWABLE (LIGMA_ITEM_UNDO (undo)->item),
                              drawable_undo->buffer,
                              drawable_undo->x,
                              drawable_undo->y);
 }
 
 static void
-gimp_drawable_undo_free (GimpUndo     *undo,
-                         GimpUndoMode  undo_mode)
+ligma_drawable_undo_free (LigmaUndo     *undo,
+                         LigmaUndoMode  undo_mode)
 {
-  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (undo);
+  LigmaDrawableUndo *drawable_undo = LIGMA_DRAWABLE_UNDO (undo);
 
   g_clear_object (&drawable_undo->buffer);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

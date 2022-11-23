@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,20 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMPRESSIONIST_H
-#define __GIMPRESSIONIST_H
+#ifndef __LIGMARESSIONIST_H
+#define __LIGMARESSIONIST_H
 
 /* Includes necessary for the correct processing of this file. */
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "ppmtool.h"
 /* Defines */
 
-#define PLUG_IN_PROC    "plug-in-gimpressionist"
+#define PLUG_IN_PROC    "plug-in-ligmaressionist"
 #define PLUG_IN_VERSION "v1.0, November 2003"
-#define PLUG_IN_BINARY  "gimpressionist"
-#define PLUG_IN_ROLE    "gimp-gimpressionist"
+#define PLUG_IN_BINARY  "ligmaressionist"
+#define PLUG_IN_ROLE    "ligma-ligmaressionist"
 
 #define PREVIEWSIZE     150
 #define MAXORIENTVECT   50
@@ -70,7 +70,7 @@ typedef struct
   int        run;
   char       selected_brush[200];
   char       selected_paper[200];
-  GimpRGB    color;
+  LigmaRGB    color;
   int        general_paint_edges;
   int        place_type;
   vector_t   orient_vectors[MAXORIENTVECT];
@@ -101,7 +101,7 @@ typedef struct
 
   int        color_type;
   double     color_noise;
-} gimpressionist_vals_t;
+} ligmaressionist_vals_t;
 
 /* Enumerations */
 
@@ -121,7 +121,7 @@ enum PRESETS_LIST_COLUMN_ENUM
 
 /* Globals */
 
-extern gimpressionist_vals_t pcvals;
+extern ligmaressionist_vals_t pcvals;
 
 
 /* Prototypes */
@@ -160,7 +160,7 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
 
 
 void set_colorbrushes (const gchar *fn);
-int  create_gimpressionist (void);
+int  create_ligmaressionist (void);
 
 double dist (double x, double y, double dx, double dy);
 
@@ -174,13 +174,13 @@ GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
                                 GtkWidget **buttons_array
                                );
 
-void gimpressionist_scale_entry_update_double (GimpLabelSpin *entry,
+void ligmaressionist_scale_entry_update_double (LigmaLabelSpin *entry,
                                                gdouble       *value);
-void gimpressionist_scale_entry_update_int    (GimpLabelSpin *entry,
+void ligmaressionist_scale_entry_update_int    (LigmaLabelSpin *entry,
                                                gint          *value);
 
 #define CLAMP_UP_TO(x, max) (CLAMP((x),(0),(max-1)))
 
-#endif /* #ifndef __GIMPRESSIONIST_H */
+#endif /* #ifndef __LIGMARESSIONIST_H */
 
 

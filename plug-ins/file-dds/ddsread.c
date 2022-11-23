@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -38,10 +38,10 @@
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include <libgimp/stdplugins-intl.h>
+#include <libligma/stdplugins-intl.h>
 
 #include "ddsread.h"
 #include "dds.h"
@@ -56,8 +56,8 @@ typedef struct
   guchar  rshift, gshift, bshift, ashift;
   guchar  rbits, gbits, bbits, abits;
   guint   rmask, gmask, bmask, amask;
-  guint   bpp, gimp_bpp;
-  guint   gimp_bps;         /* bytes per sample */
+  guint   bpp, ligma_bpp;
+  guint   ligma_bps;         /* bytes per sample */
   gint    tile_height;
   guchar *palette;
 } dds_load_info_t;
@@ -75,7 +75,7 @@ static gboolean      setup_dxgi_format (dds_header_t       *hdr,
 static gboolean      load_layer        (FILE               *fp,
                                         dds_header_t       *hdr,
                                         dds_load_info_t    *d,
-                                        GimpImage          *image,
+                                        LigmaImage          *image,
                                         guint               level,
                                         gchar              *prefix,
                                         guint              *l,
@@ -86,7 +86,7 @@ static gboolean      load_layer        (FILE               *fp,
 static gboolean      load_mipmaps      (FILE               *fp,
                                         dds_header_t       *hdr,
                                         dds_load_info_t    *d,
-                                        GimpImage          *image,
+                                        LigmaImage          *image,
                                         gchar              *prefix,
                                         guint              *l,
                                         guchar             *pixels,
@@ -97,7 +97,7 @@ static gboolean      load_mipmaps      (FILE               *fp,
 static gboolean      load_face         (FILE               *fp,
                                         dds_header_t       *hdr,
                                         dds_load_info_t    *d,
-                                        GimpImage          *image,
+                                        LigmaImage          *image,
                                         char               *prefix,
                                         guint              *l,
                                         guchar             *pixels,
@@ -107,19 +107,19 @@ static gboolean      load_face         (FILE               *fp,
                                         GError            **error);
 static guchar        color_bits        (guint               mask);
 static guchar        color_shift       (guint               mask);
-static gboolean      load_dialog       (GimpProcedure      *procedure,
+static gboolean      load_dialog       (LigmaProcedure      *procedure,
                                         GObject            *config);
 
 
-GimpPDBStatusType
+LigmaPDBStatusType
 read_dds (GFile          *file,
-          GimpImage     **ret_image,
+          LigmaImage     **ret_image,
           gboolean        interactive,
-          GimpProcedure  *procedure,
+          LigmaProcedure  *procedure,
           GObject        *config,
           GError        **error)
 {
-  GimpImage         *image = NULL;
+  LigmaImage         *image = NULL;
   guchar            *buf;
   guint              l = 0;
   guchar            *pixels;
@@ -128,18 +128,18 @@ read_dds (GFile          *file,
   dds_header_dx10_t  dx10hdr;
   dds_load_info_t    d;
   GList             *layers;
-  GimpImageBaseType  type;
-  GimpPrecision      precision;
+  LigmaImageBaseType  type;
+  LigmaPrecision      precision;
   gboolean           read_mipmaps;
   gboolean           decode_images;
   gint               i, j;
 
   if (interactive)
     {
-      gimp_ui_init ("dds");
+      ligma_ui_init ("dds");
 
       if (! load_dialog (procedure, config))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
 
   g_object_get (config,
@@ -153,11 +153,11 @@ read_dds (GFile          *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_progress_init_printf ("Loading %s:", gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf ("Loading %s:", ligma_file_get_utf8_name (file));
 
   /* read header */
   read_header (&hdr, fp);
@@ -172,14 +172,14 @@ read_dds (GFile          *file,
       if (! setup_dxgi_format (&hdr, &dx10hdr, error))
         {
           fclose (fp);
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
   if (! validate_header (&hdr, error))
     {
       fclose (fp);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* a lot of DDS images out there don't have this for some reason -_- */
@@ -239,7 +239,7 @@ read_dds (GFile          *file,
   else
     d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (16 - d.abits);
 
-  d.gimp_bps = 1; /* Most formats will be converted to 1 byte per sample */
+  d.ligma_bps = 1; /* Most formats will be converted to 1 byte per sample */
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
       switch (GETL32 (hdr.pixelfmt.fourcc))
@@ -247,18 +247,18 @@ read_dds (GFile          *file,
         case FOURCC ('A','T','I','1'):
         case FOURCC ('B','C','4','U'):
         case FOURCC ('B','C','4','S'):
-          d.bpp = d.gimp_bpp = 1;
-          type = GIMP_GRAY;
+          d.bpp = d.ligma_bpp = 1;
+          type = LIGMA_GRAY;
           break;
         case FOURCC ('A','T','I','2'):
         case FOURCC ('B','C','5','U'):
         case FOURCC ('B','C','5','S'):
-          d.bpp = d.gimp_bpp = 3;
-          type = GIMP_RGB;
+          d.bpp = d.ligma_bpp = 3;
+          type = LIGMA_RGB;
           break;
         default:
-          d.bpp = d.gimp_bpp = 4;
-          type = GIMP_RGB;
+          d.bpp = d.ligma_bpp = 4;
+          type = LIGMA_RGB;
           break;
         }
     }
@@ -270,31 +270,31 @@ read_dds (GFile          *file,
         {
           if (hdr.pixelfmt.amask == 0xf000) /* RGBA4 */
             {
-              d.gimp_bpp = 4;
-              type = GIMP_RGB;
+              d.ligma_bpp = 4;
+              type = LIGMA_RGB;
             }
           else if (hdr.pixelfmt.amask == 0xff00) /* L8A8 */
             {
-              d.gimp_bpp = 2;
-              type = GIMP_GRAY;
+              d.ligma_bpp = 2;
+              type = LIGMA_GRAY;
             }
           else if (hdr.pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
             {
               if (hdr.pixelfmt.amask == 0x8000) /* RGB5A1 */
-                d.gimp_bpp = 4;
+                d.ligma_bpp = 4;
               else
-                d.gimp_bpp = 3;
+                d.ligma_bpp = 3;
 
-              type = GIMP_RGB;
+              type = LIGMA_RGB;
             }
           else if (hdr.pixelfmt.rmask == 0xffff || /* L16 */
                    hdr.pixelfmt.gmask == 0xffff ||
                    hdr.pixelfmt.bmask == 0xffff ||
                    hdr.pixelfmt.amask == 0xffff)
             {
-              d.gimp_bpp = 2;
-              d.gimp_bps = 2;
-              type = GIMP_GRAY;
+              d.ligma_bpp = 2;
+              d.ligma_bps = 2;
+              type = LIGMA_GRAY;
             }
           else
             {
@@ -304,32 +304,32 @@ read_dds (GFile          *file,
                            hdr.pixelfmt.bpp,
                            hdr.pixelfmt.rmask, hdr.pixelfmt.gmask,
                            hdr.pixelfmt.bmask, hdr.pixelfmt.amask);
-              return GIMP_PDB_EXECUTION_ERROR;
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
         }
       else
         {
           if (hdr.pixelfmt.flags & DDPF_PALETTEINDEXED8)
             {
-              type = GIMP_INDEXED;
-              d.gimp_bpp = 1;
+              type = LIGMA_INDEXED;
+              d.ligma_bpp = 1;
             }
           else if (hdr.pixelfmt.rmask == 0xe0) /* R3G3B2 */
             {
-              type = GIMP_RGB;
-              d.gimp_bpp = 3;
+              type = LIGMA_RGB;
+              d.ligma_bpp = 3;
             }
           else if (d.bpp == 4)
             {
-              type = GIMP_RGB;
+              type = LIGMA_RGB;
               if (d.rbits > 8 || d.gbits > 8 || d.bbits > 8 || d.abits > 8)
                 {
-                  d.gimp_bps = 2;
-                  d.gimp_bpp = 8;
+                  d.ligma_bps = 2;
+                  d.ligma_bpp = 8;
                 }
               else
                 {
-                  d.gimp_bpp = d.bpp;
+                  d.ligma_bpp = d.bpp;
                 }
             }
           else
@@ -337,38 +337,38 @@ read_dds (GFile          *file,
               /* test alpha only image */
               if (d.bpp == 1 && (hdr.pixelfmt.flags & DDPF_ALPHA))
                 {
-                  d.gimp_bpp = 2;
-                  type = GIMP_GRAY;
+                  d.ligma_bpp = 2;
+                  type = LIGMA_GRAY;
                 }
               else
                 {
-                  d.gimp_bpp = d.bpp;
-                  type = (d.bpp == 1) ? GIMP_GRAY : GIMP_RGB;
+                  d.ligma_bpp = d.bpp;
+                  type = (d.bpp == 1) ? LIGMA_GRAY : LIGMA_RGB;
                 }
             }
         }
     }
 
-  if (d.gimp_bps == 2)
+  if (d.ligma_bps == 2)
     {
-      precision = GIMP_PRECISION_U16_NON_LINEAR;
+      precision = LIGMA_PRECISION_U16_NON_LINEAR;
     }
   else
     {
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      precision = LIGMA_PRECISION_U8_NON_LINEAR;
     }
 
-  image = gimp_image_new_with_precision (hdr.width, hdr.height, type, precision);
+  image = ligma_image_new_with_precision (hdr.width, hdr.height, type, precision);
 
   if (! image)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOMEM,
                    _("Could not allocate a new image."));
       fclose (fp);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
   if (hdr.pixelfmt.flags & DDPF_PALETTEINDEXED8)
     {
@@ -378,8 +378,8 @@ read_dds (GFile          *file,
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading palette."));
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
       for (i = j = 0; i < 768; i += 3, j += 4)
         {
@@ -387,12 +387,12 @@ read_dds (GFile          *file,
           d.palette[i + 1] = d.palette[j + 1];
           d.palette[i + 2] = d.palette[j + 2];
         }
-      gimp_image_set_colormap (image, d.palette, 256);
+      ligma_image_set_colormap (image, d.palette, 256);
     }
 
-  d.tile_height = gimp_tile_height ();
+  d.tile_height = ligma_tile_height ();
 
-  pixels = g_new (guchar, d.tile_height * hdr.width * d.gimp_bpp);
+  pixels = g_new (guchar, d.tile_height * hdr.width * d.ligma_bpp);
   buf = g_malloc (hdr.pitch_or_linsize);
 
   if (! (hdr.caps.caps2 & DDSCAPS2_CUBEMAP) &&
@@ -403,16 +403,16 @@ read_dds (GFile          *file,
                         decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (! load_mipmaps (fp, &hdr, &d, image, "", &l, pixels, buf,
                           read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
     }
   else if (hdr.caps.caps2 & DDSCAPS2_CUBEMAP)
@@ -422,8 +422,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) &&
@@ -431,8 +431,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) &&
@@ -440,8 +440,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) &&
@@ -449,8 +449,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) &&
@@ -458,8 +458,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) &&
@@ -467,8 +467,8 @@ read_dds (GFile          *file,
                        read_mipmaps, decode_images, error))
         {
           fclose (fp);
-          gimp_image_delete (image);
-          return GIMP_PDB_EXECUTION_ERROR;
+          ligma_image_delete (image);
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
     }
   else if ((hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
@@ -485,8 +485,8 @@ read_dds (GFile          *file,
             {
               g_free (plane);
               fclose (fp);
-              gimp_image_delete (image);
-              return GIMP_PDB_EXECUTION_ERROR;
+              ligma_image_delete (image);
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
           g_free (plane);
         }
@@ -512,8 +512,8 @@ read_dds (GFile          *file,
                     {
                       g_free (plane);
                       fclose (fp);
-                      gimp_image_delete (image);
-                      return GIMP_PDB_EXECUTION_ERROR;
+                      ligma_image_delete (image);
+                      return LIGMA_PDB_EXECUTION_ERROR;
                     }
 
                   g_free (plane);
@@ -534,23 +534,23 @@ read_dds (GFile          *file,
                             decode_images, error))
             {
               fclose (fp);
-              gimp_image_delete (image);
-              return GIMP_PDB_EXECUTION_ERROR;
+              ligma_image_delete (image);
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
 
           if (! load_mipmaps (fp, &hdr, &d, image, elem, &l, pixels, buf,
                               read_mipmaps, decode_images, error))
             {
               fclose (fp);
-              gimp_image_delete (image);
-              return GIMP_PDB_EXECUTION_ERROR;
+              ligma_image_delete (image);
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
 
           g_free (elem);
         }
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (hdr.pixelfmt.flags & DDPF_PALETTEINDEXED8)
     g_free (d.palette);
@@ -559,7 +559,7 @@ read_dds (GFile          *file,
   g_free (pixels);
   fclose (fp);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   if (! layers)
     {
@@ -571,14 +571,14 @@ read_dds (GFile          *file,
        */
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "Oops! NULL image read! Please report this!");
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_take_selected_layers (image, layers);
+  ligma_image_take_selected_layers (image, layers);
 
   *ret_image = image;
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 static gboolean
@@ -617,14 +617,14 @@ read_header (dds_header_t *hdr,
   hdr->caps.caps1 = GETL32 (buf + 108);
   hdr->caps.caps2 = GETL32 (buf + 112);
 
-  /* GIMP-DDS special info */
+  /* LIGMA-DDS special info */
   if (GETL32 (buf + 32) == FOURCC ('G','I','M','P') &&
       GETL32 (buf + 36) == FOURCC ('-','D','D','S'))
     {
-      hdr->reserved.gimp_dds_special.magic1       = GETL32 (buf + 32);
-      hdr->reserved.gimp_dds_special.magic2       = GETL32 (buf + 36);
-      hdr->reserved.gimp_dds_special.version      = GETL32 (buf + 40);
-      hdr->reserved.gimp_dds_special.extra_fourcc = GETL32 (buf + 44);
+      hdr->reserved.ligma_dds_special.magic1       = GETL32 (buf + 32);
+      hdr->reserved.ligma_dds_special.magic2       = GETL32 (buf + 36);
+      hdr->reserved.ligma_dds_special.version      = GETL32 (buf + 40);
+      hdr->reserved.ligma_dds_special.extra_fourcc = GETL32 (buf + 44);
     }
 
   return TRUE;
@@ -994,7 +994,7 @@ static gboolean
 load_layer (FILE             *fp,
             dds_header_t     *hdr,
             dds_load_info_t  *d,
-            GimpImage        *image,
+            LigmaImage        *image,
             guint             level,
             char             *prefix,
             guint            *l,
@@ -1005,10 +1005,10 @@ load_layer (FILE             *fp,
 {
   GeglBuffer    *buffer;
   const Babl    *bablfmt = NULL;
-  GimpImageType  type = GIMP_RGBA_IMAGE;
+  LigmaImageType  type = LIGMA_RGBA_IMAGE;
   gchar         *layer_name;
   gint           x, y, z, n;
-  GimpLayer     *layer;
+  LigmaLayer     *layer;
   guint          width = hdr->width >> level;
   guint          height = hdr->height >> level;
   guint          size = hdr->pitch_or_linsize >> (2 * level);
@@ -1023,21 +1023,21 @@ load_layer (FILE             *fp,
     case 1:
       if (hdr->pixelfmt.flags & DDPF_PALETTEINDEXED8)
         {
-          type = GIMP_INDEXED_IMAGE;
+          type = LIGMA_INDEXED_IMAGE;
         }
       else if (hdr->pixelfmt.rmask == 0xe0)
         {
-          type = GIMP_RGB_IMAGE;
+          type = LIGMA_RGB_IMAGE;
           bablfmt = babl_format ("R'G'B' u8");
         }
       else if (hdr->pixelfmt.flags & DDPF_ALPHA)
         {
-          type = GIMP_GRAYA_IMAGE;
+          type = LIGMA_GRAYA_IMAGE;
           bablfmt = babl_format ("Y'A u8");
         }
       else
         {
-          type = GIMP_GRAY_IMAGE;
+          type = LIGMA_GRAY_IMAGE;
           bablfmt = babl_format ("Y' u8");
         }
       break;
@@ -1045,21 +1045,21 @@ load_layer (FILE             *fp,
       if ((hdr->pixelfmt.flags & (DDPF_PALETTEINDEXED8 + DDPF_ALPHA)) ==
           DDPF_PALETTEINDEXED8 + DDPF_ALPHA)
         {
-          type = GIMP_INDEXEDA_IMAGE;
+          type = LIGMA_INDEXEDA_IMAGE;
         }
       else if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
         {
-          type = GIMP_RGBA_IMAGE;
+          type = LIGMA_RGBA_IMAGE;
           bablfmt = babl_format ("R'G'B'A u8");
         }
       else if (hdr->pixelfmt.amask == 0xff00) /* L8A8 */
         {
-          type = GIMP_GRAYA_IMAGE;
+          type = LIGMA_GRAYA_IMAGE;
           bablfmt = babl_format ("Y'A u8");
         }
       else if (hdr->pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
         {
-          type = (hdr->pixelfmt.amask == 0x8000) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          type = (hdr->pixelfmt.amask == 0x8000) ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE;
           bablfmt = (hdr->pixelfmt.amask == 0x8000) ? babl_format ("R'G'B'A u8") : babl_format ("R'G'B' u8");
         }
       else if (hdr->pixelfmt.rmask == 0xffff || /* L16 */
@@ -1067,18 +1067,18 @@ load_layer (FILE             *fp,
                hdr->pixelfmt.bmask == 0xffff ||
                hdr->pixelfmt.amask == 0xffff)
         {
-          type = GIMP_GRAY_IMAGE;
+          type = LIGMA_GRAY_IMAGE;
           bablfmt = babl_format ("Y' u16");
         }
       break;
-    case 3: type = GIMP_RGB_IMAGE;  bablfmt = babl_format ("R'G'B' u8");  break;
+    case 3: type = LIGMA_RGB_IMAGE;  bablfmt = babl_format ("R'G'B' u8");  break;
     case 4:
     case 8:
       {
-        type = GIMP_RGBA_IMAGE;
-        if (d->gimp_bps == 1)
+        type = LIGMA_RGBA_IMAGE;
+        if (d->ligma_bps == 1)
           bablfmt = babl_format ("R'G'B'A u8");
-        else if (d->gimp_bps == 2)
+        else if (d->ligma_bps == 2)
           bablfmt = babl_format ("R'G'B'A u16");
       }
       break;
@@ -1087,18 +1087,18 @@ load_layer (FILE             *fp,
   layer_name = (level) ? g_strdup_printf ("mipmap %d %s", level, prefix) :
     g_strdup_printf ("main surface %s", prefix);
 
-  layer = gimp_layer_new (image, layer_name, width, height, type, 100,
-                          gimp_image_get_default_new_layer_mode (image));
+  layer = ligma_layer_new (image, layer_name, width, height, type, 100,
+                          ligma_image_get_default_new_layer_mode (image));
   g_free (layer_name);
 
-  gimp_image_insert_layer (image, layer, NULL, *l);
+  ligma_image_insert_layer (image, layer, NULL, *l);
 
-  if (type == GIMP_INDEXED_IMAGE || type == GIMP_INDEXEDA_IMAGE)
-    bablfmt = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  if (type == LIGMA_INDEXED_IMAGE || type == LIGMA_INDEXEDA_IMAGE)
+    bablfmt = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
-  if ((*l)++) gimp_item_set_visible (GIMP_ITEM (layer), FALSE);
+  if ((*l)++) ligma_item_set_visible (LIGMA_ITEM (layer), FALSE);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   layerw = gegl_buffer_get_width (buffer);
 
@@ -1144,16 +1144,16 @@ load_layer (FILE             *fp,
       guint ired  = 0;
       guint iblue = 2;
 
-      if (hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
-          hdr->reserved.gimp_dds_special.version <= 199003 &&
-          hdr->reserved.gimp_dds_special.version > 0 &&
+      if (hdr->reserved.ligma_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+          hdr->reserved.ligma_dds_special.version <= 199003 &&
+          hdr->reserved.ligma_dds_special.version > 0 &&
           d->bpp >= 3 && hdr->pixelfmt.amask == 0xc0000000)
         {
-          /* GIMP dds plug-in versions before or equal to 199003 (3.9.91) wrote
+          /* LIGMA dds plug-in versions before or equal to 199003 (3.9.91) wrote
            * the red and green channels reversed for RGB10A2. We will fix that here.
            */
           g_printerr ("Switching incorrect red and green channels in RGB10A2 dds "
-                      "written by an older version of GIMP's dds plug-in.\n");
+                      "written by an older version of LIGMA's dds plug-in.\n");
           ired = 2;
           iblue = 0;
         }
@@ -1166,7 +1166,7 @@ load_layer (FILE             *fp,
               gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - n, layerw, n), 0,
                                bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
               n = 0;
-              gimp_progress_update ((double) y / (double) hdr->height);
+              ligma_progress_update ((double) y / (double) hdr->height);
             }
 
           if ((hdr->flags & DDSD_PITCH) &&
@@ -1182,7 +1182,7 @@ load_layer (FILE             *fp,
           for (x = 0; x < layerw; ++x)
             {
               guint pixel = buf[z];
-              guint pos   = (n * layerw + x) * d->gimp_bpp;
+              guint pos   = (n * layerw + x) * d->ligma_bpp;
 
               if (d->bpp > 1) pixel += ((guint) buf[z + 1] <<  8);
               if (d->bpp > 2) pixel += ((guint) buf[z + 2] << 16);
@@ -1217,7 +1217,7 @@ load_layer (FILE             *fp,
                     }
                   else if (d->bpp == 4)
                     {
-                      if (d->gimp_bps == 2)
+                      if (d->ligma_bps == 2)
                         {
                           guint16 *pixels16 = (guint16 *) &pixels[pos];
 
@@ -1337,36 +1337,36 @@ load_layer (FILE             *fp,
     {
       guchar *dst;
 
-      dst = g_malloc (width * height * d->gimp_bpp);
-      memset (dst, 0, width * height * d->gimp_bpp);
+      dst = g_malloc (width * height * d->ligma_bpp);
+      memset (dst, 0, width * height * d->ligma_bpp);
 
-      if (d->gimp_bpp == 4)
+      if (d->ligma_bpp == 4)
         {
           for (y = 0; y < height; ++y)
             for (x = 0; x < width; ++x)
               dst[y * (width * 4) + (x * 4) + 3] = 255;
         }
 
-      dxt_decompress (dst, buf, format, size, width, height, d->gimp_bpp,
+      dxt_decompress (dst, buf, format, size, width, height, d->ligma_bpp,
                       hdr->pixelfmt.flags & DDPF_NORMAL);
 
       if (format == DDS_COMPRESS_BC5 &&
-          hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
-          hdr->reserved.gimp_dds_special.version > 0 &&
-          hdr->reserved.gimp_dds_special.version <= 199002)
+          hdr->reserved.ligma_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+          hdr->reserved.ligma_dds_special.version > 0 &&
+          hdr->reserved.ligma_dds_special.version <= 199002)
         {
-          /* GIMP dds plug-in versions before 199002 == 3.9.90 wrote
+          /* LIGMA dds plug-in versions before 199002 == 3.9.90 wrote
            * the red and green channels reversed. We will fix that here.
            */
           g_printerr ("Switching incorrect red and green channels in BC5 dds "
-                      "written by an older version of GIMP's dds plug-in.\n");
+                      "written by an older version of LIGMA's dds plug-in.\n");
 
           for (y = 0; y < height; ++y)
             for (x = 0; x < width; ++x)
               {
                 guchar tmpG;
-                guint  pix_width = width * d->gimp_bpp;
-                guint  x_width   = x * d->gimp_bpp;
+                guint  pix_width = width * d->ligma_bpp;
+                guint  x_width   = x * d->ligma_bpp;
 
                 tmpG = dst[y * pix_width + x_width];
                 dst[y * pix_width + x_width] = dst[y * pix_width + x_width + 1];
@@ -1382,12 +1382,12 @@ load_layer (FILE             *fp,
               gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - n, layerw, n), 0,
                                bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
               n = 0;
-              gimp_progress_update ((double)y / (double)hdr->height);
+              ligma_progress_update ((double)y / (double)hdr->height);
             }
 
-          memcpy (pixels + n * layerw * d->gimp_bpp,
-                  dst + y * layerw * d->gimp_bpp,
-                  width * d->gimp_bpp);
+          memcpy (pixels + n * layerw * d->ligma_bpp,
+                  dst + y * layerw * d->ligma_bpp,
+                  width * d->ligma_bpp);
         }
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - n, layerw, n), 0,
@@ -1400,21 +1400,21 @@ load_layer (FILE             *fp,
 
   g_object_unref (buffer);
 
-  /* gimp dds specific.  decode encoded images */
+  /* ligma dds specific.  decode encoded images */
   if (decode_images &&
-      hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
-      hdr->reserved.gimp_dds_special.magic2 == FOURCC ('-','D','D','S'))
+      hdr->reserved.ligma_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+      hdr->reserved.ligma_dds_special.magic2 == FOURCC ('-','D','D','S'))
     {
-      switch (hdr->reserved.gimp_dds_special.extra_fourcc)
+      switch (hdr->reserved.ligma_dds_special.extra_fourcc)
         {
         case FOURCC ('A','E','X','P'):
-          decode_alpha_exp_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_alpha_exp_image (LIGMA_DRAWABLE (layer), FALSE);
           break;
         case FOURCC ('Y','C','G','1'):
-          decode_ycocg_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_ycocg_image (LIGMA_DRAWABLE (layer), FALSE);
           break;
         case FOURCC ('Y','C','G','2'):
-          decode_ycocg_scaled_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_ycocg_scaled_image (LIGMA_DRAWABLE (layer), FALSE);
           break;
         default:
           break;
@@ -1428,7 +1428,7 @@ static gboolean
 load_mipmaps (FILE             *fp,
               dds_header_t     *hdr,
               dds_load_info_t  *d,
-              GimpImage        *image,
+              LigmaImage        *image,
               char             *prefix,
               unsigned int     *l,
               guchar           *pixels,
@@ -1458,7 +1458,7 @@ static gboolean
 load_face (FILE             *fp,
            dds_header_t     *hdr,
            dds_load_info_t  *d,
-           GimpImage        *image,
+           LigmaImage        *image,
            gchar            *prefix,
            guint            *l,
            guchar           *pixels,
@@ -1504,7 +1504,7 @@ color_shift (guint mask)
 }
 
 static gboolean
-load_dialog (GimpProcedure *procedure,
+load_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -1512,8 +1512,8 @@ load_dialog (GimpProcedure *procedure,
   GtkWidget *check;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Open DDS"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
@@ -1522,18 +1522,18 @@ load_dialog (GimpProcedure *procedure,
                       vbox, 1, 1, 0);
   gtk_widget_show (vbox);
 
-  check = gimp_prop_check_button_new (config, "load-mipmaps",
+  check = ligma_prop_check_button_new (config, "load-mipmaps",
                                       _("_Load mipmaps"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
 
-  check = gimp_prop_check_button_new (config, "decode-images",
+  check = ligma_prop_check_button_new (config, "decode-images",
                                       _("_Automatically decode YCoCg/AExp "
                                         "images when detected"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

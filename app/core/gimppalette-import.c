@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,23 +21,23 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimpimage-colormap.h"
-#include "gimppalette.h"
-#include "gimppalette-import.h"
-#include "gimppalette-load.h"
-#include "gimppickable.h"
+#include "ligmachannel.h"
+#include "ligmacontainer.h"
+#include "ligmacontext.h"
+#include "ligmagradient.h"
+#include "ligmaimage.h"
+#include "ligmaimage-colormap.h"
+#include "ligmapalette.h"
+#include "ligmapalette-import.h"
+#include "ligmapalette-load.h"
+#include "ligmapickable.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_IMAGE_COLORS (10000 * 2)
@@ -45,35 +45,35 @@
 
 /*  create a palette from a gradient  ****************************************/
 
-GimpPalette *
-gimp_palette_import_from_gradient (GimpGradient                *gradient,
-                                   GimpContext                 *context,
+LigmaPalette *
+ligma_palette_import_from_gradient (LigmaGradient                *gradient,
+                                   LigmaContext                 *context,
                                    gboolean                     reverse,
-                                   GimpGradientBlendColorSpace  blend_color_space,
+                                   LigmaGradientBlendColorSpace  blend_color_space,
                                    const gchar                 *palette_name,
                                    gint                         n_colors)
 {
-  GimpPalette         *palette;
-  GimpGradientSegment *seg = NULL;
+  LigmaPalette         *palette;
+  LigmaGradientSegment *seg = NULL;
   gdouble              dx, cur_x;
-  GimpRGB              color;
+  LigmaRGB              color;
   gint                 i;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+  palette = LIGMA_PALETTE (ligma_palette_new (context, palette_name));
 
   dx = 1.0 / (n_colors - 1);
 
   for (i = 0, cur_x = 0; i < n_colors; i++, cur_x += dx)
     {
-      seg = gimp_gradient_get_color_at (gradient, context,
+      seg = ligma_gradient_get_color_at (gradient, context,
                                         seg, cur_x, reverse, blend_color_space,
                                         &color);
-      gimp_palette_add_entry (palette, -1, NULL, &color);
+      ligma_palette_add_entry (palette, -1, NULL, &color);
     }
 
   return palette;
@@ -98,7 +98,7 @@ struct _ImgColors
 static gint count_color_entries = 0;
 
 static GHashTable *
-gimp_palette_import_store_colors (GHashTable *table,
+ligma_palette_import_store_colors (GHashTable *table,
                                   guchar     *colors,
                                   guchar     *colors_real,
                                   gint        n_colors)
@@ -166,7 +166,7 @@ gimp_palette_import_store_colors (GHashTable *table,
 }
 
 static void
-gimp_palette_import_create_list (gpointer key,
+ligma_palette_import_create_list (gpointer key,
                                  gpointer value,
                                  gpointer user_data)
 {
@@ -177,7 +177,7 @@ gimp_palette_import_create_list (gpointer key,
 }
 
 static gint
-gimp_palette_import_sort_colors (gconstpointer a,
+ligma_palette_import_sort_colors (gconstpointer a,
                                  gconstpointer b)
 {
   const ImgColors *s1 = a;
@@ -192,19 +192,19 @@ gimp_palette_import_sort_colors (gconstpointer a,
 }
 
 static void
-gimp_palette_import_create_image_palette (gpointer data,
+ligma_palette_import_create_image_palette (gpointer data,
                                           gpointer user_data)
 {
-  GimpPalette *palette   = user_data;
+  LigmaPalette *palette   = user_data;
   ImgColors   *color_tab = data;
   gint         n_colors;
   gchar       *lab;
-  GimpRGB      color;
+  LigmaRGB      color;
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
                                                  "import-n-colors"));
 
-  if (gimp_palette_get_n_colors (palette) >= n_colors)
+  if (ligma_palette_get_n_colors (palette) >= n_colors)
     return;
 
   /* TRANSLATORS: the "%s" is an item title and "%u" is the number of
@@ -214,40 +214,40 @@ gimp_palette_import_create_image_palette (gpointer data,
                          color_tab->count);
 
   /* Adjust the colors to the mean of the the sample */
-  gimp_rgba_set_uchar
+  ligma_rgba_set_uchar
     (&color,
      (guchar) color_tab->r + (color_tab->r_adj / color_tab->count),
      (guchar) color_tab->g + (color_tab->g_adj / color_tab->count),
      (guchar) color_tab->b + (color_tab->b_adj / color_tab->count),
      255);
 
-  gimp_palette_add_entry (palette, -1, lab, &color);
+  ligma_palette_add_entry (palette, -1, lab, &color);
 
   g_free (lab);
 }
 
-static GimpPalette *
-gimp_palette_import_make_palette (GHashTable  *table,
+static LigmaPalette *
+ligma_palette_import_make_palette (GHashTable  *table,
                                   const gchar *palette_name,
-                                  GimpContext *context,
+                                  LigmaContext *context,
                                   gint         n_colors)
 {
-  GimpPalette *palette;
+  LigmaPalette *palette;
   GSList      *list = NULL;
   GSList      *iter;
 
-  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+  palette = LIGMA_PALETTE (ligma_palette_new (context, palette_name));
 
   if (! table)
     return palette;
 
-  g_hash_table_foreach (table, gimp_palette_import_create_list, &list);
-  list = g_slist_sort (list, gimp_palette_import_sort_colors);
+  g_hash_table_foreach (table, ligma_palette_import_create_list, &list);
+  list = g_slist_sort (list, ligma_palette_import_sort_colors);
 
   g_object_set_data (G_OBJECT (palette), "import-n-colors",
                      GINT_TO_POINTER (n_colors));
 
-  g_slist_foreach (list, gimp_palette_import_create_image_palette, palette);
+  g_slist_foreach (list, ligma_palette_import_create_image_palette, palette);
 
   g_object_set_data (G_OBJECT (palette), "import-n-colors", NULL);
 
@@ -266,9 +266,9 @@ gimp_palette_import_make_palette (GHashTable  *table,
 }
 
 static GHashTable *
-gimp_palette_import_extract (GimpImage     *image,
+ligma_palette_import_extract (LigmaImage     *image,
                              GHashTable    *colors,
-                             GimpPickable  *pickable,
+                             LigmaPickable  *pickable,
                              gint           pickable_off_x,
                              gint           pickable_off_y,
                              gboolean       selection_only,
@@ -287,7 +287,7 @@ gimp_palette_import_extract (GimpImage     *image,
   gint                bpp;
   gint                mask_bpp = 0;
 
-  buffer = gimp_pickable_get_buffer (pickable);
+  buffer = ligma_pickable_get_buffer (pickable);
   format = babl_format ("R'G'B'A u8");
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
@@ -295,14 +295,14 @@ gimp_palette_import_extract (GimpImage     *image,
   bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
-      ! gimp_channel_is_empty (gimp_image_get_mask (image)))
+      ! ligma_channel_is_empty (ligma_image_get_mask (image)))
     {
-      GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
+      LigmaDrawable *mask = LIGMA_DRAWABLE (ligma_image_get_mask (image));
 
       rect.x = x + pickable_off_x;
       rect.y = y + pickable_off_y;
 
-      buffer = gimp_drawable_get_buffer (mask);
+      buffer = ligma_drawable_get_buffer (mask);
       format = babl_format ("Y u8");
 
       gegl_buffer_iterator_add (iter, buffer, &rect, 0, format,
@@ -335,7 +335,7 @@ gimp_palette_import_extract (GimpImage     *image,
               rgba[1] = (rgba[1] / threshold) * threshold;
               rgba[2] = (rgba[2] / threshold) * threshold;
 
-              colors = gimp_palette_import_store_colors (colors,
+              colors = ligma_palette_import_store_colors (colors,
                                                          rgba, rgb_real,
                                                          n_colors);
             }
@@ -350,9 +350,9 @@ gimp_palette_import_extract (GimpImage     *image,
   return colors;
 }
 
-GimpPalette *
-gimp_palette_import_from_image (GimpImage   *image,
-                                GimpContext *context,
+LigmaPalette *
+ligma_palette_import_from_image (LigmaImage   *image,
+                                LigmaContext *context,
                                 const gchar *palette_name,
                                 gint         n_colors,
                                 gint         threshold,
@@ -362,57 +362,57 @@ gimp_palette_import_from_image (GimpImage   *image,
   gint        x, y;
   gint        width, height;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
-  gimp_pickable_flush (GIMP_PICKABLE (image));
+  ligma_pickable_flush (LIGMA_PICKABLE (image));
 
   if (selection_only)
     {
-      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+      ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                         &x, &y, &width, &height);
     }
   else
     {
       x      = 0;
       y      = 0;
-      width  = gimp_image_get_width  (image);
-      height = gimp_image_get_height (image);
+      width  = ligma_image_get_width  (image);
+      height = ligma_image_get_height (image);
     }
 
-  colors = gimp_palette_import_extract (image,
+  colors = ligma_palette_import_extract (image,
                                         NULL,
-                                        GIMP_PICKABLE (image),
+                                        LIGMA_PICKABLE (image),
                                         0, 0,
                                         selection_only,
                                         x, y, width, height,
                                         n_colors, threshold);
 
-  return gimp_palette_import_make_palette (colors, palette_name, context,
+  return ligma_palette_import_make_palette (colors, palette_name, context,
                                            n_colors);
 }
 
 
 /*  create a palette from an indexed image  **********************************/
 
-GimpPalette *
-gimp_palette_import_from_indexed_image (GimpImage   *image,
-                                        GimpContext *context,
+LigmaPalette *
+ligma_palette_import_from_indexed_image (LigmaImage   *image,
+                                        LigmaContext *context,
                                         const gchar *palette_name)
 {
-  GimpPalette  *palette;
+  LigmaPalette  *palette;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (gimp_image_get_base_type (image) == GIMP_INDEXED, NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (ligma_image_get_base_type (image) == LIGMA_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
-  palette = GIMP_PALETTE (gimp_data_duplicate (GIMP_DATA (gimp_image_get_colormap_palette (image))));
+  palette = LIGMA_PALETTE (ligma_data_duplicate (LIGMA_DATA (ligma_image_get_colormap_palette (image))));
 
-  gimp_object_set_name (GIMP_OBJECT (palette), palette_name);
+  ligma_object_set_name (LIGMA_OBJECT (palette), palette_name);
 
   return palette;
 }
@@ -420,9 +420,9 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
 
 /*  create a palette from a drawable  ****************************************/
 
-GimpPalette *
-gimp_palette_import_from_drawables (GList       *drawables,
-                                    GimpContext *context,
+LigmaPalette *
+ligma_palette_import_from_drawables (GList       *drawables,
+                                    LigmaContext *context,
                                     const gchar *palette_name,
                                     gint         n_colors,
                                     gint         threshold,
@@ -434,21 +434,21 @@ gimp_palette_import_from_drawables (GList       *drawables,
   gint        width, height;
   gint        off_x, off_y;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      GimpDrawable *drawable = iter->data;
+      LigmaDrawable *drawable = iter->data;
 
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
 
       if (selection_only)
         {
-          if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+          if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                           &x, &y, &width, &height))
             return NULL;
         }
@@ -456,31 +456,31 @@ gimp_palette_import_from_drawables (GList       *drawables,
         {
           x      = 0;
           y      = 0;
-          width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          height = gimp_item_get_height (GIMP_ITEM (drawable));
+          width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+          height = ligma_item_get_height (LIGMA_ITEM (drawable));
         }
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       colors =
-        gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),
+        ligma_palette_import_extract (ligma_item_get_image (LIGMA_ITEM (drawable)),
                                      colors,
-                                     GIMP_PICKABLE (drawable),
+                                     LIGMA_PICKABLE (drawable),
                                      off_x, off_y,
                                      selection_only,
                                      x, y, width, height,
                                      n_colors, threshold);
     }
 
-  return gimp_palette_import_make_palette (colors, palette_name, context,
+  return ligma_palette_import_make_palette (colors, palette_name, context,
                                            n_colors);
 }
 
 
 /*  create a palette from a file  **********************************/
 
-GimpPalette *
-gimp_palette_import_from_file (GimpContext  *context,
+LigmaPalette *
+ligma_palette_import_from_file (LigmaContext  *context,
                                GFile        *file,
                                const gchar  *palette_name,
                                GError      **error)
@@ -489,7 +489,7 @@ gimp_palette_import_from_file (GimpContext  *context,
   GInputStream *input;
   GError       *my_error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -497,44 +497,44 @@ gimp_palette_import_from_file (GimpContext  *context,
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
   if (! input)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
+                   ligma_file_get_utf8_name (file), my_error->message);
       g_clear_error (&my_error);
       return NULL;
     }
 
-  switch (gimp_palette_load_detect_format (file, input))
+  switch (ligma_palette_load_detect_format (file, input))
     {
-    case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_GPL:
+      palette_list = ligma_palette_load (context, file, input, error);
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette_list = gimp_palette_load_act (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_ACT:
+      palette_list = ligma_palette_load_act (context, file, input, error);
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette_list = gimp_palette_load_riff (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_RIFF_PAL:
+      palette_list = ligma_palette_load_riff (context, file, input, error);
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:
-      palette_list = gimp_palette_load_psp (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_PSP_PAL:
+      palette_list = ligma_palette_load_psp (context, file, input, error);
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_ACO:
-      palette_list = gimp_palette_load_aco (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_ACO:
+      palette_list = ligma_palette_load_aco (context, file, input, error);
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_CSS:
-      palette_list = gimp_palette_load_css (context, file, input, error);
+    case LIGMA_PALETTE_FILE_FORMAT_CSS:
+      palette_list = ligma_palette_load_css (context, file, input, error);
       break;
 
     default:
       g_set_error (error,
-                   GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Unknown type of palette file: %s"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       break;
     }
 
@@ -542,9 +542,9 @@ gimp_palette_import_from_file (GimpContext  *context,
 
   if (palette_list)
     {
-      GimpPalette *palette = g_object_ref (palette_list->data);
+      LigmaPalette *palette = g_object_ref (palette_list->data);
 
-      gimp_object_set_name (GIMP_OBJECT (palette), palette_name);
+      ligma_object_set_name (LIGMA_OBJECT (palette), palette_name);
 
       g_list_free_full (palette_list, (GDestroyNotify) g_object_unref);
 

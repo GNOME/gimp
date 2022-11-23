@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimp-internal-data.c
+ * ligma-internal-data.c
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,62 +23,62 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-gradients.h"
-#include "gimp-internal-data.h"
-#include "gimpdata.h"
-#include "gimpdataloaderfactory.h"
-#include "gimperror.h"
-#include "gimpgradient-load.h"
+#include "ligma.h"
+#include "ligma-gradients.h"
+#include "ligma-internal-data.h"
+#include "ligmadata.h"
+#include "ligmadataloaderfactory.h"
+#include "ligmaerror.h"
+#include "ligmagradient-load.h"
 
-#include "gimp-intl.h"
-
-
-#define GIMP_INTERNAL_DATA_DIRECTORY "internal-data"
+#include "ligma-intl.h"
 
 
-typedef GimpData * (* GimpDataGetFunc) (Gimp *gimp);
+#define LIGMA_INTERNAL_DATA_DIRECTORY "internal-data"
 
 
-typedef struct _GimpInternalDataFile GimpInternalDataFile;
+typedef LigmaData * (* LigmaDataGetFunc) (Ligma *ligma);
 
-struct _GimpInternalDataFile
+
+typedef struct _LigmaInternalDataFile LigmaInternalDataFile;
+
+struct _LigmaInternalDataFile
 {
   const gchar      *name;
-  GimpDataGetFunc   get_func;
-  GimpDataLoadFunc  load_func;
+  LigmaDataGetFunc   get_func;
+  LigmaDataLoadFunc  load_func;
 };
 
 
 /*  local function prototypes  */
 
-static gboolean   gimp_internal_data_create_directory (GError                     **error);
+static gboolean   ligma_internal_data_create_directory (GError                     **error);
 
-static GFile    * gimp_internal_data_get_file         (const GimpInternalDataFile  *data_file);
+static GFile    * ligma_internal_data_get_file         (const LigmaInternalDataFile  *data_file);
 
-static gboolean   gimp_internal_data_load_data_file   (Gimp                        *gimp,
-                                                       const GimpInternalDataFile  *data_file,
+static gboolean   ligma_internal_data_load_data_file   (Ligma                        *ligma,
+                                                       const LigmaInternalDataFile  *data_file,
                                                        GError                     **error);
-static gboolean   gimp_internal_data_save_data_file   (Gimp                        *gimp,
-                                                       const GimpInternalDataFile  *data_file,
+static gboolean   ligma_internal_data_save_data_file   (Ligma                        *ligma,
+                                                       const LigmaInternalDataFile  *data_file,
                                                        GError                     **error);
-static gboolean   gimp_internal_data_delete_data_file (Gimp                        *gimp,
-                                                       const GimpInternalDataFile  *data_file,
+static gboolean   ligma_internal_data_delete_data_file (Ligma                        *ligma,
+                                                       const LigmaInternalDataFile  *data_file,
                                                        GError                     **error);
 
 /*  static variables  */
 
-static const GimpInternalDataFile internal_data_files[] =
+static const LigmaInternalDataFile internal_data_files[] =
 {
   /* Custom gradient */
   {
-    .name      = "custom" GIMP_GRADIENT_FILE_EXTENSION,
-    .get_func  = (GimpDataGetFunc) gimp_gradients_get_custom,
-    .load_func = gimp_gradient_load
+    .name      = "custom" LIGMA_GRADIENT_FILE_EXTENSION,
+    .get_func  = (LigmaDataGetFunc) ligma_gradients_get_custom,
+    .load_func = ligma_gradient_load
   }
 };
 
@@ -86,19 +86,19 @@ static const GimpInternalDataFile internal_data_files[] =
 /*  public functions  */
 
 gboolean
-gimp_internal_data_load (Gimp    *gimp,
+ligma_internal_data_load (Ligma    *ligma,
                          GError **error)
 {
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   for (i = 0; i < G_N_ELEMENTS (internal_data_files); i++)
     {
-      const GimpInternalDataFile *data_file = &internal_data_files[i];
+      const LigmaInternalDataFile *data_file = &internal_data_files[i];
 
-      if (! gimp_internal_data_load_data_file (gimp, data_file, error))
+      if (! ligma_internal_data_load_data_file (ligma, data_file, error))
         return FALSE;
     }
 
@@ -106,22 +106,22 @@ gimp_internal_data_load (Gimp    *gimp,
 }
 
 gboolean
-gimp_internal_data_save (Gimp    *gimp,
+ligma_internal_data_save (Ligma    *ligma,
                          GError **error)
 {
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_internal_data_create_directory (error))
+  if (! ligma_internal_data_create_directory (error))
     return FALSE;
 
   for (i = 0; i < G_N_ELEMENTS (internal_data_files); i++)
     {
-      const GimpInternalDataFile *data_file = &internal_data_files[i];
+      const LigmaInternalDataFile *data_file = &internal_data_files[i];
 
-      if (! gimp_internal_data_save_data_file (gimp, data_file, error))
+      if (! ligma_internal_data_save_data_file (ligma, data_file, error))
         return FALSE;
     }
 
@@ -129,19 +129,19 @@ gimp_internal_data_save (Gimp    *gimp,
 }
 
 gboolean
-gimp_internal_data_clear (Gimp    *gimp,
+ligma_internal_data_clear (Ligma    *ligma,
                           GError **error)
 {
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   for (i = 0; i < G_N_ELEMENTS (internal_data_files); i++)
     {
-      const GimpInternalDataFile *data_file = &internal_data_files[i];
+      const LigmaInternalDataFile *data_file = &internal_data_files[i];
 
-      if (! gimp_internal_data_delete_data_file (gimp, data_file, error))
+      if (! ligma_internal_data_delete_data_file (ligma, data_file, error))
         return FALSE;
     }
 
@@ -152,13 +152,13 @@ gimp_internal_data_clear (Gimp    *gimp,
 /*  private functions  */
 
 static gboolean
-gimp_internal_data_create_directory (GError **error)
+ligma_internal_data_create_directory (GError **error)
 {
   GFile    *directory;
   GError   *my_error = NULL;
   gboolean  success;
 
-  directory = gimp_directory_file (GIMP_INTERNAL_DATA_DIRECTORY, NULL);
+  directory = ligma_directory_file (LIGMA_INTERNAL_DATA_DIRECTORY, NULL);
 
   success = g_file_make_directory (directory, NULL, &my_error);
 
@@ -181,28 +181,28 @@ gimp_internal_data_create_directory (GError **error)
 }
 
 static GFile *
-gimp_internal_data_get_file (const GimpInternalDataFile *data_file)
+ligma_internal_data_get_file (const LigmaInternalDataFile *data_file)
 {
-  return gimp_directory_file (GIMP_INTERNAL_DATA_DIRECTORY,
+  return ligma_directory_file (LIGMA_INTERNAL_DATA_DIRECTORY,
                               data_file->name,
                               NULL);
 }
 
 static gboolean
-gimp_internal_data_load_data_file (Gimp                        *gimp,
-                                   const GimpInternalDataFile  *data_file,
+ligma_internal_data_load_data_file (Ligma                        *ligma,
+                                   const LigmaInternalDataFile  *data_file,
                                    GError                     **error)
 {
   GFile        *file;
   GInputStream *input;
-  GimpData     *data;
+  LigmaData     *data;
   GList        *list;
   GError       *my_error = NULL;
 
-  file = gimp_internal_data_get_file (data_file);
+  file = ligma_internal_data_get_file (data_file);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
@@ -222,7 +222,7 @@ gimp_internal_data_load_data_file (Gimp                        *gimp,
         }
     }
 
-  list = data_file->load_func (gimp->user_context, file, input, error);
+  list = data_file->load_func (ligma->user_context, file, input, error);
 
   g_object_unref (input);
   g_object_unref (file);
@@ -230,9 +230,9 @@ gimp_internal_data_load_data_file (Gimp                        *gimp,
   if (! list)
     return FALSE;
 
-  data = data_file->get_func (gimp);
+  data = data_file->get_func (ligma);
 
-  gimp_data_copy (data, GIMP_DATA (list->data));
+  ligma_data_copy (data, LIGMA_DATA (list->data));
 
   g_list_free_full (list, g_object_unref);
 
@@ -240,19 +240,19 @@ gimp_internal_data_load_data_file (Gimp                        *gimp,
 }
 
 static gboolean
-gimp_internal_data_save_data_file (Gimp                        *gimp,
-                                   const GimpInternalDataFile  *data_file,
+ligma_internal_data_save_data_file (Ligma                        *ligma,
+                                   const LigmaInternalDataFile  *data_file,
                                    GError                     **error)
 {
   GFile         *file;
   GOutputStream *output;
-  GimpData      *data;
+  LigmaData      *data;
   gboolean       success;
 
-  file = gimp_internal_data_get_file (data_file);
+  file = ligma_internal_data_get_file (data_file);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE,
                                             G_FILE_CREATE_NONE,
@@ -265,18 +265,18 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
       return FALSE;
     }
 
-  data = data_file->get_func (gimp);
+  data = data_file->get_func (ligma);
 
-  /* we bypass gimp_data_save() and call the data's save() virtual function
-   * directly, since gimp_data_save() is a nop for internal data.
+  /* we bypass ligma_data_save() and call the data's save() virtual function
+   * directly, since ligma_data_save() is a nop for internal data.
    *
    * FIXME:  we save the data whether it's dirty or not, since it might not
    * exist on disk.  currently, we only use this for cheap data, such as
    * gradients, so this is not a big concern, but if we save more expensive
    * data in the future, we should fix this.
    */
-  gimp_assert (GIMP_DATA_GET_CLASS (data)->save);
-  success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
+  ligma_assert (LIGMA_DATA_GET_CLASS (data)->save);
+  success = LIGMA_DATA_GET_CLASS (data)->save (data, output, error);
 
   if (success)
     {
@@ -284,7 +284,7 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
         {
           g_prefix_error (error,
                           _("Error saving '%s': "),
-                          gimp_file_get_utf8_name (file));
+                          ligma_file_get_utf8_name (file));
           success = FALSE;
         }
     }
@@ -297,13 +297,13 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
         {
           g_prefix_error (error,
                           _("Error saving '%s': "),
-                          gimp_file_get_utf8_name (file));
+                          ligma_file_get_utf8_name (file));
         }
       else
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_WRITE,
                        _("Error saving '%s'"),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
         }
       g_output_stream_close (output, cancellable, NULL);
       g_object_unref (cancellable);
@@ -316,27 +316,27 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
 }
 
 static gboolean
-gimp_internal_data_delete_data_file (Gimp                        *gimp,
-                                     const GimpInternalDataFile  *data_file,
+ligma_internal_data_delete_data_file (Ligma                        *ligma,
+                                     const LigmaInternalDataFile  *data_file,
                                      GError                     **error)
 {
   GFile    *file;
   GError   *my_error = NULL;
   gboolean  success  = TRUE;
 
-  file = gimp_internal_data_get_file (data_file);
+  file = ligma_internal_data_get_file (data_file);
 
-  if (gimp->be_verbose)
-    g_print ("Deleting '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Deleting '%s'\n", ligma_file_get_utf8_name (file));
 
   if (! g_file_delete (file, NULL, &my_error) &&
       my_error->code != G_IO_ERROR_NOT_FOUND)
     {
       success = FALSE;
 
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                    _("Deleting \"%s\" failed: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
+                   ligma_file_get_utf8_name (file), my_error->message);
     }
 
   g_clear_error (&my_error);

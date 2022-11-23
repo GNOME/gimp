@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Based on select-to-brush by
@@ -37,13 +37,13 @@
         (filename2 0)
         )
 
-  (if (= (car (gimp-selection-is-empty image)) TRUE)
+  (if (= (car (ligma-selection-is-empty image)) TRUE)
       (begin
-        (set! selection-width (car (gimp-drawable-get-width drawable)))
-        (set! selection-height (car (gimp-drawable-get-height drawable)))
+        (set! selection-width (car (ligma-drawable-get-width drawable)))
+        (set! selection-height (car (ligma-drawable-get-height drawable)))
       )
       (begin
-        (set! selection-bounds (gimp-drawable-mask-bounds drawable))
+        (set! selection-bounds (ligma-drawable-mask-bounds drawable))
         (set! select-offset-x (cadr selection-bounds))
         (set! select-offset-y (caddr selection-bounds))
         (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -51,46 +51,46 @@
       )
   )
 
-  (if (= (car (gimp-drawable-has-alpha drawable)) TRUE)
+  (if (= (car (ligma-drawable-has-alpha drawable)) TRUE)
       (set! pattern-draw-type RGBA-IMAGE)
       (set! pattern-draw-type RGB-IMAGE)
   )
 
   (set! pattern-image-type RGB)
 
-  (set! pattern-image (car (gimp-image-new selection-width selection-height
+  (set! pattern-image (car (ligma-image-new selection-width selection-height
                                            pattern-image-type)))
 
   (set! pattern-draw
-        (car (gimp-layer-new pattern-image selection-width selection-height
+        (car (ligma-layer-new pattern-image selection-width selection-height
                              pattern-draw-type "Pattern" 100 LAYER-MODE-NORMAL)))
 
-  (gimp-drawable-fill pattern-draw FILL-TRANSPARENT)
+  (ligma-drawable-fill pattern-draw FILL-TRANSPARENT)
 
-  (gimp-image-insert-layer pattern-image pattern-draw 0 0)
+  (ligma-image-insert-layer pattern-image pattern-draw 0 0)
 
-  (gimp-edit-copy 1 (vector drawable))
+  (ligma-edit-copy 1 (vector drawable))
 
   (let* (
-           (pasted (gimp-edit-paste pattern-draw FALSE))
+           (pasted (ligma-edit-paste pattern-draw FALSE))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-    (gimp-floating-sel-anchor floating-sel)
+    (ligma-floating-sel-anchor floating-sel)
   )
 
-  (set! filename2 (string-append gimp-directory
+  (set! filename2 (string-append ligma-directory
                                  "/patterns/"
                                  filename
                                  (number->string image)
                                  ".pat"))
 
   (file-pat-save 1 pattern-image 1 (vector pattern-draw) filename2 desc)
-  (gimp-patterns-refresh)
-  (gimp-context-set-pattern desc)
+  (ligma-patterns-refresh)
+  (ligma-context-set-pattern desc)
 
-  (gimp-image-delete pattern-image)
-  (gimp-displays-flush)
+  (ligma-image-delete pattern-image)
+  (ligma-displays-flush)
   )
 )
 

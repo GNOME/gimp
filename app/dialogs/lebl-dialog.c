@@ -7,11 +7,11 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "lebl-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 /* phish code */
 #define PHSHFRAMES 8
@@ -643,7 +643,7 @@ ensure_creatures (void)
 	if (inv_goat1 != NULL)
 		return TRUE;
 
-	pb = gdk_pixbuf_new_from_resource ("/org/gimp/lebl-dialog/wanda.png",
+	pb = gdk_pixbuf_new_from_resource ("/org/ligma/lebl-dialog/wanda.png",
                                            NULL);
 	if (pb == NULL)
 		return FALSE;
@@ -660,7 +660,7 @@ ensure_creatures (void)
 
 	g_object_unref (G_OBJECT (pb));
 
-	pb = gdk_pixbuf_new_from_resource ("/org/gimp/lebl-dialog/gegl-1.png",
+	pb = gdk_pixbuf_new_from_resource ("/org/ligma/lebl-dialog/gegl-1.png",
                                            NULL);
 	if (pb == NULL) {
 		g_object_unref (G_OBJECT (inv_phsh1));
@@ -671,7 +671,7 @@ ensure_creatures (void)
 	inv_goat1 = pb_scale (pb, inv_factor * 0.66);
 	g_object_unref (pb);
 
-	pb = gdk_pixbuf_new_from_resource ("/org/gimp/lebl-dialog/gegl-2.png",
+	pb = gdk_pixbuf_new_from_resource ("/org/ligma/lebl-dialog/gegl-2.png",
                                            NULL);
 	if (pb == NULL) {
 		g_object_unref (G_OBJECT (inv_goat1));
@@ -775,10 +775,10 @@ inv_draw (GtkWidget *widget, cairo_t *cr)
 	return TRUE;
 }
 
-gboolean gimp_lebl_dialog (void);
+gboolean ligma_lebl_dialog (void);
 
 gboolean
-gimp_lebl_dialog (void)
+ligma_lebl_dialog (void)
 {
         GdkMonitor *monitor;
         GdkRectangle workarea;
@@ -793,7 +793,7 @@ gimp_lebl_dialog (void)
 	inv_width = 800;
 	inv_height = 600;
 
-        monitor = gimp_get_monitor_at_pointer ();
+        monitor = ligma_get_monitor_at_pointer ();
         gdk_monitor_get_workarea (monitor, &workarea);
 
 	if (inv_width > workarea.width * 0.9) {

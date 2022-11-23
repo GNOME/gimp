@@ -1,6 +1,6 @@
 # Version resources for Microsoft Windows
 
-GIMPAPPRC = $(top_builddir)/build/windows/gimp.rc
+LIGMAAPPRC = $(top_builddir)/build/windows/ligma.rc
 
 # `windres` seems a very stupid tool and it breaks with double shlashes
 # in parameter paths. Strengthen the rule a little.
@@ -11,4 +11,4 @@ GIMPAPPRC = $(top_builddir)/build/windows/gimp.rc
 		-I"`echo $(top_srcdir)/app | sed 's%/\+%/%'`" \
 		-I"`echo $(top_builddir)/app | sed 's%/\+%/%'`"\
 		-I"`echo $(top_builddir) | sed 's%/\+%/%'`"\
-		$(GIMPAPPRC) $@
+		$(LIGMAAPPRC) $@

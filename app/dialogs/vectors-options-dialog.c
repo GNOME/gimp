@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,26 +20,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
 #include "item-options-dialog.h"
 #include "vectors-options-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _VectorsOptionsDialog VectorsOptionsDialog;
 
 struct _VectorsOptionsDialog
 {
-  GimpVectorsOptionsCallback  callback;
+  LigmaVectorsOptionsCallback  callback;
   gpointer                    user_data;
 };
 
@@ -48,12 +48,12 @@ struct _VectorsOptionsDialog
 
 static void  vectors_options_dialog_free     (VectorsOptionsDialog *private);
 static void  vectors_options_dialog_callback (GtkWidget            *dialog,
-                                              GimpImage            *image,
-                                              GimpItem             *item,
-                                              GimpContext          *context,
+                                              LigmaImage            *image,
+                                              LigmaItem             *item,
+                                              LigmaContext          *context,
                                               const gchar          *item_name,
                                               gboolean              item_visible,
-                                              GimpColorTag          item_color_tag,
+                                              LigmaColorTag          item_color_tag,
                                               gboolean              item_lock_content,
                                               gboolean              item_lock_position,
                                               gpointer              user_data);
@@ -62,9 +62,9 @@ static void  vectors_options_dialog_callback (GtkWidget            *dialog,
 /*  public functions  */
 
 GtkWidget *
-vectors_options_dialog_new (GimpImage                  *image,
-                            GimpVectors                *vectors,
-                            GimpContext                *context,
+vectors_options_dialog_new (LigmaImage                  *image,
+                            LigmaVectors                *vectors,
+                            LigmaContext                *context,
                             GtkWidget                  *parent,
                             const gchar                *title,
                             const gchar                *role,
@@ -73,18 +73,18 @@ vectors_options_dialog_new (GimpImage                  *image,
                             const gchar                *help_id,
                             const gchar                *vectors_name,
                             gboolean                    vectors_visible,
-                            GimpColorTag                vectors_color_tag,
+                            LigmaColorTag                vectors_color_tag,
                             gboolean                    vectors_lock_content,
                             gboolean                    vectors_lock_position,
-                            GimpVectorsOptionsCallback  callback,
+                            LigmaVectorsOptionsCallback  callback,
                             gpointer                    user_data)
 {
   VectorsOptionsDialog *private;
   GtkWidget            *dialog;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (vectors == NULL || LIGMA_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
@@ -98,11 +98,11 @@ vectors_options_dialog_new (GimpImage                  *image,
   private->callback  = callback;
   private->user_data = user_data;
 
-  dialog = item_options_dialog_new (image, GIMP_ITEM (vectors), context,
+  dialog = item_options_dialog_new (image, LIGMA_ITEM (vectors), context,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     _("Path _name:"),
-                                    GIMP_ICON_TOOL_PATH,
+                                    LIGMA_ICON_TOOL_PATH,
                                     _("Lock path _strokes"),
                                     _("Lock path _position"),
                                     vectors_name,
@@ -130,12 +130,12 @@ vectors_options_dialog_free (VectorsOptionsDialog *private)
 
 static void
 vectors_options_dialog_callback (GtkWidget    *dialog,
-                                 GimpImage    *image,
-                                 GimpItem     *item,
-                                 GimpContext  *context,
+                                 LigmaImage    *image,
+                                 LigmaItem     *item,
+                                 LigmaContext  *context,
                                  const gchar  *item_name,
                                  gboolean      item_visible,
-                                 GimpColorTag  item_color_tag,
+                                 LigmaColorTag  item_color_tag,
                                  gboolean      item_lock_content,
                                  gboolean      item_lock_position,
                                  gpointer      user_data)
@@ -144,7 +144,7 @@ vectors_options_dialog_callback (GtkWidget    *dialog,
 
   private->callback (dialog,
                      image,
-                     GIMP_VECTORS (item),
+                     LIGMA_VECTORS (item),
                      context,
                      item_name,
                      item_visible,

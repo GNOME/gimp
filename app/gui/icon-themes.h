@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * icon-themes.h
@@ -22,12 +22,12 @@
 #define __ICONS_THEMES_H__
 
 
-void     icon_themes_init          (Gimp        *gimp);
-void     icon_themes_exit          (Gimp        *gimp);
+void     icon_themes_init          (Ligma        *ligma);
+void     icon_themes_exit          (Ligma        *ligma);
 
-gchar ** icon_themes_list_themes   (Gimp        *gimp,
+gchar ** icon_themes_list_themes   (Ligma        *ligma,
                                     gint        *n_themes);
-GFile  * icon_themes_get_theme_dir (Gimp        *gimp,
+GFile  * icon_themes_get_theme_dir (Ligma        *ligma,
                                     const gchar *theme_name);
 
 

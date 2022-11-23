@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpheal.c
+ * ligmaheal.c
  * Copyright (C) Jean-Yves Couleaud <cjyves@free.fr>
  * Copyright (C) 2013 Loren Merritt
  *
@@ -27,26 +27,26 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "core/gimpbrush.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimptempbuf.h"
+#include "core/ligmabrush.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpheal.h"
-#include "gimpsourceoptions.h"
+#include "ligmaheal.h"
+#include "ligmasourceoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 
@@ -67,28 +67,28 @@
  * Jean-Yves Couleaud cjyves@free.fr
  */
 
-static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
+static gboolean     ligma_heal_start              (LigmaPaintCore    *paint_core,
                                                   GList            *drawables,
-                                                  GimpPaintOptions *paint_options,
-                                                  const GimpCoords *coords,
+                                                  LigmaPaintOptions *paint_options,
+                                                  const LigmaCoords *coords,
                                                   GError          **error);
-static GeglBuffer * gimp_heal_get_paint_buffer   (GimpPaintCore    *core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  GimpLayerMode     paint_mode,
-                                                  const GimpCoords *coords,
+static GeglBuffer * ligma_heal_get_paint_buffer   (LigmaPaintCore    *core,
+                                                  LigmaDrawable     *drawable,
+                                                  LigmaPaintOptions *paint_options,
+                                                  LigmaLayerMode     paint_mode,
+                                                  const LigmaCoords *coords,
                                                   gint             *paint_buffer_x,
                                                   gint             *paint_buffer_y,
                                                   gint             *paint_width,
                                                   gint             *paint_height);
 
-static void         gimp_heal_motion             (GimpSourceCore   *source_core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  const GimpCoords *coords,
+static void         ligma_heal_motion             (LigmaSourceCore   *source_core,
+                                                  LigmaDrawable     *drawable,
+                                                  LigmaPaintOptions *paint_options,
+                                                  const LigmaCoords *coords,
                                                   GeglNode         *op,
                                                   gdouble           opacity,
-                                                  GimpPickable     *src_pickable,
+                                                  LigmaPickable     *src_pickable,
                                                   GeglBuffer       *src_buffer,
                                                   GeglRectangle    *src_rect,
                                                   gint              src_offset_x,
@@ -102,59 +102,59 @@ static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   gint              paint_area_height);
 
 
-G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
+G_DEFINE_TYPE (LigmaHeal, ligma_heal, LIGMA_TYPE_SOURCE_CORE)
 
-#define parent_class gimp_heal_parent_class
+#define parent_class ligma_heal_parent_class
 
 
 void
-gimp_heal_register (Gimp                      *gimp,
-                    GimpPaintRegisterCallback  callback)
+ligma_heal_register (Ligma                      *ligma,
+                    LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_HEAL,
-                GIMP_TYPE_SOURCE_OPTIONS,
-                "gimp-heal",
+  (* callback) (ligma,
+                LIGMA_TYPE_HEAL,
+                LIGMA_TYPE_SOURCE_OPTIONS,
+                "ligma-heal",
                 _("Healing"),
-                "gimp-tool-heal");
+                "ligma-tool-heal");
 }
 
 static void
-gimp_heal_class_init (GimpHealClass *klass)
+ligma_heal_class_init (LigmaHealClass *klass)
 {
-  GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
-  GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
+  LigmaPaintCoreClass  *paint_core_class  = LIGMA_PAINT_CORE_CLASS (klass);
+  LigmaSourceCoreClass *source_core_class = LIGMA_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->start            = gimp_heal_start;
-  paint_core_class->get_paint_buffer = gimp_heal_get_paint_buffer;
+  paint_core_class->start            = ligma_heal_start;
+  paint_core_class->get_paint_buffer = ligma_heal_get_paint_buffer;
 
-  source_core_class->motion          = gimp_heal_motion;
+  source_core_class->motion          = ligma_heal_motion;
 }
 
 static void
-gimp_heal_init (GimpHeal *heal)
+ligma_heal_init (LigmaHeal *heal)
 {
 }
 
 static gboolean
-gimp_heal_start (GimpPaintCore     *paint_core,
+ligma_heal_start (LigmaPaintCore     *paint_core,
                  GList             *drawables,
-                 GimpPaintOptions  *paint_options,
-                 const GimpCoords  *coords,
+                 LigmaPaintOptions  *paint_options,
+                 const LigmaCoords  *coords,
                  GError           **error)
 {
-  GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);
+  LigmaSourceCore *source_core = LIGMA_SOURCE_CORE (paint_core);
 
-  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
+  if (! LIGMA_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
                                                      paint_options, coords,
                                                      error))
     {
       return FALSE;
     }
 
-  if (! source_core->set_source && gimp_drawable_is_indexed (drawables->data))
+  if (! source_core->set_source && ligma_drawable_is_indexed (drawables->data))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Healing does not operate on indexed layers."));
       return FALSE;
     }
@@ -163,20 +163,20 @@ gimp_heal_start (GimpPaintCore     *paint_core,
 }
 
 static GeglBuffer *
-gimp_heal_get_paint_buffer (GimpPaintCore    *core,
-                            GimpDrawable     *drawable,
-                            GimpPaintOptions *paint_options,
-                            GimpLayerMode     paint_mode,
-                            const GimpCoords *coords,
+ligma_heal_get_paint_buffer (LigmaPaintCore    *core,
+                            LigmaDrawable     *drawable,
+                            LigmaPaintOptions *paint_options,
+                            LigmaLayerMode     paint_mode,
+                            const LigmaCoords *coords,
                             gint             *paint_buffer_x,
                             gint             *paint_buffer_y,
                             gint             *paint_width,
                             gint             *paint_height)
 {
-  return GIMP_PAINT_CORE_CLASS (parent_class)->get_paint_buffer (core,
+  return LIGMA_PAINT_CORE_CLASS (parent_class)->get_paint_buffer (core,
                                                                  drawable,
                                                                  paint_options,
-                                                                 GIMP_LAYER_MODE_NORMAL,
+                                                                 LIGMA_LAYER_MODE_NORMAL,
                                                                  coords,
                                                                  paint_buffer_x,
                                                                  paint_buffer_y,
@@ -187,7 +187,7 @@ gimp_heal_get_paint_buffer (GimpPaintCore    *core,
 /* Subtract bottom from top and store in result as a float
  */
 static void
-gimp_heal_sub (GeglBuffer          *top_buffer,
+ligma_heal_sub (GeglBuffer          *top_buffer,
                const GeglRectangle *top_rect,
                GeglBuffer          *bottom_buffer,
                const GeglRectangle *bottom_rect,
@@ -230,7 +230,7 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
 /* Add first to second and store in result
  */
 static void
-gimp_heal_add (GeglBuffer          *first_buffer,
+ligma_heal_add (GeglBuffer          *first_buffer,
                const GeglRectangle *first_rect,
                GeglBuffer          *second_buffer,
                const GeglRectangle *second_rect,
@@ -273,7 +273,7 @@ gimp_heal_add (GeglBuffer          *first_buffer,
 
 #if defined(__SSE__) && defined(__GNUC__) && __GNUC__ >= 4
 static float
-gimp_heal_laplace_iteration_sse (gfloat *pixels,
+ligma_heal_laplace_iteration_sse (gfloat *pixels,
                                  gfloat *Adiag,
                                  gint   *Aidx,
                                  gfloat  w,
@@ -305,7 +305,7 @@ gimp_heal_laplace_iteration_sse (gfloat *pixels,
 /* Perform one iteration of Gauss-Seidel, and return the sum squared residual.
  */
 static float
-gimp_heal_laplace_iteration (gfloat *pixels,
+ligma_heal_laplace_iteration (gfloat *pixels,
                              gfloat *Adiag,
                              gint   *Aidx,
                              gfloat  w,
@@ -317,7 +317,7 @@ gimp_heal_laplace_iteration (gfloat *pixels,
 
 #if defined(__SSE__) && defined(__GNUC__) && __GNUC__ >= 4
   if (depth == 4)
-    return gimp_heal_laplace_iteration_sse (pixels, Adiag, Aidx, w, nmask);
+    return ligma_heal_laplace_iteration_sse (pixels, Adiag, Aidx, w, nmask);
 #endif
 
   for (i = 0; i < nmask; i++)
@@ -348,7 +348,7 @@ gimp_heal_laplace_iteration (gfloat *pixels,
 /* Solve the laplace equation for pixels and store the result in-place.
  */
 static void
-gimp_heal_laplace_loop (gfloat *pixels,
+ligma_heal_laplace_loop (gfloat *pixels,
                         gint    height,
                         gint    depth,
                         gint    width,
@@ -415,7 +415,7 @@ gimp_heal_laplace_loop (gfloat *pixels,
   /* Gauss-Seidel with successive over-relaxation */
   for (iter = 0; iter < MAX_ITER; iter++)
     {
-      gfloat err = gimp_heal_laplace_iteration (pixels, Adiag, Aidx,
+      gfloat err = ligma_heal_laplace_iteration (pixels, Adiag, Aidx,
                                                 w, nmask, depth);
       if (err < EPSILON * EPSILON * w * w)
         break;
@@ -431,7 +431,7 @@ gimp_heal_laplace_loop (gfloat *pixels,
  * http://www.tgeorgiev.net/Photoshop_Healing.pdf
  */
 static void
-gimp_heal (GeglBuffer          *src_buffer,
+ligma_heal (GeglBuffer          *src_buffer,
            const GeglRectangle *src_rect,
            GeglBuffer          *dest_buffer,
            const GeglRectangle *dest_rect,
@@ -471,7 +471,7 @@ gimp_heal (GeglBuffer          *src_buffer,
                                       (GDestroyNotify) g_free, diff_alloc);
 
   /* subtract pattern from image and store the result as a float in diff */
-  gimp_heal_sub (dest_buffer, dest_rect,
+  ligma_heal_sub (dest_buffer, dest_rect,
                  src_buffer, src_rect,
                  diff_buffer, GEGL_RECTANGLE (0, 0, width, height));
 
@@ -480,12 +480,12 @@ gimp_heal (GeglBuffer          *src_buffer,
   gegl_buffer_get (mask_buffer, mask_rect, 1.0, babl_format ("Y u8"),
                    mask, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_heal_laplace_loop (diff, height, src_components, width, mask);
+  ligma_heal_laplace_loop (diff, height, src_components, width, mask);
 
   g_free (mask);
 
   /* add solution to original image and store in dest */
-  gimp_heal_add (diff_buffer, GEGL_RECTANGLE (0, 0, width, height),
+  ligma_heal_add (diff_buffer, GEGL_RECTANGLE (0, 0, width, height),
                  src_buffer, src_rect,
                  dest_buffer, dest_rect);
 
@@ -493,13 +493,13 @@ gimp_heal (GeglBuffer          *src_buffer,
 }
 
 static void
-gimp_heal_motion (GimpSourceCore   *source_core,
-                  GimpDrawable     *drawable,
-                  GimpPaintOptions *paint_options,
-                  const GimpCoords *coords,
+ligma_heal_motion (LigmaSourceCore   *source_core,
+                  LigmaDrawable     *drawable,
+                  LigmaPaintOptions *paint_options,
+                  const LigmaCoords *coords,
                   GeglNode         *op,
                   gdouble           opacity,
-                  GimpPickable     *src_pickable,
+                  LigmaPickable     *src_pickable,
                   GeglBuffer       *src_buffer,
                   GeglRectangle    *src_rect,
                   gint              src_offset_x,
@@ -512,15 +512,15 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
-  GimpPaintCore     *paint_core  = GIMP_PAINT_CORE (source_core);
-  GimpContext       *context     = GIMP_CONTEXT (paint_options);
-  GimpSourceOptions *src_options = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpDynamics      *dynamics    = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image       = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaPaintCore     *paint_core  = LIGMA_PAINT_CORE (source_core);
+  LigmaContext       *context     = LIGMA_CONTEXT (paint_options);
+  LigmaSourceOptions *src_options = LIGMA_SOURCE_OPTIONS (paint_options);
+  LigmaDynamics      *dynamics    = LIGMA_BRUSH_CORE (paint_core)->dynamics;
+  LigmaImage         *image       = ligma_item_get_image (LIGMA_ITEM (drawable));
   GeglBuffer        *src_copy;
   GeglBuffer        *mask_buffer;
-  GimpPickable      *dest_pickable;
-  const GimpTempBuf *mask_buf;
+  LigmaPickable      *dest_pickable;
+  const LigmaTempBuf *mask_buf;
   gdouble            fade_point;
   gdouble            force;
   gint               mask_off_x;
@@ -528,21 +528,21 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   gint               dest_pickable_off_x;
   gint               dest_pickable_off_y;
 
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
+  fade_point = ligma_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
-    force = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_FORCE,
+  if (ligma_dynamics_is_output_enabled (dynamics, LIGMA_DYNAMICS_OUTPUT_FORCE))
+    force = ligma_dynamics_get_linear_value (dynamics,
+                                            LIGMA_DYNAMICS_OUTPUT_FORCE,
                                             coords,
                                             paint_options,
                                             fade_point);
   else
     force = paint_options->brush_force;
 
-  mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
+  mask_buf = ligma_brush_core_get_brush_mask (LIGMA_BRUSH_CORE (source_core),
                                              coords,
-                                             GIMP_BRUSH_HARD,
+                                             LIGMA_BRUSH_HARD,
                                              force);
 
   if (! mask_buf)
@@ -568,33 +568,33 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   if (! op)
     {
-      gimp_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
                              src_copy, gegl_buffer_get_extent (src_copy));
     }
   else
     {
-      gimp_gegl_apply_operation (src_buffer, NULL, NULL, op,
+      ligma_gegl_apply_operation (src_buffer, NULL, NULL, op,
                                  src_copy, gegl_buffer_get_extent (src_copy),
                                  FALSE);
     }
 
   if (src_options->sample_merged)
     {
-      dest_pickable = GIMP_PICKABLE (image);
+      dest_pickable = LIGMA_PICKABLE (image);
 
-      gimp_item_get_offset (GIMP_ITEM (drawable),
+      ligma_item_get_offset (LIGMA_ITEM (drawable),
                             &dest_pickable_off_x,
                             &dest_pickable_off_y);
     }
   else
     {
-      dest_pickable = GIMP_PICKABLE (drawable);
+      dest_pickable = LIGMA_PICKABLE (drawable);
 
       dest_pickable_off_x = 0;
       dest_pickable_off_y = 0;
     }
 
-  gimp_gegl_buffer_copy (gimp_pickable_get_buffer (dest_pickable),
+  ligma_gegl_buffer_copy (ligma_pickable_get_buffer (dest_pickable),
                          GEGL_RECTANGLE (paint_buffer_x + dest_pickable_off_x,
                                          paint_buffer_y + dest_pickable_off_y,
                                          gegl_buffer_get_width  (paint_buffer),
@@ -606,7 +606,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                          paint_area_width,
                                          paint_area_height));
 
-  mask_buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask_buf);
+  mask_buffer = ligma_temp_buf_create_buffer ((LigmaTempBuf *) mask_buf);
 
   /* find the offset of the brush mask's rect */
   {
@@ -617,7 +617,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     mask_off_y = (y < 0) ? -y : 0;
   }
 
-  gimp_heal (src_copy, gegl_buffer_get_extent (src_copy),
+  ligma_heal (src_copy, gegl_buffer_get_extent (src_copy),
              paint_buffer,
              GEGL_RECTANGLE (paint_area_offset_x,
                              paint_area_offset_y,
@@ -632,11 +632,11 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   g_object_unref (mask_buffer);
 
   /* replace the canvas with our healed data */
-  gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+  ligma_brush_core_replace_canvas (LIGMA_BRUSH_CORE (paint_core), drawable,
                                   coords,
-                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
-                                  gimp_context_get_opacity (context),
-                                  gimp_paint_options_get_brush_mode (paint_options),
+                                  MIN (opacity, LIGMA_OPACITY_OPAQUE),
+                                  ligma_context_get_opacity (context),
+                                  ligma_paint_options_get_brush_mode (paint_options),
                                   force,
-                                  GIMP_PAINT_INCREMENTAL);
+                                  LIGMA_PAINT_INCREMENTAL);
 }

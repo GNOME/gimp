@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdynamicsoutputeditor.h
+ * ligmadynamicsoutputeditor.h
  * Copyright (C) 2010 Alexia Death
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,34 +18,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_OUTPUT_EDITOR_H__
-#define __GIMP_DYNAMICS_OUTPUT_EDITOR_H__
+#ifndef __LIGMA_DYNAMICS_OUTPUT_EDITOR_H__
+#define __LIGMA_DYNAMICS_OUTPUT_EDITOR_H__
 
 
-#define GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR            (gimp_dynamics_output_editor_get_type ())
-#define GIMP_DYNAMICS_OUTPUT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditor))
-#define GIMP_DYNAMICS_OUTPUT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditorClass))
-#define GIMP_IS_DYNAMICS_OUTPUT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR))
-#define GIMP_IS_DYNAMICS_OUTPUT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR))
-#define GIMP_DYNAMICS_OUTPUT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditorClass))
+#define LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR            (ligma_dynamics_output_editor_get_type ())
+#define LIGMA_DYNAMICS_OUTPUT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR, LigmaDynamicsOutputEditor))
+#define LIGMA_DYNAMICS_OUTPUT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR, LigmaDynamicsOutputEditorClass))
+#define LIGMA_IS_DYNAMICS_OUTPUT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR))
+#define LIGMA_IS_DYNAMICS_OUTPUT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR))
+#define LIGMA_DYNAMICS_OUTPUT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DYNAMICS_OUTPUT_EDITOR, LigmaDynamicsOutputEditorClass))
 
 
-typedef struct _GimpDynamicsOutputEditorClass GimpDynamicsOutputEditorClass;
+typedef struct _LigmaDynamicsOutputEditorClass LigmaDynamicsOutputEditorClass;
 
-struct _GimpDynamicsOutputEditor
+struct _LigmaDynamicsOutputEditor
 {
   GtkBox  parent_instance;
 };
 
-struct _GimpDynamicsOutputEditorClass
+struct _LigmaDynamicsOutputEditorClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType       gimp_dynamics_output_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_dynamics_output_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dynamics_output_editor_new      (GimpDynamicsOutput *output);
+GtkWidget * ligma_dynamics_output_editor_new      (LigmaDynamicsOutput *output);
 
 
-#endif /* __GIMP_DYNAMICS_OUTPUT_EDITOR_H__ */
+#endif /* __LIGMA_DYNAMICS_OUTPUT_EDITOR_H__ */

@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Sky
+## Makefile.am for ligma/data/patterns/Sky
 
-patternsskydatadir = $(gimpdatadir)/patterns/Sky
+patternsskydatadir = $(ligmadatadir)/patterns/Sky
 
 patternsskydata_DATA = \
 	lightning.pat		\

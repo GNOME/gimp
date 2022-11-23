@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppropwidgets.c
- * Copyright (C) 2002-2007  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropwidgets.c
+ * Copyright (C) 2002-2007  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,20 +23,20 @@
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgets.h"
-#include "gimpwidgets-private.h"
+#include "ligmawidgets.h"
+#include "ligmawidgets-private.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimppropwidgets
- * @title: GimpPropWidgets
+ * SECTION: ligmapropwidgets
+ * @title: LigmaPropWidgets
  * @short_description: Editable views on #GObject properties.
  *
  * Editable views on #GObject properties.
@@ -81,11 +81,11 @@ static void         connect_notify     (GObject     *config,
                                         GCallback    callback,
                                         gpointer     callback_data);
 
-static gboolean gimp_prop_widget_double_to_factor   (GBinding     *binding,
+static gboolean ligma_prop_widget_double_to_factor   (GBinding     *binding,
                                                      const GValue *from_value,
                                                      GValue       *to_value,
                                                      gpointer      user_data);
-static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
+static gboolean ligma_prop_widget_double_from_factor (GBinding     *binding,
                                                      const GValue *from_value,
                                                      GValue       *to_value,
                                                      gpointer      user_data);
@@ -96,7 +96,7 @@ static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
 /******************/
 
 /**
- * gimp_prop_check_button_new:
+ * ligma_prop_check_button_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by checkbutton.
  * @label:         Label to give checkbutton (including mnemonic).
@@ -111,7 +111,7 @@ static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_check_button_new (GObject     *config,
+ligma_prop_check_button_new (GObject     *config,
                             const gchar *property_name,
                             const gchar *label)
 {
@@ -135,26 +135,26 @@ gimp_prop_check_button_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-    gimp_help_set_help_data (button, blurb, NULL);
+    ligma_help_set_help_data (button, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           button, "active",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_bound_property (button, config, property_name);
+  ligma_widget_set_bound_property (button, config, property_name);
 
   return button;
 }
 
 
-static void   gimp_prop_enum_check_button_callback (GtkWidget  *widget,
+static void   ligma_prop_enum_check_button_callback (GtkWidget  *widget,
                                                     GObject    *config);
-static void   gimp_prop_enum_check_button_notify   (GObject    *config,
+static void   ligma_prop_enum_check_button_notify   (GObject    *config,
                                                     GParamSpec *param_spec,
                                                     GtkWidget  *button);
 
 /**
- * gimp_prop_enum_check_button_new:
+ * ligma_prop_enum_check_button_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by checkbutton.
  * @label: (nullable): Label to give checkbutton (including mnemonic).
@@ -173,7 +173,7 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_enum_check_button_new (GObject     *config,
+ligma_prop_enum_check_button_new (GObject     *config,
                                  const gchar *property_name,
                                  const gchar *label,
                                  gint         false_value,
@@ -213,22 +213,22 @@ gimp_prop_enum_check_button_new (GObject     *config,
                      GINT_TO_POINTER (true_value));
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_prop_enum_check_button_callback),
+                    G_CALLBACK (ligma_prop_enum_check_button_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_enum_check_button_notify),
+                  G_CALLBACK (ligma_prop_enum_check_button_notify),
                   button);
 
   gtk_widget_show (button);
 
-  gimp_widget_set_bound_property (button, config, property_name);
+  ligma_widget_set_bound_property (button, config, property_name);
 
   return button;
 }
 
 static void
-gimp_prop_enum_check_button_callback (GtkWidget *widget,
+ligma_prop_enum_check_button_callback (GtkWidget *widget,
                                       GObject   *config)
 {
   GParamSpec *param_spec;
@@ -260,7 +260,7 @@ gimp_prop_enum_check_button_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_enum_check_button_notify (GObject    *config,
+ligma_prop_enum_check_button_notify (GObject    *config,
                                     GParamSpec *param_spec,
                                     GtkWidget  *button)
 {
@@ -290,13 +290,13 @@ gimp_prop_enum_check_button_notify (GObject    *config,
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) != active)
     {
       g_signal_handlers_block_by_func (button,
-                                       gimp_prop_enum_check_button_callback,
+                                       ligma_prop_enum_check_button_callback,
                                        config);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
 
       g_signal_handlers_unblock_by_func (button,
-                                         gimp_prop_enum_check_button_callback,
+                                         ligma_prop_enum_check_button_callback,
                                          config);
     }
 }
@@ -308,7 +308,7 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 
 
 /**
- * gimp_prop_switch_new:
+ * ligma_prop_switch_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by checkbutton.
  * @label:         Label to give checkbutton (including mnemonic).
@@ -324,7 +324,7 @@ gimp_prop_enum_check_button_notify (GObject    *config,
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_switch_new (GObject     *config,
+ligma_prop_switch_new (GObject     *config,
                       const gchar *property_name,
                       const gchar *label,
                       GtkWidget  **label_out,
@@ -352,13 +352,13 @@ gimp_prop_switch_new (GObject     *config,
   pswitch = gtk_switch_new ();
   g_object_bind_property (config, property_name, pswitch, "active",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-  gimp_help_set_help_data (pswitch, tooltip, NULL);
+  ligma_help_set_help_data (pswitch, tooltip, NULL);
   gtk_widget_show (pswitch);
 
   plabel = gtk_label_new_with_mnemonic (label);
   gtk_label_set_xalign (GTK_LABEL (plabel), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (plabel), pswitch);
-  gimp_help_set_help_data (plabel, tooltip, NULL);
+  ligma_help_set_help_data (plabel, tooltip, NULL);
   gtk_widget_show (plabel);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -371,7 +371,7 @@ gimp_prop_switch_new (GObject     *config,
   if (switch_out)
     *switch_out = pswitch;
 
-  gimp_widget_set_bound_property (hbox, config, property_name);
+  ligma_widget_set_bound_property (hbox, config, property_name);
 
   return hbox;
 }
@@ -381,36 +381,36 @@ gimp_prop_switch_new (GObject     *config,
 /*  int/enum combo box   */
 /*************************/
 
-static void gimp_prop_int_combo_box_callback     (GtkWidget  *widget,
+static void ligma_prop_int_combo_box_callback     (GtkWidget  *widget,
                                                   GObject    *config);
-static void gimp_prop_int_combo_box_notify       (GObject    *config,
+static void ligma_prop_int_combo_box_notify       (GObject    *config,
                                                   GParamSpec *param_spec,
                                                   GtkWidget  *widget);
 
-static void gimp_prop_pointer_combo_box_callback (GtkWidget  *widget,
+static void ligma_prop_pointer_combo_box_callback (GtkWidget  *widget,
                                                   GObject    *config);
-static void gimp_prop_pointer_combo_box_notify   (GObject    *config,
+static void ligma_prop_pointer_combo_box_notify   (GObject    *config,
                                                   GParamSpec *param_spec,
                                                   GtkWidget  *combo_box);
 
 /**
- * gimp_prop_int_combo_box_new:
+ * ligma_prop_int_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of int property controlled by combo box.
- * @store:         #GimpIntStore holding list of labels, values, etc.
+ * @store:         #LigmaIntStore holding list of labels, values, etc.
  *
- * Creates a #GimpIntComboBox widget to display and set the specified
+ * Creates a #LigmaIntComboBox widget to display and set the specified
  * property.  The contents of the widget are determined by @store,
- * which should be created using gimp_int_store_new().
+ * which should be created using ligma_int_store_new().
  *
- * Returns: (transfer full): The newly created #GimpIntComboBox widget.
+ * Returns: (transfer full): The newly created #LigmaIntComboBox widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_int_combo_box_new (GObject      *config,
+ligma_prop_int_combo_box_new (GObject      *config,
                              const gchar  *property_name,
-                             GimpIntStore *store)
+                             LigmaIntStore *store)
 {
   GParamSpec  *param_spec;
   GtkWidget   *combo_box;
@@ -450,44 +450,44 @@ gimp_prop_int_combo_box_new (GObject      *config,
         }
     }
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+  combo_box = g_object_new (LIGMA_TYPE_INT_COMBO_BOX,
                             "model", store,
                             "visible", TRUE,
                             NULL);
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-    gimp_help_set_help_data (combo_box, blurb, NULL);
+    ligma_help_set_help_data (combo_box, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           combo_box, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_bound_property (combo_box, config, property_name);
+  ligma_widget_set_bound_property (combo_box, config, property_name);
 
   return combo_box;
 }
 
 /**
- * gimp_prop_pointer_combo_box_new:
+ * ligma_prop_pointer_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of GType/gpointer property controlled by combo box.
- * @store:         #GimpIntStore holding list of labels, values, etc.
+ * @store:         #LigmaIntStore holding list of labels, values, etc.
  *
- * Creates a #GimpIntComboBox widget to display and set the specified
+ * Creates a #LigmaIntComboBox widget to display and set the specified
  * property.  The contents of the widget are determined by @store,
- * which should be created using gimp_int_store_new().
+ * which should be created using ligma_int_store_new().
  * Values are GType/gpointer data, and therefore must be stored in the
  * "user-data" column, instead of the usual "value" column.
  *
- * Returns: (transfer full): The newly created #GimpIntComboBox widget.
+ * Returns: (transfer full): The newly created #LigmaIntComboBox widget.
  *
  * Since: 2.10
  */
 GtkWidget *
-gimp_prop_pointer_combo_box_new (GObject      *config,
+ligma_prop_pointer_combo_box_new (GObject      *config,
                                  const gchar  *property_name,
-                                 GimpIntStore *store)
+                                 LigmaIntStore *store)
 {
   GParamSpec *param_spec;
   GtkWidget  *combo_box;
@@ -510,28 +510,28 @@ gimp_prop_pointer_combo_box_new (GObject      *config,
                 property_name, &property_value,
                 NULL);
 
-  /* We use a GimpIntComboBox but we cannot store gpointer in the
+  /* We use a LigmaIntComboBox but we cannot store gpointer in the
    * "value" column, because gpointer is not a subset of gint. Instead
    * we store the value in the "user-data" column which is a gpointer.
    */
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+  combo_box = g_object_new (LIGMA_TYPE_INT_COMBO_BOX,
                             "model", store,
                             NULL);
 
-  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+  ligma_int_combo_box_set_active_by_user_data (LIGMA_INT_COMBO_BOX (combo_box),
                                               property_value);
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_pointer_combo_box_callback),
+                    G_CALLBACK (ligma_prop_pointer_combo_box_callback),
                     config);
 
   set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_pointer_combo_box_notify),
+                  G_CALLBACK (ligma_prop_pointer_combo_box_notify),
                   combo_box);
 
-  gimp_widget_set_bound_property (combo_box, config, property_name);
+  ligma_widget_set_bound_property (combo_box, config, property_name);
 
   gtk_widget_show (combo_box);
 
@@ -539,24 +539,24 @@ gimp_prop_pointer_combo_box_new (GObject      *config,
 }
 
 /**
- * gimp_prop_enum_combo_box_new:
+ * ligma_prop_enum_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by combo box.
  * @minimum:       Smallest allowed value of enum.
  * @maximum:       Largest allowed value of enum.
  *
- * Creates a #GimpIntComboBox widget to display and set the specified
+ * Creates a #LigmaIntComboBox widget to display and set the specified
  * enum property.  The @mimimum_value and @maximum_value give the
  * possibility of restricting the allowed range to a subset of the
  * enum.  If the two values are equal (e.g., 0, 0), then the full
  * range of the Enum is used.
  *
- * Returns: (transfer full): The newly created #GimpEnumComboBox widget.
+ * Returns: (transfer full): The newly created #LigmaEnumComboBox widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_enum_combo_box_new (GObject     *config,
+ligma_prop_enum_combo_box_new (GObject     *config,
                               const gchar *property_name,
                               gint         minimum,
                               gint         maximum)
@@ -580,56 +580,56 @@ gimp_prop_enum_combo_box_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      store = gimp_enum_store_new_with_range (param_spec->value_type,
+      store = ligma_enum_store_new_with_range (param_spec->value_type,
                                               minimum, maximum);
     }
-  else if (param_spec->value_type == GIMP_TYPE_DESATURATE_MODE)
+  else if (param_spec->value_type == LIGMA_TYPE_DESATURATE_MODE)
     {
       /* this is a bad hack, if we get more of those, we should probably
        * think of something less ugly
        */
-      store = gimp_enum_store_new_with_values (param_spec->value_type,
+      store = ligma_enum_store_new_with_values (param_spec->value_type,
                                                5,
-                                               GIMP_DESATURATE_LUMINANCE,
-                                               GIMP_DESATURATE_LUMA,
-                                               GIMP_DESATURATE_LIGHTNESS,
-                                               GIMP_DESATURATE_AVERAGE,
-                                               GIMP_DESATURATE_VALUE);
+                                               LIGMA_DESATURATE_LUMINANCE,
+                                               LIGMA_DESATURATE_LUMA,
+                                               LIGMA_DESATURATE_LIGHTNESS,
+                                               LIGMA_DESATURATE_AVERAGE,
+                                               LIGMA_DESATURATE_VALUE);
     }
 
   if (store)
     {
-      combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+      combo_box = g_object_new (LIGMA_TYPE_ENUM_COMBO_BOX,
                                 "model", store,
                                 NULL);
       g_object_unref (store);
     }
   else
     {
-      combo_box = gimp_enum_combo_box_new (param_spec->value_type);
+      combo_box = ligma_enum_combo_box_new (param_spec->value_type);
     }
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo_box), value);
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_int_combo_box_callback),
+                    G_CALLBACK (ligma_prop_int_combo_box_callback),
                     config);
 
   set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_int_combo_box_notify),
+                  G_CALLBACK (ligma_prop_int_combo_box_notify),
                   combo_box);
 
   gtk_widget_show (combo_box);
 
-  gimp_widget_set_bound_property (combo_box, config, property_name);
+  ligma_widget_set_bound_property (combo_box, config, property_name);
 
   return combo_box;
 }
 
 static void
-gimp_prop_int_combo_box_callback (GtkWidget *widget,
+ligma_prop_int_combo_box_callback (GtkWidget *widget,
                                   GObject   *config)
 {
   GParamSpec  *param_spec;
@@ -639,7 +639,7 @@ gimp_prop_int_combo_box_callback (GtkWidget *widget,
   if (! param_spec)
     return;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value))
     {
       gint v;
 
@@ -651,7 +651,7 @@ gimp_prop_int_combo_box_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_int_combo_box_notify (GObject    *config,
+ligma_prop_int_combo_box_notify (GObject    *config,
                                 GParamSpec *param_spec,
                                 GtkWidget  *combo_box)
 {
@@ -662,18 +662,18 @@ gimp_prop_int_combo_box_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (combo_box,
-                                   gimp_prop_int_combo_box_callback,
+                                   ligma_prop_int_combo_box_callback,
                                    config);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo_box), value);
 
   g_signal_handlers_unblock_by_func (combo_box,
-                                     gimp_prop_int_combo_box_callback,
+                                     ligma_prop_int_combo_box_callback,
                                      config);
 }
 
 static void
-gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
+ligma_prop_pointer_combo_box_callback (GtkWidget *widget,
                                       GObject   *config)
 {
   GParamSpec *param_spec;
@@ -683,7 +683,7 @@ gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
   if (! param_spec)
     return;
 
-  if (gimp_int_combo_box_get_active_user_data (GIMP_INT_COMBO_BOX (widget),
+  if (ligma_int_combo_box_get_active_user_data (LIGMA_INT_COMBO_BOX (widget),
                                                &value))
     {
       gpointer v;
@@ -696,7 +696,7 @@ gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_pointer_combo_box_notify (GObject    *config,
+ligma_prop_pointer_combo_box_notify (GObject    *config,
                                     GParamSpec *param_spec,
                                     GtkWidget  *combo_box)
 {
@@ -707,14 +707,14 @@ gimp_prop_pointer_combo_box_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (combo_box,
-                                   gimp_prop_pointer_combo_box_callback,
+                                   ligma_prop_pointer_combo_box_callback,
                                    config);
 
-  gimp_int_combo_box_set_active_by_user_data (GIMP_INT_COMBO_BOX (combo_box),
+  ligma_int_combo_box_set_active_by_user_data (LIGMA_INT_COMBO_BOX (combo_box),
                                               value);
 
   g_signal_handlers_unblock_by_func (combo_box,
-                                     gimp_prop_pointer_combo_box_callback,
+                                     ligma_prop_pointer_combo_box_callback,
                                      config);
 }
 
@@ -722,15 +722,15 @@ gimp_prop_pointer_combo_box_notify (GObject    *config,
 /*  boolean combo box   */
 /************************/
 
-static void   gimp_prop_boolean_combo_box_callback (GtkWidget   *combo,
+static void   ligma_prop_boolean_combo_box_callback (GtkWidget   *combo,
                                                     GObject     *config);
-static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
+static void   ligma_prop_boolean_combo_box_notify   (GObject     *config,
                                                     GParamSpec  *param_spec,
                                                     GtkWidget   *combo);
 
 
 /**
- * gimp_prop_boolean_combo_box_new:
+ * ligma_prop_boolean_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by combo box.
  * @true_text:     Label used for entry corresponding to %TRUE value.
@@ -746,7 +746,7 @@ static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_boolean_combo_box_new (GObject     *config,
+ligma_prop_boolean_combo_box_new (GObject     *config,
                                  const gchar *property_name,
                                  const gchar *true_text,
                                  const gchar *false_text)
@@ -767,23 +767,23 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  combo = gimp_int_combo_box_new (true_text,  TRUE,
+  combo = ligma_int_combo_box_new (true_text,  TRUE,
                                   false_text, FALSE,
                                   NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), value);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), value);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_prop_boolean_combo_box_callback),
+                    G_CALLBACK (ligma_prop_boolean_combo_box_callback),
                     config);
 
   set_param_spec (G_OBJECT (combo), combo, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_boolean_combo_box_notify),
+                  G_CALLBACK (ligma_prop_boolean_combo_box_notify),
                   combo);
 
-  gimp_widget_set_bound_property (combo, config, property_name);
+  ligma_widget_set_bound_property (combo, config, property_name);
 
   gtk_widget_show (combo);
 
@@ -791,7 +791,7 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
 }
 
 static void
-gimp_prop_boolean_combo_box_callback (GtkWidget *combo,
+ligma_prop_boolean_combo_box_callback (GtkWidget *combo,
                                       GObject   *config)
 {
   GParamSpec  *param_spec;
@@ -801,7 +801,7 @@ gimp_prop_boolean_combo_box_callback (GtkWidget *combo,
   if (! param_spec)
     return;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value))
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo), &value))
     {
       gint v;
 
@@ -813,7 +813,7 @@ gimp_prop_boolean_combo_box_callback (GtkWidget *combo,
 }
 
 static void
-gimp_prop_boolean_combo_box_notify (GObject    *config,
+ligma_prop_boolean_combo_box_notify (GObject    *config,
                                     GParamSpec *param_spec,
                                     GtkWidget  *combo)
 {
@@ -824,13 +824,13 @@ gimp_prop_boolean_combo_box_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (combo,
-                                   gimp_prop_boolean_combo_box_callback,
+                                   ligma_prop_boolean_combo_box_callback,
                                    config);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), value);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), value);
 
   g_signal_handlers_unblock_by_func (combo,
-                                     gimp_prop_boolean_combo_box_callback,
+                                     ligma_prop_boolean_combo_box_callback,
                                      config);
 }
 
@@ -839,15 +839,15 @@ gimp_prop_boolean_combo_box_notify (GObject    *config,
 /*  radio boxes  */
 /*****************/
 
-static void  gimp_prop_radio_button_callback (GtkWidget   *widget,
+static void  ligma_prop_radio_button_callback (GtkWidget   *widget,
                                               GObject     *config);
-static void  gimp_prop_radio_button_notify   (GObject     *config,
+static void  ligma_prop_radio_button_notify   (GObject     *config,
                                               GParamSpec  *param_spec,
                                               GtkWidget   *button);
 
 
 /**
- * gimp_prop_enum_radio_frame_new:
+ * ligma_prop_enum_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
  * @title: (nullable): Label for the frame holding the buttons
@@ -861,12 +861,12 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned frame.
  *
- * Returns: (transfer full): A #GimpFrame containing the radio buttons.
+ * Returns: (transfer full): A #LigmaFrame containing the radio buttons.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_enum_radio_frame_new (GObject     *config,
+ligma_prop_enum_radio_frame_new (GObject     *config,
                                 const gchar *property_name,
                                 const gchar *title,
                                 gint         minimum,
@@ -894,41 +894,41 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      frame = gimp_enum_radio_frame_new_with_range (param_spec->value_type,
+      frame = ligma_enum_radio_frame_new_with_range (param_spec->value_type,
                                                     minimum, maximum,
                                                     gtk_label_new (title),
-                                                    G_CALLBACK (gimp_prop_radio_button_callback),
+                                                    G_CALLBACK (ligma_prop_radio_button_callback),
                                                     config, NULL,
                                                     &button);
     }
   else
     {
-      frame = gimp_enum_radio_frame_new (param_spec->value_type,
+      frame = ligma_enum_radio_frame_new (param_spec->value_type,
                                          gtk_label_new (title),
-                                         G_CALLBACK (gimp_prop_radio_button_callback),
+                                         G_CALLBACK (ligma_prop_radio_button_callback),
                                          config, NULL,
                                          &button);
     }
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
   set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  G_CALLBACK (ligma_prop_radio_button_notify),
                   button);
 
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
   gtk_widget_show (frame);
 
-  gimp_widget_set_bound_property (frame, config, property_name);
+  ligma_widget_set_bound_property (frame, config, property_name);
 
   return frame;
 }
 
 /**
- * gimp_prop_enum_radio_box_new:
+ * ligma_prop_enum_radio_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
  * @minimum:       Smallest value of enum to be included.
@@ -939,14 +939,14 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
  * allow only a subset of the enum to be used.  If the two arguments
  * are equal (e.g., 0, 0), then the full range of the enum will be used.
  * If you want to assign a label to the group of radio buttons, use
- * gimp_prop_enum_radio_frame_new() instead of this function.
+ * ligma_prop_enum_radio_frame_new() instead of this function.
  *
  * Returns: (transfer full): A #GtkBox containing the radio buttons.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_enum_radio_box_new (GObject     *config,
+ligma_prop_enum_radio_box_new (GObject     *config,
                               const gchar *property_name,
                               gint         minimum,
                               gint         maximum)
@@ -970,31 +970,31 @@ gimp_prop_enum_radio_box_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      vbox = gimp_enum_radio_box_new_with_range (param_spec->value_type,
+      vbox = ligma_enum_radio_box_new_with_range (param_spec->value_type,
                                                  minimum, maximum,
-                                                 G_CALLBACK (gimp_prop_radio_button_callback),
+                                                 G_CALLBACK (ligma_prop_radio_button_callback),
                                                  config, NULL,
                                                  &button);
     }
   else
     {
-      vbox = gimp_enum_radio_box_new (param_spec->value_type,
-                                      G_CALLBACK (gimp_prop_radio_button_callback),
+      vbox = ligma_enum_radio_box_new (param_spec->value_type,
+                                      G_CALLBACK (ligma_prop_radio_button_callback),
                                       config, NULL,
                                       &button);
     }
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
   set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  G_CALLBACK (ligma_prop_radio_button_notify),
                   button);
 
   g_object_set_data (G_OBJECT (vbox), "radio-button", button);
 
-  gimp_widget_set_bound_property (vbox, config, property_name);
+  ligma_widget_set_bound_property (vbox, config, property_name);
 
   gtk_widget_show (vbox);
 
@@ -1002,25 +1002,25 @@ gimp_prop_enum_radio_box_new (GObject     *config,
 }
 
 /**
- * gimp_prop_int_radio_frame_new:
+ * ligma_prop_int_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
  * @title: (nullable): Label for the frame holding the buttons
- * @store:         #GimpIntStore holding list of labels, values, etc.
+ * @store:         #LigmaIntStore holding list of labels, values, etc.
  *
  * Creates a group of radio buttons which function to set and display
  * the specified int property. If @title is %NULL, the
  * @property_name's nick will be used as label of the returned frame.
  *
- * Returns: (transfer full): A #GimpFrame containing the radio buttons.
+ * Returns: (transfer full): A #LigmaFrame containing the radio buttons.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_int_radio_frame_new (GObject      *config,
+ligma_prop_int_radio_frame_new (GObject      *config,
                                const gchar  *property_name,
                                const gchar  *title,
-                               GimpIntStore *store)
+                               LigmaIntStore *store)
 {
   GParamSpec  *param_spec;
   const gchar *tooltip;
@@ -1028,7 +1028,7 @@ gimp_prop_int_radio_frame_new (GObject      *config,
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_INT_STORE (store), NULL);
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_INT, G_STRFUNC);
@@ -1040,14 +1040,14 @@ gimp_prop_int_radio_frame_new (GObject      *config,
 
   tooltip = g_param_spec_get_blurb (param_spec);
 
-  frame = gimp_int_radio_frame_new_from_store (title, store);
+  frame = ligma_int_radio_frame_new_from_store (title, store);
   g_object_bind_property (config, property_name,
                           frame, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-  gimp_help_set_help_data (frame, tooltip, NULL);
+  ligma_help_set_help_data (frame, tooltip, NULL);
   gtk_widget_show (frame);
 
-  gimp_widget_set_bound_property (frame, config, property_name);
+  ligma_widget_set_bound_property (frame, config, property_name);
 
   return frame;
 }
@@ -1057,21 +1057,21 @@ gimp_prop_int_radio_frame_new (GObject      *config,
 /*  label  */
 /***********/
 
-static void  gimp_prop_enum_label_notify (GObject    *config,
+static void  ligma_prop_enum_label_notify (GObject    *config,
                                           GParamSpec *param_spec,
                                           GtkWidget  *label);
 
 /**
- * gimp_prop_enum_label_new:
+ * ligma_prop_enum_label_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of enum property to be displayed.
  *
- * Returns: (transfer full): The newly created #GimpEnumLabel widget.
+ * Returns: (transfer full): The newly created #LigmaEnumLabel widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_enum_label_new (GObject     *config,
+ligma_prop_enum_label_new (GObject     *config,
                           const gchar *property_name)
 {
   GParamSpec *param_spec;
@@ -1090,16 +1090,16 @@ gimp_prop_enum_label_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  label = gimp_enum_label_new (param_spec->value_type, value);
+  label = ligma_enum_label_new (param_spec->value_type, value);
   gtk_widget_set_halign (label, GTK_ALIGN_START);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_enum_label_notify),
+                  G_CALLBACK (ligma_prop_enum_label_notify),
                   label);
 
-  gimp_widget_set_bound_property (label, config, property_name);
+  ligma_widget_set_bound_property (label, config, property_name);
 
   gtk_widget_show (label);
 
@@ -1107,7 +1107,7 @@ gimp_prop_enum_label_new (GObject     *config,
 }
 
 static void
-gimp_prop_enum_label_notify (GObject    *config,
+ligma_prop_enum_label_notify (GObject    *config,
                              GParamSpec *param_spec,
                              GtkWidget  *label)
 {
@@ -1117,12 +1117,12 @@ gimp_prop_enum_label_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_enum_label_set_value (GIMP_ENUM_LABEL (label), value);
+  ligma_enum_label_set_value (LIGMA_ENUM_LABEL (label), value);
 }
 
 
 /**
- * gimp_prop_boolean_radio_frame_new:
+ * ligma_prop_boolean_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by the radio buttons.
  * @title: (nullable): Label for the frame.
@@ -1134,12 +1134,12 @@ gimp_prop_enum_label_notify (GObject    *config,
  * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned frame.
  *
- * Returns: (transfer full): A #GimpFrame containing the radio buttons.
+ * Returns: (transfer full): A #LigmaFrame containing the radio buttons.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_boolean_radio_frame_new (GObject     *config,
+ligma_prop_boolean_radio_frame_new (GObject     *config,
                                    const gchar *property_name,
                                    const gchar *title,
                                    const gchar *true_text,
@@ -1166,8 +1166,8 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
                 NULL);
 
   frame =
-    gimp_int_radio_group_new (TRUE, title,
-                              G_CALLBACK (gimp_prop_radio_button_callback),
+    ligma_int_radio_group_new (TRUE, title,
+                              G_CALLBACK (ligma_prop_radio_button_callback),
                               config, NULL, value,
 
                               false_text, FALSE, &button,
@@ -1178,12 +1178,12 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  G_CALLBACK (ligma_prop_radio_button_notify),
                   button);
 
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
-  gimp_widget_set_bound_property (frame, config, property_name);
+  ligma_widget_set_bound_property (frame, config, property_name);
 
   gtk_widget_show (frame);
 
@@ -1191,7 +1191,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
 }
 
 /**
- * gimp_prop_enum_icon_box_new:
+ * ligma_prop_enum_icon_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
  * @icon_prefix:   The prefix of the group of icon names to use.
@@ -1202,14 +1202,14 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
  * function to set and display the value of the specified Enum
  * property.  The icon name for each icon is created by appending the
  * enum_value's nick to the given @icon_prefix.  See
- * gimp_enum_icon_box_new() for more information.
+ * ligma_enum_icon_box_new() for more information.
  *
- * Returns: (transfer full): A #libgimpwidgets-gimpenumiconbox containing the radio buttons.
+ * Returns: (transfer full): A #libligmawidgets-ligmaenumiconbox containing the radio buttons.
  *
  * Since: 2.10
  */
 GtkWidget *
-gimp_prop_enum_icon_box_new (GObject     *config,
+ligma_prop_enum_icon_box_new (GObject     *config,
                              const gchar *property_name,
                              const gchar *icon_prefix,
                              gint         minimum,
@@ -1234,33 +1234,33 @@ gimp_prop_enum_icon_box_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      box = gimp_enum_icon_box_new_with_range (param_spec->value_type,
+      box = ligma_enum_icon_box_new_with_range (param_spec->value_type,
                                                minimum, maximum,
                                                icon_prefix,
                                                GTK_ICON_SIZE_MENU,
-                                               G_CALLBACK (gimp_prop_radio_button_callback),
+                                               G_CALLBACK (ligma_prop_radio_button_callback),
                                                config, NULL,
                                                &button);
     }
   else
     {
-      box = gimp_enum_icon_box_new (param_spec->value_type,
+      box = ligma_enum_icon_box_new (param_spec->value_type,
                                     icon_prefix,
                                     GTK_ICON_SIZE_MENU,
-                                    G_CALLBACK (gimp_prop_radio_button_callback),
+                                    G_CALLBACK (ligma_prop_radio_button_callback),
                                     config, NULL,
                                     &button);
     }
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
   set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  G_CALLBACK (ligma_prop_radio_button_notify),
                   button);
 
-  gimp_widget_set_bound_property (box, config, property_name);
+  ligma_widget_set_bound_property (box, config, property_name);
 
   gtk_widget_show (box);
 
@@ -1268,7 +1268,7 @@ gimp_prop_enum_icon_box_new (GObject     *config,
 }
 
 static void
-gimp_prop_radio_button_callback (GtkWidget *widget,
+ligma_prop_radio_button_callback (GtkWidget *widget,
                                  GObject   *config)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
@@ -1282,7 +1282,7 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
         return;
 
       value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                  "gimp-item-data"));
+                                                  "ligma-item-data"));
 
       g_object_get (config, param_spec->name, &v, NULL);
 
@@ -1292,7 +1292,7 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_radio_button_notify (GObject    *config,
+ligma_prop_radio_button_notify (GObject    *config,
                                GParamSpec *param_spec,
                                GtkWidget  *button)
 {
@@ -1302,7 +1302,7 @@ gimp_prop_radio_button_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 }
 
 
@@ -1310,14 +1310,14 @@ gimp_prop_radio_button_notify (GObject    *config,
 /*  adjustments  */
 /*****************/
 
-static void   gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
+static void   ligma_prop_adjustment_callback (GtkAdjustment *adjustment,
                                              GObject       *config);
-static void   gimp_prop_adjustment_notify   (GObject       *config,
+static void   ligma_prop_adjustment_notify   (GObject       *config,
                                              GParamSpec    *param_spec,
                                              GtkAdjustment *adjustment);
 
 /**
- * gimp_prop_spin_button_new:
+ * ligma_prop_spin_button_new:
  * @config:            Object to which property is attached.
  * @property_name:     Name of double property controlled by the spin button.
  * @step_increment:    Step size.
@@ -1328,14 +1328,14 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * specified double property.
  *
  * If you wish to change the widget's range relatively to the
- * @property_name's range, use gimp_prop_widget_set_factor().
+ * @property_name's range, use ligma_prop_widget_set_factor().
  *
- * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ * Returns: (transfer full): A new #libligmawidgets-ligmaspinbutton.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_spin_button_new (GObject     *config,
+ligma_prop_spin_button_new (GObject     *config,
                            const gchar *property_name,
                            gdouble      step_increment,
                            gdouble      page_increment,
@@ -1363,7 +1363,7 @@ gimp_prop_spin_button_new (GObject     *config,
   adjustment = gtk_adjustment_new (value, lower, upper,
                                    step_increment, page_increment, 0);
 
-  spinbutton = gimp_spin_button_new (adjustment, step_increment, digits);
+  spinbutton = ligma_spin_button_new (adjustment, step_increment, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
@@ -1372,10 +1372,10 @@ gimp_prop_spin_button_new (GObject     *config,
                                     spinbutton, "value",
                                     G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
   g_object_set_data (G_OBJECT (adjustment),
-                     "gimp-prop-adjustment-binding",
+                     "ligma-prop-adjustment-binding",
                      binding);
 
-  gimp_widget_set_bound_property (spinbutton, config, property_name);
+  ligma_widget_set_bound_property (spinbutton, config, property_name);
 
   gtk_widget_show (spinbutton);
 
@@ -1383,19 +1383,19 @@ gimp_prop_spin_button_new (GObject     *config,
 }
 
 /**
- * gimp_prop_label_spin_new:
+ * ligma_prop_label_spin_new:
  * @config:            Object to which property is attached.
  * @digits:            Number of digits after decimal point to display.
  *
- * Creates a #GimpLabelSpin to set and display the value of the
+ * Creates a #LigmaLabelSpin to set and display the value of the
  * specified double property.
  *
- * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ * Returns: (transfer full): A new #libligmawidgets-ligmaspinbutton.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_label_spin_new (GObject     *config,
+ligma_prop_label_spin_new (GObject     *config,
                           const gchar *property_name,
                           gint         digits)
 {
@@ -1418,19 +1418,19 @@ gimp_prop_label_spin_new (GObject     *config,
     digits = 0;
 
   label = g_param_spec_get_nick (param_spec);
-  widget = gimp_label_spin_new (label, value, lower, upper, digits);
+  widget = ligma_label_spin_new (label, value, lower, upper, digits);
 
   g_object_bind_property (config, property_name,
                           widget, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_bound_property (widget, config, property_name);
+  ligma_widget_set_bound_property (widget, config, property_name);
 
   return widget;
 }
 
 /**
- * gimp_prop_spin_scale_new:
+ * ligma_prop_spin_scale_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of double or int property controlled by the
  *                  spin button.
@@ -1444,17 +1444,17 @@ gimp_prop_label_spin_new (GObject     *config,
  * int or double property.
  *
  * By default, the @property_name's nick will be used as label of the
- * returned widget. Use gimp_spin_scale_set_label() to change this.
+ * returned widget. Use ligma_spin_scale_set_label() to change this.
  *
  * If you wish to change the widget's range relatively to the
- * @property_name's range, use gimp_prop_widget_set_factor().
+ * @property_name's range, use ligma_prop_widget_set_factor().
  *
- * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ * Returns: (transfer full): A new #libligmawidgets-ligmaspinbutton.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_spin_scale_new (GObject     *config,
+ligma_prop_spin_scale_new (GObject     *config,
                           const gchar *property_name,
                           gdouble      step_increment,
                           gdouble      page_increment,
@@ -1485,7 +1485,7 @@ gimp_prop_spin_scale_new (GObject     *config,
                                    step_increment, page_increment, 0);
   label = g_param_spec_get_nick (param_spec);
 
-  spinscale = gimp_spin_scale_new (adjustment, label, digits);
+  spinscale = ligma_spin_scale_new (adjustment, label, digits);
 
   set_param_spec (G_OBJECT (adjustment), spinscale, param_spec);
 
@@ -1493,39 +1493,39 @@ gimp_prop_spin_scale_new (GObject     *config,
     {
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (param_spec);
 
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (spinscale),
+      ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (spinscale),
                                         gspec->ui_minimum, gspec->ui_maximum);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (spinscale), gspec->ui_gamma);
+      ligma_spin_scale_set_gamma (LIGMA_SPIN_SCALE (spinscale), gspec->ui_gamma);
     }
   else if (GEGL_IS_PARAM_SPEC_INT (param_spec))
     {
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (param_spec);
 
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (spinscale),
+      ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (spinscale),
                                         gspec->ui_minimum, gspec->ui_maximum);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (spinscale), gspec->ui_gamma);
+      ligma_spin_scale_set_gamma (LIGMA_SPIN_SCALE (spinscale), gspec->ui_gamma);
     }
 
   tooltip = g_param_spec_get_blurb (param_spec);
-  gimp_help_set_help_data (spinscale, tooltip, NULL);
+  ligma_help_set_help_data (spinscale, tooltip, NULL);
 
   binding = g_object_bind_property (config, property_name,
                                     spinscale, "value",
                                     G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
   g_object_set_data (G_OBJECT (adjustment),
-                     "gimp-prop-adjustment-binding",
+                     "ligma-prop-adjustment-binding",
                      binding);
 
   gtk_widget_show (spinscale);
 
-  gimp_widget_set_bound_property (spinscale, config, property_name);
+  ligma_widget_set_bound_property (spinscale, config, property_name);
 
   return spinscale;
 }
 
 /**
- * gimp_prop_widget_set_factor:
+ * ligma_prop_widget_set_factor:
  * @widget:         Property widget.
  * @factor:         Multiplier to convert the @widget's range and
  *                  map appropriately to the property's range it is
@@ -1536,8 +1536,8 @@ gimp_prop_spin_scale_new (GObject     *config,
  *
  * Change the display factor of the property @widget relatively to the
  * property it was bound to. Currently the only types of widget accepted
- * as input are those created by gimp_prop_spin_scale_new() and
- * gimp_prop_spin_button_new().
+ * as input are those created by ligma_prop_spin_scale_new() and
+ * ligma_prop_spin_button_new().
  *
  * If @factor is 1.0, then the config property and the widget display
  * map exactly.
@@ -1555,7 +1555,7 @@ gimp_prop_spin_scale_new (GObject     *config,
  * Since: 3.0
  */
 void
-gimp_prop_widget_set_factor (GtkWidget *widget,
+ligma_prop_widget_set_factor (GtkWidget *widget,
                              gdouble    factor,
                              gdouble    step_increment,
                              gdouble    page_increment,
@@ -1581,7 +1581,7 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
 
   /* Get the old factor and recompute new values. */
   factor_store = g_object_get_data (G_OBJECT (adjustment),
-                                    "gimp-prop-adjustment-factor");
+                                    "ligma-prop-adjustment-factor");
   if (factor_store)
     {
       old_factor = *factor_store;
@@ -1590,7 +1590,7 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
     {
       factor_store = g_new (gdouble, 1);
       g_object_set_data_full (G_OBJECT (adjustment),
-                              "gimp-prop-adjustment-factor",
+                              "ligma-prop-adjustment-factor",
                               factor_store, (GDestroyNotify) g_free);
     }
 
@@ -1606,7 +1606,7 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
 
   /* Remove the old binding. */
   binding = g_object_get_data (G_OBJECT (adjustment),
-                               "gimp-prop-adjustment-binding");
+                               "ligma-prop-adjustment-binding");
   g_return_if_fail (binding != NULL);
   config = g_binding_dup_source (binding);
 
@@ -1640,8 +1640,8 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
       binding = g_object_bind_property_full (config, property_name,
                                              widget, "value",
                                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
-                                             gimp_prop_widget_double_to_factor,
-                                             gimp_prop_widget_double_from_factor,
+                                             ligma_prop_widget_double_to_factor,
+                                             ligma_prop_widget_double_from_factor,
                                              user_data, (GDestroyNotify) g_free);
     }
   else
@@ -1651,14 +1651,14 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
                                         G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
     }
   g_object_set_data (G_OBJECT (adjustment),
-                     "gimp-prop-adjustment-binding",
+                     "ligma-prop-adjustment-binding",
                      binding);
   g_object_unref (config);
   g_free (property_name);
 }
 
 /**
- * gimp_prop_hscale_new:
+ * ligma_prop_hscale_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of integer or double property controlled by the scale.
  * @step_increment: Step size.
@@ -1673,7 +1673,7 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_hscale_new (GObject     *config,
+ligma_prop_hscale_new (GObject     *config,
                       const gchar *property_name,
                       gdouble      step_increment,
                       gdouble      page_increment,
@@ -1709,14 +1709,14 @@ gimp_prop_hscale_new (GObject     *config,
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
 
   g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    G_CALLBACK (ligma_prop_adjustment_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  G_CALLBACK (ligma_prop_adjustment_notify),
                   adjustment);
 
-  gimp_widget_set_bound_property (scale, config, property_name);
+  ligma_widget_set_bound_property (scale, config, property_name);
 
   gtk_widget_show (scale);
 
@@ -1724,13 +1724,13 @@ gimp_prop_hscale_new (GObject     *config,
 }
 
 /**
- * gimp_prop_scale_entry_new:
+ * ligma_prop_scale_entry_new:
  * @config:         Object to which property is attached.
  * @label: (nullable): The text for the #GtkLabel which will appear left of
  *                     the #GtkHScale.
  * @property_name:  Name of integer or double property controlled by the scale.
  * @factor:         Optional multiplier to convert @property_name's
- *                  range into the #GimpScaleEntry's range. The common
+ *                  range into the #LigmaScaleEntry's range. The common
  *                  usage is to set 1.0.
  *                  For non-double properties, no other values than 1.0
  *                  are acceptable.
@@ -1739,7 +1739,7 @@ gimp_prop_hscale_new (GObject     *config,
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
  * @upper_limit:    The scale's upper boundary if @scale_limits is %TRUE.
  *
- * Creates a #GimpScaleEntry (slider and spin button) to set and display
+ * Creates a #LigmaScaleEntry (slider and spin button) to set and display
  * the value of a specified int or double property with sensible default
  * settings depending on the range (decimal places, increments, etc.).
  * These settings can be overridden by the relevant widget methods.
@@ -1752,15 +1752,15 @@ gimp_prop_hscale_new (GObject     *config,
  * be to display a [0.0, 1.0] range as [0.0, 100.0] by setting 100.0 as
  * @factor.
  *
- * See gimp_scale_entry_set_bounds() for more information on
+ * See ligma_scale_entry_set_bounds() for more information on
  * @limit_scale, @lower_limit and @upper_limit.
  *
- * Returns: (transfer full): The newly allocated #GimpScaleEntry.
+ * Returns: (transfer full): The newly allocated #LigmaScaleEntry.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_scale_entry_new (GObject     *config,
+ligma_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
                            const gchar *label,
                            gdouble      factor,
@@ -1794,14 +1794,14 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (G_IS_PARAM_SPEC_INT (param_spec) || G_IS_PARAM_SPEC_UINT (param_spec))
     digits = 0;
 
-  widget = gimp_scale_entry_new (label, value, lower * factor, upper * factor, digits);
+  widget = ligma_scale_entry_new (label, value, lower * factor, upper * factor, digits);
   if (limit_scale)
-    gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (widget),
+    ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (widget),
                                  lower_limit, upper_limit,
                                  FALSE);
 
   tooltip = g_param_spec_get_blurb (param_spec);
-  gimp_help_set_help_data (widget, tooltip, NULL);
+  ligma_help_set_help_data (widget, tooltip, NULL);
 
   if (factor != 1.0)
     {
@@ -1815,8 +1815,8 @@ gimp_prop_scale_entry_new (GObject     *config,
       g_object_bind_property_full (config, property_name,
                                    widget, "value",
                                    G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
-                                   gimp_prop_widget_double_to_factor,
-                                   gimp_prop_widget_double_from_factor,
+                                   ligma_prop_widget_double_to_factor,
+                                   ligma_prop_widget_double_from_factor,
                                    user_data, (GDestroyNotify) g_free);
     }
   else
@@ -1827,14 +1827,14 @@ gimp_prop_scale_entry_new (GObject     *config,
 
     }
 
-  gimp_widget_set_bound_property (widget, config, property_name);
+  ligma_widget_set_bound_property (widget, config, property_name);
 
   return widget;
 }
 
 
 static void
-gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
+ligma_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)
 {
   GParamSpec *param_spec;
@@ -1848,7 +1848,7 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
   value = gtk_adjustment_get_value (adjustment);
 
   factor = g_object_get_data (G_OBJECT (adjustment),
-                              "gimp-prop-adjustment-factor");
+                              "ligma-prop-adjustment-factor");
   if (factor)
     value /= *factor;
 
@@ -1918,7 +1918,7 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 }
 
 static void
-gimp_prop_adjustment_notify (GObject       *config,
+ligma_prop_adjustment_notify (GObject       *config,
                              GParamSpec    *param_spec,
                              GtkAdjustment *adjustment)
 {
@@ -1989,20 +1989,20 @@ gimp_prop_adjustment_notify (GObject       *config,
     }
 
   factor = g_object_get_data (G_OBJECT (adjustment),
-                              "gimp-prop-adjustment-factor");
+                              "ligma-prop-adjustment-factor");
   if (factor)
     value *= *factor;
 
   if (gtk_adjustment_get_value (adjustment) != value)
     {
       g_signal_handlers_block_by_func (adjustment,
-                                       gimp_prop_adjustment_callback,
+                                       ligma_prop_adjustment_callback,
                                        config);
 
       gtk_adjustment_set_value (adjustment, value);
 
       g_signal_handlers_unblock_by_func (adjustment,
-                                         gimp_prop_adjustment_callback,
+                                         ligma_prop_adjustment_callback,
                                          config);
     }
 }
@@ -2012,27 +2012,27 @@ gimp_prop_adjustment_notify (GObject       *config,
 /*  memsize  */
 /*************/
 
-static void   gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
+static void   ligma_prop_memsize_callback (LigmaMemsizeEntry *entry,
                                           GObject          *config);
-static void   gimp_prop_memsize_notify   (GObject          *config,
+static void   ligma_prop_memsize_notify   (GObject          *config,
                                           GParamSpec       *param_spec,
-                                          GimpMemsizeEntry *entry);
+                                          LigmaMemsizeEntry *entry);
 
 /**
- * gimp_prop_memsize_entry_new:
+ * ligma_prop_memsize_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of memsize property.
  *
- * Creates a #GimpMemsizeEntry (spin button and option menu) to set
+ * Creates a #LigmaMemsizeEntry (spin button and option menu) to set
  * and display the value of the specified memsize property.  See
- * gimp_memsize_entry_new() for more information.
+ * ligma_memsize_entry_new() for more information.
  *
- * Returns: (transfer full): A new #GimpMemsizeEntry.
+ * Returns: (transfer full): A new #LigmaMemsizeEntry.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_memsize_entry_new (GObject     *config,
+ligma_prop_memsize_entry_new (GObject     *config,
                              const gchar *property_name)
 {
   GParamSpec       *param_spec;
@@ -2044,7 +2044,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
   g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_MEMSIZE, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_MEMSIZE, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2054,26 +2054,26 @@ gimp_prop_memsize_entry_new (GObject     *config,
 
   uint64_spec = G_PARAM_SPEC_UINT64 (param_spec);
 
-  g_return_val_if_fail (uint64_spec->minimum <= GIMP_MAX_MEMSIZE, NULL);
-  g_return_val_if_fail (uint64_spec->maximum <= GIMP_MAX_MEMSIZE, NULL);
+  g_return_val_if_fail (uint64_spec->minimum <= LIGMA_MAX_MEMSIZE, NULL);
+  g_return_val_if_fail (uint64_spec->maximum <= LIGMA_MAX_MEMSIZE, NULL);
 
-  entry = gimp_memsize_entry_new (value,
+  entry = ligma_memsize_entry_new (value,
                                   uint64_spec->minimum,
                                   uint64_spec->maximum);
 
   set_param_spec (G_OBJECT (entry),
-                  gimp_memsize_entry_get_spinbutton (GIMP_MEMSIZE_ENTRY (entry)),
+                  ligma_memsize_entry_get_spinbutton (LIGMA_MEMSIZE_ENTRY (entry)),
                   param_spec);
 
   g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_prop_memsize_callback),
+                    G_CALLBACK (ligma_prop_memsize_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_memsize_notify),
+                  G_CALLBACK (ligma_prop_memsize_notify),
                   entry);
 
-  gimp_widget_set_bound_property (entry, config, property_name);
+  ligma_widget_set_bound_property (entry, config, property_name);
 
   gtk_widget_show (entry);
 
@@ -2082,7 +2082,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
 
 
 static void
-gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
+ligma_prop_memsize_callback (LigmaMemsizeEntry *entry,
                             GObject          *config)
 {
   GParamSpec *param_spec;
@@ -2095,7 +2095,7 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
 
   g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
-  value = gimp_memsize_entry_get_value (entry);
+  value = ligma_memsize_entry_get_value (entry);
 
   g_object_get (config, param_spec->name, &v, NULL);
 
@@ -2104,9 +2104,9 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
 }
 
 static void
-gimp_prop_memsize_notify (GObject          *config,
+ligma_prop_memsize_notify (GObject          *config,
                           GParamSpec       *param_spec,
-                          GimpMemsizeEntry *entry)
+                          LigmaMemsizeEntry *entry)
 {
   guint64  value;
 
@@ -2116,16 +2116,16 @@ gimp_prop_memsize_notify (GObject          *config,
                 param_spec->name, &value,
                 NULL);
 
-  if (gimp_memsize_entry_get_value (entry) != value)
+  if (ligma_memsize_entry_get_value (entry) != value)
     {
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_memsize_callback,
+                                       ligma_prop_memsize_callback,
                                        config);
 
-      gimp_memsize_entry_set_value (entry, value);
+      ligma_memsize_entry_set_value (entry, value);
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_memsize_callback,
+                                         ligma_prop_memsize_callback,
                                          config);
     }
 }
@@ -2136,21 +2136,21 @@ gimp_prop_memsize_notify (GObject          *config,
 /***********/
 
 /**
- * gimp_prop_label_new:
+ * ligma_prop_label_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  *
  * Creates a #GtkLabel to display the value of the specified property.
  * The property should be a string property or at least transformable
  * to a string.  If the user should be able to edit the string, use
- * gimp_prop_entry_new() instead.
+ * ligma_prop_entry_new() instead.
  *
  * Returns: (transfer full): A new #GtkLabel widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_label_new (GObject     *config,
+ligma_prop_label_new (GObject     *config,
                      const gchar *property_name)
 {
   GParamSpec    *param_spec;
@@ -2171,7 +2171,7 @@ gimp_prop_label_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-    gimp_help_set_help_data (label, blurb, NULL);
+    ligma_help_set_help_data (label, blurb, NULL);
 
   /* As labels are read-only widgets, allow read-only properties (though
    * we still keep possibility for bidirectional binding, which can be
@@ -2183,7 +2183,7 @@ gimp_prop_label_new (GObject     *config,
   g_object_bind_property (config, property_name,
                           label, "label", flags);
 
-  gimp_widget_set_bound_property (label, config, property_name);
+  ligma_widget_set_bound_property (label, config, property_name);
 
   return label;
 }
@@ -2193,14 +2193,14 @@ gimp_prop_label_new (GObject     *config,
 /*  entry  */
 /***********/
 
-static void   gimp_prop_entry_callback (GtkWidget  *entry,
+static void   ligma_prop_entry_callback (GtkWidget  *entry,
                                         GObject    *config);
-static void   gimp_prop_entry_notify   (GObject    *config,
+static void   ligma_prop_entry_notify   (GObject    *config,
                                         GParamSpec *param_spec,
                                         GtkWidget  *entry);
 
 /**
- * gimp_prop_entry_new:
+ * ligma_prop_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  * @max_len:       Maximum allowed length of string.
@@ -2213,7 +2213,7 @@ static void   gimp_prop_entry_notify   (GObject    *config,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_entry_new (GObject     *config,
+ligma_prop_entry_new (GObject     *config,
                      const gchar *property_name,
                      gint         max_len)
 {
@@ -2247,14 +2247,14 @@ gimp_prop_entry_new (GObject     *config,
   set_param_spec (G_OBJECT (entry), entry, param_spec);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gimp_prop_entry_callback),
+                    G_CALLBACK (ligma_prop_entry_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_entry_notify),
+                  G_CALLBACK (ligma_prop_entry_notify),
                   entry);
 
-  gimp_widget_set_bound_property (entry, config, property_name);
+  ligma_widget_set_bound_property (entry, config, property_name);
 
   gtk_widget_show (entry);
 
@@ -2262,7 +2262,7 @@ gimp_prop_entry_new (GObject     *config,
 }
 
 static void
-gimp_prop_entry_callback (GtkWidget *entry,
+ligma_prop_entry_callback (GtkWidget *entry,
                           GObject   *config)
 {
   GParamSpec  *param_spec;
@@ -2280,13 +2280,13 @@ gimp_prop_entry_callback (GtkWidget *entry,
   if (g_strcmp0 (v, value))
     {
       g_signal_handlers_block_by_func (config,
-                                       gimp_prop_entry_notify,
+                                       ligma_prop_entry_notify,
                                        entry);
 
       g_object_set (config, param_spec->name, value, NULL);
 
       g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_entry_notify,
+                                         ligma_prop_entry_notify,
                                          entry);
     }
 
@@ -2294,7 +2294,7 @@ gimp_prop_entry_callback (GtkWidget *entry,
 }
 
 static void
-gimp_prop_entry_notify (GObject    *config,
+ligma_prop_entry_notify (GObject    *config,
                         GParamSpec *param_spec,
                         GtkWidget  *entry)
 {
@@ -2305,13 +2305,13 @@ gimp_prop_entry_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (entry,
-                                   gimp_prop_entry_callback,
+                                   ligma_prop_entry_callback,
                                    config);
 
   gtk_entry_set_text (GTK_ENTRY (entry), value ? value : "");
 
   g_signal_handlers_unblock_by_func (entry,
-                                     gimp_prop_entry_callback,
+                                     ligma_prop_entry_callback,
                                      config);
 
   g_free (value);
@@ -2322,13 +2322,13 @@ gimp_prop_entry_notify (GObject    *config,
 /*****************/
 
 /**
- * gimp_prop_label_entry_new:
+ * ligma_prop_label_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  * @max_len:       Maximum allowed length of string (set to negative for
  *                 no maximum).
  *
- * Creates a #GimpLabelEntry to set and display the value of the
+ * Creates a #LigmaLabelEntry to set and display the value of the
  * specified string property.
  *
  * Returns: (transfer full): A new #GtkEntry widget.
@@ -2336,7 +2336,7 @@ gimp_prop_entry_notify (GObject    *config,
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_label_entry_new (GObject     *config,
+ligma_prop_label_entry_new (GObject     *config,
                            const gchar *property_name,
                            gint         max_len)
 {
@@ -2354,8 +2354,8 @@ gimp_prop_label_entry_new (GObject     *config,
     return NULL;
 
   label = g_param_spec_get_nick (param_spec);
-  label_entry = gimp_label_entry_new (label);
-  entry = gimp_label_entry_get_entry (GIMP_LABEL_ENTRY (label_entry));
+  label_entry = ligma_label_entry_new (label);
+  entry = ligma_label_entry_get_entry (LIGMA_LABEL_ENTRY (label_entry));
 
   if (max_len > 0)
     gtk_entry_set_max_length (GTK_ENTRY (entry), max_len);
@@ -2369,7 +2369,7 @@ gimp_prop_label_entry_new (GObject     *config,
                           label_entry, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_bound_property (label_entry, config, property_name);
+  ligma_widget_set_bound_property (label_entry, config, property_name);
 
   gtk_widget_show (label_entry);
 
@@ -2381,14 +2381,14 @@ gimp_prop_label_entry_new (GObject     *config,
 /*  text buffer  */
 /*****************/
 
-static void   gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
+static void   ligma_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
                                               GObject       *config);
-static void   gimp_prop_text_buffer_notify   (GObject       *config,
+static void   ligma_prop_text_buffer_notify   (GObject       *config,
                                               GParamSpec    *param_spec,
                                               GtkTextBuffer *text_buffer);
 
 /**
- * gimp_prop_text_buffer_new:
+ * ligma_prop_text_buffer_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  * @max_len:       Maximum allowed length of text (in characters).
@@ -2396,7 +2396,7 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
  * Creates a #GtkTextBuffer to set and display the value of the
  * specified string property.  Unless the string is expected to
  * contain multiple lines or a large amount of text, use
- * gimp_prop_entry_new() instead.  See #GtkTextView for information on
+ * ligma_prop_entry_new() instead.  See #GtkTextView for information on
  * how to insert a text buffer into a visible widget.
  *
  * If @max_len is 0 or negative, the text buffer allows an unlimited
@@ -2407,7 +2407,7 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
  * Since: 2.4
  */
 GtkTextBuffer *
-gimp_prop_text_buffer_new (GObject     *config,
+ligma_prop_text_buffer_new (GObject     *config,
                            const gchar *property_name,
                            gint         max_len)
 {
@@ -2439,18 +2439,18 @@ gimp_prop_text_buffer_new (GObject     *config,
   set_param_spec (G_OBJECT (text_buffer), NULL, param_spec);
 
   g_signal_connect (text_buffer, "changed",
-                    G_CALLBACK (gimp_prop_text_buffer_callback),
+                    G_CALLBACK (ligma_prop_text_buffer_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_text_buffer_notify),
+                  G_CALLBACK (ligma_prop_text_buffer_notify),
                   text_buffer);
 
   return text_buffer;
 }
 
 static void
-gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
+ligma_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
                                 GObject       *config)
 {
   GParamSpec  *param_spec;
@@ -2471,7 +2471,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
 
   if (max_len > 0 && g_utf8_strlen (text, -1) > max_len)
     {
-      g_message (dngettext (GETTEXT_PACKAGE "-libgimp",
+      g_message (dngettext (GETTEXT_PACKAGE "-libligma",
                             "This text input field is limited to %d character.",
                             "This text input field is limited to %d characters.",
                             max_len), max_len);
@@ -2492,13 +2492,13 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
       if (g_strcmp0 (v, text))
         {
           g_signal_handlers_block_by_func (config,
-                                           gimp_prop_text_buffer_notify,
+                                           ligma_prop_text_buffer_notify,
                                            text_buffer);
 
           g_object_set (config, param_spec->name, text,  NULL);
 
           g_signal_handlers_unblock_by_func (config,
-                                             gimp_prop_text_buffer_notify,
+                                             ligma_prop_text_buffer_notify,
                                              text_buffer);
         }
 
@@ -2509,7 +2509,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
 }
 
 static void
-gimp_prop_text_buffer_notify (GObject       *config,
+ligma_prop_text_buffer_notify (GObject       *config,
                               GParamSpec    *param_spec,
                               GtkTextBuffer *text_buffer)
 {
@@ -2520,13 +2520,13 @@ gimp_prop_text_buffer_notify (GObject       *config,
                 NULL);
 
   g_signal_handlers_block_by_func (text_buffer,
-                                   gimp_prop_text_buffer_callback,
+                                   ligma_prop_text_buffer_callback,
                                    config);
 
   gtk_text_buffer_set_text (text_buffer, value ? value : "", -1);
 
   g_signal_handlers_unblock_by_func (text_buffer,
-                                     gimp_prop_text_buffer_callback,
+                                     ligma_prop_text_buffer_callback,
                                      config);
 
   g_free (value);
@@ -2537,30 +2537,30 @@ gimp_prop_text_buffer_notify (GObject       *config,
 /*  string combo box   */
 /***********************/
 
-static void   gimp_prop_string_combo_box_callback (GtkWidget   *widget,
+static void   ligma_prop_string_combo_box_callback (GtkWidget   *widget,
                                                    GObject     *config);
-static void   gimp_prop_string_combo_box_notify   (GObject     *config,
+static void   ligma_prop_string_combo_box_notify   (GObject     *config,
                                                    GParamSpec  *param_spec,
                                                    GtkWidget   *widget);
 
 /**
- * gimp_prop_string_combo_box_new:
+ * ligma_prop_string_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of int property controlled by combo box.
  * @model:         #GtkTreeStore holding list of values
  * @id_column:     column in @store that holds string IDs
  * @label_column:  column in @store that holds labels to use in the combo-box
  *
- * Creates a #GimpStringComboBox widget to display and set the
+ * Creates a #LigmaStringComboBox widget to display and set the
  * specified property.  The contents of the widget are determined by
  * @store.
  *
- * Returns: (transfer full): The newly created #GimpStringComboBox widget.
+ * Returns: (transfer full): The newly created #LigmaStringComboBox widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_string_combo_box_new (GObject      *config,
+ligma_prop_string_combo_box_new (GObject      *config,
                                 const gchar  *property_name,
                                 GtkTreeModel *model,
                                 gint          id_column,
@@ -2583,21 +2583,21 @@ gimp_prop_string_combo_box_new (GObject      *config,
                 property_name, &value,
                 NULL);
 
-  combo_box = gimp_string_combo_box_new (model, id_column, label_column);
+  combo_box = ligma_string_combo_box_new (model, id_column, label_column);
 
-  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+  ligma_string_combo_box_set_active (LIGMA_STRING_COMBO_BOX (combo_box), value);
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_string_combo_box_callback),
+                    G_CALLBACK (ligma_prop_string_combo_box_callback),
                     config);
 
   set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_string_combo_box_notify),
+                  G_CALLBACK (ligma_prop_string_combo_box_notify),
                   combo_box);
 
-  gimp_widget_set_bound_property (combo_box, config, property_name);
+  ligma_widget_set_bound_property (combo_box, config, property_name);
 
   gtk_widget_show (combo_box);
 
@@ -2605,7 +2605,7 @@ gimp_prop_string_combo_box_new (GObject      *config,
 }
 
 static void
-gimp_prop_string_combo_box_callback (GtkWidget *widget,
+ligma_prop_string_combo_box_callback (GtkWidget *widget,
                                      GObject   *config)
 {
   GParamSpec  *param_spec;
@@ -2616,7 +2616,7 @@ gimp_prop_string_combo_box_callback (GtkWidget *widget,
   if (! param_spec)
     return;
 
-  value = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
+  value = ligma_string_combo_box_get_active (LIGMA_STRING_COMBO_BOX (widget));
 
   g_object_get (config, param_spec->name, &v, NULL);
 
@@ -2628,7 +2628,7 @@ gimp_prop_string_combo_box_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_string_combo_box_notify (GObject    *config,
+ligma_prop_string_combo_box_notify (GObject    *config,
                                    GParamSpec *param_spec,
                                    GtkWidget  *combo_box)
 {
@@ -2639,13 +2639,13 @@ gimp_prop_string_combo_box_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (combo_box,
-                                   gimp_prop_string_combo_box_callback,
+                                   ligma_prop_string_combo_box_callback,
                                    config);
 
-  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+  ligma_string_combo_box_set_active (LIGMA_STRING_COMBO_BOX (combo_box), value);
 
   g_signal_handlers_unblock_by_func (combo_box,
-                                     gimp_prop_string_combo_box_callback,
+                                     ligma_prop_string_combo_box_callback,
                                      config);
 
   g_free (value);
@@ -2656,25 +2656,25 @@ gimp_prop_string_combo_box_notify (GObject    *config,
 /*  file chooser button  */
 /*************************/
 
-static GtkWidget * gimp_prop_file_chooser_button_setup    (GtkWidget      *button,
+static GtkWidget * ligma_prop_file_chooser_button_setup    (GtkWidget      *button,
                                                            GObject        *config,
                                                            GParamSpec     *param_spec);
-static void        gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
+static void        ligma_prop_file_chooser_button_callback (GtkFileChooser *button,
                                                            GObject        *config);
-static void        gimp_prop_file_chooser_button_notify   (GObject        *config,
+static void        ligma_prop_file_chooser_button_notify   (GObject        *config,
                                                            GParamSpec     *param_spec,
                                                            GtkFileChooser *button);
 
 
 /**
- * gimp_prop_file_chooser_button_new:
+ * ligma_prop_file_chooser_button_new:
  * @config:        object to which property is attached.
  * @property_name: name of path property.
  * @title: (nullable): the title of the browse dialog.
  * @action:        the open mode for the widget.
  *
  * Creates a #GtkFileChooserButton to edit the specified path property.
- * @property_name must represent either a GIMP_PARAM_SPEC_CONFIG_PATH or
+ * @property_name must represent either a LIGMA_PARAM_SPEC_CONFIG_PATH or
  * a G_PARAM_SPEC_OBJECT where `value_type == G_TYPE_FILE`.
  *
  * Note that #GtkFileChooserButton implements the #GtkFileChooser
@@ -2685,7 +2685,7 @@ static void        gimp_prop_file_chooser_button_notify   (GObject        *confi
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_file_chooser_button_new (GObject              *config,
+ligma_prop_file_chooser_button_new (GObject              *config,
                                    const gchar          *property_name,
                                    const gchar          *title,
                                    GtkFileChooserAction  action)
@@ -2705,10 +2705,10 @@ gimp_prop_file_chooser_button_new (GObject              *config,
       return NULL;
     }
 
-  if (! GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec) &&
+  if (! LIGMA_IS_PARAM_SPEC_CONFIG_PATH (param_spec) &&
       (! G_IS_PARAM_SPEC_OBJECT (param_spec) || param_spec->value_type != G_TYPE_FILE))
     {
-      g_warning ("%s: property '%s' of %s is neither a GIMP_PARAM_SPEC_CONFIG_PATH "
+      g_warning ("%s: property '%s' of %s is neither a LIGMA_PARAM_SPEC_CONFIG_PATH "
                  "nor a G_PARAM_SPEC_OBJECT of value type G_TYPE_FILE.",
                  G_STRFUNC, param_spec->name,
                  g_type_name (param_spec->owner_type));
@@ -2720,11 +2720,11 @@ gimp_prop_file_chooser_button_new (GObject              *config,
 
   button = gtk_file_chooser_button_new (title, action);
 
-  return gimp_prop_file_chooser_button_setup (button, config, param_spec);
+  return ligma_prop_file_chooser_button_setup (button, config, param_spec);
 }
 
 /**
- * gimp_prop_file_chooser_button_new_with_dialog:
+ * ligma_prop_file_chooser_button_new_with_dialog:
  * @config:        object to which property is attached.
  * @property_name: name of path property.
  * @dialog:        the #GtkFileChooserDialog widget to use.
@@ -2743,7 +2743,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
+ligma_prop_file_chooser_button_new_with_dialog (GObject     *config,
                                                const gchar *property_name,
                                                GtkWidget   *dialog)
 {
@@ -2755,23 +2755,23 @@ gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
   g_return_val_if_fail (GTK_IS_FILE_CHOOSER_DIALOG (dialog), NULL);
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   button = gtk_file_chooser_button_new_with_dialog (dialog);
 
-  return gimp_prop_file_chooser_button_setup (button, config, param_spec);
+  return ligma_prop_file_chooser_button_setup (button, config, param_spec);
 }
 
 static GtkWidget *
-gimp_prop_file_chooser_button_setup (GtkWidget  *button,
+ligma_prop_file_chooser_button_setup (GtkWidget  *button,
                                      GObject    *config,
                                      GParamSpec *param_spec)
 {
   GFile *file = NULL;
 
-  if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
+  if (LIGMA_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
       gchar *value;
 
@@ -2781,7 +2781,7 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
 
       if (value)
         {
-          file = gimp_file_new_for_config_path (value, NULL);
+          file = ligma_file_new_for_config_path (value, NULL);
           g_free (value);
         }
     }
@@ -2808,11 +2808,11 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
   set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "file-set",
-                    G_CALLBACK (gimp_prop_file_chooser_button_callback),
+                    G_CALLBACK (ligma_prop_file_chooser_button_callback),
                     config);
 
   connect_notify (config, param_spec->name,
-                  G_CALLBACK (gimp_prop_file_chooser_button_notify),
+                  G_CALLBACK (ligma_prop_file_chooser_button_notify),
                   button);
 
   gtk_widget_show (button);
@@ -2821,7 +2821,7 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
 }
 
 static void
-gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
+ligma_prop_file_chooser_button_callback (GtkFileChooser *button,
                                         GObject        *config)
 {
   GParamSpec *param_spec;
@@ -2833,14 +2833,14 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 
   file = gtk_file_chooser_get_file (button);
 
-  if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
+  if (LIGMA_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
       gchar *value = NULL;
       gchar *v;
 
       if (file)
         {
-          value = gimp_file_get_config_path (file, NULL);
+          value = ligma_file_get_config_path (file, NULL);
           g_object_unref (file);
         }
 
@@ -2849,13 +2849,13 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
       if (g_strcmp0 (v, value))
         {
           g_signal_handlers_block_by_func (config,
-                                           gimp_prop_file_chooser_button_notify,
+                                           ligma_prop_file_chooser_button_notify,
                                            button);
 
           g_object_set (config, param_spec->name, value, NULL);
 
           g_signal_handlers_unblock_by_func (config,
-                                             gimp_prop_file_chooser_button_notify,
+                                             ligma_prop_file_chooser_button_notify,
                                              button);
         }
 
@@ -2871,13 +2871,13 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
       if (! f || ! file || ! g_file_equal (f, file))
         {
           g_signal_handlers_block_by_func (config,
-                                           gimp_prop_file_chooser_button_notify,
+                                           ligma_prop_file_chooser_button_notify,
                                            button);
 
           g_object_set (config, param_spec->name, file, NULL);
 
           g_signal_handlers_unblock_by_func (config,
-                                             gimp_prop_file_chooser_button_notify,
+                                             ligma_prop_file_chooser_button_notify,
                                              button);
         }
       g_clear_object (&f);
@@ -2886,7 +2886,7 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 }
 
 static void
-gimp_prop_file_chooser_button_notify (GObject        *config,
+ligma_prop_file_chooser_button_notify (GObject        *config,
                                       GParamSpec     *param_spec,
                                       GtkFileChooser *button)
 {
@@ -2899,12 +2899,12 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
 
   if (value)
     {
-      file = gimp_file_new_for_config_path (value, NULL);
+      file = ligma_file_new_for_config_path (value, NULL);
       g_free (value);
     }
 
   g_signal_handlers_block_by_func (button,
-                                   gimp_prop_file_chooser_button_callback,
+                                   ligma_prop_file_chooser_button_callback,
                                    config);
 
   if (file)
@@ -2918,7 +2918,7 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
     }
 
   g_signal_handlers_unblock_by_func (button,
-                                     gimp_prop_file_chooser_button_callback,
+                                     ligma_prop_file_chooser_button_callback,
                                      config);
 }
 
@@ -2927,31 +2927,31 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
 /*  path editor  */
 /*****************/
 
-static void   gimp_prop_path_editor_path_callback     (GimpPathEditor *editor,
+static void   ligma_prop_path_editor_path_callback     (LigmaPathEditor *editor,
                                                        GObject        *config);
-static void   gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
+static void   ligma_prop_path_editor_writable_callback (LigmaPathEditor *editor,
                                                        GObject        *config);
-static void   gimp_prop_path_editor_path_notify       (GObject        *config,
+static void   ligma_prop_path_editor_path_notify       (GObject        *config,
                                                        GParamSpec     *param_spec,
-                                                       GimpPathEditor *editor);
-static void   gimp_prop_path_editor_writable_notify   (GObject        *config,
+                                                       LigmaPathEditor *editor);
+static void   ligma_prop_path_editor_writable_notify   (GObject        *config,
                                                        GParamSpec     *param_spec,
-                                                       GimpPathEditor *editor);
+                                                       LigmaPathEditor *editor);
 
 /**
- * gimp_prop_path_editor_new:
+ * ligma_prop_path_editor_new:
  * @config:                 object to which property is attached.
  * @path_property_name:     name of path property.
  * @writable_property_name: name of writable path property.
  * @filechooser_title:      window title of #GtkFileChooserDialog widget.
  *
- * Creates a #GimpPathEditor to edit the specified path and writable
+ * Creates a #LigmaPathEditor to edit the specified path and writable
  * path properties.
  *
- * Returns: (transfer full): A new #GimpPathEditor.
+ * Returns: (transfer full): A new #LigmaPathEditor.
  **/
 GtkWidget *
-gimp_prop_path_editor_new (GObject     *config,
+ligma_prop_path_editor_new (GObject     *config,
                            const gchar *path_property_name,
                            const gchar *writable_property_name,
                            const gchar *filechooser_title)
@@ -2966,14 +2966,14 @@ gimp_prop_path_editor_new (GObject     *config,
   g_return_val_if_fail (path_property_name != NULL, NULL);
 
   path_param_spec = check_param_spec_w (config, path_property_name,
-                                        GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+                                        LIGMA_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! path_param_spec)
     return NULL;
 
   if (writable_property_name)
     {
       writable_param_spec = check_param_spec_w (config, writable_property_name,
-                                                GIMP_TYPE_PARAM_CONFIG_PATH,
+                                                LIGMA_TYPE_PARAM_CONFIG_PATH,
                                                 G_STRFUNC);
       if (! writable_param_spec)
         return NULL;
@@ -2983,10 +2983,10 @@ gimp_prop_path_editor_new (GObject     *config,
                 path_property_name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  filename = value ? ligma_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
 
-  editor = gimp_path_editor_new (filechooser_title, filename);
+  editor = ligma_path_editor_new (filechooser_title, filename);
   g_free (filename);
 
   if (writable_property_name)
@@ -2995,39 +2995,39 @@ gimp_prop_path_editor_new (GObject     *config,
                     writable_property_name, &value,
                     NULL);
 
-      filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      filename = value ? ligma_config_path_expand (value, TRUE, NULL) : NULL;
       g_free (value);
 
-      gimp_path_editor_set_writable_path (GIMP_PATH_EDITOR (editor), filename);
+      ligma_path_editor_set_writable_path (LIGMA_PATH_EDITOR (editor), filename);
       g_free (filename);
     }
 
-  g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-path",
+  g_object_set_data (G_OBJECT (editor), "ligma-config-param-spec-path",
                      path_param_spec);
 
   g_signal_connect (editor, "path-changed",
-                    G_CALLBACK (gimp_prop_path_editor_path_callback),
+                    G_CALLBACK (ligma_prop_path_editor_path_callback),
                     config);
 
   connect_notify (config, path_property_name,
-                  G_CALLBACK (gimp_prop_path_editor_path_notify),
+                  G_CALLBACK (ligma_prop_path_editor_path_notify),
                   editor);
 
   if (writable_property_name)
     {
-      g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-writable",
+      g_object_set_data (G_OBJECT (editor), "ligma-config-param-spec-writable",
                          writable_param_spec);
 
       g_signal_connect (editor, "writable-changed",
-                        G_CALLBACK (gimp_prop_path_editor_writable_callback),
+                        G_CALLBACK (ligma_prop_path_editor_writable_callback),
                         config);
 
       connect_notify (config, writable_property_name,
-                      G_CALLBACK (gimp_prop_path_editor_writable_notify),
+                      G_CALLBACK (ligma_prop_path_editor_writable_notify),
                       editor);
     }
 
-  gimp_widget_set_bound_property (editor, config, path_property_name);
+  ligma_widget_set_bound_property (editor, config, path_property_name);
 
   gtk_widget_show (editor);
 
@@ -3035,7 +3035,7 @@ gimp_prop_path_editor_new (GObject     *config,
 }
 
 static void
-gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
+ligma_prop_path_editor_path_callback (LigmaPathEditor *editor,
                                      GObject        *config)
 {
   GParamSpec *path_param_spec;
@@ -3044,18 +3044,18 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
   gchar      *utf8;
 
   path_param_spec     = g_object_get_data (G_OBJECT (editor),
-                                           "gimp-config-param-spec-path");
+                                           "ligma-config-param-spec-path");
   writable_param_spec = g_object_get_data (G_OBJECT (editor),
-                                           "gimp-config-param-spec-writable");
+                                           "ligma-config-param-spec-writable");
   if (! path_param_spec)
     return;
 
-  value = gimp_path_editor_get_path (editor);
-  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
+  value = ligma_path_editor_get_path (editor);
+  utf8 = value ? ligma_config_path_unexpand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (config,
-                                   gimp_prop_path_editor_path_notify,
+                                   ligma_prop_path_editor_path_notify,
                                    editor);
 
   g_object_set (config,
@@ -3063,19 +3063,19 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_path_editor_path_notify,
+                                     ligma_prop_path_editor_path_notify,
                                      editor);
 
   g_free (utf8);
 
   if (writable_param_spec)
     {
-      value = gimp_path_editor_get_writable_path (editor);
-      utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
+      value = ligma_path_editor_get_writable_path (editor);
+      utf8 = value ? ligma_config_path_unexpand (value, TRUE, NULL) : NULL;
       g_free (value);
 
       g_signal_handlers_block_by_func (config,
-                                       gimp_prop_path_editor_writable_notify,
+                                       ligma_prop_path_editor_writable_notify,
                                        editor);
 
       g_object_set (config,
@@ -3083,7 +3083,7 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
                     NULL);
 
       g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_path_editor_writable_notify,
+                                         ligma_prop_path_editor_writable_notify,
                                          editor);
 
       g_free (utf8);
@@ -3091,7 +3091,7 @@ gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
 }
 
 static void
-gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
+ligma_prop_path_editor_writable_callback (LigmaPathEditor *editor,
                                          GObject        *config)
 {
   GParamSpec *param_spec;
@@ -3099,16 +3099,16 @@ gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
   gchar      *utf8;
 
   param_spec = g_object_get_data (G_OBJECT (editor),
-                                  "gimp-config-param-spec-writable");
+                                  "ligma-config-param-spec-writable");
   if (! param_spec)
     return;
 
-  value = gimp_path_editor_get_writable_path (editor);
-  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
+  value = ligma_path_editor_get_writable_path (editor);
+  utf8 = value ? ligma_config_path_unexpand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (config,
-                                   gimp_prop_path_editor_writable_notify,
+                                   ligma_prop_path_editor_writable_notify,
                                    editor);
 
   g_object_set (config,
@@ -3116,16 +3116,16 @@ gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_path_editor_writable_notify,
+                                     ligma_prop_path_editor_writable_notify,
                                      editor);
 
   g_free (utf8);
 }
 
 static void
-gimp_prop_path_editor_path_notify (GObject        *config,
+ligma_prop_path_editor_path_notify (GObject        *config,
                                    GParamSpec     *param_spec,
-                                   GimpPathEditor *editor)
+                                   LigmaPathEditor *editor)
 {
   gchar *value;
   gchar *filename;
@@ -3134,26 +3134,26 @@ gimp_prop_path_editor_path_notify (GObject        *config,
                 param_spec->name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  filename = value ? ligma_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (editor,
-                                   gimp_prop_path_editor_path_callback,
+                                   ligma_prop_path_editor_path_callback,
                                    config);
 
-  gimp_path_editor_set_path (editor, filename);
+  ligma_path_editor_set_path (editor, filename);
 
   g_signal_handlers_unblock_by_func (editor,
-                                     gimp_prop_path_editor_path_callback,
+                                     ligma_prop_path_editor_path_callback,
                                      config);
 
   g_free (filename);
 }
 
 static void
-gimp_prop_path_editor_writable_notify (GObject        *config,
+ligma_prop_path_editor_writable_notify (GObject        *config,
                                        GParamSpec     *param_spec,
-                                       GimpPathEditor *editor)
+                                       LigmaPathEditor *editor)
 {
   gchar *value;
   gchar *filename;
@@ -3162,17 +3162,17 @@ gimp_prop_path_editor_writable_notify (GObject        *config,
                 param_spec->name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  filename = value ? ligma_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
 
   g_signal_handlers_block_by_func (editor,
-                                   gimp_prop_path_editor_writable_callback,
+                                   ligma_prop_path_editor_writable_callback,
                                    config);
 
-  gimp_path_editor_set_writable_path (editor, filename);
+  ligma_path_editor_set_writable_path (editor, filename);
 
   g_signal_handlers_unblock_by_func (editor,
-                                     gimp_prop_path_editor_writable_callback,
+                                     ligma_prop_path_editor_writable_callback,
                                      config);
 
   g_free (filename);
@@ -3183,48 +3183,48 @@ gimp_prop_path_editor_writable_notify (GObject        *config,
 /*  sizeentry  */
 /***************/
 
-static void   gimp_prop_size_entry_callback    (GimpSizeEntry *entry,
+static void   ligma_prop_size_entry_callback    (LigmaSizeEntry *entry,
                                                 GObject       *config);
-static void   gimp_prop_size_entry_notify      (GObject       *config,
+static void   ligma_prop_size_entry_notify      (GObject       *config,
                                                 GParamSpec    *param_spec,
-                                                GimpSizeEntry *entry);
-static void   gimp_prop_size_entry_notify_unit (GObject       *config,
+                                                LigmaSizeEntry *entry);
+static void   ligma_prop_size_entry_notify_unit (GObject       *config,
                                                 GParamSpec    *param_spec,
-                                                GimpSizeEntry *entry);
-static gint   gimp_prop_size_entry_num_chars   (gdouble        lower,
+                                                LigmaSizeEntry *entry);
+static gint   ligma_prop_size_entry_num_chars   (gdouble        lower,
                                                 gdouble        upper);
 
 
 /**
- * gimp_prop_size_entry_new:
+ * ligma_prop_size_entry_new:
  * @config:             Object to which property is attached.
  * @property_name:      Name of int or double property.
  * @property_is_pixel:  When %TRUE, the property value is in pixels,
  *                      and in the selected unit otherwise.
  * @unit_property_name: Name of unit property.
  * @unit_format:        A printf-like unit-format string as is used with
- *                      gimp_unit_menu_new().
+ *                      ligma_unit_menu_new().
  * @update_policy:      How the automatic pixel <-> real-world-unit
  *                      calculations should be done.
  * @resolution:         The resolution (in dpi) for the field.
  *
- * Creates a #GimpSizeEntry to set and display the specified double or
+ * Creates a #LigmaSizeEntry to set and display the specified double or
  * int property, and its associated unit property.  Note that this
  * function is only suitable for creating a size entry holding a
- * single value.  Use gimp_prop_coordinates_new() to create a size
+ * single value.  Use ligma_prop_coordinates_new() to create a size
  * entry holding two values.
  *
- * Returns: (transfer full): A new #GimpSizeEntry widget.
+ * Returns: (transfer full): A new #LigmaSizeEntry widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_size_entry_new (GObject                   *config,
+ligma_prop_size_entry_new (GObject                   *config,
                           const gchar               *property_name,
                           gboolean                   property_is_pixel,
                           const gchar               *unit_property_name,
                           const gchar               *unit_format,
-                          GimpSizeEntryUpdatePolicy  update_policy,
+                          LigmaSizeEntryUpdatePolicy  update_policy,
                           gdouble                    resolution)
 {
   GtkWidget  *entry;
@@ -3235,7 +3235,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     value;
   gdouble     lower;
   gdouble     upper;
-  GimpUnit    unit_value;
+  LigmaUnit    unit_value;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -3250,17 +3250,17 @@ gimp_prop_size_entry_new (GObject                   *config,
       GValue value = G_VALUE_INIT;
 
       unit_param_spec = check_param_spec_w (config, unit_property_name,
-                                            GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+                                            LIGMA_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return NULL;
 
       g_value_init (&value, unit_param_spec->value_type);
 
-      g_value_set_int (&value, GIMP_UNIT_PIXEL);
+      g_value_set_int (&value, LIGMA_UNIT_PIXEL);
       show_pixels = (g_param_value_validate (unit_param_spec,
                                              &value) == FALSE);
 
-      g_value_set_int (&value, GIMP_UNIT_PERCENT);
+      g_value_set_int (&value, LIGMA_UNIT_PERCENT);
       show_percent = (g_param_value_validate (unit_param_spec,
                                               &value) == FALSE);
 
@@ -3273,72 +3273,72 @@ gimp_prop_size_entry_new (GObject                   *config,
   else
     {
       unit_param_spec = NULL;
-      unit_value      = GIMP_UNIT_INCH;
+      unit_value      = LIGMA_UNIT_INCH;
       show_pixels     = FALSE;
       show_percent    = FALSE;
     }
 
-  entry = gimp_size_entry_new (1, unit_value, unit_format,
+  entry = ligma_size_entry_new (1, unit_value, unit_format,
                                show_pixels, show_percent, FALSE,
-                               gimp_prop_size_entry_num_chars (lower, upper) + 1 +
-                               gimp_unit_get_scaled_digits (unit_value, resolution),
+                               ligma_prop_size_entry_num_chars (lower, upper) + 1 +
+                               ligma_unit_get_scaled_digits (unit_value, resolution),
                                update_policy);
 
   set_param_spec (NULL,
-                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
+                  ligma_size_entry_get_help_widget (LIGMA_SIZE_ENTRY (entry), 0),
                   param_spec);
 
   if (unit_param_spec)
     set_param_spec (NULL,
-                    gimp_size_entry_get_unit_combo  (GIMP_SIZE_ENTRY (entry)),
+                    ligma_size_entry_get_unit_combo  (LIGMA_SIZE_ENTRY (entry)),
                     unit_param_spec);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (entry), unit_value);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (entry), unit_value);
 
-  if (update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
+  if (update_policy == LIGMA_SIZE_ENTRY_UPDATE_SIZE)
+    ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0,
                                     resolution, FALSE);
 
-  gimp_size_entry_set_value_boundaries (GIMP_SIZE_ENTRY (entry), 0,
+  ligma_size_entry_set_value_boundaries (LIGMA_SIZE_ENTRY (entry), 0,
                                         lower, upper);
 
   g_object_set_data (G_OBJECT (entry), "value-is-pixel",
                      GINT_TO_POINTER (property_is_pixel ? TRUE : FALSE));
 
   if (property_is_pixel)
-    gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, value);
+    ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0, value);
   else
-    gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 0, value);
+    ligma_size_entry_set_value (LIGMA_SIZE_ENTRY (entry), 0, value);
 
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec",
+  g_object_set_data (G_OBJECT (entry), "ligma-config-param-spec",
                      param_spec);
 
   g_signal_connect (entry, "refval-changed",
-                    G_CALLBACK (gimp_prop_size_entry_callback),
+                    G_CALLBACK (ligma_prop_size_entry_callback),
                     config);
   g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_prop_size_entry_callback),
+                    G_CALLBACK (ligma_prop_size_entry_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_size_entry_notify),
+                  G_CALLBACK (ligma_prop_size_entry_notify),
                   entry);
 
   if (unit_property_name)
     {
-      g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-unit",
+      g_object_set_data (G_OBJECT (entry), "ligma-config-param-spec-unit",
                          unit_param_spec);
 
       g_signal_connect (entry, "unit-changed",
-                        G_CALLBACK (gimp_prop_size_entry_callback),
+                        G_CALLBACK (ligma_prop_size_entry_callback),
                         config);
 
       connect_notify (config, unit_property_name,
-                      G_CALLBACK (gimp_prop_size_entry_notify_unit),
+                      G_CALLBACK (ligma_prop_size_entry_notify_unit),
                       entry);
     }
 
-  gimp_widget_set_bound_property (entry, config, property_name);
+  ligma_widget_set_bound_property (entry, config, property_name);
 
   gtk_widget_show (entry);
 
@@ -3346,35 +3346,35 @@ gimp_prop_size_entry_new (GObject                   *config,
 }
 
 static void
-gimp_prop_size_entry_callback (GimpSizeEntry *entry,
+ligma_prop_size_entry_callback (LigmaSizeEntry *entry,
                                GObject       *config)
 {
   GParamSpec *param_spec;
   GParamSpec *unit_param_spec;
   gdouble     value;
   gboolean    value_is_pixel;
-  GimpUnit    unit_value;
+  LigmaUnit    unit_value;
 
-  param_spec = g_object_get_data (G_OBJECT (entry), "gimp-config-param-spec");
+  param_spec = g_object_get_data (G_OBJECT (entry), "ligma-config-param-spec");
   if (! param_spec)
     return;
 
   unit_param_spec = g_object_get_data (G_OBJECT (entry),
-                                       "gimp-config-param-spec-unit");
+                                       "ligma-config-param-spec-unit");
 
   value_is_pixel = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry),
                                                        "value-is-pixel"));
 
   if (value_is_pixel)
-    value = gimp_size_entry_get_refval (entry, 0);
+    value = ligma_size_entry_get_refval (entry, 0);
   else
-    value = gimp_size_entry_get_value (entry, 0);
+    value = ligma_size_entry_get_value (entry, 0);
 
-  unit_value = gimp_size_entry_get_unit (entry);
+  unit_value = ligma_size_entry_get_unit (entry);
 
   if (unit_param_spec)
     {
-      GimpUnit  old_unit;
+      LigmaUnit  old_unit;
 
       g_object_get (config,
                     unit_param_spec->name, &old_unit,
@@ -3407,9 +3407,9 @@ gimp_prop_size_entry_callback (GimpSizeEntry *entry,
 }
 
 static void
-gimp_prop_size_entry_notify (GObject       *config,
+ligma_prop_size_entry_notify (GObject       *config,
                              GParamSpec    *param_spec,
-                             GimpSizeEntry *entry)
+                             LigmaSizeEntry *entry)
 {
   gdouble  value;
   gdouble  entry_value;
@@ -3436,54 +3436,54 @@ gimp_prop_size_entry_notify (GObject       *config,
                                                        "value-is-pixel"));
 
   if (value_is_pixel)
-    entry_value = gimp_size_entry_get_refval (entry, 0);
+    entry_value = ligma_size_entry_get_refval (entry, 0);
   else
-    entry_value = gimp_size_entry_get_value (entry, 0);
+    entry_value = ligma_size_entry_get_value (entry, 0);
 
   if (value != entry_value)
     {
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_size_entry_callback,
+                                       ligma_prop_size_entry_callback,
                                        config);
 
       if (value_is_pixel)
-        gimp_size_entry_set_refval (entry, 0, value);
+        ligma_size_entry_set_refval (entry, 0, value);
       else
-        gimp_size_entry_set_value (entry, 0, value);
+        ligma_size_entry_set_value (entry, 0, value);
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_size_entry_callback,
+                                         ligma_prop_size_entry_callback,
                                          config);
     }
 }
 
 static void
-gimp_prop_size_entry_notify_unit (GObject       *config,
+ligma_prop_size_entry_notify_unit (GObject       *config,
                                   GParamSpec    *param_spec,
-                                  GimpSizeEntry *entry)
+                                  LigmaSizeEntry *entry)
 {
-  GimpUnit value;
+  LigmaUnit value;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  if (value != gimp_size_entry_get_unit (entry))
+  if (value != ligma_size_entry_get_unit (entry))
     {
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_size_entry_callback,
+                                       ligma_prop_size_entry_callback,
                                        config);
 
-      gimp_size_entry_set_unit (entry, value);
+      ligma_size_entry_set_unit (entry, value);
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_size_entry_callback,
+                                         ligma_prop_size_entry_callback,
                                          config);
     }
 }
 
 static gint
-gimp_prop_size_entry_num_chars (gdouble lower,
+ligma_prop_size_entry_num_chars (gdouble lower,
                                 gdouble upper)
 {
   gint lower_chars = log (fabs (lower)) / log (10);
@@ -3503,48 +3503,48 @@ gimp_prop_size_entry_num_chars (gdouble lower,
 /*  coordinates  */
 /*****************/
 
-static void   gimp_prop_coordinates_callback    (GimpSizeEntry *entry,
+static void   ligma_prop_coordinates_callback    (LigmaSizeEntry *entry,
                                                  GObject       *config);
-static void   gimp_prop_coordinates_notify_x    (GObject       *config,
+static void   ligma_prop_coordinates_notify_x    (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
-static void   gimp_prop_coordinates_notify_y    (GObject       *config,
+                                                 LigmaSizeEntry *entry);
+static void   ligma_prop_coordinates_notify_y    (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
-static void   gimp_prop_coordinates_notify_unit (GObject       *config,
+                                                 LigmaSizeEntry *entry);
+static void   ligma_prop_coordinates_notify_unit (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
+                                                 LigmaSizeEntry *entry);
 
 
 /**
- * gimp_prop_coordinates_new:
+ * ligma_prop_coordinates_new:
  * @config:             Object to which property is attached.
  * @x_property_name:    Name of int or double property for X coordinate.
  * @y_property_name:    Name of int or double property for Y coordinate.
  * @unit_property_name: Name of unit property.
  * @unit_format:        A printf-like unit-format string as is used with
- *                      gimp_unit_menu_new().
+ *                      ligma_unit_menu_new().
  * @update_policy:      How the automatic pixel <-> real-world-unit
  *                      calculations should be done.
  * @xresolution:        The resolution (in dpi) for the X coordinate.
  * @yresolution:        The resolution (in dpi) for the Y coordinate.
  * @has_chainbutton:    Whether to add a chainbutton to the size entry.
  *
- * Creates a #GimpSizeEntry to set and display two double or int
+ * Creates a #LigmaSizeEntry to set and display two double or int
  * properties, which will usually represent X and Y coordinates, and
  * their associated unit property.
  *
- * Returns: (transfer full): A new #GimpSizeEntry widget.
+ * Returns: (transfer full): A new #LigmaSizeEntry widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_coordinates_new (GObject                   *config,
+ligma_prop_coordinates_new (GObject                   *config,
                            const gchar               *x_property_name,
                            const gchar               *y_property_name,
                            const gchar               *unit_property_name,
                            const gchar               *unit_format,
-                           GimpSizeEntryUpdatePolicy  update_policy,
+                           LigmaSizeEntryUpdatePolicy  update_policy,
                            gdouble                    xresolution,
                            gdouble                    yresolution,
                            gboolean                   has_chainbutton)
@@ -3552,18 +3552,18 @@ gimp_prop_coordinates_new (GObject                   *config,
   GtkWidget *entry;
   GtkWidget *chainbutton = NULL;
 
-  entry = gimp_size_entry_new (2, GIMP_UNIT_INCH, unit_format,
+  entry = ligma_size_entry_new (2, LIGMA_UNIT_INCH, unit_format,
                                FALSE, FALSE, TRUE, 10,
                                update_policy);
 
   if (has_chainbutton)
     {
-      chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+      chainbutton = ligma_chain_button_new (LIGMA_CHAIN_BOTTOM);
       gtk_grid_attach (GTK_GRID (entry), chainbutton, 1, 3, 2, 1);
       gtk_widget_show (chainbutton);
     }
 
-  if (! gimp_prop_coordinates_connect (config,
+  if (! ligma_prop_coordinates_connect (config,
                                        x_property_name,
                                        y_property_name,
                                        unit_property_name,
@@ -3576,7 +3576,7 @@ gimp_prop_coordinates_new (GObject                   *config,
       return NULL;
     }
 
-  gimp_widget_set_bound_property (entry, config, x_property_name);
+  ligma_widget_set_bound_property (entry, config, x_property_name);
 
   gtk_widget_show (entry);
 
@@ -3584,7 +3584,7 @@ gimp_prop_coordinates_new (GObject                   *config,
 }
 
 gboolean
-gimp_prop_coordinates_connect (GObject     *config,
+ligma_prop_coordinates_connect (GObject     *config,
                                const gchar *x_property_name,
                                const gchar *y_property_name,
                                const gchar *unit_property_name,
@@ -3598,17 +3598,17 @@ gimp_prop_coordinates_connect (GObject     *config,
   GParamSpec *unit_param_spec;
   gdouble     x_value, x_lower, x_upper;
   gdouble     y_value, y_lower, y_upper;
-  GimpUnit    unit_value;
+  LigmaUnit    unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
-  GimpUnit   *old_unit_value;
+  LigmaUnit   *old_unit_value;
   gboolean    chain_checked;
 
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (entry), FALSE);
-  g_return_val_if_fail (gimp_size_entry_get_n_fields (GIMP_SIZE_ENTRY (entry)) == 2,
+  g_return_val_if_fail (LIGMA_IS_SIZE_ENTRY (entry), FALSE);
+  g_return_val_if_fail (ligma_size_entry_get_n_fields (LIGMA_SIZE_ENTRY (entry)) == 2,
                         FALSE);
   g_return_val_if_fail (chainbutton == NULL ||
-                        GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
+                        LIGMA_IS_CHAIN_BUTTON (chainbutton), FALSE);
 
   x_param_spec = find_param_spec (config, x_property_name, G_STRFUNC);
   if (! x_param_spec)
@@ -3627,7 +3627,7 @@ gimp_prop_coordinates_connect (GObject     *config,
   if (unit_property_name)
     {
       unit_param_spec = check_param_spec_w (config, unit_property_name,
-                                            GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+                                            LIGMA_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return FALSE;
 
@@ -3638,35 +3638,35 @@ gimp_prop_coordinates_connect (GObject     *config,
   else
     {
       unit_param_spec = NULL;
-      unit_value      = GIMP_UNIT_INCH;
+      unit_value      = LIGMA_UNIT_INCH;
     }
 
   set_param_spec (NULL,
-                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
+                  ligma_size_entry_get_help_widget (LIGMA_SIZE_ENTRY (entry), 0),
                   x_param_spec);
   set_param_spec (NULL,
-                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 1),
+                  ligma_size_entry_get_help_widget (LIGMA_SIZE_ENTRY (entry), 1),
                   y_param_spec);
 
   if (unit_param_spec)
     set_param_spec (NULL,
-                    gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (entry)),
+                    ligma_size_entry_get_unit_combo (LIGMA_SIZE_ENTRY (entry)),
                     unit_param_spec);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (entry), unit_value);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (entry), unit_value);
 
-  switch (gimp_size_entry_get_update_policy (GIMP_SIZE_ENTRY (entry)))
+  switch (ligma_size_entry_get_update_policy (LIGMA_SIZE_ENTRY (entry)))
     {
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
+    case LIGMA_SIZE_ENTRY_UPDATE_SIZE:
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0,
                                       xresolution, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1,
                                       yresolution, FALSE);
       chain_checked = (ABS (x_value - y_value) < 1);
       break;
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      chain_checked = (ABS (x_value - y_value) < GIMP_MIN_RESOLUTION);
+    case LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION:
+      chain_checked = (ABS (x_value - y_value) < LIGMA_MIN_RESOLUTION);
       break;
 
     default:
@@ -3674,17 +3674,17 @@ gimp_prop_coordinates_connect (GObject     *config,
       break;
     }
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 0,
                                          x_lower, x_upper);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 1,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 1,
                                          y_lower, y_upper);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, x_value);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, y_value);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0, x_value);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 1, y_value);
 
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-x",
+  g_object_set_data (G_OBJECT (entry), "ligma-config-param-spec-x",
                      x_param_spec);
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-y",
+  g_object_set_data (G_OBJECT (entry), "ligma-config-param-spec-y",
                      y_param_spec);
 
   old_x_value  = g_new0 (gdouble, 1);
@@ -3702,42 +3702,42 @@ gimp_prop_coordinates_connect (GObject     *config,
   if (chainbutton)
     {
       if (chain_checked)
-        gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
+        ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chainbutton), TRUE);
 
       g_object_set_data (G_OBJECT (entry), "chainbutton", chainbutton);
     }
 
   g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_prop_coordinates_callback),
+                    G_CALLBACK (ligma_prop_coordinates_callback),
                     config);
   g_signal_connect (entry, "refval-changed",
-                    G_CALLBACK (gimp_prop_coordinates_callback),
+                    G_CALLBACK (ligma_prop_coordinates_callback),
                     config);
 
   connect_notify (config, x_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_x),
+                  G_CALLBACK (ligma_prop_coordinates_notify_x),
                   entry);
   connect_notify (config, y_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_y),
+                  G_CALLBACK (ligma_prop_coordinates_notify_y),
                   entry);
 
   if (unit_property_name)
     {
-      g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-unit",
+      g_object_set_data (G_OBJECT (entry), "ligma-config-param-spec-unit",
                          unit_param_spec);
 
-      old_unit_value  = g_new0 (GimpUnit, 1);
+      old_unit_value  = g_new0 (LigmaUnit, 1);
       *old_unit_value = unit_value;
       g_object_set_data_full (G_OBJECT (entry), "old-unit-value",
                               old_unit_value,
                               (GDestroyNotify) g_free);
 
       g_signal_connect (entry, "unit-changed",
-                        G_CALLBACK (gimp_prop_coordinates_callback),
+                        G_CALLBACK (ligma_prop_coordinates_callback),
                         config);
 
       connect_notify (config, unit_property_name,
-                      G_CALLBACK (gimp_prop_coordinates_notify_unit),
+                      G_CALLBACK (ligma_prop_coordinates_notify_unit),
                       entry);
     }
 
@@ -3745,7 +3745,7 @@ gimp_prop_coordinates_connect (GObject     *config,
 }
 
 static void
-gimp_prop_coordinates_callback (GimpSizeEntry *entry,
+ligma_prop_coordinates_callback (LigmaSizeEntry *entry,
                                 GObject       *config)
 {
   GParamSpec *x_param_spec;
@@ -3753,26 +3753,26 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
   GParamSpec *unit_param_spec;
   gdouble     x_value;
   gdouble     y_value;
-  GimpUnit    unit_value;
+  LigmaUnit    unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
-  GimpUnit   *old_unit_value;
+  LigmaUnit   *old_unit_value;
   gboolean    backwards;
 
   x_param_spec = g_object_get_data (G_OBJECT (entry),
-                                    "gimp-config-param-spec-x");
+                                    "ligma-config-param-spec-x");
   y_param_spec = g_object_get_data (G_OBJECT (entry),
-                                    "gimp-config-param-spec-y");
+                                    "ligma-config-param-spec-y");
 
   if (! x_param_spec || ! y_param_spec)
     return;
 
   unit_param_spec = g_object_get_data (G_OBJECT (entry),
-                                       "gimp-config-param-spec-unit");
+                                       "ligma-config-param-spec-unit");
 
-  x_value    = gimp_size_entry_get_refval (entry, 0);
-  y_value    = gimp_size_entry_get_refval (entry, 1);
-  unit_value = gimp_size_entry_get_unit (entry);
+  x_value    = ligma_size_entry_get_refval (entry, 0);
+  y_value    = ligma_size_entry_get_refval (entry, 1);
+  unit_value = ligma_size_entry_get_unit (entry);
 
   old_x_value    = g_object_get_data (G_OBJECT (entry), "old-x-value");
   old_y_value    = g_object_get_data (G_OBJECT (entry), "old-y-value");
@@ -3782,7 +3782,7 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
     return;
 
   /*
-   * FIXME: if the entry was created using gimp_coordinates_new, then
+   * FIXME: if the entry was created using ligma_coordinates_new, then
    * the chain button is handled automatically and the following block
    * of code is unnecessary (and, in fact, redundant).
    */
@@ -3793,7 +3793,7 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
       chainbutton = g_object_get_data (G_OBJECT (entry), "chainbutton");
 
       if (chainbutton &&
-          gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)) &&
+          ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (chainbutton)) &&
           ! g_object_get_data (G_OBJECT (chainbutton), "constrains-ratio"))
         {
           if (x_value != *old_x_value)
@@ -3853,9 +3853,9 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
 }
 
 static void
-gimp_prop_coordinates_notify_x (GObject       *config,
+ligma_prop_coordinates_notify_x (GObject       *config,
                                 GParamSpec    *param_spec,
-                                GimpSizeEntry *entry)
+                                LigmaSizeEntry *entry)
 {
   gdouble value;
 
@@ -3876,33 +3876,33 @@ gimp_prop_coordinates_notify_x (GObject       *config,
                     NULL);
     }
 
-  if (value != gimp_size_entry_get_refval (entry, 0))
+  if (value != ligma_size_entry_get_refval (entry, 0))
     {
       gdouble *old_x_value = g_object_get_data (G_OBJECT (entry),
                                                 "old-x-value");
 
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
+                                       ligma_prop_coordinates_callback,
                                        config);
 
-      gimp_size_entry_set_refval (entry, 0, value);
+      ligma_size_entry_set_refval (entry, 0, value);
 
       if (old_x_value)
         *old_x_value = value;
 
       g_signal_emit_by_name (entry, "value-changed",
-                             gimp_size_entry_get_value (entry, 0));
+                             ligma_size_entry_get_value (entry, 0));
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
+                                         ligma_prop_coordinates_callback,
                                          config);
     }
 }
 
 static void
-gimp_prop_coordinates_notify_y (GObject       *config,
+ligma_prop_coordinates_notify_y (GObject       *config,
                                 GParamSpec    *param_spec,
-                                GimpSizeEntry *entry)
+                                LigmaSizeEntry *entry)
 {
   gdouble value;
 
@@ -3923,50 +3923,50 @@ gimp_prop_coordinates_notify_y (GObject       *config,
                     NULL);
     }
 
-  if (value != gimp_size_entry_get_refval (entry, 1))
+  if (value != ligma_size_entry_get_refval (entry, 1))
     {
       gdouble *old_y_value = g_object_get_data (G_OBJECT (entry),
                                                 "old-y-value");
 
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
+                                       ligma_prop_coordinates_callback,
                                        config);
 
-      gimp_size_entry_set_refval (entry, 1, value);
+      ligma_size_entry_set_refval (entry, 1, value);
 
       if (old_y_value)
         *old_y_value = value;
 
       g_signal_emit_by_name (entry, "value-changed",
-                             gimp_size_entry_get_value (entry, 1));
+                             ligma_size_entry_get_value (entry, 1));
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
+                                         ligma_prop_coordinates_callback,
                                          config);
     }
 }
 
 static void
-gimp_prop_coordinates_notify_unit (GObject       *config,
+ligma_prop_coordinates_notify_unit (GObject       *config,
                                    GParamSpec    *param_spec,
-                                   GimpSizeEntry *entry)
+                                   LigmaSizeEntry *entry)
 {
-  GimpUnit value;
+  LigmaUnit value;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  if (value != gimp_size_entry_get_unit (entry))
+  if (value != ligma_size_entry_get_unit (entry))
     {
       g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
+                                       ligma_prop_coordinates_callback,
                                        config);
 
-      gimp_size_entry_set_unit (entry, value);
+      ligma_size_entry_set_unit (entry, value);
 
       g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
+                                         ligma_prop_coordinates_callback,
                                          config);
     }
 }
@@ -3976,40 +3976,40 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
 /*  color area  */
 /****************/
 
-static void   gimp_prop_color_area_callback (GtkWidget  *widget,
+static void   ligma_prop_color_area_callback (GtkWidget  *widget,
                                              GObject    *config);
-static void   gimp_prop_color_area_notify   (GObject    *config,
+static void   ligma_prop_color_area_notify   (GObject    *config,
                                              GParamSpec *param_spec,
                                              GtkWidget  *area);
 
 /**
- * gimp_prop_color_area_new:
+ * ligma_prop_color_area_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of RGB property.
  * @width:         Width of color area.
  * @height:        Height of color area.
  * @type:          How transparency is represented.
  *
- * Creates a #GimpColorArea to set and display the value of an RGB
+ * Creates a #LigmaColorArea to set and display the value of an RGB
  * property.
  *
- * Returns: (transfer full): A new #GimpColorArea widget.
+ * Returns: (transfer full): A new #LigmaColorArea widget.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_color_area_new (GObject           *config,
+ligma_prop_color_area_new (GObject           *config,
                           const gchar       *property_name,
                           gint               width,
                           gint               height,
-                          GimpColorAreaType  type)
+                          LigmaColorAreaType  type)
 {
   GParamSpec *param_spec;
   GtkWidget  *area;
-  GimpRGB    *value;
+  LigmaRGB    *value;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4017,7 +4017,7 @@ gimp_prop_color_area_new (GObject           *config,
                 property_name, &value,
                 NULL);
 
-  area = gimp_color_area_new (value, type,
+  area = ligma_color_area_new (value, type,
                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
   gtk_widget_set_size_request (area, width, height);
 
@@ -4026,14 +4026,14 @@ gimp_prop_color_area_new (GObject           *config,
   set_param_spec (G_OBJECT (area), area, param_spec);
 
   g_signal_connect (area, "color-changed",
-                    G_CALLBACK (gimp_prop_color_area_callback),
+                    G_CALLBACK (ligma_prop_color_area_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_color_area_notify),
+                  G_CALLBACK (ligma_prop_color_area_notify),
                   area);
 
-  gimp_widget_set_bound_property (area, config, property_name);
+  ligma_widget_set_bound_property (area, config, property_name);
 
   gtk_widget_show (area);
 
@@ -4041,20 +4041,20 @@ gimp_prop_color_area_new (GObject           *config,
 }
 
 static void
-gimp_prop_color_area_callback (GtkWidget *area,
+ligma_prop_color_area_callback (GtkWidget *area,
                                GObject   *config)
 {
   GParamSpec *param_spec;
-  GimpRGB     value;
+  LigmaRGB     value;
 
   param_spec = get_param_spec (G_OBJECT (area));
   if (! param_spec)
     return;
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (area), &value);
+  ligma_color_area_get_color (LIGMA_COLOR_AREA (area), &value);
 
   g_signal_handlers_block_by_func (config,
-                                   gimp_prop_color_area_notify,
+                                   ligma_prop_color_area_notify,
                                    area);
 
   g_object_set (config,
@@ -4062,62 +4062,62 @@ gimp_prop_color_area_callback (GtkWidget *area,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_color_area_notify,
+                                     ligma_prop_color_area_notify,
                                      area);
 }
 
 static void
-gimp_prop_color_area_notify (GObject    *config,
+ligma_prop_color_area_notify (GObject    *config,
                              GParamSpec *param_spec,
                              GtkWidget  *area)
 {
-  GimpRGB *value;
+  LigmaRGB *value;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
   g_signal_handlers_block_by_func (area,
-                                   gimp_prop_color_area_callback,
+                                   ligma_prop_color_area_callback,
                                    config);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (area), value);
+  ligma_color_area_set_color (LIGMA_COLOR_AREA (area), value);
 
   g_free (value);
 
   g_signal_handlers_unblock_by_func (area,
-                                     gimp_prop_color_area_callback,
+                                     ligma_prop_color_area_callback,
                                      config);
 }
 
 /**
- * gimp_prop_color_select_new:
+ * ligma_prop_color_select_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of RGB property.
  * @width:         Width of the colorpreview in pixels.
  * @height:        Height of the colorpreview in pixels.
  * @type:          How transparency is represented.
  *
- * Creates a #GimpColorButton to set and display the value of an RGB
+ * Creates a #LigmaColorButton to set and display the value of an RGB
  * property.
  *
- * Returns: (transfer full): A new #GimpColorButton widget.
+ * Returns: (transfer full): A new #LigmaColorButton widget.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_color_select_new (GObject           *config,
+ligma_prop_color_select_new (GObject           *config,
                             const gchar       *property_name,
                             gint               width,
                             gint               height,
-                            GimpColorAreaType  type)
+                            LigmaColorAreaType  type)
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
-  GimpRGB    *value;
+  LigmaRGB    *value;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4125,7 +4125,7 @@ gimp_prop_color_select_new (GObject           *config,
                 property_name, &value,
                 NULL);
 
-  button = gimp_color_button_new (g_param_spec_get_nick (param_spec),
+  button = ligma_color_button_new (g_param_spec_get_nick (param_spec),
                                   width, height, value, type);
 
   g_free (value);
@@ -4134,7 +4134,7 @@ gimp_prop_color_select_new (GObject           *config,
                           button, "color",
                           G_BINDING_BIDIRECTIONAL);
 
-  gimp_widget_set_bound_property (button, config, property_name);
+  ligma_widget_set_bound_property (button, config, property_name);
 
   gtk_widget_show (button);
 
@@ -4142,30 +4142,30 @@ gimp_prop_color_select_new (GObject           *config,
 }
 
 /**
- * gimp_prop_label_color_new:
+ * ligma_prop_label_color_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of RGB property.
  * @editable:      Whether the widget should allow color editability.
  *
- * Creates a #GimpLabelColor to set and display the value of an RGB
+ * Creates a #LigmaLabelColor to set and display the value of an RGB
  * property.
  *
- * Returns: (transfer full): A new #GimpLabelColor widget.
+ * Returns: (transfer full): A new #LigmaLabelColor widget.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_prop_label_color_new (GObject     *config,
+ligma_prop_label_color_new (GObject     *config,
                            const gchar *property_name,
                            gboolean     editable)
 {
   GParamSpec  *param_spec;
   GtkWidget   *prop_widget;
   const gchar *label;
-  GimpRGB     *value;
+  LigmaRGB     *value;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4175,14 +4175,14 @@ gimp_prop_label_color_new (GObject     *config,
 
   label = g_param_spec_get_nick (param_spec);
 
-  prop_widget = gimp_label_color_new (label, value, editable);
+  prop_widget = ligma_label_color_new (label, value, editable);
   g_free (value);
 
   g_object_bind_property (config,      property_name,
                           prop_widget, "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_bound_property (prop_widget, config, property_name);
+  ligma_widget_set_bound_property (prop_widget, config, property_name);
 
   gtk_widget_show (prop_widget);
 
@@ -4193,47 +4193,47 @@ gimp_prop_label_color_new (GObject     *config,
 /*  unit combo box  */
 /********************/
 
-static void   gimp_prop_unit_combo_box_callback (GtkWidget  *combo,
+static void   ligma_prop_unit_combo_box_callback (GtkWidget  *combo,
                                                  GObject    *config);
-static void   gimp_prop_unit_combo_box_notify   (GObject    *config,
+static void   ligma_prop_unit_combo_box_notify   (GObject    *config,
                                                  GParamSpec *param_spec,
                                                  GtkWidget  *combo);
 
 /**
- * gimp_prop_unit_combo_box_new:
+ * ligma_prop_unit_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of Unit property.
  *
- * Creates a #GimpUnitComboBox to set and display the value of a Unit
- * property.  See gimp_unit_combo_box_new() for more information.
+ * Creates a #LigmaUnitComboBox to set and display the value of a Unit
+ * property.  See ligma_unit_combo_box_new() for more information.
  *
- * Returns: (transfer full): A new #GimpUnitComboBox widget.
+ * Returns: (transfer full): A new #LigmaUnitComboBox widget.
  *
  * Since: 2.8
  */
 GtkWidget *
-gimp_prop_unit_combo_box_new (GObject     *config,
+ligma_prop_unit_combo_box_new (GObject     *config,
                               const gchar *property_name)
 {
   GParamSpec   *param_spec;
   GtkWidget    *combo;
   GtkTreeModel *model;
-  GimpUnit      unit;
+  LigmaUnit      unit;
   GValue        value = G_VALUE_INIT;
   gboolean      show_pixels;
   gboolean      show_percent;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+                                   LIGMA_TYPE_PARAM_UNIT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   g_value_init (&value, param_spec->value_type);
 
-  g_value_set_int (&value, GIMP_UNIT_PIXEL);
+  g_value_set_int (&value, LIGMA_UNIT_PIXEL);
   show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
 
-  g_value_set_int (&value, GIMP_UNIT_PERCENT);
+  g_value_set_int (&value, LIGMA_UNIT_PERCENT);
   show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
 
   g_value_unset (&value);
@@ -4242,24 +4242,24 @@ gimp_prop_unit_combo_box_new (GObject     *config,
                 property_name, &unit,
                 NULL);
 
-  combo = gimp_unit_combo_box_new ();
+  combo = ligma_unit_combo_box_new ();
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
-  gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (model), show_pixels);
-  gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (model), show_percent);
+  ligma_unit_store_set_has_pixels (LIGMA_UNIT_STORE (model), show_pixels);
+  ligma_unit_store_set_has_percent (LIGMA_UNIT_STORE (model), show_percent);
 
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (combo), unit);
+  ligma_unit_combo_box_set_active (LIGMA_UNIT_COMBO_BOX (combo), unit);
 
   set_param_spec (G_OBJECT (combo), combo, param_spec);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_prop_unit_combo_box_callback),
+                    G_CALLBACK (ligma_prop_unit_combo_box_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_unit_combo_box_notify),
+                  G_CALLBACK (ligma_prop_unit_combo_box_notify),
                   combo);
 
-  gimp_widget_set_bound_property (combo, config, property_name);
+  ligma_widget_set_bound_property (combo, config, property_name);
 
   gtk_widget_show (combo);
 
@@ -4267,58 +4267,58 @@ gimp_prop_unit_combo_box_new (GObject     *config,
 }
 
 static void
-gimp_prop_unit_combo_box_callback (GtkWidget *combo,
+ligma_prop_unit_combo_box_callback (GtkWidget *combo,
                                    GObject   *config)
 {
   GParamSpec *param_spec;
-  GimpUnit    value;
-  GimpUnit    v;
+  LigmaUnit    value;
+  LigmaUnit    v;
 
   param_spec = get_param_spec (G_OBJECT (combo));
   if (! param_spec)
     return;
 
-  value = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (combo));
+  value = ligma_unit_combo_box_get_active (LIGMA_UNIT_COMBO_BOX (combo));
 
   g_object_get (config, param_spec->name, &v, NULL);
 
   if (v != value)
     {
-      /* FIXME gimp_unit_menu_update (menu, &unit); */
+      /* FIXME ligma_unit_menu_update (menu, &unit); */
 
       g_signal_handlers_block_by_func (config,
-                                       gimp_prop_unit_combo_box_notify,
+                                       ligma_prop_unit_combo_box_notify,
                                        combo);
 
       g_object_set (config, param_spec->name, value, NULL);
 
       g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_unit_combo_box_notify,
+                                         ligma_prop_unit_combo_box_notify,
                                          combo);
     }
 }
 
 static void
-gimp_prop_unit_combo_box_notify (GObject    *config,
+ligma_prop_unit_combo_box_notify (GObject    *config,
                                  GParamSpec *param_spec,
                                  GtkWidget  *combo)
 {
-  GimpUnit  unit;
+  LigmaUnit  unit;
 
   g_object_get (config,
                 param_spec->name, &unit,
                 NULL);
 
   g_signal_handlers_block_by_func (combo,
-                                   gimp_prop_unit_combo_box_callback,
+                                   ligma_prop_unit_combo_box_callback,
                                    config);
 
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (combo), unit);
+  ligma_unit_combo_box_set_active (LIGMA_UNIT_COMBO_BOX (combo), unit);
 
-  /* FIXME gimp_unit_menu_update (menu, &unit); */
+  /* FIXME ligma_unit_menu_update (menu, &unit); */
 
   g_signal_handlers_unblock_by_func (combo,
-                                     gimp_prop_unit_combo_box_callback,
+                                     ligma_prop_unit_combo_box_callback,
                                      config);
 }
 
@@ -4328,7 +4328,7 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
 /***************/
 
 /**
- * gimp_prop_icon_image_new:
+ * ligma_prop_icon_image_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  * @icon_size:     Size of desired icon image.
@@ -4342,7 +4342,7 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
  * Since: 2.10
  */
 GtkWidget *
-gimp_prop_icon_image_new (GObject     *config,
+ligma_prop_icon_image_new (GObject     *config,
                           const gchar *property_name,
                           GtkIconSize  icon_size)
 {
@@ -4365,13 +4365,13 @@ gimp_prop_icon_image_new (GObject     *config,
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)
-    gimp_help_set_help_data (image, blurb, NULL);
+    ligma_help_set_help_data (image, blurb, NULL);
 
   g_object_bind_property (config, property_name,
                           image, "icon-name",
                           G_BINDING_BIDIRECTIONAL);
 
-  gimp_widget_set_bound_property (image, config, property_name);
+  ligma_widget_set_bound_property (image, config, property_name);
 
   g_free (icon_name);
 
@@ -4383,16 +4383,16 @@ gimp_prop_icon_image_new (GObject     *config,
 /*  expander  */
 /**************/
 
-static void   gimp_prop_expanded_notify (GtkExpander *expander,
+static void   ligma_prop_expanded_notify (GtkExpander *expander,
                                          GParamSpec  *param_spec,
                                          GObject     *config);
-static void   gimp_prop_expander_notify (GObject     *config,
+static void   ligma_prop_expander_notify (GObject     *config,
                                          GParamSpec  *param_spec,
                                          GtkExpander *expander);
 
 
 /**
- * gimp_prop_expander_new:
+ * ligma_prop_expander_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property.
  * @label: (nullable): Label for expander.
@@ -4408,7 +4408,7 @@ static void   gimp_prop_expander_notify (GObject     *config,
  * Since: 2.4
  */
 GtkWidget *
-gimp_prop_expander_new (GObject     *config,
+ligma_prop_expander_new (GObject     *config,
                         const gchar *property_name,
                         const gchar *label)
 {
@@ -4436,14 +4436,14 @@ gimp_prop_expander_new (GObject     *config,
   set_param_spec (G_OBJECT (expander), expander, param_spec);
 
   g_signal_connect (expander, "notify::expanded",
-                    G_CALLBACK (gimp_prop_expanded_notify),
+                    G_CALLBACK (ligma_prop_expanded_notify),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_expander_notify),
+                  G_CALLBACK (ligma_prop_expander_notify),
                   expander);
 
-  gimp_widget_set_bound_property (expander, config, property_name);
+  ligma_widget_set_bound_property (expander, config, property_name);
 
   gtk_widget_show (expander);
 
@@ -4451,7 +4451,7 @@ gimp_prop_expander_new (GObject     *config,
 }
 
 static void
-gimp_prop_expanded_notify (GtkExpander *expander,
+ligma_prop_expanded_notify (GtkExpander *expander,
                            GParamSpec  *param_spec,
                            GObject     *config)
 {
@@ -4465,7 +4465,7 @@ gimp_prop_expanded_notify (GtkExpander *expander,
 }
 
 static void
-gimp_prop_expander_notify (GObject     *config,
+ligma_prop_expander_notify (GObject     *config,
                            GParamSpec  *param_spec,
                            GtkExpander *expander)
 {
@@ -4478,13 +4478,13 @@ gimp_prop_expander_notify (GObject     *config,
   if (gtk_expander_get_expanded (expander) != value)
     {
       g_signal_handlers_block_by_func (expander,
-                                       gimp_prop_expanded_notify,
+                                       ligma_prop_expanded_notify,
                                        config);
 
       gtk_expander_set_expanded (expander, value);
 
       g_signal_handlers_unblock_by_func (expander,
-                                         gimp_prop_expanded_notify,
+                                         ligma_prop_expanded_notify,
                                          config);
     }
 }
@@ -4494,17 +4494,17 @@ gimp_prop_expander_notify (GObject     *config,
 /*  private utility functions  */
 /*******************************/
 
-static GQuark gimp_prop_widgets_param_spec_quark (void) G_GNUC_CONST;
+static GQuark ligma_prop_widgets_param_spec_quark (void) G_GNUC_CONST;
 
-#define PARAM_SPEC_QUARK (gimp_prop_widgets_param_spec_quark ())
+#define PARAM_SPEC_QUARK (ligma_prop_widgets_param_spec_quark ())
 
 static GQuark
-gimp_prop_widgets_param_spec_quark (void)
+ligma_prop_widgets_param_spec_quark (void)
 {
   static GQuark param_spec_quark = 0;
 
   if (! param_spec_quark)
-    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+    param_spec_quark = g_quark_from_static_string ("ligma-config-param-spec");
 
   return param_spec_quark;
 }
@@ -4524,7 +4524,7 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        gimp_help_set_help_data (widget, blurb, NULL);
+        ligma_help_set_help_data (widget, blurb, NULL);
     }
 }
 
@@ -4700,7 +4700,7 @@ connect_notify (GObject     *config,
 
 
 static gboolean
-gimp_prop_widget_double_to_factor (GBinding     *binding,
+ligma_prop_widget_double_to_factor (GBinding     *binding,
                                    const GValue *from_value,
                                    GValue       *to_value,
                                    gpointer      user_data)
@@ -4714,7 +4714,7 @@ gimp_prop_widget_double_to_factor (GBinding     *binding,
 }
 
 static gboolean
-gimp_prop_widget_double_from_factor (GBinding     *binding,
+ligma_prop_widget_double_from_factor (GBinding     *binding,
                                      const GValue *from_value,
                                      GValue       *to_value,
                                      gpointer      user_data)

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors-warp.h
+ * ligmavectors-warp.h
  * Copyright (C) 2005 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,19 +18,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_WARP_H__
-#define __GIMP_VECTORS_WARP_H__
+#ifndef __LIGMA_VECTORS_WARP_H__
+#define __LIGMA_VECTORS_WARP_H__
 
 
-void gimp_vectors_warp_point   (GimpVectors *vectors,
-                                GimpCoords  *point,
-                                GimpCoords  *point_warped,
+void ligma_vectors_warp_point   (LigmaVectors *vectors,
+                                LigmaCoords  *point,
+                                LigmaCoords  *point_warped,
                                 gdouble      y_offset);
 
-void gimp_vectors_warp_vectors (GimpVectors *vectors,
-                                GimpVectors *vectors_in,
+void ligma_vectors_warp_vectors (LigmaVectors *vectors,
+                                LigmaVectors *vectors_in,
                                 gdouble      yoffset);
 
 
-#endif /* __GIMP_VECTORS_WARP_H__ */
+#endif /* __LIGMA_VECTORS_WARP_H__ */
 

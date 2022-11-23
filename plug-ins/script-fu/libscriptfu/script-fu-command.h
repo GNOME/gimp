@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,11 @@
 gboolean        script_fu_run_command          (const gchar  *command,
                                                 GError      **error);
 
-GimpValueArray *script_fu_interpret_image_proc (GimpProcedure        *procedure,
+LigmaValueArray *script_fu_interpret_image_proc (LigmaProcedure        *procedure,
                                                 SFScript             *script,
-                                                GimpImage            *image,
+                                                LigmaImage            *image,
                                                 guint                 n_drawables,
-                                                GimpDrawable        **drawables,
-                                                const GimpValueArray *args);
+                                                LigmaDrawable        **drawables,
+                                                const LigmaValueArray *args);
 
 #endif /* __SCRIPT_FU_COMMAND_H__ */

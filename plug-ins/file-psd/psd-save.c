@@ -1,6 +1,6 @@
 /*
  * PSD Export Plugin version 1.0 (BETA)
- * This GIMP plug-in is designed to export Adobe Photoshop(tm) files (.PSD)
+ * This LIGMA plug-in is designed to export Adobe Photoshop(tm) files (.PSD)
  *
  * Monigotes
  *
@@ -40,7 +40,7 @@
  *       - Cleaned up and GNUstylized.
  *       - Translated all comments and vars in Spanish to English.
  *
- *  2005-2-11 Jay Cox <jaycox@gimp.org>
+ *  2005-2-11 Jay Cox <jaycox@ligma.org>
  *       Rewrote all the code that deals with pixels to be stingy with
  *       memory and operate on tile-size chunks.  Create a flattened
  *       copy of the image when necessary. Fixes file corruption bug
@@ -70,16 +70,16 @@
 
 #include <glib/gstdio.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "psd.h"
 #include "psd-util.h"
 #include "psd-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PSD_UNIT_INCH 1
@@ -98,7 +98,7 @@ typedef enum PsdLayerType
 
 typedef struct PsdLayer
 {
-  GimpLayer      *layer;
+  LigmaLayer      *layer;
   PSD_Layer_Type  type;
 } PSD_Layer;
 
@@ -109,13 +109,13 @@ typedef struct PsdImageData
   gint32             image_height;
   gint32             image_width;
 
-  GimpImageBaseType  baseType;
+  LigmaImageBaseType  baseType;
 
-  GimpLayer         *merged_layer;/* Merged image,
+  LigmaLayer         *merged_layer;/* Merged image,
                                      to be used for the image data section */
 
   gint               nChannels;   /* Number of user channels in the image */
-  GList             *lChannels;   /* List of GimpChannel (User channels in the image) */
+  GList             *lChannels;   /* List of LigmaChannel (User channels in the image) */
 
   gint               nLayers;     /* Number of layers in the image */
   GList             *lLayers;     /* List of PSD_Layer */
@@ -126,34 +126,34 @@ static PSD_Image_Data PSDImageData;
 /* Declare some local functions.
  */
 
-static const gchar * psd_lmode_layer      (GimpLayer      *layer,
+static const gchar * psd_lmode_layer      (LigmaLayer      *layer,
                                            gboolean        section_divider);
 
-static void          reshuffle_cmap_write (guchar         *mapGimp);
+static void          reshuffle_cmap_write (guchar         *mapLigma);
 
 static void          save_header          (GOutputStream  *output,
-                                           GimpImage      *image,
+                                           LigmaImage      *image,
                                            gboolean        export_cmyk,
                                            gboolean        export_duotone);
 
 static void          save_color_mode_data (GOutputStream  *output,
-                                           GimpImage      *image,
+                                           LigmaImage      *image,
                                            gboolean        export_duotone);
 
 static void          save_resources       (GOutputStream  *output,
-                                           GimpImage      *image,
+                                           LigmaImage      *image,
                                            gboolean        export_cmyk,
                                            gboolean        export_duotone);
 
 static void          save_paths           (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           LigmaImage      *image);
 
 static void          save_layer_and_mask  (GOutputStream  *output,
-                                           GimpImage      *image,
+                                           LigmaImage      *image,
                                            gboolean        export_cmyk);
 
 static void          save_data            (GOutputStream  *output,
-                                           GimpImage      *image,
+                                           LigmaImage      *image,
                                            gboolean        export_cmyk);
 
 static void          double_to_psd_fixed  (gdouble         value,
@@ -191,41 +191,41 @@ static void          write_datablock_luni (GOutputStream  *output,
 
 
 static void          write_pixel_data     (GOutputStream  *output,
-                                           GimpImage      *image,
-                                           GimpDrawable   *drawable,
+                                           LigmaImage      *image,
+                                           LigmaDrawable   *drawable,
                                            goffset        *ChanLenPosition,
                                            goffset         rowlenOffset,
                                            gboolean        write_mask,
                                            gboolean        export_cmyk);
 
-static GimpLayer   * create_merged_image  (GimpImage      *image);
+static LigmaLayer   * create_merged_image  (LigmaImage      *image);
 
-static gint          get_bpc              (GimpImage      *image);
-static const Babl  * get_pixel_format     (GimpDrawable   *drawable);
-static const Babl  * get_channel_format   (GimpDrawable   *drawable);
-static const Babl  * get_mask_format      (GimpLayerMask  *mask);
+static gint          get_bpc              (LigmaImage      *image);
+static const Babl  * get_pixel_format     (LigmaDrawable   *drawable);
+static const Babl  * get_channel_format   (LigmaDrawable   *drawable);
+static const Babl  * get_mask_format      (LigmaLayerMask  *mask);
 
-static GList       * image_get_all_layers (GimpImage      *image,
+static GList       * image_get_all_layers (LigmaImage      *image,
                                            gint           *n_layers);
 
 static const gchar *
-psd_lmode_layer (GimpLayer *layer,
+psd_lmode_layer (LigmaLayer *layer,
                  gboolean   section_divider)
 {
   LayerModeInfo mode_info;
 
-  mode_info.mode            = gimp_layer_get_mode (layer);
-  mode_info.blend_space     = gimp_layer_get_blend_space (layer);
-  mode_info.composite_space = gimp_layer_get_composite_space (layer);
-  mode_info.composite_mode  = gimp_layer_get_composite_mode (layer);
+  mode_info.mode            = ligma_layer_get_mode (layer);
+  mode_info.blend_space     = ligma_layer_get_blend_space (layer);
+  mode_info.composite_space = ligma_layer_get_composite_space (layer);
+  mode_info.composite_mode  = ligma_layer_get_composite_mode (layer);
 
   /* pass-through groups use normal mode in their layer record; the
    * pass-through mode is specified in their section divider resource.
    */
-  if (mode_info.mode == GIMP_LAYER_MODE_PASS_THROUGH && ! section_divider)
-    mode_info.mode = GIMP_LAYER_MODE_NORMAL;
+  if (mode_info.mode == LIGMA_LAYER_MODE_PASS_THROUGH && ! section_divider)
+    mode_info.mode = LIGMA_LAYER_MODE_NORMAL;
 
-  return gimp_to_psd_blend_mode (&mode_info);
+  return ligma_to_psd_blend_mode (&mode_info);
 }
 
 static void
@@ -292,7 +292,7 @@ xfwrite (GOutputStream  *output,
                                    &bytes_written, NULL, NULL))
     {
       g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
-      gimp_quit ();
+      ligma_quit ();
     }
 }
 
@@ -314,7 +314,7 @@ write_gchar (GOutputStream  *output,
                                    &bytes_written, NULL, NULL))
     {
       g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
-      gimp_quit ();
+      ligma_quit ();
     }
   g_seekable_seek (G_SEEKABLE (output),
                    pos + 1, G_SEEK_SET,
@@ -340,7 +340,7 @@ write_gint16 (GOutputStream  *output,
                                    &bytes_written, NULL, NULL))
     {
       g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
-      gimp_quit ();
+      ligma_quit ();
     }
 }
 
@@ -362,7 +362,7 @@ write_gint32 (GOutputStream  *output,
                                    &bytes_written, NULL, NULL))
     {
       g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
-      gimp_quit ();
+      ligma_quit ();
     }
 }
 
@@ -471,27 +471,27 @@ pack_pb_line (guchar *start,
 }
 
 static gint
-gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
+ligmaBaseTypeToPsdMode (LigmaImageBaseType ligmaBaseType)
 {
-  switch (gimpBaseType)
+  switch (ligmaBaseType)
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       return 3;                                         /* RGB */
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       return 1;                                         /* Grayscale */
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       return 2;                                         /* Indexed */
     default:
-      g_message (_("Error: Can't convert GIMP base imagetype to PSD mode"));
-      IFDBG(1) g_debug ("PSD Export: gimpBaseType value is %d, "
-                        "can't convert to PSD mode", gimpBaseType);
-      gimp_quit ();
+      g_message (_("Error: Can't convert LIGMA base imagetype to PSD mode"));
+      IFDBG(1) g_debug ("PSD Export: ligmaBaseType value is %d, "
+                        "can't convert to PSD mode", ligmaBaseType);
+      ligma_quit ();
       return 3;                            /* Return RGB by default */
     }
 }
 
 static gint
-nChansLayer (gint gimpBaseType,
+nChansLayer (gint ligmaBaseType,
              gint hasAlpha,
              gint hasMask)
 {
@@ -501,13 +501,13 @@ nChansLayer (gint gimpBaseType,
   incAlpha = (hasAlpha == 0) ? 0 : 1;
   incMask = (hasMask == 0) ? 0 : 1;
 
-  switch (gimpBaseType)
+  switch (ligmaBaseType)
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       return 3 + incAlpha + incMask;     /* R,G,B & Alpha & Mask (if any) */
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       return 1 + incAlpha + incMask;     /* G & Alpha & Mask (if any) */
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       return 1 + incAlpha + incMask;     /* I & Alpha & Mask (if any) */
     default:
       return 0;                          /* Return 0 channels by default */
@@ -515,7 +515,7 @@ nChansLayer (gint gimpBaseType,
 }
 
 static void
-reshuffle_cmap_write (guchar *mapGimp)
+reshuffle_cmap_write (guchar *mapLigma)
 {
   guchar *mapPSD;
   gint    i;
@@ -524,14 +524,14 @@ reshuffle_cmap_write (guchar *mapGimp)
 
   for (i = 0; i < 256; i++)
     {
-      mapPSD[i] = mapGimp[i * 3];
-      mapPSD[i + 256] = mapGimp[i * 3 + 1];
-      mapPSD[i + 512] = mapGimp[i * 3 + 2];
+      mapPSD[i] = mapLigma[i * 3];
+      mapPSD[i + 256] = mapLigma[i * 3 + 1];
+      mapPSD[i + 512] = mapLigma[i * 3 + 2];
     }
 
   for (i = 0; i < 768; i++)
     {
-      mapGimp[i] = mapPSD[i];
+      mapLigma[i] = mapPSD[i];
     }
 
   g_free (mapPSD);
@@ -539,7 +539,7 @@ reshuffle_cmap_write (guchar *mapGimp)
 
 static void
 save_header (GOutputStream  *output,
-             GimpImage      *image,
+             LigmaImage      *image,
              gboolean        export_cmyk,
              gboolean        export_duotone)
 {
@@ -556,13 +556,13 @@ save_header (GOutputStream  *output,
   if (export_cmyk)
     {
       nChannels =
-        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)) ?
+        ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)) ?
         5 : 4;
     }
   else
     {
       nChannels = (PSDImageData.nChannels + nChansLayer (PSDImageData.baseType,
-        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0));
+        ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)), 0));
     }
 
   xfwrite (output, "8BPS", 4, "signature");
@@ -578,23 +578,23 @@ save_header (GOutputStream  *output,
   else if (export_duotone)
     write_gint16 (output, PSD_DUOTONE, "mode");
   else
-    write_gint16 (output, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
+    write_gint16 (output, ligmaBaseTypeToPsdMode (PSDImageData.baseType), "mode");
 }
 
 static void
 save_color_mode_data (GOutputStream  *output,
-                      GimpImage      *image,
+                      LigmaImage      *image,
                       gboolean        export_duotone)
 {
   guchar       *cmap;
   guchar       *cmap_modified;
   gint          i;
   gint32        nColors;
-  GimpParasite *parasite = NULL;
+  LigmaParasite *parasite = NULL;
 
   IFDBG(1) g_debug ("Function: save_color_mode_data");
 
-  parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+  parasite = ligma_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
   if (export_duotone && parasite)
     {
       const guchar *parasite_data;
@@ -602,22 +602,22 @@ save_color_mode_data (GOutputStream  *output,
 
       IFDBG(1) g_debug ("\tImage type: DUOTONE");
 
-      parasite_data = (const guchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = (const guchar *) ligma_parasite_get_data (parasite, &parasite_size);
 
       write_gint32 (output, parasite_size, "color data length");
       xfwrite (output, parasite_data, parasite_size, "colormap");
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
       return;
     }
 
   switch (PSDImageData.baseType)
     {
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       IFDBG(1) g_debug ("\tImage type: INDEXED");
 
-      cmap = gimp_image_get_colormap (image, &nColors);
-      IFDBG(1) g_debug ("\t\tLength of colormap returned by gimp_image_get_colormap: %d", nColors);
+      cmap = ligma_image_get_colormap (image, &nColors);
+      IFDBG(1) g_debug ("\t\tLength of colormap returned by ligma_image_get_colormap: %d", nColors);
 
       if (nColors == 0)
         {
@@ -659,7 +659,7 @@ save_color_mode_data (GOutputStream  *output,
 
 static void
 save_resources (GOutputStream  *output,
-                GimpImage      *image,
+                LigmaImage      *image,
                 gboolean        export_cmyk,
                 gboolean        export_duotone)
 {
@@ -672,7 +672,7 @@ save_resources (GOutputStream  *output,
   goffset       name_sec;            /* Position for Lengths of Channel Names */
 
 
-  /* Only relevant resources in GIMP are: 0x03EE, 0x03F0 & 0x0400 */
+  /* Only relevant resources in LIGMA are: 0x03EE, 0x03F0 & 0x0400 */
   /* For Adobe Photoshop version 4.0 these can also be considered:
      0x0408, 0x040A & 0x040B (1006, 1008, 1024, 1032, 1034, and 1035) */
 
@@ -682,11 +682,11 @@ save_resources (GOutputStream  *output,
   /* Get the image title from its filename */
 
   IFDBG(1) g_debug ("\tImage title: %s",
-                    g_file_peek_path (gimp_image_get_file (image)));
+                    g_file_peek_path (ligma_image_get_file (image)));
 
   /* Get the selected layers */
 
-  SelLayers = gimp_image_list_selected_layers (image);
+  SelLayers = ligma_image_list_selected_layers (image);
 
   /* Here's where actual writing starts */
 
@@ -698,7 +698,7 @@ save_resources (GOutputStream  *output,
   if (! export_cmyk)
     {
       if (PSDImageData.nChannels > 0 ||
-          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)))
         {
           xfwrite (output, "8BIM", 4, "imageresources signature");
           write_gint16 (output, 0x03EE, "0x03EE Id"); /* 1006 */
@@ -713,12 +713,12 @@ save_resources (GOutputStream  *output,
           /* Write all strings */
 
           /* if the merged_image contains transparency, write a name for it first */
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)))
             write_string (output, "Transparency", "channel name");
 
           for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
             {
-              char *chName = gimp_item_get_name (iter->data);
+              char *chName = ligma_item_get_name (iter->data);
               write_string (output, chName, "channel name");
               g_free (chName);
             }
@@ -748,7 +748,7 @@ save_resources (GOutputStream  *output,
       /* --------------- Write Channel properties --------------- */
 
       if (PSDImageData.nChannels > 0 ||
-          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)))
         {
           xfwrite (output, "8BIM", 4, "imageresources signature");
           write_gint16 (output, 0x0435, "0x0435 Id"); /* 1077 */
@@ -756,8 +756,8 @@ save_resources (GOutputStream  *output,
           write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
           write_gint32 (output,
                         4  +
-                        13 * (gimp_drawable_has_alpha (
-                                GIMP_DRAWABLE (PSDImageData.merged_layer)) +
+                        13 * (ligma_drawable_has_alpha (
+                                LIGMA_DRAWABLE (PSDImageData.merged_layer)) +
                               PSDImageData.nChannels),
                         "0x0435 resource size");
 
@@ -772,7 +772,7 @@ save_resources (GOutputStream  *output,
           #define DOUBLE_TO_INT16(x) ROUND (SAFE_CLAMP (x, 0.0, 1.0) * 0xffff)
 
           /* if the merged_image contains transparency, write its properties first */
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)))
             {
               write_gint16 (output, PSD_CS_RGB, "channel color space");
               write_gint16 (output, DOUBLE_TO_INT16 (1.0), "channel color r");
@@ -785,12 +785,12 @@ save_resources (GOutputStream  *output,
 
           for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
             {
-              GimpChannel *channel = iter->data;
-              GimpRGB      color;
+              LigmaChannel *channel = iter->data;
+              LigmaRGB      color;
               gdouble      opacity;
 
-              gimp_channel_get_color (channel, &color);
-              opacity = gimp_channel_get_opacity (channel);
+              ligma_channel_get_color (channel, &color);
+              opacity = ligma_channel_get_opacity (channel);
 
               write_gint16 (output, PSD_CS_RGB,                "channel color space");
               write_gint16 (output, DOUBLE_TO_INT16 (color.r), "channel color r");
@@ -810,13 +810,13 @@ save_resources (GOutputStream  *output,
         }
     }
   /* --------------- Write Guides --------------- */
-  if (gimp_image_find_next_guide (image, 0))
+  if (ligma_image_find_next_guide (image, 0))
     {
       gint n_guides = 0;
       gint guide_id = 0;
 
       /* Count the guides */
-      while ((guide_id = gimp_image_find_next_guide(image, guide_id)))
+      while ((guide_id = ligma_image_find_next_guide(image, guide_id)))
         n_guides++;
 
       xfwrite (output, "8BIM", 4, "imageresources signature");
@@ -831,12 +831,12 @@ save_resources (GOutputStream  *output,
       write_gint32 (output, n_guides, "number of guides");
 
       /* write the guides */
-      while ((guide_id = gimp_image_find_next_guide (image, guide_id)))
+      while ((guide_id = ligma_image_find_next_guide (image, guide_id)))
         {
           gchar orientation;
           gint32 position;
-          orientation = gimp_image_get_guide_orientation (image, guide_id);
-          position    = 32 * gimp_image_get_guide_position (image, guide_id);
+          orientation = ligma_image_get_guide_orientation (image, guide_id);
+          position    = 32 * ligma_image_get_guide_position (image, guide_id);
           orientation ^= 1; /* in the psd vert =0 , horiz = 1 */
           write_gint32 (output, position, "Position of guide");
           write_gchar (output, orientation, "Orientation of guide");
@@ -857,13 +857,13 @@ save_resources (GOutputStream  *output,
   {
     gdouble  xres = 0, yres = 0;
     guint32  xres_fix, yres_fix;
-    GimpUnit g_unit;
+    LigmaUnit g_unit;
     gint16   psd_unit;
 
-    g_unit = gimp_image_get_unit (image);
-    gimp_image_get_resolution (image, &xres, &yres);
+    g_unit = ligma_image_get_unit (image);
+    ligma_image_get_resolution (image, &xres, &yres);
 
-    if (g_unit == GIMP_UNIT_MM)
+    if (g_unit == LIGMA_UNIT_MM)
       {
         psd_unit = PSD_UNIT_CM;
       }
@@ -934,22 +934,22 @@ save_resources (GOutputStream  *output,
       write_gint32 (output, sizeof (gint16) + sizeof (gint32) * g_list_length (SelLayers), "0x0400 resource size");
       write_gint16 (output, g_list_length (SelLayers), "2 bytes count");
       for (iter = SelLayers; iter; iter = iter->next)
-        write_gint32 (output, GPOINTER_TO_INT (gimp_item_get_tattoo (iter->data)), "4 bytes layer ID");
+        write_gint32 (output, GPOINTER_TO_INT (ligma_item_get_tattoo (iter->data)), "4 bytes layer ID");
     }
   g_list_free (SelLayers);
 
   /* --------------- Write ICC profile data ------------------- */
   {
-    GimpColorProfile *profile = NULL;
+    LigmaColorProfile *profile = NULL;
 
     if (! export_duotone)
-      profile = gimp_image_get_effective_color_profile (image);
+      profile = ligma_image_get_effective_color_profile (image);
 
     if (export_cmyk)
       {
-        profile = gimp_image_get_simulation_profile (image);
+        profile = ligma_image_get_simulation_profile (image);
 
-        if (! gimp_color_profile_is_cmyk (profile))
+        if (! ligma_color_profile_is_cmyk (profile))
           g_object_unref (profile);
       }
 
@@ -958,7 +958,7 @@ save_resources (GOutputStream  *output,
         const guint8 *icc_data;
         gsize         icc_length;
 
-        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+        icc_data = ligma_color_profile_get_icc_profile (profile, &icc_length);
 
         xfwrite (output, "8BIM", 4, "imageresources signature");
         write_gint16 (output, 0x040f, "0x040f Id");
@@ -1102,11 +1102,11 @@ double_to_psd_fixed (gdouble  value,
 /* Ported from /plug-ins/file-tiff/file-tiff-save.c */
 static void
 save_paths (GOutputStream  *output,
-            GimpImage      *image)
+            LigmaImage      *image)
 {
   gshort  id     = 0x07D0; /* Photoshop paths have IDs >= 2000 */
-  gdouble width  = gimp_image_get_width (image);
-  gdouble height = gimp_image_get_height (image);
+  gdouble width  = ligma_image_get_width (image);
+  gdouble height = ligma_image_get_height (image);
   GList  *vectors;
   GList  *iter;
   gint    v;
@@ -1114,7 +1114,7 @@ save_paths (GOutputStream  *output,
   gint   *strokes;
   gint    s;
 
-  vectors = gimp_image_list_vectors (image);
+  vectors = ligma_image_list_vectors (image);
 
   if (! vectors)
     return;
@@ -1140,7 +1140,7 @@ save_paths (GOutputStream  *output,
        * - use iso8859-1 if possible
        * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
        */
-      name = gimp_item_get_name (iter->data);
+      name = ligma_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
 
       if (tmpname && err == NULL)
@@ -1177,20 +1177,20 @@ save_paths (GOutputStream  *output,
       pointrecord[1] = 6;  /* fill rule record */
       g_string_append_len (data, pointrecord, 26);
 
-      strokes = gimp_vectors_get_strokes (iter->data, &num_strokes);
+      strokes = ligma_vectors_get_strokes (iter->data, &num_strokes);
 
       for (s = 0; s < num_strokes; s++)
         {
-          GimpVectorsStrokeType type;
+          LigmaVectorsStrokeType type;
           gdouble  *points;
           gint      num_points;
           gboolean  closed;
           gint      p = 0;
 
-          type = gimp_vectors_stroke_get_points (iter->data, strokes[s],
+          type = ligma_vectors_stroke_get_points (iter->data, strokes[s],
                                                  &num_points, &points, &closed);
 
-          if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
+          if (type != LIGMA_VECTORS_STROKE_TYPE_BEZIER ||
               num_points > 65535 ||
               num_points % 6)
             {
@@ -1240,7 +1240,7 @@ save_paths (GOutputStream  *output,
 
 static void
 save_layer_and_mask (GOutputStream  *output,
-                     GimpImage      *image,
+                     LigmaImage      *image,
                      gboolean        export_cmyk)
 {
   gint           i,j;
@@ -1255,7 +1255,7 @@ save_layer_and_mask (GOutputStream  *output,
   gint           nChannelsLayer;         /* Number of channels of a layer */
   gint32         ChanSize;               /* Data length for a channel */
   gchar         *layerName;              /* Layer name */
-  GimpLayerMask *mask;                   /* Layer mask */
+  LigmaLayerMask *mask;                   /* Layer mask */
   gint           depth;                  /* Layer group nesting depth */
   gint           bpc;                    /* Image BPC */
 
@@ -1285,7 +1285,7 @@ save_layer_and_mask (GOutputStream  *output,
 
   /* Layer structure section */
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+  if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)))
     write_gint16 (output, -PSDImageData.nLayers, "Layer structure count");
   else
     write_gint16 (output, PSDImageData.nLayers, "Layer structure count");
@@ -1295,7 +1295,7 @@ save_layer_and_mask (GOutputStream  *output,
   bpc = get_bpc (image);
 
   /* Layer records section */
-  /* GIMP layers must be written in reverse order */
+  /* LIGMA layers must be written in reverse order */
 
   for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers;
        iter;
@@ -1306,10 +1306,10 @@ save_layer_and_mask (GOutputStream  *output,
 
       if (psd_layer->type == PSD_LAYER_TYPE_LAYER)
         {
-          gimp_drawable_get_offsets (GIMP_DRAWABLE (psd_layer->layer),
+          ligma_drawable_get_offsets (LIGMA_DRAWABLE (psd_layer->layer),
                                      &offset_x, &offset_y);
-          layerWidth = gimp_drawable_get_width (GIMP_DRAWABLE (psd_layer->layer));
-          layerHeight = gimp_drawable_get_height (GIMP_DRAWABLE (psd_layer->layer));
+          layerWidth = ligma_drawable_get_width (LIGMA_DRAWABLE (psd_layer->layer));
+          layerHeight = ligma_drawable_get_height (LIGMA_DRAWABLE (psd_layer->layer));
         }
       else
         {
@@ -1350,18 +1350,18 @@ save_layer_and_mask (GOutputStream  *output,
       write_gint32 (output, offset_x + layerWidth,  "Layer right");
 
       hasMask = (psd_layer->type != PSD_LAYER_TYPE_GROUP_END &&
-                 gimp_layer_get_mask (psd_layer->layer) != NULL);
+                 ligma_layer_get_mask (psd_layer->layer) != NULL);
       nChannelsLayer = nChansLayer (PSDImageData.baseType,
-                                    gimp_drawable_has_alpha (GIMP_DRAWABLE (psd_layer->layer)),
+                                    ligma_drawable_has_alpha (LIGMA_DRAWABLE (psd_layer->layer)),
                                     hasMask);
 
       /* Manually set channels to 4 or 5 when export as CMYK;
-       * Can be removed once CMYK channels are accessible in GIMP
+       * Can be removed once CMYK channels are accessible in LIGMA
        */
       if (export_cmyk)
         {
           nChannelsLayer =
-            gimp_drawable_has_alpha (GIMP_DRAWABLE (psd_layer->layer)) ?
+            ligma_drawable_has_alpha (LIGMA_DRAWABLE (psd_layer->layer)) ?
             5 : 4;
         }
 
@@ -1372,11 +1372,11 @@ save_layer_and_mask (GOutputStream  *output,
 
       ChannelLengthPos[i-1] = g_new (goffset, nChannelsLayer);
 
-      /* Try with gimp_drawable_get_bpp() */
+      /* Try with ligma_drawable_get_bpp() */
 
       for (j = 0; j < nChannelsLayer; j++)
         {
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (psd_layer->layer)))
+          if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (psd_layer->layer)))
             idChannel = j - 1;
           else
             idChannel = j;
@@ -1402,18 +1402,18 @@ save_layer_and_mask (GOutputStream  *output,
       IFDBG(1) g_debug ("\t\tBlend mode: %s", blendMode);
       xfwrite (output, blendMode, 4, "blend mode key");
 
-      layerOpacity = RINT ((gimp_layer_get_opacity (psd_layer->layer) * 255.0) / 100.0);
+      layerOpacity = RINT ((ligma_layer_get_opacity (psd_layer->layer) * 255.0) / 100.0);
       IFDBG(1) g_debug ("\t\tOpacity: %u", layerOpacity);
       write_gchar (output, layerOpacity, "Opacity");
 
-      if (gimp_layer_get_composite_mode (psd_layer->layer) == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
+      if (ligma_layer_get_composite_mode (psd_layer->layer) == LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
         write_gchar (output, 1, "Clipping");
       else
         write_gchar (output, 0, "Clipping");
 
       flags = 0;
-      if (gimp_layer_get_lock_alpha (psd_layer->layer)) flags |= 1;
-      if (! gimp_item_get_visible (GIMP_ITEM (psd_layer->layer))) flags |= 2;
+      if (ligma_layer_get_lock_alpha (psd_layer->layer)) flags |= 1;
+      if (! ligma_item_get_visible (LIGMA_ITEM (psd_layer->layer))) flags |= 2;
       if (psd_layer->type != PSD_LAYER_TYPE_LAYER) flags |= 0x18;
       IFDBG(1) g_debug ("\t\tFlags: %u", flags);
       write_gchar (output, flags, "Flags");
@@ -1432,13 +1432,13 @@ save_layer_and_mask (GOutputStream  *output,
           gint     maskHeight;
           gboolean apply;
 
-          mask = gimp_layer_get_mask (psd_layer->layer);
+          mask = ligma_layer_get_mask (psd_layer->layer);
 
-          gimp_drawable_get_offsets (GIMP_DRAWABLE (mask), &maskOffset_x, &maskOffset_y);
+          ligma_drawable_get_offsets (LIGMA_DRAWABLE (mask), &maskOffset_x, &maskOffset_y);
 
-          maskWidth  = gimp_drawable_get_width  (GIMP_DRAWABLE (mask));
-          maskHeight = gimp_drawable_get_height (GIMP_DRAWABLE (mask));
-          apply      = gimp_layer_get_apply_mask (psd_layer->layer);
+          maskWidth  = ligma_drawable_get_width  (LIGMA_DRAWABLE (mask));
+          maskHeight = ligma_drawable_get_height (LIGMA_DRAWABLE (mask));
+          apply      = ligma_layer_get_apply_mask (psd_layer->layer);
 
           IFDBG(1) g_debug ("\t\tLayer mask size: %d", 20);
           write_gint32 (output, 20,                        "Layer mask size");
@@ -1465,7 +1465,7 @@ save_layer_and_mask (GOutputStream  *output,
       IFDBG(1) g_debug ("\t\tLayer blending size: %d", 0);
 
       if (psd_layer->type != PSD_LAYER_TYPE_GROUP_END)
-        layerName = gimp_item_get_name (GIMP_ITEM (psd_layer->layer));
+        layerName = ligma_item_get_name (LIGMA_ITEM (psd_layer->layer));
       else
         layerName = g_strdup ("</Layer group>");
       write_pascalstring (output, layerName, 4, "layer name");
@@ -1480,13 +1480,13 @@ save_layer_and_mask (GOutputStream  *output,
       /* Layer ID */
       xfwrite (output, "8BIMlyid", 8, "lyid signature");
       write_gint32 (output, 4, "lyid size");
-      write_gint32 (output, gimp_item_get_tattoo (GIMP_ITEM (psd_layer->layer)), "Layer ID");
+      write_gint32 (output, ligma_item_get_tattoo (LIGMA_ITEM (psd_layer->layer)), "Layer ID");
 
       /* Layer color tag */
       xfwrite (output, "8BIMlclr", 8, "sheet color signature");
       write_gint32 (output, 8, "sheet color size");
       write_gint16 (output,
-                    gimp_to_psd_layer_color_tag (gimp_item_get_color_tag (GIMP_ITEM (psd_layer->layer))),
+                    ligma_to_psd_layer_color_tag (ligma_item_get_color_tag (LIGMA_ITEM (psd_layer->layer))),
                     "sheet color code");
       write_gint16 (output, 0, "sheet color unused value");
       write_gint16 (output, 0, "sheet color unused value");
@@ -1502,7 +1502,7 @@ save_layer_and_mask (GOutputStream  *output,
 
           if (psd_layer->type == PSD_LAYER_TYPE_GROUP_START)
             {
-              type = gimp_item_get_expanded (GIMP_ITEM (psd_layer->layer)) ? 1 : 2;
+              type = ligma_item_get_expanded (LIGMA_ITEM (psd_layer->layer)) ? 1 : 2;
 
               depth--;
             }
@@ -1553,7 +1553,7 @@ save_layer_and_mask (GOutputStream  *output,
 
 
   /* Channel image data section */
-  /* Gimp layers must be written in reverse order */
+  /* Ligma layers must be written in reverse order */
 
   for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers;
        iter;
@@ -1561,15 +1561,15 @@ save_layer_and_mask (GOutputStream  *output,
     {
       PSD_Layer *psd_layer = (PSD_Layer *) iter->data;
 
-      gimp_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
+      ligma_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
 
       IFDBG(1) g_debug ("\t\tWriting pixel data for layer slot %d", i-1);
-      write_pixel_data (output, image, GIMP_DRAWABLE (psd_layer->layer), ChannelLengthPos[i-1], 0,
+      write_pixel_data (output, image, LIGMA_DRAWABLE (psd_layer->layer), ChannelLengthPos[i-1], 0,
                         psd_layer->type != PSD_LAYER_TYPE_GROUP_END, export_cmyk);
       g_free (ChannelLengthPos[i-1]);
     }
 
-  gimp_progress_update (PSDImageData.nLayers / (PSDImageData.nLayers + 1.0));
+  ligma_progress_update (PSDImageData.nLayers / (PSDImageData.nLayers + 1.0));
   eof_pos = g_seekable_tell (G_SEEKABLE (output));
 
   /* Write actual size of Layer info section */
@@ -1599,20 +1599,20 @@ save_layer_and_mask (GOutputStream  *output,
 
 static void
 write_pixel_data (GOutputStream  *output,
-                  GimpImage      *image,
-                  GimpDrawable   *drawable,
+                  LigmaImage      *image,
+                  LigmaDrawable   *drawable,
                   goffset        *ChanLenPosition,
                   goffset         ltable_offset,
                   gboolean        write_mask,
                   gboolean        export_cmyk)
 {
-  GeglBuffer       *buffer = gimp_drawable_get_buffer (drawable);
+  GeglBuffer       *buffer = ligma_drawable_get_buffer (drawable);
   const Babl       *format;
   const Babl       *space  = NULL;
   const Babl       *type;
-  GimpColorProfile *profile;
-  GimpLayerMask    *mask;
-  gint32            tile_height = gimp_tile_height ();
+  LigmaColorProfile *profile;
+  LigmaLayerMask    *mask;
+  gint32            tile_height = ligma_tile_height ();
   gint32            height = gegl_buffer_get_height (buffer);
   gint32            width  = gegl_buffer_get_width (buffer);
   gint32            bytes;
@@ -1628,31 +1628,31 @@ write_pixel_data (GOutputStream  *output,
   int               i, j;
 
   IFDBG(1) g_debug ("Function: write_pixel_data, drw %d, lto %" G_GOFFSET_FORMAT,
-                    gimp_item_get_id (GIMP_ITEM (drawable)), ltable_offset);
+                    ligma_item_get_id (LIGMA_ITEM (drawable)), ltable_offset);
 
   if (write_mask)
-    mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+    mask = ligma_layer_get_mask (LIGMA_LAYER (drawable));
   else
     mask = NULL;
 
   /* groups have empty channel data, but may have a mask */
-  if (gimp_item_is_group (GIMP_ITEM (drawable)) && mask == NULL)
+  if (ligma_item_is_group (LIGMA_ITEM (drawable)) && mask == NULL)
     {
       width  = 0;
       height = 0;
     }
 
-  if (gimp_item_is_channel (GIMP_ITEM (drawable)))
+  if (ligma_item_is_channel (LIGMA_ITEM (drawable)))
     format = get_channel_format (drawable);
   else
     format = get_pixel_format (drawable);
 
-  if (export_cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
+  if (export_cmyk && ! ligma_item_is_channel (LIGMA_ITEM (drawable)))
     {
-      profile = gimp_image_get_simulation_profile (image);
-      if (profile && gimp_color_profile_is_cmyk (profile))
-        space = gimp_color_profile_get_space (profile,
-                                              gimp_image_get_simulation_intent (image),
+      profile = ligma_image_get_simulation_profile (image);
+      if (profile && ligma_color_profile_is_cmyk (profile))
+        space = ligma_color_profile_get_space (profile,
+                                              ligma_image_get_simulation_intent (image),
                                               NULL);
       if (profile)
         g_object_unref (profile);
@@ -1662,7 +1662,7 @@ write_pixel_data (GOutputStream  *output,
       else
         type = babl_type ("u16");
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format_new (babl_model ("cmykA"),
                                   type,
                                   babl_component ("cyan"),
@@ -1690,8 +1690,8 @@ write_pixel_data (GOutputStream  *output,
 
   colors = components;
 
-  if (gimp_drawable_has_alpha  (drawable) &&
-      ! gimp_drawable_is_indexed (drawable))
+  if (ligma_drawable_has_alpha  (drawable) &&
+      ! ligma_drawable_is_indexed (drawable))
     colors -= 1;
 
   LengthsTable = g_new (gint16, height);
@@ -1701,7 +1701,7 @@ write_pixel_data (GOutputStream  *output,
   data = g_new (guchar, MIN (height, tile_height) * width * bytes);
 
   /* groups have empty channel data */
-  if (gimp_item_is_group (GIMP_ITEM (drawable)))
+  if (ligma_item_is_group (LIGMA_ITEM (drawable)))
     {
       width  = 0;
       height = 0;
@@ -1795,7 +1795,7 @@ write_pixel_data (GOutputStream  *output,
   /* Write layer mask, as last channel, id -2 */
   if (mask != NULL)
     {
-      GeglBuffer *mbuffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      GeglBuffer *mbuffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
       const Babl *mformat = get_mask_format (mask);
 
       width  = gegl_buffer_get_width (buffer);
@@ -1889,7 +1889,7 @@ write_pixel_data (GOutputStream  *output,
 
 static void
 save_data (GOutputStream  *output,
-           GimpImage      *image,
+           LigmaImage      *image,
            gboolean        export_cmyk)
 {
   GList  *iter;
@@ -1903,10 +1903,10 @@ save_data (GOutputStream  *output,
 
   ChanCount = (PSDImageData.nChannels +
                nChansLayer (PSDImageData.baseType,
-                            gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)),
+                            ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)),
                             0));
 
-  imageHeight = gimp_image_get_height (image);
+  imageHeight = ligma_image_get_height (image);
 
   write_gint16 (output, 1, "RLE compression");
 
@@ -1919,11 +1919,11 @@ save_data (GOutputStream  *output,
       write_gint16 (output, 0, "junk line lengths");
 
   IFDBG(1) g_debug ("\t\tWriting compressed image data");
-  write_pixel_data (output, image, GIMP_DRAWABLE (PSDImageData.merged_layer),
+  write_pixel_data (output, image, LIGMA_DRAWABLE (PSDImageData.merged_layer),
                     NULL, offset, FALSE, export_cmyk);
 
   chan = nChansLayer (PSDImageData.baseType,
-                      gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0);
+                      ligma_drawable_has_alpha (LIGMA_DRAWABLE (PSDImageData.merged_layer)), 0);
 
   for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
     {
@@ -1935,20 +1935,20 @@ save_data (GOutputStream  *output,
     }
 }
 
-static GimpLayer *
-create_merged_image (GimpImage *image)
+static LigmaLayer *
+create_merged_image (LigmaImage *image)
 {
-  GimpLayer *projection;
+  LigmaLayer *projection;
 
-  projection = gimp_layer_new_from_visible (image, image, "psd-save");
+  projection = ligma_layer_new_from_visible (image, image, "psd-save");
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (projection)))
+  if (! ligma_drawable_has_alpha (LIGMA_DRAWABLE (projection)))
     return projection;
 
-  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
+  if (ligma_image_get_base_type (image) != LIGMA_INDEXED)
     {
-      GeglBuffer         *buffer             = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
-      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection));
+      GeglBuffer         *buffer             = ligma_drawable_get_buffer (LIGMA_DRAWABLE (projection));
+      const Babl         *format             = get_pixel_format (LIGMA_DRAWABLE (projection));
       gboolean            transparency_found = FALSE;
       gint                bpp                = babl_format_get_bytes_per_pixel (format);
       GeglBufferIterator *iter;
@@ -1983,35 +1983,35 @@ create_merged_image (GimpImage *image)
       g_object_unref (buffer);
 
       if (! transparency_found)
-        gimp_layer_flatten (projection);
+        ligma_layer_flatten (projection);
     }
   else
     {
-      gimp_layer_flatten (projection);  /* PSDs don't support transparency information in indexed images*/
+      ligma_layer_flatten (projection);  /* PSDs don't support transparency information in indexed images*/
     }
 
   return projection;
 }
 
 static void
-get_image_data (GimpImage *image)
+get_image_data (LigmaImage *image)
 {
   IFDBG(1) g_debug ("Function: get_image_data");
 
   PSDImageData.compression = FALSE;
 
-  PSDImageData.image_height = gimp_image_get_height (image);
+  PSDImageData.image_height = ligma_image_get_height (image);
   IFDBG(1) g_debug ("\tGot number of rows: %d", PSDImageData.image_height);
 
-  PSDImageData.image_width = gimp_image_get_width (image);
+  PSDImageData.image_width = ligma_image_get_width (image);
   IFDBG(1) g_debug ("\tGot number of cols: %d", PSDImageData.image_width);
 
-  PSDImageData.baseType = gimp_image_get_base_type (image);
+  PSDImageData.baseType = ligma_image_get_base_type (image);
   IFDBG(1) g_debug ("\tGot base type: %d", PSDImageData.baseType);
 
   PSDImageData.merged_layer = create_merged_image (image);
 
-  PSDImageData.lChannels = gimp_image_list_channels (image);
+  PSDImageData.lChannels = ligma_image_list_channels (image);
   PSDImageData.nChannels = g_list_length (PSDImageData.lChannels);
   IFDBG(1) g_debug ("\tGot number of channels: %d", PSDImageData.nChannels);
 
@@ -2034,7 +2034,7 @@ clear_image_data (void)
 
 gboolean
 save_image (GFile      *file,
-            GimpImage  *image,
+            LigmaImage  *image,
             GObject    *config,
             GError    **error)
 {
@@ -2042,7 +2042,7 @@ save_image (GFile      *file,
   GeglBuffer     *buffer;
   GList          *iter;
   GError         *local_error = NULL;
-  GimpParasite   *parasite    = NULL;
+  LigmaParasite   *parasite    = NULL;
   gboolean        config_cmyk;
   gboolean        config_duotone;
 
@@ -2056,30 +2056,30 @@ save_image (GFile      *file,
   if (config_cmyk)
     config_duotone = FALSE;
 
-  if (gimp_image_get_width (image) > 30000 ||
-      gimp_image_get_height (image) > 30000)
+  if (ligma_image_get_width (image) > 30000 ||
+      ligma_image_get_height (image) > 30000)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unable to export '%s'.  The PSD file format does not "
                      "support images that are more than 30,000 pixels wide "
                      "or tall."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* If image is not grayscale or lacks Duotone color space parasite,
    * turn off "Export as Duotone".
    */
-  parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+  parasite = ligma_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
   if (parasite)
     {
-      if (gimp_image_get_base_type (image) != GIMP_GRAY)
+      if (ligma_image_get_base_type (image) != LIGMA_GRAY)
         config_duotone = FALSE;
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
   else
     {
@@ -2095,7 +2095,7 @@ save_image (GFile      *file,
 
       if (layer->type == PSD_LAYER_TYPE_LAYER)
         {
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->layer));
+          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer->layer));
 
           if (gegl_buffer_get_width (buffer)  > 30000 ||
               gegl_buffer_get_height (buffer) > 30000)
@@ -2104,7 +2104,7 @@ save_image (GFile      *file,
                            _("Unable to export '%s'.  The PSD file format does not "
                              "support images with layers that are more than 30,000 "
                              "pixels wide or tall."),
-                           gimp_file_get_utf8_name (file));
+                           ligma_file_get_utf8_name (file));
               clear_image_data ();
               return FALSE;
             }
@@ -2122,12 +2122,12 @@ save_image (GFile      *file,
       if (! local_error)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for writing: %s"),
-                       gimp_file_get_utf8_name (file), g_strerror (errno));
+                       ligma_file_get_utf8_name (file), g_strerror (errno));
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (file), local_error->message);
+                       ligma_file_get_utf8_name (file), local_error->message);
           g_error_free (local_error);
         }
       clear_image_data ();
@@ -2135,7 +2135,7 @@ save_image (GFile      *file,
     }
 
   IFDBG(1) g_debug ("\tFile '%s' has been opened",
-                    gimp_file_get_utf8_name (file));
+                    ligma_file_get_utf8_name (file));
 
   save_header (output, image, config_cmyk, config_duotone);
   save_color_mode_data (output, image, config_duotone);
@@ -2143,7 +2143,7 @@ save_image (GFile      *file,
 
   /* PSD format does not support layers in indexed images */
 
-  if (PSDImageData.baseType == GIMP_INDEXED)
+  if (PSDImageData.baseType == LIGMA_INDEXED)
     write_gint32 (output, 0, "layers info section length");
   else
     save_layer_and_mask (output, image, config_cmyk);
@@ -2154,7 +2154,7 @@ save_image (GFile      *file,
 
   /* Delete merged image now */
 
-  gimp_item_delete (GIMP_ITEM (PSDImageData.merged_layer));
+  ligma_item_delete (LIGMA_ITEM (PSDImageData.merged_layer));
 
   clear_image_data ();
 
@@ -2162,35 +2162,35 @@ save_image (GFile      *file,
 
   g_object_unref (output);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return TRUE;
 }
 
 static gint
-get_bpc (GimpImage *image)
+get_bpc (LigmaImage *image)
 {
-  switch (gimp_image_get_precision (image))
+  switch (ligma_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
       return 1;
 
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U16_NON_LINEAR:
-    case GIMP_PRECISION_U16_PERCEPTUAL:
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_HALF_NON_LINEAR:
-    case GIMP_PRECISION_HALF_PERCEPTUAL:
+    case LIGMA_PRECISION_U16_LINEAR:
+    case LIGMA_PRECISION_U16_NON_LINEAR:
+    case LIGMA_PRECISION_U16_PERCEPTUAL:
+    case LIGMA_PRECISION_HALF_LINEAR:
+    case LIGMA_PRECISION_HALF_NON_LINEAR:
+    case LIGMA_PRECISION_HALF_PERCEPTUAL:
       return 2;
 
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_U32_NON_LINEAR:
-    case GIMP_PRECISION_U32_PERCEPTUAL:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_FLOAT_NON_LINEAR:
-    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+    case LIGMA_PRECISION_U32_LINEAR:
+    case LIGMA_PRECISION_U32_NON_LINEAR:
+    case LIGMA_PRECISION_U32_PERCEPTUAL:
+    case LIGMA_PRECISION_FLOAT_LINEAR:
+    case LIGMA_PRECISION_FLOAT_NON_LINEAR:
+    case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
     default:
       /* FIXME: we *should* encode the image as u32 in this case, but simply
        * using the same code as for the other cases produces invalid psd files
@@ -2206,34 +2206,34 @@ get_bpc (GimpImage *image)
 }
 
 static const Babl *
-get_pixel_format (GimpDrawable *drawable)
+get_pixel_format (LigmaDrawable *drawable)
 {
-  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaImage   *image = ligma_item_get_image (LIGMA_ITEM (drawable));
   const gchar *model;
   gint         bpc;
   gchar        format[32];
 
-  switch (gimp_drawable_type (drawable))
+  switch (ligma_drawable_type (drawable))
     {
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       model = "Y'";
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       model = "Y'A";
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       model = "R'G'B'";
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       model = "R'G'B'A";
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      return gimp_drawable_get_format (drawable);
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
+      return ligma_drawable_get_format (drawable);
 
     default:
       g_return_val_if_reached (NULL);
@@ -2247,14 +2247,14 @@ get_pixel_format (GimpDrawable *drawable)
 }
 
 static const Babl *
-get_channel_format (GimpDrawable *drawable)
+get_channel_format (LigmaDrawable *drawable)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (drawable));
   gint       bpc;
   gchar      format[32];
 
-  /* see gimp_image_get_channel_format() */
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR)
+  /* see ligma_image_get_channel_format() */
+  if (ligma_image_get_precision (image) == LIGMA_PRECISION_U8_NON_LINEAR)
     return babl_format ("Y' u8");
 
   bpc = get_bpc (image);
@@ -2265,9 +2265,9 @@ get_channel_format (GimpDrawable *drawable)
 }
 
 static const Babl *
-get_mask_format (GimpLayerMask *mask)
+get_mask_format (LigmaLayerMask *mask)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (mask));
+  LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (mask));
   gint       bpc;
   gchar      format[32];
 
@@ -2291,7 +2291,7 @@ append_layers (GList *layers)
 
       layer->layer = iter->data;
 
-      is_group = gimp_item_is_group (iter->data);
+      is_group = ligma_item_is_group (iter->data);
 
       if (! is_group)
         layer->type = PSD_LAYER_TYPE_LAYER;
@@ -2305,7 +2305,7 @@ append_layers (GList *layers)
           PSD_Layer *end_layer = g_new0 (PSD_Layer, 1);
           GList     *group_layers;
 
-          group_layers = gimp_item_list_children (iter->data);
+          group_layers = ligma_item_list_children (iter->data);
           psd_layers = g_list_concat (psd_layers,
                                       append_layers (group_layers));
           g_list_free (group_layers);
@@ -2320,13 +2320,13 @@ append_layers (GList *layers)
 }
 
 static GList *
-image_get_all_layers (GimpImage *image,
+image_get_all_layers (LigmaImage *image,
                       gint      *n_layers)
 {
   GList *psd_layers = NULL;
   GList *layers;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   psd_layers = append_layers (layers);
   g_list_free (layers);
 
@@ -2336,46 +2336,46 @@ image_get_all_layers (GimpImage *image,
 }
 
 gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget        *dialog;
   GtkWidget        *duotone_notice;
   GtkWidget        *profile_label;
-  GimpColorProfile *cmyk_profile;
-  GimpParasite     *parasite         = NULL;
+  LigmaColorProfile *cmyk_profile;
+  LigmaParasite     *parasite         = NULL;
   gboolean          has_duotone_data = FALSE;
   gboolean          run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as PSD"));
 
   /* CMYK profile label. */
-  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  profile_label = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                    "profile-label", _("No soft-proofing profile"));
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (profile_label),
+  ligma_label_set_attributes (GTK_LABEL (profile_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gimp_help_set_help_data (profile_label,
+  ligma_help_set_help_data (profile_label,
                            _("Name of the color profile used for CMYK export."), NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "cmyk-frame", "cmyk", FALSE,
                                     "profile-label");
-  cmyk_profile = gimp_image_get_simulation_profile (image);
+  cmyk_profile = ligma_image_get_simulation_profile (image);
   if (cmyk_profile)
     {
-      if (gimp_color_profile_is_cmyk (cmyk_profile))
+      if (ligma_color_profile_is_cmyk (cmyk_profile))
         {
           gchar *label_text;
 
           label_text = g_strdup_printf (_("Profile: %s"),
-                                        gimp_color_profile_get_label (cmyk_profile));
+                                        ligma_color_profile_get_label (cmyk_profile));
           gtk_label_set_text (GTK_LABEL (profile_label), label_text);
-          gimp_label_set_attributes (GTK_LABEL (profile_label),
+          ligma_label_set_attributes (GTK_LABEL (profile_label),
                                      PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
                                      -1);
           g_free (label_text);
@@ -2386,55 +2386,55 @@ save_dialog (GimpImage     *image,
   /* Only show dialog if image is grayscale and duotone color space
    * information was attached from the original image imported
    */
-   parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+   parasite = ligma_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
    if (parasite)
      {
-       if (gimp_image_get_base_type (image) == GIMP_GRAY)
+       if (ligma_image_get_base_type (image) == LIGMA_GRAY)
          {
            has_duotone_data = TRUE;
 
            /* Duotone Option label */
-           duotone_notice = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+           duotone_notice = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                              "duotone-notice",
                                                              _("Duotone color space information "
                                                              "from the original\nimported image "
                                                              "will be used."));
            gtk_label_set_xalign (GTK_LABEL (duotone_notice), 0.0);
            gtk_label_set_ellipsize (GTK_LABEL (duotone_notice), PANGO_ELLIPSIZE_END);
-           gimp_label_set_attributes (GTK_LABEL (duotone_notice),
+           ligma_label_set_attributes (GTK_LABEL (duotone_notice),
                                       PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                       -1);
 
-           gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+           ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                              "duotone-frame", "duotone", FALSE,
                                              "duotone-notice");
 
            /* Prevent you from setting both Duotone and CMYK exports */
-           gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+           ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                                 "duotone",
                                                 TRUE, config, "cmyk", TRUE);
-           gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+           ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                                 "cmyk",
                                                 TRUE, config, "duotone", TRUE);
 
          }
 
-       gimp_parasite_free (parasite);
+       ligma_parasite_free (parasite);
      }
 
   if (has_duotone_data)
-    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+    ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                 "cmyk-frame",
                                 "duotone-frame",
                                 NULL);
   else
-    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+    ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                 "cmyk-frame",
                                 NULL);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,332 +20,332 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "actions.h"
 #include "items-actions.h"
 #include "vectors-actions.h"
 #include "vectors-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry vectors_actions[] =
+static const LigmaActionEntry vectors_actions[] =
 {
-  { "vectors-popup", GIMP_ICON_DIALOG_PATHS,
+  { "vectors-popup", LIGMA_ICON_DIALOG_PATHS,
     NC_("vectors-action", "Paths Menu"), NULL, NULL, NULL,
-    GIMP_HELP_PATH_DIALOG },
+    LIGMA_HELP_PATH_DIALOG },
 
   { "vectors-color-tag-menu", NULL,
     NC_("vectors-action", "Color Tag"), NULL, NULL, NULL,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_HELP_PATH_COLOR_TAG },
 
-  { "vectors-edit", GIMP_ICON_TOOL_PATH,
+  { "vectors-edit", LIGMA_ICON_TOOL_PATH,
     NC_("vectors-action", "Edit Pa_th"), NULL,
     NC_("vectors-action", "Edit the active path"),
     vectors_edit_cmd_callback,
-    GIMP_HELP_TOOL_VECTORS },
+    LIGMA_HELP_TOOL_VECTORS },
 
-  { "vectors-edit-attributes", GIMP_ICON_EDIT,
+  { "vectors-edit-attributes", LIGMA_ICON_EDIT,
     NC_("vectors-action", "_Edit Path Attributes..."), NULL,
     NC_("vectors-action", "Edit path attributes"),
     vectors_edit_attributes_cmd_callback,
-    GIMP_HELP_PATH_EDIT },
+    LIGMA_HELP_PATH_EDIT },
 
-  { "vectors-new", GIMP_ICON_DOCUMENT_NEW,
+  { "vectors-new", LIGMA_ICON_DOCUMENT_NEW,
     NC_("vectors-action", "_New Path..."), NULL,
     NC_("vectors-action", "Create a new path..."),
     vectors_new_cmd_callback,
-    GIMP_HELP_PATH_NEW },
+    LIGMA_HELP_PATH_NEW },
 
-  { "vectors-new-last-values", GIMP_ICON_DOCUMENT_NEW,
+  { "vectors-new-last-values", LIGMA_ICON_DOCUMENT_NEW,
     NC_("vectors-action", "_New Path with last values"), NULL,
     NC_("vectors-action", "Create a new path with last used values"),
     vectors_new_last_vals_cmd_callback,
-    GIMP_HELP_PATH_NEW },
+    LIGMA_HELP_PATH_NEW },
 
-  { "vectors-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
+  { "vectors-duplicate", LIGMA_ICON_OBJECT_DUPLICATE,
     NC_("vectors-action", "D_uplicate Path"), NULL,
     NC_("vectors-action", "Duplicate this path"),
     vectors_duplicate_cmd_callback,
-    GIMP_HELP_PATH_DUPLICATE },
+    LIGMA_HELP_PATH_DUPLICATE },
 
-  { "vectors-delete", GIMP_ICON_EDIT_DELETE,
+  { "vectors-delete", LIGMA_ICON_EDIT_DELETE,
     NC_("vectors-action", "_Delete Path"), NULL,
     NC_("vectors-action", "Delete this path"),
     vectors_delete_cmd_callback,
-    GIMP_HELP_PATH_DELETE },
+    LIGMA_HELP_PATH_DELETE },
 
   { "vectors-merge-visible", NULL,
     NC_("vectors-action", "Merge _Visible Paths"), NULL, NULL,
     vectors_merge_visible_cmd_callback,
-    GIMP_HELP_PATH_MERGE_VISIBLE },
+    LIGMA_HELP_PATH_MERGE_VISIBLE },
 
-  { "vectors-raise", GIMP_ICON_GO_UP,
+  { "vectors-raise", LIGMA_ICON_GO_UP,
     NC_("vectors-action", "_Raise Path"), NULL,
     NC_("vectors-action", "Raise this path"),
     vectors_raise_cmd_callback,
-    GIMP_HELP_PATH_RAISE },
+    LIGMA_HELP_PATH_RAISE },
 
-  { "vectors-raise-to-top", GIMP_ICON_GO_TOP,
+  { "vectors-raise-to-top", LIGMA_ICON_GO_TOP,
     NC_("vectors-action", "Raise Path to _Top"), NULL,
     NC_("vectors-action", "Raise this path to the top"),
     vectors_raise_to_top_cmd_callback,
-    GIMP_HELP_PATH_RAISE_TO_TOP },
+    LIGMA_HELP_PATH_RAISE_TO_TOP },
 
-  { "vectors-lower", GIMP_ICON_GO_DOWN,
+  { "vectors-lower", LIGMA_ICON_GO_DOWN,
     NC_("vectors-action", "_Lower Path"), NULL,
     NC_("vectors-action", "Lower this path"),
     vectors_lower_cmd_callback,
-    GIMP_HELP_PATH_LOWER },
+    LIGMA_HELP_PATH_LOWER },
 
-  { "vectors-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
+  { "vectors-lower-to-bottom", LIGMA_ICON_GO_BOTTOM,
     NC_("vectors-action", "Lower Path to _Bottom"), NULL,
     NC_("vectors-action", "Lower this path to the bottom"),
     vectors_lower_to_bottom_cmd_callback,
-    GIMP_HELP_PATH_LOWER_TO_BOTTOM },
+    LIGMA_HELP_PATH_LOWER_TO_BOTTOM },
 
-  { "vectors-fill", GIMP_ICON_TOOL_BUCKET_FILL,
+  { "vectors-fill", LIGMA_ICON_TOOL_BUCKET_FILL,
     NC_("vectors-action", "Fill Pat_h..."), NULL,
     NC_("vectors-action", "Fill the path"),
     vectors_fill_cmd_callback,
-    GIMP_HELP_PATH_FILL },
+    LIGMA_HELP_PATH_FILL },
 
-  { "vectors-fill-last-values", GIMP_ICON_TOOL_BUCKET_FILL,
+  { "vectors-fill-last-values", LIGMA_ICON_TOOL_BUCKET_FILL,
     NC_("vectors-action", "Fill Path"), NULL,
     NC_("vectors-action", "Fill the path with last values"),
     vectors_fill_last_vals_cmd_callback,
-    GIMP_HELP_PATH_FILL },
+    LIGMA_HELP_PATH_FILL },
 
-  { "vectors-stroke", GIMP_ICON_PATH_STROKE,
+  { "vectors-stroke", LIGMA_ICON_PATH_STROKE,
     NC_("vectors-action", "Stro_ke Path..."), NULL,
     NC_("vectors-action", "Paint along the path"),
     vectors_stroke_cmd_callback,
-    GIMP_HELP_PATH_STROKE },
+    LIGMA_HELP_PATH_STROKE },
 
-  { "vectors-stroke-last-values", GIMP_ICON_PATH_STROKE,
+  { "vectors-stroke-last-values", LIGMA_ICON_PATH_STROKE,
     NC_("vectors-action", "Stro_ke Path"), NULL,
     NC_("vectors-action", "Paint along the path with last values"),
     vectors_stroke_last_vals_cmd_callback,
-    GIMP_HELP_PATH_STROKE },
+    LIGMA_HELP_PATH_STROKE },
 
-  { "vectors-copy", GIMP_ICON_EDIT_COPY,
+  { "vectors-copy", LIGMA_ICON_EDIT_COPY,
     NC_("vectors-action", "Co_py Paths"), "", NULL,
     vectors_copy_cmd_callback,
-    GIMP_HELP_PATH_COPY },
+    LIGMA_HELP_PATH_COPY },
 
-  { "vectors-paste", GIMP_ICON_EDIT_PASTE,
+  { "vectors-paste", LIGMA_ICON_EDIT_PASTE,
     NC_("vectors-action", "Paste Pat_h"), "", NULL,
     vectors_paste_cmd_callback,
-    GIMP_HELP_PATH_PASTE },
+    LIGMA_HELP_PATH_PASTE },
 
-  { "vectors-export", GIMP_ICON_DOCUMENT_SAVE,
+  { "vectors-export", LIGMA_ICON_DOCUMENT_SAVE,
     NC_("vectors-action", "E_xport Paths..."), "", NULL,
     vectors_export_cmd_callback,
-    GIMP_HELP_PATH_EXPORT },
+    LIGMA_HELP_PATH_EXPORT },
 
-  { "vectors-import", GIMP_ICON_DOCUMENT_OPEN,
+  { "vectors-import", LIGMA_ICON_DOCUMENT_OPEN,
     NC_("vectors-action", "I_mport Path..."), "", NULL,
     vectors_import_cmd_callback,
-    GIMP_HELP_PATH_IMPORT }
+    LIGMA_HELP_PATH_IMPORT }
 };
 
-static const GimpToggleActionEntry vectors_toggle_actions[] =
+static const LigmaToggleActionEntry vectors_toggle_actions[] =
 {
-  { "vectors-visible", GIMP_ICON_VISIBLE,
+  { "vectors-visible", LIGMA_ICON_VISIBLE,
     NC_("vectors-action", "Toggle Path _Visibility"), NULL, NULL,
     vectors_visible_cmd_callback,
     FALSE,
-    GIMP_HELP_PATH_VISIBLE },
+    LIGMA_HELP_PATH_VISIBLE },
 
-  { "vectors-lock-content", GIMP_ICON_LOCK_CONTENT,
+  { "vectors-lock-content", LIGMA_ICON_LOCK_CONTENT,
     NC_("vectors-action", "L_ock Strokes of Path"), NULL, NULL,
     vectors_lock_content_cmd_callback,
     FALSE,
-    GIMP_HELP_PATH_LOCK_STROKES },
+    LIGMA_HELP_PATH_LOCK_STROKES },
 
-  { "vectors-lock-position", GIMP_ICON_LOCK_POSITION,
+  { "vectors-lock-position", LIGMA_ICON_LOCK_POSITION,
     NC_("vectors-action", "L_ock Position of Path"), NULL, NULL,
     vectors_lock_position_cmd_callback,
     FALSE,
-    GIMP_HELP_PATH_LOCK_POSITION }
+    LIGMA_HELP_PATH_LOCK_POSITION }
 };
 
-static const GimpEnumActionEntry vectors_color_tag_actions[] =
+static const LigmaEnumActionEntry vectors_color_tag_actions[] =
 {
-  { "vectors-color-tag-none", GIMP_ICON_EDIT_CLEAR,
+  { "vectors-color-tag-none", LIGMA_ICON_EDIT_CLEAR,
     NC_("vectors-action", "None"), NULL,
     NC_("vectors-action", "Path Color Tag: Clear"),
-    GIMP_COLOR_TAG_NONE, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_NONE, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-blue", NULL,
     NC_("vectors-action", "Blue"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Blue"),
-    GIMP_COLOR_TAG_BLUE, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_BLUE, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-green", NULL,
     NC_("vectors-action", "Green"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Green"),
-    GIMP_COLOR_TAG_GREEN, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_GREEN, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-yellow", NULL,
     NC_("vectors-action", "Yellow"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Yellow"),
-    GIMP_COLOR_TAG_YELLOW, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_YELLOW, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-orange", NULL,
     NC_("vectors-action", "Orange"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Orange"),
-    GIMP_COLOR_TAG_ORANGE, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_ORANGE, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-brown", NULL,
     NC_("vectors-action", "Brown"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Brown"),
-    GIMP_COLOR_TAG_BROWN, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_BROWN, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-red", NULL,
     NC_("vectors-action", "Red"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Red"),
-    GIMP_COLOR_TAG_RED, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_RED, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-violet", NULL,
     NC_("vectors-action", "Violet"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Violet"),
-    GIMP_COLOR_TAG_VIOLET, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG },
+    LIGMA_COLOR_TAG_VIOLET, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-gray", NULL,
     NC_("vectors-action", "Gray"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Gray"),
-    GIMP_COLOR_TAG_GRAY, FALSE,
-    GIMP_HELP_PATH_COLOR_TAG }
+    LIGMA_COLOR_TAG_GRAY, FALSE,
+    LIGMA_HELP_PATH_COLOR_TAG }
 };
 
-static const GimpEnumActionEntry vectors_to_selection_actions[] =
+static const LigmaEnumActionEntry vectors_to_selection_actions[] =
 {
-  { "vectors-selection-replace", GIMP_ICON_SELECTION_REPLACE,
+  { "vectors-selection-replace", LIGMA_ICON_SELECTION_REPLACE,
     NC_("vectors-action", "Path to Sele_ction"), NULL,
     NC_("vectors-action", "Path to selection"),
-    GIMP_CHANNEL_OP_REPLACE, FALSE,
-    GIMP_HELP_PATH_SELECTION_REPLACE },
+    LIGMA_CHANNEL_OP_REPLACE, FALSE,
+    LIGMA_HELP_PATH_SELECTION_REPLACE },
 
-  { "vectors-selection-from-vectors", GIMP_ICON_SELECTION_REPLACE,
+  { "vectors-selection-from-vectors", LIGMA_ICON_SELECTION_REPLACE,
     NC_("vectors-action", "Fr_om Path"), "<shift>V",
     NC_("vectors-action", "Replace selection with path"),
-    GIMP_CHANNEL_OP_REPLACE, FALSE,
-    GIMP_HELP_PATH_SELECTION_REPLACE },
+    LIGMA_CHANNEL_OP_REPLACE, FALSE,
+    LIGMA_HELP_PATH_SELECTION_REPLACE },
 
-  { "vectors-selection-add", GIMP_ICON_SELECTION_ADD,
+  { "vectors-selection-add", LIGMA_ICON_SELECTION_ADD,
     NC_("vectors-action", "_Add to Selection"), NULL,
     NC_("vectors-action", "Add path to selection"),
-    GIMP_CHANNEL_OP_ADD, FALSE,
-    GIMP_HELP_PATH_SELECTION_ADD },
+    LIGMA_CHANNEL_OP_ADD, FALSE,
+    LIGMA_HELP_PATH_SELECTION_ADD },
 
-  { "vectors-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
+  { "vectors-selection-subtract", LIGMA_ICON_SELECTION_SUBTRACT,
     NC_("vectors-action", "_Subtract from Selection"), NULL,
     NC_("vectors-action", "Subtract path from selection"),
-    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
-    GIMP_HELP_PATH_SELECTION_SUBTRACT },
+    LIGMA_CHANNEL_OP_SUBTRACT, FALSE,
+    LIGMA_HELP_PATH_SELECTION_SUBTRACT },
 
-  { "vectors-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
+  { "vectors-selection-intersect", LIGMA_ICON_SELECTION_INTERSECT,
     NC_("vectors-action", "_Intersect with Selection"), NULL,
     NC_("vectors-action", "Intersect path with selection"),
-    GIMP_CHANNEL_OP_INTERSECT, FALSE,
-    GIMP_HELP_PATH_SELECTION_INTERSECT }
+    LIGMA_CHANNEL_OP_INTERSECT, FALSE,
+    LIGMA_HELP_PATH_SELECTION_INTERSECT }
 };
 
-static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
+static const LigmaEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
-  { "vectors-selection-to-vectors", GIMP_ICON_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors", LIGMA_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "Selecti_on to Path"), NULL,
     NC_("vectors-action", "Selection to path"),
     FALSE, FALSE,
-    GIMP_HELP_SELECTION_TO_PATH },
+    LIGMA_HELP_SELECTION_TO_PATH },
 
-  { "vectors-selection-to-vectors-short", GIMP_ICON_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors-short", LIGMA_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "To _Path"), NULL,
     NC_("vectors-action", "Selection to path"),
     FALSE, FALSE,
-    GIMP_HELP_SELECTION_TO_PATH },
+    LIGMA_HELP_SELECTION_TO_PATH },
 
-  { "vectors-selection-to-vectors-advanced", GIMP_ICON_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors-advanced", LIGMA_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "Selection to Path (_Advanced)"), NULL,
     NC_("vectors-action", "Advanced options"),
     TRUE, FALSE,
-    GIMP_HELP_SELECTION_TO_PATH }
+    LIGMA_HELP_SELECTION_TO_PATH }
 };
 
-static const GimpEnumActionEntry vectors_select_actions[] =
+static const LigmaEnumActionEntry vectors_select_actions[] =
 {
   { "vectors-select-top", NULL,
     NC_("vectors-action", "Select _Top Path"), NULL,
     NC_("vectors-action", "Select the topmost path"),
-    GIMP_ACTION_SELECT_FIRST, FALSE,
-    GIMP_HELP_PATH_TOP },
+    LIGMA_ACTION_SELECT_FIRST, FALSE,
+    LIGMA_HELP_PATH_TOP },
 
   { "vectors-select-bottom", NULL,
     NC_("vectors-action", "Select _Bottom Path"), NULL,
     NC_("vectors-action", "Select the bottommost path"),
-    GIMP_ACTION_SELECT_LAST, FALSE,
-    GIMP_HELP_PATH_BOTTOM },
+    LIGMA_ACTION_SELECT_LAST, FALSE,
+    LIGMA_HELP_PATH_BOTTOM },
 
   { "vectors-select-previous", NULL,
     NC_("vectors-action", "Select _Previous Path"), NULL,
     NC_("vectors-action", "Select the path above the current path"),
-    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
-    GIMP_HELP_PATH_PREVIOUS },
+    LIGMA_ACTION_SELECT_PREVIOUS, FALSE,
+    LIGMA_HELP_PATH_PREVIOUS },
 
   { "vectors-select-next", NULL,
     NC_("vectors-action", "Select _Next Path"), NULL,
     NC_("vectors-action", "Select the vector below the current path"),
-    GIMP_ACTION_SELECT_NEXT, FALSE,
-    GIMP_HELP_PATH_NEXT }
+    LIGMA_ACTION_SELECT_NEXT, FALSE,
+    LIGMA_HELP_PATH_NEXT }
 };
 
 void
-vectors_actions_setup (GimpActionGroup *group)
+vectors_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "vectors-action",
+  ligma_action_group_add_actions (group, "vectors-action",
                                  vectors_actions,
                                  G_N_ELEMENTS (vectors_actions));
 
-  gimp_action_group_add_toggle_actions (group, "vectors-action",
+  ligma_action_group_add_toggle_actions (group, "vectors-action",
                                         vectors_toggle_actions,
                                         G_N_ELEMENTS (vectors_toggle_actions));
 
-  gimp_action_group_add_enum_actions (group, "vectors-action",
+  ligma_action_group_add_enum_actions (group, "vectors-action",
                                       vectors_color_tag_actions,
                                       G_N_ELEMENTS (vectors_color_tag_actions),
                                       vectors_color_tag_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "vectors-action",
+  ligma_action_group_add_enum_actions (group, "vectors-action",
                                       vectors_to_selection_actions,
                                       G_N_ELEMENTS (vectors_to_selection_actions),
                                       vectors_to_selection_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "vectors-action",
+  ligma_action_group_add_enum_actions (group, "vectors-action",
                                       vectors_selection_to_vectors_actions,
                                       G_N_ELEMENTS (vectors_selection_to_vectors_actions),
                                       vectors_selection_to_vectors_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, "vectors-action",
+  ligma_action_group_add_enum_actions (group, "vectors-action",
                                       vectors_select_actions,
                                       G_N_ELEMENTS (vectors_select_actions),
                                       vectors_select_cmd_callback);
@@ -354,10 +354,10 @@ vectors_actions_setup (GimpActionGroup *group)
 }
 
 void
-vectors_actions_update (GimpActionGroup *group,
+vectors_actions_update (LigmaActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image              = action_data_get_image (data);
+  LigmaImage    *image              = action_data_get_image (data);
   GList        *selected_vectors   = NULL;
   gint          n_selected_vectors = 0;
 
@@ -374,10 +374,10 @@ vectors_actions_update (GimpActionGroup *group,
       GList *drawables;
       GList *iter;
 
-      n_vectors  = gimp_image_get_n_vectors (image);
-      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
+      n_vectors  = ligma_image_get_n_vectors (image);
+      mask_empty = ligma_channel_is_empty (ligma_image_get_mask (image));
 
-      selected_vectors = gimp_image_get_selected_vectors (image);
+      selected_vectors = ligma_image_get_selected_vectors (image);
       n_selected_vectors = g_list_length (selected_vectors);
 
       for (iter = selected_vectors; iter; iter = iter->next)
@@ -385,7 +385,7 @@ vectors_actions_update (GimpActionGroup *group,
           GList *vectors_list;
           GList *iter2;
 
-          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+          vectors_list = ligma_item_get_container_iter (LIGMA_ITEM (iter->data));
           iter2 = g_list_find (vectors_list, iter->data);
 
           if (iter2)
@@ -401,13 +401,13 @@ vectors_actions_update (GimpActionGroup *group,
             break;
         }
 
-      drawables = gimp_image_get_selected_drawables (image);
+      drawables = ligma_image_get_selected_drawables (image);
 
       if (g_list_length (drawables) == 1)
         {
-          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL);
+          dr_writable = ! ligma_item_is_content_locked (LIGMA_ITEM (drawables->data), NULL);
 
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawables->data)))
+          if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawables->data)))
             dr_children = TRUE;
         }
 
@@ -415,9 +415,9 @@ vectors_actions_update (GimpActionGroup *group,
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("vectors-edit",            n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-edit-attributes", n_selected_vectors == 1);

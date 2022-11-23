@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,82 +23,82 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpcontext.h"
-#include "gimpgradient.h"
-#include "gimpgradient-load.h"
-#include "gimpgradient-save.h"
-#include "gimptagged.h"
-#include "gimptempbuf.h"
+#include "ligmacontext.h"
+#include "ligmagradient.h"
+#include "ligmagradient-load.h"
+#include "ligmagradient-save.h"
+#include "ligmatagged.h"
+#include "ligmatempbuf.h"
 
 
 #define EPSILON 1e-10
 
 
-static void          gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface);
-static void          gimp_gradient_finalize          (GObject             *object);
+static void          ligma_gradient_tagged_iface_init (LigmaTaggedInterface *iface);
+static void          ligma_gradient_finalize          (GObject             *object);
 
-static gint64        gimp_gradient_get_memsize       (GimpObject          *object,
+static gint64        ligma_gradient_get_memsize       (LigmaObject          *object,
                                                       gint64              *gui_size);
 
-static void          gimp_gradient_get_preview_size  (GimpViewable        *viewable,
+static void          ligma_gradient_get_preview_size  (LigmaViewable        *viewable,
                                                       gint                 size,
                                                       gboolean             popup,
                                                       gboolean             dot_for_dot,
                                                       gint                *width,
                                                       gint                *height);
-static gboolean      gimp_gradient_get_popup_size    (GimpViewable        *viewable,
+static gboolean      ligma_gradient_get_popup_size    (LigmaViewable        *viewable,
                                                       gint                 width,
                                                       gint                 height,
                                                       gboolean             dot_for_dot,
                                                       gint                *popup_width,
                                                       gint                *popup_height);
-static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewable,
-                                                      GimpContext         *context,
+static LigmaTempBuf * ligma_gradient_get_new_preview   (LigmaViewable        *viewable,
+                                                      LigmaContext         *context,
                                                       gint                 width,
                                                       gint                 height);
 
-static const gchar * gimp_gradient_get_extension     (GimpData            *data);
-static void          gimp_gradient_copy              (GimpData            *data,
-                                                      GimpData            *src_data);
-static gint          gimp_gradient_compare           (GimpData            *data1,
-                                                      GimpData            *data2);
+static const gchar * ligma_gradient_get_extension     (LigmaData            *data);
+static void          ligma_gradient_copy              (LigmaData            *data,
+                                                      LigmaData            *src_data);
+static gint          ligma_gradient_compare           (LigmaData            *data1,
+                                                      LigmaData            *data2);
 
-static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
+static gchar       * ligma_gradient_get_checksum      (LigmaTagged          *tagged);
 
-static inline GimpGradientSegment *
-              gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
-                                                      GimpGradientSegment *seg,
+static inline LigmaGradientSegment *
+              ligma_gradient_get_segment_at_internal  (LigmaGradient        *gradient,
+                                                      LigmaGradientSegment *seg,
                                                       gdouble              pos);
-static void          gimp_gradient_get_flat_color    (GimpContext         *context,
-                                                      const GimpRGB       *color,
-                                                      GimpGradientColor    color_type,
-                                                      GimpRGB             *flat_color);
+static void          ligma_gradient_get_flat_color    (LigmaContext         *context,
+                                                      const LigmaRGB       *color,
+                                                      LigmaGradientColor    color_type,
+                                                      LigmaRGB             *flat_color);
 
 
-static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_linear_factor            (gdouble  middle,
                                                                     gdouble  pos);
-static inline gdouble  gimp_gradient_calc_curved_factor            (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_curved_factor            (gdouble  middle,
                                                                     gdouble  pos);
-static inline gdouble  gimp_gradient_calc_sine_factor              (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_sine_factor              (gdouble  middle,
                                                                     gdouble  pos);
-static inline gdouble  gimp_gradient_calc_sphere_increasing_factor (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_sphere_increasing_factor (gdouble  middle,
                                                                     gdouble  pos);
-static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_sphere_decreasing_factor (gdouble  middle,
                                                                     gdouble  pos);
-static inline gdouble  gimp_gradient_calc_step_factor              (gdouble  middle,
+static inline gdouble  ligma_gradient_calc_step_factor              (gdouble  middle,
                                                                     gdouble  pos);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_gradient_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaGradient, ligma_gradient, LIGMA_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_gradient_tagged_iface_init))
 
-#define parent_class gimp_gradient_parent_class
+#define parent_class ligma_gradient_parent_class
 
 static const Babl *fish_srgb_to_linear_rgb = NULL;
 static const Babl *fish_linear_rgb_to_srgb = NULL;
@@ -107,26 +107,26 @@ static const Babl *fish_cie_lab_to_srgb    = NULL;
 
 
 static void
-gimp_gradient_class_init (GimpGradientClass *klass)
+ligma_gradient_class_init (LigmaGradientClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
 
-  object_class->finalize            = gimp_gradient_finalize;
+  object_class->finalize            = ligma_gradient_finalize;
 
-  gimp_object_class->get_memsize    = gimp_gradient_get_memsize;
+  ligma_object_class->get_memsize    = ligma_gradient_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-gradient";
-  viewable_class->get_preview_size  = gimp_gradient_get_preview_size;
-  viewable_class->get_popup_size    = gimp_gradient_get_popup_size;
-  viewable_class->get_new_preview   = gimp_gradient_get_new_preview;
+  viewable_class->default_icon_name = "ligma-tool-gradient";
+  viewable_class->get_preview_size  = ligma_gradient_get_preview_size;
+  viewable_class->get_popup_size    = ligma_gradient_get_popup_size;
+  viewable_class->get_new_preview   = ligma_gradient_get_new_preview;
 
-  data_class->save                  = gimp_gradient_save;
-  data_class->get_extension         = gimp_gradient_get_extension;
-  data_class->copy                  = gimp_gradient_copy;
-  data_class->compare               = gimp_gradient_compare;
+  data_class->save                  = ligma_gradient_save;
+  data_class->get_extension         = ligma_gradient_get_extension;
+  data_class->copy                  = ligma_gradient_copy;
+  data_class->compare               = ligma_gradient_compare;
 
   fish_srgb_to_linear_rgb = babl_fish (babl_format ("R'G'B' double"),
                                        babl_format ("RGB double"));
@@ -139,25 +139,25 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 }
 
 static void
-gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_gradient_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->get_checksum = gimp_gradient_get_checksum;
+  iface->get_checksum = ligma_gradient_get_checksum;
 }
 
 static void
-gimp_gradient_init (GimpGradient *gradient)
+ligma_gradient_init (LigmaGradient *gradient)
 {
   gradient->segments = NULL;
 }
 
 static void
-gimp_gradient_finalize (GObject *object)
+ligma_gradient_finalize (GObject *object)
 {
-  GimpGradient *gradient = GIMP_GRADIENT (object);
+  LigmaGradient *gradient = LIGMA_GRADIENT (object);
 
   if (gradient->segments)
     {
-      gimp_gradient_segments_free (gradient->segments);
+      ligma_gradient_segments_free (gradient->segments);
       gradient->segments = NULL;
     }
 
@@ -165,22 +165,22 @@ gimp_gradient_finalize (GObject *object)
 }
 
 static gint64
-gimp_gradient_get_memsize (GimpObject *object,
+ligma_gradient_get_memsize (LigmaObject *object,
                            gint64     *gui_size)
 {
-  GimpGradient        *gradient = GIMP_GRADIENT (object);
-  GimpGradientSegment *segment;
+  LigmaGradient        *gradient = LIGMA_GRADIENT (object);
+  LigmaGradientSegment *segment;
   gint64               memsize  = 0;
 
   for (segment = gradient->segments; segment; segment = segment->next)
-    memsize += sizeof (GimpGradientSegment);
+    memsize += sizeof (LigmaGradientSegment);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_gradient_get_preview_size (GimpViewable *viewable,
+ligma_gradient_get_preview_size (LigmaViewable *viewable,
                                 gint          size,
                                 gboolean      popup,
                                 gboolean      dot_for_dot,
@@ -192,7 +192,7 @@ gimp_gradient_get_preview_size (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_gradient_get_popup_size (GimpViewable *viewable,
+ligma_gradient_get_popup_size (LigmaViewable *viewable,
                               gint          width,
                               gint          height,
                               gboolean      dot_for_dot,
@@ -210,21 +210,21 @@ gimp_gradient_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-static GimpTempBuf *
-gimp_gradient_get_new_preview (GimpViewable *viewable,
-                               GimpContext  *context,
+static LigmaTempBuf *
+ligma_gradient_get_new_preview (LigmaViewable *viewable,
+                               LigmaContext  *context,
                                gint          width,
                                gint          height)
 {
-  GimpGradient        *gradient = GIMP_GRADIENT (viewable);
-  GimpGradientSegment *seg      = NULL;
-  GimpTempBuf         *temp_buf;
+  LigmaGradient        *gradient = LIGMA_GRADIENT (viewable);
+  LigmaGradientSegment *seg      = NULL;
+  LigmaTempBuf         *temp_buf;
   guchar              *buf;
   guchar              *p;
   guchar              *row;
   gint                 x, y;
   gdouble              dx, cur_x;
-  GimpRGB              color;
+  LigmaRGB              color;
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
@@ -234,9 +234,9 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 
   for (x = 0; x < width; x++)
     {
-      seg = gimp_gradient_get_color_at (gradient, context, seg, cur_x,
+      seg = ligma_gradient_get_color_at (gradient, context, seg, cur_x,
                                         FALSE,
-                                        GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                        LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                         &color);
 
       *p++ = ROUND (color.r * 255.0);
@@ -247,9 +247,9 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
       cur_x += dx;
     }
 
-  temp_buf = gimp_temp_buf_new (width, height, babl_format ("R'G'B'A u8"));
+  temp_buf = ligma_temp_buf_new (width, height, babl_format ("R'G'B'A u8"));
 
-  buf = gimp_temp_buf_get_data (temp_buf);
+  buf = ligma_temp_buf_get_data (temp_buf);
 
   for (y = 0; y < height; y++)
     memcpy (buf + (width * y * 4), row, width * 4);
@@ -260,16 +260,16 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 }
 
 static void
-gimp_gradient_copy (GimpData *data,
-                    GimpData *src_data)
+ligma_gradient_copy (LigmaData *data,
+                    LigmaData *src_data)
 {
-  GimpGradient        *gradient     = GIMP_GRADIENT (data);
-  GimpGradient        *src_gradient = GIMP_GRADIENT (src_data);
-  GimpGradientSegment *head, *prev, *cur, *orig;
+  LigmaGradient        *gradient     = LIGMA_GRADIENT (data);
+  LigmaGradient        *src_gradient = LIGMA_GRADIENT (src_data);
+  LigmaGradientSegment *head, *prev, *cur, *orig;
 
   if (gradient->segments)
     {
-      gimp_gradient_segments_free (gradient->segments);
+      ligma_gradient_segments_free (gradient->segments);
       gradient->segments = NULL;
     }
 
@@ -279,7 +279,7 @@ gimp_gradient_copy (GimpData *data,
 
   while (orig)
     {
-      cur = gimp_gradient_segment_new ();
+      cur = ligma_gradient_segment_new ();
 
       *cur = *orig;  /* Copy everything */
 
@@ -297,12 +297,12 @@ gimp_gradient_copy (GimpData *data,
 
   gradient->segments = head;
 
-  gimp_data_dirty (GIMP_DATA (gradient));
+  ligma_data_dirty (LIGMA_DATA (gradient));
 }
 
 static gint
-gimp_gradient_compare (GimpData *data1,
-                       GimpData *data2)
+ligma_gradient_compare (LigmaData *data1,
+                       LigmaData *data2)
 {
   gboolean is_custom1;
   gboolean is_custom2;
@@ -310,8 +310,8 @@ gimp_gradient_compare (GimpData *data1,
   /* check whether data1 and data2 are the custom gradient, which is the only
    * writable internal gradient.
    */
-  is_custom1 = gimp_data_is_internal (data1) && gimp_data_is_writable (data1);
-  is_custom2 = gimp_data_is_internal (data2) && gimp_data_is_writable (data2);
+  is_custom1 = ligma_data_is_internal (data1) && ligma_data_is_writable (data1);
+  is_custom2 = ligma_data_is_internal (data2) && ligma_data_is_writable (data2);
 
   /* order the custom gradient before all the other gradients; use the default
    * ordering for the rest.
@@ -328,19 +328,19 @@ gimp_gradient_compare (GimpData *data1,
       return +1;
     }
   else
-    return GIMP_DATA_CLASS (parent_class)->compare (data1, data2);
+    return LIGMA_DATA_CLASS (parent_class)->compare (data1, data2);
 }
 
 static gchar *
-gimp_gradient_get_checksum (GimpTagged *tagged)
+ligma_gradient_get_checksum (LigmaTagged *tagged)
 {
-  GimpGradient *gradient        = GIMP_GRADIENT (tagged);
+  LigmaGradient *gradient        = LIGMA_GRADIENT (tagged);
   gchar        *checksum_string = NULL;
 
   if (gradient->segments)
     {
       GChecksum           *checksum = g_checksum_new (G_CHECKSUM_MD5);
-      GimpGradientSegment *segment  = gradient->segments;
+      LigmaGradientSegment *segment  = gradient->segments;
 
       while (segment)
         {
@@ -386,35 +386,35 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
 
 /*  public functions  */
 
-GimpData *
-gimp_gradient_new (GimpContext *context,
+LigmaData *
+ligma_gradient_new (LigmaContext *context,
                    const gchar *name)
 {
-  GimpGradient *gradient;
+  LigmaGradient *gradient;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  gradient = g_object_new (GIMP_TYPE_GRADIENT,
+  gradient = g_object_new (LIGMA_TYPE_GRADIENT,
                            "name", name,
                            NULL);
 
-  gradient->segments = gimp_gradient_segment_new ();
+  gradient->segments = ligma_gradient_segment_new ();
 
-  return GIMP_DATA (gradient);
+  return LIGMA_DATA (gradient);
 }
 
-GimpData *
-gimp_gradient_get_standard (GimpContext *context)
+LigmaData *
+ligma_gradient_get_standard (LigmaContext *context)
 {
-  static GimpData *standard_gradient = NULL;
+  static LigmaData *standard_gradient = NULL;
 
   if (! standard_gradient)
     {
-      standard_gradient = gimp_gradient_new (context, "Standard");
+      standard_gradient = ligma_gradient_new (context, "Standard");
 
-      gimp_data_clean (standard_gradient);
-      gimp_data_make_internal (standard_gradient, "gimp-gradient-standard");
+      ligma_data_clean (standard_gradient);
+      ligma_data_make_internal (standard_gradient, "ligma-gradient-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_gradient),
                                  (gpointer *) &standard_gradient);
@@ -424,13 +424,13 @@ gimp_gradient_get_standard (GimpContext *context)
 }
 
 static const gchar *
-gimp_gradient_get_extension (GimpData *data)
+ligma_gradient_get_extension (LigmaData *data)
 {
-  return GIMP_GRADIENT_FILE_EXTENSION;
+  return LIGMA_GRADIENT_FILE_EXTENSION;
 }
 
 /**
- * gimp_gradient_get_color_at:
+ * ligma_gradient_get_color_at:
  * @gradient:          a gradient
  * @context:           a context
  * @seg: (nullable):   a segment to seed the search with (or %NULL)
@@ -444,24 +444,24 @@ gimp_gradient_get_extension (GimpData *data)
  *
  * Returns: the gradient segment the color is from
  **/
-GimpGradientSegment *
-gimp_gradient_get_color_at (GimpGradient                *gradient,
-                            GimpContext                 *context,
-                            GimpGradientSegment         *seg,
+LigmaGradientSegment *
+ligma_gradient_get_color_at (LigmaGradient                *gradient,
+                            LigmaContext                 *context,
+                            LigmaGradientSegment         *seg,
                             gdouble                      pos,
                             gboolean                     reverse,
-                            GimpGradientBlendColorSpace  blend_color_space,
-                            GimpRGB                     *color)
+                            LigmaGradientBlendColorSpace  blend_color_space,
+                            LigmaRGB                     *color)
 {
   gdouble  factor = 0.0;
   gdouble  seg_len;
   gdouble  middle;
-  GimpRGB  left_color;
-  GimpRGB  right_color;
-  GimpRGB  rgb;
+  LigmaRGB  left_color;
+  LigmaRGB  right_color;
+  LigmaRGB  rgb;
 
   /* type-check disabled to improve speed */
-  /* g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL); */
+  /* g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), NULL); */
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
@@ -469,7 +469,7 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
   if (reverse)
     pos = 1.0 - pos;
 
-  seg = gimp_gradient_get_segment_at_internal (gradient, seg, pos);
+  seg = ligma_gradient_get_segment_at_internal (gradient, seg, pos);
 
   seg_len = seg->right - seg->left;
 
@@ -486,28 +486,28 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   switch (seg->type)
     {
-    case GIMP_GRADIENT_SEGMENT_LINEAR:
-      factor = gimp_gradient_calc_linear_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_LINEAR:
+      factor = ligma_gradient_calc_linear_factor (middle, pos);
       break;
 
-    case GIMP_GRADIENT_SEGMENT_CURVED:
-      factor = gimp_gradient_calc_curved_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_CURVED:
+      factor = ligma_gradient_calc_curved_factor (middle, pos);
       break;
 
-    case GIMP_GRADIENT_SEGMENT_SINE:
-      factor = gimp_gradient_calc_sine_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_SINE:
+      factor = ligma_gradient_calc_sine_factor (middle, pos);
       break;
 
-    case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
-      factor = gimp_gradient_calc_sphere_increasing_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING:
+      factor = ligma_gradient_calc_sphere_increasing_factor (middle, pos);
       break;
 
-    case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
-      factor = gimp_gradient_calc_sphere_decreasing_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING:
+      factor = ligma_gradient_calc_sphere_decreasing_factor (middle, pos);
       break;
 
-    case GIMP_GRADIENT_SEGMENT_STEP:
-      factor = gimp_gradient_calc_step_factor (middle, pos);
+    case LIGMA_GRADIENT_SEGMENT_STEP:
+      factor = ligma_gradient_calc_step_factor (middle, pos);
       break;
 
     default:
@@ -519,10 +519,10 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   if (context)
     {
-      gimp_gradient_segment_get_left_flat_color (gradient,
+      ligma_gradient_segment_get_left_flat_color (gradient,
                                                  context, seg, &left_color);
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
+      ligma_gradient_segment_get_right_flat_color (gradient,
                                                   context, seg, &right_color);
     }
   else
@@ -533,24 +533,24 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   /* Calculate color components */
 
-  if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
+  if (seg->color == LIGMA_GRADIENT_SEGMENT_RGB)
     {
       switch (blend_color_space)
         {
-        case GIMP_GRADIENT_BLEND_CIE_LAB:
+        case LIGMA_GRADIENT_BLEND_CIE_LAB:
           babl_process (fish_srgb_to_cie_lab,
                         &left_color, &left_color, 1);
           babl_process (fish_srgb_to_cie_lab,
                         &right_color, &right_color, 1);
           break;
 
-        case GIMP_GRADIENT_BLEND_RGB_LINEAR:
+        case LIGMA_GRADIENT_BLEND_RGB_LINEAR:
           babl_process (fish_srgb_to_linear_rgb,
                         &left_color, &left_color, 1);
           babl_process (fish_srgb_to_linear_rgb,
                         &right_color, &right_color, 1);
 
-        case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+        case LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL:
           break;
         }
 
@@ -560,33 +560,33 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
       switch (blend_color_space)
         {
-        case GIMP_GRADIENT_BLEND_CIE_LAB:
+        case LIGMA_GRADIENT_BLEND_CIE_LAB:
           babl_process (fish_cie_lab_to_srgb,
                         &rgb, &rgb, 1);
           break;
 
-        case GIMP_GRADIENT_BLEND_RGB_LINEAR:
+        case LIGMA_GRADIENT_BLEND_RGB_LINEAR:
           babl_process (fish_linear_rgb_to_srgb,
                         &rgb, &rgb, 1);
 
-        case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+        case LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL:
           break;
         }
     }
   else
     {
-      GimpHSV left_hsv;
-      GimpHSV right_hsv;
+      LigmaHSV left_hsv;
+      LigmaHSV right_hsv;
 
-      gimp_rgb_to_hsv (&left_color,  &left_hsv);
-      gimp_rgb_to_hsv (&right_color, &right_hsv);
+      ligma_rgb_to_hsv (&left_color,  &left_hsv);
+      ligma_rgb_to_hsv (&right_color, &right_hsv);
 
       left_hsv.s = left_hsv.s + (right_hsv.s - left_hsv.s) * factor;
       left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
 
       switch (seg->color)
         {
-        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
+        case LIGMA_GRADIENT_SEGMENT_HSV_CCW:
           if (left_hsv.h < right_hsv.h)
             {
               left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
@@ -600,7 +600,7 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
             }
           break;
 
-        case GIMP_GRADIENT_SEGMENT_HSV_CW:
+        case LIGMA_GRADIENT_SEGMENT_HSV_CW:
           if (right_hsv.h < left_hsv.h)
             {
               left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
@@ -620,7 +620,7 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
           break;
         }
 
-      gimp_hsv_to_rgb (&left_hsv, &rgb);
+      ligma_hsv_to_rgb (&left_hsv, &rgb);
     }
 
   /* Calculate alpha */
@@ -632,57 +632,57 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
   return seg;
 }
 
-GimpGradientSegment *
-gimp_gradient_get_segment_at (GimpGradient *gradient,
+LigmaGradientSegment *
+ligma_gradient_get_segment_at (LigmaGradient *gradient,
                               gdouble       pos)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), NULL);
 
-  return gimp_gradient_get_segment_at_internal (gradient, NULL, pos);
+  return ligma_gradient_get_segment_at_internal (gradient, NULL, pos);
 }
 
 gboolean
-gimp_gradient_has_fg_bg_segments (GimpGradient *gradient)
+ligma_gradient_has_fg_bg_segments (LigmaGradient *gradient)
 {
-  GimpGradientSegment *segment;
+  LigmaGradientSegment *segment;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), FALSE);
 
   for (segment = gradient->segments; segment; segment = segment->next)
-    if (segment->left_color_type  != GIMP_GRADIENT_COLOR_FIXED ||
-        segment->right_color_type != GIMP_GRADIENT_COLOR_FIXED)
+    if (segment->left_color_type  != LIGMA_GRADIENT_COLOR_FIXED ||
+        segment->right_color_type != LIGMA_GRADIENT_COLOR_FIXED)
       return TRUE;
 
   return FALSE;
 }
 
 void
-gimp_gradient_split_at (GimpGradient                 *gradient,
-                        GimpContext                  *context,
-                        GimpGradientSegment          *seg,
+ligma_gradient_split_at (LigmaGradient                 *gradient,
+                        LigmaContext                  *context,
+                        LigmaGradientSegment          *seg,
                         gdouble                       pos,
-                        GimpGradientBlendColorSpace   blend_color_space,
-                        GimpGradientSegment         **newl,
-                        GimpGradientSegment         **newr)
+                        LigmaGradientBlendColorSpace   blend_color_space,
+                        LigmaGradientSegment         **newl,
+                        LigmaGradientSegment         **newr)
 {
-  GimpRGB              color;
-  GimpGradientSegment *newseg;
+  LigmaRGB              color;
+  LigmaGradientSegment *newseg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   pos = CLAMP (pos, 0.0, 1.0);
-  seg = gimp_gradient_get_segment_at_internal (gradient, seg, pos);
+  seg = ligma_gradient_get_segment_at_internal (gradient, seg, pos);
 
   /* Get color at pos */
-  gimp_gradient_get_color_at (gradient, context, seg, pos,
+  ligma_gradient_get_color_at (gradient, context, seg, pos,
                               FALSE, blend_color_space, &color);
 
   /* Create a new segment and insert it in the list */
 
-  newseg = gimp_gradient_segment_new ();
+  newseg = ligma_gradient_segment_new ();
 
   newseg->prev = seg;
   newseg->next = seg->next;
@@ -708,7 +708,7 @@ gimp_gradient_split_at (GimpGradient                 *gradient,
   newseg->right_color_type = seg->right_color_type;
   newseg->right_color      = seg->right_color;
 
-  seg->right_color_type = newseg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
+  seg->right_color_type = newseg->left_color_type = LIGMA_GRADIENT_COLOR_FIXED;
   seg->right_color      = newseg->left_color      = color;
 
   /* Set parameters of new segment */
@@ -721,34 +721,34 @@ gimp_gradient_split_at (GimpGradient                 *gradient,
   if (newl) *newl = seg;
   if (newr) *newr = newseg;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
-GimpGradient *
-gimp_gradient_flatten (GimpGradient *gradient,
-                       GimpContext  *context)
+LigmaGradient *
+ligma_gradient_flatten (LigmaGradient *gradient,
+                       LigmaContext  *context)
 {
-  GimpGradient        *flat;
-  GimpGradientSegment *seg;
+  LigmaGradient        *flat;
+  LigmaGradientSegment *seg;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  flat = GIMP_GRADIENT (gimp_data_duplicate (GIMP_DATA (gradient)));
+  flat = LIGMA_GRADIENT (ligma_data_duplicate (LIGMA_DATA (gradient)));
 
   for (seg = flat->segments; seg; seg = seg->next)
     {
-      gimp_gradient_segment_get_left_flat_color (gradient,
+      ligma_gradient_segment_get_left_flat_color (gradient,
                                                  context, seg,
                                                  &seg->left_color);
 
-      seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
+      seg->left_color_type = LIGMA_GRADIENT_COLOR_FIXED;
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
+      ligma_gradient_segment_get_right_flat_color (gradient,
                                                   context, seg,
                                                   &seg->right_color);
 
-      seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
+      seg->right_color_type = LIGMA_GRADIENT_COLOR_FIXED;
     }
 
   return flat;
@@ -757,25 +757,25 @@ gimp_gradient_flatten (GimpGradient *gradient,
 
 /*  gradient segment functions  */
 
-GimpGradientSegment *
-gimp_gradient_segment_new (void)
+LigmaGradientSegment *
+ligma_gradient_segment_new (void)
 {
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
 
-  seg = g_slice_new0 (GimpGradientSegment);
+  seg = g_slice_new0 (LigmaGradientSegment);
 
   seg->left   = 0.0;
   seg->middle = 0.5;
   seg->right  = 1.0;
 
-  seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
+  seg->left_color_type = LIGMA_GRADIENT_COLOR_FIXED;
+  ligma_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
 
-  seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
+  seg->right_color_type = LIGMA_GRADIENT_COLOR_FIXED;
+  ligma_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
 
-  seg->type  = GIMP_GRADIENT_SEGMENT_LINEAR;
-  seg->color = GIMP_GRADIENT_SEGMENT_RGB;
+  seg->type  = LIGMA_GRADIENT_SEGMENT_LINEAR;
+  seg->color = LIGMA_GRADIENT_SEGMENT_RGB;
 
   seg->prev = seg->next = NULL;
 
@@ -784,23 +784,23 @@ gimp_gradient_segment_new (void)
 
 
 void
-gimp_gradient_segment_free (GimpGradientSegment *seg)
+ligma_gradient_segment_free (LigmaGradientSegment *seg)
 {
   g_return_if_fail (seg != NULL);
 
-  g_slice_free (GimpGradientSegment, seg);
+  g_slice_free (LigmaGradientSegment, seg);
 }
 
 void
-gimp_gradient_segments_free (GimpGradientSegment *seg)
+ligma_gradient_segments_free (LigmaGradientSegment *seg)
 {
   g_return_if_fail (seg != NULL);
 
-  g_slice_free_chain (GimpGradientSegment, seg, next);
+  g_slice_free_chain (LigmaGradientSegment, seg, next);
 }
 
-GimpGradientSegment *
-gimp_gradient_segment_get_last (GimpGradientSegment *seg)
+LigmaGradientSegment *
+ligma_gradient_segment_get_last (LigmaGradientSegment *seg)
 {
   if (! seg)
     return NULL;
@@ -811,8 +811,8 @@ gimp_gradient_segment_get_last (GimpGradientSegment *seg)
   return seg;
 }
 
-GimpGradientSegment *
-gimp_gradient_segment_get_first (GimpGradientSegment *seg)
+LigmaGradientSegment *
+ligma_gradient_segment_get_first (LigmaGradientSegment *seg)
 {
   if (! seg)
     return NULL;
@@ -823,8 +823,8 @@ gimp_gradient_segment_get_first (GimpGradientSegment *seg)
   return seg;
 }
 
-GimpGradientSegment *
-gimp_gradient_segment_get_nth (GimpGradientSegment *seg,
+LigmaGradientSegment *
+ligma_gradient_segment_get_nth (LigmaGradientSegment *seg,
                                gint                 index)
 {
   gint i = 0;
@@ -847,43 +847,43 @@ gimp_gradient_segment_get_nth (GimpGradientSegment *seg,
 }
 
 void
-gimp_gradient_segment_split_midpoint (GimpGradient                 *gradient,
-                                      GimpContext                  *context,
-                                      GimpGradientSegment          *lseg,
-                                      GimpGradientBlendColorSpace   blend_color_space,
-                                      GimpGradientSegment         **newl,
-                                      GimpGradientSegment         **newr)
+ligma_gradient_segment_split_midpoint (LigmaGradient                 *gradient,
+                                      LigmaContext                  *context,
+                                      LigmaGradientSegment          *lseg,
+                                      LigmaGradientBlendColorSpace   blend_color_space,
+                                      LigmaGradientSegment         **newl,
+                                      LigmaGradientSegment         **newr)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
 
-  gimp_gradient_split_at (gradient, context, lseg, lseg->middle,
+  ligma_gradient_split_at (gradient, context, lseg, lseg->middle,
                           blend_color_space, newl, newr);
 }
 
 void
-gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
-                                     GimpContext                  *context,
-                                     GimpGradientSegment          *lseg,
+ligma_gradient_segment_split_uniform (LigmaGradient                 *gradient,
+                                     LigmaContext                  *context,
+                                     LigmaGradientSegment          *lseg,
                                      gint                          parts,
-                                     GimpGradientBlendColorSpace   blend_color_space,
-                                     GimpGradientSegment         **newl,
-                                     GimpGradientSegment         **newr)
+                                     LigmaGradientBlendColorSpace   blend_color_space,
+                                     LigmaGradientSegment         **newl,
+                                     LigmaGradientSegment         **newr)
 {
-  GimpGradientSegment *seg, *prev, *tmp;
+  LigmaGradientSegment *seg, *prev, *tmp;
   gdouble              seg_len;
   gint                 i;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg_len = (lseg->right - lseg->left) / parts; /* Length of divisions */
 
@@ -893,7 +893,7 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
 
   for (i = 0; i < parts; i++)
     {
-      seg = gimp_gradient_segment_new ();
+      seg = ligma_gradient_segment_new ();
 
       if (i == 0)
         tmp = seg; /* Remember first segment */
@@ -902,13 +902,13 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      seg->left_color_type  = GIMP_GRADIENT_COLOR_FIXED;
-      seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
+      seg->left_color_type  = LIGMA_GRADIENT_COLOR_FIXED;
+      seg->right_color_type = LIGMA_GRADIENT_COLOR_FIXED;
 
-      gimp_gradient_get_color_at (gradient, context, lseg,
+      ligma_gradient_get_color_at (gradient, context, lseg,
                                   seg->left,  FALSE, blend_color_space,
                                   &seg->left_color);
-      gimp_gradient_get_color_at (gradient, context, lseg,
+      ligma_gradient_get_color_at (gradient, context, lseg,
                                   seg->right, FALSE, blend_color_space,
                                   &seg->right_color);
 
@@ -953,17 +953,17 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
   *newr = seg;
 
   /* Delete old segment */
-  gimp_gradient_segment_free (lseg);
+  ligma_gradient_segment_free (lseg);
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_get_left_color (GimpGradient        *gradient,
-                                      GimpGradientSegment *seg,
-                                      GimpRGB             *color)
+ligma_gradient_segment_get_left_color (LigmaGradient        *gradient,
+                                      LigmaGradientSegment *seg,
+                                      LigmaRGB             *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
@@ -971,29 +971,29 @@ gimp_gradient_segment_get_left_color (GimpGradient        *gradient,
 }
 
 void
-gimp_gradient_segment_set_left_color (GimpGradient        *gradient,
-                                      GimpGradientSegment *seg,
-                                      const GimpRGB       *color)
+ligma_gradient_segment_set_left_color (LigmaGradient        *gradient,
+                                      LigmaGradientSegment *seg,
+                                      const LigmaRGB       *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
-  gimp_gradient_segment_range_blend (gradient, seg, seg,
+  ligma_gradient_segment_range_blend (gradient, seg, seg,
                                      color, &seg->right_color,
                                      TRUE, TRUE);
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_get_right_color (GimpGradient        *gradient,
-                                       GimpGradientSegment *seg,
-                                       GimpRGB             *color)
+ligma_gradient_segment_get_right_color (LigmaGradient        *gradient,
+                                       LigmaGradientSegment *seg,
+                                       LigmaRGB             *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
@@ -1001,121 +1001,121 @@ gimp_gradient_segment_get_right_color (GimpGradient        *gradient,
 }
 
 void
-gimp_gradient_segment_set_right_color (GimpGradient        *gradient,
-                                       GimpGradientSegment *seg,
-                                       const GimpRGB       *color)
+ligma_gradient_segment_set_right_color (LigmaGradient        *gradient,
+                                       LigmaGradientSegment *seg,
+                                       const LigmaRGB       *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
-  gimp_gradient_segment_range_blend (gradient, seg, seg,
+  ligma_gradient_segment_range_blend (gradient, seg, seg,
                                      &seg->left_color, color,
                                      TRUE, TRUE);
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
-GimpGradientColor
-gimp_gradient_segment_get_left_color_type (GimpGradient        *gradient,
-                                           GimpGradientSegment *seg)
+LigmaGradientColor
+ligma_gradient_segment_get_left_color_type (LigmaGradient        *gradient,
+                                           LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0);
   g_return_val_if_fail (seg != NULL, 0);
 
   return seg->left_color_type;
 }
 
 void
-gimp_gradient_segment_set_left_color_type (GimpGradient        *gradient,
-                                           GimpGradientSegment *seg,
-                                           GimpGradientColor    color_type)
+ligma_gradient_segment_set_left_color_type (LigmaGradient        *gradient,
+                                           LigmaGradientSegment *seg,
+                                           LigmaGradientColor    color_type)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg->left_color_type = color_type;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
-GimpGradientColor
-gimp_gradient_segment_get_right_color_type (GimpGradient        *gradient,
-                                            GimpGradientSegment *seg)
+LigmaGradientColor
+ligma_gradient_segment_get_right_color_type (LigmaGradient        *gradient,
+                                            LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0);
   g_return_val_if_fail (seg != NULL, 0);
 
   return seg->right_color_type;
 }
 
 void
-gimp_gradient_segment_set_right_color_type (GimpGradient        *gradient,
-                                            GimpGradientSegment *seg,
-                                            GimpGradientColor    color_type)
+ligma_gradient_segment_set_right_color_type (LigmaGradient        *gradient,
+                                            LigmaGradientSegment *seg,
+                                            LigmaGradientColor    color_type)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg->right_color_type = color_type;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_get_left_flat_color (GimpGradient        *gradient,
-                                           GimpContext         *context,
-                                           GimpGradientSegment *seg,
-                                           GimpRGB             *color)
+ligma_gradient_segment_get_left_flat_color (LigmaGradient        *gradient,
+                                           LigmaContext         *context,
+                                           LigmaGradientSegment *seg,
+                                           LigmaRGB             *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_gradient_get_flat_color (context,
+  ligma_gradient_get_flat_color (context,
                                 &seg->left_color, seg->left_color_type,
                                 color);
 }
 
 void
-gimp_gradient_segment_get_right_flat_color (GimpGradient        *gradient,
-                                            GimpContext         *context,
-                                            GimpGradientSegment *seg,
-                                            GimpRGB             *color)
+ligma_gradient_segment_get_right_flat_color (LigmaGradient        *gradient,
+                                            LigmaContext         *context,
+                                            LigmaGradientSegment *seg,
+                                            LigmaRGB             *color)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_gradient_get_flat_color (context,
+  ligma_gradient_get_flat_color (context,
                                 &seg->right_color, seg->right_color_type,
                                 color);
 }
 
 gdouble
-gimp_gradient_segment_get_left_pos (GimpGradient        *gradient,
-                                    GimpGradientSegment *seg)
+ligma_gradient_segment_get_left_pos (LigmaGradient        *gradient,
+                                    LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
   return seg->left;
 }
 
 gdouble
-gimp_gradient_segment_set_left_pos (GimpGradient        *gradient,
-                                    GimpGradientSegment *seg,
+ligma_gradient_segment_set_left_pos (LigmaGradient        *gradient,
+                                    LigmaGradientSegment *seg,
                                     gdouble              pos)
 {
   gdouble final_pos;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
   if (seg->prev == NULL)
@@ -1124,37 +1124,37 @@ gimp_gradient_segment_set_left_pos (GimpGradient        *gradient,
     }
   else
     {
-      gimp_data_freeze (GIMP_DATA (gradient));
+      ligma_data_freeze (LIGMA_DATA (gradient));
 
       final_pos = seg->prev->right = seg->left =
           CLAMP (pos,
                  seg->prev->middle + EPSILON,
                  seg->middle - EPSILON);
 
-      gimp_data_thaw (GIMP_DATA (gradient));
+      ligma_data_thaw (LIGMA_DATA (gradient));
     }
 
   return final_pos;
 }
 
 gdouble
-gimp_gradient_segment_get_right_pos (GimpGradient        *gradient,
-                                     GimpGradientSegment *seg)
+ligma_gradient_segment_get_right_pos (LigmaGradient        *gradient,
+                                     LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
   return seg->right;
 }
 
 gdouble
-gimp_gradient_segment_set_right_pos (GimpGradient        *gradient,
-                                     GimpGradientSegment *seg,
+ligma_gradient_segment_set_right_pos (LigmaGradient        *gradient,
+                                     LigmaGradientSegment *seg,
                                      gdouble              pos)
 {
   gdouble final_pos;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
   if (seg->next == NULL)
@@ -1163,77 +1163,77 @@ gimp_gradient_segment_set_right_pos (GimpGradient        *gradient,
     }
   else
     {
-      gimp_data_freeze (GIMP_DATA (gradient));
+      ligma_data_freeze (LIGMA_DATA (gradient));
 
       final_pos = seg->next->left = seg->right =
           CLAMP (pos,
                  seg->middle + EPSILON,
                  seg->next->middle - EPSILON);
 
-      gimp_data_thaw (GIMP_DATA (gradient));
+      ligma_data_thaw (LIGMA_DATA (gradient));
     }
 
   return final_pos;
 }
 
 gdouble
-gimp_gradient_segment_get_middle_pos (GimpGradient        *gradient,
-                                      GimpGradientSegment *seg)
+ligma_gradient_segment_get_middle_pos (LigmaGradient        *gradient,
+                                      LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
   return seg->middle;
 }
 
 gdouble
-gimp_gradient_segment_set_middle_pos (GimpGradient        *gradient,
-                                      GimpGradientSegment *seg,
+ligma_gradient_segment_set_middle_pos (LigmaGradient        *gradient,
+                                      LigmaGradientSegment *seg,
                                       gdouble              pos)
 {
   gdouble final_pos;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   final_pos = seg->middle =
       CLAMP (pos,
              seg->left + EPSILON,
              seg->right - EPSILON);
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 
   return final_pos;
 }
 
-GimpGradientSegmentType
-gimp_gradient_segment_get_blending_function (GimpGradient        *gradient,
-                                             GimpGradientSegment *seg)
+LigmaGradientSegmentType
+ligma_gradient_segment_get_blending_function (LigmaGradient        *gradient,
+                                             LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0);
 
   return seg->type;
 }
 
-GimpGradientSegmentColor
-gimp_gradient_segment_get_coloring_type (GimpGradient        *gradient,
-                                         GimpGradientSegment *seg)
+LigmaGradientSegmentColor
+ligma_gradient_segment_get_coloring_type (LigmaGradient        *gradient,
+                                         LigmaGradientSegment *seg)
 {
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0);
 
   return seg->color;
 }
 
 gint
-gimp_gradient_segment_range_get_n_segments (GimpGradient        *gradient,
-                                            GimpGradientSegment *range_l,
-                                            GimpGradientSegment *range_r)
+ligma_gradient_segment_range_get_n_segments (LigmaGradient        *gradient,
+                                            LigmaGradientSegment *range_l,
+                                            LigmaGradientSegment *range_r)
 {
   gint n_segments = 0;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0);
   g_return_val_if_fail (range_l != NULL, 0);
 
   for (; range_l != range_r; range_l = range_l->next)
@@ -1246,22 +1246,22 @@ gimp_gradient_segment_range_get_n_segments (GimpGradient        *gradient,
 }
 
 void
-gimp_gradient_segment_range_compress (GimpGradient        *gradient,
-                                      GimpGradientSegment *range_l,
-                                      GimpGradientSegment *range_r,
+ligma_gradient_segment_range_compress (LigmaGradient        *gradient,
+                                      LigmaGradientSegment *range_l,
+                                      LigmaGradientSegment *range_r,
                                       gdouble              new_l,
                                       gdouble              new_r)
 {
   gdouble              orig_l, orig_r;
-  GimpGradientSegment *seg, *aseg;
+  LigmaGradientSegment *seg, *aseg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (range_l != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! range_r)
-    range_r = gimp_gradient_segment_get_last (range_l);
+    range_r = ligma_gradient_segment_get_last (range_l);
 
   orig_l = range_l->left;
   orig_r = range_r->right;
@@ -1294,7 +1294,7 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
       gint n;
       gint i;
 
-      n = gimp_gradient_segment_range_get_n_segments (gradient,
+      n = ligma_gradient_segment_range_get_n_segments (gradient,
                                                       range_l, range_r);
 
       for (i = 0, seg = range_l; i < n; i++, seg = seg->next)
@@ -1315,30 +1315,30 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
   range_l->left  = new_l;
   range_l->right = new_r;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_blend (GimpGradient        *gradient,
-                                   GimpGradientSegment *lseg,
-                                   GimpGradientSegment *rseg,
-                                   const GimpRGB       *rgb1,
-                                   const GimpRGB       *rgb2,
+ligma_gradient_segment_range_blend (LigmaGradient        *gradient,
+                                   LigmaGradientSegment *lseg,
+                                   LigmaGradientSegment *rseg,
+                                   const LigmaRGB       *rgb1,
+                                   const LigmaRGB       *rgb2,
                                    gboolean             blend_colors,
                                    gboolean             blend_opacity)
 {
-  GimpRGB              d;
+  LigmaRGB              d;
   gdouble              left, len;
-  GimpGradientSegment *seg;
-  GimpGradientSegment *aseg;
+  LigmaGradientSegment *seg;
+  LigmaGradientSegment *aseg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
   g_return_if_fail (lseg != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! rseg)
-    rseg = gimp_gradient_segment_get_last (lseg);
+    rseg = ligma_gradient_segment_get_last (lseg);
 
   d.r = rgb2->r - rgb1->r;
   d.g = rgb2->g - rgb1->g;
@@ -1373,22 +1373,22 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
       seg = seg->next;
     }
   while (aseg != rseg);
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 
 }
 
 void
-gimp_gradient_segment_range_set_blending_function (GimpGradient            *gradient,
-                                                   GimpGradientSegment     *start_seg,
-                                                   GimpGradientSegment     *end_seg,
-                                                   GimpGradientSegmentType  new_type)
+ligma_gradient_segment_range_set_blending_function (LigmaGradient            *gradient,
+                                                   LigmaGradientSegment     *start_seg,
+                                                   LigmaGradientSegment     *end_seg,
+                                                   LigmaGradientSegmentType  new_type)
 {
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
   gboolean             reached_last_segment = FALSE;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg = start_seg;
   while (seg && ! reached_last_segment)
@@ -1400,21 +1400,21 @@ gimp_gradient_segment_range_set_blending_function (GimpGradient            *grad
       seg = seg->next;
     }
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_set_coloring_type (GimpGradient             *gradient,
-                                               GimpGradientSegment      *start_seg,
-                                               GimpGradientSegment      *end_seg,
-                                               GimpGradientSegmentColor  new_color)
+ligma_gradient_segment_range_set_coloring_type (LigmaGradient             *gradient,
+                                               LigmaGradientSegment      *start_seg,
+                                               LigmaGradientSegment      *end_seg,
+                                               LigmaGradientSegmentColor  new_color)
 {
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
   gboolean             reached_last_segment = FALSE;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg = start_seg;
   while (seg && ! reached_last_segment)
@@ -1426,27 +1426,27 @@ gimp_gradient_segment_range_set_coloring_type (GimpGradient             *gradien
       seg = seg->next;
     }
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_flip (GimpGradient         *gradient,
-                                  GimpGradientSegment  *start_seg,
-                                  GimpGradientSegment  *end_seg,
-                                  GimpGradientSegment **final_start_seg,
-                                  GimpGradientSegment **final_end_seg)
+ligma_gradient_segment_range_flip (LigmaGradient         *gradient,
+                                  LigmaGradientSegment  *start_seg,
+                                  LigmaGradientSegment  *end_seg,
+                                  LigmaGradientSegment **final_start_seg,
+                                  LigmaGradientSegment **final_end_seg)
 {
-  GimpGradientSegment *oseg, *oaseg;
-  GimpGradientSegment *seg, *prev, *tmp;
-  GimpGradientSegment *lseg, *rseg;
+  LigmaGradientSegment *oseg, *oaseg;
+  LigmaGradientSegment *seg, *prev, *tmp;
+  LigmaGradientSegment *lseg, *rseg;
   gdouble              left, right;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   left  = start_seg->left;
   right = end_seg->right;
@@ -1459,7 +1459,7 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
   do
     {
-      seg = gimp_gradient_segment_new ();
+      seg = ligma_gradient_segment_new ();
 
       if (prev == NULL)
         {
@@ -1480,12 +1480,12 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
       switch (oseg->type)
         {
-        case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
-          seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING;
+        case LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING:
+          seg->type = LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING;
           break;
 
-        case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
-          seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING;
+        case LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING:
+          seg->type = LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING;
           break;
 
         default:
@@ -1494,12 +1494,12 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
       switch (oseg->color)
         {
-        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
-          seg->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
+        case LIGMA_GRADIENT_SEGMENT_HSV_CCW:
+          seg->color = LIGMA_GRADIENT_SEGMENT_HSV_CW;
           break;
 
-        case GIMP_GRADIENT_SEGMENT_HSV_CW:
-          seg->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
+        case LIGMA_GRADIENT_SEGMENT_HSV_CW:
+          seg->color = LIGMA_GRADIENT_SEGMENT_HSV_CCW;
           break;
 
         default:
@@ -1531,7 +1531,7 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
   do
     {
       oaseg = oseg->next;
-      gimp_gradient_segment_free (oseg);
+      ligma_gradient_segment_free (oseg);
       oseg = oaseg;
     }
   while (oaseg != rseg);
@@ -1560,29 +1560,29 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
   /* Done */
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
-                                       GimpGradientSegment  *start_seg,
-                                       GimpGradientSegment  *end_seg,
+ligma_gradient_segment_range_replicate (LigmaGradient         *gradient,
+                                       LigmaGradientSegment  *start_seg,
+                                       LigmaGradientSegment  *end_seg,
                                        gint                  replicate_times,
-                                       GimpGradientSegment **final_start_seg,
-                                       GimpGradientSegment **final_end_seg)
+                                       LigmaGradientSegment **final_start_seg,
+                                       LigmaGradientSegment **final_end_seg)
 {
   gdouble              sel_left, sel_right, sel_len;
   gdouble              new_left;
   gdouble              factor;
-  GimpGradientSegment *prev, *seg, *tmp;
-  GimpGradientSegment *oseg, *oaseg;
-  GimpGradientSegment *lseg, *rseg;
+  LigmaGradientSegment *prev, *seg, *tmp;
+  LigmaGradientSegment *oseg, *oaseg;
+  LigmaGradientSegment *lseg, *rseg;
   gint                 i;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   if (replicate_times < 2)
     {
@@ -1591,7 +1591,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
       return;
     }
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   /* Remember original parameters */
   sel_left  = start_seg->left;
@@ -1616,7 +1616,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
 
       do
         {
-          seg = gimp_gradient_segment_new ();
+          seg = ligma_gradient_segment_new ();
 
           if (prev == NULL)
             {
@@ -1666,7 +1666,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
   do
     {
       oaseg = oseg->next;
-      gimp_gradient_segment_free (oseg);
+      ligma_gradient_segment_free (oseg);
       oseg = oaseg;
     }
   while (oaseg != rseg);
@@ -1695,33 +1695,33 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
 
   /* Done */
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_split_midpoint (GimpGradient                 *gradient,
-                                            GimpContext                  *context,
-                                            GimpGradientSegment          *start_seg,
-                                            GimpGradientSegment          *end_seg,
-                                            GimpGradientBlendColorSpace   blend_color_space,
-                                            GimpGradientSegment         **final_start_seg,
-                                            GimpGradientSegment         **final_end_seg)
+ligma_gradient_segment_range_split_midpoint (LigmaGradient                 *gradient,
+                                            LigmaContext                  *context,
+                                            LigmaGradientSegment          *start_seg,
+                                            LigmaGradientSegment          *end_seg,
+                                            LigmaGradientBlendColorSpace   blend_color_space,
+                                            LigmaGradientSegment         **final_start_seg,
+                                            LigmaGradientSegment         **final_end_seg)
 {
-  GimpGradientSegment *seg, *lseg, *rseg;
+  LigmaGradientSegment *seg, *lseg, *rseg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   seg = start_seg;
 
   do
     {
-      gimp_gradient_segment_split_midpoint (gradient, context,
+      ligma_gradient_segment_split_midpoint (gradient, context,
                                             seg, blend_color_space,
                                             &lseg, &rseg);
       seg = rseg->next;
@@ -1734,26 +1734,26 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient                 *gradie
   if (final_end_seg)
     *final_end_seg = rseg;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_split_uniform (GimpGradient                 *gradient,
-                                           GimpContext                  *context,
-                                           GimpGradientSegment          *start_seg,
-                                           GimpGradientSegment          *end_seg,
+ligma_gradient_segment_range_split_uniform (LigmaGradient                 *gradient,
+                                           LigmaContext                  *context,
+                                           LigmaGradientSegment          *start_seg,
+                                           LigmaGradientSegment          *end_seg,
                                            gint                          parts,
-                                           GimpGradientBlendColorSpace   blend_color_space,
-                                           GimpGradientSegment         **final_start_seg,
-                                           GimpGradientSegment         **final_end_seg)
+                                           LigmaGradientBlendColorSpace   blend_color_space,
+                                           LigmaGradientSegment         **final_start_seg,
+                                           LigmaGradientSegment         **final_end_seg)
 {
-  GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
+  LigmaGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   if (parts < 2)
     {
@@ -1762,7 +1762,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient                 *gradien
       return;
     }
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   seg = start_seg;
   lsel = NULL;
@@ -1771,7 +1771,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient                 *gradien
     {
       aseg = seg;
 
-      gimp_gradient_segment_split_uniform (gradient, context, seg,
+      ligma_gradient_segment_split_uniform (gradient, context, seg,
                                            parts, blend_color_space,
                                            &lseg, &rseg);
 
@@ -1788,23 +1788,23 @@ gimp_gradient_segment_range_split_uniform (GimpGradient                 *gradien
   if (final_end_seg)
     *final_end_seg = rseg;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_delete (GimpGradient         *gradient,
-                                    GimpGradientSegment  *start_seg,
-                                    GimpGradientSegment  *end_seg,
-                                    GimpGradientSegment **final_start_seg,
-                                    GimpGradientSegment **final_end_seg)
+ligma_gradient_segment_range_delete (LigmaGradient         *gradient,
+                                    LigmaGradientSegment  *start_seg,
+                                    LigmaGradientSegment  *end_seg,
+                                    LigmaGradientSegment **final_start_seg,
+                                    LigmaGradientSegment **final_end_seg)
 {
-  GimpGradientSegment *lseg, *rseg, *seg, *aseg, *next;
+  LigmaGradientSegment *lseg, *rseg, *seg, *aseg, *next;
   gdouble              join;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   /* Remember segments to the left and to the right of the selection */
 
@@ -1816,7 +1816,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   if ((lseg == NULL) && (rseg == NULL))
     goto premature_return;
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   /* Calculate join point */
 
@@ -1831,11 +1831,11 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   /* Move segments */
 
   if (lseg != NULL)
-    gimp_gradient_segment_range_compress (gradient, lseg, lseg,
+    ligma_gradient_segment_range_compress (gradient, lseg, lseg,
                                           lseg->left, join);
 
   if (rseg != NULL)
-    gimp_gradient_segment_range_compress (gradient, rseg, rseg,
+    ligma_gradient_segment_range_compress (gradient, rseg, rseg,
                                           join, rseg->right);
 
   /* Link */
@@ -1855,7 +1855,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
       next = seg->next;
       aseg = seg;
 
-      gimp_gradient_segment_free (seg);
+      ligma_gradient_segment_free (seg);
 
       seg = next;
     }
@@ -1883,7 +1883,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   if (lseg == NULL)
     gradient->segments = rseg;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 
   return;
 
@@ -1895,20 +1895,20 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
 }
 
 void
-gimp_gradient_segment_range_merge (GimpGradient         *gradient,
-                                   GimpGradientSegment  *start_seg,
-                                   GimpGradientSegment  *end_seg,
-                                   GimpGradientSegment **final_start_seg,
-                                   GimpGradientSegment **final_end_seg)
+ligma_gradient_segment_range_merge (LigmaGradient         *gradient,
+                                   LigmaGradientSegment  *start_seg,
+                                   LigmaGradientSegment  *end_seg,
+                                   LigmaGradientSegment **final_start_seg,
+                                   LigmaGradientSegment **final_end_seg)
 {
-  GimpGradientSegment *seg;
+  LigmaGradientSegment *seg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   /* Copy the end segment's right position and color to the start segment */
 
@@ -1935,17 +1935,17 @@ gimp_gradient_segment_range_merge (GimpGradient         *gradient,
 
   while (seg != start_seg)
     {
-      GimpGradientSegment *prev = seg->prev;
+      LigmaGradientSegment *prev = seg->prev;
 
       /* If the blend function and/or coloring type aren't uniform, reset them. */
 
       if (seg->type != start_seg->type)
-        start_seg->type = GIMP_GRADIENT_SEGMENT_LINEAR;
+        start_seg->type = LIGMA_GRADIENT_SEGMENT_LINEAR;
 
       if (seg->color != start_seg->color)
-        start_seg->color = GIMP_GRADIENT_SEGMENT_RGB;
+        start_seg->color = LIGMA_GRADIENT_SEGMENT_RGB;
 
-      gimp_gradient_segment_free (seg);
+      ligma_gradient_segment_free (seg);
 
       seg = prev;
     }
@@ -1955,22 +1955,22 @@ gimp_gradient_segment_range_merge (GimpGradient         *gradient,
   if (final_end_seg)
     *final_end_seg = start_seg;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_recenter_handles (GimpGradient        *gradient,
-                                              GimpGradientSegment *start_seg,
-                                              GimpGradientSegment *end_seg)
+ligma_gradient_segment_range_recenter_handles (LigmaGradient        *gradient,
+                                              LigmaGradientSegment *start_seg,
+                                              LigmaGradientSegment *end_seg)
 {
-  GimpGradientSegment *seg, *aseg;
+  LigmaGradientSegment *seg, *aseg;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   seg = start_seg;
 
@@ -1983,25 +1983,25 @@ gimp_gradient_segment_range_recenter_handles (GimpGradient        *gradient,
     }
   while (aseg != end_seg);
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 void
-gimp_gradient_segment_range_redistribute_handles (GimpGradient        *gradient,
-                                                  GimpGradientSegment *start_seg,
-                                                  GimpGradientSegment *end_seg)
+ligma_gradient_segment_range_redistribute_handles (LigmaGradient        *gradient,
+                                                  LigmaGradientSegment *start_seg,
+                                                  LigmaGradientSegment *end_seg)
 {
-  GimpGradientSegment *seg, *aseg;
+  LigmaGradientSegment *seg, *aseg;
   gdouble              left, right, seg_len;
   gint                 num_segs;
   gint                 i;
 
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (LIGMA_IS_GRADIENT (gradient));
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! end_seg)
-    end_seg = gimp_gradient_segment_get_last (start_seg);
+    end_seg = ligma_gradient_segment_get_last (start_seg);
 
   /* Count number of segments in selection */
 
@@ -2040,26 +2040,26 @@ gimp_gradient_segment_range_redistribute_handles (GimpGradient        *gradient,
   start_seg->left  = left;
   end_seg->right = right;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 }
 
 gdouble
-gimp_gradient_segment_range_move (GimpGradient        *gradient,
-                                  GimpGradientSegment *range_l,
-                                  GimpGradientSegment *range_r,
+ligma_gradient_segment_range_move (LigmaGradient        *gradient,
+                                  LigmaGradientSegment *range_l,
+                                  LigmaGradientSegment *range_r,
                                   gdouble              delta,
                                   gboolean             control_compress)
 {
   gdouble              lbound, rbound;
   gint                 is_first, is_last;
-  GimpGradientSegment *seg, *aseg;
+  LigmaGradientSegment *seg, *aseg;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
+  g_return_val_if_fail (LIGMA_IS_GRADIENT (gradient), 0.0);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
+  ligma_data_freeze (LIGMA_DATA (gradient));
 
   if (! range_r)
-    range_r = gimp_gradient_segment_get_last (range_l);
+    range_r = ligma_gradient_segment_get_last (range_l);
 
   /* First or last segments in gradient? */
 
@@ -2146,7 +2146,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
       if (! control_compress)
         range_l->prev->right = range_l->left;
       else
-        gimp_gradient_segment_range_compress (gradient,
+        ligma_gradient_segment_range_compress (gradient,
                                               range_l->prev, range_l->prev,
                                               range_l->prev->left, range_l->left);
     }
@@ -2156,12 +2156,12 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
       if (! control_compress)
         range_r->next->left = range_r->right;
       else
-        gimp_gradient_segment_range_compress (gradient,
+        ligma_gradient_segment_range_compress (gradient,
                                               range_r->next, range_r->next,
                                               range_r->right, range_r->next->right);
     }
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  ligma_data_thaw (LIGMA_DATA (gradient));
 
   return delta;
 }
@@ -2169,9 +2169,9 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
 
 /*  private functions  */
 
-static inline GimpGradientSegment *
-gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
-                                       GimpGradientSegment *seg,
+static inline LigmaGradientSegment *
+ligma_gradient_get_segment_at_internal (LigmaGradient        *gradient,
+                                       LigmaGradientSegment *seg,
                                        gdouble              pos)
 {
   /* handle FP imprecision at the edges of the gradient */
@@ -2196,37 +2196,37 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
 }
 
 static void
-gimp_gradient_get_flat_color (GimpContext       *context,
-                              const GimpRGB     *color,
-                              GimpGradientColor  color_type,
-                              GimpRGB           *flat_color)
+ligma_gradient_get_flat_color (LigmaContext       *context,
+                              const LigmaRGB     *color,
+                              LigmaGradientColor  color_type,
+                              LigmaRGB           *flat_color)
 {
   switch (color_type)
     {
-    case GIMP_GRADIENT_COLOR_FIXED:
+    case LIGMA_GRADIENT_COLOR_FIXED:
       *flat_color = *color;
       break;
 
-    case GIMP_GRADIENT_COLOR_FOREGROUND:
-    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      gimp_context_get_foreground (context, flat_color);
+    case LIGMA_GRADIENT_COLOR_FOREGROUND:
+    case LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+      ligma_context_get_foreground (context, flat_color);
 
-      if (color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (flat_color, 0.0);
+      if (color_type == LIGMA_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+        ligma_rgb_set_alpha (flat_color, 0.0);
       break;
 
-    case GIMP_GRADIENT_COLOR_BACKGROUND:
-    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      gimp_context_get_background (context, flat_color);
+    case LIGMA_GRADIENT_COLOR_BACKGROUND:
+    case LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+      ligma_context_get_background (context, flat_color);
 
-      if (color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (flat_color, 0.0);
+      if (color_type == LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+        ligma_rgb_set_alpha (flat_color, 0.0);
       break;
     }
 }
 
 static inline gdouble
-gimp_gradient_calc_linear_factor (gdouble middle,
+ligma_gradient_calc_linear_factor (gdouble middle,
                                   gdouble pos)
 {
   if (pos <= middle)
@@ -2249,7 +2249,7 @@ gimp_gradient_calc_linear_factor (gdouble middle,
 }
 
 static inline gdouble
-gimp_gradient_calc_curved_factor (gdouble middle,
+ligma_gradient_calc_curved_factor (gdouble middle,
                                   gdouble pos)
 {
   if (middle < EPSILON)
@@ -2261,36 +2261,36 @@ gimp_gradient_calc_curved_factor (gdouble middle,
 }
 
 static inline gdouble
-gimp_gradient_calc_sine_factor (gdouble middle,
+ligma_gradient_calc_sine_factor (gdouble middle,
                                 gdouble pos)
 {
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
+  pos = ligma_gradient_calc_linear_factor (middle, pos);
 
   return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
 }
 
 static inline gdouble
-gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
+ligma_gradient_calc_sphere_increasing_factor (gdouble middle,
                                              gdouble pos)
 {
-  pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
+  pos = ligma_gradient_calc_linear_factor (middle, pos) - 1.0;
 
   /* Works for convex increasing and concave decreasing */
   return sqrt (1.0 - pos * pos);
 }
 
 static inline gdouble
-gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
+ligma_gradient_calc_sphere_decreasing_factor (gdouble middle,
                                              gdouble pos)
 {
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
+  pos = ligma_gradient_calc_linear_factor (middle, pos);
 
   /* Works for convex decreasing and concave increasing */
   return 1.0 - sqrt(1.0 - pos * pos);
 }
 
 static inline gdouble
-gimp_gradient_calc_step_factor (gdouble middle,
+ligma_gradient_calc_step_factor (gdouble middle,
                                 gdouble pos)
 {
   return pos >= middle;

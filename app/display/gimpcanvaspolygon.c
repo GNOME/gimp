@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvaspolygon.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvaspolygon.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,16 +23,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimpcanvaspolygon.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvaspolygon.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -44,82 +44,82 @@ enum
 };
 
 
-typedef struct _GimpCanvasPolygonPrivate GimpCanvasPolygonPrivate;
+typedef struct _LigmaCanvasPolygonPrivate LigmaCanvasPolygonPrivate;
 
-struct _GimpCanvasPolygonPrivate
+struct _LigmaCanvasPolygonPrivate
 {
-  GimpVector2  *points;
+  LigmaVector2  *points;
   gint          n_points;
-  GimpMatrix3  *transform;
+  LigmaMatrix3  *transform;
   gboolean      filled;
 };
 
 #define GET_PRIVATE(polygon) \
-        ((GimpCanvasPolygonPrivate *) gimp_canvas_polygon_get_instance_private ((GimpCanvasPolygon *) (polygon)))
+        ((LigmaCanvasPolygonPrivate *) ligma_canvas_polygon_get_instance_private ((LigmaCanvasPolygon *) (polygon)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_polygon_finalize     (GObject        *object);
-static void             gimp_canvas_polygon_set_property (GObject        *object,
+static void             ligma_canvas_polygon_finalize     (GObject        *object);
+static void             ligma_canvas_polygon_set_property (GObject        *object,
                                                           guint           property_id,
                                                           const GValue   *value,
                                                           GParamSpec     *pspec);
-static void             gimp_canvas_polygon_get_property (GObject        *object,
+static void             ligma_canvas_polygon_get_property (GObject        *object,
                                                           guint           property_id,
                                                           GValue         *value,
                                                           GParamSpec     *pspec);
-static void             gimp_canvas_polygon_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_polygon_draw         (LigmaCanvasItem *item,
                                                           cairo_t        *cr);
-static cairo_region_t * gimp_canvas_polygon_get_extents  (GimpCanvasItem *item);
-static gboolean         gimp_canvas_polygon_hit          (GimpCanvasItem *item,
+static cairo_region_t * ligma_canvas_polygon_get_extents  (LigmaCanvasItem *item);
+static gboolean         ligma_canvas_polygon_hit          (LigmaCanvasItem *item,
                                                           gdouble         x,
                                                           gdouble         y);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasPolygon, gimp_canvas_polygon,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasPolygon, ligma_canvas_polygon,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_polygon_parent_class
+#define parent_class ligma_canvas_polygon_parent_class
 
 
 static void
-gimp_canvas_polygon_class_init (GimpCanvasPolygonClass *klass)
+ligma_canvas_polygon_class_init (LigmaCanvasPolygonClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->finalize     = gimp_canvas_polygon_finalize;
-  object_class->set_property = gimp_canvas_polygon_set_property;
-  object_class->get_property = gimp_canvas_polygon_get_property;
+  object_class->finalize     = ligma_canvas_polygon_finalize;
+  object_class->set_property = ligma_canvas_polygon_set_property;
+  object_class->get_property = ligma_canvas_polygon_get_property;
 
-  item_class->draw           = gimp_canvas_polygon_draw;
-  item_class->get_extents    = gimp_canvas_polygon_get_extents;
-  item_class->hit            = gimp_canvas_polygon_hit;
+  item_class->draw           = ligma_canvas_polygon_draw;
+  item_class->get_extents    = ligma_canvas_polygon_get_extents;
+  item_class->hit            = ligma_canvas_polygon_hit;
 
   g_object_class_install_property (object_class, PROP_POINTS,
-                                   gimp_param_spec_array ("points", NULL, NULL,
-                                                          GIMP_PARAM_READWRITE));
+                                   ligma_param_spec_array ("points", NULL, NULL,
+                                                          LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TRANSFORM,
                                    g_param_spec_pointer ("transform", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FILLED,
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_polygon_init (GimpCanvasPolygon *polygon)
+ligma_canvas_polygon_init (LigmaCanvasPolygon *polygon)
 {
 }
 
 static void
-gimp_canvas_polygon_finalize (GObject *object)
+ligma_canvas_polygon_finalize (GObject *object)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->points, g_free);
   private->n_points = 0;
@@ -130,18 +130,18 @@ gimp_canvas_polygon_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_polygon_set_property (GObject      *object,
+ligma_canvas_polygon_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_POINTS:
       {
-        GimpArray *array = g_value_get_boxed (value);
+        LigmaArray *array = g_value_get_boxed (value);
 
         g_clear_pointer (&private->points, g_free);
         private->n_points = 0;
@@ -149,18 +149,18 @@ gimp_canvas_polygon_set_property (GObject      *object,
         if (array)
           {
             private->points = g_memdup2 (array->data, array->length);
-            private->n_points = array->length / sizeof (GimpVector2);
+            private->n_points = array->length / sizeof (LigmaVector2);
           }
       }
       break;
 
     case PROP_TRANSFORM:
       {
-        GimpMatrix3 *transform = g_value_get_pointer (value);
+        LigmaMatrix3 *transform = g_value_get_pointer (value);
         if (private->transform)
           g_free (private->transform);
         if (transform)
-          private->transform = g_memdup2 (transform, sizeof (GimpMatrix3));
+          private->transform = g_memdup2 (transform, sizeof (LigmaMatrix3));
         else
           private->transform = NULL;
       }
@@ -177,22 +177,22 @@ gimp_canvas_polygon_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_polygon_get_property (GObject    *object,
+ligma_canvas_polygon_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_POINTS:
       if (private->points)
         {
-          GimpArray *array;
+          LigmaArray *array;
 
-          array = gimp_array_new ((const guint8 *) private->points,
-                                  private->n_points * sizeof (GimpVector2),
+          array = ligma_array_new ((const guint8 *) private->points,
+                                  private->n_points * sizeof (LigmaVector2),
                                   FALSE);
           g_value_take_boxed (value, array);
         }
@@ -217,22 +217,22 @@ gimp_canvas_polygon_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_polygon_transform (GimpCanvasItem *item,
-                               GimpVector2    *points,
+ligma_canvas_polygon_transform (LigmaCanvasItem *item,
+                               LigmaVector2    *points,
                                gint           *n_points)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (item);
   gint                      i;
 
   if (private->transform)
     {
-      gimp_transform_polygon (private->transform,
+      ligma_transform_polygon (private->transform,
                               private->points, private->n_points, FALSE,
                               points, n_points);
 
       for (i = 0; i < *n_points; i++)
         {
-          gimp_canvas_item_transform_xy_f (item,
+          ligma_canvas_item_transform_xy_f (item,
                                            points[i].x,
                                            points[i].y,
                                            &points[i].x,
@@ -246,7 +246,7 @@ gimp_canvas_polygon_transform (GimpCanvasItem *item,
     {
       for (i = 0; i < private->n_points; i++)
         {
-          gimp_canvas_item_transform_xy_f (item,
+          ligma_canvas_item_transform_xy_f (item,
                                            private->points[i].x,
                                            private->points[i].y,
                                            &points[i].x,
@@ -261,11 +261,11 @@ gimp_canvas_polygon_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_polygon_draw (GimpCanvasItem *item,
+ligma_canvas_polygon_draw (LigmaCanvasItem *item,
                           cairo_t        *cr)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
-  GimpVector2              *points;
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (item);
+  LigmaVector2              *points;
   gint                      n_points;
   gint                      i;
 
@@ -277,9 +277,9 @@ gimp_canvas_polygon_draw (GimpCanvasItem *item,
   if (private->transform)
     n_points = 3 * n_points / 2;
 
-  points = g_new0 (GimpVector2, n_points);
+  points = g_new0 (LigmaVector2, n_points);
 
-  gimp_canvas_polygon_transform (item, points, &n_points);
+  ligma_canvas_polygon_transform (item, points, &n_points);
 
   if (n_points < 2)
     {
@@ -296,19 +296,19 @@ gimp_canvas_polygon_draw (GimpCanvasItem *item,
     }
 
   if (private->filled)
-    _gimp_canvas_item_fill (item, cr);
+    _ligma_canvas_item_fill (item, cr);
   else
-    _gimp_canvas_item_stroke (item, cr);
+    _ligma_canvas_item_stroke (item, cr);
 
   g_free (points);
 }
 
 static cairo_region_t *
-gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
+ligma_canvas_polygon_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (item);
   cairo_rectangle_int_t     rectangle;
-  GimpVector2              *points;
+  LigmaVector2              *points;
   gint                      n_points;
   gint                      x1, y1, x2, y2;
   gint                      i;
@@ -321,9 +321,9 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
   if (private->transform)
     n_points = 3 * n_points / 2;
 
-  points = g_new0 (GimpVector2, n_points);
+  points = g_new0 (LigmaVector2, n_points);
 
-  gimp_canvas_polygon_transform (item, points, &n_points);
+  ligma_canvas_polygon_transform (item, points, &n_points);
 
   if (n_points < 2)
     {
@@ -361,12 +361,12 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
 }
 
 static gboolean
-gimp_canvas_polygon_hit (GimpCanvasItem *item,
+ligma_canvas_polygon_hit (LigmaCanvasItem *item,
                          gdouble         x,
                          gdouble         y)
 {
-  GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
-  GimpVector2              *points;
+  LigmaCanvasPolygonPrivate *private = GET_PRIVATE (item);
+  LigmaVector2              *points;
   gint                      n_points;
   gdouble                   tx, ty;
   cairo_surface_t          *surface;
@@ -377,16 +377,16 @@ gimp_canvas_polygon_hit (GimpCanvasItem *item,
   if (! private->points)
     return FALSE;
 
-  gimp_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
+  ligma_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
 
   n_points = private->n_points;
 
   if (private->transform)
     n_points = 3 * n_points / 2;
 
-  points = g_new0 (GimpVector2, n_points);
+  points = g_new0 (LigmaVector2, n_points);
 
-  gimp_canvas_polygon_transform (item, points, &n_points);
+  ligma_canvas_polygon_transform (item, points, &n_points);
 
   if (n_points < 2)
     {
@@ -415,50 +415,50 @@ gimp_canvas_polygon_hit (GimpCanvasItem *item,
   return hit;
 }
 
-GimpCanvasItem *
-gimp_canvas_polygon_new (GimpDisplayShell  *shell,
-                         const GimpVector2 *points,
+LigmaCanvasItem *
+ligma_canvas_polygon_new (LigmaDisplayShell  *shell,
+                         const LigmaVector2 *points,
                          gint               n_points,
-                         GimpMatrix3       *transform,
+                         LigmaMatrix3       *transform,
                          gboolean           filled)
 {
-  GimpCanvasItem *item;
-  GimpArray      *array;
+  LigmaCanvasItem *item;
+  LigmaArray      *array;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (points == NULL || n_points > 0, NULL);
 
-  array = gimp_array_new ((const guint8 *) points,
-                          n_points * sizeof (GimpVector2), TRUE);
+  array = ligma_array_new ((const guint8 *) points,
+                          n_points * sizeof (LigmaVector2), TRUE);
 
-  item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+  item = g_object_new (LIGMA_TYPE_CANVAS_POLYGON,
                        "shell",     shell,
                        "transform", transform,
                        "filled",    filled,
                        "points",    array,
                        NULL);
 
-  gimp_array_free (array);
+  ligma_array_free (array);
 
   return item;
 }
 
-GimpCanvasItem *
-gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
-                                     const GimpCoords *coords,
+LigmaCanvasItem *
+ligma_canvas_polygon_new_from_coords (LigmaDisplayShell *shell,
+                                     const LigmaCoords *coords,
                                      gint              n_coords,
-                                     GimpMatrix3      *transform,
+                                     LigmaMatrix3      *transform,
                                      gboolean          filled)
 {
-  GimpCanvasItem *item;
-  GimpVector2    *points;
-  GimpArray      *array;
+  LigmaCanvasItem *item;
+  LigmaVector2    *points;
+  LigmaArray      *array;
   gint            i;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (coords == NULL || n_coords > 0, NULL);
 
-  points = g_new (GimpVector2, n_coords);
+  points = g_new (LigmaVector2, n_coords);
 
   for (i = 0; i < n_coords; i++)
     {
@@ -466,40 +466,40 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
       points[i].y = coords[i].y;
     }
 
-  array = gimp_array_new ((const guint8 *) points,
-                          n_coords * sizeof (GimpVector2), TRUE);
+  array = ligma_array_new ((const guint8 *) points,
+                          n_coords * sizeof (LigmaVector2), TRUE);
 
-  item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+  item = g_object_new (LIGMA_TYPE_CANVAS_POLYGON,
                        "shell",     shell,
                        "transform", transform,
                        "filled",    filled,
                        "points",    array,
                        NULL);
 
-  gimp_array_free (array);
+  ligma_array_free (array);
   g_free (points);
 
   return item;
 }
 
 void
-gimp_canvas_polygon_set_points (GimpCanvasItem    *polygon,
-                                const GimpVector2 *points,
+ligma_canvas_polygon_set_points (LigmaCanvasItem    *polygon,
+                                const LigmaVector2 *points,
                                 gint               n_points)
 {
-  GimpArray *array;
+  LigmaArray *array;
 
-  g_return_if_fail (GIMP_IS_CANVAS_POLYGON (polygon));
+  g_return_if_fail (LIGMA_IS_CANVAS_POLYGON (polygon));
   g_return_if_fail (points == NULL || n_points > 0);
 
-  array = gimp_array_new ((const guint8 *) points,
-                          n_points * sizeof (GimpVector2), TRUE);
+  array = ligma_array_new ((const guint8 *) points,
+                          n_points * sizeof (LigmaVector2), TRUE);
 
-  gimp_canvas_item_begin_change (polygon);
+  ligma_canvas_item_begin_change (polygon);
   g_object_set (polygon,
                 "points", array,
                 NULL);
-  gimp_canvas_item_end_change (polygon);
+  ligma_canvas_item_end_change (polygon);
 
-  gimp_array_free (array);
+  ligma_array_free (array);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,118 +25,118 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpparamspecs.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GTimer *gimp_debug_timer         = NULL;
-static gint    gimp_debug_timer_counter = 0;
+static GTimer *ligma_debug_timer         = NULL;
+static gint    ligma_debug_timer_counter = 0;
 
-static GimpValueArray *
-debug_timer_start_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+debug_timer_start_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
-  if (gimp_debug_timer_counter++ == 0)
-    gimp_debug_timer = g_timer_new ();
+  if (ligma_debug_timer_counter++ == 0)
+    ligma_debug_timer = g_timer_new ();
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-debug_timer_end_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+debug_timer_end_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble elapsed = 0.0;
 
   elapsed = 0.0;
 
-  if (gimp_debug_timer_counter == 0)
+  if (ligma_debug_timer_counter == 0)
     success = FALSE;
-  else if (--gimp_debug_timer_counter == 0)
+  else if (--ligma_debug_timer_counter == 0)
     {
-      elapsed = g_timer_elapsed (gimp_debug_timer, NULL);
+      elapsed = g_timer_elapsed (ligma_debug_timer, NULL);
 
-      g_printerr ("GIMP debug timer: %g seconds\n", elapsed);
+      g_printerr ("LIGMA debug timer: %g seconds\n", elapsed);
 
-      g_timer_destroy (gimp_debug_timer);
+      g_timer_destroy (ligma_debug_timer);
 
-      gimp_debug_timer = NULL;
+      ligma_debug_timer = NULL;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), elapsed);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), elapsed);
 
   return return_vals;
 }
 
 void
-register_debug_procs (GimpPDB *pdb)
+register_debug_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-debug-timer-start
+   * ligma-debug-timer-start
    */
-  procedure = gimp_procedure_new (debug_timer_start_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-debug-timer-start");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (debug_timer_start_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-debug-timer-start");
+  ligma_procedure_set_static_help (procedure,
                                   "Starts measuring elapsed time.",
-                                  "This procedure starts a timer, measuring the elapsed time since the call. Each call to this procedure should be matched by a call to 'gimp-debug-timer-end', which returns the elapsed time.\n"
-                                  "If there is already an active timer, it is not affected by the call, however, a matching 'gimp-debug-timer-end' call is still required.\n"
+                                  "This procedure starts a timer, measuring the elapsed time since the call. Each call to this procedure should be matched by a call to 'ligma-debug-timer-end', which returns the elapsed time.\n"
+                                  "If there is already an active timer, it is not affected by the call, however, a matching 'ligma-debug-timer-end' call is still required.\n"
                                   "\n"
                                   "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-debug-timer-end
+   * ligma-debug-timer-end
    */
-  procedure = gimp_procedure_new (debug_timer_end_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-debug-timer-end");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (debug_timer_end_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-debug-timer-end");
+  ligma_procedure_set_static_help (procedure,
                                   "Finishes measuring elapsed time.",
-                                  "This procedure stops the timer started by a previous 'gimp-debug-timer-start' call, and prints and returns the elapsed time.\n"
-                                  "If there was already an active timer at the time of corresponding call to 'gimp-debug-timer-start', a dummy value is returned.\n"
+                                  "This procedure stops the timer started by a previous 'ligma-debug-timer-start' call, and prints and returns the elapsed time.\n"
+                                  "If there was already an active timer at the time of corresponding call to 'ligma-debug-timer-start', a dummy value is returned.\n"
                                   "\n"
                                   "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2017");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("elapsed",
                                                         "elapsed",
                                                         "The elapsed time, in seconds",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

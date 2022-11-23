@@ -1,4 +1,4 @@
-iconsdir = $(gimpdatadir)/icons/hicolor
+iconsdir = $(ligmadatadir)/icons/hicolor
 icons_DATA = \
 	index.theme
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_COMBINE_H__
-#define __GIMP_CHANNEL_COMBINE_H__
+#ifndef __LIGMA_CHANNEL_COMBINE_H__
+#define __LIGMA_CHANNEL_COMBINE_H__
 
 
-void   gimp_channel_combine_rect         (GimpChannel    *mask,
-                                          GimpChannelOps  op,
+void   ligma_channel_combine_rect         (LigmaChannel    *mask,
+                                          LigmaChannelOps  op,
                                           gint            x,
                                           gint            y,
                                           gint            w,
                                           gint            h);
-void   gimp_channel_combine_ellipse      (GimpChannel    *mask,
-                                          GimpChannelOps  op,
+void   ligma_channel_combine_ellipse      (LigmaChannel    *mask,
+                                          LigmaChannelOps  op,
                                           gint            x,
                                           gint            y,
                                           gint            w,
                                           gint            h,
                                           gboolean        antialias);
-void   gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
-                                          GimpChannelOps  op,
+void   ligma_channel_combine_ellipse_rect (LigmaChannel    *mask,
+                                          LigmaChannelOps  op,
                                           gint            x,
                                           gint            y,
                                           gint            w,
@@ -41,20 +41,20 @@ void   gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                           gdouble         rx,
                                           gdouble         ry,
                                           gboolean        antialias);
-void   gimp_channel_combine_mask         (GimpChannel    *mask,
-                                          GimpChannel    *add_on,
-                                          GimpChannelOps  op,
+void   ligma_channel_combine_mask         (LigmaChannel    *mask,
+                                          LigmaChannel    *add_on,
+                                          LigmaChannelOps  op,
                                           gint            off_x,
                                           gint            off_y);
-void   gimp_channel_combine_buffer       (GimpChannel    *mask,
+void   ligma_channel_combine_buffer       (LigmaChannel    *mask,
                                           GeglBuffer     *add_on_buffer,
-                                          GimpChannelOps  op,
+                                          LigmaChannelOps  op,
                                           gint            off_x,
                                           gint            off_y);
 
-void   gimp_channel_combine_items        (GimpChannel    *mask,
+void   ligma_channel_combine_items        (LigmaChannel    *mask,
                                           GList          *items,
-                                          GimpChannelOps  op);
+                                          LigmaChannelOps  op);
 
 
-#endif /* __GIMP_CHANNEL_COMBINE_H__ */
+#endif /* __LIGMA_CHANNEL_COMBINE_H__ */

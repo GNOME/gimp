@@ -30,7 +30,7 @@
  * Any suggestions, bug-reports or patches are welcome.
  *
  * This plug-in interfaces to the TWAIN support library in order
- * to capture images from TWAIN devices directly into GIMP images.
+ * to capture images from TWAIN devices directly into LIGMA images.
  * The plug-in is capable of acquiring the following type of
  * images:
  * - B/W (1 bit images translated to grayscale B/W)
@@ -69,8 +69,8 @@
 #include "tw_platform.h"
 #include "tw_local.h"
 
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/ligma.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "tw_func.h"
 #include "tw_util.h"
@@ -132,12 +132,12 @@ typedef struct _TwainClass TwainClass;
 
 struct _Twain
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _TwainClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -146,28 +146,28 @@ struct _TwainClass
 
 GType                   twain_get_type         (void) G_GNUC_CONST;
 
-static GList          * twain_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * twain_create_procedure (GimpPlugIn           *plug_in,
+static GList          * twain_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * twain_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * twain_run              (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * twain_run              (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                LigmaDrawable        **drawables,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
-G_DEFINE_TYPE (Twain, twain, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Twain, twain, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (TWAIN_TYPE)
+LIGMA_MAIN (TWAIN_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 twain_class_init (TwainClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = twain_query_procedures;
   plug_in_class->create_procedure = twain_create_procedure;
@@ -180,52 +180,52 @@ twain_init (Twain *twain)
 }
 
 static GList *
-twain_query_procedures (GimpPlugIn *plug_in)
+twain_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_NAME));
 }
 
-static GimpProcedure *
-twain_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+twain_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_NAME))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             twain_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE     |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES    |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_IMAGE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE     |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES    |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_IMAGE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Scanner/Camera..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+      ligma_procedure_set_menu_label (procedure, _("_Scanner/Camera..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         PLUG_IN_DESCRIPTION,
                                         PLUG_IN_HELP,
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       PLUG_IN_AUTHOR,
                                       PLUG_IN_COPYRIGHT,
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_VAL_INT (procedure, "image-count",
+      LIGMA_PROC_VAL_INT (procedure, "image-count",
                          "Number of acquired images",
                          "Number of acquired images",
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_OBJECT_ARRAY (procedure, "images",
+      LIGMA_PROC_VAL_OBJECT_ARRAY (procedure, "images",
                                   "Array of acquired images",
                                   "Array of acquired images",
-                                  GIMP_TYPE_IMAGE,
+                                  LIGMA_TYPE_IMAGE,
                                   G_PARAM_READWRITE);
      }
 
@@ -330,13 +330,13 @@ getAppIdentity (void)
   appIdentity->Version.MinorNum = 1;
   appIdentity->Version.Language = TWLG_USA;
   appIdentity->Version.Country = TWCY_USA;
-  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.6");
+  strcpy(appIdentity->Version.Info, "LIGMA TWAIN 0.6");
   appIdentity->ProtocolMajor = TWON_PROTOCOLMAJOR;
   appIdentity->ProtocolMinor = TWON_PROTOCOLMINOR;
   appIdentity->SupportedGroups = DG_IMAGE;
   strcpy(appIdentity->Manufacturer, "Craig Setera");
-  strcpy(appIdentity->ProductFamily, "GIMP");
-  strcpy(appIdentity->ProductName, "GIMP");
+  strcpy(appIdentity->ProductFamily, "LIGMA");
+  strcpy(appIdentity->ProductName, "LIGMA");
 
   return appIdentity;
 }
@@ -372,7 +372,7 @@ initializeTwain (void)
 }
 
 /******************************************************************
- * GIMP Plug-in entry points
+ * LIGMA Plug-in entry points
  ******************************************************************/
 
 /* Return values storage */
@@ -385,21 +385,21 @@ static gint   image_count = 0;
  * The plug-in is being requested to run.
  * Capture an image from a TWAIN datasource
  */
-static GimpValueArray *
-twain_run (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+twain_run (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           LigmaDrawable        **drawables,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
   /* Initialize the return values
    * Always return at least the status to the caller.
    */
-  GimpPDBStatusType   status      = GIMP_PDB_SUCCESS;
-  GimpValueArray     *return_vals = NULL;
-  GimpImage         **images;
+  LigmaPDBStatusType   status      = LIGMA_PDB_SUCCESS;
+  LigmaValueArray     *return_vals = NULL;
+  LigmaImage         **images;
   GList              *list;
   gint                num_images;
   gint                i;
@@ -412,32 +412,32 @@ twain_run (GimpProcedure        *procedure,
    */
   if (! twainIsAvailable ())
     {
-      return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
   /* How are we running today? */
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       /* Retrieve values from the last run...
        * Currently ignored
        */
-      gimp_get_data (PLUG_IN_NAME, &twainvals);
+      ligma_get_data (PLUG_IN_NAME, &twainvals);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       /* Currently, we don't do non-interactive calls.
        * Bail if someone tries to call us non-interactively
        */
-      return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CALLING_ERROR,
                                                NULL);
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       /* Retrieve values from the last run...
        * Currently ignored
        */
-      gimp_get_data (PLUG_IN_NAME, &twainvals);
+      ligma_get_data (PLUG_IN_NAME, &twainvals);
       break;
 
     default:
@@ -445,7 +445,7 @@ twain_run (GimpProcedure        *procedure,
     }
 
   /* Have we succeeded so far? */
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     twainMain ();
 
   /* Check to make sure we got at least one valid
@@ -457,14 +457,14 @@ twain_run (GimpProcedure        *procedure,
        * datasource.  Do final Interactive
        * steps.
        */
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         {
           /* Store variable states for next run */
-          gimp_set_data (PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
+          ligma_set_data (PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
         }
 
       num_images = g_list_length (image_list);
-      images     = g_new (GimpImage *, num_images);
+      images     = g_new (LigmaImage *, num_images);
 
       for (list = image_list, i = 0;
            list;
@@ -476,16 +476,16 @@ twain_run (GimpProcedure        *procedure,
       g_list_free (image_list);
 
       /* Set return values */
-      return_vals = gimp_procedure_new_return_values (procedure, status,
+      return_vals = ligma_procedure_new_return_values (procedure, status,
                                                       NULL);
-      GIMP_VALUES_SET_INT           (return_vals, 1, num_images);
-      GIMP_VALUES_TAKE_OBJECT_ARRAY (return_vals, 2, GIMP_TYPE_IMAGE, images, num_images);
+      LIGMA_VALUES_SET_INT           (return_vals, 1, num_images);
+      LIGMA_VALUES_TAKE_OBJECT_ARRAY (return_vals, 2, LIGMA_TYPE_IMAGE, images, num_images);
 
       return return_vals;
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 }
@@ -499,8 +499,8 @@ twain_run (GimpProcedure        *procedure,
  */
 typedef struct
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
+  LigmaImage    *image;
+  LigmaLayer    *layer;
   GeglBuffer   *buffer;
   const Babl   *format;
   pTW_PALETTE8  paletteData;
@@ -518,7 +518,7 @@ void
 preTransferCallback (void *clientData)
 {
   /* Initialize our progress dialog */
-  gimp_progress_init (_("Transferring data from scanner/camera"));
+  ligma_progress_init (_("Transferring data from scanner/camera"));
 }
 
 /*
@@ -534,9 +534,9 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
 
   const Babl        *format;
-  GimpImageBaseType  imageType;
-  GimpImageType      layerType;
-  GimpPrecision      precision;
+  LigmaImageBaseType  imageType;
+  LigmaImageType      layerType;
+  LigmaPrecision      precision;
 
   gint               bpc = imageInfo->BitsPerPixel /
                            imageInfo->SamplesPerPixel;
@@ -551,26 +551,26 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
     {
     case TWPT_BW:
       /* Set up the image and layer types */
-      imageType = GIMP_GRAY;
-      layerType = GIMP_GRAY_IMAGE;
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      imageType = LIGMA_GRAY;
+      layerType = LIGMA_GRAY_IMAGE;
+      precision = LIGMA_PRECISION_U8_NON_LINEAR;
       format    = babl_format ("Y' u8");
       break;
 
     case TWPT_GRAY:
       /* Set up the image and layer types */
-      imageType = GIMP_GRAY;
-      layerType = GIMP_GRAY_IMAGE;
+      imageType = LIGMA_GRAY;
+      layerType = LIGMA_GRAY_IMAGE;
 
       switch (bpc)
         {
         case 8:
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
           format    = babl_format ("Y' u8");
           break;
 
         case 16:
-          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          precision = LIGMA_PRECISION_U16_NON_LINEAR;
           format    = babl_format ("Y' u16");
           break;
 
@@ -581,18 +581,18 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
 
     case TWPT_RGB:
       /* Set up the image and layer types */
-      imageType = GIMP_RGB;
-      layerType = GIMP_RGB_IMAGE;
+      imageType = LIGMA_RGB;
+      layerType = LIGMA_RGB_IMAGE;
 
       switch (bpc)
         {
         case 8:
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
           format    = babl_format ("R'G'B' u8");
           break;
 
         case 16:
-          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          precision = LIGMA_PRECISION_U16_NON_LINEAR;
           format    = babl_format ("R'G'B' u16");
           break;
 
@@ -615,18 +615,18 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
         {
         case TWPA_RGB:
           /* Set up the image and layer types */
-          imageType = GIMP_RGB;
-          layerType = GIMP_RGB_IMAGE;
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          imageType = LIGMA_RGB;
+          layerType = LIGMA_RGB_IMAGE;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
 
           format = babl_format ("R'G'B' u8");
           break;
 
         case TWPA_GRAY:
           /* Set up the image and layer types */
-          imageType = GIMP_GRAY;
-          layerType = GIMP_GRAY_IMAGE;
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          imageType = LIGMA_GRAY;
+          layerType = LIGMA_GRAY_IMAGE;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
 
           format = babl_format ("Y' u8");
           break;
@@ -644,37 +644,37 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
       return FALSE;
     }
 
-  /* Create the GIMP image */
-  theClientData->image = gimp_image_new_with_precision (imageInfo->ImageWidth,
+  /* Create the LIGMA image */
+  theClientData->image = ligma_image_new_with_precision (imageInfo->ImageWidth,
                                                         imageInfo->ImageLength,
                                                         imageType,
                                                         precision);
 
   /* Set the actual resolution */
-  gimp_image_set_resolution (theClientData->image,
+  ligma_image_set_resolution (theClientData->image,
                              FIX32ToFloat (imageInfo->XResolution),
                              FIX32ToFloat (imageInfo->YResolution));
-  gimp_image_set_unit (theClientData->image, GIMP_UNIT_INCH);
+  ligma_image_set_unit (theClientData->image, LIGMA_UNIT_INCH);
 
   /* Create a layer */
-  theClientData->layer = gimp_layer_new (theClientData->image,
+  theClientData->layer = ligma_layer_new (theClientData->image,
                                          _("Background"),
                                          imageInfo->ImageWidth,
                                          imageInfo->ImageLength,
                                          layerType, 100,
-                                         GIMP_LAYER_MODE_NORMAL);
+                                         LIGMA_LAYER_MODE_NORMAL);
 
   /* Add the layer to the image */
-  gimp_image_insert_layer (theClientData->image,
+  ligma_image_insert_layer (theClientData->image,
                            theClientData->layer, NULL, 0);
 
   /* Update the progress dialog */
   theClientData->totalPixels     = imageInfo->ImageWidth * imageInfo->ImageLength;
   theClientData->completedPixels = 0;
 
-  gimp_progress_update (0.0);
+  ligma_progress_update (0.0);
 
-  theClientData->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (theClientData->layer));
+  theClientData->buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (theClientData->layer));
   theClientData->format = format;
 
   /* Store our client data for the data transfer callbacks */
@@ -697,7 +697,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
  * the image type is Black/White.
  *
  * Black and white data is unpacked from bit data
- * into byte data and written into a gray scale GIMP
+ * into byte data and written into a gray scale LIGMA
  * image.
  */
 static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
@@ -740,7 +740,7 @@ bitTransferCallback (pTW_IMAGEINFO     imageInfo,
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update ((double) theClientData->completedPixels /
+  ligma_progress_update ((double) theClientData->completedPixels /
                         (double) theClientData->totalPixels);
 
   return TRUE;
@@ -771,7 +771,7 @@ directTransferCallback (pTW_IMAGEINFO     imageInfo,
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update ((double) theClientData->completedPixels /
+  ligma_progress_update ((double) theClientData->completedPixels /
                         (double) theClientData->totalPixels);
 
   return TRUE;
@@ -783,7 +783,7 @@ directTransferCallback (pTW_IMAGEINFO     imageInfo,
  * The following function is called for each memory
  * block that is transferred from the data source if
  * the image type is paletted.  This does not create
- * an indexed image type in GIMP because for some
+ * an indexed image type in LIGMA because for some
  * reason it does not allow creation of a specific
  * palette.  This function will create an RGB or Gray
  * image and use the palette to set the details of
@@ -857,7 +857,7 @@ palettedTransferCallback (pTW_IMAGEINFO     imageInfo,
 
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update ((double) theClientData->completedPixels /
+  ligma_progress_update ((double) theClientData->completedPixels /
                         (double) theClientData->totalPixels);
 
   return TRUE;
@@ -934,14 +934,14 @@ endTransferCallback (int   completionState,
 
       /* Display the image */
       LogMessage ("Displaying image %d\n",
-                  gimp_image_get_id (theClientData->image));
-      gimp_display_new (theClientData->image);
+                  ligma_image_get_id (theClientData->image));
+      ligma_display_new (theClientData->image);
     }
   else
     {
       /* The transfer did not complete successfully */
       LogMessage ("Deleting image\n");
-      gimp_image_delete (theClientData->image);
+      ligma_image_delete (theClientData->image);
     }
 
   /* Shut down if we have received all of the possible images */

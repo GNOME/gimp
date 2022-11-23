@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * fill-dialog.h
- * Copyright (C) 2016  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2016  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,23 +22,23 @@
 #define __FILL_DIALOG_H__
 
 
-typedef void (* GimpFillCallback) (GtkWidget       *dialog,
-                                   GimpItem        *item,
+typedef void (* LigmaFillCallback) (GtkWidget       *dialog,
+                                   LigmaItem        *item,
                                    GList           *drawables,
-                                   GimpContext     *context,
-                                   GimpFillOptions *options,
+                                   LigmaContext     *context,
+                                   LigmaFillOptions *options,
                                    gpointer         user_data);
 
 
-GtkWidget * fill_dialog_new (GimpItem         *item,
+GtkWidget * fill_dialog_new (LigmaItem         *item,
                              GList            *drawables,
-                             GimpContext      *context,
+                             LigmaContext      *context,
                              const gchar      *title,
                              const gchar      *icon_name,
                              const gchar      *help_id,
                              GtkWidget        *parent,
-                             GimpFillOptions  *options,
-                             GimpFillCallback  callback,
+                             LigmaFillOptions  *options,
+                             LigmaFillCallback  callback,
                              gpointer          user_data);
 
 

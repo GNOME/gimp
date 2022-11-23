@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrendererdashes.c
- * Copyright (C) 2005 Sven Neumann <sven@gimp.org>
+ * ligmacellrendererdashes.c
+ * Copyright (C) 2005 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
 
 #include "widgets-types.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "core/gimpdashpattern.h"
+#include "core/ligmadashpattern.h"
 
-#include "gimpcellrendererdashes.h"
+#include "ligmacellrendererdashes.h"
 
 
 #define DASHES_WIDTH   96
@@ -45,23 +45,23 @@ enum
 };
 
 
-static void gimp_cell_renderer_dashes_finalize     (GObject            *object);
-static void gimp_cell_renderer_dashes_get_property (GObject            *object,
+static void ligma_cell_renderer_dashes_finalize     (GObject            *object);
+static void ligma_cell_renderer_dashes_get_property (GObject            *object,
                                                     guint               param_id,
                                                     GValue             *value,
                                                     GParamSpec         *pspec);
-static void gimp_cell_renderer_dashes_set_property (GObject            *object,
+static void ligma_cell_renderer_dashes_set_property (GObject            *object,
                                                     guint               param_id,
                                                     const GValue       *value,
                                                     GParamSpec         *pspec);
-static void gimp_cell_renderer_dashes_get_size     (GtkCellRenderer    *cell,
+static void ligma_cell_renderer_dashes_get_size     (GtkCellRenderer    *cell,
                                                     GtkWidget          *widget,
                                                     const GdkRectangle *rectangle,
                                                     gint               *x_offset,
                                                     gint               *y_offset,
                                                     gint               *width,
                                                     gint               *height);
-static void gimp_cell_renderer_dashes_render       (GtkCellRenderer    *cell,
+static void ligma_cell_renderer_dashes_render       (GtkCellRenderer    *cell,
                                                     cairo_t            *cr,
                                                     GtkWidget          *widget,
                                                     const GdkRectangle *background_area,
@@ -69,41 +69,41 @@ static void gimp_cell_renderer_dashes_render       (GtkCellRenderer    *cell,
                                                     GtkCellRendererState flags);
 
 
-G_DEFINE_TYPE (GimpCellRendererDashes, gimp_cell_renderer_dashes,
+G_DEFINE_TYPE (LigmaCellRendererDashes, ligma_cell_renderer_dashes,
                GTK_TYPE_CELL_RENDERER)
 
-#define parent_class gimp_cell_renderer_dashes_parent_class
+#define parent_class ligma_cell_renderer_dashes_parent_class
 
 
 static void
-gimp_cell_renderer_dashes_class_init (GimpCellRendererDashesClass *klass)
+ligma_cell_renderer_dashes_class_init (LigmaCellRendererDashesClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
-  object_class->finalize     = gimp_cell_renderer_dashes_finalize;
-  object_class->get_property = gimp_cell_renderer_dashes_get_property;
-  object_class->set_property = gimp_cell_renderer_dashes_set_property;
+  object_class->finalize     = ligma_cell_renderer_dashes_finalize;
+  object_class->get_property = ligma_cell_renderer_dashes_get_property;
+  object_class->set_property = ligma_cell_renderer_dashes_set_property;
 
-  cell_class->get_size       = gimp_cell_renderer_dashes_get_size;
-  cell_class->render         = gimp_cell_renderer_dashes_render;
+  cell_class->get_size       = ligma_cell_renderer_dashes_get_size;
+  cell_class->render         = ligma_cell_renderer_dashes_render;
 
   g_object_class_install_property (object_class, PROP_PATTERN,
                                    g_param_spec_boxed ("pattern", NULL, NULL,
-                                                       GIMP_TYPE_DASH_PATTERN,
-                                                       GIMP_PARAM_WRITABLE));
+                                                       LIGMA_TYPE_DASH_PATTERN,
+                                                       LIGMA_PARAM_WRITABLE));
 }
 
 static void
-gimp_cell_renderer_dashes_init (GimpCellRendererDashes *dashes)
+ligma_cell_renderer_dashes_init (LigmaCellRendererDashes *dashes)
 {
   dashes->segments = g_new0 (gboolean, N_SEGMENTS);
 }
 
 static void
-gimp_cell_renderer_dashes_finalize (GObject *object)
+ligma_cell_renderer_dashes_finalize (GObject *object)
 {
-  GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (object);
+  LigmaCellRendererDashes *dashes = LIGMA_CELL_RENDERER_DASHES (object);
 
   g_free (dashes->segments);
 
@@ -111,7 +111,7 @@ gimp_cell_renderer_dashes_finalize (GObject *object)
 }
 
 static void
-gimp_cell_renderer_dashes_get_property (GObject    *object,
+ligma_cell_renderer_dashes_get_property (GObject    *object,
                                         guint       param_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
@@ -120,17 +120,17 @@ gimp_cell_renderer_dashes_get_property (GObject    *object,
 }
 
 static void
-gimp_cell_renderer_dashes_set_property (GObject      *object,
+ligma_cell_renderer_dashes_set_property (GObject      *object,
                                         guint         param_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (object);
+  LigmaCellRendererDashes *dashes = LIGMA_CELL_RENDERER_DASHES (object);
 
   switch (param_id)
     {
     case PROP_PATTERN:
-      gimp_dash_pattern_fill_segments (g_value_get_boxed (value),
+      ligma_dash_pattern_fill_segments (g_value_get_boxed (value),
                                        dashes->segments, N_SEGMENTS);
       break;
 
@@ -141,7 +141,7 @@ gimp_cell_renderer_dashes_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_dashes_get_size (GtkCellRenderer    *cell,
+ligma_cell_renderer_dashes_get_size (GtkCellRenderer    *cell,
                                     GtkWidget          *widget,
                                     const GdkRectangle *cell_area,
                                     gint               *x_offset,
@@ -188,14 +188,14 @@ gimp_cell_renderer_dashes_get_size (GtkCellRenderer    *cell,
 }
 
 static void
-gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
+ligma_cell_renderer_dashes_render (GtkCellRenderer      *cell,
                                   cairo_t              *cr,
                                   GtkWidget            *widget,
                                   const GdkRectangle   *background_area,
                                   const GdkRectangle   *cell_area,
                                   GtkCellRendererState  flags)
 {
-  GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
+  LigmaCellRendererDashes *dashes = LIGMA_CELL_RENDERER_DASHES (cell);
   GtkStyleContext        *style  = gtk_widget_get_style_context (widget);
   GtkStateType            state;
   GdkRGBA                 color;
@@ -229,7 +229,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 }
 
 GtkCellRenderer *
-gimp_cell_renderer_dashes_new (void)
+ligma_cell_renderer_dashes_new (void)
 {
-  return g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES, NULL);
+  return g_object_new (LIGMA_TYPE_CELL_RENDERER_DASHES, NULL);
 }

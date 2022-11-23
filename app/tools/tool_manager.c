@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,40 +22,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolgroup.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
-#include "core/gimptoolpreset.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatoolgroup.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
+#include "core/ligmatoolpreset.h"
 
-#include "display/gimpdisplay.h"
+#include "display/ligmadisplay.h"
 
-#include "widgets/gimpcairo-wilber.h"
+#include "widgets/ligmacairo-wilber.h"
 
-#include "gimptool.h"
-#include "gimptoolcontrol.h"
-#include "gimptransformgridtool.h"
+#include "ligmatool.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatransformgridtool.h"
 #include "tool_manager.h"
 
 
-typedef struct _GimpToolManager GimpToolManager;
+typedef struct _LigmaToolManager LigmaToolManager;
 
-struct _GimpToolManager
+struct _LigmaToolManager
 {
-  Gimp          *gimp;
+  Ligma          *ligma;
 
-  GimpTool      *active_tool;
+  LigmaTool      *active_tool;
   GSList        *tool_stack;
 
-  GimpToolGroup *active_tool_group;
+  LigmaToolGroup *active_tool_group;
 
-  GimpImage     *image;
+  LigmaImage     *image;
 
   GQuark         image_clean_handler_id;
   GQuark         image_dirty_handler_id;
@@ -65,36 +65,36 @@ struct _GimpToolManager
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get                       (Gimp            *gimp);
+static LigmaToolManager * tool_manager_get                       (Ligma            *ligma);
 
-static void              tool_manager_select_tool               (GimpToolManager *tool_manager,
-                                                                 GimpTool        *tool);
+static void              tool_manager_select_tool               (LigmaToolManager *tool_manager,
+                                                                 LigmaTool        *tool);
 
-static void              tool_manager_set_active_tool_group     (GimpToolManager *tool_manager,
-                                                                 GimpToolGroup   *tool_group);
+static void              tool_manager_set_active_tool_group     (LigmaToolManager *tool_manager,
+                                                                 LigmaToolGroup   *tool_group);
 
-static void              tool_manager_tool_changed              (GimpContext     *user_context,
-                                                                 GimpToolInfo    *tool_info,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_preset_changed            (GimpContext     *user_context,
-                                                                 GimpToolPreset  *preset,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_clean_dirty         (GimpImage       *image,
-                                                                 GimpDirtyMask    dirty_mask,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_saving              (GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_tool_ancestry_changed     (GimpToolInfo    *tool_info,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_changed             (GimpContext     *context,
-                                                                 GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_selected_layers_changed   (GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_tool_changed              (LigmaContext     *user_context,
+                                                                 LigmaToolInfo    *tool_info,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_preset_changed            (LigmaContext     *user_context,
+                                                                 LigmaToolPreset  *preset,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_image_clean_dirty         (LigmaImage       *image,
+                                                                 LigmaDirtyMask    dirty_mask,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_image_saving              (LigmaImage       *image,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_tool_ancestry_changed     (LigmaToolInfo    *tool_info,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_group_active_tool_changed (LigmaToolGroup   *tool_group,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_image_changed             (LigmaContext     *context,
+                                                                 LigmaImage       *image,
+                                                                 LigmaToolManager *tool_manager);
+static void              tool_manager_selected_layers_changed   (LigmaImage       *image,
+                                                                 LigmaToolManager *tool_manager);
 
-static void              tool_manager_cast_spell                (GimpToolInfo    *tool_info);
+static void              tool_manager_cast_spell                (LigmaToolInfo    *tool_info);
 
 
 static GQuark tool_manager_quark = 0;
@@ -103,38 +103,38 @@ static GQuark tool_manager_quark = 0;
 /*  public functions  */
 
 void
-tool_manager_init (Gimp *gimp)
+tool_manager_init (Ligma *ligma)
 {
-  GimpToolManager *tool_manager;
-  GimpContext     *user_context;
+  LigmaToolManager *tool_manager;
+  LigmaContext     *user_context;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (tool_manager_quark == 0);
 
-  tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
+  tool_manager_quark = g_quark_from_static_string ("ligma-tool-manager");
 
-  tool_manager = g_slice_new0 (GimpToolManager);
+  tool_manager = g_slice_new0 (LigmaToolManager);
 
-  tool_manager->gimp = gimp;
+  tool_manager->ligma = ligma;
 
-  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
+  g_object_set_qdata (G_OBJECT (ligma), tool_manager_quark, tool_manager);
 
   tool_manager->image_clean_handler_id =
-    gimp_container_add_handler (gimp->images, "clean",
+    ligma_container_add_handler (ligma->images, "clean",
                                 G_CALLBACK (tool_manager_image_clean_dirty),
                                 tool_manager);
 
   tool_manager->image_dirty_handler_id =
-    gimp_container_add_handler (gimp->images, "dirty",
+    ligma_container_add_handler (ligma->images, "dirty",
                                 G_CALLBACK (tool_manager_image_clean_dirty),
                                 tool_manager);
 
   tool_manager->image_saving_handler_id =
-    gimp_container_add_handler (gimp->images, "saving",
+    ligma_container_add_handler (ligma->images, "saving",
                                 G_CALLBACK (tool_manager_image_saving),
                                 tool_manager);
 
-  user_context = gimp_get_user_context (gimp);
+  user_context = ligma_get_user_context (ligma);
 
   g_signal_connect (user_context, "tool-changed",
                     G_CALLBACK (tool_manager_tool_changed),
@@ -147,29 +147,29 @@ tool_manager_init (Gimp *gimp)
                     tool_manager);
 
   tool_manager_image_changed (user_context,
-                              gimp_context_get_image (user_context),
+                              ligma_context_get_image (user_context),
                               tool_manager);
-  tool_manager_selected_layers_changed (gimp_context_get_image (user_context),
+  tool_manager_selected_layers_changed (ligma_context_get_image (user_context),
                                         tool_manager);
 
   tool_manager_tool_changed (user_context,
-                             gimp_context_get_tool (user_context),
+                             ligma_context_get_tool (user_context),
                              tool_manager);
 }
 
 void
-tool_manager_exit (Gimp *gimp)
+tool_manager_exit (Ligma *ligma)
 {
-  GimpToolManager *tool_manager;
-  GimpContext     *user_context;
+  LigmaToolManager *tool_manager;
+  LigmaContext     *user_context;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   g_return_if_fail (tool_manager != NULL);
 
-  user_context = gimp_get_user_context (gimp);
+  user_context = ligma_get_user_context (ligma);
 
   g_signal_handlers_disconnect_by_func (user_context,
                                         tool_manager_tool_changed,
@@ -181,11 +181,11 @@ tool_manager_exit (Gimp *gimp)
                                         tool_manager_image_changed,
                                         tool_manager);
 
-  gimp_container_remove_handler (gimp->images,
+  ligma_container_remove_handler (ligma->images,
                                  tool_manager->image_clean_handler_id);
-  gimp_container_remove_handler (gimp->images,
+  ligma_container_remove_handler (ligma->images,
                                  tool_manager->image_dirty_handler_id);
-  gimp_container_remove_handler (gimp->images,
+  ligma_container_remove_handler (ligma->images,
                                  tool_manager->image_saving_handler_id);
 
   if (tool_manager->active_tool)
@@ -200,34 +200,34 @@ tool_manager_exit (Gimp *gimp)
 
   tool_manager_set_active_tool_group (tool_manager, NULL);
 
-  g_slice_free (GimpToolManager, tool_manager);
+  g_slice_free (LigmaToolManager, tool_manager);
 
-  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, NULL);
+  g_object_set_qdata (G_OBJECT (ligma), tool_manager_quark, NULL);
 }
 
-GimpTool *
-tool_manager_get_active (Gimp *gimp)
+LigmaTool *
+tool_manager_get_active (Ligma *ligma)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   return tool_manager->active_tool;
 }
 
 void
-tool_manager_push_tool (Gimp     *gimp,
-                        GimpTool *tool)
+tool_manager_push_tool (Ligma     *ligma,
+                        LigmaTool *tool)
 {
-  GimpToolManager *tool_manager;
-  GimpDisplay     *focus_display = NULL;
+  LigmaToolManager *tool_manager;
+  LigmaDisplay     *focus_display = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_TOOL (tool));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
@@ -242,21 +242,21 @@ tool_manager_push_tool (Gimp     *gimp,
   tool_manager_select_tool (tool_manager, tool);
 
   if (focus_display)
-    tool_manager_focus_display_active (gimp, focus_display);
+    tool_manager_focus_display_active (ligma, focus_display);
 }
 
 void
-tool_manager_pop_tool (Gimp *gimp)
+tool_manager_pop_tool (Ligma *ligma)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->tool_stack)
     {
-      GimpTool *tool = tool_manager->tool_stack->data;
+      LigmaTool *tool = tool_manager->tool_stack->data;
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
                                                  tool);
@@ -268,26 +268,26 @@ tool_manager_pop_tool (Gimp *gimp)
 }
 
 gboolean
-tool_manager_initialize_active (Gimp        *gimp,
-                                GimpDisplay *display)
+tool_manager_initialize_active (Ligma        *ligma,
+                                LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      GimpTool *tool = tool_manager->active_tool;
+      LigmaTool *tool = tool_manager->active_tool;
 
-      if (gimp_tool_initialize (tool, display))
+      if (ligma_tool_initialize (tool, display))
         {
-          GimpImage *image = gimp_display_get_image (display);
+          LigmaImage *image = ligma_display_get_image (display);
 
           g_list_free (tool->drawables);
-          tool->drawables = gimp_image_get_selected_drawables (image);
+          tool->drawables = ligma_image_get_selected_drawables (image);
 
           return TRUE;
         }
@@ -297,110 +297,110 @@ tool_manager_initialize_active (Gimp        *gimp,
 }
 
 void
-tool_manager_control_active (Gimp           *gimp,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
+tool_manager_control_active (Ligma           *ligma,
+                             LigmaToolAction  action,
+                             LigmaDisplay    *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      GimpTool *tool = tool_manager->active_tool;
+      LigmaTool *tool = tool_manager->active_tool;
 
-      if (display && gimp_tool_has_display (tool, display))
+      if (display && ligma_tool_has_display (tool, display))
         {
-          gimp_tool_control (tool, action, display);
+          ligma_tool_control (tool, action, display);
         }
-      else if (action == GIMP_TOOL_ACTION_HALT)
+      else if (action == LIGMA_TOOL_ACTION_HALT)
         {
-          if (gimp_tool_control_is_active (tool->control))
-            gimp_tool_control_halt (tool->control);
+          if (ligma_tool_control_is_active (tool->control))
+            ligma_tool_control_halt (tool->control);
         }
     }
 }
 
 void
-tool_manager_button_press_active (Gimp                *gimp,
-                                  const GimpCoords    *coords,
+tool_manager_button_press_active (Ligma                *ligma,
+                                  const LigmaCoords    *coords,
                                   guint32              time,
                                   GdkModifierType      state,
-                                  GimpButtonPressType  press_type,
-                                  GimpDisplay         *display)
+                                  LigmaButtonPressType  press_type,
+                                  LigmaDisplay         *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_button_press (tool_manager->active_tool,
+      ligma_tool_button_press (tool_manager->active_tool,
                               coords, time, state, press_type,
                               display);
     }
 }
 
 void
-tool_manager_button_release_active (Gimp             *gimp,
-                                    const GimpCoords *coords,
+tool_manager_button_release_active (Ligma             *ligma,
+                                    const LigmaCoords *coords,
                                     guint32           time,
                                     GdkModifierType   state,
-                                    GimpDisplay      *display)
+                                    LigmaDisplay      *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_button_release (tool_manager->active_tool,
+      ligma_tool_button_release (tool_manager->active_tool,
                                 coords, time, state,
                                 display);
     }
 }
 
 void
-tool_manager_motion_active (Gimp             *gimp,
-                            const GimpCoords *coords,
+tool_manager_motion_active (Ligma             *ligma,
+                            const LigmaCoords *coords,
                             guint32           time,
                             GdkModifierType   state,
-                            GimpDisplay      *display)
+                            LigmaDisplay      *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_motion (tool_manager->active_tool,
+      ligma_tool_motion (tool_manager->active_tool,
                         coords, time, state,
                         display);
     }
 }
 
 gboolean
-tool_manager_key_press_active (Gimp        *gimp,
+tool_manager_key_press_active (Ligma        *ligma,
                                GdkEventKey *kevent,
-                               GimpDisplay *display)
+                               LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_key_press (tool_manager->active_tool,
+      return ligma_tool_key_press (tool_manager->active_tool,
                                   kevent,
                                   display);
     }
@@ -409,19 +409,19 @@ tool_manager_key_press_active (Gimp        *gimp,
 }
 
 gboolean
-tool_manager_key_release_active (Gimp        *gimp,
+tool_manager_key_release_active (Ligma        *ligma,
                                  GdkEventKey *kevent,
-                                 GimpDisplay *display)
+                                 LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_key_release (tool_manager->active_tool,
+      return ligma_tool_key_release (tool_manager->active_tool,
                                     kevent,
                                     display);
     }
@@ -430,118 +430,118 @@ tool_manager_key_release_active (Gimp        *gimp,
 }
 
 void
-tool_manager_focus_display_active (Gimp        *gimp,
-                                   GimpDisplay *display)
+tool_manager_focus_display_active (Ligma        *ligma,
+                                   LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool &&
-      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
+      ! ligma_tool_control_is_active (tool_manager->active_tool->control))
     {
-      gimp_tool_set_focus_display (tool_manager->active_tool,
+      ligma_tool_set_focus_display (tool_manager->active_tool,
                                    display);
     }
 }
 
 void
-tool_manager_modifier_state_active (Gimp            *gimp,
+tool_manager_modifier_state_active (Ligma            *ligma,
                                     GdkModifierType  state,
-                                    GimpDisplay     *display)
+                                    LigmaDisplay     *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool &&
-      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
+      ! ligma_tool_control_is_active (tool_manager->active_tool->control))
     {
-      gimp_tool_set_modifier_state (tool_manager->active_tool,
+      ligma_tool_set_modifier_state (tool_manager->active_tool,
                                     state,
                                     display);
     }
 }
 
 void
-tool_manager_active_modifier_state_active (Gimp            *gimp,
+tool_manager_active_modifier_state_active (Ligma            *ligma,
                                            GdkModifierType  state,
-                                           GimpDisplay     *display)
+                                           LigmaDisplay     *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_set_active_modifier_state (tool_manager->active_tool,
+      ligma_tool_set_active_modifier_state (tool_manager->active_tool,
                                            state,
                                            display);
     }
 }
 
 void
-tool_manager_oper_update_active (Gimp             *gimp,
-                                 const GimpCoords *coords,
+tool_manager_oper_update_active (Ligma             *ligma,
+                                 const LigmaCoords *coords,
                                  GdkModifierType   state,
                                  gboolean          proximity,
-                                 GimpDisplay      *display)
+                                 LigmaDisplay      *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool &&
-      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
+      ! ligma_tool_control_is_active (tool_manager->active_tool->control))
     {
-      gimp_tool_oper_update (tool_manager->active_tool,
+      ligma_tool_oper_update (tool_manager->active_tool,
                              coords, state, proximity,
                              display);
     }
 }
 
 void
-tool_manager_cursor_update_active (Gimp             *gimp,
-                                   const GimpCoords *coords,
+tool_manager_cursor_update_active (Ligma             *ligma,
+                                   const LigmaCoords *coords,
                                    GdkModifierType   state,
-                                   GimpDisplay      *display)
+                                   LigmaDisplay      *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool &&
-      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
+      ! ligma_tool_control_is_active (tool_manager->active_tool->control))
     {
-      gimp_tool_cursor_update (tool_manager->active_tool,
+      ligma_tool_cursor_update (tool_manager->active_tool,
                                coords, state,
                                display);
     }
 }
 
 const gchar *
-tool_manager_can_undo_active (Gimp        *gimp,
-                              GimpDisplay *display)
+tool_manager_can_undo_active (Ligma        *ligma,
+                              LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_can_undo (tool_manager->active_tool,
+      return ligma_tool_can_undo (tool_manager->active_tool,
                                  display);
     }
 
@@ -549,18 +549,18 @@ tool_manager_can_undo_active (Gimp        *gimp,
 }
 
 const gchar *
-tool_manager_can_redo_active (Gimp        *gimp,
-                              GimpDisplay *display)
+tool_manager_can_redo_active (Ligma        *ligma,
+                              LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_can_redo (tool_manager->active_tool,
+      return ligma_tool_can_redo (tool_manager->active_tool,
                                  display);
     }
 
@@ -568,18 +568,18 @@ tool_manager_can_redo_active (Gimp        *gimp,
 }
 
 gboolean
-tool_manager_undo_active (Gimp        *gimp,
-                          GimpDisplay *display)
+tool_manager_undo_active (Ligma        *ligma,
+                          LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_undo (tool_manager->active_tool,
+      return ligma_tool_undo (tool_manager->active_tool,
                              display);
     }
 
@@ -587,40 +587,40 @@ tool_manager_undo_active (Gimp        *gimp,
 }
 
 gboolean
-tool_manager_redo_active (Gimp        *gimp,
-                          GimpDisplay *display)
+tool_manager_redo_active (Ligma        *ligma,
+                          LigmaDisplay *display)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_redo (tool_manager->active_tool,
+      return ligma_tool_redo (tool_manager->active_tool,
                              display);
     }
 
   return FALSE;
 }
 
-GimpUIManager *
-tool_manager_get_popup_active (Gimp             *gimp,
-                               const GimpCoords *coords,
+LigmaUIManager *
+tool_manager_get_popup_active (Ligma             *ligma,
+                               const LigmaCoords *coords,
                                GdkModifierType   state,
-                               GimpDisplay      *display,
+                               LigmaDisplay      *display,
                                const gchar     **ui_path)
 {
-  GimpToolManager *tool_manager;
+  LigmaToolManager *tool_manager;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  tool_manager = tool_manager_get (gimp);
+  tool_manager = tool_manager_get (ligma);
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_get_popup (tool_manager->active_tool,
+      return ligma_tool_get_popup (tool_manager->active_tool,
                                   coords, state,
                                   display,
                                   ui_path);
@@ -632,17 +632,17 @@ tool_manager_get_popup_active (Gimp             *gimp,
 
 /*  private functions  */
 
-static GimpToolManager *
-tool_manager_get (Gimp *gimp)
+static LigmaToolManager *
+tool_manager_get (Ligma *ligma)
 {
-  return g_object_get_qdata (G_OBJECT (gimp), tool_manager_quark);
+  return g_object_get_qdata (G_OBJECT (ligma), tool_manager_quark);
 }
 
 static void
-tool_manager_select_tool (GimpToolManager *tool_manager,
-                          GimpTool        *tool)
+tool_manager_select_tool (LigmaToolManager *tool_manager,
+                          LigmaTool        *tool)
 {
-  Gimp *gimp = tool_manager->gimp;
+  Ligma *ligma = tool_manager->ligma;
 
   /*  reset the previously selected tool, but only if it is not only
    *  temporarily pushed to the tool stack
@@ -652,14 +652,14 @@ tool_manager_select_tool (GimpToolManager *tool_manager,
       if (! tool_manager->tool_stack ||
           tool_manager->active_tool != tool_manager->tool_stack->data)
         {
-          GimpTool    *active_tool = tool_manager->active_tool;
-          GimpDisplay *display;
+          LigmaTool    *active_tool = tool_manager->active_tool;
+          LigmaDisplay *display;
 
           /*  NULL image returns any display (if there is any)  */
-          display = gimp_tool_has_image (active_tool, NULL);
+          display = ligma_tool_has_image (active_tool, NULL);
 
-          tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
-          tool_manager_focus_display_active (gimp, NULL);
+          tool_manager_control_active (ligma, LIGMA_TOOL_ACTION_HALT, display);
+          tool_manager_focus_display_active (ligma, NULL);
         }
     }
 
@@ -667,8 +667,8 @@ tool_manager_select_tool (GimpToolManager *tool_manager,
 }
 
 static void
-tool_manager_set_active_tool_group (GimpToolManager *tool_manager,
-                                    GimpToolGroup   *tool_group)
+tool_manager_set_active_tool_group (LigmaToolManager *tool_manager,
+                                    LigmaToolGroup   *tool_group)
 {
   if (tool_group != tool_manager->active_tool_group)
     {
@@ -693,24 +693,24 @@ tool_manager_set_active_tool_group (GimpToolManager *tool_manager,
 }
 
 static void
-tool_manager_tool_changed (GimpContext     *user_context,
-                           GimpToolInfo    *tool_info,
-                           GimpToolManager *tool_manager)
+tool_manager_tool_changed (LigmaContext     *user_context,
+                           LigmaToolInfo    *tool_info,
+                           LigmaToolManager *tool_manager)
 {
-  GimpTool *new_tool = NULL;
+  LigmaTool *new_tool = NULL;
 
   if (! tool_info)
     return;
 
-  if (! g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
+  if (! g_type_is_a (tool_info->tool_type, LIGMA_TYPE_TOOL))
     {
-      g_warning ("%s: tool_info->tool_type is no GimpTool subclass",
+      g_warning ("%s: tool_info->tool_type is no LigmaTool subclass",
                  G_STRFUNC);
       return;
     }
 
-  /* FIXME: gimp_busy HACK */
-  if (user_context->gimp->busy)
+  /* FIXME: ligma_busy HACK */
+  if (user_context->ligma->busy)
     {
       /*  there may be contexts waiting for the user_context's "tool-changed"
        *  signal, so stop emitting it.
@@ -725,7 +725,7 @@ tool_manager_tool_changed (GimpContext     *user_context,
                                            tool_manager);
 
           /*  explicitly set the current tool  */
-          gimp_context_set_tool (user_context,
+          ligma_context_set_tool (user_context,
                                  tool_manager->active_tool->tool_info);
 
           g_signal_handlers_unblock_by_func (user_context,
@@ -740,18 +740,18 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   if (tool_manager->active_tool)
     {
-      GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display;
+      LigmaTool    *active_tool = tool_manager->active_tool;
+      LigmaDisplay *display;
 
       /*  NULL image returns any display (if there is any)  */
-      display = gimp_tool_has_image (active_tool, NULL);
+      display = ligma_tool_has_image (active_tool, NULL);
 
       /*  commit the old tool's operation before creating the new tool
        *  because creating a tool might mess with the old tool's
        *  options (old and new tool might be the same)
        */
       if (display)
-        tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
+        tool_manager_control_active (user_context->ligma, LIGMA_TOOL_ACTION_COMMIT,
                                      display);
 
       g_signal_handlers_disconnect_by_func (active_tool->tool_info,
@@ -772,13 +772,13 @@ tool_manager_tool_changed (GimpContext     *user_context,
   tool_manager_select_tool (tool_manager, new_tool);
 
   /* Auto-activate any transform tools */
-  if (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool))
+  if (LIGMA_IS_TRANSFORM_GRID_TOOL (new_tool))
     {
-      GimpDisplay *new_display;
+      LigmaDisplay *new_display;
 
-      new_display = gimp_context_get_display (user_context);
-      if (new_display && gimp_display_get_image (new_display))
-        tool_manager_initialize_active (user_context->gimp, new_display);
+      new_display = ligma_context_get_display (user_context);
+      if (new_display && ligma_display_get_image (new_display))
+        tool_manager_initialize_active (user_context->ligma, new_display);
     }
 
   g_object_unref (new_tool);
@@ -793,7 +793,7 @@ tool_manager_copy_tool_options (GObject *src,
 {
   GList *diff;
 
-  diff = gimp_config_diff (src, dest, G_PARAM_READWRITE);
+  diff = ligma_config_diff (src, dest, G_PARAM_READWRITE);
 
   if (diff)
     {
@@ -805,7 +805,7 @@ tool_manager_copy_tool_options (GObject *src,
         {
           GParamSpec *prop_spec = list->data;
 
-          if (g_type_is_a (prop_spec->owner_type, GIMP_TYPE_TOOL_OPTIONS) &&
+          if (g_type_is_a (prop_spec->owner_type, LIGMA_TYPE_TOOL_OPTIONS) &&
               ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
             {
               GValue value = G_VALUE_INIT;
@@ -826,29 +826,29 @@ tool_manager_copy_tool_options (GObject *src,
 }
 
 static void
-tool_manager_preset_changed (GimpContext     *user_context,
-                             GimpToolPreset  *preset,
-                             GimpToolManager *tool_manager)
+tool_manager_preset_changed (LigmaContext     *user_context,
+                             LigmaToolPreset  *preset,
+                             LigmaToolManager *tool_manager)
 {
-  GimpToolInfo *preset_tool;
+  LigmaToolInfo *preset_tool;
 
-  if (! preset || user_context->gimp->busy)
+  if (! preset || user_context->ligma->busy)
     return;
 
-  preset_tool = gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
+  preset_tool = ligma_context_get_tool (LIGMA_CONTEXT (preset->tool_options));
 
   /* first, select the preset's tool, even if it's already the active
    * tool
    */
-  gimp_context_set_tool (user_context, preset_tool);
+  ligma_context_set_tool (user_context, preset_tool);
 
   /* then, copy the context properties the preset remembers, possibly
    * changing some tool options due to the "link brush stuff to brush
-   * defaults" settings in gimptooloptions.c
+   * defaults" settings in ligmatooloptions.c
    */
-  gimp_context_copy_properties (GIMP_CONTEXT (preset->tool_options),
+  ligma_context_copy_properties (LIGMA_CONTEXT (preset->tool_options),
                                 user_context,
-                                gimp_tool_preset_get_prop_mask (preset));
+                                ligma_tool_preset_get_prop_mask (preset));
 
   /* finally, copy all tool options properties, overwriting any
    * changes resulting from setting the context properties above, we
@@ -859,74 +859,74 @@ tool_manager_preset_changed (GimpContext     *user_context,
 }
 
 static void
-tool_manager_image_clean_dirty (GimpImage       *image,
-                                GimpDirtyMask    dirty_mask,
-                                GimpToolManager *tool_manager)
+tool_manager_image_clean_dirty (LigmaImage       *image,
+                                LigmaDirtyMask    dirty_mask,
+                                LigmaToolManager *tool_manager)
 {
-  GimpTool *tool = tool_manager->active_tool;
+  LigmaTool *tool = tool_manager->active_tool;
 
   if (tool &&
-      ! gimp_tool_control_get_preserve (tool->control) &&
-      (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
+      ! ligma_tool_control_get_preserve (tool->control) &&
+      (ligma_tool_control_get_dirty_mask (tool->control) & dirty_mask))
     {
-      GimpDisplay *display = gimp_tool_has_image (tool, image);
+      LigmaDisplay *display = ligma_tool_has_image (tool, image);
 
       if (display)
         {
           tool_manager_control_active (
-            image->gimp,
-            gimp_tool_control_get_dirty_action (tool->control),
+            image->ligma,
+            ligma_tool_control_get_dirty_action (tool->control),
             display);
         }
     }
 }
 
 static void
-tool_manager_image_saving (GimpImage       *image,
-                           GimpToolManager *tool_manager)
+tool_manager_image_saving (LigmaImage       *image,
+                           LigmaToolManager *tool_manager)
 {
-  GimpTool *tool = tool_manager->active_tool;
+  LigmaTool *tool = tool_manager->active_tool;
 
   if (tool &&
-      ! gimp_tool_control_get_preserve (tool->control))
+      ! ligma_tool_control_get_preserve (tool->control))
     {
-      GimpDisplay *display = gimp_tool_has_image (tool, image);
+      LigmaDisplay *display = ligma_tool_has_image (tool, image);
 
       if (display)
-        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_COMMIT,
+        tool_manager_control_active (image->ligma, LIGMA_TOOL_ACTION_COMMIT,
                                      display);
     }
 }
 
 static void
-tool_manager_tool_ancestry_changed (GimpToolInfo    *tool_info,
-                                    GimpToolManager *tool_manager)
+tool_manager_tool_ancestry_changed (LigmaToolInfo    *tool_info,
+                                    LigmaToolManager *tool_manager)
 {
-  GimpViewable *parent;
+  LigmaViewable *parent;
 
-  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (tool_info));
+  parent = ligma_viewable_get_parent (LIGMA_VIEWABLE (tool_info));
 
   if (parent)
     {
-      gimp_tool_group_set_active_tool_info (GIMP_TOOL_GROUP (parent),
+      ligma_tool_group_set_active_tool_info (LIGMA_TOOL_GROUP (parent),
                                             tool_info);
     }
 
-  tool_manager_set_active_tool_group (tool_manager, GIMP_TOOL_GROUP (parent));
+  tool_manager_set_active_tool_group (tool_manager, LIGMA_TOOL_GROUP (parent));
 }
 
 static void
-tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
-                                        GimpToolManager *tool_manager)
+tool_manager_group_active_tool_changed (LigmaToolGroup   *tool_group,
+                                        LigmaToolManager *tool_manager)
 {
-  gimp_context_set_tool (tool_manager->gimp->user_context,
-                         gimp_tool_group_get_active_tool_info (tool_group));
+  ligma_context_set_tool (tool_manager->ligma->user_context,
+                         ligma_tool_group_get_active_tool_info (tool_group));
 }
 
 static void
-tool_manager_image_changed (GimpContext     *context,
-                            GimpImage       *image,
-                            GimpToolManager *tool_manager)
+tool_manager_image_changed (LigmaContext     *context,
+                            LigmaImage       *image,
+                            LigmaToolManager *tool_manager)
 {
   if (tool_manager->image)
     {
@@ -939,13 +939,13 @@ tool_manager_image_changed (GimpContext     *context,
 
   /* Re-activate transform tools when switching images */
   if (image &&
-      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+      LIGMA_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
     {
-      gimp_context_set_tool (context,
+      ligma_context_set_tool (context,
                              tool_manager->active_tool->tool_info);
 
       tool_manager_tool_changed (context,
-                                 gimp_context_get_tool (context),
+                                 ligma_context_get_tool (context),
                                  tool_manager);
     }
 
@@ -956,25 +956,25 @@ tool_manager_image_changed (GimpContext     *context,
 }
 
 static void
-tool_manager_selected_layers_changed (GimpImage       *image,
-                                      GimpToolManager *tool_manager)
+tool_manager_selected_layers_changed (LigmaImage       *image,
+                                      LigmaToolManager *tool_manager)
 {
   /* Re-activate transform tools when changing selected layers */
   if (image &&
-      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+      LIGMA_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
     {
-      gimp_context_set_tool (tool_manager->gimp->user_context,
+      ligma_context_set_tool (tool_manager->ligma->user_context,
                              tool_manager->active_tool->tool_info);
 
-      tool_manager_tool_changed (tool_manager->gimp->user_context,
-                                 gimp_context_get_tool (
-                                   tool_manager->gimp->user_context),
+      tool_manager_tool_changed (tool_manager->ligma->user_context,
+                                 ligma_context_get_tool (
+                                   tool_manager->ligma->user_context),
                                  tool_manager);
     }
 }
 
 static void
-tool_manager_cast_spell (GimpToolInfo *tool_info)
+tool_manager_cast_spell (LigmaToolInfo *tool_info)
 {
   typedef struct
   {
@@ -984,13 +984,13 @@ tool_manager_cast_spell (GimpToolInfo *tool_info)
 
   static const Spell spells[] =
   {
-    { .sequence = "gimp-warp-tool\0"
-                  "gimp-iscissors-tool\0"
-                  "gimp-gradient-tool\0"
-                  "gimp-vector-tool\0"
-                  "gimp-ellipse-select-tool\0"
-                  "gimp-rect-select-tool\0",
-      .func     = gimp_cairo_wilber_toggle_pointer_eyes
+    { .sequence = "ligma-warp-tool\0"
+                  "ligma-iscissors-tool\0"
+                  "ligma-gradient-tool\0"
+                  "ligma-vector-tool\0"
+                  "ligma-ellipse-select-tool\0"
+                  "ligma-rect-select-tool\0",
+      .func     = ligma_cairo_wilber_toggle_pointer_eyes
     }
   };
 
@@ -998,7 +998,7 @@ tool_manager_cast_spell (GimpToolInfo *tool_info)
   const gchar        *tool_name;
   gint                i;
 
-  tool_name = gimp_object_get_name (GIMP_OBJECT (tool_info));
+  tool_name = ligma_object_get_name (LIGMA_OBJECT (tool_info));
 
   for (i = 0; i < G_N_ELEMENTS (spells); i++)
     {

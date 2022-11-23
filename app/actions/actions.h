@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,21 @@
 #define __ACTIONS_H__
 
 
-extern GimpActionFactory *global_action_factory;
+extern LigmaActionFactory *global_action_factory;
 
 
-void               actions_init            (Gimp                 *gimp);
-void               actions_exit            (Gimp                 *gimp);
+void               actions_init            (Ligma                 *ligma);
+void               actions_exit            (Ligma                 *ligma);
 
-Gimp             * action_data_get_gimp    (gpointer              data);
-GimpContext      * action_data_get_context (gpointer              data);
-GimpImage        * action_data_get_image   (gpointer              data);
-GimpDisplay      * action_data_get_display (gpointer              data);
-GimpDisplayShell * action_data_get_shell   (gpointer              data);
+Ligma             * action_data_get_ligma    (gpointer              data);
+LigmaContext      * action_data_get_context (gpointer              data);
+LigmaImage        * action_data_get_image   (gpointer              data);
+LigmaDisplay      * action_data_get_display (gpointer              data);
+LigmaDisplayShell * action_data_get_shell   (gpointer              data);
 GtkWidget        * action_data_get_widget  (gpointer              data);
 gint               action_data_sel_count   (gpointer              data);
 
-gdouble            action_select_value     (GimpActionSelectType  select_type,
+gdouble            action_select_value     (LigmaActionSelectType  select_type,
                                             gdouble               value,
                                             gdouble               min,
                                             gdouble               max,
@@ -43,8 +43,8 @@ gdouble            action_select_value     (GimpActionSelectType  select_type,
                                             gdouble               skip_inc,
                                             gdouble               delta_factor,
                                             gboolean              wrap);
-void               action_select_property  (GimpActionSelectType  select_type,
-                                            GimpDisplay          *display,
+void               action_select_property  (LigmaActionSelectType  select_type,
+                                            LigmaDisplay          *display,
                                             GObject              *object,
                                             const gchar          *property_name,
                                             gdouble               small_inc,
@@ -52,18 +52,18 @@ void               action_select_property  (GimpActionSelectType  select_type,
                                             gdouble               skip_inc,
                                             gdouble               delta_factor,
                                             gboolean              wrap);
-GimpObject       * action_select_object    (GimpActionSelectType  select_type,
-                                            GimpContainer        *container,
-                                            GimpObject           *current);
-void               action_message          (GimpDisplay          *display,
+LigmaObject       * action_select_object    (LigmaActionSelectType  select_type,
+                                            LigmaContainer        *container,
+                                            LigmaObject           *current);
+void               action_message          (LigmaDisplay          *display,
                                             GObject              *object,
                                             const gchar          *format,
                                             ...) G_GNUC_PRINTF(3,4);
 
 
-#define return_if_no_gimp(gimp,data) \
-  gimp = action_data_get_gimp (data); \
-  if (! gimp) \
+#define return_if_no_ligma(ligma,data) \
+  ligma = action_data_get_ligma (data); \
+  if (! ligma) \
     return
 
 #define return_if_no_context(context,data) \
@@ -93,43 +93,43 @@ void               action_message          (GimpDisplay          *display,
 
 #define return_if_no_drawables(image,drawables,data) \
   return_if_no_image (image,data); \
-  drawables = gimp_image_get_selected_drawables (image); \
+  drawables = ligma_image_get_selected_drawables (image); \
   if (! drawables) \
     return
 
 #define return_if_no_layer(image,layer,data) \
   return_if_no_image (image,data); \
-  layer = gimp_image_get_active_layer (image); \
+  layer = ligma_image_get_active_layer (image); \
   if (! layer) \
     return
 
 #define return_if_no_layers(image,layers,data) \
   return_if_no_image (image,data); \
-  layers = gimp_image_get_selected_layers (image); \
+  layers = ligma_image_get_selected_layers (image); \
   if (! layers) \
     return
 
 #define return_if_no_channel(image,channel,data) \
   return_if_no_image (image,data); \
-  channel = gimp_image_get_active_channel (image); \
+  channel = ligma_image_get_active_channel (image); \
   if (! channel) \
     return
 
 #define return_if_no_channels(image,channels,data) \
   return_if_no_image (image,data); \
-  channels = gimp_image_get_selected_channels (image); \
+  channels = ligma_image_get_selected_channels (image); \
   if (! channels) \
     return
 
 #define return_if_no_vectors(image,vectors,data) \
   return_if_no_image (image,data); \
-  vectors = gimp_image_get_active_vectors (image); \
+  vectors = ligma_image_get_active_vectors (image); \
   if (! vectors) \
     return
 
 #define return_if_no_vectors_list(image,list,data) \
   return_if_no_image (image,data); \
-  list = gimp_image_get_selected_vectors (image); \
+  list = ligma_image_get_selected_vectors (image); \
   if (! list) \
     return
 

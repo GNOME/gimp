@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ;
-; Copyright (C) 1997 Sven Neumann <sven@gimp.org>
+; Copyright (C) 1997 Sven Neumann <sven@ligma.org>
 ;
 ;
 ; Makes a copy of your image and creates an animation of the active layer
@@ -40,17 +40,17 @@
          (remaining-frames num-frames)
          (phase 0)
          (phaseshift (/ 360 num-frames))
-         (image (car (gimp-image-duplicate img)))
-         (source-layer (aref (cadr (gimp-image-get-selected-layers image)) 0)))
+         (image (car (ligma-image-duplicate img)))
+         (source-layer (aref (cadr (ligma-image-get-selected-layers image)) 0)))
 
-  (gimp-image-undo-disable image)
+  (ligma-image-undo-disable image)
 
   (if (= invert TRUE)
       (set! phaseshift (- 0 phaseshift)))
 
   (while (> remaining-frames 1)
     (let* (
-          (waves-layer (car (gimp-layer-copy source-layer TRUE)))
+          (waves-layer (car (ligma-layer-copy source-layer TRUE)))
           (layer-name (string-append "Frame "
                                      (number->string
                                        (- (+ num-frames 2)
@@ -58,9 +58,9 @@
                                        )
                                      " (replace)"))
           )
-    (gimp-layer-set-lock-alpha waves-layer FALSE)
-    (gimp-image-insert-layer image waves-layer 0 -1)
-    (gimp-item-set-name waves-layer layer-name)
+    (ligma-layer-set-lock-alpha waves-layer FALSE)
+    (ligma-image-insert-layer image waves-layer 0 -1)
+    (ligma-item-set-name waves-layer layer-name)
 
     (plug-in-waves RUN-NONINTERACTIVE
                    image
@@ -76,7 +76,7 @@
     )
   )
 
-  (gimp-item-set-name source-layer "Frame 1")
+  (ligma-item-set-name source-layer "Frame 1")
   (plug-in-waves RUN-NONINTERACTIVE
                  image
                  source-layer
@@ -86,15 +86,15 @@
                  0
                  FALSE)
 
-  (gimp-image-undo-enable image)
-  (gimp-display-new image)
+  (ligma-image-undo-enable image)
+  (ligma-display-new image)
   )
 )
 
 (script-fu-register "script-fu-waves-anim"
   _"_Waves..."
   _"Create a multi-layer image with an effect like a stone was thrown into the current image"
-  "Sven Neumann <sven@gimp.org>"
+  "Sven Neumann <sven@ligma.org>"
   "Sven Neumann"
   "1997/13/12"
   "RGB* GRAY*"

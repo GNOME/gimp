@@ -1,4 +1,4 @@
-/* gimpparasite.c: Copyright 1998 Jay Cox <jaycox@gimp.org>
+/* ligmaparasite.c: Copyright 1998 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,22 +18,22 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-parasites.h"
-#include "gimpparasitelist.h"
+#include "ligma.h"
+#include "ligma-parasites.h"
+#include "ligmaparasitelist.h"
 
 
 gboolean
-gimp_parasite_validate (Gimp                *gimp,
-                        const GimpParasite  *parasite,
+ligma_parasite_validate (Ligma                *ligma,
+                        const LigmaParasite  *parasite,
                         GError             **error)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -41,57 +41,57 @@ gimp_parasite_validate (Gimp                *gimp,
 }
 
 void
-gimp_parasite_attach (Gimp               *gimp,
-                      const GimpParasite *parasite)
+ligma_parasite_attach (Ligma               *ligma,
+                      const LigmaParasite *parasite)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (parasite != NULL);
 
-  gimp_parasite_list_add (gimp->parasites, parasite);
+  ligma_parasite_list_add (ligma->parasites, parasite);
 }
 
 void
-gimp_parasite_detach (Gimp        *gimp,
+ligma_parasite_detach (Ligma        *ligma,
                       const gchar *name)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (name != NULL);
 
-  gimp_parasite_list_remove (gimp->parasites, name);
+  ligma_parasite_list_remove (ligma->parasites, name);
 }
 
-const GimpParasite *
-gimp_parasite_find (Gimp        *gimp,
+const LigmaParasite *
+ligma_parasite_find (Ligma        *ligma,
                     const gchar *name)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return gimp_parasite_list_find (gimp->parasites, name);
+  return ligma_parasite_list_find (ligma->parasites, name);
 }
 
 static void
 list_func (const gchar    *key,
-           GimpParasite   *parasite,
+           LigmaParasite   *parasite,
            gchar        ***current)
 {
   *(*current)++ = g_strdup (key);
 }
 
 gchar **
-gimp_parasite_list (Gimp *gimp)
+ligma_parasite_list (Ligma *ligma)
 {
   gint    count;
   gchar **list;
   gchar **current;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  count = gimp_parasite_list_length (gimp->parasites);
+  count = ligma_parasite_list_length (ligma->parasites);
 
   list = current = g_new0 (gchar *, count + 1);
 
-  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &current);
+  ligma_parasite_list_foreach (ligma->parasites, (GHFunc) list_func, &current);
 
   return list;
 }
@@ -100,7 +100,7 @@ gimp_parasite_list (Gimp *gimp)
 /*  FIXME: this doesn't belong here  */
 
 void
-gimp_parasite_shift_parent (GimpParasite *parasite)
+ligma_parasite_shift_parent (LigmaParasite *parasite)
 {
   g_return_if_fail (parasite != NULL);
 
@@ -111,23 +111,23 @@ gimp_parasite_shift_parent (GimpParasite *parasite)
 /*  parasiterc functions  */
 
 void
-gimp_parasiterc_load (Gimp *gimp)
+ligma_parasiterc_load (Ligma *ligma)
 {
   GFile  *file;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  file = gimp_directory_file ("parasiterc", NULL);
+  file = ligma_directory_file ("parasiterc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->parasites),
+  if (! ligma_config_deserialize_file (LIGMA_CONFIG (ligma->parasites),
                                       file, NULL, &error))
     {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      if (error->code != LIGMA_CONFIG_ERROR_OPEN_ENOENT)
+        ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
 
       g_error_free (error);
     }
@@ -136,10 +136,10 @@ gimp_parasiterc_load (Gimp *gimp)
 }
 
 void
-gimp_parasiterc_save (Gimp *gimp)
+ligma_parasiterc_save (Ligma *ligma)
 {
   const gchar *header =
-    "GIMP parasiterc\n"
+    "LIGMA parasiterc\n"
     "\n"
     "This file will be entirely rewritten each time you exit.";
   const gchar *footer =
@@ -148,20 +148,20 @@ gimp_parasiterc_save (Gimp *gimp)
   GFile  *file;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PARASITE_LIST (gimp->parasites));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_PARASITE_LIST (ligma->parasites));
 
-  file = gimp_directory_file ("parasiterc", NULL);
+  file = ligma_directory_file ("parasiterc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->parasites),
+  if (! ligma_config_serialize_to_file (LIGMA_CONFIG (ligma->parasites),
                                        file,
                                        header, footer, NULL,
                                        &error))
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 

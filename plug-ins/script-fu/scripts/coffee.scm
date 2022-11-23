@@ -18,31 +18,31 @@
 (define (script-fu-coffee-stain inImage inLayer inNumber inDark)
   (let* (
         (theImage inImage)
-        (theHeight (car (gimp-image-get-height theImage)))
-        (theWidth (car (gimp-image-get-width theImage)))
+        (theHeight (car (ligma-image-get-height theImage)))
+        (theWidth (car (ligma-image-get-width theImage)))
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
         (theStain 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-group-start theImage)
+    (ligma-image-undo-group-start theImage)
 
     (while (> theNumber 0)
       (set! theNumber (- theNumber 1))
-      (set! theStain (car (gimp-layer-new theImage theSize theSize
+      (set! theStain (car (ligma-layer-new theImage theSize theSize
                                           RGBA-IMAGE _"Stain" 100
                                           (if (= inDark TRUE)
                                               LAYER-MODE-DARKEN-ONLY LAYER-MODE-NORMAL))))
 
-      (gimp-image-insert-layer theImage theStain 0 0)
-      (gimp-selection-all theImage)
-      (gimp-drawable-edit-clear theStain)
+      (ligma-image-insert-layer theImage theStain 0 0)
+      (ligma-selection-all theImage)
+      (ligma-drawable-edit-clear theStain)
 
       (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1))))
-        (gimp-image-select-ellipse theImage
+        (ligma-image-select-ellipse theImage
 				   CHANNEL-OP-REPLACE
 				   (/ (- theSize blobSize) 2)
 				   (/ (- theSize blobSize) 2)
@@ -53,30 +53,30 @@
                                     (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
                                     (/ theSize 25) 4 2 TRUE TRUE)
 
-      (gimp-context-set-gradient "Coffee")
+      (ligma-context-set-gradient "Coffee")
 
-      (gimp-drawable-edit-gradient-fill theStain
+      (ligma-drawable-edit-gradient-fill theStain
 					GRADIENT-SHAPEBURST-DIMPLED 0
 					FALSE 0 0
 					TRUE
 					0 0 0 0)
 
-      (gimp-layer-set-offsets theStain
+      (ligma-layer-set-offsets theStain
                               (- (rand theWidth) (/ theSize 2))
                               (- (rand theHeight) (/ theSize 2)))
     )
 
-    (gimp-selection-none theImage)
+    (ligma-selection-none theImage)
 
-    (gimp-image-undo-group-end theImage)
+    (ligma-image-undo-group-end theImage)
 
-    (gimp-displays-flush)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 
-; Register the function with GIMP:
+; Register the function with LIGMA:
 
 (script-fu-register "script-fu-coffee-stain"
   _"_Coffee Stain..."

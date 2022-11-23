@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpextensiondetails.c
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextensiondetails.c
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,62 +23,62 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpextension.h"
-#include "core/gimpextensionmanager.h"
+#include "core/ligmaextension.h"
+#include "core/ligmaextensionmanager.h"
 
-#include "gimpextensiondetails.h"
+#include "ligmaextensiondetails.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-struct _GimpExtensionDetailsPrivate
+struct _LigmaExtensionDetailsPrivate
 {
-  GimpExtension *extension;
+  LigmaExtension *extension;
 
   gint           screenshot_width;
   gint           screenshot_height;
 };
 
-static void gimp_extension_details_size_allocate (GimpExtensionDetails *details,
+static void ligma_extension_details_size_allocate (LigmaExtensionDetails *details,
                                                   GdkRectangle         *allocation,
                                                   GtkGrid              *data);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpExtensionDetails, gimp_extension_details,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaExtensionDetails, ligma_extension_details,
                             GTK_TYPE_FRAME)
 
-#define parent_class gimp_extension_details_parent_class
+#define parent_class ligma_extension_details_parent_class
 
 
 static void
-gimp_extension_details_class_init (GimpExtensionDetailsClass *klass)
+ligma_extension_details_class_init (LigmaExtensionDetailsClass *klass)
 {
 }
 
 static void
-gimp_extension_details_init (GimpExtensionDetails *details)
+ligma_extension_details_init (LigmaExtensionDetails *details)
 {
   gtk_frame_set_label_align (GTK_FRAME (details), 0.5, 1.0);
-  details->p = gimp_extension_details_get_instance_private (details);
+  details->p = ligma_extension_details_get_instance_private (details);
 }
 
 GtkWidget *
-gimp_extension_details_new (void)
+ligma_extension_details_new (void)
 {
-  return g_object_new (GIMP_TYPE_EXTENSION_DETAILS, NULL);
+  return g_object_new (LIGMA_TYPE_EXTENSION_DETAILS, NULL);
 }
 
 void
-gimp_extension_details_set (GimpExtensionDetails *details,
-                            GimpExtension        *extension)
+ligma_extension_details_set (LigmaExtensionDetails *details,
+                            LigmaExtension        *extension)
 {
   GtkWidget     *grid;
   GtkWidget     *widget;
   GtkTextBuffer *buffer;
 
-  g_return_if_fail (GIMP_IS_EXTENSION (extension));
+  g_return_if_fail (LIGMA_IS_EXTENSION (extension));
 
   if (details->p->extension)
     g_object_unref (details->p->extension);
@@ -90,7 +90,7 @@ gimp_extension_details_set (GimpExtensionDetails *details,
                          NULL);
 
   gtk_frame_set_label (GTK_FRAME (details),
-                       extension ? gimp_extension_get_name (extension) : NULL);
+                       extension ? ligma_extension_get_name (extension) : NULL);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_homogeneous (GTK_GRID (grid), FALSE);
@@ -111,14 +111,14 @@ gimp_extension_details_set (GimpExtensionDetails *details,
 
           gtk_widget_get_allocated_size (GTK_WIDGET (details),
                                          &allocation, &baseline);
-          gimp_extension_details_size_allocate (details, &allocation, GTK_GRID (grid));
+          ligma_extension_details_size_allocate (details, &allocation, GTK_GRID (grid));
         }
       g_signal_connect (details, "size-allocate",
-                        G_CALLBACK (gimp_extension_details_size_allocate),
+                        G_CALLBACK (ligma_extension_details_size_allocate),
                         grid);
 
       /* Description. */
-      desc = gimp_extension_get_markup_description (extension);
+      desc = ligma_extension_get_markup_description (extension);
       widget = gtk_text_view_new ();
       gtk_widget_set_vexpand (widget, TRUE);
       gtk_widget_set_hexpand (widget, TRUE);
@@ -141,7 +141,7 @@ gimp_extension_details_set (GimpExtensionDetails *details,
 /* Private functions. */
 
 static void
-gimp_extension_details_size_allocate (GimpExtensionDetails *details,
+ligma_extension_details_size_allocate (LigmaExtensionDetails *details,
                                       GdkRectangle         *allocation,
                                       GtkGrid              *grid)
 {
@@ -156,7 +156,7 @@ gimp_extension_details_size_allocate (GimpExtensionDetails *details,
       details->p->screenshot_width  = allocation->width * 2 / 3;
       details->p->screenshot_height = allocation->height * 2 / 3;
 
-      pixbuf = gimp_extension_get_screenshot (details->p->extension,
+      pixbuf = ligma_extension_get_screenshot (details->p->extension,
                                               details->p->screenshot_width, details->p->screenshot_height,
                                               NULL);
       if (pixbuf)

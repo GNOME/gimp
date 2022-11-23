@@ -1,4 +1,4 @@
-/* borderaverage 0.01 - image processing plug-in for GIMP.
+/* borderaverage 0.01 - image processing plug-in for LIGMA.
  *
  * Copyright (C) 1998 Philipp Klaus (webmaster@access.ch)
  *
@@ -19,15 +19,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-borderaverage"
 #define PLUG_IN_BINARY "border-average"
-#define PLUG_IN_ROLE   "gimp-border-average"
+#define PLUG_IN_ROLE   "ligma-border-average"
 
 
 typedef struct _BorderAverage      BorderAverage;
@@ -35,12 +35,12 @@ typedef struct _BorderAverageClass BorderAverageClass;
 
 struct _BorderAverage
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _BorderAverageClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -50,25 +50,25 @@ struct _BorderAverageClass
 
 GType                   border_average_get_type               (void) G_GNUC_CONST;
 
-static GList          * border_average_query_procedures       (GimpPlugIn           *plug_in);
-static GimpProcedure  * border_average_create_procedure       (GimpPlugIn           *plug_in,
+static GList          * border_average_query_procedures       (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * border_average_create_procedure       (LigmaPlugIn           *plug_in,
                                                                const gchar          *name);
 
-static GimpValueArray * border_average_run                    (GimpProcedure        *procedure,
-                                                               GimpRunMode           run_mode,
-                                                               GimpImage            *image,
+static LigmaValueArray * border_average_run                    (LigmaProcedure        *procedure,
+                                                               LigmaRunMode           run_mode,
+                                                               LigmaImage            *image,
                                                                gint                  n_drawables,
-                                                               GimpDrawable        **drawables,
-                                                               const GimpValueArray *args,
+                                                               LigmaDrawable        **drawables,
+                                                               const LigmaValueArray *args,
                                                                gpointer              run_data);
 
 
 static void      borderaverage        (GeglBuffer   *buffer,
-                                       GimpDrawable *drawable,
-                                       GimpRGB      *result);
+                                       LigmaDrawable *drawable,
+                                       LigmaRGB      *result);
 
-static gboolean  borderaverage_dialog (GimpImage    *image,
-                                       GimpDrawable *drawable);
+static gboolean  borderaverage_dialog (LigmaImage    *image,
+                                       LigmaDrawable *drawable);
 
 static void      add_new_color        (const guchar *buffer,
                                        gint         *cube,
@@ -78,9 +78,9 @@ static void      thickness_callback   (GtkWidget    *widget,
                                        gpointer      data);
 
 
-G_DEFINE_TYPE (BorderAverage, border_average, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (BorderAverage, border_average, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BORDER_AVERAGE_TYPE)
+LIGMA_MAIN (BORDER_AVERAGE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -102,7 +102,7 @@ static borderaverage_data =
 static void
 border_average_class_init (BorderAverageClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = border_average_query_procedures;
   plug_in_class->create_procedure = border_average_create_procedure;
@@ -115,51 +115,51 @@ border_average_init (BorderAverage *film)
 }
 
 static GList *
-border_average_query_procedures (GimpPlugIn *plug_in)
+border_average_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-border_average_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+border_average_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             border_average_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Border Average..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Info");
+      ligma_procedure_set_menu_label (procedure, _("_Border Average..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Info");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Set foreground to the average color of the image border"),
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Philipp Klaus",
                                       "Internet Access AG",
                                       "1998");
 
-      GIMP_PROC_ARG_INT (procedure, "thickness",
+      LIGMA_PROC_ARG_INT (procedure, "thickness",
                          "Border size to take in count",
                          "Border size to take in count",
                          0, G_MAXINT, 3,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "bucket-exponent",
+      LIGMA_PROC_ARG_INT (procedure, "bucket-exponent",
                          "Bits for bucket size (default=4: 16 Levels)",
                          "Bits for bucket size (default=4: 16 Levels)",
                          0, G_MAXINT, 4,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_RGB (procedure, "borderaverage",
+      LIGMA_PROC_VAL_RGB (procedure, "borderaverage",
                          "The average color of the specified border.",
                          "The average color of the specified border.",
                          TRUE, NULL,
@@ -170,19 +170,19 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
 }
 
 
-static GimpValueArray *
-border_average_run (GimpProcedure        *procedure,
-                    GimpRunMode           run_mode,
-                    GimpImage            *image,
+static LigmaValueArray *
+border_average_run (LigmaProcedure        *procedure,
+                    LigmaRunMode           run_mode,
+                    LigmaImage            *image,
                     gint                  n_drawables,
-                    GimpDrawable        **drawables,
-                    const GimpValueArray *args,
+                    LigmaDrawable        **drawables,
+                    const LigmaValueArray *args,
                     gpointer              run_data)
 {
-  GimpDrawable      *drawable;
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRGB            result_color = { 0.0, };
+  LigmaDrawable      *drawable;
+  LigmaValueArray    *return_vals = NULL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaRGB            result_color = { 0.0, };
   GeglBuffer        *buffer;
 
   gegl_init (NULL, NULL);
@@ -191,12 +191,12 @@ border_average_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -204,30 +204,30 @@ border_average_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &borderaverage_data);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &borderaverage_data);
       borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
       if (! borderaverage_dialog (image, drawable))
-        status = GIMP_PDB_EXECUTION_ERROR;
+        status = LIGMA_PDB_EXECUTION_ERROR;
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      if (gimp_value_array_length (args) != 2)
-        status = GIMP_PDB_CALLING_ERROR;
-      if (status == GIMP_PDB_SUCCESS)
+    case LIGMA_RUN_NONINTERACTIVE:
+      if (ligma_value_array_length (args) != 2)
+        status = LIGMA_PDB_CALLING_ERROR;
+      if (status == LIGMA_PDB_SUCCESS)
         {
-          borderaverage_thickness       = GIMP_VALUES_GET_INT (args, 0);
-          borderaverage_bucket_exponent = GIMP_VALUES_GET_INT (args, 1);
+          borderaverage_thickness       = LIGMA_VALUES_GET_INT (args, 0);
+          borderaverage_bucket_exponent = LIGMA_VALUES_GET_INT (args, 1);
         }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &borderaverage_data);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &borderaverage_data);
       borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
       break;
@@ -236,38 +236,38 @@ border_average_run (GimpProcedure        *procedure,
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable))
+      if (ligma_drawable_is_rgb (drawable))
         {
-          gimp_progress_init ( _("Border Average"));
+          ligma_progress_init ( _("Border Average"));
           borderaverage (buffer, drawable, &result_color);
 
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+          if (run_mode != LIGMA_RUN_NONINTERACTIVE)
             {
-              gimp_context_set_foreground (&result_color);
+              ligma_context_set_foreground (&result_color);
             }
-          if (run_mode == GIMP_RUN_INTERACTIVE)
+          if (run_mode == LIGMA_RUN_INTERACTIVE)
             {
               borderaverage_data.thickness       = borderaverage_thickness;
               borderaverage_data.bucket_exponent = borderaverage_bucket_exponent;
-              gimp_set_data (PLUG_IN_PROC,
+              ligma_set_data (PLUG_IN_PROC,
                              &borderaverage_data, sizeof (borderaverage_data));
             }
         }
       else
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
   g_object_unref (buffer);
 
-  return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+  return_vals = ligma_procedure_new_return_values (procedure, status, NULL);
 
-  if (status == GIMP_PDB_SUCCESS)
-    GIMP_VALUES_SET_RGB (return_vals, 1, &result_color);
+  if (status == LIGMA_PDB_SUCCESS)
+    LIGMA_VALUES_SET_RGB (return_vals, 1, &result_color);
 
   return return_vals;
 }
@@ -275,8 +275,8 @@ border_average_run (GimpProcedure        *procedure,
 
 static void
 borderaverage (GeglBuffer   *buffer,
-               GimpDrawable *drawable,
-               GimpRGB      *result)
+               LigmaDrawable *drawable,
+               LigmaRGB      *result)
 {
   gint            x, y, width, height;
   gint            max;
@@ -286,9 +286,9 @@ borderaverage (GeglBuffer   *buffer,
   gint            i, j, k;
   GeglRectangle   border[4];
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! ligma_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      gimp_rgba_set_uchar (result, 0, 0, 0, 255);
+      ligma_rgba_set_uchar (result, 0, 0, 0, 255);
       return;
     }
 
@@ -383,7 +383,7 @@ borderaverage (GeglBuffer   *buffer,
     }
 
   /* return the color */
-  gimp_rgba_set_uchar (result, r, g, b, 255);
+  ligma_rgba_set_uchar (result, r, g, b, 255);
 
   g_free (cube);
 }
@@ -404,8 +404,8 @@ add_new_color (const guchar *buffer,
 }
 
 static gboolean
-borderaverage_dialog (GimpImage    *image,
-                      GimpDrawable *drawable)
+borderaverage_dialog (LigmaImage    *image,
+                      LigmaDrawable *drawable)
 {
   GtkWidget    *dialog;
   GtkWidget    *frame;
@@ -413,7 +413,7 @@ borderaverage_dialog (GimpImage    *image,
   GtkWidget    *hbox;
   GtkWidget    *label;
   GtkWidget    *size_entry;
-  GimpUnit      unit;
+  LigmaUnit      unit;
   GtkWidget    *combo;
   GtkSizeGroup *group;
   gboolean      run;
@@ -423,23 +423,23 @@ borderaverage_dialog (GimpImage    *image,
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Border Average"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Border Average"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -447,7 +447,7 @@ borderaverage_dialog (GimpImage    *image,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("Border Size"));
+  frame = ligma_frame_new (_("Border Size"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -465,33 +465,33 @@ borderaverage_dialog (GimpImage    *image,
   g_object_unref (group);
 
   /*  Get the image resolution and unit  */
-  gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
+  ligma_image_get_resolution (image, &xres, &yres);
+  unit = ligma_image_get_unit (image);
 
-  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 4,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  size_entry = ligma_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 4,
+                                    LIGMA_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (size_entry), LIGMA_UNIT_PIXEL);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   if (buffer)
-    gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
+    ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (size_entry), 0, 0.0,
                               MIN (gegl_buffer_get_width (buffer),
                                    gegl_buffer_get_height (buffer)));
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (size_entry), 0,
                               (gdouble) borderaverage_thickness);
   g_signal_connect (size_entry, "value-changed",
                     G_CALLBACK (thickness_callback),
                     NULL);
   gtk_widget_show (size_entry);
 
-  frame = gimp_frame_new (_("Number of Colors"));
+  frame = ligma_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -506,12 +506,12 @@ borderaverage_dialog (GimpImage    *image,
 
   gtk_size_group_add_widget (group, label);
 
-  combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (labels), labels);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+  combo = ligma_int_combo_box_new_array (G_N_ELEMENTS (labels), labels);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                  borderaverage_bucket_exponent);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &borderaverage_bucket_exponent);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
@@ -520,7 +520,7 @@ borderaverage_dialog (GimpImage    *image,
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -532,5 +532,5 @@ thickness_callback (GtkWidget *widget,
                     gpointer   data)
 {
   borderaverage_thickness =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+    ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 0);
 }

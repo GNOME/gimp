@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfilter.c
+ * ligmafilter.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-memsize.h"
-#include "gimpfilter.h"
+#include "ligma.h"
+#include "ligma-memsize.h"
+#include "ligmafilter.h"
 
 
 enum
@@ -45,93 +45,93 @@ enum
 };
 
 
-typedef struct _GimpFilterPrivate GimpFilterPrivate;
+typedef struct _LigmaFilterPrivate LigmaFilterPrivate;
 
-struct _GimpFilterPrivate
+struct _LigmaFilterPrivate
 {
   GeglNode       *node;
 
   guint           active       : 1;
   guint           is_last_node : 1;
 
-  GimpApplicator *applicator;
+  LigmaApplicator *applicator;
 };
 
-#define GET_PRIVATE(filter) ((GimpFilterPrivate *) gimp_filter_get_instance_private ((GimpFilter *) (filter)))
+#define GET_PRIVATE(filter) ((LigmaFilterPrivate *) ligma_filter_get_instance_private ((LigmaFilter *) (filter)))
 
 
 /*  local function prototypes  */
 
-static void       gimp_filter_finalize      (GObject      *object);
-static void       gimp_filter_set_property  (GObject      *object,
+static void       ligma_filter_finalize      (GObject      *object);
+static void       ligma_filter_set_property  (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void       gimp_filter_get_property  (GObject      *object,
+static void       ligma_filter_get_property  (GObject      *object,
                                              guint         property_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
-static gint64     gimp_filter_get_memsize   (GimpObject   *object,
+static gint64     ligma_filter_get_memsize   (LigmaObject   *object,
                                              gint64       *gui_size);
 
-static GeglNode * gimp_filter_real_get_node (GimpFilter   *filter);
+static GeglNode * ligma_filter_real_get_node (LigmaFilter   *filter);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFilter, gimp_filter, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaFilter, ligma_filter, LIGMA_TYPE_VIEWABLE)
 
-#define parent_class gimp_filter_parent_class
+#define parent_class ligma_filter_parent_class
 
-static guint gimp_filter_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_filter_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_filter_class_init (GimpFilterClass *klass)
+ligma_filter_class_init (LigmaFilterClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
-  gimp_filter_signals[ACTIVE_CHANGED] =
+  ligma_filter_signals[ACTIVE_CHANGED] =
     g_signal_new ("active-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFilterClass, active_changed),
+                  G_STRUCT_OFFSET (LigmaFilterClass, active_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize         = gimp_filter_finalize;
-  object_class->set_property     = gimp_filter_set_property;
-  object_class->get_property     = gimp_filter_get_property;
+  object_class->finalize         = ligma_filter_finalize;
+  object_class->set_property     = ligma_filter_set_property;
+  object_class->get_property     = ligma_filter_get_property;
 
-  gimp_object_class->get_memsize = gimp_filter_get_memsize;
+  ligma_object_class->get_memsize = ligma_filter_get_memsize;
 
   klass->active_changed          = NULL;
-  klass->get_node                = gimp_filter_real_get_node;
+  klass->get_node                = ligma_filter_real_get_node;
 
   g_object_class_install_property (object_class, PROP_ACTIVE,
                                    g_param_spec_boolean ("active", NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_IS_LAST_NODE,
                                    g_param_spec_boolean ("is-last-node",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_filter_init (GimpFilter *filter)
+ligma_filter_init (LigmaFilter *filter)
 {
-  GimpFilterPrivate *private = GET_PRIVATE (filter);
+  LigmaFilterPrivate *private = GET_PRIVATE (filter);
 
   private->active = TRUE;
 }
 
 static void
-gimp_filter_finalize (GObject *object)
+ligma_filter_finalize (GObject *object)
 {
-  GimpFilterPrivate *private = GET_PRIVATE (object);
+  LigmaFilterPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->node);
 
@@ -139,20 +139,20 @@ gimp_filter_finalize (GObject *object)
 }
 
 static void
-gimp_filter_set_property (GObject      *object,
+ligma_filter_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpFilter *filter = GIMP_FILTER (object);
+  LigmaFilter *filter = LIGMA_FILTER (object);
 
   switch (property_id)
     {
     case PROP_ACTIVE:
-      gimp_filter_set_active (filter, g_value_get_boolean (value));
+      ligma_filter_set_active (filter, g_value_get_boolean (value));
       break;
     case PROP_IS_LAST_NODE:
-      gimp_filter_set_is_last_node (filter, g_value_get_boolean (value));
+      ligma_filter_set_is_last_node (filter, g_value_get_boolean (value));
       break;
 
     default:
@@ -162,12 +162,12 @@ gimp_filter_set_property (GObject      *object,
 }
 
 static void
-gimp_filter_get_property (GObject    *object,
+ligma_filter_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpFilterPrivate *private = GET_PRIVATE (object);
+  LigmaFilterPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -185,22 +185,22 @@ gimp_filter_get_property (GObject    *object,
 }
 
 static gint64
-gimp_filter_get_memsize (GimpObject *object,
+ligma_filter_get_memsize (LigmaObject *object,
                          gint64     *gui_size)
 {
-  GimpFilterPrivate *private = GET_PRIVATE (object);
+  LigmaFilterPrivate *private = GET_PRIVATE (object);
   gint64             memsize = 0;
 
-  memsize += gimp_g_object_get_memsize (G_OBJECT (private->node));
+  memsize += ligma_g_object_get_memsize (G_OBJECT (private->node));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static GeglNode *
-gimp_filter_real_get_node (GimpFilter *filter)
+ligma_filter_real_get_node (LigmaFilter *filter)
 {
-  GimpFilterPrivate *private = GET_PRIVATE (filter);
+  LigmaFilterPrivate *private = GET_PRIVATE (filter);
 
   private->node = gegl_node_new ();
 
@@ -210,74 +210,74 @@ gimp_filter_real_get_node (GimpFilter *filter)
 
 /*  public functions  */
 
-GimpFilter *
-gimp_filter_new (const gchar *name)
+LigmaFilter *
+ligma_filter_new (const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_FILTER,
+  return g_object_new (LIGMA_TYPE_FILTER,
                        "name", name,
                        NULL);
 }
 
 GeglNode *
-gimp_filter_get_node (GimpFilter *filter)
+ligma_filter_get_node (LigmaFilter *filter)
 {
-  GimpFilterPrivate *private;
+  LigmaFilterPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILTER (filter), NULL);
 
   private = GET_PRIVATE (filter);
 
   if (private->node)
     return private->node;
 
-  return GIMP_FILTER_GET_CLASS (filter)->get_node (filter);
+  return LIGMA_FILTER_GET_CLASS (filter)->get_node (filter);
 }
 
 GeglNode *
-gimp_filter_peek_node (GimpFilter *filter)
+ligma_filter_peek_node (LigmaFilter *filter)
 {
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILTER (filter), NULL);
 
   return GET_PRIVATE (filter)->node;
 }
 
 void
-gimp_filter_set_active (GimpFilter *filter,
+ligma_filter_set_active (LigmaFilter *filter,
                         gboolean    active)
 {
-  g_return_if_fail (GIMP_IS_FILTER (filter));
+  g_return_if_fail (LIGMA_IS_FILTER (filter));
 
   active = active ? TRUE : FALSE;
 
-  if (active != gimp_filter_get_active (filter))
+  if (active != ligma_filter_get_active (filter))
     {
       GET_PRIVATE (filter)->active = active;
 
-      g_signal_emit (filter, gimp_filter_signals[ACTIVE_CHANGED], 0);
+      g_signal_emit (filter, ligma_filter_signals[ACTIVE_CHANGED], 0);
 
       g_object_notify (G_OBJECT (filter), "active");
     }
 }
 
 gboolean
-gimp_filter_get_active (GimpFilter *filter)
+ligma_filter_get_active (LigmaFilter *filter)
 {
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILTER (filter), FALSE);
 
   return GET_PRIVATE (filter)->active;
 }
 
 void
-gimp_filter_set_is_last_node (GimpFilter *filter,
+ligma_filter_set_is_last_node (LigmaFilter *filter,
                               gboolean    is_last_node)
 {
-  g_return_if_fail (GIMP_IS_FILTER (filter));
+  g_return_if_fail (LIGMA_IS_FILTER (filter));
 
   is_last_node = is_last_node ? TRUE : FALSE;
 
-  if (is_last_node != gimp_filter_get_is_last_node (filter))
+  if (is_last_node != ligma_filter_get_is_last_node (filter))
     {
       GET_PRIVATE (filter)->is_last_node = is_last_node;
 
@@ -286,30 +286,30 @@ gimp_filter_set_is_last_node (GimpFilter *filter,
 }
 
 gboolean
-gimp_filter_get_is_last_node (GimpFilter *filter)
+ligma_filter_get_is_last_node (LigmaFilter *filter)
 {
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILTER (filter), FALSE);
 
   return GET_PRIVATE (filter)->is_last_node;
 }
 
 void
-gimp_filter_set_applicator (GimpFilter     *filter,
-                            GimpApplicator *applicator)
+ligma_filter_set_applicator (LigmaFilter     *filter,
+                            LigmaApplicator *applicator)
 {
-  GimpFilterPrivate *private;
+  LigmaFilterPrivate *private;
 
-  g_return_if_fail (GIMP_IS_FILTER (filter));
+  g_return_if_fail (LIGMA_IS_FILTER (filter));
 
   private = GET_PRIVATE (filter);
 
   private->applicator = applicator;
 }
 
-GimpApplicator *
-gimp_filter_get_applicator (GimpFilter *filter)
+LigmaApplicator *
+ligma_filter_get_applicator (LigmaFilter *filter)
 {
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILTER (filter), NULL);
 
   return GET_PRIVATE (filter)->applicator;
 }

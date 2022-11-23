@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsearchpopup.c
+ * ligmasearchpopup.c
  * Copyright (C) 2015 Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,20 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpaction.h"
-#include "gimppopup.h"
-#include "gimpsearchpopup.h"
-#include "gimptoggleaction.h"
-#include "gimpuimanager.h"
+#include "ligmaaction.h"
+#include "ligmapopup.h"
+#include "ligmasearchpopup.h"
+#include "ligmatoggleaction.h"
+#include "ligmauimanager.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -55,148 +55,148 @@ enum
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_CALLBACK,
   PROP_CALLBACK_DATA
 };
 
 
-struct _GimpSearchPopupPrivate
+struct _LigmaSearchPopupPrivate
 {
-  Gimp                    *gimp;
+  Ligma                    *ligma;
   GtkWidget               *keyword_entry;
   GtkWidget               *results_list;
   GtkWidget               *list_view;
 
-  GimpSearchPopupCallback  build_results;
+  LigmaSearchPopupCallback  build_results;
   gpointer                 build_results_data;
 };
 
 
-static void       gimp_search_popup_constructed         (GObject            *object);
-static void       gimp_search_popup_set_property        (GObject            *object,
+static void       ligma_search_popup_constructed         (GObject            *object);
+static void       ligma_search_popup_set_property        (GObject            *object,
                                                          guint               property_id,
                                                          const GValue       *value,
                                                          GParamSpec         *pspec);
-static void       gimp_search_popup_get_property        (GObject            *object,
+static void       ligma_search_popup_get_property        (GObject            *object,
                                                          guint               property_id,
                                                          GValue             *value,
                                                          GParamSpec         *pspec);
 
-static void       gimp_search_popup_size_allocate        (GtkWidget         *widget,
+static void       ligma_search_popup_size_allocate        (GtkWidget         *widget,
                                                           GtkAllocation     *allocation);
 
-static void       gimp_search_popup_confirm              (GimpPopup *popup);
+static void       ligma_search_popup_confirm              (LigmaPopup *popup);
 
 /* Signal handlers on the search entry */
 static gboolean   keyword_entry_key_press_event          (GtkWidget         *widget,
                                                           GdkEventKey       *event,
-                                                          GimpSearchPopup   *popup);
+                                                          LigmaSearchPopup   *popup);
 static gboolean   keyword_entry_key_release_event        (GtkWidget         *widget,
                                                           GdkEventKey       *event,
-                                                          GimpSearchPopup   *popup);
+                                                          LigmaSearchPopup   *popup);
 
 /* Signal handlers on the results list */
 static gboolean   results_list_key_press_event           (GtkWidget         *widget,
                                                           GdkEventKey       *kevent,
-                                                          GimpSearchPopup   *popup);
+                                                          LigmaSearchPopup   *popup);
 static void       results_list_row_activated             (GtkTreeView       *treeview,
                                                           GtkTreePath       *path,
                                                           GtkTreeViewColumn *col,
-                                                          GimpSearchPopup   *popup);
+                                                          LigmaSearchPopup   *popup);
 
 /* Utils */
-static void       gimp_search_popup_run_selected         (GimpSearchPopup   *popup);
-static void       gimp_search_popup_setup_results        (GtkWidget        **results_list,
+static void       ligma_search_popup_run_selected         (LigmaSearchPopup   *popup);
+static void       ligma_search_popup_setup_results        (GtkWidget        **results_list,
                                                           GtkWidget        **list_view);
 
-static gchar    * gimp_search_popup_find_accel_label     (GimpAction        *action);
-static gboolean   gimp_search_popup_view_accel_find_func (GtkAccelKey       *key,
+static gchar    * ligma_search_popup_find_accel_label     (LigmaAction        *action);
+static gboolean   ligma_search_popup_view_accel_find_func (GtkAccelKey       *key,
                                                           GClosure          *closure,
                                                           gpointer           data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSearchPopup, ligma_search_popup, LIGMA_TYPE_POPUP)
 
-#define parent_class gimp_search_popup_parent_class
+#define parent_class ligma_search_popup_parent_class
 
 static gint window_height = 0;
 
 
 static void
-gimp_search_popup_class_init (GimpSearchPopupClass *klass)
+ligma_search_popup_class_init (LigmaSearchPopupClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpPopupClass *popup_class  = GIMP_POPUP_CLASS (klass);
+  LigmaPopupClass *popup_class  = LIGMA_POPUP_CLASS (klass);
 
-  object_class->constructed   = gimp_search_popup_constructed;
-  object_class->set_property  = gimp_search_popup_set_property;
-  object_class->get_property  = gimp_search_popup_get_property;
+  object_class->constructed   = ligma_search_popup_constructed;
+  object_class->set_property  = ligma_search_popup_set_property;
+  object_class->get_property  = ligma_search_popup_get_property;
 
-  widget_class->size_allocate = gimp_search_popup_size_allocate;
+  widget_class->size_allocate = ligma_search_popup_size_allocate;
 
-  popup_class->confirm        = gimp_search_popup_confirm;
+  popup_class->confirm        = ligma_search_popup_confirm;
 
   /**
-   * GimpSearchPopup:gimp:
+   * LigmaSearchPopup:ligma:
    *
-   * The #Gimp object.
+   * The #Ligma object.
    */
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   /**
-   * GimpSearchPopup:callback:
+   * LigmaSearchPopup:callback:
    *
-   * The #GimpSearchPopupCallback used to fill in results.
+   * The #LigmaSearchPopupCallback used to fill in results.
    */
   g_object_class_install_property (object_class, PROP_CALLBACK,
                                    g_param_spec_pointer ("callback", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
   /**
-   * GimpSearchPopup:callback-data:
+   * LigmaSearchPopup:callback-data:
    *
-   * The #GPointer fed as last parameter to the #GimpSearchPopupCallback.
+   * The #GPointer fed as last parameter to the #LigmaSearchPopupCallback.
    */
   g_object_class_install_property (object_class, PROP_CALLBACK_DATA,
                                    g_param_spec_pointer ("callback-data", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_search_popup_init (GimpSearchPopup *search_popup)
+ligma_search_popup_init (LigmaSearchPopup *search_popup)
 {
-  search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
+  search_popup->priv = ligma_search_popup_get_instance_private (search_popup);
 }
 
 /************ Public Functions ****************/
 
 /**
- * gimp_search_popup_new:
- * @gimp:          #Gimp object.
+ * ligma_search_popup_new:
+ * @ligma:          #Ligma object.
  * @role:          the role to give to the #GtkWindow.
  * @title:         the #GtkWindow title.
- * @callback:      the #GimpSearchPopupCallback used to fill in results.
+ * @callback:      the #LigmaSearchPopupCallback used to fill in results.
  * @callback_data: data fed to @callback.
  *
- * Returns: a new #GimpSearchPopup.
+ * Returns: a new #LigmaSearchPopup.
  */
 GtkWidget *
-gimp_search_popup_new (Gimp                    *gimp,
+ligma_search_popup_new (Ligma                    *ligma,
                        const gchar             *role,
                        const gchar             *title,
-                       GimpSearchPopupCallback  callback,
+                       LigmaSearchPopupCallback  callback,
                        gpointer                 callback_data)
 {
   GtkWidget *widget;
 
-  widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
+  widget = g_object_new (LIGMA_TYPE_SEARCH_POPUP,
                          "type",          GTK_WINDOW_TOPLEVEL,
                          "type-hint",     GDK_WINDOW_TYPE_HINT_DIALOG,
                          "decorated",     TRUE,
@@ -204,7 +204,7 @@ gimp_search_popup_new (Gimp                    *gimp,
                          "role",          role,
                          "title",         title,
 
-                         "gimp",          gimp,
+                         "ligma",          ligma,
                          "callback",      callback,
                          "callback-data", callback_data,
                          NULL);
@@ -215,9 +215,9 @@ gimp_search_popup_new (Gimp                    *gimp,
 }
 
 /**
- * gimp_search_popup_add_result:
- * @popup:   the #GimpSearchPopup.
- * @action:  a #GimpAction to add in results list.
+ * ligma_search_popup_add_result:
+ * @popup:   the #LigmaSearchPopup.
+ * @action:  a #LigmaAction to add in results list.
  * @section: the section to add @action.
  *
  * Adds @action in the @popup's results at @section.
@@ -225,8 +225,8 @@ gimp_search_popup_new (Gimp                    *gimp,
  * to appear before other, simply use lower @section.
  */
 void
-gimp_search_popup_add_result (GimpSearchPopup *popup,
-                              GimpAction      *action,
+ligma_search_popup_add_result (LigmaSearchPopup *popup,
+                              LigmaAction      *action,
                               gint             section)
 {
   GtkTreeIter   iter;
@@ -248,7 +248,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   const gchar  *sensitive_reason = NULL;
   gchar        *escaped_reason   = NULL;
 
-  label = g_strstrip (gimp_strip_uline (gimp_action_get_label (action)));
+  label = g_strstrip (ligma_strip_uline (ligma_action_get_label (action)));
 
   if (! label || strlen (label) == 0)
     {
@@ -258,33 +258,33 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 
   escaped_label = g_markup_escape_text (label, -1);
 
-  if (GIMP_IS_TOGGLE_ACTION (action))
+  if (LIGMA_IS_TOGGLE_ACTION (action))
     {
-      if (gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)))
+      if (ligma_toggle_action_get_active (LIGMA_TOGGLE_ACTION (action)))
         icon_name = "gtk-ok";
       else
         icon_name = "gtk-no";
     }
   else
     {
-      icon_name = gimp_action_get_icon_name (action);
+      icon_name = ligma_action_get_icon_name (action);
     }
 
-  accel_string = gimp_search_popup_find_accel_label (action);
+  accel_string = ligma_search_popup_find_accel_label (action);
   if (accel_string)
     {
       escaped_accel = g_markup_escape_text (accel_string, -1);
       has_shortcut = TRUE;
     }
 
-  tooltip = gimp_action_get_tooltip (action);
+  tooltip = ligma_action_get_tooltip (action);
   if (tooltip != NULL)
     {
       escaped_tooltip = g_markup_escape_text (tooltip, -1);
       has_tooltip = TRUE;
     }
 
-  sensitive = gimp_action_is_sensitive (action, &sensitive_reason);
+  sensitive = ligma_action_is_sensitive (action, &sensitive_reason);
   if (sensitive_reason != NULL)
     {
       escaped_reason = g_markup_escape_text (sensitive_reason, -1);
@@ -303,7 +303,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                             escaped_reason ? "\n" : "",
                             escaped_reason ? escaped_reason : "");
 
-  action_name = g_markup_escape_text (gimp_action_get_name (action), -1);
+  action_name = g_markup_escape_text (ligma_action_get_name (action), -1);
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (popup->priv->results_list));
   store = GTK_LIST_STORE (model);
@@ -354,9 +354,9 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 /************ Private Functions ****************/
 
 static void
-gimp_search_popup_constructed (GObject *object)
+ligma_search_popup_constructed (GObject *object)
 {
-  GimpSearchPopup *popup = GIMP_SEARCH_POPUP (object);
+  LigmaSearchPopup *popup = LIGMA_SEARCH_POPUP (object);
   GtkWidget       *main_vbox;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -375,7 +375,7 @@ gimp_search_popup_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (popup->priv->keyword_entry);
 
-  gimp_search_popup_setup_results (&popup->priv->results_list,
+  ligma_search_popup_setup_results (&popup->priv->results_list,
                                    &popup->priv->list_view);
   gtk_box_pack_start (GTK_BOX (main_vbox),
                       popup->priv->list_view, TRUE, TRUE, 0);
@@ -403,17 +403,17 @@ gimp_search_popup_constructed (GObject *object)
 }
 
 static void
-gimp_search_popup_set_property (GObject      *object,
+ligma_search_popup_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpSearchPopup *search_popup = GIMP_SEARCH_POPUP (object);
+  LigmaSearchPopup *search_popup = LIGMA_SEARCH_POPUP (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      search_popup->priv->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      search_popup->priv->ligma = g_value_get_object (value);
       break;
     case PROP_CALLBACK:
       search_popup->priv->build_results = g_value_get_pointer (value);
@@ -429,17 +429,17 @@ gimp_search_popup_set_property (GObject      *object,
 }
 
 static void
-gimp_search_popup_get_property (GObject      *object,
+ligma_search_popup_get_property (GObject      *object,
                                 guint         property_id,
                                 GValue       *value,
                                 GParamSpec   *pspec)
 {
-  GimpSearchPopup *search_popup = GIMP_SEARCH_POPUP (object);
+  LigmaSearchPopup *search_popup = LIGMA_SEARCH_POPUP (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, search_popup->priv->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, search_popup->priv->ligma);
       break;
     case PROP_CALLBACK:
       g_value_set_pointer (value, search_popup->priv->build_results);
@@ -455,15 +455,15 @@ gimp_search_popup_get_property (GObject      *object,
 }
 
 static void
-gimp_search_popup_size_allocate (GtkWidget     *widget,
+ligma_search_popup_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
-  GimpSearchPopup *popup = GIMP_SEARCH_POPUP (widget);
+  LigmaSearchPopup *popup = LIGMA_SEARCH_POPUP (widget);
   GdkRectangle     workarea;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget),
+  gdk_monitor_get_workarea (ligma_widget_get_monitor (widget),
                             &workarea);
 
   if (window_height == 0)
@@ -483,17 +483,17 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_search_popup_confirm (GimpPopup *popup)
+ligma_search_popup_confirm (LigmaPopup *popup)
 {
-  GimpSearchPopup *search_popup = GIMP_SEARCH_POPUP (popup);
+  LigmaSearchPopup *search_popup = LIGMA_SEARCH_POPUP (popup);
 
-  gimp_search_popup_run_selected (search_popup);
+  ligma_search_popup_run_selected (search_popup);
 }
 
 static gboolean
 keyword_entry_key_press_event (GtkWidget       *widget,
                                GdkEventKey     *event,
-                               GimpSearchPopup *popup)
+                               LigmaSearchPopup *popup)
 {
   gboolean event_processed = FALSE;
 
@@ -520,7 +520,7 @@ keyword_entry_key_press_event (GtkWidget       *widget,
 static gboolean
 keyword_entry_key_release_event (GtkWidget       *widget,
                                  GdkEventKey     *event,
-                                 GimpSearchPopup *popup)
+                                 LigmaSearchPopup *popup)
 {
   GtkTreeView *tree_view = GTK_TREE_VIEW (popup->priv->results_list);
   GtkTreePath *path;
@@ -592,7 +592,7 @@ keyword_entry_key_release_event (GtkWidget       *widget,
 static gboolean
 results_list_key_press_event (GtkWidget       *widget,
                               GdkEventKey     *kevent,
-                              GimpSearchPopup *popup)
+                              LigmaSearchPopup *popup)
 {
   /* These keys are already managed by key bindings. */
   g_return_val_if_fail (kevent->keyval != GDK_KEY_Escape   &&
@@ -665,13 +665,13 @@ static void
 results_list_row_activated (GtkTreeView       *treeview,
                             GtkTreePath       *path,
                             GtkTreeViewColumn *col,
-                            GimpSearchPopup   *popup)
+                            LigmaSearchPopup   *popup)
 {
-  gimp_search_popup_run_selected (popup);
+  ligma_search_popup_run_selected (popup);
 }
 
 static void
-gimp_search_popup_run_selected (GimpSearchPopup *popup)
+ligma_search_popup_run_selected (LigmaSearchPopup *popup)
 {
   GtkTreeSelection *selection;
   GtkTreeModel     *model;
@@ -682,16 +682,16 @@ gimp_search_popup_run_selected (GimpSearchPopup *popup)
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      GimpAction *action;
+      LigmaAction *action;
 
       gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
 
-      if (gimp_action_is_sensitive (action, NULL))
+      if (ligma_action_is_sensitive (action, NULL))
         {
           /* Close the search popup on activation. */
-          GIMP_POPUP_CLASS (parent_class)->cancel (GIMP_POPUP (popup));
+          LIGMA_POPUP_CLASS (parent_class)->cancel (LIGMA_POPUP (popup));
 
-          gimp_action_activate (action);
+          ligma_action_activate (action);
         }
 
       g_object_unref (action);
@@ -699,7 +699,7 @@ gimp_search_popup_run_selected (GimpSearchPopup *popup)
 }
 
 static void
-gimp_search_popup_setup_results (GtkWidget **results_list,
+ligma_search_popup_setup_results (GtkWidget **results_list,
                                  GtkWidget **list_view)
 {
   gint                wid1 = 100;
@@ -712,12 +712,12 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
-                              GIMP_TYPE_ACTION,
+                              LIGMA_TYPE_ACTION,
                               G_TYPE_BOOLEAN,
                               G_TYPE_INT);
   *results_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (*results_list), FALSE);
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
   gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (*results_list),
                                     COLUMN_TOOLTIP);
 #endif
@@ -747,25 +747,25 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
 }
 
 static gchar *
-gimp_search_popup_find_accel_label (GimpAction *action)
+ligma_search_popup_find_accel_label (LigmaAction *action)
 {
   guint            accel_key     = 0;
   GdkModifierType  accel_mask    = 0;
   GClosure        *accel_closure = NULL;
   gchar           *accel_string;
   GtkAccelGroup   *accel_group;
-  GimpUIManager   *manager;
+  LigmaUIManager   *manager;
 
-  manager       = gimp_ui_managers_from_name ("<Image>")->data;
-  accel_group   = gimp_ui_manager_get_accel_group (manager);
-  accel_closure = gimp_action_get_accel_closure (action);
+  manager       = ligma_ui_managers_from_name ("<Image>")->data;
+  accel_group   = ligma_ui_manager_get_accel_group (manager);
+  accel_closure = ligma_action_get_accel_closure (action);
 
   if (accel_closure)
     {
       GtkAccelKey *key;
 
       key = gtk_accel_group_find (accel_group,
-                                  gimp_search_popup_view_accel_find_func,
+                                  ligma_search_popup_view_accel_find_func,
                                   accel_closure);
       if (key            &&
           key->accel_key &&
@@ -790,7 +790,7 @@ gimp_search_popup_find_accel_label (GimpAction *action)
 }
 
 static gboolean
-gimp_search_popup_view_accel_find_func (GtkAccelKey *key,
+ligma_search_popup_view_accel_find_func (GtkAccelKey *key,
                                         GClosure    *closure,
                                         gpointer     data)
 {

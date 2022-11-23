@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@
 #include <sys/stat.h>
 #endif /* __APPLE__ */
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #else
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -51,18 +51,18 @@
 
 #include <babl/babl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb/pdb-types.h"
 
-#include "config/gimpearlyrc.h"
-#include "config/gimpconfig-dump.h"
+#include "config/ligmaearlyrc.h"
+#include "config/ligmaconfig-dump.h"
 
-#include "core/gimp.h"
-#include "core/gimpbacktrace.h"
+#include "core/ligma.h"
+#include "core/ligmabacktrace.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligmaprocedure.h"
 #include "pdb/internal-procs.h"
 
 #include "about.h"
@@ -84,47 +84,47 @@
 #include <conio.h>
 #endif
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
-#include "gimp-version.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
+#include "ligma-version.h"
 
 
-static gboolean  gimp_option_fatal_warnings   (const gchar  *option_name,
+static gboolean  ligma_option_fatal_warnings   (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
-static gboolean  gimp_option_stack_trace_mode (const gchar  *option_name,
+static gboolean  ligma_option_stack_trace_mode (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
-static gboolean  gimp_option_pdb_compat_mode  (const gchar  *option_name,
+static gboolean  ligma_option_pdb_compat_mode  (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
-static gboolean  gimp_option_dump_gimprc      (const gchar  *option_name,
+static gboolean  ligma_option_dump_ligmarc      (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
-static gboolean  gimp_option_dump_pdb_procedures_deprecated
+static gboolean  ligma_option_dump_pdb_procedures_deprecated
                                               (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
 
-static void      gimp_show_version_and_exit   (void) G_GNUC_NORETURN;
-static void      gimp_show_license_and_exit   (void) G_GNUC_NORETURN;
+static void      ligma_show_version_and_exit   (void) G_GNUC_NORETURN;
+static void      ligma_show_license_and_exit   (void) G_GNUC_NORETURN;
 
-static void      gimp_init_i18n               (void);
-static void      gimp_init_malloc             (void);
+static void      ligma_init_i18n               (void);
+static void      ligma_init_malloc             (void);
 
-#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
-static void      gimp_open_console_window     (void);
+#if defined (G_OS_WIN32) && !defined (LIGMA_CONSOLE_COMPILATION)
+static void      ligma_open_console_window     (void);
 #else
-#define gimp_open_console_window() /* as nothing */
+#define ligma_open_console_window() /* as nothing */
 #endif
 
-static const gchar        *system_gimprc     = NULL;
-static const gchar        *user_gimprc       = NULL;
+static const gchar        *system_ligmarc     = NULL;
+static const gchar        *user_ligmarc       = NULL;
 static const gchar        *session_name      = NULL;
 static const gchar        *batch_interpreter = NULL;
 static const gchar       **batch_commands    = NULL;
@@ -146,28 +146,28 @@ static gboolean            use_cpu_accel     = TRUE;
 static gboolean            console_messages  = FALSE;
 static gboolean            use_debug_handler = FALSE;
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
 static gboolean            show_playground   = TRUE;
 static gboolean            show_debug_menu   = TRUE;
-static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
-static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_WARN;
+static LigmaStackTraceMode  stack_trace_mode  = LIGMA_STACK_TRACE_QUERY;
+static LigmaPDBCompatMode   pdb_compat_mode   = LIGMA_PDB_COMPAT_WARN;
 #else
 static gboolean            show_playground   = FALSE;
 static gboolean            show_debug_menu   = FALSE;
-static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
-static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
+static LigmaStackTraceMode  stack_trace_mode  = LIGMA_STACK_TRACE_NEVER;
+static LigmaPDBCompatMode   pdb_compat_mode   = LIGMA_PDB_COMPAT_ON;
 #endif
 
 
 static const GOptionEntry main_entries[] =
 {
   { "version", 'v', G_OPTION_FLAG_NO_ARG,
-    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version_and_exit,
+    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) ligma_show_version_and_exit,
     N_("Show version information and exit"), NULL
   },
   {
     "license", 0, G_OPTION_FLAG_NO_ARG,
-    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_license_and_exit,
+    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) ligma_show_license_and_exit,
     N_("Show license information and exit"), NULL
   },
   {
@@ -178,7 +178,7 @@ static const GOptionEntry main_entries[] =
   {
     "new-instance", 'n', 0,
     G_OPTION_ARG_NONE, &new_instance,
-    N_("Start a new GIMP instance"), NULL
+    N_("Start a new LIGMA instance"), NULL
   },
   {
     "as-new", 'a', 0,
@@ -208,7 +208,7 @@ static const GOptionEntry main_entries[] =
   {
     "no-shm", 0, G_OPTION_FLAG_REVERSE,
     G_OPTION_ARG_NONE, &use_shm,
-    N_("Do not use shared memory between GIMP and plug-ins"), NULL
+    N_("Do not use shared memory between LIGMA and plug-ins"), NULL
   },
   {
     "no-cpu-accel", 0, G_OPTION_FLAG_REVERSE,
@@ -221,14 +221,14 @@ static const GOptionEntry main_entries[] =
     N_("Use an alternate sessionrc file"), "<name>"
   },
   {
-    "gimprc", 'g', 0,
-    G_OPTION_ARG_FILENAME, &user_gimprc,
-    N_("Use an alternate user gimprc file"), "<filename>"
+    "ligmarc", 'g', 0,
+    G_OPTION_ARG_FILENAME, &user_ligmarc,
+    N_("Use an alternate user ligmarc file"), "<filename>"
   },
   {
-    "system-gimprc", 0, 0,
-    G_OPTION_ARG_FILENAME, &system_gimprc,
-    N_("Use an alternate system gimprc file"), "<filename>"
+    "system-ligmarc", 0, 0,
+    G_OPTION_ARG_FILENAME, &system_ligmarc,
+    N_("Use an alternate system ligmarc file"), "<filename>"
   },
   {
     "batch", 'b', 0,
@@ -252,13 +252,13 @@ static const GOptionEntry main_entries[] =
   },
   {
     "pdb-compat-mode", 0, 0,
-    G_OPTION_ARG_CALLBACK, gimp_option_pdb_compat_mode,
+    G_OPTION_ARG_CALLBACK, ligma_option_pdb_compat_mode,
     /*  don't translate the mode names (off|on|warn)  */
     N_("PDB compatibility mode (off|on|warn)"), "<mode>"
   },
   {
     "stack-trace-mode", 0, 0,
-    G_OPTION_ARG_CALLBACK, gimp_option_stack_trace_mode,
+    G_OPTION_ARG_CALLBACK, ligma_option_stack_trace_mode,
     /*  don't translate the mode names (never|query|always)  */
     N_("Debug in case of a crash (never|query|always)"), "<mode>"
   },
@@ -269,28 +269,28 @@ static const GOptionEntry main_entries[] =
   },
   {
     "g-fatal-warnings", 0, G_OPTION_FLAG_NO_ARG,
-    G_OPTION_ARG_CALLBACK, gimp_option_fatal_warnings,
+    G_OPTION_ARG_CALLBACK, ligma_option_fatal_warnings,
     N_("Make all warnings fatal"), NULL
   },
   {
-    "dump-gimprc", 0, G_OPTION_FLAG_NO_ARG,
-    G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
-    N_("Output a gimprc file with default settings"), NULL
+    "dump-ligmarc", 0, G_OPTION_FLAG_NO_ARG,
+    G_OPTION_ARG_CALLBACK, ligma_option_dump_ligmarc,
+    N_("Output a ligmarc file with default settings"), NULL
   },
   {
-    "dump-gimprc-system", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
-    G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+    "dump-ligmarc-system", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_CALLBACK, ligma_option_dump_ligmarc,
     NULL, NULL
   },
   {
-    "dump-gimprc-manpage", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
-    G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+    "dump-ligmarc-manpage", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_CALLBACK, ligma_option_dump_ligmarc,
     NULL, NULL
   },
   {
     "dump-pdb-procedures-deprecated", 0,
     G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
-    G_OPTION_ARG_CALLBACK, gimp_option_dump_pdb_procedures_deprecated,
+    G_OPTION_ARG_CALLBACK, ligma_option_dump_pdb_procedures_deprecated,
     N_("Output a sorted list of deprecated procedures in the PDB"), NULL
   },
   {
@@ -313,21 +313,21 @@ static const GOptionEntry main_entries[] =
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
 static void
-gimp_macos_setenv (const char * progname)
+ligma_macos_setenv (const char * progname)
 {
-  /* helper to set environment variables for GIMP to be relocatable.
+  /* helper to set environment variables for LIGMA to be relocatable.
    * Due to the latest changes it is not recommended to set it in the shell
    * wrapper anymore.
    */
   gchar  *resolved_path;
-  /* on some OSX installations open file limit is 256 and GIMP needs more */
+  /* on some OSX installations open file limit is 256 and LIGMA needs more */
   struct  rlimit limit;
 
   limit.rlim_cur = 10000;
   limit.rlim_max = 10000;
   setrlimit (RLIMIT_NOFILE, &limit);
   resolved_path = g_canonicalize_filename (progname, NULL);
-  if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER"))
+  if (resolved_path && ! g_getenv ("LIGMA_NO_WRAPPER"))
     {
       /* set path to the app folder to make sure that our python is called
        * instead of system one
@@ -348,7 +348,7 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       if (res_dir && !stat (res_dir, &sb) && S_ISDIR (sb.st_mode))
         {
-          g_print ("GIMP is started as MacOS application\n");
+          g_print ("LIGMA is started as MacOS application\n");
         }
       else
         {
@@ -359,7 +359,7 @@ gimp_macos_setenv (const char * progname)
             {
               g_free (res_dir);
 
-              g_print ("GIMP is started in the build directory\n");
+              g_print ("LIGMA is started in the build directory\n");
 
               tmp = g_strdup_printf ("%s/..", app_dir); /* running in build dir */
               res_dir = g_canonicalize_filename (tmp, NULL);
@@ -376,7 +376,7 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/Frameworks/Python.framework", res_dir);
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
-          g_print ("GIMP was built with homebrew\n");
+          g_print ("LIGMA was built with homebrew\n");
           need_pythonhome = FALSE;
         }
       g_free (tmp);
@@ -384,7 +384,7 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", res_dir);
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
-          g_print ("GIMP was built with MacPorts\n");
+          g_print ("LIGMA was built with MacPorts\n");
           need_pythonhome = FALSE;
         }
       g_free (tmp);
@@ -450,7 +450,7 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       if (g_getenv ("HOME") != NULL)
         {
-          tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/3.00/cache",
+          tmp = g_strdup_printf ("%s/Library/Application Support/LIGMA/3.00/cache",
                                  g_getenv ("HOME"));
           g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
           g_free (tmp);
@@ -461,47 +461,47 @@ gimp_macos_setenv (const char * progname)
 }
 #endif
 
-/* gimp_early_configuration () is executed as soon as we can read
- * the "gimprc" files, but before any library initialization takes
+/* ligma_early_configuration () is executed as soon as we can read
+ * the "ligmarc" files, but before any library initialization takes
  * place
  */
 static void
-gimp_early_configuration (void)
+ligma_early_configuration (void)
 {
-  GFile       *system_gimprc_file = NULL;
-  GFile       *user_gimprc_file   = NULL;
-  GimpEarlyRc *earlyrc;
+  GFile       *system_ligmarc_file = NULL;
+  GFile       *user_ligmarc_file   = NULL;
+  LigmaEarlyRc *earlyrc;
   gchar       *language;
 
-  if (system_gimprc)
-    system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);
+  if (system_ligmarc)
+    system_ligmarc_file = g_file_new_for_commandline_arg (system_ligmarc);
 
-  if (user_gimprc)
-    user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
+  if (user_ligmarc)
+    user_ligmarc_file = g_file_new_for_commandline_arg (user_ligmarc);
 
-  /* GimpEarlyRc is reponsible for reading "gimprc" files for the
+  /* LigmaEarlyRc is reponsible for reading "ligmarc" files for the
    * sole purpose of getting some configuration data that is needed
    * in the early initialization phase
    */
-  earlyrc = gimp_early_rc_new (system_gimprc_file,
-                               user_gimprc_file,
+  earlyrc = ligma_early_rc_new (system_ligmarc_file,
+                               user_ligmarc_file,
                                be_verbose);
 
-  /* Language needs to be determined first, before any GimpContext is
-   * instantiated (which happens when the Gimp object is created)
+  /* Language needs to be determined first, before any LigmaContext is
+   * instantiated (which happens when the Ligma object is created)
    * because its properties need to be properly localized in the
    * settings language (if different from system language). Otherwise we
    * end up with pieces of GUI always using the system language (cf. bug
    * 787457)
    */
-  language = gimp_early_rc_get_language (earlyrc);
+  language = ligma_early_rc_get_language (earlyrc);
 
   /*  change the locale if a language if specified  */
   language_init (language);
   if (language)
     g_free (language);
 
-#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+#if defined (G_OS_WIN32) && !defined (LIGMA_CONSOLE_COMPILATION)
 
 #if GTK_MAJOR_VERSION > 3
 #warning For GTK4 and above use the proper backend-specific API instead of the GDK_WIN32_TABLET_INPUT_API environment variable
@@ -515,14 +515,14 @@ gimp_early_configuration (void)
        (gtk_get_minor_version () == 24 &&
         gtk_get_micro_version () >= 30)))
     {
-      GimpWin32PointerInputAPI api = gimp_early_rc_get_win32_pointer_input_api (earlyrc);
+      LigmaWin32PointerInputAPI api = ligma_early_rc_get_win32_pointer_input_api (earlyrc);
 
       switch (api)
         {
-        case GIMP_WIN32_POINTER_INPUT_API_WINTAB:
+        case LIGMA_WIN32_POINTER_INPUT_API_WINTAB:
           g_setenv ("GDK_WIN32_TABLET_INPUT_API", "wintab", TRUE);
           break;
-        case GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK:
+        case LIGMA_WIN32_POINTER_INPUT_API_WINDOWS_INK:
           g_setenv ("GDK_WIN32_TABLET_INPUT_API", "winpointer", TRUE);
           break;
         }
@@ -532,18 +532,18 @@ gimp_early_configuration (void)
 
   g_object_unref (earlyrc);
 
-  g_clear_object (&system_gimprc_file);
-  g_clear_object (&user_gimprc_file);
+  g_clear_object (&system_ligmarc_file);
+  g_clear_object (&user_ligmarc_file);
 }
 
 static gboolean
-gimp_options_group_parse_hook (GOptionContext   *context,
+ligma_options_group_parse_hook (GOptionContext   *context,
                                GOptionGroup     *group,
                                gpointer          data,
                                GError          **error)
 {
-  /*  early initialization from data stored in "gimprc" files  */
-  gimp_early_configuration ();
+  /*  early initialization from data stored in "ligmarc" files  */
+  ligma_early_configuration ();
 
   return TRUE;
 }
@@ -556,15 +556,15 @@ main (int    argc,
   GError         *error = NULL;
   const gchar    *abort_message;
   gchar          *basename;
-  GFile          *system_gimprc_file = NULL;
-  GFile          *user_gimprc_file   = NULL;
-  GOptionGroup   *gimp_group         = NULL;
+  GFile          *system_ligmarc_file = NULL;
+  GFile          *user_ligmarc_file   = NULL;
+  GOptionGroup   *ligma_group         = NULL;
   gchar          *backtrace_file     = NULL;
   gint            retval;
   gint            i;
 
 #ifdef ENABLE_WIN32_DEBUG_CONSOLE
-  gimp_open_console_window ();
+  ligma_open_console_window ();
 #endif
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   /* remove MacOS session identifier from the command line args */
@@ -583,7 +583,7 @@ main (int    argc,
       argc = newargc;
     }
 
-  gimp_macos_setenv (argv[0]);
+  ligma_macos_setenv (argv[0]);
 #endif
 
 #if defined (__GNUC__) && defined (_WIN64)
@@ -596,14 +596,14 @@ main (int    argc,
   argv = __argv;
 #endif
 
-  /* Initialize GimpBacktrace early on.  In particular, we want the
+  /* Initialize LigmaBacktrace early on.  In particular, we want the
    * Windows backend to catch the SET_THREAD_NAME exceptions of newly
    * created threads.
    */
-  gimp_backtrace_init ();
+  ligma_backtrace_init ();
 
   /* Start signal handlers early. */
-  gimp_init_signal_handlers (&backtrace_file);
+  ligma_init_signal_handlers (&backtrace_file);
 
 #ifdef G_OS_WIN32
   /* Reduce risks */
@@ -619,7 +619,7 @@ main (int    argc,
   }
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
-     plug-ins in the plug-ins directory can find libgimp and file
+     plug-ins in the plug-ins directory can find libligma and file
      library DLLs without needing to set external PATH. */
   {
     const gchar *install_dir;
@@ -628,7 +628,7 @@ main (int    argc,
     int          n;
 
     w_bin_dir = NULL;
-    install_dir = gimp_installation_directory ();
+    install_dir = ligma_installation_directory ();
     bin_dir = g_build_filename (install_dir, "bin", NULL);
 
     n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
@@ -673,19 +673,19 @@ main (int    argc,
       (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
                                                                   "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
-      (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
+      (*p_SetCurrentProcessExplicitAppUserModelID) (L"ligma.LigmaApplication");
   }
 #endif
 
-  gimp_init_malloc ();
+  ligma_init_malloc ();
 
-  gimp_env_init (FALSE);
+  ligma_env_init (FALSE);
 
-  gimp_log_init ();
+  ligma_log_init ();
 
-  gimp_init_i18n ();
+  ligma_init_i18n ();
 
-  g_set_application_name (GIMP_NAME);
+  g_set_application_name (LIGMA_NAME);
 
 #ifdef G_OS_WIN32
   argv = g_win32_get_command_line ();
@@ -725,36 +725,36 @@ main (int    argc,
         }
       else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
         {
-          gimp_show_version_and_exit ();
+          ligma_show_version_and_exit ();
         }
-#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+#if defined (G_OS_WIN32) && !defined (LIGMA_CONSOLE_COMPILATION)
       else if ((strcmp (arg, "--help") == 0) ||
                (strcmp (arg, "-?") == 0) ||
                (strncmp (arg, "--help-", 7) == 0))
         {
-          gimp_open_console_window ();
+          ligma_open_console_window ();
         }
 #endif
     }
 
-#ifdef GIMP_CONSOLE_COMPILATION
+#ifdef LIGMA_CONSOLE_COMPILATION
   no_interface = TRUE;
 #endif
 
   context = g_option_context_new (_("[FILE|URI...]"));
-  g_option_context_set_summary (context, GIMP_NAME);
+  g_option_context_set_summary (context, LIGMA_NAME);
 
   g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
-  /* The GIMP option group is just an empty option group, created for the sole
+  /* The LIGMA option group is just an empty option group, created for the sole
    * purpose of running a post-parse hook before any other of dependant libraries
    * are run. This makes it possible to apply options from configuration data
-   * obtained from "gimprc" files, before other libraries have a chance to run
+   * obtained from "ligmarc" files, before other libraries have a chance to run
    * some of their intialization code.
    */
-  gimp_group = g_option_group_new ("gimp", "", "", NULL, NULL);
-  g_option_group_set_parse_hooks (gimp_group, NULL, gimp_options_group_parse_hook);
-  g_option_context_add_group (context, gimp_group);
+  ligma_group = g_option_group_new ("ligma", "", "", NULL, NULL);
+  g_option_group_set_parse_hooks (ligma_group, NULL, ligma_options_group_parse_hook);
+  g_option_context_add_group (context, ligma_group);
 
   app_libs_init (context, no_interface);
 
@@ -762,14 +762,14 @@ main (int    argc,
     {
       if (error)
         {
-          gimp_open_console_window ();
+          ligma_open_console_window ();
           g_print ("%s\n", error->message);
           g_error_free (error);
         }
       else
         {
           g_print ("%s\n",
-                   _("GIMP could not initialize the graphical user interface.\n"
+                   _("LIGMA could not initialize the graphical user interface.\n"
                      "Make sure a proper setup for your display environment "
                      "exists."));
         }
@@ -778,20 +778,20 @@ main (int    argc,
     }
 
   if (no_interface || be_verbose || console_messages || batch_commands != NULL)
-    gimp_open_console_window ();
+    ligma_open_console_window ();
 
   if (no_interface)
     new_instance = TRUE;
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  if (! new_instance && gimp_unique_open (filenames, as_new))
+#ifndef LIGMA_CONSOLE_COMPILATION
+  if (! new_instance && ligma_unique_open (filenames, as_new))
     {
       if (be_verbose)
         g_print ("%s\n",
-                 _("Another GIMP instance is already running."));
+                 _("Another LIGMA instance is already running."));
 
       if (batch_commands)
-        gimp_unique_batch_run (batch_interpreter, batch_commands);
+        ligma_unique_batch_run (batch_interpreter, batch_commands);
 
       gdk_notify_startup_complete ();
 
@@ -803,16 +803,16 @@ main (int    argc,
   if (abort_message)
     app_abort (no_interface, abort_message);
 
-  if (system_gimprc)
-    system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);
+  if (system_ligmarc)
+    system_ligmarc_file = g_file_new_for_commandline_arg (system_ligmarc);
 
-  if (user_gimprc)
-    user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
+  if (user_ligmarc)
+    user_ligmarc_file = g_file_new_for_commandline_arg (user_ligmarc);
 
   retval = app_run (argv[0],
                     filenames,
-                    system_gimprc_file,
-                    user_gimprc_file,
+                    system_ligmarc_file,
+                    user_ligmarc_file,
                     session_name,
                     batch_interpreter,
                     batch_commands,
@@ -835,8 +835,8 @@ main (int    argc,
 
   g_free (backtrace_file);
 
-  g_clear_object (&system_gimprc_file);
-  g_clear_object (&user_gimprc_file);
+  g_clear_object (&system_ligmarc_file);
+  g_clear_object (&user_ligmarc_file);
 
   g_strfreev (argv);
 
@@ -848,7 +848,7 @@ main (int    argc,
 
 #ifdef G_OS_WIN32
 
-/* Provide WinMain in case we build GIMP as a subsystem:windows
+/* Provide WinMain in case we build LIGMA as a subsystem:windows
  * application. Well, we do. When built with mingw, though, user code
  * execution still starts in main() in that case. So WinMain() gets
  * used on MSVC builds only.
@@ -869,21 +869,21 @@ WinMain (struct HINSTANCE__ *hInstance,
   return main (__argc, __argv);
 }
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 
 static void
 wait_console_window (void)
 {
   FILE *console = fopen ("CONOUT$", "w");
 
-  SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. Type any character to close this window."), -1, NULL, NULL, NULL));
+  SetConsoleTitleW (g_utf8_to_utf16 (_("LIGMA output. Type any character to close this window."), -1, NULL, NULL, NULL));
   fprintf (console, _("(Type any character to close this window)\n"));
   fflush (console);
   _getch ();
 }
 
 static void
-gimp_open_console_window (void)
+ligma_open_console_window (void)
 {
   if (((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE ||
        (HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE) && AllocConsole ())
@@ -894,7 +894,7 @@ gimp_open_console_window (void)
       if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
         freopen ("CONOUT$", "w", stderr);
 
-      SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize this window, but don't close it."), -1, NULL, NULL, NULL));
+      SetConsoleTitleW (g_utf8_to_utf16 (_("LIGMA output. You can minimize this window, but don't close it."), -1, NULL, NULL, NULL));
 
       atexit (wait_console_window);
     }
@@ -905,7 +905,7 @@ gimp_open_console_window (void)
 
 
 static gboolean
-gimp_option_fatal_warnings (const gchar  *option_name,
+ligma_option_fatal_warnings (const gchar  *option_name,
                             const gchar  *value,
                             gpointer      data,
                             GError      **error)
@@ -921,17 +921,17 @@ gimp_option_fatal_warnings (const gchar  *option_name,
 }
 
 static gboolean
-gimp_option_stack_trace_mode (const gchar  *option_name,
+ligma_option_stack_trace_mode (const gchar  *option_name,
                               const gchar  *value,
                               gpointer      data,
                               GError      **error)
 {
   if (strcmp (value, "never") == 0)
-    stack_trace_mode = GIMP_STACK_TRACE_NEVER;
+    stack_trace_mode = LIGMA_STACK_TRACE_NEVER;
   else if (strcmp (value, "query") == 0)
-    stack_trace_mode = GIMP_STACK_TRACE_QUERY;
+    stack_trace_mode = LIGMA_STACK_TRACE_QUERY;
   else if (strcmp (value, "always") == 0)
-    stack_trace_mode = GIMP_STACK_TRACE_ALWAYS;
+    stack_trace_mode = LIGMA_STACK_TRACE_ALWAYS;
   else
     return FALSE;
 
@@ -939,17 +939,17 @@ gimp_option_stack_trace_mode (const gchar  *option_name,
 }
 
 static gboolean
-gimp_option_pdb_compat_mode (const gchar  *option_name,
+ligma_option_pdb_compat_mode (const gchar  *option_name,
                              const gchar  *value,
                              gpointer      data,
                              GError      **error)
 {
   if (! strcmp (value, "off"))
-    pdb_compat_mode = GIMP_PDB_COMPAT_OFF;
+    pdb_compat_mode = LIGMA_PDB_COMPAT_OFF;
   else if (! strcmp (value, "on"))
-    pdb_compat_mode = GIMP_PDB_COMPAT_ON;
+    pdb_compat_mode = LIGMA_PDB_COMPAT_ON;
   else if (! strcmp (value, "warn"))
-    pdb_compat_mode = GIMP_PDB_COMPAT_WARN;
+    pdb_compat_mode = LIGMA_PDB_COMPAT_WARN;
   else
     return FALSE;
 
@@ -957,34 +957,34 @@ gimp_option_pdb_compat_mode (const gchar  *option_name,
 }
 
 static gboolean
-gimp_option_dump_gimprc (const gchar  *option_name,
+ligma_option_dump_ligmarc (const gchar  *option_name,
                          const gchar  *value,
                          gpointer      data,
                          GError      **error)
 {
-  GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
+  LigmaConfigDumpFormat format = LIGMA_CONFIG_DUMP_NONE;
 
-  gimp_open_console_window ();
+  ligma_open_console_window ();
 
-  if (strcmp (option_name, "--dump-gimprc") == 0)
-    format = GIMP_CONFIG_DUMP_GIMPRC;
-  if (strcmp (option_name, "--dump-gimprc-system") == 0)
-    format = GIMP_CONFIG_DUMP_GIMPRC_SYSTEM;
-  else if (strcmp (option_name, "--dump-gimprc-manpage") == 0)
-    format = GIMP_CONFIG_DUMP_GIMPRC_MANPAGE;
+  if (strcmp (option_name, "--dump-ligmarc") == 0)
+    format = LIGMA_CONFIG_DUMP_LIGMARC;
+  if (strcmp (option_name, "--dump-ligmarc-system") == 0)
+    format = LIGMA_CONFIG_DUMP_LIGMARC_SYSTEM;
+  else if (strcmp (option_name, "--dump-ligmarc-manpage") == 0)
+    format = LIGMA_CONFIG_DUMP_LIGMARC_MANPAGE;
 
   if (format)
     {
-      Gimp     *gimp;
+      Ligma     *ligma;
       gboolean  success;
 
       babl_init ();
-      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
-      gimp_load_config (gimp, NULL, NULL);
+      ligma = g_object_new (LIGMA_TYPE_LIGMA, NULL);
+      ligma_load_config (ligma, NULL, NULL);
 
-      success = gimp_config_dump (G_OBJECT (gimp), format);
+      success = ligma_config_dump (G_OBJECT (ligma), format);
 
-      g_object_unref (gimp);
+      g_object_unref (ligma);
 
       app_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
     }
@@ -993,40 +993,40 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 }
 
 static gboolean
-gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
+ligma_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
                                             const gchar  *value,
                                             gpointer      data,
                                             GError      **error)
 {
-  Gimp  *gimp;
+  Ligma  *ligma;
   GList *deprecated_procs;
   GList *iter;
 
   babl_init ();
-  gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
-  gimp_load_config (gimp, NULL, NULL);
+  ligma = g_object_new (LIGMA_TYPE_LIGMA, NULL);
+  ligma_load_config (ligma, NULL, NULL);
 
   /* Make sure to turn on compatibility mode so deprecated procedures
    * are included
    */
-  gimp->pdb_compat_mode = GIMP_PDB_COMPAT_ON;
+  ligma->pdb_compat_mode = LIGMA_PDB_COMPAT_ON;
 
   /* Initialize the list of procedures */
-  internal_procs_init (gimp->pdb);
+  internal_procs_init (ligma->pdb);
 
   /* Get deprecated procedures */
-  deprecated_procs = gimp_pdb_get_deprecated_procedures (gimp->pdb);
+  deprecated_procs = ligma_pdb_get_deprecated_procedures (ligma->pdb);
 
   for (iter = deprecated_procs; iter; iter = g_list_next (iter))
     {
-      GimpProcedure *procedure = GIMP_PROCEDURE (iter->data);
+      LigmaProcedure *procedure = LIGMA_PROCEDURE (iter->data);
 
-      g_print ("%s\n", gimp_object_get_name (procedure));
+      g_print ("%s\n", ligma_object_get_name (procedure));
     }
 
   g_list_free (deprecated_procs);
 
-  g_object_unref (gimp);
+  g_object_unref (ligma);
 
   app_exit (EXIT_SUCCESS);
 
@@ -1034,31 +1034,31 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
 }
 
 static void
-gimp_show_version_and_exit (void)
+ligma_show_version_and_exit (void)
 {
-  gimp_open_console_window ();
-  gimp_version_show (be_verbose);
+  ligma_open_console_window ();
+  ligma_version_show (be_verbose);
 
   app_exit (EXIT_SUCCESS);
 }
 
 static void
-gimp_show_license_and_exit (void)
+ligma_show_license_and_exit (void)
 {
-  gimp_open_console_window ();
-  gimp_version_show (be_verbose);
+  ligma_open_console_window ();
+  ligma_version_show (be_verbose);
 
   g_print ("\n");
-  g_print (GIMP_LICENSE);
+  g_print (LIGMA_LICENSE);
   g_print ("\n\n");
 
   app_exit (EXIT_SUCCESS);
 }
 
 static void
-gimp_init_malloc (void)
+ligma_init_malloc (void)
 {
-#ifdef GIMP_GLIB_MEM_PROFILER
+#ifdef LIGMA_GLIB_MEM_PROFILER
   g_mem_set_vtable (glib_mem_profiler_table);
   g_atexit (g_mem_profile);
 #endif
@@ -1082,22 +1082,22 @@ gimp_init_malloc (void)
 }
 
 static void
-gimp_init_i18n (void)
+ligma_init_i18n (void)
 {
   /*  We may change the locale later if the user specifies a language
-   *  in the gimprc file. Here we are just initializing the locale
+   *  in the ligmarc file. Here we are just initializing the locale
    *  according to the environment variables and set up the paths to
    *  the message catalogs.
    */
 
   setlocale (LC_ALL, "");
 
-  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+  bindtextdomain (GETTEXT_PACKAGE"-libligma", ligma_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libligma", "UTF-8");
 #endif
 
-  bindtextdomain (GETTEXT_PACKAGE, gimp_locale_directory ());
+  bindtextdomain (GETTEXT_PACKAGE, ligma_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 #endif

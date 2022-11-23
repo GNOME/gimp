@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,190 +22,190 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
-#include "core/gimptoolpreset.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
+#include "core/ligmatoolpreset.h"
 
-#include "widgets/gimpdataeditor.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpeditor.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmadataeditor.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmaeditor.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmatooloptionseditor.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
 
 #include "dialogs/data-delete-dialog.h"
 
 #include "tool-options-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   tool_options_show_preset_editor (Gimp           *gimp,
-                                               GimpEditor     *editor,
-                                               GimpToolPreset *preset);
+static void   tool_options_show_preset_editor (Ligma           *ligma,
+                                               LigmaEditor     *editor,
+                                               LigmaToolPreset *preset);
 
 
 /*  public functions  */
 
 void
-tool_options_save_new_preset_cmd_callback (GimpAction *action,
+tool_options_save_new_preset_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    user_data)
 {
-  GimpEditor  *editor  = GIMP_EDITOR (user_data);
-  Gimp        *gimp    = gimp_editor_get_ui_manager (editor)->gimp;
-  GimpContext *context = gimp_get_user_context (gimp);
-  GimpData    *data;
+  LigmaEditor  *editor  = LIGMA_EDITOR (user_data);
+  Ligma        *ligma    = ligma_editor_get_ui_manager (editor)->ligma;
+  LigmaContext *context = ligma_get_user_context (ligma);
+  LigmaData    *data;
 
-  data = gimp_data_factory_data_new (context->gimp->tool_preset_factory,
+  data = ligma_data_factory_data_new (context->ligma->tool_preset_factory,
                                      context, _("Untitled"));
 
-  tool_options_show_preset_editor (gimp, editor, GIMP_TOOL_PRESET (data));
+  tool_options_show_preset_editor (ligma, editor, LIGMA_TOOL_PRESET (data));
 }
 
 void
-tool_options_save_preset_cmd_callback (GimpAction *action,
+tool_options_save_preset_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpEditor     *editor    = GIMP_EDITOR (data);
-  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
-  GimpContext    *context   = gimp_get_user_context (gimp);
-  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
-  GimpToolPreset *preset;
+  LigmaEditor     *editor    = LIGMA_EDITOR (data);
+  Ligma           *ligma      = ligma_editor_get_ui_manager (editor)->ligma;
+  LigmaContext    *context   = ligma_get_user_context (ligma);
+  LigmaToolInfo   *tool_info = ligma_context_get_tool (context);
+  LigmaToolPreset *preset;
   gint            index;
 
   index = g_variant_get_int32 (value);
 
-  preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, index);
+  preset = (LigmaToolPreset *)
+    ligma_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
-      gimp_config_sync (G_OBJECT (tool_info->tool_options),
+      ligma_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (preset->tool_options), 0);
 
-      tool_options_show_preset_editor (gimp, editor, preset);
+      tool_options_show_preset_editor (ligma, editor, preset);
     }
 }
 
 void
-tool_options_restore_preset_cmd_callback (GimpAction *action,
+tool_options_restore_preset_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data)
 {
-  GimpEditor     *editor    = GIMP_EDITOR (data);
-  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
-  GimpContext    *context   = gimp_get_user_context (gimp);
-  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
-  GimpToolPreset *preset;
+  LigmaEditor     *editor    = LIGMA_EDITOR (data);
+  Ligma           *ligma      = ligma_editor_get_ui_manager (editor)->ligma;
+  LigmaContext    *context   = ligma_get_user_context (ligma);
+  LigmaToolInfo   *tool_info = ligma_context_get_tool (context);
+  LigmaToolPreset *preset;
   gint            index;
 
   index = g_variant_get_int32 (value);
 
-  preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, index);
+  preset = (LigmaToolPreset *)
+    ligma_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
-      if (gimp_context_get_tool_preset (context) != preset)
-        gimp_context_set_tool_preset (context, preset);
+      if (ligma_context_get_tool_preset (context) != preset)
+        ligma_context_set_tool_preset (context, preset);
       else
-        gimp_context_tool_preset_changed (context);
+        ligma_context_tool_preset_changed (context);
     }
 }
 
 void
-tool_options_edit_preset_cmd_callback (GimpAction *action,
+tool_options_edit_preset_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpEditor     *editor    = GIMP_EDITOR (data);
-  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
-  GimpContext    *context   = gimp_get_user_context (gimp);
-  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
-  GimpToolPreset *preset;
+  LigmaEditor     *editor    = LIGMA_EDITOR (data);
+  Ligma           *ligma      = ligma_editor_get_ui_manager (editor)->ligma;
+  LigmaContext    *context   = ligma_get_user_context (ligma);
+  LigmaToolInfo   *tool_info = ligma_context_get_tool (context);
+  LigmaToolPreset *preset;
   gint            index;
 
   index = g_variant_get_int32 (value);
 
-  preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, index);
+  preset = (LigmaToolPreset *)
+    ligma_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
-      tool_options_show_preset_editor (gimp, editor, preset);
+      tool_options_show_preset_editor (ligma, editor, preset);
     }
 }
 
 void
-tool_options_delete_preset_cmd_callback (GimpAction *action,
+tool_options_delete_preset_cmd_callback (LigmaAction *action,
                                          GVariant   *value,
                                          gpointer    data)
 {
-  GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
-  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
-  GimpToolPreset *preset;
+  LigmaEditor     *editor    = LIGMA_EDITOR (data);
+  LigmaContext    *context   = ligma_get_user_context (ligma_editor_get_ui_manager (editor)->ligma);
+  LigmaToolInfo   *tool_info = ligma_context_get_tool (context);
+  LigmaToolPreset *preset;
   gint            index;
 
   index = g_variant_get_int32 (value);
 
-  preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, index);
+  preset = (LigmaToolPreset *)
+    ligma_container_get_child_by_index (tool_info->presets, index);
 
   if (preset &&
-      gimp_data_is_deletable (GIMP_DATA (preset)))
+      ligma_data_is_deletable (LIGMA_DATA (preset)))
     {
-      GimpDataFactory *factory = context->gimp->tool_preset_factory;
+      LigmaDataFactory *factory = context->ligma->tool_preset_factory;
       GtkWidget       *dialog;
 
-      dialog = data_delete_dialog_new (factory, GIMP_DATA (preset), NULL,
+      dialog = data_delete_dialog_new (factory, LIGMA_DATA (preset), NULL,
                                        GTK_WIDGET (editor));
       gtk_widget_show (dialog);
     }
 }
 
 void
-tool_options_reset_cmd_callback (GimpAction *action,
+tool_options_reset_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpEditor   *editor    = GIMP_EDITOR (data);
-  GimpContext  *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
-  GimpToolInfo *tool_info = gimp_context_get_tool (context);
+  LigmaEditor   *editor    = LIGMA_EDITOR (data);
+  LigmaContext  *context   = ligma_get_user_context (ligma_editor_get_ui_manager (editor)->ligma);
+  LigmaToolInfo *tool_info = ligma_context_get_tool (context);
 
-  gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
+  ligma_config_reset (LIGMA_CONFIG (tool_info->tool_options));
 }
 
 void
-tool_options_reset_all_cmd_callback (GimpAction *action,
+tool_options_reset_all_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpEditor *editor = GIMP_EDITOR (data);
+  LigmaEditor *editor = LIGMA_EDITOR (data);
   GtkWidget  *dialog;
 
-  dialog = gimp_message_dialog_new (_("Reset All Tool Options"),
-                                    GIMP_ICON_DIALOG_QUESTION,
+  dialog = ligma_message_dialog_new (_("Reset All Tool Options"),
+                                    LIGMA_ICON_DIALOG_QUESTION,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("_Reset"),  GTK_RESPONSE_OK,
@@ -213,7 +213,7 @@ tool_options_reset_all_cmd_callback (GimpAction *action,
                                     NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -223,22 +223,22 @@ tool_options_reset_all_cmd_callback (GimpAction *action,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Do you really want to reset all "
                                        "tool options to default values?"));
 
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      Gimp  *gimp = gimp_editor_get_ui_manager (editor)->gimp;
+      Ligma  *ligma = ligma_editor_get_ui_manager (editor)->ligma;
       GList *list;
 
-      for (list = gimp_get_tool_info_iter (gimp);
+      for (list = ligma_get_tool_info_iter (ligma);
            list;
            list = g_list_next (list))
         {
-          GimpToolInfo *tool_info = list->data;
+          LigmaToolInfo *tool_info = list->data;
 
-          gimp_config_reset (GIMP_CONFIG (tool_info->tool_options));
+          ligma_config_reset (LIGMA_CONFIG (tool_info->tool_options));
         }
     }
 
@@ -249,19 +249,19 @@ tool_options_reset_all_cmd_callback (GimpAction *action,
 /*  private functions  */
 
 static void
-tool_options_show_preset_editor (Gimp           *gimp,
-                                 GimpEditor     *editor,
-                                 GimpToolPreset *preset)
+tool_options_show_preset_editor (Ligma           *ligma,
+                                 LigmaEditor     *editor,
+                                 LigmaToolPreset *preset)
 {
   GtkWidget *dockable;
 
   dockable =
-    gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                               gimp,
-                                               gimp_dialog_factory_get_singleton (),
-                                               gimp_widget_get_monitor (GTK_WIDGET (editor)),
-                                               "gimp-tool-preset-editor");
+    ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                               ligma,
+                                               ligma_dialog_factory_get_singleton (),
+                                               ligma_widget_get_monitor (GTK_WIDGET (editor)),
+                                               "ligma-tool-preset-editor");
 
-  gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
-                             GIMP_DATA (preset));
+  ligma_data_editor_set_data (LIGMA_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
+                             LIGMA_DATA (preset));
 }

@@ -1,15 +1,15 @@
-# Serbian translation of gimp
+# Serbian translation of ligma
 # Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003, 2004.
 #
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Maintainer: Милош Поповић <gpopac@gmail.com>
 # Милош Поповић <gpopac@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-05-26 14:00+0000\n"
 "PO-Revision-Date: 2021-01-15 23:41+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
@@ -40,7 +40,7 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Покреће сервер за удаљене радње са скриптама"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
+msgid "_LIGMA Online"
 msgstr "_Гимп на мрежи"
 
 #: ../plug-ins/script-fu/script-fu.c:395
@@ -80,7 +80,7 @@ msgid "_Beveled Pattern"
 msgstr "_Испупчена мустра"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
 msgstr "_Класик.Гимп.Орг"
 
 #: ../plug-ins/script-fu/script-fu.c:419
@@ -827,91 +827,91 @@ msgstr "Тежина сенке (%)"
 msgid "Flatten image"
 msgstr "Изравнај слику"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Употреба путања"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Обележивач до упутства за кориснике"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "С_премам слике за веб"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "Рад са _фотографијама из дигиталних апарата"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Направи, отвори и сачувај _датотеке"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Основни концепти"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Прозорчићи „_Како се користи“"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Исцртај _просте објекте"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Направи и употреби _избор"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Главна веб страница"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
 msgstr "Обележивач за Гимпову веб страницу"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "_Веб страница развојног тима"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Развојна путања"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#| msgid "Bookmark to the GIMP web site"
-msgid "Bookmark to the roadmap of GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+#| msgid "Bookmark to the LIGMA web site"
+msgid "Bookmark to the roadmap of LIGMA"
 msgstr "Обележивач за Гимпову веб страницу са плановима за наредна издања"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Википедија"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#| msgid "Bookmark to the GIMP web site"
-msgid "Bookmark to the wiki of GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+#| msgid "Bookmark to the LIGMA web site"
+msgid "Bookmark to the wiki of LIGMA"
 msgstr "Обележивач за Гимпову вики страницу"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Грешке и унапређења могућности"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
 #| msgid "Bookmark to the user manual"
-msgid "Bookmark to the bug tracker of GIMP"
+msgid "Bookmark to the bug tracker of LIGMA"
 msgstr "Обележивач до програма за праћење грешака у Гимпу"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "В_еб страница за упутством за кориснике"
 
@@ -1632,7 +1632,7 @@ msgstr "Y померај сенке"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Исцртавам спирограф"
 
-#~ msgid "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
 #~ msgstr "_Спирогимп..."
 
 #~ msgid ""
@@ -2468,11 +2468,11 @@ msgstr "Y померај сенке"
 #~ msgid "Autocrop"
 #~ msgstr "Сам исеци"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr "Прави слику за велико заглавље веб страница као на gimp.org"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
+#~ msgstr "Прави слику за велико заглавље веб страница као на ligma.org"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr "Прави слику за мало заглавље веб страница као на gimp.org"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
+#~ msgstr "Прави слику за мало заглавље веб страница као на ligma.org"
 
 #~ msgid "Dark color"
 #~ msgstr "Боја за тамно"
@@ -2499,24 +2499,24 @@ msgstr "Y померај сенке"
 #~ msgstr "_Мало заглавље..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
-#~ "Прави слику за дугме са натписом за заглавље страница као на gimp.org"
+#~ "Прави слику за дугме са натписом за заглавље страница као на ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr "Прави слику за дугме са натписом као на gimp.org"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
+#~ msgstr "Прави слику за дугме са натписом као на ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
-#~ msgstr "Прави слику за дугме са натписом другог нивоа као на gimp.org"
+#~ msgstr "Прави слику за дугме са натписом другог нивоа као на ligma.org"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
-#~ msgstr "Прави слику за дугме са натписом трећег нивоа као на gimp.org"
+#~ msgstr "Прави слику за дугме са натписом трећег нивоа као на ligma.org"
 
 #~ msgid "T_ube Sub-Button Label..."
 #~ msgstr "Дугме са натписом _2. нивоа..."

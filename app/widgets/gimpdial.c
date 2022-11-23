@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdial.c
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmadial.c
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * Based on code from the color-rotate plug-in
  * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
@@ -27,16 +27,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp-cairo.h"
+#include "core/ligma-cairo.h"
 
-#include "gimpdial.h"
+#include "ligmadial.h"
 
 
 #define SEGMENT_FRACTION 0.3
@@ -63,7 +63,7 @@ typedef enum
 } DialTarget;
 
 
-struct _GimpDialPrivate
+struct _LigmaDialPrivate
 {
   gdouble     alpha;
   gdouble     beta;
@@ -76,28 +76,28 @@ struct _GimpDialPrivate
 };
 
 
-static void        gimp_dial_set_property         (GObject            *object,
+static void        ligma_dial_set_property         (GObject            *object,
                                                    guint               property_id,
                                                    const GValue       *value,
                                                    GParamSpec         *pspec);
-static void        gimp_dial_get_property         (GObject            *object,
+static void        ligma_dial_get_property         (GObject            *object,
                                                    guint               property_id,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
 
-static gboolean    gimp_dial_draw                 (GtkWidget          *widget,
+static gboolean    ligma_dial_draw                 (GtkWidget          *widget,
                                                    cairo_t            *cr);
-static gboolean    gimp_dial_button_press_event   (GtkWidget          *widget,
+static gboolean    ligma_dial_button_press_event   (GtkWidget          *widget,
                                                    GdkEventButton     *bevent);
-static gboolean    gimp_dial_motion_notify_event  (GtkWidget          *widget,
+static gboolean    ligma_dial_motion_notify_event  (GtkWidget          *widget,
                                                    GdkEventMotion     *mevent);
 
-static void        gimp_dial_reset_target         (GimpCircle         *circle);
+static void        ligma_dial_reset_target         (LigmaCircle         *circle);
 
-static void        gimp_dial_set_target           (GimpDial           *dial,
+static void        ligma_dial_set_target           (LigmaDial           *dial,
                                                    DialTarget          target);
 
-static void        gimp_dial_draw_arrows          (cairo_t            *cr,
+static void        ligma_dial_draw_arrows          (cairo_t            *cr,
                                                    gint                size,
                                                    gdouble             alpha,
                                                    gdouble             beta,
@@ -105,81 +105,81 @@ static void        gimp_dial_draw_arrows          (cairo_t            *cr,
                                                    DialTarget          highlight,
                                                    gboolean            draw_beta);
 
-static gdouble     gimp_dial_normalize_angle      (gdouble             angle);
-static gdouble     gimp_dial_get_angle_distance   (gdouble             alpha,
+static gdouble     ligma_dial_normalize_angle      (gdouble             angle);
+static gdouble     ligma_dial_get_angle_distance   (gdouble             alpha,
                                                    gdouble             beta);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDial, gimp_dial, GIMP_TYPE_CIRCLE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDial, ligma_dial, LIGMA_TYPE_CIRCLE)
 
-#define parent_class gimp_dial_parent_class
+#define parent_class ligma_dial_parent_class
 
 
 static void
-gimp_dial_class_init (GimpDialClass *klass)
+ligma_dial_class_init (LigmaDialClass *klass)
 {
   GObjectClass    *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass  *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpCircleClass *circle_class = GIMP_CIRCLE_CLASS (klass);
+  LigmaCircleClass *circle_class = LIGMA_CIRCLE_CLASS (klass);
 
-  object_class->get_property         = gimp_dial_get_property;
-  object_class->set_property         = gimp_dial_set_property;
+  object_class->get_property         = ligma_dial_get_property;
+  object_class->set_property         = ligma_dial_set_property;
 
-  widget_class->draw                 = gimp_dial_draw;
-  widget_class->button_press_event   = gimp_dial_button_press_event;
-  widget_class->motion_notify_event  = gimp_dial_motion_notify_event;
+  widget_class->draw                 = ligma_dial_draw;
+  widget_class->button_press_event   = ligma_dial_button_press_event;
+  widget_class->motion_notify_event  = ligma_dial_motion_notify_event;
 
-  circle_class->reset_target         = gimp_dial_reset_target;
+  circle_class->reset_target         = ligma_dial_reset_target;
 
   g_object_class_install_property (object_class, PROP_ALPHA,
                                    g_param_spec_double ("alpha",
                                                         NULL, NULL,
                                                         0.0, 2 * G_PI, 0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BETA,
                                    g_param_spec_double ("beta",
                                                         NULL, NULL,
                                                         0.0, 2 * G_PI, G_PI,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CLOCKWISE_ANGLES,
                                    g_param_spec_boolean ("clockwise-angles",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CLOCKWISE_DELTA,
                                    g_param_spec_boolean ("clockwise-delta",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_DRAW_BETA,
                                    g_param_spec_boolean ("draw-beta",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_dial_init (GimpDial *dial)
+ligma_dial_init (LigmaDial *dial)
 {
-  dial->priv = gimp_dial_get_instance_private (dial);
+  dial->priv = ligma_dial_get_instance_private (dial);
 }
 
 static void
-gimp_dial_set_property (GObject      *object,
+ligma_dial_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpDial *dial = GIMP_DIAL (object);
+  LigmaDial *dial = LIGMA_DIAL (object);
 
   switch (property_id)
     {
@@ -215,12 +215,12 @@ gimp_dial_set_property (GObject      *object,
 }
 
 static void
-gimp_dial_get_property (GObject    *object,
+ligma_dial_get_property (GObject    *object,
                         guint       property_id,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpDial *dial = GIMP_DIAL (object);
+  LigmaDial *dial = LIGMA_DIAL (object);
 
   switch (property_id)
     {
@@ -251,10 +251,10 @@ gimp_dial_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_dial_draw (GtkWidget *widget,
+ligma_dial_draw (GtkWidget *widget,
                 cairo_t   *cr)
 {
-  GimpDial      *dial  = GIMP_DIAL (widget);
+  LigmaDial      *dial  = LIGMA_DIAL (widget);
   GtkAllocation  allocation;
   gint           size;
   gdouble        alpha = dial->priv->alpha;
@@ -280,7 +280,7 @@ gimp_dial_draw (GtkWidget *widget,
                    (allocation.width  - size) / 2.0,
                    (allocation.height - size) / 2.0);
 
-  gimp_dial_draw_arrows (cr, size,
+  ligma_dial_draw_arrows (cr, size,
                          alpha, beta,
                          dial->priv->clockwise_delta,
                          dial->priv->target,
@@ -292,10 +292,10 @@ gimp_dial_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_dial_button_press_event (GtkWidget      *widget,
+ligma_dial_button_press_event (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
+  LigmaDial *dial = LIGMA_DIAL (widget);
 
   if (bevent->type == GDK_BUTTON_PRESS &&
       bevent->button == 1              &&
@@ -305,7 +305,7 @@ gimp_dial_button_press_event (GtkWidget      *widget,
 
       GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+      angle = _ligma_circle_get_angle_and_distance (LIGMA_CIRCLE (dial),
                                                    bevent->x, bevent->y,
                                                    NULL);
 
@@ -336,21 +336,21 @@ gimp_dial_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_dial_motion_notify_event (GtkWidget      *widget,
+ligma_dial_motion_notify_event (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
+  LigmaDial *dial = LIGMA_DIAL (widget);
   gdouble   angle;
   gdouble   distance;
 
-  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+  angle = _ligma_circle_get_angle_and_distance (LIGMA_CIRCLE (dial),
                                                mevent->x, mevent->y,
                                                &distance);
 
   if (dial->priv->clockwise_angles && angle)
     angle = 2.0 * G_PI - angle;
 
-  if (_gimp_circle_has_grab (GIMP_CIRCLE (dial)))
+  if (_ligma_circle_has_grab (LIGMA_CIRCLE (dial)))
     {
       gdouble delta;
 
@@ -380,8 +380,8 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
                 delta = SNAP (alpha + delta, G_PI / 12.0) - alpha;
 
               g_object_set (dial,
-                            "alpha", gimp_dial_normalize_angle (dial->priv->alpha + delta),
-                            "beta",  gimp_dial_normalize_angle (dial->priv->beta  + delta),
+                            "alpha", ligma_dial_normalize_angle (dial->priv->alpha + delta),
+                            "beta",  ligma_dial_normalize_angle (dial->priv->beta  + delta),
                             NULL);
               break;
 
@@ -396,8 +396,8 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
       gdouble    dist_alpha;
       gdouble    dist_beta;
 
-      dist_alpha = gimp_dial_get_angle_distance (dial->priv->alpha, angle);
-      dist_beta  = gimp_dial_get_angle_distance (dial->priv->beta, angle);
+      dist_alpha = ligma_dial_get_angle_distance (dial->priv->alpha, angle);
+      dist_beta  = ligma_dial_get_angle_distance (dial->priv->beta, angle);
 
       if (dial->priv->draw_beta       &&
           distance > SEGMENT_FRACTION &&
@@ -417,7 +417,7 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
           target = DIAL_TARGET_BOTH;
         }
 
-      gimp_dial_set_target (dial, target);
+      ligma_dial_set_target (dial, target);
     }
 
   gdk_event_request_motions (mevent);
@@ -426,25 +426,25 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
 }
 
 static void
-gimp_dial_reset_target (GimpCircle *circle)
+ligma_dial_reset_target (LigmaCircle *circle)
 {
-  gimp_dial_set_target (GIMP_DIAL (circle), DIAL_TARGET_NONE);
+  ligma_dial_set_target (LIGMA_DIAL (circle), DIAL_TARGET_NONE);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_dial_new (void)
+ligma_dial_new (void)
 {
-  return g_object_new (GIMP_TYPE_DIAL, NULL);
+  return g_object_new (LIGMA_TYPE_DIAL, NULL);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_dial_set_target (GimpDial   *dial,
+ligma_dial_set_target (LigmaDial   *dial,
                       DialTarget  target)
 {
   if (target != dial->priv->target)
@@ -455,7 +455,7 @@ gimp_dial_set_target (GimpDial   *dial,
 }
 
 static void
-gimp_dial_draw_arrow (cairo_t *cr,
+ligma_dial_draw_arrow (cairo_t *cr,
                       gdouble  radius,
                       gdouble  angle)
 {
@@ -483,7 +483,7 @@ gimp_dial_draw_arrow (cairo_t *cr,
 }
 
 static void
-gimp_dial_draw_segment (cairo_t  *cr,
+ligma_dial_draw_segment (cairo_t  *cr,
                         gdouble   radius,
                         gdouble   alpha,
                         gdouble   beta,
@@ -509,16 +509,16 @@ gimp_dial_draw_segment (cairo_t  *cr,
   cairo_new_sub_path (cr);
 
   if (clockwise_delta)
-    slice = -gimp_dial_normalize_angle (alpha - beta);
+    slice = -ligma_dial_normalize_angle (alpha - beta);
   else
-    slice = gimp_dial_normalize_angle (beta - alpha);
+    slice = ligma_dial_normalize_angle (beta - alpha);
 
-  gimp_cairo_arc (cr, radius, radius, segment_dist,
+  ligma_cairo_arc (cr, radius, radius, segment_dist,
                   alpha, slice);
 }
 
 static void
-gimp_dial_draw_arrows (cairo_t    *cr,
+ligma_dial_draw_arrows (cairo_t    *cr,
                        gint        size,
                        gdouble     alpha,
                        gdouble     beta,
@@ -538,15 +538,15 @@ gimp_dial_draw_arrows (cairo_t    *cr,
   if (highlight != DIAL_TARGET_BOTH)
     {
       if (! (highlight & DIAL_TARGET_ALPHA))
-        gimp_dial_draw_arrow (cr, radius, alpha);
+        ligma_dial_draw_arrow (cr, radius, alpha);
 
       if (draw_beta)
         {
           if (! (highlight & DIAL_TARGET_BETA))
-            gimp_dial_draw_arrow (cr, radius, beta);
+            ligma_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) != DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
+            ligma_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
         }
 
       cairo_set_line_width (cr, 3.0);
@@ -561,15 +561,15 @@ gimp_dial_draw_arrows (cairo_t    *cr,
   if (highlight != DIAL_TARGET_NONE)
     {
       if (highlight & DIAL_TARGET_ALPHA)
-        gimp_dial_draw_arrow (cr, radius, alpha);
+        ligma_dial_draw_arrow (cr, radius, alpha);
 
       if (draw_beta)
         {
           if (highlight & DIAL_TARGET_BETA)
-            gimp_dial_draw_arrow (cr, radius, beta);
+            ligma_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) == DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
+            ligma_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
         }
 
       cairo_set_line_width (cr, 3.0);
@@ -585,7 +585,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
 }
 
 static gdouble
-gimp_dial_normalize_angle (gdouble angle)
+ligma_dial_normalize_angle (gdouble angle)
 {
   if (angle < 0)
     return angle + 2 * G_PI;
@@ -596,9 +596,9 @@ gimp_dial_normalize_angle (gdouble angle)
 }
 
 static gdouble
-gimp_dial_get_angle_distance (gdouble alpha,
+ligma_dial_get_angle_distance (gdouble alpha,
                               gdouble beta)
 {
-  return ABS (MIN (gimp_dial_normalize_angle (alpha - beta),
-                   2 * G_PI - gimp_dial_normalize_angle (alpha - beta)));
+  return ABS (MIN (ligma_dial_normalize_angle (alpha - beta),
+                   2 * G_PI - ligma_dial_normalize_angle (alpha - beta)));
 }

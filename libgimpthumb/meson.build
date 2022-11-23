@@ -2,14 +2,14 @@
 # one is not versionned in the repository (not sure why). Moreover the
 # options are quite different from the other generated enums, so it
 # didn't make sense to overdo it.
-gimpthumbenums = custom_target('gimpthumb-enums.c',
-  input : [ 'gimpthumb-enums.h', ],
-  output: [ 'gimpthumb-enums.c', ],
+ligmathumbenums = custom_target('ligmathumb-enums.c',
+  input : [ 'ligmathumb-enums.h', ],
+  output: [ 'ligmathumb-enums.c', ],
   command: [
-    gimp_mkenums,
+    ligma_mkenums,
     '--fhead','#include "config.h"\n'+
               '#include <glib-object.h>\n'+
-              '#include "gimpthumb-enums.h"\n',
+              '#include "ligmathumb-enums.h"\n',
     '--fprod','/* enumerations from "@filename@" */',
     '--vhead','GType\n'+
               '@enum_name@_get_type (void)\n'+
@@ -32,67 +32,67 @@ gimpthumbenums = custom_target('gimpthumb-enums.c',
   capture: true,
 )
 
-libgimpthumb_sources_introspectable = files(
-  'gimpthumb-error.c',
-  'gimpthumb-utils.c',
-  'gimpthumbnail.c',
+libligmathumb_sources_introspectable = files(
+  'ligmathumb-error.c',
+  'ligmathumb-utils.c',
+  'ligmathumbnail.c',
 )
 
-libgimpthumb_sources = [
-  libgimpthumb_sources_introspectable,
-  gimpthumbenums,
+libligmathumb_sources = [
+  libligmathumb_sources_introspectable,
+  ligmathumbenums,
 ]
 
-libgimpthumb_headers_introspectable = files(
-  'gimpthumb-enums.h',
-  'gimpthumb-error.h',
-  'gimpthumb-types.h',
-  'gimpthumb-utils.h',
-  'gimpthumbnail.h',
+libligmathumb_headers_introspectable = files(
+  'ligmathumb-enums.h',
+  'ligmathumb-error.h',
+  'ligmathumb-types.h',
+  'ligmathumb-utils.h',
+  'ligmathumbnail.h',
 )
 
-libgimpthumb_headers = [
-  libgimpthumb_headers_introspectable,
-  'gimpthumb.h',
+libligmathumb_headers = [
+  libligmathumb_headers_introspectable,
+  'ligmathumb.h',
 ]
 
-libgimpthumb_introspectable = [
-  libgimpthumb_sources_introspectable,
-  libgimpthumb_headers_introspectable,
+libligmathumb_introspectable = [
+  libligmathumb_sources_introspectable,
+  libligmathumb_headers_introspectable,
 ]
 
-libgimpthumb = library('gimpthumb-'+ gimp_api_version,
-  libgimpthumb_sources,
+libligmathumb = library('ligmathumb-'+ ligma_api_version,
+  libligmathumb_sources,
   include_directories: rootInclude,
   dependencies: [
     glib, gobject, gdk_pixbuf, gio,
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpThumb"', '-DGIMP_THUMB_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="LibLigmaThumb"', '-DLIGMA_THUMB_COMPILATION', ],
   link_with:  [
-    libgimpbase,
+    libligmabase,
   ],
-  vs_module_defs: 'gimpthumb.def',
+  vs_module_defs: 'ligmathumb.def',
   install: true,
   version: so_version,
 )
 
 install_headers(
-  libgimpthumb_headers,
-  subdir: gimp_api_name / 'libgimpthumb',
+  libligmathumb_headers,
+  subdir: ligma_api_name / 'libligmathumb',
 )
 
 
 # Test program, not installed
-gimp_thumbnail_list = executable('gimp-thumbnail-list',
-  'gimp-thumbnail-list.c',
+ligma_thumbnail_list = executable('ligma-thumbnail-list',
+  'ligma-thumbnail-list.c',
   include_directories: rootInclude,
   dependencies: [
     gdk_pixbuf,
   ],
-  c_args: '-DG_LOG_DOMAIN="LibGimpThumb"',
+  c_args: '-DG_LOG_DOMAIN="LibLigmaThumb"',
   link_with: [
-    libgimpbase,
-    libgimpthumb,
+    libligmabase,
+    libligmathumb,
   ],
   install: false,
 )

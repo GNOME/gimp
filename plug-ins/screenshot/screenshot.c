@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Screenshot plug-in
- * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
- * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ * Copyright 1998-2007 Sven Neumann <sven@ligma.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@ligma.org>
  * Copyright 2012      Simone Karin Lehmann - OS X patches
- * Copyright 2016      Michael Natterer <mitch@gimp.org>
+ * Copyright 2016      Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
@@ -33,26 +33,26 @@
 #include "screenshot-x11.h"
 #include "screenshot-win32.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /* Defines */
 
 #define PLUG_IN_PROC   "plug-in-screenshot"
 #define PLUG_IN_BINARY "screenshot"
-#define PLUG_IN_ROLE   "gimp-screenshot"
+#define PLUG_IN_ROLE   "ligma-screenshot"
 
 typedef struct _Screenshot      Screenshot;
 typedef struct _ScreenshotClass ScreenshotClass;
 
 struct _Screenshot
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _ScreenshotClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 #define SCREENSHOT_TYPE  (screenshot_get_type ())
@@ -60,16 +60,16 @@ struct _ScreenshotClass
 
 GType                   screenshot_get_type         (void) G_GNUC_CONST;
 
-static GList          * screenshot_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * screenshot_create_procedure (GimpPlugIn           *plug_in,
+static GList          * screenshot_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * screenshot_create_procedure (LigmaPlugIn           *plug_in,
                                                      const gchar          *name);
 
-static GimpValueArray * screenshot_run              (GimpProcedure        *procedure,
-                                                     const GimpValueArray *args,
+static LigmaValueArray * screenshot_run              (LigmaProcedure        *procedure,
+                                                     const LigmaValueArray *args,
                                                      gpointer              run_data);
 
-static GimpPDBStatusType   shoot               (GdkMonitor       *monitor,
-                                                GimpImage       **image,
+static LigmaPDBStatusType   shoot               (GdkMonitor       *monitor,
+                                                LigmaImage       **image,
                                                 GError          **error);
 
 static gboolean            shoot_dialog        (GdkMonitor      **monitor);
@@ -77,9 +77,9 @@ static gboolean            shoot_quit_timeout  (gpointer          data);
 static gboolean            shoot_delay_timeout (gpointer          data);
 
 
-G_DEFINE_TYPE (Screenshot, screenshot, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Screenshot, screenshot, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SCREENSHOT_TYPE)
+LIGMA_MAIN (SCREENSHOT_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -107,7 +107,7 @@ static ScreenshotValues shootvals =
 static void
 screenshot_class_init (ScreenshotClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = screenshot_query_procedures;
   plug_in_class->create_procedure = screenshot_create_procedure;
@@ -120,27 +120,27 @@ screenshot_init (Screenshot *screenshot)
 }
 
 static GList *
-screenshot_query_procedures (GimpPlugIn *plug_in)
+screenshot_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-screenshot_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+screenshot_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       screenshot_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("_Screenshot..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+      ligma_procedure_set_menu_label (procedure, _("_Screenshot..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
-      gimp_procedure_set_documentation
+      ligma_procedure_set_documentation
         (procedure,
          _("Create an image from an area of the screen"),
          "The plug-in takes screenshots of an "
@@ -159,57 +159,57 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
          "window, you need to use the interactive mode.",
          name);
 
-      gimp_procedure_set_attribution (procedure,
-                                      "Sven Neumann <sven@gimp.org>, "
-                                      "Henrik Brix Andersen <brix@gimp.org>,"
+      ligma_procedure_set_attribution (procedure,
+                                      "Sven Neumann <sven@ligma.org>, "
+                                      "Henrik Brix Andersen <brix@ligma.org>,"
                                       "Simone Karin Lehmann",
                                       "1998 - 2008",
                                       "v1.1 (2008/04)");
 
 
-      gimp_procedure_set_icon_pixbuf (procedure,
+      ligma_procedure_set_icon_pixbuf (procedure,
                                       gdk_pixbuf_new_from_inline (-1, screenshot_icon,
                                                                   FALSE, NULL));
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_NONINTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_NONINTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "shoot-type",
+      LIGMA_PROC_ARG_INT (procedure, "shoot-type",
                          "Shoot type",
                          "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
                          "SHOOT-REGION (2) }",
                          0, 2, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "x1",
+      LIGMA_PROC_ARG_INT (procedure, "x1",
                          "X1",
                          "Region left x coord for SHOOT-WINDOW",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y1",
+      LIGMA_PROC_ARG_INT (procedure, "y1",
                          "Y1",
                          "Region top y coord for SHOOT-WINDOW",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "x2",
+      LIGMA_PROC_ARG_INT (procedure, "x2",
                          "X2",
                          "Region right x coord for SHOOT-WINDOW",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y2",
+      LIGMA_PROC_ARG_INT (procedure, "y2",
                          "Y2",
                          "Region bottom y coord for SHOOT-WINDOW",
                          G_MININT, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "image",
                            "Image",
                            "Output image",
                            FALSE,
@@ -219,22 +219,22 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-screenshot_run (GimpProcedure        *procedure,
-                const GimpValueArray *args,
+static LigmaValueArray *
+screenshot_run (LigmaProcedure        *procedure,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  LigmaValueArray    *return_vals;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaRunMode        run_mode;
   GdkMonitor        *monitor = NULL;
-  GimpImage         *image   = NULL;
+  LigmaImage         *image   = NULL;
   GError            *error   = NULL;
 
   gegl_init (NULL, NULL);
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
-  gimp_ui_init (PLUG_IN_BINARY);
+  run_mode = LIGMA_VALUES_GET_ENUM (args, 0);
+  ligma_ui_init (PLUG_IN_BINARY);
 
 #ifdef PLATFORM_OSX
   if (! backend && screenshot_osx_available ())
@@ -271,9 +271,9 @@ screenshot_run (GimpProcedure        *procedure,
   /* how are we running today? */
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_PROC, &shootvals);
+      ligma_get_data (PLUG_IN_PROC, &shootvals);
       shootvals.window_id = 0;
 
       if ((shootvals.shoot_type == SHOOT_WINDOW &&
@@ -294,7 +294,7 @@ screenshot_run (GimpProcedure        *procedure,
       if (backend != SCREENSHOT_BACKEND_FREEDESKTOP)
         {
           if (! shoot_dialog (&monitor))
-            status = GIMP_PDB_CANCEL;
+            status = LIGMA_PDB_CANCEL;
         }
       else
         {
@@ -306,81 +306,81 @@ screenshot_run (GimpProcedure        *procedure,
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      shootvals.shoot_type   = GIMP_VALUES_GET_INT (args, 1);
-      shootvals.window_id    = GIMP_VALUES_GET_INT (args, 2);
+    case LIGMA_RUN_NONINTERACTIVE:
+      shootvals.shoot_type   = LIGMA_VALUES_GET_INT (args, 1);
+      shootvals.window_id    = LIGMA_VALUES_GET_INT (args, 2);
       shootvals.select_delay = 0;
-      shootvals.x1           = GIMP_VALUES_GET_INT (args, 3);
-      shootvals.y1           = GIMP_VALUES_GET_INT (args, 4);
-      shootvals.x2           = GIMP_VALUES_GET_INT (args, 5);
-      shootvals.y2           = GIMP_VALUES_GET_INT (args, 6);
+      shootvals.x1           = LIGMA_VALUES_GET_INT (args, 3);
+      shootvals.y1           = LIGMA_VALUES_GET_INT (args, 4);
+      shootvals.x2           = LIGMA_VALUES_GET_INT (args, 5);
+      shootvals.y2           = LIGMA_VALUES_GET_INT (args, 6);
 
       if (! gdk_init_check (NULL, NULL))
-        status = GIMP_PDB_CALLING_ERROR;
+        status = LIGMA_PDB_CALLING_ERROR;
 
       if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
         {
           if (shootvals.shoot_type == SHOOT_WINDOW ||
               shootvals.shoot_type == SHOOT_REGION)
             {
-              status = GIMP_PDB_CALLING_ERROR;
+              status = LIGMA_PDB_CALLING_ERROR;
             }
         }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_PROC, &shootvals);
+      ligma_get_data (PLUG_IN_PROC, &shootvals);
       break;
 
     default:
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       status = shoot (monitor, &image, &error);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      gchar *comment = gimp_get_default_comment ();
+      gchar *comment = ligma_get_default_comment ();
 
-      gimp_image_undo_disable (image);
+      ligma_image_undo_disable (image);
 
       if (shootvals.profile_policy == SCREENSHOT_PROFILE_POLICY_SRGB)
         {
-          GimpColorProfile *srgb_profile = gimp_color_profile_new_rgb_srgb ();
+          LigmaColorProfile *srgb_profile = ligma_color_profile_new_rgb_srgb ();
 
-          gimp_image_convert_color_profile (image,
+          ligma_image_convert_color_profile (image,
                                             srgb_profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             TRUE);
           g_object_unref (srgb_profile);
         }
 
       if (comment)
         {
-          GimpParasite *parasite;
+          LigmaParasite *parasite;
 
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("ligma-comment",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comment) + 1, comment);
 
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
 
           g_free (comment);
         }
 
-      gimp_image_undo_enable (image);
+      ligma_image_undo_enable (image);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         {
           /* Store variable states for next run */
-          gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
+          ligma_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
 
-          gimp_display_new (image);
+          ligma_display_new (image);
 
           /* Give some sort of feedback that the shot is done */
           if (shootvals.select_delay > 0)
@@ -392,10 +392,10 @@ screenshot_run (GimpProcedure        *procedure,
         }
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure, status, error);
+  return_vals = ligma_procedure_new_return_values (procedure, status, error);
 
-  if (status == GIMP_PDB_SUCCESS)
-    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  if (status == LIGMA_PDB_SUCCESS)
+    LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -403,9 +403,9 @@ screenshot_run (GimpProcedure        *procedure,
 
 /* The main Screenshot function */
 
-static GimpPDBStatusType
+static LigmaPDBStatusType
 shoot (GdkMonitor  *monitor,
-       GimpImage  **image,
+       LigmaImage  **image,
        GError     **error)
 {
 #ifdef PLATFORM_OSX
@@ -426,7 +426,7 @@ shoot (GdkMonitor  *monitor,
     return screenshot_x11_shoot (&shootvals, monitor, image, error);
 #endif
 
-  return GIMP_PDB_CALLING_ERROR; /* silence compiler */
+  return LIGMA_PDB_CALLING_ERROR; /* silence compiler */
 }
 
 
@@ -446,7 +446,7 @@ shoot_dialog_add_hint (GtkNotebook *notebook,
                         "xalign",  0.0,
                         "yalign",  0.0,
                         NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
 
@@ -458,7 +458,7 @@ static void
 shoot_radio_button_toggled (GtkWidget *widget,
                             GtkWidget *notebook)
 {
-  gimp_radio_button_update (widget, &shootvals.shoot_type);
+  ligma_radio_button_update (widget, &shootvals.shoot_type);
 
   if (select_delay_grid)
     {
@@ -509,16 +509,16 @@ shoot_dialog (GdkMonitor **monitor)
   gboolean       run;
   GtkWidget     *cursor_toggle = NULL;
 
-  dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Screenshot"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("S_nap"),   GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -541,7 +541,7 @@ shoot_dialog (GdkMonitor **monitor)
                             NULL);
 
   /*  Area  */
-  frame = gimp_frame_new (_("Area"));
+  frame = ligma_frame_new (_("Area"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -559,7 +559,7 @@ shoot_dialog (GdkMonitor **monitor)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+      g_object_set_data (G_OBJECT (button), "ligma-item-data",
                          GINT_TO_POINTER (SHOOT_WINDOW));
 
       g_signal_connect (button, "toggled",
@@ -583,7 +583,7 @@ shoot_dialog (GdkMonitor **monitor)
           gtk_widget_show (toggle);
 
           g_signal_connect (toggle, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
+                            G_CALLBACK (ligma_toggle_button_update),
                             &shootvals.decorate);
 
           g_object_bind_property (button, "active",
@@ -604,7 +604,7 @@ shoot_dialog (GdkMonitor **monitor)
           gtk_widget_show (cursor_toggle);
 
           g_signal_connect (cursor_toggle, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
+                            G_CALLBACK (ligma_toggle_button_update),
                             &shootvals.show_cursor);
 
           g_object_bind_property (button, "active",
@@ -625,7 +625,7 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+  g_object_set_data (G_OBJECT (button), "ligma-item-data",
                      GINT_TO_POINTER (SHOOT_ROOT));
 
   g_signal_connect (button, "toggled",
@@ -649,7 +649,7 @@ shoot_dialog (GdkMonitor **monitor)
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &shootvals.show_cursor);
 
       if (cursor_toggle)
@@ -677,7 +677,7 @@ shoot_dialog (GdkMonitor **monitor)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+      g_object_set_data (G_OBJECT (button), "ligma-item-data",
                          GINT_TO_POINTER (SHOOT_REGION));
 
       g_signal_connect (button, "toggled",
@@ -688,7 +688,7 @@ shoot_dialog (GdkMonitor **monitor)
                         notebook2);
     }
 
-  frame = gimp_frame_new (_("Delay"));
+  frame = ligma_frame_new (_("Delay"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -714,13 +714,13 @@ shoot_dialog (GdkMonitor **monitor)
 
   adj = gtk_adjustment_new (shootvals.select_delay,
                             0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gimp_spin_button_new (adj, 0, 0);
+  spinner = ligma_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &shootvals.select_delay);
 
   /*  translators: this is the unit label of a spinbutton  */
@@ -773,14 +773,14 @@ shoot_dialog (GdkMonitor **monitor)
 
   adj = gtk_adjustment_new (shootvals.screenshot_delay,
                             0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gimp_spin_button_new (adj, 0, 0);
+  spinner = ligma_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (spinner));
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &shootvals.screenshot_delay);
 
   /*  translators: this is the unit label of a spinbutton  */
@@ -814,9 +814,9 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook2), shootvals.shoot_type);
 
   /*  Color profile  */
-  frame = gimp_int_radio_group_new (TRUE,
+  frame = ligma_int_radio_group_new (TRUE,
                                     _("Color Profile"),
-                                    G_CALLBACK (gimp_radio_button_update),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &shootvals.profile_policy, NULL,
                                     shootvals.profile_policy,
 
@@ -835,12 +835,12 @@ shoot_dialog (GdkMonitor **monitor)
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
       /* get the screen on which we are running */
-      *monitor = gimp_widget_get_monitor (dialog);
+      *monitor = ligma_widget_get_monitor (dialog);
     }
 
   gtk_widget_destroy (dialog);

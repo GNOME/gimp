@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,31 +24,31 @@
 #include "display/display-enums.h"
 
 
-typedef struct _GimpCanvas               GimpCanvas;
-typedef struct _GimpCanvasGroup          GimpCanvasGroup;
-typedef struct _GimpCanvasItem           GimpCanvasItem;
+typedef struct _LigmaCanvas               LigmaCanvas;
+typedef struct _LigmaCanvasGroup          LigmaCanvasGroup;
+typedef struct _LigmaCanvasItem           LigmaCanvasItem;
 
-typedef struct _GimpDisplayShell         GimpDisplayShell;
-typedef struct _GimpMotionBuffer         GimpMotionBuffer;
+typedef struct _LigmaDisplayShell         LigmaDisplayShell;
+typedef struct _LigmaMotionBuffer         LigmaMotionBuffer;
 
-typedef struct _GimpImageWindow          GimpImageWindow;
-typedef struct _GimpMultiWindowStrategy  GimpMultiWindowStrategy;
-typedef struct _GimpSingleWindowStrategy GimpSingleWindowStrategy;
+typedef struct _LigmaImageWindow          LigmaImageWindow;
+typedef struct _LigmaMultiWindowStrategy  LigmaMultiWindowStrategy;
+typedef struct _LigmaSingleWindowStrategy LigmaSingleWindowStrategy;
 
-typedef struct _GimpCursorView           GimpCursorView;
-typedef struct _GimpNavigationEditor     GimpNavigationEditor;
-typedef struct _GimpScaleComboBox        GimpScaleComboBox;
-typedef struct _GimpStatusbar            GimpStatusbar;
+typedef struct _LigmaCursorView           LigmaCursorView;
+typedef struct _LigmaNavigationEditor     LigmaNavigationEditor;
+typedef struct _LigmaScaleComboBox        LigmaScaleComboBox;
+typedef struct _LigmaStatusbar            LigmaStatusbar;
 
-typedef struct _GimpToolDialog           GimpToolDialog;
-typedef struct _GimpToolGui              GimpToolGui;
-typedef struct _GimpToolWidget           GimpToolWidget;
-typedef struct _GimpToolWidgetGroup      GimpToolWidgetGroup;
+typedef struct _LigmaToolDialog           LigmaToolDialog;
+typedef struct _LigmaToolGui              LigmaToolGui;
+typedef struct _LigmaToolWidget           LigmaToolWidget;
+typedef struct _LigmaToolWidgetGroup      LigmaToolWidgetGroup;
 
-typedef struct _GimpDisplayXfer          GimpDisplayXfer;
+typedef struct _LigmaDisplayXfer          LigmaDisplayXfer;
 typedef struct _Selection                Selection;
 
-typedef struct _GimpModifiersManager     GimpModifiersManager;
+typedef struct _LigmaModifiersManager     LigmaModifiersManager;
 
 
 #endif /* __DISPLAY_TYPES_H__ */

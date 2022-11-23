@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,46 +27,46 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmodule/gimpmodule.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamodule/ligmamodule.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "config/gimprc.h"
-#include "core/gimp-utils.h"
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptemplate.h"
+#include "config/ligmarc.h"
+#include "core/ligma-utils.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatemplate.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-gimprc_query_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+ligmarc_query_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *token;
   gchar *value = NULL;
 
-  token = g_value_get_string (gimp_value_array_index (args, 0));
+  token = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
       if (strlen (token))
         {
           /*  use edit_config because unknown tokens are set there  */
-          value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+          value = ligma_rc_query (LIGMA_RC (ligma->edit_config), token);
 
           if (! value)
             success = FALSE;
@@ -75,334 +75,334 @@ gimprc_query_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), value);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), value);
 
   return return_vals;
 }
 
-static GimpValueArray *
-gimprc_set_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+ligmarc_set_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
   const gchar *token;
   const gchar *value;
 
-  token = g_value_get_string (gimp_value_array_index (args, 0));
-  value = g_value_get_string (gimp_value_array_index (args, 1));
+  token = g_value_get_string (ligma_value_array_index (args, 0));
+  value = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
       if (strlen (token))
         {
           /*  use edit_config because that's the one that gets saved  */
-          gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+          ligma_rc_set_unknown_token (LIGMA_RC (ligma->edit_config), token, value);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-get_default_comment_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+get_default_comment_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *comment = NULL;
 
-  comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
+  comment = g_strdup (ligma_template_get_comment (ligma->config->default_image));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (gimp_value_array_index (return_vals, 1), comment);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_string (ligma_value_array_index (return_vals, 1), comment);
 
   return return_vals;
 }
 
-static GimpValueArray *
-get_default_unit_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+get_default_unit_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_PIXEL;
+  LigmaValueArray *return_vals;
+  LigmaUnit unit_id = LIGMA_UNIT_PIXEL;
 
-  unit_id = gimp_get_default_unit ();
+  unit_id = ligma_get_default_unit ();
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), unit_id);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (ligma_value_array_index (return_vals, 1), unit_id);
 
   return return_vals;
 }
 
-static GimpValueArray *
-get_monitor_resolution_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+get_monitor_resolution_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gdouble xres = 0.0;
   gdouble yres = 0.0;
 
-  xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
-  yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
+  xres = LIGMA_DISPLAY_CONFIG (ligma->config)->monitor_xres;
+  yres = LIGMA_DISPLAY_CONFIG (ligma->config)->monitor_yres;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_double (gimp_value_array_index (return_vals, 1), xres);
-  g_value_set_double (gimp_value_array_index (return_vals, 2), yres);
+  g_value_set_double (ligma_value_array_index (return_vals, 1), xres);
+  g_value_set_double (ligma_value_array_index (return_vals, 2), yres);
 
   return return_vals;
 }
 
-static GimpValueArray *
-get_color_configuration_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+get_color_configuration_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *config = NULL;
 
-  config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
+  config = ligma_config_serialize_to_string (LIGMA_CONFIG (ligma->config->color_management), NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (gimp_value_array_index (return_vals, 1), config);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_string (ligma_value_array_index (return_vals, 1), config);
 
   return return_vals;
 }
 
-static GimpValueArray *
-get_module_load_inhibit_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+get_module_load_inhibit_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gchar *load_inhibit = NULL;
 
-  load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
+  load_inhibit = g_strdup (ligma_module_db_get_load_inhibit (ligma->module_db));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (gimp_value_array_index (return_vals, 1), load_inhibit);
+  return_vals = ligma_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_take_string (ligma_value_array_index (return_vals, 1), load_inhibit);
 
   return return_vals;
 }
 
 void
-register_gimprc_procs (GimpPDB *pdb)
+register_ligmarc_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-gimprc-query
+   * ligma-ligmarc-query
    */
-  procedure = gimp_procedure_new (gimprc_query_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gimprc-query");
-  gimp_procedure_set_static_help (procedure,
-                                  "Queries the gimprc file parser for information on a specified token.",
-                                  "This procedure is used to locate additional information contained in the gimprc file considered extraneous to the operation of GIMP. Plug-ins that need configuration information can expect it will be stored in the user gimprc file and can use this procedure to retrieve it. This query procedure will return the value associated with the specified token. This corresponds _only_ to entries with the format: (<token> <value>). The value must be a string. Entries not corresponding to this format will cause warnings to be issued on gimprc parsing and will not be queryable.",
+  procedure = ligma_procedure_new (ligmarc_query_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-ligmarc-query");
+  ligma_procedure_set_static_help (procedure,
+                                  "Queries the ligmarc file parser for information on a specified token.",
+                                  "This procedure is used to locate additional information contained in the ligmarc file considered extraneous to the operation of LIGMA. Plug-ins that need configuration information can expect it will be stored in the user ligmarc file and can use this procedure to retrieve it. This query procedure will return the value associated with the specified token. This corresponds _only_ to entries with the format: (<token> <value>). The value must be a string. Entries not corresponding to this format will cause warnings to be issued on ligmarc parsing and will not be queryable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("token",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("token",
                                                        "token",
                                                        "The token to query for",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("value",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("value",
                                                            "value",
                                                            "The value associated with the queried token",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-gimprc-set
+   * ligma-ligmarc-set
    */
-  procedure = gimp_procedure_new (gimprc_set_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gimprc-set");
-  gimp_procedure_set_static_help (procedure,
-                                  "Sets a gimprc token to a value and saves it in the gimprc.",
-                                  "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of GIMP. Plug-ins that need configuration information can use this function to store it, and 'gimp-gimprc-query' to retrieve it. This will accept _only_ string values in UTF-8 encoding.",
+  procedure = ligma_procedure_new (ligmarc_set_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-ligmarc-set");
+  ligma_procedure_set_static_help (procedure,
+                                  "Sets a ligmarc token to a value and saves it in the ligmarc.",
+                                  "This procedure is used to add or change additional information in the ligmarc file that is considered extraneous to the operation of LIGMA. Plug-ins that need configuration information can use this function to store it, and 'ligma-ligmarc-query' to retrieve it. This will accept _only_ string values in UTF-8 encoding.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Seth Burgess",
                                          "Seth Burgess",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("token",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("token",
                                                        "token",
                                                        "The token to add or modify",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("value",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("value",
                                                        "value",
                                                        "The value to set the token to",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-default-comment
+   * ligma-get-default-comment
    */
-  procedure = gimp_procedure_new (get_default_comment_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-default-comment");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_default_comment_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-default-comment");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the default image comment as specified in the Preferences.",
                                   "Returns a copy of the default image comment.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("comment",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("comment",
                                                            "comment",
                                                            "Default image comment",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-default-unit
+   * ligma-get-default-unit
    */
-  procedure = gimp_procedure_new (get_default_unit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-default-unit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_default_unit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-default-unit");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the default unit (taken from the user's locale).",
                                   "Returns the default unit's integer ID.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_unit ("unit-id",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_unit ("unit-id",
                                                          "unit id",
                                                          "Default unit",
                                                          TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_UNIT_PIXEL,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-monitor-resolution
+   * ligma-get-monitor-resolution
    */
-  procedure = gimp_procedure_new (get_monitor_resolution_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-monitor-resolution");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_monitor_resolution_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-monitor-resolution");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the monitor resolution as specified in the Preferences.",
                                   "Returns the resolution of the monitor in pixels/inch. This value is taken from the Preferences (or the windowing system if this is set in the Preferences) and there's no guarantee for the value to be reasonable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xres",
                                                         "xres",
                                                         "X resolution",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("yres",
                                                         "yres",
                                                         "Y resolution",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-color-configuration
+   * ligma-get-color-configuration
    */
-  procedure = gimp_procedure_new (get_color_configuration_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-color-configuration");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_color_configuration_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-color-configuration");
+  ligma_procedure_set_static_help (procedure,
                                   "Get a serialized version of the color management configuration.",
-                                  "Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.",
+                                  "Returns a string that can be deserialized into a LigmaColorConfig object representing the current color management configuration.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2005");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("config",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("config",
                                                            "config",
                                                            "Serialized color management configuration",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-get-module-load-inhibit
+   * ligma-get-module-load-inhibit
    */
-  procedure = gimp_procedure_new (get_module_load_inhibit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-module-load-inhibit");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (get_module_load_inhibit_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-get-module-load-inhibit");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the list of modules which should not be loaded.",
                                   "Returns a copy of the list of modules which should not be loaded.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("load-inhibit",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("load-inhibit",
                                                            "load inhibit",
                                                            "The list of modules",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

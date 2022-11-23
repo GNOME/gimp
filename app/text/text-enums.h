@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,27 +19,27 @@
 #define __TEXT_ENUMS_H__
 
 
-#define GIMP_TYPE_TEXT_BOX_MODE (gimp_text_box_mode_get_type ())
+#define LIGMA_TYPE_TEXT_BOX_MODE (ligma_text_box_mode_get_type ())
 
-GType gimp_text_box_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TEXT_BOX_DYNAMIC, /*< desc="Dynamic" >*/
-  GIMP_TEXT_BOX_FIXED    /*< desc="Fixed"   >*/
-} GimpTextBoxMode;
-
-
-#define GIMP_TYPE_TEXT_OUTLINE (gimp_text_outline_get_type ())
-
-GType gimp_text_outline_get_type (void) G_GNUC_CONST;
+GType ligma_text_box_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_OUTLINE_NONE,        /*< desc="Filled"              >*/
-  GIMP_TEXT_OUTLINE_STROKE_ONLY, /*< desc="Outlined"            >*/
-  GIMP_TEXT_OUTLINE_STROKE_FILL  /*< desc="Outlined and filled" >*/
-} GimpTextOutline;
+  LIGMA_TEXT_BOX_DYNAMIC, /*< desc="Dynamic" >*/
+  LIGMA_TEXT_BOX_FIXED    /*< desc="Fixed"   >*/
+} LigmaTextBoxMode;
+
+
+#define LIGMA_TYPE_TEXT_OUTLINE (ligma_text_outline_get_type ())
+
+GType ligma_text_outline_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_TEXT_OUTLINE_NONE,        /*< desc="Filled"              >*/
+  LIGMA_TEXT_OUTLINE_STROKE_ONLY, /*< desc="Outlined"            >*/
+  LIGMA_TEXT_OUTLINE_STROKE_FILL  /*< desc="Outlined and filled" >*/
+} LigmaTextOutline;
 
 
 #endif /* __TEXT_ENUMS_H__ */

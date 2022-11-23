@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/org/gimp/lighting/icons">
+  <gresource prefix="/org/ligma/lighting/icons">
     <file preprocess="to-pixdata">lighting-intensity-ambient-high.png</file>
     <file preprocess="to-pixdata">lighting-intensity-ambient-low.png</file>
     <file preprocess="to-pixdata">lighting-intensity-diffuse-high.png</file>

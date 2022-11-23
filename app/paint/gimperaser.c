@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,80 +22,80 @@
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimp-palettes.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligma-palettes.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimperaser.h"
-#include "gimperaseroptions.h"
+#include "ligmaeraser.h"
+#include "ligmaeraseroptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean   gimp_eraser_get_color_history_color (GimpPaintbrush            *paintbrush,
-                                                       GimpDrawable              *drawable,
-                                                       GimpPaintOptions          *paint_options,
-                                                       GimpRGB                   *color);
-static void       gimp_eraser_get_paint_params        (GimpPaintbrush            *paintbrush,
-                                                       GimpDrawable              *drawable,
-                                                       GimpPaintOptions          *paint_options,
-                                                       GimpSymmetry              *sym,
+static gboolean   ligma_eraser_get_color_history_color (LigmaPaintbrush            *paintbrush,
+                                                       LigmaDrawable              *drawable,
+                                                       LigmaPaintOptions          *paint_options,
+                                                       LigmaRGB                   *color);
+static void       ligma_eraser_get_paint_params        (LigmaPaintbrush            *paintbrush,
+                                                       LigmaDrawable              *drawable,
+                                                       LigmaPaintOptions          *paint_options,
+                                                       LigmaSymmetry              *sym,
                                                        gdouble                    grad_point,
-                                                       GimpLayerMode             *paint_mode,
-                                                       GimpPaintApplicationMode  *paint_appl_mode,
-                                                       const GimpTempBuf        **paint_pixmap,
-                                                       GimpRGB                   *paint_color);
+                                                       LigmaLayerMode             *paint_mode,
+                                                       LigmaPaintApplicationMode  *paint_appl_mode,
+                                                       const LigmaTempBuf        **paint_pixmap,
+                                                       LigmaRGB                   *paint_color);
 
 
-G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_PAINTBRUSH)
+G_DEFINE_TYPE (LigmaEraser, ligma_eraser, LIGMA_TYPE_PAINTBRUSH)
 
 
 void
-gimp_eraser_register (Gimp                      *gimp,
-                      GimpPaintRegisterCallback  callback)
+ligma_eraser_register (Ligma                      *ligma,
+                      LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_ERASER,
-                GIMP_TYPE_ERASER_OPTIONS,
-                "gimp-eraser",
+  (* callback) (ligma,
+                LIGMA_TYPE_ERASER,
+                LIGMA_TYPE_ERASER_OPTIONS,
+                "ligma-eraser",
                 _("Eraser"),
-                "gimp-tool-eraser");
+                "ligma-tool-eraser");
 }
 
 static void
-gimp_eraser_class_init (GimpEraserClass *klass)
+ligma_eraser_class_init (LigmaEraserClass *klass)
 {
-  GimpPaintbrushClass *paintbrush_class = GIMP_PAINTBRUSH_CLASS (klass);
+  LigmaPaintbrushClass *paintbrush_class = LIGMA_PAINTBRUSH_CLASS (klass);
 
-  paintbrush_class->get_color_history_color = gimp_eraser_get_color_history_color;
-  paintbrush_class->get_paint_params        = gimp_eraser_get_paint_params;
+  paintbrush_class->get_color_history_color = ligma_eraser_get_color_history_color;
+  paintbrush_class->get_paint_params        = ligma_eraser_get_paint_params;
 }
 
 static void
-gimp_eraser_init (GimpEraser *eraser)
+ligma_eraser_init (LigmaEraser *eraser)
 {
 }
 
 static gboolean
-gimp_eraser_get_color_history_color (GimpPaintbrush   *paintbrush,
-                                     GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options,
-                                     GimpRGB          *color)
+ligma_eraser_get_color_history_color (LigmaPaintbrush   *paintbrush,
+                                     LigmaDrawable     *drawable,
+                                     LigmaPaintOptions *paint_options,
+                                     LigmaRGB          *color)
 {
   /* Erasing on a drawable without alpha is equivalent to
    * drawing with background color. So let's save history.
    */
-  if (! gimp_drawable_has_alpha (drawable))
+  if (! ligma_drawable_has_alpha (drawable))
     {
-      GimpContext *context = GIMP_CONTEXT (paint_options);
+      LigmaContext *context = LIGMA_CONTEXT (paint_options);
 
-      gimp_context_get_background (context, color);
+      ligma_context_get_background (context, color);
 
       return TRUE;
     }
@@ -104,27 +104,27 @@ gimp_eraser_get_color_history_color (GimpPaintbrush   *paintbrush,
 }
 
 static void
-gimp_eraser_get_paint_params (GimpPaintbrush            *paintbrush,
-                              GimpDrawable              *drawable,
-                              GimpPaintOptions          *paint_options,
-                              GimpSymmetry              *sym,
+ligma_eraser_get_paint_params (LigmaPaintbrush            *paintbrush,
+                              LigmaDrawable              *drawable,
+                              LigmaPaintOptions          *paint_options,
+                              LigmaSymmetry              *sym,
                               gdouble                    grad_point,
-                              GimpLayerMode             *paint_mode,
-                              GimpPaintApplicationMode  *paint_appl_mode,
-                              const GimpTempBuf        **paint_pixmap,
-                              GimpRGB                   *paint_color)
+                              LigmaLayerMode             *paint_mode,
+                              LigmaPaintApplicationMode  *paint_appl_mode,
+                              const LigmaTempBuf        **paint_pixmap,
+                              LigmaRGB                   *paint_color)
 {
-  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  LigmaEraserOptions *options = LIGMA_ERASER_OPTIONS (paint_options);
+  LigmaContext       *context = LIGMA_CONTEXT (paint_options);
 
-  gimp_context_get_background (context, paint_color);
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+  ligma_context_get_background (context, paint_color);
+  ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                      paint_color, paint_color);
 
   if (options->anti_erase)
-    *paint_mode = GIMP_LAYER_MODE_ANTI_ERASE;
-  else if (gimp_drawable_has_alpha (drawable))
-    *paint_mode = GIMP_LAYER_MODE_ERASE;
+    *paint_mode = LIGMA_LAYER_MODE_ANTI_ERASE;
+  else if (ligma_drawable_has_alpha (drawable))
+    *paint_mode = LIGMA_LAYER_MODE_ERASE;
   else
-    *paint_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+    *paint_mode = LIGMA_LAYER_MODE_NORMAL_LEGACY;
 }

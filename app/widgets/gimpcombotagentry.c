@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcombotagentry.c
+ * ligmacombotagentry.c
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,58 +25,58 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimptag.h"
-#include "core/gimptagged.h"
-#include "core/gimptaggedcontainer.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmatag.h"
+#include "core/ligmatagged.h"
+#include "core/ligmataggedcontainer.h"
+#include "core/ligmaviewable.h"
 
-#include "gimptagentry.h"
-#include "gimptagpopup.h"
-#include "gimpcombotagentry.h"
+#include "ligmatagentry.h"
+#include "ligmatagpopup.h"
+#include "ligmacombotagentry.h"
 
 
-static void     gimp_combo_tag_entry_constructed       (GObject              *object);
+static void     ligma_combo_tag_entry_constructed       (GObject              *object);
 
-static gboolean gimp_combo_tag_entry_draw              (GtkWidget            *widget,
+static gboolean ligma_combo_tag_entry_draw              (GtkWidget            *widget,
                                                         cairo_t              *cr);
 
-static void     gimp_combo_tag_entry_icon_press        (GtkWidget            *widget,
+static void     ligma_combo_tag_entry_icon_press        (GtkWidget            *widget,
                                                         GtkEntryIconPosition  icon_pos,
                                                         GdkEvent             *event,
                                                         gpointer              user_data);
 
-static void     gimp_combo_tag_entry_popup_destroy     (GtkWidget            *widget,
-                                                        GimpComboTagEntry    *entry);
+static void     ligma_combo_tag_entry_popup_destroy     (GtkWidget            *widget,
+                                                        LigmaComboTagEntry    *entry);
 
-static void     gimp_combo_tag_entry_tag_count_changed (GimpTaggedContainer  *container,
+static void     ligma_combo_tag_entry_tag_count_changed (LigmaTaggedContainer  *container,
                                                         gint                  tag_count,
-                                                        GimpComboTagEntry    *entry);
+                                                        LigmaComboTagEntry    *entry);
 
 
-G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GIMP_TYPE_TAG_ENTRY);
+G_DEFINE_TYPE (LigmaComboTagEntry, ligma_combo_tag_entry, LIGMA_TYPE_TAG_ENTRY);
 
-#define parent_class gimp_combo_tag_entry_parent_class
+#define parent_class ligma_combo_tag_entry_parent_class
 
 
 static void
-gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
+ligma_combo_tag_entry_class_init (LigmaComboTagEntryClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed = gimp_combo_tag_entry_constructed;
+  object_class->constructed = ligma_combo_tag_entry_constructed;
 
-  widget_class->draw        = gimp_combo_tag_entry_draw;
+  widget_class->draw        = ligma_combo_tag_entry_draw;
 }
 
 static void
-gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
+ligma_combo_tag_entry_init (LigmaComboTagEntry *entry)
 {
   entry->popup = NULL;
 
@@ -86,28 +86,28 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
                                      GTK_ENTRY_ICON_SECONDARY,
-                                     GIMP_ICON_GO_DOWN);
+                                     LIGMA_ICON_GO_DOWN);
 
   g_signal_connect (entry, "icon-press",
-                    G_CALLBACK (gimp_combo_tag_entry_icon_press),
+                    G_CALLBACK (ligma_combo_tag_entry_icon_press),
                     NULL);
 }
 
 static void
-gimp_combo_tag_entry_constructed (GObject *object)
+ligma_combo_tag_entry_constructed (GObject *object)
 {
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (object);
+  LigmaComboTagEntry *entry = LIGMA_COMBO_TAG_ENTRY (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_signal_connect_object (GIMP_TAG_ENTRY (entry)->container,
+  g_signal_connect_object (LIGMA_TAG_ENTRY (entry)->container,
                            "tag-count-changed",
-                           G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
+                           G_CALLBACK (ligma_combo_tag_entry_tag_count_changed),
                            entry, 0);
 }
 
 static gboolean
-gimp_combo_tag_entry_draw (GtkWidget *widget,
+ligma_combo_tag_entry_draw (GtkWidget *widget,
                            cairo_t   *cr)
 {
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
@@ -130,49 +130,49 @@ gimp_combo_tag_entry_draw (GtkWidget *widget,
 }
 
 /**
- * gimp_combo_tag_entry_new:
+ * ligma_combo_tag_entry_new:
  * @container: a tagged container to be used.
  * @mode:      tag entry mode to work in.
  *
- * Creates a new #GimpComboTagEntry widget which extends #GimpTagEntry by
+ * Creates a new #LigmaComboTagEntry widget which extends #LigmaTagEntry by
  * adding ability to pick tags using popup window (similar to combo box).
  *
- * Returns: a new #GimpComboTagEntry widget.
+ * Returns: a new #LigmaComboTagEntry widget.
  **/
 GtkWidget *
-gimp_combo_tag_entry_new (GimpTaggedContainer *container,
-                          GimpTagEntryMode     mode)
+ligma_combo_tag_entry_new (LigmaTaggedContainer *container,
+                          LigmaTagEntryMode     mode)
 {
-  g_return_val_if_fail (GIMP_IS_TAGGED_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_TAGGED_CONTAINER (container), NULL);
 
-  return g_object_new (GIMP_TYPE_COMBO_TAG_ENTRY,
+  return g_object_new (LIGMA_TYPE_COMBO_TAG_ENTRY,
                        "container", container,
                        "mode",      mode,
                        NULL);
 }
 
 static void
-gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
+ligma_combo_tag_entry_icon_press (GtkWidget            *widget,
                                  GtkEntryIconPosition  icon_pos,
                                  GdkEvent             *event,
                                  gpointer              user_data)
 {
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  LigmaComboTagEntry *entry = LIGMA_COMBO_TAG_ENTRY (widget);
 
   if (! entry->popup)
     {
-      GimpTaggedContainer *container = GIMP_TAG_ENTRY (entry)->container;
+      LigmaTaggedContainer *container = LIGMA_TAG_ENTRY (entry)->container;
       gint                 tag_count;
 
-      tag_count = gimp_tagged_container_get_tag_count (container);
+      tag_count = ligma_tagged_container_get_tag_count (container);
 
-      if (tag_count > 0 && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags)
+      if (tag_count > 0 && ! LIGMA_TAG_ENTRY (entry)->has_invalid_tags)
         {
-          entry->popup = gimp_tag_popup_new (entry);
+          entry->popup = ligma_tag_popup_new (entry);
           g_signal_connect (entry->popup, "destroy",
-                            G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
+                            G_CALLBACK (ligma_combo_tag_entry_popup_destroy),
                             entry);
-          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup), event);
+          ligma_tag_popup_show (LIGMA_TAG_POPUP (entry->popup), event);
         }
     }
   else
@@ -182,21 +182,21 @@ gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
 }
 
 static void
-gimp_combo_tag_entry_popup_destroy (GtkWidget         *widget,
-                                    GimpComboTagEntry *entry)
+ligma_combo_tag_entry_popup_destroy (GtkWidget         *widget,
+                                    LigmaComboTagEntry *entry)
 {
   entry->popup = NULL;
   gtk_widget_grab_focus (GTK_WIDGET (entry));
 }
 
 static void
-gimp_combo_tag_entry_tag_count_changed (GimpTaggedContainer *container,
+ligma_combo_tag_entry_tag_count_changed (LigmaTaggedContainer *container,
                                         gint                 tag_count,
-                                        GimpComboTagEntry   *entry)
+                                        LigmaComboTagEntry   *entry)
 {
   gboolean sensitive;
 
-  sensitive = tag_count > 0 && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags;
+  sensitive = tag_count > 0 && ! LIGMA_TAG_ENTRY (entry)->has_invalid_tags;
 
   gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
                                 GTK_ENTRY_ICON_SECONDARY,

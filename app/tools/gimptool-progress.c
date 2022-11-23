@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptool-progress.c
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmatool-progress.c
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,37 +26,37 @@
 
 #include "tools-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpcanvasprogress.h"
+#include "display/ligmacanvasprogress.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-items.h"
-#include "display/gimpdisplayshell-transform.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-items.h"
+#include "display/ligmadisplayshell-transform.h"
 
-#include "gimptool.h"
-#include "gimptool-progress.h"
+#include "ligmatool.h"
+#include "ligmatool-progress.h"
 
 
 /*  local function prototypes  */
 
-static GimpProgress * gimp_tool_progress_start     (GimpProgress        *progress,
+static LigmaProgress * ligma_tool_progress_start     (LigmaProgress        *progress,
                                                     gboolean             cancelable,
                                                     const gchar         *message);
-static void           gimp_tool_progress_end       (GimpProgress        *progress);
-static gboolean       gimp_tool_progress_is_active (GimpProgress        *progress);
-static void           gimp_tool_progress_set_text  (GimpProgress        *progress,
+static void           ligma_tool_progress_end       (LigmaProgress        *progress);
+static gboolean       ligma_tool_progress_is_active (LigmaProgress        *progress);
+static void           ligma_tool_progress_set_text  (LigmaProgress        *progress,
                                                     const gchar         *message);
-static void           gimp_tool_progress_set_value (GimpProgress        *progress,
+static void           ligma_tool_progress_set_value (LigmaProgress        *progress,
                                                     gdouble              percentage);
-static gdouble        gimp_tool_progress_get_value (GimpProgress        *progress);
-static void           gimp_tool_progress_pulse     (GimpProgress        *progress);
-static gboolean       gimp_tool_progress_message   (GimpProgress        *progress,
-                                                    Gimp                *gimp,
-                                                    GimpMessageSeverity  severity,
+static gdouble        ligma_tool_progress_get_value (LigmaProgress        *progress);
+static void           ligma_tool_progress_pulse     (LigmaProgress        *progress);
+static gboolean       ligma_tool_progress_message   (LigmaProgress        *progress,
+                                                    Ligma                *ligma,
+                                                    LigmaMessageSeverity  severity,
                                                     const gchar         *domain,
                                                     const gchar         *message);
 
@@ -64,46 +64,46 @@ static gboolean       gimp_tool_progress_message   (GimpProgress        *progres
 /*  public functions  */
 
 void
-gimp_tool_progress_iface_init (GimpProgressInterface *iface)
+ligma_tool_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start     = gimp_tool_progress_start;
-  iface->end       = gimp_tool_progress_end;
-  iface->is_active = gimp_tool_progress_is_active;
-  iface->set_text  = gimp_tool_progress_set_text;
-  iface->set_value = gimp_tool_progress_set_value;
-  iface->get_value = gimp_tool_progress_get_value;
-  iface->pulse     = gimp_tool_progress_pulse;
-  iface->message   = gimp_tool_progress_message;
+  iface->start     = ligma_tool_progress_start;
+  iface->end       = ligma_tool_progress_end;
+  iface->is_active = ligma_tool_progress_is_active;
+  iface->set_text  = ligma_tool_progress_set_text;
+  iface->set_value = ligma_tool_progress_set_value;
+  iface->get_value = ligma_tool_progress_get_value;
+  iface->pulse     = ligma_tool_progress_pulse;
+  iface->message   = ligma_tool_progress_message;
 }
 
 
 /*  private functions  */
 
 static gboolean
-gimp_tool_progress_button_press (GtkWidget            *widget,
+ligma_tool_progress_button_press (GtkWidget            *widget,
                                  const GdkEventButton *bevent,
-                                 GimpTool             *tool)
+                                 LigmaTool             *tool)
 {
   if (tool->progress_cancelable          &&
       bevent->type   == GDK_BUTTON_PRESS &&
       bevent->button == 1)
     {
       GtkWidget        *event_widget;
-      GimpDisplayShell *shell;
+      LigmaDisplayShell *shell;
 
       event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
-      shell        = gimp_display_get_shell (tool->progress_display);
+      shell        = ligma_display_get_shell (tool->progress_display);
 
       if (shell->canvas == event_widget)
         {
           gint x, y;
 
-          gimp_display_shell_unzoom_xy (shell, bevent->x, bevent->y,
+          ligma_display_shell_unzoom_xy (shell, bevent->x, bevent->y,
                                         &x, &y, FALSE);
 
-          if (gimp_canvas_item_hit (tool->progress, x, y))
+          if (ligma_canvas_item_hit (tool->progress, x, y))
             {
-              gimp_progress_cancel (GIMP_PROGRESS (tool));
+              ligma_progress_cancel (LIGMA_PROGRESS (tool));
             }
         }
     }
@@ -112,45 +112,45 @@ gimp_tool_progress_button_press (GtkWidget            *widget,
 }
 
 static gboolean
-gimp_tool_progress_key_press (GtkWidget         *widget,
+ligma_tool_progress_key_press (GtkWidget         *widget,
                               const GdkEventKey *kevent,
-                              GimpTool          *tool)
+                              LigmaTool          *tool)
 {
   if (tool->progress_cancelable &&
       kevent->keyval == GDK_KEY_Escape)
     {
-      gimp_progress_cancel (GIMP_PROGRESS (tool));
+      ligma_progress_cancel (LIGMA_PROGRESS (tool));
     }
 
   return TRUE;
 }
 
-static GimpProgress *
-gimp_tool_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_tool_progress_start (LigmaProgress *progress,
                           gboolean      cancelable,
                           const gchar  *message)
 {
-  GimpTool         *tool = GIMP_TOOL (progress);
-  GimpDisplayShell *shell;
+  LigmaTool         *tool = LIGMA_TOOL (progress);
+  LigmaDisplayShell *shell;
   gint              x, y;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY (tool->display), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (tool->display), NULL);
   g_return_val_if_fail (tool->progress == NULL, NULL);
 
-  shell = gimp_display_get_shell (tool->display);
+  shell = ligma_display_get_shell (tool->display);
 
   x = shell->disp_width  / 2;
   y = shell->disp_height / 2;
 
-  gimp_display_shell_unzoom_xy (shell, x, y, &x, &y, FALSE);
+  ligma_display_shell_unzoom_xy (shell, x, y, &x, &y, FALSE);
 
-  tool->progress = gimp_canvas_progress_new (shell,
-                                             GIMP_HANDLE_ANCHOR_CENTER,
+  tool->progress = ligma_canvas_progress_new (shell,
+                                             LIGMA_HANDLE_ANCHOR_CENTER,
                                              x, y);
-  gimp_display_shell_add_unrotated_item (shell, tool->progress);
+  ligma_display_shell_add_unrotated_item (shell, tool->progress);
   g_object_unref (tool->progress);
 
-  gimp_progress_start (GIMP_PROGRESS (tool->progress), FALSE,
+  ligma_progress_start (LIGMA_PROGRESS (tool->progress), FALSE,
                        "%s", message);
 
   tool->progress_display = tool->display;
@@ -160,10 +160,10 @@ gimp_tool_progress_start (GimpProgress *progress,
   gtk_grab_add (tool->progress_grab_widget);
 
   g_signal_connect (tool->progress_grab_widget, "button-press-event",
-                    G_CALLBACK (gimp_tool_progress_button_press),
+                    G_CALLBACK (ligma_tool_progress_button_press),
                     tool);
   g_signal_connect (tool->progress_grab_widget, "key-press-event",
-                    G_CALLBACK (gimp_tool_progress_key_press),
+                    G_CALLBACK (ligma_tool_progress_key_press),
                     tool);
 
   tool->progress_cancelable = cancelable;
@@ -172,16 +172,16 @@ gimp_tool_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_tool_progress_end (GimpProgress *progress)
+ligma_tool_progress_end (LigmaProgress *progress)
 {
-  GimpTool *tool = GIMP_TOOL (progress);
+  LigmaTool *tool = LIGMA_TOOL (progress);
 
   if (tool->progress)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->progress_display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (tool->progress_display);
 
-      gimp_progress_end (GIMP_PROGRESS (tool->progress));
-      gimp_display_shell_remove_unrotated_item (shell, tool->progress);
+      ligma_progress_end (LIGMA_PROGRESS (tool->progress));
+      ligma_display_shell_remove_unrotated_item (shell, tool->progress);
 
       gtk_grab_remove (tool->progress_grab_widget);
       gtk_widget_destroy (tool->progress_grab_widget);
@@ -194,53 +194,53 @@ gimp_tool_progress_end (GimpProgress *progress)
 }
 
 static gboolean
-gimp_tool_progress_is_active (GimpProgress *progress)
+ligma_tool_progress_is_active (LigmaProgress *progress)
 {
-  GimpTool *tool = GIMP_TOOL (progress);
+  LigmaTool *tool = LIGMA_TOOL (progress);
 
   return tool->progress != NULL;
 }
 
 static void
-gimp_tool_progress_set_text (GimpProgress *progress,
+ligma_tool_progress_set_text (LigmaProgress *progress,
                              const gchar  *message)
 {
-  GimpTool *tool = GIMP_TOOL (progress);
+  LigmaTool *tool = LIGMA_TOOL (progress);
 
   if (tool->progress)
-    gimp_progress_set_text_literal (GIMP_PROGRESS (tool->progress), message);
+    ligma_progress_set_text_literal (LIGMA_PROGRESS (tool->progress), message);
 }
 
 static void
-gimp_tool_progress_set_value (GimpProgress *progress,
+ligma_tool_progress_set_value (LigmaProgress *progress,
                               gdouble       percentage)
 {
-  GimpTool *tool = GIMP_TOOL (progress);
+  LigmaTool *tool = LIGMA_TOOL (progress);
 
   if (tool->progress)
-    gimp_progress_set_value (GIMP_PROGRESS (tool->progress), percentage);
+    ligma_progress_set_value (LIGMA_PROGRESS (tool->progress), percentage);
 }
 
 static gdouble
-gimp_tool_progress_get_value (GimpProgress *progress)
+ligma_tool_progress_get_value (LigmaProgress *progress)
 {
-  GimpTool *tool = GIMP_TOOL (progress);
+  LigmaTool *tool = LIGMA_TOOL (progress);
 
   if (tool->progress)
-    return gimp_progress_get_value (GIMP_PROGRESS (tool->progress));
+    return ligma_progress_get_value (LIGMA_PROGRESS (tool->progress));
 
   return 0.0;
 }
 
 static void
-gimp_tool_progress_pulse (GimpProgress *progress)
+ligma_tool_progress_pulse (LigmaProgress *progress)
 {
 }
 
 static gboolean
-gimp_tool_progress_message (GimpProgress        *progress,
-                            Gimp                *gimp,
-                            GimpMessageSeverity  severity,
+ligma_tool_progress_message (LigmaProgress        *progress,
+                            Ligma                *ligma,
+                            LigmaMessageSeverity  severity,
                             const gchar         *domain,
                             const gchar         *message)
 {

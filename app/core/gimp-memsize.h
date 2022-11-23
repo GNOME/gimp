@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,46 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_MEMSIZE_H__
-#define __APP_GIMP_MEMSIZE_H__
+#ifndef __APP_LIGMA_MEMSIZE_H__
+#define __APP_LIGMA_MEMSIZE_H__
 
 
-gint64   gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
-gint64   gimp_g_object_get_memsize             (GObject         *object);
+gint64   ligma_g_type_instance_get_memsize      (GTypeInstance   *instance);
+gint64   ligma_g_object_get_memsize             (GObject         *object);
 
-gint64   gimp_g_hash_table_get_memsize         (GHashTable      *hash,
+gint64   ligma_g_hash_table_get_memsize         (GHashTable      *hash,
                                                 gint64           data_size);
-gint64   gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
-                                                GimpMemsizeFunc  func,
+gint64   ligma_g_hash_table_get_memsize_foreach (GHashTable      *hash,
+                                                LigmaMemsizeFunc  func,
                                                 gint64          *gui_size);
 
-gint64   gimp_g_slist_get_memsize              (GSList          *slist,
+gint64   ligma_g_slist_get_memsize              (GSList          *slist,
                                                 gint64           data_size);
-gint64   gimp_g_slist_get_memsize_foreach      (GSList          *slist,
-                                                GimpMemsizeFunc  func,
+gint64   ligma_g_slist_get_memsize_foreach      (GSList          *slist,
+                                                LigmaMemsizeFunc  func,
                                                 gint64          *gui_size);
 
-gint64   gimp_g_list_get_memsize               (GList           *list,
+gint64   ligma_g_list_get_memsize               (GList           *list,
                                                 gint64           data_size);
-gint64   gimp_g_list_get_memsize_foreach       (GList           *list,
-                                                GimpMemsizeFunc  func,
+gint64   ligma_g_list_get_memsize_foreach       (GList           *list,
+                                                LigmaMemsizeFunc  func,
                                                 gint64          *gui_size);
 
-gint64   gimp_g_queue_get_memsize              (GQueue          *queue,
+gint64   ligma_g_queue_get_memsize              (GQueue          *queue,
                                                 gint64           data_size);
-gint64   gimp_g_queue_get_memsize_foreach      (GQueue          *queue,
-                                                GimpMemsizeFunc  func,
+gint64   ligma_g_queue_get_memsize_foreach      (GQueue          *queue,
+                                                LigmaMemsizeFunc  func,
                                                 gint64          *gui_size);
 
-gint64   gimp_g_value_get_memsize              (GValue          *value);
-gint64   gimp_g_param_spec_get_memsize         (GParamSpec      *pspec);
+gint64   ligma_g_value_get_memsize              (GValue          *value);
+gint64   ligma_g_param_spec_get_memsize         (GParamSpec      *pspec);
 
-gint64   gimp_gegl_buffer_get_memsize          (GeglBuffer      *buffer);
-gint64   gimp_gegl_pyramid_get_memsize         (GeglBuffer      *buffer);
+gint64   ligma_gegl_buffer_get_memsize          (GeglBuffer      *buffer);
+gint64   ligma_gegl_pyramid_get_memsize         (GeglBuffer      *buffer);
 
-gint64   gimp_string_get_memsize               (const gchar     *string);
-gint64   gimp_parasite_get_memsize             (GimpParasite    *parasite,
+gint64   ligma_string_get_memsize               (const gchar     *string);
+gint64   ligma_parasite_get_memsize             (LigmaParasite    *parasite,
                                                 gint64          *gui_size);
 
 
-#endif /* __APP_GIMP_MEMSIZE_H__ */
+#endif /* __APP_LIGMA_MEMSIZE_H__ */

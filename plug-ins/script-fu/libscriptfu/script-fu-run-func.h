@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,16 +18,16 @@
 #ifndef __SCRIPT_FU_RUN_FUNC_H__
 #define __SCRIPT_FU_RUN_FUNC_H__
 
-GimpValueArray *script_fu_run_procedure       (GimpProcedure        *procedure,
-                                               const GimpValueArray *args,
+LigmaValueArray *script_fu_run_procedure       (LigmaProcedure        *procedure,
+                                               const LigmaValueArray *args,
                                                gpointer              data);
 
-GimpValueArray *script_fu_run_image_procedure (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+LigmaValueArray *script_fu_run_image_procedure (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                guint                 n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              data);
 
 #endif /*  __SCRIPT_FU_RUN_FUNC__  */

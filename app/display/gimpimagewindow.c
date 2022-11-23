@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,92 +28,92 @@
 #include <windows.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpprogress.h"
-#include "core/gimpcontainer.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmacontainer.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdockcolumns.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpsessioninfo-aux.h"
-#include "widgets/gimpsessionmanaged.h"
-#include "widgets/gimpsessioninfo-dock.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpview.h"
-#include "widgets/gimpviewrenderer.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadockcolumns.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamenufactory.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmasessioninfo-aux.h"
+#include "widgets/ligmasessionmanaged.h"
+#include "widgets/ligmasessioninfo-dock.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmaview.h"
+#include "widgets/ligmaviewrenderer.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-close.h"
-#include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-tool-events.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpimagewindow.h"
-#include "gimpstatusbar.h"
+#include "ligmadisplay.h"
+#include "ligmadisplay-foreach.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-appearance.h"
+#include "ligmadisplayshell-close.h"
+#include "ligmadisplayshell-expose.h"
+#include "ligmadisplayshell-render.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-tool-events.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmaimagewindow.h"
+#include "ligmastatusbar.h"
 
-#include "gimp-log.h"
-#include "gimp-priorities.h"
+#include "ligma-log.h"
+#include "ligma-priorities.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID   "gimp-empty-image-window"
-#define GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID  "gimp-single-image-window"
+#define LIGMA_EMPTY_IMAGE_WINDOW_ENTRY_ID   "ligma-empty-image-window"
+#define LIGMA_SINGLE_IMAGE_WINDOW_ENTRY_ID  "ligma-single-image-window"
 
 /* The width of the left and right dock areas */
-#define GIMP_IMAGE_WINDOW_LEFT_DOCKS_WIDTH  "left-docks-width"
-#define GIMP_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH "right-docks-width"
+#define LIGMA_IMAGE_WINDOW_LEFT_DOCKS_WIDTH  "left-docks-width"
+#define LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH "right-docks-width"
 
 /* deprecated property: GtkPaned position of the right docks area */
-#define GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS  "right-docks-position"
+#define LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_POS  "right-docks-position"
 
 /* Whether the window's maximized or not */
-#define GIMP_IMAGE_WINDOW_MAXIMIZED        "maximized"
+#define LIGMA_IMAGE_WINDOW_MAXIMIZED        "maximized"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_DIALOG_FACTORY,
   PROP_INITIAL_MONITOR
 };
 
 
-typedef struct _GimpImageWindowPrivate GimpImageWindowPrivate;
+typedef struct _LigmaImageWindowPrivate LigmaImageWindowPrivate;
 
-struct _GimpImageWindowPrivate
+struct _LigmaImageWindowPrivate
 {
-  Gimp              *gimp;
-  GimpUIManager     *menubar_manager;
-  GimpDialogFactory *dialog_factory;
+  Ligma              *ligma;
+  LigmaUIManager     *menubar_manager;
+  LigmaDialogFactory *dialog_factory;
 
   GList             *shells;
-  GimpDisplayShell  *active_shell;
+  LigmaDisplayShell  *active_shell;
 
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
@@ -146,177 +146,177 @@ typedef struct
 } PosCorrectionData;
 
 
-#define GIMP_IMAGE_WINDOW_GET_PRIVATE(window) \
-        ((GimpImageWindowPrivate *) gimp_image_window_get_instance_private ((GimpImageWindow *) (window)))
+#define LIGMA_IMAGE_WINDOW_GET_PRIVATE(window) \
+        ((LigmaImageWindowPrivate *) ligma_image_window_get_instance_private ((LigmaImageWindow *) (window)))
 
 
 /*  local function prototypes  */
 
-static void      gimp_image_window_dock_container_iface_init
-                                                       (GimpDockContainerInterface
+static void      ligma_image_window_dock_container_iface_init
+                                                       (LigmaDockContainerInterface
                                                                             *iface);
-static void      gimp_image_window_session_managed_iface_init
-                                                       (GimpSessionManagedInterface
+static void      ligma_image_window_session_managed_iface_init
+                                                       (LigmaSessionManagedInterface
                                                                             *iface);
-static void      gimp_image_window_constructed         (GObject             *object);
-static void      gimp_image_window_dispose             (GObject             *object);
-static void      gimp_image_window_finalize            (GObject             *object);
-static void      gimp_image_window_set_property        (GObject             *object,
+static void      ligma_image_window_constructed         (GObject             *object);
+static void      ligma_image_window_dispose             (GObject             *object);
+static void      ligma_image_window_finalize            (GObject             *object);
+static void      ligma_image_window_set_property        (GObject             *object,
                                                         guint                property_id,
                                                         const GValue        *value,
                                                         GParamSpec          *pspec);
-static void      gimp_image_window_get_property        (GObject             *object,
+static void      ligma_image_window_get_property        (GObject             *object,
                                                         guint                property_id,
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
 
-static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
+static gboolean  ligma_image_window_delete_event        (GtkWidget           *widget,
                                                         GdkEventAny         *event);
-static gboolean  gimp_image_window_configure_event     (GtkWidget           *widget,
+static gboolean  ligma_image_window_configure_event     (GtkWidget           *widget,
                                                         GdkEventConfigure   *event);
-static gboolean  gimp_image_window_window_state_event  (GtkWidget           *widget,
+static gboolean  ligma_image_window_window_state_event  (GtkWidget           *widget,
                                                         GdkEventWindowState *event);
-static void      gimp_image_window_style_updated       (GtkWidget           *widget);
+static void      ligma_image_window_style_updated       (GtkWidget           *widget);
 
-static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
+static void      ligma_image_window_monitor_changed     (LigmaWindow          *window,
                                                         GdkMonitor          *monitor);
 
-static GList *   gimp_image_window_get_docks           (GimpDockContainer   *dock_container);
-static GimpDialogFactory *
-                 gimp_image_window_dock_container_get_dialog_factory
-                                                       (GimpDockContainer   *dock_container);
-static GimpUIManager *
-                 gimp_image_window_dock_container_get_ui_manager
-                                                       (GimpDockContainer   *dock_container);
-static void      gimp_image_window_add_dock            (GimpDockContainer   *dock_container,
-                                                        GimpDock            *dock,
-                                                        GimpSessionInfoDock *dock_info);
-static GimpAlignmentType
-                 gimp_image_window_get_dock_side       (GimpDockContainer   *dock_container,
-                                                        GimpDock            *dock);
-static GList   * gimp_image_window_get_aux_info        (GimpSessionManaged  *session_managed);
-static void      gimp_image_window_set_aux_info        (GimpSessionManaged  *session_managed,
+static GList *   ligma_image_window_get_docks           (LigmaDockContainer   *dock_container);
+static LigmaDialogFactory *
+                 ligma_image_window_dock_container_get_dialog_factory
+                                                       (LigmaDockContainer   *dock_container);
+static LigmaUIManager *
+                 ligma_image_window_dock_container_get_ui_manager
+                                                       (LigmaDockContainer   *dock_container);
+static void      ligma_image_window_add_dock            (LigmaDockContainer   *dock_container,
+                                                        LigmaDock            *dock,
+                                                        LigmaSessionInfoDock *dock_info);
+static LigmaAlignmentType
+                 ligma_image_window_get_dock_side       (LigmaDockContainer   *dock_container,
+                                                        LigmaDock            *dock);
+static GList   * ligma_image_window_get_aux_info        (LigmaSessionManaged  *session_managed);
+static void      ligma_image_window_set_aux_info        (LigmaSessionManaged  *session_managed,
                                                         GList               *aux_info);
 
-static void      gimp_image_window_config_notify       (GimpImageWindow     *window,
+static void      ligma_image_window_config_notify       (LigmaImageWindow     *window,
                                                         GParamSpec          *pspec,
-                                                        GimpGuiConfig       *config);
-static void      gimp_image_window_session_clear       (GimpImageWindow     *window);
-static void      gimp_image_window_session_apply       (GimpImageWindow     *window,
+                                                        LigmaGuiConfig       *config);
+static void      ligma_image_window_session_clear       (LigmaImageWindow     *window);
+static void      ligma_image_window_session_apply       (LigmaImageWindow     *window,
                                                         const gchar         *entry_id,
                                                         GdkMonitor          *monitor);
-static void      gimp_image_window_session_update      (GimpImageWindow     *window,
-                                                        GimpDisplay         *new_display,
+static void      ligma_image_window_session_update      (LigmaImageWindow     *window,
+                                                        LigmaDisplay         *new_display,
                                                         const gchar         *new_entry_id,
                                                         GdkMonitor          *monitor);
 static const gchar *
-                 gimp_image_window_config_to_entry_id  (GimpGuiConfig       *config);
-static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
+                 ligma_image_window_config_to_entry_id  (LigmaGuiConfig       *config);
+static void      ligma_image_window_show_tooltip        (LigmaUIManager       *manager,
                                                         const gchar         *tooltip,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_hide_tooltip        (GimpUIManager       *manager,
-                                                        GimpImageWindow     *window);
-static gboolean  gimp_image_window_update_ui_manager_idle
-                                                       (GimpImageWindow     *window);
-static void      gimp_image_window_update_ui_manager   (GimpImageWindow     *window);
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_hide_tooltip        (LigmaUIManager       *manager,
+                                                        LigmaImageWindow     *window);
+static gboolean  ligma_image_window_update_ui_manager_idle
+                                                       (LigmaImageWindow     *window);
+static void      ligma_image_window_update_ui_manager   (LigmaImageWindow     *window);
 
-static void      gimp_image_window_shell_size_allocate (GimpDisplayShell    *shell,
+static void      ligma_image_window_shell_size_allocate (LigmaDisplayShell    *shell,
                                                         GtkAllocation       *allocation,
                                                         PosCorrectionData   *data);
-static gboolean  gimp_image_window_shell_events        (GtkWidget           *widget,
+static gboolean  ligma_image_window_shell_events        (GtkWidget           *widget,
                                                         GdkEvent            *event,
-                                                        GimpImageWindow     *window);
+                                                        LigmaImageWindow     *window);
 
-static void      gimp_image_window_switch_page         (GtkNotebook         *notebook,
+static void      ligma_image_window_switch_page         (GtkNotebook         *notebook,
                                                         gpointer             page,
                                                         gint                 page_num,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_page_removed        (GtkNotebook         *notebook,
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_page_reordered      (GtkNotebook         *notebook,
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_page_reordered      (GtkNotebook         *notebook,
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_disconnect_from_active_shell
-                                                       (GimpImageWindow *window);
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_disconnect_from_active_shell
+                                                       (LigmaImageWindow *window);
 
-static void      gimp_image_window_image_notify        (GimpDisplay         *display,
+static void      ligma_image_window_image_notify        (LigmaDisplay         *display,
                                                         const GParamSpec    *pspec,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_shell_scaled        (GimpDisplayShell    *shell,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_shell_rotated       (GimpDisplayShell    *shell,
-                                                        GimpImageWindow     *window);
-static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *shell,
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_shell_scaled        (LigmaDisplayShell    *shell,
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_shell_rotated       (LigmaDisplayShell    *shell,
+                                                        LigmaImageWindow     *window);
+static void      ligma_image_window_shell_title_notify  (LigmaDisplayShell    *shell,
                                                         const GParamSpec    *pspec,
-                                                        GimpImageWindow     *window);
+                                                        LigmaImageWindow     *window);
 static GtkWidget *
-                 gimp_image_window_create_tab_label    (GimpImageWindow     *window,
-                                                        GimpDisplayShell    *shell);
-static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *window);
+                 ligma_image_window_create_tab_label    (LigmaImageWindow     *window,
+                                                        LigmaDisplayShell    *shell);
+static void      ligma_image_window_update_tab_labels   (LigmaImageWindow     *window);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
-                         G_ADD_PRIVATE (GimpImageWindow)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
-                                                gimp_image_window_dock_container_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
-                                                gimp_image_window_session_managed_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaImageWindow, ligma_image_window, LIGMA_TYPE_WINDOW,
+                         G_ADD_PRIVATE (LigmaImageWindow)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCK_CONTAINER,
+                                                ligma_image_window_dock_container_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_SESSION_MANAGED,
+                                                ligma_image_window_session_managed_iface_init))
 
-#define parent_class gimp_image_window_parent_class
+#define parent_class ligma_image_window_parent_class
 
 
 static void
-gimp_image_window_class_init (GimpImageWindowClass *klass)
+ligma_image_window_class_init (LigmaImageWindowClass *klass)
 {
   GObjectClass    *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass  *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpWindowClass *window_class = GIMP_WINDOW_CLASS (klass);
+  LigmaWindowClass *window_class = LIGMA_WINDOW_CLASS (klass);
 
-  object_class->constructed        = gimp_image_window_constructed;
-  object_class->dispose            = gimp_image_window_dispose;
-  object_class->finalize           = gimp_image_window_finalize;
-  object_class->set_property       = gimp_image_window_set_property;
-  object_class->get_property       = gimp_image_window_get_property;
+  object_class->constructed        = ligma_image_window_constructed;
+  object_class->dispose            = ligma_image_window_dispose;
+  object_class->finalize           = ligma_image_window_finalize;
+  object_class->set_property       = ligma_image_window_set_property;
+  object_class->get_property       = ligma_image_window_get_property;
 
-  widget_class->delete_event       = gimp_image_window_delete_event;
-  widget_class->configure_event    = gimp_image_window_configure_event;
-  widget_class->window_state_event = gimp_image_window_window_state_event;
-  widget_class->style_updated      = gimp_image_window_style_updated;
+  widget_class->delete_event       = ligma_image_window_delete_event;
+  widget_class->configure_event    = ligma_image_window_configure_event;
+  widget_class->window_state_event = ligma_image_window_window_state_event;
+  widget_class->style_updated      = ligma_image_window_style_updated;
 
-  window_class->monitor_changed    = gimp_image_window_monitor_changed;
+  window_class->monitor_changed    = ligma_image_window_monitor_changed;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_WRITABLE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
                                    g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DIALOG_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DIALOG_FACTORY,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
                                    g_param_spec_object ("initial-monitor",
                                                         NULL, NULL,
                                                         GDK_TYPE_MONITOR,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_image_window_init (GimpImageWindow *window)
+ligma_image_window_init (LigmaImageWindow *window)
 {
   static gint  role_serial = 1;
   gchar       *role;
 
-  role = g_strdup_printf ("gimp-image-window-%d", role_serial++);
+  role = g_strdup_printf ("ligma-image-window-%d", role_serial++);
   gtk_window_set_role (GTK_WINDOW (window), role);
   g_free (role);
 
@@ -324,59 +324,59 @@ gimp_image_window_init (GimpImageWindow *window)
 }
 
 static void
-gimp_image_window_dock_container_iface_init (GimpDockContainerInterface *iface)
+ligma_image_window_dock_container_iface_init (LigmaDockContainerInterface *iface)
 {
-  iface->get_docks          = gimp_image_window_get_docks;
-  iface->get_dialog_factory = gimp_image_window_dock_container_get_dialog_factory;
-  iface->get_ui_manager     = gimp_image_window_dock_container_get_ui_manager;
-  iface->add_dock           = gimp_image_window_add_dock;
-  iface->get_dock_side      = gimp_image_window_get_dock_side;
+  iface->get_docks          = ligma_image_window_get_docks;
+  iface->get_dialog_factory = ligma_image_window_dock_container_get_dialog_factory;
+  iface->get_ui_manager     = ligma_image_window_dock_container_get_ui_manager;
+  iface->add_dock           = ligma_image_window_add_dock;
+  iface->get_dock_side      = ligma_image_window_get_dock_side;
 }
 
 static void
-gimp_image_window_session_managed_iface_init (GimpSessionManagedInterface *iface)
+ligma_image_window_session_managed_iface_init (LigmaSessionManagedInterface *iface)
 {
-  iface->get_aux_info = gimp_image_window_get_aux_info;
-  iface->set_aux_info = gimp_image_window_set_aux_info;
+  iface->get_aux_info = ligma_image_window_get_aux_info;
+  iface->set_aux_info = ligma_image_window_set_aux_info;
 }
 
 static void
-gimp_image_window_constructed (GObject *object)
+ligma_image_window_constructed (GObject *object)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpMenuFactory        *menu_factory;
-  GimpGuiConfig          *config;
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (object);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaMenuFactory        *menu_factory;
+  LigmaGuiConfig          *config;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (private->gimp));
-  gimp_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
+  ligma_assert (LIGMA_IS_LIGMA (private->ligma));
+  ligma_assert (LIGMA_IS_DIALOG_FACTORY (private->dialog_factory));
 
-  menu_factory = gimp_dialog_factory_get_menu_factory (private->dialog_factory);
+  menu_factory = ligma_dialog_factory_get_menu_factory (private->dialog_factory);
 
-  private->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
+  private->menubar_manager = ligma_menu_factory_manager_new (menu_factory,
                                                             "<Image>",
                                                             window);
 
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
-                           G_CALLBACK (gimp_image_window_update_ui_manager),
+                           G_CALLBACK (ligma_image_window_update_ui_manager),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (private->dialog_factory, "dock-window-removed",
-                           G_CALLBACK (gimp_image_window_update_ui_manager),
+                           G_CALLBACK (ligma_image_window_update_ui_manager),
                            window, G_CONNECT_SWAPPED);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gimp_ui_manager_get_accel_group (private->menubar_manager));
+                              ligma_ui_manager_get_accel_group (private->menubar_manager));
 
   g_signal_connect (private->menubar_manager, "show-tooltip",
-                    G_CALLBACK (gimp_image_window_show_tooltip),
+                    G_CALLBACK (ligma_image_window_show_tooltip),
                     window);
   g_signal_connect (private->menubar_manager, "hide-tooltip",
-                    G_CALLBACK (gimp_image_window_hide_tooltip),
+                    G_CALLBACK (ligma_image_window_hide_tooltip),
                     window);
 
-  config = GIMP_GUI_CONFIG (private->gimp->config);
+  config = LIGMA_GUI_CONFIG (private->ligma->config);
 
   /* Create the window toplevel container */
   private->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -385,7 +385,7 @@ gimp_image_window_constructed (GObject *object)
 
   /* Create the menubar */
 #ifndef GDK_WINDOWING_QUARTZ
-  private->menubar = gimp_ui_manager_get_widget (private->menubar_manager,
+  private->menubar = ligma_ui_manager_get_widget (private->menubar_manager,
                                                  "/image-menubar");
 #endif /* !GDK_WINDOWING_QUARTZ */
   if (private->menubar)
@@ -402,13 +402,13 @@ gimp_image_window_constructed (GObject *object)
 
       /*  active display callback  */
       g_signal_connect (private->menubar, "button-press-event",
-                        G_CALLBACK (gimp_image_window_shell_events),
+                        G_CALLBACK (ligma_image_window_shell_events),
                         window);
       g_signal_connect (private->menubar, "button-release-event",
-                        G_CALLBACK (gimp_image_window_shell_events),
+                        G_CALLBACK (ligma_image_window_shell_events),
                         window);
       g_signal_connect (private->menubar, "key-press-event",
-                        G_CALLBACK (gimp_image_window_shell_events),
+                        G_CALLBACK (ligma_image_window_shell_events),
                         window);
     }
 
@@ -427,7 +427,7 @@ gimp_image_window_constructed (GObject *object)
 
   /* Create the left dock columns widget */
   private->left_docks =
-    gimp_dock_columns_new (gimp_get_user_context (private->gimp),
+    ligma_dock_columns_new (ligma_get_user_context (private->ligma),
                            private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
@@ -451,19 +451,19 @@ gimp_image_window_constructed (GObject *object)
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
                    TRUE, TRUE);
   g_signal_connect (private->notebook, "switch-page",
-                    G_CALLBACK (gimp_image_window_switch_page),
+                    G_CALLBACK (ligma_image_window_switch_page),
                     window);
   g_signal_connect (private->notebook, "page-removed",
-                    G_CALLBACK (gimp_image_window_page_removed),
+                    G_CALLBACK (ligma_image_window_page_removed),
                     window);
   g_signal_connect (private->notebook, "page-reordered",
-                    G_CALLBACK (gimp_image_window_page_reordered),
+                    G_CALLBACK (ligma_image_window_page_reordered),
                     window);
   gtk_widget_show (private->notebook);
 
   /* Create the right dock columns widget */
   private->right_docks =
-    gimp_dock_columns_new (gimp_get_user_context (private->gimp),
+    ligma_dock_columns_new (ligma_get_user_context (private->ligma),
                            private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
@@ -471,33 +471,33 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_set_visible (private->right_docks, config->single_window_mode);
 
   g_signal_connect_object (config, "notify::single-window-mode",
-                           G_CALLBACK (gimp_image_window_config_notify),
+                           G_CALLBACK (ligma_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::show-tabs",
-                           G_CALLBACK (gimp_image_window_config_notify),
+                           G_CALLBACK (ligma_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::hide-docks",
-                           G_CALLBACK (gimp_image_window_config_notify),
+                           G_CALLBACK (ligma_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::tabs-position",
-                           G_CALLBACK (gimp_image_window_config_notify),
+                           G_CALLBACK (ligma_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
 
-  gimp_image_window_session_update (window,
+  ligma_image_window_session_update (window,
                                     NULL /*new_display*/,
-                                    gimp_image_window_config_to_entry_id (config),
+                                    ligma_image_window_config_to_entry_id (config),
                                     private->initial_monitor);
 }
 
 static void
-gimp_image_window_dispose (GObject *object)
+ligma_image_window_dispose (GObject *object)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (object);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (object);
 
   if (private->dialog_factory)
     {
       g_signal_handlers_disconnect_by_func (private->dialog_factory,
-                                            gimp_image_window_update_ui_manager,
+                                            ligma_image_window_update_ui_manager,
                                             object);
       private->dialog_factory = NULL;
     }
@@ -514,9 +514,9 @@ gimp_image_window_dispose (GObject *object)
 }
 
 static void
-gimp_image_window_finalize (GObject *object)
+ligma_image_window_finalize (GObject *object)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (object);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (object);
 
   if (private->shells)
     {
@@ -528,18 +528,18 @@ gimp_image_window_finalize (GObject *object)
 }
 
 static void
-gimp_image_window_set_property (GObject      *object,
+ligma_image_window_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (object);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value);
       break;
     case PROP_DIALOG_FACTORY:
       private->dialog_factory = g_value_get_object (value);
@@ -555,18 +555,18 @@ gimp_image_window_set_property (GObject      *object,
 }
 
 static void
-gimp_image_window_get_property (GObject    *object,
+ligma_image_window_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (object);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
     case PROP_DIALOG_FACTORY:
       g_value_set_object (value, private->dialog_factory);
@@ -582,29 +582,29 @@ gimp_image_window_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_image_window_delete_event (GtkWidget   *widget,
+ligma_image_window_delete_event (GtkWidget   *widget,
                                 GdkEventAny *event)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
-  GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpGuiConfig          *config  = GIMP_GUI_CONFIG (private->gimp->config);
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (widget);
+  LigmaDisplayShell       *shell   = ligma_image_window_get_active_shell (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaGuiConfig          *config  = LIGMA_GUI_CONFIG (private->ligma->config);
 
   if (config->single_window_mode)
-    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+    ligma_ui_manager_activate_action (ligma_image_window_get_ui_manager (window),
                                      "file", "file-quit");
   else if (shell)
-    gimp_display_shell_close (shell, FALSE);
+    ligma_display_shell_close (shell, FALSE);
 
   return TRUE;
 }
 
 static gboolean
-gimp_image_window_configure_event (GtkWidget         *widget,
+ligma_image_window_configure_event (GtkWidget         *widget,
                                    GdkEventConfigure *event)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (widget);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
   GtkAllocation           allocation;
   gint                    current_width;
   gint                    current_height;
@@ -627,9 +627,9 @@ gimp_image_window_configure_event (GtkWidget         *widget,
       event->height != current_height)
     {
       /* FIXME multiple shells */
-      GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
+      LigmaDisplayShell *shell = ligma_image_window_get_active_shell (window);
 
-      if (shell && gimp_display_get_image (shell->display))
+      if (shell && ligma_display_get_image (shell->display))
         shell->size_allocate_from_configure_event = TRUE;
     }
 
@@ -643,10 +643,10 @@ gimp_image_window_configure_event (GtkWidget         *widget,
 
       for (list = private->shells; list; list = g_list_next (list))
         {
-          GimpDisplayShell *shell = list->data;
+          LigmaDisplayShell *shell = list->data;
 
-          gimp_display_shell_render_set_scale (shell, scale_factor);
-          gimp_display_shell_expose_full (shell);
+          ligma_display_shell_render_set_scale (shell, scale_factor);
+          ligma_display_shell_expose_full (shell);
         }
     }
 
@@ -654,7 +654,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
 }
 
 static void
-gimp_image_window_update_csd_on_fullscreen (GtkWidget *child,
+ligma_image_window_update_csd_on_fullscreen (GtkWidget *child,
                                             gpointer   user_data)
 {
   gboolean fullscreen = GPOINTER_TO_INT (user_data);
@@ -664,12 +664,12 @@ gimp_image_window_update_csd_on_fullscreen (GtkWidget *child,
 }
 
 static gboolean
-gimp_image_window_window_state_event (GtkWidget           *widget,
+ligma_image_window_window_state_event (GtkWidget           *widget,
                                       GdkEventWindowState *event)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
+  LigmaImageWindow        *window  = LIGMA_IMAGE_WINDOW (widget);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaDisplayShell       *shell   = ligma_image_window_get_active_shell (window);
 
   /* Run the parent implementation */
   if (GTK_WIDGET_CLASS (parent_class)->window_state_event)
@@ -682,53 +682,53 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
     {
-      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
+      gboolean fullscreen = ligma_image_window_get_fullscreen (window);
 
-      GIMP_LOG (WM, "Image window '%s' [%p] set fullscreen %s",
+      LIGMA_LOG (WM, "Image window '%s' [%p] set fullscreen %s",
                 gtk_window_get_title (GTK_WINDOW (widget)),
                 widget,
                 fullscreen ? "TRUE" : "FALSE");
 
-      gimp_image_window_suspend_keep_pos (window);
-      gimp_display_shell_appearance_update (shell);
-      gimp_image_window_resume_keep_pos (window);
+      ligma_image_window_suspend_keep_pos (window);
+      ligma_display_shell_appearance_update (shell);
+      ligma_image_window_resume_keep_pos (window);
 
       /* When using CSD (for example in Wayland), our title bar stays visible
        * when going fullscreen by default. There is no getter for it and it's
        * an internal child, so we use this workaround instead */
       gtk_container_forall (GTK_CONTAINER (window),
-                            gimp_image_window_update_csd_on_fullscreen,
+                            ligma_image_window_update_csd_on_fullscreen,
                             GINT_TO_POINTER (fullscreen));
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
     {
-      GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
-      gboolean       iconified = gimp_image_window_is_iconified (window);
+      LigmaStatusbar *statusbar = ligma_display_shell_get_statusbar (shell);
+      gboolean       iconified = ligma_image_window_is_iconified (window);
 
-      GIMP_LOG (WM, "Image window '%s' [%p] set %s",
+      LIGMA_LOG (WM, "Image window '%s' [%p] set %s",
                 gtk_window_get_title (GTK_WINDOW (widget)),
                 widget,
                 iconified ? "iconified" : "uniconified");
 
       if (iconified)
         {
-          if (gimp_displays_get_num_visible (private->gimp) == 0)
+          if (ligma_displays_get_num_visible (private->ligma) == 0)
             {
-              GIMP_LOG (WM, "No displays visible any longer");
+              LIGMA_LOG (WM, "No displays visible any longer");
 
-              gimp_dialog_factory_hide_with_display (private->dialog_factory);
+              ligma_dialog_factory_hide_with_display (private->dialog_factory);
             }
         }
       else
         {
-          gimp_dialog_factory_show_with_display (private->dialog_factory);
+          ligma_dialog_factory_show_with_display (private->dialog_factory);
         }
 
-      if (gimp_progress_is_active (GIMP_PROGRESS (statusbar)))
+      if (ligma_progress_is_active (LIGMA_PROGRESS (statusbar)))
         {
           if (iconified)
-            gimp_statusbar_override_window_title (statusbar);
+            ligma_statusbar_override_window_title (statusbar);
           else
             gtk_window_set_title (GTK_WINDOW (window), shell->title);
         }
@@ -738,12 +738,12 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 }
 
 static void
-gimp_image_window_style_updated (GtkWidget *widget)
+ligma_image_window_style_updated (GtkWidget *widget)
 {
-  GimpImageWindow        *window        = GIMP_IMAGE_WINDOW (widget);
-  GimpImageWindowPrivate *private       = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpDisplayShell       *shell         = gimp_image_window_get_active_shell (window);
-  GimpStatusbar          *statusbar     = NULL;
+  LigmaImageWindow        *window        = LIGMA_IMAGE_WINDOW (widget);
+  LigmaImageWindowPrivate *private       = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaDisplayShell       *shell         = ligma_image_window_get_active_shell (window);
+  LigmaStatusbar          *statusbar     = NULL;
   GtkRequisition          requisition   = { 0, };
   GdkGeometry             geometry      = { 0, };
   GdkWindowHints          geometry_mask = 0;
@@ -753,7 +753,7 @@ gimp_image_window_style_updated (GtkWidget *widget)
   if (! shell)
     return;
 
-  statusbar = gimp_display_shell_get_statusbar (shell);
+  statusbar = ligma_display_shell_get_statusbar (shell);
 
   gtk_widget_get_preferred_size (GTK_WIDGET (statusbar), &requisition, NULL);
 
@@ -772,23 +772,23 @@ gimp_image_window_style_updated (GtkWidget *widget)
   geometry_mask = GDK_HINT_MIN_SIZE;
 
   /*  Only set user pos on the empty display because it gets a pos
-   *  set by gimp. All other displays should be placed by the window
+   *  set by ligma. All other displays should be placed by the window
    *  manager. See https://bugzilla.gnome.org/show_bug.cgi?id=559580
    */
-  if (! gimp_display_get_image (shell->display))
+  if (! ligma_display_get_image (shell->display))
     geometry_mask |= GDK_HINT_USER_POS;
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
                                  &geometry, geometry_mask);
 
-  gimp_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
+  ligma_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
 }
 
 static void
-gimp_image_window_monitor_changed (GimpWindow *window,
+ligma_image_window_monitor_changed (LigmaWindow *window,
                                    GdkMonitor *monitor)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
   GList                  *list;
 
   for (list = private->shells; list; list = g_list_next (list))
@@ -800,145 +800,145 @@ gimp_image_window_monitor_changed (GimpWindow *window,
                              gtk_widget_get_screen (list->data));
 
       /*  make it fetch the new monitor's resolution  */
-      gimp_display_shell_scale_update (GIMP_DISPLAY_SHELL (list->data));
+      ligma_display_shell_scale_update (LIGMA_DISPLAY_SHELL (list->data));
 
       /*  make it fetch the right monitor profile  */
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (list->data));
+      ligma_color_managed_profile_changed (LIGMA_COLOR_MANAGED (list->data));
     }
 }
 
 static GList *
-gimp_image_window_get_docks (GimpDockContainer *dock_container)
+ligma_image_window_get_docks (LigmaDockContainer *dock_container)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
   GList                  *iter;
   GList                  *all_docks = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (dock_container), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (dock_container);
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->left_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->left_docks));
        iter;
        iter = g_list_next (iter))
     {
-      all_docks = g_list_append (all_docks, GIMP_DOCK (iter->data));
+      all_docks = g_list_append (all_docks, LIGMA_DOCK (iter->data));
     }
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->right_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->right_docks));
        iter;
        iter = g_list_next (iter))
     {
-      all_docks = g_list_append (all_docks, GIMP_DOCK (iter->data));
+      all_docks = g_list_append (all_docks, LIGMA_DOCK (iter->data));
     }
 
   return all_docks;
 }
 
-static GimpDialogFactory *
-gimp_image_window_dock_container_get_dialog_factory (GimpDockContainer *dock_container)
+static LigmaDialogFactory *
+ligma_image_window_dock_container_get_dialog_factory (LigmaDockContainer *dock_container)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (dock_container);
 
   return private->dialog_factory;
 }
 
-static GimpUIManager *
-gimp_image_window_dock_container_get_ui_manager (GimpDockContainer *dock_container)
+static LigmaUIManager *
+ligma_image_window_dock_container_get_ui_manager (LigmaDockContainer *dock_container)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (dock_container);
+  LigmaImageWindow *window = LIGMA_IMAGE_WINDOW (dock_container);
 
-  return gimp_image_window_get_ui_manager (window);
+  return ligma_image_window_get_ui_manager (window);
 }
 
 void
-gimp_image_window_add_dock (GimpDockContainer   *dock_container,
-                            GimpDock            *dock,
-                            GimpSessionInfoDock *dock_info)
+ligma_image_window_add_dock (LigmaDockContainer   *dock_container,
+                            LigmaDock            *dock,
+                            LigmaSessionInfoDock *dock_info)
 {
-  GimpImageWindow        *window;
-  GimpDisplayShell       *active_shell;
-  GimpImageWindowPrivate *private;
+  LigmaImageWindow        *window;
+  LigmaDisplayShell       *active_shell;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (dock_container));
 
-  window  = GIMP_IMAGE_WINDOW (dock_container);
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  window  = LIGMA_IMAGE_WINDOW (dock_container);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (dock_info->side == GIMP_ALIGN_LEFT)
+  if (dock_info->side == LIGMA_ALIGN_LEFT)
     {
-      gimp_dock_columns_add_dock (GIMP_DOCK_COLUMNS (private->left_docks),
+      ligma_dock_columns_add_dock (LIGMA_DOCK_COLUMNS (private->left_docks),
                                   dock,
                                   -1 /*index*/);
     }
   else
     {
-      gimp_dock_columns_add_dock (GIMP_DOCK_COLUMNS (private->right_docks),
+      ligma_dock_columns_add_dock (LIGMA_DOCK_COLUMNS (private->right_docks),
                                   dock,
                                   -1 /*index*/);
     }
 
-  active_shell = gimp_image_window_get_active_shell (window);
+  active_shell = ligma_image_window_get_active_shell (window);
   if (active_shell)
-    gimp_display_shell_appearance_update (active_shell);
+    ligma_display_shell_appearance_update (active_shell);
 }
 
-static GimpAlignmentType
-gimp_image_window_get_dock_side (GimpDockContainer *dock_container,
-                                 GimpDock          *dock)
+static LigmaAlignmentType
+ligma_image_window_get_dock_side (LigmaDockContainer *dock_container,
+                                 LigmaDock          *dock)
 {
-  GimpAlignmentType       side = -1;
-  GimpImageWindowPrivate *private;
+  LigmaAlignmentType       side = -1;
+  LigmaImageWindowPrivate *private;
   GList                  *iter;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (dock_container), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (dock_container);
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->left_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->left_docks));
        iter && side == -1;
        iter = g_list_next (iter))
     {
-      GimpDock *dock_iter = GIMP_DOCK (iter->data);
+      LigmaDock *dock_iter = LIGMA_DOCK (iter->data);
 
       if (dock_iter == dock)
-        side = GIMP_ALIGN_LEFT;
+        side = LIGMA_ALIGN_LEFT;
     }
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->right_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->right_docks));
        iter && side == -1;
        iter = g_list_next (iter))
     {
-      GimpDock *dock_iter = GIMP_DOCK (iter->data);
+      LigmaDock *dock_iter = LIGMA_DOCK (iter->data);
 
       if (dock_iter == dock)
-        side = GIMP_ALIGN_RIGHT;
+        side = LIGMA_ALIGN_RIGHT;
     }
 
   return side;
 }
 
 static GList *
-gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
+ligma_image_window_get_aux_info (LigmaSessionManaged *session_managed)
 {
   GList                  *aux_info = NULL;
-  GimpImageWindowPrivate *private;
-  GimpGuiConfig          *config;
+  LigmaImageWindowPrivate *private;
+  LigmaGuiConfig          *config;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (session_managed), NULL);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (session_managed);
-  config  = GIMP_GUI_CONFIG (private->gimp->config);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (session_managed);
+  config  = LIGMA_GUI_CONFIG (private->ligma->config);
 
   if (config->single_window_mode)
     {
-      GimpSessionInfoAux *aux;
+      LigmaSessionInfoAux *aux;
       GtkAllocation       allocation;
       gchar               widthbuf[128];
 
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
                   gtk_paned_get_position (GTK_PANED (private->left_hpane)));
-      aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_LEFT_DOCKS_WIDTH,
+      aux = ligma_session_info_aux_new (LIGMA_IMAGE_WINDOW_LEFT_DOCKS_WIDTH,
                                        widthbuf);
       aux_info = g_list_append (aux_info, aux);
 
@@ -947,12 +947,12 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
                   allocation.width -
                   gtk_paned_get_position (GTK_PANED (private->right_hpane)));
-      aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH,
+      aux = ligma_session_info_aux_new (LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH,
                                        widthbuf);
       aux_info = g_list_append (aux_info, aux);
 
-      aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_MAXIMIZED,
-                                       gimp_image_window_is_maximized (GIMP_IMAGE_WINDOW (session_managed)) ?
+      aux = ligma_session_info_aux_new (LIGMA_IMAGE_WINDOW_MAXIMIZED,
+                                       ligma_image_window_is_maximized (LIGMA_IMAGE_WINDOW (session_managed)) ?
                                        "yes" : "no");
       aux_info = g_list_append (aux_info, aux);
     }
@@ -961,7 +961,7 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
 }
 
 static void
-gimp_image_window_set_right_docks_width (GtkPaned      *paned,
+ligma_image_window_set_right_docks_width (GtkPaned      *paned,
                                          GtkAllocation *allocation,
                                          void          *data)
 {
@@ -975,15 +975,15 @@ gimp_image_window_set_right_docks_width (GtkPaned      *paned,
     gtk_paned_set_position (paned, - width);
 
   g_signal_handlers_disconnect_by_func (paned,
-                                        gimp_image_window_set_right_docks_width,
+                                        ligma_image_window_set_right_docks_width,
                                         data);
 }
 
 static void
-gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
+ligma_image_window_set_aux_info (LigmaSessionManaged *session_managed,
                                 GList              *aux_info)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
   GList                  *iter;
   gint                    left_docks_width      = G_MININT;
   gint                    right_docks_width     = G_MININT;
@@ -995,22 +995,22 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   GetStartupInfo (&StartupInfo);
 #endif
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (session_managed));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (session_managed);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (session_managed);
 
   for (iter = aux_info; iter; iter = g_list_next (iter))
     {
-      GimpSessionInfoAux *aux   = iter->data;
+      LigmaSessionInfoAux *aux   = iter->data;
       gint               *width = NULL;
 
-      if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_LEFT_DOCKS_WIDTH))
+      if (! strcmp (aux->name, LIGMA_IMAGE_WINDOW_LEFT_DOCKS_WIDTH))
         width = &left_docks_width;
-      else if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH))
+      else if (! strcmp (aux->name, LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH))
         width = &right_docks_width;
-      else if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS))
+      else if (! strcmp (aux->name, LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_POS))
         width = &right_docks_width;
-      else if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_MAXIMIZED))
+      else if (! strcmp (aux->name, LIGMA_IMAGE_WINDOW_MAXIMIZED))
         if (! g_ascii_strcasecmp (aux->value, "yes"))
           maximized = TRUE;
 
@@ -1018,7 +1018,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
         sscanf (aux->value, "%d", width);
 
       /* compat handling for right docks */
-      if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS))
+      if (! strcmp (aux->name, LIGMA_IMAGE_WINDOW_RIGHT_DOCKS_POS))
         {
           /* negate the value because negative docks pos means docks width,
            * also use the negativenes of a real docks pos as condition below.
@@ -1050,7 +1050,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
            * position
            */
           g_signal_connect_data (private->right_hpane, "size-allocate",
-                                 G_CALLBACK (gimp_image_window_set_right_docks_width),
+                                 G_CALLBACK (ligma_image_window_set_right_docks_width),
                                  GINT_TO_POINTER (right_docks_width), NULL,
                                  G_CONNECT_AFTER);
         }
@@ -1068,7 +1068,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
 #ifdef G_OS_WIN32
   /* On Windows, user can provide startup hints to have a program
    * maximized/minimized on startup. This can be done through command
-   * line: `start /max gimp-2.9.exe` or with the shortcut's "run"
+   * line: `start /max ligma-2.9.exe` or with the shortcut's "run"
    * property.
    * When such a hint is given, we should follow it and bypass the
    * session's information.
@@ -1096,22 +1096,22 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
 
 /*  public functions  */
 
-GimpImageWindow *
-gimp_image_window_new (Gimp              *gimp,
-                       GimpImage         *image,
-                       GimpDialogFactory *dialog_factory,
+LigmaImageWindow *
+ligma_image_window_new (Ligma              *ligma,
+                       LigmaImage         *image,
+                       LigmaDialogFactory *dialog_factory,
                        GdkMonitor        *monitor)
 {
-  GimpImageWindow        *window;
-  GimpImageWindowPrivate *private;
+  LigmaImageWindow        *window;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (image == NULL || LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
-  window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
-                         "gimp",            gimp,
+  window = g_object_new (LIGMA_TYPE_IMAGE_WINDOW,
+                         "ligma",            ligma,
                          "dialog-factory",  dialog_factory,
                          "initial-monitor", monitor,
                          "application",     g_application_get_default (),
@@ -1123,13 +1123,13 @@ gimp_image_window_new (Gimp              *gimp,
                          GTK_WIN_POS_CENTER,
                          NULL);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gimp->image_windows = g_list_append (gimp->image_windows, window);
+  ligma->image_windows = g_list_append (ligma->image_windows, window);
 
-  if (! GIMP_GUI_CONFIG (private->gimp->config)->single_window_mode)
+  if (! LIGMA_GUI_CONFIG (private->ligma->config)->single_window_mode)
     {
-      GdkMonitor *pointer_monitor = gimp_get_monitor_at_pointer ();
+      GdkMonitor *pointer_monitor = ligma_get_monitor_at_pointer ();
 
       /*  If we are supposed to go to a monitor other than where the
        *  pointer is, place the window on that monitor manually,
@@ -1153,73 +1153,73 @@ gimp_image_window_new (Gimp              *gimp,
 }
 
 void
-gimp_image_window_destroy (GimpImageWindow *window)
+ligma_image_window_destroy (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  private->gimp->image_windows = g_list_remove (private->gimp->image_windows,
+  private->ligma->image_windows = g_list_remove (private->ligma->image_windows,
                                                 window);
 
   gtk_widget_destroy (GTK_WIDGET (window));
 }
 
-GimpUIManager *
-gimp_image_window_get_ui_manager (GimpImageWindow *window)
+LigmaUIManager *
+ligma_image_window_get_ui_manager (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return private->menubar_manager;
 }
 
-GimpDockColumns  *
-gimp_image_window_get_left_docks (GimpImageWindow  *window)
+LigmaDockColumns  *
+ligma_image_window_get_left_docks (LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  return GIMP_DOCK_COLUMNS (private->left_docks);
+  return LIGMA_DOCK_COLUMNS (private->left_docks);
 }
 
-GimpDockColumns  *
-gimp_image_window_get_right_docks (GimpImageWindow  *window)
+LigmaDockColumns  *
+ligma_image_window_get_right_docks (LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  return GIMP_DOCK_COLUMNS (private->right_docks);
+  return LIGMA_DOCK_COLUMNS (private->right_docks);
 }
 
 void
-gimp_image_window_add_shell (GimpImageWindow  *window,
-                             GimpDisplayShell *shell)
+ligma_image_window_add_shell (LigmaImageWindow  *window,
+                             LigmaDisplayShell *shell)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
   GtkWidget              *tab_label;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   g_return_if_fail (g_list_find (private->shells, shell) == NULL);
 
   private->shells = g_list_append (private->shells, shell);
 
-  tab_label = gimp_image_window_create_tab_label (window, shell);
+  tab_label = ligma_image_window_create_tab_label (window, shell);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), tab_label);
@@ -1229,32 +1229,32 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   gtk_widget_show (GTK_WIDGET (shell));
 
   /*  make it fetch the right monitor profile  */
-  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
+  ligma_color_managed_profile_changed (LIGMA_COLOR_MANAGED (shell));
 }
 
-GimpDisplayShell *
-gimp_image_window_get_shell (GimpImageWindow *window,
+LigmaDisplayShell *
+ligma_image_window_get_shell (LigmaImageWindow *window,
                              gint             index)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), NULL);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return g_list_nth_data (private->shells, index);
 }
 
 void
-gimp_image_window_remove_shell (GimpImageWindow  *window,
-                                GimpDisplayShell *shell)
+ligma_image_window_remove_shell (LigmaImageWindow  *window,
+                                LigmaDisplayShell *shell)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   g_return_if_fail (g_list_find (private->shells, shell) != NULL);
 
@@ -1265,28 +1265,28 @@ gimp_image_window_remove_shell (GimpImageWindow  *window,
 }
 
 gint
-gimp_image_window_get_n_shells (GimpImageWindow *window)
+ligma_image_window_get_n_shells (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), 0);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), 0);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return g_list_length (private->shells);
 }
 
 void
-gimp_image_window_set_active_shell (GimpImageWindow  *window,
-                                    GimpDisplayShell *shell)
+ligma_image_window_set_active_shell (LigmaImageWindow  *window,
+                                    LigmaDisplayShell *shell)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
   gint                    page_num;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   g_return_if_fail (g_list_find (private->shells, shell));
 
@@ -1296,25 +1296,25 @@ gimp_image_window_set_active_shell (GimpImageWindow  *window,
   gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook), page_num);
 }
 
-GimpDisplayShell *
-gimp_image_window_get_active_shell (GimpImageWindow *window)
+LigmaDisplayShell *
+ligma_image_window_get_active_shell (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), NULL);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return private->active_shell;
 }
 
 void
-gimp_image_window_set_fullscreen (GimpImageWindow *window,
+ligma_image_window_set_fullscreen (LigmaImageWindow *window,
                                   gboolean         fullscreen)
 {
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  if (fullscreen != gimp_image_window_get_fullscreen (window))
+  if (fullscreen != ligma_image_window_get_fullscreen (window))
     {
       if (fullscreen)
         gtk_window_fullscreen (GTK_WINDOW (window));
@@ -1324,39 +1324,39 @@ gimp_image_window_set_fullscreen (GimpImageWindow *window,
 }
 
 gboolean
-gimp_image_window_get_fullscreen (GimpImageWindow *window)
+ligma_image_window_get_fullscreen (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return (private->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 }
 
 void
-gimp_image_window_set_show_menubar (GimpImageWindow *window,
+ligma_image_window_set_show_menubar (LigmaImageWindow *window,
                                     gboolean         show)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (private->menubar)
     gtk_widget_set_visible (private->menubar, show);
 }
 
 gboolean
-gimp_image_window_get_show_menubar (GimpImageWindow *window)
+ligma_image_window_get_show_menubar (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (private->menubar)
     return gtk_widget_get_visible (private->menubar);
@@ -1365,58 +1365,58 @@ gimp_image_window_get_show_menubar (GimpImageWindow *window)
 }
 
 gboolean
-gimp_image_window_is_iconified (GimpImageWindow *window)
+ligma_image_window_is_iconified (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return (private->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
 }
 
 gboolean
-gimp_image_window_is_maximized (GimpImageWindow *window)
+ligma_image_window_is_maximized (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return (private->window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
 }
 
 /**
- * gimp_image_window_has_toolbox:
+ * ligma_image_window_has_toolbox:
  * @window:
  *
- * Returns: %TRUE if the image window contains a GimpToolbox.
+ * Returns: %TRUE if the image window contains a LigmaToolbox.
  **/
 gboolean
-gimp_image_window_has_toolbox (GimpImageWindow *window)
+ligma_image_window_has_toolbox (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
   GList                  *iter = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_WINDOW (window), FALSE);
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->left_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->left_docks));
        iter;
        iter = g_list_next (iter))
     {
-      if (GIMP_IS_TOOLBOX (iter->data))
+      if (LIGMA_IS_TOOLBOX (iter->data))
         return TRUE;
     }
 
-  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->right_docks));
+  for (iter = ligma_dock_columns_get_docks (LIGMA_DOCK_COLUMNS (private->right_docks));
        iter;
        iter = g_list_next (iter))
     {
-      if (GIMP_IS_TOOLBOX (iter->data))
+      if (LIGMA_IS_TOOLBOX (iter->data))
         return TRUE;
     }
 
@@ -1424,10 +1424,10 @@ gimp_image_window_has_toolbox (GimpImageWindow *window)
 }
 
 void
-gimp_image_window_shrink_wrap (GimpImageWindow *window,
+ligma_image_window_shrink_wrap (LigmaImageWindow *window,
                                gboolean         grow_only)
 {
-  GimpDisplayShell *active_shell;
+  LigmaDisplayShell *active_shell;
   GtkWidget        *widget;
   GtkAllocation     allocation;
   GdkMonitor       *monitor;
@@ -1438,33 +1438,33 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   gint              border_width, border_height;
   gboolean          resize = FALSE;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
   if (! gtk_widget_get_realized (GTK_WIDGET (window)))
     return;
 
   /* FIXME this so needs cleanup and shell/window separation */
 
-  active_shell = gimp_image_window_get_active_shell (window);
+  active_shell = ligma_image_window_get_active_shell (window);
 
   if (!active_shell)
     return;
 
   widget  = GTK_WIDGET (window);
-  monitor = gimp_widget_get_monitor (widget);
+  monitor = ligma_widget_get_monitor (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
   gdk_monitor_get_workarea (monitor, &rect);
 
-  if (! gimp_display_shell_get_infinite_canvas (active_shell))
+  if (! ligma_display_shell_get_infinite_canvas (active_shell))
     {
-      gimp_display_shell_scale_get_image_size (active_shell,
+      ligma_display_shell_scale_get_image_size (active_shell,
                                                &width, &height);
     }
   else
     {
-      gimp_display_shell_scale_get_image_bounding_box (active_shell,
+      ligma_display_shell_scale_get_image_bounding_box (active_shell,
                                                        NULL,   NULL,
                                                        &width, &height);
     }
@@ -1541,7 +1541,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   if (resize)
     {
-      GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (active_shell);
+      LigmaStatusbar *statusbar = ligma_display_shell_get_statusbar (active_shell);
       gint           statusbar_width;
 
       gtk_widget_get_size_request (GTK_WIDGET (statusbar),
@@ -1567,23 +1567,23 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   /* A wrap always means that we should center the image too. If the
    * window changes size another center will be done in
-   * GimpDisplayShell::configure_event().
+   * LigmaDisplayShell::configure_event().
    */
   /* FIXME multiple shells */
-  gimp_display_shell_scroll_center_content (active_shell, TRUE, TRUE);
+  ligma_display_shell_scroll_center_content (active_shell, TRUE, TRUE);
 }
 
 static GtkWidget *
-gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
+ligma_image_window_get_first_dockbook (LigmaDockColumns *columns)
 {
   GList *dock_iter;
 
-  for (dock_iter = gimp_dock_columns_get_docks (columns);
+  for (dock_iter = ligma_dock_columns_get_docks (columns);
        dock_iter;
        dock_iter = g_list_next (dock_iter))
     {
-      GimpDock *dock      = GIMP_DOCK (dock_iter->data);
-      GList    *dockbooks = gimp_dock_get_dockbooks (dock);
+      LigmaDock *dock      = LIGMA_DOCK (dock_iter->data);
+      GList    *dockbooks = ligma_dock_get_dockbooks (dock);
 
       if (dockbooks)
         return GTK_WIDGET (dockbooks->data);
@@ -1593,7 +1593,7 @@ gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
 }
 
 /**
- * gimp_image_window_get_default_dockbook:
+ * ligma_image_window_get_default_dockbook:
  * @window:
  *
  * Gets the default dockbook, which is the dockbook in which new
@@ -1603,30 +1603,30 @@ gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
  *          dockbook were available.
  **/
 GtkWidget *
-gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
+ligma_image_window_get_default_dockbook (LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private;
-  GimpDockColumns        *dock_columns;
+  LigmaImageWindowPrivate *private;
+  LigmaDockColumns        *dock_columns;
   GtkWidget              *dockbook = NULL;
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   /* First try the first dockbook in the right docks */
-  dock_columns = GIMP_DOCK_COLUMNS (private->right_docks);
-  dockbook     = gimp_image_window_get_first_dockbook (dock_columns);
+  dock_columns = LIGMA_DOCK_COLUMNS (private->right_docks);
+  dockbook     = ligma_image_window_get_first_dockbook (dock_columns);
 
   /* Then the left docks */
   if (! dockbook)
     {
-      dock_columns = GIMP_DOCK_COLUMNS (private->left_docks);
-      dockbook     = gimp_image_window_get_first_dockbook (dock_columns);
+      dock_columns = LIGMA_DOCK_COLUMNS (private->left_docks);
+      dockbook     = ligma_image_window_get_first_dockbook (dock_columns);
     }
 
   return dockbook;
 }
 
 /**
- * gimp_image_window_keep_canvas_pos:
+ * ligma_image_window_keep_canvas_pos:
  * @window:
  *
  * Stores the coordinates of the current image canvas origin relatively
@@ -1640,25 +1640,25 @@ gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
  * have been hidden.
  **/
 void
-gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
+ligma_image_window_keep_canvas_pos (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
-  GimpDisplayShell       *shell;
+  LigmaImageWindowPrivate *private;
+  LigmaDisplayShell       *shell;
   gint                    canvas_x;
   gint                    canvas_y;
   gint                    window_x;
   gint                    window_y;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (private->suspend_keep_pos > 0)
     return;
 
-  shell = gimp_image_window_get_active_shell (window);
+  shell = ligma_image_window_get_active_shell (window);
 
-  gimp_display_shell_transform_xy (shell, 0.0, 0.0, &canvas_x, &canvas_y);
+  ligma_display_shell_transform_xy (shell, 0.0, 0.0, &canvas_x, &canvas_y);
 
   if (gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
                                         GTK_WIDGET (window),
@@ -1673,7 +1673,7 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
       data->window_y = window_y;
 
       g_signal_connect_data (shell, "size-allocate",
-                             G_CALLBACK (gimp_image_window_shell_size_allocate),
+                             G_CALLBACK (ligma_image_window_shell_size_allocate),
                              data, (GClosureNotify) g_free,
                              G_CONNECT_AFTER);
       /*
@@ -1692,25 +1692,25 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
 }
 
 void
-gimp_image_window_suspend_keep_pos (GimpImageWindow  *window)
+ligma_image_window_suspend_keep_pos (LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   private->suspend_keep_pos++;
 }
 
 void
-gimp_image_window_resume_keep_pos (GimpImageWindow  *window)
+ligma_image_window_resume_keep_pos (LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private;
+  LigmaImageWindowPrivate *private;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   g_return_if_fail (private->suspend_keep_pos > 0);
 
@@ -1718,7 +1718,7 @@ gimp_image_window_resume_keep_pos (GimpImageWindow  *window)
 }
 
 /**
- * gimp_image_window_update_tabs:
+ * ligma_image_window_update_tabs:
  * @window: the Image Window to update.
  *
  * Holds the logics of whether shell tabs are to be shown or not in the
@@ -1730,16 +1730,16 @@ gimp_image_window_resume_keep_pos (GimpImageWindow  *window)
  * procedure instead.
  **/
 void
-gimp_image_window_update_tabs (GimpImageWindow *window)
+ligma_image_window_update_tabs (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private;
-  GimpGuiConfig          *config;
+  LigmaImageWindowPrivate *private;
+  LigmaGuiConfig          *config;
   GtkPositionType         position;
 
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (LIGMA_IS_IMAGE_WINDOW (window));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  config = GIMP_GUI_CONFIG (private->gimp->config);
+  private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  config = LIGMA_GUI_CONFIG (private->ligma->config);
 
   /* Tab visibility. */
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook),
@@ -1748,22 +1748,22 @@ gimp_image_window_update_tabs (GimpImageWindow *window)
                               ! config->hide_docks       &&
                               ((private->active_shell          &&
                                 private->active_shell->display &&
-                                gimp_display_get_image (private->active_shell->display)) ||
+                                ligma_display_get_image (private->active_shell->display)) ||
                                g_list_length (private->shells) > 1));
 
   /* Tab position. */
   switch (config->tabs_position)
     {
-    case GIMP_POSITION_TOP:
+    case LIGMA_POSITION_TOP:
       position = GTK_POS_TOP;
       break;
-    case GIMP_POSITION_BOTTOM:
+    case LIGMA_POSITION_BOTTOM:
       position = GTK_POS_BOTTOM;
       break;
-    case GIMP_POSITION_LEFT:
+    case LIGMA_POSITION_LEFT:
       position = GTK_POS_LEFT;
       break;
-    case GIMP_POSITION_RIGHT:
+    case LIGMA_POSITION_RIGHT:
       position = GTK_POS_RIGHT;
       break;
     default:
@@ -1779,28 +1779,28 @@ gimp_image_window_update_tabs (GimpImageWindow *window)
 /*  private functions  */
 
 static void
-gimp_image_window_show_tooltip (GimpUIManager   *manager,
+ligma_image_window_show_tooltip (LigmaUIManager   *manager,
                                 const gchar     *tooltip,
-                                GimpImageWindow *window)
+                                LigmaImageWindow *window)
 {
-  GimpDisplayShell *shell     = gimp_image_window_get_active_shell (window);
-  GimpStatusbar    *statusbar = NULL;
+  LigmaDisplayShell *shell     = ligma_image_window_get_active_shell (window);
+  LigmaStatusbar    *statusbar = NULL;
 
   if (! shell)
     return;
 
-  statusbar = gimp_display_shell_get_statusbar (shell);
+  statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_statusbar_push (statusbar, "menu-tooltip",
+  ligma_statusbar_push (statusbar, "menu-tooltip",
                        NULL, "%s", tooltip);
 }
 
 static void
-gimp_image_window_config_notify (GimpImageWindow *window,
+ligma_image_window_config_notify (LigmaImageWindow *window,
                                  GParamSpec      *pspec,
-                                 GimpGuiConfig   *config)
+                                 LigmaGuiConfig   *config)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   /* Dock column visibility */
   if (strcmp (pspec->name, "single-window-mode") == 0 ||
@@ -1814,7 +1814,7 @@ gimp_image_window_config_notify (GimpImageWindow *window,
           gboolean show_docks = (config->single_window_mode &&
                                  ! config->hide_docks);
 
-          gimp_image_window_keep_canvas_pos (window);
+          ligma_image_window_keep_canvas_pos (window);
           gtk_widget_set_visible (private->left_docks, show_docks);
           gtk_widget_set_visible (private->right_docks, show_docks);
 
@@ -1827,13 +1827,13 @@ gimp_image_window_config_notify (GimpImageWindow *window,
               ! config->single_window_mode            &&
               ! config->hide_docks)
             {
-              GimpDisplayShell *shell;
-              GimpContext      *user_context;
+              LigmaDisplayShell *shell;
+              LigmaContext      *user_context;
 
-              shell        = gimp_image_window_get_active_shell (window);
-              user_context = gimp_get_user_context (private->gimp);
+              shell        = ligma_image_window_get_active_shell (window);
+              user_context = ligma_get_user_context (private->ligma);
 
-              if (gimp_context_get_display (user_context) == shell->display)
+              if (ligma_context_get_display (user_context) == shell->display)
                 {
                   GdkWindow *w = gtk_widget_get_window (GTK_WIDGET (window));
 
@@ -1843,42 +1843,42 @@ gimp_image_window_config_notify (GimpImageWindow *window,
             }
         }
 
-      gimp_image_window_update_tabs (window);
+      ligma_image_window_update_tabs (window);
     }
 
   /* Session management */
   if (strcmp (pspec->name, "single-window-mode") == 0)
     {
-      gimp_image_window_session_update (window,
+      ligma_image_window_session_update (window,
                                         NULL /*new_display*/,
-                                        gimp_image_window_config_to_entry_id (config),
-                                        gimp_widget_get_monitor (GTK_WIDGET (window)));
+                                        ligma_image_window_config_to_entry_id (config),
+                                        ligma_widget_get_monitor (GTK_WIDGET (window)));
     }
 }
 
 static void
-gimp_image_window_hide_tooltip (GimpUIManager   *manager,
-                                GimpImageWindow *window)
+ligma_image_window_hide_tooltip (LigmaUIManager   *manager,
+                                LigmaImageWindow *window)
 {
-  GimpDisplayShell *shell     = gimp_image_window_get_active_shell (window);
-  GimpStatusbar    *statusbar = NULL;
+  LigmaDisplayShell *shell     = ligma_image_window_get_active_shell (window);
+  LigmaStatusbar    *statusbar = NULL;
 
   if (! shell)
     return;
 
-  statusbar = gimp_display_shell_get_statusbar (shell);
+  statusbar = ligma_display_shell_get_statusbar (shell);
 
-  gimp_statusbar_pop (statusbar, "menu-tooltip");
+  ligma_statusbar_pop (statusbar, "menu-tooltip");
 }
 
 static gboolean
-gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
+ligma_image_window_update_ui_manager_idle (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gimp_assert (private->active_shell != NULL);
+  ligma_assert (private->active_shell != NULL);
 
-  gimp_ui_manager_update (private->menubar_manager,
+  ligma_ui_manager_update (private->menubar_manager,
                           private->active_shell->display);
 
   private->update_ui_manager_idle_id = 0;
@@ -1887,26 +1887,26 @@ gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
 }
 
 static void
-gimp_image_window_update_ui_manager (GimpImageWindow *window)
+ligma_image_window_update_ui_manager (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (! private->update_ui_manager_idle_id)
     {
       private->update_ui_manager_idle_id =
-        g_idle_add_full (GIMP_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE,
-                         (GSourceFunc) gimp_image_window_update_ui_manager_idle,
+        g_idle_add_full (LIGMA_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE,
+                         (GSourceFunc) ligma_image_window_update_ui_manager_idle,
                          window,
                          NULL);
     }
 }
 
 static void
-gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
+ligma_image_window_shell_size_allocate (LigmaDisplayShell  *shell,
                                        GtkAllocation     *allocation,
                                        PosCorrectionData *data)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  LigmaImageWindow *window = ligma_display_shell_get_window (shell);
   gint             new_window_x;
   gint             new_window_y;
 
@@ -1919,125 +1919,125 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
       gint off_y = new_window_y - data->window_y;
 
       if (off_x || off_y)
-        gimp_display_shell_scroll (shell, off_x, off_y);
+        ligma_display_shell_scroll (shell, off_x, off_y);
     }
 
   g_signal_handlers_disconnect_by_func (shell,
-                                        gimp_image_window_shell_size_allocate,
+                                        ligma_image_window_shell_size_allocate,
                                         data);
 }
 
 static gboolean
-gimp_image_window_shell_events (GtkWidget       *widget,
+ligma_image_window_shell_events (GtkWidget       *widget,
                                 GdkEvent        *event,
-                                GimpImageWindow *window)
+                                LigmaImageWindow *window)
 {
-  GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
+  LigmaDisplayShell *shell = ligma_image_window_get_active_shell (window);
 
   if (! shell)
     return FALSE;
 
-  return gimp_display_shell_events (widget, event, shell);
+  return ligma_display_shell_events (widget, event, shell);
 }
 
 static void
-gimp_image_window_switch_page (GtkNotebook     *notebook,
+ligma_image_window_switch_page (GtkNotebook     *notebook,
                                gpointer         page,
                                gint             page_num,
-                               GimpImageWindow *window)
+                               LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpDisplayShell       *shell;
-  GimpDisplay            *active_display;
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaDisplayShell       *shell;
+  LigmaDisplay            *active_display;
 
-  shell = GIMP_DISPLAY_SHELL (gtk_notebook_get_nth_page (notebook, page_num));
+  shell = LIGMA_DISPLAY_SHELL (gtk_notebook_get_nth_page (notebook, page_num));
 
   if (shell == private->active_shell)
     return;
 
-  gimp_image_window_disconnect_from_active_shell (window);
+  ligma_image_window_disconnect_from_active_shell (window);
 
-  GIMP_LOG (WM, "GimpImageWindow %p, private->active_shell = %p; \n",
+  LIGMA_LOG (WM, "LigmaImageWindow %p, private->active_shell = %p; \n",
             window, shell);
   private->active_shell = shell;
 
-  gimp_window_set_primary_focus_widget (GIMP_WINDOW (window),
+  ligma_window_set_primary_focus_widget (LIGMA_WINDOW (window),
                                         shell->canvas);
 
   active_display = private->active_shell->display;
 
   g_signal_connect (active_display, "notify::image",
-                    G_CALLBACK (gimp_image_window_image_notify),
+                    G_CALLBACK (ligma_image_window_image_notify),
                     window);
 
   g_signal_connect (private->active_shell, "scaled",
-                    G_CALLBACK (gimp_image_window_shell_scaled),
+                    G_CALLBACK (ligma_image_window_shell_scaled),
                     window);
   g_signal_connect (private->active_shell, "rotated",
-                    G_CALLBACK (gimp_image_window_shell_rotated),
+                    G_CALLBACK (ligma_image_window_shell_rotated),
                     window);
   g_signal_connect (private->active_shell, "notify::title",
-                    G_CALLBACK (gimp_image_window_shell_title_notify),
+                    G_CALLBACK (ligma_image_window_shell_title_notify),
                     window);
 
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
 
-  gimp_display_shell_appearance_update (private->active_shell);
+  ligma_display_shell_appearance_update (private->active_shell);
 
   if (gtk_widget_get_window (GTK_WIDGET (window)))
     {
       /*  we are fully initialized, use the window's current monitor
        */
-      gimp_image_window_session_update (window,
+      ligma_image_window_session_update (window,
                                         active_display,
                                         NULL /*new_entry_id*/,
-                                        gimp_widget_get_monitor (GTK_WIDGET (window)));
+                                        ligma_widget_get_monitor (GTK_WIDGET (window)));
     }
   else
     {
       /*  we are in construction, use the initial monitor; calling
-       *  gimp_widget_get_monitor() would get us the monitor where the
+       *  ligma_widget_get_monitor() would get us the monitor where the
        *  pointer is
        */
-      gimp_image_window_session_update (window,
+      ligma_image_window_session_update (window,
                                         active_display,
                                         NULL /*new_entry_id*/,
                                         private->initial_monitor);
     }
 
-  gimp_context_set_display (gimp_get_user_context (private->gimp),
+  ligma_context_set_display (ligma_get_user_context (private->ligma),
                             active_display);
 
-  gimp_image_window_update_ui_manager (window);
+  ligma_image_window_update_ui_manager (window);
 
-  gimp_image_window_update_tab_labels (window);
+  ligma_image_window_update_tab_labels (window);
 }
 
 static void
-gimp_image_window_page_removed (GtkNotebook     *notebook,
+ligma_image_window_page_removed (GtkNotebook     *notebook,
                                 GtkWidget       *widget,
                                 gint             page_num,
-                                GimpImageWindow *window)
+                                LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (GTK_WIDGET (private->active_shell) == widget)
     {
-      GIMP_LOG (WM, "GimpImageWindow %p, private->active_shell = %p; \n",
+      LIGMA_LOG (WM, "LigmaImageWindow %p, private->active_shell = %p; \n",
                 window, NULL);
-      gimp_image_window_disconnect_from_active_shell (window);
+      ligma_image_window_disconnect_from_active_shell (window);
       private->active_shell = NULL;
     }
 }
 
 static void
-gimp_image_window_page_reordered (GtkNotebook     *notebook,
+ligma_image_window_page_reordered (GtkNotebook     *notebook,
                                   GtkWidget       *widget,
                                   gint             page_num,
-                                  GimpImageWindow *window)
+                                  LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private  = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpContainer          *displays = private->gimp->displays;
+  LigmaImageWindowPrivate *private  = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaContainer          *displays = private->ligma->displays;
   gint                    index    = g_list_index (private->shells, widget);
 
   if (index != page_num)
@@ -2049,18 +2049,18 @@ gimp_image_window_page_reordered (GtkNotebook     *notebook,
   /* We need to reorder the displays as well in order to update the
    * numbered accelerators (alt-1, alt-2, etc.).
    */
-  gimp_container_reorder (displays,
-                          GIMP_OBJECT (GIMP_DISPLAY_SHELL (widget)->display),
+  ligma_container_reorder (displays,
+                          LIGMA_OBJECT (LIGMA_DISPLAY_SHELL (widget)->display),
                           page_num);
 
   gtk_notebook_reorder_child (notebook, widget, page_num);
 }
 
 static void
-gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
+ligma_image_window_disconnect_from_active_shell (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private        = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpDisplay            *active_display = NULL;
+  LigmaImageWindowPrivate *private        = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaDisplay            *active_display = NULL;
 
   if (! private->active_shell)
     return;
@@ -2069,21 +2069,21 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 
   if (active_display)
     g_signal_handlers_disconnect_by_func (active_display,
-                                          gimp_image_window_image_notify,
+                                          ligma_image_window_image_notify,
                                           window);
 
   g_signal_handlers_disconnect_by_func (private->active_shell,
-                                        gimp_image_window_shell_scaled,
+                                        ligma_image_window_shell_scaled,
                                         window);
   g_signal_handlers_disconnect_by_func (private->active_shell,
-                                        gimp_image_window_shell_rotated,
+                                        ligma_image_window_shell_rotated,
                                         window);
   g_signal_handlers_disconnect_by_func (private->active_shell,
-                                        gimp_image_window_shell_title_notify,
+                                        ligma_image_window_shell_title_notify,
                                         window);
 
   if (private->menubar_manager)
-    gimp_image_window_hide_tooltip (private->menubar_manager, window);
+    ligma_image_window_hide_tooltip (private->menubar_manager, window);
 
   if (private->update_ui_manager_idle_id)
     {
@@ -2093,50 +2093,50 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 }
 
 static void
-gimp_image_window_image_notify (GimpDisplay      *display,
+ligma_image_window_image_notify (LigmaDisplay      *display,
                                 const GParamSpec *pspec,
-                                GimpImageWindow  *window)
+                                LigmaImageWindow  *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
   GtkWidget              *tab_label;
   GList                  *children;
   GtkWidget              *view;
 
-  gimp_image_window_session_update (window,
+  ligma_image_window_session_update (window,
                                     display,
                                     NULL /*new_entry_id*/,
-                                    gimp_widget_get_monitor (GTK_WIDGET (window)));
+                                    ligma_widget_get_monitor (GTK_WIDGET (window)));
 
   tab_label = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
-                                          GTK_WIDGET (gimp_display_get_shell (display)));
+                                          GTK_WIDGET (ligma_display_get_shell (display)));
   children  = gtk_container_get_children (GTK_CONTAINER (tab_label));
   view      = GTK_WIDGET (children->data);
   g_list_free (children);
 
-  gimp_view_set_viewable (GIMP_VIEW (view),
-                          GIMP_VIEWABLE (gimp_display_get_image (display)));
+  ligma_view_set_viewable (LIGMA_VIEW (view),
+                          LIGMA_VIEWABLE (ligma_display_get_image (display)));
 
-  gimp_image_window_update_ui_manager (window);
+  ligma_image_window_update_ui_manager (window);
 }
 
 static void
-gimp_image_window_session_clear (GimpImageWindow *window)
+ligma_image_window_session_clear (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
   GtkWidget              *widget  = GTK_WIDGET (window);
 
-  if (gimp_dialog_factory_from_widget (widget, NULL))
-    gimp_dialog_factory_remove_dialog (private->dialog_factory,
+  if (ligma_dialog_factory_from_widget (widget, NULL))
+    ligma_dialog_factory_remove_dialog (private->dialog_factory,
                                        widget);
 }
 
 static void
-gimp_image_window_session_apply (GimpImageWindow *window,
+ligma_image_window_session_apply (LigmaImageWindow *window,
                                  const gchar     *entry_id,
                                  GdkMonitor      *monitor)
 {
-  GimpImageWindowPrivate *private      = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpSessionInfo        *session_info = NULL;
+  LigmaImageWindowPrivate *private      = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaSessionInfo        *session_info = NULL;
   gint                    width        = -1;
   gint                    height       = -1;
 
@@ -2147,12 +2147,12 @@ gimp_image_window_session_apply (GimpImageWindow *window,
    *  stored session info entry.
    */
   session_info =
-    gimp_dialog_factory_find_session_info (private->dialog_factory, entry_id);
+    ligma_dialog_factory_find_session_info (private->dialog_factory, entry_id);
 
   if (session_info)
     {
-      width  = gimp_session_info_get_width  (session_info);
-      height = gimp_session_info_get_height (session_info);
+      width  = ligma_session_info_get_width  (session_info);
+      height = ligma_session_info_get_height (session_info);
     }
   else
     {
@@ -2164,7 +2164,7 @@ gimp_image_window_session_apply (GimpImageWindow *window,
       height = allocation.height;
     }
 
-  gimp_dialog_factory_add_foreign (private->dialog_factory,
+  ligma_dialog_factory_add_foreign (private->dialog_factory,
                                    entry_id,
                                    GTK_WIDGET (window),
                                    monitor);
@@ -2174,12 +2174,12 @@ gimp_image_window_session_apply (GimpImageWindow *window,
 }
 
 static void
-gimp_image_window_session_update (GimpImageWindow *window,
-                                  GimpDisplay     *new_display,
+ligma_image_window_session_update (LigmaImageWindow *window,
+                                  LigmaDisplay     *new_display,
                                   const gchar     *new_entry_id,
                                   GdkMonitor      *monitor)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
 
   /* Handle changes to the entry id */
   if (new_entry_id)
@@ -2191,9 +2191,9 @@ gimp_image_window_session_update (GimpImageWindow *window,
            * it. If we're in multi-window mode, we will find out if we
            * should session manage ourselves when we get a display
            */
-          if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
+          if (strcmp (new_entry_id, LIGMA_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
             {
-              gimp_image_window_session_apply (window, new_entry_id, monitor);
+              ligma_image_window_session_apply (window, new_entry_id, monitor);
             }
         }
       else if (strcmp (private->entry_id, new_entry_id) != 0)
@@ -2201,29 +2201,29 @@ gimp_image_window_session_update (GimpImageWindow *window,
           /* The entry id changed, immediately and always stop session
            * managing the old entry
            */
-          gimp_image_window_session_clear (window);
+          ligma_image_window_session_clear (window);
 
-          if (strcmp (new_entry_id, GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
+          if (strcmp (new_entry_id, LIGMA_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
             {
               /* If there is only one imageless display, we shall
                * become the empty image window
                */
               if (private->active_shell &&
                   private->active_shell->display &&
-                  ! gimp_display_get_image (private->active_shell->display) &&
+                  ! ligma_display_get_image (private->active_shell->display) &&
                   g_list_length (private->shells) <= 1)
                 {
-                  gimp_image_window_session_apply (window, new_entry_id,
+                  ligma_image_window_session_apply (window, new_entry_id,
                                                    monitor);
                 }
             }
-          else if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
+          else if (strcmp (new_entry_id, LIGMA_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
             {
               /* As soon as we become the single image window, we
                * shall session manage ourself until single-window mode
                * is exited
                */
-              gimp_image_window_session_apply (window, new_entry_id,
+              ligma_image_window_session_apply (window, new_entry_id,
                                                monitor);
             }
         }
@@ -2236,91 +2236,91 @@ gimp_image_window_session_update (GimpImageWindow *window,
    * to care about the multi-window mode case here
    */
   if (new_display &&
-      strcmp (private->entry_id, GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
+      strcmp (private->entry_id, LIGMA_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
     {
-      if (gimp_display_get_image (new_display))
+      if (ligma_display_get_image (new_display))
         {
           /* As soon as we have an image we should not affect the size of the
            * empty image window
            */
-          gimp_image_window_session_clear (window);
+          ligma_image_window_session_clear (window);
         }
-      else if (! gimp_display_get_image (new_display) &&
+      else if (! ligma_display_get_image (new_display) &&
                g_list_length (private->shells) <= 1)
         {
           /* As soon as we have no image (and no other shells that may
            * contain images) we should become the empty image window
            */
-          gimp_image_window_session_apply (window, private->entry_id,
+          ligma_image_window_session_apply (window, private->entry_id,
                                            monitor);
         }
     }
 }
 
 static const gchar *
-gimp_image_window_config_to_entry_id (GimpGuiConfig *config)
+ligma_image_window_config_to_entry_id (LigmaGuiConfig *config)
 {
   return (config->single_window_mode ?
-          GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID :
-          GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID);
+          LIGMA_SINGLE_IMAGE_WINDOW_ENTRY_ID :
+          LIGMA_EMPTY_IMAGE_WINDOW_ENTRY_ID);
 }
 
 static void
-gimp_image_window_shell_scaled (GimpDisplayShell *shell,
-                                GimpImageWindow  *window)
+ligma_image_window_shell_scaled (LigmaDisplayShell *shell,
+                                LigmaImageWindow  *window)
 {
   /* update the <Image>/View/Zoom menu */
-  gimp_image_window_update_ui_manager (window);
+  ligma_image_window_update_ui_manager (window);
 }
 
 static void
-gimp_image_window_shell_rotated (GimpDisplayShell *shell,
-                                 GimpImageWindow  *window)
+ligma_image_window_shell_rotated (LigmaDisplayShell *shell,
+                                 LigmaImageWindow  *window)
 {
   /* update the <Image>/View/Rotate menu */
-  gimp_image_window_update_ui_manager (window);
+  ligma_image_window_update_ui_manager (window);
 }
 
 static void
-gimp_image_window_shell_title_notify (GimpDisplayShell *shell,
+ligma_image_window_shell_title_notify (LigmaDisplayShell *shell,
                                       const GParamSpec *pspec,
-                                      GimpImageWindow  *window)
+                                      LigmaImageWindow  *window)
 {
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
 }
 
 static void
-gimp_image_window_shell_close_button_callback (GimpDisplayShell *shell)
+ligma_image_window_shell_close_button_callback (LigmaDisplayShell *shell)
 {
   if (shell)
-    gimp_display_shell_close (shell, FALSE);
+    ligma_display_shell_close (shell, FALSE);
 }
 
 static GtkWidget *
-gimp_image_window_create_tab_label (GimpImageWindow  *window,
-                                    GimpDisplayShell *shell)
+ligma_image_window_create_tab_label (LigmaImageWindow  *window,
+                                    LigmaDisplayShell *shell)
 {
   GtkWidget *hbox;
   GtkWidget *view;
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *button;
   GtkWidget *gtk_image;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_widget_show (hbox);
 
-  view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
-                                 GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
-                                 GIMP_VIEW_SIZE_LARGE, 0, FALSE);
-  gtk_widget_set_size_request (view, GIMP_VIEW_SIZE_LARGE, -1);
-  gimp_view_renderer_set_color_config (GIMP_VIEW (view)->renderer,
-                                       gimp_display_shell_get_color_config (shell));
+  view = ligma_view_new_by_types (ligma_get_user_context (shell->display->ligma),
+                                 LIGMA_TYPE_VIEW, LIGMA_TYPE_IMAGE,
+                                 LIGMA_VIEW_SIZE_LARGE, 0, FALSE);
+  gtk_widget_set_size_request (view, LIGMA_VIEW_SIZE_LARGE, -1);
+  ligma_view_renderer_set_color_config (LIGMA_VIEW (view)->renderer,
+                                       ligma_display_shell_get_color_config (shell));
   gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
   gtk_widget_show (view);
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
   if (image)
-    gimp_view_set_viewable (GIMP_VIEW (view), GIMP_VIEWABLE (image));
+    ligma_view_set_viewable (LIGMA_VIEW (view), LIGMA_VIEWABLE (image));
 
   button = gtk_button_new ();
   gtk_widget_set_can_focus (button, FALSE);
@@ -2328,13 +2328,13 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE,
+  gtk_image = gtk_image_new_from_icon_name (LIGMA_ICON_CLOSE,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), gtk_image);
   gtk_widget_show (gtk_image);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_image_window_shell_close_button_callback),
+                            G_CALLBACK (ligma_image_window_shell_close_button_callback),
                             shell);
 
   g_object_set_data (G_OBJECT (hbox), "close-button", button);
@@ -2343,9 +2343,9 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
 }
 
 static void
-gimp_image_window_update_tab_labels (GimpImageWindow *window)
+ligma_image_window_update_tab_labels (LigmaImageWindow *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  LigmaImageWindowPrivate *private = LIGMA_IMAGE_WINDOW_GET_PRIVATE (window);
   GList                  *children;
   GList                  *list;
 
@@ -2362,8 +2362,8 @@ gimp_image_window_update_tab_labels (GimpImageWindow *window)
 
       close_button = g_object_get_data (G_OBJECT (tab_widget), "close-button");
 
-      if (gimp_context_get_display (gimp_get_user_context (private->gimp)) ==
-          GIMP_DISPLAY_SHELL (shell)->display)
+      if (ligma_context_get_display (ligma_get_user_context (private->ligma)) ==
+          LIGMA_DISPLAY_SHELL (shell)->display)
         {
           gtk_widget_show (close_button);
         }

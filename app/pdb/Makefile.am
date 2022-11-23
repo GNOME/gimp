@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
+	-DG_LOG_DOMAIN=\"Ligma-PDB\"	\
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
@@ -18,20 +18,20 @@ noinst_LIBRARIES = libapppdb.a libappinternal-procs.a
 libapppdb_a_SOURCES = \
 	pdb-types.h			\
 	\
-	gimp-pdb-compat.c		\
-	gimp-pdb-compat.h		\
-	gimppdb.c			\
-	gimppdb.h			\
-	gimppdb-query.c			\
-	gimppdb-query.h			\
-	gimppdb-utils.c			\
-	gimppdb-utils.h			\
-	gimppdbcontext.c		\
-	gimppdbcontext.h		\
-	gimppdberror.c			\
-	gimppdberror.h			\
-	gimpprocedure.c			\
-	gimpprocedure.h
+	ligma-pdb-compat.c		\
+	ligma-pdb-compat.h		\
+	ligmapdb.c			\
+	ligmapdb.h			\
+	ligmapdb-query.c			\
+	ligmapdb-query.h			\
+	ligmapdb-utils.c			\
+	ligmapdb-utils.h			\
+	ligmapdbcontext.c		\
+	ligmapdbcontext.h		\
+	ligmapdberror.c			\
+	ligmapdberror.h			\
+	ligmaprocedure.c			\
+	ligmaprocedure.h
 
 libappinternal_procs_a_SOURCES = \
 	internal-procs.c		\
@@ -53,8 +53,8 @@ libappinternal_procs_a_SOURCES = \
 	floating-sel-cmds.c		\
 	font-select-cmds.c		\
 	fonts-cmds.c			\
-	gimp-cmds.c			\
-	gimprc-cmds.c			\
+	ligma-cmds.c			\
+	ligmarc-cmds.c			\
 	gradient-cmds.c			\
 	gradient-select-cmds.c		\
 	gradients-cmds.c		\

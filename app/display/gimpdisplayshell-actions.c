@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,128 +22,128 @@
 
 #include "display-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmauimanager.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-actions.h"
-#include "gimpimagewindow.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-actions.h"
+#include "ligmaimagewindow.h"
 
 
 void
-gimp_display_shell_set_action_sensitive (GimpDisplayShell *shell,
+ligma_display_shell_set_action_sensitive (LigmaDisplayShell *shell,
                                          const gchar      *action,
                                          gboolean          sensitive)
 {
-  GimpImageWindow *window;
-  GimpContext     *context;
+  LigmaImageWindow *window;
+  LigmaContext     *context;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (action != NULL);
 
-  window = gimp_display_shell_get_window (shell);
+  window = ligma_display_shell_get_window (shell);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
+  if (window && ligma_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-      GimpActionGroup *action_group;
+      LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (manager, "view");
+      action_group = ligma_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
-        gimp_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
+        ligma_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
     }
 
-  context = gimp_get_user_context (shell->display->gimp);
+  context = ligma_get_user_context (shell->display->ligma);
 
-  if (shell->display == gimp_context_get_display (context))
+  if (shell->display == ligma_context_get_display (context))
     {
-      GimpActionGroup *action_group;
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (shell->popup_manager,
+      action_group = ligma_ui_manager_get_action_group (shell->popup_manager,
                                                        "view");
 
       if (action_group)
-        gimp_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
+        ligma_action_group_set_action_sensitive (action_group, action, sensitive, NULL);
     }
 }
 
 void
-gimp_display_shell_set_action_active (GimpDisplayShell *shell,
+ligma_display_shell_set_action_active (LigmaDisplayShell *shell,
                                       const gchar      *action,
                                       gboolean          active)
 {
-  GimpImageWindow *window;
-  GimpContext     *context;
+  LigmaImageWindow *window;
+  LigmaContext     *context;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (action != NULL);
 
-  window = gimp_display_shell_get_window (shell);
+  window = ligma_display_shell_get_window (shell);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
+  if (window && ligma_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-      GimpActionGroup *action_group;
+      LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (manager, "view");
+      action_group = ligma_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
-        gimp_action_group_set_action_active (action_group, action, active);
+        ligma_action_group_set_action_active (action_group, action, active);
     }
 
-  context = gimp_get_user_context (shell->display->gimp);
+  context = ligma_get_user_context (shell->display->ligma);
 
-  if (shell->display == gimp_context_get_display (context))
+  if (shell->display == ligma_context_get_display (context))
     {
-      GimpActionGroup *action_group;
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (shell->popup_manager,
+      action_group = ligma_ui_manager_get_action_group (shell->popup_manager,
                                                        "view");
 
       if (action_group)
-        gimp_action_group_set_action_active (action_group, action, active);
+        ligma_action_group_set_action_active (action_group, action, active);
     }
 }
 
 void
-gimp_display_shell_set_action_color (GimpDisplayShell *shell,
+ligma_display_shell_set_action_color (LigmaDisplayShell *shell,
                                      const gchar      *action,
-                                     const GimpRGB    *color)
+                                     const LigmaRGB    *color)
 {
-  GimpImageWindow *window;
-  GimpContext     *context;
+  LigmaImageWindow *window;
+  LigmaContext     *context;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (action != NULL);
 
-  window = gimp_display_shell_get_window (shell);
+  window = ligma_display_shell_get_window (shell);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
+  if (window && ligma_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-      GimpActionGroup *action_group;
+      LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (manager, "view");
+      action_group = ligma_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
-        gimp_action_group_set_action_color (action_group, action, color, FALSE);
+        ligma_action_group_set_action_color (action_group, action, color, FALSE);
     }
 
-  context = gimp_get_user_context (shell->display->gimp);
+  context = ligma_get_user_context (shell->display->ligma);
 
-  if (shell->display == gimp_context_get_display (context))
+  if (shell->display == ligma_context_get_display (context))
     {
-      GimpActionGroup *action_group;
+      LigmaActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (shell->popup_manager,
+      action_group = ligma_ui_manager_get_action_group (shell->popup_manager,
                                                        "view");
 
       if (action_group)
-        gimp_action_group_set_action_color (action_group, action, color, FALSE);
+        ligma_action_group_set_action_color (action_group, action, color, FALSE);
     }
 }

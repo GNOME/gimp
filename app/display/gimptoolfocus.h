@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolfocus.h
+ * ligmatoolfocus.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_FOCUS_H__
-#define __GIMP_TOOL_FOCUS_H__
+#ifndef __LIGMA_TOOL_FOCUS_H__
+#define __LIGMA_TOOL_FOCUS_H__
 
 
-#include "gimptoolwidget.h"
+#include "ligmatoolwidget.h"
 
 
-#define GIMP_TYPE_TOOL_FOCUS            (gimp_tool_focus_get_type ())
-#define GIMP_TOOL_FOCUS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_FOCUS, GimpToolFocus))
-#define GIMP_TOOL_FOCUS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_FOCUS, GimpToolFocusClass))
-#define GIMP_IS_TOOL_FOCUS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_FOCUS))
-#define GIMP_IS_TOOL_FOCUS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_FOCUS))
-#define GIMP_TOOL_FOCUS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_FOCUS, GimpToolFocusClass))
+#define LIGMA_TYPE_TOOL_FOCUS            (ligma_tool_focus_get_type ())
+#define LIGMA_TOOL_FOCUS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_FOCUS, LigmaToolFocus))
+#define LIGMA_TOOL_FOCUS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_FOCUS, LigmaToolFocusClass))
+#define LIGMA_IS_TOOL_FOCUS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_FOCUS))
+#define LIGMA_IS_TOOL_FOCUS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_FOCUS))
+#define LIGMA_TOOL_FOCUS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_FOCUS, LigmaToolFocusClass))
 
 
-typedef struct _GimpToolFocus        GimpToolFocus;
-typedef struct _GimpToolFocusPrivate GimpToolFocusPrivate;
-typedef struct _GimpToolFocusClass   GimpToolFocusClass;
+typedef struct _LigmaToolFocus        LigmaToolFocus;
+typedef struct _LigmaToolFocusPrivate LigmaToolFocusPrivate;
+typedef struct _LigmaToolFocusClass   LigmaToolFocusClass;
 
-struct _GimpToolFocus
+struct _LigmaToolFocus
 {
-  GimpToolWidget        parent_instance;
+  LigmaToolWidget        parent_instance;
 
-  GimpToolFocusPrivate *priv;
+  LigmaToolFocusPrivate *priv;
 };
 
-struct _GimpToolFocusClass
+struct _LigmaToolFocusClass
 {
-  GimpToolWidgetClass  parent_class;
+  LigmaToolWidgetClass  parent_class;
 };
 
 
-GType            gimp_tool_focus_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_focus_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_focus_new      (GimpDisplayShell *shell);
+LigmaToolWidget * ligma_tool_focus_new      (LigmaDisplayShell *shell);
 
 
-#endif /* __GIMP_TOOL_FOCUS_H__ */
+#endif /* __LIGMA_TOOL_FOCUS_H__ */

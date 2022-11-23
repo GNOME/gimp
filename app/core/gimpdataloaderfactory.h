@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdataloaderfactory.h
- * Copyright (C) 2001-2018 Michael Natterer <mitch@gimp.org>
+ * ligmadataloaderfactory.h
+ * Copyright (C) 2001-2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,61 +18,61 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_LOADER_FACTORY_H__
-#define __GIMP_DATA_LOADER_FACTORY_H__
+#ifndef __LIGMA_DATA_LOADER_FACTORY_H__
+#define __LIGMA_DATA_LOADER_FACTORY_H__
 
 
-#include "gimpdatafactory.h"
+#include "ligmadatafactory.h"
 
 
-typedef GList * (* GimpDataLoadFunc) (GimpContext   *context,
+typedef GList * (* LigmaDataLoadFunc) (LigmaContext   *context,
                                       GFile         *file,
                                       GInputStream  *input,
                                       GError       **error);
 
 
-#define GIMP_TYPE_DATA_LOADER_FACTORY            (gimp_data_loader_factory_get_type ())
-#define GIMP_DATA_LOADER_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_LOADER_FACTORY, GimpDataLoaderFactory))
-#define GIMP_DATA_LOADER_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_LOADER_FACTORY, GimpDataLoaderFactoryClass))
-#define GIMP_IS_DATA_LOADER_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_LOADER_FACTORY))
-#define GIMP_IS_DATA_LOADER_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_LOADER_FACTORY))
-#define GIMP_DATA_LOADER_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_LOADER_FACTORY, GimpDataLoaderFactoryClass))
+#define LIGMA_TYPE_DATA_LOADER_FACTORY            (ligma_data_loader_factory_get_type ())
+#define LIGMA_DATA_LOADER_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DATA_LOADER_FACTORY, LigmaDataLoaderFactory))
+#define LIGMA_DATA_LOADER_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DATA_LOADER_FACTORY, LigmaDataLoaderFactoryClass))
+#define LIGMA_IS_DATA_LOADER_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DATA_LOADER_FACTORY))
+#define LIGMA_IS_DATA_LOADER_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DATA_LOADER_FACTORY))
+#define LIGMA_DATA_LOADER_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DATA_LOADER_FACTORY, LigmaDataLoaderFactoryClass))
 
 
-typedef struct _GimpDataLoaderFactoryPrivate GimpDataLoaderFactoryPrivate;
-typedef struct _GimpDataLoaderFactoryClass   GimpDataLoaderFactoryClass;
+typedef struct _LigmaDataLoaderFactoryPrivate LigmaDataLoaderFactoryPrivate;
+typedef struct _LigmaDataLoaderFactoryClass   LigmaDataLoaderFactoryClass;
 
-struct _GimpDataLoaderFactory
+struct _LigmaDataLoaderFactory
 {
-  GimpDataFactory               parent_instance;
+  LigmaDataFactory               parent_instance;
 
-  GimpDataLoaderFactoryPrivate *priv;
+  LigmaDataLoaderFactoryPrivate *priv;
 };
 
-struct _GimpDataLoaderFactoryClass
+struct _LigmaDataLoaderFactoryClass
 {
-  GimpDataFactoryClass  parent_class;
+  LigmaDataFactoryClass  parent_class;
 };
 
 
-GType             gimp_data_loader_factory_get_type     (void) G_GNUC_CONST;
+GType             ligma_data_loader_factory_get_type     (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_data_loader_factory_new          (Gimp                    *gimp,
+LigmaDataFactory * ligma_data_loader_factory_new          (Ligma                    *ligma,
                                                          GType                    data_type,
                                                          const gchar             *path_property_name,
                                                          const gchar             *writable_property_name,
                                                          const gchar             *ext_property_name,
-                                                         GimpDataNewFunc          new_func,
-                                                         GimpDataGetStandardFunc  get_standard_func);
+                                                         LigmaDataNewFunc          new_func,
+                                                         LigmaDataGetStandardFunc  get_standard_func);
 
-void              gimp_data_loader_factory_add_loader   (GimpDataFactory         *factory,
+void              ligma_data_loader_factory_add_loader   (LigmaDataFactory         *factory,
                                                          const gchar             *name,
-                                                         GimpDataLoadFunc         load_func,
+                                                         LigmaDataLoadFunc         load_func,
                                                          const gchar             *extension,
                                                          gboolean                 writable);
-void              gimp_data_loader_factory_add_fallback (GimpDataFactory         *factory,
+void              ligma_data_loader_factory_add_fallback (LigmaDataFactory         *factory,
                                                          const gchar             *name,
-                                                         GimpDataLoadFunc         load_func);
+                                                         LigmaDataLoadFunc         load_func);
 
 
-#endif  /*  __GIMP_DATA_LOADER_FACTORY_H__  */
+#endif  /*  __LIGMA_DATA_LOADER_FACTORY_H__  */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdata.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadata.c
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,16 +23,16 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpdata.h"
-#include "gimptag.h"
-#include "gimptagged.h"
+#include "ligma-memsize.h"
+#include "ligmadata.h"
+#include "ligmatag.h"
+#include "ligmatagged.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -51,7 +51,7 @@ enum
 };
 
 
-struct _GimpDataPrivate
+struct _LigmaDataPrivate
 {
   GFile  *file;
   GQuark  mime_type;
@@ -62,7 +62,7 @@ struct _GimpDataPrivate
   gint    freeze_count;
   gint64  mtime;
 
-  /* Identifies the GimpData object across sessions. Used when there
+  /* Identifies the LigmaData object across sessions. Used when there
    * is not a filename associated with the object.
    */
   gchar  *identifier;
@@ -70,58 +70,58 @@ struct _GimpDataPrivate
   GList  *tags;
 };
 
-#define GIMP_DATA_GET_PRIVATE(obj) (((GimpData *) (obj))->priv)
+#define LIGMA_DATA_GET_PRIVATE(obj) (((LigmaData *) (obj))->priv)
 
 
-static void       gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
+static void       ligma_data_tagged_iface_init (LigmaTaggedInterface *iface);
 
-static void       gimp_data_constructed       (GObject             *object);
-static void       gimp_data_finalize          (GObject             *object);
-static void       gimp_data_set_property      (GObject             *object,
+static void       ligma_data_constructed       (GObject             *object);
+static void       ligma_data_finalize          (GObject             *object);
+static void       ligma_data_set_property      (GObject             *object,
                                                guint                property_id,
                                                const GValue        *value,
                                                GParamSpec          *pspec);
-static void       gimp_data_get_property      (GObject             *object,
+static void       ligma_data_get_property      (GObject             *object,
                                                guint                property_id,
                                                GValue              *value,
                                                GParamSpec          *pspec);
 
-static void       gimp_data_name_changed      (GimpObject          *object);
-static gint64     gimp_data_get_memsize       (GimpObject          *object,
+static void       ligma_data_name_changed      (LigmaObject          *object);
+static gint64     ligma_data_get_memsize       (LigmaObject          *object,
                                                gint64              *gui_size);
 
-static gboolean   gimp_data_is_name_editable  (GimpViewable        *viewable);
+static gboolean   ligma_data_is_name_editable  (LigmaViewable        *viewable);
 
-static void       gimp_data_real_dirty        (GimpData            *data);
-static GimpData * gimp_data_real_duplicate    (GimpData            *data);
-static gint       gimp_data_real_compare      (GimpData            *data1,
-                                               GimpData            *data2);
+static void       ligma_data_real_dirty        (LigmaData            *data);
+static LigmaData * ligma_data_real_duplicate    (LigmaData            *data);
+static gint       ligma_data_real_compare      (LigmaData            *data1,
+                                               LigmaData            *data2);
 
-static gboolean   gimp_data_add_tag           (GimpTagged          *tagged,
-                                               GimpTag             *tag);
-static gboolean   gimp_data_remove_tag        (GimpTagged          *tagged,
-                                               GimpTag             *tag);
-static GList    * gimp_data_get_tags          (GimpTagged          *tagged);
-static gchar    * gimp_data_get_identifier    (GimpTagged          *tagged);
-static gchar    * gimp_data_get_checksum      (GimpTagged          *tagged);
+static gboolean   ligma_data_add_tag           (LigmaTagged          *tagged,
+                                               LigmaTag             *tag);
+static gboolean   ligma_data_remove_tag        (LigmaTagged          *tagged,
+                                               LigmaTag             *tag);
+static GList    * ligma_data_get_tags          (LigmaTagged          *tagged);
+static gchar    * ligma_data_get_identifier    (LigmaTagged          *tagged);
+static gchar    * ligma_data_get_checksum      (LigmaTagged          *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_VIEWABLE,
-                         G_ADD_PRIVATE (GimpData)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_data_tagged_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaData, ligma_data, LIGMA_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (LigmaData)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_TAGGED,
+                                                ligma_data_tagged_iface_init))
 
-#define parent_class gimp_data_parent_class
+#define parent_class ligma_data_parent_class
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_data_class_init (GimpDataClass *klass)
+ligma_data_class_init (LigmaDataClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -129,64 +129,64 @@ gimp_data_class_init (GimpDataClass *klass)
     g_signal_new ("dirty",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpDataClass, dirty),
+                  G_STRUCT_OFFSET (LigmaDataClass, dirty),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed        = gimp_data_constructed;
-  object_class->finalize           = gimp_data_finalize;
-  object_class->set_property       = gimp_data_set_property;
-  object_class->get_property       = gimp_data_get_property;
+  object_class->constructed        = ligma_data_constructed;
+  object_class->finalize           = ligma_data_finalize;
+  object_class->set_property       = ligma_data_set_property;
+  object_class->get_property       = ligma_data_get_property;
 
-  gimp_object_class->name_changed  = gimp_data_name_changed;
-  gimp_object_class->get_memsize   = gimp_data_get_memsize;
+  ligma_object_class->name_changed  = ligma_data_name_changed;
+  ligma_object_class->get_memsize   = ligma_data_get_memsize;
 
   viewable_class->name_editable    = TRUE;
-  viewable_class->is_name_editable = gimp_data_is_name_editable;
+  viewable_class->is_name_editable = ligma_data_is_name_editable;
 
-  klass->dirty                     = gimp_data_real_dirty;
+  klass->dirty                     = ligma_data_real_dirty;
   klass->save                      = NULL;
   klass->get_extension             = NULL;
   klass->copy                      = NULL;
-  klass->duplicate                 = gimp_data_real_duplicate;
-  klass->compare                   = gimp_data_real_compare;
+  klass->duplicate                 = ligma_data_real_duplicate;
+  klass->compare                   = ligma_data_real_compare;
 
   g_object_class_install_property (object_class, PROP_FILE,
                                    g_param_spec_object ("file", NULL, NULL,
                                                         G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WRITABLE,
                                    g_param_spec_boolean ("writable", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DELETABLE,
                                    g_param_spec_boolean ("deletable", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_MIME_TYPE,
                                    g_param_spec_string ("mime-type", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
+ligma_data_tagged_iface_init (LigmaTaggedInterface *iface)
 {
-  iface->add_tag        = gimp_data_add_tag;
-  iface->remove_tag     = gimp_data_remove_tag;
-  iface->get_tags       = gimp_data_get_tags;
-  iface->get_identifier = gimp_data_get_identifier;
-  iface->get_checksum   = gimp_data_get_checksum;
+  iface->add_tag        = ligma_data_add_tag;
+  iface->remove_tag     = ligma_data_remove_tag;
+  iface->get_tags       = ligma_data_get_tags;
+  iface->get_identifier = ligma_data_get_identifier;
+  iface->get_checksum   = ligma_data_get_checksum;
 }
 
 static void
-gimp_data_init (GimpData *data)
+ligma_data_init (LigmaData *data)
 {
-  GimpDataPrivate *private = gimp_data_get_instance_private (data);
+  LigmaDataPrivate *private = ligma_data_get_instance_private (data);
 
   data->priv = private;
 
@@ -195,26 +195,26 @@ gimp_data_init (GimpData *data)
   private->dirty     = TRUE;
 
   /*  freeze the data object during construction  */
-  gimp_data_freeze (data);
+  ligma_data_freeze (data);
 }
 
 static void
-gimp_data_constructed (GObject *object)
+ligma_data_constructed (GObject *object)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  if (! GIMP_DATA_GET_CLASS (object)->save)
+  if (! LIGMA_DATA_GET_CLASS (object)->save)
     private->writable = FALSE;
 
-  gimp_data_thaw (GIMP_DATA (object));
+  ligma_data_thaw (LIGMA_DATA (object));
 }
 
 static void
-gimp_data_finalize (GObject *object)
+ligma_data_finalize (GObject *object)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (object);
 
   g_clear_object (&private->file);
 
@@ -230,18 +230,18 @@ gimp_data_finalize (GObject *object)
 }
 
 static void
-gimp_data_set_property (GObject      *object,
+ligma_data_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpData        *data    = GIMP_DATA (object);
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (data);
+  LigmaData        *data    = LIGMA_DATA (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (data);
 
   switch (property_id)
     {
     case PROP_FILE:
-      gimp_data_set_file (data,
+      ligma_data_set_file (data,
                           g_value_get_object (value),
                           private->writable,
                           private->deletable);
@@ -269,12 +269,12 @@ gimp_data_set_property (GObject      *object,
 }
 
 static void
-gimp_data_get_property (GObject    *object,
+ligma_data_get_property (GObject    *object,
                         guint       property_id,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -301,55 +301,55 @@ gimp_data_get_property (GObject    *object,
 }
 
 static void
-gimp_data_name_changed (GimpObject *object)
+ligma_data_name_changed (LigmaObject *object)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (object);
 
   private->dirty = TRUE;
 
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+  if (LIGMA_OBJECT_CLASS (parent_class)->name_changed)
+    LIGMA_OBJECT_CLASS (parent_class)->name_changed (object);
 }
 
 static gint64
-gimp_data_get_memsize (GimpObject *object,
+ligma_data_get_memsize (LigmaObject *object,
                        gint64     *gui_size)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (object);
   gint64           memsize = 0;
 
-  memsize += gimp_g_object_get_memsize (G_OBJECT (private->file));
+  memsize += ligma_g_object_get_memsize (G_OBJECT (private->file));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_data_is_name_editable (GimpViewable *viewable)
+ligma_data_is_name_editable (LigmaViewable *viewable)
 {
-  return gimp_data_is_writable (GIMP_DATA (viewable)) &&
-         ! gimp_data_is_internal (GIMP_DATA (viewable));
+  return ligma_data_is_writable (LIGMA_DATA (viewable)) &&
+         ! ligma_data_is_internal (LIGMA_DATA (viewable));
 }
 
 static void
-gimp_data_real_dirty (GimpData *data)
+ligma_data_real_dirty (LigmaData *data)
 {
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (data));
 
   /* Emit the "name-changed" to signal general dirtiness, our name
    * changed implementation will also set the "dirty" flag to TRUE.
    */
-  gimp_object_name_changed (GIMP_OBJECT (data));
+  ligma_object_name_changed (LIGMA_OBJECT (data));
 }
 
-static GimpData *
-gimp_data_real_duplicate (GimpData *data)
+static LigmaData *
+ligma_data_real_duplicate (LigmaData *data)
 {
-  if (GIMP_DATA_GET_CLASS (data)->copy)
+  if (LIGMA_DATA_GET_CLASS (data)->copy)
     {
-      GimpData *new = g_object_new (G_OBJECT_TYPE (data), NULL);
+      LigmaData *new = g_object_new (G_OBJECT_TYPE (data), NULL);
 
-      gimp_data_copy (new, data);
+      ligma_data_copy (new, data);
 
       return new;
     }
@@ -358,11 +358,11 @@ gimp_data_real_duplicate (GimpData *data)
 }
 
 static gint
-gimp_data_real_compare (GimpData *data1,
-                        GimpData *data2)
+ligma_data_real_compare (LigmaData *data1,
+                        LigmaData *data2)
 {
-  GimpDataPrivate *private1 = GIMP_DATA_GET_PRIVATE (data1);
-  GimpDataPrivate *private2 = GIMP_DATA_GET_PRIVATE (data2);
+  LigmaDataPrivate *private1 = LIGMA_DATA_GET_PRIVATE (data1);
+  LigmaDataPrivate *private2 = LIGMA_DATA_GET_PRIVATE (data2);
 
   /*  move the internal objects (like the FG -> BG) gradient) to the top  */
   if (private1->internal != private2->internal)
@@ -372,22 +372,22 @@ gimp_data_real_compare (GimpData *data1,
   if (private1->deletable != private2->deletable)
     return private1->deletable ? -1 : 1;
 
-  return gimp_object_name_collate ((GimpObject *) data1,
-                                   (GimpObject *) data2);
+  return ligma_object_name_collate ((LigmaObject *) data1,
+                                   (LigmaObject *) data2);
 }
 
 static gboolean
-gimp_data_add_tag (GimpTagged *tagged,
-                   GimpTag    *tag)
+ligma_data_add_tag (LigmaTagged *tagged,
+                   LigmaTag    *tag)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (tagged);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (tagged);
   GList           *list;
 
   for (list = private->tags; list; list = g_list_next (list))
     {
-      GimpTag *this = GIMP_TAG (list->data);
+      LigmaTag *this = LIGMA_TAG (list->data);
 
-      if (gimp_tag_equals (tag, this))
+      if (ligma_tag_equals (tag, this))
         return FALSE;
     }
 
@@ -397,17 +397,17 @@ gimp_data_add_tag (GimpTagged *tagged,
 }
 
 static gboolean
-gimp_data_remove_tag (GimpTagged *tagged,
-                      GimpTag    *tag)
+ligma_data_remove_tag (LigmaTagged *tagged,
+                      LigmaTag    *tag)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (tagged);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (tagged);
   GList           *list;
 
   for (list = private->tags; list; list = g_list_next (list))
     {
-      GimpTag *this = GIMP_TAG (list->data);
+      LigmaTag *this = LIGMA_TAG (list->data);
 
-      if (gimp_tag_equals (tag, this))
+      if (ligma_tag_equals (tag, this))
         {
           private->tags = g_list_delete_link (private->tags, list);
           g_object_unref (this);
@@ -419,38 +419,38 @@ gimp_data_remove_tag (GimpTagged *tagged,
 }
 
 static GList *
-gimp_data_get_tags (GimpTagged *tagged)
+ligma_data_get_tags (LigmaTagged *tagged)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (tagged);
+  LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (tagged);
 
   return private->tags;
 }
 
 static gchar *
-gimp_data_get_identifier (GimpTagged *tagged)
+ligma_data_get_identifier (LigmaTagged *tagged)
 {
-  GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (tagged);
+  LigmaDataPrivate *private    = LIGMA_DATA_GET_PRIVATE (tagged);
   gchar           *identifier = NULL;
 
   if (private->file)
     {
-      const gchar *data_dir = gimp_data_directory ();
-      const gchar *gimp_dir = gimp_directory ();
+      const gchar *data_dir = ligma_data_directory ();
+      const gchar *ligma_dir = ligma_directory ();
       gchar       *path     = g_file_get_path (private->file);
       gchar       *tmp;
 
       if (g_str_has_prefix (path, data_dir))
         {
-          tmp = g_strconcat ("${gimp_data_dir}",
+          tmp = g_strconcat ("${ligma_data_dir}",
                              path + strlen (data_dir),
                              NULL);
           identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
-      else if (g_str_has_prefix (path, gimp_dir))
+      else if (g_str_has_prefix (path, ligma_dir))
         {
-          tmp = g_strconcat ("${gimp_dir}",
-                             path + strlen (gimp_dir),
+          tmp = g_strconcat ("${ligma_dir}",
+                             path + strlen (ligma_dir),
                              NULL);
           identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
@@ -487,35 +487,35 @@ gimp_data_get_identifier (GimpTagged *tagged)
 }
 
 static gchar *
-gimp_data_get_checksum (GimpTagged *tagged)
+ligma_data_get_checksum (LigmaTagged *tagged)
 {
   return NULL;
 }
 
 /**
- * gimp_data_save:
+ * ligma_data_save:
  * @data:  object whose contents are to be saved.
  * @error: return location for errors or %NULL
  *
  * Save the object.  If the object is marked as "internal", nothing
  * happens.  Otherwise, it is saved to disk, using the file name set
- * by gimp_data_set_file().  If the save is successful, the object is
+ * by ligma_data_set_file().  If the save is successful, the object is
  * marked as not dirty.  If not, an error message is returned using
  * the @error argument.
  *
  * Returns: %TRUE if the object is internal or the save is successful.
  **/
 gboolean
-gimp_data_save (GimpData  *data,
+ligma_data_save (LigmaData  *data,
                 GError   **error)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
   gboolean         success = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   g_return_val_if_fail (private->writable == TRUE, FALSE);
 
@@ -527,7 +527,7 @@ gimp_data_save (GimpData  *data,
 
   g_return_val_if_fail (G_IS_FILE (private->file), FALSE);
 
-  if (GIMP_DATA_GET_CLASS (data)->save)
+  if (LIGMA_DATA_GET_CLASS (data)->save)
     {
       GOutputStream *output;
 
@@ -537,7 +537,7 @@ gimp_data_save (GimpData  *data,
 
       if (output)
         {
-          success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
+          success = LIGMA_DATA_GET_CLASS (data)->save (data, output, error);
 
           if (success)
             {
@@ -545,7 +545,7 @@ gimp_data_save (GimpData  *data,
                 {
                   g_prefix_error (error,
                                   _("Error saving '%s': "),
-                                  gimp_file_get_utf8_name (private->file));
+                                  ligma_file_get_utf8_name (private->file));
                   success = FALSE;
                 }
             }
@@ -558,13 +558,13 @@ gimp_data_save (GimpData  *data,
                 {
                   g_prefix_error (error,
                                   _("Error saving '%s': "),
-                                  gimp_file_get_utf8_name (private->file));
+                                  ligma_file_get_utf8_name (private->file));
                 }
               else
                 {
-                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                  g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_WRITE,
                                _("Error saving '%s'"),
-                               gimp_file_get_utf8_name (private->file));
+                               ligma_file_get_utf8_name (private->file));
                 }
               g_output_stream_close (output, cancellable, NULL);
               g_object_unref (cancellable);
@@ -595,131 +595,131 @@ gimp_data_save (GimpData  *data,
 }
 
 /**
- * gimp_data_dirty:
- * @data: a #GimpData object.
+ * ligma_data_dirty:
+ * @data: a #LigmaData object.
  *
  * Marks @data as dirty.  Unless the object is frozen, this causes
  * its preview to be invalidated, and emits a "dirty" signal.  If the
  * object is frozen, the function has no effect.
  **/
 void
-gimp_data_dirty (GimpData *data)
+ligma_data_dirty (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   if (private->freeze_count == 0)
     g_signal_emit (data, data_signals[DIRTY], 0);
 }
 
 void
-gimp_data_clean (GimpData *data)
+ligma_data_clean (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   private->dirty = FALSE;
 }
 
 gboolean
-gimp_data_is_dirty (GimpData *data)
+ligma_data_is_dirty (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->dirty;
 }
 
 /**
- * gimp_data_freeze:
- * @data: a #GimpData object.
+ * ligma_data_freeze:
+ * @data: a #LigmaData object.
  *
  * Increments the freeze count for the object.  A positive freeze count
  * prevents the object from being treated as dirty.  Any call to this
- * function must be followed eventually by a call to gimp_data_thaw().
+ * function must be followed eventually by a call to ligma_data_thaw().
  **/
 void
-gimp_data_freeze (GimpData *data)
+ligma_data_freeze (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   private->freeze_count++;
 }
 
 /**
- * gimp_data_thaw:
- * @data: a #GimpData object.
+ * ligma_data_thaw:
+ * @data: a #LigmaData object.
  *
  * Decrements the freeze count for the object.  If the freeze count
  * drops to zero, the object is marked as dirty, and the "dirty"
  * signal is emitted.  It is an error to call this function without
- * having previously called gimp_data_freeze().
+ * having previously called ligma_data_freeze().
  **/
 void
-gimp_data_thaw (GimpData *data)
+ligma_data_thaw (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   g_return_if_fail (private->freeze_count > 0);
 
   private->freeze_count--;
 
   if (private->freeze_count == 0)
-    gimp_data_dirty (data);
+    ligma_data_dirty (data);
 }
 
 gboolean
-gimp_data_is_frozen (GimpData *data)
+ligma_data_is_frozen (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->freeze_count > 0;
 }
 
 /**
- * gimp_data_delete_from_disk:
- * @data:  a #GimpData object.
+ * ligma_data_delete_from_disk:
+ * @data:  a #LigmaData object.
  * @error: return location for errors or %NULL
  *
  * Deletes the object from disk.  If the object is marked as "internal",
  * nothing happens.  Otherwise, if the file exists whose name has been
- * set by gimp_data_set_file(), it is deleted.  Obviously this is
+ * set by ligma_data_set_file(), it is deleted.  Obviously this is
  * a potentially dangerous function, which should be used with care.
  *
- * Returns: %TRUE if the object is internal to Gimp, or the deletion is
+ * Returns: %TRUE if the object is internal to Ligma, or the deletion is
  *          successful.
  **/
 gboolean
-gimp_data_delete_from_disk (GimpData  *data,
+ligma_data_delete_from_disk (LigmaData  *data,
                             GError   **error)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   g_return_val_if_fail (private->file      != NULL, FALSE);
   g_return_val_if_fail (private->deletable == TRUE, FALSE);
@@ -731,19 +731,19 @@ gimp_data_delete_from_disk (GimpData  *data,
 }
 
 const gchar *
-gimp_data_get_extension (GimpData *data)
+ligma_data_get_extension (LigmaData *data)
 {
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), NULL);
 
-  if (GIMP_DATA_GET_CLASS (data)->get_extension)
-    return GIMP_DATA_GET_CLASS (data)->get_extension (data);
+  if (LIGMA_DATA_GET_CLASS (data)->get_extension)
+    return LIGMA_DATA_GET_CLASS (data)->get_extension (data);
 
   return NULL;
 }
 
 /**
- * gimp_data_set_file:
- * @data:     A #GimpData object
+ * ligma_data_set_file:
+ * @data:     A #LigmaData object
  * @file:     File to assign to @data.
  * @writable: %TRUE if we want to be able to write to this file.
  * @deletable: %TRUE if we want to be able to delete this file.
@@ -755,15 +755,15 @@ gimp_data_get_extension (GimpData *data)
  * @data is marked as writable.
  **/
 void
-gimp_data_set_file (GimpData *data,
+ligma_data_set_file (LigmaData *data,
                     GFile    *file,
                     gboolean  writable,
                     gboolean  deletable)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
   gchar           *path;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
   g_return_if_fail (G_IS_FILE (file));
 
   path = g_file_get_path (file);
@@ -773,7 +773,7 @@ gimp_data_set_file (GimpData *data,
 
   g_free (path);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   if (private->internal)
     return;
@@ -836,26 +836,26 @@ gimp_data_set_file (GimpData *data,
         }
 
       /*  if we can't save, we are not writable  */
-      if (! GIMP_DATA_GET_CLASS (data)->save)
+      if (! LIGMA_DATA_GET_CLASS (data)->save)
         private->writable = FALSE;
     }
 }
 
 GFile *
-gimp_data_get_file (GimpData *data)
+ligma_data_get_file (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), NULL);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->file;
 }
 
 /**
- * gimp_data_create_filename:
- * @data:     a #Gimpdata object.
+ * ligma_data_create_filename:
+ * @data:     a #Ligmadata object.
  * @dest_dir: directory in which to create a file name.
  *
  * This function creates a unique file name to be used for saving
@@ -865,10 +865,10 @@ gimp_data_get_file (GimpData *data)
  * assuming that @data can be saved.
  **/
 void
-gimp_data_create_filename (GimpData *data,
+ligma_data_create_filename (LigmaData *data,
                            GFile    *dest_dir)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
   gchar           *safename;
   gchar           *basename;
   GFile           *file;
@@ -876,15 +876,15 @@ gimp_data_create_filename (GimpData *data,
   gint             unum  = 1;
   GError          *error = NULL;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
   g_return_if_fail (G_IS_FILE (dest_dir));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   if (private->internal)
     return;
 
-  safename = g_strstrip (g_strdup (gimp_object_get_name (data)));
+  safename = g_strstrip (g_strdup (ligma_object_get_name (data)));
 
   if (safename[0] == '.')
     safename[0] = '-';
@@ -893,16 +893,16 @@ gimp_data_create_filename (GimpData *data,
     if (strchr ("\\/*?\"`'<>{}|\n\t ;:$^&", safename[i]))
       safename[i] = '-';
 
-  basename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
+  basename = g_strconcat (safename, ligma_data_get_extension (data), NULL);
 
   file = g_file_get_child_for_display_name (dest_dir, basename, &error);
   g_free (basename);
 
   if (! file)
     {
-      g_warning ("gimp_data_create_filename:\n"
+      g_warning ("ligma_data_create_filename:\n"
                  "g_file_get_child_for_display_name() failed for '%s': %s",
-                 gimp_object_get_name (data), error->message);
+                 ligma_object_get_name (data), error->message);
       g_clear_error (&error);
       g_free (safename);
       return;
@@ -915,7 +915,7 @@ gimp_data_create_filename (GimpData *data,
       basename = g_strdup_printf ("%s-%d%s",
                                   safename,
                                   unum++,
-                                  gimp_data_get_extension (data));
+                                  ligma_data_get_extension (data));
 
       file = g_file_get_child_for_display_name (dest_dir, basename, NULL);
       g_free (basename);
@@ -923,7 +923,7 @@ gimp_data_create_filename (GimpData *data,
 
   g_free (safename);
 
-  gimp_data_set_file (data, file, TRUE, TRUE);
+  ligma_data_set_file (data, file, TRUE, TRUE);
 
   g_object_unref (file);
 }
@@ -936,14 +936,14 @@ static const gchar *tag_blacklist[] = { "brushes",
                                         "tool-presets" };
 
 /**
- * gimp_data_set_folder_tags:
- * @data:          a #Gimpdata object.
+ * ligma_data_set_folder_tags:
+ * @data:          a #Ligmadata object.
  * @top_directory: the top directory of the currently processed data
  *                 hierarchy.
  *
  * Sets tags based on all folder names below top_directory. So if the
  * data's filename is e.g.
- * /home/foo/.config/GIMP/X.Y/brushes/Flowers/Roses/rose.gbr, it will
+ * /home/foo/.config/LIGMA/X.Y/brushes/Flowers/Roses/rose.gbr, it will
  * add "Flowers" and "Roses" tags.
  *
  * if the top directory (as passed, or as derived from the data's
@@ -951,18 +951,18 @@ static const gchar *tag_blacklist[] = { "brushes",
  * (brushes, patterns etc), its name will be added as tag too.
  **/
 void
-gimp_data_set_folder_tags (GimpData *data,
+ligma_data_set_folder_tags (LigmaData *data,
                            GFile    *top_directory)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
   gchar           *tmp;
   gchar           *dirname;
   gchar           *top_path;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
   g_return_if_fail (G_IS_FILE (top_directory));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   if (private->internal)
     return;
@@ -983,10 +983,10 @@ gimp_data_set_folder_tags (GimpData *data,
   while (strcmp (dirname, top_path))
     {
       gchar   *basename = g_path_get_basename (dirname);
-      GimpTag *tag      = gimp_tag_new (basename);
+      LigmaTag *tag      = ligma_tag_new (basename);
 
-      gimp_tag_set_internal (tag, TRUE);
-      gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+      ligma_tag_set_internal (tag, TRUE);
+      ligma_tagged_add_tag (LIGMA_TAGGED (data), tag);
       g_object_unref (tag);
       g_free (basename);
 
@@ -1010,10 +1010,10 @@ gimp_data_set_folder_tags (GimpData *data,
 
       if (i == G_N_ELEMENTS (tag_blacklist))
         {
-          GimpTag *tag = gimp_tag_new (basename);
+          LigmaTag *tag = ligma_tag_new (basename);
 
-          gimp_tag_set_internal (tag, TRUE);
-          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+          ligma_tag_set_internal (tag, TRUE);
+          ligma_tagged_add_tag (LIGMA_TAGGED (data), tag);
           g_object_unref (tag);
         }
 
@@ -1023,110 +1023,110 @@ gimp_data_set_folder_tags (GimpData *data,
 }
 
 const gchar *
-gimp_data_get_mime_type (GimpData *data)
+ligma_data_get_mime_type (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), NULL);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return g_quark_to_string (private->mime_type);
 }
 
 gboolean
-gimp_data_is_writable (GimpData *data)
+ligma_data_is_writable (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->writable;
 }
 
 gboolean
-gimp_data_is_deletable (GimpData *data)
+ligma_data_is_deletable (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->deletable;
 }
 
 void
-gimp_data_set_mtime (GimpData *data,
+ligma_data_set_mtime (LigmaData *data,
                      gint64    mtime)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   private->mtime = mtime;
 }
 
 gint64
-gimp_data_get_mtime (GimpData *data)
+ligma_data_get_mtime (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), 0);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), 0);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->mtime;
 }
 
 gboolean
-gimp_data_is_copyable (GimpData *data)
+ligma_data_is_copyable (LigmaData *data)
 {
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  return GIMP_DATA_GET_CLASS (data)->copy != NULL;
+  return LIGMA_DATA_GET_CLASS (data)->copy != NULL;
 }
 
 /**
- * gimp_data_copy:
- * @data:     a #GimpData object
- * @src_data: the #GimpData object to copy from
+ * ligma_data_copy:
+ * @data:     a #LigmaData object
+ * @src_data: the #LigmaData object to copy from
  *
  * Copies @src_data to @data.  Only the object data is  copied:  the
  * name, file name, preview, etc. are not copied.
  **/
 void
-gimp_data_copy (GimpData *data,
-                GimpData *src_data)
+ligma_data_copy (LigmaData *data,
+                LigmaData *src_data)
 {
-  g_return_if_fail (GIMP_IS_DATA (data));
-  g_return_if_fail (GIMP_IS_DATA (src_data));
-  g_return_if_fail (GIMP_DATA_GET_CLASS (data)->copy != NULL);
-  g_return_if_fail (GIMP_DATA_GET_CLASS (data)->copy ==
-                    GIMP_DATA_GET_CLASS (src_data)->copy);
+  g_return_if_fail (LIGMA_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (src_data));
+  g_return_if_fail (LIGMA_DATA_GET_CLASS (data)->copy != NULL);
+  g_return_if_fail (LIGMA_DATA_GET_CLASS (data)->copy ==
+                    LIGMA_DATA_GET_CLASS (src_data)->copy);
 
   if (data != src_data)
-    GIMP_DATA_GET_CLASS (data)->copy (data, src_data);
+    LIGMA_DATA_GET_CLASS (data)->copy (data, src_data);
 }
 
 gboolean
-gimp_data_is_duplicatable (GimpData *data)
+ligma_data_is_duplicatable (LigmaData *data)
 {
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  if (GIMP_DATA_GET_CLASS (data)->duplicate == gimp_data_real_duplicate)
-    return gimp_data_is_copyable (data);
+  if (LIGMA_DATA_GET_CLASS (data)->duplicate == ligma_data_real_duplicate)
+    return ligma_data_is_copyable (data);
   else
-    return GIMP_DATA_GET_CLASS (data)->duplicate != NULL;
+    return LIGMA_DATA_GET_CLASS (data)->duplicate != NULL;
 }
 
 /**
- * gimp_data_duplicate:
- * @data: a #GimpData object
+ * ligma_data_duplicate:
+ * @data: a #LigmaData object
  *
  * Creates a copy of @data, if possible.  Only the object data is
  * copied:  the newly created object is not automatically given an
@@ -1135,19 +1135,19 @@ gimp_data_is_duplicatable (GimpData *data)
  * Returns: (nullable) (transfer full): the newly created copy, or %NULL if
  *          @data cannot be copied.
  **/
-GimpData *
-gimp_data_duplicate (GimpData *data)
+LigmaData *
+ligma_data_duplicate (LigmaData *data)
 {
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), NULL);
 
-  if (gimp_data_is_duplicatable (data))
+  if (ligma_data_is_duplicatable (data))
     {
-      GimpData        *new     = GIMP_DATA_GET_CLASS (data)->duplicate (data);
-      GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (new);
+      LigmaData        *new     = LIGMA_DATA_GET_CLASS (data)->duplicate (data);
+      LigmaDataPrivate *private = LIGMA_DATA_GET_PRIVATE (new);
 
       g_object_set (new,
                     "name",      NULL,
-                    "writable",  GIMP_DATA_GET_CLASS (new)->save != NULL,
+                    "writable",  LIGMA_DATA_GET_CLASS (new)->save != NULL,
                     "deletable", TRUE,
                     NULL);
 
@@ -1160,26 +1160,26 @@ gimp_data_duplicate (GimpData *data)
 }
 
 /**
- * gimp_data_make_internal:
- * @data: a #GimpData object.
+ * ligma_data_make_internal:
+ * @data: a #LigmaData object.
  *
- * Mark @data as "internal" to Gimp, which means that it will not be
+ * Mark @data as "internal" to Ligma, which means that it will not be
  * saved to disk.  Note that if you do this, later calls to
- * gimp_data_save() and gimp_data_delete_from_disk() will
+ * ligma_data_save() and ligma_data_delete_from_disk() will
  * automatically return successfully without giving any warning.
  *
  * The identifier name shall be an untranslated globally unique string
  * that identifies the internal object across sessions.
  **/
 void
-gimp_data_make_internal (GimpData    *data,
+ligma_data_make_internal (LigmaData    *data,
                          const gchar *identifier)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (LIGMA_IS_DATA (data));
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   g_clear_object (&private->file);
 
@@ -1192,53 +1192,53 @@ gimp_data_make_internal (GimpData    *data,
 }
 
 gboolean
-gimp_data_is_internal (GimpData *data)
+ligma_data_is_internal (LigmaData *data)
 {
-  GimpDataPrivate *private;
+  LigmaDataPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DATA (data), FALSE);
 
-  private = GIMP_DATA_GET_PRIVATE (data);
+  private = LIGMA_DATA_GET_PRIVATE (data);
 
   return private->internal;
 }
 
 /**
- * gimp_data_compare:
- * @data1: a #GimpData object.
- * @data2: another #GimpData object.
+ * ligma_data_compare:
+ * @data1: a #LigmaData object.
+ * @data2: another #LigmaData object.
  *
  * Compares two data objects for use in sorting. Objects marked as
  * "internal" come first, then user-writable objects, then system data
  * files. In these three groups, the objects are sorted alphabetically
- * by name, using gimp_object_name_collate().
+ * by name, using ligma_object_name_collate().
  *
  * Returns: -1 if @data1 compares before @data2,
  *                0 if they compare equal,
  *                1 if @data1 compares after @data2.
  **/
 gint
-gimp_data_compare (GimpData *data1,
-                   GimpData *data2)
+ligma_data_compare (LigmaData *data1,
+                   LigmaData *data2)
 {
-  g_return_val_if_fail (GIMP_IS_DATA (data1), 0);
-  g_return_val_if_fail (GIMP_IS_DATA (data2), 0);
-  g_return_val_if_fail (GIMP_DATA_GET_CLASS (data1)->compare ==
-                        GIMP_DATA_GET_CLASS (data2)->compare, 0);
+  g_return_val_if_fail (LIGMA_IS_DATA (data1), 0);
+  g_return_val_if_fail (LIGMA_IS_DATA (data2), 0);
+  g_return_val_if_fail (LIGMA_DATA_GET_CLASS (data1)->compare ==
+                        LIGMA_DATA_GET_CLASS (data2)->compare, 0);
 
-  return GIMP_DATA_GET_CLASS (data1)->compare (data1, data2);
+  return LIGMA_DATA_GET_CLASS (data1)->compare (data1, data2);
 }
 
 /**
- * gimp_data_error_quark:
+ * ligma_data_error_quark:
  *
- * This function is used to implement the GIMP_DATA_ERROR macro. It
+ * This function is used to implement the LIGMA_DATA_ERROR macro. It
  * shouldn't be called directly.
  *
- * Returns: the #GQuark to identify error in the GimpData error domain.
+ * Returns: the #GQuark to identify error in the LigmaData error domain.
  **/
 GQuark
-gimp_data_error_quark (void)
+ligma_data_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-data-error-quark");
+  return g_quark_from_static_string ("ligma-data-error-quark");
 }

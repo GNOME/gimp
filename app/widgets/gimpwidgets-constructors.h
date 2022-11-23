@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_CONSTRUCTORS_H__
-#define __GIMP_WIDGETS_CONSTRUCTORS_H__
+#ifndef __LIGMA_WIDGETS_CONSTRUCTORS_H__
+#define __LIGMA_WIDGETS_CONSTRUCTORS_H__
 
 
-GtkWidget * gimp_icon_button_new         (const gchar      *icon_name,
+GtkWidget * ligma_icon_button_new         (const gchar      *icon_name,
                                           const gchar      *label);
 
-GtkWidget * gimp_color_profile_label_new (GimpColorProfile *profile);
+GtkWidget * ligma_color_profile_label_new (LigmaColorProfile *profile);
 
 
-#endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */
+#endif  /*  __LIGMA_WIDGETS_CONSTRUCTORS_H__  */

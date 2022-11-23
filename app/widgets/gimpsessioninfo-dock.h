@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo-dock.h
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo-dock.h
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,47 +18,47 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_DOCK_H__
-#define __GIMP_SESSION_INFO_DOCK_H__
+#ifndef __LIGMA_SESSION_INFO_DOCK_H__
+#define __LIGMA_SESSION_INFO_DOCK_H__
 
 
 /**
- * GimpSessionInfoDock:
+ * LigmaSessionInfoDock:
  *
  * Contains information about a dock in the interface.
  */
-struct _GimpSessionInfoDock
+struct _LigmaSessionInfoDock
 {
-  /* Type of dock, written to/read from sessionrc. E.g. 'gimp-dock' or
-   * 'gimp-toolbox'
+  /* Type of dock, written to/read from sessionrc. E.g. 'ligma-dock' or
+   * 'ligma-toolbox'
    */
   gchar             *dock_type;
 
   /* What side this dock is in in single-window mode. Either
-   * GIMP_ALIGN_LEFT, GIMP_ALIGN_RIGHT or -1.
+   * LIGMA_ALIGN_LEFT, LIGMA_ALIGN_RIGHT or -1.
    */
-  GimpAlignmentType  side;
+  LigmaAlignmentType  side;
 
   /* GtkPaned position of this dock */
   gint               position;
 
-  /*  list of GimpSessionInfoBook  */
+  /*  list of LigmaSessionInfoBook  */
   GList             *books;
 };
 
-GimpSessionInfoDock * gimp_session_info_dock_new         (const gchar          *dock_type);
-void                  gimp_session_info_dock_free        (GimpSessionInfoDock  *dock_info);
-void                  gimp_session_info_dock_serialize   (GimpConfigWriter     *writer,
-                                                          GimpSessionInfoDock  *dock);
-GTokenType            gimp_session_info_dock_deserialize (GScanner             *scanner,
+LigmaSessionInfoDock * ligma_session_info_dock_new         (const gchar          *dock_type);
+void                  ligma_session_info_dock_free        (LigmaSessionInfoDock  *dock_info);
+void                  ligma_session_info_dock_serialize   (LigmaConfigWriter     *writer,
+                                                          LigmaSessionInfoDock  *dock);
+GTokenType            ligma_session_info_dock_deserialize (GScanner             *scanner,
                                                           gint                  scope,
-                                                          GimpSessionInfoDock **info,
+                                                          LigmaSessionInfoDock **info,
                                                           const gchar          *dock_type);
-GimpSessionInfoDock * gimp_session_info_dock_from_widget (GimpDock             *dock);
-GimpDock            * gimp_session_info_dock_restore     (GimpSessionInfoDock  *dock_info,
-                                                          GimpDialogFactory    *factory,
+LigmaSessionInfoDock * ligma_session_info_dock_from_widget (LigmaDock             *dock);
+LigmaDock            * ligma_session_info_dock_restore     (LigmaSessionInfoDock  *dock_info,
+                                                          LigmaDialogFactory    *factory,
                                                           GdkMonitor           *monitor,
-                                                          GimpDockContainer    *dock_container);
+                                                          LigmaDockContainer    *dock_container);
 
 
-#endif  /* __GIMP_SESSION_INFO_DOCK_H__ */
+#endif  /* __LIGMA_SESSION_INFO_DOCK_H__ */

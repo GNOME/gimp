@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpintradioframe.h
+ * ligmaintradioframe.h
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,58 +19,58 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#include <libgimpwidgets/gimpframe.h>
+#include <libligmawidgets/ligmaframe.h>
 
-#ifndef __GIMP_INT_RADIO_FRAME_H__
-#define __GIMP_INT_RADIO_FRAME_H__
+#ifndef __LIGMA_INT_RADIO_FRAME_H__
+#define __LIGMA_INT_RADIO_FRAME_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_INT_RADIO_FRAME            (gimp_int_radio_frame_get_type ())
-#define GIMP_INT_RADIO_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrame))
-#define GIMP_INT_RADIO_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrameClass))
-#define GIMP_IS_INT_RADIO_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INT_RADIO_FRAME))
-#define GIMP_IS_INT_RADIO_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INT_RADIO_FRAME))
-#define GIMP_INT_RADIO_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrameClass))
+#define LIGMA_TYPE_INT_RADIO_FRAME            (ligma_int_radio_frame_get_type ())
+#define LIGMA_INT_RADIO_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_INT_RADIO_FRAME, LigmaIntRadioFrame))
+#define LIGMA_INT_RADIO_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_INT_RADIO_FRAME, LigmaIntRadioFrameClass))
+#define LIGMA_IS_INT_RADIO_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_INT_RADIO_FRAME))
+#define LIGMA_IS_INT_RADIO_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_INT_RADIO_FRAME))
+#define LIGMA_INT_RADIO_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_INT_RADIO_FRAME, LigmaIntRadioFrameClass))
 
 
-typedef struct _GimpIntRadioFrameClass   GimpIntRadioFrameClass;
+typedef struct _LigmaIntRadioFrameClass   LigmaIntRadioFrameClass;
 
-struct _GimpIntRadioFrame
+struct _LigmaIntRadioFrame
 {
-  GimpFrame       parent_instance;
+  LigmaFrame       parent_instance;
 };
 
-struct _GimpIntRadioFrameClass
+struct _LigmaIntRadioFrameClass
 {
-  GimpFrameClass  parent_class;
+  LigmaFrameClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
 /**
- * GimpIntRadioFrameSensitivityFunc:
+ * LigmaIntRadioFrameSensitivityFunc:
  * @value: the value associated with a radio button.
  * @user_data: the data associated with a radio button.
  * @new_value: the value to check instead if the function returns %FALSE.
- * @data: (closure): the data set in gimp_int_radio_frame_set_sensitivity()
+ * @data: (closure): the data set in ligma_int_radio_frame_set_sensitivity()
  *
  * Signature for a function called on each radio button value and data,
- * each time the %GimpIntRadioFrame is drawn, to make some radio button
+ * each time the %LigmaIntRadioFrame is drawn, to make some radio button
  * insensitive.
  * If the function returns %FALSE, it usually means that the value is
  * not a valid choice in current situation. In this case, you might want
@@ -81,48 +81,48 @@ struct _GimpIntRadioFrameClass
  *
  * Returns: %TRUE if the button stays sensitive, %FALSE otherwise.
  */
-typedef  gboolean (* GimpIntRadioFrameSensitivityFunc) (gint      value,
+typedef  gboolean (* LigmaIntRadioFrameSensitivityFunc) (gint      value,
                                                         gpointer  user_data,
                                                         gint     *new_value,
                                                         gpointer  data);
 
 
 
-GType         gimp_int_radio_frame_get_type        (void) G_GNUC_CONST;
+GType         ligma_int_radio_frame_get_type        (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_int_radio_frame_new_from_store  (const gchar       *title,
-                                                    GimpIntStore      *store);
-GtkWidget   * gimp_int_radio_frame_new             (const gchar       *first_label,
+GtkWidget   * ligma_int_radio_frame_new_from_store  (const gchar       *title,
+                                                    LigmaIntStore      *store);
+GtkWidget   * ligma_int_radio_frame_new             (const gchar       *first_label,
                                                     gint               first_value,
                                                     ...) G_GNUC_NULL_TERMINATED;
-GtkWidget   * gimp_int_radio_frame_new_valist      (const gchar       *first_label,
+GtkWidget   * ligma_int_radio_frame_new_valist      (const gchar       *first_label,
                                                     gint               first_value,
                                                     va_list            values);
 
-GtkWidget   * gimp_int_radio_frame_new_array       (const gchar       *labels[]);
+GtkWidget   * ligma_int_radio_frame_new_array       (const gchar       *labels[]);
 
-void          gimp_int_radio_frame_prepend         (GimpIntRadioFrame *radio_frame,
+void          ligma_int_radio_frame_prepend         (LigmaIntRadioFrame *radio_frame,
                                                     ...);
-void          gimp_int_radio_frame_append          (GimpIntRadioFrame *radio_frame,
+void          ligma_int_radio_frame_append          (LigmaIntRadioFrame *radio_frame,
                                                     ...);
 
-gboolean      gimp_int_radio_frame_set_active      (GimpIntRadioFrame *radio_frame,
+gboolean      ligma_int_radio_frame_set_active      (LigmaIntRadioFrame *radio_frame,
                                                     gint               value);
-gint          gimp_int_radio_frame_get_active      (GimpIntRadioFrame *radio_frame);
+gint          ligma_int_radio_frame_get_active      (LigmaIntRadioFrame *radio_frame);
 
 gboolean
-      gimp_int_radio_frame_set_active_by_user_data (GimpIntRadioFrame *radio_frame,
+      ligma_int_radio_frame_set_active_by_user_data (LigmaIntRadioFrame *radio_frame,
                                                     gpointer           user_data);
 gboolean
-      gimp_int_radio_frame_get_active_user_data    (GimpIntRadioFrame *radio_frame,
+      ligma_int_radio_frame_get_active_user_data    (LigmaIntRadioFrame *radio_frame,
                                                     gpointer          *user_data);
 
-void          gimp_int_radio_frame_set_sensitivity (GimpIntRadioFrame *radio_frame,
-                                                    GimpIntRadioFrameSensitivityFunc  func,
+void          ligma_int_radio_frame_set_sensitivity (LigmaIntRadioFrame *radio_frame,
+                                                    LigmaIntRadioFrameSensitivityFunc  func,
                                                     gpointer           data,
                                                     GDestroyNotify     destroy);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_INT_RADIO_FRAME_H__ */
+#endif  /* __LIGMA_INT_RADIO_FRAME_H__ */

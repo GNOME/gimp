@@ -7,13 +7,13 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export MSYS2_ARCH="i686"
     export MSYS_PREFIX="/c/msys64/mingw32/"
     export PATH="/mingw32/bin:$PATH"
-    export GIMP_DISTRIB=`realpath ./gimp-w32`
+    export LIGMA_DISTRIB=`realpath ./ligma-w32`
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS_PREFIX="/c/msys64/mingw64/"
     export PATH="/mingw64/bin:$PATH"
-    export GIMP_DISTRIB=`realpath ./gimp-w64`
+    export LIGMA_DISTRIB=`realpath ./ligma-w64`
 fi
 
 # Update everything
@@ -67,155 +67,155 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala \
     mingw-w64-$MSYS2_ARCH-xpm-nox
 
-export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
-export PATH="$GIMP_PREFIX/bin:$PATH"
+export LIGMA_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
+export PATH="$LIGMA_PREFIX/bin:$PATH"
 
 # Package ressources.
-mkdir -p ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/etc ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/include ${GIMP_DISTRIB}
-#cp -fr ${GIMP_PREFIX}/ssl ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/share ${GIMP_DISTRIB}
+mkdir -p ${LIGMA_DISTRIB}
+cp -fr ${LIGMA_PREFIX}/etc ${LIGMA_DISTRIB}
+cp -fr ${LIGMA_PREFIX}/include ${LIGMA_DISTRIB}
+#cp -fr ${LIGMA_PREFIX}/ssl ${LIGMA_DISTRIB}
+cp -fr ${LIGMA_PREFIX}/share ${LIGMA_DISTRIB}
 
 # Package executables.
-mkdir ${GIMP_DISTRIB}/bin
-cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
+mkdir ${LIGMA_DISTRIB}/bin
+cp -fr ${LIGMA_PREFIX}/bin/ligma*.exe ${LIGMA_DISTRIB}/bin/
 
 # With the native Windows build, it's directly in bin/
-#mkdir ${GIMP_DISTRIB}/libexec
-#cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
+#mkdir ${LIGMA_DISTRIB}/libexec
+#cp -fr ${LIGMA_PREFIX}/libexec/ligma*.exe ${LIGMA_DISTRIB}/libexec/
 
 # Add a wrapper at tree root, less messy than having to look for the
 # binary inside bin/, in the middle of all the DLLs.
-echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
+echo "bin\ligma-2.99.exe" > ${LIGMA_DISTRIB}/ligma.cmd
 
 # Package library data and modules.
-cp -fr ${MSYS_PREFIX}/etc/fonts ${GIMP_DISTRIB}/etc/
-cp -fr ${MSYS_PREFIX}/etc/gtk-3.0 ${GIMP_DISTRIB}/etc/
+cp -fr ${MSYS_PREFIX}/etc/fonts ${LIGMA_DISTRIB}/etc/
+cp -fr ${MSYS_PREFIX}/etc/gtk-3.0 ${LIGMA_DISTRIB}/etc/
 
-mkdir ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
+mkdir ${LIGMA_DISTRIB}/lib/
+cp -fr ${LIGMA_PREFIX}/lib/ligma ${LIGMA_DISTRIB}/lib/
+cp -fr ${LIGMA_PREFIX}/lib/gegl-0.4 ${LIGMA_DISTRIB}/lib/
+cp -fr ${LIGMA_PREFIX}/lib/babl-0.1 ${LIGMA_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.0/
+cp -fr ${MSYS_PREFIX}/lib/girepository-1.0 ${LIGMA_DISTRIB}/lib/
+cp -fr ${LIGMA_PREFIX}/lib/girepository-1.0/* ${LIGMA_DISTRIB}/lib/girepository-1.0/
 
-cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
-cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
-cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gio ${LIGMA_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${LIGMA_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${LIGMA_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/lib/python3.10 ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/python3.10 ${LIGMA_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/ghostscript ${LIGMA_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${LIGMA_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libthai ${LIGMA_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libwmf ${LIGMA_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/mypaint-data ${LIGMA_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/poppler ${LIGMA_DISTRIB}/share/
 
 # Move these 2 folders into bin/ so that Lua plug-ins find the lua
 # dependencies. The alternative was to modify LUA_PATH_DEFAULT and
 # LUA_CPATH_DEFAULT macros in lua (which ender used to do, hence
 # rebuilding lua). But it's much simpler to just move these 2 folders as
 # bin/lua/ and bin/lgi/
-cp -fr ${MSYS_PREFIX}/share/lua/5.1/ ${GIMP_DISTRIB}/bin/lua
-cp -fr ${MSYS_PREFIX}/lib/lua/5.1/lgi/ ${GIMP_DISTRIB}/bin/
+cp -fr ${MSYS_PREFIX}/share/lua/5.1/ ${LIGMA_DISTRIB}/bin/lua
+cp -fr ${MSYS_PREFIX}/lib/lua/5.1/lgi/ ${LIGMA_DISTRIB}/bin/
 
 # XXX Are these themes really needed?
-cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/themes ${LIGMA_DISTRIB}/share/
 
-# Only copy from langs supported in GIMP.
-for dir in ${GIMP_DISTRIB}/share/locale/*/; do
+# Only copy from langs supported in LIGMA.
+for dir in ${LIGMA_DISTRIB}/share/locale/*/; do
   lang=`basename "$dir"`;
   # TODO: ideally we could be a bit more accurate and copy only the
   # language files from our dependencies and iso_639.mo. But let's go
   # with this for now, especially as each lang may have different
   # translation availability.
   if [ -d "${MSYS_PREFIX}/share/locale/${lang}/LC_MESSAGES/" ]; then
-    cp -fr "${MSYS_PREFIX}/share/locale/${lang}/LC_MESSAGES/"*.mo "${GIMP_DISTRIB}/share/locale/${lang}/LC_MESSAGES/"
+    cp -fr "${MSYS_PREFIX}/share/locale/${lang}/LC_MESSAGES/"*.mo "${LIGMA_DISTRIB}/share/locale/${lang}/LC_MESSAGES/"
   fi
 done;
 
 # Only one iso-codes file is useful.
-mkdir -p ${GIMP_DISTRIB}/share/xml/iso-codes
-cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/iso-codes/
+mkdir -p ${LIGMA_DISTRIB}/share/xml/iso-codes
+cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${LIGMA_DISTRIB}/share/xml/iso-codes/
 
 # Adwaita can be used as the base icon set.
-cp -fr ${MSYS_PREFIX}/share/icons/Adwaita ${GIMP_DISTRIB}/share/icons/
+cp -fr ${MSYS_PREFIX}/share/icons/Adwaita ${LIGMA_DISTRIB}/share/icons/
 
 # XXX Why are these for exactly?
-cp -fr ${MSYS_PREFIX}/bin/gspawn*.exe ${GIMP_DISTRIB}/bin/
+cp -fr ${MSYS_PREFIX}/bin/gspawn*.exe ${LIGMA_DISTRIB}/bin/
 
 # We save the list of already copied DLLs to keep a state between dll_link runs.
 rm -f done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX} ${GIMP_DISTRIB} --output-dll-list done-dll.list
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper-console.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/gspawn-win*-helper.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX} ${LIGMA_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/gspawn-win*-helper-console.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
 # XXX Does not look like it's needed anymore. Check?
-cp -fr ${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/gdk-pixbuf-query-loaders.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
 # XXX Why is bzip2.exe needed?
-cp -fr ${MSYS_PREFIX}/bin/bzip2.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/bzip2.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/bzip2.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/bzip2.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
 # Executables for supported interpreters.
-cp -fr ${MSYS_PREFIX}/bin/pythonw.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/pythonw.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-cp -fr ${MSYS_PREFIX}/bin/python3w.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-cp -fr ${MSYS_PREFIX}/bin/python3.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/pythonw.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/pythonw.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/python3w.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/python3w.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/python3.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/python3.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/luajit.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
 # Executable for "gegl:introspect" from graphviz package.
-cp -fr ${MSYS_PREFIX}/bin/dot.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/dot.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/dot.exe ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/dot.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
 # Generate share/glib-2.0/schemas/gschemas.compiled
-glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
+glib-compile-schemas --targetdir=${LIGMA_DISTRIB}/share/glib-2.0/schemas ${LIGMA_DISTRIB}/share/glib-2.0/schemas
 
 # Package needed DLLs only
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligma-2.99.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-console-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligma-console-2.99.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-debug-resume.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligma-debug-resume.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-debug-tool-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligma-debug-tool-2.99.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-test-clipboard-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligma-test-clipboard-2.99.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimptool-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/ligmatool-2.99.exe ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-for dll in ${GIMP_DISTRIB}/lib/babl-0.1/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/babl-0.1/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
-for dll in ${GIMP_DISTRIB}/lib/gegl-0.4/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/gegl-0.4/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
-for dll in ${GIMP_DISTRIB}/lib/gio/modules/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/gio/modules/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
-for dll in ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
-for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/ligma/2.99/modules/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
-for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/ligma/2.99/plug-ins/*/*.exe; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done
 
 # Libraries for GObject Introspection.
 
-cp -fr ${MSYS_PREFIX}/bin/libgirepository-1.0-1.dll ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+cp -fr ${MSYS_PREFIX}/bin/libgirepository-1.0-1.dll ${LIGMA_DISTRIB}/bin/
+python3 build/windows/gitlab-ci/dll_link.py ${LIGMA_DISTRIB}/bin/libgirepository-1.0-1.dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list
 
-for dll in ${GIMP_DISTRIB}/lib/python3.10/site-packages/*/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+for dll in ${LIGMA_DISTRIB}/lib/python3.10/site-packages/*/*.dll; do
+  python3 build/windows/gitlab-ci/dll_link.py $dll ${LIGMA_PREFIX}/ ${MSYS_PREFIX}/ ${LIGMA_DISTRIB} --output-dll-list done-dll.list;
 done

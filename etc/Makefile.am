@@ -1,17 +1,17 @@
-## Makefile.am for gimp/etc
+## Makefile.am for ligma/etc
 
-gimpsysconf = \
+ligmasysconf = \
 	controllerrc	\
-	gimp.css	\
+	ligma.css	\
 	menurc		\
 	sessionrc	\
 	templaterc	\
 	toolrc		\
 	unitrc
 
-gimpsysconf_DATA = \
-	$(gimpsysconf)	\
-	gimprc
+ligmasysconf_DATA = \
+	$(ligmasysconf)	\
+	ligmarc
 
 EXTRA_DIST = \
-	$(gimpsysconf)
+	$(ligmasysconf)

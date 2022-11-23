@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CORE_LOOPS_H__
-#define __GIMP_BRUSH_CORE_LOOPS_H__
+#ifndef __LIGMA_BRUSH_CORE_LOOPS_H__
+#define __LIGMA_BRUSH_CORE_LOOPS_H__
 
 
-const GimpTempBuf * gimp_brush_core_subsample_mask  (GimpBrushCore     *core,
-                                                     const GimpTempBuf *mask,
+const LigmaTempBuf * ligma_brush_core_subsample_mask  (LigmaBrushCore     *core,
+                                                     const LigmaTempBuf *mask,
                                                      gdouble            x,
                                                      gdouble            y);
-const GimpTempBuf * gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
-                                                     const GimpTempBuf *brush_mask,
+const LigmaTempBuf * ligma_brush_core_pressurize_mask (LigmaBrushCore     *core,
+                                                     const LigmaTempBuf *brush_mask,
                                                      gdouble            x,
                                                      gdouble            y,
                                                      gdouble            pressure);
-const GimpTempBuf * gimp_brush_core_solidify_mask   (GimpBrushCore     *core,
-                                                     const GimpTempBuf *brush_mask,
+const LigmaTempBuf * ligma_brush_core_solidify_mask   (LigmaBrushCore     *core,
+                                                     const LigmaTempBuf *brush_mask,
                                                      gdouble            x,
                                                      gdouble            y);
 
 
-#endif  /*  __GIMP_BRUSH_CORE_LOOPS_H__  */
+#endif  /*  __LIGMA_BRUSH_CORE_LOOPS_H__  */

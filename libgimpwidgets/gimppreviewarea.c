@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -23,21 +23,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimppreviewarea.h"
-#include "gimpwidgetsutils.h"
+#include "ligmapreviewarea.h"
+#include "ligmawidgetsutils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimppreviewarea
- * @title: GimpPreviewArea
+ * SECTION: ligmapreviewarea
+ * @title: LigmaPreviewArea
  * @short_description: A general purpose preview widget which caches
  *                     its pixel data.
  *
@@ -55,8 +55,8 @@ enum
 };
 
 
-#define DEFAULT_CHECK_SIZE  GIMP_CHECK_SIZE_MEDIUM_CHECKS
-#define DEFAULT_CHECK_TYPE  GIMP_CHECK_TYPE_GRAY_CHECKS
+#define DEFAULT_CHECK_SIZE  LIGMA_CHECK_SIZE_MEDIUM_CHECKS
+#define DEFAULT_CHECK_TYPE  LIGMA_CHECK_TYPE_GRAY_CHECKS
 
 #define CHECK_R(priv, row, col)        \
   (((((priv)->offset_y + (row)) & size) ^  \
@@ -71,12 +71,12 @@ enum
     (((priv)->offset_x + (col)) & size)) ? b1 : b2)
 
 
-struct _GimpPreviewAreaPrivate
+struct _LigmaPreviewAreaPrivate
 {
-  GimpCheckSize       check_size;
-  GimpCheckType       check_type;
-  GimpRGB             check_custom_color1;
-  GimpRGB             check_custom_color2;
+  LigmaCheckSize       check_size;
+  LigmaCheckType       check_type;
+  LigmaRGB             check_custom_color1;
+  LigmaRGB             check_custom_color2;
   gint                width;
   gint                height;
   gint                rowstride;
@@ -87,126 +87,126 @@ struct _GimpPreviewAreaPrivate
   guchar             *buf;
   guchar             *colormap;
 
-  GimpColorConfig    *config;
-  GimpColorTransform *transform;
+  LigmaColorConfig    *config;
+  LigmaColorTransform *transform;
 };
 
-#define GET_PRIVATE(obj) (((GimpPreviewArea *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaPreviewArea *) (obj))->priv)
 
 
-static void      gimp_preview_area_dispose           (GObject          *object);
-static void      gimp_preview_area_finalize          (GObject          *object);
-static void      gimp_preview_area_set_property      (GObject          *object,
+static void      ligma_preview_area_dispose           (GObject          *object);
+static void      ligma_preview_area_finalize          (GObject          *object);
+static void      ligma_preview_area_set_property      (GObject          *object,
                                                       guint             property_id,
                                                       const GValue     *value,
                                                       GParamSpec       *pspec);
-static void      gimp_preview_area_get_property      (GObject          *object,
+static void      ligma_preview_area_get_property      (GObject          *object,
                                                       guint             property_id,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
-static void      gimp_preview_area_size_allocate     (GtkWidget        *widget,
+static void      ligma_preview_area_size_allocate     (GtkWidget        *widget,
                                                       GtkAllocation    *allocation);
-static gboolean  gimp_preview_area_widget_draw       (GtkWidget        *widget,
+static gboolean  ligma_preview_area_widget_draw       (GtkWidget        *widget,
                                                       cairo_t          *cr);
 
-static void      gimp_preview_area_queue_draw        (GimpPreviewArea  *area,
+static void      ligma_preview_area_queue_draw        (LigmaPreviewArea  *area,
                                                       gint              x,
                                                       gint              y,
                                                       gint              width,
                                                       gint              height);
-static gint      gimp_preview_area_image_type_bytes  (GimpImageType     type);
+static gint      ligma_preview_area_image_type_bytes  (LigmaImageType     type);
 
-static void      gimp_preview_area_create_transform  (GimpPreviewArea  *area);
-static void      gimp_preview_area_destroy_transform (GimpPreviewArea  *area);
+static void      ligma_preview_area_create_transform  (LigmaPreviewArea  *area);
+static void      ligma_preview_area_destroy_transform (LigmaPreviewArea  *area);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPreviewArea, gimp_preview_area,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPreviewArea, ligma_preview_area,
                             GTK_TYPE_DRAWING_AREA)
 
-#define parent_class gimp_preview_area_parent_class
+#define parent_class ligma_preview_area_parent_class
 
 
 static void
-gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
+ligma_preview_area_class_init (LigmaPreviewAreaClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose       = gimp_preview_area_dispose;
-  object_class->finalize      = gimp_preview_area_finalize;
-  object_class->set_property  = gimp_preview_area_set_property;
-  object_class->get_property  = gimp_preview_area_get_property;
+  object_class->dispose       = ligma_preview_area_dispose;
+  object_class->finalize      = ligma_preview_area_finalize;
+  object_class->set_property  = ligma_preview_area_set_property;
+  object_class->get_property  = ligma_preview_area_get_property;
 
-  widget_class->size_allocate = gimp_preview_area_size_allocate;
-  widget_class->draw          = gimp_preview_area_widget_draw;
+  widget_class->size_allocate = ligma_preview_area_size_allocate;
+  widget_class->draw          = ligma_preview_area_widget_draw;
 
   g_object_class_install_property (object_class, PROP_CHECK_SIZE,
                                    g_param_spec_enum ("check-size",
                                                       _("Check Size"),
                                                       "The size of the checkerboard pattern indicating transparency",
-                                                      GIMP_TYPE_CHECK_SIZE,
+                                                      LIGMA_TYPE_CHECK_SIZE,
                                                       DEFAULT_CHECK_SIZE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_TYPE,
                                    g_param_spec_enum ("check-type",
                                                       _("Check Style"),
                                                       "The colors of the checkerboard pattern indicating transparency",
-                                                      GIMP_TYPE_CHECK_TYPE,
+                                                      LIGMA_TYPE_CHECK_TYPE,
                                                       DEFAULT_CHECK_TYPE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR1,
                                    g_param_spec_boxed ("check-custom-color1",
                                                        _("Custom Checks Color 1"),
                                                        "The first color of the checkerboard pattern indicating transparency",
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_TYPE_RGB,
+                                                       LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR2,
                                    g_param_spec_boxed ("check-custom-color2",
                                                        _("Custom Checks Color 2"),
                                                        "The second color of the checkerboard pattern indicating transparency",
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_TYPE_RGB,
+                                                       LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_preview_area_init (GimpPreviewArea *area)
+ligma_preview_area_init (LigmaPreviewArea *area)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  area->priv = gimp_preview_area_get_instance_private (area);
+  area->priv = ligma_preview_area_get_instance_private (area);
 
   priv = area->priv;
 
   priv->check_size          = DEFAULT_CHECK_SIZE;
   priv->check_type          = DEFAULT_CHECK_TYPE;
-  priv->check_custom_color1 = GIMP_CHECKS_CUSTOM_COLOR1;
-  priv->check_custom_color2 = GIMP_CHECKS_CUSTOM_COLOR2;
+  priv->check_custom_color1 = LIGMA_CHECKS_CUSTOM_COLOR1;
+  priv->check_custom_color2 = LIGMA_CHECKS_CUSTOM_COLOR2;
   priv->max_width           = -1;
   priv->max_height          = -1;
 
-  gimp_widget_track_monitor (GTK_WIDGET (area),
-                             G_CALLBACK (gimp_preview_area_destroy_transform),
+  ligma_widget_track_monitor (GTK_WIDGET (area),
+                             G_CALLBACK (ligma_preview_area_destroy_transform),
                              NULL, NULL);
 }
 
 static void
-gimp_preview_area_dispose (GObject *object)
+ligma_preview_area_dispose (GObject *object)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+  LigmaPreviewArea *area = LIGMA_PREVIEW_AREA (object);
 
-  gimp_preview_area_set_color_config (area, NULL);
+  ligma_preview_area_set_color_config (area, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_preview_area_finalize (GObject *object)
+ligma_preview_area_finalize (GObject *object)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->buf,      g_free);
   g_clear_pointer (&priv->colormap, g_free);
@@ -215,12 +215,12 @@ gimp_preview_area_finalize (GObject *object)
 }
 
 static void
-gimp_preview_area_set_property (GObject      *object,
+ligma_preview_area_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -231,10 +231,10 @@ gimp_preview_area_set_property (GObject      *object,
       priv->check_type = g_value_get_enum (value);
       break;
     case PROP_CHECK_CUSTOM_COLOR1:
-      priv->check_custom_color1 = *(GimpRGB *) g_value_get_boxed (value);
+      priv->check_custom_color1 = *(LigmaRGB *) g_value_get_boxed (value);
       break;
     case PROP_CHECK_CUSTOM_COLOR2:
-      priv->check_custom_color2 = *(GimpRGB *) g_value_get_boxed (value);
+      priv->check_custom_color2 = *(LigmaRGB *) g_value_get_boxed (value);
       break;
 
     default:
@@ -244,12 +244,12 @@ gimp_preview_area_set_property (GObject      *object,
 }
 
 static void
-gimp_preview_area_get_property (GObject    *object,
+ligma_preview_area_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -273,10 +273,10 @@ gimp_preview_area_get_property (GObject    *object,
 }
 
 static void
-gimp_preview_area_size_allocate (GtkWidget     *widget,
+ligma_preview_area_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (widget);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (widget);
   gint                    width;
   gint                    height;
 
@@ -304,11 +304,11 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_preview_area_widget_draw (GtkWidget *widget,
+ligma_preview_area_widget_draw (GtkWidget *widget,
                                cairo_t   *cr)
 {
-  GimpPreviewArea        *area = GIMP_PREVIEW_AREA (widget);
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
+  LigmaPreviewArea        *area = LIGMA_PREVIEW_AREA (widget);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (area);
   GtkAllocation           allocation;
   GdkPixbuf              *pixbuf;
   GdkRectangle            rect;
@@ -324,7 +324,7 @@ gimp_preview_area_widget_draw (GtkWidget *widget,
   rect.height = priv->height;
 
   if (! priv->transform)
-    gimp_preview_area_create_transform (area);
+    ligma_preview_area_create_transform (area);
 
   if (priv->transform)
     {
@@ -337,7 +337,7 @@ gimp_preview_area_widget_draw (GtkWidget *widget,
 
       for (i = 0; i < priv->height; i++)
         {
-          gimp_color_transform_process_pixels (priv->transform,
+          ligma_color_transform_process_pixels (priv->transform,
                                                format, src,
                                                format, dest,
                                                priv->width);
@@ -376,13 +376,13 @@ gimp_preview_area_widget_draw (GtkWidget *widget,
 }
 
 static void
-gimp_preview_area_queue_draw (GimpPreviewArea *area,
+ligma_preview_area_queue_draw (LigmaPreviewArea *area,
                               gint             x,
                               gint             y,
                               gint             width,
                               gint             height)
 {
-  GimpPreviewAreaPrivate *priv   = GET_PRIVATE (area);
+  LigmaPreviewAreaPrivate *priv   = GET_PRIVATE (area);
   GtkWidget              *widget = GTK_WIDGET (area);
   GtkAllocation           allocation;
 
@@ -395,22 +395,22 @@ gimp_preview_area_queue_draw (GimpPreviewArea *area,
 }
 
 static gint
-gimp_preview_area_image_type_bytes (GimpImageType type)
+ligma_preview_area_image_type_bytes (LigmaImageType type)
 {
   switch (type)
     {
-    case GIMP_GRAY_IMAGE:
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_GRAY_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       return 1;
 
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       return 2;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       return 3;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       return 4;
 
     default:
@@ -420,34 +420,34 @@ gimp_preview_area_image_type_bytes (GimpImageType type)
 }
 
 static void
-gimp_preview_area_create_transform (GimpPreviewArea *area)
+ligma_preview_area_create_transform (LigmaPreviewArea *area)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (area);
 
   if (priv->config)
     {
-      static GimpColorProfile *profile = NULL;
+      static LigmaColorProfile *profile = NULL;
 
       const Babl *format = babl_format ("R'G'B' u8");
 
       if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
+        profile = ligma_color_profile_new_rgb_srgb ();
 
-      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (area),
+      priv->transform = ligma_widget_get_color_transform (GTK_WIDGET (area),
                                                          priv->config,
                                                          profile,
                                                          format,
                                                          format,
                                                          NULL,
-                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                          FALSE);
     }
 }
 
 static void
-gimp_preview_area_destroy_transform (GimpPreviewArea *area)
+ligma_preview_area_destroy_transform (LigmaPreviewArea *area)
 {
-  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
+  LigmaPreviewAreaPrivate *priv = GET_PRIVATE (area);
 
   if (priv->transform)
     {
@@ -460,65 +460,65 @@ gimp_preview_area_destroy_transform (GimpPreviewArea *area)
 
 
 /**
- * gimp_preview_area_new:
+ * ligma_preview_area_new:
  *
- * Creates a new #GimpPreviewArea widget.
+ * Creates a new #LigmaPreviewArea widget.
  *
  * If the preview area is used to draw an image with transparency, you
  * might want to default the checkboard size and colors to user-set
  * Preferences. To do this, you may set the following properties on the
- * newly created #GimpPreviewArea:
+ * newly created #LigmaPreviewArea:
  *
  * |[<!-- language="C" -->
  * g_object_set (area,
- *               "check-size",          gimp_check_size (),
- *               "check-type",          gimp_check_type (),
- *               "check-custom-color1", gimp_check_custom_color1 (),
- *               "check-custom-color2", gimp_check_custom_color2 (),
+ *               "check-size",          ligma_check_size (),
+ *               "check-type",          ligma_check_type (),
+ *               "check-custom-color1", ligma_check_custom_color1 (),
+ *               "check-custom-color2", ligma_check_custom_color2 (),
  *               NULL);
  * ]|
  *
- * Returns: a new #GimpPreviewArea widget.
+ * Returns: a new #LigmaPreviewArea widget.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 GtkWidget *
-gimp_preview_area_new (void)
+ligma_preview_area_new (void)
 {
-  return g_object_new (GIMP_TYPE_PREVIEW_AREA, NULL);
+  return g_object_new (LIGMA_TYPE_PREVIEW_AREA, NULL);
 }
 
 /**
- * gimp_preview_area_draw:
- * @area:      a #GimpPreviewArea widget.
+ * ligma_preview_area_draw:
+ * @area:      a #LigmaPreviewArea widget.
  * @x:         x offset in preview
  * @y:         y offset in preview
  * @width:     buffer width
  * @height:    buffer height
- * @type:      the #GimpImageType of @buf
+ * @type:      the #LigmaImageType of @buf
  * @buf: (array): a #guchar buffer that contains the preview pixel data.
  * @rowstride: rowstride of @buf
  *
  * Draws @buf on @area and queues a redraw on the given rectangle.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 void
-gimp_preview_area_draw (GimpPreviewArea *area,
+ligma_preview_area_draw (LigmaPreviewArea *area,
                         gint             x,
                         gint             y,
                         gint             width,
                         gint             height,
-                        GimpImageType    type,
+                        LigmaImageType    type,
                         const guchar    *buf,
                         gint             rowstride)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
   const guchar           *src;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
+  LigmaRGB                 color1;
+  LigmaRGB                 color2;
   guchar                  r1;
   guchar                  g1;
   guchar                  b1;
@@ -528,7 +528,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   gint                    row;
   gint                    col;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
 
   priv = GET_PRIVATE (area);
@@ -547,7 +547,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = ligma_preview_area_image_type_bytes (type);
 
       buf -= x * bpp;
       width += x;
@@ -578,16 +578,16 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   size = 1 << (2 + priv->check_size);
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
-  gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  ligma_checks_get_colors (priv->check_type, &color1, &color2);
+  ligma_rgb_get_uchar (&color1, &r1, &g1, &b1);
+  ligma_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
   src  = buf;
   dest = priv->buf + x * 3 + y * priv->rowstride;
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       for (row = 0; row < height; row++)
         {
           memcpy (dest, src, 3 * width);
@@ -597,7 +597,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
        for (row = y; row < y + height; row++)
         {
           const guchar *s = src;
@@ -639,7 +639,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
         }
        break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       for (row = 0; row < height; row++)
         {
           const guchar *s = src;
@@ -655,7 +655,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       for (row = y; row < y + height; row++)
         {
           const guchar *s = src;
@@ -695,7 +695,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
@@ -716,7 +716,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
@@ -762,17 +762,17 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       break;
     }
 
-  gimp_preview_area_queue_draw (area, x, y, width, height);
+  ligma_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
- * gimp_preview_area_blend:
- * @area:       a #GimpPreviewArea widget.
+ * ligma_preview_area_blend:
+ * @area:       a #LigmaPreviewArea widget.
  * @x:          x offset in preview
  * @y:          y offset in preview
  * @width:      buffer width
  * @height:     buffer height
- * @type:       the #GimpImageType of @buf1 and @buf2
+ * @type:       the #LigmaImageType of @buf1 and @buf2
  * @buf1: (array): a #guchar buffer that contains the pixel data for
  *                 the lower layer
  * @rowstride1: rowstride of @buf1
@@ -784,28 +784,28 @@ gimp_preview_area_draw (GimpPreviewArea *area,
  * Composites @buf1 on @buf2 with the given @opacity, draws the result
  * to @area and queues a redraw on the given rectangle.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 void
-gimp_preview_area_blend (GimpPreviewArea *area,
+ligma_preview_area_blend (LigmaPreviewArea *area,
                          gint             x,
                          gint             y,
                          gint             width,
                          gint             height,
-                         GimpImageType    type,
+                         LigmaImageType    type,
                          const guchar    *buf1,
                          gint             rowstride1,
                          const guchar    *buf2,
                          gint             rowstride2,
                          guchar           opacity)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
   const guchar           *src1;
   const guchar           *src2;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
+  LigmaRGB                 color1;
+  LigmaRGB                 color2;
   guchar                  r1;
   guchar                  g1;
   guchar                  b1;
@@ -816,7 +816,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   gint                    col;
   gint                    i;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
 
   priv = GET_PRIVATE (area);
@@ -832,12 +832,12 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   switch (opacity)
     {
     case 0:
-      gimp_preview_area_draw (area, x, y, width, height,
+      ligma_preview_area_draw (area, x, y, width, height,
                               type, buf1, rowstride1);
       return;
 
     case 255:
-      gimp_preview_area_draw (area, x, y, width, height,
+      ligma_preview_area_draw (area, x, y, width, height,
                               type, buf2, rowstride2);
       return;
 
@@ -853,7 +853,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = ligma_preview_area_image_type_bytes (type);
 
       buf1 -= x * bpp;
       buf2 -= x * bpp;
@@ -886,9 +886,9 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   size = 1 << (2 + priv->check_size);
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
-  gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  ligma_checks_get_colors (priv->check_type, &color1, &color2);
+  ligma_rgb_get_uchar (&color1, &r1, &g1, &b1);
+  ligma_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
   src1 = buf1;
   src2 = buf2;
@@ -896,7 +896,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -916,7 +916,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -986,7 +986,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -1005,7 +1005,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -1068,7 +1068,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
@@ -1092,7 +1092,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
@@ -1169,17 +1169,17 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       break;
     }
 
-  gimp_preview_area_queue_draw (area, x, y, width, height);
+  ligma_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
- * gimp_preview_area_mask:
- * @area:           a #GimpPreviewArea widget.
+ * ligma_preview_area_mask:
+ * @area:           a #LigmaPreviewArea widget.
  * @x:              x offset in preview
  * @y:              y offset in preview
  * @width:          buffer width
  * @height:         buffer height
- * @type:           the #GimpImageType of @buf1 and @buf2
+ * @type:           the #LigmaImageType of @buf1 and @buf2
  * @buf1: (array):  a #guchar buffer that contains the pixel data for
  *                  the lower layer
  * @rowstride1:     rowstride of @buf1
@@ -1193,15 +1193,15 @@ gimp_preview_area_blend (GimpPreviewArea *area,
  * Composites @buf1 on @buf2 with the given @mask, draws the result on
  * @area and queues a redraw on the given rectangle.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 void
-gimp_preview_area_mask (GimpPreviewArea *area,
+ligma_preview_area_mask (LigmaPreviewArea *area,
                         gint             x,
                         gint             y,
                         gint             width,
                         gint             height,
-                        GimpImageType    type,
+                        LigmaImageType    type,
                         const guchar    *buf1,
                         gint             rowstride1,
                         const guchar    *buf2,
@@ -1209,14 +1209,14 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                         const guchar    *mask,
                         gint             rowstride_mask)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
   const guchar           *src1;
   const guchar           *src2;
   const guchar           *src_mask;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
+  LigmaRGB                 color1;
+  LigmaRGB                 color2;
   guchar                  r1;
   guchar                  g1;
   guchar                  b1;
@@ -1227,7 +1227,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   gint                    col;
   gint                    i;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
 
   priv = GET_PRIVATE (area);
@@ -1250,7 +1250,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = ligma_preview_area_image_type_bytes (type);
 
       buf1 -= x * bpp;
       buf2 -= x * bpp;
@@ -1285,9 +1285,9 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   size = 1 << (2 + priv->check_size);
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
-  gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  ligma_checks_get_colors (priv->check_type, &color1, &color2);
+  ligma_rgb_get_uchar (&color1, &r1, &g1, &b1);
+  ligma_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
   src1     = buf1;
   src2     = buf2;
@@ -1296,7 +1296,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -1318,7 +1318,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
        for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -1460,7 +1460,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
         }
        break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -1478,7 +1478,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -1606,7 +1606,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
@@ -1632,7 +1632,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
         }
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
@@ -1782,12 +1782,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       break;
     }
 
-  gimp_preview_area_queue_draw (area, x, y, width, height);
+  ligma_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
- * gimp_preview_area_fill:
- * @area:   a #GimpPreviewArea widget.
+ * ligma_preview_area_fill:
+ * @area:   a #LigmaPreviewArea widget.
  * @x:      x offset in preview
  * @y:      y offset in preview
  * @width:  width of the rectangle to fill
@@ -1799,10 +1799,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
  * Fills the given rectangle of @area in the given color and queues a
  * redraw.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 void
-gimp_preview_area_fill (GimpPreviewArea *area,
+ligma_preview_area_fill (LigmaPreviewArea *area,
                         gint             x,
                         gint             y,
                         gint             width,
@@ -1811,13 +1811,13 @@ gimp_preview_area_fill (GimpPreviewArea *area,
                         guchar           green,
                         guchar           blue)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
   guchar                 *dest;
   guchar                 *d;
   gint                    row;
   gint                    col;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
 
   priv = GET_PRIVATE (area);
@@ -1872,12 +1872,12 @@ gimp_preview_area_fill (GimpPreviewArea *area,
       memcpy (d, dest, width * 3);
     }
 
-  gimp_preview_area_queue_draw (area, x, y, width, height);
+  ligma_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
- * gimp_preview_area_set_offsets:
- * @area: a #GimpPreviewArea
+ * ligma_preview_area_set_offsets:
+ * @area: a #LigmaPreviewArea
  * @x:    horizontal offset
  * @y:    vertical offset
  *
@@ -1887,13 +1887,13 @@ gimp_preview_area_fill (GimpPreviewArea *area,
  * Since: 2.2
  **/
 void
-gimp_preview_area_set_offsets (GimpPreviewArea *area,
+ligma_preview_area_set_offsets (LigmaPreviewArea *area,
                                gint             x,
                                gint             y)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
 
   priv = GET_PRIVATE (area);
 
@@ -1902,25 +1902,25 @@ gimp_preview_area_set_offsets (GimpPreviewArea *area,
 }
 
 /**
- * gimp_preview_area_set_colormap:
- * @area:       a #GimpPreviewArea
+ * ligma_preview_area_set_colormap:
+ * @area:       a #LigmaPreviewArea
  * @colormap: (array): a #guchar buffer that contains the colormap
  * @num_colors: the number of colors in the colormap
  *
- * Sets the colormap for the #GimpPreviewArea widget. You need to
- * call this function before you use gimp_preview_area_draw() with
- * an image type of %GIMP_INDEXED_IMAGE or %GIMP_INDEXEDA_IMAGE.
+ * Sets the colormap for the #LigmaPreviewArea widget. You need to
+ * call this function before you use ligma_preview_area_draw() with
+ * an image type of %LIGMA_INDEXED_IMAGE or %LIGMA_INDEXEDA_IMAGE.
  *
- * Since GIMP 2.2
+ * Since LIGMA 2.2
  **/
 void
-gimp_preview_area_set_colormap (GimpPreviewArea *area,
+ligma_preview_area_set_colormap (LigmaPreviewArea *area,
                                 const guchar    *colormap,
                                 gint             num_colors)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
   g_return_if_fail (colormap != NULL || num_colors == 0);
   g_return_if_fail (num_colors >= 0 && num_colors <= 256);
 
@@ -1943,22 +1943,22 @@ gimp_preview_area_set_colormap (GimpPreviewArea *area,
 }
 
 /**
- * gimp_preview_area_set_color_config:
- * @area:   a #GimpPreviewArea widget.
- * @config: a #GimpColorConfig object.
+ * ligma_preview_area_set_color_config:
+ * @area:   a #LigmaPreviewArea widget.
+ * @config: a #LigmaColorConfig object.
  *
  * Sets the color management configuration to use with this preview area.
  *
  * Since: 2.10
  */
 void
-gimp_preview_area_set_color_config (GimpPreviewArea *area,
-                                    GimpColorConfig *config)
+ligma_preview_area_set_color_config (LigmaPreviewArea *area,
+                                    LigmaColorConfig *config)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
   priv = GET_PRIVATE (area);
 
@@ -1967,10 +1967,10 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
       if (priv->config)
         {
           g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_preview_area_destroy_transform,
+                                                ligma_preview_area_destroy_transform,
                                                 area);
 
-          gimp_preview_area_destroy_transform (area);
+          ligma_preview_area_destroy_transform (area);
         }
 
       g_set_object (&priv->config, config);
@@ -1978,28 +1978,28 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
       if (priv->config)
         {
           g_signal_connect_swapped (priv->config, "notify",
-                                    G_CALLBACK (gimp_preview_area_destroy_transform),
+                                    G_CALLBACK (ligma_preview_area_destroy_transform),
                                     area);
         }
     }
 }
 
 /**
- * gimp_preview_area_get_size:
- * @area:   a #GimpPreviewArea widget.
+ * ligma_preview_area_get_size:
+ * @area:   a #LigmaPreviewArea widget.
  * @width: (out): The preview areay width
  * @height: (out): The preview areay height
  *
  * Gets the preview area size
  */
 void
-gimp_preview_area_get_size (GimpPreviewArea *area,
+ligma_preview_area_get_size (LigmaPreviewArea *area,
                             gint            *width,
                             gint            *height)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
 
   priv = GET_PRIVATE (area);
 
@@ -2008,12 +2008,12 @@ gimp_preview_area_get_size (GimpPreviewArea *area,
 }
 
 /**
- * gimp_preview_area_set_max_size:
- * @area:   a #GimpPreviewArea widget
+ * ligma_preview_area_set_max_size:
+ * @area:   a #LigmaPreviewArea widget
  * @width:  the maximum width in pixels or -1 to unset the limit
  * @height: the maximum height in pixels or -1 to unset the limit
  *
- * Usually a #GimpPreviewArea fills the size that it is
+ * Usually a #LigmaPreviewArea fills the size that it is
  * allocated. This function allows you to limit the preview area to a
  * maximum size. If a larger size is allocated for the widget, the
  * preview will draw itself centered into the allocated area.
@@ -2021,13 +2021,13 @@ gimp_preview_area_get_size (GimpPreviewArea *area,
  * Since: 2.2
  **/
 void
-gimp_preview_area_set_max_size (GimpPreviewArea *area,
+ligma_preview_area_set_max_size (LigmaPreviewArea *area,
                                 gint             width,
                                 gint             height)
 {
-  GimpPreviewAreaPrivate *priv;
+  LigmaPreviewAreaPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
 
   priv = GET_PRIVATE (area);
 
@@ -2040,20 +2040,20 @@ gimp_preview_area_set_max_size (GimpPreviewArea *area,
 /*  popup menu  */
 
 static void
-gimp_preview_area_menu_toggled (GtkWidget       *item,
-                                GimpPreviewArea *area)
+ligma_preview_area_menu_toggled (GtkWidget       *item,
+                                LigmaPreviewArea *area)
 {
   gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
 
   if (active)
     {
       const gchar *name = g_object_get_data (G_OBJECT (item),
-                                             "gimp-preview-area-prop-name");
+                                             "ligma-preview-area-prop-name");
       if (name)
         {
           gint  value =
             GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
-                                                "gimp-preview-area-prop-value"));
+                                                "ligma-preview-area-prop-value"));
           g_object_set (area,
                         name, value,
                         NULL);
@@ -2062,7 +2062,7 @@ gimp_preview_area_menu_toggled (GtkWidget       *item,
 }
 
 static GtkWidget *
-gimp_preview_area_menu_new (GimpPreviewArea *area,
+ligma_preview_area_menu_new (LigmaPreviewArea *area,
                             const gchar     *property)
 {
   GParamSpec *pspec;
@@ -2087,7 +2087,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
 
   for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
     {
-      const gchar *name = gimp_enum_value_get_desc (enum_class, enum_value);
+      const gchar *name = ligma_enum_value_get_desc (enum_class, enum_value);
 
       item = gtk_radio_menu_item_new_with_label (group, name);
 
@@ -2095,18 +2095,18 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
       gtk_widget_show (item);
 
       g_object_set_data (G_OBJECT (item),
-                         "gimp-preview-area-prop-name",
+                         "ligma-preview-area-prop-name",
                          (gpointer) property);
 
       g_object_set_data (G_OBJECT (item),
-                         "gimp-preview-area-prop-value",
+                         "ligma-preview-area-prop-value",
                          GINT_TO_POINTER (enum_value->value));
 
       gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                       (enum_value->value == value));
 
       g_signal_connect (item, "toggled",
-                        G_CALLBACK (gimp_preview_area_menu_toggled),
+                        G_CALLBACK (ligma_preview_area_menu_toggled),
                         area);
 
       group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
@@ -2122,8 +2122,8 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
 }
 
 /**
- * gimp_preview_area_menu_popup:
- * @area:  a #GimpPreviewArea
+ * ligma_preview_area_menu_popup:
+ * @area:  a #LigmaPreviewArea
  * @event: (nullable): the button event that causes the menu to popup or %NULL
  *
  * Creates a popup menu that allows one to configure the size and type of
@@ -2132,29 +2132,29 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
  * Since: 2.2
  **/
 void
-gimp_preview_area_menu_popup (GimpPreviewArea *area,
+ligma_preview_area_menu_popup (LigmaPreviewArea *area,
                               GdkEventButton  *event)
 {
   GtkWidget *menu;
 
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (LIGMA_IS_PREVIEW_AREA (area));
 
   menu = gtk_menu_new ();
   gtk_menu_set_screen (GTK_MENU (menu),
                        gtk_widget_get_screen (GTK_WIDGET (area)));
 
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
-                         gimp_preview_area_menu_new (area, "check-type"));
+                         ligma_preview_area_menu_new (area, "check-type"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
-                         gimp_preview_area_menu_new (area, "check-size"));
+                         ligma_preview_area_menu_new (area, "check-size"));
 #if 0
-  /* gimp_preview_area_menu_new() currently only handles enum types, and
+  /* ligma_preview_area_menu_new() currently only handles enum types, and
    * in particular not color properties.
    */
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
-                         gimp_preview_area_menu_new (area, "check-custom-color1"));
+                         ligma_preview_area_menu_new (area, "check-custom-color1"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
-                         gimp_preview_area_menu_new (area, "check-custom-color2"));
+                         ligma_preview_area_menu_new (area, "check-custom-color2"));
 #endif
 
   gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);

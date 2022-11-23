@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcolorpickeroptions.h"
+#include "ligmacolorpickeroptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
+  PROP_SAMPLE_AVERAGE, /* overrides a LigmaColorOptions property */
   PROP_PICK_TARGET,
   PROP_USE_INFO_WINDOW,
   PROP_FRAME1_MODE,
@@ -44,85 +44,85 @@ enum
 };
 
 
-static void   gimp_color_picker_options_set_property (GObject      *object,
+static void   ligma_color_picker_options_set_property (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
                                                       GParamSpec   *pspec);
-static void   gimp_color_picker_options_get_property (GObject      *object,
+static void   ligma_color_picker_options_get_property (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
                                                       GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpColorPickerOptions, gimp_color_picker_options,
-               GIMP_TYPE_COLOR_OPTIONS)
+G_DEFINE_TYPE (LigmaColorPickerOptions, ligma_color_picker_options,
+               LIGMA_TYPE_COLOR_OPTIONS)
 
 
 static void
-gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
+ligma_color_picker_options_class_init (LigmaColorPickerOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_color_picker_options_set_property;
-  object_class->get_property = gimp_color_picker_options_get_property;
+  object_class->set_property = ligma_color_picker_options_set_property;
+  object_class->get_property = ligma_color_picker_options_get_property;
 
-  /* override a GimpColorOptions property to get a different default value */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+  /* override a LigmaColorOptions property to get a different default value */
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                             "sample-average",
                             _("Sample average"),
                             _("Use averaged color value from "
                               "nearby pixels"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_TARGET,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PICK_TARGET,
                          "pick-target",
                          _("Pick Target"),
                          _("Choose what the color picker will do"),
-                         GIMP_TYPE_COLOR_PICK_TARGET,
-                         GIMP_COLOR_PICK_TARGET_FOREGROUND,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_PICK_TARGET,
+                         LIGMA_COLOR_PICK_TARGET_FOREGROUND,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                             "use-info-window",
                             _("Use info window"),
                             _("Open a floating dialog to view picked "
                               "color values in various color models"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME1_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_FRAME1_MODE,
                          "frame1-mode",
                          "Frame 1 Mode", NULL,
-                         GIMP_TYPE_COLOR_PICK_MODE,
-                         GIMP_COLOR_PICK_MODE_PIXEL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_PICK_MODE,
+                         LIGMA_COLOR_PICK_MODE_PIXEL,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME2_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_FRAME2_MODE,
                          "frame2-mode",
                          "Frame 2 Mode", NULL,
-                         GIMP_TYPE_COLOR_PICK_MODE,
-                         GIMP_COLOR_PICK_MODE_RGB_PERCENT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_PICK_MODE,
+                         LIGMA_COLOR_PICK_MODE_RGB_PERCENT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_color_picker_options_init (GimpColorPickerOptions *options)
+ligma_color_picker_options_init (LigmaColorPickerOptions *options)
 {
 }
 
 static void
-gimp_color_picker_options_set_property (GObject      *object,
+ligma_color_picker_options_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (object);
+  LigmaColorPickerOptions *options = LIGMA_COLOR_PICKER_OPTIONS (object);
 
   switch (property_id)
     {
     case PROP_SAMPLE_AVERAGE:
-      GIMP_COLOR_OPTIONS (options)->sample_average = g_value_get_boolean (value);
+      LIGMA_COLOR_OPTIONS (options)->sample_average = g_value_get_boolean (value);
       break;
     case PROP_PICK_TARGET:
       options->pick_target = g_value_get_enum (value);
@@ -144,18 +144,18 @@ gimp_color_picker_options_set_property (GObject      *object,
 }
 
 static void
-gimp_color_picker_options_get_property (GObject    *object,
+ligma_color_picker_options_get_property (GObject    *object,
                                         guint       property_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (object);
+  LigmaColorPickerOptions *options = LIGMA_COLOR_PICKER_OPTIONS (object);
 
   switch (property_id)
     {
     case PROP_SAMPLE_AVERAGE:
       g_value_set_boolean (value,
-                           GIMP_COLOR_OPTIONS (options)->sample_average);
+                           LIGMA_COLOR_OPTIONS (options)->sample_average);
       break;
     case PROP_PICK_TARGET:
       g_value_set_enum (value, options->pick_target);
@@ -177,27 +177,27 @@ gimp_color_picker_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_color_picker_options_gui (GimpToolOptions *tool_options)
+ligma_color_picker_options_gui (LigmaToolOptions *tool_options)
 {
   GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_color_options_gui (tool_options);
+  GtkWidget       *vbox   = ligma_color_options_gui (tool_options);
   GtkWidget       *button;
   GtkWidget       *frame;
   gchar           *str;
-  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType  extend_mask = ligma_get_extend_selection_mask ();
+  GdkModifierType  toggle_mask = ligma_get_toggle_behavior_mask ();
 
   /*  the pick FG/BG frame  */
   str = g_strdup_printf (_("Pick Target  (%s)"),
-                         gimp_get_mod_string (toggle_mask));
-  frame = gimp_prop_enum_radio_frame_new (config, "pick-target", str, -1, -1);
+                         ligma_get_mod_string (toggle_mask));
+  frame = ligma_prop_enum_radio_frame_new (config, "pick-target", str, -1, -1);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   g_free (str);
 
   /*  the use_info_window toggle button  */
   str = g_strdup_printf (_("Use info window  (%s)"),
-                         gimp_get_mod_string (extend_mask));
-  button = gimp_prop_check_button_new (config, "use-info-window", str);
+                         ligma_get_mod_string (extend_mask));
+  button = ligma_prop_check_button_new (config, "use-info-window", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   g_free (str);
 

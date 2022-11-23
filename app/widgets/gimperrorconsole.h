@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimperrorconsole.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaerrorconsole.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERROR_CONSOLE_H__
-#define __GIMP_ERROR_CONSOLE_H__
+#ifndef __LIGMA_ERROR_CONSOLE_H__
+#define __LIGMA_ERROR_CONSOLE_H__
 
 
-#include "gimpeditor.h"
+#include "ligmaeditor.h"
 
 
-#define GIMP_TYPE_ERROR_CONSOLE            (gimp_error_console_get_type ())
-#define GIMP_ERROR_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERROR_CONSOLE, GimpErrorConsole))
-#define GIMP_ERROR_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERROR_CONSOLE, GimpErrorConsoleClass))
-#define GIMP_IS_ERROR_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERROR_CONSOLE))
-#define GIMP_IS_ERROR_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERROR_CONSOLE))
-#define GIMP_ERROR_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERROR_CONSOLE, GimpErrorConsoleClass))
+#define LIGMA_TYPE_ERROR_CONSOLE            (ligma_error_console_get_type ())
+#define LIGMA_ERROR_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ERROR_CONSOLE, LigmaErrorConsole))
+#define LIGMA_ERROR_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ERROR_CONSOLE, LigmaErrorConsoleClass))
+#define LIGMA_IS_ERROR_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ERROR_CONSOLE))
+#define LIGMA_IS_ERROR_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ERROR_CONSOLE))
+#define LIGMA_ERROR_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ERROR_CONSOLE, LigmaErrorConsoleClass))
 
 
-typedef struct _GimpErrorConsoleClass GimpErrorConsoleClass;
+typedef struct _LigmaErrorConsoleClass LigmaErrorConsoleClass;
 
-struct _GimpErrorConsole
+struct _LigmaErrorConsole
 {
-  GimpEditor     parent_instance;
+  LigmaEditor     parent_instance;
 
-  Gimp          *gimp;
+  Ligma          *ligma;
 
   GtkTextBuffer *text_buffer;
   GtkWidget     *text_view;
@@ -50,24 +50,24 @@ struct _GimpErrorConsole
   GtkWidget     *file_dialog;
   gboolean       save_selection;
 
-  gboolean       highlight[GIMP_MESSAGE_ERROR + 1];
+  gboolean       highlight[LIGMA_MESSAGE_ERROR + 1];
 };
 
-struct _GimpErrorConsoleClass
+struct _LigmaErrorConsoleClass
 {
-  GimpEditorClass  parent_class;
+  LigmaEditorClass  parent_class;
 };
 
 
-GType       gimp_error_console_get_type (void) G_GNUC_CONST;
+GType       ligma_error_console_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_error_console_new      (Gimp                *gimp,
-                                         GimpMenuFactory     *menu_factory);
+GtkWidget * ligma_error_console_new      (Ligma                *ligma,
+                                         LigmaMenuFactory     *menu_factory);
 
-void        gimp_error_console_add      (GimpErrorConsole    *console,
-                                         GimpMessageSeverity  severity,
+void        ligma_error_console_add      (LigmaErrorConsole    *console,
+                                         LigmaMessageSeverity  severity,
                                          const gchar         *domain,
                                          const gchar         *message);
 
 
-#endif  /*  __GIMP_ERROR_CONSOLE_H__  */
+#endif  /*  __LIGMA_ERROR_CONSOLE_H__  */

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Sven Neumann <sven@gimp.org>
+# "Perlized" from C source by Sven Neumann <sven@ligma.org>
 
 sub help {
     $blurb = "Load a help page.";
@@ -23,9 +23,9 @@ sub help {
 This procedure loads the specified help page into the helpbrowser or
 what ever is configured as help viewer. The help page is identified by
 its domain and ID: if help_domain is NULL, we use the help_domain
-which was registered using the gimp_plugin_help_register() procedure. If
+which was registered using the ligma_plugin_help_register() procedure. If
 help_domain is NULL and no help domain was registered, the help domain
-of the main GIMP installation is used.
+of the main LIGMA installation is used.
 HELP
 
     &mitch_pdb_misc('2000');
@@ -40,33 +40,33 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugInManager *manager = gimp->plug_in_manager;
+  LigmaPlugInManager *manager = ligma->plug_in_manager;
 
   if (! help_domain && manager->current_plug_in)
     help_domain = (gchar *)
-      gimp_plug_in_manager_get_help_domain (manager,
+      ligma_plug_in_manager_get_help_domain (manager,
                                             manager->current_plug_in->file,
                                             NULL);
 
-  gimp_help (gimp, progress, help_domain, help_id);
+  ligma_help (ligma, progress, help_domain, help_id);
 }
 CODE
     );
 }
 
 
-@headers = qw("core/gimp.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimppluginmanager.h"
-              "plug-in/gimppluginmanager-help-domain.h");
+@headers = qw("core/ligma.h"
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmapluginmanager.h"
+              "plug-in/ligmapluginmanager-help-domain.h");
 
 @procs = qw(help);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Help procedures';
-$doc_title = 'gimphelp';
-$doc_short_desc = 'Loading help pages using gimp_help.';
-$doc_long_desc = 'Loading help pages using gimp_help.';
+$doc_title = 'ligmahelp';
+$doc_short_desc = 'Loading help pages using ligma_help.';
+$doc_long_desc = 'Loading help pages using ligma_help.';
 
 1;

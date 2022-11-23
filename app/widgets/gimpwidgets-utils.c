@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwidgets-utils.c
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * ligmawidgets-utils.c
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,37 +41,37 @@
 #include <ApplicationServices/ApplicationServices.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmatoolinfo.h"
 
-#include "gimpaction.h"
-#include "gimpaction.h"
-#include "gimpdialogfactory.h"
-#include "gimpdock.h"
-#include "gimpdockcontainer.h"
-#include "gimpdockwindow.h"
-#include "gimperrordialog.h"
-#include "gimpsessioninfo.h"
-#include "gimptoolbutton.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindowstrategy.h"
+#include "ligmaaction.h"
+#include "ligmaaction.h"
+#include "ligmadialogfactory.h"
+#include "ligmadock.h"
+#include "ligmadockcontainer.h"
+#include "ligmadockwindow.h"
+#include "ligmaerrordialog.h"
+#include "ligmasessioninfo.h"
+#include "ligmatoolbutton.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindowstrategy.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-#define GIMP_TOOL_OPTIONS_GUI_KEY      "gimp-tool-options-gui"
-#define GIMP_TOOL_OPTIONS_GUI_FUNC_KEY "gimp-tool-options-gui-func"
+#define LIGMA_TOOL_OPTIONS_GUI_KEY      "ligma-tool-options-gui"
+#define LIGMA_TOOL_OPTIONS_GUI_FUNC_KEY "ligma-tool-options-gui-func"
 
 
 typedef struct
@@ -87,23 +87,23 @@ typedef struct
   gchar     *settings_value;
 } BlinkStep;
 
-static void         gimp_widget_blink_after        (GtkWidget   *widget,
+static void         ligma_widget_blink_after        (GtkWidget   *widget,
                                                     gint         ms_timeout);
-static void         gimp_search_widget_rec         (GtkWidget   *widget,
+static void         ligma_search_widget_rec         (GtkWidget   *widget,
                                                     BlinkSearch *data);
-static void         gimp_blink_free_script         (GList       *blink_scenario);
+static void         ligma_blink_free_script         (GList       *blink_scenario);
 
 
 GtkWidget *
-gimp_menu_item_get_image (GtkMenuItem *item)
+ligma_menu_item_get_image (GtkMenuItem *item)
 {
   g_return_val_if_fail (GTK_IS_MENU_ITEM (item), NULL);
 
-  return g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+  return g_object_get_data (G_OBJECT (item), "ligma-menu-item-image");
 }
 
 void
-gimp_menu_item_set_image (GtkMenuItem *item,
+ligma_menu_item_set_image (GtkMenuItem *item,
                           GtkWidget   *image)
 {
   GtkWidget *hbox;
@@ -113,7 +113,7 @@ gimp_menu_item_set_image (GtkMenuItem *item,
   g_return_if_fail (GTK_IS_MENU_ITEM (item));
   g_return_if_fail (image == NULL || GTK_IS_WIDGET (image));
 
-  hbox = g_object_get_data (G_OBJECT (item), "gimp-menu-item-hbox");
+  hbox = g_object_get_data (G_OBJECT (item), "ligma-menu-item-hbox");
 
   if (! hbox)
     {
@@ -121,10 +121,10 @@ gimp_menu_item_set_image (GtkMenuItem *item,
         return;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      g_object_set_data (G_OBJECT (item), "gimp-menu-item-hbox", hbox);
+      g_object_set_data (G_OBJECT (item), "ligma-menu-item-hbox", hbox);
 
       label = gtk_bin_get_child (GTK_BIN (item));
-      g_object_set_data (G_OBJECT (item), "gimp-menu-item-label", label);
+      g_object_set_data (G_OBJECT (item), "ligma-menu-item-label", label);
 
       g_object_ref (label);
       gtk_container_remove (GTK_CONTAINER (item), label);
@@ -135,28 +135,28 @@ gimp_menu_item_set_image (GtkMenuItem *item,
       gtk_widget_show (hbox);
     }
 
-  old_image = g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+  old_image = g_object_get_data (G_OBJECT (item), "ligma-menu-item-image");
 
   if (old_image != image)
     {
       if (old_image)
         {
           gtk_widget_destroy (old_image);
-          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", NULL);
+          g_object_set_data (G_OBJECT (item), "ligma-menu-item-image", NULL);
         }
 
       if (image)
         {
           gtk_container_add (GTK_CONTAINER (hbox), image);
           gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
-          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", image);
+          g_object_set_data (G_OBJECT (item), "ligma-menu-item-image", image);
           gtk_widget_show (image);
         }
     }
 }
 
 /**
- * gimp_menu_position:
+ * ligma_menu_position:
  * @menu: a #GtkMenu widget
  * @x: pointer to horizontal position
  * @y: pointer to vertical position
@@ -168,11 +168,11 @@ gimp_menu_item_set_image (GtkMenuItem *item,
  *
  * You should call this function with @x and @y initialized to the
  * origin of the menu. This is typically the center of the widget the
- * menu is popped up from. gimp_menu_position() will then decide if
+ * menu is popped up from. ligma_menu_position() will then decide if
  * and how these initial values need to be changed.
  **/
 void
-gimp_menu_position (GtkMenu *menu,
+ligma_menu_position (GtkMenu *menu,
                     gint    *x,
                     gint    *y)
 {
@@ -186,7 +186,7 @@ gimp_menu_position (GtkMenu *menu,
 
   widget = GTK_WIDGET (menu);
 
-  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget), &workarea);
+  gdk_monitor_get_workarea (ligma_widget_get_monitor (widget), &workarea);
 
   gtk_menu_set_screen (menu, gtk_widget_get_screen (widget));
 
@@ -215,7 +215,7 @@ gimp_menu_position (GtkMenu *menu,
 }
 
 void
-gimp_grid_attach_icon (GtkGrid     *grid,
+ligma_grid_attach_icon (GtkGrid     *grid,
                        gint         row,
                        const gchar *icon_name,
                        GtkWidget   *widget,
@@ -237,7 +237,7 @@ gimp_grid_attach_icon (GtkGrid     *grid,
 }
 
 void
-gimp_enum_radio_box_add (GtkBox    *box,
+ligma_enum_radio_box_add (GtkBox    *box,
                          GtkWidget *widget,
                          gint       enum_value,
                          gboolean   below)
@@ -256,7 +256,7 @@ gimp_enum_radio_box_add (GtkBox    *box,
        list = g_list_next (list), pos++)
     {
       if (GTK_IS_RADIO_BUTTON (list->data) &&
-          GPOINTER_TO_INT (g_object_get_data (list->data, "gimp-item-data")) ==
+          GPOINTER_TO_INT (g_object_get_data (list->data, "ligma-item-data")) ==
           enum_value)
         {
           GtkWidget *radio = list->data;
@@ -339,7 +339,7 @@ gimp_enum_radio_box_add (GtkBox    *box,
 }
 
 void
-gimp_enum_radio_frame_add (GtkFrame  *frame,
+ligma_enum_radio_frame_add (GtkFrame  *frame,
                            GtkWidget *widget,
                            gint       enum_value,
                            gboolean   below)
@@ -353,11 +353,11 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
 
   g_return_if_fail (GTK_IS_BOX (box));
 
-  gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
+  ligma_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
 /**
- * gimp_widget_load_icon:
+ * ligma_widget_load_icon:
  * @widget:                  parent widget (to determine icon theme and
  *                           style)
  * @icon_name:               icon name
@@ -365,7 +365,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
  *
  * Loads an icon into a pixbuf with size as close as possible to @size.
  * If icon does not exist or fail to load, the function will fallback to
- * "gimp-wilber-eek" instead to prevent NULL pixbuf. As a last resort,
+ * "ligma-wilber-eek" instead to prevent NULL pixbuf. As a last resort,
  * if even the fallback failed to load, a magenta @size square will be
  * returned, so this function is guaranteed to always return a
  * #GdkPixbuf.
@@ -374,7 +374,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
  * size @size or a fallback icon/size.
  **/
 GdkPixbuf *
-gimp_widget_load_icon (GtkWidget   *widget,
+ligma_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
                        gint         size)
 {
@@ -407,7 +407,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
       if (! pixbuf)
         /* The icon was seemingly present in the current icon theme, yet
          * it failed to load. Maybe the file is broken?
-         * As last resort, try to load "gimp-wilber-eek" as fallback.
+         * As last resort, try to load "ligma-wilber-eek" as fallback.
          * Note that we are not making more checks, so if the fallback
          * icon fails to load as well, the function may still return NULL.
          */
@@ -417,11 +417,11 @@ gimp_widget_load_icon (GtkWidget   *widget,
   else
     g_printerr ("WARNING: icon theme has no icon '%s'.\n", icon_name);
 
-  /* First fallback: gimp-wilber-eek */
+  /* First fallback: ligma-wilber-eek */
   if (! pixbuf)
     {
       icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
-                                                        GIMP_ICON_WILBER_EEK "-symbolic",
+                                                        LIGMA_ICON_WILBER_EEK "-symbolic",
                                                         size, scale_factor,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
       if (icon_info)
@@ -432,12 +432,12 @@ gimp_widget_load_icon (GtkWidget   *widget,
           g_object_unref (icon_info);
           if (! pixbuf)
             g_printerr ("WARNING: icon '%s' failed to load. Check the files "
-                        "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
+                        "in your icon theme.\n", LIGMA_ICON_WILBER_EEK);
         }
       else
         {
           g_printerr ("WARNING: icon theme has no icon '%s'.\n",
-                      GIMP_ICON_WILBER_EEK);
+                      LIGMA_ICON_WILBER_EEK);
         }
     }
 
@@ -475,21 +475,21 @@ gimp_widget_load_icon (GtkWidget   *widget,
   return pixbuf;
 }
 
-GimpTabStyle
-gimp_preview_tab_style_to_icon (GimpTabStyle tab_style)
+LigmaTabStyle
+ligma_preview_tab_style_to_icon (LigmaTabStyle tab_style)
 {
   switch (tab_style)
     {
-    case GIMP_TAB_STYLE_PREVIEW:
-      tab_style = GIMP_TAB_STYLE_ICON;
+    case LIGMA_TAB_STYLE_PREVIEW:
+      tab_style = LIGMA_TAB_STYLE_ICON;
       break;
 
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-      tab_style = GIMP_TAB_STYLE_ICON_NAME;
+    case LIGMA_TAB_STYLE_PREVIEW_NAME:
+      tab_style = LIGMA_TAB_STYLE_ICON_NAME;
       break;
 
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+    case LIGMA_TAB_STYLE_PREVIEW_BLURB:
+      tab_style = LIGMA_TAB_STYLE_ICON_BLURB;
       break;
 
     default:
@@ -500,7 +500,7 @@ gimp_preview_tab_style_to_icon (GimpTabStyle tab_style)
 }
 
 const gchar *
-gimp_get_mod_string (GdkModifierType modifiers)
+ligma_get_mod_string (GdkModifierType modifiers)
 {
   static GHashTable *mod_labels;
   gchar             *label;
@@ -511,7 +511,7 @@ gimp_get_mod_string (GdkModifierType modifiers)
   if (G_UNLIKELY (! mod_labels))
     mod_labels = g_hash_table_new (g_int_hash, g_int_equal);
 
-  modifiers = gimp_replace_virtual_modifiers (modifiers);
+  modifiers = ligma_replace_virtual_modifiers (modifiers);
 
   label = g_hash_table_lookup (mod_labels, &modifiers);
 
@@ -545,7 +545,7 @@ gimp_get_mod_string (GdkModifierType modifiers)
 
 #define BUF_SIZE 100
 /**
- * gimp_suggest_modifiers:
+ * ligma_suggest_modifiers:
  * @message:                 initial text for the message
  * @modifiers:               bit mask of modifiers that should be suggested
  * @extend_selection_format: optional format string for the
@@ -567,14 +567,14 @@ gimp_get_mod_string (GdkModifierType modifiers)
  * Returns: a newly allocated string containing the message.
  **/
 gchar *
-gimp_suggest_modifiers (const gchar     *message,
+ligma_suggest_modifiers (const gchar     *message,
                         GdkModifierType  modifiers,
                         const gchar     *extend_selection_format,
                         const gchar     *toggle_behavior_format,
                         const gchar     *alt_format)
 {
-  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType  extend_mask = ligma_get_extend_selection_mask ();
+  GdkModifierType  toggle_mask = ligma_get_toggle_behavior_mask ();
   gchar            msg_buf[3][BUF_SIZE];
   gint             num_msgs = 0;
   gboolean         try      = FALSE;
@@ -584,12 +584,12 @@ gimp_suggest_modifiers (const gchar     *message,
       if (extend_selection_format && *extend_selection_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, extend_selection_format,
-                      gimp_get_mod_string (extend_mask));
+                      ligma_get_mod_string (extend_mask));
         }
       else
         {
           g_strlcpy (msg_buf[num_msgs],
-                     gimp_get_mod_string (extend_mask), BUF_SIZE);
+                     ligma_get_mod_string (extend_mask), BUF_SIZE);
           try = TRUE;
         }
 
@@ -601,12 +601,12 @@ gimp_suggest_modifiers (const gchar     *message,
       if (toggle_behavior_format && *toggle_behavior_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, toggle_behavior_format,
-                      gimp_get_mod_string (toggle_mask));
+                      ligma_get_mod_string (toggle_mask));
         }
       else
         {
           g_strlcpy (msg_buf[num_msgs],
-                     gimp_get_mod_string (toggle_mask), BUF_SIZE);
+                     ligma_get_mod_string (toggle_mask), BUF_SIZE);
           try = TRUE;
         }
 
@@ -618,12 +618,12 @@ gimp_suggest_modifiers (const gchar     *message,
       if (alt_format && *alt_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, alt_format,
-                      gimp_get_mod_string (GDK_MOD1_MASK));
+                      ligma_get_mod_string (GDK_MOD1_MASK));
         }
       else
         {
           g_strlcpy (msg_buf[num_msgs],
-                     gimp_get_mod_string (GDK_MOD1_MASK), BUF_SIZE);
+                     ligma_get_mod_string (GDK_MOD1_MASK), BUF_SIZE);
           try = TRUE;
         }
 
@@ -653,33 +653,33 @@ gimp_suggest_modifiers (const gchar     *message,
 }
 #undef BUF_SIZE
 
-GimpChannelOps
-gimp_modifiers_to_channel_op (GdkModifierType  modifiers)
+LigmaChannelOps
+ligma_modifiers_to_channel_op (GdkModifierType  modifiers)
 {
-  GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType modify_mask = gimp_get_modify_selection_mask ();
+  GdkModifierType extend_mask = ligma_get_extend_selection_mask ();
+  GdkModifierType modify_mask = ligma_get_modify_selection_mask ();
 
   if (modifiers & extend_mask)
     {
       if (modifiers & modify_mask)
         {
-          return GIMP_CHANNEL_OP_INTERSECT;
+          return LIGMA_CHANNEL_OP_INTERSECT;
         }
       else
         {
-          return GIMP_CHANNEL_OP_ADD;
+          return LIGMA_CHANNEL_OP_ADD;
         }
     }
   else if (modifiers & modify_mask)
     {
-      return GIMP_CHANNEL_OP_SUBTRACT;
+      return LIGMA_CHANNEL_OP_SUBTRACT;
     }
 
-  return GIMP_CHANNEL_OP_REPLACE;
+  return LIGMA_CHANNEL_OP_REPLACE;
 }
 
 GdkModifierType
-gimp_replace_virtual_modifiers (GdkModifierType modifiers)
+ligma_replace_virtual_modifiers (GdkModifierType modifiers)
 {
   GdkDisplay      *display = gdk_display_get_default ();
   GdkModifierType  result  = 0;
@@ -707,7 +707,7 @@ gimp_replace_virtual_modifiers (GdkModifierType modifiers)
 }
 
 GdkModifierType
-gimp_get_primary_accelerator_mask (void)
+ligma_get_primary_accelerator_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -716,7 +716,7 @@ gimp_get_primary_accelerator_mask (void)
 }
 
 GdkModifierType
-gimp_get_extend_selection_mask (void)
+ligma_get_extend_selection_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -725,7 +725,7 @@ gimp_get_extend_selection_mask (void)
 }
 
 GdkModifierType
-gimp_get_modify_selection_mask (void)
+ligma_get_modify_selection_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -734,17 +734,7 @@ gimp_get_modify_selection_mask (void)
 }
 
 GdkModifierType
-gimp_get_toggle_behavior_mask (void)
-{
-  GdkDisplay *display = gdk_display_get_default ();
-
-  /* use the modify selection modifier */
-  return gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
-                                       GDK_MODIFIER_INTENT_MODIFY_SELECTION);
-}
-
-GdkModifierType
-gimp_get_constrain_behavior_mask (void)
+ligma_get_toggle_behavior_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -754,7 +744,17 @@ gimp_get_constrain_behavior_mask (void)
 }
 
 GdkModifierType
-gimp_get_all_modifiers_mask (void)
+ligma_get_constrain_behavior_mask (void)
+{
+  GdkDisplay *display = gdk_display_get_default ();
+
+  /* use the modify selection modifier */
+  return gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                       GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+}
+
+GdkModifierType
+ligma_get_all_modifiers_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -768,7 +768,7 @@ gimp_get_all_modifiers_mask (void)
 }
 
 /**
- * gimp_get_monitor_resolution:
+ * ligma_get_monitor_resolution:
  * @screen: a #GdkScreen
  * @monitor: a monitor number
  * @xres: returns the horizontal monitor resolution (in dpi)
@@ -777,7 +777,7 @@ gimp_get_all_modifiers_mask (void)
  * Retrieves the monitor's resolution from GDK.
  **/
 void
-gimp_get_monitor_resolution (GdkMonitor *monitor,
+ligma_get_monitor_resolution (GdkMonitor *monitor,
                              gdouble    *xres,
                              gdouble    *yres)
 {
@@ -826,10 +826,10 @@ gimp_get_monitor_resolution (GdkMonitor *monitor,
       y = (size_pixels.height * 25.4) / (gdouble) height_mm;
     }
 
-  if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
-      y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
+  if (x < LIGMA_MIN_RESOLUTION || x > LIGMA_MAX_RESOLUTION ||
+      y < LIGMA_MIN_RESOLUTION || y > LIGMA_MAX_RESOLUTION)
     {
-      g_printerr ("gimp_get_monitor_resolution(): GDK returned bogus "
+      g_printerr ("ligma_get_monitor_resolution(): GDK returned bogus "
                   "values for the monitor resolution, using 96 dpi instead.\n");
 
       x = 96.0;
@@ -842,7 +842,7 @@ gimp_get_monitor_resolution (GdkMonitor *monitor,
 }
 
 gboolean
-gimp_get_style_color (GtkWidget   *widget,
+ligma_get_style_color (GtkWidget   *widget,
                       const gchar *property_name,
                       GdkRGBA     *color)
 {
@@ -874,29 +874,29 @@ gimp_get_style_color (GtkWidget   *widget,
 }
 
 void
-gimp_window_set_hint (GtkWindow      *window,
-                      GimpWindowHint  hint)
+ligma_window_set_hint (GtkWindow      *window,
+                      LigmaWindowHint  hint)
 {
   g_return_if_fail (GTK_IS_WINDOW (window));
 
   switch (hint)
     {
-    case GIMP_WINDOW_HINT_NORMAL:
+    case LIGMA_WINDOW_HINT_NORMAL:
       gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_NORMAL);
       break;
 
-    case GIMP_WINDOW_HINT_UTILITY:
+    case LIGMA_WINDOW_HINT_UTILITY:
       gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
       break;
 
-    case GIMP_WINDOW_HINT_KEEP_ABOVE:
+    case LIGMA_WINDOW_HINT_KEEP_ABOVE:
       gtk_window_set_keep_above (window, TRUE);
       break;
     }
 }
 
 /**
- * gimp_window_get_native_id:
+ * ligma_window_get_native_id:
  * @window: a #GtkWindow
  *
  * This function is used to pass a window handle to plug-ins so that
@@ -906,7 +906,7 @@ gimp_window_set_hint (GtkWindow      *window,
  *               if the window isn't realized yet
  */
 guint32
-gimp_window_get_native_id (GtkWindow *window)
+ligma_window_get_native_id (GtkWindow *window)
 {
   GdkWindow *surface;
 
@@ -936,16 +936,16 @@ gimp_window_get_native_id (GtkWindow *window)
 
 #ifndef GDK_WINDOWING_WIN32
 static void
-gimp_window_transient_realized (GtkWidget *window,
+ligma_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
 {
   if (gtk_widget_get_realized (window))
     gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
 
-/* similar to what we have in libgimp/gimpui.c */
+/* similar to what we have in libligma/ligmaui.c */
 static GdkWindow *
-gimp_get_foreign_window (guint32 window)
+ligma_get_foreign_window (guint32 window)
 {
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -963,15 +963,15 @@ gimp_get_foreign_window (guint32 window)
 #endif
 
 void
-gimp_window_set_transient_for (GtkWindow *window,
+ligma_window_set_transient_for (GtkWindow *window,
                                guint32    parent_ID)
 {
   /* Cross-process transient-for is broken in gdk/win32 <= 2.10.6. It
-   * causes hangs, at least when used as by the gimp and script-fu
+   * causes hangs, at least when used as by the ligma and script-fu
    * processes. In some newer GTK+ version it will be fixed to be a
    * no-op. If it eventually is fixed to actually work, change this to
    * a run-time check of GTK+ version. Remember to change also the
-   * function with the same name in libgimp/gimpui.c
+   * function with the same name in libligma/ligmaui.c
    *
    * Note: this hanging bug is still happening with GTK+3 as of 2019-10,
    * with steps described in comment 4 in:
@@ -980,7 +980,7 @@ gimp_window_set_transient_for (GtkWindow *window,
 #ifndef GDK_WINDOWING_WIN32
   GdkWindow *parent;
 
-  parent = gimp_get_foreign_window (parent_ID);
+  parent = ligma_get_foreign_window (parent_ID);
   if (! parent)
     return;
 
@@ -989,7 +989,7 @@ gimp_window_set_transient_for (GtkWindow *window,
                                   parent);
 
   g_signal_connect_object (window, "realize",
-                           G_CALLBACK (gimp_window_transient_realized),
+                           G_CALLBACK (ligma_window_transient_realized),
                            parent, 0);
 
   g_object_unref (parent);
@@ -997,7 +997,7 @@ gimp_window_set_transient_for (GtkWindow *window,
 }
 
 static gboolean
-gimp_widget_accel_find_func (GtkAccelKey *key,
+ligma_widget_accel_find_func (GtkAccelKey *key,
                              GClosure    *closure,
                              gpointer     data)
 {
@@ -1005,7 +1005,7 @@ gimp_widget_accel_find_func (GtkAccelKey *key,
 }
 
 static void
-gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
+ligma_widget_accel_changed (GtkAccelGroup   *accel_group,
                            guint            unused1,
                            GdkModifierType  unused2,
                            GClosure        *accel_closure,
@@ -1013,22 +1013,22 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
 {
   GClosure *widget_closure;
 
-  widget_closure = g_object_get_data (G_OBJECT (widget), "gimp-accel-closure");
+  widget_closure = g_object_get_data (G_OBJECT (widget), "ligma-accel-closure");
 
   if (accel_closure == widget_closure)
     {
-      GimpAction  *action;
+      LigmaAction  *action;
       GtkAccelKey *accel_key;
       const gchar *tooltip;
       const gchar *help_id;
 
-      action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
+      action = g_object_get_data (G_OBJECT (widget), "ligma-accel-action");
 
-      tooltip = gimp_action_get_tooltip (action);
-      help_id = gimp_action_get_help_id (action);
+      tooltip = ligma_action_get_tooltip (action);
+      help_id = ligma_action_get_help_id (action);
 
       accel_key = gtk_accel_group_find (accel_group,
-                                        gimp_widget_accel_find_func,
+                                        ligma_widget_accel_find_func,
                                         accel_closure);
 
       if (accel_key            &&
@@ -1043,125 +1043,125 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           g_free (accel);
           g_free (escaped);
 
-          gimp_help_set_help_data_with_markup (widget, tmp, help_id);
+          ligma_help_set_help_data_with_markup (widget, tmp, help_id);
           g_free (tmp);
         }
       else
         {
-          gimp_help_set_help_data (widget, tooltip, help_id);
+          ligma_help_set_help_data (widget, tooltip, help_id);
         }
     }
 }
 
-static void   gimp_accel_help_widget_weak_notify (gpointer  accel_group,
+static void   ligma_accel_help_widget_weak_notify (gpointer  accel_group,
                                                   GObject  *where_widget_was);
 
 static void
-gimp_accel_help_accel_group_weak_notify (gpointer  widget,
+ligma_accel_help_accel_group_weak_notify (gpointer  widget,
                                          GObject  *where_accel_group_was)
 {
   g_object_weak_unref (widget,
-                       gimp_accel_help_widget_weak_notify,
+                       ligma_accel_help_widget_weak_notify,
                        where_accel_group_was);
 
-  g_object_set_data (widget, "gimp-accel-group", NULL);
+  g_object_set_data (widget, "ligma-accel-group", NULL);
 }
 
 static void
-gimp_accel_help_widget_weak_notify (gpointer  accel_group,
+ligma_accel_help_widget_weak_notify (gpointer  accel_group,
                                     GObject  *where_widget_was)
 {
   g_object_weak_unref (accel_group,
-                       gimp_accel_help_accel_group_weak_notify,
+                       ligma_accel_help_accel_group_weak_notify,
                        where_widget_was);
 }
 
 void
-gimp_widget_set_accel_help (GtkWidget  *widget,
-                            GimpAction *action)
+ligma_widget_set_accel_help (GtkWidget  *widget,
+                            LigmaAction *action)
 {
   GtkAccelGroup *accel_group;
   GClosure      *accel_closure;
 
-  accel_group = g_object_get_data (G_OBJECT (widget), "gimp-accel-group");
+  accel_group = g_object_get_data (G_OBJECT (widget), "ligma-accel-group");
 
   if (accel_group)
     {
       g_signal_handlers_disconnect_by_func (accel_group,
-                                            gimp_widget_accel_changed,
+                                            ligma_widget_accel_changed,
                                             widget);
       g_object_weak_unref (G_OBJECT (accel_group),
-                           gimp_accel_help_accel_group_weak_notify,
+                           ligma_accel_help_accel_group_weak_notify,
                            widget);
       g_object_weak_unref (G_OBJECT (widget),
-                           gimp_accel_help_widget_weak_notify,
+                           ligma_accel_help_widget_weak_notify,
                            accel_group);
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-group", NULL);
+      g_object_set_data (G_OBJECT (widget), "ligma-accel-group", NULL);
     }
 
-  accel_closure = gimp_action_get_accel_closure (action);
+  accel_closure = ligma_action_get_accel_closure (action);
 
   if (accel_closure)
     {
       accel_group = gtk_accel_group_from_accel_closure (accel_closure);
 
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-group",
+      g_object_set_data (G_OBJECT (widget), "ligma-accel-group",
                          accel_group);
       g_object_weak_ref (G_OBJECT (accel_group),
-                         gimp_accel_help_accel_group_weak_notify,
+                         ligma_accel_help_accel_group_weak_notify,
                          widget);
       g_object_weak_ref (G_OBJECT (widget),
-                         gimp_accel_help_widget_weak_notify,
+                         ligma_accel_help_widget_weak_notify,
                          accel_group);
 
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-closure",
+      g_object_set_data (G_OBJECT (widget), "ligma-accel-closure",
                          accel_closure);
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-action",
+      g_object_set_data (G_OBJECT (widget), "ligma-accel-action",
                          action);
 
       g_signal_connect_object (accel_group, "accel-changed",
-                               G_CALLBACK (gimp_widget_accel_changed),
+                               G_CALLBACK (ligma_widget_accel_changed),
                                widget, 0);
 
-      gimp_widget_accel_changed (accel_group,
+      ligma_widget_accel_changed (accel_group,
                                  0, 0,
                                  accel_closure,
                                  widget);
     }
   else
     {
-      gimp_help_set_help_data (widget,
-                               gimp_action_get_tooltip (action),
-                               gimp_action_get_help_id (action));
+      ligma_help_set_help_data (widget,
+                               ligma_action_get_tooltip (action),
+                               ligma_action_get_help_id (action));
 
     }
 }
 
 const gchar *
-gimp_get_message_icon_name (GimpMessageSeverity severity)
+ligma_get_message_icon_name (LigmaMessageSeverity severity)
 {
   switch (severity)
     {
-    case GIMP_MESSAGE_INFO:
-      return GIMP_ICON_DIALOG_INFORMATION;
+    case LIGMA_MESSAGE_INFO:
+      return LIGMA_ICON_DIALOG_INFORMATION;
 
-    case GIMP_MESSAGE_WARNING:
-      return GIMP_ICON_DIALOG_WARNING;
+    case LIGMA_MESSAGE_WARNING:
+      return LIGMA_ICON_DIALOG_WARNING;
 
-    case GIMP_MESSAGE_ERROR:
-      return GIMP_ICON_DIALOG_ERROR;
+    case LIGMA_MESSAGE_ERROR:
+      return LIGMA_ICON_DIALOG_ERROR;
 
-    case GIMP_MESSAGE_BUG_WARNING:
-    case GIMP_MESSAGE_BUG_CRITICAL:
-      return GIMP_ICON_WILBER_EEK;
+    case LIGMA_MESSAGE_BUG_WARNING:
+    case LIGMA_MESSAGE_BUG_CRITICAL:
+      return LIGMA_ICON_WILBER_EEK;
     }
 
-  g_return_val_if_reached (GIMP_ICON_DIALOG_WARNING);
+  g_return_val_if_reached (LIGMA_ICON_DIALOG_WARNING);
 }
 
 gboolean
-gimp_get_color_tag_color (GimpColorTag  color_tag,
-                          GimpRGB      *color,
+ligma_get_color_tag_color (LigmaColorTag  color_tag,
+                          LigmaRGB      *color,
                           gboolean      inherited)
 {
   static const struct
@@ -1186,9 +1186,9 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
   g_return_val_if_fail (color != NULL, FALSE);
   g_return_val_if_fail (color_tag < G_N_ELEMENTS (colors), FALSE);
 
-  if (color_tag > GIMP_COLOR_TAG_NONE)
+  if (color_tag > LIGMA_COLOR_TAG_NONE)
     {
-      gimp_rgba_set_uchar (color,
+      ligma_rgba_set_uchar (color,
                            colors[color_tag].r,
                            colors[color_tag].g,
                            colors[color_tag].b,
@@ -1196,8 +1196,8 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
 
       if (inherited)
         {
-          gimp_rgb_composite (color, &(GimpRGB) {1.0, 1.0, 1.0, 0.2},
-                              GIMP_RGB_COMPOSITE_NORMAL);
+          ligma_rgb_composite (color, &(LigmaRGB) {1.0, 1.0, 1.0, 0.2},
+                              LIGMA_RGB_COMPOSITE_NORMAL);
         }
 
       return TRUE;
@@ -1207,7 +1207,7 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
 }
 
 void
-gimp_pango_layout_set_scale (PangoLayout *layout,
+ligma_pango_layout_set_scale (PangoLayout *layout,
                              gdouble      scale)
 {
   PangoAttrList  *attrs;
@@ -1227,7 +1227,7 @@ gimp_pango_layout_set_scale (PangoLayout *layout,
 }
 
 void
-gimp_pango_layout_set_weight (PangoLayout *layout,
+ligma_pango_layout_set_weight (PangoLayout *layout,
                               PangoWeight  weight)
 {
   PangoAttrList  *attrs;
@@ -1247,7 +1247,7 @@ gimp_pango_layout_set_weight (PangoLayout *layout,
 }
 
 static gboolean
-gimp_highlight_widget_draw (GtkWidget *widget,
+ligma_highlight_widget_draw (GtkWidget *widget,
                             cairo_t   *cr,
                             gpointer   data)
 {
@@ -1295,7 +1295,7 @@ gimp_highlight_widget_draw (GtkWidget *widget,
 }
 
 /**
- * gimp_highlight_widget:
+ * ligma_highlight_widget:
  * @widget:
  * @highlight:
  * @rect:
@@ -1310,7 +1310,7 @@ gimp_highlight_widget_draw (GtkWidget *widget,
  * doesn't matter, as the previously used rectangle will be reused.
  **/
 void
-gimp_highlight_widget (GtkWidget    *widget,
+ligma_highlight_widget (GtkWidget    *widget,
                        gboolean      highlight,
                        GdkRectangle *rect)
 {
@@ -1322,17 +1322,17 @@ gimp_highlight_widget (GtkWidget    *widget,
   highlight = highlight ? TRUE : FALSE;
 
   old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                      "gimp-widget-highlight"));
-  old_rect = g_object_get_data (G_OBJECT (widget), "gimp-widget-highlight-rect");
+                                                      "ligma-widget-highlight"));
+  old_rect = g_object_get_data (G_OBJECT (widget), "ligma-widget-highlight-rect");
 
   if (highlight && old_highlight &&
       rect && old_rect && ! gdk_rectangle_equal (rect, old_rect))
     {
       /* Highlight area changed. */
-      gimp_highlight_widget (widget, FALSE, NULL);
+      ligma_highlight_widget (widget, FALSE, NULL);
       old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                          "gimp-widget-highlight"));
-      old_rect = g_object_get_data (G_OBJECT (widget), "gimp-widget-highlight-rect");
+                                                          "ligma-widget-highlight"));
+      old_rect = g_object_get_data (G_OBJECT (widget), "ligma-widget-highlight-rect");
     }
 
   if (highlight != old_highlight)
@@ -1346,12 +1346,12 @@ gimp_highlight_widget (GtkWidget    *widget,
               new_rect = g_new0 (GdkRectangle, 1);
               *new_rect = *rect;
               g_object_set_data_full (G_OBJECT (widget),
-                                      "gimp-widget-highlight-rect",
+                                      "ligma-widget-highlight-rect",
                                       new_rect,
                                       (GDestroyNotify) g_free);
             }
           g_signal_connect_after (widget, "draw",
-                                  G_CALLBACK (gimp_highlight_widget_draw),
+                                  G_CALLBACK (ligma_highlight_widget_draw),
                                   new_rect);
         }
       else
@@ -1359,20 +1359,20 @@ gimp_highlight_widget (GtkWidget    *widget,
           if (old_rect)
             {
               g_signal_handlers_disconnect_by_func (widget,
-                                                    gimp_highlight_widget_draw,
+                                                    ligma_highlight_widget_draw,
                                                     old_rect);
               g_object_set_data (G_OBJECT (widget),
-                                 "gimp-widget-highlight-rect",
+                                 "ligma-widget-highlight-rect",
                                  NULL);
             }
 
           g_signal_handlers_disconnect_by_func (widget,
-                                                gimp_highlight_widget_draw,
+                                                ligma_highlight_widget_draw,
                                                 NULL);
         }
 
       g_object_set_data (G_OBJECT (widget),
-                         "gimp-widget-highlight",
+                         "ligma-widget-highlight",
                          GINT_TO_POINTER (highlight));
 
       gtk_widget_queue_draw (widget);
@@ -1416,29 +1416,29 @@ widget_blink_free (WidgetBlink *blink)
 }
 
 static gboolean
-gimp_widget_blink_start_timeout (GtkWidget *widget)
+ligma_widget_blink_start_timeout (GtkWidget *widget)
 {
   WidgetBlink *blink;
 
-  blink = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
+  blink = g_object_get_data (G_OBJECT (widget), "ligma-widget-blink");
   if (blink)
     {
       blink->timeout_id = 0;
-      gimp_widget_blink (widget);
+      ligma_widget_blink (widget);
     }
   else
     {
       /* If the data is not here anymore, our blink has been canceled
        * already. Also delete the script, if any.
        */
-      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);
+      g_object_set_data (G_OBJECT (widget), "ligma-widget-blink-script", NULL);
     }
 
   return G_SOURCE_REMOVE;
 }
 
 static gboolean
-gimp_widget_blink_popover_remove (GtkWidget *widget)
+ligma_widget_blink_popover_remove (GtkWidget *widget)
 {
   gtk_widget_destroy (widget);
 
@@ -1446,15 +1446,15 @@ gimp_widget_blink_popover_remove (GtkWidget *widget)
 }
 
 static gboolean
-gimp_widget_blink_timeout (GtkWidget *widget)
+ligma_widget_blink_timeout (GtkWidget *widget)
 {
   WidgetBlink *blink;
   GList       *script;
 
-  blink  = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
-  script = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink-script");
+  blink  = g_object_get_data (G_OBJECT (widget), "ligma-widget-blink");
+  script = g_object_get_data (G_OBJECT (widget), "ligma-widget-blink-script");
 
-  gimp_highlight_widget (widget, blink->counter % 2 == 1, blink->rect);
+  ligma_highlight_widget (widget, blink->counter % 2 == 1, blink->rect);
   blink->counter++;
 
   if (blink->counter == 1)
@@ -1470,9 +1470,9 @@ gimp_widget_blink_timeout (GtkWidget *widget)
               GObject     *config;
 
               prop_name = g_object_get_data (G_OBJECT (widget),
-                                             "gimp-widget-property-name");
+                                             "ligma-widget-property-name");
               config    = g_object_get_data (G_OBJECT (widget),
-                                             "gimp-widget-property-config");
+                                             "ligma-widget-property-config");
 
               if (config && G_IS_OBJECT (config) && prop_name)
                 {
@@ -1543,7 +1543,7 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                                 {
                                   const gchar *enum_desc;
 
-                                  enum_desc = gimp_enum_value_get_desc (pspec_enum->enum_class, genum_value);
+                                  enum_desc = ligma_enum_value_get_desc (pspec_enum->enum_class, genum_value);
                                   if (enum_desc)
                                     /* TRANSLATORS: the %s will be replaced
                                      * by the localized label of a
@@ -1565,11 +1565,11 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                     }
                 }
             }
-          else if (GIMP_IS_TOOL_BUTTON (widget))
+          else if (LIGMA_IS_TOOL_BUTTON (widget))
             {
-              GimpToolInfo *info;
+              LigmaToolInfo *info;
 
-              info = gimp_tool_button_get_tool_info (GIMP_TOOL_BUTTON (widget));
+              info = ligma_tool_button_get_tool_info (LIGMA_TOOL_BUTTON (widget));
               /* TRANSLATORS: %s will be a tool name, so we'll get a
                * final string looking like 'Activate the "Bucket fill" tool'.
                */
@@ -1587,7 +1587,7 @@ gimp_widget_blink_timeout (GtkWidget *widget)
               gtk_widget_show (popover);
 
               g_timeout_add (1200,
-                             (GSourceFunc) gimp_widget_blink_popover_remove,
+                             (GSourceFunc) ligma_widget_blink_popover_remove,
                              popover);
               g_free (popover_text);
             }
@@ -1597,7 +1597,7 @@ gimp_widget_blink_timeout (GtkWidget *widget)
     {
       blink->timeout_id = 0;
 
-      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+      g_object_set_data (G_OBJECT (widget), "ligma-widget-blink", NULL);
 
       if (script)
         {
@@ -1606,16 +1606,16 @@ gimp_widget_blink_timeout (GtkWidget *widget)
               BlinkStep *next_step   = script->next->data;
               GtkWidget *next_widget = next_step->widget;
 
-              g_object_set_data_full (G_OBJECT (next_widget), "gimp-widget-blink-script",
+              g_object_set_data_full (G_OBJECT (next_widget), "ligma-widget-blink-script",
                                       script->next,
-                                      (GDestroyNotify) gimp_blink_free_script);
+                                      (GDestroyNotify) ligma_blink_free_script);
               script->next->prev = NULL;
               script->next       = NULL;
 
-              gimp_widget_blink_after (next_widget, 800);
+              ligma_widget_blink_after (next_widget, 800);
             }
 
-          g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);
+          g_object_set_data (G_OBJECT (widget), "ligma-widget-blink-script", NULL);
         }
 
       return G_SOURCE_REMOVE;
@@ -1625,31 +1625,31 @@ gimp_widget_blink_timeout (GtkWidget *widget)
 }
 
 void
-gimp_widget_blink (GtkWidget *widget)
+ligma_widget_blink (GtkWidget *widget)
 {
   WidgetBlink *blink;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gimp_widget_blink_cancel (widget);
+  ligma_widget_blink_cancel (widget);
 
   blink = widget_blink_new ();
 
-  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+  g_object_set_data_full (G_OBJECT (widget), "ligma-widget-blink", blink,
                           (GDestroyNotify) widget_blink_free);
 
   blink->timeout_id = g_timeout_add (150,
-                                     (GSourceFunc) gimp_widget_blink_timeout,
+                                     (GSourceFunc) ligma_widget_blink_timeout,
                                      widget);
 
-  gimp_highlight_widget (widget, TRUE, NULL);
+  ligma_highlight_widget (widget, TRUE, NULL);
 
   while ((widget = gtk_widget_get_parent (widget)))
-    gimp_widget_blink_cancel (widget);
+    ligma_widget_blink_cancel (widget);
 }
 
 void
-gimp_widget_script_blink (GtkWidget    *widget,
+ligma_widget_script_blink (GtkWidget    *widget,
                           const gchar  *settings_value,
                           GList       **blink_scenario)
 {
@@ -1662,17 +1662,17 @@ gimp_widget_script_blink (GtkWidget    *widget,
   *blink_scenario = g_list_append (*blink_scenario, step);
 
   while ((widget = gtk_widget_get_parent (widget)))
-    gimp_widget_blink_cancel (widget);
+    ligma_widget_blink_cancel (widget);
 }
 
-/* gimp_blink_play_script:
+/* ligma_blink_play_script:
  * @blink_scenario:
  *
  * This function will play the @blink_scenario and free the associated
  * data once done.
  */
 void
-gimp_blink_play_script (GList *blink_scenario)
+ligma_blink_play_script (GList *blink_scenario)
 {
   BlinkStep *step;
 
@@ -1681,95 +1681,95 @@ gimp_blink_play_script (GList *blink_scenario)
   step = blink_scenario->data;
 
   g_object_set_data_full (G_OBJECT (step->widget),
-                          "gimp-widget-blink-script",
+                          "ligma-widget-blink-script",
                           blink_scenario,
-                          (GDestroyNotify) gimp_blink_free_script);
-  gimp_widget_blink (step->widget);
+                          (GDestroyNotify) ligma_blink_free_script);
+  ligma_widget_blink (step->widget);
 }
 
 void
-gimp_widget_blink_rect (GtkWidget    *widget,
+ligma_widget_blink_rect (GtkWidget    *widget,
                         GdkRectangle *rect)
 {
   WidgetBlink *blink;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gimp_widget_blink_cancel (widget);
+  ligma_widget_blink_cancel (widget);
 
   blink          = widget_blink_new ();
   blink->rect    = g_slice_new (GdkRectangle);
   *(blink->rect) = *rect;
 
-  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+  g_object_set_data_full (G_OBJECT (widget), "ligma-widget-blink", blink,
                           (GDestroyNotify) widget_blink_free);
 
   blink->timeout_id = g_timeout_add (150,
-                                     (GSourceFunc) gimp_widget_blink_timeout,
+                                     (GSourceFunc) ligma_widget_blink_timeout,
                                      widget);
 
-  gimp_highlight_widget (widget, TRUE, blink->rect);
+  ligma_highlight_widget (widget, TRUE, blink->rect);
 
   while ((widget = gtk_widget_get_parent (widget)))
-    gimp_widget_blink_cancel (widget);
+    ligma_widget_blink_cancel (widget);
 }
 
 void
-gimp_widget_blink_cancel (GtkWidget *widget)
+ligma_widget_blink_cancel (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (g_object_get_data (G_OBJECT (widget), "gimp-widget-blink"))
+  if (g_object_get_data (G_OBJECT (widget), "ligma-widget-blink"))
     {
-      gimp_highlight_widget (widget, FALSE, NULL);
+      ligma_highlight_widget (widget, FALSE, NULL);
 
-      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+      g_object_set_data (G_OBJECT (widget), "ligma-widget-blink", NULL);
     }
 }
 
 /**
- * gimp_blink_toolbox:
- * @gimp:
+ * ligma_blink_toolbox:
+ * @ligma:
  * @action_name:
  * @blink_scenario:
  *
- * This is similar to gimp_blink_dockable() for the toolbox
+ * This is similar to ligma_blink_dockable() for the toolbox
  * specifically. What it will do, additionally to blink the tool button,
  * is first to activate it.
  *
  * Also the identifier is easy as it is simply the action name.
  */
 void
-gimp_blink_toolbox (Gimp         *gimp,
+ligma_blink_toolbox (Ligma         *ligma,
                     const gchar  *action_name,
                     GList       **blink_scenario)
 {
-  GimpUIManager *ui_manager;
+  LigmaUIManager *ui_manager;
   GtkWidget     *toolbox;
 
   /* As a special case, for the toolbox, we don't just raise it,
    * we also select the tool if one was requested.
    */
-  toolbox = gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                                       gimp,
-                                                       gimp_dialog_factory_get_singleton (),
-                                                       gimp_get_monitor_at_pointer (),
-                                                       "gimp-toolbox");
+  toolbox = ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                                       ligma,
+                                                       ligma_dialog_factory_get_singleton (),
+                                                       ligma_get_monitor_at_pointer (),
+                                                       "ligma-toolbox");
   /* Find and activate the tool. */
   if (toolbox && action_name != NULL &&
-      (ui_manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox))))
+      (ui_manager = ligma_dock_get_ui_manager (LIGMA_DOCK (toolbox))))
     {
-      GimpAction *action;
+      LigmaAction *action;
 
-      action = gimp_ui_manager_find_action (ui_manager, "tools", action_name);
-      gimp_action_activate (GIMP_ACTION (action));
+      action = ligma_ui_manager_find_action (ui_manager, "tools", action_name);
+      ligma_action_activate (LIGMA_ACTION (action));
     }
-  gimp_blink_dockable (gimp, "gimp-toolbox", action_name, NULL, blink_scenario);
+  ligma_blink_dockable (ligma, "ligma-toolbox", action_name, NULL, blink_scenario);
 }
 
 /**
- * gimp_blink_dockable:
- * @gimp:
+ * ligma_blink_dockable:
+ * @ligma:
  * @dockable_identifier:
  * @widget_identifier:
  * @settings_value:
@@ -1789,13 +1789,13 @@ gimp_blink_toolbox (Gimp         *gimp,
  *
  * Finally it will either blink this widget immediately to raise
  * attention, or add it to the @blink_scenario if not %NULL. The blink
- * scenario must be explicitly started with gimp_blink_play_script()
+ * scenario must be explicitly started with ligma_blink_play_script()
  * when ready. @blink_scenario should be considered as opaque data, so
- * you should not free it directly and let gimp_blink_play_script() do
+ * you should not free it directly and let ligma_blink_play_script() do
  * so for you.
  */
 void
-gimp_blink_dockable (Gimp         *gimp,
+ligma_blink_dockable (Ligma         *ligma,
                      const gchar  *dockable_identifier,
                      const gchar  *widget_identifier,
                      const gchar  *settings_value,
@@ -1805,14 +1805,14 @@ gimp_blink_dockable (Gimp         *gimp,
   GdkMonitor  *monitor;
   BlinkSearch *data;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  monitor = gimp_get_monitor_at_pointer ();
+  monitor = ligma_get_monitor_at_pointer ();
 
-  dockable = gimp_window_strategy_show_dockable_dialog (
-    GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-    gimp,
-    gimp_dialog_factory_get_singleton (),
+  dockable = ligma_window_strategy_show_dockable_dialog (
+    LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+    ligma,
+    ligma_dialog_factory_get_singleton (),
     monitor,
     dockable_identifier);
 
@@ -1826,87 +1826,87 @@ gimp_blink_dockable (Gimp         *gimp,
       data->widget_identifier = widget_identifier;
       data->settings_value    = settings_value;
       gtk_container_foreach (GTK_CONTAINER (dockable),
-                             (GtkCallback) gimp_search_widget_rec,
+                             (GtkCallback) ligma_search_widget_rec,
                              (gpointer) data);
       g_slice_free (BlinkSearch, data);
     }
 }
 
 /**
- * gimp_dock_with_window_new:
- * @factory: a #GimpDialogFacotry
+ * ligma_dock_with_window_new:
+ * @factory: a #LigmaDialogFacotry
  * @monitor: the #GdkMonitor the dock window should appear on
- * @toolbox: if %TRUE; gives a "gimp-toolbox-window" with a
- *           "gimp-toolbox", "gimp-dock-window"+"gimp-dock"
+ * @toolbox: if %TRUE; gives a "ligma-toolbox-window" with a
+ *           "ligma-toolbox", "ligma-dock-window"+"ligma-dock"
  *           otherwise
  *
- * Returns: the newly created #GimpDock with the #GimpDockWindow
+ * Returns: the newly created #LigmaDock with the #LigmaDockWindow
  **/
 GtkWidget *
-gimp_dock_with_window_new (GimpDialogFactory *factory,
+ligma_dock_with_window_new (LigmaDialogFactory *factory,
                            GdkMonitor        *monitor,
                            gboolean           toolbox)
 {
   GtkWidget         *dock_window;
-  GimpDockContainer *dock_container;
+  LigmaDockContainer *dock_container;
   GtkWidget         *dock;
-  GimpUIManager     *ui_manager;
+  LigmaUIManager     *ui_manager;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
   /* Create a dock window to put the dock in. We need to create the
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window = gimp_dialog_factory_dialog_new (factory, monitor,
+  dock_window = ligma_dialog_factory_dialog_new (factory, monitor,
                                                 NULL /*ui_manager*/,
                                                 NULL,
                                                 (toolbox ?
-                                                 "gimp-toolbox-window" :
-                                                 "gimp-dock-window"),
+                                                 "ligma-toolbox-window" :
+                                                 "ligma-dock-window"),
                                                 -1 /*view_size*/,
                                                 FALSE /*present*/);
 
-  dock_container = GIMP_DOCK_CONTAINER (dock_window);
-  ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
-  dock           = gimp_dialog_factory_dialog_new (factory, monitor,
+  dock_container = LIGMA_DOCK_CONTAINER (dock_window);
+  ui_manager     = ligma_dock_container_get_ui_manager (dock_container);
+  dock           = ligma_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
                                                    dock_window,
                                                    (toolbox ?
-                                                    "gimp-toolbox" :
-                                                    "gimp-dock"),
+                                                    "ligma-toolbox" :
+                                                    "ligma-dock"),
                                                    -1 /*view_size*/,
                                                    FALSE /*present*/);
 
   if (dock)
-    gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
-                               GIMP_DOCK (dock),
+    ligma_dock_window_add_dock (LIGMA_DOCK_WINDOW (dock_window),
+                               LIGMA_DOCK (dock),
                                -1);
 
   return dock;
 }
 
 GtkWidget *
-gimp_tools_get_tool_options_gui (GimpToolOptions *tool_options)
+ligma_tools_get_tool_options_gui (LigmaToolOptions *tool_options)
 {
   GtkWidget *widget;
 
   widget = g_object_get_data (G_OBJECT (tool_options),
-                              GIMP_TOOL_OPTIONS_GUI_KEY);
+                              LIGMA_TOOL_OPTIONS_GUI_KEY);
 
   if (! widget)
     {
-      GimpToolOptionsGUIFunc func;
+      LigmaToolOptionsGUIFunc func;
 
       func = g_object_get_data (G_OBJECT (tool_options),
-                                GIMP_TOOL_OPTIONS_GUI_FUNC_KEY);
+                                LIGMA_TOOL_OPTIONS_GUI_FUNC_KEY);
 
       if (func)
         {
           widget = func (tool_options);
 
-          gimp_tools_set_tool_options_gui (tool_options, widget);
+          ligma_tools_set_tool_options_gui (tool_options, widget);
         }
     }
 
@@ -1914,13 +1914,13 @@ gimp_tools_get_tool_options_gui (GimpToolOptions *tool_options)
 }
 
 void
-gimp_tools_set_tool_options_gui (GimpToolOptions *tool_options,
+ligma_tools_set_tool_options_gui (LigmaToolOptions *tool_options,
                                  GtkWidget       *widget)
 {
   GtkWidget *prev_widget;
 
   prev_widget = g_object_get_data (G_OBJECT (tool_options),
-                                   GIMP_TOOL_OPTIONS_GUI_KEY);
+                                   LIGMA_TOOL_OPTIONS_GUI_KEY);
 
   if (widget == prev_widget)
     return;
@@ -1929,57 +1929,57 @@ gimp_tools_set_tool_options_gui (GimpToolOptions *tool_options,
     gtk_widget_destroy (prev_widget);
 
   g_object_set_data_full (G_OBJECT (tool_options),
-                          GIMP_TOOL_OPTIONS_GUI_KEY,
+                          LIGMA_TOOL_OPTIONS_GUI_KEY,
                           widget ? g_object_ref_sink (widget)      : NULL,
                           widget ? (GDestroyNotify) g_object_unref : NULL);
 }
 
 void
-gimp_tools_set_tool_options_gui_func (GimpToolOptions        *tool_options,
-                                      GimpToolOptionsGUIFunc  func)
+ligma_tools_set_tool_options_gui_func (LigmaToolOptions        *tool_options,
+                                      LigmaToolOptionsGUIFunc  func)
 {
   g_object_set_data (G_OBJECT (tool_options),
-                     GIMP_TOOL_OPTIONS_GUI_FUNC_KEY,
+                     LIGMA_TOOL_OPTIONS_GUI_FUNC_KEY,
                      func);
 }
 
 gboolean
-gimp_widget_get_fully_opaque (GtkWidget *widget)
+ligma_widget_get_fully_opaque (GtkWidget *widget)
 {
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
   return g_object_get_data (G_OBJECT (widget),
-                            "gimp-widget-fully-opaque") != NULL;
+                            "ligma-widget-fully-opaque") != NULL;
 }
 
 void
-gimp_widget_set_fully_opaque (GtkWidget *widget,
+ligma_widget_set_fully_opaque (GtkWidget *widget,
                               gboolean   fully_opaque)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   return g_object_set_data (G_OBJECT (widget),
-                            "gimp-widget-fully-opaque",
+                            "ligma-widget-fully-opaque",
                             GINT_TO_POINTER (fully_opaque));
 }
 
 static void
-gimp_gtk_container_clear_callback (GtkWidget    *widget,
+ligma_gtk_container_clear_callback (GtkWidget    *widget,
                                    GtkContainer *container)
 {
   gtk_container_remove (container, widget);
 }
 
 void
-gimp_gtk_container_clear (GtkContainer *container)
+ligma_gtk_container_clear (GtkContainer *container)
 {
   gtk_container_foreach (container,
-                         (GtkCallback) gimp_gtk_container_clear_callback,
+                         (GtkCallback) ligma_gtk_container_clear_callback,
                          container);
 }
 
 void
-gimp_button_set_suggested (GtkWidget      *button,
+ligma_button_set_suggested (GtkWidget      *button,
                            gboolean        suggested,
                            GtkReliefStyle  default_relief)
 {
@@ -2002,7 +2002,7 @@ gimp_button_set_suggested (GtkWidget      *button,
 }
 
 void
-gimp_button_set_destructive (GtkWidget      *button,
+ligma_button_set_destructive (GtkWidget      *button,
                              gboolean        destructive,
                              GtkReliefStyle  default_relief)
 {
@@ -2025,7 +2025,7 @@ gimp_button_set_destructive (GtkWidget      *button,
 }
 
 void
-gimp_gtk_adjustment_chain (GtkAdjustment *adjustment1,
+ligma_gtk_adjustment_chain (GtkAdjustment *adjustment1,
                            GtkAdjustment *adjustment2)
 {
   g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment1));
@@ -2040,7 +2040,7 @@ gimp_gtk_adjustment_chain (GtkAdjustment *adjustment1,
 }
 
 static gboolean
-gimp_print_event_free (gpointer data)
+ligma_print_event_free (gpointer data)
 {
   g_free (data);
 
@@ -2048,7 +2048,7 @@ gimp_print_event_free (gpointer data)
 }
 
 const gchar *
-gimp_print_event (const GdkEvent *event)
+ligma_print_event (const GdkEvent *event)
 {
   gchar *str;
   gchar *tmp;
@@ -2147,45 +2147,45 @@ gimp_print_event (const GdkEvent *event)
   g_free (str);
   str = tmp;
 
-  g_idle_add (gimp_print_event_free, str);
+  g_idle_add (ligma_print_event_free, str);
 
   return str;
 }
 
 gboolean
-gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
-                                       GimpColorConfig        *config,
-                                       GimpImageBaseType       base_type,
-                                       GimpPrecision           precision,
+ligma_color_profile_store_add_defaults (LigmaColorProfileStore  *store,
+                                       LigmaColorConfig        *config,
+                                       LigmaImageBaseType       base_type,
+                                       LigmaPrecision           precision,
                                        GError                **error)
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
   gchar            *label;
   GError           *my_error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store), FALSE);
-  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE_STORE (store), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_CONFIG (config), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  profile = gimp_babl_get_builtin_color_profile (base_type,
-                                                 gimp_babl_trc (precision));
+  profile = ligma_babl_get_builtin_color_profile (base_type,
+                                                 ligma_babl_trc (precision));
 
-  if (base_type == GIMP_GRAY)
+  if (base_type == LIGMA_GRAY)
     {
       label = g_strdup_printf (_("Built-in grayscale (%s)"),
-                               gimp_color_profile_get_label (profile));
+                               ligma_color_profile_get_label (profile));
 
-      profile = gimp_color_config_get_gray_color_profile (config, &my_error);
+      profile = ligma_color_config_get_gray_color_profile (config, &my_error);
     }
   else
     {
       label = g_strdup_printf (_("Built-in RGB (%s)"),
-                               gimp_color_profile_get_label (profile));
+                               ligma_color_profile_get_label (profile));
 
-      profile = gimp_color_config_get_rgb_color_profile (config, &my_error);
+      profile = ligma_color_config_get_rgb_color_profile (config, &my_error);
     }
 
-  gimp_color_profile_store_add_file (store, NULL, label);
+  ligma_color_profile_store_add_file (store, NULL, label);
   g_free (label);
 
   if (profile)
@@ -2193,28 +2193,28 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
       gchar *path;
       GFile *file;
 
-      if (base_type == GIMP_GRAY)
+      if (base_type == LIGMA_GRAY)
         {
           g_object_get (config, "gray-profile", &path, NULL);
-          file = gimp_file_new_for_config_path (path, NULL);
+          file = ligma_file_new_for_config_path (path, NULL);
           g_free (path);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
-                                   gimp_color_profile_get_label (profile));
+                                   ligma_color_profile_get_label (profile));
         }
       else
         {
           g_object_get (config, "rgb-profile", &path, NULL);
-          file = gimp_file_new_for_config_path (path, NULL);
+          file = ligma_file_new_for_config_path (path, NULL);
           g_free (path);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
-                                   gimp_color_profile_get_label (profile));
+                                   ligma_color_profile_get_label (profile));
         }
 
       g_object_unref (profile);
 
-      gimp_color_profile_store_add_file (store, file, label);
+      ligma_color_profile_store_add_file (store, file, label);
 
       g_object_unref (file);
       g_free (label);
@@ -2232,7 +2232,7 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 }
 
 static void
-connect_path_show (GimpColorProfileChooserDialog *dialog)
+connect_path_show (LigmaColorProfileChooserDialog *dialog)
 {
   GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
   GFile          *file    = gtk_file_chooser_get_file (chooser);
@@ -2257,7 +2257,7 @@ connect_path_show (GimpColorProfileChooserDialog *dialog)
 
       if (path)
         {
-          GFile *folder = gimp_file_new_for_config_path (path, NULL);
+          GFile *folder = ligma_file_new_for_config_path (path, NULL);
 
           if (folder)
             {
@@ -2271,7 +2271,7 @@ connect_path_show (GimpColorProfileChooserDialog *dialog)
 }
 
 static void
-connect_path_response (GimpColorProfileChooserDialog *dialog,
+connect_path_response (LigmaColorProfileChooserDialog *dialog,
                        gint                           response)
 {
   if (response == GTK_RESPONSE_ACCEPT)
@@ -2294,7 +2294,7 @@ connect_path_response (GimpColorProfileChooserDialog *dialog,
               property = g_object_get_data (G_OBJECT (dialog),
                                             "profile-path-property");
 
-              path = gimp_file_get_config_path (folder, NULL);
+              path = ligma_file_get_config_path (folder, NULL);
 
               g_object_set (config, property, path, NULL);
 
@@ -2310,11 +2310,11 @@ connect_path_response (GimpColorProfileChooserDialog *dialog,
 }
 
 void
-gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
+ligma_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
                                                 GObject     *config,
                                                 const gchar *property_name)
 {
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
   g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (property_name != NULL);
 
@@ -2334,7 +2334,7 @@ gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
 }
 
 void
-gimp_widget_flush_expose (void)
+ligma_widget_flush_expose (void)
 {
   while (g_main_context_pending (NULL))
     g_main_context_iteration (NULL, FALSE);
@@ -2344,7 +2344,7 @@ gimp_widget_flush_expose (void)
 /*  private functions  */
 
 static void
-gimp_widget_blink_after (GtkWidget *widget,
+ligma_widget_blink_after (GtkWidget *widget,
                          gint       ms_timeout)
 {
   WidgetBlink *blink;
@@ -2353,16 +2353,16 @@ gimp_widget_blink_after (GtkWidget *widget,
 
   blink = widget_blink_new ();
 
-  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+  g_object_set_data_full (G_OBJECT (widget), "ligma-widget-blink", blink,
                           (GDestroyNotify) widget_blink_free);
 
   blink->timeout_id = g_timeout_add (ms_timeout,
-                                     (GSourceFunc) gimp_widget_blink_start_timeout,
+                                     (GSourceFunc) ligma_widget_blink_start_timeout,
                                      widget);
 }
 
 static void
-gimp_search_widget_rec (GtkWidget   *widget,
+ligma_search_widget_rec (GtkWidget   *widget,
                         BlinkSearch *data)
 {
   GList       **blink_script   = data->blink_script;
@@ -2371,12 +2371,12 @@ gimp_search_widget_rec (GtkWidget   *widget,
   const gchar  *id;
 
   id = g_object_get_data (G_OBJECT (widget),
-                          "gimp-widget-identifier");
+                          "ligma-widget-identifier");
 
   if (id == NULL)
     /* Using propwidgets identifiers as fallback. */
     id = g_object_get_data (G_OBJECT (widget),
-                            "gimp-widget-property-name");
+                            "ligma-widget-property-name");
 
   if (id && g_strcmp0 (id, searched_id) == 0)
     {
@@ -2390,20 +2390,20 @@ gimp_search_widget_rec (GtkWidget   *widget,
        */
       gtk_widget_grab_focus (widget);
       if (blink_script)
-        gimp_widget_script_blink (widget, settings_value, blink_script);
+        ligma_widget_script_blink (widget, settings_value, blink_script);
       else if (gtk_widget_is_visible (widget))
-        gimp_widget_blink (widget);
+        ligma_widget_blink (widget);
     }
   else if (GTK_IS_CONTAINER (widget))
     {
       gtk_container_foreach (GTK_CONTAINER (widget),
-                             (GtkCallback) gimp_search_widget_rec,
+                             (GtkCallback) ligma_search_widget_rec,
                              (gpointer) data);
     }
 }
 
 static void
-gimp_blink_free_script (GList *blink_scenario)
+ligma_blink_free_script (GList *blink_scenario)
 {
   GList *iter;
 

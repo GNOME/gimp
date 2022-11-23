@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpdrawablepreview.h
+ * ligmadrawablepreview.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DRAWABLE_PREVIEW_H__
-#define __GIMP_DRAWABLE_PREVIEW_H__
+#ifndef __LIGMA_DRAWABLE_PREVIEW_H__
+#define __LIGMA_DRAWABLE_PREVIEW_H__
 
 G_BEGIN_DECLS
 
@@ -31,51 +31,51 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_DRAWABLE_PREVIEW            (gimp_drawable_preview_get_type ())
-#define GIMP_DRAWABLE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreview))
-#define GIMP_DRAWABLE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
-#define GIMP_IS_DRAWABLE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_IS_DRAWABLE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
+#define LIGMA_TYPE_DRAWABLE_PREVIEW            (ligma_drawable_preview_get_type ())
+#define LIGMA_DRAWABLE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DRAWABLE_PREVIEW, LigmaDrawablePreview))
+#define LIGMA_DRAWABLE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DRAWABLE_PREVIEW, LigmaDrawablePreviewClass))
+#define LIGMA_IS_DRAWABLE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DRAWABLE_PREVIEW))
+#define LIGMA_IS_DRAWABLE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DRAWABLE_PREVIEW))
+#define LIGMA_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DRAWABLE_PREVIEW, LigmaDrawablePreviewClass))
 
 
-typedef struct _GimpDrawablePreviewPrivate GimpDrawablePreviewPrivate;
-typedef struct _GimpDrawablePreviewClass   GimpDrawablePreviewClass;
+typedef struct _LigmaDrawablePreviewPrivate LigmaDrawablePreviewPrivate;
+typedef struct _LigmaDrawablePreviewClass   LigmaDrawablePreviewClass;
 
-struct _GimpDrawablePreview
+struct _LigmaDrawablePreview
 {
-  GimpScrolledPreview         parent_instance;
+  LigmaScrolledPreview         parent_instance;
 
-  GimpDrawablePreviewPrivate *priv;
+  LigmaDrawablePreviewPrivate *priv;
 };
 
-struct _GimpDrawablePreviewClass
+struct _LigmaDrawablePreviewClass
 {
-  GimpScrolledPreviewClass parent_class;
+  LigmaScrolledPreviewClass parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
+GType          ligma_drawable_preview_get_type             (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_drawable_preview_new_from_drawable (GimpDrawable        *drawable);
-GimpDrawable * gimp_drawable_preview_get_drawable      (GimpDrawablePreview *preview);
+GtkWidget    * ligma_drawable_preview_new_from_drawable (LigmaDrawable        *drawable);
+LigmaDrawable * ligma_drawable_preview_get_drawable      (LigmaDrawablePreview *preview);
 
 /*  for internal use only  */
-G_GNUC_INTERNAL void      _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
-                                                                  GimpDrawable    *drawable,
+G_GNUC_INTERNAL void      _ligma_drawable_preview_area_draw_thumb (LigmaPreviewArea *area,
+                                                                  LigmaDrawable    *drawable,
                                                                   gint             width,
                                                                   gint             height);
-G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (GimpDrawable    *drawable,
+G_GNUC_INTERNAL gboolean  _ligma_drawable_preview_get_bounds      (LigmaDrawable    *drawable,
                                                                   gint            *xmin,
                                                                   gint            *ymin,
                                                                   gint            *xmax,
@@ -84,5 +84,5 @@ G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (GimpDrawable  
 
 G_END_DECLS
 
-#endif /* __GIMP_DRAWABLE_PREVIEW_H__ */
+#endif /* __LIGMA_DRAWABLE_PREVIEW_H__ */
 

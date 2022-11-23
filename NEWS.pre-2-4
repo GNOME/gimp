@@ -3,10 +3,10 @@
                          Development Branch
                    ------------------------------
 
-This used to be the development branch that lead to GIMP 2.4.
+This used to be the development branch that lead to LIGMA 2.4.
 
 
-Changes in GIMP 2.4.0
+Changes in LIGMA 2.4.0
 =====================
 
 - further improved the rectangle select and crop tools
@@ -14,7 +14,7 @@ Changes in GIMP 2.4.0
 - bug fixes
 
 
-Changes in GIMP 2.4.0-rc3
+Changes in LIGMA 2.4.0-rc3
 =========================
 
 - use the new format for storing recently used files
@@ -28,7 +28,7 @@ Changes in GIMP 2.4.0-rc3
 - bug fixes
 
 
-Changes in GIMP 2.4.0-rc2
+Changes in LIGMA 2.4.0-rc2
 =========================
 
 - more improvements and bug fixes in the rectangle tools
@@ -37,13 +37,13 @@ Changes in GIMP 2.4.0-rc2
 - improve handling of JPEG settings
 - fix script-fu error reporting
 - on OS X, get rid of menubars in windows and use the global menubar
-- fix plug-ins using GimpZoomPreview
+- fix plug-ins using LigmaZoomPreview
 - throw properly catchable exceptions from foreign script-fu function
   (like PDB wrappers)
 - bug fixes
 
 
-Changes in GIMP 2.4.0-rc1
+Changes in LIGMA 2.4.0-rc1
 =========================
 
 - further improvement to the Print plug-in
@@ -55,7 +55,7 @@ Changes in GIMP 2.4.0-rc1
 - further improved the display quality for zoomed-out views
 
 
-Changes in GIMP 2.3.19
+Changes in LIGMA 2.3.19
 ======================
 
 - support long layer names in PSD files
@@ -71,7 +71,7 @@ Changes in GIMP 2.3.19
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.18
+Changes in LIGMA 2.3.18
 ======================
 
 - temporarily show the hidden image statusbar while the progress is active
@@ -81,7 +81,7 @@ Changes in GIMP 2.3.18
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.17
+Changes in LIGMA 2.3.17
 ======================
 
 - improved import of multi-page TIFF files
@@ -90,7 +90,7 @@ Changes in GIMP 2.3.17
 - added support for loading .abr v2 Photoshop brushes
 - improved border behavior of the Blur tool
 - show the brush outline at the Clone tool's source position
-- added libgimpbase API to retrieve the user's Pictures folder
+- added libligmabase API to retrieve the user's Pictures folder
 - add a shortcut to the user's Pictures folder to the file-chooser dialog
 - improved the quality of the Motion Blur filter
 - save paths in TIFF files
@@ -100,7 +100,7 @@ Changes in GIMP 2.3.17
 - lots of bug fixes
 
 
-Changes in GIMP 2.3.16
+Changes in LIGMA 2.3.16
 ======================
 
 - make the XOR color configurable as a workaround for broken drivers
@@ -119,7 +119,7 @@ Changes in GIMP 2.3.16
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.15
+Changes in LIGMA 2.3.15
 ======================
 
 - added keyboard control to rectangle tools and improved their tool options
@@ -128,7 +128,7 @@ Changes in GIMP 2.3.15
 - cleanup of the internal undo system
 - ask before overwriting files, not only for image files
 - added "Revert Zoom" functionality
-- added GimpStringComboBox widget to libgimpwidgets
+- added LigmaStringComboBox widget to libligmawidgets
 - added HAL support for hotplug of Linux Input devices
 - added support for shaped windows to the Screenshot plug-in
 - improved handling of incomplete PNG files
@@ -140,7 +140,7 @@ Changes in GIMP 2.3.15
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.14
+Changes in LIGMA 2.3.14
 ======================
 
 - added actions to control brush spacing
@@ -149,16 +149,16 @@ Changes in GIMP 2.3.14
 - save tool presets when they are changed
 - improved handling of vectors in the Python bindings
 - allow for auto-cropping the result of the transform tools
-- added GimpRatioEntry widget and use it in the rectangle tool options
+- added LigmaRatioEntry widget and use it in the rectangle tool options
 - added functions to transform between preview and image coordinates
 - added PDB functions to validate display, drawable, image and vectors IDs
 - added HSL color model to Decompose and Compose plug-ins
 - further improved status bar messages for tools
-- on systems with D-Bus build gimp-remote functionality into gimp executable
+- on systems with D-Bus build ligma-remote functionality into ligma executable
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.13
+Changes in LIGMA 2.3.13
 ======================
 
 - show information about embedded color profiles in Image Properties dialog
@@ -168,7 +168,7 @@ Changes in GIMP 2.3.13
 - added Edit->Fade operation
 - added Rounded Corners option to Rectangle Select tool
 - improved WinIcon plug-in (now loads and saves 24 bit and Vista icons)
-- merged gimp-tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
+- merged ligma-tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
 - remember unit and interpolation type in scale and resize dialogs
 - changed default interpolation type to Cubic
 - show comment in Image Properties dialog
@@ -184,7 +184,7 @@ Changes in GIMP 2.3.13
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.12
+Changes in LIGMA 2.3.12
 ======================
 
 - merged the Perspective Clone tool
@@ -203,7 +203,7 @@ Changes in GIMP 2.3.12
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.11
+Changes in LIGMA 2.3.11
 ======================
 
 - depend on newer versions of glib, gtk+ and pango and use some of the new
@@ -213,29 +213,29 @@ Changes in GIMP 2.3.11
 - added support for 16/32 bit bitmaps and alpha channel to the BMP plug-in
 - if possible, detect the number of CPUs
 - allow to disable the build of the Script-Fu extension
-- many improvements to the Python bindings and the pygimp user interface
+- many improvements to the Python bindings and the pyligma user interface
 - made message dialogs transient for the progress window
 - added PDB API for creating a selection from vectors
 - further improved status bar messages for tools
 - derive ByColorSelect and FuzzySelect tools from a common base class
 - finer control over select-by-color functionality
 - minor optimizations in the drawing code
-- abstract brush outline drawing into the common base class GimpBrushTool
+- abstract brush outline drawing into the common base class LigmaBrushTool
 - store sample points in XCF files
 - added extended PDB API for selection procedures
-- added convenience API to libgimp that creates a layer from a GdkPixbuf
+- added convenience API to libligma that creates a layer from a GdkPixbuf
 - added midpoint handles to Scale tool for scaling with fixed width or height
 - let color picker tools select a matching color in the Palette Editor
 - allow to use foreground and background color in gradients
 - added first draft of a new Healing Brush tool
-- abstract clone tool functionality into the common base class GimpSourceTool
+- abstract clone tool functionality into the common base class LigmaSourceTool
 - improvements to the new selection tools
-- don't wake up the gimp every so often
-- added GimpHintBox widget to libgimpwidgets
+- don't wake up the ligma every so often
+- added LigmaHintBox widget to libligmawidgets
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.10
+Changes in LIGMA 2.3.10
 ======================
 
 - added support for a registration color in the Decompose plug-in
@@ -252,12 +252,12 @@ Changes in GIMP 2.3.10
 - added load plug-in to open desktop links
 - removed print plug-ins and started work on a replacement using the 
   new GTK+ Print API
-- added replacements for gimp_foo_select widgets, akin to GimpFontSelectButton
+- added replacements for ligma_foo_select widgets, akin to LigmaFontSelectButton
 - introduced translation context to a number of colliding strings
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.9
+Changes in LIGMA 2.3.9
 =====================
 
 - better interpolation for "smooth" curves in the Curve tool
@@ -276,7 +276,7 @@ Changes in GIMP 2.3.9
 - added scripts to sort color palettes
 - swap meanings of "dilate" and	"erode" which have been wrong for a long time
 - show Clone tool source location while painting
-- use GtkFileChooserButton in place of GimpFileEntry
+- use GtkFileChooserButton in place of LigmaFileEntry
 - added script to reverse the order of layers
 - added "Sample merged" and "Selected Pixels only" options to Palette import
 - added actions to select palette and colormap colors
@@ -285,18 +285,18 @@ Changes in GIMP 2.3.9
 - speed up Selective Gaussian Blur plug-in
 - improved tool cursors, added edge resizing cursors
 - improved behaviour of new selection tools
-- allow to reset all gimprc values from the Preferences dialog
+- allow to reset all ligmarc values from the Preferences dialog
 - optionally show guides in the Crop tool
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.8
+Changes in LIGMA 2.3.8
 =====================
 
 - added new tile primitive Triangle to Mosaic plug-in
 - speed up Gaussian Blur plug-in
 - suppress redundant progress updates from plug-ins
-- changed some gimprc and sessionrc default values (window hints,
+- changed some ligmarc and sessionrc default values (window hints,
   fullscreen mode)
 - do not focus transform tool dialogs on map
 - renamed Magnify tool to Zoom tool and added some missing tool shortcuts
@@ -318,11 +318,11 @@ Changes in GIMP 2.3.8
 - provide script-specific samples instead of hard-coding "Aa" for font preview
 - build the Screenshot plug-in on all platforms
 - allow to discard invisible layers when merging visible layers
-- nicer output from gimp-procedural-db-dump
+- nicer output from ligma-procedural-db-dump
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.7
+Changes in LIGMA 2.3.7
 =====================
 
 - depend on GTK+ 2.8, use some of the new features
@@ -343,7 +343,7 @@ Changes in GIMP 2.3.7
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.6
+Changes in LIGMA 2.3.6
 =====================
 
 - even faster application startup
@@ -360,7 +360,7 @@ Changes in GIMP 2.3.6
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.5
+Changes in LIGMA 2.3.5
 =====================
 
 - optionally add jitter to paint strokes
@@ -387,7 +387,7 @@ Changes in GIMP 2.3.5
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.4
+Changes in LIGMA 2.3.4
 =====================
 
 - allow plug-ins and scripts to register menu entries in the <Brushes>,
@@ -424,10 +424,10 @@ Changes in GIMP 2.3.4
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.3
+Changes in LIGMA 2.3.3
 =====================
 
-- improved new GimpPageSelector widget
+- improved new LigmaPageSelector widget
 - minor improvements to the Procedure and Plug-In browsers
 - set alternative button order in some places that were missed earlier
 - added SIOX algorithm for foreground extraction
@@ -439,7 +439,7 @@ Changes in GIMP 2.3.3
 - show more information in the Image Properties dialog
 - added prototype of SIOX foreground selection tool
 - fixed build of MMX code on gcc 4.0
-- moved procedure browser to libgimpwidgets as GimpProcBrowserDialog
+- moved procedure browser to libligmawidgets as LigmaProcBrowserDialog
 - canonicalize PDB procedure and parameter names
 - use the coefficients from the sRGB spec when calculating luminance
 - allow to remove alpha channel from a layer
@@ -447,7 +447,7 @@ Changes in GIMP 2.3.3
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.2
+Changes in LIGMA 2.3.2
 =====================
 
 - more standard way of dealing with translation of the startup tips
@@ -462,30 +462,30 @@ Changes in GIMP 2.3.2
   XPM icons that were being used
 - added an option to Motion Blur to blur outwards
 - added support for the proposed ICC Profiles In X Specification
-- added new widget GimpEnumLabel to libgimpwidgets
+- added new widget LigmaEnumLabel to libligmawidgets
 - let the lcms display filter module show information about the used
   color profiles
 - improved drawing of the brush outline
 - fixed build of Python language binding on Win32
 - allow plug-ins to access the user's color management configuration
-- added new widget GimpPageSelector to libgimpwidgets
+- added new widget LigmaPageSelector to libligmawidgets
 - reenabled the Debug menu
 - load and save ICC color profiles from/to JPEG images
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.1
+Changes in LIGMA 2.3.1
 =====================
 
-- allow to copy and paste SVG between GIMP and other applications
+- allow to copy and paste SVG between LIGMA and other applications
 - added a utility for testing and debugging clipboard operations
 - more work on the new vectors PDB API
 - made screen edges active in the image display in fullscreen mode
 - made file and color selection dialogs transient to their parent windows
-- moved browser widget from Procedure Browser plug-in to libgimpwidgets
+- moved browser widget from Procedure Browser plug-in to libligmawidgets
 - allow more search types in the Procedure Browser
 - reduced size of the Colors dockable by moving the hex entry down
-- added object properties to GimpColorArea and GimpColorButton
+- added object properties to LigmaColorArea and LigmaColorButton
 - changed default for RGB->Indexed conversion to not to any dithering
 - allow to paste a new image using Ctrl-V on the toolbox
 - show previews of dash presets in Stroke Options dialog
@@ -494,16 +494,16 @@ Changes in GIMP 2.3.1
   on the canvas
 - improved Sample Points dockable
 - added first draft of new align tool
-- turned image and drawable combo boxes in libgimpui into real widgets
+- turned image and drawable combo boxes in libligmaui into real widgets
 - further improved Python bindings
 - nicer DND icons for viewables
 - allow to hide the button-bar found at the bottom of most dockables
-- turned font selection in libgimpui into a real widget
+- turned font selection in libligmaui into a real widget
 - added support for BMP files with alpha channel (RGBA)
 - bug fixes and code cleanup
 
 
-Changes in GIMP 2.3.0
+Changes in LIGMA 2.3.0
 =====================
 
 - added Recompose plug-in
@@ -515,19 +515,19 @@ Changes in GIMP 2.3.0
 - added previews to Mosaic, Pixelize and Sparkle plug-ins
 - added Lanczos interpolation method
 - added Open as Image menu entries to brushes and patterns dialogs
-- improved drag-n-drop of drawables within GIMP
+- improved drag-n-drop of drawables within LIGMA
 - added a prototype of a new rectangular select tool
-- moved a bunch of enums from core into libgimpbase
-- moved GimpConfig functionality from core into libgimpconfig
-- moved GimpEnumStore and GimpEnumComboBox to libgimpwidgets
-- moved convenience constructors for property views to libgimpwidgets
+- moved a bunch of enums from core into libligmabase
+- moved LigmaConfig functionality from core into libligmaconfig
+- moved LigmaEnumStore and LigmaEnumComboBox to libligmawidgets
+- moved convenience constructors for property views to libligmawidgets
 - ported ImageMap plug-in to action based menus.
 - first steps towards color management
 - use GOptionContext for command-line parsing
 - added a gnome-vfs backend for the uri plug-in (former url plug-in)
 - prepared code for accessing remote files in the file-chooser
 - let all dialogs obey the gtk-alternative-button-order setting
-- extended GimpProgress PDB API
+- extended LigmaProgress PDB API
 - improved file type handling in file save dialog
 - resurrected threaded pixel processor and enable it by default
 - parallelized a few more internal functions
@@ -556,8 +556,8 @@ Changes in GIMP 2.3.0
 - transfer the clipboard content to a clipboard manager on exit
 - moved cursor info out of the Info window into a dockable
 - moved remaining bits of the Info Window to a new Image Properties dialog
-- build and install gimp-console by default
-- allow to drag and drop image data into GIMP
+- build and install ligma-console by default
+- allow to drag and drop image data into LIGMA
 - use the statusbar more to display hints and info about the tool state
 - resurrected --no-data functionality
 - zoom to the cursor position instead of the display center

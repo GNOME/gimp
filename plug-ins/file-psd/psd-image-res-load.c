@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -118,7 +118,7 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include <jpeglib.h>
 #include <jerror.h>
@@ -131,115 +131,115 @@
 #include "psd-util.h"
 #include "psd-image-res-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define EXIF_HEADER_SIZE 8
 
 /*  Local function prototypes  */
 static gint     load_resource_unknown  (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_ps_only  (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1005     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1006     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1007     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1008     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1022     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1024     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1028     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1032     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 /* 1033 - Thumbnail needs special handling since it calls the jpeg library
  *        which needs a classic FILE. */
 static gint     load_resource_1033     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GFile                 *file,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1039     (const PSDimageres     *res_a,
                                         PSDimage              *img_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1045     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1046     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1053     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1058     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1069     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_1077     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         PSDimage              *img_a,
                                         GInputStream          *input,
                                         GError               **error);
 
 static gint     load_resource_2000     (const PSDimageres     *res_a,
-                                        GimpImage             *image,
+                                        LigmaImage             *image,
                                         GInputStream          *input,
                                         GError               **error);
 
@@ -284,7 +284,7 @@ get_image_resource_header (PSDimageres   *res_a,
 
 gint
 load_image_resource (PSDimageres  *res_a,
-                     GimpImage    *image,
+                     LigmaImage    *image,
                      PSDimage     *img_a,
                      GInputStream  *input,
                      gboolean     *resolution_loaded,
@@ -330,7 +330,7 @@ load_image_resource (PSDimageres  *res_a,
 
           case PSD_MAC_PRINT_INFO:
           case PSD_JPEG_QUAL:
-            /* Save photoshop resources with no meaning for GIMP
+            /* Save photoshop resources with no meaning for LIGMA
               as image parasites */
             load_resource_ps_only (res_a, image, input, error);
             break;
@@ -437,7 +437,7 @@ load_image_resource (PSDimageres  *res_a,
 
 gint
 load_thumbnail_resource (PSDimageres   *res_a,
-                         GimpImage     *image,
+                         LigmaImage     *image,
                          GFile         *file,
                          GInputStream  *input,
                          GError       **error)
@@ -481,12 +481,12 @@ load_thumbnail_resource (PSDimageres   *res_a,
 
 static gint
 load_resource_unknown (const PSDimageres  *res_a,
-                       GimpImage          *image,
+                       LigmaImage          *image,
                        GInputStream       *input,
                        GError            **error)
 {
   /* Unknown image resources attached as parasites to re-save later */
-  GimpParasite  *parasite;
+  LigmaParasite  *parasite;
   gchar         *data;
   gchar         *name;
 
@@ -504,9 +504,9 @@ load_resource_unknown (const PSDimageres  *res_a,
                            res_a->type, res_a->id);
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
-  parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  parasite = ligma_parasite_new (name, 0, res_a->data_len, data);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
   g_free (data);
   g_free (name);
 
@@ -515,13 +515,13 @@ load_resource_unknown (const PSDimageres  *res_a,
 
 static gint
 load_resource_ps_only (const PSDimageres  *res_a,
-                       GimpImage          *image,
+                       LigmaImage          *image,
                        GInputStream       *input,
                        GError            **error)
 {
-  /* Save photoshop resources with no meaning for GIMP as image parasites
+  /* Save photoshop resources with no meaning for LIGMA as image parasites
      to re-save later */
-  GimpParasite  *parasite;
+  LigmaParasite  *parasite;
   gchar         *data;
   gchar         *name;
 
@@ -539,9 +539,9 @@ load_resource_ps_only (const PSDimageres  *res_a,
                            res_a->type, res_a->id);
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
-  parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  parasite = ligma_parasite_new (name, 0, res_a->data_len, data);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
   g_free (data);
   g_free (name);
 
@@ -550,7 +550,7 @@ load_resource_ps_only (const PSDimageres  *res_a,
 
 static gint
 load_resource_1005 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
@@ -559,7 +559,7 @@ load_resource_1005 (const PSDimageres  *res_a,
   /* FIXME  width unit and height unit unused at present */
 
   ResolutionInfo        res_info;
-  GimpUnit              image_unit;
+  LigmaUnit              image_unit;
 
   IFDBG(2) g_debug ("Process image resource block 1005: Resolution Info");
 
@@ -591,30 +591,30 @@ load_resource_1005 (const PSDimageres  *res_a,
   /* Resolution always recorded as pixels / inch in a fixed point implied
      decimal int32 with 16 bits before point and 16 after (i.e. cast as
      double and divide resolution by 2^16 */
-  gimp_image_set_resolution (image,
+  ligma_image_set_resolution (image,
                              res_info.hRes / 65536.0, res_info.vRes / 65536.0);
 
-  /* GIMP only has one display unit so use ps horizontal resolution unit */
+  /* LIGMA only has one display unit so use ps horizontal resolution unit */
   switch (res_info.hResUnit)
     {
     case PSD_RES_INCH:
-      image_unit = GIMP_UNIT_INCH;
+      image_unit = LIGMA_UNIT_INCH;
       break;
     case PSD_RES_CM:
-      image_unit = GIMP_UNIT_MM;
+      image_unit = LIGMA_UNIT_MM;
       break;
     default:
-      image_unit = GIMP_UNIT_INCH;
+      image_unit = LIGMA_UNIT_INCH;
     }
 
-  gimp_image_set_unit (image, image_unit);
+  ligma_image_set_unit (image, image_unit);
 
   return 0;
 }
 
 static gint
 load_resource_1006 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -656,7 +656,7 @@ load_resource_1006 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1007 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -665,9 +665,9 @@ load_resource_1007 (const PSDimageres  *res_a,
 
   DisplayInfo       dsp_info;
   CMColor           ps_color;
-  GimpRGB           gimp_rgb;
-  GimpHSV           gimp_hsv;
-  GimpCMYK          gimp_cmyk;
+  LigmaRGB           ligma_rgb;
+  LigmaHSV           ligma_hsv;
+  LigmaCMYK          ligma_cmyk;
   gint16            tot_rec;
   gint              cidx;
 
@@ -699,28 +699,28 @@ load_resource_1007 (const PSDimageres  *res_a,
       switch (dsp_info.colorSpace)
         {
           case PSD_CS_RGB:
-            gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
+            ligma_rgb_set (&ligma_rgb, ps_color.rgb.red / 65535.0,
                           ps_color.rgb.green / 65535.0,
                           ps_color.rgb.blue / 65535.0);
             break;
 
           case PSD_CS_HSB:
-            gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
+            ligma_hsv_set (&ligma_hsv, ps_color.hsv.hue / 65535.0,
                           ps_color.hsv.saturation / 65535.0,
                           ps_color.hsv.value / 65535.0);
-            gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
+            ligma_hsv_to_rgb (&ligma_hsv, &ligma_rgb);
             break;
 
           case PSD_CS_CMYK:
-            gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
+            ligma_cmyk_set (&ligma_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
                            1.0 - ps_color.cmyk.magenta / 65535.0,
                            1.0 - ps_color.cmyk.yellow / 65535.0,
                            1.0 - ps_color.cmyk.black / 65535.0);
-            gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
+            ligma_cmyk_to_rgb (&ligma_cmyk, &ligma_rgb);
             break;
 
           case PSD_CS_GRAYSCALE:
-            gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
+            ligma_rgb_set (&ligma_rgb, ps_color.gray.gray / 10000.0,
                           ps_color.gray.gray / 10000.0,
                           ps_color.gray.gray / 10000.0);
             break;
@@ -737,10 +737,10 @@ load_resource_1007 (const PSDimageres  *res_a,
             if (CONVERSION_WARNINGS)
               g_message ("Unsupported color space: %d",
                          dsp_info.colorSpace);
-            gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
+            ligma_rgb_set (&ligma_rgb, 1.0, 0.0, 0.0);
         }
 
-      gimp_rgb_set_alpha (&gimp_rgb, 1.0);
+      ligma_rgb_set_alpha (&ligma_rgb, 1.0);
 
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
@@ -748,11 +748,11 @@ load_resource_1007 (const PSDimageres  *res_a,
                         dsp_info.kind);
 
       IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, kind: %d",
-                        dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
+                        dsp_info.colorSpace, ligma_rgb.r * 255 , ligma_rgb.g * 255,
+                        ligma_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
 
       img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
-      img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
+      img_a->alpha_display_info[cidx]->ligma_color = ligma_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_kind = dsp_info.kind;
       img_a->alpha_display_info[cidx]->ps_cspace = dsp_info.colorSpace;
@@ -764,12 +764,12 @@ load_resource_1007 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1008 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
   /* Load image caption */
-  GimpParasite  *parasite;
+  LigmaParasite  *parasite;
   gchar         *caption;
   gint32         read_len;
   gint32         write_len;
@@ -780,10 +780,10 @@ load_resource_1008 (const PSDimageres  *res_a,
     return -1;
 
   IFDBG(3) g_debug ("Caption: %s", caption);
-  parasite = gimp_parasite_new (GIMP_PARASITE_COMMENT, GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new (LIGMA_PARASITE_COMMENT, LIGMA_PARASITE_PERSISTENT,
                                 write_len, caption);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
   g_free (caption);
 
   return 0;
@@ -791,7 +791,7 @@ load_resource_1008 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1022 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -818,7 +818,7 @@ load_resource_1022 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1024 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -838,7 +838,7 @@ load_resource_1024 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1028 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
@@ -852,7 +852,7 @@ load_resource_1028 (const PSDimageres  *res_a,
   gchar        *name;
 #endif /* HAVE_IPTCDATA */
 
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   gchar        *res_data;
 
   IFDBG(2) g_debug ("Process image resource block: 1028: IPTC data");
@@ -870,17 +870,17 @@ load_resource_1028 (const PSDimageres  *res_a,
   iptc_data = iptc_data_new_from_data (res_data, res_a->data_len);
   IFDBG (3) iptc_data_dump (iptc_data, 0);
 
-  /* Store resource data as a GIMP IPTC parasite */
-  IFDBG (2) g_debug ("Processing IPTC data as GIMP IPTC parasite");
+  /* Store resource data as a LIGMA IPTC parasite */
+  IFDBG (2) g_debug ("Processing IPTC data as LIGMA IPTC parasite");
   /* Serialize IPTC data */
   iptc_data_save (iptc_data, &iptc_buf, &iptc_buf_len);
   if (iptc_buf_len > 0)
     {
-      parasite = gimp_parasite_new (GIMP_PARASITE_IPTC,
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new (LIGMA_PARASITE_IPTC,
+                                    LIGMA_PARASITE_PERSISTENT,
                                     iptc_buf_len, iptc_buf);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
 
   iptc_data_unref (iptc_data);
@@ -893,9 +893,9 @@ load_resource_1028 (const PSDimageres  *res_a,
                            res_a->type, res_a->id);
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
-  parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  parasite = ligma_parasite_new (name, 0, res_a->data_len, res_data);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
   g_free (name);
 
 #endif /* HAVE_IPTCDATA */
@@ -906,7 +906,7 @@ load_resource_1028 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1032 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
@@ -955,9 +955,9 @@ load_resource_1032 (const PSDimageres  *res_a,
                          guide.fDirection);
 
       if (guide.fDirection == PSD_VERTICAL)
-        gimp_image_add_vguide (image, guide.fLocation);
+        ligma_image_add_vguide (image, guide.fLocation);
       else
-        gimp_image_add_hguide (image, guide.fLocation);
+        ligma_image_add_hguide (image, guide.fLocation);
     }
 
   return 0;
@@ -965,7 +965,7 @@ load_resource_1032 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1033 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GFile              *file,
                     GInputStream       *input,
                     GError            **error)
@@ -979,7 +979,7 @@ load_resource_1033 (const PSDimageres  *res_a,
   ThumbnailInfo         thumb_info;
   GeglBuffer           *buffer;
   const Babl           *format;
-  GimpLayer            *layer;
+  LigmaLayer            *layer;
   guchar               *buf;
   guchar               *rgb_buf;
   guchar              **rowbuf;
@@ -1063,14 +1063,14 @@ load_resource_1033 (const PSDimageres  *res_a,
     rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
 
   /* Create image layer */
-  gimp_image_resize (image, cinfo.output_width, cinfo.output_height, 0, 0);
-  layer = gimp_layer_new (image, _("Background"),
+  ligma_image_resize (image, cinfo.output_width, cinfo.output_height, 0, 0);
+  layer = ligma_layer_new (image, _("Background"),
                           cinfo.output_width,
                           cinfo.output_height,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+                          ligma_image_get_default_new_layer_mode (image));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
   format = babl_format ("R'G'B' u8");
 
   /* Step 6: while (scan lines remain to be read) */
@@ -1125,7 +1125,7 @@ load_resource_1033 (const PSDimageres  *res_a,
    * corrupt-data warnings occurred (test whether
    * jerr.num_warnings is nonzero).
    */
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
   g_object_unref (buffer);
 
   return 0;
@@ -1134,12 +1134,12 @@ load_resource_1033 (const PSDimageres  *res_a,
 static gint
 load_resource_1039 (const PSDimageres  *res_a,
                     PSDimage           *img_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
   /* Load ICC profile */
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
   gchar            *icc_profile;
 
   IFDBG(2) g_debug ("Process image resource block: 1039: ICC Profile");
@@ -1152,17 +1152,17 @@ load_resource_1039 (const PSDimageres  *res_a,
       return -1;
     }
 
-  profile = gimp_color_profile_new_from_icc_profile ((guint8 *) icc_profile,
+  profile = ligma_color_profile_new_from_icc_profile ((guint8 *) icc_profile,
                                                      res_a->data_len,
                                                      NULL);
   if (profile)
     {
       if (img_a->color_mode == PSD_CMYK &&
-          gimp_color_profile_is_cmyk (profile))
+          ligma_color_profile_is_cmyk (profile))
         {
           img_a->cmyk_profile = profile;
-          /* Store CMYK profile in GimpImage if attached */
-          gimp_image_set_simulation_profile (image, img_a->cmyk_profile);
+          /* Store CMYK profile in LigmaImage if attached */
+          ligma_image_set_simulation_profile (image, img_a->cmyk_profile);
         }
       else if (img_a->color_mode == PSD_LAB)
         {
@@ -1171,7 +1171,7 @@ load_resource_1039 (const PSDimageres  *res_a,
         }
       else
         {
-          gimp_image_set_color_profile (image, profile);
+          ligma_image_set_color_profile (image, profile);
           g_object_unref (profile);
         }
     }
@@ -1183,7 +1183,7 @@ load_resource_1039 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1045 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -1232,7 +1232,7 @@ load_resource_1045 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1046 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
@@ -1254,9 +1254,9 @@ load_resource_1046 (const PSDimageres  *res_a,
   /* FIXME - check that we have indexed image */
   if (index_count && index_count < 256)
     {
-      cmap = gimp_image_get_colormap (image, &cmap_count);
+      cmap = ligma_image_get_colormap (image, &cmap_count);
       if (cmap && index_count < cmap_count)
-        gimp_image_set_colormap (image, cmap, index_count);
+        ligma_image_set_colormap (image, cmap, index_count);
       g_free (cmap);
     }
   return 0;
@@ -1264,7 +1264,7 @@ load_resource_1046 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1053 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -1298,13 +1298,13 @@ load_resource_1053 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1058 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
   gchar        *name;
 
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   gchar        *res_data;
 
   IFDBG(2) g_debug ("Process image resource block: 1058: Exif data");
@@ -1323,9 +1323,9 @@ load_resource_1058 (const PSDimageres  *res_a,
                            res_a->type, res_a->id);
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
-  parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  parasite = ligma_parasite_new (name, 0, res_a->data_len, res_data);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
   g_free (name);
 
   g_free (res_data);
@@ -1334,7 +1334,7 @@ load_resource_1058 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1069 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -1375,7 +1375,7 @@ load_resource_1069 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1077 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     PSDimage           *img_a,
                     GInputStream       *input,
                     GError            **error)
@@ -1384,9 +1384,9 @@ load_resource_1077 (const PSDimageres  *res_a,
 
   DisplayInfoNew    dsp_info;
   CMColor           ps_color;
-  GimpRGB           gimp_rgb;
-  GimpHSV           gimp_hsv;
-  GimpCMYK          gimp_cmyk;
+  LigmaRGB           ligma_rgb;
+  LigmaHSV           ligma_hsv;
+  LigmaCMYK          ligma_cmyk;
   gint16            tot_rec;
   gint              cidx;
 
@@ -1423,28 +1423,28 @@ load_resource_1077 (const PSDimageres  *res_a,
       switch (dsp_info.colorSpace)
         {
           case PSD_CS_RGB:
-            gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
+            ligma_rgb_set (&ligma_rgb, ps_color.rgb.red / 65535.0,
                           ps_color.rgb.green / 65535.0,
                           ps_color.rgb.blue / 65535.0);
             break;
 
           case PSD_CS_HSB:
-            gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
+            ligma_hsv_set (&ligma_hsv, ps_color.hsv.hue / 65535.0,
                           ps_color.hsv.saturation / 65535.0,
                           ps_color.hsv.value / 65535.0);
-            gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
+            ligma_hsv_to_rgb (&ligma_hsv, &ligma_rgb);
             break;
 
           case PSD_CS_CMYK:
-            gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
+            ligma_cmyk_set (&ligma_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
                            1.0 - ps_color.cmyk.magenta / 65535.0,
                            1.0 - ps_color.cmyk.yellow / 65535.0,
                            1.0 - ps_color.cmyk.black / 65535.0);
-            gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
+            ligma_cmyk_to_rgb (&ligma_cmyk, &ligma_rgb);
             break;
 
           case PSD_CS_GRAYSCALE:
-            gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
+            ligma_rgb_set (&ligma_rgb, ps_color.gray.gray / 10000.0,
                           ps_color.gray.gray / 10000.0,
                           ps_color.gray.gray / 10000.0);
             break;
@@ -1461,10 +1461,10 @@ load_resource_1077 (const PSDimageres  *res_a,
             if (CONVERSION_WARNINGS)
               g_message ("Unsupported color space: %d",
                           dsp_info.colorSpace);
-            gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
+            ligma_rgb_set (&ligma_rgb, 1.0, 0.0, 0.0);
         }
 
-      gimp_rgb_set_alpha (&gimp_rgb, 1.0);
+      ligma_rgb_set_alpha (&ligma_rgb, 1.0);
 
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, mode: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
@@ -1472,11 +1472,11 @@ load_resource_1077 (const PSDimageres  *res_a,
                         dsp_info.mode);
 
       IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, mode: %d",
-                        dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.mode);
+                        dsp_info.colorSpace, ligma_rgb.r * 255 , ligma_rgb.g * 255,
+                        ligma_rgb.b * 255, dsp_info.opacity, dsp_info.mode);
 
       img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
-      img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
+      img_a->alpha_display_info[cidx]->ligma_color = ligma_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_mode = dsp_info.mode;
       img_a->alpha_display_info[cidx]->ps_cspace = dsp_info.colorSpace;
@@ -1488,14 +1488,14 @@ load_resource_1077 (const PSDimageres  *res_a,
 
 static gint
 load_resource_2000 (const PSDimageres  *res_a,
-                    GimpImage          *image,
+                    LigmaImage          *image,
                     GInputStream       *input,
                     GError            **error)
 {
   gdouble      *controlpoints;
   gint32        x[3];
   gint32        y[3];
-  GimpVectors  *vectors = NULL;
+  LigmaVectors  *vectors = NULL;
   gint16        type;
   gint16        init_fill;
   gint16        num_rec;
@@ -1535,22 +1535,22 @@ load_resource_2000 (const PSDimageres  *res_a,
   if (path_rec ==0)
     return 0;
 
-  image_width = gimp_image_get_width (image);
-  image_height = gimp_image_get_height (image);
+  image_width = ligma_image_get_width (image);
+  image_height = ligma_image_get_height (image);
 
   /* Create path */
   if (res_a->id == PSD_WORKING_PATH)
     {
       /* use "Working Path" for the path name to match the Photoshop display */
-      vectors = gimp_vectors_new (image, "Working Path");
+      vectors = ligma_vectors_new (image, "Working Path");
     }
   else
     {
       /* Use the name stored in the PSD to name the path */
-      vectors = gimp_vectors_new (image, res_a->name);
+      vectors = ligma_vectors_new (image, res_a->name);
     }
 
-  gimp_image_insert_vectors (image, vectors, NULL, -1);
+  ligma_image_insert_vectors (image, vectors, NULL, -1);
 
   while (path_rec > 0)
     {
@@ -1665,8 +1665,8 @@ load_resource_2000 (const PSDimageres  *res_a,
               num_rec--;
             }
           /* Add sub-path */
-          gimp_vectors_stroke_new_from_points (vectors,
-                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
+          ligma_vectors_stroke_new_from_points (vectors,
+                                               LIGMA_VECTORS_STROKE_TYPE_BEZIER,
                                                cntr, controlpoints, closed);
           g_free (controlpoints);
         }

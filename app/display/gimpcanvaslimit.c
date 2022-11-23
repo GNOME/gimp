@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvaslimit.c
+ * ligmacanvaslimit.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,15 +23,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-cairo.h"
+#include "core/ligma-cairo.h"
 
-#include "gimpcanvaslimit.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvaslimit.h"
+#include "ligmadisplayshell.h"
 
 
 #define DASH_LENGTH   4.0
@@ -51,11 +51,11 @@ enum
 };
 
 
-typedef struct _GimpCanvasLimitPrivate GimpCanvasLimitPrivate;
+typedef struct _LigmaCanvasLimitPrivate LigmaCanvasLimitPrivate;
 
-struct _GimpCanvasLimitPrivate
+struct _LigmaCanvasLimitPrivate
 {
-  GimpLimitType type;
+  LigmaLimitType type;
 
   gdouble       x;
   gdouble       y;
@@ -67,108 +67,108 @@ struct _GimpCanvasLimitPrivate
 };
 
 #define GET_PRIVATE(limit) \
-        ((GimpCanvasLimitPrivate *) gimp_canvas_limit_get_instance_private ((GimpCanvasLimit *) (limit)))
+        ((LigmaCanvasLimitPrivate *) ligma_canvas_limit_get_instance_private ((LigmaCanvasLimit *) (limit)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_limit_set_property (GObject        *object,
+static void             ligma_canvas_limit_set_property (GObject        *object,
                                                         guint           property_id,
                                                         const GValue   *value,
                                                         GParamSpec     *pspec);
-static void             gimp_canvas_limit_get_property (GObject        *object,
+static void             ligma_canvas_limit_get_property (GObject        *object,
                                                         guint           property_id,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
 
-static void             gimp_canvas_limit_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_limit_draw         (LigmaCanvasItem *item,
                                                         cairo_t        *cr);
-static cairo_region_t * gimp_canvas_limit_get_extents  (GimpCanvasItem *item);
-static gboolean         gimp_canvas_limit_hit          (GimpCanvasItem *item,
+static cairo_region_t * ligma_canvas_limit_get_extents  (LigmaCanvasItem *item);
+static gboolean         ligma_canvas_limit_hit          (LigmaCanvasItem *item,
                                                         gdouble         x,
                                                         gdouble         y);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasLimit, gimp_canvas_limit,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasLimit, ligma_canvas_limit,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_limit_parent_class
+#define parent_class ligma_canvas_limit_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_canvas_limit_class_init (GimpCanvasLimitClass *klass)
+ligma_canvas_limit_class_init (LigmaCanvasLimitClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_limit_set_property;
-  object_class->get_property = gimp_canvas_limit_get_property;
+  object_class->set_property = ligma_canvas_limit_set_property;
+  object_class->get_property = ligma_canvas_limit_get_property;
 
-  item_class->draw           = gimp_canvas_limit_draw;
-  item_class->get_extents    = gimp_canvas_limit_get_extents;
-  item_class->hit            = gimp_canvas_limit_hit;
+  item_class->draw           = ligma_canvas_limit_draw;
+  item_class->get_extents    = ligma_canvas_limit_get_extents;
+  item_class->hit            = ligma_canvas_limit_hit;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,
-                                                      GIMP_TYPE_LIMIT_TYPE,
-                                                      GIMP_LIMIT_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_LIMIT_TYPE,
+                                                      LIGMA_LIMIT_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_double ("x", NULL, NULL,
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_double ("y", NULL, NULL,
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL, NULL,
                                                         0.0,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
                                    g_param_spec_double ("aspect-ratio", NULL, NULL,
                                                         -1.0,
                                                         +1.0,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle", NULL, NULL,
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DASHED,
                                    g_param_spec_boolean ("dashed", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_limit_init (GimpCanvasLimit *limit)
+ligma_canvas_limit_init (LigmaCanvasLimit *limit)
 {
 }
 
 static void
-gimp_canvas_limit_set_property (GObject      *object,
+ligma_canvas_limit_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCanvasLimitPrivate *priv = GET_PRIVATE (object);
+  LigmaCanvasLimitPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -207,12 +207,12 @@ gimp_canvas_limit_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_limit_get_property (GObject    *object,
+ligma_canvas_limit_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCanvasLimitPrivate *priv = GET_PRIVATE (object);
+  LigmaCanvasLimitPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -251,24 +251,24 @@ gimp_canvas_limit_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_limit_transform (GimpCanvasItem *item,
+ligma_canvas_limit_transform (LigmaCanvasItem *item,
                              gdouble        *x,
                              gdouble        *y,
                              gdouble        *rx,
                              gdouble        *ry)
 {
-  GimpCanvasLimit        *limit      = GIMP_CANVAS_LIMIT (item);
-  GimpCanvasLimitPrivate *priv       = GET_PRIVATE (item);
+  LigmaCanvasLimit        *limit      = LIGMA_CANVAS_LIMIT (item);
+  LigmaCanvasLimitPrivate *priv       = GET_PRIVATE (item);
   gdouble                 x1, y1;
   gdouble                 x2, y2;
   gdouble                 min_radius = 0.0;
 
-  gimp_canvas_limit_get_radii (limit, rx, ry);
+  ligma_canvas_limit_get_radii (limit, rx, ry);
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    priv->x - *rx, priv->y - *ry,
                                    &x1,           &y1);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    priv->x + *rx, priv->y + *ry,
                                    &x2,           &y2);
 
@@ -286,17 +286,17 @@ gimp_canvas_limit_transform (GimpCanvasItem *item,
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
-    case GIMP_LIMIT_SQUARE:
+    case LIGMA_LIMIT_CIRCLE:
+    case LIGMA_LIMIT_SQUARE:
       min_radius = 2.0;
       break;
 
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_DIAMOND:
       min_radius = 3.0;
       break;
 
-    case GIMP_LIMIT_HORIZONTAL:
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_VERTICAL:
       min_radius = 1.0;
       break;
     }
@@ -306,16 +306,16 @@ gimp_canvas_limit_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_limit_paint (GimpCanvasItem *item,
+ligma_canvas_limit_paint (LigmaCanvasItem *item,
                          cairo_t        *cr)
 {
-  GimpCanvasLimitPrivate *priv  = GET_PRIVATE (item);
-  GimpDisplayShell       *shell = gimp_canvas_item_get_shell (item);
+  LigmaCanvasLimitPrivate *priv  = GET_PRIVATE (item);
+  LigmaDisplayShell       *shell = ligma_canvas_item_get_shell (item);
   gdouble                 x,  y;
   gdouble                 rx, ry;
   gdouble                 inf;
 
-  gimp_canvas_limit_transform (item,
+  ligma_canvas_limit_transform (item,
                                &x,  &y,
                                &rx, &ry);
 
@@ -330,15 +330,15 @@ gimp_canvas_limit_paint (GimpCanvasItem *item,
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
+    case LIGMA_LIMIT_CIRCLE:
       cairo_arc (cr, 0.0, 0.0, 1.0, 0.0, 2.0 * G_PI);
       break;
 
-    case GIMP_LIMIT_SQUARE:
+    case LIGMA_LIMIT_SQUARE:
       cairo_rectangle (cr, -1.0, -1.0, 2.0, 2.0);
       break;
 
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_DIAMOND:
       cairo_move_to (cr,  0.0, -1.0);
       cairo_line_to (cr, +1.0,  0.0);
       cairo_line_to (cr,  0.0, +1.0);
@@ -346,7 +346,7 @@ gimp_canvas_limit_paint (GimpCanvasItem *item,
       cairo_close_path (cr);
       break;
 
-    case GIMP_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_HORIZONTAL:
       cairo_move_to (cr, -inf / rx, -1.0);
       cairo_line_to (cr, +inf / rx, -1.0);
 
@@ -354,7 +354,7 @@ gimp_canvas_limit_paint (GimpCanvasItem *item,
       cairo_line_to (cr, +inf / rx, +1.0);
       break;
 
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_VERTICAL:
       cairo_move_to (cr, -1.0, -inf / ry);
       cairo_line_to (cr, -1.0, +inf / ry);
 
@@ -367,25 +367,25 @@ gimp_canvas_limit_paint (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_limit_draw (GimpCanvasItem *item,
+ligma_canvas_limit_draw (LigmaCanvasItem *item,
                         cairo_t        *cr)
 {
-  GimpCanvasLimitPrivate *priv = GET_PRIVATE (item);
+  LigmaCanvasLimitPrivate *priv = GET_PRIVATE (item);
 
-  gimp_canvas_limit_paint (item, cr);
+  ligma_canvas_limit_paint (item, cr);
 
   cairo_save (cr);
 
   if (priv->dashed)
     cairo_set_dash (cr, (const gdouble[]) {DASH_LENGTH}, 1, 0.0);
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 
   cairo_restore (cr);
 }
 
 static cairo_region_t *
-gimp_canvas_limit_get_extents (GimpCanvasItem *item)
+ligma_canvas_limit_get_extents (LigmaCanvasItem *item)
 {
   cairo_t               *cr;
   cairo_surface_t       *surface;
@@ -397,7 +397,7 @@ gimp_canvas_limit_get_extents (GimpCanvasItem *item)
 
   cr = cairo_create (surface);
 
-  gimp_canvas_limit_paint (item, cr);
+  ligma_canvas_limit_paint (item, cr);
 
   cairo_path_extents (cr,
                       &x1, &y1,
@@ -416,18 +416,18 @@ gimp_canvas_limit_get_extents (GimpCanvasItem *item)
 }
 
 static gboolean
-gimp_canvas_limit_hit (GimpCanvasItem *item,
+ligma_canvas_limit_hit (LigmaCanvasItem *item,
                        gdouble         x,
                        gdouble         y)
 {
-  GimpCanvasLimit *limit = GIMP_CANVAS_LIMIT (item);
+  LigmaCanvasLimit *limit = LIGMA_CANVAS_LIMIT (item);
   gdouble          bx, by;
 
-  gimp_canvas_limit_boundary_point (limit,
+  ligma_canvas_limit_boundary_point (limit,
                                     x,   y,
                                     &bx, &by);
 
-  return gimp_canvas_item_transform_distance (item,
+  return ligma_canvas_item_transform_distance (item,
                                               x,  y,
                                               bx, by) <= HIT_DISTANCE;
 }
@@ -435,9 +435,9 @@ gimp_canvas_limit_hit (GimpCanvasItem *item,
 
 /*  public functions  */
 
-GimpCanvasItem *
-gimp_canvas_limit_new (GimpDisplayShell *shell,
-                       GimpLimitType     type,
+LigmaCanvasItem *
+ligma_canvas_limit_new (LigmaDisplayShell *shell,
+                       LigmaLimitType     type,
                        gdouble           x,
                        gdouble           y,
                        gdouble           radius,
@@ -445,9 +445,9 @@ gimp_canvas_limit_new (GimpDisplayShell *shell,
                        gdouble           angle,
                        gboolean          dashed)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_LIMIT,
+  return g_object_new (LIGMA_TYPE_CANVAS_LIMIT,
                        "shell",        shell,
                        "type",         type,
                        "x",            x,
@@ -460,13 +460,13 @@ gimp_canvas_limit_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_canvas_limit_get_radii (GimpCanvasLimit  *limit,
+ligma_canvas_limit_get_radii (LigmaCanvasLimit  *limit,
                              gdouble          *rx,
                              gdouble          *ry)
 {
-  GimpCanvasLimitPrivate *priv;
+  LigmaCanvasLimitPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_CANVAS_LIMIT (limit));
+  g_return_if_fail (LIGMA_IS_CANVAS_LIMIT (limit));
 
   priv = GET_PRIVATE (limit);
 
@@ -483,19 +483,19 @@ gimp_canvas_limit_get_radii (GimpCanvasLimit  *limit,
 }
 
 gboolean
-gimp_canvas_limit_is_inside (GimpCanvasLimit *limit,
+ligma_canvas_limit_is_inside (LigmaCanvasLimit *limit,
                              gdouble          x,
                              gdouble          y)
 {
-  GimpCanvasLimitPrivate *priv;
-  GimpVector2             p;
+  LigmaCanvasLimitPrivate *priv;
+  LigmaVector2             p;
   gdouble                 rx, ry;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_LIMIT (limit), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_LIMIT (limit), FALSE);
 
   priv = GET_PRIVATE (limit);
 
-  gimp_canvas_limit_get_radii (limit, &rx, &ry);
+  ligma_canvas_limit_get_radii (limit, &rx, &ry);
 
   if (rx == 0.0 || ry == 0.0)
     return FALSE;
@@ -503,26 +503,26 @@ gimp_canvas_limit_is_inside (GimpCanvasLimit *limit,
   p.x = x - priv->x;
   p.y = y - priv->y;
 
-  gimp_vector2_rotate (&p, +priv->angle);
+  ligma_vector2_rotate (&p, +priv->angle);
 
   p.x = fabs (p.x / rx);
   p.y = fabs (p.y / ry);
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
-      return gimp_vector2_length (&p) < 1.0;
+    case LIGMA_LIMIT_CIRCLE:
+      return ligma_vector2_length (&p) < 1.0;
 
-    case GIMP_LIMIT_SQUARE:
+    case LIGMA_LIMIT_SQUARE:
       return p.x < 1.0 && p.y < 1.0;
 
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_DIAMOND:
       return p.x + p.y < 1.0;
 
-    case GIMP_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_HORIZONTAL:
       return p.y < 1.0;
 
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_VERTICAL:
       return p.x < 1.0;
     }
 
@@ -530,30 +530,30 @@ gimp_canvas_limit_is_inside (GimpCanvasLimit *limit,
 }
 
 void
-gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
+ligma_canvas_limit_boundary_point (LigmaCanvasLimit *limit,
                                   gdouble          x,
                                   gdouble          y,
                                   gdouble         *bx,
                                   gdouble         *by)
 {
-  GimpCanvasLimitPrivate *priv;
-  GimpVector2             p;
+  LigmaCanvasLimitPrivate *priv;
+  LigmaVector2             p;
   gdouble                 rx, ry;
   gboolean                flip_x = FALSE;
   gboolean                flip_y = FALSE;
 
-  g_return_if_fail (GIMP_IS_CANVAS_LIMIT (limit));
+  g_return_if_fail (LIGMA_IS_CANVAS_LIMIT (limit));
   g_return_if_fail (bx != NULL);
   g_return_if_fail (by != NULL);
 
   priv = GET_PRIVATE (limit);
 
-  gimp_canvas_limit_get_radii (limit, &rx, &ry);
+  ligma_canvas_limit_get_radii (limit, &rx, &ry);
 
   p.x = x - priv->x;
   p.y = y - priv->y;
 
-  gimp_vector2_rotate (&p, +priv->angle);
+  ligma_vector2_rotate (&p, +priv->angle);
 
   if (p.x < 0.0)
     {
@@ -571,12 +571,12 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
+    case LIGMA_LIMIT_CIRCLE:
       if (rx == ry)
         {
-          gimp_vector2_normalize (&p);
+          ligma_vector2_normalize (&p);
 
-          gimp_vector2_mul (&p, rx);
+          ligma_vector2_mul (&p, rx);
         }
       else
         {
@@ -587,8 +587,8 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
 
           for (i = 0; i < 20; i++)
             {
-              GimpVector2 r;
-              GimpVector2 n;
+              LigmaVector2 r;
+              LigmaVector2 n;
 
               a = (a0 + a1) / 2.0;
 
@@ -598,7 +598,7 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
               n.x = 1.0;
               n.y = tan (a) * rx / ry;
 
-              if (gimp_vector2_cross_product (&r, &n).x >= 0.0)
+              if (ligma_vector2_cross_product (&r, &n).x >= 0.0)
                 a1 = a;
               else
                 a0 = a;
@@ -611,7 +611,7 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
         }
       break;
 
-    case GIMP_LIMIT_SQUARE:
+    case LIGMA_LIMIT_SQUARE:
       if (p.x <= rx || p.y <= ry)
         {
           if (rx - p.x <= ry - p.y)
@@ -626,10 +626,10 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
         }
       break;
 
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_DIAMOND:
       {
-        GimpVector2 l;
-        GimpVector2 r;
+        LigmaVector2 l;
+        LigmaVector2 r;
         gdouble     t;
 
         l.x = rx;
@@ -638,8 +638,8 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
         r.x = p.x;
         r.y = p.y - ry;
 
-        t = gimp_vector2_inner_product (&r, &l) /
-            gimp_vector2_inner_product (&l, &l);
+        t = ligma_vector2_inner_product (&r, &l) /
+            ligma_vector2_inner_product (&l, &l);
         t = CLAMP (t, 0.0, 1.0);
 
         p.x = rx * t;
@@ -647,11 +647,11 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
       }
       break;
 
-    case GIMP_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_HORIZONTAL:
       p.y = ry;
       break;
 
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_VERTICAL:
       p.x = rx;
       break;
     }
@@ -662,28 +662,28 @@ gimp_canvas_limit_boundary_point (GimpCanvasLimit *limit,
   if (flip_y)
     p.y = -p.y;
 
-  gimp_vector2_rotate (&p, -priv->angle);
+  ligma_vector2_rotate (&p, -priv->angle);
 
   *bx = priv->x + p.x;
   *by = priv->y + p.y;
 }
 
 gdouble
-gimp_canvas_limit_boundary_radius (GimpCanvasLimit *limit,
+ligma_canvas_limit_boundary_radius (LigmaCanvasLimit *limit,
                                    gdouble          x,
                                    gdouble          y)
 {
-  GimpCanvasLimitPrivate *priv;
-  GimpVector2             p;
+  LigmaCanvasLimitPrivate *priv;
+  LigmaVector2             p;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_LIMIT (limit), 0.0);
+  g_return_val_if_fail (LIGMA_IS_CANVAS_LIMIT (limit), 0.0);
 
   priv = GET_PRIVATE (limit);
 
   p.x = x - priv->x;
   p.y = y - priv->y;
 
-  gimp_vector2_rotate (&p, +priv->angle);
+  ligma_vector2_rotate (&p, +priv->angle);
 
   p.x = fabs (p.x);
   p.y = fabs (p.y);
@@ -695,19 +695,19 @@ gimp_canvas_limit_boundary_radius (GimpCanvasLimit *limit,
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
-      return gimp_vector2_length (&p);
+    case LIGMA_LIMIT_CIRCLE:
+      return ligma_vector2_length (&p);
 
-    case GIMP_LIMIT_SQUARE:
+    case LIGMA_LIMIT_SQUARE:
       return MAX (p.x, p.y);
 
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_DIAMOND:
       return p.x + p.y;
 
-    case GIMP_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_HORIZONTAL:
       return p.y;
 
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_VERTICAL:
       return p.x;
     }
 
@@ -715,16 +715,16 @@ gimp_canvas_limit_boundary_radius (GimpCanvasLimit *limit,
 }
 
 void
-gimp_canvas_limit_center_point (GimpCanvasLimit *limit,
+ligma_canvas_limit_center_point (LigmaCanvasLimit *limit,
                                 gdouble          x,
                                 gdouble          y,
                                 gdouble         *cx,
                                 gdouble         *cy)
 {
-  GimpCanvasLimitPrivate *priv;
-  GimpVector2             p;
+  LigmaCanvasLimitPrivate *priv;
+  LigmaVector2             p;
 
-  g_return_if_fail (GIMP_IS_CANVAS_LIMIT (limit));
+  g_return_if_fail (LIGMA_IS_CANVAS_LIMIT (limit));
   g_return_if_fail (cx != NULL);
   g_return_if_fail (cy != NULL);
 
@@ -733,27 +733,27 @@ gimp_canvas_limit_center_point (GimpCanvasLimit *limit,
   p.x = x - priv->x;
   p.y = y - priv->y;
 
-  gimp_vector2_rotate (&p, +priv->angle);
+  ligma_vector2_rotate (&p, +priv->angle);
 
   switch (priv->type)
     {
-    case GIMP_LIMIT_CIRCLE:
-    case GIMP_LIMIT_SQUARE:
-    case GIMP_LIMIT_DIAMOND:
+    case LIGMA_LIMIT_CIRCLE:
+    case LIGMA_LIMIT_SQUARE:
+    case LIGMA_LIMIT_DIAMOND:
       p.x = 0.0;
       p.y = 0.0;
       break;
 
-    case GIMP_LIMIT_HORIZONTAL:
+    case LIGMA_LIMIT_HORIZONTAL:
       p.y = 0.0;
       break;
 
-    case GIMP_LIMIT_VERTICAL:
+    case LIGMA_LIMIT_VERTICAL:
       p.x = 0.0;
       break;
     }
 
-  gimp_vector2_rotate (&p, -priv->angle);
+  ligma_vector2_rotate (&p, -priv->angle);
 
   *cx = priv->x + p.x;
   *cy = priv->y + p.y;

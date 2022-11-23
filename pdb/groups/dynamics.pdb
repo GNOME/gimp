@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub dynamics_refresh {
     $blurb = 'Refresh current paint dynamics. This function always succeeds.';
@@ -30,7 +30,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_data_factory_data_refresh (gimp->dynamics_factory, context);
+  ligma_data_factory_data_refresh (ligma->dynamics_factory, context);
 }
 CODE
     );
@@ -57,10 +57,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpcontainer-filter.h") ],
+        headers => [ qw("core/ligmacontainer-filter.h") ],
 	code => <<'CODE'
 {
-  dynamics_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->dynamics_factory),
+  dynamics_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->dynamics_factory),
                                                           filter);
 }
 CODE
@@ -68,9 +68,9 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpcontainer.h"
-              "core/gimpdatafactory.h");
+@headers = qw("core/ligma.h"
+              "core/ligmacontainer.h"
+              "core/ligmadatafactory.h");
 
 @procs = qw(dynamics_refresh
             dynamics_get_list);
@@ -78,7 +78,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paint Dynamics';
-$doc_title = 'gimpdynamics';
+$doc_title = 'ligmadynamics';
 $doc_short_desc = 'Operations related to paint dynamics.';
 $doc_long_desc = 'Operations related to paint dynamics.';
 

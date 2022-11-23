@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,28 +24,28 @@
 #include <unistd.h>
 #endif
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 #include "script-fu-text-console.h"
 
 #include "script-fu-intl.h"
 #include "script-fu-lib.h"
 
-GimpValueArray *
-script_fu_text_console_run (GimpProcedure        *procedure,
-                            const GimpValueArray *args)
+LigmaValueArray *
+script_fu_text_console_run (LigmaProcedure        *procedure,
+                            const LigmaValueArray *args)
 {
   script_fu_redirect_output_to_stdout ();
 
   script_fu_print_welcome ();
 
-  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_procedure_get_plug_in (procedure),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
   script_fu_run_read_eval_print_loop ();
 
-  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
-                                      GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  ligma_plug_in_set_pdb_error_handler (ligma_procedure_get_plug_in (procedure),
+                                      LIGMA_PDB_ERROR_HANDLER_INTERNAL);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }

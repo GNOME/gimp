@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbutton.c
- * Copyright (C) 2000-2008 Michael Natterer <mitch@gimp.org>
+ * ligmabutton.c
+ * Copyright (C) 2000-2008 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,17 +23,17 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpbutton.h"
+#include "ligmabutton.h"
 
 
 /**
- * SECTION: gimpbutton
- * @title: GimpButton
+ * SECTION: ligmabutton
+ * @title: LigmaButton
  * @short_description: A #GtkButton with a little extra functionality.
  *
- * #GimpButton adds an extra signal to the #GtkButton widget that
+ * #LigmaButton adds an extra signal to the #GtkButton widget that
  * allows the callback to distinguish a normal click from a click that
  * was performed with modifier keys pressed.
  **/
@@ -46,35 +46,35 @@ enum
 };
 
 
-struct _GimpButtonPrivate
+struct _LigmaButtonPrivate
 {
   GdkModifierType  press_state;
 };
 
-#define GET_PRIVATE(obj) (((GimpButton *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaButton *) (obj))->priv)
 
 
-static gboolean   gimp_button_button_press (GtkWidget      *widget,
+static gboolean   ligma_button_button_press (GtkWidget      *widget,
                                             GdkEventButton *event);
-static void       gimp_button_clicked      (GtkButton      *button);
+static void       ligma_button_clicked      (GtkButton      *button);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpButton, gimp_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaButton, ligma_button, GTK_TYPE_BUTTON)
 
-#define parent_class gimp_button_parent_class
+#define parent_class ligma_button_parent_class
 
 static guint button_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_button_class_init (GimpButtonClass *klass)
+ligma_button_class_init (LigmaButtonClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   /**
-   * GimpButton::extended-clicked:
-   * @gimpbutton: the object that received the signal.
+   * LigmaButton::extended-clicked:
+   * @ligmabutton: the object that received the signal.
    * @arg1: the state of modifier keys when the button was clicked
    *
    * This signal is emitted when the button is clicked with a modifier
@@ -84,57 +84,57 @@ gimp_button_class_init (GimpButtonClass *klass)
     g_signal_new ("extended-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpButtonClass, extended_clicked),
+                  G_STRUCT_OFFSET (LigmaButtonClass, extended_clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  widget_class->button_press_event = gimp_button_button_press;
+  widget_class->button_press_event = ligma_button_button_press;
 
-  button_class->clicked            = gimp_button_clicked;
+  button_class->clicked            = ligma_button_clicked;
 }
 
 static void
-gimp_button_init (GimpButton *button)
+ligma_button_init (LigmaButton *button)
 {
-  button->priv = gimp_button_get_instance_private (button);
+  button->priv = ligma_button_get_instance_private (button);
 }
 
 /**
- * gimp_button_new:
+ * ligma_button_new:
  *
- * Creates a new #GimpButton widget.
+ * Creates a new #LigmaButton widget.
  *
- * Returns: A pointer to the new #GimpButton widget.
+ * Returns: A pointer to the new #LigmaButton widget.
  **/
 GtkWidget *
-gimp_button_new (void)
+ligma_button_new (void)
 {
-  return g_object_new (GIMP_TYPE_BUTTON, NULL);
+  return g_object_new (LIGMA_TYPE_BUTTON, NULL);
 }
 
 /**
- * gimp_button_extended_clicked:
- * @button:         a #GimpButton.
+ * ligma_button_extended_clicked:
+ * @button:         a #LigmaButton.
  * @modifier_state: a state as found in #GdkEventButton->state,
  *                  e.g. #GDK_SHIFT_MASK.
  *
  * Emits the button's "extended_clicked" signal.
  **/
 void
-gimp_button_extended_clicked (GimpButton      *button,
+ligma_button_extended_clicked (LigmaButton      *button,
                               GdkModifierType  modifier_state)
 {
-  g_return_if_fail (GIMP_IS_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_BUTTON (button));
 
   g_signal_emit (button, button_signals[EXTENDED_CLICKED], 0, modifier_state);
 }
 
 static gboolean
-gimp_button_button_press (GtkWidget      *widget,
+ligma_button_button_press (GtkWidget      *widget,
                           GdkEventButton *bevent)
 {
-  GimpButtonPrivate *private = GET_PRIVATE (widget);
+  LigmaButtonPrivate *private = GET_PRIVATE (widget);
 
   if (bevent->button == 1)
     {
@@ -149,9 +149,9 @@ gimp_button_button_press (GtkWidget      *widget,
 }
 
 static void
-gimp_button_clicked (GtkButton *button)
+ligma_button_clicked (GtkButton *button)
 {
-  GimpButtonPrivate *private = GET_PRIVATE (button);
+  LigmaButtonPrivate *private = GET_PRIVATE (button);
 
   if (private->press_state &
       (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK |
@@ -164,7 +164,7 @@ gimp_button_clicked (GtkButton *button)
     {
       g_signal_stop_emission_by_name (button, "clicked");
 
-      gimp_button_extended_clicked (GIMP_BUTTON (button), private->press_state);
+      ligma_button_extended_clicked (LIGMA_BUTTON (button), private->press_state);
     }
   else if (GTK_BUTTON_CLASS (parent_class)->clicked)
     {

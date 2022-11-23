@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp-shm.c
+ * ligma-shm.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -62,12 +62,12 @@
 #  define USE_WIN32_SHM 1
 #endif
 
-#include "gimp.h"
-#include "gimp-shm.h"
+#include "ligma.h"
+#include "ligma-shm.h"
 
 
-#define TILE_MAP_SIZE     (gimp_tile_width () * gimp_tile_height () * 32)
-#define ERRMSG_SHM_FAILED "Could not attach to gimp shared memory segment"
+#define TILE_MAP_SIZE     (ligma_tile_width () * ligma_tile_height () * 32)
+#define ERRMSG_SHM_FAILED "Could not attach to ligma shared memory segment"
 
 
 #ifdef USE_WIN32_SHM
@@ -79,13 +79,13 @@ static guchar *_shm_addr = NULL;
 
 
 guchar *
-_gimp_shm_addr (void)
+_ligma_shm_addr (void)
 {
   return _shm_addr;
 }
 
 void
-_gimp_shm_open (gint shm_ID)
+_ligma_shm_open (gint shm_ID)
 {
   _shm_ID = shm_ID;
 
@@ -110,7 +110,7 @@ _gimp_shm_open (gint shm_ID)
       gchar fileMapName[128];
 
       /* From the id, derive the file map name */
-      g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
+      g_snprintf (fileMapName, sizeof (fileMapName), "LIGMA%d.SHM", _shm_ID);
 
       /* Open the file mapping */
       _shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
@@ -143,7 +143,7 @@ _gimp_shm_open (gint shm_ID)
       gint  shm_fd;
 
       /* From the id, derive the file map name */
-      g_snprintf (map_file, sizeof (map_file), "/gimp-shm-%d", _shm_ID);
+      g_snprintf (map_file, sizeof (map_file), "/ligma-shm-%d", _shm_ID);
 
       /* Open the file mapping */
       shm_fd = shm_open (map_file, O_RDWR, 0600);
@@ -175,7 +175,7 @@ _gimp_shm_open (gint shm_ID)
 }
 
 void
-_gimp_shm_close (void)
+_ligma_shm_close (void)
 {
 #if defined(USE_SYSV_SHM)
 

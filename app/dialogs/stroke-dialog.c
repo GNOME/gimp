@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,26 +22,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimpstrokeoptions.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmastrokeoptions.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpstrokeeditor.h"
+#include "widgets/ligmacontainercombobox.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmastrokeeditor.h"
 
 #include "stroke-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -51,11 +51,11 @@ typedef struct _StrokeDialog StrokeDialog;
 
 struct _StrokeDialog
 {
-  GimpItem           *item;
+  LigmaItem           *item;
   GList              *drawables;
-  GimpContext        *context;
-  GimpStrokeOptions  *options;
-  GimpStrokeCallback  callback;
+  LigmaContext        *context;
+  LigmaStrokeOptions  *options;
+  LigmaStrokeCallback  callback;
   gpointer            user_data;
 
   GtkWidget          *tool_combo;
@@ -73,19 +73,19 @@ static void  stroke_dialog_response (GtkWidget    *dialog,
 /*  public function  */
 
 GtkWidget *
-stroke_dialog_new (GimpItem           *item,
+stroke_dialog_new (LigmaItem           *item,
                    GList              *drawables,
-                   GimpContext        *context,
+                   LigmaContext        *context,
                    const gchar        *title,
                    const gchar        *icon_name,
                    const gchar        *help_id,
                    GtkWidget          *parent,
-                   GimpStrokeOptions  *options,
-                   GimpStrokeCallback  callback,
+                   LigmaStrokeOptions  *options,
+                   LigmaStrokeCallback  callback,
                    gpointer            user_data)
 {
   StrokeDialog *private;
-  GimpImage    *image;
+  LigmaImage    *image;
   GtkWidget    *dialog;
   GtkWidget    *main_vbox;
   GtkWidget    *radio_box;
@@ -94,34 +94,34 @@ stroke_dialog_new (GimpItem           *item,
   GSList       *group;
   GtkWidget    *frame;
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), NULL);
   g_return_val_if_fail (drawables, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  image = gimp_item_get_image (item);
+  image = ligma_item_get_image (item);
 
   private = g_slice_new0 (StrokeDialog);
 
   private->item      = item;
   private->drawables = g_list_copy (drawables);
   private->context   = context;
-  private->options   = gimp_stroke_options_new (context->gimp, context, TRUE);
+  private->options   = ligma_stroke_options_new (context->ligma, context, TRUE);
   private->callback  = callback;
   private->user_data = user_data;
 
-  gimp_config_sync (G_OBJECT (options),
+  ligma_config_sync (G_OBJECT (options),
                     G_OBJECT (private->options), 0);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, item), context,
-                                     title, "gimp-stroke-options",
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, item), context,
+                                     title, "ligma-stroke-options",
                                      icon_name,
                                      _("Choose Stroke Style"),
                                      parent,
-                                     gimp_standard_help_func,
+                                     ligma_standard_help_func,
                                      help_id,
 
                                      _("_Reset"),  RESPONSE_RESET,
@@ -130,7 +130,7 @@ stroke_dialog_new (GimpItem           *item,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -151,7 +151,7 @@ stroke_dialog_new (GimpItem           *item,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (private->options),
+  radio_box = ligma_prop_enum_radio_box_new (G_OBJECT (private->options),
                                             "method", -1, -1);
 
   group = gtk_radio_button_get_group (g_object_get_data (G_OBJECT (radio_box),
@@ -166,16 +166,16 @@ stroke_dialog_new (GimpItem           *item,
   g_object_ref_sink (radio_box);
   g_object_unref (radio_box);
 
-  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (cairo_radio))),
+  ligma_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (cairo_radio))),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (paint_radio))),
+  ligma_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (paint_radio))),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
 
   /*  the stroke frame  */
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -187,9 +187,9 @@ stroke_dialog_new (GimpItem           *item,
     gdouble    xres;
     gdouble    yres;
 
-    gimp_image_get_resolution (image, &xres, &yres);
+    ligma_image_get_resolution (image, &xres, &yres);
 
-    stroke_editor = gimp_stroke_editor_new (private->options, yres, FALSE);
+    stroke_editor = ligma_stroke_editor_new (private->options, yres, FALSE);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
@@ -201,7 +201,7 @@ stroke_dialog_new (GimpItem           *item,
 
   /*  the paint tool frame  */
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -231,15 +231,15 @@ stroke_dialog_new (GimpItem           *item,
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
-                                          GIMP_CONTEXT (private->options),
+    combo = ligma_container_combo_box_new (image->ligma->paint_info_list,
+                                          LIGMA_CONTEXT (private->options),
                                           16, 0);
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
     private->tool_combo = combo;
 
-    button = gimp_prop_check_button_new (G_OBJECT (private->options),
+    button = ligma_prop_check_button_new (G_OBJECT (private->options),
                                          "emulate-brush-dynamics",
                                          _("_Emulate brush dynamics"));
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -269,12 +269,12 @@ stroke_dialog_response (GtkWidget    *dialog,
     {
     case RESPONSE_RESET:
       {
-        GimpToolInfo *tool_info = gimp_context_get_tool (private->context);
+        LigmaToolInfo *tool_info = ligma_context_get_tool (private->context);
 
-        gimp_config_reset (GIMP_CONFIG (private->options));
+        ligma_config_reset (LIGMA_CONFIG (private->options));
 
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->tool_combo),
-                                         GIMP_VIEWABLE (tool_info->paint_info));
+        ligma_container_view_select_item (LIGMA_CONTAINER_VIEW (private->tool_combo),
+                                         LIGMA_VIEWABLE (tool_info->paint_info));
 
       }
       break;

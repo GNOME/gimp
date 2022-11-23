@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmultiwindowstrategy.c
+ * ligmamultiwindowstrategy.c
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,63 +25,63 @@
 
 #include "display-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmawindowstrategy.h"
 
-#include "gimpmultiwindowstrategy.h"
+#include "ligmamultiwindowstrategy.h"
 
 
-static void        gimp_multi_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface);
-static GtkWidget * gimp_multi_window_strategy_show_dockable_dialog       (GimpWindowStrategy          *strategy,
-                                                                          Gimp                        *gimp,
-                                                                          GimpDialogFactory           *factory,
+static void        ligma_multi_window_strategy_window_strategy_iface_init (LigmaWindowStrategyInterface *iface);
+static GtkWidget * ligma_multi_window_strategy_show_dockable_dialog       (LigmaWindowStrategy          *strategy,
+                                                                          Ligma                        *ligma,
+                                                                          LigmaDialogFactory           *factory,
                                                                           GdkMonitor                  *monitor,
                                                                           const gchar                 *identifiers);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpMultiWindowStrategy, gimp_multi_window_strategy, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_WINDOW_STRATEGY,
-                                                gimp_multi_window_strategy_window_strategy_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaMultiWindowStrategy, ligma_multi_window_strategy, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_WINDOW_STRATEGY,
+                                                ligma_multi_window_strategy_window_strategy_iface_init))
 
-#define parent_class gimp_multi_window_strategy_parent_class
+#define parent_class ligma_multi_window_strategy_parent_class
 
 
 static void
-gimp_multi_window_strategy_class_init (GimpMultiWindowStrategyClass *klass)
+ligma_multi_window_strategy_class_init (LigmaMultiWindowStrategyClass *klass)
 {
 }
 
 static void
-gimp_multi_window_strategy_init (GimpMultiWindowStrategy *strategy)
+ligma_multi_window_strategy_init (LigmaMultiWindowStrategy *strategy)
 {
 }
 
 static void
-gimp_multi_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface)
+ligma_multi_window_strategy_window_strategy_iface_init (LigmaWindowStrategyInterface *iface)
 {
-  iface->show_dockable_dialog = gimp_multi_window_strategy_show_dockable_dialog;
+  iface->show_dockable_dialog = ligma_multi_window_strategy_show_dockable_dialog;
 }
 
 static GtkWidget *
-gimp_multi_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
-                                                 Gimp               *gimp,
-                                                 GimpDialogFactory  *factory,
+ligma_multi_window_strategy_show_dockable_dialog (LigmaWindowStrategy *strategy,
+                                                 Ligma               *ligma,
+                                                 LigmaDialogFactory  *factory,
                                                  GdkMonitor         *monitor,
                                                  const gchar        *identifiers)
 {
-  return gimp_dialog_factory_dialog_raise (factory, monitor, NULL,
+  return ligma_dialog_factory_dialog_raise (factory, monitor, NULL,
                                            identifiers, -1);
 }
 
-GimpObject *
-gimp_multi_window_strategy_get_singleton (void)
+LigmaObject *
+ligma_multi_window_strategy_get_singleton (void)
 {
-  static GimpObject *singleton = NULL;
+  static LigmaObject *singleton = NULL;
 
   if (! singleton)
-    singleton = g_object_new (GIMP_TYPE_MULTI_WINDOW_STRATEGY, NULL);
+    singleton = g_object_new (LIGMA_TYPE_MULTI_WINDOW_STRATEGY, NULL);
 
   return singleton;
 }

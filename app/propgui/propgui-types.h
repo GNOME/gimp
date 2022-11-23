@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,13 +28,13 @@
 
 typedef enum
 {
-  GIMP_CONTROLLER_TYPE_LINE,
-  GIMP_CONTROLLER_TYPE_SLIDER_LINE,
-  GIMP_CONTROLLER_TYPE_TRANSFORM_GRID,
-  GIMP_CONTROLLER_TYPE_TRANSFORM_GRIDS,
-  GIMP_CONTROLLER_TYPE_GYROSCOPE,
-  GIMP_CONTROLLER_TYPE_FOCUS
-} GimpControllerType;
+  LIGMA_CONTROLLER_TYPE_LINE,
+  LIGMA_CONTROLLER_TYPE_SLIDER_LINE,
+  LIGMA_CONTROLLER_TYPE_TRANSFORM_GRID,
+  LIGMA_CONTROLLER_TYPE_TRANSFORM_GRIDS,
+  LIGMA_CONTROLLER_TYPE_GYROSCOPE,
+  LIGMA_CONTROLLER_TYPE_FOCUS
+} LigmaControllerType;
 
 
 /*  structs  */
@@ -51,15 +51,15 @@ typedef struct
   gboolean       removable  : 1;  /*  slider is removable                    */
 
   gboolean       autohide   : 1;  /*  whether to autohide the slider         */
-  GimpHandleType type;            /*  slider handle type                     */
+  LigmaHandleType type;            /*  slider handle type                     */
   gdouble        size;            /*  slider handle size, as a fraction of   *
                                    *  the default size                       */
 
   gpointer       data;            /*  user data                              */
-} GimpControllerSlider;
+} LigmaControllerSlider;
 
-#define GIMP_CONTROLLER_SLIDER_DEFAULT                                         \
-  ((const GimpControllerSlider) {                                              \
+#define LIGMA_CONTROLLER_SLIDER_DEFAULT                                         \
+  ((const LigmaControllerSlider) {                                              \
     .value      = 0.0,                                                         \
     .min        = 0.0,                                                         \
     .max        = 1.0,                                                         \
@@ -70,7 +70,7 @@ typedef struct
     .removable  = FALSE,                                                       \
                                                                                \
     .autohide   = FALSE,                                                       \
-    .type       = GIMP_HANDLE_FILLED_DIAMOND,                                  \
+    .type       = LIGMA_HANDLE_FILLED_DIAMOND,                                  \
     .size       = 1.0,                                                         \
                                                                                \
     .data       = NULL                                                         \
@@ -79,44 +79,44 @@ typedef struct
 
 /*  function types  */
 
-typedef void (* GimpPickerCallback)                   (gpointer                    data,
+typedef void (* LigmaPickerCallback)                   (gpointer                    data,
                                                        gpointer                    identifier,
                                                        gdouble                     x,
                                                        gdouble                     y,
                                                        const Babl                 *sample_format,
-                                                       const GimpRGB              *color);
+                                                       const LigmaRGB              *color);
 
-typedef void (* GimpControllerLineCallback)           (gpointer                    data,
+typedef void (* LigmaControllerLineCallback)           (gpointer                    data,
                                                        GeglRectangle              *area,
                                                        gdouble                     x1,
                                                        gdouble                     y1,
                                                        gdouble                     x2,
                                                        gdouble                     y2);
-typedef void (* GimpControllerSliderLineCallback)     (gpointer                    data,
+typedef void (* LigmaControllerSliderLineCallback)     (gpointer                    data,
                                                        GeglRectangle              *area,
                                                        gdouble                     x1,
                                                        gdouble                     y1,
                                                        gdouble                     x2,
                                                        gdouble                     y2,
-                                                       const GimpControllerSlider *sliders,
+                                                       const LigmaControllerSlider *sliders,
                                                        gint                        n_sliders);
-typedef void (* GimpControllerTransformGridCallback)  (gpointer                    data,
+typedef void (* LigmaControllerTransformGridCallback)  (gpointer                    data,
                                                        GeglRectangle              *area,
-                                                       const GimpMatrix3          *transform);
-typedef void (* GimpControllerTransformGridsCallback) (gpointer                    data,
+                                                       const LigmaMatrix3          *transform);
+typedef void (* LigmaControllerTransformGridsCallback) (gpointer                    data,
                                                        GeglRectangle              *area,
-                                                       const GimpMatrix3          *transforms,
+                                                       const LigmaMatrix3          *transforms,
                                                        gint                        n_transforms);
-typedef void (* GimpControllerGyroscopeCallback)      (gpointer                    data,
+typedef void (* LigmaControllerGyroscopeCallback)      (gpointer                    data,
                                                        GeglRectangle              *area,
                                                        gdouble                     yaw,
                                                        gdouble                     pitch,
                                                        gdouble                     roll,
                                                        gdouble                     zoom,
                                                        gboolean                    invert);
-typedef void (* GimpControllerFocusCallback)          (gpointer                    data,
+typedef void (* LigmaControllerFocusCallback)          (gpointer                    data,
                                                        GeglRectangle              *area,
-                                                       GimpLimitType               type,
+                                                       LigmaLimitType               type,
                                                        gdouble                     x,
                                                        gdouble                     y,
                                                        gdouble                     radius,
@@ -126,16 +126,16 @@ typedef void (* GimpControllerFocusCallback)          (gpointer                 
                                                        gdouble                     midpoint);
 
 
-typedef GtkWidget * (* GimpCreatePickerFunc)          (gpointer                    creator,
+typedef GtkWidget * (* LigmaCreatePickerFunc)          (gpointer                    creator,
                                                        const gchar                *property_name,
                                                        const gchar                *icon_name,
                                                        const gchar                *tooltip,
                                                        gboolean                    pick_abyss,
-                                                       GimpPickerCallback          callback,
+                                                       LigmaPickerCallback          callback,
                                                        gpointer                    callback_data);
 
-typedef GCallback   (* GimpCreateControllerFunc)      (gpointer                    creator,
-                                                       GimpControllerType          controller_type,
+typedef GCallback   (* LigmaCreateControllerFunc)      (gpointer                    creator,
+                                                       LigmaControllerType          controller_type,
                                                        const gchar                *status_title,
                                                        GCallback                   callback,
                                                        gpointer                    callback_data,

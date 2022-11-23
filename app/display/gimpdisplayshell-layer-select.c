@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,25 +21,25 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
 
-#include "widgets/gimpview.h"
-#include "widgets/gimpviewrenderer.h"
+#include "widgets/ligmaview.h"
+#include "widgets/ligmaviewrenderer.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-layer-select.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-layer-select.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct
@@ -48,15 +48,15 @@ typedef struct
   GtkWidget *view;
   GtkWidget *label;
 
-  GimpImage *image;
+  LigmaImage *image;
   GList     *orig_layers;
 } LayerSelect;
 
 
 /*  local function prototypes  */
 
-static LayerSelect * layer_select_new       (GimpDisplayShell *shell,
-                                             GimpImage        *image,
+static LayerSelect * layer_select_new       (LigmaDisplayShell *shell,
+                                             LigmaImage        *image,
                                              GList            *layers,
                                              gint              view_size);
 static void          layer_select_destroy   (LayerSelect      *layer_select,
@@ -71,27 +71,27 @@ static gboolean      layer_select_events    (GtkWidget        *widget,
 /*  public functions  */
 
 void
-gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
+ligma_display_shell_layer_select_init (LigmaDisplayShell *shell,
                                       GdkEvent         *event,
                                       gint              move)
 {
   LayerSelect   *layer_select;
-  GimpImage     *image;
+  LigmaImage     *image;
   GList         *layers;
   GdkGrabStatus  status;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
-  layers = gimp_image_get_selected_layers (image);
+  layers = ligma_image_get_selected_layers (image);
 
   if (! layers)
     return;
 
   layer_select = layer_select_new (shell, image, layers,
-                                   image->gimp->config->layer_preview_size);
+                                   image->ligma->config->layer_preview_size);
   layer_select_advance (layer_select, move);
 
   gtk_window_set_screen (GTK_WINDOW (layer_select->window),
@@ -115,8 +115,8 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 /*  private functions  */
 
 static LayerSelect *
-layer_select_new (GimpDisplayShell *shell,
-                  GimpImage        *image,
+layer_select_new (LigmaDisplayShell *shell,
+                  LigmaImage        *image,
                   GList            *layers,
                   gint              view_size)
 {
@@ -131,7 +131,7 @@ layer_select_new (GimpDisplayShell *shell,
   layer_select->orig_layers = g_list_copy (layers);
 
   layer_select->window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_role (GTK_WINDOW (layer_select->window), "gimp-layer-select");
+  gtk_window_set_role (GTK_WINDOW (layer_select->window), "ligma-layer-select");
   gtk_window_set_title (GTK_WINDOW (layer_select->window), _("Layer Select"));
   gtk_window_set_position (GTK_WINDOW (layer_select->window), GTK_WIN_POS_MOUSE);
   gtk_widget_set_events (layer_select->window,
@@ -160,14 +160,14 @@ layer_select_new (GimpDisplayShell *shell,
 
   /*  the view  */
   layer_select->view =
-    gimp_view_new_by_types (gimp_get_user_context (image->gimp),
-                            GIMP_TYPE_VIEW,
-                            GIMP_TYPE_LAYER,
+    ligma_view_new_by_types (ligma_get_user_context (image->ligma),
+                            LIGMA_TYPE_VIEW,
+                            LIGMA_TYPE_LAYER,
                             view_size, 1, FALSE);
-  gimp_view_renderer_set_color_config (GIMP_VIEW (layer_select->view)->renderer,
-                                       gimp_display_shell_get_color_config (shell));
-  gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
-                          g_list_length (layers) == 1 ? GIMP_VIEWABLE (layers->data) : NULL);
+  ligma_view_renderer_set_color_config (LIGMA_VIEW (layer_select->view)->renderer,
+                                       ligma_display_shell_get_color_config (shell));
+  ligma_view_set_viewable (LIGMA_VIEW (layer_select->view),
+                          g_list_length (layers) == 1 ? LIGMA_VIEWABLE (layers->data) : NULL);
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->view, FALSE, FALSE, 0);
   gtk_widget_show (layer_select->view);
 
@@ -189,21 +189,21 @@ layer_select_destroy (LayerSelect *layer_select,
 
   /* Flush only if selection actually changed. */
   if (g_list_length (layer_select->orig_layers) !=
-      g_list_length (gimp_image_get_selected_layers (layer_select->image)))
+      g_list_length (ligma_image_get_selected_layers (layer_select->image)))
     {
-      gimp_image_flush (layer_select->image);
+      ligma_image_flush (layer_select->image);
     }
   else
     {
       GList *layers;
       GList *iter;
 
-      layers = gimp_image_get_selected_layers (layer_select->image);
+      layers = ligma_image_get_selected_layers (layer_select->image);
 
       for (iter = layers; iter; iter = iter->next)
         if (! g_list_find (layer_select->orig_layers, iter->data))
           {
-            gimp_image_flush (layer_select->image);
+            ligma_image_flush (layer_select->image);
             break;
           }
     }
@@ -227,20 +227,20 @@ layer_select_advance (LayerSelect *layer_select,
     return;
 
   /*  If there is a floating selection, allow no advancement  */
-  if (gimp_image_get_floating_selection (layer_select->image))
+  if (ligma_image_get_floating_selection (layer_select->image))
     return;
 
-  selected_layers = gimp_image_get_selected_layers (layer_select->image);
+  selected_layers = ligma_image_get_selected_layers (layer_select->image);
 
   if (! selected_layers)
     return;
 
-  layers   = gimp_image_get_layer_list (layer_select->image);
+  layers   = ligma_image_get_layer_list (layer_select->image);
   n_layers = g_list_length (layers);
 
   for (iter = selected_layers; iter; iter = iter->next)
     {
-      GimpLayer *next_layer;
+      LigmaLayer *next_layer;
 
       index = g_list_index (layers, iter->data);
       index += move;
@@ -257,21 +257,21 @@ layer_select_advance (LayerSelect *layer_select,
     }
   g_list_free (layers);
 
-  gimp_image_set_selected_layers (layer_select->image, next_layers);
-  selected_layers = gimp_image_get_selected_layers (layer_select->image);
+  ligma_image_set_selected_layers (layer_select->image, next_layers);
+  selected_layers = ligma_image_get_selected_layers (layer_select->image);
 
   if (selected_layers)
     {
       if (g_list_length (selected_layers) == 1)
         {
-          gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
-                                  GIMP_VIEWABLE (selected_layers->data));
+          ligma_view_set_viewable (LIGMA_VIEW (layer_select->view),
+                                  LIGMA_VIEWABLE (selected_layers->data));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
-                              gimp_object_get_name (selected_layers->data));
+                              ligma_object_get_name (selected_layers->data));
         }
       else
         {
-          gimp_view_set_viewable (GIMP_VIEW (layer_select->view), NULL);
+          ligma_view_set_viewable (LIGMA_VIEW (layer_select->view), NULL);
           gtk_label_set_text (GTK_LABEL (layer_select->label),
                               move > 0 ? _("Layer Selection Moved Down") :
                                          _("Layer Selection Moved Up"));

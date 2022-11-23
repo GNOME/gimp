@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTreeHandler
- * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ * LigmaTreeHandler
+ * Copyright (C) 2009  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,69 +25,69 @@
 
 #include "core-types.h"
 
-#include "gimpcontainer.h"
-#include "gimptreehandler.h"
-#include "gimpviewable.h"
+#include "ligmacontainer.h"
+#include "ligmatreehandler.h"
+#include "ligmaviewable.h"
 
 
-static void   gimp_tree_handler_dispose          (GObject         *object);
+static void   ligma_tree_handler_dispose          (GObject         *object);
 
-static void   gimp_tree_handler_freeze           (GimpTreeHandler *handler,
-                                                  GimpContainer   *container);
-static void   gimp_tree_handler_thaw             (GimpTreeHandler *handler,
-                                                  GimpContainer   *container);
+static void   ligma_tree_handler_freeze           (LigmaTreeHandler *handler,
+                                                  LigmaContainer   *container);
+static void   ligma_tree_handler_thaw             (LigmaTreeHandler *handler,
+                                                  LigmaContainer   *container);
 
-static void   gimp_tree_handler_add_container    (GimpTreeHandler *handler,
-                                                  GimpContainer   *container);
-static void   gimp_tree_handler_add_foreach      (GimpViewable    *viewable,
-                                                  GimpTreeHandler *handler);
-static void   gimp_tree_handler_add              (GimpTreeHandler *handler,
-                                                  GimpViewable    *viewable,
-                                                  GimpContainer   *container);
+static void   ligma_tree_handler_add_container    (LigmaTreeHandler *handler,
+                                                  LigmaContainer   *container);
+static void   ligma_tree_handler_add_foreach      (LigmaViewable    *viewable,
+                                                  LigmaTreeHandler *handler);
+static void   ligma_tree_handler_add              (LigmaTreeHandler *handler,
+                                                  LigmaViewable    *viewable,
+                                                  LigmaContainer   *container);
 
-static void   gimp_tree_handler_remove_container (GimpTreeHandler *handler,
-                                                  GimpContainer   *container);
-static void   gimp_tree_handler_remove_foreach   (GimpViewable    *viewable,
-                                                  GimpTreeHandler *handler);
-static void   gimp_tree_handler_remove           (GimpTreeHandler *handler,
-                                                  GimpViewable    *viewable,
-                                                  GimpContainer   *container);
+static void   ligma_tree_handler_remove_container (LigmaTreeHandler *handler,
+                                                  LigmaContainer   *container);
+static void   ligma_tree_handler_remove_foreach   (LigmaViewable    *viewable,
+                                                  LigmaTreeHandler *handler);
+static void   ligma_tree_handler_remove           (LigmaTreeHandler *handler,
+                                                  LigmaViewable    *viewable,
+                                                  LigmaContainer   *container);
 
 
-G_DEFINE_TYPE (GimpTreeHandler, gimp_tree_handler, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaTreeHandler, ligma_tree_handler, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_tree_handler_parent_class
+#define parent_class ligma_tree_handler_parent_class
 
 
 static void
-gimp_tree_handler_class_init (GimpTreeHandlerClass *klass)
+ligma_tree_handler_class_init (LigmaTreeHandlerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_tree_handler_dispose;
+  object_class->dispose = ligma_tree_handler_dispose;
 }
 
 static void
-gimp_tree_handler_init (GimpTreeHandler *handler)
+ligma_tree_handler_init (LigmaTreeHandler *handler)
 {
 }
 
 static void
-gimp_tree_handler_dispose (GObject *object)
+ligma_tree_handler_dispose (GObject *object)
 {
-  GimpTreeHandler *handler = GIMP_TREE_HANDLER (object);
+  LigmaTreeHandler *handler = LIGMA_TREE_HANDLER (object);
 
   if (handler->container)
     {
       g_signal_handlers_disconnect_by_func (handler->container,
-                                            gimp_tree_handler_freeze,
+                                            ligma_tree_handler_freeze,
                                             handler);
       g_signal_handlers_disconnect_by_func (handler->container,
-                                            gimp_tree_handler_thaw,
+                                            ligma_tree_handler_thaw,
                                             handler);
 
-      if (! gimp_container_frozen (handler->container))
-        gimp_tree_handler_remove_container (handler, handler->container);
+      if (! ligma_container_frozen (handler->container))
+        ligma_tree_handler_remove_container (handler, handler->container);
 
       g_clear_object (&handler->container);
       g_clear_pointer (&handler->signal_name, g_free);
@@ -99,33 +99,33 @@ gimp_tree_handler_dispose (GObject *object)
 
 /*  public functions  */
 
-GimpTreeHandler *
-gimp_tree_handler_connect (GimpContainer *container,
+LigmaTreeHandler *
+ligma_tree_handler_connect (LigmaContainer *container,
                            const gchar   *signal_name,
                            GCallback      callback,
                            gpointer       user_data)
 {
-  GimpTreeHandler *handler;
+  LigmaTreeHandler *handler;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
 
-  handler = g_object_new (GIMP_TYPE_TREE_HANDLER, NULL);
+  handler = g_object_new (LIGMA_TYPE_TREE_HANDLER, NULL);
 
   handler->container   = g_object_ref (container);
   handler->signal_name = g_strdup (signal_name);
   handler->callback    = callback;
   handler->user_data   = user_data;
 
-  if (! gimp_container_frozen (container))
-    gimp_tree_handler_add_container (handler, container);
+  if (! ligma_container_frozen (container))
+    ligma_tree_handler_add_container (handler, container);
 
   g_signal_connect_object (container, "freeze",
-                           G_CALLBACK (gimp_tree_handler_freeze),
+                           G_CALLBACK (ligma_tree_handler_freeze),
                            handler,
                            G_CONNECT_SWAPPED);
   g_signal_connect_object (container, "thaw",
-                           G_CALLBACK (gimp_tree_handler_thaw),
+                           G_CALLBACK (ligma_tree_handler_thaw),
                            handler,
                            G_CONNECT_SWAPPED);
 
@@ -133,9 +133,9 @@ gimp_tree_handler_connect (GimpContainer *container,
 }
 
 void
-gimp_tree_handler_disconnect (GimpTreeHandler *handler)
+ligma_tree_handler_disconnect (LigmaTreeHandler *handler)
 {
-  g_return_if_fail (GIMP_IS_TREE_HANDLER (handler));
+  g_return_if_fail (LIGMA_IS_TREE_HANDLER (handler));
 
   g_object_run_dispose (G_OBJECT (handler));
   g_object_unref (handler);
@@ -145,50 +145,50 @@ gimp_tree_handler_disconnect (GimpTreeHandler *handler)
 /*  private functions  */
 
 static void
-gimp_tree_handler_freeze (GimpTreeHandler *handler,
-                          GimpContainer   *container)
+ligma_tree_handler_freeze (LigmaTreeHandler *handler,
+                          LigmaContainer   *container)
 {
-  gimp_tree_handler_remove_container (handler, container);
+  ligma_tree_handler_remove_container (handler, container);
 }
 
 static void
-gimp_tree_handler_thaw (GimpTreeHandler *handler,
-                        GimpContainer   *container)
+ligma_tree_handler_thaw (LigmaTreeHandler *handler,
+                        LigmaContainer   *container)
 {
-  gimp_tree_handler_add_container (handler, container);
+  ligma_tree_handler_add_container (handler, container);
 }
 
 static void
-gimp_tree_handler_add_container (GimpTreeHandler *handler,
-                                 GimpContainer   *container)
+ligma_tree_handler_add_container (LigmaTreeHandler *handler,
+                                 LigmaContainer   *container)
 {
-  gimp_container_foreach (container,
-                          (GFunc) gimp_tree_handler_add_foreach,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_tree_handler_add_foreach,
                           handler);
 
   g_signal_connect_object (container, "add",
-                           G_CALLBACK (gimp_tree_handler_add),
+                           G_CALLBACK (ligma_tree_handler_add),
                            handler,
                            G_CONNECT_SWAPPED);
   g_signal_connect_object (container, "remove",
-                           G_CALLBACK (gimp_tree_handler_remove),
+                           G_CALLBACK (ligma_tree_handler_remove),
                            handler,
                            G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_tree_handler_add_foreach (GimpViewable    *viewable,
-                               GimpTreeHandler *handler)
+ligma_tree_handler_add_foreach (LigmaViewable    *viewable,
+                               LigmaTreeHandler *handler)
 {
-  gimp_tree_handler_add (handler, viewable, NULL);
+  ligma_tree_handler_add (handler, viewable, NULL);
 }
 
 static void
-gimp_tree_handler_add (GimpTreeHandler *handler,
-                       GimpViewable    *viewable,
-                       GimpContainer   *unused)
+ligma_tree_handler_add (LigmaTreeHandler *handler,
+                       LigmaViewable    *viewable,
+                       LigmaContainer   *unused)
 {
-  GimpContainer *children = gimp_viewable_get_children (viewable);
+  LigmaContainer *children = ligma_viewable_get_children (viewable);
 
   g_signal_connect (viewable,
                     handler->signal_name,
@@ -196,41 +196,41 @@ gimp_tree_handler_add (GimpTreeHandler *handler,
                     handler->user_data);
 
   if (children)
-    gimp_tree_handler_add_container (handler, children);
+    ligma_tree_handler_add_container (handler, children);
 }
 
 static void
-gimp_tree_handler_remove_container (GimpTreeHandler *handler,
-                                    GimpContainer   *container)
+ligma_tree_handler_remove_container (LigmaTreeHandler *handler,
+                                    LigmaContainer   *container)
 {
   g_signal_handlers_disconnect_by_func (container,
-                                        gimp_tree_handler_add,
+                                        ligma_tree_handler_add,
                                         handler);
   g_signal_handlers_disconnect_by_func (container,
-                                        gimp_tree_handler_remove,
+                                        ligma_tree_handler_remove,
                                         handler);
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_tree_handler_remove_foreach,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_tree_handler_remove_foreach,
                           handler);
 }
 
 static void
-gimp_tree_handler_remove_foreach (GimpViewable    *viewable,
-                                  GimpTreeHandler *handler)
+ligma_tree_handler_remove_foreach (LigmaViewable    *viewable,
+                                  LigmaTreeHandler *handler)
 {
-  gimp_tree_handler_remove (handler, viewable, NULL);
+  ligma_tree_handler_remove (handler, viewable, NULL);
 }
 
 static void
-gimp_tree_handler_remove (GimpTreeHandler *handler,
-                          GimpViewable    *viewable,
-                          GimpContainer   *unused)
+ligma_tree_handler_remove (LigmaTreeHandler *handler,
+                          LigmaViewable    *viewable,
+                          LigmaContainer   *unused)
 {
-  GimpContainer *children = gimp_viewable_get_children (viewable);
+  LigmaContainer *children = ligma_viewable_get_children (viewable);
 
   if (children)
-    gimp_tree_handler_remove_container (handler, children);
+    ligma_tree_handler_remove_container (handler, children);
 
   g_signal_handlers_disconnect_by_func (viewable,
                                         handler->callback,

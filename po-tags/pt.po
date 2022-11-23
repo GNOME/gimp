@@ -1,13 +1,13 @@
-# Portuguese translation for gimp.
-# Copyright (C) 2011 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Portuguese translation for ligma.
+# Copyright (C) 2011 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Pedro Barreira <almufadado@gmail.com>, 2011.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.6 tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.6 tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-07-19 16:44+0000\n"
 "PO-Revision-Date: 2021-10-06 22:17+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "redondo"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"

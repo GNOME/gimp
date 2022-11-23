@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * cdisplay_colorblind.c
- * Copyright (C) 2002-2003 Michael Natterer <mitch@gimp.org>,
- *                         Sven Neumann <sven@gimp.org>,
+ * Copyright (C) 2002-2003 Michael Natterer <mitch@ligma.org>,
+ *                         Sven Neumann <sven@ligma.org>,
  *                         Robert Dougherty <bob@vischeck.com> and
  *                         Alex Wade <alex@vischeck.com>
  *
@@ -32,13 +32,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 typedef enum
@@ -62,7 +62,7 @@ static const GEnumValue enum_values[] =
   { 0, NULL, NULL }
 };
 
-static const GimpEnumDesc enum_descs[] =
+static const LigmaEnumDesc enum_descs[] =
   {
     { COLORBLIND_DEFICIENCY_PROTANOPIA,
       N_("Protanopia (insensitivity to red)"), NULL },
@@ -89,7 +89,7 @@ typedef struct _CdisplayColorblindClass CdisplayColorblindClass;
 
 struct _CdisplayColorblind
 {
-  GimpColorDisplay          parent_instance;
+  LigmaColorDisplay          parent_instance;
 
   ColorblindDeficiencyType  type;
 
@@ -100,7 +100,7 @@ struct _CdisplayColorblind
 
 struct _CdisplayColorblindClass
 {
-  GimpColorDisplayClass  parent_instance;
+  LigmaColorDisplayClass  parent_instance;
 };
 
 
@@ -122,10 +122,10 @@ static void        cdisplay_colorblind_get_property   (GObject                  
                                                        GValue                   *value,
                                                        GParamSpec               *pspec);
 
-static void        cdisplay_colorblind_convert_buffer (GimpColorDisplay         *display,
+static void        cdisplay_colorblind_convert_buffer (LigmaColorDisplay         *display,
                                                        GeglBuffer               *buffer,
                                                        GeglRectangle            *area);
-static void        cdisplay_colorblind_changed        (GimpColorDisplay         *display);
+static void        cdisplay_colorblind_changed        (LigmaColorDisplay         *display);
 
 static void        cdisplay_colorblind_set_type       (CdisplayColorblind       *colorblind,
                                                        ColorblindDeficiencyType  value);
@@ -188,11 +188,11 @@ static const gfloat lms2rgb[9] =
 };
 
 
-static const GimpModuleInfo cdisplay_colorblind_info =
+static const LigmaModuleInfo cdisplay_colorblind_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"),
-  "Michael Natterer <mitch@gimp.org>, Bob Dougherty <bob@vischeck.com>, "
+  "Michael Natterer <mitch@ligma.org>, Bob Dougherty <bob@vischeck.com>, "
   "Alex Wade <alex@vischeck.com>",
   "v0.2",
   "(c) 2002-2004, released under the GPL",
@@ -201,19 +201,19 @@ static const GimpModuleInfo cdisplay_colorblind_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (CdisplayColorblind, cdisplay_colorblind,
-                       GIMP_TYPE_COLOR_DISPLAY)
+                       LIGMA_TYPE_COLOR_DISPLAY)
 
 static GType cdisplay_colorblind_deficiency_type_type = 0;
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &cdisplay_colorblind_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   cdisplay_colorblind_register_type (module);
   cdisplay_colorblind_deficiency_type_register_type (module);
@@ -230,9 +230,9 @@ cdisplay_colorblind_deficiency_type_register_type (GTypeModule *module)
         g_type_module_register_enum (module, "CDisplayColorblindDeficiencyType",
                                      enum_values);
 
-      gimp_type_set_translation_domain (cdisplay_colorblind_deficiency_type_type,
-                                        GETTEXT_PACKAGE "-libgimp");
-      gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type_type,
+      ligma_type_set_translation_domain (cdisplay_colorblind_deficiency_type_type,
+                                        GETTEXT_PACKAGE "-libligma");
+      ligma_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type_type,
                                         enum_descs);
     }
 
@@ -243,12 +243,12 @@ static void
 cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  LigmaColorDisplayClass *display_class = LIGMA_COLOR_DISPLAY_CLASS (klass);
 
   object_class->get_property     = cdisplay_colorblind_get_property;
   object_class->set_property     = cdisplay_colorblind_set_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TYPE,
                          "type",
                          _("Type"),
                          _("Color vision deficiency type"),
@@ -257,8 +257,8 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
                          0);
 
   display_class->name            = _("Color Deficient Vision");
-  display_class->help_id         = "gimp-colordisplay-colorblind";
-  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_COLORBLIND;
+  display_class->help_id         = "ligma-colordisplay-colorblind";
+  display_class->icon_name       = LIGMA_ICON_DISPLAY_FILTER_COLORBLIND;
 
   display_class->convert_buffer  = cdisplay_colorblind_convert_buffer;
   display_class->changed         = cdisplay_colorblind_changed;
@@ -315,7 +315,7 @@ cdisplay_colorblind_set_property (GObject      *object,
 }
 
 static void
-cdisplay_colorblind_convert_buffer (GimpColorDisplay *display,
+cdisplay_colorblind_convert_buffer (LigmaColorDisplay *display,
                                     GeglBuffer       *buffer,
                                     GeglRectangle    *area)
 {
@@ -406,7 +406,7 @@ cdisplay_colorblind_convert_buffer (GimpColorDisplay *display,
 }
 
 static void
-cdisplay_colorblind_changed (GimpColorDisplay *display)
+cdisplay_colorblind_changed (LigmaColorDisplay *display)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   gfloat              anchor_e[3];
@@ -490,6 +490,6 @@ cdisplay_colorblind_set_type (CdisplayColorblind       *colorblind,
       colorblind->type = value;
 
       g_object_notify (G_OBJECT (colorblind), "type");
-      gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
+      ligma_color_display_changed (LIGMA_COLOR_DISPLAY (colorblind));
     }
 }

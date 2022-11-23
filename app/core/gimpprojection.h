@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,36 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROJECTION_H__
-#define __GIMP_PROJECTION_H__
+#ifndef __LIGMA_PROJECTION_H__
+#define __LIGMA_PROJECTION_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_PROJECTION            (gimp_projection_get_type ())
-#define GIMP_PROJECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROJECTION, GimpProjection))
-#define GIMP_PROJECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROJECTION, GimpProjectionClass))
-#define GIMP_IS_PROJECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROJECTION))
-#define GIMP_IS_PROJECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROJECTION))
-#define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
+#define LIGMA_TYPE_PROJECTION            (ligma_projection_get_type ())
+#define LIGMA_PROJECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PROJECTION, LigmaProjection))
+#define LIGMA_PROJECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PROJECTION, LigmaProjectionClass))
+#define LIGMA_IS_PROJECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PROJECTION))
+#define LIGMA_IS_PROJECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PROJECTION))
+#define LIGMA_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PROJECTION, LigmaProjectionClass))
 
 
-typedef struct _GimpProjectionPrivate GimpProjectionPrivate;
-typedef struct _GimpProjectionClass   GimpProjectionClass;
+typedef struct _LigmaProjectionPrivate LigmaProjectionPrivate;
+typedef struct _LigmaProjectionClass   LigmaProjectionClass;
 
-struct _GimpProjection
+struct _LigmaProjection
 {
-  GimpObject             parent_instance;
+  LigmaObject             parent_instance;
 
-  GimpProjectionPrivate *priv;
+  LigmaProjectionPrivate *priv;
 };
 
-struct _GimpProjectionClass
+struct _LigmaProjectionClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void (* update) (GimpProjection *proj,
+  void (* update) (LigmaProjection *proj,
                    gboolean        now,
                    gint            x,
                    gint            y,
@@ -53,31 +53,31 @@ struct _GimpProjectionClass
 };
 
 
-GType            gimp_projection_get_type          (void) G_GNUC_CONST;
+GType            ligma_projection_get_type          (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new               (GimpProjectable   *projectable);
+LigmaProjection * ligma_projection_new               (LigmaProjectable   *projectable);
 
-void             gimp_projection_set_priority      (GimpProjection    *projection,
+void             ligma_projection_set_priority      (LigmaProjection    *projection,
                                                     gint               priority);
-gint             gimp_projection_get_priority      (GimpProjection    *projection);
+gint             ligma_projection_get_priority      (LigmaProjection    *projection);
 
-void             gimp_projection_set_priority_rect (GimpProjection    *proj,
+void             ligma_projection_set_priority_rect (LigmaProjection    *proj,
                                                     gint               x,
                                                     gint               y,
                                                     gint               width,
                                                     gint               height);
 
-void             gimp_projection_stop_rendering    (GimpProjection    *proj);
+void             ligma_projection_stop_rendering    (LigmaProjection    *proj);
 
-void             gimp_projection_flush             (GimpProjection    *proj);
-void             gimp_projection_flush_now         (GimpProjection    *proj,
+void             ligma_projection_flush             (LigmaProjection    *proj);
+void             ligma_projection_flush_now         (LigmaProjection    *proj,
                                                     gboolean           direct);
-void             gimp_projection_finish_draw       (GimpProjection    *proj);
+void             ligma_projection_finish_draw       (LigmaProjection    *proj);
 
-gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,
-                                                    GimpComponentType  component_type,
+gint64           ligma_projection_estimate_memsize  (LigmaImageBaseType  type,
+                                                    LigmaComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
 
 
-#endif /*  __GIMP_PROJECTION_H__  */
+#endif /*  __LIGMA_PROJECTION_H__  */

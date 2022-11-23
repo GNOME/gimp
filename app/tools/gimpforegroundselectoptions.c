@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,22 +20,22 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimpcolorpanel.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-constructors.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmacolorpanel.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-constructors.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpforegroundselectoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmaforegroundselectoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*
@@ -57,106 +57,106 @@ enum
 };
 
 
-static void   gimp_foreground_select_options_set_property (GObject      *object,
+static void   ligma_foreground_select_options_set_property (GObject      *object,
                                                            guint         property_id,
                                                            const GValue *value,
                                                            GParamSpec   *pspec);
-static void   gimp_foreground_select_options_get_property (GObject      *object,
+static void   ligma_foreground_select_options_get_property (GObject      *object,
                                                            guint         property_id,
                                                            GValue       *value,
                                                            GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpForegroundSelectOptions, gimp_foreground_select_options,
-               GIMP_TYPE_SELECTION_OPTIONS)
+G_DEFINE_TYPE (LigmaForegroundSelectOptions, ligma_foreground_select_options,
+               LIGMA_TYPE_SELECTION_OPTIONS)
 
 
 static void
-gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *klass)
+ligma_foreground_select_options_class_init (LigmaForegroundSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB blue = {0.0, 0.0, 1.0, 0.5};
+  LigmaRGB blue = {0.0, 0.0, 1.0, 0.5};
 
-  object_class->set_property = gimp_foreground_select_options_set_property;
-  object_class->get_property = gimp_foreground_select_options_get_property;
+  object_class->set_property = ligma_foreground_select_options_set_property;
+  object_class->get_property = ligma_foreground_select_options_get_property;
 
-  /*  override the antialias default value from GimpSelectionOptions  */
+  /*  override the antialias default value from LigmaSelectionOptions  */
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DRAW_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DRAW_MODE,
                          "draw-mode",
                          _("Draw Mode"),
                          _("Paint over areas to mark color values for "
                            "inclusion or exclusion from selection"),
-                         GIMP_TYPE_MATTING_DRAW_MODE,
-                         GIMP_MATTING_DRAW_MODE_FOREGROUND,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_MATTING_DRAW_MODE,
+                         LIGMA_MATTING_DRAW_MODE_FOREGROUND,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PREVIEW_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PREVIEW_MODE,
                          "preview-mode",
                          _("Preview Mode"),
                          _("Preview Mode"),
-                         GIMP_TYPE_MATTING_PREVIEW_MODE,
-                         GIMP_MATTING_PREVIEW_MODE_ON_COLOR,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_MATTING_PREVIEW_MODE,
+                         LIGMA_MATTING_PREVIEW_MODE_ON_COLOR,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
                          "stroke-width",
                          _("Stroke width"),
                          _("Size of the brush used for refinements"),
                          1, 6000, 10,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB  (object_class, PROP_MASK_COLOR,
+  LIGMA_CONFIG_PROP_RGB  (object_class, PROP_MASK_COLOR,
                          "mask-color",
                          _("Preview color"),
                          _("Color of selection preview mask"),
-                         GIMP_TYPE_RGB,
+                         LIGMA_TYPE_RGB,
                          &blue,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ENGINE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ENGINE,
                          "engine",
                          _("Engine"),
                          _("Matting engine to use"),
-                         GIMP_TYPE_MATTING_ENGINE,
-                         GIMP_MATTING_ENGINE_LEVIN,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_MATTING_ENGINE,
+                         LIGMA_MATTING_ENGINE_LEVIN,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_LEVELS,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_LEVELS,
                          "levels",
                          _("Levels"),
                          _("Number of downsampled levels to use"),
                          1, 10, 2,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
                          "active-levels",
                          _("Active levels"),
                          _("Number of levels to perform solving"),
                          1, 10, 2,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_ITERATIONS,
+  LIGMA_CONFIG_PROP_INT  (object_class, PROP_ITERATIONS,
                          "iterations",
                          _("Iterations"),
                          _("Number of iterations to perform"),
                          1, 10, 2,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_foreground_select_options_init (GimpForegroundSelectOptions *options)
+ligma_foreground_select_options_init (LigmaForegroundSelectOptions *options)
 {
 }
 
 static void
-gimp_foreground_select_options_set_property (GObject      *object,
+ligma_foreground_select_options_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec)
 {
-  GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (object);
-  GimpRGB *color;
+  LigmaForegroundSelectOptions *options = LIGMA_FOREGROUND_SELECT_OPTIONS (object);
+  LigmaRGB *color;
 
   switch (property_id)
     {
@@ -179,10 +179,10 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
     case PROP_ENGINE:
       options->engine = g_value_get_enum (value);
-      if ((options->engine == GIMP_MATTING_ENGINE_LEVIN) &&
+      if ((options->engine == LIGMA_MATTING_ENGINE_LEVIN) &&
           !(gegl_has_operation ("gegl:matting-levin")))
         {
-          options->engine = GIMP_MATTING_ENGINE_GLOBAL;
+          options->engine = LIGMA_MATTING_ENGINE_GLOBAL;
         }
       break;
 
@@ -205,12 +205,12 @@ gimp_foreground_select_options_set_property (GObject      *object,
 }
 
 static void
-gimp_foreground_select_options_get_property (GObject    *object,
+ligma_foreground_select_options_get_property (GObject    *object,
                                              guint       property_id,
                                              GValue     *value,
                                              GParamSpec *pspec)
 {
-  GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (object);
+  LigmaForegroundSelectOptions *options = LIGMA_FOREGROUND_SELECT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -253,14 +253,14 @@ gimp_foreground_select_options_get_property (GObject    *object,
 }
 
 static void
-gimp_foreground_select_options_reset_stroke_width (GtkWidget       *button,
-                                                   GimpToolOptions *tool_options)
+ligma_foreground_select_options_reset_stroke_width (GtkWidget       *button,
+                                                   LigmaToolOptions *tool_options)
 {
   g_object_set (tool_options, "stroke-width", 10, NULL);
 }
 
 static gboolean
-gimp_foreground_select_options_sync_engine (GBinding     *binding,
+ligma_foreground_select_options_sync_engine (GBinding     *binding,
                                             const GValue *source_value,
                                             GValue       *target_value,
                                             gpointer      user_data)
@@ -274,10 +274,10 @@ gimp_foreground_select_options_sync_engine (GBinding     *binding,
 }
 
 GtkWidget *
-gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
+ligma_foreground_select_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_selection_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
@@ -286,10 +286,10 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *inner_vbox;
   GtkWidget *antialias_toggle;
 
-  antialias_toggle = GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle;
+  antialias_toggle = LIGMA_SELECTION_OPTIONS (tool_options)->antialias_toggle;
   gtk_widget_hide (antialias_toggle);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", NULL,
+  frame = ligma_prop_enum_radio_frame_new (config, "draw-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -298,48 +298,48 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
 
   /* stroke width */
-  scale = gimp_prop_spin_scale_new (config, "stroke-width",
+  scale = ligma_prop_spin_scale_new (config, "stroke-width",
                                     1.0, 10.0, 2);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
-  gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (scale), 1.0, 1000.0);
+  ligma_spin_scale_set_gamma (LIGMA_SPIN_SCALE (scale), 1.7);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
 
-  button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
+  button = ligma_icon_button_new (LIGMA_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
+                                LIGMA_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_foreground_select_options_reset_stroke_width),
+                    G_CALLBACK (ligma_foreground_select_options_reset_stroke_width),
                     tool_options);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Reset stroke width native size"), NULL);
 
   /* preview mode */
 
-  frame = gimp_prop_enum_radio_frame_new (config, "preview-mode", NULL,
+  frame = ligma_prop_enum_radio_frame_new (config, "preview-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   /*  mask color */
-  button = gimp_prop_color_button_new (config, "mask-color",
+  button = ligma_prop_color_button_new (config, "mask-color",
                                        NULL,
                                        128, 24,
-                                       GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                GIMP_CONTEXT (config));
+                                       LIGMA_COLOR_AREA_SMALL_CHECKS);
+  ligma_color_panel_set_context (LIGMA_COLOR_PANEL (button),
+                                LIGMA_CONTEXT (config));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /* engine */
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  combo = gimp_prop_enum_combo_box_new (config, "engine", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Engine"));
+  combo = ligma_prop_enum_combo_box_new (config, "engine", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Engine"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
 
@@ -351,40 +351,40 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (inner_vbox);
 
   /*  engine parameters  */
-  scale = gimp_prop_spin_scale_new (config, "levels",
+  scale = ligma_prop_spin_scale_new (config, "levels",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
   g_object_bind_property_full (config, "engine",
                                scale,  "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_foreground_select_options_sync_engine,
+                               ligma_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
+                               GINT_TO_POINTER (LIGMA_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "active-levels",
+  scale = ligma_prop_spin_scale_new (config, "active-levels",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
   g_object_bind_property_full (config, "engine",
                                scale,  "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_foreground_select_options_sync_engine,
+                               ligma_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
+                               GINT_TO_POINTER (LIGMA_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "iterations",
+  scale = ligma_prop_spin_scale_new (config, "iterations",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
   g_object_bind_property_full (config, "engine",
                                scale,  "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_foreground_select_options_sync_engine,
+                               ligma_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_GLOBAL),
+                               GINT_TO_POINTER (LIGMA_MATTING_ENGINE_GLOBAL),
                                NULL);
 
   return vbox;

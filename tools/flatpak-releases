@@ -2,7 +2,7 @@
 
 # This is a very basic script for developper usage. It has a few known
 # limitations (feel free to send patches for these):
-# - It is targetted at GIMP usage primarily, hence able to check only
+# - It is targetted at LIGMA usage primarily, hence able to check only
 #   Flathub (stable and beta remotes) and GNOME-nightly. Yet some
 #   generity is built-in so you can set your own application ID on
 #   command line and it should work.
@@ -22,7 +22,7 @@
 #   portability.
 
 install=-1
-appid=org.gimp.GIMP
+appid=org.ligma.LIGMA
 remote='flathub'
 branch='stable'
 prefix='--user'
@@ -42,7 +42,7 @@ do
     echo "Usage: ./flathub-releases [--beta] [--system] [-X] [org.example.app]"
     echo
     echo "List all flatpak builds stored on Flathub or GNOME repository."
-    echo "The builds for org.gimp.GIMP are looked up by default unless"
+    echo "The builds for org.ligma.LIGMA are looked up by default unless"
     echo "you provide explicitely another AppStream ID."
     echo
     echo "Adding a -X number as option install the numbered release"

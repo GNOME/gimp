@@ -38,5 +38,5 @@ lighting_icons_init (void)
 
   icon_theme = gtk_icon_theme_get_default ();
 
-  gtk_icon_theme_add_resource_path (icon_theme, "/org/gimp/lighting/icons");
+  gtk_icon_theme_add_resource_path (icon_theme, "/org/ligma/lighting/icons");
 }

@@ -1,8 +1,8 @@
-# German translation of gimp-python
-# This is the German catalog for GIMP Python.
+# German translation of ligma-python
+# This is the German catalog for LIGMA Python.
 # Copyright (C) 2006 Free Software Foundation, Inc.
 #
-# Sven Neumann <sven@gimp.org>, 2006.
+# Sven Neumann <sven@ligma.org>, 2006.
 # Hendrik Brandt <heb@gnome-de.org>, 2006-2008.
 # Mario Blättermann <mariobl@freenet.de>, 2011.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2013.
@@ -12,8 +12,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma trunk\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-03-28 15:24+0000\n"
 "PO-Revision-Date: 2021-03-29 20:46+0200\n"
 "Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
@@ -417,8 +417,8 @@ msgid "Python _Console"
 msgstr "Python-_Konsole"
 
 #: ../plug-ins/python/python-console/python-console.py:281
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktiver Gimp-Python-Interpreter"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktiver Ligma-Python-Interpreter"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -774,8 +774,8 @@ msgstr ""
 "erneut auf die zuletzt aktive Ebene gezeichnet werden soll"
 
 #: ../plug-ins/python/spyro-plus.py:1746
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1755 ../plug-ins/python/spyro-plus.py:2292
 msgid "Draw spyrographs using current tool settings and selection."
@@ -803,8 +803,8 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Bitte warten: Muster wird erstellt"
 
 #: ../plug-ins/python/spyro-plus.py:2296
-msgid "Spyrogimp..."
-msgstr "Spyrogimp …"
+msgid "Spyroligma..."
+msgstr "Spyroligma …"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Keine Informationen zur Ausnahme"

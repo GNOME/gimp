@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpview.c
- * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
+ * ligmaview.c
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontext.h"
+#include "core/ligmamarshal.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpdnd.h"
-#include "gimpview.h"
-#include "gimpview-popup.h"
-#include "gimpviewrenderer.h"
-#include "gimpviewrenderer-utils.h"
+#include "ligmadnd.h"
+#include "ligmaview.h"
+#include "ligmaview-popup.h"
+#include "ligmaviewrenderer.h"
+#include "ligmaviewrenderer-utils.h"
 
 
 enum
@@ -53,57 +53,57 @@ enum
 };
 
 
-static void        gimp_view_dispose              (GObject          *object);
+static void        ligma_view_dispose              (GObject          *object);
 
-static void        gimp_view_realize              (GtkWidget        *widget);
-static void        gimp_view_unrealize            (GtkWidget        *widget);
-static void        gimp_view_map                  (GtkWidget        *widget);
-static void        gimp_view_unmap                (GtkWidget        *widget);
-static void        gimp_view_get_preferred_width  (GtkWidget        *widget,
+static void        ligma_view_realize              (GtkWidget        *widget);
+static void        ligma_view_unrealize            (GtkWidget        *widget);
+static void        ligma_view_map                  (GtkWidget        *widget);
+static void        ligma_view_unmap                (GtkWidget        *widget);
+static void        ligma_view_get_preferred_width  (GtkWidget        *widget,
                                                    gint             *minimum_width,
                                                    gint             *natural_width);
-static void        gimp_view_get_preferred_height (GtkWidget        *widget,
+static void        ligma_view_get_preferred_height (GtkWidget        *widget,
                                                    gint             *minimum_height,
                                                    gint             *natural_height);
-static void        gimp_view_size_allocate        (GtkWidget        *widget,
+static void        ligma_view_size_allocate        (GtkWidget        *widget,
                                                    GtkAllocation    *allocation);
-static void        gimp_view_style_updated        (GtkWidget        *widget);
-static gboolean    gimp_view_draw                 (GtkWidget        *widget,
+static void        ligma_view_style_updated        (GtkWidget        *widget);
+static gboolean    ligma_view_draw                 (GtkWidget        *widget,
                                                    cairo_t          *cr);
-static gboolean    gimp_view_button_press_event   (GtkWidget        *widget,
+static gboolean    ligma_view_button_press_event   (GtkWidget        *widget,
                                                    GdkEventButton   *bevent);
-static gboolean    gimp_view_button_release_event (GtkWidget        *widget,
+static gboolean    ligma_view_button_release_event (GtkWidget        *widget,
                                                    GdkEventButton   *bevent);
-static gboolean    gimp_view_enter_notify_event   (GtkWidget        *widget,
+static gboolean    ligma_view_enter_notify_event   (GtkWidget        *widget,
                                                    GdkEventCrossing *event);
-static gboolean    gimp_view_leave_notify_event   (GtkWidget        *widget,
+static gboolean    ligma_view_leave_notify_event   (GtkWidget        *widget,
                                                    GdkEventCrossing *event);
 
-static void        gimp_view_real_set_viewable    (GimpView         *view,
-                                                   GimpViewable     *old,
-                                                   GimpViewable     *viewable);
+static void        ligma_view_real_set_viewable    (LigmaView         *view,
+                                                   LigmaViewable     *old,
+                                                   LigmaViewable     *viewable);
 
-static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
-                                                   GimpView         *view);
+static void        ligma_view_update_callback      (LigmaViewRenderer *renderer,
+                                                   LigmaView         *view);
 
-static void        gimp_view_monitor_changed      (GimpView         *view);
+static void        ligma_view_monitor_changed      (LigmaView         *view);
 
-static GimpViewable * gimp_view_drag_viewable     (GtkWidget        *widget,
-                                                   GimpContext     **context,
+static LigmaViewable * ligma_view_drag_viewable     (GtkWidget        *widget,
+                                                   LigmaContext     **context,
                                                    gpointer          data);
-static GdkPixbuf    * gimp_view_drag_pixbuf       (GtkWidget        *widget,
+static GdkPixbuf    * ligma_view_drag_pixbuf       (GtkWidget        *widget,
                                                    gpointer          data);
 
 
-G_DEFINE_TYPE (GimpView, gimp_view, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (LigmaView, ligma_view, GTK_TYPE_WIDGET)
 
-#define parent_class gimp_view_parent_class
+#define parent_class ligma_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_view_class_init (GimpViewClass *klass)
+ligma_view_class_init (LigmaViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -112,17 +112,17 @@ gimp_view_class_init (GimpViewClass *klass)
     g_signal_new ("set-viewable",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpViewClass, set_viewable),
+                  G_STRUCT_OFFSET (LigmaViewClass, set_viewable),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_OBJECT,
+                  ligma_marshal_VOID__OBJECT_OBJECT,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_VIEWABLE, GIMP_TYPE_VIEWABLE);
+                  LIGMA_TYPE_VIEWABLE, LIGMA_TYPE_VIEWABLE);
 
   view_signals[CLICKED] =
     g_signal_new ("clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpViewClass, clicked),
+                  G_STRUCT_OFFSET (LigmaViewClass, clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
@@ -131,7 +131,7 @@ gimp_view_class_init (GimpViewClass *klass)
     g_signal_new ("double-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpViewClass, double_clicked),
+                  G_STRUCT_OFFSET (LigmaViewClass, double_clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -139,35 +139,35 @@ gimp_view_class_init (GimpViewClass *klass)
     g_signal_new ("context",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpViewClass, context),
+                  G_STRUCT_OFFSET (LigmaViewClass, context),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose              = gimp_view_dispose;
+  object_class->dispose              = ligma_view_dispose;
 
   widget_class->activate_signal      = view_signals[CLICKED];
-  widget_class->realize              = gimp_view_realize;
-  widget_class->unrealize            = gimp_view_unrealize;
-  widget_class->map                  = gimp_view_map;
-  widget_class->unmap                = gimp_view_unmap;
-  widget_class->get_preferred_width  = gimp_view_get_preferred_width;
-  widget_class->get_preferred_height = gimp_view_get_preferred_height;
-  widget_class->size_allocate        = gimp_view_size_allocate;
-  widget_class->style_updated        = gimp_view_style_updated;
-  widget_class->draw                 = gimp_view_draw;
-  widget_class->button_press_event   = gimp_view_button_press_event;
-  widget_class->button_release_event = gimp_view_button_release_event;
-  widget_class->enter_notify_event   = gimp_view_enter_notify_event;
-  widget_class->leave_notify_event   = gimp_view_leave_notify_event;
+  widget_class->realize              = ligma_view_realize;
+  widget_class->unrealize            = ligma_view_unrealize;
+  widget_class->map                  = ligma_view_map;
+  widget_class->unmap                = ligma_view_unmap;
+  widget_class->get_preferred_width  = ligma_view_get_preferred_width;
+  widget_class->get_preferred_height = ligma_view_get_preferred_height;
+  widget_class->size_allocate        = ligma_view_size_allocate;
+  widget_class->style_updated        = ligma_view_style_updated;
+  widget_class->draw                 = ligma_view_draw;
+  widget_class->button_press_event   = ligma_view_button_press_event;
+  widget_class->button_release_event = ligma_view_button_release_event;
+  widget_class->enter_notify_event   = ligma_view_enter_notify_event;
+  widget_class->leave_notify_event   = ligma_view_leave_notify_event;
 
-  klass->set_viewable                = gimp_view_real_set_viewable;
+  klass->set_viewable                = ligma_view_real_set_viewable;
   klass->clicked                     = NULL;
   klass->double_clicked              = NULL;
   klass->context                     = NULL;
 }
 
 static void
-gimp_view_init (GimpView *view)
+ligma_view_init (LigmaView *view)
 {
   gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
   gtk_widget_add_events (GTK_WIDGET (view),
@@ -185,18 +185,18 @@ gimp_view_init (GimpView *view)
   view->has_grab          = FALSE;
   view->press_state       = 0;
 
-  gimp_widget_track_monitor (GTK_WIDGET (view),
-                             G_CALLBACK (gimp_view_monitor_changed),
+  ligma_widget_track_monitor (GTK_WIDGET (view),
+                             G_CALLBACK (ligma_view_monitor_changed),
                              NULL, NULL);
 }
 
 static void
-gimp_view_dispose (GObject *object)
+ligma_view_dispose (GObject *object)
 {
-  GimpView *view = GIMP_VIEW (object);
+  LigmaView *view = LIGMA_VIEW (object);
 
   if (view->viewable)
-    gimp_view_set_viewable (view, NULL);
+    ligma_view_set_viewable (view, NULL);
 
   g_clear_object (&view->renderer);
 
@@ -204,9 +204,9 @@ gimp_view_dispose (GObject *object)
 }
 
 static void
-gimp_view_realize (GtkWidget *widget)
+ligma_view_realize (GtkWidget *widget)
 {
-  GimpView      *view = GIMP_VIEW (widget);
+  LigmaView      *view = LIGMA_VIEW (widget);
   GtkAllocation  allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
@@ -231,9 +231,9 @@ gimp_view_realize (GtkWidget *widget)
 }
 
 static void
-gimp_view_unrealize (GtkWidget *widget)
+ligma_view_unrealize (GtkWidget *widget)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   if (view->event_window)
     {
@@ -246,9 +246,9 @@ gimp_view_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_view_map (GtkWidget *widget)
+ligma_view_map (GtkWidget *widget)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -257,9 +257,9 @@ gimp_view_map (GtkWidget *widget)
 }
 
 static void
-gimp_view_unmap (GtkWidget *widget)
+ligma_view_unmap (GtkWidget *widget)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   if (view->has_grab)
     {
@@ -274,11 +274,11 @@ gimp_view_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_view_get_preferred_width (GtkWidget *widget,
+ligma_view_get_preferred_width (GtkWidget *widget,
                                gint      *minimum_width,
                                gint      *natural_width)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   if (view->expand)
     {
@@ -292,11 +292,11 @@ gimp_view_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-gimp_view_get_preferred_height (GtkWidget *widget,
+ligma_view_get_preferred_height (GtkWidget *widget,
                                 gint      *minimum_height,
                                 gint      *natural_height)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   if (view->expand)
     {
@@ -310,18 +310,18 @@ gimp_view_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_view_size_allocate (GtkWidget     *widget,
+ligma_view_size_allocate (GtkWidget     *widget,
                          GtkAllocation *allocation)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
   gint      width;
   gint      height;
 
   if (view->expand)
     {
-      width  = MIN (GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
+      width  = MIN (LIGMA_VIEWABLE_MAX_PREVIEW_SIZE,
                     allocation->width - 2 * view->renderer->border_width);
-      height = MIN (GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
+      height = MIN (LIGMA_VIEWABLE_MAX_PREVIEW_SIZE,
                     allocation->height - 2 * view->renderer->border_width);
 
       if (view->renderer->width  != width ||
@@ -336,14 +336,14 @@ gimp_view_size_allocate (GtkWidget     *widget,
               gint scaled_width;
               gint scaled_height;
 
-              gimp_viewable_get_preview_size (view->renderer->viewable,
-                                              GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
+              ligma_viewable_get_preview_size (view->renderer->viewable,
+                                              LIGMA_VIEWABLE_MAX_PREVIEW_SIZE,
                                               view->renderer->is_popup,
                                               view->renderer->dot_for_dot,
                                               &view_width,
                                               &view_height);
 
-              gimp_viewable_calc_preview_size (view_width, view_height,
+              ligma_viewable_calc_preview_size (view_width, view_height,
                                                width, height,
                                                TRUE, 1.0, 1.0,
                                                &scaled_width, &scaled_height,
@@ -360,18 +360,18 @@ gimp_view_size_allocate (GtkWidget     *widget,
                   scaled_height = scaled_height * height / scaled_height;
                 }
 
-              gimp_view_renderer_set_size (view->renderer,
+              ligma_view_renderer_set_size (view->renderer,
                                            MAX (scaled_width, scaled_height),
                                            border_width);
             }
           else
             {
-              gimp_view_renderer_set_size_full (view->renderer,
+              ligma_view_renderer_set_size_full (view->renderer,
                                                 width, height,
                                                 border_width);
             }
 
-          gimp_view_renderer_remove_idle (view->renderer);
+          ligma_view_renderer_remove_idle (view->renderer);
         }
     }
 
@@ -400,24 +400,24 @@ gimp_view_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_view_style_updated (GtkWidget *widget)
+ligma_view_style_updated (GtkWidget *widget)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gimp_view_renderer_invalidate (view->renderer);
+  ligma_view_renderer_invalidate (view->renderer);
 }
 
 static gboolean
-gimp_view_draw (GtkWidget *widget,
+ligma_view_draw (GtkWidget *widget,
                 cairo_t   *cr)
 {
   GtkAllocation allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
+  ligma_view_renderer_draw (LIGMA_VIEW (widget)->renderer,
                            widget, cr,
                            allocation.width,
                            allocation.height);
@@ -429,23 +429,23 @@ gimp_view_draw (GtkWidget *widget,
 #define DEBUG_MEMSIZE 1
 
 #ifdef DEBUG_MEMSIZE
-extern gboolean gimp_debug_memsize;
+extern gboolean ligma_debug_memsize;
 #endif
 
 static gboolean
-gimp_view_button_press_event (GtkWidget      *widget,
+ligma_view_button_press_event (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
 #ifdef DEBUG_MEMSIZE
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
     {
-      gimp_debug_memsize = TRUE;
+      ligma_debug_memsize = TRUE;
 
-      gimp_object_get_memsize (GIMP_OBJECT (view->viewable), NULL);
+      ligma_object_get_memsize (LIGMA_OBJECT (view->viewable), NULL);
 
-      gimp_debug_memsize = FALSE;
+      ligma_debug_memsize = FALSE;
     }
 #endif /* DEBUG_MEMSIZE */
 
@@ -473,7 +473,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
 
           if (view->show_popup && view->viewable)
             {
-              gimp_view_popup_show (widget, bevent,
+              ligma_view_popup_show (widget, bevent,
                                     view->renderer->context,
                                     view->viewable,
                                     view->renderer->width,
@@ -486,7 +486,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
           view->press_state = 0;
 
           if (bevent->button == 2)
-            gimp_view_popup_show (widget, bevent,
+            ligma_view_popup_show (widget, bevent,
                                   view->renderer->context,
                                   view->viewable,
                                   view->renderer->width,
@@ -506,10 +506,10 @@ gimp_view_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_view_button_release_event (GtkWidget      *widget,
+ligma_view_button_release_event (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpView *view = GIMP_VIEW (widget);
+  LigmaView *view = LIGMA_VIEW (widget);
 
   if (! view->clickable &&
       ! view->show_popup)
@@ -534,10 +534,10 @@ gimp_view_button_release_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_view_enter_notify_event (GtkWidget        *widget,
+ligma_view_enter_notify_event (GtkWidget        *widget,
                               GdkEventCrossing *event)
 {
-  GimpView  *view         = GIMP_VIEW (widget);
+  LigmaView  *view         = LIGMA_VIEW (widget);
   GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) event);
 
   if ((event_widget == widget) &&
@@ -550,10 +550,10 @@ gimp_view_enter_notify_event (GtkWidget        *widget,
 }
 
 static gboolean
-gimp_view_leave_notify_event (GtkWidget        *widget,
+ligma_view_leave_notify_event (GtkWidget        *widget,
                               GdkEventCrossing *event)
 {
-  GimpView  *view         = GIMP_VIEW (widget);
+  LigmaView  *view         = LIGMA_VIEW (widget);
   GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) event);
 
   if ((event_widget == widget) &&
@@ -566,9 +566,9 @@ gimp_view_leave_notify_event (GtkWidget        *widget,
 }
 
 static void
-gimp_view_real_set_viewable (GimpView     *view,
-                             GimpViewable *old,
-                             GimpViewable *viewable)
+ligma_view_real_set_viewable (LigmaView     *view,
+                             LigmaViewable *old,
+                             LigmaViewable *viewable)
 {
   GType viewable_type = G_TYPE_NONE;
 
@@ -590,11 +590,11 @@ gimp_view_real_set_viewable (GimpView     *view,
 
       if (! viewable && ! view->renderer->is_popup)
         {
-          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (view),
+          if (ligma_dnd_viewable_source_remove (GTK_WIDGET (view),
                                                G_TYPE_FROM_INSTANCE (view->viewable)))
             {
-              if (gimp_viewable_get_size (view->viewable, NULL, NULL))
-                gimp_dnd_pixbuf_source_remove (GTK_WIDGET (view));
+              if (ligma_viewable_get_size (view->viewable, NULL, NULL))
+                ligma_dnd_pixbuf_source_remove (GTK_WIDGET (view));
 
               gtk_drag_source_unset (GTK_WIDGET (view));
             }
@@ -602,24 +602,24 @@ gimp_view_real_set_viewable (GimpView     *view,
     }
   else if (viewable && ! view->renderer->is_popup)
     {
-      if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (view),
+      if (ligma_dnd_drag_source_set_by_type (GTK_WIDGET (view),
                                             GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                                             viewable_type,
                                             GDK_ACTION_COPY))
         {
-          gimp_dnd_viewable_source_add (GTK_WIDGET (view),
+          ligma_dnd_viewable_source_add (GTK_WIDGET (view),
                                         viewable_type,
-                                        gimp_view_drag_viewable,
+                                        ligma_view_drag_viewable,
                                         NULL);
 
-          if (gimp_viewable_get_size (viewable, NULL, NULL))
-            gimp_dnd_pixbuf_source_add (GTK_WIDGET (view),
-                                        gimp_view_drag_pixbuf,
+          if (ligma_viewable_get_size (viewable, NULL, NULL))
+            ligma_dnd_pixbuf_source_add (GTK_WIDGET (view),
+                                        ligma_view_drag_pixbuf,
                                         NULL);
         }
     }
 
-  gimp_view_renderer_set_viewable (view->renderer, viewable);
+  ligma_view_renderer_set_viewable (view->renderer, viewable);
   view->viewable = viewable;
 
   if (view->viewable)
@@ -632,33 +632,33 @@ gimp_view_real_set_viewable (GimpView     *view,
 /*  public functions  */
 
 GtkWidget *
-gimp_view_new (GimpContext  *context,
-               GimpViewable *viewable,
+ligma_view_new (LigmaContext  *context,
+               LigmaViewable *viewable,
                gint          size,
                gint          border_width,
                gboolean      is_popup)
 {
   GtkWidget *view;
 
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEWABLE (viewable), NULL);
 
-  view = gimp_view_new_by_types (context,
-                                 GIMP_TYPE_VIEW,
+  view = ligma_view_new_by_types (context,
+                                 LIGMA_TYPE_VIEW,
                                  G_TYPE_FROM_INSTANCE (viewable),
                                  size, border_width, is_popup);
 
   if (view)
-    gimp_view_set_viewable (GIMP_VIEW (view), viewable);
+    ligma_view_set_viewable (LIGMA_VIEW (view), viewable);
 
-  gimp_view_renderer_remove_idle (GIMP_VIEW (view)->renderer);
+  ligma_view_renderer_remove_idle (LIGMA_VIEW (view)->renderer);
 
   return view;
 }
 
 GtkWidget *
-gimp_view_new_full (GimpContext  *context,
-                    GimpViewable *viewable,
+ligma_view_new_full (LigmaContext  *context,
+                    LigmaViewable *viewable,
                     gint          width,
                     gint          height,
                     gint          border_width,
@@ -668,43 +668,43 @@ gimp_view_new_full (GimpContext  *context,
 {
   GtkWidget *view;
 
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEWABLE (viewable), NULL);
 
-  view = gimp_view_new_full_by_types (context,
-                                      GIMP_TYPE_VIEW,
+  view = ligma_view_new_full_by_types (context,
+                                      LIGMA_TYPE_VIEW,
                                       G_TYPE_FROM_INSTANCE (viewable),
                                       width, height, border_width,
                                       is_popup, clickable, show_popup);
 
   if (view)
-    gimp_view_set_viewable (GIMP_VIEW (view), viewable);
+    ligma_view_set_viewable (LIGMA_VIEW (view), viewable);
 
-  gimp_view_renderer_remove_idle (GIMP_VIEW (view)->renderer);
+  ligma_view_renderer_remove_idle (LIGMA_VIEW (view)->renderer);
 
   return view;
 }
 
 GtkWidget *
-gimp_view_new_by_types (GimpContext *context,
+ligma_view_new_by_types (LigmaContext *context,
                         GType        view_type,
                         GType        viewable_type,
                         gint         size,
                         gint         border_width,
                         gboolean     is_popup)
 {
-  GimpViewRenderer *renderer;
-  GimpView         *view;
+  LigmaViewRenderer *renderer;
+  LigmaView         *view;
 
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_VIEW), NULL);
-  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (g_type_is_a (view_type, LIGMA_TYPE_VIEW), NULL);
+  g_return_val_if_fail (g_type_is_a (viewable_type, LIGMA_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (size >  0 &&
-                        size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        size <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
-                        border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
+                        border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new (context, viewable_type, size,
+  renderer = ligma_view_renderer_new (context, viewable_type, size,
                                      border_width, is_popup);
 
   g_return_val_if_fail (renderer != NULL, NULL);
@@ -712,7 +712,7 @@ gimp_view_new_by_types (GimpContext *context,
   view = g_object_new (view_type, NULL);
 
   g_signal_connect (renderer, "update",
-                    G_CALLBACK (gimp_view_update_callback),
+                    G_CALLBACK (ligma_view_update_callback),
                     view);
 
   view->renderer = renderer;
@@ -721,7 +721,7 @@ gimp_view_new_by_types (GimpContext *context,
 }
 
 GtkWidget *
-gimp_view_new_full_by_types (GimpContext *context,
+ligma_view_new_full_by_types (LigmaContext *context,
                              GType        view_type,
                              GType        viewable_type,
                              gint         width,
@@ -731,20 +731,20 @@ gimp_view_new_full_by_types (GimpContext *context,
                              gboolean     clickable,
                              gboolean     show_popup)
 {
-  GimpViewRenderer *renderer;
-  GimpView         *view;
+  LigmaViewRenderer *renderer;
+  LigmaView         *view;
 
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_VIEW), NULL);
-  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (g_type_is_a (view_type, LIGMA_TYPE_VIEW), NULL);
+  g_return_val_if_fail (g_type_is_a (viewable_type, LIGMA_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (width >  0 &&
-                        width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        width <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (height >  0 &&
-                        height <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        height <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
-                        border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
+                        border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new_full (context, viewable_type,
+  renderer = ligma_view_renderer_new_full (context, viewable_type,
                                           width, height, border_width,
                                           is_popup);
 
@@ -753,7 +753,7 @@ gimp_view_new_full_by_types (GimpContext *context,
   view = g_object_new (view_type, NULL);
 
   g_signal_connect (renderer, "update",
-                    G_CALLBACK (gimp_view_update_callback),
+                    G_CALLBACK (ligma_view_update_callback),
                     view);
 
   view->renderer   = renderer;
@@ -763,20 +763,20 @@ gimp_view_new_full_by_types (GimpContext *context,
   return GTK_WIDGET (view);
 }
 
-GimpViewable *
-gimp_view_get_viewable (GimpView *view)
+LigmaViewable *
+ligma_view_get_viewable (LigmaView *view)
 {
-  g_return_val_if_fail (GIMP_IS_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEW (view), NULL);
 
   return view->viewable;
 }
 
 void
-gimp_view_set_viewable (GimpView     *view,
-                        GimpViewable *viewable)
+ligma_view_set_viewable (LigmaView     *view,
+                        LigmaViewable *viewable)
 {
-  g_return_if_fail (GIMP_IS_VIEW (view));
-  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (LIGMA_IS_VIEW (view));
+  g_return_if_fail (viewable == NULL || LIGMA_IS_VIEWABLE (viewable));
 
   if (viewable == view->viewable)
     return;
@@ -785,10 +785,10 @@ gimp_view_set_viewable (GimpView     *view,
 }
 
 void
-gimp_view_set_expand (GimpView *view,
+ligma_view_set_expand (LigmaView *view,
                       gboolean  expand)
 {
-  g_return_if_fail (GIMP_IS_VIEW (view));
+  g_return_if_fail (LIGMA_IS_VIEW (view));
 
   if (view->expand != expand)
     {
@@ -801,8 +801,8 @@ gimp_view_set_expand (GimpView *view,
 /*  private functions  */
 
 static void
-gimp_view_update_callback (GimpViewRenderer *renderer,
-                           GimpView         *view)
+ligma_view_update_callback (LigmaViewRenderer *renderer,
+                           LigmaView         *view)
 {
   GtkWidget      *widget = GTK_WIDGET (view);
   GtkRequisition  requisition;
@@ -826,34 +826,34 @@ gimp_view_update_callback (GimpViewRenderer *renderer,
 }
 
 static void
-gimp_view_monitor_changed (GimpView *view)
+ligma_view_monitor_changed (LigmaView *view)
 {
   if (view->renderer)
-    gimp_view_renderer_free_color_transform (view->renderer);
+    ligma_view_renderer_free_color_transform (view->renderer);
 }
 
-static GimpViewable *
-gimp_view_drag_viewable (GtkWidget    *widget,
-                         GimpContext **context,
+static LigmaViewable *
+ligma_view_drag_viewable (GtkWidget    *widget,
+                         LigmaContext **context,
                          gpointer      data)
 {
   if (context)
-    *context = GIMP_VIEW (widget)->renderer->context;
+    *context = LIGMA_VIEW (widget)->renderer->context;
 
-  return GIMP_VIEW (widget)->viewable;
+  return LIGMA_VIEW (widget)->viewable;
 }
 
 static GdkPixbuf *
-gimp_view_drag_pixbuf (GtkWidget *widget,
+ligma_view_drag_pixbuf (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpView     *view     = GIMP_VIEW (widget);
-  GimpViewable *viewable = view->viewable;
+  LigmaView     *view     = LIGMA_VIEW (widget);
+  LigmaViewable *viewable = view->viewable;
   gint          width;
   gint          height;
 
-  if (viewable && gimp_viewable_get_size (viewable, &width, &height))
-    return gimp_viewable_get_new_pixbuf (viewable, view->renderer->context,
+  if (viewable && ligma_viewable_get_size (viewable, &width, &height))
+    return ligma_viewable_get_new_pixbuf (viewable, view->renderer->context,
                                          width, height);
 
   return NULL;

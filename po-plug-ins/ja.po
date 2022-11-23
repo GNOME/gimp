@@ -1,4 +1,4 @@
-# GIMP plug-ins message translation table
+# LIGMA plug-ins message translation table
 # Copyright (C) 1999-2012, 2021 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999-2001.
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000.
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-12-18 18:43+0000\n"
 "PO-Revision-Date: 2021-01-09 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
@@ -72,11 +72,11 @@ msgstr ""
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:852
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1246
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
-#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2496
 #: ../plug-ins/gradient-flare/gradient-flare.c:3346
 #: ../plug-ins/gradient-flare/gradient-flare.c:3458
@@ -161,10 +161,10 @@ msgstr ""
 #: ../plug-ins/flame/flame.c:1010
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1247
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2497
 #: ../plug-ins/gradient-flare/gradient-flare.c:3459
 #: ../plug-ins/ifs-compose/ifs-compose.c:783
@@ -180,15 +180,15 @@ msgstr "OK(_O)"
 msgid "Exercise a goat (Vala)"
 msgstr ""
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:1
 msgid "Goat Exercises"
 msgstr ""
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
 msgstr ""
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
@@ -390,7 +390,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:424
 #: ../plug-ins/file-tiff/file-tiff-load.c:1261
 #: ../plug-ins/file-webp/file-webp-load.c:173
-#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:653
 msgid "Background"
@@ -467,7 +467,7 @@ msgid "Checkerboard"
 msgstr "市松模様"
 
 #: ../plug-ins/common/checkerboard.c:532
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "サイズ(_S):"
 
@@ -670,8 +670,8 @@ msgstr "共通種を元にした乱数"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:200
-#: ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "色相"
 
@@ -682,8 +682,8 @@ msgstr "彩度"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
 #: ../plug-ins/common/decompose.c:202
-#: ../plug-ins/gimpressionist/orientation.c:148
-#: ../plug-ins/gimpressionist/size.c:155
+#: ../plug-ins/ligmaressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/size.c:155
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "明度"
@@ -751,7 +751,7 @@ msgstr "開く(_O)"
 #: ../plug-ins/flame/flame.c:1088
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:780
 #: ../plug-ins/ifs-compose/ifs-compose.c:2536
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
@@ -949,7 +949,7 @@ msgstr "CML エクスプローラーのパラメーター保存"
 #: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1395
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:521
-#: ../plug-ins/file-fli/fli-gimp.c:786 ../plug-ins/file-ico/ico-save.c:1103
+#: ../plug-ins/file-fli/fli-ligma.c:786 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:317 ../plug-ins/file-psd/psd-save.c:1753
 #: ../plug-ins/file-tiff/file-tiff-save.c:1062
 #: ../plug-ins/file-tiff/file-tiff-save.c:1177 ../plug-ins/flame/flame.c:485
@@ -986,15 +986,15 @@ msgstr "CML エクスプローラーのパラメーター読み込み"
 #: ../plug-ins/common/file-xwd.c:484 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-dds/ddsread.c:156
 #: ../plug-ins/file-faxg3/faxg3.c:256 ../plug-ins/file-fits/fits.c:384
-#: ../plug-ins/file-fli/fli-gimp.c:460 ../plug-ins/file-fli/fli-gimp.c:510
+#: ../plug-ins/file-fli/fli-ligma.c:460 ../plug-ins/file-fli/fli-ligma.c:510
 #: ../plug-ins/file-ico/ico-load.c:676 ../plug-ins/file-ico/ico-load.c:758
 #: ../plug-ins/file-jpeg/jpeg-load.c:102 ../plug-ins/file-jpeg/jpeg-load.c:543
 #: ../plug-ins/file-psd/psd-load.c:152 ../plug-ins/file-psd/psd-thumb-load.c:90
 #: ../plug-ins/flame/flame.c:454
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1015
-#: ../plug-ins/gfig/gfig.c:454 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:454 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1078,7 +1078,7 @@ msgstr "カラーマップ変更"
 #: ../plug-ins/common/sphere-designer.c:2626
 #: ../plug-ins/common/tile-small.c:502
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:781
 #: ../plug-ins/selection-to-path/selection-to-path.c:405
 msgid "_Reset"
@@ -1437,8 +1437,8 @@ msgstr "カーブに沿って曲げる"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1222
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "プレビュー"
@@ -1801,7 +1801,7 @@ msgstr "ノイズ除去(_P)..."
 msgid "Remove speckle noise from the image"
 msgstr ""
 "画像中のノイズやモアレを除去します\n"
-"(以前の GIMP の「非斑化」)"
+"(以前の LIGMA の「非斑化」)"
 
 #: ../plug-ins/common/despeckle.c:396 ../plug-ins/common/despeckle.c:899
 msgid "Despeckle"
@@ -1940,7 +1940,7 @@ msgstr ""
 #: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:650
 #: ../plug-ins/common/file-xpm.c:383 ../plug-ins/common/file-xwd.c:474
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
-#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:500
+#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-ligma.c:500
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
 #: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
@@ -2029,7 +2029,7 @@ msgstr ""
 #: ../plug-ins/common/file-tga.c:1224 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:710 ../plug-ins/common/file-xwd.c:678
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:510
-#: ../plug-ins/file-fli/fli-gimp.c:751 ../plug-ins/file-ico/ico-save.c:1093
+#: ../plug-ins/file-fli/fli-ligma.c:751 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:270 ../plug-ins/file-psd/psd-save.c:1716
 #: ../plug-ins/file-sgi/sgi.c:594 ../plug-ins/file-tiff/file-tiff-save.c:1052
 #, fuzzy, c-format
@@ -2157,8 +2157,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "不明な画像タイプは扱えません。"
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "GIMP ブラシ"
+msgid "LIGMA brush"
+msgstr "LIGMA ブラシ"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, fuzzy, c-format
@@ -2410,8 +2410,8 @@ msgstr ""
 "を持つ画像でなければ、アニメーションとしてエクスポートすることはできません。"
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "GIMP ブラシ (動画)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA ブラシ (動画)"
 
 #: ../plug-ins/common/file-gih.c:605
 msgid "Brush Pipe"
@@ -3036,8 +3036,8 @@ msgstr ""
 "ションは、画像が複数のレイヤーを持つときのみ有効です。"
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "GIMP パターン"
+msgid "LIGMA pattern"
+msgstr "LIGMA パターン"
 
 #: ../plug-ins/common/file-pat.c:206
 #, fuzzy, c-format
@@ -3530,16 +3530,16 @@ msgid "Invalid X resolution."
 msgstr "不正な X 解像度です"
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "画像の幅が GIMP で扱える範囲を超えています"
+msgid "Image width is larger than LIGMA can handle."
+msgstr "画像の幅が LIGMA で扱える範囲を超えています"
 
 #: ../plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "不正な Y 解像度です"
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "画像の高さが GIMP で扱える範囲を超えています"
+msgid "Image height is larger than LIGMA can handle."
+msgstr "画像の高さが LIGMA で扱える範囲を超えています"
 
 #: ../plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3652,8 +3652,8 @@ msgstr "グレー"
 
 # 「色」とすべき箇所と「カラー」とすべき箇所（あるいはその他の表記）が衝突している
 #: ../plug-ins/common/file-ps.c:3692 ../plug-ins/common/file-xpm.c:515
-#: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65
+#: ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "カラー"
@@ -4198,10 +4198,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"画像の幅がGIMPで扱える範囲を超えています"
+"画像の幅がLIGMAで扱える範囲を超えています"
 
 #: ../plug-ins/common/file-sunras.c:540 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:569
@@ -4218,10 +4218,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"画像の高さがGIMPで扱える範囲を超えています"
+"画像の高さがLIGMAで扱える範囲を超えています"
 
 #: ../plug-ins/common/file-sunras.c:584
 msgid "This image depth is not supported"
@@ -4332,8 +4332,8 @@ msgstr "パスをインポートする(_P)"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "SVG のパス要素を GIMP パスツールで使えるようにインポートします"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "SVG のパス要素を LIGMA パスツールで使えるようにインポートします"
 
 #: ../plug-ins/common/file-svg.c:891
 msgid "Merge imported paths"
@@ -5399,9 +5399,9 @@ msgstr "ソース色の取得(_S)"
 #: ../plug-ins/common/sample-colorize.c:1393
 #: ../plug-ins/common/tile-small.c:606
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1202
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "適用(_A)"
@@ -5641,7 +5641,7 @@ msgid "Use the background color"
 msgstr "背景色を使う"
 
 #: ../plug-ins/common/sphere-designer.c:334
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "単色"
 
@@ -5729,7 +5729,7 @@ msgstr "複製(_U)"
 #: ../plug-ins/common/sphere-designer.c:2746
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:852
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 #: ../plug-ins/gradient-flare/gradient-flare.c:3346
 #: ../plug-ins/ifs-compose/ifs-compose.c:1050
@@ -5766,7 +5766,7 @@ msgstr "色選択ダイアログ"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2828
-#: ../plug-ins/gimpressionist/paper.c:191
+#: ../plug-ins/ligmaressionist/paper.c:191
 #: ../plug-ins/ifs-compose/ifs-compose.c:559
 msgid "Scale:"
 msgstr "拡大縮小:"
@@ -5918,9 +5918,9 @@ msgstr "保存済"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
-msgstr "チェックされている単位定義は GIMP 終了時に保存されます。"
+msgstr "チェックされている単位定義は LIGMA 終了時に保存されます。"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid "ID"
@@ -5928,8 +5928,8 @@ msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:113
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr "これらの文字列は GIMP の設定ファイルで単位を識別するために使われます。"
+"This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "これらの文字列は LIGMA の設定ファイルで単位を識別するために使われます。"
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "Factor"
@@ -6001,9 +6001,9 @@ msgstr "選択している単位を基に、新しい単位を定義します"
 msgid "U_nits"
 msgstr "単位の定義(_N)"
 
-# GIMP で使う単位であることはわかりきったことなので "used in GIMP" の訳は省略した
+# LIGMA で使う単位であることはわかりきったことなので "used in LIGMA" の訳は省略した
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
+msgid "Create or alter units used in LIGMA"
 msgstr "新しい単位を定義したり変更したりします"
 
 #: ../plug-ins/common/unit-editor.c:237
@@ -6054,7 +6054,7 @@ msgstr "単位の定義"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1191
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "再読み込み(_R)"
 
@@ -6511,13 +6511,13 @@ msgstr "色空間の情報を書き込む(_W)"
 #, fuzzy
 #| msgid ""
 #| "Some applications can not read BMP images that include color space "
-#| "information. GIMP writes color space information by default. Enabling "
-#| "this option will cause GIMP to not write color space information to the "
+#| "information. LIGMA writes color space information by default. Enabling "
+#| "this option will cause LIGMA to not write color space information to the "
 #| "file."
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
 msgstr ""
 "アプリケーションによっては色空間の情報を含む BMP 形式の画像ファイルを読み込め"
 "ない場合があります。既定では BMP 形式ファイルへのエクスポート時に色空間情報を"
@@ -6803,28 +6803,28 @@ msgctxt "composing"
 msgid "_None"
 msgstr "圧縮しない(_N)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC 動画"
 
-#: ../plug-ins/file-fli/fli-gimp.c:585
+#: ../plug-ins/file-fli/fli-ligma.c:585
 #, c-format
 msgid "Frame (%i)"
 msgstr "フレーム (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:747
+#: ../plug-ins/file-fli/fli-ligma.c:747
 #, fuzzy
 #| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "インデックスもしくはグレースケール画像しか保存できません。"
 
-#: ../plug-ins/file-fli/fli-gimp.c:910
+#: ../plug-ins/file-fli/fli-ligma.c:910
 #, fuzzy
 #| msgid "AutoDesk FLIC animation"
 msgid "Open FLIC Animation"
 msgstr "AutoDesk FLIC 動画"
 
-#: ../plug-ins/file-fli/fli-gimp.c:928
+#: ../plug-ins/file-fli/fli-ligma.c:928
 #, fuzzy
 #| msgctxt "email-address"
 #| msgid "_From:"
@@ -6832,7 +6832,7 @@ msgctxt "frame-range"
 msgid "_From:"
 msgstr "差出人(_F):  "
 
-#: ../plug-ins/file-fli/fli-gimp.c:934
+#: ../plug-ins/file-fli/fli-ligma.c:934
 #, fuzzy
 #| msgctxt "email-address"
 #| msgid "_To:"
@@ -6840,7 +6840,7 @@ msgctxt "frame-range"
 msgid "_To:"
 msgstr "宛先(_T):  "
 
-#: ../plug-ins/file-fli/fli-gimp.c:964
+#: ../plug-ins/file-fli/fli-ligma.c:964
 #, fuzzy
 #| msgid "AutoDesk FLIC animation"
 msgid "Export Image as FLI Animation"
@@ -7108,8 +7108,8 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/file-psd/psd-save.c:463
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "GIMP の画像タイプを PSD のモードに変換できません"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "LIGMA の画像タイプを PSD のモードに変換できません"
 
 #: ../plug-ins/file-psd/psd-save.c:1709
 #, fuzzy, c-format
@@ -7254,7 +7254,7 @@ msgstr ""
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -7707,8 +7707,8 @@ msgstr "乱数のリセット(_R)"
 msgid "Same"
 msgstr "同じ"
 
-#: ../plug-ins/flame/flame.c:785 ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/flame/flame.c:785 ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "ランダム"
 
@@ -7840,8 +7840,8 @@ msgstr "炎の設定ファイルを保存"
 msgid "Flame"
 msgstr "炎(プロミネンス)"
 
-#: ../plug-ins/flame/flame.c:1072 ../plug-ins/gimpressionist/orientation.c:190
-#: ../plug-ins/gimpressionist/size.c:199
+#: ../plug-ins/flame/flame.c:1072 ../plug-ins/ligmaressionist/orientation.c:190
+#: ../plug-ins/ligmaressionist/size.c:199
 #: ../plug-ins/gradient-flare/gradient-flare.c:3061
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -7900,16 +7900,16 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:977
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"gimprc の中に '%1$s' の記述が見つかりません\n"
+"ligmarc の中に '%1$s' の記述が見つかりません\n"
 "ファイル '%4$s' の中に\n"
 "\n"
 "(%2$s \"%3$s\")\n"
@@ -8518,7 +8518,7 @@ msgstr "アンチエイリアス"
 msgid "Max undo:"
 msgstr "元に戻せる段階:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "透明"
 
@@ -8617,7 +8617,7 @@ msgid "Left"
 msgstr "左"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1746
-#: ../plug-ins/gimpressionist/orientation.c:140
+#: ../plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "向き:"
 
@@ -8674,299 +8674,299 @@ msgstr "図を付属物として保存中にエラー: 描画対象に付属物�
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "付属物読み込み用の一時ファイル '%s' オープン中にエラー: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "描画対象のみ保存できます!"
 
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "ブラシの保存"
 
-#: ../plug-ins/gimpressionist/brush.c:522
+#: ../plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "ブラシ(_B)"
 
-#: ../plug-ins/gimpressionist/brush.c:559
+#: ../plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "ガンマ:"
 
-#: ../plug-ins/gimpressionist/brush.c:577
+#: ../plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "選択したブラシのガンマ (明るさ) を変更します"
 
-#: ../plug-ins/gimpressionist/brush.c:585
+#: ../plug-ins/ligmaressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:595
 msgid "Select:"
 msgstr "選択:"
 
-#: ../plug-ins/gimpressionist/brush.c:601
+#: ../plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "名前を付けて保存(_A)..."
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "縦横比:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "ブラシの縦横比を指定します"
 
-#: ../plug-ins/gimpressionist/brush.c:626
-#: ../plug-ins/gimpressionist/paper.c:202
+#: ../plug-ins/ligmaressionist/brush.c:626
+#: ../plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "浮き彫り:"
 
-#: ../plug-ins/gimpressionist/brush.c:628
-#: ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:628
+#: ../plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "浮き彫り効果の強さをパーセントで指定します"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "色(_L)"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "ブラシ下の平均(_V)"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "ブラシの中心(_E)"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "ブラシの下のすべてのピクセルの平均から色を設定します"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "ブラシの中心にあるピクセルの色を取得して設定します"
 
-#: ../plug-ins/gimpressionist/color.c:87
+#: ../plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "ノイズの付加(_N):"
 
-#: ../plug-ins/gimpressionist/color.c:89
+#: ../plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "色にランダムノイズを付加します"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3656
 msgid "_General"
 msgstr "全般(_G)"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "元画像を残す"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "元画像を背景として残します"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "紙から"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "選択した紙のテクスチャーを背景にコピーします"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "背景を単色で塗ります"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "背景を透明にして塗った部分だけが見えるようにします"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "端も塗る"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "画像の周りに出ていくようにブラシストロークさせるかどうか"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "タイル化可能"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "結果画像が継目無しに並べられるようにするかどうか"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "ドロップシャドウ"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "個々のブラシ描画の際に影を付けます"
 
-#: ../plug-ins/gimpressionist/general.c:238
+#: ../plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "端の暗度:"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "ブラシストロークの端の暗度を設定します"
 
-#: ../plug-ins/gimpressionist/general.c:246
+#: ../plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "ドロップシャドウの暗度:"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "ドロップシャドウの暗度を設定します"
 
-#: ../plug-ins/gimpressionist/general.c:255
+#: ../plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "ドロップシャドウの深度:"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "ドロップシャドウの深さ (オブジェクトからドロップシャドウを離す度合い) を設定"
 "します"
 
-#: ../plug-ins/gimpressionist/general.c:263
+#: ../plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "ドロップシャドウのぼかし量:"
 
-#: ../plug-ins/gimpressionist/general.c:265
+#: ../plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "ドロップシャドウのぼかし量を設定します"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "しきい値:"
 
-#: ../plug-ins/gimpressionist/general.c:273
+#: ../plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "効果を適用する領域を決定するためのしきい値を設定します"
 
-#: ../plug-ins/gimpressionist/gimp.c:116
-msgid "_GIMPressionist..."
-msgstr "GIMPressionist(_G)..."
+#: ../plug-ins/ligmaressionist/ligma.c:116
+msgid "_LIGMAressionist..."
+msgstr "LIGMAressionist(_G)..."
 
-#: ../plug-ins/gimpressionist/gimp.c:120
+#: ../plug-ins/ligmaressionist/ligma.c:120
 msgid "Performs various artistic operations"
 msgstr "色々なオプションを用いて芸術的効果を画像に適用します"
 
-#: ../plug-ins/gimpressionist/gimp.c:429
+#: ../plug-ins/ligmaressionist/ligma.c:429
 msgid "Painting"
 msgstr "描画しています"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "向き(_I)"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "方向バリエーション数:"
 
-#: ../plug-ins/gimpressionist/orientation.c:102
+#: ../plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "使用できるストローク方向のバリエーション数を指定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:111
+#: ../plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "開始角度:"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "最初のストローク方向 (角度) を指定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "角度範囲:"
 
-#: ../plug-ins/gimpressionist/orientation.c:124
+#: ../plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "ストローク方向を変化させる範囲 (角度) を指定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "付近の明度でストローク方向を決定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "中央からの距離"
 
-#: ../plug-ins/gimpressionist/orientation.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "画像中央からの距離でストローク方向を決定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "ストロークごとにランダムなストローク方向を選びます"
 
 # fixed Bug 588342 reported by SimaMoto, Ryota.
 # 「半径」から変更、フィルター適用後の結果から意訳
 # (2009-07-19 NISHIBORI Kiyotaka)
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "中央からの方向"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "画像中央からの方向でストローク方向を決定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "流れるように"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
-#: ../plug-ins/gimpressionist/size.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "「流れるような」パターンに従ってストロークします"
 
-#: ../plug-ins/gimpressionist/orientation.c:173
+#: ../plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "付近の色相でストローク方向を決定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "適応的"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr "原画に最適なストローク方向を自動的に選びます"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "手動設定"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "ストローク方向を手動で設定します"
 
-#: ../plug-ins/gimpressionist/orientation.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "方位マップエディターを開く"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "方位マップエディター"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "ベクトル"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -8975,64 +8975,64 @@ msgstr ""
 "右クリック: アクティブなベクトルの方向を決定します\n"
 "中クリック: 新しいベクトルを追加します"
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "プレビューの明るさを調整する"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "前のベクトルをアクティブにします"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "次のベクトルをアクティブにします"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "追加(_D)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "新しいベクトルを追加します"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "削除(_K)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "アクティブなベクトルを削除します"
 
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "種類"
 
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "標準(_N)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "渦(_X)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "渦 _2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "渦 _3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "ボロノイモード(_V)"
 
 #  訳注：実際の動作から意訳（作文）した
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -9040,239 +9040,239 @@ msgstr ""
 "ボロノイモードでは、設定したベクトルを母点とするボロノイ図として各ベクトルが"
 "影響を受けます"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "角度(_N):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "アクティブなベクトルの角度を指定します"
 
-#: ../plug-ins/gimpressionist/orientmap.c:678
+#: ../plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "角度オフセット(_L):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr ""
 "指定した角度で、アクティブなベクトル以外のベクトルの向きをオフセットします"
 
-#: ../plug-ins/gimpressionist/orientmap.c:688
+#: ../plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "強さ(_S):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "アクティブなベクトルの強さを指定します"
 
-#: ../plug-ins/gimpressionist/orientmap.c:699
+#: ../plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "強さ指数(_T):"
 
-#: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "強さの指数を指定します"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "紙(_A)"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "階調を反転する(_I)"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "紙テクスチャーの階調を反転して適用します"
 
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "オーバーレイ(_V)"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "紙テクスチャーを浮き彫りにせず、そのまま適用します"
 
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "テクスチャーの拡大率/縮小率をパーセントで指定します"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "配置(_A)"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "ストロークの配置"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "ランダムに"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "均等に"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "ストロークを画像中にランダムに配置します"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "ストロークを画像中に均等に配置します"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "中心に集中させる"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "画像の中心周りにブラシストロークを集中させます"
 
-#: ../plug-ins/gimpressionist/placement.c:113
+#: ../plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "ストローク密度(_D):"
 
-#: ../plug-ins/gimpressionist/placement.c:115
+#: ../plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "ブラシストロークの相対的な密度を指定します"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "PPM ファイル '%s' の保存に失敗: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "現状保存"
 
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "説明:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist デフォルト"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist デフォルト"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "プリセット(_P)"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "現状保存..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "現在の設定に名前を付けてファイルに保存します"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "メモリに選択したプリセットを読み込みます"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "選択したプリセットを削除します"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "プリセットのディレクトリを再読み込みします"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511
 #: ../plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "更新(_U)"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "プレビューウィンドウの更新"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "元画像に戻す"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "サイズ(_S)"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "サイズバリエーション数:"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "使用できるストロークサイズのバリエーション数を指定します"
 
-#: ../plug-ins/gimpressionist/size.c:118
+#: ../plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "最小サイズ:"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "作成する最小ブラシサイズを指定します"
 
-#: ../plug-ins/gimpressionist/size.c:129
+#: ../plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "最大サイズ:"
 
-#: ../plug-ins/gimpressionist/size.c:131
+#: ../plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "作成する最大ブラシサイズを指定します"
 
-#: ../plug-ins/gimpressionist/size.c:147
+#: ../plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "サイズの決定基準:"
 
-#: ../plug-ins/gimpressionist/size.c:156
+#: ../plug-ins/ligmaressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "付近の明度でストロークサイズを決定します"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "画像中央からの距離でストロークサイズを決定します"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "ストロークごとにランダムなブラシサイズを選びます"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "画像中央からの方向でストロークサイズを決定します"
 
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "付近の色相でストロークサイズを決定します"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "原画に最適なストロークサイズを自動的に選びます"
 
-#: ../plug-ins/gimpressionist/size.c:193
+#: ../plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "ストロークサイズを手動で設定します"
 
-#: ../plug-ins/gimpressionist/size.c:204
+#: ../plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "サイズマップエディターを開いてストロークサイズを設定します"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "サイズマップエディター"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "サイズマップベクトル"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9281,40 +9281,40 @@ msgstr ""
 "ティブなサイズマップベクトルの方向を決定、中クリックで新しいサイズマップベク"
 "トルを追加します。"
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "前のサイズマップベクトルをアクティブにします"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "次のサイズマップベクトルをアクティブにします"
 
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "新しいサイズマップベクトルを追加します"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "アクティブなサイズマップベクトルを削除します"
 
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "アクティブなサイズマップベクトルの角度を指定します"
 
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "強さ(_T):"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "アクティブなサイズマップベクトルの強さを指定します"
 
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "強さ指数(_R):"
 
 # 実際の動作から意訳（作文）した
-#: ../plug-ins/gimpressionist/sizemap.c:546
+#: ../plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9697,9 +9697,9 @@ msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 #, fuzzy
-#| msgid "GIMP Extension"
+#| msgid "LIGMA Extension"
 msgid "IPTC Extension"
-msgstr "GIMP 拡張機能"
+msgstr "LIGMA 拡張機能"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
 msgid "Supplemental Category"
@@ -9892,9 +9892,9 @@ msgid "invalid formatted GFlare file: %s\n"
 msgstr "'%s' は無効な形式のグラデーションフレアファイルです。\n"
 
 # %1$s: gflare->name
-# %2$s: gimprc
+# %2$s: ligmarc
 # %3$s: gflare_dir
-# %4$s: gimp_filename_to_utf8 (dir)
+# %4$s: ligma_filename_to_utf8 (dir)
 #: ../plug-ins/gradient-flare/gradient-flare.c:1541
 #, c-format
 msgid ""
@@ -10142,8 +10142,8 @@ msgid "_Second Flares"
 msgstr "二次フレア(_S)"
 
 #: ../plug-ins/help-browser/dialog.c:177 ../plug-ins/help-browser/dialog.c:1104
-msgid "GIMP Help Browser"
-msgstr "GIMP ヘルプブラウザー"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA ヘルプブラウザー"
 
 #: ../plug-ins/help-browser/dialog.c:542
 msgid "Go back one page"
@@ -10198,8 +10198,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "目次 (サイドバー) の表示/非表示を切り替えます"
 
 #: ../plug-ins/help-browser/dialog.c:634
-msgid "Visit the GIMP documentation website"
-msgstr "GIMP Documentation ウェブサイトへ移動"
+msgid "Visit the LIGMA documentation website"
+msgstr "LIGMA Documentation ウェブサイトへ移動"
 
 #: ../plug-ins/help-browser/dialog.c:1146
 msgid "Find:"
@@ -10220,14 +10220,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "閉じる(_C)"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "%s に関するヘルプ (ページ) は、現在利用できません。"
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "現在、GIMP ユーザーマニュアルは利用できません。"
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "現在、LIGMA ユーザーマニュアルは利用できません。"
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -10235,35 +10235,35 @@ msgstr "現在、GIMP ユーザーマニュアルは利用できません。"
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 #, fuzzy
 #| msgid ""
 #| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
+#| "at http://docs.ligma.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"https://docs.ligma.org/"
 msgstr ""
-"GIMP 2 ユーザーマニュアル・パッケージをインストールするか、オンライン版の "
-"GIMP ユーザーマニュアル ( http://docs.gimp.org/) を利用してください。"
+"LIGMA 2 ユーザーマニュアル・パッケージをインストールするか、オンライン版の "
+"LIGMA ユーザーマニュアル ( http://docs.ligma.org/) を利用してください。"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 "おそらく GIO バックエンドが見つからないためと思われます。GVFS のインストール"
 "を確認してください。"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ヘルプ ID '%s' が分かりません"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "'%s' からインデックスを読み込んでいます..."
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10493,7 +10493,7 @@ msgid "Clear"
 msgstr "消去"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "作成"
 
@@ -10518,41 +10518,41 @@ msgid "Edit Object"
 msgstr "オブジェクト編集"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Gimp のガイドを使う"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Ligma のガイドを使う"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "一つおきのタイル(_T)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "すべて(_L)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "ガイドを追加"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "左の縁(_E)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "右の縁(_R)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "上の縁(_U)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "下の縁(_W)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "基準 URL(_B):"
 
@@ -10996,8 +10996,8 @@ msgid "Grid Settings..."
 msgstr "グリッドの設定..."
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "GIMP のガイドを使う..."
+msgid "Use LIGMA Guides..."
+msgstr "LIGMA のガイドを使う..."
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
@@ -12798,7 +12798,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "_HSL color model"
 #~ msgstr "HSL カラーモデル(_H)"
 
-#~ msgid "Preview a GIMP layer-based animation"
+#~ msgid "Preview a LIGMA layer-based animation"
 #~ msgstr "レイヤーによるアニメーションを再生します"
 
 #~ msgid "_Playback..."
@@ -13586,14 +13586,14 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr ""
 #~ "'%s' のヘッダーデータ (幅: %lu、高さ: %lu、バイト: %lu) は無効な値です"
 
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "GIMP ブラシファイル '%s' でエラー発生"
+#~ msgid "Error in LIGMA brush file '%s'"
+#~ msgstr "LIGMA ブラシファイル '%s' でエラー発生"
 
 #~ msgid "Invalid UTF-8 string in brush file '%s'."
 #~ msgstr "ブラシファイル '%s' に不正な UTF-8 文字列"
 
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "GIMP ブラシファイルはグレースケールか RGBA のいずれかです"
+#~ msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+#~ msgstr "LIGMA ブラシファイルはグレースケールか RGBA のいずれかです"
 
 #~ msgid "Brush"
 #~ msgstr "ブラシ"
@@ -13614,11 +13614,11 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "The default comment is limited to %d characters."
 #~ msgstr "デフォルトのコメントは %d 文字までです。"
 
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "GIMP ブラシパイプファイル中にエラー"
+#~ msgid "Error in LIGMA brush pipe file."
+#~ msgstr "LIGMA ブラシパイプファイル中にエラー"
 
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "GIMP ブラシファイルが破損しているようです。"
+#~ msgid "LIGMA brush file appears to be corrupted."
+#~ msgstr "LIGMA ブラシファイルが破損しているようです。"
 
 #~ msgid "Couldn't load one brush in the pipe, giving up."
 #~ msgstr "パイプ中のブラシが読み込めませんでした。"
@@ -13738,12 +13738,12 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 #~ msgid ""
 #~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+#~ "The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 #~ "bit, so it will be converted for you. Information will be lost because of "
 #~ "this conversion."
 #~ msgstr ""
 #~ "警告:\n"
-#~ "16 bit /チャンネルの画像を読み込もうとしていますが、GIMPはこのモードが取り"
+#~ "16 bit /チャンネルの画像を読み込もうとしていますが、LIGMAはこのモードが取り"
 #~ "扱えないので 8 bit /チャンネルに変換します。この変換によりカラー情報の一部"
 #~ "が失われます。"
 
@@ -14591,10 +14591,10 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "画像にモザイク処理を適用します (旧バージョンの「ピクセル化」)"
 
 # 「ピクセル化」から「モザイク処理」に変更
-# - GIMP ユーザーから「モザイクを掛けたいのだがどのフィルターを使えばいいの？」との問いかけがあった
+# - LIGMA ユーザーから「モザイクを掛けたいのだがどのフィルターを使えばいいの？」との問いかけがあった
 # - 日本では "Pixelize" を「モザイク」と呼ぶことが一般的である
 # - Photoshop でも同様のフィルターに「モザイク」の呼称が使われている
-# - GIMP では既に「モザイク」の呼称のフィルターが存在するので、曖昧さ回避のために「モザイク処理」とした
+# - LIGMA では既に「モザイク」の呼称のフィルターが存在するので、曖昧さ回避のために「モザイク処理」とした
 #~ msgid "_Pixelize..."
 #~ msgstr "モザイク処理(_P)..."
 
@@ -14602,10 +14602,10 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "モザイク処理を適用しています"
 
 # 「ピクセル化」から「モザイク処理」に変更
-# - GIMP ユーザーから「モザイクを掛けたいのだがどのフィルターを使えばいいの？」との問いかけがあった
+# - LIGMA ユーザーから「モザイクを掛けたいのだがどのフィルターを使えばいいの？」との問いかけがあった
 # - 日本では "Pixelize" を「モザイク」と呼ぶことが一般的である
 # - Photoshop でも同様のフィルターに「モザイク」の呼称が使われている
-# - GIMP では既に「モザイク」の呼称のフィルターが存在するので、曖昧さ回避のために「モザイク処理」とした
+# - LIGMA では既に「モザイク」の呼称のフィルターが存在するので、曖昧さ回避のために「モザイク処理」とした
 #~ msgid "Pixelize"
 #~ msgstr "モザイク処理"
 
@@ -15147,7 +15147,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 # - Twitter 上で、ユーザから訳が適切でないとの指摘があった
 # - これに類似したフィルターは、Photoshop では「渦巻き」と「つまむ」と表記されている (Photoshop では 2つのフィルターに分かれている)
-# - GIMPでは「つまむ」という名のフィルターが既に存在しているので、「つまむ」に該当する部分を「吸い込み」とした
+# - LIGMAでは「つまむ」という名のフィルターが既に存在しているので、「つまむ」に該当する部分を「吸い込み」とした
 #~ msgid "W_hirl and Pinch..."
 #~ msgstr "渦巻きと吸い込み(_H)..."
 
@@ -15156,7 +15156,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 # - Twitter 上で、ユーザから訳が適切でないとの指摘があった
 # - これに類似したフィルターは、Photoshop では「渦巻き」と「つまむ」と表記されている (Photoshop では 2つのフィルターに分かれている)
-# - GIMPでは「つまむ」という名のフィルターが既に存在しているので、「つまむ」に該当する部分を「吸い込み」とした
+# - LIGMAでは「つまむ」という名のフィルターが既に存在しているので、「つまむ」に該当する部分を「吸い込み」とした
 #~ msgid "Whirl and Pinch"
 #~ msgstr "渦巻きと吸い込み"
 
@@ -15249,7 +15249,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ "この画像ファイルは回転されています。\n"
 #~ "(EXIF データに回転情報が記録されています。)"
 
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
+#~ msgid "Would you like LIGMA to rotate it into the standard orientation?"
 #~ msgstr "(プレビューのように) 元の向きで開きますか？"
 
 #~ msgid "JPEG quality parameter"
@@ -15341,8 +15341,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "URI"
 #~ msgstr "URI"
 
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "GIMP 圧縮 XJT 画像"
+#~ msgid "LIGMA compressed XJT image"
+#~ msgstr "LIGMA 圧縮 XJT 画像"
 
 #~ msgid "XJT file contains unknown layermode %d"
 #~ msgstr "XJT ファイル中に不明なレイヤーモード %d があります"
@@ -15532,7 +15532,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
+#~ "if necessary - use the environment variable GS_PROG to tell LIGMA about "
 #~ "its location.\n"
 #~ "(%s)"
 #~ msgstr ""
@@ -15605,14 +15605,14 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Hotspot _X:"
 #~ msgstr "ホットスポット X(_X): "
 
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "A big hello from the GIMP team!"
+#~ msgid "A big hello from the LIGMA team!"
+#~ msgstr "A big hello from the LIGMA team!"
 
 #~ msgid "Gee Zoom"
 #~ msgstr "Gee ズーム"
 
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "GIMP を選んでくれてありがとう"
+#~ msgid "Thank You for Choosing LIGMA"
+#~ msgstr "LIGMA を選んでくれてありがとう"
 
 #~ msgid "An obsolete creation by %s"
 #~ msgstr "%s の昔の作品"
@@ -15722,8 +15722,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Unable to add additional point.\n"
 #~ msgstr "これ以上点を追加できません。\n"
 
-#~ msgid "There is a problem with the GIMP user manual."
-#~ msgstr "GIMP ユーザーマニュアルに以下の問題が発生しました。"
+#~ msgid "There is a problem with the LIGMA user manual."
+#~ msgstr "LIGMA ユーザーマニュアルに以下の問題が発生しました。"
 
 #~ msgid "Please check your installation."
 #~ msgstr "インストール内容を確認してください。"
@@ -15746,8 +15746,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "_Smoothing:"
 #~ msgstr "スムージング(_S):"
 
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "GIMP ヘルプファイルが見つかりません。"
+#~ msgid "The LIGMA help files are not found."
+#~ msgstr "LIGMA ヘルプファイルが見つかりません。"
 
 #~ msgid "Enter Password"
 #~ msgstr "パスワードを入力"
@@ -15804,7 +15804,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr ""
 #~ "画像中の黒を描画色、白を背景色の基準でマッピングします。また、描画色と同じ"
 #~ "色のピクセルは黒に、背景色と同じ色のピクセルは白にマップされます。\n"
-#~ "(GIMP2.2 の「前景-背景調整」)"
+#~ "(LIGMA2.2 の「前景-背景調整」)"
 
 #~ msgid "Adjust _Foreground & Background"
 #~ msgstr "描画色と背景色でマップ"
@@ -15821,7 +15821,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Adjusting foreground and background colors"
 #~ msgstr ""
 #~ "現在の描画色と背景色でマッピングします\n"
-#~ "(GIMP2.2 の「前景/背景調整」)"
+#~ "(LIGMA2.2 の「前景/背景調整」)"
 
 #~ msgid "Mapping colors"
 #~ msgstr "カラーマッピングしています"
@@ -16379,14 +16379,14 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "GEE-SLIME"
 #~ msgstr "GEE-スライム"
 
-#~ msgid "Thank you for choosing GIMP"
-#~ msgstr "GIMP を選んでくれてありがとう"
+#~ msgid "Thank you for choosing LIGMA"
+#~ msgstr "LIGMA を選んでくれてありがとう"
 
 #~ msgid ""
-#~ "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox."
+#~ "A less-obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox."
 #~ "org / 1998-2000"
 #~ msgstr ""
-#~ "ちょっと古い Adam D. Moss の作品 / adam@gimp.org / adam@foxbox.org / "
+#~ "ちょっと古い Adam D. Moss の作品 / adam@ligma.org / adam@foxbox.org / "
 #~ "1998-2000"
 
 #~ msgid "Gee-_Zoom"
@@ -16396,10 +16396,10 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "GEE-ズーム"
 
 #~ msgid ""
-#~ "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+#~ "An obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 #~ "1998-2000"
 #~ msgstr ""
-#~ "Adam D. Moss の昔の作品 / adam@gimp.org / adam@foxbox.org / 1998-2000"
+#~ "Adam D. Moss の昔の作品 / adam@ligma.org / adam@foxbox.org / 1998-2000"
 
 #~ msgid ""
 #~ "Warning:\n"
@@ -16453,8 +16453,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Drawing Grid..."
 #~ msgstr "グリッドを描いています..."
 
-#~ msgid "GIMP Table Magic"
-#~ msgstr "GIMP テーブルマジック"
+#~ msgid "LIGMA Table Magic"
+#~ msgstr "LIGMA テーブルマジック"
 
 #~ msgid "Guillotine..."
 #~ msgstr "ギロチンで切断しています..."
@@ -17007,8 +17007,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "PageSetupDlg failed: %d"
 #~ msgstr "PageSetupDlg 失敗: %d"
 
-#~ msgid "Created with The GIMP"
-#~ msgstr "GIMP で作成しました"
+#~ msgid "Created with The LIGMA"
+#~ msgstr "LIGMA で作成しました"
 
 #~ msgid ""
 #~ "XWD-file %s has format %d, depth %d\n"
@@ -17052,11 +17052,11 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Date:"
 #~ msgstr "日付:"
 
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "GIMP 内部プロシージャー"
+#~ msgid "Internal LIGMA procedure"
+#~ msgstr "LIGMA 内部プロシージャー"
 
-#~ msgid "GIMP Plug-In"
-#~ msgstr "GIMP プラグイン"
+#~ msgid "LIGMA Plug-In"
+#~ msgstr "LIGMA プラグイン"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "テンポラリプロシージャー"
@@ -17151,11 +17151,11 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Drop Shadow"
 #~ msgstr "影を落す"
 
-#~ msgid "The GIMPressionist"
-#~ msgstr "The GIMPressionist"
+#~ msgid "The LIGMAressionist"
+#~ msgstr "The LIGMAressionist"
 
-#~ msgid "Gimpressionist"
-#~ msgstr "Gimpressionist"
+#~ msgid "Ligmaressionist"
+#~ msgstr "Ligmaressionist"
 
 #~ msgid "A_bout"
 #~ msgstr "このプラグインについて(_B)"
@@ -17163,8 +17163,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Centerize"
 #~ msgstr "中央寄せ"
 
-#~ msgid "The Gimpressionist Defaults"
-#~ msgstr "Gimpressionist デフォルト"
+#~ msgid "The Ligmaressionist Defaults"
+#~ msgstr "Ligmaressionist デフォルト"
 
 #~ msgid "Save current..."
 #~ msgstr "現状保存..."
@@ -17174,15 +17174,15 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 #~ msgid ""
 #~ "It is highly recommended to add\n"
-#~ " (gimpressionist-path \"%s\")\n"
-#~ "(or similar) to your gimprc file."
+#~ " (ligmaressionist-path \"%s\")\n"
+#~ "(or similar) to your ligmarc file."
 #~ msgstr ""
-#~ "  (gimpressionist-path \"%s\")\n"
-#~ "のように gimprc に付け足すことを\n"
+#~ "  (ligmaressionist-path \"%s\")\n"
+#~ "のように ligmarc に付け足すことを\n"
 #~ "強くお勧めします。"
 
-#~ msgid "GIMP Help browser"
-#~ msgstr "GIMP ヘルプブラウザー"
+#~ msgid "LIGMA Help browser"
+#~ msgstr "LIGMA ヘルプブラウザー"
 
 #~ msgid "Scale Hue by:"
 #~ msgstr "色相倍率:"
@@ -17286,8 +17286,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Grid settings..."
 #~ msgstr "グリッド設定..."
 
-#~ msgid "Use GIMP guides..."
-#~ msgstr "GIMP のガイドを使う..."
+#~ msgid "Use LIGMA guides..."
+#~ msgstr "LIGMA のガイドを使う..."
 
 #~ msgid "Create guides..."
 #~ msgstr "ガイドの作成..."
@@ -17547,19 +17547,19 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Enter the name you wish to give this logical printer"
 #~ msgstr "この論理プリンタ用の名前を入力してください"
 
-#~ msgid "About Gimp-Print "
-#~ msgstr "Gimp-Print について "
+#~ msgid "About Ligma-Print "
+#~ msgstr "Ligma-Print について "
 
-#~ msgid "Gimp-Print Version "
-#~ msgstr "Gimp-Print バージョン "
+#~ msgid "Ligma-Print Version "
+#~ msgstr "Ligma-Print バージョン "
 
 #~ msgid ""
 #~ "\n"
 #~ "\n"
 #~ "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-#~ "and the rest of the Gimp-Print Development Team.\n"
+#~ "and the rest of the Ligma-Print Development Team.\n"
 #~ "\n"
-#~ "Please visit our web site at http://gimp-print.sourceforge.net.\n"
+#~ "Please visit our web site at http://ligma-print.sourceforge.net.\n"
 #~ "\n"
 #~ "This program is free software; you can redistribute it and/or modify\n"
 #~ "it under the terms of the GNU General Public License as published by\n"
@@ -17579,9 +17579,9 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ "\n"
 #~ "\n"
 #~ "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-#~ "and the rest of the Gimp-Print Development Team.\n"
+#~ "and the rest of the Ligma-Print Development Team.\n"
 #~ "\n"
-#~ "私たちの web サイト http://gimp-print.sourceforge.net をご覧ください。\n"
+#~ "私たちの web サイト http://ligma-print.sourceforge.net をご覧ください。\n"
 #~ "\n"
 #~ "本プログラムはフリー・ソフトウェアです。あなたは、Free Software\n"
 #~ " Foundation が公表したGNU一般公有使用許諾の「バージョン2」あるいはそ\n"
@@ -17827,8 +17827,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Transferring TWAIN data..."
 #~ msgstr "TWAIN データを転送しています..."
 
-#~ msgid "GIMP Windows Icon Plugin"
-#~ msgstr "GIMP Windows プラグイン"
+#~ msgid "LIGMA Windows Icon Plugin"
+#~ msgstr "LIGMA Windows プラグイン"
 
 #~ msgid "Icon details"
 #~ msgstr "アイコン詳細"
@@ -17947,12 +17947,12 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "側面/ポイント/回転の数:"
 
 #~ msgid ""
-#~ "The requested document could not be found in your GIMP help path as shown "
+#~ "The requested document could not be found in your LIGMA help path as shown "
 #~ "above. This means that the topic has not yet been written or your "
 #~ "installation is not complete. Ensure that your installation is complete "
 #~ "before reporting this error as a bug."
 #~ msgstr ""
-#~ "お求めの文書は上の GIMP ヘルプファイルパスに見つかりませんでした。該当する"
+#~ "お求めの文書は上の LIGMA ヘルプファイルパスに見つかりませんでした。該当する"
 #~ "トピックのヘルプがまだないか、インストールが不完全である可能性があります。"
 #~ "これをバグとして報告する前にインストールが完全であるか確認して下さい。"
 
@@ -18387,8 +18387,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "About Gfig"
 #~ msgstr "GFig について"
 
-#~ msgid "Gfig - GIMP plug-in"
-#~ msgstr "Gfig - GIMP プラグイン"
+#~ msgid "Gfig - LIGMA plug-in"
+#~ msgstr "Gfig - LIGMA プラグイン"
 
 #, fuzzy
 #~ msgid "Release 2.0"
@@ -18817,8 +18817,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "<Image>/Filters/Toys/Gee-_Slime"
 #~ msgstr "<Image>/フィルター/おもちゃ/Gee-スライム"
 
-#~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-#~ msgstr "GEE-万華鏡: 以前は \"The GIMP E'er Egg\" だったプラグイン"
+#~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The LIGMA E'er Egg\""
+#~ msgstr "GEE-万華鏡: 以前は \"The LIGMA E'er Egg\" だったプラグイン"
 
 #~ msgid "Save as GIcon"
 #~ msgstr "GIcon 形式で保存"
@@ -19088,8 +19088,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "\"%s\" が見つかりません: \"%s\" を使用します"
 
 #, fuzzy
-#~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-#~ msgstr "<Image>/フィルター/芸術的効果/GIMPressionist..."
+#~ msgid "<Image>/Filters/Artistic/_LIGMAressionist..."
+#~ msgstr "<Image>/フィルター/芸術的効果/LIGMAressionist..."
 
 #~ msgid "Paper Preview:"
 #~ msgstr "紙プレビュー:"
@@ -19307,7 +19307,7 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "別名で保存..."
 
 #~ msgid "A_bout..."
-#~ msgstr "Gimpressionist について(_B)..."
+#~ msgstr "Ligmaressionist について(_B)..."
 
 #~ msgid "Click here to load your file"
 #~ msgstr "個人ファイルを読み込みます"
@@ -19347,14 +19347,14 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "ウィンドウ飾りも含める(_D)"
 
 #~ msgid ""
-#~ "GIMP Help Browser Error.\n"
+#~ "LIGMA Help Browser Error.\n"
 #~ "\n"
-#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "Couldn't find LIGMA_HELP_ROOT html directory.\n"
 #~ "(%s)"
 #~ msgstr ""
-#~ "GIMP ヘルプブラウザーエラー。\n"
+#~ "LIGMA ヘルプブラウザーエラー。\n"
 #~ "\n"
-#~ "GIMP_HELP_ROOT HTML ディレクトリが見つかりません。\n"
+#~ "LIGMA_HELP_ROOT HTML ディレクトリが見つかりません。\n"
 #~ "(%s)"
 
 #~ msgid "<Image>/Select/To Path"
@@ -19523,12 +19523,12 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ "1999 年 9月 作"
 
 #~ msgid ""
-#~ "No fractalexplorer-path in gimprc:\n"
+#~ "No fractalexplorer-path in ligmarc:\n"
 #~ "You need to add an entry like\n"
 #~ "(fractalexplorer-path \"%s\")\n"
 #~ "to your %s file."
 #~ msgstr ""
-#~ "fractalexplorer-path が gimprc 中に見つかりません:\n"
+#~ "fractalexplorer-path が ligmarc 中に見つかりません:\n"
 #~ "(fractalexplorer-path \"%s\")\n"
 #~ "のように %s ファイルに追加してみて下さい。"
 
@@ -19587,12 +19587,12 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgstr "等幅グリッド By Rob Saunders"
 
 #~ msgid ""
-#~ "No gflare-path in gimprc:\n"
+#~ "No gflare-path in ligmarc:\n"
 #~ "You need to add an entry like\n"
 #~ "(gflare-path \"%s\")\n"
 #~ "to your %s file."
 #~ msgstr ""
-#~ "gflare-path が gimprc 中に見つかりません:\n"
+#~ "gflare-path が ligmarc 中に見つかりません:\n"
 #~ "(gflare-path \"%s\")\n"
 #~ "のように %s ファイルに追加して下さい。"
 
@@ -19616,11 +19616,11 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "Don't Save Unit"
 #~ msgstr "単位を保存しない"
 
-#~ msgid "Don't save the currently selected unit before GIMP exits."
-#~ msgstr "GIMP が終了するまで現在選択中の単位を保存しない。"
+#~ msgid "Don't save the currently selected unit before LIGMA exits."
+#~ msgstr "LIGMA が終了するまで現在選択中の単位を保存しない。"
 
-#~ msgid "Save the currently selected unit before GIMP exits."
-#~ msgstr "GIMP 終了前に現在選択中の単位を保存する。"
+#~ msgid "Save the currently selected unit before LIGMA exits."
+#~ msgstr "LIGMA 終了前に現在選択中の単位を保存する。"
 
 #~ msgid "Specifies the amount of embossing to apply to each brush stroke"
 #~ msgstr "個々のブラシ描画に適用する浮き彫りの程度を指定する"
@@ -19767,8 +19767,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "selection_to_path"
 #~ msgstr "選択領域からされたパス"
 
-#~ msgid "gimp_image_get_selection failed"
-#~ msgstr "gimp_image_get_selection 失敗"
+#~ msgid "ligma_image_get_selection failed"
+#~ msgstr "ligma_image_get_selection 失敗"
 
 #~ msgid "Internal error. Selection bpp > 1"
 #~ msgstr "内部エラー。選択領域の bpp > 1"
@@ -19814,12 +19814,12 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ "これをバグとして報告する前に慎重に調べて下さい</small></body></html>"
 
 #~ msgid ""
-#~ "GIMP Help Browser Error.\n"
+#~ "LIGMA Help Browser Error.\n"
 #~ "\n"
 #~ "Couldn't find my root html directory.\n"
 #~ "(%s)"
 #~ msgstr ""
-#~ "GIMP ヘルプブラウザーエラー。\n"
+#~ "LIGMA ヘルプブラウザーエラー。\n"
 #~ "\n"
 #~ "ルート HTML ディレクトリが見つかりません。\n"
 #~ "(%s)"
@@ -20005,8 +20005,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
 #~ msgstr "    環境変数 GAP_XANIM_PROG が国際版 xanim を指すようにして"
 
-#~ msgid "    to your xanim exporting program and restart gimp"
-#~ msgstr "    gimp を再起動して下さい"
+#~ msgid "    to your xanim exporting program and restart ligma"
+#~ msgstr "    ligma を再起動して下さい"
 
 #~ msgid "An ERROR occured while trying to call xanim:"
 #~ msgstr "xanim 呼び出し中にエラー発生"
@@ -20684,10 +20684,10 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 #~ msgid ""
 #~ "Save all single frames of animated preview to video buffer\n"
-#~ "(configured in gimprc by video-paste-dir and video-paste-basename)"
+#~ "(configured in ligmarc by video-paste-dir and video-paste-basename)"
 #~ msgstr ""
 #~ "すべての動画プレビューのフレームそれぞれをビデオバッファに保存する\n"
-#~ "(video-paste-dir と video-paste-basename によって gimprc で設定される)"
+#~ "(video-paste-dir と video-paste-basename によって ligmarc で設定される)"
 
 #~ msgid "Move Path Animated Preview"
 #~ msgstr "パス移動動画プレビュー"
@@ -21553,8 +21553,8 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "GDynText Layer"
 #~ msgstr "GDynText レイヤー"
 
-#~ msgid "GIMP Dynamic Text"
-#~ msgstr "GIMP ダイナミック文字"
+#~ msgid "LIGMA Dynamic Text"
+#~ msgstr "LIGMA ダイナミック文字"
 
 #~ msgid "GDynText: Messages Window"
 #~ msgstr "GDynText メッセージ窓"
@@ -21645,9 +21645,9 @@ msgstr "スキャナー/カメラからデータを転送しています"
 
 #~ msgid ""
 #~ "Holding the Shift key while pressing this button will force GDynText in "
-#~ "changing the layer name as done in GIMP 1.0."
+#~ "changing the layer name as done in LIGMA 1.0."
 #~ msgstr ""
-#~ "Shift キーを押しながらこのボタンを押すと GDynText は GIMP 1.0 のようにレイ"
+#~ "Shift キーを押しながらこのボタンを押すと GDynText は LIGMA 1.0 のようにレイ"
 #~ "ヤー名を強制的に変更します。"
 
 #~ msgid "GDynText: Load text"
@@ -21686,14 +21686,14 @@ msgstr "スキャナー/カメラからデータを転送しています"
 #~ msgid "<Image>/File/Print (Gtk)..."
 #~ msgstr "<Image>/ファイル/印刷 (Gtk)..."
 
-#~ msgid "<Image>/File/Print (Gimp)..."
-#~ msgstr "<Image>/ファイル/印刷 (Gimp)..."
+#~ msgid "<Image>/File/Print (Ligma)..."
+#~ msgstr "<Image>/ファイル/印刷 (Ligma)..."
 
 #~ msgid "(unknown!?)"
 #~ msgstr "(不明!?)"
 
-#~ msgid "GEE!  The GIMP E'er Egg!"
-#~ msgstr "GEE! The GIMP E'er Egg!"
+#~ msgid "GEE!  The LIGMA E'er Egg!"
+#~ msgstr "GEE! The LIGMA E'er Egg!"
 
 #, fuzzy
 #~ msgid "Save as Pixmap Brush"

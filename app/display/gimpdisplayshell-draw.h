@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,24 +15,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_DRAW_H__
-#define __GIMP_DISPLAY_SHELL_DRAW_H__
+#ifndef __LIGMA_DISPLAY_SHELL_DRAW_H__
+#define __LIGMA_DISPLAY_SHELL_DRAW_H__
 
 
-void   gimp_display_shell_draw_selection_out (GimpDisplayShell   *shell,
+void   ligma_display_shell_draw_selection_out (LigmaDisplayShell   *shell,
                                               cairo_t            *cr,
-                                              GimpSegment        *segs,
+                                              LigmaSegment        *segs,
                                               gint                n_segs);
-void   gimp_display_shell_draw_selection_in  (GimpDisplayShell   *shell,
+void   ligma_display_shell_draw_selection_in  (LigmaDisplayShell   *shell,
                                               cairo_t            *cr,
                                               cairo_pattern_t    *mask,
                                               gint                index);
 
-void   gimp_display_shell_draw_background    (GimpDisplayShell   *shell,
+void   ligma_display_shell_draw_background    (LigmaDisplayShell   *shell,
                                               cairo_t            *cr);
-void   gimp_display_shell_draw_checkerboard  (GimpDisplayShell   *shell,
+void   ligma_display_shell_draw_checkerboard  (LigmaDisplayShell   *shell,
                                               cairo_t            *cr);
-void   gimp_display_shell_draw_image         (GimpDisplayShell   *shell,
+void   ligma_display_shell_draw_image         (LigmaDisplayShell   *shell,
                                               cairo_t            *cr,
                                               gint                x,
                                               gint                y,
@@ -40,4 +40,4 @@ void   gimp_display_shell_draw_image         (GimpDisplayShell   *shell,
                                               gint                h);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_DRAW_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_DRAW_H__ */

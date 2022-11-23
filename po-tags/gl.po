@@ -1,13 +1,13 @@
-# translation of gimp.po-tags.master.po to Galician
-# Spanish translation for gimp.
-# Copyright (C) 2011 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# translation of ligma.po-tags.master.po to Galician
+# Spanish translation for ligma.
+# Copyright (C) 2011 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Fran Diéguez <frandieguez@gnome.org>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.po-tags.master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma.po-tags.master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-01-19 20:36+0000\n"
 "PO-Revision-Date: 2011-08-28 03:36+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "borroso"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "redondo"

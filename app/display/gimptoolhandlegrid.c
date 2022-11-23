@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolhandlegrid.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolhandlegrid.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
- * Based on GimpHandleTransformTool
+ * Based on LigmaHandleTransformTool
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimp-utils.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligma-utils.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvashandle.h"
-#include "gimpdisplayshell.h"
-#include "gimptoolhandlegrid.h"
+#include "ligmacanvashandle.h"
+#include "ligmadisplayshell.h"
+#include "ligmatoolhandlegrid.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -66,13 +66,13 @@ enum
 };
 
 
-struct _GimpToolHandleGridPrivate
+struct _LigmaToolHandleGridPrivate
 {
-  GimpTransformHandleMode  handle_mode; /* enum to be renamed */
+  LigmaTransformHandleMode  handle_mode; /* enum to be renamed */
 
   gint        n_handles;
-  GimpVector2 orig[4];
-  GimpVector2 trans[4];
+  LigmaVector2 orig[4];
+  LigmaVector2 trans[4];
 
   gint     handle;
   gdouble  last_x;
@@ -82,61 +82,61 @@ struct _GimpToolHandleGridPrivate
   gdouble  mouse_x;
   gdouble  mouse_y;
 
-  GimpCanvasItem *handles[5];
+  LigmaCanvasItem *handles[5];
 };
 
 
 /*  local function prototypes  */
 
-static void   gimp_tool_handle_grid_constructed    (GObject               *object);
-static void   gimp_tool_handle_grid_set_property   (GObject               *object,
+static void   ligma_tool_handle_grid_constructed    (GObject               *object);
+static void   ligma_tool_handle_grid_set_property   (GObject               *object,
                                                     guint                  property_id,
                                                     const GValue          *value,
                                                     GParamSpec            *pspec);
-static void   gimp_tool_handle_grid_get_property   (GObject               *object,
+static void   ligma_tool_handle_grid_get_property   (GObject               *object,
                                                     guint                  property_id,
                                                     GValue                *value,
                                                     GParamSpec            *pspec);
 
-static void   gimp_tool_handle_grid_changed        (GimpToolWidget        *widget);
-static gint   gimp_tool_handle_grid_button_press   (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static void   ligma_tool_handle_grid_changed        (LigmaToolWidget        *widget);
+static gint   ligma_tool_handle_grid_button_press   (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state,
-                                                    GimpButtonPressType    press_type);
-static void   gimp_tool_handle_grid_button_release (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+                                                    LigmaButtonPressType    press_type);
+static void   ligma_tool_handle_grid_button_release (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state,
-                                                    GimpButtonReleaseType  release_type);
-static void   gimp_tool_handle_grid_motion         (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+                                                    LigmaButtonReleaseType  release_type);
+static void   ligma_tool_handle_grid_motion         (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state);
-static GimpHit  gimp_tool_handle_grid_hit          (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static LigmaHit  ligma_tool_handle_grid_hit          (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
                                                     gboolean               proximity);
-static void     gimp_tool_handle_grid_hover        (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static void     ligma_tool_handle_grid_hover        (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
                                                     gboolean               proximity);
-static void     gimp_tool_handle_grid_leave_notify (GimpToolWidget        *widget);
-static gboolean gimp_tool_handle_grid_get_cursor   (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static void     ligma_tool_handle_grid_leave_notify (LigmaToolWidget        *widget);
+static gboolean ligma_tool_handle_grid_get_cursor   (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
-                                                    GimpCursorType        *cursor,
-                                                    GimpToolCursorType    *tool_cursor,
-                                                    GimpCursorModifier    *modifier);
+                                                    LigmaCursorType        *cursor,
+                                                    LigmaToolCursorType    *tool_cursor,
+                                                    LigmaCursorModifier    *modifier);
 
-static gint     gimp_tool_handle_grid_get_handle     (GimpToolHandleGrid  *grid,
-                                                      const GimpCoords    *coords);
-static void     gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid  *grid);
-static void     gimp_tool_handle_grid_update_matrix  (GimpToolHandleGrid  *grid);
+static gint     ligma_tool_handle_grid_get_handle     (LigmaToolHandleGrid  *grid,
+                                                      const LigmaCoords    *coords);
+static void     ligma_tool_handle_grid_update_hilight (LigmaToolHandleGrid  *grid);
+static void     ligma_tool_handle_grid_update_matrix  (LigmaToolHandleGrid  *grid);
 
-static gboolean is_handle_position_valid           (GimpToolHandleGrid    *grid,
+static gboolean is_handle_position_valid           (LigmaToolHandleGrid    *grid,
                                                     gint                   handle);
-static void     handle_micro_move                  (GimpToolHandleGrid    *grid,
+static void     handle_micro_move                  (LigmaToolHandleGrid    *grid,
                                                     gint                   handle);
 
 static inline gdouble calc_angle               (gdouble ax,
@@ -155,203 +155,203 @@ static inline gdouble calc_lineintersect_ratio (gdouble p1x,
                                                 gdouble q2y);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolHandleGrid, gimp_tool_handle_grid,
-                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolHandleGrid, ligma_tool_handle_grid,
+                            LIGMA_TYPE_TOOL_TRANSFORM_GRID)
 
-#define parent_class gimp_tool_handle_grid_parent_class
+#define parent_class ligma_tool_handle_grid_parent_class
 
 
 static void
-gimp_tool_handle_grid_class_init (GimpToolHandleGridClass *klass)
+ligma_tool_handle_grid_class_init (LigmaToolHandleGridClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_handle_grid_constructed;
-  object_class->set_property    = gimp_tool_handle_grid_set_property;
-  object_class->get_property    = gimp_tool_handle_grid_get_property;
+  object_class->constructed     = ligma_tool_handle_grid_constructed;
+  object_class->set_property    = ligma_tool_handle_grid_set_property;
+  object_class->get_property    = ligma_tool_handle_grid_get_property;
 
-  widget_class->changed         = gimp_tool_handle_grid_changed;
-  widget_class->button_press    = gimp_tool_handle_grid_button_press;
-  widget_class->button_release  = gimp_tool_handle_grid_button_release;
-  widget_class->motion          = gimp_tool_handle_grid_motion;
-  widget_class->hit             = gimp_tool_handle_grid_hit;
-  widget_class->hover           = gimp_tool_handle_grid_hover;
-  widget_class->leave_notify    = gimp_tool_handle_grid_leave_notify;
-  widget_class->get_cursor      = gimp_tool_handle_grid_get_cursor;
+  widget_class->changed         = ligma_tool_handle_grid_changed;
+  widget_class->button_press    = ligma_tool_handle_grid_button_press;
+  widget_class->button_release  = ligma_tool_handle_grid_button_release;
+  widget_class->motion          = ligma_tool_handle_grid_motion;
+  widget_class->hit             = ligma_tool_handle_grid_hit;
+  widget_class->hover           = ligma_tool_handle_grid_hover;
+  widget_class->leave_notify    = ligma_tool_handle_grid_leave_notify;
+  widget_class->get_cursor      = ligma_tool_handle_grid_get_cursor;
 
   g_object_class_install_property (object_class, PROP_HANDLE_MODE,
                                    g_param_spec_enum ("handle-mode",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_TRANSFORM_HANDLE_MODE,
-                                                      GIMP_HANDLE_MODE_ADD_TRANSFORM,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_TRANSFORM_HANDLE_MODE,
+                                                      LIGMA_HANDLE_MODE_ADD_TRANSFORM,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_N_HANDLES,
                                    g_param_spec_int ("n-handles",
                                                      NULL, NULL,
                                                      0, 4, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_X1,
                                    g_param_spec_double ("orig-x1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_Y1,
                                    g_param_spec_double ("orig-y1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_X2,
                                    g_param_spec_double ("orig-x2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_Y2,
                                    g_param_spec_double ("orig-y2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_X3,
                                    g_param_spec_double ("orig-x3",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_Y3,
                                    g_param_spec_double ("orig-y3",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_X4,
                                    g_param_spec_double ("orig-x4",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ORIG_Y4,
                                    g_param_spec_double ("orig-y4",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_X1,
                                    g_param_spec_double ("trans-x1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_Y1,
                                    g_param_spec_double ("trans-y1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_X2,
                                    g_param_spec_double ("trans-x2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_Y2,
                                    g_param_spec_double ("trans-y2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_X3,
                                    g_param_spec_double ("trans-x3",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_Y3,
                                    g_param_spec_double ("trans-y3",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_X4,
                                    g_param_spec_double ("trans-x4",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TRANS_Y4,
                                    g_param_spec_double ("trans-y4",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_handle_grid_init (GimpToolHandleGrid *grid)
+ligma_tool_handle_grid_init (LigmaToolHandleGrid *grid)
 {
-  grid->private = gimp_tool_handle_grid_get_instance_private (grid);
+  grid->private = ligma_tool_handle_grid_get_instance_private (grid);
 }
 
 static void
-gimp_tool_handle_grid_constructed (GObject *object)
+ligma_tool_handle_grid_constructed (GObject *object)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (object);
-  GimpToolWidget            *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (object);
+  LigmaToolWidget            *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolHandleGridPrivate *private = grid->private;
   gint                       i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -359,25 +359,25 @@ gimp_tool_handle_grid_constructed (GObject *object)
   for (i = 0; i < 4; i++)
     {
       private->handles[i + 1] =
-        gimp_tool_widget_add_handle (widget,
-                                     GIMP_HANDLE_CIRCLE,
+        ligma_tool_widget_add_handle (widget,
+                                     LIGMA_HANDLE_CIRCLE,
                                      0, 0,
-                                     GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                     GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+                                     LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                                     LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                                     LIGMA_HANDLE_ANCHOR_CENTER);
     }
 
-  gimp_tool_handle_grid_changed (widget);
+  ligma_tool_handle_grid_changed (widget);
 }
 
 static void
-gimp_tool_handle_grid_set_property (GObject      *object,
+ligma_tool_handle_grid_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (object);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (object);
+  LigmaToolHandleGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -446,13 +446,13 @@ gimp_tool_handle_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_handle_grid_get_property (GObject    *object,
+ligma_tool_handle_grid_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (object);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (object);
+  LigmaToolHandleGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -521,46 +521,46 @@ gimp_tool_handle_grid_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_handle_grid_changed (GimpToolWidget *widget)
+ligma_tool_handle_grid_changed (LigmaToolWidget *widget)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private = grid->private;
   gint                       i;
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->changed (widget);
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->changed (widget);
 
   for (i = 0; i < 4; i++)
     {
-      gimp_canvas_handle_set_position (private->handles[i + 1],
+      ligma_canvas_handle_set_position (private->handles[i + 1],
                                        private->trans[i].x,
                                        private->trans[i].y);
-      gimp_canvas_item_set_visible (private->handles[i + 1],
+      ligma_canvas_item_set_visible (private->handles[i + 1],
                                     i < private->n_handles);
     }
 
-  gimp_tool_handle_grid_update_hilight (grid);
+  ligma_tool_handle_grid_update_hilight (grid);
 }
 
 static gint
-gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
-                                    const GimpCoords    *coords,
+ligma_tool_handle_grid_button_press (LigmaToolWidget      *widget,
+                                    const LigmaCoords    *coords,
                                     guint32              time,
                                     GdkModifierType      state,
-                                    GimpButtonPressType  press_type)
+                                    LigmaButtonPressType  press_type)
 {
-  GimpToolHandleGrid        *grid          = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private       = grid->private;
+  LigmaToolHandleGrid        *grid          = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private       = grid->private;
   gint                       n_handles     = private->n_handles;
   gint                       active_handle = private->handle - 1;
 
   switch (private->handle_mode)
     {
-    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+    case LIGMA_HANDLE_MODE_ADD_TRANSFORM:
       if (n_handles < 4 && active_handle == -1)
         {
           /* add handle */
 
-          GimpMatrix3 *matrix;
+          LigmaMatrix3 *matrix;
 
           active_handle = n_handles;
 
@@ -578,8 +578,8 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
                         "transform", &matrix,
                         NULL);
 
-          gimp_matrix3_invert (matrix);
-          gimp_matrix3_transform_point (matrix,
+          ligma_matrix3_invert (matrix);
+          ligma_matrix3_transform_point (matrix,
                                         private->trans[active_handle].x,
                                         private->trans[active_handle].y,
                                         &private->orig[active_handle].x,
@@ -593,21 +593,21 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
         }
       break;
 
-    case GIMP_HANDLE_MODE_MOVE:
+    case LIGMA_HANDLE_MODE_MOVE:
       /* check for valid position and calculating of OX0...OY3 is
        * done on button release
        */
       break;
 
-    case GIMP_HANDLE_MODE_REMOVE:
+    case LIGMA_HANDLE_MODE_REMOVE:
       if (n_handles > 0      &&
           active_handle >= 0 &&
           active_handle < 4)
         {
           /* remove handle */
 
-          GimpVector2 temp  = private->trans[active_handle];
-          GimpVector2 tempo = private->orig[active_handle];
+          LigmaVector2 temp  = private->trans[active_handle];
+          LigmaVector2 tempo = private->orig[active_handle];
           gint        i;
 
           n_handles--;
@@ -634,21 +634,21 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
 }
 
 static void
-gimp_tool_handle_grid_button_release (GimpToolWidget        *widget,
-                                      const GimpCoords      *coords,
+ligma_tool_handle_grid_button_release (LigmaToolWidget        *widget,
+                                      const LigmaCoords      *coords,
                                       guint32                time,
                                       GdkModifierType        state,
-                                      GimpButtonReleaseType  release_type)
+                                      LigmaButtonReleaseType  release_type)
 {
-  GimpToolHandleGrid        *grid          = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private       = grid->private;
+  LigmaToolHandleGrid        *grid          = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private       = grid->private;
   gint                       active_handle = private->handle - 1;
 
-  if (private->handle_mode == GIMP_HANDLE_MODE_MOVE &&
+  if (private->handle_mode == LIGMA_HANDLE_MODE_MOVE &&
       active_handle >= 0 &&
       active_handle < 4)
     {
-      GimpMatrix3 *matrix;
+      LigmaMatrix3 *matrix;
 
       if (! is_handle_position_valid (grid, active_handle))
         {
@@ -660,8 +660,8 @@ gimp_tool_handle_grid_button_release (GimpToolWidget        *widget,
                     "transform", &matrix,
                     NULL);
 
-      gimp_matrix3_invert (matrix);
-      gimp_matrix3_transform_point (matrix,
+      ligma_matrix3_invert (matrix);
+      ligma_matrix3_transform_point (matrix,
                                     private->trans[active_handle].x,
                                     private->trans[active_handle].y,
                                     &private->orig[active_handle].x,
@@ -669,18 +669,18 @@ gimp_tool_handle_grid_button_release (GimpToolWidget        *widget,
 
       g_free (matrix);
 
-      gimp_tool_handle_grid_update_matrix (grid);
+      ligma_tool_handle_grid_update_matrix (grid);
     }
 }
 
 void
-gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
-                              const GimpCoords *coords,
+ligma_tool_handle_grid_motion (LigmaToolWidget   *widget,
+                              const LigmaCoords *coords,
                               guint32           time,
                               GdkModifierType   state)
 {
-  GimpToolHandleGrid        *grid          = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private       = grid->private;
+  LigmaToolHandleGrid        *grid          = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private       = grid->private;
   gint                       n_handles     = private->n_handles;
   gint                       active_handle = private->handle - 1;
   gdouble                    diff_x        = coords->x - private->last_x;
@@ -691,7 +691,7 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
 
   if (active_handle >= 0 && active_handle < 4)
     {
-      if (private->handle_mode == GIMP_HANDLE_MODE_MOVE)
+      if (private->handle_mode == LIGMA_HANDLE_MODE_MOVE)
         {
           private->trans[active_handle].x += diff_x;
           private->trans[active_handle].y += diff_y;
@@ -701,16 +701,16 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
            * faster Moving could be even faster if there was caching
            * for the image preview
            */
-          gimp_canvas_handle_set_position (private->handles[active_handle + 1],
+          ligma_canvas_handle_set_position (private->handles[active_handle + 1],
                                            private->trans[active_handle].x,
                                            private->trans[active_handle].y);
         }
-      else if (private->handle_mode == GIMP_HANDLE_MODE_ADD_TRANSFORM)
+      else if (private->handle_mode == LIGMA_HANDLE_MODE_ADD_TRANSFORM)
         {
           gdouble angle, angle_sin, angle_cos, scale;
-          GimpVector2 fixed_handles[3];
-          GimpVector2 oldpos[4];
-          GimpVector2 newpos[4];
+          LigmaVector2 fixed_handles[3];
+          LigmaVector2 oldpos[4];
+          LigmaVector2 newpos[4];
           gint    i, j;
 
           for (i = 0, j = 0; i < 4; i++)
@@ -790,7 +790,7 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
               private->trans[i] = newpos[i];
             }
 
-          gimp_tool_handle_grid_update_matrix (grid);
+          ligma_tool_handle_grid_update_matrix (grid);
         }
     }
 
@@ -798,63 +798,63 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
   private->last_y = coords->y;
 }
 
-static GimpHit
-gimp_tool_handle_grid_hit (GimpToolWidget   *widget,
-                           const GimpCoords *coords,
+static LigmaHit
+ligma_tool_handle_grid_hit (LigmaToolWidget   *widget,
+                           const LigmaCoords *coords,
                            GdkModifierType   state,
                            gboolean          proximity)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private = grid->private;
 
   if (proximity)
     {
-      gint handle = gimp_tool_handle_grid_get_handle (grid, coords);
+      gint handle = ligma_tool_handle_grid_get_handle (grid, coords);
 
       switch (private->handle_mode)
         {
-        case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+        case LIGMA_HANDLE_MODE_ADD_TRANSFORM:
           if (handle > 0)
-            return GIMP_HIT_DIRECT;
+            return LIGMA_HIT_DIRECT;
           else
-            return GIMP_HIT_INDIRECT;
+            return LIGMA_HIT_INDIRECT;
           break;
 
-        case GIMP_HANDLE_MODE_MOVE:
-        case GIMP_HANDLE_MODE_REMOVE:
+        case LIGMA_HANDLE_MODE_MOVE:
+        case LIGMA_HANDLE_MODE_REMOVE:
           if (private->handle > 0)
-            return GIMP_HIT_DIRECT;
+            return LIGMA_HIT_DIRECT;
           break;
         }
     }
 
-  return GIMP_HIT_NONE;
+  return LIGMA_HIT_NONE;
 }
 
 static void
-gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
-                             const GimpCoords *coords,
+ligma_tool_handle_grid_hover (LigmaToolWidget   *widget,
+                             const LigmaCoords *coords,
                              GdkModifierType   state,
                              gboolean          proximity)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private = grid->private;
   gchar                     *status  = NULL;
 
   private->hover   = TRUE;
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
-  private->handle = gimp_tool_handle_grid_get_handle (grid, coords);
+  private->handle = ligma_tool_handle_grid_get_handle (grid, coords);
 
   if (proximity)
     {
-      GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
-      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+      GdkModifierType extend_mask = ligma_get_extend_selection_mask ();
+      GdkModifierType toggle_mask = ligma_get_toggle_behavior_mask ();
 
       switch (private->handle_mode)
         {
-        case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+        case LIGMA_HANDLE_MODE_ADD_TRANSFORM:
           if (private->handle > 0)
             {
               const gchar *s = NULL;
@@ -875,7 +875,7 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
                   break;
                 }
 
-              status = gimp_suggest_modifiers (s,
+              status = ligma_suggest_modifiers (s,
                                                extend_mask | toggle_mask,
                                                NULL, NULL, NULL);
             }
@@ -886,95 +886,95 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
             }
           break;
 
-        case GIMP_HANDLE_MODE_MOVE:
+        case LIGMA_HANDLE_MODE_MOVE:
           if (private->handle > 0)
             status = g_strdup (_("Click-Drag to move this handle"));
           break;
 
-        case GIMP_HANDLE_MODE_REMOVE:
+        case LIGMA_HANDLE_MODE_REMOVE:
           if (private->handle > 0)
             status = g_strdup (_("Click-Drag to remove this handle"));
           break;
         }
     }
 
-  gimp_tool_widget_set_status (widget, status);
+  ligma_tool_widget_set_status (widget, status);
   g_free (status);
 
-  gimp_tool_handle_grid_update_hilight (grid);
+  ligma_tool_handle_grid_update_hilight (grid);
 }
 
 static void
-gimp_tool_handle_grid_leave_notify (GimpToolWidget *widget)
+ligma_tool_handle_grid_leave_notify (LigmaToolWidget *widget)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private = grid->private;
 
   private->hover  = FALSE;
   private->handle = 0;
 
-  gimp_tool_handle_grid_update_hilight (grid);
+  ligma_tool_handle_grid_update_hilight (grid);
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static gboolean
-gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
-                                  const GimpCoords   *coords,
+ligma_tool_handle_grid_get_cursor (LigmaToolWidget     *widget,
+                                  const LigmaCoords   *coords,
                                   GdkModifierType     state,
-                                  GimpCursorType     *cursor,
-                                  GimpToolCursorType *tool_cursor,
-                                  GimpCursorModifier *modifier)
+                                  LigmaCursorType     *cursor,
+                                  LigmaToolCursorType *tool_cursor,
+                                  LigmaCursorModifier *modifier)
 {
-  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGrid        *grid    = LIGMA_TOOL_HANDLE_GRID (widget);
+  LigmaToolHandleGridPrivate *private = grid->private;
 
-  *cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
-  *tool_cursor = GIMP_TOOL_CURSOR_NONE;
-  *modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  *cursor      = LIGMA_CURSOR_CROSSHAIR_SMALL;
+  *tool_cursor = LIGMA_TOOL_CURSOR_NONE;
+  *modifier    = LIGMA_CURSOR_MODIFIER_NONE;
 
   switch (private->handle_mode)
     {
-    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+    case LIGMA_HANDLE_MODE_ADD_TRANSFORM:
       if (private->handle > 0)
         {
           switch (private->n_handles)
             {
             case 1:
-              *tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+              *tool_cursor = LIGMA_TOOL_CURSOR_MOVE;
               break;
             case 2:
-              *tool_cursor = GIMP_TOOL_CURSOR_ROTATE;
+              *tool_cursor = LIGMA_TOOL_CURSOR_ROTATE;
               break;
             case 3:
-              *tool_cursor = GIMP_TOOL_CURSOR_SHEAR;
+              *tool_cursor = LIGMA_TOOL_CURSOR_SHEAR;
               break;
             case 4:
-              *tool_cursor = GIMP_TOOL_CURSOR_PERSPECTIVE;
+              *tool_cursor = LIGMA_TOOL_CURSOR_PERSPECTIVE;
               break;
             }
         }
       else
         {
           if (private->n_handles < 4)
-            *modifier = GIMP_CURSOR_MODIFIER_PLUS;
+            *modifier = LIGMA_CURSOR_MODIFIER_PLUS;
           else
-            *modifier = GIMP_CURSOR_MODIFIER_BAD;
+            *modifier = LIGMA_CURSOR_MODIFIER_BAD;
         }
       break;
 
-    case GIMP_HANDLE_MODE_MOVE:
+    case LIGMA_HANDLE_MODE_MOVE:
       if (private->handle > 0)
-        *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
       else
-        *modifier = GIMP_CURSOR_MODIFIER_BAD;
+        *modifier = LIGMA_CURSOR_MODIFIER_BAD;
       break;
 
-    case GIMP_HANDLE_MODE_REMOVE:
+    case LIGMA_HANDLE_MODE_REMOVE:
       if (private->handle > 0)
-        *modifier = GIMP_CURSOR_MODIFIER_MINUS;
+        *modifier = LIGMA_CURSOR_MODIFIER_MINUS;
       else
-        *modifier = GIMP_CURSOR_MODIFIER_BAD;
+        *modifier = LIGMA_CURSOR_MODIFIER_BAD;
       break;
     }
 
@@ -982,16 +982,16 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
 }
 
 static gint
-gimp_tool_handle_grid_get_handle (GimpToolHandleGrid *grid,
-                                  const GimpCoords   *coords)
+ligma_tool_handle_grid_get_handle (LigmaToolHandleGrid *grid,
+                                  const LigmaCoords   *coords)
 {
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGridPrivate *private = grid->private;
   gint                       i;
 
   for (i = 0; i < 4; i++)
     {
       if (private->handles[i + 1] &&
-          gimp_canvas_item_hit (private->handles[i + 1],
+          ligma_canvas_item_hit (private->handles[i + 1],
                                 coords->x, coords->y))
         {
           return i + 1;
@@ -1002,44 +1002,44 @@ gimp_tool_handle_grid_get_handle (GimpToolHandleGrid *grid,
 }
 
 static void
-gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
+ligma_tool_handle_grid_update_hilight (LigmaToolHandleGrid *grid)
 {
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGridPrivate *private = grid->private;
   gint                       i;
 
   for (i = 0; i < 4; i++)
     {
-      GimpCanvasItem *item = private->handles[i + 1];
+      LigmaCanvasItem *item = private->handles[i + 1];
 
       if (item)
         {
-          gdouble diameter = GIMP_CANVAS_HANDLE_SIZE_CIRCLE;
+          gdouble diameter = LIGMA_CANVAS_HANDLE_SIZE_CIRCLE;
 
           if (private->hover)
             {
-              diameter = gimp_canvas_handle_calc_size (
+              diameter = ligma_canvas_handle_calc_size (
                 item,
                 private->mouse_x,
                 private->mouse_y,
-                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE);
+                LIGMA_CANVAS_HANDLE_SIZE_CIRCLE,
+                2 * LIGMA_CANVAS_HANDLE_SIZE_CIRCLE);
             }
 
-          gimp_canvas_handle_set_size (item, diameter, diameter);
-          gimp_canvas_item_set_highlight (item, (i + 1) == private->handle);
+          ligma_canvas_handle_set_size (item, diameter, diameter);
+          ligma_canvas_item_set_highlight (item, (i + 1) == private->handle);
         }
     }
 }
 
 static void
-gimp_tool_handle_grid_update_matrix (GimpToolHandleGrid *grid)
+ligma_tool_handle_grid_update_matrix (LigmaToolHandleGrid *grid)
 {
-  GimpToolHandleGridPrivate *private = grid->private;
-  GimpMatrix3                transform;
+  LigmaToolHandleGridPrivate *private = grid->private;
+  LigmaMatrix3                transform;
   gboolean                   transform_valid;
 
-  gimp_matrix3_identity (&transform);
-  transform_valid = gimp_transform_matrix_generic (&transform,
+  ligma_matrix3_identity (&transform);
+  transform_valid = ligma_transform_matrix_generic (&transform,
                                                    private->orig,
                                                    private->trans);
 
@@ -1051,10 +1051,10 @@ gimp_tool_handle_grid_update_matrix (GimpToolHandleGrid *grid)
 
 /* check if a handle is not on the connection line of two other handles */
 static gboolean
-is_handle_position_valid (GimpToolHandleGrid *grid,
+is_handle_position_valid (LigmaToolHandleGrid *grid,
                           gint                handle)
 {
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGridPrivate *private = grid->private;
   gint                       i, j, k;
 
   for (i = 0; i < 2; i++)
@@ -1090,10 +1090,10 @@ is_handle_position_valid (GimpToolHandleGrid *grid,
 /* three handles on a line causes problems.
  * Let's move the new handle around a bit to find a better position */
 static void
-handle_micro_move (GimpToolHandleGrid *grid,
+handle_micro_move (LigmaToolHandleGrid *grid,
                    gint                handle)
 {
-  GimpToolHandleGridPrivate *private = grid->private;
+  LigmaToolHandleGridPrivate *private = grid->private;
   gdouble                    posx    = private->trans[handle].x;
   gdouble                    posy    = private->trans[handle].y;
   gdouble                    dx, dy;
@@ -1166,16 +1166,16 @@ calc_lineintersect_ratio (gdouble p1x, gdouble p1y,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_handle_grid_new (GimpDisplayShell *shell,
+LigmaToolWidget *
+ligma_tool_handle_grid_new (LigmaDisplayShell *shell,
                            gdouble           x1,
                            gdouble           y1,
                            gdouble           x2,
                            gdouble           y2)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_HANDLE_GRID,
+  return g_object_new (LIGMA_TYPE_TOOL_HANDLE_GRID,
                        "shell",       shell,
                        "x1",          x1,
                        "y1",          y1,

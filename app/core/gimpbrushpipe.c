@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1999 Adrian Likins and Tor Lillqvist
  *
@@ -21,76 +21,76 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpparasiteio.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmaparasiteio.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpbrush-private.h"
-#include "gimpbrushpipe.h"
-#include "gimpbrushpipe-load.h"
-#include "gimpbrushpipe-save.h"
-#include "gimptempbuf.h"
+#include "ligmabrush-private.h"
+#include "ligmabrushpipe.h"
+#include "ligmabrushpipe-load.h"
+#include "ligmabrushpipe-save.h"
+#include "ligmatempbuf.h"
 
 
-static void          gimp_brush_pipe_finalize         (GObject          *object);
+static void          ligma_brush_pipe_finalize         (GObject          *object);
 
-static gint64        gimp_brush_pipe_get_memsize      (GimpObject       *object,
+static gint64        ligma_brush_pipe_get_memsize      (LigmaObject       *object,
                                                        gint64           *gui_size);
 
-static gboolean      gimp_brush_pipe_get_popup_size   (GimpViewable     *viewable,
+static gboolean      ligma_brush_pipe_get_popup_size   (LigmaViewable     *viewable,
                                                        gint              width,
                                                        gint              height,
                                                        gboolean          dot_for_dot,
                                                        gint             *popup_width,
                                                        gint             *popup_height);
 
-static const gchar * gimp_brush_pipe_get_extension    (GimpData         *data);
-static void          gimp_brush_pipe_copy             (GimpData         *data,
-                                                       GimpData         *src_data);
+static const gchar * ligma_brush_pipe_get_extension    (LigmaData         *data);
+static void          ligma_brush_pipe_copy             (LigmaData         *data,
+                                                       LigmaData         *src_data);
 
-static void          gimp_brush_pipe_begin_use        (GimpBrush        *brush);
-static void          gimp_brush_pipe_end_use          (GimpBrush        *brush);
-static GimpBrush   * gimp_brush_pipe_select_brush     (GimpBrush        *brush,
-                                                       const GimpCoords *last_coords,
-                                                       const GimpCoords *current_coords);
-static gboolean      gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
-                                                       const GimpCoords *last_coords,
-                                                       const GimpCoords *current_coords);
+static void          ligma_brush_pipe_begin_use        (LigmaBrush        *brush);
+static void          ligma_brush_pipe_end_use          (LigmaBrush        *brush);
+static LigmaBrush   * ligma_brush_pipe_select_brush     (LigmaBrush        *brush,
+                                                       const LigmaCoords *last_coords,
+                                                       const LigmaCoords *current_coords);
+static gboolean      ligma_brush_pipe_want_null_motion (LigmaBrush        *brush,
+                                                       const LigmaCoords *last_coords,
+                                                       const LigmaCoords *current_coords);
 
 
-G_DEFINE_TYPE (GimpBrushPipe, gimp_brush_pipe, GIMP_TYPE_BRUSH);
+G_DEFINE_TYPE (LigmaBrushPipe, ligma_brush_pipe, LIGMA_TYPE_BRUSH);
 
-#define parent_class gimp_brush_pipe_parent_class
+#define parent_class ligma_brush_pipe_parent_class
 
 
 static void
-gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
+ligma_brush_pipe_class_init (LigmaBrushPipeClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
-  GimpBrushClass    *brush_class       = GIMP_BRUSH_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
+  LigmaBrushClass    *brush_class       = LIGMA_BRUSH_CLASS (klass);
 
-  object_class->finalize         = gimp_brush_pipe_finalize;
+  object_class->finalize         = ligma_brush_pipe_finalize;
 
-  gimp_object_class->get_memsize = gimp_brush_pipe_get_memsize;
+  ligma_object_class->get_memsize = ligma_brush_pipe_get_memsize;
 
-  viewable_class->get_popup_size = gimp_brush_pipe_get_popup_size;
+  viewable_class->get_popup_size = ligma_brush_pipe_get_popup_size;
 
-  data_class->save               = gimp_brush_pipe_save;
-  data_class->get_extension      = gimp_brush_pipe_get_extension;
-  data_class->copy               = gimp_brush_pipe_copy;
+  data_class->save               = ligma_brush_pipe_save;
+  data_class->get_extension      = ligma_brush_pipe_get_extension;
+  data_class->copy               = ligma_brush_pipe_copy;
 
-  brush_class->begin_use         = gimp_brush_pipe_begin_use;
-  brush_class->end_use           = gimp_brush_pipe_end_use;
-  brush_class->select_brush      = gimp_brush_pipe_select_brush;
-  brush_class->want_null_motion  = gimp_brush_pipe_want_null_motion;
+  brush_class->begin_use         = ligma_brush_pipe_begin_use;
+  brush_class->end_use           = ligma_brush_pipe_end_use;
+  brush_class->select_brush      = ligma_brush_pipe_select_brush;
+  brush_class->want_null_motion  = ligma_brush_pipe_want_null_motion;
 }
 
 static void
-gimp_brush_pipe_init (GimpBrushPipe *pipe)
+ligma_brush_pipe_init (LigmaBrushPipe *pipe)
 {
   pipe->current   = NULL;
   pipe->dimension = 0;
@@ -103,9 +103,9 @@ gimp_brush_pipe_init (GimpBrushPipe *pipe)
 }
 
 static void
-gimp_brush_pipe_finalize (GObject *object)
+ligma_brush_pipe_finalize (GObject *object)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (object);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (object);
 
   g_clear_pointer (&pipe->rank,   g_free);
   g_clear_pointer (&pipe->stride, g_free);
@@ -124,17 +124,17 @@ gimp_brush_pipe_finalize (GObject *object)
       g_clear_pointer (&pipe->brushes, g_free);
     }
 
-  GIMP_BRUSH (pipe)->priv->mask   = NULL;
-  GIMP_BRUSH (pipe)->priv->pixmap = NULL;
+  LIGMA_BRUSH (pipe)->priv->mask   = NULL;
+  LIGMA_BRUSH (pipe)->priv->pixmap = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gint64
-gimp_brush_pipe_get_memsize (GimpObject *object,
+ligma_brush_pipe_get_memsize (LigmaObject *object,
                              gint64     *gui_size)
 {
-  GimpBrushPipe *pipe    = GIMP_BRUSH_PIPE (object);
+  LigmaBrushPipe *pipe    = LIGMA_BRUSH_PIPE (object);
   gint64         memsize = 0;
   gint           i;
 
@@ -143,36 +143,36 @@ gimp_brush_pipe_get_memsize (GimpObject *object,
                                 sizeof (PipeSelectModes));
 
   for (i = 0; i < pipe->n_brushes; i++)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (pipe->brushes[i]),
+    memsize += ligma_object_get_memsize (LIGMA_OBJECT (pipe->brushes[i]),
                                         gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_brush_pipe_get_popup_size (GimpViewable *viewable,
+ligma_brush_pipe_get_popup_size (LigmaViewable *viewable,
                                 gint          width,
                                 gint          height,
                                 gboolean      dot_for_dot,
                                 gint         *popup_width,
                                 gint         *popup_height)
 {
-  return gimp_viewable_get_size (viewable, popup_width, popup_height);
+  return ligma_viewable_get_size (viewable, popup_width, popup_height);
 }
 
 static const gchar *
-gimp_brush_pipe_get_extension (GimpData *data)
+ligma_brush_pipe_get_extension (LigmaData *data)
 {
-  return GIMP_BRUSH_PIPE_FILE_EXTENSION;
+  return LIGMA_BRUSH_PIPE_FILE_EXTENSION;
 }
 
 static void
-gimp_brush_pipe_copy (GimpData *data,
-                      GimpData *src_data)
+ligma_brush_pipe_copy (LigmaData *data,
+                      LigmaData *src_data)
 {
-  GimpBrushPipe *pipe     = GIMP_BRUSH_PIPE (data);
-  GimpBrushPipe *src_pipe = GIMP_BRUSH_PIPE (src_data);
+  LigmaBrushPipe *pipe     = LIGMA_BRUSH_PIPE (data);
+  LigmaBrushPipe *src_pipe = LIGMA_BRUSH_PIPE (src_data);
   gint           i;
 
   pipe->dimension = src_pipe->dimension;
@@ -200,14 +200,14 @@ gimp_brush_pipe_copy (GimpData *data,
 
   pipe->n_brushes = src_pipe->n_brushes;
 
-  pipe->brushes = g_new0 (GimpBrush *, pipe->n_brushes);
+  pipe->brushes = g_new0 (LigmaBrush *, pipe->n_brushes);
   for (i = 0; i < pipe->n_brushes; i++)
     if (src_pipe->brushes[i])
       {
         pipe->brushes[i] =
-          GIMP_BRUSH (gimp_data_duplicate (GIMP_DATA (src_pipe->brushes[i])));
-        gimp_object_set_name (GIMP_OBJECT (pipe->brushes[i]),
-                              gimp_object_get_name (src_pipe->brushes[i]));
+          LIGMA_BRUSH (ligma_data_duplicate (LIGMA_DATA (src_pipe->brushes[i])));
+        ligma_object_set_name (LIGMA_OBJECT (pipe->brushes[i]),
+                              ligma_object_get_name (src_pipe->brushes[i]));
       }
 
   g_clear_pointer (&pipe->params, g_free);
@@ -215,51 +215,51 @@ gimp_brush_pipe_copy (GimpData *data,
 
   pipe->current = pipe->brushes[0];
 
-  GIMP_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
-  GIMP_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
-  GIMP_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
-  GIMP_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
-  GIMP_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
+  LIGMA_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
+  LIGMA_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
+  LIGMA_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
+  LIGMA_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
+  LIGMA_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
 
-  gimp_data_dirty (data);
+  ligma_data_dirty (data);
 }
 
 static void
-gimp_brush_pipe_begin_use (GimpBrush *brush)
+ligma_brush_pipe_begin_use (LigmaBrush *brush)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (brush);
   gint           i;
 
-  GIMP_BRUSH_CLASS (parent_class)->begin_use (brush);
+  LIGMA_BRUSH_CLASS (parent_class)->begin_use (brush);
 
   for (i = 0; i < pipe->n_brushes; i++)
     if (pipe->brushes[i])
-      gimp_brush_begin_use (pipe->brushes[i]);
+      ligma_brush_begin_use (pipe->brushes[i]);
 }
 
 static void
-gimp_brush_pipe_end_use (GimpBrush *brush)
+ligma_brush_pipe_end_use (LigmaBrush *brush)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (brush);
   gint           i;
 
-  GIMP_BRUSH_CLASS (parent_class)->end_use (brush);
+  LIGMA_BRUSH_CLASS (parent_class)->end_use (brush);
 
   for (i = 0; i < pipe->n_brushes; i++)
     if (pipe->brushes[i])
-      gimp_brush_end_use (pipe->brushes[i]);
+      ligma_brush_end_use (pipe->brushes[i]);
 }
 
-static GimpBrush *
-gimp_brush_pipe_select_brush (GimpBrush        *brush,
-                              const GimpCoords *last_coords,
-                              const GimpCoords *current_coords)
+static LigmaBrush *
+ligma_brush_pipe_select_brush (LigmaBrush        *brush,
+                              const LigmaCoords *last_coords,
+                              const LigmaCoords *current_coords)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
 
   if (pipe->n_brushes == 1)
-    return GIMP_BRUSH (pipe->current);
+    return LIGMA_BRUSH (pipe->current);
 
   brushix = 0;
   for (i = 0; i < pipe->dimension; i++)
@@ -313,15 +313,15 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
 
   pipe->current = pipe->brushes[brushix];
 
-  return GIMP_BRUSH (pipe->current);
+  return LIGMA_BRUSH (pipe->current);
 }
 
 static gboolean
-gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
-                                  const GimpCoords *last_coords,
-                                  const GimpCoords *current_coords)
+ligma_brush_pipe_want_null_motion (LigmaBrush        *brush,
+                                  const LigmaCoords *last_coords,
+                                  const LigmaCoords *current_coords)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (brush);
   gint           i;
 
   if (pipe->n_brushes == 1)
@@ -338,21 +338,21 @@ gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
 /*  public functions  */
 
 gboolean
-gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
+ligma_brush_pipe_set_params (LigmaBrushPipe *pipe,
                             const gchar   *paramstring)
 {
   gint totalcells;
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (pipe), FALSE);
+  g_return_val_if_fail (LIGMA_IS_BRUSH_PIPE (pipe), FALSE);
   g_return_val_if_fail (pipe->dimension == 0, FALSE); /* only on a new pipe! */
 
   if (paramstring && *paramstring)
     {
-      GimpPixPipeParams params;
+      LigmaPixPipeParams params;
 
-      gimp_pixpipe_params_init (&params);
-      gimp_pixpipe_params_parse (paramstring, &params);
+      ligma_pixpipe_params_init (&params);
+      ligma_pixpipe_params_parse (paramstring, &params);
 
       pipe->dimension = params.dim;
       pipe->rank      = g_new0 (gint, pipe->dimension);
@@ -384,7 +384,7 @@ gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
           pipe->index[i] = 0;
         }
 
-      gimp_pixpipe_params_free (&params);
+      ligma_pixpipe_params_free (&params);
 
       pipe->params = g_strdup (paramstring);
     }

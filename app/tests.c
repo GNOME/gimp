@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,16 +30,16 @@
 
 #include "menus/menus.h"
 
-#include "widgets/gimpsessioninfo.h"
+#include "widgets/ligmasessioninfo.h"
 
-#include "config/gimpgeglconfig.h"
+#include "config/ligmageglconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-contexts.h"
+#include "core/ligma.h"
+#include "core/ligma-contexts.h"
 
-#include "gegl/gimp-gegl.h"
+#include "gegl/ligma-gegl.h"
 
-#include "gimp-log.h"
+#include "ligma-log.h"
 #include "tests.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
@@ -48,48 +48,48 @@
 
 
 static void
-gimp_status_func_dummy (const gchar *text1,
+ligma_status_func_dummy (const gchar *text1,
                         const gchar *text2,
                         gdouble      percentage)
 {
 }
 
 /**
- * gimp_init_for_testing:
+ * ligma_init_for_testing:
  *
- * Initialize the GIMP object system for unit testing. This is a
+ * Initialize the LIGMA object system for unit testing. This is a
  * selected subset of the initialization happening in app_run().
  **/
-Gimp *
-gimp_init_for_testing (void)
+Ligma *
+ligma_init_for_testing (void)
 {
-  Gimp *gimp;
+  Ligma *ligma;
 
-  gimp_log_init ();
+  ligma_log_init ();
   gegl_init (NULL, NULL);
 
-  gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, TRUE,
+  ligma = ligma_new ("Unit Tested LIGMA", NULL, NULL, FALSE, TRUE, TRUE, TRUE,
                    FALSE, FALSE, TRUE, FALSE, FALSE,
-                   GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
+                   LIGMA_STACK_TRACE_QUERY, LIGMA_PDB_COMPAT_OFF);
 
-  gimp_load_config (gimp, NULL, NULL);
+  ligma_load_config (ligma, NULL, NULL);
 
-  gimp_gegl_init (gimp);
-  gimp_initialize (gimp, gimp_status_func_dummy);
-  gimp_restore (gimp, gimp_status_func_dummy, NULL);
+  ligma_gegl_init (ligma);
+  ligma_initialize (ligma, ligma_status_func_dummy);
+  ligma_restore (ligma, ligma_status_func_dummy, NULL);
 
-  return gimp;
+  return ligma;
 }
 
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 
 static void
-gimp_init_icon_theme_for_testing (void)
+ligma_init_icon_theme_for_testing (void)
 {
   gchar       *icon_root;
 
-  icon_root = g_test_build_filename (G_TEST_BUILT, "gimp-test-icon-theme", NULL);
+  icon_root = g_test_build_filename (G_TEST_BUILT, "ligma-test-icon-theme", NULL);
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icon_root);
   g_free (icon_root);
@@ -98,18 +98,18 @@ gimp_init_icon_theme_for_testing (void)
 
 #ifdef GDK_WINDOWING_QUARTZ
 static gboolean
-gimp_osx_focus_window (gpointer user_data)
+ligma_osx_focus_window (gpointer user_data)
 {
   [NSApp activateIgnoringOtherApps:YES];
   return FALSE;
 }
 #endif
 
-static Gimp *
-gimp_init_for_gui_testing_internal (gboolean  show_gui,
-                                    GFile    *gimprc)
+static Ligma *
+ligma_init_for_gui_testing_internal (gboolean  show_gui,
+                                    GFile    *ligmarc)
 {
-  Gimp *gimp;
+  Ligma *ligma;
 
 #if defined (G_OS_WIN32)
   /* g_test_init() sets warnings always fatal, which is a usually a good
@@ -124,67 +124,67 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
 #endif
 
   /* from main() */
-  gimp_log_init ();
+  ligma_log_init ();
   gegl_init (NULL, NULL);
 
   /* Introduce an error margin for positions written to sessionrc */
-  gimp_session_info_set_position_accuracy (5);
+  ligma_session_info_set_position_accuracy (5);
 
   /* from app_run() */
-  gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
+  ligma = ligma_new ("Unit Tested LIGMA", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
                    FALSE, FALSE, TRUE, FALSE, FALSE,
-                   GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
+                   LIGMA_STACK_TRACE_QUERY, LIGMA_PDB_COMPAT_OFF);
 
-  gimp_set_show_gui (gimp, show_gui);
-  gimp_load_config (gimp, gimprc, NULL);
-  gimp_gegl_init (gimp);
-  gui_init (gimp, TRUE, NULL, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"));
-  gimp_init_icon_theme_for_testing ();
-  gimp_initialize (gimp, gimp_status_func_dummy);
-  gimp_restore (gimp, gimp_status_func_dummy, NULL);
+  ligma_set_show_gui (ligma, show_gui);
+  ligma_load_config (ligma, ligmarc, NULL);
+  ligma_gegl_init (ligma);
+  gui_init (ligma, TRUE, NULL, g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"));
+  ligma_init_icon_theme_for_testing ();
+  ligma_initialize (ligma, ligma_status_func_dummy);
+  ligma_restore (ligma, ligma_status_func_dummy, NULL);
 #ifdef GDK_WINDOWING_QUARTZ
-  g_idle_add (gimp_osx_focus_window, NULL);
+  g_idle_add (ligma_osx_focus_window, NULL);
 #endif
 
-  return gimp;
+  return ligma;
 }
 
 /**
- * gimp_init_for_gui_testing:
+ * ligma_init_for_gui_testing:
  * @show_gui:
  *
- * Initializes a #Gimp instance for use in test cases that rely on GUI
+ * Initializes a #Ligma instance for use in test cases that rely on GUI
  * code to be initialized.
  *
- * Returns: The #Gimp instance.
+ * Returns: The #Ligma instance.
  **/
-Gimp *
-gimp_init_for_gui_testing (gboolean show_gui)
+Ligma *
+ligma_init_for_gui_testing (gboolean show_gui)
 {
-  return gimp_init_for_gui_testing_internal (show_gui, NULL);
+  return ligma_init_for_gui_testing_internal (show_gui, NULL);
 }
 
 /**
- * gimp_init_for_gui_testing:
+ * ligma_init_for_gui_testing:
  * @show_gui:
- * @gimprc:
+ * @ligmarc:
  *
- * Like gimp_init_for_gui_testing(), but also allows a custom gimprc
+ * Like ligma_init_for_gui_testing(), but also allows a custom ligmarc
  * filename to be specified.
  *
- * Returns: The #Gimp instance.
+ * Returns: The #Ligma instance.
  **/
-Gimp *
-gimp_init_for_gui_testing_with_rc (gboolean  show_gui,
-                                   GFile    *gimprc)
+Ligma *
+ligma_init_for_gui_testing_with_rc (gboolean  show_gui,
+                                   GFile    *ligmarc)
 {
-  return gimp_init_for_gui_testing_internal (show_gui, gimprc);
+  return ligma_init_for_gui_testing_internal (show_gui, ligmarc);
 }
 
-#endif /* GIMP_CONSOLE_COMPILATION */
+#endif /* LIGMA_CONSOLE_COMPILATION */
 
 static gboolean
-gimp_tests_quit_mainloop (GMainLoop *loop)
+ligma_tests_quit_mainloop (GMainLoop *loop)
 {
   g_main_loop_quit (loop);
 
@@ -192,21 +192,21 @@ gimp_tests_quit_mainloop (GMainLoop *loop)
 }
 
 /**
- * gimp_test_run_temp_mainloop:
+ * ligma_test_run_temp_mainloop:
  * @running_time: The time to run the main loop.
  *
  * Helper function for tests that wants to run a main loop for a
- * while. Useful when you want GIMP's state to settle before doing
+ * while. Useful when you want LIGMA's state to settle before doing
  * tests.
  **/
 void
-gimp_test_run_temp_mainloop (guint32 running_time)
+ligma_test_run_temp_mainloop (guint32 running_time)
 {
   GMainLoop *loop;
   loop = g_main_loop_new (NULL, FALSE);
 
   g_timeout_add (running_time,
-                 (GSourceFunc) gimp_tests_quit_mainloop,
+                 (GSourceFunc) ligma_tests_quit_mainloop,
                  loop);
 
   g_main_loop_run (loop);
@@ -215,17 +215,17 @@ gimp_test_run_temp_mainloop (guint32 running_time)
 }
 
 /**
- * gimp_test_run_mainloop_until_idle:
+ * ligma_test_run_mainloop_until_idle:
  *
  * Creates and runs a main loop until it is idle, i.e. has no more
  * work to do.
  **/
 void
-gimp_test_run_mainloop_until_idle (void)
+ligma_test_run_mainloop_until_idle (void)
 {
   GMainLoop *loop = g_main_loop_new (NULL, FALSE);
 
-  g_idle_add ((GSourceFunc) gimp_tests_quit_mainloop, loop);
+  g_idle_add ((GSourceFunc) ligma_tests_quit_mainloop, loop);
 
   g_main_loop_run (loop);
 
@@ -233,14 +233,14 @@ gimp_test_run_mainloop_until_idle (void)
 }
 
 /**
- * gimp_test_bail_if_no_display:
+ * ligma_test_bail_if_no_display:
  * @void:
  *
  * If no DISPLAY is set, call exit(EXIT_SUCCESS). There is no use in
  * having UI tests failing in DISPLAY-less environments.
  **/
 void
-gimp_test_bail_if_no_display (void)
+ligma_test_bail_if_no_display (void)
 {
   if (! g_getenv ("DISPLAY"))
     {

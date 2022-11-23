@@ -1,14 +1,14 @@
-# Gimp'i eesti keele tõlge.
-# Estonian translation of Gimp.
+# Ligma'i eesti keele tõlge.
+# Estonian translation of Ligma.
 #
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Gimp package.
+# This file is distributed under the same license as the Ligma package.
 #
 # Olle Niit <olle@paalalinn.com>, 2005-2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-03-09 03:35+0000\n"
 "PO-Revision-Date: 2007-10-02 23:54+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
@@ -99,7 +99,7 @@ msgstr "Ei suutnud kirjutada faili '%s': %s"
 msgid "Save Python-Fu Console Output"
 msgstr "Salvesta Python-Fu puldi väljund"
 
-msgid "Interactive Gimp-Python interpreter"
+msgid "Interactive Ligma-Python interpreter"
 msgstr ""
 
 msgid "_Console"
@@ -238,5 +238,5 @@ msgid "Drop shadow _Y displacement"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Gimp-Python Console"
+#~ msgid "Ligma-Python Console"
 #~ msgstr "Python konsool"

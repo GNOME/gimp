@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_SPACE_H__
-#define __GIMP_COLOR_SPACE_H__
+#ifndef __LIGMA_COLOR_SPACE_H__
+#define __LIGMA_COLOR_SPACE_H__
 
 G_BEGIN_DECLS
 
@@ -31,23 +31,23 @@ G_BEGIN_DECLS
 /*  Color conversion routines  */
 
 
-/*  GimpRGB function  */
+/*  LigmaRGB function  */
 
-void   gimp_rgb_to_hsv          (const GimpRGB  *rgb,
-                                 GimpHSV        *hsv);
-void   gimp_rgb_to_hsl          (const GimpRGB  *rgb,
-                                 GimpHSL        *hsl);
-void   gimp_rgb_to_cmyk         (const GimpRGB  *rgb,
+void   ligma_rgb_to_hsv          (const LigmaRGB  *rgb,
+                                 LigmaHSV        *hsv);
+void   ligma_rgb_to_hsl          (const LigmaRGB  *rgb,
+                                 LigmaHSL        *hsl);
+void   ligma_rgb_to_cmyk         (const LigmaRGB  *rgb,
                                  gdouble         pullout,
-                                 GimpCMYK       *cmyk);
+                                 LigmaCMYK       *cmyk);
 
-void   gimp_hsv_to_rgb          (const GimpHSV  *hsv,
-                                 GimpRGB        *rgb);
-void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
-                                 GimpRGB        *rgb);
-void   gimp_cmyk_to_rgb         (const GimpCMYK *cmyk,
-                                 GimpRGB        *rgb);
+void   ligma_hsv_to_rgb          (const LigmaHSV  *hsv,
+                                 LigmaRGB        *rgb);
+void   ligma_hsl_to_rgb          (const LigmaHSL  *hsl,
+                                 LigmaRGB        *rgb);
+void   ligma_cmyk_to_rgb         (const LigmaCMYK *cmyk,
+                                 LigmaRGB        *rgb);
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_SPACE_H__ */
+#endif  /* __LIGMA_COLOR_SPACE_H__ */

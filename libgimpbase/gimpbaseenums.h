@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,16 +16,16 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_ENUMS_H__
-#define __GIMP_BASE_ENUMS_H__
+#ifndef __LIGMA_BASE_ENUMS_H__
+#define __LIGMA_BASE_ENUMS_H__
 
 
 /**
- * SECTION: gimpbaseenums
- * @title: gimpbaseenums
- * @short_description: Basic GIMP enumeration data types.
+ * SECTION: ligmabaseenums
+ * @title: ligmabaseenums
+ * @short_description: Basic LIGMA enumeration data types.
  *
- * Basic GIMP enumeration data types.
+ * Basic LIGMA enumeration data types.
  **/
 
 
@@ -35,1286 +35,1286 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpAddMaskType:
- * @GIMP_ADD_MASK_WHITE:          White (full opacity)
- * @GIMP_ADD_MASK_BLACK:          Black (full transparency)
- * @GIMP_ADD_MASK_ALPHA:          Layer's alpha channel
- * @GIMP_ADD_MASK_ALPHA_TRANSFER: Transfer layer's alpha channel
- * @GIMP_ADD_MASK_SELECTION:      Selection
- * @GIMP_ADD_MASK_COPY:           Grayscale copy of layer
- * @GIMP_ADD_MASK_CHANNEL:        Channel
+ * LigmaAddMaskType:
+ * @LIGMA_ADD_MASK_WHITE:          White (full opacity)
+ * @LIGMA_ADD_MASK_BLACK:          Black (full transparency)
+ * @LIGMA_ADD_MASK_ALPHA:          Layer's alpha channel
+ * @LIGMA_ADD_MASK_ALPHA_TRANSFER: Transfer layer's alpha channel
+ * @LIGMA_ADD_MASK_SELECTION:      Selection
+ * @LIGMA_ADD_MASK_COPY:           Grayscale copy of layer
+ * @LIGMA_ADD_MASK_CHANNEL:        Channel
  *
  * Modes of initialising a layer mask.
  **/
-#define GIMP_TYPE_ADD_MASK_TYPE (gimp_add_mask_type_get_type ())
+#define LIGMA_TYPE_ADD_MASK_TYPE (ligma_add_mask_type_get_type ())
 
-GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
+GType ligma_add_mask_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ADD_MASK_WHITE,          /*< desc="_White (full opacity)"           >*/
-  GIMP_ADD_MASK_BLACK,          /*< desc="_Black (full transparency)"      >*/
-  GIMP_ADD_MASK_ALPHA,          /*< desc="Layer's _alpha channel"          >*/
-  GIMP_ADD_MASK_ALPHA_TRANSFER, /*< desc="_Transfer layer's alpha channel" >*/
-  GIMP_ADD_MASK_SELECTION,      /*< desc="_Selection"                      >*/
-  GIMP_ADD_MASK_COPY,           /*< desc="_Grayscale copy of layer"        >*/
-  GIMP_ADD_MASK_CHANNEL         /*< desc="C_hannel"                        >*/
-} GimpAddMaskType;
+  LIGMA_ADD_MASK_WHITE,          /*< desc="_White (full opacity)"           >*/
+  LIGMA_ADD_MASK_BLACK,          /*< desc="_Black (full transparency)"      >*/
+  LIGMA_ADD_MASK_ALPHA,          /*< desc="Layer's _alpha channel"          >*/
+  LIGMA_ADD_MASK_ALPHA_TRANSFER, /*< desc="_Transfer layer's alpha channel" >*/
+  LIGMA_ADD_MASK_SELECTION,      /*< desc="_Selection"                      >*/
+  LIGMA_ADD_MASK_COPY,           /*< desc="_Grayscale copy of layer"        >*/
+  LIGMA_ADD_MASK_CHANNEL         /*< desc="C_hannel"                        >*/
+} LigmaAddMaskType;
 
 
 /**
- * GimpBrushGeneratedShape:
- * @GIMP_BRUSH_GENERATED_CIRCLE:  Circle
- * @GIMP_BRUSH_GENERATED_SQUARE:  Square
- * @GIMP_BRUSH_GENERATED_DIAMOND: Diamond
+ * LigmaBrushGeneratedShape:
+ * @LIGMA_BRUSH_GENERATED_CIRCLE:  Circle
+ * @LIGMA_BRUSH_GENERATED_SQUARE:  Square
+ * @LIGMA_BRUSH_GENERATED_DIAMOND: Diamond
  *
  * Shapes of generated brushes.
  **/
-#define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
+#define LIGMA_TYPE_BRUSH_GENERATED_SHAPE (ligma_brush_generated_shape_get_type ())
 
-GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
+GType ligma_brush_generated_shape_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_BRUSH_GENERATED_CIRCLE,  /*< desc="Circle"  >*/
-  GIMP_BRUSH_GENERATED_SQUARE,  /*< desc="Square"  >*/
-  GIMP_BRUSH_GENERATED_DIAMOND  /*< desc="Diamond" >*/
-} GimpBrushGeneratedShape;
+  LIGMA_BRUSH_GENERATED_CIRCLE,  /*< desc="Circle"  >*/
+  LIGMA_BRUSH_GENERATED_SQUARE,  /*< desc="Square"  >*/
+  LIGMA_BRUSH_GENERATED_DIAMOND  /*< desc="Diamond" >*/
+} LigmaBrushGeneratedShape;
 
 
 /**
- * GimpCapStyle:
- * @GIMP_CAP_BUTT:   Butt
- * @GIMP_CAP_ROUND:  Round
- * @GIMP_CAP_SQUARE: Square
+ * LigmaCapStyle:
+ * @LIGMA_CAP_BUTT:   Butt
+ * @LIGMA_CAP_ROUND:  Round
+ * @LIGMA_CAP_SQUARE: Square
  *
  * Style of line endings.
  **/
-#define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
+#define LIGMA_TYPE_CAP_STYLE (ligma_cap_style_get_type ())
 
-GType gimp_cap_style_get_type (void) G_GNUC_CONST;
+GType ligma_cap_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
-  GIMP_CAP_ROUND,  /*< desc="Round"  >*/
-  GIMP_CAP_SQUARE  /*< desc="Square" >*/
-} GimpCapStyle;
+  LIGMA_CAP_BUTT,   /*< desc="Butt"   >*/
+  LIGMA_CAP_ROUND,  /*< desc="Round"  >*/
+  LIGMA_CAP_SQUARE  /*< desc="Square" >*/
+} LigmaCapStyle;
 
 
 /**
- * GimpChannelOps:
- * @GIMP_CHANNEL_OP_ADD:       Add to the current selection
- * @GIMP_CHANNEL_OP_SUBTRACT:  Subtract from the current selection
- * @GIMP_CHANNEL_OP_REPLACE:   Replace the current selection
- * @GIMP_CHANNEL_OP_INTERSECT: Intersect with the current selection
+ * LigmaChannelOps:
+ * @LIGMA_CHANNEL_OP_ADD:       Add to the current selection
+ * @LIGMA_CHANNEL_OP_SUBTRACT:  Subtract from the current selection
+ * @LIGMA_CHANNEL_OP_REPLACE:   Replace the current selection
+ * @LIGMA_CHANNEL_OP_INTERSECT: Intersect with the current selection
  *
  * Operations to combine channels and selections.
  **/
-#define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
+#define LIGMA_TYPE_CHANNEL_OPS (ligma_channel_ops_get_type ())
 
-GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
+GType ligma_channel_ops_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
-  GIMP_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
-  GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
-  GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
-} GimpChannelOps;
+  LIGMA_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
+  LIGMA_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
+  LIGMA_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
+  LIGMA_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
+} LigmaChannelOps;
 
 
 /**
- * GimpChannelType:
- * @GIMP_CHANNEL_RED:     Red
- * @GIMP_CHANNEL_GREEN:   Green
- * @GIMP_CHANNEL_BLUE:    Blue
- * @GIMP_CHANNEL_GRAY:    Gray
- * @GIMP_CHANNEL_INDEXED: Indexed
- * @GIMP_CHANNEL_ALPHA:   Alpha
+ * LigmaChannelType:
+ * @LIGMA_CHANNEL_RED:     Red
+ * @LIGMA_CHANNEL_GREEN:   Green
+ * @LIGMA_CHANNEL_BLUE:    Blue
+ * @LIGMA_CHANNEL_GRAY:    Gray
+ * @LIGMA_CHANNEL_INDEXED: Indexed
+ * @LIGMA_CHANNEL_ALPHA:   Alpha
  *
  * Channels (as in color components).
  **/
-#define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
+#define LIGMA_TYPE_CHANNEL_TYPE (ligma_channel_type_get_type ())
 
-GType gimp_channel_type_get_type (void) G_GNUC_CONST;
+GType ligma_channel_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CHANNEL_RED,      /*< desc="Red"     >*/
-  GIMP_CHANNEL_GREEN,    /*< desc="Green"   >*/
-  GIMP_CHANNEL_BLUE,     /*< desc="Blue"    >*/
-  GIMP_CHANNEL_GRAY,     /*< desc="Gray"    >*/
-  GIMP_CHANNEL_INDEXED,  /*< desc="Indexed" >*/
-  GIMP_CHANNEL_ALPHA     /*< desc="Alpha"   >*/
-} GimpChannelType;
+  LIGMA_CHANNEL_RED,      /*< desc="Red"     >*/
+  LIGMA_CHANNEL_GREEN,    /*< desc="Green"   >*/
+  LIGMA_CHANNEL_BLUE,     /*< desc="Blue"    >*/
+  LIGMA_CHANNEL_GRAY,     /*< desc="Gray"    >*/
+  LIGMA_CHANNEL_INDEXED,  /*< desc="Indexed" >*/
+  LIGMA_CHANNEL_ALPHA     /*< desc="Alpha"   >*/
+} LigmaChannelType;
 
 
 /**
- * GimpCheckSize:
- * @GIMP_CHECK_SIZE_SMALL_CHECKS:  Small
- * @GIMP_CHECK_SIZE_MEDIUM_CHECKS: Medium
- * @GIMP_CHECK_SIZE_LARGE_CHECKS:  Large
+ * LigmaCheckSize:
+ * @LIGMA_CHECK_SIZE_SMALL_CHECKS:  Small
+ * @LIGMA_CHECK_SIZE_MEDIUM_CHECKS: Medium
+ * @LIGMA_CHECK_SIZE_LARGE_CHECKS:  Large
  *
  * Size of the checkerboard indicating transparency.
  **/
-#define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
+#define LIGMA_TYPE_CHECK_SIZE (ligma_check_size_get_type ())
 
-GType gimp_check_size_get_type (void) G_GNUC_CONST;
+GType ligma_check_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_CHECK_SIZE_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/
-  GIMP_CHECK_SIZE_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
-  GIMP_CHECK_SIZE_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
-} GimpCheckSize;
+  LIGMA_CHECK_SIZE_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/
+  LIGMA_CHECK_SIZE_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
+  LIGMA_CHECK_SIZE_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
+} LigmaCheckSize;
 
 
 /**
- * GimpCheckType:
- * @GIMP_CHECK_TYPE_LIGHT_CHECKS: Light checks
- * @GIMP_CHECK_TYPE_GRAY_CHECKS:  Mid-tone checks
- * @GIMP_CHECK_TYPE_DARK_CHECKS:  Dark checks
- * @GIMP_CHECK_TYPE_WHITE_ONLY:   White only
- * @GIMP_CHECK_TYPE_GRAY_ONLY:    Gray only
- * @GIMP_CHECK_TYPE_BLACK_ONLY:   Black only
- * @GIMP_CHECK_TYPE_CUSTOM_CHECKS: Custom checks
+ * LigmaCheckType:
+ * @LIGMA_CHECK_TYPE_LIGHT_CHECKS: Light checks
+ * @LIGMA_CHECK_TYPE_GRAY_CHECKS:  Mid-tone checks
+ * @LIGMA_CHECK_TYPE_DARK_CHECKS:  Dark checks
+ * @LIGMA_CHECK_TYPE_WHITE_ONLY:   White only
+ * @LIGMA_CHECK_TYPE_GRAY_ONLY:    Gray only
+ * @LIGMA_CHECK_TYPE_BLACK_ONLY:   Black only
+ * @LIGMA_CHECK_TYPE_CUSTOM_CHECKS: Custom checks
  *
  * Color/Brightness of the checkerboard indicating transparency.
  **/
-#define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
+#define LIGMA_TYPE_CHECK_TYPE (ligma_check_type_get_type ())
 
-GType gimp_check_type_get_type (void) G_GNUC_CONST;
+GType ligma_check_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_CHECK_TYPE_LIGHT_CHECKS = 0,  /*< desc="Light checks"    >*/
-  GIMP_CHECK_TYPE_GRAY_CHECKS  = 1,  /*< desc="Mid-tone checks" >*/
-  GIMP_CHECK_TYPE_DARK_CHECKS  = 2,  /*< desc="Dark checks"     >*/
-  GIMP_CHECK_TYPE_WHITE_ONLY   = 3,  /*< desc="White only"      >*/
-  GIMP_CHECK_TYPE_GRAY_ONLY    = 4,  /*< desc="Gray only"       >*/
-  GIMP_CHECK_TYPE_BLACK_ONLY   = 5,  /*< desc="Black only"      >*/
-  GIMP_CHECK_TYPE_CUSTOM_CHECKS = 6  /*< desc="Custom checks"   >*/
-} GimpCheckType;
+  LIGMA_CHECK_TYPE_LIGHT_CHECKS = 0,  /*< desc="Light checks"    >*/
+  LIGMA_CHECK_TYPE_GRAY_CHECKS  = 1,  /*< desc="Mid-tone checks" >*/
+  LIGMA_CHECK_TYPE_DARK_CHECKS  = 2,  /*< desc="Dark checks"     >*/
+  LIGMA_CHECK_TYPE_WHITE_ONLY   = 3,  /*< desc="White only"      >*/
+  LIGMA_CHECK_TYPE_GRAY_ONLY    = 4,  /*< desc="Gray only"       >*/
+  LIGMA_CHECK_TYPE_BLACK_ONLY   = 5,  /*< desc="Black only"      >*/
+  LIGMA_CHECK_TYPE_CUSTOM_CHECKS = 6  /*< desc="Custom checks"   >*/
+} LigmaCheckType;
 
 
 /**
- * GimpCloneType:
- * @GIMP_CLONE_IMAGE:   Clone from an image/drawable source
- * @GIMP_CLONE_PATTERN: Clone from a pattern source
+ * LigmaCloneType:
+ * @LIGMA_CLONE_IMAGE:   Clone from an image/drawable source
+ * @LIGMA_CLONE_PATTERN: Clone from a pattern source
  *
  * Clone sources.
  **/
-#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
+#define LIGMA_TYPE_CLONE_TYPE (ligma_clone_type_get_type ())
 
-GType gimp_clone_type_get_type (void) G_GNUC_CONST;
+GType ligma_clone_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CLONE_IMAGE,    /*< desc="Image"   >*/
-  GIMP_CLONE_PATTERN   /*< desc="Pattern" >*/
-} GimpCloneType;
+  LIGMA_CLONE_IMAGE,    /*< desc="Image"   >*/
+  LIGMA_CLONE_PATTERN   /*< desc="Pattern" >*/
+} LigmaCloneType;
 
 
 /**
- * GimpColorTag:
- * @GIMP_COLOR_TAG_NONE:   None
- * @GIMP_COLOR_TAG_BLUE:   Blue
- * @GIMP_COLOR_TAG_GREEN:  Green
- * @GIMP_COLOR_TAG_YELLOW: Yellow
- * @GIMP_COLOR_TAG_ORANGE: Orange
- * @GIMP_COLOR_TAG_BROWN:  Brown
- * @GIMP_COLOR_TAG_RED:    Red
- * @GIMP_COLOR_TAG_VIOLET: Violet
- * @GIMP_COLOR_TAG_GRAY:   Gray
+ * LigmaColorTag:
+ * @LIGMA_COLOR_TAG_NONE:   None
+ * @LIGMA_COLOR_TAG_BLUE:   Blue
+ * @LIGMA_COLOR_TAG_GREEN:  Green
+ * @LIGMA_COLOR_TAG_YELLOW: Yellow
+ * @LIGMA_COLOR_TAG_ORANGE: Orange
+ * @LIGMA_COLOR_TAG_BROWN:  Brown
+ * @LIGMA_COLOR_TAG_RED:    Red
+ * @LIGMA_COLOR_TAG_VIOLET: Violet
+ * @LIGMA_COLOR_TAG_GRAY:   Gray
  *
  * Possible tag colors.
  *
  * Since: 2.10
  **/
-#define GIMP_TYPE_COLOR_TAG (gimp_color_tag_get_type ())
+#define LIGMA_TYPE_COLOR_TAG (ligma_color_tag_get_type ())
 
-GType gimp_color_tag_get_type (void) G_GNUC_CONST;
+GType ligma_color_tag_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_TAG_NONE,   /*< desc="None"   >*/
-  GIMP_COLOR_TAG_BLUE,   /*< desc="Blue"   >*/
-  GIMP_COLOR_TAG_GREEN,  /*< desc="Green"  >*/
-  GIMP_COLOR_TAG_YELLOW, /*< desc="Yellow" >*/
-  GIMP_COLOR_TAG_ORANGE, /*< desc="Orange" >*/
-  GIMP_COLOR_TAG_BROWN,  /*< desc="Brown"  >*/
-  GIMP_COLOR_TAG_RED,    /*< desc="Red"    >*/
-  GIMP_COLOR_TAG_VIOLET, /*< desc="Violet" >*/
-  GIMP_COLOR_TAG_GRAY    /*< desc="Gray"   >*/
-} GimpColorTag;
+  LIGMA_COLOR_TAG_NONE,   /*< desc="None"   >*/
+  LIGMA_COLOR_TAG_BLUE,   /*< desc="Blue"   >*/
+  LIGMA_COLOR_TAG_GREEN,  /*< desc="Green"  >*/
+  LIGMA_COLOR_TAG_YELLOW, /*< desc="Yellow" >*/
+  LIGMA_COLOR_TAG_ORANGE, /*< desc="Orange" >*/
+  LIGMA_COLOR_TAG_BROWN,  /*< desc="Brown"  >*/
+  LIGMA_COLOR_TAG_RED,    /*< desc="Red"    >*/
+  LIGMA_COLOR_TAG_VIOLET, /*< desc="Violet" >*/
+  LIGMA_COLOR_TAG_GRAY    /*< desc="Gray"   >*/
+} LigmaColorTag;
 
 
 /**
- * GimpComponentType:
- * @GIMP_COMPONENT_TYPE_U8:     8-bit integer
- * @GIMP_COMPONENT_TYPE_U16:    16-bit integer
- * @GIMP_COMPONENT_TYPE_U32:    32-bit integer
- * @GIMP_COMPONENT_TYPE_HALF:   16-bit floating point
- * @GIMP_COMPONENT_TYPE_FLOAT:  32-bit floating point
- * @GIMP_COMPONENT_TYPE_DOUBLE: 64-bit floating point
+ * LigmaComponentType:
+ * @LIGMA_COMPONENT_TYPE_U8:     8-bit integer
+ * @LIGMA_COMPONENT_TYPE_U16:    16-bit integer
+ * @LIGMA_COMPONENT_TYPE_U32:    32-bit integer
+ * @LIGMA_COMPONENT_TYPE_HALF:   16-bit floating point
+ * @LIGMA_COMPONENT_TYPE_FLOAT:  32-bit floating point
+ * @LIGMA_COMPONENT_TYPE_DOUBLE: 64-bit floating point
  *
  * Encoding types of image components.
  *
  * Since: 2.10
  **/
-#define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
+#define LIGMA_TYPE_COMPONENT_TYPE (ligma_component_type_get_type ())
 
-GType gimp_component_type_get_type (void) G_GNUC_CONST;
+GType ligma_component_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COMPONENT_TYPE_U8     = 100, /*< desc="8-bit integer"         >*/
-  GIMP_COMPONENT_TYPE_U16    = 200, /*< desc="16-bit integer"        >*/
-  GIMP_COMPONENT_TYPE_U32    = 300, /*< desc="32-bit integer"        >*/
-  GIMP_COMPONENT_TYPE_HALF   = 500, /*< desc="16-bit floating point" >*/
-  GIMP_COMPONENT_TYPE_FLOAT  = 600, /*< desc="32-bit floating point" >*/
-  GIMP_COMPONENT_TYPE_DOUBLE = 700  /*< desc="64-bit floating point" >*/
-} GimpComponentType;
+  LIGMA_COMPONENT_TYPE_U8     = 100, /*< desc="8-bit integer"         >*/
+  LIGMA_COMPONENT_TYPE_U16    = 200, /*< desc="16-bit integer"        >*/
+  LIGMA_COMPONENT_TYPE_U32    = 300, /*< desc="32-bit integer"        >*/
+  LIGMA_COMPONENT_TYPE_HALF   = 500, /*< desc="16-bit floating point" >*/
+  LIGMA_COMPONENT_TYPE_FLOAT  = 600, /*< desc="32-bit floating point" >*/
+  LIGMA_COMPONENT_TYPE_DOUBLE = 700  /*< desc="64-bit floating point" >*/
+} LigmaComponentType;
 
 
 /**
- * GimpConvertPaletteType:
- * @GIMP_CONVERT_PALETTE_GENERATE: Generate optimum palette
- * @GIMP_CONVERT_PALETTE_WEB:      Use web-optimized palette
- * @GIMP_CONVERT_PALETTE_MONO:     Use black and white (1-bit) palette
- * @GIMP_CONVERT_PALETTE_CUSTOM:   Use custom palette
+ * LigmaConvertPaletteType:
+ * @LIGMA_CONVERT_PALETTE_GENERATE: Generate optimum palette
+ * @LIGMA_CONVERT_PALETTE_WEB:      Use web-optimized palette
+ * @LIGMA_CONVERT_PALETTE_MONO:     Use black and white (1-bit) palette
+ * @LIGMA_CONVERT_PALETTE_CUSTOM:   Use custom palette
  *
  * Types of palettes for indexed conversion.
  **/
-#define GIMP_TYPE_CONVERT_PALETTE_TYPE (gimp_convert_palette_type_get_type ())
+#define LIGMA_TYPE_CONVERT_PALETTE_TYPE (ligma_convert_palette_type_get_type ())
 
-GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
+GType ligma_convert_palette_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CONVERT_PALETTE_GENERATE, /*< desc="Generate optimum palette"          >*/
-  GIMP_CONVERT_PALETTE_WEB,      /*< desc="Use web-optimized palette"         >*/
-  GIMP_CONVERT_PALETTE_MONO,     /*< desc="Use black and white (1-bit) palette" >*/
-  GIMP_CONVERT_PALETTE_CUSTOM    /*< desc="Use custom palette"                >*/
-} GimpConvertPaletteType;
+  LIGMA_CONVERT_PALETTE_GENERATE, /*< desc="Generate optimum palette"          >*/
+  LIGMA_CONVERT_PALETTE_WEB,      /*< desc="Use web-optimized palette"         >*/
+  LIGMA_CONVERT_PALETTE_MONO,     /*< desc="Use black and white (1-bit) palette" >*/
+  LIGMA_CONVERT_PALETTE_CUSTOM    /*< desc="Use custom palette"                >*/
+} LigmaConvertPaletteType;
 
 
 /**
- * GimpConvolveType:
- * @GIMP_CONVOLVE_BLUR:    Blur
- * @GIMP_CONVOLVE_SHARPEN: Sharpen
+ * LigmaConvolveType:
+ * @LIGMA_CONVOLVE_BLUR:    Blur
+ * @LIGMA_CONVOLVE_SHARPEN: Sharpen
  *
  * Types of convolutions.
  **/
-#define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
+#define LIGMA_TYPE_CONVOLVE_TYPE (ligma_convolve_type_get_type ())
 
-GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
+GType ligma_convolve_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CONVOLVE_BLUR,    /*< desc="Blur"    >*/
-  GIMP_CONVOLVE_SHARPEN  /*< desc="Sharpen" >*/
-} GimpConvolveType;
+  LIGMA_CONVOLVE_BLUR,    /*< desc="Blur"    >*/
+  LIGMA_CONVOLVE_SHARPEN  /*< desc="Sharpen" >*/
+} LigmaConvolveType;
 
 
 /**
- * GimpDesaturateMode:
- * @GIMP_DESATURATE_LIGHTNESS:  Lightness (HSL)
- * @GIMP_DESATURATE_LUMA:       Luma
- * @GIMP_DESATURATE_AVERAGE:    Average (HSI Intensity)
- * @GIMP_DESATURATE_LUMINANCE:  Luminance
- * @GIMP_DESATURATE_VALUE:      Value (HSV)
+ * LigmaDesaturateMode:
+ * @LIGMA_DESATURATE_LIGHTNESS:  Lightness (HSL)
+ * @LIGMA_DESATURATE_LUMA:       Luma
+ * @LIGMA_DESATURATE_AVERAGE:    Average (HSI Intensity)
+ * @LIGMA_DESATURATE_LUMINANCE:  Luminance
+ * @LIGMA_DESATURATE_VALUE:      Value (HSV)
  *
  * Grayscale conversion methods.
  **/
-#define GIMP_TYPE_DESATURATE_MODE (gimp_desaturate_mode_get_type ())
+#define LIGMA_TYPE_DESATURATE_MODE (ligma_desaturate_mode_get_type ())
 
-GType gimp_desaturate_mode_get_type (void) G_GNUC_CONST;
+GType ligma_desaturate_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_DESATURATE_LIGHTNESS,   /*< desc="Lightness (HSL)"          >*/
-  GIMP_DESATURATE_LUMA,        /*< desc="Luma"                     >*/
-  GIMP_DESATURATE_AVERAGE,     /*< desc="Average (HSI Intensity)"  >*/
-  GIMP_DESATURATE_LUMINANCE,   /*< desc="Luminance"                >*/
-  GIMP_DESATURATE_VALUE        /*< desc="Value (HSV)"              >*/
-} GimpDesaturateMode;
+  LIGMA_DESATURATE_LIGHTNESS,   /*< desc="Lightness (HSL)"          >*/
+  LIGMA_DESATURATE_LUMA,        /*< desc="Luma"                     >*/
+  LIGMA_DESATURATE_AVERAGE,     /*< desc="Average (HSI Intensity)"  >*/
+  LIGMA_DESATURATE_LUMINANCE,   /*< desc="Luminance"                >*/
+  LIGMA_DESATURATE_VALUE        /*< desc="Value (HSV)"              >*/
+} LigmaDesaturateMode;
 
 
 /**
- * GimpDodgeBurnType:
- * @GIMP_DODGE_BURN_TYPE_DODGE: Dodge
- * @GIMP_DODGE_BURN_TYPE_BURN:  Burn
+ * LigmaDodgeBurnType:
+ * @LIGMA_DODGE_BURN_TYPE_DODGE: Dodge
+ * @LIGMA_DODGE_BURN_TYPE_BURN:  Burn
  *
  * Methods for the dodge/burn operation.
  **/
-#define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
+#define LIGMA_TYPE_DODGE_BURN_TYPE (ligma_dodge_burn_type_get_type ())
 
-GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
+GType ligma_dodge_burn_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_DODGE_BURN_TYPE_DODGE,  /*< desc="Dodge" >*/
-  GIMP_DODGE_BURN_TYPE_BURN    /*< desc="Burn"  >*/
-} GimpDodgeBurnType;
+  LIGMA_DODGE_BURN_TYPE_DODGE,  /*< desc="Dodge" >*/
+  LIGMA_DODGE_BURN_TYPE_BURN    /*< desc="Burn"  >*/
+} LigmaDodgeBurnType;
 
 
 /**
- * GimpFillType:
- * @GIMP_FILL_FOREGROUND:  Foreground color
- * @GIMP_FILL_BACKGROUND:  Background color
- * @GIMP_FILL_WHITE:       White
- * @GIMP_FILL_TRANSPARENT: Transparency
- * @GIMP_FILL_PATTERN:     Pattern
+ * LigmaFillType:
+ * @LIGMA_FILL_FOREGROUND:  Foreground color
+ * @LIGMA_FILL_BACKGROUND:  Background color
+ * @LIGMA_FILL_WHITE:       White
+ * @LIGMA_FILL_TRANSPARENT: Transparency
+ * @LIGMA_FILL_PATTERN:     Pattern
  *
  * Types of filling.
  **/
-#define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
+#define LIGMA_TYPE_FILL_TYPE (ligma_fill_type_get_type ())
 
-GType gimp_fill_type_get_type (void) G_GNUC_CONST;
+GType ligma_fill_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FILL_FOREGROUND,  /*< desc="Foreground color" >*/
-  GIMP_FILL_BACKGROUND,  /*< desc="Background color" >*/
-  GIMP_FILL_WHITE,       /*< desc="White"            >*/
-  GIMP_FILL_TRANSPARENT, /*< desc="Transparency"     >*/
-  GIMP_FILL_PATTERN      /*< desc="Pattern"          >*/
-} GimpFillType;
+  LIGMA_FILL_FOREGROUND,  /*< desc="Foreground color" >*/
+  LIGMA_FILL_BACKGROUND,  /*< desc="Background color" >*/
+  LIGMA_FILL_WHITE,       /*< desc="White"            >*/
+  LIGMA_FILL_TRANSPARENT, /*< desc="Transparency"     >*/
+  LIGMA_FILL_PATTERN      /*< desc="Pattern"          >*/
+} LigmaFillType;
 
 
 /**
- * GimpForegroundExtractMode:
- * @GIMP_FOREGROUND_EXTRACT_MATTING: Matting (Since 2.10)
+ * LigmaForegroundExtractMode:
+ * @LIGMA_FOREGROUND_EXTRACT_MATTING: Matting (Since 2.10)
  *
  * Foreground extract engines.
  **/
-#define GIMP_TYPE_FOREGROUND_EXTRACT_MODE (gimp_foreground_extract_mode_get_type ())
+#define LIGMA_TYPE_FOREGROUND_EXTRACT_MODE (ligma_foreground_extract_mode_get_type ())
 
-GType gimp_foreground_extract_mode_get_type (void) G_GNUC_CONST;
+GType ligma_foreground_extract_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FOREGROUND_EXTRACT_MATTING
-} GimpForegroundExtractMode;
+  LIGMA_FOREGROUND_EXTRACT_MATTING
+} LigmaForegroundExtractMode;
 
 
 /**
- * GimpGradientBlendColorSpace:
- * @GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL: Perceptual RGB
- * @GIMP_GRADIENT_BLEND_RGB_LINEAR:     Linear RGB
- * @GIMP_GRADIENT_BLEND_CIE_LAB:        CIE Lab
+ * LigmaGradientBlendColorSpace:
+ * @LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL: Perceptual RGB
+ * @LIGMA_GRADIENT_BLEND_RGB_LINEAR:     Linear RGB
+ * @LIGMA_GRADIENT_BLEND_CIE_LAB:        CIE Lab
  *
  * Color space for blending gradients.
  *
  * Since: 2.10
  */
-#define GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE (gimp_gradient_blend_color_space_get_type ())
+#define LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE (ligma_gradient_blend_color_space_get_type ())
 
-GType gimp_gradient_blend_color_space_get_type (void) G_GNUC_CONST;
+GType ligma_gradient_blend_color_space_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,  /*< desc="Perceptual RGB", nick=rgb-perceptual >*/
-  GIMP_GRADIENT_BLEND_RGB_LINEAR,      /*< desc="Linear RGB",     nick=rgb-linear     >*/
-  GIMP_GRADIENT_BLEND_CIE_LAB          /*< desc="CIE Lab",        nick=cie-lab        >*/
-} GimpGradientBlendColorSpace;
+  LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,  /*< desc="Perceptual RGB", nick=rgb-perceptual >*/
+  LIGMA_GRADIENT_BLEND_RGB_LINEAR,      /*< desc="Linear RGB",     nick=rgb-linear     >*/
+  LIGMA_GRADIENT_BLEND_CIE_LAB          /*< desc="CIE Lab",        nick=cie-lab        >*/
+} LigmaGradientBlendColorSpace;
 
 
 /**
- * GimpGradientSegmentColor:
- * @GIMP_GRADIENT_SEGMENT_RGB:     RGB
- * @GIMP_GRADIENT_SEGMENT_HSV_CCW: HSV (counter-clockwise hue)
- * @GIMP_GRADIENT_SEGMENT_HSV_CW:  HSV (clockwise hue)
+ * LigmaGradientSegmentColor:
+ * @LIGMA_GRADIENT_SEGMENT_RGB:     RGB
+ * @LIGMA_GRADIENT_SEGMENT_HSV_CCW: HSV (counter-clockwise hue)
+ * @LIGMA_GRADIENT_SEGMENT_HSV_CW:  HSV (clockwise hue)
  *
  * Coloring types for gradient segments.
  **/
-#define GIMP_TYPE_GRADIENT_SEGMENT_COLOR (gimp_gradient_segment_color_get_type ())
+#define LIGMA_TYPE_GRADIENT_SEGMENT_COLOR (ligma_gradient_segment_color_get_type ())
 
-GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
+GType ligma_gradient_segment_color_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_SEGMENT_RGB,      /*< desc="RGB"                                             >*/
-  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /*< desc="HSV (counter-clockwise hue)", abbrev="HSV (ccw)" >*/
-  GIMP_GRADIENT_SEGMENT_HSV_CW    /*< desc="HSV (clockwise hue)",         abbrev="HSV (cw)"  >*/
-} GimpGradientSegmentColor;
+  LIGMA_GRADIENT_SEGMENT_RGB,      /*< desc="RGB"                                             >*/
+  LIGMA_GRADIENT_SEGMENT_HSV_CCW,  /*< desc="HSV (counter-clockwise hue)", abbrev="HSV (ccw)" >*/
+  LIGMA_GRADIENT_SEGMENT_HSV_CW    /*< desc="HSV (clockwise hue)",         abbrev="HSV (cw)"  >*/
+} LigmaGradientSegmentColor;
 
 
 /**
- * GimpGradientSegmentType:
- * @GIMP_GRADIENT_SEGMENT_LINEAR:            Linear
- * @GIMP_GRADIENT_SEGMENT_CURVED:            Curved
- * @GIMP_GRADIENT_SEGMENT_SINE:              Sinusoidal
- * @GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: Spherical (increasing)
- * @GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: Spherical (decreasing)
- * @GIMP_GRADIENT_SEGMENT_STEP:              Step
+ * LigmaGradientSegmentType:
+ * @LIGMA_GRADIENT_SEGMENT_LINEAR:            Linear
+ * @LIGMA_GRADIENT_SEGMENT_CURVED:            Curved
+ * @LIGMA_GRADIENT_SEGMENT_SINE:              Sinusoidal
+ * @LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING: Spherical (increasing)
+ * @LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING: Spherical (decreasing)
+ * @LIGMA_GRADIENT_SEGMENT_STEP:              Step
  *
  * Transition functions for gradient segments.
  **/
-#define GIMP_TYPE_GRADIENT_SEGMENT_TYPE (gimp_gradient_segment_type_get_type ())
+#define LIGMA_TYPE_GRADIENT_SEGMENT_TYPE (ligma_gradient_segment_type_get_type ())
 
-GType gimp_gradient_segment_type_get_type (void) G_GNUC_CONST;
+GType ligma_gradient_segment_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_SEGMENT_LINEAR,             /*< desc="Linear"                                           >*/
-  GIMP_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"                                           >*/
-  GIMP_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"                                       >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (increasing)", abbrev="Spherical (inc)" >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,  /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
-  GIMP_GRADIENT_SEGMENT_STEP                /*< desc="Step"                                             >*/
-} GimpGradientSegmentType;
+  LIGMA_GRADIENT_SEGMENT_LINEAR,             /*< desc="Linear"                                           >*/
+  LIGMA_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"                                           >*/
+  LIGMA_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"                                       >*/
+  LIGMA_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (increasing)", abbrev="Spherical (inc)" >*/
+  LIGMA_GRADIENT_SEGMENT_SPHERE_DECREASING,  /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
+  LIGMA_GRADIENT_SEGMENT_STEP                /*< desc="Step"                                             >*/
+} LigmaGradientSegmentType;
 
 
 /**
- * GimpGradientType:
- * @GIMP_GRADIENT_LINEAR:               Linear
- * @GIMP_GRADIENT_BILINEAR:             Bi-linear
- * @GIMP_GRADIENT_RADIAL:               Radial
- * @GIMP_GRADIENT_SQUARE:               Square
- * @GIMP_GRADIENT_CONICAL_SYMMETRIC:    Conical (symmetric)
- * @GIMP_GRADIENT_CONICAL_ASYMMETRIC:   Conical (asymmetric)
- * @GIMP_GRADIENT_SHAPEBURST_ANGULAR:   Shaped (angular)
- * @GIMP_GRADIENT_SHAPEBURST_SPHERICAL: Shaped (spherical)
- * @GIMP_GRADIENT_SHAPEBURST_DIMPLED:   Shaped (dimpled)
- * @GIMP_GRADIENT_SPIRAL_CLOCKWISE:     Spiral (clockwise)
- * @GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE: Spiral (counter-clockwise)
+ * LigmaGradientType:
+ * @LIGMA_GRADIENT_LINEAR:               Linear
+ * @LIGMA_GRADIENT_BILINEAR:             Bi-linear
+ * @LIGMA_GRADIENT_RADIAL:               Radial
+ * @LIGMA_GRADIENT_SQUARE:               Square
+ * @LIGMA_GRADIENT_CONICAL_SYMMETRIC:    Conical (symmetric)
+ * @LIGMA_GRADIENT_CONICAL_ASYMMETRIC:   Conical (asymmetric)
+ * @LIGMA_GRADIENT_SHAPEBURST_ANGULAR:   Shaped (angular)
+ * @LIGMA_GRADIENT_SHAPEBURST_SPHERICAL: Shaped (spherical)
+ * @LIGMA_GRADIENT_SHAPEBURST_DIMPLED:   Shaped (dimpled)
+ * @LIGMA_GRADIENT_SPIRAL_CLOCKWISE:     Spiral (clockwise)
+ * @LIGMA_GRADIENT_SPIRAL_ANTICLOCKWISE: Spiral (counter-clockwise)
  *
  * Gradient shapes.
  **/
-#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
+#define LIGMA_TYPE_GRADIENT_TYPE (ligma_gradient_type_get_type ())
 
-GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
+GType ligma_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"                                              >*/
-  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"                                           >*/
-  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"                                              >*/
-  GIMP_GRADIENT_SQUARE,                /*< desc="Square"                                              >*/
-  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (symmetric)",        abbrev="Conical (sym)"  >*/
-  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asymmetric)",       abbrev="Conical (asym)" >*/
-  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"                                    >*/
-  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)"                                  >*/
-  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"                                    >*/
-  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (clockwise)",         abbrev="Spiral (cw)"    >*/
-  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (counter-clockwise)", abbrev="Spiral (ccw)"   >*/
-} GimpGradientType;
+  LIGMA_GRADIENT_LINEAR,                /*< desc="Linear"                                              >*/
+  LIGMA_GRADIENT_BILINEAR,              /*< desc="Bi-linear"                                           >*/
+  LIGMA_GRADIENT_RADIAL,                /*< desc="Radial"                                              >*/
+  LIGMA_GRADIENT_SQUARE,                /*< desc="Square"                                              >*/
+  LIGMA_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (symmetric)",        abbrev="Conical (sym)"  >*/
+  LIGMA_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asymmetric)",       abbrev="Conical (asym)" >*/
+  LIGMA_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"                                    >*/
+  LIGMA_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)"                                  >*/
+  LIGMA_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"                                    >*/
+  LIGMA_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (clockwise)",         abbrev="Spiral (cw)"    >*/
+  LIGMA_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (counter-clockwise)", abbrev="Spiral (ccw)"   >*/
+} LigmaGradientType;
 
 
 /**
- * GimpGridStyle:
- * @GIMP_GRID_DOTS:          Intersections (dots)
- * @GIMP_GRID_INTERSECTIONS: Intersections (crosshairs)
- * @GIMP_GRID_ON_OFF_DASH:   Dashed
- * @GIMP_GRID_DOUBLE_DASH:   Double dashed
- * @GIMP_GRID_SOLID:         Solid
+ * LigmaGridStyle:
+ * @LIGMA_GRID_DOTS:          Intersections (dots)
+ * @LIGMA_GRID_INTERSECTIONS: Intersections (crosshairs)
+ * @LIGMA_GRID_ON_OFF_DASH:   Dashed
+ * @LIGMA_GRID_DOUBLE_DASH:   Double dashed
+ * @LIGMA_GRID_SOLID:         Solid
  *
  * Rendering types for the display grid.
  **/
-#define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
+#define LIGMA_TYPE_GRID_STYLE (ligma_grid_style_get_type ())
 
-GType gimp_grid_style_get_type (void) G_GNUC_CONST;
+GType ligma_grid_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRID_DOTS,           /*< desc="Intersections (dots)"       >*/
-  GIMP_GRID_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
-  GIMP_GRID_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
-  GIMP_GRID_DOUBLE_DASH,    /*< desc="Double dashed"              >*/
-  GIMP_GRID_SOLID           /*< desc="Solid"                      >*/
-} GimpGridStyle;
+  LIGMA_GRID_DOTS,           /*< desc="Intersections (dots)"       >*/
+  LIGMA_GRID_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
+  LIGMA_GRID_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
+  LIGMA_GRID_DOUBLE_DASH,    /*< desc="Double dashed"              >*/
+  LIGMA_GRID_SOLID           /*< desc="Solid"                      >*/
+} LigmaGridStyle;
 
 
 /**
- * GimpHueRange:
- * @GIMP_HUE_RANGE_ALL:     All hues
- * @GIMP_HUE_RANGE_RED:     Red hues
- * @GIMP_HUE_RANGE_YELLOW:  Yellow hues
- * @GIMP_HUE_RANGE_GREEN:   Green hues
- * @GIMP_HUE_RANGE_CYAN:    Cyan hues
- * @GIMP_HUE_RANGE_BLUE:    Blue hues
- * @GIMP_HUE_RANGE_MAGENTA: Magenta hues
+ * LigmaHueRange:
+ * @LIGMA_HUE_RANGE_ALL:     All hues
+ * @LIGMA_HUE_RANGE_RED:     Red hues
+ * @LIGMA_HUE_RANGE_YELLOW:  Yellow hues
+ * @LIGMA_HUE_RANGE_GREEN:   Green hues
+ * @LIGMA_HUE_RANGE_CYAN:    Cyan hues
+ * @LIGMA_HUE_RANGE_BLUE:    Blue hues
+ * @LIGMA_HUE_RANGE_MAGENTA: Magenta hues
  *
  * Hue ranges.
  **/
-#define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
+#define LIGMA_TYPE_HUE_RANGE (ligma_hue_range_get_type ())
 
-GType gimp_hue_range_get_type (void) G_GNUC_CONST;
+GType ligma_hue_range_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HUE_RANGE_ALL,
-  GIMP_HUE_RANGE_RED,
-  GIMP_HUE_RANGE_YELLOW,
-  GIMP_HUE_RANGE_GREEN,
-  GIMP_HUE_RANGE_CYAN,
-  GIMP_HUE_RANGE_BLUE,
-  GIMP_HUE_RANGE_MAGENTA
-} GimpHueRange;
+  LIGMA_HUE_RANGE_ALL,
+  LIGMA_HUE_RANGE_RED,
+  LIGMA_HUE_RANGE_YELLOW,
+  LIGMA_HUE_RANGE_GREEN,
+  LIGMA_HUE_RANGE_CYAN,
+  LIGMA_HUE_RANGE_BLUE,
+  LIGMA_HUE_RANGE_MAGENTA
+} LigmaHueRange;
 
 
 /**
- * GimpIconType:
- * @GIMP_ICON_TYPE_ICON_NAME:  Icon name
- * @GIMP_ICON_TYPE_PIXBUF:     Inline pixbuf
- * @GIMP_ICON_TYPE_IMAGE_FILE: Image file
+ * LigmaIconType:
+ * @LIGMA_ICON_TYPE_ICON_NAME:  Icon name
+ * @LIGMA_ICON_TYPE_PIXBUF:     Inline pixbuf
+ * @LIGMA_ICON_TYPE_IMAGE_FILE: Image file
  *
  * Icon types for plug-ins to register.
  **/
-#define GIMP_TYPE_ICON_TYPE (gimp_icon_type_get_type ())
+#define LIGMA_TYPE_ICON_TYPE (ligma_icon_type_get_type ())
 
-GType gimp_icon_type_get_type (void) G_GNUC_CONST;
+GType ligma_icon_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ICON_TYPE_ICON_NAME,  /*< desc="Icon name"  >*/
-  GIMP_ICON_TYPE_PIXBUF,     /*< desc="Pixbuf"     >*/
-  GIMP_ICON_TYPE_IMAGE_FILE  /*< desc="Image file" >*/
-} GimpIconType;
+  LIGMA_ICON_TYPE_ICON_NAME,  /*< desc="Icon name"  >*/
+  LIGMA_ICON_TYPE_PIXBUF,     /*< desc="Pixbuf"     >*/
+  LIGMA_ICON_TYPE_IMAGE_FILE  /*< desc="Image file" >*/
+} LigmaIconType;
 
 
 /**
- * GimpImageBaseType:
- * @GIMP_RGB:     RGB color
- * @GIMP_GRAY:    Grayscale
- * @GIMP_INDEXED: Indexed color
+ * LigmaImageBaseType:
+ * @LIGMA_RGB:     RGB color
+ * @LIGMA_GRAY:    Grayscale
+ * @LIGMA_INDEXED: Indexed color
  *
  * Image color models.
  **/
-#define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
+#define LIGMA_TYPE_IMAGE_BASE_TYPE (ligma_image_base_type_get_type ())
 
-GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
+GType ligma_image_base_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RGB,     /*< desc="RGB color"     >*/
-  GIMP_GRAY,    /*< desc="Grayscale"     >*/
-  GIMP_INDEXED  /*< desc="Indexed color" >*/
-} GimpImageBaseType;
+  LIGMA_RGB,     /*< desc="RGB color"     >*/
+  LIGMA_GRAY,    /*< desc="Grayscale"     >*/
+  LIGMA_INDEXED  /*< desc="Indexed color" >*/
+} LigmaImageBaseType;
 
 
 /**
- * GimpImageType:
- * @GIMP_RGB_IMAGE:      RGB
- * @GIMP_RGBA_IMAGE:     RGB-alpha
- * @GIMP_GRAY_IMAGE:     Grayscale
- * @GIMP_GRAYA_IMAGE:    Grayscale-alpha
- * @GIMP_INDEXED_IMAGE:  Indexed
- * @GIMP_INDEXEDA_IMAGE: Indexed-alpha
+ * LigmaImageType:
+ * @LIGMA_RGB_IMAGE:      RGB
+ * @LIGMA_RGBA_IMAGE:     RGB-alpha
+ * @LIGMA_GRAY_IMAGE:     Grayscale
+ * @LIGMA_GRAYA_IMAGE:    Grayscale-alpha
+ * @LIGMA_INDEXED_IMAGE:  Indexed
+ * @LIGMA_INDEXEDA_IMAGE: Indexed-alpha
  *
  * Possible drawable types.
  **/
-#define GIMP_TYPE_IMAGE_TYPE (gimp_image_type_get_type ())
+#define LIGMA_TYPE_IMAGE_TYPE (ligma_image_type_get_type ())
 
-GType gimp_image_type_get_type (void) G_GNUC_CONST;
+GType ligma_image_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RGB_IMAGE,      /*< desc="RGB"             >*/
-  GIMP_RGBA_IMAGE,     /*< desc="RGB-alpha"       >*/
-  GIMP_GRAY_IMAGE,     /*< desc="Grayscale"       >*/
-  GIMP_GRAYA_IMAGE,    /*< desc="Grayscale-alpha" >*/
-  GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
-  GIMP_INDEXEDA_IMAGE  /*< desc="Indexed-alpha"   >*/
-} GimpImageType;
+  LIGMA_RGB_IMAGE,      /*< desc="RGB"             >*/
+  LIGMA_RGBA_IMAGE,     /*< desc="RGB-alpha"       >*/
+  LIGMA_GRAY_IMAGE,     /*< desc="Grayscale"       >*/
+  LIGMA_GRAYA_IMAGE,    /*< desc="Grayscale-alpha" >*/
+  LIGMA_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
+  LIGMA_INDEXEDA_IMAGE  /*< desc="Indexed-alpha"   >*/
+} LigmaImageType;
 
 
 /**
- * GimpInkBlobType:
- * @GIMP_INK_BLOB_TYPE_CIRCLE:  Circle
- * @GIMP_INK_BLOB_TYPE_SQUARE:  Square
- * @GIMP_INK_BLOB_TYPE_DIAMOND: Diamond
+ * LigmaInkBlobType:
+ * @LIGMA_INK_BLOB_TYPE_CIRCLE:  Circle
+ * @LIGMA_INK_BLOB_TYPE_SQUARE:  Square
+ * @LIGMA_INK_BLOB_TYPE_DIAMOND: Diamond
  *
  * Ink tool tips.
  **/
-#define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
+#define LIGMA_TYPE_INK_BLOB_TYPE (ligma_ink_blob_type_get_type ())
 
-GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
+GType ligma_ink_blob_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_INK_BLOB_TYPE_CIRCLE,  /*< desc="Circle"  >*/
-  GIMP_INK_BLOB_TYPE_SQUARE,  /*< desc="Square"  >*/
-  GIMP_INK_BLOB_TYPE_DIAMOND  /*< desc="Diamond" >*/
-} GimpInkBlobType;
+  LIGMA_INK_BLOB_TYPE_CIRCLE,  /*< desc="Circle"  >*/
+  LIGMA_INK_BLOB_TYPE_SQUARE,  /*< desc="Square"  >*/
+  LIGMA_INK_BLOB_TYPE_DIAMOND  /*< desc="Diamond" >*/
+} LigmaInkBlobType;
 
 
 /**
- * GimpInterpolationType:
- * @GIMP_INTERPOLATION_NONE:   None
- * @GIMP_INTERPOLATION_LINEAR: Linear
- * @GIMP_INTERPOLATION_CUBIC:  Cubic
- * @GIMP_INTERPOLATION_NOHALO: NoHalo
- * @GIMP_INTERPOLATION_LOHALO: LoHalo
+ * LigmaInterpolationType:
+ * @LIGMA_INTERPOLATION_NONE:   None
+ * @LIGMA_INTERPOLATION_LINEAR: Linear
+ * @LIGMA_INTERPOLATION_CUBIC:  Cubic
+ * @LIGMA_INTERPOLATION_NOHALO: NoHalo
+ * @LIGMA_INTERPOLATION_LOHALO: LoHalo
  *
  * Interpolation types.
  **/
-#define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
+#define LIGMA_TYPE_INTERPOLATION_TYPE (ligma_interpolation_type_get_type ())
 
-GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
+GType ligma_interpolation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_INTERPOLATION_NONE,   /*< desc="None"   >*/
-  GIMP_INTERPOLATION_LINEAR, /*< desc="Linear" >*/
-  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
-  GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
-  GIMP_INTERPOLATION_LOHALO  /*< desc="LoHalo" >*/
-} GimpInterpolationType;
+  LIGMA_INTERPOLATION_NONE,   /*< desc="None"   >*/
+  LIGMA_INTERPOLATION_LINEAR, /*< desc="Linear" >*/
+  LIGMA_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
+  LIGMA_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
+  LIGMA_INTERPOLATION_LOHALO  /*< desc="LoHalo" >*/
+} LigmaInterpolationType;
 
 
 /**
- * GimpJoinStyle:
- * @GIMP_JOIN_MITER: Miter
- * @GIMP_JOIN_ROUND: Round
- * @GIMP_JOIN_BEVEL: Bevel
+ * LigmaJoinStyle:
+ * @LIGMA_JOIN_MITER: Miter
+ * @LIGMA_JOIN_ROUND: Round
+ * @LIGMA_JOIN_BEVEL: Bevel
  *
  * Line join styles.
  **/
-#define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
+#define LIGMA_TYPE_JOIN_STYLE (ligma_join_style_get_type ())
 
-GType gimp_join_style_get_type (void) G_GNUC_CONST;
+GType ligma_join_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_JOIN_MITER,  /*< desc="Miter" >*/
-  GIMP_JOIN_ROUND,  /*< desc="Round" >*/
-  GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
-} GimpJoinStyle;
+  LIGMA_JOIN_MITER,  /*< desc="Miter" >*/
+  LIGMA_JOIN_ROUND,  /*< desc="Round" >*/
+  LIGMA_JOIN_BEVEL   /*< desc="Bevel" >*/
+} LigmaJoinStyle;
 
 
 /**
- * GimpMaskApplyMode:
- * @GIMP_MASK_APPLY:   Apply the mask
- * @GIMP_MASK_DISCARD: Discard the mask
+ * LigmaMaskApplyMode:
+ * @LIGMA_MASK_APPLY:   Apply the mask
+ * @LIGMA_MASK_DISCARD: Discard the mask
  *
  * Layer mask apply modes.
  **/
-#define GIMP_TYPE_MASK_APPLY_MODE (gimp_mask_apply_mode_get_type ())
+#define LIGMA_TYPE_MASK_APPLY_MODE (ligma_mask_apply_mode_get_type ())
 
-GType gimp_mask_apply_mode_get_type (void) G_GNUC_CONST;
+GType ligma_mask_apply_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_MASK_APPLY,
-  GIMP_MASK_DISCARD
-} GimpMaskApplyMode;
+  LIGMA_MASK_APPLY,
+  LIGMA_MASK_DISCARD
+} LigmaMaskApplyMode;
 
 
 /**
- * GimpMergeType:
- * @GIMP_EXPAND_AS_NECESSARY:  Expanded as necessary
- * @GIMP_CLIP_TO_IMAGE:        Clipped to image
- * @GIMP_CLIP_TO_BOTTOM_LAYER: Clipped to bottom layer
- * @GIMP_FLATTEN_IMAGE:        Flatten
+ * LigmaMergeType:
+ * @LIGMA_EXPAND_AS_NECESSARY:  Expanded as necessary
+ * @LIGMA_CLIP_TO_IMAGE:        Clipped to image
+ * @LIGMA_CLIP_TO_BOTTOM_LAYER: Clipped to bottom layer
+ * @LIGMA_FLATTEN_IMAGE:        Flatten
  *
  * Types of merging layers.
  **/
-#define GIMP_TYPE_MERGE_TYPE (gimp_merge_type_get_type ())
+#define LIGMA_TYPE_MERGE_TYPE (ligma_merge_type_get_type ())
 
-GType gimp_merge_type_get_type (void) G_GNUC_CONST;
+GType ligma_merge_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_EXPAND_AS_NECESSARY,  /*< desc="Expanded as necessary"  >*/
-  GIMP_CLIP_TO_IMAGE,        /*< desc="Clipped to image"        >*/
-  GIMP_CLIP_TO_BOTTOM_LAYER, /*< desc="Clipped to bottom layer" >*/
-  GIMP_FLATTEN_IMAGE         /*< desc="Flatten"                 >*/
-} GimpMergeType;
+  LIGMA_EXPAND_AS_NECESSARY,  /*< desc="Expanded as necessary"  >*/
+  LIGMA_CLIP_TO_IMAGE,        /*< desc="Clipped to image"        >*/
+  LIGMA_CLIP_TO_BOTTOM_LAYER, /*< desc="Clipped to bottom layer" >*/
+  LIGMA_FLATTEN_IMAGE         /*< desc="Flatten"                 >*/
+} LigmaMergeType;
 
 
 /**
- * GimpMessageHandlerType:
- * @GIMP_MESSAGE_BOX:   A popup dialog
- * @GIMP_CONSOLE:       The terminal
- * @GIMP_ERROR_CONSOLE: The error console dockable
+ * LigmaMessageHandlerType:
+ * @LIGMA_MESSAGE_BOX:   A popup dialog
+ * @LIGMA_CONSOLE:       The terminal
+ * @LIGMA_ERROR_CONSOLE: The error console dockable
  *
  * How to present messages.
  **/
-#define GIMP_TYPE_MESSAGE_HANDLER_TYPE (gimp_message_handler_type_get_type ())
+#define LIGMA_TYPE_MESSAGE_HANDLER_TYPE (ligma_message_handler_type_get_type ())
 
-GType gimp_message_handler_type_get_type (void) G_GNUC_CONST;
+GType ligma_message_handler_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_MESSAGE_BOX,
-  GIMP_CONSOLE,
-  GIMP_ERROR_CONSOLE
-} GimpMessageHandlerType;
+  LIGMA_MESSAGE_BOX,
+  LIGMA_CONSOLE,
+  LIGMA_ERROR_CONSOLE
+} LigmaMessageHandlerType;
 
 
 /**
- * GimpOffsetType:
- * @GIMP_OFFSET_BACKGROUND:  Background
- * @GIMP_OFFSET_TRANSPARENT: Transparent
- * @GIMP_OFFSET_WRAP_AROUND: Wrap image around
+ * LigmaOffsetType:
+ * @LIGMA_OFFSET_BACKGROUND:  Background
+ * @LIGMA_OFFSET_TRANSPARENT: Transparent
+ * @LIGMA_OFFSET_WRAP_AROUND: Wrap image around
  *
  * Background fill types for the offset operation.
  **/
-#define GIMP_TYPE_OFFSET_TYPE (gimp_offset_type_get_type ())
+#define LIGMA_TYPE_OFFSET_TYPE (ligma_offset_type_get_type ())
 
-GType gimp_offset_type_get_type (void) G_GNUC_CONST;
+GType ligma_offset_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_OFFSET_BACKGROUND,
-  GIMP_OFFSET_TRANSPARENT,
-  GIMP_OFFSET_WRAP_AROUND
-} GimpOffsetType;
+  LIGMA_OFFSET_BACKGROUND,
+  LIGMA_OFFSET_TRANSPARENT,
+  LIGMA_OFFSET_WRAP_AROUND
+} LigmaOffsetType;
 
 
 /**
- * GimpOrientationType:
- * @GIMP_ORIENTATION_HORIZONTAL: Horizontal
- * @GIMP_ORIENTATION_VERTICAL:   Vertical
- * @GIMP_ORIENTATION_UNKNOWN:    Unknown
+ * LigmaOrientationType:
+ * @LIGMA_ORIENTATION_HORIZONTAL: Horizontal
+ * @LIGMA_ORIENTATION_VERTICAL:   Vertical
+ * @LIGMA_ORIENTATION_UNKNOWN:    Unknown
  *
  * Orientations for various purposes.
  **/
-#define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
+#define LIGMA_TYPE_ORIENTATION_TYPE (ligma_orientation_type_get_type ())
 
-GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
+GType ligma_orientation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
-  GIMP_ORIENTATION_VERTICAL,   /*< desc="Vertical"   >*/
-  GIMP_ORIENTATION_UNKNOWN     /*< desc="Unknown"    >*/
-} GimpOrientationType;
+  LIGMA_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  LIGMA_ORIENTATION_VERTICAL,   /*< desc="Vertical"   >*/
+  LIGMA_ORIENTATION_UNKNOWN     /*< desc="Unknown"    >*/
+} LigmaOrientationType;
 
 
 /**
- * GimpPaintApplicationMode:
- * @GIMP_PAINT_CONSTANT:    Constant
- * @GIMP_PAINT_INCREMENTAL: Incremental
+ * LigmaPaintApplicationMode:
+ * @LIGMA_PAINT_CONSTANT:    Constant
+ * @LIGMA_PAINT_INCREMENTAL: Incremental
  *
  * Paint application modes.
  **/
-#define GIMP_TYPE_PAINT_APPLICATION_MODE (gimp_paint_application_mode_get_type ())
+#define LIGMA_TYPE_PAINT_APPLICATION_MODE (ligma_paint_application_mode_get_type ())
 
-GType gimp_paint_application_mode_get_type (void) G_GNUC_CONST;
+GType ligma_paint_application_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PAINT_CONSTANT,    /*< desc="Constant"    >*/
-  GIMP_PAINT_INCREMENTAL  /*< desc="Incremental" >*/
-} GimpPaintApplicationMode;
+  LIGMA_PAINT_CONSTANT,    /*< desc="Constant"    >*/
+  LIGMA_PAINT_INCREMENTAL  /*< desc="Incremental" >*/
+} LigmaPaintApplicationMode;
 
 
 /**
- * GimpPDBErrorHandler:
- * @GIMP_PDB_ERROR_HANDLER_INTERNAL: Internal
- * @GIMP_PDB_ERROR_HANDLER_PLUGIN:   Plug-In
+ * LigmaPDBErrorHandler:
+ * @LIGMA_PDB_ERROR_HANDLER_INTERNAL: Internal
+ * @LIGMA_PDB_ERROR_HANDLER_PLUGIN:   Plug-In
  *
  * PDB error handlers.
  **/
-#define GIMP_TYPE_PDB_ERROR_HANDLER (gimp_pdb_error_handler_get_type ())
+#define LIGMA_TYPE_PDB_ERROR_HANDLER (ligma_pdb_error_handler_get_type ())
 
-GType gimp_pdb_error_handler_get_type (void) G_GNUC_CONST;
+GType ligma_pdb_error_handler_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PDB_ERROR_HANDLER_INTERNAL,
-  GIMP_PDB_ERROR_HANDLER_PLUGIN
-} GimpPDBErrorHandler;
+  LIGMA_PDB_ERROR_HANDLER_INTERNAL,
+  LIGMA_PDB_ERROR_HANDLER_PLUGIN
+} LigmaPDBErrorHandler;
 
 
 /**
- * GimpPDBProcType:
- * @GIMP_PDB_PROC_TYPE_INTERNAL:  Internal GIMP procedure
- * @GIMP_PDB_PROC_TYPE_PLUGIN:    GIMP Plug-In
- * @GIMP_PDB_PROC_TYPE_EXTENSION: GIMP Extension
- * @GIMP_PDB_PROC_TYPE_TEMPORARY: Temporary Procedure
+ * LigmaPDBProcType:
+ * @LIGMA_PDB_PROC_TYPE_INTERNAL:  Internal LIGMA procedure
+ * @LIGMA_PDB_PROC_TYPE_PLUGIN:    LIGMA Plug-In
+ * @LIGMA_PDB_PROC_TYPE_EXTENSION: LIGMA Extension
+ * @LIGMA_PDB_PROC_TYPE_TEMPORARY: Temporary Procedure
  *
  * Types of PDB procedures.
  **/
-#define GIMP_TYPE_PDB_PROC_TYPE (gimp_pdb_proc_type_get_type ())
+#define LIGMA_TYPE_PDB_PROC_TYPE (ligma_pdb_proc_type_get_type ())
 
-GType gimp_pdb_proc_type_get_type (void) G_GNUC_CONST;
+GType ligma_pdb_proc_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PDB_PROC_TYPE_INTERNAL,   /*< desc="Internal GIMP procedure" >*/
-  GIMP_PDB_PROC_TYPE_PLUGIN,     /*< desc="GIMP Plug-In" >*/
-  GIMP_PDB_PROC_TYPE_EXTENSION,  /*< desc="GIMP Extension" >*/
-  GIMP_PDB_PROC_TYPE_TEMPORARY   /*< desc="Temporary Procedure" >*/
-} GimpPDBProcType;
+  LIGMA_PDB_PROC_TYPE_INTERNAL,   /*< desc="Internal LIGMA procedure" >*/
+  LIGMA_PDB_PROC_TYPE_PLUGIN,     /*< desc="LIGMA Plug-In" >*/
+  LIGMA_PDB_PROC_TYPE_EXTENSION,  /*< desc="LIGMA Extension" >*/
+  LIGMA_PDB_PROC_TYPE_TEMPORARY   /*< desc="Temporary Procedure" >*/
+} LigmaPDBProcType;
 
 
 /**
- * GimpPDBStatusType:
- * @GIMP_PDB_EXECUTION_ERROR: Execution error
- * @GIMP_PDB_CALLING_ERROR:   Calling error
- * @GIMP_PDB_PASS_THROUGH:    Pass through
- * @GIMP_PDB_SUCCESS:         Success
- * @GIMP_PDB_CANCEL:          User cancel
+ * LigmaPDBStatusType:
+ * @LIGMA_PDB_EXECUTION_ERROR: Execution error
+ * @LIGMA_PDB_CALLING_ERROR:   Calling error
+ * @LIGMA_PDB_PASS_THROUGH:    Pass through
+ * @LIGMA_PDB_SUCCESS:         Success
+ * @LIGMA_PDB_CANCEL:          User cancel
  *
  * Return status of PDB calls.
  **/
-#define GIMP_TYPE_PDB_STATUS_TYPE (gimp_pdb_status_type_get_type ())
+#define LIGMA_TYPE_PDB_STATUS_TYPE (ligma_pdb_status_type_get_type ())
 
-GType gimp_pdb_status_type_get_type (void) G_GNUC_CONST;
+GType ligma_pdb_status_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PDB_EXECUTION_ERROR,
-  GIMP_PDB_CALLING_ERROR,
-  GIMP_PDB_PASS_THROUGH,
-  GIMP_PDB_SUCCESS,
-  GIMP_PDB_CANCEL
-} GimpPDBStatusType;
+  LIGMA_PDB_EXECUTION_ERROR,
+  LIGMA_PDB_CALLING_ERROR,
+  LIGMA_PDB_PASS_THROUGH,
+  LIGMA_PDB_SUCCESS,
+  LIGMA_PDB_CANCEL
+} LigmaPDBStatusType;
 
 
 /**
- * GimpPrecision:
- * @GIMP_PRECISION_U8_LINEAR:         8-bit linear integer
- * @GIMP_PRECISION_U8_NON_LINEAR:     8-bit non-linear integer
- * @GIMP_PRECISION_U8_PERCEPTUAL:     8-bit perceptual integer
- * @GIMP_PRECISION_U16_LINEAR:        16-bit linear integer
- * @GIMP_PRECISION_U16_NON_LINEAR:    16-bit non-linear integer
- * @GIMP_PRECISION_U16_PERCEPTUAL:    16-bit perceptual integer
- * @GIMP_PRECISION_U32_LINEAR:        32-bit linear integer
- * @GIMP_PRECISION_U32_NON_LINEAR:    32-bit non-linear integer
- * @GIMP_PRECISION_U32_PERCEPTUAL:    32-bit perceptual integer
- * @GIMP_PRECISION_HALF_LINEAR:       16-bit linear floating point
- * @GIMP_PRECISION_HALF_NON_LINEAR:   16-bit non-linear floating point
- * @GIMP_PRECISION_HALF_PERCEPTUAL:   16-bit perceptual floating point
- * @GIMP_PRECISION_FLOAT_LINEAR:      32-bit linear floating point
- * @GIMP_PRECISION_FLOAT_NON_LINEAR:  32-bit non-linear floating point
- * @GIMP_PRECISION_FLOAT_PERCEPTUAL:  32-bit perceptual floating point
- * @GIMP_PRECISION_DOUBLE_LINEAR:     64-bit linear floating point
- * @GIMP_PRECISION_DOUBLE_NON_LINEAR: 64-bit non-linear floating point
- * @GIMP_PRECISION_DOUBLE_PERCEPTUAL: 64-bit perceptual floating point
- * @GIMP_PRECISION_U8_GAMMA:      deprecated alias for
- *                                @GIMP_PRECISION_U8_NON_LINEAR
- * @GIMP_PRECISION_U16_GAMMA:     deprecated alias for
- *                                @GIMP_PRECISION_U16_NON_LINEAR
- * @GIMP_PRECISION_U32_GAMMA:     deprecated alias for
- *                                @GIMP_PRECISION_U32_NON_LINEAR
- * @GIMP_PRECISION_HALF_GAMMA:    deprecated alias for
- *                                @GIMP_PRECISION_HALF_NON_LINEAR
- * @GIMP_PRECISION_FLOAT_GAMMA:   deprecated alias for
- *                                @GIMP_PRECISION_FLOAT_NON_LINEAR
- * @GIMP_PRECISION_DOUBLE_GAMMA:  deprecated alias for
- *                                @GIMP_PRECISION_DOUBLE_NON_LINEAR
+ * LigmaPrecision:
+ * @LIGMA_PRECISION_U8_LINEAR:         8-bit linear integer
+ * @LIGMA_PRECISION_U8_NON_LINEAR:     8-bit non-linear integer
+ * @LIGMA_PRECISION_U8_PERCEPTUAL:     8-bit perceptual integer
+ * @LIGMA_PRECISION_U16_LINEAR:        16-bit linear integer
+ * @LIGMA_PRECISION_U16_NON_LINEAR:    16-bit non-linear integer
+ * @LIGMA_PRECISION_U16_PERCEPTUAL:    16-bit perceptual integer
+ * @LIGMA_PRECISION_U32_LINEAR:        32-bit linear integer
+ * @LIGMA_PRECISION_U32_NON_LINEAR:    32-bit non-linear integer
+ * @LIGMA_PRECISION_U32_PERCEPTUAL:    32-bit perceptual integer
+ * @LIGMA_PRECISION_HALF_LINEAR:       16-bit linear floating point
+ * @LIGMA_PRECISION_HALF_NON_LINEAR:   16-bit non-linear floating point
+ * @LIGMA_PRECISION_HALF_PERCEPTUAL:   16-bit perceptual floating point
+ * @LIGMA_PRECISION_FLOAT_LINEAR:      32-bit linear floating point
+ * @LIGMA_PRECISION_FLOAT_NON_LINEAR:  32-bit non-linear floating point
+ * @LIGMA_PRECISION_FLOAT_PERCEPTUAL:  32-bit perceptual floating point
+ * @LIGMA_PRECISION_DOUBLE_LINEAR:     64-bit linear floating point
+ * @LIGMA_PRECISION_DOUBLE_NON_LINEAR: 64-bit non-linear floating point
+ * @LIGMA_PRECISION_DOUBLE_PERCEPTUAL: 64-bit perceptual floating point
+ * @LIGMA_PRECISION_U8_GAMMA:      deprecated alias for
+ *                                @LIGMA_PRECISION_U8_NON_LINEAR
+ * @LIGMA_PRECISION_U16_GAMMA:     deprecated alias for
+ *                                @LIGMA_PRECISION_U16_NON_LINEAR
+ * @LIGMA_PRECISION_U32_GAMMA:     deprecated alias for
+ *                                @LIGMA_PRECISION_U32_NON_LINEAR
+ * @LIGMA_PRECISION_HALF_GAMMA:    deprecated alias for
+ *                                @LIGMA_PRECISION_HALF_NON_LINEAR
+ * @LIGMA_PRECISION_FLOAT_GAMMA:   deprecated alias for
+ *                                @LIGMA_PRECISION_FLOAT_NON_LINEAR
+ * @LIGMA_PRECISION_DOUBLE_GAMMA:  deprecated alias for
+ *                                @LIGMA_PRECISION_DOUBLE_NON_LINEAR
  *
  * Precisions for pixel encoding.
  *
  * Since: 2.10
  **/
-#define GIMP_TYPE_PRECISION (gimp_precision_get_type ())
+#define LIGMA_TYPE_PRECISION (ligma_precision_get_type ())
 
-GType gimp_precision_get_type (void) G_GNUC_CONST;
+GType ligma_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PRECISION_U8_LINEAR         = 100, /*< desc="8-bit linear integer"         >*/
-  GIMP_PRECISION_U8_NON_LINEAR     = 150, /*< desc="8-bit non-linear integer"          >*/
-  GIMP_PRECISION_U8_PERCEPTUAL     = 175, /*< desc="8-bit perceptual integer"          >*/
-  GIMP_PRECISION_U16_LINEAR        = 200, /*< desc="16-bit linear integer"        >*/
-  GIMP_PRECISION_U16_NON_LINEAR    = 250, /*< desc="16-bit non-linear integer"         >*/
-  GIMP_PRECISION_U16_PERCEPTUAL    = 275, /*< desc="16-bit perceptual integer"         >*/
-  GIMP_PRECISION_U32_LINEAR        = 300, /*< desc="32-bit linear integer"        >*/
-  GIMP_PRECISION_U32_NON_LINEAR    = 350, /*< desc="32-bit non-linear integer"         >*/
-  GIMP_PRECISION_U32_PERCEPTUAL    = 375, /*< desc="32-bit perceptual integer"         >*/
-  GIMP_PRECISION_HALF_LINEAR       = 500, /*< desc="16-bit linear floating point" >*/
-  GIMP_PRECISION_HALF_NON_LINEAR   = 550, /*< desc="16-bit non-linear floating point"  >*/
-  GIMP_PRECISION_HALF_PERCEPTUAL   = 575, /*< desc="16-bit perceptual floating point"  >*/
-  GIMP_PRECISION_FLOAT_LINEAR      = 600, /*< desc="32-bit linear floating point" >*/
-  GIMP_PRECISION_FLOAT_NON_LINEAR  = 650, /*< desc="32-bit non-linear floating point"  >*/
-  GIMP_PRECISION_FLOAT_PERCEPTUAL  = 675, /*< desc="32-bit perceptual floating point"  >*/
-  GIMP_PRECISION_DOUBLE_LINEAR     = 700, /*< desc="64-bit linear floating point" >*/
-  GIMP_PRECISION_DOUBLE_NON_LINEAR = 750, /*< desc="64-bit non-linear floating point"  >*/
-  GIMP_PRECISION_DOUBLE_PERCEPTUAL = 775, /*< desc="64-bit perceptual floating point"  >*/
+  LIGMA_PRECISION_U8_LINEAR         = 100, /*< desc="8-bit linear integer"         >*/
+  LIGMA_PRECISION_U8_NON_LINEAR     = 150, /*< desc="8-bit non-linear integer"          >*/
+  LIGMA_PRECISION_U8_PERCEPTUAL     = 175, /*< desc="8-bit perceptual integer"          >*/
+  LIGMA_PRECISION_U16_LINEAR        = 200, /*< desc="16-bit linear integer"        >*/
+  LIGMA_PRECISION_U16_NON_LINEAR    = 250, /*< desc="16-bit non-linear integer"         >*/
+  LIGMA_PRECISION_U16_PERCEPTUAL    = 275, /*< desc="16-bit perceptual integer"         >*/
+  LIGMA_PRECISION_U32_LINEAR        = 300, /*< desc="32-bit linear integer"        >*/
+  LIGMA_PRECISION_U32_NON_LINEAR    = 350, /*< desc="32-bit non-linear integer"         >*/
+  LIGMA_PRECISION_U32_PERCEPTUAL    = 375, /*< desc="32-bit perceptual integer"         >*/
+  LIGMA_PRECISION_HALF_LINEAR       = 500, /*< desc="16-bit linear floating point" >*/
+  LIGMA_PRECISION_HALF_NON_LINEAR   = 550, /*< desc="16-bit non-linear floating point"  >*/
+  LIGMA_PRECISION_HALF_PERCEPTUAL   = 575, /*< desc="16-bit perceptual floating point"  >*/
+  LIGMA_PRECISION_FLOAT_LINEAR      = 600, /*< desc="32-bit linear floating point" >*/
+  LIGMA_PRECISION_FLOAT_NON_LINEAR  = 650, /*< desc="32-bit non-linear floating point"  >*/
+  LIGMA_PRECISION_FLOAT_PERCEPTUAL  = 675, /*< desc="32-bit perceptual floating point"  >*/
+  LIGMA_PRECISION_DOUBLE_LINEAR     = 700, /*< desc="64-bit linear floating point" >*/
+  LIGMA_PRECISION_DOUBLE_NON_LINEAR = 750, /*< desc="64-bit non-linear floating point"  >*/
+  LIGMA_PRECISION_DOUBLE_PERCEPTUAL = 775, /*< desc="64-bit perceptual floating point"  >*/
 
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_PRECISION_U8_GAMMA      = GIMP_PRECISION_U8_NON_LINEAR,
-  GIMP_PRECISION_U16_GAMMA     = GIMP_PRECISION_U16_NON_LINEAR,
-  GIMP_PRECISION_U32_GAMMA     = GIMP_PRECISION_U32_NON_LINEAR,
-  GIMP_PRECISION_HALF_GAMMA    = GIMP_PRECISION_HALF_NON_LINEAR,
-  GIMP_PRECISION_FLOAT_GAMMA   = GIMP_PRECISION_FLOAT_NON_LINEAR,
-  GIMP_PRECISION_DOUBLE_GAMMA  = GIMP_PRECISION_DOUBLE_NON_LINEAR
+#ifndef LIGMA_DISABLE_DEPRECATED
+  LIGMA_PRECISION_U8_GAMMA      = LIGMA_PRECISION_U8_NON_LINEAR,
+  LIGMA_PRECISION_U16_GAMMA     = LIGMA_PRECISION_U16_NON_LINEAR,
+  LIGMA_PRECISION_U32_GAMMA     = LIGMA_PRECISION_U32_NON_LINEAR,
+  LIGMA_PRECISION_HALF_GAMMA    = LIGMA_PRECISION_HALF_NON_LINEAR,
+  LIGMA_PRECISION_FLOAT_GAMMA   = LIGMA_PRECISION_FLOAT_NON_LINEAR,
+  LIGMA_PRECISION_DOUBLE_GAMMA  = LIGMA_PRECISION_DOUBLE_NON_LINEAR
 #endif
-} GimpPrecision;
+} LigmaPrecision;
 
 
 /**
- * GimpProcedureSensitivityMask:
- * @GIMP_PROCEDURE_SENSITIVE_DRAWABLE:     Handles image with one selected drawable.
- * @GIMP_PROCEDURE_SENSITIVE_DRAWABLES:    Handles image with several selected drawables.
- * @GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES: Handles image with no selected drawables.
- * @GIMP_PROCEDURE_SENSITIVE_NO_IMAGE:     Handles no image.
+ * LigmaProcedureSensitivityMask:
+ * @LIGMA_PROCEDURE_SENSITIVE_DRAWABLE:     Handles image with one selected drawable.
+ * @LIGMA_PROCEDURE_SENSITIVE_DRAWABLES:    Handles image with several selected drawables.
+ * @LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES: Handles image with no selected drawables.
+ * @LIGMA_PROCEDURE_SENSITIVE_NO_IMAGE:     Handles no image.
  *
- * The cases when a #GimpProcedure should be shown as sensitive.
+ * The cases when a #LigmaProcedure should be shown as sensitive.
  **/
-#define GIMP_TYPE_PROCEDURE_SENSITIVITY_MASK (gimp_procedure_sensitivity_mask_get_type ())
+#define LIGMA_TYPE_PROCEDURE_SENSITIVITY_MASK (ligma_procedure_sensitivity_mask_get_type ())
 
-GType gimp_procedure_sensitivity_mask_get_type (void) G_GNUC_CONST;
+GType ligma_procedure_sensitivity_mask_get_type (void) G_GNUC_CONST;
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PROCEDURE_SENSITIVE_DRAWABLE      = 1 << 0,
-  GIMP_PROCEDURE_SENSITIVE_DRAWABLES     = 1 << 2,
-  GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES  = 1 << 3,
-  GIMP_PROCEDURE_SENSITIVE_NO_IMAGE      = 1 << 4,
-  GIMP_PROCEDURE_SENSITIVE_ALWAYS        = G_MAXINT
-} GimpProcedureSensitivityMask;
+  LIGMA_PROCEDURE_SENSITIVE_DRAWABLE      = 1 << 0,
+  LIGMA_PROCEDURE_SENSITIVE_DRAWABLES     = 1 << 2,
+  LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES  = 1 << 3,
+  LIGMA_PROCEDURE_SENSITIVE_NO_IMAGE      = 1 << 4,
+  LIGMA_PROCEDURE_SENSITIVE_ALWAYS        = G_MAXINT
+} LigmaProcedureSensitivityMask;
 
 
 /**
- * GimpProgressCommand:
- * @GIMP_PROGRESS_COMMAND_START:      Start a progress
- * @GIMP_PROGRESS_COMMAND_END:        End the progress
- * @GIMP_PROGRESS_COMMAND_SET_TEXT:   Set the text
- * @GIMP_PROGRESS_COMMAND_SET_VALUE:  Set the percentage
- * @GIMP_PROGRESS_COMMAND_PULSE:      Pulse the progress
- * @GIMP_PROGRESS_COMMAND_GET_WINDOW: Get the window where the progress is shown
+ * LigmaProgressCommand:
+ * @LIGMA_PROGRESS_COMMAND_START:      Start a progress
+ * @LIGMA_PROGRESS_COMMAND_END:        End the progress
+ * @LIGMA_PROGRESS_COMMAND_SET_TEXT:   Set the text
+ * @LIGMA_PROGRESS_COMMAND_SET_VALUE:  Set the percentage
+ * @LIGMA_PROGRESS_COMMAND_PULSE:      Pulse the progress
+ * @LIGMA_PROGRESS_COMMAND_GET_WINDOW: Get the window where the progress is shown
  *
  * Commands for the progress API.
  **/
-#define GIMP_TYPE_PROGRESS_COMMAND (gimp_progress_command_get_type ())
+#define LIGMA_TYPE_PROGRESS_COMMAND (ligma_progress_command_get_type ())
 
-GType gimp_progress_command_get_type (void) G_GNUC_CONST;
+GType ligma_progress_command_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PROGRESS_COMMAND_START,
-  GIMP_PROGRESS_COMMAND_END,
-  GIMP_PROGRESS_COMMAND_SET_TEXT,
-  GIMP_PROGRESS_COMMAND_SET_VALUE,
-  GIMP_PROGRESS_COMMAND_PULSE,
-  GIMP_PROGRESS_COMMAND_GET_WINDOW
-} GimpProgressCommand;
+  LIGMA_PROGRESS_COMMAND_START,
+  LIGMA_PROGRESS_COMMAND_END,
+  LIGMA_PROGRESS_COMMAND_SET_TEXT,
+  LIGMA_PROGRESS_COMMAND_SET_VALUE,
+  LIGMA_PROGRESS_COMMAND_PULSE,
+  LIGMA_PROGRESS_COMMAND_GET_WINDOW
+} LigmaProgressCommand;
 
 
 /**
- * GimpRepeatMode:
- * @GIMP_REPEAT_NONE:       None (extend)
- * @GIMP_REPEAT_SAWTOOTH:   Sawtooth wave
- * @GIMP_REPEAT_TRIANGULAR: Triangular wave
- * @GIMP_REPEAT_TRUNCATE:   Truncate
+ * LigmaRepeatMode:
+ * @LIGMA_REPEAT_NONE:       None (extend)
+ * @LIGMA_REPEAT_SAWTOOTH:   Sawtooth wave
+ * @LIGMA_REPEAT_TRIANGULAR: Triangular wave
+ * @LIGMA_REPEAT_TRUNCATE:   Truncate
  *
  * Repeat modes for example for gradients.
  **/
-#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
+#define LIGMA_TYPE_REPEAT_MODE (ligma_repeat_mode_get_type ())
 
-GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
+GType ligma_repeat_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_REPEAT_NONE,       /*< desc="None (extend)"   >*/
-  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
-  GIMP_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
-} GimpRepeatMode;
+  LIGMA_REPEAT_NONE,       /*< desc="None (extend)"   >*/
+  LIGMA_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
+  LIGMA_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
+  LIGMA_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
+} LigmaRepeatMode;
 
 
 /**
- * GimpRotationType:
- * @GIMP_ROTATE_90:  90 degrees
- * @GIMP_ROTATE_180: 180 degrees
- * @GIMP_ROTATE_270: 270 degrees
+ * LigmaRotationType:
+ * @LIGMA_ROTATE_90:  90 degrees
+ * @LIGMA_ROTATE_180: 180 degrees
+ * @LIGMA_ROTATE_270: 270 degrees
  *
  * Types of simple rotations.
  **/
-#define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
+#define LIGMA_TYPE_ROTATION_TYPE (ligma_rotation_type_get_type ())
 
-GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
+GType ligma_rotation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ROTATE_90,
-  GIMP_ROTATE_180,
-  GIMP_ROTATE_270
-} GimpRotationType;
+  LIGMA_ROTATE_90,
+  LIGMA_ROTATE_180,
+  LIGMA_ROTATE_270
+} LigmaRotationType;
 
 
 /**
- * GimpRunMode:
- * @GIMP_RUN_INTERACTIVE:    Run interactively
- * @GIMP_RUN_NONINTERACTIVE: Run non-interactively
- * @GIMP_RUN_WITH_LAST_VALS: Run with last used values
+ * LigmaRunMode:
+ * @LIGMA_RUN_INTERACTIVE:    Run interactively
+ * @LIGMA_RUN_NONINTERACTIVE: Run non-interactively
+ * @LIGMA_RUN_WITH_LAST_VALS: Run with last used values
  *
  * Run modes for plug-ins.
  **/
-#define GIMP_TYPE_RUN_MODE (gimp_run_mode_get_type ())
+#define LIGMA_TYPE_RUN_MODE (ligma_run_mode_get_type ())
 
-GType gimp_run_mode_get_type (void) G_GNUC_CONST;
+GType ligma_run_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RUN_INTERACTIVE,     /*< desc="Run interactively"         >*/
-  GIMP_RUN_NONINTERACTIVE,  /*< desc="Run non-interactively"     >*/
-  GIMP_RUN_WITH_LAST_VALS   /*< desc="Run with last used values" >*/
-} GimpRunMode;
+  LIGMA_RUN_INTERACTIVE,     /*< desc="Run interactively"         >*/
+  LIGMA_RUN_NONINTERACTIVE,  /*< desc="Run non-interactively"     >*/
+  LIGMA_RUN_WITH_LAST_VALS   /*< desc="Run with last used values" >*/
+} LigmaRunMode;
 
 
 /**
- * GimpSelectCriterion:
- * @GIMP_SELECT_CRITERION_COMPOSITE:      Composite
- * @GIMP_SELECT_CRITERION_RGB_RED:        Red
- * @GIMP_SELECT_CRITERION_RGB_GREEN:      Green
- * @GIMP_SELECT_CRITERION_RGB_BLUE:       Blue
- * @GIMP_SELECT_CRITERION_HSV_HUE:        HSV Hue
- * @GIMP_SELECT_CRITERION_HSV_SATURATION: HSV Saturation
- * @GIMP_SELECT_CRITERION_HSV_VALUE:      HSV Value
- * @GIMP_SELECT_CRITERION_LCH_LIGHTNESS:  LCh Lightness
- * @GIMP_SELECT_CRITERION_LCH_CHROMA:     LCh Chroma
- * @GIMP_SELECT_CRITERION_LCH_HUE:        LCh Hue
- * @GIMP_SELECT_CRITERION_ALPHA:          Alpha
+ * LigmaSelectCriterion:
+ * @LIGMA_SELECT_CRITERION_COMPOSITE:      Composite
+ * @LIGMA_SELECT_CRITERION_RGB_RED:        Red
+ * @LIGMA_SELECT_CRITERION_RGB_GREEN:      Green
+ * @LIGMA_SELECT_CRITERION_RGB_BLUE:       Blue
+ * @LIGMA_SELECT_CRITERION_HSV_HUE:        HSV Hue
+ * @LIGMA_SELECT_CRITERION_HSV_SATURATION: HSV Saturation
+ * @LIGMA_SELECT_CRITERION_HSV_VALUE:      HSV Value
+ * @LIGMA_SELECT_CRITERION_LCH_LIGHTNESS:  LCh Lightness
+ * @LIGMA_SELECT_CRITERION_LCH_CHROMA:     LCh Chroma
+ * @LIGMA_SELECT_CRITERION_LCH_HUE:        LCh Hue
+ * @LIGMA_SELECT_CRITERION_ALPHA:          Alpha
  *
  * Criterions for color similarity.
  **/
-#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
+#define LIGMA_TYPE_SELECT_CRITERION (ligma_select_criterion_get_type ())
 
-GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
+GType ligma_select_criterion_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SELECT_CRITERION_COMPOSITE,      /*< desc="Composite"      >*/
-  GIMP_SELECT_CRITERION_RGB_RED,        /*< desc="Red"            >*/
-  GIMP_SELECT_CRITERION_RGB_GREEN,      /*< desc="Green"          >*/
-  GIMP_SELECT_CRITERION_RGB_BLUE,       /*< desc="Blue"           >*/
-  GIMP_SELECT_CRITERION_HSV_HUE,        /*< desc="HSV Hue"        >*/
-  GIMP_SELECT_CRITERION_HSV_SATURATION, /*< desc="HSV Saturation" >*/
-  GIMP_SELECT_CRITERION_HSV_VALUE,      /*< desc="HSV Value"      >*/
-  GIMP_SELECT_CRITERION_LCH_LIGHTNESS,  /*< desc="LCh Lightness"  >*/
-  GIMP_SELECT_CRITERION_LCH_CHROMA,     /*< desc="LCh Chroma"     >*/
-  GIMP_SELECT_CRITERION_LCH_HUE,        /*< desc="LCh Hue"        >*/
-  GIMP_SELECT_CRITERION_ALPHA,          /*< desc="Alpha"          >*/
-} GimpSelectCriterion;
+  LIGMA_SELECT_CRITERION_COMPOSITE,      /*< desc="Composite"      >*/
+  LIGMA_SELECT_CRITERION_RGB_RED,        /*< desc="Red"            >*/
+  LIGMA_SELECT_CRITERION_RGB_GREEN,      /*< desc="Green"          >*/
+  LIGMA_SELECT_CRITERION_RGB_BLUE,       /*< desc="Blue"           >*/
+  LIGMA_SELECT_CRITERION_HSV_HUE,        /*< desc="HSV Hue"        >*/
+  LIGMA_SELECT_CRITERION_HSV_SATURATION, /*< desc="HSV Saturation" >*/
+  LIGMA_SELECT_CRITERION_HSV_VALUE,      /*< desc="HSV Value"      >*/
+  LIGMA_SELECT_CRITERION_LCH_LIGHTNESS,  /*< desc="LCh Lightness"  >*/
+  LIGMA_SELECT_CRITERION_LCH_CHROMA,     /*< desc="LCh Chroma"     >*/
+  LIGMA_SELECT_CRITERION_LCH_HUE,        /*< desc="LCh Hue"        >*/
+  LIGMA_SELECT_CRITERION_ALPHA,          /*< desc="Alpha"          >*/
+} LigmaSelectCriterion;
 
 
 /**
- * GimpSizeType:
- * @GIMP_PIXELS: Pixels
- * @GIMP_POINTS: Points
+ * LigmaSizeType:
+ * @LIGMA_PIXELS: Pixels
+ * @LIGMA_POINTS: Points
  *
  * Size types for the old-style text API.
  **/
-#define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
+#define LIGMA_TYPE_SIZE_TYPE (ligma_size_type_get_type ())
 
-GType gimp_size_type_get_type (void) G_GNUC_CONST;
+GType ligma_size_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PIXELS,  /*< desc="Pixels" >*/
-  GIMP_POINTS   /*< desc="Points" >*/
-} GimpSizeType;
+  LIGMA_PIXELS,  /*< desc="Pixels" >*/
+  LIGMA_POINTS   /*< desc="Points" >*/
+} LigmaSizeType;
 
 
 /**
- * GimpStackTraceMode:
- * @GIMP_STACK_TRACE_NEVER:  Never
- * @GIMP_STACK_TRACE_QUERY:  Ask each time
- * @GIMP_STACK_TRACE_ALWAYS: Always
+ * LigmaStackTraceMode:
+ * @LIGMA_STACK_TRACE_NEVER:  Never
+ * @LIGMA_STACK_TRACE_QUERY:  Ask each time
+ * @LIGMA_STACK_TRACE_ALWAYS: Always
  *
  * When to generate stack traces in case of an error.
  **/
-#define GIMP_TYPE_STACK_TRACE_MODE (gimp_stack_trace_mode_get_type ())
+#define LIGMA_TYPE_STACK_TRACE_MODE (ligma_stack_trace_mode_get_type ())
 
-GType gimp_stack_trace_mode_get_type (void) G_GNUC_CONST;
+GType ligma_stack_trace_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_STACK_TRACE_NEVER,
-  GIMP_STACK_TRACE_QUERY,
-  GIMP_STACK_TRACE_ALWAYS
-} GimpStackTraceMode;
+  LIGMA_STACK_TRACE_NEVER,
+  LIGMA_STACK_TRACE_QUERY,
+  LIGMA_STACK_TRACE_ALWAYS
+} LigmaStackTraceMode;
 
 
 /**
- * GimpStrokeMethod:
- * @GIMP_STROKE_LINE:         Stroke line
- * @GIMP_STROKE_PAINT_METHOD: Stroke with a paint tool
+ * LigmaStrokeMethod:
+ * @LIGMA_STROKE_LINE:         Stroke line
+ * @LIGMA_STROKE_PAINT_METHOD: Stroke with a paint tool
  *
  * Methods of stroking selections and paths.
  **/
-#define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
+#define LIGMA_TYPE_STROKE_METHOD (ligma_stroke_method_get_type ())
 
-GType gimp_stroke_method_get_type (void) G_GNUC_CONST;
+GType ligma_stroke_method_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_STROKE_LINE,         /*< desc="Stroke line"              >*/
-  GIMP_STROKE_PAINT_METHOD  /*< desc="Stroke with a paint tool" >*/
-} GimpStrokeMethod;
+  LIGMA_STROKE_LINE,         /*< desc="Stroke line"              >*/
+  LIGMA_STROKE_PAINT_METHOD  /*< desc="Stroke with a paint tool" >*/
+} LigmaStrokeMethod;
 
 
 /**
- * GimpTextDirection:
- * @GIMP_TEXT_DIRECTION_LTR: From left to right
- * @GIMP_TEXT_DIRECTION_RTL: From right to left
- * @GIMP_TEXT_DIRECTION_TTB_RTL: Characters are from top to bottom, Lines are from right to left
- * @GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT: Upright characters are from top to bottom, Lines are from right to left
- * @GIMP_TEXT_DIRECTION_TTB_LTR: Characters are from top to bottom, Lines are from left to right
- * @GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT: Upright characters are from top to bottom, Lines are from left to right
+ * LigmaTextDirection:
+ * @LIGMA_TEXT_DIRECTION_LTR: From left to right
+ * @LIGMA_TEXT_DIRECTION_RTL: From right to left
+ * @LIGMA_TEXT_DIRECTION_TTB_RTL: Characters are from top to bottom, Lines are from right to left
+ * @LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT: Upright characters are from top to bottom, Lines are from right to left
+ * @LIGMA_TEXT_DIRECTION_TTB_LTR: Characters are from top to bottom, Lines are from left to right
+ * @LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT: Upright characters are from top to bottom, Lines are from left to right
  *
  * Text directions.
  **/
-#define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())
+#define LIGMA_TYPE_TEXT_DIRECTION (ligma_text_direction_get_type ())
 
-GType gimp_text_direction_get_type (void) G_GNUC_CONST;
+GType ligma_text_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right"                                     >*/
-  GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left"                                     >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical, right to left (mixed orientation)"  >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical, right to left (upright orientation)" >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical, left to right (mixed orientation)"  >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical, left to right (upright orientation)" >*/
-} GimpTextDirection;
+  LIGMA_TEXT_DIRECTION_LTR,              /*< desc="From left to right"                                     >*/
+  LIGMA_TEXT_DIRECTION_RTL,              /*< desc="From right to left"                                     >*/
+  LIGMA_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical, right to left (mixed orientation)"  >*/
+  LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical, right to left (upright orientation)" >*/
+  LIGMA_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical, left to right (mixed orientation)"  >*/
+  LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical, left to right (upright orientation)" >*/
+} LigmaTextDirection;
 
 
 /**
- * GimpTextHintStyle:
- * @GIMP_TEXT_HINT_STYLE_NONE:   None
- * @GIMP_TEXT_HINT_STYLE_SLIGHT: Slight
- * @GIMP_TEXT_HINT_STYLE_MEDIUM: Medium
- * @GIMP_TEXT_HINT_STYLE_FULL:   Full
+ * LigmaTextHintStyle:
+ * @LIGMA_TEXT_HINT_STYLE_NONE:   None
+ * @LIGMA_TEXT_HINT_STYLE_SLIGHT: Slight
+ * @LIGMA_TEXT_HINT_STYLE_MEDIUM: Medium
+ * @LIGMA_TEXT_HINT_STYLE_FULL:   Full
  *
  * Text hint strengths.
  **/
-#define GIMP_TYPE_TEXT_HINT_STYLE (gimp_text_hint_style_get_type ())
+#define LIGMA_TYPE_TEXT_HINT_STYLE (ligma_text_hint_style_get_type ())
 
-GType gimp_text_hint_style_get_type (void) G_GNUC_CONST;
+GType ligma_text_hint_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_HINT_STYLE_NONE,     /*< desc="None"   >*/
-  GIMP_TEXT_HINT_STYLE_SLIGHT,   /*< desc="Slight" >*/
-  GIMP_TEXT_HINT_STYLE_MEDIUM,   /*< desc="Medium" >*/
-  GIMP_TEXT_HINT_STYLE_FULL      /*< desc="Full"   >*/
-} GimpTextHintStyle;
+  LIGMA_TEXT_HINT_STYLE_NONE,     /*< desc="None"   >*/
+  LIGMA_TEXT_HINT_STYLE_SLIGHT,   /*< desc="Slight" >*/
+  LIGMA_TEXT_HINT_STYLE_MEDIUM,   /*< desc="Medium" >*/
+  LIGMA_TEXT_HINT_STYLE_FULL      /*< desc="Full"   >*/
+} LigmaTextHintStyle;
 
 
 /**
- * GimpTextJustification:
- * @GIMP_TEXT_JUSTIFY_LEFT:   Left justified
- * @GIMP_TEXT_JUSTIFY_RIGHT:  Right justified
- * @GIMP_TEXT_JUSTIFY_CENTER: Centered
- * @GIMP_TEXT_JUSTIFY_FILL:   Filled
+ * LigmaTextJustification:
+ * @LIGMA_TEXT_JUSTIFY_LEFT:   Left justified
+ * @LIGMA_TEXT_JUSTIFY_RIGHT:  Right justified
+ * @LIGMA_TEXT_JUSTIFY_CENTER: Centered
+ * @LIGMA_TEXT_JUSTIFY_FILL:   Filled
  *
  * Text justifications.
  **/
-#define GIMP_TYPE_TEXT_JUSTIFICATION (gimp_text_justification_get_type ())
+#define LIGMA_TYPE_TEXT_JUSTIFICATION (ligma_text_justification_get_type ())
 
-GType gimp_text_justification_get_type (void) G_GNUC_CONST;
+GType ligma_text_justification_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left justified"  >*/
-  GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right justified" >*/
-  GIMP_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
-  GIMP_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
-} GimpTextJustification;
+  LIGMA_TEXT_JUSTIFY_LEFT,    /*< desc="Left justified"  >*/
+  LIGMA_TEXT_JUSTIFY_RIGHT,   /*< desc="Right justified" >*/
+  LIGMA_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
+  LIGMA_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
+} LigmaTextJustification;
 
 
 /**
- * GimpTransferMode:
- * @GIMP_TRANSFER_SHADOWS:    Shadows
- * @GIMP_TRANSFER_MIDTONES:   Midtones
- * @GIMP_TRANSFER_HIGHLIGHTS: Highlights
+ * LigmaTransferMode:
+ * @LIGMA_TRANSFER_SHADOWS:    Shadows
+ * @LIGMA_TRANSFER_MIDTONES:   Midtones
+ * @LIGMA_TRANSFER_HIGHLIGHTS: Highlights
  *
  * For choosing which brightness ranges to transform.
  **/
-#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
+#define LIGMA_TYPE_TRANSFER_MODE (ligma_transfer_mode_get_type ())
 
-GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
+GType ligma_transfer_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
-  GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
-  GIMP_TRANSFER_HIGHLIGHTS   /*< desc="Highlights" >*/
-} GimpTransferMode;
+  LIGMA_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
+  LIGMA_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
+  LIGMA_TRANSFER_HIGHLIGHTS   /*< desc="Highlights" >*/
+} LigmaTransferMode;
 
 
 /**
- * GimpTransformDirection:
- * @GIMP_TRANSFORM_FORWARD:  Normal (Forward)
- * @GIMP_TRANSFORM_BACKWARD: Corrective (Backward)
+ * LigmaTransformDirection:
+ * @LIGMA_TRANSFORM_FORWARD:  Normal (Forward)
+ * @LIGMA_TRANSFORM_BACKWARD: Corrective (Backward)
  *
  * Transform directions.
  **/
-#define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
+#define LIGMA_TYPE_TRANSFORM_DIRECTION (ligma_transform_direction_get_type ())
 
-GType gimp_transform_direction_get_type (void) G_GNUC_CONST;
+GType ligma_transform_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_FORWARD,   /*< desc="Normal (Forward)" >*/
-  GIMP_TRANSFORM_BACKWARD   /*< desc="Corrective (Backward)" >*/
-} GimpTransformDirection;
+  LIGMA_TRANSFORM_FORWARD,   /*< desc="Normal (Forward)" >*/
+  LIGMA_TRANSFORM_BACKWARD   /*< desc="Corrective (Backward)" >*/
+} LigmaTransformDirection;
 
 
 /**
- * GimpTransformResize:
- * @GIMP_TRANSFORM_RESIZE_ADJUST:           Adjust
- * @GIMP_TRANSFORM_RESIZE_CLIP:             Clip
- * @GIMP_TRANSFORM_RESIZE_CROP:             Crop to result
- * @GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT: Crop with aspect
+ * LigmaTransformResize:
+ * @LIGMA_TRANSFORM_RESIZE_ADJUST:           Adjust
+ * @LIGMA_TRANSFORM_RESIZE_CLIP:             Clip
+ * @LIGMA_TRANSFORM_RESIZE_CROP:             Crop to result
+ * @LIGMA_TRANSFORM_RESIZE_CROP_WITH_ASPECT: Crop with aspect
  *
  * Ways of clipping the result when transforming drawables.
  **/
-#define GIMP_TYPE_TRANSFORM_RESIZE (gimp_transform_resize_get_type ())
+#define LIGMA_TYPE_TRANSFORM_RESIZE (ligma_transform_resize_get_type ())
 
-GType gimp_transform_resize_get_type (void) G_GNUC_CONST;
+GType ligma_transform_resize_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_RESIZE_ADJUST,           /*< desc="Adjust"           >*/
-  GIMP_TRANSFORM_RESIZE_CLIP,             /*< desc="Clip"             >*/
-  GIMP_TRANSFORM_RESIZE_CROP,             /*< desc="Crop to result"   >*/
-  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT  /*< desc="Crop with aspect" >*/
-} GimpTransformResize;
+  LIGMA_TRANSFORM_RESIZE_ADJUST,           /*< desc="Adjust"           >*/
+  LIGMA_TRANSFORM_RESIZE_CLIP,             /*< desc="Clip"             >*/
+  LIGMA_TRANSFORM_RESIZE_CROP,             /*< desc="Crop to result"   >*/
+  LIGMA_TRANSFORM_RESIZE_CROP_WITH_ASPECT  /*< desc="Crop with aspect" >*/
+} LigmaTransformResize;
 
 
 /**
- * GimpUnit:
- * @GIMP_UNIT_PIXEL:   Pixels
- * @GIMP_UNIT_INCH:    Inches
- * @GIMP_UNIT_MM:      Millimeters
- * @GIMP_UNIT_POINT:   Points
- * @GIMP_UNIT_PICA:    Picas
- * @GIMP_UNIT_END:     Marker for end-of-builtin-units
- * @GIMP_UNIT_PERCENT: Pseudo-unit percent
+ * LigmaUnit:
+ * @LIGMA_UNIT_PIXEL:   Pixels
+ * @LIGMA_UNIT_INCH:    Inches
+ * @LIGMA_UNIT_MM:      Millimeters
+ * @LIGMA_UNIT_POINT:   Points
+ * @LIGMA_UNIT_PICA:    Picas
+ * @LIGMA_UNIT_END:     Marker for end-of-builtin-units
+ * @LIGMA_UNIT_PERCENT: Pseudo-unit percent
  *
  * Units used for dimensions in images.
  **/
 typedef enum /*< skip >*/
 {
-  GIMP_UNIT_PIXEL   = 0,
+  LIGMA_UNIT_PIXEL   = 0,
 
-  GIMP_UNIT_INCH    = 1,
-  GIMP_UNIT_MM      = 2,
-  GIMP_UNIT_POINT   = 3,
-  GIMP_UNIT_PICA    = 4,
+  LIGMA_UNIT_INCH    = 1,
+  LIGMA_UNIT_MM      = 2,
+  LIGMA_UNIT_POINT   = 3,
+  LIGMA_UNIT_PICA    = 4,
 
-  GIMP_UNIT_END     = 5,
+  LIGMA_UNIT_END     = 5,
 
-  GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
-} GimpUnit;
+  LIGMA_UNIT_PERCENT = 65536 /*< pdb-skip >*/
+} LigmaUnit;
 
 
 /**
- * GimpVectorsStrokeType:
- * @GIMP_VECTORS_STROKE_TYPE_BEZIER: A bezier stroke
+ * LigmaVectorsStrokeType:
+ * @LIGMA_VECTORS_STROKE_TYPE_BEZIER: A bezier stroke
  *
  * Possible type of strokes in vectors objects.
  **/
-#define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
+#define LIGMA_TYPE_VECTORS_STROKE_TYPE (ligma_vectors_stroke_type_get_type ())
 
-GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
+GType ligma_vectors_stroke_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_VECTORS_STROKE_TYPE_BEZIER
-} GimpVectorsStrokeType;
+  LIGMA_VECTORS_STROKE_TYPE_BEZIER
+} LigmaVectorsStrokeType;
 
 G_END_DECLS
 
-#endif  /* __GIMP_BASE_ENUMS_H__ */
+#endif  /* __LIGMA_BASE_ENUMS_H__ */

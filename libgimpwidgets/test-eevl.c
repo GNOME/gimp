@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * test-eevl.c
@@ -28,21 +28,21 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpeevl.h"
+#include "ligmaeevl.h"
 
 
 typedef struct
 {
   const gchar      *string;
-  GimpEevlQuantity  result;
+  LigmaEevlQuantity  result;
   gboolean          should_succeed;
 } TestCase;
 
 static gboolean
 test_units (const gchar      *ident,
-            GimpEevlQuantity *factor,
+            LigmaEevlQuantity *factor,
             gdouble          *offset,
             gpointer          data)
 {
@@ -118,16 +118,16 @@ main(void)
   for (i = 0; cases[i].string; i++)
     {
       const gchar      *test           = cases[i].string;
-      GimpEevlOptions   options        = GIMP_EEVL_OPTIONS_INIT;
-      GimpEevlQuantity  should         = cases[i].result;
-      GimpEevlQuantity  result         = { 0, -1 };
+      LigmaEevlOptions   options        = LIGMA_EEVL_OPTIONS_INIT;
+      LigmaEevlQuantity  should         = cases[i].result;
+      LigmaEevlQuantity  result         = { 0, -1 };
       gboolean          should_succeed = cases[i].should_succeed;
       GError           *error          = NULL;
       const gchar      *error_pos      = 0;
 
       options.unit_resolver_proc = test_units;
 
-      gimp_eevl_evaluate (test,
+      ligma_eevl_evaluate (test,
                           &options,
                           &result,
                           &error_pos,

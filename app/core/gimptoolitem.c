@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolitem.c
+ * ligmatoolitem.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimptoolitem.h"
+#include "ligmatoolitem.h"
 
 
 enum
@@ -48,7 +48,7 @@ enum
 };
 
 
-struct _GimpToolItemPrivate
+struct _LigmaToolItemPrivate
 {
   gboolean visible;
 };
@@ -56,73 +56,73 @@ struct _GimpToolItemPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_tool_item_get_property  (GObject      *object,
+static void   ligma_tool_item_get_property  (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
-static void   gimp_tool_item_set_property  (GObject      *object,
+static void   ligma_tool_item_set_property  (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolItem, gimp_tool_item, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolItem, ligma_tool_item, LIGMA_TYPE_VIEWABLE)
 
-#define parent_class gimp_tool_item_parent_class
+#define parent_class ligma_tool_item_parent_class
 
-static guint gimp_tool_item_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_tool_item_signals[LAST_SIGNAL] = { 0 };
 
 
 /*  private functions  */
 
 static void
-gimp_tool_item_class_init (GimpToolItemClass *klass)
+ligma_tool_item_class_init (LigmaToolItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_tool_item_signals[VISIBLE_CHANGED] =
+  ligma_tool_item_signals[VISIBLE_CHANGED] =
     g_signal_new ("visible-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolItemClass, visible_changed),
+                  G_STRUCT_OFFSET (LigmaToolItemClass, visible_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_tool_item_signals[SHOWN_CHANGED] =
+  ligma_tool_item_signals[SHOWN_CHANGED] =
     g_signal_new ("shown-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolItemClass, shown_changed),
+                  G_STRUCT_OFFSET (LigmaToolItemClass, shown_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->get_property = gimp_tool_item_get_property;
-  object_class->set_property = gimp_tool_item_set_property;
+  object_class->get_property = ligma_tool_item_get_property;
+  object_class->set_property = ligma_tool_item_set_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VISIBLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_VISIBLE,
                             "visible", NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_SHOWN,
                                    g_param_spec_boolean ("shown", NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READABLE));
+                                                         LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_tool_item_init (GimpToolItem *tool_item)
+ligma_tool_item_init (LigmaToolItem *tool_item)
 {
-  tool_item->priv = gimp_tool_item_get_instance_private (tool_item);
+  tool_item->priv = ligma_tool_item_get_instance_private (tool_item);
 }
 
 static void
-gimp_tool_item_get_property (GObject    *object,
+ligma_tool_item_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpToolItem *tool_item = GIMP_TOOL_ITEM (object);
+  LigmaToolItem *tool_item = LIGMA_TOOL_ITEM (object);
 
   switch (property_id)
     {
@@ -130,7 +130,7 @@ gimp_tool_item_get_property (GObject    *object,
       g_value_set_boolean (value, tool_item->priv->visible);
       break;
     case PROP_SHOWN:
-      g_value_set_boolean (value, gimp_tool_item_get_shown (tool_item));
+      g_value_set_boolean (value, ligma_tool_item_get_shown (tool_item));
       break;
 
     default:
@@ -140,17 +140,17 @@ gimp_tool_item_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_item_set_property (GObject      *object,
+ligma_tool_item_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpToolItem *tool_item = GIMP_TOOL_ITEM (object);
+  LigmaToolItem *tool_item = LIGMA_TOOL_ITEM (object);
 
   switch (property_id)
     {
     case PROP_VISIBLE:
-      gimp_tool_item_set_visible (tool_item, g_value_get_boolean (value));
+      ligma_tool_item_set_visible (tool_item, g_value_get_boolean (value));
       break;
 
     default:
@@ -163,10 +163,10 @@ gimp_tool_item_set_property (GObject      *object,
 /*  public functions  */
 
 void
-gimp_tool_item_set_visible (GimpToolItem *tool_item,
+ligma_tool_item_set_visible (LigmaToolItem *tool_item,
                             gboolean      visible)
 {
-  g_return_if_fail (GIMP_IS_TOOL_ITEM (tool_item));
+  g_return_if_fail (LIGMA_IS_TOOL_ITEM (tool_item));
 
   if (visible != tool_item->priv->visible)
     {
@@ -174,14 +174,14 @@ gimp_tool_item_set_visible (GimpToolItem *tool_item,
 
       g_object_freeze_notify (G_OBJECT (tool_item));
 
-      old_shown = gimp_tool_item_get_shown (tool_item);
+      old_shown = ligma_tool_item_get_shown (tool_item);
 
       tool_item->priv->visible = visible;
 
-      g_signal_emit (tool_item, gimp_tool_item_signals[VISIBLE_CHANGED], 0);
+      g_signal_emit (tool_item, ligma_tool_item_signals[VISIBLE_CHANGED], 0);
 
-      if (gimp_tool_item_get_shown (tool_item) != old_shown)
-        gimp_tool_item_shown_changed (tool_item);
+      if (ligma_tool_item_get_shown (tool_item) != old_shown)
+        ligma_tool_item_shown_changed (tool_item);
 
       g_object_notify (G_OBJECT (tool_item), "visible");
 
@@ -190,34 +190,34 @@ gimp_tool_item_set_visible (GimpToolItem *tool_item,
 }
 
 gboolean
-gimp_tool_item_get_visible (GimpToolItem *tool_item)
+ligma_tool_item_get_visible (LigmaToolItem *tool_item)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_ITEM (tool_item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_ITEM (tool_item), FALSE);
 
   return tool_item->priv->visible;
 }
 
 gboolean
-gimp_tool_item_get_shown (GimpToolItem *tool_item)
+ligma_tool_item_get_shown (LigmaToolItem *tool_item)
 {
-  GimpToolItem *parent;
+  LigmaToolItem *parent;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_ITEM (tool_item), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_ITEM (tool_item), FALSE);
 
-  parent = GIMP_TOOL_ITEM (
-    gimp_viewable_get_parent (GIMP_VIEWABLE (tool_item)));
+  parent = LIGMA_TOOL_ITEM (
+    ligma_viewable_get_parent (LIGMA_VIEWABLE (tool_item)));
 
   return tool_item->priv->visible &&
-         (! parent || gimp_tool_item_get_shown (parent));
+         (! parent || ligma_tool_item_get_shown (parent));
 }
 
 
 /*  protected functions  */
 
 void
-gimp_tool_item_shown_changed (GimpToolItem *tool_item)
+ligma_tool_item_shown_changed (LigmaToolItem *tool_item)
 {
-  g_signal_emit (tool_item, gimp_tool_item_signals[SHOWN_CHANGED], 0);
+  g_signal_emit (tool_item, ligma_tool_item_signals[SHOWN_CHANGED], 0);
 
   g_object_notify (G_OBJECT (tool_item), "shown");
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,144 +20,144 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
-#include "config/gimpguiconfig.h"
+#include "config/ligmadisplayconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpdrawable.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimpprojection.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmaprojection.h"
+#include "core/ligmatoolinfo.h"
 
-#include "paint/gimppaintcore.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintcore.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "widgets/gimpdevices.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadevices.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-selection.h"
-#include "display/gimpdisplayshell-utils.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-selection.h"
+#include "display/ligmadisplayshell-utils.h"
 
-#include "gimpcoloroptions.h"
-#include "gimppaintoptions-gui.h"
-#include "gimppainttool.h"
-#include "gimppainttool-paint.h"
-#include "gimptoolcontrol.h"
-#include "gimptools-utils.h"
+#include "ligmacoloroptions.h"
+#include "ligmapaintoptions-gui.h"
+#include "ligmapainttool.h"
+#include "ligmapainttool-paint.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatools-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   gimp_paint_tool_constructed    (GObject               *object);
-static void   gimp_paint_tool_finalize       (GObject               *object);
+static void   ligma_paint_tool_constructed    (GObject               *object);
+static void   ligma_paint_tool_finalize       (GObject               *object);
 
-static void   gimp_paint_tool_control        (GimpTool              *tool,
-                                              GimpToolAction         action,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_button_press   (GimpTool              *tool,
-                                              const GimpCoords      *coords,
+static void   ligma_paint_tool_control        (LigmaTool              *tool,
+                                              LigmaToolAction         action,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_button_press   (LigmaTool              *tool,
+                                              const LigmaCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
-                                              GimpButtonPressType    press_type,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_button_release (GimpTool              *tool,
-                                              const GimpCoords      *coords,
+                                              LigmaButtonPressType    press_type,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_button_release (LigmaTool              *tool,
+                                              const LigmaCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
-                                              GimpButtonReleaseType  release_type,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_motion         (GimpTool              *tool,
-                                              const GimpCoords      *coords,
+                                              LigmaButtonReleaseType  release_type,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_motion         (LigmaTool              *tool,
+                                              const LigmaCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_modifier_key   (GimpTool              *tool,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_modifier_key   (LigmaTool              *tool,
                                               GdkModifierType        key,
                                               gboolean               press,
                                               GdkModifierType        state,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_cursor_update  (GimpTool              *tool,
-                                              const GimpCoords      *coords,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_cursor_update  (LigmaTool              *tool,
+                                              const LigmaCoords      *coords,
                                               GdkModifierType        state,
-                                              GimpDisplay           *display);
-static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
-                                              const GimpCoords      *coords,
+                                              LigmaDisplay           *display);
+static void   ligma_paint_tool_oper_update    (LigmaTool              *tool,
+                                              const LigmaCoords      *coords,
                                               GdkModifierType        state,
                                               gboolean               proximity,
-                                              GimpDisplay           *display);
+                                              LigmaDisplay           *display);
 
-static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
+static void   ligma_paint_tool_draw           (LigmaDrawTool          *draw_tool);
 
 static void
-          gimp_paint_tool_real_paint_prepare (GimpPaintTool         *paint_tool,
-                                              GimpDisplay           *display);
+          ligma_paint_tool_real_paint_prepare (LigmaPaintTool         *paint_tool,
+                                              LigmaDisplay           *display);
 
-static GimpCanvasItem *
-              gimp_paint_tool_get_outline    (GimpPaintTool         *paint_tool,
-                                              GimpDisplay           *display,
+static LigmaCanvasItem *
+              ligma_paint_tool_get_outline    (LigmaPaintTool         *paint_tool,
+                                              LigmaDisplay           *display,
                                               gdouble                x,
                                               gdouble                y);
 
-static gboolean  gimp_paint_tool_check_alpha (GimpPaintTool         *paint_tool,
-                                              GimpDrawable          *drawable,
-                                              GimpDisplay           *display,
+static gboolean  ligma_paint_tool_check_alpha (LigmaPaintTool         *paint_tool,
+                                              LigmaDrawable          *drawable,
+                                              LigmaDisplay           *display,
                                               GError               **error);
 
-static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
+static void   ligma_paint_tool_hard_notify    (LigmaPaintOptions      *options,
                                               const GParamSpec      *pspec,
-                                              GimpPaintTool         *paint_tool);
-static void   gimp_paint_tool_cursor_notify  (GimpDisplayConfig     *config,
+                                              LigmaPaintTool         *paint_tool);
+static void   ligma_paint_tool_cursor_notify  (LigmaDisplayConfig     *config,
                                               GParamSpec            *pspec,
-                                              GimpPaintTool         *paint_tool);
+                                              LigmaPaintTool         *paint_tool);
 
 
-G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
+G_DEFINE_TYPE (LigmaPaintTool, ligma_paint_tool, LIGMA_TYPE_COLOR_TOOL)
 
-#define parent_class gimp_paint_tool_parent_class
+#define parent_class ligma_paint_tool_parent_class
 
 
 static void
-gimp_paint_tool_class_init (GimpPaintToolClass *klass)
+ligma_paint_tool_class_init (LigmaPaintToolClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  LigmaToolClass     *tool_class      = LIGMA_TOOL_CLASS (klass);
+  LigmaDrawToolClass *draw_tool_class = LIGMA_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructed  = gimp_paint_tool_constructed;
-  object_class->finalize     = gimp_paint_tool_finalize;
+  object_class->constructed  = ligma_paint_tool_constructed;
+  object_class->finalize     = ligma_paint_tool_finalize;
 
-  tool_class->control        = gimp_paint_tool_control;
-  tool_class->button_press   = gimp_paint_tool_button_press;
-  tool_class->button_release = gimp_paint_tool_button_release;
-  tool_class->motion         = gimp_paint_tool_motion;
-  tool_class->modifier_key   = gimp_paint_tool_modifier_key;
-  tool_class->cursor_update  = gimp_paint_tool_cursor_update;
-  tool_class->oper_update    = gimp_paint_tool_oper_update;
+  tool_class->control        = ligma_paint_tool_control;
+  tool_class->button_press   = ligma_paint_tool_button_press;
+  tool_class->button_release = ligma_paint_tool_button_release;
+  tool_class->motion         = ligma_paint_tool_motion;
+  tool_class->modifier_key   = ligma_paint_tool_modifier_key;
+  tool_class->cursor_update  = ligma_paint_tool_cursor_update;
+  tool_class->oper_update    = ligma_paint_tool_oper_update;
 
-  draw_tool_class->draw      = gimp_paint_tool_draw;
+  draw_tool_class->draw      = ligma_paint_tool_draw;
 
-  klass->paint_prepare       = gimp_paint_tool_real_paint_prepare;
+  klass->paint_prepare       = ligma_paint_tool_real_paint_prepare;
 }
 
 static void
-gimp_paint_tool_init (GimpPaintTool *paint_tool)
+ligma_paint_tool_init (LigmaPaintTool *paint_tool)
 {
-  GimpTool *tool = GIMP_TOOL (paint_tool);
+  LigmaTool *tool = LIGMA_TOOL (paint_tool);
 
-  gimp_tool_control_set_motion_mode    (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_scroll_lock    (tool->control, TRUE);
-  gimp_tool_control_set_action_opacity (tool->control,
+  ligma_tool_control_set_motion_mode    (tool->control, LIGMA_MOTION_MODE_EXACT);
+  ligma_tool_control_set_scroll_lock    (tool->control, TRUE);
+  ligma_tool_control_set_action_opacity (tool->control,
                                         "context/context-opacity-set");
 
   paint_tool->active          = TRUE;
@@ -181,54 +181,54 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 }
 
 static void
-gimp_paint_tool_constructed (GObject *object)
+ligma_paint_tool_constructed (GObject *object)
 {
-  GimpTool          *tool       = GIMP_TOOL (object);
-  GimpPaintTool     *paint_tool = GIMP_PAINT_TOOL (object);
-  GimpPaintOptions  *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpDisplayConfig *display_config;
-  GimpPaintInfo     *paint_info;
+  LigmaTool          *tool       = LIGMA_TOOL (object);
+  LigmaPaintTool     *paint_tool = LIGMA_PAINT_TOOL (object);
+  LigmaPaintOptions  *options    = LIGMA_PAINT_TOOL_GET_OPTIONS (tool);
+  LigmaDisplayConfig *display_config;
+  LigmaPaintInfo     *paint_info;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
-  gimp_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));
+  ligma_assert (LIGMA_IS_TOOL_INFO (tool->tool_info));
+  ligma_assert (LIGMA_IS_PAINT_INFO (tool->tool_info->paint_info));
 
-  display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
+  display_config = LIGMA_DISPLAY_CONFIG (tool->tool_info->ligma->config);
 
   paint_info = tool->tool_info->paint_info;
 
-  gimp_assert (g_type_is_a (paint_info->paint_type, GIMP_TYPE_PAINT_CORE));
+  ligma_assert (g_type_is_a (paint_info->paint_type, LIGMA_TYPE_PAINT_CORE));
 
   paint_tool->core = g_object_new (paint_info->paint_type,
                                    "undo-desc", paint_info->blurb,
                                    NULL);
 
   g_signal_connect_object (options, "notify::hard",
-                           G_CALLBACK (gimp_paint_tool_hard_notify),
+                           G_CALLBACK (ligma_paint_tool_hard_notify),
                            paint_tool, 0);
 
-  gimp_paint_tool_hard_notify (options, NULL, paint_tool);
+  ligma_paint_tool_hard_notify (options, NULL, paint_tool);
 
   paint_tool->show_cursor = display_config->show_paint_tool_cursor;
   paint_tool->draw_brush  = display_config->show_brush_outline;
   paint_tool->snap_brush  = display_config->snap_brush_outline;
 
   g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
-                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           G_CALLBACK (ligma_paint_tool_cursor_notify),
                            paint_tool, 0);
   g_signal_connect_object (display_config, "notify::show-brush-outline",
-                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           G_CALLBACK (ligma_paint_tool_cursor_notify),
                            paint_tool, 0);
   g_signal_connect_object (display_config, "notify::snap-brush-outline",
-                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           G_CALLBACK (ligma_paint_tool_cursor_notify),
                            paint_tool, 0);
 }
 
 static void
-gimp_paint_tool_finalize (GObject *object)
+ligma_paint_tool_finalize (GObject *object)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (object);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (object);
 
   if (paint_tool->core)
     {
@@ -240,59 +240,59 @@ gimp_paint_tool_finalize (GObject *object)
 }
 
 static void
-gimp_paint_tool_control (GimpTool       *tool,
-                         GimpToolAction  action,
-                         GimpDisplay    *display)
+ligma_paint_tool_control (LigmaTool       *tool,
+                         LigmaToolAction  action,
+                         LigmaDisplay    *display)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_paint_core_cleanup (paint_tool->core);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_paint_core_cleanup (paint_tool->core);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
+    case LIGMA_TOOL_ACTION_COMMIT:
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_paint_tool_button_press (GimpTool            *tool,
-                              const GimpCoords    *coords,
+ligma_paint_tool_button_press (LigmaTool            *tool,
+                              const LigmaCoords    *coords,
                               guint32              time,
                               GdkModifierType      state,
-                              GimpButtonPressType  press_type,
-                              GimpDisplay         *display)
+                              LigmaButtonPressType  press_type,
+                              LigmaDisplay         *display)
 {
-  GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpGuiConfig    *config     = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpDisplayShell *shell      = gimp_display_get_shell (display);
-  GimpImage        *image      = gimp_display_get_image (display);
+  LigmaDrawTool     *draw_tool  = LIGMA_DRAW_TOOL (tool);
+  LigmaPaintTool    *paint_tool = LIGMA_PAINT_TOOL (tool);
+  LigmaPaintOptions *options    = LIGMA_PAINT_TOOL_GET_OPTIONS (tool);
+  LigmaGuiConfig    *config     = LIGMA_GUI_CONFIG (display->ligma->config);
+  LigmaDisplayShell *shell      = ligma_display_get_shell (display);
+  LigmaImage        *image      = ligma_display_get_image (display);
   GList            *drawables;
   GList            *iter;
   gboolean          constrain;
   GError           *error = NULL;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
     {
-      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+      LIGMA_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                     press_type, display);
       return;
     }
 
-  drawables  = gimp_image_get_selected_drawables (image);
+  drawables  = ligma_image_get_selected_drawables (image);
   if (drawables == NULL)
     {
-      gimp_tool_message_literal (tool, display,
+      ligma_tool_message_literal (tool, display,
                                  _("No selected drawables."));
 
       return;
@@ -301,7 +301,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     {
       if (g_list_length (drawables) != 1)
         {
-          gimp_tool_message_literal (tool, display,
+          ligma_tool_message_literal (tool, display,
                                      _("Cannot paint on multiple layers. Select only one layer."));
 
           g_list_free (drawables);
@@ -311,42 +311,42 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      GimpDrawable *drawable    = iter->data;
-      GimpItem     *locked_item = NULL;
+      LigmaDrawable *drawable    = iter->data;
+      LigmaItem     *locked_item = NULL;
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+      if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawable)))
         {
-          gimp_tool_message_literal (tool, display,
+          ligma_tool_message_literal (tool, display,
                                      _("Cannot paint on layer groups."));
           g_list_free (drawables);
 
           return;
         }
 
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
+      if (ligma_item_is_content_locked (LIGMA_ITEM (drawable), &locked_item))
         {
-          gimp_tool_message_literal (tool, display,
+          ligma_tool_message_literal (tool, display,
                                      _("The selected item's pixels are locked."));
-          gimp_tools_blink_lock_box (display->gimp, locked_item);
+          ligma_tools_blink_lock_box (display->ligma, locked_item);
           g_list_free (drawables);
 
           return;
         }
 
-      if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
+      if (! ligma_paint_tool_check_alpha (paint_tool, drawable, display, &error))
         {
           GtkWidget *options_gui;
           GtkWidget *mode_box;
 
-          gimp_tool_message_literal (tool, display, error->message);
+          ligma_tool_message_literal (tool, display, error->message);
 
-          options_gui = gimp_tools_get_tool_options_gui (GIMP_TOOL_OPTIONS (options));
-          mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
+          options_gui = ligma_tools_get_tool_options_gui (LIGMA_TOOL_OPTIONS (options));
+          mode_box    = ligma_paint_options_gui_get_paint_mode_box (options_gui);
 
           if (gtk_widget_is_sensitive (mode_box))
             {
-              gimp_tools_show_tool_options (display->gimp);
-              gimp_widget_blink (mode_box);
+              ligma_tools_show_tool_options (display->ligma);
+              ligma_widget_blink (mode_box);
             }
 
           g_clear_error (&error);
@@ -355,10 +355,10 @@ gimp_paint_tool_button_press (GimpTool            *tool,
           return;
         }
 
-      if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      if (! ligma_item_is_visible (LIGMA_ITEM (drawable)) &&
           ! config->edit_non_visible)
         {
-          gimp_tool_message_literal (tool, display,
+          ligma_tool_message_literal (tool, display,
                                      _("A selected layer is not visible."));
           g_list_free (drawables);
 
@@ -366,12 +366,12 @@ gimp_paint_tool_button_press (GimpTool            *tool,
         }
     }
 
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_stop (draw_tool);
+  if (ligma_draw_tool_is_active (draw_tool))
+    ligma_draw_tool_stop (draw_tool);
 
   if (tool->display            &&
       tool->display != display &&
-      gimp_display_get_image (tool->display) == image)
+      ligma_display_get_image (tool->display) == image)
     {
       /*  if this is a different display, but the same image, HACK around
        *  in tool internals AFTER stopping the current draw_tool, so
@@ -382,13 +382,13 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       tool->display = display;
     }
 
-  constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+  constrain = (state & ligma_get_constrain_behavior_mask ()) != 0;
 
-  if (! gimp_paint_tool_paint_start (paint_tool,
+  if (! ligma_paint_tool_paint_start (paint_tool,
                                      display, coords, time, constrain,
                                      &error))
     {
-      gimp_tool_message_literal (tool, display, error->message);
+      ligma_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
       return;
     }
@@ -397,111 +397,111 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   tool->drawables = drawables;
 
   /*  pause the current selection  */
-  gimp_display_shell_selection_pause (shell);
+  ligma_display_shell_selection_pause (shell);
 
-  gimp_draw_tool_start (draw_tool, display);
+  ligma_draw_tool_start (draw_tool, display);
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
 }
 
 static void
-gimp_paint_tool_button_release (GimpTool              *tool,
-                                const GimpCoords      *coords,
+ligma_paint_tool_button_release (LigmaTool              *tool,
+                                const LigmaCoords      *coords,
                                 guint32                time,
                                 GdkModifierType        state,
-                                GimpButtonReleaseType  release_type,
-                                GimpDisplay           *display)
+                                LigmaButtonReleaseType  release_type,
+                                LigmaDisplay           *display)
 {
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpDisplayShell *shell      = gimp_display_get_shell (display);
-  GimpImage        *image      = gimp_display_get_image (display);
+  LigmaPaintTool    *paint_tool = LIGMA_PAINT_TOOL (tool);
+  LigmaDisplayShell *shell      = ligma_display_get_shell (display);
+  LigmaImage        *image      = ligma_display_get_image (display);
   gboolean          cancel;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
     {
-      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
+      LIGMA_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
                                                       state, release_type,
                                                       display);
       return;
     }
 
-  cancel = (release_type == GIMP_BUTTON_RELEASE_CANCEL);
+  cancel = (release_type == LIGMA_BUTTON_RELEASE_CANCEL);
 
-  gimp_paint_tool_paint_end (paint_tool, time, cancel);
+  ligma_paint_tool_paint_end (paint_tool, time, cancel);
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
   /*  resume the current selection  */
-  gimp_display_shell_selection_resume (shell);
+  ligma_display_shell_selection_resume (shell);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 }
 
 static void
-gimp_paint_tool_motion (GimpTool         *tool,
-                        const GimpCoords *coords,
+ligma_paint_tool_motion (LigmaTool         *tool,
+                        const LigmaCoords *coords,
                         guint32           time,
                         GdkModifierType   state,
-                        GimpDisplay      *display)
+                        LigmaDisplay      *display)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (tool);
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
+  LIGMA_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
     return;
 
   if (! paint_tool->snap_brush)
-    gimp_draw_tool_pause  (GIMP_DRAW_TOOL (tool));
+    ligma_draw_tool_pause  (LIGMA_DRAW_TOOL (tool));
 
-  gimp_paint_tool_paint_motion (paint_tool, coords, time);
+  ligma_paint_tool_paint_motion (paint_tool, coords, time);
 
   if (! paint_tool->snap_brush)
-    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
 }
 
 static void
-gimp_paint_tool_modifier_key (GimpTool        *tool,
+ligma_paint_tool_modifier_key (LigmaTool        *tool,
                               GdkModifierType  key,
                               gboolean         press,
                               GdkModifierType  state,
-                              GimpDisplay     *display)
+                              LigmaDisplay     *display)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (tool);
+  LigmaDrawTool  *draw_tool  = LIGMA_DRAW_TOOL (tool);
 
   if (paint_tool->pick_colors && ! paint_tool->draw_line)
     {
-      if ((state & gimp_get_all_modifiers_mask ()) ==
-          gimp_get_constrain_behavior_mask ())
+      if ((state & ligma_get_all_modifiers_mask ()) ==
+          ligma_get_constrain_behavior_mask ())
         {
-          if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+          if (! ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
             {
-              GimpToolInfo *info = gimp_get_tool_info (display->gimp,
-                                                       "gimp-color-picker-tool");
+              LigmaToolInfo *info = ligma_get_tool_info (display->ligma,
+                                                       "ligma-color-picker-tool");
 
-              if (GIMP_IS_TOOL_INFO (info))
+              if (LIGMA_IS_TOOL_INFO (info))
                 {
-                  if (gimp_draw_tool_is_active (draw_tool))
-                    gimp_draw_tool_stop (draw_tool);
+                  if (ligma_draw_tool_is_active (draw_tool))
+                    ligma_draw_tool_stop (draw_tool);
 
-                  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                                          GIMP_COLOR_OPTIONS (info->tool_options));
+                  ligma_color_tool_enable (LIGMA_COLOR_TOOL (tool),
+                                          LIGMA_COLOR_OPTIONS (info->tool_options));
 
-                  switch (GIMP_COLOR_TOOL (tool)->pick_target)
+                  switch (LIGMA_COLOR_TOOL (tool)->pick_target)
                     {
-                    case GIMP_COLOR_PICK_TARGET_FOREGROUND:
-                      gimp_tool_push_status (tool, display,
+                    case LIGMA_COLOR_PICK_TARGET_FOREGROUND:
+                      ligma_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "foreground color"));
                       break;
 
-                    case GIMP_COLOR_PICK_TARGET_BACKGROUND:
-                      gimp_tool_push_status (tool, display,
+                    case LIGMA_COLOR_PICK_TARGET_BACKGROUND:
+                      ligma_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "background color"));
                       break;
@@ -514,27 +514,27 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
         }
       else
         {
-          if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+          if (ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
             {
-              gimp_tool_pop_status (tool, display);
-              gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+              ligma_tool_pop_status (tool, display);
+              ligma_color_tool_disable (LIGMA_COLOR_TOOL (tool));
             }
         }
     }
 }
 
 static void
-gimp_paint_tool_cursor_update (GimpTool         *tool,
-                               const GimpCoords *coords,
+ligma_paint_tool_cursor_update (LigmaTool         *tool,
+                               const LigmaCoords *coords,
                                GdkModifierType   state,
-                               GimpDisplay      *display)
+                               LigmaDisplay      *display)
 {
-  GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpGuiConfig      *config     = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpCursorModifier  modifier;
-  GimpCursorModifier  toggle_modifier;
-  GimpCursorModifier  old_modifier;
-  GimpCursorModifier  old_toggle_modifier;
+  LigmaPaintTool      *paint_tool = LIGMA_PAINT_TOOL (tool);
+  LigmaGuiConfig      *config     = LIGMA_GUI_CONFIG (display->ligma->config);
+  LigmaCursorModifier  modifier;
+  LigmaCursorModifier  toggle_modifier;
+  LigmaCursorModifier  old_modifier;
+  LigmaCursorModifier  old_toggle_modifier;
 
   modifier        = tool->control->cursor_modifier;
   toggle_modifier = tool->control->toggle_cursor_modifier;
@@ -542,10 +542,10 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
   old_modifier        = modifier;
   old_toggle_modifier = toggle_modifier;
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (! ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
     {
-      GimpImage    *image     = gimp_display_get_image (display);
-      GList        *drawables = gimp_image_get_selected_drawables (image);
+      LigmaImage    *image     = ligma_display_get_image (display);
+      GList        *drawables = ligma_image_get_selected_drawables (image);
       GList        *iter;
 
       if (! drawables)
@@ -553,16 +553,16 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
 
       for (iter = drawables; iter; iter = iter->next)
         {
-          GimpDrawable *drawable = iter->data;
+          LigmaDrawable *drawable = iter->data;
 
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
-              gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL)            ||
-              ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
-              ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+          if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawable))               ||
+              ligma_item_is_content_locked (LIGMA_ITEM (drawable), NULL)            ||
+              ! ligma_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
+              ! (ligma_item_is_visible (LIGMA_ITEM (drawable)) ||
                  config->edit_non_visible))
             {
-              modifier        = GIMP_CURSOR_MODIFIER_BAD;
-              toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
+              modifier        = LIGMA_CURSOR_MODIFIER_BAD;
+              toggle_modifier = LIGMA_CURSOR_MODIFIER_BAD;
               break;
             }
         }
@@ -570,71 +570,71 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       g_list_free (drawables);
 
       if (! paint_tool->show_cursor &&
-          modifier != GIMP_CURSOR_MODIFIER_BAD)
+          modifier != LIGMA_CURSOR_MODIFIER_BAD)
         {
           if (paint_tool->draw_brush)
-            gimp_tool_set_cursor (tool, display,
-                                  GIMP_CURSOR_NONE,
-                                  GIMP_TOOL_CURSOR_NONE,
-                                  GIMP_CURSOR_MODIFIER_NONE);
+            ligma_tool_set_cursor (tool, display,
+                                  LIGMA_CURSOR_NONE,
+                                  LIGMA_TOOL_CURSOR_NONE,
+                                  LIGMA_CURSOR_MODIFIER_NONE);
           else
-            gimp_tool_set_cursor (tool, display,
-                                  GIMP_CURSOR_SINGLE_DOT,
-                                  GIMP_TOOL_CURSOR_NONE,
-                                  GIMP_CURSOR_MODIFIER_NONE);
+            ligma_tool_set_cursor (tool, display,
+                                  LIGMA_CURSOR_SINGLE_DOT,
+                                  LIGMA_TOOL_CURSOR_NONE,
+                                  LIGMA_CURSOR_MODIFIER_NONE);
           return;
         }
 
-      gimp_tool_control_set_cursor_modifier        (tool->control,
+      ligma_tool_control_set_cursor_modifier        (tool->control,
                                                     modifier);
-      gimp_tool_control_set_toggle_cursor_modifier (tool->control,
+      ligma_tool_control_set_toggle_cursor_modifier (tool->control,
                                                     toggle_modifier);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+  LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
 
   /*  reset old stuff here so we are not interfering with the modifiers
    *  set by our subclasses
    */
-  gimp_tool_control_set_cursor_modifier        (tool->control,
+  ligma_tool_control_set_cursor_modifier        (tool->control,
                                                 old_modifier);
-  gimp_tool_control_set_toggle_cursor_modifier (tool->control,
+  ligma_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 old_toggle_modifier);
 }
 
 static void
-gimp_paint_tool_oper_update (GimpTool         *tool,
-                             const GimpCoords *coords,
+ligma_paint_tool_oper_update (LigmaTool         *tool,
+                             const LigmaCoords *coords,
                              GdkModifierType   state,
                              gboolean          proximity,
-                             GimpDisplay      *display)
+                             LigmaDisplay      *display)
 {
-  GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
-  GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
-  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintCore    *core          = paint_tool->core;
-  GimpDisplayShell *shell         = gimp_display_get_shell (display);
-  GimpImage        *image         = gimp_display_get_image (display);
+  LigmaPaintTool    *paint_tool    = LIGMA_PAINT_TOOL (tool);
+  LigmaDrawTool     *draw_tool     = LIGMA_DRAW_TOOL (tool);
+  LigmaPaintOptions *paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (tool);
+  LigmaPaintCore    *core          = paint_tool->core;
+  LigmaDisplayShell *shell         = ligma_display_get_shell (display);
+  LigmaImage        *image         = ligma_display_get_image (display);
   GList            *drawables;
   gchar            *status        = NULL;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (tool)))
     {
-      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+      LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
       return;
     }
 
-  gimp_draw_tool_pause (draw_tool);
+  ligma_draw_tool_pause (draw_tool);
 
-  if (gimp_draw_tool_is_active (draw_tool) &&
+  if (ligma_draw_tool_is_active (draw_tool) &&
       draw_tool->display != display)
-    gimp_draw_tool_stop (draw_tool);
+    ligma_draw_tool_stop (draw_tool);
 
   if (tool->display            &&
       tool->display != display &&
-      gimp_display_get_image (tool->display) == image)
+      ligma_display_get_image (tool->display) == image)
     {
       /*  if this is a different display, but the same image, HACK around
        *  in tool internals AFTER stopping the current draw_tool, so
@@ -645,17 +645,17 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       tool->display = display;
     }
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if ((g_list_length (drawables) == 1 ||
        (g_list_length (drawables) > 1 && paint_tool->can_multi_paint)) &&
       proximity)
     {
-      gboolean  constrain_mask = gimp_get_constrain_behavior_mask ();
+      gboolean  constrain_mask = ligma_get_constrain_behavior_mask ();
 
       core->cur_coords = *coords;
 
-      if (display == tool->display && (state & GIMP_PAINT_TOOL_LINE_MASK))
+      if (display == tool->display && (state & LIGMA_PAINT_TOOL_LINE_MASK))
         {
           /*  If shift is down and this is not the first paint stroke,
            *  draw a line.
@@ -664,21 +664,21 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           gdouble  offset_angle;
           gdouble  xres, yres;
 
-          gimp_display_shell_get_constrained_line_params (shell,
+          ligma_display_shell_get_constrained_line_params (shell,
                                                           &offset_angle,
                                                           &xres, &yres);
 
-          gimp_paint_core_round_line (core, paint_options,
+          ligma_paint_core_round_line (core, paint_options,
                                       (state & constrain_mask) != 0,
                                       offset_angle, xres, yres);
 
-          status_help = gimp_suggest_modifiers (paint_tool->status_line,
+          status_help = ligma_suggest_modifiers (paint_tool->status_line,
                                                 constrain_mask & ~state,
                                                 NULL,
                                                 _("%s for constrained angles"),
                                                 NULL);
 
-          status = gimp_display_shell_get_line_status (shell, status_help,
+          status = ligma_display_shell_get_line_status (shell, status_help,
                                                        ". ",
                                                        core->last_coords.x,
                                                        core->last_coords.y,
@@ -694,7 +694,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           /* HACK: A paint tool may set status_ctrl to NULL to indicate that
            * it ignores the Ctrl modifier (temporarily or permanently), so
            * it should not be suggested.  This is different from how
-           * gimp_suggest_modifiers() would interpret this parameter.
+           * ligma_suggest_modifiers() would interpret this parameter.
            */
           if (paint_tool->status_ctrl != NULL)
             modifiers |= constrain_mask;
@@ -702,9 +702,9 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           /* suggest drawing lines only after the first point is set
            */
           if (display == tool->display)
-            modifiers |= GIMP_PAINT_TOOL_LINE_MASK;
+            modifiers |= LIGMA_PAINT_TOOL_LINE_MASK;
 
-          status = gimp_suggest_modifiers (paint_tool->status,
+          status = ligma_suggest_modifiers (paint_tool->status,
                                            modifiers & ~state,
                                            _("%s for a straight line"),
                                            paint_tool->status_ctrl,
@@ -715,45 +715,45 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       paint_tool->cursor_x = core->cur_coords.x;
       paint_tool->cursor_y = core->cur_coords.y;
 
-      if (! gimp_draw_tool_is_active (draw_tool))
-        gimp_draw_tool_start (draw_tool, display);
+      if (! ligma_draw_tool_is_active (draw_tool))
+        ligma_draw_tool_start (draw_tool, display);
     }
-  else if (gimp_draw_tool_is_active (draw_tool))
+  else if (ligma_draw_tool_is_active (draw_tool))
     {
-      gimp_draw_tool_stop (draw_tool);
+      ligma_draw_tool_stop (draw_tool);
     }
 
   if (status != NULL)
     {
-      gimp_tool_push_status (tool, display, "%s", status);
+      ligma_tool_push_status (tool, display, "%s", status);
       g_free (status);
     }
   else
     {
-      gimp_tool_pop_status (tool, display);
+      ligma_tool_pop_status (tool, display);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+  LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
-  gimp_draw_tool_resume (draw_tool);
+  ligma_draw_tool_resume (draw_tool);
   g_list_free (drawables);
 }
 
 static void
-gimp_paint_tool_draw (GimpDrawTool *draw_tool)
+ligma_paint_tool_draw (LigmaDrawTool *draw_tool)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+  LigmaPaintTool *paint_tool = LIGMA_PAINT_TOOL (draw_tool);
 
   if (paint_tool->active &&
-      ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+      ! ligma_color_tool_is_enabled (LIGMA_COLOR_TOOL (draw_tool)))
     {
-      GimpPaintCore  *core       = paint_tool->core;
-      GimpCanvasItem *outline    = NULL;
+      LigmaPaintCore  *core       = paint_tool->core;
+      LigmaCanvasItem *outline    = NULL;
       gboolean        line_drawn = FALSE;
       gdouble         cur_x, cur_y;
 
-      if (gimp_paint_tool_paint_is_active (paint_tool) &&
+      if (ligma_paint_tool_paint_is_active (paint_tool) &&
           paint_tool->snap_brush)
         {
           cur_x = paint_tool->paint_x;
@@ -765,52 +765,52 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           cur_y = paint_tool->cursor_y;
 
           if (paint_tool->draw_line &&
-              ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
+              ! ligma_tool_control_is_active (LIGMA_TOOL (draw_tool)->control))
             {
-              GimpCanvasGroup *group;
+              LigmaCanvasGroup *group;
               gdouble          last_x, last_y;
 
               last_x = core->last_coords.x;
               last_y = core->last_coords.y;
 
-              group = gimp_draw_tool_add_stroke_group (draw_tool);
-              gimp_draw_tool_push_group (draw_tool, group);
+              group = ligma_draw_tool_add_stroke_group (draw_tool);
+              ligma_draw_tool_push_group (draw_tool, group);
 
-              gimp_draw_tool_add_handle (draw_tool,
-                                         GIMP_HANDLE_CIRCLE,
+              ligma_draw_tool_add_handle (draw_tool,
+                                         LIGMA_HANDLE_CIRCLE,
                                          last_x, last_y,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_HANDLE_ANCHOR_CENTER);
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_HANDLE_ANCHOR_CENTER);
 
-              gimp_draw_tool_add_line (draw_tool,
+              ligma_draw_tool_add_line (draw_tool,
                                        last_x, last_y,
                                        cur_x, cur_y);
 
-              gimp_draw_tool_add_handle (draw_tool,
-                                         GIMP_HANDLE_CIRCLE,
+              ligma_draw_tool_add_handle (draw_tool,
+                                         LIGMA_HANDLE_CIRCLE,
                                          cur_x, cur_y,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                         GIMP_HANDLE_ANCHOR_CENTER);
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_TOOL_HANDLE_SIZE_CIRCLE,
+                                         LIGMA_HANDLE_ANCHOR_CENTER);
 
-              gimp_draw_tool_pop_group (draw_tool);
+              ligma_draw_tool_pop_group (draw_tool);
 
               line_drawn = TRUE;
             }
         }
 
-      gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
-      gimp_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
+      ligma_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
+      ligma_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
 
       if (paint_tool->draw_brush)
-        outline = gimp_paint_tool_get_outline (paint_tool,
+        outline = ligma_paint_tool_get_outline (paint_tool,
                                                draw_tool->display,
                                                cur_x, cur_y);
 
       if (outline)
         {
-          gimp_draw_tool_add_item (draw_tool, outline);
+          ligma_draw_tool_add_item (draw_tool, outline);
           g_object_unref (outline);
         }
       else if (paint_tool->draw_fallback)
@@ -828,7 +828,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 #define ROTATION_ANGLE G_PI / 4
 
           /* marks for indicating full size */
-          gimp_draw_tool_add_arc (draw_tool,
+          ligma_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
@@ -836,7 +836,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   ROTATION_ANGLE - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
                                   (2.0 * G_PI) / TICKMARK_ANGLE);
 
-          gimp_draw_tool_add_arc (draw_tool,
+          ligma_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
@@ -844,7 +844,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   ROTATION_ANGLE + G_PI / 2 - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
                                   (2.0 * G_PI) / TICKMARK_ANGLE);
 
-          gimp_draw_tool_add_arc (draw_tool,
+          ligma_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
@@ -852,7 +852,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   ROTATION_ANGLE + G_PI - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
                                   (2.0 * G_PI) / TICKMARK_ANGLE);
 
-          gimp_draw_tool_add_arc (draw_tool,
+          ligma_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
@@ -865,7 +865,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           gint size = (gint) paint_tool->circle_size;
 
           /* draw an indicatory circle */
-          gimp_draw_tool_add_arc (draw_tool,
+          ligma_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
@@ -880,7 +880,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           ! paint_tool->draw_circle)
         {
           /* I am not sure this case can/should ever happen since now we
-           * always set the GIMP_CURSOR_SINGLE_DOT when neither pointer
+           * always set the LIGMA_CURSOR_SINGLE_DOT when neither pointer
            * nor outline options are checked. Yet let's imagine any
            * weird case where brush outline is wanted, without pointer
            * cursor, yet we fail to draw the outline while neither
@@ -891,71 +891,71 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
            * indication so we draw a fallback crosshair.
            */
           if (paint_tool->draw_brush)
-            gimp_draw_tool_add_handle (draw_tool,
-                                       GIMP_HANDLE_CIRCLE,
+            ligma_draw_tool_add_handle (draw_tool,
+                                       LIGMA_HANDLE_CIRCLE,
                                        cur_x, cur_y,
-                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                       GIMP_HANDLE_ANCHOR_CENTER);
+                                       LIGMA_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                       LIGMA_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                       LIGMA_HANDLE_ANCHOR_CENTER);
         }
     }
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  LIGMA_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static void
-gimp_paint_tool_real_paint_prepare (GimpPaintTool *paint_tool,
-                                    GimpDisplay   *display)
+ligma_paint_tool_real_paint_prepare (LigmaPaintTool *paint_tool,
+                                    LigmaDisplay   *display)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
+  LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
-  gimp_paint_core_set_show_all (paint_tool->core, shell->show_all);
+  ligma_paint_core_set_show_all (paint_tool->core, shell->show_all);
 }
 
-static GimpCanvasItem *
-gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
-                             GimpDisplay   *display,
+static LigmaCanvasItem *
+ligma_paint_tool_get_outline (LigmaPaintTool *paint_tool,
+                             LigmaDisplay   *display,
                              gdouble        x,
                              gdouble        y)
 {
-  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline)
-    return GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (paint_tool,
+  if (LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline)
+    return LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (paint_tool,
                                                                 display, x, y);
 
   return NULL;
 }
 
 static gboolean
-gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
-                             GimpDrawable   *drawable,
-                             GimpDisplay    *display,
+ligma_paint_tool_check_alpha (LigmaPaintTool  *paint_tool,
+                             LigmaDrawable   *drawable,
+                             LigmaDisplay    *display,
                              GError        **error)
 {
-  GimpPaintToolClass *klass = GIMP_PAINT_TOOL_GET_CLASS (paint_tool);
+  LigmaPaintToolClass *klass = LIGMA_PAINT_TOOL_GET_CLASS (paint_tool);
 
   if (klass->is_alpha_only && klass->is_alpha_only (paint_tool, drawable))
     {
-      GimpLayer *locked_layer = NULL;
+      LigmaLayer *locked_layer = NULL;
 
-      if (! gimp_drawable_has_alpha (drawable))
+      if (! ligma_drawable_has_alpha (drawable))
         {
           g_set_error_literal (
-            error, GIMP_ERROR, GIMP_FAILED,
+            error, LIGMA_ERROR, LIGMA_FAILED,
             _("The selected drawable does not have an alpha channel."));
 
           return FALSE;
         }
 
-        if (GIMP_IS_LAYER (drawable) &&
-            gimp_layer_is_alpha_locked (GIMP_LAYER (drawable),
+        if (LIGMA_IS_LAYER (drawable) &&
+            ligma_layer_is_alpha_locked (LIGMA_LAYER (drawable),
                                         &locked_layer))
         {
           g_set_error_literal (
-            error, GIMP_ERROR, GIMP_FAILED,
+            error, LIGMA_ERROR, LIGMA_FAILED,
             _("The selected layer's alpha channel is locked."));
 
           if (error)
-            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (locked_layer));
+            ligma_tools_blink_lock_box (display->ligma, LIGMA_ITEM (locked_layer));
 
           return FALSE;
         }
@@ -965,60 +965,60 @@ gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
 }
 
 static void
-gimp_paint_tool_hard_notify (GimpPaintOptions *options,
+ligma_paint_tool_hard_notify (LigmaPaintOptions *options,
                              const GParamSpec *pspec,
-                             GimpPaintTool    *paint_tool)
+                             LigmaPaintTool    *paint_tool)
 {
   if (paint_tool->active)
     {
-      GimpTool *tool = GIMP_TOOL (paint_tool);
+      LigmaTool *tool = LIGMA_TOOL (paint_tool);
 
-      gimp_tool_control_set_precision (tool->control,
+      ligma_tool_control_set_precision (tool->control,
                                        options->hard ?
-                                       GIMP_CURSOR_PRECISION_PIXEL_CENTER :
-                                       GIMP_CURSOR_PRECISION_SUBPIXEL);
+                                       LIGMA_CURSOR_PRECISION_PIXEL_CENTER :
+                                       LIGMA_CURSOR_PRECISION_SUBPIXEL);
     }
 }
 
 static void
-gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
+ligma_paint_tool_cursor_notify (LigmaDisplayConfig *config,
                                GParamSpec        *pspec,
-                               GimpPaintTool     *paint_tool)
+                               LigmaPaintTool     *paint_tool)
 {
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
+  ligma_draw_tool_pause (LIGMA_DRAW_TOOL (paint_tool));
 
   paint_tool->show_cursor = config->show_paint_tool_cursor;
   paint_tool->draw_brush  = config->show_brush_outline;
   paint_tool->snap_brush  = config->snap_brush_outline;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
+  ligma_draw_tool_resume (LIGMA_DRAW_TOOL (paint_tool));
 }
 
 void
-gimp_paint_tool_set_active (GimpPaintTool *tool,
+ligma_paint_tool_set_active (LigmaPaintTool *tool,
                             gboolean       active)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
   if (active != tool->active)
     {
-      GimpPaintOptions *options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
+      LigmaPaintOptions *options = LIGMA_PAINT_TOOL_GET_OPTIONS (tool);
 
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      ligma_draw_tool_pause (LIGMA_DRAW_TOOL (tool));
 
       tool->active = active;
 
       if (active)
-        gimp_paint_tool_hard_notify (options, NULL, tool);
+        ligma_paint_tool_hard_notify (options, NULL, tool);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tool));
     }
 }
 
 /**
- * gimp_paint_tool_enable_color_picker:
- * @tool:   a #GimpPaintTool
- * @target: the #GimpColorPickTarget to set
+ * ligma_paint_tool_enable_color_picker:
+ * @tool:   a #LigmaPaintTool
+ * @target: the #LigmaColorPickTarget to set
  *
  * This is a convenience function used from the init method of paint
  * tools that want the color picking functionality. The @mode that is
@@ -1026,48 +1026,48 @@ gimp_paint_tool_set_active (GimpPaintTool *tool,
  * picked color goes to the foreground or background color.
  **/
 void
-gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
-                                     GimpColorPickTarget  target)
+ligma_paint_tool_enable_color_picker (LigmaPaintTool       *tool,
+                                     LigmaColorPickTarget  target)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
   tool->pick_colors = TRUE;
 
-  GIMP_COLOR_TOOL (tool)->pick_target = target;
+  LIGMA_COLOR_TOOL (tool)->pick_target = target;
 }
 
 /**
- * gimp_paint_tool_enable_multi_paint:
- * @tool: a #GimpPaintTool
+ * ligma_paint_tool_enable_multi_paint:
+ * @tool: a #LigmaPaintTool
  *
  * This is a convenience function used from the init method of paint
  * tools that want to allow painting with several drawables.
  **/
 void
-gimp_paint_tool_enable_multi_paint (GimpPaintTool *tool)
+ligma_paint_tool_enable_multi_paint (LigmaPaintTool *tool)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
   tool->can_multi_paint = TRUE;
 }
 
 void
-gimp_paint_tool_set_draw_fallback (GimpPaintTool *tool,
+ligma_paint_tool_set_draw_fallback (LigmaPaintTool *tool,
                                    gboolean       draw_fallback,
                                    gint           fallback_size)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
   tool->draw_fallback = draw_fallback;
   tool->fallback_size = fallback_size;
 }
 
 void
-gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
+ligma_paint_tool_set_draw_circle (LigmaPaintTool *tool,
                                  gboolean       draw_circle,
                                  gint           circle_size)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
   tool->draw_circle = draw_circle;
   tool->circle_size = circle_size;
@@ -1075,7 +1075,7 @@ gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
 
 
 /**
- * gimp_paint_tool_force_draw:
+ * ligma_paint_tool_force_draw:
  * @tool:
  * @force:
  *
@@ -1085,14 +1085,14 @@ gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
  * visual feedback, temporarily bypassing the user setting.
  */
 void
-gimp_paint_tool_force_draw (GimpPaintTool *tool,
+ligma_paint_tool_force_draw (LigmaPaintTool *tool,
                             gboolean       force)
 {
-  GimpDisplayConfig *display_config;
+  LigmaDisplayConfig *display_config;
 
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (tool));
 
-  display_config = GIMP_DISPLAY_CONFIG (GIMP_TOOL (tool)->tool_info->gimp->config);
+  display_config = LIGMA_DISPLAY_CONFIG (LIGMA_TOOL (tool)->tool_info->ligma->config);
 
   if (force)
     tool->draw_brush = TRUE;

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,10 +29,10 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "presets.h"
 
 #include "color.h"
@@ -42,10 +42,10 @@
 #include "size.h"
 
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
+#include "libligmabase/ligmawin32-io.h"
 #endif
 
 #define PRESETMAGIC "Preset"
@@ -65,7 +65,7 @@ can_delete_preset (const gchar *abs)
   gchar *user_data_dir;
   gboolean ret;
 
-  user_data_dir = g_strconcat (gimp_directory (),
+  user_data_dir = g_strconcat (ligma_directory (),
                                G_DIR_SEPARATOR_S,
                                NULL);
 
@@ -247,7 +247,7 @@ load_old_preset (const gchar *fname)
   if (!f)
     {
       g_printerr ("Error opening file \"%s\" for reading!\n",
-                  gimp_filename_to_utf8 (fname));
+                  ligma_filename_to_utf8 (fname));
       return -1;
     }
   len = fread (&pcvals, 1, sizeof (pcvals), f);
@@ -429,7 +429,7 @@ set_values (const gchar *key, const gchar *val)
   else if (!strcmp (key, "color"))
     {
       char *c = parse_rgb_string (val);
-      gimp_rgba_set_uchar (&pcvals.color, c[0], c[1], c[2], 255);
+      ligma_rgba_set_uchar (&pcvals.color, c[0], c[1], c[2], 255);
     }
 
   else if (!strcmp (key, "numorientvector"))
@@ -468,7 +468,7 @@ load_preset (const gchar *fn)
   if (!f)
     {
       g_printerr ("Error opening file \"%s\" for reading!\n",
-                  gimp_filename_to_utf8 (fn));
+                  ligma_filename_to_utf8 (fn));
       return -1;
     }
   fgets (line, 10, f);
@@ -635,16 +635,16 @@ create_save_preset (GtkWidget *parent)
       return;
     }
 
-  window = gimp_dialog_new (_("Save Current"), PLUG_IN_ROLE,
+  window = ligma_dialog_new (_("Save Current"), PLUG_IN_ROLE,
                             gtk_widget_get_toplevel (parent), 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -712,7 +712,7 @@ save_preset (void)
       return;
     }
 
-  /* Create the ~/.gimp-$VER/gimpressionist/Presets directory if
+  /* Create the ~/.ligma-$VER/ligmaressionist/Presets directory if
    * it doesn't already exists.
    *
    */
@@ -728,7 +728,7 @@ save_preset (void)
                    S_IROTH | S_IXOTH) == -1)
         {
           g_printerr ("Error creating folder \"%s\"!\n",
-                      gimp_filename_to_utf8 (presets_dir_path));
+                      ligma_filename_to_utf8 (presets_dir_path));
           g_free (presets_dir_path);
           return;
         }
@@ -762,7 +762,7 @@ save_preset (void)
   if (!f)
     {
       g_printerr ("Error opening file \"%s\" for writing!\n",
-                  gimp_filename_to_utf8 (fname));
+                  ligma_filename_to_utf8 (fname));
       g_free (fname);
       return;
     }
@@ -820,7 +820,7 @@ save_preset (void)
   fprintf (f, "selectedbrush=%s\n", pcvals.selected_brush);
   fprintf (f, "selectedpaper=%s\n", pcvals.selected_paper);
 
-  gimp_rgb_get_uchar (&pcvals.color, &color[0], &color[1], &color[2]);
+  ligma_rgb_get_uchar (&pcvals.color, &color[0], &color[1], &color[2]);
   fprintf (f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
 
   fprintf (f, "placetype=%d\n", pcvals.place_type);
@@ -890,7 +890,7 @@ read_description (const char *fn)
       if (!strcmp (fn, factory_defaults))
         {
           gtk_widget_set_sensitive (delete_button, FALSE);
-          set_preset_description_text (_("Gimpressionist Defaults"));
+          set_preset_description_text (_("Ligmaressionist Defaults"));
         }
       else
         {
@@ -1028,12 +1028,12 @@ create_presetpage (GtkNotebook *notebook)
 
   presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
   gtk_button_set_image (GTK_BUTTON (presetsavebutton),
-                        gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_SAVE,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_DOCUMENT_SAVE,
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (create_save_preset), NULL);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -1061,23 +1061,23 @@ create_presetpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (apply_preset), selection);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
   tmpw = delete_button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_preset), selection);
-  gimp_help_set_help_data (tmpw, _("Deletes the selected Preset"), NULL);
+  ligma_help_set_help_data (tmpw, _("Deletes the selected Preset"), NULL);
 
   tmpw = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (preset_refresh_presets), NULL);
-  gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
+  ligma_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new (NULL);
-  gimp_label_set_attributes (GTK_LABEL (tmpw),
+  ligma_label_set_attributes (GTK_LABEL (tmpw),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_label_set_line_wrap (GTK_LABEL (tmpw), TRUE);

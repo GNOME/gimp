@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorselect.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolorselect.h
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on color_notebook module
  * Copyright (C) 1998 Austin Donnelly <austin@greenend.org.uk>
@@ -22,20 +22,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_SELECT_H__
-#define __GIMP_COLOR_SELECT_H__
+#ifndef __LIGMA_COLOR_SELECT_H__
+#define __LIGMA_COLOR_SELECT_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_SELECT            (gimp_color_select_get_type ())
-#define GIMP_COLOR_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECT, GimpColorSelect))
-#define GIMP_IS_COLOR_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECT))
+#define LIGMA_TYPE_COLOR_SELECT            (ligma_color_select_get_type ())
+#define LIGMA_COLOR_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_SELECT, LigmaColorSelect))
+#define LIGMA_IS_COLOR_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_SELECT))
 
 
-GType   gimp_color_select_get_type (void) G_GNUC_CONST;
+GType   ligma_color_select_get_type (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_SELECT_H__ */
+#endif /* __LIGMA_COLOR_SELECT_H__ */

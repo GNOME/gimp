@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * PostScript file plugin
  * PostScript writing and GhostScript interfacing code
@@ -9,7 +9,7 @@
  *   George White <aa056@chebucto.ns.ca>
  *
  * Added Ascii85 encoding
- *   Austin Donnelly <austin@gimp.org>
+ *   Austin Donnelly <austin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,10 +82,10 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include <ghostscript/ierrors.h>
 #include <ghostscript/iapi.h>
@@ -101,7 +101,7 @@ static const gchar dversion[] = "v1.17  19-Sep-2004";
 #define SAVE_PS_PROC       "file-ps-save"
 #define SAVE_EPS_PROC      "file-eps-save"
 #define PLUG_IN_BINARY     "file-ps"
-#define PLUG_IN_ROLE       "gimp-file-ps"
+#define PLUG_IN_ROLE       "ligma-file-ps"
 
 #define STR_LENGTH     64
 #define MIN_RESOLUTION 5
@@ -138,12 +138,12 @@ typedef struct _PostScriptClass PostScriptClass;
 
 struct _PostScript
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PostScriptClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -152,44 +152,44 @@ struct _PostScriptClass
 
 GType                   ps_get_type         (void) G_GNUC_CONST;
 
-static GList          * ps_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ps_create_procedure (GimpPlugIn           *plug_in,
+static GList          * ps_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * ps_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * ps_load             (GimpProcedure        *procedure,
-                                             GimpRunMode           run_mode,
+static LigmaValueArray * ps_load             (LigmaProcedure        *procedure,
+                                             LigmaRunMode           run_mode,
                                              GFile                *file,
-                                             const GimpValueArray *args,
+                                             const LigmaValueArray *args,
                                              gpointer              run_data);
-static GimpValueArray * ps_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * ps_load_thumb       (LigmaProcedure        *procedure,
                                              GFile                *file,
                                              gint                  size,
-                                             const GimpValueArray *args,
+                                             const LigmaValueArray *args,
                                              gpointer              run_data);
-static GimpValueArray * ps_save             (GimpProcedure        *procedure,
-                                             GimpRunMode           run_mode,
-                                             GimpImage            *image,
+static LigmaValueArray * ps_save             (LigmaProcedure        *procedure,
+                                             LigmaRunMode           run_mode,
+                                             LigmaImage            *image,
                                              gint                  n_drawables,
-                                             GimpDrawable        **drawables,
+                                             LigmaDrawable        **drawables,
                                              GFile                *file,
-                                             const GimpValueArray *args,
+                                             const LigmaValueArray *args,
                                              gpointer              run_data);
 
-static GimpImage      * load_image          (GFile                *file,
+static LigmaImage      * load_image          (GFile                *file,
                                              GError              **error);
 static gboolean         save_image          (GFile                *file,
-                                             GimpImage            *image,
-                                             GimpDrawable         *drawable,
+                                             LigmaImage            *image,
+                                             LigmaDrawable         *drawable,
                                              GError              **error);
 
 static void      ps_set_save_size (PSSaveVals        *vals,
-                                   GimpImage         *image);
+                                   LigmaImage         *image);
 
 static gboolean  save_ps_header   (GOutputStream     *output,
                                    GFile             *file,
                                    GError           **error);
 static gboolean  save_ps_setup    (GOutputStream     *output,
-                                   GimpDrawable      *drawable,
+                                   LigmaDrawable      *drawable,
                                    gint               width,
                                    gint               height,
                                    gint               bpp,
@@ -198,24 +198,24 @@ static gboolean  save_ps_trailer  (GOutputStream     *output,
                                    GError           **error);
 
 static gboolean  save_ps_preview  (GOutputStream     *output,
-                                   GimpDrawable      *drawable,
+                                   LigmaDrawable      *drawable,
                                    GError           **error);
 
 static gboolean  save_gray        (GOutputStream     *output,
-                                   GimpImage         *image,
-                                   GimpDrawable      *drawable,
+                                   LigmaImage         *image,
+                                   LigmaDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_bw          (GOutputStream     *output,
-                                   GimpImage         *image,
-                                   GimpDrawable      *drawable,
+                                   LigmaImage         *image,
+                                   LigmaDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_index       (GOutputStream     *output,
-                                   GimpImage         *image,
-                                   GimpDrawable      *drawable,
+                                   LigmaImage         *image,
+                                   LigmaDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_rgb         (GOutputStream     *output,
-                                   GimpImage         *image,
-                                   GimpDrawable      *drawable,
+                                   LigmaImage         *image,
+                                   LigmaDrawable      *drawable,
                                    GError           **error);
 
 static gboolean  print            (GOutputStream     *output,
@@ -223,12 +223,12 @@ static gboolean  print            (GOutputStream     *output,
                                    const gchar       *format,
                                    ...) G_GNUC_PRINTF (3, 4);
 
-static GimpImage * create_new_image (GFile             *file,
+static LigmaImage * create_new_image (GFile             *file,
                                      guint              pagenum,
                                      guint              width,
                                      guint              height,
-                                     GimpImageBaseType  type,
-                                     GimpLayer        **layer);
+                                     LigmaImageBaseType  type,
+                                     LigmaLayer        **layer);
 
 static void      check_load_vals  (void);
 static void      check_save_vals  (void);
@@ -256,7 +256,7 @@ static void      ps_close         (FILE              *ifp,
 
 static gboolean  skip_ps          (FILE              *ifp);
 
-static GimpImage * load_ps        (GFile             *file,
+static LigmaImage * load_ps        (GFile             *file,
                                    guint              pagenum,
                                    FILE              *ifp,
                                    gint               llx,
@@ -291,9 +291,9 @@ static void      save_unit_toggle_update  (GtkWidget *widget,
                                            gpointer   data);
 
 
-G_DEFINE_TYPE (PostScript, ps, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (PostScript, ps, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PS_TYPE)
+LIGMA_MAIN (PS_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -331,13 +331,13 @@ static PSSaveVals psvals =
 static const char hex[] = "0123456789abcdef";
 
 /* The run mode */
-static GimpRunMode l_run_mode;
+static LigmaRunMode l_run_mode;
 
 
 static void
 ps_class_init (PostScriptClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = ps_query_procedures;
   plug_in_class->create_procedure = ps_create_procedure;
@@ -350,7 +350,7 @@ ps_init (PostScript *ps)
 }
 
 static GList *
-ps_query_procedures (GimpPlugIn *plug_in)
+ps_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -363,121 +363,121 @@ ps_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-ps_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+ps_create_procedure (LigmaPlugIn  *plug_in,
                      const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PS_PROC) ||
       ! strcmp (name, LOAD_EPS_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
         {
-          gimp_procedure_set_menu_label (procedure, _("PostScript document"));
+          ligma_procedure_set_menu_label (procedure, _("PostScript document"));
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             "Load PostScript documents",
                                             "Load PostScript documents",
                                             name);
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               "application/postscript");
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               "ps");
-          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                           "0,string,%!,0,long,0xc5d0d3c6");
         }
       else
         {
-          gimp_procedure_set_menu_label (procedure,
+          ligma_procedure_set_menu_label (procedure,
                                          _("Encapsulated PostScript image"));
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             "load Encapsulated PostScript images",
                                             "load Encapsulated PostScript images",
                                             name);
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               "image/x-eps");
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               "eps");
-          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                           "0,string,%!,0,long,0xc5d0d3c6");
         }
 
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner <peter@kirchgessner.net>",
                                       "Peter Kirchgessner",
                                       dversion);
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_PS_THUMB_PROC);
 
-      GIMP_PROC_ARG_INT (procedure, "resolution",
+      LIGMA_PROC_ARG_INT (procedure, "resolution",
                          "Resolution",
                          "Resolution to interpret image (dpi)",
                          MIN_RESOLUTION, MAX_RESOLUTION, 100,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "width",
+      LIGMA_PROC_ARG_INT (procedure, "width",
                          "Width",
                          "Desired width",
-                         1, GIMP_MAX_IMAGE_SIZE, 826,
-                         GIMP_PARAM_READWRITE);
+                         1, LIGMA_MAX_IMAGE_SIZE, 826,
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "height",
+      LIGMA_PROC_ARG_INT (procedure, "height",
                          "Height",
                          "Desired height",
-                         1, GIMP_MAX_IMAGE_SIZE, 1170,
-                         GIMP_PARAM_READWRITE);
+                         1, LIGMA_MAX_IMAGE_SIZE, 1170,
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "check-bbox",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "check-bbox",
                              "Check bbox",
                              "FALSE: Use width/height, TRUE: Use BoundingBox",
                              TRUE,
-                             GIMP_PARAM_READWRITE);
+                             LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "pages",
+      LIGMA_PROC_ARG_STRING (procedure, "pages",
                             "Pages",
                             "Pages to load (e.g.: 1,3,5-7)",
                             "1",
-                            GIMP_PARAM_READWRITE);
+                            LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "coloring",
+      LIGMA_PROC_ARG_INT (procedure, "coloring",
                          "Coloring",
                          "4: b/w, 5: grey, 6: color image, 7: automatic",
                          4, 7, 6,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "text-alpha-bits",
+      LIGMA_PROC_ARG_INT (procedure, "text-alpha-bits",
                          "Text alpha bits",
                          "1, 2 or 4",
                          1, 4, 1,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "graphoc-alpha-bits",
+      LIGMA_PROC_ARG_INT (procedure, "graphoc-alpha-bits",
                          "Graphic alpha bits",
                          "1, 2 or 4",
                          1, 4, 1,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_PS_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 ps_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads a small preview from a "
                                         "PostScript or PDF document",
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner <peter@kirchgessner.net>",
                                       "Peter Kirchgessner",
                                       dversion);
@@ -485,32 +485,32 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, SAVE_PS_PROC) ||
            ! strcmp (name, SAVE_EPS_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ps_save, NULL, NULL);
 
       if (! strcmp (name, SAVE_PS_PROC))
         {
-          gimp_procedure_set_menu_label (procedure, _("PostScript document"));
+          ligma_procedure_set_menu_label (procedure, _("PostScript document"));
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             "Export image as PostScript document",
                                             "PostScript exporting handles all "
                                             "image types except those with alpha "
                                             "channels.",
                                             name);
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               "application/postscript");
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               "ps");
         }
       else
         {
-          gimp_procedure_set_menu_label (procedure,
+          ligma_procedure_set_menu_label (procedure,
                                          _("Encapsulated PostScript image"));
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             "Export image as Encapsulated "
                                             "PostScript image",
                                             "PostScript exporting handles all "
@@ -518,80 +518,80 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                             "channels.",
                                             name);
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               "application/x-eps");
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               "eps");
         }
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner <peter@kirchgessner.net>",
                                       "Peter Kirchgessner",
                                       dversion);
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "width",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "width",
                             "Width",
                             "Width of the image in PostScript file "
                             "(0: use input image size)",
-                            0, GIMP_MAX_IMAGE_SIZE, 0,
+                            0, LIGMA_MAX_IMAGE_SIZE, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "height",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "height",
                             "Height",
                             "Height of the image in PostScript file "
                             "(0: use input image size)",
-                            0, GIMP_MAX_IMAGE_SIZE, 0,
+                            0, LIGMA_MAX_IMAGE_SIZE, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "x-offset",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "x-offset",
                             "X offset",
                             "X-offset to image from lower left corner",
-                            -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                            -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "y-offset",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "y-offset",
                             "Y offset",
                             "Y-offset to image from lower left corner",
-                            -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                            -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "unit",
+      LIGMA_PROC_ARG_INT (procedure, "unit",
                          "Unit",
                          "Unit for width/height/offset. "
                          "0: inches, 1: millimeters",
                          0, 1, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "keep-ratio",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "keep-ratio",
                              "Keep ratio",
                              "FALSE: use width/height, TRUE: keep aspect ratio",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "rotation",
+      LIGMA_PROC_ARG_INT (procedure, "rotation",
                          "Rotation",
                          "0, 90, 180, 270",
                          0, 270, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "eps-flag",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "eps-flag",
                              "EPG flag",
                              "FALSE: PostScript, TRUE: Encapsulated PostScript",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "preview",
+      LIGMA_PROC_ARG_INT (procedure, "preview",
                          "Preview",
                          "0: no preview, >0: max. size of preview",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "level",
+      LIGMA_PROC_ARG_INT (procedure, "level",
                          "Level",
                          "1: PostScript Level 1, 2: PostScript Level 2",
                          1, 2, 2,
@@ -601,15 +601,15 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-ps_load (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
+static LigmaValueArray *
+ps_load (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
          GFile                *file,
-         const GimpValueArray *args,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -618,33 +618,33 @@ ps_load (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (LOAD_PS_PROC, &plvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (LOAD_PS_PROC, &plvals);
 
       if (! load_dialog (file))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      plvals.resolution = GIMP_VALUES_GET_INT     (args, 0);
-      plvals.width      = GIMP_VALUES_GET_INT     (args, 1);
-      plvals.height     = GIMP_VALUES_GET_INT     (args, 2);
-      plvals.use_bbox   = GIMP_VALUES_GET_BOOLEAN (args, 3);
-      if (GIMP_VALUES_GET_STRING (args, 4))
+    case LIGMA_RUN_NONINTERACTIVE:
+      plvals.resolution = LIGMA_VALUES_GET_INT     (args, 0);
+      plvals.width      = LIGMA_VALUES_GET_INT     (args, 1);
+      plvals.height     = LIGMA_VALUES_GET_INT     (args, 2);
+      plvals.use_bbox   = LIGMA_VALUES_GET_BOOLEAN (args, 3);
+      if (LIGMA_VALUES_GET_STRING (args, 4))
         g_strlcpy (plvals.pages,
-                   GIMP_VALUES_GET_STRING (args, 4),
+                   LIGMA_VALUES_GET_STRING (args, 4),
                    sizeof (plvals.pages));
       else
         plvals.pages[0] = '\0';
-      plvals.pnm_type      = GIMP_VALUES_GET_INT (args, 5);
-      plvals.textalpha     = GIMP_VALUES_GET_INT (args, 6);
-      plvals.graphicsalpha = GIMP_VALUES_GET_INT (args, 7);
+      plvals.pnm_type      = LIGMA_VALUES_GET_INT (args, 5);
+      plvals.textalpha     = LIGMA_VALUES_GET_INT (args, 6);
+      plvals.graphicsalpha = LIGMA_VALUES_GET_INT (args, 7);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (LOAD_PS_PROC, &plvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (LOAD_PS_PROC, &plvals);
       break;
 
     default:
@@ -656,30 +656,30 @@ ps_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
+  ligma_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ps_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+ps_load_thumb (LigmaProcedure        *procedure,
                GFile                *file,
                gint                  size,
-               const GimpValueArray *args,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -698,57 +698,57 @@ ps_load_thumb (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
-  gimp_value_array_truncate (return_vals, 2);
+  ligma_value_array_truncate (return_vals, 2);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ps_save (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
+static LigmaValueArray *
+ps_save (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
+         LigmaImage            *image,
          gint                  n_drawables,
-         GimpDrawable        **drawables,
+         LigmaDrawable        **drawables,
          GFile                *file,
-         const GimpValueArray *args,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GimpImage         *orig_image;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export = LIGMA_EXPORT_CANCEL;
+  LigmaImage         *orig_image;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  psvals.eps = strcmp (gimp_procedure_get_name (procedure), SAVE_PS_PROC);
+  psvals.eps = strcmp (ligma_procedure_get_name (procedure), SAVE_PS_PROC);
 
   orig_image = image;
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables,
+      export = ligma_export_image (&image, &n_drawables, &drawables,
                                   psvals.eps ? "EPS" : "PostScript",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -761,45 +761,45 @@ ps_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("PostScript plug-in does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (gimp_procedure_get_name (procedure), &psvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (ligma_procedure_get_name (procedure), &psvals);
 
       ps_set_save_size (&psvals, orig_image);
 
       if (! save_dialog ())
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      psvals.width        = GIMP_VALUES_GET_DOUBLE  (args, 0);
-      psvals.height       = GIMP_VALUES_GET_DOUBLE  (args, 1);
-      psvals.x_offset     = GIMP_VALUES_GET_DOUBLE  (args, 2);
-      psvals.y_offset     = GIMP_VALUES_GET_DOUBLE  (args, 3);
-      psvals.unit_mm      = GIMP_VALUES_GET_INT     (args, 4);
-      psvals.keep_ratio   = GIMP_VALUES_GET_BOOLEAN (args, 5);
-      psvals.rotate       = GIMP_VALUES_GET_INT     (args, 6);
-      psvals.eps          = GIMP_VALUES_GET_INT     (args, 7);
-      psvals.preview_size = GIMP_VALUES_GET_INT     (args, 8);
+    case LIGMA_RUN_NONINTERACTIVE:
+      psvals.width        = LIGMA_VALUES_GET_DOUBLE  (args, 0);
+      psvals.height       = LIGMA_VALUES_GET_DOUBLE  (args, 1);
+      psvals.x_offset     = LIGMA_VALUES_GET_DOUBLE  (args, 2);
+      psvals.y_offset     = LIGMA_VALUES_GET_DOUBLE  (args, 3);
+      psvals.unit_mm      = LIGMA_VALUES_GET_INT     (args, 4);
+      psvals.keep_ratio   = LIGMA_VALUES_GET_BOOLEAN (args, 5);
+      psvals.rotate       = LIGMA_VALUES_GET_INT     (args, 6);
+      psvals.eps          = LIGMA_VALUES_GET_INT     (args, 7);
+      psvals.preview_size = LIGMA_VALUES_GET_INT     (args, 8);
       psvals.preview      = psvals.preview_size != 0;
-      psvals.level        = GIMP_VALUES_GET_INT     (args, 9);
+      psvals.level        = LIGMA_VALUES_GET_INT     (args, 9);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (gimp_procedure_get_name (procedure), &psvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (ligma_procedure_get_name (procedure), &psvals);
       break;
 
     default:
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if ((psvals.width == 0.0) || (psvals.height == 0.0))
         ps_set_save_size (&psvals, orig_image);
@@ -808,22 +808,22 @@ ps_save (GimpProcedure        *procedure,
 
       if (save_image (file, image, drawables[0], &error))
         {
-          gimp_set_data (gimp_procedure_get_name (procedure),
+          ligma_set_data (ligma_procedure_get_name (procedure),
                          &psvals, sizeof (PSSaveVals));
         }
       else
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 
@@ -836,7 +836,7 @@ static guint32  ascii85_buf       = 0;
 static gint     ascii85_len       = 0;
 static gint     ascii85_linewidth = 0;
 
-static GimpPageSelectorTarget ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+static LigmaPageSelectorTarget ps_pagemode = LIGMA_PAGE_SELECTOR_TARGET_LAYERS;
 
 static void
 ascii85_init (void)
@@ -1112,12 +1112,12 @@ ps_end_data (GOutputStream  *output,
   return TRUE;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
-  GimpImage    *image = NULL;
-  GimpImage   **image_list, **nl;
+  LigmaImage    *image = NULL;
+  LigmaImage   **image_list, **nl;
   const gchar  *filename;
   guint         page_count;
   FILE         *ifp;
@@ -1137,18 +1137,18 @@ load_image (GFile   *file,
   g_print (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
 #endif
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* Try to see if PostScript file is available */
-  filename = gimp_file_get_utf8_name (file);
+  filename = ligma_file_get_utf8_name (file);
   ifp = g_fopen (filename, "r");
 
   if (! ifp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
   fclose (ifp);
@@ -1158,11 +1158,11 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
                    _("Could not interpret PostScript file '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
-  image_list = g_new (GimpImage *, 10);
+  image_list = g_new (LigmaImage *, 10);
   n_images = 0;
   max_images = 10;
 
@@ -1204,14 +1204,14 @@ load_image (GFile   *file,
           if (! image)
             break;
 
-          gimp_image_set_resolution (image,
+          ligma_image_set_resolution (image,
                                      (gdouble) plvals.resolution,
                                      (gdouble) plvals.resolution);
 
           if (n_images == max_images)
             {
-              nl = (GimpImage **) g_realloc (image_list,
-                                             (max_images+10)*sizeof (GimpImage *));
+              nl = (LigmaImage **) g_realloc (image_list,
+                                             (max_images+10)*sizeof (LigmaImage *));
               if (nl == NULL) break;
               image_list = nl;
               max_images += 10;
@@ -1229,29 +1229,29 @@ load_image (GFile   *file,
   ps_close (ifp, tmp_filename);
 
   /* EPS are now imported using pngalpha, so they can be converted
-   * to a layer with gimp_layer_new_from_pixbuf () and exported at
+   * to a layer with ligma_layer_new_from_pixbuf () and exported at
    * this part of the loading process
    */
   if (is_epsf)
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
 
-      image = gimp_image_new (urx, ury, GIMP_RGB);
+      image = ligma_image_new (urx, ury, LIGMA_RGB);
 
-      gimp_image_undo_disable (image);
+      ligma_image_undo_disable (image);
 
-      gimp_image_set_file (image, file);
-      gimp_image_set_resolution (image,
+      ligma_image_set_file (image, file);
+      ligma_image_set_resolution (image,
                                  plvals.resolution,
                                  plvals.resolution);
 
-      layer = gimp_layer_new_from_pixbuf (image, _("Rendered EPS"), pixbuf,
+      layer = ligma_layer_new_from_pixbuf (image, _("Rendered EPS"), pixbuf,
                                           100,
-                                          gimp_image_get_default_new_layer_mode (image),
+                                          ligma_image_get_default_new_layer_mode (image),
                                           0.0, 1.0);
-      gimp_image_insert_layer (image, layer, NULL, 0);
+      ligma_image_insert_layer (image, layer, NULL, 0);
 
-      gimp_image_undo_enable (image);
+      ligma_image_undo_enable (image);
 
       g_free (image_list);
       g_object_unref (pixbuf);
@@ -1259,7 +1259,7 @@ load_image (GFile   *file,
       return image;
     }
 
-  if (ps_pagemode == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
+  if (ps_pagemode == LIGMA_PAGE_SELECTOR_TARGET_LAYERS)
     {
       for (k = 0; k < n_images; k++)
         {
@@ -1279,44 +1279,44 @@ load_image (GFile   *file,
               new_file = g_file_new_for_uri (new_uri);
               g_free (new_uri);
 
-              gimp_image_set_file (image, new_file);
+              ligma_image_set_file (image, new_file);
               g_object_unref (new_file);
             }
           else
             {
-              GimpLayer     *current_layer;
+              LigmaLayer     *current_layer;
               gchar         *name;
-              GimpDrawable **tmp_drawables;
+              LigmaDrawable **tmp_drawables;
               gint           n_drawables;
 
-              tmp_drawables = gimp_image_get_selected_drawables (image_list[k], &n_drawables);
+              tmp_drawables = ligma_image_get_selected_drawables (image_list[k], &n_drawables);
 
-              name = gimp_item_get_name (GIMP_ITEM (tmp_drawables[0]));
+              name = ligma_item_get_name (LIGMA_ITEM (tmp_drawables[0]));
 
-              current_layer = gimp_layer_new_from_drawable (tmp_drawables[0], image);
-              gimp_item_set_name (GIMP_ITEM (current_layer), name);
-              gimp_image_insert_layer (image, current_layer, NULL, -1);
-              gimp_image_delete (image_list[k]);
+              current_layer = ligma_layer_new_from_drawable (tmp_drawables[0], image);
+              ligma_item_set_name (LIGMA_ITEM (current_layer), name);
+              ligma_image_insert_layer (image, current_layer, NULL, -1);
+              ligma_image_delete (image_list[k]);
 
               g_free (tmp_drawables);
               g_free (name);
             }
         }
 
-      gimp_image_undo_enable (image);
+      ligma_image_undo_enable (image);
     }
   else
     {
       /* Display images in reverse order.
-       * The last will be displayed by GIMP itself
+       * The last will be displayed by LIGMA itself
        */
       for (k = n_images - 1; k >= 0; k--)
         {
-          gimp_image_undo_enable (image_list[k]);
-          gimp_image_clean_all (image_list[k]);
+          ligma_image_undo_enable (image_list[k]);
+          ligma_image_clean_all (image_list[k]);
 
-          if (l_run_mode != GIMP_RUN_NONINTERACTIVE && k > 0)
-            gimp_display_new (image_list[k]);
+          if (l_run_mode != LIGMA_RUN_NONINTERACTIVE && k > 0)
+            ligma_display_new (image_list[k]);
         }
 
       image = (n_images > 0) ? image_list[0] : NULL;
@@ -1330,18 +1330,18 @@ load_image (GFile   *file,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GError       **error)
 {
   GOutputStream *output;
   GCancellable  *cancellable;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("PostScript export cannot handle images with alpha channels"));
@@ -1350,9 +1350,9 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_GRAY_IMAGE:
-    case GIMP_RGB_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_GRAY_IMAGE:
+    case LIGMA_RGB_IMAGE:
       break;
 
     default:
@@ -1362,8 +1362,8 @@ save_image (GFile         *file,
       break;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -1387,17 +1387,17 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       if (! save_index (output, image, drawable, error))
         goto fail;
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       if (! save_gray (output, image, drawable, error))
         goto fail;
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       if (! save_rgb (output, image, drawable, error))
         goto fail;
       break;
@@ -1471,25 +1471,25 @@ check_save_vals (void)
 
 static void
 ps_set_save_size (PSSaveVals *vals,
-                  GimpImage  *image)
+                  LigmaImage  *image)
 {
   gdouble  xres, yres, factor, iw, ih;
   guint    width, height;
-  GimpUnit unit;
+  LigmaUnit unit;
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   if ((xres < 1e-5) || (yres < 1e-5))
     xres = yres = 72.0;
 
   /* Calculate size of image in inches */
-  width  = gimp_image_get_width (image);
-  height = gimp_image_get_height (image);
+  width  = ligma_image_get_width (image);
+  height = ligma_image_get_height (image);
   iw = width  / xres;
   ih = height / yres;
 
-  unit = gimp_image_get_unit (image);
-  factor = gimp_unit_get_factor (unit);
+  unit = ligma_image_get_unit (image);
+  factor = ligma_unit_get_factor (unit);
 
   if (factor == 0.0254 ||
       factor == 0.254 ||
@@ -1767,7 +1767,7 @@ ps_open (GFile            *file,
   /* Check if it is a EPS-file */
   *is_epsf = FALSE;
 
-  filename = gimp_file_get_utf8_name (file);
+  filename = ligma_file_get_utf8_name (file);
 
   eps_file = g_fopen (filename, "rb");
 
@@ -1857,11 +1857,11 @@ ps_open (GFile            *file,
   if (*is_epsf)
     {
       driver = "pngalpha";
-      *tmp_filename = g_file_get_path (gimp_temp_file ("png"));
+      *tmp_filename = g_file_get_path (ligma_temp_file ("png"));
     }
   else
     {
-      *tmp_filename = g_file_get_path (gimp_temp_file ("pnm"));
+      *tmp_filename = g_file_get_path (ligma_temp_file ("pnm"));
     }
 
   /* Build command array */
@@ -2034,16 +2034,16 @@ read_pnmraw_type (FILE *ifp,
 
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
-static GimpImage *
+static LigmaImage *
 create_new_image (GFile              *file,
                   guint               pagenum,
                   guint               width,
                   guint               height,
-                  GimpImageBaseType   type,
-                  GimpLayer         **layer)
+                  LigmaImageBaseType   type,
+                  LigmaLayer         **layer)
 {
-  GimpImage     *image;
-  GimpImageType  gdtype;
+  LigmaImage     *image;
+  LigmaImageType  gdtype;
   GFile         *new_file;
   gchar         *uri;
   gchar         *new_uri;
@@ -2051,20 +2051,20 @@ create_new_image (GFile              *file,
 
   switch (type)
     {
-    case GIMP_GRAY:
-      gdtype = GIMP_GRAY_IMAGE;
+    case LIGMA_GRAY:
+      gdtype = LIGMA_GRAY_IMAGE;
       break;
-    case GIMP_INDEXED:
-      gdtype = GIMP_INDEXED_IMAGE;
+    case LIGMA_INDEXED:
+      gdtype = LIGMA_INDEXED_IMAGE;
       break;
-    case GIMP_RGB:
+    case LIGMA_RGB:
     default:
-      gdtype = GIMP_RGB_IMAGE;
+      gdtype = LIGMA_RGB_IMAGE;
     }
 
-  image = gimp_image_new_with_precision (width, height, type,
-                                         GIMP_PRECISION_U8_NON_LINEAR);
-  gimp_image_undo_disable (image);
+  image = ligma_image_new_with_precision (width, height, type,
+                                         LIGMA_PRECISION_U8_NON_LINEAR);
+  ligma_image_undo_disable (image);
 
   uri = g_file_get_uri (file);
 
@@ -2074,17 +2074,17 @@ create_new_image (GFile              *file,
   new_file = g_file_new_for_uri (new_uri);
   g_free (new_uri);
 
-  gimp_image_set_file (image, new_file);
+  ligma_image_set_file (image, new_file);
   g_object_unref (new_file);
 
   tmp = g_strdup_printf (_("Page %d"), pagenum);
-  *layer = gimp_layer_new (image, tmp, width, height,
+  *layer = ligma_layer_new (image, tmp, width, height,
                            gdtype,
                            100,
-                           gimp_image_get_default_new_layer_mode (image));
+                           ligma_image_get_default_new_layer_mode (image));
   g_free (tmp);
 
-  gimp_image_insert_layer (image, *layer, NULL, 0);
+  ligma_image_insert_layer (image, *layer, NULL, 0);
 
   return image;
 }
@@ -2126,7 +2126,7 @@ skip_ps (FILE *ifp)
 
 
 /* Load PNM image generated from PostScript file */
-static GimpImage *
+static LigmaImage *
 load_ps (GFile *file,
          guint  pagenum,
          FILE  *ifp,
@@ -2142,9 +2142,9 @@ load_ps (GFile *file,
   int     image_width, image_height;
   int     skip_left, skip_bottom;
   int     i, j, pnmtype, maxval, bpp, nread;
-  GimpImageBaseType imagetype;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImageBaseType imagetype;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   GeglBuffer *buffer = NULL;
   int         err = 0;
   int         e;
@@ -2165,7 +2165,7 @@ load_ps (GFile *file,
     }
   if (pnmtype == 4)   /* Portable Bitmap */
     {
-      imagetype = GIMP_INDEXED;
+      imagetype = LIGMA_INDEXED;
       nread = (width+7)/8;
       bpp = 1;
       bitline = g_new (guchar, nread);
@@ -2179,14 +2179,14 @@ load_ps (GFile *file,
     }
   else if (pnmtype == 5)  /* Portable Greymap */
     {
-      imagetype = GIMP_GRAY;
+      imagetype = LIGMA_GRAY;
       nread = width;
       bpp = 1;
       byteline = g_new (guchar, nread);
     }
   else if (pnmtype == 6)  /* Portable Pixmap */
     {
-      imagetype = GIMP_RGB;
+      imagetype = LIGMA_RGB;
       nread = width * 3;
       bpp = 3;
       byteline = g_new (guchar, nread);
@@ -2197,9 +2197,9 @@ load_ps (GFile *file,
   image = create_new_image (file, pagenum,
                             image_width, image_height, imagetype,
                             &layer);
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * image_width * bpp);
 
   dest = data;
@@ -2209,7 +2209,7 @@ load_ps (GFile *file,
     {
       const guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
-      gimp_image_set_colormap (image, BWColorMap, 2);
+      ligma_image_set_colormap (image, BWColorMap, 2);
 
       for (i = 0; i < height; i++)
         {
@@ -2251,7 +2251,7 @@ load_ps (GFile *file,
             }
 
           if ((i % 20) == 0)
-            gimp_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
+            ligma_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
 
           if (err)
             break;
@@ -2287,13 +2287,13 @@ load_ps (GFile *file,
             }
 
           if ((i % 20) == 0)
-            gimp_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
+            ligma_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
 
           if (err)
             break;
         }
     }
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_free (data);
   g_free (byteline);
@@ -2314,7 +2314,7 @@ save_ps_header (GOutputStream  *output,
                 GFile          *file,
                 GError        **error)
 {
-  gchar  *basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+  gchar  *basename = g_path_get_basename (ligma_file_get_utf8_name (file));
   time_t  cutime   = time (NULL);
 
   if (! print (output, error,
@@ -2322,7 +2322,7 @@ save_ps_header (GOutputStream  *output,
     goto fail;
 
   if (! print (output, error,
-               "%%%%Creator: GIMP PostScript file plug-in V %4.2f "
+               "%%%%Creator: LIGMA PostScript file plug-in V %4.2f "
                "by Peter Kirchgessner\n", VERSION))
     goto fail;
 
@@ -2355,7 +2355,7 @@ save_ps_header (GOutputStream  *output,
 /* Write out transformation for image */
 static gboolean
 save_ps_setup (GOutputStream  *output,
-               GimpDrawable   *drawable,
+               LigmaDrawable   *drawable,
                gint            width,
                gint            height,
                gint            bpp,
@@ -2612,10 +2612,10 @@ dither_grey (const guchar *grey,
 /* Write a device independent screen preview */
 static gboolean
 save_ps_preview (GOutputStream  *output,
-                 GimpDrawable   *drawable,
+                 LigmaDrawable   *drawable,
                  GError        **error)
 {
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
   const Babl    *format;
   gint           bpp;
@@ -2630,23 +2630,23 @@ save_ps_preview (GOutputStream  *output,
   if (psvals.preview_size <= 0)
     return TRUE;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   cmap = NULL;
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
   switch (drawable_type)
     {
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (gimp_item_get_image (GIMP_ITEM (drawable)),
+    case LIGMA_INDEXED_IMAGE:
+      cmap = ligma_image_get_colormap (ligma_item_get_image (LIGMA_ITEM (drawable)),
                                       &ncols);
-      format = gimp_drawable_get_format (drawable);
+      format = ligma_drawable_get_format (drawable);
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
     default:
       format = babl_format ("R'G'B' u8");
       break;
@@ -2758,10 +2758,10 @@ save_ps_preview (GOutputStream  *output,
         goto fail;
 
       if ((y % 20) == 0)
-        gimp_progress_update ((gdouble) y / (gdouble) height);
+        ligma_progress_update ((gdouble) y / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (! print (output, error, "%%%%EndPreview\n"))
     goto fail;
@@ -2788,8 +2788,8 @@ save_ps_preview (GOutputStream  *output,
 
 static gboolean
 save_gray (GOutputStream  *output,
-           GimpImage      *image,
-           GimpDrawable   *drawable,
+           LigmaImage      *image,
+           LigmaDrawable   *drawable,
            GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -2802,13 +2802,13 @@ save_gray (GOutputStream  *output,
   guchar     *packb = NULL;
   gboolean    level2 = (psvals.level > 1);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   format = babl_format ("Y' u8");
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = (guchar *) g_malloc (tile_height * width * bpp);
@@ -2886,10 +2886,10 @@ save_gray (GOutputStream  *output,
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (level2)
     {
@@ -2928,8 +2928,8 @@ save_gray (GOutputStream  *output,
 
 static gboolean
 save_bw (GOutputStream  *output,
-         GimpImage      *image,
-         GimpDrawable   *drawable,
+         LigmaImage      *image,
+         LigmaDrawable   *drawable,
          GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -2945,15 +2945,15 @@ save_bw (GOutputStream  *output,
   guchar     *hex_scanline;
   gboolean    level2 = (psvals.level > 1);
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = ligma_image_get_colormap (image, &ncols);
 
-  buffer = gimp_drawable_get_buffer (drawable);
-  format = gimp_drawable_get_format (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
+  format = ligma_drawable_get_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = g_new (guchar, tile_height * width * bpp);
@@ -3066,10 +3066,10 @@ save_bw (GOutputStream  *output,
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (level2)
     {
@@ -3112,8 +3112,8 @@ save_bw (GOutputStream  *output,
 
 static gboolean
 save_index (GOutputStream  *output,
-            GimpImage      *image,
-            GimpDrawable   *drawable,
+            LigmaImage      *image,
+            LigmaDrawable   *drawable,
             GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -3129,7 +3129,7 @@ save_index (GOutputStream  *output,
   gchar       coltab[256 * 6], *ct;
   gboolean    level2 = (psvals.level > 1);
 
-  cmap = cmap_start = gimp_image_get_colormap (image, &ncols);
+  cmap = cmap_start = ligma_image_get_colormap (image, &ncols);
 
   ct = coltab;
   bw = 1;
@@ -3157,13 +3157,13 @@ save_index (GOutputStream  *output,
   if (bw)
     return save_bw (output, image, drawable, error);
 
-  buffer = gimp_drawable_get_buffer (drawable);
-  format = gimp_drawable_get_format (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
+  format = ligma_drawable_get_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = (guchar *) g_malloc (tile_height * width * bpp);
@@ -3272,10 +3272,10 @@ save_index (GOutputStream  *output,
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (! ps_end_data (output, error))
     goto fail;
@@ -3306,8 +3306,8 @@ save_index (GOutputStream  *output,
 
 static gboolean
 save_rgb (GOutputStream  *output,
-          GimpImage      *image,
-          GimpDrawable   *drawable,
+          LigmaImage      *image,
+          LigmaDrawable   *drawable,
           GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -3320,13 +3320,13 @@ save_rgb (GOutputStream  *output,
   guchar     *plane = NULL;
   gboolean    level2 = (psvals.level > 1);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   format = babl_format ("R'G'B' u8");
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = g_new (guchar, tile_height * width * bpp);
@@ -3457,10 +3457,10 @@ save_rgb (GOutputStream  *output,
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (! ps_end_data (output, error))
     goto fail;
@@ -3536,7 +3536,7 @@ count_ps_pages (GFile *file)
   if (psfile == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_file_get_utf8_name (file), g_strerror (errno));
+                 ligma_file_get_utf8_name (file), g_strerror (errno));
       return 0;
     }
 
@@ -3579,23 +3579,23 @@ load_dialog (GFile *file)
 
   page_count = count_ps_pages (file);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Import from PostScript"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Import from PostScript"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PS_PROC,
+                            ligma_standard_help_func, LOAD_PS_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_Import"), GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -3605,11 +3605,11 @@ load_dialog (GFile *file)
 
   if (page_count > 1)
     {
-      selector = gimp_page_selector_new ();
+      selector = ligma_page_selector_new ();
       gtk_box_pack_start (GTK_BOX (main_vbox), selector, TRUE, TRUE, 0);
-      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
+      ligma_page_selector_set_n_pages (LIGMA_PAGE_SELECTOR (selector),
                                       page_count);
-      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
+      ligma_page_selector_set_target (LIGMA_PAGE_SELECTOR (selector),
                                      ps_pagemode);
 
       gtk_widget_show (selector);
@@ -3625,7 +3625,7 @@ load_dialog (GFile *file)
   gtk_widget_show (hbox);
 
   /* Rendering */
-  frame = gimp_frame_new (_("Rendering"));
+  frame = ligma_frame_new (_("Rendering"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -3641,9 +3641,9 @@ load_dialog (GFile *file)
   adj = gtk_adjustment_new (plvals.resolution,
                             MIN_RESOLUTION, MAX_RESOLUTION,
                             1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Resolution:"), 0.0, 0.5,
                             spinbutton, 1);
 
@@ -3651,33 +3651,33 @@ load_dialog (GFile *file)
                     G_CALLBACK (resolution_change_callback),
                     &plvals.resolution);
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &plvals.resolution);
 
   adj = gtk_adjustment_new (plvals.width,
-                            1, GIMP_MAX_IMAGE_SIZE,
+                            1, LIGMA_MAX_IMAGE_SIZE,
                             1, 10, 0);
-  ps_width_spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+  ps_width_spinbutton = ligma_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Width:"), 0.0, 0.5,
                             ps_width_spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &plvals.width);
 
   adj = gtk_adjustment_new (plvals.height,
-                            1, GIMP_MAX_IMAGE_SIZE,
+                            1, LIGMA_MAX_IMAGE_SIZE,
                             1, 10, 0);
-  ps_height_spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+  ps_height_spinbutton = ligma_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Height:"), 0.0, 0.5,
                             ps_height_spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &plvals.height);
 
   if (page_count == 0)
@@ -3685,25 +3685,25 @@ load_dialog (GFile *file)
       entry = gtk_entry_new ();
       gtk_widget_set_size_request (entry, 80, -1);
       gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                                 _("Pages:"), 0.0, 0.5,
                                 entry, 1);
 
       g_signal_connect (entry, "changed",
                         G_CALLBACK (load_pages_entry_callback),
                         NULL);
-      gimp_help_set_help_data (GTK_WIDGET (entry),
+      ligma_help_set_help_data (GTK_WIDGET (entry),
                                _("Pages to load (e.g.: 1-4 or 1,3,5-7)"), NULL);
 
       target = gtk_combo_box_text_new ();
       gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (target),
-                                      GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                                      LIGMA_PAGE_SELECTOR_TARGET_LAYERS,
                                       _("Layers"));
       gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (target),
-                                      GIMP_PAGE_SELECTOR_TARGET_IMAGES,
+                                      LIGMA_PAGE_SELECTOR_TARGET_IMAGES,
                                       _("Images"));
       gtk_combo_box_set_active (GTK_COMBO_BOX (target), (int) ps_pagemode);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                                 _("Open as"), 0.0, 0.5,
                                 target, 1);
     }
@@ -3714,15 +3714,15 @@ load_dialog (GFile *file)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &plvals.use_bbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
   /* Coloring */
-  frame = gimp_int_radio_group_new (TRUE, _("Coloring"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Coloring"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &plvals.pnm_type, NULL, plvals.pnm_type,
 
                                     _("B/W"),       4, NULL,
@@ -3739,8 +3739,8 @@ load_dialog (GFile *file)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Text antialiasing"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Text antialiasing"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &plvals.textalpha, NULL, plvals.textalpha,
 
                                     C_("antialiasing", "None"), 1, NULL,
@@ -3751,8 +3751,8 @@ load_dialog (GFile *file)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Graphic antialiasing"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Graphic antialiasing"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &plvals.graphicsalpha, NULL, plvals.graphicsalpha,
 
                                     C_("antialiasing", "None"), 1, NULL,
@@ -3765,21 +3765,21 @@ load_dialog (GFile *file)
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (selector)
     {
-      range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
+      range = ligma_page_selector_get_selected_range (LIGMA_PAGE_SELECTOR (selector));
 
       if (strlen (range) < 1)
         {
-          gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
-          range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
+          ligma_page_selector_select_all (LIGMA_PAGE_SELECTOR (selector));
+          range = ligma_page_selector_get_selected_range (LIGMA_PAGE_SELECTOR (selector));
         }
 
       g_strlcpy (plvals.pages, range, sizeof (plvals.pages));
 
-      ps_pagemode = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+      ps_pagemode = ligma_page_selector_get_target (LIGMA_PAGE_SELECTOR (selector));
     }
   else if (page_count == 0)
     {
@@ -3788,7 +3788,7 @@ load_dialog (GFile *file)
   else
     {
       g_strlcpy (plvals.pages, "1", sizeof (plvals.pages));
-      ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
+      ps_pagemode = LIGMA_PAGE_SELECTOR_TARGET_IMAGES;
     }
 
   gtk_widget_destroy (dialog);
@@ -3825,12 +3825,12 @@ save_dialog (void)
   vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
 
-  dialog = gimp_export_dialog_new (_("PostScript"), PLUG_IN_BINARY, SAVE_PS_PROC);
+  dialog = ligma_export_dialog_new (_("PostScript"), PLUG_IN_BINARY, SAVE_PS_PROC);
 
   /* Main hbox */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       hbox, FALSE, FALSE, 0);
   main_vbox[0] = main_vbox[1] = NULL;
 
@@ -3842,7 +3842,7 @@ save_dialog (void)
     }
 
   /* Image Size */
-  frame = gimp_frame_new (_("Image Size"));
+  frame = ligma_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -3856,47 +3856,47 @@ save_dialog (void)
   gtk_widget_show (grid);
 
   vals->adjustment[0] = gtk_adjustment_new (psvals.width,
-                                            1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (vals->adjustment[0], 1.0, 2);
+                                            1e-5, LIGMA_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = ligma_spin_button_new (vals->adjustment[0], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Width:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (vals->adjustment[0], "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &psvals.width);
 
   vals->adjustment[1] = gtk_adjustment_new (psvals.height,
-                                            1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (vals->adjustment[1], 1.0, 2);
+                                            1e-5, LIGMA_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = ligma_spin_button_new (vals->adjustment[1], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Height:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (vals->adjustment[1], "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &psvals.height);
 
   vals->adjustment[2] = gtk_adjustment_new (psvals.x_offset,
-                                            0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (vals->adjustment[2], 1.0, 2);
+                                            0.0, LIGMA_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = ligma_spin_button_new (vals->adjustment[2], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_X offset:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (vals->adjustment[2], "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &psvals.x_offset);
 
   vals->adjustment[3] = gtk_adjustment_new (psvals.y_offset,
-                                            0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (vals->adjustment[3], 1.0, 2);
+                                            0.0, LIGMA_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = ligma_spin_button_new (vals->adjustment[3], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("_Y offset:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (vals->adjustment[3], "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &psvals.y_offset);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Keep aspect ratio"));
@@ -3904,18 +3904,18 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("When toggled, the resulting image will be "
                              "scaled to fit into the given size without "
                              "changing the aspect ratio."),
                            "#keep_aspect_ratio"),
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &psvals.keep_ratio);
 
   /* Unit */
-  uframe = gimp_int_radio_group_new (TRUE, _("Unit"),
+  uframe = ligma_int_radio_group_new (TRUE, _("Unit"),
                                      G_CALLBACK (save_unit_toggle_update),
                                      vals, NULL, psvals.unit_mm,
 
@@ -3931,8 +3931,8 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Rotation */
-  frame = gimp_int_radio_group_new (TRUE, _("Rotation"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Rotation"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &psvals.rotate, NULL, psvals.rotate,
 
                                     "_0",   0,   NULL,
@@ -3946,7 +3946,7 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Format */
-  frame = gimp_frame_new (_("Output"));
+  frame = ligma_frame_new (_("Output"));
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -3958,7 +3958,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &vals->level);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Encapsulated PostScript"));
@@ -3967,7 +3967,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &psvals.eps);
 
   toggle = gtk_check_button_new_with_mnemonic (_("P_review"));
@@ -3976,7 +3976,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &psvals.preview);
 
   /* Preview size label/entry */
@@ -3991,15 +3991,15 @@ save_dialog (void)
 
   adj = gtk_adjustment_new (psvals.preview_size,
                             0, 1024, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Preview _size:"), 1.0, 0.5,
                             spinbutton, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &psvals.preview_size);
 
   gtk_widget_show (vbox);
@@ -4008,7 +4008,7 @@ save_dialog (void)
   gtk_widget_show (hbox);
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -4032,7 +4032,7 @@ save_unit_toggle_update (GtkWidget *widget,
       gint            i;
 
       unit_mm = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                    "gimp-item-data"));
+                                                    "ligma-item-data"));
 
       psvals.unit_mm = unit_mm;
 

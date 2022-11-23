@@ -1,4 +1,4 @@
-/* Gimp - The GNU Image Manipulation Program
+/* Ligma - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,73 +22,73 @@
 
 #include "vectors-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpvectors.h"
-#include "gimpvectorspropundo.h"
-
-
-static void   gimp_vectors_prop_undo_constructed (GObject             *object);
-
-static void   gimp_vectors_prop_undo_pop         (GimpUndo            *undo,
-                                                  GimpUndoMode         undo_mode,
-                                                  GimpUndoAccumulator *accum);
+#include "ligmavectors.h"
+#include "ligmavectorspropundo.h"
 
 
-G_DEFINE_TYPE (GimpVectorsPropUndo, gimp_vectors_prop_undo, GIMP_TYPE_ITEM_UNDO)
+static void   ligma_vectors_prop_undo_constructed (GObject             *object);
 
-#define parent_class gimp_vectors_prop_undo_parent_class
+static void   ligma_vectors_prop_undo_pop         (LigmaUndo            *undo,
+                                                  LigmaUndoMode         undo_mode,
+                                                  LigmaUndoAccumulator *accum);
+
+
+G_DEFINE_TYPE (LigmaVectorsPropUndo, ligma_vectors_prop_undo, LIGMA_TYPE_ITEM_UNDO)
+
+#define parent_class ligma_vectors_prop_undo_parent_class
 
 
 static void
-gimp_vectors_prop_undo_class_init (GimpVectorsPropUndoClass *klass)
+ligma_vectors_prop_undo_class_init (LigmaVectorsPropUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_vectors_prop_undo_constructed;
+  object_class->constructed = ligma_vectors_prop_undo_constructed;
 
-  undo_class->pop           = gimp_vectors_prop_undo_pop;
+  undo_class->pop           = ligma_vectors_prop_undo_pop;
 }
 
 static void
-gimp_vectors_prop_undo_init (GimpVectorsPropUndo *undo)
+ligma_vectors_prop_undo_init (LigmaVectorsPropUndo *undo)
 {
 }
 
 static void
-gimp_vectors_prop_undo_constructed (GObject *object)
+ligma_vectors_prop_undo_constructed (GObject *object)
 {
-  /* GimpVectors *vectors; */
+  /* LigmaVectors *vectors; */
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_VECTORS (LIGMA_ITEM_UNDO (object)->item));
 
-  /* vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item); */
+  /* vectors = LIGMA_VECTORS (LIGMA_ITEM_UNDO (object)->item); */
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
     }
 }
 
 static void
-gimp_vectors_prop_undo_pop (GimpUndo            *undo,
-                            GimpUndoMode         undo_mode,
-                            GimpUndoAccumulator *accum)
+ligma_vectors_prop_undo_pop (LigmaUndo            *undo,
+                            LigmaUndoMode         undo_mode,
+                            LigmaUndoAccumulator *accum)
 {
 #if 0
-  GimpVectorsPropUndo *vectors_prop_undo = GIMP_VECTORS_PROP_UNDO (undo);
-  GimpVectors         *vectors           = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+  LigmaVectorsPropUndo *vectors_prop_undo = LIGMA_VECTORS_PROP_UNDO (undo);
+  LigmaVectors         *vectors           = LIGMA_VECTORS (LIGMA_ITEM_UNDO (undo)->item);
 #endif
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
     default:
-      gimp_assert_not_reached ();
+      ligma_assert_not_reached ();
     }
 }

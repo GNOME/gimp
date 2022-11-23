@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2016, 2017 Ben Touchette
@@ -22,6 +22,6 @@
 
 extern void metadata_editor_write_callback       (GtkWidget           *dialog,
                                                   GtkBuilder          *builder,
-                                                  GimpImage           *image);
+                                                  LigmaImage           *image);
 
 #endif /* __METADATA_EDITOR_H__ */

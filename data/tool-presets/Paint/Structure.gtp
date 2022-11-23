@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-paintbrush")
+(icon-name "ligma-tool-paintbrush")
 (name "Structure")
-(tool-options "GimpPaintOptions"
-    (tool "gimp-paintbrush-tool")
+(tool-options "LigmaPaintOptions"
+    (tool "ligma-paintbrush-tool")
     (brush "Structure")
     (dynamics "Perspective")
     (gradient "FG to BG (RGB)")
@@ -16,4 +16,4 @@
 (use-palette yes)
 (use-font yes)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

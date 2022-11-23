@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 #include "display/display-types.h"
 
 
-typedef void (* GimpScaleCallback) (GtkWidget             *dialog,
-                                    GimpViewable          *viewable,
+typedef void (* LigmaScaleCallback) (GtkWidget             *dialog,
+                                    LigmaViewable          *viewable,
                                     gint                   width,
                                     gint                   height,
-                                    GimpUnit               unit,
-                                    GimpInterpolationType  interpolation,
+                                    LigmaUnit               unit,
+                                    LigmaInterpolationType  interpolation,
                                     gdouble                xresolution,
                                     gdouble                yresolution,
-                                    GimpUnit               resolution_unit,
+                                    LigmaUnit               resolution_unit,
                                     gpointer               user_data);
 
 

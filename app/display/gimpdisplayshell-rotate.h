@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_ROTATE_H__
-#define __GIMP_DISPLAY_SHELL_ROTATE_H__
+#ifndef __LIGMA_DISPLAY_SHELL_ROTATE_H__
+#define __LIGMA_DISPLAY_SHELL_ROTATE_H__
 
 
-void   gimp_display_shell_flip                    (GimpDisplayShell *shell,
+void   ligma_display_shell_flip                    (LigmaDisplayShell *shell,
                                                    gboolean          flip_horizontally,
                                                    gboolean          flip_vertically);
 
-void   gimp_display_shell_rotate                  (GimpDisplayShell *shell,
+void   ligma_display_shell_rotate                  (LigmaDisplayShell *shell,
                                                    gdouble           delta);
-void   gimp_display_shell_rotate_to               (GimpDisplayShell *shell,
+void   ligma_display_shell_rotate_to               (LigmaDisplayShell *shell,
                                                    gdouble           value);
-void   gimp_display_shell_rotate_drag             (GimpDisplayShell *shell,
+void   ligma_display_shell_rotate_drag             (LigmaDisplayShell *shell,
                                                    gdouble           last_x,
                                                    gdouble           last_y,
                                                    gdouble           cur_x,
                                                    gdouble           cur_y,
                                                    gboolean          constrain);
 
-void   gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell);
+void   ligma_display_shell_rotate_update_transform (LigmaDisplayShell *shell);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_ROTATE_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_ROTATE_H__  */

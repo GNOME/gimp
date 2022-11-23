@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_TOOL_PAINT_H__
-#define __GIMP_PAINT_TOOL_PAINT_H__
+#ifndef __LIGMA_PAINT_TOOL_PAINT_H__
+#define __LIGMA_PAINT_TOOL_PAINT_H__
 
 
-typedef void (* GimpPaintToolPaintFunc) (GimpPaintTool *tool,
+typedef void (* LigmaPaintToolPaintFunc) (LigmaPaintTool *tool,
                                          gpointer       data);
 
 
 
-gboolean   gimp_paint_tool_paint_start     (GimpPaintTool           *tool,
-                                            GimpDisplay             *display,
-                                            const GimpCoords        *coords,
+gboolean   ligma_paint_tool_paint_start     (LigmaPaintTool           *tool,
+                                            LigmaDisplay             *display,
+                                            const LigmaCoords        *coords,
                                             guint32                  time,
                                             gboolean                 constrain,
                                             GError                 **error);
-void       gimp_paint_tool_paint_end       (GimpPaintTool           *tool,
+void       ligma_paint_tool_paint_end       (LigmaPaintTool           *tool,
                                             guint32                  time,
                                             gboolean                 cancel);
 
-gboolean   gimp_paint_tool_paint_is_active (GimpPaintTool           *tool);
+gboolean   ligma_paint_tool_paint_is_active (LigmaPaintTool           *tool);
 
-void       gimp_paint_tool_paint_push      (GimpPaintTool           *tool,
-                                            GimpPaintToolPaintFunc   func,
+void       ligma_paint_tool_paint_push      (LigmaPaintTool           *tool,
+                                            LigmaPaintToolPaintFunc   func,
                                             gpointer                 data);
 
-void       gimp_paint_tool_paint_motion    (GimpPaintTool           *tool,
-                                            const GimpCoords        *coords,
+void       ligma_paint_tool_paint_motion    (LigmaPaintTool           *tool,
+                                            const LigmaCoords        *coords,
                                             guint32                  time);
 
 
-#endif  /*  __GIMP_PAINT_TOOL_PAINT_H__  */
+#endif  /*  __LIGMA_PAINT_TOOL_PAINT_H__  */

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpscaleentry.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * ligmascaleentry.c
+ * Copyright (C) 2000 Michael Natterer <mitch@ligma.org>
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -25,15 +25,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
 
 /**
- * SECTION: gimpscaleentry
- * @title: GimpScaleEntry
+ * SECTION: ligmascaleentry
+ * @title: LigmaScaleEntry
  * @short_description: Widget containing a scale, a spin button and a
  *                     label.
  *
@@ -42,64 +42,64 @@
  * mnemonic on the #GtkSpinButton.
  **/
 
-typedef struct _GimpScaleEntryPrivate
+typedef struct _LigmaScaleEntryPrivate
 {
   GtkWidget     *scale;
   GBinding      *binding;
 
   gboolean       logarithmic;
   gboolean       limit_scale;
-} GimpScaleEntryPrivate;
+} LigmaScaleEntryPrivate;
 
 
-static void       gimp_scale_entry_constructed       (GObject       *object);
+static void       ligma_scale_entry_constructed       (GObject       *object);
 
-static gboolean   gimp_scale_entry_linear_to_log     (GBinding     *binding,
+static gboolean   ligma_scale_entry_linear_to_log     (GBinding     *binding,
                                                       const GValue *from_value,
                                                       GValue       *to_value,
                                                       gpointer      user_data);
-static gboolean   gimp_scale_entry_log_to_linear     (GBinding     *binding,
+static gboolean   ligma_scale_entry_log_to_linear     (GBinding     *binding,
                                                       const GValue *from_value,
                                                       GValue       *to_value,
                                                       gpointer      user_data);
-static void       gimp_scale_entry_configure         (GimpScaleEntry *entry);
+static void       ligma_scale_entry_configure         (LigmaScaleEntry *entry);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpScaleEntry, gimp_scale_entry, GIMP_TYPE_LABEL_SPIN)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaScaleEntry, ligma_scale_entry, LIGMA_TYPE_LABEL_SPIN)
 
-#define parent_class gimp_scale_entry_parent_class
+#define parent_class ligma_scale_entry_parent_class
 
 static void
-gimp_scale_entry_class_init (GimpScaleEntryClass *klass)
+ligma_scale_entry_class_init (LigmaScaleEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_scale_entry_constructed;
+  object_class->constructed  = ligma_scale_entry_constructed;
 
   klass->new_range_widget    = NULL;
 }
 
 static void
-gimp_scale_entry_init (GimpScaleEntry *entry)
+ligma_scale_entry_init (LigmaScaleEntry *entry)
 {
-  GimpScaleEntryPrivate *priv  = gimp_scale_entry_get_instance_private (entry);
+  LigmaScaleEntryPrivate *priv  = ligma_scale_entry_get_instance_private (entry);
 
   priv->limit_scale = FALSE;
 }
 
 static void
-gimp_scale_entry_constructed (GObject *object)
+ligma_scale_entry_constructed (GObject *object)
 {
-  GimpScaleEntryClass   *klass;
-  GimpScaleEntry        *entry = GIMP_SCALE_ENTRY (object);
-  GimpScaleEntryPrivate *priv  = gimp_scale_entry_get_instance_private (entry);
+  LigmaScaleEntryClass   *klass;
+  LigmaScaleEntry        *entry = LIGMA_SCALE_ENTRY (object);
+  LigmaScaleEntryPrivate *priv  = ligma_scale_entry_get_instance_private (entry);
   GtkAdjustment         *scale_adjustment;
   GtkAdjustment         *spin_adjustment;
   GtkWidget             *spinbutton;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (entry));
+  spinbutton = ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (entry));
   spin_adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
   scale_adjustment = gtk_adjustment_new (gtk_adjustment_get_value (spin_adjustment),
                                          gtk_adjustment_get_lower (spin_adjustment),
@@ -108,7 +108,7 @@ gimp_scale_entry_constructed (GObject *object)
                                          gtk_adjustment_get_page_increment (spin_adjustment),
                                          gtk_adjustment_get_page_size (spin_adjustment));
 
-  klass = GIMP_SCALE_ENTRY_GET_CLASS (entry);
+  klass = LIGMA_SCALE_ENTRY_GET_CLASS (entry);
   if (klass->new_range_widget)
     {
       priv->scale = klass->new_range_widget (scale_adjustment);
@@ -136,13 +136,13 @@ gimp_scale_entry_constructed (GObject *object)
   gtk_widget_show (priv->scale);
 
   g_signal_connect_swapped (spin_adjustment, "changed",
-                            G_CALLBACK (gimp_scale_entry_configure),
+                            G_CALLBACK (ligma_scale_entry_configure),
                             entry);
-  gimp_scale_entry_configure (entry);
+  ligma_scale_entry_configure (entry);
 }
 
 static gboolean
-gimp_scale_entry_linear_to_log (GBinding     *binding,
+ligma_scale_entry_linear_to_log (GBinding     *binding,
                                 const GValue *from_value,
                                 GValue       *to_value,
                                 gpointer      user_data)
@@ -165,7 +165,7 @@ gimp_scale_entry_linear_to_log (GBinding     *binding,
 }
 
 static gboolean
-gimp_scale_entry_log_to_linear (GBinding     *binding,
+ligma_scale_entry_log_to_linear (GBinding     *binding,
                                 const GValue *from_value,
                                 GValue       *to_value,
                                 gpointer      user_data)
@@ -188,9 +188,9 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
 }
 
 static void
-gimp_scale_entry_configure (GimpScaleEntry *entry)
+ligma_scale_entry_configure (LigmaScaleEntry *entry)
 {
-  GimpScaleEntryPrivate *priv;
+  LigmaScaleEntryPrivate *priv;
   GBinding              *binding;
   GtkWidget             *spinbutton;
   GtkAdjustment         *spin_adj;
@@ -198,12 +198,12 @@ gimp_scale_entry_configure (GimpScaleEntry *entry)
   gdouble                scale_lower;
   gdouble                scale_upper;
 
-  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_SCALE_ENTRY (entry));
 
-  priv      = gimp_scale_entry_get_instance_private (entry);
+  priv      = ligma_scale_entry_get_instance_private (entry);
   scale_adj = gtk_range_get_adjustment (GTK_RANGE (priv->scale));
 
-  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (entry));
+  spinbutton = ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (entry));
   spin_adj  = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
   g_clear_object (&priv->binding);
@@ -245,8 +245,8 @@ gimp_scale_entry_configure (GimpScaleEntry *entry)
                                              G_OBJECT (scale_adj), "value",
                                              G_BINDING_BIDIRECTIONAL |
                                              G_BINDING_SYNC_CREATE,
-                                             gimp_scale_entry_linear_to_log,
-                                             gimp_scale_entry_log_to_linear,
+                                             ligma_scale_entry_linear_to_log,
+                                             ligma_scale_entry_log_to_linear,
                                              NULL, NULL);
     }
   else
@@ -270,7 +270,7 @@ gimp_scale_entry_configure (GimpScaleEntry *entry)
 /* Public functions */
 
 /**
- * gimp_scale_entry_new:
+ * ligma_scale_entry_new:
  * @text:           The text for the #GtkLabel which will appear left of
  *                  the #GtkHScale.
  * @value:          The initial value.
@@ -281,10 +281,10 @@ gimp_scale_entry_configure (GimpScaleEntry *entry)
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkGrid.
  *
- * Returns: (transfer full): The new #GimpScaleEntry.
+ * Returns: (transfer full): The new #LigmaScaleEntry.
  **/
 GtkWidget *
-gimp_scale_entry_new  (const gchar *text,
+ligma_scale_entry_new  (const gchar *text,
                        gdouble      value,
                        gdouble      lower,
                        gdouble      upper,
@@ -292,7 +292,7 @@ gimp_scale_entry_new  (const gchar *text,
 {
   GtkWidget *entry;
 
-  entry = g_object_new (GIMP_TYPE_SCALE_ENTRY,
+  entry = g_object_new (LIGMA_TYPE_SCALE_ENTRY,
                         "label",          text,
                         "value",          value,
                         "lower",          lower,
@@ -304,7 +304,7 @@ gimp_scale_entry_new  (const gchar *text,
 }
 
 /**
- * gimp_scale_entry_get_range:
+ * ligma_scale_entry_get_range:
  * @entry: The #GtkScaleEntry.
  *
  * This function returns the #GtkRange packed in @entry. This can be
@@ -317,17 +317,17 @@ gimp_scale_entry_new  (const gchar *text,
  * Returns: (transfer none) (type GtkRange): The #GtkRange contained in @entry.
  **/
 GtkWidget *
-gimp_scale_entry_get_range (GimpScaleEntry *entry)
+ligma_scale_entry_get_range (LigmaScaleEntry *entry)
 {
-  GimpScaleEntryPrivate *priv = gimp_scale_entry_get_instance_private (entry);
+  LigmaScaleEntryPrivate *priv = ligma_scale_entry_get_instance_private (entry);
 
-  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), NULL);
+  g_return_val_if_fail (LIGMA_IS_SCALE_ENTRY (entry), NULL);
 
   return priv->scale;
 }
 
 /**
- * gimp_scale_entry_set_bounds:
+ * ligma_scale_entry_set_bounds:
  * @entry:       The #GtkScaleEntry.
  * @lower:       the lower value for the whole widget if @limit_scale is
  *               %FALSE, or only for the #GtkScale if %TRUE.
@@ -355,26 +355,26 @@ gimp_scale_entry_get_range (GimpScaleEntry *entry)
  * Note that the step and page increments are updated when the range is
  * updated according to some common usage algorithm which should work if
  * you don't have very specific needs. If you want to customize the step
- * increments yourself, you may call gimp_label_spin_set_increments()
+ * increments yourself, you may call ligma_label_spin_set_increments()
  **/
 void
-gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
+ligma_scale_entry_set_bounds (LigmaScaleEntry *entry,
                              gdouble         lower,
                              gdouble         upper,
                              gboolean        limit_scale)
 {
-  GimpScaleEntryPrivate *priv;
+  LigmaScaleEntryPrivate *priv;
   GtkWidget             *spinbutton;
   GtkAdjustment         *spin_adjustment;
   GtkAdjustment         *scale_adjustment;
 
-  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_SCALE_ENTRY (entry));
   g_return_if_fail (lower <= upper);
 
-  priv             = gimp_scale_entry_get_instance_private (entry);
+  priv             = ligma_scale_entry_get_instance_private (entry);
   scale_adjustment = gtk_range_get_adjustment (GTK_RANGE (priv->scale));
 
-  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (entry));
+  spinbutton = ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (entry));
   spin_adjustment  = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
   priv->limit_scale = limit_scale;
@@ -387,7 +387,7 @@ gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
       gtk_adjustment_set_lower (scale_adjustment, lower);
       gtk_adjustment_set_upper (scale_adjustment, upper);
 
-      gimp_scale_entry_configure (entry);
+      ligma_scale_entry_configure (entry);
     }
   else if (! limit_scale)
     {
@@ -399,8 +399,8 @@ gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
 }
 
 /**
- * gimp_scale_entry_set_logarithmic:
- * @entry:       a #GimpScaleEntry as returned by gimp_scale_entry_new()
+ * ligma_scale_entry_set_logarithmic:
+ * @entry:       a #LigmaScaleEntry as returned by ligma_scale_entry_new()
  * @logarithmic: a boolean value to set or reset logarithmic behaviour
  *               of the scale widget
  *
@@ -412,25 +412,25 @@ gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
  * Since: 2.2
  **/
 void
-gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
+ligma_scale_entry_set_logarithmic (LigmaScaleEntry *entry,
                                   gboolean        logarithmic)
 {
-  GimpScaleEntryPrivate *priv;
+  LigmaScaleEntryPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_SCALE_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_SCALE_ENTRY (entry));
 
-  priv = gimp_scale_entry_get_instance_private (entry);
+  priv = ligma_scale_entry_get_instance_private (entry);
 
   if (logarithmic != priv->logarithmic)
     {
       priv->logarithmic = logarithmic;
-      gimp_scale_entry_configure (entry);
+      ligma_scale_entry_configure (entry);
     }
 }
 
 /**
- * gimp_scale_entry_get_logarithmic:
- * @entry: a #GimpScaleEntry as returned by gimp_scale_entry_new()
+ * ligma_scale_entry_get_logarithmic:
+ * @entry: a #LigmaScaleEntry as returned by ligma_scale_entry_new()
  *
  * Returns: %TRUE if @entry's scale widget will behave in
  *          logarithmic fashion, %FALSE for linear behaviour.
@@ -438,11 +438,11 @@ gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
  * Since: 2.2
  **/
 gboolean
-gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry)
+ligma_scale_entry_get_logarithmic (LigmaScaleEntry *entry)
 {
-  GimpScaleEntryPrivate *priv = gimp_scale_entry_get_instance_private (entry);
+  LigmaScaleEntryPrivate *priv = ligma_scale_entry_get_instance_private (entry);
 
-  g_return_val_if_fail (GIMP_IS_SCALE_ENTRY (entry), FALSE);
+  g_return_val_if_fail (LIGMA_IS_SCALE_ENTRY (entry), FALSE);
 
   return priv->logarithmic;
 }

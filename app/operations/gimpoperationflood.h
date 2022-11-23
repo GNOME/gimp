@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationflood.h
+ * ligmaoperationflood.h
  * Copyright (C) 2016 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,36 +18,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_FLOOD_H__
-#define __GIMP_OPERATION_FLOOD_H__
+#ifndef __LIGMA_OPERATION_FLOOD_H__
+#define __LIGMA_OPERATION_FLOOD_H__
 
 
 #include <gegl-plugin.h>
 
 
-#define GIMP_TYPE_OPERATION_FLOOD            (gimp_operation_flood_get_type ())
-#define GIMP_OPERATION_FLOOD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_FLOOD, GimpOperationFlood))
-#define GIMP_OPERATION_FLOOD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_FLOOD, GimpOperationFloodClass))
-#define GIMP_IS_OPERATION_FLOOD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_FLOOD))
-#define GIMP_IS_OPERATION_FLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_FLOOD))
-#define GIMP_OPERATION_FLOOD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_FLOOD, GimpOperationFloodClass))
+#define LIGMA_TYPE_OPERATION_FLOOD            (ligma_operation_flood_get_type ())
+#define LIGMA_OPERATION_FLOOD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_FLOOD, LigmaOperationFlood))
+#define LIGMA_OPERATION_FLOOD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_FLOOD, LigmaOperationFloodClass))
+#define LIGMA_IS_OPERATION_FLOOD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_FLOOD))
+#define LIGMA_IS_OPERATION_FLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_FLOOD))
+#define LIGMA_OPERATION_FLOOD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_FLOOD, LigmaOperationFloodClass))
 
 
-typedef struct _GimpOperationFlood      GimpOperationFlood;
-typedef struct _GimpOperationFloodClass GimpOperationFloodClass;
+typedef struct _LigmaOperationFlood      LigmaOperationFlood;
+typedef struct _LigmaOperationFloodClass LigmaOperationFloodClass;
 
-struct _GimpOperationFlood
+struct _LigmaOperationFlood
 {
   GeglOperationFilter  parent_instance;
 };
 
-struct _GimpOperationFloodClass
+struct _LigmaOperationFloodClass
 {
   GeglOperationFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_flood_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_flood_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_FLOOD_H__ */
+#endif /* __LIGMA_OPERATION_FLOOD_H__ */

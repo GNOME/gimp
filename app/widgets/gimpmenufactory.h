@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmenufactory.h
- * Copyright (C) 2003-2004 Michael Natterer <mitch@gimp.org>
+ * ligmamenufactory.h
+ * Copyright (C) 2003-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MENU_FACTORY_H__
-#define __GIMP_MENU_FACTORY_H__
+#ifndef __LIGMA_MENU_FACTORY_H__
+#define __LIGMA_MENU_FACTORY_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-typedef struct _GimpMenuFactoryEntry GimpMenuFactoryEntry;
+typedef struct _LigmaMenuFactoryEntry LigmaMenuFactoryEntry;
 
-struct _GimpMenuFactoryEntry
+struct _LigmaMenuFactoryEntry
 {
   gchar *identifier;
   GList *action_groups;
@@ -35,41 +35,41 @@ struct _GimpMenuFactoryEntry
 };
 
 
-#define GIMP_TYPE_MENU_FACTORY            (gimp_menu_factory_get_type ())
-#define GIMP_MENU_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MENU_FACTORY, GimpMenuFactory))
-#define GIMP_MENU_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MENU_FACTORY, GimpMenuFactoryClass))
-#define GIMP_IS_MENU_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MENU_FACTORY))
-#define GIMP_IS_MENU_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_FACTORY))
-#define GIMP_MENU_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MENU_FACTORY, GimpMenuFactoryClass))
+#define LIGMA_TYPE_MENU_FACTORY            (ligma_menu_factory_get_type ())
+#define LIGMA_MENU_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MENU_FACTORY, LigmaMenuFactory))
+#define LIGMA_MENU_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MENU_FACTORY, LigmaMenuFactoryClass))
+#define LIGMA_IS_MENU_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MENU_FACTORY))
+#define LIGMA_IS_MENU_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MENU_FACTORY))
+#define LIGMA_MENU_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MENU_FACTORY, LigmaMenuFactoryClass))
 
 
-typedef struct _GimpMenuFactoryPrivate  GimpMenuFactoryPrivate;
-typedef struct _GimpMenuFactoryClass    GimpMenuFactoryClass;
+typedef struct _LigmaMenuFactoryPrivate  LigmaMenuFactoryPrivate;
+typedef struct _LigmaMenuFactoryClass    LigmaMenuFactoryClass;
 
-struct _GimpMenuFactory
+struct _LigmaMenuFactory
 {
-  GimpObject              parent_instance;
+  LigmaObject              parent_instance;
 
-  GimpMenuFactoryPrivate *p;
+  LigmaMenuFactoryPrivate *p;
 };
 
-struct _GimpMenuFactoryClass
+struct _LigmaMenuFactoryClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType             gimp_menu_factory_get_type             (void) G_GNUC_CONST;
-GimpMenuFactory * gimp_menu_factory_new                  (Gimp              *gimp,
-                                                          GimpActionFactory *action_factory);
-void              gimp_menu_factory_manager_register     (GimpMenuFactory   *factory,
+GType             ligma_menu_factory_get_type             (void) G_GNUC_CONST;
+LigmaMenuFactory * ligma_menu_factory_new                  (Ligma              *ligma,
+                                                          LigmaActionFactory *action_factory);
+void              ligma_menu_factory_manager_register     (LigmaMenuFactory   *factory,
                                                           const gchar       *identifier,
                                                           const gchar       *first_group,
                                                           ...)  G_GNUC_NULL_TERMINATED;
-GList           * gimp_menu_factory_get_registered_menus (GimpMenuFactory   *factory);
-GimpUIManager   * gimp_menu_factory_manager_new          (GimpMenuFactory   *factory,
+GList           * ligma_menu_factory_get_registered_menus (LigmaMenuFactory   *factory);
+LigmaUIManager   * ligma_menu_factory_manager_new          (LigmaMenuFactory   *factory,
                                                           const gchar       *identifier,
                                                           gpointer           callback_data);
 
 
-#endif  /*  __GIMP_MENU_FACTORY_H__  */
+#endif  /*  __LIGMA_MENU_FACTORY_H__  */

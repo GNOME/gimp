@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactionfactory.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaactionfactory.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,63 +18,63 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_FACTORY_H__
-#define __GIMP_ACTION_FACTORY_H__
+#ifndef __LIGMA_ACTION_FACTORY_H__
+#define __LIGMA_ACTION_FACTORY_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-typedef struct _GimpActionFactoryEntry GimpActionFactoryEntry;
+typedef struct _LigmaActionFactoryEntry LigmaActionFactoryEntry;
 
-struct _GimpActionFactoryEntry
+struct _LigmaActionFactoryEntry
 {
   gchar                     *identifier;
   gchar                     *label;
   gchar                     *icon_name;
-  GimpActionGroupSetupFunc   setup_func;
-  GimpActionGroupUpdateFunc  update_func;
+  LigmaActionGroupSetupFunc   setup_func;
+  LigmaActionGroupUpdateFunc  update_func;
 };
 
 
-#define GIMP_TYPE_ACTION_FACTORY            (gimp_action_factory_get_type ())
-#define GIMP_ACTION_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_FACTORY, GimpActionFactory))
-#define GIMP_ACTION_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACTION_FACTORY, GimpActionFactoryClass))
-#define GIMP_IS_ACTION_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION_FACTORY))
-#define GIMP_IS_ACTION_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ACTION_FACTORY))
-#define GIMP_ACTION_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ACTION_FACTORY, GimpActionFactoryClass))
+#define LIGMA_TYPE_ACTION_FACTORY            (ligma_action_factory_get_type ())
+#define LIGMA_ACTION_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ACTION_FACTORY, LigmaActionFactory))
+#define LIGMA_ACTION_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ACTION_FACTORY, LigmaActionFactoryClass))
+#define LIGMA_IS_ACTION_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ACTION_FACTORY))
+#define LIGMA_IS_ACTION_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ACTION_FACTORY))
+#define LIGMA_ACTION_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ACTION_FACTORY, LigmaActionFactoryClass))
 
 
-typedef struct _GimpActionFactoryClass  GimpActionFactoryClass;
+typedef struct _LigmaActionFactoryClass  LigmaActionFactoryClass;
 
-struct _GimpActionFactory
+struct _LigmaActionFactory
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 
-  Gimp       *gimp;
+  Ligma       *ligma;
   GList      *registered_groups;
 };
 
-struct _GimpActionFactoryClass
+struct _LigmaActionFactoryClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType               gimp_action_factory_get_type (void) G_GNUC_CONST;
+GType               ligma_action_factory_get_type (void) G_GNUC_CONST;
 
-GimpActionFactory * gimp_action_factory_new      (Gimp              *gimp);
+LigmaActionFactory * ligma_action_factory_new      (Ligma              *ligma);
 
-void          gimp_action_factory_group_register (GimpActionFactory *factory,
+void          ligma_action_factory_group_register (LigmaActionFactory *factory,
                                                   const gchar       *identifier,
                                                   const gchar       *label,
                                                   const gchar       *icon_name,
-                                                  GimpActionGroupSetupFunc  setup_func,
-                                                  GimpActionGroupUpdateFunc update_func);
+                                                  LigmaActionGroupSetupFunc  setup_func,
+                                                  LigmaActionGroupUpdateFunc update_func);
 
-GimpActionGroup * gimp_action_factory_group_new  (GimpActionFactory *factory,
+LigmaActionGroup * ligma_action_factory_group_new  (LigmaActionFactory *factory,
                                                   const gchar       *identifier,
                                                   gpointer           user_data);
 
 
-#endif  /*  __GIMP_ACTION_FACTORY_H__  */
+#endif  /*  __LIGMA_ACTION_FACTORY_H__  */

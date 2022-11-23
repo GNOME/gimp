@@ -1,14 +1,14 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-crop")
+(icon-name "ligma-tool-crop")
 (name "Crop 16:9")
-(tool-options "GimpCropOptions"
+(tool-options "LigmaCropOptions"
     (aspect-denominator 9.000000)
     (aspect-numerator 16.000000)
     (fixed-rule-active yes)
     (guide thirds)
     (overridden-fixed-aspect yes)
-    (tool "gimp-crop-tool")
+    (tool "ligma-crop-tool")
     (allow-growing yes))
 (use-fg-bg no)
 (use-brush no)
@@ -18,4 +18,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

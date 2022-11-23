@@ -15,7 +15,7 @@
    id="svg2"
    viewBox="0 0 15.999999 16"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-controller-wheel.svg">
+   sodipodi:docname="ligma-controller-wheel.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -43,13 +43,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -118,7 +118,7 @@
      id="stock">
     <g
        transform="translate(198.97084,-4.2792011)"
-       id="gimp-controller-wheel">
+       id="ligma-controller-wheel">
       <path
          id="path5634-1"
          d="m 0.39504783,4.8454206 c -0.566838,1.459106 -0.357118,3.1860669 -0.357118,4.9542394 0,6.20034 0,6.20034 0,6.20034 L 15.955854,16 c 0,0 0,0 0,-6.20034 0,-1.6800602 0.218345,-3.5155986 -0.316154,-4.9867796 -2.264555,-6.233074 -12.6642062,-6.609821 -15.24465217,0.03254 z"

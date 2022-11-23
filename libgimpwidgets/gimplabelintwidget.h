@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabelintwidget.h
+ * ligmalabelintwidget.h
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,44 +19,44 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABEL_INT_WIDGET_H__
-#define __GIMP_LABEL_INT_WIDGET_H__
+#ifndef __LIGMA_LABEL_INT_WIDGET_H__
+#define __LIGMA_LABEL_INT_WIDGET_H__
 
-#include <libgimpwidgets/gimplabeled.h>
+#include <libligmawidgets/ligmalabeled.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_LABEL_INT_WIDGET (gimp_label_int_widget_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelIntWidget, gimp_label_int_widget, GIMP, LABEL_INT_WIDGET, GimpLabeled)
+#define LIGMA_TYPE_LABEL_INT_WIDGET (ligma_label_int_widget_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLabelIntWidget, ligma_label_int_widget, LIGMA, LABEL_INT_WIDGET, LigmaLabeled)
 
-struct _GimpLabelIntWidgetClass
+struct _LigmaLabelIntWidgetClass
 {
-  GimpLabeledClass   parent_class;
+  LigmaLabeledClass   parent_class;
 
   /*  Signals */
   void            (* value_changed)    (GtkWidget *int_widget);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget  * gimp_label_int_widget_new        (const gchar        *text,
+GtkWidget  * ligma_label_int_widget_new        (const gchar        *text,
                                                GtkWidget          *widget);
 
-GtkWidget  * gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget);
+GtkWidget  * ligma_label_int_widget_get_widget (LigmaLabelIntWidget *widget);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_LABEL_INT_WIDGET_H__ */
+#endif /* __LIGMA_LABEL_INT_WIDGET_H__ */

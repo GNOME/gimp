@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,38 +20,38 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimphelp.h"
+#include "widgets/ligmahelp.h"
 
 #include "actions.h"
 #include "help-commands.h"
 
 
 void
-help_help_cmd_callback (GimpAction *action,
+help_help_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  Gimp        *gimp;
-  GimpDisplay *display;
-  return_if_no_gimp (gimp, data);
+  Ligma        *ligma;
+  LigmaDisplay *display;
+  return_if_no_ligma (ligma, data);
   return_if_no_display (display, data);
 
-  gimp_help_show (gimp, GIMP_PROGRESS (display), NULL, NULL);
+  ligma_help_show (ligma, LIGMA_PROGRESS (display), NULL, NULL);
 }
 
 void
-help_context_help_cmd_callback (GimpAction *action,
+help_context_help_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  gimp_context_help (widget);
+  ligma_context_help (widget);
 }

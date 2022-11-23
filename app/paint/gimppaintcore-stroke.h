@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,34 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_STROKE_H__
-#define __GIMP_PAINT_CORE_STROKE_H__
+#ifndef __LIGMA_PAINT_CORE_STROKE_H__
+#define __LIGMA_PAINT_CORE_STROKE_H__
 
 
-gboolean   gimp_paint_core_stroke          (GimpPaintCore      *core,
-                                            GimpDrawable       *drawable,
-                                            GimpPaintOptions   *paint_options,
-                                            GimpCoords         *strokes,
+gboolean   ligma_paint_core_stroke          (LigmaPaintCore      *core,
+                                            LigmaDrawable       *drawable,
+                                            LigmaPaintOptions   *paint_options,
+                                            LigmaCoords         *strokes,
                                             gint                n_strokes,
                                             gboolean            push_undo,
                                             GError            **error);
-gboolean   gimp_paint_core_stroke_boundary (GimpPaintCore      *core,
-                                            GimpDrawable       *drawable,
-                                            GimpPaintOptions   *paint_options,
+gboolean   ligma_paint_core_stroke_boundary (LigmaPaintCore      *core,
+                                            LigmaDrawable       *drawable,
+                                            LigmaPaintOptions   *paint_options,
                                             gboolean            emulate_dynamics,
-                                            const GimpBoundSeg *bound_segs,
+                                            const LigmaBoundSeg *bound_segs,
                                             gint                n_bound_segs,
                                             gint                offset_x,
                                             gint                offset_y,
                                             gboolean            push_undo,
                                             GError            **error);
-gboolean   gimp_paint_core_stroke_vectors  (GimpPaintCore      *core,
-                                            GimpDrawable       *drawable,
-                                            GimpPaintOptions   *paint_options,
+gboolean   ligma_paint_core_stroke_vectors  (LigmaPaintCore      *core,
+                                            LigmaDrawable       *drawable,
+                                            LigmaPaintOptions   *paint_options,
                                             gboolean            emulate_dynamics,
-                                            GimpVectors        *vectors,
+                                            LigmaVectors        *vectors,
                                             gboolean            push_undo,
                                             GError            **error);
 
 
-#endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */
+#endif  /*  __LIGMA_PAINT_CORE_STROKE_H__  */

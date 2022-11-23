@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,49 +20,49 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
 
-#include "paint/gimpcloneoptions.h"
+#include "paint/ligmacloneoptions.h"
 
-#include "widgets/gimpviewablebox.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaviewablebox.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcloneoptions-gui.h"
-#include "gimppaintoptions-gui.h"
+#include "ligmacloneoptions-gui.h"
+#include "ligmapaintoptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean gimp_clone_options_sync_source           (GBinding     *binding,
+static gboolean ligma_clone_options_sync_source           (GBinding     *binding,
                                                           const GValue *source_value,
                                                           GValue       *target_value,
                                                           gpointer      user_data);
 
-static void gimp_clone_options_gui_drawables_changed     (GimpImage         *image,
-                                                          GimpSourceOptions *options);
-static void gimp_clone_options_gui_src_changed           (GimpSourceOptions *options,
+static void ligma_clone_options_gui_drawables_changed     (LigmaImage         *image,
+                                                          LigmaSourceOptions *options);
+static void ligma_clone_options_gui_src_changed           (LigmaSourceOptions *options,
                                                           GParamSpec        *pspec,
                                                           GtkWidget         *label);
-static void gimp_clone_options_gui_context_image_changed (GimpContext       *context,
-                                                          GimpImage         *image,
-                                                          GimpSourceOptions *options);
+static void ligma_clone_options_gui_context_image_changed (LigmaContext       *context,
+                                                          LigmaImage         *image,
+                                                          LigmaSourceOptions *options);
 
-static gboolean gimp_clone_options_gui_update_src_label  (GimpSourceOptions *options);
+static gboolean ligma_clone_options_gui_update_src_label  (LigmaSourceOptions *options);
 
 
 static gboolean
-gimp_clone_options_sync_source (GBinding     *binding,
+ligma_clone_options_sync_source (GBinding     *binding,
                                 const GValue *source_value,
                                 GValue       *target_value,
                                 gpointer      user_data)
 {
-  GimpCloneType type = g_value_get_enum (source_value);
+  LigmaCloneType type = g_value_get_enum (source_value);
 
   g_value_set_boolean (target_value,
                        type == GPOINTER_TO_INT (user_data));
@@ -71,13 +71,13 @@ gimp_clone_options_sync_source (GBinding     *binding,
 }
 
 static void
-gimp_clone_options_gui_drawables_changed (GimpImage         *image,
-                                          GimpSourceOptions *options)
+ligma_clone_options_gui_drawables_changed (LigmaImage         *image,
+                                          LigmaSourceOptions *options)
 {
   GList     *drawables;
   GtkWidget *button;
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
   button    = g_object_get_data (G_OBJECT (options), "sample-merged-checkbox");
 
   gtk_widget_set_sensitive (button, (g_list_length (drawables) < 2));
@@ -87,12 +87,12 @@ gimp_clone_options_gui_drawables_changed (GimpImage         *image,
   g_idle_remove_by_data (options);
 
   g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
-                   (GSourceFunc) gimp_clone_options_gui_update_src_label,
+                   (GSourceFunc) ligma_clone_options_gui_update_src_label,
                    g_object_ref (options), (GDestroyNotify) g_object_unref);
 }
 
 static void
-gimp_clone_options_gui_src_changed (GimpSourceOptions *options,
+ligma_clone_options_gui_src_changed (LigmaSourceOptions *options,
                                     GParamSpec        *pspec,
                                     GtkWidget         *label)
 {
@@ -101,53 +101,53 @@ gimp_clone_options_gui_src_changed (GimpSourceOptions *options,
 
   /* Why we need absolutely to run this in a thread is that it updates
    * the GUI. And sometimes this src_changed callback may be called by
-   * paint threads (see gimppainttool-paint.c). This may cause crashes
+   * paint threads (see ligmapainttool-paint.c). This may cause crashes
    * as in recent GTK, all GTK/GDK calls should be main from the main
    * thread. Idle functions are ensured to be run in this main thread.
    */
   g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
-                   (GSourceFunc) gimp_clone_options_gui_update_src_label,
+                   (GSourceFunc) ligma_clone_options_gui_update_src_label,
                    g_object_ref (options), (GDestroyNotify) g_object_unref);
 }
 
 static void
-gimp_clone_options_gui_context_image_changed (GimpContext       *context,
-                                              GimpImage         *image,
-                                              GimpSourceOptions *options)
+ligma_clone_options_gui_context_image_changed (LigmaContext       *context,
+                                              LigmaImage         *image,
+                                              LigmaSourceOptions *options)
 {
-  GimpImage *prev_image;
+  LigmaImage *prev_image;
   GtkWidget *button;
 
   button     = g_object_get_data (G_OBJECT (options), "sample-merged-checkbox");
-  prev_image = g_object_get_data (G_OBJECT (button), "gimp-clone-options-gui-image");
+  prev_image = g_object_get_data (G_OBJECT (button), "ligma-clone-options-gui-image");
 
   if (image != prev_image)
     {
       if (prev_image)
         g_signal_handlers_disconnect_by_func (prev_image,
-                                              G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                              G_CALLBACK (ligma_clone_options_gui_drawables_changed),
                                               options);
       if (image)
         {
           g_signal_connect_object (image, "selected-channels-changed",
-                                   G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                   G_CALLBACK (ligma_clone_options_gui_drawables_changed),
                                    options, 0);
           g_signal_connect_object (image, "selected-layers-changed",
-                                   G_CALLBACK (gimp_clone_options_gui_drawables_changed),
+                                   G_CALLBACK (ligma_clone_options_gui_drawables_changed),
                                    options, 0);
-          gimp_clone_options_gui_drawables_changed (image, options);
+          ligma_clone_options_gui_drawables_changed (image, options);
         }
       else
         {
           gtk_widget_set_sensitive (button, TRUE);
         }
 
-      g_object_set_data (G_OBJECT (button), "gimp-clone-options-gui-image", image);
+      g_object_set_data (G_OBJECT (button), "ligma-clone-options-gui-image", image);
     }
 }
 
 static gboolean
-gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
+ligma_clone_options_gui_update_src_label (LigmaSourceOptions *options)
 {
   GtkWidget *label;
   gchar     *markup = NULL;
@@ -160,13 +160,13 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
     }
   else
     {
-      GimpImage *image;
+      LigmaImage *image;
       GList     *drawables;
       gchar     *str = NULL;
       gboolean   sample_merged;
 
-      image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
-      drawables = gimp_image_get_selected_drawables (image);
+      image = ligma_context_get_image (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma));
+      drawables = ligma_image_get_selected_drawables (image);
 
       sample_merged = options->sample_merged && g_list_length (drawables) == 1;
 
@@ -179,9 +179,9 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
         }
       else
         {
-          GimpImage *src_image = NULL;
+          LigmaImage *src_image = NULL;
 
-          src_image = gimp_item_get_image (options->src_drawables->data);
+          src_image = ligma_item_get_image (options->src_drawables->data);
 
           if (sample_merged)
             {
@@ -189,7 +189,7 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
                 str = g_strdup (_("All composited visible layers"));
               else
                 str = g_strdup_printf (_("All composited visible layers from '%s'"),
-                                       gimp_image_get_display_name (src_image));
+                                       ligma_image_get_display_name (src_image));
             }
           else
             {
@@ -203,7 +203,7 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
                                                  "Source: %d items from '%s'",
                                                  g_list_length (options->src_drawables)),
                                        g_list_length (options->src_drawables),
-                                       gimp_image_get_display_name (src_image));
+                                       ligma_image_get_display_name (src_image));
             }
         }
       markup = g_strdup_printf ("<i>%s</i>", str);
@@ -223,10 +223,10 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
 
 
 GtkWidget *
-gimp_clone_options_gui (GimpToolOptions *tool_options)
+ligma_clone_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_paint_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *combo;
@@ -236,14 +236,14 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gchar     *str;
 
   /*  the source frame  */
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), frame, 2);
   gtk_widget_show (frame);
 
   /*  the source type menu  */
-  combo = gimp_prop_enum_combo_box_new (config, "clone-type", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
+  combo = ligma_prop_enum_combo_box_new (config, "clone-type", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Source"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
 
@@ -251,16 +251,16 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), source_vbox);
   gtk_widget_show (source_vbox);
 
-  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  button = ligma_prop_check_button_new (config, "sample-merged", NULL);
   g_object_set_data (G_OBJECT (tool_options), "sample-merged-checkbox", button);
   gtk_box_pack_start (GTK_BOX (source_vbox), button, FALSE, FALSE, 0);
 
   g_object_bind_property_full (config, "clone-type",
                                button, "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_clone_options_sync_source,
+                               ligma_clone_options_sync_source,
                                NULL,
-                               GINT_TO_POINTER (GIMP_CLONE_IMAGE), NULL);
+                               GINT_TO_POINTER (LIGMA_CLONE_IMAGE), NULL);
 
   label = gtk_label_new (NULL);
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
@@ -276,16 +276,16 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   g_object_bind_property_full (config, "clone-type",
                                label,  "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_clone_options_sync_source,
+                               ligma_clone_options_sync_source,
                                NULL,
-                               GINT_TO_POINTER (GIMP_CLONE_IMAGE), NULL);
+                               GINT_TO_POINTER (LIGMA_CLONE_IMAGE), NULL);
 
-  g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (tool_options)->gimp),
+  g_signal_connect (ligma_get_user_context (LIGMA_CONTEXT (tool_options)->ligma),
                     "image-changed",
-                    G_CALLBACK (gimp_clone_options_gui_context_image_changed),
+                    G_CALLBACK (ligma_clone_options_gui_context_image_changed),
                     tool_options);
 
-  hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
+  hbox = ligma_prop_pattern_box_new (NULL, LIGMA_CONTEXT (tool_options),
                                     NULL, 2,
                                     "pattern-view-type", "pattern-view-size");
   gtk_box_pack_start (GTK_BOX (source_vbox), hbox, FALSE, FALSE, 0);
@@ -293,24 +293,24 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   g_object_bind_property_full (config, "clone-type",
                                hbox,   "visible",
                                G_BINDING_SYNC_CREATE,
-                               gimp_clone_options_sync_source,
+                               ligma_clone_options_sync_source,
                                NULL,
-                               GINT_TO_POINTER (GIMP_CLONE_PATTERN), NULL);
+                               GINT_TO_POINTER (LIGMA_CLONE_PATTERN), NULL);
 
-  combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Alignment"));
+  combo = ligma_prop_enum_combo_box_new (config, "align-mode", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Alignment"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), combo, 3);
 
   /* A few options which can trigger a change in the source label. */
   g_signal_connect (config, "notify::src-drawables",
-                    G_CALLBACK (gimp_clone_options_gui_src_changed),
+                    G_CALLBACK (ligma_clone_options_gui_src_changed),
                     label);
   g_signal_connect (config, "notify::sample-merged",
-                    G_CALLBACK (gimp_clone_options_gui_src_changed),
+                    G_CALLBACK (ligma_clone_options_gui_src_changed),
                     label);
-  gimp_clone_options_gui_src_changed (GIMP_SOURCE_OPTIONS (config), NULL, label);
+  ligma_clone_options_gui_src_changed (LIGMA_SOURCE_OPTIONS (config), NULL, label);
 
   return vbox;
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo-aux.c
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo-aux.c
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,29 +24,29 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "widgets-types.h"
 
-#include "gimpdock.h"
-#include "gimpdockable.h"
-#include "gimpdockwindow.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpsessionmanaged.h"
+#include "ligmadock.h"
+#include "ligmadockable.h"
+#include "ligmadockwindow.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmasessionmanaged.h"
 
 
 /*  public functions  */
 
-GimpSessionInfoAux *
-gimp_session_info_aux_new (const gchar *name,
+LigmaSessionInfoAux *
+ligma_session_info_aux_new (const gchar *name,
                            const gchar *value)
 {
-  GimpSessionInfoAux *aux;
+  LigmaSessionInfoAux *aux;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (value != NULL, NULL);
 
-  aux = g_slice_new0 (GimpSessionInfoAux);
+  aux = g_slice_new0 (LigmaSessionInfoAux);
 
   aux->name  = g_strdup (name);
   aux->value = g_strdup (value);
@@ -55,18 +55,18 @@ gimp_session_info_aux_new (const gchar *name,
 }
 
 void
-gimp_session_info_aux_free (GimpSessionInfoAux *aux)
+ligma_session_info_aux_free (LigmaSessionInfoAux *aux)
 {
   g_return_if_fail (aux != NULL);
 
   g_free (aux->name);
   g_free (aux->value);
 
-  g_slice_free (GimpSessionInfoAux, aux);
+  g_slice_free (LigmaSessionInfoAux, aux);
 }
 
 GList *
-gimp_session_info_aux_new_from_props (GObject *object,
+ligma_session_info_aux_new_from_props (GObject *object,
                                       ...)
 {
   GList       *list = NULL;
@@ -93,10 +93,10 @@ gimp_session_info_aux_new_from_props (GObject *object,
           g_object_get_property (object, pspec->name, &value);
 
           if (! g_param_value_defaults (pspec, &value) &&
-              gimp_config_serialize_value (&value, str, TRUE))
+              ligma_config_serialize_value (&value, str, TRUE))
             {
               list = g_list_prepend (list,
-                                     gimp_session_info_aux_new (prop_name,
+                                     ligma_session_info_aux_new (prop_name,
                                                                 str->str));
             }
 
@@ -117,7 +117,7 @@ gimp_session_info_aux_new_from_props (GObject *object,
 }
 
 void
-gimp_session_info_aux_set_props (GObject *object,
+ligma_session_info_aux_set_props (GObject *object,
                                  GList   *auxs,
                                  ...)
 {
@@ -136,7 +136,7 @@ gimp_session_info_aux_set_props (GObject *object,
 
       for (list = auxs; list; list = g_list_next (list))
         {
-          GimpSessionInfoAux *aux = list->data;
+          LigmaSessionInfoAux *aux = list->data;
 
           if (strcmp (aux->name, prop_name) == 0)
             {
@@ -204,7 +204,7 @@ gimp_session_info_aux_set_props (GObject *object,
 }
 
 void
-gimp_session_info_aux_serialize (GimpConfigWriter *writer,
+ligma_session_info_aux_serialize (LigmaConfigWriter *writer,
                                  GList            *aux_info)
 {
   GList *list;
@@ -212,25 +212,25 @@ gimp_session_info_aux_serialize (GimpConfigWriter *writer,
   g_return_if_fail (writer != NULL);
   g_return_if_fail (aux_info != NULL);
 
-  gimp_config_writer_open (writer, "aux-info");
+  ligma_config_writer_open (writer, "aux-info");
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
 
-      gimp_config_writer_open (writer, aux->name);
-      gimp_config_writer_string (writer, aux->value);
-      gimp_config_writer_close (writer);
+      ligma_config_writer_open (writer, aux->name);
+      ligma_config_writer_string (writer, aux->value);
+      ligma_config_writer_close (writer);
     }
 
-  gimp_config_writer_close (writer);
+  ligma_config_writer_close (writer);
 }
 
 GTokenType
-gimp_session_info_aux_deserialize (GScanner  *scanner,
+ligma_session_info_aux_deserialize (GScanner  *scanner,
                                    GList    **aux_list)
 {
-  GimpSessionInfoAux *aux_info = NULL;
+  LigmaSessionInfoAux *aux_info = NULL;
   GTokenType          token    = G_TOKEN_LEFT_PAREN;
 
   g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
@@ -248,7 +248,7 @@ gimp_session_info_aux_deserialize (GScanner  *scanner,
 
         case G_TOKEN_IDENTIFIER:
           {
-            aux_info = g_slice_new0 (GimpSessionInfoAux);
+            aux_info = g_slice_new0 (LigmaSessionInfoAux);
 
             aux_info->name = g_strdup (scanner->value.v_identifier);
 
@@ -256,7 +256,7 @@ gimp_session_info_aux_deserialize (GScanner  *scanner,
             if (g_scanner_peek_next_token (scanner) != token)
               goto error;
 
-            if (! gimp_scanner_parse_string (scanner, &aux_info->value))
+            if (! ligma_scanner_parse_string (scanner, &aux_info->value))
               goto error;
 
             *aux_list = g_list_append (*aux_list, aux_info);
@@ -278,7 +278,7 @@ gimp_session_info_aux_deserialize (GScanner  *scanner,
 
  error:
   if (aux_info)
-    gimp_session_info_aux_free (aux_info);
+    ligma_session_info_aux_free (aux_info);
 
   return token;
 }

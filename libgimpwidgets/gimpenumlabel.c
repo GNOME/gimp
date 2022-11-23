@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumlabel.c
- * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
+ * ligmaenumlabel.c
+ * Copyright (C) 2005  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,16 +23,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpenumlabel.h"
+#include "ligmaenumlabel.h"
 
 
 /**
- * SECTION: gimpenumlabel
- * @title: GimpEnumLabel
+ * SECTION: ligmaenumlabel
+ * @title: LigmaEnumLabel
  * @short_description: A #GtkLabel subclass that displays an enum value.
  *
  * A #GtkLabel subclass that displays an enum value.
@@ -47,41 +47,41 @@ enum
 };
 
 
-struct _GimpEnumLabelPrivate
+struct _LigmaEnumLabelPrivate
 {
   GEnumClass *enum_class;
 };
 
-#define GET_PRIVATE(obj) (((GimpEnumLabel *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaEnumLabel *) (obj))->priv)
 
 
-static void   gimp_enum_label_finalize     (GObject      *object);
-static void   gimp_enum_label_get_property (GObject      *object,
+static void   ligma_enum_label_finalize     (GObject      *object);
+static void   ligma_enum_label_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
-static void   gimp_enum_label_set_property (GObject      *object,
+static void   ligma_enum_label_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaEnumLabel, ligma_enum_label, GTK_TYPE_LABEL)
 
-#define parent_class gimp_enum_label_parent_class
+#define parent_class ligma_enum_label_parent_class
 
 
 static void
-gimp_enum_label_class_init (GimpEnumLabelClass *klass)
+ligma_enum_label_class_init (LigmaEnumLabelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_enum_label_finalize;
-  object_class->get_property = gimp_enum_label_get_property;
-  object_class->set_property = gimp_enum_label_set_property;
+  object_class->finalize     = ligma_enum_label_finalize;
+  object_class->get_property = ligma_enum_label_get_property;
+  object_class->set_property = ligma_enum_label_set_property;
 
   /**
-   * GimpEnumLabel:enum-type:
+   * LigmaEnumLabel:enum-type:
    *
    * The #GType of the enum.
    *
@@ -92,11 +92,11 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
                                                        "Enum Type",
                                                        "The type of the displayed enum",
                                                        G_TYPE_NONE,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GimpEnumLabel:enum-value:
+   * LigmaEnumLabel:enum-value:
    *
    * The value to display.
    *
@@ -107,20 +107,20 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
                                                      "Enum Value",
                                                      "The enum value to display",
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_WRITABLE |
+                                                     LIGMA_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_enum_label_init (GimpEnumLabel *enum_label)
+ligma_enum_label_init (LigmaEnumLabel *enum_label)
 {
-  enum_label->priv = gimp_enum_label_get_instance_private (enum_label);
+  enum_label->priv = ligma_enum_label_get_instance_private (enum_label);
 }
 
 static void
-gimp_enum_label_finalize (GObject *object)
+ligma_enum_label_finalize (GObject *object)
 {
-  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
+  LigmaEnumLabelPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->enum_class, g_type_class_unref);
 
@@ -128,12 +128,12 @@ gimp_enum_label_finalize (GObject *object)
 }
 
 static void
-gimp_enum_label_get_property (GObject    *object,
+ligma_enum_label_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
+  LigmaEnumLabelPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -151,13 +151,13 @@ gimp_enum_label_get_property (GObject    *object,
 }
 
 static void
-gimp_enum_label_set_property (GObject      *object,
+ligma_enum_label_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpEnumLabel        *label   = GIMP_ENUM_LABEL (object);
-  GimpEnumLabelPrivate *private = GET_PRIVATE (label);
+  LigmaEnumLabel        *label   = LIGMA_ENUM_LABEL (object);
+  LigmaEnumLabelPrivate *private = GET_PRIVATE (label);
 
   switch (property_id)
     {
@@ -166,7 +166,7 @@ gimp_enum_label_set_property (GObject      *object,
       break;
 
     case PROP_ENUM_VALUE:
-      gimp_enum_label_set_value (label, g_value_get_int (value));
+      ligma_enum_label_set_value (label, g_value_get_int (value));
       break;
 
     default:
@@ -176,46 +176,46 @@ gimp_enum_label_set_property (GObject      *object,
 }
 
 /**
- * gimp_enum_label_new:
+ * ligma_enum_label_new:
  * @enum_type: the #GType of an enum
  * @value:     an enum value
  *
- * Returns: a new #GimpEnumLabel.
+ * Returns: a new #LigmaEnumLabel.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_enum_label_new (GType enum_type,
+ligma_enum_label_new (GType enum_type,
                      gint  value)
 {
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
 
-  return g_object_new (GIMP_TYPE_ENUM_LABEL,
+  return g_object_new (LIGMA_TYPE_ENUM_LABEL,
                        "enum-type",  enum_type,
                        "enum-value", value,
                        NULL);
 }
 
 /**
- * gimp_enum_label_set_value
- * @label: a #GimpEnumLabel
+ * ligma_enum_label_set_value
+ * @label: a #LigmaEnumLabel
  * @value: an enum value
  *
  * Since: 2.4
  **/
 void
-gimp_enum_label_set_value (GimpEnumLabel *label,
+ligma_enum_label_set_value (LigmaEnumLabel *label,
                            gint           value)
 {
-  GimpEnumLabelPrivate *private;
+  LigmaEnumLabelPrivate *private;
   const gchar          *nick;
   const gchar          *desc;
 
-  g_return_if_fail (GIMP_IS_ENUM_LABEL (label));
+  g_return_if_fail (LIGMA_IS_ENUM_LABEL (label));
 
   private = GET_PRIVATE (label);
 
-  if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (private->enum_class), value,
+  if (! ligma_enum_get_value (G_TYPE_FROM_CLASS (private->enum_class), value,
                              NULL, &nick, &desc, NULL))
     {
       g_warning ("%s: %d is not valid for enum of type '%s'",

@@ -1,11 +1,11 @@
 /*
  * Animation Playback plug-in version 0.99.1
  *
- * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
+ * (c) Adam D. Moss : 1997-2000 : adam@ligma.org : adam@foxbox.org
  * (c) Mircea Purdea : 2009 : someone_else@exhalus.net
  * (c) Jehan : 2012 : jehan at girinstud.io
  *
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,16 +34,16 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 #undef GDK_DISABLE_DEPRECATED
-#include <libgimp/gimpui.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-animationplay"
 #define PLUG_IN_BINARY "animation-play"
-#define PLUG_IN_ROLE   "gimp-animation-play"
+#define PLUG_IN_ROLE   "ligma-animation-play"
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
 
 
@@ -73,12 +73,12 @@ typedef struct _PlayClass PlayClass;
 
 struct _Play
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PlayClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 #define PLAY_TYPE  (play_get_type ())
@@ -86,16 +86,16 @@ struct _PlayClass
 
 GType                   play_get_type         (void) G_GNUC_CONST;
 
-static GList          * play_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * play_create_procedure (GimpPlugIn           *plug_in,
+static GList          * play_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * play_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * play_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * play_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static void        initialize                (void);
@@ -159,9 +159,9 @@ static gboolean    is_ms_tag                 (const gchar     *str,
                                               gint            *taglength);
 
 
-G_DEFINE_TYPE (Play, play, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Play, play, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PLAY_TYPE)
+LIGMA_MAIN (PLAY_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -175,7 +175,7 @@ static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
 static GtkWidget         *frame_disposal_combo      = NULL;
 
-static GimpImage         *image                     = NULL;
+static LigmaImage         *image                     = NULL;
 static guint              width                     = -1;
 static guint              height                    = -1;
 static GList             *layers                    = NULL;
@@ -191,7 +191,7 @@ static guint              shape_drawing_area_width  = -1;
 static guint              shape_drawing_area_height = -1;
 
 static gint32             total_frames              = 0;
-static GimpLayer        **frames                    = NULL;
+static LigmaLayer        **frames                    = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number              = 0;
 
@@ -208,13 +208,13 @@ static AnimationSettings settings =
   100 /* ms */
 };
 
-static GimpImage *frames_image = NULL;
+static LigmaImage *frames_image = NULL;
 
 
 static void
 play_class_init (PlayClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = play_query_procedures;
   plug_in_class->create_procedure = play_create_procedure;
@@ -227,74 +227,74 @@ play_init (Play *play)
 }
 
 static GList *
-play_query_procedures (GimpPlugIn *plug_in)
+play_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-play_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+play_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             play_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Playback..."));
-      gimp_procedure_set_icon_name (procedure, "media-playback-start");
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Animation/");
+      ligma_procedure_set_menu_label (procedure, _("_Playback..."));
+      ligma_procedure_set_icon_name (procedure, "media-playback-start");
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Animation/");
 
-      gimp_procedure_set_documentation (procedure,
-                                        _("Preview a GIMP layer-based "
+      ligma_procedure_set_documentation (procedure,
+                                        _("Preview a LIGMA layer-based "
                                           "animation"),
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Adam D. Moss <adam@gimp.org>",
-                                      "Adam D. Moss <adam@gimp.org>",
+      ligma_procedure_set_attribution (procedure,
+                                      "Adam D. Moss <adam@ligma.org>",
+                                      "Adam D. Moss <adam@ligma.org>",
                                       "1997, 1998...");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-play_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *_image,
+static LigmaValueArray *
+play_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *_image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
   gegl_init (NULL, NULL);
 
   image = _image;
 
-  gimp_get_data (PLUG_IN_PROC, &settings);
+  ligma_get_data (PLUG_IN_PROC, &settings);
 
   initialize ();
   gtk_main ();
 
-  gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
+  ligma_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  gimp_image_delete (frames_image);
+  ligma_image_delete (frames_image);
   gegl_exit ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
@@ -491,13 +491,13 @@ repaint_da (GtkWidget *darea,
             gpointer   data)
 {
   cairo_pattern_t *check;
-  GimpRGB          light = *(gimp_check_custom_color1 ());
-  GimpRGB          dark  = *(gimp_check_custom_color2 ());;
+  LigmaRGB          light = *(ligma_check_custom_color1 ());
+  LigmaRGB          dark  = *(ligma_check_custom_color2 ());;
   guchar           l, d;
 
-  gimp_checks_get_colors (gimp_check_type (), &light, &dark);
+  ligma_checks_get_colors (ligma_check_type (), &light, &dark);
 
-  check = gimp_cairo_checkerboard_create (cr, 32, &light, &dark);
+  check = ligma_cairo_checkerboard_create (cr, 32, &light, &dark);
 
   cairo_set_source (cr, check);
   cairo_paint (cr);
@@ -539,7 +539,7 @@ static void
 help_callback (GtkAction *action,
                gpointer   data)
 {
-  gimp_standard_help_func (PLUG_IN_PROC, data);
+  ligma_standard_help_func (PLUG_IN_PROC, data);
 }
 
 
@@ -603,7 +603,7 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
-    { "refresh", GIMP_ICON_VIEW_REFRESH,
+    { "refresh", LIGMA_ICON_VIEW_REFRESH,
       NULL, "<control>R", N_("Reload the image"),
       G_CALLBACK (refresh_callback) },
 
@@ -643,7 +643,7 @@ ui_manager_new (GtkWidget *window)
       NULL, "space", N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 
-    { "detach", GIMP_ICON_DETACH,
+    { "detach", LIGMA_ICON_DETACH,
       N_("Detach"), NULL,
       N_("Detach the animation from the dialog window"),
       G_CALLBACK (detach_callback), FALSE }
@@ -737,7 +737,7 @@ refresh_dialog (gchar *imagename)
   g_free (name);
 
   /* Update GUI size. */
-  monitor = gimp_widget_get_monitor (window);
+  monitor = ligma_widget_get_monitor (window);
   gdk_monitor_get_workarea (monitor, &workarea);
   gtk_window_get_size (GTK_WINDOW (window), &window_width, &window_height);
 
@@ -787,7 +787,7 @@ build_dialog (gchar *imagename)
   gint         index;
   gchar       *text;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_role (GTK_WINDOW (window), "animation-playback");
@@ -799,7 +799,7 @@ build_dialog (gchar *imagename)
                     G_CALLBACK (popup_menu),
                     NULL);
 
-  gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
+  ligma_help_connect (window, ligma_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
   ui_manager = ui_manager_new (window);
 
@@ -888,7 +888,7 @@ build_dialog (gchar *imagename)
                     G_CALLBACK (zoomcombo_changed),
                     NULL);
 
-  gimp_help_set_help_data (zoomcombo, _("Zoom"), NULL);
+  ligma_help_set_help_data (zoomcombo, _("Zoom"), NULL);
 
   /* fps combo */
   fpscombo = gtk_combo_box_text_new ();
@@ -909,7 +909,7 @@ build_dialog (gchar *imagename)
                     G_CALLBACK (fpscombo_changed),
                     NULL);
 
-  gimp_help_set_help_data (fpscombo, _("Default framerate"), NULL);
+  ligma_help_set_help_data (fpscombo, _("Default framerate"), NULL);
 
   /* Speed Combo */
   speedcombo = gtk_combo_box_text_new ();
@@ -929,7 +929,7 @@ build_dialog (gchar *imagename)
                     G_CALLBACK (speedcombo_changed),
                     NULL);
 
-  gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
+  ligma_help_set_help_data (speedcombo, _("Playback speed"), NULL);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
@@ -1018,9 +1018,9 @@ init_frames (void)
 {
   /* Frames are associated to an unused image. */
   gint          i;
-  GimpLayer    *new_frame;
-  GimpLayer    *previous_frame;
-  GimpLayer    *new_layer;
+  LigmaLayer    *new_frame;
+  LigmaLayer    *previous_frame;
+  LigmaLayer    *new_layer;
   gboolean      animated;
   GtkAction    *action;
   gint          duration = 0;
@@ -1033,17 +1033,17 @@ init_frames (void)
   /* Cleanup before re-generation. */
   if (frames)
     {
-      gimp_image_delete (frames_image);
+      ligma_image_delete (frames_image);
       g_free (frames);
       g_free (frame_durations);
     }
-  frames = g_try_malloc0_n (total_frames, sizeof (GimpLayer *));
+  frames = g_try_malloc0_n (total_frames, sizeof (LigmaLayer *));
   frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
   if (! frames || ! frame_durations)
     {
-      gimp_message (_("Memory could not be allocated to the frame container."));
+      ligma_message (_("Memory could not be allocated to the frame container."));
       gtk_main_quit ();
-      gimp_quit ();
+      ligma_quit ();
       return;
     }
 
@@ -1051,16 +1051,16 @@ init_frames (void)
    * somehow render terrible colors. Layers from other types will be
    * automatically converted.
    */
-  frames_image = gimp_image_new (width, height, GIMP_RGB);
+  frames_image = ligma_image_new (width, height, LIGMA_RGB);
 
   /* Save processing time and memory by not saving history and merged frames. */
-  gimp_image_undo_disable (frames_image);
+  ligma_image_undo_disable (frames_image);
 
   for (iter = layers, i = 0;
        iter;
        iter = g_list_next (iter), i++)
     {
-      layer_name = gimp_item_get_name (iter->data);
+      layer_name = ligma_item_get_name (iter->data);
       if (layer_name)
         {
           duration = parse_ms_tag (layer_name);
@@ -1070,17 +1070,17 @@ init_frames (void)
 
       if (i > 0 && disposal != DISPOSE_REPLACE)
         {
-          previous_frame = gimp_layer_copy (frames[i - 1]);
-          gimp_image_insert_layer (frames_image, previous_frame, NULL, -1);
-          gimp_item_set_visible (GIMP_ITEM (previous_frame), TRUE);
+          previous_frame = ligma_layer_copy (frames[i - 1]);
+          ligma_image_insert_layer (frames_image, previous_frame, NULL, -1);
+          ligma_item_set_visible (LIGMA_ITEM (previous_frame), TRUE);
         }
-      new_layer = gimp_layer_new_from_drawable (iter->data, frames_image);
-      gimp_image_insert_layer (frames_image, new_layer, NULL, -1);
-      gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE);
-      new_frame = gimp_image_merge_visible_layers (frames_image,
-                                                   GIMP_CLIP_TO_IMAGE);
+      new_layer = ligma_layer_new_from_drawable (iter->data, frames_image);
+      ligma_image_insert_layer (frames_image, new_layer, NULL, -1);
+      ligma_item_set_visible (LIGMA_ITEM (new_layer), TRUE);
+      new_frame = ligma_image_merge_visible_layers (frames_image,
+                                                   LIGMA_CLIP_TO_IMAGE);
       frames[i] = new_frame;
-      gimp_item_set_visible (GIMP_ITEM (new_frame), FALSE);
+      ligma_item_set_visible (LIGMA_ITEM (new_frame), FALSE);
 
       if (duration <= 0)
         duration = settings.default_frame_duration;
@@ -1117,22 +1117,22 @@ initialize (void)
   g_list_free (layers);
 
   /* Catch the case when the user has closed the image in the meantime. */
-  if (! gimp_image_is_valid (image))
+  if (! ligma_image_is_valid (image))
     {
-      gimp_message (_("Invalid image. Did you close it?"));
+      ligma_message (_("Invalid image. Did you close it?"));
       gtk_main_quit ();
       return;
     }
 
-  width  = gimp_image_get_width (image);
-  height = gimp_image_get_height (image);
+  width  = ligma_image_get_width (image);
+  height = ligma_image_get_height (image);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   layers = g_list_reverse (layers);
 
   if (!window)
-    build_dialog (gimp_image_get_name (image));
-  refresh_dialog (gimp_image_get_name (image));
+    build_dialog (ligma_image_get_name (image));
+  refresh_dialog (ligma_image_get_name (image));
 
   init_frames ();
   render_frame (frame_number);
@@ -1169,7 +1169,7 @@ render_frame (gint32 whichframe)
       drawing_scale   = scale;
     }
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (frames[whichframe]));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (frames[whichframe]));
 
   if (*drawing_surface)
     cairo_surface_destroy (*drawing_surface);

@@ -1,11 +1,11 @@
 ### Environment/Versions
 
-- GIMP Version:
-- Package: <!--[flatpak? Installer from gimp.org? If another installer, tell us where from] (write it after the > symbol)-->
+- LIGMA Version:
+- Package: <!--[flatpak? Installer from ligma.org? If another installer, tell us where from] (write it after the > symbol)-->
 - Operating System: <!--[Windows? macOS? Linux? All?] (write it after the > symbol) -->
 
 <!-- Note: bug reporters are expected to have verified the bug still exists
-either in the last stable version of GIMP or on updated development code
+either in the last stable version of LIGMA or on updated development code
 (master branch). -->
 
 ### Issue Description
@@ -17,7 +17,7 @@ either in the last stable version of GIMP or on updated development code
 <!-- Please record a performance log demonstrating the issue, and attach it to the report.
 For more information, see
 
-  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/performance-logs/performance-logs.md
+  https://gitlab.gnome.org/GNOME/ligma/blob/master/devel-docs/performance-logs/performance-logs.md
 
 -->
 

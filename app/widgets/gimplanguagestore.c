@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplanguagestore.c
- * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
+ * ligmalanguagestore.c
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,39 +26,39 @@
 
 #include "widgets-types.h"
 
-#include "gimplanguagestore.h"
-#include "gimplanguagestore-parser.h"
+#include "ligmalanguagestore.h"
+#include "ligmalanguagestore-parser.h"
 
 
-static void   gimp_language_store_constructed (GObject           *object);
+static void   ligma_language_store_constructed (GObject           *object);
 
-static void   gimp_language_store_real_add    (GimpLanguageStore *store,
+static void   ligma_language_store_real_add    (LigmaLanguageStore *store,
                                                const gchar       *label,
                                                const gchar       *code);
 
-static gint   gimp_language_store_sort        (GtkTreeModel      *model,
+static gint   ligma_language_store_sort        (GtkTreeModel      *model,
                                                GtkTreeIter       *a,
                                                GtkTreeIter       *b,
                                                gpointer           userdata);
 
 
-G_DEFINE_TYPE (GimpLanguageStore, gimp_language_store, GTK_TYPE_LIST_STORE)
+G_DEFINE_TYPE (LigmaLanguageStore, ligma_language_store, GTK_TYPE_LIST_STORE)
 
-#define parent_class gimp_language_store_parent_class
+#define parent_class ligma_language_store_parent_class
 
 
 static void
-gimp_language_store_class_init (GimpLanguageStoreClass *klass)
+ligma_language_store_class_init (LigmaLanguageStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed = gimp_language_store_constructed;
+  object_class->constructed = ligma_language_store_constructed;
 
-  klass->add                = gimp_language_store_real_add;
+  klass->add                = ligma_language_store_real_add;
 }
 
 static void
-gimp_language_store_init (GimpLanguageStore *store)
+ligma_language_store_init (LigmaLanguageStore *store)
 {
   GType column_types[2] = { G_TYPE_STRING, G_TYPE_STRING };
 
@@ -66,15 +66,15 @@ gimp_language_store_init (GimpLanguageStore *store)
                                    G_N_ELEMENTS (column_types), column_types);
 
   gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store),
-                                   GIMP_LANGUAGE_STORE_LABEL,
-                                   gimp_language_store_sort, NULL, NULL);
+                                   LIGMA_LANGUAGE_STORE_LABEL,
+                                   ligma_language_store_sort, NULL, NULL);
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
-                                        GIMP_LANGUAGE_STORE_LABEL,
+                                        LIGMA_LANGUAGE_STORE_LABEL,
                                         GTK_SORT_ASCENDING);
 }
 
 static void
-gimp_language_store_constructed (GObject *object)
+ligma_language_store_constructed (GObject *object)
 {
   GHashTable     *lang_list;
   GHashTableIter  lang_iter;
@@ -83,18 +83,18 @@ gimp_language_store_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  lang_list = gimp_language_store_parser_get_languages (FALSE);
+  lang_list = ligma_language_store_parser_get_languages (FALSE);
   g_return_if_fail (lang_list != NULL);
 
   g_hash_table_iter_init (&lang_iter, lang_list);
 
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
-    GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+    LIGMA_LANGUAGE_STORE_GET_CLASS (object)->add (LIGMA_LANGUAGE_STORE (object),
                                                  name, code);
 }
 
 static void
-gimp_language_store_real_add (GimpLanguageStore *store,
+ligma_language_store_real_add (LigmaLanguageStore *store,
                               const gchar       *label,
                               const gchar       *code)
 {
@@ -102,13 +102,13 @@ gimp_language_store_real_add (GimpLanguageStore *store,
 
   gtk_list_store_append (GTK_LIST_STORE (store), &iter);
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                      GIMP_LANGUAGE_STORE_LABEL, label,
-                      GIMP_LANGUAGE_STORE_CODE,  code,
+                      LIGMA_LANGUAGE_STORE_LABEL, label,
+                      LIGMA_LANGUAGE_STORE_CODE,  code,
                       -1);
 }
 
 static gint
-gimp_language_store_sort (GtkTreeModel *model,
+ligma_language_store_sort (GtkTreeModel *model,
                           GtkTreeIter  *a,
                           GtkTreeIter  *b,
                           gpointer      userdata)
@@ -118,8 +118,8 @@ gimp_language_store_sort (GtkTreeModel *model,
   gint   cmp    = 0;
 
   /*  keep system language at the top of the list  */
-  gtk_tree_model_get_value (model, a, GIMP_LANGUAGE_STORE_CODE, &avalue);
-  gtk_tree_model_get_value (model, b, GIMP_LANGUAGE_STORE_CODE, &bvalue);
+  gtk_tree_model_get_value (model, a, LIGMA_LANGUAGE_STORE_CODE, &avalue);
+  gtk_tree_model_get_value (model, b, LIGMA_LANGUAGE_STORE_CODE, &bvalue);
 
   if (g_strcmp0 ("", g_value_get_string (&avalue)) == 0)
     cmp = -1;
@@ -134,8 +134,8 @@ gimp_language_store_sort (GtkTreeModel *model,
     return cmp;
 
   /*  sort labels alphabetically  */
-  gtk_tree_model_get_value (model, a, GIMP_LANGUAGE_STORE_LABEL, &avalue);
-  gtk_tree_model_get_value (model, b, GIMP_LANGUAGE_STORE_LABEL, &bvalue);
+  gtk_tree_model_get_value (model, a, LIGMA_LANGUAGE_STORE_LABEL, &avalue);
+  gtk_tree_model_get_value (model, b, LIGMA_LANGUAGE_STORE_LABEL, &bvalue);
 
   cmp = g_utf8_collate (g_value_get_string (&avalue),
                         g_value_get_string (&bvalue));
@@ -147,13 +147,13 @@ gimp_language_store_sort (GtkTreeModel *model,
 }
 
 GtkListStore *
-gimp_language_store_new (void)
+ligma_language_store_new (void)
 {
-  return g_object_new (GIMP_TYPE_LANGUAGE_STORE, NULL);
+  return g_object_new (LIGMA_TYPE_LANGUAGE_STORE, NULL);
 }
 
 gboolean
-gimp_language_store_lookup (GimpLanguageStore *store,
+ligma_language_store_lookup (LigmaLanguageStore *store,
                             const gchar       *code,
                             GtkTreeIter       *iter)
 {
@@ -162,7 +162,7 @@ gimp_language_store_lookup (GimpLanguageStore *store,
   gint          len;
   gboolean      iter_valid;
 
-  g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LANGUAGE_STORE (store), FALSE);
   g_return_val_if_fail (code != NULL, FALSE);
   g_return_val_if_fail (iter != NULL, FALSE);
 
@@ -185,7 +185,7 @@ gimp_language_store_lookup (GimpLanguageStore *store,
       gchar *value;
 
       gtk_tree_model_get (model, iter,
-                          GIMP_LANGUAGE_STORE_CODE, &value,
+                          LIGMA_LANGUAGE_STORE_CODE, &value,
                           -1);
 
       if (value && strncmp (code, value, len) == 0)

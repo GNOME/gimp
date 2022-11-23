@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolhandlegrid.h"
-#include "display/gimptoolgui.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolhandlegrid.h"
+#include "display/ligmatoolgui.h"
 
-#include "gimphandletransformoptions.h"
-#include "gimphandletransformtool.h"
-#include "gimptoolcontrol.h"
+#include "ligmahandletransformoptions.h"
+#include "ligmahandletransformtool.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* the transformation is defined by 8 points:
@@ -77,88 +77,88 @@ enum
 
 /*  local function prototypes  */
 
-static void             gimp_handle_transform_tool_modifier_key   (GimpTool                 *tool,
+static void             ligma_handle_transform_tool_modifier_key   (LigmaTool                 *tool,
                                                                    GdkModifierType           key,
                                                                    gboolean                  press,
                                                                    GdkModifierType           state,
-                                                                   GimpDisplay              *display);
+                                                                   LigmaDisplay              *display);
 
-static void             gimp_handle_transform_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
-                                                                   const GimpMatrix3        *transform);
-static void             gimp_handle_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
-static GimpToolWidget * gimp_handle_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
-static void             gimp_handle_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
-static void             gimp_handle_transform_tool_widget_changed (GimpTransformGridTool    *tg_tool);
+static void             ligma_handle_transform_tool_matrix_to_info (LigmaTransformGridTool    *tg_tool,
+                                                                   const LigmaMatrix3        *transform);
+static void             ligma_handle_transform_tool_prepare        (LigmaTransformGridTool    *tg_tool);
+static LigmaToolWidget * ligma_handle_transform_tool_get_widget     (LigmaTransformGridTool    *tg_tool);
+static void             ligma_handle_transform_tool_update_widget  (LigmaTransformGridTool    *tg_tool);
+static void             ligma_handle_transform_tool_widget_changed (LigmaTransformGridTool    *tg_tool);
 
-static void             gimp_handle_transform_tool_info_to_points (GimpGenericTransformTool *generic);
+static void             ligma_handle_transform_tool_info_to_points (LigmaGenericTransformTool *generic);
 
 
-G_DEFINE_TYPE (GimpHandleTransformTool, gimp_handle_transform_tool,
-               GIMP_TYPE_GENERIC_TRANSFORM_TOOL)
+G_DEFINE_TYPE (LigmaHandleTransformTool, ligma_handle_transform_tool,
+               LIGMA_TYPE_GENERIC_TRANSFORM_TOOL)
 
-#define parent_class gimp_handle_transform_tool_parent_class
+#define parent_class ligma_handle_transform_tool_parent_class
 
 
 void
-gimp_handle_transform_tool_register (GimpToolRegisterCallback  callback,
+ligma_handle_transform_tool_register (LigmaToolRegisterCallback  callback,
                                      gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_HANDLE_TRANSFORM_TOOL,
-                GIMP_TYPE_HANDLE_TRANSFORM_OPTIONS,
-                gimp_handle_transform_options_gui,
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
-                "gimp-handle-transform-tool",
+  (* callback) (LIGMA_TYPE_HANDLE_TRANSFORM_TOOL,
+                LIGMA_TYPE_HANDLE_TRANSFORM_OPTIONS,
+                ligma_handle_transform_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND,
+                "ligma-handle-transform-tool",
                 _("Handle Transform"),
                 _("Handle Transform Tool: "
                   "Deform the layer, selection or path with handles"),
                 N_("_Handle Transform"), "<shift>L",
-                NULL, GIMP_HELP_TOOL_HANDLE_TRANSFORM,
-                GIMP_ICON_TOOL_HANDLE_TRANSFORM,
+                NULL, LIGMA_HELP_TOOL_HANDLE_TRANSFORM,
+                LIGMA_ICON_TOOL_HANDLE_TRANSFORM,
                 data);
 }
 
 static void
-gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
+ligma_handle_transform_tool_class_init (LigmaHandleTransformToolClass *klass)
 {
-  GimpToolClass                 *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpTransformToolClass        *tr_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
-  GimpTransformGridToolClass    *tg_class   = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
-  GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
+  LigmaToolClass                 *tool_class    = LIGMA_TOOL_CLASS (klass);
+  LigmaTransformToolClass        *tr_class   = LIGMA_TRANSFORM_TOOL_CLASS (klass);
+  LigmaTransformGridToolClass    *tg_class   = LIGMA_TRANSFORM_GRID_TOOL_CLASS (klass);
+  LigmaGenericTransformToolClass *generic_class = LIGMA_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->modifier_key      = gimp_handle_transform_tool_modifier_key;
+  tool_class->modifier_key      = ligma_handle_transform_tool_modifier_key;
 
-  tg_class->matrix_to_info      = gimp_handle_transform_tool_matrix_to_info;
-  tg_class->prepare             = gimp_handle_transform_tool_prepare;
-  tg_class->get_widget          = gimp_handle_transform_tool_get_widget;
-  tg_class->update_widget       = gimp_handle_transform_tool_update_widget;
-  tg_class->widget_changed      = gimp_handle_transform_tool_widget_changed;
+  tg_class->matrix_to_info      = ligma_handle_transform_tool_matrix_to_info;
+  tg_class->prepare             = ligma_handle_transform_tool_prepare;
+  tg_class->get_widget          = ligma_handle_transform_tool_get_widget;
+  tg_class->update_widget       = ligma_handle_transform_tool_update_widget;
+  tg_class->widget_changed      = ligma_handle_transform_tool_widget_changed;
 
-  generic_class->info_to_points = gimp_handle_transform_tool_info_to_points;
+  generic_class->info_to_points = ligma_handle_transform_tool_info_to_points;
 
   tr_class->undo_desc           = C_("undo-type", "Handle transform");
   tr_class->progress_text       = _("Handle transformation");
 }
 
 static void
-gimp_handle_transform_tool_init (GimpHandleTransformTool *ht_tool)
+ligma_handle_transform_tool_init (LigmaHandleTransformTool *ht_tool)
 {
-  ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_ADD_TRANSFORM;
+  ht_tool->saved_handle_mode = LIGMA_HANDLE_MODE_ADD_TRANSFORM;
 }
 
 static void
-gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
+ligma_handle_transform_tool_modifier_key (LigmaTool        *tool,
                                          GdkModifierType  key,
                                          gboolean         press,
                                          GdkModifierType  state,
-                                         GimpDisplay     *display)
+                                         LigmaDisplay     *display)
 {
-  GimpHandleTransformTool    *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tool);
-  GimpHandleTransformOptions *options;
-  GdkModifierType             shift   = gimp_get_extend_selection_mask ();
-  GdkModifierType             ctrl    = gimp_get_constrain_behavior_mask ();
-  GimpTransformHandleMode     handle_mode;
+  LigmaHandleTransformTool    *ht_tool = LIGMA_HANDLE_TRANSFORM_TOOL (tool);
+  LigmaHandleTransformOptions *options;
+  GdkModifierType             shift   = ligma_get_extend_selection_mask ();
+  GdkModifierType             ctrl    = ligma_get_constrain_behavior_mask ();
+  LigmaTransformHandleMode     handle_mode;
 
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  options = LIGMA_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
   handle_mode = options->handle_mode;
 
@@ -181,11 +181,11 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   if (state & shift)
     {
-      handle_mode = GIMP_HANDLE_MODE_MOVE;
+      handle_mode = LIGMA_HANDLE_MODE_MOVE;
     }
   else if (state & ctrl)
     {
-      handle_mode = GIMP_HANDLE_MODE_REMOVE;
+      handle_mode = LIGMA_HANDLE_MODE_REMOVE;
     }
 
   if (handle_mode != options->handle_mode)
@@ -195,30 +195,30 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
                     NULL);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
+  LIGMA_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
                                                 state, display);
 }
 
 static void
-gimp_handle_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
-                                           const GimpMatrix3     *transform)
+ligma_handle_transform_tool_matrix_to_info (LigmaTransformGridTool *tg_tool,
+                                           const LigmaMatrix3     *transform)
 {
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tg_tool->trans_info[OX0],
                                 tg_tool->trans_info[OY0],
                                 &tg_tool->trans_info[X0],
                                 &tg_tool->trans_info[Y0]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tg_tool->trans_info[OX1],
                                 tg_tool->trans_info[OY1],
                                 &tg_tool->trans_info[X1],
                                 &tg_tool->trans_info[Y1]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tg_tool->trans_info[OX2],
                                 tg_tool->trans_info[OY2],
                                 &tg_tool->trans_info[X2],
                                 &tg_tool->trans_info[Y2]);
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 tg_tool->trans_info[OX3],
                                 tg_tool->trans_info[OY3],
                                 &tg_tool->trans_info[X3],
@@ -226,11 +226,11 @@ gimp_handle_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
 }
 
 static void
-gimp_handle_transform_tool_prepare (GimpTransformGridTool *tg_tool)
+ligma_handle_transform_tool_prepare (LigmaTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
 
   tg_tool->trans_info[X0]        = (gdouble) tr_tool->x1;
   tg_tool->trans_info[Y0]        = (gdouble) tr_tool->y1;
@@ -251,18 +251,18 @@ gimp_handle_transform_tool_prepare (GimpTransformGridTool *tg_tool)
   tg_tool->trans_info[N_HANDLES] = 0;
 }
 
-static GimpToolWidget *
-gimp_handle_transform_tool_get_widget (GimpTransformGridTool *tg_tool)
+static LigmaToolWidget *
+ligma_handle_transform_tool_get_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpTool                   *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool          *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpHandleTransformOptions *options;
-  GimpDisplayShell           *shell   = gimp_display_get_shell (tool->display);
-  GimpToolWidget             *widget;
+  LigmaTool                   *tool    = LIGMA_TOOL (tg_tool);
+  LigmaTransformTool          *tr_tool = LIGMA_TRANSFORM_TOOL (tg_tool);
+  LigmaHandleTransformOptions *options;
+  LigmaDisplayShell           *shell   = ligma_display_get_shell (tool->display);
+  LigmaToolWidget             *widget;
 
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
+  options = LIGMA_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
 
-  widget = gimp_tool_handle_grid_new (shell,
+  widget = ligma_tool_handle_grid_new (shell,
                                       tr_tool->x1,
                                       tr_tool->y1,
                                       tr_tool->x2,
@@ -297,14 +297,14 @@ gimp_handle_transform_tool_get_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_handle_transform_tool_update_widget (GimpTransformGridTool *tg_tool)
+ligma_handle_transform_tool_update_widget (LigmaTransformGridTool *tg_tool)
 {
-  GimpMatrix3 transform;
+  LigmaMatrix3 transform;
   gboolean    transform_valid;
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
 
-  transform_valid = gimp_transform_grid_tool_info_to_matrix (tg_tool,
+  transform_valid = ligma_transform_grid_tool_info_to_matrix (tg_tool,
                                                              &transform);
 
   g_object_set (tg_tool->widget,
@@ -330,7 +330,7 @@ gimp_handle_transform_tool_update_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_handle_transform_tool_widget_changed (GimpTransformGridTool *tg_tool)
+ligma_handle_transform_tool_widget_changed (LigmaTransformGridTool *tg_tool)
 {
   gint n_handles;
 
@@ -356,29 +356,29 @@ gimp_handle_transform_tool_widget_changed (GimpTransformGridTool *tg_tool)
 
   tg_tool->trans_info[N_HANDLES] = n_handles;
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
+  LIGMA_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
 }
 
 static void
-gimp_handle_transform_tool_info_to_points (GimpGenericTransformTool *generic)
+ligma_handle_transform_tool_info_to_points (LigmaGenericTransformTool *generic)
 {
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
+  LigmaTransformGridTool *tg_tool = LIGMA_TRANSFORM_GRID_TOOL (generic);
 
-  generic->input_points[0]  = (GimpVector2) {tg_tool->trans_info[OX0],
+  generic->input_points[0]  = (LigmaVector2) {tg_tool->trans_info[OX0],
                                              tg_tool->trans_info[OY0]};
-  generic->input_points[1]  = (GimpVector2) {tg_tool->trans_info[OX1],
+  generic->input_points[1]  = (LigmaVector2) {tg_tool->trans_info[OX1],
                                              tg_tool->trans_info[OY1]};
-  generic->input_points[2]  = (GimpVector2) {tg_tool->trans_info[OX2],
+  generic->input_points[2]  = (LigmaVector2) {tg_tool->trans_info[OX2],
                                              tg_tool->trans_info[OY2]};
-  generic->input_points[3]  = (GimpVector2) {tg_tool->trans_info[OX3],
+  generic->input_points[3]  = (LigmaVector2) {tg_tool->trans_info[OX3],
                                              tg_tool->trans_info[OY3]};
 
-  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
+  generic->output_points[0] = (LigmaVector2) {tg_tool->trans_info[X0],
                                              tg_tool->trans_info[Y0]};
-  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
+  generic->output_points[1] = (LigmaVector2) {tg_tool->trans_info[X1],
                                              tg_tool->trans_info[Y1]};
-  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
+  generic->output_points[2] = (LigmaVector2) {tg_tool->trans_info[X2],
                                              tg_tool->trans_info[Y2]};
-  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
+  generic->output_points[3] = (LigmaVector2) {tg_tool->trans_info[X3],
                                              tg_tool->trans_info[Y3]};
 }

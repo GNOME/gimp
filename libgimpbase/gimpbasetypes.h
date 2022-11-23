@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,14 +16,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_TYPES_H__
-#define __GIMP_BASE_TYPES_H__
+#ifndef __LIGMA_BASE_TYPES_H__
+#define __LIGMA_BASE_TYPES_H__
 
 
-#include <libgimpcolor/gimpcolortypes.h>
-#include <libgimpmath/gimpmathtypes.h>
+#include <libligmacolor/ligmacolortypes.h>
+#include <libligmamath/ligmamathtypes.h>
 
-#include <libgimpbase/gimpbaseenums.h>
+#include <libligmabase/ligmabaseenums.h>
 
 
 G_BEGIN_DECLS
@@ -33,35 +33,35 @@ G_BEGIN_DECLS
 
 /* XXX FIXME move these to a separate file */
 
-#ifdef GIMP_DISABLE_DEPRECATION_WARNINGS
-#define GIMP_DEPRECATED
-#define GIMP_DEPRECATED_FOR(f)
-#define GIMP_UNAVAILABLE(maj,min)
+#ifdef LIGMA_DISABLE_DEPRECATION_WARNINGS
+#define LIGMA_DEPRECATED
+#define LIGMA_DEPRECATED_FOR(f)
+#define LIGMA_UNAVAILABLE(maj,min)
 #else
-#define GIMP_DEPRECATED G_DEPRECATED
-#define GIMP_DEPRECATED_FOR(f) G_DEPRECATED_FOR(f)
-#define GIMP_UNAVAILABLE(maj,min) G_UNAVAILABLE(maj,min)
+#define LIGMA_DEPRECATED G_DEPRECATED
+#define LIGMA_DEPRECATED_FOR(f) G_DEPRECATED_FOR(f)
+#define LIGMA_UNAVAILABLE(maj,min) G_UNAVAILABLE(maj,min)
 #endif
 
 
-typedef struct _GimpParasite     GimpParasite;
-typedef struct _GimpEnumDesc     GimpEnumDesc;
-typedef struct _GimpFlagsDesc    GimpFlagsDesc;
-typedef struct _GimpValueArray   GimpValueArray;
+typedef struct _LigmaParasite     LigmaParasite;
+typedef struct _LigmaEnumDesc     LigmaEnumDesc;
+typedef struct _LigmaFlagsDesc    LigmaFlagsDesc;
+typedef struct _LigmaValueArray   LigmaValueArray;
 
-typedef struct _GimpMetadata     GimpMetadata;
+typedef struct _LigmaMetadata     LigmaMetadata;
 
 
 /**
- * GimpEnumDesc:
+ * LigmaEnumDesc:
  * @value:      An enum value.
  * @value_desc: The value's description.
  * @value_help: The value's help text.
  *
  * This structure is used to register translatable descriptions and
- * help texts for enum values. See gimp_enum_set_value_descriptions().
+ * help texts for enum values. See ligma_enum_set_value_descriptions().
  **/
-struct _GimpEnumDesc
+struct _LigmaEnumDesc
 {
   gint         value;
   const gchar *value_desc;
@@ -69,15 +69,15 @@ struct _GimpEnumDesc
 };
 
 /**
- * GimpFlagsDesc:
+ * LigmaFlagsDesc:
  * @value:      A flag value.
  * @value_desc: The value's description.
  * @value_help: The value's help text.
  *
  * This structure is used to register translatable descriptions and
- * help texts for flag values. See gimp_flags_set_value_descriptions().
+ * help texts for flag values. See ligma_flags_set_value_descriptions().
  **/
-struct _GimpFlagsDesc
+struct _LigmaFlagsDesc
 {
   guint        value;
   const gchar *value_desc;
@@ -85,23 +85,23 @@ struct _GimpFlagsDesc
 };
 
 
-void                  gimp_type_set_translation_domain  (GType                type,
+void                  ligma_type_set_translation_domain  (GType                type,
                                                          const gchar         *domain);
-const gchar         * gimp_type_get_translation_domain  (GType                type);
+const gchar         * ligma_type_get_translation_domain  (GType                type);
 
-void                  gimp_type_set_translation_context (GType                type,
+void                  ligma_type_set_translation_context (GType                type,
                                                          const gchar         *context);
-const gchar         * gimp_type_get_translation_context (GType                type);
+const gchar         * ligma_type_get_translation_context (GType                type);
 
-void                  gimp_enum_set_value_descriptions  (GType                enum_type,
-                                                         const GimpEnumDesc  *descriptions);
-const GimpEnumDesc  * gimp_enum_get_value_descriptions  (GType                enum_type);
+void                  ligma_enum_set_value_descriptions  (GType                enum_type,
+                                                         const LigmaEnumDesc  *descriptions);
+const LigmaEnumDesc  * ligma_enum_get_value_descriptions  (GType                enum_type);
 
-void                  gimp_flags_set_value_descriptions (GType                flags_type,
-                                                         const GimpFlagsDesc *descriptions);
-const GimpFlagsDesc * gimp_flags_get_value_descriptions (GType                flags_type);
+void                  ligma_flags_set_value_descriptions (GType                flags_type,
+                                                         const LigmaFlagsDesc *descriptions);
+const LigmaFlagsDesc * ligma_flags_get_value_descriptions (GType                flags_type);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_BASE_TYPES_H__ */
+#endif  /* __LIGMA_BASE_TYPES_H__ */

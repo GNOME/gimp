@@ -1,30 +1,30 @@
-# Introspectable sources for libgimpconfig
+# Introspectable sources for libligmaconfig
 
-libgimpconfig_introspectable_headers =	\
-	../libgimpconfig/gimpconfigenums.h		\
-	../libgimpconfig/gimpconfigtypes.h		\
-	../libgimpconfig/gimpconfig-iface.h		\
-	../libgimpconfig/gimpconfig-deserialize.h	\
-	../libgimpconfig/gimpconfig-error.h		\
-	../libgimpconfig/gimpconfig-params.h		\
-	../libgimpconfig/gimpconfig-path.h		\
-	../libgimpconfig/gimpconfig-register.h		\
-	../libgimpconfig/gimpconfig-serialize.h		\
-	../libgimpconfig/gimpconfig-utils.h		\
-	../libgimpconfig/gimpconfigwriter.h		\
-	../libgimpconfig/gimpscanner.h			\
-	../libgimpconfig/gimpcolorconfig.h
+libligmaconfig_introspectable_headers =	\
+	../libligmaconfig/ligmaconfigenums.h		\
+	../libligmaconfig/ligmaconfigtypes.h		\
+	../libligmaconfig/ligmaconfig-iface.h		\
+	../libligmaconfig/ligmaconfig-deserialize.h	\
+	../libligmaconfig/ligmaconfig-error.h		\
+	../libligmaconfig/ligmaconfig-params.h		\
+	../libligmaconfig/ligmaconfig-path.h		\
+	../libligmaconfig/ligmaconfig-register.h		\
+	../libligmaconfig/ligmaconfig-serialize.h		\
+	../libligmaconfig/ligmaconfig-utils.h		\
+	../libligmaconfig/ligmaconfigwriter.h		\
+	../libligmaconfig/ligmascanner.h			\
+	../libligmaconfig/ligmacolorconfig.h
 
-libgimpconfig_introspectable =	\
-	../libgimpconfig/gimpconfig-iface.c		\
-	../libgimpconfig/gimpconfig-deserialize.c	\
-	../libgimpconfig/gimpconfig-error.c		\
-	../libgimpconfig/gimpconfig-path.c		\
-	../libgimpconfig/gimpconfig-params.c		\
-	../libgimpconfig/gimpconfig-register.c		\
-	../libgimpconfig/gimpconfig-serialize.c		\
-	../libgimpconfig/gimpconfig-utils.c		\
-	../libgimpconfig/gimpconfigwriter.c		\
-	../libgimpconfig/gimpscanner.c			\
-	../libgimpconfig/gimpcolorconfig.c		\
-	$(libgimpconfig_introspectable_headers)
+libligmaconfig_introspectable =	\
+	../libligmaconfig/ligmaconfig-iface.c		\
+	../libligmaconfig/ligmaconfig-deserialize.c	\
+	../libligmaconfig/ligmaconfig-error.c		\
+	../libligmaconfig/ligmaconfig-path.c		\
+	../libligmaconfig/ligmaconfig-params.c		\
+	../libligmaconfig/ligmaconfig-register.c		\
+	../libligmaconfig/ligmaconfig-serialize.c		\
+	../libligmaconfig/ligmaconfig-utils.c		\
+	../libligmaconfig/ligmaconfigwriter.c		\
+	../libligmaconfig/ligmascanner.c			\
+	../libligmaconfig/ligmacolorconfig.c		\
+	$(libligmaconfig_introspectable_headers)

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,371 +22,371 @@
 
 #include "display-types.h"
 
-#include "config/gimpdisplayoptions.h"
+#include "config/ligmadisplayoptions.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpdockcolumns.h"
-#include "widgets/gimprender.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadockcolumns.h"
+#include "widgets/ligmarender.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvas.h"
-#include "gimpcanvasitem.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-actions.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-selection.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-scrollbars.h"
-#include "gimpimagewindow.h"
-#include "gimpstatusbar.h"
+#include "ligmacanvas.h"
+#include "ligmacanvasitem.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-actions.h"
+#include "ligmadisplayshell-appearance.h"
+#include "ligmadisplayshell-expose.h"
+#include "ligmadisplayshell-selection.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-scrollbars.h"
+#include "ligmaimagewindow.h"
+#include "ligmastatusbar.h"
 
 
 /*  local function prototypes  */
 
-static GimpDisplayOptions * appearance_get_options (GimpDisplayShell *shell);
+static LigmaDisplayOptions * appearance_get_options (LigmaDisplayShell *shell);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_appearance_update (GimpDisplayShell *shell)
+ligma_display_shell_appearance_update (LigmaDisplayShell *shell)
 {
-  GimpDisplayOptions *options;
-  GimpImageWindow    *window;
+  LigmaDisplayOptions *options;
+  LigmaImageWindow    *window;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
-  window  = gimp_display_shell_get_window (shell);
+  window  = ligma_display_shell_get_window (shell);
 
   if (window)
     {
-      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
+      gboolean fullscreen = ligma_image_window_get_fullscreen (window);
 
-      gimp_display_shell_set_action_active (shell, "view-fullscreen",
+      ligma_display_shell_set_action_active (shell, "view-fullscreen",
                                             fullscreen);
     }
 
-  gimp_display_shell_set_show_menubar        (shell,
+  ligma_display_shell_set_show_menubar        (shell,
                                               options->show_menubar);
-  gimp_display_shell_set_show_statusbar      (shell,
+  ligma_display_shell_set_show_statusbar      (shell,
                                               options->show_statusbar);
 
-  gimp_display_shell_set_show_rulers         (shell,
+  ligma_display_shell_set_show_rulers         (shell,
                                               options->show_rulers);
-  gimp_display_shell_set_show_scrollbars     (shell,
+  ligma_display_shell_set_show_scrollbars     (shell,
                                               options->show_scrollbars);
-  gimp_display_shell_set_show_selection      (shell,
+  ligma_display_shell_set_show_selection      (shell,
                                               options->show_selection);
-  gimp_display_shell_set_show_layer          (shell,
+  ligma_display_shell_set_show_layer          (shell,
                                               options->show_layer_boundary);
-  gimp_display_shell_set_show_canvas         (shell,
+  ligma_display_shell_set_show_canvas         (shell,
                                               options->show_canvas_boundary);
-  gimp_display_shell_set_show_guides         (shell,
+  ligma_display_shell_set_show_guides         (shell,
                                               options->show_guides);
-  gimp_display_shell_set_show_grid           (shell,
+  ligma_display_shell_set_show_grid           (shell,
                                               options->show_grid);
-  gimp_display_shell_set_show_sample_points  (shell,
+  ligma_display_shell_set_show_sample_points  (shell,
                                               options->show_sample_points);
-  gimp_display_shell_set_padding             (shell,
+  ligma_display_shell_set_padding             (shell,
                                               options->padding_mode,
                                               &options->padding_color);
-  gimp_display_shell_set_padding_in_show_all (shell,
+  ligma_display_shell_set_padding_in_show_all (shell,
                                               options->padding_in_show_all);
 }
 
 void
-gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
+ligma_display_shell_set_show_menubar (LigmaDisplayShell *shell,
                                      gboolean          show)
 {
-  GimpDisplayOptions *options;
-  GimpImageWindow    *window;
+  LigmaDisplayOptions *options;
+  LigmaImageWindow    *window;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
-  window  = gimp_display_shell_get_window (shell);
+  window  = ligma_display_shell_get_window (shell);
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
+  if (window && ligma_image_window_get_active_shell (window) == shell)
     {
-      gimp_image_window_keep_canvas_pos (gimp_display_shell_get_window (shell));
-      gimp_image_window_set_show_menubar (window, show);
+      ligma_image_window_keep_canvas_pos (ligma_display_shell_get_window (shell));
+      ligma_image_window_set_show_menubar (window, show);
     }
 
-  gimp_display_shell_set_action_active (shell, "view-show-menubar", show);
+  ligma_display_shell_set_action_active (shell, "view-show-menubar", show);
 }
 
 gboolean
-gimp_display_shell_get_show_menubar (GimpDisplayShell *shell)
+ligma_display_shell_get_show_menubar (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_menubar;
 }
 
 void
-gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
+ligma_display_shell_set_show_statusbar (LigmaDisplayShell *shell,
                                        gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  gimp_image_window_keep_canvas_pos (gimp_display_shell_get_window (shell));
-  gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
+  ligma_image_window_keep_canvas_pos (ligma_display_shell_get_window (shell));
+  ligma_statusbar_set_visible (LIGMA_STATUSBAR (shell->statusbar), show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-statusbar", show);
+  ligma_display_shell_set_action_active (shell, "view-show-statusbar", show);
 }
 
 gboolean
-gimp_display_shell_get_show_statusbar (GimpDisplayShell *shell)
+ligma_display_shell_get_show_statusbar (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_statusbar;
 }
 
 void
-gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
+ligma_display_shell_set_show_rulers (LigmaDisplayShell *shell,
                                     gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-rulers", show, NULL);
 
-  gimp_image_window_keep_canvas_pos (gimp_display_shell_get_window (shell));
+  ligma_image_window_keep_canvas_pos (ligma_display_shell_get_window (shell));
   gtk_widget_set_visible (shell->origin, show);
   gtk_widget_set_visible (shell->hrule, show);
   gtk_widget_set_visible (shell->vrule, show);
   gtk_widget_set_visible (shell->quick_mask_button, show);
   gtk_widget_set_visible (shell->zoom_button, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-rulers", show);
+  ligma_display_shell_set_action_active (shell, "view-show-rulers", show);
 }
 
 gboolean
-gimp_display_shell_get_show_rulers (GimpDisplayShell *shell)
+ligma_display_shell_get_show_rulers (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_rulers;
 }
 
 void
-gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
+ligma_display_shell_set_show_scrollbars (LigmaDisplayShell *shell,
                                         gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-scrollbars", show, NULL);
 
-  gimp_image_window_keep_canvas_pos (gimp_display_shell_get_window (shell));
+  ligma_image_window_keep_canvas_pos (ligma_display_shell_get_window (shell));
   gtk_widget_set_visible (shell->nav_ebox, show);
   gtk_widget_set_visible (shell->hsb, show);
   gtk_widget_set_visible (shell->vsb, show);
   gtk_widget_set_visible (shell->quick_mask_button, show);
   gtk_widget_set_visible (shell->zoom_button, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-scrollbars", show);
+  ligma_display_shell_set_action_active (shell, "view-show-scrollbars", show);
 }
 
 gboolean
-gimp_display_shell_get_show_scrollbars (GimpDisplayShell *shell)
+ligma_display_shell_get_show_scrollbars (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_scrollbars;
 }
 
 void
-gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
+ligma_display_shell_set_show_selection (LigmaDisplayShell *shell,
                                        gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-selection", show, NULL);
 
-  gimp_display_shell_selection_set_show (shell, show);
+  ligma_display_shell_selection_set_show (shell, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-selection", show);
+  ligma_display_shell_set_action_active (shell, "view-show-selection", show);
 }
 
 gboolean
-gimp_display_shell_get_show_selection (GimpDisplayShell *shell)
+ligma_display_shell_get_show_selection (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_selection;
 }
 
 void
-gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
+ligma_display_shell_set_show_layer (LigmaDisplayShell *shell,
                                    gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-layer-boundary", show, NULL);
 
-  gimp_canvas_item_set_visible (shell->layer_boundary, show);
+  ligma_canvas_item_set_visible (shell->layer_boundary, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-layer-boundary", show);
+  ligma_display_shell_set_action_active (shell, "view-show-layer-boundary", show);
 }
 
 gboolean
-gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
+ligma_display_shell_get_show_layer (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_layer_boundary;
 }
 
 void
-gimp_display_shell_set_show_canvas (GimpDisplayShell *shell,
+ligma_display_shell_set_show_canvas (LigmaDisplayShell *shell,
                                     gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-canvas-boundary", show, NULL);
 
-  gimp_canvas_item_set_visible (shell->canvas_boundary,
+  ligma_canvas_item_set_visible (shell->canvas_boundary,
                                 show && shell->show_all);
 
-  gimp_display_shell_set_action_active (shell, "view-show-canvas-boundary", show);
+  ligma_display_shell_set_action_active (shell, "view-show-canvas-boundary", show);
 }
 
 gboolean
-gimp_display_shell_get_show_canvas (GimpDisplayShell *shell)
+ligma_display_shell_get_show_canvas (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_canvas_boundary;
 }
 
 void
-gimp_display_shell_update_show_canvas (GimpDisplayShell *shell)
+ligma_display_shell_update_show_canvas (LigmaDisplayShell *shell)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
-  gimp_canvas_item_set_visible (shell->canvas_boundary,
+  ligma_canvas_item_set_visible (shell->canvas_boundary,
                                 options->show_canvas_boundary &&
                                 shell->show_all);
 }
 
 void
-gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
+ligma_display_shell_set_show_guides (LigmaDisplayShell *shell,
                                     gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-guides", show, NULL);
 
-  gimp_canvas_item_set_visible (shell->guides, show);
+  ligma_canvas_item_set_visible (shell->guides, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-guides", show);
+  ligma_display_shell_set_action_active (shell, "view-show-guides", show);
 }
 
 gboolean
-gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
+ligma_display_shell_get_show_guides (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_guides;
 }
 
 void
-gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
+ligma_display_shell_set_show_grid (LigmaDisplayShell *shell,
                                   gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-grid", show, NULL);
 
-  gimp_canvas_item_set_visible (shell->grid, show);
+  ligma_canvas_item_set_visible (shell->grid, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-grid", show);
+  ligma_display_shell_set_action_active (shell, "view-show-grid", show);
 }
 
 gboolean
-gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
+ligma_display_shell_get_show_grid (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_grid;
 }
 
 void
-gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
+ligma_display_shell_set_show_sample_points (LigmaDisplayShell *shell,
                                            gboolean          show)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  gimp_canvas_item_set_visible (shell->sample_points, show);
+  ligma_canvas_item_set_visible (shell->sample_points, show);
 
-  gimp_display_shell_set_action_active (shell, "view-show-sample-points", show);
+  ligma_display_shell_set_action_active (shell, "view-show-sample-points", show);
 }
 
 gboolean
-gimp_display_shell_get_show_sample_points (GimpDisplayShell *shell)
+ligma_display_shell_get_show_sample_points (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_sample_points;
 }
 
 void
-gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
+ligma_display_shell_set_snap_to_grid (LigmaDisplayShell *shell,
                                      gboolean          snap)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -394,20 +394,20 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
+ligma_display_shell_get_snap_to_grid (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->snap_to_grid;
 }
 
 void
-gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
+ligma_display_shell_set_snap_to_guides (LigmaDisplayShell *shell,
                                        gboolean          snap)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -415,20 +415,20 @@ gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_guides (GimpDisplayShell *shell)
+ligma_display_shell_get_snap_to_guides (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->snap_to_guides;
 }
 
 void
-gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
+ligma_display_shell_set_snap_to_canvas (LigmaDisplayShell *shell,
                                        gboolean          snap)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -436,20 +436,20 @@ gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_canvas (GimpDisplayShell *shell)
+ligma_display_shell_get_snap_to_canvas (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->snap_to_canvas;
 }
 
 void
-gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
+ligma_display_shell_set_snap_to_vectors (LigmaDisplayShell *shell,
                                         gboolean          snap)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -457,22 +457,22 @@ gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
+ligma_display_shell_get_snap_to_vectors (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->snap_to_path;
 }
 
 void
-gimp_display_shell_set_padding (GimpDisplayShell      *shell,
-                                GimpCanvasPaddingMode  padding_mode,
-                                const GimpRGB         *padding_color)
+ligma_display_shell_set_padding (LigmaDisplayShell      *shell,
+                                LigmaCanvasPaddingMode  padding_mode,
+                                const LigmaRGB         *padding_color)
 {
-  GimpDisplayOptions *options;
-  GimpRGB             color;
+  LigmaDisplayOptions *options;
+  LigmaRGB             color;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (padding_color != NULL);
 
   options = appearance_get_options (shell);
@@ -480,19 +480,19 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   switch (padding_mode)
     {
-    case GIMP_CANVAS_PADDING_MODE_DEFAULT:
+    case LIGMA_CANVAS_PADDING_MODE_DEFAULT:
       break;
 
-    case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
-      color = *gimp_render_check_color1 ();
+    case LIGMA_CANVAS_PADDING_MODE_LIGHT_CHECK:
+      color = *ligma_render_check_color1 ();
       break;
 
-    case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      color = *gimp_render_check_color2 ();
+    case LIGMA_CANVAS_PADDING_MODE_DARK_CHECK:
+      color = *ligma_render_check_color2 ();
       break;
 
-    case GIMP_CANVAS_PADDING_MODE_CUSTOM:
-    case GIMP_CANVAS_PADDING_MODE_RESET:
+    case LIGMA_CANVAS_PADDING_MODE_CUSTOM:
+    case LIGMA_CANVAS_PADDING_MODE_RESET:
       break;
     }
 
@@ -501,25 +501,25 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                 "padding-color", &color,
                 NULL);
 
-  gimp_canvas_set_padding (GIMP_CANVAS (shell->canvas),
+  ligma_canvas_set_padding (LIGMA_CANVAS (shell->canvas),
                            padding_mode, &color);
 
-  if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
-    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+  if (padding_mode != LIGMA_CANVAS_PADDING_MODE_DEFAULT)
+    ligma_display_shell_set_action_color (shell, "view-padding-color-menu",
                                          &options->padding_color);
   else
-    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+    ligma_display_shell_set_action_color (shell, "view-padding-color-menu",
                                          NULL);
 }
 
 void
-gimp_display_shell_get_padding (GimpDisplayShell      *shell,
-                                GimpCanvasPaddingMode *padding_mode,
-                                GimpRGB               *padding_color)
+ligma_display_shell_get_padding (LigmaDisplayShell      *shell,
+                                LigmaCanvasPaddingMode *padding_mode,
+                                LigmaRGB               *padding_color)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -531,12 +531,12 @@ gimp_display_shell_get_padding (GimpDisplayShell      *shell,
 }
 
 void
-gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
+ligma_display_shell_set_padding_in_show_all (LigmaDisplayShell *shell,
                                             gboolean          keep)
 {
-  GimpDisplayOptions *options;
+  LigmaDisplayOptions *options;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
 
@@ -546,13 +546,13 @@ gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
 
       if (shell->display)
         {
-          gimp_display_shell_scroll_clamp_and_update (shell);
-          gimp_display_shell_scrollbars_update (shell);
+          ligma_display_shell_scroll_clamp_and_update (shell);
+          ligma_display_shell_scrollbars_update (shell);
 
-          gimp_display_shell_expose_full (shell);
+          ligma_display_shell_expose_full (shell);
         }
 
-      gimp_display_shell_set_action_active (shell,
+      ligma_display_shell_set_action_active (shell,
                                             "view-padding-color-in-show-all",
                                             keep);
 
@@ -561,9 +561,9 @@ gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_padding_in_show_all (GimpDisplayShell *shell)
+ligma_display_shell_get_padding_in_show_all (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->padding_in_show_all;
 }
@@ -571,14 +571,14 @@ gimp_display_shell_get_padding_in_show_all (GimpDisplayShell *shell)
 
 /*  private functions  */
 
-static GimpDisplayOptions *
-appearance_get_options (GimpDisplayShell *shell)
+static LigmaDisplayOptions *
+appearance_get_options (LigmaDisplayShell *shell)
 {
-  if (gimp_display_get_image (shell->display))
+  if (ligma_display_get_image (shell->display))
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+      LigmaImageWindow *window = ligma_display_shell_get_window (shell);
 
-      if (window && gimp_image_window_get_fullscreen (window))
+      if (window && ligma_image_window_get_fullscreen (window))
         return shell->fullscreen_options;
       else
         return shell->options;

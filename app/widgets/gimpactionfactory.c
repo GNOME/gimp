@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactionfactory.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaactionfactory.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,54 +25,54 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpactionfactory.h"
-#include "gimpactiongroup.h"
-
-
-static void   gimp_action_factory_finalize (GObject *object);
+#include "ligmaactionfactory.h"
+#include "ligmaactiongroup.h"
 
 
-G_DEFINE_TYPE (GimpActionFactory, gimp_action_factory, GIMP_TYPE_OBJECT)
+static void   ligma_action_factory_finalize (GObject *object);
 
-#define parent_class gimp_action_factory_parent_class
+
+G_DEFINE_TYPE (LigmaActionFactory, ligma_action_factory, LIGMA_TYPE_OBJECT)
+
+#define parent_class ligma_action_factory_parent_class
 
 
 static void
-gimp_action_factory_class_init (GimpActionFactoryClass *klass)
+ligma_action_factory_class_init (LigmaActionFactoryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_action_factory_finalize;
+  object_class->finalize = ligma_action_factory_finalize;
 }
 
 static void
-gimp_action_factory_init (GimpActionFactory *factory)
+ligma_action_factory_init (LigmaActionFactory *factory)
 {
-  factory->gimp              = NULL;
+  factory->ligma              = NULL;
   factory->registered_groups = NULL;
 }
 
 static void
-gimp_action_factory_finalize (GObject *object)
+ligma_action_factory_finalize (GObject *object)
 {
-  GimpActionFactory *factory = GIMP_ACTION_FACTORY (object);
+  LigmaActionFactory *factory = LIGMA_ACTION_FACTORY (object);
   GList             *list;
 
   for (list = factory->registered_groups; list; list = g_list_next (list))
     {
-      GimpActionFactoryEntry *entry = list->data;
+      LigmaActionFactoryEntry *entry = list->data;
 
       g_free (entry->identifier);
       g_free (entry->label);
       g_free (entry->icon_name);
 
-      g_slice_free (GimpActionFactoryEntry, entry);
+      g_slice_free (LigmaActionFactoryEntry, entry);
     }
 
   g_list_free (factory->registered_groups);
@@ -81,37 +81,37 @@ gimp_action_factory_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GimpActionFactory *
-gimp_action_factory_new (Gimp *gimp)
+LigmaActionFactory *
+ligma_action_factory_new (Ligma *ligma)
 {
-  GimpActionFactory *factory;
+  LigmaActionFactory *factory;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  factory = g_object_new (GIMP_TYPE_ACTION_FACTORY, NULL);
+  factory = g_object_new (LIGMA_TYPE_ACTION_FACTORY, NULL);
 
-  factory->gimp = gimp;
+  factory->ligma = ligma;
 
   return factory;
 }
 
 void
-gimp_action_factory_group_register (GimpActionFactory         *factory,
+ligma_action_factory_group_register (LigmaActionFactory         *factory,
                                     const gchar               *identifier,
                                     const gchar               *label,
                                     const gchar               *icon_name,
-                                    GimpActionGroupSetupFunc   setup_func,
-                                    GimpActionGroupUpdateFunc  update_func)
+                                    LigmaActionGroupSetupFunc   setup_func,
+                                    LigmaActionGroupUpdateFunc  update_func)
 {
-  GimpActionFactoryEntry *entry;
+  LigmaActionFactoryEntry *entry;
 
-  g_return_if_fail (GIMP_IS_ACTION_FACTORY (factory));
+  g_return_if_fail (LIGMA_IS_ACTION_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (label != NULL);
   g_return_if_fail (setup_func != NULL);
   g_return_if_fail (update_func != NULL);
 
-  entry = g_slice_new0 (GimpActionFactoryEntry);
+  entry = g_slice_new0 (LigmaActionFactoryEntry);
 
   entry->identifier  = g_strdup (identifier);
   entry->label       = g_strdup (label);
@@ -123,25 +123,25 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
                                                entry);
 }
 
-GimpActionGroup *
-gimp_action_factory_group_new (GimpActionFactory *factory,
+LigmaActionGroup *
+ligma_action_factory_group_new (LigmaActionFactory *factory,
                                const gchar       *identifier,
                                gpointer           user_data)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_ACTION_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACTION_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
   for (list = factory->registered_groups; list; list = g_list_next (list))
     {
-      GimpActionFactoryEntry *entry = list->data;
+      LigmaActionFactoryEntry *entry = list->data;
 
       if (! strcmp (entry->identifier, identifier))
         {
-          GimpActionGroup *group;
+          LigmaActionGroup *group;
 
-          group = gimp_action_group_new (factory->gimp,
+          group = ligma_action_group_new (factory->ligma,
                                          entry->identifier,
                                          entry->label,
                                          entry->icon_name,

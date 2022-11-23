@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Major improvement to support polygonal segments
@@ -23,178 +23,178 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-floating-selection.h"
+#include "core/ligmachannel.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-floating-selection.h"
 
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolpolygon.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolpolygon.h"
 
-#include "gimpfreeselecttool.h"
-#include "gimpselectionoptions.h"
-#include "gimptoolcontrol.h"
+#include "ligmafreeselecttool.h"
+#include "ligmaselectionoptions.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-struct _GimpFreeSelectToolPrivate
+struct _LigmaFreeSelectToolPrivate
 {
   gboolean        started;
   gboolean        changed;
 
   /* The selection operation active when the tool was started */
-  GimpChannelOps  operation_at_start;
+  LigmaChannelOps  operation_at_start;
 };
 
 
-static void       gimp_free_select_tool_control         (GimpTool              *tool,
-                                                         GimpToolAction         action,
-                                                         GimpDisplay           *display);
-static void       gimp_free_select_tool_button_press    (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+static void       ligma_free_select_tool_control         (LigmaTool              *tool,
+                                                         LigmaToolAction         action,
+                                                         LigmaDisplay           *display);
+static void       ligma_free_select_tool_button_press    (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state,
-                                                         GimpButtonPressType    press_type,
-                                                         GimpDisplay           *display);
-static void       gimp_free_select_tool_button_release  (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
+                                                         LigmaButtonPressType    press_type,
+                                                         LigmaDisplay           *display);
+static void       ligma_free_select_tool_button_release  (LigmaTool              *tool,
+                                                         const LigmaCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state,
-                                                         GimpButtonReleaseType  release_type,
-                                                         GimpDisplay           *display);
-static void       gimp_free_select_tool_options_notify  (GimpTool              *tool,
-                                                         GimpToolOptions       *options,
+                                                         LigmaButtonReleaseType  release_type,
+                                                         LigmaDisplay           *display);
+static void       ligma_free_select_tool_options_notify  (LigmaTool              *tool,
+                                                         LigmaToolOptions       *options,
                                                          const GParamSpec      *pspec);
 
-static gboolean   gimp_free_select_tool_have_selection  (GimpSelectionTool     *sel_tool,
-                                                         GimpDisplay           *display);
+static gboolean   ligma_free_select_tool_have_selection  (LigmaSelectionTool     *sel_tool,
+                                                         LigmaDisplay           *display);
 
-static void       gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
-                                                         GimpDisplay           *display);
+static void       ligma_free_select_tool_change_complete (LigmaPolygonSelectTool *poly_sel,
+                                                         LigmaDisplay           *display);
 
-static void       gimp_free_select_tool_commit          (GimpFreeSelectTool    *free_sel,
-                                                         GimpDisplay           *display);
-static void       gimp_free_select_tool_halt            (GimpFreeSelectTool    *free_sel);
+static void       ligma_free_select_tool_commit          (LigmaFreeSelectTool    *free_sel,
+                                                         LigmaDisplay           *display);
+static void       ligma_free_select_tool_halt            (LigmaFreeSelectTool    *free_sel);
 
-static gboolean   gimp_free_select_tool_select          (GimpFreeSelectTool    *free_sel,
-                                                         GimpDisplay           *display);
+static gboolean   ligma_free_select_tool_select          (LigmaFreeSelectTool    *free_sel,
+                                                         LigmaDisplay           *display);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFreeSelectTool, gimp_free_select_tool,
-                            GIMP_TYPE_POLYGON_SELECT_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaFreeSelectTool, ligma_free_select_tool,
+                            LIGMA_TYPE_POLYGON_SELECT_TOOL)
 
-#define parent_class gimp_free_select_tool_parent_class
+#define parent_class ligma_free_select_tool_parent_class
 
 
 void
-gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
+ligma_free_select_tool_register (LigmaToolRegisterCallback  callback,
                                 gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_FREE_SELECT_TOOL,
-                GIMP_TYPE_SELECTION_OPTIONS,
-                gimp_selection_options_gui,
+  (* callback) (LIGMA_TYPE_FREE_SELECT_TOOL,
+                LIGMA_TYPE_SELECTION_OPTIONS,
+                ligma_selection_options_gui,
                 0,
-                "gimp-free-select-tool",
+                "ligma-free-select-tool",
                 _("Free Select"),
                 _("Free Select Tool: Select a hand-drawn region with free "
                   "and polygonal segments"),
                 N_("_Free Select"), "F",
-                NULL, GIMP_HELP_TOOL_FREE_SELECT,
-                GIMP_ICON_TOOL_FREE_SELECT,
+                NULL, LIGMA_HELP_TOOL_FREE_SELECT,
+                LIGMA_ICON_TOOL_FREE_SELECT,
                 data);
 }
 
 static void
-gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
+ligma_free_select_tool_class_init (LigmaFreeSelectToolClass *klass)
 {
-  GimpToolClass              *tool_class     = GIMP_TOOL_CLASS (klass);
-  GimpSelectionToolClass     *sel_class      = GIMP_SELECTION_TOOL_CLASS (klass);
-  GimpPolygonSelectToolClass *poly_sel_class = GIMP_POLYGON_SELECT_TOOL_CLASS (klass);
+  LigmaToolClass              *tool_class     = LIGMA_TOOL_CLASS (klass);
+  LigmaSelectionToolClass     *sel_class      = LIGMA_SELECTION_TOOL_CLASS (klass);
+  LigmaPolygonSelectToolClass *poly_sel_class = LIGMA_POLYGON_SELECT_TOOL_CLASS (klass);
 
-  tool_class->control             = gimp_free_select_tool_control;
-  tool_class->button_press        = gimp_free_select_tool_button_press;
-  tool_class->button_release      = gimp_free_select_tool_button_release;
-  tool_class->options_notify      = gimp_free_select_tool_options_notify;
+  tool_class->control             = ligma_free_select_tool_control;
+  tool_class->button_press        = ligma_free_select_tool_button_press;
+  tool_class->button_release      = ligma_free_select_tool_button_release;
+  tool_class->options_notify      = ligma_free_select_tool_options_notify;
 
-  sel_class->have_selection       = gimp_free_select_tool_have_selection;
+  sel_class->have_selection       = ligma_free_select_tool_have_selection;
 
-  poly_sel_class->change_complete = gimp_free_select_tool_change_complete;
+  poly_sel_class->change_complete = ligma_free_select_tool_change_complete;
 }
 
 static void
-gimp_free_select_tool_init (GimpFreeSelectTool *free_sel)
+ligma_free_select_tool_init (LigmaFreeSelectTool *free_sel)
 {
-  GimpTool          *tool     = GIMP_TOOL (free_sel);
-  GimpSelectionTool *sel_tool = GIMP_SELECTION_TOOL (tool);
+  LigmaTool          *tool     = LIGMA_TOOL (free_sel);
+  LigmaSelectionTool *sel_tool = LIGMA_SELECTION_TOOL (tool);
 
-  free_sel->priv = gimp_free_select_tool_get_instance_private (free_sel);
+  free_sel->priv = ligma_free_select_tool_get_instance_private (free_sel);
 
-  gimp_tool_control_set_preserve     (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask   (tool->control,
-                                      GIMP_DIRTY_SELECTION);
-  gimp_tool_control_set_dirty_action (tool->control,
-                                      GIMP_TOOL_ACTION_COMMIT);
-  gimp_tool_control_set_tool_cursor  (tool->control,
-                                      GIMP_TOOL_CURSOR_FREE_SELECT);
+  ligma_tool_control_set_preserve     (tool->control, FALSE);
+  ligma_tool_control_set_dirty_mask   (tool->control,
+                                      LIGMA_DIRTY_SELECTION);
+  ligma_tool_control_set_dirty_action (tool->control,
+                                      LIGMA_TOOL_ACTION_COMMIT);
+  ligma_tool_control_set_tool_cursor  (tool->control,
+                                      LIGMA_TOOL_CURSOR_FREE_SELECT);
 
   sel_tool->allow_move = TRUE;
 }
 
 static void
-gimp_free_select_tool_control (GimpTool       *tool,
-                               GimpToolAction  action,
-                               GimpDisplay    *display)
+ligma_free_select_tool_control (LigmaTool       *tool,
+                               LigmaToolAction  action,
+                               LigmaDisplay    *display)
 {
-  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
+  LigmaFreeSelectTool *free_sel = LIGMA_FREE_SELECT_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_free_select_tool_halt (free_sel);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_free_select_tool_halt (free_sel);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_free_select_tool_commit (free_sel, display);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_free_select_tool_commit (free_sel, display);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_free_select_tool_button_press (GimpTool            *tool,
-                                    const GimpCoords    *coords,
+ligma_free_select_tool_button_press (LigmaTool            *tool,
+                                    const LigmaCoords    *coords,
                                     guint32              time,
                                     GdkModifierType      state,
-                                    GimpButtonPressType  press_type,
-                                    GimpDisplay         *display)
+                                    LigmaButtonPressType  press_type,
+                                    LigmaDisplay         *display)
 {
-  GimpSelectionOptions      *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpFreeSelectTool        *free_sel = GIMP_FREE_SELECT_TOOL (tool);
-  GimpPolygonSelectTool     *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpFreeSelectToolPrivate *priv     = free_sel->priv;
+  LigmaSelectionOptions      *options  = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
+  LigmaFreeSelectTool        *free_sel = LIGMA_FREE_SELECT_TOOL (tool);
+  LigmaPolygonSelectTool     *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaFreeSelectToolPrivate *priv     = free_sel->priv;
 
-  if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
-      gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
+  if (press_type == LIGMA_BUTTON_PRESS_NORMAL &&
+      ligma_selection_tool_start_edit (LIGMA_SELECTION_TOOL (poly_sel),
                                       display, coords))
     return;
 
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+  LIGMA_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 press_type, display);
 
-  if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
-      gimp_polygon_select_tool_is_grabbed (poly_sel))
+  if (press_type == LIGMA_BUTTON_PRESS_NORMAL &&
+      ligma_polygon_select_tool_is_grabbed (poly_sel))
     {
       if (! priv->started)
         {
@@ -202,9 +202,9 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
           priv->operation_at_start = options->operation;
         }
 
-      gimp_selection_tool_start_change (
-        GIMP_SELECTION_TOOL (tool),
-        ! gimp_polygon_select_tool_is_closed (poly_sel),
+      ligma_selection_tool_start_change (
+        LIGMA_SELECTION_TOOL (tool),
+        ! ligma_polygon_select_tool_is_closed (poly_sel),
         priv->operation_at_start);
 
       priv->changed = FALSE;
@@ -212,32 +212,32 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 }
 
 static void
-gimp_free_select_tool_button_release (GimpTool              *tool,
-                                      const GimpCoords      *coords,
+ligma_free_select_tool_button_release (LigmaTool              *tool,
+                                      const LigmaCoords      *coords,
                                       guint32                time,
                                       GdkModifierType        state,
-                                      GimpButtonReleaseType  release_type,
-                                      GimpDisplay           *display)
+                                      LigmaButtonReleaseType  release_type,
+                                      LigmaDisplay           *display)
 {
-  GimpFreeSelectTool        *free_sel = GIMP_FREE_SELECT_TOOL (tool);
-  GimpPolygonSelectTool     *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpFreeSelectToolPrivate *priv     = free_sel->priv;
+  LigmaFreeSelectTool        *free_sel = LIGMA_FREE_SELECT_TOOL (tool);
+  LigmaPolygonSelectTool     *poly_sel = LIGMA_POLYGON_SELECT_TOOL (tool);
+  LigmaFreeSelectToolPrivate *priv     = free_sel->priv;
 
-  if (gimp_polygon_select_tool_is_grabbed (poly_sel))
+  if (ligma_polygon_select_tool_is_grabbed (poly_sel))
     {
-      gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (tool),
+      ligma_selection_tool_end_change (LIGMA_SELECTION_TOOL (tool),
                                       ! priv->changed);
 
       priv->changed = FALSE;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+  LIGMA_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                   release_type, display);
 }
 
 static void
-gimp_free_select_tool_options_notify (GimpTool         *tool,
-                                      GimpToolOptions  *options,
+ligma_free_select_tool_options_notify (LigmaTool         *tool,
+                                      LigmaToolOptions  *options,
                                       const GParamSpec *pspec)
 {
   if (! strcmp (pspec->name, "antialias") ||
@@ -246,96 +246,96 @@ gimp_free_select_tool_options_notify (GimpTool         *tool,
     {
       if (tool->display)
         {
-          gimp_free_select_tool_change_complete (
-            GIMP_POLYGON_SELECT_TOOL (tool), tool->display);
+          ligma_free_select_tool_change_complete (
+            LIGMA_POLYGON_SELECT_TOOL (tool), tool->display);
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+  LIGMA_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 }
 
 static gboolean
-gimp_free_select_tool_have_selection (GimpSelectionTool *sel_tool,
-                                      GimpDisplay       *display)
+ligma_free_select_tool_have_selection (LigmaSelectionTool *sel_tool,
+                                      LigmaDisplay       *display)
 {
-  GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (sel_tool);
-  GimpTool              *tool     = GIMP_TOOL (sel_tool);
+  LigmaPolygonSelectTool *poly_sel = LIGMA_POLYGON_SELECT_TOOL (sel_tool);
+  LigmaTool              *tool     = LIGMA_TOOL (sel_tool);
 
   if (display == tool->display)
     {
       gint n_points;
 
-      gimp_polygon_select_tool_get_points (poly_sel, NULL, &n_points);
+      ligma_polygon_select_tool_get_points (poly_sel, NULL, &n_points);
 
       if (n_points > 2)
         return TRUE;
     }
 
-  return GIMP_SELECTION_TOOL_CLASS (parent_class)->have_selection (sel_tool,
+  return LIGMA_SELECTION_TOOL_CLASS (parent_class)->have_selection (sel_tool,
                                                                    display);
 }
 
 static void
-gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
-                                       GimpDisplay           *display)
+ligma_free_select_tool_change_complete (LigmaPolygonSelectTool *poly_sel,
+                                       LigmaDisplay           *display)
 {
-  GimpFreeSelectTool        *free_sel = GIMP_FREE_SELECT_TOOL (poly_sel);
-  GimpFreeSelectToolPrivate *priv     = free_sel->priv;
+  LigmaFreeSelectTool        *free_sel = LIGMA_FREE_SELECT_TOOL (poly_sel);
+  LigmaFreeSelectToolPrivate *priv     = free_sel->priv;
 
   priv->changed = TRUE;
 
-  gimp_selection_tool_start_change (GIMP_SELECTION_TOOL (free_sel),
+  ligma_selection_tool_start_change (LIGMA_SELECTION_TOOL (free_sel),
                                     FALSE,
                                     priv->operation_at_start);
 
-  if (gimp_polygon_select_tool_is_closed (poly_sel))
-    gimp_free_select_tool_select (free_sel, display);
+  if (ligma_polygon_select_tool_is_closed (poly_sel))
+    ligma_free_select_tool_select (free_sel, display);
 
-  gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (free_sel),
+  ligma_selection_tool_end_change (LIGMA_SELECTION_TOOL (free_sel),
                                   FALSE);
 }
 
 static void
-gimp_free_select_tool_halt (GimpFreeSelectTool *free_sel)
+ligma_free_select_tool_halt (LigmaFreeSelectTool *free_sel)
 {
-  GimpFreeSelectToolPrivate *priv = free_sel->priv;
+  LigmaFreeSelectToolPrivate *priv = free_sel->priv;
 
   priv->started = FALSE;
 }
 
 static void
-gimp_free_select_tool_commit (GimpFreeSelectTool *free_sel,
-                              GimpDisplay        *display)
+ligma_free_select_tool_commit (LigmaFreeSelectTool *free_sel,
+                              LigmaDisplay        *display)
 {
-  GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (free_sel);
+  LigmaPolygonSelectTool *poly_sel = LIGMA_POLYGON_SELECT_TOOL (free_sel);
 
-  if (! gimp_polygon_select_tool_is_closed (poly_sel))
+  if (! ligma_polygon_select_tool_is_closed (poly_sel))
     {
-      if (gimp_free_select_tool_select (free_sel, display))
-        gimp_image_flush (gimp_display_get_image (display));
+      if (ligma_free_select_tool_select (free_sel, display))
+        ligma_image_flush (ligma_display_get_image (display));
     }
 }
 
 static gboolean
-gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
-                              GimpDisplay        *display)
+ligma_free_select_tool_select (LigmaFreeSelectTool *free_sel,
+                              LigmaDisplay        *display)
 {
-  GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
-  GimpTool                  *tool    = GIMP_TOOL (free_sel);
-  GimpFreeSelectToolPrivate *priv    = free_sel->priv;
-  GimpImage                 *image   = gimp_display_get_image (display);
-  const GimpVector2         *points;
+  LigmaSelectionOptions      *options = LIGMA_SELECTION_TOOL_GET_OPTIONS (free_sel);
+  LigmaTool                  *tool    = LIGMA_TOOL (free_sel);
+  LigmaFreeSelectToolPrivate *priv    = free_sel->priv;
+  LigmaImage                 *image   = ligma_display_get_image (display);
+  const LigmaVector2         *points;
   gint                       n_points;
 
-  gimp_polygon_select_tool_get_points (GIMP_POLYGON_SELECT_TOOL (free_sel),
+  ligma_polygon_select_tool_get_points (LIGMA_POLYGON_SELECT_TOOL (free_sel),
                                        &points, &n_points);
 
   if (n_points > 2)
     {
       /* prevent this change from halting the tool */
-      gimp_tool_control_push_preserve (tool->control, TRUE);
+      ligma_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_channel_select_polygon (gimp_image_get_mask (image),
+      ligma_channel_select_polygon (ligma_image_get_mask (image),
                                    C_("command", "Free Select"),
                                    n_points,
                                    points,
@@ -346,7 +346,7 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                                    options->feather_radius,
                                    TRUE);
 
-      gimp_tool_control_pop_preserve (tool->control);
+      ligma_tool_control_pop_preserve (tool->control);
 
       return TRUE;
     }

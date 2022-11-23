@@ -1,5 +1,5 @@
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #define LOAD_PROC      "file-bmp-load"
 #define SAVE_PROC      "file-bmp-save"
 #define PLUG_IN_BINARY "file-bmp"
-#define PLUG_IN_ROLE   "gimp-file-bmp"
+#define PLUG_IN_ROLE   "ligma-file-bmp"
 
 #define MAXCOLORS   256
 

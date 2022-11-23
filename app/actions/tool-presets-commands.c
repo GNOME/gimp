@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,51 +20,51 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptoolpreset.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatoolpreset.h"
 
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
+#include "widgets/ligmacontainereditor.h"
+#include "widgets/ligmacontainerview.h"
 
 #include "tool-presets-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-tool_presets_save_cmd_callback (GimpAction *action,
+tool_presets_save_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpToolPreset      *preset;
-  GimpToolInfo        *tool_info;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaToolPreset      *preset;
+  LigmaToolInfo        *tool_info;
 
-  context = gimp_container_view_get_context (editor->view);
+  context = ligma_container_view_get_context (editor->view);
 
-  preset    = gimp_context_get_tool_preset (context);
-  tool_info = gimp_context_get_tool (gimp_get_user_context (context->gimp));
+  preset    = ligma_context_get_tool_preset (context);
+  tool_info = ligma_context_get_tool (ligma_get_user_context (context->ligma));
 
   if (tool_info && preset)
     {
-      GimpToolInfo *preset_tool;
+      LigmaToolInfo *preset_tool;
 
-      preset_tool =  gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
+      preset_tool =  ligma_context_get_tool (LIGMA_CONTEXT (preset->tool_options));
 
       if (tool_info != preset_tool)
         {
-          gimp_message (context->gimp,
-                        G_OBJECT (editor), GIMP_MESSAGE_WARNING,
+          ligma_message (context->ligma,
+                        G_OBJECT (editor), LIGMA_MESSAGE_WARNING,
                         _("Can't save '%s' tool options to an "
                           "existing '%s' tool preset."),
                         tool_info->label,
@@ -72,24 +72,24 @@ tool_presets_save_cmd_callback (GimpAction *action,
           return;
         }
 
-      gimp_config_sync (G_OBJECT (tool_info->tool_options),
+      ligma_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (preset->tool_options), 0);
     }
 }
 
 void
-tool_presets_restore_cmd_callback (GimpAction *action,
+tool_presets_restore_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpToolPreset      *preset;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
+  LigmaToolPreset      *preset;
 
-  context = gimp_container_view_get_context (editor->view);
+  context = ligma_container_view_get_context (editor->view);
 
-  preset = gimp_context_get_tool_preset (context);
+  preset = ligma_context_get_tool_preset (context);
 
   if (preset)
-    gimp_context_tool_preset_changed (gimp_get_user_context (context->gimp));
+    ligma_context_tool_preset_changed (ligma_get_user_context (context->ligma));
 }

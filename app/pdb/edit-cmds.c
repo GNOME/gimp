@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,59 +25,59 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp-edit.h"
-#include "core/gimp.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpdrawable-edit.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligma-edit.h"
+#include "core/ligma.h"
+#include "core/ligmabuffer.h"
+#include "core/ligmadrawable-edit.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-edit_cut_invoker (GimpProcedure         *procedure,
-                  Gimp                  *gimp,
-                  GimpContext           *context,
-                  GimpProgress          *progress,
-                  const GimpValueArray  *args,
+static LigmaValueArray *
+edit_cut_invoker (LigmaProcedure         *procedure,
+                  Ligma                  *ligma,
+                  LigmaContext           *context,
+                  LigmaProgress          *progress,
+                  const LigmaValueArray  *args,
                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_drawables;
-  const GimpItem **drawables;
+  const LigmaItem **drawables;
   gboolean non_empty = FALSE;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  num_drawables = g_value_get_int (ligma_value_array_index (args, 0));
+  drawables = (const LigmaItem **) ligma_value_get_object_array (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpImage *image         = NULL;
+      LigmaImage *image         = NULL;
       GList     *drawable_list = NULL;
       gint       i;
 
       for (i = 0; i < num_drawables; i++)
         {
-          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                           GIMP_PDB_ITEM_CONTENT, error) ||
-              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+          if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                           LIGMA_PDB_ITEM_CONTENT, error) ||
+              ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error))
             {
               success = FALSE;
               break;
@@ -85,13 +85,13 @@ edit_cut_invoker (GimpProcedure         *procedure,
 
           if (! image)
             {
-              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+              image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
             }
-          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+          else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
             {
               success = FALSE;
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     _("All specified drawables must belong to the same image."));
               break;
             }
@@ -103,12 +103,12 @@ edit_cut_invoker (GimpProcedure         *procedure,
         {
           GError *my_error = NULL;
 
-          non_empty = gimp_edit_cut (image, drawable_list, context, &my_error) != NULL;
+          non_empty = ligma_edit_cut (image, drawable_list, context, &my_error) != NULL;
 
           if (! non_empty)
             {
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     my_error->message);
               g_clear_error (&my_error);
             }
@@ -120,50 +120,50 @@ edit_cut_invoker (GimpProcedure         *procedure,
       g_list_free (drawable_list);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_copy_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+edit_copy_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_drawables;
-  const GimpItem **drawables;
+  const LigmaItem **drawables;
   gboolean non_empty = FALSE;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  num_drawables = g_value_get_int (ligma_value_array_index (args, 0));
+  drawables = (const LigmaItem **) ligma_value_get_object_array (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpImage *image          = NULL;
+      LigmaImage *image          = NULL;
       GList     *drawables_list = NULL;
       gint       i;
 
       for (i = 0; i < num_drawables; i++)
         {
-          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
+          if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL, 0, error))
             {
               success = FALSE;
               break;
             }
           if (image == NULL)
             {
-              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+              image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
             }
-          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+          else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
             {
               success = FALSE;
               break;
@@ -175,12 +175,12 @@ edit_copy_invoker (GimpProcedure         *procedure,
         {
           GError *my_error = NULL;
 
-          non_empty = gimp_edit_copy (image, drawables_list, context, &my_error) != NULL;
+          non_empty = ligma_edit_copy (image, drawables_list, context, &my_error) != NULL;
 
           if (! non_empty)
             {
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     my_error->message);
               g_clear_error (&my_error);
             }
@@ -191,80 +191,80 @@ edit_copy_invoker (GimpProcedure         *procedure,
       g_list_free (drawables_list);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_copy_visible_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+edit_copy_visible_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gboolean non_empty = FALSE;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       GError *my_error = NULL;
 
-      non_empty = gimp_edit_copy_visible (image, context, &my_error) != NULL;
+      non_empty = ligma_edit_copy_visible (image, context, &my_error) != NULL;
 
       if (! non_empty)
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_paste_invoker (GimpProcedure         *procedure,
-                    Gimp                  *gimp,
-                    GimpContext           *context,
-                    GimpProgress          *progress,
-                    const GimpValueArray  *args,
+static LigmaValueArray *
+edit_paste_invoker (LigmaProcedure         *procedure,
+                    Ligma                  *ligma,
+                    LigmaContext           *context,
+                    LigmaProgress          *progress,
+                    const LigmaValueArray  *args,
                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean paste_into;
   gint num_layers = 0;
-  GimpLayer **layers = NULL;
+  LigmaLayer **layers = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  paste_into = g_value_get_boolean (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  paste_into = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpObject *paste = gimp_get_clipboard_object (gimp);
+      LigmaObject *paste = ligma_get_clipboard_object (ligma);
 
       if (paste &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GList *drawables = NULL;
           GList *list;
@@ -273,11 +273,11 @@ edit_paste_invoker (GimpProcedure         *procedure,
           if (drawable != NULL)
             drawables = g_list_prepend (drawables, drawable);
 
-          list = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+          list = ligma_edit_paste (ligma_item_get_image (LIGMA_ITEM (drawable)),
                                   drawables, paste,
                                   paste_into ?
-                                  GIMP_PASTE_TYPE_FLOATING_INTO :
-                                  GIMP_PASTE_TYPE_FLOATING,
+                                  LIGMA_PASTE_TYPE_FLOATING_INTO :
+                                  LIGMA_PASTE_TYPE_FLOATING,
                                   context, FALSE,
                                   -1, -1, -1, -1);
           g_list_free (drawables);
@@ -286,7 +286,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
             success = FALSE;
 
           num_layers = g_list_length (list);
-          layers = g_new (GimpLayer *, num_layers);
+          layers = g_new (LigmaLayer *, num_layers);
 
           for (i = 0; i < num_layers; i++, list = g_list_next (list))
             layers[i] = g_object_ref (list->data);
@@ -297,79 +297,79 @@ edit_paste_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), num_layers);
+      ligma_value_take_object_array (ligma_value_array_index (return_vals, 2), LIGMA_TYPE_LAYER, (GObject **) layers, num_layers);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+edit_paste_as_new_image_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  GimpObject *paste = gimp_get_clipboard_object (gimp);
+  LigmaObject *paste = ligma_get_clipboard_object (ligma);
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = ligma_edit_paste_as_new_image (ligma, paste);
 
       if (! image)
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_named_cut_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+edit_named_cut_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_drawables;
-  const GimpItem **drawables;
+  const LigmaItem **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
+  num_drawables = g_value_get_int (ligma_value_array_index (args, 0));
+  drawables = (const LigmaItem **) ligma_value_get_object_array (ligma_value_array_index (args, 1));
+  buffer_name = g_value_get_string (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpImage *image         = NULL;
+      LigmaImage *image         = NULL;
       GList     *drawable_list = NULL;
       gint       i;
 
       for (i = 0; i < num_drawables; i++)
         {
-          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                           GIMP_PDB_ITEM_CONTENT, error) ||
-              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+          if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                           LIGMA_PDB_ITEM_CONTENT, error) ||
+              ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error))
             {
               success = FALSE;
               break;
@@ -377,13 +377,13 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
 
           if (! image)
             {
-              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+              image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
             }
-          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+          else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
             {
               success = FALSE;
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     _("All specified drawables must belong to the same image."));
               break;
             }
@@ -395,7 +395,7 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
         {
           GError *my_error = NULL;
 
-          real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+          real_name = (gchar *) ligma_edit_named_cut (image, buffer_name,
                                                      drawable_list, context, &my_error);
 
           if (real_name)
@@ -404,8 +404,8 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
             }
           else
             {
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     my_error->message);
               g_clear_error (&my_error);
             }
@@ -417,43 +417,43 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
       g_list_free (drawable_list);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), real_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), real_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_named_copy_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+edit_named_copy_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_drawables;
-  const GimpItem **drawables;
+  const LigmaItem **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
+  num_drawables = g_value_get_int (ligma_value_array_index (args, 0));
+  drawables = (const LigmaItem **) ligma_value_get_object_array (ligma_value_array_index (args, 1));
+  buffer_name = g_value_get_string (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpImage *image         = NULL;
+      LigmaImage *image         = NULL;
       GList     *drawable_list = NULL;
       gint       i;
 
       for (i = 0; i < num_drawables; i++)
         {
-          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+          if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
                                            0, error))
             {
               success = FALSE;
@@ -462,13 +462,13 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
 
           if (! image)
             {
-              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+              image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
             }
-          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+          else if (image != ligma_item_get_image (LIGMA_ITEM (drawables[i])))
             {
               success = FALSE;
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     _("All specified drawables must belong to the same image."));
               break;
             }
@@ -480,7 +480,7 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
         {
           GError *my_error = NULL;
 
-          real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+          real_name = (gchar *) ligma_edit_named_copy (image, buffer_name,
                                                       drawable_list, context, &my_error);
 
           if (real_name)
@@ -489,8 +489,8 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
             }
           else
             {
-              gimp_message_literal (gimp,
-                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+              ligma_message_literal (ligma,
+                                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                     my_error->message);
               g_clear_error (&my_error);
             }
@@ -502,37 +502,37 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
       g_list_free (drawable_list);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), real_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), real_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_named_copy_visible_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+edit_named_copy_visible_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  buffer_name = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
       GError *my_error = NULL;
 
-      real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+      real_name = (gchar *) ligma_edit_named_copy_visible (image, buffer_name,
                                                           context, &my_error);
 
       if (real_name)
@@ -541,49 +541,49 @@ edit_named_copy_visible_invoker (GimpProcedure         *procedure,
         }
       else
         {
-          gimp_message_literal (gimp,
-                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (ligma,
+                                G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                                 my_error->message);
           g_clear_error (&my_error);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), real_name);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), real_name);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_named_paste_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+edit_named_paste_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   const gchar *buffer_name;
   gboolean paste_into;
-  GimpLayer *floating_sel = NULL;
+  LigmaLayer *floating_sel = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
-  paste_into = g_value_get_boolean (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  buffer_name = g_value_get_string (ligma_value_array_index (args, 1));
+  paste_into = g_value_get_boolean (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+      LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
       if (buffer &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           GList *drawables = NULL;
           GList *layers;
@@ -591,11 +591,11 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
           if (drawable != NULL)
             drawables = g_list_prepend (drawables, drawable);
 
-          layers = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                    drawables, GIMP_OBJECT (buffer),
+          layers = ligma_edit_paste (ligma_item_get_image (LIGMA_ITEM (drawable)),
+                                    drawables, LIGMA_OBJECT (buffer),
                                     paste_into ?
-                                    GIMP_PASTE_TYPE_FLOATING_INTO :
-                                    GIMP_PASTE_TYPE_FLOATING,
+                                    LIGMA_PASTE_TYPE_FLOATING_INTO :
+                                    LIGMA_PASTE_TYPE_FLOATING,
                                     context, FALSE,
                                     -1, -1, -1, -1);
           g_list_free (drawables);
@@ -611,37 +611,37 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), floating_sel);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), floating_sel);
 
   return return_vals;
 }
 
-static GimpValueArray *
-edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+edit_named_paste_as_new_image_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *buffer_name;
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
 
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
+  buffer_name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+      LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
       if (buffer)
         {
-          image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
+          image = ligma_edit_paste_as_new_image (ligma, LIGMA_OBJECT (buffer));
 
           if (! image)
             success = FALSE;
@@ -650,376 +650,376 @@ edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), image);
 
   return return_vals;
 }
 
 void
-register_edit_procs (GimpPDB *pdb)
+register_edit_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-edit-cut
+   * ligma-edit-cut
    */
-  procedure = gimp_procedure_new (edit_cut_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-cut");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_cut_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-cut");
+  ligma_procedure_set_static_help (procedure,
                                   "Cut from the specified drawables.",
-                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection and only one specified drawable, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to cut from.",
+                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawables and placed in an internal LIGMA edit buffer. It can subsequently be retrieved using the 'ligma-edit-paste' command. If there is no selection and only one specified drawable, then the specified drawable will be removed and its contents stored in the internal LIGMA edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to cut from.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "The drawables to cut from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if the cut was successful, FALSE if there was nothing to copy from",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-copy
+   * ligma-edit-copy
    */
-  procedure = gimp_procedure_new (edit_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-copy");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_copy_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-copy");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy from the specified drawables.",
-                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawables' contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to copy from. All the drawables must belong to the same image.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawables and placed in an internal LIGMA edit buffer. It can subsequently be retrieved using the 'ligma-edit-paste' command. If there is no selection, then the specified drawables' contents will be stored in the internal LIGMA edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to copy from. All the drawables must belong to the same image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables to save",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "Drawables to copy from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if the cut was successful, FALSE if there was nothing to copy from",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-copy-visible
+   * ligma-edit-copy-visible
    */
-  procedure = gimp_procedure_new (edit_copy_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-copy-visible");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_copy_visible_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-copy-visible");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy from the projection.",
-                                  "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal LIGMA edit buffer. It can subsequently be retrieved using the 'ligma-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal LIGMA edit buffer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to copy from",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if the copy was successful",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-paste
+   * ligma-edit-paste
    */
-  procedure = gimp_procedure_new (edit_paste_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-paste");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_paste_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-paste");
+  ligma_procedure_set_static_help (procedure,
                                   "Paste buffer to the specified drawable.",
-                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
+                                  "This procedure pastes a copy of the internal LIGMA edit buffer to the specified drawable. The LIGMA edit buffer will be empty unless a call was previously made to either 'ligma-edit-cut' or 'ligma-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
                                   "This procedure returns the new layers (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to paste to",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("paste-into",
                                                      "paste into",
                                                      "Clear selection, or paste behind it?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-layers",
                                                      "num layers",
                                                      "The newly pasted layers",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_object_array ("layers",
                                                                  "layers",
                                                                  "The list of pasted layers.",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                 LIGMA_TYPE_LAYER,
+                                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-paste-as-new-image
+   * ligma-edit-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_paste_as_new_image_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-paste-as-new-image");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_paste_as_new_image_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-paste-as-new-image");
+  ligma_procedure_set_static_help (procedure,
                                   "Paste buffer to a new image.",
-                                  "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
+                                  "This procedure pastes a copy of the internal LIGMA edit buffer to a new image. The LIGMA edit buffer will be empty unless a call was previously made to either 'ligma-edit-cut' or 'ligma-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image ("image",
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_image ("image",
                                                           "image",
                                                           "The new image",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-cut
+   * ligma-edit-named-cut
    */
-  procedure = gimp_procedure_new (edit_named_cut_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-cut");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_named_cut_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-named-cut");
+  ligma_procedure_set_static_help (procedure,
                                   "Cut into a named buffer.",
-                                  "This procedure works like 'gimp-edit-cut', but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  "This procedure works like 'ligma-edit-cut', but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "The drawables to cut from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("buffer-name",
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The name of the buffer to create",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("real-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("real-name",
                                                            "real name",
                                                            "The real name given to the buffer, or NULL if the cut failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-copy
+   * ligma-edit-named-copy
    */
-  procedure = gimp_procedure_new (edit_named_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-copy");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_named_copy_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-named-copy");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy into a named buffer.",
-                                  "This procedure works like 'gimp-edit-copy', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  "This procedure works like 'ligma-edit-copy', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "The drawables to copy from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("buffer-name",
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The name of the buffer to create",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("real-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("real-name",
                                                            "real name",
                                                            "The real name given to the buffer, or NULL if the copy failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-copy-visible
+   * ligma-edit-named-copy-visible
    */
-  procedure = gimp_procedure_new (edit_named_copy_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-copy-visible");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_named_copy_visible_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-named-copy-visible");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy from the projection into a named buffer.",
-                                  "This procedure works like 'gimp-edit-copy-visible', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  "This procedure works like 'ligma-edit-copy-visible', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to copy from",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("buffer-name",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The name of the buffer to create",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("real-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("real-name",
                                                            "real name",
                                                            "The real name given to the buffer, or NULL if the copy failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-paste
+   * ligma-edit-named-paste
    */
-  procedure = gimp_procedure_new (edit_named_paste_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-paste");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_named_paste_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-named-paste");
+  ligma_procedure_set_static_help (procedure,
                                   "Paste named buffer to the specified drawable.",
-                                  "This procedure works like 'gimp-edit-paste' but pastes a named buffer instead of the global buffer.",
+                                  "This procedure works like 'ligma-edit-paste' but pastes a named buffer instead of the global buffer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to paste to",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("buffer-name",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The name of the buffer to paste",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("paste-into",
                                                      "paste into",
                                                      "Clear selection, or paste behind it?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("floating-sel",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("floating-sel",
                                                           "floating sel",
                                                           "The new floating selection",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-paste-as-new-image
+   * ligma-edit-named-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-paste-as-new-image");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (edit_named_paste_as_new_image_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-edit-named-paste-as-new-image");
+  ligma_procedure_set_static_help (procedure,
                                   "Paste named buffer to a new image.",
-                                  "This procedure works like 'gimp-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
+                                  "This procedure works like 'ligma-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("buffer-name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The name of the buffer to paste",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image ("image",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_image ("image",
                                                           "image",
                                                           "The new image",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

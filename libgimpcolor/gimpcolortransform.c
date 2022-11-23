@@ -1,10 +1,10 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcolortransform.c
- * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
+ * ligmacolortransform.c
+ * Copyright (C) 2014  Michael Natterer <mitch@ligma.org>
  *                     Elle Stone <ellestone@ninedegreesbelow.com>
- *                     Øyvind Kolås <pippin@gimp.org>
+ *                     Øyvind Kolås <pippin@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,30 +30,30 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimpcolorprofile.h"
-#include "gimpcolortransform.h"
+#include "ligmacolorprofile.h"
+#include "ligmacolortransform.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolortransform
- * @title: GimpColorTransform
+ * SECTION: ligmacolortransform
+ * @title: LigmaColorTransform
  * @short_description: Definitions and Functions relating to LCMS.
  *
  * Definitions and Functions relating to LCMS.
  **/
 
 /**
- * GimpColorTransform:
+ * LigmaColorTransform:
  *
  * Simply a typedef to #gpointer, but actually is a cmsHTRANSFORM. It's
- * used in public GIMP APIs in order to avoid having to include LCMS
+ * used in public LIGMA APIs in order to avoid having to include LCMS
  * headers.
  **/
 
@@ -65,12 +65,12 @@ enum
 };
 
 
-struct _GimpColorTransformPrivate
+struct _LigmaColorTransformPrivate
 {
-  GimpColorProfile *src_profile;
+  LigmaColorProfile *src_profile;
   const Babl       *src_format;
 
-  GimpColorProfile *dest_profile;
+  LigmaColorProfile *dest_profile;
   const Babl       *dest_format;
 
   cmsHTRANSFORM     transform;
@@ -78,15 +78,15 @@ struct _GimpColorTransformPrivate
 };
 
 
-static void   gimp_color_transform_finalize (GObject *object);
+static void   ligma_color_transform_finalize (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorTransform, gimp_color_transform,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorTransform, ligma_color_transform,
                             G_TYPE_OBJECT)
 
-#define parent_class gimp_color_transform_parent_class
+#define parent_class ligma_color_transform_parent_class
 
-static guint gimp_color_transform_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_color_transform_signals[LAST_SIGNAL] = { 0 };
 
 static gchar *lcms_last_error = NULL;
 
@@ -112,17 +112,17 @@ lcms_error_handler (cmsContext       ContextID,
 }
 
 static void
-gimp_color_transform_class_init (GimpColorTransformClass *klass)
+ligma_color_transform_class_init (LigmaColorTransformClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_color_transform_finalize;
+  object_class->finalize = ligma_color_transform_finalize;
 
-  gimp_color_transform_signals[PROGRESS] =
+  ligma_color_transform_signals[PROGRESS] =
     g_signal_new ("progress",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorTransformClass,
+                  G_STRUCT_OFFSET (LigmaColorTransformClass,
                                    progress),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
@@ -132,15 +132,15 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
 }
 
 static void
-gimp_color_transform_init (GimpColorTransform *transform)
+ligma_color_transform_init (LigmaColorTransform *transform)
 {
-  transform->priv = gimp_color_transform_get_instance_private (transform);
+  transform->priv = ligma_color_transform_get_instance_private (transform);
 }
 
 static void
-gimp_color_transform_finalize (GObject *object)
+ligma_color_transform_finalize (GObject *object)
 {
-  GimpColorTransform *transform = GIMP_COLOR_TRANSFORM (object);
+  LigmaColorTransform *transform = LIGMA_COLOR_TRANSFORM (object);
 
   g_clear_object (&transform->priv->src_profile);
   g_clear_object (&transform->priv->dest_profile);
@@ -152,10 +152,10 @@ gimp_color_transform_finalize (GObject *object)
 
 
 /**
- * gimp_color_transform_new:
- * @src_profile:      the source #GimpColorProfile
+ * ligma_color_transform_new:
+ * @src_profile:      the source #LigmaColorProfile
  * @src_format:       the source #Babl format
- * @dest_profile:     the destination #GimpColorProfile
+ * @dest_profile:     the destination #LigmaColorProfile
  * @dest_format:      the destination #Babl format
  * @rendering_intent: the rendering intent
  * @flags:            transform flags
@@ -168,39 +168,39 @@ gimp_color_transform_finalize (GObject *object)
  * encodings to transform.
  *
  * Note: this function used to return %NULL if
- * gimp_color_transform_can_gegl_copy() returned %TRUE for
+ * ligma_color_transform_can_gegl_copy() returned %TRUE for
  * @src_profile and @dest_profile. This is no longer the case because
  * special care has to be taken not to perform multiple implicit color
  * transforms caused by babl formats with color spaces. Now, it always
  * returns a non-%NULL transform and the code takes care of doing only
  * exactly the requested color transform.
  *
- * Returns: (nullable): the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: (nullable): the #LigmaColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
-GimpColorTransform *
-gimp_color_transform_new (GimpColorProfile         *src_profile,
+LigmaColorTransform *
+ligma_color_transform_new (LigmaColorProfile         *src_profile,
                           const Babl               *src_format,
-                          GimpColorProfile         *dest_profile,
+                          LigmaColorProfile         *dest_profile,
                           const Babl               *dest_format,
-                          GimpColorRenderingIntent  rendering_intent,
-                          GimpColorTransformFlags   flags)
+                          LigmaColorRenderingIntent  rendering_intent,
+                          LigmaColorTransformFlags   flags)
 {
-  GimpColorTransform        *transform;
-  GimpColorTransformPrivate *priv;
+  LigmaColorTransform        *transform;
+  LigmaColorTransformPrivate *priv;
   cmsHPROFILE                src_lcms;
   cmsHPROFILE                dest_lcms;
   cmsUInt32Number            lcms_src_format;
   cmsUInt32Number            lcms_dest_format;
   GError                    *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (dest_profile), NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
 
-  transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
+  transform = g_object_new (LIGMA_TYPE_COLOR_TRANSFORM, NULL);
 
   priv = transform->priv;
 
@@ -210,9 +210,9 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
    * and process_buffer().
    */
 
-  priv->src_format = gimp_color_profile_get_format (src_profile,
+  priv->src_format = ligma_color_profile_get_format (src_profile,
                                                     src_format,
-                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                     &error);
   if (! priv->src_format)
     {
@@ -221,7 +221,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
       g_clear_error (&error);
     }
 
-  priv->dest_format = gimp_color_profile_get_format (dest_profile,
+  priv->dest_format = ligma_color_profile_get_format (dest_profile,
                                                      dest_format,
                                                      rendering_intent,
                                                      &error);
@@ -232,7 +232,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
       g_clear_error (&error);
     }
 
-  if (! g_getenv ("GIMP_COLOR_TRANSFORM_DISABLE_BABL") &&
+  if (! g_getenv ("LIGMA_COLOR_TRANSFORM_DISABLE_BABL") &&
       priv->src_format && priv->dest_format)
     {
       priv->fish = babl_fish (priv->src_format,
@@ -240,26 +240,26 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
       g_debug ("%s: using babl for '%s' -> '%s'",
                G_STRFUNC,
-               gimp_color_profile_get_label (src_profile),
-               gimp_color_profile_get_label (dest_profile));
+               ligma_color_profile_get_label (src_profile),
+               ligma_color_profile_get_label (dest_profile));
 
       return transform;
     }
 
   /* see above: when using lcms, don't mess with formats with color
-   * spaces, gimp_color_profile_get_lcms_format() might return the
+   * spaces, ligma_color_profile_get_lcms_format() might return the
    * same format and it must be without space
    */
   src_format  = babl_format_with_space ((const gchar *) src_format,  NULL);
   dest_format = babl_format_with_space ((const gchar *) dest_format, NULL);
 
-  priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
+  priv->src_format  = ligma_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
-  priv->dest_format = gimp_color_profile_get_lcms_format (dest_format,
+  priv->dest_format = ligma_color_profile_get_lcms_format (dest_format,
                                                           &lcms_dest_format);
 
-  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+  src_lcms  = ligma_color_profile_get_lcms_profile (src_profile);
+  dest_lcms = ligma_color_profile_get_lcms_profile (dest_profile);
 
   lcms_error_clear ();
 
@@ -290,66 +290,66 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 }
 
 /**
- * gimp_color_transform_new_proofing:
- * @src_profile:    the source #GimpColorProfile
+ * ligma_color_transform_new_proofing:
+ * @src_profile:    the source #LigmaColorProfile
  * @src_format:     the source #Babl format
- * @dest_profile:   the destination #GimpColorProfile
+ * @dest_profile:   the destination #LigmaColorProfile
  * @dest_format:    the destination #Babl format
- * @proof_profile:  the proof #GimpColorProfile
+ * @proof_profile:  the proof #LigmaColorProfile
  * @proof_intent:   the proof intent
  * @display_intent: the display intent
  * @flags:          transform flags
  *
  * This function creates a simulation / proofing color transform.
  *
- * See gimp_color_transform_new() about the color spaces to transform
+ * See ligma_color_transform_new() about the color spaces to transform
  * between.
  *
- * Returns: (nullable): the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: (nullable): the #LigmaColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
-GimpColorTransform *
-gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
+LigmaColorTransform *
+ligma_color_transform_new_proofing (LigmaColorProfile         *src_profile,
                                    const Babl               *src_format,
-                                   GimpColorProfile         *dest_profile,
+                                   LigmaColorProfile         *dest_profile,
                                    const Babl               *dest_format,
-                                   GimpColorProfile         *proof_profile,
-                                   GimpColorRenderingIntent  proof_intent,
-                                   GimpColorRenderingIntent  display_intent,
-                                   GimpColorTransformFlags   flags)
+                                   LigmaColorProfile         *proof_profile,
+                                   LigmaColorRenderingIntent  proof_intent,
+                                   LigmaColorRenderingIntent  display_intent,
+                                   LigmaColorTransformFlags   flags)
 {
-  GimpColorTransform        *transform;
-  GimpColorTransformPrivate *priv;
+  LigmaColorTransform        *transform;
+  LigmaColorTransformPrivate *priv;
   cmsHPROFILE                src_lcms;
   cmsHPROFILE                dest_lcms;
   cmsHPROFILE                proof_lcms;
   cmsUInt32Number            lcms_src_format;
   cmsUInt32Number            lcms_dest_format;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (dest_profile), NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (proof_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (proof_profile), NULL);
 
-  transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
+  transform = g_object_new (LIGMA_TYPE_COLOR_TRANSFORM, NULL);
 
   priv = transform->priv;
 
-  src_lcms   = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms  = gimp_color_profile_get_lcms_profile (dest_profile);
-  proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
+  src_lcms   = ligma_color_profile_get_lcms_profile (src_profile);
+  dest_lcms  = ligma_color_profile_get_lcms_profile (dest_profile);
+  proof_lcms = ligma_color_profile_get_lcms_profile (proof_profile);
 
-  /* see gimp_color_transform_new(), we can't have color spaces
+  /* see ligma_color_transform_new(), we can't have color spaces
    * on the formats
    */
   src_format  = babl_format_with_space ((const gchar *) src_format,  NULL);
   dest_format = babl_format_with_space ((const gchar *) dest_format, NULL);
 
-  priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
+  priv->src_format  = ligma_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
-  priv->dest_format = gimp_color_profile_get_lcms_format (dest_format,
+  priv->dest_format = ligma_color_profile_get_lcms_format (dest_format,
                                                           &lcms_dest_format);
 
   lcms_error_clear ();
@@ -384,8 +384,8 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
 }
 
 /**
- * gimp_color_transform_process_pixels:
- * @transform:   a #GimpColorTransform
+ * ligma_color_transform_process_pixels:
+ * @transform:   a #LigmaColorTransform
  * @src_format:  #Babl format of @src_pixels
  * @src_pixels:  pointer to the source pixels
  * @dest_format: #Babl format of @dest_pixels
@@ -394,7 +394,7 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
  *
  * This function transforms a contiguous line of pixels.
  *
- * See gimp_color_transform_new(): only the pixel encoding of
+ * See ligma_color_transform_new(): only the pixel encoding of
  * @src_format and @dest_format is honored, their color spaces are
  * ignored. The transform always takes place between the color spaces
  * determined by @transform's color profiles.
@@ -402,18 +402,18 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
  * Since: 2.10
  **/
 void
-gimp_color_transform_process_pixels (GimpColorTransform *transform,
+ligma_color_transform_process_pixels (LigmaColorTransform *transform,
                                      const Babl         *src_format,
                                      gconstpointer       src_pixels,
                                      const Babl         *dest_format,
                                      gpointer            dest_pixels,
                                      gsize               length)
 {
-  GimpColorTransformPrivate *priv;
+  LigmaColorTransformPrivate *priv;
   gpointer                  *src;
   gpointer                  *dest;
 
-  g_return_if_fail (GIMP_IS_COLOR_TRANSFORM (transform));
+  g_return_if_fail (LIGMA_IS_COLOR_TRANSFORM (transform));
   g_return_if_fail (src_format != NULL);
   g_return_if_fail (src_pixels != NULL);
   g_return_if_fail (dest_format != NULL);
@@ -480,8 +480,8 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
 }
 
 /**
- * gimp_color_transform_process_buffer:
- * @transform:   a #GimpColorTransform
+ * ligma_color_transform_process_buffer:
+ * @transform:   a #LigmaColorTransform
  * @src_buffer:  source #GeglBuffer
  * @src_rect:    rectangle in @src_buffer
  * @dest_buffer: destination #GeglBuffer
@@ -489,7 +489,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
  *
  * This function transforms buffer into another buffer.
  *
- * See gimp_color_transform_new(): only the pixel encoding of
+ * See ligma_color_transform_new(): only the pixel encoding of
  * @src_buffer's and @dest_buffer's formats honored, their color
  * spaces are ignored. The transform always takes place between the
  * color spaces determined by @transform's color profiles.
@@ -497,20 +497,20 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
  * Since: 2.10
  **/
 void
-gimp_color_transform_process_buffer (GimpColorTransform  *transform,
+ligma_color_transform_process_buffer (LigmaColorTransform  *transform,
                                      GeglBuffer          *src_buffer,
                                      const GeglRectangle *src_rect,
                                      GeglBuffer          *dest_buffer,
                                      const GeglRectangle *dest_rect)
 {
-  GimpColorTransformPrivate *priv;
+  LigmaColorTransformPrivate *priv;
   const Babl                *src_format;
   const Babl                *dest_format;
   GeglBufferIterator        *iter;
   gint                       total_pixels;
   gint                       done_pixels = 0;
 
-  g_return_if_fail (GIMP_IS_COLOR_TRANSFORM (transform));
+  g_return_if_fail (LIGMA_IS_COLOR_TRANSFORM (transform));
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
@@ -568,7 +568,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
           done_pixels += iter->items[0].roi.width * iter->items[0].roi.height;
 
-          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+          g_signal_emit (transform, ligma_color_transform_signals[PROGRESS], 0,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
@@ -595,22 +595,22 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
           done_pixels += iter->items[0].roi.width * iter->items[0].roi.height;
 
-          g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+          g_signal_emit (transform, ligma_color_transform_signals[PROGRESS], 0,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
     }
 
-  g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
+  g_signal_emit (transform, ligma_color_transform_signals[PROGRESS], 0,
                  1.0);
 }
 
 /**
- * gimp_color_transform_can_gegl_copy:
- * @src_profile:  source #GimpColorProfile
- * @dest_profile: destination #GimpColorProfile
+ * ligma_color_transform_can_gegl_copy:
+ * @src_profile:  source #LigmaColorProfile
+ * @dest_profile: destination #LigmaColorProfile
  *
- * This function checks if a GimpColorTransform is needed at all.
+ * This function checks if a LigmaColorTransform is needed at all.
  *
  * Returns: %TRUE if pixels can be correctly converted between
  *               @src_profile and @dest_profile by simply using
@@ -619,20 +619,20 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
  * Since: 2.10
  **/
 gboolean
-gimp_color_transform_can_gegl_copy (GimpColorProfile *src_profile,
-                                    GimpColorProfile *dest_profile)
+ligma_color_transform_can_gegl_copy (LigmaColorProfile *src_profile,
+                                    LigmaColorProfile *dest_profile)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), FALSE);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (src_profile), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (dest_profile), FALSE);
 
-  if (gimp_color_profile_is_equal (src_profile, dest_profile))
+  if (ligma_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
-  if (gimp_color_profile_get_space (src_profile,
-                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+  if (ligma_color_profile_get_space (src_profile,
+                                    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                     NULL) &&
-      gimp_color_profile_get_space (dest_profile,
-                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      ligma_color_profile_get_space (dest_profile,
+                                    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                     NULL))
     {
       return TRUE;

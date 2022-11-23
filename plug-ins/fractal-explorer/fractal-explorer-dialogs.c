@@ -1,5 +1,5 @@
 /**********************************************************************
-   GIMP - The GNU Image Manipulation Program
+   LIGMA - The GNU Image Manipulation Program
    Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
    This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "fractal-explorer.h"
 #include "fractal-explorer-dialogs.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define ZOOM_UNDO_SIZE 100
@@ -235,7 +235,7 @@ static void
 explorer_toggle_update (GtkWidget *widget,
                         gpointer   data)
 {
-  gimp_toggle_button_update (widget, data);
+  ligma_toggle_button_update (widget, data);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -247,7 +247,7 @@ explorer_radio_update  (GtkWidget *widget,
 {
   gboolean c_sensitive;
 
-  gimp_radio_button_update (widget, data);
+  ligma_radio_button_update (widget, data);
 
   switch (wvals.fractaltype)
     {
@@ -269,10 +269,10 @@ explorer_radio_update  (GtkWidget *widget,
 }
 
 static void
-explorer_double_adjustment_update (GimpLabelSpin *entry,
+explorer_double_adjustment_update (LigmaLabelSpin *entry,
                                    gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -282,14 +282,14 @@ static void
 explorer_number_of_colors_callback (GtkAdjustment *adjustment,
                                     gpointer       data)
 {
-  gimp_int_adjustment_update (adjustment, data);
+  ligma_int_adjustment_update (adjustment, data);
 
   g_free (gradient_samples);
 
   if (! gradient_name)
-    gradient_name = gimp_context_get_gradient ();
+    gradient_name = ligma_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient_name,
+  ligma_gradient_get_uniform_samples (gradient_name,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
@@ -300,7 +300,7 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 }
 
 static void
-explorer_gradient_select_callback (GimpGradientSelectButton *gradient_button,
+explorer_gradient_select_callback (LigmaGradientSelectButton *gradient_button,
                                    const gchar              *name,
                                    gint                      width,
                                    const gdouble            *gradient_data,
@@ -312,7 +312,7 @@ explorer_gradient_select_callback (GimpGradientSelectButton *gradient_button,
 
   gradient_name = g_strdup (name);
 
-  gimp_gradient_get_uniform_samples (gradient_name,
+  ligma_gradient_get_uniform_samples (gradient_name,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
@@ -356,9 +356,9 @@ preview_draw_crosshair (gint px,
 static void
 preview_redraw (void)
 {
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (wint.preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (wint.preview),
                           0, 0, preview_width, preview_height,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           wint.wimage, preview_width * 3);
 
   gtk_widget_queue_draw (wint.preview);
@@ -527,9 +527,9 @@ explorer_dialog (void)
   GSList    *group = NULL;
   gint       i;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  path = gimp_gimprc_query ("fractalexplorer-path");
+  path = ligma_ligmarc_query ("fractalexplorer-path");
 
   if (path)
     {
@@ -538,20 +538,20 @@ explorer_dialog (void)
     }
   else
     {
-      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
-      gchar *full_path = gimp_config_build_data_path ("fractalexplorer");
+      GFile *ligmarc    = ligma_directory_file ("ligmarc", NULL);
+      gchar *full_path = ligma_config_build_data_path ("fractalexplorer");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
-      g_message (_("No %s in gimprc:\n"
+      g_message (_("No %s in ligmarc:\n"
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
                  "fractalexplorer-path",
                  "fractalexplorer-path",
-                 esc_path, gimp_file_get_utf8_name (gimprc));
+                 esc_path, ligma_file_get_utf8_name (ligmarc));
 
-      g_object_unref (gimprc);
+      g_object_unref (ligmarc);
       g_free (esc_path);
     }
 
@@ -559,21 +559,21 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new (_("Fractal Explorer"), PLUG_IN_ROLE,
+    ligma_dialog_new (_("Fractal Explorer"), PLUG_IN_ROLE,
                      NULL, 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
+                     ligma_standard_help_func, PLUG_IN_PROC,
 
                      _("_Cancel"), GTK_RESPONSE_CANCEL,
                      _("_OK"),     GTK_RESPONSE_OK,
 
                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
@@ -605,7 +605,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  wint.preview = gimp_preview_area_new ();
+  wint.preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (wint.preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), wint.preview);
 
@@ -640,7 +640,7 @@ explorer_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 wvals.alwayspreview);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("If enabled the preview will "
+  ligma_help_set_help_data (toggle, _("If enabled the preview will "
                                      "be redrawn automatically"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("R_edraw preview"));
@@ -651,7 +651,7 @@ explorer_dialog (void)
   gtk_widget_show (button);
 
   /*  Zoom Options  */
-  frame = gimp_frame_new (_("Zoom"));
+  frame = ligma_frame_new (_("Zoom"));
   gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -689,7 +689,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Undo last zoom change"), NULL);
+  ligma_help_set_help_data (button, _("Undo last zoom change"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_undo_zoom_callback),
@@ -699,7 +699,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Redo last zoom change"), NULL);
+  ligma_help_set_help_data (button, _("Redo last zoom change"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redo_zoom_callback),
@@ -719,7 +719,7 @@ explorer_dialog (void)
                             gtk_label_new_with_mnemonic (_("_Parameters")));
   gtk_widget_show (vbox);
 
-  frame = gimp_frame_new (_("Fractal Parameters"));
+  frame = ligma_frame_new (_("Fractal Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -728,8 +728,8 @@ explorer_dialog (void)
   gtk_widget_show (vbox2);
 
   elements->xmin =
-    gimp_scale_entry_new (_("Left:"), wvals.xmin, -3, 3, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->xmin), 0.001, 0.01);
+    ligma_scale_entry_new (_("Left:"), wvals.xmin, -3, 3, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->xmin), 0.001, 0.01);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
@@ -737,8 +737,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->xmin);
 
   elements->xmax =
-    gimp_scale_entry_new (_("Right:"), wvals.xmax, -3, 3, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->xmax), 0.001, 0.01);
+    ligma_scale_entry_new (_("Right:"), wvals.xmax, -3, 3, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->xmax), 0.001, 0.01);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
@@ -746,8 +746,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->xmax);
 
   elements->ymin =
-    gimp_scale_entry_new (_("Top:"), wvals.ymin, -3, 3, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->ymin), 0.001, 0.01);
+    ligma_scale_entry_new (_("Top:"), wvals.ymin, -3, 3, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->ymin), 0.001, 0.01);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
@@ -755,8 +755,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->ymin);
 
   elements->ymax =
-    gimp_scale_entry_new (_("Bottom:"), wvals.ymax, -3, 3, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->ymax), 0.001, 0.01);
+    ligma_scale_entry_new (_("Bottom:"), wvals.ymax, -3, 3, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->ymax), 0.001, 0.01);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
@@ -764,8 +764,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->ymax);
 
   elements->iter =
-    gimp_scale_entry_new (_("Iterations:"), wvals.iter, 1, 1000, 0);
-  gimp_help_set_help_data (elements->iter,
+    ligma_scale_entry_new (_("Iterations:"), wvals.iter, 1, 1000, 0);
+  ligma_help_set_help_data (elements->iter,
                            _("The higher the number of iterations, "
                              "the more details will be calculated"),
                            NULL);
@@ -776,9 +776,9 @@ explorer_dialog (void)
   gtk_widget_show (elements->iter);
 
   elements->cx =
-    gimp_scale_entry_new (_("CX:"), wvals.cx, -2.5, 2.5, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->cx), 0.001, 0.01);
-  gimp_help_set_help_data (elements->cx,
+    ligma_scale_entry_new (_("CX:"), wvals.cx, -2.5, 2.5, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->cx), 0.001, 0.01);
+  ligma_help_set_help_data (elements->cx,
                            _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cx, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -787,9 +787,9 @@ explorer_dialog (void)
   gtk_widget_show (elements->cx);
 
   elements->cy =
-    gimp_scale_entry_new (_("CY:"), wvals.cy, -2.5, 2.5, 5);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (elements->cy), 0.001, 0.01);
-  gimp_help_set_help_data (elements->cy,
+    ligma_scale_entry_new (_("CY:"), wvals.cy, -2.5, 2.5, 5);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (elements->cy), 0.001, 0.01);
+  ligma_help_set_help_data (elements->cy,
                            _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cy, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -809,7 +809,7 @@ explorer_dialog (void)
                     G_CALLBACK (create_load_file_chooser),
                     dialog);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
+  ligma_help_set_help_data (button, _("Load a fractal from file"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
@@ -817,7 +817,7 @@ explorer_dialog (void)
                     G_CALLBACK (dialog_reset_callback),
                     dialog);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Reset parameters to default values"),
+  ligma_help_set_help_data (button, _("Reset parameters to default values"),
                            NULL);
 
   button = gtk_button_new_with_mnemonic (_("_Save"));
@@ -826,10 +826,10 @@ explorer_dialog (void)
                     G_CALLBACK (create_save_file_chooser),
                     dialog);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Save active fractal to file"), NULL);
+  ligma_help_set_help_data (button, _("Save active fractal to file"), NULL);
 
   /*  Fractal type toggle box  */
-  frame = gimp_frame_new (_("Fractal Type"));
+  frame = ligma_frame_new (_("Fractal Type"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -838,7 +838,7 @@ explorer_dialog (void)
   gtk_widget_show (hbox);
 
   toggle_vbox =
-    gimp_int_radio_group_new (FALSE, NULL,
+    ligma_int_radio_group_new (FALSE, NULL,
                               G_CALLBACK (explorer_radio_update),
                               &wvals.fractaltype, NULL, wvals.fractaltype,
 
@@ -908,7 +908,7 @@ explorer_dialog (void)
   gtk_widget_show (vbox);
 
   /*  Number of Colors frame  */
-  frame = gimp_frame_new (_("Number of Colors"));
+  frame = ligma_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -917,8 +917,8 @@ explorer_dialog (void)
   gtk_widget_show (grid);
 
   elements->ncol =
-    gimp_scale_entry_new (_("Number of colors:"), wvals.ncolors, 2, MAXNCOLORS, 0);
-  gimp_help_set_help_data (elements->ncol,
+    ligma_scale_entry_new (_("Number of colors:"), wvals.ncolors, 2, MAXNCOLORS, 0);
+  ligma_help_set_help_data (elements->ncol,
                            _("Change the number of colors in the mapping"),
                            NULL);
   g_signal_connect (elements->ncol, "value-changed",
@@ -934,12 +934,12 @@ explorer_dialog (void)
                     &wvals.useloglog);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.useloglog);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use log log smoothing to eliminate "
+  ligma_help_set_help_data (toggle, _("Use log log smoothing to eliminate "
                                      "\"banding\" in the result"), NULL);
   gtk_box_pack_start (GTK_BOX (grid), elements->useloglog, TRUE, TRUE, 2);
 
   /*  Color Density frame  */
-  frame = gimp_frame_new (_("Color Density"));
+  frame = ligma_frame_new (_("Color Density"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -948,8 +948,8 @@ explorer_dialog (void)
   gtk_widget_show (grid);
 
   elements->red =
-    gimp_scale_entry_new (_("Red:"), wvals.redstretch, 0, 1, 2);
-  gimp_help_set_help_data (elements->red,
+    ligma_scale_entry_new (_("Red:"), wvals.redstretch, 0, 1, 2);
+  ligma_help_set_help_data (elements->red,
                            _("Change the intensity of the red channel"), NULL);
   g_signal_connect (elements->red, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -958,8 +958,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->red);
 
   elements->green =
-    gimp_scale_entry_new (_("Green:"), wvals.greenstretch, 0, 1, 2);
-  gimp_help_set_help_data (elements->green,
+    ligma_scale_entry_new (_("Green:"), wvals.greenstretch, 0, 1, 2);
+  ligma_help_set_help_data (elements->green,
                            _("Change the intensity of the green channel"), NULL);
   g_signal_connect (elements->green, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -968,8 +968,8 @@ explorer_dialog (void)
   gtk_widget_show (elements->green);
 
   elements->blue =
-    gimp_scale_entry_new (_("Blue:"), wvals.bluestretch, 0, 1, 2);
-  gimp_help_set_help_data (elements->blue,
+    ligma_scale_entry_new (_("Blue:"), wvals.bluestretch, 0, 1, 2);
+  ligma_help_set_help_data (elements->blue,
                            _("Change the intensity of the blue channel"), NULL);
   g_signal_connect (elements->blue, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
@@ -978,7 +978,7 @@ explorer_dialog (void)
   gtk_widget_show (elements->blue);
 
   /*  Color Function frame  */
-  frame = gimp_frame_new (_("Color Function"));
+  frame = ligma_frame_new (_("Color Function"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -987,7 +987,7 @@ explorer_dialog (void)
   gtk_widget_show (hbox);
 
   /*  Redmode radio frame  */
-  frame = gimp_int_radio_group_new (TRUE, _("Red"),
+  frame = ligma_int_radio_group_new (TRUE, _("Red"),
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.redmode, NULL, wvals.redmode,
 
@@ -999,13 +999,13 @@ explorer_dialog (void)
                                     &elements->redmode[NONE],
 
                                     NULL);
-  gimp_help_set_help_data (elements->redmode[SINUS],
+  ligma_help_set_help_data (elements->redmode[SINUS],
                            _("Use sine-function for this color component"),
                            NULL);
-  gimp_help_set_help_data (elements->redmode[COSINUS],
+  ligma_help_set_help_data (elements->redmode[COSINUS],
                            _("Use cosine-function for this color "
                              "component"), NULL);
-  gimp_help_set_help_data (elements->redmode[NONE],
+  ligma_help_set_help_data (elements->redmode[NONE],
                            _("Use linear mapping instead of any "
                              "trigonometrical function for this color "
                              "channel"), NULL);
@@ -1022,13 +1022,13 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.redinvert);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("If you enable this option higher color values "
                              "will be swapped with lower ones and vice "
                              "versa"), NULL);
 
   /*  Greenmode radio frame  */
-  frame = gimp_int_radio_group_new (TRUE, _("Green"),
+  frame = ligma_int_radio_group_new (TRUE, _("Green"),
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.greenmode, NULL, wvals.greenmode,
 
@@ -1040,13 +1040,13 @@ explorer_dialog (void)
                                     &elements->greenmode[NONE],
 
                                     NULL);
-  gimp_help_set_help_data (elements->greenmode[SINUS],
+  ligma_help_set_help_data (elements->greenmode[SINUS],
                            _("Use sine-function for this color component"),
                            NULL);
-  gimp_help_set_help_data (elements->greenmode[COSINUS],
+  ligma_help_set_help_data (elements->greenmode[COSINUS],
                            _("Use cosine-function for this color "
                              "component"), NULL);
-  gimp_help_set_help_data (elements->greenmode[NONE],
+  ligma_help_set_help_data (elements->greenmode[NONE],
                            _("Use linear mapping instead of any "
                              "trigonometrical function for this color "
                              "channel"), NULL);
@@ -1063,13 +1063,13 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.greeninvert);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("If you enable this option higher color values "
                              "will be swapped with lower ones and vice "
                              "versa"), NULL);
 
   /*  Bluemode radio frame  */
-  frame = gimp_int_radio_group_new (TRUE, _("Blue"),
+  frame = ligma_int_radio_group_new (TRUE, _("Blue"),
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.bluemode, NULL, wvals.bluemode,
 
@@ -1081,13 +1081,13 @@ explorer_dialog (void)
                                     &elements->bluemode[NONE],
 
                                     NULL);
-  gimp_help_set_help_data (elements->bluemode[SINUS],
+  ligma_help_set_help_data (elements->bluemode[SINUS],
                            _("Use sine-function for this color component"),
                            NULL);
-  gimp_help_set_help_data (elements->bluemode[COSINUS],
+  ligma_help_set_help_data (elements->bluemode[COSINUS],
                            _("Use cosine-function for this color "
                              "component"), NULL);
-  gimp_help_set_help_data (elements->bluemode[NONE],
+  ligma_help_set_help_data (elements->bluemode[NONE],
                            _("Use linear mapping instead of any "
                              "trigonometrical function for this color "
                              "channel"), NULL);
@@ -1104,13 +1104,13 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.blueinvert);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("If you enable this option higher color values "
                              "will be swapped with lower ones and vice "
                              "versa"), NULL);
 
   /*  Colormode toggle box  */
-  frame = gimp_frame_new (_("Color Mode"));
+  frame = ligma_frame_new (_("Color Mode"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1122,7 +1122,7 @@ explorer_dialog (void)
     gtk_radio_button_new_with_label (group, _("As specified above"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (0));
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_radio_update),
@@ -1130,7 +1130,7 @@ explorer_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 wvals.colormode == 0);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Create a color-map with the options you "
                              "specified above (color density/function). The "
                              "result is visible in the preview image"), NULL);
@@ -1144,7 +1144,7 @@ explorer_dialog (void)
                                      _("Apply active gradient to final image"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (1));
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_radio_update),
@@ -1152,19 +1152,19 @@ explorer_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 wvals.colormode == 1);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Create a color-map using a gradient from "
                              "the gradient editor"), NULL);
 
-  gradient_name = gimp_context_get_gradient ();
+  gradient_name = ligma_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient_name,
+  ligma_gradient_get_uniform_samples (gradient_name,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
                                      &gradient_samples);
 
-  gradient = gimp_gradient_select_button_new (_("FractalExplorer Gradient"),
+  gradient = ligma_gradient_select_button_new (_("FractalExplorer Gradient"),
                                               gradient_name);
   g_signal_connect (gradient, "gradient-set",
                     G_CALLBACK (explorer_gradient_select_callback), NULL);
@@ -1183,7 +1183,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  cmap_preview = gimp_preview_area_new ();
+  cmap_preview = ligma_preview_area_new ();
   gtk_widget_set_halign (cmap_preview, GTK_ALIGN_CENTER);
   gtk_widget_set_valign (cmap_preview, GTK_ALIGN_CENTER);
   gtk_widget_set_size_request (cmap_preview, 32, 32);
@@ -1266,7 +1266,7 @@ cmap_preview_size_allocate (GtkWidget     *widget,
   gint             y;
   gint             j;
   guchar          *b;
-  GimpPreviewArea *preview = GIMP_PREVIEW_AREA (widget);
+  LigmaPreviewArea *preview = LIGMA_PREVIEW_AREA (widget);
 
   b = g_new (guchar, allocation->width * allocation->height * 3);
 
@@ -1288,9 +1288,9 @@ cmap_preview_size_allocate (GtkWidget     *widget,
             }
         }
     }
-  gimp_preview_area_draw (preview,
+  ligma_preview_area_draw (preview,
                           0, 0, allocation->width, allocation->height,
-                          GIMP_RGB_IMAGE, b, allocation->width*3);
+                          LIGMA_RGB_IMAGE, b, allocation->width*3);
   gtk_widget_queue_draw (cmap_preview);
 
   g_free (b);
@@ -1341,9 +1341,9 @@ make_color_map (void)
    */
   if (gradient_samples == NULL)
     {
-      gchar *gradient_name = gimp_context_get_gradient ();
+      gchar *gradient_name = ligma_context_get_gradient ();
 
-      gimp_gradient_get_uniform_samples (gradient_name,
+      ligma_gradient_get_uniform_samples (gradient_name,
                                          wvals.ncolors,
                                          wvals.gradinvert,
                                          &n_gradient_samples,
@@ -1441,17 +1441,17 @@ dialog_change_scale (void)
 {
   ready_now = FALSE;
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->xmin),  wvals.xmin);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->xmax),  wvals.xmax);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->ymin),  wvals.ymin);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->ymax),  wvals.ymax);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->iter),  wvals.iter);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->cx),    wvals.cx);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->cy),    wvals.cy);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->xmin),  wvals.xmin);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->xmax),  wvals.xmax);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->ymin),  wvals.ymin);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->ymax),  wvals.ymax);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->iter),  wvals.iter);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->cx),    wvals.cx);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->cy),    wvals.cy);
 
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->red),   wvals.redstretch);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->green), wvals.greenstretch);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (elements->blue),  wvals.bluestretch);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->red),   wvals.redstretch);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->green), wvals.greenstretch);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (elements->blue),  wvals.bluestretch);
 
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (elements->type[wvals.fractaltype]), TRUE);
@@ -1543,21 +1543,21 @@ save_callback (void)
   if (!fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (savename), g_strerror (errno));
+                 ligma_filename_to_utf8 (savename), g_strerror (errno));
       return;
     }
 
   /* Write header out */
   fputs (FRACTAL_HEADER, fp);
   fputs ("#**********************************************************************\n", fp);
-  fputs ("# This is a data file for the Fractal Explorer plug-in for GIMP       *\n", fp);
+  fputs ("# This is a data file for the Fractal Explorer plug-in for LIGMA       *\n", fp);
   fputs ("#**********************************************************************\n", fp);
 
   save_options (fp);
 
   if (ferror (fp))
     g_message (_("Could not write '%s': %s"),
-               gimp_filename_to_utf8 (savename), g_strerror (ferror (fp)));
+               ligma_filename_to_utf8 (savename), g_strerror (ferror (fp)));
 
   fclose (fp);
 }
@@ -1586,17 +1586,17 @@ file_chooser_set_default_folder (GtkFileChooser *chooser)
   if (! fractalexplorer_path)
     return;
 
-  path_list = gimp_path_parse (fractalexplorer_path, 256, FALSE, NULL);
+  path_list = ligma_path_parse (fractalexplorer_path, 256, FALSE, NULL);
 
-  dir = gimp_path_get_user_writable_dir (path_list);
+  dir = ligma_path_get_user_writable_dir (path_list);
 
   if (! dir)
-    dir = g_strdup (gimp_directory ());
+    dir = g_strdup (ligma_directory ());
 
   gtk_file_chooser_set_current_folder (chooser, dir);
 
   g_free (dir);
-  gimp_path_free (path_list);
+  ligma_path_free (path_list);
 }
 
 static void
@@ -1642,7 +1642,7 @@ create_load_file_chooser (GtkWidget *widget,
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -1678,7 +1678,7 @@ create_save_file_chooser (GtkWidget *widget,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -1860,7 +1860,7 @@ explorer_load (void)
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 ligma_filename_to_utf8 (filename), g_strerror (errno));
       return;
     }
   get_line (load_buf, MAX_LOAD_LINE, fp, 1);
@@ -1868,14 +1868,14 @@ explorer_load (void)
   if (strncmp (FRACTAL_HEADER, load_buf, strlen (load_buf)))
     {
       g_message (_("'%s' is not a FractalExplorer file"),
-                 gimp_filename_to_utf8 (filename));
+                 ligma_filename_to_utf8 (filename));
       fclose (fp);
       return;
     }
   if (load_options (current_obj,fp))
     {
       g_message (_("'%s' is corrupt. Line %d Option section incorrect"),
-                 gimp_filename_to_utf8 (filename), line_no);
+                 ligma_filename_to_utf8 (filename), line_no);
       fclose (fp);
       return;
     }

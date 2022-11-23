@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_TYPE_H__
-#define __GIMP_IMAGE_CONVERT_TYPE_H__
+#ifndef __LIGMA_IMAGE_CONVERT_TYPE_H__
+#define __LIGMA_IMAGE_CONVERT_TYPE_H__
 
 
-gboolean   gimp_image_convert_type (GimpImage          *image,
-                                    GimpImageBaseType   new_type,
-                                    GimpColorProfile   *dest_profile,
-                                    GimpProgress       *progress,
+gboolean   ligma_image_convert_type (LigmaImage          *image,
+                                    LigmaImageBaseType   new_type,
+                                    LigmaColorProfile   *dest_profile,
+                                    LigmaProgress       *progress,
                                     GError            **error);
 
 
-#endif  /*  __GIMP_IMAGE_CONVERT_TYPE_H__  */
+#endif  /*  __LIGMA_IMAGE_CONVERT_TYPE_H__  */

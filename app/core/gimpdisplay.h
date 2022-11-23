@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,53 +15,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_H__
-#define __GIMP_DISPLAY_H__
+#ifndef __LIGMA_DISPLAY_H__
+#define __LIGMA_DISPLAY_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
-#define GIMP_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY, GimpDisplay))
-#define GIMP_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY, GimpDisplayClass))
-#define GIMP_IS_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY))
-#define GIMP_IS_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY))
-#define GIMP_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY, GimpDisplayClass))
+#define LIGMA_TYPE_DISPLAY            (ligma_display_get_type ())
+#define LIGMA_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DISPLAY, LigmaDisplay))
+#define LIGMA_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DISPLAY, LigmaDisplayClass))
+#define LIGMA_IS_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DISPLAY))
+#define LIGMA_IS_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DISPLAY))
+#define LIGMA_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DISPLAY, LigmaDisplayClass))
 
 
-typedef struct _GimpDisplayClass   GimpDisplayClass;
-typedef struct _GimpDisplayPrivate GimpDisplayPrivate;
+typedef struct _LigmaDisplayClass   LigmaDisplayClass;
+typedef struct _LigmaDisplayPrivate LigmaDisplayPrivate;
 
-struct _GimpDisplay
+struct _LigmaDisplay
 {
-  GimpObject          parent_instance;
+  LigmaObject          parent_instance;
 
-  Gimp               *gimp;
-  GimpDisplayConfig  *config;
+  Ligma               *ligma;
+  LigmaDisplayConfig  *config;
 
-  GimpDisplayPrivate *priv;
+  LigmaDisplayPrivate *priv;
 };
 
-struct _GimpDisplayClass
+struct _LigmaDisplayClass
 {
-  GimpObjectClass     parent_class;
+  LigmaObjectClass     parent_class;
 
-  gboolean         (* present)    (GimpDisplay *display);
-  gboolean         (* grab_focus) (GimpDisplay *display);
+  gboolean         (* present)    (LigmaDisplay *display);
+  gboolean         (* grab_focus) (LigmaDisplay *display);
 };
 
 
-GType         gimp_display_get_type  (void) G_GNUC_CONST;
+GType         ligma_display_get_type  (void) G_GNUC_CONST;
 
-gint          gimp_display_get_id    (GimpDisplay *display);
-GimpDisplay * gimp_display_get_by_id (Gimp        *gimp,
+gint          ligma_display_get_id    (LigmaDisplay *display);
+LigmaDisplay * ligma_display_get_by_id (Ligma        *ligma,
                                       gint         id);
 
-gboolean      gimp_display_present    (GimpDisplay *display);
-gboolean      gimp_display_grab_focus (GimpDisplay *display);
+gboolean      ligma_display_present    (LigmaDisplay *display);
+gboolean      ligma_display_grab_focus (LigmaDisplay *display);
 
-Gimp        * gimp_display_get_gimp  (GimpDisplay *display);
+Ligma        * ligma_display_get_ligma  (LigmaDisplay *display);
 
 
-#endif /*  __GIMP_DISPLAY_H__  */
+#endif /*  __LIGMA_DISPLAY_H__  */

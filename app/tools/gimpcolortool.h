@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,73 +15,73 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_COLOR_TOOL_H__
-#define  __GIMP_COLOR_TOOL_H__
+#ifndef  __LIGMA_COLOR_TOOL_H__
+#define  __LIGMA_COLOR_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_COLOR_TOOL            (gimp_color_tool_get_type ())
-#define GIMP_COLOR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_TOOL, GimpColorTool))
-#define GIMP_COLOR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_TOOL, GimpColorToolClass))
-#define GIMP_IS_COLOR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_TOOL))
-#define GIMP_IS_COLOR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_TOOL))
-#define GIMP_COLOR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_TOOL, GimpColorToolClass))
+#define LIGMA_TYPE_COLOR_TOOL            (ligma_color_tool_get_type ())
+#define LIGMA_COLOR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_TOOL, LigmaColorTool))
+#define LIGMA_COLOR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_TOOL, LigmaColorToolClass))
+#define LIGMA_IS_COLOR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_TOOL))
+#define LIGMA_IS_COLOR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_TOOL))
+#define LIGMA_COLOR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_TOOL, LigmaColorToolClass))
 
-#define GIMP_COLOR_TOOL_GET_OPTIONS(t)  (GIMP_COLOR_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_COLOR_TOOL_GET_OPTIONS(t)  (LIGMA_COLOR_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpColorToolClass GimpColorToolClass;
+typedef struct _LigmaColorToolClass LigmaColorToolClass;
 
-struct _GimpColorTool
+struct _LigmaColorTool
 {
-  GimpDrawTool         parent_instance;
+  LigmaDrawTool         parent_instance;
 
   gboolean             enabled;
-  GimpColorOptions    *options;
+  LigmaColorOptions    *options;
   gboolean             saved_snap_to;
 
-  GimpColorPickTarget  pick_target;
+  LigmaColorPickTarget  pick_target;
 
   gboolean             can_pick;
   gint                 center_x;
   gint                 center_y;
-  GimpSamplePoint     *sample_point;
+  LigmaSamplePoint     *sample_point;
 };
 
-struct _GimpColorToolClass
+struct _LigmaColorToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  gboolean (* can_pick) (GimpColorTool      *tool,
-                         const GimpCoords   *coords,
-                         GimpDisplay        *display);
-  gboolean (* pick)     (GimpColorTool      *tool,
-                         const GimpCoords   *coords,
-                         GimpDisplay        *display,
+  gboolean (* can_pick) (LigmaColorTool      *tool,
+                         const LigmaCoords   *coords,
+                         LigmaDisplay        *display);
+  gboolean (* pick)     (LigmaColorTool      *tool,
+                         const LigmaCoords   *coords,
+                         LigmaDisplay        *display,
                          const Babl        **sample_format,
                          gpointer            pixel,
-                         GimpRGB            *color);
+                         LigmaRGB            *color);
 
   /*  signals  */
-  void     (* picked)   (GimpColorTool      *tool,
-                         const GimpCoords   *coords,
-                         GimpDisplay        *display,
-                         GimpColorPickState  pick_state,
+  void     (* picked)   (LigmaColorTool      *tool,
+                         const LigmaCoords   *coords,
+                         LigmaDisplay        *display,
+                         LigmaColorPickState  pick_state,
                          const Babl         *sample_format,
                          gpointer            pixel,
-                         const GimpRGB      *color);
+                         const LigmaRGB      *color);
 };
 
 
-GType      gimp_color_tool_get_type   (void) G_GNUC_CONST;
+GType      ligma_color_tool_get_type   (void) G_GNUC_CONST;
 
-void       gimp_color_tool_enable     (GimpColorTool    *color_tool,
-                                       GimpColorOptions *options);
-void       gimp_color_tool_disable    (GimpColorTool    *color_tool);
-gboolean   gimp_color_tool_is_enabled (GimpColorTool    *color_tool);
+void       ligma_color_tool_enable     (LigmaColorTool    *color_tool,
+                                       LigmaColorOptions *options);
+void       ligma_color_tool_disable    (LigmaColorTool    *color_tool);
+gboolean   ligma_color_tool_is_enabled (LigmaColorTool    *color_tool);
 
 
-#endif  /*  __GIMP_COLOR_TOOL_H__  */
+#endif  /*  __LIGMA_COLOR_TOOL_H__  */

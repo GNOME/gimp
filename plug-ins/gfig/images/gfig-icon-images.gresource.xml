@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/org/gimp/gfig/icons">
+  <gresource prefix="/org/ligma/gfig/icons">
     <file preprocess="to-pixdata">gfig-bezier.png</file>
     <file preprocess="to-pixdata">gfig-circle.png</file>
     <file preprocess="to-pixdata">gfig-copy-object.png</file>

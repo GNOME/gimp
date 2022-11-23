@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,19 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERROR_H__
-#define __GIMP_ERROR_H__
+#ifndef __LIGMA_ERROR_H__
+#define __LIGMA_ERROR_H__
 
 
 typedef enum
 {
-  GIMP_FAILED,  /* generic error condition */
-} GimpErrorCode;
+  LIGMA_FAILED,  /* generic error condition */
+} LigmaErrorCode;
 
 
-#define GIMP_ERROR (gimp_error_quark ())
+#define LIGMA_ERROR (ligma_error_quark ())
 
-GQuark  gimp_error_quark (void) G_GNUC_CONST;
+GQuark  ligma_error_quark (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_ERROR_H__ */
+#endif /* __LIGMA_ERROR_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_BAR_H__
-#define __GIMP_COLOR_BAR_H__
+#ifndef __LIGMA_COLOR_BAR_H__
+#define __LIGMA_COLOR_BAR_H__
 
 
-#define GIMP_TYPE_COLOR_BAR            (gimp_color_bar_get_type ())
-#define GIMP_COLOR_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BAR, GimpColorBar))
-#define GIMP_COLOR_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BAR, GimpColorBarClass))
-#define GIMP_IS_COLOR_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_BAR))
-#define GIMP_IS_COLOR_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BAR))
-#define GIMP_COLOR_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_BAR, GimpColorBarClass))
+#define LIGMA_TYPE_COLOR_BAR            (ligma_color_bar_get_type ())
+#define LIGMA_COLOR_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_BAR, LigmaColorBar))
+#define LIGMA_COLOR_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_BAR, LigmaColorBarClass))
+#define LIGMA_IS_COLOR_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_BAR))
+#define LIGMA_IS_COLOR_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_BAR))
+#define LIGMA_COLOR_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_BAR, LigmaColorBarClass))
 
 
-typedef struct _GimpColorBarClass  GimpColorBarClass;
+typedef struct _LigmaColorBarClass  LigmaColorBarClass;
 
-struct _GimpColorBar
+struct _LigmaColorBar
 {
   GtkEventBox     parent_class;
 
@@ -37,24 +37,24 @@ struct _GimpColorBar
   guchar          buf[3 * 256];
 };
 
-struct _GimpColorBarClass
+struct _LigmaColorBarClass
 {
   GtkEventBoxClass  parent_class;
 };
 
 
-GType       gimp_color_bar_get_type    (void) G_GNUC_CONST;
+GType       ligma_color_bar_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_bar_new         (GtkOrientation        orientation);
+GtkWidget * ligma_color_bar_new         (GtkOrientation        orientation);
 
-void        gimp_color_bar_set_color   (GimpColorBar         *bar,
-                                        const GimpRGB        *color);
-void        gimp_color_bar_set_channel (GimpColorBar         *bar,
-                                        GimpHistogramChannel  channel);
-void        gimp_color_bar_set_buffers (GimpColorBar         *bar,
+void        ligma_color_bar_set_color   (LigmaColorBar         *bar,
+                                        const LigmaRGB        *color);
+void        ligma_color_bar_set_channel (LigmaColorBar         *bar,
+                                        LigmaHistogramChannel  channel);
+void        ligma_color_bar_set_buffers (LigmaColorBar         *bar,
                                         const guchar         *red,
                                         const guchar         *green,
                                         const guchar         *blue);
 
 
-#endif  /*  __GIMP_COLOR_BAR_H__  */
+#endif  /*  __LIGMA_COLOR_BAR_H__  */

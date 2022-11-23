@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimageguides_pdb.c
+ * ligmaimageguides_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimageguides
- * @title: gimpimageguides
+ * SECTION: ligmaimageguides
+ * @title: ligmaimageguides
  * @short_description: Functions for manipulating an image's guides.
  *
  * Functions for manipulating an image's guides.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_add_hguide:
+ * ligma_image_add_hguide:
  * @image: The image.
  * @yposition: The guide's y-offset from top of image.
  *
@@ -50,33 +50,33 @@
  * Returns: The new guide.
  **/
 guint
-gimp_image_add_hguide (GimpImage *image,
+ligma_image_add_hguide (LigmaImage *image,
                        gint       yposition)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint guide = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, yposition,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-add-hguide",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-add-hguide",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    guide = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    guide = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return guide;
 }
 
 /**
- * gimp_image_add_vguide:
+ * ligma_image_add_vguide:
  * @image: The image.
  * @xposition: The guide's x-offset from left of image.
  *
@@ -89,33 +89,33 @@ gimp_image_add_hguide (GimpImage *image,
  * Returns: The new guide.
  **/
 guint
-gimp_image_add_vguide (GimpImage *image,
+ligma_image_add_vguide (LigmaImage *image,
                        gint       xposition)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint guide = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, xposition,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-add-vguide",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-add-vguide",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    guide = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    guide = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return guide;
 }
 
 /**
- * gimp_image_delete_guide:
+ * ligma_image_delete_guide:
  * @image: The image.
  * @guide: The ID of the guide to be removed.
  *
@@ -127,32 +127,32 @@ gimp_image_add_vguide (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_delete_guide (GimpImage *image,
+ligma_image_delete_guide (LigmaImage *image,
                          guint      guide)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-delete-guide",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-delete-guide",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_find_next_guide:
+ * ligma_image_find_next_guide:
  * @image: The image.
  * @guide: The ID of the current guide (0 if first invocation).
  *
@@ -167,33 +167,33 @@ gimp_image_delete_guide (GimpImage *image,
  * Returns: The next guide's ID.
  **/
 guint
-gimp_image_find_next_guide (GimpImage *image,
+ligma_image_find_next_guide (LigmaImage *image,
                             guint      guide)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint next_guide = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-find-next-guide",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-find-next-guide",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    next_guide = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    next_guide = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return next_guide;
 }
 
 /**
- * gimp_image_get_guide_orientation:
+ * ligma_image_get_guide_orientation:
  * @image: The image.
  * @guide: The guide.
  *
@@ -204,34 +204,34 @@ gimp_image_find_next_guide (GimpImage *image,
  *
  * Returns: The guide's orientation.
  **/
-GimpOrientationType
-gimp_image_get_guide_orientation (GimpImage *image,
+LigmaOrientationType
+ligma_image_get_guide_orientation (LigmaImage *image,
                                   guint      guide)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaOrientationType orientation = LIGMA_ORIENTATION_UNKNOWN;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-guide-orientation",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-guide-orientation",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    orientation = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    orientation = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return orientation;
 }
 
 /**
- * gimp_image_get_guide_position:
+ * ligma_image_get_guide_position:
  * @image: The image.
  * @guide: The guide.
  *
@@ -243,27 +243,27 @@ gimp_image_get_guide_orientation (GimpImage *image,
  * Returns: The guide's position relative to top or left of image.
  **/
 gint
-gimp_image_get_guide_position (GimpImage *image,
+ligma_image_get_guide_position (LigmaImage *image,
                                guint      guide)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  gint position = G_MININT /* LIGMA_GUIDE_POSITION_UNDEFINED */;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-guide-position",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-guide-position",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    position = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    position = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return position;
 }

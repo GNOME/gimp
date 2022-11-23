@@ -1,13 +1,13 @@
 plugin_name = 'file-fli'
 
 plugin_sources = [
-  'fli-gimp.c',
+  'fli-ligma.c',
   'fli.c',
 ]
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    ligma_plugins_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
@@ -21,7 +21,7 @@ endif
 
 executable(plugin_name,
   plugin_sources,
-  dependencies: libgimpui_dep,
+  dependencies: libligmaui_dep,
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

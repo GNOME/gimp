@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_INDEXED_H__
-#define __GIMP_IMAGE_CONVERT_INDEXED_H__
+#ifndef __LIGMA_IMAGE_CONVERT_INDEXED_H__
+#define __LIGMA_IMAGE_CONVERT_INDEXED_H__
 
 
 #define MAXNUMCOLORS 256
 
 
-gboolean   gimp_image_convert_indexed      (GimpImage               *image,
-                                            GimpConvertPaletteType   palette_type,
+gboolean   ligma_image_convert_indexed      (LigmaImage               *image,
+                                            LigmaConvertPaletteType   palette_type,
                                             gint                     max_colors,
                                             gboolean                 remove_duplicates,
-                                            GimpConvertDitherType    dither_type,
+                                            LigmaConvertDitherType    dither_type,
                                             gboolean                 dither_alpha,
                                             gboolean                 dither_text_layers,
-                                            GimpPalette             *custom_palette,
-                                            GimpProgress            *progress,
+                                            LigmaPalette             *custom_palette,
+                                            LigmaProgress            *progress,
                                             GError                 **error);
 
-void  gimp_image_convert_indexed_set_dither_matrix (const guchar *matrix,
+void  ligma_image_convert_indexed_set_dither_matrix (const guchar *matrix,
                                                     gint          width,
                                                     gint          height);
 
 
-#endif  /*  __GIMP_IMAGE_CONVERT_INDEXED_H__  */
+#endif  /*  __LIGMA_IMAGE_CONVERT_INDEXED_H__  */

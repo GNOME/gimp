@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolbutton.h
+ * ligmatoolbutton.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_BUTTON_H__
-#define __GIMP_TOOL_BUTTON_H__
+#ifndef __LIGMA_TOOL_BUTTON_H__
+#define __LIGMA_TOOL_BUTTON_H__
 
 
-#define GIMP_TYPE_TOOL_BUTTON            (gimp_tool_button_get_type ())
-#define GIMP_TOOL_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_BUTTON, GimpToolButton))
-#define GIMP_TOOL_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_BUTTON, GimpToolButtonClass))
-#define GIMP_IS_TOOL_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_TOOL_BUTTON))
-#define GIMP_IS_TOOL_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_BUTTON))
-#define GIMP_TOOL_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_BUTTON, GimpToolButtonClass))
+#define LIGMA_TYPE_TOOL_BUTTON            (ligma_tool_button_get_type ())
+#define LIGMA_TOOL_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_BUTTON, LigmaToolButton))
+#define LIGMA_TOOL_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_BUTTON, LigmaToolButtonClass))
+#define LIGMA_IS_TOOL_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_TOOL_BUTTON))
+#define LIGMA_IS_TOOL_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_BUTTON))
+#define LIGMA_TOOL_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_BUTTON, LigmaToolButtonClass))
 
 
-typedef struct _GimpToolButtonPrivate GimpToolButtonPrivate;
-typedef struct _GimpToolButtonClass   GimpToolButtonClass;
+typedef struct _LigmaToolButtonPrivate LigmaToolButtonPrivate;
+typedef struct _LigmaToolButtonClass   LigmaToolButtonClass;
 
-struct _GimpToolButton
+struct _LigmaToolButton
 {
   GtkToggleToolButton    parent_instance;
 
-  GimpToolButtonPrivate *priv;
+  LigmaToolButtonPrivate *priv;
 };
 
-struct _GimpToolButtonClass
+struct _LigmaToolButtonClass
 {
   GtkToggleToolButtonClass  parent_class;
 };
 
 
-GType          gimp_tool_button_get_type      (void) G_GNUC_CONST;
+GType          ligma_tool_button_get_type      (void) G_GNUC_CONST;
 
-GtkToolItem  * gimp_tool_button_new           (GimpToolbox    *toolbox,
-                                               GimpToolItem   *tool_item);
+GtkToolItem  * ligma_tool_button_new           (LigmaToolbox    *toolbox,
+                                               LigmaToolItem   *tool_item);
 
-GimpToolbox  * gimp_tool_button_get_toolbox   (GimpToolButton *tool_button);
+LigmaToolbox  * ligma_tool_button_get_toolbox   (LigmaToolButton *tool_button);
 
-void           gimp_tool_button_set_tool_item (GimpToolButton *tool_button,
-                                               GimpToolItem   *tool_item);
-GimpToolItem * gimp_tool_button_get_tool_item (GimpToolButton *tool_button);
+void           ligma_tool_button_set_tool_item (LigmaToolButton *tool_button,
+                                               LigmaToolItem   *tool_item);
+LigmaToolItem * ligma_tool_button_get_tool_item (LigmaToolButton *tool_button);
 
-GimpToolInfo * gimp_tool_button_get_tool_info (GimpToolButton *tool_button);
+LigmaToolInfo * ligma_tool_button_get_tool_info (LigmaToolButton *tool_button);
 
 
-#endif /* __GIMP_TOOL_BUTTON_H__ */
+#endif /* __LIGMA_TOOL_BUTTON_H__ */

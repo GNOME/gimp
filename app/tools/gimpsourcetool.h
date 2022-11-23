@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,52 +15,52 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SOURCE_TOOL_H__
-#define __GIMP_SOURCE_TOOL_H__
+#ifndef __LIGMA_SOURCE_TOOL_H__
+#define __LIGMA_SOURCE_TOOL_H__
 
 
-#include "gimpbrushtool.h"
+#include "ligmabrushtool.h"
 
 
-#define GIMP_TYPE_SOURCE_TOOL            (gimp_source_tool_get_type ())
-#define GIMP_SOURCE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_TOOL, GimpSourceTool))
-#define GIMP_SOURCE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_TOOL, GimpSourceToolClass))
-#define GIMP_IS_SOURCE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_TOOL))
-#define GIMP_IS_SOURCE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_TOOL))
-#define GIMP_SOURCE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_TOOL, GimpSourceToolClass))
+#define LIGMA_TYPE_SOURCE_TOOL            (ligma_source_tool_get_type ())
+#define LIGMA_SOURCE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SOURCE_TOOL, LigmaSourceTool))
+#define LIGMA_SOURCE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SOURCE_TOOL, LigmaSourceToolClass))
+#define LIGMA_IS_SOURCE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SOURCE_TOOL))
+#define LIGMA_IS_SOURCE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SOURCE_TOOL))
+#define LIGMA_SOURCE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SOURCE_TOOL, LigmaSourceToolClass))
 
-#define GIMP_SOURCE_TOOL_GET_OPTIONS(t)  (GIMP_SOURCE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_SOURCE_TOOL_GET_OPTIONS(t)  (LIGMA_SOURCE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpSourceTool      GimpSourceTool;
-typedef struct _GimpSourceToolClass GimpSourceToolClass;
+typedef struct _LigmaSourceTool      LigmaSourceTool;
+typedef struct _LigmaSourceToolClass LigmaSourceToolClass;
 
-struct _GimpSourceTool
+struct _LigmaSourceTool
 {
-  GimpBrushTool        parent_instance;
+  LigmaBrushTool        parent_instance;
 
-  GimpDisplay         *src_display;
+  LigmaDisplay         *src_display;
   gint                 src_x;
   gint                 src_y;
 
   gboolean             show_source_outline;
-  GimpCursorPrecision  saved_precision;
+  LigmaCursorPrecision  saved_precision;
 
-  GimpCanvasItem      *src_handle;
-  GimpCanvasItem      *src_outline;
+  LigmaCanvasItem      *src_handle;
+  LigmaCanvasItem      *src_outline;
 
   const gchar         *status_paint;
   const gchar         *status_set_source;
   const gchar         *status_set_source_ctrl;
 };
 
-struct _GimpSourceToolClass
+struct _LigmaSourceToolClass
 {
-  GimpBrushToolClass  parent_class;
+  LigmaBrushToolClass  parent_class;
 };
 
 
-GType   gimp_source_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_source_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SOURCE_TOOL_H__  */
+#endif  /*  __LIGMA_SOURCE_TOOL_H__  */

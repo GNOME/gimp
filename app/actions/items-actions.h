@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 #define __ITEMS_ACTIONS_H__
 
 
-void   items_actions_setup  (GimpActionGroup *group,
+void   items_actions_setup  (LigmaActionGroup *group,
                              const gchar     *prefix);
-void   items_actions_update (GimpActionGroup *group,
+void   items_actions_update (LigmaActionGroup *group,
                              const gchar     *prefix,
                              GList           *items);
 

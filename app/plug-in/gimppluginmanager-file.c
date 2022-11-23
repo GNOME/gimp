@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppluginmanager-file.c
+ * ligmapluginmanager-file.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
 
-#include "gimpplugin.h"
-#include "gimpplugindef.h"
-#include "gimppluginmanager.h"
-#include "gimppluginmanager-file.h"
-#include "gimppluginprocedure.h"
+#include "ligmaplugin.h"
+#include "ligmaplugindef.h"
+#include "ligmapluginmanager.h"
+#include "ligmapluginmanager-file.h"
+#include "ligmapluginprocedure.h"
 
-#include "gimp-log.h"
+#include "ligma-log.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 #ifdef G_OS_WIN32
 #include <stdlib.h>
@@ -58,21 +58,21 @@ typedef enum
 
 /*  local function prototypes  */
 
-static gboolean              file_proc_in_group (GimpPlugInProcedure    *file_proc,
-                                                 GimpFileProcedureGroup  group);
+static gboolean              file_proc_in_group (LigmaPlugInProcedure    *file_proc,
+                                                 LigmaFileProcedureGroup  group);
 
-static GimpPlugInProcedure * file_proc_find              (GSList       *procs,
+static LigmaPlugInProcedure * file_proc_find              (GSList       *procs,
                                                           GFile        *file,
                                                           GError      **error);
-static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
+static LigmaPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
                                                           GFile        *file,
                                                           gboolean      skip_magic);
-static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
+static LigmaPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
                                                           GFile        *file,
                                                           gboolean      skip_magic);
-static GimpPlugInProcedure * file_proc_find_by_mime_type (GSList       *procs,
+static LigmaPlugInProcedure * file_proc_find_by_mime_type (GSList       *procs,
                                                           const gchar  *mime_type);
-static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
+static LigmaPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
                                                           GFile        *file,
                                                           gboolean      skip_magic);
 
@@ -97,30 +97,30 @@ static FileMatchType         file_check_magic_list       (GSList       *magics_l
 /*  public functions  */
 
 void
-gimp_plug_in_manager_add_load_procedure (GimpPlugInManager   *manager,
-                                         GimpPlugInProcedure *proc)
+ligma_plug_in_manager_add_load_procedure (LigmaPlugInManager   *manager,
+                                         LigmaPlugInProcedure *proc)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_PROCEDURE (proc));
 
   if (! g_slist_find (manager->load_procs, proc))
     manager->load_procs = g_slist_prepend (manager->load_procs, proc);
 }
 
 void
-gimp_plug_in_manager_add_save_procedure (GimpPlugInManager   *manager,
-                                         GimpPlugInProcedure *proc)
+ligma_plug_in_manager_add_save_procedure (LigmaPlugInManager   *manager,
+                                         LigmaPlugInProcedure *proc)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_PROCEDURE (proc));
 
-  if (file_proc_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_SAVE))
+  if (file_proc_in_group (proc, LIGMA_FILE_PROCEDURE_GROUP_SAVE))
     {
       if (! g_slist_find (manager->save_procs, proc))
         manager->save_procs = g_slist_prepend (manager->save_procs, proc);
     }
 
-  if (file_proc_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_EXPORT))
+  if (file_proc_in_group (proc, LIGMA_FILE_PROCEDURE_GROUP_EXPORT))
     {
       if (! g_slist_find (manager->export_procs, proc))
         manager->export_procs = g_slist_prepend (manager->export_procs, proc);
@@ -128,23 +128,23 @@ gimp_plug_in_manager_add_save_procedure (GimpPlugInManager   *manager,
 }
 
 GSList *
-gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
-                                          GimpFileProcedureGroup  group)
+ligma_plug_in_manager_get_file_procedures (LigmaPlugInManager      *manager,
+                                          LigmaFileProcedureGroup  group)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), NULL);
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_NONE:
+    case LIGMA_FILE_PROCEDURE_GROUP_NONE:
       return NULL;
 
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       return manager->display_load_procs;
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       return manager->display_save_procs;
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       return manager->display_export_procs;
 
     default:
@@ -152,25 +152,25 @@ gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
     }
 }
 
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find (GimpPlugInManager      *manager,
-                                          GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find (LigmaPlugInManager      *manager,
+                                          LigmaFileProcedureGroup  group,
                                           GFile                  *file,
                                           GError                **error)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       return file_proc_find (manager->load_procs, file, error);
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       return file_proc_find (manager->save_procs, file, error);
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       return file_proc_find (manager->export_procs, file, error);
 
     default:
@@ -178,23 +178,23 @@ gimp_plug_in_manager_file_procedure_find (GimpPlugInManager      *manager,
     }
 }
 
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_prefix (GimpPlugInManager      *manager,
-                                                    GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_prefix (LigmaPlugInManager      *manager,
+                                                    LigmaFileProcedureGroup  group,
                                                     GFile                  *file)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       return file_proc_find_by_prefix (manager->load_procs, file, FALSE);
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       return file_proc_find_by_prefix (manager->save_procs, file, FALSE);
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       return file_proc_find_by_prefix (manager->export_procs, file, FALSE);
 
     default:
@@ -202,23 +202,23 @@ gimp_plug_in_manager_file_procedure_find_by_prefix (GimpPlugInManager      *mana
     }
 }
 
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_extension (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_extension (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        GFile                  *file)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       return file_proc_find_by_extension (manager->load_procs, file, FALSE);
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       return file_proc_find_by_extension (manager->save_procs, file, FALSE);
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       return file_proc_find_by_extension (manager->export_procs, file, FALSE);
 
     default:
@@ -226,23 +226,23 @@ gimp_plug_in_manager_file_procedure_find_by_extension (GimpPlugInManager      *m
     }
 }
 
-GimpPlugInProcedure *
-gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *manager,
-                                                       GimpFileProcedureGroup  group,
+LigmaPlugInProcedure *
+ligma_plug_in_manager_file_procedure_find_by_mime_type (LigmaPlugInManager      *manager,
+                                                       LigmaFileProcedureGroup  group,
                                                        const gchar            *mime_type)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       return file_proc_find_by_mime_type (manager->load_procs, mime_type);
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       return file_proc_find_by_mime_type (manager->save_procs, mime_type);
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       return file_proc_find_by_mime_type (manager->export_procs, mime_type);
 
     default:
@@ -254,14 +254,14 @@ gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *m
 /*  private functions  */
 
 static gboolean
-file_proc_in_group (GimpPlugInProcedure    *file_proc,
-                    GimpFileProcedureGroup  group)
+file_proc_in_group (LigmaPlugInProcedure    *file_proc,
+                    LigmaFileProcedureGroup  group)
 {
-  const gchar *name        = gimp_object_get_name (file_proc);
+  const gchar *name        = ligma_object_get_name (file_proc);
   gboolean     is_xcf_save = FALSE;
   gboolean     is_filter   = FALSE;
 
-  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
+  is_xcf_save = (strcmp (name, "ligma-xcf-save") == 0);
 
   is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
                  strcmp (name, "file-bz2-save") == 0 ||
@@ -269,34 +269,34 @@ file_proc_in_group (GimpPlugInProcedure    *file_proc,
 
   switch (group)
     {
-    case GIMP_FILE_PROCEDURE_GROUP_NONE:
+    case LIGMA_FILE_PROCEDURE_GROUP_NONE:
       return FALSE;
 
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+    case LIGMA_FILE_PROCEDURE_GROUP_SAVE:
       /* Only .xcf shall pass */
       return is_xcf_save || is_filter;
 
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+    case LIGMA_FILE_PROCEDURE_GROUP_EXPORT:
       /* Anything but .xcf shall pass */
       return ! is_xcf_save;
 
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+    case LIGMA_FILE_PROCEDURE_GROUP_OPEN:
       /* No filter applied for Open */
       return TRUE;
 
     default:
-    case GIMP_FILE_PROCEDURE_GROUP_ANY:
+    case LIGMA_FILE_PROCEDURE_GROUP_ANY:
       return TRUE;
     }
 }
 
-static GimpPlugInProcedure *
+static LigmaPlugInProcedure *
 file_proc_find (GSList  *procs,
                 GFile   *file,
                 GError **error)
 {
-  GimpPlugInProcedure *file_proc;
-  GimpPlugInProcedure *size_matched_proc = NULL;
+  LigmaPlugInProcedure *file_proc;
+  LigmaPlugInProcedure *size_matched_proc = NULL;
   gint                 size_match_count  = 0;
 
   g_return_val_if_fail (procs != NULL, NULL);
@@ -318,7 +318,7 @@ file_proc_find (GSList  *procs,
       gsize                head_size = 0;
       guchar               head[256];
       FileMatchType        best_match_val = FILE_MATCH_NONE;
-      GimpPlugInProcedure *best_file_proc = NULL;
+      LigmaPlugInProcedure *best_file_proc = NULL;
 
       for (list = procs; list; list = g_slist_next (list))
         {
@@ -370,10 +370,10 @@ file_proc_find (GSList  *procs,
                     }
                   else if (match_val != FILE_MATCH_NONE)
                     {
-                      GIMP_LOG (MAGIC_MATCH,
+                      LIGMA_LOG (MAGIC_MATCH,
                                 "magic match %d on %s\n",
                                 match_val,
-                                gimp_object_get_name (file_proc));
+                                ligma_object_get_name (file_proc));
 
                       if (match_val > best_match_val)
                         {
@@ -390,9 +390,9 @@ file_proc_find (GSList  *procs,
 
       if (best_file_proc)
         {
-          GIMP_LOG (MAGIC_MATCH,
+          LIGMA_LOG (MAGIC_MATCH,
                     "best magic match on %s\n",
-                    gimp_object_get_name (best_file_proc));
+                    ligma_object_get_name (best_file_proc));
 
           return best_file_proc;
         }
@@ -420,7 +420,7 @@ file_proc_find (GSList  *procs,
   return file_proc;
 }
 
-static GimpPlugInProcedure *
+static LigmaPlugInProcedure *
 file_proc_find_by_mime_type (GSList      *procs,
                              const gchar *mime_type)
 {
@@ -430,7 +430,7 @@ file_proc_find_by_mime_type (GSList      *procs,
 
   for (list = procs; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
       GSList              *mime;
 
       for (mime = proc->mime_types_list; mime; mime = g_slist_next (mime))
@@ -443,7 +443,7 @@ file_proc_find_by_mime_type (GSList      *procs,
   return NULL;
 }
 
-static GimpPlugInProcedure *
+static LigmaPlugInProcedure *
 file_proc_find_by_prefix (GSList   *procs,
                           GFile    *file,
                           gboolean  skip_magic)
@@ -453,7 +453,7 @@ file_proc_find_by_prefix (GSList   *procs,
 
   for (p = procs; p; p = g_slist_next (p))
     {
-      GimpPlugInProcedure *proc = p->data;
+      LigmaPlugInProcedure *proc = p->data;
       GSList              *prefixes;
 
       if (skip_magic && proc->magics_list)
@@ -476,12 +476,12 @@ file_proc_find_by_prefix (GSList   *procs,
   return NULL;
 }
 
-static GimpPlugInProcedure *
+static LigmaPlugInProcedure *
 file_proc_find_by_extension (GSList   *procs,
                              GFile    *file,
                              gboolean  skip_magic)
 {
-  gchar *ext = gimp_file_get_extension (file);
+  gchar *ext = ligma_file_get_extension (file);
 
   if (ext)
     {
@@ -489,7 +489,7 @@ file_proc_find_by_extension (GSList   *procs,
 
       for (p = procs; p; p = g_slist_next (p))
         {
-          GimpPlugInProcedure *proc = p->data;
+          LigmaPlugInProcedure *proc = p->data;
 
           if (skip_magic && proc->magics_list)
             continue;
@@ -510,12 +510,12 @@ file_proc_find_by_extension (GSList   *procs,
   return NULL;
 }
 
-static GimpPlugInProcedure *
+static LigmaPlugInProcedure *
 file_proc_find_by_name (GSList   *procs,
                         GFile    *file,
                         gboolean  skip_magic)
 {
-  GimpPlugInProcedure *proc;
+  LigmaPlugInProcedure *proc;
 
   proc = file_proc_find_by_prefix (procs, file, skip_magic);
 

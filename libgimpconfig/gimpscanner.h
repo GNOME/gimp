@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpscanner.h
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
- *                     Michael Natterer <mitch@gimp.org>
+ * ligmascanner.h
+ * Copyright (C) 2002  Sven Neumann <sven@ligma.org>
+ *                     Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,61 +20,61 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
-#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#if !defined (__LIGMA_CONFIG_H_INSIDE__) && !defined (LIGMA_CONFIG_COMPILATION)
+#error "Only <libligmaconfig/ligmaconfig.h> can be included directly."
 #endif
 
-#ifndef __GIMP_SCANNER_H__
-#define __GIMP_SCANNER_H__
+#ifndef __LIGMA_SCANNER_H__
+#define __LIGMA_SCANNER_H__
 
 
 /**
- * GIMP_TYPE_SCANNER:
+ * LIGMA_TYPE_SCANNER:
  *
- * The type ID of the GIMP scanner type which is a boxed type, used to
+ * The type ID of the LIGMA scanner type which is a boxed type, used to
  * read config files.
  *
  * Since: 3.0
  */
-#define GIMP_TYPE_SCANNER (gimp_scnner_get_type ())
+#define LIGMA_TYPE_SCANNER (ligma_scnner_get_type ())
 
 
-GType         gimp_scanner_get_type                 (void) G_GNUC_CONST;
+GType         ligma_scanner_get_type                 (void) G_GNUC_CONST;
 
-GimpScanner * gimp_scanner_new_file                 (GFile         *file,
+LigmaScanner * ligma_scanner_new_file                 (GFile         *file,
                                                      GError       **error);
-GimpScanner * gimp_scanner_new_stream               (GInputStream  *input,
+LigmaScanner * ligma_scanner_new_stream               (GInputStream  *input,
                                                      GError       **error);
-GimpScanner * gimp_scanner_new_string               (const gchar   *text,
+LigmaScanner * ligma_scanner_new_string               (const gchar   *text,
                                                      gint           text_len,
                                                      GError       **error);
 
-GimpScanner * gimp_scanner_ref                      (GimpScanner   *scanner);
-void          gimp_scanner_unref                    (GimpScanner   *scanner);
+LigmaScanner * ligma_scanner_ref                      (LigmaScanner   *scanner);
+void          ligma_scanner_unref                    (LigmaScanner   *scanner);
 
-gboolean      gimp_scanner_parse_token              (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_token              (LigmaScanner   *scanner,
                                                      GTokenType     token);
-gboolean      gimp_scanner_parse_identifier         (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_identifier         (LigmaScanner   *scanner,
                                                      const gchar   *identifier);
-gboolean      gimp_scanner_parse_string             (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_string             (LigmaScanner   *scanner,
                                                      gchar        **dest);
-gboolean      gimp_scanner_parse_string_no_validate (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_string_no_validate (LigmaScanner   *scanner,
                                                      gchar        **dest);
-gboolean      gimp_scanner_parse_data               (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_data               (LigmaScanner   *scanner,
                                                      gint           length,
                                                      guint8       **dest);
-gboolean      gimp_scanner_parse_int                (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_int                (LigmaScanner   *scanner,
                                                      gint          *dest);
-gboolean      gimp_scanner_parse_int64              (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_int64              (LigmaScanner   *scanner,
                                                      gint64        *dest);
-gboolean      gimp_scanner_parse_float              (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_float              (LigmaScanner   *scanner,
                                                      gdouble       *dest);
-gboolean      gimp_scanner_parse_boolean            (GimpScanner   *scanner,
+gboolean      ligma_scanner_parse_boolean            (LigmaScanner   *scanner,
                                                      gboolean      *dest);
-gboolean      gimp_scanner_parse_color              (GimpScanner   *scanner,
-                                                     GimpRGB       *dest);
-gboolean      gimp_scanner_parse_matrix2            (GimpScanner   *scanner,
-                                                     GimpMatrix2   *dest);
+gboolean      ligma_scanner_parse_color              (LigmaScanner   *scanner,
+                                                     LigmaRGB       *dest);
+gboolean      ligma_scanner_parse_matrix2            (LigmaScanner   *scanner,
+                                                     LigmaMatrix2   *dest);
 
 
-#endif /* __GIMP_SCANNER_H__ */
+#endif /* __LIGMA_SCANNER_H__ */

@@ -7,7 +7,7 @@
 /.libs
 /.deps
 /*.la
-/gimpversion.h
+/ligmaversion.h
 /*.lib
 /*.exp
 /xgen-cec

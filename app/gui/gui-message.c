@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "gui-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmaprogress.h"
 
-#include "plug-in/gimpplugin.h"
+#include "plug-in/ligmaplugin.h"
 
-#include "widgets/gimpcriticaldialog.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimperrorconsole.h"
-#include "widgets/gimperrordialog.h"
-#include "widgets/gimpprogressdialog.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmacriticaldialog.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmaerrorconsole.h"
+#include "widgets/ligmaerrordialog.h"
+#include "widgets/ligmaprogressdialog.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
 
 #include "about.h"
 
 #include "gui-message.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_TRACES 3
@@ -57,30 +57,30 @@
 
 typedef struct
 {
-  Gimp                *gimp;
+  Ligma                *ligma;
   gchar               *domain;
   gchar               *message;
   gchar               *trace;
   GObject             *handler;
-  GimpMessageSeverity  severity;
-} GimpLogMessageData;
+  LigmaMessageSeverity  severity;
+} LigmaLogMessageData;
 
 
 static gboolean  gui_message_idle           (gpointer             user_data);
-static gboolean  gui_message_error_console  (Gimp                *gimp,
-                                             GimpMessageSeverity  severity,
+static gboolean  gui_message_error_console  (Ligma                *ligma,
+                                             LigmaMessageSeverity  severity,
                                              const gchar         *domain,
                                              const gchar         *message);
-static gboolean  gui_message_error_dialog   (Gimp                *gimp,
+static gboolean  gui_message_error_dialog   (Ligma                *ligma,
                                              GObject             *handler,
-                                             GimpMessageSeverity  severity,
+                                             LigmaMessageSeverity  severity,
                                              const gchar         *domain,
                                              const gchar         *message,
                                              const gchar         *trace);
-static void      gui_message_console        (GimpMessageSeverity  severity,
+static void      gui_message_console        (LigmaMessageSeverity  severity,
                                              const gchar         *domain,
                                              const gchar         *message);
-static gchar *   gui_message_format         (GimpMessageSeverity  severity,
+static gchar *   gui_message_format         (LigmaMessageSeverity  severity,
                                              const gchar         *domain,
                                              const gchar         *message);
 
@@ -97,26 +97,26 @@ static gint   n_errors = 0;
 
 
 void
-gui_message (Gimp                *gimp,
+gui_message (Ligma                *ligma,
              GObject             *handler,
-             GimpMessageSeverity  severity,
+             LigmaMessageSeverity  severity,
              const gchar         *domain,
              const gchar         *message)
 {
   gchar    *trace     = NULL;
   gboolean  gen_trace = FALSE;
 
-  switch (gimp->message_handler)
+  switch (ligma->message_handler)
     {
-    case GIMP_ERROR_CONSOLE:
-      if (gui_message_error_console (gimp, severity, domain, message))
+    case LIGMA_ERROR_CONSOLE:
+      if (gui_message_error_console (ligma, severity, domain, message))
         return;
 
-      gimp->message_handler = GIMP_MESSAGE_BOX;
+      ligma->message_handler = LIGMA_MESSAGE_BOX;
       /*  fallthru  */
 
-    case GIMP_MESSAGE_BOX:
-      if (severity >= GIMP_MESSAGE_BUG_WARNING)
+    case LIGMA_MESSAGE_BOX:
+      if (severity >= LIGMA_MESSAGE_BUG_WARNING)
         {
           g_mutex_lock (&mutex);
           /* Trace creation can be time consuming so don't block the
@@ -134,23 +134,23 @@ gui_message (Gimp                *gimp,
       if (gen_trace)
         {
           /* We need to create the trace here because for multi-thread
-           * errors (i.e. non-GIMP ones), the backtrace after a idle
+           * errors (i.e. non-LIGMA ones), the backtrace after a idle
            * function will simply be useless. It needs to happen in the
            * buggy thread to be meaningful.
            */
-          gimp_stack_trace_print (NULL, NULL, &trace);
+          ligma_stack_trace_print (NULL, NULL, &trace);
         }
 
-      if (g_strcmp0 (GIMP_ACRONYM, domain) != 0)
+      if (g_strcmp0 (LIGMA_ACRONYM, domain) != 0)
         {
-          /* Handle non-GIMP messages in a multi-thread safe way,
+          /* Handle non-LIGMA messages in a multi-thread safe way,
            * because we can't know for sure whether the log message may
            * not have been called from a thread other than the main one.
            */
-          GimpLogMessageData *data;
+          LigmaLogMessageData *data;
 
-          data = g_new0 (GimpLogMessageData, 1);
-          data->gimp     = gimp;
+          data = g_new0 (LigmaLogMessageData, 1);
+          data->ligma     = ligma;
           data->domain   = g_strdup (domain);
           data->message  = g_strdup (message);
           data->trace    = trace;
@@ -162,14 +162,14 @@ gui_message (Gimp                *gimp,
                                      data, g_free);
           return;
         }
-      if (gui_message_error_dialog (gimp, handler, severity,
+      if (gui_message_error_dialog (ligma, handler, severity,
                                     domain, message, trace))
         break;
 
-      gimp->message_handler = GIMP_CONSOLE;
+      ligma->message_handler = LIGMA_CONSOLE;
       /*  fallthru  */
 
-    case GIMP_CONSOLE:
+    case LIGMA_CONSOLE:
       gui_message_console (severity, domain, message);
       break;
     }
@@ -180,9 +180,9 @@ gui_message (Gimp                *gimp,
 static gboolean
 gui_message_idle (gpointer user_data)
 {
-  GimpLogMessageData *data = (GimpLogMessageData *) user_data;
+  LigmaLogMessageData *data = (LigmaLogMessageData *) user_data;
 
-  if (! gui_message_error_dialog (data->gimp,
+  if (! gui_message_error_dialog (data->ligma,
                                   data->handler,
                                   data->severity,
                                   data->domain,
@@ -204,42 +204,42 @@ gui_message_idle (gpointer user_data)
 }
 
 static gboolean
-gui_message_error_console (Gimp                *gimp,
-                           GimpMessageSeverity  severity,
+gui_message_error_console (Ligma                *ligma,
+                           LigmaMessageSeverity  severity,
                            const gchar         *domain,
                            const gchar         *message)
 {
   GtkWidget *dockable;
 
-  dockable = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                              "gimp-error-console");
+  dockable = ligma_dialog_factory_find_widget (ligma_dialog_factory_get_singleton (),
+                                              "ligma-error-console");
 
   /* avoid raising the error console for unhighlighted messages */
   if (dockable)
     {
       GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
 
-      if (GIMP_ERROR_CONSOLE (child)->highlight[severity])
+      if (LIGMA_ERROR_CONSOLE (child)->highlight[severity])
         dockable = NULL;
     }
 
   if (! dockable)
     {
-      GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
+      GdkMonitor *monitor = ligma_get_monitor_at_pointer ();
 
       dockable =
-        gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                                   gimp,
-                                                   gimp_dialog_factory_get_singleton (),
+        ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                                   ligma,
+                                                   ligma_dialog_factory_get_singleton (),
                                                    monitor,
-                                                   "gimp-error-console");
+                                                   "ligma-error-console");
     }
 
   if (dockable)
     {
       GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
 
-      gimp_error_console_add (GIMP_ERROR_CONSOLE (child),
+      ligma_error_console_add (LIGMA_ERROR_CONSOLE (child),
                               severity, domain, message);
 
       return TRUE;
@@ -249,25 +249,25 @@ gui_message_error_console (Gimp                *gimp,
 }
 
 static void
-progress_error_dialog_unset (GimpProgress *progress)
+progress_error_dialog_unset (LigmaProgress *progress)
 {
-  g_object_set_data (G_OBJECT (progress), "gimp-error-dialog", NULL);
+  g_object_set_data (G_OBJECT (progress), "ligma-error-dialog", NULL);
 }
 
 static GtkWidget *
-progress_error_dialog (GimpProgress *progress)
+progress_error_dialog (LigmaProgress *progress)
 {
   GtkWidget *dialog;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), NULL);
 
-  dialog = g_object_get_data (G_OBJECT (progress), "gimp-error-dialog");
+  dialog = g_object_get_data (G_OBJECT (progress), "ligma-error-dialog");
 
   if (! dialog)
     {
-      dialog = gimp_error_dialog_new (_("GIMP Message"));
+      dialog = ligma_error_dialog_new (_("LIGMA Message"));
 
-      g_object_set_data (G_OBJECT (progress), "gimp-error-dialog", dialog);
+      g_object_set_data (G_OBJECT (progress), "ligma-error-dialog", dialog);
 
       g_signal_connect_object (dialog, "destroy",
                                G_CALLBACK (progress_error_dialog_unset),
@@ -283,10 +283,10 @@ progress_error_dialog (GimpProgress *progress)
         }
       else
         {
-          guint32 window_id = gimp_progress_get_window_id (progress);
+          guint32 window_id = ligma_progress_get_window_id (progress);
 
           if (window_id)
-            gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
+            ligma_window_set_transient_for (GTK_WINDOW (dialog), window_id);
         }
     }
 
@@ -294,9 +294,9 @@ progress_error_dialog (GimpProgress *progress)
 }
 
 static gboolean
-gui_message_error_dialog (Gimp                *gimp,
+gui_message_error_dialog (Ligma                *ligma,
                           GObject             *handler,
-                          GimpMessageSeverity  severity,
+                          LigmaMessageSeverity  severity,
                           const gchar         *domain,
                           const gchar         *message,
                           const gchar         *trace)
@@ -306,22 +306,22 @@ gui_message_error_dialog (Gimp                *gimp,
 
   switch (severity)
     {
-    case GIMP_MESSAGE_INFO:
+    case LIGMA_MESSAGE_INFO:
       type = GTK_MESSAGE_INFO;
       break;
-    case GIMP_MESSAGE_WARNING:
+    case LIGMA_MESSAGE_WARNING:
       type = GTK_MESSAGE_WARNING;
       break;
-    case GIMP_MESSAGE_ERROR:
+    case LIGMA_MESSAGE_ERROR:
       type = GTK_MESSAGE_ERROR;
       break;
-    case GIMP_MESSAGE_BUG_WARNING:
-    case GIMP_MESSAGE_BUG_CRITICAL:
+    case LIGMA_MESSAGE_BUG_WARNING:
+    case LIGMA_MESSAGE_BUG_CRITICAL:
       type = GTK_MESSAGE_OTHER;
       break;
     }
 
-  if (severity >= GIMP_MESSAGE_BUG_WARNING)
+  if (severity >= LIGMA_MESSAGE_BUG_WARNING)
     {
       /* Process differently programming errors.
        * The reason is that we will generate traces, which will take
@@ -346,7 +346,7 @@ gui_message_error_dialog (Gimp                *gimp,
           dialog = global_critical_dialog ();
 
           text = gui_message_format (severity, domain, message);
-          gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
+          ligma_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
 
           gtk_widget_show (dialog);
 
@@ -358,7 +358,7 @@ gui_message_error_dialog (Gimp                *gimp,
         {
           const gchar *reason = "Message";
 
-          gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+          ligma_enum_get_value (LIGMA_TYPE_MESSAGE_SEVERITY, severity,
                                NULL, NULL, &reason, NULL);
 
           /* Since we overridden glib default's WARNING and CRITICAL
@@ -372,13 +372,13 @@ gui_message_error_dialog (Gimp                *gimp,
           return TRUE;
         }
     }
-  else if (GIMP_IS_PROGRESS (handler))
+  else if (LIGMA_IS_PROGRESS (handler))
     {
       /* If there's already an error dialog associated with this
-       * progress, then continue without trying gimp_progress_message().
+       * progress, then continue without trying ligma_progress_message().
        */
-      if (! g_object_get_data (handler, "gimp-error-dialog") &&
-          gimp_progress_message (GIMP_PROGRESS (handler), gimp,
+      if (! g_object_get_data (handler, "ligma-error-dialog") &&
+          ligma_progress_message (LIGMA_PROGRESS (handler), ligma,
                                  severity, domain, message))
         {
           return TRUE;
@@ -403,16 +403,16 @@ gui_message_error_dialog (Gimp                *gimp,
       return TRUE;
     }
 
-  if (GIMP_IS_PROGRESS (handler) && ! GIMP_IS_PROGRESS_DIALOG (handler))
-    dialog = progress_error_dialog (GIMP_PROGRESS (handler));
+  if (LIGMA_IS_PROGRESS (handler) && ! LIGMA_IS_PROGRESS_DIALOG (handler))
+    dialog = progress_error_dialog (LIGMA_PROGRESS (handler));
   else
     dialog = global_error_dialog ();
 
   if (dialog)
     {
       gtk_window_set_keep_above (GTK_WINDOW (dialog), TRUE);
-      gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
-                             gimp_get_message_icon_name (severity),
+      ligma_error_dialog_add (LIGMA_ERROR_DIALOG (dialog),
+                             ligma_get_message_icon_name (severity),
                              domain, message);
       gtk_window_present (GTK_WINDOW (dialog));
 
@@ -423,7 +423,7 @@ gui_message_error_dialog (Gimp                *gimp,
 }
 
 static void
-gui_message_console (GimpMessageSeverity  severity,
+gui_message_console (LigmaMessageSeverity  severity,
                      const gchar         *domain,
                      const gchar         *message)
 {
@@ -435,14 +435,14 @@ gui_message_console (GimpMessageSeverity  severity,
 }
 
 static gchar *
-gui_message_format (GimpMessageSeverity  severity,
+gui_message_format (LigmaMessageSeverity  severity,
                     const gchar         *domain,
                     const gchar         *message)
 {
   const gchar *desc = "Message";
   gchar       *formatted_message;
 
-  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+  ligma_enum_get_value (LIGMA_TYPE_MESSAGE_SEVERITY, severity,
                        NULL, NULL, &desc, NULL);
 
   formatted_message = g_strdup_printf ("%s-%s: %s", domain, desc, message);
@@ -453,27 +453,27 @@ gui_message_format (GimpMessageSeverity  severity,
 static GtkWidget *
 global_error_dialog (void)
 {
-  GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
+  GdkMonitor *monitor = ligma_get_monitor_at_pointer ();
 
-  return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+  return ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
                                          monitor,
                                          NULL /*ui_manager*/,
                                          NULL,
-                                         "gimp-error-dialog", -1,
+                                         "ligma-error-dialog", -1,
                                          FALSE);
 }
 
 static GtkWidget *
 global_critical_dialog (void)
 {
-  GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
+  GdkMonitor *monitor = ligma_get_monitor_at_pointer ();
   GtkWidget  *dialog;
 
-  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+  dialog = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
                                            monitor,
                                            NULL /*ui_manager*/,
                                            NULL,
-                                           "gimp-critical-dialog", -1,
+                                           "ligma-critical-dialog", -1,
                                            FALSE);
   g_signal_handlers_disconnect_by_func (dialog,
                                         gui_message_reset_errors,

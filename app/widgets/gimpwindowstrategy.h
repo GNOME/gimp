@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwindowstrategy.h
+ * ligmawindowstrategy.h
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WINDOW_STRATEGY_H__
-#define __GIMP_WINDOW_STRATEGY_H__
+#ifndef __LIGMA_WINDOW_STRATEGY_H__
+#define __LIGMA_WINDOW_STRATEGY_H__
 
 
-#define GIMP_TYPE_WINDOW_STRATEGY (gimp_window_strategy_get_type ())
-G_DECLARE_INTERFACE (GimpWindowStrategy, gimp_window_strategy, GIMP, WINDOW_STRATEGY, GObject)
+#define LIGMA_TYPE_WINDOW_STRATEGY (ligma_window_strategy_get_type ())
+G_DECLARE_INTERFACE (LigmaWindowStrategy, ligma_window_strategy, LIGMA, WINDOW_STRATEGY, GObject)
 
 
-struct _GimpWindowStrategyInterface
+struct _LigmaWindowStrategyInterface
 {
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GtkWidget * (* show_dockable_dialog) (GimpWindowStrategy *strategy,
-                                        Gimp               *gimp,
-                                        GimpDialogFactory  *factory,
+  GtkWidget * (* show_dockable_dialog) (LigmaWindowStrategy *strategy,
+                                        Ligma               *ligma,
+                                        LigmaDialogFactory  *factory,
                                         GdkMonitor         *monitor,
                                         const gchar        *identifiers);
 };
 
 
-GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
-                                                       Gimp               *gimp,
-                                                       GimpDialogFactory  *factory,
+GtkWidget * ligma_window_strategy_show_dockable_dialog (LigmaWindowStrategy *strategy,
+                                                       Ligma               *ligma,
+                                                       LigmaDialogFactory  *factory,
                                                        GdkMonitor         *monitor,
                                                        const gchar        *identifiers);
 
 
-#endif  /*  __GIMP_WINDOW_STRATEGY_H__  */
+#endif  /*  __LIGMA_WINDOW_STRATEGY_H__  */

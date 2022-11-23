@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_TOOL_H__
-#define __GIMP_OPERATION_TOOL_H__
+#ifndef __LIGMA_OPERATION_TOOL_H__
+#define __LIGMA_OPERATION_TOOL_H__
 
 
-#include "gimpfiltertool.h"
+#include "ligmafiltertool.h"
 
 
-#define GIMP_TYPE_OPERATION_TOOL            (gimp_operation_tool_get_type ())
-#define GIMP_OPERATION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_TOOL, GimpOperationTool))
-#define GIMP_OPERATION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OPERATION_TOOL, GimpOperationToolClass))
-#define GIMP_IS_OPERATION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_TOOL))
-#define GIMP_IS_OPERATION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OPERATION_TOOL))
-#define GIMP_OPERATION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OPERATION_TOOL, GimpOperationToolClass))
+#define LIGMA_TYPE_OPERATION_TOOL            (ligma_operation_tool_get_type ())
+#define LIGMA_OPERATION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_TOOL, LigmaOperationTool))
+#define LIGMA_OPERATION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OPERATION_TOOL, LigmaOperationToolClass))
+#define LIGMA_IS_OPERATION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_TOOL))
+#define LIGMA_IS_OPERATION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OPERATION_TOOL))
+#define LIGMA_OPERATION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OPERATION_TOOL, LigmaOperationToolClass))
 
 
-typedef struct _GimpOperationTool      GimpOperationTool;
-typedef struct _GimpOperationToolClass GimpOperationToolClass;
+typedef struct _LigmaOperationTool      LigmaOperationTool;
+typedef struct _LigmaOperationToolClass LigmaOperationToolClass;
 
-struct _GimpOperationTool
+struct _LigmaOperationTool
 {
-  GimpFilterTool  parent_instance;
+  LigmaFilterTool  parent_instance;
 
   gchar          *operation;
   gchar          *description;
@@ -48,18 +48,18 @@ struct _GimpOperationTool
   GWeakRef        options_gui_ref;
 };
 
-struct _GimpOperationToolClass
+struct _LigmaOperationToolClass
 {
-  GimpFilterToolClass  parent_class;
+  LigmaFilterToolClass  parent_class;
 };
 
 
-void    gimp_operation_tool_register      (GimpToolRegisterCallback  callback,
+void    ligma_operation_tool_register      (LigmaToolRegisterCallback  callback,
                                            gpointer                  data);
 
-GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
+GType   ligma_operation_tool_get_type      (void) G_GNUC_CONST;
 
-void    gimp_operation_tool_set_operation (GimpOperationTool        *op_tool,
+void    ligma_operation_tool_set_operation (LigmaOperationTool        *op_tool,
                                            const gchar              *operation,
                                            const gchar              *title,
                                            const gchar              *description,
@@ -68,4 +68,4 @@ void    gimp_operation_tool_set_operation (GimpOperationTool        *op_tool,
                                            const gchar              *help_id);
 
 
-#endif  /*  __GIMP_OPERATION_TOOL_H__  */
+#endif  /*  __LIGMA_OPERATION_TOOL_H__  */

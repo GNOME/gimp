@@ -1,4 +1,4 @@
-# Basque translation for gimp-tips
+# Basque translation for ligma-tips
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -8,8 +8,8 @@
 # Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2021.
 #
 msgid ""
-msgstr "Project-Id-Version: gimp-tips master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+msgstr "Project-Id-Version: ligma-tips master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2021-07-19 16:45+0000\n"
 "PO-Revision-Date: 2021-10-30 15:03+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
@@ -20,48 +20,48 @@ msgstr "Project-Id-Version: gimp-tips master\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
-msgstr "GIMPeko eginbide gehienentzako testuinguruko laguntza F1 tekla edozein  unetan sakatuta lor dezakezu. Horrek menuetan ere balio du."
+msgstr "LIGMAeko eginbide gehienentzako testuinguruko laguntza F1 tekla edozein  unetan sakatuta lor dezakezu. Horrek menuetan ere balio du."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr "GIMPek geruzak erabiltzen ditu irudia antolatzen laguntzeko. Imajinatu diapositiba- edo iragazki-multzoak direla eta haietan barrena begiratuta haien edukia ikusten duzula."
+msgstr "LIGMAek geruzak erabiltzen ditu irudia antolatzen laguntzeko. Imajinatu diapositiba- edo iragazki-multzoak direla eta haietan barrena begiratuta haien edukia ikusten duzula."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
 msgstr "Geruza-eragiketa ugari egin ditzakezu 'Geruzak' elkarrizketa-koadroan geruza baten testu-etiketan saguaren eskuineko botoiaz klik eginda."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
-msgstr "Irudi bat gordetzen denean, GIMPen jatorrizko XCF fitxategi-formatua erabiltzen da (fitxategi-luzapena: <tt>.xcf</tt>). Hala, irudiaren geruzak eta lantzen ari zaren arlo asko mantenduko dira. Proiektua bukatutakoan, ordea, formatu hauetan gorde behar duzu: JPEG, PNG, GIF, ..."
+msgstr "Irudi bat gordetzen denean, LIGMAen jatorrizko XCF fitxategi-formatua erabiltzen da (fitxategi-luzapena: <tt>.xcf</tt>). Hala, irudiaren geruzak eta lantzen ari zaren arlo asko mantenduko dira. Proiektua bukatutakoan, ordea, formatu hauetan gorde behar duzu: JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr "Plugin gehienek uneko irudiaren uneko geruzan egiten dute lan. Batzuetan, geruza guztiak batu behar dira (Irudia→Berdindu irudia) pluginak irudi osoan lan egitea nahi baduzu."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr "Geruza elkarrizketa-koadroan geruza baten izena <b>lodiz</b> agertzen bada, geruza horrek alfa-kanalik ez duela adierazten du. Alfa-kanala gehitzeko erabili Geruza → Gardentasuna → Gehitu alfa kanaka."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -69,7 +69,7 @@ msgid ""
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr "Efektu guztiak ez dira berdin aplikatzen irudi mota guztietan. Hori adierazteko, menu-sarrera lausotuta agertuko da. Agian irudiaren modua GBUra  (gorria, berdea, urdina) aldatu behar duzu (Irudia→Modua→GBU), alfa kanal bat gehitu (Geruzak→Gardentasuna→Gehitu alfa kanala) edo irudia berdindu (Irudia→Berdindu irudia)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -77,33 +77,33 @@ msgid ""
 "the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr "Hautapen bat doitzeko edo lekuz aldatzeko, erabili <tt>Alt</tt>-arrastatu. Honek leihoa mugitzen badu, leiho kudeatzaileak <tt>Alt</tt> erabiltzen duela adierazten du. Leiho kudeatzaile gehienak <tt>Alt</tt> teklari ez ikusi egiteko  edo <tt>Super</tt> (\"Windows-en logoa\") tekla erabiltzeko horren ordez konfiguratuta daude."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
-msgstr "GIMPen hainbat gauza arrastatu eta jaregin ditzakezu. Adibidez, tresna-laukitik edo kolore-paleta batetik kolore bat arrastatu eta irudi batean jaregiten baduzu, uneko irudia edo hautapena kolore horrez beteko da."
+msgstr "LIGMAen hainbat gauza arrastatu eta jaregin ditzakezu. Adibidez, tresna-laukitik edo kolore-paleta batetik kolore bat arrastatu eta irudi batean jaregiten baduzu, uneko irudia edo hautapena kolore horrez beteko da."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr "Saguaren erdiko botoia erabil dezakezu irudiaren inguruan ibiltzeko (edo aukeran eduki <tt>Zuriunea</tt> tekla sakatuta sagua mugitzen duzun bitartean)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr "Egin klik erregelan eta arrastatu gida irudi batean jartzeko. Arrastatutako hautapen guztiak gidetara moldatuko dira. Gidak kentzeko, arrastatu iruditik 'Mugitu' tresnarekin."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr "Geruza bat arrasta dezakezu 'Geruzak' elkarrizketa-koadrotik eta tresna-laukira jaregin dezakezu. Irudi berri bat sortuko da eta geruza hori bakarrik edukiko du."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -111,42 +111,42 @@ msgid ""
 "use the menus to do the same."
 msgstr "Hautapen mugikorra geruza berri batean edo azken geruza aktiboan ainguratu behar da, irudian beste eragiketarik egin baino lehen. Sakatu &quot;Geruza berria&quot; edo &quot;Ainguratu geruza&quot; botoietan &quot;Geruzak&quot; elkarrizketa-koadroan, edo erabili menuak gauza bera egiteko."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
-msgstr "GIMPek gzip konprimatzea unean onartzen du. Fitxategi-izenari <tt>.gz</tt> gehitu besterik ez duzu egin behar (edo <tt>.bz2</tt>, bzip2 instalatuta baduzu) eta irudia konprimatuta gordeko da. Noski, konprimatutako irudiak ere karga daitezke."
+msgstr "LIGMAek gzip konprimatzea unean onartzen du. Fitxategi-izenari <tt>.gz</tt> gehitu besterik ez duzu egin behar (edo <tt>.bz2</tt>, bzip2 instalatuta baduzu) eta irudia konprimatuta gordeko da. Noski, konprimatutako irudiak ere karga daitezke."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr "Hautapena egin aurretik <tt>Maius</tt> tekla sakatuta baduzu, uneko hautapenera gehituko duzu ordeztu beharrean. Hautapena egin aurretik <tt>Ktrl</tt> erabiltzen bada, unekotik kendu egiten da."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr "'Editatu→Trazua' erabiliz lauki edo zirkulu soilak marraz daitezke uneko hautapenaren ertza brotxa aktiboarekin margotuz. Forma konplexuagoak marraz daitezke 'Iragazkiak→Errendatu→Gfig' aukeratuz."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr "Bide bat trazatzen baduzu (Editatu→Trazatu), uneko marrazketa-tresna eta haren ezarpenak erabiliko dira. Pintzela gradiente-moduan, 'Borragoma' edo 'Zirriborroa egin' tresnak ere erabil ditzakezu."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr "Hautapen konplexuak egiteko eta editatzeko, erabili 'Bidea' tresna. 'Bideak' elkarrizketa-koadroaren bidez, hainbat bide-izenetan lan egin dezakezu eta haiek hautapen bihur ditzakezu."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -154,7 +154,7 @@ msgid ""
 "it back to a normal selection."
 msgstr "Margotzeko tresnak erabil ditzakezu hautapena aldatzeko. Egin klik irudi-leiho bateko behealdeko ezkerreko &quot;Maskara azkarra&quot; botoian. Aldatu hautapena irudian marraztuz, eta egin klik berriro botoian hautapen arruntera itzultzeko."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -162,43 +162,43 @@ msgid ""
 "selection."
 msgstr "Hautapena kanalean gorde dezakezu (Hautatu→Gorde kanalean) eta gero kanala aldatu margotzeko tresnekin. 'Kanalak' elkarrizketa-koadroko botoiak erabiliz kanal berri honen ikusgaitasuna txandaka dezakezu edo hautapen bihurtu."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
-msgstr "Hobespenen elkarrizketa-koadroan &quot;Laster-tekla dinamikoak&quot; gaitu ondoren laster-teklak berriro ezar ditzakezu. Menuetako laster-teklak esleitzeko, ireki menua, hautatu menu-elementua eta sakatu laster-teklen konbinazio berria. &quot;Gorde laster-teklak&quot; gaitzen bada, GIMPetik irtendakoan gordetzen dira. Baliteke &quot;Laster-tekla dinamikoak&quot; desgaitu nahi izatea, laster-teklak nahi gabe ezartzea edo kentzea saihesteko."
+msgstr "Hobespenen elkarrizketa-koadroan &quot;Laster-tekla dinamikoak&quot; gaitu ondoren laster-teklak berriro ezar ditzakezu. Menuetako laster-teklak esleitzeko, ireki menua, hautatu menu-elementua eta sakatu laster-teklen konbinazio berria. &quot;Gorde laster-teklak&quot; gaitzen bada, LIGMAetik irtendakoan gordetzen dira. Baliteke &quot;Laster-tekla dinamikoak&quot; desgaitu nahi izatea, laster-teklak nahi gabe ezartzea edo kentzea saihesteko."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr "Pantaila beteegia badago, <tt>Tab</tt> tekla behin baino gehiagotan sakatu irudi-leihoan, tresna-laukia edo beste elkarrizketa-koadroak ezkutatzeko edo agertzeko."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr "Egin klik <tt>Maius</tt> tekla sakatuta 'Geruzak' elkarrizketa-koadroko begiaren ikonoan, geruza hori ez beste guztiak ezkutatzeko.  Egin klik berriro <tt>Maius</tt> tekla sakatuta, geruza guztiak agertzeko."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr "Egin klik <tt>Ktrl</tt> sakatuta, 'Geruzak' elkarrizketa-koadroko geruza-maskararen aurrebistan geruza-maskararen efektua txandakatzeko. Egin klik <tt>Alt</tt> sakatuta, 'Geruzak' elkarrizketa-koadroko geruza-maskararen aurrebistan geruza-maskararen ikuspegia txandakatzeko."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr "<tt>Alt</tt>-<tt>Tab</tt> teklak erabil ditzakezu irudi bateko geruzetan batetik bestera joateko (zure leiho-kudeatzaileak tekla horiek blokeatzen ez baditu...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -206,13 +206,13 @@ msgid ""
 "color."
 msgstr "Egin klik <tt>Ktrl</tt> sakatuta Bete tresnarekin, aurreko planoaren kolorearen ordez atzeko planoaren kolorea erabil dezan. Era berean, egin klik <tt>Ktrl</tt> sakatuta kolore-hautatzailea tresnarekin aurreko planoaren kolorearen ordez atzeko planoaren kolorea ezar dezan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr "Biratze-moduan eraldatze-tresnarekin <tt>Ktrl</tt> sakatuta arrastatzen baduzu, 15 gradu biratuko da."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -224,10 +224,10 @@ msgstr "Eskaneatutako argazki batzuk kolore nahikoa ez badute, erraz hobe dezake
 #~ msgstr "<big>Ongi etorri GNU Irudiak Manipulatzeko Programara!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
-#~ "GIMPek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
+#~ "LIGMAek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
 
 #~ msgid ""
 #~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "

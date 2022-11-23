@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrushclipboard.c
- * Copyright (C) 2006 Michael Natterer <mitch@gimp.org>
+ * ligmabrushclipboard.c
+ * Copyright (C) 2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +23,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpbuffer.h"
-#include "gimpbrush-private.h"
-#include "gimpbrushclipboard.h"
-#include "gimpimage.h"
-#include "gimppickable.h"
-#include "gimptempbuf.h"
+#include "ligma.h"
+#include "ligmabuffer.h"
+#include "ligmabrush-private.h"
+#include "ligmabrushclipboard.h"
+#include "ligmaimage.h"
+#include "ligmapickable.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define BRUSH_MAX_SIZE 1024
@@ -43,92 +43,92 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_MASK_ONLY
 };
 
 
 /*  local function prototypes  */
 
-static void       gimp_brush_clipboard_constructed  (GObject      *object);
-static void       gimp_brush_clipboard_set_property (GObject      *object,
+static void       ligma_brush_clipboard_constructed  (GObject      *object);
+static void       ligma_brush_clipboard_set_property (GObject      *object,
                                                      guint         property_id,
                                                      const GValue *value,
                                                      GParamSpec   *pspec);
-static void       gimp_brush_clipboard_get_property (GObject      *object,
+static void       ligma_brush_clipboard_get_property (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
-static GimpData * gimp_brush_clipboard_duplicate    (GimpData     *data);
+static LigmaData * ligma_brush_clipboard_duplicate    (LigmaData     *data);
 
-static void       gimp_brush_clipboard_changed      (Gimp         *gimp,
-                                                     GimpBrush    *brush);
+static void       ligma_brush_clipboard_changed      (Ligma         *ligma,
+                                                     LigmaBrush    *brush);
 
 
-G_DEFINE_TYPE (GimpBrushClipboard, gimp_brush_clipboard, GIMP_TYPE_BRUSH)
+G_DEFINE_TYPE (LigmaBrushClipboard, ligma_brush_clipboard, LIGMA_TYPE_BRUSH)
 
-#define parent_class gimp_brush_clipboard_parent_class
+#define parent_class ligma_brush_clipboard_parent_class
 
 
 static void
-gimp_brush_clipboard_class_init (GimpBrushClipboardClass *klass)
+ligma_brush_clipboard_class_init (LigmaBrushClipboardClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
+  LigmaDataClass *data_class   = LIGMA_DATA_CLASS (klass);
 
-  object_class->constructed  = gimp_brush_clipboard_constructed;
-  object_class->set_property = gimp_brush_clipboard_set_property;
-  object_class->get_property = gimp_brush_clipboard_get_property;
+  object_class->constructed  = ligma_brush_clipboard_constructed;
+  object_class->set_property = ligma_brush_clipboard_set_property;
+  object_class->get_property = ligma_brush_clipboard_get_property;
 
-  data_class->duplicate      = gimp_brush_clipboard_duplicate;
+  data_class->duplicate      = ligma_brush_clipboard_duplicate;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MASK_ONLY,
                                    g_param_spec_boolean ("mask-only", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_brush_clipboard_init (GimpBrushClipboard *brush)
+ligma_brush_clipboard_init (LigmaBrushClipboard *brush)
 {
 }
 
 static void
-gimp_brush_clipboard_constructed (GObject *object)
+ligma_brush_clipboard_constructed (GObject *object)
 {
-  GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (object);
+  LigmaBrushClipboard *brush = LIGMA_BRUSH_CLIPBOARD (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (brush->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (brush->ligma));
 
-  g_signal_connect_object (brush->gimp, "clipboard-changed",
-                           G_CALLBACK (gimp_brush_clipboard_changed),
+  g_signal_connect_object (brush->ligma, "clipboard-changed",
+                           G_CALLBACK (ligma_brush_clipboard_changed),
                            brush, 0);
 
-  gimp_brush_clipboard_changed (brush->gimp, GIMP_BRUSH (brush));
+  ligma_brush_clipboard_changed (brush->ligma, LIGMA_BRUSH (brush));
 }
 
 static void
-gimp_brush_clipboard_set_property (GObject      *object,
+ligma_brush_clipboard_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (object);
+  LigmaBrushClipboard *brush = LIGMA_BRUSH_CLIPBOARD (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      brush->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      brush->ligma = g_value_get_object (value);
       break;
 
     case PROP_MASK_ONLY:
@@ -142,17 +142,17 @@ gimp_brush_clipboard_set_property (GObject      *object,
 }
 
 static void
-gimp_brush_clipboard_get_property (GObject    *object,
+ligma_brush_clipboard_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (object);
+  LigmaBrushClipboard *brush = LIGMA_BRUSH_CLIPBOARD (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, brush->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, brush->ligma);
       break;
 
     case PROP_MASK_ONLY:
@@ -165,32 +165,32 @@ gimp_brush_clipboard_get_property (GObject    *object,
     }
 }
 
-static GimpData *
-gimp_brush_clipboard_duplicate (GimpData *data)
+static LigmaData *
+ligma_brush_clipboard_duplicate (LigmaData *data)
 {
-  GimpData *new = g_object_new (GIMP_TYPE_BRUSH, NULL);
+  LigmaData *new = g_object_new (LIGMA_TYPE_BRUSH, NULL);
 
-  gimp_data_copy (new, data);
+  ligma_data_copy (new, data);
 
   return new;
 }
 
-GimpData *
-gimp_brush_clipboard_new (Gimp     *gimp,
+LigmaData *
+ligma_brush_clipboard_new (Ligma     *ligma,
                           gboolean  mask_only)
 {
   const gchar *name;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   if (mask_only)
     name = _("Clipboard Mask");
   else
     name = _("Clipboard Image");
 
-  return g_object_new (GIMP_TYPE_BRUSH_CLIPBOARD,
+  return g_object_new (LIGMA_TYPE_BRUSH_CLIPBOARD,
                        "name",      name,
-                       "gimp",      gimp,
+                       "ligma",      ligma,
                        "mask-only", mask_only,
                        NULL);
 }
@@ -199,27 +199,27 @@ gimp_brush_clipboard_new (Gimp     *gimp,
 /*  private functions  */
 
 static void
-gimp_brush_clipboard_changed (Gimp      *gimp,
-                              GimpBrush *brush)
+ligma_brush_clipboard_changed (Ligma      *ligma,
+                              LigmaBrush *brush)
 {
-  GimpObject *paste;
+  LigmaObject *paste;
   GeglBuffer *buffer = NULL;
   gint        width;
   gint        height;
 
-  g_clear_pointer (&brush->priv->mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->mask,   ligma_temp_buf_unref);
+  g_clear_pointer (&brush->priv->pixmap, ligma_temp_buf_unref);
 
-  paste = gimp_get_clipboard_object (gimp);
+  paste = ligma_get_clipboard_object (ligma);
 
-  if (GIMP_IS_IMAGE (paste))
+  if (LIGMA_IS_IMAGE (paste))
     {
-      gimp_pickable_flush (GIMP_PICKABLE (paste));
-      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+      ligma_pickable_flush (LIGMA_PICKABLE (paste));
+      buffer = ligma_pickable_get_buffer (LIGMA_PICKABLE (paste));
     }
-  else if (GIMP_IS_BUFFER (paste))
+  else if (LIGMA_IS_BUFFER (paste))
     {
-      buffer = gimp_buffer_get_buffer (GIMP_BUFFER (paste));
+      buffer = ligma_buffer_get_buffer (LIGMA_BUFFER (paste));
     }
 
   if (buffer)
@@ -229,10 +229,10 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
       width  = MIN (gegl_buffer_get_width  (buffer), BRUSH_MAX_SIZE);
       height = MIN (gegl_buffer_get_height (buffer), BRUSH_MAX_SIZE);
 
-      brush->priv->mask = gimp_temp_buf_new (width, height,
+      brush->priv->mask = ligma_temp_buf_new (width, height,
                                              babl_format ("Y u8"));
 
-      if (GIMP_BRUSH_CLIPBOARD (brush)->mask_only)
+      if (LIGMA_BRUSH_CLIPBOARD (brush)->mask_only)
         {
           guchar *p;
           gint    i;
@@ -240,13 +240,13 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
           gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (0, 0, width, height), 1.0,
                            babl_format ("Y u8"),
-                           gimp_temp_buf_get_data (brush->priv->mask),
+                           ligma_temp_buf_get_data (brush->priv->mask),
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           /*  invert the mask, it's more intuitive to think
            *  "black on white" than the other way around
            */
-          for (i = 0, p = gimp_temp_buf_get_data (brush->priv->mask);
+          for (i = 0, p = ligma_temp_buf_get_data (brush->priv->mask);
                i < width * height;
                i++, p++)
             {
@@ -255,7 +255,7 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
         }
       else
         {
-          brush->priv->pixmap = gimp_temp_buf_new (width, height,
+          brush->priv->pixmap = ligma_temp_buf_new (width, height,
                                                    babl_format ("R'G'B' u8"));
 
           /*  copy the alpha channel into the brush's mask  */
@@ -264,12 +264,12 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
               gegl_buffer_get (buffer,
                                GEGL_RECTANGLE (0, 0, width, height), 1.0,
                                babl_format ("A u8"),
-                               gimp_temp_buf_get_data (brush->priv->mask),
+                               ligma_temp_buf_get_data (brush->priv->mask),
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
             }
           else
             {
-              memset (gimp_temp_buf_get_data (brush->priv->mask), 255,
+              memset (ligma_temp_buf_get_data (brush->priv->mask), 255,
                       width * height);
             }
 
@@ -277,7 +277,7 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
           gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (0, 0, width, height), 1.0,
                            babl_format ("R'G'B' u8"),
-                           gimp_temp_buf_get_data (brush->priv->pixmap),
+                           ligma_temp_buf_get_data (brush->priv->pixmap),
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
         }
     }
@@ -286,9 +286,9 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
       width  = 17;
       height = 17;
 
-      brush->priv->mask = gimp_temp_buf_new (width, height,
+      brush->priv->mask = ligma_temp_buf_new (width, height,
                                              babl_format ("Y u8"));
-      gimp_temp_buf_data_clear (brush->priv->mask);
+      ligma_temp_buf_data_clear (brush->priv->mask);
     }
 
   brush->priv->x_axis.x = width / 2;
@@ -296,5 +296,5 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
   brush->priv->y_axis.x = 0;
   brush->priv->y_axis.y = height / 2;
 
-  gimp_data_dirty (GIMP_DATA (brush));
+  ligma_data_dirty (LIGMA_DATA (brush));
 }

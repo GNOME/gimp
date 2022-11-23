@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,45 +15,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SUB_PROGRESS_H__
-#define __GIMP_SUB_PROGRESS_H__
+#ifndef __LIGMA_SUB_PROGRESS_H__
+#define __LIGMA_SUB_PROGRESS_H__
 
 
-#define GIMP_TYPE_SUB_PROGRESS            (gimp_sub_progress_get_type ())
-#define GIMP_SUB_PROGRESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SUB_PROGRESS, GimpSubProgress))
-#define GIMP_SUB_PROGRESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SUB_PROGRESS, GimpSubProgressClass))
-#define GIMP_IS_SUB_PROGRESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SUB_PROGRESS))
-#define GIMP_IS_SUB_PROGRESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SUB_PROGRESS))
-#define GIMP_SUB_PROGRESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SUB_PROGRESS, GimpSubProgressClass))
+#define LIGMA_TYPE_SUB_PROGRESS            (ligma_sub_progress_get_type ())
+#define LIGMA_SUB_PROGRESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SUB_PROGRESS, LigmaSubProgress))
+#define LIGMA_SUB_PROGRESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SUB_PROGRESS, LigmaSubProgressClass))
+#define LIGMA_IS_SUB_PROGRESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SUB_PROGRESS))
+#define LIGMA_IS_SUB_PROGRESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SUB_PROGRESS))
+#define LIGMA_SUB_PROGRESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SUB_PROGRESS, LigmaSubProgressClass))
 
 
-typedef struct _GimpSubProgressClass GimpSubProgressClass;
+typedef struct _LigmaSubProgressClass LigmaSubProgressClass;
 
-struct _GimpSubProgress
+struct _LigmaSubProgress
 {
   GObject       parent_instance;
 
-  GimpProgress *progress;
+  LigmaProgress *progress;
   gdouble       start;
   gdouble       end;
 };
 
-struct _GimpSubProgressClass
+struct _LigmaSubProgressClass
 {
   GObjectClass  parent_class;
 };
 
 
-GType          gimp_sub_progress_get_type (void) G_GNUC_CONST;
+GType          ligma_sub_progress_get_type (void) G_GNUC_CONST;
 
-GimpProgress * gimp_sub_progress_new       (GimpProgress    *progress);
-void           gimp_sub_progress_set_range (GimpSubProgress *progress,
+LigmaProgress * ligma_sub_progress_new       (LigmaProgress    *progress);
+void           ligma_sub_progress_set_range (LigmaSubProgress *progress,
                                             gdouble          start,
                                             gdouble          end);
-void           gimp_sub_progress_set_step  (GimpSubProgress *progress,
+void           ligma_sub_progress_set_step  (LigmaSubProgress *progress,
                                             gint             index,
                                             gint             num_steps);
 
 
 
-#endif /* __GIMP_SUB_PROGRESS_H__ */
+#endif /* __LIGMA_SUB_PROGRESS_H__ */

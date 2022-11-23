@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,35 +15,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAW_TOOL_H__
-#define __GIMP_DRAW_TOOL_H__
+#ifndef __LIGMA_DRAW_TOOL_H__
+#define __LIGMA_DRAW_TOOL_H__
 
 
-#include "gimptool.h"
+#include "ligmatool.h"
 
 
-#define GIMP_TOOL_HANDLE_SIZE_CIRCLE    13
-#define GIMP_TOOL_HANDLE_SIZE_CROSS     15
-#define GIMP_TOOL_HANDLE_SIZE_CROSSHAIR 43
-#define GIMP_TOOL_HANDLE_SIZE_LARGE     25
-#define GIMP_TOOL_HANDLE_SIZE_SMALL     7
+#define LIGMA_TOOL_HANDLE_SIZE_CIRCLE    13
+#define LIGMA_TOOL_HANDLE_SIZE_CROSS     15
+#define LIGMA_TOOL_HANDLE_SIZE_CROSSHAIR 43
+#define LIGMA_TOOL_HANDLE_SIZE_LARGE     25
+#define LIGMA_TOOL_HANDLE_SIZE_SMALL     7
 
 
-#define GIMP_TYPE_DRAW_TOOL            (gimp_draw_tool_get_type ())
-#define GIMP_DRAW_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAW_TOOL, GimpDrawTool))
-#define GIMP_DRAW_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAW_TOOL, GimpDrawToolClass))
-#define GIMP_IS_DRAW_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAW_TOOL))
-#define GIMP_IS_DRAW_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAW_TOOL))
-#define GIMP_DRAW_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAW_TOOL, GimpDrawToolClass))
+#define LIGMA_TYPE_DRAW_TOOL            (ligma_draw_tool_get_type ())
+#define LIGMA_DRAW_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DRAW_TOOL, LigmaDrawTool))
+#define LIGMA_DRAW_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DRAW_TOOL, LigmaDrawToolClass))
+#define LIGMA_IS_DRAW_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DRAW_TOOL))
+#define LIGMA_IS_DRAW_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DRAW_TOOL))
+#define LIGMA_DRAW_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DRAW_TOOL, LigmaDrawToolClass))
 
 
-typedef struct _GimpDrawToolClass GimpDrawToolClass;
+typedef struct _LigmaDrawToolClass LigmaDrawToolClass;
 
-struct _GimpDrawTool
+struct _LigmaDrawTool
 {
-  GimpTool        parent_instance;
+  LigmaTool        parent_instance;
 
-  GimpDisplay    *display;        /*  The display we are drawing to (may be
+  LigmaDisplay    *display;        /*  The display we are drawing to (may be
                                    *  a different one than tool->display)
                                    */
 
@@ -51,92 +51,92 @@ struct _GimpDrawTool
   guint           draw_timeout;   /*  draw delay timeout ID                   */
   guint64         last_draw_time; /*  time of last draw(), monotonically      */
 
-  GimpToolWidget *widget;
+  LigmaToolWidget *widget;
   gchar          *default_status;
-  GimpCanvasItem *preview;
-  GimpCanvasItem *item;
+  LigmaCanvasItem *preview;
+  LigmaCanvasItem *item;
   GList          *group_stack;
 };
 
-struct _GimpDrawToolClass
+struct _LigmaDrawToolClass
 {
-  GimpToolClass   parent_class;
+  LigmaToolClass   parent_class;
 
   /*  virtual function  */
 
-  void (* draw) (GimpDrawTool *draw_tool);
+  void (* draw) (LigmaDrawTool *draw_tool);
 };
 
 
-GType            gimp_draw_tool_get_type             (void) G_GNUC_CONST;
+GType            ligma_draw_tool_get_type             (void) G_GNUC_CONST;
 
-void             gimp_draw_tool_start                (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display);
-void             gimp_draw_tool_stop                 (GimpDrawTool     *draw_tool);
+void             ligma_draw_tool_start                (LigmaDrawTool     *draw_tool,
+                                                      LigmaDisplay      *display);
+void             ligma_draw_tool_stop                 (LigmaDrawTool     *draw_tool);
 
-gboolean         gimp_draw_tool_is_active            (GimpDrawTool     *draw_tool);
+gboolean         ligma_draw_tool_is_active            (LigmaDrawTool     *draw_tool);
 
-void             gimp_draw_tool_pause                (GimpDrawTool     *draw_tool);
-void             gimp_draw_tool_resume               (GimpDrawTool     *draw_tool);
+void             ligma_draw_tool_pause                (LigmaDrawTool     *draw_tool);
+void             ligma_draw_tool_resume               (LigmaDrawTool     *draw_tool);
 
-gdouble          gimp_draw_tool_calc_distance        (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
+gdouble          ligma_draw_tool_calc_distance        (LigmaDrawTool     *draw_tool,
+                                                      LigmaDisplay      *display,
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
-gdouble          gimp_draw_tool_calc_distance_square (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
+gdouble          ligma_draw_tool_calc_distance_square (LigmaDrawTool     *draw_tool,
+                                                      LigmaDisplay      *display,
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
 
-void             gimp_draw_tool_set_widget           (GimpDrawTool     *draw_tool,
-                                                      GimpToolWidget   *widget);
-void             gimp_draw_tool_set_default_status   (GimpDrawTool     *draw_tool,
+void             ligma_draw_tool_set_widget           (LigmaDrawTool     *draw_tool,
+                                                      LigmaToolWidget   *widget);
+void             ligma_draw_tool_set_default_status   (LigmaDrawTool     *draw_tool,
                                                       const gchar      *status);
 
-void             gimp_draw_tool_add_preview          (GimpDrawTool     *draw_tool,
-                                                      GimpCanvasItem   *item);
-void             gimp_draw_tool_remove_preview       (GimpDrawTool     *draw_tool,
-                                                      GimpCanvasItem   *item);
+void             ligma_draw_tool_add_preview          (LigmaDrawTool     *draw_tool,
+                                                      LigmaCanvasItem   *item);
+void             ligma_draw_tool_remove_preview       (LigmaDrawTool     *draw_tool,
+                                                      LigmaCanvasItem   *item);
 
-void             gimp_draw_tool_add_item             (GimpDrawTool     *draw_tool,
-                                                      GimpCanvasItem   *item);
-void             gimp_draw_tool_remove_item          (GimpDrawTool     *draw_tool,
-                                                      GimpCanvasItem   *item);
+void             ligma_draw_tool_add_item             (LigmaDrawTool     *draw_tool,
+                                                      LigmaCanvasItem   *item);
+void             ligma_draw_tool_remove_item          (LigmaDrawTool     *draw_tool,
+                                                      LigmaCanvasItem   *item);
 
-GimpCanvasGroup* gimp_draw_tool_add_stroke_group     (GimpDrawTool     *draw_tool);
-GimpCanvasGroup* gimp_draw_tool_add_fill_group       (GimpDrawTool     *draw_tool);
+LigmaCanvasGroup* ligma_draw_tool_add_stroke_group     (LigmaDrawTool     *draw_tool);
+LigmaCanvasGroup* ligma_draw_tool_add_fill_group       (LigmaDrawTool     *draw_tool);
 
-void             gimp_draw_tool_push_group           (GimpDrawTool     *draw_tool,
-                                                      GimpCanvasGroup  *group);
-void             gimp_draw_tool_pop_group            (GimpDrawTool     *draw_tool);
+void             ligma_draw_tool_push_group           (LigmaDrawTool     *draw_tool,
+                                                      LigmaCanvasGroup  *group);
+void             ligma_draw_tool_pop_group            (LigmaDrawTool     *draw_tool);
 
-GimpCanvasItem * gimp_draw_tool_add_line             (GimpDrawTool     *draw_tool,
+LigmaCanvasItem * ligma_draw_tool_add_line             (LigmaDrawTool     *draw_tool,
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
-GimpCanvasItem * gimp_draw_tool_add_guide            (GimpDrawTool     *draw_tool,
-                                                      GimpOrientationType  orientation,
+LigmaCanvasItem * ligma_draw_tool_add_guide            (LigmaDrawTool     *draw_tool,
+                                                      LigmaOrientationType  orientation,
                                                       gint              position,
-                                                      GimpGuideStyle    style);
-GimpCanvasItem * gimp_draw_tool_add_crosshair        (GimpDrawTool     *draw_tool,
+                                                      LigmaGuideStyle    style);
+LigmaCanvasItem * ligma_draw_tool_add_crosshair        (LigmaDrawTool     *draw_tool,
                                                       gint              position_x,
                                                       gint              position_y);
-GimpCanvasItem * gimp_draw_tool_add_sample_point     (GimpDrawTool     *draw_tool,
+LigmaCanvasItem * ligma_draw_tool_add_sample_point     (LigmaDrawTool     *draw_tool,
                                                       gint              x,
                                                       gint              y,
                                                       gint              index);
-GimpCanvasItem * gimp_draw_tool_add_rectangle        (GimpDrawTool     *draw_tool,
+LigmaCanvasItem * ligma_draw_tool_add_rectangle        (LigmaDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,
                                                       gdouble           y,
                                                       gdouble           width,
                                                       gdouble           height);
-GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_tool,
+LigmaCanvasItem * ligma_draw_tool_add_arc              (LigmaDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,
                                                       gdouble           y,
@@ -144,63 +144,63 @@ GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_too
                                                       gdouble           height,
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
-GimpCanvasItem * gimp_draw_tool_add_transform_preview(GimpDrawTool     *draw_tool,
-                                                      GimpPickable     *pickable,
-                                                      const GimpMatrix3 *transform,
+LigmaCanvasItem * ligma_draw_tool_add_transform_preview(LigmaDrawTool     *draw_tool,
+                                                      LigmaPickable     *pickable,
+                                                      const LigmaMatrix3 *transform,
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
 
-GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_tool,
-                                                      GimpHandleType    type,
+LigmaCanvasItem * ligma_draw_tool_add_handle           (LigmaDrawTool     *draw_tool,
+                                                      LigmaHandleType    type,
                                                       gdouble           x,
                                                       gdouble           y,
                                                       gint              width,
                                                       gint              height,
-                                                      GimpHandleAnchor  anchor);
+                                                      LigmaHandleAnchor  anchor);
 
-GimpCanvasItem * gimp_draw_tool_add_lines            (GimpDrawTool     *draw_tool,
-                                                      const GimpVector2 *points,
+LigmaCanvasItem * ligma_draw_tool_add_lines            (LigmaDrawTool     *draw_tool,
+                                                      const LigmaVector2 *points,
                                                       gint              n_points,
-                                                      GimpMatrix3      *transform,
+                                                      LigmaMatrix3      *transform,
                                                       gboolean          filled);
 
-GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_tool,
-                                                      const GimpCoords *points,
+LigmaCanvasItem * ligma_draw_tool_add_strokes          (LigmaDrawTool     *draw_tool,
+                                                      const LigmaCoords *points,
                                                       gint              n_points,
-                                                      GimpMatrix3      *transform,
+                                                      LigmaMatrix3      *transform,
                                                       gboolean          filled);
 
-GimpCanvasItem * gimp_draw_tool_add_pen              (GimpDrawTool     *draw_tool,
-                                                      const GimpVector2 *points,
+LigmaCanvasItem * ligma_draw_tool_add_pen              (LigmaDrawTool     *draw_tool,
+                                                      const LigmaVector2 *points,
                                                       gint              n_points,
-                                                      GimpContext      *context,
-                                                      GimpActiveColor   color,
+                                                      LigmaContext      *context,
+                                                      LigmaActiveColor   color,
                                                       gint              width);
 
-GimpCanvasItem * gimp_draw_tool_add_boundary         (GimpDrawTool     *draw_tool,
-                                                      const GimpBoundSeg *bound_segs,
+LigmaCanvasItem * ligma_draw_tool_add_boundary         (LigmaDrawTool     *draw_tool,
+                                                      const LigmaBoundSeg *bound_segs,
                                                       gint              n_bound_segs,
-                                                      GimpMatrix3      *transform,
+                                                      LigmaMatrix3      *transform,
                                                       gdouble           offset_x,
                                                       gdouble           offset_y);
 
-GimpCanvasItem * gimp_draw_tool_add_text_cursor      (GimpDrawTool     *draw_tool,
+LigmaCanvasItem * ligma_draw_tool_add_text_cursor      (LigmaDrawTool     *draw_tool,
                                                       PangoRectangle   *cursor,
                                                       gboolean          overwrite,
-                                                      GimpTextDirection direction);
+                                                      LigmaTextDirection direction);
 
-gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
+gboolean         ligma_draw_tool_on_handle            (LigmaDrawTool     *draw_tool,
+                                                      LigmaDisplay      *display,
                                                       gdouble           x,
                                                       gdouble           y,
-                                                      GimpHandleType    type,
+                                                      LigmaHandleType    type,
                                                       gdouble           handle_x,
                                                       gdouble           handle_y,
                                                       gint              width,
                                                       gint              height,
-                                                      GimpHandleAnchor  anchor);
+                                                      LigmaHandleAnchor  anchor);
 
 
-#endif  /*  __GIMP_DRAW_TOOL_H__  */
+#endif  /*  __LIGMA_DRAW_TOOL_H__  */

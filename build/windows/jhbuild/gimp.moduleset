@@ -33,7 +33,7 @@
 	</dependencies>
 </autotools>
 
-<metamodule id="gimp-common">
+<metamodule id="ligma-common">
 	<dependencies>
 		<dep package="babl"/>
 		<dep package="gtk2"/>
@@ -52,19 +52,19 @@
 	</suggests>
 </metamodule>
 
-<autotools id="gimp-stable">
-	<branch module="gimp" revision="gimp-2-8"/>
+<autotools id="ligma-stable">
+	<branch module="ligma" revision="ligma-2-8"/>
 	<dependencies>
-		<dep package="gimp-common"/>
+		<dep package="ligma-common"/>
 		<dep package="lcms"/>
 		<dep package="gegl-0.2"/>
 	</dependencies>
 </autotools>
 
-<autotools id="gimp-dev">
-	<branch module="gimp" revision="master"/>
+<autotools id="ligma-dev">
+	<branch module="ligma" revision="master"/>
 	<dependencies>
-		<dep package="gimp-common"/>
+		<dep package="ligma-common"/>
 		<dep package="lcms2"/>
 		<dep package="libgexiv2"/>
 		<dep package="libmypaint"/>
@@ -73,10 +73,10 @@
 	</dependencies>
 </autotools>
 
-<autotools id="gimp-gtk3">
-	<branch module="gimp" revision="origin/gtk3-port"/>
+<autotools id="ligma-gtk3">
+	<branch module="ligma" revision="origin/gtk3-port"/>
 	<dependencies>
-		<dep package="gimp-common"/>
+		<dep package="ligma-common"/>
 		<dep package="lcms2"/>
 		<dep package="gegl"/>
 		<dep package="gtk3"/>

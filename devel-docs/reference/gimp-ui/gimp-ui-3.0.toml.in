@@ -1,13 +1,13 @@
 [library]
-namespace = "GimpUi"
-version = "@GIMP_VERSION@"
-browse_url = "https://gitlab.gnome.org/GNOME/gimp/"
-repository_url = "https://gitlab.gnome.org/GNOME/gimp.git"
-website_url = "https://www.gimp.org"
-authors = "GIMP contributors"
-logo_url = "@GIMP_LOGO@"
+namespace = "LigmaUi"
+version = "@LIGMA_VERSION@"
+browse_url = "https://gitlab.gnome.org/GNOME/ligma/"
+repository_url = "https://gitlab.gnome.org/GNOME/ligma.git"
+website_url = "https://www.ligma.org"
+authors = "LIGMA contributors"
+logo_url = "@LIGMA_LOGO@"
 license = "GPL-3.0-or-later"
-description = "GIMP UI library"
+description = "LIGMA UI library"
 dependencies = [
   'Babl-0.1',
   'GLib-2.0',
@@ -67,7 +67,7 @@ show_index_summary = true
 show_class_hierarchy = true
 
 [source-location]
-base_url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/"
+base_url = "https://gitlab.gnome.org/GNOME/ligma/-/blob/master/"
 
 [extra]
 content_files = [

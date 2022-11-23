@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimptemplate.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmatemplate.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,19 +27,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "gimpimage.h"
-#include "gimpprojection.h"
-#include "gimptemplate.h"
+#include "ligmaimage.h"
+#include "ligmaprojection.h"
+#include "ligmatemplate.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_RESOLUTION 300.0
@@ -71,27 +71,27 @@ enum
 };
 
 
-typedef struct _GimpTemplatePrivate GimpTemplatePrivate;
+typedef struct _LigmaTemplatePrivate LigmaTemplatePrivate;
 
-struct _GimpTemplatePrivate
+struct _LigmaTemplatePrivate
 {
   gint                     width;
   gint                     height;
-  GimpUnit                 unit;
+  LigmaUnit                 unit;
 
   gdouble                  xresolution;
   gdouble                  yresolution;
-  GimpUnit                 resolution_unit;
+  LigmaUnit                 resolution_unit;
 
-  GimpImageBaseType        base_type;
-  GimpPrecision            precision;
+  LigmaImageBaseType        base_type;
+  LigmaPrecision            precision;
 
   GFile                   *color_profile;
   GFile                   *simulation_profile;
-  GimpColorRenderingIntent simulation_intent;
+  LigmaColorRenderingIntent simulation_intent;
   gboolean                 simulation_bpc;
 
-  GimpFillType             fill_type;
+  LigmaFillType             fill_type;
 
   gchar                   *comment;
   gchar                   *filename;
@@ -99,191 +99,191 @@ struct _GimpTemplatePrivate
   guint64            initial_size;
 };
 
-#define GET_PRIVATE(template) ((GimpTemplatePrivate *) gimp_template_get_instance_private ((GimpTemplate *) (template)))
+#define GET_PRIVATE(template) ((LigmaTemplatePrivate *) ligma_template_get_instance_private ((LigmaTemplate *) (template)))
 
 
-static void      gimp_template_finalize     (GObject      *object);
-static void      gimp_template_set_property (GObject      *object,
+static void      ligma_template_finalize     (GObject      *object);
+static void      ligma_template_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void      gimp_template_get_property (GObject      *object,
+static void      ligma_template_get_property (GObject      *object,
                                              guint         property_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
-static void      gimp_template_notify       (GObject      *object,
+static void      ligma_template_notify       (GObject      *object,
                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpTemplate, gimp_template, GIMP_TYPE_VIEWABLE,
-                         G_ADD_PRIVATE (GimpTemplate)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaTemplate, ligma_template, LIGMA_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (LigmaTemplate)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-#define parent_class gimp_template_parent_class
+#define parent_class ligma_template_parent_class
 
 
 static void
-gimp_template_class_init (GimpTemplateClass *klass)
+ligma_template_class_init (LigmaTemplateClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_template_finalize;
+  object_class->finalize     = ligma_template_finalize;
 
-  object_class->set_property = gimp_template_set_property;
-  object_class->get_property = gimp_template_get_property;
-  object_class->notify       = gimp_template_notify;
+  object_class->set_property = ligma_template_set_property;
+  object_class->get_property = ligma_template_get_property;
+  object_class->notify       = ligma_template_notify;
 
-  viewable_class->default_icon_name = "gimp-template";
+  viewable_class->default_icon_name = "ligma-template";
   viewable_class->name_editable     = TRUE;
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_WIDTH,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_WIDTH,
                         "width",
                         _("Width"),
                         NULL,
-                        GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                        GIMP_DEFAULT_IMAGE_WIDTH,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
+                        LIGMA_DEFAULT_IMAGE_WIDTH,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_HEIGHT,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_HEIGHT,
                         "height",
                         _("Height"),
                         NULL,
-                        GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                        GIMP_DEFAULT_IMAGE_HEIGHT,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_MIN_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE,
+                        LIGMA_DEFAULT_IMAGE_HEIGHT,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
                          "unit",
                          _("Unit"),
                          _("The unit used for coordinate display "
                            "when not in dot-for-dot mode."),
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         TRUE, FALSE, LIGMA_UNIT_PIXEL,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
+  LIGMA_CONFIG_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
                                "xresolution",
                                _("Resolution X"),
                                _("The horizontal image resolution."),
                                DEFAULT_RESOLUTION,
-                               GIMP_PARAM_STATIC_STRINGS |
-                               GIMP_TEMPLATE_PARAM_COPY_FIRST);
+                               LIGMA_PARAM_STATIC_STRINGS |
+                               LIGMA_TEMPLATE_PARAM_COPY_FIRST);
 
-  GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
+  LIGMA_CONFIG_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
                                "yresolution",
                                _("Resolution X"),
                                _("The vertical image resolution."),
                                DEFAULT_RESOLUTION,
-                               GIMP_PARAM_STATIC_STRINGS |
-                               GIMP_TEMPLATE_PARAM_COPY_FIRST);
+                               LIGMA_PARAM_STATIC_STRINGS |
+                               LIGMA_TEMPLATE_PARAM_COPY_FIRST);
 
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                          "resolution-unit",
                          _("Resolution unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         FALSE, FALSE, LIGMA_UNIT_INCH,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BASE_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BASE_TYPE,
                          "image-type", /* serialized name */
                          _("Image type"),
                          NULL,
-                         GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_IMAGE_BASE_TYPE, LIGMA_RGB,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PRECISION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PRECISION,
                          "precision",
                          _("Precision"),
                          NULL,
-                         GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_NON_LINEAR,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_PRECISION, LIGMA_PRECISION_U8_NON_LINEAR,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_COMPONENT_TYPE,
                                    g_param_spec_enum ("component-type",
                                                       _("Precision"),
                                                       NULL,
-                                                      GIMP_TYPE_COMPONENT_TYPE,
-                                                      GIMP_COMPONENT_TYPE_U8,
+                                                      LIGMA_TYPE_COMPONENT_TYPE,
+                                                      LIGMA_COMPONENT_TYPE_U8,
                                                       G_PARAM_READWRITE |
-                                                      GIMP_PARAM_STATIC_STRINGS));
+                                                      LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class, PROP_TRC,
                                    g_param_spec_enum ("trc",
                                                       _("Linear/Perceptual"),
                                                       NULL,
-                                                      GIMP_TYPE_TRC_TYPE,
-                                                      GIMP_TRC_NON_LINEAR,
+                                                      LIGMA_TYPE_TRC_TYPE,
+                                                      LIGMA_TRC_NON_LINEAR,
                                                       G_PARAM_READWRITE |
-                                                      GIMP_PARAM_STATIC_STRINGS));
+                                                      LIGMA_PARAM_STATIC_STRINGS));
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_PROFILE,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_PROFILE,
                            "color-profile",
                            _("Color profile"),
                            NULL,
                            G_TYPE_FILE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_SIMULATION_PROFILE,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_SIMULATION_PROFILE,
                            "simulation-profile",
                            _("Simulation profile"),
                            NULL,
                            G_TYPE_FILE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_INTENT,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_INTENT,
                          "simulation-intent",
                          _("Simulation Rendering Intent"),
                          NULL,
-                         GIMP_TYPE_COLOR_RENDERING_INTENT,
-                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_COLOR_RENDERING_INTENT,
+                         LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_BPC,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_BPC,
                             "simulation-bpc",
                             _("Use Black Point Compensation for Simulation"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
                          "fill-type",
                          _("Fill type"),
                          NULL,
-                         GIMP_TYPE_FILL_TYPE, GIMP_FILL_BACKGROUND,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_TYPE, LIGMA_FILL_BACKGROUND,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_COMMENT,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_COMMENT,
                            "comment",
                            _("Comment"),
                            NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_FILENAME,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_FILENAME,
                            "filename",
                            _("Filename"),
                            NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   /* compat cruft */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
                             "color-managed",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 }
 
 static void
-gimp_template_init (GimpTemplate *template)
+ligma_template_init (LigmaTemplate *template)
 {
 }
 
 static void
-gimp_template_finalize (GObject *object)
+ligma_template_finalize (GObject *object)
 {
-  GimpTemplatePrivate *private = GET_PRIVATE (object);
+  LigmaTemplatePrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->color_profile);
   g_clear_object (&private->simulation_profile);
@@ -294,12 +294,12 @@ gimp_template_finalize (GObject *object)
 }
 
 static void
-gimp_template_set_property (GObject      *object,
+ligma_template_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpTemplatePrivate *private = GET_PRIVATE (object);
+  LigmaTemplatePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -331,13 +331,13 @@ gimp_template_set_property (GObject      *object,
       break;
     case PROP_COMPONENT_TYPE:
       private->precision =
-        gimp_babl_precision (g_value_get_enum (value),
-                             gimp_babl_trc (private->precision));
+        ligma_babl_precision (g_value_get_enum (value),
+                             ligma_babl_trc (private->precision));
       g_object_notify (object, "precision");
       break;
     case PROP_TRC:
       private->precision =
-        gimp_babl_precision (gimp_babl_component_type (private->precision),
+        ligma_babl_precision (ligma_babl_component_type (private->precision),
                              g_value_get_enum (value));
       g_object_notify (object, "precision");
       break;
@@ -382,12 +382,12 @@ gimp_template_set_property (GObject      *object,
 }
 
 static void
-gimp_template_get_property (GObject    *object,
+ligma_template_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpTemplatePrivate *private = GET_PRIVATE (object);
+  LigmaTemplatePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -416,10 +416,10 @@ gimp_template_get_property (GObject    *object,
       g_value_set_enum (value, private->precision);
       break;
     case PROP_COMPONENT_TYPE:
-      g_value_set_enum (value, gimp_babl_component_type (private->precision));
+      g_value_set_enum (value, ligma_babl_component_type (private->precision));
       break;
     case PROP_TRC:
-      g_value_set_enum (value, gimp_babl_trc (private->precision));
+      g_value_set_enum (value, ligma_babl_trc (private->precision));
       break;
     case PROP_COLOR_PROFILE:
       g_value_set_object (value, private->color_profile);
@@ -454,10 +454,10 @@ gimp_template_get_property (GObject    *object,
 }
 
 static void
-gimp_template_notify (GObject    *object,
+ligma_template_notify (GObject    *object,
                       GParamSpec *pspec)
 {
-  GimpTemplatePrivate *private = GET_PRIVATE (object);
+  LigmaTemplatePrivate *private = GET_PRIVATE (object);
   const Babl          *format;
   gint                 bytes;
 
@@ -465,14 +465,14 @@ gimp_template_notify (GObject    *object,
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
   /* the initial layer */
-  format = gimp_babl_format (private->base_type,
+  format = ligma_babl_format (private->base_type,
                              private->precision,
-                             private->fill_type == GIMP_FILL_TRANSPARENT,
+                             private->fill_type == LIGMA_FILL_TRANSPARENT,
                              NULL);
   bytes = babl_format_get_bytes_per_pixel (format);
 
   /* the selection */
-  format = gimp_babl_mask_format (private->precision);
+  format = ligma_babl_mask_format (private->precision);
   bytes += babl_format_get_bytes_per_pixel (format);
 
   private->initial_size = ((guint64) bytes          *
@@ -480,61 +480,61 @@ gimp_template_notify (GObject    *object,
                            (guint64) private->height);
 
   private->initial_size +=
-    gimp_projection_estimate_memsize (private->base_type,
-                                      gimp_babl_component_type (private->precision),
+    ligma_projection_estimate_memsize (private->base_type,
+                                      ligma_babl_component_type (private->precision),
                                       private->width, private->height);
 }
 
 
 /*  public functions  */
 
-GimpTemplate *
-gimp_template_new (const gchar *name)
+LigmaTemplate *
+ligma_template_new (const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_TEMPLATE,
+  return g_object_new (LIGMA_TYPE_TEMPLATE,
                        "name", name,
                        NULL);
 }
 
 void
-gimp_template_set_from_image (GimpTemplate *template,
-                              GimpImage    *image)
+ligma_template_set_from_image (LigmaTemplate *template,
+                              LigmaImage    *image)
 {
   gdouble             xresolution;
   gdouble             yresolution;
-  GimpImageBaseType   base_type;
-  const GimpParasite *parasite;
+  LigmaImageBaseType   base_type;
+  const LigmaParasite *parasite;
   gchar              *comment = NULL;
 
-  g_return_if_fail (GIMP_IS_TEMPLATE (template));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_TEMPLATE (template));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  gimp_image_get_resolution (image, &xresolution, &yresolution);
+  ligma_image_get_resolution (image, &xresolution, &yresolution);
 
-  base_type = gimp_image_get_base_type (image);
+  base_type = ligma_image_get_base_type (image);
 
-  if (base_type == GIMP_INDEXED)
-    base_type = GIMP_RGB;
+  if (base_type == LIGMA_INDEXED)
+    base_type = LIGMA_RGB;
 
-  parasite =  gimp_image_parasite_find (image, "gimp-comment");
+  parasite =  ligma_image_parasite_find (image, "ligma-comment");
   if (parasite)
     {
       guint32 parasite_size;
 
-      comment = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      comment = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
       comment = g_strndup (comment, parasite_size);
     }
 
   g_object_set (template,
-                "width",           gimp_image_get_width (image),
-                "height",          gimp_image_get_height (image),
+                "width",           ligma_image_get_width (image),
+                "height",          ligma_image_get_height (image),
                 "xresolution",     xresolution,
                 "yresolution",     yresolution,
-                "resolution-unit", gimp_image_get_unit (image),
+                "resolution-unit", ligma_image_get_unit (image),
                 "image-type",      base_type,
-                "precision",       gimp_image_get_precision (image),
+                "precision",       ligma_image_get_precision (image),
                 "comment",         comment,
                 NULL);
 
@@ -543,107 +543,107 @@ gimp_template_set_from_image (GimpTemplate *template,
 }
 
 gint
-gimp_template_get_width (GimpTemplate *template)
+ligma_template_get_width (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), 0);
 
   return GET_PRIVATE (template)->width;
 }
 
 gint
-gimp_template_get_height (GimpTemplate *template)
+ligma_template_get_height (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), 0);
 
   return GET_PRIVATE (template)->height;
 }
 
-GimpUnit
-gimp_template_get_unit (GimpTemplate *template)
+LigmaUnit
+ligma_template_get_unit (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), LIGMA_UNIT_INCH);
 
   return GET_PRIVATE (template)->unit;
 }
 
 gdouble
-gimp_template_get_resolution_x (GimpTemplate *template)
+ligma_template_get_resolution_x (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 1.0);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), 1.0);
 
   return GET_PRIVATE (template)->xresolution;
 }
 
 gdouble
-gimp_template_get_resolution_y (GimpTemplate *template)
+ligma_template_get_resolution_y (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 1.0);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), 1.0);
 
   return GET_PRIVATE (template)->yresolution;
 }
 
-GimpUnit
-gimp_template_get_resolution_unit (GimpTemplate *template)
+LigmaUnit
+ligma_template_get_resolution_unit (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), LIGMA_UNIT_INCH);
 
   return GET_PRIVATE (template)->resolution_unit;
 }
 
-GimpImageBaseType
-gimp_template_get_base_type (GimpTemplate *template)
+LigmaImageBaseType
+ligma_template_get_base_type (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), LIGMA_RGB);
 
   return GET_PRIVATE (template)->base_type;
 }
 
-GimpPrecision
-gimp_template_get_precision (GimpTemplate *template)
+LigmaPrecision
+ligma_template_get_precision (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template),
-                        GIMP_PRECISION_U8_NON_LINEAR);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template),
+                        LIGMA_PRECISION_U8_NON_LINEAR);
 
   return GET_PRIVATE (template)->precision;
 }
 
-GimpColorProfile *
-gimp_template_get_color_profile (GimpTemplate *template)
+LigmaColorProfile *
+ligma_template_get_color_profile (LigmaTemplate *template)
 {
-  GimpTemplatePrivate *private;
+  LigmaTemplatePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), FALSE);
 
   private = GET_PRIVATE (template);
 
   if (private->color_profile)
-    return gimp_color_profile_new_from_file (private->color_profile, NULL);
+    return ligma_color_profile_new_from_file (private->color_profile, NULL);
 
   return NULL;
 }
 
-GimpColorProfile *
-gimp_template_get_simulation_profile (GimpTemplate *template)
+LigmaColorProfile *
+ligma_template_get_simulation_profile (LigmaTemplate *template)
 {
-  GimpTemplatePrivate *private;
+  LigmaTemplatePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), FALSE);
 
   private = GET_PRIVATE (template);
 
   if (private->simulation_profile)
-    return gimp_color_profile_new_from_file (private->simulation_profile,
+    return ligma_color_profile_new_from_file (private->simulation_profile,
                                              NULL);
 
   return NULL;
 }
 
-GimpColorRenderingIntent
-gimp_template_get_simulation_intent (GimpTemplate *template)
+LigmaColorRenderingIntent
+ligma_template_get_simulation_intent (LigmaTemplate *template)
 {
-  GimpTemplatePrivate *private;
+  LigmaTemplatePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), FALSE);
 
   private = GET_PRIVATE (template);
 
@@ -651,37 +651,37 @@ gimp_template_get_simulation_intent (GimpTemplate *template)
 }
 
 gboolean
-gimp_template_get_simulation_bpc (GimpTemplate *template)
+ligma_template_get_simulation_bpc (LigmaTemplate *template)
 {
-  GimpTemplatePrivate *private;
+  LigmaTemplatePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), FALSE);
 
   private = GET_PRIVATE (template);
 
   return private->simulation_bpc;
 }
 
-GimpFillType
-gimp_template_get_fill_type (GimpTemplate *template)
+LigmaFillType
+ligma_template_get_fill_type (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_FILL_BACKGROUND);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), LIGMA_FILL_BACKGROUND);
 
   return GET_PRIVATE (template)->fill_type;
 }
 
 const gchar *
-gimp_template_get_comment (GimpTemplate *template)
+ligma_template_get_comment (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), NULL);
 
   return GET_PRIVATE (template)->comment;
 }
 
 guint64
-gimp_template_get_initial_size (GimpTemplate *template)
+ligma_template_get_initial_size (LigmaTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), 0);
 
   return GET_PRIVATE (template)->initial_size;
 }

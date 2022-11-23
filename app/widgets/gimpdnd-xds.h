@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpdnd-xds.c
- * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
+ * ligmadnd-xds.c
+ * Copyright (C) 2005  Sven Neumann <sven@ligma.org>
  *
  * Saving Files via Drag-and-Drop:
  * The Direct Save Protocol for the X Window System
@@ -21,15 +21,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DND_XDS_H__
-#define __GIMP_DND_XDS_H__
+#ifndef __LIGMA_DND_XDS_H__
+#define __LIGMA_DND_XDS_H__
 
 
-void  gimp_dnd_xds_source_set (GdkDragContext   *context,
-                               GimpImage        *image);
-void  gimp_dnd_xds_save_image (GdkDragContext   *context,
-                               GimpImage        *image,
+void  ligma_dnd_xds_source_set (GdkDragContext   *context,
+                               LigmaImage        *image);
+void  ligma_dnd_xds_save_image (GdkDragContext   *context,
+                               LigmaImage        *image,
                                GtkSelectionData *selection);
 
 
-#endif /* __GIMP_DND_XDS_H__ */
+#endif /* __LIGMA_DND_XDS_H__ */

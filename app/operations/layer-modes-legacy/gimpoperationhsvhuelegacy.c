@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhuemode.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationhuemode.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,14 +25,14 @@
 #include <gegl-plugin.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "../operations-types.h"
 
-#include "gimpoperationhsvhuelegacy.h"
+#include "ligmaoperationhsvhuelegacy.h"
 
 
-static gboolean   gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_hsv_hue_legacy_process (GeglOperation       *op,
                                                          void                *in,
                                                          void                *layer,
                                                          void                *mask,
@@ -42,31 +42,31 @@ static gboolean   gimp_operation_hsv_hue_legacy_process (GeglOperation       *op
                                                          gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationHsvHueLegacy, gimp_operation_hsv_hue_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationHsvHueLegacy, ligma_operation_hsv_hue_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_hsv_hue_legacy_class_init (GimpOperationHsvHueLegacyClass *klass)
+ligma_operation_hsv_hue_legacy_class_init (LigmaOperationHsvHueLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hsv-hue-legacy",
-                                 "description", "GIMP hue mode operation",
+                                 "name",        "ligma:hsv-hue-legacy",
+                                 "description", "LIGMA hue mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_hsv_hue_legacy_process;
+  layer_mode_class->process = ligma_operation_hsv_hue_legacy_process;
 }
 
 static void
-gimp_operation_hsv_hue_legacy_init (GimpOperationHsvHueLegacy *self)
+ligma_operation_hsv_hue_legacy_init (LigmaOperationHsvHueLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
+ligma_operation_hsv_hue_legacy_process (GeglOperation       *op,
                                        void                *in_p,
                                        void                *layer_p,
                                        void                *mask_p,
@@ -75,7 +75,7 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
                                        const GeglRectangle *roi,
                                        gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -84,9 +84,9 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
 
   while (samples--)
     {
-      GimpHSV layer_hsv, out_hsv;
-      GimpRGB layer_rgb = {layer[0], layer[1], layer[2]};
-      GimpRGB out_rgb   = {in[0], in[1], in[2]};
+      LigmaHSV layer_hsv, out_hsv;
+      LigmaRGB layer_rgb = {layer[0], layer[1], layer[2]};
+      LigmaRGB out_rgb   = {in[0], in[1], in[2]};
       gfloat  comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
@@ -101,8 +101,8 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
           gfloat out_tmp[3];
           gfloat ratio = comp_alpha / new_alpha;
 
-          gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
-          gimp_rgb_to_hsv (&out_rgb, &out_hsv);
+          ligma_rgb_to_hsv (&layer_rgb, &layer_hsv);
+          ligma_rgb_to_hsv (&out_rgb, &out_hsv);
 
           /*  Composition should have no effect if saturation is zero.
            *  otherwise, black would be painted red (see bug #123296).
@@ -111,7 +111,7 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
             {
               out_hsv.h = layer_hsv.h;
             }
-          gimp_hsv_to_rgb (&out_hsv, &out_rgb);
+          ligma_hsv_to_rgb (&out_hsv, &out_rgb);
 
           out_tmp[0] = out_rgb.r;
           out_tmp[1] = out_rgb.g;

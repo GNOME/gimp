@@ -5,7 +5,7 @@ should help answer some questions regarding the code found in dxt.c
 
 mul8bit: This formula is equivalent to (a*b)/255 for a fairly large set of
 values (didn't bother finding out the exact bounds). It's a fairly well-known
-trick also used in other parts of the GIMP codebase (among others) and was
+trick also used in other parts of the LIGMA codebase (among others) and was
 first documented by Jim Blinn, I think. A good reference is his book "Dirty
 Pixels".
 

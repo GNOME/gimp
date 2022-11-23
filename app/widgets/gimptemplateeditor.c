@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,27 +22,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimp.h"
-#include "core/gimptemplate.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligmatemplate.h"
+#include "core/ligma-utils.h"
 
-#include "gimppropwidgets.h"
-#include "gimptemplateeditor.h"
-#include "gimpwidgets-utils.h"
+#include "ligmapropwidgets.h"
+#include "ligmatemplateeditor.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SB_WIDTH            8
@@ -52,18 +52,18 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_TEMPLATE
 };
 
 
-typedef struct _GimpTemplateEditorPrivate GimpTemplateEditorPrivate;
+typedef struct _LigmaTemplateEditorPrivate LigmaTemplateEditorPrivate;
 
-struct _GimpTemplateEditorPrivate
+struct _LigmaTemplateEditorPrivate
 {
-  Gimp          *gimp;
+  Ligma          *ligma;
 
-  GimpTemplate  *template;
+  LigmaTemplate  *template;
 
   GtkWidget     *aspect_button;
   gboolean       block_aspect;
@@ -83,67 +83,67 @@ struct _GimpTemplateEditorPrivate
 };
 
 #define GET_PRIVATE(editor) \
-        ((GimpTemplateEditorPrivate *) gimp_template_editor_get_instance_private ((GimpTemplateEditor *) (editor)))
+        ((LigmaTemplateEditorPrivate *) ligma_template_editor_get_instance_private ((LigmaTemplateEditor *) (editor)))
 
 
-static void    gimp_template_editor_constructed    (GObject            *object);
-static void    gimp_template_editor_finalize       (GObject            *object);
-static void    gimp_template_editor_set_property   (GObject            *object,
+static void    ligma_template_editor_constructed    (GObject            *object);
+static void    ligma_template_editor_finalize       (GObject            *object);
+static void    ligma_template_editor_set_property   (GObject            *object,
                                                     guint               property_id,
                                                     const GValue       *value,
                                                     GParamSpec         *pspec);
-static void    gimp_template_editor_get_property   (GObject            *object,
+static void    ligma_template_editor_get_property   (GObject            *object,
                                                     guint               property_id,
                                                     GValue             *value,
                                                     GParamSpec         *pspec);
 
-static void gimp_template_editor_precision_changed (GtkWidget          *widget,
-                                                    GimpTemplateEditor *editor);
-static void gimp_template_editor_simulation_intent_changed
+static void ligma_template_editor_precision_changed (GtkWidget          *widget,
+                                                    LigmaTemplateEditor *editor);
+static void ligma_template_editor_simulation_intent_changed
                                                    (GtkWidget          *widget,
-                                                    GimpTemplateEditor *editor);
-static void gimp_template_editor_simulation_bpc_toggled
+                                                    LigmaTemplateEditor *editor);
+static void ligma_template_editor_simulation_bpc_toggled
                                                    (GtkWidget          *widget,
-                                                    GimpTemplateEditor *editor);
+                                                    LigmaTemplateEditor *editor);
 
-static void gimp_template_editor_aspect_callback   (GtkWidget          *widget,
-                                                    GimpTemplateEditor *editor);
-static void gimp_template_editor_template_notify   (GimpTemplate       *template,
+static void ligma_template_editor_aspect_callback   (GtkWidget          *widget,
+                                                    LigmaTemplateEditor *editor);
+static void ligma_template_editor_template_notify   (LigmaTemplate       *template,
                                                     GParamSpec         *param_spec,
-                                                    GimpTemplateEditor *editor);
+                                                    LigmaTemplateEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpTemplateEditor, gimp_template_editor,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaTemplateEditor, ligma_template_editor,
                             GTK_TYPE_BOX)
 
-#define parent_class gimp_template_editor_parent_class
+#define parent_class ligma_template_editor_parent_class
 
 
 static void
-gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
+ligma_template_editor_class_init (LigmaTemplateEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_template_editor_constructed;
-  object_class->finalize     = gimp_template_editor_finalize;
-  object_class->set_property = gimp_template_editor_set_property;
-  object_class->get_property = gimp_template_editor_get_property;
+  object_class->constructed  = ligma_template_editor_constructed;
+  object_class->finalize     = ligma_template_editor_finalize;
+  object_class->set_property = ligma_template_editor_set_property;
+  object_class->get_property = ligma_template_editor_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_TEMPLATE,
                                    g_param_spec_object ("template", NULL, NULL,
-                                                        GIMP_TYPE_TEMPLATE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_TEMPLATE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_template_editor_init (GimpTemplateEditor *editor)
+ligma_template_editor_init (LigmaTemplateEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -152,11 +152,11 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
 }
 
 static void
-gimp_template_editor_constructed (GObject *object)
+ligma_template_editor_constructed (GObject *object)
 {
-  GimpTemplateEditor        *editor  = GIMP_TEMPLATE_EDITOR (object);
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
-  GimpTemplate              *template;
+  LigmaTemplateEditor        *editor  = LIGMA_TEMPLATE_EDITOR (object);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (object);
+  LigmaTemplate              *template;
   GtkWidget                 *aspect_box;
   GtkWidget                 *frame;
   GtkWidget                 *hbox;
@@ -179,13 +179,13 @@ gimp_template_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (private->gimp != NULL);
-  gimp_assert (private->template != NULL);
+  ligma_assert (private->ligma != NULL);
+  ligma_assert (private->template != NULL);
 
   template = private->template;
 
   /*  Image size frame  */
-  frame = gimp_frame_new (_("Image Size"));
+  frame = ligma_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -196,12 +196,12 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (grid);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  width = gimp_spin_button_new (adjustment, 1.0, 2);
+  width = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gimp_spin_button_new (adjustment, 1.0, 2);
+  height = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
@@ -223,30 +223,30 @@ gimp_template_editor_constructed (GObject *object)
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
   gtk_widget_show (hbox);
 
-  private->size_se = gimp_size_entry_new (0,
-                                          gimp_template_get_unit (template),
+  private->size_se = ligma_size_entry_new (0,
+                                          ligma_template_get_unit (template),
                                           _("%p"),
                                           TRUE, FALSE, FALSE, SB_WIDTH,
-                                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                                          LIGMA_SIZE_ENTRY_UPDATE_SIZE);
 
   gtk_box_pack_start (GTK_BOX (hbox), private->size_se, FALSE, FALSE, 0);
   gtk_widget_show (private->size_se);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (private->size_se), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (private->size_se), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
-  gimp_prop_coordinates_connect (G_OBJECT (template),
+  ligma_prop_coordinates_connect (G_OBJECT (template),
                                  "width", "height", "unit",
                                  private->size_se, NULL,
-                                 gimp_template_get_resolution_x (template),
-                                 gimp_template_get_resolution_y (template));
+                                 ligma_template_get_resolution_x (template),
+                                 ligma_template_get_resolution_y (template));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 2, 1);
@@ -256,9 +256,9 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  aspect_box = gimp_enum_icon_box_new (GIMP_TYPE_ASPECT_TYPE,
-                                       "gimp", GTK_ICON_SIZE_MENU,
-                                       G_CALLBACK (gimp_template_editor_aspect_callback),
+  aspect_box = ligma_enum_icon_box_new (LIGMA_TYPE_ASPECT_TYPE,
+                                       "ligma", GTK_ICON_SIZE_MENU,
+                                       G_CALLBACK (ligma_template_editor_aspect_callback),
                                        editor, NULL,
                                        &private->aspect_button);
   gtk_widget_hide (private->aspect_button); /* hide "square" */
@@ -271,7 +271,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (vbox);
 
   private->pixel_label = gtk_label_new (NULL);
-  gimp_label_set_attributes (GTK_LABEL (private->pixel_label),
+  ligma_label_set_attributes (GTK_LABEL (private->pixel_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (private->pixel_label), 0.0);
@@ -279,7 +279,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (private->pixel_label);
 
   private->more_label = gtk_label_new (NULL);
-  gimp_label_set_attributes (GTK_LABEL (private->more_label),
+  ligma_label_set_attributes (GTK_LABEL (private->more_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (private->more_label), 0.0);
@@ -288,7 +288,7 @@ gimp_template_editor_constructed (GObject *object)
 
 #ifdef ENABLE_MEMSIZE_LABEL
   private->memsize_label = gtk_label_new (NULL);
-  gimp_label_set_attributes (GTK_LABEL (private->memsize_label),
+  ligma_label_set_attributes (GTK_LABEL (private->memsize_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
@@ -308,7 +308,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), private->expander, TRUE, TRUE, 0);
   gtk_widget_show (private->expander);
 
-  frame = gimp_frame_new ("<expander>");
+  frame = ligma_frame_new ("<expander>");
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
   gtk_widget_show (frame);
 
@@ -330,12 +330,12 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (grid);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  xres = gimp_spin_button_new (adjustment, 1.0, 2);
+  xres = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (xres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (xres), SB_WIDTH);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  yres = gimp_spin_button_new (adjustment, 1.0, 2);
+  yres = ligma_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (yres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
 
@@ -358,45 +358,45 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (hbox);
 
   private->resolution_se =
-    gimp_size_entry_new (0,
-                         gimp_template_get_resolution_unit (template),
+    ligma_size_entry_new (0,
+                         ligma_template_get_resolution_unit (template),
                          _("pixels/%s"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
-                         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+                         LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   gtk_box_pack_start (GTK_BOX (hbox), private->resolution_se, FALSE, FALSE, 0);
   gtk_widget_show (private->resolution_se);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (yres), NULL);
   gtk_grid_attach (GTK_GRID (private->resolution_se), yres, 0, 1, 1, 1);
   gtk_widget_show (yres);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (xres), NULL);
   gtk_grid_attach (GTK_GRID (private->resolution_se), xres, 0, 0, 1, 1);
   gtk_widget_show (xres);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                  gimp_template_get_resolution_x (template),
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 0,
+                                  ligma_template_get_resolution_x (template),
                                   FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                  gimp_template_get_resolution_y (template),
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 1,
+                                  ligma_template_get_resolution_y (template),
                                   FALSE);
 
   /*  the resolution chainbutton  */
-  private->chain_button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  private->chain_button = ligma_chain_button_new (LIGMA_CHAIN_RIGHT);
   gtk_grid_attach (GTK_GRID (private->resolution_se), private->chain_button, 1, 0, 1, 2);
   gtk_widget_show (private->chain_button);
 
-  gimp_prop_coordinates_connect (G_OBJECT (template),
+  ligma_prop_coordinates_connect (G_OBJECT (template),
                                  "xresolution", "yresolution",
                                  "resolution-unit",
                                  private->resolution_se, private->chain_button,
                                  1.0, 1.0);
 
   focus_chain = g_list_prepend (focus_chain,
-                                gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (private->resolution_se)));
+                                ligma_size_entry_get_unit_combo (LIGMA_SIZE_ENTRY (private->resolution_se)));
   focus_chain = g_list_prepend (focus_chain, private->chain_button);
   focus_chain = g_list_prepend (focus_chain, yres);
   focus_chain = g_list_prepend (focus_chain, xres);
@@ -407,96 +407,96 @@ gimp_template_editor_constructed (GObject *object)
 
   row = 2;
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
+  combo = ligma_prop_enum_combo_box_new (G_OBJECT (template),
                                         "image-type",
-                                        GIMP_RGB, GIMP_GRAY);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                        LIGMA_RGB, LIGMA_GRAY);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Color _space:"), 0.0, 0.5,
                             combo, 1);
 
   /* construct the precision combo manually, instead of using
-   * gimp_prop_enum_combo_box_new(), so that we only reset the gamma combo when
+   * ligma_prop_enum_combo_box_new(), so that we only reset the gamma combo when
    * the precision is changed through the ui.  see issue #3025.
    */
-  store = gimp_enum_store_new_with_range (GIMP_TYPE_COMPONENT_TYPE,
-                                          GIMP_COMPONENT_TYPE_U8,
-                                          GIMP_COMPONENT_TYPE_FLOAT);
+  store = ligma_enum_store_new_with_range (LIGMA_TYPE_COMPONENT_TYPE,
+                                          LIGMA_COMPONENT_TYPE_U8,
+                                          LIGMA_COMPONENT_TYPE_FLOAT);
 
-  private->precision_combo = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+  private->precision_combo = g_object_new (LIGMA_TYPE_ENUM_COMBO_BOX,
                                            "model", store,
                                            NULL);
   g_object_unref (store);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Precision:"), 0.0, 0.5,
                             private->precision_combo, 1);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->precision_combo),
-                                 gimp_babl_component_type (
-                                   gimp_template_get_precision (template)));
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->precision_combo),
+                                 ligma_babl_component_type (
+                                   ligma_template_get_precision (template)));
 
   g_signal_connect (private->precision_combo, "changed",
-                    G_CALLBACK (gimp_template_editor_precision_changed),
+                    G_CALLBACK (ligma_template_editor_precision_changed),
                     editor);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template), "trc",
-                                        GIMP_TRC_LINEAR,
-                                        GIMP_TRC_NON_LINEAR);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  combo = ligma_prop_enum_combo_box_new (G_OBJECT (template), "trc",
+                                        LIGMA_TRC_LINEAR,
+                                        LIGMA_TRC_NON_LINEAR);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Gamma:"), 0.0, 0.5,
                             combo, 1);
 
   private->profile_combo =
-    gimp_prop_profile_combo_box_new (G_OBJECT (template),
+    ligma_prop_profile_combo_box_new (G_OBJECT (template),
                                      "color-profile",
                                      NULL,
                                      _("Choose A Color Profile"),
-                                     G_OBJECT (private->gimp->config),
+                                     G_OBJECT (private->ligma->config),
                                      "color-profile-path");
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Co_lor profile:"), 0.0, 0.5,
                             private->profile_combo, 1);
 
   private->simulation_profile_combo =
-    gimp_prop_profile_combo_box_new (G_OBJECT (template),
+    ligma_prop_profile_combo_box_new (G_OBJECT (template),
                                      "simulation-profile",
                                      NULL,
                                      _("Choose A Soft-Proofing Color Profile"),
-                                     G_OBJECT (private->gimp->config),
+                                     G_OBJECT (private->ligma->config),
                                      "color-profile-path");
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Soft-proofing color profile:"), 0.0, 0.5,
                             private->simulation_profile_combo, 1);
 
   private->simulation_intent_combo =
-    gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
+    ligma_enum_combo_box_new (LIGMA_TYPE_COLOR_RENDERING_INTENT);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Soft-proofing rendering intent:"), 0.0, 0.5,
                             private->simulation_intent_combo, 1);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->simulation_intent_combo),
-                                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (private->simulation_intent_combo),
+                                 LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
   g_signal_connect (private->simulation_intent_combo, "changed",
-                    G_CALLBACK (gimp_template_editor_simulation_intent_changed),
+                    G_CALLBACK (ligma_template_editor_simulation_intent_changed),
                     editor);
 
   private->simulation_bpc_toggle =
     gtk_check_button_new_with_mnemonic (_("_Use Black Point Compensation"));
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             NULL, 0.0, 0.5,
                             private->simulation_bpc_toggle, 1);
 
   g_signal_connect (private->simulation_bpc_toggle, "toggled",
-                    G_CALLBACK (gimp_template_editor_simulation_bpc_toggled),
+                    G_CALLBACK (ligma_template_editor_simulation_bpc_toggled),
                     editor);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
+  combo = ligma_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         0, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Fill with:"), 0.0, 0.5,
                             combo, 1);
 
@@ -506,11 +506,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                     _("Comme_nt:"), 0.0, 0.0,
                                     scrolled_window, 1);
 
-  text_buffer = gimp_prop_text_buffer_new (G_OBJECT (template),
+  text_buffer = ligma_prop_text_buffer_new (G_OBJECT (template),
                                            "comment", MAX_COMMENT_LENGTH);
 
   text_view = gtk_text_view_new_with_buffer (text_buffer);
@@ -523,17 +523,17 @@ gimp_template_editor_constructed (GObject *object)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), text_view);
 
   g_signal_connect_object (template, "notify",
-                           G_CALLBACK (gimp_template_editor_template_notify),
+                           G_CALLBACK (ligma_template_editor_template_notify),
                            editor, 0);
 
   /*  call the notify callback once to get the labels set initially  */
-  gimp_template_editor_template_notify (template, NULL, editor);
+  ligma_template_editor_template_notify (template, NULL, editor);
 }
 
 static void
-gimp_template_editor_finalize (GObject *object)
+ligma_template_editor_finalize (GObject *object)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->template);
 
@@ -541,17 +541,17 @@ gimp_template_editor_finalize (GObject *object)
 }
 
 static void
-gimp_template_editor_set_property (GObject      *object,
+ligma_template_editor_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value); /* don't ref */
       break;
 
     case PROP_TEMPLATE:
@@ -565,17 +565,17 @@ gimp_template_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_template_editor_get_property (GObject      *object,
+ligma_template_editor_get_property (GObject      *object,
                                    guint         property_id,
                                    GValue       *value,
                                    GParamSpec   *pspec)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
 
     case PROP_TEMPLATE:
@@ -589,18 +589,18 @@ gimp_template_editor_get_property (GObject      *object,
 }
 
 GtkWidget *
-gimp_template_editor_new (GimpTemplate *template,
-                          Gimp         *gimp,
+ligma_template_editor_new (LigmaTemplate *template,
+                          Ligma         *ligma,
                           gboolean      edit_template)
 {
-  GimpTemplateEditor        *editor;
-  GimpTemplateEditorPrivate *private;
+  LigmaTemplateEditor        *editor;
+  LigmaTemplateEditorPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  editor = g_object_new (GIMP_TYPE_TEMPLATE_EDITOR,
-                         "gimp",     gimp,
+  editor = g_object_new (LIGMA_TYPE_TEMPLATE_EDITOR,
+                         "ligma",     ligma,
                          "template", template,
                          NULL);
 
@@ -619,15 +619,15 @@ gimp_template_editor_new (GimpTemplate *template,
       gtk_box_reorder_child (GTK_BOX (editor), grid, 0);
       gtk_widget_show (grid);
 
-      entry = gimp_prop_entry_new (G_OBJECT (private->template), "name", 128);
+      entry = ligma_prop_entry_new (G_OBJECT (private->template), "name", 128);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                 _("_Name:"), 1.0, 0.5,
                                 entry, 1);
 
-      icon_picker = gimp_prop_icon_picker_new (GIMP_VIEWABLE (private->template),
-                                               gimp);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      icon_picker = ligma_prop_icon_picker_new (LIGMA_VIEWABLE (private->template),
+                                               ligma);
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("_Icon:"), 1.0, 0.5,
                                 icon_picker, 1);
     }
@@ -635,21 +635,21 @@ gimp_template_editor_new (GimpTemplate *template,
   return GTK_WIDGET (editor);
 }
 
-GimpTemplate *
-gimp_template_editor_get_template (GimpTemplateEditor *editor)
+LigmaTemplate *
+ligma_template_editor_get_template (LigmaTemplateEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE_EDITOR (editor), NULL);
 
   return GET_PRIVATE (editor)->template;
 }
 
 void
-gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
+ligma_template_editor_show_advanced (LigmaTemplateEditor *editor,
                                     gboolean            expanded)
 {
-  GimpTemplateEditorPrivate *private;
+  LigmaTemplateEditorPrivate *private;
 
-  g_return_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor));
+  g_return_if_fail (LIGMA_IS_TEMPLATE_EDITOR (editor));
 
   private = GET_PRIVATE (editor);
 
@@ -657,25 +657,25 @@ gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
 }
 
 GtkWidget *
-gimp_template_editor_get_size_se (GimpTemplateEditor *editor)
+ligma_template_editor_get_size_se (LigmaTemplateEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE_EDITOR (editor), NULL);
 
   return GET_PRIVATE (editor)->size_se;
 }
 
 GtkWidget *
-gimp_template_editor_get_resolution_se (GimpTemplateEditor *editor)
+ligma_template_editor_get_resolution_se (LigmaTemplateEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE_EDITOR (editor), NULL);
 
   return GET_PRIVATE (editor)->resolution_se;
 }
 
 GtkWidget *
-gimp_template_editor_get_resolution_chain (GimpTemplateEditor *editor)
+ligma_template_editor_get_resolution_chain (LigmaTemplateEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEMPLATE_EDITOR (editor), NULL);
 
   return GET_PRIVATE (editor)->chain_button;
 }
@@ -684,21 +684,21 @@ gimp_template_editor_get_resolution_chain (GimpTemplateEditor *editor)
 /*  private functions  */
 
 static void
-gimp_template_editor_precision_changed (GtkWidget          *widget,
-                                        GimpTemplateEditor *editor)
+ligma_template_editor_precision_changed (GtkWidget          *widget,
+                                        LigmaTemplateEditor *editor)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
-  GimpComponentType          component_type;
-  GimpTRCType                trc;
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaComponentType          component_type;
+  LigmaTRCType                trc;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  (gint *) &component_type);
 
   g_object_get (private->template,
                 "trc", &trc,
                 NULL);
 
-  trc = gimp_suggest_trc_for_component_type (component_type, trc);
+  trc = ligma_suggest_trc_for_component_type (component_type, trc);
 
   g_object_set (private->template,
                 "component-type", component_type,
@@ -707,13 +707,13 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
 }
 
 static void
-gimp_template_editor_simulation_intent_changed (GtkWidget          *widget,
-                                                GimpTemplateEditor *editor)
+ligma_template_editor_simulation_intent_changed (GtkWidget          *widget,
+                                                LigmaTemplateEditor *editor)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
-  GimpColorRenderingIntent   intent;
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaColorRenderingIntent   intent;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  (gint *) &intent);
 
   g_object_set (private->template,
@@ -722,10 +722,10 @@ gimp_template_editor_simulation_intent_changed (GtkWidget          *widget,
 }
 
 static void
-gimp_template_editor_simulation_bpc_toggled (GtkWidget          *widget,
-                                             GimpTemplateEditor *editor)
+ligma_template_editor_simulation_bpc_toggled (GtkWidget          *widget,
+                                             LigmaTemplateEditor *editor)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
   gboolean                   bpc     = FALSE;
 
   bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
@@ -736,52 +736,52 @@ gimp_template_editor_simulation_bpc_toggled (GtkWidget          *widget,
 }
 
 static void
-gimp_template_editor_set_pixels (GimpTemplateEditor *editor,
-                                 GimpTemplate       *template)
+ligma_template_editor_set_pixels (LigmaTemplateEditor *editor,
+                                 LigmaTemplate       *template)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
   gchar                     *text;
 
   text = g_strdup_printf (ngettext ("%d × %d pixel",
                                     "%d × %d pixels",
-                                    gimp_template_get_height (template)),
-                          gimp_template_get_width (template),
-                          gimp_template_get_height (template));
+                                    ligma_template_get_height (template)),
+                          ligma_template_get_width (template),
+                          ligma_template_get_height (template));
   gtk_label_set_text (GTK_LABEL (private->pixel_label), text);
   g_free (text);
 }
 
 static void
-gimp_template_editor_aspect_callback (GtkWidget          *widget,
-                                      GimpTemplateEditor *editor)
+ligma_template_editor_aspect_callback (GtkWidget          *widget,
+                                      LigmaTemplateEditor *editor)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
 
   if (! private->block_aspect &&
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      GimpTemplate *template    = private->template;
-      gint          width       = gimp_template_get_width (template);
-      gint          height      = gimp_template_get_height (template);
-      gdouble       xresolution = gimp_template_get_resolution_x (template);
-      gdouble       yresolution = gimp_template_get_resolution_y (template);
+      LigmaTemplate *template    = private->template;
+      gint          width       = ligma_template_get_width (template);
+      gint          height      = ligma_template_get_height (template);
+      gdouble       xresolution = ligma_template_get_resolution_x (template);
+      gdouble       yresolution = ligma_template_get_resolution_y (template);
 
       if (width == height)
         {
           private->block_aspect = TRUE;
-          gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (private->aspect_button),
-                                           GIMP_ASPECT_SQUARE);
+          ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (private->aspect_button),
+                                           LIGMA_ASPECT_SQUARE);
           private->block_aspect = FALSE;
           return;
        }
 
       g_signal_handlers_block_by_func (template,
-                                       gimp_template_editor_template_notify,
+                                       ligma_template_editor_template_notify,
                                        editor);
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 0,
                                       yresolution, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 1,
                                       xresolution, FALSE);
 
       g_object_set (template,
@@ -792,20 +792,20 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
                     NULL);
 
       g_signal_handlers_unblock_by_func (template,
-                                         gimp_template_editor_template_notify,
+                                         ligma_template_editor_template_notify,
                                          editor);
 
-      gimp_template_editor_set_pixels (editor, template);
+      ligma_template_editor_set_pixels (editor, template);
     }
 }
 
 static void
-gimp_template_editor_template_notify (GimpTemplate       *template,
+ligma_template_editor_template_notify (LigmaTemplate       *template,
                                       GParamSpec         *param_spec,
-                                      GimpTemplateEditor *editor)
+                                      LigmaTemplateEditor *editor)
 {
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
-  GimpAspectType             aspect;
+  LigmaTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  LigmaAspectType             aspect;
   const gchar               *desc;
   gchar                     *text;
   gint                       width;
@@ -817,61 +817,61 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     {
       if (! strcmp (param_spec->name, "xresolution"))
         {
-          gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                          gimp_template_get_resolution_x (template),
+          ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 0,
+                                          ligma_template_get_resolution_x (template),
                                           FALSE);
         }
       else if (! strcmp (param_spec->name, "yresolution"))
         {
-          gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                          gimp_template_get_resolution_y (template),
+          ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (private->size_se), 1,
+                                          ligma_template_get_resolution_y (template),
                                           FALSE);
         }
       else if (! strcmp (param_spec->name, "component-type"))
         {
           g_signal_handlers_block_by_func (private->precision_combo,
-                                           gimp_template_editor_precision_changed,
+                                           ligma_template_editor_precision_changed,
                                            editor);
 
-          gimp_int_combo_box_set_active (
-            GIMP_INT_COMBO_BOX (private->precision_combo),
-            gimp_babl_component_type (gimp_template_get_precision (template)));
+          ligma_int_combo_box_set_active (
+            LIGMA_INT_COMBO_BOX (private->precision_combo),
+            ligma_babl_component_type (ligma_template_get_precision (template)));
 
           g_signal_handlers_unblock_by_func (private->precision_combo,
-                                             gimp_template_editor_precision_changed,
+                                             ligma_template_editor_precision_changed,
                                              editor);
         }
     }
 
 #ifdef ENABLE_MEMSIZE_LABEL
-  text = g_format_size (gimp_template_get_initial_size (template));
+  text = g_format_size (ligma_template_get_initial_size (template));
   gtk_label_set_text (GTK_LABEL (private->memsize_label), text);
   g_free (text);
 #endif
 
-  gimp_template_editor_set_pixels (editor, template);
+  ligma_template_editor_set_pixels (editor, template);
 
-  width  = gimp_template_get_width (template);
-  height = gimp_template_get_height (template);
+  width  = ligma_template_get_width (template);
+  height = ligma_template_get_height (template);
 
   if (width > height)
-    aspect = GIMP_ASPECT_LANDSCAPE;
+    aspect = LIGMA_ASPECT_LANDSCAPE;
   else if (height > width)
-    aspect = GIMP_ASPECT_PORTRAIT;
+    aspect = LIGMA_ASPECT_PORTRAIT;
   else
-    aspect = GIMP_ASPECT_SQUARE;
+    aspect = LIGMA_ASPECT_SQUARE;
 
   private->block_aspect = TRUE;
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (private->aspect_button),
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (private->aspect_button),
                                    aspect);
   private->block_aspect = FALSE;
 
-  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
-                       gimp_template_get_base_type (template),
+  ligma_enum_get_value (LIGMA_TYPE_IMAGE_BASE_TYPE,
+                       ligma_template_get_base_type (template),
                        NULL, NULL, &desc, NULL);
 
-  xres = ROUND (gimp_template_get_resolution_x (template));
-  yres = ROUND (gimp_template_get_resolution_y (template));
+  xres = ROUND (ligma_template_get_resolution_x (template));
+  yres = ROUND (ligma_template_get_resolution_y (template));
 
   if (xres != yres)
     text = g_strdup_printf (_("%d × %d ppi, %s"), xres, yres, desc);
@@ -885,45 +885,45 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       ! strcmp (param_spec->name, "image-type") ||
       ! strcmp (param_spec->name, "precision"))
     {
-      GimpColorProfile        *profile;
+      LigmaColorProfile        *profile;
       GtkListStore            *profile_store;
       GFile                   *file;
       gchar                   *path;
 
-      file = gimp_directory_file ("profilerc", NULL);
-      profile_store = gimp_color_profile_store_new (file);
+      file = ligma_directory_file ("profilerc", NULL);
+      profile_store = ligma_color_profile_store_new (file);
       g_object_unref (file);
 
-      gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (profile_store),
-                                             private->gimp->config->color_management,
-                                             gimp_template_get_base_type (template),
-                                             gimp_template_get_precision (template),
+      ligma_color_profile_store_add_defaults (LIGMA_COLOR_PROFILE_STORE (profile_store),
+                                             private->ligma->config->color_management,
+                                             ligma_template_get_base_type (template),
+                                             ligma_template_get_precision (template),
                                              NULL);
 
       gtk_combo_box_set_model (GTK_COMBO_BOX (private->profile_combo),
                                GTK_TREE_MODEL (profile_store));
 
       /* Simulation Profile should not be set by default */
-      file = gimp_directory_file ("profilerc", NULL);
-      profile_store = gimp_color_profile_store_new (file);
+      file = ligma_directory_file ("profilerc", NULL);
+      profile_store = ligma_color_profile_store_new (file);
       g_object_unref (file);
 
-      gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (profile_store),
+      ligma_color_profile_store_add_file (LIGMA_COLOR_PROFILE_STORE (profile_store),
                                          NULL, NULL);
       /* Add Preferred CMYK profile if it exists */
       profile =
-        gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (private->gimp->config->color_management),
+        ligma_color_config_get_cmyk_color_profile (LIGMA_COLOR_CONFIG (private->ligma->config->color_management),
                                                   NULL);
       if (profile)
         {
-          g_object_get (G_OBJECT (private->gimp->config->color_management),
+          g_object_get (G_OBJECT (private->ligma->config->color_management),
                         "cmyk-profile", &path, NULL);
-          file = gimp_file_new_for_config_path (path, NULL);
+          file = ligma_file_new_for_config_path (path, NULL);
           g_free (path);
           text = g_strdup_printf (_("Preferred CMYK (%s)"),
-                                  gimp_color_profile_get_label (profile));
+                                  ligma_color_profile_get_label (profile));
           g_object_unref (profile);
-          gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (profile_store),
+          ligma_color_profile_store_add_file (LIGMA_COLOR_PROFILE_STORE (profile_store),
                                              file, text);
           g_object_unref (file);
           g_free (text);
@@ -938,7 +938,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                     "color-profile", &file,
                     NULL);
 
-      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
+      ligma_color_profile_combo_box_set_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
                                                     file, NULL);
 
       if (file)
@@ -948,7 +948,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                     "simulation-profile", &file,
                     NULL);
 
-      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->simulation_profile_combo),
+      ligma_color_profile_combo_box_set_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (private->simulation_profile_combo),
                                                     file, NULL);
 
       if (file)

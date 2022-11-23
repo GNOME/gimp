@@ -1,7 +1,7 @@
 IfsCompose
 ----------
 
-IfsCompose is a plug-in for GIMP that allows
+IfsCompose is a plug-in for LIGMA that allows
 the creation of Iterated Function System fractals by direct
 manipulation onscreen of the component transforms.
 
@@ -40,8 +40,8 @@ well as in real space.
 Installation
 ------------
 The included Makefile should work with minor modifications on most
-systems if you have installed Gimp normally. Put the resulting binary
-in ~/.gimp/plug-ins or the system-wide plug-ins directory.
+systems if you have installed Ligma normally. Put the resulting binary
+in ~/.ligma/plug-ins or the system-wide plug-ins directory.
 
 The included files gtkaspectframe.c/.h implement a modified frame
 widget that guarantees that the aspect ratio of the child widget
@@ -75,7 +75,7 @@ fractals), otherwise the background will be the current background.
 There are tutorials and some example images at:
 
  http://www.gtk.org/~otaylor/IfsCompose/ifs_tutorial/tutorial.html
- http://tigert.gimp.org/gimp/ifs-compose/
+ http://tigert.ligma.org/ligma/ifs-compose/
 
 
 Have fun!

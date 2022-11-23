@@ -2,6 +2,6 @@
 
 if ENABLE_GI_DOCGEN
 
-SUBDIRS = gimp gimp-ui
+SUBDIRS = ligma ligma-ui
 
 endif

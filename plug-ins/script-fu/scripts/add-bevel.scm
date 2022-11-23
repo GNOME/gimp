@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; add-bevel.scm version 1.04
@@ -21,7 +21,7 @@
 ; Contains code from add-shadow.scm by Sven Neumann
 ; (neumanns@uni-duesseldorf.de) (thanks Sven).
 ;
-; Adds a bevel to an image.  See http://www.cs.waikato.ac.nz/~ard/gimp/
+; Adds a bevel to an image.  See http://www.cs.waikato.ac.nz/~ard/ligma/
 ;
 ; If there is a selection, it is bevelled.
 ; Otherwise if there is an alpha channel, the selection is taken from it
@@ -36,7 +36,7 @@
 ; 1.01: now works on offset layers.
 ; 1.02: has crop-pixel-border option to trim one pixel off each edge of the
 ;       bevelled image.  Bumpmapping leaves edge pixels unchanged, which
-;       looks bad.  Oddly, this is not apparent in GIMP - you have to
+;       looks bad.  Oddly, this is not apparent in LIGMA - you have to
 ;       save the image and load it into another viewer.  First noticed in
 ;       Nutscrape.
 ;       Changed path (removed "filters/").
@@ -61,15 +61,15 @@
         (index 1)
         (greyness 0)
         (thickness (abs thickness))
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-        (pic-layer (aref (cadr (gimp-image-get-selected-drawables image)) 0))
-        (offsets (gimp-drawable-get-offsets pic-layer))
-        (width (car (gimp-drawable-get-width pic-layer)))
-        (height (car (gimp-drawable-get-height pic-layer)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image (if (= work-on-copy TRUE) (car (ligma-image-duplicate img)) img))
+        (pic-layer (aref (cadr (ligma-image-get-selected-drawables image)) 0))
+        (offsets (ligma-drawable-get-offsets pic-layer))
+        (width (car (ligma-drawable-get-width pic-layer)))
+        (height (car (ligma-drawable-get-height pic-layer)))
 
         ; Bumpmap has a one pixel border on each side
-        (bump-layer (car (gimp-layer-new image
+        (bump-layer (car (ligma-layer-new image
                                          (+ width 2)
                                          (+ height 2)
                                          RGB-IMAGE
@@ -77,24 +77,24 @@
                                          100
                                          LAYER-MODE-NORMAL)))
 
-        (selection-exists (car (gimp-selection-bounds image)))
+        (selection-exists (car (ligma-selection-bounds image)))
         (selection 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
     ; disable undo on copy, start group otherwise
     (if (= work-on-copy TRUE)
-      (gimp-image-undo-disable image)
-      (gimp-image-undo-group-start image)
+      (ligma-image-undo-disable image)
+      (ligma-image-undo-group-start image)
     )
 
-    (gimp-image-insert-layer image bump-layer 0 1)
+    (ligma-image-insert-layer image bump-layer 0 1)
 
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap
-    (gimp-layer-set-offsets bump-layer (- (car offsets) 1)
+    (ligma-layer-set-offsets bump-layer (- (car offsets) 1)
                                        (- (cadr offsets) 1))
 
     ;------------------------------------------------------------
@@ -102,36 +102,36 @@
     ; Set the selection to the area we want to bevel.
     ;
     (if (= selection-exists 0)
-        (gimp-image-select-item image CHANNEL-OP-REPLACE pic-layer)
+        (ligma-image-select-item image CHANNEL-OP-REPLACE pic-layer)
     )
 
     ; Store it for later.
-    (set! selection (car (gimp-selection-save image)))
+    (set! selection (car (ligma-selection-save image)))
     ; Try to lose the jaggies
-    (gimp-selection-feather image 2)
+    (ligma-selection-feather image 2)
 
     ;------------------------------------------------------------
     ;
     ; Initialise our bumpmap
     ;
-    (gimp-context-set-background '(0 0 0))
-    (gimp-drawable-fill bump-layer FILL-BACKGROUND)
+    (ligma-context-set-background '(0 0 0))
+    (ligma-drawable-fill bump-layer FILL-BACKGROUND)
 
     (while (and (< index thickness)
-                (= (car (gimp-selection-is-empty image)) FALSE)
+                (= (car (ligma-selection-is-empty image)) FALSE)
            )
            (set! greyness (/ (* index 255) thickness))
-           (gimp-context-set-background (list greyness greyness greyness))
-           ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-           (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
-           (gimp-selection-shrink image 1)
+           (ligma-context-set-background (list greyness greyness greyness))
+           ;(ligma-selection-feather image 1) ;Stop the slopey jaggies?
+           (ligma-drawable-edit-fill bump-layer FILL-BACKGROUND)
+           (ligma-selection-shrink image 1)
            (set! index (+ index 1))
     )
     ; Now the white interior
-    (if (= (car (gimp-selection-is-empty image)) FALSE)
+    (if (= (car (ligma-selection-is-empty image)) FALSE)
         (begin
-          (gimp-context-set-background '(255 255 255))
-          (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
+          (ligma-context-set-background '(255 255 255))
+          (ligma-drawable-edit-fill bump-layer FILL-BACKGROUND)
         )
     )
 
@@ -139,7 +139,7 @@
     ;
     ; Do the bump.
     ;
-    (gimp-selection-none image)
+    (ligma-selection-none image)
 
     ; To further lessen jaggies?
     ;(plug-in-gauss-rle RUN-NONINTERACTIVE image bump-layer thickness TRUE TRUE)
@@ -155,33 +155,33 @@
     ; Restore things
     ;
     (if (= selection-exists 0)
-        (gimp-selection-none image)        ; No selection to start with
-        (gimp-image-select-item image CHANNEL-OP-REPLACE selection)
+        (ligma-selection-none image)        ; No selection to start with
+        (ligma-image-select-item image CHANNEL-OP-REPLACE selection)
     )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.
 
     ; clean up
-    (gimp-image-remove-channel image selection)
+    (ligma-image-remove-channel image selection)
     (if (= keep-bump-layer TRUE)
-        (gimp-item-set-visible bump-layer 0)
-        (gimp-image-remove-layer image bump-layer)
+        (ligma-item-set-visible bump-layer 0)
+        (ligma-image-remove-layer image bump-layer)
     )
 
-    (gimp-image-set-selected-layers image 1 (vector pic-layer))
+    (ligma-image-set-selected-layers image 1 (vector pic-layer))
 
     ; enable undo / end undo group
     (if (= work-on-copy TRUE)
       (begin
-        (gimp-display-new image)
-        (gimp-image-undo-enable image)
+        (ligma-display-new image)
+        (ligma-image-undo-enable image)
       )
-      (gimp-image-undo-group-end image)
+      (ligma-image-undo-group-end image)
     )
 
-    (gimp-displays-flush)
+    (ligma-displays-flush)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 

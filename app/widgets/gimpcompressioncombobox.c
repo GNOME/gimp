@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcompressioncombobox.c
- * Copyright (C) 2004, 2008  Sven Neumann <sven@gimp.org>
+ * ligmacompressioncombobox.c
+ * Copyright (C) 2004, 2008  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpcompressioncombobox.h"
+#include "ligmacompressioncombobox.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,38 +44,38 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_compression_combo_box_constructed    (GObject      *object);
+static void       ligma_compression_combo_box_constructed    (GObject      *object);
 
-static gboolean   gimp_compression_combo_box_separator_func (GtkTreeModel *model,
+static gboolean   ligma_compression_combo_box_separator_func (GtkTreeModel *model,
                                                              GtkTreeIter  *iter,
                                                              gpointer      data);
 
 
-G_DEFINE_TYPE (GimpCompressionComboBox, gimp_compression_combo_box,
-               GIMP_TYPE_STRING_COMBO_BOX)
+G_DEFINE_TYPE (LigmaCompressionComboBox, ligma_compression_combo_box,
+               LIGMA_TYPE_STRING_COMBO_BOX)
 
-#define parent_class gimp_compression_combo_box_parent_class
+#define parent_class ligma_compression_combo_box_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_compression_combo_box_class_init (GimpCompressionComboBoxClass *klass)
+ligma_compression_combo_box_class_init (LigmaCompressionComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed = gimp_compression_combo_box_constructed;
+  object_class->constructed = ligma_compression_combo_box_constructed;
 }
 
 static void
-gimp_compression_combo_box_init (GimpCompressionComboBox *combo_box)
+ligma_compression_combo_box_init (LigmaCompressionComboBox *combo_box)
 {
 }
 
 static void
-gimp_compression_combo_box_constructed (GObject *object)
+ligma_compression_combo_box_constructed (GObject *object)
 {
-  GimpCompressionComboBox *combo_box = GIMP_COMPRESSION_COMBO_BOX (object);
+  LigmaCompressionComboBox *combo_box = LIGMA_COMPRESSION_COMBO_BOX (object);
   GtkCellLayout           *layout;
   GtkCellRenderer         *cell;
   GtkListStore            *store;
@@ -92,7 +92,7 @@ gimp_compression_combo_box_constructed (GObject *object)
 
   gtk_combo_box_set_row_separator_func (
     GTK_COMBO_BOX (combo_box),
-    gimp_compression_combo_box_separator_func,
+    ligma_compression_combo_box_separator_func,
     NULL,
     NULL);
 
@@ -141,7 +141,7 @@ gimp_compression_combo_box_constructed (GObject *object)
 }
 
 static gboolean
-gimp_compression_combo_box_separator_func (GtkTreeModel *model,
+ligma_compression_combo_box_separator_func (GtkTreeModel *model,
                                            GtkTreeIter  *iter,
                                            gpointer      data)
 {
@@ -161,9 +161,9 @@ gimp_compression_combo_box_separator_func (GtkTreeModel *model,
 /*  public functions  */
 
 GtkWidget *
-gimp_compression_combo_box_new (void)
+ligma_compression_combo_box_new (void)
 {
-  return g_object_new (GIMP_TYPE_COMPRESSION_COMBO_BOX,
+  return g_object_new (LIGMA_TYPE_COMPRESSION_COMBO_BOX,
                        "has-entry",    TRUE,
                        "id-column",    COLUMN_ID,
                        "label-column", COLUMN_LABEL,
@@ -171,13 +171,13 @@ gimp_compression_combo_box_new (void)
 }
 
 void
-gimp_compression_combo_box_set_compression (GimpCompressionComboBox *combo_box,
+ligma_compression_combo_box_set_compression (LigmaCompressionComboBox *combo_box,
                                             const gchar             *compression)
 {
-  g_return_if_fail (GIMP_IS_COMPRESSION_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_COMPRESSION_COMBO_BOX (combo_box));
   g_return_if_fail (compression != NULL);
 
-  if (! gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box),
+  if (! ligma_string_combo_box_set_active (LIGMA_STRING_COMBO_BOX (combo_box),
                                           compression))
     {
       GtkWidget *entry;
@@ -191,13 +191,13 @@ gimp_compression_combo_box_set_compression (GimpCompressionComboBox *combo_box,
 }
 
 gchar *
-gimp_compression_combo_box_get_compression (GimpCompressionComboBox *combo_box)
+ligma_compression_combo_box_get_compression (LigmaCompressionComboBox *combo_box)
 {
   gchar *result;
 
-  g_return_val_if_fail (GIMP_IS_COMPRESSION_COMBO_BOX (combo_box), NULL);
+  g_return_val_if_fail (LIGMA_IS_COMPRESSION_COMBO_BOX (combo_box), NULL);
 
-  result = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (combo_box));
+  result = ligma_string_combo_box_get_active (LIGMA_STRING_COMBO_BOX (combo_box));
 
   if (! result)
     {

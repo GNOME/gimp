@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbatchprocedure.c
+ * ligmabatchprocedure.c
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,75 +20,75 @@
 
 #include "config.h"
 
-#include "gimp.h"
-#include "gimpbatchprocedure.h"
-#include "gimppdb_pdb.h"
+#include "ligma.h"
+#include "ligmabatchprocedure.h"
+#include "ligmapdb_pdb.h"
 
 
-struct _GimpBatchProcedurePrivate
+struct _LigmaBatchProcedurePrivate
 {
   gchar           *interpreter_name;
 
-  GimpBatchFunc    run_func;
+  LigmaBatchFunc    run_func;
   gpointer         run_data;
   GDestroyNotify   run_data_destroy;
 
 };
 
 
-static void   gimp_batch_procedure_constructed (GObject              *object);
-static void   gimp_batch_procedure_finalize    (GObject              *object);
+static void   ligma_batch_procedure_constructed (GObject              *object);
+static void   ligma_batch_procedure_finalize    (GObject              *object);
 
-static void   gimp_batch_procedure_install     (GimpProcedure        *procedure);
-static GimpValueArray *
-              gimp_batch_procedure_run         (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
-static GimpProcedureConfig *
-            gimp_batch_procedure_create_config (GimpProcedure        *procedure,
+static void   ligma_batch_procedure_install     (LigmaProcedure        *procedure);
+static LigmaValueArray *
+              ligma_batch_procedure_run         (LigmaProcedure        *procedure,
+                                                const LigmaValueArray *args);
+static LigmaProcedureConfig *
+            ligma_batch_procedure_create_config (LigmaProcedure        *procedure,
                                                 GParamSpec          **args,
                                                 gint                  n_args);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBatchProcedure, gimp_batch_procedure,
-                            GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaBatchProcedure, ligma_batch_procedure,
+                            LIGMA_TYPE_PROCEDURE)
 
-#define parent_class gimp_batch_procedure_parent_class
+#define parent_class ligma_batch_procedure_parent_class
 
 
 static void
-gimp_batch_procedure_class_init (GimpBatchProcedureClass *klass)
+ligma_batch_procedure_class_init (LigmaBatchProcedureClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
-  GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
+  LigmaProcedureClass *procedure_class = LIGMA_PROCEDURE_CLASS (klass);
 
-  object_class->constructed      = gimp_batch_procedure_constructed;
-  object_class->finalize         = gimp_batch_procedure_finalize;
+  object_class->constructed      = ligma_batch_procedure_constructed;
+  object_class->finalize         = ligma_batch_procedure_finalize;
 
-  procedure_class->install       = gimp_batch_procedure_install;
-  procedure_class->run           = gimp_batch_procedure_run;
-  procedure_class->create_config = gimp_batch_procedure_create_config;
+  procedure_class->install       = ligma_batch_procedure_install;
+  procedure_class->run           = ligma_batch_procedure_run;
+  procedure_class->create_config = ligma_batch_procedure_create_config;
 }
 
 static void
-gimp_batch_procedure_init (GimpBatchProcedure *procedure)
+ligma_batch_procedure_init (LigmaBatchProcedure *procedure)
 {
-  procedure->priv = gimp_batch_procedure_get_instance_private (procedure);
+  procedure->priv = ligma_batch_procedure_get_instance_private (procedure);
 }
 
 static void
-gimp_batch_procedure_constructed (GObject *object)
+ligma_batch_procedure_constructed (GObject *object)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+  LigmaProcedure *procedure = LIGMA_PROCEDURE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+  LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                       "Run mode",
                       "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_NONINTERACTIVE,
+                      LIGMA_TYPE_RUN_MODE,
+                      LIGMA_RUN_NONINTERACTIVE,
                       G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "script",
+  LIGMA_PROC_ARG_STRING (procedure, "script",
                         "Batch commands in the target language",
                         "Batch commands in the target language, which will be run by the interpreter",
                         "",
@@ -96,9 +96,9 @@ gimp_batch_procedure_constructed (GObject *object)
 }
 
 static void
-gimp_batch_procedure_finalize (GObject *object)
+ligma_batch_procedure_finalize (GObject *object)
 {
-  GimpBatchProcedure *procedure = GIMP_BATCH_PROCEDURE (object);
+  LigmaBatchProcedure *procedure = LIGMA_BATCH_PROCEDURE (object);
 
   g_clear_pointer (&procedure->priv->interpreter_name, g_free);
 
@@ -106,41 +106,41 @@ gimp_batch_procedure_finalize (GObject *object)
 }
 
 static void
-gimp_batch_procedure_install (GimpProcedure *procedure)
+ligma_batch_procedure_install (LigmaProcedure *procedure)
 {
-  GimpBatchProcedure *proc = GIMP_BATCH_PROCEDURE (procedure);
+  LigmaBatchProcedure *proc = LIGMA_BATCH_PROCEDURE (procedure);
 
   g_return_if_fail (proc->priv->interpreter_name != NULL);
 
-  GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
+  LIGMA_PROCEDURE_CLASS (parent_class)->install (procedure);
 
-  _gimp_pdb_set_batch_interpreter (gimp_procedure_get_name (procedure),
+  _ligma_pdb_set_batch_interpreter (ligma_procedure_get_name (procedure),
                                    proc->priv->interpreter_name);
 }
 
 #define ARG_OFFSET 2
 
-static GimpValueArray *
-gimp_batch_procedure_run (GimpProcedure        *procedure,
-                          const GimpValueArray *args)
+static LigmaValueArray *
+ligma_batch_procedure_run (LigmaProcedure        *procedure,
+                          const LigmaValueArray *args)
 {
-  GimpBatchProcedure *batch_proc = GIMP_BATCH_PROCEDURE (procedure);
-  GimpValueArray    *remaining;
-  GimpValueArray    *return_values;
-  GimpRunMode        run_mode;
+  LigmaBatchProcedure *batch_proc = LIGMA_BATCH_PROCEDURE (procedure);
+  LigmaValueArray    *remaining;
+  LigmaValueArray    *return_values;
+  LigmaRunMode        run_mode;
   const gchar       *cmd;
   gint               i;
 
-  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
-  cmd      = GIMP_VALUES_GET_STRING (args, 1);
+  run_mode = LIGMA_VALUES_GET_ENUM   (args, 0);
+  cmd      = LIGMA_VALUES_GET_STRING (args, 1);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
+  remaining = ligma_value_array_new (ligma_value_array_length (args) - ARG_OFFSET);
 
-  for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
+  for (i = ARG_OFFSET; i < ligma_value_array_length (args); i++)
     {
-      GValue *value = gimp_value_array_index (args, i);
+      GValue *value = ligma_value_array_index (args, i);
 
-      gimp_value_array_append (remaining, value);
+      ligma_value_array_append (remaining, value);
     }
 
   return_values = batch_proc->priv->run_func (procedure,
@@ -148,13 +148,13 @@ gimp_batch_procedure_run (GimpProcedure        *procedure,
                                               cmd,
                                               remaining,
                                               batch_proc->priv->run_data);
-  gimp_value_array_unref (remaining);
+  ligma_value_array_unref (remaining);
 
   return return_values;
 }
 
-static GimpProcedureConfig *
-gimp_batch_procedure_create_config (GimpProcedure  *procedure,
+static LigmaProcedureConfig *
+ligma_batch_procedure_create_config (LigmaProcedure  *procedure,
                                     GParamSpec    **args,
                                     gint            n_args)
 {
@@ -169,7 +169,7 @@ gimp_batch_procedure_create_config (GimpProcedure  *procedure,
       n_args = 0;
     }
 
-  return GIMP_PROCEDURE_CLASS (parent_class)->create_config (procedure,
+  return LIGMA_PROCEDURE_CLASS (parent_class)->create_config (procedure,
                                                              args,
                                                              n_args);
 }
@@ -177,11 +177,11 @@ gimp_batch_procedure_create_config (GimpProcedure  *procedure,
 /*  public functions  */
 
 /**
- * gimp_batch_procedure_new:
- * @plug_in:          a #GimpPlugIn.
+ * ligma_batch_procedure_new:
+ * @plug_in:          a #LigmaPlugIn.
  * @name:             the new procedure's name.
  * @interpreter_name: the public-facing name, e.g. "Python 3".
- * @proc_type:        the new procedure's #GimpPDBProcType.
+ * @proc_type:        the new procedure's #LigmaPDBProcType.
  * @run_func:         the run function for the new procedure.
  * @run_data:         user data passed to @run_func.
  * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
@@ -189,46 +189,46 @@ gimp_batch_procedure_create_config (GimpProcedure  *procedure,
  * Creates a new batch interpreter procedure named @name which will call
  * @run_func when invoked.
  *
- * See gimp_procedure_new() for information about @proc_type.
+ * See ligma_procedure_new() for information about @proc_type.
  *
- * #GimpBatchProcedure is a #GimpProcedure subclass that makes it easier
+ * #LigmaBatchProcedure is a #LigmaProcedure subclass that makes it easier
  * to write batch interpreter procedures.
  *
  * It automatically adds the standard
  *
- * (#GimpRunMode, #gchar)
+ * (#LigmaRunMode, #gchar)
  *
  * arguments of a batch procedure. It is possible to add additional
  * arguments.
  *
- * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguments and calls @run_func which is a #GimpBatchFunc. The "args"
- * #GimpValueArray of #GimpRunSaveFunc only contains additionally added
+ * When invoked via ligma_procedure_run(), it unpacks these standard
+ * arguments and calls @run_func which is a #LigmaBatchFunc. The "args"
+ * #LigmaValueArray of #LigmaRunSaveFunc only contains additionally added
  * arguments.
  *
- * Returns: a new #GimpProcedure.
+ * Returns: a new #LigmaProcedure.
  *
  * Since: 3.0
  **/
-GimpProcedure  *
-gimp_batch_procedure_new (GimpPlugIn       *plug_in,
+LigmaProcedure  *
+ligma_batch_procedure_new (LigmaPlugIn       *plug_in,
                           const gchar      *name,
                           const gchar      *interpreter_name,
-                          GimpPDBProcType   proc_type,
-                          GimpBatchFunc     run_func,
+                          LigmaPDBProcType   proc_type,
+                          LigmaBatchFunc     run_func,
                           gpointer          run_data,
                           GDestroyNotify    run_data_destroy)
 {
-  GimpBatchProcedure *procedure;
+  LigmaBatchProcedure *procedure;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (name), NULL);
   g_return_val_if_fail (interpreter_name != NULL && g_utf8_validate (interpreter_name, -1, NULL), NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
+  g_return_val_if_fail (proc_type != LIGMA_PDB_PROC_TYPE_INTERNAL, NULL);
+  g_return_val_if_fail (proc_type != LIGMA_PDB_PROC_TYPE_EXTENSION, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
-  procedure = g_object_new (GIMP_TYPE_BATCH_PROCEDURE,
+  procedure = g_object_new (LIGMA_TYPE_BATCH_PROCEDURE,
                             "plug-in",        plug_in,
                             "name",           name,
                             "procedure-type", proc_type,
@@ -238,13 +238,13 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
   procedure->priv->run_data         = run_data;
   procedure->priv->run_data_destroy = run_data_destroy;
 
-  gimp_batch_procedure_set_interpreter_name (procedure, interpreter_name);
+  ligma_batch_procedure_set_interpreter_name (procedure, interpreter_name);
 
-  return GIMP_PROCEDURE (procedure);
+  return LIGMA_PROCEDURE (procedure);
 }
 
 /**
- * gimp_batch_procedure_set_interpreter_name:
+ * ligma_batch_procedure_set_interpreter_name:
  * @procedure:        A batch procedure.
  * @interpreter_name: A public-facing name for the interpreter, e.g. "Python 3".
  *
@@ -259,7 +259,7 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
  * to localize it at runtime, for instance through gettext, like:
  *
  * ```c
- * gimp_batch_procedure_set_interpreter_name (procedure, _("Python 3"));
+ * ligma_batch_procedure_set_interpreter_name (procedure, _("Python 3"));
  * ```
  *
  * Some language would indeed localize even some technical terms or
@@ -269,10 +269,10 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
  * Since: 3.0
  **/
 void
-gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *procedure,
+ligma_batch_procedure_set_interpreter_name (LigmaBatchProcedure *procedure,
                                            const gchar        *interpreter_name)
 {
-  g_return_if_fail (GIMP_IS_BATCH_PROCEDURE (procedure));
+  g_return_if_fail (LIGMA_IS_BATCH_PROCEDURE (procedure));
   g_return_if_fail (interpreter_name != NULL && g_utf8_validate (interpreter_name, -1, NULL));
 
   g_free (procedure->priv->interpreter_name);
@@ -280,7 +280,7 @@ gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *procedure,
 }
 
 /**
- * gimp_batch_procedure_get_interpreter_name:
+ * ligma_batch_procedure_get_interpreter_name:
  * @procedure: A batch procedure object.
  *
  * Returns the procedure's interpreter name, as set with
@@ -291,9 +291,9 @@ gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *procedure,
  * Since: 3.0
  **/
 const gchar *
-gimp_batch_procedure_get_interpreter_name (GimpBatchProcedure *procedure)
+ligma_batch_procedure_get_interpreter_name (LigmaBatchProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_BATCH_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (LIGMA_IS_BATCH_PROCEDURE (procedure), NULL);
 
   return procedure->priv->interpreter_name;
 }

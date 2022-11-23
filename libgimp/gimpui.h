@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,55 +16,55 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
+#ifndef __LIGMA_UI_H__
+#define __LIGMA_UI_H__
 
 #include <gio/gio.h>
 #include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include <libgimpwidgets/gimpwidgets.h>
+#include <libligmawidgets/ligmawidgets.h>
 
-#define __GIMP_UI_H_INSIDE__
+#define __LIGMA_UI_H_INSIDE__
 
-#include <libgimp/gimpuitypes.h>
+#include <libligma/ligmauitypes.h>
 
-#include <libgimp/gimpaspectpreview.h>
-#include <libgimp/gimpbrushselectbutton.h>
-#include <libgimp/gimpdrawablepreview.h>
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpfontselectbutton.h>
-#include <libgimp/gimpgradientselectbutton.h>
-#include <libgimp/gimpimagecombobox.h>
-#include <libgimp/gimpitemcombobox.h>
-#include <libgimp/gimppaletteselectbutton.h>
-#include <libgimp/gimppatternselectbutton.h>
-#include <libgimp/gimpprocbrowserdialog.h>
-#include <libgimp/gimpproceduredialog.h>
-#include <libgimp/gimpprocview.h>
-#include <libgimp/gimpprogressbar.h>
-#include <libgimp/gimpsaveproceduredialog.h>
-#include <libgimp/gimpselectbutton.h>
-#include <libgimp/gimpzoompreview.h>
+#include <libligma/ligmaaspectpreview.h>
+#include <libligma/ligmabrushselectbutton.h>
+#include <libligma/ligmadrawablepreview.h>
+#include <libligma/ligmaexport.h>
+#include <libligma/ligmafontselectbutton.h>
+#include <libligma/ligmagradientselectbutton.h>
+#include <libligma/ligmaimagecombobox.h>
+#include <libligma/ligmaitemcombobox.h>
+#include <libligma/ligmapaletteselectbutton.h>
+#include <libligma/ligmapatternselectbutton.h>
+#include <libligma/ligmaprocbrowserdialog.h>
+#include <libligma/ligmaproceduredialog.h>
+#include <libligma/ligmaprocview.h>
+#include <libligma/ligmaprogressbar.h>
+#include <libligma/ligmasaveproceduredialog.h>
+#include <libligma/ligmaselectbutton.h>
+#include <libligma/ligmazoompreview.h>
 
-#undef __GIMP_UI_H_INSIDE__
+#undef __LIGMA_UI_H_INSIDE__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-void        gimp_ui_init                          (const gchar *prog_name);
+void        ligma_ui_init                          (const gchar *prog_name);
 
-GdkWindow * gimp_ui_get_progress_window           (void);
+GdkWindow * ligma_ui_get_progress_window           (void);
 
-void        gimp_window_set_transient             (GtkWindow   *window);
+void        ligma_window_set_transient             (GtkWindow   *window);
 
-GdkWindow * gimp_ui_get_display_window            (GimpDisplay *display);
-void        gimp_window_set_transient_for_display (GtkWindow   *window,
-                                                   GimpDisplay *display);
+GdkWindow * ligma_ui_get_display_window            (LigmaDisplay *display);
+void        ligma_window_set_transient_for_display (GtkWindow   *window,
+                                                   LigmaDisplay *display);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __LIGMA_UI_H__ */

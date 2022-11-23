@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvastransformguides.c
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmacanvastransformguides.c
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,16 +23,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimp-utils.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimpcanvastransformguides.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvastransformguides.h"
+#include "ligmadisplayshell.h"
 
 
 #define SQRT5 2.236067977
@@ -52,133 +52,133 @@ enum
 };
 
 
-typedef struct _GimpCanvasTransformGuidesPrivate GimpCanvasTransformGuidesPrivate;
+typedef struct _LigmaCanvasTransformGuidesPrivate LigmaCanvasTransformGuidesPrivate;
 
-struct _GimpCanvasTransformGuidesPrivate
+struct _LigmaCanvasTransformGuidesPrivate
 {
-  GimpMatrix3    transform;
+  LigmaMatrix3    transform;
   gdouble        x1, y1;
   gdouble        x2, y2;
-  GimpGuidesType type;
+  LigmaGuidesType type;
   gint           n_guides;
   gboolean       clip;
 };
 
 #define GET_PRIVATE(transform) \
-        ((GimpCanvasTransformGuidesPrivate *) gimp_canvas_transform_guides_get_instance_private ((GimpCanvasTransformGuides *) (transform)))
+        ((LigmaCanvasTransformGuidesPrivate *) ligma_canvas_transform_guides_get_instance_private ((LigmaCanvasTransformGuides *) (transform)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_transform_guides_set_property (GObject        *object,
+static void             ligma_canvas_transform_guides_set_property (GObject        *object,
                                                                    guint           property_id,
                                                                    const GValue   *value,
                                                                    GParamSpec     *pspec);
-static void             gimp_canvas_transform_guides_get_property (GObject        *object,
+static void             ligma_canvas_transform_guides_get_property (GObject        *object,
                                                                    guint           property_id,
                                                                    GValue         *value,
                                                                    GParamSpec     *pspec);
-static void             gimp_canvas_transform_guides_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_transform_guides_draw         (LigmaCanvasItem *item,
                                                                    cairo_t        *cr);
-static cairo_region_t * gimp_canvas_transform_guides_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_transform_guides_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasTransformGuides,
-                            gimp_canvas_transform_guides, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasTransformGuides,
+                            ligma_canvas_transform_guides, LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_transform_guides_parent_class
+#define parent_class ligma_canvas_transform_guides_parent_class
 
 
 static void
-gimp_canvas_transform_guides_class_init (GimpCanvasTransformGuidesClass *klass)
+ligma_canvas_transform_guides_class_init (LigmaCanvasTransformGuidesClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_transform_guides_set_property;
-  object_class->get_property = gimp_canvas_transform_guides_get_property;
+  object_class->set_property = ligma_canvas_transform_guides_set_property;
+  object_class->get_property = ligma_canvas_transform_guides_get_property;
 
-  item_class->draw           = gimp_canvas_transform_guides_draw;
-  item_class->get_extents    = gimp_canvas_transform_guides_get_extents;
+  item_class->draw           = ligma_canvas_transform_guides_draw;
+  item_class->get_extents    = ligma_canvas_transform_guides_get_extents;
 
   g_object_class_install_property (object_class, PROP_TRANSFORM,
-                                   gimp_param_spec_matrix3 ("transform",
+                                   ligma_param_spec_matrix3 ("transform",
                                                             NULL, NULL,
                                                             NULL,
-                                                            GIMP_PARAM_READWRITE));
+                                                            LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_X1,
                                    g_param_spec_double ("x1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y1,
                                    g_param_spec_double ("y1",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_X2,
                                    g_param_spec_double ("x2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y2,
                                    g_param_spec_double ("y2",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,
-                                                      GIMP_TYPE_GUIDES_TYPE,
-                                                      GIMP_GUIDES_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_GUIDES_TYPE,
+                                                      LIGMA_GUIDES_NONE,
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_N_GUIDES,
                                    g_param_spec_int ("n-guides", NULL, NULL,
                                                      1, 128, 4,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CLIP,
                                    g_param_spec_boolean ("clip", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_transform_guides_init (GimpCanvasTransformGuides *transform)
+ligma_canvas_transform_guides_init (LigmaCanvasTransformGuides *transform)
 {
 }
 
 static void
-gimp_canvas_transform_guides_set_property (GObject      *object,
+ligma_canvas_transform_guides_set_property (GObject      *object,
                                            guint         property_id,
                                            const GValue *value,
                                            GParamSpec   *pspec)
 {
-  GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasTransformGuidesPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_TRANSFORM:
       {
-        GimpMatrix3 *transform = g_value_get_boxed (value);
+        LigmaMatrix3 *transform = g_value_get_boxed (value);
 
         if (transform)
           private->transform = *transform;
         else
-          gimp_matrix3_identity (&private->transform);
+          ligma_matrix3_identity (&private->transform);
       }
       break;
 
@@ -217,12 +217,12 @@ gimp_canvas_transform_guides_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_transform_guides_get_property (GObject    *object,
+ligma_canvas_transform_guides_get_property (GObject    *object,
                                            guint       property_id,
                                            GValue     *value,
                                            GParamSpec *pspec)
 {
-  GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasTransformGuidesPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -265,21 +265,21 @@ gimp_canvas_transform_guides_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_canvas_transform_guides_transform (GimpCanvasItem *item,
-                                        GimpVector2    *t_vertices,
+ligma_canvas_transform_guides_transform (LigmaCanvasItem *item,
+                                        LigmaVector2    *t_vertices,
                                         gint           *n_t_vertices)
 {
-  GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
-  GimpVector2                       vertices[4];
+  LigmaCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaVector2                       vertices[4];
 
-  vertices[0] = (GimpVector2) { private->x1, private->y1 };
-  vertices[1] = (GimpVector2) { private->x2, private->y1 };
-  vertices[2] = (GimpVector2) { private->x2, private->y2 };
-  vertices[3] = (GimpVector2) { private->x1, private->y2 };
+  vertices[0] = (LigmaVector2) { private->x1, private->y1 };
+  vertices[1] = (LigmaVector2) { private->x2, private->y1 };
+  vertices[2] = (LigmaVector2) { private->x2, private->y2 };
+  vertices[3] = (LigmaVector2) { private->x1, private->y2 };
 
   if (private->clip)
     {
-      gimp_transform_polygon (&private->transform, vertices, 4, TRUE,
+      ligma_transform_polygon (&private->transform, vertices, 4, TRUE,
                               t_vertices, n_t_vertices);
 
       return TRUE;
@@ -290,14 +290,14 @@ gimp_canvas_transform_guides_transform (GimpCanvasItem *item,
 
       for (i = 0; i < 4; i++)
         {
-          gimp_matrix3_transform_point (&private->transform,
+          ligma_matrix3_transform_point (&private->transform,
                                         vertices[i].x,    vertices[i].y,
                                         &t_vertices[i].x, &t_vertices[i].y);
         }
 
       *n_t_vertices = 4;
 
-      return gimp_transform_polygon_is_convex (t_vertices[0].x, t_vertices[0].y,
+      return ligma_transform_polygon_is_convex (t_vertices[0].x, t_vertices[0].y,
                                                t_vertices[1].x, t_vertices[1].y,
                                                t_vertices[3].x, t_vertices[3].y,
                                                t_vertices[2].x, t_vertices[2].y);
@@ -306,24 +306,24 @@ gimp_canvas_transform_guides_transform (GimpCanvasItem *item,
 
 static void
 draw_line (cairo_t        *cr,
-           GimpCanvasItem *item,
-           GimpMatrix3    *transform,
+           LigmaCanvasItem *item,
+           LigmaMatrix3    *transform,
            gdouble         x1,
            gdouble         y1,
            gdouble         x2,
            gdouble         y2)
 {
-  GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
-  GimpVector2                       vertices[2];
-  GimpVector2                       t_vertices[2];
+  LigmaCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaVector2                       vertices[2];
+  LigmaVector2                       t_vertices[2];
   gint                              n_t_vertices;
 
-  vertices[0] = (GimpVector2) { x1, y1 };
-  vertices[1] = (GimpVector2) { x2, y2 };
+  vertices[0] = (LigmaVector2) { x1, y1 };
+  vertices[1] = (LigmaVector2) { x2, y2 };
 
   if (private->clip)
     {
-      gimp_transform_polygon (transform, vertices, 2, FALSE,
+      ligma_transform_polygon (transform, vertices, 2, FALSE,
                               t_vertices, &n_t_vertices);
     }
   else
@@ -332,7 +332,7 @@ draw_line (cairo_t        *cr,
 
       for (i = 0; i < 2; i++)
         {
-          gimp_matrix3_transform_point (transform,
+          ligma_matrix3_transform_point (transform,
                                         vertices[i].x,    vertices[i].y,
                                         &t_vertices[i].x, &t_vertices[i].y);
         }
@@ -346,9 +346,9 @@ draw_line (cairo_t        *cr,
 
       for (i = 0; i < 2; i++)
         {
-          GimpVector2 v;
+          LigmaVector2 v;
 
-          gimp_canvas_item_transform_xy_f (item,
+          ligma_canvas_item_transform_xy_f (item,
                                            t_vertices[i].x, t_vertices[i].y,
                                            &v.x,            &v.y);
 
@@ -365,8 +365,8 @@ draw_line (cairo_t        *cr,
 
 static void
 draw_hline (cairo_t        *cr,
-            GimpCanvasItem *item,
-            GimpMatrix3    *transform,
+            LigmaCanvasItem *item,
+            LigmaMatrix3    *transform,
             gdouble         x1,
             gdouble         x2,
             gdouble         y)
@@ -376,8 +376,8 @@ draw_hline (cairo_t        *cr,
 
 static void
 draw_vline (cairo_t        *cr,
-            GimpCanvasItem *item,
-            GimpMatrix3    *transform,
+            LigmaCanvasItem *item,
+            LigmaMatrix3    *transform,
             gdouble         y1,
             gdouble         y2,
             gdouble         x)
@@ -386,16 +386,16 @@ draw_vline (cairo_t        *cr,
 }
 
 static void
-gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
+ligma_canvas_transform_guides_draw (LigmaCanvasItem *item,
                                    cairo_t        *cr)
 {
-  GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
-  GimpVector2                       t_vertices[5];
+  LigmaCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
+  LigmaVector2                       t_vertices[5];
   gint                              n_t_vertices;
   gboolean                          convex;
   gint                              i;
 
-  convex = gimp_canvas_transform_guides_transform (item,
+  convex = ligma_canvas_transform_guides_transform (item,
                                                    t_vertices, &n_t_vertices);
 
   if (n_t_vertices < 2)
@@ -403,9 +403,9 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
 
   for (i = 0; i < n_t_vertices; i++)
     {
-      GimpVector2 v;
+      LigmaVector2 v;
 
-      gimp_canvas_item_transform_xy_f (item, t_vertices[i].x, t_vertices[i].y,
+      ligma_canvas_item_transform_xy_f (item, t_vertices[i].x, t_vertices[i].y,
                                        &v.x, &v.y);
 
       v.x = floor (v.x) + 0.5;
@@ -421,23 +421,23 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
 
   if (! convex || n_t_vertices < 3)
     {
-      _gimp_canvas_item_stroke (item, cr);
+      _ligma_canvas_item_stroke (item, cr);
       return;
     }
 
   switch (private->type)
     {
-    case GIMP_GUIDES_NONE:
+    case LIGMA_GUIDES_NONE:
       break;
 
-    case GIMP_GUIDES_CENTER_LINES:
+    case LIGMA_GUIDES_CENTER_LINES:
       draw_hline (cr, item, &private->transform,
                   private->x1, private->x2, (private->y1 + private->y2) / 2);
       draw_vline (cr, item, &private->transform,
                   private->y1, private->y2, (private->x1 + private->x2) / 2);
       break;
 
-    case GIMP_GUIDES_THIRDS:
+    case LIGMA_GUIDES_THIRDS:
       draw_hline (cr, item, &private->transform,
                   private->x1, private->x2, (2 * private->y1 + private->y2) / 3);
       draw_hline (cr, item, &private->transform,
@@ -449,7 +449,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
                   private->y1, private->y2, (private->x1 + 2 * private->x2) / 3);
       break;
 
-    case GIMP_GUIDES_FIFTHS:
+    case LIGMA_GUIDES_FIFTHS:
       for (i = 0; i < 5; i++)
         {
           draw_hline (cr, item, &private->transform,
@@ -461,7 +461,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_GUIDES_GOLDEN:
+    case LIGMA_GUIDES_GOLDEN:
       draw_hline (cr, item, &private->transform,
                   private->x1, private->x2,
                   (2 * private->y1 + (1 + SQRT5) * private->y2) / (3 + SQRT5));
@@ -480,7 +480,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
     /* This code implements the method of diagonals discovered by
      * Edwin Westhoff - see http://www.diagonalmethod.info/
      */
-    case GIMP_GUIDES_DIAGONALS:
+    case LIGMA_GUIDES_DIAGONALS:
       {
         /* the side of the largest square that can be
          * fitted in whole into the rectangle (x1, y1), (x2, y2)
@@ -514,8 +514,8 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
       }
       break;
 
-    case GIMP_GUIDES_N_LINES:
-    case GIMP_GUIDES_SPACING:
+    case LIGMA_GUIDES_N_LINES:
+    case LIGMA_GUIDES_SPACING:
       {
         gint width, height;
         gint ngx, ngy;
@@ -527,7 +527,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
          *  every 5 image pixels, see bug 772667.
          */
 
-        if (private->type == GIMP_GUIDES_N_LINES)
+        if (private->type == LIGMA_GUIDES_N_LINES)
           {
             if (width <= height)
               {
@@ -546,7 +546,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
                 ngx = MIN (ngx, width / 5);
               }
           }
-        else /* GIMP_GUIDES_SPACING */
+        else /* LIGMA_GUIDES_SPACING */
           {
             gint grid_size = MAX (2, private->n_guides);
 
@@ -579,29 +579,29 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
       }
     }
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_transform_guides_get_extents (GimpCanvasItem *item)
+ligma_canvas_transform_guides_get_extents (LigmaCanvasItem *item)
 {
-  GimpVector2           t_vertices[5];
+  LigmaVector2           t_vertices[5];
   gint                  n_t_vertices;
-  GimpVector2           top_left;
-  GimpVector2           bottom_right;
+  LigmaVector2           top_left;
+  LigmaVector2           bottom_right;
   cairo_rectangle_int_t extents;
   gint                  i;
 
-  gimp_canvas_transform_guides_transform (item, t_vertices, &n_t_vertices);
+  ligma_canvas_transform_guides_transform (item, t_vertices, &n_t_vertices);
 
   if (n_t_vertices < 2)
     return  cairo_region_create ();
 
   for (i = 0; i < n_t_vertices; i++)
     {
-      GimpVector2 v;
+      LigmaVector2 v;
 
-      gimp_canvas_item_transform_xy_f (item,
+      ligma_canvas_item_transform_xy_f (item,
                                        t_vertices[i].x, t_vertices[i].y,
                                        &v.x,            &v.y);
 
@@ -627,20 +627,20 @@ gimp_canvas_transform_guides_get_extents (GimpCanvasItem *item)
   return cairo_region_create_rectangle (&extents);
 }
 
-GimpCanvasItem *
-gimp_canvas_transform_guides_new (GimpDisplayShell  *shell,
-                                  const GimpMatrix3 *transform,
+LigmaCanvasItem *
+ligma_canvas_transform_guides_new (LigmaDisplayShell  *shell,
+                                  const LigmaMatrix3 *transform,
                                   gdouble            x1,
                                   gdouble            y1,
                                   gdouble            x2,
                                   gdouble            y2,
-                                  GimpGuidesType     type,
+                                  LigmaGuidesType     type,
                                   gint               n_guides,
                                   gboolean           clip)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_TRANSFORM_GUIDES,
+  return g_object_new (LIGMA_TYPE_CANVAS_TRANSFORM_GUIDES,
                        "shell",     shell,
                        "transform", transform,
                        "x1",        x1,
@@ -654,19 +654,19 @@ gimp_canvas_transform_guides_new (GimpDisplayShell  *shell,
 }
 
 void
-gimp_canvas_transform_guides_set (GimpCanvasItem    *guides,
-                                  const GimpMatrix3 *transform,
+ligma_canvas_transform_guides_set (LigmaCanvasItem    *guides,
+                                  const LigmaMatrix3 *transform,
                                   gdouble            x1,
                                   gdouble            y1,
                                   gdouble            x2,
                                   gdouble            y2,
-                                  GimpGuidesType     type,
+                                  LigmaGuidesType     type,
                                   gint               n_guides,
                                   gboolean           clip)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_TRANSFORM_GUIDES (guides));
+  g_return_if_fail (LIGMA_IS_CANVAS_TRANSFORM_GUIDES (guides));
 
-  gimp_canvas_item_begin_change (guides);
+  ligma_canvas_item_begin_change (guides);
 
   g_object_set (guides,
                 "transform", transform,
@@ -679,5 +679,5 @@ gimp_canvas_transform_guides_set (GimpCanvasItem    *guides,
                 "clip",      clip,
                 NULL);
 
-  gimp_canvas_item_end_change (guides);
+  ligma_canvas_item_end_change (guides);
 }

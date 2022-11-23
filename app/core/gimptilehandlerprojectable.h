@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_HANDLER_PROJECTABLE_H__
-#define __GIMP_TILE_HANDLER_PROJECTABLE_H__
+#ifndef __LIGMA_TILE_HANDLER_PROJECTABLE_H__
+#define __LIGMA_TILE_HANDLER_PROJECTABLE_H__
 
 
-#include "gegl/gimptilehandlervalidate.h"
+#include "gegl/ligmatilehandlervalidate.h"
 
 
 /***
- * GimpTileHandlerProjectable is a GeglTileHandler that renders a
+ * LigmaTileHandlerProjectable is a GeglTileHandler that renders a
  * projectable, calling the projectable's begin_render() and end_render()
  * before/after the actual rendering.
  *
@@ -32,33 +32,33 @@
  * lifetime.
  */
 
-#define GIMP_TYPE_TILE_HANDLER_PROJECTABLE            (gimp_tile_handler_projectable_get_type ())
-#define GIMP_TILE_HANDLER_PROJECTABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_HANDLER_PROJECTABLE, GimpTileHandlerProjectable))
-#define GIMP_TILE_HANDLER_PROJECTABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_TILE_HANDLER_PROJECTABLE, GimpTileHandlerProjectableClass))
-#define GIMP_IS_TILE_HANDLER_PROJECTABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILE_HANDLER_PROJECTABLE))
-#define GIMP_IS_TILE_HANDLER_PROJECTABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_TILE_HANDLER_PROJECTABLE))
-#define GIMP_TILE_HANDLER_PROJECTABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_HANDLER_PROJECTABLE, GimpTileHandlerProjectableClass))
+#define LIGMA_TYPE_TILE_HANDLER_PROJECTABLE            (ligma_tile_handler_projectable_get_type ())
+#define LIGMA_TILE_HANDLER_PROJECTABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TILE_HANDLER_PROJECTABLE, LigmaTileHandlerProjectable))
+#define LIGMA_TILE_HANDLER_PROJECTABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_TILE_HANDLER_PROJECTABLE, LigmaTileHandlerProjectableClass))
+#define LIGMA_IS_TILE_HANDLER_PROJECTABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TILE_HANDLER_PROJECTABLE))
+#define LIGMA_IS_TILE_HANDLER_PROJECTABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_TILE_HANDLER_PROJECTABLE))
+#define LIGMA_TILE_HANDLER_PROJECTABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_TILE_HANDLER_PROJECTABLE, LigmaTileHandlerProjectableClass))
 
 
-typedef struct _GimpTileHandlerProjectable      GimpTileHandlerProjectable;
-typedef struct _GimpTileHandlerProjectableClass GimpTileHandlerProjectableClass;
+typedef struct _LigmaTileHandlerProjectable      LigmaTileHandlerProjectable;
+typedef struct _LigmaTileHandlerProjectableClass LigmaTileHandlerProjectableClass;
 
-struct _GimpTileHandlerProjectable
+struct _LigmaTileHandlerProjectable
 {
-  GimpTileHandlerValidate  parent_instance;
+  LigmaTileHandlerValidate  parent_instance;
 
-  GimpProjectable         *projectable;
+  LigmaProjectable         *projectable;
 };
 
-struct _GimpTileHandlerProjectableClass
+struct _LigmaTileHandlerProjectableClass
 {
-  GimpTileHandlerValidateClass  parent_class;
+  LigmaTileHandlerValidateClass  parent_class;
 };
 
 
-GType             gimp_tile_handler_projectable_get_type (void) G_GNUC_CONST;
+GType             ligma_tile_handler_projectable_get_type (void) G_GNUC_CONST;
 
-GeglTileHandler * gimp_tile_handler_projectable_new      (GimpProjectable *projectable);
+GeglTileHandler * ligma_tile_handler_projectable_new      (LigmaProjectable *projectable);
 
 
-#endif /* __GIMP_TILE_HANDLER_PROJECTABLE_H__ */
+#endif /* __LIGMA_TILE_HANDLER_PROJECTABLE_H__ */

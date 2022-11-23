@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub pdb_misc {
-   $author = 'Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>';
+   $author = 'Michael Natterer <mitch@ligma.org> & Sven Neumann <sven@ligma.org>';
    $copyright = 'Michael Natterer & Sven Neumann';
    $date = '2004';
    $since = '2.2';
@@ -29,7 +29,7 @@ sub context_push {
     $help = <<'HELP';
 This procedure creates a new context by copying the current context. This
 copy becomes the new current context for the calling plug-in until it is
-popped again using gimp_context_pop().
+popped again using ligma_context_pop().
 HELP
 
     &pdb_misc;
@@ -37,10 +37,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_context_push (plug_in);
+    success = ligma_plug_in_context_push (plug_in);
   else
     success = FALSE;
 }
@@ -54,7 +54,7 @@ sub context_pop {
     $help = <<'HELP';
 This procedure removes the topmost context from the plug-in's context
 stack.  The context that was active before the corresponding call to
-gimp_context_push() becomes the new current context of the plug-in.
+ligma_context_push() becomes the new current context of the plug-in.
 HELP
 
     &pdb_misc;
@@ -62,10 +62,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_context_pop (plug_in);
+    success = ligma_plug_in_context_pop (plug_in);
   else
     success = FALSE;
 }
@@ -91,7 +91,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-    gimp_config_reset (GIMP_CONFIG (context));
+    ligma_config_reset (LIGMA_CONFIG (context));
 }
 CODE
     );
@@ -102,7 +102,7 @@ sub context_list_paint_methods {
 
     $help = <<'HELP';
 This procedure lists the names of the available paint methods. Any
-of the results can be used for gimp_context_set_paint_method().
+of the results can be used for ligma_context_set_paint_method().
 HELP
 
     &simon_pdb_misc('2007', '2.4');
@@ -115,7 +115,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  paint_methods = gimp_container_get_name_array (gimp->paint_info_list);
+  paint_methods = ligma_container_get_name_array (ligma->paint_info_list);
 }
 CODE
     );
@@ -138,10 +138,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
+  LigmaPaintInfo *paint_info = ligma_context_get_paint_info (context);
 
   if (paint_info)
-    name = g_strdup (gimp_object_get_name (paint_info));
+    name = g_strdup (ligma_object_get_name (paint_info));
   else
     success = FALSE;
 }
@@ -171,10 +171,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintInfo *paint_info = gimp_pdb_get_paint_info (gimp, name, error);
+  LigmaPaintInfo *paint_info = ligma_pdb_get_paint_info (ligma, name, error);
 
   if (paint_info)
-    gimp_context_set_paint_info (context, paint_info);
+    ligma_context_set_paint_info (context, paint_info);
   else
     success = FALSE;
 }
@@ -192,15 +192,15 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-	{ name  => 'stroke_method', type  => 'enum GimpStrokeMethod',
+	{ name  => 'stroke_method', type  => 'enum LigmaStrokeMethod',
 	  desc  => 'The active stroke method' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "method", &stroke_method,
@@ -222,15 +222,15 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'stroke_method', type => 'enum GimpStrokeMethod',
+        { name => 'stroke_method', type => 'enum LigmaStrokeMethod',
           desc => 'The new stroke method' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "method", stroke_method,
@@ -241,10 +241,10 @@ CODE
 }
 
 sub context_get_foreground {
-    $blurb = "Get the current GIMP foreground color.";
+    $blurb = "Get the current LIGMA foreground color.";
 
     $help = <<'HELP';
-This procedure returns the current GIMP foreground color. The foreground
+This procedure returns the current LIGMA foreground color. The foreground
 color is used in a variety of tools such as paint tools, blending, and bucket
 fill.
 HELP
@@ -259,18 +259,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_get_foreground (context, &foreground);
-  gimp_rgb_set_alpha (&foreground, 1.0);
+  ligma_context_get_foreground (context, &foreground);
+  ligma_rgb_set_alpha (&foreground, 1.0);
 }
 CODE
     );
 }
 
 sub context_set_foreground {
-    $blurb = "Set the current GIMP foreground color.";
+    $blurb = "Set the current LIGMA foreground color.";
 
     $help = <<'HELP';
-This procedure sets the current GIMP foreground color. After this is set,
+This procedure sets the current LIGMA foreground color. After this is set,
 operations which use foreground such as paint tools, blending, and bucket fill
 will use the new value.
 HELP
@@ -285,18 +285,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&foreground, 1.0);
-  gimp_context_set_foreground (context, &foreground);
+  ligma_rgb_set_alpha (&foreground, 1.0);
+  ligma_context_set_foreground (context, &foreground);
 }
 CODE
     );
 }
 
 sub context_get_background {
-    $blurb = "Get the current GIMP background color.";
+    $blurb = "Get the current LIGMA background color.";
 
     $help = <<'HELP';
-This procedure returns the current GIMP background color. The background
+This procedure returns the current LIGMA background color. The background
 color is used in a variety of tools such as blending, erasing (with non-alpha
 images), and image filling.
 HELP
@@ -311,18 +311,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_get_background (context, &background);
-  gimp_rgb_set_alpha (&background, 1.0);
+  ligma_context_get_background (context, &background);
+  ligma_rgb_set_alpha (&background, 1.0);
 }
 CODE
     );
 }
 
 sub context_set_background {
-    $blurb = "Set the current GIMP background color.";
+    $blurb = "Set the current LIGMA background color.";
 
     $help = <<'HELP';
-This procedure sets the current GIMP background color. After this is set,
+This procedure sets the current LIGMA background color. After this is set,
 operations which use background such as blending, filling images, clearing,
 and erasing (in non-alpha images) will use the new value.
 HELP
@@ -337,8 +337,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&background, 1.0);
-  gimp_context_set_background (context, &background);
+  ligma_rgb_set_alpha (&background, 1.0);
+  ligma_context_set_background (context, &background);
 }
 CODE
     );
@@ -346,11 +346,11 @@ CODE
 
 sub context_set_default_colors {
     $blurb = <<'BLURB';
-Set the current GIMP foreground and background colors to black and white.
+Set the current LIGMA foreground and background colors to black and white.
 BLURB
 
     $help = <<'HELP';
-This procedure sets the current GIMP foreground and background colors to their
+This procedure sets the current LIGMA foreground and background colors to their
 initial default values, black and white.
 HELP
 
@@ -359,17 +359,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_set_default_colors (context);
+  ligma_context_set_default_colors (context);
 }
 CODE
     );
 }
 
 sub context_swap_colors {
-    $blurb = 'Swap the current GIMP foreground and background colors.';
+    $blurb = 'Swap the current LIGMA foreground and background colors.';
 
     $help = <<'HELP';
-This procedure swaps the current GIMP foreground and background colors, so that
+This procedure swaps the current LIGMA foreground and background colors, so that
 the new foreground color becomes the old background color and vice versa.
 HELP
 
@@ -378,7 +378,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_swap_colors (context);
+  ligma_context_swap_colors (context);
 }
 CODE
     );
@@ -402,7 +402,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  opacity = gimp_context_get_opacity (context) * 100.0;
+  opacity = ligma_context_get_opacity (context) * 100.0;
 }
 CODE
     );
@@ -426,7 +426,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_set_opacity (context, opacity / 100.0);
+  ligma_context_set_opacity (context, opacity / 100.0);
 }
 CODE
     );
@@ -444,15 +444,15 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'paint_mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+        { name => 'paint_mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
           desc => 'The paint mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  paint_mode = gimp_context_get_paint_mode (context);
+  paint_mode = ligma_context_get_paint_mode (context);
 }
 CODE
     );
@@ -468,18 +468,18 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'paint_mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+        { name => 'paint_mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
           desc => 'The paint mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+  if (paint_mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+    paint_mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-  gimp_context_set_paint_mode (context, paint_mode);
+  ligma_context_set_paint_mode (context, paint_mode);
 }
 CODE
     );
@@ -502,8 +502,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "width", &line_width,
@@ -521,7 +521,7 @@ This procedure modifies the line width setting for stroking lines.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -534,8 +534,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "width", line_width,
@@ -562,8 +562,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "unit", &line_width_unit,
@@ -581,7 +581,7 @@ This procedure modifies the line width unit setting for stroking lines.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -594,8 +594,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "unit", line_width_unit,
@@ -615,15 +615,15 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'cap_style', type => 'enum GimpCapStyle',
+        { name => 'cap_style', type => 'enum LigmaCapStyle',
           desc => 'The line cap style setting' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "cap-style", &cap_style,
@@ -641,21 +641,21 @@ This procedure modifies the line cap style setting for stroking lines.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'cap_style', type => 'enum GimpCapStyle',
+        { name => 'cap_style', type => 'enum LigmaCapStyle',
           desc => 'The line cap style setting' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "cap-style", cap_style,
@@ -675,15 +675,15 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'join_style', type => 'enum GimpJoinStyle',
+        { name => 'join_style', type => 'enum LigmaJoinStyle',
           desc => 'The line join style setting' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "join-style", &join_style,
@@ -701,21 +701,21 @@ This procedure modifies the line join style setting for stroking lines.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'join_style', type => 'enum GimpJoinStyle',
+        { name => 'join_style', type => 'enum LigmaJoinStyle',
           desc => 'The line join style setting' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "join-style", join_style,
@@ -742,8 +742,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "miter-limit", &miter_limit,
@@ -765,7 +765,7 @@ actual join point.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -778,8 +778,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "miter-limit", miter_limit,
@@ -806,8 +806,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_get (options,
                 "dash-offset", &dash_offset,
@@ -825,7 +825,7 @@ This procedure modifies the line dash offset setting for stroking lines.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -838,8 +838,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   g_object_set (options,
                 "dash-offset", dash_offset,
@@ -867,12 +867,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
-  GArray *pattern = gimp_stroke_options_get_dash_info (options);
+  GArray *pattern = ligma_stroke_options_get_dash_info (options);
 
-  dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
+  dashes = ligma_dash_pattern_to_double_array (pattern, &num_dashes);
 }
 CODE
     );
@@ -891,7 +891,7 @@ results in a square segment shape (or gap shape).
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
+ligma_drawable_edit_stroke_selection(), ligma_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -905,21 +905,21 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpStrokeOptions *options =
-    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+  LigmaStrokeOptions *options =
+    ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
   GArray *pattern = NULL;
 
   if (num_dashes > 0)
     {
-      pattern = gimp_dash_pattern_from_double_array (num_dashes, dashes);
+      pattern = ligma_dash_pattern_from_double_array (num_dashes, dashes);
 
       if (! pattern)
         success = FALSE;
     }
 
   if (success)
-    gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM, pattern);
+    ligma_stroke_options_take_dash_pattern (options, LIGMA_DASH_CUSTOM, pattern);
 }
 CODE
     );
@@ -944,10 +944,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
-    name = g_strdup (gimp_object_get_name (brush));
+    name = g_strdup (ligma_object_get_name (brush));
   else
     success = FALSE;
 }
@@ -976,10 +976,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, FALSE, error);
 
   if (brush)
-    gimp_context_set_brush (context, brush);
+    ligma_context_set_brush (context, brush);
   else
     success = FALSE;
 }
@@ -1002,9 +1002,9 @@ sub context_get_brush_size {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1034,7 +1034,7 @@ sub context_set_brush_size {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1059,17 +1059,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_size (list->data, brush);
+        ligma_paint_options_set_default_brush_size (list->data, brush);
 
       g_list_free (options);
     }
@@ -1099,7 +1099,7 @@ sub context_set_brush_aspect_ratio {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1127,9 +1127,9 @@ sub context_get_brush_aspect_ratio {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1159,7 +1159,7 @@ sub context_set_brush_angle {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1187,9 +1187,9 @@ sub context_get_brush_angle {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1217,9 +1217,9 @@ sub context_get_brush_spacing {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1249,7 +1249,7 @@ sub context_set_brush_spacing {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1274,17 +1274,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_spacing (list->data, brush);
+        ligma_paint_options_set_default_brush_spacing (list->data, brush);
 
       g_list_free (options);
     }
@@ -1312,9 +1312,9 @@ sub context_get_brush_hardness {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1344,7 +1344,7 @@ sub context_set_brush_hardness {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1369,17 +1369,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_context_get_brush (context);
+  LigmaBrush *brush = ligma_context_get_brush (context);
 
   if (brush)
     {
       GList *options;
       GList *list;
 
-      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        gimp_paint_options_set_default_brush_hardness (list->data, brush);
+        ligma_paint_options_set_default_brush_hardness (list->data, brush);
 
       g_list_free (options);
     }
@@ -1407,9 +1407,9 @@ sub context_get_brush_force {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1439,7 +1439,7 @@ sub context_set_brush_force {
   GList *options;
   GList *list;
 
-  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_brush_options (LIGMA_PDB_CONTEXT (context));
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
@@ -1461,7 +1461,7 @@ dynamics. If enabled, all paint operations and stroke operations use
 this paint dynamics to control the application of paint to the image.
 If disabled, the dynamics will be ignored during paint actions.
 
-See gimp_context_are_dynamics_enabled() to enquire whether dynamics are
+See ligma_context_are_dynamics_enabled() to enquire whether dynamics are
 used or ignored.
 HELP
 
@@ -1475,10 +1475,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpDynamics *dynamics = gimp_context_get_dynamics (context);
+  LigmaDynamics *dynamics = ligma_context_get_dynamics (context);
 
   if (dynamics)
-    name = g_strdup (gimp_object_get_name (dynamics));
+    name = g_strdup (ligma_object_get_name (dynamics));
   else
     success = FALSE;
 }
@@ -1508,10 +1508,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaDynamics *dynamics = ligma_pdb_get_dynamics (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (dynamics)
-    gimp_context_set_dynamics (context, dynamics);
+    ligma_context_set_dynamics (context, dynamics);
   else
     success = FALSE;
 }
@@ -1524,7 +1524,7 @@ sub context_are_dynamics_enabled {
 
     $help = <<'HELP';
 This procedure returns whether the currently active paint dynamics (as
-returned by gimp_context_get_dynamics()) is enabled.
+returned by ligma_context_get_dynamics()) is enabled.
 HELP
 
     &jehan_pdb_misc('2022', '3.0');
@@ -1538,12 +1538,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
-    enabled = gimp_paint_options_are_dynamics_enabled (options);
+    enabled = ligma_paint_options_are_dynamics_enabled (options);
   else
     success = FALSE;
 }
@@ -1569,12 +1569,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
-    gimp_paint_options_enable_dynamics (options, enable);
+    ligma_paint_options_enable_dynamics (options, enable);
   else
     success = FALSE;
 }
@@ -1599,10 +1599,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMybrush *brush = gimp_context_get_mybrush (context);
+  LigmaMybrush *brush = ligma_context_get_mybrush (context);
 
   if (brush)
-    name = g_strdup (gimp_object_get_name (brush));
+    name = g_strdup (ligma_object_get_name (brush));
   else
     success = FALSE;
 }
@@ -1632,10 +1632,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaMybrush *brush = ligma_pdb_get_mybrush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    gimp_context_set_mybrush (context, brush);
+    ligma_context_set_mybrush (context, brush);
   else
     success = FALSE;
 }
@@ -1662,10 +1662,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_context_get_pattern (context);
+  LigmaPattern *pattern = ligma_context_get_pattern (context);
 
   if (pattern)
-    name = g_strdup (gimp_object_get_name (pattern));
+    name = g_strdup (ligma_object_get_name (pattern));
   else
     success = FALSE;
 }
@@ -1694,10 +1694,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+  LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
   if (pattern)
-    gimp_context_set_pattern (context, pattern);
+    ligma_context_set_pattern (context, pattern);
   else
     success = FALSE;
 }
@@ -1722,10 +1722,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_context_get_gradient (context);
+  LigmaGradient *gradient = ligma_context_get_gradient (context);
 
   if (gradient)
-    name = g_strdup (gimp_object_get_name (gradient));
+    name = g_strdup (ligma_object_get_name (gradient));
   else
     success = FALSE;
 }
@@ -1754,10 +1754,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+  LigmaGradient *gradient = ligma_pdb_get_gradient (ligma, name, FALSE, error);
 
   if (gradient)
-    gimp_context_set_gradient (context, gradient);
+    ligma_context_set_gradient (context, gradient);
   else
     success = FALSE;
 }
@@ -1778,8 +1778,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_rgb (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_rgb (ligma));
 }
 CODE
     );
@@ -1798,8 +1798,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_hsv_cw (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_hsv_cw (ligma));
 }
 CODE
     );
@@ -1818,8 +1818,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_bg_hsv_ccw (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_bg_hsv_ccw (ligma));
 }
 CODE
     );
@@ -1838,8 +1838,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_context_set_gradient (context,
-                             gimp_gradients_get_fg_transparent (gimp));
+  ligma_context_set_gradient (context,
+                             ligma_gradients_get_fg_transparent (ligma));
 }
 CODE
     );
@@ -1852,19 +1852,19 @@ sub context_set_gradient_blend_color_space {
     &mitch_pdb_misc('2018', '2.10');
 
     @inargs = (
-	{ name => "blend_color_space", type => 'enum GimpGradientBlendColorSpace',
+	{ name => "blend_color_space", type => 'enum LigmaGradientBlendColorSpace',
 	  desc => "Blend color space" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpContainer *options;
+  LigmaContainer *options;
   GList         *list;
 
-  options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-  for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+  for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
     g_object_set (list->data,
                   "gradient-blend-color-space", blend_color_space,
                    NULL);
@@ -1880,7 +1880,7 @@ sub context_get_gradient_blend_color_space {
     &mitch_pdb_misc('2018', '2.10');
 
     @outargs = (
-	{ name => "blend_color_space", type => 'enum GimpGradientBlendColorSpace',
+	{ name => "blend_color_space", type => 'enum LigmaGradientBlendColorSpace',
 	  desc => "Color blend space" }
     );
 
@@ -1888,9 +1888,9 @@ sub context_get_gradient_blend_color_space {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1910,19 +1910,19 @@ sub context_set_gradient_repeat_mode {
     &mitch_pdb_misc('2018', '2.10');
 
     @inargs = (
-	{ name => "repeat_mode", type => 'enum GimpRepeatMode',
+	{ name => "repeat_mode", type => 'enum LigmaRepeatMode',
 	  desc => "Repeat mode" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpContainer *options;
+  LigmaContainer *options;
   GList         *list;
 
-  options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-  for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+  for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
     g_object_set (list->data,
                   "gradient-repeat", repeat_mode,
                    NULL);
@@ -1938,7 +1938,7 @@ sub context_get_gradient_repeat_mode {
     &mitch_pdb_misc('2018', '2.10');
 
     @outargs = (
-	{ name => "repeat_mode", type => 'enum GimpRepeatMode',
+	{ name => "repeat_mode", type => 'enum LigmaRepeatMode',
 	  desc => "Repeat mode" }
     );
 
@@ -1946,9 +1946,9 @@ sub context_get_gradient_repeat_mode {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -1975,12 +1975,12 @@ sub context_set_gradient_reverse {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpContainer *options;
+  LigmaContainer *options;
   GList         *list;
 
-  options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+  options = ligma_pdb_context_get_paint_options_list (LIGMA_PDB_CONTEXT (context));
 
-  for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+  for (list = LIGMA_LIST (options)->queue->head; list; list = g_list_next (list))
     g_object_set (list->data,
                   "gradient-reverse", reverse,
                    NULL);
@@ -2004,9 +2004,9 @@ sub context_get_gradient_reverse {
 	code => <<'CODE'
 {
   /* all options should have the same value, so pick a random one */
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-paintbrush");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-paintbrush");
 
   if (options)
     g_object_get (options,
@@ -2036,10 +2036,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_context_get_palette (context);
+  LigmaPalette *palette = ligma_context_get_palette (context);
 
   if (palette)
-    name = g_strdup (gimp_object_get_name (palette));
+    name = g_strdup (ligma_object_get_name (palette));
   else
     success = FALSE;
 }
@@ -2068,10 +2068,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  LigmaPalette *palette = ligma_pdb_get_palette (ligma, name, FALSE, error);
 
   if (palette)
-    gimp_context_set_palette (context, palette);
+    ligma_context_set_palette (context, palette);
   else
     success = FALSE;
 }
@@ -2096,10 +2096,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font = gimp_context_get_font (context);
+  LigmaFont *font = ligma_context_get_font (context);
 
   if (font)
-    name = g_strdup (gimp_object_get_name (font));
+    name = g_strdup (ligma_object_get_name (font));
   else
     success = FALSE;
 }
@@ -2128,10 +2128,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font = gimp_pdb_get_font (gimp, name, error);
+  LigmaFont *font = ligma_pdb_get_font (ligma, name, error);
 
   if (font)
-    gimp_context_set_font (context, font);
+    ligma_context_set_font (context, font);
   else
     success = FALSE;
 }
@@ -2176,11 +2176,11 @@ selection is wanted.
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
-gimp_image_select_polygon(), gimp_image_select_item(),
-gimp_drawable_edit_bucket_fill(), gimp_drawable_edit_stroke_item(),
-gimp_drawable_edit_stroke_selection().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_image_select_round_rectangle(), ligma_image_select_ellipse(),
+ligma_image_select_polygon(), ligma_image_select_item(),
+ligma_drawable_edit_bucket_fill(), ligma_drawable_edit_stroke_item(),
+ligma_drawable_edit_stroke_selection().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2233,14 +2233,14 @@ sub context_set_feather {
 This procedure modifies the feather setting. If the feather option is
 enabled, selections will be blurred before combining. The blur is a
 gaussian blur; its radii can be controlled using
-gimp_context_set_feather_radius().
+ligma_context_set_feather_radius().
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_image_select_rectangle(), gimp_image_select_round_rectangle(),
-gimp_image_select_ellipse(), gimp_image_select_polygon(),
-gimp_image_select_item().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_image_select_rectangle(), ligma_image_select_round_rectangle(),
+ligma_image_select_ellipse(), ligma_image_select_polygon(),
+ligma_image_select_item().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2297,7 +2297,7 @@ This procedure modifies the feather radius setting.
 
 
 This setting affects all procedures that are affected
-by gimp_context_set_feather().
+by ligma_context_set_feather().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2359,8 +2359,8 @@ equivalent to sampling for colors after merging all visible layers).
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_drawable_edit_bucket_fill().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_drawable_edit_bucket_fill().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2391,7 +2391,7 @@ HELP
     &mitch_pdb_misc('2011', '2.8');
 
     @outargs = (
-        { name => 'sample_criterion', type => 'enum GimpSelectCriterion',
+        { name => 'sample_criterion', type => 'enum LigmaSelectCriterion',
           desc => 'The sample criterion setting' }
     );
 
@@ -2417,14 +2417,14 @@ determined. SELECT_CRITERION_COMPOSITE is the default value.
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_drawable_edit_bucket_fill().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_drawable_edit_bucket_fill().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
 
     @inargs = (
-        { name => 'sample_criterion', type => 'enum GimpSelectCriterion',
+        { name => 'sample_criterion', type => 'enum LigmaSelectCriterion',
           desc => 'The sample criterion setting' }
     );
 
@@ -2472,12 +2472,12 @@ This procedure modifies the sample threshold setting. If an operation
 depends on the colors of the pixels present in a drawable, like when
 doing a seed fill, this setting controls what is "sufficiently close"
 to be considered a similar color. If the sample threshold has not been
-set explicitly, the default threshold set in gimprc will be used.
+set explicitly, the default threshold set in ligmarc will be used.
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_drawable_edit_bucket_fill().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_drawable_edit_bucket_fill().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2503,7 +2503,7 @@ sub context_get_sample_threshold_int {
 
     $help = <<'HELP';
 This procedure returns the sample threshold setting as an integer
-value. See gimp_context_get_sample_threshold().
+value. See ligma_context_get_sample_threshold().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2533,7 +2533,7 @@ sub context_set_sample_threshold_int {
 
     $help = <<'HELP';
 This procedure modifies the sample threshold setting as an integer
-value. See gimp_context_set_sample_threshold().
+value. See ligma_context_set_sample_threshold().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2591,8 +2591,8 @@ setting is TRUE, transparent areas can be selected or filled.
 
 
 This setting affects the following procedures:
-gimp_image_select_color(), gimp_image_select_contiguous_color(),
-gimp_drawable_edit_bucket_fill().
+ligma_image_select_color(), ligma_image_select_contiguous_color(),
+ligma_drawable_edit_bucket_fill().
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2654,7 +2654,7 @@ are considered.
 
 
 This setting affects the following procedures:
-gimp_image_select_contiguous_color(), gimp_drawable_edit_bucket_fill().
+ligma_image_select_contiguous_color(), ligma_drawable_edit_bucket_fill().
 HELP
 
     $author = 'Ell';
@@ -2683,7 +2683,7 @@ sub context_get_distance_metric {
 
     $help = <<'HELP';
 This procedure returns the distance metric in the current context.
-See gimp_context_set_distance_metric() to know more about its usage.
+See ligma_context_set_distance_metric() to know more about its usage.
 HELP
 
     &jehan_pdb_misc('2018', '2.10');
@@ -2709,13 +2709,13 @@ sub context_set_distance_metric {
 
     $help = <<'HELP';
 This procedure modifies the distance metric used in some computations,
-such as gimp_drawable_edit_gradient_fill(). In particular, it does not
+such as ligma_drawable_edit_gradient_fill(). In particular, it does not
 change the metric used in generic distance computation on canvas, as
 in the Measure tool.
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_gradient_fill().
+ligma_drawable_edit_gradient_fill().
 HELP
 
     &jehan_pdb_misc('2018', '2.10');
@@ -2743,14 +2743,14 @@ sub context_get_interpolation {
 This procedure returns the interpolation setting. The return value
 is an integer which corresponds to the values listed in the argument
 description. If the interpolation has not been set explicitly by
-gimp_context_set_interpolation(), the default interpolation set in
-gimprc will be used.
+ligma_context_set_interpolation(), the default interpolation set in
+ligmarc will be used.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
 
     @outargs = (
-        { name => 'interpolation', type => 'enum GimpInterpolationType',
+        { name => 'interpolation', type => 'enum LigmaInterpolationType',
           desc => 'The interpolation type' }
     );
 
@@ -2773,16 +2773,16 @@ This procedure modifies the interpolation setting.
 
 
 This setting affects affects the following procedures:
-gimp_item_transform_flip(), gimp_item_transform_perspective(),
-gimp_item_transform_rotate(), gimp_item_transform_scale(),
-gimp_item_transform_shear(), gimp_item_transform_2d(),
-gimp_item_transform_matrix(), gimp_image_scale(), gimp_layer_scale().
+ligma_item_transform_flip(), ligma_item_transform_perspective(),
+ligma_item_transform_rotate(), ligma_item_transform_scale(),
+ligma_item_transform_shear(), ligma_item_transform_2d(),
+ligma_item_transform_matrix(), ligma_image_scale(), ligma_layer_scale().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
 
     @inargs = (
-        { name => 'interpolation', type => 'enum GimpInterpolationType',
+        { name => 'interpolation', type => 'enum LigmaInterpolationType',
           desc => 'The interpolation type' }
     );
 
@@ -2809,7 +2809,7 @@ HELP
     &mitch_pdb_misc('2010', '2.8');
 
     @outargs = (
-        { name => 'transform_direction', type => 'enum GimpTransformDirection',
+        { name => 'transform_direction', type => 'enum LigmaTransformDirection',
           desc => 'The transform direction' }
     );
 
@@ -2832,16 +2832,16 @@ This procedure modifies the transform direction setting.
 
 
 This setting affects affects the following procedures:
-gimp_item_transform_flip(), gimp_item_transform_perspective(),
-gimp_item_transform_rotate(), gimp_item_transform_scale(),
-gimp_item_transform_shear(), gimp_item_transform_2d(),
-gimp_item_transform_matrix().
+ligma_item_transform_flip(), ligma_item_transform_perspective(),
+ligma_item_transform_rotate(), ligma_item_transform_scale(),
+ligma_item_transform_shear(), ligma_item_transform_2d(),
+ligma_item_transform_matrix().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
 
     @inargs = (
-        { name => 'transform_direction', type => 'enum GimpTransformDirection',
+        { name => 'transform_direction', type => 'enum LigmaTransformDirection',
           desc => 'The transform direction' }
     );
 
@@ -2868,7 +2868,7 @@ HELP
     &mitch_pdb_misc('2010', '2.8');
 
     @outargs = (
-        { name => 'transform_resize', type => 'enum GimpTransformResize',
+        { name => 'transform_resize', type => 'enum LigmaTransformResize',
           desc => 'The transform resize type' }
     );
 
@@ -2894,17 +2894,17 @@ is sized.
 
 
 This setting affects affects the following procedures:
-gimp_item_transform_flip(), gimp_item_transform_flip_simple(),
-gimp_item_transform_perspective(), gimp_item_transform_rotate(),
-gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
-gimp_item_transform_shear(), gimp_item_transform_2d(),
-gimp_item_transform_matrix().
+ligma_item_transform_flip(), ligma_item_transform_flip_simple(),
+ligma_item_transform_perspective(), ligma_item_transform_rotate(),
+ligma_item_transform_rotate_simple(), ligma_item_transform_scale(),
+ligma_item_transform_shear(), ligma_item_transform_2d(),
+ligma_item_transform_matrix().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
 
     @inargs = (
-        { name => 'transform_resize', type => 'enum GimpTransformResize',
+        { name => 'transform_resize', type => 'enum LigmaTransformResize',
           desc => 'The transform resize type' }
     );
 
@@ -2933,9 +2933,9 @@ sub context_get_ink_size {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -2963,9 +2963,9 @@ sub context_set_ink_size {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -2993,9 +2993,9 @@ sub context_get_ink_angle {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3023,9 +3023,9 @@ sub context_set_ink_angle {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3053,9 +3053,9 @@ sub context_get_ink_size_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3083,9 +3083,9 @@ sub context_set_ink_size_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3113,9 +3113,9 @@ sub context_get_ink_tilt_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3143,9 +3143,9 @@ sub context_set_ink_tilt_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3173,9 +3173,9 @@ sub context_get_ink_speed_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3203,9 +3203,9 @@ sub context_set_ink_speed_sensitivity {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3226,16 +3226,16 @@ sub context_get_ink_blob_type {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "type", type => "enum GimpInkBlobType",
+        { name => "type", type => "enum LigmaInkBlobType",
           desc => "Ink blob type" }
     );
 
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3256,16 +3256,16 @@ sub context_set_ink_blob_type {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "type", type => "enum GimpInkBlobType",
+        { name => "type", type => "enum LigmaInkBlobType",
           desc => "Ink blob type" }
     );
 
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3293,9 +3293,9 @@ sub context_get_ink_blob_aspect_ratio {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_get (options,
@@ -3323,9 +3323,9 @@ sub context_set_ink_blob_aspect_ratio {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3353,9 +3353,9 @@ sub context_get_ink_blob_angle {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     {
@@ -3386,9 +3386,9 @@ sub context_set_ink_blob_angle {
     %invoke = (
     code => <<'CODE'
 {
-  GimpPaintOptions *options =
-    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                        "gimp-ink");
+  LigmaPaintOptions *options =
+    ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                        "ligma-ink");
 
   if (options)
     g_object_set (options,
@@ -3401,20 +3401,20 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h"
-              "core/gimp-gradients.h"
-              "core/gimpcontainer.h"
-              "core/gimpdashpattern.h"
-              "core/gimpdatafactory.h"
-              "core/gimplist.h"
-              "core/gimpstrokeoptions.h"
-              "paint/gimppaintoptions.h"
-              "libgimpconfig/gimpconfig.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimpplugin-context.h"
-              "plug-in/gimppluginmanager.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h");
+@headers = qw("core/ligma.h"
+              "core/ligma-gradients.h"
+              "core/ligmacontainer.h"
+              "core/ligmadashpattern.h"
+              "core/ligmadatafactory.h"
+              "core/ligmalist.h"
+              "core/ligmastrokeoptions.h"
+              "paint/ligmapaintoptions.h"
+              "libligmaconfig/ligmaconfig.h"
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmaplugin-context.h"
+              "plug-in/ligmapluginmanager.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h");
 
 @procs = qw(context_push context_pop context_set_defaults
             context_list_paint_methods
@@ -3483,7 +3483,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Context';
-$doc_title = 'gimpcontext';
+$doc_title = 'ligmacontext';
 $doc_short_desc = "Functions to manipulate a plug-in's context.";
 $doc_long_desc = "Functions to manipulate a plug-in's context.";
 

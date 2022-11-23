@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub selection_bounds {
     $blurb = 'Find the bounding box of the current selection.';
@@ -54,7 +54,7 @@ HELP
 {
   gint x, y, w, h;
 
-  non_empty = gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+  non_empty = ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                                 &x, &y, &w, &h);
 
   x1 = x;
@@ -95,7 +95,7 @@ HELP
 {
   gdouble val;
 
-  val= gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)),
+  val= ligma_pickable_get_opacity_at (LIGMA_PICKABLE (ligma_image_get_mask (image)),
                                      x, y);
 
   value = ROUND (CLAMP (val, 0.0, 1.0) * 255.0);
@@ -126,7 +126,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
+  is_empty = ligma_channel_is_empty (ligma_image_get_mask (image));
 }
 CODE
     );
@@ -156,7 +156,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (image)),
+  ligma_item_translate (LIGMA_ITEM (ligma_image_get_mask (image)),
                        offx, offy, TRUE);
 }
 CODE
@@ -201,7 +201,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
   gint       i;
 
   if (num_drawables < 1)
@@ -212,17 +212,17 @@ HELP
     {
       for (i = 0; i < num_drawables; i++)
         {
-          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                           GIMP_PDB_ITEM_CONTENT, error) ||
-              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error)   ||
-              (image && image != gimp_item_get_image (GIMP_ITEM (drawables[i]))))
+          if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                           LIGMA_PDB_ITEM_CONTENT, error) ||
+              ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error)   ||
+              (image && image != ligma_item_get_image (LIGMA_ITEM (drawables[i]))))
             {
               success = FALSE;
               break;
             }
           else
             {
-              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+              image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
             }
         }
     }
@@ -234,7 +234,7 @@ HELP
       for (i = 0; i < num_drawables; i++)
         drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
 
-      layer = gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
+      layer = ligma_selection_float (LIGMA_SELECTION (ligma_image_get_mask (image)),
                                     drawable_list, context, TRUE, offx, offy,
                                     error);
       g_list_free (drawable_list);
@@ -264,7 +264,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_invert (gimp_image_get_mask (image), TRUE);
+  ligma_channel_invert (ligma_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -290,7 +290,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
+  ligma_channel_sharpen (ligma_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -314,7 +314,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_all (gimp_image_get_mask (image), TRUE);
+  ligma_channel_all (ligma_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -338,7 +338,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+  ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
 }
 CODE
     );
@@ -365,7 +365,7 @@ HELP
 	code => <<'CODE'
 {
   /* FIXME: "edge-lock" hardcoded to  TRUE */
-  gimp_channel_feather (gimp_image_get_mask (image),
+  ligma_channel_feather (ligma_image_get_mask (image),
                         radius, radius, TRUE, TRUE);
 }
 CODE
@@ -394,9 +394,9 @@ HELP
 	code => <<'CODE'
 {
   /* FIXME: "style" and "edge-lock" hardcoded to SMOOTH and TRUE, respectively. */
-  gimp_channel_border (gimp_image_get_mask (image),
+  ligma_channel_border (ligma_image_get_mask (image),
                        radius, radius,
-                       GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
+                       LIGMA_CHANNEL_BORDER_STYLE_SMOOTH,
                        TRUE, TRUE);
 }
 CODE
@@ -423,7 +423,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_grow (gimp_image_get_mask (image),
+  ligma_channel_grow (ligma_image_get_mask (image),
                      steps, steps, TRUE);
 }
 CODE
@@ -451,7 +451,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_shrink (gimp_image_get_mask (image),
+  ligma_channel_shrink (ligma_image_get_mask (image),
                        steps, steps, FALSE, TRUE);
 }
 CODE
@@ -481,7 +481,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_flood (gimp_image_get_mask (image), TRUE);
+  ligma_channel_flood (ligma_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -509,19 +509,19 @@ HELP
     );
 
     %invoke = (
-        headers => [qw("core/gimpselection.h") ],
+        headers => [qw("core/ligmaselection.h") ],
 	code    => <<'CODE'
 {
-  channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
-                                               GIMP_TYPE_CHANNEL));
+  channel = LIGMA_CHANNEL (ligma_item_duplicate (LIGMA_ITEM (ligma_image_get_mask (image)),
+                                               LIGMA_TYPE_CHANNEL));
 
   if (channel)
     {
       /*  saved selections are not visible by default  */
-      gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+      ligma_item_set_visible (LIGMA_ITEM (channel), FALSE, FALSE);
 
-      gimp_image_add_channel (image, channel,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      ligma_image_add_channel (image, channel,
+                              LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
     }
   else
     success = FALSE;
@@ -530,10 +530,10 @@ CODE
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "core/gimppickable.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+@headers = qw("libligmamath/ligmamath.h"
+              "core/ligmapickable.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty
 	    selection_translate selection_float
@@ -545,7 +545,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image mask';
-$doc_title = 'gimpselection';
+$doc_title = 'ligmaselection';
 $doc_short_desc = 'Functions for manipulating selections.';
 $doc_long_desc = 'Functions for manipulating selections.';
 

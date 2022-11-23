@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub brush_new {
     $blurb = "Creates a new brush.";
@@ -35,11 +35,11 @@ sub brush_new {
     %invoke = (
         code => <<'CODE'
 {
-  GimpData *data = gimp_data_factory_data_new (gimp->brush_factory,
+  LigmaData *data = ligma_data_factory_data_new (ligma->brush_factory,
                                                context, name);
 
   if (data)
-    actual_name = g_strdup (gimp_object_get_name (data));
+    actual_name = g_strdup (ligma_object_get_name (data));
   else
     success = FALSE;
 }
@@ -66,16 +66,16 @@ sub brush_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
-      GimpBrush *brush_copy = (GimpBrush *)
-        gimp_data_factory_data_duplicate (gimp->brush_factory,
-                                          GIMP_DATA (brush));
+      LigmaBrush *brush_copy = (LigmaBrush *)
+        ligma_data_factory_data_duplicate (ligma->brush_factory,
+                                          LIGMA_DATA (brush));
 
       if (brush_copy)
-        copy_name = g_strdup (gimp_object_get_name (brush_copy));
+        copy_name = g_strdup (ligma_object_get_name (brush_copy));
       else
         success = FALSE;
     }
@@ -105,10 +105,10 @@ sub brush_is_generated {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    generated = GIMP_IS_BRUSH_GENERATED (brush);
+    generated = LIGMA_IS_BRUSH_GENERATED (brush);
   else
     success = FALSE;
 }
@@ -135,10 +135,10 @@ sub brush_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    editable = gimp_data_is_writable (GIMP_DATA (brush));
+    editable = ligma_data_is_writable (LIGMA_DATA (brush));
   else
     success = FALSE;
 }
@@ -167,12 +167,12 @@ sub brush_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_RENAME, error);
 
   if (brush)
     {
-      gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-      actual_name = g_strdup (gimp_object_get_name (brush));
+      ligma_object_set_name (LIGMA_OBJECT (brush), new_name);
+      actual_name = g_strdup (ligma_object_get_name (brush));
     }
   else
     success = FALSE;
@@ -195,11 +195,11 @@ sub brush_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
-  if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
-    success = gimp_data_factory_data_delete (gimp->brush_factory,
-                                             GIMP_DATA (brush),
+  if (brush && ligma_data_is_deletable (LIGMA_DATA (brush)))
+    success = ligma_data_factory_data_delete (ligma->brush_factory,
+                                             LIGMA_DATA (brush),
                                              TRUE, error);
   else
     success = FALSE;
@@ -237,25 +237,25 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
-      GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-      GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+      LigmaTempBuf *mask   = ligma_brush_get_mask (brush);
+      LigmaTempBuf *pixmap = ligma_brush_get_pixmap (brush);
       const Babl  *format;
 
-      format = gimp_babl_compat_u8_mask_format (
-        gimp_temp_buf_get_format (mask));
+      format = ligma_babl_compat_u8_mask_format (
+        ligma_temp_buf_get_format (mask));
 
-      width    = gimp_brush_get_width  (brush);
-      height   = gimp_brush_get_height (brush);
+      width    = ligma_brush_get_width  (brush);
+      height   = ligma_brush_get_height (brush);
       mask_bpp = babl_format_get_bytes_per_pixel (format);
 
       if (pixmap)
         {
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pixmap));
+          format = ligma_babl_compat_u8_format (
+            ligma_temp_buf_get_format (pixmap));
 
           color_bpp = babl_format_get_bytes_per_pixel (format);
         }
@@ -302,41 +302,41 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
-      GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-      GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+      LigmaTempBuf *mask   = ligma_brush_get_mask (brush);
+      LigmaTempBuf *pixmap = ligma_brush_get_pixmap (brush);
       const Babl  *format;
       gpointer     data;
 
-      format = gimp_babl_compat_u8_mask_format (
-        gimp_temp_buf_get_format (mask));
-      data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
+      format = ligma_babl_compat_u8_mask_format (
+        ligma_temp_buf_get_format (mask));
+      data   = ligma_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
 
-      width          = gimp_temp_buf_get_width  (mask);
-      height         = gimp_temp_buf_get_height (mask);
+      width          = ligma_temp_buf_get_width  (mask);
+      height         = ligma_temp_buf_get_height (mask);
       mask_bpp       = babl_format_get_bytes_per_pixel (format);
-      num_mask_bytes = gimp_temp_buf_get_height (mask) *
-                       gimp_temp_buf_get_width  (mask) * mask_bpp;
+      num_mask_bytes = ligma_temp_buf_get_height (mask) *
+                       ligma_temp_buf_get_width  (mask) * mask_bpp;
       mask_bytes     = g_memdup2 (data, num_mask_bytes);
 
-      gimp_temp_buf_unlock (mask, data);
+      ligma_temp_buf_unlock (mask, data);
 
       if (pixmap)
         {
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pixmap));
-          data   = gimp_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
+          format = ligma_babl_compat_u8_format (
+            ligma_temp_buf_get_format (pixmap));
+          data   = ligma_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
 
           color_bpp       = babl_format_get_bytes_per_pixel (format);
-          num_color_bytes = gimp_temp_buf_get_height (pixmap) *
-                            gimp_temp_buf_get_width  (pixmap) *
+          num_color_bytes = ligma_temp_buf_get_height (pixmap) *
+                            ligma_temp_buf_get_width  (pixmap) *
                             color_bpp;
           color_bytes     = g_memdup2 (data, num_color_bytes);
 
-          gimp_temp_buf_unlock (pixmap, data);
+          ligma_temp_buf_unlock (pixmap, data);
         }
     }
   else
@@ -370,10 +370,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    spacing = gimp_brush_get_spacing (brush);
+    spacing = ligma_brush_get_spacing (brush);
   else
     success = FALSE;
 }
@@ -387,9 +387,9 @@ sub brush_get_shape {
     $help = <<'HELP';
 This procedure gets the shape value for a generated brush. If
 called for any other type of brush, it does not succeed.  The
-current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
-Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
-(GIMP_BRUSH_GENERATED_DIAMOND).  Other shapes are likely to be
+current possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE),
+Square (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond
+(LIGMA_BRUSH_GENERATED_DIAMOND).  Other shapes are likely to be
 added in the future. 
 HELP
 
@@ -401,17 +401,17 @@ HELP
     );
 
     @outargs = (
-	{ name => 'shape', type => 'enum GimpBrushGeneratedShape',
+	{ name => 'shape', type => 'enum LigmaBrushGeneratedShape',
           desc => 'The brush shape' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    shape = GIMP_BRUSH_GENERATED (brush)->shape;
+    shape = LIGMA_BRUSH_GENERATED (brush)->shape;
   else
     success = FALSE;
 }
@@ -442,10 +442,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    radius = GIMP_BRUSH_GENERATED (brush)->radius;
+    radius = LIGMA_BRUSH_GENERATED (brush)->radius;
   else
     success = FALSE;
 }
@@ -476,10 +476,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
+    spikes = LIGMA_BRUSH_GENERATED (brush)->spikes;
   else
     success = FALSE;
 }
@@ -513,10 +513,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
+    hardness = LIGMA_BRUSH_GENERATED (brush)->hardness;
   else
     success = FALSE;
 }
@@ -548,10 +548,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+    aspect_ratio = LIGMA_BRUSH_GENERATED (brush)->aspect_ratio;
   else
     success = FALSE;
 }
@@ -582,10 +582,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
-    angle = GIMP_BRUSH_GENERATED (brush)->angle;
+    angle = LIGMA_BRUSH_GENERATED (brush)->angle;
   else
     success = FALSE;
 }
@@ -613,10 +613,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
-    gimp_brush_set_spacing (brush, spacing);
+    ligma_brush_set_spacing (brush, spacing);
   else
     success = FALSE;
 }
@@ -630,9 +630,9 @@ sub brush_set_shape {
     $help = <<'HELP';
 This procedure sets the shape value for a generated brush. If
 called for any other type of brush, it does not succeed. The
-current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
-Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
-(GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be
+current possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE),
+Square (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond
+(LIGMA_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be
 added in the future. 
 HELP
 
@@ -641,25 +641,25 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
-	{ name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
+	{ name => 'shape_in', type => 'enum LigmaBrushGeneratedShape',
           desc => 'The brush shape' }
     );
 
     @outargs = (
-	{ name => 'shape_out', type => 'enum GimpBrushGeneratedShape',
+	{ name => 'shape_out', type => 'enum LigmaBrushGeneratedShape',
           desc => 'The brush shape actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_shape (LIGMA_BRUSH_GENERATED (brush),
                                       shape_in);
-      shape_out = GIMP_BRUSH_GENERATED (brush)->shape;
+      shape_out = LIGMA_BRUSH_GENERATED (brush)->shape;
     }
   else
     success = FALSE;
@@ -693,13 +693,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_radius (LIGMA_BRUSH_GENERATED (brush),
                                        radius_in);
-      radius_out = GIMP_BRUSH_GENERATED (brush)->radius;
+      radius_out = LIGMA_BRUSH_GENERATED (brush)->radius;
     }
   else
     success = FALSE;
@@ -733,13 +733,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_spikes (LIGMA_BRUSH_GENERATED (brush),
                                        spikes_in);
-      spikes_out = GIMP_BRUSH_GENERATED (brush)->spikes;
+      spikes_out = LIGMA_BRUSH_GENERATED (brush)->spikes;
     }
   else
     success = FALSE;
@@ -774,13 +774,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_hardness (LIGMA_BRUSH_GENERATED (brush),
                                          hardness_in);
-      hardness_out = GIMP_BRUSH_GENERATED (brush)->hardness;
+      hardness_out = LIGMA_BRUSH_GENERATED (brush)->hardness;
     }
   else
     success = FALSE;
@@ -815,13 +815,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_aspect_ratio (LIGMA_BRUSH_GENERATED (brush),
                                              aspect_ratio_in);
-      aspect_ratio_out = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+      aspect_ratio_out = LIGMA_BRUSH_GENERATED (brush)->aspect_ratio;
     }
   else
     success = FALSE;
@@ -855,13 +855,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+  LigmaBrush *brush = ligma_pdb_get_generated_brush (ligma, name, LIGMA_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
-      gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
+      ligma_brush_generated_set_angle (LIGMA_BRUSH_GENERATED (brush),
                                       angle_in);
-      angle_out = GIMP_BRUSH_GENERATED (brush)->angle;
+      angle_out = LIGMA_BRUSH_GENERATED (brush)->angle;
     }
   else
     success = FALSE;
@@ -872,14 +872,14 @@ CODE
 
 
 @headers = qw(<string.h>
-              "gegl/gimp-babl-compat.h"
-              "core/gimp.h"
-              "core/gimpbrush.h"
-              "core/gimpbrushgenerated.h"
-              "core/gimpcontext.h" 
-              "core/gimpdatafactory.h"
-              "core/gimptempbuf.h"
-              "gimppdb-utils.h");
+              "gegl/ligma-babl-compat.h"
+              "core/ligma.h"
+              "core/ligmabrush.h"
+              "core/ligmabrushgenerated.h"
+              "core/ligmacontext.h" 
+              "core/ligmadatafactory.h"
+              "core/ligmatempbuf.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(brush_new
             brush_duplicate
@@ -900,7 +900,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';
-$doc_title = 'gimpbrush';
+$doc_title = 'ligmabrush';
 $doc_short_desc = 'Functions operating on a single brush.';
 $doc_long_desc = 'Functions operating on a single brush.';
 

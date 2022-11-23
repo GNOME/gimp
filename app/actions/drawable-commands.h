@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,27 +19,27 @@
 #define __DRAWABLE_COMMANDS_H__
 
 
-void   drawable_equalize_cmd_callback       (GimpAction *action,
+void   drawable_equalize_cmd_callback       (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-void   drawable_levels_stretch_cmd_callback (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data);
-
-void   drawable_visible_cmd_callback        (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data);
-void   drawable_lock_content_cmd_callback   (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data);
-void   drawable_lock_position_cmd_callback  (GimpAction *action,
+void   drawable_levels_stretch_cmd_callback (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data);
 
-void   drawable_flip_cmd_callback           (GimpAction *action,
+void   drawable_visible_cmd_callback        (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-void   drawable_rotate_cmd_callback         (GimpAction *action,
+void   drawable_lock_content_cmd_callback   (LigmaAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
+void   drawable_lock_position_cmd_callback  (LigmaAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
+
+void   drawable_flip_cmd_callback           (LigmaAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
+void   drawable_rotate_cmd_callback         (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data);
 

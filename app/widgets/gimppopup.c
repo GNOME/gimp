@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppopup.c
- * Copyright (C) 2003-2014 Michael Natterer <mitch@gimp.org>
+ * ligmapopup.c
+ * Copyright (C) 2003-2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimppopup.h"
+#include "ligmapopup.h"
 
 
 enum
@@ -39,26 +39,26 @@ enum
 };
 
 
-static gboolean gimp_popup_map_event    (GtkWidget      *widget,
+static gboolean ligma_popup_map_event    (GtkWidget      *widget,
                                          GdkEventAny    *event);
-static gboolean gimp_popup_button_press (GtkWidget      *widget,
+static gboolean ligma_popup_button_press (GtkWidget      *widget,
                                          GdkEventButton *bevent);
-static gboolean gimp_popup_key_press    (GtkWidget      *widget,
+static gboolean ligma_popup_key_press    (GtkWidget      *widget,
                                          GdkEventKey    *kevent);
 
-static void     gimp_popup_real_cancel  (GimpPopup      *popup);
-static void     gimp_popup_real_confirm (GimpPopup      *popup);
+static void     ligma_popup_real_cancel  (LigmaPopup      *popup);
+static void     ligma_popup_real_confirm (LigmaPopup      *popup);
 
 
-G_DEFINE_TYPE (GimpPopup, gimp_popup, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE (LigmaPopup, ligma_popup, GTK_TYPE_WINDOW)
 
-#define parent_class gimp_popup_parent_class
+#define parent_class ligma_popup_parent_class
 
 static guint popup_signals[LAST_SIGNAL];
 
 
 static void
-gimp_popup_class_init (GimpPopupClass *klass)
+ligma_popup_class_init (LigmaPopupClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
@@ -67,7 +67,7 @@ gimp_popup_class_init (GimpPopupClass *klass)
     g_signal_new ("cancel",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpPopupClass, cancel),
+                  G_STRUCT_OFFSET (LigmaPopupClass, cancel),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -75,16 +75,16 @@ gimp_popup_class_init (GimpPopupClass *klass)
     g_signal_new ("confirm",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpPopupClass, confirm),
+                  G_STRUCT_OFFSET (LigmaPopupClass, confirm),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  widget_class->map_event          = gimp_popup_map_event;
-  widget_class->button_press_event = gimp_popup_button_press;
-  widget_class->key_press_event    = gimp_popup_key_press;
+  widget_class->map_event          = ligma_popup_map_event;
+  widget_class->button_press_event = ligma_popup_button_press;
+  widget_class->key_press_event    = ligma_popup_key_press;
 
-  klass->cancel                    = gimp_popup_real_cancel;
-  klass->confirm                   = gimp_popup_real_confirm;
+  klass->cancel                    = ligma_popup_real_cancel;
+  klass->confirm                   = ligma_popup_real_confirm;
 
   binding_set = gtk_binding_set_by_class (klass);
 
@@ -103,12 +103,12 @@ gimp_popup_class_init (GimpPopupClass *klass)
 }
 
 static void
-gimp_popup_init (GimpPopup *popup)
+ligma_popup_init (LigmaPopup *popup)
 {
 }
 
 static void
-gimp_popup_grab_notify (GtkWidget *widget,
+ligma_popup_grab_notify (GtkWidget *widget,
                         gboolean   was_grabbed)
 {
   if (was_grabbed)
@@ -122,16 +122,16 @@ gimp_popup_grab_notify (GtkWidget *widget,
 }
 
 static gboolean
-gimp_popup_grab_broken_event (GtkWidget          *widget,
+ligma_popup_grab_broken_event (GtkWidget          *widget,
                               GdkEventGrabBroken *event)
 {
-  gimp_popup_grab_notify (widget, FALSE);
+  ligma_popup_grab_notify (widget, FALSE);
 
   return FALSE;
 }
 
 static gboolean
-gimp_popup_map_event (GtkWidget   *widget,
+ligma_popup_map_event (GtkWidget   *widget,
                       GdkEventAny *event)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
@@ -153,10 +153,10 @@ gimp_popup_map_event (GtkWidget   *widget,
       gtk_grab_add (widget);
 
       g_signal_connect (widget, "grab-notify",
-                        G_CALLBACK (gimp_popup_grab_notify),
+                        G_CALLBACK (ligma_popup_grab_notify),
                         widget);
       g_signal_connect (widget, "grab-broken-event",
-                        G_CALLBACK (gimp_popup_grab_broken_event),
+                        G_CALLBACK (ligma_popup_grab_broken_event),
                         widget);
 
       return FALSE;
@@ -171,7 +171,7 @@ gimp_popup_map_event (GtkWidget   *widget,
 }
 
 static gboolean
-gimp_popup_button_press (GtkWidget      *widget,
+ligma_popup_button_press (GtkWidget      *widget,
                          GdkEventButton *bevent)
 {
   GtkWidget *event_widget;
@@ -186,21 +186,21 @@ gimp_popup_button_press (GtkWidget      *widget,
       gtk_widget_get_allocation (widget, &allocation);
 
       /*  the event was on the popup, which can either be really on the
-       *  popup or outside gimp (owner_events == TRUE, see map())
+       *  popup or outside ligma (owner_events == TRUE, see map())
        */
       if (bevent->x < 0                ||
           bevent->y < 0                ||
           bevent->x > allocation.width ||
           bevent->y > allocation.height)
         {
-          /*  the event was outsde gimp  */
+          /*  the event was outsde ligma  */
 
           cancel = TRUE;
         }
     }
   else if (gtk_widget_get_toplevel (event_widget) != widget)
     {
-      /*  the event was on a gimp widget, but not inside the popup  */
+      /*  the event was on a ligma widget, but not inside the popup  */
 
       cancel = TRUE;
     }
@@ -212,7 +212,7 @@ gimp_popup_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_popup_key_press (GtkWidget   *widget,
+ligma_popup_key_press (GtkWidget   *widget,
                       GdkEventKey *kevent)
 {
   GtkWidget *focus            = gtk_window_get_focus (GTK_WINDOW (widget));
@@ -235,7 +235,7 @@ gimp_popup_key_press (GtkWidget   *widget,
     {
       GtkBindingSet *binding_set;
 
-      binding_set = gtk_binding_set_by_class (g_type_class_peek (GIMP_TYPE_POPUP));
+      binding_set = gtk_binding_set_by_class (g_type_class_peek (LIGMA_TYPE_POPUP));
 
       /*  invoke the popup's binding entries manually, because
        *  otherwise the focus widget (GtkTreeView e.g.) would consume
@@ -254,7 +254,7 @@ gimp_popup_key_press (GtkWidget   *widget,
 }
 
 static void
-gimp_popup_real_cancel (GimpPopup *popup)
+ligma_popup_real_cancel (LigmaPopup *popup)
 {
   GtkWidget *widget = GTK_WIDGET (popup);
 
@@ -265,7 +265,7 @@ gimp_popup_real_cancel (GimpPopup *popup)
 }
 
 static void
-gimp_popup_real_confirm (GimpPopup *popup)
+ligma_popup_real_confirm (LigmaPopup *popup)
 {
   GtkWidget *widget = GTK_WIDGET (popup);
 
@@ -276,7 +276,7 @@ gimp_popup_real_confirm (GimpPopup *popup)
 }
 
 void
-gimp_popup_show (GimpPopup *popup,
+ligma_popup_show (LigmaPopup *popup,
                  GtkWidget *widget)
 {
   GdkDisplay     *display;
@@ -289,7 +289,7 @@ gimp_popup_show (GimpPopup *popup,
   gint            x;
   gint            y;
 
-  g_return_if_fail (GIMP_IS_POPUP (popup));
+  g_return_if_fail (LIGMA_IS_POPUP (popup));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gtk_widget_get_preferred_size (GTK_WIDGET (popup), &requisition, NULL);

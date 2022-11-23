@@ -29,7 +29,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -18757,8 +18757,8 @@
          x="704.29669"
          y="746.66449">Unused</tspan></text>
     <g
-       inkscape:label="gimp-error"
-       id="gimp-error-24"
+       inkscape:label="ligma-error"
+       id="ligma-error-24"
        style="display:inline;stroke:none"
        transform="matrix(1.5,0,0,1.5,466.51476,187.25017)">
       <rect
@@ -18777,8 +18777,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-question-24"
-       id="gimp-question-24"
+       inkscape:label="ligma-question-24"
+       id="ligma-question-24"
        style="display:inline"
        transform="matrix(1.5,0,0,1.5,588.01506,6.53142)">
       <path
@@ -18800,7 +18800,7 @@
     </g>
     <g
        transform="matrix(1.5000679,0,0,1.5000593,756.0145,-768.85482)"
-       id="gimp-warning-24"
+       id="ligma-warning-24"
        style="display:inline">
       <path
          inkscape:connector-curvature="0"
@@ -18811,8 +18811,8 @@
     </g>
     <g
        transform="translate(697.62634,877.97478)"
-       inkscape:label="gimp-prefs-folders"
-       id="gimp-prefs-folders-tools"
+       inkscape:label="ligma-prefs-folders"
+       id="ligma-prefs-folders-tools"
        style="display:inline">
       <path
          id="rect3845-6"
@@ -18830,8 +18830,8 @@
     </g>
     <g
        transform="translate(718.72794,877.97478)"
-       inkscape:label="gimp-prefs-folders"
-       id="gimp-prefs-folders-tool-plug-ins"
+       inkscape:label="ligma-prefs-folders"
+       id="ligma-prefs-folders-tool-plug-ins"
        style="display:inline">
       <path
          id="rect3845-5"
@@ -18849,8 +18849,8 @@
     </g>
     <g
        transform="translate(637.01505,889.75017)"
-       inkscape:label="gimp-prefs-default-comment"
-       id="gimp-prefs-default-comment"
+       inkscape:label="ligma-prefs-default-comment"
+       id="ligma-prefs-default-comment"
        style="display:inline">
       <g
          style="display:inline"
@@ -18886,12 +18886,12 @@
     </g>
     <g
        transform="matrix(0.9991969,0,0,1,639.97589,869.68805)"
-       inkscape:label="gimp-prefs-session"
-       id="gimp-prefs-session"
+       inkscape:label="ligma-prefs-session"
+       id="ligma-prefs-session"
        style="display:inline">
       <g
          id="g706"
-         inkscape:label="gimp-prefs-session">
+         inkscape:label="ligma-prefs-session">
         <path
            inkscape:connector-curvature="0"
            id="path15003"
@@ -18963,9 +18963,9 @@
          x="-553.59094"
          y="147.49554">tools</tspan></text>
     <g
-       inkscape:label="gimp-tool-airbrush"
+       inkscape:label="ligma-tool-airbrush"
        transform="translate(-574.11774,98.599838)"
-       id="gimp-tool-airbrush"
+       id="ligma-tool-airbrush"
        style="display:inline">
       <rect
          transform="rotate(-90)"
@@ -19074,8 +19074,8 @@
     </g>
     <g
        transform="translate(-546.59195,99.578102)"
-       inkscape:label="gimp-tool-paintbrush"
-       id="gimp-tool-paintbrush"
+       inkscape:label="ligma-tool-paintbrush"
+       id="ligma-tool-paintbrush"
        style="display:inline">
       <g
          id="g9272"
@@ -19106,8 +19106,8 @@
     </g>
     <g
        transform="translate(-634.82279,133.36234)"
-       inkscape:label="gimp-tool-pencil"
-       id="gimp-tool-pencil"
+       inkscape:label="ligma-tool-pencil"
+       id="ligma-tool-pencil"
        style="display:inline">
       <path
          style="fill:url(#linearGradient10396);fill-opacity:1;fill-rule:evenodd;stroke:none"
@@ -19134,8 +19134,8 @@
     </g>
     <g
        transform="translate(-572.74819,3.357188)"
-       inkscape:label="gimp-tool-rect-select"
-       id="gimp-tool-rect-select"
+       inkscape:label="ligma-tool-rect-select"
+       id="ligma-tool-rect-select"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;stroke:none"
@@ -19322,8 +19322,8 @@
     </g>
     <g
        transform="translate(-636.39649,173.70256)"
-       inkscape:label="gimp-tool-heal"
-       id="gimp-tool-heal"
+       inkscape:label="ligma-tool-heal"
+       id="ligma-tool-heal"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -19346,8 +19346,8 @@
     </g>
     <g
        transform="matrix(0.99609384,0,0,1,-692.24575,99.599838)"
-       inkscape:label="gimp-tool-ink"
-       id="gimp-tool-ink"
+       inkscape:label="ligma-tool-ink"
+       id="ligma-tool-ink"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;stroke:none;stroke-width:1"
@@ -19372,7 +19372,7 @@
     </g>
     <g
        transform="translate(-465.61287,32.493493)"
-       id="gimp-tool-fuzzy-select"
+       id="ligma-tool-fuzzy-select"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;stroke:none"
@@ -19408,8 +19408,8 @@
     </g>
     <g
        transform="translate(-574.20341,199.74543)"
-       inkscape:label="gimp-tool-eraser"
-       id="gimp-tool-eraser"
+       inkscape:label="ligma-tool-eraser"
+       id="ligma-tool-eraser"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -19445,8 +19445,8 @@
     </g>
     <g
        transform="translate(-654.5211,3.112437)"
-       inkscape:label="gimp-tool-iscissors"
-       id="gimp-tool-iscissors"
+       inkscape:label="ligma-tool-iscissors"
+       id="ligma-tool-iscissors"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;stroke:none"
@@ -19531,8 +19531,8 @@
     </g>
     <g
        transform="translate(-630.0706,199.74543)"
-       inkscape:label="gimp-tool-smudge"
-       id="gimp-tool-smudge"
+       inkscape:label="ligma-tool-smudge"
+       id="ligma-tool-smudge"
        style="display:inline">
       <g
          id="g12900"
@@ -19556,8 +19556,8 @@
     </g>
     <g
        transform="matrix(1,0,0,1.0015171,-638.59659,133.34302)"
-       inkscape:label="gimp-tool-clone"
-       id="gimp-tool-clone"
+       inkscape:label="ligma-tool-clone"
+       id="ligma-tool-clone"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none;opacity:0"
@@ -19587,8 +19587,8 @@
     </g>
     <g
        transform="translate(-669.28386,-47.315797)"
-       inkscape:label="gimp-tool-foreground-select"
-       id="gimp-tool-foreground-select"
+       inkscape:label="ligma-tool-foreground-select"
+       id="ligma-tool-foreground-select"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;stroke:none"
@@ -19801,8 +19801,8 @@
     </g>
     <g
        transform="translate(-525.15105,-67.315797)"
-       inkscape:label="gimp-tool-free-select"
-       id="gimp-tool-free-select"
+       inkscape:label="ligma-tool-free-select"
+       id="ligma-tool-free-select"
        style="display:inline">
       <rect
          id="rect4684"
@@ -19834,10 +19834,10 @@
     <g
        inkscape:export-ydpi="95.999985"
        inkscape:export-xdpi="95.999985"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-ellipse-select.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/16/ligma-tool-ellipse-select.png"
        transform="translate(-591.71763,-67.152374)"
-       inkscape:label="gimp-tool-ellipse-select"
-       id="gimp-tool-ellipse-select"
+       inkscape:label="ligma-tool-ellipse-select"
+       id="ligma-tool-ellipse-select"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;stroke:none"
@@ -19901,7 +19901,7 @@
          x="-553.77405"
          y="176.94981">selection tools</tspan></text>
     <g
-       id="gimp-tool-perspective-clone"
+       id="ligma-tool-perspective-clone"
        transform="translate(-513.20321,-665.65961)"
        style="display:inline">
       <rect
@@ -19936,13 +19936,13 @@
          sodipodi:nodetypes="ccccccccccc" />
     </g>
     <g
-       id="gimp-tool-dodge"
+       id="ligma-tool-dodge"
        transform="translate(-535.39629,-619.61677)"
        style="display:inline">
       <g
          style="display:inline"
-         id="gimp-tool-dodge-0"
-         inkscape:label="gimp-tool-dodge"
+         id="ligma-tool-dodge-0"
+         inkscape:label="ligma-tool-dodge"
          transform="translate(-41.000198,799.2372)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75">
@@ -19984,7 +19984,7 @@
          d="m 11.997573,1047.2229 a 4,4 0 0 1 -3.8577398,4.1368 4,4 0 0 1 -4.1373703,-3.8572 4,4 0 0 1 3.8566755,-4.1378 4,4 0 0 1 4.1383626,3.8561 L 8,1047.3622 Z" />
     </g>
     <g
-       id="gimp-tool-seamless-clone"
+       id="ligma-tool-seamless-clone"
        transform="translate(-489.0704,-665.65961)"
        style="display:inline">
       <rect
@@ -20034,7 +20034,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-mypaint-brush"
+       id="ligma-tool-mypaint-brush"
        transform="translate(-509.72456,-760.07382)"
        style="display:inline">
       <rect
@@ -20069,8 +20069,8 @@
     </g>
     <g
        transform="translate(-678.59659,199.74543)"
-       inkscape:label="gimp-tool-blur"
-       id="gimp-tool-blur"
+       inkscape:label="ligma-tool-blur"
+       id="ligma-tool-blur"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -20090,7 +20090,7 @@
     </g>
     <g
        transform="translate(-419.91763,3.258934)"
-       id="gimp-tool-by-color-select"
+       id="ligma-tool-by-color-select"
        style="display:inline">
       <g
          id="g11613">
@@ -20303,15 +20303,15 @@
          transform="scale(1,-1)" />
     </g>
     <g
-       id="gimp-tool-blur-24"
+       id="ligma-tool-blur-24"
        transform="translate(-445.06822,-615.61677)"
        style="display:inline">
       <g
          id="g4441" />
       <g
          style="display:inline"
-         id="gimp-tool-blur-2"
-         inkscape:label="gimp-tool-blur"
+         id="ligma-tool-blur-2"
+         inkscape:label="ligma-tool-blur"
          transform="matrix(1.5,0,0,1.5,-181.5003,702.8622)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75">
@@ -20332,7 +20332,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-rect-select-24"
+       id="ligma-tool-rect-select-24"
        transform="translate(-409.28909,-805.33011)"
        style="display:inline">
       <rect
@@ -20477,7 +20477,7 @@
          y="1031.3622" />
     </g>
     <g
-       id="gimp-tool-clone-24"
+       id="ligma-tool-clone-24"
        transform="translate(-445.06821,-661.65961)"
        style="display:inline">
       <rect
@@ -20508,7 +20508,7 @@
     </g>
     <g
        style="display:inline;fill:url(#linearGradient8974);fill-opacity:1"
-       id="gimp-tool-seamless-clone-24"
+       id="ligma-tool-seamless-clone-24"
        transform="translate(-341.78109,-661.65963)">
       <g
          style="fill:url(#linearGradient8156);fill-opacity:1"
@@ -20552,7 +20552,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-pencil-24"
+       id="ligma-tool-pencil-24"
        transform="translate(-443.27768,-722.56739)"
        style="display:inline">
       <path
@@ -20578,7 +20578,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-perspective-clone-24"
+       id="ligma-tool-perspective-clone-24"
        transform="translate(-379.64357,-661.65961)"
        style="display:inline">
       <rect
@@ -20619,7 +20619,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-heal-24"
+       id="ligma-tool-heal-24"
        transform="translate(-411.67646,-661.65962)"
        style="display:inline">
       <rect
@@ -20641,13 +20641,13 @@
          id="path82165-9" />
     </g>
     <g
-       id="gimp-tool-eraser-24"
+       id="ligma-tool-eraser-24"
        transform="translate(-379.64357,-615.61677)"
        style="display:inline">
       <g
          style="display:inline"
-         id="gimp-tool-eraser-7"
-         inkscape:label="gimp-tool-eraser"
+         id="ligma-tool-eraser-7"
+         inkscape:label="ligma-tool-eraser"
          transform="matrix(1.5,0,0,1.5,-91.5003,702.8622)">
         <rect
            ry="0"
@@ -20686,8 +20686,8 @@
     </g>
     <g
        transform="matrix(1.5,0,0,1.5,-553.28139,87.24542)"
-       inkscape:label="gimp-tool-smudge"
-       id="gimp-tool-smudge-24"
+       inkscape:label="ligma-tool-smudge"
+       id="ligma-tool-smudge-24"
        style="display:inline">
       <g
          id="g12900-5"
@@ -20710,7 +20710,7 @@
          transform="translate(241.0002,217)" />
     </g>
     <g
-       id="gimp-tool-iscissors-24"
+       id="ligma-tool-iscissors-24"
        transform="translate(-442.68084,-805.33013)"
        style="display:inline">
       <rect
@@ -20787,7 +20787,7 @@
          y="1029.3622" />
     </g>
     <g
-       id="gimp-tool-fuzzy-select-24"
+       id="ligma-tool-fuzzy-select-24"
        transform="translate(-377.2562,-805.33011)"
        style="display:inline">
       <rect
@@ -20824,7 +20824,7 @@
          sodipodi:nodetypes="czcczcc" />
     </g>
     <g
-       id="gimp-tool-airbrush-24"
+       id="ligma-tool-airbrush-24"
        transform="translate(-444.47137,-757.52883)"
        style="display:inline">
       <rect
@@ -20933,7 +20933,7 @@
          style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10466-5);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
     </g>
     <g
-       id="gimp-tool-by-color-select-24"
+       id="ligma-tool-by-color-select-24"
        transform="translate(-440.13231,-842.67799)"
        style="display:inline">
       <rect
@@ -21101,7 +21101,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-ink-24"
+       id="ligma-tool-ink-24"
        transform="translate(-410.08252,-758.16736)"
        style="display:inline">
       <rect
@@ -21127,7 +21127,7 @@
          style="fill:url(#linearGradient10438-2);fill-opacity:1;stroke:none;stroke-width:1.49368358" />
     </g>
     <g
-       id="gimp-tool-mypaint-brush-24"
+       id="ligma-tool-mypaint-brush-24"
        transform="translate(-374.38626,-754.88968)"
        style="display:inline">
       <rect
@@ -21161,7 +21161,7 @@
          sodipodi:nodetypes="cscccccscccscc" />
     </g>
     <g
-       id="gimp-tool-paintbrush-24"
+       id="ligma-tool-paintbrush-24"
        transform="translate(-341.78109,-756.59708)"
        style="display:inline">
       <g
@@ -21194,8 +21194,8 @@
     <g
        inkscape:export-ydpi="95.999985"
        inkscape:export-xdpi="95.999985"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-tool-ellipse-select.png"
-       id="gimp-tool-ellipse-select-24"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-tool-ellipse-select.png"
+       id="ligma-tool-ellipse-select-24"
        transform="translate(-409.71743,-843.51437)"
        style="display:inline">
       <rect
@@ -21216,7 +21216,7 @@
          style="fill:url(#linearGradient9738-5);fill-opacity:1;stroke:none;stroke-width:1.65144014" />
     </g>
     <g
-       id="gimp-tool-foreground-select-24"
+       id="ligma-tool-foreground-select-24"
        transform="translate(-373.92089,-842.67799)"
        style="display:inline">
       <path
@@ -21527,7 +21527,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-free-select-24"
+       id="ligma-tool-free-select-24"
        transform="translate(-341.78109,-842.67799)"
        style="display:inline">
       <rect
@@ -21568,7 +21568,7 @@
          x="-417.96213"
          y="175.42982">24px</tspan></text>
     <g
-       id="gimp-tool-dodge-24"
+       id="ligma-tool-dodge-24"
        transform="matrix(1.0008752,0,0,1,-411.68694,-615.61675)"
        style="display:inline">
       <rect
@@ -21597,8 +21597,8 @@
     </g>
     <g
        transform="matrix(0.9999676,0,0,0.99994527,-367.40053,250.25241)"
-       inkscape:label="gimp-tool-move"
-       id="gimp-tool-move"
+       inkscape:label="ligma-tool-move"
+       id="ligma-tool-move"
        style="display:inline">
       <rect
          y="197.01823"
@@ -21616,8 +21616,8 @@
     </g>
     <g
        transform="translate(-370.09414,219.74543)"
-       inkscape:label="gimp-tool-text"
-       id="gimp-tool-text"
+       inkscape:label="ligma-tool-text"
+       id="ligma-tool-text"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -21636,8 +21636,8 @@
     </g>
     <g
        transform="matrix(1,0,0,-1,-387.06045,434.54635)"
-       inkscape:label="gimp-tool-scale"
-       id="gimp-tool-scale"
+       inkscape:label="ligma-tool-scale"
+       id="ligma-tool-scale"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -21670,8 +21670,8 @@
     </g>
     <g
        transform="matrix(1,0,0,0.99724574,-402.44639,194.19007)"
-       inkscape:label="gimp-tool-color-picker"
-       id="gimp-tool-color-picker"
+       inkscape:label="ligma-tool-color-picker"
+       id="ligma-tool-color-picker"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -21702,8 +21702,8 @@
     </g>
     <g
        transform="matrix(0.99805136,0,0,1,-369.7686,-27.315797)"
-       inkscape:label="gimp-tool-cage"
-       id="gimp-tool-cage"
+       inkscape:label="ligma-tool-cage"
+       id="ligma-tool-cage"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none;opacity:0"
@@ -21747,8 +21747,8 @@
     </g>
     <g
        transform="translate(-404.74916,4.546347)"
-       inkscape:label="gimp-tool-shear"
-       id="gimp-tool-shear"
+       inkscape:label="ligma-tool-shear"
+       id="ligma-tool-shear"
        style="display:inline">
       <rect
          style="fill:none;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -21779,8 +21779,8 @@
     </g>
     <g
        transform="translate(-469.94205,153.70257)"
-       inkscape:label="gimp-tool-align"
-       id="gimp-tool-align"
+       inkscape:label="ligma-tool-align"
+       id="ligma-tool-align"
        style="display:inline">
       <rect
          style="opacity:0.3;fill:none;fill-opacity:1;stroke:none"
@@ -21815,8 +21815,8 @@
     </g>
     <g
        transform="translate(-387.06045,-47.315797)"
-       inkscape:label="gimp-tool-flip"
-       id="gimp-tool-flip"
+       inkscape:label="ligma-tool-flip"
+       id="ligma-tool-flip"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -21843,8 +21843,8 @@
     </g>
     <g
        transform="translate(-340.05846,-47.315797)"
-       inkscape:label="gimp-tool-perspective"
-       id="gimp-tool-perspective"
+       inkscape:label="ligma-tool-perspective"
+       id="ligma-tool-perspective"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -21932,7 +21932,7 @@
     </g>
     <g
        transform="translate(-369.94205,22.182527)"
-       id="gimp-tool-brightness-contrast"
+       id="ligma-tool-brightness-contrast"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -21950,7 +21950,7 @@
     </g>
     <g
        transform="translate(-327.06045,2.182526)"
-       id="gimp-tool-color-balance"
+       id="ligma-tool-color-balance"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -22024,8 +22024,8 @@
     </g>
     <g
        transform="translate(-324.74922,2.182526)"
-       inkscape:label="gimp-tool-colorize"
-       id="gimp-tool-colorize"
+       inkscape:label="ligma-tool-colorize"
+       id="ligma-tool-colorize"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -22062,8 +22062,8 @@
     </g>
     <g
        transform="translate(-322.44639,2.182526)"
-       inkscape:label="gimp-tool-curves"
-       id="gimp-tool-curves"
+       inkscape:label="ligma-tool-curves"
+       id="ligma-tool-curves"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -22090,8 +22090,8 @@
     </g>
     <g
        transform="translate(-320.05846,2.182526)"
-       inkscape:label="gimp-tool-desaturate"
-       id="gimp-tool-desaturate"
+       inkscape:label="ligma-tool-desaturate"
+       id="ligma-tool-desaturate"
        style="display:inline">
       <rect
          ry="0"
@@ -22122,8 +22122,8 @@
     </g>
     <g
        transform="translate(-407.06045,41.598956)"
-       inkscape:label="gimp-tool-hue-saturation"
-       id="gimp-tool-hue-saturation"
+       inkscape:label="ligma-tool-hue-saturation"
+       id="ligma-tool-hue-saturation"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -22243,8 +22243,8 @@
     </g>
     <g
        transform="translate(-404.74922,41.598956)"
-       inkscape:label="gimp-tool-levels"
-       id="gimp-tool-levels"
+       inkscape:label="ligma-tool-levels"
+       id="ligma-tool-levels"
        style="display:inline">
       <rect
          style="fill:none;fill-opacity:1;stroke:none"
@@ -22276,8 +22276,8 @@
     </g>
     <g
        transform="translate(-402.44639,41.598956)"
-       inkscape:label="gimp-tool-posterize"
-       id="gimp-tool-posterize"
+       inkscape:label="ligma-tool-posterize"
+       id="ligma-tool-posterize"
        style="display:inline">
       <rect
          style="opacity:0.3;fill:none;fill-opacity:1;stroke:none"
@@ -22380,8 +22380,8 @@
     </g>
     <g
        transform="translate(-489.94205,42.993461)"
-       inkscape:label="gimp-tool-threshold"
-       id="gimp-tool-threshold"
+       inkscape:label="ligma-tool-threshold"
+       id="ligma-tool-threshold"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -22452,8 +22452,8 @@
          x="-292.0213"
          y="365.32693">other tools</tspan></text>
     <g
-       inkscape:label="gimp-tool-zoom"
-       id="gimp-tool-zoom"
+       inkscape:label="ligma-tool-zoom"
+       id="ligma-tool-zoom"
        style="display:inline"
        transform="translate(-304.99562,219.74543)">
       <rect
@@ -22476,7 +22476,7 @@
     </g>
     <g
        transform="translate(-335.54245,3.258904)"
-       id="gimp-tool-n-point-deformation"
+       id="ligma-tool-n-point-deformation"
        style="display:inline">
       <path
          style="fill:url(#linearGradient6857);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -22519,8 +22519,8 @@
     </g>
     <g
        transform="translate(114.24117,338.74186)"
-       inkscape:label="gimp-tool-warp"
-       id="gimp-tool-warp"
+       inkscape:label="ligma-tool-warp"
+       id="ligma-tool-warp"
        style="display:inline">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -22539,7 +22539,7 @@
          sodipodi:nodetypes="ccccccccscc" />
     </g>
     <g
-       id="gimp-tool-bucket-fill"
+       id="ligma-tool-bucket-fill"
        transform="translate(-243.74901,-665.65963)"
        style="display:inline">
       <g
@@ -22581,7 +22581,7 @@
          sodipodi:nodetypes="sscsass" />
     </g>
     <g
-       id="gimp-tool-unified-transform"
+       id="ligma-tool-unified-transform"
        transform="translate(-288.94185,-815.6216)"
        style="display:inline">
       <path
@@ -22604,7 +22604,7 @@
          sodipodi:nodetypes="ccssccccsscccc" />
     </g>
     <g
-       id="gimp-tool-path"
+       id="ligma-tool-path"
        transform="matrix(1,0,0,0.99994581,-243.99552,-589.06525)"
        style="display:inline">
       <path
@@ -22646,7 +22646,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#linearGradient7004);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-tool-handle-transform"
+       id="ligma-tool-handle-transform"
        transform="translate(-243.70177,-846.67798)"
        style="display:inline">
       <rect
@@ -22707,7 +22707,7 @@
          style="opacity:1;fill:url(#linearGradient7241);fill-opacity:1;stroke:none;stroke-width:0.51658648;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       id="gimp-tool-crop"
+       id="ligma-tool-crop"
        transform="translate(-221.44619,-619.61674)"
        style="display:inline">
       <g
@@ -22777,7 +22777,7 @@
          sodipodi:open="true" />
     </g>
     <g
-       id="gimp-tool-gradient"
+       id="ligma-tool-gradient"
        transform="translate(-266.06025,-665.65961)"
        style="display:inline">
       <rect
@@ -22872,8 +22872,8 @@
          y="1036.3622" />
     </g>
     <g
-       inkscape:label="gimp-gegl"
-       id="gimp-gegl"
+       inkscape:label="ligma-gegl"
+       id="ligma-gegl"
        style="display:inline"
        transform="translate(-302.44639,-71.759247)">
       <rect
@@ -22893,7 +22893,7 @@
     </g>
     <g
        transform="translate(-219.86744,219.00359)"
-       id="gimp-tool-rotate"
+       id="ligma-tool-rotate"
        style="display:inline">
       <g
          id="g4271">
@@ -22932,8 +22932,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-tool-color-temperature"
-       id="gimp-tool-color-temperature"
+       inkscape:label="ligma-tool-color-temperature"
+       id="ligma-tool-color-temperature"
        transform="matrix(3.7795276,0,0,3.7795276,-289.25846,477.7361)"
        style="display:inline">
       <path
@@ -23007,7 +23007,7 @@
          sodipodi:nodetypes="sscssscsssssscccssscccss" />
     </g>
     <g
-       id="gimp-tool-exposure"
+       id="ligma-tool-exposure"
        transform="matrix(3.7795276,0,0,3.7795275,-266.40412,-628.78344)"
        style="display:inline">
       <rect
@@ -23031,8 +23031,8 @@
          sodipodi:nodetypes="ccccccccccccc" />
     </g>
     <g
-       inkscape:label="gimp-tool-shadows-highlights"
-       id="gimp-tool-shadows-highlights"
+       inkscape:label="ligma-tool-shadows-highlights"
+       id="ligma-tool-shadows-highlights"
        transform="matrix(3.7795274,0,0,3.7795275,-257.49542,-634.53352)"
        style="display:inline">
       <g
@@ -23040,7 +23040,7 @@
         <rect
            transform="matrix(0.26458334,0,0,0.26458334,40.67107,172.55385)"
            style="display:inline;opacity:0;fill:url(#linearGradient10824-7);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="gimp-base-16-7"
+           id="ligma-base-16-7"
            width="16"
            height="16"
            x="-140.21742"
@@ -23056,7 +23056,7 @@
     </g>
     <g
        transform="matrix(1.5,0,0,1.5,-283.34569,-107.62959)"
-       id="gimp-tool-brightness-contrast-24"
+       id="ligma-tool-brightness-contrast-24"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -23075,11 +23075,11 @@
     <path
        sodipodi:nodetypes="ccccccccccccccccccccccccc"
        inkscape:connector-curvature="0"
-       id="gimp-tool-move-24"
+       id="ligma-tool-move-24"
        d="m -115.50379,446.92172 -4.99989,4.00004 h 3.99989 v 7.01612 c -2.01506,-0.0152 -4.98437,-0.0317 -7,-0.0439 v -3.9722 l -4.00001,4.99999 4.00001,5 v -3.99999 c 2.01556,-1.4e-4 4.9844,-0.005 7,0 0,2.33332 0,4.66666 0,6.99999 h -4.00012 l 5.00011,4.00001 5.00001,-4.00001 h -4.00001 c 0,-2.33333 0,-4.66667 0,-6.99999 1.99996,10e-4 5.00009,0.006 6.99999,0 v 3.99999 l 4.00001,-4.99999 -4.00001,-5 v 3.97514 c -1.99975,0.0352 -4.9993,0.0582 -6.99999,0.0526 v -7.02783 h 4.00001 z"
        style="display:inline;fill:url(#linearGradient7060-5);fill-opacity:1;stroke:none;stroke-width:1.49995136" />
     <g
-       id="gimp-tool-path-24"
+       id="ligma-tool-path-24"
        transform="translate(-90.919076,446.92176)"
        style="display:inline">
       <path
@@ -23121,7 +23121,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#linearGradient7004-1);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-tool-perspective-24"
+       id="ligma-tool-perspective-24"
        transform="translate(-25.824927,-842.678)"
        style="display:inline">
       <rect
@@ -23212,7 +23212,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-flip-24"
+       id="ligma-tool-flip-24"
        transform="translate(-127.5038,-842.678)"
        style="display:inline">
       <rect
@@ -23237,7 +23237,7 @@
          style="fill:url(#linearGradient7303-6);fill-opacity:1;stroke:none;stroke-width:1.58564997" />
     </g>
     <g
-       id="gimp-tool-cage-24"
+       id="ligma-tool-cage-24"
        transform="translate(-161.84539,-842.678)"
        style="display:inline">
       <path
@@ -23267,7 +23267,7 @@
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7339-4);fill-opacity:1;stroke:none;stroke-width:1.48837173;marker:none;enable-background:new" />
     </g>
     <g
-       id="gimp-tool-color-balance-24"
+       id="ligma-tool-color-balance-24"
        transform="translate(-127.5038,-750.4918)"
        style="display:inline">
       <rect
@@ -23341,7 +23341,7 @@
          y="1031.3622" />
     </g>
     <g
-       id="gimp-tool-zoom-24"
+       id="ligma-tool-zoom-24"
        transform="translate(-90.919086,-615.61675)"
        style="display:inline">
       <rect
@@ -23368,8 +23368,8 @@
     </g>
     <g
        transform="matrix(1.5,0,0,1.5,443.46416,295.74007)"
-       inkscape:label="gimp-tool-warp"
-       id="gimp-tool-warp-24"
+       inkscape:label="ligma-tool-warp"
+       id="ligma-tool-warp-24"
        style="display:inline">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -23389,8 +23389,8 @@
     </g>
     <g
        transform="matrix(1.5,0,0,1.5,-283.34569,117.24542)"
-       inkscape:label="gimp-tool-text"
-       id="gimp-tool-text-24"
+       inkscape:label="ligma-tool-text"
+       id="ligma-tool-text-24"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -23407,7 +23407,7 @@
          sodipodi:nodetypes="ccccccccccccc" />
     </g>
     <g
-       id="gimp-tool-align-24"
+       id="ligma-tool-align-24"
        transform="translate(-161.84539,-661.65961)"
        style="display:inline">
       <rect
@@ -23440,7 +23440,7 @@
          y="1041.3622" />
     </g>
     <g
-       id="gimp-tool-color-picker-24"
+       id="ligma-tool-color-picker-24"
        transform="translate(-55.880167,-661.65964)"
        style="display:inline">
       <rect
@@ -23474,7 +23474,7 @@
       </g>
     </g>
     <g
-       id="gimp-tool-colorize-24"
+       id="ligma-tool-colorize-24"
        transform="translate(-90.919086,-750.4918)"
        style="display:inline">
       <rect
@@ -23510,7 +23510,7 @@
          sodipodi:nodetypes="ccccsscccssscc" />
     </g>
     <g
-       id="gimp-tool-curves-24"
+       id="ligma-tool-curves-24"
        transform="translate(-55.880167,-750.4918)"
        style="display:inline">
       <rect
@@ -23530,7 +23530,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-desaturate-24"
+       id="ligma-tool-desaturate-24"
        transform="translate(-25.824927,-750.4918)"
        style="display:inline">
       <rect
@@ -23560,7 +23560,7 @@
          style="opacity:1;fill:url(#linearGradient9862-1);fill-opacity:1;stroke:none;stroke-width:1.65144157px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
     <g
-       id="gimp-tool-unified-transform-24"
+       id="ligma-tool-unified-transform-24"
        transform="translate(-161.84539,-810.7605)"
        style="display:inline">
       <path
@@ -23583,7 +23583,7 @@
          sodipodi:nodetypes="ccssccccsscccc" />
     </g>
     <g
-       id="gimp-tool-scale-24"
+       id="ligma-tool-scale-24"
        transform="matrix(1,0,0,-1,-127.5038,1269.9639)"
        style="display:inline">
       <rect
@@ -23615,7 +23615,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-threshold-24"
+       id="ligma-tool-threshold-24"
        transform="translate(-161.84539,-713.22727)"
        style="display:inline">
       <rect
@@ -23659,7 +23659,7 @@
     </g>
     <g
        transform="translate(-89.789086,-810.7606)"
-       id="gimp-tool-shear-24"
+       id="ligma-tool-shear-24"
        style="display:inline">
       <rect
          style="fill:none;stroke:none;stroke-width:2.9999795;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -23688,7 +23688,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       id="gimp-tool-hue-saturation-24"
+       id="ligma-tool-hue-saturation-24"
        transform="translate(-125.94222,-715.4474)"
        style="display:inline">
       <rect
@@ -23807,7 +23807,7 @@
          y="-1042.3622" />
     </g>
     <g
-       id="gimp-tool-levels-24"
+       id="ligma-tool-levels-24"
        transform="translate(-95.366286,-715.39659)"
        style="display:inline">
       <rect
@@ -23838,7 +23838,7 @@
          style="fill:url(#linearGradient9918-0);fill-opacity:1;stroke:none;stroke-width:1.78885412" />
     </g>
     <g
-       id="gimp-tool-posterize-24"
+       id="ligma-tool-posterize-24"
        transform="translate(-55.880167,-716.29145)"
        style="display:inline">
       <g
@@ -23956,7 +23956,7 @@
          x="-119.57514"
          y="175.42982">24px</tspan></text>
     <g
-       id="gimp-tool-crop-24"
+       id="ligma-tool-crop-24"
        transform="matrix(1.0008752,0,0,1,-55.890657,-615.61675)"
        style="display:inline">
       <rect
@@ -24019,7 +24019,7 @@
          sodipodi:open="true" />
     </g>
     <g
-       id="gimp-tool-bucket-fill-24"
+       id="ligma-tool-bucket-fill-24"
        transform="matrix(1.0008752,0,0,1,-90.929566,-661.65961)"
        style="display:inline">
       <rect
@@ -24056,7 +24056,7 @@
     <g
        style="display:inline;fill:url(#linearGradient23372);fill-opacity:1"
        transform="matrix(1.4858017,0,0,1.4931173,-161.73274,-1100.4668)"
-       id="gimp-tool-measure-24">
+       id="ligma-tool-measure-24">
       <g
          style="fill:url(#linearGradient8239);fill-opacity:1"
          id="g4219-5"
@@ -24089,7 +24089,7 @@
     </g>
     <g
        style="display:inline;fill:url(#linearGradient23348);fill-opacity:1"
-       id="gimp-tool-gradient-24"
+       id="ligma-tool-gradient-24"
        transform="matrix(1.0008752,0,0,1,-127.51429,-661.65962)">
       <path
          style="fill:url(#linearGradient8248);fill-opacity:1;stroke-width:1.22178757"
@@ -24366,7 +24366,7 @@
     </g>
     <g
        transform="matrix(1.5013128,0,0,1.4999426,-55.890657,-1368.7997)"
-       id="gimp-tool-n-point-deformation-24"
+       id="ligma-tool-n-point-deformation-24"
        style="display:inline">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -24397,7 +24397,7 @@
          sodipodi:nodetypes="ccccccccccccc" />
     </g>
     <g
-       id="gimp-tool-handle-transform-24"
+       id="ligma-tool-handle-transform-24"
        transform="matrix(1.0008752,0,0,1,-90.929576,-842.678)"
        style="display:inline">
       <rect
@@ -24458,7 +24458,7 @@
          style="opacity:1;fill:url(#linearGradient8773);fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       id="gimp-gegl-24"
+       id="ligma-gegl-24"
        transform="translate(-55.091407,-580.81004)"
        style="display:inline">
       <rect
@@ -24475,7 +24475,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-rotate-24"
+       id="ligma-tool-rotate-24"
        transform="translate(-53.352847,223.84763)"
        style="display:inline">
       <path
@@ -24512,7 +24512,7 @@
          sodipodi:nodetypes="cccccccccc" />
     </g>
     <g
-       id="gimp-color-temperature-24"
+       id="ligma-color-temperature-24"
        transform="matrix(3.7795276,0,0,3.7795275,-634.68939,-214.88301)"
        style="display:inline">
       <path
@@ -24576,7 +24576,7 @@
          transform="rotate(135)" />
     </g>
     <g
-       id="gimp-tool-exposure-24"
+       id="ligma-tool-exposure-24"
        transform="matrix(3.7795276,0,0,3.7795275,-126.76305,-617.41226)"
        style="display:inline">
       <rect
@@ -24600,8 +24600,8 @@
     </g>
     <g
        transform="matrix(1.0008752,0,0,1,-623.94799,-8.6160438)"
-       inkscape:label="#gimp-tools"
-       id="gimp-tools"
+       inkscape:label="#ligma-tools"
+       id="ligma-tools"
        style="display:inline">
       <rect
          style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -24614,7 +24614,7 @@
          inkscape:transform-center-y="52.3259" />
       <g
          transform="matrix(1.2168203,0,0,1.159372,127.54317,-1045.7736)"
-         id="gimp-prefs-toolbox-paint-2-4"
+         id="ligma-prefs-toolbox-paint-2-4"
          inkscape:label="#g4012">
         <path
            inkscape:connector-curvature="0"
@@ -24640,7 +24640,7 @@
         </g>
       </g>
       <g
-         id="gimp-prefs-toolbox-paint-1-6"
+         id="ligma-prefs-toolbox-paint-1-6"
          inkscape:label="#g6622"
          transform="matrix(0.60875755,-1.1290711,1.1319608,0.60720354,33.224186,391.99136)">
         <path
@@ -24666,11 +24666,11 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-tool-measure"
-       id="gimp-tool-measure">
+       inkscape:label="ligma-tool-measure"
+       id="ligma-tool-measure">
       <rect
          style="display:inline;opacity:0;fill:url(#linearGradient10824-9);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="gimp-base-16-1"
+         id="ligma-base-16-1"
          width="16"
          height="16"
          x="-289.13525"
@@ -24713,7 +24713,7 @@
     </g>
     <g
        transform="matrix(3.7795275,0,0,3.7795275,-199.05826,-887.51606)"
-       id="gimp-tool-transform-3d">
+       id="ligma-tool-transform-3d">
       <path
          inkscape:path-effect="#path-effect8778"
          inkscape:connector-curvature="0"
@@ -24754,8 +24754,8 @@
          sodipodi:role="line">preferences</tspan></text>
     <g
        transform="translate(637.24039,-17.22342)"
-       inkscape:label="gimp-prefs-display"
-       id="gimp-prefs-display"
+       inkscape:label="ligma-prefs-display"
+       id="ligma-prefs-display"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -24810,11 +24810,11 @@
     </g>
     <g
        transform="translate(527.07329,103.28096)"
-       inkscape:label="gimp-prefs-folders-brushes"
-       id="gimp-prefs-folders-brushes"
+       inkscape:label="ligma-prefs-folders-brushes"
+       id="ligma-prefs-folders-brushes"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders"
+         inkscape:label="ligma-prefs-folders"
          id="g560"
          transform="translate(20)">
         <g
@@ -24841,8 +24841,8 @@
     </g>
     <g
        transform="translate(572.06639,103.28096)"
-       inkscape:label="gimp-prefs-folders-fonts"
-       id="gimp-prefs-folders-fonts"
+       inkscape:label="ligma-prefs-folders-fonts"
+       id="ligma-prefs-folders-fonts"
        style="display:inline">
       <rect
          y="-40"
@@ -24860,8 +24860,8 @@
     </g>
     <g
        transform="translate(465.69069,148.86032)"
-       inkscape:label="gimp-prefs-folders-gradients"
-       id="gimp-prefs-folders-gradients"
+       inkscape:label="ligma-prefs-folders-gradients"
+       id="ligma-prefs-folders-gradients"
        style="display:inline">
       <rect
          y="-40"
@@ -24967,8 +24967,8 @@
     </g>
     <g
        transform="translate(613.90419,29.82554)"
-       inkscape:label="gimp-prefs-window-management"
-       id="gimp-prefs-window-management"
+       inkscape:label="ligma-prefs-window-management"
+       id="ligma-prefs-window-management"
        style="display:inline">
       <rect
          style="opacity:0.3;fill:none;stroke:none"
@@ -24990,8 +24990,8 @@
     </g>
     <g
        transform="translate(488.67519,125.66153)"
-       inkscape:label="gimp-prefs-folders-patterns"
-       id="gimp-prefs-folders-patterns"
+       inkscape:label="ligma-prefs-folders-patterns"
+       id="ligma-prefs-folders-patterns"
        style="display:inline">
       <rect
          style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
@@ -25093,11 +25093,11 @@
     </g>
     <g
        transform="translate(512.06639,125.63028)"
-       inkscape:label="gimp-prefs-folders-scripts"
-       id="gimp-prefs-folders-scripts"
+       inkscape:label="ligma-prefs-folders-scripts"
+       id="ligma-prefs-folders-scripts"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders"
+         inkscape:label="ligma-prefs-folders"
          id="g607"
          transform="translate(100)">
         <path
@@ -25118,11 +25118,11 @@
     </g>
     <g
        transform="translate(470.40199,125.63028)"
-       inkscape:label="gimp-prefs-folders-plug-ins"
-       id="gimp-prefs-folders-plug-ins"
+       inkscape:label="ligma-prefs-folders-plug-ins"
+       id="ligma-prefs-folders-plug-ins"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders"
+         inkscape:label="ligma-prefs-folders"
          id="g612"
          transform="translate(120)">
         <path
@@ -25143,8 +25143,8 @@
     </g>
     <g
        transform="translate(503.85049,-37.2927)"
-       inkscape:label="gimp-prefs-color-management"
-       id="gimp-prefs-color-management"
+       inkscape:label="ligma-prefs-color-management"
+       id="ligma-prefs-color-management"
        style="display:inline">
       <g
          id="g14498">
@@ -25196,8 +25196,8 @@
     </g>
     <g
        transform="translate(507.23179,-37.22342)"
-       inkscape:label="gimp-prefs-controllers"
-       id="gimp-prefs-controllers"
+       inkscape:label="ligma-prefs-controllers"
+       id="ligma-prefs-controllers"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -25227,8 +25227,8 @@
     </g>
     <g
        transform="translate(542.91129,-12.52412)"
-       inkscape:label="gimp-prefs-help-system"
-       id="gimp-prefs-help-system"
+       inkscape:label="ligma-prefs-help-system"
+       id="ligma-prefs-help-system"
        style="display:inline">
       <rect
          style="opacity:0.3;fill:none;stroke:none"
@@ -25250,8 +25250,8 @@
     </g>
     <g
        transform="translate(523.89569,-34.87377)"
-       inkscape:label="gimp-prefs-image-windows"
-       id="gimp-prefs-image-windows"
+       inkscape:label="ligma-prefs-image-windows"
+       id="ligma-prefs-image-windows"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -25282,14 +25282,14 @@
     </g>
     <g
        transform="translate(507.23179,-34.87377)"
-       inkscape:label="gimp-prefs-input-devices"
-       id="gimp-prefs-input-devices"
+       inkscape:label="ligma-prefs-input-devices"
+       id="ligma-prefs-input-devices"
        style="display:inline">
       <g
          style="display:inline"
          transform="translate(-186.0002,-543)"
-         id="gimp-prefs-desktop-peripherals"
-         inkscape:label="gimp-prefs-desktop-peripherals">
+         id="ligma-prefs-desktop-peripherals"
+         inkscape:label="ligma-prefs-desktop-peripherals">
         <g
            id="g13899">
           <rect
@@ -25326,13 +25326,13 @@
     </g>
     <g
        transform="translate(487.23179,9.82554)"
-       inkscape:label="gimp-prefs-theme"
-       id="gimp-prefs-theme"
+       inkscape:label="ligma-prefs-theme"
+       id="ligma-prefs-theme"
        style="display:inline">
       <g
          transform="translate(-146.0002,-543)"
          id="g699"
-         inkscape:label="gimp-prefs-theme">
+         inkscape:label="ligma-prefs-theme">
         <path
            inkscape:connector-curvature="0"
            id="path13662"
@@ -25362,8 +25362,8 @@
     </g>
     <g
        transform="translate(493.90419,-34.87376)"
-       inkscape:label="gimp-prefs-new-image"
-       id="gimp-prefs-new-image"
+       inkscape:label="ligma-prefs-new-image"
+       id="ligma-prefs-new-image"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -25395,8 +25395,8 @@
     </g>
     <g
        transform="translate(447.84199,-34.87377)"
-       inkscape:label="gimp-prefs-interface"
-       id="gimp-prefs-interface"
+       inkscape:label="ligma-prefs-interface"
+       id="ligma-prefs-interface"
        style="display:inline">
       <rect
          style="opacity:0.3;fill:none;stroke:none"
@@ -25418,11 +25418,11 @@
     </g>
     <g
        transform="translate(586.47919,-32.52412)"
-       inkscape:label="gimp-prefs-image-title"
-       id="gimp-prefs-image-title"
+       inkscape:label="ligma-prefs-image-title"
+       id="ligma-prefs-image-title"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-image-windows"
+         inkscape:label="ligma-prefs-image-windows"
          id="g724"
          transform="translate(-20,20)">
         <rect
@@ -25448,15 +25448,15 @@
     </g>
     <g
        transform="translate(549.25859,87.13078)"
-       inkscape:label="gimp-prefs-folders-interp"
-       id="gimp-prefs-folders-interp"
+       inkscape:label="ligma-prefs-folders-interp"
+       id="ligma-prefs-folders-interp"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders-tools"
+         inkscape:label="ligma-prefs-folders-tools"
          id="g736"
          transform="translate(20)">
         <g
-           inkscape:label="gimp-prefs-folders"
+           inkscape:label="ligma-prefs-folders"
            id="g738"
            transform="translate(0,60)">
           <path
@@ -25486,11 +25486,11 @@
     </g>
     <g
        transform="translate(528.73769,43.28096)"
-       inkscape:label="gimp-prefs-folders-dynamics"
-       id="gimp-prefs-folders-dynamics"
+       inkscape:label="ligma-prefs-folders-dynamics"
+       id="ligma-prefs-folders-dynamics"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders"
+         inkscape:label="ligma-prefs-folders"
          id="g744"
          transform="translate(40,60)">
         <path
@@ -25510,15 +25510,15 @@
     </g>
     <g
        transform="translate(530.40199,43.28096)"
-       inkscape:label="gimp-prefs-folders-environ"
-       id="gimp-prefs-folders-environ"
+       inkscape:label="ligma-prefs-folders-environ"
+       id="ligma-prefs-folders-environ"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders-dynamics"
+         inkscape:label="ligma-prefs-folders-dynamics"
          id="g749"
          transform="translate(20)">
         <g
-           inkscape:label="gimp-prefs-folders"
+           inkscape:label="ligma-prefs-folders"
            id="g751"
            transform="translate(40,60)">
           <path
@@ -25539,8 +25539,8 @@
     </g>
     <g
        transform="translate(445.40899,65.63028)"
-       inkscape:label="gimp-prefs-folders-modules"
-       id="gimp-prefs-folders-modules"
+       inkscape:label="ligma-prefs-folders-modules"
+       id="ligma-prefs-folders-modules"
        style="display:inline">
       <path
          style="display:inline;fill:url(#linearGradient8382);fill-opacity:1;stroke:none"
@@ -25558,11 +25558,11 @@
     </g>
     <g
        transform="translate(447.07329,65.63028)"
-       inkscape:label="gimp-prefs-folders-palettes"
-       id="gimp-prefs-folders-palettes"
+       inkscape:label="ligma-prefs-folders-palettes"
+       id="ligma-prefs-folders-palettes"
        style="display:inline">
       <g
-         inkscape:label="gimp-prefs-folders"
+         inkscape:label="ligma-prefs-folders"
          id="g759"
          transform="translate(100,60)">
         <path
@@ -25594,8 +25594,8 @@
     </g>
     <g
        transform="translate(525.69069,171.20964)"
-       id="gimp-prefs-folders-themes"
-       inkscape:label="gimp-prefs-folders-themes"
+       id="ligma-prefs-folders-themes"
+       inkscape:label="ligma-prefs-folders-themes"
        style="display:inline">
       <path
          inkscape:connector-curvature="0"
@@ -25612,22 +25612,22 @@
          style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-prefs-icon-theme"
+       id="ligma-prefs-icon-theme"
        transform="matrix(1,0,0,1.0003903,562.23179,-1049.2971)"
        style="display:inline">
       <g
          transform="matrix(0.52776641,0,0,0.52776641,-67.915171,699.58746)"
          style="display:inline"
-         id="gimp-wilber-9"
-         inkscape:label="gimp-wilber">
+         id="ligma-wilber-9"
+         inkscape:label="ligma-wilber">
         <g
-           inkscape:label="gimp"
-           id="gimp-8"
+           inkscape:label="ligma"
+           id="ligma-8"
            style="display:inline"
            transform="translate(-122.00001,443.99848)">
           <g
-             id="applications-gimp-75"
-             inkscape:label="applications-gimp">
+             id="applications-ligma-75"
+             inkscape:label="applications-ligma">
             <rect
                y="195.00299"
                x="263.00021"
@@ -25700,8 +25700,8 @@
     </g>
     <g
        transform="translate(548.67449,146.70897)"
-       inkscape:label="gimp-prefs-folders"
-       id="gimp-prefs-folders-icon-themes"
+       inkscape:label="ligma-prefs-folders"
+       id="ligma-prefs-folders-icon-themes"
        style="display:inline">
       <path
          id="rect3845-9"
@@ -25719,16 +25719,16 @@
     </g>
     <g
        transform="translate(349.86659,9.54549)"
-       id="gimp-prefs-default-grid"
+       id="ligma-prefs-default-grid"
        style="display:inline">
       <g
          id="g6669"
-         inkscape:label="gimp-prefs-default-grid"
+         inkscape:label="ligma-prefs-default-grid"
          transform="translate(164.03761,-46.768919)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75">
         <g
-           inkscape:label="gimp-grid"
+           inkscape:label="ligma-grid"
            id="g6196"
            style="display:inline"
            transform="translate(-26.000198,-399)">
@@ -25768,8 +25768,8 @@
          y="55.849789">folders</tspan></text>
     <g
        transform="translate(517.24039,29.82554)"
-       inkscape:label="gimp-prefs-system-rescources"
-       id="gimp-prefs-system-resources"
+       inkscape:label="ligma-prefs-system-rescources"
+       id="ligma-prefs-system-resources"
        style="display:inline">
       <rect
          style="fill:none;stroke:none"
@@ -25937,8 +25937,8 @@
     </g>
     <g
        transform="translate(525.13769,103.03393)"
-       inkscape:label="gimp-prefs-folders"
-       id="gimp-prefs-folders-tool-presets"
+       inkscape:label="ligma-prefs-folders"
+       id="ligma-prefs-folders-tool-presets"
        style="display:inline">
       <path
          id="rect3845-47"
@@ -25956,13 +25956,13 @@
     </g>
     <g
        transform="translate(427.47509,7.68569)"
-       id="gimp-prefs-toolbox"
+       id="ligma-prefs-toolbox"
        style="display:inline">
       <g
          style="display:inline"
          transform="translate(166.42902,-0.2098)"
-         id="gimp-tools-8"
-         inkscape:label="gimp-tools"
+         id="ligma-tools-8"
+         inkscape:label="ligma-tools"
          inkscape:export-xdpi="90"
          inkscape:export-ydpi="90">
         <rect
@@ -25980,7 +25980,7 @@
            style="fill:url(#linearGradient8047);fill-opacity:1;stroke:none" />
       </g>
       <g
-         id="gimp-prefs-toolbox-paint-2"
+         id="ligma-prefs-toolbox-paint-2"
          transform="translate(180.63518,-1051.31)"
          inkscape:label="#g4012">
         <path
@@ -26014,7 +26014,7 @@
         </g>
       </g>
       <g
-         id="gimp-prefs-toolbox-paint-1"
+         id="ligma-prefs-toolbox-paint-1"
          inkscape:label="#g6622"
          transform="translate(-11.412943,2.7123002)">
         <path
@@ -26049,7 +26049,7 @@
     <g
        style="display:inline;opacity:1;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-opacity:1"
        transform="translate(632.24039,-1075.236)"
-       id="gimp-prefs-playground">
+       id="ligma-prefs-playground">
       <path
          style="opacity:1;fill:url(#linearGradient8240);fill-opacity:1;stroke:url(#linearGradient8252);stroke-width:0.94302762;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path4371"
@@ -26105,9 +26105,9 @@
     <g
        inkscape:export-ydpi="180"
        inkscape:export-xdpi="180"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/48/gimp-prefs-folders.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/48/ligma-prefs-folders.png"
        transform="translate(-770.41944,-160.39062)"
-       id="gimp-prefs-folders-24"
+       id="ligma-prefs-folders-24"
        style="display:inline">
       <rect
          transform="matrix(1.0008752,0,0,1,634.41222,167.42187)"
@@ -26118,7 +26118,7 @@
          x="776.92291"
          y="29.292892" />
       <g
-         id="gimp-prefs-folders-2"
+         id="ligma-prefs-folders-2"
          transform="translate(36.000055,7.9999951)">
         <rect
            y="196.71477"
@@ -26188,8 +26188,8 @@
     <g
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/22/gimp-prefs-folders.png"
-       id="gimp-prefs-folders"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/22/ligma-prefs-folders.png"
+       id="ligma-prefs-folders"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -26240,8 +26240,8 @@
     <g
        inkscape:export-ydpi="88"
        inkscape:export-xdpi="88"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/22/gimp-prefs-import-export.png"
-       id="gimp-prefs-import-export"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/22/ligma-prefs-import-export.png"
+       id="ligma-prefs-import-export"
        transform="translate(705.59569,-1085.0453)"
        style="display:inline">
       <rect
@@ -26283,9 +26283,9 @@
          sodipodi:nodetypes="ccccccccccc" />
     </g>
     <g
-       inkscape:label="gimp-prefs-image-windows-appearance"
+       inkscape:label="ligma-prefs-image-windows-appearance"
        transform="translate(631.24039,-13.52412)"
-       id="gimp-prefs-image-windows-appearance"
+       id="ligma-prefs-image-windows-appearance"
        style="display:inline">
       <g
          id="g4327">
@@ -26295,7 +26295,7 @@
            id="preferences-5">
           <g
              transform="translate(117.50524,197.96911)"
-             id="gimp-prefs-image-windows-4">
+             id="ligma-prefs-image-windows-4">
             <path
                style="fill:url(#linearGradient7490-2);fill-opacity:1;stroke:none"
                d="M 16,1 V 15 H 30 V 1 Z m 1,1 H 29 V 3 H 17 Z m 0,2.09375 H 29 V 13 H 17 Z"
@@ -26311,16 +26311,16 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-prefs-image-windows-snapping"
+       inkscape:label="ligma-prefs-image-windows-snapping"
        transform="translate(654.57649,-58.22342)"
-       id="gimp-prefs-image-windows-snapping"
+       id="ligma-prefs-image-windows-snapping"
        style="display:inline">
       <g
          id="preferences-9"
          style="display:inline"
          transform="translate(-132.50525,-197.96911)">
         <g
-           id="gimp-prefs-image-windows-2"
+           id="ligma-prefs-image-windows-2"
            transform="translate(117.50524,197.96911)">
           <path
              inkscape:connector-curvature="0"
@@ -26360,7 +26360,7 @@
       </g>
     </g>
     <path
-       id="gimp-prefs-tool-options"
+       id="ligma-prefs-tool-options"
        d="m 747.56502,0.794287 c -0.29223,0 -0.8827,0.3166 -0.9375,0.5332 l -0.8418,1.4668001 h -6.2207 v 9.9999999 h 2.14063 l -1.12891,3.125 c -0.0739,0.21997 0.0556,0.76471 0.33984,0.85742 0.31174,0.10167 0.76167,-0.24998 0.78907,-0.5 l 0.5996,-1.48242 h 10.5293 l 0.56641,1.67578 c 0.12786,0.26684 0.44747,0.36736 0.67578,0.26758 0.23745,-0.11679 0.39997,-0.63306 0.28125,-0.81641 l -0.93164,-3.12695 h 2.11523 l 0.0234,-9.9999999 h -6.11719 L 748.43803,1.227877 c -0.18671,-0.24378 -0.58547,-0.43359 -0.87305,-0.43359 z m 0,1 0.44727,1.0000001 h -0.83985 z m 3,2.0000001 1.16992,1.1699199 h 1.66016 v 1.66016 l 1.16992,1.16992 -1.16992,1.16992 v 1.66016 h -1.66016 l -1.16992,1.16992 -1.16992,-1.16992 h -1.66016 v -1.66016 l -1.16992,-1.16992 1.16992,-1.16992 v -1.66016 h 1.66016 z m -3.08203,0.3828099 c 0.0753,0.0383 0.0966,0.15191 0.0195,0.31836 -0.95865,1.54121 -1.20816,2.82276 -3.42187,5.20899 -0.22372,-0.46818 -0.65448,-0.79365 -1.15625,-0.8125 1.86996,-2.57484 2.21156,-2.5898 4.21093,-4.57422 0.14218,-0.14111 0.27238,-0.17888 0.34766,-0.14063 z m 3.08203,1.4961 v 4.24218 c 1.17065,0 2.12109,-0.95042 2.12109,-2.12109 0,-1.17067 -0.95044,-2.12109 -2.12109,-2.12109 z m -7.83984,3.64843 c 0.5179,-0.0122 0.92103,0.41155 1.02148,0.77735 0.169,0.61541 -0.14745,1.11851 -0.56836,1.39062 -0.80743,0.522 -2.75595,0.40129 -2.88476,-0.0976 1.36054,4.9e-4 1.22222,-1.48181 1.88281,-1.89453 0.19137,-0.11957 0.37619,-0.17171 0.54883,-0.17579 z m 0.51953,3.47266 h 8.91992 l 0.28711,1 h -9.72656 z"
        style="display:inline;fill:url(#linearGradient8041);fill-opacity:1;stroke-width:0.08724019"
        inkscape:connector-curvature="0"
@@ -26381,8 +26381,8 @@
        inkscape:export-ydpi="270"
        inkscape:export-xdpi="270"
        transform="translate(591.64539,146.43547)"
-       inkscape:label="gimp-prefs-folders-mypaint-brushes"
-       id="gimp-prefs-folders-mypaint-brushes"
+       inkscape:label="ligma-prefs-folders-mypaint-brushes"
+       id="ligma-prefs-folders-mypaint-brushes"
        style="display:inline">
       <path
          inkscape:connector-curvature="0"
@@ -26422,7 +26422,7 @@
        x="-362.13486"
        height="16"
        width="16"
-       id="gimp-base-16"
+       id="ligma-base-16"
        style="display:inline;opacity:1;fill:url(#linearGradient10824);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
@@ -26442,7 +26442,7 @@
        x="-22.924406"
        height="24"
        width="24"
-       id="gimp-base-24"
+       id="ligma-base-24"
        style="display:inline;opacity:1;fill:url(#linearGradient10824-8);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        transform="translate(-222.41744,-119.86663)" />
     <rect
@@ -26513,7 +26513,7 @@
       <g
          transform="translate(-96.544889,-433.28258)"
          style="display:inline"
-         id="gimp-edit">
+         id="ligma-edit">
         <rect
            transform="translate(241.0002,217)"
            y="182"
@@ -26781,8 +26781,8 @@
       <g
          transform="translate(-141.0002,517.3622)"
          style="display:inline"
-         id="gimp-question-6"
-         inkscape:label="gimp-question">
+         id="ligma-question-6"
+         inkscape:label="ligma-question">
         <rect
            inkscape:label="a"
            y="519"
@@ -27045,7 +27045,7 @@
          sodipodi:nodetypes="cccc" />
       <g
          id="g932"
-         inkscape:label="gimp-save-tool-preset">
+         inkscape:label="ligma-save-tool-preset">
         <g
            inkscape:label="document-save"
            transform="translate(-118.9998,-119)"
@@ -27091,7 +27091,7 @@
       <g
          transform="translate(-41.0002,617.3622)"
          style="display:inline"
-         id="gimp-save" />
+         id="ligma-save" />
       <g
          id="layer12"
          transform="translate(-101,389.3622)">
@@ -27145,7 +27145,7 @@
        inkscape:label="edit-delete"
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/edit-delete.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/16/edit-delete.png"
        id="edit-delete"
        transform="matrix(1.7777778,0,0,1.7777778,-17.489114,-1025.8788)"
        style="display:inline">
@@ -27159,7 +27159,7 @@
     <g
        inkscape:export-ydpi="423.35001"
        inkscape:export-xdpi="423.35001"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/folder-new.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/16/folder-new.png"
        transform="translate(-75.793188,858.87448)"
        inkscape:label="folder-new"
        id="folder-new"
@@ -28180,7 +28180,7 @@
          id="preferences-6">
         <g
            transform="translate(289.15566,155.46232)"
-           id="gimp-prefs-image-title-3">
+           id="ligma-prefs-image-title-3">
           <g
              id="g724-9"
              transform="translate(-20,20)">
@@ -28325,7 +28325,7 @@
          y="292.76666" />
     </g>
     <g
-       inkscape:label="gimp-error"
+       inkscape:label="ligma-error"
        id="dialog-error"
        style="display:inline;stroke:none;stroke-width:1.00044"
        transform="translate(7.133846,369.34433)">
@@ -28344,7 +28344,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="#gimp-text-dir-ltr-24"
+       inkscape:label="#ligma-text-dir-ltr-24"
        id="format-text-direction-ltr"
        transform="matrix(1.0008752,0,0,1,177.60269,-223.66504)"
        style="display:inline">
@@ -28386,7 +28386,7 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-text-dir-rtl-24"
+       inkscape:label="#ligma-text-dir-rtl-24"
        id="format-text-direction-rtl"
        transform="matrix(1.0008752,0,0,1,134.83067,-223.56399)"
        style="display:inline">
@@ -28430,7 +28430,7 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-rotate-270"
+       inkscape:label="ligma-rotate-270"
        id="object-rotate-left"
        style="display:inline"
        transform="matrix(1.0008752,0,0,1,76.961466,543.71479)">
@@ -28452,7 +28452,7 @@
     <g
        transform="matrix(-1.0008752,0,0,1,245.20165,543.71479)"
        id="object-rotate-right"
-       inkscape:label="gimp-rotate-90"
+       inkscape:label="ligma-rotate-90"
        style="display:inline">
       <rect
          transform="matrix(0,-1,-1,0,0,0)"
@@ -28470,7 +28470,7 @@
          style="fill:url(#linearGradient7180);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-question"
+       inkscape:label="ligma-question"
        id="dialog-question"
        style="display:inline"
        transform="matrix(1.0008752,0,0,1,90.891457,248.75017)">
@@ -28702,8 +28702,8 @@
      inkscape:groupmode="layer">
     <g
        style="stroke-width:1.02783155"
-       inkscape:label="gimp-convert-grayscale"
-       id="gimp-convert-grayscale"
+       inkscape:label="ligma-convert-grayscale"
+       id="ligma-convert-grayscale"
        transform="matrix(0.99752709,0,0,0.99839696,117.41397,195.24472)">
       <rect
          style="opacity:0;fill:none;stroke:none;stroke-width:1.02783155"
@@ -28820,8 +28820,8 @@
          y="23.812208">templates </tspan></text>
     <g
        style="stroke-width:1.02739298"
-       inkscape:label="gimp-convert-indexed"
-       id="gimp-convert-indexed"
+       inkscape:label="ligma-convert-indexed"
+       id="ligma-convert-indexed"
        transform="matrix(0.9975534,0,0,0.99922335,136.56808,195.59291)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.02739298"
@@ -28951,7 +28951,7 @@
     </g>
     <g
        transform="translate(-72.145306,-94.027404)"
-       id="gimp-gradient-shapeburst-angular">
+       id="ligma-gradient-shapeburst-angular">
       <g
          id="g4039"
          transform="translate(250.20643,-811.77068)">
@@ -29033,7 +29033,7 @@
          style="display:inline;opacity:0.38500001;fill:url(#linearGradient6850-6);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
-       id="gimp-gradient-shapeburst-spherical"
+       id="ligma-gradient-shapeburst-spherical"
        transform="translate(197.90779,-905.79808)">
       <rect
          style="fill:none;stroke:none"
@@ -29106,7 +29106,7 @@
          y="1043.8622" />
     </g>
     <g
-       id="gimp-gradient-spiral-clockwise"
+       id="ligma-gradient-spiral-clockwise"
        transform="translate(158.21445,-906.61058)">
       <rect
          style="fill:none;stroke:none"
@@ -29143,8 +29143,8 @@
          transform="scale(-1,1)" />
     </g>
     <g
-       inkscape:label="gimp-anchor"
-       id="gimp-anchor"
+       inkscape:label="ligma-anchor"
+       id="ligma-anchor"
        style="display:inline"
        transform="translate(-293.80351,-320.70738)">
       <rect
@@ -29168,8 +29168,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-duplicate"
-       id="gimp-duplicate"
+       inkscape:label="ligma-duplicate"
+       id="ligma-duplicate"
        style="display:inline"
        transform="translate(128.23639,-12.519605)">
       <rect
@@ -29193,8 +29193,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-cap-square"
-       id="gimp-cap-square"
+       inkscape:label="ligma-cap-square"
+       id="ligma-cap-square"
        style="display:inline"
        transform="translate(-84.78405,-188.7071)">
       <rect
@@ -29220,13 +29220,13 @@
          y="406" />
     </g>
     <g
-       inkscape:label="gimp-cap-round"
-       id="gimp-cap-round"
+       inkscape:label="ligma-cap-round"
+       id="ligma-cap-round"
        style="display:inline"
        transform="translate(-124.56869,-188.7071)">
       <g
          id="g896"
-         inkscape:label="gimp-cap-round">
+         inkscape:label="ligma-cap-round">
         <rect
            style="opacity:0.3;fill:none;stroke:none"
            id="rect30018"
@@ -29249,8 +29249,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-cap-butt"
-       id="gimp-cap-butt"
+       inkscape:label="ligma-cap-butt"
+       id="ligma-cap-butt"
        style="display:inline"
        transform="translate(-164.3533,-188.7071)">
       <rect
@@ -29284,8 +29284,8 @@
          y="405" />
     </g>
     <g
-       inkscape:label="gimp-gradient-bilinear"
-       id="gimp-gradient-bilinear"
+       inkscape:label="ligma-gradient-bilinear"
+       id="ligma-gradient-bilinear"
        style="display:inline"
        transform="translate(-2.9655948,-328.00321)">
       <rect
@@ -29486,8 +29486,8 @@
          transform="scale(-1,1)" />
     </g>
     <g
-       inkscape:label="gimp-gradient-conical-asymmetric"
-       id="gimp-gradient-conical-asymmetric"
+       inkscape:label="ligma-gradient-conical-asymmetric"
+       id="ligma-gradient-conical-asymmetric"
        style="display:inline"
        transform="translate(-2.7171208,-328.00321)">
       <rect
@@ -29596,8 +29596,8 @@
     <g
        inkscape:transform-center-y="5.0643736"
        inkscape:transform-center-x="-9.284685"
-       inkscape:label="gimp-gradient-conical-symmetric"
-       id="gimp-gradient-conical-symmetric"
+       inkscape:label="ligma-gradient-conical-symmetric"
+       id="ligma-gradient-conical-symmetric"
        style="display:inline"
        transform="translate(156.96463,-348.1784)">
       <rect
@@ -29638,8 +29638,8 @@
          style="opacity:0.3;fill:url(#linearGradient7498);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-gradient-radial"
-       id="gimp-gradient-radial"
+       inkscape:label="ligma-gradient-radial"
+       id="ligma-gradient-radial"
        style="display:inline"
        transform="translate(57.52097,-348.00321)">
       <rect
@@ -29671,8 +29671,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-color-pick-from-screen"
-       id="gimp-color-pick-from-screen"
+       inkscape:label="ligma-color-pick-from-screen"
+       id="ligma-color-pick-from-screen"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912555,0,0,1,-102.30783,-254.7071)">
       <rect
@@ -29721,8 +29721,8 @@
          rx="1.1972495" />
     </g>
     <g
-       inkscape:label="gimp-device-status"
-       id="gimp-device-status"
+       inkscape:label="ligma-device-status"
+       id="ligma-device-status"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912557,0,0,1,145.47531,-577.7071)">
       <rect
@@ -29753,8 +29753,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-dynamics"
-       id="gimp-dynamics"
+       inkscape:label="ligma-dynamics"
+       id="ligma-dynamics"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912557,0,0,1,168.4552,-237.7071)">
       <rect
@@ -29788,8 +29788,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-controller-keyboard"
-       id="gimp-controller-keyboard"
+       inkscape:label="ligma-controller-keyboard"
+       id="ligma-controller-keyboard"
        style="display:inline;stroke-width:1.00043762"
        transform="matrix(0.99912545,0,0,1,57.574319,-613.2446)">
       <rect
@@ -29956,8 +29956,8 @@
          id="path18333" />
     </g>
     <g
-       inkscape:label="gimp-controller-midi"
-       id="gimp-controller-midi"
+       inkscape:label="ligma-controller-midi"
+       id="ligma-controller-midi"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912557,0,0,1,77.488997,-613.2446)">
       <rect
@@ -29974,8 +29974,8 @@
          id="rect18381" />
     </g>
     <g
-       inkscape:label="gimp-controller-wheel"
-       id="gimp-controller-wheel"
+       inkscape:label="ligma-controller-wheel"
+       id="ligma-controller-wheel"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912557,0,0,1,75.105302,-613.2446)">
       <path
@@ -30001,8 +30001,8 @@
          rx="2.0017505" />
     </g>
     <g
-       inkscape:label="gimp-cursor"
-       id="gimp-cursor"
+       inkscape:label="ligma-cursor"
+       id="ligma-cursor"
        style="display:inline;stroke-width:1.0004375"
        transform="matrix(0.99912557,0,0,1,-111.29996,-221.7071)">
       <rect
@@ -30021,8 +30021,8 @@
          sodipodi:nodetypes="ccccccccccc" />
     </g>
     <g
-       inkscape:label="gimp-display-filter"
-       id="gimp-display-filter"
+       inkscape:label="ligma-display-filter"
+       id="ligma-display-filter"
        style="display:inline"
        transform="translate(58.104984,-534.12103)">
       <rect
@@ -30053,8 +30053,8 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7103);fill-opacity:1;stroke:none;stroke-width:1.00960875;marker:none;enable-background:accumulate" />
     </g>
     <g
-       inkscape:label="gimp-template"
-       id="gimp-template"
+       inkscape:label="ligma-template"
+       id="ligma-template"
        style="display:inline"
        transform="translate(114.42696,-623.51069)">
       <rect
@@ -30102,8 +30102,8 @@
          transform="translate(241.0002,217)" />
     </g>
     <g
-       inkscape:label="gimp-web"
-       id="gimp-web"
+       inkscape:label="ligma-web"
+       id="ligma-web"
        style="display:inline"
        transform="translate(-22.002448,-602.71282)">
       <g
@@ -30143,8 +30143,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-video"
-       id="gimp-video"
+       inkscape:label="ligma-video"
+       id="ligma-video"
        style="display:inline"
        transform="translate(-62.51008,-602.71279)">
       <g
@@ -30174,7 +30174,7 @@
     </g>
     <g
        transform="translate(-72.07276,-94.027402)"
-       id="gimp-gradient-square">
+       id="ligma-gradient-square">
       <g
          transform="matrix(-1,0,0,1,198.34393,-811.4582)"
          id="g4011">
@@ -30185,8 +30185,8 @@
              id="g4016-6"
              transform="translate(23.625,1.1875)">
             <g
-               inkscape:label="gimp-gradient-conical-asymmetric"
-               id="gimp-gradient-conical-asymmetric-1"
+               inkscape:label="ligma-gradient-conical-asymmetric"
+               id="ligma-gradient-conical-asymmetric-1"
                style="display:inline"
                transform="translate(-204.6252,556.1747)">
               <rect
@@ -30248,10 +30248,10 @@
     </g>
     <g
        style="stroke-width:1.0004375"
-       inkscape:label="gimp-controller-linux-input"
+       inkscape:label="ligma-controller-linux-input"
        inkscape:transform-center-y="81.29939"
        inkscape:transform-center-x="-14.261457"
-       id="gimp-controller-linux-input"
+       id="ligma-controller-linux-input"
        transform="matrix(0.99912557,0,0,1,137.07007,-1050.6063)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.0004375"
@@ -30281,15 +30281,15 @@
          inkscape:transform-center-y="2.9119729" />
     </g>
     <g
-       inkscape:label="gimp-gradient-linear"
-       id="gimp-gradient-linear"
+       inkscape:label="ligma-gradient-linear"
+       id="ligma-gradient-linear"
        style="display:inline"
        transform="translate(-3.9301308,-328.00322)">
       <g
          transform="translate(20,302)"
          style="display:inline"
          id="g1279"
-         inkscape:label="gimp-tool-gradient">
+         inkscape:label="ligma-tool-gradient">
         <g
            inkscape:label="blend"
            id="g1281">
@@ -30466,7 +30466,7 @@
       </g>
     </g>
     <g
-       id="gimp-gradient-spiral-anticlockwise"
+       id="ligma-gradient-spiral-anticlockwise"
        transform="translate(138.36782,-905.79808)">
       <rect
          style="fill:none;stroke:none"
@@ -30502,8 +30502,8 @@
          d="m 7.802619,1044.4117 c 0.1393202,0.1703 -0.1607985,0.2719 -0.2830168,0.2316 -0.3312038,-0.1091 -0.3422698,-0.5484 -0.180102,-0.7976 0.2900801,-0.4458 0.9267947,-0.4377 1.312169,-0.1286 0.5655523,0.4535 0.536579,1.3105 0.077187,1.8267 -0.6122968,0.688 -1.696223,0.6369 -2.3413213,0.026 -0.8117904,-0.7691 -0.7380637,-2.0828 0.025727,-2.8559 0.9250532,-0.9363 2.4699474,-0.8396 3.3704735,0.077 1.0612389,1.0805 0.9415149,2.8574 -0.1286419,3.8851 -1.2355381,1.1864 -3.2450628,1.0435 -4.3996259,-0.1801 -1.3118879,-1.3904 -1.1457607,-3.6329 0.2315567,-4.9142 1.5451419,-1.4375 4.0208119,-1.2481 5.428778,0.283 1.563109,1.6998 1.350404,4.4088 -0.334471,5.9433 -1.8543143,1.6889 -4.7969046,1.4529 -6.4579306,-0.3859 -1.8146469,-2.0088 -1.5552716,-5.185 0.437386,-6.9725 2.1632429,-1.9405 5.5732036,-1.6578 7.4870826,0.4889 2.066377,2.3176 1.76028,5.9614 -0.540301,8.0016" />
     </g>
     <g
-       inkscape:label="gimp-channel-alpha"
-       id="gimp-channel-alpha"
+       inkscape:label="ligma-channel-alpha"
+       id="ligma-channel-alpha"
        transform="matrix(0.9963388,0,0,0.9963388,118.52117,-1097.7836)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7266);stroke-width:1.0587945;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30526,8 +30526,8 @@
            style="fill:url(#linearGradient9247);fill-opacity:1;stroke-width:1.22771px">α</tspan></text>
     </g>
     <g
-       inkscape:label="gimp-channel-blue"
-       id="gimp-channel-blue"
+       inkscape:label="ligma-channel-blue"
+       id="ligma-channel-blue"
        transform="translate(178.56419,-1101.6917)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7232);stroke-width:1.05491805;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30559,8 +30559,8 @@
          y="1038.3622" />
     </g>
     <g
-       inkscape:label="gimp-channel-gray"
-       id="gimp-channel-gray"
+       inkscape:label="ligma-channel-gray"
+       id="ligma-channel-gray"
        transform="matrix(0.9963388,0,0,0.9963388,199.10302,-1097.7836)">
       <g
          id="g4222">
@@ -30581,8 +30581,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-channel-green"
-       id="gimp-channel-green"
+       inkscape:label="ligma-channel-green"
+       id="ligma-channel-green"
        transform="translate(158.39091,-1101.6917)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7243);stroke-width:1.05491805;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30614,8 +30614,8 @@
          y="1038.3622" />
     </g>
     <g
-       inkscape:label="gimp-channel-indexed"
-       id="gimp-channel-indexed"
+       inkscape:label="ligma-channel-indexed"
+       id="ligma-channel-indexed"
        transform="matrix(0.9963388,0,0,0.9963388,219.61441,-1097.7836)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7274);stroke-width:1.0587945;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30901,8 +30901,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-channel-red"
-       id="gimp-channel-red"
+       inkscape:label="ligma-channel-red"
+       id="ligma-channel-red"
        transform="translate(137.04261,-1101.6917)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7252);stroke-width:1.05491805;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30934,8 +30934,8 @@
          y="1038.3622" />
     </g>
     <g
-       inkscape:label="gimp-channels"
-       id="gimp-channels"
+       inkscape:label="ligma-channels"
+       id="ligma-channels"
        transform="matrix(0.9963388,0,0,0.9963388,200.48959,-1119.7292)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient7192);stroke-width:1.0587945;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -30967,9 +30967,9 @@
          y="1039.3622" />
     </g>
     <g
-       inkscape:label="gimp-convert-rgb"
+       inkscape:label="ligma-convert-rgb"
        style="stroke-width:1.02783048"
-       id="gimp-convert-rgb"
+       id="ligma-convert-rgb"
        transform="matrix(0.99753043,0,0,0.99839575,157.91638,195.60613)">
       <g
          style="stroke-width:1.02783048"
@@ -31039,8 +31039,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-close-12"
-       id="gimp-close"
+       inkscape:label="ligma-close-12"
+       id="ligma-close"
        transform="translate(610.15177,-1098.537)">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.92307693;stroke-opacity:1"
@@ -31066,15 +31066,15 @@
          id="rect4375" />
     </g>
     <g
-       id="gimp-zoom-follow-window"
+       id="ligma-zoom-follow-window"
        transform="translate(610.15177,-1056.0517)">
       <g
          id="g4400">
         <g
            inkscape:export-ydpi="67.5"
            inkscape:export-xdpi="67.5"
-           inkscape:label="gimp-zoom-follow-window"
-           id="gimp-zoom-follow-window-2-6"
+           inkscape:label="ligma-zoom-follow-window"
+           id="ligma-zoom-follow-window-2-6"
            style="display:inline"
            transform="matrix(0.75,0,0,0.75,-135.75015,756.1122)">
           <path
@@ -31101,7 +31101,7 @@
     </g>
     <g
        transform="matrix(-1,0,0,1,622.15177,-1013.5663)"
-       id="gimp-menu-right">
+       id="ligma-menu-right">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.92307693;stroke-opacity:1"
          id="rect4384-9"
@@ -31127,7 +31127,7 @@
          sodipodi:nodetypes="cccc" />
     </g>
     <g
-       id="gimp-menu-left"
+       id="ligma-menu-left"
        transform="translate(610.15177,-1034.809)">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.92307693;stroke-opacity:1"
@@ -31154,7 +31154,7 @@
          sodipodi:nodetypes="cccc" />
     </g>
     <g
-       id="gimp-quick-mask-off"
+       id="ligma-quick-mask-off"
        transform="translate(610.15177,-989.70053)">
       <path
          style="opacity:0.3;fill:url(#linearGradient7927);fill-opacity:1;stroke:none;stroke-width:1.00349033"
@@ -31277,7 +31277,7 @@
          style="fill:url(#linearGradient7961);fill-opacity:1;stroke:none" />
     </g>
     <g
-       id="gimp-quick-mask-on"
+       id="ligma-quick-mask-on"
        transform="translate(610.15177,-968.45783)">
       <path
          id="rect17271"
@@ -31287,13 +31287,13 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-swap-colors"
+       id="ligma-swap-colors"
        transform="translate(610.15177,-1077.2943)">
       <g
          transform="matrix(0.85714286,0,0,0.79876989,-35.143029,529.1679)"
          style="display:inline"
-         id="gimp-swap-colors-7"
-         inkscape:label="gimp-swap-colors"
+         id="ligma-swap-colors-7"
+         inkscape:label="ligma-swap-colors"
          inkscape:export-xdpi="67.5"
          inkscape:export-ydpi="67.5">
         <path
@@ -31336,9 +31336,9 @@
          x="644.771"
          y="-71.707039">18px</tspan></text>
     <g
-       inkscape:label="#gimp-color-picker-black-18"
+       inkscape:label="#ligma-color-picker-black-18"
        transform="translate(651.23388,-1095.9051)"
-       id="gimp-color-picker-black">
+       id="ligma-color-picker-black">
       <rect
          style="display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:0.99862194"
          id="rect12977-2"
@@ -31380,9 +31380,9 @@
          style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5" />
     </g>
     <g
-       inkscape:label="#gimp-color-picker-white-18"
+       inkscape:label="#ligma-color-picker-white-18"
        transform="translate(651.23388,-1066.9583)"
-       id="gimp-color-picker-white">
+       id="ligma-color-picker-white">
       <rect
          style="display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:0.99862194"
          id="rect12977"
@@ -31424,9 +31424,9 @@
          style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.5" />
     </g>
     <g
-       inkscape:label="#gimp-color-picker-gray-18"
+       inkscape:label="#ligma-color-picker-gray-18"
        transform="translate(651.23388,-1038.0114)"
-       id="gimp-color-picker-gray">
+       id="ligma-color-picker-gray">
       <rect
          style="display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:0.99862194"
          id="rect12977-8"
@@ -31468,8 +31468,8 @@
          style="display:inline;opacity:1;fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:1.5" />
     </g>
     <g
-       inkscape:label="gimp-linked"
-       id="gimp-linked-12"
+       inkscape:label="ligma-linked"
+       id="ligma-linked-12"
        style="display:inline"
        transform="matrix(0.75,0,0,0.75,474.40162,-356.10295)">
       <rect
@@ -31503,8 +31503,8 @@
          ry="0" />
     </g>
     <g
-       inkscape:label="gimp-linked"
-       id="gimp-linked-20"
+       inkscape:label="ligma-linked"
+       id="ligma-linked-20"
        style="display:inline"
        transform="matrix(1.25,0,0,1.25,423.98363,-704.24861)">
       <rect
@@ -31559,8 +31559,8 @@
          x="650.09821"
          y="32.143501">20px</tspan></text>
     <g
-       inkscape:label="gimp-visible"
-       id="gimp-visible-12"
+       inkscape:label="ligma-visible"
+       id="ligma-visible-12"
        style="display:inline"
        transform="matrix(0.75,0,0,0.75,474.40162,-199.86027)">
       <rect
@@ -31587,13 +31587,13 @@
          sodipodi:nodetypes="scscsscscs" />
     </g>
     <g
-       id="gimp-visible-20"
+       id="ligma-visible-20"
        transform="translate(650.23388,-954.48942)">
       <g
          transform="matrix(1.25,0,0,1.25,-226.25025,508.6122)"
          style="display:inline"
-         id="gimp-visible-5"
-         inkscape:label="gimp-visible"
+         id="ligma-visible-5"
+         inkscape:label="ligma-visible"
          inkscape:export-xdpi="112.5"
          inkscape:export-ydpi="112.5">
         <rect
@@ -31621,8 +31621,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-controller"
-       id="gimp-controller"
+       inkscape:label="ligma-controller"
+       id="ligma-controller"
        transform="translate(175.98238,-1074.7291)">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.12729526;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -31638,8 +31638,8 @@
          style="fill:url(#linearGradient7168);fill-opacity:1;stroke-width:0.69999999" />
     </g>
     <g
-       inkscape:label="#gimp-display-filter-colorblind"
-       id="gimp-display-filter-colorblind"
+       inkscape:label="#ligma-display-filter-colorblind"
+       id="ligma-display-filter-colorblind"
        transform="translate(140.25903,-950.37641)">
       <rect
          style="fill:none;stroke:none"
@@ -31737,8 +31737,8 @@
          sodipodi:nodetypes="sssscscccccscsscsssscssss" />
     </g>
     <g
-       inkscape:label="#gimp-display-filter-contrast"
-       id="gimp-display-filter-contrast"
+       inkscape:label="#ligma-display-filter-contrast"
+       id="ligma-display-filter-contrast"
        transform="translate(161.99728,-950.39862)">
       <rect
          style="fill:none;stroke:none"
@@ -31791,8 +31791,8 @@
          sodipodi:nodetypes="sssscscccccscsscsssscssss" />
     </g>
     <g
-       inkscape:label="#gimp-display-filter-gamma"
-       id="gimp-display-filter-gamma"
+       inkscape:label="#ligma-display-filter-gamma"
+       id="ligma-display-filter-gamma"
        transform="translate(183.73543,-949.87153)">
       <rect
          style="fill:none;stroke:none"
@@ -31822,8 +31822,8 @@
            sodipodi:role="line">γ</tspan></text>
     </g>
     <g
-       inkscape:label="#gimp-display-filter-lcms"
-       id="gimp-display-filter-lcms"
+       inkscape:label="#ligma-display-filter-lcms"
+       id="ligma-display-filter-lcms"
        transform="translate(205.47363,-949.80178)">
       <rect
          style="fill:none;stroke:none"
@@ -31841,8 +31841,8 @@
          sodipodi:nodetypes="sssscscccccscsscsssscssss" />
       <g
          style="display:inline"
-         id="gimp-prefs-color-management-2"
-         inkscape:label="gimp-prefs-color-management"
+         id="ligma-prefs-color-management-2"
+         inkscape:label="ligma-prefs-color-management"
          transform="matrix(0.75,0,0,0.75,-24.283847,1053.3102)">
         <g
            id="g14498-89">
@@ -31894,8 +31894,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-display-filter-proof"
-       id="gimp-display-filter-proof"
+       inkscape:label="ligma-display-filter-proof"
+       id="ligma-display-filter-proof"
        transform="translate(227.21187,-949.80178)">
       <rect
          style="fill:none;stroke:none"
@@ -31963,9 +31963,9 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-vfill-24"
+       inkscape:label="#ligma-vfill-24"
        transform="rotate(-90,-408.42234,362.03324)"
-       id="gimp-vfill">
+       id="ligma-vfill">
       <path
          style="fill:url(#linearGradient10028);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 10,1034.3622 -5,6.0352 5,5.9648 v -4.041 c 1.332094,-0.029 2.666585,-0.071 4,-0.051 v 4.0918 l 5,-5.9648 -5,-6.0352 v 4.0195 c -1.334105,-0.013 -2.667576,-0.014 -4,0 z"
@@ -32006,8 +32006,8 @@
          x="290.04266"
          y="-77.470657">24px</tspan></text>
     <g
-       inkscape:label="#gimp-hfill-24"
-       id="gimp-hfill"
+       inkscape:label="#ligma-hfill-24"
+       id="ligma-hfill"
        transform="translate(257.40705,-1069.3703)">
       <path
          style="fill:url(#linearGradient10036);fill-opacity:1;stroke:none;stroke-width:1.20939934"
@@ -32039,9 +32039,9 @@
          y="1028.3622" />
     </g>
     <g
-       inkscape:label="#gimp-hcenter-24"
+       inkscape:label="#ligma-hcenter-24"
        transform="rotate(90,660.93004,650.67506)"
-       id="gimp-hcenter">
+       id="ligma-hcenter">
       <path
          style="fill:url(#linearGradient10048);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 18,1047.3622 -6.0352,-5 -5.9648,5 h 4.041 c 0.029,1.3321 -0.041,4 -0.041,4 h 4 c 0,0 -0.01,-2.6676 -0.019,-4 z"
@@ -32072,8 +32072,8 @@
          sodipodi:nodetypes="cccccccc" />
     </g>
     <g
-       inkscape:label="#gimp-vcenter-24"
-       id="gimp-vcenter"
+       inkscape:label="#ligma-vcenter-24"
+       id="ligma-vcenter"
        transform="translate(259.54652,-1008.9466)">
       <path
          style="fill:url(#linearGradient10054);fill-opacity:1;stroke:none;stroke-width:1.20939934"
@@ -32105,9 +32105,9 @@
          sodipodi:nodetypes="cccccccc" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-north-24"
+       inkscape:label="#ligma-gravity-north-24"
        transform="rotate(90,631.9265,679.0817)"
-       id="gimp-gravity-north">
+       id="ligma-gravity-north">
       <path
          style="fill:url(#linearGradient7453);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 10,1034.3622 -5,6.0352 5,5.9648 v -4.041 c 1.332094,-0.029 9,0.041 9,0.041 v -4 c 0,0 -7.667576,0.01 -9,0.019 z"
@@ -32131,8 +32131,8 @@
          y="1028.3622" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-west-24"
-       id="gimp-gravity-west"
+       inkscape:label="#ligma-gravity-west-24"
+       id="ligma-gravity-west"
        transform="translate(259.83972,-952.94841)">
       <path
          style="fill:url(#linearGradient7447);fill-opacity:1;stroke:none;stroke-width:1.20939934"
@@ -32157,9 +32157,9 @@
          y="1028.3622" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-east-24"
+       inkscape:label="#ligma-gravity-east-24"
        transform="matrix(-1,0,0,1,318.78947,-952.94841)"
-       id="gimp-gravity-east">
+       id="ligma-gravity-east">
       <path
          style="fill:url(#linearGradient7429);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 10,1034.3622 -5,6.0352 5,5.9648 v -4.041 c 1.332094,-0.029 9,0.041 9,0.041 v -4 c 0,0 -7.667576,0.01 -9,0.019 z"
@@ -32183,9 +32183,9 @@
          y="1028.3622" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-south-24"
+       inkscape:label="#ligma-gravity-south-24"
        transform="matrix(0,-1,-1,0,1347.0819,71.155223)"
-       id="gimp-gravity-south">
+       id="ligma-gravity-south">
       <path
          style="fill:url(#linearGradient7423);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 10,1034.3622 -5,6.0352 5,5.9648 v -4.041 c 1.332094,-0.029 9,0.041 9,0.041 v -4 c 0,0 -7.667576,0.01 -9,0.019 z"
@@ -32209,8 +32209,8 @@
          y="1028.3622" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-north-west-24"
-       id="gimp-gravity-north-west"
+       inkscape:label="#ligma-gravity-north-west-24"
+       id="ligma-gravity-north-west"
        transform="translate(294.52267,-1098.7512)">
       <path
          style="fill:url(#linearGradient7387);fill-opacity:1;stroke:none;stroke-width:1.20939934"
@@ -32235,9 +32235,9 @@
          transform="rotate(90)" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-north-east-24"
+       inkscape:label="#ligma-gravity-north-east-24"
        transform="matrix(-1,0,0,1,318.43135,-1069.3703)"
-       id="gimp-gravity-north-east">
+       id="ligma-gravity-north-east">
       <path
          style="fill:url(#linearGradient7369);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="M 16.394674,1035.3552 8,1035.3622 l -0.013365,8.5549 2.831407,-2.8832 c 0.970754,0.9126 6.392644,6.3353 6.392644,6.3353 l 2.802679,-2.854 c 0,0 -5.477729,-5.3653 -6.434683,-6.2925 z"
@@ -32261,9 +32261,9 @@
          transform="rotate(90)" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-south-east-24"
+       inkscape:label="#ligma-gravity-south-east-24"
        transform="rotate(180,160.09574,521.0536)"
-       id="gimp-gravity-south-east">
+       id="ligma-gravity-south-east">
       <path
          style="fill:url(#linearGradient7393);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="M 16.394674,1035.3552 8,1035.3622 l -0.013365,8.5549 2.831407,-2.8832 c 0.970754,0.9126 6.392644,6.3353 6.392644,6.3353 l 2.802679,-2.854 c 0,0 -5.477729,-5.3653 -6.434683,-6.2925 z"
@@ -32287,8 +32287,8 @@
          transform="rotate(90)" />
     </g>
     <g
-       inkscape:label="gimp-color-triangle"
-       id="gimp-color-triangle"
+       inkscape:label="ligma-color-triangle"
+       id="ligma-color-triangle"
        transform="translate(-35.71881,-777.11489)">
       <path
          sodipodi:type="star"
@@ -32331,9 +32331,9 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="#gimp-gravity-south-west-24"
+       inkscape:label="#ligma-gravity-south-west-24"
        transform="matrix(1,0,0,-1,295.36433,1071.7778)"
-       id="gimp-gravity-south-west">
+       id="ligma-gravity-south-west">
       <path
          style="fill:url(#linearGradient7405);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="M 16.394674,1035.3552 8,1035.3622 l -0.013365,8.5549 2.831407,-2.8832 c 0.970754,0.9126 6.392644,6.3353 6.392644,6.3353 l 2.802679,-2.854 c 0,0 -5.477729,-5.3653 -6.434683,-6.2925 z"
@@ -32357,12 +32357,12 @@
          transform="rotate(90)" />
     </g>
     <g
-       inkscape:label="#gimp-hchain-broken-24"
+       inkscape:label="#ligma-hchain-broken-24"
        inkscape:export-ydpi="96"
        inkscape:export-xdpi="96"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-hchain-broken.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-hchain-broken.png"
        transform="rotate(-90,-372.37779,325.67069)"
-       id="gimp-hchain-broken">
+       id="ligma-hchain-broken">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect4380"
@@ -32406,11 +32406,11 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-vchain-broken-24"
+       inkscape:label="#ligma-vchain-broken-24"
        inkscape:export-ydpi="96"
        inkscape:export-xdpi="96"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-vchain-broken.png"
-       id="gimp-vchain-broken"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-vchain-broken.png"
+       id="ligma-vchain-broken"
        transform="translate(331.31288,-1069.0693)">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
@@ -32455,9 +32455,9 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-vchain-24"
+       inkscape:label="#ligma-vchain-24"
        transform="rotate(-90,-341.87772,355.17159)"
-       id="gimp-vchain">
+       id="ligma-vchain">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect4380-9"
@@ -32479,8 +32479,8 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-hchain-24"
-       id="gimp-hchain"
+       inkscape:label="#ligma-hchain-24"
+       id="ligma-hchain"
        transform="translate(331.1821,-1008.9466)">
       <rect
          style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
@@ -32514,7 +32514,7 @@
            id="rect10341" /></flowRegion><flowPara
          id="flowPara10343" /></flowRoot>
     <g
-       id="gimp-gradient-shapeburst-dimpled"
+       id="ligma-gradient-shapeburst-dimpled"
        transform="translate(217.7544,-905.79808)">
       <g
          id="g4056">
@@ -32577,8 +32577,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-curve-smooth"
-       id="gimp-curve-smooth"
+       inkscape:label="ligma-curve-smooth"
+       id="ligma-curve-smooth"
        transform="matrix(0.99912557,0,0,1,34.43802,-702.67126)"
        style="display:inline;stroke-width:1.0004375">
       <rect
@@ -32611,8 +32611,8 @@
     </g>
     <g
        style="stroke-width:1.0004375"
-       inkscape:label="gimp-curve-free"
-       id="gimp-curve-free"
+       inkscape:label="ligma-curve-free"
+       id="ligma-curve-free"
        transform="matrix(0.99912557,0,0,1,11.057238,-702.67126)">
       <g
          style="stroke-width:1.0004375"
@@ -32642,8 +32642,8 @@
       <g
          transform="translate(-196.5002,516.5497)"
          style="display:inline;stroke-width:1.0004375"
-         id="gimp-curve-free-0"
-         inkscape:label="gimp-curve-free"
+         id="ligma-curve-free-0"
+         inkscape:label="ligma-curve-free"
          inkscape:export-xdpi="90"
          inkscape:export-ydpi="90">
         <path
@@ -32655,8 +32655,8 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-default-colors-12"
-       id="gimp-default-colors"
+       inkscape:label="#ligma-default-colors-12"
+       id="ligma-default-colors"
        transform="translate(610.15177,-909.15903)">
       <rect
          style="opacity:1;fill:url(#linearGradient8040);fill-opacity:1;stroke:none;stroke-width:0.43368483;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
@@ -32697,7 +32697,7 @@
        id="rect8663"
        style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.61777443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <g
-       id="gimp-move-to-screen"
+       id="ligma-move-to-screen"
        transform="matrix(0.99912557,0,0,1,367.29243,-1069.3703)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
@@ -32845,7 +32845,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,368.93595,-1038.6171)"
-       id="gimp-resize-24">
+       id="ligma-resize-24">
       <g
          id="g3997-6"
          transform="matrix(1.5000001,0,0,1.5000001,0,-526.18118)">
@@ -32945,7 +32945,7 @@
       </g>
     </g>
     <g
-       id="gimp-scale-24"
+       id="ligma-scale-24"
        transform="matrix(0.99912557,0,0,1,367.6129,-1008.9466)">
       <g
          id="g3997-0"
@@ -33014,7 +33014,7 @@
       </g>
     </g>
     <g
-       id="gimp-grid-24"
+       id="ligma-grid-24"
        transform="matrix(0.99912557,0,0,1,372.26666,-981.20696)">
       <rect
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:markers fill stroke"
@@ -33039,12 +33039,12 @@
     </g>
     <path
        sodipodi:nodetypes="cccccccccccccccccccccccccccccccc"
-       id="gimp-tool-options-24"
+       id="ligma-tool-options-24"
        d="m 395.13301,93.413761 v -15 h -9.16712 l -1.51385,-2.3496 c -0.27982,-0.3657 -0.87755,-0.6502 -1.30854,-0.6502 -0.43796,0 -1.3219,0.4756 -1.40402,0.8005 l -1.26351,2.1993 h -9.32198 v 15 h 2.99738 l -1.49869,6 h 1.49869 l 0.74934,-3 h 16.48557 l 0.74935,3 h 1.49869 l -1.49869,-6.0001 z m -11.98943,-16.5 0.74926,1.5 h -1.49869 z m -10.99046,2.5 h 21.98076 v 13 h -21.98076 z m 18.48382,15.5 h -14.98688 v -1.5 h 14.98688 z"
        style="fill:url(#linearGradient8952);fill-opacity:1;stroke-width:0.13080306"
        inkscape:connector-curvature="0" />
     <g
-       id="gimp-symmetry-24"
+       id="ligma-symmetry-24"
        transform="matrix(0.99912557,0,0,1,368.06559,-920.25336)">
       <rect
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7397024;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:markers fill stroke"
@@ -33089,7 +33089,7 @@
       </g>
     </g>
     <g
-       id="gimp-image-24"
+       id="ligma-image-24"
        transform="matrix(0.99912557,0,0,1,405.15978,-927.85683)">
       <rect
          style="opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.0215081;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:markers fill stroke"
@@ -33112,7 +33112,7 @@
          sodipodi:nodetypes="cccaccccccccccccccccccccccccccccccc" />
     </g>
     <g
-       id="gimp-images-24"
+       id="ligma-images-24"
        transform="matrix(0.99912557,0,0,1,405.15978,-960.94843)">
       <rect
          style="fill:none;stroke:none"
@@ -33135,8 +33135,8 @@
       <g
          transform="translate(-133.0002,665.3622)"
          style="display:inline"
-         id="gimp-image-7"
-         inkscape:label="gimp-image">
+         id="ligma-image-7"
+         inkscape:label="ligma-image">
         <rect
            transform="translate(241.0002,217)"
            y="162"
@@ -33160,7 +33160,7 @@
       </g>
     </g>
     <g
-       id="gimp-layer-24"
+       id="ligma-layer-24"
        transform="matrix(0.99912557,0,0,1,405.15977,-1098.7513)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
@@ -33180,8 +33180,8 @@
       <g
          transform="matrix(1.5,0,0,1.5,-61.500297,369.86224)"
          style="display:inline"
-         id="gimp-layers-2"
-         inkscape:label="gimp-layers">
+         id="ligma-layers-2"
+         inkscape:label="ligma-layers">
         <rect
            y="439"
            x="41.000198"
@@ -33210,7 +33210,7 @@
          sodipodi:nodetypes="ccccccc" />
     </g>
     <g
-       id="gimp-layer-mask-24"
+       id="ligma-layer-mask-24"
        transform="matrix(0.99912557,0,0,1,405.15978,-1069.3703)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
@@ -33241,7 +33241,7 @@
     </g>
     <g
        transform="matrix(1.4986883,0,0,1.5,405.15978,-1564.7982)"
-       id="gimp-layers-24">
+       id="ligma-layers-24">
       <rect
          style="fill:none;stroke:none"
          id="rect28186-4-07"
@@ -33284,7 +33284,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       id="gimp-text-layer-24"
+       id="ligma-text-layer-24"
        transform="matrix(0.99912557,0,0,1,405.15978,-1008.9466)">
       <rect
          style="opacity:0.3;fill:none;stroke:none;stroke-width:1.5"
@@ -33307,9 +33307,9 @@
          style="fill:url(#linearGradient8884);fill-opacity:1;stroke:none;stroke-width:1.53312325" />
     </g>
     <g
-       inkscape:label="gimp-center-24"
+       inkscape:label="ligma-center-24"
        transform="matrix(0.99912557,0,0,1,405.15978,47.155223)"
-       id="gimp-center-24">
+       id="ligma-center-24">
       <g
          transform="matrix(1.5,0,0,1.4998125,6.922215,-1558.8431)"
          id="g8-32"
@@ -33352,8 +33352,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-channel"
-       id="gimp-channel"
+       inkscape:label="ligma-channel"
+       id="ligma-channel"
        transform="matrix(0.99912557,0,0,1,178.70399,-1124.5988)">
       <path
          inkscape:connector-curvature="0"
@@ -33370,7 +33370,7 @@
     </g>
     <g
        transform="matrix(1.5364079,0,0,1.5377526,264.60062,-1444.1792)"
-       id="gimp-channel-24">
+       id="ligma-channel-24">
       <path
          inkscape:connector-curvature="0"
          id="rect4150-9"
@@ -33385,7 +33385,7 @@
          y="1040.0061" />
     </g>
     <g
-       id="gimp-channel-alpha-24"
+       id="ligma-channel-alpha-24"
        transform="matrix(0.99912557,0,0,1,295.89936,-878.26927)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9039);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -33408,7 +33408,7 @@
            style="fill:url(#linearGradient9253);fill-opacity:1;stroke-width:1.84156px">α</tspan></text>
     </g>
     <g
-       id="gimp-channels-24"
+       id="ligma-channels-24"
        transform="matrix(0.99912557,0,0,1,327.19781,-878.26927)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9045);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -33739,7 +33739,7 @@
       </g>
     </g>
     <g
-       id="gimp-channel-blue-24"
+       id="ligma-channel-blue-24"
        transform="matrix(0.99912557,0,0,1,262.41448,-841.93692)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9075);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -33771,7 +33771,7 @@
          y="1031.3622" />
     </g>
     <g
-       id="gimp-channel-gray-24"
+       id="ligma-channel-gray-24"
        transform="matrix(0.99912557,0,0,1,295.54757,-841.93692)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9069);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -33789,7 +33789,7 @@
          y="1032.3622" />
     </g>
     <g
-       id="gimp-channel-green-24"
+       id="ligma-channel-green-24"
        transform="matrix(0.99912557,0,0,1,328.68058,-841.93692)">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9063);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -33822,7 +33822,7 @@
     </g>
     <g
        transform="matrix(-0.99912557,0,0,1,384.13379,-841.93692)"
-       id="gimp-channel-red-24">
+       id="ligma-channel-red-24">
       <rect
          style="fill:none;fill-opacity:1;stroke:url(#linearGradient9057);stroke-width:1.00004363;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4150-2"
@@ -33853,7 +33853,7 @@
          y="1031.3622" />
     </g>
     <g
-       id="gimp-colormap-24"
+       id="ligma-colormap-24"
        transform="matrix(0.99912557,0,0,1,438.3644,-1095.8438)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49999976"
@@ -33897,7 +33897,7 @@
          y="1042.3622" />
     </g>
     <g
-       id="gimp-transparency-24"
+       id="ligma-transparency-24"
        style="display:inline"
        transform="matrix(1.4986881,0,0,1.5,196.65365,-605.59539)">
       <rect
@@ -34031,13 +34031,13 @@
          y="391" />
     </g>
     <g
-       id="gimp-web-24"
+       id="ligma-web-24"
        transform="matrix(0.99912557,0,0,1,437.52107,-1036.7594)">
       <g
          transform="matrix(1.6249983,0,0,1.625,-262.62505,-11.012787)"
          style="display:inline"
-         id="gimp-web-4"
-         inkscape:label="gimp-web">
+         id="ligma-web-4"
+         inkscape:label="ligma-web">
         <g
            inkscape:label="emblem-web"
            id="emblem-web-8"
@@ -34069,7 +34069,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-floating-selection-24"
+       id="ligma-floating-selection-24"
        transform="matrix(0.99912557,0,0,1,438.78607,-1005.1071)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
@@ -34089,8 +34089,8 @@
       <g
          transform="matrix(1.5,0,0,1.5,-61.500297,369.86224)"
          style="display:inline"
-         id="gimp-layers-46"
-         inkscape:label="gimp-layers">
+         id="ligma-layers-46"
+         inkscape:label="ligma-layers">
         <rect
            y="439"
            x="41.000198"
@@ -34114,10 +34114,10 @@
        sodipodi:nodetypes="ccccc"
        style="fill:url(#linearGradient9143);fill-opacity:1;stroke-width:1.42101562"
        inkscape:connector-curvature="0"
-       id="gimp-navigation-24"
+       id="ligma-navigation-24"
        d="m 450.77557,51.10911 -11.98951,24 11.98951,-6 11.98951,6 z" />
     <g
-       id="gimp-selection-24"
+       id="ligma-selection-24"
        transform="matrix(0.99912557,0,0,1,437.94274,86.963164)">
       <g
          id="g4004-7"
@@ -34145,7 +34145,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,438.29929,-917.1945)"
-       id="gimp-device-status-24">
+       id="ligma-device-status-24">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49934399"
          id="rect34968-5"
@@ -34172,8 +34172,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-display-filter"
-       id="gimp-display-filter-24"
+       inkscape:label="ligma-display-filter"
+       id="ligma-display-filter-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,262.07198,-869.90161)">
       <rect
@@ -34205,7 +34205,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient8975);fill-opacity:1;stroke:none;stroke-width:1.00960875;marker:none;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-display-filter-colorblind-24"
+       id="ligma-display-filter-colorblind-24"
        transform="matrix(0.99912557,0,0,1,472.84983,-940.45567)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49992847"
@@ -34303,7 +34303,7 @@
          sodipodi:nodetypes="sssscscccccscsscsssscssss" />
     </g>
     <g
-       id="gimp-display-filter-contrast-24"
+       id="ligma-display-filter-contrast-24"
        transform="matrix(0.99912557,0,0,1,472.84983,-909.41987)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49992847"
@@ -34356,7 +34356,7 @@
          style="fill:url(#linearGradient9105);fill-opacity:1;stroke:none;stroke-width:1.49992847" />
     </g>
     <g
-       id="gimp-display-filter-gamma-24"
+       id="ligma-display-filter-gamma-24"
        transform="matrix(0.99912557,0,0,1,472.12182,-876.72637)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49992847"
@@ -34386,7 +34386,7 @@
          style="fill:url(#linearGradient9147);fill-opacity:1;stroke:none;stroke-width:1.49992847" />
     </g>
     <g
-       id="gimp-display-filter-lcms-24"
+       id="ligma-display-filter-lcms-24"
        transform="matrix(0.99912557,0,0,1,472.12743,-843.29381)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49992847"
@@ -34445,7 +34445,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-display-filter-proof-24"
+       id="ligma-display-filter-proof-24"
        transform="matrix(0.99912557,0,0,1,473.19763,-811.28917)">
       <g
          id="g4392"
@@ -34517,13 +34517,13 @@
          style="fill:url(#linearGradient9187);fill-opacity:1;stroke:none;stroke-width:1.49992847" />
     </g>
     <g
-       id="gimp-cursor-24"
+       id="ligma-cursor-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,161.58049,130.43195)">
       <g
          transform="translate(-55.752028,-612.64312)"
          style="display:inline"
-         id="gimp-cursor-9">
+         id="ligma-cursor-9">
         <rect
            transform="translate(241.0002,217)"
            y="382"
@@ -34541,7 +34541,7 @@
       </g>
     </g>
     <g
-       id="gimp-controller-24"
+       id="ligma-controller-24"
        transform="matrix(0.99912557,0,0,1,505.05112,28.796765)">
       <rect
          y="-2.6074218e-05"
@@ -34557,7 +34557,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-controller-keyboard-24"
+       id="ligma-controller-keyboard-24"
        transform="matrix(0.99912557,0,0,1,506.24375,55.057789)">
       <rect
          style="fill:none;stroke:none"
@@ -34715,10 +34715,10 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1.0047633,506.24375,89.674321)"
-       id="gimp-controller-linux-input-24">
+       id="ligma-controller-linux-input-24">
       <g
          transform="matrix(1.5,0,0,1.5,5e-6,-1554.5426)"
-         id="gimp-controller-linux-input-4">
+         id="ligma-controller-linux-input-4">
         <rect
            y="1036.3619"
            x="0"
@@ -34734,13 +34734,13 @@
       </g>
     </g>
     <g
-       id="gimp-controller-midi-24"
+       id="ligma-controller-midi-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,272.61489,143.27101)">
       <g
          transform="translate(75.684484,-613.2446)"
          style="display:inline"
-         id="gimp-controller-midi-4">
+         id="ligma-controller-midi-4">
         <rect
            y="599"
            x="81.000198"
@@ -34756,13 +34756,13 @@
       </g>
     </g>
     <g
-       id="gimp-controller-wheel-24"
+       id="ligma-controller-wheel-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,243.64149,175.50048)">
       <g
          transform="translate(75.016984,-613.2446)"
          style="display:inline"
-         id="gimp-controller-wheel-8">
+         id="ligma-controller-wheel-8">
         <path
            inkscape:connector-curvature="0"
            id="rect5916-1"
@@ -34787,7 +34787,7 @@
       </g>
     </g>
     <g
-       id="gimp-sample-point-24"
+       id="ligma-sample-point-24"
        transform="matrix(0.99912557,0,0,1,508.62903,182.782)">
       <rect
          style="fill:none;stroke:none"
@@ -34859,7 +34859,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,402.48402,149.35886)"
-       id="gimp-info-24">
+       id="ligma-info-24">
       <rect
          style="fill:none;stroke:none"
          id="rect21704-2"
@@ -34896,7 +34896,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-user-manual-24"
+       id="ligma-user-manual-24"
        transform="matrix(0.99912557,0,0,1,437.0706,149.35888)">
       <rect
          style="fill:none;stroke:none"
@@ -34924,7 +34924,7 @@
     </g>
     <g
        transform="matrix(1.4986885,0,0,1.5000002,-405.19234,-391.45173)"
-       id="gimp-video-24"
+       id="ligma-video-24"
        style="display:inline">
       <g
          id="g1873-7">
@@ -34944,7 +34944,7 @@
       </g>
     </g>
     <g
-       id="gimp-char-picker-24"
+       id="ligma-char-picker-24"
        transform="matrix(0.99912557,0,0,1,402.19751,184.78149)">
       <rect
          style="display:inline;opacity:0;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -34977,7 +34977,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,541.30842,-65.987647)"
-       id="gimp-dynamics-24">
+       id="ligma-dynamics-24">
       <rect
          style="opacity:0.3;fill:none;stroke:none;stroke-width:1.5"
          id="rect13138-0"
@@ -35007,7 +35007,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-histogram-24"
+       id="ligma-histogram-24"
        transform="matrix(0.99912557,0,0,1,542.01999,-34.818635)">
       <rect
          style="fill:none;stroke:none;stroke-width:1.49999976"
@@ -35034,13 +35034,13 @@
       </g>
     </g>
     <g
-       id="gimp-input-device-24"
+       id="ligma-input-device-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,564.28722,-76.702159)">
       <g
          transform="matrix(0.99478793,0,0,1,-96.490026,-488.16554)"
          style="display:inline"
-         id="gimp-input-device-2">
+         id="ligma-input-device-2">
         <rect
            transform="translate(241.0002,217)"
            y="322"
@@ -35064,7 +35064,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,541.41095,33.861329)"
-       id="gimp-landscape-24">
+       id="ligma-landscape-24">
       <rect
          style="fill:none;stroke:none;stroke-width:1.5"
          id="rect8503-7"
@@ -35097,8 +35097,8 @@
          r="2.5" />
     </g>
     <g
-       inkscape:label="#gimp-letter-spacing-24"
-       id="gimp-letter-spacing"
+       inkscape:label="#ligma-letter-spacing-24"
+       id="ligma-letter-spacing"
        transform="matrix(0.99912557,0,0,1,291.74813,109.10491)">
       <rect
          style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -35125,8 +35125,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="#gimp-line-spacing-24"
-       id="gimp-line-spacing"
+       inkscape:label="#ligma-line-spacing-24"
+       id="ligma-line-spacing"
        transform="matrix(0.99912557,0,0,1,329.15834,110.45523)">
       <rect
          style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -35168,7 +35168,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,538.43678,63.63958)"
-       id="gimp-portrait-24">
+       id="ligma-portrait-24">
       <g
          id="g4268"
          transform="rotate(-90,12,12)">
@@ -35204,12 +35204,12 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-path-24"
+       id="ligma-path-24"
        style="display:inline"
        transform="matrix(1.4986883,0,0,1.5,466.30559,-16.292623)">
       <g
          transform="translate(48.149329,-962.42484)"
-         id="gimp-path-0">
+         id="ligma-path-0">
         <path
            sodipodi:nodetypes="csc"
            inkscape:connector-curvature="0"
@@ -35238,13 +35238,13 @@
       </g>
     </g>
     <g
-       id="gimp-paths-24"
+       id="ligma-paths-24"
        style="display:inline"
        transform="matrix(1.4986881,0,0,1.4999998,495.50048,14.720063)">
       <g
          transform="translate(-132.8914,-347.20086)"
          style="display:inline"
-         id="gimp-paths-2">
+         id="ligma-paths-2">
         <rect
            transform="translate(241.0002,217)"
            y="202"
@@ -35289,9 +35289,9 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-business-card"
+       inkscape:label="ligma-business-card"
        transform="matrix(0.99912557,0,0,1,200.42742,36.28718)"
-       id="gimp-business-card">
+       id="ligma-business-card">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:1.52554011;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect4238"
@@ -35354,8 +35354,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-center"
-       id="gimp-center"
+       inkscape:label="ligma-center"
+       id="ligma-center"
        style="display:inline"
        transform="matrix(0.99912557,0,0,1,92.65743,392.00983)">
       <g
@@ -35413,8 +35413,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-char-picker"
-       id="gimp-char-picker"
+       inkscape:label="ligma-char-picker"
+       id="ligma-char-picker"
        style="display:inline"
        transform="matrix(0.99912557,0,0,1,-129.28717,-92.954321)">
       <rect
@@ -35448,14 +35448,14 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.04574132;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       inkscape:label="gimp-colormap"
-       id="gimp-colormap"
+       inkscape:label="ligma-colormap"
+       id="ligma-colormap"
        style="display:inline"
        transform="matrix(0.99912557,0,0,1,-119.734,233.45844)">
       <g
          transform="translate(-96.911768,-488.16554)"
          style="display:inline"
-         id="gimp-colormap-6">
+         id="ligma-colormap-6">
         <rect
            transform="translate(241.0002,217)"
            y="322"
@@ -35499,9 +35499,9 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-clipboard"
+       inkscape:label="ligma-clipboard"
        transform="matrix(0.99912557,0,0,1,117.49999,285.2929)"
-       id="gimp-clipboard">
+       id="ligma-clipboard">
       <rect
          style="fill:none;stroke:none;stroke-width:0.99989343"
          id="rect14038-2"
@@ -35543,9 +35543,9 @@
          sodipodi:nodetypes="ccccccccccc" />
     </g>
     <g
-       inkscape:label="gimp-close-all"
+       inkscape:label="ligma-close-all"
        style="stroke-width:1.0003885"
-       id="gimp-close-all"
+       id="ligma-close-all"
        transform="matrix(0.99834979,0,0,1,48.564209,-3.7071047)">
       <path
          style="fill:url(#linearGradient10188-0);fill-opacity:1;stroke:none;stroke-width:0.71202481"
@@ -35601,8 +35601,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-color-cmyk"
-       id="gimp-color-cmyk"
+       inkscape:label="ligma-color-cmyk"
+       id="ligma-color-cmyk"
        transform="matrix(0.99912557,0,0,1,-61.343483,-777.11489)">
       <rect
          style="fill:none;stroke:none"
@@ -35672,9 +35672,9 @@
            y="1050.4872">K</tspan></text>
     </g>
     <g
-       inkscape:label="gimp-color-water"
+       inkscape:label="ligma-color-water"
        transform="matrix(0.99912557,0,0,1,-12.868422,259.24729)"
-       id="gimp-color-water">
+       id="ligma-color-water">
       <g
          id="g4294">
         <path
@@ -35713,9 +35713,9 @@
          id="path4299-3-6" />
     </g>
     <g
-       inkscape:label="gimp-display"
+       inkscape:label="ligma-display"
        transform="matrix(0.99912557,0,0,1,163.0589,366.4804)"
-       id="gimp-display">
+       id="ligma-display">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:1.33377314;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect4233"
@@ -35739,8 +35739,8 @@
       </g>
     </g>
     <g
-       inkscape:label="#gimp-display-filter-clip-warning"
-       id="gimp-display-filter-clip-warning"
+       inkscape:label="#ligma-display-filter-clip-warning"
+       id="ligma-display-filter-clip-warning"
        transform="matrix(3.7762226,0,0,3.7795276,118.52105,-1020.5336)">
       <g
          id="g22265">
@@ -35804,7 +35804,7 @@
          y="292.76666" />
     </g>
     <g
-       id="gimp-display-filter-clip-warning-24"
+       id="ligma-display-filter-clip-warning-24"
        transform="matrix(3.7762226,0,0,3.7795276,472.84395,-1041.7086)">
       <g
          id="g51743">
@@ -35891,15 +35891,15 @@
     <g
        inkscape:export-ydpi="192"
        inkscape:export-xdpi="192"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-attach.png"
-       inkscape:label="gimp-attach-12"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-attach.png"
+       inkscape:label="ligma-attach-12"
        transform="translate(0.08811033,-2.9999967)"
-       id="gimp-attach"
+       id="ligma-attach"
        style="display:inline">
       <g
          id="g6983"
          transform="translate(-0.00518497,-2.5439453e-6)"
-         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/LIGMA-icon-attach_detach/attach12.png"
          inkscape:export-xdpi="95.916092"
          inkscape:export-ydpi="95.916092">
         <g
@@ -35929,22 +35929,22 @@
          height="12"
          x="610.06366"
          y="174.79289"
-         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/LIGMA-icon-attach_detach/attach12.png"
          inkscape:export-xdpi="95.916092"
          inkscape:export-ydpi="95.916092" />
     </g>
     <g
        inkscape:export-ydpi="192"
        inkscape:export-xdpi="192"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-detach.png"
-       inkscape:label="gimp-detach-12"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-detach.png"
+       inkscape:label="ligma-detach-12"
        transform="translate(0.08817137,-2.9999967)"
-       id="gimp-detach"
+       id="ligma-detach"
        style="display:inline">
       <g
          id="g6185"
          transform="translate(-91.924803,16.999992)"
-         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/detach12.png"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/LIGMA-icon-attach_detach/detach12.png"
          inkscape:export-xdpi="95.916092"
          inkscape:export-ydpi="95.916092">
         <path
@@ -35967,14 +35967,14 @@
          height="12"
          x="610.0636"
          y="153.29289"
-         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/LIGMA-icon-attach_detach/attach12.png"
          inkscape:export-xdpi="95.916092"
          inkscape:export-ydpi="95.916092" />
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,8.9830972,278.74731)"
-       id="gimp-color-space-linear"
-       inkscape:label="gimp-color-space-linear">
+       id="ligma-color-space-linear"
+       inkscape:label="ligma-color-space-linear">
       <g
          id="g12339">
         <path
@@ -35991,8 +35991,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-color-space-perceptual"
-       id="gimp-color-space-perceptual"
+       inkscape:label="ligma-color-space-perceptual"
+       id="ligma-color-space-perceptual"
        transform="matrix(3.7762225,0,0,3.7795275,31.833698,-848.27231)">
       <g
          id="g10239">
@@ -36012,11 +36012,11 @@
     </g>
     <g
        transform="translate(-137.05794,50.878229)"
-       inkscape:label="gimp-file-manager"
-       id="gimp-file-manager">
+       inkscape:label="ligma-file-manager"
+       id="ligma-file-manager">
       <rect
          style="display:inline;opacity:0;fill:url(#linearGradient10824-6);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.19991253;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="gimp-base-16-9"
+         id="ligma-base-16-9"
          width="15.986009"
          height="16"
          x="85.703163"
@@ -36038,8 +36038,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-image-open"
-       id="gimp-image-open"
+       inkscape:label="ligma-image-open"
+       id="ligma-image-open"
        transform="matrix(0.99912557,0,0,1,-19.044457,-1040.0693)">
       <g
          id="g4256">
@@ -36079,9 +36079,9 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-image-reload"
+       inkscape:label="ligma-image-reload"
        transform="matrix(0.99912557,0,0,1,3.5160303,-3.7072497)"
-       id="gimp-image-reload">
+       id="ligma-image-reload">
       <g
          id="refresh-1"
          transform="matrix(0.44359232,0,0,0.43109129,18.091378,-432.8546)">
@@ -36112,8 +36112,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-pattern"
-       id="gimp-pattern"
+       inkscape:label="ligma-pattern"
+       id="ligma-pattern"
        transform="matrix(0.99912557,0,0,1,249.64999,-715.25682)">
       <g
          transform="translate(-255,249.00002)"
@@ -36171,24 +36171,24 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        style="display:inline;fill:url(#linearGradient6815);fill-opacity:1;stroke-width:0.9477582"
-       id="gimp-navigation" />
+       id="ligma-navigation" />
     <g
-       id="gimp-wilber-eek"
+       id="ligma-wilber-eek"
        transform="matrix(1,0,0,0.99990559,-35.112626,-1085.5267)"
        style="display:inline">
       <g
          transform="translate(-141.0002,397.36073)"
          style="display:inline"
-         id="gimp-wilber-4"
-         inkscape:label="gimp-wilber">
+         id="ligma-wilber-4"
+         inkscape:label="ligma-wilber">
         <g
-           inkscape:label="gimp"
-           id="gimp-9"
+           inkscape:label="ligma"
+           id="ligma-9"
            style="display:inline"
            transform="translate(-122.00001,443.99848)">
           <g
-             id="applications-gimp-7"
-             inkscape:label="applications-gimp">
+             id="applications-ligma-7"
+             inkscape:label="applications-ligma">
             <rect
                y="195.00299"
                x="263.00021"
@@ -36238,12 +36238,12 @@
        d="m 167.24036,319.40885 c -0.16005,-0.0114 -0.56256,0.17882 -0.60825,0.26595 -0.49476,2.07985 -0.43384,5.43212 0.35214,6.9479 0.67229,1.2965 2.72115,0.7646 3.80961,1.2965 -1.3056,0.0954 -2.62511,0 -3.13732,0.5319 -1.02443,1.06379 -0.30555,3.69275 0.51221,5.08626 0.52292,0.89106 1.58807,2.11537 2.56109,1.82839 1.07585,-0.77681 0,-3.19138 3.0733,-5.85086 v 0.0997 c -0.0728,0.0436 -0.13239,0.10499 -0.19209,0.16622 -0.0721,0.0739 -0.14301,0.14034 -0.19208,0.2327 -0.0954,0.16904 -0.13215,0.36911 -0.12805,0.56514 v 1.59575 c -0.007,0.56201 0.48315,1.06379 1.02443,1.06379 0.54128,0 1.03209,-0.50178 1.02444,-1.06379 v -1.59575 c 0.008,-0.39208 -0.21059,-0.78031 -0.54423,-0.96406 0.007,-0.0525 0.0237,-0.0368 0.032,-0.0997 3.0733,2.65948 1.9975,5.07405 3.07335,5.85086 0.97301,0.28698 2.03812,-0.93733 2.56103,-1.82839 0.81776,-1.39351 1.5367,-4.55437 0.51221,-5.08627 -0.64791,-0.33639 -1.83171,-0.43647 -3.13732,-0.53189 1.08851,-0.5319 3.13738,0 3.80961,-1.2965 0.78594,-1.51581 0.84691,-4.86805 0.35215,-6.9479 -0.0457,-0.0871 -0.4482,-0.27734 -0.60826,-0.26595 -0.66277,0.047 -1.27145,0.0675 -1.95282,0.26595 -2.01764,0.58796 -3.21784,3.87382 -4.12975,6.05032 -0.0224,-0.3246 -0.17588,-0.5856 -0.41618,-0.76461 0.0805,-0.30617 0.17537,-0.62864 0.25611,-0.96406 0.0945,-0.39218 0.18122,-0.79335 0.32014,-1.09704 0.0623,-0.13624 0.14595,-0.23788 0.22409,-0.33242 0.053,0.0193 0.10081,0.0332 0.16007,0.0332 0.28289,0 0.51222,-0.23814 0.51222,-0.5319 0,-0.29376 -0.22933,-0.5319 -0.51222,-0.5319 -0.28289,0 -0.51222,0.23814 -0.51222,0.5319 0,0.0357 -0.006,0.0659 0,0.0997 -0.1272,0.15743 -0.23065,0.33625 -0.32013,0.5319 -0.16521,0.36117 -0.28649,0.75784 -0.38416,1.16351 -0.0774,0.32121 -0.12743,0.61924 -0.19208,0.89758 -0.0455,-0.006 -0.0808,-0.0332 -0.12801,-0.0332 -0.0471,0 -0.0826,0.027 -0.12805,0.0332 -0.0646,-0.27834 -0.11474,-0.57637 -0.19208,-0.89758 -0.0976,-0.40567 -0.21896,-0.80234 -0.38417,-1.16351 -0.0894,-0.19565 -0.19293,-0.37447 -0.32013,-0.5319 0.006,-0.0337 0,-0.064 0,-0.0997 0,-0.29376 -0.22933,-0.5319 -0.51222,-0.5319 -0.28288,0 -0.51221,0.23814 -0.51221,0.5319 0,0.29376 0.22933,0.5319 0.51221,0.5319 0.0593,0 0.10711,-0.0139 0.16007,-0.0332 0.0782,0.0946 0.16181,0.19618 0.2241,0.33242 0.13891,0.30369 0.22568,0.70486 0.32013,1.09704 0.0782,0.32468 0.17731,0.63346 0.25611,0.93082 0.003,0.01 -0.003,0.0234 0,0.0332 -0.12174,0.0906 -0.21438,0.19614 -0.28812,0.33243 -0.0299,0.0553 -0.0759,0.10532 -0.096,0.16622 -0.009,0.0297 0.007,0.0686 0,0.0997 -0.0107,0.0455 -0.0273,0.0853 -0.032,0.13299 -0.91056,-2.17445 -2.12023,-5.43149 -4.12975,-6.01709 -0.68137,-0.1985 -1.29006,-0.21893 -1.95283,-0.26595 z m 6.46674,7.21385 c 0.0319,0.0248 0.0617,0.0452 0.096,0.0665 v 0.16622 c -0.0299,-0.0637 -0.0657,-0.16505 -0.096,-0.23271 z m 1.21651,0 c -0.0305,0.0677 -0.0661,0.16902 -0.096,0.2327 -0.0226,-0.0449 -0.0184,-0.0885 -0.032,-0.13297 0.0459,-0.0258 0.0868,-0.0672 0.12805,-0.0997 z"
        sodipodi:nodetypes="ccscsscccccccscccccsscsccccccccssssccccsccccssssccccccccccccccccccccc"
        inkscape:connector-curvature="0"
-       id="gimp-symmetry"
+       id="ligma-symmetry"
        style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7223);fill-opacity:1;stroke:none;stroke-width:2.08785558;marker:none;enable-background:accumulate" />
     <g
        transform="translate(81.652845,-532.95881)"
-       inkscape:label="gimp-wilber-outline"
-       id="gimp-wilber-outline"
+       inkscape:label="ligma-wilber-outline"
+       id="ligma-wilber-outline"
        style="display:inline">
       <rect
          style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -36345,8 +36345,8 @@
          id="tspan10174"
          sodipodi:role="line">stock</tspan></text>
     <g
-       inkscape:label="gimp-rotate-180"
-       id="gimp-rotate-180"
+       inkscape:label="ligma-rotate-180"
+       id="ligma-rotate-180"
        style="display:inline"
        transform="translate(-393.03385,376.29292)">
       <rect
@@ -36364,8 +36364,8 @@
          style="fill:url(#linearGradient7188);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-shape-circle"
-       id="gimp-shape-circle"
+       inkscape:label="ligma-shape-circle"
+       id="ligma-shape-circle"
        style="display:inline"
        transform="translate(-3.500206,-113.7071)">
       <rect
@@ -36385,8 +36385,8 @@
          transform="matrix(1.3333329,0,0,1.3333327,277.66682,166.33343)" />
     </g>
     <g
-       inkscape:label="gimp-shape-diamond"
-       id="gimp-shape-diamond"
+       inkscape:label="ligma-shape-diamond"
+       id="ligma-shape-diamond"
        style="display:inline"
        transform="translate(-0.52120383,-113.7071)">
       <rect
@@ -36405,8 +36405,8 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       inkscape:label="gimp-shape-square"
-       id="gimp-shape-square"
+       inkscape:label="ligma-shape-square"
+       id="ligma-shape-square"
        style="display:inline"
        transform="translate(2.4578211,-113.7071)">
       <rect
@@ -36427,8 +36427,8 @@
          transform="translate(241.0002,217)" />
     </g>
     <g
-       inkscape:label="gimp-grid"
-       id="gimp-grid"
+       inkscape:label="ligma-grid"
+       id="ligma-grid"
        style="display:inline"
        transform="translate(-80.436437,67.045679)">
       <rect
@@ -36447,8 +36447,8 @@
          style="fill:url(#linearGradient7248);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-image"
-       id="gimp-image"
+       inkscape:label="ligma-image"
+       id="ligma-image"
        style="display:inline"
        transform="translate(-143.40227,-401.7071)">
       <rect
@@ -36473,8 +36473,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-transparency"
-       id="gimp-transparency"
+       inkscape:label="ligma-transparency"
+       id="ligma-transparency"
        style="display:inline"
        transform="translate(58.614212,-466.16132)">
       <rect
@@ -36608,8 +36608,8 @@
          style="opacity:0.3;fill:url(#linearGradient7242);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-info"
-       id="gimp-info"
+       inkscape:label="ligma-info"
+       id="ligma-info"
        style="display:inline"
        transform="translate(145.20146,-11.003775)">
       <rect
@@ -36646,8 +36646,8 @@
          transform="translate(241.0002,217)" />
     </g>
     <g
-       inkscape:label="gimp-undo-history"
-       id="gimp-undo-history"
+       inkscape:label="ligma-undo-history"
+       id="ligma-undo-history"
        style="display:inline"
        transform="matrix(1,0,0,0.99993875,193.33889,-97.657872)">
       <path
@@ -36682,8 +36682,8 @@
          sodipodi:nodetypes="cccc" />
     </g>
     <g
-       inkscape:label="gimp-paths"
-       id="gimp-paths"
+       inkscape:label="ligma-paths"
+       id="ligma-paths"
        style="display:inline"
        transform="translate(-219.3533,-258.7071)">
       <rect
@@ -36732,8 +36732,8 @@
     <g
        inkscape:export-ydpi="112.5"
        inkscape:export-xdpi="112.5"
-       inkscape:label="gimp-visible"
-       id="gimp-visible"
+       inkscape:label="ligma-visible"
+       id="ligma-visible"
        style="display:inline"
        transform="translate(-118.89748,-515.7071)">
       <rect
@@ -36759,8 +36759,8 @@
          sodipodi:nodetypes="scscsscscs" />
     </g>
     <g
-       inkscape:label="gimp-merge-down"
-       id="gimp-merge-down"
+       inkscape:label="ligma-merge-down"
+       id="ligma-merge-down"
        style="display:inline"
        transform="translate(-209.32532,-400.7071)">
       <rect
@@ -36797,7 +36797,7 @@
          style="fill:url(#linearGradient7740);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-move-to-screen"
+       inkscape:label="ligma-move-to-screen"
        id="g8724"
        style="display:inline"
        transform="matrix(0.99912557,0,0,1,74.537394,-72.519605)">
@@ -36863,8 +36863,8 @@
          ry="0.5" />
     </g>
     <g
-       inkscape:label="gimp-selection-all"
-       id="gimp-selection-all"
+       inkscape:label="ligma-selection-all"
+       id="ligma-selection-all"
        style="display:inline"
        transform="translate(-140.9204,-344.33202)">
       <rect
@@ -37000,8 +37000,8 @@
          transform="translate(241.0002,217)" />
     </g>
     <g
-       inkscape:label="gimp-selection-border"
-       id="gimp-selection-border"
+       inkscape:label="ligma-selection-border"
+       id="ligma-selection-border"
        style="display:inline"
        transform="translate(-135.26359,-344.49363)">
       <rect
@@ -37107,8 +37107,8 @@
          y="465" />
     </g>
     <g
-       inkscape:label="gimp-selection-grow"
-       id="gimp-selection-grow"
+       inkscape:label="ligma-selection-grow"
+       id="ligma-selection-grow"
        style="display:inline"
        transform="translate(-202.86408,-343.53417)">
       <rect
@@ -37240,8 +37240,8 @@
          style="fill:url(#linearGradient8302);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-selection-intersect"
-       id="gimp-selection-intersect"
+       inkscape:label="ligma-selection-intersect"
+       id="ligma-selection-intersect"
        style="display:inline"
        transform="translate(-102.76176,-388.85257)">
       <rect
@@ -37421,8 +37421,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-selection-shrink"
-       id="gimp-selection-shrink"
+       inkscape:label="ligma-selection-shrink"
+       id="ligma-selection-shrink"
        style="display:inline"
        transform="translate(-102.21901,-388.85257)">
       <path
@@ -37577,8 +37577,8 @@
          style="opacity:0.3;fill:url(#linearGradient8063);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-selection-stroke"
-       id="gimp-selection-stroke"
+       inkscape:label="ligma-selection-stroke"
+       id="ligma-selection-stroke"
        style="display:inline"
        transform="matrix(1,0,0,0.999068,-101.94763,-388.40614)">
       <rect
@@ -37739,12 +37739,12 @@
          style="fill:url(#linearGradient8206);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-selection-subtract"
-       id="gimp-selection-subtract"
+       inkscape:label="ligma-selection-subtract"
+       id="ligma-selection-subtract"
        style="display:inline"
        transform="translate(-96.200529,-387.23327)">
       <g
-         inkscape:label="gimp-selection-intersect"
+         inkscape:label="ligma-selection-intersect"
          id="g1251"
          transform="translate(80)">
         <rect
@@ -37925,8 +37925,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-invert"
-       id="gimp-invert"
+       inkscape:label="ligma-invert"
+       id="ligma-invert"
        style="display:inline"
        transform="translate(-173.86862,-214.7071)">
       <rect
@@ -37956,8 +37956,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-landscape"
-       id="gimp-landscape"
+       inkscape:label="ligma-landscape"
+       id="ligma-landscape"
        style="display:inline"
        transform="translate(-78.426753,-542.7071)">
       <rect
@@ -37997,8 +37997,8 @@
          transform="matrix(0.765625,0,0,0.99999997,204.79706,217.5)" />
     </g>
     <g
-       inkscape:label="gimp-portrait"
-       id="gimp-portrait"
+       inkscape:label="ligma-portrait"
+       id="ligma-portrait"
        style="display:inline"
        transform="translate(-73.44774,-544.2071)">
       <rect
@@ -38035,8 +38035,8 @@
          sodipodi:nodetypes="ccccccc" />
     </g>
     <g
-       inkscape:label="gimp-sample-point"
-       id="gimp-sample-point"
+       inkscape:label="ligma-sample-point"
+       id="ligma-sample-point"
        style="display:inline"
        transform="translate(89.358137,-197.7071)">
       <rect
@@ -38109,8 +38109,8 @@
          ry="1" />
     </g>
     <g
-       inkscape:label="gimp-input-device"
-       id="gimp-input-device"
+       inkscape:label="ligma-input-device"
+       id="ligma-input-device"
        style="display:inline"
        transform="matrix(0.99478793,0,0,1,125.97791,-553.7714)">
       <rect
@@ -38135,8 +38135,8 @@
          style="display:inline;fill:url(#linearGradient7793);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-join-bevel"
-       id="gimp-join-bevel"
+       inkscape:label="ligma-join-bevel"
+       id="ligma-join-bevel"
        style="display:inline"
        transform="translate(-45.430251,-348.7071)">
       <rect
@@ -38211,12 +38211,12 @@
          y="573" />
     </g>
     <g
-       inkscape:label="gimp-join-miter"
-       id="gimp-join-miter"
+       inkscape:label="ligma-join-miter"
+       id="ligma-join-miter"
        style="display:inline"
        transform="translate(-104.99949,-348.7071)">
       <g
-         inkscape:label="gimp-join-bevel"
+         inkscape:label="ligma-join-bevel"
          id="g1529"
          transform="translate(20)">
         <rect
@@ -38292,8 +38292,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-join-round"
-       id="gimp-join-round"
+       inkscape:label="ligma-join-round"
+       id="ligma-join-round"
        style="display:inline"
        transform="translate(-105.21486,-348.7071)">
       <rect
@@ -38374,7 +38374,7 @@
          sodipodi:nodetypes="cccccccc" />
     </g>
     <g
-       id="gimp-histogram-linear"
+       id="ligma-histogram-linear"
        style="display:inline"
        transform="translate(-128.5754,-285.70711)">
       <rect
@@ -38402,8 +38402,8 @@
          sodipodi:nodetypes="ccccccccccccccccccccccc" />
     </g>
     <g
-       inkscape:label="gimp-linked"
-       id="gimp-linked"
+       inkscape:label="ligma-linked"
+       id="ligma-linked"
        style="display:inline"
        transform="translate(-157.42442,-700.70742)">
       <rect
@@ -38422,8 +38422,8 @@
          style="fill:url(#linearGradient7134);fill-opacity:1;stroke:none" />
     </g>
     <g
-       inkscape:label="gimp-paste-into"
-       id="gimp-paste-into"
+       inkscape:label="ligma-paste-into"
+       id="ligma-paste-into"
        style="display:inline"
        transform="translate(61.998846,-333.7071)">
       <rect
@@ -38723,8 +38723,8 @@
          ry="0.53033006" />
     </g>
     <g
-       inkscape:label="gimp-paste-as-new"
-       id="gimp-paste-as-new"
+       inkscape:label="ligma-paste-as-new"
+       id="ligma-paste-as-new"
        style="display:inline"
        transform="translate(99.249303,-333.7071)">
       <rect
@@ -38766,8 +38766,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-plugin"
-       id="gimp-plugin"
+       inkscape:label="ligma-plugin"
+       id="ligma-plugin"
        style="display:inline"
        transform="translate(-149.37549,-144.7071)">
       <rect
@@ -38825,18 +38825,18 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       inkscape:label="gimp-wilber"
-       id="gimp-wilber"
+       inkscape:label="ligma-wilber"
+       id="ligma-wilber"
        style="display:inline"
        transform="translate(-154.14394,-710.2063)">
       <g
          transform="translate(-122.00001,443.99848)"
          style="display:inline"
-         id="gimp"
-         inkscape:label="gimp">
+         id="ligma"
+         inkscape:label="ligma">
         <g
-           inkscape:label="applications-gimp"
-           id="applications-gimp">
+           inkscape:label="applications-ligma"
+           id="applications-ligma">
           <rect
              style="fill:none;stroke:none"
              id="rect5139"
@@ -38889,7 +38889,7 @@
       </g>
     </g>
     <g
-       id="gimp-floating-selection"
+       id="ligma-floating-selection"
        transform="translate(-15.261359,-999.06929)"
        style="display:inline">
       <g
@@ -38914,8 +38914,8 @@
           <g
              transform="translate(-41.000198,597.3622)"
              style="display:inline"
-             id="gimp-layers-6"
-             inkscape:label="gimp-layers">
+             id="ligma-layers-6"
+             inkscape:label="ligma-layers">
             <rect
                y="439"
                x="41.000198"
@@ -38948,7 +38948,7 @@
          x="-58.873447"
          y="81.175705">Selections</tspan></text>
     <g
-       id="gimp-histogram-logarithmic"
+       id="ligma-histogram-logarithmic"
        transform="translate(12.133922,-723.0693)"
        style="display:inline">
       <rect
@@ -38962,8 +38962,8 @@
       <g
          transform="translate(-161.0002,437.3622)"
          style="display:inline"
-         id="gimp-histogram-0"
-         inkscape:label="gimp-histogram">
+         id="ligma-histogram-0"
+         inkscape:label="ligma-histogram">
         <rect
            y="599"
            x="161.0002"
@@ -38990,7 +38990,7 @@
       </g>
     </g>
     <g
-       id="gimp-list"
+       id="ligma-list"
        transform="translate(17.583491,-590.3165)"
        style="display:inline">
       <rect
@@ -39073,7 +39073,7 @@
          d="m 3.5,1048.3622 a 1.5,1.5 0 0 1 -1.4988088,1.5 1.5,1.5 0 0 1 -1.50118931,-1.4976 1.5,1.5 0 0 1 1.49642451,-1.5024 1.5,1.5 0 0 1 1.503566,1.4952" />
     </g>
     <g
-       id="gimp-selection-to-channel"
+       id="ligma-selection-to-channel"
        transform="translate(-43.212664,-922.5182)"
        style="display:inline">
       <path
@@ -39196,7 +39196,7 @@
          y="1049.3624" />
     </g>
     <g
-       id="gimp-layer"
+       id="ligma-layer"
        transform="translate(-62.346105,-999.06911)"
        style="display:inline">
       <rect
@@ -39217,8 +39217,8 @@
       <g
          transform="translate(-41.000198,597.3622)"
          style="display:inline"
-         id="gimp-layers-4"
-         inkscape:label="gimp-layers">
+         id="ligma-layers-4"
+         inkscape:label="ligma-layers">
         <rect
            y="439"
            x="41.000198"
@@ -39247,7 +39247,7 @@
          sodipodi:nodetypes="ccccccc" />
     </g>
     <g
-       id="gimp-layers"
+       id="ligma-layers"
        transform="translate(-38.803734,-999.06929)"
        style="display:inline">
       <rect
@@ -39292,7 +39292,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       id="gimp-layer-mask"
+       id="ligma-layer-mask"
        transform="translate(78.908175,-999.06929)"
        style="display:inline">
       <rect
@@ -39323,7 +39323,7 @@
          sodipodi:nodetypes="cscscccccccccccccccc" />
     </g>
     <g
-       id="gimp-text-layer"
+       id="ligma-text-layer"
        style="display:inline"
        transform="translate(-112.71915,-381.70711)">
       <rect
@@ -39349,7 +39349,7 @@
          style="fill:url(#linearGradient7215);fill-opacity:1;stroke:none" />
     </g>
     <g
-       id="gimp-layer-to-imagesize"
+       id="ligma-layer-to-imagesize"
        transform="translate(55.36583,-999.06929)"
        style="display:inline">
       <path
@@ -39383,13 +39383,13 @@
     </g>
     <path
        sodipodi:nodetypes="cccccccccccccccccccccccccccccccc"
-       id="gimp-tool-options"
+       id="ligma-tool-options"
        d="m 181.45803,423.29288 v -9.99998 h -6.11677 l -1.01012,-1.56639 c -0.18671,-0.24378 -0.62208,-0.43351 -0.90966,-0.43351 -0.29223,0 -0.84549,0.3171 -0.90029,0.53371 l -0.84308,1.46619 h -6.22009 v 9.99998 h 2 l -1,3.99998 h 1 l 0.5,-1.99997 h 11.00001 l 0.5,1.99997 h 1 l -1,-4.0001 z m -7.99995,-11.00001 0.49994,1.00003 h -1 z m -7.00006,2.00002 h 14.00001 v 8 h -14.00001 z m 12.00001,9.99997 h -10.00001 v -0.99998 h 10.00001 z"
        style="display:inline;fill:url(#linearGradient7524);fill-opacity:1;stroke-width:0.08724019"
        inkscape:connector-curvature="0" />
     <g
        transform="matrix(1,0,0,1.000209,33.11972,-637.28845)"
-       id="gimp-reset"
+       id="ligma-reset"
        style="display:inline">
       <rect
          style="opacity:0;fill:none;stroke:none;stroke-width:0.99989283"
@@ -39416,7 +39416,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#linearGradient7302);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.99979103;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-path"
+       id="ligma-path"
        transform="translate(-34.874087,-873.56929)"
        style="display:inline">
       <path
@@ -39446,7 +39446,7 @@
          r="1.5" />
     </g>
     <g
-       id="gimp-path-stroke"
+       id="ligma-path-stroke"
        transform="translate(-8.4179418,-873.08625)"
        style="display:inline">
       <g
@@ -39561,7 +39561,7 @@
          d="m 7.9987865,1043.2925 a 2,2 0 0 1 -1.9288741,2.0685 2,2 0 0 1 -2.0686812,-1.9287 2,2 0 0 1 1.9283506,-2.0689 2,2 0 0 1 2.0691692,1.9281 L 6,1043.3622 Z" />
     </g>
     <g
-       id="gimp-selection-to-path"
+       id="ligma-selection-to-path"
        transform="translate(-61.76146,-923.3084)"
        style="display:inline">
       <g
@@ -39605,15 +39605,15 @@
            d="m 15.870991,1037.8622 a 1.3709913,1.3709913 0 0 1 -1.370991,1.371 1.3709913,1.3709913 0 0 1 -1.370991,-1.371 1.3709913,1.3709913 0 0 1 1.370991,-1.371 1.3709913,1.3709913 0 0 1 1.370991,1.371 z"
            style="opacity:1;fill:url(#linearGradient8224);fill-opacity:1;stroke:none;stroke-width:0.25801733;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <g
-           inkscape:label="gimp-selection"
-           id="gimp-selection-5"
+           inkscape:label="ligma-selection"
+           id="ligma-selection-5"
            style="display:inline"
            transform="matrix(1,0,0,0.99994375,-121.0002,577.38892)">
           <g
              transform="translate(80.000002,242)"
              style="display:inline"
              id="g1054-5"
-             inkscape:label="gimp-tool-rect-select">
+             inkscape:label="ligma-tool-rect-select">
             <rect
                y="222"
                x="43.000198"
@@ -39696,27 +39696,27 @@
       </g>
     </g>
     <g
-       id="gimp-tool-preset"
+       id="ligma-tool-preset"
        transform="translate(197.43004,-624.54262)"
        style="display:inline">
       <g
          style="display:inline"
-         id="gimp-tool-pencil-6"
-         inkscape:label="gimp-tool-pencil"
+         id="ligma-tool-pencil-6"
+         inkscape:label="ligma-tool-pencil"
          transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,158.05046,1101.0911)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75" />
       <g
          style="display:inline"
-         id="gimp-tool-pencil-7"
-         inkscape:label="gimp-tool-pencil"
+         id="ligma-tool-pencil-7"
+         inkscape:label="ligma-tool-pencil"
          transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,163.05046,1101.0911)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75" />
       <g
          style="display:inline"
-         id="gimp-tool-pencil-1"
-         inkscape:label="gimp-tool-pencil"
+         id="ligma-tool-pencil-1"
+         inkscape:label="ligma-tool-pencil"
          transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,167.05046,1101.0911)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75" />
@@ -39727,8 +39727,8 @@
            inkscape:export-ydpi="123.75"
            inkscape:export-xdpi="123.75"
            transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)"
-           inkscape:label="gimp-tool-pencil"
-           id="gimp-tool-pencil-3"
+           inkscape:label="ligma-tool-pencil"
+           id="ligma-tool-pencil-3"
            style="display:inline">
           <path
              style="fill:url(#linearGradient7620);fill-opacity:1;fill-rule:evenodd;stroke:none"
@@ -39760,8 +39760,8 @@
            inkscape:export-ydpi="123.75"
            inkscape:export-xdpi="123.75"
            transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)"
-           inkscape:label="gimp-tool-pencil"
-           id="gimp-tool-pencil-4"
+           inkscape:label="ligma-tool-pencil"
+           id="ligma-tool-pencil-4"
            style="display:inline">
           <path
              style="fill:url(#linearGradient7635);fill-opacity:1;fill-rule:evenodd;stroke:none"
@@ -39793,8 +39793,8 @@
            inkscape:export-ydpi="123.75"
            inkscape:export-xdpi="123.75"
            transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)"
-           inkscape:label="gimp-tool-pencil"
-           id="gimp-tool-pencil-4-5"
+           inkscape:label="ligma-tool-pencil"
+           id="ligma-tool-pencil-4-5"
            style="display:inline">
           <path
              style="fill:url(#linearGradient7637);fill-opacity:1;fill-rule:evenodd;stroke:none"
@@ -39826,8 +39826,8 @@
            inkscape:export-ydpi="123.75"
            inkscape:export-xdpi="123.75"
            transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)"
-           inkscape:label="gimp-tool-pencil"
-           id="gimp-tool-pencil-4-5-7"
+           inkscape:label="ligma-tool-pencil"
+           id="ligma-tool-pencil-4-5-7"
            style="display:inline">
           <path
              style="fill:url(#linearGradient7653);fill-opacity:1;fill-rule:evenodd;stroke:none"
@@ -39854,7 +39854,7 @@
       </g>
     </g>
     <g
-       id="gimp-reshow-filter"
+       id="ligma-reshow-filter"
        transform="translate(8.6904364,-637.0684)"
        style="display:inline">
       <g
@@ -39913,7 +39913,7 @@
          sodipodi:nodetypes="cccccccccccccsssssssccccssssssscccc" />
     </g>
     <g
-       id="gimp-resize"
+       id="ligma-resize"
        transform="translate(-41.519279,-1040.0693)"
        style="display:inline">
       <g
@@ -39979,7 +39979,7 @@
          id="path15603-2-4" />
     </g>
     <g
-       id="gimp-scale"
+       id="ligma-scale"
        transform="translate(26.034055,-1040.0693)"
        style="display:inline">
       <g
@@ -40048,7 +40048,7 @@
       </g>
     </g>
     <g
-       id="gimp-images"
+       id="ligma-images"
        transform="translate(-64.037103,-1040.0693)"
        style="display:inline">
       <g
@@ -40095,7 +40095,7 @@
       </g>
     </g>
     <g
-       id="gimp-histogram"
+       id="ligma-histogram"
        transform="translate(56.048962,-723.0693)"
        style="display:inline">
       <rect
@@ -40109,8 +40109,8 @@
       <g
          transform="translate(-161.0002,437.3622)"
          style="display:inline"
-         id="gimp-histogram-6"
-         inkscape:label="gimp-histogram">
+         id="ligma-histogram-6"
+         inkscape:label="ligma-histogram">
         <rect
            y="599"
            x="161.0002"
@@ -40137,7 +40137,7 @@
       </g>
     </g>
     <g
-       id="gimp-selection-none"
+       id="ligma-selection-none"
        transform="translate(-42.369445,-947.06924)"
        style="display:inline">
       <rect
@@ -40150,7 +40150,7 @@
       <g
          transform="translate(-205.81398,812.54849)"
          style="display:inline"
-         id="gimp-selection-none-8">
+         id="ligma-selection-none-8">
         <path
            inkscape:connector-curvature="0"
            id="path30301-8"
@@ -40328,7 +40328,7 @@
       </g>
     </g>
     <g
-       id="gimp-selection-add"
+       id="ligma-selection-add"
        transform="translate(45.07107,-945.28747)"
        style="display:inline">
       <rect
@@ -40349,8 +40349,8 @@
       <g
          transform="translate(-41.0002,557.3622)"
          style="display:inline"
-         id="gimp-selection-intersect-0"
-         inkscape:label="gimp-selection-intersect">
+         id="ligma-selection-intersect-0"
+         inkscape:label="ligma-selection-intersect">
         <rect
            transform="translate(241.0002,217)"
            y="262"
@@ -40529,7 +40529,7 @@
       </g>
     </g>
     <g
-       id="gimp-selection-replace"
+       id="ligma-selection-replace"
        transform="translate(44.685458,-920.37092)"
        style="display:inline">
       <rect
@@ -40749,7 +40749,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-user-manual"
+       id="ligma-user-manual"
        transform="translate(-52.353091,-562.06928)"
        style="display:inline">
       <rect
@@ -40773,7 +40773,7 @@
          sodipodi:nodetypes="ccccc" />
     </g>
     <g
-       id="gimp-selection"
+       id="ligma-selection"
        transform="matrix(0.99912557,0,0,1,6.9413301,-968.67591)"
        style="display:inline">
       <g
@@ -40801,7 +40801,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient9115);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.99999094;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-dashboard"
+       id="ligma-dashboard"
        transform="matrix(3.7762226,0,0,3.7795276,188.14325,-786.73113)"
        style="display:inline">
       <path
@@ -40818,13 +40818,13 @@
          y="292.76666" />
     </g>
     <g
-       inkscape:label="gimp-group-layer"
+       inkscape:label="ligma-group-layer"
        transform="matrix(0.99912557,0,0,1,-144.63209,-184.99302)"
        style="display:inline"
-       id="gimp-group-layer">
+       id="ligma-group-layer">
       <g
          transform="translate(161.61693,262.28591)"
-         id="gimp-prefs-folders-8">
+         id="ligma-prefs-folders-8">
         <path
            inkscape:connector-curvature="0"
            style="display:inline;fill:url(#linearGradient8286);fill-opacity:1;stroke:none"
@@ -40839,8 +40839,8 @@
       </g>
     </g>
     <g
-       inkscape:label="gimp-shred"
-       id="gimp-shred"
+       inkscape:label="ligma-shred"
+       id="ligma-shred"
        transform="matrix(0.99912557,0,0,1,-5.3959265,-590.31657)">
       <g
          id="g4247">
@@ -40902,12 +40902,12 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,-597.40826,-496.80269)"
-       inkscape:label="gimp-smartphone"
-       id="gimp-smartphone">
+       inkscape:label="ligma-smartphone"
+       id="ligma-smartphone">
       <rect
          transform="matrix(1.0008752,0,0,1,634.41222,167.42187)"
          style="display:inline;opacity:0;fill:url(#linearGradient10824-5);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.19991253;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="gimp-base-16-4"
+         id="ligma-base-16-4"
          width="15.986009"
          height="16"
          x="143.50162"
@@ -40930,28 +40930,28 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,537.64313,152.90261)"
-       id="gimp-tool-preset-24"
+       id="ligma-tool-preset-24"
        style="display:inline">
       <g
          id="g4349">
         <g
            transform="matrix(-0.84758274,0.83489574,-0.82495318,-0.85779805,237.07563,97.09331)"
-           id="gimp-tool-pencil-6-1"
+           id="ligma-tool-pencil-6-1"
            style="display:inline" />
         <g
            transform="matrix(-0.84758274,0.83489574,-0.82495318,-0.85779805,244.57563,97.09331)"
-           id="gimp-tool-pencil-7-2"
+           id="ligma-tool-pencil-7-2"
            style="display:inline" />
         <g
            transform="matrix(-0.84758274,0.83489574,-0.82495318,-0.85779805,250.57563,97.09331)"
-           id="gimp-tool-pencil-1-3"
+           id="ligma-tool-pencil-1-3"
            style="display:inline" />
         <g
            transform="matrix(1.3333324,0,0,1.4946627,1.0000029,-1549.0119)"
            id="g4421-9">
           <g
              style="display:inline"
-             id="gimp-tool-pencil-3-6"
+             id="ligma-tool-pencil-3-6"
              transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)">
             <path
                inkscape:connector-curvature="0"
@@ -40977,7 +40977,7 @@
            id="g4421-0-2">
           <g
              style="display:inline"
-             id="gimp-tool-pencil-4-7"
+             id="ligma-tool-pencil-4-7"
              transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)">
             <path
                inkscape:connector-curvature="0"
@@ -41003,7 +41003,7 @@
            id="g4421-0-9-1">
           <g
              style="display:inline"
-             id="gimp-tool-pencil-4-5-9"
+             id="ligma-tool-pencil-4-5-9"
              transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)">
             <path
                inkscape:connector-curvature="0"
@@ -41029,7 +41029,7 @@
            id="g4421-0-9-3-4">
           <g
              style="display:inline"
-             id="gimp-tool-pencil-4-5-7-1"
+             id="ligma-tool-pencil-4-5-7-1"
              transform="matrix(-0.56505531,0.55659731,-0.54996893,-0.57186552,154.05046,1101.0911)">
             <path
                inkscape:connector-curvature="0"
@@ -41060,19 +41060,19 @@
          y="0.71113229" />
     </g>
     <g
-       id="gimp-wilber-24"
+       id="ligma-wilber-24"
        style="display:inline"
        transform="matrix(1.4986898,0,0,1.5000015,590.41165,36.92264)">
       <g
          transform="translate(-177.09927,-542.03748)"
          style="display:inline"
-         id="gimp-wilber-8">
+         id="ligma-wilber-8">
         <g
-           id="gimp-95"
+           id="ligma-95"
            style="display:inline"
            transform="translate(-122.00001,443.99848)">
           <g
-             id="applications-gimp-2">
+             id="applications-ligma-2">
             <rect
                y="195.00299"
                x="263.00021"
@@ -41120,7 +41120,7 @@
     </g>
     <g
        transform="matrix(1.5021921,0,0,1.4999437,503.45316,-36.30537)"
-       id="gimp-tools-24">
+       id="ligma-tools-24">
       <path
          style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient9084);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.29053822;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
          d="M 3.2756368,8.3574651 C 2.6200906,8.957352 2.2698884,9.6320086 2.4906748,9.8899668 L 3.1653873,10.678275 C 3.397032,10.94892 3.9392237,10.231415 4.6579978,9.6104283 5.3767716,8.9894422 6.0030126,8.6974773 5.7713678,8.4268325 L 5.0966553,7.6385244 C 4.8650106,7.3678796 4.0948549,7.6497 3.3760811,8.2706861 3.3423883,8.2997941 3.307877,8.3279641 3.2756368,8.3574651 Z"
@@ -41185,7 +41185,7 @@
       </g>
     </g>
     <g
-       id="gimp-template-24"
+       id="ligma-template-24"
        style="display:inline"
        transform="matrix(0.99912557,0,0,1,330.13485,-8.76258)">
       <rect
@@ -41418,8 +41418,8 @@
          y="433.65521"
          style="stroke-width:1">Various</tspan></text>
     <g
-       inkscape:label="gimp-undo-history"
-       id="gimp-undo-history-24"
+       inkscape:label="ligma-undo-history"
+       id="ligma-undo-history-24"
        style="display:inline"
        transform="matrix(1.4986697,0,0,1.4999081,354.6633,-695.65149)">
       <path
@@ -41447,14 +41447,14 @@
     </g>
     <g
        inkscape:label="#g6492"
-       id="gimp-toilet-paper">
+       id="ligma-toilet-paper">
       <g
-         inkscape:label="#gimp-toilet-paper"
-         id="gimp-toilet-paper-contents"
+         inkscape:label="#ligma-toilet-paper"
+         id="ligma-toilet-paper-contents"
          transform="translate(-79.945363,-13.958363)">
         <g
            transform="translate(239.41969,-986.11664)"
-           id="gimp-new-toilet-paper">
+           id="ligma-new-toilet-paper">
           <rect
              style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:0;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.10246459;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
              id="rect3999-9"
@@ -41463,7 +41463,7 @@
              x="0"
              y="1036.3622" />
           <g
-             id="gimp-new-toilet-paper-1"
+             id="ligma-new-toilet-paper-1"
              transform="matrix(0.04091636,0,0,0.04091636,0.17280194,1015.6658)">
             <path
                sodipodi:nodetypes="cssssscc"
@@ -41534,7 +41534,7 @@
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#linearGradient6498);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.09995627;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
-       id="gimp-marker"
+       id="ligma-marker"
        style="display:inline"
        transform="matrix(3.7762226,0,0,3.7795275,-4.3963723,-632.22659)">
       <g
@@ -41611,7 +41611,7 @@
          y="292.76666" />
     </g>
     <g
-       id="gimp-tool-offset"
+       id="ligma-tool-offset"
        transform="matrix(0.99912557,0,0,1,-365.07765,87.29202)"
        style="display:inline">
       <rect
@@ -41628,7 +41628,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="gimp-tool-offset-5"
+       id="ligma-tool-offset-5"
        transform="matrix(0.99912557,0,0,1,-192.22893,-948.06929)"
        style="display:inline">
       <rect
@@ -41640,8 +41640,8 @@
          y="1029.8622" />
       <g
          style="display:inline;stroke-width:1.50000012"
-         id="gimp-tool-move-3"
-         inkscape:label="gimp-tool-move"
+         id="ligma-tool-move-3"
+         inkscape:label="ligma-tool-move"
          transform="matrix(0.9999675,0,0,0.9999675,-96.996396,835.36912)"
          inkscape:export-xdpi="123.75"
          inkscape:export-ydpi="123.75">
@@ -41657,7 +41657,7 @@
     <g
        style="display:inline"
        transform="matrix(3.7762225,0,0,3.7795275,53.814461,-848.27231)"
-       id="gimp-color-space-non-linear"
+       id="ligma-color-space-non-linear"
        inkscape:label="TODO">
       <g
          id="g10239-5">
@@ -41678,9 +41678,9 @@
     <g
        transform="matrix(0.99912557,0,0,1,93.941092,327.05367)"
        style="display:inline"
-       id="gimp-curve-point-smooth">
+       id="ligma-curve-point-smooth">
       <g
-         id="gimp-shape-circle-7"
+         id="ligma-shape-circle-7"
          style="display:inline"
          transform="translate(-156.91149,-354.36275)">
         <circle
@@ -41695,9 +41695,9 @@
     <g
        transform="matrix(0.99912557,0,0,1,96.607128,326.88523)"
        style="display:inline"
-       id="gimp-curve-point-corner">
+       id="ligma-curve-point-corner">
       <g
-         id="gimp-shape-diamond-8"
+         id="ligma-shape-diamond-8"
          style="display:inline"
          transform="translate(-156.1041,-353.19431)">
         <path
@@ -41721,7 +41721,7 @@
          id="tspan11157-9-1-6-2-3">Pivot</tspan></text>
     <g
        transform="matrix(0,3.7795276,-3.7762226,0,1308.9777,456.32836)"
-       id="gimp-pivot-center"
+       id="ligma-pivot-center"
        style="display:inline">
       <rect
          style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -41741,7 +41741,7 @@
     </g>
     <g
        transform="matrix(0,3.7795276,-3.7762226,0,1332.9566,456.32836)"
-       id="gimp-pivot-east"
+       id="ligma-pivot-east"
        style="display:inline">
       <g
          id="g1534">
@@ -41776,7 +41776,7 @@
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795276,163.45975,-672.19125)"
-       id="gimp-pivot-north-west"
+       id="ligma-pivot-north-west"
        style="display:inline">
       <g
          id="g1461">
@@ -41810,7 +41810,7 @@
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795276,187.4387,-672.19125)"
-       id="gimp-pivot-north"
+       id="ligma-pivot-north"
        style="display:inline">
       <g
          id="g1534-4">
@@ -41844,7 +41844,7 @@
     </g>
     <g
        transform="matrix(0,3.7795276,-3.7762226,0,1332.9566,438.32838)"
-       id="gimp-pivot-north-east"
+       id="ligma-pivot-north-east"
        style="display:inline">
       <g
          id="g1461-1">
@@ -41879,7 +41879,7 @@
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795276,187.43876,-636.19133)"
-       id="gimp-pivot-south"
+       id="ligma-pivot-south"
        style="display:inline">
       <g
          id="g1534-6">
@@ -41913,7 +41913,7 @@
     </g>
     <g
        transform="matrix(0,3.7795276,-3.7762226,0,1284.9986,456.32836)"
-       id="gimp-pivot-west"
+       id="ligma-pivot-west"
        style="display:inline">
       <g
          id="g1534-65">
@@ -41951,7 +41951,7 @@
     </g>
     <g
        transform="matrix(-3.7762226,0,0,-3.7795276,223.4072,1596.8479)"
-       id="gimp-pivot-south-east"
+       id="ligma-pivot-south-east"
        style="display:inline">
       <g
          id="g1461-5">
@@ -41986,7 +41986,7 @@
     </g>
     <g
        transform="matrix(0,-3.7795276,3.7762226,0,-946.08879,486.3283)"
-       id="gimp-pivot-south-west"
+       id="ligma-pivot-south-west"
        style="display:inline">
       <g
          id="g1461-0">
@@ -42032,7 +42032,7 @@
          style="stroke-width:1">Text direction</tspan></text>
     <g
        transform="matrix(0.99912557,0,0,1,309.31707,392.57813)"
-       id="gimp-text-dir-ttb-rtl-upright">
+       id="ligma-text-dir-ttb-rtl-upright">
       <rect
          ry="2.1219141"
          rx="0.41507211"
@@ -42077,7 +42077,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,342.62123,392.57813)"
-       id="gimp-text-dir-ttb-ltr-upright">
+       id="ligma-text-dir-ttb-ltr-upright">
       <rect
          ry="2.1219141"
          rx="0.41507211"
@@ -42118,7 +42118,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,375.92546,392.57813)"
-       id="gimp-text-dir-ttb-rtl">
+       id="ligma-text-dir-ttb-rtl">
       <rect
          ry="2.1219141"
          rx="0.41507211"
@@ -42159,7 +42159,7 @@
     </g>
     <g
        transform="matrix(0.99912557,0,0,1,409.22962,392.57813)"
-       id="gimp-text-dir-ttb-ltr">
+       id="ligma-text-dir-ttb-ltr">
       <rect
          ry="2.1219141"
          rx="0.41507211"
@@ -42200,7 +42200,7 @@
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795275,315.31182,-663.94151)"
-       id="gimp-transform-3d-move"
+       id="ligma-transform-3d-move"
        style="display:inline">
       <path
          id="path74740-9"
@@ -42217,7 +42217,7 @@
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795275,340.28996,-663.94151)"
-       id="gimp-transform-3d-camera"
+       id="ligma-transform-3d-camera"
        style="display:inline">
       <g
          id="g10002">
@@ -42246,7 +42246,7 @@
     <g
        transform="matrix(3.7762226,0,0,3.7795275,365.2681,-663.94151)"
        style="display:inline"
-       id="gimp-transform-3d-rotate">
+       id="ligma-transform-3d-rotate">
       <circle
          r="0.5291667"
          cx="2.1166666"
@@ -42316,7 +42316,7 @@
        y="24.422203"
        x="581.86987"
        id="tspan4576"
-       sodipodi:role="line">GIMP symbolic icons</tspan><tspan
+       sodipodi:role="line">LIGMA symbolic icons</tspan><tspan
        id="tspan7879"
        y="74.422203"
        x="581.86987"

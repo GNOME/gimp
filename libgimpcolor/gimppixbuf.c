@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppixbuf.c
- * Copyright (C) 2012  Michael Natterer <mitch@gimp.org>
+ * ligmapixbuf.c
+ * Copyright (C) 2012  Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,21 +24,21 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimppixbuf.h"
+#include "ligmapixbuf.h"
 
 
 /**
- * SECTION: gimppixbuf
- * @title: GimpPixbuf
+ * SECTION: ligmapixbuf
+ * @title: LigmaPixbuf
  * @short_description: Definitions and Functions relating to GdkPixbuf.
  *
  * Definitions and Functions relating to GdkPixbuf.
  **/
 
 /**
- * gimp_pixbuf_get_format:
+ * ligma_pixbuf_get_format:
  * @pixbuf: a #GdkPixbuf
  *
  * Returns the Babl format that corresponds to the @pixbuf's pixel format.
@@ -48,7 +48,7 @@
  * Since: 2.10
  **/
 const Babl *
-gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
+ligma_pixbuf_get_format (GdkPixbuf *pixbuf)
 {
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
@@ -62,7 +62,7 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
 }
 
 /**
- * gimp_pixbuf_create_buffer:
+ * ligma_pixbuf_create_buffer:
  * @pixbuf: a #GdkPixbuf
  *
  * Returns a #GeglBuffer that's either backed by the @pixbuf's pixels,
@@ -77,7 +77,7 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
  * Since: 2.10
  **/
 GeglBuffer *
-gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
+ligma_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 {
   gint width;
   gint height;
@@ -94,7 +94,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
   if ((rowstride % bpp) == 0)
     {
       return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
-                                               gimp_pixbuf_get_format (pixbuf),
+                                               ligma_pixbuf_get_format (pixbuf),
                                                GEGL_RECTANGLE (0, 0,
                                                                width, height),
                                                rowstride,
@@ -105,7 +105,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
     {
       GeglBuffer *buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                             width, height),
-                                            gimp_pixbuf_get_format (pixbuf));
+                                            ligma_pixbuf_get_format (pixbuf));
 
       gegl_buffer_set (buffer, NULL, 0, NULL,
                        gdk_pixbuf_get_pixels (pixbuf),
@@ -116,7 +116,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 }
 
 /**
- * gimp_pixbuf_get_icc_profile:
+ * ligma_pixbuf_get_icc_profile:
  * @pixbuf: a #GdkPixbuf
  * @length: (out): return location for the ICC profile's length
  *
@@ -129,7 +129,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
  * Since: 2.10
  **/
 guint8 *
-gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
+ligma_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
                              gsize     *length)
 {
   const gchar *icc_base64;

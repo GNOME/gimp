@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpplugin.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaplugin.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,57 +25,57 @@
 #include <libintl.h>
 #include <string.h>
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libligmabase/ligmaprotocol.h"
+#include "libligmabase/ligmawire.h"
 
-#include "gimp-private.h"
-#include "gimp-shm.h"
-#include "gimpgpparams.h"
-#include "gimpplugin-private.h"
-#include "gimpplugin_pdb.h"
-#include "gimpprocedure-private.h"
+#include "ligma-private.h"
+#include "ligma-shm.h"
+#include "ligmagpparams.h"
+#include "ligmaplugin-private.h"
+#include "ligmaplugin_pdb.h"
+#include "ligmaprocedure-private.h"
 
 
 /**
- * GimpPlugIn:
+ * LigmaPlugIn:
  *
  * The base class for plug-ins to derive from.
  *
- * GimpPlugIn manages the plug-in's [class@Procedure] objects. The procedures a
- * plug-in implements are registered with GIMP by returning a list of their
- * names from either [vfunc@GimpPlugIn.query_procedures] or
- * [vfunc@GimpPlugIn.init_procedures].
+ * LigmaPlugIn manages the plug-in's [class@Procedure] objects. The procedures a
+ * plug-in implements are registered with LIGMA by returning a list of their
+ * names from either [vfunc@LigmaPlugIn.query_procedures] or
+ * [vfunc@LigmaPlugIn.init_procedures].
  *
- * Every GIMP plug-in has to be implemented as a subclass and make it known to
- * the libgimp infrastructure and the main GIMP application by passing its
+ * Every LIGMA plug-in has to be implemented as a subclass and make it known to
+ * the libligma infrastructure and the main LIGMA application by passing its
  * `GType` to [func@MAIN].
  *
  * [func@MAIN] passes the 'argc' and 'argv' of the platform's main() function,
  * along with the `GType`, to [func@main], which creates an instance of the
- * plug-in's `GimpPlugIn` subclass and calls its virtual functions, depending
- * on how the plug-in was called by GIMP.
+ * plug-in's `LigmaPlugIn` subclass and calls its virtual functions, depending
+ * on how the plug-in was called by LIGMA.
  *
- * There are 3 different ways GIMP calls a plug-in: "query", "init" and "run".
+ * There are 3 different ways LIGMA calls a plug-in: "query", "init" and "run".
  *
  * The plug-in is called in "query" mode once after it was installed, or when
  * the cached plug-in information in the config file "pluginrc" needs to be
- * recreated. In "query" mode, [vfunc@GimpPlugIn.query_procedures] is called
+ * recreated. In "query" mode, [vfunc@LigmaPlugIn.query_procedures] is called
  * and returns a list of procedure names the plug-in implements. This is the
  * "normal" place to register procedures, because the existence of most
- * procedures doesn't depend on things that change between GIMP sessions.
+ * procedures doesn't depend on things that change between LIGMA sessions.
  *
- * The plug-in is called in "init" mode at each GIMP startup, and
+ * The plug-in is called in "init" mode at each LIGMA startup, and
  * [vfunc@PlugIn.init_procedures] is called and returns a list of procedure
  * names this plug-in implements. This only happens if the plug-in actually
- * implements [vfunc@GimpPlugIn.init_procedures]. A plug-in only needs to
+ * implements [vfunc@LigmaPlugIn.init_procedures]. A plug-in only needs to
  * implement init_procedures if the existence of its procedures can change
- * between GIMP sessions, for example if they depend on the presence of
+ * between LIGMA sessions, for example if they depend on the presence of
  * external tools, or hardware like scanners, or online services, or whatever
  * variable circumstances.
  *
- * In order to register the plug-in's procedures with the main GIMP application
+ * In order to register the plug-in's procedures with the main LIGMA application
  * in the plug-in's "query" and "init" modes, [class@PlugIn] calls
  * [vfunc@PlugIn.create_procedure] on all procedure names in the exact order of
  * the list returned by [vfunc@PlugIn.query_procedures] or
@@ -83,7 +83,7 @@
  * [class@Procedure].
  *
  * The plug-in is called in "run" mode whenever one of the procedures it
- * implements is called by either the main GIMP application or any other
+ * implements is called by either the main LIGMA application or any other
  * plug-in. In "run" mode, one of the procedure names returned by
  * [vfunc@PlugIn.query_procedures] or [vfunc@PlugIn.init_procedures] is passed
  * to [vfunc@PlugIn.create_procedure] which must return a [class@Procedure] for
@@ -100,7 +100,7 @@
 #define WRITE_BUFFER_SIZE 1024
 
 /**
- * gimp_plug_in_error_quark:
+ * ligma_plug_in_error_quark:
  *
  * Generic #GQuark error domain for plug-ins. Plug-ins are welcome to
  * create their own domain when they want to handle advanced error
@@ -109,7 +109,7 @@
  *
  * See #GError for information on error domains.
  */
-G_DEFINE_QUARK (gimp-plug-in-error-quark, gimp_plug_in_error)
+G_DEFINE_QUARK (ligma-plug-in-error-quark, ligma_plug_in_error)
 
 enum
 {
@@ -120,15 +120,15 @@ enum
 };
 
 
-typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
+typedef struct _LigmaPlugInMenuBranch LigmaPlugInMenuBranch;
 
-struct _GimpPlugInMenuBranch
+struct _LigmaPlugInMenuBranch
 {
   gchar *menu_path;
   gchar *menu_label;
 };
 
-struct _GimpPlugInPrivate
+struct _LigmaPlugInPrivate
 {
   GIOChannel *read_channel;
   GIOChannel *write_channel;
@@ -155,122 +155,122 @@ struct _GimpPlugInPrivate
 };
 
 
-static void       gimp_plug_in_constructed       (GObject         *object);
-static void       gimp_plug_in_dispose           (GObject         *object);
-static void       gimp_plug_in_finalize          (GObject         *object);
-static void       gimp_plug_in_set_property      (GObject         *object,
+static void       ligma_plug_in_constructed       (GObject         *object);
+static void       ligma_plug_in_dispose           (GObject         *object);
+static void       ligma_plug_in_finalize          (GObject         *object);
+static void       ligma_plug_in_set_property      (GObject         *object,
                                                   guint            property_id,
                                                   const GValue    *value,
                                                   GParamSpec      *pspec);
-static void       gimp_plug_in_get_property      (GObject         *object,
+static void       ligma_plug_in_get_property      (GObject         *object,
                                                   guint            property_id,
                                                   GValue          *value,
                                                   GParamSpec      *pspec);
 
-static gboolean   gimp_plug_in_real_set_i18n     (GimpPlugIn      *plug_in,
+static gboolean   ligma_plug_in_real_set_i18n     (LigmaPlugIn      *plug_in,
                                                   const gchar     *procedure_name,
                                                   gchar          **gettext_domain,
                                                   gchar          **catalog_dir);
 
-static void       gimp_plug_in_register          (GimpPlugIn      *plug_in,
+static void       ligma_plug_in_register          (LigmaPlugIn      *plug_in,
                                                   GList           *procedures);
 
-static gboolean   gimp_plug_in_write             (GIOChannel      *channel,
+static gboolean   ligma_plug_in_write             (GIOChannel      *channel,
                                                   const guint8    *buf,
                                                   gulong           count,
                                                   gpointer         user_data);
-static gboolean   gimp_plug_in_flush             (GIOChannel      *channel,
+static gboolean   ligma_plug_in_flush             (GIOChannel      *channel,
                                                   gpointer         user_data);
-static gboolean   gimp_plug_in_io_error_handler  (GIOChannel      *channel,
+static gboolean   ligma_plug_in_io_error_handler  (GIOChannel      *channel,
                                                   GIOCondition     cond,
                                                   gpointer         data);
 
-static void       gimp_plug_in_loop              (GimpPlugIn      *plug_in);
-static void       gimp_plug_in_single_message    (GimpPlugIn      *plug_in);
-static void       gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
-                                                  GimpWireMessage *msg);
-static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
+static void       ligma_plug_in_loop              (LigmaPlugIn      *plug_in);
+static void       ligma_plug_in_single_message    (LigmaPlugIn      *plug_in);
+static void       ligma_plug_in_process_message   (LigmaPlugIn      *plug_in,
+                                                  LigmaWireMessage *msg);
+static void       ligma_plug_in_proc_run          (LigmaPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
-static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
+static void       ligma_plug_in_temp_proc_run     (LigmaPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
-static void       gimp_plug_in_proc_run_internal (GimpPlugIn      *plug_in,
+static void       ligma_plug_in_proc_run_internal (LigmaPlugIn      *plug_in,
                                                   GPProcRun       *proc_run,
-                                                  GimpProcedure   *procedure,
+                                                  LigmaProcedure   *procedure,
                                                   GPProcReturn    *proc_return);
-static gboolean   gimp_plug_in_extension_read    (GIOChannel      *channel,
+static gboolean   ligma_plug_in_extension_read    (GIOChannel      *channel,
                                                   GIOCondition     condition,
                                                   gpointer         data);
 
-static void       gimp_plug_in_push_procedure    (GimpPlugIn      *plug_in,
-                                                  GimpProcedure   *procedure);
-static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
-                                                  GimpProcedure   *procedure);
-static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
-static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
+static void       ligma_plug_in_push_procedure    (LigmaPlugIn      *plug_in,
+                                                  LigmaProcedure   *procedure);
+static void       ligma_plug_in_pop_procedure     (LigmaPlugIn      *plug_in,
+                                                  LigmaProcedure   *procedure);
+static void       ligma_plug_in_destroy_hashes    (LigmaPlugIn      *plug_in);
+static void       ligma_plug_in_destroy_proxies   (GHashTable      *hash_table,
                                                   gboolean         destroy_all);
 
-static void       gimp_plug_in_init_i18n         (GimpPlugIn      *plug_in);
+static void       ligma_plug_in_init_i18n         (LigmaPlugIn      *plug_in);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPlugIn, ligma_plug_in, G_TYPE_OBJECT)
 
-#define parent_class gimp_plug_in_parent_class
+#define parent_class ligma_plug_in_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-gimp_plug_in_class_init (GimpPlugInClass *klass)
+ligma_plug_in_class_init (LigmaPlugInClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_plug_in_constructed;
-  object_class->dispose      = gimp_plug_in_dispose;
-  object_class->finalize     = gimp_plug_in_finalize;
-  object_class->set_property = gimp_plug_in_set_property;
-  object_class->get_property = gimp_plug_in_get_property;
+  object_class->constructed  = ligma_plug_in_constructed;
+  object_class->dispose      = ligma_plug_in_dispose;
+  object_class->finalize     = ligma_plug_in_finalize;
+  object_class->set_property = ligma_plug_in_set_property;
+  object_class->get_property = ligma_plug_in_get_property;
 
-  klass->set_i18n            = gimp_plug_in_real_set_i18n;
+  klass->set_i18n            = ligma_plug_in_real_set_i18n;
 
   /**
-   * GimpPlugIn:read-channel:
+   * LigmaPlugIn:read-channel:
    *
-   * The [struct@GLib.IOChannel] to read from GIMP
+   * The [struct@GLib.IOChannel] to read from LIGMA
    */
   props[PROP_READ_CHANNEL] =
     g_param_spec_boxed ("read-channel",
                         "Read channel",
-                        "The GIOChanel to read from GIMP",
+                        "The GIOChanel to read from LIGMA",
                         G_TYPE_IO_CHANNEL,
-                        GIMP_PARAM_READWRITE |
+                        LIGMA_PARAM_READWRITE |
                         G_PARAM_CONSTRUCT_ONLY);
 
   /**
-   * GimpPlugIn:write-channel:
+   * LigmaPlugIn:write-channel:
    *
-   * The [struct@GLib.IOChannel] to write to GIMP
+   * The [struct@GLib.IOChannel] to write to LIGMA
    */
   props[PROP_WRITE_CHANNEL] =
     g_param_spec_boxed ("write-channel",
                         "Write channel",
-                        "The GIOChanel to write to GIMP",
+                        "The GIOChanel to write to LIGMA",
                         G_TYPE_IO_CHANNEL,
-                        GIMP_PARAM_READWRITE |
+                        LIGMA_PARAM_READWRITE |
                         G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
-gimp_plug_in_init (GimpPlugIn *plug_in)
+ligma_plug_in_init (LigmaPlugIn *plug_in)
 {
-  plug_in->priv = gimp_plug_in_get_instance_private (plug_in);
+  plug_in->priv = ligma_plug_in_get_instance_private (plug_in);
 }
 
 static void
-gimp_plug_in_constructed (GObject *object)
+ligma_plug_in_constructed (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  LigmaPlugIn *plug_in = LIGMA_PLUG_IN (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -279,14 +279,14 @@ gimp_plug_in_constructed (GObject *object)
 
   gp_init ();
 
-  gimp_wire_set_writer (gimp_plug_in_write);
-  gimp_wire_set_flusher (gimp_plug_in_flush);
+  ligma_wire_set_writer (ligma_plug_in_write);
+  ligma_wire_set_flusher (ligma_plug_in_flush);
 }
 
 static void
-gimp_plug_in_dispose (GObject *object)
+ligma_plug_in_dispose (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  LigmaPlugIn *plug_in = LIGMA_PLUG_IN (object);
 
   if (plug_in->priv->extension_source_id)
     {
@@ -304,9 +304,9 @@ gimp_plug_in_dispose (GObject *object)
 }
 
 static void
-gimp_plug_in_finalize (GObject *object)
+ligma_plug_in_finalize (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  LigmaPlugIn *plug_in = LIGMA_PLUG_IN (object);
   GList      *list;
 
   g_clear_pointer (&plug_in->priv->translation_domain_name, g_free);
@@ -317,31 +317,31 @@ gimp_plug_in_finalize (GObject *object)
 
   for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
     {
-      GimpPlugInMenuBranch *branch = list->data;
+      LigmaPlugInMenuBranch *branch = list->data;
 
       g_free (branch->menu_path);
       g_free (branch->menu_label);
-      g_slice_free (GimpPlugInMenuBranch, branch);
+      g_slice_free (LigmaPlugInMenuBranch, branch);
     }
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
 
-  gimp_plug_in_destroy_hashes (plug_in);
+  ligma_plug_in_destroy_hashes (plug_in);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_plug_in_set_property (GObject      *object,
+ligma_plug_in_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  LigmaPlugIn *plug_in = LIGMA_PLUG_IN (object);
 
   switch (property_id)
     {
@@ -360,12 +360,12 @@ gimp_plug_in_set_property (GObject      *object,
 }
 
 static void
-gimp_plug_in_get_property (GObject    *object,
+ligma_plug_in_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  LigmaPlugIn *plug_in = LIGMA_PLUG_IN (object);
 
   switch (property_id)
     {
@@ -384,7 +384,7 @@ gimp_plug_in_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_plug_in_real_set_i18n (GimpPlugIn   *plug_in,
+ligma_plug_in_real_set_i18n (LigmaPlugIn   *plug_in,
                             const gchar  *procedure_name,
                             gchar       **gettext_domain,
                             gchar       **catalog_dir)
@@ -400,17 +400,17 @@ gimp_plug_in_real_set_i18n (GimpPlugIn   *plug_in,
 /*  public functions  */
 
 /**
- * gimp_plug_in_set_help_domain:
- * @plug_in:     A #GimpPlugIn.
+ * ligma_plug_in_set_help_domain:
+ * @plug_in:     A #LigmaPlugIn.
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_uri:  The root URI of the plug-in's help pages.
  *
  * Set a help domain and path for the @plug_in.
  *
  * This function registers user documentation for the calling plug-in
- * with the GIMP help system. The @domain_uri parameter points to the
+ * with the LIGMA help system. The @domain_uri parameter points to the
  * root directory where the plug-in help is installed. For each
- * supported language there should be a file called 'gimp-help.xml'
+ * supported language there should be a file called 'ligma-help.xml'
  * that maps the help IDs to the actual help files.
  *
  * This function can only be called in the
@@ -419,11 +419,11 @@ gimp_plug_in_real_set_i18n (GimpPlugIn   *plug_in,
  * Since: 3.0
  **/
 void
-gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
+ligma_plug_in_set_help_domain (LigmaPlugIn  *plug_in,
                               const gchar *domain_name,
                               GFile       *domain_uri)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (G_IS_FILE (domain_uri));
 
@@ -434,37 +434,37 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_add_menu_branch:
- * @plug_in:    A #GimpPlugIn
+ * ligma_plug_in_add_menu_branch:
+ * @plug_in:    A #LigmaPlugIn
  * @menu_path:  The sub-menu's menu path.
  * @menu_label: The menu label of the sub-menu.
  *
- * Add a new sub-menu to the GIMP menus.
+ * Add a new sub-menu to the LIGMA menus.
  *
  * This function installs a sub-menu which does not belong to any
  * procedure at the location @menu_path.
  *
  * For translations of @menu_label to work properly, @menu_label
  * should only be marked for translation but passed to this function
- * untranslated, for example using N_("Submenu"). GIMP will look up
+ * untranslated, for example using N_("Submenu"). LIGMA will look up
  * the translation in the textdomain registered for the plug-in.
  *
- * See also: gimp_procedure_add_menu_path().
+ * See also: ligma_procedure_add_menu_path().
  *
  * Since: 3.0
  **/
 void
-gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
+ligma_plug_in_add_menu_branch (LigmaPlugIn  *plug_in,
                               const gchar *menu_path,
                               const gchar *menu_label)
 {
-  GimpPlugInMenuBranch *branch;
+  LigmaPlugInMenuBranch *branch;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
-  branch = g_slice_new (GimpPlugInMenuBranch);
+  branch = g_slice_new (LigmaPlugInMenuBranch);
 
   branch->menu_path  = g_strdup (menu_path);
   branch->menu_label = g_strdup (menu_label);
@@ -474,22 +474,22 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_add_temp_procedure:
- * @plug_in:   A #GimpPlugIn
- * @procedure: A #GimpProcedure of type %GIMP_PDB_PROC_TYPE_TEMPORARY.
+ * ligma_plug_in_add_temp_procedure:
+ * @plug_in:   A #LigmaPlugIn
+ * @procedure: A #LigmaProcedure of type %LIGMA_PDB_PROC_TYPE_TEMPORARY.
  *
  * This function adds a temporary procedure to @plug_in. It is usually
- * called from a %GIMP_PDB_PROC_TYPE_EXTENSION procedure's
+ * called from a %LIGMA_PDB_PROC_TYPE_EXTENSION procedure's
  * [vfunc@Procedure.run].
  *
  * A temporary procedure is a procedure which is only available while
  * one of your plug-in's "real" procedures is running.
  *
  * The procedure's type _must_ be
- * %GIMP_PDB_PROC_TYPE_TEMPORARY or the function will fail.
+ * %LIGMA_PDB_PROC_TYPE_TEMPORARY or the function will fail.
  *
  * NOTE: Normally, plug-in communication is triggered by the plug-in
- * and the GIMP core only responds to the plug-in's requests. You must
+ * and the LIGMA core only responds to the plug-in's requests. You must
  * explicitly enable receiving of temporary procedure run requests
  * using either [method@PlugIn.extension_enable] or
  * [method@PlugIn.extension_process]. See their respective documentation
@@ -498,24 +498,24 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * Since: 3.0
  **/
 void
-gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
-                                 GimpProcedure *procedure)
+ligma_plug_in_add_temp_procedure (LigmaPlugIn    *plug_in,
+                                 LigmaProcedure *procedure)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (gimp_procedure_get_proc_type (procedure) ==
-                    GIMP_PDB_PROC_TYPE_TEMPORARY);
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PROCEDURE (procedure));
+  g_return_if_fail (ligma_procedure_get_proc_type (procedure) ==
+                    LIGMA_PDB_PROC_TYPE_TEMPORARY);
 
   plug_in->priv->temp_procedures =
     g_list_prepend (plug_in->priv->temp_procedures,
                     g_object_ref (procedure));
 
-  GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
+  LIGMA_PROCEDURE_GET_CLASS (procedure)->install (procedure);
 }
 
 /**
- * gimp_plug_in_remove_temp_procedure:
- * @plug_in:        A #GimpPlugIn
+ * ligma_plug_in_remove_temp_procedure:
+ * @plug_in:        A #LigmaPlugIn
  * @procedure_name: The name of a [class@Procedure] added to @plug_in.
  *
  * This function removes a temporary procedure from @plug_in by the
@@ -524,19 +524,19 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
  * Since: 3.0
  **/
 void
-gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
+ligma_plug_in_remove_temp_procedure (LigmaPlugIn  *plug_in,
                                     const gchar *procedure_name)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (gimp_is_canonical_identifier (procedure_name));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
+  g_return_if_fail (ligma_is_canonical_identifier (procedure_name));
 
-  procedure = gimp_plug_in_get_temp_procedure (plug_in, procedure_name);
+  procedure = ligma_plug_in_get_temp_procedure (plug_in, procedure_name);
 
   if (procedure)
     {
-      GIMP_PROCEDURE_GET_CLASS (procedure)->uninstall (procedure);
+      LIGMA_PROCEDURE_GET_CLASS (procedure)->uninstall (procedure);
 
       plug_in->priv->temp_procedures =
         g_list_remove (plug_in->priv->temp_procedures,
@@ -546,28 +546,28 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_get_temp_procedures:
+ * ligma_plug_in_get_temp_procedures:
  * @plug_in: A plug-in
  *
  * This function retrieves the list of temporary procedure of @plug_in as
  * added with [method@PlugIn.add_temp_procedure].
  *
- * Returns: (transfer none) (element-type GimpProcedure): The list of
+ * Returns: (transfer none) (element-type LigmaProcedure): The list of
  *          procedures.
  *
  * Since: 3.0
  **/
 GList *
-gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
+ligma_plug_in_get_temp_procedures (LigmaPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   return plug_in->priv->temp_procedures;
 }
 
 /**
- * gimp_plug_in_get_temp_procedure:
- * @plug_in:        A #GimpPlugIn
+ * ligma_plug_in_get_temp_procedure:
+ * @plug_in:        A #LigmaPlugIn
  * @procedure_name: The name of a [class@Procedure] added to @plug_in.
  *
  * This function retrieves a temporary procedure from @plug_in by the
@@ -577,20 +577,20 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
  *
  * Since: 3.0
  **/
-GimpProcedure *
-gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
+LigmaProcedure *
+ligma_plug_in_get_temp_procedure (LigmaPlugIn  *plug_in,
                                  const gchar *procedure_name)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
   for (list = plug_in->priv->temp_procedures; list; list = g_list_next (list))
     {
-      GimpProcedure *procedure = list->data;
+      LigmaProcedure *procedure = list->data;
 
-      if (! strcmp (procedure_name, gimp_procedure_get_name (procedure)))
+      if (! strcmp (procedure_name, ligma_procedure_get_name (procedure)))
         return procedure;
     }
 
@@ -598,15 +598,15 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_extension_enable:
+ * ligma_plug_in_extension_enable:
  * @plug_in: A plug-in
  *
- * Enables asynchronous processing of messages from the main GIMP
+ * Enables asynchronous processing of messages from the main LIGMA
  * application.
  *
- * Normally, a plug-in is not called by GIMP except for the call to
+ * Normally, a plug-in is not called by LIGMA except for the call to
  * the procedure it implements. All subsequent communication is
- * triggered by the plug-in and all messages sent from GIMP to the
+ * triggered by the plug-in and all messages sent from LIGMA to the
  * plug-in are just answers to requests the plug-in made.
  *
  * If the plug-in however registered temporary procedures using
@@ -626,28 +626,28 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * Since: 3.0
  **/
 void
-gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
+ligma_plug_in_extension_enable (LigmaPlugIn *plug_in)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   if (! plug_in->priv->extension_source_id)
     {
       plug_in->priv->extension_source_id =
         g_io_add_watch (plug_in->priv->read_channel, G_IO_IN | G_IO_PRI,
-                        gimp_plug_in_extension_read,
+                        ligma_plug_in_extension_read,
                         plug_in);
     }
 }
 
 /**
- * gimp_plug_in_extension_process:
+ * ligma_plug_in_extension_process:
  * @plug_in: A plug-in.
  * @timeout: The timeout (in ms) to use for the select() call.
  *
- * Processes one message sent by GIMP and returns.
+ * Processes one message sent by LIGMA and returns.
  *
  * Call this function in an endless loop after calling
- * gimp_procedure_extension_ready() to process requests for running
+ * ligma_procedure_extension_ready() to process requests for running
  * temporary procedures.
  *
  * See [method@PlugIn.extension_enable] for an asynchronous way of
@@ -658,14 +658,14 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
  * Since: 3.0
  **/
 void
-gimp_plug_in_extension_process (GimpPlugIn *plug_in,
+ligma_plug_in_extension_process (LigmaPlugIn *plug_in,
                                 guint       timeout)
 {
 #ifndef G_OS_WIN32
 
   gint select_val;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   do
     {
@@ -688,12 +688,12 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
         {
-          gimp_plug_in_single_message (plug_in);
+          ligma_plug_in_single_message (plug_in);
         }
       else if (select_val == -1 && errno != EINTR)
         {
-          perror ("gimp_plug_in_extension_process");
-          gimp_quit ();
+          perror ("ligma_plug_in_extension_process");
+          ligma_quit ();
         }
     }
   while (select_val == -1 && errno == EINTR);
@@ -706,7 +706,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
    */
   GPollFD pollfd;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   if (timeout == 0)
     timeout = -1;
@@ -716,189 +716,189 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     {
-      gimp_plug_in_single_message (plug_in);
+      ligma_plug_in_single_message (plug_in);
     }
 
 #endif
 }
 
 /**
- * gimp_plug_in_set_pdb_error_handler:
+ * ligma_plug_in_set_pdb_error_handler:
  * @plug_in: A plug-in
  * @handler: Who is responsible for handling procedure call errors.
  *
  * Sets an error handler for procedure calls.
  *
  * This procedure changes the way that errors in procedure calls are
- * handled. By default GIMP will raise an error dialog if a procedure
+ * handled. By default LIGMA will raise an error dialog if a procedure
  * call made by a plug-in fails. Using this procedure the plug-in can
  * change this behavior. If the error handler is set to
- * %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
- * calling gimp_pdb_get_last_error() and handling the error whenever
+ * %LIGMA_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
+ * calling ligma_pdb_get_last_error() and handling the error whenever
  * one if its procedure calls fails. It can do this by displaying the
  * error message or by forwarding it in its own return values.
  *
  * Since: 3.0
  **/
 void
-gimp_plug_in_set_pdb_error_handler (GimpPlugIn          *plug_in,
-                                    GimpPDBErrorHandler  handler)
+ligma_plug_in_set_pdb_error_handler (LigmaPlugIn          *plug_in,
+                                    LigmaPDBErrorHandler  handler)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
-  _gimp_plug_in_set_pdb_error_handler (handler);
+  _ligma_plug_in_set_pdb_error_handler (handler);
 }
 
 /**
- * gimp_plug_in_get_pdb_error_handler:
+ * ligma_plug_in_get_pdb_error_handler:
  * @plug_in: A plug-in
  *
  * Retrieves the active error handler for procedure calls.
  *
  * This procedure retrieves the currently active error handler for
  * procedure calls made by the calling plug-in. See
- * gimp_plugin_set_pdb_error_handler() for details.
+ * ligma_plugin_set_pdb_error_handler() for details.
  *
  * Returns: Who is responsible for handling procedure call errors.
  *
  * Since: 3.0
  **/
-GimpPDBErrorHandler
-gimp_plug_in_get_pdb_error_handler (GimpPlugIn *plug_in)
+LigmaPDBErrorHandler
+ligma_plug_in_get_pdb_error_handler (LigmaPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
-                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in),
+                        LIGMA_PDB_ERROR_HANDLER_INTERNAL);
 
-  return _gimp_plug_in_get_pdb_error_handler ();
+  return _ligma_plug_in_get_pdb_error_handler ();
 }
 
 
 /*  internal functions  */
 
 void
-_gimp_plug_in_query (GimpPlugIn *plug_in)
+_ligma_plug_in_query (LigmaPlugIn *plug_in)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+  if (LIGMA_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
     gp_has_init_write (plug_in->priv->write_channel, plug_in);
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
+  if (LIGMA_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
     {
       GList *procedures =
-        GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
+        LIGMA_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
 
-      gimp_plug_in_register (plug_in, procedures);
+      ligma_plug_in_register (plug_in, procedures);
     }
 }
 
 void
-_gimp_plug_in_init (GimpPlugIn *plug_in)
+_ligma_plug_in_init (LigmaPlugIn *plug_in)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+  if (LIGMA_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
     {
       GList *procedures =
-        GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
+        LIGMA_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
 
-      gimp_plug_in_register (plug_in, procedures);
+      ligma_plug_in_register (plug_in, procedures);
     }
 }
 
 void
-_gimp_plug_in_run (GimpPlugIn *plug_in)
+_ligma_plug_in_run (LigmaPlugIn *plug_in)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   g_io_add_watch (plug_in->priv->read_channel,
                   G_IO_ERR | G_IO_HUP,
-                  gimp_plug_in_io_error_handler,
+                  ligma_plug_in_io_error_handler,
                   NULL);
 
-  gimp_plug_in_loop (plug_in);
+  ligma_plug_in_loop (plug_in);
 }
 
 void
-_gimp_plug_in_quit (GimpPlugIn *plug_in)
+_ligma_plug_in_quit (LigmaPlugIn *plug_in)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
-    GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
+  if (LIGMA_PLUG_IN_GET_CLASS (plug_in)->quit)
+    LIGMA_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
 
-  _gimp_shm_close ();
+  _ligma_shm_close ();
 
   gp_quit_write (plug_in->priv->write_channel, plug_in);
 }
 
 GIOChannel *
-_gimp_plug_in_get_read_channel (GimpPlugIn *plug_in)
+_ligma_plug_in_get_read_channel (LigmaPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   return plug_in->priv->read_channel;
 }
 
 GIOChannel *
-_gimp_plug_in_get_write_channel (GimpPlugIn *plug_in)
+_ligma_plug_in_get_write_channel (LigmaPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   return plug_in->priv->write_channel;
 }
 
 void
-_gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
-                               GimpWireMessage *msg,
+_ligma_plug_in_read_expect_msg (LigmaPlugIn      *plug_in,
+                               LigmaWireMessage *msg,
                                gint             type)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   while (TRUE)
     {
-      if (! gimp_wire_read_msg (plug_in->priv->read_channel, msg, NULL))
-        gimp_quit ();
+      if (! ligma_wire_read_msg (plug_in->priv->read_channel, msg, NULL))
+        ligma_quit ();
 
       if (msg->type == type)
         return; /* up to the caller to call wire_destroy() */
 
       if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
         {
-          gimp_plug_in_process_message (plug_in, msg);
+          ligma_plug_in_process_message (plug_in, msg);
         }
       else
         {
           g_error ("unexpected message: %d", msg->type);
         }
 
-      gimp_wire_destroy (msg);
+      ligma_wire_destroy (msg);
     }
 }
 
 gboolean
-_gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
+_ligma_plug_in_set_i18n (LigmaPlugIn   *plug_in,
                         const gchar  *procedure_name,
                         gchar       **gettext_domain,
                         gchar       **catalog_dir)
 {
   gboolean use_gettext;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (gettext_domain && *gettext_domain == NULL, FALSE);
   g_return_val_if_fail (catalog_dir && *catalog_dir == NULL, FALSE);
 
   if (! plug_in->priv->translation_domain_path ||
       ! plug_in->priv->translation_domain_name)
-    gimp_plug_in_init_i18n (plug_in);
+    ligma_plug_in_init_i18n (plug_in);
 
-  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n)
+  if (! LIGMA_PLUG_IN_GET_CLASS (plug_in)->set_i18n)
     {
       use_gettext = FALSE;
     }
   else
     {
-      use_gettext = GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n (plug_in,
+      use_gettext = LIGMA_PLUG_IN_GET_CLASS (plug_in)->set_i18n (plug_in,
                                                                 procedure_name,
                                                                 gettext_domain,
                                                                 catalog_dir);
@@ -926,7 +926,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                   g_clear_pointer (catalog_dir, g_free);
                 }
 
-              *catalog_dir = g_strdup (gimp_locale_directory ());
+              *catalog_dir = g_strdup (ligma_locale_directory ());
               reserved = TRUE;
             }
 
@@ -942,7 +942,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                 }
               else
                 {
-                  gchar *rootdir   = g_path_get_dirname (gimp_get_progname ());
+                  gchar *rootdir   = g_path_get_dirname (ligma_get_progname ());
                   GFile *root_file = g_file_new_for_path (rootdir);
                   GFile *catalog_file;
                   GFile *parent;
@@ -1004,17 +1004,17 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
   return use_gettext;
 }
 
-GimpProcedure *
-_gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
+LigmaProcedure *
+_ligma_plug_in_create_procedure (LigmaPlugIn  *plug_in,
                                 const gchar *procedure_name)
 {
   gchar *gettext_domain = NULL;
   gchar *catalog_dir    = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
-  if (_gimp_plug_in_set_i18n (plug_in, procedure_name, &gettext_domain, &catalog_dir))
+  if (_ligma_plug_in_set_i18n (plug_in, procedure_name, &gettext_domain, &catalog_dir))
     {
       bindtextdomain (gettext_domain, catalog_dir);
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
@@ -1026,8 +1026,8 @@ _gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
       g_free (catalog_dir);
     }
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
-    return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
+  if (LIGMA_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
+    return LIGMA_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
                                                                procedure_name);
 
   return NULL;
@@ -1037,7 +1037,7 @@ _gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
 /*  private functions  */
 
 static void
-gimp_plug_in_register (GimpPlugIn *plug_in,
+ligma_plug_in_register (LigmaPlugIn *plug_in,
                        GList      *procedures)
 {
   GList *list;
@@ -1045,12 +1045,12 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
   for (list = procedures; list; list = g_list_next (list))
     {
       const gchar   *name = list->data;
-      GimpProcedure *procedure;
+      LigmaProcedure *procedure;
 
-      procedure = _gimp_plug_in_create_procedure (plug_in, name);
+      procedure = _ligma_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
-          GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
+          LIGMA_PROCEDURE_GET_CLASS (procedure)->install (procedure);
           g_object_unref (procedure);
         }
       else
@@ -1063,26 +1063,26 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
 
   if (plug_in->priv->help_domain_name)
     {
-      _gimp_plug_in_help_register (plug_in->priv->help_domain_name,
+      _ligma_plug_in_help_register (plug_in->priv->help_domain_name,
                                    plug_in->priv->help_domain_uri);
     }
 
   for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
     {
-      GimpPlugInMenuBranch *branch = list->data;
+      LigmaPlugInMenuBranch *branch = list->data;
 
-      _gimp_plug_in_menu_branch_register (branch->menu_path,
+      _ligma_plug_in_menu_branch_register (branch->menu_path,
                                           branch->menu_label);
     }
 }
 
 static gboolean
-gimp_plug_in_write (GIOChannel   *channel,
+ligma_plug_in_write (GIOChannel   *channel,
                     const guint8 *buf,
                     gulong        count,
                     gpointer      user_data)
 {
-  GimpPlugIn *plug_in = user_data;
+  LigmaPlugIn *plug_in = user_data;
 
   while (count > 0)
     {
@@ -1095,7 +1095,7 @@ gimp_plug_in_write (GIOChannel   *channel,
                   buf, bytes);
           plug_in->priv->write_buffer_index += bytes;
 
-          if (! gimp_wire_flush (channel, plug_in))
+          if (! ligma_wire_flush (channel, plug_in))
             return FALSE;
         }
       else
@@ -1114,10 +1114,10 @@ gimp_plug_in_write (GIOChannel   *channel,
 }
 
 static gboolean
-gimp_plug_in_flush (GIOChannel *channel,
+ligma_plug_in_flush (GIOChannel *channel,
                     gpointer    user_data)
 {
-  GimpPlugIn *plug_in = user_data;
+  LigmaPlugIn *plug_in = user_data;
 
   if (plug_in->priv->write_buffer_index > 0)
     {
@@ -1144,13 +1144,13 @@ gimp_plug_in_flush (GIOChannel *channel,
             {
               if (error)
                 {
-                  g_warning ("%s: gimp_flush(): error: %s",
+                  g_warning ("%s: ligma_flush(): error: %s",
                              g_get_prgname (), error->message);
                   g_error_free (error);
                 }
               else
                 {
-                  g_warning ("%s: gimp_flush(): error", g_get_prgname ());
+                  g_warning ("%s: ligma_flush(): error", g_get_prgname ());
                 }
 
               return FALSE;
@@ -1166,35 +1166,35 @@ gimp_plug_in_flush (GIOChannel *channel,
 }
 
 static gboolean
-gimp_plug_in_io_error_handler (GIOChannel   *channel,
+ligma_plug_in_io_error_handler (GIOChannel   *channel,
                                GIOCondition  cond,
                                gpointer      data)
 {
-  g_printerr ("%s: fatal error: GIMP crashed\n", gimp_get_progname ());
-  gimp_quit ();
+  g_printerr ("%s: fatal error: LIGMA crashed\n", ligma_get_progname ());
+  ligma_quit ();
 
   /* never reached */
   return TRUE;
 }
 
 static void
-gimp_plug_in_loop (GimpPlugIn *plug_in)
+ligma_plug_in_loop (LigmaPlugIn *plug_in)
 {
   while (TRUE)
     {
-      GimpWireMessage msg;
+      LigmaWireMessage msg;
 
-      if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+      if (! ligma_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
         return;
 
       switch (msg.type)
         {
         case GP_QUIT:
-          gimp_wire_destroy (&msg);
+          ligma_wire_destroy (&msg);
           return;
 
         case GP_CONFIG:
-          _gimp_config (msg.data);
+          _ligma_config (msg.data);
           break;
 
         case GP_TILE_REQ:
@@ -1204,8 +1204,8 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
           break;
 
         case GP_PROC_RUN:
-          gimp_plug_in_proc_run (plug_in, msg.data);
-          gimp_wire_destroy (&msg);
+          ligma_plug_in_proc_run (plug_in, msg.data);
+          ligma_wire_destroy (&msg);
           return;
 
         case GP_PROC_RETURN:
@@ -1229,35 +1229,35 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
           break;
         }
 
-      gimp_wire_destroy (&msg);
+      ligma_wire_destroy (&msg);
     }
 }
 
 static void
-gimp_plug_in_single_message (GimpPlugIn *plug_in)
+ligma_plug_in_single_message (LigmaPlugIn *plug_in)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   /* Run a temp function */
-  if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
-    gimp_quit ();
+  if (! ligma_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+    ligma_quit ();
 
-  gimp_plug_in_process_message (plug_in, &msg);
+  ligma_plug_in_process_message (plug_in, &msg);
 
-  gimp_wire_destroy (&msg);
+  ligma_wire_destroy (&msg);
 }
 
 static void
-gimp_plug_in_process_message (GimpPlugIn      *plug_in,
-                              GimpWireMessage *msg)
+ligma_plug_in_process_message (LigmaPlugIn      *plug_in,
+                              LigmaWireMessage *msg)
 {
   switch (msg->type)
     {
     case GP_QUIT:
-      gimp_quit ();
+      ligma_quit ();
       break;
     case GP_CONFIG:
-      _gimp_config (msg->data);
+      _ligma_config (msg->data);
       break;
     case GP_TILE_REQ:
     case GP_TILE_ACK:
@@ -1271,7 +1271,7 @@ gimp_plug_in_process_message (GimpPlugIn      *plug_in,
       g_warning ("unexpected proc return message received (should not happen)");
       break;
     case GP_TEMP_PROC_RUN:
-      gimp_plug_in_temp_proc_run (plug_in, msg->data);
+      ligma_plug_in_temp_proc_run (plug_in, msg->data);
       break;
     case GP_TEMP_PROC_RETURN:
       g_warning ("unexpected temp proc return message received (should not happen)");
@@ -1286,17 +1286,17 @@ gimp_plug_in_process_message (GimpPlugIn      *plug_in,
 }
 
 static void
-gimp_plug_in_proc_run (GimpPlugIn *plug_in,
+ligma_plug_in_proc_run (LigmaPlugIn *plug_in,
                        GPProcRun  *proc_run)
 {
   GPProcReturn   proc_return;
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = _gimp_plug_in_create_procedure (plug_in, proc_run->name);
+  procedure = _ligma_plug_in_create_procedure (plug_in, proc_run->name);
 
   if (procedure)
     {
-      gimp_plug_in_proc_run_internal (plug_in,
+      ligma_plug_in_proc_run_internal (plug_in,
                                       proc_run, procedure,
                                       &proc_return);
       g_object_unref (procedure);
@@ -1304,46 +1304,46 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
 
   if (! gp_proc_return_write (plug_in->priv->write_channel,
                               &proc_return, plug_in))
-    gimp_quit ();
+    ligma_quit ();
 
-  _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
+  _ligma_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
 
 static void
-gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
+ligma_plug_in_temp_proc_run (LigmaPlugIn *plug_in,
                             GPProcRun  *proc_run)
 {
   GPProcReturn   proc_return;
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_plug_in_get_temp_procedure (plug_in, proc_run->name);
+  procedure = ligma_plug_in_get_temp_procedure (plug_in, proc_run->name);
 
   if (procedure)
     {
-      gimp_plug_in_proc_run_internal (plug_in,
+      ligma_plug_in_proc_run_internal (plug_in,
                                       proc_run, procedure,
                                       &proc_return);
     }
 
   if (! gp_temp_proc_return_write (plug_in->priv->write_channel,
                                    &proc_return, plug_in))
-    gimp_quit ();
+    ligma_quit ();
 
-  _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
+  _ligma_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
 
 static void
-gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
+ligma_plug_in_proc_run_internal (LigmaPlugIn    *plug_in,
                                 GPProcRun     *proc_run,
-                                GimpProcedure *procedure,
+                                LigmaProcedure *procedure,
                                 GPProcReturn  *proc_return)
 {
-  GimpValueArray *arguments;
-  GimpValueArray *return_values  = NULL;
+  LigmaValueArray *arguments;
+  LigmaValueArray *return_values  = NULL;
   gchar          *gettext_domain = NULL;
   gchar          *catalog_dir    = NULL;
 
-  if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
+  if (_ligma_plug_in_set_i18n (plug_in, ligma_procedure_get_name (procedure),
                               &gettext_domain, &catalog_dir))
     {
       bindtextdomain (gettext_domain, catalog_dir);
@@ -1356,35 +1356,35 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
       g_free (catalog_dir);
     }
 
-  gimp_plug_in_push_procedure (plug_in, procedure);
+  ligma_plug_in_push_procedure (plug_in, procedure);
 
-  arguments = _gimp_gp_params_to_value_array (NULL,
+  arguments = _ligma_gp_params_to_value_array (NULL,
                                               NULL, 0,
                                               proc_run->params,
                                               proc_run->n_params,
                                               FALSE);
 
-  return_values = gimp_procedure_run (procedure, arguments);
+  return_values = ligma_procedure_run (procedure, arguments);
 
-  gimp_value_array_unref (arguments);
+  ligma_value_array_unref (arguments);
 
   proc_return->name     = proc_run->name;
-  proc_return->n_params = gimp_value_array_length (return_values);
-  proc_return->params   = _gimp_value_array_to_gp_params (return_values, TRUE);
+  proc_return->n_params = ligma_value_array_length (return_values);
+  proc_return->params   = _ligma_value_array_to_gp_params (return_values, TRUE);
 
-  gimp_value_array_unref (return_values);
+  ligma_value_array_unref (return_values);
 
-  gimp_plug_in_pop_procedure (plug_in, procedure);
+  ligma_plug_in_pop_procedure (plug_in, procedure);
 }
 
 static gboolean
-gimp_plug_in_extension_read (GIOChannel  *channel,
+ligma_plug_in_extension_read (GIOChannel  *channel,
                              GIOCondition condition,
                              gpointer     data)
 {
-  GimpPlugIn *plug_in = data;
+  LigmaPlugIn *plug_in = data;
 
-  gimp_plug_in_single_message (plug_in);
+  ligma_plug_in_single_message (plug_in);
 
   return G_SOURCE_CONTINUE;
 }
@@ -1392,53 +1392,53 @@ gimp_plug_in_extension_read (GIOChannel  *channel,
 
 /*  procedure stack / display-, image-, item-cache  */
 
-GimpProcedure *
-_gimp_plug_in_get_procedure (GimpPlugIn *plug_in)
+LigmaProcedure *
+_ligma_plug_in_get_procedure (LigmaPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (plug_in->priv->procedure_stack != NULL, NULL);
 
   return plug_in->priv->procedure_stack->data;
 }
 
 static void
-gimp_plug_in_push_procedure (GimpPlugIn    *plug_in,
-                             GimpProcedure *procedure)
+ligma_plug_in_push_procedure (LigmaPlugIn    *plug_in,
+                             LigmaProcedure *procedure)
 {
   plug_in->priv->procedure_stack =
     g_list_prepend (plug_in->priv->procedure_stack, procedure);
 }
 
 static void
-gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
-                            GimpProcedure *procedure)
+ligma_plug_in_pop_procedure (LigmaPlugIn    *plug_in,
+                            LigmaProcedure *procedure)
 {
   plug_in->priv->procedure_stack =
     g_list_remove (plug_in->priv->procedure_stack, procedure);
 
-  _gimp_procedure_destroy_proxies (procedure);
+  _ligma_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays, FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,   FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,    FALSE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->displays, FALSE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->images,   FALSE);
+  ligma_plug_in_destroy_proxies (plug_in->priv->items,    FALSE);
 
   if (! plug_in->priv->procedure_stack)
     {
-      gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+      ligma_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
+      ligma_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
+      ligma_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
 
-      gimp_plug_in_destroy_hashes (plug_in);
+      ligma_plug_in_destroy_hashes (plug_in);
     }
 }
 
-GimpDisplay *
-_gimp_plug_in_get_display (GimpPlugIn *plug_in,
+LigmaDisplay *
+_ligma_plug_in_get_display (LigmaPlugIn *plug_in,
                            gint32      display_id)
 {
-  GimpDisplay *display = NULL;
+  LigmaDisplay *display = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   if (G_UNLIKELY (! plug_in->priv->displays))
     plug_in->priv->displays =
@@ -1452,7 +1452,7 @@ _gimp_plug_in_get_display (GimpPlugIn *plug_in,
 
   if (! display)
     {
-      display = g_object_new (GIMP_TYPE_DISPLAY,
+      display = g_object_new (LIGMA_TYPE_DISPLAY,
                               "id", display_id,
                               NULL);
 
@@ -1464,13 +1464,13 @@ _gimp_plug_in_get_display (GimpPlugIn *plug_in,
   return display;
 }
 
-GimpImage *
-_gimp_plug_in_get_image (GimpPlugIn *plug_in,
+LigmaImage *
+_ligma_plug_in_get_image (LigmaPlugIn *plug_in,
                          gint32      image_id)
 {
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   if (G_UNLIKELY (! plug_in->priv->images))
     plug_in->priv->images =
@@ -1484,7 +1484,7 @@ _gimp_plug_in_get_image (GimpPlugIn *plug_in,
 
   if (! image)
     {
-      image = g_object_new (GIMP_TYPE_IMAGE,
+      image = g_object_new (LIGMA_TYPE_IMAGE,
                             "id", image_id,
                             NULL);
 
@@ -1496,13 +1496,13 @@ _gimp_plug_in_get_image (GimpPlugIn *plug_in,
   return image;
 }
 
-GimpItem *
-_gimp_plug_in_get_item (GimpPlugIn *plug_in,
+LigmaItem *
+_ligma_plug_in_get_item (LigmaPlugIn *plug_in,
                         gint32      item_id)
 {
-  GimpItem *item = NULL;
+  LigmaItem *item = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
   if (G_UNLIKELY (! plug_in->priv->items))
     plug_in->priv->items =
@@ -1516,39 +1516,39 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
 
   if (! item)
     {
-      if (gimp_item_id_is_text_layer (item_id))
+      if (ligma_item_id_is_text_layer (item_id))
         {
-          item = g_object_new (GIMP_TYPE_TEXT_LAYER,
+          item = g_object_new (LIGMA_TYPE_TEXT_LAYER,
                                "id", item_id,
                                NULL);
         }
-      else if (gimp_item_id_is_layer (item_id))
+      else if (ligma_item_id_is_layer (item_id))
         {
-          item = g_object_new (GIMP_TYPE_LAYER,
+          item = g_object_new (LIGMA_TYPE_LAYER,
                                "id", item_id,
                                NULL);
         }
-      else if (gimp_item_id_is_layer_mask (item_id))
+      else if (ligma_item_id_is_layer_mask (item_id))
         {
-          item = g_object_new (GIMP_TYPE_LAYER_MASK,
+          item = g_object_new (LIGMA_TYPE_LAYER_MASK,
                                "id", item_id,
                                NULL);
         }
-      else if (gimp_item_id_is_selection (item_id))
+      else if (ligma_item_id_is_selection (item_id))
         {
-          item = g_object_new (GIMP_TYPE_SELECTION,
+          item = g_object_new (LIGMA_TYPE_SELECTION,
                                "id", item_id,
                                NULL);
         }
-      else if (gimp_item_id_is_channel (item_id))
+      else if (ligma_item_id_is_channel (item_id))
         {
-          item = g_object_new (GIMP_TYPE_CHANNEL,
+          item = g_object_new (LIGMA_TYPE_CHANNEL,
                                "id", item_id,
                                NULL);
         }
-      else if (gimp_item_id_is_vectors (item_id))
+      else if (ligma_item_id_is_vectors (item_id))
         {
-          item = g_object_new (GIMP_TYPE_VECTORS,
+          item = g_object_new (LIGMA_TYPE_VECTORS,
                                "id", item_id,
                                NULL);
         }
@@ -1563,7 +1563,7 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
 }
 
 static void
-gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
+ligma_plug_in_destroy_hashes (LigmaPlugIn *plug_in)
 {
   g_clear_pointer (&plug_in->priv->displays, g_hash_table_unref);
   g_clear_pointer (&plug_in->priv->images,   g_hash_table_unref);
@@ -1571,7 +1571,7 @@ gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 }
 
 static void
-gimp_plug_in_destroy_proxies (GHashTable *hash_table,
+ligma_plug_in_destroy_proxies (GHashTable *hash_table,
                               gboolean    destroy_all)
 {
   GHashTableIter iter;
@@ -1639,13 +1639,13 @@ gimp_plug_in_destroy_proxies (GHashTable *hash_table,
 }
 
 static void
-gimp_plug_in_init_i18n (GimpPlugIn *plug_in)
+ligma_plug_in_init_i18n (LigmaPlugIn *plug_in)
 {
-  gchar *rootdir      = g_path_get_dirname (gimp_get_progname ());
+  gchar *rootdir      = g_path_get_dirname (ligma_get_progname ());
   GFile *root_file    = g_file_new_for_path (rootdir);
   GFile *catalog_file = NULL;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
 
   /* Default domain name is the program directory name. */
   g_free (plug_in->priv->translation_domain_name);

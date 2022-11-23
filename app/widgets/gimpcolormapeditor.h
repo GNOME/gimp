@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,50 +15,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLORMAP_EDITOR_H__
-#define __GIMP_COLORMAP_EDITOR_H__
+#ifndef __LIGMA_COLORMAP_EDITOR_H__
+#define __LIGMA_COLORMAP_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_COLORMAP_EDITOR            (gimp_colormap_editor_get_type ())
-#define GIMP_COLORMAP_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditor))
-#define GIMP_COLORMAP_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditorClass))
-#define GIMP_IS_COLORMAP_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLORMAP_EDITOR))
-#define GIMP_IS_COLORMAP_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLORMAP_EDITOR))
-#define GIMP_COLORMAP_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditorClass))
+#define LIGMA_TYPE_COLORMAP_EDITOR            (ligma_colormap_editor_get_type ())
+#define LIGMA_COLORMAP_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLORMAP_EDITOR, LigmaColormapEditor))
+#define LIGMA_COLORMAP_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLORMAP_EDITOR, LigmaColormapEditorClass))
+#define LIGMA_IS_COLORMAP_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLORMAP_EDITOR))
+#define LIGMA_IS_COLORMAP_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLORMAP_EDITOR))
+#define LIGMA_COLORMAP_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLORMAP_EDITOR, LigmaColormapEditorClass))
 
 
-typedef struct _GimpColormapEditorClass GimpColormapEditorClass;
+typedef struct _LigmaColormapEditorClass LigmaColormapEditorClass;
 
-struct _GimpColormapEditor
+struct _LigmaColormapEditor
 {
-  GimpImageEditor  parent_instance;
+  LigmaImageEditor  parent_instance;
 
   GtkWidget       *selection;
   GtkWidget       *color_dialog;
 };
 
-struct _GimpColormapEditorClass
+struct _LigmaColormapEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_colormap_editor_get_type   (void) G_GNUC_CONST;
+GType       ligma_colormap_editor_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_colormap_editor_new        (GimpMenuFactory    *menu_factory);
+GtkWidget * ligma_colormap_editor_new        (LigmaMenuFactory    *menu_factory);
 
-void        gimp_colormap_editor_edit_color (GimpColormapEditor *editor);
+void        ligma_colormap_editor_edit_color (LigmaColormapEditor *editor);
 
-gint        gimp_colormap_editor_get_index  (GimpColormapEditor *editor,
-                                             const GimpRGB      *search);
-gboolean    gimp_colormap_editor_set_index  (GimpColormapEditor *editor,
+gint        ligma_colormap_editor_get_index  (LigmaColormapEditor *editor,
+                                             const LigmaRGB      *search);
+gboolean    ligma_colormap_editor_set_index  (LigmaColormapEditor *editor,
                                              gint                index,
-                                             GimpRGB            *color);
+                                             LigmaRGB            *color);
 
-gint        gimp_colormap_editor_max_index  (GimpColormapEditor *editor);
+gint        ligma_colormap_editor_max_index  (LigmaColormapEditor *editor);
 
 
-#endif /* __GIMP_COLORMAP_EDITOR_H__ */
+#endif /* __LIGMA_COLORMAP_EDITOR_H__ */

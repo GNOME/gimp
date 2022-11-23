@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Layer-Modes\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Layer-Modes\"	\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
@@ -18,42 +18,42 @@ noinst_LIBRARIES = \
 	libapplayermodes.a
 
 libapplayermodes_generic_a_sources = \
-	gimp-layer-modes.c			\
-	gimp-layer-modes.h			\
+	ligma-layer-modes.c			\
+	ligma-layer-modes.h			\
 	\
-	gimpoperationlayermode.c		\
-	gimpoperationlayermode.h		\
-	gimpoperationlayermode-blend.c		\
-	gimpoperationlayermode-blend.h		\
-	gimpoperationlayermode-composite.c	\
-	gimpoperationlayermode-composite.h	\
+	ligmaoperationlayermode.c		\
+	ligmaoperationlayermode.h		\
+	ligmaoperationlayermode-blend.c		\
+	ligmaoperationlayermode-blend.h		\
+	ligmaoperationlayermode-composite.c	\
+	ligmaoperationlayermode-composite.h	\
 	\
-	gimpoperationantierase.c		\
-	gimpoperationantierase.h		\
-	gimpoperationbehind.c			\
-	gimpoperationbehind.h			\
-	gimpoperationdissolve.c			\
-	gimpoperationdissolve.h			\
-	gimpoperationerase.c			\
-	gimpoperationerase.h			\
-	gimpoperationmerge.c			\
-	gimpoperationmerge.h			\
-	gimpoperationnormal.c			\
-	gimpoperationnormal.h			\
-	gimpoperationpassthrough.c		\
-	gimpoperationpassthrough.h		\
-	gimpoperationreplace.c			\
-	gimpoperationreplace.h			\
-	gimpoperationsplit.c			\
-	gimpoperationsplit.h
+	ligmaoperationantierase.c		\
+	ligmaoperationantierase.h		\
+	ligmaoperationbehind.c			\
+	ligmaoperationbehind.h			\
+	ligmaoperationdissolve.c			\
+	ligmaoperationdissolve.h			\
+	ligmaoperationerase.c			\
+	ligmaoperationerase.h			\
+	ligmaoperationmerge.c			\
+	ligmaoperationmerge.h			\
+	ligmaoperationnormal.c			\
+	ligmaoperationnormal.h			\
+	ligmaoperationpassthrough.c		\
+	ligmaoperationpassthrough.h		\
+	ligmaoperationreplace.c			\
+	ligmaoperationreplace.h			\
+	ligmaoperationsplit.c			\
+	ligmaoperationsplit.h
 
 libapplayermodes_sse2_a_sources = \
-	gimpoperationlayermode-composite-sse2.c	\
+	ligmaoperationlayermode-composite-sse2.c	\
 	\
-	gimpoperationnormal-sse2.c
+	ligmaoperationnormal-sse2.c
 
 libapplayermodes_sse4_a_sources = \
-	gimpoperationnormal-sse4.c
+	ligmaoperationnormal-sse4.c
 
 
 libapplayermodes_generic_a_SOURCES = $(libapplayermodes_generic_a_sources)

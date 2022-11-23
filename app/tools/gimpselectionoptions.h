@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_OPTIONS_H__
-#define __GIMP_SELECTION_OPTIONS_H__
+#ifndef __LIGMA_SELECTION_OPTIONS_H__
+#define __LIGMA_SELECTION_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_SELECTION_OPTIONS            (gimp_selection_options_get_type ())
-#define GIMP_SELECTION_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptions))
-#define GIMP_SELECTION_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptionsClass))
-#define GIMP_IS_SELECTION_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_OPTIONS))
-#define GIMP_IS_SELECTION_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_OPTIONS))
-#define GIMP_SELECTION_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptionsClass))
+#define LIGMA_TYPE_SELECTION_OPTIONS            (ligma_selection_options_get_type ())
+#define LIGMA_SELECTION_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SELECTION_OPTIONS, LigmaSelectionOptions))
+#define LIGMA_SELECTION_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SELECTION_OPTIONS, LigmaSelectionOptionsClass))
+#define LIGMA_IS_SELECTION_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SELECTION_OPTIONS))
+#define LIGMA_IS_SELECTION_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SELECTION_OPTIONS))
+#define LIGMA_SELECTION_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SELECTION_OPTIONS, LigmaSelectionOptionsClass))
 
 
-typedef struct _GimpSelectionOptions GimpSelectionOptions;
-typedef struct _GimpToolOptionsClass GimpSelectionOptionsClass;
+typedef struct _LigmaSelectionOptions LigmaSelectionOptions;
+typedef struct _LigmaToolOptionsClass LigmaSelectionOptionsClass;
 
-struct _GimpSelectionOptions
+struct _LigmaSelectionOptions
 {
-  GimpToolOptions  parent_instance;
+  LigmaToolOptions  parent_instance;
 
-  GimpChannelOps   operation;
+  LigmaChannelOps   operation;
   gboolean         antialias;
   gboolean         feather;
   gdouble          feather_radius;
@@ -48,9 +48,9 @@ struct _GimpSelectionOptions
 };
 
 
-GType       gimp_selection_options_get_type (void) G_GNUC_CONST;
+GType       ligma_selection_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_selection_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_selection_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_SELECTION_OPTIONS_H__  */
+#endif  /*  __LIGMA_SELECTION_OPTIONS_H__  */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,37 +22,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdisplay.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadisplay.h"
 
 #include "file/file-open.h"
 
-#include "gimpcairo-wilber.h"
-#include "gimpdevices.h"
-#include "gimpdialogfactory.h"
-#include "gimpdockwindow.h"
-#include "gimphelp-ids.h"
-#include "gimppanedbox.h"
-#include "gimptoolbox.h"
-#include "gimptoolbox-color-area.h"
-#include "gimptoolbox-dnd.h"
-#include "gimptoolbox-image-area.h"
-#include "gimptoolbox-indicator-area.h"
-#include "gimptoolpalette.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacairo-wilber.h"
+#include "ligmadevices.h"
+#include "ligmadialogfactory.h"
+#include "ligmadockwindow.h"
+#include "ligmahelp-ids.h"
+#include "ligmapanedbox.h"
+#include "ligmatoolbox.h"
+#include "ligmatoolbox-color-area.h"
+#include "ligmatoolbox-dnd.h"
+#include "ligmatoolbox-image-area.h"
+#include "ligmatoolbox-indicator-area.h"
+#include "ligmatoolpalette.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
 
 #include "about.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -62,9 +62,9 @@ enum
 };
 
 
-struct _GimpToolboxPrivate
+struct _LigmaToolboxPrivate
 {
-  GimpContext       *context;
+  LigmaContext       *context;
 
   GtkWidget         *vbox;
 
@@ -78,126 +78,126 @@ struct _GimpToolboxPrivate
   gint               area_rows;
   gint               area_columns;
 
-  GimpPanedBox      *drag_handler;
+  LigmaPanedBox      *drag_handler;
 
   gboolean           in_destruction;
 };
 
 
-static void        gimp_toolbox_constructed             (GObject        *object);
-static void        gimp_toolbox_dispose                 (GObject        *object);
-static void        gimp_toolbox_set_property            (GObject        *object,
+static void        ligma_toolbox_constructed             (GObject        *object);
+static void        ligma_toolbox_dispose                 (GObject        *object);
+static void        ligma_toolbox_set_property            (GObject        *object,
                                                          guint           property_id,
                                                          const GValue   *value,
                                                          GParamSpec     *pspec);
-static void        gimp_toolbox_get_property            (GObject        *object,
+static void        ligma_toolbox_get_property            (GObject        *object,
                                                          guint           property_id,
                                                          GValue         *value,
                                                          GParamSpec     *pspec);
 
-static gboolean    gimp_toolbox_button_press_event      (GtkWidget      *widget,
+static gboolean    ligma_toolbox_button_press_event      (GtkWidget      *widget,
                                                          GdkEventButton *event);
-static void        gimp_toolbox_drag_leave              (GtkWidget      *widget,
+static void        ligma_toolbox_drag_leave              (GtkWidget      *widget,
                                                          GdkDragContext *context,
                                                          guint           time,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_drag_motion             (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         gint            x,
-                                                         gint            y,
-                                                         guint           time,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_drag_drop               (GtkWidget      *widget,
+                                                         LigmaToolbox    *toolbox);
+static gboolean    ligma_toolbox_drag_motion             (GtkWidget      *widget,
                                                          GdkDragContext *context,
                                                          gint            x,
                                                          gint            y,
                                                          guint           time,
-                                                         GimpToolbox    *toolbox);
-static gchar     * gimp_toolbox_get_description         (GimpDock       *dock,
+                                                         LigmaToolbox    *toolbox);
+static gboolean    ligma_toolbox_drag_drop               (GtkWidget      *widget,
+                                                         GdkDragContext *context,
+                                                         gint            x,
+                                                         gint            y,
+                                                         guint           time,
+                                                         LigmaToolbox    *toolbox);
+static gchar     * ligma_toolbox_get_description         (LigmaDock       *dock,
                                                          gboolean        complete);
-static void        gimp_toolbox_set_host_geometry_hints (GimpDock       *dock,
+static void        ligma_toolbox_set_host_geometry_hints (LigmaDock       *dock,
                                                          GtkWindow      *window);
-static void        gimp_toolbox_book_added              (GimpDock       *dock,
-                                                         GimpDockbook   *dockbook);
-static void        gimp_toolbox_book_removed            (GimpDock       *dock,
-                                                         GimpDockbook   *dockbook);
+static void        ligma_toolbox_book_added              (LigmaDock       *dock,
+                                                         LigmaDockbook   *dockbook);
+static void        ligma_toolbox_book_removed            (LigmaDock       *dock,
+                                                         LigmaDockbook   *dockbook);
 
-static void        gimp_toolbox_notify_theme            (GimpGuiConfig  *config,
+static void        ligma_toolbox_notify_theme            (LigmaGuiConfig  *config,
                                                          GParamSpec     *pspec,
-                                                         GimpToolbox    *toolbox);
+                                                         LigmaToolbox    *toolbox);
 
-static void        gimp_toolbox_palette_style_updated   (GtkWidget      *palette,
-                                                         GimpToolbox    *toolbox);
+static void        ligma_toolbox_palette_style_updated   (GtkWidget      *palette,
+                                                         LigmaToolbox    *toolbox);
 
-static void        gimp_toolbox_wilber_style_updated    (GtkWidget      *widget,
-                                                         GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_draw_wilber             (GtkWidget      *widget,
+static void        ligma_toolbox_wilber_style_updated    (GtkWidget      *widget,
+                                                         LigmaToolbox    *toolbox);
+static gboolean    ligma_toolbox_draw_wilber             (GtkWidget      *widget,
                                                          cairo_t        *cr);
-static GtkWidget * toolbox_create_color_area            (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
-static GtkWidget * toolbox_create_foo_area              (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
-static GtkWidget * toolbox_create_image_area            (GimpToolbox    *toolbox,
-                                                         GimpContext    *context);
+static GtkWidget * toolbox_create_color_area            (LigmaToolbox    *toolbox,
+                                                         LigmaContext    *context);
+static GtkWidget * toolbox_create_foo_area              (LigmaToolbox    *toolbox,
+                                                         LigmaContext    *context);
+static GtkWidget * toolbox_create_image_area            (LigmaToolbox    *toolbox,
+                                                         LigmaContext    *context);
 static void        toolbox_paste_received               (GtkClipboard   *clipboard,
                                                          const gchar    *text,
                                                          gpointer        data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolbox, ligma_toolbox, LIGMA_TYPE_DOCK)
 
-#define parent_class gimp_toolbox_parent_class
+#define parent_class ligma_toolbox_parent_class
 
 
 static void
-gimp_toolbox_class_init (GimpToolboxClass *klass)
+ligma_toolbox_class_init (LigmaToolboxClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
+  LigmaDockClass  *dock_class   = LIGMA_DOCK_CLASS (klass);
 
-  object_class->constructed           = gimp_toolbox_constructed;
-  object_class->dispose               = gimp_toolbox_dispose;
-  object_class->set_property          = gimp_toolbox_set_property;
-  object_class->get_property          = gimp_toolbox_get_property;
+  object_class->constructed           = ligma_toolbox_constructed;
+  object_class->dispose               = ligma_toolbox_dispose;
+  object_class->set_property          = ligma_toolbox_set_property;
+  object_class->get_property          = ligma_toolbox_get_property;
 
-  widget_class->button_press_event    = gimp_toolbox_button_press_event;
+  widget_class->button_press_event    = ligma_toolbox_button_press_event;
 
-  dock_class->get_description         = gimp_toolbox_get_description;
-  dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
-  dock_class->book_added              = gimp_toolbox_book_added;
-  dock_class->book_removed            = gimp_toolbox_book_removed;
+  dock_class->get_description         = ligma_toolbox_get_description;
+  dock_class->set_host_geometry_hints = ligma_toolbox_set_host_geometry_hints;
+  dock_class->book_added              = ligma_toolbox_book_added;
+  dock_class->book_removed            = ligma_toolbox_book_removed;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_toolbox_init (GimpToolbox *toolbox)
+ligma_toolbox_init (LigmaToolbox *toolbox)
 {
-  toolbox->p = gimp_toolbox_get_instance_private (toolbox);
+  toolbox->p = ligma_toolbox_get_instance_private (toolbox);
 
-  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
-                     GIMP_HELP_TOOLBOX, NULL, NULL);
+  ligma_help_connect (GTK_WIDGET (toolbox), ligma_standard_help_func,
+                     LIGMA_HELP_TOOLBOX, NULL, NULL);
 }
 
 static void
-gimp_toolbox_constructed (GObject *object)
+ligma_toolbox_constructed (GObject *object)
 {
-  GimpToolbox   *toolbox = GIMP_TOOLBOX (object);
-  GimpGuiConfig *config;
+  LigmaToolbox   *toolbox = LIGMA_TOOLBOX (object);
+  LigmaGuiConfig *config;
   GtkWidget     *main_vbox;
   GtkWidget     *event_box;
 
-  gimp_assert (GIMP_IS_CONTEXT (toolbox->p->context));
+  ligma_assert (LIGMA_IS_CONTEXT (toolbox->p->context));
 
-  config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
+  config = LIGMA_GUI_CONFIG (toolbox->p->context->ligma->config);
 
-  main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
+  main_vbox = ligma_dock_get_main_vbox (LIGMA_DOCK (toolbox));
 
   toolbox->p->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->p->vbox, FALSE, FALSE, 0);
@@ -208,28 +208,28 @@ gimp_toolbox_constructed (GObject *object)
    * data and reuse the same function for the vbox
    */
   g_signal_connect (toolbox, "drag-leave",
-                    G_CALLBACK (gimp_toolbox_drag_leave),
+                    G_CALLBACK (ligma_toolbox_drag_leave),
                     toolbox);
   g_signal_connect (toolbox, "drag-motion",
-                    G_CALLBACK (gimp_toolbox_drag_motion),
+                    G_CALLBACK (ligma_toolbox_drag_motion),
                     toolbox);
   g_signal_connect (toolbox, "drag-drop",
-                    G_CALLBACK (gimp_toolbox_drag_drop),
+                    G_CALLBACK (ligma_toolbox_drag_drop),
                     toolbox);
   g_signal_connect (toolbox->p->vbox, "drag-leave",
-                    G_CALLBACK (gimp_toolbox_drag_leave),
+                    G_CALLBACK (ligma_toolbox_drag_leave),
                     toolbox);
   g_signal_connect (toolbox->p->vbox, "drag-motion",
-                    G_CALLBACK (gimp_toolbox_drag_motion),
+                    G_CALLBACK (ligma_toolbox_drag_motion),
                     toolbox);
   g_signal_connect (toolbox->p->vbox, "drag-drop",
-                    G_CALLBACK (gimp_toolbox_drag_drop),
+                    G_CALLBACK (ligma_toolbox_drag_drop),
                     toolbox);
 
   event_box = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), event_box, FALSE, FALSE, 0);
   g_signal_connect_swapped (event_box, "button-press-event",
-                            G_CALLBACK (gimp_toolbox_button_press_event),
+                            G_CALLBACK (ligma_toolbox_button_press_event),
                             toolbox);
   gtk_widget_show (event_box);
 
@@ -242,17 +242,17 @@ gimp_toolbox_constructed (GObject *object)
                           G_BINDING_SYNC_CREATE);
 
   g_signal_connect (toolbox->p->header, "style-updated",
-                    G_CALLBACK (gimp_toolbox_wilber_style_updated),
+                    G_CALLBACK (ligma_toolbox_wilber_style_updated),
                     toolbox);
   g_signal_connect (toolbox->p->header, "draw",
-                    G_CALLBACK (gimp_toolbox_draw_wilber),
+                    G_CALLBACK (ligma_toolbox_draw_wilber),
                     toolbox);
 
-  gimp_help_set_help_data (toolbox->p->header,
+  ligma_help_set_help_data (toolbox->p->header,
                            _("Drop image files here to open them"), NULL);
 
-  toolbox->p->tool_palette = gimp_tool_palette_new ();
-  gimp_tool_palette_set_toolbox (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+  toolbox->p->tool_palette = ligma_tool_palette_new ();
+  ligma_tool_palette_set_toolbox (LIGMA_TOOL_PALETTE (toolbox->p->tool_palette),
                                  toolbox);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->tool_palette,
                       FALSE, FALSE, 0);
@@ -266,7 +266,7 @@ gimp_toolbox_constructed (GObject *object)
   gtk_widget_show (toolbox->p->area_box);
 
   gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
-  gimp_devices_add_widget (toolbox->p->context->gimp, GTK_WIDGET (toolbox));
+  ligma_devices_add_widget (toolbox->p->context->ligma, GTK_WIDGET (toolbox));
 
   toolbox->p->color_area = toolbox_create_color_area (toolbox,
                                                       toolbox->p->context);
@@ -294,13 +294,13 @@ gimp_toolbox_constructed (GObject *object)
                           toolbox->p->image_area, "visible",
                           G_BINDING_SYNC_CREATE);
 
-  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox), toolbox->p->vbox);
+  ligma_toolbox_dnd_init (LIGMA_TOOLBOX (toolbox), toolbox->p->vbox);
 }
 
 static void
-gimp_toolbox_dispose (GObject *object)
+ligma_toolbox_dispose (GObject *object)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (object);
 
   toolbox->p->in_destruction = TRUE;
 
@@ -312,12 +312,12 @@ gimp_toolbox_dispose (GObject *object)
 }
 
 static void
-gimp_toolbox_set_property (GObject      *object,
+ligma_toolbox_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (object);
 
   switch (property_id)
     {
@@ -332,12 +332,12 @@ gimp_toolbox_set_property (GObject      *object,
 }
 
 static void
-gimp_toolbox_get_property (GObject    *object,
+ligma_toolbox_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (object);
 
   switch (property_id)
     {
@@ -352,11 +352,11 @@ gimp_toolbox_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_toolbox_button_press_event (GtkWidget      *widget,
+ligma_toolbox_button_press_event (GtkWidget      *widget,
                                  GdkEventButton *event)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (widget);
-  GimpDisplay *display;
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (widget);
+  LigmaDisplay *display;
   gboolean     stop_event = GDK_EVENT_PROPAGATE;
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 2)
@@ -370,44 +370,44 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
 
       stop_event = GDK_EVENT_STOP;
     }
-  else if ((display = gimp_context_get_display (toolbox->p->context)))
+  else if ((display = ligma_context_get_display (toolbox->p->context)))
     {
       /* Any button event in empty spaces or the Wilber area gives focus
        * to the top image.
        */
-      gimp_display_grab_focus (display);
+      ligma_display_grab_focus (display);
     }
 
   return stop_event;
 }
 
 static void
-gimp_toolbox_drag_leave (GtkWidget      *widget,
+ligma_toolbox_drag_leave (GtkWidget      *widget,
                          GdkDragContext *context,
                          guint           time,
-                         GimpToolbox    *toolbox)
+                         LigmaToolbox    *toolbox)
 {
-  gimp_highlight_widget (widget, FALSE, NULL);
+  ligma_highlight_widget (widget, FALSE, NULL);
 }
 
 static gboolean
-gimp_toolbox_drag_motion (GtkWidget      *widget,
+ligma_toolbox_drag_motion (GtkWidget      *widget,
                           GdkDragContext *context,
                           gint            x,
                           gint            y,
                           guint           time,
-                          GimpToolbox    *toolbox)
+                          LigmaToolbox    *toolbox)
 {
   gboolean handle;
 
-  if (gimp_paned_box_will_handle_drag (toolbox->p->drag_handler,
+  if (ligma_paned_box_will_handle_drag (toolbox->p->drag_handler,
                                        widget,
                                        context,
                                        x, y,
                                        time))
     {
       gdk_drag_status (context, 0, time);
-      gimp_highlight_widget (widget, FALSE, NULL);
+      ligma_highlight_widget (widget, FALSE, NULL);
 
       return FALSE;
     }
@@ -415,24 +415,24 @@ gimp_toolbox_drag_motion (GtkWidget      *widget,
   handle = (gtk_drag_dest_find_target (widget, context, NULL) != GDK_NONE);
 
   gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
-  gimp_highlight_widget (widget, handle, NULL);
+  ligma_highlight_widget (widget, handle, NULL);
 
   /* Return TRUE so drag_leave() is called */
   return TRUE;
 }
 
 static gboolean
-gimp_toolbox_drag_drop (GtkWidget      *widget,
+ligma_toolbox_drag_drop (GtkWidget      *widget,
                         GdkDragContext *context,
                         gint            x,
                         gint            y,
                         guint           time,
-                        GimpToolbox    *toolbox)
+                        LigmaToolbox    *toolbox)
 {
   GdkAtom  target;
   gboolean dropped = FALSE;
 
-  if (gimp_paned_box_will_handle_drag (toolbox->p->drag_handler,
+  if (ligma_paned_box_will_handle_drag (toolbox->p->drag_handler,
                                        widget,
                                        context,
                                        x, y,
@@ -459,16 +459,16 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
 }
 
 static gchar *
-gimp_toolbox_get_description (GimpDock *dock,
+ligma_toolbox_get_description (LigmaDock *dock,
                               gboolean  complete)
 {
   GString *desc      = g_string_new (_("Toolbox"));
-  gchar   *dock_desc = GIMP_DOCK_CLASS (parent_class)->get_description (dock,
+  gchar   *dock_desc = LIGMA_DOCK_CLASS (parent_class)->get_description (dock,
                                                                         complete);
 
   if (dock_desc && strlen (dock_desc) > 0)
     {
-      g_string_append (desc, GIMP_DOCK_BOOK_SEPARATOR);
+      g_string_append (desc, LIGMA_DOCK_BOOK_SEPARATOR);
       g_string_append (desc, dock_desc);
     }
 
@@ -478,43 +478,43 @@ gimp_toolbox_get_description (GimpDock *dock,
 }
 
 static void
-gimp_toolbox_book_added (GimpDock     *dock,
-                         GimpDockbook *dockbook)
+ligma_toolbox_book_added (LigmaDock     *dock,
+                         LigmaDockbook *dockbook)
 {
-  if (GIMP_DOCK_CLASS (parent_class)->book_added)
-    GIMP_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
+  if (LIGMA_DOCK_CLASS (parent_class)->book_added)
+    LIGMA_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
 
-  if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
+  if (g_list_length (ligma_dock_get_dockbooks (dock)) == 1)
     {
-      gimp_dock_invalidate_geometry (dock);
+      ligma_dock_invalidate_geometry (dock);
     }
 }
 
 static void
-gimp_toolbox_book_removed (GimpDock     *dock,
-                           GimpDockbook *dockbook)
+ligma_toolbox_book_removed (LigmaDock     *dock,
+                           LigmaDockbook *dockbook)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (dock);
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (dock);
 
-  if (GIMP_DOCK_CLASS (parent_class)->book_removed)
-    GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
+  if (LIGMA_DOCK_CLASS (parent_class)->book_removed)
+    LIGMA_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
 
-  if (! gimp_dock_get_dockbooks (dock) &&
+  if (! ligma_dock_get_dockbooks (dock) &&
       ! toolbox->p->in_destruction)
     {
-      gimp_dock_invalidate_geometry (dock);
+      ligma_dock_invalidate_geometry (dock);
     }
 }
 
 static void
-gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
+ligma_toolbox_set_host_geometry_hints (LigmaDock  *dock,
                                       GtkWindow *window)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (dock);
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (dock);
   gint         button_width;
   gint         button_height;
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+  if (ligma_tool_palette_get_button_size (LIGMA_TOOL_PALETTE (toolbox->p->tool_palette),
                                          &button_width, &button_height))
     {
       GdkGeometry geometry;
@@ -534,37 +534,37 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
 
-      gimp_dialog_factory_set_has_min_size (window, TRUE);
+      ligma_dialog_factory_set_has_min_size (window, TRUE);
     }
 }
 
 GtkWidget *
-gimp_toolbox_new (GimpDialogFactory *factory,
-                  GimpContext       *context,
-                  GimpUIManager     *ui_manager)
+ligma_toolbox_new (LigmaDialogFactory *factory,
+                  LigmaContext       *context,
+                  LigmaUIManager     *ui_manager)
 {
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (GIMP_IS_UI_MANAGER (ui_manager), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_UI_MANAGER (ui_manager), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOLBOX,
+  return g_object_new (LIGMA_TYPE_TOOLBOX,
                        "context", context,
                        NULL);
 }
 
-GimpContext *
-gimp_toolbox_get_context (GimpToolbox *toolbox)
+LigmaContext *
+ligma_toolbox_get_context (LigmaToolbox *toolbox)
 {
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOLBOX (toolbox), NULL);
 
   return toolbox->p->context;
 }
 
 void
-gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
-                               GimpPanedBox *drag_handler)
+ligma_toolbox_set_drag_handler (LigmaToolbox  *toolbox,
+                               LigmaPanedBox *drag_handler)
 {
-  g_return_if_fail (GIMP_IS_TOOLBOX (toolbox));
+  g_return_if_fail (LIGMA_IS_TOOLBOX (toolbox));
 
   toolbox->p->drag_handler = drag_handler;
 }
@@ -573,16 +573,16 @@ gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
 /*  private functions  */
 
 static void
-gimp_toolbox_notify_theme (GimpGuiConfig *config,
+ligma_toolbox_notify_theme (LigmaGuiConfig *config,
                            GParamSpec    *pspec,
-                           GimpToolbox   *toolbox)
+                           LigmaToolbox   *toolbox)
 {
-  gimp_toolbox_palette_style_updated (GTK_WIDGET (toolbox->p->tool_palette), toolbox);
+  ligma_toolbox_palette_style_updated (GTK_WIDGET (toolbox->p->tool_palette), toolbox);
 }
 
 static void
-gimp_toolbox_palette_style_updated (GtkWidget   *widget,
-                                    GimpToolbox *toolbox)
+ligma_toolbox_palette_style_updated (GtkWidget   *widget,
+                                    LigmaToolbox *toolbox)
 {
   GtkIconSize  tool_icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
   gint         icon_width     = 40;
@@ -600,13 +600,13 @@ gimp_toolbox_palette_style_updated (GtkWidget   *widget,
 }
 
 static void
-gimp_toolbox_wilber_style_updated (GtkWidget   *widget,
-                                   GimpToolbox *toolbox)
+ligma_toolbox_wilber_style_updated (GtkWidget   *widget,
+                                   LigmaToolbox *toolbox)
 {
   gint button_width;
   gint button_height;
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+  if (ligma_tool_palette_get_button_size (LIGMA_TOOL_PALETTE (toolbox->p->tool_palette),
                                          &button_width, &button_height))
     {
       gtk_widget_set_size_request (widget,
@@ -616,17 +616,17 @@ gimp_toolbox_wilber_style_updated (GtkWidget   *widget,
 }
 
 static gboolean
-gimp_toolbox_draw_wilber (GtkWidget *widget,
+ligma_toolbox_draw_wilber (GtkWidget *widget,
                           cairo_t   *cr)
 {
-  gimp_cairo_draw_toolbox_wilber (widget, cr);
+  ligma_cairo_draw_toolbox_wilber (widget, cr);
 
   return FALSE;
 }
 
 static GtkWidget *
-toolbox_create_color_area (GimpToolbox *toolbox,
-                           GimpContext *context)
+toolbox_create_color_area (LigmaToolbox *toolbox,
+                           LigmaContext *context)
 {
   GtkWidget   *col_area;
   GtkIconSize  tool_icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
@@ -637,7 +637,7 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                         "tool-icon-size", &tool_icon_size,
                         NULL);
   gtk_icon_size_lookup (tool_icon_size, &icon_width, &icon_height);
-  col_area = gimp_toolbox_color_area_create (toolbox,
+  col_area = ligma_toolbox_color_area_create (toolbox,
                                              (gint) (icon_width * 1.75),
                                              (gint) (icon_height * 1.75));
   g_object_set (col_area,
@@ -650,30 +650,30 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                 NULL);
 
   g_signal_connect (toolbox->p->tool_palette, "style-updated",
-                    G_CALLBACK (gimp_toolbox_palette_style_updated),
+                    G_CALLBACK (ligma_toolbox_palette_style_updated),
                     toolbox);
-  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+  g_signal_connect_after (LIGMA_GUI_CONFIG (toolbox->p->context->ligma->config),
                           "notify::theme",
-                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          G_CALLBACK (ligma_toolbox_notify_theme),
                           toolbox);
-  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+  g_signal_connect_after (LIGMA_GUI_CONFIG (toolbox->p->context->ligma->config),
                           "notify::override-theme-icon-size",
-                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          G_CALLBACK (ligma_toolbox_notify_theme),
                           toolbox);
-  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+  g_signal_connect_after (LIGMA_GUI_CONFIG (toolbox->p->context->ligma->config),
                           "notify::custom-icon-size",
-                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          G_CALLBACK (ligma_toolbox_notify_theme),
                           toolbox);
   return col_area;
 }
 
 static GtkWidget *
-toolbox_create_foo_area (GimpToolbox *toolbox,
-                         GimpContext *context)
+toolbox_create_foo_area (LigmaToolbox *toolbox,
+                         LigmaContext *context)
 {
   GtkWidget *foo_area;
 
-  foo_area = gimp_toolbox_indicator_area_create (toolbox);
+  foo_area = ligma_toolbox_indicator_area_create (toolbox);
   g_object_set (foo_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
@@ -687,12 +687,12 @@ toolbox_create_foo_area (GimpToolbox *toolbox,
 }
 
 static GtkWidget *
-toolbox_create_image_area (GimpToolbox *toolbox,
-                           GimpContext *context)
+toolbox_create_image_area (LigmaToolbox *toolbox,
+                           LigmaContext *context)
 {
   GtkWidget *image_area;
 
-  image_area = gimp_toolbox_image_area_create (toolbox, 52, 42);
+  image_area = ligma_toolbox_image_area_create (toolbox, 52, 42);
   g_object_set (image_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
@@ -710,8 +710,8 @@ toolbox_paste_received (GtkClipboard *clipboard,
                         const gchar  *text,
                         gpointer      data)
 {
-  GimpToolbox *toolbox = GIMP_TOOLBOX (data);
-  GimpContext *context = toolbox->p->context;
+  LigmaToolbox *toolbox = LIGMA_TOOLBOX (data);
+  LigmaContext *context = toolbox->p->context;
 
   if (text)
     {
@@ -734,27 +734,27 @@ toolbox_paste_received (GtkClipboard *clipboard,
       if (file)
         {
           GtkWidget         *widget = GTK_WIDGET (toolbox);
-          GimpImage         *image;
-          GimpDisplay       *display;
-          GimpPDBStatusType  status;
+          LigmaImage         *image;
+          LigmaDisplay       *display;
+          LigmaPDBStatusType  status;
           GError            *error = NULL;
 
-          image = file_open_with_display (context->gimp, context, NULL,
+          image = file_open_with_display (context->ligma, context, NULL,
                                           file, FALSE,
-                                          G_OBJECT (gimp_widget_get_monitor (widget)),
+                                          G_OBJECT (ligma_widget_get_monitor (widget)),
                                           &status, &error);
 
-          if (! image && status != GIMP_PDB_CANCEL)
+          if (! image && status != LIGMA_PDB_CANCEL)
             {
-              gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+              ligma_message (context->ligma, NULL, LIGMA_MESSAGE_ERROR,
                             _("Opening '%s' failed:\n\n%s"),
-                            gimp_file_get_utf8_name (file), error->message);
+                            ligma_file_get_utf8_name (file), error->message);
               g_clear_error (&error);
             }
-          else if ((display = gimp_context_get_display (context)))
+          else if ((display = ligma_context_get_display (context)))
             {
               /* Giving focus to newly opened image. */
-              gimp_display_grab_focus (display);
+              ligma_display_grab_focus (display);
             }
 
           g_object_unref (file);

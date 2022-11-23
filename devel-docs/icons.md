@@ -1,8 +1,8 @@
-# Icon themes for GIMP
+# Icon themes for LIGMA
 
 ## Released Themes
 
-GIMP 3.0 comes with 3 icon themes:
+LIGMA 3.0 comes with 3 icon themes:
 
 1. **Symbolic**: the default icon theme which is vector and which will
    be automatically recolored to your theme colors.
@@ -14,8 +14,8 @@ GIMP 3.0 comes with 3 icon themes:
 2. **Color**: the color icon theme, also designed with vector graphics,
    yet it won't be recolored.
 
-3. **Legacy**: icon theme which contains the old GIMP 2.8's raster
-   icons (mostly untouched ever since GIMP 2.10). It is not maintained
+3. **Legacy**: icon theme which contains the old LIGMA 2.8's raster
+   icons (mostly untouched ever since LIGMA 2.10). It is not maintained
    anymore and we are not expecting new icons for Legacy. Yet since we
    keep them in the source tree for now, we would accept updates.
 
@@ -50,7 +50,7 @@ the icons as the software evolve.
 
 - You should group all parts of a single icon into a single object and
   id this object with the icon name. For instance the object containing
-  the Move Tool icon should be id-ed: "gimp-tool-move".
+  the Move Tool icon should be id-ed: "ligma-tool-move".
 
 - Make sure the object has the right expected size. A good trick is to
   group with a square of the right size, made invisible.
@@ -120,11 +120,11 @@ this flag, so you will likely have to edit the file manually in a text
 or XML editor.
 
 For instance
-"[gimp-default-colors](icons/Symbolic/scalable/gimp-default-colors-symbolic.svg)"
-![gimp-default-colors](icons/Symbolic/scalable/gimp-default-colors-symbolic.svg)
+"[ligma-default-colors](icons/Symbolic/scalable/ligma-default-colors-symbolic.svg)"
+![ligma-default-colors](icons/Symbolic/scalable/ligma-default-colors-symbolic.svg)
 and
-"[gimp-toilet-paper](icons/Symbolic/scalable/gimp-toilet-paper-symbolic.svg)"
-![gimp-toilet-paper](icons/Symbolic/scalable/gimp-toilet-paper-symbolic.svg)
+"[ligma-toilet-paper](icons/Symbolic/scalable/ligma-toilet-paper-symbolic.svg)"
+![ligma-toilet-paper](icons/Symbolic/scalable/ligma-toilet-paper-symbolic.svg)
 icons contain such tricks.
 For the first one, the default colors was black and white in this
 specific order (it made no sense to invert them or worse to transform
@@ -133,13 +133,13 @@ second, it was considered inappropriate by some contributors to generate
 black toilet papers.
 
 Other such examples are
-[gimp-color-picker-black](icons/Symbolic/scalable/gimp-color-picker-black-symbolic.svg),
-![gimp-color-picker-black](icons/Symbolic/scalable/gimp-color-picker-black-symbolic.svg)
-[gimp-color-picker-gray](icons/Symbolic/scalable/gimp-color-picker-gray-symbolic.svg)
-![gimp-color-picker-gray](icons/Symbolic/scalable/gimp-color-picker-gray-symbolic.svg)
+[ligma-color-picker-black](icons/Symbolic/scalable/ligma-color-picker-black-symbolic.svg),
+![ligma-color-picker-black](icons/Symbolic/scalable/ligma-color-picker-black-symbolic.svg)
+[ligma-color-picker-gray](icons/Symbolic/scalable/ligma-color-picker-gray-symbolic.svg)
+![ligma-color-picker-gray](icons/Symbolic/scalable/ligma-color-picker-gray-symbolic.svg)
 and
-[gimp-color-picker-white](icons/Symbolic/scalable/gimp-color-picker-white-symbolic.svg).
-![gimp-color-picker-white](icons/Symbolic/scalable/gimp-color-picker-white-symbolic.svg).
+[ligma-color-picker-white](icons/Symbolic/scalable/ligma-color-picker-white-symbolic.svg).
+![ligma-color-picker-white](icons/Symbolic/scalable/ligma-color-picker-white-symbolic.svg).
 Since they are designing specific colors, it doesn't make sense to let
 any recoloring happen.
 
@@ -159,18 +159,18 @@ Menu items and buttons are not supposed to have icons any longer (except
 for buttons with no label at all). Yet our actions have icons and some
 desktop environments would enable them in menus and buttons regardless.
 To test how it looks on systems which do so, set the environment
-variable `GIMP_ICONS_LIKE_A_BOSS`.
+variable `LIGMA_ICONS_LIKE_A_BOSS`.
 
-For instance, start GIMP like this:
+For instance, start LIGMA like this:
 
-    GIMP_ICONS_LIKE_A_BOSS=1 gimp-2.99
+    LIGMA_ICONS_LIKE_A_BOSS=1 ligma-2.99
 
 ### Playing with low/high density
 
 To test high (or low) density icons, without having to change the
 scaling factor of your whole desktop, just change the `GDK_SCALE`
 environment variable.
-For instance, run GIMP like this to simulate a scaling factor of 2
+For instance, run LIGMA like this to simulate a scaling factor of 2
 (every icons and text would typically double):
 
-    GDK_SCALE=2 gimp-2.99
+    GDK_SCALE=2 ligma-2.99

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * color-profile-import-dialog.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 #define __COLOR_PROFILE_IMPORT_DIALOG_H__
 
 
-GimpColorProfilePolicy
-    color_profile_import_dialog_run (GimpImage                 *image,
-                                     GimpContext               *context,
+LigmaColorProfilePolicy
+    color_profile_import_dialog_run (LigmaImage                 *image,
+                                     LigmaContext               *context,
                                      GtkWidget                 *parent,
-                                     GimpColorProfile         **dest_profile,
-                                     GimpColorRenderingIntent  *intent,
+                                     LigmaColorProfile         **dest_profile,
+                                     LigmaColorRenderingIntent  *intent,
                                      gboolean                  *bpc,
                                      gboolean                  *dont_ask);
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Decompose plug-in (C) 1997 Peter Kirchgessner
@@ -29,14 +29,14 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define PLUG_IN_PROC   "plug-in-decompose"
 #define PLUG_IN_BINARY "decompose"
-#define PLUG_IN_ROLE   "gimp-decompose"
+#define PLUG_IN_ROLE   "ligma-decompose"
 
 
 /* Description of a component */
@@ -77,12 +77,12 @@ typedef struct _DecomposeClass DecomposeClass;
 
 struct _Decompose
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _DecomposeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -91,39 +91,39 @@ struct _DecomposeClass
 
 GType                   decompose_get_type         (void) G_GNUC_CONST;
 
-static GList          * decompose_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * decompose_create_procedure (GimpPlugIn           *plug_in,
+static GList          * decompose_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * decompose_create_procedure (LigmaPlugIn           *plug_in,
                                                     const gchar          *name);
 
-static GimpValueArray * decompose_run              (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode,
-                                                    GimpImage            *image,
+static LigmaValueArray * decompose_run              (LigmaProcedure        *procedure,
+                                                    LigmaRunMode           run_mode,
+                                                    LigmaImage            *image,
                                                     gint                  n_drawables,
-                                                    GimpDrawable        **drawables,
-                                                    const GimpValueArray *args,
+                                                    LigmaDrawable        **drawables,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
 
-static gint        decompose                   (GimpImage           *image,
-                                                GimpDrawable        *drawable,
+static gint        decompose                   (LigmaImage           *image,
+                                                LigmaDrawable        *drawable,
                                                 GObject             *config,
-                                                GimpImage          **image_dst,
+                                                LigmaImage          **image_dst,
                                                 gint32              *num_layers,
-                                                GimpLayer          **layer_dst);
-static GimpImage * create_new_image            (GFile               *file,
+                                                LigmaLayer          **layer_dst);
+static LigmaImage * create_new_image            (GFile               *file,
                                                 const gchar         *layername,
                                                 guint                width,
                                                 guint                height,
-                                                GimpImageBaseType    type,
-                                                GimpPrecision        precision,
+                                                LigmaImageBaseType    type,
+                                                LigmaPrecision        precision,
                                                 gdouble              xres,
                                                 gdouble              yres,
-                                                GimpLayer          **layer);
-static GimpLayer * create_new_layer            (GimpImage           *image,
+                                                LigmaLayer          **layer);
+static LigmaLayer * create_new_layer            (LigmaImage           *image,
                                                 gint                 position,
                                                 const gchar         *layername,
                                                 guint                width,
                                                 guint                height,
-                                                GimpImageBaseType    type);
+                                                LigmaImageBaseType    type);
 static void        transfer_registration_color (GeglBuffer          *src,
                                                 GeglBuffer         **dst,
                                                 gint                 count);
@@ -139,17 +139,17 @@ static void        copy_one_component          (GeglBuffer          *src,
                                                 const char          *model,
                                                 const Component      component,
                                                 gboolean             clamp);
-static gboolean    decompose_dialog            (GimpProcedure       *procedure,
+static gboolean    decompose_dialog            (LigmaProcedure       *procedure,
                                                 GObject             *config);
-static gchar   *   generate_filename           (GimpImage           *image,
+static gchar   *   generate_filename           (LigmaImage           *image,
                                                 GObject             *config,
                                                 guint                colorspace,
                                                 guint                channel);
 
 
-G_DEFINE_TYPE (Decompose, decompose, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Decompose, decompose, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DECOMPOSE_TYPE)
+LIGMA_MAIN (DECOMPOSE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -229,7 +229,7 @@ static const Extract extract[] =
 static void
 decompose_class_init (DecomposeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = decompose_query_procedures;
   plug_in_class->create_procedure = decompose_create_procedure;
@@ -242,16 +242,16 @@ decompose_init (Decompose *decompose)
 }
 
 static GList *
-decompose_query_procedures (GimpPlugIn *plug_in)
+decompose_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-decompose_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+decompose_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
@@ -271,42 +271,42 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
           g_string_append_c (type_desc, '"');
         }
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             decompose_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Decompose..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
+      ligma_procedure_set_menu_label (procedure, _("_Decompose..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Decompose an image into separate "
                                           "colorspace components"),
                                         "This function creates new gray images "
                                         "with different channel information "
                                         "in each of them",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner, Clarence Risher",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "decompose-type",
+      LIGMA_PROC_ARG_STRING (procedure, "decompose-type",
                             "Decompose type",
                             type_desc->str,
                             "RGB",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "layers-mode",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "layers-mode",
                              "Layers mode",
                              "Create channels as layers in a single image",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-registration",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "use-registration",
                              "Use registration",
                              "When enabled, pixels in the foreground color "
                              "will appear black in all output images. This "
@@ -315,25 +315,25 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image-1",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image-1",
                            "New image 1",
                            "Output gray image 1",
                            FALSE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image-2",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image-2",
                            "New image 2",
                            "Output gray image 2 (N/A for single channel extract)",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image-3",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image-3",
                            "New image 3",
                            "Output gray image 3 (N/A for single channel extract)",
                            TRUE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image-4",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image-4",
                            "New image 4",
                            "Output gray image 4 (N/A for single channel extract)",
                            TRUE,
@@ -345,21 +345,21 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-decompose_run (GimpProcedure        *procedure,
-               GimpRunMode           run_mode,
-               GimpImage            *image,
+static LigmaValueArray *
+decompose_run (LigmaProcedure        *procedure,
+               LigmaRunMode           run_mode,
+               LigmaImage            *image,
                gint                  n_drawables,
-               GimpDrawable        **drawables,
-               const GimpValueArray *args,
+               LigmaDrawable        **drawables,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpDrawable        *drawable;
+  LigmaProcedureConfig *config;
+  LigmaValueArray      *return_vals;
+  LigmaDrawable        *drawable;
   gint                 num_images;
-  GimpImage           *image_extract[MAX_EXTRACT_IMAGES];
-  GimpLayer           *layer_extract[MAX_EXTRACT_IMAGES];
+  LigmaImage           *image_extract[MAX_EXTRACT_IMAGES];
+  LigmaLayer           *layer_extract[MAX_EXTRACT_IMAGES];
   gint                 num_layers;
   GString             *data;
   gchar               *decompose_type;
@@ -372,12 +372,12 @@ decompose_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -385,8 +385,8 @@ decompose_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, NULL, run_mode, args);
 
   g_object_get (config,
                 "decompose-type", &decompose_type,
@@ -401,17 +401,17 @@ decompose_run (GimpProcedure        *procedure,
 
   g_free (tmp);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! decompose_dialog (procedure, G_OBJECT (config)))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
     }
 
-  gimp_progress_init (_("Decomposing"));
+  ligma_progress_init (_("Decomposing"));
 
   num_images = decompose (image,
                           drawable,
@@ -422,11 +422,11 @@ decompose_run (GimpProcedure        *procedure,
 
   if (num_images <= 0)
     {
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      ligma_procedure_config_end_run (config, LIGMA_PDB_EXECUTION_ERROR);
       g_object_unref (config);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
@@ -438,41 +438,41 @@ decompose_run (GimpProcedure        *procedure,
                 NULL);
 
   g_string_printf (data, "source=%d type=%s ",
-                   gimp_item_get_id (GIMP_ITEM (drawable)),
+                   ligma_item_get_id (LIGMA_ITEM (drawable)),
                    decompose_type);
 
   g_free (decompose_type);
 
   for (j = 0; j < num_layers; j++)
     g_string_append_printf (data, "%d ",
-                            gimp_item_get_id (GIMP_ITEM (layer_extract[j])));
+                            ligma_item_get_id (LIGMA_ITEM (layer_extract[j])));
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
   for (j = 0; j < num_images; j++)
     {
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
 
-      GIMP_VALUES_SET_IMAGE (return_vals, j + 1, image_extract[j]);
+      LIGMA_VALUES_SET_IMAGE (return_vals, j + 1, image_extract[j]);
 
-      gimp_image_undo_enable (image_extract[j]);
-      gimp_image_clean_all (image_extract[j]);
+      ligma_image_undo_enable (image_extract[j]);
+      ligma_image_clean_all (image_extract[j]);
 
-      parasite = gimp_parasite_new ("decompose-data",
+      parasite = ligma_parasite_new ("decompose-data",
                                     0, data->len + 1, data->str);
-      gimp_image_attach_parasite (image_extract[j], parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image_extract[j], parasite);
+      ligma_parasite_free (parasite);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_display_new (image_extract[j]);
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_display_new (image_extract[j]);
     }
 
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  ligma_procedure_config_end_run (config, LIGMA_PDB_SUCCESS);
   g_object_unref (config);
 
-  gimp_progress_end ();
+  ligma_progress_end ();
 
   return return_vals;
 }
@@ -483,12 +483,12 @@ decompose_run (GimpProcedure        *procedure,
  * On failure, -1 is returned.
  */
 static gint
-decompose (GimpImage    *image,
-           GimpDrawable *drawable,
+decompose (LigmaImage    *image,
+           LigmaDrawable *drawable,
            GObject      *config,
-           GimpImage   **image_dst,
+           LigmaImage   **image_dst,
            gint         *nlayers,
-           GimpLayer   **layer_dst)
+           LigmaLayer   **layer_dst)
 {
   const gchar   *layername;
   gint           j, extract_idx;
@@ -496,7 +496,7 @@ decompose (GimpImage    *image,
   gint           num_layers;
   GeglBuffer    *src_buffer;
   GeglBuffer    *dst_buffer[MAX_EXTRACT_IMAGES];
-  GimpPrecision  precision;
+  LigmaPrecision  precision;
   gboolean       requirements      = FALSE;
   gboolean       decomp_has_alpha = FALSE;
   gchar         *config_extract_type;
@@ -524,8 +524,8 @@ decompose (GimpImage    *image,
   num_layers = extract[extract_idx].num_images;
 
   /* Sanity checks */
-  src_buffer = gimp_drawable_get_buffer (drawable);
-  precision  = gimp_image_get_precision (image);
+  src_buffer = ligma_drawable_get_buffer (drawable);
+  precision  = ligma_image_get_precision (image);
 
   for (j = 0; j < num_layers; j++)
     {
@@ -536,13 +536,13 @@ decompose (GimpImage    *image,
                                        extract[extract_idx].component[j].babl_name);
     }
 
-  requirements |= (gimp_drawable_is_rgb (drawable));
-  requirements |= (gimp_drawable_is_indexed (drawable));
-  requirements |= (gimp_drawable_is_gray (drawable)
-                   && gimp_drawable_has_alpha (drawable)
+  requirements |= (ligma_drawable_is_rgb (drawable));
+  requirements |= (ligma_drawable_is_indexed (drawable));
+  requirements |= (ligma_drawable_is_gray (drawable)
+                   && ligma_drawable_has_alpha (drawable)
                    && (num_layers <= 2)
                    && decomp_has_alpha);
-  requirements &= (!decomp_has_alpha || gimp_drawable_has_alpha (drawable));
+  requirements &= (!decomp_has_alpha || ligma_drawable_has_alpha (drawable));
 
   if (!requirements)
     {
@@ -560,7 +560,7 @@ decompose (GimpImage    *image,
       gdouble  xres, yres;
 
       filename = generate_filename (image, config, extract_idx, j);
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
       if (config_as_layers)
         {
@@ -569,25 +569,25 @@ decompose (GimpImage    *image,
           if (j == 0)
             image_dst[j] = create_new_image (g_file_new_for_path (filename),
                                              layername,
-                                             width, height, GIMP_GRAY, precision,
+                                             width, height, LIGMA_GRAY, precision,
                                              xres, yres,
                                              layer_dst + j);
           else
             layer_dst[j] = create_new_layer (image_dst[0], j, layername,
-                                             width, height, GIMP_GRAY);
+                                             width, height, LIGMA_GRAY);
         }
       else
         {
           image_dst[j] = create_new_image (g_file_new_for_path (filename),
                                            NULL,
-                                           width, height, GIMP_GRAY, precision,
+                                           width, height, LIGMA_GRAY, precision,
                                            xres, yres,
                                            layer_dst + j);
         }
 
       g_free (filename);
 
-      dst_buffer[j] = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_dst[j]));
+      dst_buffer[j] = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer_dst[j]));
     }
 
   copy_n_components (src_buffer, dst_buffer,
@@ -596,7 +596,7 @@ decompose (GimpImage    *image,
   if (config_use_registration)
     transfer_registration_color (src_buffer, dst_buffer, num_layers);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_object_unref (src_buffer);
 
@@ -612,24 +612,24 @@ decompose (GimpImage    *image,
 
 
 /* Create an image. Returns layer and image */
-static GimpImage *
+static LigmaImage *
 create_new_image (GFile             *file,
                   const gchar       *layername,
                   guint              width,
                   guint              height,
-                  GimpImageBaseType  type,
-                  GimpPrecision      precision,
+                  LigmaImageBaseType  type,
+                  LigmaPrecision      precision,
                   gdouble            xres,
                   gdouble            yres,
-                  GimpLayer        **layer)
+                  LigmaLayer        **layer)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = gimp_image_new_with_precision (width, height, type, precision);
+  image = ligma_image_new_with_precision (width, height, type, precision);
 
-  gimp_image_undo_disable (image);
-  gimp_image_set_file (image, file);
-  gimp_image_set_resolution (image, xres, yres);
+  ligma_image_undo_disable (image);
+  ligma_image_set_file (image, file);
+  ligma_image_set_resolution (image, xres, yres);
 
   *layer = create_new_layer (image, 0,
                              layername, width, height, type);
@@ -638,38 +638,38 @@ create_new_image (GFile             *file,
 }
 
 
-static GimpLayer *
-create_new_layer (GimpImage         *image,
+static LigmaLayer *
+create_new_layer (LigmaImage         *image,
                   gint               position,
                   const gchar       *layername,
                   guint              width,
                   guint              height,
-                  GimpImageBaseType  type)
+                  LigmaImageBaseType  type)
 {
-  GimpLayer     *layer;
-  GimpImageType  gdtype = GIMP_RGB_IMAGE;
+  LigmaLayer     *layer;
+  LigmaImageType  gdtype = LIGMA_RGB_IMAGE;
 
   switch (type)
     {
-    case GIMP_RGB:
-      gdtype = GIMP_RGB_IMAGE;
+    case LIGMA_RGB:
+      gdtype = LIGMA_RGB_IMAGE;
       break;
-    case GIMP_GRAY:
-      gdtype = GIMP_GRAY_IMAGE;
+    case LIGMA_GRAY:
+      gdtype = LIGMA_GRAY_IMAGE;
       break;
-    case GIMP_INDEXED:
-      gdtype = GIMP_INDEXED_IMAGE;
+    case LIGMA_INDEXED:
+      gdtype = LIGMA_INDEXED_IMAGE;
       break;
     }
 
   if (! layername)
     layername = _("Background");
 
-  layer = gimp_layer_new (image, layername, width, height,
+  layer = ligma_layer_new (image, layername, width, height,
                           gdtype,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, position);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, position);
 
   return layer;
 }
@@ -681,7 +681,7 @@ transfer_registration_color (GeglBuffer  *src,
                              GeglBuffer **dst,
                              gint         count)
 {
-  GimpRGB             color, test;
+  LigmaRGB             color, test;
   GeglBufferIterator *gi;
   const Babl         *src_format;
   const Babl         *dst_format;
@@ -690,7 +690,7 @@ transfer_registration_color (GeglBuffer  *src,
   gint                i;
   gdouble             white;
 
-  gimp_context_get_foreground (&color);
+  ligma_context_get_foreground (&color);
   white = 1.0;
 
   src_format = gegl_buffer_get_format (src);
@@ -722,9 +722,9 @@ transfer_registration_color (GeglBuffer  *src,
         {
           gulong pos = k * src_bpp;
 
-          gimp_rgba_set_pixel (&test, src_format, ((guchar *)src_data) + pos);
+          ligma_rgba_set_pixel (&test, src_format, ((guchar *)src_data) + pos);
 
-          if (gimp_rgb_distance (&test, &color) < 1e-6)
+          if (ligma_rgb_distance (&test, &color) < 1e-6)
             {
               for (j = 0; j < count; j++)
                 {
@@ -787,7 +787,7 @@ copy_n_components (GeglBuffer  *src,
 
   for (i = 0; i < ext.num_images; i++)
     {
-      gimp_progress_update ((gdouble) i / (gdouble) ext.num_images);
+      ligma_progress_update ((gdouble) i / (gdouble) ext.num_images);
 
       copy_one_component (src, dst[i], ext.model, ext.component[i], ext.clamp);
     }
@@ -847,7 +847,7 @@ copy_one_component (GeglBuffer      *src,
 }
 
 static gboolean
-decompose_dialog (GimpProcedure *procedure,
+decompose_dialog (LigmaProcedure *procedure,
                   GObject       *config)
 {
   GtkWidget    *dialog;
@@ -867,10 +867,10 @@ decompose_dialog (GimpProcedure *procedure,
                 "decompose-type", &config_extract_type,
                 NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Decompose"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
@@ -881,7 +881,7 @@ decompose_dialog (GimpProcedure *procedure,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("Extract Channels"));
+  frame = ligma_frame_new (_("Extract Channels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -921,7 +921,7 @@ decompose_dialog (GimpProcedure *procedure,
         }
     }
 
-  combo = gimp_prop_string_combo_box_new (config, "decompose-type",
+  combo = ligma_prop_string_combo_box_new (config, "decompose-type",
                                           GTK_TREE_MODEL (store), 0, 1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
 
@@ -929,13 +929,13 @@ decompose_dialog (GimpProcedure *procedure,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  toggle = gimp_prop_check_button_new (config, "layers-mode",
+  toggle = ligma_prop_check_button_new (config, "layers-mode",
                                        _("_Decompose to layers"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
 
-  toggle = gimp_prop_check_button_new (config, "use-registration",
+  toggle = ligma_prop_check_button_new (config, "use-registration",
                                        _("_Foreground as registration color"));
-  gimp_help_set_help_data (toggle, _("Pixels in the foreground color will "
+  ligma_help_set_help_data (toggle, _("Pixels in the foreground color will "
                                      "appear black in all output images.  "
                                      "This can be used for things like crop "
                                      "marks that have to show up on all "
@@ -944,7 +944,7 @@ decompose_dialog (GimpProcedure *procedure,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -953,7 +953,7 @@ decompose_dialog (GimpProcedure *procedure,
 
 /* Build a filename like <imagename>-<channel>.<extension> */
 gchar *
-generate_filename (GimpImage *image,
+generate_filename (LigmaImage *image,
                    GObject   *config,
                    guint      colorspace,
                    guint      channel)
@@ -968,7 +968,7 @@ generate_filename (GimpImage *image,
                 "layers-mode", &config_as_layers,
                 NULL);
 
-  fname = g_file_get_path (gimp_image_get_file (image));
+  fname = g_file_get_path (ligma_image_get_file (image));
 
   if (fname)
     {

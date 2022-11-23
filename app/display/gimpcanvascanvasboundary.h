@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvascanvasvboundary.h
+ * ligmacanvascanvasvboundary.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_CANVAS_BOUNDARY_H__
-#define __GIMP_CANVAS_CANVAS_BOUNDARY_H__
+#ifndef __LIGMA_CANVAS_CANVAS_BOUNDARY_H__
+#define __LIGMA_CANVAS_CANVAS_BOUNDARY_H__
 
 
-#include "gimpcanvasrectangle.h"
+#include "ligmacanvasrectangle.h"
 
 
-#define GIMP_TYPE_CANVAS_CANVAS_BOUNDARY            (gimp_canvas_canvas_boundary_get_type ())
-#define GIMP_CANVAS_CANVAS_BOUNDARY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_CANVAS_BOUNDARY, GimpCanvasCanvasBoundary))
-#define GIMP_CANVAS_CANVAS_BOUNDARY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_CANVAS_BOUNDARY, GimpCanvasCanvasBoundaryClass))
-#define GIMP_IS_CANVAS_CANVAS_BOUNDARY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_CANVAS_BOUNDARY))
-#define GIMP_IS_CANVAS_CANVAS_BOUNDARY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_CANVAS_BOUNDARY))
-#define GIMP_CANVAS_CANVAS_BOUNDARY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_CANVAS_BOUNDARY, GimpCanvasCanvasBoundaryClass))
+#define LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY            (ligma_canvas_canvas_boundary_get_type ())
+#define LIGMA_CANVAS_CANVAS_BOUNDARY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY, LigmaCanvasCanvasBoundary))
+#define LIGMA_CANVAS_CANVAS_BOUNDARY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY, LigmaCanvasCanvasBoundaryClass))
+#define LIGMA_IS_CANVAS_CANVAS_BOUNDARY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY))
+#define LIGMA_IS_CANVAS_CANVAS_BOUNDARY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY))
+#define LIGMA_CANVAS_CANVAS_BOUNDARY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_CANVAS_BOUNDARY, LigmaCanvasCanvasBoundaryClass))
 
 
-typedef struct _GimpCanvasCanvasBoundary      GimpCanvasCanvasBoundary;
-typedef struct _GimpCanvasCanvasBoundaryClass GimpCanvasCanvasBoundaryClass;
+typedef struct _LigmaCanvasCanvasBoundary      LigmaCanvasCanvasBoundary;
+typedef struct _LigmaCanvasCanvasBoundaryClass LigmaCanvasCanvasBoundaryClass;
 
-struct _GimpCanvasCanvasBoundary
+struct _LigmaCanvasCanvasBoundary
 {
-  GimpCanvasRectangle  parent_instance;
+  LigmaCanvasRectangle  parent_instance;
 };
 
-struct _GimpCanvasCanvasBoundaryClass
+struct _LigmaCanvasCanvasBoundaryClass
 {
-  GimpCanvasRectangleClass  parent_class;
+  LigmaCanvasRectangleClass  parent_class;
 };
 
 
-GType            gimp_canvas_canvas_boundary_get_type  (void) G_GNUC_CONST;
+GType            ligma_canvas_canvas_boundary_get_type  (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_canvas_boundary_new       (GimpDisplayShell        *shell);
+LigmaCanvasItem * ligma_canvas_canvas_boundary_new       (LigmaDisplayShell        *shell);
 
-void             gimp_canvas_canvas_boundary_set_image (GimpCanvasCanvasBoundary *boundary,
-                                                        GimpImage                *image);
+void             ligma_canvas_canvas_boundary_set_image (LigmaCanvasCanvasBoundary *boundary,
+                                                        LigmaImage                *image);
 
 
-#endif /* __GIMP_CANVAS_CANVAS_BOUNDARY_H__ */
+#endif /* __LIGMA_CANVAS_CANVAS_BOUNDARY_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpfilterstack.c
- * Copyright (C) 2008-2013 Michael Natterer <mitch@gimp.org>
+ * ligmafilterstack.c
+ * Copyright (C) 2008-2013 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,76 +25,76 @@
 
 #include "core-types.h"
 
-#include "gimpfilter.h"
-#include "gimpfilterstack.h"
+#include "ligmafilter.h"
+#include "ligmafilterstack.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_filter_stack_constructed      (GObject         *object);
-static void   gimp_filter_stack_finalize         (GObject         *object);
+static void   ligma_filter_stack_constructed      (GObject         *object);
+static void   ligma_filter_stack_finalize         (GObject         *object);
 
-static void   gimp_filter_stack_add              (GimpContainer   *container,
-                                                  GimpObject      *object);
-static void   gimp_filter_stack_remove           (GimpContainer   *container,
-                                                  GimpObject      *object);
-static void   gimp_filter_stack_reorder          (GimpContainer   *container,
-                                                  GimpObject      *object,
+static void   ligma_filter_stack_add              (LigmaContainer   *container,
+                                                  LigmaObject      *object);
+static void   ligma_filter_stack_remove           (LigmaContainer   *container,
+                                                  LigmaObject      *object);
+static void   ligma_filter_stack_reorder          (LigmaContainer   *container,
+                                                  LigmaObject      *object,
                                                   gint             new_index);
 
-static void   gimp_filter_stack_add_node         (GimpFilterStack *stack,
-                                                  GimpFilter      *filter);
-static void   gimp_filter_stack_remove_node      (GimpFilterStack *stack,
-                                                  GimpFilter      *filter);
-static void   gimp_filter_stack_update_last_node (GimpFilterStack *stack);
+static void   ligma_filter_stack_add_node         (LigmaFilterStack *stack,
+                                                  LigmaFilter      *filter);
+static void   ligma_filter_stack_remove_node      (LigmaFilterStack *stack,
+                                                  LigmaFilter      *filter);
+static void   ligma_filter_stack_update_last_node (LigmaFilterStack *stack);
 
-static void   gimp_filter_stack_filter_active    (GimpFilter      *filter,
-                                                  GimpFilterStack *stack);
+static void   ligma_filter_stack_filter_active    (LigmaFilter      *filter,
+                                                  LigmaFilterStack *stack);
 
 
-G_DEFINE_TYPE (GimpFilterStack, gimp_filter_stack, GIMP_TYPE_LIST);
+G_DEFINE_TYPE (LigmaFilterStack, ligma_filter_stack, LIGMA_TYPE_LIST);
 
-#define parent_class gimp_filter_stack_parent_class
+#define parent_class ligma_filter_stack_parent_class
 
 
 static void
-gimp_filter_stack_class_init (GimpFilterStackClass *klass)
+ligma_filter_stack_class_init (LigmaFilterStackClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
-  GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
+  LigmaContainerClass *container_class = LIGMA_CONTAINER_CLASS (klass);
 
-  object_class->constructed = gimp_filter_stack_constructed;
-  object_class->finalize    = gimp_filter_stack_finalize;
+  object_class->constructed = ligma_filter_stack_constructed;
+  object_class->finalize    = ligma_filter_stack_finalize;
 
-  container_class->add      = gimp_filter_stack_add;
-  container_class->remove   = gimp_filter_stack_remove;
-  container_class->reorder  = gimp_filter_stack_reorder;
+  container_class->add      = ligma_filter_stack_add;
+  container_class->remove   = ligma_filter_stack_remove;
+  container_class->reorder  = ligma_filter_stack_reorder;
 }
 
 static void
-gimp_filter_stack_init (GimpFilterStack *stack)
+ligma_filter_stack_init (LigmaFilterStack *stack)
 {
 }
 
 static void
-gimp_filter_stack_constructed (GObject *object)
+ligma_filter_stack_constructed (GObject *object)
 {
-  GimpContainer *container = GIMP_CONTAINER (object);
+  LigmaContainer *container = LIGMA_CONTAINER (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (g_type_is_a (gimp_container_get_children_type (container),
-                            GIMP_TYPE_FILTER));
+  ligma_assert (g_type_is_a (ligma_container_get_children_type (container),
+                            LIGMA_TYPE_FILTER));
 
-  gimp_container_add_handler (container, "active-changed",
-                              G_CALLBACK (gimp_filter_stack_filter_active),
+  ligma_container_add_handler (container, "active-changed",
+                              G_CALLBACK (ligma_filter_stack_filter_active),
                               container);
 }
 
 static void
-gimp_filter_stack_finalize (GObject *object)
+ligma_filter_stack_finalize (GObject *object)
 {
-  GimpFilterStack *stack = GIMP_FILTER_STACK (object);
+  LigmaFilterStack *stack = LIGMA_FILTER_STACK (object);
 
   g_clear_object (&stack->graph);
 
@@ -102,93 +102,93 @@ gimp_filter_stack_finalize (GObject *object)
 }
 
 static void
-gimp_filter_stack_add (GimpContainer *container,
-                       GimpObject    *object)
+ligma_filter_stack_add (LigmaContainer *container,
+                       LigmaObject    *object)
 {
-  GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
-  GimpFilter      *filter = GIMP_FILTER (object);
+  LigmaFilterStack *stack  = LIGMA_FILTER_STACK (container);
+  LigmaFilter      *filter = LIGMA_FILTER (object);
 
-  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+  LIGMA_CONTAINER_CLASS (parent_class)->add (container, object);
 
-  if (gimp_filter_get_active (filter))
+  if (ligma_filter_get_active (filter))
     {
       if (stack->graph)
         {
-          gegl_node_add_child (stack->graph, gimp_filter_get_node (filter));
-          gimp_filter_stack_add_node (stack, filter);
+          gegl_node_add_child (stack->graph, ligma_filter_get_node (filter));
+          ligma_filter_stack_add_node (stack, filter);
         }
 
-      gimp_filter_stack_update_last_node (stack);
+      ligma_filter_stack_update_last_node (stack);
     }
 }
 
 static void
-gimp_filter_stack_remove (GimpContainer *container,
-                          GimpObject    *object)
+ligma_filter_stack_remove (LigmaContainer *container,
+                          LigmaObject    *object)
 {
-  GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
-  GimpFilter      *filter = GIMP_FILTER (object);
+  LigmaFilterStack *stack  = LIGMA_FILTER_STACK (container);
+  LigmaFilter      *filter = LIGMA_FILTER (object);
 
-  if (stack->graph && gimp_filter_get_active (filter))
+  if (stack->graph && ligma_filter_get_active (filter))
     {
-      gimp_filter_stack_remove_node (stack, filter);
-      gegl_node_remove_child (stack->graph, gimp_filter_get_node (filter));
+      ligma_filter_stack_remove_node (stack, filter);
+      gegl_node_remove_child (stack->graph, ligma_filter_get_node (filter));
     }
 
-  GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
+  LIGMA_CONTAINER_CLASS (parent_class)->remove (container, object);
 
-  if (gimp_filter_get_active (filter))
+  if (ligma_filter_get_active (filter))
     {
-      gimp_filter_set_is_last_node (filter, FALSE);
-      gimp_filter_stack_update_last_node (stack);
+      ligma_filter_set_is_last_node (filter, FALSE);
+      ligma_filter_stack_update_last_node (stack);
     }
 }
 
 static void
-gimp_filter_stack_reorder (GimpContainer *container,
-                           GimpObject    *object,
+ligma_filter_stack_reorder (LigmaContainer *container,
+                           LigmaObject    *object,
                            gint           new_index)
 {
-  GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
-  GimpFilter      *filter = GIMP_FILTER (object);
+  LigmaFilterStack *stack  = LIGMA_FILTER_STACK (container);
+  LigmaFilter      *filter = LIGMA_FILTER (object);
 
-  if (stack->graph && gimp_filter_get_active (filter))
-    gimp_filter_stack_remove_node (stack, filter);
+  if (stack->graph && ligma_filter_get_active (filter))
+    ligma_filter_stack_remove_node (stack, filter);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  LIGMA_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
-  if (gimp_filter_get_active (filter))
+  if (ligma_filter_get_active (filter))
     {
-      gimp_filter_stack_update_last_node (stack);
+      ligma_filter_stack_update_last_node (stack);
 
       if (stack->graph)
-        gimp_filter_stack_add_node (stack, filter);
+        ligma_filter_stack_add_node (stack, filter);
     }
 }
 
 
 /*  public functions  */
 
-GimpContainer *
-gimp_filter_stack_new (GType filter_type)
+LigmaContainer *
+ligma_filter_stack_new (GType filter_type)
 {
-  g_return_val_if_fail (g_type_is_a (filter_type, GIMP_TYPE_FILTER), NULL);
+  g_return_val_if_fail (g_type_is_a (filter_type, LIGMA_TYPE_FILTER), NULL);
 
-  return g_object_new (GIMP_TYPE_FILTER_STACK,
+  return g_object_new (LIGMA_TYPE_FILTER_STACK,
                        "name",          g_type_name (filter_type),
                        "children-type", filter_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "policy",        LIGMA_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 
 GeglNode *
-gimp_filter_stack_get_graph (GimpFilterStack *stack)
+ligma_filter_stack_get_graph (LigmaFilterStack *stack)
 {
   GList    *list;
   GeglNode *previous;
   GeglNode *output;
 
-  g_return_val_if_fail (GIMP_IS_FILTER_STACK (stack), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILTER_STACK (stack), NULL);
 
   if (stack->graph)
     return stack->graph;
@@ -197,17 +197,17 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 
   previous = gegl_node_get_input_proxy (stack->graph, "input");
 
-  for (list = GIMP_LIST (stack)->queue->tail;
+  for (list = LIGMA_LIST (stack)->queue->tail;
        list;
        list = g_list_previous (list))
     {
-      GimpFilter *filter = list->data;
+      LigmaFilter *filter = list->data;
       GeglNode   *node;
 
-      if (! gimp_filter_get_active (filter))
+      if (! ligma_filter_get_active (filter))
         continue;
 
-      node = gimp_filter_get_node (filter);
+      node = ligma_filter_get_node (filter);
 
       gegl_node_add_child (stack->graph, node);
 
@@ -229,26 +229,26 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 /*  private functions  */
 
 static void
-gimp_filter_stack_add_node (GimpFilterStack *stack,
-                            GimpFilter      *filter)
+ligma_filter_stack_add_node (LigmaFilterStack *stack,
+                            LigmaFilter      *filter)
 {
   GeglNode *node;
   GeglNode *node_above = NULL;
   GeglNode *node_below = NULL;
   GList    *iter;
 
-  node = gimp_filter_get_node (filter);
+  node = ligma_filter_get_node (filter);
 
 
-  iter = g_list_find (GIMP_LIST (stack)->queue->head, filter);
+  iter = g_list_find (LIGMA_LIST (stack)->queue->head, filter);
 
   while ((iter = g_list_previous (iter)))
     {
-      GimpFilter *filter_above = iter->data;
+      LigmaFilter *filter_above = iter->data;
 
-      if (gimp_filter_get_active (filter_above))
+      if (ligma_filter_get_active (filter_above))
         {
-          node_above = gimp_filter_get_node (filter_above);
+          node_above = ligma_filter_get_node (filter_above);
 
           break;
         }
@@ -266,25 +266,25 @@ gimp_filter_stack_add_node (GimpFilterStack *stack,
 }
 
 static void
-gimp_filter_stack_remove_node (GimpFilterStack *stack,
-                               GimpFilter      *filter)
+ligma_filter_stack_remove_node (LigmaFilterStack *stack,
+                               LigmaFilter      *filter)
 {
   GeglNode *node;
   GeglNode *node_above = NULL;
   GeglNode *node_below = NULL;
   GList    *iter;
 
-  node = gimp_filter_get_node (filter);
+  node = ligma_filter_get_node (filter);
 
-  iter = g_list_find (GIMP_LIST (stack)->queue->head, filter);
+  iter = g_list_find (LIGMA_LIST (stack)->queue->head, filter);
 
   while ((iter = g_list_previous (iter)))
     {
-      GimpFilter *filter_above = iter->data;
+      LigmaFilter *filter_above = iter->data;
 
-      if (gimp_filter_get_active (filter_above))
+      if (ligma_filter_get_active (filter_above))
         {
-          node_above = gimp_filter_get_node (filter_above);
+          node_above = ligma_filter_get_node (filter_above);
 
           break;
         }
@@ -302,49 +302,49 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
 }
 
 static void
-gimp_filter_stack_update_last_node (GimpFilterStack *stack)
+ligma_filter_stack_update_last_node (LigmaFilterStack *stack)
 {
   GList    *list;
   gboolean  found_last = FALSE;
 
-  for (list = GIMP_LIST (stack)->queue->tail;
+  for (list = LIGMA_LIST (stack)->queue->tail;
        list;
        list = g_list_previous (list))
     {
-      GimpFilter *filter = list->data;
+      LigmaFilter *filter = list->data;
 
-      if (! found_last && gimp_filter_get_active (filter))
+      if (! found_last && ligma_filter_get_active (filter))
         {
-          gimp_filter_set_is_last_node (filter, TRUE);
+          ligma_filter_set_is_last_node (filter, TRUE);
           found_last = TRUE;
         }
       else
         {
-          gimp_filter_set_is_last_node (filter, FALSE);
+          ligma_filter_set_is_last_node (filter, FALSE);
         }
     }
 }
 
 static void
-gimp_filter_stack_filter_active (GimpFilter      *filter,
-                                 GimpFilterStack *stack)
+ligma_filter_stack_filter_active (LigmaFilter      *filter,
+                                 LigmaFilterStack *stack)
 {
   if (stack->graph)
     {
-      if (gimp_filter_get_active (filter))
+      if (ligma_filter_get_active (filter))
         {
-          gegl_node_add_child (stack->graph, gimp_filter_get_node (filter));
-          gimp_filter_stack_add_node (stack, filter);
+          gegl_node_add_child (stack->graph, ligma_filter_get_node (filter));
+          ligma_filter_stack_add_node (stack, filter);
         }
       else
         {
-          gimp_filter_stack_remove_node (stack, filter);
-          gegl_node_remove_child (stack->graph, gimp_filter_get_node (filter));
+          ligma_filter_stack_remove_node (stack, filter);
+          gegl_node_remove_child (stack->graph, ligma_filter_get_node (filter));
         }
     }
 
-  gimp_filter_stack_update_last_node (stack);
+  ligma_filter_stack_update_last_node (stack);
 
-  if (! gimp_filter_get_active (filter))
-    gimp_filter_set_is_last_node (filter, FALSE);
+  if (! ligma_filter_get_active (filter))
+    ligma_filter_set_is_last_node (filter, FALSE);
 }

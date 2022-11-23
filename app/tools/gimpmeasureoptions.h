@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,44 +15,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MEASURE_OPTIONS_H__
-#define __GIMP_MEASURE_OPTIONS_H__
+#ifndef __LIGMA_MEASURE_OPTIONS_H__
+#define __LIGMA_MEASURE_OPTIONS_H__
 
 
-#include "gimptransformoptions.h"
+#include "ligmatransformoptions.h"
 
 
-#define GIMP_TYPE_MEASURE_OPTIONS            (gimp_measure_options_get_type ())
-#define GIMP_MEASURE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MEASURE_OPTIONS, GimpMeasureOptions))
-#define GIMP_MEASURE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEASURE_OPTIONS, GimpMeasureOptionsClass))
-#define GIMP_IS_MEASURE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MEASURE_OPTIONS))
-#define GIMP_IS_MEASURE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEASURE_OPTIONS))
-#define GIMP_MEASURE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEASURE_OPTIONS, GimpMeasureOptionsClass))
+#define LIGMA_TYPE_MEASURE_OPTIONS            (ligma_measure_options_get_type ())
+#define LIGMA_MEASURE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MEASURE_OPTIONS, LigmaMeasureOptions))
+#define LIGMA_MEASURE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MEASURE_OPTIONS, LigmaMeasureOptionsClass))
+#define LIGMA_IS_MEASURE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MEASURE_OPTIONS))
+#define LIGMA_IS_MEASURE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MEASURE_OPTIONS))
+#define LIGMA_MEASURE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MEASURE_OPTIONS, LigmaMeasureOptionsClass))
 
 
-typedef struct _GimpMeasureOptions      GimpMeasureOptions;
-typedef struct _GimpMeasureOptionsClass GimpMeasureOptionsClass;
+typedef struct _LigmaMeasureOptions      LigmaMeasureOptions;
+typedef struct _LigmaMeasureOptionsClass LigmaMeasureOptionsClass;
 
-struct _GimpMeasureOptions
+struct _LigmaMeasureOptions
 {
-  GimpTransformOptions    parent_instance;
+  LigmaTransformOptions    parent_instance;
 
-  GimpCompassOrientation  orientation;
+  LigmaCompassOrientation  orientation;
   gboolean                use_info_window;
 
   /*  options gui  */
   GtkWidget              *straighten_button;
 };
 
-struct _GimpMeasureOptionsClass
+struct _LigmaMeasureOptionsClass
 {
-  GimpTransformOptionsClass  parent_class;
+  LigmaTransformOptionsClass  parent_class;
 };
 
 
-GType       gimp_measure_options_get_type (void) G_GNUC_CONST;
+GType       ligma_measure_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_measure_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_measure_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_MEASURE_OPTIONS_H__  */
+#endif  /*  __LIGMA_MEASURE_OPTIONS_H__  */

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabelentry.h
+ * ligmalabelentry.h
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,46 +19,46 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABEL_ENTRY_H__
-#define __GIMP_LABEL_ENTRY_H__
+#ifndef __LIGMA_LABEL_ENTRY_H__
+#define __LIGMA_LABEL_ENTRY_H__
 
-#include <libgimpwidgets/gimplabeled.h>
+#include <libligmawidgets/ligmalabeled.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_LABEL_ENTRY (gimp_label_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelEntry, gimp_label_entry, GIMP, LABEL_ENTRY, GimpLabeled)
+#define LIGMA_TYPE_LABEL_ENTRY (ligma_label_entry_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLabelEntry, ligma_label_entry, LIGMA, LABEL_ENTRY, LigmaLabeled)
 
-struct _GimpLabelEntryClass
+struct _LigmaLabelEntryClass
 {
-  GimpLabeledClass   parent_class;
+  LigmaLabeledClass   parent_class;
 
   /*  Signals */
-  void (* value_changed)   (GimpLabelEntry *entry);
+  void (* value_changed)   (LigmaLabelEntry *entry);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget   * gimp_label_entry_new        (const gchar   *label);
+GtkWidget   * ligma_label_entry_new        (const gchar   *label);
 
-void          gimp_label_entry_set_value  (GimpLabelEntry *entry,
+void          ligma_label_entry_set_value  (LigmaLabelEntry *entry,
                                            const gchar    *value);
-const gchar * gimp_label_entry_get_value  (GimpLabelEntry *entry);
+const gchar * ligma_label_entry_get_value  (LigmaLabelEntry *entry);
 
-GtkWidget   * gimp_label_entry_get_entry  (GimpLabelEntry *entry);
+GtkWidget   * ligma_label_entry_get_entry  (LigmaLabelEntry *entry);
 
 G_END_DECLS
 
-#endif /* __GIMP_LABEL_ENTRY_H__ */
+#endif /* __LIGMA_LABEL_ENTRY_H__ */

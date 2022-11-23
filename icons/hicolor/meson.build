@@ -1,5 +1,5 @@
 install_data('index.theme',
-  install_dir: gimpiconsdir / theme,
+  install_dir: ligmaiconsdir / theme,
 )
 
 generic_icons = [
@@ -12,6 +12,6 @@ foreach icon_info : generic_icons
   icons_dir = icon_info[0]
   icons_list= icon_info[1]
   install_data(icons_list,
-    install_dir: gimpiconsdir / theme / icons_dir,
+    install_dir: ligmaiconsdir / theme / icons_dir,
   )
 endforeach

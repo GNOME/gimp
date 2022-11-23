@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,32 +20,32 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpitemstack.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitemstack.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "image-merge-layers-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _ImageMergeLayersDialog ImageMergeLayersDialog;
 
 struct _ImageMergeLayersDialog
 {
-  GimpImage               *image;
-  GimpContext             *context;
-  GimpMergeType            merge_type;
+  LigmaImage               *image;
+  LigmaContext             *context;
+  LigmaMergeType            merge_type;
   gboolean                 merge_active_group;
   gboolean                 discard_invisible;
-  GimpMergeLayersCallback  callback;
+  LigmaMergeLayersCallback  callback;
   gpointer                 user_data;
 };
 
@@ -61,13 +61,13 @@ static void  image_merge_layers_dialog_response (GtkWidget              *dialog,
 /*  public functions  */
 
 GtkWidget *
-image_merge_layers_dialog_new (GimpImage               *image,
-                               GimpContext             *context,
+image_merge_layers_dialog_new (LigmaImage               *image,
+                               LigmaContext             *context,
                                GtkWidget               *parent,
-                               GimpMergeType            merge_type,
+                               LigmaMergeType            merge_type,
                                gboolean                 merge_active_group,
                                gboolean                 discard_invisible,
-                               GimpMergeLayersCallback  callback,
+                               LigmaMergeLayersCallback  callback,
                                gpointer                 user_data)
 {
   ImageMergeLayersDialog *private;
@@ -76,8 +76,8 @@ image_merge_layers_dialog_new (GimpImage               *image,
   GtkWidget              *frame;
   GtkWidget              *button;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   private = g_slice_new0 (ImageMergeLayersDialog);
 
@@ -89,20 +89,20 @@ image_merge_layers_dialog_new (GimpImage               *image,
   private->callback           = callback;
   private->user_data          = user_data;
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
-                                     _("Merge Layers"), "gimp-image-merge-layers",
-                                     GIMP_ICON_LAYER_MERGE_DOWN,
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
+                                     _("Merge Layers"), "ligma-image-merge-layers",
+                                     LIGMA_ICON_LAYER_MERGE_DOWN,
                                      _("Layers Merge Options"),
                                      parent,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_IMAGE_MERGE_LAYERS,
+                                     ligma_standard_help_func,
+                                     LIGMA_HELP_IMAGE_MERGE_LAYERS,
 
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
                                      _("_Merge"),  GTK_RESPONSE_OK,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -123,14 +123,14 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_widget_show (vbox);
 
   frame =
-    gimp_enum_radio_frame_new_with_range (GIMP_TYPE_MERGE_TYPE,
-                                          GIMP_EXPAND_AS_NECESSARY,
-                                          GIMP_CLIP_TO_BOTTOM_LAYER,
+    ligma_enum_radio_frame_new_with_range (LIGMA_TYPE_MERGE_TYPE,
+                                          LIGMA_EXPAND_AS_NECESSARY,
+                                          LIGMA_CLIP_TO_BOTTOM_LAYER,
                                           gtk_label_new (_("Final, Merged Layer should be:")),
-                                          G_CALLBACK (gimp_radio_button_update),
+                                          G_CALLBACK (ligma_radio_button_update),
                                           &private->merge_type, NULL,
                                           &button);
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->merge_type);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -142,10 +142,10 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &private->merge_active_group);
 
-  if (gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
+  if (ligma_item_stack_is_flat (LIGMA_ITEM_STACK (ligma_image_get_layers (image))))
     gtk_widget_set_sensitive (button, FALSE);
 
   button = gtk_check_button_new_with_mnemonic (_("_Discard invisible layers"));
@@ -155,7 +155,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &private->discard_invisible);
 
   return dialog;

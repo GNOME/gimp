@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimageprocedure.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaimageprocedure.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,10 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROCEDURE_H__
-#define __GIMP_IMAGE_PROCEDURE_H__
+#ifndef __LIGMA_IMAGE_PROCEDURE_H__
+#define __LIGMA_IMAGE_PROCEDURE_H__
 
-#include <libgimp/gimpprocedure.h>
+#include <libligma/ligmaprocedure.h>
 
 G_BEGIN_DECLS
 
@@ -30,66 +30,66 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpRunImageFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
- * @image:       the #GimpImage.
- * @n_drawables: the number of #GimpDrawable-s.
- * @drawables: (array length=n_drawables): the input #GimpDrawable-s.
+ * LigmaRunImageFunc:
+ * @procedure:   the #LigmaProcedure that runs.
+ * @run_mode:    the #LigmaRunMode.
+ * @image:       the #LigmaImage.
+ * @n_drawables: the number of #LigmaDrawable-s.
+ * @drawables: (array length=n_drawables): the input #LigmaDrawable-s.
  * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_image_procedure_new().
+ * @run_data: (closure): the run_data given in ligma_image_procedure_new().
  *
- * The image function is run during the lifetime of the GIMP session,
+ * The image function is run during the lifetime of the LIGMA session,
  * each time a plug-in image procedure is called.
  *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure         *procedure,
-                                               GimpRunMode            run_mode,
-                                               GimpImage             *image,
+typedef LigmaValueArray * (* LigmaRunImageFunc) (LigmaProcedure         *procedure,
+                                               LigmaRunMode            run_mode,
+                                               LigmaImage             *image,
                                                gint                   n_drawables,
-                                               GimpDrawable         **drawables,
-                                               const GimpValueArray  *args,
+                                               LigmaDrawable         **drawables,
+                                               const LigmaValueArray  *args,
                                                gpointer               run_data);
 
 
-#define GIMP_TYPE_IMAGE_PROCEDURE            (gimp_image_procedure_get_type ())
-#define GIMP_IMAGE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedure))
-#define GIMP_IMAGE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedureClass))
-#define GIMP_IS_IMAGE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_PROCEDURE))
-#define GIMP_IS_IMAGE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_PROCEDURE))
-#define GIMP_IMAGE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedureClass))
+#define LIGMA_TYPE_IMAGE_PROCEDURE            (ligma_image_procedure_get_type ())
+#define LIGMA_IMAGE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_PROCEDURE, LigmaImageProcedure))
+#define LIGMA_IMAGE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_PROCEDURE, LigmaImageProcedureClass))
+#define LIGMA_IS_IMAGE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_PROCEDURE))
+#define LIGMA_IS_IMAGE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_PROCEDURE))
+#define LIGMA_IMAGE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_PROCEDURE, LigmaImageProcedureClass))
 
 
-typedef struct _GimpImageProcedure        GimpImageProcedure;
-typedef struct _GimpImageProcedureClass   GimpImageProcedureClass;
-typedef struct _GimpImageProcedurePrivate GimpImageProcedurePrivate;
+typedef struct _LigmaImageProcedure        LigmaImageProcedure;
+typedef struct _LigmaImageProcedureClass   LigmaImageProcedureClass;
+typedef struct _LigmaImageProcedurePrivate LigmaImageProcedurePrivate;
 
-struct _GimpImageProcedure
+struct _LigmaImageProcedure
 {
-  GimpProcedure              parent_instance;
+  LigmaProcedure              parent_instance;
 
-  GimpImageProcedurePrivate *priv;
+  LigmaImageProcedurePrivate *priv;
 };
 
-struct _GimpImageProcedureClass
+struct _LigmaImageProcedureClass
 {
-  GimpProcedureClass parent_class;
+  LigmaProcedureClass parent_class;
 };
 
 
-GType           gimp_image_procedure_get_type (void) G_GNUC_CONST;
+GType           ligma_image_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_image_procedure_new      (GimpPlugIn       *plug_in,
+LigmaProcedure * ligma_image_procedure_new      (LigmaPlugIn       *plug_in,
                                                const gchar      *name,
-                                               GimpPDBProcType   proc_type,
-                                               GimpRunImageFunc  run_func,
+                                               LigmaPDBProcType   proc_type,
+                                               LigmaRunImageFunc  run_func,
                                                gpointer          run_data,
                                                GDestroyNotify    run_data_destroy);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_IMAGE_PROCEDURE_H__  */
+#endif  /*  __LIGMA_IMAGE_PROCEDURE_H__  */

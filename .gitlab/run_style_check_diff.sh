@@ -6,7 +6,7 @@ ancestor_horizon=28  # days (4 weeks)
 
 echo ""
 echo "This script may be wrong. You may disregard it if it conflicts with"
-echo "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/CODING_STYLE.md"
+echo "https://gitlab.gnome.org/GNOME/ligma/-/blob/master/CODING_STYLE.md"
 
 clang-format --version
 

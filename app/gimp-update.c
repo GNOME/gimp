@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-update.c
+ * ligma-update.c
  * Copyright (C) 2019 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,60 +28,60 @@
 #import <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 #include "dialogs/about-dialog.h"
 #include "dialogs/welcome-dialog.h"
 #endif
 
-#include "gimp-intl.h"
-#include "gimp-update.h"
-#include "gimp-version.h"
+#include "ligma-intl.h"
+#include "ligma-update.h"
+#include "ligma-version.h"
 
-static gboolean      gimp_update_known               (GimpCoreConfig   *config,
+static gboolean      ligma_update_known               (LigmaCoreConfig   *config,
                                                       const gchar      *last_version,
                                                       gint64            release_timestamp,
                                                       gint              build_revision,
                                                       const gchar      *comment);
-static void          gimp_check_updates_process      (const gchar      *source,
+static void          ligma_check_updates_process      (const gchar      *source,
                                                       gchar            *file_contents,
                                                       gsize             file_length,
-                                                      GimpCoreConfig   *config);
+                                                      LigmaCoreConfig   *config);
 #ifndef PLATFORM_OSX
-static void          gimp_check_updates_callback     (GObject          *source,
+static void          ligma_check_updates_callback     (GObject          *source,
                                                       GAsyncResult     *result,
                                                       gpointer          user_data);
 #endif /* PLATFORM_OSX */
-static void          gimp_update_about_dialog        (GimpCoreConfig   *config,
+static void          ligma_update_about_dialog        (LigmaCoreConfig   *config,
                                                       const GParamSpec *pspec,
                                                       gpointer          user_data);
 
-static gboolean      gimp_version_break              (const gchar      *v,
+static gboolean      ligma_version_break              (const gchar      *v,
                                                       gint             *major,
                                                       gint             *minor,
                                                       gint             *micro);
-static gint          gimp_version_cmp                (const gchar      *v1,
+static gint          ligma_version_cmp                (const gchar      *v1,
                                                       const gchar      *v2);
 
-static const gchar * gimp_get_version_url            (void);
+static const gchar * ligma_get_version_url            (void);
 
 #ifdef PLATFORM_OSX
-static gint          gimp_check_updates_process_idle (gpointer          data);
+static gint          ligma_check_updates_process_idle (gpointer          data);
 #endif
 
 /* Private Functions */
 
 /**
- * gimp_update_known:
+ * ligma_update_known:
  * @config:
  * @last_version:
  * @release_timestamp: must be non-zero is @last_version is not %NULL.
@@ -101,7 +101,7 @@ static gint          gimp_check_updates_process_idle (gpointer          data);
  * @last_version was %NULL) is newer than running version.
  */
 static gboolean
-gimp_update_known (GimpCoreConfig *config,
+ligma_update_known (LigmaCoreConfig *config,
                    const gchar    *last_version,
                    gint64          release_timestamp,
                    gint            build_revision,
@@ -133,11 +133,11 @@ gimp_update_known (GimpCoreConfig *config,
         * happen if updating the config files without having
         * re-checked the remote JSON file.
         */
-       gimp_version_cmp (last_version, NULL) < 0 ||
+       ligma_version_cmp (last_version, NULL) < 0 ||
        /* Already using the last officially released
         * revision. */
-       (gimp_version_cmp (last_version, NULL) == 0 &&
-        build_revision <= gimp_version_get_revision ())))
+       (ligma_version_cmp (last_version, NULL) == 0 &&
+        build_revision <= ligma_version_get_revision ())))
     {
       last_version = NULL;
     }
@@ -161,12 +161,12 @@ gimp_update_known (GimpCoreConfig *config,
                 "last-release-comment",   build_comment,
                 NULL);
 
-  /* Are we running an old GIMP? */
+  /* Are we running an old LIGMA? */
   return (last_version != NULL);
 }
 
 static gboolean
-gimp_update_get_highest (JsonParser  *parser,
+ligma_update_get_highest (JsonParser  *parser,
                          gchar      **highest_version,
                          gint64      *release_timestamp,
                          gint        *build_revision,
@@ -200,9 +200,9 @@ gimp_update_get_highest (JsonParser  *parser,
   /* For Windows and macOS, let's look if installers are available.
    * For other platforms, let's just look for source release.
    */
-  if (g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "windows") == 0 ||
-      g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "macos") == 0)
-    platform = GIMP_BUILD_PLATFORM_FAMILY;
+  if (g_strcmp0 (LIGMA_BUILD_PLATFORM_FAMILY, "windows") == 0 ||
+      g_strcmp0 (LIGMA_BUILD_PLATFORM_FAMILY, "macos") == 0)
+    platform = LIGMA_BUILD_PLATFORM_FAMILY;
   else
     platform = "source";
 
@@ -264,7 +264,7 @@ gimp_update_get_highest (JsonParser  *parser,
               build = json_array_get_object_element (builds, j);
               if (json_object_has_member (build, "build-id"))
                 build_id = json_object_get_string_member (build, "build-id");
-              if (g_strcmp0 (build_id, GIMP_BUILD_ID) == 0 ||
+              if (g_strcmp0 (build_id, LIGMA_BUILD_ID) == 0 ||
                   g_strcmp0 (platform, "source") == 0)
                 {
                   /* Release date is the build date if any set,
@@ -332,10 +332,10 @@ gimp_update_get_highest (JsonParser  *parser,
 }
 
 static void
-gimp_check_updates_process (const gchar    *source,
+ligma_check_updates_process (const gchar    *source,
                             gchar          *file_contents,
                             gsize           file_length,
-                            GimpCoreConfig *config)
+                            LigmaCoreConfig *config)
 {
   gchar       *last_version      = NULL;
   gchar       *build_comment     = NULL;
@@ -360,21 +360,21 @@ gimp_check_updates_process (const gchar    *source,
       return;
     }
 
-  gimp_update_get_highest (parser, &last_version, &release_timestamp,
+  ligma_update_get_highest (parser, &last_version, &release_timestamp,
                            &build_revision, &build_comment, FALSE);
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
     {
       gchar  *dev_version = NULL;
       gchar  *dev_comment      = NULL;
       gint64  dev_timestamp    = 0;
       gint    dev_revision     = 0;
 
-      gimp_update_get_highest (parser, &dev_version, &dev_timestamp,
+      ligma_update_get_highest (parser, &dev_version, &dev_timestamp,
                                &dev_revision, &dev_comment, TRUE);
       if (dev_version)
         {
-          if (! last_version || gimp_version_cmp (dev_version, last_version) > 0)
+          if (! last_version || ligma_version_cmp (dev_version, last_version) > 0)
             {
               g_clear_pointer (&last_version, g_free);
               g_clear_pointer (&build_comment, g_free);
@@ -392,7 +392,7 @@ gimp_check_updates_process (const gchar    *source,
     }
 #endif
 
-  gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
+  ligma_update_known (config, last_version, release_timestamp, build_revision, build_comment);
 
   g_clear_pointer (&last_version, g_free);
   g_clear_pointer (&build_comment, g_free);
@@ -402,11 +402,11 @@ gimp_check_updates_process (const gchar    *source,
 
 #ifndef PLATFORM_OSX
 static void
-gimp_check_updates_callback (GObject      *source,
+ligma_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
                              gpointer      user_data)
 {
-  GimpCoreConfig *config        = user_data;
+  LigmaCoreConfig *config        = user_data;
   char           *file_contents = NULL;
   gsize           file_length   = 0;
   GError         *error         = NULL;
@@ -415,7 +415,7 @@ gimp_check_updates_callback (GObject      *source,
                                    &file_contents, &file_length,
                                    NULL, &error))
     {
-      gimp_check_updates_process (g_file_get_uri (G_FILE (source)), file_contents, file_length, config);
+      ligma_check_updates_process (g_file_get_uri (G_FILE (source)), file_contents, file_length, config);
     }
   else
     {
@@ -431,20 +431,20 @@ gimp_check_updates_callback (GObject      *source,
 #endif /* PLATFORM_OSX */
 
 static void
-gimp_update_about_dialog (GimpCoreConfig   *config,
+ligma_update_about_dialog (LigmaCoreConfig   *config,
                           const GParamSpec *pspec,
                           gpointer          user_data)
 {
   g_signal_handlers_disconnect_by_func (config,
-                                        (GCallback) gimp_update_about_dialog,
+                                        (GCallback) ligma_update_about_dialog,
                                         NULL);
 
   if (config->last_known_release != NULL)
     {
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
       gtk_widget_show (about_dialog_create (config));
 #else
-      g_printerr (_("A new version of GIMP (%s) was released.\n"
+      g_printerr (_("A new version of LIGMA (%s) was released.\n"
                     "It is recommended to update."),
                   config->last_known_release);
 #endif
@@ -452,7 +452,7 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
 }
 
 static gboolean
-gimp_version_break (const gchar *v,
+ligma_version_break (const gchar *v,
                     gint        *major,
                     gint        *minor,
                     gint        *micro)
@@ -485,7 +485,7 @@ gimp_version_break (const gchar *v,
 }
 
 /**
- * gimp_version_cmp:
+ * ligma_version_cmp:
  * @v1: a string representing a version, ex. "2.10.22".
  * @v2: a string representing another version, ex. "2.99.2".
  *
@@ -496,19 +496,19 @@ gimp_version_break (const gchar *v,
  *          matching, or greater than @v2.
  */
 static gint
-gimp_version_cmp (const gchar *v1,
+ligma_version_cmp (const gchar *v1,
                   const gchar *v2)
 {
   gint     major1;
   gint     minor1;
   gint     micro1;
-  gint     major2 = GIMP_MAJOR_VERSION;
-  gint     minor2 = GIMP_MINOR_VERSION;
-  gint     micro2 = GIMP_MICRO_VERSION;
+  gint     major2 = LIGMA_MAJOR_VERSION;
+  gint     minor2 = LIGMA_MINOR_VERSION;
+  gint     micro2 = LIGMA_MICRO_VERSION;
 
   g_return_val_if_fail (v1 != NULL, -1);
 
-  if (! gimp_version_break (v1, &major1, &minor1, &micro1))
+  if (! ligma_version_break (v1, &major1, &minor1, &micro1))
     {
       /* If version is not properly parsed, something is wrong with
        * upstream version number or parsing. This should not happen.
@@ -518,7 +518,7 @@ gimp_version_cmp (const gchar *v1,
 
       return -1;
     }
-  if (v2 && ! gimp_version_break (v2, &major2, &minor2, &micro2))
+  if (v2 && ! ligma_version_break (v2, &major2, &minor2, &micro2))
     {
       g_printerr ("%s: version not properly formatted: %s\n",
                   G_STRFUNC, v2);
@@ -537,33 +537,33 @@ gimp_version_cmp (const gchar *v1,
 }
 
 static const gchar *
-gimp_get_version_url (void)
+ligma_get_version_url (void)
 {
-#ifdef GIMP_RELEASE
-  return "https://www.gimp.org/gimp_versions.json";
+#ifdef LIGMA_RELEASE
+  return "https://www.ligma.org/ligma_versions.json";
 #else
-  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
-    return g_getenv ("GIMP_DEV_VERSIONS_JSON");
+  if (g_getenv ("LIGMA_DEV_VERSIONS_JSON"))
+    return g_getenv ("LIGMA_DEV_VERSIONS_JSON");
   else
-    return "https://testing.gimp.org/gimp_versions.json";
+    return "https://testing.ligma.org/ligma_versions.json";
 #endif
 }
 
 #ifdef PLATFORM_OSX
-typedef struct _GimpCheckUpdatesData
+typedef struct _LigmaCheckUpdatesData
 {
-  const gchar    *gimp_versions;
+  const gchar    *ligma_versions;
   gchar          *json_result;
   gsize           json_size;
-  GimpCoreConfig *config;
-} GimpCheckUpdatesData;
+  LigmaCoreConfig *config;
+} LigmaCheckUpdatesData;
 
 static int
-gimp_check_updates_process_idle (gpointer data)
+ligma_check_updates_process_idle (gpointer data)
 {
-  GimpCheckUpdatesData *check_updates_data = (GimpCheckUpdatesData *) data;
+  LigmaCheckUpdatesData *check_updates_data = (LigmaCheckUpdatesData *) data;
 
-  gimp_check_updates_process (check_updates_data->gimp_versions,
+  ligma_check_updates_process (check_updates_data->ligma_versions,
                               check_updates_data->json_result,
                               check_updates_data->json_size,
                               check_updates_data->config);
@@ -577,35 +577,35 @@ gimp_check_updates_process_idle (gpointer data)
 /* Public Functions */
 
 /*
- * gimp_update_auto_check:
+ * ligma_update_auto_check:
  * @config:
- * @gimp:
+ * @ligma:
  *
- * Run the check for newer versions of GIMP if conditions are right.
+ * Run the check for newer versions of LIGMA if conditions are right.
  *
  * Returns: %TRUE if a check was actually run.
  */
 gboolean
-gimp_update_auto_check (GimpCoreConfig *config,
-                        Gimp           *gimp)
+ligma_update_auto_check (LigmaCoreConfig *config,
+                        Ligma           *ligma)
 {
   gint64 prev_update_timestamp;
   gint64 current_timestamp;
 
   if (config->config_version == NULL ||
-      gimp_version_cmp (GIMP_VERSION,
+      ligma_version_cmp (LIGMA_VERSION,
                         config->config_version) > 0)
     {
-#ifndef GIMP_CONSOLE_COMPILATION
-      /* GIMP was just updated and this is the first time the new
+#ifndef LIGMA_CONSOLE_COMPILATION
+      /* LIGMA was just updated and this is the first time the new
        * version is run. Display a welcome dialog, and do not check for
        * updates right now. */
-      gtk_widget_show (welcome_dialog_create (gimp));
+      gtk_widget_show (welcome_dialog_create (ligma));
 
       return FALSE;
 #else
       g_log (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE,
-             "Welcome to GIMP %s!", GIMP_VERSION);
+             "Welcome to LIGMA %s!", LIGMA_VERSION);
 #endif
     }
 
@@ -617,7 +617,7 @@ gimp_update_auto_check (GimpCoreConfig *config,
    * the Windows Store (with update check disabled because it comes with
    * its own update channel).
    */
-  if (! gimp_version_check_update () ||
+  if (! ligma_version_check_update () ||
       ! config->check_updates)
 #endif
     return FALSE;
@@ -631,37 +631,37 @@ gimp_update_auto_check (GimpCoreConfig *config,
   if (prev_update_timestamp > current_timestamp)
     prev_update_timestamp = -1;
 
-#ifdef GIMP_RELEASE
+#ifdef LIGMA_RELEASE
   /* Do not check more than once a week. */
   if (current_timestamp - prev_update_timestamp < 3600L * 24L * 7L)
     return FALSE;
 #endif
 
   g_signal_connect (config, "notify::last-known-release",
-                    (GCallback) gimp_update_about_dialog,
+                    (GCallback) ligma_update_about_dialog,
                     NULL);
 
-  gimp_update_check (config);
+  ligma_update_check (config);
 
   return TRUE;
 }
 
 /*
- * gimp_update_check:
+ * ligma_update_check:
  * @config:
  *
- * Run the check for newer versions of GIMP inconditionnally.
+ * Run the check for newer versions of LIGMA inconditionnally.
  */
 void
-gimp_update_check (GimpCoreConfig *config)
+ligma_update_check (LigmaCoreConfig *config)
 {
 #ifdef PLATFORM_OSX
-  const gchar *gimp_versions;
+  const gchar *ligma_versions;
 
-  gimp_versions = gimp_get_version_url ();
+  ligma_versions = ligma_get_version_url ();
 
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-  [request setURL:[NSURL URLWithString:@(gimp_versions)]];
+  [request setURL:[NSURL URLWithString:@(ligma_versions)]];
   [request setHTTPMethod:@"GET"];
 
   NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -669,13 +669,13 @@ gimp_update_check (GimpCoreConfig *config)
   [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     NSString             *reply;
     gchar                *json_result;
-    GimpCheckUpdatesData *update_results;
+    LigmaCheckUpdatesData *update_results;
 
     if (error)
       {
-        g_printerr ("%s: gimp_update_check failed to get update from %s, with error: %s\n",
+        g_printerr ("%s: ligma_update_check failed to get update from %s, with error: %s\n",
                     G_STRFUNC,
-                    gimp_versions,
+                    ligma_versions,
                     [error.localizedDescription UTF8String]);
         return;
       }
@@ -685,45 +685,45 @@ gimp_update_check (GimpCoreConfig *config)
 
         if (statusCode != 200)
           {
-            g_printerr ("%s: gimp_update_check failed to get update from %s, with status code: %d\n",
+            g_printerr ("%s: ligma_update_check failed to get update from %s, with status code: %d\n",
                         G_STRFUNC,
-                        gimp_versions,
+                        ligma_versions,
                         (int)statusCode);
             return;
           }
     }
 
     reply       = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    json_result = g_strdup ([reply UTF8String]); /* will be freed by gimp_check_updates_process */
+    json_result = g_strdup ([reply UTF8String]); /* will be freed by ligma_check_updates_process */
 
-    update_results = g_new (GimpCheckUpdatesData, 1);
+    update_results = g_new (LigmaCheckUpdatesData, 1);
 
-    update_results->gimp_versions = gimp_versions;
+    update_results->ligma_versions = ligma_versions;
     update_results->json_result   = json_result;
     update_results->json_size     = [reply lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
     update_results->config        = config;
 
-    g_idle_add ((GSourceFunc) gimp_check_updates_process_idle, (gpointer) update_results);
+    g_idle_add ((GSourceFunc) ligma_check_updates_process_idle, (gpointer) update_results);
   }] resume];
 #else
-  GFile *gimp_versions;
+  GFile *ligma_versions;
 
-  gimp_versions = g_file_new_for_uri (gimp_get_version_url ());
+  ligma_versions = g_file_new_for_uri (ligma_get_version_url ());
 
-  g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);
-  g_object_unref (gimp_versions);
+  g_file_load_contents_async (ligma_versions, NULL, ligma_check_updates_callback, config);
+  g_object_unref (ligma_versions);
 #endif /* PLATFORM_OSX */
 }
 
 /*
- * gimp_update_refresh:
+ * ligma_update_refresh:
  * @config:
  *
  * Do not execute a remote check, but refresh the known release data as
  * it may be outdated.
  */
 void
-gimp_update_refresh (GimpCoreConfig *config)
+ligma_update_refresh (LigmaCoreConfig *config)
 {
-  gimp_update_known (config, NULL, 0, 0, NULL);
+  ligma_update_known (config, NULL, 0, 0, NULL);
 }

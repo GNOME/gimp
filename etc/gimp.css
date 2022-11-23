@@ -1,9 +1,9 @@
-/* You can add your own GIMP-specific GTK styles here */
+/* You can add your own LIGMA-specific GTK styles here */
 
 
 /* Adjust the size of previews in plug-in dialogs */
 /*
-GimpPreview {
-  -GimpPreview-size: 256;
+LigmaPreview {
+  -LigmaPreview-size: 256;
 }
 */

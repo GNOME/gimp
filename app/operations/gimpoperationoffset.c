@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationoffset.c
+ * ligmaoperationoffset.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,14 +26,14 @@
 
 #include "operations-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimpoperationoffset.h"
+#include "ligmaoperationoffset.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,74 +46,74 @@ enum
 };
 
 
-static void            gimp_operation_offset_dispose                   (GObject              *object);
-static void            gimp_operation_offset_get_property              (GObject              *object,
+static void            ligma_operation_offset_dispose                   (GObject              *object);
+static void            ligma_operation_offset_get_property              (GObject              *object,
                                                                         guint                 property_id,
                                                                         GValue               *value,
                                                                         GParamSpec           *pspec);
-static void            gimp_operation_offset_set_property              (GObject              *object,
+static void            ligma_operation_offset_set_property              (GObject              *object,
                                                                         guint                 property_id,
                                                                         const GValue         *value,
                                                                         GParamSpec           *pspec);
 
-static GeglRectangle   gimp_operation_offset_get_required_for_output   (GeglOperation        *operation,
+static GeglRectangle   ligma_operation_offset_get_required_for_output   (GeglOperation        *operation,
                                                                         const gchar          *input_pad,
                                                                         const GeglRectangle  *output_roi);
-static GeglRectangle   gimp_operation_offset_get_invalidated_by_change (GeglOperation        *operation,
+static GeglRectangle   ligma_operation_offset_get_invalidated_by_change (GeglOperation        *operation,
                                                                         const gchar          *input_pad,
                                                                         const GeglRectangle  *input_roi);
-static void            gimp_operation_offset_prepare                   (GeglOperation        *operation);
-static gboolean        gimp_operation_offset_parent_process            (GeglOperation        *operation,
+static void            ligma_operation_offset_prepare                   (GeglOperation        *operation);
+static gboolean        ligma_operation_offset_parent_process            (GeglOperation        *operation,
                                                                         GeglOperationContext *context,
                                                                         const gchar          *output_pad,
                                                                         const GeglRectangle  *result,
                                                                         gint                  level);
 
-static gboolean        gimp_operation_offset_process                   (GeglOperation        *operation,
+static gboolean        ligma_operation_offset_process                   (GeglOperation        *operation,
                                                                         GeglBuffer           *input,
                                                                         GeglBuffer           *output,
                                                                         const GeglRectangle  *roi,
                                                                         gint                  level);
 
-static void            gimp_operation_offset_get_offset                (GimpOperationOffset  *offset,
+static void            ligma_operation_offset_get_offset                (LigmaOperationOffset  *offset,
                                                                         gboolean              invert,
                                                                         gint                 *x,
                                                                         gint                 *y);
-static void            gimp_operation_offset_get_rect                  (GimpOperationOffset  *offset,
+static void            ligma_operation_offset_get_rect                  (LigmaOperationOffset  *offset,
                                                                         gboolean              invert,
                                                                         const GeglRectangle  *roi,
                                                                         GeglRectangle        *rect);
 
 
-G_DEFINE_TYPE (GimpOperationOffset, gimp_operation_offset,
+G_DEFINE_TYPE (LigmaOperationOffset, ligma_operation_offset,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_offset_parent_class
+#define parent_class ligma_operation_offset_parent_class
 
 
 static void
-gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
+ligma_operation_offset_class_init (LigmaOperationOffsetClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  object_class->dispose                      = gimp_operation_offset_dispose;
-  object_class->set_property                 = gimp_operation_offset_set_property;
-  object_class->get_property                 = gimp_operation_offset_get_property;
+  object_class->dispose                      = ligma_operation_offset_dispose;
+  object_class->set_property                 = ligma_operation_offset_set_property;
+  object_class->get_property                 = ligma_operation_offset_get_property;
 
-  operation_class->get_required_for_output   = gimp_operation_offset_get_required_for_output;
-  operation_class->get_invalidated_by_change = gimp_operation_offset_get_invalidated_by_change;
-  operation_class->prepare                   = gimp_operation_offset_prepare;
-  operation_class->process                   = gimp_operation_offset_parent_process;
+  operation_class->get_required_for_output   = ligma_operation_offset_get_required_for_output;
+  operation_class->get_invalidated_by_change = ligma_operation_offset_get_invalidated_by_change;
+  operation_class->prepare                   = ligma_operation_offset_prepare;
+  operation_class->process                   = ligma_operation_offset_parent_process;
 
   operation_class->threaded                  = FALSE;
   operation_class->cache_policy              = GEGL_CACHE_POLICY_NEVER;
 
-  filter_class->process                      = gimp_operation_offset_process;
+  filter_class->process                      = ligma_operation_offset_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:offset",
+                                 "name",        "ligma:offset",
                                  "categories",  "transform",
                                  "description", _("Shift the pixels, optionally wrapping them at the borders"),
                                  NULL);
@@ -121,8 +121,8 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         "Context",
-                                                        "A GimpContext",
-                                                        GIMP_TYPE_CONTEXT,
+                                                        "A LigmaContext",
+                                                        LIGMA_TYPE_CONTEXT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -130,8 +130,8 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
                                    g_param_spec_enum  ("type",
                                                        "Type",
                                                        "Offset type",
-                                                       GIMP_TYPE_OFFSET_TYPE,
-                                                       GIMP_OFFSET_WRAP_AROUND,
+                                                       LIGMA_TYPE_OFFSET_TYPE,
+                                                       LIGMA_OFFSET_WRAP_AROUND,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 
@@ -153,14 +153,14 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
 }
 
 static void
-gimp_operation_offset_init (GimpOperationOffset *self)
+ligma_operation_offset_init (LigmaOperationOffset *self)
 {
 }
 
 static void
-gimp_operation_offset_dispose (GObject *object)
+ligma_operation_offset_dispose (GObject *object)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (object);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (object);
 
   g_clear_object (&offset->context);
 
@@ -168,12 +168,12 @@ gimp_operation_offset_dispose (GObject *object)
 }
 
 static void
-gimp_operation_offset_get_property (GObject    *object,
+ligma_operation_offset_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (object);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (object);
 
   switch (property_id)
     {
@@ -200,12 +200,12 @@ gimp_operation_offset_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_offset_set_property (GObject      *object,
+ligma_operation_offset_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (object);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (object);
 
   switch (property_id)
     {
@@ -232,33 +232,33 @@ gimp_operation_offset_set_property (GObject      *object,
 }
 
 static GeglRectangle
-gimp_operation_offset_get_required_for_output (GeglOperation       *operation,
+ligma_operation_offset_get_required_for_output (GeglOperation       *operation,
                                                const gchar         *input_pad,
                                                const GeglRectangle *output_roi)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (operation);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (operation);
   GeglRectangle        rect;
 
-  gimp_operation_offset_get_rect (offset, TRUE, output_roi, &rect);
+  ligma_operation_offset_get_rect (offset, TRUE, output_roi, &rect);
 
   return rect;
 }
 
 static GeglRectangle
-gimp_operation_offset_get_invalidated_by_change (GeglOperation       *operation,
+ligma_operation_offset_get_invalidated_by_change (GeglOperation       *operation,
                                                  const gchar         *input_pad,
                                                  const GeglRectangle *input_roi)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (operation);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (operation);
   GeglRectangle        rect;
 
-  gimp_operation_offset_get_rect (offset, FALSE, input_roi, &rect);
+  ligma_operation_offset_get_rect (offset, FALSE, input_roi, &rect);
 
   return rect;
 }
 
 static void
-gimp_operation_offset_prepare (GeglOperation *operation)
+ligma_operation_offset_prepare (GeglOperation *operation)
 {
   const Babl *format;
 
@@ -272,20 +272,20 @@ gimp_operation_offset_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_offset_parent_process (GeglOperation        *operation,
+ligma_operation_offset_parent_process (GeglOperation        *operation,
                                       GeglOperationContext *context,
                                       const gchar          *output_pad,
                                       const GeglRectangle  *result,
                                       gint                  level)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (operation);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (operation);
   GObject             *input;
   gint                 x;
   gint                 y;
 
   input = gegl_operation_context_get_object (context, "input");
 
-  gimp_operation_offset_get_offset (offset, FALSE, &x, &y);
+  ligma_operation_offset_get_offset (offset, FALSE, &x, &y);
 
   if (x == 0 && y == 0)
     {
@@ -293,8 +293,8 @@ gimp_operation_offset_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-  else if (offset->type  == GIMP_OFFSET_TRANSPARENT ||
-           (offset->type == GIMP_OFFSET_BACKGROUND  &&
+  else if (offset->type  == LIGMA_OFFSET_TRANSPARENT ||
+           (offset->type == LIGMA_OFFSET_BACKGROUND  &&
             ! offset->context))
     {
       GObject *output = NULL;
@@ -339,13 +339,13 @@ gimp_operation_offset_parent_process (GeglOperation        *operation,
 }
 
 static gboolean
-gimp_operation_offset_process (GeglOperation       *operation,
+ligma_operation_offset_process (GeglOperation       *operation,
                                GeglBuffer          *input,
                                GeglBuffer          *output,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (operation);
+  LigmaOperationOffset *offset = LIGMA_OPERATION_OFFSET (operation);
   GeglColor           *color  = NULL;
   GeglRectangle        bounds;
   gint                 x;
@@ -354,15 +354,15 @@ gimp_operation_offset_process (GeglOperation       *operation,
 
   bounds = gegl_operation_get_bounding_box (GEGL_OPERATION (offset));
 
-  gimp_operation_offset_get_offset (offset, FALSE, &x, &y);
+  ligma_operation_offset_get_offset (offset, FALSE, &x, &y);
 
-  if (offset->type == GIMP_OFFSET_BACKGROUND && offset->context)
+  if (offset->type == LIGMA_OFFSET_BACKGROUND && offset->context)
     {
-      GimpRGB bg;
+      LigmaRGB bg;
 
-      gimp_context_get_background (offset->context, &bg);
+      ligma_context_get_background (offset->context, &bg);
 
-      color = gimp_gegl_color_new (&bg, NULL);
+      color = ligma_gegl_color_new (&bg, NULL);
     }
 
   for (i = 0; i < 4; i++)
@@ -381,14 +381,14 @@ gimp_operation_offset_process (GeglOperation       *operation,
 
       if (gegl_rectangle_intersect (&offset_bounds, &offset_bounds, roi))
         {
-          if (i == 0 || offset->type == GIMP_OFFSET_WRAP_AROUND)
+          if (i == 0 || offset->type == LIGMA_OFFSET_WRAP_AROUND)
             {
               GeglRectangle offset_roi = offset_bounds;
 
               offset_roi.x -= offset_x;
               offset_roi.y -= offset_y;
 
-              gimp_gegl_buffer_copy (input,  &offset_roi, GEGL_ABYSS_NONE,
+              ligma_gegl_buffer_copy (input,  &offset_roi, GEGL_ABYSS_NONE,
                                      output, &offset_bounds);
             }
           else if (color)
@@ -404,7 +404,7 @@ gimp_operation_offset_process (GeglOperation       *operation,
 }
 
 static void
-gimp_operation_offset_get_offset (GimpOperationOffset *offset,
+ligma_operation_offset_get_offset (LigmaOperationOffset *offset,
                                   gboolean             invert,
                                   gint                *x,
                                   gint                *y)
@@ -430,7 +430,7 @@ gimp_operation_offset_get_offset (GimpOperationOffset *offset,
       *y = -*y;
     }
 
-  if (offset->type == GIMP_OFFSET_WRAP_AROUND)
+  if (offset->type == LIGMA_OFFSET_WRAP_AROUND)
     {
       *x %= bounds.width;
 
@@ -450,7 +450,7 @@ gimp_operation_offset_get_offset (GimpOperationOffset *offset,
 }
 
 static void
-gimp_operation_offset_get_rect (GimpOperationOffset *offset,
+ligma_operation_offset_get_rect (LigmaOperationOffset *offset,
                                 gboolean             invert,
                                 const GeglRectangle *roi,
                                 GeglRectangle       *rect)
@@ -471,14 +471,14 @@ gimp_operation_offset_get_rect (GimpOperationOffset *offset,
       return;
     }
 
-  gimp_operation_offset_get_offset (offset, invert, &x, &y);
+  ligma_operation_offset_get_offset (offset, invert, &x, &y);
 
   *rect = *roi;
 
   rect->x += x;
   rect->y += y;
 
-  if (offset->type == GIMP_OFFSET_WRAP_AROUND)
+  if (offset->type == LIGMA_OFFSET_WRAP_AROUND)
     {
       if (rect->x + rect->width > bounds.x + bounds.width)
         {

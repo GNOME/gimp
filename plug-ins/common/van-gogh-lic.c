@@ -1,8 +1,8 @@
-/* LIC 0.14 -- image filter plug-in for GIMP
+/* LIC 0.14 -- image filter plug-in for LIGMA
  * Copyright (C) 1996 Tom Bech
  *
- * E-mail: tomb@gimp.org
- * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
+ * E-mail: tomb@ligma.org
+ * You can contact the original LIGMA authors at ligma@xcf.berkeley.edu
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * -> 0.11: Fixed a bug in the convolution kernels (Tom).
  * -> 0.12: Added Quartic's bilinear interpolation stuff (Tom).
  * -> 0.13 Changed some UI stuff causing trouble with the 0.60 release, added
- *         the (GIMP) tags and changed random() calls to rand() (Tom)
+ *         the (LIGMA) tags and changed random() calls to rand() (Tom)
  * -> 0.14 Ported to 0.99.11 (Tom)
  *
  * This plug-in implements the Line Integral Convolution (LIC) as described in
@@ -37,10 +37,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /************/
@@ -52,7 +52,7 @@
 
 #define PLUG_IN_PROC   "plug-in-lic"
 #define PLUG_IN_BINARY "van-gogh-lic"
-#define PLUG_IN_ROLE   "gimp-van-gogh-lic"
+#define PLUG_IN_ROLE   "ligma-van-gogh-lic"
 
 typedef enum
 {
@@ -67,12 +67,12 @@ typedef struct _LicClass LicClass;
 
 struct _Lic
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _LicClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -81,31 +81,31 @@ struct _LicClass
 
 GType                   lic_get_type         (void) G_GNUC_CONST;
 
-static GList          * lic_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * lic_create_procedure (GimpPlugIn           *plug_in,
+static GList          * lic_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * lic_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * lic_run              (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * lic_run              (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              LigmaDrawable        **drawables,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static void           lic_scale_entry_update (GimpLabelSpin        *entry,
+static void           lic_scale_entry_update (LigmaLabelSpin        *entry,
                                               gdouble              *value);
 
 
-G_DEFINE_TYPE (Lic, lic, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Lic, lic, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (LIC_TYPE)
+LIGMA_MAIN (LIC_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 lic_class_init (LicClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = lic_query_procedures;
   plug_in_class->create_procedure = lic_create_procedure;
@@ -161,7 +161,7 @@ static void
 peek (GeglBuffer *buffer,
       gint        x,
       gint        y,
-      GimpRGB    *color)
+      LigmaRGB    *color)
 {
   gegl_buffer_sample (buffer, x, y, NULL,
                       color, babl_format ("R'G'B'A double"),
@@ -172,7 +172,7 @@ static void
 poke (GeglBuffer *buffer,
       gint        x,
       gint        y,
-      GimpRGB    *color)
+      LigmaRGB    *color)
 {
   gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
                    babl_format ("R'G'B'A double"), color,
@@ -382,13 +382,13 @@ lic_noise (gint    x,
 
 static void
 getpixel (GeglBuffer *buffer,
-          GimpRGB    *p,
+          LigmaRGB    *p,
           gdouble     u,
           gdouble     v)
 {
   register gint x1, y1, x2, y2;
   gint width, height;
-  static GimpRGB pp[4];
+  static LigmaRGB pp[4];
 
   width  = border_w;
   height = border_h;
@@ -415,9 +415,9 @@ getpixel (GeglBuffer *buffer,
   peek (buffer, x2, y2, &pp[3]);
 
   if (source_drw_has_alpha)
-    *p = gimp_bilinear_rgba (u, v, pp);
+    *p = ligma_bilinear_rgba (u, v, pp);
   else
-    *p = gimp_bilinear_rgb (u, v, pp);
+    *p = ligma_bilinear_rgb (u, v, pp);
 }
 
 static void
@@ -426,13 +426,13 @@ lic_image (GeglBuffer *buffer,
            gint        y,
            gdouble     vx,
            gdouble     vy,
-           GimpRGB    *color)
+           LigmaRGB    *color)
 {
   gdouble u, step = 2.0 * l / isteps;
   gdouble xx = (gdouble) x, yy = (gdouble) y;
   gdouble c, s;
-  GimpRGB col = { 0, 0, 0, 0 };
-  GimpRGB col1, col2, col3;
+  LigmaRGB col = { 0, 0, 0, 0 };
+  LigmaRGB col1, col2, col3;
 
   /* Get vector at x,y */
   /* ================= */
@@ -446,9 +446,9 @@ lic_image (GeglBuffer *buffer,
   getpixel (buffer, &col1, xx + l * c, yy + l * s);
 
   if (source_drw_has_alpha)
-    gimp_rgba_multiply (&col1, filter (-l));
+    ligma_rgba_multiply (&col1, filter (-l));
   else
-    gimp_rgb_multiply (&col1, filter (-l));
+    ligma_rgb_multiply (&col1, filter (-l));
 
   for (u = -l + step; u <= l; u += step)
     {
@@ -456,51 +456,51 @@ lic_image (GeglBuffer *buffer,
 
       if (source_drw_has_alpha)
         {
-          gimp_rgba_multiply (&col2, filter (u));
+          ligma_rgba_multiply (&col2, filter (u));
 
           col3 = col1;
-          gimp_rgba_add (&col3, &col2);
-          gimp_rgba_multiply (&col3, 0.5 * step);
-          gimp_rgba_add (&col, &col3);
+          ligma_rgba_add (&col3, &col2);
+          ligma_rgba_multiply (&col3, 0.5 * step);
+          ligma_rgba_add (&col, &col3);
         }
       else
         {
-          gimp_rgb_multiply (&col2, filter (u));
+          ligma_rgb_multiply (&col2, filter (u));
 
           col3 = col1;
-          gimp_rgb_add (&col3, &col2);
-          gimp_rgb_multiply (&col3, 0.5 * step);
-          gimp_rgb_add (&col, &col3);
+          ligma_rgb_add (&col3, &col2);
+          ligma_rgb_multiply (&col3, 0.5 * step);
+          ligma_rgb_add (&col, &col3);
         }
       col1 = col2;
     }
   if (source_drw_has_alpha)
-    gimp_rgba_multiply (&col, 1.0 / l);
+    ligma_rgba_multiply (&col, 1.0 / l);
   else
-    gimp_rgb_multiply (&col, 1.0 / l);
-  gimp_rgb_clamp (&col);
+    ligma_rgb_multiply (&col, 1.0 / l);
+  ligma_rgb_clamp (&col);
 
   *color = col;
 }
 
 static guchar *
-rgb_to_hsl (GimpDrawable     *drawable,
+rgb_to_hsl (LigmaDrawable     *drawable,
             LICEffectChannel  effect_channel)
 {
   GeglBuffer *buffer;
   guchar     *themap, data[4];
   gint        x, y;
-  GimpRGB     color;
-  GimpHSL     color_hsl;
+  LigmaRGB     color;
+  LigmaHSL     color_hsl;
   gdouble     val = 0.0;
   glong       maxc, index = 0;
   GRand      *gr;
 
   gr = g_rand_new ();
 
-  maxc = gimp_drawable_get_width (drawable) * gimp_drawable_get_height (drawable);
+  maxc = ligma_drawable_get_width (drawable) * ligma_drawable_get_height (drawable);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   themap = g_new (guchar, maxc);
 
@@ -514,8 +514,8 @@ rgb_to_hsl (GimpDrawable     *drawable,
                               data, babl_format ("R'G'B'A u8"),
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          gimp_rgba_set_uchar (&color, data[0], data[1], data[2], data[3]);
-          gimp_rgb_to_hsl (&color, &color_hsl);
+          ligma_rgba_set_uchar (&color, data[0], data[1], data[2], data[3]);
+          ligma_rgb_to_hsl (&color, &color_hsl);
 
           switch (effect_channel)
             {
@@ -546,18 +546,18 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
 
 static void
-compute_lic (GimpDrawable *drawable,
+compute_lic (LigmaDrawable *drawable,
              const guchar *scalarfield,
              gboolean      rotate)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
   gint        xcount, ycount;
-  GimpRGB     color;
+  LigmaRGB     color;
   gdouble     vx, vy, tmp;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   for (ycount = 0; ycount < border_h; ycount++)
     {
@@ -595,9 +595,9 @@ compute_lic (GimpDrawable *drawable,
               tmp = lic_noise (xcount, ycount, vx, vy);
 
               if (source_drw_has_alpha)
-                gimp_rgba_multiply (&color, tmp);
+                ligma_rgba_multiply (&color, tmp);
               else
-                gimp_rgb_multiply (&color, tmp);
+                ligma_rgb_multiply (&color, tmp);
             }
           else
             {
@@ -607,29 +607,29 @@ compute_lic (GimpDrawable *drawable,
           poke (dest_buffer, xcount, ycount, &color);
         }
 
-      gimp_progress_update ((gfloat) ycount / (gfloat) border_h);
+      ligma_progress_update ((gfloat) ycount / (gfloat) border_h);
     }
 
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static void
-compute_image (GimpDrawable *drawable)
+compute_image (LigmaDrawable *drawable)
 {
-  GimpDrawable *effect_image;
+  LigmaDrawable *effect_image;
   guchar       *scalarfield = NULL;
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &border_x, &border_y,
                                       &border_w, &border_h))
     return;
 
-  gimp_progress_init (_("Van Gogh (LIC)"));
+  ligma_progress_init (_("Van Gogh (LIC)"));
 
   if (licvals.effect_convolve == 0)
     generatevectors ();
@@ -643,12 +643,12 @@ compute_image (GimpDrawable *drawable)
   maxv = licvals.maxv / 10.0;
   isteps = licvals.intsteps;
 
-  source_drw_has_alpha = gimp_drawable_has_alpha (drawable);
+  source_drw_has_alpha = ligma_drawable_has_alpha (drawable);
 
-  effect_image = gimp_drawable_get_by_id (licvals.effect_image_id);
+  effect_image = ligma_drawable_get_by_id (licvals.effect_image_id);
 
-  effect_width =  gimp_drawable_get_width  (effect_image);
-  effect_height = gimp_drawable_get_height (effect_image);
+  effect_width =  ligma_drawable_get_width  (effect_image);
+  effect_height = ligma_drawable_get_height (effect_image);
 
   switch (licvals.effect_channel)
     {
@@ -670,10 +670,10 @@ compute_image (GimpDrawable *drawable)
   /* Update image */
   /* ============ */
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, border_x, border_y, border_w, border_h);
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, border_x, border_y, border_w, border_h);
 
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 }
 
 /**************************/
@@ -681,11 +681,11 @@ compute_image (GimpDrawable *drawable)
 /**************************/
 
 static gboolean
-effect_image_constrain (GimpImage *image,
-                        GimpItem  *item,
+effect_image_constrain (LigmaImage *image,
+                        LigmaItem  *item,
                         gpointer   data)
 {
-  return gimp_drawable_is_rgb (GIMP_DRAWABLE (item));
+  return ligma_drawable_is_rgb (LIGMA_DRAWABLE (item));
 }
 
 static gboolean
@@ -700,23 +700,23 @@ create_main_dialog (void)
   gint       row;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Van Gogh (LIC)"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -728,8 +728,8 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Effect Channel"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Effect Channel"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &licvals.effect_channel, NULL,
                                     licvals.effect_channel,
 
@@ -741,8 +741,8 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Effect Operator"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Effect Operator"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &licvals.effect_operator, NULL,
                                     licvals.effect_operator,
 
@@ -753,8 +753,8 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Convolve"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Convolve"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &licvals.effect_convolve, NULL,
                                     licvals.effect_convolve,
 
@@ -771,13 +771,13 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  combo = gimp_drawable_combo_box_new (effect_image_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  combo = ligma_drawable_combo_box_new (effect_image_constrain, NULL, NULL);
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               licvals.effect_image_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &licvals.effect_image_id, NULL);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Effect image:"), 0.0, 0.5, combo, 2);
 
   grid = gtk_grid_new ();
@@ -788,37 +788,37 @@ create_main_dialog (void)
 
   row = 0;
 
-  scale = gimp_scale_entry_new (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 8.0);
+  scale = ligma_scale_entry_new (_("_Filter length:"), licvals.filtlen, 0.1, 64, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 1.0, 8.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.filtlen);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
+  scale = ligma_scale_entry_new (_("_Noise magnitude:"), licvals.noisemag, 1, 5, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.1, 1.0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.noisemag);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("In_tegration steps:"), licvals.intsteps, 1, 40, 1);
+  scale = ligma_scale_entry_new (_("In_tegration steps:"), licvals.intsteps, 1, 40, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.intsteps);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("_Minimum value:"), licvals.minv, -100, 0, 1);
+  scale = ligma_scale_entry_new (_("_Minimum value:"), licvals.minv, -100, 0, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
                     &licvals.minv);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("M_aximum value:"),
+  scale = ligma_scale_entry_new (_("M_aximum value:"),
                                       licvals.maxv, 0, 100, 1);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (lic_scale_entry_update),
@@ -828,7 +828,7 @@ create_main_dialog (void)
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -854,36 +854,36 @@ set_default_settings (void)
 }
 
 static GList *
-lic_query_procedures (GimpPlugIn *plug_in)
+lic_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-lic_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+lic_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             lic_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Van Gogh (LIC)..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
+      ligma_procedure_set_menu_label (procedure, _("_Van Gogh (LIC)..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Special effects that nobody "
                                           "understands"),
                                         "No help yet",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Tom Bech & Federico Mena Quintero",
                                       "Version 0.14, September 24 1997");
@@ -892,16 +892,16 @@ lic_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-lic_run (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
+static LigmaValueArray *
+lic_run (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
+         LigmaImage            *image,
          gint                  n_drawables,
-         GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         LigmaDrawable        **drawables,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -909,12 +909,12 @@ lic_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -930,32 +930,32 @@ lic_run (GimpProcedure        *procedure,
   /* Possibly retrieve data */
   /* ====================== */
 
-  gimp_get_data (PLUG_IN_PROC, &licvals);
+  ligma_get_data (PLUG_IN_PROC, &licvals);
 
-  if (! gimp_item_id_is_valid (licvals.effect_image_id))
+  if (! ligma_item_id_is_valid (licvals.effect_image_id))
     licvals.effect_image_id = -1;
 
   /* Make sure that the drawable is RGBA or RGB color */
   /* ================================================ */
 
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
+        case LIGMA_RUN_INTERACTIVE:
           if (! create_main_dialog ())
             {
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_CANCEL,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_CANCEL,
                                                        NULL);
             }
 
           compute_image (drawable);
 
-          gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
+          ligma_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
           break;
 
-        case GIMP_RUN_WITH_LAST_VALS:
+        case LIGMA_RUN_WITH_LAST_VALS:
           compute_image (drawable);
           break;
 
@@ -965,17 +965,17 @@ lic_run (GimpProcedure        *procedure,
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
-lic_scale_entry_update (GimpLabelSpin *entry,
+lic_scale_entry_update (LigmaLabelSpin *entry,
                         gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (entry);
+  *value = ligma_label_spin_get_value (entry);
 }

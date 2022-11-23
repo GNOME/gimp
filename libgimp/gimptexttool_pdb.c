@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimptexttool_pdb.c
+ * ligmatexttool_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimptexttool
- * @title: gimptexttool
+ * SECTION: ligmatexttool
+ * @title: ligmatexttool
  * @short_description: Functions for controlling the text tool.
  *
  * Functions for controlling the text tool.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_text_fontname:
+ * ligma_text_fontname:
  * @image: The image.
  * @drawable: (nullable): The affected drawable: (%NULL for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
@@ -69,50 +69,50 @@
  * Returns: (nullable) (transfer none):
  *          The new text layer or %NULL if no layer was created.
  **/
-GimpLayer *
-gimp_text_fontname (GimpImage    *image,
-                    GimpDrawable *drawable,
+LigmaLayer *
+ligma_text_fontname (LigmaImage    *image,
+                    LigmaDrawable *drawable,
                     gdouble       x,
                     gdouble       y,
                     const gchar  *text,
                     gint          border,
                     gboolean      antialias,
                     gdouble       size,
-                    GimpSizeType  size_type,
+                    LigmaSizeType  size_type,
                     const gchar  *fontname)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *text_layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *text_layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_STRING, text,
                                           G_TYPE_INT, border,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_SIZE_TYPE, size_type,
+                                          LIGMA_TYPE_SIZE_TYPE, size_type,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-fontname",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-fontname",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    text_layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    text_layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return text_layer;
 }
 
 /**
- * gimp_text_get_extents_fontname:
+ * ligma_text_get_extents_fontname:
  * @text: The text to generate (in UTF-8 encoding).
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
@@ -135,47 +135,47 @@ gimp_text_fontname (GimpImage    *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_text_get_extents_fontname (const gchar  *text,
+ligma_text_get_extents_fontname (const gchar  *text,
                                 gdouble       size,
-                                GimpSizeType  size_type,
+                                LigmaSizeType  size_type,
                                 const gchar  *fontname,
                                 gint         *width,
                                 gint         *height,
                                 gint         *ascent,
                                 gint         *descent)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, text,
                                           G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_SIZE_TYPE, size_type,
+                                          LIGMA_TYPE_SIZE_TYPE, size_type,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-get-extents-fontname",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-text-get-extents-fontname",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *ascent = 0;
   *descent = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *ascent = GIMP_VALUES_GET_INT (return_vals, 3);
-      *descent = GIMP_VALUES_GET_INT (return_vals, 4);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *ascent = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *descent = LIGMA_VALUES_GET_INT (return_vals, 4);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptool_presetfactoryview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmatool_presetfactoryview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_FACTORY_VIEW_H__
-#define __GIMP_TOOL_PRESET_FACTORY_VIEW_H__
+#ifndef __LIGMA_TOOL_PRESET_FACTORY_VIEW_H__
+#define __LIGMA_TOOL_PRESET_FACTORY_VIEW_H__
 
-#include "gimpdatafactoryview.h"
-
-
-#define GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW            (gimp_tool_preset_factory_view_get_type ())
-#define GIMP_TOOL_PRESET_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryView))
-#define GIMP_TOOL_PRESET_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryViewClass))
-#define GIMP_IS_TOOL_PRESET_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW))
-#define GIMP_IS_TOOL_PRESET_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW))
-#define GIMP_TOOL_PRESET_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryViewClass))
+#include "ligmadatafactoryview.h"
 
 
-typedef struct _GimpToolPresetFactoryViewClass  GimpToolPresetFactoryViewClass;
+#define LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW            (ligma_tool_preset_factory_view_get_type ())
+#define LIGMA_TOOL_PRESET_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW, LigmaToolPresetFactoryView))
+#define LIGMA_TOOL_PRESET_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW, LigmaToolPresetFactoryViewClass))
+#define LIGMA_IS_TOOL_PRESET_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW))
+#define LIGMA_IS_TOOL_PRESET_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW))
+#define LIGMA_TOOL_PRESET_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_PRESET_FACTORY_VIEW, LigmaToolPresetFactoryViewClass))
 
-struct _GimpToolPresetFactoryView
+
+typedef struct _LigmaToolPresetFactoryViewClass  LigmaToolPresetFactoryViewClass;
+
+struct _LigmaToolPresetFactoryView
 {
-  GimpDataFactoryView  parent_instance;
+  LigmaDataFactoryView  parent_instance;
 };
 
-struct _GimpToolPresetFactoryViewClass
+struct _LigmaToolPresetFactoryViewClass
 {
-  GimpDataFactoryViewClass  parent_class;
+  LigmaDataFactoryViewClass  parent_class;
 };
 
 
-GType       gimp_tool_preset_factory_view_get_type (void) G_GNUC_CONST;
+GType       ligma_tool_preset_factory_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_preset_factory_view_new     (GimpViewType     view_type,
-                                                   GimpDataFactory *factory,
-                                                   GimpContext     *context,
+GtkWidget * ligma_tool_preset_factory_view_new     (LigmaViewType     view_type,
+                                                   LigmaDataFactory *factory,
+                                                   LigmaContext     *context,
                                                    gint             view_size,
                                                    gint             view_border_width,
-                                                   GimpMenuFactory *menu_factory);
+                                                   LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_TOOL_PRESET_FACTORY_VIEW_H__  */
+#endif  /*  __LIGMA_TOOL_PRESET_FACTORY_VIEW_H__  */

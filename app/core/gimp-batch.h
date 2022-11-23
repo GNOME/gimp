@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BATCH_H__
-#define __GIMP_BATCH_H__
+#ifndef __LIGMA_BATCH_H__
+#define __LIGMA_BATCH_H__
 
 
-gint   gimp_batch_run (Gimp         *gimp,
+gint   ligma_batch_run (Ligma         *ligma,
                        const gchar  *batch_interpreter,
                        const gchar **batch_commands);
 
 
-#endif /* __GIMP_BATCH_H__ */
+#endif /* __LIGMA_BATCH_H__ */

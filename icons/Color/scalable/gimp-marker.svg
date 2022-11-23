@@ -15,9 +15,9 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="gimp-marker.svg">
+   sodipodi:docname="ligma-marker.svg">
   <title
-     id="title8619">GIMP Marker</title>
+     id="title8619">LIGMA Marker</title>
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>GIMP Marker</dc:title>
+        <dc:title>LIGMA Marker</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Ell</dc:title>
@@ -85,7 +85,7 @@
      transform="translate(0,-292.76665)"
      style="display:inline">
     <g
-       id="gimp-marker">
+       id="ligma-marker">
       <path
          inkscape:connector-curvature="0"
          id="path1551"

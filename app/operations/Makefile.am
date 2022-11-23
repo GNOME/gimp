@@ -6,7 +6,7 @@ SUBDIRS = \
 	tests
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Operations\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Operations\"	\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
@@ -22,85 +22,85 @@ noinst_LIBRARIES = \
 libappoperations_a_sources = \
 	operations-types.h			\
 	operations-enums.h			\
-	gimp-operations.c			\
-	gimp-operations.h			\
+	ligma-operations.c			\
+	ligma-operations.h			\
 	\
-	gimp-operation-config.c			\
-	gimp-operation-config.h			\
-	gimpoperationsettings.c			\
-	gimpoperationsettings.h			\
-	gimpbrightnesscontrastconfig.c		\
-	gimpbrightnesscontrastconfig.h		\
-	gimpcageconfig.c			\
-	gimpcageconfig.h			\
-	gimpcolorbalanceconfig.c		\
-	gimpcolorbalanceconfig.h		\
-	gimpcurvesconfig.c			\
-	gimpcurvesconfig.h			\
-	gimphuesaturationconfig.c		\
-	gimphuesaturationconfig.h		\
-	gimplevelsconfig.c			\
-	gimplevelsconfig.h			\
+	ligma-operation-config.c			\
+	ligma-operation-config.h			\
+	ligmaoperationsettings.c			\
+	ligmaoperationsettings.h			\
+	ligmabrightnesscontrastconfig.c		\
+	ligmabrightnesscontrastconfig.h		\
+	ligmacageconfig.c			\
+	ligmacageconfig.h			\
+	ligmacolorbalanceconfig.c		\
+	ligmacolorbalanceconfig.h		\
+	ligmacurvesconfig.c			\
+	ligmacurvesconfig.h			\
+	ligmahuesaturationconfig.c		\
+	ligmahuesaturationconfig.h		\
+	ligmalevelsconfig.c			\
+	ligmalevelsconfig.h			\
 	\
-	gimpoperationborder.c			\
-	gimpoperationborder.h			\
-	gimpoperationbuffersourcevalidate.c	\
-	gimpoperationbuffersourcevalidate.h	\
-	gimpoperationcagecoefcalc.c		\
-	gimpoperationcagecoefcalc.h		\
-	gimpoperationcagetransform.c		\
-	gimpoperationcagetransform.h		\
-	gimpoperationcomposecrop.c		\
-	gimpoperationcomposecrop.h		\
-	gimpoperationequalize.c			\
-	gimpoperationequalize.h			\
-	gimpoperationfillsource.c		\
-	gimpoperationfillsource.h		\
-	gimpoperationflood.c			\
-	gimpoperationflood.h			\
-	gimpoperationgradient.c			\
-	gimpoperationgradient.h			\
-	gimpoperationgrow.c			\
-	gimpoperationgrow.h			\
-	gimpoperationhistogramsink.c		\
-	gimpoperationhistogramsink.h		\
-	gimpoperationmaskcomponents.cc		\
-	gimpoperationmaskcomponents.h		\
-	gimpoperationoffset.c			\
-	gimpoperationoffset.h			\
-	gimpoperationprofiletransform.c		\
-	gimpoperationprofiletransform.h		\
-	gimpoperationscalarmultiply.c		\
-	gimpoperationscalarmultiply.h		\
-	gimpoperationsemiflatten.c		\
-	gimpoperationsemiflatten.h		\
-	gimpoperationsetalpha.c			\
-	gimpoperationsetalpha.h			\
-	gimpoperationshrink.c			\
-	gimpoperationshrink.h			\
-	gimpoperationthresholdalpha.c		\
-	gimpoperationthresholdalpha.h		\
+	ligmaoperationborder.c			\
+	ligmaoperationborder.h			\
+	ligmaoperationbuffersourcevalidate.c	\
+	ligmaoperationbuffersourcevalidate.h	\
+	ligmaoperationcagecoefcalc.c		\
+	ligmaoperationcagecoefcalc.h		\
+	ligmaoperationcagetransform.c		\
+	ligmaoperationcagetransform.h		\
+	ligmaoperationcomposecrop.c		\
+	ligmaoperationcomposecrop.h		\
+	ligmaoperationequalize.c			\
+	ligmaoperationequalize.h			\
+	ligmaoperationfillsource.c		\
+	ligmaoperationfillsource.h		\
+	ligmaoperationflood.c			\
+	ligmaoperationflood.h			\
+	ligmaoperationgradient.c			\
+	ligmaoperationgradient.h			\
+	ligmaoperationgrow.c			\
+	ligmaoperationgrow.h			\
+	ligmaoperationhistogramsink.c		\
+	ligmaoperationhistogramsink.h		\
+	ligmaoperationmaskcomponents.cc		\
+	ligmaoperationmaskcomponents.h		\
+	ligmaoperationoffset.c			\
+	ligmaoperationoffset.h			\
+	ligmaoperationprofiletransform.c		\
+	ligmaoperationprofiletransform.h		\
+	ligmaoperationscalarmultiply.c		\
+	ligmaoperationscalarmultiply.h		\
+	ligmaoperationsemiflatten.c		\
+	ligmaoperationsemiflatten.h		\
+	ligmaoperationsetalpha.c			\
+	ligmaoperationsetalpha.h			\
+	ligmaoperationshrink.c			\
+	ligmaoperationshrink.h			\
+	ligmaoperationthresholdalpha.c		\
+	ligmaoperationthresholdalpha.h		\
 	\
-	gimpoperationpointfilter.c		\
-	gimpoperationpointfilter.h		\
-	gimpoperationbrightnesscontrast.c	\
-	gimpoperationbrightnesscontrast.h	\
-	gimpoperationcolorbalance.c		\
-	gimpoperationcolorbalance.h		\
-	gimpoperationcolorize.c			\
-	gimpoperationcolorize.h			\
-	gimpoperationcurves.c			\
-	gimpoperationcurves.h			\
-	gimpoperationdesaturate.c		\
-	gimpoperationdesaturate.h		\
-	gimpoperationhuesaturation.c		\
-	gimpoperationhuesaturation.h		\
-	gimpoperationlevels.c			\
-	gimpoperationlevels.h			\
-	gimpoperationposterize.c		\
-	gimpoperationposterize.h		\
-	gimpoperationthreshold.c		\
-	gimpoperationthreshold.h
+	ligmaoperationpointfilter.c		\
+	ligmaoperationpointfilter.h		\
+	ligmaoperationbrightnesscontrast.c	\
+	ligmaoperationbrightnesscontrast.h	\
+	ligmaoperationcolorbalance.c		\
+	ligmaoperationcolorbalance.h		\
+	ligmaoperationcolorize.c			\
+	ligmaoperationcolorize.h			\
+	ligmaoperationcurves.c			\
+	ligmaoperationcurves.h			\
+	ligmaoperationdesaturate.c		\
+	ligmaoperationdesaturate.h		\
+	ligmaoperationhuesaturation.c		\
+	ligmaoperationhuesaturation.h		\
+	ligmaoperationlevels.c			\
+	ligmaoperationlevels.h			\
+	ligmaoperationposterize.c		\
+	ligmaoperationposterize.h		\
+	ligmaoperationthreshold.c		\
+	ligmaoperationthreshold.h
 
 libappoperations_a_built_sources = operations-enums.c
 
@@ -115,16 +115,16 @@ libappoperations_a_SOURCES = \
 gen_sources = stamp-operations-enums.h xgen-oec
 CLEANFILES = $(gen_sources)
 
-xgen-oec: $(srcdir)/operations-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"stamp-operations-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"operations-enums.h\"\n#include \"gimp-intl.h\"" \
+xgen-oec: $(srcdir)/operations-enums.h $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"stamp-operations-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libligmabase/ligmabase.h\"\n#include \"operations-enums.h\"\n#include \"ligma-intl.h\"" \
 		--fprod "\n/* enumerations from \"@basename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > $@
 
 stamp-operations-enums.h: xgen-oec

@@ -2,7 +2,7 @@ flame - cosmic recursive fractal flames
 Scott Draves <spot@cs.cmu.edu>
 
 get source code from
-http://www.cs.cmu.edu/~spot/gimp/flame.tar.gz
+http://www.cs.cmu.edu/~spot/ligma/flame.tar.gz
 
 images, documentation, and other interfaces (a batch animation
 renderer and a low-quality interactive editor) are available from
@@ -34,7 +34,7 @@ Added "eight directions" edit window.  relayedout other widgets.
 reconfigured to use Makefile.am.  cleaned warnings out of code.
 
 0.8 as of Thu Sep 18
-added Makefile.in.patch, made gimp integration easier.  changed
+added Makefile.in.patch, made ligma integration easier.  changed
 license.  added some built-in cmaps to the menu.
 
 0.7 as of Sun Sep 14
@@ -61,4 +61,4 @@ added alpha channel
 
 0.2 as of Aug 24 1997
 real -> double, other header file reorganization.  added new cmaps.
-added gimp interface.
+added ligma interface.

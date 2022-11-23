@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpintcombobox.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmaintcombobox.c
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,17 +25,17 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpintcombobox.h"
-#include "gimpintstore.h"
+#include "ligmaintcombobox.h"
+#include "ligmaintstore.h"
 
 
 /**
- * SECTION: gimpintcombobox
- * @title: GimpIntComboBox
+ * SECTION: ligmaintcombobox
+ * @title: LigmaIntComboBox
  * @short_description: A widget providing a popup menu of integer
  *                     values (e.g. enums).
  *
@@ -53,62 +53,62 @@ enum
 };
 
 
-struct _GimpIntComboBoxPrivate
+struct _LigmaIntComboBoxPrivate
 {
   GtkCellRenderer        *text_renderer;
 
   PangoEllipsizeMode      ellipsize;
   gchar                  *label;
-  GimpIntComboBoxLayout   layout;
+  LigmaIntComboBoxLayout   layout;
 
-  GimpIntSensitivityFunc  sensitivity_func;
+  LigmaIntSensitivityFunc  sensitivity_func;
   gpointer                sensitivity_data;
   GDestroyNotify          sensitivity_destroy;
 };
 
-#define GET_PRIVATE(obj) (((GimpIntComboBox *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaIntComboBox *) (obj))->priv)
 
 
-static void  gimp_int_combo_box_constructed  (GObject         *object);
-static void  gimp_int_combo_box_finalize     (GObject         *object);
-static void  gimp_int_combo_box_set_property (GObject         *object,
+static void  ligma_int_combo_box_constructed  (GObject         *object);
+static void  ligma_int_combo_box_finalize     (GObject         *object);
+static void  ligma_int_combo_box_set_property (GObject         *object,
                                               guint            property_id,
                                               const GValue    *value,
                                               GParamSpec      *pspec);
-static void  gimp_int_combo_box_get_property (GObject         *object,
+static void  ligma_int_combo_box_get_property (GObject         *object,
                                               guint            property_id,
                                               GValue          *value,
                                               GParamSpec      *pspec);
 
-static void  gimp_int_combo_box_changed      (GtkComboBox     *combo_box,
+static void  ligma_int_combo_box_changed      (GtkComboBox     *combo_box,
                                               gpointer         user_data);
 
-static void  gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box);
-static void  gimp_int_combo_box_data_func    (GtkCellLayout   *layout,
+static void  ligma_int_combo_box_create_cells (LigmaIntComboBox *combo_box);
+static void  ligma_int_combo_box_data_func    (GtkCellLayout   *layout,
                                               GtkCellRenderer *cell,
                                               GtkTreeModel    *model,
                                               GtkTreeIter     *iter,
                                               gpointer         data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpIntComboBox, gimp_int_combo_box,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaIntComboBox, ligma_int_combo_box,
                             GTK_TYPE_COMBO_BOX)
 
-#define parent_class gimp_int_combo_box_parent_class
+#define parent_class ligma_int_combo_box_parent_class
 
 
 static void
-gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
+ligma_int_combo_box_class_init (LigmaIntComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_int_combo_box_constructed;
-  object_class->finalize     = gimp_int_combo_box_finalize;
-  object_class->set_property = gimp_int_combo_box_set_property;
-  object_class->get_property = gimp_int_combo_box_get_property;
+  object_class->constructed  = ligma_int_combo_box_constructed;
+  object_class->finalize     = ligma_int_combo_box_finalize;
+  object_class->set_property = ligma_int_combo_box_set_property;
+  object_class->get_property = ligma_int_combo_box_get_property;
 
   /**
-   * GimpIntComboBox:ellipsize:
+   * LigmaIntComboBox:ellipsize:
    *
    * Specifies the preferred place to ellipsize text in the combo-box,
    * if the cell renderer does not have enough room to display the
@@ -122,12 +122,12 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                       "Ellipsize mode for the used text cell renderer",
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpIntComboBox:label:
+   * LigmaIntComboBox:label:
    *
-   * Sets a label on the combo-box, see gimp_int_combo_box_set_label().
+   * Sets a label on the combo-box, see ligma_int_combo_box_set_label().
    *
    * Since: 2.10
    */
@@ -136,10 +136,10 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                         "Label",
                                                         "An optional label to be displayed",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpIntComboBox:layout:
+   * LigmaIntComboBox:layout:
    *
    * Specifies the combo box layout.
    *
@@ -149,12 +149,12 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                    g_param_spec_enum ("layout",
                                                       "Layout",
                                                       "Combo box layout",
-                                                      GIMP_TYPE_INT_COMBO_BOX_LAYOUT,
-                                                      GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_INT_COMBO_BOX_LAYOUT,
+                                                      LIGMA_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
+                                                      LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpIntComboBox:value:
+   * LigmaIntComboBox:value:
    *
    * The active value (different from the "active" property of
    * GtkComboBox which is the active index).
@@ -166,40 +166,40 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                      "Value",
                                                      "Value of active item",
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_int_combo_box_init (GimpIntComboBox *combo_box)
+ligma_int_combo_box_init (LigmaIntComboBox *combo_box)
 {
-  GimpIntComboBoxPrivate *priv;
+  LigmaIntComboBoxPrivate *priv;
   GtkListStore           *store;
 
-  combo_box->priv = priv = gimp_int_combo_box_get_instance_private (combo_box);
+  combo_box->priv = priv = ligma_int_combo_box_get_instance_private (combo_box);
 
-  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+  store = g_object_new (LIGMA_TYPE_INT_STORE, NULL);
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  priv->layout = GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
+  priv->layout = LIGMA_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_int_combo_box_changed),
+                    G_CALLBACK (ligma_int_combo_box_changed),
                     NULL);
 }
 
 static void
-gimp_int_combo_box_constructed (GObject *object)
+ligma_int_combo_box_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_int_combo_box_create_cells (GIMP_INT_COMBO_BOX (object));
+  ligma_int_combo_box_create_cells (LIGMA_INT_COMBO_BOX (object));
 }
 
 static void
-gimp_int_combo_box_finalize (GObject *object)
+ligma_int_combo_box_finalize (GObject *object)
 {
-  GimpIntComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaIntComboBoxPrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->label, g_free);
 
@@ -215,12 +215,12 @@ gimp_int_combo_box_finalize (GObject *object)
 }
 
 static void
-gimp_int_combo_box_set_property (GObject      *object,
+ligma_int_combo_box_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpIntComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaIntComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -233,15 +233,15 @@ gimp_int_combo_box_set_property (GObject      *object,
         }
       break;
     case PROP_LABEL:
-      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (object),
+      ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (object),
                                     g_value_get_string (value));
       break;
     case PROP_LAYOUT:
-      gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (object),
+      ligma_int_combo_box_set_layout (LIGMA_INT_COMBO_BOX (object),
                                      g_value_get_enum (value));
       break;
     case PROP_VALUE:
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (object),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (object),
                                      g_value_get_int (value));
       break;
 
@@ -252,12 +252,12 @@ gimp_int_combo_box_set_property (GObject      *object,
 }
 
 static void
-gimp_int_combo_box_get_property (GObject    *object,
+ligma_int_combo_box_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpIntComboBoxPrivate *priv = GET_PRIVATE (object);
+  LigmaIntComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -274,7 +274,7 @@ gimp_int_combo_box_get_property (GObject    *object,
       {
         gint v;
 
-        gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (object), &v);
+        ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (object), &v);
         g_value_set_int (value, v);
       }
     break;
@@ -287,7 +287,7 @@ gimp_int_combo_box_get_property (GObject    *object,
 
 
 /**
- * gimp_int_combo_box_new: (skip)
+ * ligma_int_combo_box_new: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @...: a %NULL terminated list of more label, value pairs
@@ -296,15 +296,15 @@ gimp_int_combo_box_get_property (GObject    *object,
  * item. The items to fill the combo box with are specified as a %NULL
  * terminated list of label/value pairs.
  *
- * If you need to construct an empty #GimpIntComboBox, it's best to use
- * g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL).
+ * If you need to construct an empty #LigmaIntComboBox, it's best to use
+ * g_object_new (LIGMA_TYPE_INT_COMBO_BOX, NULL).
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_int_combo_box_new (const gchar *first_label,
+ligma_int_combo_box_new (const gchar *first_label,
                         gint         first_value,
                         ...)
 {
@@ -313,7 +313,7 @@ gimp_int_combo_box_new (const gchar *first_label,
 
   va_start (args, first_value);
 
-  combo_box = gimp_int_combo_box_new_valist (first_label, first_value, args);
+  combo_box = ligma_int_combo_box_new_valist (first_label, first_value, args);
 
   va_end (args);
 
@@ -321,29 +321,29 @@ gimp_int_combo_box_new (const gchar *first_label,
 }
 
 /**
- * gimp_int_combo_box_new_valist: (skip)
+ * ligma_int_combo_box_new_valist: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @values: a va_list with more values
  *
- * A variant of gimp_int_combo_box_new() that takes a va_list of
+ * A variant of ligma_int_combo_box_new() that takes a va_list of
  * label/value pairs.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_int_combo_box_new_valist (const gchar *first_label,
+ligma_int_combo_box_new_valist (const gchar *first_label,
                                gint         first_value,
                                va_list      values)
 {
   GtkWidget    *combo_box;
   GtkListStore *store;
 
-  store = gimp_int_store_new_valist (first_label, first_value, values);
+  store = ligma_int_store_new_valist (first_label, first_value, values);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+  combo_box = g_object_new (LIGMA_TYPE_INT_COMBO_BOX,
                             "model", store,
                             NULL);
 
@@ -353,19 +353,19 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
 }
 
 /**
- * gimp_int_combo_box_new_array: (rename-to gimp_int_combo_box_new)
+ * ligma_int_combo_box_new_array: (rename-to ligma_int_combo_box_new)
  * @n_values: the number of values
  * @labels: (array length=n_values): an array of labels
  *
- * A variant of gimp_int_combo_box_new() that takes an array of labels.
+ * A variant of ligma_int_combo_box_new() that takes an array of labels.
  * The array indices are used as values.
  *
- * Returns: a new #GimpIntComboBox.
+ * Returns: a new #LigmaIntComboBox.
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_int_combo_box_new_array (gint         n_values,
+ligma_int_combo_box_new_array (gint         n_values,
                               const gchar *labels[])
 {
   GtkWidget    *combo_box;
@@ -375,7 +375,7 @@ gimp_int_combo_box_new_array (gint         n_values,
   g_return_val_if_fail (n_values >= 0, NULL);
   g_return_val_if_fail (labels != NULL || n_values == 0, NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo_box = g_object_new (LIGMA_TYPE_INT_COMBO_BOX, NULL);
 
   store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
 
@@ -387,8 +387,8 @@ gimp_int_combo_box_new_array (gint         n_values,
         {
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
-                              GIMP_INT_STORE_VALUE, i,
-                              GIMP_INT_STORE_LABEL, gettext (labels[i]),
+                              LIGMA_INT_STORE_VALUE, i,
+                              LIGMA_INT_STORE_LABEL, gettext (labels[i]),
                               -1);
         }
     }
@@ -397,27 +397,27 @@ gimp_int_combo_box_new_array (gint         n_values,
 }
 
 /**
- * gimp_int_combo_box_prepend: (skip)
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_prepend: (skip)
+ * @combo_box: a #LigmaIntComboBox
  * @...:       pairs of column number and value, terminated with -1
  *
  * This function provides a convenient way to prepend items to a
- * #GimpIntComboBox. It prepends a row to the @combo_box's list store
+ * #LigmaIntComboBox. It prepends a row to the @combo_box's list store
  * and calls gtk_list_store_set() for you.
  *
- * The column number must be taken from the enum #GimpIntStoreColumns.
+ * The column number must be taken from the enum #LigmaIntStoreColumns.
  *
  * Since: 2.2
  **/
 void
-gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
+ligma_int_combo_box_prepend (LigmaIntComboBox *combo_box,
                             ...)
 {
   GtkListStore *store;
   GtkTreeIter   iter;
   va_list       args;
 
-  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box));
 
   store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
 
@@ -430,27 +430,27 @@ gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_append: (skip)
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_append: (skip)
+ * @combo_box: a #LigmaIntComboBox
  * @...:       pairs of column number and value, terminated with -1
  *
  * This function provides a convenient way to append items to a
- * #GimpIntComboBox. It appends a row to the @combo_box's list store
+ * #LigmaIntComboBox. It appends a row to the @combo_box's list store
  * and calls gtk_list_store_set() for you.
  *
- * The column number must be taken from the enum #GimpIntStoreColumns.
+ * The column number must be taken from the enum #LigmaIntStoreColumns.
  *
  * Since: 2.2
  **/
 void
-gimp_int_combo_box_append (GimpIntComboBox *combo_box,
+ligma_int_combo_box_append (LigmaIntComboBox *combo_box,
                            ...)
 {
   GtkListStore *store;
   GtkTreeIter   iter;
   va_list       args;
 
-  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box));
 
   store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
 
@@ -463,8 +463,8 @@ gimp_int_combo_box_append (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_set_active:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_set_active:
+ * @combo_box: a #LigmaIntComboBox
  * @value:     an integer value
  *
  * Looks up the item that belongs to the given @value and makes it the
@@ -476,26 +476,26 @@ gimp_int_combo_box_append (GimpIntComboBox *combo_box,
  * Since: 2.2
  **/
 gboolean
-gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
+ligma_int_combo_box_set_active (LigmaIntComboBox *combo_box,
                                gint             value)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
   gint          current_value;
 
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), FALSE);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  if (gimp_int_combo_box_get_active (combo_box, &current_value) &&
+  if (ligma_int_combo_box_get_active (combo_box, &current_value) &&
       value == current_value)
     {
       /* Guard for identical value to not loop forever between
-       * GimpIntComboBox "value" and GtkComboBox "active" properties.
+       * LigmaIntComboBox "value" and GtkComboBox "active" properties.
        */
       return TRUE;
     }
-  else if (gimp_int_store_lookup_by_value (model, value, &iter))
+  else if (ligma_int_store_lookup_by_value (model, value, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
       return TRUE;
@@ -505,8 +505,8 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_get_active:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_get_active:
+ * @combo_box: a #LigmaIntComboBox
  * @value: (out): return location for the integer value
  *
  * Retrieves the value of the selected (active) item in the @combo_box.
@@ -517,19 +517,19 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
  * Since: 2.2
  **/
 gboolean
-gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
+ligma_int_combo_box_get_active (LigmaIntComboBox *combo_box,
                                gint            *value)
 {
   GtkTreeIter  iter;
 
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), FALSE);
   g_return_val_if_fail (value != NULL, FALSE);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {
       gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)),
                           &iter,
-                          GIMP_INT_STORE_VALUE, value,
+                          LIGMA_INT_STORE_VALUE, value,
                           -1);
       return TRUE;
     }
@@ -538,8 +538,8 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_set_active_by_user_data:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_set_active_by_user_data:
+ * @combo_box: a #LigmaIntComboBox
  * @user_data: an integer value
  *
  * Looks up the item that has the given @user_data and makes it the
@@ -551,17 +551,17 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
  * Since: 2.10
  **/
 gboolean
-gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
+ligma_int_combo_box_set_active_by_user_data (LigmaIntComboBox *combo_box,
                                             gpointer         user_data)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
 
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), FALSE);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  if (gimp_int_store_lookup_by_user_data (model, user_data, &iter))
+  if (ligma_int_store_lookup_by_user_data (model, user_data, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
       return TRUE;
@@ -571,8 +571,8 @@ gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_get_active_user_data:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_get_active_user_data:
+ * @combo_box: a #LigmaIntComboBox
  * @user_data: (out): return location for the gpointer value
  *
  * Retrieves the user-data of the selected (active) item in the @combo_box.
@@ -583,19 +583,19 @@ gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
  * Since: 2.10
  **/
 gboolean
-gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
+ligma_int_combo_box_get_active_user_data (LigmaIntComboBox *combo_box,
                                          gpointer        *user_data)
 {
   GtkTreeIter  iter;
 
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), FALSE);
   g_return_val_if_fail (user_data != NULL, FALSE);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {
       gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)),
                           &iter,
-                          GIMP_INT_STORE_USER_DATA, user_data,
+                          LIGMA_INT_STORE_USER_DATA, user_data,
                           -1);
       return TRUE;
     }
@@ -604,21 +604,21 @@ gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_connect:
- * @combo_box:    a #GimpIntComboBox
+ * ligma_int_combo_box_connect:
+ * @combo_box:    a #LigmaIntComboBox
  * @value:        the value to set
  * @callback:     a callback to connect to the @combo_box's "changed" signal
  * @data:         a pointer passed as data to g_signal_connect()
  * @data_destroy: Destroy function for @data.
  *
  * A convenience function that sets the initial @value of a
- * #GimpIntComboBox and connects @callback to the "changed"
+ * #LigmaIntComboBox and connects @callback to the "changed"
  * signal.
  *
  * This function also calls the @callback once after setting the
  * initial @value. This is often convenient when working with combo
  * boxes that select a default active item, like for example
- * gimp_drawable_combo_box_new(). If you pass an invalid initial
+ * ligma_drawable_combo_box_new(). If you pass an invalid initial
  * @value, the @callback will be called with the default item active.
  *
  * Returns: the signal handler ID as returned by g_signal_connect()
@@ -626,7 +626,7 @@ gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
  * Since: 2.2
  **/
 gulong
-gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
+ligma_int_combo_box_connect (LigmaIntComboBox *combo_box,
                             gint             value,
                             GCallback        callback,
                             gpointer         data,
@@ -634,7 +634,7 @@ gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
 {
   gulong handler = 0;
 
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), 0);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), 0);
 
   if (callback)
     handler = g_signal_connect (combo_box, "changed", callback, data);
@@ -643,15 +643,15 @@ gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
     g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy,
                        data);
 
-  if (! gimp_int_combo_box_set_active (combo_box, value))
+  if (! ligma_int_combo_box_set_active (combo_box, value))
     g_signal_emit_by_name (combo_box, "changed", NULL);
 
   return handler;
 }
 
 /**
- * gimp_int_combo_box_set_label:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_set_label:
+ * @combo_box: a #LigmaIntComboBox
  * @label:     a string to be shown as label
  *
  * Sets a caption on the @combo_box that will be displayed
@@ -662,12 +662,12 @@ gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
  * Since: 2.10
  **/
 void
-gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
+ligma_int_combo_box_set_label (LigmaIntComboBox *combo_box,
                               const gchar     *label)
 {
-  GimpIntComboBoxPrivate *priv;
+  LigmaIntComboBoxPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box));
 
   priv = GET_PRIVATE (combo_box);
 
@@ -680,7 +680,7 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
       priv->label = NULL;
 
       g_signal_handlers_disconnect_by_func (combo_box,
-                                            gimp_int_combo_box_create_cells,
+                                            ligma_int_combo_box_create_cells,
                                             NULL);
     }
 
@@ -689,20 +689,20 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
       priv->label = g_strdup (label);
 
       g_signal_connect (combo_box, "notify::popup-shown",
-                        G_CALLBACK (gimp_int_combo_box_create_cells),
+                        G_CALLBACK (ligma_int_combo_box_create_cells),
                         NULL);
     }
 
-  gimp_int_combo_box_create_cells (combo_box);
+  ligma_int_combo_box_create_cells (combo_box);
 
   g_object_notify (G_OBJECT (combo_box), "label");
 }
 
 /**
- * gimp_int_combo_box_get_label:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_get_label:
+ * @combo_box: a #LigmaIntComboBox
  *
- * Returns the label previously set with gimp_int_combo_box_set_label(),
+ * Returns the label previously set with ligma_int_combo_box_set_label(),
  * or %NULL,
  *
  * Returns: the @combo_box' label.
@@ -710,16 +710,16 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
  * Since: 2.10
  **/
 const gchar *
-gimp_int_combo_box_get_label (GimpIntComboBox *combo_box)
+ligma_int_combo_box_get_label (LigmaIntComboBox *combo_box)
 {
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), NULL);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box), NULL);
 
   return GET_PRIVATE (combo_box)->label;
 }
 
 /**
- * gimp_int_combo_box_set_layout:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_set_layout:
+ * @combo_box: a #LigmaIntComboBox
  * @layout:    the combo box layout
  *
  * Sets the layout of @combo_box to @layout.
@@ -727,12 +727,12 @@ gimp_int_combo_box_get_label (GimpIntComboBox *combo_box)
  * Since: 2.10
  **/
 void
-gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
-                               GimpIntComboBoxLayout  layout)
+ligma_int_combo_box_set_layout (LigmaIntComboBox       *combo_box,
+                               LigmaIntComboBoxLayout  layout)
 {
-  GimpIntComboBoxPrivate *priv;
+  LigmaIntComboBoxPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box));
 
   priv = GET_PRIVATE (combo_box);
 
@@ -741,14 +741,14 @@ gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
 
   priv->layout = layout;
 
-  gimp_int_combo_box_create_cells (combo_box);
+  ligma_int_combo_box_create_cells (combo_box);
 
   g_object_notify (G_OBJECT (combo_box), "layout");
 }
 
 /**
- * gimp_int_combo_box_get_layout:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_get_layout:
+ * @combo_box: a #LigmaIntComboBox
  *
  * Returns the layout of @combo_box
  *
@@ -756,18 +756,18 @@ gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
  *
  * Since: 2.10
  **/
-GimpIntComboBoxLayout
-gimp_int_combo_box_get_layout (GimpIntComboBox *combo_box)
+LigmaIntComboBoxLayout
+ligma_int_combo_box_get_layout (LigmaIntComboBox *combo_box)
 {
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box),
-                        GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
+  g_return_val_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box),
+                        LIGMA_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
 
   return GET_PRIVATE (combo_box)->layout;
 }
 
 /**
- * gimp_int_combo_box_set_sensitivity:
- * @combo_box: a #GimpIntComboBox
+ * ligma_int_combo_box_set_sensitivity:
+ * @combo_box: a #LigmaIntComboBox
  * @func: a function that returns a boolean value, or %NULL to unset
  * @data: data to pass to @func
  * @destroy: destroy notification for @data
@@ -782,14 +782,14 @@ gimp_int_combo_box_get_layout (GimpIntComboBox *combo_box)
  * Since: 2.4
  **/
 void
-gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
-                                    GimpIntSensitivityFunc  func,
+ligma_int_combo_box_set_sensitivity (LigmaIntComboBox        *combo_box,
+                                    LigmaIntSensitivityFunc  func,
                                     gpointer                data,
                                     GDestroyNotify          destroy)
 {
-  GimpIntComboBoxPrivate *priv;
+  LigmaIntComboBoxPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+  g_return_if_fail (LIGMA_IS_INT_COMBO_BOX (combo_box));
 
   priv = GET_PRIVATE (combo_box);
 
@@ -805,27 +805,27 @@ gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
   priv->sensitivity_data    = data;
   priv->sensitivity_destroy = destroy;
 
-  gimp_int_combo_box_create_cells (combo_box);
+  ligma_int_combo_box_create_cells (combo_box);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_int_combo_box_changed (GtkComboBox *combo_box,
+ligma_int_combo_box_changed (GtkComboBox *combo_box,
                             gpointer     user_data)
 {
   gint value;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo_box),
                                  &value);
   g_object_set (combo_box, "value", value, NULL);
 }
 
 static void
-gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
+ligma_int_combo_box_create_cells (LigmaIntComboBox *combo_box)
 {
-  GimpIntComboBoxPrivate *priv   = GET_PRIVATE (combo_box);
+  LigmaIntComboBoxPrivate *priv   = GET_PRIVATE (combo_box);
   GtkCellLayout          *layout = GTK_CELL_LAYOUT (combo_box);
   GtkCellRenderer        *text_renderer;
   GtkCellRenderer        *pixbuf_renderer;
@@ -853,24 +853,24 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 
       gtk_cell_layout_set_attributes (layout,
                                       pixbuf_renderer,
-                                      "icon-name", GIMP_INT_STORE_ICON_NAME,
-                                      "pixbuf",    GIMP_INT_STORE_PIXBUF,
+                                      "icon-name", LIGMA_INT_STORE_ICON_NAME,
+                                      "pixbuf",    LIGMA_INT_STORE_PIXBUF,
                                       NULL);
       gtk_cell_layout_set_attributes (layout,
                                       text_renderer,
-                                      "text", GIMP_INT_STORE_LABEL,
+                                      "text", LIGMA_INT_STORE_LABEL,
                                       NULL);
 
       if (priv->sensitivity_func)
         {
           gtk_cell_layout_set_cell_data_func (layout,
                                               pixbuf_renderer,
-                                              gimp_int_combo_box_data_func,
+                                              ligma_int_combo_box_data_func,
                                               priv, NULL);
 
           gtk_cell_layout_set_cell_data_func (layout,
                                               text_renderer,
-                                              gimp_int_combo_box_data_func,
+                                              ligma_int_combo_box_data_func,
                                               priv, NULL);
         }
     }
@@ -878,7 +878,7 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
     {
       /*  combo box layout  */
 
-      if (priv->layout != GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY)
+      if (priv->layout != LIGMA_INT_COMBO_BOX_LAYOUT_ICON_ONLY)
         {
           priv->text_renderer = text_renderer = gtk_cell_renderer_text_new ();
           g_object_set (priv->text_renderer,
@@ -930,48 +930,48 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 
       gtk_cell_layout_set_attributes (layout,
                                       pixbuf_renderer,
-                                      "icon-name", GIMP_INT_STORE_ICON_NAME,
+                                      "icon-name", LIGMA_INT_STORE_ICON_NAME,
                                       NULL);
 
       if (text_renderer)
         gtk_cell_layout_set_attributes (layout,
                                         text_renderer,
-                                        "text", GIMP_INT_STORE_LABEL,
+                                        "text", LIGMA_INT_STORE_LABEL,
                                         NULL);
 
-      if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED ||
+      if (priv->layout == LIGMA_INT_COMBO_BOX_LAYOUT_ABBREVIATED ||
           priv->sensitivity_func)
         {
           gtk_cell_layout_set_cell_data_func (layout,
                                               pixbuf_renderer,
-                                              gimp_int_combo_box_data_func,
+                                              ligma_int_combo_box_data_func,
                                               priv, NULL);
 
           if (text_renderer)
             gtk_cell_layout_set_cell_data_func (layout,
                                                 text_renderer,
-                                                gimp_int_combo_box_data_func,
+                                                ligma_int_combo_box_data_func,
                                                 priv, NULL);
         }
     }
 }
 
 static void
-gimp_int_combo_box_data_func (GtkCellLayout   *layout,
+ligma_int_combo_box_data_func (GtkCellLayout   *layout,
                               GtkCellRenderer *cell,
                               GtkTreeModel    *model,
                               GtkTreeIter     *iter,
                               gpointer         data)
 {
-  GimpIntComboBoxPrivate *priv = data;
+  LigmaIntComboBoxPrivate *priv = data;
 
-  if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED &&
+  if (priv->layout == LIGMA_INT_COMBO_BOX_LAYOUT_ABBREVIATED &&
       cell == priv->text_renderer)
     {
       gchar *abbrev;
 
       gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_ABBREV, &abbrev,
+                          LIGMA_INT_STORE_ABBREV, &abbrev,
                           -1);
 
       if (abbrev)
@@ -990,7 +990,7 @@ gimp_int_combo_box_data_func (GtkCellLayout   *layout,
       gboolean  sensitive;
 
       gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_VALUE, &value,
+                          LIGMA_INT_STORE_VALUE, &value,
                           -1);
 
       sensitive = priv->sensitivity_func (value, priv->sensitivity_data);

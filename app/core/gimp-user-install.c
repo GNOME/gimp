@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-user-install.c
+ * ligma-user-install.c
  * Copyright (C) 2000-2008 Michael Natterer and Sven Neumann
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  */
 
 /* This file contains functions to help migrate the settings from a
- * previous GIMP version to be used with the current (newer) version.
+ * previous LIGMA version to be used with the current (newer) version.
  */
 
 #include "config.h"
@@ -42,26 +42,26 @@
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
+#include <libligmabase/ligmawin32-io.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "config/gimpconfig-file.h"
-#include "config/gimprc.h"
+#include "config/ligmaconfig-file.h"
+#include "config/ligmarc.h"
 
-#include "gimp-templates.h"
-#include "gimp-tags.h"
-#include "gimp-user-install.h"
+#include "ligma-templates.h"
+#include "ligma-tags.h"
+#include "ligma-user-install.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-struct _GimpUserInstall
+struct _LigmaUserInstall
 {
-  GObject                 *gimp;
+  GObject                 *ligma;
 
   gboolean                verbose;
 
@@ -73,7 +73,7 @@ struct _GimpUserInstall
 
   const gchar            *migrate;
 
-  GimpUserInstallLogFunc  log;
+  LigmaUserInstallLogFunc  log;
   gpointer                log_data;
 };
 
@@ -81,14 +81,14 @@ typedef enum
 {
   USER_INSTALL_MKDIR, /* Create the directory        */
   USER_INSTALL_COPY   /* Copy from sysconf directory */
-} GimpUserInstallAction;
+} LigmaUserInstallAction;
 
 static const struct
 {
   const gchar           *name;
-  GimpUserInstallAction  action;
+  LigmaUserInstallAction  action;
 }
-gimp_user_install_items[] =
+ligma_user_install_items[] =
 {
   { "menurc",          USER_INSTALL_COPY  },
   { "brushes",         USER_INSTALL_MKDIR },
@@ -113,57 +113,57 @@ gimp_user_install_items[] =
   { "fractalexplorer", USER_INSTALL_MKDIR },
   { "gfig",            USER_INSTALL_MKDIR },
   { "gflare",          USER_INSTALL_MKDIR },
-  { "gimpressionist",  USER_INSTALL_MKDIR }
+  { "ligmaressionist",  USER_INSTALL_MKDIR }
 };
 
 
-static gboolean  user_install_detect_old         (GimpUserInstall    *install,
-                                                  const gchar        *gimp_dir);
-static gchar *   user_install_old_style_gimpdir  (void);
+static gboolean  user_install_detect_old         (LigmaUserInstall    *install,
+                                                  const gchar        *ligma_dir);
+static gchar *   user_install_old_style_ligmadir  (void);
 
-static void      user_install_log                (GimpUserInstall    *install,
+static void      user_install_log                (LigmaUserInstall    *install,
                                                   const gchar        *format,
                                                   ...) G_GNUC_PRINTF (2, 3);
-static void      user_install_log_newline        (GimpUserInstall    *install);
-static void      user_install_log_error          (GimpUserInstall    *install,
+static void      user_install_log_newline        (LigmaUserInstall    *install);
+static void      user_install_log_error          (LigmaUserInstall    *install,
                                                   GError            **error);
 
-static gboolean  user_install_mkdir              (GimpUserInstall    *install,
+static gboolean  user_install_mkdir              (LigmaUserInstall    *install,
                                                   const gchar        *dirname);
-static gboolean  user_install_mkdir_with_parents (GimpUserInstall    *install,
+static gboolean  user_install_mkdir_with_parents (LigmaUserInstall    *install,
                                                   const gchar        *dirname);
-static gboolean  user_install_file_copy          (GimpUserInstall    *install,
+static gboolean  user_install_file_copy          (LigmaUserInstall    *install,
                                                   const gchar        *source,
                                                   const gchar        *dest,
                                                   const gchar        *old_options_regexp,
                                                   GRegexEvalCallback  update_callback);
-static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
+static gboolean  user_install_dir_copy           (LigmaUserInstall    *install,
                                                   gint                level,
                                                   const gchar        *source,
                                                   const gchar        *base,
                                                   const gchar        *update_pattern,
                                                   GRegexEvalCallback  update_callback);
 
-static gboolean  user_install_create_files       (GimpUserInstall    *install);
-static gboolean  user_install_migrate_files      (GimpUserInstall    *install);
+static gboolean  user_install_create_files       (LigmaUserInstall    *install);
+static gboolean  user_install_migrate_files      (LigmaUserInstall    *install);
 
 
 /*  public functions  */
 
-GimpUserInstall *
-gimp_user_install_new (GObject  *gimp,
+LigmaUserInstall *
+ligma_user_install_new (GObject  *ligma,
                        gboolean  verbose)
 {
-  GimpUserInstall *install = g_slice_new0 (GimpUserInstall);
+  LigmaUserInstall *install = g_slice_new0 (LigmaUserInstall);
 
-  install->gimp    = gimp;
+  install->ligma    = ligma;
   install->verbose = verbose;
 
-  user_install_detect_old (install, gimp_directory ());
+  user_install_detect_old (install, ligma_directory ());
 
 #ifdef PLATFORM_OSX
   /* The config path on OSX has for a very short time frame (2.8.2 only)
-     been "~/Library/GIMP". It changed to "~/Library/Application Support"
+     been "~/Library/LIGMA". It changed to "~/Library/Application Support"
      in 2.8.4 and was in the home folder (as was other UNIX) before. */
 
   if (! install->old_dir)
@@ -180,7 +180,7 @@ gimp_user_install_new (GObject  *gimp,
       library_dir = [path objectAtIndex:0];
 
       dir = g_build_filename ([library_dir UTF8String],
-                              GIMPDIR, GIMP_USER_VERSION, NULL);
+                              LIGMADIR, LIGMA_USER_VERSION, NULL);
 
       [pool drain];
 
@@ -195,7 +195,7 @@ gimp_user_install_new (GObject  *gimp,
       /* if the default XDG-style config directory was not found, try
        * the "old-style" path in the home folder.
        */
-      gchar *dir = user_install_old_style_gimpdir ();
+      gchar *dir = user_install_old_style_ligmadir ();
       user_install_detect_old (install, dir);
       g_free (dir);
     }
@@ -204,7 +204,7 @@ gimp_user_install_new (GObject  *gimp,
 }
 
 gboolean
-gimp_user_install_run (GimpUserInstall *install,
+ligma_user_install_run (LigmaUserInstall *install,
                        gint             scale_factor)
 {
   gchar *dirname;
@@ -212,17 +212,17 @@ gimp_user_install_run (GimpUserInstall *install,
   g_return_val_if_fail (install != NULL, FALSE);
 
   install->scale_factor = scale_factor;
-  dirname = g_filename_display_name (gimp_directory ());
+  dirname = g_filename_display_name (ligma_directory ());
 
   if (install->migrate)
     user_install_log (install,
-                      _("It seems you have used GIMP %s before.  "
-                        "GIMP will now migrate your user settings to '%s'."),
+                      _("It seems you have used LIGMA %s before.  "
+                        "LIGMA will now migrate your user settings to '%s'."),
                       install->migrate, dirname);
   else
     user_install_log (install,
-                      _("It appears that you are using GIMP for the "
-                        "first time.  GIMP will now create a folder "
+                      _("It appears that you are using LIGMA for the "
+                        "first time.  LIGMA will now create a folder "
                         "named '%s' and copy some files to it."),
                       dirname);
 
@@ -230,7 +230,7 @@ gimp_user_install_run (GimpUserInstall *install,
 
   user_install_log_newline (install);
 
-  if (! user_install_mkdir_with_parents (install, gimp_directory ()))
+  if (! user_install_mkdir_with_parents (install, ligma_directory ()))
     return FALSE;
 
   if (install->migrate)
@@ -241,18 +241,18 @@ gimp_user_install_run (GimpUserInstall *install,
 }
 
 void
-gimp_user_install_free (GimpUserInstall *install)
+ligma_user_install_free (LigmaUserInstall *install)
 {
   g_return_if_fail (install != NULL);
 
   g_free (install->old_dir);
 
-  g_slice_free (GimpUserInstall, install);
+  g_slice_free (LigmaUserInstall, install);
 }
 
 void
-gimp_user_install_set_log_handler (GimpUserInstall        *install,
-                                   GimpUserInstallLogFunc  log,
+ligma_user_install_set_log_handler (LigmaUserInstall        *install,
+                                   LigmaUserInstallLogFunc  log,
                                    gpointer                user_data)
 {
   g_return_if_fail (install != NULL);
@@ -265,31 +265,31 @@ gimp_user_install_set_log_handler (GimpUserInstall        *install,
 /*  Local functions  */
 
 static gboolean
-user_install_detect_old (GimpUserInstall *install,
-                         const gchar     *gimp_dir)
+user_install_detect_old (LigmaUserInstall *install,
+                         const gchar     *ligma_dir)
 {
-  gchar    *dir     = g_strdup (gimp_dir);
+  gchar    *dir     = g_strdup (ligma_dir);
   gchar    *version;
   gboolean  migrate = FALSE;
 
-  version = strstr (dir, GIMP_APP_VERSION);
+  version = strstr (dir, LIGMA_APP_VERSION);
   g_snprintf (version, 5, "%d.XY", 2);
 
   if (version)
     {
       gint i;
 
-      for (i = (GIMP_MINOR_VERSION & ~1); i >= 0; i -= 2)
+      for (i = (LIGMA_MINOR_VERSION & ~1); i >= 0; i -= 2)
         {
-          /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
+          /*  we assume that LIGMA_APP_VERSION is in the form '2.x'  */
           g_snprintf (version + 2, 3, "%d", i);
 
           migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
 
           if (migrate)
             {
-#ifdef GIMP_UNSTABLE
-              g_printerr ("gimp-user-install: migrating from %s\n", dir);
+#ifdef LIGMA_UNSTABLE
+              g_printerr ("ligma-user-install: migrating from %s\n", dir);
 #endif
               install->old_major = 2;
               install->old_minor = i;
@@ -313,14 +313,14 @@ user_install_detect_old (GimpUserInstall *install,
 }
 
 static gchar *
-user_install_old_style_gimpdir (void)
+user_install_old_style_ligmadir (void)
 {
   const gchar *home_dir = g_get_home_dir ();
-  gchar       *gimp_dir = NULL;
+  gchar       *ligma_dir = NULL;
 
   if (home_dir)
     {
-      gimp_dir = g_build_filename (home_dir, ".gimp-" GIMP_APP_VERSION, NULL);
+      ligma_dir = g_build_filename (home_dir, ".ligma-" LIGMA_APP_VERSION, NULL);
     }
   else
     {
@@ -347,19 +347,19 @@ user_install_old_style_gimpdir (void)
 #ifndef G_OS_WIN32
       g_message ("warning: no home directory.");
 #endif
-      subdir_name = g_strconcat (".gimp-" GIMP_APP_VERSION ".", user_name, NULL);
-      gimp_dir = g_build_filename (gimp_data_directory (),
+      subdir_name = g_strconcat (".ligma-" LIGMA_APP_VERSION ".", user_name, NULL);
+      ligma_dir = g_build_filename (ligma_data_directory (),
                                    subdir_name,
                                    NULL);
       g_free (user_name);
       g_free (subdir_name);
     }
 
-  return gimp_dir;
+  return ligma_dir;
 }
 
 static void
-user_install_log (GimpUserInstall *install,
+user_install_log (LigmaUserInstall *install,
                   const gchar     *format,
                   ...)
 {
@@ -384,7 +384,7 @@ user_install_log (GimpUserInstall *install,
 }
 
 static void
-user_install_log_newline (GimpUserInstall *install)
+user_install_log_newline (LigmaUserInstall *install)
 {
   if (install->verbose)
     g_print ("\n");
@@ -394,7 +394,7 @@ user_install_log_newline (GimpUserInstall *install)
 }
 
 static void
-user_install_log_error (GimpUserInstall  *install,
+user_install_log_error (LigmaUserInstall  *install,
                         GError          **error)
 {
   if (error && *error)
@@ -412,7 +412,7 @@ user_install_log_error (GimpUserInstall  *install,
 }
 
 static gboolean
-user_install_file_copy (GimpUserInstall    *install,
+user_install_file_copy (LigmaUserInstall    *install,
                         const gchar        *source,
                         const gchar        *dest,
                         const gchar        *old_options_regexp,
@@ -422,10 +422,10 @@ user_install_file_copy (GimpUserInstall    *install,
   gboolean  success;
 
   user_install_log (install, _("Copying file '%s' from '%s'..."),
-                    gimp_filename_to_utf8 (dest),
-                    gimp_filename_to_utf8 (source));
+                    ligma_filename_to_utf8 (dest),
+                    ligma_filename_to_utf8 (source));
 
-  success = gimp_config_file_copy (source, dest, old_options_regexp, update_callback, install, &error);
+  success = ligma_config_file_copy (source, dest, old_options_regexp, update_callback, install, &error);
 
   user_install_log_error (install, &error);
 
@@ -433,11 +433,11 @@ user_install_file_copy (GimpUserInstall    *install,
 }
 
 static gboolean
-user_install_mkdir (GimpUserInstall *install,
+user_install_mkdir (LigmaUserInstall *install,
                     const gchar     *dirname)
 {
   user_install_log (install, _("Creating folder '%s'..."),
-                    gimp_filename_to_utf8 (dirname));
+                    ligma_filename_to_utf8 (dirname));
 
   if (g_mkdir (dirname,
                S_IRUSR | S_IWUSR | S_IXUSR |
@@ -448,7 +448,7 @@ user_install_mkdir (GimpUserInstall *install,
 
       g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
-                   gimp_filename_to_utf8 (dirname), g_strerror (errno));
+                   ligma_filename_to_utf8 (dirname), g_strerror (errno));
 
       user_install_log_error (install, &error);
 
@@ -459,11 +459,11 @@ user_install_mkdir (GimpUserInstall *install,
 }
 
 static gboolean
-user_install_mkdir_with_parents (GimpUserInstall *install,
+user_install_mkdir_with_parents (LigmaUserInstall *install,
                                  const gchar     *dirname)
 {
   user_install_log (install, _("Creating folder '%s'..."),
-                    gimp_filename_to_utf8 (dirname));
+                    ligma_filename_to_utf8 (dirname));
 
   if (g_mkdir_with_parents (dirname,
                             S_IRUSR | S_IWUSR | S_IXUSR |
@@ -474,7 +474,7 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
 
       g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
-                   gimp_filename_to_utf8 (dirname), g_strerror (errno));
+                   ligma_filename_to_utf8 (dirname), g_strerror (errno));
 
       user_install_log_error (install, &error);
 
@@ -484,7 +484,7 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   return TRUE;
 }
 
-/* The regexp pattern of all options changed from menurc of GIMP 2.8.
+/* The regexp pattern of all options changed from menurc of LIGMA 2.8.
  * Add any pattern that we want to recognize for replacement in the menurc of
  * the next release
  */
@@ -501,7 +501,7 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   "\"<Actions>/view/view-rotate-reset\""
 
 /**
- * callback to use for updating a menurc from GIMP over 2.0.
+ * callback to use for updating a menurc from LIGMA over 2.0.
  * data is unused (always NULL).
  * The updated value will be matched line by line.
  */
@@ -510,7 +510,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                            GString          *new_value,
                            gpointer          data)
 {
-  GimpUserInstall *install = (GimpUserInstall *) data;
+  LigmaUserInstall *install = (LigmaUserInstall *) data;
   gchar           *match   = g_match_info_fetch (matched_value, 0);
 
   /* "*-paste-as-new" renamed to "*-paste-as-new-image"
@@ -524,7 +524,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       g_string_append (new_value, "\"<Actions>/edit/edit-paste-as-new-image\"");
     }
   /* file-export-* changes to follow file-save-* patterns.  Actions
-   * available since GIMP 2.8, changed for 2.10 in commit 4b14ed2.
+   * available since LIGMA 2.8, changed for 2.10 in commit 4b14ed2.
    */
   else if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
     {
@@ -555,7 +555,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       g_string_append (new_value, "\"<Actions>/filters/filters-gaussian-blur\"");
     }
   /* Tools settings renamed more user-friendly.  Actions available
-   * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
+   * since LIGMA 2.4, changed for 2.10 in commit 0bdb747.
    */
   else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-1-"))
     {
@@ -650,7 +650,7 @@ user_update_sessionrc (const GMatchInfo *matched_value,
                        GString          *new_value,
                        gpointer          data)
 {
-  GimpUserInstall *install = (GimpUserInstall *) data;
+  LigmaUserInstall *install = (LigmaUserInstall *) data;
   gchar           *original;
 
   original = g_match_info_fetch (matched_value, 0);
@@ -721,24 +721,24 @@ user_update_sessionrc (const GMatchInfo *matched_value,
   return FALSE;
 }
 
-#define GIMPRC_UPDATE_PATTERN \
+#define LIGMARC_UPDATE_PATTERN \
   "\\(theme [^)]*\\)"    "|" \
   "\\(.*-path [^)]*\\)"
 
 static gboolean
-user_update_gimprc (const GMatchInfo *matched_value,
+user_update_ligmarc (const GMatchInfo *matched_value,
                     GString          *new_value,
                     gpointer          data)
 {
-  /* Do not migrate paths and themes from GIMP < 2.10. */
+  /* Do not migrate paths and themes from LIGMA < 2.10. */
   return FALSE;
 }
 
-#define GIMPRESSIONIST_UPDATE_PATTERN \
+#define LIGMARESSIONIST_UPDATE_PATTERN \
   "selectedbrush=Brushes/paintbrush.pgm"
 
 static gboolean
-user_update_gimpressionist (const GMatchInfo *matched_value,
+user_update_ligmaressionist (const GMatchInfo *matched_value,
                             GString          *new_value,
                             gpointer          data)
 {
@@ -760,10 +760,10 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
 }
 
 #define TOOL_PRESETS_UPDATE_PATTERN \
-  "GimpImageMapOptions"       "|" \
-  "GimpBlendOptions"          "|" \
-  "gimp-blend-tool"           "|" \
-  "gimp-tool-blend"           "|" \
+  "LigmaImageMapOptions"       "|" \
+  "LigmaBlendOptions"          "|" \
+  "ligma-blend-tool"           "|" \
+  "ligma-tool-blend"           "|" \
   "dynamics \"Dynamics Off\"" "|" \
   "\\(dynamics-expanded yes\\)"
 
@@ -774,21 +774,21 @@ user_update_tool_presets (const GMatchInfo *matched_value,
 {
   gchar *match = g_match_info_fetch (matched_value, 0);
 
-  if (g_strcmp0 (match, "GimpImageMapOptions") == 0)
+  if (g_strcmp0 (match, "LigmaImageMapOptions") == 0)
     {
-      g_string_append (new_value, "GimpFilterOptions");
+      g_string_append (new_value, "LigmaFilterOptions");
     }
-  else if (g_strcmp0 (match, "GimpBlendOptions") == 0)
+  else if (g_strcmp0 (match, "LigmaBlendOptions") == 0)
     {
-      g_string_append (new_value, "GimpGradientOptions");
+      g_string_append (new_value, "LigmaGradientOptions");
     }
-  else if (g_strcmp0 (match, "gimp-blend-tool") == 0)
+  else if (g_strcmp0 (match, "ligma-blend-tool") == 0)
     {
-      g_string_append (new_value, "gimp-gradient-tool");
+      g_string_append (new_value, "ligma-gradient-tool");
     }
-  else if (g_strcmp0 (match, "gimp-tool-blend") == 0)
+  else if (g_strcmp0 (match, "ligma-tool-blend") == 0)
     {
-      g_string_append (new_value, "gimp-tool-gradient");
+      g_string_append (new_value, "ligma-tool-gradient");
     }
   else if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
     {
@@ -809,11 +809,11 @@ user_update_tool_presets (const GMatchInfo *matched_value,
 }
 
 /* Actually not only for contextrc, but all other files where
- * gimp-blend-tool may appear. Apparently that is also "devicerc", as
+ * ligma-blend-tool may appear. Apparently that is also "devicerc", as
  * well as "toolrc" (but this one is skipped anyway).
  */
 #define CONTEXTRC_UPDATE_PATTERN \
-  "gimp-blend-tool"           "|" \
+  "ligma-blend-tool"           "|" \
   "dynamics \"Dynamics Off\"" "|" \
   "\\(dynamics-expanded yes\\)"
 
@@ -824,9 +824,9 @@ user_update_contextrc_over20 (const GMatchInfo *matched_value,
 {
   gchar *match = g_match_info_fetch (matched_value, 0);
 
-  if (g_strcmp0 (match, "gimp-blend-tool") == 0)
+  if (g_strcmp0 (match, "ligma-blend-tool") == 0)
     {
-      g_string_append (new_value, "gimp-gradient-tool");
+      g_string_append (new_value, "ligma-gradient-tool");
     }
   else if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
     {
@@ -847,7 +847,7 @@ user_update_contextrc_over20 (const GMatchInfo *matched_value,
 }
 
 static gboolean
-user_install_dir_copy (GimpUserInstall    *install,
+user_install_dir_copy (LigmaUserInstall    *install,
                        gint                level,
                        const gchar        *source,
                        const gchar        *base,
@@ -867,7 +867,7 @@ user_install_dir_copy (GimpUserInstall    *install,
     {
       /* Config migration is recursive, but we can't go on forever,
        * since we may fall into recursive symlinks in particular (which
-       * is a security risk to fill a disk, and would also block GIMP
+       * is a security risk to fill a disk, and would also block LIGMA
        * forever at migration stage).
        * Let's just break the recursivity at 5 levels, which is just an
        * arbitrary value (but I don't think there should be any data
@@ -935,23 +935,23 @@ user_install_dir_copy (GimpUserInstall    *install,
 }
 
 static gboolean
-user_install_create_files (GimpUserInstall *install)
+user_install_create_files (LigmaUserInstall *install)
 {
   gchar dest[1024];
   gchar source[1024];
   gint  i;
 
-  for (i = 0; i < G_N_ELEMENTS (gimp_user_install_items); i++)
+  for (i = 0; i < G_N_ELEMENTS (ligma_user_install_items); i++)
     {
       g_snprintf (dest, sizeof (dest), "%s%c%s",
-                  gimp_directory (),
+                  ligma_directory (),
                   G_DIR_SEPARATOR,
-                  gimp_user_install_items[i].name);
+                  ligma_user_install_items[i].name);
 
       if (g_file_test (dest, G_FILE_TEST_EXISTS))
         continue;
 
-      switch (gimp_user_install_items[i].action)
+      switch (ligma_user_install_items[i].action)
         {
         case USER_INSTALL_MKDIR:
           if (! user_install_mkdir (install, dest))
@@ -960,8 +960,8 @@ user_install_create_files (GimpUserInstall *install)
 
         case USER_INSTALL_COPY:
           g_snprintf (source, sizeof (source), "%s%c%s",
-                      gimp_sysconf_directory (), G_DIR_SEPARATOR,
-                      gimp_user_install_items[i].name);
+                      ligma_sysconf_directory (), G_DIR_SEPARATOR,
+                      ligma_user_install_items[i].name);
 
           if (! user_install_file_copy (install, source, dest, NULL, NULL))
             return FALSE;
@@ -970,13 +970,13 @@ user_install_create_files (GimpUserInstall *install)
     }
 
   g_snprintf (dest, sizeof (dest), "%s%c%s",
-              gimp_directory (), G_DIR_SEPARATOR, "tags.xml");
+              ligma_directory (), G_DIR_SEPARATOR, "tags.xml");
 
   if (! g_file_test (dest, G_FILE_TEST_IS_REGULAR))
     {
       /* if there was no tags.xml, install it with default tag set.
        */
-      if (! gimp_tags_user_install ())
+      if (! ligma_tags_user_install ())
         {
           return FALSE;
         }
@@ -986,12 +986,12 @@ user_install_create_files (GimpUserInstall *install)
 }
 
 static gboolean
-user_install_migrate_files (GimpUserInstall *install)
+user_install_migrate_files (LigmaUserInstall *install)
 {
   GDir        *dir;
   const gchar *basename;
   gchar        dest[1024];
-  GimpRc      *gimprc;
+  LigmaRc      *ligmarc;
   GError      *error = NULL;
 
   dir = g_dir_open (install->old_dir, 0, &error);
@@ -1013,7 +1013,7 @@ user_install_migrate_files (GimpUserInstall *install)
 
           /*  skip these files for all old versions  */
           if (strcmp (basename, "documents") == 0      ||
-              g_str_has_prefix (basename, "gimpswap.") ||
+              g_str_has_prefix (basename, "ligmaswap.") ||
               strcmp (basename, "pluginrc") == 0       ||
               strcmp (basename, "themerc") == 0        ||
               strcmp (basename, "toolrc") == 0         ||
@@ -1035,7 +1035,7 @@ user_install_migrate_files (GimpUserInstall *install)
               switch (install->old_minor)
                 {
                 case 0:
-                  /*  skip menurc for gimp 2.0 as the format has changed  */
+                  /*  skip menurc for ligma 2.0 as the format has changed  */
                   goto next_file;
                   break;
                 default:
@@ -1049,10 +1049,10 @@ user_install_migrate_files (GimpUserInstall *install)
               update_pattern  = CONTROLLERRC_UPDATE_PATTERN;
               update_callback = user_update_controllerrc;
             }
-          else if (strcmp (basename, "gimprc") == 0)
+          else if (strcmp (basename, "ligmarc") == 0)
             {
-              update_pattern  = GIMPRC_UPDATE_PATTERN;
-              update_callback = user_update_gimprc;
+              update_pattern  = LIGMARC_UPDATE_PATTERN;
+              update_callback = user_update_ligmarc;
             }
           else if (strcmp (basename, "contextrc") == 0      ||
                    strcmp (basename, "devicerc") == 0)
@@ -1062,7 +1062,7 @@ user_install_migrate_files (GimpUserInstall *install)
             }
 
           g_snprintf (dest, sizeof (dest), "%s%c%s",
-                      gimp_directory (), G_DIR_SEPARATOR, basename);
+                      ligma_directory (), G_DIR_SEPARATOR, basename);
 
           user_install_file_copy (install, source, dest,
                                   update_pattern, update_callback);
@@ -1087,17 +1087,17 @@ user_install_migrate_files (GimpUserInstall *install)
               goto next_file;
             }
 
-          if (strcmp (basename, "gimpressionist") == 0)
+          if (strcmp (basename, "ligmaressionist") == 0)
             {
-              update_pattern  = GIMPRESSIONIST_UPDATE_PATTERN;
-              update_callback = user_update_gimpressionist;
+              update_pattern  = LIGMARESSIONIST_UPDATE_PATTERN;
+              update_callback = user_update_ligmaressionist;
             }
           else if (strcmp (basename, "tool-presets") == 0)
             {
               update_pattern  = TOOL_PRESETS_UPDATE_PATTERN;
               update_callback = user_update_tool_presets;
             }
-          user_install_dir_copy (install, 0, source, gimp_directory (),
+          user_install_dir_copy (install, 0, source, ligma_directory (),
                                  update_pattern, update_callback);
         }
 
@@ -1108,17 +1108,17 @@ user_install_migrate_files (GimpUserInstall *install)
   /*  create the tmp directory that was explicitly not copied  */
 
   g_snprintf (dest, sizeof (dest), "%s%c%s",
-              gimp_directory (), G_DIR_SEPARATOR, "tmp");
+              ligma_directory (), G_DIR_SEPARATOR, "tmp");
 
   user_install_mkdir (install, dest);
   g_dir_close (dir);
 
-  gimp_templates_migrate (install->old_dir);
+  ligma_templates_migrate (install->old_dir);
 
-  gimprc = gimp_rc_new (install->gimp, NULL, NULL, FALSE);
-  gimp_rc_migrate (gimprc);
-  gimp_rc_save (gimprc);
-  g_object_unref (gimprc);
+  ligmarc = ligma_rc_new (install->ligma, NULL, NULL, FALSE);
+  ligma_rc_migrate (ligmarc);
+  ligma_rc_save (ligmarc);
+  g_object_unref (ligmarc);
 
   return TRUE;
 }

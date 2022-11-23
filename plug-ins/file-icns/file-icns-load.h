@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns-load.h
@@ -21,11 +21,11 @@
 #ifndef __ICNS_LOAD_H__
 #define __ICNS_LOAD_H__
 
-GimpImage * icns_load_image           (GFile         *file,
+LigmaImage * icns_load_image           (GFile         *file,
                                        gint32        *file_offset,
                                        GError       **error);
 
-GimpImage * icns_load_thumbnail_image (GFile         *file,
+LigmaImage * icns_load_thumbnail_image (GFile         *file,
                                        gint          *width,
                                        gint          *height,
                                        gint32         file_offset,

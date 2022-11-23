@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoverlaychild.h
- * Copyright (C) 2009 Michael Natterer <mitch@gimp.org>
+ * ligmaoverlaychild.h
+ * Copyright (C) 2009 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OVERLAY_CHILD_H__
-#define __GIMP_OVERLAY_CHILD_H__
+#ifndef __LIGMA_OVERLAY_CHILD_H__
+#define __LIGMA_OVERLAY_CHILD_H__
 
 
-typedef struct _GimpOverlayChild GimpOverlayChild;
+typedef struct _LigmaOverlayChild LigmaOverlayChild;
 
-struct _GimpOverlayChild
+struct _LigmaOverlayChild
 {
   GtkWidget      *widget;
   GdkWindow      *window;
@@ -43,45 +43,45 @@ struct _GimpOverlayChild
 };
 
 
-GimpOverlayChild * gimp_overlay_child_new                  (GimpOverlayBox  *box,
+LigmaOverlayChild * ligma_overlay_child_new                  (LigmaOverlayBox  *box,
                                                             GtkWidget       *widget,
                                                             gdouble          xalign,
                                                             gdouble          yalign,
                                                             gdouble          angle,
                                                             gdouble          opacity);
-void               gimp_overlay_child_free                 (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
+void               ligma_overlay_child_free                 (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child);
 
-GimpOverlayChild * gimp_overlay_child_find                 (GimpOverlayBox   *box,
+LigmaOverlayChild * ligma_overlay_child_find                 (LigmaOverlayBox   *box,
                                                             GtkWidget        *widget);
 
-void               gimp_overlay_child_realize              (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
-void               gimp_overlay_child_unrealize            (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
-void               gimp_overlay_child_get_preferred_width  (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child,
+void               ligma_overlay_child_realize              (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child);
+void               ligma_overlay_child_unrealize            (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child);
+void               ligma_overlay_child_get_preferred_width  (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child,
                                                             gint             *minimum,
                                                             gint             *natural);
-void               gimp_overlay_child_get_preferred_height (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child,
+void               ligma_overlay_child_get_preferred_height (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child,
                                                             gint             *minimum,
                                                             gint             *natural);
-void               gimp_overlay_child_size_allocate        (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
-gboolean           gimp_overlay_child_draw                 (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child,
+void               ligma_overlay_child_size_allocate        (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child);
+gboolean           ligma_overlay_child_draw                 (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child,
                                                             cairo_t          *cr);
-gboolean           gimp_overlay_child_damage               (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child,
+gboolean           ligma_overlay_child_damage               (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child,
                                                             GdkEventExpose   *event);
 
-void               gimp_overlay_child_invalidate           (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
-gboolean           gimp_overlay_child_pick                 (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child,
+void               ligma_overlay_child_invalidate           (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child);
+gboolean           ligma_overlay_child_pick                 (LigmaOverlayBox   *box,
+                                                            LigmaOverlayChild *child,
                                                             gdouble           box_x,
                                                             gdouble           box_y);
 
 
-#endif /* __GIMP_OVERLAY_CHILD_H__ */
+#endif /* __LIGMA_OVERLAY_CHILD_H__ */

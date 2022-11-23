@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,12 +16,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_TYPES_H__
-#define __GIMP_COLOR_TYPES_H__
+#ifndef __LIGMA_COLOR_TYPES_H__
+#define __LIGMA_COLOR_TYPES_H__
 
 
-#include <libgimpbase/gimpbasetypes.h>
-#include <libgimpconfig/gimpconfigtypes.h>
+#include <libligmabase/ligmabasetypes.h>
+#include <libligmaconfig/ligmaconfigtypes.h>
 
 
 G_BEGIN_DECLS
@@ -29,22 +29,22 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-typedef struct _GimpColorManaged   GimpColorManaged;  /* dummy typedef */
-typedef struct _GimpColorProfile   GimpColorProfile;
-typedef struct _GimpColorTransform GimpColorTransform;
+typedef struct _LigmaColorManaged   LigmaColorManaged;  /* dummy typedef */
+typedef struct _LigmaColorProfile   LigmaColorProfile;
+typedef struct _LigmaColorTransform LigmaColorTransform;
 
 
 /*  usually we don't keep the structure definitions in the types file
- *  but GimpRGB appears in too many header files...
+ *  but LigmaRGB appears in too many header files...
  */
 
-typedef struct _GimpRGB  GimpRGB;
-typedef struct _GimpHSV  GimpHSV;
-typedef struct _GimpHSL  GimpHSL;
-typedef struct _GimpCMYK GimpCMYK;
+typedef struct _LigmaRGB  LigmaRGB;
+typedef struct _LigmaHSV  LigmaHSV;
+typedef struct _LigmaHSL  LigmaHSL;
+typedef struct _LigmaCMYK LigmaCMYK;
 
 /**
- * GimpRGB:
+ * LigmaRGB:
  * @r: the red component
  * @g: the green component
  * @b: the blue component
@@ -53,13 +53,13 @@ typedef struct _GimpCMYK GimpCMYK;
  * Used to keep RGB and RGBA colors. All components are in a range of
  * [0.0..1.0].
  **/
-struct _GimpRGB
+struct _LigmaRGB
 {
   gdouble r, g, b, a;
 };
 
 /**
- * GimpHSV:
+ * LigmaHSV:
  * @h: the hue component
  * @s: the saturation component
  * @v: the value component
@@ -68,13 +68,13 @@ struct _GimpRGB
  * Used to keep HSV and HSVA colors. All components are in a range of
  * [0.0..1.0].
  **/
-struct _GimpHSV
+struct _LigmaHSV
 {
   gdouble h, s, v, a;
 };
 
 /**
- * GimpHSL:
+ * LigmaHSL:
  * @h: the hue component
  * @s: the saturation component
  * @l: the lightness component
@@ -83,13 +83,13 @@ struct _GimpHSV
  * Used to keep HSL and HSLA colors. All components are in a range of
  * [0.0..1.0].
  **/
-struct _GimpHSL
+struct _LigmaHSL
 {
   gdouble h, s, l, a;
 };
 
 /**
- * GimpCMYK:
+ * LigmaCMYK:
  * @c: the cyan component
  * @m: the magenta component
  * @y: the yellow component
@@ -101,7 +101,7 @@ struct _GimpHSL
  * colorspace, but we keep one around anyway so color conversions
  * going to CMYK and back can preserve alpha.
  **/
-struct _GimpCMYK
+struct _LigmaCMYK
 {
   gdouble c, m, y, k, a;
 };
@@ -109,4 +109,4 @@ struct _GimpCMYK
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_TYPES_H__ */
+#endif  /* __LIGMA_COLOR_TYPES_H__ */

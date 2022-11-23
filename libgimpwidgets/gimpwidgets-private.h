@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets-private.h
- * Copyright (C) 2003 Sven Neumann <sven@gimp.org>
+ * ligmawidgets-private.h
+ * Copyright (C) 2003 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,39 +19,39 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_PRIVATE_H__
-#define __GIMP_WIDGETS_PRIVATE_H__
+#ifndef __LIGMA_WIDGETS_PRIVATE_H__
+#define __LIGMA_WIDGETS_PRIVATE_H__
 
 /* Used to compare similar colors across several widgets. */
-#define GIMP_RGBA_EPSILON 1e-6
+#define LIGMA_RGBA_EPSILON 1e-6
 
 
-typedef gboolean (* GimpGetColorFunc)      (GimpRGB *color);
-typedef void     (* GimpEnsureModulesFunc) (void);
+typedef gboolean (* LigmaGetColorFunc)      (LigmaRGB *color);
+typedef void     (* LigmaEnsureModulesFunc) (void);
 
 
-extern GimpHelpFunc          _gimp_standard_help_func;
-extern GimpGetColorFunc      _gimp_get_foreground_func;
-extern GimpGetColorFunc      _gimp_get_background_func;
-extern GimpEnsureModulesFunc _gimp_ensure_modules_func;
+extern LigmaHelpFunc          _ligma_standard_help_func;
+extern LigmaGetColorFunc      _ligma_get_foreground_func;
+extern LigmaGetColorFunc      _ligma_get_background_func;
+extern LigmaEnsureModulesFunc _ligma_ensure_modules_func;
 
 
 G_BEGIN_DECLS
 
 
-void  gimp_widgets_init              (GimpHelpFunc           standard_help_func,
-                                      GimpGetColorFunc       get_foreground_func,
-                                      GimpGetColorFunc       get_background_func,
-                                      GimpEnsureModulesFunc  ensure_modules_func,
+void  ligma_widgets_init              (LigmaHelpFunc           standard_help_func,
+                                      LigmaGetColorFunc       get_foreground_func,
+                                      LigmaGetColorFunc       get_background_func,
+                                      LigmaEnsureModulesFunc  ensure_modules_func,
                                       const gchar           *test_base_dir);
 
-void  gimp_widget_set_identifier     (GtkWidget             *widget,
+void  ligma_widget_set_identifier     (GtkWidget             *widget,
                                       const gchar           *identifier);
-void  gimp_widget_set_bound_property (GtkWidget             *widget,
+void  ligma_widget_set_bound_property (GtkWidget             *widget,
                                       GObject               *config,
                                       const gchar           *property_name);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_WIDGETS_PRIVATE_H__ */
+#endif /* __LIGMA_WIDGETS_PRIVATE_H__ */

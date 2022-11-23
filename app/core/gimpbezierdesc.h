@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbezierdesc.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmabezierdesc.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,30 +18,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BEZIER_DESC_H__
-#define __GIMP_BEZIER_DESC_H__
+#ifndef __LIGMA_BEZIER_DESC_H__
+#define __LIGMA_BEZIER_DESC_H__
 
 
-#define          GIMP_TYPE_BEZIER_DESC     (gimp_bezier_desc_get_type ())
+#define          LIGMA_TYPE_BEZIER_DESC     (ligma_bezier_desc_get_type ())
 
-GType            gimp_bezier_desc_get_type (void) G_GNUC_CONST;
+GType            ligma_bezier_desc_get_type (void) G_GNUC_CONST;
 
 
 /* takes ownership of "data" */
-GimpBezierDesc * gimp_bezier_desc_new                 (cairo_path_data_t    *data,
+LigmaBezierDesc * ligma_bezier_desc_new                 (cairo_path_data_t    *data,
                                                        gint                  n_data);
 
-/* expects sorted GimpBoundSegs */
-GimpBezierDesc * gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg         *bound_segs,
+/* expects sorted LigmaBoundSegs */
+LigmaBezierDesc * ligma_bezier_desc_new_from_bound_segs (LigmaBoundSeg         *bound_segs,
                                                        gint                  n_bound_segs,
                                                        gint                  n_bound_groups);
 
-void             gimp_bezier_desc_translate           (GimpBezierDesc       *desc,
+void             ligma_bezier_desc_translate           (LigmaBezierDesc       *desc,
                                                        gdouble               offset_x,
                                                        gdouble               offset_y);
 
-GimpBezierDesc * gimp_bezier_desc_copy                (const GimpBezierDesc *desc);
-void             gimp_bezier_desc_free                (GimpBezierDesc       *desc);
+LigmaBezierDesc * ligma_bezier_desc_copy                (const LigmaBezierDesc *desc);
+void             ligma_bezier_desc_free                (LigmaBezierDesc       *desc);
 
 
-#endif /* __GIMP_BEZIER_DESC_H__ */
+#endif /* __LIGMA_BEZIER_DESC_H__ */

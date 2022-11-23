@@ -1,14 +1,14 @@
 About libscriptfu
 
-libscriptfu is part of GIMP.
-It is not generally useful except by GIMP.
+libscriptfu is part of LIGMA.
+It is not generally useful except by LIGMA.
 
 The libscriptfu library is used by plugin executables,
 and the PDB procedures they create,
 all part of the "ScriptFu" machinery.
 
 The libscriptfu library is not intended for third-party developers,
-only for core GIMP developers.
+only for core LIGMA developers.
 Headers for libscriptfu might not be installed.
 
 This directory contains three libraries: libscriptfu, tinyscheme, and ftx.
@@ -17,18 +17,18 @@ The ftx library extends the TinyScheme interpreter,
 adding file functions to the Scheme language.
 The libscriptfu library contains both the tinyscheme and ftx libraries.
 The libscriptfu library wraps the TinyScheme interpreter,
-specializing it for GIMP.
+specializing it for LIGMA.
 The script-fu executable uses the libscriptfu library,
-to interpret Scheme scripts that GIMP users refer to as "plug-ins."
+to interpret Scheme scripts that LIGMA users refer to as "plug-ins."
 
-These libraries depend on other libraries, e.g. math, libgimp, glib, etc.
+These libraries depend on other libraries, e.g. math, libligma, glib, etc.
 
 Coupling between the executables and the libraries should be in one direction:
 source for the inner libs should not include headers from the outer executables.
 This lets you more easily update the inner libraries
 (which originated elsewhere and might be maintained elsewhere),
 and change the outer executables
-(which are subject to change by GIMP developers.)
+(which are subject to change by LIGMA developers.)
 
 Example (which may change):
 The script-fu executable is a plugin file that implements PDB procedures:

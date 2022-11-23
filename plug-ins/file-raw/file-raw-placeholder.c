@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-raw-placeholder.c -- raw file format plug-in that does nothing
  *                           except warning that there is no raw plug-in
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  * Copyright (C) 2016 Tobias Ellinghaus <me@houz.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "file-raw-formats.h"
 
@@ -34,12 +34,12 @@ typedef struct _PlaceholderClass PlaceholderClass;
 
 struct _Placeholder
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PlaceholderClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -48,27 +48,27 @@ struct _PlaceholderClass
 
 GType                   placeholder_get_type         (void) G_GNUC_CONST;
 
-static GList          * placeholder_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * placeholder_create_procedure (GimpPlugIn           *plug_in,
+static GList          * placeholder_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * placeholder_create_procedure (LigmaPlugIn           *plug_in,
                                                       const gchar          *name);
 
-static GimpValueArray * placeholder_load             (GimpProcedure        *procedure,
-                                                      GimpRunMode           run_mode,
+static LigmaValueArray * placeholder_load             (LigmaProcedure        *procedure,
+                                                      LigmaRunMode           run_mode,
                                                       GFile                *file,
-                                                      const GimpValueArray *args,
+                                                      const LigmaValueArray *args,
                                                       gpointer              run_data);
 
 
-G_DEFINE_TYPE (Placeholder, placeholder, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Placeholder, placeholder, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PLACEHOLDER_TYPE)
+LIGMA_MAIN (PLACEHOLDER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 placeholder_class_init (PlaceholderClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = placeholder_query_procedures;
   plug_in_class->create_procedure = placeholder_create_procedure;
@@ -81,7 +81,7 @@ placeholder_init (Placeholder *placeholder)
 }
 
 static GList *
-placeholder_query_procedures (GimpPlugIn *plug_in)
+placeholder_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
   gint   i;
@@ -100,11 +100,11 @@ placeholder_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-placeholder_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+placeholder_create_procedure (LigmaPlugIn  *plug_in,
                               const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
   gint           i;
 
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
@@ -126,26 +126,26 @@ placeholder_create_procedure (GimpPlugIn  *plug_in,
       load_blurb = g_strdup_printf (format->load_blurb_format, "placeholder");
       load_help  = g_strdup_printf (format->load_help_format,  "placeholder");
 
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            placeholder_load,
                                            (gpointer) format, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         load_blurb, load_help, name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tobias Ellinghaus",
                                       "Tobias Ellinghaus",
                                       "2016");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           format->mime_type);
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           format->extensions);
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       format->magic);
 
-      gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_handles_raw (LIGMA_LOAD_PROCEDURE (procedure),
                                            TRUE);
 
       g_free (load_proc);
@@ -158,11 +158,11 @@ placeholder_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-placeholder_load (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
+static LigmaValueArray *
+placeholder_load (LigmaProcedure        *procedure,
+                  LigmaRunMode           run_mode,
                   GFile                *file,
-                  const GimpValueArray *args,
+                  const LigmaValueArray *args,
                   gpointer              run_data)
 {
   const FileFormat *format = run_data;
@@ -171,7 +171,7 @@ placeholder_load (GimpProcedure        *procedure,
   g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                _("There is no RAW loader installed to open '%s' files.\n"
                  "\n"
-                 "GIMP currently supports these RAW loaders:\n"
+                 "LIGMA currently supports these RAW loaders:\n"
                  "- darktable (http://www.darktable.org/), at least 1.7\n"
                  "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
                  "\n"
@@ -179,7 +179,7 @@ placeholder_load (GimpProcedure        *procedure,
                  "load RAW files."),
                gettext (format->file_type));
 
-  return gimp_procedure_new_return_values (procedure,
-                                           GIMP_PDB_EXECUTION_ERROR,
+  return ligma_procedure_new_return_values (procedure,
+                                           LIGMA_PDB_EXECUTION_ERROR,
                                            error);
 }

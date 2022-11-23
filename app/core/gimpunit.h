@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_UNIT_H__
-#define __APP_GIMP_UNIT_H__
+#ifndef __APP_LIGMA_UNIT_H__
+#define __APP_LIGMA_UNIT_H__
 
 
-gint          _gimp_unit_get_number_of_units          (Gimp        *gimp);
-gint          _gimp_unit_get_number_of_built_in_units (Gimp        *gimp) G_GNUC_CONST;
+gint          _ligma_unit_get_number_of_units          (Ligma        *ligma);
+gint          _ligma_unit_get_number_of_built_in_units (Ligma        *ligma) G_GNUC_CONST;
 
-GimpUnit      _gimp_unit_new                          (Gimp        *gimp,
+LigmaUnit      _ligma_unit_new                          (Ligma        *ligma,
                                                        const gchar *identifier,
                                                        gdouble      factor,
                                                        gint         digits,
@@ -31,31 +31,31 @@ GimpUnit      _gimp_unit_new                          (Gimp        *gimp,
                                                        const gchar *singular,
                                                        const gchar *plural);
 
-gboolean      _gimp_unit_get_deletion_flag            (Gimp        *gimp,
-                                                       GimpUnit     unit);
-void          _gimp_unit_set_deletion_flag            (Gimp        *gimp,
-                                                       GimpUnit     unit,
+gboolean      _ligma_unit_get_deletion_flag            (Ligma        *ligma,
+                                                       LigmaUnit     unit);
+void          _ligma_unit_set_deletion_flag            (Ligma        *ligma,
+                                                       LigmaUnit     unit,
                                                        gboolean     deletion_flag);
 
-gdouble       _gimp_unit_get_factor                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
+gdouble       _ligma_unit_get_factor                   (Ligma        *ligma,
+                                                       LigmaUnit     unit);
 
-gint          _gimp_unit_get_digits                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
+gint          _ligma_unit_get_digits                   (Ligma        *ligma,
+                                                       LigmaUnit     unit);
 
-const gchar * _gimp_unit_get_identifier               (Gimp        *gimp,
-                                                       GimpUnit     unit);
+const gchar * _ligma_unit_get_identifier               (Ligma        *ligma,
+                                                       LigmaUnit     unit);
 
-const gchar * _gimp_unit_get_symbol                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_abbreviation             (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_singular                 (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_plural                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
+const gchar * _ligma_unit_get_symbol                   (Ligma        *ligma,
+                                                       LigmaUnit     unit);
+const gchar * _ligma_unit_get_abbreviation             (Ligma        *ligma,
+                                                       LigmaUnit     unit);
+const gchar * _ligma_unit_get_singular                 (Ligma        *ligma,
+                                                       LigmaUnit     unit);
+const gchar * _ligma_unit_get_plural                   (Ligma        *ligma,
+                                                       LigmaUnit     unit);
 
-void           gimp_user_units_free                   (Gimp        *gimp);
+void           ligma_user_units_free                   (Ligma        *ligma);
 
 
-#endif  /*  __APP_GIMP_UNIT_H__  */
+#endif  /*  __APP_LIGMA_UNIT_H__  */

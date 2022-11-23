@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_CORE_H__
-#define __GIMP_BRUSH_CORE_H__
+#ifndef __LIGMA_BRUSH_CORE_H__
+#define __LIGMA_BRUSH_CORE_H__
 
 
-#include "gimppaintcore.h"
+#include "ligmapaintcore.h"
 
 
 #define BRUSH_CORE_SUBSAMPLE        4
@@ -27,23 +27,23 @@
 #define BRUSH_CORE_JITTER_LUTSIZE   360
 
 
-#define GIMP_TYPE_BRUSH_CORE            (gimp_brush_core_get_type ())
-#define GIMP_BRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_CORE, GimpBrushCore))
-#define GIMP_BRUSH_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_CORE, GimpBrushCoreClass))
-#define GIMP_IS_BRUSH_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_CORE))
-#define GIMP_IS_BRUSH_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_CORE))
-#define GIMP_BRUSH_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_CORE, GimpBrushCoreClass))
+#define LIGMA_TYPE_BRUSH_CORE            (ligma_brush_core_get_type ())
+#define LIGMA_BRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_CORE, LigmaBrushCore))
+#define LIGMA_BRUSH_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_CORE, LigmaBrushCoreClass))
+#define LIGMA_IS_BRUSH_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_CORE))
+#define LIGMA_IS_BRUSH_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_CORE))
+#define LIGMA_BRUSH_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_CORE, LigmaBrushCoreClass))
 
 
-typedef struct _GimpBrushCoreClass GimpBrushCoreClass;
+typedef struct _LigmaBrushCoreClass LigmaBrushCoreClass;
 
-struct _GimpBrushCore
+struct _LigmaBrushCore
 {
-  GimpPaintCore      parent_instance;
+  LigmaPaintCore      parent_instance;
 
-  GimpBrush         *main_brush;
-  GimpBrush         *brush;
-  GimpDynamics      *dynamics;
+  LigmaBrush         *main_brush;
+  LigmaBrush         *brush;
+  LigmaDynamics      *dynamics;
   gdouble            spacing;
   gdouble            scale;
   gdouble            aspect_ratio;
@@ -55,17 +55,17 @@ struct _GimpBrushCore
   gboolean           symmetry_reflect;
 
   /*  brush buffers  */
-  GimpTempBuf       *pressure_brush;
+  LigmaTempBuf       *pressure_brush;
 
-  GimpTempBuf       *solid_brushes[BRUSH_CORE_SOLID_SUBSAMPLE][BRUSH_CORE_SOLID_SUBSAMPLE];
-  const GimpTempBuf *last_solid_brush_mask;
+  LigmaTempBuf       *solid_brushes[BRUSH_CORE_SOLID_SUBSAMPLE][BRUSH_CORE_SOLID_SUBSAMPLE];
+  const LigmaTempBuf *last_solid_brush_mask;
   gboolean           solid_cache_invalid;
 
-  const GimpTempBuf *transform_brush;
-  const GimpTempBuf *transform_pixmap;
+  const LigmaTempBuf *transform_brush;
+  const LigmaTempBuf *transform_pixmap;
 
-  GimpTempBuf       *subsample_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
-  const GimpTempBuf *last_subsample_brush_mask;
+  LigmaTempBuf       *subsample_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
+  const LigmaTempBuf *last_subsample_brush_mask;
   gboolean           subsample_cache_invalid;
 
   gdouble            jitter;
@@ -75,9 +75,9 @@ struct _GimpBrushCore
   GRand             *rand;
 };
 
-struct _GimpBrushCoreClass
+struct _LigmaBrushCoreClass
 {
-  GimpPaintCoreClass  parent_class;
+  LigmaPaintCoreClass  parent_class;
 
   /*  Set for tools that don't mind if the brush changes while painting  */
   gboolean            handles_changing_brush;
@@ -88,65 +88,65 @@ struct _GimpBrushCoreClass
   /*  Set for tools that don't mind if the brush scales mid stroke  */
   gboolean            handles_dynamic_transforming_brush;
 
-  void (* set_brush)    (GimpBrushCore *core,
-                         GimpBrush     *brush);
-  void (* set_dynamics) (GimpBrushCore *core,
-                         GimpDynamics  *brush);
+  void (* set_brush)    (LigmaBrushCore *core,
+                         LigmaBrush     *brush);
+  void (* set_dynamics) (LigmaBrushCore *core,
+                         LigmaDynamics  *brush);
 };
 
 
-GType  gimp_brush_core_get_type       (void) G_GNUC_CONST;
+GType  ligma_brush_core_get_type       (void) G_GNUC_CONST;
 
-void   gimp_brush_core_set_brush      (GimpBrushCore            *core,
-                                       GimpBrush                *brush);
+void   ligma_brush_core_set_brush      (LigmaBrushCore            *core,
+                                       LigmaBrush                *brush);
 
-void   gimp_brush_core_set_dynamics   (GimpBrushCore            *core,
-                                       GimpDynamics             *dynamics);
+void   ligma_brush_core_set_dynamics   (LigmaBrushCore            *core,
+                                       LigmaDynamics             *dynamics);
 
-void   gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
-                                       GimpDrawable             *drawable,
-                                       const GimpCoords         *coords,
+void   ligma_brush_core_paste_canvas   (LigmaBrushCore            *core,
+                                       LigmaDrawable             *drawable,
+                                       const LigmaCoords         *coords,
                                        gdouble                   brush_opacity,
                                        gdouble                   image_opacity,
-                                       GimpLayerMode             paint_mode,
-                                       GimpBrushApplicationMode  brush_hardness,
+                                       LigmaLayerMode             paint_mode,
+                                       LigmaBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode);
-void   gimp_brush_core_replace_canvas (GimpBrushCore            *core,
-                                       GimpDrawable             *drawable,
-                                       const GimpCoords         *coords,
+                                       LigmaPaintApplicationMode  mode);
+void   ligma_brush_core_replace_canvas (LigmaBrushCore            *core,
+                                       LigmaDrawable             *drawable,
+                                       const LigmaCoords         *coords,
                                        gdouble                   brush_opacity,
                                        gdouble                   image_opacity,
-                                       GimpBrushApplicationMode  brush_hardness,
+                                       LigmaBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode);
+                                       LigmaPaintApplicationMode  mode);
 
-void   gimp_brush_core_color_area_with_pixmap
-                                      (GimpBrushCore            *core,
-                                       GimpDrawable             *drawable,
-                                       const GimpCoords         *coords,
+void   ligma_brush_core_color_area_with_pixmap
+                                      (LigmaBrushCore            *core,
+                                       LigmaDrawable             *drawable,
+                                       const LigmaCoords         *coords,
                                        GeglBuffer               *area,
                                        gint                      area_x,
                                        gint                      area_y,
                                        gboolean                  apply_mask);
 
-const GimpTempBuf * gimp_brush_core_get_brush_mask
-                                      (GimpBrushCore            *core,
-                                       const GimpCoords         *coords,
-                                       GimpBrushApplicationMode  brush_hardness,
+const LigmaTempBuf * ligma_brush_core_get_brush_mask
+                                      (LigmaBrushCore            *core,
+                                       const LigmaCoords         *coords,
+                                       LigmaBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness);
-const GimpTempBuf * gimp_brush_core_get_brush_pixmap
-                                      (GimpBrushCore            *core);
+const LigmaTempBuf * ligma_brush_core_get_brush_pixmap
+                                      (LigmaBrushCore            *core);
 
-void   gimp_brush_core_eval_transform_dynamics
-                                      (GimpBrushCore            *core,
-                                       GimpImage                *image,
-                                       GimpPaintOptions         *paint_options,
-                                       const GimpCoords         *coords);
-void   gimp_brush_core_eval_transform_symmetry
-                                      (GimpBrushCore            *core,
-                                       GimpSymmetry             *symmetry,
+void   ligma_brush_core_eval_transform_dynamics
+                                      (LigmaBrushCore            *core,
+                                       LigmaImage                *image,
+                                       LigmaPaintOptions         *paint_options,
+                                       const LigmaCoords         *coords);
+void   ligma_brush_core_eval_transform_symmetry
+                                      (LigmaBrushCore            *core,
+                                       LigmaSymmetry             *symmetry,
                                        gint                      stroke);
 
 
-#endif  /*  __GIMP_BRUSH_CORE_H__  */
+#endif  /*  __LIGMA_BRUSH_CORE_H__  */

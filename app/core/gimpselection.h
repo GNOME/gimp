@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,48 +15,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_H__
-#define __GIMP_SELECTION_H__
+#ifndef __LIGMA_SELECTION_H__
+#define __LIGMA_SELECTION_H__
 
 
-#include "gimpchannel.h"
+#include "ligmachannel.h"
 
 
-#define GIMP_TYPE_SELECTION            (gimp_selection_get_type ())
-#define GIMP_SELECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION, GimpSelection))
-#define GIMP_SELECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION, GimpSelectionClass))
-#define GIMP_IS_SELECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION))
-#define GIMP_IS_SELECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION))
-#define GIMP_SELECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION, GimpSelectionClass))
+#define LIGMA_TYPE_SELECTION            (ligma_selection_get_type ())
+#define LIGMA_SELECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SELECTION, LigmaSelection))
+#define LIGMA_SELECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SELECTION, LigmaSelectionClass))
+#define LIGMA_IS_SELECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SELECTION))
+#define LIGMA_IS_SELECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SELECTION))
+#define LIGMA_SELECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SELECTION, LigmaSelectionClass))
 
 
-typedef struct _GimpSelectionClass GimpSelectionClass;
+typedef struct _LigmaSelectionClass LigmaSelectionClass;
 
-struct _GimpSelection
+struct _LigmaSelection
 {
-  GimpChannel parent_instance;
+  LigmaChannel parent_instance;
 
   gint        suspend_count;
 };
 
-struct _GimpSelectionClass
+struct _LigmaSelectionClass
 {
-  GimpChannelClass parent_class;
+  LigmaChannelClass parent_class;
 };
 
 
-GType         gimp_selection_get_type (void) G_GNUC_CONST;
+GType         ligma_selection_get_type (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new      (GimpImage     *image,
+LigmaChannel * ligma_selection_new      (LigmaImage     *image,
                                        gint           width,
                                        gint           height);
 
-gint          gimp_selection_suspend  (GimpSelection *selection);
-gint          gimp_selection_resume   (GimpSelection *selection);
+gint          ligma_selection_suspend  (LigmaSelection *selection);
+gint          ligma_selection_resume   (LigmaSelection *selection);
 
-GeglBuffer  * gimp_selection_extract  (GimpSelection *selection,
+GeglBuffer  * ligma_selection_extract  (LigmaSelection *selection,
                                        GList         *pickables,
-                                       GimpContext   *context,
+                                       LigmaContext   *context,
                                        gboolean       cut_image,
                                        gboolean       keep_indexed,
                                        gboolean       add_alpha,
@@ -64,13 +64,13 @@ GeglBuffer  * gimp_selection_extract  (GimpSelection *selection,
                                        gint          *offset_y,
                                        GError       **error);
 
-GimpLayer   * gimp_selection_float    (GimpSelection *selection,
+LigmaLayer   * ligma_selection_float    (LigmaSelection *selection,
                                        GList         *drawables,
-                                       GimpContext   *context,
+                                       LigmaContext   *context,
                                        gboolean       cut_image,
                                        gint           off_x,
                                        gint           off_y,
                                        GError       **error);
 
 
-#endif /* __GIMP_SELECTION_H__ */
+#endif /* __LIGMA_SELECTION_H__ */

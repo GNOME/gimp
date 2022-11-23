@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,76 +20,76 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimplayer.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmalayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpitemtreeview.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmaitemtreeview.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
 
-#include "gimptools-utils.h"
+#include "ligmatools-utils.h"
 
 
 
 /*  public functions  */
 
 void
-gimp_tools_blink_lock_box (Gimp     *gimp,
-                           GimpItem *item)
+ligma_tools_blink_lock_box (Ligma     *ligma,
+                           LigmaItem *item)
 {
   GtkWidget        *dockable;
-  GimpItemTreeView *view;
+  LigmaItemTreeView *view;
   GdkMonitor       *monitor;
   const gchar      *identifier;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_ITEM (item));
 
-  if (GIMP_IS_LAYER (item))
-    identifier = "gimp-layer-list";
-  else if (GIMP_IS_CHANNEL (item))
-    identifier = "gimp-channel-list";
-  else if (GIMP_IS_VECTORS (item))
-    identifier = "gimp-vectors-list";
+  if (LIGMA_IS_LAYER (item))
+    identifier = "ligma-layer-list";
+  else if (LIGMA_IS_CHANNEL (item))
+    identifier = "ligma-channel-list";
+  else if (LIGMA_IS_VECTORS (item))
+    identifier = "ligma-vectors-list";
   else
     return;
 
-  monitor = gimp_get_monitor_at_pointer ();
+  monitor = ligma_get_monitor_at_pointer ();
 
-  dockable = gimp_window_strategy_show_dockable_dialog (
-    GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-    gimp,
-    gimp_dialog_factory_get_singleton (),
+  dockable = ligma_window_strategy_show_dockable_dialog (
+    LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+    ligma,
+    ligma_dialog_factory_get_singleton (),
     monitor,
     identifier);
 
   if (! dockable)
     return;
 
-  view = GIMP_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
-  gimp_item_tree_view_blink_lock (view, item);
+  view = LIGMA_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
+  ligma_item_tree_view_blink_lock (view, item);
 }
 
 void
-gimp_tools_show_tool_options (Gimp *gimp)
+ligma_tools_show_tool_options (Ligma *ligma)
 {
   GdkMonitor *monitor;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  monitor = gimp_get_monitor_at_pointer ();
+  monitor = ligma_get_monitor_at_pointer ();
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                             gimp,
-                                             gimp_dialog_factory_get_singleton (),
-                                             monitor, "gimp-tool-options");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                             ligma,
+                                             ligma_dialog_factory_get_singleton (),
+                                             monitor, "ligma-tool-options");
 }

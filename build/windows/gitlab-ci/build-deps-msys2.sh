@@ -43,13 +43,13 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-vala
 
 export GIT_DEPTH=1
-export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
-export PATH="$GIMP_PREFIX/bin:$PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
-export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
+export LIGMA_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
+export PATH="$LIGMA_PREFIX/bin:$PATH"
+export PKG_CONFIG_PATH="${LIGMA_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="${LIGMA_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="${LIGMA_PREFIX}/lib:${LD_LIBRARY_PATH}"
 export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
+export XDG_DATA_DIRS="${LIGMA_PREFIX}/share:/mingw64/share/"
 
 ## babl and GEGL (follow master branch) ##
 
@@ -58,14 +58,14 @@ git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 mkdir _babl/_build
 cd _babl/_build
-meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false \
+meson -Dprefix="${LIGMA_PREFIX}" -Dwith-docs=false \
       ${BABL_OPTIONS} ..
 ninja
 ninja install
 
 mkdir ../../_gegl/_build
 cd ../../_gegl/_build
-meson -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
+meson -Dprefix="${LIGMA_PREFIX}" -Ddocs=false \
       -Dcairo=enabled -Dumfpack=enabled \
       -Dopenexr=enabled -Dworkshop=true \
       ${GEGL_OPTIONS} ..

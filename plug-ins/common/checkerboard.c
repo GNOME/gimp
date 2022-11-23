@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Copyright (C) 1997 Brent Burton & the Edward Blevins
  *
@@ -20,15 +20,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC      "plug-in-checkerboard"
 #define PLUG_IN_BINARY    "checkerboard"
-#define PLUG_IN_ROLE      "gimp-checkerboard"
+#define PLUG_IN_ROLE      "ligma-checkerboard"
 #define SPIN_BUTTON_WIDTH 8
 
 
@@ -45,12 +45,12 @@ typedef struct _CheckerboardClass CheckerboardClass;
 
 struct _Checkerboard
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _CheckerboardClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -59,33 +59,33 @@ struct _CheckerboardClass
 
 GType                   checkerboard_get_type         (void) G_GNUC_CONST;
 
-static GList          * checkerboard_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * checkerboard_create_procedure (GimpPlugIn           *plug_in,
+static GList          * checkerboard_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * checkerboard_create_procedure (LigmaPlugIn           *plug_in,
                                                        const gchar          *name);
 
-static GimpValueArray * checkerboard_run              (GimpProcedure        *procedure,
-                                                       GimpRunMode           run_mode,
-                                                       GimpImage            *image,
+static LigmaValueArray * checkerboard_run              (LigmaProcedure        *procedure,
+                                                       LigmaRunMode           run_mode,
+                                                       LigmaImage            *image,
                                                        gint                  n_drawables,
-                                                       GimpDrawable        **drawables,
-                                                       const GimpValueArray *args,
+                                                       LigmaDrawable        **drawables,
+                                                       const LigmaValueArray *args,
                                                        gpointer              run_data);
 
-static void             do_checkerboard_pattern       (GimpDrawable *drawable,
-                                                       GimpPreview  *preview);
-static void             do_checkerboard_preview       (GimpDrawable *drawable,
-                                                       GimpPreview  *preview);
+static void             do_checkerboard_pattern       (LigmaDrawable *drawable,
+                                                       LigmaPreview  *preview);
+static void             do_checkerboard_preview       (LigmaDrawable *drawable,
+                                                       LigmaPreview  *preview);
 static gint             inblock                       (gint          pos,
                                                        gint          size);
 
-static gboolean         checkerboard_dialog           (GimpImage    *image,
-                                                       GimpDrawable *drawable);
+static gboolean         checkerboard_dialog           (LigmaImage    *image,
+                                                       LigmaDrawable *drawable);
 static void             check_size_update_callback    (GtkWidget    *widget);
 
 
-G_DEFINE_TYPE (Checkerboard, checkerboard, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Checkerboard, checkerboard, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (CHECKERBOARD_TYPE)
+LIGMA_MAIN (CHECKERBOARD_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -99,7 +99,7 @@ static CheckVals cvals =
 static void
 checkerboard_class_init (CheckerboardClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = checkerboard_query_procedures;
   plug_in_class->create_procedure = checkerboard_create_procedure;
@@ -112,67 +112,67 @@ checkerboard_init (Checkerboard *checkerboard)
 }
 
 static GList *
-checkerboard_query_procedures (GimpPlugIn *plug_in)
+checkerboard_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-checkerboard_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+checkerboard_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             checkerboard_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure,
+      ligma_procedure_set_menu_label (procedure,
                                      N_("_Checkerboard (legacy)..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         N_("Create a checkerboard pattern"),
                                         "More here later",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Brent Burton & the Edward Blevins",
                                       "Brent Burton & the Edward Blevins",
                                       "1997");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "psychobily",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "psychobily",
                              "Psychobily",
                              "Render a psychobiliy checkerboard",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "check-size",
+      LIGMA_PROC_ARG_INT (procedure, "check-size",
                          "Check size",
                          "Size of the checks",
-                         1, GIMP_MAX_IMAGE_SIZE, 10,
+                         1, LIGMA_MAX_IMAGE_SIZE, 10,
                          G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-checkerboard_run (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
-                  GimpImage            *image,
+static LigmaValueArray *
+checkerboard_run (LigmaProcedure        *procedure,
+                  LigmaRunMode           run_mode,
+                  LigmaImage            *image,
                   gint                  n_drawables,
-                  GimpDrawable        **drawables,
-                  const GimpValueArray *args,
+                  LigmaDrawable        **drawables,
+                  const LigmaValueArray *args,
                   gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -180,12 +180,12 @@ checkerboard_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -195,49 +195,49 @@ checkerboard_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &cvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &cvals);
 
       if (! checkerboard_dialog (image, drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      cvals.mode = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      cvals.size = GIMP_VALUES_GET_INT     (args, 1);
+    case LIGMA_RUN_NONINTERACTIVE:
+      cvals.mode = LIGMA_VALUES_GET_BOOLEAN (args, 0);
+      cvals.size = LIGMA_VALUES_GET_INT     (args, 1);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &cvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &cvals);
       break;
 
     default:
       break;
     }
 
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb  (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
       do_checkerboard_pattern (drawable, NULL);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &cvals, sizeof (CheckVals));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &cvals, sizeof (CheckVals));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 typedef struct
@@ -281,39 +281,39 @@ checkerboard_func (gint      x,
 }
 
 static void
-do_checkerboard_pattern (GimpDrawable *drawable,
-                         GimpPreview  *preview)
+do_checkerboard_pattern (LigmaDrawable *drawable,
+                         LigmaPreview  *preview)
 {
   CheckerboardParam_t  param;
-  GimpRGB              fg, bg;
+  LigmaRGB              fg, bg;
   const Babl          *format;
   gint                 bpp;
 
-  gimp_context_get_background (&bg);
-  gimp_context_get_foreground (&fg);
+  ligma_context_get_background (&bg);
+  ligma_context_get_foreground (&fg);
 
-  if (gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_gray (drawable))
     {
-      param.bg[0] = gimp_rgb_luminance_uchar (&bg);
-      gimp_rgba_get_uchar (&bg, NULL, NULL, NULL, param.bg + 1);
+      param.bg[0] = ligma_rgb_luminance_uchar (&bg);
+      ligma_rgba_get_uchar (&bg, NULL, NULL, NULL, param.bg + 1);
 
-      param.fg[0] = gimp_rgb_luminance_uchar (&fg);
-      gimp_rgba_get_uchar (&fg, NULL, NULL, NULL, param.fg + 3);
+      param.fg[0] = ligma_rgb_luminance_uchar (&fg);
+      ligma_rgba_get_uchar (&fg, NULL, NULL, NULL, param.fg + 3);
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      gimp_rgba_get_uchar (&bg,
+      ligma_rgba_get_uchar (&bg,
                            param.bg, param.bg + 1, param.bg + 2, param.bg + 1);
 
-      gimp_rgba_get_uchar (&fg,
+      ligma_rgba_get_uchar (&fg,
                            param.fg, param.fg + 1, param.fg + 2, param.fg + 3);
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -334,9 +334,9 @@ do_checkerboard_pattern (GimpDrawable *drawable,
       gint    i;
       guchar *buffer;
 
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
-      bpp = gimp_drawable_get_bpp (drawable);
+      ligma_preview_get_position (preview, &x1, &y1);
+      ligma_preview_get_size (preview, &width, &height);
+      bpp = ligma_drawable_get_bpp (drawable);
       buffer = g_new (guchar, width * height * bpp);
 
       for (i = 0; i < width * height; i++)
@@ -347,7 +347,7 @@ do_checkerboard_pattern (GimpDrawable *drawable,
                              bpp, &param);
         }
 
-      gimp_preview_draw_buffer (preview, buffer, width * bpp);
+      ligma_preview_draw_buffer (preview, buffer, width * bpp);
       g_free (buffer);
     }
   else
@@ -358,14 +358,14 @@ do_checkerboard_pattern (GimpDrawable *drawable,
       gint                progress_total;
       gint                progress_done = 0;
 
-      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+      if (! ligma_drawable_mask_intersect (drawable, &x, &y, &w, &h))
         return;
 
       progress_total = w * h;
 
-      gimp_progress_init (_("Checkerboard"));
+      ligma_progress_init (_("Checkerboard"));
 
-      buffer = gimp_drawable_get_shadow_buffer (drawable);
+      buffer = ligma_drawable_get_shadow_buffer (drawable);
 
       iter = gegl_buffer_iterator_new (buffer,
                                        GEGL_RECTANGLE (x, y, w, h), 0,
@@ -395,22 +395,22 @@ do_checkerboard_pattern (GimpDrawable *drawable,
             }
 
           progress_done += roi.width * roi.height;
-          gimp_progress_update ((gdouble) progress_done /
+          ligma_progress_update ((gdouble) progress_done /
                                 (gdouble) progress_total);
         }
 
       g_object_unref (buffer);
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, x, y, w, h);
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, x, y, w, h);
     }
 }
 
 static void
-do_checkerboard_preview (GimpDrawable *drawable,
-                         GimpPreview  *preview)
+do_checkerboard_preview (LigmaDrawable *drawable,
+                         LigmaPreview  *preview)
 {
   do_checkerboard_pattern (drawable, preview);
 }
@@ -471,8 +471,8 @@ inblock (gint pos,
 }
 
 static gboolean
-checkerboard_dialog (GimpImage    *image,
-                     GimpDrawable *drawable)
+checkerboard_dialog (LigmaImage    *image,
+                     LigmaDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -481,28 +481,28 @@ checkerboard_dialog (GimpImage    *image,
   GtkWidget *toggle;
   GtkWidget *size_entry;
   gint       size, width, height;
-  GimpUnit   unit;
+  LigmaUnit   unit;
   gdouble    xres;
   gdouble    yres;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Checkerboard"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Checkerboard"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -510,7 +510,7 @@ checkerboard_dialog (GimpImage    *image,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -522,44 +522,44 @@ checkerboard_dialog (GimpImage    *image,
   gtk_widget_show (hbox);
 
   /*  Get the image resolution and unit  */
-  gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
+  ligma_image_get_resolution (image, &xres, &yres);
+  unit = ligma_image_get_unit (image);
 
-  width  = gimp_drawable_get_width (drawable);
-  height = gimp_drawable_get_height (drawable);
+  width  = ligma_drawable_get_width (drawable);
+  height = ligma_drawable_get_height (drawable);
   size   = MIN (width, height);
 
-  size_entry = gimp_size_entry_new (1, unit, "%a",
+  size_entry = ligma_size_entry_new (1, unit, "%a",
                                     TRUE, TRUE, FALSE, SPIN_BUTTON_WIDTH,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                                    LIGMA_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
   gtk_widget_show (size_entry);
 
   /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
+  ligma_size_entry_set_unit (LIGMA_SIZE_ENTRY (size_entry), LIGMA_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, size);
+  ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (size_entry), 0, 0.0, size);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (size_entry), 0,
                                          1.0, size);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, cvals.size);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (size_entry), 0, cvals.size);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (size_entry),
                                 _("_Size:"), 1, 0, 0.0);
 
   g_signal_connect (size_entry, "value-changed",
                     G_CALLBACK (check_size_update_callback),
                     &cvals.size);
   g_signal_connect_swapped (size_entry, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
@@ -568,15 +568,15 @@ checkerboard_dialog (GimpImage    *image,
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &cvals.mode);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -586,5 +586,5 @@ checkerboard_dialog (GimpImage    *image,
 static void
 check_size_update_callback (GtkWidget *widget)
 {
-  cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  cvals.size = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (widget), 0);
 }

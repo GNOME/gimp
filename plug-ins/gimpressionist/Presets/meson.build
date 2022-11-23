@@ -28,5 +28,5 @@ presets = [
 
 install_data(
   presets,
-  install_dir: gimpdatadir / 'gimpressionist' / 'Presets',
+  install_dir: ligmadatadir / 'ligmaressionist' / 'Presets',
 )

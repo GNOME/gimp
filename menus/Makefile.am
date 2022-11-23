@@ -1,6 +1,6 @@
-## Makefile.am for gimp/menus
+## Makefile.am for ligma/menus
 
-menudatadir = $(gimpdatadir)/menus
+menudatadir = $(ligmadatadir)/menus
 
 menudata_in_files = \
 	dockable-menu.xml.in	\
@@ -53,7 +53,7 @@ EXTRA_DIST = \
 MAINTAINERCLEANFILES = $(menudata_built_files)
 
 
-if GIMP_UNSTABLE
+if LIGMA_UNSTABLE
 UNSTABLE_MENU_PARAMS = --stringparam unstable-menus yes
 endif
 

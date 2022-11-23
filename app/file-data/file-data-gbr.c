@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,69 +21,69 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpbrush-load.h"
-#include "core/gimpbrush-private.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-new.h"
-#include "core/gimpimage-resize.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmabrush-load.h"
+#include "core/ligmabrush-private.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmaimage-resize.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatempbuf.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmaprocedure.h"
 
 #include "file-data-gbr.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static GimpImage * file_gbr_brush_to_image (Gimp         *gimp,
-                                            GimpBrush    *brush);
-static GimpBrush * file_gbr_image_to_brush (GimpImage    *image,
-                                            GimpDrawable *drawable,
+static LigmaImage * file_gbr_brush_to_image (Ligma         *ligma,
+                                            LigmaBrush    *brush);
+static LigmaBrush * file_gbr_image_to_brush (LigmaImage    *image,
+                                            LigmaDrawable *drawable,
                                             const gchar  *name,
                                             gdouble       spacing);
 
 
 /*  public functions  */
 
-GimpValueArray *
-file_gbr_load_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+LigmaValueArray *
+file_gbr_load_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image = NULL;
   GFile          *file;
   GInputStream   *input;
   GError         *my_error = NULL;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
   if (input)
     {
-      GimpBrush *brush = gimp_brush_load_brush (context, file, input, error);
+      LigmaBrush *brush = ligma_brush_load_brush (context, file, input, error);
 
       if (brush)
         {
-          image = file_gbr_brush_to_image (gimp, brush);
+          image = file_gbr_brush_to_image (ligma, brush);
           g_object_unref (brush);
         }
 
@@ -93,99 +93,99 @@ file_gbr_load_invoker (GimpProcedure         *procedure,
     {
       g_propagate_prefixed_error (error, my_error,
                                   _("Could not open '%s' for reading: "),
-                                  gimp_file_get_utf8_name (file));
+                                  ligma_file_get_utf8_name (file));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
+  return_vals = ligma_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
 
   if (image)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), image);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }
 
-GimpValueArray *
-file_gbr_save_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+LigmaValueArray *
+file_gbr_save_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GimpDrawable   *drawable;
-  GimpBrush      *brush;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
+  LigmaDrawable   *drawable;
+  LigmaBrush      *brush;
   const gchar    *name;
   GFile          *file;
   gint            spacing;
   gboolean        success;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  image    = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  file     = g_value_get_object (gimp_value_array_index (args, 3));
-  spacing  = g_value_get_int    (gimp_value_array_index (args, 4));
-  name     = g_value_get_string (gimp_value_array_index (args, 5));
+  image    = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  file     = g_value_get_object (ligma_value_array_index (args, 3));
+  spacing  = g_value_get_int    (ligma_value_array_index (args, 4));
+  name     = g_value_get_string (ligma_value_array_index (args, 5));
 
   brush = file_gbr_image_to_brush (image, drawable, name, spacing);
 
-  gimp_data_set_file (GIMP_DATA (brush), file, TRUE, TRUE);
+  ligma_data_set_file (LIGMA_DATA (brush), file, TRUE, TRUE);
 
-  success = gimp_data_save (GIMP_DATA (brush), error);
+  success = ligma_data_save (LIGMA_DATA (brush), error);
 
   g_object_unref (brush);
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }
 
-GimpLayer *
-file_gbr_brush_to_layer (GimpImage *image,
-                         GimpBrush *brush)
+LigmaLayer *
+file_gbr_brush_to_layer (LigmaImage *image,
+                         LigmaBrush *brush)
 {
-  GimpLayer    *layer;
+  LigmaLayer    *layer;
   const Babl   *format;
   gboolean      alpha;
   gint          width;
   gint          height;
   gint          image_width;
   gint          image_height;
-  GimpTempBuf  *mask;
-  GimpTempBuf  *pixmap;
+  LigmaTempBuf  *mask;
+  LigmaTempBuf  *pixmap;
   GeglBuffer   *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_BRUSH (brush), NULL);
 
-  mask   = gimp_brush_get_mask   (brush);
-  pixmap = gimp_brush_get_pixmap (brush);
+  mask   = ligma_brush_get_mask   (brush);
+  pixmap = ligma_brush_get_pixmap (brush);
 
   if (pixmap)
     alpha = TRUE;
   else
     alpha = FALSE;
 
-  width  = gimp_temp_buf_get_width  (mask);
-  height = gimp_temp_buf_get_height (mask);
+  width  = ligma_temp_buf_get_width  (mask);
+  height = ligma_temp_buf_get_height (mask);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  image_width  = ligma_image_get_width  (image);
+  image_height = ligma_image_get_height (image);
 
   if (width > image_width || height > image_height)
     {
       gint new_width  = MAX (image_width,  width);
       gint new_height = MAX (image_height, height);
 
-      gimp_image_resize (image, gimp_get_user_context (image->gimp),
+      ligma_image_resize (image, ligma_get_user_context (image->ligma),
                          new_width, new_height,
                          (new_width  - image_width) / 2,
                          (new_height - image_height) / 2,
@@ -195,17 +195,17 @@ file_gbr_brush_to_layer (GimpImage *image,
       image_height = new_height;
     }
 
-  format = gimp_image_get_layer_format (image, alpha);
+  format = ligma_image_get_layer_format (image, alpha);
 
-  layer = gimp_layer_new (image, width, height, format,
-                          gimp_object_get_name (brush),
-                          1.0, GIMP_LAYER_MODE_NORMAL);
+  layer = ligma_layer_new (image, width, height, format,
+                          ligma_object_get_name (brush),
+                          1.0, LIGMA_LAYER_MODE_NORMAL);
 
-  gimp_item_set_offset (GIMP_ITEM (layer),
+  ligma_item_set_offset (LIGMA_ITEM (layer),
                         (image_width  - width)  / 2,
                         (image_height - height) / 2);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   if (pixmap)
     {
@@ -217,10 +217,10 @@ file_gbr_brush_to_layer (GimpImage *image,
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        babl_format ("R'G'B' u8"),
-                       gimp_temp_buf_get_data (pixmap), GEGL_AUTO_ROWSTRIDE);
+                       ligma_temp_buf_get_data (pixmap), GEGL_AUTO_ROWSTRIDE);
 
       pixmap_data = gegl_buffer_linear_open (buffer, NULL, NULL, NULL);
-      mask_data   = gimp_temp_buf_get_data (mask);
+      mask_data   = ligma_temp_buf_get_data (mask);
 
       for (i = 0, p = pixmap_data, m = mask_data;
            i < width * height;
@@ -233,7 +233,7 @@ file_gbr_brush_to_layer (GimpImage *image,
     }
   else
     {
-      guchar *mask_data = gimp_temp_buf_get_data (mask);
+      guchar *mask_data = ligma_temp_buf_get_data (mask);
       gint    i;
 
       for (i = 0; i < width * height; i++)
@@ -247,45 +247,45 @@ file_gbr_brush_to_layer (GimpImage *image,
   return layer;
 }
 
-GimpBrush *
-file_gbr_drawable_to_brush (GimpDrawable        *drawable,
+LigmaBrush *
+file_gbr_drawable_to_brush (LigmaDrawable        *drawable,
                             const GeglRectangle *rect,
                             const gchar         *name,
                             gdouble              spacing)
 {
-  GimpBrush   *brush;
+  LigmaBrush   *brush;
   GeglBuffer  *buffer;
-  GimpTempBuf *mask;
-  GimpTempBuf *pixmap = NULL;
+  LigmaTempBuf *mask;
+  LigmaTempBuf *pixmap = NULL;
   gint         width;
   gint         height;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (rect != NULL, NULL);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   width  = rect->width;
   height = rect->height;
 
-  brush = g_object_new (GIMP_TYPE_BRUSH,
+  brush = g_object_new (LIGMA_TYPE_BRUSH,
                         "name",      name,
-                        "mime-type", "image/x-gimp-gbr",
+                        "mime-type", "image/x-ligma-gbr",
                         "spacing",   spacing,
                         NULL);
 
-  mask = gimp_temp_buf_new (width, height, babl_format ("Y u8"));
+  mask = ligma_temp_buf_new (width, height, babl_format ("Y u8"));
 
-  if (gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_gray (drawable))
     {
-      guchar *m = gimp_temp_buf_get_data (mask);
+      guchar *m = ligma_temp_buf_get_data (mask);
       gint    i;
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         {
           GeglBufferIterator *iter;
-          GimpRGB             white;
+          LigmaRGB             white;
 
-          gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
+          ligma_rgba_set_uchar (&white, 255, 255, 255, 255);
 
           iter = gegl_buffer_iterator_new (buffer, rect, 0,
                                            babl_format ("Y'A u8"),
@@ -299,23 +299,23 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
 
               for (j = 0; j < iter->length; j++)
                 {
-                  GimpRGB gray;
+                  LigmaRGB gray;
                   gint    x, y;
                   gint    dest;
 
-                  gimp_rgba_set_uchar (&gray,
+                  ligma_rgba_set_uchar (&gray,
                                        data[0], data[0], data[0],
                                        data[1]);
 
-                  gimp_rgb_composite (&gray, &white,
-                                      GIMP_RGB_COMPOSITE_BEHIND);
+                  ligma_rgb_composite (&gray, &white,
+                                      LIGMA_RGB_COMPOSITE_BEHIND);
 
                   x = iter->items[0].roi.x + j % iter->items[0].roi.width;
                   y = iter->items[0].roi.y + j / iter->items[0].roi.width;
 
                   dest = y * width + x;
 
-                  gimp_rgba_get_uchar (&gray, &m[dest], NULL, NULL, NULL);
+                  ligma_rgba_get_uchar (&gray, &m[dest], NULL, NULL, NULL);
 
                   data += 2;
                 }
@@ -334,16 +334,16 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
     }
   else
     {
-      pixmap = gimp_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
+      pixmap = ligma_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
 
       gegl_buffer_get (buffer, rect, 1.0,
                        babl_format ("R'G'B' u8"),
-                       gimp_temp_buf_get_data (pixmap),
+                       ligma_temp_buf_get_data (pixmap),
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       gegl_buffer_get (buffer, rect, 1.0,
                        babl_format ("A u8"),
-                       gimp_temp_buf_get_data (mask),
+                       ligma_temp_buf_get_data (mask),
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
 
@@ -357,69 +357,69 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
 
 /*  private functions  */
 
-static GimpImage *
-file_gbr_brush_to_image (Gimp      *gimp,
-                         GimpBrush *brush)
+static LigmaImage *
+file_gbr_brush_to_image (Ligma      *ligma,
+                         LigmaBrush *brush)
 {
-  GimpImage         *image;
-  GimpLayer         *layer;
-  GimpImageBaseType  base_type;
+  LigmaImage         *image;
+  LigmaLayer         *layer;
+  LigmaImageBaseType  base_type;
   gint               width;
   gint               height;
-  GimpTempBuf       *mask   = gimp_brush_get_mask   (brush);
-  GimpTempBuf       *pixmap = gimp_brush_get_pixmap (brush);
+  LigmaTempBuf       *mask   = ligma_brush_get_mask   (brush);
+  LigmaTempBuf       *pixmap = ligma_brush_get_pixmap (brush);
   GString           *string;
-  GimpConfigWriter  *writer;
-  GimpParasite      *parasite;
+  LigmaConfigWriter  *writer;
+  LigmaParasite      *parasite;
 
   if (pixmap)
-    base_type = GIMP_RGB;
+    base_type = LIGMA_RGB;
   else
-    base_type = GIMP_GRAY;
+    base_type = LIGMA_GRAY;
 
-  width  = gimp_temp_buf_get_width  (mask);
-  height = gimp_temp_buf_get_height (mask);
+  width  = ligma_temp_buf_get_width  (mask);
+  height = ligma_temp_buf_get_height (mask);
 
-  image = gimp_image_new (gimp, width, height, base_type,
-                          GIMP_PRECISION_U8_NON_LINEAR);
+  image = ligma_image_new (ligma, width, height, base_type,
+                          LIGMA_PRECISION_U8_NON_LINEAR);
 
   string = g_string_new (NULL);
-  writer = gimp_config_writer_new_from_string (string);
+  writer = ligma_config_writer_new_from_string (string);
 
-  gimp_config_writer_open (writer, "spacing");
-  gimp_config_writer_printf (writer, "%d", gimp_brush_get_spacing (brush));
-  gimp_config_writer_close (writer);
+  ligma_config_writer_open (writer, "spacing");
+  ligma_config_writer_printf (writer, "%d", ligma_brush_get_spacing (brush));
+  ligma_config_writer_close (writer);
 
-  gimp_config_writer_linefeed (writer);
+  ligma_config_writer_linefeed (writer);
 
-  gimp_config_writer_open (writer, "description");
-  gimp_config_writer_string (writer, gimp_object_get_name (brush));
-  gimp_config_writer_close (writer);
+  ligma_config_writer_open (writer, "description");
+  ligma_config_writer_string (writer, ligma_object_get_name (brush));
+  ligma_config_writer_close (writer);
 
-  gimp_config_writer_finish (writer, NULL, NULL);
+  ligma_config_writer_finish (writer, NULL, NULL);
 
-  parasite = gimp_parasite_new ("GimpProcedureConfig-file-gbr-save-last",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("LigmaProcedureConfig-file-gbr-save-last",
+                                LIGMA_PARASITE_PERSISTENT,
                                 string->len + 1, string->str);
-  gimp_image_parasite_attach (image, parasite, FALSE);
-  gimp_parasite_free (parasite);
+  ligma_image_parasite_attach (image, parasite, FALSE);
+  ligma_parasite_free (parasite);
 
   g_string_free (string, TRUE);
 
   layer = file_gbr_brush_to_layer (image, brush);
-  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+  ligma_image_add_layer (image, layer, NULL, 0, FALSE);
 
   return image;
 }
 
-static GimpBrush *
-file_gbr_image_to_brush (GimpImage    *image,
-                         GimpDrawable *drawable,
+static LigmaBrush *
+file_gbr_image_to_brush (LigmaImage    *image,
+                         LigmaDrawable *drawable,
                          const gchar  *name,
                          gdouble       spacing)
 {
-  gint width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-  gint height = gimp_item_get_height (GIMP_ITEM (drawable));
+  gint width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+  gint height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
   return file_gbr_drawable_to_brush (drawable,
                                      GEGL_RECTANGLE (0, 0, width, height),

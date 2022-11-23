@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,20 @@
 #define __XCF_H__
 
 
-void        xcf_init        (Gimp           *gimp);
-void        xcf_exit        (Gimp           *gimp);
+void        xcf_init        (Ligma           *ligma);
+void        xcf_exit        (Ligma           *ligma);
 
-GimpImage * xcf_load_stream (Gimp           *gimp,
+LigmaImage * xcf_load_stream (Ligma           *ligma,
                              GInputStream   *input,
                              GFile          *input_file,
-                             GimpProgress   *progress,
+                             LigmaProgress   *progress,
                              GError        **error);
 
-gboolean    xcf_save_stream (Gimp           *gimp,
-                             GimpImage      *image,
+gboolean    xcf_save_stream (Ligma           *ligma,
+                             LigmaImage      *image,
                              GOutputStream  *output,
                              GFile          *output_file,
-                             GimpProgress   *progress,
+                             LigmaProgress   *progress,
                              GError        **error);
 
 #endif /* __XCF_H__ */

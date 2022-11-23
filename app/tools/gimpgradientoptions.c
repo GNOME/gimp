@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpdata.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimp-gradients.h"
+#include "core/ligmadata.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligma-gradients.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpviewablebox.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmaviewablebox.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpgradientoptions.h"
-#include "gimppaintoptions-gui.h"
+#include "ligmagradientoptions.h"
+#include "ligmapaintoptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -55,109 +55,109 @@ enum
 };
 
 
-static void   gimp_gradient_options_set_property           (GObject             *object,
+static void   ligma_gradient_options_set_property           (GObject             *object,
                                                             guint                property_id,
                                                             const GValue        *value,
                                                             GParamSpec          *pspec);
-static void   gimp_gradient_options_get_property           (GObject             *object,
+static void   ligma_gradient_options_get_property           (GObject             *object,
                                                             guint                property_id,
                                                             GValue              *value,
                                                             GParamSpec          *pspec);
 
-static void   gradient_options_repeat_gradient_type_notify (GimpGradientOptions *options,
+static void   gradient_options_repeat_gradient_type_notify (LigmaGradientOptions *options,
                                                             GParamSpec          *pspec,
                                                             GtkWidget           *repeat_combo);
-static void   gradient_options_metric_gradient_type_notify (GimpGradientOptions *options,
+static void   gradient_options_metric_gradient_type_notify (LigmaGradientOptions *options,
                                                             GParamSpec          *pspec,
                                                             GtkWidget           *repeat_combo);
 
 
-G_DEFINE_TYPE (GimpGradientOptions, gimp_gradient_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaGradientOptions, ligma_gradient_options,
+               LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
+ligma_gradient_options_class_init (LigmaGradientOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_gradient_options_set_property;
-  object_class->get_property = gimp_gradient_options_get_property;
+  object_class->set_property = ligma_gradient_options_set_property;
+  object_class->get_property = ligma_gradient_options_get_property;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET,
                            "offset",
                            _("Offset"),
                            NULL,
                            0.0, 100.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
                          "gradient-type",
                          _("Shape"),
                          NULL,
-                         GIMP_TYPE_GRADIENT_TYPE,
-                         GIMP_GRADIENT_LINEAR,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
+                         LIGMA_TYPE_GRADIENT_TYPE,
+                         LIGMA_GRADIENT_LINEAR,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
                          "distance-metric",
                          _("Metric"),
                          _("Metric to use for the distance calculation"),
                          GEGL_TYPE_DISTANCE_METRIC,
                          GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
                             "supersample",
                             _("Adaptive Supersampling"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
                         "supersample-depth",
                         _("Max depth"),
                         NULL,
                         1, 9, 3,
-                        GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
+                        LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
                            "supersample-threshold",
                            _("Threshold"),
                            NULL,
                            0.0, 4.0, 0.2,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DITHER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DITHER,
                             "dither",
                             _("Dithering"),
                             NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTANT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTANT,
                             "instant",
                             _("Instant mode"),
                             _("Commit gradient instantly"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFY_ACTIVE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFY_ACTIVE,
                             "modify-active",
                             _("Modify active gradient"),
                             _("Modify the active gradient in-place"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_gradient_options_init (GimpGradientOptions *options)
+ligma_gradient_options_init (LigmaGradientOptions *options)
 {
 }
 
 static void
-gimp_gradient_options_set_property (GObject      *object,
+ligma_gradient_options_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (object);
+  LigmaGradientOptions *options = LIGMA_GRADIENT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -199,12 +199,12 @@ gimp_gradient_options_set_property (GObject      *object,
 }
 
 static void
-gimp_gradient_options_get_property (GObject    *object,
+ligma_gradient_options_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (object);
+  LigmaGradientOptions *options = LIGMA_GRADIENT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -246,12 +246,12 @@ gimp_gradient_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_gradient_options_gui (GimpToolOptions *tool_options)
+ligma_gradient_options_gui (LigmaToolOptions *tool_options)
 {
   GObject             *config  = G_OBJECT (tool_options);
-  GimpContext         *context = GIMP_CONTEXT (tool_options);
-  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (tool_options);
-  GtkWidget           *vbox    = gimp_paint_options_gui (tool_options);
+  LigmaContext         *context = LIGMA_CONTEXT (tool_options);
+  LigmaGradientOptions *options = LIGMA_GRADIENT_OPTIONS (tool_options);
+  GtkWidget           *vbox    = ligma_paint_options_gui (tool_options);
   GtkWidget           *vbox2;
   GtkWidget           *frame;
   GtkWidget           *scale;
@@ -260,40 +260,40 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   GtkWidget           *label;
   gchar               *str;
   GdkModifierType      extend_mask;
-  GimpGradient        *gradient;
+  LigmaGradient        *gradient;
 
-  extend_mask = gimp_get_extend_selection_mask ();
+  extend_mask = ligma_get_extend_selection_mask ();
 
   /*  the gradient  */
-  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
+  button = ligma_prop_gradient_box_new (NULL, LIGMA_CONTEXT (tool_options),
                                        _("Gradient"), 2,
                                        "gradient-view-type",
                                        "gradient-view-size",
                                        "gradient-reverse",
                                        "gradient-blend-color-space",
-                                       "gimp-gradient-editor",
+                                       "ligma-gradient-editor",
                                        _("Edit this gradient"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  the blend color space  */
-  combo = gimp_prop_enum_combo_box_new (config, "gradient-blend-color-space",
+  combo = ligma_prop_enum_combo_box_new (config, "gradient-blend-color-space",
                                         0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo),
                                 _("Blend Color Space"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
 
   /*  the gradient type menu  */
-  combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Shape"));
+  combo = ligma_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Shape"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                       "gimp-gradient");
+  ligma_enum_combo_box_set_icon_prefix (LIGMA_ENUM_COMBO_BOX (combo),
+                                       "ligma-gradient");
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
   /*  the distance metric menu  */
-  combo = gimp_prop_enum_combo_box_new (config, "distance-metric", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Metric"));
+  combo = ligma_prop_enum_combo_box_new (config, "distance-metric", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Metric"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
@@ -303,8 +303,8 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gradient_options_metric_gradient_type_notify (options, NULL, combo);
 
   /*  the repeat option  */
-  combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
+  combo = ligma_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Repeat"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
@@ -314,35 +314,35 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gradient_options_repeat_gradient_type_notify (options, NULL, combo);
 
   /*  the offset scale  */
-  scale = gimp_prop_spin_scale_new (config, "offset",
+  scale = ligma_prop_spin_scale_new (config, "offset",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  the dither toggle  */
-  button = gimp_prop_check_button_new (config, "dither", NULL);
+  button = ligma_prop_check_button_new (config, "dither", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  supersampling options  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  frame = gimp_prop_expanding_frame_new (config, "supersample", NULL,
+  frame = ligma_prop_expanding_frame_new (config, "supersample", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   /*  max depth scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-depth",
+  scale = ligma_prop_spin_scale_new (config, "supersample-depth",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /*  threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
+  scale = ligma_prop_spin_scale_new (config, "supersample-threshold",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /* the instant toggle */
   str = g_strdup_printf (_("Instant mode  (%s)"),
-                          gimp_get_mod_string (extend_mask));
+                          ligma_get_mod_string (extend_mask));
 
-  button = gimp_prop_check_button_new (config, "instant", str);
+  button = ligma_prop_check_button_new (config, "instant", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   g_free (str);
@@ -351,7 +351,7 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
 
   /*  the modify active toggle  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  frame = gimp_prop_expanding_frame_new (config, "modify-active", NULL,
+  frame = ligma_prop_expanding_frame_new (config, "modify-active", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -365,39 +365,39 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_width_chars (GTK_LABEL (label), 24);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
 
   options->modify_active_hint = label;
 
-  gradient = gimp_context_get_gradient (GIMP_CONTEXT (options));
+  gradient = ligma_context_get_gradient (LIGMA_CONTEXT (options));
 
   gtk_widget_set_sensitive (options->modify_active_frame,
                             gradient !=
-                            gimp_gradients_get_custom (context->gimp));
+                            ligma_gradients_get_custom (context->ligma));
   gtk_widget_set_visible (options->modify_active_hint,
                           gradient &&
-                          ! gimp_data_is_writable (GIMP_DATA (gradient)));
+                          ! ligma_data_is_writable (LIGMA_DATA (gradient)));
 
   return vbox;
 }
 
 static void
-gradient_options_repeat_gradient_type_notify (GimpGradientOptions *options,
+gradient_options_repeat_gradient_type_notify (LigmaGradientOptions *options,
                                               GParamSpec       *pspec,
                                               GtkWidget        *repeat_combo)
 {
   gtk_widget_set_sensitive (repeat_combo,
-                            options->gradient_type < GIMP_GRADIENT_SHAPEBURST_ANGULAR);
+                            options->gradient_type < LIGMA_GRADIENT_SHAPEBURST_ANGULAR);
 }
 
 static void
-gradient_options_metric_gradient_type_notify (GimpGradientOptions *options,
+gradient_options_metric_gradient_type_notify (LigmaGradientOptions *options,
                                               GParamSpec       *pspec,
                                               GtkWidget        *repeat_combo)
 {
   gtk_widget_set_sensitive (repeat_combo,
-                            options->gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
-                            options->gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED);
+                            options->gradient_type >= LIGMA_GRADIENT_SHAPEBURST_ANGULAR &&
+                            options->gradient_type <= LIGMA_GRADIENT_SHAPEBURST_DIMPLED);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_FACTORIES_H__
-#define __GIMP_DATA_FACTORIES_H__
+#ifndef __LIGMA_DATA_FACTORIES_H__
+#define __LIGMA_DATA_FACTORIES_H__
 
 
-void      gimp_data_factories_init        (Gimp               *gimp);
-void      gimp_data_factories_add_builtin (Gimp               *gimp);
-void      gimp_data_factories_clear       (Gimp               *gimp);
-void      gimp_data_factories_exit        (Gimp               *gimp);
+void      ligma_data_factories_init        (Ligma               *ligma);
+void      ligma_data_factories_add_builtin (Ligma               *ligma);
+void      ligma_data_factories_clear       (Ligma               *ligma);
+void      ligma_data_factories_exit        (Ligma               *ligma);
 
-gint64    gimp_data_factories_get_memsize (Gimp   *gimp,
+gint64    ligma_data_factories_get_memsize (Ligma   *ligma,
                                            gint64 *gui_size);
-void      gimp_data_factories_data_clean  (Gimp   *gimp);
+void      ligma_data_factories_data_clean  (Ligma   *ligma);
 
-void      gimp_data_factories_load        (Gimp               *gimp,
-                                           GimpInitStatusFunc  status_callback);
-void      gimp_data_factories_save        (Gimp               *gimp);
+void      ligma_data_factories_load        (Ligma               *ligma,
+                                           LigmaInitStatusFunc  status_callback);
+void      ligma_data_factories_save        (Ligma               *ligma);
 
 
-#endif /* __GIMP_DATA_FACTORIES_H__ */
+#endif /* __LIGMA_DATA_FACTORIES_H__ */

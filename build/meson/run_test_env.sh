@@ -9,7 +9,7 @@ if [ -n "${UI_TEST}" ]; then
   # a new enough version which has the -d option.
   #
   # Also use dbus-run-session to make sure parallel tests aren't failing
-  # as they simultaneously try to own the "org.gimp.GIMP.UI" D-Bus name
+  # as they simultaneously try to own the "org.ligma.LIGMA.UI" D-Bus name
 
   # This is weird but basically on a Debian testing/bookworm, apparently
   # the --auto-display (neither the short version -d) option does not

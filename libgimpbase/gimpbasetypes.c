@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpbasetypes.c
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmabasetypes.c
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,12 +23,12 @@
 
 #include <glib-object.h>
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
 
 /**
- * SECTION: gimpbasetypes
- * @title: gimpbasetypes
+ * SECTION: ligmabasetypes
+ * @title: ligmabasetypes
  * @short_description: Translation between gettext translation domain
  *                     identifier and GType.
  *
@@ -37,13 +37,13 @@
  **/
 
 
-static GQuark  gimp_translation_domain_quark  (void) G_GNUC_CONST;
-static GQuark  gimp_translation_context_quark (void) G_GNUC_CONST;
-static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
+static GQuark  ligma_translation_domain_quark  (void) G_GNUC_CONST;
+static GQuark  ligma_translation_context_quark (void) G_GNUC_CONST;
+static GQuark  ligma_value_descriptions_quark  (void) G_GNUC_CONST;
 
 
 /**
- * gimp_type_set_translation_domain:
+ * ligma_type_set_translation_domain:
  * @type:   a #GType
  * @domain: a constant string that identifies a translation domain or %NULL
  *
@@ -55,21 +55,21 @@ static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
  * Since: 2.2
  **/
 void
-gimp_type_set_translation_domain (GType        type,
+ligma_type_set_translation_domain (GType        type,
                                   const gchar *domain)
 {
   g_type_set_qdata (type,
-                    gimp_translation_domain_quark (), (gpointer) domain);
+                    ligma_translation_domain_quark (), (gpointer) domain);
 }
 
 /**
- * gimp_type_get_translation_domain:
+ * ligma_type_get_translation_domain:
  * @type: a #GType
  *
  * Retrieves the gettext translation domain identifier that has been
- * previously set using gimp_type_set_translation_domain(). You should
- * not need to use this function directly, use gimp_enum_get_value()
- * or gimp_enum_value_get_desc() instead.
+ * previously set using ligma_type_set_translation_domain(). You should
+ * not need to use this function directly, use ligma_enum_get_value()
+ * or ligma_enum_value_get_desc() instead.
  *
  * Returns: the translation domain associated with @type
  *               or %NULL if no domain was set
@@ -77,14 +77,14 @@ gimp_type_set_translation_domain (GType        type,
  * Since: 2.2
  **/
 const gchar *
-gimp_type_get_translation_domain (GType type)
+ligma_type_get_translation_domain (GType type)
 {
   return (const gchar *) g_type_get_qdata (type,
-                                           gimp_translation_domain_quark ());
+                                           ligma_translation_domain_quark ());
 }
 
 /**
- * gimp_type_set_translation_context:
+ * ligma_type_set_translation_context:
  * @type:    a #GType
  * @context: a constant string that identifies a translation context or %NULL
  *
@@ -95,21 +95,21 @@ gimp_type_get_translation_domain (GType type)
  * Since: 2.8
  **/
 void
-gimp_type_set_translation_context (GType        type,
+ligma_type_set_translation_context (GType        type,
                                    const gchar *context)
 {
   g_type_set_qdata (type,
-                    gimp_translation_context_quark (), (gpointer) context);
+                    ligma_translation_context_quark (), (gpointer) context);
 }
 
 /**
- * gimp_type_get_translation_context:
+ * ligma_type_get_translation_context:
  * @type: a #GType
  *
  * Retrieves the translation context that has been previously set
- * using gimp_type_set_translation_context(). You should not need to
- * use this function directly, use gimp_enum_get_value() or
- * gimp_enum_value_get_desc() instead.
+ * using ligma_type_set_translation_context(). You should not need to
+ * use this function directly, use ligma_enum_get_value() or
+ * ligma_enum_value_get_desc() instead.
  *
  * Returns: the translation context associated with @type
  *               or %NULL if no context was set
@@ -117,16 +117,16 @@ gimp_type_set_translation_context (GType        type,
  * Since: 2.8
  **/
 const gchar *
-gimp_type_get_translation_context (GType type)
+ligma_type_get_translation_context (GType type)
 {
   return (const gchar *) g_type_get_qdata (type,
-                                           gimp_translation_context_quark ());
+                                           ligma_translation_context_quark ());
 }
 
 /**
- * gimp_enum_set_value_descriptions:
+ * ligma_enum_set_value_descriptions:
  * @enum_type:    a #GType
- * @descriptions: a %NULL terminated constant static array of #GimpEnumDesc
+ * @descriptions: a %NULL terminated constant static array of #LigmaEnumDesc
  *
  * Sets the array of human readable and translatable descriptions
  * and help texts for enum values.
@@ -134,41 +134,41 @@ gimp_type_get_translation_context (GType type)
  * Since: 2.2
  **/
 void
-gimp_enum_set_value_descriptions (GType               enum_type,
-                                  const GimpEnumDesc *descriptions)
+ligma_enum_set_value_descriptions (GType               enum_type,
+                                  const LigmaEnumDesc *descriptions)
 {
   g_return_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM));
   g_return_if_fail (descriptions != NULL);
 
   g_type_set_qdata (enum_type,
-                    gimp_value_descriptions_quark (),
+                    ligma_value_descriptions_quark (),
                     (gpointer) descriptions);
 }
 
 /**
- * gimp_enum_get_value_descriptions:
+ * ligma_enum_get_value_descriptions:
  * @enum_type: a #GType
  *
  * Retrieves the array of human readable and translatable descriptions
  * and help texts for enum values.
  *
- * Returns: a %NULL terminated constant array of #GimpEnumDesc
+ * Returns: a %NULL terminated constant array of #LigmaEnumDesc
  *
  * Since: 2.2
  **/
-const GimpEnumDesc *
-gimp_enum_get_value_descriptions (GType enum_type)
+const LigmaEnumDesc *
+ligma_enum_get_value_descriptions (GType enum_type)
 {
   g_return_val_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM), NULL);
 
-  return (const GimpEnumDesc *)
-    g_type_get_qdata (enum_type, gimp_value_descriptions_quark ());
+  return (const LigmaEnumDesc *)
+    g_type_get_qdata (enum_type, ligma_value_descriptions_quark ());
 }
 
 /**
- * gimp_flags_set_value_descriptions:
+ * ligma_flags_set_value_descriptions:
  * @flags_type:   a #GType
- * @descriptions: a %NULL terminated constant static array of #GimpFlagsDesc
+ * @descriptions: a %NULL terminated constant static array of #LigmaFlagsDesc
  *
  * Sets the array of human readable and translatable descriptions
  * and help texts for flags values.
@@ -176,69 +176,69 @@ gimp_enum_get_value_descriptions (GType enum_type)
  * Since: 2.2
  **/
 void
-gimp_flags_set_value_descriptions (GType                flags_type,
-                                   const GimpFlagsDesc *descriptions)
+ligma_flags_set_value_descriptions (GType                flags_type,
+                                   const LigmaFlagsDesc *descriptions)
 {
   g_return_if_fail (g_type_is_a (flags_type, G_TYPE_FLAGS));
   g_return_if_fail (descriptions != NULL);
 
   g_type_set_qdata (flags_type,
-                    gimp_value_descriptions_quark (),
+                    ligma_value_descriptions_quark (),
                     (gpointer) descriptions);
 }
 
 /**
- * gimp_flags_get_value_descriptions:
+ * ligma_flags_get_value_descriptions:
  * @flags_type: a #GType
  *
  * Retrieves the array of human readable and translatable descriptions
  * and help texts for flags values.
  *
- * Returns: a %NULL terminated constant array of #GimpFlagsDesc
+ * Returns: a %NULL terminated constant array of #LigmaFlagsDesc
  *
  * Since: 2.2
  **/
-const GimpFlagsDesc *
-gimp_flags_get_value_descriptions (GType flags_type)
+const LigmaFlagsDesc *
+ligma_flags_get_value_descriptions (GType flags_type)
 {
   g_return_val_if_fail (g_type_is_a (flags_type, G_TYPE_FLAGS), NULL);
 
-  return (const GimpFlagsDesc *)
-    g_type_get_qdata (flags_type, gimp_value_descriptions_quark ());
+  return (const LigmaFlagsDesc *)
+    g_type_get_qdata (flags_type, ligma_value_descriptions_quark ());
 }
 
 
 /*  private functions  */
 
 static GQuark
-gimp_translation_domain_quark (void)
+ligma_translation_domain_quark (void)
 {
   static GQuark quark = 0;
 
   if (! quark)
-    quark = g_quark_from_static_string ("gimp-translation-domain-quark");
+    quark = g_quark_from_static_string ("ligma-translation-domain-quark");
 
   return quark;
 }
 
 static GQuark
-gimp_translation_context_quark (void)
+ligma_translation_context_quark (void)
 {
   static GQuark quark = 0;
 
   if (! quark)
-    quark = g_quark_from_static_string ("gimp-translation-context-quark");
+    quark = g_quark_from_static_string ("ligma-translation-context-quark");
 
   return quark;
 }
 
 static GQuark
-gimp_value_descriptions_quark (void)
+ligma_value_descriptions_quark (void)
 {
   static GQuark quark = 0;
 
   if (! quark)
-    quark = g_quark_from_static_string ("gimp-value-descriptions-quark");
+    quark = g_quark_from_static_string ("ligma-value-descriptions-quark");
 
   return quark;
 }

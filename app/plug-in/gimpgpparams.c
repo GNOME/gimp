@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpgpparams.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmagpparams.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,26 +24,26 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpprotocol.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmabase/ligmaprotocol.h"
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdisplay.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimpselection.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmadisplay.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaselection.h"
+#include "core/ligmaparamspecs.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "libgimp/gimpgpparams.h"
+#include "libligma/ligmagpparams.h"
 
 
 /*  include the implementation, they are shared between app/ and
- *  libgimp/ but need different headers.
+ *  libligma/ but need different headers.
  */
-#include "../../libgimp/gimpgpparams-body.c"
+#include "../../libligma/ligmagpparams-body.c"

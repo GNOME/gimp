@@ -1,11 +1,11 @@
 devel_docs_build_root = meson.current_build_dir()
 
 scan_args_common = [
-  '--deprecated-guards=GIMP_DISABLE_DEPRECATED',
+  '--deprecated-guards=LIGMA_DISABLE_DEPRECATED',
 ]
 
 mkdb_args_common = [
-  '--name-space=gimp',
+  '--name-space=ligma',
 ]
 
 if gi_docgen.found()

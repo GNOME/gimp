@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "script-fu-types.h"    /* SFScript */
 #include "script-fu-lib.h"
@@ -48,16 +48,16 @@
  * 1) set the error message from tinyscheme into GError at given handle.
  * 2) return FALSE
  * otherwise, return TRUE and discard any result of interpretation
- * ScriptFu return values only have a GimpPDBStatus,
+ * ScriptFu return values only have a LigmaPDBStatus,
  * since ScriptFu plugin scripts can only be declared returning void.
  *
  * While interpreting, any errors from further calls to the PDB
- * can show error dialogs in any GIMP gui,
+ * can show error dialogs in any LIGMA gui,
  * unless the caller has taken responsibility with a prior call to
- * gimp_plug_in_set_pdb_error_handler
+ * ligma_plug_in_set_pdb_error_handler
  *
  * FIXME: see script_fu_run_procedure.
- * It does not call gimp_plug_in_set_pdb_error_handler for NON-INTERACTIVE mode.
+ * It does not call ligma_plug_in_set_pdb_error_handler for NON-INTERACTIVE mode.
  */
 gboolean
 script_fu_run_command (const gchar  *command,
@@ -72,7 +72,7 @@ script_fu_run_command (const gchar  *command,
 
   if (script_fu_interpret_string (command))
     {
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0, "%s", output->str);
+      g_set_error (error, LIGMA_PLUG_IN_ERROR, 0, "%s", output->str);
     }
   else
     {
@@ -86,38 +86,38 @@ script_fu_run_command (const gchar  *command,
 
 
 
-/* Interpret a script that defines a GimpImageProcedure.
+/* Interpret a script that defines a LigmaImageProcedure.
  *
  * Similar to v2 code in script-fu-interface.c, except:
- * 1) builds a command from a GValueArray from a GimpConfig,
+ * 1) builds a command from a GValueArray from a LigmaConfig,
  *    instead of from local array of SFArg.
- * 2) adds actual args image, drawable, etc. for GimpImageProcedure
+ * 2) adds actual args image, drawable, etc. for LigmaImageProcedure
  */
-GimpValueArray *
+LigmaValueArray *
 script_fu_interpret_image_proc (
-                            GimpProcedure        *procedure,
+                            LigmaProcedure        *procedure,
                             SFScript             *script,
-                            GimpImage            *image,
+                            LigmaImage            *image,
                             guint                 n_drawables,
-                            GimpDrawable        **drawables,
-                            const GimpValueArray *args)
+                            LigmaDrawable        **drawables,
+                            const LigmaValueArray *args)
 {
   gchar          *command;
-  GimpValueArray *result = NULL;
+  LigmaValueArray *result = NULL;
   gboolean        interpretation_result;
   GError         *error = NULL;
 
   command = script_fu_script_get_command_for_image_proc (script, image, n_drawables, drawables, args);
 
   /* Take responsibility for handling errors from the scripts further calls to PDB.
-   * ScriptFu does not show an error dialog, but forwards errors back to GIMP.
-   * This only tells GIMP that ScriptFu itself will forward GimpPDBStatus errors from
+   * ScriptFu does not show an error dialog, but forwards errors back to LIGMA.
+   * This only tells LIGMA that ScriptFu itself will forward LigmaPDBStatus errors from
    * this scripts calls to the PDB.
-   * The onus is on this script's called PDB procedures to return errors in the GimpPDBStatus.
-   * Any that do not, but for example only call gimp-message, are breaching contract.
+   * The onus is on this script's called PDB procedures to return errors in the LigmaPDBStatus.
+   * Any that do not, but for example only call ligma-message, are breaching contract.
    */
-  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
   interpretation_result = script_fu_run_command (command, &error);
   g_free (command);
@@ -126,25 +126,25 @@ script_fu_interpret_image_proc (
       /* This is to the console.
        * script->name not localized.
        * error->message expected to be localized.
-       * GIMP will later display "PDB procedure failed: <message>" localized.
+       * LIGMA will later display "PDB procedure failed: <message>" localized.
        */
       g_warning ("While executing %s: %s",
                  script->name,
                  error->message);
       /* A GError was allocated and this will take ownership. */
-      result = gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
+      result = ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_EXECUTION_ERROR,
                                                  error);
     }
   else
     {
-      result = gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_SUCCESS,
+      result = ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_SUCCESS,
                                                  NULL);
     }
 
-  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                      GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                      LIGMA_PDB_ERROR_HANDLER_INTERNAL);
 
   return result;
 }

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2021-11-04 21:02+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
@@ -23,13 +23,13 @@ msgid "License Agreement"
 msgstr "Licences nosacījumi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Iestatītāju izveidoja Jernej Simončič, jernej-gimp@ena.si"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "Iestatītāju izveidoja Jernej Simončič, jernej-ligma@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Šai GIMP versijai ir vajadzīgs Windows 7, vai jaunāka Windows versija."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
+msgstr "Šai LIGMA versijai ir vajadzīgs Windows 7, vai jaunāka Windows versija."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -37,20 +37,20 @@ msgstr "Izstrādes versija"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Šī ir GIMP izstrādes versija, kur ne visas iespējas ir līdz galam pabeigtas, "
-"vai arī tās varētu būt nestabilas.%nŠī GIMP versija nav paredzēta ikdienas "
+"Šī ir LIGMA izstrādes versija, kur ne visas iespējas ir līdz galam pabeigtas, "
+"vai arī tās varētu būt nestabilas.%nŠī LIGMA versija nav paredzēta ikdienas "
 "darbam, jo tā varētu nebūt stabila un jūs varat pazaudēt savu darbu.%n Ja "
 "jums gadās kādas problēmas, vispirms pārliecinieties, ka tās jau nav "
 "izlabotas GIT sistēmā, pirms sazināties ar izstrādātājiem vai ziņot par to "
-"GIMP gitlab kļūdu atsekošanas sistēmā:%n_https://gitlab.gnome.org/GNOME/gimp/"
+"LIGMA gitlab kļūdu atsekošanas sistēmā:%n_https://gitlab.gnome.org/GNOME/ligma/"
 "issues%n%nVai tomēr vēlaties turpināt instalēšanu?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
@@ -64,9 +64,9 @@ msgstr "Iziet"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
+"This version of LIGMA requires a processor that supports SSE instructions."
 msgstr ""
-"Šai GIMP versijai ir vajadzīgs procesors, kas atbalsta SSE instrukcijas."
+"Šai LIGMA versijai ir vajadzīgs procesors, kas atbalsta SSE instrukcijas."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -75,12 +75,12 @@ msgstr "Attēlošanas iestatījumu problēma"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
 "Iestatītājs konstatēja, ka jūsu Windows nedarbojas attēlošanas režīmā “32 "
-"biti uz pikseli”. Tas var radīt stabilitātes problēmas GIMP lietotnē, tāpēc "
+"biti uz pikseli”. Tas var radīt stabilitātes problēmas LIGMA lietotnē, tāpēc "
 "vēlams mainīt displeja krāsu dziļumu uz 32BPP, pirms turpināt."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
@@ -89,11 +89,11 @@ msgstr "I&ziet"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP ir gatavs instalēšanai. Spiediet pogu “Instalēt tagad”, lai instalētu, "
+"LIGMA ir gatavs instalēšanai. Spiediet pogu “Instalēt tagad”, lai instalētu, "
 "izmantojot noklusējuma iestatījumus, vai arī spiediet pogu “Pielāgot”, ja "
 "vēlaties lielāku kontroli pār to, kas tiks instalēts."
 
@@ -122,12 +122,12 @@ msgid "Description"
 msgstr "Apraksts"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "GIMP un visi noklusējuma spraudņi"
+msgid "LIGMA and all default plug-ins"
+msgstr "LIGMA un visi noklusējuma spraudņi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
@@ -135,17 +135,17 @@ msgstr "Izpildlaika bibliotēkas"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
 #, fuzzy
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
 msgstr ""
-"Izpildlaika bibliotēkas, ko izmanto GIMP, ieskaitot GTK+ izpildlaika vide"
+"Izpildlaika bibliotēkas, ko izmanto LIGMA, ieskaitot GTK+ izpildlaika vide"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "Atkļūdošanas simboli"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
-msgstr "Iekļaut informāciju, lai palīdzētu atkļūdot GIMP"
+msgid "Include information to help with debugging LIGMA"
+msgstr "Iekļaut informāciju, lai palīdzētu atkļūdot LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 #, fuzzy
@@ -153,8 +153,8 @@ msgid "MS-Windows engine for GTK"
 msgstr "MS-Windows dzinis GTK+ bibliotēkai"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Windows izskats GIMP lietotnei"
+msgid "Native Windows look for LIGMA"
+msgstr "Windows izskats LIGMA lietotnei"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -174,9 +174,9 @@ msgid "Python scripting"
 msgstr "Python skriptēšana"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
 msgstr ""
-"Ļauj jums izmantot GIMP spraudņus, kas ir rakstīti Python skriptēšanas "
+"Ļauj jums izmantot LIGMA spraudņus, kas ir rakstīti Python skriptēšanas "
 "valodā."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
@@ -184,9 +184,9 @@ msgid "Lua scripting"
 msgstr "Lua skriptēšana"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
 msgstr ""
-"Ļauj jums izmantot GIMP spraudņus, kas ir rakstīti Lua skriptēšanas valodā."
+"Ļauj jums izmantot LIGMA spraudņus, kas ir rakstīti Lua skriptēšanas valodā."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
@@ -201,8 +201,8 @@ msgid "PostScript support"
 msgstr "PostScript atbalsts"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "Ļauj GIMP ielādēt PostScript datnes"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "Ļauj LIGMA ielādēt PostScript datnes"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -229,16 +229,16 @@ msgid "Create a &Quick Launch icon"
 msgstr "Izveidot ātrās _palaišanas ikonu"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "Izņemt iepriekšējo GIMP versiju"
+msgid "Remove previous LIGMA version"
+msgstr "Izņemt iepriekšējo LIGMA versiju"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"Gadījās problēma, atjauninot GIMP vidi uz %1. Ja jums gadās problēmas, "
-"ielādējot spraudņus, mēģiniet atinstalēt un no jauna instalēt GIMP."
+"Gadījās problēma, atjauninot LIGMA vidi uz %1. Ja jums gadās problēmas, "
+"ielādējot spraudņus, mēģiniet atinstalēt un no jauna instalēt LIGMA."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
@@ -257,12 +257,12 @@ msgid "There was an error updating %1."
 msgstr "Gadījās kļūda, atjauninot %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Gadījās kļūda, atjauninot GIMP konfigurācijas datni %1."
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "Gadījās kļūda, atjauninot LIGMA konfigurācijas datni %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "Rediģēt ar GIMP"
+msgid "Edit with LIGMA"
+msgstr "Rediģēt ar LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -273,15 +273,15 @@ msgid "Extensions:"
 msgstr "Paplašinājumi:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Izvēlieties, kurus datņu tipus vēlaties saistīt ar GIMP"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "Izvēlieties, kurus datņu tipus vēlaties saistīt ar LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"Tas liks atvērt izvēlētās datnes ar GIMP lietotni, kad uz tām veiks "
+"Tas liks atvērt izvēlētās datnes ar LIGMA lietotni, kad uz tām veiks "
 "dubultklikšķi datņu pārlūkā Explorer."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
@@ -297,48 +297,48 @@ msgid "Select &Unused"
 msgstr "&Izvēlēties neizmantotos"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "Datņu tipi, ko asociēt ar GIMP:"
+msgid "File types to associate with LIGMA:"
+msgstr "Datņu tipi, ko asociēt ar LIGMA:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "Izņemt iepriekšējo GIMP versiju:"
+msgid "Removing previous version of LIGMA:"
+msgstr "Izņemt iepriekšējo LIGMA versiju:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 nevar instalēt pa virsu jau instalētajai GIMP versijai un neizdevās "
+"LIGMA %1 nevar instalēt pa virsu jau instalētajai LIGMA versijai un neizdevās "
 "automātiski atinstalēt iepriekšējo versiju.%n%nLūdzu, paši izņemiet "
-"iepriekšējo GIMP versiju pirms instalēt šo versiju uz %2, vai izvēlieties "
+"iepriekšējo LIGMA versiju pirms instalēt šo versiju uz %2, vai izvēlieties "
 "pielāgoto instalēšanu un izvēlieties citu instalācijas mapi.%n%nIestatītājs "
 "tagad beigs darbu."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 nevar instalēt pa virsu jau instalētajai GIMP versijai un "
+"LIGMA %1 nevar instalēt pa virsu jau instalētajai LIGMA versijai un "
 "iestatītājs nevarēja atrast veidu, kā automātiski izņemt veco versiju.%n"
-"%nLūdzu, paši izņemiet iepriekšējo GIMP versiju un tā spraudņus pirms "
+"%nLūdzu, paši izņemiet iepriekšējo LIGMA versiju un tā spraudņus pirms "
 "instalēt šo versiju uz %2, vai izvēlieties pielāgoto instalēšanu un "
 "izvēlieties citu instalācijas mapi.%n%nIestatītājs tagad beigs darbu."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"Iepriekšējā GIMP versija tika sekmīgi izņemta, bet ir jāpārstartē Windows, "
+"Iepriekšējā LIGMA versija tika sekmīgi izņemta, bet ir jāpārstartē Windows, "
 "pirms iestatīšana var turpināties.%n%nPēc datora pārstartēšanas instalēšana "
 "turpināsies, kad sistēmā ierakstīsies administrators."
 
@@ -351,8 +351,8 @@ msgid "Cleaning up old files..."
 msgstr "Nokopj vecās datnes..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Atcerieties: GIMP ir brīvā programmatūra.%n%n Lūdzu, apmeklējiet"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "Atcerieties: LIGMA ir brīvā programmatūra.%n%n Lūdzu, apmeklējiet"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -363,24 +363,24 @@ msgid "Setting up file associations..."
 msgstr "Iestata datņu asociācijas..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Iestata vidi GIMP Python paplašinājumiem..."
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "Iestata vidi LIGMA Python paplašinājumiem..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Iestata MyPaint otas..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "Iestata GIMP vidi..."
+msgid "Setting up LIGMA environment..."
+msgstr "Iestata LIGMA vidi..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Iestata GIMP konfigurāciju 32 bitu spraudņu atbalstam..."
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "Iestata LIGMA konfigurāciju 32 bitu spraudņu atbalstam..."
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "Palaist GIMP"
+msgid "Launch LIGMA"
+msgstr "Palaist LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -392,7 +392,7 @@ msgstr "Iekšēja kļūda (%1)."
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"Izskatās, ka GIMP nav instalēts izvēlētajā direktorijā. Tomēr turpināt?"
+"Izskatās, ka LIGMA nav instalēts izvēlētajā direktorijā. Tomēr turpināt?"

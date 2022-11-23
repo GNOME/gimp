@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,17 +26,17 @@
 
 #include <glib.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
-#include "gimphelp.h"
+#include "ligmahelp.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /*  defines  */
 
-#define GIMP_HELP_EXT_PROC        "extension-gimp-help"
-#define GIMP_HELP_TEMP_EXT_PROC   "extension-gimp-help-temp"
+#define LIGMA_HELP_EXT_PROC        "extension-ligma-help"
+#define LIGMA_HELP_TEMP_EXT_PROC   "extension-ligma-help-temp"
 
 
 typedef struct _Help      Help;
@@ -44,12 +44,12 @@ typedef struct _HelpClass HelpClass;
 
 struct _Help
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _HelpClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 typedef struct
@@ -68,39 +68,39 @@ typedef struct
 
 GType                   help_get_type          (void) G_GNUC_CONST;
 
-static GList          * help_query_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * help_create_procedure  (GimpPlugIn           *plug_in,
+static GList          * help_query_procedures  (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * help_create_procedure  (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * help_run               (GimpProcedure        *procedure,
-                                                const GimpValueArray *args,
+static LigmaValueArray * help_run               (LigmaProcedure        *procedure,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
-static GimpValueArray * help_temp_run          (GimpProcedure        *procedure,
-                                                const GimpValueArray *args,
+static LigmaValueArray * help_temp_run          (LigmaProcedure        *procedure,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
-static void             help_temp_proc_install (GimpPlugIn           *plug_in);
+static void             help_temp_proc_install (LigmaPlugIn           *plug_in);
 static void             help_load              (const gchar          *procedure,
                                                 const gchar          *help_domain,
                                                 const gchar          *help_locales,
                                                 const gchar          *help_id);
 static gboolean         help_load_idle         (gpointer              data);
 
-static GimpHelpProgress * help_load_progress_new (void);
+static LigmaHelpProgress * help_load_progress_new (void);
 
 
 static GMainLoop *main_loop = NULL;
 
-G_DEFINE_TYPE (Help, help, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Help, help, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (HELP_TYPE)
+LIGMA_MAIN (HELP_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 help_class_init (HelpClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = help_query_procedures;
   plug_in_class->create_procedure = help_create_procedure;
@@ -113,36 +113,36 @@ help_init (Help *help)
 }
 
 static GList *
-help_query_procedures (GimpPlugIn *plug_in)
+help_query_procedures (LigmaPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (GIMP_HELP_EXT_PROC));
+  return g_list_append (NULL, g_strdup (LIGMA_HELP_EXT_PROC));
 }
 
-static GimpProcedure *
-help_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+help_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
-  if (! strcmp (name, GIMP_HELP_EXT_PROC))
+  if (! strcmp (name, LIGMA_HELP_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_EXTENSION,
                                       help_run, NULL, NULL);
 
-      gimp_procedure_set_attribution (procedure,
-                                      "Sven Neumann <sven@gimp.org>, "
-                                      "Michael Natterer <mitch@gimp.org>, "
-                                      "Henrik Brix Andersen <brix@gimp.org>",
+      ligma_procedure_set_attribution (procedure,
+                                      "Sven Neumann <sven@ligma.org>, "
+                                      "Michael Natterer <mitch@ligma.org>, "
+                                      "Henrik Brix Andersen <brix@ligma.org>",
                                       "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
                                       "1999-2008");
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-names",
+      LIGMA_PROC_ARG_STRV (procedure, "domain-names",
                           "Domain Names",
                           "Domain names",
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
+      LIGMA_PROC_ARG_STRV (procedure, "domain-uris",
                           "Domain URIs",
                           "Domain URIs",
                           G_PARAM_READWRITE);
@@ -151,116 +151,116 @@ help_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-help_run (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+static LigmaValueArray *
+help_run (LigmaProcedure        *procedure,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  LigmaPDBStatusType status = LIGMA_PDB_SUCCESS;
 
-  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 0),
-                        GIMP_VALUES_GET_STRV (args, 1)))
+  if (! ligma_help_init (LIGMA_VALUES_GET_STRV (args, 0),
+                        LIGMA_VALUES_GET_STRV (args, 1)))
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      status = LIGMA_PDB_CALLING_ERROR;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpPlugIn *plug_in = gimp_procedure_get_plug_in (procedure);
+      LigmaPlugIn *plug_in = ligma_procedure_get_plug_in (procedure);
 
       main_loop = g_main_loop_new (NULL, FALSE);
 
       help_temp_proc_install (plug_in);
 
-      gimp_procedure_extension_ready (procedure);
-      gimp_plug_in_extension_enable (plug_in);
+      ligma_procedure_extension_ready (procedure);
+      ligma_plug_in_extension_enable (plug_in);
 
       g_main_loop_run (main_loop);
 
       g_main_loop_unref (main_loop);
       main_loop = NULL;
 
-      gimp_plug_in_remove_temp_procedure (plug_in, GIMP_HELP_TEMP_EXT_PROC);
+      ligma_plug_in_remove_temp_procedure (plug_in, LIGMA_HELP_TEMP_EXT_PROC);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void
-help_temp_proc_install (GimpPlugIn *plug_in)
+help_temp_proc_install (LigmaPlugIn *plug_in)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+  procedure = ligma_procedure_new (plug_in, LIGMA_HELP_TEMP_EXT_PROC,
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
                                   help_temp_run, NULL, NULL);
 
-  gimp_procedure_set_attribution (procedure,
-                                  "Sven Neumann <sven@gimp.org>, "
-                                  "Michael Natterer <mitch@gimp.org>"
-                                  "Henrik Brix Andersen <brix@gimp.org",
+  ligma_procedure_set_attribution (procedure,
+                                  "Sven Neumann <sven@ligma.org>, "
+                                  "Michael Natterer <mitch@ligma.org>"
+                                  "Henrik Brix Andersen <brix@ligma.org",
                                   "Sven Neumann, Michael Natterer & "
                                   "Henrik Brix Andersen",
                                   "1999-2008");
 
-  GIMP_PROC_ARG_STRING (procedure, "help-proc",
+  LIGMA_PROC_ARG_STRING (procedure, "help-proc",
                         "The procedure of the browser to use",
                         "The procedure of the browser to use",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-domain",
+  LIGMA_PROC_ARG_STRING (procedure, "help-domain",
                         "Help domain to use",
                         "Help domain to use",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-locales",
+  LIGMA_PROC_ARG_STRING (procedure, "help-locales",
                         "Language to use",
                         "Language to use",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-id",
+  LIGMA_PROC_ARG_STRING (procedure, "help-id",
                         "Help ID to open",
                         "Help ID to open",
                         NULL,
                         G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 }
 
-static GimpValueArray *
-help_temp_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+static LigmaValueArray *
+help_temp_run (LigmaProcedure        *procedure,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
+  LigmaPDBStatusType  status       = LIGMA_PDB_SUCCESS;
   const gchar       *help_proc    = NULL;
-  const gchar       *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
+  const gchar       *help_domain  = LIGMA_HELP_DEFAULT_DOMAIN;
   const gchar       *help_locales = NULL;
-  const gchar       *help_id      = GIMP_HELP_DEFAULT_ID;
+  const gchar       *help_id      = LIGMA_HELP_DEFAULT_ID;
 
-  if (GIMP_VALUES_GET_STRING (args, 0))
-    help_proc = GIMP_VALUES_GET_STRING (args, 0);
+  if (LIGMA_VALUES_GET_STRING (args, 0))
+    help_proc = LIGMA_VALUES_GET_STRING (args, 0);
 
-  if (GIMP_VALUES_GET_STRING (args, 1))
-    help_domain = GIMP_VALUES_GET_STRING (args, 1);
+  if (LIGMA_VALUES_GET_STRING (args, 1))
+    help_domain = LIGMA_VALUES_GET_STRING (args, 1);
 
-  if (GIMP_VALUES_GET_STRING (args, 2))
-    help_locales = GIMP_VALUES_GET_STRING (args, 2);
+  if (LIGMA_VALUES_GET_STRING (args, 2))
+    help_locales = LIGMA_VALUES_GET_STRING (args, 2);
 
-  if (GIMP_VALUES_GET_STRING (args, 3))
-    help_id = GIMP_VALUES_GET_STRING (args, 3);
+  if (LIGMA_VALUES_GET_STRING (args, 3))
+    help_id = LIGMA_VALUES_GET_STRING (args, 3);
 
   if (! help_proc)
-    status = GIMP_PDB_CALLING_ERROR;
+    status = LIGMA_PDB_CALLING_ERROR;
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     help_load (help_proc, help_domain, help_locales, help_id);
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void
@@ -283,44 +283,44 @@ static gboolean
 help_load_idle (gpointer data)
 {
   IdleHelp       *idle_help = data;
-  GimpHelpDomain *domain;
+  LigmaHelpDomain *domain;
 
-  domain = gimp_help_lookup_domain (idle_help->help_domain);
+  domain = ligma_help_lookup_domain (idle_help->help_domain);
 
   if (domain)
     {
-      GimpHelpProgress *progress = NULL;
+      LigmaHelpProgress *progress = NULL;
       GList            *locales;
       gchar            *uri;
       gboolean          fatal_error;
 
-      locales = gimp_help_parse_locales (idle_help->help_locales);
+      locales = ligma_help_parse_locales (idle_help->help_locales);
 
       if (! g_str_has_prefix (domain->help_uri, "file:"))
         progress = help_load_progress_new ();
 
-      uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
+      uri = ligma_help_domain_map (domain, locales, idle_help->help_id,
                                   progress, NULL, &fatal_error);
 
       if (progress)
-        gimp_help_progress_free (progress);
+        ligma_help_progress_free (progress);
 
       g_list_free_full (locales, (GDestroyNotify) g_free);
 
       if (uri)
         {
-          GimpValueArray *return_vals;
+          LigmaValueArray *return_vals;
 
-#ifdef GIMP_HELP_DEBUG
+#ifdef LIGMA_HELP_DEBUG
           g_printerr ("help: calling '%s' for '%s'\n",
                       idle_help->procedure, uri);
 #endif
 
-          return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
+          return_vals = ligma_pdb_run_procedure (ligma_get_pdb (),
                                                 idle_help->procedure,
                                                 G_TYPE_STRING, uri,
                                                 G_TYPE_NONE);
-          gimp_value_array_unref (return_vals);
+          ligma_value_array_unref (return_vals);
 
           g_free (uri);
         }
@@ -345,31 +345,31 @@ help_load_progress_start (const gchar *message,
                           gboolean     cancelable,
                           gpointer     user_data)
 {
-  gimp_progress_init (message);
+  ligma_progress_init (message);
 }
 
 static void
 help_load_progress_update (gdouble  value,
                            gpointer user_data)
 {
-  gimp_progress_update (value);
+  ligma_progress_update (value);
 }
 
 static void
 help_load_progress_end (gpointer user_data)
 {
-  gimp_progress_end ();
+  ligma_progress_end ();
 }
 
-static GimpHelpProgress *
+static LigmaHelpProgress *
 help_load_progress_new (void)
 {
-  static const GimpHelpProgressVTable vtable =
+  static const LigmaHelpProgressVTable vtable =
   {
     help_load_progress_start,
     help_load_progress_end,
     help_load_progress_update
   };
 
-  return gimp_help_progress_new (&vtable, NULL);
+  return ligma_help_progress_new (&vtable, NULL);
 }

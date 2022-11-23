@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgpparams-body.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmagpparams-body.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,12 +21,12 @@
 
 /*  this file is included by both
  *
- *  libgimp/gimpgpparams.c
- *  app/plug-in/gimpgpparams.c
+ *  libligma/ligmagpparams.c
+ *  app/plug-in/ligmagpparams.c
  */
 
 GParamSpec *
-_gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
+_ligma_gp_param_def_to_param_spec (const GPParamDef *param_def)
 {
   const gchar *name  = param_def->name;
   const gchar *nick  = param_def->nick;
@@ -38,20 +38,20 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
   switch (param_def->param_def_type)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
-      if (! strcmp (param_def->type_name, "GimpParamInt32Array"))
-        return gimp_param_spec_int32_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "LigmaParamInt32Array"))
+        return ligma_param_spec_int32_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamUInt8Array"))
-        return gimp_param_spec_uint8_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "LigmaParamUInt8Array"))
+        return ligma_param_spec_uint8_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
-        return gimp_param_spec_float_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "LigmaParamFloatArray"))
+        return ligma_param_spec_float_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamRGBArray"))
-        return gimp_param_spec_rgb_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "LigmaParamRGBArray"))
+        return ligma_param_spec_rgb_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamParasite"))
-        return gimp_param_spec_parasite (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "LigmaParamParasite"))
+        return ligma_param_spec_parasite (name, nick, blurb, flags);
 
       if (! strcmp (param_def->type_name, "GParamParam"))
         return g_param_spec_param (name, nick, blurb,
@@ -63,9 +63,9 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return g_param_spec_object (name, nick, blurb, G_TYPE_FILE, flags);
 
       if (! strcmp (param_def->type_name, "GParamBoxed") &&
-          ! strcmp (param_def->value_type_name, "GimpRGB"))
+          ! strcmp (param_def->value_type_name, "LigmaRGB"))
         /* Unfortunately this type loses default and alpha info. */
-        return gimp_param_spec_rgb (name, nick, blurb, TRUE, NULL, flags);
+        return ligma_param_spec_rgb (name, nick, blurb, TRUE, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GParamBoxed") &&
           ! strcmp (param_def->value_type_name, "GStrv"))
@@ -97,8 +97,8 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_UNIT:
-      if (! strcmp (param_def->type_name, "GimpParamUnit"))
-        return gimp_param_spec_unit (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamUnit"))
+        return ligma_param_spec_unit (name, nick, blurb,
                                      param_def->meta.m_unit.allow_pixels,
                                      param_def->meta.m_unit.allow_percent,
                                      param_def->meta.m_unit.default_val,
@@ -112,8 +112,8 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                   param_def->meta.m_enum.default_val,
                                   flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamEnum"))
-        /* FIXME GimpParamEnum */
+      if (! strcmp (param_def->type_name, "LigmaParamEnum"))
+        /* FIXME LigmaParamEnum */
         return g_param_spec_enum (name, nick, blurb,
                                   g_type_from_name (param_def->value_type_name),
                                   param_def->meta.m_enum.default_val,
@@ -144,62 +144,62 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
-      if (! strcmp (param_def->type_name, "GimpParamRGB"))
-        return gimp_param_spec_rgb (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamRGB"))
+        return ligma_param_spec_rgb (name, nick, blurb,
                                     param_def->meta.m_color.has_alpha,
                                     &param_def->meta.m_color.default_val,
                                     flags);
 
     case GP_PARAM_DEF_TYPE_ID:
-      if (! strcmp (param_def->type_name, "GimpParamDisplay"))
-        return gimp_param_spec_display (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamDisplay"))
+        return ligma_param_spec_display (name, nick, blurb,
                                         param_def->meta.m_id.none_ok,
                                         flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamImage"))
-        return gimp_param_spec_image (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamImage"))
+        return ligma_param_spec_image (name, nick, blurb,
                                       param_def->meta.m_id.none_ok,
                                       flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamItem"))
-        return gimp_param_spec_item (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamItem"))
+        return ligma_param_spec_item (name, nick, blurb,
                                      param_def->meta.m_id.none_ok,
                                      flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamDrawable"))
-        return gimp_param_spec_drawable (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamDrawable"))
+        return ligma_param_spec_drawable (name, nick, blurb,
                                          param_def->meta.m_id.none_ok,
                                          flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamLayer"))
-        return gimp_param_spec_layer (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamLayer"))
+        return ligma_param_spec_layer (name, nick, blurb,
                                       param_def->meta.m_id.none_ok,
                                       flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamChannel"))
-        return gimp_param_spec_channel (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamChannel"))
+        return ligma_param_spec_channel (name, nick, blurb,
                                         param_def->meta.m_id.none_ok,
                                         flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamLayerMask"))
-        return gimp_param_spec_layer_mask (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamLayerMask"))
+        return ligma_param_spec_layer_mask (name, nick, blurb,
                                            param_def->meta.m_id.none_ok,
                                            flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamSelection"))
-        return gimp_param_spec_selection (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamSelection"))
+        return ligma_param_spec_selection (name, nick, blurb,
                                           param_def->meta.m_id.none_ok,
                                           flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamVectors"))
-        return gimp_param_spec_vectors (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamVectors"))
+        return ligma_param_spec_vectors (name, nick, blurb,
                                         param_def->meta.m_id.none_ok,
                                         flags);
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
-      if (! strcmp (param_def->type_name, "GimpParamObjectArray"))
-        return gimp_param_spec_object_array (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "LigmaParamObjectArray"))
+        return ligma_param_spec_object_array (name, nick, blurb,
                                              g_type_from_name (param_def->meta.m_id_array.type_name),
                                              flags);
       break;
@@ -212,7 +212,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
 }
 
 void
-_gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
+_ligma_param_spec_to_gp_param_def (GParamSpec *pspec,
                                   GPParamDef *param_def)
 {
   GType pspec_type = G_PARAM_SPEC_TYPE (pspec);
@@ -256,14 +256,14 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_int.max_val     = uspec->maximum;
       param_def->meta.m_int.default_val = uspec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_UNIT)
+  else if (pspec_type == LIGMA_TYPE_PARAM_UNIT)
     {
       GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
-      GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+      LigmaParamSpecUnit *uspec = LIGMA_PARAM_SPEC_UNIT (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_UNIT;
 
-      param_def->meta.m_unit.allow_pixels  = (ispec->minimum < GIMP_UNIT_INCH);
+      param_def->meta.m_unit.allow_pixels  = (ispec->minimum < LIGMA_UNIT_INCH);
       param_def->meta.m_unit.allow_percent = uspec->allow_percent;
       param_def->meta.m_unit.default_val   = ispec->default_value;
     }
@@ -297,96 +297,96 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     {
       GParamSpecString *gsspec = G_PARAM_SPEC_STRING (pspec);
 
-      if (! strcmp (param_def->type_name, "GimpParamString"))
+      if (! strcmp (param_def->type_name, "LigmaParamString"))
         param_def->type_name = "GParamString";
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_STRING;
 
       param_def->meta.m_string.default_val = gsspec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_RGB)
+  else if (pspec_type == LIGMA_TYPE_PARAM_RGB)
     {
       param_def->param_def_type = GP_PARAM_DEF_TYPE_COLOR;
 
       param_def->meta.m_color.has_alpha =
-        gimp_param_spec_rgb_has_alpha (pspec);
+        ligma_param_spec_rgb_has_alpha (pspec);
 
-      gimp_param_spec_rgb_get_default (pspec,
+      ligma_param_spec_rgb_get_default (pspec,
                                        &param_def->meta.m_color.default_val);
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_IMAGE)
+  else if (pspec_type == LIGMA_TYPE_PARAM_IMAGE)
     {
-      GimpParamSpecImage *ispec = GIMP_PARAM_SPEC_IMAGE (pspec);
+      LigmaParamSpecImage *ispec = LIGMA_PARAM_SPEC_IMAGE (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (GIMP_IS_PARAM_SPEC_ITEM (pspec))
+  else if (LIGMA_IS_PARAM_SPEC_ITEM (pspec))
     {
-      GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
+      LigmaParamSpecItem *ispec = LIGMA_PARAM_SPEC_ITEM (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_DISPLAY)
+  else if (pspec_type == LIGMA_TYPE_PARAM_DISPLAY)
     {
-      GimpParamSpecDisplay *ispec = GIMP_PARAM_SPEC_DISPLAY (pspec);
+      LigmaParamSpecDisplay *ispec = LIGMA_PARAM_SPEC_DISPLAY (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
+  else if (LIGMA_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
     {
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
 
       param_def->meta.m_id_array.type_name =
-        (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
+        (gchar *) g_type_name (LIGMA_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
     }
   else if (pspec_type == G_TYPE_PARAM_OBJECT &&
            value_type != G_TYPE_FILE)
     {
       const gchar *type_name  = NULL;
 
-      if (g_type_is_a (value_type, GIMP_TYPE_DISPLAY))
+      if (g_type_is_a (value_type, LIGMA_TYPE_DISPLAY))
         {
-          /* g_type_is_a() because the core has a GimpDisplay subclasses */
-          type_name = "GimpParamDisplay";
+          /* g_type_is_a() because the core has a LigmaDisplay subclasses */
+          type_name = "LigmaParamDisplay";
         }
-      else if (value_type == GIMP_TYPE_IMAGE)
+      else if (value_type == LIGMA_TYPE_IMAGE)
         {
-          type_name = "GimpParamImage";
+          type_name = "LigmaParamImage";
         }
-      else if (value_type == GIMP_TYPE_ITEM)
+      else if (value_type == LIGMA_TYPE_ITEM)
         {
-          type_name = "GimpParamItem";
+          type_name = "LigmaParamItem";
         }
-      else if (value_type == GIMP_TYPE_DRAWABLE)
+      else if (value_type == LIGMA_TYPE_DRAWABLE)
         {
-          type_name = "GimpParamDrawable";
+          type_name = "LigmaParamDrawable";
         }
-      else if (g_type_is_a (value_type, GIMP_TYPE_LAYER))
+      else if (g_type_is_a (value_type, LIGMA_TYPE_LAYER))
         {
           /* g_type_is_a() because the core has layer subclasses */
-          type_name = "GimpParamLayer";
+          type_name = "LigmaParamLayer";
         }
-      else if (value_type == GIMP_TYPE_CHANNEL)
+      else if (value_type == LIGMA_TYPE_CHANNEL)
         {
-          type_name = "GimpParamChannel";
+          type_name = "LigmaParamChannel";
         }
-      else if (value_type == GIMP_TYPE_LAYER_MASK)
+      else if (value_type == LIGMA_TYPE_LAYER_MASK)
         {
-          type_name = "GimpParamLayerMask";
+          type_name = "LigmaParamLayerMask";
         }
-      else if (value_type == GIMP_TYPE_SELECTION)
+      else if (value_type == LIGMA_TYPE_SELECTION)
         {
-          type_name = "GimpParamSelection";
+          type_name = "LigmaParamSelection";
         }
-      else if (value_type == GIMP_TYPE_VECTORS)
+      else if (value_type == LIGMA_TYPE_VECTORS)
         {
-          type_name = "GimpParamVectors";
+          type_name = "LigmaParamVectors";
         }
 
       if (type_name)
@@ -403,41 +403,41 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
 }
 
-static GimpImage *
-get_image_by_id (gpointer gimp,
+static LigmaImage *
+get_image_by_id (gpointer ligma,
                  gint     id)
 {
-#ifdef LIBGIMP_COMPILATION
-  return gimp_image_get_by_id (id);
+#ifdef LIBLIGMA_COMPILATION
+  return ligma_image_get_by_id (id);
 #else
-  return gimp_image_get_by_id (gimp, id);
+  return ligma_image_get_by_id (ligma, id);
 #endif
 }
 
-static GimpItem *
-get_item_by_id (gpointer gimp,
+static LigmaItem *
+get_item_by_id (gpointer ligma,
                 gint     id)
 {
-#ifdef LIBGIMP_COMPILATION
-  return gimp_item_get_by_id (id);
+#ifdef LIBLIGMA_COMPILATION
+  return ligma_item_get_by_id (id);
 #else
-  return gimp_item_get_by_id (gimp, id);
+  return ligma_item_get_by_id (ligma, id);
 #endif
 }
 
-static GimpDisplay *
-get_display_by_id (gpointer gimp,
+static LigmaDisplay *
+get_display_by_id (gpointer ligma,
                    gint     id)
 {
-#ifdef LIBGIMP_COMPILATION
-  return gimp_display_get_by_id (id);
+#ifdef LIBLIGMA_COMPILATION
+  return ligma_display_get_by_id (id);
 #else
-  return gimp_display_get_by_id (gimp, id);
+  return ligma_display_get_by_id (ligma, id);
 #endif
 }
 
 static void
-gimp_gp_param_to_value (gpointer        gimp,
+ligma_gp_param_to_value (gpointer        ligma,
                         const GPParam  *param,
                         GType           type,
                         GValue         *value)
@@ -451,7 +451,7 @@ gimp_gp_param_to_value (gpointer        gimp,
   g_value_init (value, type);
 
   if (type == G_TYPE_INT ||
-      type == GIMP_TYPE_UNIT)
+      type == LIGMA_TYPE_UNIT)
     {
       g_value_set_int (value, param->data.d_int);
     }
@@ -485,45 +485,45 @@ gimp_gp_param_to_value (gpointer        gimp,
                                    g_file_new_for_uri (param->data.d_string) :
                                    NULL));
     }
-  else if (GIMP_VALUE_HOLDS_RGB (value))
+  else if (LIGMA_VALUE_HOLDS_RGB (value))
     {
-      gimp_value_set_rgb (value, &param->data.d_color);
+      ligma_value_set_rgb (value, &param->data.d_color);
     }
-  else if (GIMP_VALUE_HOLDS_PARASITE (value))
+  else if (LIGMA_VALUE_HOLDS_PARASITE (value))
     {
       g_value_set_boxed (value, &param->data.d_parasite);
     }
-  else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_INT32_ARRAY (value))
     {
-      gimp_value_set_int32_array (value,
+      ligma_value_set_int32_array (value,
                                   (gint32 *) param->data.d_array.data,
                                   param->data.d_array.size /
                                   sizeof (gint32));
     }
-  else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_UINT8_ARRAY (value))
     {
-      gimp_value_set_uint8_array (value,
+      ligma_value_set_uint8_array (value,
                                   param->data.d_array.data,
                                   param->data.d_array.size /
                                   sizeof (guint8));
     }
-  else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
-      gimp_value_set_float_array (value,
+      ligma_value_set_float_array (value,
                                   (const gdouble *)
                                   param->data.d_array.data,
                                   param->data.d_array.size /
                                   sizeof (gdouble));
     }
-  else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_RGB_ARRAY (value))
     {
-      gimp_value_set_rgb_array (value,
-                                (GimpRGB *)
+      ligma_value_set_rgb_array (value,
+                                (LigmaRGB *)
                                 param->data.d_array.data,
                                 param->data.d_array.size /
-                                sizeof (GimpRGB));
+                                sizeof (LigmaRGB));
     }
-  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
       GType     object_type;
       GObject **objects;
@@ -537,62 +537,62 @@ gimp_gp_param_to_value (gpointer        gimp,
         {
           gint id = param->data.d_id_array.data[i];
 
-          if (object_type == GIMP_TYPE_IMAGE)
+          if (object_type == LIGMA_TYPE_IMAGE)
             {
-              objects[i] = (GObject *) get_image_by_id (gimp, id);
+              objects[i] = (GObject *) get_image_by_id (ligma, id);
             }
-          else if (g_type_is_a (object_type, GIMP_TYPE_ITEM))
+          else if (g_type_is_a (object_type, LIGMA_TYPE_ITEM))
             {
-              objects[i] = (GObject *) get_item_by_id (gimp, id);
+              objects[i] = (GObject *) get_item_by_id (ligma, id);
             }
-          else if (g_type_is_a (object_type, GIMP_TYPE_DISPLAY))
+          else if (g_type_is_a (object_type, LIGMA_TYPE_DISPLAY))
             {
-              objects[i] = (GObject *) get_display_by_id (gimp, id);
+              objects[i] = (GObject *) get_display_by_id (ligma, id);
             }
 
           if (objects[i])
             g_object_ref (objects[i]);
         }
 
-      gimp_value_take_object_array (value, object_type, objects,
+      ligma_value_take_object_array (value, object_type, objects,
                                     param->data.d_id_array.size);
     }
-  else if (GIMP_VALUE_HOLDS_IMAGE (value))
+  else if (LIGMA_VALUE_HOLDS_IMAGE (value))
     {
-      g_value_set_object (value, get_image_by_id (gimp, param->data.d_int));
+      g_value_set_object (value, get_image_by_id (ligma, param->data.d_int));
     }
-  else if (GIMP_VALUE_HOLDS_ITEM (value))
+  else if (LIGMA_VALUE_HOLDS_ITEM (value))
     {
-      g_value_set_object (value, get_item_by_id (gimp, param->data.d_int));
+      g_value_set_object (value, get_item_by_id (ligma, param->data.d_int));
     }
-  else if (GIMP_VALUE_HOLDS_DISPLAY (value))
+  else if (LIGMA_VALUE_HOLDS_DISPLAY (value))
     {
-      g_value_set_object (value, get_display_by_id (gimp, param->data.d_int));
+      g_value_set_object (value, get_display_by_id (ligma, param->data.d_int));
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
       GParamSpec *pspec =
-        _gimp_gp_param_def_to_param_spec (&param->data.d_param_def);
+        _ligma_gp_param_def_to_param_spec (&param->data.d_param_def);
 
       g_value_take_param (value, pspec);
     }
 }
 
-GimpValueArray *
-_gimp_gp_params_to_value_array (gpointer        gimp,
+LigmaValueArray *
+_ligma_gp_params_to_value_array (gpointer        ligma,
                                 GParamSpec    **pspecs,
                                 gint            n_pspecs,
                                 const GPParam  *params,
                                 gint            n_params,
                                 gboolean        return_values)
 {
-  GimpValueArray *args;
+  LigmaValueArray *args;
   gint            i;
 
   g_return_val_if_fail ((params != NULL && n_params  > 0) ||
                         (params == NULL && n_params == 0), NULL);
 
-  args = gimp_value_array_new (n_params);
+  args = ligma_value_array_new (n_params);
 
   for (i = 0; i < n_params; i++)
     {
@@ -650,9 +650,9 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
             }
         }
 
-      gimp_gp_param_to_value (gimp, &params[i], type, &value);
+      ligma_gp_param_to_value (ligma, &params[i], type, &value);
 
-      gimp_value_array_append (args, &value);
+      ligma_value_array_append (args, &value);
       g_value_unset (&value);
     }
 
@@ -660,7 +660,7 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
 }
 
 static void
-gimp_value_to_gp_param (const GValue *value,
+ligma_value_to_gp_param (const GValue *value,
                         GPParam      *param,
                         gboolean      full_copy)
 {
@@ -679,7 +679,7 @@ gimp_value_to_gp_param (const GValue *value,
     param->type_name = (gchar *) g_type_name (type);
 
   if (type == G_TYPE_INT ||
-      type == GIMP_TYPE_UNIT)
+      type == LIGMA_TYPE_UNIT)
     {
       param->param_type = GP_PARAM_TYPE_INT;
 
@@ -732,15 +732,15 @@ gimp_value_to_gp_param (const GValue *value,
 
       param->data.d_string = file ? g_file_get_uri (file) : NULL;
     }
-  else if (GIMP_VALUE_HOLDS_RGB (value))
+  else if (LIGMA_VALUE_HOLDS_RGB (value))
     {
       param->param_type = GP_PARAM_TYPE_COLOR;
 
-      gimp_value_get_rgb (value, &param->data.d_color);
+      ligma_value_get_rgb (value, &param->data.d_color);
     }
-  else if (GIMP_VALUE_HOLDS_PARASITE (value))
+  else if (LIGMA_VALUE_HOLDS_PARASITE (value))
     {
-      GimpParasite *parasite = (full_copy ?
+      LigmaParasite *parasite = (full_copy ?
                                 g_value_dup_boxed (value) :
                                 g_value_get_boxed (value));
 
@@ -760,7 +760,7 @@ gimp_value_to_gp_param (const GValue *value,
               parasite->size  = 0;
               parasite->data  = NULL;
 
-              gimp_parasite_free (parasite);
+              ligma_parasite_free (parasite);
             }
         }
       else
@@ -771,12 +771,12 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_parasite.data  = NULL;
         }
     }
-  else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_INT32_ARRAY (value) ||
+           LIGMA_VALUE_HOLDS_UINT8_ARRAY (value) ||
+           LIGMA_VALUE_HOLDS_FLOAT_ARRAY (value) ||
+           LIGMA_VALUE_HOLDS_RGB_ARRAY (value))
     {
-      GimpArray *array = g_value_get_boxed (value);
+      LigmaArray *array = g_value_get_boxed (value);
 
       param->param_type = GP_PARAM_TYPE_ARRAY;
 
@@ -807,9 +807,9 @@ gimp_value_to_gp_param (const GValue *value,
       else
         param->data.d_strv = array;
     }
-  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+  else if (LIGMA_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
-      GimpObjectArray *array = g_value_get_boxed (value);
+      LigmaObjectArray *array = g_value_get_boxed (value);
 
       param->param_type = GP_PARAM_TYPE_ID_ARRAY;
 
@@ -831,20 +831,20 @@ gimp_value_to_gp_param (const GValue *value,
 
           for (i = 0; i < array->length; i++)
             {
-              if (GIMP_IS_IMAGE (array->data[i]))
+              if (LIGMA_IS_IMAGE (array->data[i]))
                 {
                   param->data.d_id_array.data[i] =
-                    gimp_image_get_id (GIMP_IMAGE (array->data[i]));
+                    ligma_image_get_id (LIGMA_IMAGE (array->data[i]));
                 }
-              else if (GIMP_IS_ITEM (array->data[i]))
+              else if (LIGMA_IS_ITEM (array->data[i]))
                 {
                   param->data.d_id_array.data[i] =
-                    gimp_item_get_id (GIMP_ITEM (array->data[i]));
+                    ligma_item_get_id (LIGMA_ITEM (array->data[i]));
                 }
-              else if (GIMP_IS_DISPLAY (array->data[i]))
+              else if (LIGMA_IS_DISPLAY (array->data[i]))
                 {
                   param->data.d_id_array.data[i] =
-                    gimp_display_get_id (GIMP_DISPLAY (array->data[i]));
+                    ligma_display_get_id (LIGMA_DISPLAY (array->data[i]));
                 }
               else
                 {
@@ -858,35 +858,35 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_id_array.data = NULL;
         }
     }
-  else if (GIMP_VALUE_HOLDS_IMAGE (value))
+  else if (LIGMA_VALUE_HOLDS_IMAGE (value))
     {
-      GimpImage *image = g_value_get_object (value);
+      LigmaImage *image = g_value_get_object (value);
 
       param->param_type = GP_PARAM_TYPE_INT;
 
-      param->data.d_int = image ? gimp_image_get_id (image) : -1;
+      param->data.d_int = image ? ligma_image_get_id (image) : -1;
     }
-  else if (GIMP_VALUE_HOLDS_ITEM (value))
+  else if (LIGMA_VALUE_HOLDS_ITEM (value))
     {
-      GimpItem *item = g_value_get_object (value);
+      LigmaItem *item = g_value_get_object (value);
 
       param->param_type = GP_PARAM_TYPE_INT;
 
-      param->data.d_int = item ? gimp_item_get_id (item) : -1;
+      param->data.d_int = item ? ligma_item_get_id (item) : -1;
     }
-  else if (GIMP_VALUE_HOLDS_DISPLAY (value))
+  else if (LIGMA_VALUE_HOLDS_DISPLAY (value))
     {
-      GimpDisplay *display = g_value_get_object (value);
+      LigmaDisplay *display = g_value_get_object (value);
 
       param->param_type = GP_PARAM_TYPE_INT;
 
-      param->data.d_int = display ? gimp_display_get_id (display) : -1;
+      param->data.d_int = display ? ligma_display_get_id (display) : -1;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
       param->param_type = GP_PARAM_TYPE_PARAM_DEF;
 
-      _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
+      _ligma_param_spec_to_gp_param_def (g_value_get_param (value),
                                         &param->data.d_param_def);
     }
 
@@ -896,7 +896,7 @@ gimp_value_to_gp_param (const GValue *value,
 }
 
 GPParam *
-_gimp_value_array_to_gp_params (const GimpValueArray  *args,
+_ligma_value_array_to_gp_params (const LigmaValueArray  *args,
                                 gboolean               full_copy)
 {
   GPParam *params;
@@ -905,22 +905,22 @@ _gimp_value_array_to_gp_params (const GimpValueArray  *args,
 
   g_return_val_if_fail (args != NULL, NULL);
 
-  length = gimp_value_array_length (args);
+  length = ligma_value_array_length (args);
 
   params = g_new0 (GPParam, length);
 
   for (i = 0; i < length; i++)
     {
-      GValue *value = gimp_value_array_index (args, i);
+      GValue *value = ligma_value_array_index (args, i);
 
-      gimp_value_to_gp_param (value, &params[i], full_copy);
+      ligma_value_to_gp_param (value, &params[i], full_copy);
     }
 
   return params;
 }
 
 void
-_gimp_gp_params_free (GPParam  *params,
+_ligma_gp_params_free (GPParam  *params,
                       gint      n_params,
                       gboolean  full_copy)
 {

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplanguagestore-parser.c
- * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
+ * ligmalanguagestore-parser.c
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@ligma.org>
  * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,16 +26,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "gimplanguagestore.h"
-#include "gimplanguagestore-parser.h"
+#include "ligmalanguagestore.h"
+#include "ligmalanguagestore-parser.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef enum
@@ -92,7 +92,7 @@ static GHashTable *all_lang_list = NULL;
  * made only once, at program initialization, but after language_init().
  */
 void
-gimp_language_store_parser_init (void)
+ligma_language_store_parser_init (void)
 {
   GHashTable     *base_lang_list;
   gchar          *current_env;
@@ -103,7 +103,7 @@ gimp_language_store_parser_init (void)
 
   if (l10n_lang_list != NULL)
     {
-      g_warning ("gimp_language_store_parser_init() must be run only once.");
+      g_warning ("ligma_language_store_parser_init() must be run only once.");
       return;
     }
 
@@ -120,14 +120,14 @@ gimp_language_store_parser_init (void)
                                           (GDestroyNotify) g_free);
 
   /* Check all locales we have translations for. */
-  locales_dir = g_dir_open (gimp_locale_directory (), 0, NULL);
+  locales_dir = g_dir_open (ligma_locale_directory (), 0, NULL);
   if (locales_dir)
     {
       const gchar *locale;
 
       while ((locale = g_dir_read_name (locales_dir)) != NULL)
         {
-          gchar *filename = g_build_filename (gimp_locale_directory (),
+          gchar *filename = g_build_filename (ligma_locale_directory (),
                                               locale,
                                               "LC_MESSAGES",
                                               GETTEXT_PACKAGE ".mo",
@@ -270,7 +270,7 @@ gimp_language_store_parser_init (void)
 }
 
 void
-gimp_language_store_parser_clean (void)
+ligma_language_store_parser_clean (void)
 {
   g_hash_table_destroy (l10n_lang_list);
   g_hash_table_destroy (all_lang_list);
@@ -282,7 +282,7 @@ gimp_language_store_parser_clean (void)
  * ISO-639 standard code.
  *
  * If @localization_only is TRUE, it returns only the list of available
- * GIMP localizations, and language names are translated in their own
+ * LIGMA localizations, and language names are translated in their own
  * locale.
  * If @localization_only is FALSE, the full list of ISO-639 languages
  * is returned, and language names are in the user-set locale.
@@ -290,7 +290,7 @@ gimp_language_store_parser_clean (void)
  * Do not free the list or elements of the list.
  */
 GHashTable *
-gimp_language_store_parser_get_languages (gboolean localization_only)
+ligma_language_store_parser_get_languages (gboolean localization_only)
 {
   if (localization_only)
     return l10n_lang_list;
@@ -324,7 +324,7 @@ parse_iso_codes (GHashTable  *base_lang_list,
       NULL   /*  error        */
     };
 
-  GimpXmlParser  *xml_parser;
+  LigmaXmlParser  *xml_parser;
   GFile          *file;
   IsoCodesParser  parser = { 0, };
 
@@ -334,17 +334,17 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   parser.base_lang_list = g_hash_table_ref (base_lang_list);
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
+  xml_parser = ligma_xml_parser_new (&markup_parser, &parser);
 
 #ifdef ENABLE_RELOCATABLE_RESOURCES
-  file = gimp_installation_directory_file ("share", "xml", "iso-codes",
+  file = ligma_installation_directory_file ("share", "xml", "iso-codes",
                                            "iso_639.xml", NULL);
 #else
   file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
                               "iso_639.xml");
 #endif
 
-  success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
+  success = ligma_xml_parser_parse_gfile (xml_parser, file, error);
   if (error && *error)
     {
       g_warning ("%s: error parsing '%s': %s\n",
@@ -355,7 +355,7 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   g_object_unref (file);
 
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
   g_hash_table_unref (parser.base_lang_list);
 
 #endif /* HAVE_ISO_CODES */
@@ -373,8 +373,8 @@ iso_codes_parser_init (void)
     return;
 
 #ifdef G_OS_WIN32
-  /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
-  bindtextdomain ("iso_639", gimp_locale_directory ());
+  /*  on Win32, assume iso-codes is installed in the same location as LIGMA  */
+  bindtextdomain ("iso_639", ligma_locale_directory ());
 #else
   bindtextdomain ("iso_639", ISO_CODES_LOCALEDIR);
 #endif
@@ -508,7 +508,7 @@ iso_codes_parser_start_unknown (IsoCodesParser *parser)
 static void
 iso_codes_parser_end_unknown (IsoCodesParser *parser)
 {
-  gimp_assert (parser->unknown_depth > 0 &&
+  ligma_assert (parser->unknown_depth > 0 &&
                parser->state == ISO_CODES_IN_UNKNOWN);
 
   parser->unknown_depth--;

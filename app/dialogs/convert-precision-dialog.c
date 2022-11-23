@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,37 +20,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimp-utils.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligma-utils.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "convert-precision-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _ConvertDialog ConvertDialog;
 
 struct _ConvertDialog
 {
-  GimpImage                    *image;
-  GimpComponentType             component_type;
-  GimpTRCType                   trc;
+  LigmaImage                    *image;
+  LigmaComponentType             component_type;
+  LigmaTRCType                   trc;
   GeglDitherMethod              layer_dither_method;
   GeglDitherMethod              text_layer_dither_method;
   GeglDitherMethod              channel_dither_method;
-  GimpConvertPrecisionCallback  callback;
+  LigmaConvertPrecisionCallback  callback;
   gpointer                      user_data;
 };
 
@@ -66,14 +66,14 @@ static void   convert_precision_dialog_response (GtkWidget        *widget,
 /*  public functions  */
 
 GtkWidget *
-convert_precision_dialog_new (GimpImage                    *image,
-                              GimpContext                  *context,
+convert_precision_dialog_new (LigmaImage                    *image,
+                              LigmaContext                  *context,
                               GtkWidget                    *parent,
-                              GimpComponentType             component_type,
+                              LigmaComponentType             component_type,
                               GeglDitherMethod              layer_dither_method,
                               GeglDitherMethod              text_layer_dither_method,
                               GeglDitherMethod              channel_dither_method,
-                              GimpConvertPrecisionCallback  callback,
+                              LigmaConvertPrecisionCallback  callback,
                               gpointer                      user_data)
 
 {
@@ -90,17 +90,17 @@ convert_precision_dialog_new (GimpImage                    *image,
   gint           old_bits;
   gint           new_bits;
   gboolean       dither;
-  GimpTRCType    trc;
+  LigmaTRCType    trc;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   /* random formats with the right precision */
-  old_format = gimp_image_get_layer_format (image, FALSE);
-  new_format = gimp_babl_format (GIMP_RGB,
-                                 gimp_babl_precision (component_type, FALSE),
+  old_format = ligma_image_get_layer_format (image, FALSE);
+  new_format = ligma_babl_format (LIGMA_RGB,
+                                 ligma_babl_precision (component_type, FALSE),
                                  FALSE,
                                  babl_format_get_space (old_format));
 
@@ -115,8 +115,8 @@ convert_precision_dialog_new (GimpImage                    *image,
   dither = (new_bits <  old_bits &&
             new_bits <= CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS);
 
-  trc = gimp_babl_format_get_trc (old_format);
-  trc = gimp_suggest_trc_for_component_type (component_type, trc);
+  trc = ligma_babl_format_get_trc (old_format);
+  trc = ligma_suggest_trc_for_component_type (component_type, trc);
 
   private = g_slice_new0 (ConvertDialog);
 
@@ -129,19 +129,19 @@ convert_precision_dialog_new (GimpImage                    *image,
   private->callback                 = callback;
   private->user_data                = user_data;
 
-  gimp_enum_get_value (GIMP_TYPE_COMPONENT_TYPE, component_type,
+  ligma_enum_get_value (LIGMA_TYPE_COMPONENT_TYPE, component_type,
                        NULL, NULL, &enum_desc, NULL);
 
   blurb = g_strdup_printf (_("Convert Image to %s"), enum_desc);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      _("Encoding Conversion"),
-                                     "gimp-image-convert-precision",
-                                     GIMP_ICON_CONVERT_PRECISION,
+                                     "ligma-image-convert-precision",
+                                     LIGMA_ICON_CONVERT_PRECISION,
                                      blurb,
                                      parent,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_IMAGE_CONVERT_PRECISION,
+                                     ligma_standard_help_func,
+                                     LIGMA_HELP_IMAGE_CONVERT_PRECISION,
 
                                      _("_Cancel"),  GTK_RESPONSE_CANCEL,
                                      _("C_onvert"), GTK_RESPONSE_OK,
@@ -150,7 +150,7 @@ convert_precision_dialog_new (GimpImage                    *image,
 
   g_free (blurb);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -173,27 +173,27 @@ convert_precision_dialog_new (GimpImage                    *image,
 
   /*  gamma  */
 
-  frame = gimp_frame_new (_("Gamma"));
+  frame = ligma_frame_new (_("Gamma"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gimp_int_radio_group_new (FALSE, NULL,
-                                   G_CALLBACK (gimp_radio_button_update),
+  vbox = ligma_int_radio_group_new (FALSE, NULL,
+                                   G_CALLBACK (ligma_radio_button_update),
                                    &private->trc, NULL,
                                    trc,
 
                                    _("Linear light"),
-                                   GIMP_TRC_LINEAR, NULL,
+                                   LIGMA_TRC_LINEAR, NULL,
 
                                    _("Non-Linear"),
-                                   GIMP_TRC_NON_LINEAR, NULL,
+                                   LIGMA_TRC_NON_LINEAR, NULL,
 
                                    _("Perceptual (sRGB)"),
-                                   GIMP_TRC_PERCEPTUAL, &perceptual_radio,
+                                   LIGMA_TRC_PERCEPTUAL, &perceptual_radio,
 
                                    NULL);
 
-  if (private->trc != GIMP_TRC_PERCEPTUAL)
+  if (private->trc != LIGMA_TRC_PERCEPTUAL)
     gtk_widget_hide (perceptual_radio);
 
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -209,7 +209,7 @@ convert_precision_dialog_new (GimpImage                    *image,
       GtkWidget    *combo;
       GtkSizeGroup *size_group;
 
-      frame = gimp_frame_new (_("Dithering"));
+      frame = ligma_frame_new (_("Dithering"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -231,14 +231,14 @@ convert_precision_dialog_new (GimpImage                    *image,
       gtk_size_group_add_widget (size_group, label);
       gtk_widget_show (label);
 
-      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      combo = ligma_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->layer_dither_method,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->layer_dither_method, NULL);
 
       /*  text layers  */
@@ -253,17 +253,17 @@ convert_precision_dialog_new (GimpImage                    *image,
       gtk_size_group_add_widget (size_group, label);
       gtk_widget_show (label);
 
-      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      combo = ligma_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->text_layer_dither_method,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->text_layer_dither_method, NULL);
 
-      gimp_help_set_help_data (combo,
+      ligma_help_set_help_data (combo,
                                _("Dithering text layers will make them "
                                  "uneditable"),
                                NULL);
@@ -280,14 +280,14 @@ convert_precision_dialog_new (GimpImage                    *image,
       gtk_size_group_add_widget (size_group, label);
       gtk_widget_show (label);
 
-      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      combo = ligma_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->channel_dither_method,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->channel_dither_method, NULL);
 
       g_object_unref (size_group);
@@ -312,7 +312,7 @@ convert_precision_dialog_response (GtkWidget     *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpPrecision precision = gimp_babl_precision (private->component_type,
+      LigmaPrecision precision = ligma_babl_precision (private->component_type,
                                                      private->trc);
 
       private->callback (dialog,

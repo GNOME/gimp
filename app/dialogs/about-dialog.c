@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,23 +22,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
 #include "about.h"
 #include "git-version.h"
 
 #include "about-dialog.h"
 #include "authors.h"
-#include "gimp-update.h"
-#include "gimp-version.h"
+#include "ligma-update.h"
+#include "ligma-version.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* The first authors are the creators and maintainers, don't shuffle
@@ -53,7 +53,7 @@ typedef struct
   GtkWidget   *dialog;
 
   GtkWidget      *update_frame;
-  GimpCoreConfig *config;
+  LigmaCoreConfig *config;
 
   GtkWidget   *anim_area;
   PangoLayout *layout;
@@ -67,41 +67,41 @@ typedef struct
   gint         animstep;
   gint         state;
   gboolean     visible;
-} GimpAboutDialog;
+} LigmaAboutDialog;
 
 
 static void        about_dialog_map           (GtkWidget       *widget,
-                                               GimpAboutDialog *dialog);
+                                               LigmaAboutDialog *dialog);
 static void        about_dialog_unmap         (GtkWidget       *widget,
-                                               GimpAboutDialog *dialog);
+                                               LigmaAboutDialog *dialog);
 static GdkPixbuf * about_dialog_load_logo     (void);
 static void        about_dialog_add_animation (GtkWidget       *vbox,
-                                               GimpAboutDialog *dialog);
-static void        about_dialog_add_update    (GimpAboutDialog *dialog,
-                                               GimpCoreConfig  *config);
+                                               LigmaAboutDialog *dialog);
+static void        about_dialog_add_update    (LigmaAboutDialog *dialog,
+                                               LigmaCoreConfig  *config);
 static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
                                                cairo_t         *cr,
-                                               GimpAboutDialog *dialog);
-static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
+                                               LigmaAboutDialog *dialog);
+static void        about_dialog_reshuffle     (LigmaAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
 static void        about_dialog_add_unstable_message
                                               (GtkWidget       *vbox);
-#endif /* GIMP_UNSTABLE */
+#endif /* LIGMA_UNSTABLE */
 
 static void        about_dialog_last_release_changed
-                                              (GimpCoreConfig   *config,
+                                              (LigmaCoreConfig   *config,
                                                const GParamSpec *pspec,
-                                               GimpAboutDialog  *dialog);
+                                               LigmaAboutDialog  *dialog);
 static void        about_dialog_download_clicked
                                               (GtkButton   *button,
                                                const gchar *link);
 
 GtkWidget *
-about_dialog_create (GimpCoreConfig *config)
+about_dialog_create (LigmaCoreConfig *config)
 {
-  static GimpAboutDialog dialog;
+  static LigmaAboutDialog dialog;
 
   if (! dialog.dialog)
     {
@@ -117,30 +117,30 @@ about_dialog_create (GimpCoreConfig *config)
 
       pixbuf = about_dialog_load_logo ();
 
-      copyright = g_strdup_printf (GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
-      if (gimp_version_get_revision () > 0)
-        /* Translators: the %s is GIMP version, the %d is the
+      copyright = g_strdup_printf (LIGMA_COPYRIGHT, LIGMA_GIT_LAST_COMMIT_YEAR);
+      if (ligma_version_get_revision () > 0)
+        /* Translators: the %s is LIGMA version, the %d is the
          * installer/package revision.
          * For instance: "2.10.18 (revision 2)"
          */
-        version = g_strdup_printf (_("%s (revision %d)"), GIMP_VERSION,
-                                   gimp_version_get_revision ());
+        version = g_strdup_printf (_("%s (revision %d)"), LIGMA_VERSION,
+                                   ligma_version_get_revision ());
       else
-        version = g_strdup (GIMP_VERSION);
+        version = g_strdup (LIGMA_VERSION);
 
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-                             "role",               "gimp-about",
+                             "role",               "ligma-about",
                              "window-position",    GTK_WIN_POS_CENTER,
-                             "title",              _("About GIMP"),
-                             "program-name",       GIMP_ACRONYM,
+                             "title",              _("About LIGMA"),
+                             "program-name",       LIGMA_ACRONYM,
                              "version",            version,
                              "copyright",          copyright,
-                             "comments",           GIMP_NAME,
-                             "license",            GIMP_LICENSE,
+                             "comments",           LIGMA_NAME,
+                             "license",            LIGMA_LICENSE,
                              "wrap-license",       TRUE,
                              "logo",               pixbuf,
-                             "website",            "https://www.gimp.org/",
-                             "website-label",      _("Visit the GIMP website"),
+                             "website",            "https://www.ligma.org/",
+                             "website-label",      _("Visit the LIGMA website"),
                              "authors",            authors,
                              "artists",            artists,
                              "documenters",        documenters,
@@ -177,9 +177,9 @@ about_dialog_create (GimpCoreConfig *config)
       if (GTK_IS_BOX (children->data))
         {
           about_dialog_add_animation (children->data, &dialog);
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           about_dialog_add_unstable_message (children->data);
-#endif /* GIMP_UNSTABLE */
+#endif /* LIGMA_UNSTABLE */
           about_dialog_add_update (&dialog, config);
         }
       else
@@ -193,9 +193,9 @@ about_dialog_create (GimpCoreConfig *config)
 
 static void
 about_dialog_map (GtkWidget       *widget,
-                  GimpAboutDialog *dialog)
+                  LigmaAboutDialog *dialog)
 {
-  gimp_update_refresh (dialog->config);
+  ligma_update_refresh (dialog->config);
 
   if (dialog->layout && dialog->timer == 0)
     {
@@ -212,7 +212,7 @@ about_dialog_map (GtkWidget       *widget,
 
 static void
 about_dialog_unmap (GtkWidget       *widget,
-                    GimpAboutDialog *dialog)
+                    LigmaAboutDialog *dialog)
 {
   if (dialog->timer)
     {
@@ -228,11 +228,11 @@ about_dialog_load_logo (void)
   GFile        *file;
   GInputStream *input;
 
-  file = gimp_data_directory_file ("images",
-#ifdef GIMP_UNSTABLE
-                                   "gimp-devel-logo.png",
+  file = ligma_data_directory_file ("images",
+#ifdef LIGMA_UNSTABLE
+                                   "ligma-devel-logo.png",
 #else
-                                   "gimp-logo.png",
+                                   "ligma-logo.png",
 #endif
                                    NULL);
 
@@ -250,7 +250,7 @@ about_dialog_load_logo (void)
 
 static void
 about_dialog_add_animation (GtkWidget       *vbox,
-                            GimpAboutDialog *dialog)
+                            LigmaAboutDialog *dialog)
 {
   gint  height;
 
@@ -273,8 +273,8 @@ about_dialog_add_animation (GtkWidget       *vbox,
 }
 
 static void
-about_dialog_add_update (GimpAboutDialog *dialog,
-                         GimpCoreConfig  *config)
+about_dialog_add_update (LigmaAboutDialog *dialog,
+                         LigmaCoreConfig  *config)
 {
   GtkWidget *container;
   GList     *children;
@@ -351,10 +351,10 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_image_set_from_icon_name (GTK_IMAGE (button_image),
                                     "software-update-available",
                                     GTK_ICON_SIZE_DIALOG);
-#ifdef GIMP_UNSTABLE
-      download_url = "https://www.gimp.org/downloads/devel/";
+#ifdef LIGMA_UNSTABLE
+      download_url = "https://www.ligma.org/downloads/devel/";
 #else
-      download_url = "https://www.gimp.org/downloads/";
+      download_url = "https://www.ligma.org/downloads/";
 #endif
       g_signal_connect (button, "clicked",
                         (GCallback) about_dialog_download_clicked,
@@ -368,7 +368,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       if (config->last_revision > 0)
         {
           /* This is actually a new revision of current version. */
-          text = g_strdup_printf (_("Download GIMP %s revision %d (released on %s)\n"),
+          text = g_strdup_printf (_("Download LIGMA %s revision %d (released on %s)\n"),
                                   config->last_known_release,
                                   config->last_revision,
                                   date);
@@ -383,7 +383,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
         }
       else
         {
-          text = g_strdup_printf (_("Download GIMP %s (released on %s)\n"),
+          text = g_strdup_printf (_("Download LIGMA %s (released on %s)\n"),
                                   config->last_known_release, date);
         }
       gtk_label_set_text (GTK_LABEL (button_label), text);
@@ -410,7 +410,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
                                     GTK_ICON_SIZE_MENU);
       gtk_label_set_text (GTK_LABEL (button_label), _("Check for updates"));
       g_signal_connect_swapped (button, "clicked",
-                                (GCallback) gimp_update_check, config);
+                                (GCallback) ligma_update_check, config);
 
     }
 
@@ -432,7 +432,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_widget_set_tooltip_text (button, _("Check for updates"));
       gtk_box_pack_start (GTK_BOX (box2), button, FALSE, FALSE, 0);
       g_signal_connect_swapped (button, "clicked",
-                                (GCallback) gimp_update_check, config);
+                                (GCallback) ligma_update_check, config);
       gtk_widget_show (button);
     }
 
@@ -477,7 +477,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 }
 
 static void
-about_dialog_reshuffle (GimpAboutDialog *dialog)
+about_dialog_reshuffle (LigmaAboutDialog *dialog)
 {
   GRand *gr = g_rand_new ();
   gint   i;
@@ -505,7 +505,7 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
 static gboolean
 about_dialog_anim_draw (GtkWidget       *widget,
                         cairo_t         *cr,
-                        GimpAboutDialog *dialog)
+                        LigmaAboutDialog *dialog)
 {
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
@@ -576,7 +576,7 @@ insert_spacers (const gchar *string)
 }
 
 static void
-decorate_text (GimpAboutDialog *dialog,
+decorate_text (LigmaAboutDialog *dialog,
                gint             anim_type,
                gdouble          time)
 {
@@ -659,7 +659,7 @@ decorate_text (GimpAboutDialog *dialog,
 static gboolean
 about_dialog_timer (gpointer data)
 {
-  GimpAboutDialog *dialog  = data;
+  LigmaAboutDialog *dialog  = data;
   gint             timeout = 0;
 
   if (dialog->animstep == 0)
@@ -676,7 +676,7 @@ about_dialog_timer (gpointer data)
           return FALSE;
 
         case 1:
-          text = insert_spacers (_("GIMP is brought to you by"));
+          text = insert_spacers (_("LIGMA is brought to you by"));
           dialog->state += 1;
           break;
 
@@ -744,7 +744,7 @@ about_dialog_timer (gpointer data)
   return TRUE;
 }
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
 
 static void
 about_dialog_add_unstable_message (GtkWidget *vbox)
@@ -753,13 +753,13 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   gchar     *text;
 
   text = g_strdup_printf (_("This is an unstable development release\n"
-                            "commit %s"), GIMP_GIT_VERSION_ABBREV);
+                            "commit %s"), LIGMA_GIT_VERSION_ABBREV);
   label = gtk_label_new (text);
   g_free (text);
 
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -767,12 +767,12 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   gtk_widget_show (label);
 }
 
-#endif /* GIMP_UNSTABLE */
+#endif /* LIGMA_UNSTABLE */
 
 static void
-about_dialog_last_release_changed (GimpCoreConfig   *config,
+about_dialog_last_release_changed (LigmaCoreConfig   *config,
                                    const GParamSpec *pspec,
-                                   GimpAboutDialog  *dialog)
+                                   LigmaAboutDialog  *dialog)
 {
   g_signal_handlers_disconnect_by_func (config,
                                         (GCallback) about_dialog_last_release_changed,

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextLayer
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * LigmaTextLayer
+ * Copyright (C) 2002-2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,37 +27,37 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "text-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
-#include "core/gimpitemtree.h"
-#include "core/gimpparasitelist.h"
-#include "core/gimppattern.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage-undo-push.h"
+#include "core/ligmaitemtree.h"
+#include "core/ligmaparasitelist.h"
+#include "core/ligmapattern.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimptext.h"
-#include "gimptextlayer.h"
-#include "gimptextlayer-transform.h"
-#include "gimptextlayout.h"
-#include "gimptextlayout-render.h"
+#include "ligmatext.h"
+#include "ligmatextlayer.h"
+#include "ligmatextlayer-transform.h"
+#include "ligmatextlayout.h"
+#include "ligmatextlayout-render.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -68,37 +68,37 @@ enum
   PROP_MODIFIED
 };
 
-struct _GimpTextLayerPrivate
+struct _LigmaTextLayerPrivate
 {
-  GimpTextDirection base_dir;
+  LigmaTextDirection base_dir;
 };
 
-static void       gimp_text_layer_finalize       (GObject           *object);
-static void       gimp_text_layer_get_property   (GObject           *object,
+static void       ligma_text_layer_finalize       (GObject           *object);
+static void       ligma_text_layer_get_property   (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
-static void       gimp_text_layer_set_property   (GObject           *object,
+static void       ligma_text_layer_set_property   (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
 
-static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
+static gint64     ligma_text_layer_get_memsize    (LigmaObject        *object,
                                                   gint64            *gui_size);
 
-static GimpItem * gimp_text_layer_duplicate      (GimpItem          *item,
+static LigmaItem * ligma_text_layer_duplicate      (LigmaItem          *item,
                                                   GType              new_type);
-static gboolean   gimp_text_layer_rename         (GimpItem          *item,
+static gboolean   ligma_text_layer_rename         (LigmaItem          *item,
                                                   const gchar       *new_name,
                                                   const gchar       *undo_desc,
                                                   GError           **error);
 
-static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
+static void       ligma_text_layer_set_buffer     (LigmaDrawable      *drawable,
                                                   gboolean           push_undo,
                                                   const gchar       *undo_desc,
                                                   GeglBuffer        *buffer,
                                                   const GeglRectangle *bounds);
-static void       gimp_text_layer_push_undo      (GimpDrawable      *drawable,
+static void       ligma_text_layer_push_undo      (LigmaDrawable      *drawable,
                                                   const gchar       *undo_desc,
                                                   GeglBuffer        *buffer,
                                                   gint               x,
@@ -106,53 +106,53 @@ static void       gimp_text_layer_push_undo      (GimpDrawable      *drawable,
                                                   gint               width,
                                                   gint               height);
 
-static void       gimp_text_layer_convert_type   (GimpLayer         *layer,
-                                                  GimpImage         *dest_image,
+static void       ligma_text_layer_convert_type   (LigmaLayer         *layer,
+                                                  LigmaImage         *dest_image,
                                                   const Babl        *new_format,
-                                                  GimpColorProfile  *src_profile,
-                                                  GimpColorProfile  *dest_profile,
+                                                  LigmaColorProfile  *src_profile,
+                                                  LigmaColorProfile  *dest_profile,
                                                   GeglDitherMethod   layer_dither_type,
                                                   GeglDitherMethod   mask_dither_type,
                                                   gboolean           push_undo,
-                                                  GimpProgress      *progress);
+                                                  LigmaProgress      *progress);
 
-static void       gimp_text_layer_text_changed   (GimpTextLayer     *layer);
-static gboolean   gimp_text_layer_render         (GimpTextLayer     *layer);
-static void       gimp_text_layer_render_layout  (GimpTextLayer     *layer,
-                                                  GimpTextLayout    *layout);
+static void       ligma_text_layer_text_changed   (LigmaTextLayer     *layer);
+static gboolean   ligma_text_layer_render         (LigmaTextLayer     *layer);
+static void       ligma_text_layer_render_layout  (LigmaTextLayer     *layer,
+                                                  LigmaTextLayout    *layout);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaTextLayer, ligma_text_layer, LIGMA_TYPE_LAYER)
 
-#define parent_class gimp_text_layer_parent_class
+#define parent_class ligma_text_layer_parent_class
 
 
 static void
-gimp_text_layer_class_init (GimpTextLayerClass *klass)
+ligma_text_layer_class_init (LigmaTextLayerClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
-  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
-  GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaItemClass     *item_class        = LIGMA_ITEM_CLASS (klass);
+  LigmaDrawableClass *drawable_class    = LIGMA_DRAWABLE_CLASS (klass);
+  LigmaLayerClass    *layer_class       = LIGMA_LAYER_CLASS (klass);
 
-  object_class->finalize            = gimp_text_layer_finalize;
-  object_class->get_property        = gimp_text_layer_get_property;
-  object_class->set_property        = gimp_text_layer_set_property;
+  object_class->finalize            = ligma_text_layer_finalize;
+  object_class->get_property        = ligma_text_layer_get_property;
+  object_class->set_property        = ligma_text_layer_set_property;
 
-  gimp_object_class->get_memsize    = gimp_text_layer_get_memsize;
+  ligma_object_class->get_memsize    = ligma_text_layer_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-text-layer";
+  viewable_class->default_icon_name = "ligma-text-layer";
 
-  item_class->duplicate             = gimp_text_layer_duplicate;
-  item_class->rename                = gimp_text_layer_rename;
+  item_class->duplicate             = ligma_text_layer_duplicate;
+  item_class->rename                = ligma_text_layer_rename;
 
 #if 0
-  item_class->scale                 = gimp_text_layer_scale;
-  item_class->flip                  = gimp_text_layer_flip;
-  item_class->rotate                = gimp_text_layer_rotate;
-  item_class->transform             = gimp_text_layer_transform;
+  item_class->scale                 = ligma_text_layer_scale;
+  item_class->flip                  = ligma_text_layer_flip;
+  item_class->rotate                = ligma_text_layer_rotate;
+  item_class->transform             = ligma_text_layer_transform;
 #endif
 
   item_class->default_name          = _("Text Layer");
@@ -164,42 +164,42 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate_desc           = _("Rotate Text Layer");
   item_class->transform_desc        = _("Transform Text Layer");
 
-  drawable_class->set_buffer        = gimp_text_layer_set_buffer;
-  drawable_class->push_undo         = gimp_text_layer_push_undo;
+  drawable_class->set_buffer        = ligma_text_layer_set_buffer;
+  drawable_class->push_undo         = ligma_text_layer_push_undo;
 
-  layer_class->convert_type         = gimp_text_layer_convert_type;
+  layer_class->convert_type         = ligma_text_layer_convert_type;
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TEXT,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_TEXT,
                            "text",
                            NULL, NULL,
-                           GIMP_TYPE_TEXT,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_TYPE_TEXT,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
                             "auto-rename",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
                             "modified",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_text_layer_init (GimpTextLayer *layer)
+ligma_text_layer_init (LigmaTextLayer *layer)
 {
   layer->text          = NULL;
   layer->text_parasite = NULL;
-  layer->private       = gimp_text_layer_get_instance_private (layer);
+  layer->private       = ligma_text_layer_get_instance_private (layer);
 }
 
 static void
-gimp_text_layer_finalize (GObject *object)
+ligma_text_layer_finalize (GObject *object)
 {
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (object);
+  LigmaTextLayer *layer = LIGMA_TEXT_LAYER (object);
 
   g_clear_object (&layer->text);
 
@@ -207,12 +207,12 @@ gimp_text_layer_finalize (GObject *object)
 }
 
 static void
-gimp_text_layer_get_property (GObject      *object,
+ligma_text_layer_get_property (GObject      *object,
                               guint         property_id,
                               GValue       *value,
                               GParamSpec   *pspec)
 {
-  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (object);
+  LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (object);
 
   switch (property_id)
     {
@@ -233,17 +233,17 @@ gimp_text_layer_get_property (GObject      *object,
 }
 
 static void
-gimp_text_layer_set_property (GObject      *object,
+ligma_text_layer_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (object);
+  LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (object);
 
   switch (property_id)
     {
     case PROP_TEXT:
-      gimp_text_layer_set_text (text_layer, g_value_get_object (value));
+      ligma_text_layer_set_text (text_layer, g_value_get_object (value));
       break;
     case PROP_AUTO_RENAME:
       text_layer->auto_rename = g_value_get_boolean (value);
@@ -259,41 +259,41 @@ gimp_text_layer_set_property (GObject      *object,
 }
 
 static gint64
-gimp_text_layer_get_memsize (GimpObject *object,
+ligma_text_layer_get_memsize (LigmaObject *object,
                              gint64     *gui_size)
 {
-  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (object);
+  LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (object);
   gint64         memsize    = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (text_layer->text),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (text_layer->text),
                                       gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
-static GimpItem *
-gimp_text_layer_duplicate (GimpItem *item,
+static LigmaItem *
+ligma_text_layer_duplicate (LigmaItem *item,
                            GType     new_type)
 {
-  GimpItem *new_item;
+  LigmaItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, LIGMA_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
+  new_item = LIGMA_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
-  if (GIMP_IS_TEXT_LAYER (new_item))
+  if (LIGMA_IS_TEXT_LAYER (new_item))
     {
-      GimpTextLayer *layer     = GIMP_TEXT_LAYER (item);
-      GimpTextLayer *new_layer = GIMP_TEXT_LAYER (new_item);
+      LigmaTextLayer *layer     = LIGMA_TEXT_LAYER (item);
+      LigmaTextLayer *new_layer = LIGMA_TEXT_LAYER (new_item);
 
-      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
+      ligma_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
       if (layer->text)
         {
-          GimpText *text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+          LigmaText *text = ligma_config_duplicate (LIGMA_CONFIG (layer->text));
 
-          gimp_text_layer_set_text (new_layer, text);
+          ligma_text_layer_set_text (new_layer, text);
 
           g_object_unref (text);
         }
@@ -309,12 +309,12 @@ gimp_text_layer_duplicate (GimpItem *item,
 }
 
 static gboolean
-gimp_text_layer_rename (GimpItem     *item,
+ligma_text_layer_rename (LigmaItem     *item,
                         const gchar  *new_name,
                         const gchar  *undo_desc,
                         GError      **error)
 {
-  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error))
+  if (LIGMA_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error))
     {
       g_object_set (item, "auto-rename", FALSE, NULL);
 
@@ -325,35 +325,35 @@ gimp_text_layer_rename (GimpItem     *item,
 }
 
 static void
-gimp_text_layer_set_buffer (GimpDrawable        *drawable,
+ligma_text_layer_set_buffer (LigmaDrawable        *drawable,
                             gboolean             push_undo,
                             const gchar         *undo_desc,
                             GeglBuffer          *buffer,
                             const GeglRectangle *bounds)
 {
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
-  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+  LigmaTextLayer *layer = LIGMA_TEXT_LAYER (drawable);
+  LigmaImage     *image = ligma_item_get_image (LIGMA_ITEM (layer));
 
   if (push_undo && ! layer->modified)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
+  LIGMA_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
                                                   buffer, bounds);
 
   if (push_undo && ! layer->modified)
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+      ligma_image_undo_push_text_layer_modified (image, NULL, layer);
 
       g_object_set (drawable, "modified", TRUE, NULL);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
     }
 }
 
 static void
-gimp_text_layer_push_undo (GimpDrawable *drawable,
+ligma_text_layer_push_undo (LigmaDrawable *drawable,
                            const gchar  *undo_desc,
                            GeglBuffer   *buffer,
                            gint          x,
@@ -361,45 +361,45 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
-  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+  LigmaTextLayer *layer = LIGMA_TEXT_LAYER (drawable);
+  LigmaImage     *image = ligma_item_get_image (LIGMA_ITEM (layer));
 
   if (! layer->modified)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
+    ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_DRAWABLE, undo_desc);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
+  LIGMA_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
                                                  buffer,
                                                  x, y, width, height);
 
   if (! layer->modified)
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+      ligma_image_undo_push_text_layer_modified (image, NULL, layer);
 
       g_object_set (drawable, "modified", TRUE, NULL);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
     }
 }
 
 static void
-gimp_text_layer_convert_type (GimpLayer         *layer,
-                              GimpImage         *dest_image,
+ligma_text_layer_convert_type (LigmaLayer         *layer,
+                              LigmaImage         *dest_image,
                               const Babl        *new_format,
-                              GimpColorProfile  *src_profile,
-                              GimpColorProfile  *dest_profile,
+                              LigmaColorProfile  *src_profile,
+                              LigmaColorProfile  *dest_profile,
                               GeglDitherMethod   layer_dither_type,
                               GeglDitherMethod   mask_dither_type,
                               gboolean           push_undo,
-                              GimpProgress      *progress)
+                              LigmaProgress      *progress)
 {
-  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
-  GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (text_layer));
+  LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (layer);
+  LigmaImage     *image      = ligma_item_get_image (LIGMA_ITEM (text_layer));
 
   if (! text_layer->text   ||
       text_layer->modified ||
       layer_dither_type != GEGL_DITHER_NONE)
     {
-      GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
+      LIGMA_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
                                                      new_format,
                                                      src_profile,
                                                      dest_profile,
@@ -411,11 +411,11 @@ gimp_text_layer_convert_type (GimpLayer         *layer,
   else
     {
       if (push_undo)
-        gimp_image_undo_push_text_layer_convert (image, NULL, text_layer);
+        ligma_image_undo_push_text_layer_convert (image, NULL, text_layer);
 
       text_layer->convert_format = new_format;
 
-      gimp_text_layer_render (text_layer);
+      ligma_text_layer_render (text_layer);
 
       text_layer->convert_format = NULL;
     }
@@ -425,54 +425,54 @@ gimp_text_layer_convert_type (GimpLayer         *layer,
 /*  public functions  */
 
 /**
- * gimp_text_layer_new:
- * @image: the #GimpImage the layer should belong to
- * @text: a #GimpText object
+ * ligma_text_layer_new:
+ * @image: the #LigmaImage the layer should belong to
+ * @text: a #LigmaText object
  *
  * Creates a new text layer.
  *
- * Returns: (nullable): a new #GimpTextLayer or %NULL in case of a problem
+ * Returns: (nullable): a new #LigmaTextLayer or %NULL in case of a problem
  **/
-GimpLayer *
-gimp_text_layer_new (GimpImage *image,
-                     GimpText  *text)
+LigmaLayer *
+ligma_text_layer_new (LigmaImage *image,
+                     LigmaText  *text)
 {
-  GimpTextLayer *layer;
+  LigmaTextLayer *layer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT (text), NULL);
 
   if (! text->text && ! text->markup)
     return NULL;
 
   layer =
-    GIMP_TEXT_LAYER (gimp_drawable_new (GIMP_TYPE_TEXT_LAYER,
+    LIGMA_TEXT_LAYER (ligma_drawable_new (LIGMA_TYPE_TEXT_LAYER,
                                         image, NULL,
                                         0, 0, 1, 1,
-                                        gimp_image_get_layer_format (image,
+                                        ligma_image_get_layer_format (image,
                                                                      TRUE)));
 
-  gimp_layer_set_mode (GIMP_LAYER (layer),
-                       gimp_image_get_default_new_layer_mode (image),
+  ligma_layer_set_mode (LIGMA_LAYER (layer),
+                       ligma_image_get_default_new_layer_mode (image),
                        FALSE);
 
-  gimp_text_layer_set_text (layer, text);
+  ligma_text_layer_set_text (layer, text);
 
-  if (! gimp_text_layer_render (layer))
+  if (! ligma_text_layer_render (layer))
     {
       g_object_unref (layer);
       return NULL;
     }
 
-  return GIMP_LAYER (layer);
+  return LIGMA_LAYER (layer);
 }
 
 void
-gimp_text_layer_set_text (GimpTextLayer *layer,
-                          GimpText      *text)
+ligma_text_layer_set_text (LigmaTextLayer *layer,
+                          LigmaText      *text)
 {
-  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-  g_return_if_fail (text == NULL || GIMP_IS_TEXT (text));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYER (layer));
+  g_return_if_fail (text == NULL || LIGMA_IS_TEXT (text));
 
   if (layer->text == text)
     return;
@@ -480,7 +480,7 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
   if (layer->text)
     {
       g_signal_handlers_disconnect_by_func (layer->text,
-                                            G_CALLBACK (gimp_text_layer_text_changed),
+                                            G_CALLBACK (ligma_text_layer_text_changed),
                                             layer);
 
       g_clear_object (&layer->text);
@@ -492,48 +492,48 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
       layer->private->base_dir = layer->text->base_dir;
 
       g_signal_connect_object (text, "changed",
-                               G_CALLBACK (gimp_text_layer_text_changed),
+                               G_CALLBACK (ligma_text_layer_text_changed),
                                layer, G_CONNECT_SWAPPED);
     }
 
   g_object_notify (G_OBJECT (layer), "text");
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (layer));
 }
 
-GimpText *
-gimp_text_layer_get_text (GimpTextLayer *layer)
+LigmaText *
+ligma_text_layer_get_text (LigmaTextLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_LAYER (layer), NULL);
 
   return layer->text;
 }
 
 void
-gimp_text_layer_set (GimpTextLayer *layer,
+ligma_text_layer_set (LigmaTextLayer *layer,
                      const gchar   *undo_desc,
                      const gchar   *first_property_name,
                      ...)
 {
-  GimpImage *image;
-  GimpText  *text;
+  LigmaImage *image;
+  LigmaText  *text;
   va_list    var_args;
 
-  g_return_if_fail (gimp_item_is_text_layer (GIMP_ITEM (layer)));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+  g_return_if_fail (ligma_item_is_text_layer (LIGMA_ITEM (layer)));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (layer)));
 
-  text = gimp_text_layer_get_text (layer);
+  text = ligma_text_layer_get_text (layer);
   if (! text)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (layer));
+  image = ligma_item_get_image (LIGMA_ITEM (layer));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, undo_desc);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TEXT, undo_desc);
 
   g_object_freeze_notify (G_OBJECT (layer));
 
   if (layer->modified)
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+      ligma_image_undo_push_text_layer_modified (image, NULL, layer);
 
       /*  pass copy_tiles = TRUE so we not only ref the tiles; after
        *  being a text layer again, undo doesn't care about the
@@ -542,11 +542,11 @@ gimp_text_layer_set (GimpTextLayer *layer,
        *  pixels, changing the pixels on the undo stack too without
        *  any chance to ever undo again.
        */
-      gimp_image_undo_push_drawable_mod (image, NULL,
-                                         GIMP_DRAWABLE (layer), TRUE);
+      ligma_image_undo_push_drawable_mod (image, NULL,
+                                         LIGMA_DRAWABLE (layer), TRUE);
     }
 
-  gimp_image_undo_push_text_layer (image, undo_desc, layer, NULL);
+  ligma_image_undo_push_text_layer (image, undo_desc, layer, NULL);
 
   va_start (var_args, first_property_name);
 
@@ -558,54 +558,54 @@ gimp_text_layer_set (GimpTextLayer *layer,
 
   g_object_thaw_notify (G_OBJECT (layer));
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 }
 
 /**
- * gimp_text_layer_discard:
- * @layer: a #GimpTextLayer
+ * ligma_text_layer_discard:
+ * @layer: a #LigmaTextLayer
  *
  * Discards the text information. This makes @layer behave like a
  * normal layer.
  */
 void
-gimp_text_layer_discard (GimpTextLayer *layer)
+ligma_text_layer_discard (LigmaTextLayer *layer)
 {
-  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYER (layer));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (layer)));
 
   if (! layer->text)
     return;
 
-  gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
+  ligma_image_undo_push_text_layer (ligma_item_get_image (LIGMA_ITEM (layer)),
                                    _("Discard Text Information"),
                                    layer, NULL);
 
-  gimp_text_layer_set_text (layer, NULL);
+  ligma_text_layer_set_text (layer, NULL);
 }
 
 gboolean
-gimp_item_is_text_layer (GimpItem *item)
+ligma_item_is_text_layer (LigmaItem *item)
 {
-  return (GIMP_IS_TEXT_LAYER (item)    &&
-          GIMP_TEXT_LAYER (item)->text &&
-          GIMP_TEXT_LAYER (item)->modified == FALSE);
+  return (LIGMA_IS_TEXT_LAYER (item)    &&
+          LIGMA_TEXT_LAYER (item)->text &&
+          LIGMA_TEXT_LAYER (item)->modified == FALSE);
 }
 
 
 /*  private functions  */
 
 static const Babl *
-gimp_text_layer_get_format (GimpTextLayer *layer)
+ligma_text_layer_get_format (LigmaTextLayer *layer)
 {
   if (layer->convert_format)
     return layer->convert_format;
 
-  return gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  return ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 }
 
 static void
-gimp_text_layer_text_changed (GimpTextLayer *layer)
+ligma_text_layer_text_changed (LigmaTextLayer *layer)
 {
   /*  If the text layer was created from a parasite, it's time to
    *  remove that parasite now.
@@ -615,85 +615,85 @@ gimp_text_layer_text_changed (GimpTextLayer *layer)
       /*  Don't push an undo because the parasite only exists temporarily
        *  while the text layer is loaded from XCF.
        */
-      gimp_item_parasite_detach (GIMP_ITEM (layer), layer->text_parasite,
+      ligma_item_parasite_detach (LIGMA_ITEM (layer), layer->text_parasite,
                                  FALSE);
       layer->text_parasite = NULL;
     }
 
-  if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
+  if (layer->text->box_mode == LIGMA_TEXT_BOX_DYNAMIC)
     {
       gint                old_width;
       gint                new_width;
-      GimpItem           *item         = GIMP_ITEM (layer);
-      GimpTextDirection   old_base_dir = layer->private->base_dir;
-      GimpTextDirection   new_base_dir = layer->text->base_dir;
+      LigmaItem           *item         = LIGMA_ITEM (layer);
+      LigmaTextDirection   old_base_dir = layer->private->base_dir;
+      LigmaTextDirection   new_base_dir = layer->text->base_dir;
 
-      old_width = gimp_item_get_width (item);
-      gimp_text_layer_render (layer);
-      new_width = gimp_item_get_width (item);
+      old_width = ligma_item_get_width (item);
+      ligma_text_layer_render (layer);
+      new_width = ligma_item_get_width (item);
 
       if (old_base_dir != new_base_dir)
         {
           switch (old_base_dir)
             {
-            case GIMP_TEXT_DIRECTION_LTR:
-            case GIMP_TEXT_DIRECTION_RTL:
-            case GIMP_TEXT_DIRECTION_TTB_LTR:
-            case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+            case LIGMA_TEXT_DIRECTION_LTR:
+            case LIGMA_TEXT_DIRECTION_RTL:
+            case LIGMA_TEXT_DIRECTION_TTB_LTR:
+            case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
               switch (new_base_dir)
                 {
-                case GIMP_TEXT_DIRECTION_TTB_RTL:
-                case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
-                  gimp_item_translate (item, -new_width, 0, FALSE);
+                case LIGMA_TEXT_DIRECTION_TTB_RTL:
+                case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+                  ligma_item_translate (item, -new_width, 0, FALSE);
                   break;
 
-                case GIMP_TEXT_DIRECTION_LTR:
-                case GIMP_TEXT_DIRECTION_RTL:
-                case GIMP_TEXT_DIRECTION_TTB_LTR:
-                case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+                case LIGMA_TEXT_DIRECTION_LTR:
+                case LIGMA_TEXT_DIRECTION_RTL:
+                case LIGMA_TEXT_DIRECTION_TTB_LTR:
+                case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
                   break;
                 }
               break;
 
-            case GIMP_TEXT_DIRECTION_TTB_RTL:
-            case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+            case LIGMA_TEXT_DIRECTION_TTB_RTL:
+            case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
               switch (new_base_dir)
                 {
-                case GIMP_TEXT_DIRECTION_LTR:
-                case GIMP_TEXT_DIRECTION_RTL:
-                case GIMP_TEXT_DIRECTION_TTB_LTR:
-                case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
-                  gimp_item_translate (item, old_width, 0, FALSE);
+                case LIGMA_TEXT_DIRECTION_LTR:
+                case LIGMA_TEXT_DIRECTION_RTL:
+                case LIGMA_TEXT_DIRECTION_TTB_LTR:
+                case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+                  ligma_item_translate (item, old_width, 0, FALSE);
                   break;
 
-                case GIMP_TEXT_DIRECTION_TTB_RTL:
-                case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+                case LIGMA_TEXT_DIRECTION_TTB_RTL:
+                case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
                   break;
                 }
               break;
             }
         }
-      else if ((new_base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
-              new_base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
+      else if ((new_base_dir == LIGMA_TEXT_DIRECTION_TTB_RTL ||
+              new_base_dir == LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
         {
           if (old_width != new_width)
-            gimp_item_translate (item, old_width - new_width, 0, FALSE);
+            ligma_item_translate (item, old_width - new_width, 0, FALSE);
         }
     }
   else
-    gimp_text_layer_render (layer);
+    ligma_text_layer_render (layer);
 
   layer->private->base_dir = layer->text->base_dir;
 }
 
 static gboolean
-gimp_text_layer_render (GimpTextLayer *layer)
+ligma_text_layer_render (LigmaTextLayer *layer)
 {
-  GimpDrawable   *drawable;
-  GimpItem       *item;
-  GimpImage      *image;
-  GimpContainer  *container;
-  GimpTextLayout *layout;
+  LigmaDrawable   *drawable;
+  LigmaItem       *item;
+  LigmaImage      *image;
+  LigmaContainer  *container;
+  LigmaTextLayout *layout;
   gdouble         xres;
   gdouble         yres;
   gint            width;
@@ -703,73 +703,73 @@ gimp_text_layer_render (GimpTextLayer *layer)
   if (! layer->text)
     return FALSE;
 
-  drawable  = GIMP_DRAWABLE (layer);
-  item      = GIMP_ITEM (layer);
-  image     = gimp_item_get_image (item);
-  container = gimp_data_factory_get_container (image->gimp->font_factory);
+  drawable  = LIGMA_DRAWABLE (layer);
+  item      = LIGMA_ITEM (layer);
+  image     = ligma_item_get_image (item);
+  container = ligma_data_factory_get_container (image->ligma->font_factory);
 
-  gimp_data_factory_data_wait (image->gimp->font_factory);
+  ligma_data_factory_data_wait (image->ligma->font_factory);
 
-  if (gimp_container_is_empty (container))
+  if (ligma_container_is_empty (container))
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_ERROR,
                             _("Due to lack of any fonts, "
                               "text functionality is not available."));
       return FALSE;
     }
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
-  layout = gimp_text_layout_new (layer->text, xres, yres, &error);
+  layout = ligma_text_layout_new (layer->text, xres, yres, &error);
   if (error)
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
-  if (gimp_text_layout_get_size (layout, &width, &height) &&
-      (width  != gimp_item_get_width  (item) ||
-       height != gimp_item_get_height (item) ||
-       gimp_text_layer_get_format (layer) !=
-       gimp_drawable_get_format (drawable)))
+  if (ligma_text_layout_get_size (layout, &width, &height) &&
+      (width  != ligma_item_get_width  (item) ||
+       height != ligma_item_get_height (item) ||
+       ligma_text_layer_get_format (layer) !=
+       ligma_drawable_get_format (drawable)))
     {
       GeglBuffer *new_buffer;
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                    gimp_text_layer_get_format (layer));
-      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
+                                    ligma_text_layer_get_format (layer));
+      ligma_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
 
-      if (gimp_layer_get_mask (GIMP_LAYER (layer)))
+      if (ligma_layer_get_mask (LIGMA_LAYER (layer)))
         {
-          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+          LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (layer));
 
-          static GimpContext *unused_eek = NULL;
+          static LigmaContext *unused_eek = NULL;
 
           if (! unused_eek)
-            unused_eek = gimp_context_new (image->gimp, "eek", NULL);
+            unused_eek = ligma_context_new (image->ligma, "eek", NULL);
 
-          gimp_item_resize (GIMP_ITEM (mask),
-                            unused_eek, GIMP_FILL_TRANSPARENT,
+          ligma_item_resize (LIGMA_ITEM (mask),
+                            unused_eek, LIGMA_FILL_TRANSPARENT,
                             width, height, 0, 0);
         }
     }
 
   if (layer->auto_rename)
     {
-      GimpItem *item = GIMP_ITEM (layer);
+      LigmaItem *item = LIGMA_ITEM (layer);
       gchar    *name = NULL;
 
       if (layer->text->text)
         {
-          name = gimp_utf8_strtrim (layer->text->text, 30);
+          name = ligma_utf8_strtrim (layer->text->text, 30);
         }
       else if (layer->text->markup)
         {
-          gchar *tmp = gimp_markup_extract_text (layer->text->markup);
-          name = gimp_utf8_strtrim (tmp, 30);
+          gchar *tmp = ligma_markup_extract_text (layer->text->markup);
+          name = ligma_utf8_strtrim (tmp, 30);
           g_free (tmp);
         }
 
@@ -779,20 +779,20 @@ gimp_text_layer_render (GimpTextLayer *layer)
           name = g_strdup (_("Empty Text Layer"));
         }
 
-      if (gimp_item_is_attached (item))
+      if (ligma_item_is_attached (item))
         {
-          gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
+          ligma_item_tree_rename_item (ligma_item_get_tree (item), item,
                                       name, FALSE, NULL);
           g_free (name);
         }
       else
         {
-          gimp_object_take_name (GIMP_OBJECT (layer), name);
+          ligma_object_take_name (LIGMA_OBJECT (layer), name);
         }
     }
 
   if (width > 0 && height > 0)
-    gimp_text_layer_render_layout (layer, layout);
+    ligma_text_layer_render_layout (layer, layout);
 
   g_object_unref (layout);
 
@@ -802,7 +802,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
 }
 
 static void
-gimp_text_layer_set_dash_info (cairo_t      *cr,
+ligma_text_layer_set_dash_info (cairo_t      *cr,
                                gdouble       width,
                                gdouble       dash_offset,
                                const GArray *dash_info)
@@ -869,7 +869,7 @@ gimp_text_layer_set_dash_info (cairo_t      *cr,
 }
 
 static cairo_surface_t *
-gimp_temp_buf_create_cairo_surface (GimpTempBuf *temp_buf)
+ligma_temp_buf_create_cairo_surface (LigmaTempBuf *temp_buf)
 {
   cairo_surface_t *surface;
   gboolean         has_alpha;
@@ -885,10 +885,10 @@ gimp_temp_buf_create_cairo_surface (GimpTempBuf *temp_buf)
 
   g_return_val_if_fail (temp_buf != NULL, NULL);
 
-  data      = gimp_temp_buf_get_data (temp_buf);
-  format    = gimp_temp_buf_get_format (temp_buf);
-  width     = gimp_temp_buf_get_width (temp_buf);
-  height    = gimp_temp_buf_get_height (temp_buf);
+  data      = ligma_temp_buf_get_data (temp_buf);
+  format    = ligma_temp_buf_get_format (temp_buf);
+  width     = ligma_temp_buf_get_width (temp_buf);
+  height    = ligma_temp_buf_get_height (temp_buf);
   bpp       = babl_format_get_bytes_per_pixel (format);
   has_alpha = babl_format_has_alpha (format);
 
@@ -917,33 +917,33 @@ gimp_temp_buf_create_cairo_surface (GimpTempBuf *temp_buf)
 }
 
 static void
-gimp_text_layer_render_layout (GimpTextLayer  *layer,
-                               GimpTextLayout *layout)
+ligma_text_layer_render_layout (LigmaTextLayer  *layer,
+                               LigmaTextLayout *layout)
 {
-  GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
-  GimpItem           *item     = GIMP_ITEM (layer);
-  GimpImage          *image    = gimp_item_get_image (item);
+  LigmaDrawable       *drawable = LIGMA_DRAWABLE (layer);
+  LigmaItem           *item     = LIGMA_ITEM (layer);
+  LigmaImage          *image    = ligma_item_get_image (item);
   GeglBuffer         *buffer;
-  GimpColorTransform *transform;
+  LigmaColorTransform *transform;
   cairo_t            *cr;
   cairo_surface_t    *surface;
   gint                width;
   gint                height;
   cairo_status_t      status;
 
-  g_return_if_fail (gimp_drawable_has_alpha (drawable));
+  g_return_if_fail (ligma_drawable_has_alpha (drawable));
 
-  width  = gimp_item_get_width  (item);
-  height = gimp_item_get_height (item);
+  width  = ligma_item_get_width  (item);
+  height = ligma_item_get_height (item);
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
   status = cairo_surface_status (surface);
 
   if (status != CAIRO_STATUS_SUCCESS)
     {
-      GimpImage *image = gimp_item_get_image (item);
+      LigmaImage *image = ligma_item_get_image (item);
 
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_ERROR,
                             _("Your text cannot be rendered. It is likely too big. "
                               "Please make it shorter or use a smaller font."));
       cairo_surface_destroy (surface);
@@ -951,40 +951,40 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
     }
 
   cr = cairo_create (surface);
-  if (layer->text->outline != GIMP_TEXT_OUTLINE_STROKE_ONLY)
+  if (layer->text->outline != LIGMA_TEXT_OUTLINE_STROKE_ONLY)
     {
       cairo_save (cr);
 
-      gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
+      ligma_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
 
       cairo_restore (cr);
     }
 
-  if (layer->text->outline != GIMP_TEXT_OUTLINE_NONE)
+  if (layer->text->outline != LIGMA_TEXT_OUTLINE_NONE)
     {
-      GimpText *text = layer->text;
-      GimpRGB   col  = text->outline_foreground;
+      LigmaText *text = layer->text;
+      LigmaRGB   col  = text->outline_foreground;
 
       cairo_save (cr);
 
       cairo_set_antialias (cr, text->outline_antialias ?
                            CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       cairo_set_line_cap (cr,
-                          text->outline_cap_style == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
-                          text->outline_cap_style == GIMP_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
+                          text->outline_cap_style == LIGMA_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
+                          text->outline_cap_style == LIGMA_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
                           CAIRO_LINE_CAP_SQUARE);
-      cairo_set_line_join (cr, text->outline_join_style == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
-                               text->outline_join_style == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
+      cairo_set_line_join (cr, text->outline_join_style == LIGMA_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
+                               text->outline_join_style == LIGMA_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
                                CAIRO_LINE_JOIN_BEVEL);
       cairo_set_miter_limit (cr, text->outline_miter_limit);
 
       if (text->outline_dash_info)
-        gimp_text_layer_set_dash_info (cr, text->outline_width, text->outline_dash_offset, text->outline_dash_info);
+        ligma_text_layer_set_dash_info (cr, text->outline_width, text->outline_dash_offset, text->outline_dash_info);
 
-      if (text->outline_style == GIMP_FILL_STYLE_PATTERN && text->outline_pattern)
+      if (text->outline_style == LIGMA_FILL_STYLE_PATTERN && text->outline_pattern)
         {
-          GimpTempBuf     *tempbuf = gimp_pattern_get_mask (text->outline_pattern);
-          cairo_surface_t *surface = gimp_temp_buf_create_cairo_surface (tempbuf);
+          LigmaTempBuf     *tempbuf = ligma_pattern_get_mask (text->outline_pattern);
+          cairo_surface_t *surface = ligma_temp_buf_create_cairo_surface (tempbuf);
 
           cairo_set_source_surface (cr, surface, 0.0, 0.0);
           cairo_surface_destroy (surface);
@@ -998,7 +998,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
       cairo_set_line_width (cr, text->outline_width * 2);
 
-      gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
+      ligma_text_layout_render (layout, cr, text->base_dir, TRUE);
       cairo_clip_preserve (cr);
       cairo_stroke (cr);
 
@@ -1009,26 +1009,26 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   cairo_surface_flush (surface);
 
-  buffer = gimp_cairo_surface_create_buffer (surface);
+  buffer = ligma_cairo_surface_create_buffer (surface);
 
-  transform = gimp_image_get_color_transform_from_srgb_u8 (image);
+  transform = ligma_image_get_color_transform_from_srgb_u8 (image);
 
   if (transform)
     {
-      gimp_color_transform_process_buffer (transform,
+      ligma_color_transform_process_buffer (transform,
                                            buffer,
                                            NULL,
-                                           gimp_drawable_get_buffer (drawable),
+                                           ligma_drawable_get_buffer (drawable),
                                            NULL);
     }
   else
     {
-      gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (drawable), NULL);
+      ligma_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                             ligma_drawable_get_buffer (drawable), NULL);
     }
 
   g_object_unref (buffer);
   cairo_surface_destroy (surface);
 
-  gimp_drawable_update (drawable, 0, 0, width, height);
+  ligma_drawable_update (drawable, 0, 0, width, height);
 }

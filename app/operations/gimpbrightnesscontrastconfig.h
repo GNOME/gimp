@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrightnesscontrastconfig.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmabrightnesscontrastconfig.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
-#define __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
+#ifndef __LIGMA_BRIGHTNESS_CONTRAST_CONFIG_H__
+#define __LIGMA_BRIGHTNESS_CONTRAST_CONFIG_H__
 
 
-#include "gimpoperationsettings.h"
+#include "ligmaoperationsettings.h"
 
 
-#define GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG            (gimp_brightness_contrast_config_get_type ())
-#define GIMP_BRIGHTNESS_CONTRAST_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, GimpBrightnessContrastConfig))
-#define GIMP_BRIGHTNESS_CONTRAST_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, GimpBrightnessContrastConfigClass))
-#define GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG))
-#define GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG))
-#define GIMP_BRIGHTNESS_CONTRAST_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, GimpBrightnessContrastConfigClass))
+#define LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG            (ligma_brightness_contrast_config_get_type ())
+#define LIGMA_BRIGHTNESS_CONTRAST_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG, LigmaBrightnessContrastConfig))
+#define LIGMA_BRIGHTNESS_CONTRAST_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG, LigmaBrightnessContrastConfigClass))
+#define LIGMA_IS_BRIGHTNESS_CONTRAST_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG))
+#define LIGMA_IS_BRIGHTNESS_CONTRAST_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG))
+#define LIGMA_BRIGHTNESS_CONTRAST_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG, LigmaBrightnessContrastConfigClass))
 
 
-typedef struct _GimpBrightnessContrastConfigClass GimpBrightnessContrastConfigClass;
+typedef struct _LigmaBrightnessContrastConfigClass LigmaBrightnessContrastConfigClass;
 
-struct _GimpBrightnessContrastConfig
+struct _LigmaBrightnessContrastConfig
 {
-  GimpOperationSettings  parent_instance;
+  LigmaOperationSettings  parent_instance;
 
   gdouble                brightness;
   gdouble                contrast;
 };
 
-struct _GimpBrightnessContrastConfigClass
+struct _LigmaBrightnessContrastConfigClass
 {
-  GimpOperationSettingsClass  parent_class;
+  LigmaOperationSettingsClass  parent_class;
 };
 
 
-GType   gimp_brightness_contrast_config_get_type (void) G_GNUC_CONST;
+GType   ligma_brightness_contrast_config_get_type (void) G_GNUC_CONST;
 
-GimpLevelsConfig *
-gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config);
+LigmaLevelsConfig *
+ligma_brightness_contrast_config_to_levels_config (LigmaBrightnessContrastConfig *config);
 
 
-#endif /* __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__ */
+#endif /* __LIGMA_BRIGHTNESS_CONTRAST_CONFIG_H__ */

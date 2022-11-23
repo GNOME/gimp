@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,60 +15,60 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OBJECT_H__
-#define __GIMP_OBJECT_H__
+#ifndef __LIGMA_OBJECT_H__
+#define __LIGMA_OBJECT_H__
 
 
-#define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
-#define GIMP_IS_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OBJECT))
-#define GIMP_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT, GimpObjectClass))
+#define LIGMA_TYPE_OBJECT            (ligma_object_get_type ())
+#define LIGMA_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OBJECT, LigmaObject))
+#define LIGMA_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_OBJECT, LigmaObjectClass))
+#define LIGMA_IS_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OBJECT))
+#define LIGMA_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_OBJECT))
+#define LIGMA_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_OBJECT, LigmaObjectClass))
 
 
-typedef struct _GimpObjectPrivate  GimpObjectPrivate;
-typedef struct _GimpObjectClass    GimpObjectClass;
+typedef struct _LigmaObjectPrivate  LigmaObjectPrivate;
+typedef struct _LigmaObjectClass    LigmaObjectClass;
 
-struct _GimpObject
+struct _LigmaObject
 {
   GObject            parent_instance;
 
-  GimpObjectPrivate *p;
+  LigmaObjectPrivate *p;
 };
 
-struct _GimpObjectClass
+struct _LigmaObjectClass
 {
   GObjectClass  parent_class;
 
   /*  signals  */
-  void    (* disconnect)   (GimpObject *object);
-  void    (* name_changed) (GimpObject *object);
+  void    (* disconnect)   (LigmaObject *object);
+  void    (* name_changed) (LigmaObject *object);
 
   /*  virtual functions  */
-  gint64  (* get_memsize)  (GimpObject *object,
+  gint64  (* get_memsize)  (LigmaObject *object,
                             gint64     *gui_size);
 };
 
 
-GType         gimp_object_get_type        (void) G_GNUC_CONST;
+GType         ligma_object_get_type        (void) G_GNUC_CONST;
 
-void          gimp_object_set_name        (GimpObject       *object,
+void          ligma_object_set_name        (LigmaObject       *object,
                                            const gchar      *name);
-void          gimp_object_set_name_safe   (GimpObject       *object,
+void          ligma_object_set_name_safe   (LigmaObject       *object,
                                            const gchar      *name);
-void          gimp_object_set_static_name (GimpObject       *object,
+void          ligma_object_set_static_name (LigmaObject       *object,
                                            const gchar      *name);
-void          gimp_object_take_name       (GimpObject       *object,
+void          ligma_object_take_name       (LigmaObject       *object,
                                            gchar            *name);
-const gchar * gimp_object_get_name        (gconstpointer     object);
-void          gimp_object_name_changed    (GimpObject       *object);
-void          gimp_object_name_free       (GimpObject       *object);
+const gchar * ligma_object_get_name        (gconstpointer     object);
+void          ligma_object_name_changed    (LigmaObject       *object);
+void          ligma_object_name_free       (LigmaObject       *object);
 
-gint          gimp_object_name_collate    (GimpObject       *object1,
-                                           GimpObject       *object2);
-gint64        gimp_object_get_memsize     (GimpObject       *object,
+gint          ligma_object_name_collate    (LigmaObject       *object1,
+                                           LigmaObject       *object2);
+gint64        ligma_object_get_memsize     (LigmaObject       *object,
                                            gint64           *gui_size);
 
 
-#endif  /* __GIMP_OBJECT_H__ */
+#endif  /* __LIGMA_OBJECT_H__ */

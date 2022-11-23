@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #define __VECTORS_IMPORT_DIALOG_H__
 
 
-typedef void (* GimpVectorsImportCallback) (GtkWidget *dialog,
-                                            GimpImage *image,
+typedef void (* LigmaVectorsImportCallback) (GtkWidget *dialog,
+                                            LigmaImage *image,
                                             GFile     *file,
                                             GFile     *import_folder,
                                             gboolean   merge_vectors,
@@ -28,12 +28,12 @@ typedef void (* GimpVectorsImportCallback) (GtkWidget *dialog,
                                             gpointer   user_data);
 
 
-GtkWidget * vectors_import_dialog_new (GimpImage                 *image,
+GtkWidget * vectors_import_dialog_new (LigmaImage                 *image,
                                        GtkWidget                 *parent,
                                        GFile                     *import_folder,
                                        gboolean                   merge_vectors,
                                        gboolean                   scale_vectors,
-                                       GimpVectorsImportCallback  callback,
+                                       LigmaVectorsImportCallback  callback,
                                        gpointer                   user_data);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "print.h"
 #include "print-page-setup.h"
@@ -48,7 +48,7 @@ print_page_setup_dialog (GtkPrintOperation *operation)
 
 void
 print_page_setup_load (GtkPrintOperation *operation,
-                       GimpImage         *image)
+                       LigmaImage         *image)
 {
   GKeyFile *key_file;
 
@@ -79,7 +79,7 @@ print_page_setup_load (GtkPrintOperation *operation,
 
 void
 print_page_setup_save (GtkPrintOperation *operation,
-                       GimpImage         *image)
+                       LigmaImage         *image)
 {
   GtkPageSetup *setup;
   GKeyFile     *key_file;

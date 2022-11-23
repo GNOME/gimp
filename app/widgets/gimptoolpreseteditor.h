@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_EDITOR_H__
-#define __GIMP_TOOL_PRESET_EDITOR_H__
+#ifndef __LIGMA_TOOL_PRESET_EDITOR_H__
+#define __LIGMA_TOOL_PRESET_EDITOR_H__
 
 
-#include "gimpdataeditor.h"
+#include "ligmadataeditor.h"
 
 
-#define GIMP_TYPE_TOOL_PRESET_EDITOR            (gimp_tool_preset_editor_get_type ())
-#define GIMP_TOOL_PRESET_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_PRESET_EDITOR, GimpToolPresetEditor))
-#define GIMP_TOOL_PRESET_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_PRESET_EDITOR, GimpToolPresetEditorClass))
-#define GIMP_IS_TOOL_PRESET_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_PRESET_EDITOR))
-#define GIMP_IS_TOOL_PRESET_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_PRESET_EDITOR))
-#define GIMP_TOOL_PRESET_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PRESET_EDITOR, GimpToolPresetEditorClass))
+#define LIGMA_TYPE_TOOL_PRESET_EDITOR            (ligma_tool_preset_editor_get_type ())
+#define LIGMA_TOOL_PRESET_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_PRESET_EDITOR, LigmaToolPresetEditor))
+#define LIGMA_TOOL_PRESET_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_PRESET_EDITOR, LigmaToolPresetEditorClass))
+#define LIGMA_IS_TOOL_PRESET_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_PRESET_EDITOR))
+#define LIGMA_IS_TOOL_PRESET_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_PRESET_EDITOR))
+#define LIGMA_TOOL_PRESET_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_PRESET_EDITOR, LigmaToolPresetEditorClass))
 
 
-typedef struct _GimpToolPresetEditorPrivate GimpToolPresetEditorPrivate;
-typedef struct _GimpToolPresetEditorClass   GimpToolPresetEditorClass;
+typedef struct _LigmaToolPresetEditorPrivate LigmaToolPresetEditorPrivate;
+typedef struct _LigmaToolPresetEditorClass   LigmaToolPresetEditorClass;
 
-struct _GimpToolPresetEditor
+struct _LigmaToolPresetEditor
 {
-  GimpDataEditor               parent_instance;
+  LigmaDataEditor               parent_instance;
 
-  GimpToolPresetEditorPrivate *priv;
+  LigmaToolPresetEditorPrivate *priv;
 };
 
-struct _GimpToolPresetEditorClass
+struct _LigmaToolPresetEditorClass
 {
-  GimpDataEditorClass  parent_class;
+  LigmaDataEditorClass  parent_class;
 };
 
 
-GType       gimp_tool_preset_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_tool_preset_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_preset_editor_new      (GimpContext     *context,
-                                              GimpMenuFactory *menu_factory);
+GtkWidget * ligma_tool_preset_editor_new      (LigmaContext     *context,
+                                              LigmaMenuFactory *menu_factory);
 
 
-#endif /* __GIMP_TOOL_PRESET_EDITOR_H__ */
+#endif /* __LIGMA_TOOL_PRESET_EDITOR_H__ */

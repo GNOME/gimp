@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationflood.c
+ * ligmaoperationflood.c
  * Copyright (C) 2016 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 
 /* Implementation of the Flood algorithm.
- * See https://wiki.gimp.org/wiki/Algorithms:Flood for details.
+ * See https://wiki.ligma.org/wiki/Algorithms:Flood for details.
  */
 
 
@@ -32,27 +32,27 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationflood.h"
+#include "ligmaoperationflood.h"
 
 
 /* Maximal gap, in pixels, between consecutive dirty ranges, below (and
  * including) which they are coalesced, at the beginning of the distribution
  * step.
  */
-#define GIMP_OPERATION_FLOOD_COALESCE_MAX_GAP 32
+#define LIGMA_OPERATION_FLOOD_COALESCE_MAX_GAP 32
 
 
-typedef struct _GimpOperationFloodSegment    GimpOperationFloodSegment;
-typedef struct _GimpOperationFloodDirtyRange GimpOperationFloodDirtyRange;
-typedef struct _GimpOperationFloodContext    GimpOperationFloodContext;
+typedef struct _LigmaOperationFloodSegment    LigmaOperationFloodSegment;
+typedef struct _LigmaOperationFloodDirtyRange LigmaOperationFloodDirtyRange;
+typedef struct _LigmaOperationFloodContext    LigmaOperationFloodContext;
 
 
 /* A segment. */
-struct _GimpOperationFloodSegment
+struct _LigmaOperationFloodSegment
 {
   /* A boolean flag indicating whether the image- and ROI-virtual coordinate
    * systems should be transposed when processing this segment.  TRUE iff the
@@ -79,12 +79,12 @@ struct _GimpOperationFloodSegment
   gint   x[2];
 };
 /* Make sure the maximal image dimension fits in
- * `GimpOperationFloodSegment::y`.
+ * `LigmaOperationFloodSegment::y`.
  */
-G_STATIC_ASSERT (GIMP_MAX_IMAGE_SIZE <= (1 << (8 * sizeof (guint) - 3)));
+G_STATIC_ASSERT (LIGMA_MAX_IMAGE_SIZE <= (1 << (8 * sizeof (guint) - 3)));
 
 /* A dirty range of the current segment. */
-struct _GimpOperationFloodDirtyRange
+struct _LigmaOperationFloodDirtyRange
 {
   /* A boolean flag indicating whether the range was extended, or its existing
    * pixels were modified, during the horizontal propagation step.
@@ -99,7 +99,7 @@ struct _GimpOperationFloodDirtyRange
 };
 
 /* Common parameters for the various parts of the algorithm. */
-struct _GimpOperationFloodContext
+struct _LigmaOperationFloodContext
 {
   /* Input image. */
   GeglBuffer                *input;
@@ -114,7 +114,7 @@ struct _GimpOperationFloodContext
   GeglRectangle  roi;
 
   /* Current segment. */
-  GimpOperationFloodSegment  segment;
+  LigmaOperationFloodSegment  segment;
 
   /* The following arrays hold the ground- and water-level of the current- and
    * source-segments.  The vertical- and horizontal-propagation steps don't
@@ -153,59 +153,59 @@ struct _GimpOperationFloodContext
 };
 
 
-static void          gimp_operation_flood_prepare                      (GeglOperation                     *operation);
-static GeglRectangle gimp_operation_flood_get_required_for_output      (GeglOperation                     *self,
+static void          ligma_operation_flood_prepare                      (GeglOperation                     *operation);
+static GeglRectangle ligma_operation_flood_get_required_for_output      (GeglOperation                     *self,
                                                                         const gchar                       *input_pad,
                                                                         const GeglRectangle               *roi);
-static GeglRectangle gimp_operation_flood_get_cached_region            (GeglOperation                     *self,
+static GeglRectangle ligma_operation_flood_get_cached_region            (GeglOperation                     *self,
                                                                         const GeglRectangle               *roi);
 
-static void          gimp_operation_flood_process_push                 (GQueue                            *queue,
+static void          ligma_operation_flood_process_push                 (GQueue                            *queue,
                                                                         gboolean                           transpose,
                                                                         gint                               y,
                                                                         gint                               source_y_delta,
                                                                         gint                               x0,
                                                                         gint                               x1);
-static void          gimp_operation_flood_process_seed                 (GQueue                            *queue,
+static void          ligma_operation_flood_process_seed                 (GQueue                            *queue,
                                                                         const GeglRectangle               *roi);
-static void          gimp_operation_flood_process_transform_rect       (const GimpOperationFloodContext    *ctx,
+static void          ligma_operation_flood_process_transform_rect       (const LigmaOperationFloodContext    *ctx,
                                                                         GeglRectangle                      *dest,
                                                                         const GeglRectangle                *src);
-static void          gimp_operation_flood_process_fetch                (GimpOperationFloodContext          *ctx);
-static gint          gimp_operation_flood_process_propagate_vertical   (GimpOperationFloodContext          *ctx,
-                                                                        GimpOperationFloodDirtyRange       *dirty_ranges);
-static void          gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext          *ctx,
+static void          ligma_operation_flood_process_fetch                (LigmaOperationFloodContext          *ctx);
+static gint          ligma_operation_flood_process_propagate_vertical   (LigmaOperationFloodContext          *ctx,
+                                                                        LigmaOperationFloodDirtyRange       *dirty_ranges);
+static void          ligma_operation_flood_process_propagate_horizontal (LigmaOperationFloodContext          *ctx,
                                                                         gint                                dir,
-                                                                        GimpOperationFloodDirtyRange       *dirty_ranges,
+                                                                        LigmaOperationFloodDirtyRange       *dirty_ranges,
                                                                         gint                                range_count);
-static gint         gimp_operation_flood_process_coalesce              (const GimpOperationFloodContext    *ctx,
-                                                                        GimpOperationFloodDirtyRange       *dirty_ranges,
+static gint         ligma_operation_flood_process_coalesce              (const LigmaOperationFloodContext    *ctx,
+                                                                        LigmaOperationFloodDirtyRange       *dirty_ranges,
                                                                         gint                                range_count,
                                                                         gint                                gap);
-static void          gimp_operation_flood_process_commit               (const GimpOperationFloodContext    *ctx,
-                                                                        const GimpOperationFloodDirtyRange *dirty_ranges,
+static void          ligma_operation_flood_process_commit               (const LigmaOperationFloodContext    *ctx,
+                                                                        const LigmaOperationFloodDirtyRange *dirty_ranges,
                                                                         gint                                range_count);
-static void          gimp_operation_flood_process_distribute           (const GimpOperationFloodContext    *ctx,
+static void          ligma_operation_flood_process_distribute           (const LigmaOperationFloodContext    *ctx,
                                                                         GQueue                             *queue,
-                                                                        const GimpOperationFloodDirtyRange *dirty_ranges,
+                                                                        const LigmaOperationFloodDirtyRange *dirty_ranges,
                                                                         gint                                range_count);
-static gboolean      gimp_operation_flood_process                      (GeglOperation                      *operation,
+static gboolean      ligma_operation_flood_process                      (GeglOperation                      *operation,
                                                                         GeglBuffer                         *input,
                                                                         GeglBuffer                         *output,
                                                                         const GeglRectangle                *roi,
                                                                         gint                                level);
 
 
-G_DEFINE_TYPE (GimpOperationFlood, gimp_operation_flood,
+G_DEFINE_TYPE (LigmaOperationFlood, ligma_operation_flood,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_flood_parent_class
+#define parent_class ligma_operation_flood_parent_class
 
 
 /* GEGL graph for the test case. */
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
-"<node operation='gimp:flood'> </node>"
+"<node operation='ligma:flood'> </node>"
 "<node operation='gegl:load'>"
 "  <params>"
 "    <param name='path'>flood-input.png</param>"
@@ -215,7 +215,7 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 
 
 static void
-gimp_operation_flood_class_init (GimpOperationFloodClass *klass)
+ligma_operation_flood_class_init (LigmaOperationFloodClass *klass)
 {
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
@@ -235,28 +235,28 @@ gimp_operation_flood_class_init (GimpOperationFloodClass *klass)
    */
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:flood",
-                                 "categories",  "gimp",
-                                 "description", "GIMP Flood operation",
-                                 "reference", "https://wiki.gimp.org/wiki/Algorithms:Flood",
+                                 "name",        "ligma:flood",
+                                 "categories",  "ligma",
+                                 "description", "LIGMA Flood operation",
+                                 "reference", "https://wiki.ligma.org/wiki/Algorithms:Flood",
                                  "reference-image", "flood-output.png",
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  operation_class->prepare                 = gimp_operation_flood_prepare;
-  operation_class->get_required_for_output = gimp_operation_flood_get_required_for_output;
-  operation_class->get_cached_region       = gimp_operation_flood_get_cached_region;
+  operation_class->prepare                 = ligma_operation_flood_prepare;
+  operation_class->get_required_for_output = ligma_operation_flood_get_required_for_output;
+  operation_class->get_cached_region       = ligma_operation_flood_get_cached_region;
 
-  filter_class->process                    = gimp_operation_flood_process;
+  filter_class->process                    = ligma_operation_flood_process;
 }
 
 static void
-gimp_operation_flood_init (GimpOperationFlood *self)
+ligma_operation_flood_init (LigmaOperationFlood *self)
 {
 }
 
 static void
-gimp_operation_flood_prepare (GeglOperation *operation)
+ligma_operation_flood_prepare (GeglOperation *operation)
 {
   const Babl *space = gegl_operation_get_source_space (operation, "input");
   gegl_operation_set_format (operation, "input",  babl_format_with_space ("Y float", space));
@@ -264,7 +264,7 @@ gimp_operation_flood_prepare (GeglOperation *operation)
 }
 
 static GeglRectangle
-gimp_operation_flood_get_required_for_output (GeglOperation       *self,
+ligma_operation_flood_get_required_for_output (GeglOperation       *self,
                                               const gchar         *input_pad,
                                               const GeglRectangle *roi)
 {
@@ -272,7 +272,7 @@ gimp_operation_flood_get_required_for_output (GeglOperation       *self,
 }
 
 static GeglRectangle
-gimp_operation_flood_get_cached_region (GeglOperation       *self,
+ligma_operation_flood_get_cached_region (GeglOperation       *self,
                                         const GeglRectangle *roi)
 {
   return *gegl_operation_source_get_bounding_box (self, "input");
@@ -281,16 +281,16 @@ gimp_operation_flood_get_cached_region (GeglOperation       *self,
 
 /* Pushes a single segment into the queue. */
 static void
-gimp_operation_flood_process_push (GQueue   *queue,
+ligma_operation_flood_process_push (GQueue   *queue,
                                    gboolean  transpose,
                                    gint      y,
                                    gint      source_y_delta,
                                    gint      x0,
                                    gint      x1)
 {
-  GimpOperationFloodSegment *segment;
+  LigmaOperationFloodSegment *segment;
 
-  segment                 = g_slice_new (GimpOperationFloodSegment);
+  segment                 = g_slice_new (LigmaOperationFloodSegment);
 
   segment->transpose      = transpose;
   segment->y              = y;
@@ -307,14 +307,14 @@ gimp_operation_flood_process_push (GQueue   *queue,
  * `roi` is given in the image-physical coordinate system.
  */
 static void
-gimp_operation_flood_process_seed (GQueue              *queue,
+ligma_operation_flood_process_seed (GQueue              *queue,
                                    const GeglRectangle *roi)
 {
   if (roi->width == 0 || roi->height == 0)
     return;
 
   /* Top edge. */
-  gimp_operation_flood_process_push (queue,
+  ligma_operation_flood_process_push (queue,
                                      /* transpose      = */ FALSE,
                                      /* y              = */ 0,
                                      /* source_y_delta = */ 0,
@@ -325,7 +325,7 @@ gimp_operation_flood_process_seed (GQueue              *queue,
     return;
 
   /* Bottom edge. */
-  gimp_operation_flood_process_push (queue,
+  ligma_operation_flood_process_push (queue,
                                      /* transpose      = */ FALSE,
                                      /* y              = */ roi->height - 1,
                                      /* source_y_delta = */ 0,
@@ -336,7 +336,7 @@ gimp_operation_flood_process_seed (GQueue              *queue,
     return;
 
   /* Left edge. */
-  gimp_operation_flood_process_push (queue,
+  ligma_operation_flood_process_push (queue,
                                      /* transpose      = */ TRUE,
                                      /* y              = */ 0,
                                      /* source_y_delta = */ 0,
@@ -347,7 +347,7 @@ gimp_operation_flood_process_seed (GQueue              *queue,
     return;
 
   /* Right edge. */
-  gimp_operation_flood_process_push (queue,
+  ligma_operation_flood_process_push (queue,
                                      /* transpose      = */ TRUE,
                                      /* y              = */ roi->width - 1,
                                      /* source_y_delta = */ 0,
@@ -363,7 +363,7 @@ gimp_operation_flood_process_seed (GQueue              *queue,
  * Both parameters may refer to the same object.
  */
 static void
-gimp_operation_flood_process_transform_rect (const GimpOperationFloodContext *ctx,
+ligma_operation_flood_process_transform_rect (const LigmaOperationFloodContext *ctx,
                                              GeglRectangle                   *dest,
                                              const GeglRectangle             *src)
 {
@@ -389,7 +389,7 @@ gimp_operation_flood_process_transform_rect (const GimpOperationFloodContext *ct
  * `water_buffer`.
  */
 static void
-gimp_operation_flood_process_fetch (GimpOperationFloodContext *ctx)
+ligma_operation_flood_process_fetch (LigmaOperationFloodContext *ctx)
 {
   /* Image-virtual and image-physical rectangles, respectively. */
   GeglRectangle iv_rect, ip_rect;
@@ -429,7 +429,7 @@ gimp_operation_flood_process_fetch (GimpOperationFloodContext *ctx)
       /* Transform `iv_rect` to the image-physical coordinate system, and store
        * the result in `ip_rect`.
        */
-      gimp_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
+      ligma_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
 
       /* Read the water level from the output GEGL buffer into `water_buffer`.
        *
@@ -504,7 +504,7 @@ gimp_operation_flood_process_fetch (GimpOperationFloodContext *ctx)
       /* Transform `iv_rect` to the image-physical coordinate system, and store
        * the result in `ip_rect`.
        */
-      gimp_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
+      ligma_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
 
       /* Read the water level of the current segment from the output GEGL
        * buffer into `water`.
@@ -527,7 +527,7 @@ gimp_operation_flood_process_fetch (GimpOperationFloodContext *ctx)
   /* Transform `iv_rect` to the image-physical coordinate system, and store the
    * result in `ip_rect`.
    */
-  gimp_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
+  ligma_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
 
   /* Read the ground level of the current segment from the input GEGL buffer
    * into `ground`.
@@ -542,10 +542,10 @@ gimp_operation_flood_process_fetch (GimpOperationFloodContext *ctx)
  * ranges as the function's result.
  */
 static gint
-gimp_operation_flood_process_propagate_vertical (GimpOperationFloodContext    *ctx,
-                                                 GimpOperationFloodDirtyRange *dirty_ranges)
+ligma_operation_flood_process_propagate_vertical (LigmaOperationFloodContext    *ctx,
+                                                 LigmaOperationFloodDirtyRange *dirty_ranges)
 {
-  GimpOperationFloodDirtyRange *range = dirty_ranges;
+  LigmaOperationFloodDirtyRange *range = dirty_ranges;
   gint                          x;
 
   for (x = ctx->segment.x[0]; x <= ctx->segment.x[1]; x++)
@@ -624,13 +624,13 @@ gimp_operation_flood_process_propagate_vertical (GimpOperationFloodContext    *c
  * modified in-place.
  */
 static void
-gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext    *ctx,
+ligma_operation_flood_process_propagate_horizontal (LigmaOperationFloodContext    *ctx,
                                                    gint                          dir,
-                                                   GimpOperationFloodDirtyRange *dirty_ranges,
+                                                   LigmaOperationFloodDirtyRange *dirty_ranges,
                                                    gint                          range_count)
 {
   /* The index of the terminal (i.e., "`dir`-most") component of the `x[]`
-   * array of `GimpOperationFloodSegment` and `GimpOperationFloodDirtyRange`,
+   * array of `LigmaOperationFloodSegment` and `LigmaOperationFloodDirtyRange`,
    * based on the scan direction.  Equals 1 (i.e., the right component) when
    * `dir` is +1 (i.e., left-to-right), and equals 0 (i.e., the left component)
    * when `dir` is -1 (i.e., right-to-left).
@@ -688,7 +688,7 @@ gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext    
        range_index += dir)
     {
       /* Current dirty range. */
-      GimpOperationFloodDirtyRange *range;
+      LigmaOperationFloodDirtyRange *range;
       /* Current pixel, in the ROI-virtual coordinate system. */
       gint                          x;
       /* We use `level` to compute the water level of the current pixel.  At
@@ -769,7 +769,7 @@ gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext    
               /* Transform `iv_rect` to the image-physical coordinate system,
                * and store the result in `ip_rect`.
                */
-              gimp_operation_flood_process_transform_rect (ctx,
+              ligma_operation_flood_process_transform_rect (ctx,
                                                            &ip_rect, &iv_rect);
 
               /* Read the current pixel's ground level. */
@@ -849,15 +849,15 @@ gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext    
  * equal-to `max_gap`, in-place, and returns the new number of ranges.
  */
 static gint
-gimp_operation_flood_process_coalesce (const GimpOperationFloodContext *ctx,
-                                       GimpOperationFloodDirtyRange    *dirty_ranges,
+ligma_operation_flood_process_coalesce (const LigmaOperationFloodContext *ctx,
+                                       LigmaOperationFloodDirtyRange    *dirty_ranges,
                                        gint                             range_count,
                                        gint                             max_gap)
 {
   /* First and last ranges to coalesce, respectively. */
-  const GimpOperationFloodDirtyRange *first_range, *last_range;
+  const LigmaOperationFloodDirtyRange *first_range, *last_range;
   /* Destination range. */
-  GimpOperationFloodDirtyRange       *range = dirty_ranges;
+  LigmaOperationFloodDirtyRange       *range = dirty_ranges;
 
   for (first_range  = dirty_ranges;
        first_range != dirty_ranges + range_count;
@@ -901,11 +901,11 @@ gimp_operation_flood_process_coalesce (const GimpOperationFloodContext *ctx,
  * buffer.
  */
 static void
-gimp_operation_flood_process_commit (const GimpOperationFloodContext    *ctx,
-                                     const GimpOperationFloodDirtyRange *dirty_ranges,
+ligma_operation_flood_process_commit (const LigmaOperationFloodContext    *ctx,
+                                     const LigmaOperationFloodDirtyRange *dirty_ranges,
                                      gint                                range_count)
 {
-  const GimpOperationFloodDirtyRange *range;
+  const LigmaOperationFloodDirtyRange *range;
   /* Image-virtual and image-physical rectangles, respectively. */
   GeglRectangle                       iv_rect, ip_rect;
 
@@ -924,7 +924,7 @@ gimp_operation_flood_process_commit (const GimpOperationFloodContext    *ctx,
       /* Transform `iv_rect` to the image-physical coordinate system, and store
        * the result in `ip_rect`.
        */
-      gimp_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
+      ligma_operation_flood_process_transform_rect (ctx, &ip_rect, &iv_rect);
 
       /* Write the updated water level to the output GEGL buffer. */
       gegl_buffer_set (ctx->output, &ip_rect, 0, ctx->output_format,
@@ -937,12 +937,12 @@ gimp_operation_flood_process_commit (const GimpOperationFloodContext    *ctx,
  * segment, into the queue.
  */
 static void
-gimp_operation_flood_process_distribute (const GimpOperationFloodContext    *ctx,
+ligma_operation_flood_process_distribute (const LigmaOperationFloodContext    *ctx,
                                          GQueue                             *queue,
-                                         const GimpOperationFloodDirtyRange *dirty_ranges,
+                                         const LigmaOperationFloodDirtyRange *dirty_ranges,
                                          gint                                range_count)
 {
-  const GimpOperationFloodDirtyRange *range;
+  const LigmaOperationFloodDirtyRange *range;
   static const gint                   y_deltas[] = {-1, +1};
   gint                                i;
 
@@ -975,7 +975,7 @@ gimp_operation_flood_process_distribute (const GimpOperationFloodContext    *ctx
                * the dirty range on the neighboring row, using the current row
                * as its source segment.
                */
-              gimp_operation_flood_process_push (queue,
+              ligma_operation_flood_process_push (queue,
                                                  ctx->segment.transpose,
                                                  y,
                                                  -y_delta,
@@ -988,7 +988,7 @@ gimp_operation_flood_process_distribute (const GimpOperationFloodContext    *ctx
 
 /* Main algorithm. */
 static gboolean
-gimp_operation_flood_process (GeglOperation       *operation,
+ligma_operation_flood_process (GeglOperation       *operation,
                               GeglBuffer          *input,
                               GeglBuffer          *output,
                               const GeglRectangle *roi,
@@ -998,18 +998,18 @@ gimp_operation_flood_process (GeglOperation       *operation,
   const Babl                   *output_format = gegl_operation_get_format (operation, "output");
   GeglColor                    *color;
   gint                          max_size;
-  GimpOperationFloodContext     ctx;
-  GimpOperationFloodDirtyRange *dirty_ranges;
+  LigmaOperationFloodContext     ctx;
+  LigmaOperationFloodDirtyRange *dirty_ranges;
   GQueue                       *queue;
 
   /* Make sure the input- and output-buffers are different. */
   g_return_val_if_fail (input != output, FALSE);
 
-  /* Make sure the ROI is small enough for the `GimpOperationFloodSegment::y`
+  /* Make sure the ROI is small enough for the `LigmaOperationFloodSegment::y`
    * field.
    */
-  g_return_val_if_fail (roi->width  <= GIMP_MAX_IMAGE_SIZE &&
-                        roi->height <= GIMP_MAX_IMAGE_SIZE, FALSE);
+  g_return_val_if_fail (roi->width  <= LIGMA_MAX_IMAGE_SIZE &&
+                        roi->height <= LIGMA_MAX_IMAGE_SIZE, FALSE);
 
   ctx.input         = input;
   ctx.input_format  = input_format;
@@ -1024,7 +1024,7 @@ gimp_operation_flood_process (GeglOperation       *operation,
   ctx.ground        = g_new (gfloat, max_size);
   /* The `water_buffer` array needs to be able to hold two rows (or columns). */
   ctx.water_buffer  = g_new (gfloat, 2 * max_size);
-  dirty_ranges      = g_new (GimpOperationFloodDirtyRange, max_size);
+  dirty_ranges      = g_new (LigmaOperationFloodDirtyRange, max_size);
 
   /* Initialize the water level to 1 everywhere. */
   color = gegl_color_new ("#fff");
@@ -1033,33 +1033,33 @@ gimp_operation_flood_process (GeglOperation       *operation,
 
   /* Create the queue and push the seed segments. */
   queue  = g_queue_new ();
-  gimp_operation_flood_process_seed (queue, roi);
+  ligma_operation_flood_process_seed (queue, roi);
 
   /* While there are segments to process in the queue... */
   while (! g_queue_is_empty (queue))
     {
-      GimpOperationFloodSegment *segment;
+      LigmaOperationFloodSegment *segment;
       gint                       range_count;
 
       /* Pop a segment off the top of the queue, copy it to `ctx.segment`, and
        * free its memory.
        */
-      segment     = (GimpOperationFloodSegment *) g_queue_pop_head (queue);
+      segment     = (LigmaOperationFloodSegment *) g_queue_pop_head (queue);
       ctx.segment = *segment;
-      g_slice_free (GimpOperationFloodSegment, segment);
+      g_slice_free (LigmaOperationFloodSegment, segment);
 
       /* Transform the ROI from the image-physical coordinate system to the
        * image-virtual coordinate system, and store the result in `ctx.roi`.
        */
-      gimp_operation_flood_process_transform_rect (&ctx, &ctx.roi, roi);
+      ligma_operation_flood_process_transform_rect (&ctx, &ctx.roi, roi);
 
       /* Read the ground- and water-levels of the current- and source-segments
        * from the corresponding GEGL buffers to the corresponding arrays.
        */
-      gimp_operation_flood_process_fetch (&ctx);
+      ligma_operation_flood_process_fetch (&ctx);
 
       /* Perform the vertical propagation step. */
-      range_count = gimp_operation_flood_process_propagate_vertical (&ctx,
+      range_count = ligma_operation_flood_process_propagate_vertical (&ctx,
                                                                      dirty_ranges);
       /* If no dirty ranges were produced during vertical propagation, then the
        * water level of the current segment didn't change, and we can short-
@@ -1069,28 +1069,28 @@ gimp_operation_flood_process (GeglOperation       *operation,
         continue;
 
       /* Perform both passes of the horizontal propagation step. */
-      gimp_operation_flood_process_propagate_horizontal (&ctx,
+      ligma_operation_flood_process_propagate_horizontal (&ctx,
                                                          /* Left-to-right */ +1,
                                                          dirty_ranges,
                                                          range_count);
-      gimp_operation_flood_process_propagate_horizontal (&ctx,
+      ligma_operation_flood_process_propagate_horizontal (&ctx,
                                                          /* Right-to-left */ -1,
                                                          dirty_ranges,
                                                          range_count);
 
       /* Coalesce consecutive dirty ranges separated by a gap less-than or
-       * equal-to `GIMP_OPERATION_FLOOD_COALESCE_MAX_GAP`.
+       * equal-to `LIGMA_OPERATION_FLOOD_COALESCE_MAX_GAP`.
        */
-      range_count = gimp_operation_flood_process_coalesce (&ctx,
+      range_count = ligma_operation_flood_process_coalesce (&ctx,
                                                            dirty_ranges,
                                                            range_count,
-                                                           GIMP_OPERATION_FLOOD_COALESCE_MAX_GAP);
+                                                           LIGMA_OPERATION_FLOOD_COALESCE_MAX_GAP);
 
       /* Write the updated water level back to the output GEGL buffer. */
-      gimp_operation_flood_process_commit (&ctx, dirty_ranges, range_count);
+      ligma_operation_flood_process_commit (&ctx, dirty_ranges, range_count);
 
       /* Push the new segments into the queue. */
-      gimp_operation_flood_process_distribute (&ctx, queue,
+      ligma_operation_flood_process_distribute (&ctx, queue,
                                                dirty_ranges, range_count);
     }
 

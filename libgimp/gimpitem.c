@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpitem.c
+ * ligmaitem.c
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -21,12 +21,12 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libligmabase/ligmawire.h" /* FIXME kill this include */
 
-#include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
+#include "ligmaplugin-private.h"
+#include "ligmaprocedure-private.h"
 
 
 enum
@@ -37,61 +37,61 @@ enum
 };
 
 
-typedef struct _GimpItemPrivate
+typedef struct _LigmaItemPrivate
 {
   gint id;
-} GimpItemPrivate;
+} LigmaItemPrivate;
 
 
-static void   gimp_item_set_property  (GObject      *object,
+static void   ligma_item_set_property  (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec);
-static void   gimp_item_get_property  (GObject      *object,
+static void   ligma_item_get_property  (GObject      *object,
                                        guint         property_id,
                                        GValue       *value,
                                        GParamSpec   *pspec);
 
 
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpItem, gimp_item, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (LigmaItem, ligma_item, G_TYPE_OBJECT)
 
-#define parent_class gimp_item_parent_class
+#define parent_class ligma_item_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-gimp_item_class_init (GimpItemClass *klass)
+ligma_item_class_init (LigmaItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_item_set_property;
-  object_class->get_property = gimp_item_get_property;
+  object_class->set_property = ligma_item_set_property;
+  object_class->get_property = ligma_item_get_property;
 
   props[PROP_ID] =
     g_param_spec_int ("id",
                       "The item id",
                       "The item id for internal use",
                       0, G_MAXINT32, 0,
-                      GIMP_PARAM_READWRITE |
+                      LIGMA_PARAM_READWRITE |
                       G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
-gimp_item_init (GimpItem *item)
+ligma_item_init (LigmaItem *item)
 {
 }
 
 static void
-gimp_item_set_property (GObject      *object,
+ligma_item_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpItem        *item = GIMP_ITEM (object);
-  GimpItemPrivate *priv = gimp_item_get_instance_private (item);
+  LigmaItem        *item = LIGMA_ITEM (object);
+  LigmaItemPrivate *priv = ligma_item_get_instance_private (item);
 
   switch (property_id)
     {
@@ -106,13 +106,13 @@ gimp_item_set_property (GObject      *object,
 }
 
 static void
-gimp_item_get_property (GObject    *object,
+ligma_item_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpItem        *item = GIMP_ITEM (object);
-  GimpItemPrivate *priv = gimp_item_get_instance_private (item);
+  LigmaItem        *item = LIGMA_ITEM (object);
+  LigmaItemPrivate *priv = ligma_item_get_instance_private (item);
 
   switch (property_id)
     {
@@ -131,7 +131,7 @@ gimp_item_get_property (GObject    *object,
 
 
 /**
- * gimp_item_get_id:
+ * ligma_item_get_id:
  * @item: The item.
  *
  * Returns: the item ID.
@@ -139,11 +139,11 @@ gimp_item_get_property (GObject    *object,
  * Since: 3.0
  **/
 gint32
-gimp_item_get_id (GimpItem *item)
+ligma_item_get_id (LigmaItem *item)
 {
   if (item)
     {
-      GimpItemPrivate *priv = gimp_item_get_instance_private (item);
+      LigmaItemPrivate *priv = ligma_item_get_instance_private (item);
 
       return priv->id;
     }
@@ -154,36 +154,36 @@ gimp_item_get_id (GimpItem *item)
 }
 
 /**
- * gimp_item_get_by_id:
+ * ligma_item_get_by_id:
  * @item_id: The item id.
  *
- * Returns a #GimpItem representing @item_id. Since #GimpItem is an
+ * Returns a #LigmaItem representing @item_id. Since #LigmaItem is an
  * abstract class, the real object type will actually be the proper
  * subclass.
  *
- * Returns: (nullable) (transfer none): a #GimpItem for @item_id or
+ * Returns: (nullable) (transfer none): a #LigmaItem for @item_id or
  *          %NULL if @item_id does not represent a valid item.
- *          The object belongs to libgimp and you must not modify
+ *          The object belongs to libligma and you must not modify
  *          or unref it.
  *
  * Since: 3.0
  **/
-GimpItem *
-gimp_item_get_by_id (gint32 item_id)
+LigmaItem *
+ligma_item_get_by_id (gint32 item_id)
 {
   if (item_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      LigmaPlugIn    *plug_in   = ligma_get_plug_in ();
+      LigmaProcedure *procedure = _ligma_plug_in_get_procedure (plug_in);
 
-      return _gimp_procedure_get_item (procedure, item_id);
+      return _ligma_procedure_get_item (procedure, item_id);
     }
 
   return NULL;
 }
 
 /**
- * gimp_item_is_valid:
+ * ligma_item_is_valid:
  * @item: The item to check.
  *
  * Returns TRUE if the item is valid.
@@ -196,13 +196,13 @@ gimp_item_get_by_id (gint32 item_id)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_valid (GimpItem *item)
+ligma_item_is_valid (LigmaItem *item)
 {
-  return gimp_item_id_is_valid (gimp_item_get_id (item));
+  return ligma_item_id_is_valid (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_drawable:
+ * ligma_item_is_drawable:
  * @item: The item.
  *
  * Returns whether the item is a drawable.
@@ -214,13 +214,13 @@ gimp_item_is_valid (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_drawable (GimpItem *item)
+ligma_item_is_drawable (LigmaItem *item)
 {
-  return gimp_item_id_is_drawable (gimp_item_get_id (item));
+  return ligma_item_id_is_drawable (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_layer:
+ * ligma_item_is_layer:
  * @item: The item.
  *
  * Returns whether the item is a layer.
@@ -232,13 +232,13 @@ gimp_item_is_drawable (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_layer (GimpItem *item)
+ligma_item_is_layer (LigmaItem *item)
 {
-  return gimp_item_id_is_layer (gimp_item_get_id (item));
+  return ligma_item_id_is_layer (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_text_layer:
+ * ligma_item_is_text_layer:
  * @item: The item.
  *
  * Returns whether the item is a text layer.
@@ -251,13 +251,13 @@ gimp_item_is_layer (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_text_layer (GimpItem *item)
+ligma_item_is_text_layer (LigmaItem *item)
 {
-  return gimp_item_id_is_text_layer (gimp_item_get_id (item));
+  return ligma_item_id_is_text_layer (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_channel:
+ * ligma_item_is_channel:
  * @item: The item.
  *
  * Returns whether the item is a channel.
@@ -269,13 +269,13 @@ gimp_item_is_text_layer (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_channel (GimpItem *item)
+ligma_item_is_channel (LigmaItem *item)
 {
-  return gimp_item_id_is_channel (gimp_item_get_id (item));
+  return ligma_item_id_is_channel (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_layer_mask:
+ * ligma_item_is_layer_mask:
  * @item: The item.
  *
  * Returns whether the item is a layer mask.
@@ -288,13 +288,13 @@ gimp_item_is_channel (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_layer_mask (GimpItem *item)
+ligma_item_is_layer_mask (LigmaItem *item)
 {
-  return gimp_item_id_is_layer_mask (gimp_item_get_id (item));
+  return ligma_item_id_is_layer_mask (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_selection:
+ * ligma_item_is_selection:
  * @item: The item.
  *
  * Returns whether the item is a selection.
@@ -306,13 +306,13 @@ gimp_item_is_layer_mask (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_selection (GimpItem *item)
+ligma_item_is_selection (LigmaItem *item)
 {
-  return gimp_item_id_is_selection (gimp_item_get_id (item));
+  return ligma_item_id_is_selection (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_is_vectors:
+ * ligma_item_is_vectors:
  * @item: The item.
  *
  * Returns whether the item is a vectors.
@@ -324,13 +324,13 @@ gimp_item_is_selection (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_vectors (GimpItem *item)
+ligma_item_is_vectors (LigmaItem *item)
 {
-  return gimp_item_id_is_vectors (gimp_item_get_id (item));
+  return ligma_item_id_is_vectors (ligma_item_get_id (item));
 }
 
 /**
- * gimp_item_list_children:
+ * ligma_item_list_children:
  * @item: The item.
  *
  * Returns the item's list of children.
@@ -338,22 +338,22 @@ gimp_item_is_vectors (GimpItem *item)
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: (element-type GimpItem) (transfer container):
+ * Returns: (element-type LigmaItem) (transfer container):
  *          The item's list of children.
  *          The returned list must be freed with g_list_free(). Item
- *          elements belong to libgimp and must not be unrefed.
+ *          elements belong to libligma and must not be unrefed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_item_list_children (GimpItem *item)
+ligma_item_list_children (LigmaItem *item)
 {
-  GimpItem **children;
+  LigmaItem **children;
   gint       num_children;
   GList     *list = NULL;
   gint       i;
 
-  children = gimp_item_get_children (item, &num_children);
+  children = ligma_item_get_children (item, &num_children);
 
   for (i = 0; i < num_children; i++)
     list = g_list_prepend (list, children[i]);

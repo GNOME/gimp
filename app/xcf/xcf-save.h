@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 
 gboolean   xcf_save_image (XcfInfo    *info,
-                           GimpImage  *image,
+                           LigmaImage  *image,
                            GError    **error);
 
 

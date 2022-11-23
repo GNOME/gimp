@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,48 +24,48 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "config/gimpgeglconfig.h"
+#include "config/ligmageglconfig.h"
 
 #include "core/core-types.h"
 
-#include "gegl/gimp-babl-compat.h"
-#include "gegl/gimp-gegl-tile-compat.h"
+#include "gegl/ligma-babl-compat.h"
+#include "gegl/ligma-gegl-tile-compat.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpchannel.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpgrid.h"
-#include "core/gimpguide.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimpimage-grid.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-metadata.h"
-#include "core/gimpimage-private.h"
-#include "core/gimpimage-sample-points.h"
-#include "core/gimpimage-symmetry.h"
-#include "core/gimpitemlist.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimpparasitelist.h"
-#include "core/gimpprogress.h"
-#include "core/gimpsamplepoint.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmachannel.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmagrid.h"
+#include "core/ligmaguide.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-colormap.h"
+#include "core/ligmaimage-grid.h"
+#include "core/ligmaimage-guides.h"
+#include "core/ligmaimage-metadata.h"
+#include "core/ligmaimage-private.h"
+#include "core/ligmaimage-sample-points.h"
+#include "core/ligmaimage-symmetry.h"
+#include "core/ligmaitemlist.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaparasitelist.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmasamplepoint.h"
+#include "core/ligmasymmetry.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "text/gimptextlayer.h"
-#include "text/gimptextlayer-xcf.h"
+#include "text/ligmatextlayer.h"
+#include "text/ligmatextlayer-xcf.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
-#include "vectors/gimpvectors-compat.h"
+#include "vectors/ligmaanchor.h"
+#include "vectors/ligmastroke.h"
+#include "vectors/ligmabezierstroke.h"
+#include "vectors/ligmavectors.h"
+#include "vectors/ligmavectors-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-read.h"
@@ -73,7 +73,7 @@
 #include "xcf-seek.h"
 #include "xcf-write.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 typedef void (* CompressTileFunc) (GeglRectangle  *tile_rect,
                                    guchar         *tile_data,
@@ -104,43 +104,43 @@ typedef struct
 } XcfJobData;
 
 static gboolean xcf_save_image_props   (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         GError           **error);
 static gboolean xcf_save_layer_props   (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpLayer         *layer,
+                                        LigmaImage         *image,
+                                        LigmaLayer         *layer,
                                         GError           **error);
 static gboolean xcf_save_channel_props (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpChannel       *channel,
+                                        LigmaImage         *image,
+                                        LigmaChannel       *channel,
                                         GError           **error);
 static gboolean xcf_save_path_props    (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpVectors       *vectors,
+                                        LigmaImage         *image,
+                                        LigmaVectors       *vectors,
                                         GError           **error);
 static gboolean xcf_save_prop          (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         PropType           prop_type,
                                         GError           **error,
                                         ...);
 static gboolean xcf_save_layer         (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpLayer         *layer,
+                                        LigmaImage         *image,
+                                        LigmaLayer         *layer,
                                         GError           **error);
 static gboolean xcf_save_channel       (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpChannel       *channel,
+                                        LigmaImage         *image,
+                                        LigmaChannel       *channel,
                                         GError           **error);
 static gboolean xcf_save_path          (XcfInfo           *info,
-                                        GimpImage         *image,
-                                        GimpVectors       *vectors,
+                                        LigmaImage         *image,
+                                        LigmaVectors       *vectors,
                                         GError           **error);
 static gboolean xcf_save_buffer        (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         GeglBuffer        *buffer,
                                         GError           **error);
 static gboolean xcf_save_level         (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         GeglBuffer        *buffer,
                                         GError           **error);
 static gboolean xcf_save_tile          (XcfInfo           *info,
@@ -167,16 +167,16 @@ static void     xcf_save_tile_zlib     (GeglRectangle     *tile_rect,
                                         gint               zlib_data_max_len,
                                         gint              *lenptr);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
-                                        GimpParasite      *parasite,
+                                        LigmaParasite      *parasite,
                                         GError           **error);
 static gboolean xcf_save_parasite_list (XcfInfo           *info,
-                                        GimpParasiteList  *parasite,
+                                        LigmaParasiteList  *parasite,
                                         GError           **error);
 static gboolean xcf_save_old_paths     (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         GError           **error);
 static gboolean xcf_save_old_vectors   (XcfInfo           *info,
-                                        GimpImage         *image,
+                                        LigmaImage         *image,
                                         GError           **error);
 
 
@@ -258,14 +258,14 @@ static gboolean xcf_save_old_vectors   (XcfInfo           *info,
   {                                             \
     progress++;                                 \
     if (info->progress)                         \
-      gimp_progress_set_value (info->progress,  \
+      ligma_progress_set_value (info->progress,  \
                                (gdouble) progress / (gdouble) max_progress); \
   } G_STMT_END
 
 
 gboolean
 xcf_save_image (XcfInfo    *info,
-                GimpImage  *image,
+                LigmaImage  *image,
                 GError    **error)
 {
   GList   *all_layers;
@@ -288,28 +288,28 @@ xcf_save_image (XcfInfo    *info,
   if (info->file_version > 0)
     {
       g_snprintf (version_tag, sizeof (version_tag),
-                  "gimp xcf v%03d", info->file_version);
+                  "ligma xcf v%03d", info->file_version);
     }
   else
     {
-      strcpy (version_tag, "gimp xcf file");
+      strcpy (version_tag, "ligma xcf file");
     }
 
   xcf_write_int8_check_error (info, (guint8 *) version_tag, 14);
 
   /* write out the width, height and image type information for the image */
-  value = gimp_image_get_width (image);
+  value = ligma_image_get_width (image);
   xcf_write_int32_check_error (info, (guint32 *) &value, 1);
 
-  value = gimp_image_get_height (image);
+  value = ligma_image_get_height (image);
   xcf_write_int32_check_error (info, (guint32 *) &value, 1);
 
-  value = gimp_image_get_base_type (image);
+  value = ligma_image_get_base_type (image);
   xcf_write_int32_check_error (info, &value, 1);
 
   if (info->file_version >= 4)
     {
-      value = gimp_image_get_precision (image);
+      value = ligma_image_get_precision (image);
       xcf_write_int32_check_error (info, &value, 1);
     }
 
@@ -317,13 +317,13 @@ xcf_save_image (XcfInfo    *info,
     write_paths = TRUE;
 
   /* determine the number of layers and channels in the image */
-  all_layers   = gimp_image_get_layer_list (image);
-  all_channels = gimp_image_get_channel_list (image);
+  all_layers   = ligma_image_get_layer_list (image);
+  all_channels = ligma_image_get_channel_list (image);
 
   /* check and see if we have to save out the selection */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+  if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
     {
-      all_channels = g_list_append (all_channels, gimp_image_get_mask (image));
+      all_channels = g_list_append (all_channels, ligma_image_get_mask (image));
     }
 
   n_layers   = (guint) g_list_length (all_layers);
@@ -331,7 +331,7 @@ xcf_save_image (XcfInfo    *info,
 
   if (write_paths)
     {
-      all_paths = gimp_image_get_vectors_list (image);
+      all_paths = ligma_image_get_vectors_list (image);
       n_paths   = (guint) g_list_length (all_paths);
     }
 
@@ -355,7 +355,7 @@ xcf_save_image (XcfInfo    *info,
 
   for (list = all_layers; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      LigmaLayer *layer = list->data;
 
       /* seek back to the next slot in the offset table and write the
        * offset of the layer
@@ -383,7 +383,7 @@ xcf_save_image (XcfInfo    *info,
 
   for (list = all_channels; list; list = g_list_next (list))
     {
-      GimpChannel *channel = list->data;
+      LigmaChannel *channel = list->data;
 
       /* seek back to the next slot in the offset table and write the
        * offset of the channel
@@ -413,7 +413,7 @@ xcf_save_image (XcfInfo    *info,
 
       for (list = all_paths; list; list = g_list_next (list))
         {
-          GimpVectors *vectors = list->data;
+          LigmaVectors *vectors = list->data;
 
           /* seek back to the next slot in the offset table and write the
            * offset of the channel
@@ -448,26 +448,26 @@ xcf_save_image (XcfInfo    *info,
 
 static gboolean
 xcf_save_image_props (XcfInfo    *info,
-                      GimpImage  *image,
+                      LigmaImage  *image,
                       GError    **error)
 {
-  GimpImagePrivate *private       = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpParasite     *grid_parasite = NULL;
-  GimpParasite     *meta_parasite = NULL;
+  LigmaImagePrivate *private       = LIGMA_IMAGE_GET_PRIVATE (image);
+  LigmaParasite     *grid_parasite = NULL;
+  LigmaParasite     *meta_parasite = NULL;
   GList            *symmetry_parasites = NULL;
   GList            *iter;
-  GimpUnit          unit          = gimp_image_get_unit (image);
+  LigmaUnit          unit          = ligma_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   /* check and see if we should save the colormap property */
-  if (gimp_image_get_colormap_palette (image))
+  if (ligma_image_get_colormap_palette (image))
     {
-      guint8 *colormap = gimp_image_get_colormap (image);
+      guint8 *colormap = ligma_image_get_colormap (image);
       xcf_check_error (xcf_save_prop (info, image, PROP_COLORMAP, error,
-                                      gimp_image_get_colormap_size (image),
+                                      ligma_image_get_colormap_size (image),
                                       colormap));
       g_free (colormap);
     }
@@ -476,86 +476,86 @@ xcf_save_image_props (XcfInfo    *info,
     xcf_check_error (xcf_save_prop (info, image, PROP_COMPRESSION, error,
                                     info->compression));
 
-  if (gimp_image_get_guides (image))
+  if (ligma_image_get_guides (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_GUIDES, error,
-                                    gimp_image_get_guides (image)));
+                                    ligma_image_get_guides (image)));
 
-  if (gimp_image_get_sample_points (image))
+  if (ligma_image_get_sample_points (image))
     {
       /* save the new property before the old one, so loading can skip
        * the latter
        */
       xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
-                                      gimp_image_get_sample_points (image)));
+                                      ligma_image_get_sample_points (image)));
       xcf_check_error (xcf_save_prop (info, image, PROP_OLD_SAMPLE_POINTS, error,
-                                      gimp_image_get_sample_points (image)));
+                                      ligma_image_get_sample_points (image)));
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
                                   xres, yres));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  gimp_image_get_tattoo_state (image)));
+                                  ligma_image_get_tattoo_state (image)));
 
-  if (unit < gimp_unit_get_number_of_built_in_units ())
+  if (unit < ligma_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit));
 
-  if (gimp_container_get_n_children (gimp_image_get_vectors (image)) > 0 &&
+  if (ligma_container_get_n_children (ligma_image_get_vectors (image)) > 0 &&
       info->file_version < 18)
     {
-      if (gimp_vectors_compat_is_compatible (image))
+      if (ligma_vectors_compat_is_compatible (image))
         xcf_check_error (xcf_save_prop (info, image, PROP_PATHS, error));
       else
         xcf_check_error (xcf_save_prop (info, image, PROP_VECTORS, error));
     }
 
-  if (unit >= gimp_unit_get_number_of_built_in_units ())
+  if (unit >= ligma_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_USER_UNIT, error, unit));
 
-  if (gimp_image_get_grid (image))
+  if (ligma_image_get_grid (image))
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
-      grid_parasite = gimp_grid_to_parasite (grid);
-      gimp_parasite_list_add (private->parasites, grid_parasite);
+      grid_parasite = ligma_grid_to_parasite (grid);
+      ligma_parasite_list_add (private->parasites, grid_parasite);
     }
 
-  if (gimp_image_get_metadata (image))
+  if (ligma_image_get_metadata (image))
     {
-      GimpMetadata *metadata = gimp_image_get_metadata (image);
+      LigmaMetadata *metadata = ligma_image_get_metadata (image);
       gchar        *meta_string;
 
-      meta_string = gimp_metadata_serialize (metadata);
+      meta_string = ligma_metadata_serialize (metadata);
 
       if (meta_string)
         {
-          meta_parasite = gimp_parasite_new ("gimp-image-metadata",
-                                             GIMP_PARASITE_PERSISTENT,
+          meta_parasite = ligma_parasite_new ("ligma-image-metadata",
+                                             LIGMA_PARASITE_PERSISTENT,
                                              strlen (meta_string) + 1,
                                              meta_string);
-          gimp_parasite_list_add (private->parasites, meta_parasite);
+          ligma_parasite_list_add (private->parasites, meta_parasite);
           g_free (meta_string);
         }
     }
 
-  if (g_list_length (gimp_image_symmetry_get (image)))
+  if (g_list_length (ligma_image_symmetry_get (image)))
     {
-      GimpParasite *parasite  = NULL;
-      GimpSymmetry *symmetry;
+      LigmaParasite *parasite  = NULL;
+      LigmaSymmetry *symmetry;
 
-      for (iter = gimp_image_symmetry_get (image); iter; iter = g_list_next (iter))
+      for (iter = ligma_image_symmetry_get (image); iter; iter = g_list_next (iter))
         {
-          symmetry = GIMP_SYMMETRY (iter->data);
-          if (G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
+          symmetry = LIGMA_SYMMETRY (iter->data);
+          if (G_TYPE_FROM_INSTANCE (symmetry) == LIGMA_TYPE_SYMMETRY)
             /* Do not save the identity symmetry. */
             continue;
-          parasite = gimp_symmetry_to_parasite (GIMP_SYMMETRY (iter->data));
-          gimp_parasite_list_add (private->parasites, parasite);
+          parasite = ligma_symmetry_to_parasite (LIGMA_SYMMETRY (iter->data));
+          ligma_parasite_list_add (private->parasites, parasite);
           symmetry_parasites = g_list_prepend (symmetry_parasites, parasite);
         }
     }
 
-  if (gimp_parasite_list_length (private->parasites) > 0)
+  if (ligma_parasite_list_length (private->parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       private->parasites));
@@ -563,30 +563,30 @@ xcf_save_image_props (XcfInfo    *info,
 
   if (grid_parasite)
     {
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (grid_parasite));
-      gimp_parasite_free (grid_parasite);
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (grid_parasite));
+      ligma_parasite_free (grid_parasite);
     }
 
   if (meta_parasite)
     {
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (meta_parasite));
-      gimp_parasite_free (meta_parasite);
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (meta_parasite));
+      ligma_parasite_free (meta_parasite);
     }
 
   for (iter = symmetry_parasites; iter; iter = g_list_next (iter))
     {
-      GimpParasite *parasite = iter->data;
+      LigmaParasite *parasite = iter->data;
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
   g_list_free_full (symmetry_parasites,
-                    (GDestroyNotify) gimp_parasite_free);
+                    (GDestroyNotify) ligma_parasite_free);
 
-  info->layer_sets = gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER);
-  info->channel_sets = gimp_image_get_stored_item_sets (image, GIMP_TYPE_CHANNEL);
+  info->layer_sets = ligma_image_get_stored_item_sets (image, LIGMA_TYPE_LAYER);
+  info->channel_sets = ligma_image_get_stored_item_sets (image, LIGMA_TYPE_CHANNEL);
 
   for (iter = info->layer_sets; iter; iter = iter->next)
     xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET, error, iter->data));
@@ -600,63 +600,63 @@ xcf_save_image_props (XcfInfo    *info,
 
 static gboolean
 xcf_save_layer_props (XcfInfo    *info,
-                      GimpImage  *image,
-                      GimpLayer  *layer,
+                      LigmaImage  *image,
+                      LigmaLayer  *layer,
                       GError    **error)
 {
-  GimpParasiteList *parasites;
+  LigmaParasiteList *parasites;
   GList            *iter;
   gint              offset_x;
   gint              offset_y;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
     xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
 
-  if (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)))
+  if (ligma_viewable_get_parent (LIGMA_VIEWABLE (layer)))
     {
       GList *path;
 
-      path = gimp_item_get_path (GIMP_ITEM (layer));
+      path = ligma_item_get_path (LIGMA_ITEM (layer));
       xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_PATH, error,
                                       path));
       g_list_free (path);
     }
 
-  if (g_list_find (gimp_image_get_selected_layers (image), layer))
+  if (g_list_find (ligma_image_get_selected_layers (image), layer))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
 
-  if (layer == gimp_image_get_floating_selection (image))
+  if (layer == ligma_image_get_floating_selection (image))
     {
-      info->floating_sel_drawable = gimp_layer_get_floating_sel_drawable (layer);
+      info->floating_sel_drawable = ligma_layer_get_floating_sel_drawable (layer);
       xcf_check_error (xcf_save_prop (info, image, PROP_FLOATING_SELECTION,
                                       error));
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
-                                  gimp_layer_get_opacity (layer)));
+                                  ligma_layer_get_opacity (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_OPACITY, error,
-                                  gimp_layer_get_opacity (layer)));
+                                  ligma_layer_get_opacity (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
-                                  gimp_item_get_visible (GIMP_ITEM (layer))));
+                                  ligma_item_get_visible (LIGMA_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
-                                  gimp_item_get_color_tag (GIMP_ITEM (layer))));
+                                  ligma_item_get_color_tag (LIGMA_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
-                                  gimp_item_get_lock_content (GIMP_ITEM (layer))));
+                                  ligma_item_get_lock_content (LIGMA_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_ALPHA, error,
-                                  gimp_layer_get_lock_alpha (layer)));
+                                  ligma_layer_get_lock_alpha (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
-                                  gimp_item_get_lock_position (GIMP_ITEM (layer))));
+                                  ligma_item_get_lock_position (LIGMA_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_VISIBILITY, error,
-                                  gimp_item_get_lock_visibility (GIMP_ITEM (layer))));
+                                  ligma_item_get_lock_visibility (LIGMA_ITEM (layer))));
 
-  if (gimp_layer_get_mask (layer))
+  if (ligma_layer_get_mask (layer))
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_APPLY_MASK, error,
-                                      gimp_layer_get_apply_mask (layer)));
+                                      ligma_layer_get_apply_mask (layer)));
       xcf_check_error (xcf_save_prop (info, image, PROP_EDIT_MASK, error,
-                                      gimp_layer_get_edit_mask (layer)));
+                                      ligma_layer_get_edit_mask (layer)));
       xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASK, error,
-                                      gimp_layer_get_show_mask (layer)));
+                                      ligma_layer_get_show_mask (layer)));
     }
   else
     {
@@ -668,30 +668,30 @@ xcf_save_layer_props (XcfInfo    *info,
                                       FALSE));
     }
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+  ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OFFSETS, error,
                                   offset_x, offset_y));
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
-                                  gimp_layer_get_mode (layer)));
+                                  ligma_layer_get_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_BLEND_SPACE, error,
-                                  gimp_layer_get_mode (layer),
-                                  gimp_layer_get_blend_space (layer)));
+                                  ligma_layer_get_mode (layer),
+                                  ligma_layer_get_blend_space (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_SPACE, error,
-                                  gimp_layer_get_mode (layer),
-                                  gimp_layer_get_composite_space (layer)));
+                                  ligma_layer_get_mode (layer),
+                                  ligma_layer_get_composite_space (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_MODE, error,
-                                  gimp_layer_get_mode (layer),
-                                  gimp_layer_get_composite_mode (layer)));
+                                  ligma_layer_get_mode (layer),
+                                  ligma_layer_get_composite_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  gimp_item_get_tattoo (GIMP_ITEM (layer))));
+                                  ligma_item_get_tattoo (LIGMA_ITEM (layer))));
 
-  if (GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
+  if (LIGMA_IS_TEXT_LAYER (layer) && LIGMA_TEXT_LAYER (layer)->text)
     {
-      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
-      guint32        flags      = gimp_text_layer_get_xcf_flags (text_layer);
+      LigmaTextLayer *text_layer = LIGMA_TEXT_LAYER (layer);
+      guint32        flags      = ligma_text_layer_get_xcf_flags (text_layer);
 
-      gimp_text_layer_xcf_save_prepare (text_layer);
+      ligma_text_layer_xcf_save_prepare (text_layer);
 
       if (flags)
         xcf_check_error (xcf_save_prop (info,
@@ -699,11 +699,11 @@ xcf_save_layer_props (XcfInfo    *info,
                                         flags));
     }
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
     {
       gint32 flags = 0;
 
-      if (gimp_viewable_get_expanded (GIMP_VIEWABLE (layer)))
+      if (ligma_viewable_get_expanded (LIGMA_VIEWABLE (layer)))
         flags |= XCF_GROUP_ITEM_EXPANDED;
 
       xcf_check_error (xcf_save_prop (info,
@@ -711,9 +711,9 @@ xcf_save_layer_props (XcfInfo    *info,
                                       flags));
     }
 
-  parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
+  parasites = ligma_item_get_parasites (LIGMA_ITEM (layer));
 
-  if (gimp_parasite_list_length (parasites) > 0)
+  if (ligma_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites));
@@ -721,13 +721,13 @@ xcf_save_layer_props (XcfInfo    *info,
 
   for (iter = info->layer_sets; iter; iter = iter->next)
     {
-      GimpItemList *set = iter->data;
+      LigmaItemList *set = iter->data;
 
-      if (! gimp_item_list_is_pattern (set, NULL))
+      if (! ligma_item_list_is_pattern (set, NULL))
         {
-          GList *items = gimp_item_list_get_items (set, NULL);
+          GList *items = ligma_item_list_get_items (set, NULL);
 
-          if (g_list_find (items, GIMP_ITEM (layer)))
+          if (g_list_find (items, LIGMA_ITEM (layer)))
             xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
                                             g_list_position (info->layer_sets, iter)));
 
@@ -742,45 +742,45 @@ xcf_save_layer_props (XcfInfo    *info,
 
 static gboolean
 xcf_save_channel_props (XcfInfo      *info,
-                        GimpImage    *image,
-                        GimpChannel  *channel,
+                        LigmaImage    *image,
+                        LigmaChannel  *channel,
                         GError      **error)
 {
-  GimpParasiteList *parasites;
+  LigmaParasiteList *parasites;
   GList            *iter;
 
-  if (g_list_find (gimp_image_get_selected_channels (image), channel))
+  if (g_list_find (ligma_image_get_selected_channels (image), channel))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
 
-  if (channel == gimp_image_get_mask (image))
+  if (channel == ligma_image_get_mask (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_SELECTION, error));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
-                                  gimp_channel_get_opacity (channel)));
+                                  ligma_channel_get_opacity (channel)));
   xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_OPACITY, error,
-                                  gimp_channel_get_opacity (channel)));
+                                  ligma_channel_get_opacity (channel)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
-                                  gimp_item_get_visible (GIMP_ITEM (channel))));
+                                  ligma_item_get_visible (LIGMA_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
-                                  gimp_item_get_color_tag (GIMP_ITEM (channel))));
+                                  ligma_item_get_color_tag (LIGMA_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
-                                  gimp_item_get_lock_content (GIMP_ITEM (channel))));
+                                  ligma_item_get_lock_content (LIGMA_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
-                                  gimp_item_get_lock_position (GIMP_ITEM (channel))));
+                                  ligma_item_get_lock_position (LIGMA_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_VISIBILITY, error,
-                                  gimp_item_get_lock_visibility (GIMP_ITEM (channel))));
+                                  ligma_item_get_lock_visibility (LIGMA_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASKED, error,
-                                  gimp_channel_get_show_masked (channel)));
+                                  ligma_channel_get_show_masked (channel)));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR, error,
                                   &channel->color));
   xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_COLOR, error,
                                   &channel->color));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  gimp_item_get_tattoo (GIMP_ITEM (channel))));
+                                  ligma_item_get_tattoo (LIGMA_ITEM (channel))));
 
-  parasites = gimp_item_get_parasites (GIMP_ITEM (channel));
+  parasites = ligma_item_get_parasites (LIGMA_ITEM (channel));
 
-  if (gimp_parasite_list_length (parasites) > 0)
+  if (ligma_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites));
@@ -788,13 +788,13 @@ xcf_save_channel_props (XcfInfo      *info,
 
   for (iter = info->channel_sets; iter; iter = iter->next)
     {
-      GimpItemList *set = iter->data;
+      LigmaItemList *set = iter->data;
 
-      if (! gimp_item_list_is_pattern (set, NULL))
+      if (! ligma_item_list_is_pattern (set, NULL))
         {
-          GList *items = gimp_item_list_get_items (set, NULL);
+          GList *items = ligma_item_list_get_items (set, NULL);
 
-          if (g_list_find (items, GIMP_ITEM (channel)))
+          if (g_list_find (items, LIGMA_ITEM (channel)))
             xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
                                             g_list_position (info->channel_sets, iter)));
 
@@ -809,30 +809,30 @@ xcf_save_channel_props (XcfInfo      *info,
 
 static gboolean
 xcf_save_path_props (XcfInfo      *info,
-                     GimpImage    *image,
-                     GimpVectors  *vectors,
+                     LigmaImage    *image,
+                     LigmaVectors  *vectors,
                      GError      **error)
 {
-  GimpParasiteList *parasites;
+  LigmaParasiteList *parasites;
 
-  if (g_list_find (gimp_image_get_selected_vectors (image), vectors))
+  if (g_list_find (ligma_image_get_selected_vectors (image), vectors))
     xcf_check_error (xcf_save_prop (info, image, PROP_SELECTED_PATH, error));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
-                                  gimp_item_get_visible (GIMP_ITEM (vectors))));
+                                  ligma_item_get_visible (LIGMA_ITEM (vectors))));
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
-                                  gimp_item_get_color_tag (GIMP_ITEM (vectors))));
+                                  ligma_item_get_color_tag (LIGMA_ITEM (vectors))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
-                                  gimp_item_get_lock_content (GIMP_ITEM (vectors))));
+                                  ligma_item_get_lock_content (LIGMA_ITEM (vectors))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
-                                  gimp_item_get_lock_position (GIMP_ITEM (vectors))));
+                                  ligma_item_get_lock_position (LIGMA_ITEM (vectors))));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  gimp_item_get_tattoo (GIMP_ITEM (vectors))));
+                                  ligma_item_get_tattoo (LIGMA_ITEM (vectors))));
 
-  parasites = gimp_item_get_parasites (GIMP_ITEM (vectors));
+  parasites = ligma_item_get_parasites (LIGMA_ITEM (vectors));
 
-  if (gimp_parasite_list_length (parasites) > 0)
+  if (ligma_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites));
@@ -841,13 +841,13 @@ xcf_save_path_props (XcfInfo      *info,
 #if 0
   for (iter = info->vectors_sets; iter; iter = iter->next)
     {
-      GimpItemList *set = iter->data;
+      LigmaItemList *set = iter->data;
 
-      if (! gimp_item_list_is_pattern (set, NULL))
+      if (! ligma_item_list_is_pattern (set, NULL))
         {
-          GList *items = gimp_item_list_get_items (set, NULL);
+          GList *items = ligma_item_list_get_items (set, NULL);
 
-          if (g_list_find (items, GIMP_ITEM (vectors)))
+          if (g_list_find (items, LIGMA_ITEM (vectors)))
             xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
                                             g_list_position (info->layer_sets, iter)));
 
@@ -863,7 +863,7 @@ xcf_save_path_props (XcfInfo      *info,
 
 static gboolean
 xcf_save_prop (XcfInfo    *info,
-               GimpImage  *image,
+               LigmaImage  *image,
                PropType    prop_type,
                GError    **error,
                ...)
@@ -952,8 +952,8 @@ xcf_save_prop (XcfInfo    *info,
 
         size = 4;
 
-        if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-          mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+        if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+          mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
@@ -964,17 +964,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_BLEND_SPACE:
       {
-        GimpLayerMode mode        = va_arg (args, GimpLayerMode);
+        LigmaLayerMode mode        = va_arg (args, LigmaLayerMode);
         gint32        blend_space = va_arg (args, gint32);
 
-        G_STATIC_ASSERT (GIMP_LAYER_COLOR_SPACE_AUTO == 0);
+        G_STATIC_ASSERT (LIGMA_LAYER_COLOR_SPACE_AUTO == 0);
 
         /* if blend_space is AUTO, save the negative of the actual value AUTO
          * maps to for the given mode, so that we can correctly load it even if
          * the mapping changes in the future.
          */
-        if (blend_space == GIMP_LAYER_COLOR_SPACE_AUTO)
-          blend_space = -gimp_layer_mode_get_blend_space (mode);
+        if (blend_space == LIGMA_LAYER_COLOR_SPACE_AUTO)
+          blend_space = -ligma_layer_mode_get_blend_space (mode);
 
         size = 4;
 
@@ -987,17 +987,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COMPOSITE_SPACE:
       {
-        GimpLayerMode mode            = va_arg (args, GimpLayerMode);
+        LigmaLayerMode mode            = va_arg (args, LigmaLayerMode);
         gint32        composite_space = va_arg (args, gint32);
 
-        G_STATIC_ASSERT (GIMP_LAYER_COLOR_SPACE_AUTO == 0);
+        G_STATIC_ASSERT (LIGMA_LAYER_COLOR_SPACE_AUTO == 0);
 
         /* if composite_space is AUTO, save the negative of the actual value
          * AUTO maps to for the given mode, so that we can correctly load it
          * even if the mapping changes in the future.
          */
-        if (composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
-          composite_space = -gimp_layer_mode_get_composite_space (mode);
+        if (composite_space == LIGMA_LAYER_COLOR_SPACE_AUTO)
+          composite_space = -ligma_layer_mode_get_composite_space (mode);
 
         size = 4;
 
@@ -1010,17 +1010,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COMPOSITE_MODE:
       {
-        GimpLayerMode mode           = va_arg (args, GimpLayerMode);
+        LigmaLayerMode mode           = va_arg (args, LigmaLayerMode);
         gint32        composite_mode = va_arg (args, gint32);
 
-        G_STATIC_ASSERT (GIMP_LAYER_COMPOSITE_AUTO == 0);
+        G_STATIC_ASSERT (LIGMA_LAYER_COMPOSITE_AUTO == 0);
 
         /* if composite_mode is AUTO, save the negative of the actual value
          * AUTO maps to for the given mode, so that we can correctly load it
          * even if the mapping changes in the future.
          */
-        if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
-          composite_mode = -gimp_layer_mode_get_composite_mode (mode);
+        if (composite_mode == LIGMA_LAYER_COMPOSITE_AUTO)
+          composite_mode = -ligma_layer_mode_get_composite_mode (mode);
 
         size = 4;
 
@@ -1196,10 +1196,10 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COLOR:
       {
-        GimpRGB *color = va_arg (args, GimpRGB *);
+        LigmaRGB *color = va_arg (args, LigmaRGB *);
         guchar   col[3];
 
-        gimp_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
+        ligma_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
 
         size = 3;
 
@@ -1212,7 +1212,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_FLOAT_COLOR:
       {
-        GimpRGB *color = va_arg (args, GimpRGB *);
+        LigmaRGB *color = va_arg (args, LigmaRGB *);
         gfloat   col[3];
 
         col[0] = color->r;
@@ -1250,7 +1250,7 @@ xcf_save_prop (XcfInfo    *info,
         for (iter = guides; iter; iter = g_list_next (iter))
           {
             /* Do not save custom guides. */
-            if (gimp_guide_is_custom (GIMP_GUIDE (iter->data)))
+            if (ligma_guide_is_custom (LIGMA_GUIDE (iter->data)))
               n_guides--;
           }
 
@@ -1263,20 +1263,20 @@ xcf_save_prop (XcfInfo    *info,
 
             for (; guides; guides = g_list_next (guides))
               {
-                GimpGuide *guide    = guides->data;
-                gint32     position = gimp_guide_get_position (guide);
+                LigmaGuide *guide    = guides->data;
+                gint32     position = ligma_guide_get_position (guide);
                 gint8      orientation;
 
-                if (gimp_guide_is_custom (guide))
+                if (ligma_guide_is_custom (guide))
                   continue;
 
-                switch (gimp_guide_get_orientation (guide))
+                switch (ligma_guide_get_orientation (guide))
                   {
-                  case GIMP_ORIENTATION_HORIZONTAL:
+                  case LIGMA_ORIENTATION_HORIZONTAL:
                     orientation = XCF_ORIENTATION_HORIZONTAL;
                     break;
 
-                  case GIMP_ORIENTATION_VERTICAL:
+                  case LIGMA_ORIENTATION_VERTICAL:
                     orientation = XCF_ORIENTATION_VERTICAL;
                     break;
 
@@ -1305,13 +1305,13 @@ xcf_save_prop (XcfInfo    *info,
 
         for (; sample_points; sample_points = g_list_next (sample_points))
           {
-            GimpSamplePoint   *sample_point = sample_points->data;
+            LigmaSamplePoint   *sample_point = sample_points->data;
             gint32             x, y;
-            GimpColorPickMode  pick_mode;
+            LigmaColorPickMode  pick_mode;
             guint32            padding[2] = { 0, };
 
-            gimp_sample_point_get_position (sample_point, &x, &y);
-            pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+            ligma_sample_point_get_position (sample_point, &x, &y);
+            pick_mode = ligma_sample_point_get_pick_mode (sample_point);
 
             xcf_write_int32_check_error (info, (guint32 *) &x,         1);
             xcf_write_int32_check_error (info, (guint32 *) &y,         1);
@@ -1333,10 +1333,10 @@ xcf_save_prop (XcfInfo    *info,
 
         for (; sample_points; sample_points = g_list_next (sample_points))
           {
-            GimpSamplePoint *sample_point = sample_points->data;
+            LigmaSamplePoint *sample_point = sample_points->data;
             gint32           x, y;
 
-            gimp_sample_point_get_position (sample_point, &x, &y);
+            ligma_sample_point_get_position (sample_point, &x, &y);
 
             xcf_write_int32_check_error (info, (guint32 *) &x, 1);
             xcf_write_int32_check_error (info, (guint32 *) &y, 1);
@@ -1375,9 +1375,9 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_PARASITES:
       {
-        GimpParasiteList *list = va_arg (args, GimpParasiteList *);
+        LigmaParasiteList *list = va_arg (args, LigmaParasiteList *);
 
-        if (gimp_parasite_list_persistent_length (list) > 0)
+        if (ligma_parasite_list_persistent_length (list) > 0)
           {
             goffset base;
             goffset pos;
@@ -1452,19 +1452,19 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_USER_UNIT:
       {
-        GimpUnit     unit = va_arg (args, guint32);
+        LigmaUnit     unit = va_arg (args, guint32);
         const gchar *unit_strings[5];
         gfloat       factor;
         guint32      digits;
 
         /* write the entire unit definition */
-        unit_strings[0] = gimp_unit_get_identifier (unit);
-        factor          = gimp_unit_get_factor (unit);
-        digits          = gimp_unit_get_digits (unit);
-        unit_strings[1] = gimp_unit_get_symbol (unit);
-        unit_strings[2] = gimp_unit_get_abbreviation (unit);
-        unit_strings[3] = gimp_unit_get_singular (unit);
-        unit_strings[4] = gimp_unit_get_plural (unit);
+        unit_strings[0] = ligma_unit_get_identifier (unit);
+        factor          = ligma_unit_get_factor (unit);
+        digits          = ligma_unit_get_digits (unit);
+        unit_strings[1] = ligma_unit_get_symbol (unit);
+        unit_strings[2] = ligma_unit_get_abbreviation (unit);
+        unit_strings[3] = ligma_unit_get_singular (unit);
+        unit_strings[4] = ligma_unit_get_plural (unit);
 
         size =
           2 * 4 +
@@ -1559,7 +1559,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_ITEM_SET:
       {
-        GimpItemList *set = va_arg (args, GimpItemList *);
+        LigmaItemList *set = va_arg (args, LigmaItemList *);
         const gchar  *string;
         guint32       method;
         guint32       item_type;
@@ -1573,21 +1573,21 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_int32_check_error (info, &size, 1);
         base = info->cp;
 
-        if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
+        if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_LAYER)
           item_type = 0;
-        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
+        else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_CHANNEL)
           item_type = 1;
-        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+        else if (ligma_item_list_get_item_type (set) == LIGMA_TYPE_VECTORS)
           item_type = 2;
         else
           g_return_val_if_reached (FALSE);
         xcf_write_int32_check_error (info, &item_type, 1);
 
-        if (! gimp_item_list_is_pattern (set, &method))
+        if (! ligma_item_list_is_pattern (set, &method))
           method = G_MAXUINT32;
         xcf_write_int32_check_error (info, &method, 1);
 
-        string = gimp_object_get_name (set);
+        string = ligma_object_get_name (set);
         xcf_write_string_check_error (info, (gchar **) &string, 1);
 
         /* go back to the saved position and write the length */
@@ -1619,8 +1619,8 @@ xcf_save_prop (XcfInfo    *info,
 
 static gboolean
 xcf_save_layer (XcfInfo    *info,
-                GimpImage  *image,
-                GimpLayer  *layer,
+                LigmaImage  *image,
+                LigmaLayer  *layer,
                 GError    **error)
 {
   goffset      saved_pos;
@@ -1632,7 +1632,7 @@ xcf_save_layer (XcfInfo    *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (GIMP_DRAWABLE (layer) == info->floating_sel_drawable)
+  if (LIGMA_DRAWABLE (layer) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error));
@@ -1641,17 +1641,17 @@ xcf_save_layer (XcfInfo    *info,
     }
 
   /* write out the width, height and image type information for the layer */
-  value = gimp_item_get_width (GIMP_ITEM (layer));
+  value = ligma_item_get_width (LIGMA_ITEM (layer));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_item_get_height (GIMP_ITEM (layer));
+  value = ligma_item_get_height (LIGMA_ITEM (layer));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_babl_format_get_image_type (gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
+  value = ligma_babl_format_get_image_type (ligma_drawable_get_format (LIGMA_DRAWABLE (layer)));
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the layers name */
-  string = gimp_object_get_name (layer);
+  string = ligma_object_get_name (layer);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the layer properties */
@@ -1667,21 +1667,21 @@ xcf_save_layer (XcfInfo    *info,
   xcf_write_zero_offset_check_error (info, 1);
 
   xcf_check_error (xcf_save_buffer (info, image,
-                                    gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                    ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer)),
                                     error));
 
   offset = info->cp;
 
   /* write out the layer mask */
-  if (gimp_layer_get_mask (layer))
+  if (ligma_layer_get_mask (layer))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (layer);
+      LigmaLayerMask *mask = ligma_layer_get_mask (layer);
 
       xcf_check_error (xcf_seek_pos (info, saved_pos, error));
       xcf_write_offset_check_error (info, &offset, 1);
 
       xcf_check_error (xcf_seek_pos (info, offset, error));
-      xcf_check_error (xcf_save_channel (info, image, GIMP_CHANNEL (mask),
+      xcf_check_error (xcf_save_channel (info, image, LIGMA_CHANNEL (mask),
                                          error));
     }
 
@@ -1690,8 +1690,8 @@ xcf_save_layer (XcfInfo    *info,
 
 static gboolean
 xcf_save_channel (XcfInfo      *info,
-                  GimpImage    *image,
-                  GimpChannel  *channel,
+                  LigmaImage    *image,
+                  LigmaChannel  *channel,
                   GError      **error)
 {
   goffset      saved_pos;
@@ -1703,7 +1703,7 @@ xcf_save_channel (XcfInfo      *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (GIMP_DRAWABLE (channel) == info->floating_sel_drawable)
+  if (LIGMA_DRAWABLE (channel) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error));
@@ -1712,14 +1712,14 @@ xcf_save_channel (XcfInfo      *info,
     }
 
   /* write out the width and height information for the channel */
-  value = gimp_item_get_width (GIMP_ITEM (channel));
+  value = ligma_item_get_width (LIGMA_ITEM (channel));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_item_get_height (GIMP_ITEM (channel));
+  value = ligma_item_get_height (LIGMA_ITEM (channel));
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the channels name */
-  string = gimp_object_get_name (channel);
+  string = ligma_object_get_name (channel);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the channel properties */
@@ -1730,7 +1730,7 @@ xcf_save_channel (XcfInfo      *info,
   xcf_write_offset_check_error (info, &offset, 1);
 
   xcf_check_error (xcf_save_buffer (info, image,
-                                    gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                                    ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel)),
                                     error));
 
   return TRUE;
@@ -1755,7 +1755,7 @@ xcf_calc_levels (gint size,
 
 static gboolean
 xcf_save_buffer (XcfInfo     *info,
-                 GimpImage   *image,
+                 LigmaImage   *image,
                  GeglBuffer  *buffer,
                  GError     **error)
 {
@@ -1845,7 +1845,7 @@ xcf_save_buffer (XcfInfo     *info,
 
 static gboolean
 xcf_save_level (XcfInfo     *info,
-                GimpImage   *image,
+                LigmaImage   *image,
                 GeglBuffer  *buffer,
                 GError     **error)
 {
@@ -1865,7 +1865,7 @@ xcf_save_level (XcfInfo     *info,
   gint        i, j, k;
   GError     *tmp_error = NULL;
 
-  num_processors = GIMP_GEGL_CONFIG (image->gimp->config)->num_processors;
+  num_processors = LIGMA_GEGL_CONFIG (image->ligma->config)->num_processors;
 
   format = gegl_buffer_get_format (buffer);
 
@@ -1885,8 +1885,8 @@ xcf_save_level (XcfInfo     *info,
   max_data_length = XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp *
                     XCF_TILE_MAX_DATA_LENGTH_FACTOR /* = 1.5, currently */;
 
-  n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
-  n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
+  n_tile_rows = ligma_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
+  n_tile_cols = ligma_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
 
   ntiles = n_tile_rows * n_tile_cols;
 
@@ -2076,7 +2076,7 @@ xcf_save_level (XcfInfo     *info,
           /* store the offset in the table and increment the next pointer */
           *next_offset++ = offset;
 
-          gimp_gegl_buffer_get_tile_rect (buffer,
+          ligma_gegl_buffer_get_tile_rect (buffer,
                                           XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
                                           i, &rect);
 
@@ -2189,7 +2189,7 @@ xcf_save_tile_parallel (XcfJobData  *job_data,
 
   for (gint i = 0; i < job_data->batch_size; ++i)
     {
-      gimp_gegl_buffer_get_tile_rect (job_data->buffer,
+      ligma_gegl_buffer_get_tile_rect (job_data->buffer,
                                       XCF_TILE_WIDTH,
                                       XCF_TILE_HEIGHT,
                                       job_data->tile + i,
@@ -2403,23 +2403,23 @@ xcf_save_tile_zlib (GeglRectangle  *tile_rect,
 
 static gboolean
 xcf_save_parasite (XcfInfo       *info,
-                   GimpParasite  *parasite,
+                   LigmaParasite  *parasite,
                    GError       **error)
 {
-  if (gimp_parasite_is_persistent (parasite))
+  if (ligma_parasite_is_persistent (parasite))
     {
       guint32        value;
       const gchar   *string;
       GError        *tmp_error = NULL;
       gconstpointer  parasite_data;
 
-      string = gimp_parasite_get_name (parasite);
+      string = ligma_parasite_get_name (parasite);
       xcf_write_string_check_error (info, (gchar **) &string, 1);
 
-      value = gimp_parasite_get_flags (parasite);
+      value = ligma_parasite_get_flags (parasite);
       xcf_write_int32_check_error (info, &value, 1);
 
-      parasite_data = gimp_parasite_get_data (parasite, &value);
+      parasite_data = ligma_parasite_get_data (parasite, &value);
       xcf_write_int32_check_error (info, &value, 1);
 
       xcf_write_int8_check_error (info, parasite_data, value);
@@ -2436,7 +2436,7 @@ typedef struct
 
 static void
 xcf_save_parasite_func (gchar           *key,
-                        GimpParasite    *parasite,
+                        LigmaParasite    *parasite,
                         XcfParasiteData *data)
 {
   if (! data->error)
@@ -2445,7 +2445,7 @@ xcf_save_parasite_func (gchar           *key,
 
 static gboolean
 xcf_save_parasite_list (XcfInfo           *info,
-                        GimpParasiteList  *list,
+                        LigmaParasiteList  *list,
                         GError           **error)
 {
   XcfParasiteData data;
@@ -2453,7 +2453,7 @@ xcf_save_parasite_list (XcfInfo           *info,
   data.info  = info;
   data.error = NULL;
 
-  gimp_parasite_list_foreach (list, (GHFunc) xcf_save_parasite_func, &data);
+  ligma_parasite_list_foreach (list, (GHFunc) xcf_save_parasite_func, &data);
 
   if (data.error)
     {
@@ -2467,10 +2467,10 @@ xcf_save_parasite_list (XcfInfo           *info,
 /* This is the oldest way to save paths. */
 static gboolean
 xcf_save_old_paths (XcfInfo    *info,
-                    GimpImage  *image,
+                    LigmaImage  *image,
                     GError    **error)
 {
-  GimpVectors *active_vectors = NULL;
+  LigmaVectors *active_vectors = NULL;
   guint32      num_paths;
   guint32      active_index = 0;
   GList       *list;
@@ -2484,38 +2484,38 @@ xcf_save_old_paths (XcfInfo    *info,
    * then each path:-
    */
 
-  num_paths = gimp_container_get_n_children (gimp_image_get_vectors (image));
+  num_paths = ligma_container_get_n_children (ligma_image_get_vectors (image));
 
-  if (gimp_image_get_selected_vectors (image))
+  if (ligma_image_get_selected_vectors (image))
     {
-      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      active_vectors = ligma_image_get_selected_vectors (image)->data;
       /* Having more than 1 selected vectors should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
-      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+      if (g_list_length (ligma_image_get_selected_vectors (image)) > 1)
         g_critical ("%s: this code path should not happen with multiple paths selected",
                     G_STRFUNC);
     }
 
   if (active_vectors)
-    active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
-                                                   GIMP_OBJECT (active_vectors));
+    active_index = ligma_container_get_child_index (ligma_image_get_vectors (image),
+                                                   LIGMA_OBJECT (active_vectors));
 
   xcf_write_int32_check_error (info, &active_index, 1);
   xcf_write_int32_check_error (info, &num_paths,    1);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = ligma_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
-      GimpVectors            *vectors = list->data;
+      LigmaVectors            *vectors = list->data;
       gchar                  *name;
       guint32                 locked;
       guint8                  state;
       guint32                 version;
       guint32                 pathtype;
       guint32                 tattoo;
-      GimpVectorsCompatPoint *points;
+      LigmaVectorsCompatPoint *points;
       guint32                 num_points;
       guint32                 closed;
       gint                    i;
@@ -2532,7 +2532,7 @@ xcf_save_old_paths (XcfInfo    *info,
        * then each point.
        */
 
-      points = gimp_vectors_compat_get_points (vectors,
+      points = ligma_vectors_compat_get_points (vectors,
                                                (gint32 *) &num_points,
                                                (gint32 *) &closed);
 
@@ -2541,13 +2541,13 @@ xcf_save_old_paths (XcfInfo    *info,
        * we already saved the number of paths and I won't start seeking
        * around to fix that cruft  */
 
-      name     = (gchar *) gimp_object_get_name (vectors);
-      /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
+      name     = (gchar *) ligma_object_get_name (vectors);
+      /* The 'linked' concept does not exist anymore in LIGMA 3.0 and over. */
       locked   = 0;
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
       pathtype = 1;  /* BEZIER  (1.2 compat) */
-      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+      tattoo   = ligma_item_get_tattoo (LIGMA_ITEM (vectors));
 
       xcf_write_string_check_error (info, &name,       1);
       xcf_write_int32_check_error  (info, &locked,     1);
@@ -2585,14 +2585,14 @@ xcf_save_old_paths (XcfInfo    *info,
 
 /* This is an older way to save paths, though more recent than
  * xcf_save_old_paths(). It used to be the normal path storing format until all
- * 2.10 versions. It changed with GIMP 3.0.
+ * 2.10 versions. It changed with LIGMA 3.0.
  */
 static gboolean
 xcf_save_old_vectors (XcfInfo    *info,
-                      GimpImage  *image,
+                      LigmaImage  *image,
                       GError    **error)
 {
-  GimpVectors *active_vectors = NULL;
+  LigmaVectors *active_vectors = NULL;
   guint32      version        = 1;
   guint32      active_index   = 0;
   guint32      num_paths;
@@ -2609,33 +2609,33 @@ xcf_save_old_vectors (XcfInfo    *info,
    * then each path:-
    */
 
-  if (gimp_image_get_selected_vectors (image))
+  if (ligma_image_get_selected_vectors (image))
     {
-      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      active_vectors = ligma_image_get_selected_vectors (image)->data;
       /* Having more than 1 selected vectors should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
-      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+      if (g_list_length (ligma_image_get_selected_vectors (image)) > 1)
         g_critical ("%s: this code path should not happen with multiple paths selected",
                     G_STRFUNC);
     }
 
   if (active_vectors)
-    active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
-                                                   GIMP_OBJECT (active_vectors));
+    active_index = ligma_container_get_child_index (ligma_image_get_vectors (image),
+                                                   LIGMA_OBJECT (active_vectors));
 
-  num_paths = gimp_container_get_n_children (gimp_image_get_vectors (image));
+  num_paths = ligma_container_get_n_children (ligma_image_get_vectors (image));
 
   xcf_write_int32_check_error (info, &version,      1);
   xcf_write_int32_check_error (info, &active_index, 1);
   xcf_write_int32_check_error (info, &num_paths,    1);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = ligma_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
-      GimpVectors      *vectors = list->data;
-      GimpParasiteList *parasites;
+      LigmaVectors      *vectors = list->data;
+      LigmaParasiteList *parasites;
       const gchar      *name;
       guint32           tattoo;
       guint32           visible;
@@ -2655,13 +2655,13 @@ xcf_save_old_vectors (XcfInfo    *info,
        * then each stroke
        */
 
-      name          = gimp_object_get_name (vectors);
-      visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
-      /* The 'linked' concept does not exist anymore in GIMP 3.0 and over. */
+      name          = ligma_object_get_name (vectors);
+      visible       = ligma_item_get_visible (LIGMA_ITEM (vectors));
+      /* The 'linked' concept does not exist anymore in LIGMA 3.0 and over. */
       linked        = 0;
-      tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
-      parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
-      num_parasites = gimp_parasite_list_persistent_length (parasites);
+      tattoo        = ligma_item_get_tattoo (LIGMA_ITEM (vectors));
+      parasites     = ligma_item_get_parasites (LIGMA_ITEM (vectors));
+      num_parasites = ligma_parasite_list_persistent_length (parasites);
       num_strokes   = g_queue_get_length (vectors->strokes);
 
       xcf_write_string_check_error (info, (gchar **) &name, 1);
@@ -2677,7 +2677,7 @@ xcf_save_old_vectors (XcfInfo    *info,
            stroke_list;
            stroke_list = g_list_next (stroke_list))
         {
-          GimpStroke *stroke = stroke_list->data;
+          LigmaStroke *stroke = stroke_list->data;
           guint32     stroke_type;
           guint32     closed;
           guint32     num_axes;
@@ -2696,7 +2696,7 @@ xcf_save_old_vectors (XcfInfo    *info,
            * then each control point.
            */
 
-          if (GIMP_IS_BEZIER_STROKE (stroke))
+          if (LIGMA_IS_BEZIER_STROKE (stroke))
             {
               stroke_type = XCF_STROKETYPE_BEZIER_STROKE;
               num_axes = 2;   /* hardcoded, might be increased later */
@@ -2707,7 +2707,7 @@ xcf_save_old_vectors (XcfInfo    *info,
               continue;
             }
 
-          control_points = gimp_stroke_control_points_get (stroke,
+          control_points = ligma_stroke_control_points_get (stroke,
                                                            (gint32 *) &closed);
 
           xcf_write_int32_check_error (info, &stroke_type,         1);
@@ -2717,9 +2717,9 @@ xcf_save_old_vectors (XcfInfo    *info,
 
           for (i = 0; i < control_points->len; i++)
             {
-              GimpAnchor *anchor;
+              LigmaAnchor *anchor;
 
-              anchor = & (g_array_index (control_points, GimpAnchor, i));
+              anchor = & (g_array_index (control_points, LigmaAnchor, i));
 
               type      = anchor->type;
               coords[0] = anchor->position.x;
@@ -2754,8 +2754,8 @@ xcf_save_old_vectors (XcfInfo    *info,
 
 static gboolean
 xcf_save_path (XcfInfo      *info,
-               GimpImage    *image,
-               GimpVectors  *vectors,
+               LigmaImage    *image,
+               LigmaVectors  *vectors,
                GError      **error)
 {
   const gchar *string;
@@ -2769,7 +2769,7 @@ xcf_save_path (XcfInfo      *info,
   goffset      pos;
 
   /* write out the path name */
-  string = gimp_object_get_name (vectors);
+  string = ligma_object_get_name (vectors);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* Payload size */
@@ -2792,7 +2792,7 @@ xcf_save_path (XcfInfo      *info,
        stroke_list;
        stroke_list = g_list_next (stroke_list))
     {
-      GimpStroke *stroke = stroke_list->data;
+      LigmaStroke *stroke = stroke_list->data;
       guint32     stroke_type;
       guint32     closed;
       guint32     num_axes;
@@ -2811,7 +2811,7 @@ xcf_save_path (XcfInfo      *info,
        * then each control point.
        */
 
-      if (GIMP_IS_BEZIER_STROKE (stroke))
+      if (LIGMA_IS_BEZIER_STROKE (stroke))
         {
           stroke_type = XCF_STROKETYPE_BEZIER_STROKE;
           num_axes = 2;   /* hardcoded, might be increased later */
@@ -2822,7 +2822,7 @@ xcf_save_path (XcfInfo      *info,
           continue;
         }
 
-      control_points = gimp_stroke_control_points_get (stroke,
+      control_points = ligma_stroke_control_points_get (stroke,
                                                        (gint32 *) &closed);
 
       /* Stroke type. */
@@ -2836,9 +2836,9 @@ xcf_save_path (XcfInfo      *info,
 
       for (i = 0; i < control_points->len; i++)
         {
-          GimpAnchor *anchor;
+          LigmaAnchor *anchor;
 
-          anchor = & (g_array_index (control_points, GimpAnchor, i));
+          anchor = & (g_array_index (control_points, LigmaAnchor, i));
 
           type      = anchor->type;
           coords[0] = anchor->position.x;

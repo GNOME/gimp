@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,52 +24,52 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core/core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-tile-compat.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-tile-compat.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdrawable-private.h" /* eek */
-#include "core/gimpgrid.h"
-#include "core/gimpgrouplayer.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimpimage-grid.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-metadata.h"
-#include "core/gimpimage-private.h"
-#include "core/gimpimage-sample-points.h"
-#include "core/gimpimage-symmetry.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpitemlist.h"
-#include "core/gimpitemstack.h"
-#include "core/gimplayer-floating-selection.h"
-#include "core/gimplayer-new.h"
-#include "core/gimplayermask.h"
-#include "core/gimpparasitelist.h"
-#include "core/gimpprogress.h"
-#include "core/gimpselection.h"
-#include "core/gimpsymmetry.h"
-#include "core/gimptemplate.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadrawable-private.h" /* eek */
+#include "core/ligmagrid.h"
+#include "core/ligmagrouplayer.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-colormap.h"
+#include "core/ligmaimage-grid.h"
+#include "core/ligmaimage-guides.h"
+#include "core/ligmaimage-metadata.h"
+#include "core/ligmaimage-private.h"
+#include "core/ligmaimage-sample-points.h"
+#include "core/ligmaimage-symmetry.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaitemlist.h"
+#include "core/ligmaitemstack.h"
+#include "core/ligmalayer-floating-selection.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaparasitelist.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmaselection.h"
+#include "core/ligmasymmetry.h"
+#include "core/ligmatemplate.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "text/gimptextlayer.h"
-#include "text/gimptextlayer-xcf.h"
+#include "text/ligmatextlayer.h"
+#include "text/ligmatextlayer-xcf.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
-#include "vectors/gimpvectors-compat.h"
+#include "vectors/ligmaanchor.h"
+#include "vectors/ligmastroke.h"
+#include "vectors/ligmabezierstroke.h"
+#include "vectors/ligmavectors.h"
+#include "vectors/ligmavectors-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"
@@ -77,21 +77,21 @@
 #include "xcf-seek.h"
 #include "xcf-utils.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 #define MAX_XCF_PARASITE_DATA_LEN (256L * 1024 * 1024)
 
-/* #define GIMP_XCF_PATH_DEBUG */
+/* #define LIGMA_XCF_PATH_DEBUG */
 
 
-static void            xcf_load_add_masks     (GimpImage     *image);
+static void            xcf_load_add_masks     (LigmaImage     *image);
 static gboolean        xcf_load_image_props   (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               LigmaImage     *image);
 static gboolean        xcf_load_layer_props   (XcfInfo       *info,
-                                               GimpImage     *image,
-                                               GimpLayer    **layer,
+                                               LigmaImage     *image,
+                                               LigmaLayer    **layer,
                                                GList        **item_path,
                                                gboolean      *apply_mask,
                                                gboolean      *edit_mask,
@@ -103,23 +103,23 @@ static gboolean        xcf_check_layer_props  (XcfInfo       *info,
                                                gboolean      *is_group_layer,
                                                gboolean      *is_text_layer);
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
-                                               GimpImage     *image,
-                                               GimpChannel  **channel);
+                                               LigmaImage     *image,
+                                               LigmaChannel  **channel);
 static gboolean        xcf_load_vectors_props (XcfInfo       *info,
-                                               GimpImage     *image,
-                                               GimpVectors  **vectors);
+                                               LigmaImage     *image,
+                                               LigmaVectors  **vectors);
 static gboolean        xcf_load_prop          (XcfInfo       *info,
                                                PropType      *prop_type,
                                                guint32       *prop_size);
-static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
-                                               GimpImage     *image,
+static LigmaLayer     * xcf_load_layer         (XcfInfo       *info,
+                                               LigmaImage     *image,
                                                GList        **item_path);
-static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
-                                               GimpImage     *image);
-static GimpVectors   * xcf_load_vectors       (XcfInfo       *info,
-                                               GimpImage     *image);
-static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
-                                               GimpImage     *image);
+static LigmaChannel   * xcf_load_channel       (XcfInfo       *info,
+                                               LigmaImage     *image);
+static LigmaVectors   * xcf_load_vectors       (XcfInfo       *info,
+                                               LigmaImage     *image);
+static LigmaLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
+                                               LigmaImage     *image);
 static gboolean        xcf_load_buffer        (XcfInfo       *info,
                                                GeglBuffer    *buffer);
 static gboolean        xcf_load_level         (XcfInfo       *info,
@@ -138,46 +138,46 @@ static gboolean        xcf_load_tile_zlib     (XcfInfo       *info,
                                                GeglRectangle *tile_rect,
                                                const Babl    *format,
                                                gint           data_length);
-static GimpParasite  * xcf_load_parasite      (XcfInfo       *info);
+static LigmaParasite  * xcf_load_parasite      (XcfInfo       *info);
 static gboolean        xcf_load_old_paths     (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               LigmaImage     *image);
 static gboolean        xcf_load_old_path      (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               LigmaImage     *image);
 static gboolean        xcf_load_old_vectors   (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               LigmaImage     *image);
 static gboolean        xcf_load_old_vector    (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               LigmaImage     *image);
 
 static gboolean        xcf_skip_unknown_prop  (XcfInfo       *info,
                                                gsize          size);
 
 static gboolean        xcf_item_path_is_parent (GList        *path,
                                                 GList        *parent_path);
-static void            xcf_fix_item_path       (GimpLayer    *layer,
+static void            xcf_fix_item_path       (LigmaLayer    *layer,
                                                 GList       **path,
                                                 GList        *broken_paths);
 
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
     if (info->progress)                         \
-      gimp_progress_pulse (info->progress);     \
+      ligma_progress_pulse (info->progress);     \
   } G_STMT_END
 
 
-GimpImage *
-xcf_load_image (Gimp     *gimp,
+LigmaImage *
+xcf_load_image (Ligma     *ligma,
                 XcfInfo  *info,
                 GError  **error)
 {
-  GimpImage          *image = NULL;
-  const GimpParasite *parasite;
+  LigmaImage          *image = NULL;
+  const LigmaParasite *parasite;
   gboolean            has_metadata = FALSE;
   goffset             saved_pos;
   goffset             offset;
   gint                width;
   gint                height;
   gint                image_type;
-  GimpPrecision       precision = GIMP_PRECISION_U8_NON_LINEAR;
+  LigmaPrecision       precision = LIGMA_PRECISION_U8_NON_LINEAR;
   gint                num_successful_elements = 0;
   gint                n_broken_layers         = 0;
   gint                n_broken_channels       = 0;
@@ -191,15 +191,15 @@ xcf_load_image (Gimp     *gimp,
   xcf_read_int32 (info, (guint32 *) &width, 1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
   xcf_read_int32 (info, (guint32 *) &image_type, 1);
-  if (image_type < GIMP_RGB || image_type > GIMP_INDEXED)
+  if (image_type < LIGMA_RGB || image_type > LIGMA_INDEXED)
     goto hard_error;
 
   /* Be lenient with corrupt image dimensions.
    * Hopefully layer dimensions will be valid. */
   if (width <= 0 || height <= 0 ||
-      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+      width > LIGMA_MAX_IMAGE_SIZE || height > LIGMA_MAX_IMAGE_SIZE)
     {
-      GIMP_LOG (XCF, "Invalid image size %d x %d, setting to 1x1.", width, height);
+      LIGMA_LOG (XCF, "Invalid image size %d x %d, setting to 1x1.", width, height);
       width  = 1;
       height = 1;
     }
@@ -214,11 +214,11 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 0: precision = GIMP_PRECISION_U8_NON_LINEAR;  break;
-            case 1: precision = GIMP_PRECISION_U16_NON_LINEAR; break;
-            case 2: precision = GIMP_PRECISION_U32_LINEAR;     break;
-            case 3: precision = GIMP_PRECISION_HALF_LINEAR;    break;
-            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR;   break;
+            case 0: precision = LIGMA_PRECISION_U8_NON_LINEAR;  break;
+            case 1: precision = LIGMA_PRECISION_U16_NON_LINEAR; break;
+            case 2: precision = LIGMA_PRECISION_U32_LINEAR;     break;
+            case 3: precision = LIGMA_PRECISION_HALF_LINEAR;    break;
+            case 4: precision = LIGMA_PRECISION_FLOAT_LINEAR;   break;
             default:
               goto hard_error;
             }
@@ -228,16 +228,16 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 100: precision = GIMP_PRECISION_U8_LINEAR;        break;
-            case 150: precision = GIMP_PRECISION_U8_NON_LINEAR;    break;
-            case 200: precision = GIMP_PRECISION_U16_LINEAR;       break;
-            case 250: precision = GIMP_PRECISION_U16_NON_LINEAR;   break;
-            case 300: precision = GIMP_PRECISION_U32_LINEAR;       break;
-            case 350: precision = GIMP_PRECISION_U32_NON_LINEAR;   break;
-            case 400: precision = GIMP_PRECISION_HALF_LINEAR;      break;
-            case 450: precision = GIMP_PRECISION_HALF_NON_LINEAR;  break;
-            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR;     break;
-            case 550: precision = GIMP_PRECISION_FLOAT_NON_LINEAR; break;
+            case 100: precision = LIGMA_PRECISION_U8_LINEAR;        break;
+            case 150: precision = LIGMA_PRECISION_U8_NON_LINEAR;    break;
+            case 200: precision = LIGMA_PRECISION_U16_LINEAR;       break;
+            case 250: precision = LIGMA_PRECISION_U16_NON_LINEAR;   break;
+            case 300: precision = LIGMA_PRECISION_U32_LINEAR;       break;
+            case 350: precision = LIGMA_PRECISION_U32_NON_LINEAR;   break;
+            case 400: precision = LIGMA_PRECISION_HALF_LINEAR;      break;
+            case 450: precision = LIGMA_PRECISION_HALF_NON_LINEAR;  break;
+            case 500: precision = LIGMA_PRECISION_FLOAT_LINEAR;     break;
+            case 550: precision = LIGMA_PRECISION_FLOAT_NON_LINEAR; break;
             default:
               goto hard_error;
             }
@@ -248,21 +248,21 @@ xcf_load_image (Gimp     *gimp,
         }
     }
 
-  GIMP_LOG (XCF, "version=%d, width=%d, height=%d, image_type=%d, precision=%d",
+  LIGMA_LOG (XCF, "version=%d, width=%d, height=%d, image_type=%d, precision=%d",
             info->file_version, width, height, image_type, precision);
 
-  if (! gimp_babl_is_valid (image_type, precision))
+  if (! ligma_babl_is_valid (image_type, precision))
     {
-      gimp_message_literal (gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_ERROR,
+      ligma_message_literal (ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_ERROR,
                             _("Invalid image mode and precision combination."));
       goto hard_error;
     }
 
-  image = gimp_create_image (gimp, width, height, image_type, precision,
+  image = ligma_create_image (ligma, width, height, image_type, precision,
                              FALSE);
 
-  gimp_image_undo_disable (image);
+  ligma_image_undo_disable (image);
 
   xcf_progress_update (info);
 
@@ -270,117 +270,117 @@ xcf_load_image (Gimp     *gimp,
   if (! xcf_load_image_props (info, image))
     goto hard_error;
 
-  GIMP_LOG (XCF, "image props loaded");
+  LIGMA_LOG (XCF, "image props loaded");
 
   /* Order matters for item sets. */
   info->layer_sets = g_list_reverse (info->layer_sets);
   info->channel_sets = g_list_reverse (info->channel_sets);
 
   /* check for simulation intent parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
                                        "image-simulation-intent");
   if (parasite)
     {
       guint32           parasite_size;
       const guint8     *intent;
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-      intent = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
+      intent = (const guint8 *) ligma_parasite_get_data (parasite, &parasite_size);
 
       if (parasite_size == 1)
         {
-          if (*intent != GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL            &&
-              *intent != GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC &&
-              *intent != GIMP_COLOR_RENDERING_INTENT_SATURATION            &&
-              *intent != GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC)
+          if (*intent != LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL            &&
+              *intent != LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC &&
+              *intent != LIGMA_COLOR_RENDERING_INTENT_SATURATION            &&
+              *intent != LIGMA_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC)
             {
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_ERROR,
+              ligma_message (info->ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_ERROR,
                             "Unknown simulation rendering intent: %d",
                             *intent);
             }
           else
             {
-              gimp_image_set_simulation_intent (image,
-                                                (GimpColorRenderingIntent) *intent);
+              ligma_image_set_simulation_intent (image,
+                                                (LigmaColorRenderingIntent) *intent);
             }
         }
       else
         {
-          gimp_message (info->gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (info->ligma, G_OBJECT (info->progress),
+                        LIGMA_MESSAGE_ERROR,
                         "Invalid simulation intent data");
         }
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
 
 /* check for simulation bpc parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
                                        "image-simulation-bpc");
   if (parasite)
     {
       guint32           parasite_size;
       const guint8     *bpc;
       gboolean          status  = FALSE;
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-      bpc = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
+      bpc = (const guint8 *) ligma_parasite_get_data (parasite, &parasite_size);
 
       if (parasite_size == 1)
         {
           if (*bpc)
             status = TRUE;
 
-          gimp_image_set_simulation_bpc (image, status);
+          ligma_image_set_simulation_bpc (image, status);
         }
       else
         {
-          gimp_message (info->gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (info->ligma, G_OBJECT (info->progress),
+                        LIGMA_MESSAGE_ERROR,
                         "Invalid simulation bpc data");
         }
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
-  /* check for a GimpGrid parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       gimp_grid_parasite_name ());
+  /* check for a LigmaGrid parasite */
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
+                                       ligma_grid_parasite_name ());
   if (parasite)
     {
-      GimpGrid *grid = gimp_grid_from_parasite (parasite);
+      LigmaGrid *grid = ligma_grid_from_parasite (parasite);
 
       if (grid)
         {
-          GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+          LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-          gimp_parasite_list_remove (private->parasites,
-                                     gimp_parasite_get_name (parasite));
+          ligma_parasite_list_remove (private->parasites,
+                                     ligma_parasite_get_name (parasite));
 
-          gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
+          ligma_image_set_grid (LIGMA_IMAGE (image), grid, FALSE);
           g_object_unref (grid);
         }
     }
 
   /* check for a metadata parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       "gimp-image-metadata");
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
+                                       "ligma-image-metadata");
   if (parasite)
     {
-      GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
-      GimpMetadata     *metadata = NULL;
+      LigmaImagePrivate *private  = LIGMA_IMAGE_GET_PRIVATE (image);
+      LigmaMetadata     *metadata = NULL;
       gchar            *meta_string;
       guint32           parasite_data_size;
 
-      meta_string = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+      meta_string = (gchar *) ligma_parasite_get_data (parasite, &parasite_data_size);
       if (meta_string)
         {
           meta_string = g_strndup (meta_string, parasite_data_size);
-          metadata = gimp_metadata_deserialize (meta_string);
+          metadata = ligma_metadata_deserialize (meta_string);
           g_free (meta_string);
         }
 
@@ -388,80 +388,80 @@ xcf_load_image (Gimp     *gimp,
         {
           has_metadata = TRUE;
 
-          gimp_image_set_metadata (image, metadata, FALSE);
+          ligma_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
   /* check for symmetry parasites */
-  syms = gimp_image_symmetry_list ();
+  syms = ligma_image_symmetry_list ();
   for (iter = syms; iter; iter = g_list_next (iter))
     {
       GType  type = (GType) iter->data;
-      gchar *parasite_name = gimp_symmetry_parasite_name (type);
+      gchar *parasite_name = ligma_symmetry_parasite_name (type);
 
-      parasite = gimp_image_parasite_find (image,
+      parasite = ligma_image_parasite_find (image,
                                            parasite_name);
       g_free (parasite_name);
       if (parasite)
         {
-          GimpSymmetry *sym = gimp_symmetry_from_parasite (parasite,
+          LigmaSymmetry *sym = ligma_symmetry_from_parasite (parasite,
                                                            image,
                                                            type);
 
           if (sym)
             {
-              GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+              LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
-              gimp_parasite_list_remove (private->parasites,
-                                         gimp_parasite_get_name (parasite));
+              ligma_parasite_list_remove (private->parasites,
+                                         ligma_parasite_get_name (parasite));
 
-              gimp_image_symmetry_add (image, sym);
+              ligma_image_symmetry_add (image, sym);
 
               g_signal_emit_by_name (sym, "active-changed", NULL);
               if (sym->active)
-                gimp_image_set_active_symmetry (image, type);
+                ligma_image_set_active_symmetry (image, type);
             }
         }
     }
   g_list_free (syms);
 
   /* migrate the old "exif-data" parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
                                        "exif-data");
   if (parasite)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
       if (has_metadata)
         {
           g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
-                      "has both 'gimp-image-metadata' and 'exif-data' "
+                      "has both 'ligma-image-metadata' and 'exif-data' "
                       "parasites, dropping old 'exif-data'\n");
         }
       else
         {
-          GimpMetadata *metadata = gimp_image_get_metadata (image);
+          LigmaMetadata *metadata = ligma_image_get_metadata (image);
           GError       *my_error = NULL;
           const guchar *parasite_data;
           guint32       parasite_data_size;
 
-          parasite_data = (const guchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+          parasite_data = (const guchar *) ligma_parasite_get_data (parasite, &parasite_data_size);
 
           if (metadata)
             g_object_ref (metadata);
           else
-            metadata = gimp_metadata_new ();
+            metadata = ligma_metadata_new ();
 
-          if (! gimp_metadata_set_from_exif (metadata,
+          if (! ligma_metadata_set_from_exif (metadata,
                                              parasite_data, parasite_data_size,
                                              &my_error))
             {
-              gimp_message (gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
+              ligma_message (ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_WARNING,
                             _("Corrupt 'exif-data' parasite discovered.\n"
                               "Exif data could not be migrated: %s"),
                             my_error->message);
@@ -469,52 +469,52 @@ xcf_load_image (Gimp     *gimp,
             }
           else
             {
-              gimp_image_set_metadata (image, metadata, FALSE);
+              ligma_image_set_metadata (image, metadata, FALSE);
             }
 
           g_object_unref (metadata);
         }
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
-  /* migrate the old "gimp-metadata" parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       "gimp-metadata");
+  /* migrate the old "ligma-metadata" parasite */
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
+                                       "ligma-metadata");
   if (parasite)
     {
-      GimpImagePrivate *private    = GIMP_IMAGE_GET_PRIVATE (image);
+      LigmaImagePrivate *private    = LIGMA_IMAGE_GET_PRIVATE (image);
       const gchar      *xmp_data;
       guint32           xmp_length;
 
-      xmp_data = (gchar *) gimp_parasite_get_data (parasite, &xmp_length);
+      xmp_data = (gchar *) ligma_parasite_get_data (parasite, &xmp_length);
 
       if (has_metadata)
         {
           g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
-                      "has both 'gimp-image-metadata' and 'gimp-metadata' "
-                      "parasites, dropping old 'gimp-metadata'\n");
+                      "has both 'ligma-image-metadata' and 'ligma-metadata' "
+                      "parasites, dropping old 'ligma-metadata'\n");
         }
       else if (xmp_length < 14 ||
-               strncmp (xmp_data, "GIMP_XMP_1", 10) != 0)
+               strncmp (xmp_data, "LIGMA_XMP_1", 10) != 0)
         {
-          gimp_message (gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_WARNING,
-                        _("Corrupt 'gimp-metadata' parasite discovered.\n"
+          ligma_message (ligma, G_OBJECT (info->progress),
+                        LIGMA_MESSAGE_WARNING,
+                        _("Corrupt 'ligma-metadata' parasite discovered.\n"
                           "XMP data could not be migrated."));
         }
       else
         {
-          GimpMetadata *metadata = gimp_image_get_metadata (image);
+          LigmaMetadata *metadata = ligma_image_get_metadata (image);
           GError       *my_error = NULL;
 
           if (metadata)
             g_object_ref (metadata);
           else
-            metadata = gimp_metadata_new ();
+            metadata = ligma_metadata_new ();
 
-          if (! gimp_metadata_set_from_xmp (metadata,
+          if (! ligma_metadata_set_from_xmp (metadata,
                                             (const guint8 *) xmp_data + 10,
                                             xmp_length - 10,
                                             &my_error))
@@ -523,10 +523,10 @@ xcf_load_image (Gimp     *gimp,
                * Let's make the message more user friendly so they will
                * understand that we can't do anything about it.
                * See issue #987. */
-              gimp_message (gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
+              ligma_message (ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_WARNING,
                             _("Corrupt XMP metadata saved by an older version of "
-                              "GIMP could not be converted and will be ignored.\n"
+                              "LIGMA could not be converted and will be ignored.\n"
                               "If you don't know what XMP is, you most likely don't "
                               "need it. Reported error: %s."),
                             my_error->message);
@@ -534,33 +534,33 @@ xcf_load_image (Gimp     *gimp,
             }
           else
             {
-              gimp_image_set_metadata (image, metadata, FALSE);
+              ligma_image_set_metadata (image, metadata, FALSE);
             }
 
           g_object_unref (metadata);
         }
 
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
-  /* check for a gimp-xcf-compatibility-mode parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       "gimp-xcf-compatibility-mode");
+  /* check for a ligma-xcf-compatibility-mode parasite */
+  parasite = ligma_image_parasite_find (LIGMA_IMAGE (image),
+                                       "ligma-xcf-compatibility-mode");
   if (parasite)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
 
       /* just ditch it, it's unused but shouldn't be re-saved */
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
+      ligma_parasite_list_remove (private->parasites,
+                                 ligma_parasite_get_name (parasite));
     }
 
   xcf_progress_update (info);
 
   while (TRUE)
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
       GList     *item_path = NULL;
 
       /* read in the offset of the next layer */
@@ -579,7 +579,7 @@ xcf_load_image (Gimp     *gimp,
 
       if (offset < saved_pos)
         {
-          GIMP_LOG (XCF, "Invalid layer offset: %" G_GOFFSET_FORMAT
+          LIGMA_LOG (XCF, "Invalid layer offset: %" G_GOFFSET_FORMAT
                     " at offset: %" G_GOFFSET_FORMAT, offset, saved_pos);
           goto error;
         }
@@ -607,10 +607,10 @@ xcf_load_image (Gimp     *gimp,
            */
           if (! item_path)
             {
-              GimpContainer *layers = gimp_image_get_layers (image);
+              LigmaContainer *layers = ligma_image_get_layers (image);
 
               item_path = g_list_prepend (NULL,
-                                          GUINT_TO_POINTER (gimp_container_get_n_children (layers)));
+                                          GUINT_TO_POINTER (ligma_container_get_n_children (layers)));
 
               broken_paths = g_list_prepend (broken_paths, item_path);
             }
@@ -629,21 +629,21 @@ xcf_load_image (Gimp     *gimp,
       xcf_progress_update (info);
 
       /* suspend layer-group size updates */
-      if (GIMP_IS_GROUP_LAYER (layer))
+      if (LIGMA_IS_GROUP_LAYER (layer))
         {
-          GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+          LigmaGroupLayer *group = LIGMA_GROUP_LAYER (layer);
 
           group_layers = g_list_prepend (group_layers, group);
 
-          gimp_group_layer_suspend_resize (group, FALSE);
+          ligma_group_layer_suspend_resize (group, FALSE);
         }
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
         {
-          GimpContainer *layers = gimp_image_get_layers (image);
-          GimpContainer *container;
-          GimpLayer     *parent;
+          LigmaContainer *layers = ligma_image_get_layers (image);
+          LigmaContainer *container;
+          LigmaLayer     *parent;
 
           if (item_path)
             {
@@ -663,12 +663,12 @@ xcf_load_image (Gimp     *gimp,
                   item_path->data = GUINT_TO_POINTER (toplevel_index);
                 }
 
-              parent = GIMP_LAYER
-                (gimp_item_stack_get_parent_by_path (GIMP_ITEM_STACK (layers),
+              parent = LIGMA_LAYER
+                (ligma_item_stack_get_parent_by_path (LIGMA_ITEM_STACK (layers),
                                                      item_path,
                                                      NULL));
 
-              container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+              container = ligma_viewable_get_children (LIGMA_VIEWABLE (parent));
 
               g_list_free (item_path);
             }
@@ -678,9 +678,9 @@ xcf_load_image (Gimp     *gimp,
               container = layers;
             }
 
-          gimp_image_add_layer (image, layer,
+          ligma_image_add_layer (image, layer,
                                 parent,
-                                gimp_container_get_n_children (container),
+                                ligma_container_get_n_children (container),
                                 FALSE);
         }
 
@@ -694,9 +694,9 @@ xcf_load_image (Gimp     *gimp,
   /* resume layer-group size updates, in reverse order */
   for (iter = group_layers; iter; iter = g_list_next (iter))
     {
-      GimpGroupLayer *group = iter->data;
+      LigmaGroupLayer *group = iter->data;
 
-      gimp_group_layer_resume_resize (group, FALSE);
+      ligma_group_layer_resume_resize (group, FALSE);
     }
   g_clear_pointer (&group_layers, g_list_free);
 
@@ -708,7 +708,7 @@ xcf_load_image (Gimp     *gimp,
 
   while (TRUE)
     {
-      GimpChannel *channel;
+      LigmaChannel *channel;
 
       /* read in the offset of the next channel */
       xcf_read_offset (info, &offset, 1);
@@ -726,7 +726,7 @@ xcf_load_image (Gimp     *gimp,
 
       if (offset < saved_pos)
         {
-          GIMP_LOG (XCF, "Invalid channel offset: %" G_GOFFSET_FORMAT
+          LIGMA_LOG (XCF, "Invalid channel offset: %" G_GOFFSET_FORMAT
                     " at offset: % "G_GOFFSET_FORMAT, offset, saved_pos);
           goto error;
         }
@@ -740,7 +740,7 @@ xcf_load_image (Gimp     *gimp,
       if (!channel)
         {
           n_broken_channels++;
-          GIMP_LOG (XCF, "Failed to load channel.");
+          LIGMA_LOG (XCF, "Failed to load channel.");
 
           if (! xcf_seek_pos (info, saved_pos, NULL))
             goto error;
@@ -753,10 +753,10 @@ xcf_load_image (Gimp     *gimp,
       xcf_progress_update (info);
 
       /* add the channel to the image if its not the selection */
-      if (channel != gimp_image_get_mask (image))
-        gimp_image_add_channel (image, channel,
+      if (channel != ligma_image_get_mask (image))
+        ligma_image_add_channel (image, channel,
                                 NULL, /* FIXME tree */
-                                gimp_container_get_n_children (gimp_image_get_channels (image)),
+                                ligma_container_get_n_children (ligma_image_get_channels (image)),
                                 FALSE);
 
       /* restore the saved position so we'll be ready to
@@ -774,9 +774,9 @@ xcf_load_image (Gimp     *gimp,
       /* we didn't fix the loaded floating selection's format before
        * because we didn't know if it needed the layer space
        */
-      if (GIMP_IS_LAYER (info->floating_sel_drawable) &&
-          gimp_drawable_is_gray (GIMP_DRAWABLE (info->floating_sel)))
-        gimp_layer_fix_format_space (info->floating_sel, TRUE, FALSE);
+      if (LIGMA_IS_LAYER (info->floating_sel_drawable) &&
+          ligma_drawable_is_gray (LIGMA_DRAWABLE (info->floating_sel)))
+        ligma_layer_fix_format_space (info->floating_sel, TRUE, FALSE);
 
       floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
     }
@@ -785,7 +785,7 @@ xcf_load_image (Gimp     *gimp,
     {
       while (TRUE)
         {
-          GimpVectors *vectors;
+          LigmaVectors *vectors;
 
           /* read in the offset of the next path */
           xcf_read_offset (info, &offset, 1);
@@ -803,7 +803,7 @@ xcf_load_image (Gimp     *gimp,
 
           if (offset < saved_pos)
             {
-              GIMP_LOG (XCF, "Invalid path offset: %" G_GOFFSET_FORMAT
+              LIGMA_LOG (XCF, "Invalid path offset: %" G_GOFFSET_FORMAT
                         " at offset: % "G_GOFFSET_FORMAT, offset, saved_pos);
               goto error;
             }
@@ -817,7 +817,7 @@ xcf_load_image (Gimp     *gimp,
           if (! vectors)
             {
               n_broken_vectors++;
-              GIMP_LOG (XCF, "Failed to load path.");
+              LIGMA_LOG (XCF, "Failed to load path.");
 
               if (! xcf_seek_pos (info, saved_pos, NULL))
                 goto error;
@@ -829,9 +829,9 @@ xcf_load_image (Gimp     *gimp,
 
           xcf_progress_update (info);
 
-          gimp_image_add_vectors (image, vectors,
+          ligma_image_add_vectors (image, vectors,
                                   NULL, /* can't be a tree */
-                                  gimp_container_get_n_children (gimp_image_get_vectors (image)),
+                                  ligma_container_get_n_children (ligma_image_get_vectors (image)),
                                   FALSE);
 
           /* restore the saved position so we'll be ready to
@@ -844,37 +844,37 @@ xcf_load_image (Gimp     *gimp,
 
   if (info->selected_layers)
     {
-      gimp_image_set_selected_layers (image, info->selected_layers);
+      ligma_image_set_selected_layers (image, info->selected_layers);
       g_clear_pointer (&info->selected_layers, g_list_free);
     }
 
   if (info->selected_channels)
-    gimp_image_set_selected_channels (image, info->selected_channels);
+    ligma_image_set_selected_channels (image, info->selected_channels);
 
   if (info->selected_vectors)
-    gimp_image_set_selected_vectors (image, info->selected_vectors);
+    ligma_image_set_selected_vectors (image, info->selected_vectors);
 
   /* We don't have linked items concept anymore. We transform formerly
    * linked items into stored sets of named items instead.
    */
   if (info->linked_layers)
     {
-      GimpItemList *set;
+      LigmaItemList *set;
 
-      set = gimp_item_list_named_new (image, GIMP_TYPE_LAYER,
+      set = ligma_item_list_named_new (image, LIGMA_TYPE_LAYER,
                                       _("Linked Layers"),
                                       info->linked_layers);
-      gimp_image_store_item_set (image, set);
+      ligma_image_store_item_set (image, set);
       g_clear_pointer (&info->linked_layers, g_list_free);
     }
   if (info->linked_channels)
     {
-      GimpItemList *set;
+      LigmaItemList *set;
 
-      set = gimp_item_list_named_new (image, GIMP_TYPE_CHANNEL,
+      set = ligma_item_list_named_new (image, LIGMA_TYPE_CHANNEL,
                                       _("Linked Channels"),
                                       info->linked_channels);
-      gimp_image_store_item_set (image, set);
+      ligma_image_store_item_set (image, set);
       g_clear_pointer (&info->linked_channels, g_list_free);
     }
   if (info->linked_paths)
@@ -891,15 +891,15 @@ xcf_load_image (Gimp     *gimp,
        */
       if (g_list_length (info->linked_paths) > 1)
         g_printerr ("xcf: some paths were linked. "
-                    "GIMP does not support linked paths since version 3.0.\n");
+                    "LIGMA does not support linked paths since version 3.0.\n");
 
 #if 0
-      GimpItemList *set;
+      LigmaItemList *set;
 
-      set = gimp_item_list_named_new (image, GIMP_TYPE_VECTORS,
+      set = ligma_item_list_named_new (image, LIGMA_TYPE_VECTORS,
                                       _("Linked Paths"),
                                       info->linked_paths);
-      gimp_image_store_item_set (image, set);
+      ligma_image_store_item_set (image, set);
 #endif
       g_clear_pointer (&info->linked_paths, g_list_free);
     }
@@ -907,27 +907,27 @@ xcf_load_image (Gimp     *gimp,
   for (iter = g_list_last (info->layer_sets); iter; iter = iter->prev)
     {
       if (iter->data)
-        gimp_image_store_item_set (image, iter->data);
+        ligma_image_store_item_set (image, iter->data);
     }
   g_list_free (info->layer_sets);
 
   for (iter = g_list_last (info->channel_sets); iter; iter = iter->prev)
     {
       if (iter->data)
-        gimp_image_store_item_set (image, iter->data);
+        ligma_image_store_item_set (image, iter->data);
     }
   g_list_free (info->channel_sets);
 
   if (info->file)
-    gimp_image_set_file (image, info->file);
+    ligma_image_set_file (image, info->file);
 
   if (info->tattoo_state > 0)
-    gimp_image_set_tattoo_state (image, info->tattoo_state);
+    ligma_image_set_tattoo_state (image, info->tattoo_state);
 
   if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_vectors > 0)
     goto error;
 
-  gimp_image_undo_enable (image);
+  ligma_image_undo_enable (image);
 
   return image;
 
@@ -943,13 +943,13 @@ xcf_load_image (Gimp     *gimp,
       broken_paths = NULL;
     }
 
-  gimp_message_literal (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
+  ligma_message_literal (ligma, G_OBJECT (info->progress), LIGMA_MESSAGE_WARNING,
                         _("This XCF file is corrupt!  I have loaded as much "
                           "of it as I can, but it is incomplete."));
 
   xcf_load_add_masks (image);
 
-  gimp_image_undo_enable (image);
+  ligma_image_undo_enable (image);
 
   return image;
 
@@ -972,19 +972,19 @@ xcf_load_image (Gimp     *gimp,
 }
 
 static void
-xcf_load_add_masks (GimpImage *image)
+xcf_load_add_masks (LigmaImage *image)
 {
   GList *layers;
   GList *list;
 
-  layers = gimp_image_get_layer_list (image);
+  layers = ligma_image_get_layer_list (image);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpLayer     *layer = list->data;
-      GimpLayerMask *mask;
+      LigmaLayer     *layer = list->data;
+      LigmaLayerMask *mask;
 
-      mask = g_object_get_data (G_OBJECT (layer), "gimp-layer-mask");
+      mask = g_object_get_data (G_OBJECT (layer), "ligma-layer-mask");
 
       if (mask)
         {
@@ -993,22 +993,22 @@ xcf_load_add_masks (GimpImage *image)
           gboolean show_mask;
 
           apply_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
-                                                           "gimp-layer-mask-apply"));
+                                                           "ligma-layer-mask-apply"));
           edit_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
-                                                          "gimp-layer-mask-edit"));
+                                                          "ligma-layer-mask-edit"));
           show_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
-                                                          "gimp-layer-mask-show"));
+                                                          "ligma-layer-mask-show"));
 
-          gimp_layer_add_mask (layer, mask, FALSE, NULL);
+          ligma_layer_add_mask (layer, mask, FALSE, NULL);
 
-          gimp_layer_set_apply_mask (layer, apply_mask, FALSE);
-          gimp_layer_set_edit_mask  (layer, edit_mask);
-          gimp_layer_set_show_mask  (layer, show_mask, FALSE);
+          ligma_layer_set_apply_mask (layer, apply_mask, FALSE);
+          ligma_layer_set_edit_mask  (layer, edit_mask);
+          ligma_layer_set_show_mask  (layer, show_mask, FALSE);
 
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask",       NULL);
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-apply", NULL);
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-edit",  NULL);
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",  NULL);
+          g_object_set_data (G_OBJECT (layer), "ligma-layer-mask",       NULL);
+          g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-apply", NULL);
+          g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-edit",  NULL);
+          g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-show",  NULL);
         }
     }
 
@@ -1017,7 +1017,7 @@ xcf_load_add_masks (GimpImage *image)
 
 static gboolean
 xcf_load_image_props (XcfInfo   *info,
-                      GimpImage *image)
+                      LigmaImage *image)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -1035,16 +1035,16 @@ xcf_load_image_props (XcfInfo   *info,
         case PROP_COLORMAP:
           {
             guint32 n_colors;
-            guchar  cmap[GIMP_IMAGE_COLORMAP_SIZE];
+            guchar  cmap[LIGMA_IMAGE_COLORMAP_SIZE];
 
             xcf_read_int32 (info, &n_colors, 1);
 
-            if (n_colors > (GIMP_IMAGE_COLORMAP_SIZE / 3))
+            if (n_colors > (LIGMA_IMAGE_COLORMAP_SIZE / 3))
               {
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_ERROR,
+                ligma_message (info->ligma, G_OBJECT (info->progress),
+                              LIGMA_MESSAGE_ERROR,
                               "Maximum colormap size (%d) exceeded",
-                              GIMP_IMAGE_COLORMAP_SIZE);
+                              LIGMA_IMAGE_COLORMAP_SIZE);
                 return FALSE;
               }
 
@@ -1052,8 +1052,8 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 gint i;
 
-                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                      GIMP_MESSAGE_WARNING,
+                ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                      LIGMA_MESSAGE_WARNING,
                                       _("XCF warning: version 0 of XCF file format\n"
                                         "did not save indexed colormaps correctly.\n"
                                         "Substituting grayscale map."));
@@ -1074,13 +1074,13 @@ xcf_load_image_props (XcfInfo   *info,
               }
 
             /* only set color map if image is indexed, this is just
-             * sanity checking to make sure gimp doesn't end up with
+             * sanity checking to make sure ligma doesn't end up with
              * an image state that is impossible.
              */
-            if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-              gimp_image_set_colormap (image, cmap, n_colors, FALSE);
+            if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
+              ligma_image_set_colormap (image, cmap, n_colors, FALSE);
 
-            GIMP_LOG (XCF, "prop colormap n_colors=%d", n_colors);
+            LIGMA_LOG (XCF, "prop colormap n_colors=%d", n_colors);
           }
           break;
 
@@ -1095,8 +1095,8 @@ xcf_load_image_props (XcfInfo   *info,
                 (compression != COMPRESS_ZLIB) &&
                 (compression != COMPRESS_FRACTAL))
               {
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_ERROR,
+                ligma_message (info->ligma, G_OBJECT (info->progress),
+                              LIGMA_MESSAGE_ERROR,
                               "Unknown compression type: %d",
                               (gint) compression);
                 return FALSE;
@@ -1104,16 +1104,16 @@ xcf_load_image_props (XcfInfo   *info,
 
             info->compression = compression;
 
-            gimp_image_set_xcf_compression (image,
+            ligma_image_set_xcf_compression (image,
                                             compression >= COMPRESS_ZLIB);
 
-            GIMP_LOG (XCF, "prop compression=%d", compression);
+            LIGMA_LOG (XCF, "prop compression=%d", compression);
           }
           break;
 
         case PROP_GUIDES:
           {
-            GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+            LigmaImagePrivate *private = LIGMA_IMAGE_GET_PRIVATE (image);
             gint32            position;
             gint8             orientation;
             gint              i, nguides;
@@ -1128,40 +1128,40 @@ xcf_load_image_props (XcfInfo   *info,
                  * skipped since 2003 (commit 909a28ced2).
                  * Then XCF up to version 14 only had positive guide
                  * positions.
-                 * Since XCF 15 (GIMP 3.0), off-canvas guides became a
+                 * Since XCF 15 (LIGMA 3.0), off-canvas guides became a
                  * thing.
                  */
                 if (info->file_version < 15 && position < 0)
                   continue;
 
-                GIMP_LOG (XCF, "prop guide orientation=%d position=%d",
+                LIGMA_LOG (XCF, "prop guide orientation=%d position=%d",
                           orientation, position);
 
                 switch (orientation)
                   {
                   case XCF_ORIENTATION_HORIZONTAL:
-                    if (info->file_version < 15 && position > gimp_image_get_height (image))
-                      gimp_message (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+                    if (info->file_version < 15 && position > ligma_image_get_height (image))
+                      ligma_message (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Ignoring off-canvas horizontal guide (position %d) in XCF %d file",
                                     position, info->file_version);
                     else
-                      gimp_image_add_hguide (image, position, FALSE);
+                      ligma_image_add_hguide (image, position, FALSE);
                     break;
 
                   case XCF_ORIENTATION_VERTICAL:
-                    if (info->file_version < 15 && position > gimp_image_get_width (image))
-                      gimp_message (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+                    if (info->file_version < 15 && position > ligma_image_get_width (image))
+                      ligma_message (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Ignoring off-canvas vertical guide (position %d) in XCF %d file",
                                     position, info->file_version);
                     else
-                      gimp_image_add_vguide (image, position, FALSE);
+                      ligma_image_add_vguide (image, position, FALSE);
                     break;
 
                   default:
-                    gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                          GIMP_MESSAGE_WARNING,
+                    ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                          LIGMA_MESSAGE_WARNING,
                                           "Guide orientation out of range in XCF file");
                     continue;
                   }
@@ -1182,9 +1182,9 @@ xcf_load_image_props (XcfInfo   *info,
             n_sample_points = prop_size / (5 * 4);
             for (i = 0; i < n_sample_points; i++)
               {
-                GimpSamplePoint   *sample_point;
+                LigmaSamplePoint   *sample_point;
                 gint32             x, y;
-                GimpColorPickMode  pick_mode;
+                LigmaColorPickMode  pick_mode;
                 guint32            padding[2] = { 0, };
 
                 xcf_read_int32 (info, (guint32 *) &x,         1);
@@ -1192,15 +1192,15 @@ xcf_load_image_props (XcfInfo   *info,
                 xcf_read_int32 (info, (guint32 *) &pick_mode, 1);
                 xcf_read_int32 (info, (guint32 *) padding,    2);
 
-                GIMP_LOG (XCF, "prop sample point x=%d y=%d mode=%d",
+                LIGMA_LOG (XCF, "prop sample point x=%d y=%d mode=%d",
                           x, y, pick_mode);
 
-                if (pick_mode > GIMP_COLOR_PICK_MODE_LAST)
-                  pick_mode = GIMP_COLOR_PICK_MODE_PIXEL;
+                if (pick_mode > LIGMA_COLOR_PICK_MODE_LAST)
+                  pick_mode = LIGMA_COLOR_PICK_MODE_PIXEL;
 
-                sample_point = gimp_image_add_sample_point_at_pos (image,
+                sample_point = ligma_image_add_sample_point_at_pos (image,
                                                                    x, y, FALSE);
-                gimp_image_set_sample_point_pick_mode (image, sample_point,
+                ligma_image_set_sample_point_pick_mode (image, sample_point,
                                                        pick_mode, FALSE);
               }
           }
@@ -1214,7 +1214,7 @@ xcf_load_image_props (XcfInfo   *info,
             /* if there are already sample points, we loaded the new
              * prop before
              */
-            if (gimp_image_get_sample_points (image))
+            if (ligma_image_get_sample_points (image))
               {
                 if (! xcf_skip_unknown_prop (info, prop_size))
                   return FALSE;
@@ -1228,9 +1228,9 @@ xcf_load_image_props (XcfInfo   *info,
                 xcf_read_int32 (info, (guint32 *) &x, 1);
                 xcf_read_int32 (info, (guint32 *) &y, 1);
 
-                GIMP_LOG (XCF, "prop old sample point x=%d y=%d", x, y);
+                LIGMA_LOG (XCF, "prop old sample point x=%d y=%d", x, y);
 
-                gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
+                ligma_image_add_sample_point_at_pos (image, x, y, FALSE);
               }
           }
           break;
@@ -1242,21 +1242,21 @@ xcf_load_image_props (XcfInfo   *info,
             xcf_read_float (info, &xres, 1);
             xcf_read_float (info, &yres, 1);
 
-            GIMP_LOG (XCF, "prop resolution x=%f y=%f", xres, yres);
+            LIGMA_LOG (XCF, "prop resolution x=%f y=%f", xres, yres);
 
-            if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
-                yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+            if (xres < LIGMA_MIN_RESOLUTION || xres > LIGMA_MAX_RESOLUTION ||
+                yres < LIGMA_MIN_RESOLUTION || yres > LIGMA_MAX_RESOLUTION)
               {
-                GimpTemplate *template = image->gimp->config->default_image;
+                LigmaTemplate *template = image->ligma->config->default_image;
 
-                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                      GIMP_MESSAGE_WARNING,
+                ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                      LIGMA_MESSAGE_WARNING,
                                       "Warning, resolution out of range in XCF file");
-                xres = gimp_template_get_resolution_x (template);
-                yres = gimp_template_get_resolution_y (template);
+                xres = ligma_template_get_resolution_x (template);
+                yres = ligma_template_get_resolution_y (template);
               }
 
-            gimp_image_set_resolution (image, xres, yres);
+            ligma_image_set_resolution (image, xres, yres);
           }
           break;
 
@@ -1264,7 +1264,7 @@ xcf_load_image_props (XcfInfo   *info,
           {
             xcf_read_int32 (info, &info->tattoo_state, 1);
 
-            GIMP_LOG (XCF, "prop tattoo state=%d", info->tattoo_state);
+            LIGMA_LOG (XCF, "prop tattoo state=%d", info->tattoo_state);
           }
           break;
 
@@ -1274,13 +1274,13 @@ xcf_load_image_props (XcfInfo   *info,
 
             while (info->cp - base < prop_size)
               {
-                GimpParasite *p     = xcf_load_parasite (info);
+                LigmaParasite *p     = xcf_load_parasite (info);
                 GError       *error = NULL;
 
                 if (! p)
                   {
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
+                    ligma_message (info->ligma, G_OBJECT (info->progress),
+                                  LIGMA_MESSAGE_WARNING,
                                   "Invalid image parasite found. "
                                   "Possibly corrupt XCF file.");
 
@@ -1288,25 +1288,25 @@ xcf_load_image_props (XcfInfo   *info,
                     continue;
                   }
 
-                if (! gimp_image_parasite_validate (image, p, &error))
+                if (! ligma_image_parasite_validate (image, p, &error))
                   {
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
+                    ligma_message (info->ligma, G_OBJECT (info->progress),
+                                  LIGMA_MESSAGE_WARNING,
                                   "Warning, invalid image parasite in XCF file: %s",
                                   error->message);
                     g_clear_error (&error);
                   }
                 else
                   {
-                    gimp_image_parasite_attach (image, p, FALSE);
+                    ligma_image_parasite_attach (image, p, FALSE);
                   }
 
-                gimp_parasite_free (p);
+                ligma_parasite_free (p);
               }
 
             if (info->cp - base != prop_size)
-              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+              ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Error while loading an image's parasites");
           }
           break;
@@ -1317,19 +1317,19 @@ xcf_load_image_props (XcfInfo   *info,
 
             xcf_read_int32 (info, &unit, 1);
 
-            GIMP_LOG (XCF, "prop unit=%d", unit);
+            LIGMA_LOG (XCF, "prop unit=%d", unit);
 
-            if ((unit <= GIMP_UNIT_PIXEL) ||
-                (unit >= gimp_unit_get_number_of_built_in_units ()))
+            if ((unit <= LIGMA_UNIT_PIXEL) ||
+                (unit >= ligma_unit_get_number_of_built_in_units ()))
               {
-                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                      GIMP_MESSAGE_WARNING,
+                ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                      LIGMA_MESSAGE_WARNING,
                                       "Warning, unit out of range in XCF file, "
                                       "falling back to inches");
-                unit = GIMP_UNIT_INCH;
+                unit = LIGMA_UNIT_INCH;
               }
 
-            gimp_image_set_unit (image, unit);
+            ligma_image_set_unit (image, unit);
           }
           break;
 
@@ -1338,8 +1338,8 @@ xcf_load_image_props (XcfInfo   *info,
             goffset base = info->cp;
 
             if (info->file_version >= 18)
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
+              ligma_message (info->ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_WARNING,
                             "XCF %d file should not contain PROP_PATHS image properties",
                             info->file_version);
 
@@ -1353,7 +1353,7 @@ xcf_load_image_props (XcfInfo   *info,
             gchar    *unit_strings[5];
             float     factor;
             guint32   digits;
-            GimpUnit  unit;
+            LigmaUnit  unit;
             gint      num_units;
             gint      i;
 
@@ -1365,17 +1365,17 @@ xcf_load_image_props (XcfInfo   *info,
               if (unit_strings[i] == NULL)
                 unit_strings[i] = g_strdup ("");
 
-            num_units = gimp_unit_get_number_of_units ();
+            num_units = ligma_unit_get_number_of_units ();
 
-            for (unit = gimp_unit_get_number_of_built_in_units ();
+            for (unit = ligma_unit_get_number_of_built_in_units ();
                  unit < num_units; unit++)
               {
                 /* if the factor and the identifier match some unit
                  * in unitrc, use the unitrc unit
                  */
-                if ((ABS (gimp_unit_get_factor (unit) - factor) < 1e-5) &&
+                if ((ABS (ligma_unit_get_factor (unit) - factor) < 1e-5) &&
                     (strcmp (unit_strings[0],
-                             gimp_unit_get_identifier (unit)) == 0))
+                             ligma_unit_get_identifier (unit)) == 0))
                   {
                     break;
                   }
@@ -1383,7 +1383,7 @@ xcf_load_image_props (XcfInfo   *info,
 
             /* no match */
             if (unit == num_units)
-              unit = gimp_unit_new (unit_strings[0],
+              unit = ligma_unit_new (unit_strings[0],
                                     factor,
                                     digits,
                                     unit_strings[1],
@@ -1391,7 +1391,7 @@ xcf_load_image_props (XcfInfo   *info,
                                     unit_strings[3],
                                     unit_strings[4]);
 
-            gimp_image_set_unit (image, unit);
+            ligma_image_set_unit (image, unit);
 
             for (i = 0; i < 5; i++)
               g_free (unit_strings[i]);
@@ -1403,8 +1403,8 @@ xcf_load_image_props (XcfInfo   *info,
             goffset base = info->cp;
 
             if (info->file_version >= 18)
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
+              ligma_message (info->ligma, G_OBJECT (info->progress),
+                            LIGMA_MESSAGE_WARNING,
                             "XCF %d file should not contain PROP_VECTORS image properties",
                             info->file_version);
 
@@ -1430,7 +1430,7 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_ITEM_SET:
           {
-            GimpItemList *set       = NULL;
+            LigmaItemList *set       = NULL;
             gchar        *label;
             GType         item_type = 0;
             guint32       itype;
@@ -1441,9 +1441,9 @@ xcf_load_image_props (XcfInfo   *info,
             xcf_read_string (info, &label, 1);
 
             if (itype == 0)
-              item_type = GIMP_TYPE_LAYER;
+              item_type = LIGMA_TYPE_LAYER;
             else
-              item_type = GIMP_TYPE_CHANNEL;
+              item_type = LIGMA_TYPE_CHANNEL;
 
             if (itype > 1)
               {
@@ -1457,7 +1457,7 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 g_printerr ("xcf: item set without a name or pattern (skipping)\n");
               }
-            else if (method != G_MAXUINT32 && method > GIMP_SELECT_GLOB_PATTERN)
+            else if (method != G_MAXUINT32 && method > LIGMA_SELECT_GLOB_PATTERN)
               {
                 g_printerr ("xcf: unsupported item set '%s' selection method attribute: 0x%x (skipping)\n",
                             label, method);
@@ -1466,11 +1466,11 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 if (method == G_MAXUINT32)
                   {
-                    /* Don't use gimp_item_list_named_new() because it
+                    /* Don't use ligma_item_list_named_new() because it
                      * doesn't allow NULL items (it would try to get the
                      * selected items instead).
                      */
-                    set = g_object_new (GIMP_TYPE_ITEM_LIST,
+                    set = g_object_new (LIGMA_TYPE_ITEM_LIST,
                                         "image",      image,
                                         "name",       label,
                                         "is-pattern", FALSE,
@@ -1480,7 +1480,7 @@ xcf_load_image_props (XcfInfo   *info,
                   }
                 else
                   {
-                    set = gimp_item_list_pattern_new (image, item_type,
+                    set = ligma_item_list_pattern_new (image, item_type,
                                                       method, label);
                   }
               }
@@ -1489,7 +1489,7 @@ xcf_load_image_props (XcfInfo   *info,
              * purpose, in order not to break order-base association
              * between PROP_ITEM_SET and PROP_ITEM_SET_ITEM.
              */
-            if (item_type == GIMP_TYPE_LAYER)
+            if (item_type == LIGMA_TYPE_LAYER)
               info->layer_sets = g_list_prepend (info->layer_sets, set);
             else
               info->channel_sets = g_list_prepend (info->channel_sets, set);
@@ -1497,7 +1497,7 @@ xcf_load_image_props (XcfInfo   *info,
           break;
 
         default:
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           g_printerr ("unexpected/unknown image property: %d (skipping)\n",
                       prop_type);
 #endif
@@ -1512,8 +1512,8 @@ xcf_load_image_props (XcfInfo   *info,
 
 static gboolean
 xcf_load_layer_props (XcfInfo    *info,
-                      GimpImage  *image,
-                      GimpLayer **layer,
+                      LigmaImage  *image,
+                      LigmaLayer **layer,
                       GList     **item_path,
                       gboolean   *apply_mask,
                       gboolean   *edit_mask,
@@ -1549,7 +1549,7 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, &opacity, 1);
 
-            gimp_layer_set_opacity (*layer, (gdouble) opacity / 255.0, FALSE);
+            ligma_layer_set_opacity (*layer, (gdouble) opacity / 255.0, FALSE);
           }
           break;
 
@@ -1559,7 +1559,7 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_float (info, &opacity, 1);
 
-            gimp_layer_set_opacity (*layer, opacity, FALSE);
+            ligma_layer_set_opacity (*layer, opacity, FALSE);
           }
           break;
 
@@ -1569,7 +1569,7 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &visible, 1);
 
-            gimp_item_set_visible (GIMP_ITEM (*layer), visible, FALSE);
+            ligma_item_set_visible (LIGMA_ITEM (*layer), visible, FALSE);
           }
           break;
 
@@ -1586,11 +1586,11 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_COLOR_TAG:
           {
-            GimpColorTag color_tag;
+            LigmaColorTag color_tag;
 
             xcf_read_int32 (info, (guint32 *) &color_tag, 1);
 
-            gimp_item_set_color_tag (GIMP_ITEM (*layer), color_tag, FALSE);
+            ligma_item_set_color_tag (LIGMA_ITEM (*layer), color_tag, FALSE);
           }
           break;
 
@@ -1600,8 +1600,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_content, 1);
 
-            if (gimp_item_can_lock_content (GIMP_ITEM (*layer)))
-              gimp_item_set_lock_content (GIMP_ITEM (*layer),
+            if (ligma_item_can_lock_content (LIGMA_ITEM (*layer)))
+              ligma_item_set_lock_content (LIGMA_ITEM (*layer),
                                           lock_content, FALSE);
           }
           break;
@@ -1612,8 +1612,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_alpha, 1);
 
-            if (gimp_layer_can_lock_alpha (*layer))
-              gimp_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
+            if (ligma_layer_can_lock_alpha (*layer))
+              ligma_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
           }
           break;
 
@@ -1623,8 +1623,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_position, 1);
 
-            if (gimp_item_can_lock_position (GIMP_ITEM (*layer)))
-              gimp_item_set_lock_position (GIMP_ITEM (*layer),
+            if (ligma_item_can_lock_position (LIGMA_ITEM (*layer)))
+              ligma_item_set_lock_position (LIGMA_ITEM (*layer),
                                            lock_position, FALSE);
           }
           break;
@@ -1635,8 +1635,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
 
-            if (gimp_item_can_lock_visibility (GIMP_ITEM (*layer)))
-              gimp_item_set_lock_visibility (GIMP_ITEM (*layer),
+            if (ligma_item_can_lock_visibility (LIGMA_ITEM (*layer)))
+              ligma_item_set_lock_visibility (LIGMA_ITEM (*layer),
                                              lock_visibility, FALSE);
           }
           break;
@@ -1661,36 +1661,36 @@ xcf_load_layer_props (XcfInfo    *info,
             xcf_read_int32 (info, (guint32 *) &offset_x, 1);
             xcf_read_int32 (info, (guint32 *) &offset_y, 1);
 
-            if (offset_x < -GIMP_MAX_IMAGE_SIZE ||
-                offset_x > GIMP_MAX_IMAGE_SIZE)
+            if (offset_x < -LIGMA_MAX_IMAGE_SIZE ||
+                offset_x > LIGMA_MAX_IMAGE_SIZE)
               {
                 g_printerr ("unexpected item offset_x (%d) in XCF, "
                             "setting to 0\n", offset_x);
                 offset_x = 0;
               }
 
-            if (offset_y < -GIMP_MAX_IMAGE_SIZE ||
-                offset_y > GIMP_MAX_IMAGE_SIZE)
+            if (offset_y < -LIGMA_MAX_IMAGE_SIZE ||
+                offset_y > LIGMA_MAX_IMAGE_SIZE)
               {
                 g_printerr ("unexpected item offset_y (%d) in XCF, "
                             "setting to 0\n", offset_y);
                 offset_y = 0;
               }
 
-            gimp_item_set_offset (GIMP_ITEM (*layer), offset_x, offset_y);
+            ligma_item_set_offset (LIGMA_ITEM (*layer), offset_x, offset_y);
           }
           break;
 
         case PROP_MODE:
           {
-            GimpLayerMode mode;
+            LigmaLayerMode mode;
 
             xcf_read_int32 (info, (guint32 *) &mode, 1);
 
-            if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-              mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+            if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+              mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-            gimp_layer_set_mode (*layer, mode, FALSE);
+            ligma_layer_set_mode (*layer, mode, FALSE);
           }
           break;
 
@@ -1707,17 +1707,17 @@ xcf_load_layer_props (XcfInfo    *info,
              */
             if (blend_space < 0)
               {
-                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+                LigmaLayerMode mode = ligma_layer_get_mode (*layer);
 
                 blend_space = -blend_space;
 
-                if (blend_space == gimp_layer_mode_get_blend_space (mode))
-                  blend_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+                if (blend_space == ligma_layer_mode_get_blend_space (mode))
+                  blend_space = LIGMA_LAYER_COLOR_SPACE_AUTO;
                 else
-                  GIMP_LOG (XCF, "BLEND_SPACE: AUTO => %d", blend_space);
+                  LIGMA_LOG (XCF, "BLEND_SPACE: AUTO => %d", blend_space);
               }
 
-            gimp_layer_set_blend_space (*layer, blend_space, FALSE);
+            ligma_layer_set_blend_space (*layer, blend_space, FALSE);
           }
           break;
 
@@ -1734,17 +1734,17 @@ xcf_load_layer_props (XcfInfo    *info,
              */
             if (composite_space < 0)
               {
-                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+                LigmaLayerMode mode = ligma_layer_get_mode (*layer);
 
                 composite_space = -composite_space;
 
-                if (composite_space == gimp_layer_mode_get_composite_space (mode))
-                  composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+                if (composite_space == ligma_layer_mode_get_composite_space (mode))
+                  composite_space = LIGMA_LAYER_COLOR_SPACE_AUTO;
                 else
-                  GIMP_LOG (XCF, "COMPOSITE_SPACE: AUTO => %d", composite_space);
+                  LIGMA_LOG (XCF, "COMPOSITE_SPACE: AUTO => %d", composite_space);
               }
 
-            gimp_layer_set_composite_space (*layer, composite_space, FALSE);
+            ligma_layer_set_composite_space (*layer, composite_space, FALSE);
           }
           break;
 
@@ -1761,27 +1761,27 @@ xcf_load_layer_props (XcfInfo    *info,
              */
             if (composite_mode < 0)
               {
-                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+                LigmaLayerMode mode = ligma_layer_get_mode (*layer);
 
                 composite_mode = -composite_mode;
 
-                if (composite_mode == gimp_layer_mode_get_composite_mode (mode))
-                  composite_mode = GIMP_LAYER_COMPOSITE_AUTO;
+                if (composite_mode == ligma_layer_mode_get_composite_mode (mode))
+                  composite_mode = LIGMA_LAYER_COMPOSITE_AUTO;
                 else
-                  GIMP_LOG (XCF, "COMPOSITE_MODE: AUTO => %d", composite_mode);
+                  LIGMA_LOG (XCF, "COMPOSITE_MODE: AUTO => %d", composite_mode);
               }
 
-            gimp_layer_set_composite_mode (*layer, composite_mode, FALSE);
+            ligma_layer_set_composite_mode (*layer, composite_mode, FALSE);
           }
           break;
 
         case PROP_TATTOO:
           {
-            GimpTattoo tattoo;
+            LigmaTattoo tattoo;
 
             xcf_read_int32 (info, (guint32 *) &tattoo, 1);
 
-            gimp_item_set_tattoo (GIMP_ITEM (*layer), tattoo);
+            ligma_item_set_tattoo (LIGMA_ITEM (*layer), tattoo);
           }
           break;
 
@@ -1791,31 +1791,31 @@ xcf_load_layer_props (XcfInfo    *info,
 
             while (info->cp - base < prop_size)
               {
-                GimpParasite *p     = xcf_load_parasite (info);
+                LigmaParasite *p     = xcf_load_parasite (info);
                 GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                if (! gimp_item_parasite_validate (GIMP_ITEM (*layer), p, &error))
+                if (! ligma_item_parasite_validate (LIGMA_ITEM (*layer), p, &error))
                   {
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
+                    ligma_message (info->ligma, G_OBJECT (info->progress),
+                                  LIGMA_MESSAGE_WARNING,
                                   "Warning, invalid layer parasite in XCF file: %s",
                                   error->message);
                     g_clear_error (&error);
                   }
                 else
                   {
-                    gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
+                    ligma_item_parasite_attach (LIGMA_ITEM (*layer), p, FALSE);
                   }
 
-                gimp_parasite_free (p);
+                ligma_parasite_free (p);
               }
 
             if (info->cp - base != prop_size)
-              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+              ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Error while loading a layer's parasites");
           }
           break;
@@ -1826,7 +1826,7 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_GROUP_ITEM:
           {
-            GimpLayer *group;
+            LigmaLayer *group;
             gboolean   is_selected_layer;
 
             /* We're going to delete *layer, Don't leave its pointers
@@ -1840,10 +1840,10 @@ xcf_load_layer_props (XcfInfo    *info,
             if (*layer == info->floating_sel)
               info->floating_sel = NULL;
 
-            group = gimp_group_layer_new (image);
+            group = ligma_group_layer_new (image);
 
-            gimp_object_set_name (GIMP_OBJECT (group),
-                                  gimp_object_get_name (*layer));
+            ligma_object_set_name (LIGMA_OBJECT (group),
+                                  ligma_object_get_name (*layer));
 
             g_object_ref_sink (*layer);
             g_object_unref (*layer);
@@ -1886,29 +1886,29 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_ITEM_SET_ITEM:
             {
-              GimpItemList *set;
+              LigmaItemList *set;
               guint32       n;
 
               xcf_read_int32 (info, &n, 1);
               set = g_list_nth_data (info->layer_sets, n);
               if (set == NULL)
                 g_printerr ("xcf: layer '%s' cannot be added to unknown layer set at index %d (skipping)\n",
-                            gimp_object_get_name (*layer), n);
+                            ligma_object_get_name (*layer), n);
               else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*layer),
-                                      gimp_item_list_get_item_type (set)))
+                                      ligma_item_list_get_item_type (set)))
                 g_printerr ("xcf: layer '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
-                            gimp_object_get_name (*layer), gimp_object_get_name (set),
-                            g_type_name (gimp_item_list_get_item_type (set)));
-              else if (gimp_item_list_is_pattern (set, NULL))
+                            ligma_object_get_name (*layer), ligma_object_get_name (set),
+                            g_type_name (ligma_item_list_get_item_type (set)));
+              else if (ligma_item_list_is_pattern (set, NULL))
                 g_printerr ("xcf: layer '%s' cannot be added to pattern item set '%s' (skipping)\n",
-                            gimp_object_get_name (*layer), gimp_object_get_name (set));
+                            ligma_object_get_name (*layer), ligma_object_get_name (set));
               else
-                gimp_item_list_add (set, GIMP_ITEM (*layer));
+                ligma_item_list_add (set, LIGMA_ITEM (*layer));
             }
           break;
 
         default:
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
                       prop_type);
 #endif
@@ -2008,7 +2008,7 @@ xcf_check_layer_props (XcfInfo    *info,
           break;
 
         default:
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
                       prop_type);
 #endif
@@ -2023,8 +2023,8 @@ xcf_check_layer_props (XcfInfo    *info,
 
 static gboolean
 xcf_load_channel_props (XcfInfo      *info,
-                        GimpImage    *image,
-                        GimpChannel **channel)
+                        LigmaImage    *image,
+                        LigmaChannel **channel)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -2045,7 +2045,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
         case PROP_SELECTION:
           {
-            GimpChannel *mask;
+            LigmaChannel *mask;
             GList       *iter;
 
             /* We're going to delete *channel, Don't leave its pointer
@@ -2059,13 +2059,13 @@ xcf_load_channel_props (XcfInfo      *info,
                 }
 
             mask =
-              gimp_selection_new (image,
-                                  gimp_item_get_width  (GIMP_ITEM (*channel)),
-                                  gimp_item_get_height (GIMP_ITEM (*channel)));
-            gimp_image_take_mask (image, mask);
+              ligma_selection_new (image,
+                                  ligma_item_get_width  (LIGMA_ITEM (*channel)),
+                                  ligma_item_get_height (LIGMA_ITEM (*channel)));
+            ligma_image_take_mask (image, mask);
 
-            gimp_drawable_steal_buffer (GIMP_DRAWABLE (mask),
-                                        GIMP_DRAWABLE (*channel));
+            ligma_drawable_steal_buffer (LIGMA_DRAWABLE (mask),
+                                        LIGMA_DRAWABLE (*channel));
             g_object_unref (*channel);
             *channel = mask;
 
@@ -2081,7 +2081,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, &opacity, 1);
 
-            gimp_channel_set_opacity (*channel, opacity / 255.0, FALSE);
+            ligma_channel_set_opacity (*channel, opacity / 255.0, FALSE);
           }
           break;
 
@@ -2091,7 +2091,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_float (info, &opacity, 1);
 
-            gimp_channel_set_opacity (*channel, opacity, FALSE);
+            ligma_channel_set_opacity (*channel, opacity, FALSE);
           }
           break;
 
@@ -2101,17 +2101,17 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &visible, 1);
 
-            gimp_item_set_visible (GIMP_ITEM (*channel), visible, FALSE);
+            ligma_item_set_visible (LIGMA_ITEM (*channel), visible, FALSE);
           }
           break;
 
         case PROP_COLOR_TAG:
           {
-            GimpColorTag color_tag;
+            LigmaColorTag color_tag;
 
             xcf_read_int32 (info, (guint32 *) &color_tag, 1);
 
-            gimp_item_set_color_tag (GIMP_ITEM (*channel), color_tag, FALSE);
+            ligma_item_set_color_tag (LIGMA_ITEM (*channel), color_tag, FALSE);
           }
           break;
 
@@ -2132,8 +2132,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_content, 1);
 
-            if (gimp_item_can_lock_content (GIMP_ITEM (*channel)))
-              gimp_item_set_lock_content (GIMP_ITEM (*channel),
+            if (ligma_item_can_lock_content (LIGMA_ITEM (*channel)))
+              ligma_item_set_lock_content (LIGMA_ITEM (*channel),
                                           lock_content, FALSE);
           }
           break;
@@ -2144,8 +2144,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_position, 1);
 
-            if (gimp_item_can_lock_position (GIMP_ITEM (*channel)))
-              gimp_item_set_lock_position (GIMP_ITEM (*channel),
+            if (ligma_item_can_lock_position (LIGMA_ITEM (*channel)))
+              ligma_item_set_lock_position (LIGMA_ITEM (*channel),
                                            lock_position, FALSE);
           }
           break;
@@ -2156,8 +2156,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
 
-            if (gimp_item_can_lock_visibility (GIMP_ITEM (*channel)))
-              gimp_item_set_lock_visibility (GIMP_ITEM (*channel),
+            if (ligma_item_can_lock_visibility (LIGMA_ITEM (*channel)))
+              ligma_item_set_lock_visibility (LIGMA_ITEM (*channel),
                                              lock_visibility, FALSE);
           }
           break;
@@ -2168,7 +2168,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &show_masked, 1);
 
-            gimp_channel_set_show_masked (*channel, show_masked);
+            ligma_channel_set_show_masked (*channel, show_masked);
           }
           break;
 
@@ -2178,7 +2178,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int8 (info, (guint8 *) col, 3);
 
-            gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
+            ligma_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
           }
           break;
 
@@ -2188,17 +2188,17 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_float (info, col, 3);
 
-            gimp_rgb_set (&(*channel)->color, col[0], col[1], col[2]);
+            ligma_rgb_set (&(*channel)->color, col[0], col[1], col[2]);
           }
           break;
 
         case PROP_TATTOO:
           {
-            GimpTattoo tattoo;
+            LigmaTattoo tattoo;
 
             xcf_read_int32 (info, (guint32 *) &tattoo, 1);
 
-            gimp_item_set_tattoo (GIMP_ITEM (*channel), tattoo);
+            ligma_item_set_tattoo (LIGMA_ITEM (*channel), tattoo);
           }
           break;
 
@@ -2208,39 +2208,39 @@ xcf_load_channel_props (XcfInfo      *info,
 
             while ((info->cp - base) < prop_size)
               {
-                GimpParasite *p     = xcf_load_parasite (info);
+                LigmaParasite *p     = xcf_load_parasite (info);
                 GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                if (! gimp_item_parasite_validate (GIMP_ITEM (*channel), p,
+                if (! ligma_item_parasite_validate (LIGMA_ITEM (*channel), p,
                                                     &error))
                   {
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
+                    ligma_message (info->ligma, G_OBJECT (info->progress),
+                                  LIGMA_MESSAGE_WARNING,
                                   "Warning, invalid channel parasite in XCF file: %s",
                                   error->message);
                     g_clear_error (&error);
                   }
                 else
                   {
-                    gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
+                    ligma_item_parasite_attach (LIGMA_ITEM (*channel), p, FALSE);
                   }
 
-                gimp_parasite_free (p);
+                ligma_parasite_free (p);
               }
 
             if (info->cp - base != prop_size)
-              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+              ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Error while loading a channel's parasites");
           }
           break;
 
         case PROP_ITEM_SET_ITEM:
             {
-              GimpItemList *set;
+              LigmaItemList *set;
               guint32       n;
 
               xcf_read_int32 (info, &n, 1);
@@ -2248,17 +2248,17 @@ xcf_load_channel_props (XcfInfo      *info,
               if (set == NULL)
                 g_printerr ("xcf: unknown channel set: %d (skipping)\n", n);
               else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*channel),
-                                      gimp_item_list_get_item_type (set)))
+                                      ligma_item_list_get_item_type (set)))
                 g_printerr ("xcf: channel '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
-                            gimp_object_get_name (*channel), gimp_object_get_name (set),
-                            g_type_name (gimp_item_list_get_item_type (set)));
+                            ligma_object_get_name (*channel), ligma_object_get_name (set),
+                            g_type_name (ligma_item_list_get_item_type (set)));
               else
-                gimp_item_list_add (set, GIMP_ITEM (*channel));
+                ligma_item_list_add (set, LIGMA_ITEM (*channel));
             }
           break;
 
         default:
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           g_printerr ("unexpected/unknown channel property: %d (skipping)\n",
                       prop_type);
 #endif
@@ -2273,8 +2273,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
 static gboolean
 xcf_load_vectors_props (XcfInfo      *info,
-                        GimpImage    *image,
-                        GimpVectors **vectors)
+                        LigmaImage    *image,
+                        LigmaVectors **vectors)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -2299,17 +2299,17 @@ xcf_load_vectors_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &visible, 1);
 
-            gimp_item_set_visible (GIMP_ITEM (*vectors), visible, FALSE);
+            ligma_item_set_visible (LIGMA_ITEM (*vectors), visible, FALSE);
           }
           break;
 
         case PROP_COLOR_TAG:
           {
-            GimpColorTag color_tag;
+            LigmaColorTag color_tag;
 
             xcf_read_int32 (info, (guint32 *) &color_tag, 1);
 
-            gimp_item_set_color_tag (GIMP_ITEM (*vectors), color_tag, FALSE);
+            ligma_item_set_color_tag (LIGMA_ITEM (*vectors), color_tag, FALSE);
           }
           break;
 
@@ -2319,8 +2319,8 @@ xcf_load_vectors_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_content, 1);
 
-            if (gimp_item_can_lock_content (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_content (GIMP_ITEM (*vectors),
+            if (ligma_item_can_lock_content (LIGMA_ITEM (*vectors)))
+              ligma_item_set_lock_content (LIGMA_ITEM (*vectors),
                                           lock_content, FALSE);
           }
           break;
@@ -2331,8 +2331,8 @@ xcf_load_vectors_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_position, 1);
 
-            if (gimp_item_can_lock_position (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_position (GIMP_ITEM (*vectors),
+            if (ligma_item_can_lock_position (LIGMA_ITEM (*vectors)))
+              ligma_item_set_lock_position (LIGMA_ITEM (*vectors),
                                            lock_position, FALSE);
           }
           break;
@@ -2343,19 +2343,19 @@ xcf_load_vectors_props (XcfInfo      *info,
 
             xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
 
-            if (gimp_item_can_lock_visibility (GIMP_ITEM (*vectors)))
-              gimp_item_set_lock_visibility (GIMP_ITEM (*vectors),
+            if (ligma_item_can_lock_visibility (LIGMA_ITEM (*vectors)))
+              ligma_item_set_lock_visibility (LIGMA_ITEM (*vectors),
                                              lock_visibility, FALSE);
           }
           break;
 
         case PROP_TATTOO:
           {
-            GimpTattoo tattoo;
+            LigmaTattoo tattoo;
 
             xcf_read_int32 (info, (guint32 *) &tattoo, 1);
 
-            gimp_item_set_tattoo (GIMP_ITEM (*vectors), tattoo);
+            ligma_item_set_tattoo (LIGMA_ITEM (*vectors), tattoo);
           }
           break;
 
@@ -2365,32 +2365,32 @@ xcf_load_vectors_props (XcfInfo      *info,
 
             while ((info->cp - base) < prop_size)
               {
-                GimpParasite *p     = xcf_load_parasite (info);
+                LigmaParasite *p     = xcf_load_parasite (info);
                 GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                if (! gimp_item_parasite_validate (GIMP_ITEM (*vectors), p,
+                if (! ligma_item_parasite_validate (LIGMA_ITEM (*vectors), p,
                                                     &error))
                   {
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
+                    ligma_message (info->ligma, G_OBJECT (info->progress),
+                                  LIGMA_MESSAGE_WARNING,
                                   "Warning, invalid path parasite in XCF file: %s",
                                   error->message);
                     g_clear_error (&error);
                   }
                 else
                   {
-                    gimp_item_parasite_attach (GIMP_ITEM (*vectors), p, FALSE);
+                    ligma_item_parasite_attach (LIGMA_ITEM (*vectors), p, FALSE);
                   }
 
-                gimp_parasite_free (p);
+                ligma_parasite_free (p);
               }
 
             if (info->cp - base != prop_size)
-              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                    GIMP_MESSAGE_WARNING,
+              ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                    LIGMA_MESSAGE_WARNING,
                                     "Error while loading a path's parasites");
           }
           break;
@@ -2398,7 +2398,7 @@ xcf_load_vectors_props (XcfInfo      *info,
 #if 0
         case PROP_ITEM_SET_ITEM:
             {
-              GimpItemList *set;
+              LigmaItemList *set;
               guint32       n;
 
               xcf_read_int32 (info, &n, 1);
@@ -2406,18 +2406,18 @@ xcf_load_vectors_props (XcfInfo      *info,
               if (set == NULL)
                 g_printerr ("xcf: unknown path set: %d (skipping)\n", n);
               else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*vectors),
-                                      gimp_item_list_get_item_type (set)))
+                                      ligma_item_list_get_item_type (set)))
                 g_printerr ("xcf: path '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
-                            gimp_object_get_name (*vectors), gimp_object_get_name (set),
-                            g_type_name (gimp_item_list_get_item_type (set)));
+                            ligma_object_get_name (*vectors), ligma_object_get_name (set),
+                            g_type_name (ligma_item_list_get_item_type (set)));
               else
-                gimp_item_list_add (set, GIMP_ITEM (*vectors));
+                ligma_item_list_add (set, LIGMA_ITEM (*vectors));
             }
           break;
 #endif
 
         default:
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
           g_printerr ("unexpected/unknown path property: %d (skipping)\n",
                       prop_type);
 #endif
@@ -2441,18 +2441,18 @@ xcf_load_prop (XcfInfo  *info,
   if (G_UNLIKELY (xcf_read_int32 (info, (guint32 *) prop_size, 1) != 4))
     return FALSE;
 
-  GIMP_LOG (XCF, "prop type=%d size=%u", *prop_type, *prop_size);
+  LIGMA_LOG (XCF, "prop type=%d size=%u", *prop_type, *prop_size);
 
   return TRUE;
 }
 
-static GimpLayer *
+static LigmaLayer *
 xcf_load_layer (XcfInfo    *info,
-                GimpImage  *image,
+                LigmaImage  *image,
                 GList     **item_path)
 {
-  GimpLayer         *layer;
-  GimpLayerMask     *layer_mask;
+  LigmaLayer         *layer;
+  LigmaLayerMask     *layer_mask;
   goffset            hierarchy_offset;
   goffset            layer_mask_offset;
   gboolean           apply_mask = TRUE;
@@ -2466,7 +2466,7 @@ xcf_load_layer (XcfInfo    *info,
   gint               width;
   gint               height;
   gint               type;
-  GimpImageBaseType  base_type;
+  LigmaImageBaseType  base_type;
   gboolean           has_alpha;
   const Babl        *format;
   gboolean           is_fs_drawable;
@@ -2484,38 +2484,38 @@ xcf_load_layer (XcfInfo    *info,
   xcf_read_int32  (info, (guint32 *) &type,   1);
   xcf_read_string (info,             &name,   1);
 
-  GIMP_LOG (XCF, "width=%d, height=%d, type=%d, name='%s'",
+  LIGMA_LOG (XCF, "width=%d, height=%d, type=%d, name='%s'",
             width, height, type, name);
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:
-      base_type = GIMP_RGB;
+    case LIGMA_RGB_IMAGE:
+      base_type = LIGMA_RGB;
       has_alpha = FALSE;
       break;
 
-    case GIMP_RGBA_IMAGE:
-      base_type = GIMP_RGB;
+    case LIGMA_RGBA_IMAGE:
+      base_type = LIGMA_RGB;
       has_alpha = TRUE;
       break;
 
-    case GIMP_GRAY_IMAGE:
-      base_type = GIMP_GRAY;
+    case LIGMA_GRAY_IMAGE:
+      base_type = LIGMA_GRAY;
       has_alpha = FALSE;
       break;
 
-    case GIMP_GRAYA_IMAGE:
-      base_type = GIMP_GRAY;
+    case LIGMA_GRAYA_IMAGE:
+      base_type = LIGMA_GRAY;
       has_alpha = TRUE;
       break;
 
-    case GIMP_INDEXED_IMAGE:
-      base_type = GIMP_INDEXED;
+    case LIGMA_INDEXED_IMAGE:
+      base_type = LIGMA_INDEXED;
       has_alpha = FALSE;
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
-      base_type = GIMP_INDEXED;
+    case LIGMA_INDEXEDA_IMAGE:
+      base_type = LIGMA_INDEXED;
       has_alpha = TRUE;
       break;
 
@@ -2525,7 +2525,7 @@ xcf_load_layer (XcfInfo    *info,
     }
 
   if (width <= 0 || height <= 0 ||
-      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+      width > LIGMA_MAX_IMAGE_SIZE || height > LIGMA_MAX_IMAGE_SIZE)
     {
       gboolean is_group_layer = FALSE;
       gboolean is_text_layer  = FALSE;
@@ -2550,25 +2550,25 @@ xcf_load_layer (XcfInfo    *info,
         }
     }
 
-  if (base_type == GIMP_GRAY)
+  if (base_type == LIGMA_GRAY)
     {
-      /* do not use gimp_image_get_layer_format() because it might
+      /* do not use ligma_image_get_layer_format() because it might
        * be the floating selection of a channel or mask
        */
-      format = gimp_image_get_format (image, base_type,
-                                      gimp_image_get_precision (image),
+      format = ligma_image_get_format (image, base_type,
+                                      ligma_image_get_precision (image),
                                       has_alpha,
                                       NULL /* we will fix the space later */);
     }
   else
     {
-      format = gimp_image_get_layer_format (image, has_alpha);
+      format = ligma_image_get_layer_format (image, has_alpha);
     }
 
   /* create a new layer */
-  layer = gimp_layer_new (image, width, height,
+  layer = ligma_layer_new (image, width, height,
                           format, name,
-                          GIMP_OPACITY_OPAQUE, GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_OPACITY_OPAQUE, LIGMA_LAYER_MODE_NORMAL);
   g_free (name);
   if (! layer)
     return NULL;
@@ -2579,7 +2579,7 @@ xcf_load_layer (XcfInfo    *info,
                               &text_layer_flags, &group_layer_flags))
     goto error;
 
-  GIMP_LOG (XCF, "layer props loaded");
+  LIGMA_LOG (XCF, "layer props loaded");
 
   xcf_progress_update (info);
 
@@ -2588,9 +2588,9 @@ xcf_load_layer (XcfInfo    *info,
   linked   = g_list_find (info->linked_layers, layer);
   floating = (info->floating_sel == layer);
 
-  if (gimp_text_layer_xcf_load_hack (&layer))
+  if (ligma_text_layer_xcf_load_hack (&layer))
     {
-      gimp_text_layer_set_xcf_flags (GIMP_TEXT_LAYER (layer),
+      ligma_text_layer_set_xcf_flags (LIGMA_TEXT_LAYER (layer),
                                      text_layer_flags);
 
       if (selected)
@@ -2611,8 +2611,8 @@ xcf_load_layer (XcfInfo    *info,
    * space already now, the function will do nothing if we already
    * created the layer with the right format
    */
-  if (! floating && base_type == GIMP_GRAY)
-    gimp_layer_fix_format_space (layer, FALSE, FALSE);
+  if (! floating && base_type == LIGMA_GRAY)
+    ligma_layer_fix_format_space (layer, FALSE, FALSE);
 
   /* read the hierarchy and layer mask offsets */
   cur_offset = info->cp;
@@ -2623,23 +2623,23 @@ xcf_load_layer (XcfInfo    *info,
    * optimization and because the hierarchy's extents don't match
    * the group layer's tiles)
    */
-  if (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (! ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
     {
       if (hierarchy_offset < cur_offset)
         {
-          GIMP_LOG (XCF, "Invalid layer hierarchy offset!");
+          LIGMA_LOG (XCF, "Invalid layer hierarchy offset!");
           goto error;
         }
       if (! xcf_seek_pos (info, hierarchy_offset, NULL))
         goto error;
 
-      GIMP_LOG (XCF, "loading buffer");
+      LIGMA_LOG (XCF, "loading buffer");
 
       if (! xcf_load_buffer (info,
-                             gimp_drawable_get_buffer (GIMP_DRAWABLE (layer))))
+                             ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer))))
         goto error;
 
-      GIMP_LOG (XCF, "buffer loaded");
+      LIGMA_LOG (XCF, "buffer loaded");
 
       xcf_progress_update (info);
     }
@@ -2647,7 +2647,7 @@ xcf_load_layer (XcfInfo    *info,
     {
       gboolean expanded = group_layer_flags & XCF_GROUP_ITEM_EXPANDED;
 
-      gimp_viewable_set_expanded (GIMP_VIEWABLE (layer), expanded);
+      ligma_viewable_set_expanded (LIGMA_VIEWABLE (layer), expanded);
     }
 
   /* read in the layer mask */
@@ -2655,7 +2655,7 @@ xcf_load_layer (XcfInfo    *info,
     {
       if (layer_mask_offset < cur_offset)
         {
-          GIMP_LOG (XCF, "Invalid layer mask offset!");
+          LIGMA_LOG (XCF, "Invalid layer mask offset!");
           goto error;
         }
       if (! xcf_seek_pos (info, layer_mask_offset, NULL))
@@ -2671,20 +2671,20 @@ xcf_load_layer (XcfInfo    *info,
        * layers which update their size automatically; instead
        * attach it so it can be added when all layers are loaded
        */
-      g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
+      g_object_set_data_full (G_OBJECT (layer), "ligma-layer-mask",
                               g_object_ref_sink (layer_mask),
                               (GDestroyNotify) g_object_unref);
-      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-apply",
+      g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-apply",
                          GINT_TO_POINTER (apply_mask));
-      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-edit",
+      g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-edit",
                          GINT_TO_POINTER (edit_mask));
-      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",
+      g_object_set_data (G_OBJECT (layer), "ligma-layer-mask-show",
                          GINT_TO_POINTER (show_mask));
     }
 
   /* attach the floating selection... */
   if (is_fs_drawable)
-    info->floating_sel_drawable = GIMP_DRAWABLE (layer);
+    info->floating_sel_drawable = LIGMA_DRAWABLE (layer);
 
   return layer;
 
@@ -2694,7 +2694,7 @@ xcf_load_layer (XcfInfo    *info,
   if (info->floating_sel == layer)
     info->floating_sel = NULL;
 
-  if (info->floating_sel_drawable == GIMP_DRAWABLE (layer))
+  if (info->floating_sel_drawable == LIGMA_DRAWABLE (layer))
     info->floating_sel_drawable = NULL;
 
   g_object_unref (layer);
@@ -2702,17 +2702,17 @@ xcf_load_layer (XcfInfo    *info,
   return NULL;
 }
 
-static GimpChannel *
+static LigmaChannel *
 xcf_load_channel (XcfInfo   *info,
-                  GimpImage *image)
+                  LigmaImage *image)
 {
-  GimpChannel *channel;
+  LigmaChannel *channel;
   goffset      hierarchy_offset;
   gint         width;
   gint         height;
   gboolean     is_fs_drawable;
   gchar       *name;
-  GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  LigmaRGB      color = { 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE };
   goffset      cur_offset;
 
   /* check and see if this is the drawable the floating selection
@@ -2724,18 +2724,18 @@ xcf_load_channel (XcfInfo   *info,
   xcf_read_int32 (info, (guint32 *) &width,  1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
   if (width <= 0 || height <= 0 ||
-      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+      width > LIGMA_MAX_IMAGE_SIZE || height > LIGMA_MAX_IMAGE_SIZE)
     {
-      GIMP_LOG (XCF, "Invalid channel size %d x %d.", width, height);
+      LIGMA_LOG (XCF, "Invalid channel size %d x %d.", width, height);
       return NULL;
     }
 
   xcf_read_string (info, &name, 1);
-  GIMP_LOG (XCF, "Channel width=%d, height=%d, name='%s'",
+  LIGMA_LOG (XCF, "Channel width=%d, height=%d, name='%s'",
             width, height, name);
 
   /* create a new channel */
-  channel = gimp_channel_new (image, width, height, name, &color);
+  channel = ligma_channel_new (image, width, height, name, &color);
   g_free (name);
   if (!channel)
     return NULL;
@@ -2752,7 +2752,7 @@ xcf_load_channel (XcfInfo   *info,
 
   if (hierarchy_offset < cur_offset)
     {
-      GIMP_LOG (XCF, "Invalid hierarchy offset!");
+      LIGMA_LOG (XCF, "Invalid hierarchy offset!");
       goto error;
     }
 
@@ -2761,19 +2761,19 @@ xcf_load_channel (XcfInfo   *info,
     goto error;
 
   if (! xcf_load_buffer (info,
-                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel))))
+                         ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel))))
     goto error;
 
   xcf_progress_update (info);
 
   if (is_fs_drawable)
-    info->floating_sel_drawable = GIMP_DRAWABLE (channel);
+    info->floating_sel_drawable = LIGMA_DRAWABLE (channel);
 
   return channel;
 
  error:
   /* don't unref the selection of a partially loaded XCF */
-  if (channel != gimp_image_get_mask (image))
+  if (channel != ligma_image_get_mask (image))
     {
       GList *iter;
 
@@ -2784,7 +2784,7 @@ xcf_load_channel (XcfInfo   *info,
             break;
           }
 
-      if (info->floating_sel_drawable == GIMP_DRAWABLE (channel))
+      if (info->floating_sel_drawable == LIGMA_DRAWABLE (channel))
         info->floating_sel_drawable = NULL;
 
       g_object_unref (channel);
@@ -2794,11 +2794,11 @@ xcf_load_channel (XcfInfo   *info,
 }
 
 /* The new path structure since XCF 18. */
-static GimpVectors *
+static LigmaVectors *
 xcf_load_vectors (XcfInfo   *info,
-                  GimpImage *image)
+                  LigmaImage *image)
 {
-  GimpVectors *vectors = NULL;
+  LigmaVectors *vectors = NULL;
   gchar       *name;
   guint32      version;
   guint32      plength;
@@ -2809,10 +2809,10 @@ xcf_load_vectors (XcfInfo   *info,
   /* read in the path name. */
   xcf_read_string (info, &name,   1);
 
-  GIMP_LOG (XCF, "Path name='%s'", name);
+  LIGMA_LOG (XCF, "Path name='%s'", name);
 
   /* create a new path */
-  vectors = gimp_vectors_new (image, name);
+  vectors = ligma_vectors_new (image, name);
   g_free (name);
   if (! vectors)
     return NULL;
@@ -2825,7 +2825,7 @@ xcf_load_vectors (XcfInfo   *info,
   if (! xcf_load_vectors_props (info, image, &vectors))
     goto error;
 
-  GIMP_LOG (XCF, "path props loaded");
+  LIGMA_LOG (XCF, "path props loaded");
 
   xcf_progress_update (info);
 
@@ -2833,8 +2833,8 @@ xcf_load_vectors (XcfInfo   *info,
 
   if (version != 1)
     {
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
+      ligma_message (info->ligma, G_OBJECT (info->progress),
+                    LIGMA_MESSAGE_WARNING,
                     "Unknown vectors version: %d (skipping)", version);
       goto error;
     }
@@ -2849,23 +2849,23 @@ xcf_load_vectors (XcfInfo   *info,
       guint32      num_axes;
       guint32      num_control_points;
       guint32      type;
-      gfloat       coords[13] = GIMP_COORDS_DEFAULT_VALUES;
-      GimpStroke  *stroke;
+      gfloat       coords[13] = LIGMA_COORDS_DEFAULT_VALUES;
+      LigmaStroke  *stroke;
       gint         j;
 
-      GimpValueArray *control_points;
+      LigmaValueArray *control_points;
       GValue          value  = G_VALUE_INIT;
-      GimpAnchor      anchor = { { 0, } };
+      LigmaAnchor      anchor = { { 0, } };
       GType           stroke_type;
 
-      g_value_init (&value, GIMP_TYPE_ANCHOR);
+      g_value_init (&value, LIGMA_TYPE_ANCHOR);
 
       xcf_read_int32 (info, &stroke_type_id,     1);
       xcf_read_int32 (info, &closed,             1);
       xcf_read_int32 (info, &num_axes,           1);
       xcf_read_int32 (info, &num_control_points, 1);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
       g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
                   stroke_type_id, closed, num_axes, num_control_points);
 #endif
@@ -2873,7 +2873,7 @@ xcf_load_vectors (XcfInfo   *info,
       switch (stroke_type_id)
         {
         case XCF_STROKETYPE_BEZIER_STROKE:
-          stroke_type = GIMP_TYPE_BEZIER_STROKE;
+          stroke_type = LIGMA_TYPE_BEZIER_STROKE;
           break;
 
         default:
@@ -2890,7 +2890,7 @@ xcf_load_vectors (XcfInfo   *info,
           goto error;
         }
 
-      control_points = gimp_value_array_new (num_control_points);
+      control_points = ligma_value_array_new (num_control_points);
 
       anchor.selected = FALSE;
 
@@ -2908,9 +2908,9 @@ xcf_load_vectors (XcfInfo   *info,
           anchor.position.wheel    = coords[5];
 
           g_value_set_boxed (&value, &anchor);
-          gimp_value_array_append (control_points, &value);
+          ligma_value_array_append (control_points, &value);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
           g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
                       coords[0], coords[1], coords[2], coords[3],
                       coords[4], coords[5]);
@@ -2924,17 +2924,17 @@ xcf_load_vectors (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      ligma_vectors_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
-      gimp_value_array_unref (control_points);
+      ligma_value_array_unref (control_points);
     }
 
 
   if (plength != info->cp - base)
     {
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
+      ligma_message (info->ligma, G_OBJECT (info->progress),
+                    LIGMA_MESSAGE_WARNING,
                     "Path payload size does not match stored size (skipping)");
       goto error;
     }
@@ -2949,19 +2949,19 @@ error:
   return NULL;
 }
 
-static GimpLayerMask *
+static LigmaLayerMask *
 xcf_load_layer_mask (XcfInfo   *info,
-                     GimpImage *image)
+                     LigmaImage *image)
 {
-  GimpLayerMask *layer_mask;
-  GimpChannel   *channel;
+  LigmaLayerMask *layer_mask;
+  LigmaChannel   *channel;
   GList         *iter;
   goffset        hierarchy_offset;
   gint           width;
   gint           height;
   gboolean       is_fs_drawable;
   gchar         *name;
-  GimpRGB        color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  LigmaRGB        color = { 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE };
   goffset        cur_offset;
 
   /* check and see if this is the drawable the floating selection
@@ -2973,24 +2973,24 @@ xcf_load_layer_mask (XcfInfo   *info,
   xcf_read_int32 (info, (guint32 *) &width,  1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
   if (width <= 0 || height <= 0 ||
-      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+      width > LIGMA_MAX_IMAGE_SIZE || height > LIGMA_MAX_IMAGE_SIZE)
     {
-      GIMP_LOG (XCF, "Invalid layer mask size %d x %d.", width, height);
+      LIGMA_LOG (XCF, "Invalid layer mask size %d x %d.", width, height);
       return NULL;
     }
 
   xcf_read_string (info, &name, 1);
-  GIMP_LOG (XCF, "Layer mask width=%d, height=%d, name='%s'",
+  LIGMA_LOG (XCF, "Layer mask width=%d, height=%d, name='%s'",
             width, height, name);
 
   /* create a new layer mask */
-  layer_mask = gimp_layer_mask_new (image, width, height, name, &color);
+  layer_mask = ligma_layer_mask_new (image, width, height, name, &color);
   g_free (name);
   if (! layer_mask)
     return NULL;
 
   /* read in the layer_mask properties */
-  channel = GIMP_CHANNEL (layer_mask);
+  channel = LIGMA_CHANNEL (layer_mask);
   if (! xcf_load_channel_props (info, image, &channel))
     goto error;
 
@@ -3002,7 +3002,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   if (hierarchy_offset < cur_offset)
     {
-      GIMP_LOG (XCF, "Invalid hierarchy offset!");
+      LIGMA_LOG (XCF, "Invalid hierarchy offset!");
       goto error;
     }
 
@@ -3011,14 +3011,14 @@ xcf_load_layer_mask (XcfInfo   *info,
     goto error;
 
   if (! xcf_load_buffer (info,
-                         gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask))))
+                         ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer_mask))))
     goto error;
 
   xcf_progress_update (info);
 
   /* attach the floating selection... */
   if (is_fs_drawable)
-    info->floating_sel_drawable = GIMP_DRAWABLE (layer_mask);
+    info->floating_sel_drawable = LIGMA_DRAWABLE (layer_mask);
 
   return layer_mask;
 
@@ -3030,7 +3030,7 @@ xcf_load_layer_mask (XcfInfo   *info,
         break;
       }
 
-  if (info->floating_sel_drawable == GIMP_DRAWABLE (layer_mask))
+  if (info->floating_sel_drawable == LIGMA_DRAWABLE (layer_mask))
     info->floating_sel_drawable = NULL;
 
   g_object_unref (layer_mask);
@@ -3068,7 +3068,7 @@ xcf_load_buffer (XcfInfo    *info,
 
   if (offset < cur_offset)
     {
-      GIMP_LOG (XCF, "Invalid buffer offset!");
+      LIGMA_LOG (XCF, "Invalid buffer offset!");
       return FALSE;
     }
 
@@ -3130,8 +3130,8 @@ xcf_load_level (XcfInfo    *info,
   if (offset == 0)
     return TRUE;
 
-  n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
-  n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
+  n_tile_rows = ligma_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
+  n_tile_cols = ligma_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
 
   ntiles = n_tile_rows * n_tile_cols;
   for (i = 0; i < ntiles; i++)
@@ -3142,8 +3142,8 @@ xcf_load_level (XcfInfo    *info,
 
       if (offset == 0)
         {
-          gimp_message_literal (info->gimp, G_OBJECT (info->progress),
-                                GIMP_MESSAGE_ERROR,
+          ligma_message_literal (info->ligma, G_OBJECT (info->progress),
+                                LIGMA_MESSAGE_ERROR,
                                 "not enough tiles found in level");
           return FALSE;
         }
@@ -3170,19 +3170,19 @@ xcf_load_level (XcfInfo    *info,
 
       if (offset2 < offset || offset2 - offset > max_data_length)
         {
-          gimp_message (info->gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (info->ligma, G_OBJECT (info->progress),
+                        LIGMA_MESSAGE_ERROR,
                         "invalid tile data length: %" G_GOFFSET_FORMAT,
                         offset2 - offset);
           return FALSE;
         }
 
       /* get buffer rectangle to write to */
-      gimp_gegl_buffer_get_tile_rect (buffer,
+      ligma_gegl_buffer_get_tile_rect (buffer,
                                       XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
                                       i, &rect);
 
-      GIMP_LOG (XCF, "loading tile %d/%d", i + 1, ntiles);
+      LIGMA_LOG (XCF, "loading tile %d/%d", i + 1, ntiles);
 
       /* read in the tile */
       switch (info->compression)
@@ -3216,7 +3216,7 @@ xcf_load_level (XcfInfo    *info,
       if (fail)
         return FALSE;
 
-      GIMP_LOG (XCF, "loaded tile %d/%d", i + 1, ntiles);
+      LIGMA_LOG (XCF, "loaded tile %d/%d", i + 1, ntiles);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -3230,7 +3230,7 @@ xcf_load_level (XcfInfo    *info,
 
   if (offset != 0)
     {
-      gimp_message (info->gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
+      ligma_message (info->ligma, G_OBJECT (info->progress), LIGMA_MESSAGE_ERROR,
                     "encountered garbage after reading level: %" G_GOFFSET_FORMAT,
                     offset);
       return FALSE;
@@ -3522,10 +3522,10 @@ xcf_load_tile_zlib (XcfInfo       *info,
   return TRUE;
 }
 
-static GimpParasite *
+static LigmaParasite *
 xcf_load_parasite (XcfInfo *info)
 {
-  GimpParasite *parasite = NULL;
+  LigmaParasite *parasite = NULL;
   gchar        *name;
   guint32       flags;
   guint32       size, size_read;
@@ -3535,7 +3535,7 @@ xcf_load_parasite (XcfInfo *info)
   xcf_read_int32  (info, &flags, 1);
   xcf_read_int32  (info, &size,  1);
 
-  GIMP_LOG (XCF, "Parasite name: %s, flags: %d, size: %d", name, flags, size);
+  LIGMA_LOG (XCF, "Parasite name: %s, flags: %d, size: %d", name, flags, size);
 
   if (size > MAX_XCF_PARASITE_DATA_LEN)
     {
@@ -3562,7 +3562,7 @@ xcf_load_parasite (XcfInfo *info)
     }
   else
     {
-      parasite = gimp_parasite_new (name, flags, size, data);
+      parasite = ligma_parasite_new (name, flags, size, data);
     }
 
   g_free (name);
@@ -3574,34 +3574,34 @@ xcf_load_parasite (XcfInfo *info)
 /* Old paths are the PROP_PATHS property, even older than PROP_VECTORS. */
 static gboolean
 xcf_load_old_paths (XcfInfo   *info,
-                    GimpImage *image)
+                    LigmaImage *image)
 {
   guint32      num_paths;
   guint32      last_selected_row;
-  GimpVectors *active_vectors;
+  LigmaVectors *active_vectors;
 
   xcf_read_int32 (info, &last_selected_row, 1);
   xcf_read_int32 (info, &num_paths,         1);
 
-  GIMP_LOG (XCF, "Number of old paths: %u", num_paths);
+  LIGMA_LOG (XCF, "Number of old paths: %u", num_paths);
 
   while (num_paths-- > 0)
     if (! xcf_load_old_path (info, image))
       return FALSE;
 
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
+    LIGMA_VECTORS (ligma_container_get_child_by_index (ligma_image_get_vectors (image),
                                                      last_selected_row));
 
   if (active_vectors)
-    gimp_image_set_active_vectors (image, active_vectors);
+    ligma_image_set_active_vectors (image, active_vectors);
 
   return TRUE;
 }
 
 static gboolean
 xcf_load_old_path (XcfInfo   *info,
-                   GimpImage *image)
+                   LigmaImage *image)
 {
   gchar                  *name;
   guint32                 locked;
@@ -3609,9 +3609,9 @@ xcf_load_old_path (XcfInfo   *info,
   guint32                 closed;
   guint32                 num_points;
   guint32                 version; /* changed from num_paths */
-  GimpTattoo              tattoo = 0;
-  GimpVectors            *vectors;
-  GimpVectorsCompatPoint *points;
+  LigmaTattoo              tattoo = 0;
+  LigmaVectors            *vectors;
+  LigmaVectorsCompatPoint *points;
   gint                    i;
 
   xcf_read_string (info, &name,       1);
@@ -3651,7 +3651,7 @@ xcf_load_old_path (XcfInfo   *info,
       return FALSE;
     }
 
-  points = g_new0 (GimpVectorsCompatPoint, num_points);
+  points = g_new0 (LigmaVectorsCompatPoint, num_points);
 
   for (i = 0; i < num_points; i++)
     {
@@ -3681,7 +3681,7 @@ xcf_load_old_path (XcfInfo   *info,
         }
     }
 
-  vectors = gimp_vectors_compat_new (image, name, points, num_points, closed);
+  vectors = ligma_vectors_compat_new (image, name, points, num_points, closed);
 
   g_free (name);
   g_free (points);
@@ -3690,27 +3690,27 @@ xcf_load_old_path (XcfInfo   *info,
     info->linked_paths = g_list_prepend (info->linked_paths, vectors);
 
   if (tattoo)
-    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
+    ligma_item_set_tattoo (LIGMA_ITEM (vectors), tattoo);
 
-  gimp_image_add_vectors (image, vectors,
+  ligma_image_add_vectors (image, vectors,
                           NULL, /* can't be a tree */
-                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
+                          ligma_container_get_n_children (ligma_image_get_vectors (image)),
                           FALSE);
 
   return TRUE;
 }
 
-/* Old vectors are the PROP_VECTORS property up to all GIMP 2.10 versions. */
+/* Old vectors are the PROP_VECTORS property up to all LIGMA 2.10 versions. */
 static gboolean
 xcf_load_old_vectors (XcfInfo   *info,
-                      GimpImage *image)
+                      LigmaImage *image)
 {
   guint32      version;
   guint32      active_index;
   guint32      num_paths;
-  GimpVectors *active_vectors;
+  LigmaVectors *active_vectors;
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vectors\n");
 #endif
 
@@ -3718,8 +3718,8 @@ xcf_load_old_vectors (XcfInfo   *info,
 
   if (version != 1)
     {
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
+      ligma_message (info->ligma, G_OBJECT (info->progress),
+                    LIGMA_MESSAGE_WARNING,
                     "Unknown vectors version: %d (skipping)", version);
       return FALSE;
     }
@@ -3727,7 +3727,7 @@ xcf_load_old_vectors (XcfInfo   *info,
   xcf_read_int32 (info, &active_index, 1);
   xcf_read_int32 (info, &num_paths,    1);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
   g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
 #endif
 
@@ -3737,13 +3737,13 @@ xcf_load_old_vectors (XcfInfo   *info,
 
   /* FIXME tree */
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
+    LIGMA_VECTORS (ligma_container_get_child_by_index (ligma_image_get_vectors (image),
                                                      active_index));
 
   if (active_vectors)
-    gimp_image_set_active_vectors (image, active_vectors);
+    ligma_image_set_active_vectors (image, active_vectors);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vectors: loaded %d bytes\n", info->cp - base);
 #endif
   return TRUE;
@@ -3751,18 +3751,18 @@ xcf_load_old_vectors (XcfInfo   *info,
 
 static gboolean
 xcf_load_old_vector (XcfInfo   *info,
-                     GimpImage *image)
+                     LigmaImage *image)
 {
   gchar       *name;
-  GimpTattoo   tattoo = 0;
+  LigmaTattoo   tattoo = 0;
   guint32      visible;
   guint32      linked;
   guint32      num_parasites;
   guint32      num_strokes;
-  GimpVectors *vectors;
+  LigmaVectors *vectors;
   gint         i;
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vector\n");
 #endif
 
@@ -3773,44 +3773,44 @@ xcf_load_old_vector (XcfInfo   *info,
   xcf_read_int32  (info, &num_parasites, 1);
   xcf_read_int32  (info, &num_strokes,   1);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
   g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, "
               "num_parasites %d, num_strokes %d\n",
               name, tattoo, visible, linked, num_parasites, num_strokes);
 #endif
 
-  vectors = gimp_vectors_new (image, name);
+  vectors = ligma_vectors_new (image, name);
   g_free (name);
 
-  gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
+  ligma_item_set_visible (LIGMA_ITEM (vectors), visible, FALSE);
   if (linked)
     info->linked_paths = g_list_prepend (info->linked_paths, vectors);
 
   if (tattoo)
-    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
+    ligma_item_set_tattoo (LIGMA_ITEM (vectors), tattoo);
 
   for (i = 0; i < num_parasites; i++)
     {
-      GimpParasite *parasite = xcf_load_parasite (info);
+      LigmaParasite *parasite = xcf_load_parasite (info);
       GError       *error    = NULL;
 
       if (! parasite)
         return FALSE;
 
-      if (! gimp_item_parasite_validate (GIMP_ITEM (vectors), parasite, &error))
+      if (! ligma_item_parasite_validate (LIGMA_ITEM (vectors), parasite, &error))
         {
-          gimp_message (info->gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_WARNING,
+          ligma_message (info->ligma, G_OBJECT (info->progress),
+                        LIGMA_MESSAGE_WARNING,
                         "Warning, invalid vectors parasite in XCF file: %s",
                         error->message);
           g_clear_error (&error);
         }
       else
         {
-          gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
+          ligma_item_parasite_attach (LIGMA_ITEM (vectors), parasite, FALSE);
         }
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
 
   for (i = 0; i < num_strokes; i++)
@@ -3820,23 +3820,23 @@ xcf_load_old_vector (XcfInfo   *info,
       guint32      num_axes;
       guint32      num_control_points;
       guint32      type;
-      gfloat       coords[13] = GIMP_COORDS_DEFAULT_VALUES;
-      GimpStroke  *stroke;
+      gfloat       coords[13] = LIGMA_COORDS_DEFAULT_VALUES;
+      LigmaStroke  *stroke;
       gint         j;
 
-      GimpValueArray *control_points;
+      LigmaValueArray *control_points;
       GValue          value  = G_VALUE_INIT;
-      GimpAnchor      anchor = { { 0, } };
+      LigmaAnchor      anchor = { { 0, } };
       GType           stroke_type;
 
-      g_value_init (&value, GIMP_TYPE_ANCHOR);
+      g_value_init (&value, LIGMA_TYPE_ANCHOR);
 
       xcf_read_int32 (info, &stroke_type_id,     1);
       xcf_read_int32 (info, &closed,             1);
       xcf_read_int32 (info, &num_axes,           1);
       xcf_read_int32 (info, &num_control_points, 1);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
       g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
                   stroke_type_id, closed, num_axes, num_control_points);
 #endif
@@ -3844,7 +3844,7 @@ xcf_load_old_vector (XcfInfo   *info,
       switch (stroke_type_id)
         {
         case XCF_STROKETYPE_BEZIER_STROKE:
-          stroke_type = GIMP_TYPE_BEZIER_STROKE;
+          stroke_type = LIGMA_TYPE_BEZIER_STROKE;
           break;
 
         default:
@@ -3861,7 +3861,7 @@ xcf_load_old_vector (XcfInfo   *info,
           return FALSE;
         }
 
-      control_points = gimp_value_array_new (num_control_points);
+      control_points = ligma_value_array_new (num_control_points);
 
       anchor.selected = FALSE;
 
@@ -3879,9 +3879,9 @@ xcf_load_old_vector (XcfInfo   *info,
           anchor.position.wheel    = coords[5];
 
           g_value_set_boxed (&value, &anchor);
-          gimp_value_array_append (control_points, &value);
+          ligma_value_array_append (control_points, &value);
 
-#ifdef GIMP_XCF_PATH_DEBUG
+#ifdef LIGMA_XCF_PATH_DEBUG
           g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
                       coords[0], coords[1], coords[2], coords[3],
                       coords[4], coords[5]);
@@ -3895,15 +3895,15 @@ xcf_load_old_vector (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      ligma_vectors_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
-      gimp_value_array_unref (control_points);
+      ligma_value_array_unref (control_points);
     }
 
-  gimp_image_add_vectors (image, vectors,
+  ligma_image_add_vectors (image, vectors,
                           NULL, /* FIXME tree */
-                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
+                          ligma_container_get_n_children (ligma_image_get_vectors (image)),
                           FALSE);
 
   return TRUE;
@@ -3955,7 +3955,7 @@ xcf_item_path_is_parent (GList *path,
 }
 
 static void
-xcf_fix_item_path (GimpLayer  *layer,
+xcf_fix_item_path (LigmaLayer  *layer,
                    GList     **path,
                    GList      *broken_paths)
 {
@@ -3967,7 +3967,7 @@ xcf_fix_item_path (GimpLayer  *layer,
         {
           /* Not much to do when the absent path is a parent. */
           g_printerr ("%s: layer '%s' moved to layer tree root because of missing parent.",
-                      G_STRFUNC, gimp_object_get_name (layer));
+                      G_STRFUNC, ligma_object_get_name (layer));
           g_clear_pointer (path, g_list_free);
           return;
         }

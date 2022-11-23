@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-darktable.c -- raw file format plug-in that uses darktable
- * Copyright (C) 2012 Simon Budig <simon@gimp.org>
+ * Copyright (C) 2012 Simon Budig <simon@ligma.org>
  * Copyright (C) 2016 Tobias Ellinghaus <me@houz.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "file-raw-formats.h"
 #include "file-raw-utils.h"
@@ -40,12 +40,12 @@ typedef struct _DarktableClass DarktableClass;
 
 struct _Darktable
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _DarktableClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -54,41 +54,41 @@ struct _DarktableClass
 
 GType                   darktable_get_type         (void) G_GNUC_CONST;
 
-static GList          * darktable_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * darktable_create_procedure (GimpPlugIn           *plug_in,
+static GList          * darktable_init_procedures  (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * darktable_create_procedure (LigmaPlugIn           *plug_in,
                                                     const gchar          *name);
 
-static GimpValueArray * darktable_load             (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode,
+static LigmaValueArray * darktable_load             (LigmaProcedure        *procedure,
+                                                    LigmaRunMode           run_mode,
                                                     GFile                *file,
-                                                    const GimpValueArray *args,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
-static GimpValueArray * darktable_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * darktable_load_thumb       (LigmaProcedure        *procedure,
                                                     GFile                *file,
                                                     gint                  size,
-                                                    const GimpValueArray *args,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
 
-static GimpImage      * load_image                 (GFile                *file,
-                                                    GimpRunMode           run_mode,
+static LigmaImage      * load_image                 (GFile                *file,
+                                                    LigmaRunMode           run_mode,
                                                     GError              **error);
-static GimpImage      * load_thumbnail_image       (GFile                *file,
+static LigmaImage      * load_thumbnail_image       (GFile                *file,
                                                     gint                  thumb_size,
                                                     gint                 *width,
                                                     gint                 *height,
                                                     GError              **error);
 
 
-G_DEFINE_TYPE (Darktable, darktable, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Darktable, darktable, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DARKTABLE_TYPE)
+LIGMA_MAIN (DARKTABLE_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 darktable_class_init (DarktableClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->init_procedures  = darktable_init_procedures;
   plug_in_class->create_procedure = darktable_create_procedure;
@@ -101,7 +101,7 @@ darktable_init (Darktable *darktable)
 }
 
 static GList *
-darktable_init_procedures (GimpPlugIn *plug_in)
+darktable_init_procedures (LigmaPlugIn *plug_in)
 {
   /* check if darktable is installed
    */
@@ -220,26 +220,26 @@ darktable_init_procedures (GimpPlugIn *plug_in)
   return NULL;
 }
 
-static GimpProcedure *
-darktable_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+darktable_create_procedure (LigmaPlugIn  *plug_in,
                             const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 darktable_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load thumbnail from a raw image "
                                         "via darktable",
                                         "This plug-in loads a thumbnail "
                                         "from a raw image by calling "
                                         "darktable-cli.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tobias Ellinghaus",
                                       "Tobias Ellinghaus",
                                       "2016");
@@ -266,28 +266,28 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
           load_blurb = g_strdup_printf (format->load_blurb_format, "darktable");
           load_help  = g_strdup_printf (format->load_help_format,  "darktable");
 
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+          procedure = ligma_load_procedure_new (plug_in, name,
+                                               LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                darktable_load,
                                                (gpointer) format, NULL);
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             load_blurb, load_help, name);
-          gimp_procedure_set_attribution (procedure,
+          ligma_procedure_set_attribution (procedure,
                                           "Tobias Ellinghaus",
                                           "Tobias Ellinghaus",
                                           "2016");
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               format->mime_type);
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               format->extensions);
-          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                           format->magic);
 
-          gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
+          ligma_load_procedure_set_handles_raw (LIGMA_LOAD_PROCEDURE (procedure),
                                                TRUE);
-          gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+          ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                     LOAD_THUMB_PROC);
 
           g_free (load_proc);
@@ -301,44 +301,44 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-darktable_load (GimpProcedure        *procedure,
-                GimpRunMode           run_mode,
+static LigmaValueArray *
+darktable_load (LigmaProcedure        *procedure,
+                LigmaRunMode           run_mode,
                 GFile                *file,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   image = load_image (file, run_mode, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-darktable_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+darktable_load_thumb (LigmaProcedure        *procedure,
                       GFile                *file,
                       gint                  size,
-                      const GimpValueArray *args,
+                      const LigmaValueArray *args,
                       gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width;
   gint            height;
-  GimpImage      *image = NULL;
+  LigmaImage      *image = NULL;
   GError         *error = NULL;
 
   width  = size;
@@ -347,38 +347,38 @@ darktable_load_thumb (GimpProcedure        *procedure,
   image = load_thumbnail_image (file, width, &width, &height, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
-  GIMP_VALUES_SET_ENUM  (return_vals, 4, GIMP_RGB_IMAGE);
-  GIMP_VALUES_SET_INT   (return_vals, 5, 1);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_ENUM  (return_vals, 4, LIGMA_RGB_IMAGE);
+  LIGMA_VALUES_SET_INT   (return_vals, 5, 1);
 
-  gimp_value_array_truncate (return_vals, 6);
+  ligma_value_array_truncate (return_vals, 6);
 
   return return_vals;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile        *file,
-            GimpRunMode   run_mode,
+            LigmaRunMode   run_mode,
             GError      **error)
 {
-  GimpImage *image              = NULL;
-  GFile     *lua_file           = gimp_data_directory_file ("file-raw",
+  LigmaImage *image              = NULL;
+  GFile     *lua_file           = ligma_data_directory_file ("file-raw",
                                                             "file-darktable-export-on-exit.lua",
                                                             NULL);
   gchar     *lua_script_escaped = g_strescape (g_file_peek_path (lua_file), "");
   gchar     *lua_quoted         = g_shell_quote (lua_script_escaped);
   gchar     *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
-  GFile     *file_out           = gimp_temp_file ("exr");
+  GFile     *file_out           = ligma_temp_file ("exr");
   gchar     *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
                                                    g_file_peek_path (file_out));
 
@@ -388,7 +388,7 @@ load_image (GFile        *file,
   /* allow the user to have some insight into why darktable may fail. */
   gboolean  debug_prints     = g_getenv ("DARKTABLE_DEBUG") != NULL;
 
-  /* linear sRGB for now as GIMP uses that internally in many places anyway */
+  /* linear sRGB for now as LIGMA uses that internally in many places anyway */
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
                                                              "DARKTABLE_EXECUTABLE",
@@ -410,8 +410,8 @@ load_image (GFile        *file,
   g_free (lua_script_escaped);
   g_free (lua_quoted);
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   if (debug_prints)
     {
@@ -442,9 +442,9 @@ load_image (GFile        *file,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, file_out);
+      image = ligma_file_load (run_mode, file_out);
       if (image)
-        gimp_image_set_file (image, file);
+        ligma_image_set_file (image, file);
     }
 
   if (debug_prints)
@@ -464,23 +464,23 @@ load_image (GFile        *file,
   g_free (export_filename);
   g_free (exec_path);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
 
-static GimpImage *
+static LigmaImage *
 load_thumbnail_image (GFile   *file,
                       gint     thumb_size,
                       gint    *width,
                       gint    *height,
                       GError **error)
 {
-  GimpImage *image           = NULL;
+  LigmaImage *image           = NULL;
 
-  GFile  *file_out           = gimp_temp_file ("jpg");
+  GFile  *file_out           = ligma_temp_file ("jpg");
   gchar  *size               = g_strdup_printf ("%d", thumb_size);
-  GFile  *lua_file           = gimp_data_directory_file ("file-raw",
+  GFile  *lua_file           = ligma_data_directory_file ("file-raw",
                                                          "file-darktable-get-size.lua",
                                                          NULL);
   gchar  *lua_script_escaped = g_strescape (g_file_peek_path (lua_file), "");
@@ -512,8 +512,8 @@ load_thumbnail_image (GFile   *file,
   g_free (lua_script_escaped);
   g_free (lua_quoted);
 
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening thumbnail for '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   *width = *height = thumb_size;
 
@@ -529,9 +529,9 @@ load_thumbnail_image (GFile   *file,
                     NULL,
                     error))
     {
-      gimp_progress_update (0.5);
+      ligma_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
+      image = ligma_file_load (LIGMA_RUN_NONINTERACTIVE, file_out);
       if (image)
         {
           /* the size reported by raw files isn't precise,
@@ -539,16 +539,16 @@ load_thumbnail_image (GFile   *file,
            */
           gchar *start_of_size = g_strstr_len (darktable_stdout,
                                                -1,
-                                               "[dt4gimp]");
+                                               "[dt4ligma]");
           if (start_of_size)
-            sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
+            sscanf (start_of_size, "[dt4ligma] %d %d", width, height);
 
           /* is this needed for thumbnails? */
-          gimp_image_set_file (image, file);
+          ligma_image_set_file (image, file);
         }
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_file_delete (file_out, NULL, NULL);
   g_free (size);

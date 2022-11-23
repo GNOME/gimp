@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1998-1999 Manish Singh
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub message {
     $blurb = 'Displays a dialog box with a message.';
@@ -36,9 +36,9 @@ HELP
 {
   const gchar *domain = NULL;
 
-  if (gimp->plug_in_manager->current_plug_in)
-    domain = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
-  gimp_show_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+  if (ligma->plug_in_manager->current_plug_in)
+    domain = ligma_plug_in_get_undo_desc (ligma->plug_in_manager->current_plug_in);
+  ligma_show_message (ligma, G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                      domain, message);
 }
 CODE
@@ -52,20 +52,20 @@ BLURB
 
     $help = <<'HELP';
 This procedure returns the way g_message warnings are displayed. They can be
-shown in a dialog box or printed on the console where gimp was started.
+shown in a dialog box or printed on the console where ligma was started.
 HELP
 
     &yosh_pdb_misc('1998');
 
     @outargs = (
-	{ name => 'handler', type => 'enum GimpMessageHandlerType',
+	{ name => 'handler', type => 'enum LigmaMessageHandlerType',
 	  desc => 'The current handler type' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  handler = gimp->message_handler;
+  handler = ligma->message_handler;
 }
 CODE
     );
@@ -76,20 +76,20 @@ sub message_set_handler {
 
     $help = <<'HELP';
 This procedure controls how g_message warnings are displayed. They can be shown
-in a dialog box or printed on the console where gimp was started.
+in a dialog box or printed on the console where ligma was started.
 HELP
 
     &yosh_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'handler', type => 'enum GimpMessageHandlerType',
+	{ name => 'handler', type => 'enum LigmaMessageHandlerType',
 	  desc => 'The new handler type' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp->message_handler = handler;
+  ligma->message_handler = handler;
 }
 CODE
     );
@@ -97,10 +97,10 @@ CODE
 
 
 @headers = qw(<string.h>
-              "core/gimp.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimppluginmanager.h"
-              "gimp-intl.h");
+              "core/ligma.h"
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmapluginmanager.h"
+              "ligma-intl.h");
 
 @procs = qw(message
             message_get_handler
@@ -109,7 +109,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Message procedures';
-$doc_title = 'gimpmessage';
+$doc_title = 'ligmamessage';
 $doc_short_desc = 'Display a dialog box with a message.';
 $doc_long_desc = 'Display a dialog box with a message.';
 

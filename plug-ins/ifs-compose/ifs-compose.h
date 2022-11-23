@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * IfsCompose is a interface for creating IFS fractals by
@@ -39,12 +39,12 @@ typedef struct {
   gdouble  shear;
   gint     flip;
 
-  GimpRGB  red_color;
-  GimpRGB  green_color;
-  GimpRGB  blue_color;
-  GimpRGB  black_color;
+  LigmaRGB  red_color;
+  LigmaRGB  green_color;
+  LigmaRGB  blue_color;
+  LigmaRGB  black_color;
 
-  GimpRGB  target_color;
+  LigmaRGB  target_color;
   gdouble  hue_scale;
   gdouble  value_scale;
 
@@ -131,7 +131,7 @@ gint      ipolygon_contains    (IPolygon *poly,
 /* manipulation of composite transforms */
 AffElement *aff_element_new                  (gdouble      x,
                                               gdouble      y,
-                                              GimpRGB     *color,
+                                              LigmaRGB     *color,
                                               gint         count);
 void        aff_element_free                 (AffElement  *elem);
 void        aff_element_compute_trans        (AffElement  *elem,

@@ -3,8 +3,8 @@ icons64dir  = $(iconsdir)/64x64/apps
 scalabledir = $(iconsdir)/scalable/apps
 
 icons64_DATA = \
-	64/gimp-frame.png					\
-	64/gimp-texture.png
+	64/ligma-frame.png					\
+	64/ligma-texture.png
 
 else
 icons12dir  = $(iconsdir)/12x12/apps

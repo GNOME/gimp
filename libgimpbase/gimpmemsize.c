@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -22,16 +22,16 @@
 
 #include <glib-object.h>
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
-#include "gimpmemsize.h"
+#include "ligmamemsize.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpmemsize
- * @title: gimpmemsize
+ * SECTION: ligmamemsize
+ * @title: ligmamemsize
  * @short_description: Functions to (de)serialize a given memory size.
  *
  * Functions to (de)serialize a given memory size.
@@ -45,7 +45,7 @@ static void   string_to_memsize (const GValue *src_value,
 
 
 GType
-gimp_memsize_get_type (void)
+ligma_memsize_get_type (void)
 {
   static GType memsize_type = 0;
 
@@ -53,7 +53,7 @@ gimp_memsize_get_type (void)
     {
       const GTypeInfo type_info = { 0, };
 
-      memsize_type = g_type_register_static (G_TYPE_UINT64, "GimpMemsize",
+      memsize_type = g_type_register_static (G_TYPE_UINT64, "LigmaMemsize",
                                              &type_info, 0);
 
       g_value_register_transform_func (memsize_type, G_TYPE_STRING,
@@ -66,11 +66,11 @@ gimp_memsize_get_type (void)
 }
 
 /**
- * gimp_memsize_serialize:
+ * ligma_memsize_serialize:
  * @memsize: memory size in bytes
  *
  * Creates a string representation of a given memory size. This string
- * can be parsed by gimp_memsize_deserialize() and can thus be used in
+ * can be parsed by ligma_memsize_deserialize() and can thus be used in
  * config files. It should not be displayed to the user. If you need a
  * nice human-readable string please use g_format_size().
  *
@@ -79,7 +79,7 @@ gimp_memsize_get_type (void)
  * Since: 2.2
  **/
 gchar *
-gimp_memsize_serialize (guint64 memsize)
+ligma_memsize_serialize (guint64 memsize)
 {
   if (memsize > (1 << 30) && memsize % (1 << 30) == 0)
     return g_strdup_printf ("%" G_GUINT64_FORMAT "G", memsize >> 30);
@@ -92,12 +92,12 @@ gimp_memsize_serialize (guint64 memsize)
 }
 
 /**
- * gimp_memsize_deserialize:
- * @string:  a string as returned by gimp_memsize_serialize()
+ * ligma_memsize_deserialize:
+ * @string:  a string as returned by ligma_memsize_serialize()
  * @memsize: return location for memory size in bytes
  *
  * Parses a string representation of a memory size as returned by
- * gimp_memsize_serialize().
+ * ligma_memsize_serialize().
  *
  * Returns: %TRUE if the @string was successfully parsed and
  *               @memsize has been set, %FALSE otherwise.
@@ -105,7 +105,7 @@ gimp_memsize_serialize (guint64 memsize)
  * Since: 2.2
  **/
 gboolean
-gimp_memsize_deserialize (const gchar *string,
+ligma_memsize_deserialize (const gchar *string,
                           guint64     *memsize)
 {
   gchar   *end;
@@ -164,7 +164,7 @@ memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)
 {
   g_value_take_string (dest_value,
-                       gimp_memsize_serialize (g_value_get_uint64 (src_value)));
+                       ligma_memsize_serialize (g_value_get_uint64 (src_value)));
 }
 
 static void
@@ -176,25 +176,25 @@ string_to_memsize (const GValue *src_value,
 
   str = g_value_get_string (src_value);
 
-  if (str && gimp_memsize_deserialize (str, &memsize))
+  if (str && ligma_memsize_deserialize (str, &memsize))
     {
       g_value_set_uint64 (dest_value, memsize);
     }
   else
     {
-      g_warning ("Can't convert string to GimpMemsize.");
+      g_warning ("Can't convert string to LigmaMemsize.");
     }
 }
 
 
 /*
- * GIMP_TYPE_PARAM_MEMSIZE
+ * LIGMA_TYPE_PARAM_MEMSIZE
  */
 
-static void  gimp_param_memsize_class_init (GParamSpecClass *class);
+static void  ligma_param_memsize_class_init (GParamSpecClass *class);
 
 /**
- * gimp_param_memsize_get_type:
+ * ligma_param_memsize_get_type:
  *
  * Reveals the object type
  *
@@ -203,7 +203,7 @@ static void  gimp_param_memsize_class_init (GParamSpecClass *class);
  * Since: 2.4
  **/
 GType
-gimp_param_memsize_get_type (void)
+ligma_param_memsize_get_type (void)
 {
   static GType spec_type = 0;
 
@@ -213,14 +213,14 @@ gimp_param_memsize_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_memsize_class_init,
+        (GClassInitFunc) ligma_param_memsize_class_init,
         NULL, NULL,
         sizeof (GParamSpecUInt64),
         0, NULL, NULL
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_UINT64,
-                                          "GimpParamMemsize",
+                                          "LigmaParamMemsize",
                                           &type_info, 0);
     }
 
@@ -228,13 +228,13 @@ gimp_param_memsize_get_type (void)
 }
 
 static void
-gimp_param_memsize_class_init (GParamSpecClass *class)
+ligma_param_memsize_class_init (GParamSpecClass *class)
 {
-  class->value_type = GIMP_TYPE_MEMSIZE;
+  class->value_type = LIGMA_TYPE_MEMSIZE;
 }
 
 /**
- * gimp_param_spec_memsize:
+ * ligma_param_spec_memsize:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
  * @blurb:         Brief description of param.
@@ -251,7 +251,7 @@ gimp_param_memsize_class_init (GParamSpecClass *class)
  * Since: 2.4
  **/
 GParamSpec *
-gimp_param_spec_memsize (const gchar *name,
+ligma_param_spec_memsize (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
                          guint64      minimum,
@@ -261,7 +261,7 @@ gimp_param_spec_memsize (const gchar *name,
 {
   GParamSpecUInt64 *pspec;
 
-  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
+  pspec = g_param_spec_internal (LIGMA_TYPE_PARAM_MEMSIZE,
                                  name, nick, blurb, flags);
 
   pspec->minimum       = minimum;

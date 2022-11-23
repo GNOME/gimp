@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimpairbrushoptions.h"
+#include "ligmaairbrushoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define AIRBRUSH_DEFAULT_RATE        50.0
@@ -44,70 +44,70 @@ enum
 };
 
 
-static void   gimp_airbrush_options_set_property (GObject      *object,
+static void   ligma_airbrush_options_set_property (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
                                                   GParamSpec   *pspec);
-static void   gimp_airbrush_options_get_property (GObject      *object,
+static void   ligma_airbrush_options_get_property (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpAirbrushOptions, gimp_airbrush_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaAirbrushOptions, ligma_airbrush_options,
+               LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
+ligma_airbrush_options_class_init (LigmaAirbrushOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_airbrush_options_set_property;
-  object_class->get_property = gimp_airbrush_options_get_property;
+  object_class->set_property = ligma_airbrush_options_set_property;
+  object_class->get_property = ligma_airbrush_options_get_property;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
                            "rate",
                            C_("airbrush-tool", "Rate"),
                            NULL,
                            0.0, 100.0, AIRBRUSH_DEFAULT_RATE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOTION_ONLY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MOTION_ONLY,
                             "motion-only",
                             _("Motion only"),
                             NULL,
                             AIRBRUSH_DEFAULT_MOTION_ONLY,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
                            "flow",
                            _("Flow"),
                            NULL,
                            0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   /* backwads-compadibility prop for flow fomerly known as pressure */
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PRESSURE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_PRESSURE,
                            "pressure",
                            NULL, NULL,
                            0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
-                           GIMP_CONFIG_PARAM_IGNORE);
+                           LIGMA_CONFIG_PARAM_IGNORE);
 }
 
 static void
-gimp_airbrush_options_init (GimpAirbrushOptions *options)
+ligma_airbrush_options_init (LigmaAirbrushOptions *options)
 {
 }
 
 static void
-gimp_airbrush_options_set_property (GObject      *object,
+ligma_airbrush_options_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (object);
+  LigmaAirbrushOptions *options = LIGMA_AIRBRUSH_OPTIONS (object);
 
   switch (property_id)
     {
@@ -129,12 +129,12 @@ gimp_airbrush_options_set_property (GObject      *object,
 }
 
 static void
-gimp_airbrush_options_get_property (GObject    *object,
+ligma_airbrush_options_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (object);
+  LigmaAirbrushOptions *options = LIGMA_AIRBRUSH_OPTIONS (object);
 
   switch (property_id)
     {

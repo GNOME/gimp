@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationsoftlightmode.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationsoftlightmode.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationsoftlightlegacy.h"
+#include "ligmaoperationsoftlightlegacy.h"
 
 
-static gboolean   gimp_operation_softlight_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_softlight_legacy_process (GeglOperation       *op,
                                                            void                *in,
                                                            void                *layer,
                                                            void                *mask,
@@ -38,13 +38,13 @@ static gboolean   gimp_operation_softlight_legacy_process (GeglOperation       *
                                                            gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationSoftlightLegacy, gimp_operation_softlight_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationSoftlightLegacy, ligma_operation_softlight_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
-"<node operation='gimp:softlight-legacy'>"
+"<node operation='ligma:softlight-legacy'>"
 "  <node operation='gegl:load'>"
 "    <params>"
 "      <param name='path'>B.png</param>"
@@ -60,28 +60,28 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 
 
 static void
-gimp_operation_softlight_legacy_class_init (GimpOperationSoftlightLegacyClass *klass)
+ligma_operation_softlight_legacy_class_init (LigmaOperationSoftlightLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:softlight-legacy",
-                                 "description", "GIMP softlight mode operation",
+                                 "name",        "ligma:softlight-legacy",
+                                 "description", "LIGMA softlight mode operation",
                                  "reference-image", "soft-light-mode.png",
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_softlight_legacy_process;
+  layer_mode_class->process = ligma_operation_softlight_legacy_process;
 }
 
 static void
-gimp_operation_softlight_legacy_init (GimpOperationSoftlightLegacy *self)
+ligma_operation_softlight_legacy_init (LigmaOperationSoftlightLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_softlight_legacy_process (GeglOperation       *op,
+ligma_operation_softlight_legacy_process (GeglOperation       *op,
                                          void                *in_p,
                                          void                *layer_p,
                                          void                *mask_p,
@@ -90,7 +90,7 @@ gimp_operation_softlight_legacy_process (GeglOperation       *op,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -115,7 +115,7 @@ gimp_operation_softlight_legacy_process (GeglOperation       *op,
           for (b = RED; b < ALPHA; b++)
             {
 #if 0
-              /* softlight is now used for what GIMP formerly called
+              /* softlight is now used for what LIGMA formerly called
                * OVERLAY.  We fixed OVERLAY to use the right math
                * (under the name NEW_OVERLAY), and redirect uses of
                * the old OVERLAY blend mode here. This math was

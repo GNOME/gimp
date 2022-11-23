@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-debug.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligma-debug.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,16 @@
 
 #include "core/core-types.h"
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
-#include "gimp-debug.h"
+#include "ligma-debug.h"
 
 
 static GHashTable *class_hash = NULL;
 
 
 void
-gimp_debug_enable_instances (void)
+ligma_debug_enable_instances (void)
 {
   g_return_if_fail (class_hash == NULL);
 
@@ -44,7 +44,7 @@ gimp_debug_enable_instances (void)
 }
 
 void
-gimp_debug_add_instance (GObject      *instance,
+ligma_debug_add_instance (GObject      *instance,
                          GObjectClass *klass)
 {
   if (class_hash)
@@ -68,7 +68,7 @@ gimp_debug_add_instance (GObject      *instance,
 }
 
 void
-gimp_debug_remove_instance (GObject *instance)
+ligma_debug_remove_instance (GObject *instance)
 {
   if (class_hash)
     {
@@ -90,33 +90,33 @@ gimp_debug_remove_instance (GObject *instance)
 }
 
 static void
-gimp_debug_instance_foreach (GObject *instance)
+ligma_debug_instance_foreach (GObject *instance)
 {
   g_printerr ("  \'%s\': ref_count = %d\n",
-              GIMP_IS_OBJECT (instance) ?
-              gimp_object_get_name (instance) : "GObject",
+              LIGMA_IS_OBJECT (instance) ?
+              ligma_object_get_name (instance) : "GObject",
               instance->ref_count);
 }
 
 static void
-gimp_debug_class_foreach (const gchar *type_name,
+ligma_debug_class_foreach (const gchar *type_name,
                           GHashTable  *instance_hash)
 {
   g_printerr ("Leaked %s instances: %d\n",
               type_name, g_hash_table_size (instance_hash));
 
   g_hash_table_foreach (instance_hash,
-                        (GHFunc) gimp_debug_instance_foreach,
+                        (GHFunc) ligma_debug_instance_foreach,
                         NULL);
 }
 
 void
-gimp_debug_instances (void)
+ligma_debug_instances (void)
 {
   if (class_hash)
     {
       g_hash_table_foreach (class_hash,
-                            (GHFunc) gimp_debug_class_foreach,
+                            (GHFunc) ligma_debug_class_foreach,
                             NULL);
     }
 }

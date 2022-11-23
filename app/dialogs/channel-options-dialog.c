@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,29 +20,29 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmacolorpanel.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "channel-options-dialog.h"
 #include "item-options-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _ChannelOptionsDialog ChannelOptionsDialog;
 
 struct _ChannelOptionsDialog
 {
-  GimpChannelOptionsCallback  callback;
+  LigmaChannelOptionsCallback  callback;
   gpointer                    user_data;
 
   GtkWidget                  *color_panel;
@@ -54,27 +54,27 @@ struct _ChannelOptionsDialog
 
 static void channel_options_dialog_free     (ChannelOptionsDialog *private);
 static void channel_options_dialog_callback (GtkWidget            *dialog,
-                                             GimpImage            *image,
-                                             GimpItem             *item,
-                                             GimpContext          *context,
+                                             LigmaImage            *image,
+                                             LigmaItem             *item,
+                                             LigmaContext          *context,
                                              const gchar          *item_name,
                                              gboolean              item_visible,
-                                             GimpColorTag          item_color_tag,
+                                             LigmaColorTag          item_color_tag,
                                              gboolean              item_lock_content,
                                              gboolean              item_lock_position,
                                              gpointer              user_data);
 static void channel_options_opacity_changed (GtkAdjustment        *adjustment,
-                                             GimpColorButton      *color_button);
-static void channel_options_color_changed   (GimpColorButton      *color_button,
+                                             LigmaColorButton      *color_button);
+static void channel_options_color_changed   (LigmaColorButton      *color_button,
                                              GtkAdjustment        *adjustment);
 
 
 /*  public functions  */
 
 GtkWidget *
-channel_options_dialog_new (GimpImage                  *image,
-                            GimpChannel                *channel,
-                            GimpContext                *context,
+channel_options_dialog_new (LigmaImage                  *image,
+                            LigmaChannel                *channel,
+                            LigmaContext                *context,
                             GtkWidget                  *parent,
                             const gchar                *title,
                             const gchar                *role,
@@ -85,12 +85,12 @@ channel_options_dialog_new (GimpImage                  *image,
                             const gchar                *opacity_label,
                             gboolean                    show_from_sel,
                             const gchar                *channel_name,
-                            const GimpRGB              *channel_color,
+                            const LigmaRGB              *channel_color,
                             gboolean                    channel_visible,
-                            GimpColorTag                channel_color_tag,
+                            LigmaColorTag                channel_color_tag,
                             gboolean                    channel_lock_content,
                             gboolean                    channel_lock_position,
-                            GimpChannelOptionsCallback  callback,
+                            LigmaChannelOptionsCallback  callback,
                             gpointer                    user_data)
 {
   ChannelOptionsDialog *private;
@@ -98,9 +98,9 @@ channel_options_dialog_new (GimpImage                  *image,
   GtkAdjustment        *opacity_adj;
   GtkWidget            *scale;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (channel == NULL || LIGMA_IS_CHANNEL (channel), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
@@ -117,11 +117,11 @@ channel_options_dialog_new (GimpImage                  *image,
   private->callback  = callback;
   private->user_data = user_data;
 
-  dialog = item_options_dialog_new (image, GIMP_ITEM (channel), context,
+  dialog = item_options_dialog_new (image, LIGMA_ITEM (channel), context,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     channel_name ? _("Channel _name:") : NULL,
-                                    GIMP_ICON_TOOL_PAINTBRUSH,
+                                    LIGMA_ICON_TOOL_PAINTBRUSH,
                                     _("Lock _pixels"),
                                     _("Lock position and _size"),
                                     channel_name,
@@ -137,16 +137,16 @@ channel_options_dialog_new (GimpImage                  *image,
 
   opacity_adj = gtk_adjustment_new (channel_color->a * 100.0,
                                     0.0, 100.0, 1.0, 10.0, 0);
-  scale = gimp_spin_scale_new (opacity_adj, NULL, 1);
+  scale = ligma_spin_scale_new (opacity_adj, NULL, 1);
   gtk_widget_set_size_request (scale, 200, -1);
   item_options_dialog_add_widget (dialog,
                                   opacity_label, scale);
 
-  private->color_panel = gimp_color_panel_new (color_label,
+  private->color_panel = ligma_color_panel_new (color_label,
                                                channel_color,
-                                               GIMP_COLOR_AREA_LARGE_CHECKS,
+                                               LIGMA_COLOR_AREA_LARGE_CHECKS,
                                                24, 24);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (private->color_panel),
+  ligma_color_panel_set_context (LIGMA_COLOR_PANEL (private->color_panel),
                                 context);
 
   g_signal_connect (opacity_adj, "value-changed",
@@ -183,21 +183,21 @@ channel_options_dialog_free (ChannelOptionsDialog *private)
 
 static void
 channel_options_dialog_callback (GtkWidget    *dialog,
-                                 GimpImage    *image,
-                                 GimpItem     *item,
-                                 GimpContext  *context,
+                                 LigmaImage    *image,
+                                 LigmaItem     *item,
+                                 LigmaContext  *context,
                                  const gchar  *item_name,
                                  gboolean      item_visible,
-                                 GimpColorTag  item_color_tag,
+                                 LigmaColorTag  item_color_tag,
                                  gboolean      item_lock_content,
                                  gboolean      item_lock_position,
                                  gpointer      user_data)
 {
   ChannelOptionsDialog *private = user_data;
-  GimpRGB               color;
+  LigmaRGB               color;
   gboolean              save_selection = FALSE;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel),
+  ligma_color_button_get_color (LIGMA_COLOR_BUTTON (private->color_panel),
                                &color);
 
   if (private->save_sel_toggle)
@@ -206,7 +206,7 @@ channel_options_dialog_callback (GtkWidget    *dialog,
 
   private->callback (dialog,
                      image,
-                     GIMP_CHANNEL (item),
+                     LIGMA_CHANNEL (item),
                      context,
                      item_name,
                      &color,
@@ -220,21 +220,21 @@ channel_options_dialog_callback (GtkWidget    *dialog,
 
 static void
 channel_options_opacity_changed (GtkAdjustment   *adjustment,
-                                 GimpColorButton *color_button)
+                                 LigmaColorButton *color_button)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
-  gimp_color_button_get_color (color_button, &color);
-  gimp_rgb_set_alpha (&color, gtk_adjustment_get_value (adjustment) / 100.0);
-  gimp_color_button_set_color (color_button, &color);
+  ligma_color_button_get_color (color_button, &color);
+  ligma_rgb_set_alpha (&color, gtk_adjustment_get_value (adjustment) / 100.0);
+  ligma_color_button_set_color (color_button, &color);
 }
 
 static void
-channel_options_color_changed (GimpColorButton *button,
+channel_options_color_changed (LigmaColorButton *button,
                                GtkAdjustment   *adjustment)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
-  gimp_color_button_get_color (button, &color);
+  ligma_color_button_get_color (button, &color);
   gtk_adjustment_set_value (adjustment, color.a * 100.0);
 }

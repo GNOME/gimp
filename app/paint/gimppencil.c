@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@
 
 #include "paint-types.h"
 
-#include "gimppencil.h"
-#include "gimppenciloptions.h"
+#include "ligmapencil.h"
+#include "ligmapenciloptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpPencil, gimp_pencil, GIMP_TYPE_PAINTBRUSH)
+G_DEFINE_TYPE (LigmaPencil, ligma_pencil, LIGMA_TYPE_PAINTBRUSH)
 
 
 void
-gimp_pencil_register (Gimp                      *gimp,
-                      GimpPaintRegisterCallback  callback)
+ligma_pencil_register (Ligma                      *ligma,
+                      LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PENCIL,
-                GIMP_TYPE_PENCIL_OPTIONS,
-                "gimp-pencil",
+  (* callback) (ligma,
+                LIGMA_TYPE_PENCIL,
+                LIGMA_TYPE_PENCIL_OPTIONS,
+                "ligma-pencil",
                 _("Pencil"),
-                "gimp-tool-pencil");
+                "ligma-tool-pencil");
 }
 
 static void
-gimp_pencil_class_init (GimpPencilClass *klass)
+ligma_pencil_class_init (LigmaPencilClass *klass)
 {
 }
 
 static void
-gimp_pencil_init (GimpPencil *pencil)
+ligma_pencil_init (LigmaPencil *pencil)
 {
 }

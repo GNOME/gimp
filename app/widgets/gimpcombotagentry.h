@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcombotagentry.h
+ * ligmacombotagentry.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMBO_TAG_ENTRY_H__
-#define __GIMP_COMBO_TAG_ENTRY_H__
+#ifndef __LIGMA_COMBO_TAG_ENTRY_H__
+#define __LIGMA_COMBO_TAG_ENTRY_H__
 
-#include "gimptagentry.h"
+#include "ligmatagentry.h"
 
-#define GIMP_TYPE_COMBO_TAG_ENTRY            (gimp_combo_tag_entry_get_type ())
-#define GIMP_COMBO_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntry))
-#define GIMP_COMBO_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntryClass))
-#define GIMP_IS_COMBO_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COMBO_TAG_ENTRY))
-#define GIMP_IS_COMBO_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMBO_TAG_ENTRY))
-#define GIMP_COMBO_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntryClass))
+#define LIGMA_TYPE_COMBO_TAG_ENTRY            (ligma_combo_tag_entry_get_type ())
+#define LIGMA_COMBO_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COMBO_TAG_ENTRY, LigmaComboTagEntry))
+#define LIGMA_COMBO_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COMBO_TAG_ENTRY, LigmaComboTagEntryClass))
+#define LIGMA_IS_COMBO_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COMBO_TAG_ENTRY))
+#define LIGMA_IS_COMBO_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COMBO_TAG_ENTRY))
+#define LIGMA_COMBO_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COMBO_TAG_ENTRY, LigmaComboTagEntryClass))
 
 
-typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;
+typedef struct _LigmaComboTagEntryClass  LigmaComboTagEntryClass;
 
-struct _GimpComboTagEntry
+struct _LigmaComboTagEntry
 {
-  GimpTagEntry  parent_instance;
+  LigmaTagEntry  parent_instance;
 
   GtkWidget    *popup;
 };
 
-struct _GimpComboTagEntryClass
+struct _LigmaComboTagEntryClass
 {
-  GimpTagEntryClass  parent_class;
+  LigmaTagEntryClass  parent_class;
 };
 
 
-GType       gimp_combo_tag_entry_get_type (void) G_GNUC_CONST;
+GType       ligma_combo_tag_entry_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_combo_tag_entry_new      (GimpTaggedContainer *container,
-                                           GimpTagEntryMode     mode);
+GtkWidget * ligma_combo_tag_entry_new      (LigmaTaggedContainer *container,
+                                           LigmaTagEntryMode     mode);
 
 
-#endif  /*  __GIMP_COMBO_TAG_ENTRY_H__  */
+#endif  /*  __LIGMA_COMBO_TAG_ENTRY_H__  */

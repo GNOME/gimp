@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,45 +22,45 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimplist.h"
-#include "core/gimppickable.h"
-#include "core/gimpsettings.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalist.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasettings.h"
 
-#include "widgets/gimpbuffersourcebox.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimppickablebutton.h"
+#include "widgets/ligmabuffersourcebox.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmapickablebutton.h"
 
-#include "propgui/gimppropgui.h"
+#include "propgui/ligmapropgui.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolgui.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolgui.h"
 
-#include "gimpfilteroptions.h"
-#include "gimpoperationtool.h"
+#include "ligmafilteroptions.h"
+#include "ligmaoperationtool.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _AuxInput AuxInput;
 
 struct _AuxInput
 {
-  GimpOperationTool *tool;
+  LigmaOperationTool *tool;
   gchar             *pad;
   GeglNode          *node;
   GtkWidget         *box;
@@ -69,133 +69,133 @@ struct _AuxInput
 
 /*  local function prototypes  */
 
-static void        gimp_operation_tool_finalize        (GObject           *object);
+static void        ligma_operation_tool_finalize        (GObject           *object);
 
-static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
-                                                        GimpDisplay       *display,
+static gboolean    ligma_operation_tool_initialize      (LigmaTool          *tool,
+                                                        LigmaDisplay       *display,
                                                         GError           **error);
-static void        gimp_operation_tool_control         (GimpTool          *tool,
-                                                        GimpToolAction     action,
-                                                        GimpDisplay       *display);
+static void        ligma_operation_tool_control         (LigmaTool          *tool,
+                                                        LigmaToolAction     action,
+                                                        LigmaDisplay       *display);
 
-static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
+static gchar     * ligma_operation_tool_get_operation   (LigmaFilterTool    *filter_tool,
                                                         gchar            **description);
-static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
-static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
-static void        gimp_operation_tool_set_config      (GimpFilterTool    *filter_tool,
-                                                        GimpConfig        *config);
-static void        gimp_operation_tool_region_changed  (GimpFilterTool    *filter_tool);
-static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filter_tool,
+static void        ligma_operation_tool_dialog          (LigmaFilterTool    *filter_tool);
+static void        ligma_operation_tool_reset           (LigmaFilterTool    *filter_tool);
+static void        ligma_operation_tool_set_config      (LigmaFilterTool    *filter_tool,
+                                                        LigmaConfig        *config);
+static void        ligma_operation_tool_region_changed  (LigmaFilterTool    *filter_tool);
+static void        ligma_operation_tool_color_picked    (LigmaFilterTool    *filter_tool,
                                                         gpointer           identifier,
                                                         gdouble            x,
                                                         gdouble            y,
                                                         const Babl        *sample_format,
-                                                        const GimpRGB     *color);
+                                                        const LigmaRGB     *color);
 
-static void        gimp_operation_tool_halt            (GimpOperationTool *op_tool);
-static void        gimp_operation_tool_commit          (GimpOperationTool *op_tool);
+static void        ligma_operation_tool_halt            (LigmaOperationTool *op_tool);
+static void        ligma_operation_tool_commit          (LigmaOperationTool *op_tool);
 
-static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
+static void        ligma_operation_tool_sync_op         (LigmaOperationTool *op_tool,
                                                         gboolean           sync_colors);
-static void        gimp_operation_tool_create_gui      (GimpOperationTool *tool);
-static void        gimp_operation_tool_add_gui         (GimpOperationTool *tool);
+static void        ligma_operation_tool_create_gui      (LigmaOperationTool *tool);
+static void        ligma_operation_tool_add_gui         (LigmaOperationTool *tool);
 
-static AuxInput *  gimp_operation_tool_aux_input_new   (GimpOperationTool *tool,
+static AuxInput *  ligma_operation_tool_aux_input_new   (LigmaOperationTool *tool,
                                                         GeglNode          *operation,
                                                         const gchar       *input_pad,
                                                         const gchar       *label);
-static void        gimp_operation_tool_aux_input_detach(AuxInput          *input);
-static void        gimp_operation_tool_aux_input_clear (AuxInput          *input);
-static void        gimp_operation_tool_aux_input_free  (AuxInput          *input);
+static void        ligma_operation_tool_aux_input_detach(AuxInput          *input);
+static void        ligma_operation_tool_aux_input_clear (AuxInput          *input);
+static void        ligma_operation_tool_aux_input_free  (AuxInput          *input);
 
-static void        gimp_operation_tool_unlink_chains   (GimpOperationTool *op_tool);
-static void        gimp_operation_tool_relink_chains   (GimpOperationTool *op_tool);
+static void        ligma_operation_tool_unlink_chains   (LigmaOperationTool *op_tool);
+static void        ligma_operation_tool_relink_chains   (LigmaOperationTool *op_tool);
 
 
-G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
-               GIMP_TYPE_FILTER_TOOL)
+G_DEFINE_TYPE (LigmaOperationTool, ligma_operation_tool,
+               LIGMA_TYPE_FILTER_TOOL)
 
-#define parent_class gimp_operation_tool_parent_class
+#define parent_class ligma_operation_tool_parent_class
 
 
 void
-gimp_operation_tool_register (GimpToolRegisterCallback  callback,
+ligma_operation_tool_register (LigmaToolRegisterCallback  callback,
                               gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_OPERATION_TOOL,
-                GIMP_TYPE_FILTER_OPTIONS,
-                gimp_color_options_gui,
-                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
-                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
-                "gimp-operation-tool",
+  (* callback) (LIGMA_TYPE_OPERATION_TOOL,
+                LIGMA_TYPE_FILTER_OPTIONS,
+                ligma_color_options_gui,
+                LIGMA_CONTEXT_PROP_MASK_FOREGROUND |
+                LIGMA_CONTEXT_PROP_MASK_BACKGROUND,
+                "ligma-operation-tool",
                 _("GEGL Operation"),
                 _("Operation Tool: Use an arbitrary GEGL operation"),
                 NULL, NULL,
-                NULL, GIMP_HELP_TOOL_GEGL,
-                GIMP_ICON_GEGL,
+                NULL, LIGMA_HELP_TOOL_GEGL,
+                LIGMA_ICON_GEGL,
                 data);
 }
 
 static void
-gimp_operation_tool_class_init (GimpOperationToolClass *klass)
+ligma_operation_tool_class_init (LigmaOperationToolClass *klass)
 {
   GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
-  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
-  GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
+  LigmaToolClass       *tool_class        = LIGMA_TOOL_CLASS (klass);
+  LigmaFilterToolClass *filter_tool_class = LIGMA_FILTER_TOOL_CLASS (klass);
 
-  object_class->finalize            = gimp_operation_tool_finalize;
+  object_class->finalize            = ligma_operation_tool_finalize;
 
-  tool_class->initialize            = gimp_operation_tool_initialize;
-  tool_class->control               = gimp_operation_tool_control;
+  tool_class->initialize            = ligma_operation_tool_initialize;
+  tool_class->control               = ligma_operation_tool_control;
 
-  filter_tool_class->get_operation  = gimp_operation_tool_get_operation;
-  filter_tool_class->dialog         = gimp_operation_tool_dialog;
-  filter_tool_class->reset          = gimp_operation_tool_reset;
-  filter_tool_class->set_config     = gimp_operation_tool_set_config;
-  filter_tool_class->region_changed = gimp_operation_tool_region_changed;
-  filter_tool_class->color_picked   = gimp_operation_tool_color_picked;
+  filter_tool_class->get_operation  = ligma_operation_tool_get_operation;
+  filter_tool_class->dialog         = ligma_operation_tool_dialog;
+  filter_tool_class->reset          = ligma_operation_tool_reset;
+  filter_tool_class->set_config     = ligma_operation_tool_set_config;
+  filter_tool_class->region_changed = ligma_operation_tool_region_changed;
+  filter_tool_class->color_picked   = ligma_operation_tool_color_picked;
 }
 
 static void
-gimp_operation_tool_init (GimpOperationTool *op_tool)
+ligma_operation_tool_init (LigmaOperationTool *op_tool)
 {
 }
 
 static void
-gimp_operation_tool_finalize (GObject *object)
+ligma_operation_tool_finalize (GObject *object)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (object);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (object);
 
   g_clear_pointer (&op_tool->operation,   g_free);
   g_clear_pointer (&op_tool->description, g_free);
 
   g_list_free_full (op_tool->aux_inputs,
-                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
+                    (GDestroyNotify) ligma_operation_tool_aux_input_free);
   op_tool->aux_inputs = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
-gimp_operation_tool_initialize (GimpTool     *tool,
-                                GimpDisplay  *display,
+ligma_operation_tool_initialize (LigmaTool     *tool,
+                                LigmaDisplay  *display,
                                 GError      **error)
 {
-  if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+  if (LIGMA_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
-      GimpFilterTool    *filter_tool = GIMP_FILTER_TOOL (tool);
-      GimpOperationTool *op_tool     = GIMP_OPERATION_TOOL (tool);
+      LigmaFilterTool    *filter_tool = LIGMA_FILTER_TOOL (tool);
+      LigmaOperationTool *op_tool     = LIGMA_OPERATION_TOOL (tool);
 
       if (filter_tool->config)
         {
           GtkWidget *options_gui;
 
-          gimp_operation_tool_sync_op (op_tool, TRUE);
+          ligma_operation_tool_sync_op (op_tool, TRUE);
           options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
           if (! options_gui)
             {
-              gimp_operation_tool_create_gui (op_tool);
-              gimp_operation_tool_add_gui (op_tool);
+              ligma_operation_tool_create_gui (op_tool);
+              ligma_operation_tool_add_gui (op_tool);
             }
           else
             {
@@ -210,35 +210,35 @@ gimp_operation_tool_initialize (GimpTool     *tool,
 }
 
 static void
-gimp_operation_tool_control (GimpTool       *tool,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
+ligma_operation_tool_control (LigmaTool       *tool,
+                             LigmaToolAction  action,
+                             LigmaDisplay    *display)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_operation_tool_halt (op_tool);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_operation_tool_halt (op_tool);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_operation_tool_commit (op_tool);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_operation_tool_commit (op_tool);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gchar *
-gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
+ligma_operation_tool_get_operation (LigmaFilterTool  *filter_tool,
                                    gchar          **description)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (filter_tool);
 
   *description = g_strdup (op_tool->description);
 
@@ -246,15 +246,15 @@ gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
 }
 
 static void
-gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
+ligma_operation_tool_dialog (LigmaFilterTool *filter_tool)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (filter_tool);
   GtkWidget         *main_vbox;
   GtkWidget         *options_sw;
   GtkWidget         *options_gui;
   GtkWidget         *options_box;
 
-  main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
+  main_vbox = ligma_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  The options scrolled window  */
   options_sw = gtk_scrolled_window_new (NULL, NULL);
@@ -278,46 +278,46 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   if (options_gui)
     {
-      gimp_operation_tool_add_gui (op_tool);
+      ligma_operation_tool_add_gui (op_tool);
       g_object_unref (options_gui);
     }
 }
 
 static void
-gimp_operation_tool_reset (GimpFilterTool *filter_tool)
+ligma_operation_tool_reset (LigmaFilterTool *filter_tool)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (filter_tool);
 
-  gimp_operation_tool_unlink_chains (op_tool);
+  ligma_operation_tool_unlink_chains (op_tool);
 
-  GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
+  LIGMA_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
-  if (filter_tool->config && GIMP_TOOL (op_tool)->drawables)
-    gimp_operation_tool_sync_op (op_tool, TRUE);
+  if (filter_tool->config && LIGMA_TOOL (op_tool)->drawables)
+    ligma_operation_tool_sync_op (op_tool, TRUE);
 
-  gimp_operation_tool_relink_chains (op_tool);
+  ligma_operation_tool_relink_chains (op_tool);
 }
 
 static void
-gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
-                                GimpConfig     *config)
+ligma_operation_tool_set_config (LigmaFilterTool *filter_tool,
+                                LigmaConfig     *config)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (filter_tool);
 
-  gimp_operation_tool_unlink_chains (op_tool);
+  ligma_operation_tool_unlink_chains (op_tool);
 
-  GIMP_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
+  LIGMA_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
 
-  if (filter_tool->config && GIMP_TOOL (op_tool)->drawables)
-    gimp_operation_tool_sync_op (op_tool, FALSE);
+  if (filter_tool->config && LIGMA_TOOL (op_tool)->drawables)
+    ligma_operation_tool_sync_op (op_tool, FALSE);
 
-  gimp_operation_tool_relink_chains (op_tool);
+  ligma_operation_tool_relink_chains (op_tool);
 }
 
 static void
-gimp_operation_tool_region_changed (GimpFilterTool *filter_tool)
+ligma_operation_tool_region_changed (LigmaFilterTool *filter_tool)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+  LigmaOperationTool *op_tool = LIGMA_OPERATION_TOOL (filter_tool);
 
   /* when the region changes, do we want the operation's on-canvas
    * controller to move to a new position, or the operation to
@@ -330,16 +330,16 @@ gimp_operation_tool_region_changed (GimpFilterTool *filter_tool)
   if (filter_tool->widget)
     g_signal_emit_by_name (filter_tool->widget, "changed");
 
-  gimp_operation_tool_sync_op (op_tool, FALSE);
+  ligma_operation_tool_sync_op (op_tool, FALSE);
 }
 
 static void
-gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
+ligma_operation_tool_color_picked (LigmaFilterTool  *filter_tool,
                                   gpointer         identifier,
                                   gdouble          x,
                                   gdouble          y,
                                   const Babl      *sample_format,
-                                  const GimpRGB   *color)
+                                  const LigmaRGB   *color)
 {
   gchar **pspecs = g_strsplit (identifier, ":", 2);
 
@@ -351,7 +351,7 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
       gint           off_x, off_y;
       GeglRectangle  area;
 
-      gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+      ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
       x -= off_x + area.x;
       y -= off_y + area.y;
@@ -368,7 +368,7 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
           g_value_init (&value_x, G_PARAM_SPEC_VALUE_TYPE (pspec_x));
           g_value_init (&value_y, G_PARAM_SPEC_VALUE_TYPE (pspec_y));
 
-#define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
+#define HAS_KEY(p,k,v) ligma_gegl_param_spec_has_key (p, k, v)
 
           if (HAS_KEY (pspec_x, "unit", "relative-coordinate") &&
               HAS_KEY (pspec_y, "unit", "relative-coordinate"))
@@ -424,41 +424,41 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
 }
 
 static void
-gimp_operation_tool_halt (GimpOperationTool *op_tool)
+ligma_operation_tool_halt (LigmaOperationTool *op_tool)
 {
   /*  don't reset op_tool->operation and op_tool->description so the
    *  tool can be properly restarted by clicking on an image
    */
 
   g_list_free_full (op_tool->aux_inputs,
-                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
+                    (GDestroyNotify) ligma_operation_tool_aux_input_free);
   op_tool->aux_inputs = NULL;
 }
 
 static void
-gimp_operation_tool_commit (GimpOperationTool *op_tool)
+ligma_operation_tool_commit (LigmaOperationTool *op_tool)
 {
   /*  remove the aux input boxes from the dialog, so they don't get
    *  destroyed when the parent class runs its commit()
    */
 
   g_list_foreach (op_tool->aux_inputs,
-                  (GFunc) gimp_operation_tool_aux_input_detach, NULL);
+                  (GFunc) ligma_operation_tool_aux_input_detach, NULL);
 }
 
 static void
-gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
+ligma_operation_tool_sync_op (LigmaOperationTool *op_tool,
                              gboolean           sync_colors)
 {
-  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (op_tool);
-  GimpToolOptions  *options     = GIMP_TOOL_GET_OPTIONS (op_tool);
+  LigmaFilterTool   *filter_tool = LIGMA_FILTER_TOOL (op_tool);
+  LigmaToolOptions  *options     = LIGMA_TOOL_GET_OPTIONS (op_tool);
   GParamSpec      **pspecs;
   guint             n_pspecs;
   gint              off_x, off_y;
   GeglRectangle     area;
   gint              i;
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (filter_tool->config),
                                            &n_pspecs);
@@ -467,7 +467,7 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
     {
       GParamSpec *pspec = pspecs[i];
 
-#define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
+#define HAS_KEY(p,k,v) ligma_gegl_param_spec_has_key (p, k, v)
 
       if (HAS_KEY (pspec, "role", "output-extent"))
         {
@@ -496,16 +496,16 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
         {
           if (HAS_KEY (pspec, "role", "color-primary"))
             {
-              GimpRGB color;
+              LigmaRGB color;
 
-              gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+              ligma_context_get_foreground (LIGMA_CONTEXT (options), &color);
               g_object_set (filter_tool->config, pspec->name, &color, NULL);
             }
           else if (sync_colors && HAS_KEY (pspec, "role", "color-secondary"))
             {
-              GimpRGB color;
+              LigmaRGB color;
 
-              gimp_context_get_background (GIMP_CONTEXT (options), &color);
+              ligma_context_get_background (LIGMA_CONTEXT (options), &color);
               g_object_set (filter_tool->config, pspec->name, &color, NULL);
             }
         }
@@ -515,23 +515,23 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 }
 
 static void
-gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
+ligma_operation_tool_create_gui (LigmaOperationTool *op_tool)
 {
-  GimpFilterTool  *filter_tool = GIMP_FILTER_TOOL (op_tool);
+  LigmaFilterTool  *filter_tool = LIGMA_FILTER_TOOL (op_tool);
   GtkWidget       *options_gui;
   gint             off_x, off_y;
   GeglRectangle    area;
   gchar          **input_pads;
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   options_gui =
-    gimp_prop_gui_new (G_OBJECT (filter_tool->config),
+    ligma_prop_gui_new (G_OBJECT (filter_tool->config),
                        G_TYPE_FROM_INSTANCE (filter_tool->config), 0,
                        &area,
-                       GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (op_tool)),
-                       (GimpCreatePickerFunc) gimp_filter_tool_add_color_picker,
-                       (GimpCreateControllerFunc) gimp_filter_tool_add_controller,
+                       LIGMA_CONTEXT (LIGMA_TOOL_GET_OPTIONS (op_tool)),
+                       (LigmaCreatePickerFunc) ligma_filter_tool_add_color_picker,
+                       (LigmaCreateControllerFunc) ligma_filter_tool_add_controller,
                        filter_tool);
   g_weak_ref_set (&op_tool->options_gui_ref, options_gui);
 
@@ -560,7 +560,7 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
                                    _("Aux\\1 Input"),
                                    0, NULL);
 
-          input = gimp_operation_tool_aux_input_new (op_tool,
+          input = ligma_operation_tool_aux_input_new (op_tool,
                                                      filter_tool->operation,
                                                      input_pads[i], label);
 
@@ -576,7 +576,7 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
 }
 
 static void
-gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
+ligma_operation_tool_add_gui (LigmaOperationTool *op_tool)
 {
   GtkSizeGroup   *size_group  = NULL;
   GtkWidget      *options_gui;
@@ -602,7 +602,7 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
         size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
       toggle =
-        gimp_buffer_source_box_get_toggle (GIMP_BUFFER_SOURCE_BOX (input->box));
+        ligma_buffer_source_box_get_toggle (LIGMA_BUFFER_SOURCE_BOX (input->box));
 
       gtk_size_group_add_widget (size_group, toggle);
 
@@ -617,8 +617,8 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
   gtk_box_pack_start (GTK_BOX (options_box), options_gui, TRUE, TRUE, 0);
   gtk_widget_show (options_gui);
 
-  shell = GTK_WIDGET (gimp_display_get_shell (GIMP_TOOL (op_tool)->display));
-  gdk_monitor_get_workarea (gimp_widget_get_monitor (shell), &workarea);
+  shell = GTK_WIDGET (ligma_display_get_shell (LIGMA_TOOL (op_tool)->display));
+  gdk_monitor_get_workarea (ligma_widget_get_monitor (shell), &workarea);
   gtk_widget_get_preferred_size (options_box, &minimum, NULL);
 
   scrolling = minimum.height > workarea.height / 2;
@@ -642,16 +642,16 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
 /*  aux input utility functions  */
 
 static void
-gimp_operation_tool_aux_input_notify (GimpBufferSourceBox *box,
+ligma_operation_tool_aux_input_notify (LigmaBufferSourceBox *box,
                                       const GParamSpec    *pspec,
                                       AuxInput            *input)
 {
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (input->tool);
+  LigmaFilterTool *filter_tool = LIGMA_FILTER_TOOL (input->tool);
 
-  /* emit "notify" so GimpFilterTool will update its preview
+  /* emit "notify" so LigmaFilterTool will update its preview
    *
-   * FIXME: this is a bad hack that should go away once GimpImageMap
-   * and GimpFilterTool are refactored to be more filter-ish.
+   * FIXME: this is a bad hack that should go away once LigmaImageMap
+   * and LigmaFilterTool are refactored to be more filter-ish.
    */
   if (filter_tool->config)
     g_signal_emit_by_name (filter_tool->config,
@@ -659,13 +659,13 @@ gimp_operation_tool_aux_input_notify (GimpBufferSourceBox *box,
 }
 
 static AuxInput *
-gimp_operation_tool_aux_input_new (GimpOperationTool *op_tool,
+ligma_operation_tool_aux_input_new (LigmaOperationTool *op_tool,
                                    GeglNode          *operation,
                                    const gchar       *input_pad,
                                    const gchar       *label)
 {
   AuxInput    *input = g_slice_new (AuxInput);
-  GimpContext *context;
+  LigmaContext *context;
 
   input->tool = op_tool;
   input->pad  = g_strdup (input_pad);
@@ -676,25 +676,25 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *op_tool,
   gegl_node_connect_to (input->node, "output",
                         operation,   input_pad);
 
-  context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (op_tool));
+  context = LIGMA_CONTEXT (LIGMA_TOOL_GET_OPTIONS (op_tool));
 
-  input->box = gimp_buffer_source_box_new (context, input->node, label);
+  input->box = ligma_buffer_source_box_new (context, input->node, label);
 
   /* make AuxInput owner of the box */
   g_object_ref_sink (input->box);
 
   g_signal_connect (input->box, "notify::pickable",
-                    G_CALLBACK (gimp_operation_tool_aux_input_notify),
+                    G_CALLBACK (ligma_operation_tool_aux_input_notify),
                     input);
   g_signal_connect (input->box, "notify::enabled",
-                    G_CALLBACK (gimp_operation_tool_aux_input_notify),
+                    G_CALLBACK (ligma_operation_tool_aux_input_notify),
                     input);
 
   return input;
 }
 
 static void
-gimp_operation_tool_aux_input_detach (AuxInput *input)
+ligma_operation_tool_aux_input_detach (AuxInput *input)
 {
   GtkWidget *parent = gtk_widget_get_parent (input->box);
 
@@ -703,9 +703,9 @@ gimp_operation_tool_aux_input_detach (AuxInput *input)
 }
 
 static void
-gimp_operation_tool_aux_input_clear (AuxInput *input)
+ligma_operation_tool_aux_input_clear (AuxInput *input)
 {
-  gimp_operation_tool_aux_input_detach (input);
+  ligma_operation_tool_aux_input_detach (input);
 
   g_object_set (input->box,
                 "pickable", NULL,
@@ -713,9 +713,9 @@ gimp_operation_tool_aux_input_clear (AuxInput *input)
 }
 
 static void
-gimp_operation_tool_aux_input_free (AuxInput *input)
+ligma_operation_tool_aux_input_free (AuxInput *input)
 {
-  gimp_operation_tool_aux_input_clear (input);
+  ligma_operation_tool_aux_input_clear (input);
 
   g_free (input->pad);
   g_object_unref (input->node);
@@ -725,7 +725,7 @@ gimp_operation_tool_aux_input_free (AuxInput *input)
 }
 
 static void
-gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
+ligma_operation_tool_unlink_chains (LigmaOperationTool *op_tool)
 {
   GObject *options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   GList   *chains;
@@ -736,17 +736,17 @@ gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
 
   while (chains)
     {
-      GimpChainButton *chain = chains->data;
+      LigmaChainButton *chain = chains->data;
       gboolean         active;
 
-      active = gimp_chain_button_get_active (chain);
+      active = ligma_chain_button_get_active (chain);
 
       g_object_set_data (G_OBJECT (chain), "was-active",
                          GINT_TO_POINTER (active));
 
       if (active)
         {
-          gimp_chain_button_set_active (chain, FALSE);
+          ligma_chain_button_set_active (chain, FALSE);
         }
 
       chains = chains->next;
@@ -756,9 +756,9 @@ gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
 }
 
 static void
-gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
+ligma_operation_tool_relink_chains (LigmaOperationTool *op_tool)
 {
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (op_tool);
+  LigmaFilterTool *filter_tool = LIGMA_FILTER_TOOL (op_tool);
   GObject        *options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   GList          *chains;
 
@@ -768,7 +768,7 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
 
   while (chains)
     {
-      GimpChainButton *chain = chains->data;
+      LigmaChainButton *chain = chains->data;
 
       if (g_object_get_data (G_OBJECT (chain), "was-active"))
         {
@@ -789,7 +789,7 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
               g_value_get_double (&double_x) ==
               g_value_get_double (&double_y))
             {
-              gimp_chain_button_set_active (chain, TRUE);
+              ligma_chain_button_set_active (chain, TRUE);
             }
 
           g_value_unset (&double_x);
@@ -810,7 +810,7 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
 /*  public functions  */
 
 void
-gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
+ligma_operation_tool_set_operation (LigmaOperationTool *op_tool,
                                    const gchar       *operation,
                                    const gchar       *title,
                                    const gchar       *description,
@@ -818,14 +818,14 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
                                    const gchar       *icon_name,
                                    const gchar       *help_id)
 {
-  GimpTool       *tool;
-  GimpFilterTool *filter_tool;
+  LigmaTool       *tool;
+  LigmaFilterTool *filter_tool;
   GtkWidget      *options_gui;
 
-  g_return_if_fail (GIMP_IS_OPERATION_TOOL (op_tool));
+  g_return_if_fail (LIGMA_IS_OPERATION_TOOL (op_tool));
 
-  tool        = GIMP_TOOL (op_tool);
-  filter_tool = GIMP_FILTER_TOOL (op_tool);
+  tool        = LIGMA_TOOL (op_tool);
+  filter_tool = LIGMA_FILTER_TOOL (op_tool);
 
   g_free (op_tool->operation);
   g_free (op_tool->description);
@@ -833,21 +833,21 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
   op_tool->operation   = g_strdup (operation);
   op_tool->description = g_strdup (description);
 
-  gimp_tool_set_label     (tool, title);
-  gimp_tool_set_undo_desc (tool, undo_desc);
-  gimp_tool_set_icon_name (tool, icon_name);
-  gimp_tool_set_help_id   (tool, help_id);
+  ligma_tool_set_label     (tool, title);
+  ligma_tool_set_undo_desc (tool, undo_desc);
+  ligma_tool_set_icon_name (tool, icon_name);
+  ligma_tool_set_help_id   (tool, help_id);
 
   g_list_free_full (op_tool->aux_inputs,
-                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
+                    (GDestroyNotify) ligma_operation_tool_aux_input_free);
   op_tool->aux_inputs = NULL;
 
-  gimp_filter_tool_set_widget (filter_tool, NULL);
+  ligma_filter_tool_set_widget (filter_tool, NULL);
 
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   if (options_gui)
     {
-      gimp_filter_tool_disable_color_picking (filter_tool);
+      ligma_filter_tool_disable_color_picking (filter_tool);
       g_object_unref (options_gui);
       gtk_widget_destroy (options_gui);
     }
@@ -855,21 +855,21 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
   if (! operation)
     return;
 
-  gimp_filter_tool_get_operation (filter_tool);
+  ligma_filter_tool_get_operation (filter_tool);
 
   if (tool->drawables)
-    gimp_operation_tool_sync_op (op_tool, TRUE);
+    ligma_operation_tool_sync_op (op_tool, TRUE);
 
   if (filter_tool->config && tool->display)
     {
       GtkWidget *options_box;
 
-      gimp_operation_tool_create_gui (op_tool);
+      ligma_operation_tool_create_gui (op_tool);
 
       options_box = g_weak_ref_get (&op_tool->options_box_ref);
       if (options_box)
         {
-          gimp_operation_tool_add_gui (op_tool);
+          ligma_operation_tool_add_gui (op_tool);
           g_object_unref (options_box);
         }
     }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockcontainer.h
+ * ligmadockcontainer.h
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCK_CONTAINER_H__
-#define __GIMP_DOCK_CONTAINER_H__
+#ifndef __LIGMA_DOCK_CONTAINER_H__
+#define __LIGMA_DOCK_CONTAINER_H__
 
 
-#define GIMP_TYPE_DOCK_CONTAINER (gimp_dock_container_get_type ())
-G_DECLARE_INTERFACE (GimpDockContainer, gimp_dock_container, GIMP, DOCK_CONTAINER, GtkWidget)
+#define LIGMA_TYPE_DOCK_CONTAINER (ligma_dock_container_get_type ())
+G_DECLARE_INTERFACE (LigmaDockContainer, ligma_dock_container, LIGMA, DOCK_CONTAINER, GtkWidget)
 
 
-struct _GimpDockContainerInterface
+struct _LigmaDockContainerInterface
 {
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GList             * (* get_docks)          (GimpDockContainer   *container);
-  GimpDialogFactory * (* get_dialog_factory) (GimpDockContainer   *container);
-  GimpUIManager     * (* get_ui_manager)     (GimpDockContainer   *container);
-  void                (* add_dock)           (GimpDockContainer   *container,
-                                              GimpDock            *dock,
-                                              GimpSessionInfoDock *dock_info);
-  GimpAlignmentType   (* get_dock_side)      (GimpDockContainer   *container,
-                                              GimpDock            *dock);
+  GList             * (* get_docks)          (LigmaDockContainer   *container);
+  LigmaDialogFactory * (* get_dialog_factory) (LigmaDockContainer   *container);
+  LigmaUIManager     * (* get_ui_manager)     (LigmaDockContainer   *container);
+  void                (* add_dock)           (LigmaDockContainer   *container,
+                                              LigmaDock            *dock,
+                                              LigmaSessionInfoDock *dock_info);
+  LigmaAlignmentType   (* get_dock_side)      (LigmaDockContainer   *container,
+                                              LigmaDock            *dock);
 };
 
 
-GList             * gimp_dock_container_get_docks          (GimpDockContainer   *container);
-GimpDialogFactory * gimp_dock_container_get_dialog_factory (GimpDockContainer   *container);
-GimpUIManager     * gimp_dock_container_get_ui_manager     (GimpDockContainer   *container);
-void                gimp_dock_container_add_dock           (GimpDockContainer   *container,
-                                                            GimpDock            *dock,
-                                                            GimpSessionInfoDock *dock_info);
-GimpAlignmentType   gimp_dock_container_get_dock_side      (GimpDockContainer   *container,
-                                                            GimpDock            *dock);
+GList             * ligma_dock_container_get_docks          (LigmaDockContainer   *container);
+LigmaDialogFactory * ligma_dock_container_get_dialog_factory (LigmaDockContainer   *container);
+LigmaUIManager     * ligma_dock_container_get_ui_manager     (LigmaDockContainer   *container);
+void                ligma_dock_container_add_dock           (LigmaDockContainer   *container,
+                                                            LigmaDock            *dock,
+                                                            LigmaSessionInfoDock *dock_info);
+LigmaAlignmentType   ligma_dock_container_get_dock_side      (LigmaDockContainer   *container,
+                                                            LigmaDock            *dock);
 
 
-#endif  /*  __GIMP_DOCK_CONTAINER_H__  */
+#endif  /*  __LIGMA_DOCK_CONTAINER_H__  */

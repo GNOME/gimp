@@ -1,156 +1,156 @@
 
-typedef GType (* GimpGetTypeFunc) (void);
+typedef GType (* LigmaGetTypeFunc) (void);
 
-static const GimpGetTypeFunc get_type_funcs[] =
+static const LigmaGetTypeFunc get_type_funcs[] =
 {
   gegl_distance_metric_get_type,
-  gimp_add_mask_type_get_type,
-  gimp_brush_application_mode_get_type,
-  gimp_brush_generated_shape_get_type,
-  gimp_cap_style_get_type,
-  gimp_channel_ops_get_type,
-  gimp_channel_type_get_type,
-  gimp_clone_type_get_type,
-  gimp_color_management_mode_get_type,
-  gimp_color_rendering_intent_get_type,
-  gimp_color_tag_get_type,
-  gimp_component_type_get_type,
-  gimp_convert_dither_type_get_type,
-  gimp_convert_palette_type_get_type,
-  gimp_convolve_type_get_type,
-  gimp_desaturate_mode_get_type,
-  gimp_dodge_burn_type_get_type,
-  gimp_fill_type_get_type,
-  gimp_foreground_extract_mode_get_type,
-  gimp_gradient_blend_color_space_get_type,
-  gimp_gradient_segment_color_get_type,
-  gimp_gradient_segment_type_get_type,
-  gimp_gradient_type_get_type,
-  gimp_grid_style_get_type,
-  gimp_histogram_channel_get_type,
-  gimp_hue_range_get_type,
-  gimp_icon_type_get_type,
-  gimp_image_base_type_get_type,
-  gimp_image_type_get_type,
-  gimp_ink_blob_type_get_type,
-  gimp_interpolation_type_get_type,
-  gimp_join_style_get_type,
-  gimp_layer_color_space_get_type,
-  gimp_layer_composite_mode_get_type,
-  gimp_layer_mode_get_type,
-  gimp_mask_apply_mode_get_type,
-  gimp_merge_type_get_type,
-  gimp_message_handler_type_get_type,
-  gimp_offset_type_get_type,
-  gimp_orientation_type_get_type,
-  gimp_pdb_error_handler_get_type,
-  gimp_pdb_proc_type_get_type,
-  gimp_pdb_status_type_get_type,
-  gimp_paint_application_mode_get_type,
-  gimp_precision_get_type,
-  gimp_progress_command_get_type,
-  gimp_repeat_mode_get_type,
-  gimp_rotation_type_get_type,
-  gimp_run_mode_get_type,
-  gimp_select_criterion_get_type,
-  gimp_size_type_get_type,
-  gimp_stack_trace_mode_get_type,
-  gimp_stroke_method_get_type,
-  gimp_text_direction_get_type,
-  gimp_text_hint_style_get_type,
-  gimp_text_justification_get_type,
-  gimp_transfer_mode_get_type,
-  gimp_transform_direction_get_type,
-  gimp_transform_resize_get_type,
-  gimp_vectors_stroke_type_get_type
+  ligma_add_mask_type_get_type,
+  ligma_brush_application_mode_get_type,
+  ligma_brush_generated_shape_get_type,
+  ligma_cap_style_get_type,
+  ligma_channel_ops_get_type,
+  ligma_channel_type_get_type,
+  ligma_clone_type_get_type,
+  ligma_color_management_mode_get_type,
+  ligma_color_rendering_intent_get_type,
+  ligma_color_tag_get_type,
+  ligma_component_type_get_type,
+  ligma_convert_dither_type_get_type,
+  ligma_convert_palette_type_get_type,
+  ligma_convolve_type_get_type,
+  ligma_desaturate_mode_get_type,
+  ligma_dodge_burn_type_get_type,
+  ligma_fill_type_get_type,
+  ligma_foreground_extract_mode_get_type,
+  ligma_gradient_blend_color_space_get_type,
+  ligma_gradient_segment_color_get_type,
+  ligma_gradient_segment_type_get_type,
+  ligma_gradient_type_get_type,
+  ligma_grid_style_get_type,
+  ligma_histogram_channel_get_type,
+  ligma_hue_range_get_type,
+  ligma_icon_type_get_type,
+  ligma_image_base_type_get_type,
+  ligma_image_type_get_type,
+  ligma_ink_blob_type_get_type,
+  ligma_interpolation_type_get_type,
+  ligma_join_style_get_type,
+  ligma_layer_color_space_get_type,
+  ligma_layer_composite_mode_get_type,
+  ligma_layer_mode_get_type,
+  ligma_mask_apply_mode_get_type,
+  ligma_merge_type_get_type,
+  ligma_message_handler_type_get_type,
+  ligma_offset_type_get_type,
+  ligma_orientation_type_get_type,
+  ligma_pdb_error_handler_get_type,
+  ligma_pdb_proc_type_get_type,
+  ligma_pdb_status_type_get_type,
+  ligma_paint_application_mode_get_type,
+  ligma_precision_get_type,
+  ligma_progress_command_get_type,
+  ligma_repeat_mode_get_type,
+  ligma_rotation_type_get_type,
+  ligma_run_mode_get_type,
+  ligma_select_criterion_get_type,
+  ligma_size_type_get_type,
+  ligma_stack_trace_mode_get_type,
+  ligma_stroke_method_get_type,
+  ligma_text_direction_get_type,
+  ligma_text_hint_style_get_type,
+  ligma_text_justification_get_type,
+  ligma_transfer_mode_get_type,
+  ligma_transform_direction_get_type,
+  ligma_transform_resize_get_type,
+  ligma_vectors_stroke_type_get_type
 };
 
 static const gchar * const type_names[] =
 {
   "GeglDistanceMetric",
-  "GimpAddMaskType",
-  "GimpBrushApplicationMode",
-  "GimpBrushGeneratedShape",
-  "GimpCapStyle",
-  "GimpChannelOps",
-  "GimpChannelType",
-  "GimpCloneType",
-  "GimpColorManagementMode",
-  "GimpColorRenderingIntent",
-  "GimpColorTag",
-  "GimpComponentType",
-  "GimpConvertDitherType",
-  "GimpConvertPaletteType",
-  "GimpConvolveType",
-  "GimpDesaturateMode",
-  "GimpDodgeBurnType",
-  "GimpFillType",
-  "GimpForegroundExtractMode",
-  "GimpGradientBlendColorSpace",
-  "GimpGradientSegmentColor",
-  "GimpGradientSegmentType",
-  "GimpGradientType",
-  "GimpGridStyle",
-  "GimpHistogramChannel",
-  "GimpHueRange",
-  "GimpIconType",
-  "GimpImageBaseType",
-  "GimpImageType",
-  "GimpInkBlobType",
-  "GimpInterpolationType",
-  "GimpJoinStyle",
-  "GimpLayerColorSpace",
-  "GimpLayerCompositeMode",
-  "GimpLayerMode",
-  "GimpMaskApplyMode",
-  "GimpMergeType",
-  "GimpMessageHandlerType",
-  "GimpOffsetType",
-  "GimpOrientationType",
-  "GimpPDBErrorHandler",
-  "GimpPDBProcType",
-  "GimpPDBStatusType",
-  "GimpPaintApplicationMode",
-  "GimpPrecision",
-  "GimpProgressCommand",
-  "GimpRepeatMode",
-  "GimpRotationType",
-  "GimpRunMode",
-  "GimpSelectCriterion",
-  "GimpSizeType",
-  "GimpStackTraceMode",
-  "GimpStrokeMethod",
-  "GimpTextDirection",
-  "GimpTextHintStyle",
-  "GimpTextJustification",
-  "GimpTransferMode",
-  "GimpTransformDirection",
-  "GimpTransformResize",
-  "GimpVectorsStrokeType"
+  "LigmaAddMaskType",
+  "LigmaBrushApplicationMode",
+  "LigmaBrushGeneratedShape",
+  "LigmaCapStyle",
+  "LigmaChannelOps",
+  "LigmaChannelType",
+  "LigmaCloneType",
+  "LigmaColorManagementMode",
+  "LigmaColorRenderingIntent",
+  "LigmaColorTag",
+  "LigmaComponentType",
+  "LigmaConvertDitherType",
+  "LigmaConvertPaletteType",
+  "LigmaConvolveType",
+  "LigmaDesaturateMode",
+  "LigmaDodgeBurnType",
+  "LigmaFillType",
+  "LigmaForegroundExtractMode",
+  "LigmaGradientBlendColorSpace",
+  "LigmaGradientSegmentColor",
+  "LigmaGradientSegmentType",
+  "LigmaGradientType",
+  "LigmaGridStyle",
+  "LigmaHistogramChannel",
+  "LigmaHueRange",
+  "LigmaIconType",
+  "LigmaImageBaseType",
+  "LigmaImageType",
+  "LigmaInkBlobType",
+  "LigmaInterpolationType",
+  "LigmaJoinStyle",
+  "LigmaLayerColorSpace",
+  "LigmaLayerCompositeMode",
+  "LigmaLayerMode",
+  "LigmaMaskApplyMode",
+  "LigmaMergeType",
+  "LigmaMessageHandlerType",
+  "LigmaOffsetType",
+  "LigmaOrientationType",
+  "LigmaPDBErrorHandler",
+  "LigmaPDBProcType",
+  "LigmaPDBStatusType",
+  "LigmaPaintApplicationMode",
+  "LigmaPrecision",
+  "LigmaProgressCommand",
+  "LigmaRepeatMode",
+  "LigmaRotationType",
+  "LigmaRunMode",
+  "LigmaSelectCriterion",
+  "LigmaSizeType",
+  "LigmaStackTraceMode",
+  "LigmaStrokeMethod",
+  "LigmaTextDirection",
+  "LigmaTextHintStyle",
+  "LigmaTextJustification",
+  "LigmaTransferMode",
+  "LigmaTransformDirection",
+  "LigmaTransformResize",
+  "LigmaVectorsStrokeType"
 };
 
 static gboolean enums_initialized = FALSE;
 
 #if 0
 /*  keep around as documentation how to do compat enums  */
-GType gimp_convert_dither_type_compat_get_type (void);
+GType ligma_convert_dither_type_compat_get_type (void);
 #endif
 
 /**
- * gimp_enums_init:
+ * ligma_enums_init:
  *
  * This function makes sure all the enum types are registered
  * with the #GType system. This is intended for use by language
- * bindings that need the symbols early, before gimp_main is run.
+ * bindings that need the symbols early, before ligma_main is run.
  * It's not necessary for plug-ins to call this directly, because
  * the normal plug-in initialization code will handle it implicitly.
  *
  * Since: 2.4
  **/
 void
-gimp_enums_init (void)
+ligma_enums_init (void)
 {
-  const GimpGetTypeFunc *funcs = get_type_funcs;
+  const LigmaGetTypeFunc *funcs = get_type_funcs;
 #if 0
   GQuark                 quark;
 #endif
@@ -170,22 +170,22 @@ gimp_enums_init (void)
   /*  keep around as documentation how to do compat enums  */
 
   /*  keep compat enum code in sync with app/app.c (app_libs_init)  */
-  quark = g_quark_from_static_string ("gimp-compat-enum");
+  quark = g_quark_from_static_string ("ligma-compat-enum");
 
-  g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
-		    (gpointer) gimp_convert_dither_type_compat_get_type ());
+  g_type_set_qdata (LIGMA_TYPE_CONVERT_DITHER_TYPE, quark,
+		    (gpointer) ligma_convert_dither_type_compat_get_type ());
 #endif
 
-  gimp_base_compat_enums_init ();
+  ligma_base_compat_enums_init ();
 
   enums_initialized = TRUE;
 }
 
 /**
- * gimp_enums_get_type_names:
+ * ligma_enums_get_type_names:
  * @n_type_names: (out): return location for the number of names
  *
- * This function gives access to the list of enums registered by libgimp.
+ * This function gives access to the list of enums registered by libligma.
  * The returned array is static and must not be modified.
  *
  * Returns: (transfer none): an array with type names
@@ -193,7 +193,7 @@ gimp_enums_init (void)
  * Since: 2.2
  **/
 const gchar **
-gimp_enums_get_type_names (gint *n_type_names)
+ligma_enums_get_type_names (gint *n_type_names)
 {
   g_return_val_if_fail (n_type_names != NULL, NULL);
 

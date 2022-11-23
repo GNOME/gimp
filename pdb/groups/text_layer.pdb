@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # New Text PDB API
@@ -24,9 +24,9 @@ sub text_layer_new {
     $help = <<'HELP';
 This procedure creates a new text layer. The arguments are kept as
 simple as necessary for the normal case. All text attributes, however,
-can be modified with the appropriate gimp_text_layer_set_*()
+can be modified with the appropriate ligma_text_layer_set_*()
 procedures. The new layer still needs to be added to the image, as
-this is not automatic. Add the new layer using gimp_image_insert_layer().
+this is not automatic. Add the new layer using ligma_image_insert_layer().
 HELP
 
     &marcus_pdb_misc('2008', '2.6');
@@ -54,12 +54,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpText *gimp_text;
-  GimpRGB   color;
+  LigmaText *ligma_text;
+  LigmaRGB   color;
 
-  gimp_context_get_foreground (context, &color);
+  ligma_context_get_foreground (context, &color);
   
-  gimp_text = g_object_new (GIMP_TYPE_TEXT,
+  ligma_text = g_object_new (LIGMA_TYPE_TEXT,
                             "text",           text,
                             "font",           fontname,
                             "font-size",      size,
@@ -67,12 +67,12 @@ HELP
                             "color",          &color,
                             NULL);
   
-  layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
-  g_object_unref (gimp_text);
+  layer = LIGMA_TEXT_LAYER (ligma_text_layer_new (image, ligma_text));
+  g_object_unref (ligma_text);
 
   if (! layer)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Failed to create text layer"));
 
       success = FALSE;
@@ -104,7 +104,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "text", &text,
                 NULL);
 }
@@ -131,7 +131,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "text", text,
                        NULL);
@@ -164,7 +164,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "markup", &markup,
                 NULL);
 }
@@ -180,7 +180,7 @@ This procedure sets the markup of the styles for a text layer.
 The markup should be in the form of Pango's markup - See
 https://docs.gtk.org/Pango/pango_markup.html for a reference.
 
-Note that GIMP's text tool does not support all of Pango markup. Any unsupported
+Note that LIGMA's text tool does not support all of Pango markup. Any unsupported
 markup will still be applied to your text layer, yet would be dropped as soon as
 you edit text with the tool.
 HELP
@@ -211,7 +211,7 @@ HELP
 
   if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
     {
-      gimp_text_layer_set (layer,
+      ligma_text_layer_set (layer,
                            _("Set text layer markup"),
                            "markup", markup_ptr,
                            NULL);
@@ -249,7 +249,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "font", &font,
                 NULL);
 }
@@ -276,7 +276,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "font", font,
                        NULL);
@@ -311,7 +311,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-   g_object_get (gimp_text_layer_get_text (layer),
+   g_object_get (ligma_text_layer_get_text (layer),
                  "font-size",      &font_size,
                  "font-size-unit", &unit,
                  NULL);
@@ -342,7 +342,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "font-size-unit", unit,
                        "font-size",      font_size,
@@ -374,7 +374,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "antialias", &antialias,
                 NULL);
 }
@@ -401,7 +401,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "antialias", antialias,
                        NULL);
@@ -427,14 +427,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'style', type => 'enum GimpTextHintStyle',
+        { name => 'style', type => 'enum LigmaTextHintStyle',
           desc => 'The hint style used for font outlines' }
     );
     
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "hint-style", &style,
                 NULL);
 }
@@ -456,14 +456,14 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'style', type => 'enum GimpTextHintStyle',
+        { name => 'style', type => 'enum LigmaTextHintStyle',
           desc => 'The new hint style' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "hint-style", style,
                        NULL);
@@ -494,7 +494,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "kerning", &kerning,
                 NULL);
 }
@@ -521,7 +521,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "kerning", kerning,
                        NULL);
@@ -553,7 +553,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "language", &language,
                 NULL);
 }
@@ -581,7 +581,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "language", language,
                        NULL);
@@ -606,14 +606,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'direction', type => 'enum GimpTextDirection',
+        { name => 'direction', type => 'enum LigmaTextDirection',
           desc => 'The based direction used for the text layer.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "base-direction", &direction,
                 NULL);
 }
@@ -634,14 +634,14 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'direction', type => 'enum GimpTextDirection',
+        { name => 'direction', type => 'enum LigmaTextDirection',
           desc => 'The base direction of the text.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "base-direction", direction,
                        NULL);
@@ -666,14 +666,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'justify', type => 'enum GimpTextJustification',
+        { name => 'justify', type => 'enum LigmaTextJustification',
           desc => 'The justification used in the text layer.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "justify", &justify,
                 NULL);
 }
@@ -694,14 +694,14 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'justify', type => 'enum GimpTextJustification',
+        { name => 'justify', type => 'enum LigmaTextJustification',
           desc => 'The justification for your text.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "justify", justify,
                        NULL);
@@ -732,7 +732,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  color = gimp_text_layer_get_text (layer)->color;
+  color = ligma_text_layer_get_text (layer)->color;
 }
 CODE
     );
@@ -757,7 +757,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "color", &color,
                        NULL);
@@ -788,7 +788,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "indent", &indent,
                 NULL);
 }
@@ -815,7 +815,7 @@ HELP
      %invoke = (
          code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "indent", indent,
                        NULL);
@@ -846,7 +846,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "line-spacing", &line_spacing,
                 NULL);
 }
@@ -873,7 +873,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "line-spacing", line_spacing,
                        NULL);
@@ -905,7 +905,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  g_object_get (gimp_text_layer_get_text (layer),
+  g_object_get (ligma_text_layer_get_text (layer),
                 "letter-spacing", &letter_spacing,
                 NULL);
 }
@@ -933,7 +933,7 @@ HELP
     %invoke = (    
         code => <<'CODE'
 {
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "letter-spacing", letter_spacing,
                        NULL);
@@ -948,7 +948,7 @@ sub text_layer_resize {
     $help = <<'HELP';
 This procedure changes the width and height of a text layer while
 keeping it as a text layer and not converting it to a bitmap like
-gimp_layer_resize() would do.
+ligma_layer_resize() would do.
 HELP
 
     barak_pdb_misc('2009', '2.8');
@@ -956,28 +956,28 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'width', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'width', type => '0.0 <= float <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The new box width in pixels' },
-        { name => 'height', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'height', type => '0.0 <= float <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'The new box height in pixels' },
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpText *text = gimp_text_layer_get_text (layer);
+  LigmaText *text = ligma_text_layer_get_text (layer);
   gdouble   xres, yres;
 
-  gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
+  ligma_image_get_resolution (ligma_item_get_image (LIGMA_ITEM (layer)),
                              &xres, &yres);
 
-  gimp_text_layer_set (layer,
+  ligma_text_layer_set (layer,
                        _("Set text layer attribute"),
-                       "box-mode",   GIMP_TEXT_BOX_FIXED,
-                       "box-width",  gimp_pixels_to_units (width,
+                       "box-mode",   LIGMA_TEXT_BOX_FIXED,
+                       "box-width",  ligma_pixels_to_units (width,
                                                            text->box_unit,
                                                            xres),
-                       "box-height", gimp_pixels_to_units (height,
+                       "box-height", ligma_pixels_to_units (height,
                                                            text->box_unit,
                                                            yres),
                        NULL);
@@ -988,13 +988,13 @@ CODE
 
 
 @headers = qw(<pango/pango.h>
-              "libgimpbase/gimpbase.h"
-              "core/gimpcontext.h"
-              "text/gimptext.h"
-              "text/gimptextlayer.h"
-              "gimppdb-utils.h"
-              "gimppdberror.h"
-              "gimp-intl.h");
+              "libligmabase/ligmabase.h"
+              "core/ligmacontext.h"
+              "text/ligmatext.h"
+              "text/ligmatextlayer.h"
+              "ligmapdb-utils.h"
+              "ligmapdberror.h"
+              "ligma-intl.h");
 
 @procs = qw(text_layer_new
             text_layer_get_text
@@ -1030,7 +1030,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text layer procedures';
-$doc_title = 'gimptextlayer';
+$doc_title = 'ligmatextlayer';
 $doc_short_desc = 'Functions for querying and manipulating text layers.';
 $doc_long_desc = 'Functions for querying and manipulating text layers.';
 

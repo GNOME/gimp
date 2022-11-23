@@ -9,10 +9,10 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    height="16.000025"
-   id="gimp-warning"
+   id="ligma-warning"
    viewBox="0 0 16.000446 16.000025"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-warning.svg"
+   sodipodi:docname="ligma-warning.svg"
    width="100%">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -33,7 +33,7 @@
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="gimp-warning"
+     inkscape:current-layer="ligma-warning"
      showguides="false">
     <inkscape:grid
        type="xygrid"
@@ -46,13 +46,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>

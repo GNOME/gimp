@@ -1,4 +1,4 @@
-# Swedish messages for GIMP Python.
+# Swedish messages for LIGMA Python.
 # Copyright © 2000-2003, 2007-2010, 2016, 2020, 2021, 2022 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-16 19:22+0000\n"
 "PO-Revision-Date: 2022-08-17 10:17+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
@@ -477,8 +477,8 @@ msgid "Python _Console"
 msgstr "Python-_konsol"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktiv GIMP Python-tolk"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktiv LIGMA Python-tolk"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -831,8 +831,8 @@ msgstr ""
 "eller spara till bana"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spirogimp"
+msgid "Spyroligma"
+msgstr "Spiroligma"
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -932,5 +932,5 @@ msgstr ""
 "Storleken och platsen för mönstret baseras på aktuell markering."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Spirogimp…"
+msgid "Spyroligma..."
+msgstr "Spiroligma…"

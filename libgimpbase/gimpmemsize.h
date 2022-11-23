@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,42 +16,42 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_MEMSIZE_H__
-#define __GIMP_MEMSIZE_H__
+#ifndef __LIGMA_MEMSIZE_H__
+#define __LIGMA_MEMSIZE_H__
 
 G_BEGIN_DECLS
 
 
 /**
- * GIMP_TYPE_MEMSIZE:
+ * LIGMA_TYPE_MEMSIZE:
  *
- * #GIMP_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
+ * #LIGMA_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
  **/
 
-#define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
-#define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
+#define LIGMA_TYPE_MEMSIZE               (ligma_memsize_get_type ())
+#define LIGMA_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_MEMSIZE))
 
-GType      gimp_memsize_get_type         (void) G_GNUC_CONST;
+GType      ligma_memsize_get_type         (void) G_GNUC_CONST;
 
-gchar    * gimp_memsize_serialize        (guint64      memsize) G_GNUC_MALLOC;
-gboolean   gimp_memsize_deserialize      (const gchar *string,
+gchar    * ligma_memsize_serialize        (guint64      memsize) G_GNUC_MALLOC;
+gboolean   ligma_memsize_deserialize      (const gchar *string,
                                           guint64     *memsize);
 
 
 /*
- * GIMP_TYPE_PARAM_MEMSIZE
+ * LIGMA_TYPE_PARAM_MEMSIZE
  */
 
-#define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
-#define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MEMSIZE))
+#define LIGMA_TYPE_PARAM_MEMSIZE           (ligma_param_memsize_get_type ())
+#define LIGMA_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_MEMSIZE))
 
-GType        gimp_param_memsize_get_type  (void) G_GNUC_CONST;
+GType        ligma_param_memsize_get_type  (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_memsize      (const gchar  *name,
+GParamSpec * ligma_param_spec_memsize      (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            guint64       minimum,
@@ -62,4 +62,4 @@ GParamSpec * gimp_param_spec_memsize      (const gchar  *name,
 
 G_END_DECLS
 
-#endif  /* __GIMP_MEMSIZE_H__ */
+#endif  /* __LIGMA_MEMSIZE_H__ */

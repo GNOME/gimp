@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEST_SESSION_UTILS_H__
-#define __GIMP_TEST_SESSION_UTILS_H__
+#ifndef __LIGMA_TEST_SESSION_UTILS_H__
+#define __LIGMA_TEST_SESSION_UTILS_H__
 
 
-void gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
+void ligma_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
                                                      const gchar *loaded_dockrc,
                                                      const gchar *expected_sessionrc,
                                                      const gchar *expected_dockrc,
                                                      gboolean     single_window_mode);
 
 
-#endif /* __GIMP_TEST_SESSION_UTILS_H__ */
+#endif /* __LIGMA_TEST_SESSION_UTILS_H__ */

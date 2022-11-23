@@ -1,6 +1,6 @@
 ;The Scheme code in this file provides some compatibility with scripts that
 ;were originally written for use with the older SIOD based Script-Fu plug-in
-;of GIMP.
+;of LIGMA.
 ;
 ;All items defined in this file except for the random number routines are
 ;deprecated. Existing scripts should be updated to avoid the use of the

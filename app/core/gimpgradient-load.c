@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,28 +25,28 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "gimp-utils.h"
-#include "gimpgradient.h"
-#include "gimpgradient-load.h"
+#include "ligma-utils.h"
+#include "ligmagradient.h"
+#include "ligmagradient-load.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GList *
-gimp_gradient_load (GimpContext   *context,
+ligma_gradient_load (LigmaContext   *context,
                     GFile         *file,
                     GInputStream  *input,
                     GError       **error)
 {
-  GimpGradient        *gradient = NULL;
-  GimpGradientSegment *prev;
+  LigmaGradient        *gradient = NULL;
+  LigmaGradientSegment *prev;
   gint                 num_segments;
   gint                 i;
   GDataInputStream    *data_input;
@@ -62,28 +62,28 @@ gimp_gradient_load (GimpContext   *context,
 
   linenum = 1;
   line_len = 1024;
-  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+  line = ligma_data_input_stream_read_line_always (data_input, &line_len,
                                                   NULL, error);
   if (! line)
     goto failed;
 
-  if (! g_str_has_prefix (line, "GIMP Gradient"))
+  if (! g_str_has_prefix (line, "LIGMA Gradient"))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Not a GIMP gradient file."));
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
+                   _("Not a LIGMA gradient file."));
       g_free (line);
       goto failed;
     }
 
   g_free (line);
 
-  gradient = g_object_new (GIMP_TYPE_GRADIENT,
-                           "mime-type", "application/x-gimp-gradient",
+  gradient = g_object_new (LIGMA_TYPE_GRADIENT,
+                           "mime-type", "application/x-ligma-gradient",
                            NULL);
 
   linenum++;
   line_len = 1024;
-  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+  line = ligma_data_input_stream_read_line_always (data_input, &line_len,
                                                   NULL, error);
   if (! line)
     goto failed;
@@ -92,24 +92,24 @@ gimp_gradient_load (GimpContext   *context,
     {
       gchar *utf8;
 
-      utf8 = gimp_any_to_utf8 (g_strstrip (line + strlen ("Name: ")), -1,
+      utf8 = ligma_any_to_utf8 (g_strstrip (line + strlen ("Name: ")), -1,
                                _("Invalid UTF-8 string in gradient file '%s'."),
-                               gimp_file_get_utf8_name (file));
-      gimp_object_take_name (GIMP_OBJECT (gradient), utf8);
+                               ligma_file_get_utf8_name (file));
+      ligma_object_take_name (LIGMA_OBJECT (gradient), utf8);
 
       g_free (line);
 
       linenum++;
       line_len = 1024;
-      line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+      line = ligma_data_input_stream_read_line_always (data_input, &line_len,
                                                       NULL, error);
       if (! line)
         goto failed;
     }
   else /* old gradient format */
     {
-      gimp_object_take_name (GIMP_OBJECT (gradient),
-                             g_path_get_basename (gimp_file_get_utf8_name (file)));
+      ligma_object_take_name (LIGMA_OBJECT (gradient),
+                             g_path_get_basename (ligma_file_get_utf8_name (file)));
     }
 
   num_segments = atoi (line);
@@ -118,7 +118,7 @@ gimp_gradient_load (GimpContext   *context,
 
   if (num_segments < 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("File is corrupt."));
       goto failed;
     }
@@ -127,14 +127,14 @@ gimp_gradient_load (GimpContext   *context,
 
   for (i = 0; i < num_segments; i++)
     {
-      GimpGradientSegment *seg;
+      LigmaGradientSegment *seg;
       gchar               *end;
       gint                 color;
       gint                 type;
       gint                 left_color_type;
       gint                 right_color_type;
 
-      seg = gimp_gradient_segment_new ();
+      seg = ligma_gradient_segment_new ();
 
       seg->prev = prev;
 
@@ -145,26 +145,26 @@ gimp_gradient_load (GimpContext   *context,
 
       linenum++;
       line_len = 1024;
-      line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+      line = ligma_data_input_stream_read_line_always (data_input, &line_len,
                                                       NULL, error);
       if (! line)
         goto failed;
 
-      if (! gimp_ascii_strtod (line, &end, &seg->left)          ||
-          ! gimp_ascii_strtod (end,  &end, &seg->middle)        ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right)         ||
+      if (! ligma_ascii_strtod (line, &end, &seg->left)          ||
+          ! ligma_ascii_strtod (end,  &end, &seg->middle)        ||
+          ! ligma_ascii_strtod (end,  &end, &seg->right)         ||
 
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.r)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.g)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.b)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.a)  ||
+          ! ligma_ascii_strtod (end,  &end, &seg->left_color.r)  ||
+          ! ligma_ascii_strtod (end,  &end, &seg->left_color.g)  ||
+          ! ligma_ascii_strtod (end,  &end, &seg->left_color.b)  ||
+          ! ligma_ascii_strtod (end,  &end, &seg->left_color.a)  ||
 
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.r) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.g) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.b) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.a))
+          ! ligma_ascii_strtod (end,  &end, &seg->right_color.r) ||
+          ! ligma_ascii_strtod (end,  &end, &seg->right_color.g) ||
+          ! ligma_ascii_strtod (end,  &end, &seg->right_color.b) ||
+          ! ligma_ascii_strtod (end,  &end, &seg->right_color.a))
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
           g_free (line);
           goto failed;
@@ -175,21 +175,21 @@ gimp_gradient_load (GimpContext   *context,
                       &left_color_type, &right_color_type))
         {
         case 4:
-          seg->left_color_type  = (GimpGradientColor) left_color_type;
-          if (seg->left_color_type < GIMP_GRADIENT_COLOR_FIXED ||
-              seg->left_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+          seg->left_color_type  = (LigmaGradientColor) left_color_type;
+          if (seg->left_color_type < LIGMA_GRADIENT_COLOR_FIXED ||
+              seg->left_color_type > LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
             {
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+              g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               g_free (line);
               goto failed;
             }
 
-          seg->right_color_type = (GimpGradientColor) right_color_type;
-          if (seg->right_color_type < GIMP_GRADIENT_COLOR_FIXED ||
-              seg->right_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+          seg->right_color_type = (LigmaGradientColor) right_color_type;
+          if (seg->right_color_type < LIGMA_GRADIENT_COLOR_FIXED ||
+              seg->right_color_type > LIGMA_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
             {
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+              g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               g_free (line);
               goto failed;
@@ -197,21 +197,21 @@ gimp_gradient_load (GimpContext   *context,
           /* fall thru */
 
         case 2:
-          seg->type  = (GimpGradientSegmentType) type;
-          if (seg->type < GIMP_GRADIENT_SEGMENT_LINEAR ||
-              seg->type > GIMP_GRADIENT_SEGMENT_STEP)
+          seg->type  = (LigmaGradientSegmentType) type;
+          if (seg->type < LIGMA_GRADIENT_SEGMENT_LINEAR ||
+              seg->type > LIGMA_GRADIENT_SEGMENT_STEP)
             {
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+              g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               g_free (line);
               goto failed;
             }
 
-          seg->color = (GimpGradientSegmentColor) color;
-          if (seg->color < GIMP_GRADIENT_SEGMENT_RGB ||
-              seg->color > GIMP_GRADIENT_SEGMENT_HSV_CW)
+          seg->color = (LigmaGradientSegmentColor) color;
+          if (seg->color < LIGMA_GRADIENT_SEGMENT_RGB ||
+              seg->color > LIGMA_GRADIENT_SEGMENT_HSV_CW)
             {
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+              g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               g_free (line);
               goto failed;
@@ -219,7 +219,7 @@ gimp_gradient_load (GimpContext   *context,
           break;
 
         default:
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
           g_free (line);
           goto failed;
@@ -232,7 +232,7 @@ gimp_gradient_load (GimpContext   *context,
           (  prev && (prev->right != seg->left)) ||
           (! prev && (0.0         != seg->left)))
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Segments do not span the range 0-1."));
           goto failed;
         }
@@ -242,7 +242,7 @@ gimp_gradient_load (GimpContext   *context,
 
   if (prev->right != 1.0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Segments do not span the range 0-1."));
       goto failed;
     }
@@ -268,7 +268,7 @@ gimp_gradient_load (GimpContext   *context,
 
 typedef struct
 {
-  GimpGradient *gradient;  /*  current gradient    */
+  LigmaGradient *gradient;  /*  current gradient    */
   GList        *gradients; /*  finished gradients  */
   GList        *stops;
 } SvgParser;
@@ -276,7 +276,7 @@ typedef struct
 typedef struct
 {
   gdouble       offset;
-  GimpRGB       color;
+  LigmaRGB       color;
 } SvgStop;
 
 
@@ -291,7 +291,7 @@ static void      svg_parser_end_element   (GMarkupParseContext  *context,
                                            gpointer              user_data,
                                            GError              **error);
 
-static GimpGradientSegment *
+static LigmaGradientSegment *
                  svg_parser_gradient_segments   (GList          *stops);
 
 static SvgStop * svg_parse_gradient_stop        (const gchar   **names,
@@ -309,12 +309,12 @@ static const GMarkupParser markup_parser =
 
 
 GList *
-gimp_gradient_load_svg (GimpContext   *context,
+ligma_gradient_load_svg (LigmaContext   *context,
                         GFile         *file,
                         GInputStream  *input,
                         GError       **error)
 {
-  GimpXmlParser *xml_parser;
+  LigmaXmlParser *xml_parser;
   SvgParser      parser = { NULL, };
   gboolean       success;
 
@@ -325,15 +325,15 @@ gimp_gradient_load_svg (GimpContext   *context,
   /* FIXME input */
   g_input_stream_close (input, NULL, NULL);
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
+  xml_parser = ligma_xml_parser_new (&markup_parser, &parser);
 
-  success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
+  success = ligma_xml_parser_parse_gfile (xml_parser, file, error);
 
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
 
   if (success && ! parser.gradients)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("No linear gradients found."));
     }
 
@@ -376,7 +376,7 @@ svg_parser_start_element (GMarkupParseContext  *context,
           attribute_values++;
         }
 
-      parser->gradient = g_object_new (GIMP_TYPE_GRADIENT,
+      parser->gradient = g_object_new (LIGMA_TYPE_GRADIENT,
                                        "name",      name,
                                        "mime-type", "image/svg+xml",
                                        NULL);
@@ -429,10 +429,10 @@ svg_parser_end_element (GMarkupParseContext  *context,
     }
 }
 
-static GimpGradientSegment *
+static LigmaGradientSegment *
 svg_parser_gradient_segments (GList *stops)
 {
-  GimpGradientSegment *segment;
+  LigmaGradientSegment *segment;
   SvgStop             *stop;
   GList               *list;
 
@@ -441,7 +441,7 @@ svg_parser_gradient_segments (GList *stops)
 
   stop = stops->data;
 
-  segment = gimp_gradient_segment_new ();
+  segment = ligma_gradient_segment_new ();
 
   segment->left_color  = stop->color;
   segment->right_color = stop->color;
@@ -449,12 +449,12 @@ svg_parser_gradient_segments (GList *stops)
   /*  the list of offsets is sorted from largest to smallest  */
   for (list = g_list_next (stops); list; list = g_list_next (list))
     {
-      GimpGradientSegment *next = segment;
+      LigmaGradientSegment *next = segment;
 
       segment->left   = stop->offset;
       segment->middle = (segment->left + segment->right) / 2.0;
 
-      segment = gimp_gradient_segment_new ();
+      segment = ligma_gradient_segment_new ();
 
       segment->next = next;
       next->prev    = segment;
@@ -472,7 +472,7 @@ svg_parser_gradient_segments (GList *stops)
   if (stop->offset > 0.0)
     segment->right_color = stop->color;
 
-  /*  FIXME: remove empty segments here or add a GimpGradient API to do that
+  /*  FIXME: remove empty segments here or add a LigmaGradient API to do that
    */
 
   return segment;
@@ -485,14 +485,14 @@ svg_parse_gradient_stop_style_prop (SvgStop     *stop,
 {
   if (strcmp (name, "stop-color") == 0)
     {
-      gimp_rgb_parse_css (&stop->color, value, -1);
+      ligma_rgb_parse_css (&stop->color, value, -1);
     }
   else if (strcmp (name, "stop-opacity") == 0)
     {
       gdouble opacity = g_ascii_strtod (value, NULL);
 
       if (errno != ERANGE)
-        gimp_rgb_set_alpha (&stop->color, CLAMP (opacity, 0.0, 1.0));
+        ligma_rgb_set_alpha (&stop->color, CLAMP (opacity, 0.0, 1.0));
     }
 }
 
@@ -543,7 +543,7 @@ svg_parse_gradient_stop (const gchar **names,
 {
   SvgStop *stop = g_slice_new0 (SvgStop);
 
-  gimp_rgb_set_alpha (&stop->color, 1.0);
+  ligma_rgb_set_alpha (&stop->color, 1.0);
 
   while (*names && *values)
     {

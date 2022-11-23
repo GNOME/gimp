@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,82 +27,82 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppattern.h"
-#include "core/gimptempbuf.h"
-#include "gegl/gimp-babl-compat.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapattern.h"
+#include "core/ligmatempbuf.h"
+#include "gegl/ligma-babl-compat.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-pattern_get_info_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+pattern_get_info_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint width = 0;
   gint height = 0;
   gint bpp = 0;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+      LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
       if (pattern)
         {
           const Babl *format;
 
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pattern->mask));
+          format = ligma_babl_compat_u8_format (
+            ligma_temp_buf_get_format (pattern->mask));
 
-          width  = gimp_temp_buf_get_width  (pattern->mask);
-          height = gimp_temp_buf_get_height (pattern->mask);
+          width  = ligma_temp_buf_get_width  (pattern->mask);
+          height = ligma_temp_buf_get_height (pattern->mask);
           bpp    = babl_format_get_bytes_per_pixel (format);
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), bpp);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-pattern_get_pixels_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+pattern_get_pixels_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *name;
   gint width = 0;
   gint height = 0;
@@ -110,145 +110,145 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
   gint num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
-  name = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+      LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
       if (pattern)
         {
           const Babl *format;
           gpointer    data;
 
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pattern->mask));
-          data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+          format = ligma_babl_compat_u8_format (
+            ligma_temp_buf_get_format (pattern->mask));
+          data   = ligma_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
 
-          width           = gimp_temp_buf_get_width  (pattern->mask);
-          height          = gimp_temp_buf_get_height (pattern->mask);
+          width           = ligma_temp_buf_get_width  (pattern->mask);
+          height          = ligma_temp_buf_get_height (pattern->mask);
           bpp             = babl_format_get_bytes_per_pixel (format);
-          num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
+          num_color_bytes = ligma_temp_buf_get_data_size (pattern->mask);
           color_bytes     = g_memdup2 (data, num_color_bytes);
 
-          gimp_temp_buf_unlock (pattern->mask, data);
+          ligma_temp_buf_unlock (pattern->mask, data);
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), num_color_bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), color_bytes, num_color_bytes);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), num_color_bytes);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 5), color_bytes, num_color_bytes);
     }
 
   return return_vals;
 }
 
 void
-register_pattern_procs (GimpPDB *pdb)
+register_pattern_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-pattern-get-info
+   * ligma-pattern-get-info
    */
-  procedure = gimp_procedure_new (pattern_get_info_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-pattern-get-info");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (pattern_get_info_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-pattern-get-info");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve information about the specified pattern.",
                                   "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The pattern name.",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The pattern width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The pattern height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("bpp",
                                                      "bpp",
                                                      "The pattern bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-pattern-get-pixels
+   * ligma-pattern-get-pixels
    */
-  procedure = gimp_procedure_new (pattern_get_pixels_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-pattern-get-pixels");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (pattern_get_pixels_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-pattern-get-pixels");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve information about the specified pattern (including pixels).",
                                   "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The pattern name.",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The pattern width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The pattern height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("bpp",
                                                      "bpp",
                                                      "The pattern bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-color-bytes",
                                                      "num color bytes",
                                                      "Number of pattern bytes",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("color-bytes",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("color-bytes",
                                                                 "color bytes",
                                                                 "The pattern data.",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

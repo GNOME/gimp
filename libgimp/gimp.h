@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp.h
+ * ligma.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,57 +18,57 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_H__
-#define __GIMP_H__
+#ifndef __LIGMA_H__
+#define __LIGMA_H__
 
 #include <cairo.h>
 #include <glib-object.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <libgimpbase/gimpbase.h>
-#include <libgimpcolor/gimpcolor.h>
-#include <libgimpconfig/gimpconfig.h>
-#include <libgimpmath/gimpmath.h>
+#include <libligmabase/ligmabase.h>
+#include <libligmacolor/ligmacolor.h>
+#include <libligmaconfig/ligmaconfig.h>
+#include <libligmamath/ligmamath.h>
 
-#define __GIMP_H_INSIDE__
+#define __LIGMA_H_INSIDE__
 
-#include <libgimp/gimpenums.h>
-#include <libgimp/gimptypes.h>
+#include <libligma/ligmaenums.h>
+#include <libligma/ligmatypes.h>
 
-#include <libgimp/gimpbatchprocedure.h>
-#include <libgimp/gimpbrushselect.h>
-#include <libgimp/gimpchannel.h>
-#include <libgimp/gimpdisplay.h>
-#include <libgimp/gimpdrawable.h>
-#include <libgimp/gimpfontselect.h>
-#include <libgimp/gimpgimprc.h>
-#include <libgimp/gimpgradientselect.h>
-#include <libgimp/gimpimage.h>
-#include <libgimp/gimpimagecolorprofile.h>
-#include <libgimp/gimpimagemetadata.h>
-#include <libgimp/gimpimageprocedure.h>
-#include <libgimp/gimpitem.h>
-#include <libgimp/gimplayer.h>
-#include <libgimp/gimplayermask.h>
-#include <libgimp/gimploadprocedure.h>
-#include <libgimp/gimppaletteselect.h>
-#include <libgimp/gimpparamspecs.h>
-#include <libgimp/gimppatternselect.h>
-#include <libgimp/gimppdb.h>
-#include <libgimp/gimpplugin.h>
-#include <libgimp/gimpprocedureconfig.h>
-#include <libgimp/gimpprocedure-params.h>
-#include <libgimp/gimpprogress.h>
-#include <libgimp/gimpsaveprocedure.h>
-#include <libgimp/gimpselection.h>
-#include <libgimp/gimptextlayer.h>
-#include <libgimp/gimpthumbnailprocedure.h>
-#include <libgimp/gimpvectors.h>
+#include <libligma/ligmabatchprocedure.h>
+#include <libligma/ligmabrushselect.h>
+#include <libligma/ligmachannel.h>
+#include <libligma/ligmadisplay.h>
+#include <libligma/ligmadrawable.h>
+#include <libligma/ligmafontselect.h>
+#include <libligma/ligmaligmarc.h>
+#include <libligma/ligmagradientselect.h>
+#include <libligma/ligmaimage.h>
+#include <libligma/ligmaimagecolorprofile.h>
+#include <libligma/ligmaimagemetadata.h>
+#include <libligma/ligmaimageprocedure.h>
+#include <libligma/ligmaitem.h>
+#include <libligma/ligmalayer.h>
+#include <libligma/ligmalayermask.h>
+#include <libligma/ligmaloadprocedure.h>
+#include <libligma/ligmapaletteselect.h>
+#include <libligma/ligmaparamspecs.h>
+#include <libligma/ligmapatternselect.h>
+#include <libligma/ligmapdb.h>
+#include <libligma/ligmaplugin.h>
+#include <libligma/ligmaprocedureconfig.h>
+#include <libligma/ligmaprocedure-params.h>
+#include <libligma/ligmaprogress.h>
+#include <libligma/ligmasaveprocedure.h>
+#include <libligma/ligmaselection.h>
+#include <libligma/ligmatextlayer.h>
+#include <libligma/ligmathumbnailprocedure.h>
+#include <libligma/ligmavectors.h>
 
-#include <libgimp/gimp_pdb_headers.h>
+#include <libligma/ligma_pdb_headers.h>
 
-#undef __GIMP_H_INSIDE__
+#undef __LIGMA_H_INSIDE__
 
 #ifdef G_OS_WIN32
 #include <stdlib.h> /* For __argc and __argv */
@@ -77,21 +77,21 @@
 G_BEGIN_DECLS
 
 
-#define gimp_get_data      gimp_pdb_get_data
-#define gimp_get_data_size gimp_pdb_get_data_size
-#define gimp_set_data      gimp_pdb_set_data
+#define ligma_get_data      ligma_pdb_get_data
+#define ligma_get_data_size ligma_pdb_get_data_size
+#define ligma_set_data      ligma_pdb_set_data
 
 
 /**
- * GIMP_MAIN:
- * @plug_in_type: The #GType of the plug-in's #GimpPlugIn subclass
+ * LIGMA_MAIN:
+ * @plug_in_type: The #GType of the plug-in's #LigmaPlugIn subclass
  *
  * A macro that expands to the appropriate main() function for the
  * platform being compiled for.
  *
  * To use this macro, simply place a line that contains just the code
  *
- * GIMP_MAIN (MY_TYPE_PLUG_IN)
+ * LIGMA_MAIN (MY_TYPE_PLUG_IN)
  *
  * at the toplevel of your file. No semicolon should be used.
  *
@@ -110,7 +110,7 @@ G_BEGIN_DECLS
 #    endif
 #  endif
 
-#  define GIMP_MAIN(plug_in_type)                       \
+#  define LIGMA_MAIN(plug_in_type)                       \
    struct HINSTANCE__;                                  \
                                                         \
    int _stdcall                                         \
@@ -125,7 +125,7 @@ G_BEGIN_DECLS
             char *lpszCmdLine,                          \
             int   nCmdShow)                             \
    {                                                    \
-     return gimp_main (plug_in_type,                    \
+     return ligma_main (plug_in_type,                    \
                        __argc, __argv);                 \
    }                                                    \
                                                         \
@@ -135,67 +135,67 @@ G_BEGIN_DECLS
      /* Use __argc and __argv here, too, as they work   \
       * better with mingw-w64.                          \
       */                                                \
-     return gimp_main (plug_in_type,                    \
+     return ligma_main (plug_in_type,                    \
                        __argc, __argv);                 \
    }
 #else
-#  define GIMP_MAIN(plug_in_type)                       \
+#  define LIGMA_MAIN(plug_in_type)                       \
    int                                                  \
    main (int argc, char *argv[])                        \
    {                                                    \
-     return gimp_main (plug_in_type,                    \
+     return ligma_main (plug_in_type,                    \
                        argc, argv);                     \
    }
 #endif
 
 
 /* The main procedure that must be called with the plug-in's
- * GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
+ * LigmaPlugIn subclass type and the 'argc' and 'argv' that are passed
  * to "main".
  */
-gint                gimp_main                 (GType  plug_in_type,
+gint                ligma_main                 (GType  plug_in_type,
                                                gint   argc,
                                                gchar *argv[]);
 
-/* Return the GimpPlugIn singleton of this plug-in process
+/* Return the LigmaPlugIn singleton of this plug-in process
  */
-GimpPlugIn        * gimp_get_plug_in          (void);
+LigmaPlugIn        * ligma_get_plug_in          (void);
 
-/* Return the GimpPDB singleton of this plug-in process
+/* Return the LigmaPDB singleton of this plug-in process
  */
-GimpPDB           * gimp_get_pdb              (void);
+LigmaPDB           * ligma_get_pdb              (void);
 
-/* Forcefully causes the gimp library to exit and
- * close down its connection to main gimp application.
+/* Forcefully causes the ligma library to exit and
+ * close down its connection to main ligma application.
  */
-void                gimp_quit                 (void) G_GNUC_NORETURN;
+void                ligma_quit                 (void) G_GNUC_NORETURN;
 
-/* Return various constants given by the GIMP core at plug-in config time.
+/* Return various constants given by the LIGMA core at plug-in config time.
  */
-guint               gimp_tile_width           (void) G_GNUC_CONST;
-guint               gimp_tile_height          (void) G_GNUC_CONST;
-gboolean            gimp_show_help_button     (void) G_GNUC_CONST;
-gboolean            gimp_export_color_profile (void) G_GNUC_CONST;
-gboolean            gimp_export_comment       (void) G_GNUC_CONST;
-gboolean            gimp_export_exif          (void) G_GNUC_CONST;
-gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
-gboolean            gimp_export_iptc          (void) G_GNUC_CONST;
-gboolean            gimp_export_thumbnail     (void) G_GNUC_CONST;
-gint                gimp_get_num_processors   (void) G_GNUC_CONST;
-GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
-GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;
-const GimpRGB     * gimp_check_custom_color1  (void) G_GNUC_CONST;
-const GimpRGB *     gimp_check_custom_color2  (void) G_GNUC_CONST;
-GimpDisplay       * gimp_default_display      (void) G_GNUC_CONST;
-const gchar       * gimp_wm_class             (void) G_GNUC_CONST;
-const gchar       * gimp_display_name         (void) G_GNUC_CONST;
-gint                gimp_monitor_number       (void) G_GNUC_CONST;
-guint32             gimp_user_time            (void) G_GNUC_CONST;
-const gchar       * gimp_icon_theme_dir       (void) G_GNUC_CONST;
+guint               ligma_tile_width           (void) G_GNUC_CONST;
+guint               ligma_tile_height          (void) G_GNUC_CONST;
+gboolean            ligma_show_help_button     (void) G_GNUC_CONST;
+gboolean            ligma_export_color_profile (void) G_GNUC_CONST;
+gboolean            ligma_export_comment       (void) G_GNUC_CONST;
+gboolean            ligma_export_exif          (void) G_GNUC_CONST;
+gboolean            ligma_export_xmp           (void) G_GNUC_CONST;
+gboolean            ligma_export_iptc          (void) G_GNUC_CONST;
+gboolean            ligma_export_thumbnail     (void) G_GNUC_CONST;
+gint                ligma_get_num_processors   (void) G_GNUC_CONST;
+LigmaCheckSize       ligma_check_size           (void) G_GNUC_CONST;
+LigmaCheckType       ligma_check_type           (void) G_GNUC_CONST;
+const LigmaRGB     * ligma_check_custom_color1  (void) G_GNUC_CONST;
+const LigmaRGB *     ligma_check_custom_color2  (void) G_GNUC_CONST;
+LigmaDisplay       * ligma_default_display      (void) G_GNUC_CONST;
+const gchar       * ligma_wm_class             (void) G_GNUC_CONST;
+const gchar       * ligma_display_name         (void) G_GNUC_CONST;
+gint                ligma_monitor_number       (void) G_GNUC_CONST;
+guint32             ligma_user_time            (void) G_GNUC_CONST;
+const gchar       * ligma_icon_theme_dir       (void) G_GNUC_CONST;
 
-const gchar       * gimp_get_progname         (void) G_GNUC_CONST;
+const gchar       * ligma_get_progname         (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_H__ */
+#endif /* __LIGMA_H__ */

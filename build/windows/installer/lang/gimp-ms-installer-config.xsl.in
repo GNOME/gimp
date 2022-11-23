@@ -5,10 +5,10 @@
 <xsl:output method="text" omit-xml-declaration="yes" />
 
 <xsl:template match="/">
-<xsl:apply-templates select="gimp-ms-installer-config" />
+<xsl:apply-templates select="ligma-ms-installer-config" />
 </xsl:template>
 
-<xsl:template match="gimp-ms-installer-config">
+<xsl:template match="ligma-ms-installer-config">
 <xsl:apply-templates select="section" />
 </xsl:template>
 

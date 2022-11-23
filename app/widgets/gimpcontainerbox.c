@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainerbox.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontainerbox.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,58 +25,58 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
 
-#include "gimpcontainerbox.h"
-#include "gimpcontainerview.h"
-#include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimppropwidgets.h"
-#include "gimpview.h"
-#include "gimpviewrenderer.h"
+#include "ligmacontainerbox.h"
+#include "ligmacontainerview.h"
+#include "ligmadnd.h"
+#include "ligmadocked.h"
+#include "ligmapropwidgets.h"
+#include "ligmaview.h"
+#include "ligmaviewrenderer.h"
 
 
-static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *iface);
-static void   gimp_container_box_docked_iface_init (GimpDockedInterface *iface);
+static void   ligma_container_box_view_iface_init   (LigmaContainerViewInterface *iface);
+static void   ligma_container_box_docked_iface_init (LigmaDockedInterface *iface);
 
-static void   gimp_container_box_constructed       (GObject      *object);
+static void   ligma_container_box_constructed       (GObject      *object);
 
-static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
-                                                    GimpContext  *context,
+static GtkWidget * ligma_container_box_get_preview  (LigmaDocked   *docked,
+                                                    LigmaContext  *context,
                                                     GtkIconSize   size);
-static void        gimp_container_box_set_context  (GimpDocked   *docked,
-                                                    GimpContext  *context);
+static void        ligma_container_box_set_context  (LigmaDocked   *docked,
+                                                    LigmaContext  *context);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpContainerBox, gimp_container_box,
-                         GIMP_TYPE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_box_view_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_container_box_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaContainerBox, ligma_container_box,
+                         LIGMA_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_container_box_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_container_box_docked_iface_init))
 
-#define parent_class gimp_container_box_parent_class
+#define parent_class ligma_container_box_parent_class
 
 
 static void
-gimp_container_box_class_init (GimpContainerBoxClass *klass)
+ligma_container_box_class_init (LigmaContainerBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_container_box_constructed;
-  object_class->set_property = gimp_container_view_set_property;
-  object_class->get_property = gimp_container_view_get_property;
+  object_class->constructed  = ligma_container_box_constructed;
+  object_class->set_property = ligma_container_view_set_property;
+  object_class->get_property = ligma_container_view_get_property;
 
-  gimp_container_view_install_properties (object_class);
+  ligma_container_view_install_properties (object_class);
 }
 
 static void
-gimp_container_box_init (GimpContainerBox *box)
+ligma_container_box_init (LigmaContainerBox *box)
 {
   GtkWidget *sb;
 
@@ -90,46 +90,46 @@ gimp_container_box_init (GimpContainerBox *box)
 }
 
 static void
-gimp_container_box_view_iface_init (GimpContainerViewInterface *iface)
+ligma_container_box_view_iface_init (LigmaContainerViewInterface *iface)
 {
 }
 
 static void
-gimp_container_box_docked_iface_init (GimpDockedInterface *iface)
+ligma_container_box_docked_iface_init (LigmaDockedInterface *iface)
 {
-  iface->get_preview = gimp_container_box_get_preview;
-  iface->set_context = gimp_container_box_set_context;
+  iface->get_preview = ligma_container_box_get_preview;
+  iface->set_context = ligma_container_box_set_context;
 }
 
 static void
-gimp_container_box_constructed (GObject *object)
+ligma_container_box_constructed (GObject *object)
 {
-  GimpContainerBox *box = GIMP_CONTAINER_BOX (object);
+  LigmaContainerBox *box = LIGMA_CONTAINER_BOX (object);
 
   /* This is evil: the hash table of "insert_data" is created on
-   * demand when GimpContainerView API is used, using a
+   * demand when LigmaContainerView API is used, using a
    * value_free_func that is set in the interface_init functions of
-   * its implementors. Therefore, no GimpContainerView API must be
+   * its implementors. Therefore, no LigmaContainerView API must be
    * called from any init() function, because the interface_init()
    * function of a subclass that sets the right value_free_func might
    * not have been called yet, leaving the insert_data hash table
    * without memory management.
    *
-   * Call GimpContainerView API from GObject::constructed() instead,
+   * Call LigmaContainerView API from GObject::constructed() instead,
    * which runs after everything is set up correctly.
    */
-  gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (box),
+  ligma_container_view_set_dnd_widget (LIGMA_CONTAINER_VIEW (box),
                                       box->scrolled_win);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 void
-gimp_container_box_set_size_request (GimpContainerBox *box,
+ligma_container_box_set_size_request (LigmaContainerBox *box,
                                      gint              width,
                                      gint              height)
 {
-  GimpContainerView      *view;
+  LigmaContainerView      *view;
   GtkScrolledWindowClass *sw_class;
   GtkStyleContext        *sw_style;
   GtkWidget              *sb;
@@ -140,11 +140,11 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
   gint                    border_x;
   gint                    border_y;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_BOX (box));
+  g_return_if_fail (LIGMA_IS_CONTAINER_BOX (box));
 
-  view = GIMP_CONTAINER_VIEW (box);
+  view = LIGMA_CONTAINER_VIEW (box);
 
-  view_size = gimp_container_view_get_view_size (view, NULL);
+  view_size = ligma_container_view_get_view_size (view, NULL);
 
   g_return_if_fail (width  <= 0 || width  >= view_size);
   g_return_if_fail (height <= 0 || height >= view_size);
@@ -178,42 +178,42 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 }
 
 static void
-gimp_container_box_set_context (GimpDocked  *docked,
-                                GimpContext *context)
+ligma_container_box_set_context (LigmaDocked  *docked,
+                                LigmaContext *context)
 {
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (docked), context);
+  ligma_container_view_set_context (LIGMA_CONTAINER_VIEW (docked), context);
 }
 
 static GtkWidget *
-gimp_container_box_get_preview (GimpDocked   *docked,
-                                GimpContext  *context,
+ligma_container_box_get_preview (LigmaDocked   *docked,
+                                LigmaContext  *context,
                                 GtkIconSize   size)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
-  GimpContainer     *container;
+  LigmaContainerView *view = LIGMA_CONTAINER_VIEW (docked);
+  LigmaContainer     *container;
   GtkWidget         *preview;
   gint               width;
   gint               height;
   gint               border_width = 1;
   const gchar       *prop_name;
 
-  container = gimp_container_view_get_container (view);
+  container = ligma_container_view_get_container (view);
 
   g_return_val_if_fail (container != NULL, NULL);
 
   gtk_icon_size_lookup (size, &width, &height);
 
-  prop_name = gimp_context_type_to_prop_name (gimp_container_get_children_type (container));
+  prop_name = ligma_context_type_to_prop_name (ligma_container_get_children_type (container));
 
-  preview = gimp_prop_view_new (G_OBJECT (context), prop_name,
+  preview = ligma_prop_view_new (G_OBJECT (context), prop_name,
                                 context, height);
-  GIMP_VIEW (preview)->renderer->size = -1;
+  LIGMA_VIEW (preview)->renderer->size = -1;
 
-  gimp_container_view_get_view_size (view, &border_width);
+  ligma_container_view_get_view_size (view, &border_width);
 
   border_width = MIN (1, border_width);
 
-  gimp_view_renderer_set_size_full (GIMP_VIEW (preview)->renderer,
+  ligma_view_renderer_set_size_full (LIGMA_VIEW (preview)->renderer,
                                     width, height, border_width);
 
   return preview;

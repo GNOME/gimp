@@ -1,4 +1,4 @@
-# Basque translation of gimp-plug-ins.
+# Basque translation of ligma-plug-ins.
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -9,8 +9,8 @@
 # Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2018, 2019, 2020, 2021, 2022.
 #
 msgid ""
-msgstr "Project-Id-Version: gimp-plug-ins master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+msgstr "Project-Id-Version: ligma-plug-ins master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-10-16 04:09+0000\n"
 "PO-Revision-Date: 2022-10-20 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
@@ -45,7 +45,7 @@ msgstr "Ahuntza ariketa egiten C lengoaian"
 #: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:190
 #: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:212
-#: plug-ins/gimpressionist/gimp.c:178
+#: plug-ins/ligmaressionist/ligma.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
 #: plug-ins/ifs-compose/ifs-compose.c:417 plug-ins/imagemap/imap_main.c:200
 #: plug-ins/lighting/lighting-main.c:404
@@ -94,10 +94,10 @@ msgstr "Ahuntza ariketan (C)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:875
 #: plug-ins/fractal-explorer/fractal-explorer.c:1269
 #: plug-ins/gfig/gfig-dialog.c:296 plug-ins/gfig/gfig-dialog.c:646
-#: plug-ins/gfig/gfig-dialog.c:695 plug-ins/gimpressionist/brush.c:270
-#: plug-ins/gimpressionist/gimpressionist.c:142
-#: plug-ins/gimpressionist/orientmap.c:528
-#: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
+#: plug-ins/gfig/gfig-dialog.c:695 plug-ins/ligmaressionist/brush.c:270
+#: plug-ins/ligmaressionist/ligmaressionist.c:142
+#: plug-ins/ligmaressionist/orientmap.c:528
+#: plug-ins/ligmaressionist/presets.c:642 plug-ins/ligmaressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
@@ -182,9 +182,9 @@ msgstr "Ahuntza ariketan (Javascript)"
 #: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
-#: plug-ins/gimpressionist/gimpressionist.c:143
-#: plug-ins/gimpressionist/orientmap.c:529
-#: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/ligmaressionist/ligmaressionist.c:143
+#: plug-ins/ligmaressionist/orientmap.c:529
+#: plug-ins/ligmaressionist/presets.c:643 plug-ins/ligmaressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
 #: plug-ins/ifs-compose/ifs-compose.c:811
@@ -195,7 +195,7 @@ msgstr "Ahuntza ariketan (Javascript)"
 msgid "_OK"
 msgstr "_Ados"
 
-#. GIMP - The GNU Image Manipulation Program
+#. LIGMA - The GNU Image Manipulation Program
 #. Copyright (C) 1995 Spencer Kimball and Peter Mattis
 #.
 #. goat-exercise-lua.lua
@@ -214,9 +214,9 @@ msgstr "_Ados"
 #. You should have received a copy of the GNU General Public License
 #. along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #. procedure:new_return_values() crashes LGI so we construct the
-#. GimpValueArray manually.
+#. LigmaValueArray manually.
 #. Not sure why run_mode has become a string instead of testing
-#. against Gimp.RunMode.INTERACTIVE.
+#. against Ligma.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
 msgid "Exercise a goat (Lua)"
 msgstr "Ahuntza ariketan (Lua)"
@@ -257,15 +257,15 @@ msgstr "Eraman ahuntza paseo bat ematera Vala gainean"
 msgid "Exercise a goat (Vala)"
 msgstr "Ahuntza ariketa egiten (Vala)"
 
-#: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
+#: extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
 msgstr "Ahuntz-ariketak"
 
-#: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:6
+#: extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in:6
 msgid "Official Demo Plug-ins"
 msgstr "Adibideko plugin ofizialak"
 
-#: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:8
+#: extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in:8
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
@@ -467,7 +467,7 @@ msgstr "_Bertikala"
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1555
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/ligmaressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
 msgid "Background"
@@ -540,7 +540,7 @@ msgstr "Sortu xake-taula eredua"
 msgid "Checkerboard"
 msgstr "Xake-taula"
 
-#: plug-ins/common/checkerboard.c:556 plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/common/checkerboard.c:556 plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "Ta_maina:"
 
@@ -742,8 +742,8 @@ msgid "Randoms from seed (shared)"
 msgstr "Ausazkoak hazitik (partekatuak)"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
-#: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
-#: plug-ins/gimpressionist/size.c:179
+#: plug-ins/common/decompose.c:202 plug-ins/ligmaressionist/orientation.c:172
+#: plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "Ñabardura"
 
@@ -753,8 +753,8 @@ msgid "Saturation"
 msgstr "Saturazioa"
 
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
-#: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155
+#: plug-ins/common/decompose.c:204 plug-ins/ligmaressionist/orientation.c:148
+#: plug-ins/ligmaressionist/size.c:155
 msgid "Value"
 msgstr "Balioa"
 
@@ -816,7 +816,7 @@ msgstr "_Ireki"
 #: plug-ins/flame/flame.c:1112
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: plug-ins/gfig/gfig-dialog.c:696 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/gfig/gfig-dialog.c:696 plug-ins/ligmaressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:808
 #: plug-ins/ifs-compose/ifs-compose.c:2564 plug-ins/imagemap/imap_file.c:125
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
@@ -1001,7 +1001,7 @@ msgstr "Gorde CML arakatzailearen parametroak"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1332
+#: plug-ins/file-fli/fli-ligma.c:817 plug-ins/file-ico/ico-save.c:1332
 #: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
 #: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
@@ -1036,7 +1036,7 @@ msgstr "Kargatu CML arakatzailearen parametroak"
 #: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
-#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
+#: plug-ins/file-fli/fli-ligma.c:458 plug-ins/file-fli/fli-ligma.c:509
 #: plug-ins/file-icns/file-icns-load.c:517
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:794 plug-ins/file-ico/ico-load.c:958
@@ -1046,7 +1046,7 @@ msgstr "Kargatu CML arakatzailearen parametroak"
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
-#: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
+#: plug-ins/help/ligmahelplocale.c:222 plug-ins/help/ligmahelplocale.c:238
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1124,7 +1124,7 @@ msgstr "Berrantolatu kolore-mapa"
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:809
+#: plug-ins/ligmaressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:809
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Berrezarri"
@@ -1460,8 +1460,8 @@ msgstr "Tolestu kurbaren arabera"
 
 #. Preview area, top of column
 #. preview
-#: plug-ins/common/curve-bend.c:1254 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/common/curve-bend.c:1254 plug-ins/ligmaressionist/orientmap.c:589
+#: plug-ins/ligmaressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Aurrebista"
 
@@ -1937,7 +1937,7 @@ msgstr "EOF edo errorea irudiaren goiburua irakurtzean"
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:509
+#: plug-ins/file-fli/fli-ligma.c:501 plug-ins/file-icns/file-icns-load.c:509
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:786
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:172
 #: plug-ins/file-raw/file-darktable.c:413
@@ -2015,7 +2015,7 @@ msgstr "'%s': EOF edo errorea paletaren datuak irakurtzean"
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-fli/fli-ligma.c:784 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
@@ -2126,13 +2126,13 @@ msgstr "'%s' ez da DICOM fitxategia"
 
 #: plug-ins/common/file-dicom.c:576
 #, c-format
-msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "%s transferentzia-sintaxia ez da onartzen GIMPen."
+msgid "Transfer syntax %s is not supported by LIGMA."
+msgstr "%s transferentzia-sintaxia ez da onartzen LIGMAen."
 
 #: plug-ins/common/file-dicom.c:631
 #, c-format
-msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
-msgstr "GIMPek ez du %s onartzen pixeleko laginekin batera: %d"
+msgid "%s is not supported by LIGMA in combination with samples per pixel: %d"
+msgstr "LIGMAek ez du %s onartzen pixeleko laginekin batera: %d"
 
 #: plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
@@ -2144,8 +2144,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Ezin izan da irudi mota ezezagunekin lan egin"
 
 #: plug-ins/common/file-gbr.c:124
-msgid "GIMP brush"
-msgstr "GIMP brotxa"
+msgid "LIGMA brush"
+msgstr "LIGMA brotxa"
 
 #: plug-ins/common/file-gbr.c:228
 msgid "GBR format does not support multiple layers."
@@ -2342,8 +2342,8 @@ msgstr "Irudiak geruza bat baino gehiago duenean soilik esporta dezakezu animazi
 "Esportatzen saiatzen ari zaren irudiak geruza bat bakarrik dauka."
 
 #: plug-ins/common/file-gih.c:178
-msgid "GIMP brush (animated)"
-msgstr "GIMP brotxa (animatua)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA brotxa (animatua)"
 
 #: plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
@@ -3001,8 +3001,8 @@ msgid ""
 msgstr "Aukera hauek esportatutako irudiak geruza bat baino gehiago dituztenean soilik daude erabilgarri. Esportatzen ari zaren irudiak geruza bakarra du."
 
 #: plug-ins/common/file-pat.c:111
-msgid "GIMP pattern"
-msgstr "GIMP eredua"
+msgid "LIGMA pattern"
+msgstr "LIGMA eredua"
 
 #: plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
@@ -3487,16 +3487,16 @@ msgid "Invalid X resolution."
 msgstr "X bereizmen baliogabea."
 
 #: plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "Irudiaren zabalera handiegia GIMPek maneiatzeko."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Irudiaren zabalera handiegia LIGMAek maneiatzeko."
 
 #: plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "Y bereizmen baliogabea."
 
 #: plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "Irudiaren altuera handiegia GIMPek maneiatzeko."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Irudiaren altuera handiegia LIGMAek maneiatzeko."
 
 #: plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3604,7 +3604,7 @@ msgid "Gray"
 msgstr "Grisa"
 
 #: plug-ins/common/file-ps.c:3730 plug-ins/common/file-xpm.c:507
-#: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
+#: plug-ins/ligmaressionist/color.c:65 plug-ins/ligmaressionist/general.c:169
 #: plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Kolorea"
@@ -4120,9 +4120,9 @@ msgstr "'%s':\n"
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr "'%s':\n"
-"Irudiaren zabalera handiegia da GIMPek maneiatzeko"
+"Irudiaren zabalera handiegia da LIGMAek maneiatzeko"
 
 #: plug-ins/common/file-sunras.c:537 plug-ins/common/file-xbm.c:851
 #: plug-ins/common/file-xwd.c:566
@@ -4138,9 +4138,9 @@ msgstr "'%s':\n"
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr "'%s':\n"
-"Irudiaren altuera handiegia da GIMPek maneiatzeko"
+"Irudiaren altuera handiegia da LIGMAek maneiatzeko"
 
 #: plug-ins/common/file-sunras.c:581
 msgid "This image depth is not supported"
@@ -4289,8 +4289,8 @@ msgstr "Inportatu _bideak"
 
 #: plug-ins/common/file-svg.c:979
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "Inportatu SVG-ko bide-elementuak, GIMPeko bide-tresnarekin erabil ahal izateko."
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "Inportatu SVG-ko bide-elementuak, LIGMAeko bide-tresnarekin erabil ahal izateko."
 
 #: plug-ins/common/file-svg.c:987
 msgid "Merge imported paths"
@@ -5306,8 +5306,8 @@ msgstr "Lortu kolore-_laginak"
 
 #: plug-ins/common/sample-colorize.c:1416 plug-ins/common/tile-small.c:635
 #: plug-ins/fractal-explorer/fractal-explorer.c:1225
-#: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/presets.c:1060 plug-ins/gimpressionist/sizemap.c:400
+#: plug-ins/ligmaressionist/orientmap.c:527
+#: plug-ins/ligmaressionist/presets.c:1060 plug-ins/ligmaressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Aplikatu"
@@ -5546,7 +5546,7 @@ msgstr "Erabili aurreko planoaren kolorea"
 msgid "Use the background color"
 msgstr "Erabili atzeko planoaren kolorea"
 
-#: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
+#: plug-ins/common/sphere-designer.c:336 plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Solidoa"
 
@@ -5634,7 +5634,7 @@ msgstr "B_ikoiztu"
 #: plug-ins/common/sphere-designer.c:2751
 #: plug-ins/fractal-explorer/fractal-explorer.c:875
 #: plug-ins/fractal-explorer/fractal-explorer.c:1236
-#: plug-ins/gimpressionist/presets.c:1067
+#: plug-ins/ligmaressionist/presets.c:1067
 #: plug-ins/gradient-flare/gradient-flare.c:3084
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/ifs-compose/ifs-compose.c:1078 plug-ins/imagemap/imap_menu.c:172
@@ -5668,7 +5668,7 @@ msgid "Color Selection Dialog"
 msgstr "Kolorea hautatzeko elkarrizketa-koadroa"
 
 #. Scale
-#: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
+#: plug-ins/common/sphere-designer.c:2833 plug-ins/ligmaressionist/paper.c:191
 #: plug-ins/ifs-compose/ifs-compose.c:587
 msgid "Scale:"
 msgstr "Eskalatu:"
@@ -5817,9 +5817,9 @@ msgstr "Gordeta"
 
 #: plug-ins/common/unit-editor.c:115
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
-msgstr "GIMPetik irten aurretik unitate-definizio bat gordetzeko, beharrezkoa da zutabe hau hautatuta egotea."
+msgstr "LIGMAetik irten aurretik unitate-definizio bat gordetzeko, beharrezkoa da zutabe hau hautatuta egotea."
 
 #: plug-ins/common/unit-editor.c:117
 msgid "ID"
@@ -5827,8 +5827,8 @@ msgstr "IDa"
 
 #: plug-ins/common/unit-editor.c:117
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr "Kate hau GIMPen konfigurazio-fitxategietan unitate bat identifikatzeko erabiliko da."
+"This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "Kate hau LIGMAen konfigurazio-fitxategietan unitate bat identifikatzeko erabiliko da."
 
 #: plug-ins/common/unit-editor.c:119
 msgid "Factor"
@@ -5888,8 +5888,8 @@ msgid "U_nits"
 msgstr "_Unitateak"
 
 #: plug-ins/common/unit-editor.c:180
-msgid "Create or alter units used in GIMP"
-msgstr "Sortu edo eraldatu GIMPen erabilitako unitateak"
+msgid "Create or alter units used in LIGMA"
+msgstr "Sortu edo eraldatu LIGMAen erabilitako unitateak"
 
 #: plug-ins/common/unit-editor.c:230 plug-ins/common/unit-editor.c:249
 msgid "Unit Editor"
@@ -5899,7 +5899,7 @@ msgstr "Unitate-editorea"
 #. Put buttons in
 #: plug-ins/common/unit-editor.c:253
 #: plug-ins/fractal-explorer/fractal-explorer.c:1214
-#: plug-ins/gimpressionist/presets.c:1073
+#: plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Freskatu"
 
@@ -6387,9 +6387,9 @@ msgstr "_Idatzi kolore-espazioaren informazioa"
 #: plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
-msgstr "Zenbait aplikaziok ezin dituzte kolore-espazioaren informazioa daukaten BPM irudiak irakurri. Lehenetsi gisa, GIMPek kolore-espazioaren informazioa idazten du. Aukera hau desgaitzean GIMPek ez du kolore-espazioaren informaziorik idatziko fitxategian."
+"information. LIGMA writes color space information by default. Disabling this "
+"option will cause LIGMA to not write color space information to the file."
+msgstr "Zenbait aplikaziok ezin dituzte kolore-espazioaren informazioa daukaten BPM irudiak irakurri. Lehenetsi gisa, LIGMAek kolore-espazioaren informazioa idazten du. Aukera hau desgaitzean LIGMAek ez du kolore-espazioaren informaziorik idatziko fitxategian."
 
 #. RGB Encoding Pptions
 #: plug-ins/file-bmp/bmp-save.c:1025
@@ -6795,35 +6795,35 @@ msgstr "Errorea datu konprimatuak irakurtzean. "
 msgid "Overflow reading compressed data. Possibly corrupt file."
 msgstr "Gainezkatzea datu konprimatuak irakurtzean. Beharbada fitxategia hondatuta dago."
 
-#: plug-ins/file-fli/fli-gimp.c:181 plug-ins/file-fli/fli-gimp.c:218
+#: plug-ins/file-fli/fli-ligma.c:181 plug-ins/file-fli/fli-ligma.c:218
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animazioa"
 
-#: plug-ins/file-fli/fli-gimp.c:587
+#: plug-ins/file-fli/fli-ligma.c:587
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "%d fotograma (%ums)"
 
-#: plug-ins/file-fli/fli-gimp.c:614
+#: plug-ins/file-fli/fli-ligma.c:614
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Huts egin du %d fotograma irakurtzeak. Beharbada animazioa hondatuta dago.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:946
+#: plug-ins/file-fli/fli-ligma.c:946
 msgid "Open FLIC Animation"
 msgstr "Ireki FLIC animazioa"
 
-#: plug-ins/file-fli/fli-gimp.c:964
+#: plug-ins/file-fli/fli-ligma.c:964
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Nork:"
 
-#: plug-ins/file-fli/fli-gimp.c:970
+#: plug-ins/file-fli/fli-ligma.c:970
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Nori:"
 
-#: plug-ins/file-fli/fli-gimp.c:1000
+#: plug-ins/file-fli/fli-ligma.c:1000
 msgid "Export Image as FLI Animation"
 msgstr "Esportatu irudia FLI animazio gisa"
 
@@ -7184,8 +7184,8 @@ msgstr "Irudia gris-eskalan inportatuko da.\n"
 "eta esportazioan berriro aplikatu daitezke."
 
 #: plug-ins/file-psd/psd-save.c:485
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Errorea: ezin da GIMP oinarriko irudi mota PSD modura bihurtu"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Errorea: ezin da LIGMA oinarriko irudi mota PSD modura bihurtu"
 
 #: plug-ins/file-psd/psd-save.c:2063
 #, c-format
@@ -7333,14 +7333,14 @@ msgstr "Raw Arriflex ARI"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr "Ez dago '%s' fitxategiak irekiko dituen RAW kargatzailerik instalatuta.\n"
 "\n"
-"GIMPek momentuz honako RAW kargatzaileak onartzen ditu:\n"
+"LIGMAek momentuz honako RAW kargatzaileak onartzen ditu:\n"
 "- Darktable (http://www.darktable.org/), gutxienez 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), gutxienez 5.2\n"
 "\n"
@@ -7561,7 +7561,7 @@ msgstr "Ezin dira '%s' irudiaren kolore-mapak eskuratu"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
-#. * and can cause GIMP to become unresponsive and/or stuck.
+#. * and can cause LIGMA to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
 #: plug-ins/file-tiff/file-tiff-load.c:1532
@@ -7928,8 +7928,8 @@ msgstr "_Ausaz nahasi"
 msgid "Same"
 msgstr "Bera"
 
-#: plug-ins/flame/flame.c:809 plug-ins/gimpressionist/orientation.c:156
-#: plug-ins/gimpressionist/size.c:163
+#: plug-ins/flame/flame.c:809 plug-ins/ligmaressionist/orientation.c:156
+#: plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "Ausazkoa"
 
@@ -8061,8 +8061,8 @@ msgstr "Gorde sugarra"
 msgid "Flame"
 msgstr "Sugarra"
 
-#: plug-ins/flame/flame.c:1096 plug-ins/gimpressionist/orientation.c:190
-#: plug-ins/gimpressionist/size.c:199
+#: plug-ins/flame/flame.c:1096 plug-ins/ligmaressionist/orientation.c:190
+#: plug-ins/ligmaressionist/size.c:199
 #: plug-ins/gradient-flare/gradient-flare.c:3082
 #: plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -8119,15 +8119,15 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: plug-ins/gfig/gfig-dialog.c:280 plug-ins/gimpressionist/utils.c:139
+#: plug-ins/gfig/gfig-dialog.c:280 plug-ins/ligmaressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:998
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
-msgstr "'%s' ez dago gimprc fitxategian:\n"
+msgstr "'%s' ez dago ligmarc fitxategian:\n"
 "Honelako sarrera bat gehitu behar diozu\n"
 "(%s \"%s\")\n"
 "zure %s fitxategiari."
@@ -8725,7 +8725,7 @@ msgstr "Antialiasinga"
 msgid "Max undo:"
 msgstr "Geh desegitea:"
 
-#: plug-ins/gfig/gfig-dialog.c:1324 plug-ins/gimpressionist/general.c:184
+#: plug-ins/gfig/gfig-dialog.c:1324 plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Gardena"
 
@@ -8823,7 +8823,7 @@ msgstr "Eskuinean"
 msgid "Left"
 msgstr "Ezkerrean"
 
-#: plug-ins/gfig/gfig-dialog.c:1746 plug-ins/gimpressionist/orientation.c:140
+#: plug-ins/gfig/gfig-dialog.c:1746 plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Orientazioa:"
 
@@ -8878,620 +8878,620 @@ msgstr "Errorea irudia parasito gisa gordetzean: ezin da parasitoa marrazgaiari 
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Errorea '%s' aldi baterako fitxategia irekitzean parasitoa kargatzeko: %s"
 
-#: plug-ins/gimpressionist/brush.c:261
+#: plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Marrazgaiak bakarrik gorde ditzaket!"
 
-#: plug-ins/gimpressionist/brush.c:266
+#: plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Gorde brotxa"
 
-#: plug-ins/gimpressionist/brush.c:522
+#: plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "_Brotxa"
 
-#: plug-ins/gimpressionist/brush.c:559
+#: plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: plug-ins/gimpressionist/brush.c:577
+#: plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Hautatutako brotxaren gamma (distira) aldatzen du"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/ligmaressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:621
 msgid "Select:"
 msgstr "Hautatu:"
 
-#: plug-ins/gimpressionist/brush.c:601
+#: plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "Gorde _honela:"
 
-#: plug-ins/gimpressionist/brush.c:613
+#: plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "Aspektu-erlazioa:"
 
-#: plug-ins/gimpressionist/brush.c:615
+#: plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Brotxaren aspektu-erlazioa zehazten du"
 
-#: plug-ins/gimpressionist/brush.c:626 plug-ins/gimpressionist/paper.c:202
+#: plug-ins/ligmaressionist/brush.c:626 plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "Erliebea:"
 
-#: plug-ins/gimpressionist/brush.c:628 plug-ins/gimpressionist/paper.c:204
+#: plug-ins/ligmaressionist/brush.c:628 plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Irudiari aplikatu beharreko erliebea (ehunekotan)"
 
-#: plug-ins/gimpressionist/color.c:59
+#: plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Ko_lorea"
 
-#: plug-ins/gimpressionist/color.c:69
+#: plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "Batez beste_koa brotxaren azpian"
 
-#: plug-ins/gimpressionist/color.c:71
+#: plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "B_rotxaren erdian"
 
-#: plug-ins/gimpressionist/color.c:78
+#: plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Kolorea brotxaren azpiko pixel guztien batez bestekoarekin kalkulatzen da"
 
-#: plug-ins/gimpressionist/color.c:82
+#: plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Kolorearen lagina brotxaren erdiko pixeletik hartzen du"
 
-#: plug-ins/gimpressionist/color.c:87
+#: plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "Kolore-_zarata:"
 
-#: plug-ins/gimpressionist/color.c:89
+#: plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Koloreari ausazko zarata eransten dio"
 
-#: plug-ins/gimpressionist/general.c:133
+#: plug-ins/ligmaressionist/general.c:133
 #: plug-ins/gradient-flare/gradient-flare.c:3677
 msgid "_General"
 msgstr "_Orokorra"
 
-#: plug-ins/gimpressionist/general.c:149
+#: plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Mantendu jatorrizkoa"
 
-#: plug-ins/gimpressionist/general.c:150
+#: plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Mantendu jatorrizko irudia atzeko plano gisa"
 
-#: plug-ins/gimpressionist/general.c:155
+#: plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Paperetik"
 
-#: plug-ins/gimpressionist/general.c:156
+#: plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiatu hautatutako paperaren testura atzeko plano gisa"
 
-#: plug-ins/gimpressionist/general.c:166
+#: plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Kolore lisoko atzeko planoa"
 
-#: plug-ins/gimpressionist/general.c:185
+#: plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Erabili atzeko plano gardena; pintatutako trazuak bakarrik ikusiko dira"
 
-#: plug-ins/gimpressionist/general.c:202
+#: plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Margotu ertzak"
 
-#: plug-ins/gimpressionist/general.c:207
+#: plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Hautatu trazuak irudiaren ertz guztietan zehar jarriko diren"
 
-#: plug-ins/gimpressionist/general.c:212
+#: plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "Lauza gisa jar daiteke"
 
-#: plug-ins/gimpressionist/general.c:216
+#: plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Hautatu lortzen den irudia hutsunerik utzi gabe mosaiko bihur daitekeen ala ez"
 
-#: plug-ins/gimpressionist/general.c:221
+#: plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Jaregin itzala"
 
-#: plug-ins/gimpressionist/general.c:226
+#: plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Brotxaren trazu bakoitzari itzalaren efektua eransten dio"
 
-#: plug-ins/gimpressionist/general.c:238
+#: plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "Ilundu ertzak:"
 
-#: plug-ins/gimpressionist/general.c:240
+#: plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Brotxaren trazu bakoitzaren ertzak zenbat \"ilundu\" behar diren"
 
-#: plug-ins/gimpressionist/general.c:246
+#: plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "Ilundu itzala:"
 
-#: plug-ins/gimpressionist/general.c:249
+#: plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Itzala zenbat \"ilundu\" behar den"
 
-#: plug-ins/gimpressionist/general.c:255
+#: plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "Itzalaren sakonera:"
 
-#: plug-ins/gimpressionist/general.c:257
+#: plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Itzalaren sakonera, hau da, objektutik zein distantziatara egon behar duen"
 
-#: plug-ins/gimpressionist/general.c:263
+#: plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "Lausotu itzala:"
 
-#: plug-ins/gimpressionist/general.c:265
+#: plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "Itzala zenbat \"lausotu\" behar den"
 
-#: plug-ins/gimpressionist/general.c:271
+#: plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "Desbideratzearen muga:"
 
-#: plug-ins/gimpressionist/general.c:273
+#: plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "Hautapen moldakorretarako segurtasun-balioa"
 
-#: plug-ins/gimpressionist/gimp.c:121
-msgid "_GIMPressionist..."
-msgstr "_GIMPresionista..."
+#: plug-ins/ligmaressionist/ligma.c:121
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAresionista..."
 
-#: plug-ins/gimpressionist/gimp.c:125
+#: plug-ins/ligmaressionist/ligma.c:125
 msgid "Performs various artistic operations"
 msgstr "Egin eragiketa artistiko batzuk"
 
-#: plug-ins/gimpressionist/gimp.c:449
+#: plug-ins/ligmaressionist/ligma.c:449
 msgid "Painting"
 msgstr "Margotzen"
 
-#: plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPresionista"
+#: plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAresionista"
 
-#: plug-ins/gimpressionist/orientation.c:87
+#: plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "Or_ientazioa"
 
-#: plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "Noranzkoak:"
 
-#: plug-ins/gimpressionist/orientation.c:102
+#: plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Erabili beharreko noranzko kopurua (hau da, brotxak)"
 
-#: plug-ins/gimpressionist/orientation.c:111
+#: plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "Hasierako angelua:"
 
-#: plug-ins/gimpressionist/orientation.c:113
+#: plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "Sortu beharreko lehen brotxaren angelua"
 
-#: plug-ins/gimpressionist/orientation.c:122
+#: plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "Angelu arteko bitartea:"
 
-#: plug-ins/gimpressionist/orientation.c:124
+#: plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "Sortu beharreko lehen brotxaren angelua"
 
-#: plug-ins/gimpressionist/orientation.c:149
+#: plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Eskualdearen balioak (distirak) zehazten du trazuaren noranzkoa"
 
-#: plug-ins/gimpressionist/orientation.c:152 plug-ins/gimpressionist/size.c:159
+#: plug-ins/ligmaressionist/orientation.c:152 plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "Erradioa"
 
-#: plug-ins/gimpressionist/orientation.c:153
+#: plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Irudiaren erdira dagoen distantziak trazuaren noranzkoa zehazten du"
 
-#: plug-ins/gimpressionist/orientation.c:157
+#: plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "Trazu bakoitzaren ausazko noranzkoa hautatzen du"
 
-#: plug-ins/gimpressionist/orientation.c:160 plug-ins/gimpressionist/size.c:167
+#: plug-ins/ligmaressionist/orientation.c:160 plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "Erradiala"
 
-#: plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/ligmaressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Erditiko noranzkoak trazuaren noranzkoa zehazten du"
 
-#: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
+#: plug-ins/ligmaressionist/orientation.c:168 plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "Fluxua"
 
-#: plug-ins/gimpressionist/orientation.c:169 plug-ins/gimpressionist/size.c:176
+#: plug-ins/ligmaressionist/orientation.c:169 plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Trazuek \"fluxu-eredu\" bati jarraitzen diote"
 
-#: plug-ins/gimpressionist/orientation.c:173
+#: plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Eskualdearen ñabardurak trazuaren noranzkoa zehazten du"
 
-#: plug-ins/gimpressionist/orientation.c:176 plug-ins/gimpressionist/size.c:183
+#: plug-ins/ligmaressionist/orientation.c:176 plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "Moldakorra"
 
-#: plug-ins/gimpressionist/orientation.c:177
+#: plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Jatorrizko irudira gehien hurbiltzen den noranzkoa hautatuko da"
 
-#: plug-ins/gimpressionist/orientation.c:184 plug-ins/gimpressionist/size.c:192
+#: plug-ins/ligmaressionist/orientation.c:184 plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "Eskuz"
 
-#: plug-ins/gimpressionist/orientation.c:185
+#: plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "Trazuaren orientazioa eskuz hautatzen da"
 
-#: plug-ins/gimpressionist/orientation.c:196
+#: plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "Orientazio-mapen editorea irekitzen du"
 
-#: plug-ins/gimpressionist/orientmap.c:523
+#: plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Orientazio-mapen editorea"
 
-#: plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Bektoreak"
 
-#: plug-ins/gimpressionist/orientmap.c:563
+#: plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr "Bektore-eremua. Egin klik ezkerreko botoian hautatutako bektorea mugitzeko, eskuineko botoian sagurantz seinalatzeko, eta erdiko botoian bektore berria gehitzeko."
 
-#: plug-ins/gimpressionist/orientmap.c:587
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/ligmaressionist/orientmap.c:587
+#: plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Doitu aurrebistaren distira"
 
-#: plug-ins/gimpressionist/orientmap.c:609
+#: plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Hautatu aurreko bektorea"
 
-#: plug-ins/gimpressionist/orientmap.c:615
+#: plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Hautatu hurrengo bektorea"
 
-#: plug-ins/gimpressionist/orientmap.c:617
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/ligmaressionist/orientmap.c:617
+#: plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "_Gehitu"
 
-#: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Gehitu bektore berria"
 
-#: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/sizemap.c:495
+#: plug-ins/ligmaressionist/orientmap.c:623
+#: plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "_Hil"
 
-#: plug-ins/gimpressionist/orientmap.c:627
+#: plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Ezabatu hautatutako bektorea"
 
-#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Mota"
 
-#: plug-ins/gimpressionist/orientmap.c:642
+#: plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normala"
 
-#: plug-ins/gimpressionist/orientmap.c:643
+#: plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "Arra_npa"
 
-#: plug-ins/gimpressionist/orientmap.c:644
+#: plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "_2.arranpa"
 
-#: plug-ins/gimpressionist/orientmap.c:645
+#: plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "_3.arranpa"
 
-#: plug-ins/gimpressionist/orientmap.c:651
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/ligmaressionist/orientmap.c:651
+#: plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: plug-ins/gimpressionist/orientmap.c:659
+#: plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Voronoi moduan, adierazitako puntutik hurbilen dagoen bektoreak bakarrik du eragina"
 
-#: plug-ins/gimpressionist/orientmap.c:668
+#: plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "_Angelua:"
 
-#: plug-ins/gimpressionist/orientmap.c:670
+#: plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "Aldatu hautatutako bektorearen angelua"
 
-#: plug-ins/gimpressionist/orientmap.c:678
+#: plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "Ange_luaren desplazamendua:"
 
-#: plug-ins/gimpressionist/orientmap.c:680
+#: plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr "Desplazatu angelu jakina duten bektore guztiak"
 
-#: plug-ins/gimpressionist/orientmap.c:688
+#: plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "_Indarra:"
 
-#: plug-ins/gimpressionist/orientmap.c:691
+#: plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "Aldatu hautatutako bektorearen indarra"
 
-#: plug-ins/gimpressionist/orientmap.c:699
+#: plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "I_ndarraren berr.:"
 
-#: plug-ins/gimpressionist/orientmap.c:702
-#: plug-ins/gimpressionist/sizemap.c:532
+#: plug-ins/ligmaressionist/orientmap.c:702
+#: plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "Aldatu indarraren berretzailea"
 
-#: plug-ins/gimpressionist/paper.c:136
+#: plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "P_apera"
 
-#: plug-ins/gimpressionist/paper.c:165
+#: plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "_Alderantzikatu"
 
-#: plug-ins/gimpressionist/paper.c:171
+#: plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Paperen testura alderantzikatzen du"
 
-#: plug-ins/gimpressionist/paper.c:175
+#: plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "_Gainjarri"
 
-#: plug-ins/gimpressionist/paper.c:180
+#: plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Papera dagoen bezala aplikatzen du (erliebetu gabe)"
 
-#: plug-ins/gimpressionist/paper.c:193
+#: plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Testuraren eskala zehazten du (jatorrizko fitxategiaren ehunekoan)"
 
-#: plug-ins/gimpressionist/placement.c:66
+#: plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "_Kokalekua"
 
-#: plug-ins/gimpressionist/placement.c:72
+#: plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Kokalekua"
 
-#: plug-ins/gimpressionist/placement.c:76
+#: plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Ausaz"
 
-#: plug-ins/gimpressionist/placement.c:80
+#: plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Uniformeki banatuta"
 
-#: plug-ins/gimpressionist/placement.c:88
+#: plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Trazuak ausaz kokatzen ditu irudiaren inguruan"
 
-#: plug-ins/gimpressionist/placement.c:92
+#: plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Trazuak uniformeki banatzen dira irudian zehar"
 
-#: plug-ins/gimpressionist/placement.c:101
+#: plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Zentratuta"
 
-#: plug-ins/gimpressionist/placement.c:107
+#: plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Brotxaren trazuak irudiaren erdialdera orientatzen ditu"
 
-#: plug-ins/gimpressionist/placement.c:113
+#: plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "Trazuaren _dentsitatea:"
 
-#: plug-ins/gimpressionist/placement.c:115
+#: plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "Brotxaren trazuen dentsitate erlatiboa"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: plug-ins/gimpressionist/ppmtool.c:648
+#: plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Ezin izan da '%s' PPM fitxategian gorde: %s"
 
-#: plug-ins/gimpressionist/presets.c:638
+#: plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Gorde unekoa"
 
-#: plug-ins/gimpressionist/presets.c:665
+#: plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Azalpena:"
 
-#: plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Gimpresionistaren lehenespenak"
+#: plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaresionistaren lehenespenak"
 
-#: plug-ins/gimpressionist/presets.c:1014
+#: plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Aurrezarpenak"
 
-#: plug-ins/gimpressionist/presets.c:1029
+#: plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Gorde unekoa..."
 
-#: plug-ins/gimpressionist/presets.c:1037
+#: plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Gorde zehaztutako fitxategiaren uneko ezarpenak"
 
-#: plug-ins/gimpressionist/presets.c:1065
+#: plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Hautatutako aurrezarpenak memoriatik irakurtzen ditu"
 
-#: plug-ins/gimpressionist/presets.c:1071
+#: plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Hautatutako aurrezarpenak ezabatzen ditu"
 
-#: plug-ins/gimpressionist/presets.c:1077
+#: plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Irakurri berriro aurrezarpenen karpeta"
 
-#: plug-ins/gimpressionist/preview.c:174 plug-ins/gimpressionist/repaint.c:1197
+#: plug-ins/ligmaressionist/preview.c:174 plug-ins/ligmaressionist/repaint.c:1197
 #: plug-ins/imagemap/imap_polygon.c:511 plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "_Eguneratu"
 
-#: plug-ins/gimpressionist/preview.c:180
+#: plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Freskatu aurrebistaren leihoa"
 
-#: plug-ins/gimpressionist/preview.c:188
+#: plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Leheneratu jatorrizko irudira"
 
-#: plug-ins/gimpressionist/size.c:94
+#: plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "Ta_maina"
 
-#: plug-ins/gimpressionist/size.c:107
+#: plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "Tamainaren aldaerak:"
 
-#: plug-ins/gimpressionist/size.c:109
+#: plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "Erabili beharreko brotxen tamaina kopurua"
 
-#: plug-ins/gimpressionist/size.c:118
+#: plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "Gutxieneko tamaina:"
 
-#: plug-ins/gimpressionist/size.c:120
+#: plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "Sortu beharreko brotxa txikiena"
 
-#: plug-ins/gimpressionist/size.c:129
+#: plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "Gehieneko tamaina:"
 
-#: plug-ins/gimpressionist/size.c:131
+#: plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "Sortu beharreko brotxa handiena"
 
-#: plug-ins/gimpressionist/size.c:147
+#: plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "Tamainaren mendekotasunak:"
 
-#: plug-ins/gimpressionist/size.c:156
+#: plug-ins/ligmaressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Eskualdearen balioak (distirak) zehazten du trazuaren tamaina"
 
-#: plug-ins/gimpressionist/size.c:160
+#: plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Irudiaren erdira dagoen distantziak trazuaren tamaina zehazten du"
 
-#: plug-ins/gimpressionist/size.c:164
+#: plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "Trazu bakoitzaren ausazko tamaina hautatzen du"
 
-#: plug-ins/gimpressionist/size.c:168
+#: plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Erditiko noranzkoak trazuaren tamaina zehazten du"
 
-#: plug-ins/gimpressionist/size.c:180
+#: plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Eskualdearen ñabardurak trazuaren tamaina zehazten du"
 
-#: plug-ins/gimpressionist/size.c:184
+#: plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Jatorrizko irudira gehien hurbiltzen den brotxa-tamaina hautatuko da"
 
-#: plug-ins/gimpressionist/size.c:193
+#: plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "Trazuaren tamaina eskuz hautatzen da"
 
-#: plug-ins/gimpressionist/size.c:204
+#: plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "Tamaina-mapen editorea irekitzen du"
 
-#: plug-ins/gimpressionist/sizemap.c:396
+#: plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Tamaina-mapen editorea"
 
-#: plug-ins/gimpressionist/sizemap.c:425
+#: plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Bektoreak"
 
-#: plug-ins/gimpressionist/sizemap.c:435
+#: plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr "Bektoreen eremua. Egin klik ezkerreko botoian hautatutako tamaina-bektorea mugitzeko, eskuineko botoian sagurantz seinalatzeko, eta erdiko botoian tamaina-bektore berria gehitzeko."
 
-#: plug-ins/gimpressionist/sizemap.c:479
+#: plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Hautatu aurreko bektorea"
 
-#: plug-ins/gimpressionist/sizemap.c:486
+#: plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Hautatu hurrengo bektorea"
 
-#: plug-ins/gimpressionist/sizemap.c:493
+#: plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Gehitu bektore berria"
 
-#: plug-ins/gimpressionist/sizemap.c:500
+#: plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Ezabatu hautatutako bektorea"
 
-#: plug-ins/gimpressionist/sizemap.c:510
+#: plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "Aldatu hautatutako bektorearen angelua"
 
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "_Indarra:"
 
-#: plug-ins/gimpressionist/sizemap.c:521
+#: plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "Aldatu hautatutako bektorearen indarra"
 
-#: plug-ins/gimpressionist/sizemap.c:529
+#: plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "I_ndararen berr.:"
 
-#: plug-ins/gimpressionist/sizemap.c:546
+#: plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10270,8 +10270,8 @@ msgstr "_Bigarren erlantzak"
 
 #. the dialog window
 #: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:892
-msgid "GIMP Help Browser"
-msgstr "GIMPeko Laguntza arakatzailea"
+msgid "LIGMA Help Browser"
+msgstr "LIGMAeko Laguntza arakatzailea"
 
 #: plug-ins/help-browser/dialog.c:275
 msgid "_Reload"
@@ -10294,8 +10294,8 @@ msgid "Go to the index page"
 msgstr "Joan indize orrialdera"
 
 #: plug-ins/help-browser/dialog.c:283
-msgid "Visit the GIMP documentation website"
-msgstr "Bisitatu GIMPen dokumentazioaren webgunea"
+msgid "Visit the LIGMA documentation website"
+msgstr "Bisitatu LIGMAen dokumentazioaren webgunea"
 
 #: plug-ins/help-browser/dialog.c:1235
 msgid "Find:"
@@ -10316,14 +10316,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "It_xi"
 
-#: plug-ins/help/gimphelpdomain.c:180
+#: plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "'%s'(r)en laguntzako orrialdeak ez daude erabilgarri."
 
-#: plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "GIMPen erabiltzailearen eskuliburua ez dago erabilgarri."
+#: plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMAen erabiltzailearen eskuliburua ez dago erabilgarri."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -10331,27 +10331,27 @@ msgstr "GIMPen erabiltzailearen eskuliburua ez dago erabilgarri."
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: plug-ins/help/gimphelpdomain.c:193
+#: plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
-msgstr "Instalatu laguntza-pakete gehigarria edo erabili lineako erabiltzaile-eskuliburua hemen: https://docs.gimp.org/"
+"https://docs.ligma.org/"
+msgstr "Instalatu laguntza-pakete gehigarria edo erabili lineako erabiltzaile-eskuliburua hemen: https://docs.ligma.org/"
 
-#: plug-ins/help/gimphelpdomain.c:202
+#: plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Agian GIO motorrak falta dira eta GVFS instalatzea behar da?"
 
-#: plug-ins/help/gimphelpdomain.c:221
+#: plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Laguntzako %s ID ezezaguna"
 
-#: plug-ins/help/gimphelplocale.c:208
+#: plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Indizea '%s'(e)ndik kargatzen"
 
-#: plug-ins/help/gimphelplocale.c:266
+#: plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10570,7 +10570,7 @@ msgid "Clear"
 msgstr "Garbitu"
 
 #: plug-ins/imagemap/imap_cmd_create.c:57
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Sortu"
 
@@ -10593,41 +10593,41 @@ msgid "Edit Object"
 msgstr "Editatu objektua"
 
 #. Create the areas
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Erabili Gimp-eko gidak"
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Erabili Ligma-eko gidak"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "T_xandakatu"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "_Guztiak"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Gehitu gida osagarriak"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "E_zkerreko ertza"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "E_skuineko ertza"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "_Goiko ertza"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "_Beheko ertza"
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Oinarrizko URLa:"
 
@@ -11067,8 +11067,8 @@ msgid "Grid Settings..."
 msgstr "Saretaren ezarpenak..."
 
 #: plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "Erabili GIMPeko gidak..."
+msgid "Use LIGMA Guides..."
+msgstr "Erabili LIGMAeko gidak..."
 
 #: plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."

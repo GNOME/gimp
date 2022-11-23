@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HEAL_TOOL_H__
-#define __GIMP_HEAL_TOOL_H__
+#ifndef __LIGMA_HEAL_TOOL_H__
+#define __LIGMA_HEAL_TOOL_H__
 
 
-#include "gimpsourcetool.h"
+#include "ligmasourcetool.h"
 
 
-#define GIMP_TYPE_HEAL_TOOL            (gimp_heal_tool_get_type ())
-#define GIMP_HEAL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealTool))
-#define GIMP_HEAL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HEAL_TOOL, GimpHealToolClass))
-#define GIMP_IS_HEAL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HEAL_TOOL))
-#define GIMP_IS_HEAL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HEAL_TOOL))
-#define GIMP_HEAL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealToolClass))
+#define LIGMA_TYPE_HEAL_TOOL            (ligma_heal_tool_get_type ())
+#define LIGMA_HEAL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_HEAL_TOOL, LigmaHealTool))
+#define LIGMA_HEAL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_HEAL_TOOL, LigmaHealToolClass))
+#define LIGMA_IS_HEAL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_HEAL_TOOL))
+#define LIGMA_IS_HEAL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_HEAL_TOOL))
+#define LIGMA_HEAL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_HEAL_TOOL, LigmaHealToolClass))
 
 
-typedef struct _GimpHealTool      GimpHealTool;
-typedef struct _GimpHealToolClass GimpHealToolClass;
+typedef struct _LigmaHealTool      LigmaHealTool;
+typedef struct _LigmaHealToolClass LigmaHealToolClass;
 
-struct _GimpHealTool
+struct _LigmaHealTool
 {
-  GimpSourceTool  parent_instance;
+  LigmaSourceTool  parent_instance;
 };
 
-struct _GimpHealToolClass
+struct _LigmaHealToolClass
 {
-  GimpSourceToolClass parent_class;
+  LigmaSourceToolClass parent_class;
 };
 
 
-void    gimp_heal_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_heal_tool_register (LigmaToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_heal_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_heal_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_HEAL_TOOL_H__  */
+#endif  /*  __LIGMA_HEAL_TOOL_H__  */

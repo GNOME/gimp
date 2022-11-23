@@ -14,7 +14,7 @@
    id="svg2"
    viewBox="0 0 16 16.000002"
    inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-prefs-folders-gradients.svg">
+   sodipodi:docname="ligma-prefs-folders-gradients.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -42,13 +42,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -218,7 +218,7 @@
   <g
      style="display:inline"
      transform="translate(4.9942652e-8,-31.999999)"
-     id="gimp-prefs-folders-gradients">
+     id="ligma-prefs-folders-gradients">
     <path
        sodipodi:nodetypes="ccccccssssccc"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4325);stroke-width:0.39071161;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

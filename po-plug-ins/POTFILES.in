@@ -1,4 +1,4 @@
-# Files from the Gimp distribution which have already been
+# Files from the Ligma distribution which have already been
 # marked to allow runtime translation of messages
 
 extensions/goat-exercises/goat-exercise-c.c
@@ -6,7 +6,7 @@ extensions/goat-exercises/goat-exercise-gjs.js
 extensions/goat-exercises/goat-exercise-lua.lua
 extensions/goat-exercises/goat-exercise-py3.py
 extensions/goat-exercises/goat-exercise-vala.vala
-extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in
+extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in
 
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
@@ -95,7 +95,7 @@ plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
 plug-ins/file-fli/fli.c
-plug-ins/file-fli/fli-gimp.c
+plug-ins/file-fli/fli-ligma.c
 plug-ins/file-icns/file-icns-load.c
 plug-ins/file-icns/file-icns-save.c
 plug-ins/file-icns/file-icns.c
@@ -136,29 +136,29 @@ plug-ins/gfig/gfig-preview.c
 plug-ins/gfig/gfig-spiral.c
 plug-ins/gfig/gfig-star.c
 plug-ins/gfig/gfig.c
-plug-ins/gimpressionist/brush.c
-plug-ins/gimpressionist/color.c
-plug-ins/gimpressionist/general.c
-plug-ins/gimpressionist/gimp.c
-plug-ins/gimpressionist/gimpressionist.c
-plug-ins/gimpressionist/orientation.c
-plug-ins/gimpressionist/orientmap.c
-plug-ins/gimpressionist/paper.c
-plug-ins/gimpressionist/placement.c
-plug-ins/gimpressionist/ppmtool.c
-plug-ins/gimpressionist/presets.c
-plug-ins/gimpressionist/preview.c
-plug-ins/gimpressionist/repaint.c
-plug-ins/gimpressionist/size.c
-plug-ins/gimpressionist/sizemap.c
-plug-ins/gimpressionist/utils.c
+plug-ins/ligmaressionist/brush.c
+plug-ins/ligmaressionist/color.c
+plug-ins/ligmaressionist/general.c
+plug-ins/ligmaressionist/ligma.c
+plug-ins/ligmaressionist/ligmaressionist.c
+plug-ins/ligmaressionist/orientation.c
+plug-ins/ligmaressionist/orientmap.c
+plug-ins/ligmaressionist/paper.c
+plug-ins/ligmaressionist/placement.c
+plug-ins/ligmaressionist/ppmtool.c
+plug-ins/ligmaressionist/presets.c
+plug-ins/ligmaressionist/preview.c
+plug-ins/ligmaressionist/repaint.c
+plug-ins/ligmaressionist/size.c
+plug-ins/ligmaressionist/sizemap.c
+plug-ins/ligmaressionist/utils.c
 plug-ins/ui/plug-in-metadata-editor.ui
 plug-ins/ui/plug-in-metadata-viewer.ui
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c
-plug-ins/help/gimphelpdomain.c
-plug-ins/help/gimphelplocale.c
+plug-ins/help/ligmahelpdomain.c
+plug-ins/help/ligmahelplocale.c
 plug-ins/ifs-compose/ifs-compose.c
 plug-ins/imagemap/imap_about.c
 plug-ins/imagemap/imap_browse.c
@@ -172,7 +172,7 @@ plug-ins/imagemap/imap_cmd_cut_object.c
 plug-ins/imagemap/imap_cmd_delete.c
 plug-ins/imagemap/imap_cmd_delete_point.c
 plug-ins/imagemap/imap_cmd_edit_object.c
-plug-ins/imagemap/imap_cmd_gimp_guides.c
+plug-ins/imagemap/imap_cmd_ligma_guides.c
 plug-ins/imagemap/imap_cmd_guides.c
 plug-ins/imagemap/imap_cmd_insert_point.c
 plug-ins/imagemap/imap_cmd_move.c

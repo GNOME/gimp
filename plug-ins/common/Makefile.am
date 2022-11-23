@@ -19,18 +19,18 @@ framework_cocoa = -framework Cocoa
 endif
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
-include gimprc.common
+include $(top_srcdir)/build/windows/ligmarc-plug-ins.rule
+include ligmarc.common
 endif
 
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la $(libm)
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libligma = $(top_builddir)/libligma/libligma-$(LIGMA_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la $(libm)
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmaui = $(top_builddir)/libligma/libligmaui-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
 
 
 AM_LDFLAGS = $(mwindows)
@@ -38,7 +38,7 @@ AM_LDFLAGS = $(mwindows)
 EXTRA_DIST = \
 	mkgen.pl	\
 	plugin-defs.pl	\
-	gimprc.common
+	ligmarc.common
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
@@ -46,83 +46,83 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
-align_layers_libexecdir = $(gimpplugindir)/plug-ins/align-layers
-animation_optimize_libexecdir = $(gimpplugindir)/plug-ins/animation-optimize
-animation_play_libexecdir = $(gimpplugindir)/plug-ins/animation-play
-blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
-border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
-busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
-checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
-cml_explorer_libexecdir = $(gimpplugindir)/plug-ins/cml-explorer
-colormap_remap_libexecdir = $(gimpplugindir)/plug-ins/colormap-remap
-compose_libexecdir = $(gimpplugindir)/plug-ins/compose
-contrast_retinex_libexecdir = $(gimpplugindir)/plug-ins/contrast-retinex
-crop_zealous_libexecdir = $(gimpplugindir)/plug-ins/crop-zealous
-curve_bend_libexecdir = $(gimpplugindir)/plug-ins/curve-bend
-decompose_libexecdir = $(gimpplugindir)/plug-ins/decompose
-depth_merge_libexecdir = $(gimpplugindir)/plug-ins/depth-merge
-despeckle_libexecdir = $(gimpplugindir)/plug-ins/despeckle
-destripe_libexecdir = $(gimpplugindir)/plug-ins/destripe
-file_aa_libexecdir = $(gimpplugindir)/plug-ins/file-aa
-file_cel_libexecdir = $(gimpplugindir)/plug-ins/file-cel
-file_compressor_libexecdir = $(gimpplugindir)/plug-ins/file-compressor
-file_csource_libexecdir = $(gimpplugindir)/plug-ins/file-csource
-file_desktop_link_libexecdir = $(gimpplugindir)/plug-ins/file-desktop-link
-file_dicom_libexecdir = $(gimpplugindir)/plug-ins/file-dicom
-file_gbr_libexecdir = $(gimpplugindir)/plug-ins/file-gbr
-file_gegl_libexecdir = $(gimpplugindir)/plug-ins/file-gegl
-file_gif_load_libexecdir = $(gimpplugindir)/plug-ins/file-gif-load
-file_gif_save_libexecdir = $(gimpplugindir)/plug-ins/file-gif-save
-file_gih_libexecdir = $(gimpplugindir)/plug-ins/file-gih
-file_glob_libexecdir = $(gimpplugindir)/plug-ins/file-glob
-file_header_libexecdir = $(gimpplugindir)/plug-ins/file-header
-file_heif_libexecdir = $(gimpplugindir)/plug-ins/file-heif
-file_html_table_libexecdir = $(gimpplugindir)/plug-ins/file-html-table
-file_jp2_load_libexecdir = $(gimpplugindir)/plug-ins/file-jp2-load
-file_jpegxl_libexecdir = $(gimpplugindir)/plug-ins/file-jpegxl
-file_mng_libexecdir = $(gimpplugindir)/plug-ins/file-mng
-file_pat_libexecdir = $(gimpplugindir)/plug-ins/file-pat
-file_pcx_libexecdir = $(gimpplugindir)/plug-ins/file-pcx
-file_pdf_load_libexecdir = $(gimpplugindir)/plug-ins/file-pdf-load
-file_pdf_save_libexecdir = $(gimpplugindir)/plug-ins/file-pdf-save
-file_pix_libexecdir = $(gimpplugindir)/plug-ins/file-pix
-file_png_libexecdir = $(gimpplugindir)/plug-ins/file-png
-file_pnm_libexecdir = $(gimpplugindir)/plug-ins/file-pnm
-file_ps_libexecdir = $(gimpplugindir)/plug-ins/file-ps
-file_psp_libexecdir = $(gimpplugindir)/plug-ins/file-psp
-file_raw_data_libexecdir = $(gimpplugindir)/plug-ins/file-raw-data
-file_sunras_libexecdir = $(gimpplugindir)/plug-ins/file-sunras
-file_svg_libexecdir = $(gimpplugindir)/plug-ins/file-svg
-file_tga_libexecdir = $(gimpplugindir)/plug-ins/file-tga
-file_wbmp_libexecdir = $(gimpplugindir)/plug-ins/file-wbmp
-file_wmf_libexecdir = $(gimpplugindir)/plug-ins/file-wmf
-file_xbm_libexecdir = $(gimpplugindir)/plug-ins/file-xbm
-file_xmc_libexecdir = $(gimpplugindir)/plug-ins/file-xmc
-file_xpm_libexecdir = $(gimpplugindir)/plug-ins/file-xpm
-file_xwd_libexecdir = $(gimpplugindir)/plug-ins/file-xwd
-film_libexecdir = $(gimpplugindir)/plug-ins/film
-gradient_map_libexecdir = $(gimpplugindir)/plug-ins/gradient-map
-grid_libexecdir = $(gimpplugindir)/plug-ins/grid
-guillotine_libexecdir = $(gimpplugindir)/plug-ins/guillotine
-hot_libexecdir = $(gimpplugindir)/plug-ins/hot
-jigsaw_libexecdir = $(gimpplugindir)/plug-ins/jigsaw
-mail_libexecdir = $(gimpplugindir)/plug-ins/mail
-nl_filter_libexecdir = $(gimpplugindir)/plug-ins/nl-filter
-plugin_browser_libexecdir = $(gimpplugindir)/plug-ins/plugin-browser
-procedure_browser_libexecdir = $(gimpplugindir)/plug-ins/procedure-browser
-qbist_libexecdir = $(gimpplugindir)/plug-ins/qbist
-sample_colorize_libexecdir = $(gimpplugindir)/plug-ins/sample-colorize
-smooth_palette_libexecdir = $(gimpplugindir)/plug-ins/smooth-palette
-sparkle_libexecdir = $(gimpplugindir)/plug-ins/sparkle
-sphere_designer_libexecdir = $(gimpplugindir)/plug-ins/sphere-designer
-tile_libexecdir = $(gimpplugindir)/plug-ins/tile
-tile_small_libexecdir = $(gimpplugindir)/plug-ins/tile-small
-unit_editor_libexecdir = $(gimpplugindir)/plug-ins/unit-editor
-van_gogh_lic_libexecdir = $(gimpplugindir)/plug-ins/van-gogh-lic
-warp_libexecdir = $(gimpplugindir)/plug-ins/warp
-wavelet_decompose_libexecdir = $(gimpplugindir)/plug-ins/wavelet-decompose
-web_browser_libexecdir = $(gimpplugindir)/plug-ins/web-browser
-web_page_libexecdir = $(gimpplugindir)/plug-ins/web-page
+align_layers_libexecdir = $(ligmaplugindir)/plug-ins/align-layers
+animation_optimize_libexecdir = $(ligmaplugindir)/plug-ins/animation-optimize
+animation_play_libexecdir = $(ligmaplugindir)/plug-ins/animation-play
+blinds_libexecdir = $(ligmaplugindir)/plug-ins/blinds
+border_average_libexecdir = $(ligmaplugindir)/plug-ins/border-average
+busy_dialog_libexecdir = $(ligmaplugindir)/plug-ins/busy-dialog
+checkerboard_libexecdir = $(ligmaplugindir)/plug-ins/checkerboard
+cml_explorer_libexecdir = $(ligmaplugindir)/plug-ins/cml-explorer
+colormap_remap_libexecdir = $(ligmaplugindir)/plug-ins/colormap-remap
+compose_libexecdir = $(ligmaplugindir)/plug-ins/compose
+contrast_retinex_libexecdir = $(ligmaplugindir)/plug-ins/contrast-retinex
+crop_zealous_libexecdir = $(ligmaplugindir)/plug-ins/crop-zealous
+curve_bend_libexecdir = $(ligmaplugindir)/plug-ins/curve-bend
+decompose_libexecdir = $(ligmaplugindir)/plug-ins/decompose
+depth_merge_libexecdir = $(ligmaplugindir)/plug-ins/depth-merge
+despeckle_libexecdir = $(ligmaplugindir)/plug-ins/despeckle
+destripe_libexecdir = $(ligmaplugindir)/plug-ins/destripe
+file_aa_libexecdir = $(ligmaplugindir)/plug-ins/file-aa
+file_cel_libexecdir = $(ligmaplugindir)/plug-ins/file-cel
+file_compressor_libexecdir = $(ligmaplugindir)/plug-ins/file-compressor
+file_csource_libexecdir = $(ligmaplugindir)/plug-ins/file-csource
+file_desktop_link_libexecdir = $(ligmaplugindir)/plug-ins/file-desktop-link
+file_dicom_libexecdir = $(ligmaplugindir)/plug-ins/file-dicom
+file_gbr_libexecdir = $(ligmaplugindir)/plug-ins/file-gbr
+file_gegl_libexecdir = $(ligmaplugindir)/plug-ins/file-gegl
+file_gif_load_libexecdir = $(ligmaplugindir)/plug-ins/file-gif-load
+file_gif_save_libexecdir = $(ligmaplugindir)/plug-ins/file-gif-save
+file_gih_libexecdir = $(ligmaplugindir)/plug-ins/file-gih
+file_glob_libexecdir = $(ligmaplugindir)/plug-ins/file-glob
+file_header_libexecdir = $(ligmaplugindir)/plug-ins/file-header
+file_heif_libexecdir = $(ligmaplugindir)/plug-ins/file-heif
+file_html_table_libexecdir = $(ligmaplugindir)/plug-ins/file-html-table
+file_jp2_load_libexecdir = $(ligmaplugindir)/plug-ins/file-jp2-load
+file_jpegxl_libexecdir = $(ligmaplugindir)/plug-ins/file-jpegxl
+file_mng_libexecdir = $(ligmaplugindir)/plug-ins/file-mng
+file_pat_libexecdir = $(ligmaplugindir)/plug-ins/file-pat
+file_pcx_libexecdir = $(ligmaplugindir)/plug-ins/file-pcx
+file_pdf_load_libexecdir = $(ligmaplugindir)/plug-ins/file-pdf-load
+file_pdf_save_libexecdir = $(ligmaplugindir)/plug-ins/file-pdf-save
+file_pix_libexecdir = $(ligmaplugindir)/plug-ins/file-pix
+file_png_libexecdir = $(ligmaplugindir)/plug-ins/file-png
+file_pnm_libexecdir = $(ligmaplugindir)/plug-ins/file-pnm
+file_ps_libexecdir = $(ligmaplugindir)/plug-ins/file-ps
+file_psp_libexecdir = $(ligmaplugindir)/plug-ins/file-psp
+file_raw_data_libexecdir = $(ligmaplugindir)/plug-ins/file-raw-data
+file_sunras_libexecdir = $(ligmaplugindir)/plug-ins/file-sunras
+file_svg_libexecdir = $(ligmaplugindir)/plug-ins/file-svg
+file_tga_libexecdir = $(ligmaplugindir)/plug-ins/file-tga
+file_wbmp_libexecdir = $(ligmaplugindir)/plug-ins/file-wbmp
+file_wmf_libexecdir = $(ligmaplugindir)/plug-ins/file-wmf
+file_xbm_libexecdir = $(ligmaplugindir)/plug-ins/file-xbm
+file_xmc_libexecdir = $(ligmaplugindir)/plug-ins/file-xmc
+file_xpm_libexecdir = $(ligmaplugindir)/plug-ins/file-xpm
+file_xwd_libexecdir = $(ligmaplugindir)/plug-ins/file-xwd
+film_libexecdir = $(ligmaplugindir)/plug-ins/film
+gradient_map_libexecdir = $(ligmaplugindir)/plug-ins/gradient-map
+grid_libexecdir = $(ligmaplugindir)/plug-ins/grid
+guillotine_libexecdir = $(ligmaplugindir)/plug-ins/guillotine
+hot_libexecdir = $(ligmaplugindir)/plug-ins/hot
+jigsaw_libexecdir = $(ligmaplugindir)/plug-ins/jigsaw
+mail_libexecdir = $(ligmaplugindir)/plug-ins/mail
+nl_filter_libexecdir = $(ligmaplugindir)/plug-ins/nl-filter
+plugin_browser_libexecdir = $(ligmaplugindir)/plug-ins/plugin-browser
+procedure_browser_libexecdir = $(ligmaplugindir)/plug-ins/procedure-browser
+qbist_libexecdir = $(ligmaplugindir)/plug-ins/qbist
+sample_colorize_libexecdir = $(ligmaplugindir)/plug-ins/sample-colorize
+smooth_palette_libexecdir = $(ligmaplugindir)/plug-ins/smooth-palette
+sparkle_libexecdir = $(ligmaplugindir)/plug-ins/sparkle
+sphere_designer_libexecdir = $(ligmaplugindir)/plug-ins/sphere-designer
+tile_libexecdir = $(ligmaplugindir)/plug-ins/tile
+tile_small_libexecdir = $(ligmaplugindir)/plug-ins/tile-small
+unit_editor_libexecdir = $(ligmaplugindir)/plug-ins/unit-editor
+van_gogh_lic_libexecdir = $(ligmaplugindir)/plug-ins/van-gogh-lic
+warp_libexecdir = $(ligmaplugindir)/plug-ins/warp
+wavelet_decompose_libexecdir = $(ligmaplugindir)/plug-ins/wavelet-decompose
+web_browser_libexecdir = $(ligmaplugindir)/plug-ins/web-browser
+web_page_libexecdir = $(ligmaplugindir)/plug-ins/web-page
 
 
 align_layers_libexec_PROGRAMS = align-layers
@@ -220,28 +220,28 @@ EXTRA_PROGRAMS = \
 
 install-%: %
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(gimpplugindir)/plug-ins/$<
+	$(mkinstalldirs) $(DESTDIR)$(ligmaplugindir)/plug-ins/$<
 	@p=$<; p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
 	if test -f $$p \
 	   || test -f $$p1 \
 	; then \
 	  f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
-	  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(gimpplugindir)/plug-ins/$$p/$$f"; \
-	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(gimpplugindir)/plug-ins/$$p/$$f || exit 1; \
+	  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(ligmaplugindir)/plug-ins/$$p/$$f"; \
+	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(ligmaplugindir)/plug-ins/$$p/$$f || exit 1; \
 	else :; fi
 
 align_layers_SOURCES = \
 	align-layers.c
 
 align_layers_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -251,11 +251,11 @@ animation_optimize_SOURCES = \
 	animation-optimize.c
 
 animation_optimize_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
@@ -267,14 +267,14 @@ animation_play_SOURCES = \
 	animation-play.c
 
 animation_play_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -285,14 +285,14 @@ blinds_SOURCES = \
 	blinds.c
 
 blinds_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -303,14 +303,14 @@ border_average_SOURCES = \
 	border-average.c
 
 border_average_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -321,14 +321,14 @@ busy_dialog_SOURCES = \
 	busy-dialog.c
 
 busy_dialog_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -339,14 +339,14 @@ checkerboard_SOURCES = \
 	checkerboard.c
 
 checkerboard_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -357,14 +357,14 @@ cml_explorer_SOURCES = \
 	cml-explorer.c
 
 cml_explorer_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -375,14 +375,14 @@ colormap_remap_SOURCES = \
 	colormap-remap.c
 
 colormap_remap_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -393,14 +393,14 @@ compose_SOURCES = \
 	compose.c
 
 compose_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -411,14 +411,14 @@ contrast_retinex_SOURCES = \
 	contrast-retinex.c
 
 contrast_retinex_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -429,11 +429,11 @@ crop_zealous_SOURCES = \
 	crop-zealous.c
 
 crop_zealous_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
@@ -445,14 +445,14 @@ curve_bend_SOURCES = \
 	curve-bend.c
 
 curve_bend_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -463,14 +463,14 @@ decompose_SOURCES = \
 	decompose.c
 
 decompose_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -481,14 +481,14 @@ depth_merge_SOURCES = \
 	depth-merge.c
 
 depth_merge_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -499,14 +499,14 @@ despeckle_SOURCES = \
 	despeckle.c
 
 despeckle_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -517,14 +517,14 @@ destripe_SOURCES = \
 	destripe.c
 
 destripe_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -535,14 +535,14 @@ file_aa_SOURCES = \
 	file-aa.c
 
 file_aa_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(AA_LIBS)		\
@@ -554,14 +554,14 @@ file_cel_SOURCES = \
 	file-cel.c
 
 file_cel_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -574,11 +574,11 @@ file_compressor_SOURCES = \
 	file-compressor.c
 
 file_compressor_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GIO_LIBS)		\
@@ -593,14 +593,14 @@ file_csource_SOURCES = \
 	file-csource.c
 
 file_csource_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -611,11 +611,11 @@ file_desktop_link_SOURCES = \
 	file-desktop-link.c
 
 file_desktop_link_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GIO_LIBS)		\
@@ -629,14 +629,14 @@ file_dicom_SOURCES = \
 	file-dicom.c
 
 file_dicom_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -647,14 +647,14 @@ file_gbr_SOURCES = \
 	file-gbr.c
 
 file_gbr_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -665,14 +665,14 @@ file_gegl_SOURCES = \
 	file-gegl.c
 
 file_gegl_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -683,11 +683,11 @@ file_gif_load_SOURCES = \
 	file-gif-load.c
 
 file_gif_load_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
@@ -699,14 +699,14 @@ file_gif_save_SOURCES = \
 	file-gif-save.c
 
 file_gif_save_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -717,14 +717,14 @@ file_gih_SOURCES = \
 	file-gih.c
 
 file_gih_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -735,11 +735,11 @@ file_glob_SOURCES = \
 	file-glob.c
 
 file_glob_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
@@ -750,14 +750,14 @@ file_header_SOURCES = \
 	file-header.c
 
 file_header_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -770,14 +770,14 @@ file_heif_SOURCES = \
 	file-heif.c
 
 file_heif_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(LIBHEIF_LIBS)		\
@@ -791,14 +791,14 @@ file_html_table_SOURCES = \
 	file-html-table.c
 
 file_html_table_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -811,14 +811,14 @@ file_jp2_load_SOURCES = \
 	file-jp2-load.c
 
 file_jp2_load_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(OPENJPEG_LIBS)		\
@@ -832,14 +832,14 @@ file_jpegxl_SOURCES = \
 	file-jpegxl.c
 
 file_jpegxl_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(JXL_THREADS_LIBS)		\
@@ -855,14 +855,14 @@ file_mng_SOURCES = \
 	file-mng.c
 
 file_mng_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(MNG_LIBS)		\
@@ -874,14 +874,14 @@ file_pat_SOURCES = \
 	file-pat.c
 
 file_pat_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -892,14 +892,14 @@ file_pcx_SOURCES = \
 	file-pcx.c
 
 file_pcx_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -912,14 +912,14 @@ file_pdf_load_SOURCES = \
 	file-pdf-load.c
 
 file_pdf_load_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(POPPLER_LIBS)		\
@@ -933,14 +933,14 @@ file_pdf_save_SOURCES = \
 	file-pdf-save.c
 
 file_pdf_save_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(CAIRO_PDF_LIBS)		\
@@ -952,14 +952,14 @@ file_pix_SOURCES = \
 	file-pix.c
 
 file_pix_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -972,14 +972,14 @@ file_png_SOURCES = \
 	file-png.c
 
 file_png_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(PNG_LIBS)		\
@@ -992,14 +992,14 @@ file_pnm_SOURCES = \
 	file-pnm.c
 
 file_pnm_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1010,14 +1010,14 @@ file_ps_SOURCES = \
 	file-ps.c
 
 file_ps_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GS_LIBS)		\
@@ -1029,14 +1029,14 @@ file_psp_SOURCES = \
 	file-psp.c
 
 file_psp_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(Z_LIBS)		\
@@ -1048,14 +1048,14 @@ file_raw_data_SOURCES = \
 	file-raw-data.c
 
 file_raw_data_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1066,14 +1066,14 @@ file_sunras_SOURCES = \
 	file-sunras.c
 
 file_sunras_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1086,14 +1086,14 @@ file_svg_SOURCES = \
 	file-svg.c
 
 file_svg_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(SVG_LIBS)		\
@@ -1105,14 +1105,14 @@ file_tga_SOURCES = \
 	file-tga.c
 
 file_tga_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1123,14 +1123,14 @@ file_wbmp_SOURCES = \
 	file-wbmp.c
 
 file_wbmp_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1143,14 +1143,14 @@ file_wmf_SOURCES = \
 	file-wmf.c
 
 file_wmf_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(WMF_LIBS)		\
@@ -1162,14 +1162,14 @@ file_xbm_SOURCES = \
 	file-xbm.c
 
 file_xbm_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1180,14 +1180,14 @@ file_xmc_SOURCES = \
 	file-xmc.c
 
 file_xmc_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(XMC_LIBS)		\
@@ -1199,14 +1199,14 @@ file_xpm_SOURCES = \
 	file-xpm.c
 
 file_xpm_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(XPM_LIBS)		\
@@ -1218,14 +1218,14 @@ file_xwd_SOURCES = \
 	file-xwd.c
 
 file_xwd_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1236,14 +1236,14 @@ film_SOURCES = \
 	film.c
 
 film_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1254,11 +1254,11 @@ gradient_map_SOURCES = \
 	gradient-map.c
 
 gradient_map_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
@@ -1270,14 +1270,14 @@ grid_SOURCES = \
 	grid.c
 
 grid_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1288,11 +1288,11 @@ guillotine_SOURCES = \
 	guillotine.c
 
 guillotine_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GIO_LIBS)		\
@@ -1304,14 +1304,14 @@ hot_SOURCES = \
 	hot.c
 
 hot_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1322,14 +1322,14 @@ jigsaw_SOURCES = \
 	jigsaw.c
 
 jigsaw_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1340,14 +1340,14 @@ mail_SOURCES = \
 	mail.c
 
 mail_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1357,14 +1357,14 @@ nl_filter_SOURCES = \
 	nl-filter.c
 
 nl_filter_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1375,14 +1375,14 @@ plugin_browser_SOURCES = \
 	plugin-browser.c
 
 plugin_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1392,14 +1392,14 @@ procedure_browser_SOURCES = \
 	procedure-browser.c
 
 procedure_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1409,14 +1409,14 @@ qbist_SOURCES = \
 	qbist.c
 
 qbist_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1427,14 +1427,14 @@ sample_colorize_SOURCES = \
 	sample-colorize.c
 
 sample_colorize_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1445,14 +1445,14 @@ smooth_palette_SOURCES = \
 	smooth-palette.c
 
 smooth_palette_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1463,14 +1463,14 @@ sparkle_SOURCES = \
 	sparkle.c
 
 sparkle_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1481,14 +1481,14 @@ sphere_designer_SOURCES = \
 	sphere-designer.c
 
 sphere_designer_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1499,14 +1499,14 @@ tile_SOURCES = \
 	tile.c
 
 tile_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1517,14 +1517,14 @@ tile_small_SOURCES = \
 	tile-small.c
 
 tile_small_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1535,14 +1535,14 @@ unit_editor_SOURCES = \
 	unit-editor.c
 
 unit_editor_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1552,14 +1552,14 @@ van_gogh_lic_SOURCES = \
 	van-gogh-lic.c
 
 van_gogh_lic_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1570,14 +1570,14 @@ warp_SOURCES = \
 	warp.c
 
 warp_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1588,14 +1588,14 @@ wavelet_decompose_SOURCES = \
 	wavelet-decompose.c
 
 wavelet_decompose_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -1610,14 +1610,14 @@ web_browser_SOURCES = \
 	web-browser.c
 
 web_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1629,14 +1629,14 @@ web_page_SOURCES = \
 	web-page.c
 
 web_page_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
+	$(libligmaui)		\
+	$(libligmawidgets)	\
+	$(libligmamodule)	\
+	$(libligma)		\
+	$(libligmamath)		\
+	$(libligmaconfig)	\
+	$(libligmacolor)		\
+	$(libligmabase)		\
 	$(GTK_LIBS)		\
 	$(WEBKIT_LIBS)		\
 	$(RT_LIBS)		\

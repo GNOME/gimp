@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,46 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_EDITOR_H__
-#define __GIMP_IMAGE_EDITOR_H__
+#ifndef __LIGMA_IMAGE_EDITOR_H__
+#define __LIGMA_IMAGE_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "ligmaeditor.h"
 
 
-#define GIMP_TYPE_IMAGE_EDITOR            (gimp_image_editor_get_type ())
-#define GIMP_IMAGE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_EDITOR, GimpImageEditor))
-#define GIMP_IMAGE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_EDITOR, GimpImageEditorClass))
-#define GIMP_IS_IMAGE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_EDITOR))
-#define GIMP_IS_IMAGE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_EDITOR))
-#define GIMP_IMAGE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_EDITOR, GimpImageEditorClass))
+#define LIGMA_TYPE_IMAGE_EDITOR            (ligma_image_editor_get_type ())
+#define LIGMA_IMAGE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_EDITOR, LigmaImageEditor))
+#define LIGMA_IMAGE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_EDITOR, LigmaImageEditorClass))
+#define LIGMA_IS_IMAGE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_EDITOR))
+#define LIGMA_IS_IMAGE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_EDITOR))
+#define LIGMA_IMAGE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_EDITOR, LigmaImageEditorClass))
 
 
-typedef struct _GimpImageEditorClass GimpImageEditorClass;
+typedef struct _LigmaImageEditorClass LigmaImageEditorClass;
 
-struct _GimpImageEditor
+struct _LigmaImageEditor
 {
-  GimpEditor   parent_instance;
+  LigmaEditor   parent_instance;
 
-  GimpContext *context;
-  GimpImage   *image;
+  LigmaContext *context;
+  LigmaImage   *image;
 };
 
-struct _GimpImageEditorClass
+struct _LigmaImageEditorClass
 {
-  GimpEditorClass  parent_class;
+  LigmaEditorClass  parent_class;
 
   /*  virtual function  */
-  void (* set_image) (GimpImageEditor *editor,
-                      GimpImage       *image);
+  void (* set_image) (LigmaImageEditor *editor,
+                      LigmaImage       *image);
 };
 
 
-GType       gimp_image_editor_get_type  (void) G_GNUC_CONST;
+GType       ligma_image_editor_get_type  (void) G_GNUC_CONST;
 
-void        gimp_image_editor_set_image (GimpImageEditor *editor,
-                                         GimpImage       *image);
-GimpImage * gimp_image_editor_get_image (GimpImageEditor *editor);
+void        ligma_image_editor_set_image (LigmaImageEditor *editor,
+                                         LigmaImage       *image);
+LigmaImage * ligma_image_editor_get_image (LigmaImageEditor *editor);
 
 
-#endif /* __GIMP_IMAGE_EDITOR_H__ */
+#endif /* __LIGMA_IMAGE_EDITOR_H__ */

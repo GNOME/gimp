@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-new.h"
-#include "gimpimage-pick-color.h"
-#include "gimplayer.h"
-#include "gimppickable.h"
+#include "ligma.h"
+#include "ligmachannel.h"
+#include "ligmacontainer.h"
+#include "ligmadrawable.h"
+#include "ligmaimage.h"
+#include "ligmaimage-new.h"
+#include "ligmaimage-pick-color.h"
+#include "ligmalayer.h"
+#include "ligmapickable.h"
 
 
 gboolean
-gimp_image_pick_color (GimpImage   *image,
+ligma_image_pick_color (LigmaImage   *image,
                        GList       *drawables,
                        gint         x,
                        gint         y,
@@ -48,28 +48,28 @@ gimp_image_pick_color (GimpImage   *image,
                        gdouble      average_radius,
                        const Babl **sample_format,
                        gpointer     pixel,
-                       GimpRGB     *color)
+                       LigmaRGB     *color)
 {
-  GimpImage    *pick_image = NULL;
-  GimpPickable *pickable;
+  LigmaImage    *pick_image = NULL;
+  LigmaPickable *pickable;
   GList        *iter;
   gboolean      result;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), FALSE);
-      g_return_val_if_fail (gimp_item_get_image (iter->data) == image,
+      g_return_val_if_fail (LIGMA_IS_DRAWABLE (iter->data), FALSE);
+      g_return_val_if_fail (ligma_item_get_image (iter->data) == image,
                             FALSE);
     }
 
   if (sample_merged && g_list_length (drawables) == 1)
     {
-      if ((GIMP_IS_LAYER (drawables->data) &&
-           gimp_image_get_n_layers (image) == 1) ||
-          (GIMP_IS_CHANNEL (drawables->data) &&
-           gimp_image_get_n_channels (image) == 1))
+      if ((LIGMA_IS_LAYER (drawables->data) &&
+           ligma_image_get_n_layers (image) == 1) ||
+          (LIGMA_IS_CHANNEL (drawables->data) &&
+           ligma_image_get_n_channels (image) == 1))
         {
           /* Let's add a special exception when an image has only one
            * layer. This was useful in particular for indexed image as
@@ -86,9 +86,9 @@ gimp_image_pick_color (GimpImage   *image,
   if (sample_merged)
     {
       if (! show_all)
-        pickable = GIMP_PICKABLE (image);
+        pickable = LIGMA_PICKABLE (image);
       else
-        pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+        pickable = LIGMA_PICKABLE (ligma_image_get_projection (image));
     }
   else
     {
@@ -96,7 +96,7 @@ gimp_image_pick_color (GimpImage   *image,
 
       if (! drawables)
         {
-          drawables = gimp_image_get_selected_drawables (image);
+          drawables = ligma_image_get_selected_drawables (image);
           free_drawables = TRUE;
         }
 
@@ -107,37 +107,37 @@ gimp_image_pick_color (GimpImage   *image,
         {
           gint off_x, off_y;
 
-          gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
+          ligma_item_get_offset (LIGMA_ITEM (drawables->data), &off_x, &off_y);
           x -= off_x;
           y -= off_y;
 
-          pickable = GIMP_PICKABLE (drawables->data);
+          pickable = LIGMA_PICKABLE (drawables->data);
         }
       else /* length > 1 */
         {
-          pick_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, FALSE);
-          gimp_container_remove (image->gimp->images, GIMP_OBJECT (pick_image));
+          pick_image = ligma_image_new_from_drawables (image->ligma, drawables, FALSE, FALSE);
+          ligma_container_remove (image->ligma->images, LIGMA_OBJECT (pick_image));
 
           if (! show_all)
-            pickable = GIMP_PICKABLE (pick_image);
+            pickable = LIGMA_PICKABLE (pick_image);
           else
-            pickable = GIMP_PICKABLE (gimp_image_get_projection (pick_image));
-          gimp_pickable_flush (pickable);
+            pickable = LIGMA_PICKABLE (ligma_image_get_projection (pick_image));
+          ligma_pickable_flush (pickable);
         }
 
       if (free_drawables)
         g_list_free (drawables);
     }
 
-  /* Do *not* call gimp_pickable_flush() here because it's too expensive
+  /* Do *not* call ligma_pickable_flush() here because it's too expensive
    * to call it unconditionally each time e.g. the cursor view is updated.
-   * Instead, call gimp_pickable_flush() in the callers if needed.
+   * Instead, call ligma_pickable_flush() in the callers if needed.
    */
 
   if (sample_format)
-    *sample_format = gimp_pickable_get_format (pickable);
+    *sample_format = ligma_pickable_get_format (pickable);
 
-  result = gimp_pickable_pick_color (pickable, x, y,
+  result = ligma_pickable_pick_color (pickable, x, y,
                                      sample_average &&
                                      ! (show_all && sample_merged),
                                      average_radius,
@@ -153,10 +153,10 @@ gimp_image_pick_color (GimpImage   *image,
 
       if (sample_average)
         {
-          GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
+          GeglBuffer *buffer = ligma_pickable_get_buffer (pickable);
           gint        radius = floor (average_radius);
 
-          gimp_gegl_average_color (buffer,
+          ligma_gegl_average_color (buffer,
                                    GEGL_RECTANGLE (x - radius,
                                                    y - radius,
                                                    2 * radius + 1,
@@ -165,7 +165,7 @@ gimp_image_pick_color (GimpImage   *image,
         }
 
       if (! result || sample_average)
-        gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
+        ligma_pickable_pixel_to_srgb (pickable, format, sample, color);
 
       result = TRUE;
     }

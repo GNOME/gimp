@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
  *
- * gimplayermodecombobox.h
- * Copyright (C) 2017  Michael Natterer <mitch@gimp.org>
+ * ligmalayermodecombobox.h
+ * Copyright (C) 2017  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MODE_COMBO_BOX_H__
-#define __GIMP_LAYER_MODE_COMBO_BOX_H__
+#ifndef __LIGMA_LAYER_MODE_COMBO_BOX_H__
+#define __LIGMA_LAYER_MODE_COMBO_BOX_H__
 
 
-#define GIMP_TYPE_LAYER_MODE_COMBO_BOX            (gimp_layer_mode_combo_box_get_type ())
-#define GIMP_LAYER_MODE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_MODE_COMBO_BOX, GimpLayerModeComboBox))
-#define GIMP_LAYER_MODE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MODE_COMBO_BOX, GimpLayerModeComboBoxClass))
-#define GIMP_IS_LAYER_MODE_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_MODE_COMBO_BOX))
-#define GIMP_IS_LAYER_MODE_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MODE_COMBO_BOX))
-#define GIMP_LAYER_MODE_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_MODE_COMBO_BOX, GimpLayerModeComboBoxClass))
+#define LIGMA_TYPE_LAYER_MODE_COMBO_BOX            (ligma_layer_mode_combo_box_get_type ())
+#define LIGMA_LAYER_MODE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LAYER_MODE_COMBO_BOX, LigmaLayerModeComboBox))
+#define LIGMA_LAYER_MODE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LAYER_MODE_COMBO_BOX, LigmaLayerModeComboBoxClass))
+#define LIGMA_IS_LAYER_MODE_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LAYER_MODE_COMBO_BOX))
+#define LIGMA_IS_LAYER_MODE_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LAYER_MODE_COMBO_BOX))
+#define LIGMA_LAYER_MODE_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LAYER_MODE_COMBO_BOX, LigmaLayerModeComboBoxClass))
 
 
-typedef struct _GimpLayerModeComboBoxPrivate GimpLayerModeComboBoxPrivate;
-typedef struct _GimpLayerModeComboBoxClass   GimpLayerModeComboBoxClass;
+typedef struct _LigmaLayerModeComboBoxPrivate LigmaLayerModeComboBoxPrivate;
+typedef struct _LigmaLayerModeComboBoxClass   LigmaLayerModeComboBoxClass;
 
-struct _GimpLayerModeComboBox
+struct _LigmaLayerModeComboBox
 {
-  GimpEnumComboBox              parent_instance;
+  LigmaEnumComboBox              parent_instance;
 
-  GimpLayerModeComboBoxPrivate *priv;
+  LigmaLayerModeComboBoxPrivate *priv;
 };
 
-struct _GimpLayerModeComboBoxClass
+struct _LigmaLayerModeComboBoxClass
 {
-  GimpEnumComboBoxClass  parent_class;
+  LigmaEnumComboBoxClass  parent_class;
 };
 
 
-GType                  gimp_layer_mode_combo_box_get_type    (void) G_GNUC_CONST;
+GType                  ligma_layer_mode_combo_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget            * gimp_layer_mode_combo_box_new         (GimpLayerModeContext   context);
+GtkWidget            * ligma_layer_mode_combo_box_new         (LigmaLayerModeContext   context);
 
-void                   gimp_layer_mode_combo_box_set_context (GimpLayerModeComboBox *combo,
-                                                              GimpLayerModeContext   context);
-GimpLayerModeContext   gimp_layer_mode_combo_box_get_context (GimpLayerModeComboBox *combo);
+void                   ligma_layer_mode_combo_box_set_context (LigmaLayerModeComboBox *combo,
+                                                              LigmaLayerModeContext   context);
+LigmaLayerModeContext   ligma_layer_mode_combo_box_get_context (LigmaLayerModeComboBox *combo);
 
-void                   gimp_layer_mode_combo_box_set_mode    (GimpLayerModeComboBox *combo,
-                                                              GimpLayerMode          mode);
-GimpLayerMode          gimp_layer_mode_combo_box_get_mode    (GimpLayerModeComboBox *combo);
+void                   ligma_layer_mode_combo_box_set_mode    (LigmaLayerModeComboBox *combo,
+                                                              LigmaLayerMode          mode);
+LigmaLayerMode          ligma_layer_mode_combo_box_get_mode    (LigmaLayerModeComboBox *combo);
 
-void                   gimp_layer_mode_combo_box_set_group   (GimpLayerModeComboBox *combo,
-                                                              GimpLayerModeGroup     group);
-GimpLayerModeGroup     gimp_layer_mode_combo_box_get_group   (GimpLayerModeComboBox *combo);
+void                   ligma_layer_mode_combo_box_set_group   (LigmaLayerModeComboBox *combo,
+                                                              LigmaLayerModeGroup     group);
+LigmaLayerModeGroup     ligma_layer_mode_combo_box_get_group   (LigmaLayerModeComboBox *combo);
 
 
-#endif  /* __GIMP_LAYER_MODE_COMBO_BOX_H__ */
+#endif  /* __LIGMA_LAYER_MODE_COMBO_BOX_H__ */

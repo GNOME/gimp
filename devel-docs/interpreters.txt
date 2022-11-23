@@ -1,38 +1,38 @@
-# Interpreters for GIMP plugins
+# Interpreters for LIGMA plugins
 
 
 
 ## About this document
 
-This describes how GIMP invokes interpreters for GIMP plugin files.
+This describes how LIGMA invokes interpreters for LIGMA plugin files.
 
-This doesn't discuss the architecture of GIMP's interpreters,
+This doesn't discuss the architecture of LIGMA's interpreters,
 or how to write an interpreted plugin.
 
-The audience is mainly GIMP developers.
+The audience is mainly LIGMA developers.
 This may also interest users who want to use different interpreters.
 
 
 ## Brief summary
 
-On Linux and MacOS, a shebang in a GIMP plugin text file
+On Linux and MacOS, a shebang in a LIGMA plugin text file
 is enough to indicate what interpreter to start.
-On Windows, you also need an .interp file installed with GIMP.
+On Windows, you also need an .interp file installed with LIGMA.
 
 It can get complicated;
 there are many combinations of envirnoment variables, shebangs, file suffixes, and .interp files that can work.
 
-*To insure a GIMP interpreted plugin works across platforms,
+*To insure a LIGMA interpreted plugin works across platforms,
 it should have a shebang.*
 
 *Except that ScriptFu plugin files installed to /scripts do not need a shebang
 since the ScriptFu extension reads them.*
 
-## Partial history of interpreters in GIMP
+## Partial history of interpreters in LIGMA
 
-Rarely are interpreters addded to GIMP.
-GIMP 2 offers Perl, Scheme, and Python2 interpreters.
-GIMP 3 offers Python3, lua, javascript, and the gimp-script-fu-interpreter interpreters.
+Rarely are interpreters addded to LIGMA.
+LIGMA 2 offers Perl, Scheme, and Python2 interpreters.
+LIGMA 3 offers Python3, lua, javascript, and the ligma-script-fu-interpreter interpreters.
 
 
 ## Background
@@ -41,24 +41,24 @@ An interpreter usually reads a text file.
 A user often launches an interpreter and passes a text file.
 But users can also double-click on a text file to launch the corresponding interpreter.
 
-Similarly, GIMP launches an interpreter on GIMP plugin text files.
-GIMP must figure out the "corresponding" interpreter.
+Similarly, LIGMA launches an interpreter on LIGMA plugin text files.
+LIGMA must figure out the "corresponding" interpreter.
 
 The general mechanism for launching interpreters from their text files is built into the operating system.
 On Linux and MacOS, the mechanism is called a shebang or sh-bang.
 On Windows, the mechanism "associates" file extensions with programs.
 
-GIMP uses similar mechanisms to launch interpreters.
-See the code in /app/plug-ins/gimpinterpreterdb.c .
+LIGMA uses similar mechanisms to launch interpreters.
+See the code in /app/plug-ins/ligmainterpreterdb.c .
 *The exception is the ScriptFu extension.
-GIMP starts it when GIMP starts and it reads its ".scm" plugin files from the /scripts directory without benefit
+LIGMA starts it when LIGMA starts and it reads its ".scm" plugin files from the /scripts directory without benefit
 of the shebang mechanism.*
 
-GIMP uses the mechanism when it queries plugin files at startup.
-Subsequently, GIMP knows the interpreter to launch,
+LIGMA uses the mechanism when it queries plugin files at startup.
+Subsequently, LIGMA knows the interpreter to launch,
 for example when a user clicks on a menu item implemented by an interpreter.
-A user should not click on a GIMP plugin file in a file browser;
-only one of the GIMP apps should launch interpreted GIMP plugin files.
+A user should not click on a LIGMA plugin file in a file browser;
+only one of the LIGMA apps should launch interpreted LIGMA plugin files.
 
 
 ## Platform differences
@@ -66,13 +66,13 @@ only one of the GIMP apps should launch interpreted GIMP plugin files.
 On Linux and MacOS, you simply need a shebang in a plugin text file.
 
 On Windows, you must also define an .interp file.
-The .interp files are part of GIMP's installation on Windows.
+The .interp files are part of LIGMA's installation on Windows.
 The .interp files are built when the Windows installer is built.
-See the source file: /build/windows/installer/gimp3264.iss .
+See the source file: /build/windows/installer/ligma3264.iss .
 
 A user can optionally create .interp files on Linux and MacOS.
 But they are not usually part of a Linux installation.
-Sophisticated users can edit .interp files to change which interpreters GIMP launches.
+Sophisticated users can edit .interp files to change which interpreters LIGMA launches.
 
 
 ## shebangs
@@ -82,15 +82,15 @@ A shebang starts with "#!",
 followed by the name or path of an interpreter,
 or followed by "/usr/bin/env", a space, and the name or path of an interpreter.
 
-!!! Shebangs for GIMP plugins always use UNIX notation, i.e. forward slashes in path strings.
+!!! Shebangs for LIGMA plugins always use UNIX notation, i.e. forward slashes in path strings.
 Even on Windows, the shebangs are in UNIX notation.
 
-Recommended examples for GIMP 3 (see repo directory /extensions/goat-exercises):
+Recommended examples for LIGMA 3 (see repo directory /extensions/goat-exercises):
 
     #!/usr/bin/env   python3
     #!/usr/bin/env   luajit
     #!/usr/bin/env   gjs
-    #!/usr/bin/env   gimp-script-fu-interpreter-3.0
+    #!/usr/bin/env   ligma-script-fu-interpreter-3.0
 
 Other examples:
 
@@ -108,20 +108,20 @@ Whether the other examples actually work depends on:
 ## .interp files
 
 Again, .interp files are necessary on Windows.
-They tell GIMP which executable interpreter to launch for a GIMP plugin text file.
+They tell LIGMA which executable interpreter to launch for a LIGMA plugin text file.
 
 You usually have one .interp file for each interpreter.
 For example:
 - python.interp
 - lua.interp
-- gimp-script-fu-interpreter.interp
+- ligma-script-fu-interpreter.interp
 
 The repo file /data/interpreters/default.interp is a non-functioning template
 for a <foo>.interp file.
 
 .interp files are installed on Windows to, for example:
 
-    C:\Users\foo\AppData\Programs\GIMP 3.0\lib\gimp\3.0\interpreters
+    C:\Users\foo\AppData\Programs\LIGMA 3.0\lib\ligma\3.0\interpreters
 
 
 interp files have three kinds of lines:
@@ -142,7 +142,7 @@ Since a shebang is always in UNIX notation, any slashes are forward.
 
 The rhs specifies a path to an interpreter.
 The rhs on the Windows platform is in Windows notation, using back slashes.
-For example, the rhs can be "C:\Users\foo\AppData\Programs\GIMP 3.0\bin\python"
+For example, the rhs can be "C:\Users\foo\AppData\Programs\LIGMA 3.0\bin\python"
 
 
 ### "extension" lines in an .interp file
@@ -154,7 +154,7 @@ See https://en.wikipedia.org/wiki/Binfmt_misc.
 
 Informally the format is:  ":name:type:offset:magic: mask:interpreter:flags"
 !!! Note the field delimiter is usually ":" but can be another character.
-GIMP parses the binfmt using the first character as the delimiter.
+LIGMA parses the binfmt using the first character as the delimiter.
  The first field is a name or identifier and has little significance.
 The second field is an "E".
 The third, fifth, and seventh fields are usually empty.
@@ -168,7 +168,7 @@ Examples:
 
     :python:E::py::python3:
     :luajit:E::lua::luajit:
-    ,python,E,,py,,C:\Users\foo\AppData\GIMP 3.0\bin\python3,
+    ,python,E,,py,,C:\Users\foo\AppData\LIGMA 3.0\bin\python3,
 
 Note the examples are not necessarily working examples.
 They might not work if the name or path is not found,
@@ -192,11 +192,11 @@ Usually interpreters read text files, and rarely binary files.
 
 ## Building .interp files for windows
 
-If a GIMP developer adds an interpreter to the GIMP package,
-they must modify GIMP's build for Windows
+If a LIGMA developer adds an interpreter to the LIGMA package,
+they must modify LIGMA's build for Windows
 to ensure proper .interp files are installed.
 
-See the repo file: /build/windows/installer/gimp3264.iss .
+See the repo file: /build/windows/installer/ligma3264.iss .
 
 For the convenience of users, we usually install an .interp file having many lines.
 Only one "program" line is needed if users only install canonical plugin text files

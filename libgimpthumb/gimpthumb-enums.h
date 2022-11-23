@@ -1,11 +1,11 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * https://specifications.freedesktop.org/thumbnail-spec/
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,97 +22,97 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_ENUMS_H__
-#define __GIMP_THUMB_ENUMS_H__
+#ifndef __LIGMA_THUMB_ENUMS_H__
+#define __LIGMA_THUMB_ENUMS_H__
 
 G_BEGIN_DECLS
 
 
 /**
- * SECTION: gimpthumb-enums
- * @title: GimpThumb-enums
- * @short_description: Enumerations used by libgimpthumb
+ * SECTION: ligmathumb-enums
+ * @title: LigmaThumb-enums
+ * @short_description: Enumerations used by libligmathumb
  *
- * Enumerations used by libgimpthumb
+ * Enumerations used by libligmathumb
  **/
 
 
 /**
- * GimpThumbFileType:
- * @GIMP_THUMB_FILE_TYPE_NONE:    file does not exist
- * @GIMP_THUMB_FILE_TYPE_REGULAR: a regular file
- * @GIMP_THUMB_FILE_TYPE_FOLDER:  a directory
- * @GIMP_THUMB_FILE_TYPE_SPECIAL: a special file (device node, fifo, socket, ...)
+ * LigmaThumbFileType:
+ * @LIGMA_THUMB_FILE_TYPE_NONE:    file does not exist
+ * @LIGMA_THUMB_FILE_TYPE_REGULAR: a regular file
+ * @LIGMA_THUMB_FILE_TYPE_FOLDER:  a directory
+ * @LIGMA_THUMB_FILE_TYPE_SPECIAL: a special file (device node, fifo, socket, ...)
  *
- * File types as returned by gimp_thumb_file_test().
+ * File types as returned by ligma_thumb_file_test().
  **/
-#define GIMP_TYPE_THUMB_FILE_TYPE (gimp_thumb_file_type_get_type ())
+#define LIGMA_TYPE_THUMB_FILE_TYPE (ligma_thumb_file_type_get_type ())
 
-GType gimp_thumb_file_type_get_type (void) G_GNUC_CONST;
+GType ligma_thumb_file_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_THUMB_FILE_TYPE_NONE,
-  GIMP_THUMB_FILE_TYPE_REGULAR,
-  GIMP_THUMB_FILE_TYPE_FOLDER,
-  GIMP_THUMB_FILE_TYPE_SPECIAL
-} GimpThumbFileType;
+  LIGMA_THUMB_FILE_TYPE_NONE,
+  LIGMA_THUMB_FILE_TYPE_REGULAR,
+  LIGMA_THUMB_FILE_TYPE_FOLDER,
+  LIGMA_THUMB_FILE_TYPE_SPECIAL
+} LigmaThumbFileType;
 
 
 /**
- * GimpThumbSize:
- * @GIMP_THUMB_SIZE_FAIL:   special size used to indicate a thumbnail
+ * LigmaThumbSize:
+ * @LIGMA_THUMB_SIZE_FAIL:   special size used to indicate a thumbnail
  *                          creation failure
- * @GIMP_THUMB_SIZE_NORMAL: normal thumbnail size (128 pixels)
- * @GIMP_THUMB_SIZE_LARGE:  large thumbnail size (256 pixels)
+ * @LIGMA_THUMB_SIZE_NORMAL: normal thumbnail size (128 pixels)
+ * @LIGMA_THUMB_SIZE_LARGE:  large thumbnail size (256 pixels)
  *
  * Possible thumbnail sizes as defined by the Thumbnail Managing
  * Standard.
  **/
-#define GIMP_TYPE_THUMB_SIZE (gimp_thumb_size_get_type ())
+#define LIGMA_TYPE_THUMB_SIZE (ligma_thumb_size_get_type ())
 
-GType gimp_thumb_size_get_type (void) G_GNUC_CONST;
+GType ligma_thumb_size_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_THUMB_SIZE_FAIL   = 0,
-  GIMP_THUMB_SIZE_NORMAL = 128,
-  GIMP_THUMB_SIZE_LARGE  = 256
-} GimpThumbSize;
+  LIGMA_THUMB_SIZE_FAIL   = 0,
+  LIGMA_THUMB_SIZE_NORMAL = 128,
+  LIGMA_THUMB_SIZE_LARGE  = 256
+} LigmaThumbSize;
 
 
 /**
- * GimpThumbState:
- * @GIMP_THUMB_STATE_UNKNOWN:   nothing is known about the file/thumbnail
- * @GIMP_THUMB_STATE_REMOTE:    the file is on a remote file system
- * @GIMP_THUMB_STATE_FOLDER:    the file is a directory
- * @GIMP_THUMB_STATE_SPECIAL:   the file is a special file
- * @GIMP_THUMB_STATE_NOT_FOUND: the file/thumbnail doesn't exist
- * @GIMP_THUMB_STATE_EXISTS:    the file/thumbnail exists
- * @GIMP_THUMB_STATE_OLD:       the thumbnail may be outdated
- * @GIMP_THUMB_STATE_FAILED:    the thumbnail couldn't be created
- * @GIMP_THUMB_STATE_OK:        the thumbnail exists and matches the image
+ * LigmaThumbState:
+ * @LIGMA_THUMB_STATE_UNKNOWN:   nothing is known about the file/thumbnail
+ * @LIGMA_THUMB_STATE_REMOTE:    the file is on a remote file system
+ * @LIGMA_THUMB_STATE_FOLDER:    the file is a directory
+ * @LIGMA_THUMB_STATE_SPECIAL:   the file is a special file
+ * @LIGMA_THUMB_STATE_NOT_FOUND: the file/thumbnail doesn't exist
+ * @LIGMA_THUMB_STATE_EXISTS:    the file/thumbnail exists
+ * @LIGMA_THUMB_STATE_OLD:       the thumbnail may be outdated
+ * @LIGMA_THUMB_STATE_FAILED:    the thumbnail couldn't be created
+ * @LIGMA_THUMB_STATE_OK:        the thumbnail exists and matches the image
  *
- * Possible image and thumbnail file states used by libgimpthumb.
+ * Possible image and thumbnail file states used by libligmathumb.
  **/
-#define GIMP_TYPE_THUMB_STATE (gimp_thumb_state_get_type ())
+#define LIGMA_TYPE_THUMB_STATE (ligma_thumb_state_get_type ())
 
-GType gimp_thumb_state_get_type (void) G_GNUC_CONST;
+GType ligma_thumb_state_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_THUMB_STATE_UNKNOWN,
-  GIMP_THUMB_STATE_REMOTE,
-  GIMP_THUMB_STATE_FOLDER,
-  GIMP_THUMB_STATE_SPECIAL,
-  GIMP_THUMB_STATE_NOT_FOUND,
-  GIMP_THUMB_STATE_EXISTS,
-  GIMP_THUMB_STATE_OLD,
-  GIMP_THUMB_STATE_FAILED,
-  GIMP_THUMB_STATE_OK
-} GimpThumbState;
+  LIGMA_THUMB_STATE_UNKNOWN,
+  LIGMA_THUMB_STATE_REMOTE,
+  LIGMA_THUMB_STATE_FOLDER,
+  LIGMA_THUMB_STATE_SPECIAL,
+  LIGMA_THUMB_STATE_NOT_FOUND,
+  LIGMA_THUMB_STATE_EXISTS,
+  LIGMA_THUMB_STATE_OLD,
+  LIGMA_THUMB_STATE_FAILED,
+  LIGMA_THUMB_STATE_OK
+} LigmaThumbState;
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_THUMB_ENUMS_H__ */
+#endif  /* __LIGMA_THUMB_ENUMS_H__ */

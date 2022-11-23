@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
  *
- * gimplayermodebox.h
- * Copyright (C) 2017  Michael Natterer <mitch@gimp.org>
+ * ligmalayermodebox.h
+ * Copyright (C) 2017  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,50 +18,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MODE_BOX_H__
-#define __GIMP_LAYER_MODE_BOX_H__
+#ifndef __LIGMA_LAYER_MODE_BOX_H__
+#define __LIGMA_LAYER_MODE_BOX_H__
 
 
-#define GIMP_TYPE_LAYER_MODE_BOX            (gimp_layer_mode_box_get_type ())
-#define GIMP_LAYER_MODE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_MODE_BOX, GimpLayerModeBox))
-#define GIMP_LAYER_MODE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MODE_BOX, GimpLayerModeBoxClass))
-#define GIMP_IS_LAYER_MODE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_MODE_BOX))
-#define GIMP_IS_LAYER_MODE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MODE_BOX))
-#define GIMP_LAYER_MODE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_MODE_BOX, GimpLayerModeBoxClass))
+#define LIGMA_TYPE_LAYER_MODE_BOX            (ligma_layer_mode_box_get_type ())
+#define LIGMA_LAYER_MODE_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LAYER_MODE_BOX, LigmaLayerModeBox))
+#define LIGMA_LAYER_MODE_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LAYER_MODE_BOX, LigmaLayerModeBoxClass))
+#define LIGMA_IS_LAYER_MODE_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LAYER_MODE_BOX))
+#define LIGMA_IS_LAYER_MODE_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LAYER_MODE_BOX))
+#define LIGMA_LAYER_MODE_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LAYER_MODE_BOX, LigmaLayerModeBoxClass))
 
 
-typedef struct _GimpLayerModeBoxPrivate GimpLayerModeBoxPrivate;
-typedef struct _GimpLayerModeBoxClass   GimpLayerModeBoxClass;
+typedef struct _LigmaLayerModeBoxPrivate LigmaLayerModeBoxPrivate;
+typedef struct _LigmaLayerModeBoxClass   LigmaLayerModeBoxClass;
 
-struct _GimpLayerModeBox
+struct _LigmaLayerModeBox
 {
   GtkBox                   parent_instance;
 
-  GimpLayerModeBoxPrivate *priv;
+  LigmaLayerModeBoxPrivate *priv;
 };
 
-struct _GimpLayerModeBoxClass
+struct _LigmaLayerModeBoxClass
 {
   GtkBoxClass  parent_class;
 };
 
 
-GType                  gimp_layer_mode_box_get_type      (void) G_GNUC_CONST;
+GType                  ligma_layer_mode_box_get_type      (void) G_GNUC_CONST;
 
-GtkWidget            * gimp_layer_mode_box_new           (GimpLayerModeContext  context);
+GtkWidget            * ligma_layer_mode_box_new           (LigmaLayerModeContext  context);
 
-void                   gimp_layer_mode_box_set_context   (GimpLayerModeBox     *box,
-                                                          GimpLayerModeContext  context);
-GimpLayerModeContext   gimp_layer_mode_box_get_context   (GimpLayerModeBox     *box);
+void                   ligma_layer_mode_box_set_context   (LigmaLayerModeBox     *box,
+                                                          LigmaLayerModeContext  context);
+LigmaLayerModeContext   ligma_layer_mode_box_get_context   (LigmaLayerModeBox     *box);
 
-void                   gimp_layer_mode_box_set_mode      (GimpLayerModeBox     *box,
-                                                          GimpLayerMode         mode);
-GimpLayerMode          gimp_layer_mode_box_get_mode      (GimpLayerModeBox     *box);
+void                   ligma_layer_mode_box_set_mode      (LigmaLayerModeBox     *box,
+                                                          LigmaLayerMode         mode);
+LigmaLayerMode          ligma_layer_mode_box_get_mode      (LigmaLayerModeBox     *box);
 
-void                   gimp_layer_mode_box_set_label     (GimpLayerModeBox     *box,
+void                   ligma_layer_mode_box_set_label     (LigmaLayerModeBox     *box,
                                                           const gchar          *label);
-void                   gimp_layer_mode_box_set_ellipsize (GimpLayerModeBox     *box,
+void                   ligma_layer_mode_box_set_ellipsize (LigmaLayerModeBox     *box,
                                                           PangoEllipsizeMode    mode);
 
 
-#endif  /* __GIMP_LAYER_MODE_BOX_H__ */
+#endif  /* __LIGMA_LAYER_MODE_BOX_H__ */

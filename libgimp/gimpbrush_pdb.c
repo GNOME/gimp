@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpbrush_pdb.c
+ * ligmabrush_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpbrush
- * @title: gimpbrush
+ * SECTION: ligmabrush
+ * @title: ligmabrush
  * @short_description: Functions operating on a single brush.
  *
  * Functions operating on a single brush.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_brush_new:
+ * ligma_brush_new:
  * @name: The requested name of the new brush.
  *
  * Creates a new brush.
@@ -50,31 +50,31 @@
  * Since: 2.2
  **/
 gchar *
-gimp_brush_new (const gchar *name)
+ligma_brush_new (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    actual_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return actual_name;
 }
 
 /**
- * gimp_brush_duplicate:
+ * ligma_brush_duplicate:
  * @name: The brush name.
  *
  * Duplicates a brush.
@@ -87,31 +87,31 @@ gimp_brush_new (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_brush_duplicate (const gchar *name)
+ligma_brush_duplicate (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-duplicate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-duplicate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    copy_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return copy_name;
 }
 
 /**
- * gimp_brush_is_generated:
+ * ligma_brush_is_generated:
  * @name: The brush name.
  *
  * Tests if brush is generated.
@@ -123,31 +123,31 @@ gimp_brush_duplicate (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_brush_is_generated (const gchar *name)
+ligma_brush_is_generated (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean generated = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-is-generated",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-is-generated",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    generated = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    generated = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return generated;
 }
 
 /**
- * gimp_brush_rename:
+ * ligma_brush_rename:
  * @name: The brush name.
  * @new_name: The new name of the brush.
  *
@@ -161,33 +161,33 @@ gimp_brush_is_generated (const gchar *name)
  * Since: 2.2
  **/
 gchar *
-gimp_brush_rename (const gchar *name,
+ligma_brush_rename (const gchar *name,
                    const gchar *new_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-rename",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-rename",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    actual_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return actual_name;
 }
 
 /**
- * gimp_brush_delete:
+ * ligma_brush_delete:
  * @name: The brush name.
  *
  * Deletes a brush.
@@ -199,30 +199,30 @@ gimp_brush_rename (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_brush_delete (const gchar *name)
+ligma_brush_delete (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_brush_is_editable:
+ * ligma_brush_is_editable:
  * @name: The brush name.
  *
  * Tests if brush can be edited.
@@ -234,31 +234,31 @@ gimp_brush_delete (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_brush_is_editable (const gchar *name)
+ligma_brush_is_editable (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean editable = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-is-editable",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-is-editable",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    editable = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return editable;
 }
 
 /**
- * gimp_brush_get_info:
+ * ligma_brush_get_info:
  * @name: The brush name.
  * @width: (out): The brush width.
  * @height: (out): The brush height.
@@ -275,47 +275,47 @@ gimp_brush_is_editable (const gchar *name)
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_info (const gchar *name,
+ligma_brush_get_info (const gchar *name,
                      gint        *width,
                      gint        *height,
                      gint        *mask_bpp,
                      gint        *color_bpp)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-info",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-info",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *mask_bpp = 0;
   *color_bpp = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *mask_bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 4);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *mask_bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *color_bpp = LIGMA_VALUES_GET_INT (return_vals, 4);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_brush_get_pixels:
+ * ligma_brush_get_pixels:
  * @name: The brush name.
  * @width: (out): The brush width.
  * @height: (out): The brush height.
@@ -336,7 +336,7 @@ gimp_brush_get_info (const gchar *name,
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_pixels (const gchar  *name,
+ligma_brush_get_pixels (const gchar  *name,
                        gint         *width,
                        gint         *height,
                        gint         *mask_bpp,
@@ -346,18 +346,18 @@ gimp_brush_get_pixels (const gchar  *name,
                        gint         *num_color_bytes,
                        guint8      **color_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-pixels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-pixels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -368,27 +368,27 @@ gimp_brush_get_pixels (const gchar  *name,
   *num_color_bytes = 0;
   *color_bytes = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *mask_bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *num_mask_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
-      *mask_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
-      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 6);
-      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 7);
-      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 8);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *mask_bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *num_mask_bytes = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *mask_bytes = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *color_bpp = LIGMA_VALUES_GET_INT (return_vals, 6);
+      *num_color_bytes = LIGMA_VALUES_GET_INT (return_vals, 7);
+      *color_bytes = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 8);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_brush_get_spacing:
+ * ligma_brush_get_spacing:
  * @name: The brush name.
  * @spacing: (out): The brush spacing.
  *
@@ -403,36 +403,36 @@ gimp_brush_get_pixels (const gchar  *name,
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_spacing (const gchar *name,
+ligma_brush_get_spacing (const gchar *name,
                         gint        *spacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *spacing = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    *spacing = GIMP_VALUES_GET_INT (return_vals, 1);
+    *spacing = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_brush_set_spacing:
+ * ligma_brush_set_spacing:
  * @name: The brush name.
  * @spacing: The brush spacing.
  *
@@ -446,73 +446,73 @@ gimp_brush_get_spacing (const gchar *name,
  * Since: 2.4
  **/
 gboolean
-gimp_brush_set_spacing (const gchar *name,
+ligma_brush_set_spacing (const gchar *name,
                         gint         spacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, spacing,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_brush_get_shape:
+ * ligma_brush_get_shape:
  * @name: The brush name.
  *
  * Gets the shape of a generated brush.
  *
  * This procedure gets the shape value for a generated brush. If called
  * for any other type of brush, it does not succeed. The current
- * possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square
- * (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
- * (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
+ * possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE), Square
+ * (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond
+ * (LIGMA_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
  * in the future.
  *
  * Returns: The brush shape.
  *
  * Since: 2.4
  **/
-GimpBrushGeneratedShape
-gimp_brush_get_shape (const gchar *name)
+LigmaBrushGeneratedShape
+ligma_brush_get_shape (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpBrushGeneratedShape shape = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaBrushGeneratedShape shape = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-shape",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-shape",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    shape = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return shape;
 }
 
 /**
- * gimp_brush_set_shape:
+ * ligma_brush_set_shape:
  * @name: The brush name.
  * @shape_in: The brush shape.
  *
@@ -520,43 +520,43 @@ gimp_brush_get_shape (const gchar *name)
  *
  * This procedure sets the shape value for a generated brush. If called
  * for any other type of brush, it does not succeed. The current
- * possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square
- * (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
- * (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
+ * possibilities are Circle (LIGMA_BRUSH_GENERATED_CIRCLE), Square
+ * (LIGMA_BRUSH_GENERATED_SQUARE), and Diamond
+ * (LIGMA_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
  * in the future.
  *
  * Returns: The brush shape actually assigned.
  *
  * Since: 2.4
  **/
-GimpBrushGeneratedShape
-gimp_brush_set_shape (const gchar             *name,
-                      GimpBrushGeneratedShape  shape_in)
+LigmaBrushGeneratedShape
+ligma_brush_set_shape (const gchar             *name,
+                      LigmaBrushGeneratedShape  shape_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpBrushGeneratedShape shape_out = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaBrushGeneratedShape shape_out = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_BRUSH_GENERATED_SHAPE, shape_in,
+                                          LIGMA_TYPE_BRUSH_GENERATED_SHAPE, shape_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-shape",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-shape",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape_out = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    shape_out = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return shape_out;
 }
 
 /**
- * gimp_brush_get_radius:
+ * ligma_brush_get_radius:
  * @name: The brush name.
  *
  * Gets the radius of a generated brush.
@@ -569,31 +569,31 @@ gimp_brush_set_shape (const gchar             *name,
  * Since: 2.4
  **/
 gdouble
-gimp_brush_get_radius (const gchar *name)
+ligma_brush_get_radius (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble radius = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-radius",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-radius",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    radius = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return radius;
 }
 
 /**
- * gimp_brush_set_radius:
+ * ligma_brush_set_radius:
  * @name: The brush name.
  * @radius_in: The desired brush radius in pixel.
  *
@@ -607,33 +607,33 @@ gimp_brush_get_radius (const gchar *name)
  * Since: 2.4
  **/
 gdouble
-gimp_brush_set_radius (const gchar *name,
+ligma_brush_set_radius (const gchar *name,
                        gdouble      radius_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble radius_out = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, radius_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-radius",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-radius",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    radius_out = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return radius_out;
 }
 
 /**
- * gimp_brush_get_spikes:
+ * ligma_brush_get_spikes:
  * @name: The brush name.
  *
  * Gets the number of spikes for a generated brush.
@@ -646,31 +646,31 @@ gimp_brush_set_radius (const gchar *name,
  * Since: 2.4
  **/
 gint
-gimp_brush_get_spikes (const gchar *name)
+ligma_brush_get_spikes (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint spikes = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-spikes",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-spikes",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    spikes = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return spikes;
 }
 
 /**
- * gimp_brush_set_spikes:
+ * ligma_brush_set_spikes:
  * @name: The brush name.
  * @spikes_in: The desired number of spikes.
  *
@@ -684,33 +684,33 @@ gimp_brush_get_spikes (const gchar *name)
  * Since: 2.4
  **/
 gint
-gimp_brush_set_spikes (const gchar *name,
+ligma_brush_set_spikes (const gchar *name,
                        gint         spikes_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint spikes_out = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_INT, spikes_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-spikes",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-spikes",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes_out = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    spikes_out = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return spikes_out;
 }
 
 /**
- * gimp_brush_get_hardness:
+ * ligma_brush_get_hardness:
  * @name: The brush name.
  *
  * Gets the hardness of a generated brush.
@@ -725,31 +725,31 @@ gimp_brush_set_spikes (const gchar *name,
  * Since: 2.4
  **/
 gdouble
-gimp_brush_get_hardness (const gchar *name)
+ligma_brush_get_hardness (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble hardness = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-hardness",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-hardness",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    hardness = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return hardness;
 }
 
 /**
- * gimp_brush_set_hardness:
+ * ligma_brush_set_hardness:
  * @name: The brush name.
  * @hardness_in: The desired brush hardness.
  *
@@ -764,33 +764,33 @@ gimp_brush_get_hardness (const gchar *name)
  * Since: 2.4
  **/
 gdouble
-gimp_brush_set_hardness (const gchar *name,
+ligma_brush_set_hardness (const gchar *name,
                          gdouble      hardness_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble hardness_out = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, hardness_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-hardness",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-hardness",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    hardness_out = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return hardness_out;
 }
 
 /**
- * gimp_brush_get_aspect_ratio:
+ * ligma_brush_get_aspect_ratio:
  * @name: The brush name.
  *
  * Gets the aspect ratio of a generated brush.
@@ -804,31 +804,31 @@ gimp_brush_set_hardness (const gchar *name,
  * Since: 2.4
  **/
 gdouble
-gimp_brush_get_aspect_ratio (const gchar *name)
+ligma_brush_get_aspect_ratio (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble aspect_ratio = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    aspect_ratio = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return aspect_ratio;
 }
 
 /**
- * gimp_brush_set_aspect_ratio:
+ * ligma_brush_set_aspect_ratio:
  * @name: The brush name.
  * @aspect_ratio_in: The desired brush aspect ratio.
  *
@@ -843,33 +843,33 @@ gimp_brush_get_aspect_ratio (const gchar *name)
  * Since: 2.4
  **/
 gdouble
-gimp_brush_set_aspect_ratio (const gchar *name,
+ligma_brush_set_aspect_ratio (const gchar *name,
                              gdouble      aspect_ratio_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble aspect_ratio_out = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, aspect_ratio_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-aspect-ratio",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-aspect-ratio",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    aspect_ratio_out = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return aspect_ratio_out;
 }
 
 /**
- * gimp_brush_get_angle:
+ * ligma_brush_get_angle:
  * @name: The brush name.
  *
  * Gets the rotation angle of a generated brush.
@@ -882,31 +882,31 @@ gimp_brush_set_aspect_ratio (const gchar *name,
  * Since: 2.4
  **/
 gdouble
-gimp_brush_get_angle (const gchar *name)
+ligma_brush_get_angle (const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble angle = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-get-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-get-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    angle = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return angle;
 }
 
 /**
- * gimp_brush_set_angle:
+ * ligma_brush_set_angle:
  * @name: The brush name.
  * @angle_in: The desired brush rotation angle in degree.
  *
@@ -920,27 +920,27 @@ gimp_brush_get_angle (const gchar *name)
  * Since: 2.4
  **/
 gdouble
-gimp_brush_set_angle (const gchar *name,
+ligma_brush_set_angle (const gchar *name,
                       gdouble      angle_in)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble angle_out = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, angle_in,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-set-angle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-brush-set-angle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    angle_out = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return angle_out;
 }

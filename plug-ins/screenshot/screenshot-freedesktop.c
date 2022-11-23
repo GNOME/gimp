@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Screenshot plug-in
- * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
- * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
- * Copyright 2016      Michael Natterer <mitch@gimp.org>
- * Copyright 2017      Jehan <jehan@gimp.org>
+ * Copyright 1998-2007 Sven Neumann <sven@ligma.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@ligma.org>
+ * Copyright 2016      Michael Natterer <mitch@ligma.org>
+ * Copyright 2017      Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 
 #include <glib.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
@@ -81,7 +81,7 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
                                     gchar       *sender_name,
                                     gchar       *signal_name,
                                     GVariant    *parameters,
-                                    GimpImage  **image)
+                                    LigmaImage  **image)
 {
   if (g_strcmp0 (signal_name, "Response") == 0)
     {
@@ -106,8 +106,8 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
             {
               GFile *file = g_file_new_for_uri (uri);
 
-              *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file);
-              gimp_image_set_file (*image, g_file_new_for_path ("screenshot.png"));
+              *image = ligma_file_load (LIGMA_RUN_NONINTERACTIVE, file);
+              ligma_image_set_file (*image, g_file_new_for_path ("screenshot.png"));
 
               /* Delete the actual file. */
               g_file_delete (file, NULL, NULL);
@@ -123,10 +123,10 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
     }
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                               GdkMonitor        *monitor,
-                              GimpImage        **image,
+                              LigmaImage        **image,
                               GError           **error)
 {
   GVariant        *retval;
@@ -139,7 +139,7 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
     {
       GdkWindow *window;
 
-      window = gimp_ui_get_progress_window ();
+      window = ligma_ui_get_progress_window ();
       if (window)
         {
           gint id;
@@ -153,7 +153,7 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
   if (shootvals->shoot_type != SHOOT_ROOT)
     {
       /* This should not happen. */
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   if (shootvals->screenshot_delay > 0)
@@ -206,7 +206,7 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
       /* Signal got a response. */
       if (*image)
         {
-          if (! gimp_image_get_color_profile (*image))
+          if (! ligma_image_get_color_profile (*image))
             {
               /* The Freedesktop portal does not return a profile, so we
                * don't have color characterization through the API.
@@ -225,19 +225,19 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                * We need to figure out how to do better color management for
                * portal screenshots. TODO!
                */
-              GimpColorProfile *profile;
+              LigmaColorProfile *profile;
 
-              profile = gimp_monitor_get_color_profile (monitor);
+              profile = ligma_monitor_get_color_profile (monitor);
               if (profile)
                 {
-                  gimp_image_set_color_profile (*image, profile);
+                  ligma_image_set_color_profile (*image, profile);
                   g_object_unref (profile);
                 }
             }
 
-          return GIMP_PDB_SUCCESS;
+          return LIGMA_PDB_SUCCESS;
         }
     }
 
-  return GIMP_PDB_EXECUTION_ERROR;
+  return LIGMA_PDB_EXECUTION_ERROR;
 }

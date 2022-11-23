@@ -16,8 +16,8 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92+devel (7a767eff19, 2017-12-26)"
-   sodipodi:docname="gimp-color-temperature.svg"
-   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2017-12-25/icons/Symbolic/16/gimp-color-temperature.png"
+   sodipodi:docname="ligma-color-temperature.svg"
+   inkscape:export-filename="/home/alex/soft/graphics/ligma/ligma-2017-12-25/icons/Symbolic/16/ligma-color-temperature.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <style
@@ -131,7 +131,7 @@
      inkscape:label="Layer 2"
      transform="translate(0,-313.26666)" />
   <g
-     id="gimp-color-temperature">
+     id="ligma-color-temperature">
     <path
        sodipodi:nodetypes="sscccccss"
        inkscape:connector-curvature="0"

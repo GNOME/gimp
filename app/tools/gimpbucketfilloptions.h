@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_BUCKET_FILL_OPTIONS_H__
-#define  __GIMP_BUCKET_FILL_OPTIONS_H__
+#ifndef  __LIGMA_BUCKET_FILL_OPTIONS_H__
+#define  __LIGMA_BUCKET_FILL_OPTIONS_H__
 
 
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_BUCKET_FILL_OPTIONS            (gimp_bucket_fill_options_get_type ())
-#define GIMP_BUCKET_FILL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUCKET_FILL_OPTIONS, GimpBucketFillOptions))
-#define GIMP_BUCKET_FILL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUCKET_FILL_OPTIONS, GimpBucketFillOptionsClass))
-#define GIMP_IS_BUCKET_FILL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUCKET_FILL_OPTIONS))
-#define GIMP_IS_BUCKET_FILL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUCKET_FILL_OPTIONS))
-#define GIMP_BUCKET_FILL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_OPTIONS, GimpBucketFillOptionsClass))
+#define LIGMA_TYPE_BUCKET_FILL_OPTIONS            (ligma_bucket_fill_options_get_type ())
+#define LIGMA_BUCKET_FILL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUCKET_FILL_OPTIONS, LigmaBucketFillOptions))
+#define LIGMA_BUCKET_FILL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUCKET_FILL_OPTIONS, LigmaBucketFillOptionsClass))
+#define LIGMA_IS_BUCKET_FILL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUCKET_FILL_OPTIONS))
+#define LIGMA_IS_BUCKET_FILL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUCKET_FILL_OPTIONS))
+#define LIGMA_BUCKET_FILL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUCKET_FILL_OPTIONS, LigmaBucketFillOptionsClass))
 
 
-typedef struct _GimpBucketFillOptions        GimpBucketFillOptions;
-typedef struct _GimpBucketFillOptionsPrivate GimpBucketFillOptionsPrivate;
-typedef struct _GimpPaintOptionsClass        GimpBucketFillOptionsClass;
+typedef struct _LigmaBucketFillOptions        LigmaBucketFillOptions;
+typedef struct _LigmaBucketFillOptionsPrivate LigmaBucketFillOptionsPrivate;
+typedef struct _LigmaPaintOptionsClass        LigmaBucketFillOptionsClass;
 
-struct _GimpBucketFillOptions
+struct _LigmaBucketFillOptions
 {
-  GimpPaintOptions              paint_options;
+  LigmaPaintOptions              paint_options;
 
-  GimpBucketFillMode            fill_mode;
-  GimpBucketFillArea            fill_area;
+  LigmaBucketFillMode            fill_mode;
+  LigmaBucketFillArea            fill_area;
   gboolean                      fill_transparent;
   gboolean                      sample_merged;
   gboolean                      diagonal_neighbors;
@@ -49,7 +49,7 @@ struct _GimpBucketFillOptions
   gdouble                       threshold;
 
   GtkWidget                    *line_art_busy_box;
-  GimpLineArtSource             line_art_source;
+  LigmaLineArtSource             line_art_source;
   gdouble                       line_art_threshold;
   gint                          line_art_max_grow;
 
@@ -58,20 +58,20 @@ struct _GimpBucketFillOptions
 
   gboolean                      line_art_stroke;
   gchar                        *line_art_stroke_tool;
-  GimpStrokeOptions            *stroke_options;
+  LigmaStrokeOptions            *stroke_options;
 
   gboolean                      fill_as_line_art;
   gdouble                       fill_as_line_art_threshold;
 
-  GimpSelectCriterion           fill_criterion;
+  LigmaSelectCriterion           fill_criterion;
 
-  GimpBucketFillOptionsPrivate *priv;
+  LigmaBucketFillOptionsPrivate *priv;
 };
 
 
-GType       gimp_bucket_fill_options_get_type (void) G_GNUC_CONST;
+GType       ligma_bucket_fill_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_bucket_fill_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_bucket_fill_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_BUCKET_FILL_OPTIONS_H__  */
+#endif  /*  __LIGMA_BUCKET_FILL_OPTIONS_H__  */

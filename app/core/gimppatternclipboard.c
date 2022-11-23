@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppatternclipboard.c
- * Copyright (C) 2006 Michael Natterer <mitch@gimp.org>
+ * ligmapatternclipboard.c
+ * Copyright (C) 2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpbuffer.h"
-#include "gimppatternclipboard.h"
-#include "gimpimage.h"
-#include "gimppickable.h"
-#include "gimptempbuf.h"
+#include "ligma.h"
+#include "ligmabuffer.h"
+#include "ligmapatternclipboard.h"
+#include "ligmaimage.h"
+#include "ligmapickable.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define PATTERN_MAX_SIZE 1024
@@ -42,84 +42,84 @@
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 
 /*  local function prototypes  */
 
-static void       gimp_pattern_clipboard_constructed  (GObject      *object);
-static void       gimp_pattern_clipboard_set_property (GObject      *object,
+static void       ligma_pattern_clipboard_constructed  (GObject      *object);
+static void       ligma_pattern_clipboard_set_property (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-static void       gimp_pattern_clipboard_get_property (GObject      *object,
+static void       ligma_pattern_clipboard_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
-static GimpData * gimp_pattern_clipboard_duplicate    (GimpData     *data);
+static LigmaData * ligma_pattern_clipboard_duplicate    (LigmaData     *data);
 
-static void       gimp_pattern_clipboard_changed      (Gimp         *gimp,
-                                                       GimpPattern  *pattern);
+static void       ligma_pattern_clipboard_changed      (Ligma         *ligma,
+                                                       LigmaPattern  *pattern);
 
 
-G_DEFINE_TYPE (GimpPatternClipboard, gimp_pattern_clipboard, GIMP_TYPE_PATTERN)
+G_DEFINE_TYPE (LigmaPatternClipboard, ligma_pattern_clipboard, LIGMA_TYPE_PATTERN)
 
-#define parent_class gimp_pattern_clipboard_parent_class
+#define parent_class ligma_pattern_clipboard_parent_class
 
 
 static void
-gimp_pattern_clipboard_class_init (GimpPatternClipboardClass *klass)
+ligma_pattern_clipboard_class_init (LigmaPatternClipboardClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
+  LigmaDataClass *data_class   = LIGMA_DATA_CLASS (klass);
 
-  object_class->constructed  = gimp_pattern_clipboard_constructed;
-  object_class->set_property = gimp_pattern_clipboard_set_property;
-  object_class->get_property = gimp_pattern_clipboard_get_property;
+  object_class->constructed  = ligma_pattern_clipboard_constructed;
+  object_class->set_property = ligma_pattern_clipboard_set_property;
+  object_class->get_property = ligma_pattern_clipboard_get_property;
 
-  data_class->duplicate      = gimp_pattern_clipboard_duplicate;
+  data_class->duplicate      = ligma_pattern_clipboard_duplicate;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma", NULL, NULL,
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_pattern_clipboard_init (GimpPatternClipboard *pattern)
+ligma_pattern_clipboard_init (LigmaPatternClipboard *pattern)
 {
 }
 
 static void
-gimp_pattern_clipboard_constructed (GObject *object)
+ligma_pattern_clipboard_constructed (GObject *object)
 {
-  GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (object);
+  LigmaPatternClipboard *pattern = LIGMA_PATTERN_CLIPBOARD (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (pattern->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (pattern->ligma));
 
-  g_signal_connect_object (pattern->gimp, "clipboard-changed",
-                           G_CALLBACK (gimp_pattern_clipboard_changed),
+  g_signal_connect_object (pattern->ligma, "clipboard-changed",
+                           G_CALLBACK (ligma_pattern_clipboard_changed),
                            pattern, 0);
 
-  gimp_pattern_clipboard_changed (pattern->gimp, GIMP_PATTERN (pattern));
+  ligma_pattern_clipboard_changed (pattern->ligma, LIGMA_PATTERN (pattern));
 }
 
 static void
-gimp_pattern_clipboard_set_property (GObject      *object,
+ligma_pattern_clipboard_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (object);
+  LigmaPatternClipboard *pattern = LIGMA_PATTERN_CLIPBOARD (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      pattern->gimp = g_value_get_object (value);
+    case PROP_LIGMA:
+      pattern->ligma = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -128,17 +128,17 @@ gimp_pattern_clipboard_set_property (GObject      *object,
 }
 
 static void
-gimp_pattern_clipboard_get_property (GObject    *object,
+ligma_pattern_clipboard_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (object);
+  LigmaPatternClipboard *pattern = LIGMA_PATTERN_CLIPBOARD (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, pattern->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, pattern->ligma);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -146,24 +146,24 @@ gimp_pattern_clipboard_get_property (GObject    *object,
     }
 }
 
-static GimpData *
-gimp_pattern_clipboard_duplicate (GimpData *data)
+static LigmaData *
+ligma_pattern_clipboard_duplicate (LigmaData *data)
 {
-  GimpData *new = g_object_new (GIMP_TYPE_PATTERN, NULL);
+  LigmaData *new = g_object_new (LIGMA_TYPE_PATTERN, NULL);
 
-  gimp_data_copy (new, data);
+  ligma_data_copy (new, data);
 
   return new;
 }
 
-GimpData *
-gimp_pattern_clipboard_new (Gimp *gimp)
+LigmaData *
+ligma_pattern_clipboard_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_PATTERN_CLIPBOARD,
+  return g_object_new (LIGMA_TYPE_PATTERN_CLIPBOARD,
                        "name", _("Clipboard Image"),
-                       "gimp", gimp,
+                       "ligma", ligma,
                        NULL);
 }
 
@@ -171,24 +171,24 @@ gimp_pattern_clipboard_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-gimp_pattern_clipboard_changed (Gimp        *gimp,
-                                GimpPattern *pattern)
+ligma_pattern_clipboard_changed (Ligma        *ligma,
+                                LigmaPattern *pattern)
 {
-  GimpObject *paste;
+  LigmaObject *paste;
   GeglBuffer *buffer = NULL;
 
-  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
+  g_clear_pointer (&pattern->mask, ligma_temp_buf_unref);
 
-  paste = gimp_get_clipboard_object (gimp);
+  paste = ligma_get_clipboard_object (ligma);
 
-  if (GIMP_IS_IMAGE (paste))
+  if (LIGMA_IS_IMAGE (paste))
     {
-      gimp_pickable_flush (GIMP_PICKABLE (paste));
-      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+      ligma_pickable_flush (LIGMA_PICKABLE (paste));
+      buffer = ligma_pickable_get_buffer (LIGMA_PICKABLE (paste));
     }
-  else if (GIMP_IS_BUFFER (paste))
+  else if (LIGMA_IS_BUFFER (paste))
     {
-      buffer = gimp_buffer_get_buffer (GIMP_BUFFER (paste));
+      buffer = ligma_buffer_get_buffer (LIGMA_BUFFER (paste));
     }
 
   if (buffer)
@@ -196,20 +196,20 @@ gimp_pattern_clipboard_changed (Gimp        *gimp,
       gint width  = MIN (gegl_buffer_get_width  (buffer), PATTERN_MAX_SIZE);
       gint height = MIN (gegl_buffer_get_height (buffer), PATTERN_MAX_SIZE);
 
-      pattern->mask = gimp_temp_buf_new (width, height,
+      pattern->mask = ligma_temp_buf_new (width, height,
                                          gegl_buffer_get_format (buffer));
 
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        NULL,
-                       gimp_temp_buf_get_data (pattern->mask),
+                       ligma_temp_buf_get_data (pattern->mask),
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
   else
     {
-      pattern->mask = gimp_temp_buf_new (16, 16, babl_format ("R'G'B' u8"));
-      memset (gimp_temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
+      pattern->mask = ligma_temp_buf_new (16, 16, babl_format ("R'G'B' u8"));
+      memset (ligma_temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
     }
 
-  gimp_data_dirty (GIMP_DATA (pattern));
+  ligma_data_dirty (LIGMA_DATA (pattern));
 }

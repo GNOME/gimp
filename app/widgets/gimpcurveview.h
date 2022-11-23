@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CURVE_VIEW_H__
-#define __GIMP_CURVE_VIEW_H__
+#ifndef __LIGMA_CURVE_VIEW_H__
+#define __LIGMA_CURVE_VIEW_H__
 
 
-#include "gimphistogramview.h"
+#include "ligmahistogramview.h"
 
 
-#define GIMP_TYPE_CURVE_VIEW            (gimp_curve_view_get_type ())
-#define GIMP_CURVE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURVE_VIEW, GimpCurveView))
-#define GIMP_CURVE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURVE_VIEW, GimpCurveViewClass))
-#define GIMP_IS_CURVE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CURVE_VIEW))
-#define GIMP_IS_CURVE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CURVE_VIEW))
-#define GIMP_CURVE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CURVE_VIEW, GimpCurveViewClass))
+#define LIGMA_TYPE_CURVE_VIEW            (ligma_curve_view_get_type ())
+#define LIGMA_CURVE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CURVE_VIEW, LigmaCurveView))
+#define LIGMA_CURVE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CURVE_VIEW, LigmaCurveViewClass))
+#define LIGMA_IS_CURVE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CURVE_VIEW))
+#define LIGMA_IS_CURVE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CURVE_VIEW))
+#define LIGMA_CURVE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CURVE_VIEW, LigmaCurveViewClass))
 
 
-typedef struct _GimpCurveViewClass  GimpCurveViewClass;
+typedef struct _LigmaCurveViewClass  LigmaCurveViewClass;
 
-struct _GimpCurveView
+struct _LigmaCurveView
 {
-  GimpHistogramView  parent_instance;
+  LigmaHistogramView  parent_instance;
 
-  Gimp              *gimp; /* only needed for copy & paste */
+  Ligma              *ligma; /* only needed for copy & paste */
 
-  GimpCurve         *curve;
-  GimpRGB           *curve_color;
+  LigmaCurve         *curve;
+  LigmaRGB           *curve_color;
 
   GList             *bg_curves;
 
@@ -50,13 +50,13 @@ struct _GimpCurveView
   gint               selected;
   gdouble            offset_x;
   gdouble            offset_y;
-  GimpCurvePointType point_type;
+  LigmaCurvePointType point_type;
   gdouble            last_x;
   gdouble            last_y;
   gdouble            leftmost;
   gdouble            rightmost;
   gboolean           grabbed;
-  GimpCurve         *orig_curve;
+  LigmaCurve         *orig_curve;
 
   GdkCursorType      cursor_type;
 
@@ -78,53 +78,53 @@ struct _GimpCurveView
   gchar             *y_axis_label;
 };
 
-struct _GimpCurveViewClass
+struct _LigmaCurveViewClass
 {
-  GimpHistogramViewClass  parent_class;
+  LigmaHistogramViewClass  parent_class;
 
   /* signals */
-  void (* selection_changed) (GimpCurveView *view);
+  void (* selection_changed) (LigmaCurveView *view);
 
-  void (* cut_clipboard)     (GimpCurveView *view);
-  void (* copy_clipboard)    (GimpCurveView *view);
-  void (* paste_clipboard)   (GimpCurveView *view);
+  void (* cut_clipboard)     (LigmaCurveView *view);
+  void (* copy_clipboard)    (LigmaCurveView *view);
+  void (* paste_clipboard)   (LigmaCurveView *view);
 };
 
 
-GType       gimp_curve_view_get_type          (void) G_GNUC_CONST;
+GType       ligma_curve_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_curve_view_new               (void);
+GtkWidget * ligma_curve_view_new               (void);
 
-void        gimp_curve_view_set_curve         (GimpCurveView *view,
-                                               GimpCurve     *curve,
-                                               const GimpRGB *color);
-GimpCurve * gimp_curve_view_get_curve         (GimpCurveView *view);
+void        ligma_curve_view_set_curve         (LigmaCurveView *view,
+                                               LigmaCurve     *curve,
+                                               const LigmaRGB *color);
+LigmaCurve * ligma_curve_view_get_curve         (LigmaCurveView *view);
 
-void        gimp_curve_view_add_background    (GimpCurveView *view,
-                                               GimpCurve     *curve,
-                                               const GimpRGB *color);
-void        gimp_curve_view_remove_background (GimpCurveView *view,
-                                               GimpCurve     *curve);
+void        ligma_curve_view_add_background    (LigmaCurveView *view,
+                                               LigmaCurve     *curve,
+                                               const LigmaRGB *color);
+void        ligma_curve_view_remove_background (LigmaCurveView *view,
+                                               LigmaCurve     *curve);
 
-void   gimp_curve_view_remove_all_backgrounds (GimpCurveView *view);
+void   ligma_curve_view_remove_all_backgrounds (LigmaCurveView *view);
 
-void        gimp_curve_view_set_selected      (GimpCurveView *view,
+void        ligma_curve_view_set_selected      (LigmaCurveView *view,
                                                gint           selected);
-gint        gimp_curve_view_get_selected      (GimpCurveView *view);
+gint        ligma_curve_view_get_selected      (LigmaCurveView *view);
 
-void        gimp_curve_view_set_range_x       (GimpCurveView *view,
+void        ligma_curve_view_set_range_x       (LigmaCurveView *view,
                                                gdouble        min,
                                                gdouble        max);
-void        gimp_curve_view_set_range_y       (GimpCurveView *view,
+void        ligma_curve_view_set_range_y       (LigmaCurveView *view,
                                                gdouble        min,
                                                gdouble        max);
-void        gimp_curve_view_set_xpos          (GimpCurveView *view,
+void        ligma_curve_view_set_xpos          (LigmaCurveView *view,
                                                gdouble        x);
 
-void        gimp_curve_view_set_x_axis_label  (GimpCurveView *view,
+void        ligma_curve_view_set_x_axis_label  (LigmaCurveView *view,
                                                const gchar   *label);
-void        gimp_curve_view_set_y_axis_label  (GimpCurveView *view,
+void        ligma_curve_view_set_y_axis_label  (LigmaCurveView *view,
                                                const gchar   *label);
 
 
-#endif /* __GIMP_CURVE_VIEW_H__ */
+#endif /* __LIGMA_CURVE_VIEW_H__ */

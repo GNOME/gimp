@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdoubleaction.h
+ * ligmadoubleaction.h
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOUBLE_ACTION_H__
-#define __GIMP_DOUBLE_ACTION_H__
+#ifndef __LIGMA_DOUBLE_ACTION_H__
+#define __LIGMA_DOUBLE_ACTION_H__
 
 
-#include "gimpactionimpl.h"
+#include "ligmaactionimpl.h"
 
 
-#define GIMP_TYPE_DOUBLE_ACTION            (gimp_double_action_get_type ())
-#define GIMP_DOUBLE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOUBLE_ACTION, GimpDoubleAction))
-#define GIMP_DOUBLE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOUBLE_ACTION, GimpDoubleActionClass))
-#define GIMP_IS_DOUBLE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOUBLE_ACTION))
-#define GIMP_IS_DOUBLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_DOUBLE_ACTION))
-#define GIMP_DOUBLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_DOUBLE_ACTION, GimpDoubleActionClass))
+#define LIGMA_TYPE_DOUBLE_ACTION            (ligma_double_action_get_type ())
+#define LIGMA_DOUBLE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOUBLE_ACTION, LigmaDoubleAction))
+#define LIGMA_DOUBLE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOUBLE_ACTION, LigmaDoubleActionClass))
+#define LIGMA_IS_DOUBLE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOUBLE_ACTION))
+#define LIGMA_IS_DOUBLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), LIGMA_TYPE_DOUBLE_ACTION))
+#define LIGMA_DOUBLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), LIGMA_TYPE_DOUBLE_ACTION, LigmaDoubleActionClass))
 
 
-typedef struct _GimpDoubleActionClass GimpDoubleActionClass;
+typedef struct _LigmaDoubleActionClass LigmaDoubleActionClass;
 
-struct _GimpDoubleAction
+struct _LigmaDoubleAction
 {
-  GimpActionImpl  parent_instance;
+  LigmaActionImpl  parent_instance;
 
   gdouble         value;
 };
 
-struct _GimpDoubleActionClass
+struct _LigmaDoubleActionClass
 {
-  GimpActionImplClass parent_class;
+  LigmaActionImplClass parent_class;
 };
 
 
-GType              gimp_double_action_get_type (void) G_GNUC_CONST;
+GType              ligma_double_action_get_type (void) G_GNUC_CONST;
 
-GimpDoubleAction * gimp_double_action_new      (const gchar *name,
+LigmaDoubleAction * ligma_double_action_new      (const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
@@ -58,4 +58,4 @@ GimpDoubleAction * gimp_double_action_new      (const gchar *name,
                                                 gdouble      value);
 
 
-#endif  /* __GIMP_DOUBLE_ACTION_H__ */
+#endif  /* __LIGMA_DOUBLE_ACTION_H__ */

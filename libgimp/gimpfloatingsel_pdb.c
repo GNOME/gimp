@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfloatingsel_pdb.c
+ * ligmafloatingsel_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpfloatingsel
- * @title: gimpfloatingsel
+ * SECTION: ligmafloatingsel
+ * @title: ligmafloatingsel
  * @short_description: Functions for removing or attaching floating selections.
  *
  * Functions for removing or attaching floating selections.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_floating_sel_remove:
+ * ligma_floating_sel_remove:
  * @floating_sel: The floating selection.
  *
  * Remove the specified floating selection from its associated
@@ -49,30 +49,30 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_floating_sel_remove (GimpLayer *floating_sel)
+ligma_floating_sel_remove (LigmaLayer *floating_sel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, floating_sel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-floating-sel-remove",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-floating-sel-remove",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_floating_sel_anchor:
+ * ligma_floating_sel_anchor:
  * @floating_sel: The floating selection.
  *
  * Anchor the specified floating selection to its associated drawable.
@@ -85,30 +85,30 @@ gimp_floating_sel_remove (GimpLayer *floating_sel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_floating_sel_anchor (GimpLayer *floating_sel)
+ligma_floating_sel_anchor (LigmaLayer *floating_sel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, floating_sel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-floating-sel-anchor",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-floating-sel-anchor",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_floating_sel_to_layer:
+ * ligma_floating_sel_to_layer:
  * @floating_sel: The floating selection.
  *
  * Transforms the specified floating selection into a layer.
@@ -125,30 +125,30 @@ gimp_floating_sel_anchor (GimpLayer *floating_sel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_floating_sel_to_layer (GimpLayer *floating_sel)
+ligma_floating_sel_to_layer (LigmaLayer *floating_sel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, floating_sel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-floating-sel-to-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-floating-sel-to-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_floating_sel_attach:
+ * ligma_floating_sel_attach:
  * @layer: The layer (is attached as floating selection).
  * @drawable: The drawable (where to attach the floating selection).
  *
@@ -160,26 +160,26 @@ gimp_floating_sel_to_layer (GimpLayer *floating_sel)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_floating_sel_attach (GimpLayer    *layer,
-                          GimpDrawable *drawable)
+ligma_floating_sel_attach (LigmaLayer    *layer,
+                          LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-floating-sel-attach",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-floating-sel-attach",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

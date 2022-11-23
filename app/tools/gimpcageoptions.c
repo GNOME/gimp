@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpcageoptions.c
+ * ligmacageoptions.c
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "gimpcageoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmacageoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -42,58 +42,58 @@ enum
 };
 
 
-static void   gimp_cage_options_set_property (GObject      *object,
+static void   ligma_cage_options_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void   gimp_cage_options_get_property (GObject      *object,
+static void   ligma_cage_options_get_property (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpCageOptions, gimp_cage_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaCageOptions, ligma_cage_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_cage_options_parent_class
+#define parent_class ligma_cage_options_parent_class
 
 
 static void
-gimp_cage_options_class_init (GimpCageOptionsClass *klass)
+ligma_cage_options_class_init (LigmaCageOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_cage_options_set_property;
-  object_class->get_property = gimp_cage_options_get_property;
+  object_class->set_property = ligma_cage_options_set_property;
+  object_class->get_property = ligma_cage_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CAGE_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CAGE_MODE,
                          "cage-mode",
                          NULL, NULL,
-                         GIMP_TYPE_CAGE_MODE,
-                         GIMP_CAGE_MODE_CAGE_CHANGE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CAGE_MODE,
+                         LIGMA_CAGE_MODE_CAGE_CHANGE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_PLAIN_COLOR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_PLAIN_COLOR,
                             "fill-plain-color",
                             _("Fill the original position\n"
                               "of the cage with a color"),
                             NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_cage_options_init (GimpCageOptions *options)
+ligma_cage_options_init (LigmaCageOptions *options)
 {
 }
 
 static void
-gimp_cage_options_set_property (GObject      *object,
+ligma_cage_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCageOptions *options = GIMP_CAGE_OPTIONS (object);
+  LigmaCageOptions *options = LIGMA_CAGE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -111,12 +111,12 @@ gimp_cage_options_set_property (GObject      *object,
 }
 
 static void
-gimp_cage_options_get_property (GObject    *object,
+ligma_cage_options_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCageOptions *options = GIMP_CAGE_OPTIONS (object);
+  LigmaCageOptions *options = LIGMA_CAGE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -134,17 +134,17 @@ gimp_cage_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_cage_options_gui (GimpToolOptions *tool_options)
+ligma_cage_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget *mode;
   GtkWidget *button;
 
-  mode = gimp_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
+  mode = ligma_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
 
-  button = gimp_prop_check_button_new (config, "fill-plain-color", NULL);
+  button = ligma_prop_check_button_new (config, "fill-plain-color", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
 
   return vbox;

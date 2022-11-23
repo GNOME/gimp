@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpparasiteio.c
+ * ligmaparasiteio.c
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
  * This library is free software: you can redistribute it and/or
@@ -32,23 +32,23 @@
 
 #include <glib.h>
 
-#include "gimpparasiteio.h"
+#include "ligmaparasiteio.h"
 
 
 /**
- * SECTION: gimpparasiteio
- * @title: gimpparasiteio
+ * SECTION: ligmaparasiteio
+ * @title: ligmaparasiteio
  * @short_description: Utility functions to (de)serialize certain C
- *                     structures to/from #GimpParasite's.
- * @see_also: #GimpParasite
+ *                     structures to/from #LigmaParasite's.
+ * @see_also: #LigmaParasite
  *
  * Utility functions to (de)serialize certain C structures to/from*
- * #GimpParasite's.
+ * #LigmaParasite's.
  **/
 
 
 void
-gimp_pixpipe_params_init (GimpPixPipeParams *params)
+ligma_pixpipe_params_init (LigmaPixPipeParams *params)
 {
   gint i;
 
@@ -63,17 +63,17 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
   params->rows       = 1;
   params->placement  = g_strdup ("constant");
 
-  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < LIGMA_PIXPIPE_MAXDIM; i++)
     params->selection[i] = g_strdup ("random");
 
   params->rank[0] = 1;
-  for (i = 1; i < GIMP_PIXPIPE_MAXDIM; i++)
+  for (i = 1; i < LIGMA_PIXPIPE_MAXDIM; i++)
     params->rank[i] = 0;
 }
 
 void
-gimp_pixpipe_params_parse (const gchar       *string,
-                           GimpPixPipeParams *params)
+ligma_pixpipe_params_parse (const gchar       *string,
+                           LigmaPixPipeParams *params)
 {
   gchar *copy;
   gchar *p, *q, *r;
@@ -107,7 +107,7 @@ gimp_pixpipe_params_parse (const gchar       *string,
           if (r)
             {
               params->dim = atoi (r + 1);
-              params->dim = CLAMP (params->dim, 1, GIMP_PIXPIPE_MAXDIM);
+              params->dim = CLAMP (params->dim, 1, LIGMA_PIXPIPE_MAXDIM);
             }
         }
       else if (strcmp (p, "cols") == 0)
@@ -167,7 +167,7 @@ gimp_pixpipe_params_parse (const gchar       *string,
 }
 
 gchar *
-gimp_pixpipe_params_build (GimpPixPipeParams *params)
+ligma_pixpipe_params_build (LigmaPixPipeParams *params)
 {
   GString *str;
   gint     i;
@@ -193,12 +193,12 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
 }
 
 void
-gimp_pixpipe_params_free (GimpPixPipeParams *params)
+ligma_pixpipe_params_free (LigmaPixPipeParams *params)
 {
   gint i;
 
   g_free (params->placement);
 
-  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < LIGMA_PIXPIPE_MAXDIM; i++)
     g_free (params->selection[i]);
 }

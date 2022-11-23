@@ -6,12 +6,12 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export MSYS2_PREFIX="/c/msys64/mingw32"
-    export GIMP_OPTIONS="-Dvala-plugins=disabled"
+    export LIGMA_OPTIONS="-Dvala-plugins=disabled"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
-    export GIMP_OPTIONS="-Dwindows-installer=true"
+    export LIGMA_OPTIONS="-Dwindows-installer=true"
 fi
 
 export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
@@ -73,13 +73,13 @@ pacman --noconfirm -S --needed \
 # completely ridiculous.
 mv "_install${ARTIFACTS_SUFFIX}" ~
 
-export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
-export PATH="$GIMP_PREFIX/bin:$PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
-export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
+export LIGMA_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
+export PATH="$LIGMA_PREFIX/bin:$PATH"
+export PKG_CONFIG_PATH="${LIGMA_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="${LIGMA_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="${LIGMA_PREFIX}/lib:${LD_LIBRARY_PATH}"
 export ACLOCAL_FLAGS="-I/c/msys64/mingw32/share/aclocal"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
+export XDG_DATA_DIRS="${LIGMA_PREFIX}/share:/mingw64/share/"
 
 mkdir -p _ccache
 export CCACHE_BASEDIR="$(pwd)"
@@ -100,12 +100,12 @@ cd "_build${ARTIFACTS_SUFFIX}"
 # and Seed/Webkit are the 2 contenders so far, but they are not
 # available on MSYS2 and we are told it's very hard to build them).
 # TODO: re-enable javascript plug-ins when we can figure this out.
-meson .. -Dprefix="${GIMP_PREFIX}"           \
+meson .. -Dprefix="${LIGMA_PREFIX}"           \
          -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
          -Djavascript=false                  \
-         -Dbuild-id=org.gimp.GIMP_official   \
+         -Dbuild-id=org.ligma.LIGMA_official   \
          -Dgi-docgen=disabled                \
-         ${GIMP_OPTIONS}
+         ${LIGMA_OPTIONS}
 ninja
 ninja install
 cd ..
@@ -113,4 +113,4 @@ cd ..
 #ccache --show-stats
 
 # XXX Moving back the prefix to be used as artifacts.
-mv "${GIMP_PREFIX}" .
+mv "${LIGMA_PREFIX}" .

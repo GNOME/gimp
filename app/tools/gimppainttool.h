@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_TOOL_H__
-#define __GIMP_PAINT_TOOL_H__
+#ifndef __LIGMA_PAINT_TOOL_H__
+#define __LIGMA_PAINT_TOOL_H__
 
 
-#include "gimpcolortool.h"
+#include "ligmacolortool.h"
 
 
-#define GIMP_PAINT_TOOL_LINE_MASK (gimp_get_extend_selection_mask ())
+#define LIGMA_PAINT_TOOL_LINE_MASK (ligma_get_extend_selection_mask ())
 
 
-#define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
-#define GIMP_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
-#define GIMP_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
-#define GIMP_IS_PAINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_TOOL))
-#define GIMP_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
-#define GIMP_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
+#define LIGMA_TYPE_PAINT_TOOL            (ligma_paint_tool_get_type ())
+#define LIGMA_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PAINT_TOOL, LigmaPaintTool))
+#define LIGMA_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PAINT_TOOL, LigmaPaintToolClass))
+#define LIGMA_IS_PAINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PAINT_TOOL))
+#define LIGMA_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PAINT_TOOL))
+#define LIGMA_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PAINT_TOOL, LigmaPaintToolClass))
 
-#define GIMP_PAINT_TOOL_GET_OPTIONS(t)  (GIMP_PAINT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_PAINT_TOOL_GET_OPTIONS(t)  (LIGMA_PAINT_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpPaintToolClass GimpPaintToolClass;
+typedef struct _LigmaPaintToolClass LigmaPaintToolClass;
 
-struct _GimpPaintTool
+struct _LigmaPaintTool
 {
-  GimpColorTool  parent_instance;
+  LigmaColorTool  parent_instance;
 
   gboolean       active;
   gboolean       pick_colors;      /*  pick color if ctrl is pressed           */
@@ -58,9 +58,9 @@ struct _GimpPaintTool
   const gchar   *status_line;  /* status message when drawing a line */
   const gchar   *status_ctrl;  /* additional message for the ctrl modifier */
 
-  GimpPaintCore *core;
+  LigmaPaintCore *core;
 
-  GimpDisplay   *display;
+  LigmaDisplay   *display;
   GList         *drawables;
 
   gdouble        cursor_x;
@@ -70,46 +70,46 @@ struct _GimpPaintTool
   gdouble        paint_y;
 };
 
-struct _GimpPaintToolClass
+struct _LigmaPaintToolClass
 {
-  GimpColorToolClass  parent_class;
+  LigmaColorToolClass  parent_class;
 
-  void             (* paint_prepare) (GimpPaintTool *paint_tool,
-                                      GimpDisplay   *display);
-  void             (* paint_start)   (GimpPaintTool *paint_tool);
-  void             (* paint_end)     (GimpPaintTool *paint_tool);
-  void             (* paint_flush)   (GimpPaintTool *paint_tool);
+  void             (* paint_prepare) (LigmaPaintTool *paint_tool,
+                                      LigmaDisplay   *display);
+  void             (* paint_start)   (LigmaPaintTool *paint_tool);
+  void             (* paint_end)     (LigmaPaintTool *paint_tool);
+  void             (* paint_flush)   (LigmaPaintTool *paint_tool);
 
-  GimpCanvasItem * (* get_outline)   (GimpPaintTool *paint_tool,
-                                      GimpDisplay   *display,
+  LigmaCanvasItem * (* get_outline)   (LigmaPaintTool *paint_tool,
+                                      LigmaDisplay   *display,
                                       gdouble        x,
                                       gdouble        y);
 
-  gboolean         (* is_alpha_only) (GimpPaintTool *paint_tool,
-                                      GimpDrawable  *drawable);
+  gboolean         (* is_alpha_only) (LigmaPaintTool *paint_tool,
+                                      LigmaDrawable  *drawable);
 };
 
 
-GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
+GType   ligma_paint_tool_get_type            (void) G_GNUC_CONST;
 
-void    gimp_paint_tool_set_active          (GimpPaintTool       *tool,
+void    ligma_paint_tool_set_active          (LigmaPaintTool       *tool,
                                              gboolean             active);
 
-void    gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
-                                             GimpColorPickTarget  target);
+void    ligma_paint_tool_enable_color_picker (LigmaPaintTool       *tool,
+                                             LigmaColorPickTarget  target);
 
-void    gimp_paint_tool_enable_multi_paint  (GimpPaintTool       *tool);
+void    ligma_paint_tool_enable_multi_paint  (LigmaPaintTool       *tool);
 
-void    gimp_paint_tool_set_draw_fallback   (GimpPaintTool       *tool,
+void    ligma_paint_tool_set_draw_fallback   (LigmaPaintTool       *tool,
                                              gboolean             draw_fallback,
                                              gint                 fallback_size);
 
-void    gimp_paint_tool_set_draw_circle     (GimpPaintTool       *tool,
+void    ligma_paint_tool_set_draw_circle     (LigmaPaintTool       *tool,
                                              gboolean             draw_circle,
                                              gint                 circle_size);
 
-void    gimp_paint_tool_force_draw          (GimpPaintTool       *tool,
+void    ligma_paint_tool_force_draw          (LigmaPaintTool       *tool,
                                              gboolean             force);
 
 
-#endif  /*  __GIMP_PAINT_TOOL_H__  */
+#endif  /*  __LIGMA_PAINT_TOOL_H__  */

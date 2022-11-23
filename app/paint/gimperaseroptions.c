@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "gimperaseroptions.h"
+#include "ligmaeraseroptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define ERASER_DEFAULT_ANTI_ERASE FALSE
@@ -40,48 +40,48 @@ enum
 };
 
 
-static void   gimp_eraser_options_set_property (GObject         *object,
+static void   ligma_eraser_options_set_property (GObject         *object,
                                                 guint            property_id,
                                                 const GValue    *value,
                                                 GParamSpec      *pspec);
-static void   gimp_eraser_options_get_property (GObject         *object,
+static void   ligma_eraser_options_get_property (GObject         *object,
                                                 guint            property_id,
                                                 GValue          *value,
                                                 GParamSpec      *pspec);
 
 
-G_DEFINE_TYPE (GimpEraserOptions, gimp_eraser_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaEraserOptions, ligma_eraser_options,
+               LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
+ligma_eraser_options_class_init (LigmaEraserOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_eraser_options_set_property;
-  object_class->get_property = gimp_eraser_options_get_property;
+  object_class->set_property = ligma_eraser_options_set_property;
+  object_class->get_property = ligma_eraser_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTI_ERASE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTI_ERASE,
                             "anti-erase",
                             _("Anti erase"),
                             NULL,
                             ERASER_DEFAULT_ANTI_ERASE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_eraser_options_init (GimpEraserOptions *options)
+ligma_eraser_options_init (LigmaEraserOptions *options)
 {
 }
 
 static void
-gimp_eraser_options_set_property (GObject      *object,
+ligma_eraser_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (object);
+  LigmaEraserOptions *options = LIGMA_ERASER_OPTIONS (object);
 
   switch (property_id)
     {
@@ -95,12 +95,12 @@ gimp_eraser_options_set_property (GObject      *object,
 }
 
 static void
-gimp_eraser_options_get_property (GObject    *object,
+ligma_eraser_options_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (object);
+  LigmaEraserOptions *options = LIGMA_ERASER_OPTIONS (object);
 
   switch (property_id)
     {

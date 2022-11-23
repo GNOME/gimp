@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * extension-dialog.h
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #define __EXTENSIONS_DIALOG_H__
 
 
-GtkWidget * extensions_dialog_new (Gimp *gimp);
+GtkWidget * extensions_dialog_new (Ligma *ligma);
 
 
 #endif /* __EXTENSIONS_DIALOG_H__ */

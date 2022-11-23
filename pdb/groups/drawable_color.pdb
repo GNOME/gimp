@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub drawable_brightness_contrast {
     $blurb = 'Modify brightness/contrast in the specified drawable.';
@@ -39,21 +39,21 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("operations/gimpbrightnesscontrastconfig.h") ],
+        headers => [ qw("operations/ligmabrightnesscontrastconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GObject *config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
+      GObject *config = g_object_new (LIGMA_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
                                       "brightness", brightness,
                                       "contrast",   contrast,
                                       NULL);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Brightness-Contrast"),
-                                             "gimp:brightness-contrast",
+                                             "ligma:brightness-contrast",
                                              config);
       g_object_unref (config);
     }
@@ -84,7 +84,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
+	{ name => 'transfer_mode', type => 'enum LigmaTransferMode',
 	  desc => 'Transfer mode' },
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' },
@@ -97,14 +97,14 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("operations/gimpcolorbalanceconfig.h") ],
+	headers => [ qw("operations/ligmacolorbalanceconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error)  &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error)  &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GObject *config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG,
+      GObject *config = g_object_new (LIGMA_TYPE_COLOR_BALANCE_CONFIG,
                                       "range",               transfer_mode,
                                       "preserve-luminosity", preserve_lum,
                                       NULL);
@@ -115,9 +115,9 @@ HELP
                     "yellow-blue",   yellow_blue   / 100.0,
                     NULL);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Color Balance"),
-                                             "gimp:color-balance",
+                                             "ligma:color-balance",
                                              config);
       g_object_unref (config);
     }
@@ -152,20 +152,20 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! gimp_drawable_is_gray (drawable))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      ! ligma_drawable_is_gray (drawable))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:colorize",
+                             "operation", "ligma:colorize",
                              "hue",        hue        / 360.0,
                              "saturation", saturation / 100.0,
                              "lightness",  lightness  / 100.0,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Colorize"),
                                      node);
       g_object_unref (node);
@@ -185,7 +185,7 @@ Modifies the intensity mapping for one channel in the specified
 drawable. The channel can be either an intensity component, or the
 value. The 'values' parameter is an array of doubles which explicitly
 defines how each pixel value in the drawable will be modified.  Use
-the gimp_drawable_curves_spline() function to modify intensity levels
+the ligma_drawable_curves_spline() function to modify intensity levels
 with Catmull Rom splines.
 HELP
 
@@ -195,7 +195,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	{ name => 'channel', type => 'enum LigmaHistogramChannel',
 	  desc => 'The channel to modify' },
 	{ name => 'values', type => 'floatarray',
 	  desc => 'The explicit curve',
@@ -204,26 +204,26 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("operations/gimpcurvesconfig.h") ],
+	headers => [ qw("operations/ligmacurvesconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
       (num_values >= 256) &&
       (num_values <= 4096) &&
-      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
-      (! gimp_drawable_is_gray (drawable) ||
-       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
-      channel != GIMP_HISTOGRAM_LUMINANCE)
+      (ligma_drawable_has_alpha (drawable) || channel != LIGMA_HISTOGRAM_ALPHA) &&
+      (! ligma_drawable_is_gray (drawable) ||
+       channel == LIGMA_HISTOGRAM_VALUE || channel == LIGMA_HISTOGRAM_ALPHA) &&
+      channel != LIGMA_HISTOGRAM_LUMINANCE)
     {
-      GObject *config = gimp_curves_config_new_explicit (channel,
+      GObject *config = ligma_curves_config_new_explicit (channel,
                                                          values,
                                                          num_values);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
-                                             "gimp:curves",
+                                             "ligma:curves",
                                              config);
       g_object_unref (config);
     }
@@ -242,7 +242,7 @@ Modifies the intensity mapping for one channel in the specified
 drawable. The channel can be either an intensity component, or the
 value. The 'points' parameter is an array of doubles which define a
 set of control points which describe a Catmull Rom spline which yields
-the final intensity curve. Use the gimp_drawable_curves_explicit()
+the final intensity curve. Use the ligma_drawable_curves_explicit()
 function to explicitly modify intensity levels.
 HELP
 
@@ -252,7 +252,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	{ name => 'channel', type => 'enum LigmaHistogramChannel',
 	  desc => 'The channel to modify' },
 	{ name => 'points', type => 'floatarray',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
@@ -263,25 +263,25 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("operations/gimpcurvesconfig.h") ],
+	headers => [ qw("operations/ligmacurvesconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
       ! (num_points & 1) &&
-      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
-      (! gimp_drawable_is_gray (drawable) ||
-       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
-      channel != GIMP_HISTOGRAM_LUMINANCE)
+      (ligma_drawable_has_alpha (drawable) || channel != LIGMA_HISTOGRAM_ALPHA) &&
+      (! ligma_drawable_is_gray (drawable) ||
+       channel == LIGMA_HISTOGRAM_VALUE || channel == LIGMA_HISTOGRAM_ALPHA) &&
+      channel != LIGMA_HISTOGRAM_LUMINANCE)
     {
-      GObject *config = gimp_curves_config_new_spline (channel,
+      GObject *config = ligma_curves_config_new_spline (channel,
                                                        points,
                                                        num_points / 2);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
-                                             "gimp:curves",
+                                             "ligma:curves",
                                              config);
       g_object_unref (config);
     }
@@ -310,25 +310,25 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'desaturate_mode', type => 'enum GimpDesaturateMode',
+	{ name => 'desaturate_mode', type => 'enum LigmaDesaturateMode',
 	  desc => 'The formula to use to desaturate' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_drawable_is_rgb (drawable))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      ligma_drawable_is_rgb (drawable))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:desaturate",
+                             "operation", "ligma:desaturate",
                              "mode",      desaturate_mode,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Desaturate"),
                                      node);
       g_object_unref (node);
@@ -364,16 +364,16 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-equalize.h") ],
+	headers => [ qw("core/ligmadrawable-equalize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                   GIMP_PDB_ITEM_CONTENT, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                   LIGMA_PDB_ITEM_CONTENT, error) ||
+      ! ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     success = FALSE;
 
   if (success)
-    gimp_drawable_equalize (drawable, mask_only);
+    ligma_drawable_equalize (drawable, mask_only);
 }
 CODE
     );
@@ -390,7 +390,7 @@ This tool makes it possible to gather information about the intensity
 histogram of a drawable. A channel to examine is first specified. This
 can be either value, red, green, or blue, depending on whether the
 drawable is of type color or grayscale. Second, a range of intensities
-are specified. The gimp_drawable_histogram() function returns
+are specified. The ligma_drawable_histogram() function returns
 statistics based on the pixels in the drawable that fall under this
 range of values. Mean, standard deviation, median, number of pixels,
 and percentile are all returned.  Additionally, the total count of
@@ -410,7 +410,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	{ name => 'channel', type => 'enum LigmaHistogramChannel',
 	  desc => 'The channel to query' },
 	{ name => 'start_range', type => '0.0 <= float <= 1.0',
 	  desc => 'Start of the intensity measurement range' },
@@ -434,43 +434,43 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-histogram.h"
-                        "core/gimphistogram.h") ],
+	headers => [ qw("core/ligmadrawable-histogram.h"
+                        "core/ligmahistogram.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error) ||
-      (! gimp_drawable_has_alpha (drawable) &&
-       channel == GIMP_HISTOGRAM_ALPHA) ||
-      (gimp_drawable_is_gray (drawable) &&
-       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
+  if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error) ||
+      (! ligma_drawable_has_alpha (drawable) &&
+       channel == LIGMA_HISTOGRAM_ALPHA) ||
+      (ligma_drawable_is_gray (drawable) &&
+       channel != LIGMA_HISTOGRAM_VALUE && channel != LIGMA_HISTOGRAM_ALPHA))
     success = FALSE;
 
   if (success)
     {
-      GimpHistogram *histogram;
+      LigmaHistogram *histogram;
       gint           n_bins;
       gint           start;
-      GimpTRCType    trc;
+      LigmaTRCType    trc;
       gint           end;
 
-      trc = gimp_drawable_get_trc (drawable);
+      trc = ligma_drawable_get_trc (drawable);
 
-      histogram = gimp_histogram_new (trc);
-      gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+      histogram = ligma_histogram_new (trc);
+      ligma_drawable_calculate_histogram (drawable, histogram, FALSE);
 
-      n_bins = gimp_histogram_n_bins (histogram);
+      n_bins = ligma_histogram_n_bins (histogram);
 
       start = ROUND (start_range * (n_bins - 1));
       end   = ROUND (end_range   * (n_bins - 1));
 
-      mean       = gimp_histogram_get_mean (histogram, channel,
+      mean       = ligma_histogram_get_mean (histogram, channel,
 		 			    start, end);
-      std_dev    = gimp_histogram_get_std_dev (histogram, channel,
+      std_dev    = ligma_histogram_get_std_dev (histogram, channel,
 					       start, end);
-      median     = gimp_histogram_get_median (histogram, channel,
+      median     = ligma_histogram_get_median (histogram, channel,
 					      start, end);
-      pixels     = gimp_histogram_get_count (histogram, channel, 0, n_bins - 1);
-      count      = gimp_histogram_get_count (histogram, channel,
+      pixels     = ligma_histogram_get_count (histogram, channel, 0, n_bins - 1);
+      count      = ligma_histogram_get_count (histogram, channel,
                                              start, end);
       percentile = count / pixels;
 
@@ -506,7 +506,7 @@ HELP
     @inargs = (
         { name => 'drawable', type => 'drawable',
           desc => 'The drawable' },
-        { name => 'hue_range', type => 'enum GimpHueRange',
+        { name => 'hue_range', type => 'enum LigmaHueRange',
           desc => 'Range of affected hues' },
         { name => 'hue_offset', type => '-180 <= float <= 180',
           desc => 'Hue offset in degrees' },
@@ -519,14 +519,14 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("operations/gimphuesaturationconfig.h") ],
+        headers => [ qw("operations/ligmahuesaturationconfig.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
+      GObject *config = g_object_new (LIGMA_TYPE_HUE_SATURATION_CONFIG,
                                       "range", hue_range,
                                       NULL);
 
@@ -537,9 +537,9 @@ HELP
                      "overlap",    overlap / 100.0,
                      NULL);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Hue-Saturation"),
-                                             "gimp:hue-saturation",
+                                             "ligma:hue-saturation",
                                              config);
       g_object_unref (config);
     }
@@ -573,11 +573,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Invert"),
                                              linear ?
                                              "gegl:invert-linear" :
@@ -613,7 +613,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	{ name => 'channel', type => 'enum LigmaHistogramChannel',
 	  desc => 'The channel to modify' },
 	{ name => 'low_input', type => '0.0 <= float <= 1.0',
 	  desc => "Intensity of lowest input" },
@@ -632,18 +632,18 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("operations/gimplevelsconfig.h") ],
+	headers => [ qw("operations/ligmalevelsconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
-      (! gimp_drawable_is_gray (drawable) ||
-       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
-      channel != GIMP_HISTOGRAM_LUMINANCE)
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      (ligma_drawable_has_alpha (drawable) || channel != LIGMA_HISTOGRAM_ALPHA) &&
+      (! ligma_drawable_is_gray (drawable) ||
+       channel == LIGMA_HISTOGRAM_VALUE || channel == LIGMA_HISTOGRAM_ALPHA) &&
+      channel != LIGMA_HISTOGRAM_LUMINANCE)
     {
-      GObject *config = g_object_new (GIMP_TYPE_LEVELS_CONFIG,
+      GObject *config = g_object_new (LIGMA_TYPE_LEVELS_CONFIG,
                                       "channel", channel,
                                       NULL);
 
@@ -657,9 +657,9 @@ HELP
                     "clamp-output", clamp_output,
                     NULL);
 
-      gimp_drawable_apply_operation_by_name (drawable, progress,
+      ligma_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Levels"),
-                                             "gimp:levels",
+                                             "ligma:levels",
                                              config);
       g_object_unref (config);
     }
@@ -689,14 +689,14 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpdrawable-levels.h") ],
+        headers => [ qw("core/ligmadrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      gimp_drawable_levels_stretch (drawable, progress);
+      ligma_drawable_levels_stretch (drawable, progress);
     }
   else
     success = FALSE;
@@ -727,17 +727,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:posterize",
+                             "operation", "ligma:posterize",
                              "levels",    levels,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Posterize"),
                                      node);
       g_object_unref (node);
@@ -766,7 +766,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	{ name => 'channel', type => 'enum LigmaHistogramChannel',
 	  desc => 'The channel to base the threshold on' },
 	{ name => 'low_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'The low threshold value' },
@@ -777,19 +777,19 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:threshold",
+                             "operation", "ligma:threshold",
                              "channel",   channel,
                              "low",       low_threshold,
                              "high",      high_threshold,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Threshold"),
                                      node);
       g_object_unref (node);
@@ -802,12 +802,12 @@ CODE
 }
 
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "core/gimp.h"
-              "core/gimpdrawable.h"
-              "core/gimpdrawable-operation.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+@headers = qw("libligmamath/ligmamath.h"
+              "core/ligma.h"
+              "core/ligmadrawable.h"
+              "core/ligmadrawable-operation.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(drawable_brightness_contrast
             drawable_color_balance
@@ -827,7 +827,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';
-$doc_title = 'gimpdrawablecolor';
+$doc_title = 'ligmadrawablecolor';
 $doc_short_desc = "Functions for manipulating a drawable's color.";
 $doc_long_desc = "Functions for manipulating a drawable's color, including curves and histograms.";
 

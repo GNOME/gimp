@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolgyroscope.c
+ * ligmatoolgyroscope.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,18 +24,18 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimptoolgyroscope.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmatoolgyroscope.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define EPSILON    1e-6
@@ -71,7 +71,7 @@ enum
   PROP_PIVOT_Y
 };
 
-struct _GimpToolGyroscopePrivate
+struct _LigmaToolGyroscopePrivate
 {
   gdouble    yaw;
   gdouble    pitch;
@@ -105,92 +105,92 @@ struct _GimpToolGyroscopePrivate
 
 /*  local function prototypes  */
 
-static void       gimp_tool_gyroscope_set_property    (GObject               *object,
+static void       ligma_tool_gyroscope_set_property    (GObject               *object,
                                                        guint                  property_id,
                                                        const GValue          *value,
                                                        GParamSpec            *pspec);
-static void       gimp_tool_gyroscope_get_property    (GObject               *object,
+static void       ligma_tool_gyroscope_get_property    (GObject               *object,
                                                        guint                  property_id,
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-static gint       gimp_tool_gyroscope_button_press    (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+static gint       ligma_tool_gyroscope_button_press    (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        guint32                time,
                                                        GdkModifierType        state,
-                                                       GimpButtonPressType    press_type);
-static void       gimp_tool_gyroscope_button_release  (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+                                                       LigmaButtonPressType    press_type);
+static void       ligma_tool_gyroscope_button_release  (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        guint32                time,
                                                        GdkModifierType        state,
-                                                       GimpButtonReleaseType  release_type);
-static void       gimp_tool_gyroscope_motion          (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+                                                       LigmaButtonReleaseType  release_type);
+static void       ligma_tool_gyroscope_motion          (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        guint32                time,
                                                        GdkModifierType        state);
-static GimpHit    gimp_tool_gyroscope_hit             (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+static LigmaHit    ligma_tool_gyroscope_hit             (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        GdkModifierType        state,
                                                        gboolean               proximity);
-static void       gimp_tool_gyroscope_hover           (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+static void       ligma_tool_gyroscope_hover           (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        GdkModifierType        state,
                                                        gboolean               proximity);
-static gboolean   gimp_tool_gyroscope_key_press       (GimpToolWidget        *widget,
+static gboolean   ligma_tool_gyroscope_key_press       (LigmaToolWidget        *widget,
                                                        GdkEventKey           *kevent);
-static void       gimp_tool_gyroscope_motion_modifier (GimpToolWidget        *widget,
+static void       ligma_tool_gyroscope_motion_modifier (LigmaToolWidget        *widget,
                                                        GdkModifierType        key,
                                                        gboolean               press,
                                                        GdkModifierType        state);
-static gboolean   gimp_tool_gyroscope_get_cursor      (GimpToolWidget        *widget,
-                                                       const GimpCoords      *coords,
+static gboolean   ligma_tool_gyroscope_get_cursor      (LigmaToolWidget        *widget,
+                                                       const LigmaCoords      *coords,
                                                        GdkModifierType        state,
-                                                       GimpCursorType        *cursor,
-                                                       GimpToolCursorType    *tool_cursor,
-                                                       GimpCursorModifier    *modifier);
+                                                       LigmaCursorType        *cursor,
+                                                       LigmaToolCursorType    *tool_cursor,
+                                                       LigmaCursorModifier    *modifier);
 
-static void       gimp_tool_gyroscope_update_status   (GimpToolGyroscope      *gyroscope,
+static void       ligma_tool_gyroscope_update_status   (LigmaToolGyroscope      *gyroscope,
                                                        GdkModifierType         state);
 
-static void       gimp_tool_gyroscope_save            (GimpToolGyroscope      *gyroscope);
-static void       gimp_tool_gyroscope_restore         (GimpToolGyroscope      *gyroscope);
+static void       ligma_tool_gyroscope_save            (LigmaToolGyroscope      *gyroscope);
+static void       ligma_tool_gyroscope_restore         (LigmaToolGyroscope      *gyroscope);
 
-static void       gimp_tool_gyroscope_rotate          (GimpToolGyroscope      *gyroscope,
-                                                       const GimpVector3      *axis);
-static void       gimp_tool_gyroscope_rotate_vector   (GimpVector3            *vector,
-                                                       const GimpVector3      *axis);
+static void       ligma_tool_gyroscope_rotate          (LigmaToolGyroscope      *gyroscope,
+                                                       const LigmaVector3      *axis);
+static void       ligma_tool_gyroscope_rotate_vector   (LigmaVector3            *vector,
+                                                       const LigmaVector3      *axis);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolGyroscope, gimp_tool_gyroscope,
-                            GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolGyroscope, ligma_tool_gyroscope,
+                            LIGMA_TYPE_TOOL_WIDGET)
 
-#define parent_class gimp_tool_gyroscope_parent_class
+#define parent_class ligma_tool_gyroscope_parent_class
 
 
 static void
-gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
+ligma_tool_gyroscope_class_init (LigmaToolGyroscopeClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->set_property    = gimp_tool_gyroscope_set_property;
-  object_class->get_property    = gimp_tool_gyroscope_get_property;
+  object_class->set_property    = ligma_tool_gyroscope_set_property;
+  object_class->get_property    = ligma_tool_gyroscope_get_property;
 
-  widget_class->button_press    = gimp_tool_gyroscope_button_press;
-  widget_class->button_release  = gimp_tool_gyroscope_button_release;
-  widget_class->motion          = gimp_tool_gyroscope_motion;
-  widget_class->hit             = gimp_tool_gyroscope_hit;
-  widget_class->hover           = gimp_tool_gyroscope_hover;
-  widget_class->key_press       = gimp_tool_gyroscope_key_press;
-  widget_class->motion_modifier = gimp_tool_gyroscope_motion_modifier;
-  widget_class->get_cursor      = gimp_tool_gyroscope_get_cursor;
+  widget_class->button_press    = ligma_tool_gyroscope_button_press;
+  widget_class->button_release  = ligma_tool_gyroscope_button_release;
+  widget_class->motion          = ligma_tool_gyroscope_motion;
+  widget_class->hit             = ligma_tool_gyroscope_hit;
+  widget_class->hover           = ligma_tool_gyroscope_hover;
+  widget_class->key_press       = ligma_tool_gyroscope_key_press;
+  widget_class->motion_modifier = ligma_tool_gyroscope_motion_modifier;
+  widget_class->get_cursor      = ligma_tool_gyroscope_get_cursor;
 
   g_object_class_install_property (object_class, PROP_YAW,
                                    g_param_spec_double ("yaw", NULL, NULL,
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PITCH,
@@ -198,7 +198,7 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ROLL,
@@ -206,7 +206,7 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ZOOM,
@@ -214,13 +214,13 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         0.0,
                                                         +G_MAXDOUBLE,
                                                         1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_INVERT,
                                    g_param_spec_boolean ("invert", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SPEED,
@@ -228,7 +228,7 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIVOT_X,
@@ -236,7 +236,7 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIVOT_Y,
@@ -244,24 +244,24 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_gyroscope_init (GimpToolGyroscope *gyroscope)
+ligma_tool_gyroscope_init (LigmaToolGyroscope *gyroscope)
 {
-  gyroscope->private = gimp_tool_gyroscope_get_instance_private (gyroscope);
+  gyroscope->private = ligma_tool_gyroscope_get_instance_private (gyroscope);
 }
 
 static void
-gimp_tool_gyroscope_set_property (GObject      *object,
+ligma_tool_gyroscope_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (object);
-  GimpToolGyroscopePrivate *private = gyroscope->private;
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (object);
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
 
   switch (property_id)
     {
@@ -297,13 +297,13 @@ gimp_tool_gyroscope_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_gyroscope_get_property (GObject    *object,
+ligma_tool_gyroscope_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (object);
-  GimpToolGyroscopePrivate *private = gyroscope->private;
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (object);
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
 
   switch (property_id)
     {
@@ -339,16 +339,16 @@ gimp_tool_gyroscope_get_property (GObject    *object,
 }
 
 static gint
-gimp_tool_gyroscope_button_press (GimpToolWidget      *widget,
-                                  const GimpCoords    *coords,
+ligma_tool_gyroscope_button_press (LigmaToolWidget      *widget,
+                                  const LigmaCoords    *coords,
                                   guint32              time,
                                   GdkModifierType      state,
-                                  GimpButtonPressType  press_type)
+                                  LigmaButtonPressType  press_type)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (widget);
-  GimpToolGyroscopePrivate *private   = gyroscope->private;
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (widget);
+  LigmaToolGyroscopePrivate *private   = gyroscope->private;
 
-  gimp_tool_gyroscope_save (gyroscope);
+  ligma_tool_gyroscope_save (gyroscope);
 
   if (state & GDK_MOD1_MASK)
     {
@@ -356,7 +356,7 @@ gimp_tool_gyroscope_button_press (GimpToolWidget      *widget,
 
       private->last_zoom = private->zoom;
     }
-  else if (state & gimp_get_extend_selection_mask ())
+  else if (state & ligma_get_extend_selection_mask ())
     {
       private->mode = MODE_ROTATE;
 
@@ -368,7 +368,7 @@ gimp_tool_gyroscope_button_press (GimpToolWidget      *widget,
     {
       private->mode = MODE_PAN;
 
-      if (state & gimp_get_constrain_behavior_mask ())
+      if (state & ligma_get_constrain_behavior_mask ())
         private->constraint = CONSTRAINT_UNKNOWN;
       else
         private->constraint = CONSTRAINT_NONE;
@@ -377,39 +377,39 @@ gimp_tool_gyroscope_button_press (GimpToolWidget      *widget,
   private->last_x = coords->x;
   private->last_y = coords->y;
 
-  gimp_tool_gyroscope_update_status (gyroscope, state);
+  ligma_tool_gyroscope_update_status (gyroscope, state);
 
   return 1;
 }
 
 static void
-gimp_tool_gyroscope_button_release (GimpToolWidget        *widget,
-                                    const GimpCoords      *coords,
+ligma_tool_gyroscope_button_release (LigmaToolWidget        *widget,
+                                    const LigmaCoords      *coords,
                                     guint32                time,
                                     GdkModifierType        state,
-                                    GimpButtonReleaseType  release_type)
+                                    LigmaButtonReleaseType  release_type)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (widget);
-  GimpToolGyroscopePrivate *private   = gyroscope->private;
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (widget);
+  LigmaToolGyroscopePrivate *private   = gyroscope->private;
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-    gimp_tool_gyroscope_restore (gyroscope);
+  if (release_type == LIGMA_BUTTON_RELEASE_CANCEL)
+    ligma_tool_gyroscope_restore (gyroscope);
 
   private->mode = MODE_NONE;
 
-  gimp_tool_gyroscope_update_status (gyroscope, state);
+  ligma_tool_gyroscope_update_status (gyroscope, state);
 }
 
 static void
-gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
-                            const GimpCoords *coords,
+ligma_tool_gyroscope_motion (LigmaToolWidget   *widget,
+                            const LigmaCoords *coords,
                             guint32           time,
                             GdkModifierType   state)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (widget);
-  GimpToolGyroscopePrivate *private   = gyroscope->private;
-  GimpDisplayShell         *shell     = gimp_tool_widget_get_shell (widget);
-  GimpVector3               axis      = {};
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (widget);
+  LigmaToolGyroscopePrivate *private   = gyroscope->private;
+  LigmaDisplayShell         *shell     = ligma_tool_widget_get_shell (widget);
+  LigmaVector3               axis      = {};
 
   switch (private->mode)
     {
@@ -423,8 +423,8 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
 
           if (private->constraint != CONSTRAINT_NONE)
             {
-              gimp_display_shell_rotate_xy_f (shell, x1, y1, &x1, &y1);
-              gimp_display_shell_rotate_xy_f (shell, x2, y2, &x2, &y2);
+              ligma_display_shell_rotate_xy_f (shell, x1, y1, &x1, &y1);
+              ligma_display_shell_rotate_xy_f (shell, x2, y2, &x2, &y2);
 
               if (private->constraint == CONSTRAINT_UNKNOWN)
                 {
@@ -439,15 +439,15 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
               else if (private->constraint == CONSTRAINT_VERTICAL)
                 x2 = x1;
 
-              gimp_display_shell_unrotate_xy_f (shell, x1, y1, &x1, &y1);
-              gimp_display_shell_unrotate_xy_f (shell, x2, y2, &x2, &y2);
+              ligma_display_shell_unrotate_xy_f (shell, x1, y1, &x1, &y1);
+              ligma_display_shell_unrotate_xy_f (shell, x2, y2, &x2, &y2);
             }
 
           if (private->invert)
             factor = 1.0 / factor;
 
-          gimp_vector3_set (&axis, y2 - y1, x2 - x1, 0.0);
-          gimp_vector3_mul (&axis, factor * private->speed);
+          ligma_vector3_set (&axis, y2 - y1, x2 - x1, 0.0);
+          ligma_vector3_mul (&axis, factor * private->speed);
         }
       break;
 
@@ -462,10 +462,10 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
 
         angle -= private->last_angle;
 
-        if (state & gimp_get_constrain_behavior_mask ())
+        if (state & ligma_get_constrain_behavior_mask ())
           angle = RINT (angle / (G_PI / 6.0)) * (G_PI / 6.0);
 
-        gimp_vector3_set (&axis, 0.0, 0.0, angle);
+        ligma_vector3_set (&axis, 0.0, 0.0, angle);
 
         private->last_angle += angle;
       }
@@ -477,10 +477,10 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
         gdouble x2, y2;
         gdouble zoom;
 
-        gimp_display_shell_transform_xy_f (shell,
+        ligma_display_shell_transform_xy_f (shell,
                                            private->last_x, private->last_y,
                                            &x1,             &y1);
-        gimp_display_shell_transform_xy_f (shell,
+        ligma_display_shell_transform_xy_f (shell,
                                            coords->x,       coords->y,
                                            &x2,             &y2);
 
@@ -493,7 +493,7 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
 
         zoom = log (private->last_zoom / private->zoom) / G_LN2;
 
-        if (state & gimp_get_constrain_behavior_mask ())
+        if (state & ligma_get_constrain_behavior_mask ())
           zoom = RINT (zoom * 2.0) / 2.0;
 
         g_object_set (gyroscope,
@@ -509,39 +509,39 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
   private->last_x = coords->x;
   private->last_y = coords->y;
 
-  gimp_tool_gyroscope_rotate (gyroscope, &axis);
+  ligma_tool_gyroscope_rotate (gyroscope, &axis);
 }
 
-static GimpHit
-gimp_tool_gyroscope_hit (GimpToolWidget   *widget,
-                         const GimpCoords *coords,
+static LigmaHit
+ligma_tool_gyroscope_hit (LigmaToolWidget   *widget,
+                         const LigmaCoords *coords,
                          GdkModifierType   state,
                          gboolean          proximity)
 {
-  return GIMP_HIT_INDIRECT;
+  return LIGMA_HIT_INDIRECT;
 }
 
 static void
-gimp_tool_gyroscope_hover (GimpToolWidget   *widget,
-                           const GimpCoords *coords,
+ligma_tool_gyroscope_hover (LigmaToolWidget   *widget,
+                           const LigmaCoords *coords,
                            GdkModifierType   state,
                            gboolean          proximity)
 {
-  gimp_tool_gyroscope_update_status (GIMP_TOOL_GYROSCOPE (widget), state);
+  ligma_tool_gyroscope_update_status (LIGMA_TOOL_GYROSCOPE (widget), state);
 }
 
 static gboolean
-gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
+ligma_tool_gyroscope_key_press (LigmaToolWidget *widget,
                                GdkEventKey    *kevent)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (widget);
-  GimpToolGyroscopePrivate *private   = gyroscope->private;
-  GimpDisplayShell         *shell     = gimp_tool_widget_get_shell (widget);
-  GimpVector3               axis      = {};
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (widget);
+  LigmaToolGyroscopePrivate *private   = gyroscope->private;
+  LigmaDisplayShell         *shell     = ligma_tool_widget_get_shell (widget);
+  LigmaVector3               axis      = {};
   gboolean                  fast;
   gboolean                  result    = FALSE;
 
-  fast = (kevent->state & gimp_get_constrain_behavior_mask ());
+  fast = (kevent->state & ligma_get_constrain_behavior_mask ());
 
   if (kevent->state & GDK_MOD1_MASK)
     {
@@ -571,7 +571,7 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
                         NULL);
         }
     }
-  else if (kevent->state & gimp_get_extend_selection_mask ())
+  else if (kevent->state & ligma_get_extend_selection_mask ())
     {
       /* rotate */
       gdouble angle = 0.0;
@@ -592,7 +592,7 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
       if (shell->flip_horizontally ^ shell->flip_vertically)
         angle = -angle;
 
-      gimp_vector3_set (&axis, 0.0, 0.0, angle * DEG_TO_RAD);
+      ligma_vector3_set (&axis, 0.0, 0.0, angle * DEG_TO_RAD);
     }
   else
     {
@@ -629,50 +629,50 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
           break;
         }
 
-      gimp_display_shell_unrotate_xy_f (shell, x0, y0, &x0, &y0);
-      gimp_display_shell_unrotate_xy_f (shell, x,  y,  &x,  &y);
+      ligma_display_shell_unrotate_xy_f (shell, x0, y0, &x0, &y0);
+      ligma_display_shell_unrotate_xy_f (shell, x,  y,  &x,  &y);
 
-      gimp_vector3_set (&axis,
+      ligma_vector3_set (&axis,
                         (y - y0) * DEG_TO_RAD,
                         (x - x0) * DEG_TO_RAD,
                         0.0);
-      gimp_vector3_mul (&axis, factor);
+      ligma_vector3_mul (&axis, factor);
     }
 
-  gimp_tool_gyroscope_rotate (gyroscope, &axis);
+  ligma_tool_gyroscope_rotate (gyroscope, &axis);
 
   return result;
 }
 
 static void
-gimp_tool_gyroscope_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_gyroscope_motion_modifier (LigmaToolWidget  *widget,
                                      GdkModifierType  key,
                                      gboolean         press,
                                      GdkModifierType  state)
 {
-  GimpToolGyroscope        *gyroscope = GIMP_TOOL_GYROSCOPE (widget);
-  GimpToolGyroscopePrivate *private   = gyroscope->private;
+  LigmaToolGyroscope        *gyroscope = LIGMA_TOOL_GYROSCOPE (widget);
+  LigmaToolGyroscopePrivate *private   = gyroscope->private;
 
-  gimp_tool_gyroscope_update_status (gyroscope, state);
+  ligma_tool_gyroscope_update_status (gyroscope, state);
 
-  if (key == gimp_get_constrain_behavior_mask ())
+  if (key == ligma_get_constrain_behavior_mask ())
     {
       switch (private->mode)
       {
         case MODE_PAN:
-          if (state & gimp_get_constrain_behavior_mask ())
+          if (state & ligma_get_constrain_behavior_mask ())
             private->constraint = CONSTRAINT_UNKNOWN;
           else
             private->constraint = CONSTRAINT_NONE;
           break;
 
         case MODE_ROTATE:
-          if (! (state & gimp_get_constrain_behavior_mask ()))
+          if (! (state & ligma_get_constrain_behavior_mask ()))
             private->last_angle = private->curr_angle;
           break;
 
         case MODE_ZOOM:
-          if (! (state & gimp_get_constrain_behavior_mask ()))
+          if (! (state & ligma_get_constrain_behavior_mask ()))
             private->last_zoom = private->zoom;
           break;
 
@@ -683,36 +683,36 @@ gimp_tool_gyroscope_motion_modifier (GimpToolWidget  *widget,
 }
 
 static gboolean
-gimp_tool_gyroscope_get_cursor (GimpToolWidget     *widget,
-                                const GimpCoords   *coords,
+ligma_tool_gyroscope_get_cursor (LigmaToolWidget     *widget,
+                                const LigmaCoords   *coords,
                                 GdkModifierType     state,
-                                GimpCursorType     *cursor,
-                                GimpToolCursorType *tool_cursor,
-                                GimpCursorModifier *modifier)
+                                LigmaCursorType     *cursor,
+                                LigmaToolCursorType *tool_cursor,
+                                LigmaCursorModifier *modifier)
 {
   if (state & GDK_MOD1_MASK)
-    *modifier = GIMP_CURSOR_MODIFIER_ZOOM;
-  else if (state & gimp_get_extend_selection_mask ())
-    *modifier = GIMP_CURSOR_MODIFIER_ROTATE;
+    *modifier = LIGMA_CURSOR_MODIFIER_ZOOM;
+  else if (state & ligma_get_extend_selection_mask ())
+    *modifier = LIGMA_CURSOR_MODIFIER_ROTATE;
   else
-    *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+    *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
 
   return TRUE;
 }
 
 static void
-gimp_tool_gyroscope_update_status (GimpToolGyroscope *gyroscope,
+ligma_tool_gyroscope_update_status (LigmaToolGyroscope *gyroscope,
                                    GdkModifierType    state)
 {
-  GimpToolGyroscopePrivate *private = gyroscope->private;
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
   gchar                    *status;
 
   if (private->mode == MODE_ZOOM ||
       (private->mode == MODE_NONE &&
        state & GDK_MOD1_MASK))
     {
-      status = gimp_suggest_modifiers (_("Click-Drag to zoom"),
-                                       gimp_get_toggle_behavior_mask () &
+      status = ligma_suggest_modifiers (_("Click-Drag to zoom"),
+                                       ligma_get_toggle_behavior_mask () &
                                        ~state,
                                        NULL,
                                        _("%s for constrained steps"),
@@ -720,10 +720,10 @@ gimp_tool_gyroscope_update_status (GimpToolGyroscope *gyroscope,
     }
   else if (private->mode == MODE_ROTATE ||
            (private->mode == MODE_NONE &&
-            state & gimp_get_extend_selection_mask ()))
+            state & ligma_get_extend_selection_mask ()))
     {
-      status = gimp_suggest_modifiers (_("Click-Drag to rotate"),
-                                       gimp_get_toggle_behavior_mask () &
+      status = ligma_suggest_modifiers (_("Click-Drag to rotate"),
+                                       ligma_get_toggle_behavior_mask () &
                                        ~state,
                                        NULL,
                                        _("%s for constrained angles"),
@@ -731,26 +731,26 @@ gimp_tool_gyroscope_update_status (GimpToolGyroscope *gyroscope,
     }
   else
     {
-      status = gimp_suggest_modifiers (_("Click-Drag to pan"),
-                                       (((gimp_get_extend_selection_mask () |
+      status = ligma_suggest_modifiers (_("Click-Drag to pan"),
+                                       (((ligma_get_extend_selection_mask () |
                                           GDK_MOD1_MASK)                    *
                                          (private->mode == MODE_NONE))      |
-                                        gimp_get_toggle_behavior_mask  ())  &
+                                        ligma_get_toggle_behavior_mask  ())  &
                                         ~state,
                                        _("%s to rotate"),
                                        _("%s for a constrained axis"),
                                        _("%s to zoom"));
     }
 
-  gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (gyroscope), status);
+  ligma_tool_widget_set_status (LIGMA_TOOL_WIDGET (gyroscope), status);
 
   g_free (status);
 }
 
 static void
-gimp_tool_gyroscope_save (GimpToolGyroscope *gyroscope)
+ligma_tool_gyroscope_save (LigmaToolGyroscope *gyroscope)
 {
-  GimpToolGyroscopePrivate *private = gyroscope->private;
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
 
   private->orig_yaw   = private->yaw;
   private->orig_pitch = private->pitch;
@@ -759,9 +759,9 @@ gimp_tool_gyroscope_save (GimpToolGyroscope *gyroscope)
 }
 
 static void
-gimp_tool_gyroscope_restore (GimpToolGyroscope *gyroscope)
+ligma_tool_gyroscope_restore (LigmaToolGyroscope *gyroscope)
 {
-  GimpToolGyroscopePrivate *private = gyroscope->private;
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
 
   g_object_set (gyroscope,
                 "yaw",   private->orig_yaw,
@@ -772,57 +772,57 @@ gimp_tool_gyroscope_restore (GimpToolGyroscope *gyroscope)
 }
 
 static void
-gimp_tool_gyroscope_rotate (GimpToolGyroscope *gyroscope,
-                            const GimpVector3 *axis)
+ligma_tool_gyroscope_rotate (LigmaToolGyroscope *gyroscope,
+                            const LigmaVector3 *axis)
 {
-  GimpToolGyroscopePrivate *private = gyroscope->private;
-  GimpVector3               real_axis;
-  GimpVector3               basis[2];
+  LigmaToolGyroscopePrivate *private = gyroscope->private;
+  LigmaVector3               real_axis;
+  LigmaVector3               basis[2];
   gdouble                   yaw;
   gdouble                   pitch;
   gdouble                   roll;
   gint                      i;
 
-  if (gimp_vector3_length (axis) < EPSILON)
+  if (ligma_vector3_length (axis) < EPSILON)
     return;
 
   real_axis = *axis;
 
   if (private->invert)
-    gimp_vector3_neg (&real_axis);
+    ligma_vector3_neg (&real_axis);
 
   for (i = 0; i < 2; i++)
     {
-      gimp_vector3_set (&basis[i], i == 0, i == 1, 0.0);
+      ligma_vector3_set (&basis[i], i == 0, i == 1, 0.0);
 
       if (private->invert)
-        gimp_tool_gyroscope_rotate_vector (&basis[i], &real_axis);
+        ligma_tool_gyroscope_rotate_vector (&basis[i], &real_axis);
 
-      gimp_tool_gyroscope_rotate_vector (
-        &basis[i], &(GimpVector3) {0.0, private->yaw * DEG_TO_RAD, 0.0});
-      gimp_tool_gyroscope_rotate_vector (
-        &basis[i], &(GimpVector3) {private->pitch * DEG_TO_RAD, 0.0, 0.0});
-      gimp_tool_gyroscope_rotate_vector (
-        &basis[i], &(GimpVector3) {0.0, 0.0, private->roll * DEG_TO_RAD});
+      ligma_tool_gyroscope_rotate_vector (
+        &basis[i], &(LigmaVector3) {0.0, private->yaw * DEG_TO_RAD, 0.0});
+      ligma_tool_gyroscope_rotate_vector (
+        &basis[i], &(LigmaVector3) {private->pitch * DEG_TO_RAD, 0.0, 0.0});
+      ligma_tool_gyroscope_rotate_vector (
+        &basis[i], &(LigmaVector3) {0.0, 0.0, private->roll * DEG_TO_RAD});
 
       if (! private->invert)
-        gimp_tool_gyroscope_rotate_vector (&basis[i], &real_axis);
+        ligma_tool_gyroscope_rotate_vector (&basis[i], &real_axis);
     }
 
   roll = atan2 (basis[1].x, basis[1].y);
 
   for (i = 0; i < 2; i++)
     {
-      gimp_tool_gyroscope_rotate_vector (
-        &basis[i], &(GimpVector3) {0.0, 0.0, -roll});
+      ligma_tool_gyroscope_rotate_vector (
+        &basis[i], &(LigmaVector3) {0.0, 0.0, -roll});
     }
 
   pitch = atan2 (-basis[1].z, basis[1].y);
 
   for (i = 0; i < 1; i++)
     {
-      gimp_tool_gyroscope_rotate_vector (
-        &basis[i], &(GimpVector3) {-pitch, 0.0, 0.0});
+      ligma_tool_gyroscope_rotate_vector (
+        &basis[i], &(LigmaVector3) {-pitch, 0.0, 0.0});
     }
 
   yaw = atan2 (basis[0].z, basis[0].x);
@@ -835,46 +835,46 @@ gimp_tool_gyroscope_rotate (GimpToolGyroscope *gyroscope,
 }
 
 static void
-gimp_tool_gyroscope_rotate_vector (GimpVector3       *vector,
-                                   const GimpVector3 *axis)
+ligma_tool_gyroscope_rotate_vector (LigmaVector3       *vector,
+                                   const LigmaVector3 *axis)
 {
-  GimpVector3 normalized_axis;
-  GimpVector3 projection;
-  GimpVector3 u;
-  GimpVector3 v;
+  LigmaVector3 normalized_axis;
+  LigmaVector3 projection;
+  LigmaVector3 u;
+  LigmaVector3 v;
   gdouble     angle;
 
-  angle = gimp_vector3_length (axis);
+  angle = ligma_vector3_length (axis);
 
   if (angle < EPSILON)
     return;
 
-  normalized_axis = gimp_vector3_mul_val (*axis, 1.0 / angle);
+  normalized_axis = ligma_vector3_mul_val (*axis, 1.0 / angle);
 
-  projection = gimp_vector3_mul_val (
+  projection = ligma_vector3_mul_val (
     normalized_axis,
-    gimp_vector3_inner_product (vector, &normalized_axis));
+    ligma_vector3_inner_product (vector, &normalized_axis));
 
-  u = gimp_vector3_sub_val (*vector, projection);
-  v = gimp_vector3_cross_product (&u, &normalized_axis);
+  u = ligma_vector3_sub_val (*vector, projection);
+  v = ligma_vector3_cross_product (&u, &normalized_axis);
 
-  gimp_vector3_mul (&u, cos (angle));
-  gimp_vector3_mul (&v, sin (angle));
+  ligma_vector3_mul (&u, cos (angle));
+  ligma_vector3_mul (&v, sin (angle));
 
-  gimp_vector3_add (vector, &u, &v);
-  gimp_vector3_add (vector, vector, &projection);
+  ligma_vector3_add (vector, &u, &v);
+  ligma_vector3_add (vector, vector, &projection);
 }
 
 
 /*  public functions  */
 
 
-GimpToolWidget *
-gimp_tool_gyroscope_new (GimpDisplayShell *shell)
+LigmaToolWidget *
+ligma_tool_gyroscope_new (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_GYROSCOPE,
+  return g_object_new (LIGMA_TYPE_TOOL_GYROSCOPE,
                        "shell", shell,
                        NULL);
 }

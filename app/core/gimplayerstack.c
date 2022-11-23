@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimplayerstack.c
+ * ligmalayerstack.c
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,141 +25,141 @@
 
 #include "core-types.h"
 
-#include "gimplayer.h"
-#include "gimplayerstack.h"
+#include "ligmalayer.h"
+#include "ligmalayerstack.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_layer_stack_constructed             (GObject       *object);
+static void   ligma_layer_stack_constructed             (GObject       *object);
 
-static void   gimp_layer_stack_add                     (GimpContainer *container,
-                                                        GimpObject    *object);
-static void   gimp_layer_stack_remove                  (GimpContainer *container,
-                                                        GimpObject    *object);
-static void   gimp_layer_stack_reorder                 (GimpContainer *container,
-                                                        GimpObject    *object,
+static void   ligma_layer_stack_add                     (LigmaContainer *container,
+                                                        LigmaObject    *object);
+static void   ligma_layer_stack_remove                  (LigmaContainer *container,
+                                                        LigmaObject    *object);
+static void   ligma_layer_stack_reorder                 (LigmaContainer *container,
+                                                        LigmaObject    *object,
                                                         gint           new_index);
 
-static void   gimp_layer_stack_layer_active            (GimpLayer      *layer,
-                                                        GimpLayerStack *stack);
-static void   gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
-                                                        GimpLayerStack *stack);
+static void   ligma_layer_stack_layer_active            (LigmaLayer      *layer,
+                                                        LigmaLayerStack *stack);
+static void   ligma_layer_stack_layer_excludes_backdrop (LigmaLayer      *layer,
+                                                        LigmaLayerStack *stack);
 
-static void   gimp_layer_stack_update_backdrop         (GimpLayerStack *stack,
-                                                        GimpLayer      *layer,
+static void   ligma_layer_stack_update_backdrop         (LigmaLayerStack *stack,
+                                                        LigmaLayer      *layer,
                                                         gboolean        ignore_active,
                                                         gboolean        ignore_excludes_backdrop);
-static void   gimp_layer_stack_update_range            (GimpLayerStack *stack,
+static void   ligma_layer_stack_update_range            (LigmaLayerStack *stack,
                                                         gint            first,
                                                         gint            last);
 
 
-G_DEFINE_TYPE (GimpLayerStack, gimp_layer_stack, GIMP_TYPE_DRAWABLE_STACK)
+G_DEFINE_TYPE (LigmaLayerStack, ligma_layer_stack, LIGMA_TYPE_DRAWABLE_STACK)
 
-#define parent_class gimp_layer_stack_parent_class
+#define parent_class ligma_layer_stack_parent_class
 
 
 static void
-gimp_layer_stack_class_init (GimpLayerStackClass *klass)
+ligma_layer_stack_class_init (LigmaLayerStackClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
-  GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
+  LigmaContainerClass *container_class = LIGMA_CONTAINER_CLASS (klass);
 
-  object_class->constructed = gimp_layer_stack_constructed;
+  object_class->constructed = ligma_layer_stack_constructed;
 
-  container_class->add      = gimp_layer_stack_add;
-  container_class->remove   = gimp_layer_stack_remove;
-  container_class->reorder  = gimp_layer_stack_reorder;
+  container_class->add      = ligma_layer_stack_add;
+  container_class->remove   = ligma_layer_stack_remove;
+  container_class->reorder  = ligma_layer_stack_reorder;
 }
 
 static void
-gimp_layer_stack_init (GimpLayerStack *stack)
+ligma_layer_stack_init (LigmaLayerStack *stack)
 {
 }
 
 static void
-gimp_layer_stack_constructed (GObject *object)
+ligma_layer_stack_constructed (GObject *object)
 {
-  GimpContainer *container = GIMP_CONTAINER (object);
+  LigmaContainer *container = LIGMA_CONTAINER (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (g_type_is_a (gimp_container_get_children_type (container),
-                            GIMP_TYPE_LAYER));
+  ligma_assert (g_type_is_a (ligma_container_get_children_type (container),
+                            LIGMA_TYPE_LAYER));
 
-  gimp_container_add_handler (container, "active-changed",
-                              G_CALLBACK (gimp_layer_stack_layer_active),
+  ligma_container_add_handler (container, "active-changed",
+                              G_CALLBACK (ligma_layer_stack_layer_active),
                               container);
-  gimp_container_add_handler (container, "excludes-backdrop-changed",
-                              G_CALLBACK (gimp_layer_stack_layer_excludes_backdrop),
+  ligma_container_add_handler (container, "excludes-backdrop-changed",
+                              G_CALLBACK (ligma_layer_stack_layer_excludes_backdrop),
                               container);
 }
 
 static void
-gimp_layer_stack_add (GimpContainer *container,
-                      GimpObject    *object)
+ligma_layer_stack_add (LigmaContainer *container,
+                      LigmaObject    *object)
 {
-  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+  LigmaLayerStack *stack = LIGMA_LAYER_STACK (container);
 
-  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+  LIGMA_CONTAINER_CLASS (parent_class)->add (container, object);
 
-  gimp_layer_stack_update_backdrop (stack, GIMP_LAYER (object), FALSE, FALSE);
+  ligma_layer_stack_update_backdrop (stack, LIGMA_LAYER (object), FALSE, FALSE);
 }
 
 static void
-gimp_layer_stack_remove (GimpContainer *container,
-                         GimpObject    *object)
+ligma_layer_stack_remove (LigmaContainer *container,
+                         LigmaObject    *object)
 {
-  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+  LigmaLayerStack *stack = LIGMA_LAYER_STACK (container);
   gboolean        update_backdrop;
   gint            index;
 
-  update_backdrop = gimp_filter_get_active (GIMP_FILTER (object)) &&
-                    gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
+  update_backdrop = ligma_filter_get_active (LIGMA_FILTER (object)) &&
+                    ligma_layer_get_excludes_backdrop (LIGMA_LAYER (object));
 
   if (update_backdrop)
-    index = gimp_container_get_child_index (container, object);
+    index = ligma_container_get_child_index (container, object);
 
-  GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
+  LIGMA_CONTAINER_CLASS (parent_class)->remove (container, object);
 
   if (update_backdrop)
-    gimp_layer_stack_update_range (stack, index, -1);
+    ligma_layer_stack_update_range (stack, index, -1);
 }
 
 static void
-gimp_layer_stack_reorder (GimpContainer *container,
-                          GimpObject    *object,
+ligma_layer_stack_reorder (LigmaContainer *container,
+                          LigmaObject    *object,
                           gint           new_index)
 {
-  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+  LigmaLayerStack *stack = LIGMA_LAYER_STACK (container);
   gboolean        update_backdrop;
   gint            index;
 
-  update_backdrop = gimp_filter_get_active (GIMP_FILTER (object)) &&
-                    gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
+  update_backdrop = ligma_filter_get_active (LIGMA_FILTER (object)) &&
+                    ligma_layer_get_excludes_backdrop (LIGMA_LAYER (object));
 
   if (update_backdrop)
-    index = gimp_container_get_child_index (container, object);
+    index = ligma_container_get_child_index (container, object);
 
-  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+  LIGMA_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
   if (update_backdrop)
-    gimp_layer_stack_update_range (stack, index, new_index);
+    ligma_layer_stack_update_range (stack, index, new_index);
 }
 
 
 /*  public functions  */
 
-GimpContainer *
-gimp_layer_stack_new (GType layer_type)
+LigmaContainer *
+ligma_layer_stack_new (GType layer_type)
 {
-  g_return_val_if_fail (g_type_is_a (layer_type, GIMP_TYPE_LAYER), NULL);
+  g_return_val_if_fail (g_type_is_a (layer_type, LIGMA_TYPE_LAYER), NULL);
 
-  return g_object_new (GIMP_TYPE_LAYER_STACK,
+  return g_object_new (LIGMA_TYPE_LAYER_STACK,
                        "name",          g_type_name (layer_type),
                        "children-type", layer_type,
-                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "policy",        LIGMA_CONTAINER_POLICY_STRONG,
                        NULL);
 }
 
@@ -167,39 +167,39 @@ gimp_layer_stack_new (GType layer_type)
 /*  private functions  */
 
 static void
-gimp_layer_stack_layer_active (GimpLayer      *layer,
-                               GimpLayerStack *stack)
+ligma_layer_stack_layer_active (LigmaLayer      *layer,
+                               LigmaLayerStack *stack)
 {
-  gimp_layer_stack_update_backdrop (stack, layer, TRUE, FALSE);
+  ligma_layer_stack_update_backdrop (stack, layer, TRUE, FALSE);
 }
 
 static void
-gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
-                                          GimpLayerStack *stack)
+ligma_layer_stack_layer_excludes_backdrop (LigmaLayer      *layer,
+                                          LigmaLayerStack *stack)
 {
-  gimp_layer_stack_update_backdrop (stack, layer, FALSE, TRUE);
+  ligma_layer_stack_update_backdrop (stack, layer, FALSE, TRUE);
 }
 
 static void
-gimp_layer_stack_update_backdrop (GimpLayerStack *stack,
-                                  GimpLayer      *layer,
+ligma_layer_stack_update_backdrop (LigmaLayerStack *stack,
+                                  LigmaLayer      *layer,
                                   gboolean        ignore_active,
                                   gboolean        ignore_excludes_backdrop)
 {
-  if ((ignore_active            || gimp_filter_get_active (GIMP_FILTER (layer))) &&
-      (ignore_excludes_backdrop || gimp_layer_get_excludes_backdrop (layer)))
+  if ((ignore_active            || ligma_filter_get_active (LIGMA_FILTER (layer))) &&
+      (ignore_excludes_backdrop || ligma_layer_get_excludes_backdrop (layer)))
     {
       gint index;
 
-      index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
-                                              GIMP_OBJECT (layer));
+      index = ligma_container_get_child_index (LIGMA_CONTAINER (stack),
+                                              LIGMA_OBJECT (layer));
 
-      gimp_layer_stack_update_range (stack, index + 1, -1);
+      ligma_layer_stack_update_range (stack, index + 1, -1);
     }
 }
 
 static void
-gimp_layer_stack_update_range (GimpLayerStack *stack,
+ligma_layer_stack_update_range (LigmaLayerStack *stack,
                                gint            first,
                                gint            last)
 {
@@ -218,24 +218,24 @@ gimp_layer_stack_update_range (GimpLayerStack *stack,
       last  = temp + 1;
     }
 
-  iter = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
+  iter = ligma_item_stack_get_item_iter (LIGMA_ITEM_STACK (stack));
 
   for (iter = g_list_nth (iter, first);
        iter && first != last;
        iter = g_list_next (iter), first++)
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
 
-      if (gimp_filter_get_active (GIMP_FILTER (item)))
+      if (ligma_filter_get_active (LIGMA_FILTER (item)))
         {
           GeglRectangle bounding_box;
 
-          bounding_box = gimp_drawable_get_bounding_box (GIMP_DRAWABLE (item));
+          bounding_box = ligma_drawable_get_bounding_box (LIGMA_DRAWABLE (item));
 
-          bounding_box.x += gimp_item_get_offset_x (item);
-          bounding_box.y += gimp_item_get_offset_y (item);
+          bounding_box.x += ligma_item_get_offset_x (item);
+          bounding_box.y += ligma_item_get_offset_y (item);
 
-          gimp_drawable_stack_update (GIMP_DRAWABLE_STACK (stack),
+          ligma_drawable_stack_update (LIGMA_DRAWABLE_STACK (stack),
                                       bounding_box.x,     bounding_box.y,
                                       bounding_box.width, bounding_box.height);
         }

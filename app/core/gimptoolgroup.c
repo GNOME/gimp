@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolgroup.c
+ * ligmatoolgroup.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,16 +25,16 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimplist.h"
-#include "gimptoolgroup.h"
-#include "gimptoolinfo.h"
+#include "ligmalist.h"
+#include "ligmatoolgroup.h"
+#include "ligmatoolinfo.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -51,120 +51,120 @@ enum
 };
 
 
-struct _GimpToolGroupPrivate
+struct _LigmaToolGroupPrivate
 {
   gchar         *active_tool;
-  GimpContainer *children;
+  LigmaContainer *children;
 };
 
 
 /*  local function prototypes  */
 
 
-static void            gimp_tool_group_finalize        (GObject        *object);
-static void            gimp_tool_group_get_property    (GObject        *object,
+static void            ligma_tool_group_finalize        (GObject        *object);
+static void            ligma_tool_group_get_property    (GObject        *object,
                                                         guint           property_id,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
-static void            gimp_tool_group_set_property    (GObject        *object,
+static void            ligma_tool_group_set_property    (GObject        *object,
                                                         guint           property_id,
                                                         const GValue   *value,
                                                         GParamSpec     *pspec);
 
-static gint64          gimp_tool_group_get_memsize     (GimpObject     *object,
+static gint64          ligma_tool_group_get_memsize     (LigmaObject     *object,
                                                         gint64         *gui_size);
 
-static gchar         * gimp_tool_group_get_description (GimpViewable   *viewable,
+static gchar         * ligma_tool_group_get_description (LigmaViewable   *viewable,
                                                         gchar         **tooltip);
-static GimpContainer * gimp_tool_group_get_children    (GimpViewable   *viewable);
-static void            gimp_tool_group_set_expanded    (GimpViewable   *viewable,
+static LigmaContainer * ligma_tool_group_get_children    (LigmaViewable   *viewable);
+static void            ligma_tool_group_set_expanded    (LigmaViewable   *viewable,
                                                         gboolean        expand);
-static gboolean        gimp_tool_group_get_expanded    (GimpViewable   *viewable);
+static gboolean        ligma_tool_group_get_expanded    (LigmaViewable   *viewable);
 
-static void            gimp_tool_group_child_add       (GimpContainer  *container,
-                                                        GimpToolInfo   *tool_info,
-                                                        GimpToolGroup  *tool_group);
-static void            gimp_tool_group_child_remove    (GimpContainer  *container,
-                                                        GimpToolInfo   *tool_info,
-                                                        GimpToolGroup  *tool_group);
+static void            ligma_tool_group_child_add       (LigmaContainer  *container,
+                                                        LigmaToolInfo   *tool_info,
+                                                        LigmaToolGroup  *tool_group);
+static void            ligma_tool_group_child_remove    (LigmaContainer  *container,
+                                                        LigmaToolInfo   *tool_info,
+                                                        LigmaToolGroup  *tool_group);
 
-static void            gimp_tool_group_shown_changed   (GimpToolItem   *tool_item);
+static void            ligma_tool_group_shown_changed   (LigmaToolItem   *tool_item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolGroup, gimp_tool_group, GIMP_TYPE_TOOL_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolGroup, ligma_tool_group, LIGMA_TYPE_TOOL_ITEM)
 
-#define parent_class gimp_tool_group_parent_class
+#define parent_class ligma_tool_group_parent_class
 
-static guint gimp_tool_group_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_tool_group_signals[LAST_SIGNAL] = { 0 };
 
 
 /*  private functions  */
 
 static void
-gimp_tool_group_class_init (GimpToolGroupClass *klass)
+ligma_tool_group_class_init (LigmaToolGroupClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpToolItemClass *tool_item_class   = GIMP_TOOL_ITEM_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaToolItemClass *tool_item_class   = LIGMA_TOOL_ITEM_CLASS (klass);
 
-  gimp_tool_group_signals[ACTIVE_TOOL_CHANGED] =
+  ligma_tool_group_signals[ACTIVE_TOOL_CHANGED] =
     g_signal_new ("active-tool-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolGroupClass, active_tool_changed),
+                  G_STRUCT_OFFSET (LigmaToolGroupClass, active_tool_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize            = gimp_tool_group_finalize;
-  object_class->get_property        = gimp_tool_group_get_property;
-  object_class->set_property        = gimp_tool_group_set_property;
+  object_class->finalize            = ligma_tool_group_finalize;
+  object_class->get_property        = ligma_tool_group_get_property;
+  object_class->set_property        = ligma_tool_group_set_property;
 
-  gimp_object_class->get_memsize    = gimp_tool_group_get_memsize;
+  ligma_object_class->get_memsize    = ligma_tool_group_get_memsize;
 
   viewable_class->default_icon_name = "folder";
-  viewable_class->get_description   = gimp_tool_group_get_description;
-  viewable_class->get_children      = gimp_tool_group_get_children;
-  viewable_class->get_expanded      = gimp_tool_group_get_expanded;
-  viewable_class->set_expanded      = gimp_tool_group_set_expanded;
+  viewable_class->get_description   = ligma_tool_group_get_description;
+  viewable_class->get_children      = ligma_tool_group_get_children;
+  viewable_class->get_expanded      = ligma_tool_group_get_expanded;
+  viewable_class->set_expanded      = ligma_tool_group_set_expanded;
 
-  tool_item_class->shown_changed    = gimp_tool_group_shown_changed;
+  tool_item_class->shown_changed    = ligma_tool_group_shown_changed;
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_ACTIVE_TOOL,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_ACTIVE_TOOL,
                            "active-tool", NULL, NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_CHILDREN,
+  LIGMA_CONFIG_PROP_OBJECT (object_class, PROP_CHILDREN,
                            "children", NULL, NULL,
-                           GIMP_TYPE_CONTAINER,
-                           GIMP_PARAM_STATIC_STRINGS |
-                           GIMP_CONFIG_PARAM_AGGREGATE);
+                           LIGMA_TYPE_CONTAINER,
+                           LIGMA_PARAM_STATIC_STRINGS |
+                           LIGMA_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
-gimp_tool_group_init (GimpToolGroup *tool_group)
+ligma_tool_group_init (LigmaToolGroup *tool_group)
 {
-  tool_group->priv = gimp_tool_group_get_instance_private (tool_group);
+  tool_group->priv = ligma_tool_group_get_instance_private (tool_group);
 
   tool_group->priv->children = g_object_new (
-    GIMP_TYPE_LIST,
-    "children-type", GIMP_TYPE_TOOL_INFO,
+    LIGMA_TYPE_LIST,
+    "children-type", LIGMA_TYPE_TOOL_INFO,
     "append",        TRUE,
     NULL);
 
   g_signal_connect (tool_group->priv->children, "add",
-                    G_CALLBACK (gimp_tool_group_child_add),
+                    G_CALLBACK (ligma_tool_group_child_add),
                     tool_group);
   g_signal_connect (tool_group->priv->children, "remove",
-                    G_CALLBACK (gimp_tool_group_child_remove),
+                    G_CALLBACK (ligma_tool_group_child_remove),
                     tool_group);
 }
 
 static void
-gimp_tool_group_finalize (GObject *object)
+ligma_tool_group_finalize (GObject *object)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (object);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (object);
 
   g_clear_pointer (&tool_group->priv->active_tool, g_free);
 
@@ -174,12 +174,12 @@ gimp_tool_group_finalize (GObject *object)
 }
 
 static void
-gimp_tool_group_get_property (GObject    *object,
+ligma_tool_group_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (object);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (object);
 
   switch (property_id)
     {
@@ -198,19 +198,19 @@ gimp_tool_group_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_group_set_property_add_tool (GimpToolInfo  *tool_info,
-                                       GimpToolGroup *tool_group)
+ligma_tool_group_set_property_add_tool (LigmaToolInfo  *tool_info,
+                                       LigmaToolGroup *tool_group)
 {
-  gimp_container_add (tool_group->priv->children, GIMP_OBJECT (tool_info));
+  ligma_container_add (tool_group->priv->children, LIGMA_OBJECT (tool_info));
 }
 
 static void
-gimp_tool_group_set_property (GObject      *object,
+ligma_tool_group_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (object);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (object);
 
   switch (property_id)
     {
@@ -222,15 +222,15 @@ gimp_tool_group_set_property (GObject      *object,
 
     case PROP_CHILDREN:
       {
-        GimpContainer *container = g_value_get_object (value);
+        LigmaContainer *container = g_value_get_object (value);
 
-        gimp_container_clear (tool_group->priv->children);
+        ligma_container_clear (tool_group->priv->children);
 
         if (! container)
           break;
 
-        gimp_container_foreach (container,
-                                (GFunc) gimp_tool_group_set_property_add_tool,
+        ligma_container_foreach (container,
+                                (GFunc) ligma_tool_group_set_property_add_tool,
                                 tool_group);
       }
       break;
@@ -242,131 +242,131 @@ gimp_tool_group_set_property (GObject      *object,
 }
 
 static gint64
-gimp_tool_group_get_memsize (GimpObject *object,
+ligma_tool_group_get_memsize (LigmaObject *object,
                              gint64     *gui_size)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (object);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (object);
   gint64         memsize = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (tool_group->priv->children),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (tool_group->priv->children),
                                       gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gchar *
-gimp_tool_group_get_description (GimpViewable  *viewable,
+ligma_tool_group_get_description (LigmaViewable  *viewable,
                                  gchar        **tooltip)
 {
   /* Translators: this is a noun */
   return g_strdup (C_("tool-item", "Group"));
 }
 
-static GimpContainer *
-gimp_tool_group_get_children (GimpViewable *viewable)
+static LigmaContainer *
+ligma_tool_group_get_children (LigmaViewable *viewable)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (viewable);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (viewable);
 
   return tool_group->priv->children;
 }
 
 static void
-gimp_tool_group_set_expanded (GimpViewable *viewable,
+ligma_tool_group_set_expanded (LigmaViewable *viewable,
                               gboolean      expand)
 {
   if (! expand)
-    gimp_viewable_expanded_changed (viewable);
+    ligma_viewable_expanded_changed (viewable);
 }
 
 static gboolean
-gimp_tool_group_get_expanded (GimpViewable *viewable)
+ligma_tool_group_get_expanded (LigmaViewable *viewable)
 {
   return TRUE;
 }
 
 static void
-gimp_tool_group_child_add (GimpContainer *container,
-                           GimpToolInfo  *tool_info,
-                           GimpToolGroup *tool_group)
+ligma_tool_group_child_add (LigmaContainer *container,
+                           LigmaToolInfo  *tool_info,
+                           LigmaToolGroup *tool_group)
 {
   g_return_if_fail (
-    gimp_viewable_get_parent (GIMP_VIEWABLE (tool_info)) == NULL);
+    ligma_viewable_get_parent (LIGMA_VIEWABLE (tool_info)) == NULL);
 
-  gimp_viewable_set_parent (GIMP_VIEWABLE (tool_info),
-                            GIMP_VIEWABLE (tool_group));
+  ligma_viewable_set_parent (LIGMA_VIEWABLE (tool_info),
+                            LIGMA_VIEWABLE (tool_group));
 
   if (! tool_group->priv->active_tool)
-    gimp_tool_group_set_active_tool_info (tool_group, tool_info);
+    ligma_tool_group_set_active_tool_info (tool_group, tool_info);
 }
 
 static void
-gimp_tool_group_child_remove (GimpContainer *container,
-                              GimpToolInfo  *tool_info,
-                              GimpToolGroup *tool_group)
+ligma_tool_group_child_remove (LigmaContainer *container,
+                              LigmaToolInfo  *tool_info,
+                              LigmaToolGroup *tool_group)
 {
-  gimp_viewable_set_parent (GIMP_VIEWABLE (tool_info), NULL);
+  ligma_viewable_set_parent (LIGMA_VIEWABLE (tool_info), NULL);
 
   if (! g_strcmp0 (tool_group->priv->active_tool,
-                   gimp_object_get_name (GIMP_OBJECT (tool_info))))
+                   ligma_object_get_name (LIGMA_OBJECT (tool_info))))
     {
-      GimpToolInfo *active_tool_info = NULL;
+      LigmaToolInfo *active_tool_info = NULL;
 
-      if (! gimp_container_is_empty (tool_group->priv->children))
+      if (! ligma_container_is_empty (tool_group->priv->children))
         {
-          active_tool_info = GIMP_TOOL_INFO (
-            gimp_container_get_first_child (tool_group->priv->children));
+          active_tool_info = LIGMA_TOOL_INFO (
+            ligma_container_get_first_child (tool_group->priv->children));
         }
 
-      gimp_tool_group_set_active_tool_info (tool_group, active_tool_info);
+      ligma_tool_group_set_active_tool_info (tool_group, active_tool_info);
     }
 }
 
 static void
-gimp_tool_group_shown_changed (GimpToolItem *tool_item)
+ligma_tool_group_shown_changed (LigmaToolItem *tool_item)
 {
-  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (tool_item);
+  LigmaToolGroup *tool_group = LIGMA_TOOL_GROUP (tool_item);
   GList         *iter;
 
-  if (GIMP_TOOL_ITEM_CLASS (parent_class)->shown_changed)
-    GIMP_TOOL_ITEM_CLASS (parent_class)->shown_changed (tool_item);
+  if (LIGMA_TOOL_ITEM_CLASS (parent_class)->shown_changed)
+    LIGMA_TOOL_ITEM_CLASS (parent_class)->shown_changed (tool_item);
 
-  for (iter = GIMP_LIST (tool_group->priv->children)->queue->head;
+  for (iter = LIGMA_LIST (tool_group->priv->children)->queue->head;
        iter;
        iter = g_list_next (iter))
     {
-      GimpToolItem *tool_item = iter->data;
+      LigmaToolItem *tool_item = iter->data;
 
-      if (gimp_tool_item_get_visible (tool_item))
-        gimp_tool_item_shown_changed (tool_item);
+      if (ligma_tool_item_get_visible (tool_item))
+        ligma_tool_item_shown_changed (tool_item);
     }
 }
 
 
 /*  public functions  */
 
-GimpToolGroup *
-gimp_tool_group_new (void)
+LigmaToolGroup *
+ligma_tool_group_new (void)
 {
-  GimpToolGroup *tool_group;
+  LigmaToolGroup *tool_group;
 
-  tool_group = g_object_new (GIMP_TYPE_TOOL_GROUP, NULL);
+  tool_group = g_object_new (LIGMA_TYPE_TOOL_GROUP, NULL);
 
-  gimp_object_set_static_name (GIMP_OBJECT (tool_group), "tool group");
+  ligma_object_set_static_name (LIGMA_OBJECT (tool_group), "tool group");
 
   return tool_group;
 }
 
 void
-gimp_tool_group_set_active_tool (GimpToolGroup *tool_group,
+ligma_tool_group_set_active_tool (LigmaToolGroup *tool_group,
                                  const gchar   *tool_name)
 {
-  g_return_if_fail (GIMP_IS_TOOL_GROUP (tool_group));
+  g_return_if_fail (LIGMA_IS_TOOL_GROUP (tool_group));
 
   if (g_strcmp0 (tool_group->priv->active_tool, tool_name))
     {
       g_return_if_fail (tool_name == NULL ||
-                        gimp_container_get_child_by_name (
+                        ligma_container_get_child_by_name (
                           tool_group->priv->children, tool_name) != NULL);
 
       g_free (tool_group->priv->active_tool);
@@ -374,38 +374,38 @@ gimp_tool_group_set_active_tool (GimpToolGroup *tool_group,
       tool_group->priv->active_tool = g_strdup (tool_name);;
 
       g_signal_emit (tool_group,
-                     gimp_tool_group_signals[ACTIVE_TOOL_CHANGED], 0);
+                     ligma_tool_group_signals[ACTIVE_TOOL_CHANGED], 0);
 
       g_object_notify (G_OBJECT (tool_group), "active-tool");
     }
 }
 
 const gchar *
-gimp_tool_group_get_active_tool (GimpToolGroup *tool_group)
+ligma_tool_group_get_active_tool (LigmaToolGroup *tool_group)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_GROUP (tool_group), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_GROUP (tool_group), NULL);
 
   return tool_group->priv->active_tool;
 }
 
 void
-gimp_tool_group_set_active_tool_info (GimpToolGroup *tool_group,
-                                      GimpToolInfo  *tool_info)
+ligma_tool_group_set_active_tool_info (LigmaToolGroup *tool_group,
+                                      LigmaToolInfo  *tool_info)
 {
-  g_return_if_fail (GIMP_IS_TOOL_GROUP (tool_group));
-  g_return_if_fail (tool_info == NULL || GIMP_IS_TOOL_INFO (tool_info));
+  g_return_if_fail (LIGMA_IS_TOOL_GROUP (tool_group));
+  g_return_if_fail (tool_info == NULL || LIGMA_IS_TOOL_INFO (tool_info));
 
-  gimp_tool_group_set_active_tool (
+  ligma_tool_group_set_active_tool (
     tool_group,
-    tool_info ? gimp_object_get_name (GIMP_OBJECT (tool_info)) : NULL);
+    tool_info ? ligma_object_get_name (LIGMA_OBJECT (tool_info)) : NULL);
 }
 
-GimpToolInfo *
-gimp_tool_group_get_active_tool_info (GimpToolGroup *tool_group)
+LigmaToolInfo *
+ligma_tool_group_get_active_tool_info (LigmaToolGroup *tool_group)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_GROUP (tool_group), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_GROUP (tool_group), NULL);
 
-  return GIMP_TOOL_INFO (
-    gimp_container_get_child_by_name (tool_group->priv->children,
+  return LIGMA_TOOL_INFO (
+    ligma_container_get_child_by_name (tool_group->priv->children,
                                       tool_group->priv->active_tool));
 }

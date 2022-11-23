@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpactionimpl.h
- * Copyright (C) 2004-2019 Michael Natterer <mitch@gimp.org>
+ * ligmaactionimpl.h
+ * Copyright (C) 2004-2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_IMPL_H__
-#define __GIMP_ACTION_IMPL_H__
+#ifndef __LIGMA_ACTION_IMPL_H__
+#define __LIGMA_ACTION_IMPL_H__
 
 
-#define GIMP_TYPE_ACTION_IMPL            (gimp_action_impl_get_type ())
-#define GIMP_ACTION_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_IMPL, GimpActionImpl))
-#define GIMP_ACTION_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACTION_IMPL, GimpActionImplClass))
-#define GIMP_IS_ACTION_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION_IMPL))
-#define GIMP_IS_ACTION_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_ACTION_IMPL))
-#define GIMP_ACTION_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_ACTION_IMPL, GimpActionImplClass))
+#define LIGMA_TYPE_ACTION_IMPL            (ligma_action_impl_get_type ())
+#define LIGMA_ACTION_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ACTION_IMPL, LigmaActionImpl))
+#define LIGMA_ACTION_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ACTION_IMPL, LigmaActionImplClass))
+#define LIGMA_IS_ACTION_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ACTION_IMPL))
+#define LIGMA_IS_ACTION_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), LIGMA_TYPE_ACTION_IMPL))
+#define LIGMA_ACTION_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), LIGMA_TYPE_ACTION_IMPL, LigmaActionImplClass))
 
-typedef struct _GimpActionImpl      GimpActionImpl;
-typedef struct _GimpActionImplClass GimpActionImplClass;
+typedef struct _LigmaActionImpl      LigmaActionImpl;
+typedef struct _LigmaActionImplClass LigmaActionImplClass;
 
-struct _GimpActionImpl
+struct _LigmaActionImpl
 {
   GtkAction           parent_instance;
 
-  GimpContext        *context;
+  LigmaContext        *context;
 
   gchar              *disable_reason;
-  GimpRGB            *color;
-  GimpViewable       *viewable;
+  LigmaRGB            *color;
+  LigmaViewable       *viewable;
   PangoEllipsizeMode  ellipsize;
   gint                max_width_chars;
 };
 
-struct _GimpActionImplClass
+struct _LigmaActionImplClass
 {
   GtkActionClass parent_class;
 };
 
-GType         gimp_action_impl_get_type       (void) G_GNUC_CONST;
+GType         ligma_action_impl_get_type       (void) G_GNUC_CONST;
 
-GimpAction  * gimp_action_impl_new            (const gchar   *name,
+LigmaAction  * ligma_action_impl_new            (const gchar   *name,
                                                const gchar   *label,
                                                const gchar   *tooltip,
                                                const gchar   *icon_name,
                                                const gchar   *help_id);
 
 
-#endif  /* __GIMP_ACTION_IMPL_H__ */
+#endif  /* __LIGMA_ACTION_IMPL_H__ */

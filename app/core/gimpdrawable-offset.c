@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,20 @@
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
-#include "gimpdrawable-offset.h"
-#include "gimpdrawable-operation.h"
+#include "ligma.h"
+#include "ligmacontext.h"
+#include "ligmadrawable.h"
+#include "ligmadrawable-offset.h"
+#include "ligmadrawable-operation.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_drawable_offset (GimpDrawable   *drawable,
-                      GimpContext    *context,
+ligma_drawable_offset (LigmaDrawable   *drawable,
+                      LigmaContext    *context,
                       gboolean        wrap_around,
-                      GimpOffsetType  fill_type,
+                      LigmaOffsetType  fill_type,
                       gint            offset_x,
                       gint            offset_y)
 {
@@ -46,19 +46,19 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   gint      width;
   gint      height;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                   NULL, NULL, &width, &height))
     {
       return;
     }
 
   if (wrap_around)
-    fill_type = GIMP_OFFSET_WRAP_AROUND;
+    fill_type = LIGMA_OFFSET_WRAP_AROUND;
 
-  if (fill_type == GIMP_OFFSET_WRAP_AROUND)
+  if (fill_type == LIGMA_OFFSET_WRAP_AROUND)
     {
       offset_x %= width;
       offset_y %= height;
@@ -68,14 +68,14 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     return;
 
   node = gegl_node_new_child (NULL,
-                              "operation", "gimp:offset",
+                              "operation", "ligma:offset",
                               "context", context,
                               "type",    fill_type,
                               "x",       offset_x,
                               "y",       offset_y,
                               NULL);
 
-  gimp_drawable_apply_operation (drawable, NULL,
+  ligma_drawable_apply_operation (drawable, NULL,
                                  C_("undo-type", "Offset Drawable"),
                                  node);
 

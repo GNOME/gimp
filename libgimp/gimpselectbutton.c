@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpselectbutton.c
- * Copyright (C) 2003  Sven Neumann  <sven@gimp.org>
+ * ligmaselectbutton.c
+ * Copyright (C) 2003  Sven Neumann  <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,15 +23,15 @@
 
 #include <gtk/gtk.h>
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpuitypes.h"
-#include "gimpselectbutton.h"
+#include "ligmauitypes.h"
+#include "ligmaselectbutton.h"
 
 
 /**
- * SECTION: gimpselectbutton
- * @title: GimpSelectButton
+ * SECTION: ligmaselectbutton
+ * @title: LigmaSelectButton
  * @short_description: The base class of the data select buttons.
  *
  * The base class of the brush, pattern, gradient, palette and font
@@ -41,51 +41,51 @@
 
 /*  local function prototypes  */
 
-static void   gimp_select_button_dispose (GObject *object);
+static void   ligma_select_button_dispose (GObject *object);
 
 
-G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_BOX)
+G_DEFINE_TYPE (LigmaSelectButton, ligma_select_button, GTK_TYPE_BOX)
 
 
 static void
-gimp_select_button_class_init (GimpSelectButtonClass *klass)
+ligma_select_button_class_init (LigmaSelectButtonClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_select_button_dispose;
+  object_class->dispose = ligma_select_button_dispose;
 }
 
 static void
-gimp_select_button_init (GimpSelectButton *select_button)
+ligma_select_button_init (LigmaSelectButton *select_button)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (select_button),
                                   GTK_ORIENTATION_HORIZONTAL);
 }
 
 static void
-gimp_select_button_dispose (GObject *object)
+ligma_select_button_dispose (GObject *object)
 {
-  gimp_select_button_close_popup (GIMP_SELECT_BUTTON (object));
+  ligma_select_button_close_popup (LIGMA_SELECT_BUTTON (object));
 
-  G_OBJECT_CLASS (gimp_select_button_parent_class)->dispose (object);
+  G_OBJECT_CLASS (ligma_select_button_parent_class)->dispose (object);
 }
 
 /**
- * gimp_select_button_close_popup:
- * @button: A #GimpSelectButton
+ * ligma_select_button_close_popup:
+ * @button: A #LigmaSelectButton
  *
  * Closes the popup window associated with @button.
  *
  * Since: 2.4
  */
 void
-gimp_select_button_close_popup (GimpSelectButton *button)
+ligma_select_button_close_popup (LigmaSelectButton *button)
 {
-  g_return_if_fail (GIMP_IS_SELECT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_SELECT_BUTTON (button));
 
   if (button->temp_callback)
     {
-      GimpSelectButtonClass *klass = GIMP_SELECT_BUTTON_GET_CLASS (button);
+      LigmaSelectButtonClass *klass = LIGMA_SELECT_BUTTON_GET_CLASS (button);
 
       klass->select_destroy (button->temp_callback);
 

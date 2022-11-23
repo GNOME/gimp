@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub pattern_get_info {
     $blurb = 'Retrieve information about the specified pattern.';
@@ -43,17 +43,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+  LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
   if (pattern)
     {
       const Babl *format;
 
-      format = gimp_babl_compat_u8_format (
-        gimp_temp_buf_get_format (pattern->mask));
+      format = ligma_babl_compat_u8_format (
+        ligma_temp_buf_get_format (pattern->mask));
 
-      width  = gimp_temp_buf_get_width  (pattern->mask);
-      height = gimp_temp_buf_get_height (pattern->mask);
+      width  = ligma_temp_buf_get_width  (pattern->mask);
+      height = ligma_temp_buf_get_height (pattern->mask);
       bpp    = babl_format_get_bytes_per_pixel (format);
     }
   else
@@ -96,24 +96,24 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+  LigmaPattern *pattern = ligma_pdb_get_pattern (ligma, name, error);
 
   if (pattern)
     {
       const Babl *format;
       gpointer    data;
 
-      format = gimp_babl_compat_u8_format (
-        gimp_temp_buf_get_format (pattern->mask));
-      data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+      format = ligma_babl_compat_u8_format (
+        ligma_temp_buf_get_format (pattern->mask));
+      data   = ligma_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
 
-      width           = gimp_temp_buf_get_width  (pattern->mask);
-      height          = gimp_temp_buf_get_height (pattern->mask);
+      width           = ligma_temp_buf_get_width  (pattern->mask);
+      height          = ligma_temp_buf_get_height (pattern->mask);
       bpp             = babl_format_get_bytes_per_pixel (format);
-      num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
+      num_color_bytes = ligma_temp_buf_get_data_size (pattern->mask);
       color_bytes     = g_memdup2 (data, num_color_bytes);
 
-      gimp_temp_buf_unlock (pattern->mask, data);
+      ligma_temp_buf_unlock (pattern->mask, data);
     }
   else
     success = FALSE;
@@ -124,12 +124,12 @@ CODE
 
 
 @headers = qw(<string.h>
-              "gegl/gimp-babl-compat.h"
-              "core/gimpcontext.h"
-              "core/gimpdatafactory.h"
-              "core/gimppattern.h"
-              "core/gimptempbuf.h"
-              "gimppdb-utils.h");
+              "gegl/ligma-babl-compat.h"
+              "core/ligmacontext.h"
+              "core/ligmadatafactory.h"
+              "core/ligmapattern.h"
+              "core/ligmatempbuf.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(pattern_get_info
             pattern_get_pixels);
@@ -137,7 +137,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern';
-$doc_title = 'gimppattern';
+$doc_title = 'ligmapattern';
 $doc_short_desc = 'Functions operating on a single pattern.';
 $doc_long_desc = 'Functions operating on a single pattern.';
 

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfontselect_pdb.c
+ * ligmafontselect_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpfontselect
- * @title: gimpfontselect
+ * SECTION: ligmafontselect
+ * @title: ligmafontselect
  * @short_description: Functions providing a font selection dialog.
  *
  * Functions providing a font selection dialog.
@@ -37,46 +37,46 @@
 
 
 /**
- * gimp_fonts_popup:
+ * ligma_fonts_popup:
  * @font_callback: The callback PDB proc to call when font selection is made.
  * @popup_title: Title of the font selection dialog.
  * @initial_font: The name of the font to set as the first selected.
  *
- * Invokes the Gimp font selection.
+ * Invokes the Ligma font selection.
  *
  * This procedure opens the font selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_fonts_popup (const gchar *font_callback,
+ligma_fonts_popup (const gchar *font_callback,
                   const gchar *popup_title,
                   const gchar *initial_font)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, font_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_font,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-fonts-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_fonts_close_popup:
+ * ligma_fonts_close_popup:
  * @font_callback: The name of the callback registered for this pop-up.
  *
  * Close the font selection dialog.
@@ -86,30 +86,30 @@ gimp_fonts_popup (const gchar *font_callback,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_fonts_close_popup (const gchar *font_callback)
+ligma_fonts_close_popup (const gchar *font_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, font_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-close-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-fonts-close-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_fonts_set_popup:
+ * ligma_fonts_set_popup:
  * @font_callback: The name of the callback registered for this pop-up.
  * @font_name: The name of the font to set as selected.
  *
@@ -120,26 +120,26 @@ gimp_fonts_close_popup (const gchar *font_callback)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_fonts_set_popup (const gchar *font_callback,
+ligma_fonts_set_popup (const gchar *font_callback,
                       const gchar *font_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, font_callback,
                                           G_TYPE_STRING, font_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-set-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-fonts-set-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

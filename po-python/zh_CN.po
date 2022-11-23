@@ -1,4 +1,4 @@
-# zh_CN translation of gimp-python.
+# zh_CN translation of ligma-python.
 # Copyright (C) 2001-2009 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-11 12:58+0000\n"
 "PO-Revision-Date: 2022-06-12 12:28+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
@@ -483,8 +483,8 @@ msgid "Python _Console"
 msgstr "Python 控制台(_C)"
 
 #: ../plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "交互性 GIMP Python 解释器"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "交互性 LIGMA Python 解释器"
 
 #: ../plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -813,7 +813,7 @@ msgid ""
 msgstr "选择是否保存为新图层，在上个活动图层上重绘或保存到路径"
 
 #: ../plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr "斯派罗图案"
 
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
@@ -904,7 +904,7 @@ msgid ""
 msgstr "使用当前的工具设置来绘制斯派罗图案。图案的大小和位置基于当前选区决定。"
 
 #: ../plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr "斯派罗图案…"
 
 #~ msgid "Fog _color"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpparamspecs.h"
+#include "ligma-memsize.h"
+#include "ligmaparamspecs.h"
 
 
 gint64
-gimp_g_type_instance_get_memsize (GTypeInstance *instance)
+ligma_g_type_instance_get_memsize (GTypeInstance *instance)
 {
   if (instance)
     {
@@ -49,16 +49,16 @@ gimp_g_type_instance_get_memsize (GTypeInstance *instance)
 }
 
 gint64
-gimp_g_object_get_memsize (GObject *object)
+ligma_g_object_get_memsize (GObject *object)
 {
   if (object)
-    return gimp_g_type_instance_get_memsize ((GTypeInstance *) object);
+    return ligma_g_type_instance_get_memsize ((GTypeInstance *) object);
 
   return 0;
 }
 
 gint64
-gimp_g_hash_table_get_memsize (GHashTable *hash,
+ligma_g_hash_table_get_memsize (GHashTable *hash,
                                gint64      data_size)
 {
   if (hash)
@@ -71,7 +71,7 @@ gimp_g_hash_table_get_memsize (GHashTable *hash,
 
 typedef struct
 {
-  GimpMemsizeFunc func;
+  LigmaMemsizeFunc func;
   gint64          memsize;
   gint64          gui_size;
 } HashMemsize;
@@ -88,8 +88,8 @@ hash_memsize_foreach (gpointer     key,
 }
 
 gint64
-gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
-                                       GimpMemsizeFunc  func,
+ligma_g_hash_table_get_memsize_foreach (GHashTable      *hash,
+                                       LigmaMemsizeFunc  func,
                                        gint64          *gui_size)
 {
   HashMemsize memsize;
@@ -108,19 +108,19 @@ gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
   if (gui_size)
     *gui_size = memsize.gui_size;
 
-  return memsize.memsize + gimp_g_hash_table_get_memsize (hash, 0);
+  return memsize.memsize + ligma_g_hash_table_get_memsize (hash, 0);
 }
 
 gint64
-gimp_g_slist_get_memsize (GSList  *slist,
+ligma_g_slist_get_memsize (GSList  *slist,
                           gint64   data_size)
 {
   return g_slist_length (slist) * (data_size + sizeof (GSList));
 }
 
 gint64
-gimp_g_slist_get_memsize_foreach (GSList          *slist,
-                                  GimpMemsizeFunc  func,
+ligma_g_slist_get_memsize_foreach (GSList          *slist,
+                                  LigmaMemsizeFunc  func,
                                   gint64          *gui_size)
 {
   GSList *l;
@@ -135,15 +135,15 @@ gimp_g_slist_get_memsize_foreach (GSList          *slist,
 }
 
 gint64
-gimp_g_list_get_memsize (GList  *list,
+ligma_g_list_get_memsize (GList  *list,
                          gint64  data_size)
 {
   return g_list_length (list) * (data_size + sizeof (GList));
 }
 
 gint64
-gimp_g_list_get_memsize_foreach (GList           *list,
-                                 GimpMemsizeFunc  func,
+ligma_g_list_get_memsize_foreach (GList           *list,
+                                 LigmaMemsizeFunc  func,
                                  gint64          *gui_size)
 {
   GList  *l;
@@ -158,7 +158,7 @@ gimp_g_list_get_memsize_foreach (GList           *list,
 }
 
 gint64
-gimp_g_queue_get_memsize (GQueue *queue,
+ligma_g_queue_get_memsize (GQueue *queue,
                           gint64  data_size)
 {
   if (queue)
@@ -171,8 +171,8 @@ gimp_g_queue_get_memsize (GQueue *queue,
 }
 
 gint64
-gimp_g_queue_get_memsize_foreach (GQueue          *queue,
-                                  GimpMemsizeFunc  func,
+ligma_g_queue_get_memsize_foreach (GQueue          *queue,
+                                  LigmaMemsizeFunc  func,
                                   gint64          *gui_size)
 {
   gint64 memsize = 0;
@@ -193,7 +193,7 @@ gimp_g_queue_get_memsize_foreach (GQueue          *queue,
 }
 
 gint64
-gimp_g_value_get_memsize (GValue *value)
+ligma_g_value_get_memsize (GValue *value)
 {
   gint64 memsize = 0;
 
@@ -202,32 +202,32 @@ gimp_g_value_get_memsize (GValue *value)
 
   if (G_VALUE_HOLDS_STRING (value))
     {
-      memsize += gimp_string_get_memsize (g_value_get_string (value));
+      memsize += ligma_string_get_memsize (g_value_get_string (value));
     }
   else if (G_VALUE_HOLDS_BOXED (value))
     {
-      if (GIMP_VALUE_HOLDS_RGB (value))
+      if (LIGMA_VALUE_HOLDS_RGB (value))
         {
-          memsize += sizeof (GimpRGB);
+          memsize += sizeof (LigmaRGB);
         }
-      else if (GIMP_VALUE_HOLDS_MATRIX2 (value))
+      else if (LIGMA_VALUE_HOLDS_MATRIX2 (value))
         {
-          memsize += sizeof (GimpMatrix2);
+          memsize += sizeof (LigmaMatrix2);
         }
-      else if (GIMP_VALUE_HOLDS_PARASITE (value))
+      else if (LIGMA_VALUE_HOLDS_PARASITE (value))
         {
-          memsize += gimp_parasite_get_memsize (g_value_get_boxed (value),
+          memsize += ligma_parasite_get_memsize (g_value_get_boxed (value),
                                                 NULL);
         }
-      else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
-               GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+      else if (LIGMA_VALUE_HOLDS_ARRAY (value)       ||
+               LIGMA_VALUE_HOLDS_UINT8_ARRAY (value) ||
+               LIGMA_VALUE_HOLDS_INT32_ARRAY (value) ||
+               LIGMA_VALUE_HOLDS_FLOAT_ARRAY (value))
         {
-          GimpArray *array = g_value_get_boxed (value);
+          LigmaArray *array = g_value_get_boxed (value);
 
           if (array)
-            memsize += sizeof (GimpArray) +
+            memsize += sizeof (LigmaArray) +
                        (array->static_data ? 0 : array->length);
         }
       else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
@@ -240,21 +240,21 @@ gimp_g_value_get_memsize (GValue *value)
 
               memsize += (length + 1) * sizeof (gchar *);
               for (gint i = 0; i < length; i++)
-                memsize += gimp_string_get_memsize (array[i]);
+                memsize += ligma_string_get_memsize (array[i]);
             }
         }
-      else if (strcmp ("GimpValueArray", G_VALUE_TYPE_NAME (value)) == 0)
+      else if (strcmp ("LigmaValueArray", G_VALUE_TYPE_NAME (value)) == 0)
         {
-          GimpValueArray *array = g_value_get_boxed (value);
+          LigmaValueArray *array = g_value_get_boxed (value);
 
           if (array)
             {
-              gint n_values = gimp_value_array_length (array), i;
+              gint n_values = ligma_value_array_length (array), i;
 
-              memsize += /* sizeof (GimpValueArray) */ sizeof (GValue *) + 3 * sizeof (gint);
+              memsize += /* sizeof (LigmaValueArray) */ sizeof (GValue *) + 3 * sizeof (gint);
 
               for (i = 0; i < n_values; i++)
-                memsize += gimp_g_value_get_memsize (gimp_value_array_index (array, i));
+                memsize += ligma_g_value_get_memsize (ligma_value_array_index (array, i));
             }
         }
       else
@@ -265,8 +265,8 @@ gimp_g_value_get_memsize (GValue *value)
     }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {
-      if (strcmp ("GimpPattern", G_VALUE_TYPE_NAME (value)) == 0)
-        memsize += gimp_g_object_get_memsize (g_value_get_object (value));
+      if (strcmp ("LigmaPattern", G_VALUE_TYPE_NAME (value)) == 0)
+        memsize += ligma_g_object_get_memsize (g_value_get_object (value));
       else
         g_printerr ("%s: unhandled object value type: %s\n",
                     G_STRFUNC, G_VALUE_TYPE_NAME (value));
@@ -276,7 +276,7 @@ gimp_g_value_get_memsize (GValue *value)
 }
 
 gint64
-gimp_g_param_spec_get_memsize (GParamSpec *pspec)
+ligma_g_param_spec_get_memsize (GParamSpec *pspec)
 {
   gint64 memsize = 0;
 
@@ -284,19 +284,19 @@ gimp_g_param_spec_get_memsize (GParamSpec *pspec)
     return 0;
 
   if (! (pspec->flags & G_PARAM_STATIC_NAME))
-    memsize += gimp_string_get_memsize (g_param_spec_get_name (pspec));
+    memsize += ligma_string_get_memsize (g_param_spec_get_name (pspec));
 
   if (! (pspec->flags & G_PARAM_STATIC_NICK))
-    memsize += gimp_string_get_memsize (g_param_spec_get_nick (pspec));
+    memsize += ligma_string_get_memsize (g_param_spec_get_nick (pspec));
 
   if (! (pspec->flags & G_PARAM_STATIC_BLURB))
-    memsize += gimp_string_get_memsize (g_param_spec_get_blurb (pspec));
+    memsize += ligma_string_get_memsize (g_param_spec_get_blurb (pspec));
 
-  return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
+  return memsize + ligma_g_type_instance_get_memsize ((GTypeInstance *) pspec);
 }
 
 gint64
-gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
+ligma_gegl_buffer_get_memsize (GeglBuffer *buffer)
 {
   if (buffer)
     {
@@ -305,14 +305,14 @@ gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
       return ((gint64) babl_format_get_bytes_per_pixel (format) *
               (gint64) gegl_buffer_get_width (buffer) *
               (gint64) gegl_buffer_get_height (buffer) +
-              gimp_g_object_get_memsize (G_OBJECT (buffer)));
+              ligma_g_object_get_memsize (G_OBJECT (buffer)));
     }
 
   return 0;
 }
 
 gint64
-gimp_gegl_pyramid_get_memsize (GeglBuffer *buffer)
+ligma_gegl_pyramid_get_memsize (GeglBuffer *buffer)
 {
   if (buffer)
     {
@@ -322,14 +322,14 @@ gimp_gegl_pyramid_get_memsize (GeglBuffer *buffer)
       return ((gint64) babl_format_get_bytes_per_pixel (format) *
               (gint64) gegl_buffer_get_width (buffer) *
               (gint64) gegl_buffer_get_height (buffer) * 1.33 +
-              gimp_g_object_get_memsize (G_OBJECT (buffer)));
+              ligma_g_object_get_memsize (G_OBJECT (buffer)));
     }
 
   return 0;
 }
 
 gint64
-gimp_string_get_memsize (const gchar *string)
+ligma_string_get_memsize (const gchar *string)
 {
   if (string)
     return strlen (string) + 1;
@@ -338,12 +338,12 @@ gimp_string_get_memsize (const gchar *string)
 }
 
 gint64
-gimp_parasite_get_memsize (GimpParasite *parasite,
+ligma_parasite_get_memsize (LigmaParasite *parasite,
                            gint64       *gui_size)
 {
   if (parasite)
-    return (sizeof (GimpParasite) +
-            gimp_string_get_memsize (parasite->name) +
+    return (sizeof (LigmaParasite) +
+            ligma_string_get_memsize (parasite->name) +
             parasite->size);
 
   return 0;

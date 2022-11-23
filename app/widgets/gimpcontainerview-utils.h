@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainerview-utils.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmacontainerview-utils.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_VIEW_UTILS_H__
-#define __GIMP_CONTAINER_VIEW_UTILS_H__
+#ifndef __LIGMA_CONTAINER_VIEW_UTILS_H__
+#define __LIGMA_CONTAINER_VIEW_UTILS_H__
 
 
-GimpContainerView * gimp_container_view_get_by_dockable (GimpDockable      *dockable);
+LigmaContainerView * ligma_container_view_get_by_dockable (LigmaDockable      *dockable);
 
-void                gimp_container_view_remove_active   (GimpContainerView *view);
+void                ligma_container_view_remove_active   (LigmaContainerView *view);
 
 
-#endif  /*  __GIMP_CONTAINER_VIEW_UTILS_H__  */
+#endif  /*  __LIGMA_CONTAINER_VIEW_UTILS_H__  */

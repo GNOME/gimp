@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpscaleentry.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>,
+ * ligmascaleentry.h
+ * Copyright (C) 2000 Michael Natterer <mitch@ligma.org>,
  *               2008 Bill Skaggs <weskaggs@primate.ucdavis.edu>
  *               2020 Jehan
  *
@@ -21,59 +21,59 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#include <libgimpwidgets/gimplabelspin.h>
+#include <libligmawidgets/ligmalabelspin.h>
 
-#ifndef __GIMP_SCALE_ENTRY_H__
-#define __GIMP_SCALE_ENTRY_H__
+#ifndef __LIGMA_SCALE_ENTRY_H__
+#define __LIGMA_SCALE_ENTRY_H__
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_SCALE_ENTRY (gimp_scale_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpScaleEntry, gimp_scale_entry, GIMP, SCALE_ENTRY, GimpLabelSpin)
+#define LIGMA_TYPE_SCALE_ENTRY (ligma_scale_entry_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaScaleEntry, ligma_scale_entry, LIGMA, SCALE_ENTRY, LigmaLabelSpin)
 
-struct _GimpScaleEntryClass
+struct _LigmaScaleEntryClass
 {
-  GimpLabelSpinClass parent_class;
+  LigmaLabelSpinClass parent_class;
 
   /*  Signals        */
-  void            (* value_changed)    (GimpScaleEntry *entry);
+  void            (* value_changed)    (LigmaScaleEntry *entry);
 
   /*  Class methods  */
   GtkWidget     * (* new_range_widget) (GtkAdjustment  *adjustment);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget     * gimp_scale_entry_new             (const gchar *text,
+GtkWidget     * ligma_scale_entry_new             (const gchar *text,
                                                   gdouble      value,
                                                   gdouble      lower,
                                                   gdouble      upper,
                                                   guint        digits);
 
-GtkWidget     * gimp_scale_entry_get_range       (GimpScaleEntry *entry);
+GtkWidget     * ligma_scale_entry_get_range       (LigmaScaleEntry *entry);
 
-void            gimp_scale_entry_set_bounds      (GimpScaleEntry *entry,
+void            ligma_scale_entry_set_bounds      (LigmaScaleEntry *entry,
                                                   gdouble         lower,
                                                   gdouble         upper,
                                                   gboolean        limit_scale);
 
-void            gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
+void            ligma_scale_entry_set_logarithmic (LigmaScaleEntry *entry,
                                                   gboolean        logarithmic);
-gboolean        gimp_scale_entry_get_logarithmic (GimpScaleEntry *entry);
+gboolean        ligma_scale_entry_get_logarithmic (LigmaScaleEntry *entry);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_SCALE_ENTRY_H__ */
+#endif /* __LIGMA_SCALE_ENTRY_H__ */

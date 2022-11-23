@@ -1,12 +1,12 @@
-# Finnish translation for gimp.
-# Copyright (C) 2016 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Finnish translation for ligma.
+# Copyright (C) 2016 ligma's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 # Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp gimp-2-8\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma ligma-2-8\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-10-09 08:48+0000\n"
 "PO-Revision-Date: 2016-10-09 12:04+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.7\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "pyöreä"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "sumea"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,114 +22,114 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools/tools-types.h"
 
-#include "tools/gimprectangleoptions.h"
+#include "tools/ligmarectangleoptions.h"
 #include "tools/tool_manager.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-callbacks.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-tool-events.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-callbacks.h"
+#include "display/ligmadisplayshell-scale.h"
+#include "display/ligmadisplayshell-tool-events.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmaimagewindow.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmatooloptionseditor.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 
-#define GIMP_TEST_IMAGE_WIDTH            150
-#define GIMP_TEST_IMAGE_HEIGHT           267
+#define LIGMA_TEST_IMAGE_WIDTH            150
+#define LIGMA_TEST_IMAGE_HEIGHT           267
 
 /* Put this in the code below when you want the test to pause so you
  * can do measurements of widgets on the screen for example
  */
-#define GIMP_PAUSE (g_usleep (2 * 1000 * 1000))
+#define LIGMA_PAUSE (g_usleep (2 * 1000 * 1000))
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-tools/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              gimp_tools_setup_image, \
+  g_test_add ("/ligma-tools/" #function, \
+              LigmaTestFixture, \
+              ligma, \
+              ligma_tools_setup_image, \
               function, \
-              gimp_tools_teardown_image);
+              ligma_tools_teardown_image);
 
 
 typedef struct
 {
   int avoid_sizeof_zero;
-} GimpTestFixture;
+} LigmaTestFixture;
 
 
-static void               gimp_tools_setup_image                         (GimpTestFixture  *fixture,
+static void               ligma_tools_setup_image                         (LigmaTestFixture  *fixture,
                                                                           gconstpointer     data);
-static void               gimp_tools_teardown_image                      (GimpTestFixture  *fixture,
+static void               ligma_tools_teardown_image                      (LigmaTestFixture  *fixture,
                                                                           gconstpointer     data);
-static void               gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
+static void               ligma_tools_synthesize_image_click_drag_release (LigmaDisplayShell *shell,
                                                                           gdouble           start_image_x,
                                                                           gdouble           start_image_y,
                                                                           gdouble           end_image_x,
                                                                           gdouble           end_image_y,
                                                                           gint              button,
                                                                           GdkModifierType   modifiers);
-static GimpDisplay      * gimp_test_get_only_display                     (Gimp             *gimp);
-static GimpImage        * gimp_test_get_only_image                       (Gimp             *gimp);
-static GimpDisplayShell * gimp_test_get_only_display_shell               (Gimp             *gimp);
+static LigmaDisplay      * ligma_test_get_only_display                     (Ligma             *ligma);
+static LigmaImage        * ligma_test_get_only_image                       (Ligma             *ligma);
+static LigmaDisplayShell * ligma_test_get_only_display_shell               (Ligma             *ligma);
 
 
 static void
-gimp_tools_setup_image (GimpTestFixture *fixture,
+ligma_tools_setup_image (LigmaTestFixture *fixture,
                         gconstpointer    data)
 {
-  Gimp *gimp = GIMP (data);
+  Ligma *ligma = LIGMA (data);
 
-  gimp_test_utils_create_image (gimp,
-                                GIMP_TEST_IMAGE_WIDTH,
-                                GIMP_TEST_IMAGE_HEIGHT);
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_utils_create_image (ligma,
+                                LIGMA_TEST_IMAGE_WIDTH,
+                                LIGMA_TEST_IMAGE_HEIGHT);
+  ligma_test_run_mainloop_until_idle ();
 }
 
 static void
-gimp_tools_teardown_image (GimpTestFixture *fixture,
+ligma_tools_teardown_image (LigmaTestFixture *fixture,
                            gconstpointer    data)
 {
-  Gimp *gimp = GIMP (data);
+  Ligma *ligma = LIGMA (data);
 
-  g_object_unref (gimp_test_get_only_image (gimp));
-  gimp_display_close (gimp_test_get_only_display (gimp));
-  gimp_test_run_mainloop_until_idle ();
+  g_object_unref (ligma_test_get_only_image (ligma));
+  ligma_display_close (ligma_test_get_only_display (ligma));
+  ligma_test_run_mainloop_until_idle ();
 }
 
 /**
- * gimp_tools_set_tool:
- * @gimp:
+ * ligma_tools_set_tool:
+ * @ligma:
  * @tool_id:
  * @display:
  *
@@ -137,68 +137,68 @@ gimp_tools_teardown_image (GimpTestFixture *fixture,
  * display is the focused tool display.
  **/
 static void
-gimp_tools_set_tool (Gimp        *gimp,
+ligma_tools_set_tool (Ligma        *ligma,
                      const gchar *tool_id,
-                     GimpDisplay *display)
+                     LigmaDisplay *display)
 {
   /* Activate tool and setup active display for the new tool */
-  gimp_context_set_tool (gimp_get_user_context (gimp),
-                         gimp_get_tool_info (gimp, tool_id));
-  tool_manager_focus_display_active (gimp, display);
+  ligma_context_set_tool (ligma_get_user_context (ligma),
+                         ligma_get_tool_info (ligma, tool_id));
+  tool_manager_focus_display_active (ligma, display);
 }
 
 /**
- * gimp_test_get_only_display:
- * @gimp:
+ * ligma_test_get_only_display:
+ * @ligma:
  *
  * Asserts that there only is one image and display and then
  * returns the display.
  *
- * Returns: The #GimpDisplay.
+ * Returns: The #LigmaDisplay.
  **/
-static GimpDisplay *
-gimp_test_get_only_display (Gimp *gimp)
+static LigmaDisplay *
+ligma_test_get_only_display (Ligma *ligma)
 {
-  g_assert (g_list_length (gimp_get_image_iter (gimp)) == 1);
-  g_assert (g_list_length (gimp_get_display_iter (gimp)) == 1);
+  g_assert (g_list_length (ligma_get_image_iter (ligma)) == 1);
+  g_assert (g_list_length (ligma_get_display_iter (ligma)) == 1);
 
-  return GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+  return LIGMA_DISPLAY (ligma_get_display_iter (ligma)->data);
 }
 
 /**
- * gimp_test_get_only_display_shell:
- * @gimp:
+ * ligma_test_get_only_display_shell:
+ * @ligma:
  *
  * Asserts that there only is one image and display shell and then
  * returns the display shell.
  *
- * Returns: The #GimpDisplayShell.
+ * Returns: The #LigmaDisplayShell.
  **/
-static GimpDisplayShell *
-gimp_test_get_only_display_shell (Gimp *gimp)
+static LigmaDisplayShell *
+ligma_test_get_only_display_shell (Ligma *ligma)
 {
-  return gimp_display_get_shell (gimp_test_get_only_display (gimp));
+  return ligma_display_get_shell (ligma_test_get_only_display (ligma));
 }
 
 /**
- * gimp_test_get_only_image:
- * @gimp:
+ * ligma_test_get_only_image:
+ * @ligma:
  *
  * Asserts that there is only one image and returns that.
  *
- * Returns: The #GimpImage.
+ * Returns: The #LigmaImage.
  **/
-static GimpImage *
-gimp_test_get_only_image (Gimp *gimp)
+static LigmaImage *
+ligma_test_get_only_image (Ligma *ligma)
 {
-  g_assert (g_list_length (gimp_get_image_iter (gimp)) == 1);
-  g_assert (g_list_length (gimp_get_display_iter (gimp)) == 1);
+  g_assert (g_list_length (ligma_get_image_iter (ligma)) == 1);
+  g_assert (g_list_length (ligma_get_display_iter (ligma)) == 1);
 
-  return GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
+  return LIGMA_IMAGE (ligma_get_image_iter (ligma)->data);
 }
 
 static void
-gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
+ligma_test_synthesize_tool_button_event (LigmaDisplayShell *shell,
                                        gint              x,
                                        gint              y,
                                        gint              button,
@@ -226,14 +226,14 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   event->button.x_root     = -1;
   event->button.y_root     = -1;
 
-  gimp_display_shell_canvas_tool_events (shell->canvas,
+  ligma_display_shell_canvas_tool_events (shell->canvas,
                                          event,
                                          shell);
   gdk_event_free (event);
 }
 
 static void
-gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
+ligma_test_synthesize_tool_motion_event (LigmaDisplayShell *shell,
                                         gint              x,
                                         gint              y,
                                         gint              modifiers)
@@ -256,14 +256,14 @@ gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
   event->motion.x_root     = -1;
   event->motion.y_root     = -1;
 
-  gimp_display_shell_canvas_tool_events (shell->canvas,
+  ligma_display_shell_canvas_tool_events (shell->canvas,
                                          event,
                                          shell);
   gdk_event_free (event);
 }
 
 static void
-gimp_test_synthesize_tool_crossing_event (GimpDisplayShell *shell,
+ligma_test_synthesize_tool_crossing_event (LigmaDisplayShell *shell,
                                           gint              x,
                                           gint              y,
                                           gint              modifiers,
@@ -292,14 +292,14 @@ gimp_test_synthesize_tool_crossing_event (GimpDisplayShell *shell,
   event->crossing.focus      = TRUE;
   event->crossing.state      = modifiers;
 
-  gimp_display_shell_canvas_tool_events (shell->canvas,
+  ligma_display_shell_canvas_tool_events (shell->canvas,
                                          event,
                                          shell);
   gdk_event_free (event);
 }
 
 static void
-gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
+ligma_tools_synthesize_image_click_drag_release (LigmaDisplayShell *shell,
                                                 gdouble           start_image_x,
                                                 gdouble           start_image_y,
                                                 gdouble           end_image_x,
@@ -315,12 +315,12 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
   gdouble end_canvas_y    = -1.0;
 
   /* Transform coordinates */
-  gimp_display_shell_transform_xy_f (shell,
+  ligma_display_shell_transform_xy_f (shell,
                                      start_image_x,
                                      start_image_y,
                                      &start_canvas_x,
                                      &start_canvas_y);
-  gimp_display_shell_transform_xy_f (shell,
+  ligma_display_shell_transform_xy_f (shell,
                                      end_image_x,
                                      end_image_y,
                                      &end_canvas_x,
@@ -329,14 +329,14 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
   middle_canvas_y = (start_canvas_y + end_canvas_y) / 2;
 
   /* Enter notify */
-  gimp_test_synthesize_tool_crossing_event (shell,
+  ligma_test_synthesize_tool_crossing_event (shell,
                                             (int)start_canvas_x,
                                             (int)start_canvas_y,
                                             modifiers,
                                             GDK_ENTER_NOTIFY);
 
   /* Button press */
-  gimp_test_synthesize_tool_button_event (shell,
+  ligma_test_synthesize_tool_button_event (shell,
                                           (int)start_canvas_x,
                                           (int)start_canvas_y,
                                           button,
@@ -344,21 +344,21 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
                                           GDK_BUTTON_PRESS);
 
   /* Move events */
-  gimp_test_synthesize_tool_motion_event (shell,
+  ligma_test_synthesize_tool_motion_event (shell,
                                           (int)start_canvas_x,
                                           (int)start_canvas_y,
                                           modifiers);
-  gimp_test_synthesize_tool_motion_event (shell,
+  ligma_test_synthesize_tool_motion_event (shell,
                                           (int)middle_canvas_x,
                                           (int)middle_canvas_y,
                                           modifiers);
-  gimp_test_synthesize_tool_motion_event (shell,
+  ligma_test_synthesize_tool_motion_event (shell,
                                           (int)end_canvas_x,
                                           (int)end_canvas_y,
                                           modifiers);
 
   /* Button release */
-  gimp_test_synthesize_tool_button_event (shell,
+  ligma_test_synthesize_tool_button_event (shell,
                                           (int)end_canvas_x,
                                           (int)end_canvas_y,
                                           button,
@@ -366,14 +366,14 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
                                           GDK_BUTTON_RELEASE);
 
   /* Leave notify */
-  gimp_test_synthesize_tool_crossing_event (shell,
+  ligma_test_synthesize_tool_crossing_event (shell,
                                             (int)start_canvas_x,
                                             (int)start_canvas_y,
                                             modifiers,
                                             GDK_LEAVE_NOTIFY);
 
   /* Process them */
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 }
 
 /**
@@ -385,12 +385,12 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
  * "Bug 315255 - SIGSEGV, while doing a crop".
  **/
 static void
-crop_tool_can_crop (GimpTestFixture *fixture,
+crop_tool_can_crop (LigmaTestFixture *fixture,
                     gconstpointer    data)
 {
-  Gimp             *gimp  = GIMP (data);
-  GimpImage        *image = gimp_test_get_only_image (gimp);
-  GimpDisplayShell *shell = gimp_test_get_only_display_shell (gimp);
+  Ligma             *ligma  = LIGMA (data);
+  LigmaImage        *image = ligma_test_get_only_image (ligma);
+  LigmaDisplayShell *shell = ligma_test_get_only_display_shell (ligma);
 
   gint cropped_x = 10;
   gint cropped_y = 10;
@@ -400,17 +400,17 @@ crop_tool_can_crop (GimpTestFixture *fixture,
   /* Fit display and pause and let it stabalize (two idlings seems to
    * always be enough)
    */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "view",
                                    "view-shrink-wrap");
-  gimp_test_run_mainloop_until_idle ();
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Activate crop tool */
-  gimp_tools_set_tool (gimp, "gimp-crop-tool", shell->display);
+  ligma_tools_set_tool (ligma, "ligma-crop-tool", shell->display);
 
   /* Do the crop rect */
-  gimp_tools_synthesize_image_click_drag_release (shell,
+  ligma_tools_synthesize_image_click_drag_release (shell,
                                                   cropped_x,
                                                   cropped_y,
                                                   cropped_x + cropped_w,
@@ -419,12 +419,12 @@ crop_tool_can_crop (GimpTestFixture *fixture,
                                                   0 /*modifiers*/);
 
   /* Crop */
-  gimp_test_utils_synthesize_key_event (GTK_WIDGET (shell), GDK_KEY_Return);
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_utils_synthesize_key_event (GTK_WIDGET (shell), GDK_KEY_Return);
+  ligma_test_run_mainloop_until_idle ();
 
   /* Make sure the new image has the expected size */
-  g_assert_cmpint (cropped_w, ==, gimp_image_get_width (image));
-  g_assert_cmpint (cropped_h, ==, gimp_image_get_height (image));
+  g_assert_cmpint (cropped_w, ==, ligma_image_get_width (image));
+  g_assert_cmpint (cropped_h, ==, ligma_image_get_height (image));
 }
 
 /**
@@ -437,29 +437,29 @@ crop_tool_can_crop (GimpTestFixture *fixture,
  * for "Bug 322396 - Crop dimension entering causes crash".
  **/
 static void
-crop_set_width_without_pending_rect (GimpTestFixture *fixture,
+crop_set_width_without_pending_rect (LigmaTestFixture *fixture,
                                      gconstpointer    data)
 {
-  Gimp                 *gimp    = GIMP (data);
-  GimpDisplay          *display = gimp_test_get_only_display (gimp);
-  GimpToolInfo         *tool_info;
-  GimpRectangleOptions *rectangle_options;
+  Ligma                 *ligma    = LIGMA (data);
+  LigmaDisplay          *display = ligma_test_get_only_display (ligma);
+  LigmaToolInfo         *tool_info;
+  LigmaRectangleOptions *rectangle_options;
   GtkWidget            *tool_options_gui;
   GtkWidget            *size_entry;
 
   /* Activate crop tool */
-  gimp_tools_set_tool (gimp, "gimp-crop-tool", display);
+  ligma_tools_set_tool (ligma, "ligma-crop-tool", display);
 
   /* Get tool options */
-  tool_info         = gimp_get_tool_info (gimp, "gimp-crop-tool");
-  tool_options_gui  = gimp_tools_get_tool_options_gui (tool_info->tool_options);
-  rectangle_options = GIMP_RECTANGLE_OPTIONS (tool_info->tool_options);
+  tool_info         = ligma_get_tool_info (ligma, "ligma-crop-tool");
+  tool_options_gui  = ligma_tools_get_tool_options_gui (tool_info->tool_options);
+  rectangle_options = LIGMA_RECTANGLE_OPTIONS (tool_info->tool_options);
 
   /* Find 'Width' or 'Height' GtkTextEntry in tool options */
-  size_entry = gimp_rectangle_options_get_size_entry (rectangle_options);
+  size_entry = ligma_rectangle_options_get_size_entry (rectangle_options);
 
   /* Set arbitrary non-0 value */
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (size_entry),
+  ligma_size_entry_set_value (LIGMA_SIZE_ENTRY (size_entry),
                              0 /*field*/,
                              42.0 /*lower*/);
 
@@ -468,19 +468,19 @@ crop_set_width_without_pending_rect (GimpTestFixture *fixture,
 
 int main(int argc, char **argv)
 {
-  Gimp *gimp   = NULL;
+  Ligma *ligma   = NULL;
   gint  result = -1;
 
-  gimp_test_bail_if_no_display ();
+  ligma_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_path ();
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/ligmadir");
+  ligma_test_utils_setup_menus_path ();
 
-  /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
-  gimp_test_run_mainloop_until_idle ();
+  /* Start up LIGMA */
+  ligma = ligma_init_for_gui_testing (TRUE /*show_gui*/);
+  ligma_test_run_mainloop_until_idle ();
 
   /* Add tests */
   ADD_TEST (crop_tool_can_crop);
@@ -490,11 +490,11 @@ int main(int argc, char **argv)
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/ligmadir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  ligma_exit (ligma, TRUE);
 
   return result;
 }

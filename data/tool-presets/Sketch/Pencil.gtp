@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-paintbrush")
+(icon-name "ligma-tool-paintbrush")
 (name "Pencil")
-(tool-options "GimpPaintOptions"
-    (tool "gimp-paintbrush-tool")
+(tool-options "LigmaPaintOptions"
+    (tool "ligma-paintbrush-tool")
     (opacity 0.250000)
     (brush "Pencil 01")
     (dynamics "Pencil Generic")
@@ -22,4 +22,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

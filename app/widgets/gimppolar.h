@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppolar.h
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmapolar.h
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * Based on code from the color-rotate plug-in
  * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
@@ -22,40 +22,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_POLAR_H__
-#define __GIMP_POLAR_H__
+#ifndef __LIGMA_POLAR_H__
+#define __LIGMA_POLAR_H__
 
 
-#include "gimpcircle.h"
+#include "ligmacircle.h"
 
 
-#define GIMP_TYPE_POLAR            (gimp_polar_get_type ())
-#define GIMP_POLAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_POLAR, GimpPolar))
-#define GIMP_POLAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POLAR, GimpPolarClass))
-#define GIMP_IS_POLAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_POLAR))
-#define GIMP_IS_POLAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POLAR))
-#define GIMP_POLAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_POLAR, GimpPolarClass))
+#define LIGMA_TYPE_POLAR            (ligma_polar_get_type ())
+#define LIGMA_POLAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_POLAR, LigmaPolar))
+#define LIGMA_POLAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_POLAR, LigmaPolarClass))
+#define LIGMA_IS_POLAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_POLAR))
+#define LIGMA_IS_POLAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_POLAR))
+#define LIGMA_POLAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_POLAR, LigmaPolarClass))
 
 
-typedef struct _GimpPolarPrivate GimpPolarPrivate;
-typedef struct _GimpPolarClass   GimpPolarClass;
+typedef struct _LigmaPolarPrivate LigmaPolarPrivate;
+typedef struct _LigmaPolarClass   LigmaPolarClass;
 
-struct _GimpPolar
+struct _LigmaPolar
 {
-  GimpCircle       parent_instance;
+  LigmaCircle       parent_instance;
 
-  GimpPolarPrivate *priv;
+  LigmaPolarPrivate *priv;
 };
 
-struct _GimpPolarClass
+struct _LigmaPolarClass
 {
-  GimpCircleClass  parent_class;
+  LigmaCircleClass  parent_class;
 };
 
 
-GType       gimp_polar_get_type (void) G_GNUC_CONST;
+GType       ligma_polar_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_polar_new      (void);
+GtkWidget * ligma_polar_new      (void);
 
 
-#endif /* __GIMP_POLAR_H__ */
+#endif /* __LIGMA_POLAR_H__ */

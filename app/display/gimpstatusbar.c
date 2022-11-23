@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program Copyright (C) 1995
+/* LIGMA - The GNU Image Manipulation Program Copyright (C) 1995
  * Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/ligmadisplayconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaprogress.h"
 
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpimagewindow.h"
-#include "gimpscalecombobox.h"
-#include "gimpstatusbar.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmaimagewindow.h"
+#include "ligmascalecombobox.h"
+#include "ligmastatusbar.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  maximal width of the string holding the cursor-coordinates  */
@@ -67,9 +67,9 @@
 #define MIN_PROGRESS_UPDATE_INTERVAL  50000
 
 
-typedef struct _GimpStatusbarMsg GimpStatusbarMsg;
+typedef struct _LigmaStatusbarMsg LigmaStatusbarMsg;
 
-struct _GimpStatusbarMsg
+struct _LigmaStatusbarMsg
 {
   guint  context_id;
   gchar *icon_name;
@@ -77,162 +77,162 @@ struct _GimpStatusbarMsg
 };
 
 
-static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface);
+static void     ligma_statusbar_progress_iface_init (LigmaProgressInterface *iface);
 
-static void     gimp_statusbar_dispose            (GObject           *object);
-static void     gimp_statusbar_finalize           (GObject           *object);
+static void     ligma_statusbar_dispose            (GObject           *object);
+static void     ligma_statusbar_finalize           (GObject           *object);
 
-static void     gimp_statusbar_screen_changed     (GtkWidget         *widget,
+static void     ligma_statusbar_screen_changed     (GtkWidget         *widget,
                                                    GdkScreen         *previous);
-static void     gimp_statusbar_style_updated      (GtkWidget         *widget);
+static void     ligma_statusbar_style_updated      (GtkWidget         *widget);
 
-static GimpProgress *
-                gimp_statusbar_progress_start     (GimpProgress      *progress,
+static LigmaProgress *
+                ligma_statusbar_progress_start     (LigmaProgress      *progress,
                                                    gboolean           cancellable,
                                                    const gchar       *message);
-static void     gimp_statusbar_progress_end       (GimpProgress      *progress);
-static gboolean gimp_statusbar_progress_is_active (GimpProgress      *progress);
-static void     gimp_statusbar_progress_set_text  (GimpProgress      *progress,
+static void     ligma_statusbar_progress_end       (LigmaProgress      *progress);
+static gboolean ligma_statusbar_progress_is_active (LigmaProgress      *progress);
+static void     ligma_statusbar_progress_set_text  (LigmaProgress      *progress,
                                                    const gchar       *message);
-static void     gimp_statusbar_progress_set_value (GimpProgress      *progress,
+static void     ligma_statusbar_progress_set_value (LigmaProgress      *progress,
                                                    gdouble            percentage);
-static gdouble  gimp_statusbar_progress_get_value (GimpProgress      *progress);
-static void     gimp_statusbar_progress_pulse     (GimpProgress      *progress);
-static gboolean gimp_statusbar_progress_message   (GimpProgress      *progress,
-                                                   Gimp              *gimp,
-                                                   GimpMessageSeverity severity,
+static gdouble  ligma_statusbar_progress_get_value (LigmaProgress      *progress);
+static void     ligma_statusbar_progress_pulse     (LigmaProgress      *progress);
+static gboolean ligma_statusbar_progress_message   (LigmaProgress      *progress,
+                                                   Ligma              *ligma,
+                                                   LigmaMessageSeverity severity,
                                                    const gchar       *domain,
                                                    const gchar       *message);
-static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_button_toggled
+static void     ligma_statusbar_progress_canceled  (GtkWidget         *button,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_button_toggled
                                                   (GtkWidget         *button,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_profile_changed
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_profile_changed
                                                   (GtkComboBox       *combo,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_rendering_intent_changed
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_rendering_intent_changed
                                                   (GtkComboBox       *combo,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_bpc_toggled
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_bpc_toggled
                                                   (GtkWidget         *button,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_optimize_changed
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_optimize_changed
                                                   (GtkWidget         *button,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_soft_proof_gamut_toggled
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_soft_proof_gamut_toggled
                                                   (GtkWidget         *button,
-                                                   GimpStatusbar     *statusbar);
-static gboolean gimp_statusbar_soft_proof_popover_shown
+                                                   LigmaStatusbar     *statusbar);
+static gboolean ligma_statusbar_soft_proof_popover_shown
                                                  (GtkWidget          *button,
                                                   GdkEventButton     *bevent,
-                                                  GimpStatusbar      *statusbar);
+                                                  LigmaStatusbar      *statusbar);
 
-static gboolean gimp_statusbar_label_draw         (GtkWidget         *widget,
+static gboolean ligma_statusbar_label_draw         (GtkWidget         *widget,
                                                    cairo_t           *cr,
-                                                   GimpStatusbar     *statusbar);
+                                                   LigmaStatusbar     *statusbar);
 
-static void     gimp_statusbar_update             (GimpStatusbar     *statusbar);
-static void     gimp_statusbar_unit_changed       (GimpUnitComboBox  *combo,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_image_changed(GimpStatusbar     *statusbar,
-                                                   GimpImage         *image,
-                                                   GimpContext       *context);
-static void     gimp_statusbar_shell_image_simulation_changed
-                                                  (GimpImage        *image,
-                                                   GimpStatusbar     *statusbar);
+static void     ligma_statusbar_update             (LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_unit_changed       (LigmaUnitComboBox  *combo,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_scale_changed      (LigmaScaleComboBox *combo,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_scale_activated    (LigmaScaleComboBox *combo,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_image_changed(LigmaStatusbar     *statusbar,
+                                                   LigmaImage         *image,
+                                                   LigmaContext       *context);
+static void     ligma_statusbar_shell_image_simulation_changed
+                                                  (LigmaImage        *image,
+                                                   LigmaStatusbar     *statusbar);
 
-static gboolean gimp_statusbar_rotate_pressed     (GtkWidget         *event_box,
+static gboolean ligma_statusbar_rotate_pressed     (GtkWidget         *event_box,
                                                    GdkEvent          *event,
-                                                   GimpStatusbar     *statusbar);
-static gboolean gimp_statusbar_horiz_flip_pressed (GtkWidget         *event_box,
+                                                   LigmaStatusbar     *statusbar);
+static gboolean ligma_statusbar_horiz_flip_pressed (GtkWidget         *event_box,
                                                    GdkEvent          *event,
-                                                   GimpStatusbar     *statusbar);
-static gboolean gimp_statusbar_vert_flip_pressed  (GtkWidget         *event_box,
+                                                   LigmaStatusbar     *statusbar);
+static gboolean ligma_statusbar_vert_flip_pressed  (GtkWidget         *event_box,
                                                    GdkEvent          *event,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_rotated      (GimpDisplayShell  *shell,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_status_notify(GimpDisplayShell  *shell,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_scaled       (LigmaDisplayShell  *shell,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_rotated      (LigmaDisplayShell  *shell,
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_status_notify(LigmaDisplayShell  *shell,
                                                    const GParamSpec  *pspec,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_color_config_notify
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_color_config_notify
                                                   (GObject           *config,
                                                    const GParamSpec  *pspec,
-                                                   GimpStatusbar     *statusbar);
-static void     gimp_statusbar_shell_set_image    (GimpStatusbar     *statusbar,
-                                                   GimpImage         *image);
+                                                   LigmaStatusbar     *statusbar);
+static void     ligma_statusbar_shell_set_image    (LigmaStatusbar     *statusbar,
+                                                   LigmaImage         *image);
 
-static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
+static guint    ligma_statusbar_get_context_id     (LigmaStatusbar     *statusbar,
                                                    const gchar       *context);
-static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar);
+static gboolean ligma_statusbar_temp_timeout       (LigmaStatusbar     *statusbar);
 
-static void     gimp_statusbar_add_size_widget    (GimpStatusbar     *statusbar,
+static void     ligma_statusbar_add_size_widget    (LigmaStatusbar     *statusbar,
                                                    GtkWidget         *widget);
-static void     gimp_statusbar_update_size        (GimpStatusbar     *statusbar);
+static void     ligma_statusbar_update_size        (LigmaStatusbar     *statusbar);
 
-static void     gimp_statusbar_add_message        (GimpStatusbar     *statusbar,
+static void     ligma_statusbar_add_message        (LigmaStatusbar     *statusbar,
                                                    guint              context_id,
                                                    const gchar       *icon_name,
                                                    const gchar       *format,
                                                    va_list            args,
                                                    gboolean           move_to_front) G_GNUC_PRINTF (4, 0);
-static void     gimp_statusbar_remove_message     (GimpStatusbar     *statusbar,
+static void     ligma_statusbar_remove_message     (LigmaStatusbar     *statusbar,
                                                    guint              context_id);
-static void     gimp_statusbar_msg_free           (GimpStatusbarMsg  *msg);
+static void     ligma_statusbar_msg_free           (LigmaStatusbarMsg  *msg);
 
-static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
+static gchar *  ligma_statusbar_vprintf            (const gchar       *format,
                                                    va_list            args) G_GNUC_PRINTF (1, 0);
 
-static GdkPixbuf * gimp_statusbar_load_icon       (GimpStatusbar     *statusbar,
+static GdkPixbuf * ligma_statusbar_load_icon       (LigmaStatusbar     *statusbar,
                                                    const gchar       *icon_name);
 
-static gboolean gimp_statusbar_queue_pos_redraw   (gpointer           data);
+static gboolean ligma_statusbar_queue_pos_redraw   (gpointer           data);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_FRAME,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_statusbar_progress_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaStatusbar, ligma_statusbar, GTK_TYPE_FRAME,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_PROGRESS,
+                                                ligma_statusbar_progress_iface_init))
 
-#define parent_class gimp_statusbar_parent_class
+#define parent_class ligma_statusbar_parent_class
 
 
 static void
-gimp_statusbar_class_init (GimpStatusbarClass *klass)
+ligma_statusbar_class_init (LigmaStatusbarClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose        = gimp_statusbar_dispose;
-  object_class->finalize       = gimp_statusbar_finalize;
+  object_class->dispose        = ligma_statusbar_dispose;
+  object_class->finalize       = ligma_statusbar_finalize;
 
-  widget_class->screen_changed = gimp_statusbar_screen_changed;
-  widget_class->style_updated  = gimp_statusbar_style_updated;
+  widget_class->screen_changed = ligma_statusbar_screen_changed;
+  widget_class->style_updated  = ligma_statusbar_style_updated;
 
   gtk_widget_class_set_css_name (widget_class, "statusbar");
 }
 
 static void
-gimp_statusbar_progress_iface_init (GimpProgressInterface *iface)
+ligma_statusbar_progress_iface_init (LigmaProgressInterface *iface)
 {
-  iface->start     = gimp_statusbar_progress_start;
-  iface->end       = gimp_statusbar_progress_end;
-  iface->is_active = gimp_statusbar_progress_is_active;
-  iface->set_text  = gimp_statusbar_progress_set_text;
-  iface->set_value = gimp_statusbar_progress_set_value;
-  iface->get_value = gimp_statusbar_progress_get_value;
-  iface->pulse     = gimp_statusbar_progress_pulse;
-  iface->message   = gimp_statusbar_progress_message;
+  iface->start     = ligma_statusbar_progress_start;
+  iface->end       = ligma_statusbar_progress_end;
+  iface->is_active = ligma_statusbar_progress_is_active;
+  iface->set_text  = ligma_statusbar_progress_set_text;
+  iface->set_value = ligma_statusbar_progress_set_value;
+  iface->get_value = ligma_statusbar_progress_get_value;
+  iface->pulse     = ligma_statusbar_progress_pulse;
+  iface->message   = ligma_statusbar_progress_message;
 }
 
 static void
-gimp_statusbar_init (GimpStatusbar *statusbar)
+ligma_statusbar_init (LigmaStatusbar *statusbar)
 {
   GtkWidget     *hbox;
   GtkWidget     *hbox2;
@@ -241,7 +241,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *grid;
   GtkWidget     *separator;
   GtkWidget     *profile_chooser;
-  GimpUnitStore *store;
+  LigmaUnitStore *store;
   gchar         *text;
   GFile         *file;
   GtkListStore  *combo_store;
@@ -285,7 +285,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->seq_context_id = 1;
 
   statusbar->temp_context_id =
-    gimp_statusbar_get_context_id (statusbar, "gimp-statusbar-temp");
+    ligma_statusbar_get_context_id (statusbar, "ligma-statusbar-temp");
 
   statusbar->cursor_format_str[0]   = '\0';
   statusbar->cursor_format_str_f[0] = '\0';
@@ -295,13 +295,13 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_shown       = FALSE;
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
-  gimp_statusbar_add_size_widget (statusbar, statusbar->cursor_label);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->cursor_label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
 
-  store = gimp_unit_store_new (2);
-  statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
+  store = ligma_unit_store_new (2);
+  statusbar->unit_combo = ligma_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
   /* see issue #2642 */
@@ -309,34 +309,34 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   gtk_widget_set_can_focus (statusbar->unit_combo, FALSE);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->unit_combo);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->unit_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->unit_combo,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->unit_combo);
 
   g_signal_connect (statusbar->unit_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_unit_changed),
+                    G_CALLBACK (ligma_statusbar_unit_changed),
                     statusbar);
 
-  statusbar->scale_combo = gimp_scale_combo_box_new ();
+  statusbar->scale_combo = ligma_scale_combo_box_new ();
   gtk_widget_set_can_focus (statusbar->scale_combo, FALSE);
   g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->scale_combo);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->scale_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->scale_combo,
                       FALSE, FALSE, 0);
   gtk_widget_show (statusbar->scale_combo);
 
   g_signal_connect (statusbar->scale_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_scale_changed),
+                    G_CALLBACK (ligma_statusbar_scale_changed),
                     statusbar);
 
   g_signal_connect (statusbar->scale_combo, "entry-activated",
-                    G_CALLBACK (gimp_statusbar_scale_activated),
+                    G_CALLBACK (ligma_statusbar_scale_activated),
                     statusbar);
 
   /* Shell transform status */
   statusbar->rotate_widget = gtk_event_box_new ();
-  gimp_statusbar_add_size_widget (statusbar, statusbar->rotate_widget);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->rotate_widget);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->rotate_widget,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->rotate_widget);
@@ -347,11 +347,11 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->rotate_label);
 
   g_signal_connect (statusbar->rotate_widget, "button-press-event",
-                    G_CALLBACK (gimp_statusbar_rotate_pressed),
+                    G_CALLBACK (ligma_statusbar_rotate_pressed),
                     statusbar);
 
   statusbar->horizontal_flip_icon = gtk_event_box_new ();
-  gimp_statusbar_add_size_widget (statusbar, statusbar->horizontal_flip_icon);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->horizontal_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->horizontal_flip_icon,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->horizontal_flip_icon);
@@ -362,11 +362,11 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (image);
 
   g_signal_connect (statusbar->horizontal_flip_icon, "button-press-event",
-                    G_CALLBACK (gimp_statusbar_horiz_flip_pressed),
+                    G_CALLBACK (ligma_statusbar_horiz_flip_pressed),
                     statusbar);
 
   statusbar->vertical_flip_icon = gtk_event_box_new ();
-  gimp_statusbar_add_size_widget (statusbar, statusbar->vertical_flip_icon);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->vertical_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->vertical_flip_icon,
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->vertical_flip_icon);
@@ -377,26 +377,26 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (image);
 
   g_signal_connect (statusbar->vertical_flip_icon, "button-press-event",
-                    G_CALLBACK (gimp_statusbar_vert_flip_pressed),
+                    G_CALLBACK (ligma_statusbar_vert_flip_pressed),
                     statusbar);
 
   statusbar->label = gtk_label_new ("");
   gtk_label_set_ellipsize (GTK_LABEL (statusbar->label), PANGO_ELLIPSIZE_END);
   gtk_label_set_justify (GTK_LABEL (statusbar->label), GTK_JUSTIFY_LEFT);
   gtk_widget_set_halign (statusbar->label, GTK_ALIGN_START);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->label);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
   gtk_widget_show (statusbar->label);
 
   g_signal_connect_after (statusbar->label, "draw",
-                          G_CALLBACK (gimp_statusbar_label_draw),
+                          G_CALLBACK (ligma_statusbar_label_draw),
                           statusbar);
 
   statusbar->progressbar = g_object_new (GTK_TYPE_PROGRESS_BAR,
                                          "show-text", TRUE,
                                          "ellipsize", PANGO_ELLIPSIZE_END,
                                          NULL);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->progressbar);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->progressbar);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progressbar,
                       TRUE, TRUE, 0);
   /*  don't show the progress bar  */
@@ -410,7 +410,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
                          GTK_RELIEF_NONE);
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->cancel_button);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->cancel_button);
   gtk_box_pack_end (GTK_BOX (hbox), statusbar->cancel_button,
                     FALSE, FALSE, 0);
   /*  don't show the cancel button  */
@@ -428,7 +428,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (label);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
-                    G_CALLBACK (gimp_statusbar_progress_canceled),
+                    G_CALLBACK (ligma_statusbar_progress_canceled),
                     statusbar);
 
   /* soft proofing button */
@@ -436,7 +436,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_set_can_focus (statusbar->soft_proof_button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (statusbar->soft_proof_button),
                          GTK_RELIEF_NONE);
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DISPLAY_FILTER_PROOF,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DISPLAY_FILTER_PROOF,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_button), image);
   gtk_widget_show (image);
@@ -454,9 +454,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                      statusbar->soft_proof_button);
   gtk_box_pack_end (GTK_BOX (hbox), statusbar->soft_proof_container,
                     FALSE, FALSE, 0);
-  gimp_statusbar_add_size_widget (statusbar, statusbar->soft_proof_container);
+  ligma_statusbar_add_size_widget (statusbar, statusbar->soft_proof_container);
   gtk_widget_show (statusbar->soft_proof_container);
-  gimp_help_set_help_data (statusbar->soft_proof_container,
+  ligma_help_set_help_data (statusbar->soft_proof_container,
                            _("Toggle soft-proofing view when "
                            "a soft-proofing profile is set\n"
                            "Right-click to show the soft-proofing "
@@ -464,7 +464,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                            NULL);
   gtk_widget_set_events (statusbar->soft_proof_container, GDK_BUTTON_PRESS_MASK);
   g_signal_connect (statusbar->soft_proof_container, "button-press-event",
-                    G_CALLBACK (gimp_statusbar_soft_proof_popover_shown),
+                    G_CALLBACK (ligma_statusbar_soft_proof_popover_shown),
                     statusbar);
   gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container),
                                  FALSE);
@@ -494,7 +494,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                    statusbar->proof_colors_toggle,
                    0, row++, 1, 1);
   g_signal_connect (statusbar->proof_colors_toggle, "clicked",
-                    G_CALLBACK (gimp_statusbar_soft_proof_button_toggled),
+                    G_CALLBACK (ligma_statusbar_soft_proof_button_toggled),
                     statusbar);
   gtk_widget_show (statusbar->proof_colors_toggle);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->proof_colors_toggle),
@@ -511,45 +511,45 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                    0, row++, 2, 1);
   gtk_widget_show (statusbar->profile_label);
 
-  file = gimp_directory_file ("profilerc", NULL);
-  combo_store = gimp_color_profile_store_new (file);
+  file = ligma_directory_file ("profilerc", NULL);
+  combo_store = ligma_color_profile_store_new (file);
   g_object_unref (file);
-  gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (combo_store),
+  ligma_color_profile_store_add_file (LIGMA_COLOR_PROFILE_STORE (combo_store),
                                      NULL, NULL);
-  profile_chooser = gimp_color_profile_chooser_dialog_new (_("Soft-Proofing Profile"), NULL,
+  profile_chooser = ligma_color_profile_chooser_dialog_new (_("Soft-Proofing Profile"), NULL,
                                                            GTK_FILE_CHOOSER_ACTION_OPEN);
-  statusbar->profile_combo = gimp_color_profile_combo_box_new_with_model (profile_chooser,
+  statusbar->profile_combo = ligma_color_profile_combo_box_new_with_model (profile_chooser,
                                                                           GTK_TREE_MODEL (combo_store));
 
-  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
+  ligma_color_profile_combo_box_set_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
                                                 NULL, NULL);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Soft-proofing Profile: "),
                             0.0, 0.5,
                             statusbar->profile_combo, 1);
   gtk_widget_show (statusbar->profile_combo);
   g_signal_connect (statusbar->profile_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_soft_proof_profile_changed),
+                    G_CALLBACK (ligma_statusbar_soft_proof_profile_changed),
                     statusbar);
 
   combo_store =
-    gimp_int_store_new ("Perceptual",            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                        "Relative Colorimetric", GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                        "Saturation",            GIMP_COLOR_RENDERING_INTENT_SATURATION,
-                        "Absolute Colorimetric", GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
+    ligma_int_store_new ("Perceptual",            LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                        "Relative Colorimetric", LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                        "Saturation",            LIGMA_COLOR_RENDERING_INTENT_SATURATION,
+                        "Absolute Colorimetric", LIGMA_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
                         NULL);
-  statusbar->rendering_intent_combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+  statusbar->rendering_intent_combo = g_object_new (LIGMA_TYPE_INT_COMBO_BOX,
                             "model", combo_store,
                             "visible", TRUE,
                             NULL);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Rendering Intent: "),
                             0.0, 0.5,
                             statusbar->rendering_intent_combo, 1);
   gtk_widget_show (statusbar->rendering_intent_combo);
   g_signal_connect (statusbar->rendering_intent_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_soft_proof_rendering_intent_changed),
+                    G_CALLBACK (ligma_statusbar_soft_proof_rendering_intent_changed),
                     statusbar);
 
   statusbar->bpc_toggle =
@@ -559,7 +559,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                    0, row++, 1, 1);
   gtk_widget_show (statusbar->bpc_toggle);
   g_signal_connect (statusbar->bpc_toggle, "clicked",
-                    G_CALLBACK (gimp_statusbar_soft_proof_bpc_toggled),
+                    G_CALLBACK (ligma_statusbar_soft_proof_bpc_toggled),
                     statusbar);
 
   separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
@@ -568,16 +568,16 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (separator);
 
   statusbar->optimize_combo =
-    gimp_int_combo_box_new (_("Speed"),  TRUE,
+    ligma_int_combo_box_new (_("Speed"),  TRUE,
                             _("Precision / Color Fidelity"), FALSE,
                             NULL);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("O_ptimize soft-proofing for: "),
                             0.0, 0.5,
                             statusbar->optimize_combo, 1);
   gtk_widget_show (statusbar->optimize_combo);
   g_signal_connect (statusbar->optimize_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_soft_proof_optimize_changed),
+                    G_CALLBACK (ligma_statusbar_soft_proof_optimize_changed),
                     statusbar);
 
   statusbar->out_of_gamut_toggle =
@@ -587,29 +587,29 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                    0, row++, 1, 1);
   gtk_widget_show (statusbar->out_of_gamut_toggle);
   g_signal_connect (statusbar->out_of_gamut_toggle, "clicked",
-                    G_CALLBACK (gimp_statusbar_soft_proof_gamut_toggled),
+                    G_CALLBACK (ligma_statusbar_soft_proof_gamut_toggled),
                     statusbar);
 
   gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_popover), grid);
   gtk_widget_show (grid);
 
-  gimp_statusbar_update_size (statusbar);
+  ligma_statusbar_update_size (statusbar);
 }
 
 static void
-gimp_statusbar_dispose (GObject *object)
+ligma_statusbar_dispose (GObject *object)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (object);
 
-  if (statusbar->gimp)
+  if (statusbar->ligma)
     {
-      g_signal_handlers_disconnect_by_func (gimp_get_user_context (statusbar->gimp),
-                                            gimp_statusbar_shell_image_changed,
+      g_signal_handlers_disconnect_by_func (ligma_get_user_context (statusbar->ligma),
+                                            ligma_statusbar_shell_image_changed,
                                             statusbar);
-      statusbar->gimp = NULL;
+      statusbar->ligma = NULL;
     }
 
-  gimp_statusbar_shell_set_image (statusbar, NULL);
+  ligma_statusbar_shell_set_image (statusbar, NULL);
 
   if (statusbar->temp_timeout_id)
     {
@@ -629,15 +629,15 @@ gimp_statusbar_dispose (GObject *object)
 }
 
 static void
-gimp_statusbar_finalize (GObject *object)
+ligma_statusbar_finalize (GObject *object)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (object);
 
   g_clear_object (&statusbar->icon);
   g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 
   g_slist_free_full (statusbar->messages,
-                     (GDestroyNotify) gimp_statusbar_msg_free);
+                     (GDestroyNotify) ligma_statusbar_msg_free);
   statusbar->messages = NULL;
 
   g_clear_pointer (&statusbar->context_ids, g_hash_table_destroy);
@@ -646,10 +646,10 @@ gimp_statusbar_finalize (GObject *object)
 }
 
 static void
-gimp_statusbar_screen_changed (GtkWidget *widget,
+ligma_statusbar_screen_changed (GtkWidget *widget,
                                GdkScreen *previous)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
     GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
@@ -658,9 +658,9 @@ gimp_statusbar_screen_changed (GtkWidget *widget,
 }
 
 static void
-gimp_statusbar_style_updated (GtkWidget *widget)
+ligma_statusbar_style_updated (GtkWidget *widget)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (widget);
   PangoLayout   *layout;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -671,15 +671,15 @@ gimp_statusbar_style_updated (GtkWidget *widget)
   pango_layout_get_pixel_size (layout, &statusbar->icon_space_width, NULL);
   g_object_unref (layout);
 
-  gimp_statusbar_update_size (statusbar);
+  ligma_statusbar_update_size (statusbar);
 }
 
-static GimpProgress *
-gimp_statusbar_progress_start (GimpProgress *progress,
+static LigmaProgress *
+ligma_statusbar_progress_start (LigmaProgress *progress,
                                gboolean      cancellable,
                                const gchar  *message)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (! statusbar->progress_active)
     {
@@ -689,7 +689,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       statusbar->progress_value            = 0.0;
       statusbar->progress_last_update_time = g_get_monotonic_time ();
 
-      gimp_statusbar_push (statusbar, "progress", NULL, "%s", message);
+      ligma_statusbar_push (statusbar, "progress", NULL, "%s", message);
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, cancellable);
 
@@ -699,7 +699,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
             {
               gchar *tooltip = g_strdup_printf (_("Cancel <i>%s</i>"), message);
 
-              gimp_help_set_help_data_with_markup (statusbar->cancel_button,
+              ligma_help_set_help_data_with_markup (statusbar->cancel_button,
                                                    tooltip, NULL);
               g_free (tooltip);
             }
@@ -716,9 +716,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
           statusbar->progress_shown = TRUE;
         }
 
-      gimp_widget_flush_expose ();
+      ligma_widget_flush_expose ();
 
-      gimp_statusbar_override_window_title (statusbar);
+      ligma_statusbar_override_window_title (statusbar);
 
       return progress;
     }
@@ -727,9 +727,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 }
 
 static void
-gimp_statusbar_progress_end (GimpProgress *progress)
+ligma_statusbar_progress_end (LigmaProgress *progress)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (statusbar->progress_active)
     {
@@ -747,45 +747,45 @@ gimp_statusbar_progress_end (GimpProgress *progress)
       gtk_widget_hide (bar);
       gtk_widget_show (statusbar->label);
 
-      gimp_statusbar_pop (statusbar, "progress");
+      ligma_statusbar_pop (statusbar, "progress");
 
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
       gtk_widget_hide (statusbar->cancel_button);
 
-      gimp_statusbar_restore_window_title (statusbar);
+      ligma_statusbar_restore_window_title (statusbar);
     }
 }
 
 static gboolean
-gimp_statusbar_progress_is_active (GimpProgress *progress)
+ligma_statusbar_progress_is_active (LigmaProgress *progress)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   return statusbar->progress_active;
 }
 
 static void
-gimp_statusbar_progress_set_text (GimpProgress *progress,
+ligma_statusbar_progress_set_text (LigmaProgress *progress,
                                   const gchar  *message)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (statusbar->progress_active)
     {
-      gimp_statusbar_replace (statusbar, "progress", NULL, "%s", message);
+      ligma_statusbar_replace (statusbar, "progress", NULL, "%s", message);
 
-      gimp_widget_flush_expose ();
+      ligma_widget_flush_expose ();
 
-      gimp_statusbar_override_window_title (statusbar);
+      ligma_statusbar_override_window_title (statusbar);
     }
 }
 
 static void
-gimp_statusbar_progress_set_value (GimpProgress *progress,
+ligma_statusbar_progress_set_value (LigmaProgress *progress,
                                    gdouble       percentage)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (statusbar->progress_active)
     {
@@ -813,16 +813,16 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
               gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar),
                                              percentage);
 
-              gimp_widget_flush_expose ();
+              ligma_widget_flush_expose ();
             }
         }
     }
 }
 
 static gdouble
-gimp_statusbar_progress_get_value (GimpProgress *progress)
+ligma_statusbar_progress_get_value (LigmaProgress *progress)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (statusbar->progress_active)
     return statusbar->progress_value;
@@ -831,9 +831,9 @@ gimp_statusbar_progress_get_value (GimpProgress *progress)
 }
 
 static void
-gimp_statusbar_progress_pulse (GimpProgress *progress)
+ligma_statusbar_progress_pulse (LigmaProgress *progress)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar = LIGMA_STATUSBAR (progress);
 
   if (statusbar->progress_active)
     {
@@ -848,19 +848,19 @@ gimp_statusbar_progress_pulse (GimpProgress *progress)
 
           gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
-          gimp_widget_flush_expose ();
+          ligma_widget_flush_expose ();
         }
     }
 }
 
 static gboolean
-gimp_statusbar_progress_message (GimpProgress        *progress,
-                                 Gimp                *gimp,
-                                 GimpMessageSeverity  severity,
+ligma_statusbar_progress_message (LigmaProgress        *progress,
+                                 Ligma                *ligma,
+                                 LigmaMessageSeverity  severity,
                                  const gchar         *domain,
                                  const gchar         *message)
 {
-  GimpStatusbar *statusbar  = GIMP_STATUSBAR (progress);
+  LigmaStatusbar *statusbar  = LIGMA_STATUSBAR (progress);
   PangoLayout   *layout;
   const gchar   *icon_name;
   gboolean       handle_msg = FALSE;
@@ -872,7 +872,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   /*  we can only handle short one-liners  */
   layout = gtk_widget_create_pango_layout (statusbar->label, message);
 
-  icon_name = gimp_get_message_icon_name (severity);
+  icon_name = ligma_get_message_icon_name (severity);
 
   if (pango_layout_get_line_count (layout) == 1)
     {
@@ -894,7 +894,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
                   GdkPixbuf *pixbuf;
                   gint       scale_factor;
 
-                  pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
+                  pixbuf = ligma_statusbar_load_icon (statusbar, icon_name);
 
                   scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
                   text_width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf) / scale_factor;
@@ -914,42 +914,42 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   g_object_unref (layout);
 
   if (handle_msg)
-    gimp_statusbar_push_temp (statusbar, severity, icon_name, "%s", message);
+    ligma_statusbar_push_temp (statusbar, severity, icon_name, "%s", message);
 
   return handle_msg;
 }
 
 static void
-gimp_statusbar_progress_canceled (GtkWidget     *button,
-                                  GimpStatusbar *statusbar)
+ligma_statusbar_progress_canceled (GtkWidget     *button,
+                                  LigmaStatusbar *statusbar)
 {
   if (statusbar->progress_active)
-    gimp_progress_cancel (GIMP_PROGRESS (statusbar));
+    ligma_progress_cancel (LIGMA_PROGRESS (statusbar));
 }
 
 static void
-gimp_statusbar_soft_proof_button_toggled (GtkWidget     *button,
-                                          GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_button_toggled (GtkWidget     *button,
+                                          LigmaStatusbar *statusbar)
 {
-  GimpColorConfig        *color_config;
-  GimpColorManagementMode mode;
+  LigmaColorConfig        *color_config;
+  LigmaColorManagementMode mode;
   gboolean                active;
 
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
-  mode = gimp_color_config_get_mode (color_config);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
+  mode = ligma_color_config_get_mode (color_config);
   active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (active)
     {
-      mode = GIMP_COLOR_MANAGEMENT_SOFTPROOF;
+      mode = LIGMA_COLOR_MANAGEMENT_SOFTPROOF;
     }
   else
     {
-      if (mode != GIMP_COLOR_MANAGEMENT_OFF)
-        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
+      if (mode != LIGMA_COLOR_MANAGEMENT_OFF)
+        mode = LIGMA_COLOR_MANAGEMENT_DISPLAY;
     }
 
-  if (mode != gimp_color_config_get_mode (color_config))
+  if (mode != ligma_color_config_get_mode (color_config))
     {
       g_object_set (color_config,
                     "mode", mode,
@@ -963,111 +963,111 @@ gimp_statusbar_soft_proof_button_toggled (GtkWidget     *button,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->proof_colors_toggle),
                                 active);
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_soft_proof_profile_changed (GtkComboBox   *combo,
-                                           GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_profile_changed (GtkComboBox   *combo,
+                                           LigmaStatusbar *statusbar)
 {
-  GimpImage        *image;
-  GimpColorConfig  *color_config;
+  LigmaImage        *image;
+  LigmaColorConfig  *color_config;
   GFile            *file;
-  GimpColorProfile *simulation_profile = NULL;
+  LigmaColorProfile *simulation_profile = NULL;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   image = statusbar->image;
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
   file =
-    gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+    ligma_color_profile_combo_box_get_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (combo));
 
   if (file)
     {
-      simulation_profile = gimp_color_profile_new_from_file (file, NULL);
+      simulation_profile = ligma_color_profile_new_from_file (file, NULL);
       g_object_unref (file);
     }
 
   if (image)
-    gimp_image_set_simulation_profile (image, simulation_profile);
+    ligma_image_set_simulation_profile (image, simulation_profile);
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_soft_proof_rendering_intent_changed (GtkComboBox   *combo,
-                                                    GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_rendering_intent_changed (GtkComboBox   *combo,
+                                                    LigmaStatusbar *statusbar)
 {
-  GimpImage                *image;
-  GimpColorConfig          *color_config;
-  GimpColorRenderingIntent  intent;
-  GimpColorRenderingIntent  active;
+  LigmaImage                *image;
+  LigmaColorConfig          *color_config;
+  LigmaColorRenderingIntent  intent;
+  LigmaColorRenderingIntent  active;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   image = statusbar->image;
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
 
   if (image)
     {
-      intent = gimp_image_get_simulation_intent (image);
+      intent = ligma_image_get_simulation_intent (image);
       active =
-        (GimpColorRenderingIntent) gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+        (LigmaColorRenderingIntent) gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
       if (active != intent)
         {
-          gimp_image_set_simulation_intent (image, active);
-          gimp_image_flush (image);
+          ligma_image_set_simulation_intent (image, active);
+          ligma_image_flush (image);
         }
     }
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_soft_proof_bpc_toggled (GtkWidget     *button,
-                                       GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_bpc_toggled (GtkWidget     *button,
+                                       LigmaStatusbar *statusbar)
 {
-  GimpImage       *image;
-  GimpColorConfig *color_config;
+  LigmaImage       *image;
+  LigmaColorConfig *color_config;
   gboolean         bpc_enabled;
   gboolean         active;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   image = statusbar->image;
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
 
   if (image)
     {
-      bpc_enabled = gimp_image_get_simulation_bpc (image);
+      bpc_enabled = ligma_image_get_simulation_bpc (image);
       active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
       if (active != bpc_enabled)
         {
-          gimp_image_set_simulation_bpc (image, active);
-          gimp_image_flush (image);
+          ligma_image_set_simulation_bpc (image, active);
+          ligma_image_flush (image);
         }
     }
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_soft_proof_optimize_changed (GtkWidget     *combo,
-                                            GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_optimize_changed (GtkWidget     *combo,
+                                            LigmaStatusbar *statusbar)
 {
-  GimpColorConfig *color_config;
+  LigmaColorConfig *color_config;
   gint             optimize;
   gint             active;
 
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
-  optimize = gimp_color_config_get_simulation_optimize (color_config);
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &active);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
+  optimize = ligma_color_config_get_simulation_optimize (color_config);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo), &active);
 
   if (active != optimize)
     {
@@ -1077,20 +1077,20 @@ gimp_statusbar_soft_proof_optimize_changed (GtkWidget     *combo,
       statusbar->shell->color_config_set = TRUE;
     }
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_soft_proof_gamut_toggled (GtkWidget     *button,
-                                         GimpStatusbar *statusbar)
+ligma_statusbar_soft_proof_gamut_toggled (GtkWidget     *button,
+                                         LigmaStatusbar *statusbar)
 {
-  GimpColorConfig *color_config;
+  LigmaColorConfig *color_config;
   gboolean         out_of_gamut;
   gboolean         active;
 
-  color_config = gimp_display_shell_get_color_config (statusbar->shell);
-  out_of_gamut = gimp_color_config_get_simulation_gamut_check (color_config);
+  color_config = ligma_display_shell_get_color_config (statusbar->shell);
+  out_of_gamut = ligma_color_config_get_simulation_gamut_check (color_config);
   active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (active != out_of_gamut)
@@ -1101,14 +1101,14 @@ gimp_statusbar_soft_proof_gamut_toggled (GtkWidget     *button,
       statusbar->shell->color_config_set = TRUE;
     }
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static gboolean
-gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
+ligma_statusbar_soft_proof_popover_shown (GtkWidget      *button,
                                          GdkEventButton *bevent,
-                                         GimpStatusbar  *statusbar)
+                                         LigmaStatusbar  *statusbar)
 {
   if (bevent->type == GDK_BUTTON_PRESS)
     {
@@ -1127,7 +1127,7 @@ gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
                                         ! active);
 
-          gimp_statusbar_soft_proof_button_toggled (statusbar->soft_proof_button,
+          ligma_statusbar_soft_proof_button_toggled (statusbar->soft_proof_button,
                                                     statusbar);
         }
     }
@@ -1136,7 +1136,7 @@ gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
 }
 
 static void
-gimp_statusbar_set_text (GimpStatusbar *statusbar,
+ligma_statusbar_set_text (LigmaStatusbar *statusbar,
                          const gchar   *icon_name,
                          const gchar   *text)
 {
@@ -1150,7 +1150,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
       g_clear_object (&statusbar->icon);
 
       if (icon_name)
-        statusbar->icon = gimp_statusbar_load_icon (statusbar, icon_name);
+        statusbar->icon = ligma_statusbar_load_icon (statusbar, icon_name);
 
       if (statusbar->icon)
         {
@@ -1165,7 +1165,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
            * division by zero.
            */
           if (statusbar->icon_space_width == 0)
-            gimp_statusbar_style_updated (GTK_WIDGET (statusbar));
+            ligma_statusbar_style_updated (GTK_WIDGET (statusbar));
           g_return_if_fail (statusbar->icon_space_width != 0);
 
           /* prepend enough spaces for the icon plus one space */
@@ -1185,20 +1185,20 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
 }
 
 static void
-gimp_statusbar_update (GimpStatusbar *statusbar)
+ligma_statusbar_update (LigmaStatusbar *statusbar)
 {
-  GimpStatusbarMsg *msg = NULL;
+  LigmaStatusbarMsg *msg = NULL;
 
   if (statusbar->messages)
     msg = statusbar->messages->data;
 
   if (msg && msg->text)
     {
-      gimp_statusbar_set_text (statusbar, msg->icon_name, msg->text);
+      ligma_statusbar_set_text (statusbar, msg->icon_name, msg->text);
     }
   else
     {
-      gimp_statusbar_set_text (statusbar, NULL, "");
+      ligma_statusbar_set_text (statusbar, NULL, "");
     }
 }
 
@@ -1206,17 +1206,17 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
 /*  public functions  */
 
 GtkWidget *
-gimp_statusbar_new (void)
+ligma_statusbar_new (void)
 {
-  return g_object_new (GIMP_TYPE_STATUSBAR, NULL);
+  return g_object_new (LIGMA_TYPE_STATUSBAR, NULL);
 }
 
 void
-gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
-                          GimpDisplayShell *shell)
+ligma_statusbar_set_shell (LigmaStatusbar    *statusbar,
+                          LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell == statusbar->shell)
     return;
@@ -1224,71 +1224,71 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
   if (statusbar->shell)
     {
       g_signal_handlers_disconnect_by_func (statusbar->shell,
-                                            gimp_statusbar_shell_scaled,
+                                            ligma_statusbar_shell_scaled,
                                             statusbar);
       g_signal_handlers_disconnect_by_func (statusbar->shell,
-                                            gimp_statusbar_shell_rotated,
+                                            ligma_statusbar_shell_rotated,
                                             statusbar);
       g_signal_handlers_disconnect_by_func (statusbar->shell,
-                                            gimp_statusbar_shell_status_notify,
+                                            ligma_statusbar_shell_status_notify,
                                             statusbar);
       if (statusbar->shell->color_config)
         g_signal_handlers_disconnect_by_func (statusbar->shell->color_config,
-                                              gimp_statusbar_shell_color_config_notify,
+                                              ligma_statusbar_shell_color_config_notify,
                                               statusbar);
     }
 
-  if (statusbar->gimp)
+  if (statusbar->ligma)
     {
-      GimpContext *context;
+      LigmaContext *context;
 
-      context = gimp_get_user_context (statusbar->gimp);
+      context = ligma_get_user_context (statusbar->ligma);
 
       g_signal_handlers_disconnect_by_func (context,
-                                            gimp_statusbar_shell_image_changed,
+                                            ligma_statusbar_shell_image_changed,
                                             statusbar);
-      gimp_statusbar_shell_set_image (statusbar, NULL);
+      ligma_statusbar_shell_set_image (statusbar, NULL);
     }
 
   statusbar->shell = shell;
 
   g_signal_connect_object (statusbar->shell, "scaled",
-                           G_CALLBACK (gimp_statusbar_shell_scaled),
+                           G_CALLBACK (ligma_statusbar_shell_scaled),
                            statusbar, 0);
   g_signal_connect_object (statusbar->shell, "rotated",
-                           G_CALLBACK (gimp_statusbar_shell_rotated),
+                           G_CALLBACK (ligma_statusbar_shell_rotated),
                            statusbar, 0);
   g_signal_connect_object (statusbar->shell, "notify::status",
-                           G_CALLBACK (gimp_statusbar_shell_status_notify),
+                           G_CALLBACK (ligma_statusbar_shell_status_notify),
                            statusbar, 0);
 
   if (statusbar->shell->color_config)
     g_signal_connect (statusbar->shell->color_config, "notify",
-                      G_CALLBACK (gimp_statusbar_shell_color_config_notify),
+                      G_CALLBACK (ligma_statusbar_shell_color_config_notify),
                       statusbar);
 
-  statusbar->gimp = gimp_display_get_gimp (statusbar->shell->display);
-  if (statusbar->gimp)
+  statusbar->ligma = ligma_display_get_ligma (statusbar->shell->display);
+  if (statusbar->ligma)
     {
-      GimpContext *context;
-      GimpImage   *image;
+      LigmaContext *context;
+      LigmaImage   *image;
 
-      context = gimp_get_user_context (statusbar->gimp);
-      image   = gimp_context_get_image (context);
+      context = ligma_get_user_context (statusbar->ligma);
+      image   = ligma_context_get_image (context);
 
       g_signal_connect_swapped (context, "image-changed",
-                                G_CALLBACK (gimp_statusbar_shell_image_changed),
+                                G_CALLBACK (ligma_statusbar_shell_image_changed),
                                 statusbar);
-      gimp_statusbar_shell_image_changed (statusbar, image, context);
+      ligma_statusbar_shell_image_changed (statusbar, image, context);
     }
 
-  gimp_statusbar_shell_rotated (shell, statusbar);
+  ligma_statusbar_shell_rotated (shell, statusbar);
 }
 
 gboolean
-gimp_statusbar_get_visible (GimpStatusbar *statusbar)
+ligma_statusbar_get_visible (LigmaStatusbar *statusbar)
 {
-  g_return_val_if_fail (GIMP_IS_STATUSBAR (statusbar), FALSE);
+  g_return_val_if_fail (LIGMA_IS_STATUSBAR (statusbar), FALSE);
 
   if (statusbar->progress_shown)
     return FALSE;
@@ -1297,10 +1297,10 @@ gimp_statusbar_get_visible (GimpStatusbar *statusbar)
 }
 
 void
-gimp_statusbar_set_visible (GimpStatusbar *statusbar,
+ligma_statusbar_set_visible (LigmaStatusbar *statusbar,
                             gboolean       visible)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   if (statusbar->progress_shown)
     {
@@ -1315,9 +1315,9 @@ gimp_statusbar_set_visible (GimpStatusbar *statusbar,
 }
 
 void
-gimp_statusbar_empty (GimpStatusbar *statusbar)
+ligma_statusbar_empty (LigmaStatusbar *statusbar)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   gtk_widget_hide (statusbar->cursor_label);
   gtk_widget_hide (statusbar->unit_combo);
@@ -1329,30 +1329,30 @@ gimp_statusbar_empty (GimpStatusbar *statusbar)
 }
 
 void
-gimp_statusbar_fill (GimpStatusbar *statusbar)
+ligma_statusbar_fill (LigmaStatusbar *statusbar)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   gtk_widget_show (statusbar->cursor_label);
   gtk_widget_show (statusbar->unit_combo);
   gtk_widget_show (statusbar->scale_combo);
   gtk_widget_show (statusbar->rotate_widget);
   gtk_widget_show (statusbar->soft_proof_button);
-  gimp_statusbar_shell_rotated (statusbar->shell, statusbar);
+  ligma_statusbar_shell_rotated (statusbar->shell, statusbar);
 }
 
 void
-gimp_statusbar_override_window_title (GimpStatusbar *statusbar)
+ligma_statusbar_override_window_title (LigmaStatusbar *statusbar)
 {
   GtkWidget *toplevel;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (statusbar));
 
-  if (gimp_image_window_is_iconified (GIMP_IMAGE_WINDOW (toplevel)))
+  if (ligma_image_window_is_iconified (LIGMA_IMAGE_WINDOW (toplevel)))
     {
-      const gchar *message = gimp_statusbar_peek (statusbar, "progress");
+      const gchar *message = ligma_statusbar_peek (statusbar, "progress");
 
       if (message)
         gtk_window_set_title (GTK_WINDOW (toplevel), message);
@@ -1360,22 +1360,22 @@ gimp_statusbar_override_window_title (GimpStatusbar *statusbar)
 }
 
 void
-gimp_statusbar_restore_window_title (GimpStatusbar *statusbar)
+ligma_statusbar_restore_window_title (LigmaStatusbar *statusbar)
 {
   GtkWidget *toplevel;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (statusbar));
 
-  if (gimp_image_window_is_iconified (GIMP_IMAGE_WINDOW (toplevel)))
+  if (ligma_image_window_is_iconified (LIGMA_IMAGE_WINDOW (toplevel)))
     {
       g_object_notify (G_OBJECT (statusbar->shell), "title");
     }
 }
 
 void
-gimp_statusbar_push (GimpStatusbar *statusbar,
+ligma_statusbar_push (LigmaStatusbar *statusbar,
                      const gchar   *context,
                      const gchar   *icon_name,
                      const gchar   *format,
@@ -1383,17 +1383,17 @@ gimp_statusbar_push (GimpStatusbar *statusbar,
 {
   va_list args;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  gimp_statusbar_push_valist (statusbar, context, icon_name, format, args);
+  ligma_statusbar_push_valist (statusbar, context, icon_name, format, args);
   va_end (args);
 }
 
 void
-gimp_statusbar_push_valist (GimpStatusbar *statusbar,
+ligma_statusbar_push_valist (LigmaStatusbar *statusbar,
                             const gchar   *context,
                             const gchar   *icon_name,
                             const gchar   *format,
@@ -1401,32 +1401,32 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
 {
   guint context_id;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  context_id = gimp_statusbar_get_context_id (statusbar, context);
+  context_id = ligma_statusbar_get_context_id (statusbar, context);
 
-  gimp_statusbar_add_message (statusbar,
+  ligma_statusbar_add_message (statusbar,
                               context_id,
                               icon_name, format, args,
                               /*  move_to_front =  */ TRUE);
 }
 
 void
-gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
+ligma_statusbar_push_coords (LigmaStatusbar       *statusbar,
                             const gchar         *context,
                             const gchar         *icon_name,
-                            GimpCursorPrecision  precision,
+                            LigmaCursorPrecision  precision,
                             const gchar         *title,
                             gdouble              x,
                             const gchar         *separator,
                             gdouble              y,
                             const gchar         *help)
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
 
@@ -1437,25 +1437,25 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
 
   switch (precision)
     {
-    case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
+    case LIGMA_CURSOR_PRECISION_PIXEL_CENTER:
       x = (gint) x;
       y = (gint) y;
       break;
 
-    case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
+    case LIGMA_CURSOR_PRECISION_PIXEL_BORDER:
       x = RINT (x);
       y = RINT (y);
       break;
 
-    case GIMP_CURSOR_PRECISION_SUBPIXEL:
+    case LIGMA_CURSOR_PRECISION_SUBPIXEL:
       break;
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
-      if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+      if (precision == LIGMA_CURSOR_PRECISION_SUBPIXEL)
         {
-          gimp_statusbar_push (statusbar, context,
+          ligma_statusbar_push (statusbar, context,
                                icon_name,
                                statusbar->cursor_format_str_f,
                                title,
@@ -1466,7 +1466,7 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
         }
       else
         {
-          gimp_statusbar_push (statusbar, context,
+          ligma_statusbar_push (statusbar, context,
                                icon_name,
                                statusbar->cursor_format_str,
                                title,
@@ -1481,32 +1481,32 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
       gdouble xres;
       gdouble yres;
 
-      gimp_image_get_resolution (gimp_display_get_image (shell->display),
+      ligma_image_get_resolution (ligma_display_get_image (shell->display),
                                  &xres, &yres);
 
-      gimp_statusbar_push (statusbar, context,
+      ligma_statusbar_push (statusbar, context,
                            icon_name,
                            statusbar->cursor_format_str,
                            title,
-                           gimp_pixels_to_units (x, shell->unit, xres),
+                           ligma_pixels_to_units (x, shell->unit, xres),
                            separator,
-                           gimp_pixels_to_units (y, shell->unit, yres),
+                           ligma_pixels_to_units (y, shell->unit, yres),
                            help);
     }
 }
 
 void
-gimp_statusbar_push_length (GimpStatusbar       *statusbar,
+ligma_statusbar_push_length (LigmaStatusbar       *statusbar,
                             const gchar         *context,
                             const gchar         *icon_name,
                             const gchar         *title,
-                            GimpOrientationType  axis,
+                            LigmaOrientationType  axis,
                             gdouble              value,
                             const gchar         *help)
 {
-  GimpDisplayShell *shell;
+  LigmaDisplayShell *shell;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
 
   if (help == NULL)
@@ -1514,9 +1514,9 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
 
   shell = statusbar->shell;
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
-      gimp_statusbar_push (statusbar, context,
+      ligma_statusbar_push (statusbar, context,
                            icon_name,
                            statusbar->length_format_str,
                            title,
@@ -1529,16 +1529,16 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
       gdouble yres;
       gdouble resolution;
 
-      gimp_image_get_resolution (gimp_display_get_image (shell->display),
+      ligma_image_get_resolution (ligma_display_get_image (shell->display),
                                  &xres, &yres);
 
       switch (axis)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
+        case LIGMA_ORIENTATION_HORIZONTAL:
           resolution = xres;
           break;
 
-        case GIMP_ORIENTATION_VERTICAL:
+        case LIGMA_ORIENTATION_VERTICAL:
           resolution = yres;
           break;
 
@@ -1547,17 +1547,17 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
           break;
         }
 
-      gimp_statusbar_push (statusbar, context,
+      ligma_statusbar_push (statusbar, context,
                            icon_name,
                            statusbar->length_format_str,
                            title,
-                           gimp_pixels_to_units (value, shell->unit, resolution),
+                           ligma_pixels_to_units (value, shell->unit, resolution),
                            help);
     }
 }
 
 void
-gimp_statusbar_replace (GimpStatusbar *statusbar,
+ligma_statusbar_replace (LigmaStatusbar *statusbar,
                         const gchar   *context,
                         const gchar   *icon_name,
                         const gchar   *format,
@@ -1565,17 +1565,17 @@ gimp_statusbar_replace (GimpStatusbar *statusbar,
 {
   va_list args;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  gimp_statusbar_replace_valist (statusbar, context, icon_name, format, args);
+  ligma_statusbar_replace_valist (statusbar, context, icon_name, format, args);
   va_end (args);
 }
 
 void
-gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
+ligma_statusbar_replace_valist (LigmaStatusbar *statusbar,
                                const gchar   *context,
                                const gchar   *icon_name,
                                const gchar   *format,
@@ -1583,33 +1583,33 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
 {
   guint context_id;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  context_id = gimp_statusbar_get_context_id (statusbar, context);
+  context_id = ligma_statusbar_get_context_id (statusbar, context);
 
-  gimp_statusbar_add_message (statusbar,
+  ligma_statusbar_add_message (statusbar,
                               context_id,
                               icon_name, format, args,
                               /*  move_to_front =  */ FALSE);
 }
 
 const gchar *
-gimp_statusbar_peek (GimpStatusbar *statusbar,
+ligma_statusbar_peek (LigmaStatusbar *statusbar,
                      const gchar   *context)
 {
   GSList *list;
   guint   context_id;
 
-  g_return_val_if_fail (GIMP_IS_STATUSBAR (statusbar), NULL);
+  g_return_val_if_fail (LIGMA_IS_STATUSBAR (statusbar), NULL);
   g_return_val_if_fail (context != NULL, NULL);
 
-  context_id = gimp_statusbar_get_context_id (statusbar, context);
+  context_id = ligma_statusbar_get_context_id (statusbar, context);
 
   for (list = statusbar->messages; list; list = list->next)
     {
-      GimpStatusbarMsg *msg = list->data;
+      LigmaStatusbarMsg *msg = list->data;
 
       if (msg->context_id == context_id)
         {
@@ -1621,23 +1621,23 @@ gimp_statusbar_peek (GimpStatusbar *statusbar,
 }
 
 void
-gimp_statusbar_pop (GimpStatusbar *statusbar,
+ligma_statusbar_pop (LigmaStatusbar *statusbar,
                     const gchar   *context)
 {
   guint context_id;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
 
-  context_id = gimp_statusbar_get_context_id (statusbar, context);
+  context_id = ligma_statusbar_get_context_id (statusbar, context);
 
-  gimp_statusbar_remove_message (statusbar,
+  ligma_statusbar_remove_message (statusbar,
                                  context_id);
 }
 
 void
-gimp_statusbar_push_temp (GimpStatusbar       *statusbar,
-                          GimpMessageSeverity  severity,
+ligma_statusbar_push_temp (LigmaStatusbar       *statusbar,
+                          LigmaMessageSeverity  severity,
                           const gchar         *icon_name,
                           const gchar         *format,
                           ...)
@@ -1645,19 +1645,19 @@ gimp_statusbar_push_temp (GimpStatusbar       *statusbar,
   va_list args;
 
   va_start (args, format);
-  gimp_statusbar_push_temp_valist (statusbar, severity, icon_name, format, args);
+  ligma_statusbar_push_temp_valist (statusbar, severity, icon_name, format, args);
   va_end (args);
 }
 
 void
-gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
-                                 GimpMessageSeverity  severity,
+ligma_statusbar_push_temp_valist (LigmaStatusbar       *statusbar,
+                                 LigmaMessageSeverity  severity,
                                  const gchar         *icon_name,
                                  const gchar         *format,
                                  va_list              args)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-  g_return_if_fail (severity <= GIMP_MESSAGE_WARNING);
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
+  g_return_if_fail (severity <= LIGMA_MESSAGE_WARNING);
   g_return_if_fail (format != NULL);
 
   /*  don't accept a message if we are already displaying a more severe one  */
@@ -1669,54 +1669,54 @@ gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
 
   statusbar->temp_timeout_id =
     g_timeout_add (MESSAGE_TIMEOUT,
-                   (GSourceFunc) gimp_statusbar_temp_timeout, statusbar);
+                   (GSourceFunc) ligma_statusbar_temp_timeout, statusbar);
 
   statusbar->temp_severity = severity;
 
-  gimp_statusbar_add_message (statusbar,
+  ligma_statusbar_add_message (statusbar,
                               statusbar->temp_context_id,
                               icon_name, format, args,
                               /*  move_to_front =  */ TRUE);
 
-  if (severity >= GIMP_MESSAGE_WARNING)
-    gimp_widget_blink (statusbar->label);
+  if (severity >= LIGMA_MESSAGE_WARNING)
+    ligma_widget_blink (statusbar->label);
 }
 
 void
-gimp_statusbar_pop_temp (GimpStatusbar *statusbar)
+ligma_statusbar_pop_temp (LigmaStatusbar *statusbar)
 {
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   if (statusbar->temp_timeout_id)
     {
       g_source_remove (statusbar->temp_timeout_id);
       statusbar->temp_timeout_id = 0;
 
-      gimp_statusbar_remove_message (statusbar,
+      ligma_statusbar_remove_message (statusbar,
                                      statusbar->temp_context_id);
     }
 }
 
 void
-gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
-                              GimpCursorPrecision  precision,
+ligma_statusbar_update_cursor (LigmaStatusbar       *statusbar,
+                              LigmaCursorPrecision  precision,
                               gdouble              x,
                               gdouble              y)
 {
-  GimpDisplayShell *shell;
-  GimpImage        *image;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
   gchar             buffer[CURSOR_LEN];
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (LIGMA_IS_STATUSBAR (statusbar));
 
   shell = statusbar->shell;
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (! image                            ||
       x <  0                             ||
       y <  0                             ||
-      x >= gimp_image_get_width  (image) ||
-      y >= gimp_image_get_height (image))
+      x >= ligma_image_get_width  (image) ||
+      y >= ligma_image_get_height (image))
     {
       gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
     }
@@ -1727,24 +1727,24 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
 
   switch (precision)
     {
-    case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
+    case LIGMA_CURSOR_PRECISION_PIXEL_CENTER:
       x = (gint) x;
       y = (gint) y;
       break;
 
-    case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
+    case LIGMA_CURSOR_PRECISION_PIXEL_BORDER:
       x = RINT (x);
       y = RINT (y);
       break;
 
-    case GIMP_CURSOR_PRECISION_SUBPIXEL:
+    case LIGMA_CURSOR_PRECISION_SUBPIXEL:
       break;
     }
   statusbar->cursor_precision = precision;
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
-      if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+      if (precision == LIGMA_CURSOR_PRECISION_SUBPIXEL)
         {
           g_snprintf (buffer, sizeof (buffer),
                       statusbar->cursor_format_str_f,
@@ -1760,13 +1760,13 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
   else /* show real world units */
     {
       GtkTreeModel  *model;
-      GimpUnitStore *store;
+      LigmaUnitStore *store;
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-      store = GIMP_UNIT_STORE (model);
+      store = LIGMA_UNIT_STORE (model);
 
-      gimp_unit_store_set_pixel_values (store, x, y);
-      gimp_unit_store_get_values (store, shell->unit, &x, &y);
+      ligma_unit_store_set_pixel_values (store, x, y);
+      ligma_unit_store_get_values (store, shell->unit, &x, &y);
 
       g_snprintf (buffer, sizeof (buffer),
                   statusbar->cursor_format_str,
@@ -1783,14 +1783,14 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
     {
       statusbar->statusbar_pos_redraw_idle_id =
         g_idle_add_full (G_PRIORITY_LOW,
-                         gimp_statusbar_queue_pos_redraw,
+                         ligma_statusbar_queue_pos_redraw,
                          statusbar,
                          NULL);
     }
 }
 
 void
-gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
+ligma_statusbar_clear_cursor (LigmaStatusbar *statusbar)
 {
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
   gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
@@ -1800,9 +1800,9 @@ gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 /*  private functions  */
 
 static gboolean
-gimp_statusbar_label_draw (GtkWidget     *widget,
+ligma_statusbar_label_draw (GtkWidget     *widget,
                            cairo_t       *cr,
-                           GimpStatusbar *statusbar)
+                           LigmaStatusbar *statusbar)
 {
   if (statusbar->icon)
     {
@@ -1839,12 +1839,12 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
 }
 
 static void
-gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
-                             GimpStatusbar    *statusbar)
+ligma_statusbar_shell_scaled (LigmaDisplayShell *shell,
+                             LigmaStatusbar    *statusbar)
 {
   static PangoLayout *layout = NULL;
 
-  GimpImage    *image = gimp_display_get_image (shell->display);
+  LigmaImage    *image = ligma_display_get_image (shell->display);
   GtkTreeModel *model;
   const gchar  *text;
   gint          image_width;
@@ -1855,9 +1855,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 
   if (image)
     {
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
-      gimp_image_get_resolution (image, &image_xres, &image_yres);
+      image_width  = ligma_image_get_width  (image);
+      image_height = ligma_image_get_height (image);
+      ligma_image_get_resolution (image, &image_xres, &image_yres);
     }
   else
     {
@@ -1868,24 +1868,24 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
     }
 
   g_signal_handlers_block_by_func (statusbar->scale_combo,
-                                   gimp_statusbar_scale_changed, statusbar);
-  gimp_scale_combo_box_set_scale (GIMP_SCALE_COMBO_BOX (statusbar->scale_combo),
-                                  gimp_zoom_model_get_factor (shell->zoom));
+                                   ligma_statusbar_scale_changed, statusbar);
+  ligma_scale_combo_box_set_scale (LIGMA_SCALE_COMBO_BOX (statusbar->scale_combo),
+                                  ligma_zoom_model_get_factor (shell->zoom));
   g_signal_handlers_unblock_by_func (statusbar->scale_combo,
-                                     gimp_statusbar_scale_changed, statusbar);
+                                     ligma_statusbar_scale_changed, statusbar);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
+  ligma_unit_store_set_resolutions (LIGMA_UNIT_STORE (model),
                                    image_xres, image_yres);
 
   g_signal_handlers_block_by_func (statusbar->unit_combo,
-                                   gimp_statusbar_unit_changed, statusbar);
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (statusbar->unit_combo),
+                                   ligma_statusbar_unit_changed, statusbar);
+  ligma_unit_combo_box_set_active (LIGMA_UNIT_COMBO_BOX (statusbar->unit_combo),
                                   shell->unit);
   g_signal_handlers_unblock_by_func (statusbar->unit_combo,
-                                     gimp_statusbar_unit_changed, statusbar);
+                                     ligma_statusbar_unit_changed, statusbar);
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -1905,8 +1905,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       gint w_digits;
       gint h_digits;
 
-      w_digits = gimp_unit_get_scaled_digits (shell->unit, image_xres);
-      h_digits = gimp_unit_get_scaled_digits (shell->unit, image_yres);
+      w_digits = ligma_unit_get_scaled_digits (shell->unit, image_xres);
+      h_digits = ligma_unit_get_scaled_digits (shell->unit, image_yres);
 
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -1921,7 +1921,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       statusbar->cursor_h_digits = h_digits;
     }
 
-  gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,
+  ligma_statusbar_update_cursor (statusbar, LIGMA_CURSOR_PRECISION_SUBPIXEL,
                                 -image_width, -image_height);
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
@@ -1935,12 +1935,12 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 
   gtk_widget_set_size_request (statusbar->cursor_label, width, -1);
 
-  gimp_statusbar_clear_cursor (statusbar);
+  ligma_statusbar_clear_cursor (statusbar);
 }
 
 static void
-gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
-                              GimpStatusbar    *statusbar)
+ligma_statusbar_shell_rotated (LigmaDisplayShell *shell,
+                              LigmaStatusbar    *statusbar)
 {
   if (shell->rotate_angle != 0.0)
     {
@@ -1971,25 +1971,25 @@ gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
 }
 
 static void
-gimp_statusbar_shell_status_notify (GimpDisplayShell *shell,
+ligma_statusbar_shell_status_notify (LigmaDisplayShell *shell,
                                     const GParamSpec *pspec,
-                                    GimpStatusbar    *statusbar)
+                                    LigmaStatusbar    *statusbar)
 {
-  gimp_statusbar_replace (statusbar, "title",
+  ligma_statusbar_replace (statusbar, "title",
                           NULL, "%s", shell->status);
 }
 
 static void
-gimp_statusbar_shell_color_config_notify (GObject          *config,
+ligma_statusbar_shell_color_config_notify (GObject          *config,
                                           const GParamSpec *pspec,
-                                          GimpStatusbar    *statusbar)
+                                          LigmaStatusbar    *statusbar)
 {
   gboolean                 active       = FALSE;
   gint                     optimize     = 0;
-  GimpColorConfig         *color_config = GIMP_COLOR_CONFIG (config);
-  GimpColorManagementMode  mode         = gimp_color_config_get_mode (color_config);
+  LigmaColorConfig         *color_config = LIGMA_COLOR_CONFIG (config);
+  LigmaColorManagementMode  mode         = ligma_color_config_get_mode (color_config);
 
-  if (mode == GIMP_COLOR_MANAGEMENT_SOFTPROOF)
+  if (mode == LIGMA_COLOR_MANAGEMENT_SOFTPROOF)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
                                     TRUE);
@@ -2008,27 +2008,27 @@ gimp_statusbar_shell_color_config_notify (GObject          *config,
                              GTK_RELIEF_NONE);
     }
 
-  optimize = gimp_color_config_get_simulation_optimize (color_config);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (statusbar->optimize_combo),
+  optimize = ligma_color_config_get_simulation_optimize (color_config);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (statusbar->optimize_combo),
                                  optimize);
 
-  active = gimp_color_config_get_simulation_gamut_check (color_config);
+  active = ligma_color_config_get_simulation_gamut_check (color_config);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->out_of_gamut_toggle),
                                 active);
 }
 
 static void
-gimp_statusbar_shell_set_image (GimpStatusbar *statusbar,
-                                GimpImage     *image)
+ligma_statusbar_shell_set_image (LigmaStatusbar *statusbar,
+                                LigmaImage     *image)
 {
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
   if (image != statusbar->image)
     {
       if (statusbar->image)
         {
           g_signal_handlers_disconnect_by_func (statusbar->image,
-                                                gimp_statusbar_shell_image_simulation_changed,
+                                                ligma_statusbar_shell_image_simulation_changed,
                                                 statusbar);
           g_object_unref (statusbar->image);
         }
@@ -2041,85 +2041,85 @@ gimp_statusbar_shell_set_image (GimpStatusbar *statusbar,
       g_object_ref (statusbar->image);
 
       g_signal_connect (statusbar->image, "simulation-profile-changed",
-                        G_CALLBACK (gimp_statusbar_shell_image_simulation_changed),
+                        G_CALLBACK (ligma_statusbar_shell_image_simulation_changed),
                         statusbar);
       g_signal_connect (statusbar->image, "simulation-intent-changed",
-                        G_CALLBACK (gimp_statusbar_shell_image_simulation_changed),
+                        G_CALLBACK (ligma_statusbar_shell_image_simulation_changed),
                         statusbar);
       g_signal_connect (statusbar->image, "simulation-bpc-changed",
-                        G_CALLBACK (gimp_statusbar_shell_image_simulation_changed),
+                        G_CALLBACK (ligma_statusbar_shell_image_simulation_changed),
                         statusbar);
 
-      gimp_statusbar_shell_image_simulation_changed (statusbar->image,
+      ligma_statusbar_shell_image_simulation_changed (statusbar->image,
                                                      statusbar);
     }
 }
 
 static void
-gimp_statusbar_unit_changed (GimpUnitComboBox *combo,
-                             GimpStatusbar    *statusbar)
+ligma_statusbar_unit_changed (LigmaUnitComboBox *combo,
+                             LigmaStatusbar    *statusbar)
 {
-  gimp_display_shell_set_unit (statusbar->shell,
-                               gimp_unit_combo_box_get_active (combo));
+  ligma_display_shell_set_unit (statusbar->shell,
+                               ligma_unit_combo_box_get_active (combo));
 }
 
 static void
-gimp_statusbar_scale_changed (GimpScaleComboBox *combo,
-                              GimpStatusbar     *statusbar)
+ligma_statusbar_scale_changed (LigmaScaleComboBox *combo,
+                              LigmaStatusbar     *statusbar)
 {
-  gimp_display_shell_scale (statusbar->shell,
-                            GIMP_ZOOM_TO,
-                            gimp_scale_combo_box_get_scale (combo),
-                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+  ligma_display_shell_scale (statusbar->shell,
+                            LIGMA_ZOOM_TO,
+                            ligma_scale_combo_box_get_scale (combo),
+                            LIGMA_ZOOM_FOCUS_BEST_GUESS);
 }
 
 static void
-gimp_statusbar_scale_activated (GimpScaleComboBox *combo,
-                                GimpStatusbar     *statusbar)
+ligma_statusbar_scale_activated (LigmaScaleComboBox *combo,
+                                LigmaStatusbar     *statusbar)
 {
   gtk_widget_grab_focus (statusbar->shell->canvas);
 }
 
 static void
-gimp_statusbar_shell_image_changed (GimpStatusbar *statusbar,
-                                    GimpImage     *image,
-                                    GimpContext   *context)
+ligma_statusbar_shell_image_changed (LigmaStatusbar *statusbar,
+                                    LigmaImage     *image,
+                                    LigmaContext   *context)
 {
-  GimpColorConfig *color_config = NULL;
+  LigmaColorConfig *color_config = NULL;
 
   if (image == statusbar->image)
     return;
 
   if (statusbar->shell && statusbar->shell->display)
-    color_config = gimp_display_shell_get_color_config (statusbar->shell);
+    color_config = ligma_display_shell_get_color_config (statusbar->shell);
 
-  gimp_statusbar_shell_set_image (statusbar, image);
+  ligma_statusbar_shell_set_image (statusbar, image);
 
-  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+  ligma_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
                                             statusbar);
 }
 
 static void
-gimp_statusbar_shell_image_simulation_changed (GimpImage     *image,
-                                               GimpStatusbar *statusbar)
+ligma_statusbar_shell_image_simulation_changed (LigmaImage     *image,
+                                               LigmaStatusbar *statusbar)
 {
-  GimpColorProfile        *simulation_profile = NULL;
+  LigmaColorProfile        *simulation_profile = NULL;
   gchar                   *text;
   const gchar             *profile_label;
-  GimpColorRenderingIntent intent             =
-    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  LigmaColorRenderingIntent intent             =
+    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   gboolean                 bpc                = FALSE;
 
   if (image)
     {
-      simulation_profile = gimp_image_get_simulation_profile (image);
-      intent             = gimp_image_get_simulation_intent (image);
-      bpc                = gimp_image_get_simulation_bpc (image);
+      simulation_profile = ligma_image_get_simulation_profile (image);
+      intent             = ligma_image_get_simulation_intent (image);
+      bpc                = ligma_image_get_simulation_bpc (image);
     }
 
-  if (simulation_profile && GIMP_IS_COLOR_PROFILE (simulation_profile))
+  if (simulation_profile && LIGMA_IS_COLOR_PROFILE (simulation_profile))
     {
-      profile_label = gimp_color_profile_get_label (simulation_profile);
+      profile_label = ligma_color_profile_get_label (simulation_profile);
       gtk_widget_set_sensitive (statusbar->soft_proof_button, TRUE);
       gtk_widget_set_sensitive (statusbar->proof_colors_toggle, TRUE);
     }
@@ -2138,7 +2138,7 @@ gimp_statusbar_shell_image_simulation_changed (GimpImage     *image,
   gtk_label_set_markup (GTK_LABEL (statusbar->profile_label), text);
   g_free (text);
 
-  gimp_color_profile_combo_box_set_active_profile (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
+  ligma_color_profile_combo_box_set_active_profile (LIGMA_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
                                                    simulation_profile);
   gtk_combo_box_set_active (GTK_COMBO_BOX (statusbar->rendering_intent_combo),
                             intent);
@@ -2147,45 +2147,45 @@ gimp_statusbar_shell_image_simulation_changed (GimpImage     *image,
 }
 
 static gboolean
-gimp_statusbar_rotate_pressed (GtkWidget     *event_box,
+ligma_statusbar_rotate_pressed (GtkWidget     *event_box,
                                GdkEvent      *event,
-                               GimpStatusbar *statusbar)
+                               LigmaStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  LigmaImageWindow *window = ligma_display_shell_get_window (statusbar->shell);
+  LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
 
-  gimp_ui_manager_activate_action (manager, "view", "view-rotate-other");
+  ligma_ui_manager_activate_action (manager, "view", "view-rotate-other");
   return FALSE;
 }
 
 static gboolean
-gimp_statusbar_horiz_flip_pressed (GtkWidget     *event_box,
+ligma_statusbar_horiz_flip_pressed (GtkWidget     *event_box,
                                    GdkEvent      *event,
-                                   GimpStatusbar *statusbar)
+                                   LigmaStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  LigmaImageWindow *window = ligma_display_shell_get_window (statusbar->shell);
+  LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
 
-  gimp_ui_manager_activate_action (manager, "view", "view-flip-horizontally");
+  ligma_ui_manager_activate_action (manager, "view", "view-flip-horizontally");
 
   return FALSE;
 }
 
 static gboolean
-gimp_statusbar_vert_flip_pressed (GtkWidget     *event_box,
+ligma_statusbar_vert_flip_pressed (GtkWidget     *event_box,
                                   GdkEvent      *event,
-                                  GimpStatusbar *statusbar)
+                                  LigmaStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  LigmaImageWindow *window = ligma_display_shell_get_window (statusbar->shell);
+  LigmaUIManager   *manager = ligma_image_window_get_ui_manager (window);
 
-  gimp_ui_manager_activate_action (manager, "view", "view-flip-vertically");
+  ligma_ui_manager_activate_action (manager, "view", "view-flip-vertically");
 
   return FALSE;
 }
 
 static guint
-gimp_statusbar_get_context_id (GimpStatusbar *statusbar,
+ligma_statusbar_get_context_id (LigmaStatusbar *statusbar,
                                const gchar   *context)
 {
   guint id = GPOINTER_TO_UINT (g_hash_table_lookup (statusbar->context_ids,
@@ -2203,22 +2203,22 @@ gimp_statusbar_get_context_id (GimpStatusbar *statusbar,
 }
 
 static gboolean
-gimp_statusbar_temp_timeout (GimpStatusbar *statusbar)
+ligma_statusbar_temp_timeout (LigmaStatusbar *statusbar)
 {
-  gimp_statusbar_pop_temp (statusbar);
+  ligma_statusbar_pop_temp (statusbar);
 
   return FALSE;
 }
 
 static void
-gimp_statusbar_add_size_widget (GimpStatusbar *statusbar,
+ligma_statusbar_add_size_widget (LigmaStatusbar *statusbar,
                                 GtkWidget     *widget)
 {
   statusbar->size_widgets = g_slist_prepend (statusbar->size_widgets, widget);
 }
 
 static void
-gimp_statusbar_update_size (GimpStatusbar *statusbar)
+ligma_statusbar_update_size (LigmaStatusbar *statusbar)
 {
   GSList *iter;
   gint    height = -1;
@@ -2243,7 +2243,7 @@ gimp_statusbar_update_size (GimpStatusbar *statusbar)
 }
 
 static void
-gimp_statusbar_add_message (GimpStatusbar *statusbar,
+ligma_statusbar_add_message (LigmaStatusbar *statusbar,
                             guint          context_id,
                             const gchar   *icon_name,
                             const gchar   *format,
@@ -2252,10 +2252,10 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
 {
   gchar            *message;
   GSList           *list;
-  GimpStatusbarMsg *msg;
+  LigmaStatusbarMsg *msg;
   gint              position;
 
-  message = gimp_statusbar_vprintf (format, args);
+  message = ligma_statusbar_vprintf (format, args);
 
   for (list = statusbar->messages; list; list = g_slist_next (list))
     {
@@ -2276,7 +2276,7 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
           if (move_to_front)
             {
               statusbar->messages = g_slist_remove (statusbar->messages, msg);
-              gimp_statusbar_msg_free (msg);
+              ligma_statusbar_msg_free (msg);
 
               break;
             }
@@ -2289,14 +2289,14 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
               msg->text = message;
 
               if (is_front_message)
-                gimp_statusbar_update (statusbar);
+                ligma_statusbar_update (statusbar);
 
               return;
             }
         }
     }
 
-  msg = g_slice_new (GimpStatusbarMsg);
+  msg = g_slice_new (LigmaStatusbarMsg);
 
   msg->context_id = context_id;
   msg->icon_name  = g_strdup (icon_name);
@@ -2306,7 +2306,7 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
   position = 0;
   /*  progress messages are always at the front of the list  */
   if (! (statusbar->progress_active &&
-         context_id == gimp_statusbar_get_context_id (statusbar, "progress")))
+         context_id == ligma_statusbar_get_context_id (statusbar, "progress")))
     {
       if (statusbar->progress_active)
         position++;
@@ -2320,11 +2320,11 @@ gimp_statusbar_add_message (GimpStatusbar *statusbar,
   statusbar->messages = g_slist_insert (statusbar->messages, msg, position);
 
   if (position == 0)
-    gimp_statusbar_update (statusbar);
+    ligma_statusbar_update (statusbar);
 }
 
 static void
-gimp_statusbar_remove_message (GimpStatusbar *statusbar,
+ligma_statusbar_remove_message (LigmaStatusbar *statusbar,
                                guint          context_id)
 {
   GSList   *list;
@@ -2332,34 +2332,34 @@ gimp_statusbar_remove_message (GimpStatusbar *statusbar,
 
   for (list = statusbar->messages; list; list = g_slist_next (list))
     {
-      GimpStatusbarMsg *msg = list->data;
+      LigmaStatusbarMsg *msg = list->data;
 
       if (msg->context_id == context_id)
         {
           needs_update = (list == statusbar->messages);
 
           statusbar->messages = g_slist_remove (statusbar->messages, msg);
-          gimp_statusbar_msg_free (msg);
+          ligma_statusbar_msg_free (msg);
 
           break;
         }
     }
 
   if (needs_update)
-    gimp_statusbar_update (statusbar);
+    ligma_statusbar_update (statusbar);
 }
 
 static void
-gimp_statusbar_msg_free (GimpStatusbarMsg *msg)
+ligma_statusbar_msg_free (LigmaStatusbarMsg *msg)
 {
   g_free (msg->icon_name);
   g_free (msg->text);
 
-  g_slice_free (GimpStatusbarMsg, msg);
+  g_slice_free (LigmaStatusbarMsg, msg);
 }
 
 static gchar *
-gimp_statusbar_vprintf (const gchar *format,
+ligma_statusbar_vprintf (const gchar *format,
                         va_list      args)
 {
   gchar *message;
@@ -2380,7 +2380,7 @@ gimp_statusbar_vprintf (const gchar *format,
 }
 
 static GdkPixbuf *
-gimp_statusbar_load_icon (GimpStatusbar *statusbar,
+ligma_statusbar_load_icon (LigmaStatusbar *statusbar,
                           const gchar   *icon_name)
 {
   GdkPixbuf *icon;
@@ -2399,7 +2399,7 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
   if (icon)
     return g_object_ref (icon);
 
-  icon = gimp_widget_load_icon (statusbar->label, icon_name, 16);
+  icon = ligma_widget_load_icon (statusbar->label, icon_name, 16);
 
   /* this is not optimal but so what */
   if (g_hash_table_size (statusbar->icon_hash) > 16)
@@ -2412,22 +2412,22 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
 }
 
 static gboolean
-gimp_statusbar_queue_pos_redraw (gpointer data)
+ligma_statusbar_queue_pos_redraw (gpointer data)
 {
-  GimpStatusbar    *statusbar = GIMP_STATUSBAR (data);
-  GimpDisplayShell *shell;
-  GimpImage        *image;
+  LigmaStatusbar    *statusbar = LIGMA_STATUSBAR (data);
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
   gint              image_width       = 0;
   gint              image_height      = 0;
   gint              label_width_chars = 2;
 
   shell = statusbar->shell;
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (image)
     {
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
+      image_width  = ligma_image_get_width  (image);
+      image_height = ligma_image_get_height (image);
 
       /* The number of chars within up to 2 times the image bounds is:
        * - max width chars: floor (log10 (2 * max_width)) + 1
@@ -2441,17 +2441,17 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
        * The goal of this is to avoid the label size jumping up and
        * down. Actually it was not a problem on Linux, but this was
        * reported on macOS.
-       * See: https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
+       * See: https://gitlab.gnome.org/GNOME/ligma/-/merge_requests/572#note_1389445
        * So we just compute what looks like a reasonable "biggest size"
        * in worst cases.
        * Of course, it could still happen for people going way
        * off-canvas but that's acceptable edge-case.
        */
-      if (shell->unit == GIMP_UNIT_PIXEL)
+      if (shell->unit == LIGMA_UNIT_PIXEL)
         {
           label_width_chars = floor (log10 (2 * image_width)) + floor (log10 (2 * image_height)) + 6;
 
-          if (statusbar->cursor_precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+          if (statusbar->cursor_precision == LIGMA_CURSOR_PRECISION_SUBPIXEL)
             /* In subpixel precision, we have a 1 digit precision per
              * dimension, so 4 additional characters, decimal
              * separators-included.
@@ -2461,15 +2461,15 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
       else /* showing real world units */
         {
           GtkTreeModel  *model;
-          GimpUnitStore *store;
+          LigmaUnitStore *store;
           gdouble        max_x = (gdouble) image_width;
           gdouble        max_y = (gdouble) image_height;
 
           model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-          store = GIMP_UNIT_STORE (model);
+          store = LIGMA_UNIT_STORE (model);
 
-          gimp_unit_store_set_pixel_values (store, max_x, max_y);
-          gimp_unit_store_get_values (store, shell->unit, &max_x, &max_y);
+          ligma_unit_store_set_pixel_values (store, max_x, max_y);
+          ligma_unit_store_get_values (store, shell->unit, &max_x, &max_y);
 
           label_width_chars = /* max width (int) up to 2 times image bounds - 1  */
                               floor (log10 (2 * max_x))                                             +

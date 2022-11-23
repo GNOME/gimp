@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabeled.c
+ * ligmalabeled.c
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -24,15 +24,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
 
 /**
- * SECTION: gimplabeled
- * @title: GimpLabeled
+ * SECTION: ligmalabeled
+ * @title: LigmaLabeled
  * @short_description: Widget containing a label as mnemonic for another
  *                     widget.
  *
@@ -52,54 +52,54 @@ enum
   PROP_LABEL,
 };
 
-typedef struct _GimpLabeledPrivate
+typedef struct _LigmaLabeledPrivate
 {
   GtkWidget *label;
-} GimpLabeledPrivate;
+} LigmaLabeledPrivate;
 
 
-static void       gimp_labeled_constructed            (GObject       *object);
-static void       gimp_labeled_set_property           (GObject       *object,
+static void       ligma_labeled_constructed            (GObject       *object);
+static void       ligma_labeled_set_property           (GObject       *object,
                                                        guint          property_id,
                                                        const GValue  *value,
                                                        GParamSpec    *pspec);
-static void       gimp_labeled_get_property           (GObject       *object,
+static void       ligma_labeled_get_property           (GObject       *object,
                                                        guint          property_id,
                                                        GValue        *value,
                                                        GParamSpec    *pspec);
 
-static void gimp_labeled_real_mnemonic_widget_changed (GimpLabeled   *labeled,
+static void ligma_labeled_real_mnemonic_widget_changed (LigmaLabeled   *labeled,
                                                        GtkWidget     *widget);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabeled, gimp_labeled, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaLabeled, ligma_labeled, GTK_TYPE_GRID)
 
-#define parent_class gimp_labeled_parent_class
+#define parent_class ligma_labeled_parent_class
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_labeled_class_init (GimpLabeledClass *klass)
+ligma_labeled_class_init (LigmaLabeledClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_labeled_constructed;
-  object_class->set_property = gimp_labeled_set_property;
-  object_class->get_property = gimp_labeled_get_property;
+  object_class->constructed  = ligma_labeled_constructed;
+  object_class->set_property = ligma_labeled_set_property;
+  object_class->get_property = ligma_labeled_get_property;
 
   signals[MNEMONIC_WIDGET_CHANGED] =
     g_signal_new ("mnemonic-widget-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabeledClass, mnemonic_widget_changed),
+                  G_STRUCT_OFFSET (LigmaLabeledClass, mnemonic_widget_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GTK_TYPE_WIDGET);
 
-  klass->mnemonic_widget_changed = gimp_labeled_real_mnemonic_widget_changed;
+  klass->mnemonic_widget_changed = ligma_labeled_real_mnemonic_widget_changed;
 
   /**
-   * GimpLabeled:label:
+   * LigmaLabeled:label:
    *
    * Label text with pango markup and mnemonic.
    *
@@ -110,20 +110,20 @@ gimp_labeled_class_init (GimpLabeledClass *klass)
                                                         "Label text",
                                                         "The text of the label part of this widget",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_labeled_init (GimpLabeled *labeled)
+ligma_labeled_init (LigmaLabeled *labeled)
 {
 }
 
 static void
-gimp_labeled_constructed (GObject *object)
+ligma_labeled_constructed (GObject *object)
 {
-  GimpLabeledClass   *klass;
-  GimpLabeled        *labeled = GIMP_LABELED (object);
-  GimpLabeledPrivate *priv    = gimp_labeled_get_instance_private (labeled);
+  LigmaLabeledClass   *klass;
+  LigmaLabeled        *labeled = LIGMA_LABELED (object);
+  LigmaLabeledPrivate *priv    = ligma_labeled_get_instance_private (labeled);
   GtkWidget          *mnemonic_widget;
   gint                x       = 0;
   gint                y       = 0;
@@ -135,7 +135,7 @@ gimp_labeled_constructed (GObject *object)
   priv->label = gtk_label_new_with_mnemonic (NULL);
   gtk_label_set_xalign (GTK_LABEL (priv->label), 0.0);
 
-  klass = GIMP_LABELED_GET_CLASS (labeled);
+  klass = LIGMA_LABELED_GET_CLASS (labeled);
   g_return_if_fail (klass->populate);
   mnemonic_widget = klass->populate (labeled, &x, &y, &width, &height);
 
@@ -147,13 +147,13 @@ gimp_labeled_constructed (GObject *object)
 }
 
 static void
-gimp_labeled_set_property (GObject      *object,
+ligma_labeled_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpLabeled        *entry = GIMP_LABELED (object);
-  GimpLabeledPrivate *priv  = gimp_labeled_get_instance_private (entry);
+  LigmaLabeled        *entry = LIGMA_LABELED (object);
+  LigmaLabeledPrivate *priv  = ligma_labeled_get_instance_private (entry);
 
   switch (property_id)
     {
@@ -177,13 +177,13 @@ gimp_labeled_set_property (GObject      *object,
 }
 
 static void
-gimp_labeled_get_property (GObject    *object,
+ligma_labeled_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpLabeled        *entry = GIMP_LABELED (object);
-  GimpLabeledPrivate *priv  = gimp_labeled_get_instance_private (entry);
+  LigmaLabeled        *entry = LIGMA_LABELED (object);
+  LigmaLabeledPrivate *priv  = ligma_labeled_get_instance_private (entry);
 
   switch (property_id)
     {
@@ -198,10 +198,10 @@ gimp_labeled_get_property (GObject    *object,
 }
 
 static void
-gimp_labeled_real_mnemonic_widget_changed (GimpLabeled *labeled,
+ligma_labeled_real_mnemonic_widget_changed (LigmaLabeled *labeled,
                                            GtkWidget   *widget)
 {
-  GimpLabeledPrivate *priv  = gimp_labeled_get_instance_private (labeled);
+  LigmaLabeledPrivate *priv  = ligma_labeled_get_instance_private (labeled);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (priv->label), widget);
 }
@@ -209,8 +209,8 @@ gimp_labeled_real_mnemonic_widget_changed (GimpLabeled *labeled,
 /* Public functions */
 
 /**
- * gimp_labeled_get_label:
- * @labeled: The #GimpLabeled.
+ * ligma_labeled_get_label:
+ * @labeled: The #LigmaLabeled.
  *
  * This function returns the #GtkLabel packed in @labeled. This can be
  * useful if you need to customize some aspects of the widget.
@@ -218,57 +218,57 @@ gimp_labeled_real_mnemonic_widget_changed (GimpLabeled *labeled,
  * Returns: (transfer none) (type GtkLabel): The #GtkLabel contained in @labeled.
  **/
 GtkWidget *
-gimp_labeled_get_label (GimpLabeled *labeled)
+ligma_labeled_get_label (LigmaLabeled *labeled)
 {
-  GimpLabeledPrivate *priv = gimp_labeled_get_instance_private (labeled);
+  LigmaLabeledPrivate *priv = ligma_labeled_get_instance_private (labeled);
 
-  g_return_val_if_fail (GIMP_IS_LABELED (labeled), NULL);
+  g_return_val_if_fail (LIGMA_IS_LABELED (labeled), NULL);
 
   return priv->label;
 }
 
 /**
- * gimp_labeled_get_text:
- * @labeled: the #GimpLabeled.
+ * ligma_labeled_get_text:
+ * @labeled: the #LigmaLabeled.
  *
  * This function will return exactly what you entered with
- * gimp_labeled_set_text() or through the "label" property because this
+ * ligma_labeled_set_text() or through the "label" property because this
  * class expects labels to have mnemonics (and allows Pango formatting).
  * To obtain instead the text as displayed with mnemonics and markup
  * removed, call:
  * |[<!-- language="C" -->
- * gtk_label_get_text (GTK_LABEL (gimp_labeled_get_label (@labeled)));
+ * gtk_label_get_text (GTK_LABEL (ligma_labeled_get_label (@labeled)));
  * ]|
  *
  * Returns: the label text as entered, which includes pango markup and
  *          mnemonics similarly to gtk_label_get_label().
  */
 const gchar *
-gimp_labeled_get_text (GimpLabeled *labeled)
+ligma_labeled_get_text (LigmaLabeled *labeled)
 {
-  GimpLabeledPrivate *priv = gimp_labeled_get_instance_private (labeled);
+  LigmaLabeledPrivate *priv = ligma_labeled_get_instance_private (labeled);
 
-  g_return_val_if_fail (GIMP_IS_LABELED (labeled), NULL);
+  g_return_val_if_fail (LIGMA_IS_LABELED (labeled), NULL);
 
   return gtk_label_get_label (GTK_LABEL (priv->label));
 }
 
 /**
- * gimp_labeled_set_text:
- * @labeled: the #GimpLabeled.
+ * ligma_labeled_set_text:
+ * @labeled: the #LigmaLabeled.
  * @text: label text with Pango markup and mnemonic.
  *
  * This is the equivalent of running
  * gtk_label_set_markup_with_mnemonic() on the #GtkLabel as a
- * #GimpLabeled expects a mnemonic. Pango markup are also allowed.
+ * #LigmaLabeled expects a mnemonic. Pango markup are also allowed.
  */
 void
-gimp_labeled_set_text (GimpLabeled *labeled,
+ligma_labeled_set_text (LigmaLabeled *labeled,
                        const gchar *text)
 {
-  GimpLabeledPrivate *priv = gimp_labeled_get_instance_private (labeled);
+  LigmaLabeledPrivate *priv = ligma_labeled_get_instance_private (labeled);
 
-  g_return_if_fail (GIMP_IS_LABELED (labeled));
+  g_return_if_fail (LIGMA_IS_LABELED (labeled));
 
   gtk_label_set_markup_with_mnemonic (GTK_LABEL (priv->label), text);
 }

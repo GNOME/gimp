@@ -13,21 +13,21 @@ init_target (){
 	echo "Cleaning Target $1"
 	rm -rf targets/$1 || true
 	mkdir -p targets/$1/_jhbuild/manifests
-	cp -a targets/gimp-common$EXT/_jhbuild/manifests/* targets/$1/_jhbuild/manifests
-	cp -a targets/gimp-common$EXT/_jhbuild/packagedb.xml targets/$1/_jhbuild/
+	cp -a targets/ligma-common$EXT/_jhbuild/manifests/* targets/$1/_jhbuild/manifests
+	cp -a targets/ligma-common$EXT/_jhbuild/packagedb.xml targets/$1/_jhbuild/
 }
 
 chmod a-w win32.cache
 
-export MODULE=gimp-common
-jhbuild --file=build.jhbuildrc $* build gimp-common || true
+export MODULE=ligma-common
+jhbuild --file=build.jhbuildrc $* build ligma-common || true
 
-./targetisunchanged gimp-common$EXT gimp-stable$EXT || init_target gimp-stable$EXT
-export MODULE=gimp-stable
-jhbuild --file=build.jhbuildrc $* build --start-at=gimp-common || true
+./targetisunchanged ligma-common$EXT ligma-stable$EXT || init_target ligma-stable$EXT
+export MODULE=ligma-stable
+jhbuild --file=build.jhbuildrc $* build --start-at=ligma-common || true
 
-./targetisunchanged gimp-common$EXT gimp-dev$EXT || init_target gimp-dev$EXT
-export MODULE=gimp-dev
-jhbuild --file=build.jhbuildrc $* build --start-at=gimp-common || true
+./targetisunchanged ligma-common$EXT ligma-dev$EXT || init_target ligma-dev$EXT
+export MODULE=ligma-dev
+jhbuild --file=build.jhbuildrc $* build --start-at=ligma-common || true
 
 chmod u+w win32.cache

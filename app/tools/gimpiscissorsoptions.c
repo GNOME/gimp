@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpiscissorstool.h"
-#include "gimpiscissorsoptions.h"
+#include "ligmaiscissorstool.h"
+#include "ligmaiscissorsoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -41,51 +41,51 @@ enum
 };
 
 
-static void   gimp_iscissors_options_set_property (GObject      *object,
+static void   ligma_iscissors_options_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
                                                    GParamSpec   *pspec);
-static void   gimp_iscissors_options_get_property (GObject      *object,
+static void   ligma_iscissors_options_get_property (GObject      *object,
                                                    guint         property_id,
                                                    GValue       *value,
                                                    GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpIscissorsOptions, gimp_iscissors_options,
-               GIMP_TYPE_SELECTION_OPTIONS)
+G_DEFINE_TYPE (LigmaIscissorsOptions, ligma_iscissors_options,
+               LIGMA_TYPE_SELECTION_OPTIONS)
 
-#define parent_class gimp_iscissors_options_parent_class
+#define parent_class ligma_iscissors_options_parent_class
 
 
 static void
-gimp_iscissors_options_class_init (GimpIscissorsOptionsClass *klass)
+ligma_iscissors_options_class_init (LigmaIscissorsOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_iscissors_options_set_property;
-  object_class->get_property = gimp_iscissors_options_get_property;
+  object_class->set_property = ligma_iscissors_options_set_property;
+  object_class->get_property = ligma_iscissors_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
                             "interactive",
                             _("Interactive boundary"),
                             _("Display future selection segment "
                               "as you drag a control node"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_iscissors_options_init (GimpIscissorsOptions *options)
+ligma_iscissors_options_init (LigmaIscissorsOptions *options)
 {
 }
 
 static void
-gimp_iscissors_options_set_property (GObject      *object,
+ligma_iscissors_options_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpIscissorsOptions *options = GIMP_ISCISSORS_OPTIONS (object);
+  LigmaIscissorsOptions *options = LIGMA_ISCISSORS_OPTIONS (object);
 
   switch (property_id)
     {
@@ -100,12 +100,12 @@ gimp_iscissors_options_set_property (GObject      *object,
 }
 
 static void
-gimp_iscissors_options_get_property (GObject    *object,
+ligma_iscissors_options_get_property (GObject    *object,
                                      guint       property_id,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpIscissorsOptions *options = GIMP_ISCISSORS_OPTIONS (object);
+  LigmaIscissorsOptions *options = LIGMA_ISCISSORS_OPTIONS (object);
 
   switch (property_id)
     {
@@ -120,13 +120,13 @@ gimp_iscissors_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_iscissors_options_gui (GimpToolOptions *tool_options)
+ligma_iscissors_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config  = G_OBJECT (tool_options);
-  GtkWidget *vbox    = gimp_selection_options_gui (tool_options);
+  GtkWidget *vbox    = ligma_selection_options_gui (tool_options);
   GtkWidget *button;
 
-  button = gimp_prop_check_button_new (config, "interactive", NULL);
+  button = ligma_prop_check_button_new (config, "interactive", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   return vbox;

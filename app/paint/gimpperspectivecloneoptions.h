@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,37 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PERSPECTIVE_CLONE_OPTIONS_H__
-#define __GIMP_PERSPECTIVE_CLONE_OPTIONS_H__
+#ifndef __LIGMA_PERSPECTIVE_CLONE_OPTIONS_H__
+#define __LIGMA_PERSPECTIVE_CLONE_OPTIONS_H__
 
 
-#include "gimpcloneoptions.h"
+#include "ligmacloneoptions.h"
 
 
-#define GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS            (gimp_perspective_clone_options_get_type ())
-#define GIMP_PERSPECTIVE_CLONE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS, GimpPerspectiveCloneOptions))
-#define GIMP_PERSPECTIVE_CLONE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS, GimpPerspectiveCloneOptionsClass))
-#define GIMP_IS_PERSPECTIVE_CLONE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS))
-#define GIMP_IS_PERSPECTIVE_CLONE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS))
-#define GIMP_PERSPECTIVE_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS, GimpPerspectiveCloneOptionsClass))
+#define LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS            (ligma_perspective_clone_options_get_type ())
+#define LIGMA_PERSPECTIVE_CLONE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS, LigmaPerspectiveCloneOptions))
+#define LIGMA_PERSPECTIVE_CLONE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS, LigmaPerspectiveCloneOptionsClass))
+#define LIGMA_IS_PERSPECTIVE_CLONE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS))
+#define LIGMA_IS_PERSPECTIVE_CLONE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS))
+#define LIGMA_PERSPECTIVE_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_OPTIONS, LigmaPerspectiveCloneOptionsClass))
 
 
-typedef struct _GimpPerspectiveCloneOptionsClass GimpPerspectiveCloneOptionsClass;
+typedef struct _LigmaPerspectiveCloneOptionsClass LigmaPerspectiveCloneOptionsClass;
 
-struct _GimpPerspectiveCloneOptions
+struct _LigmaPerspectiveCloneOptions
 {
-  GimpCloneOptions          paint_instance;
+  LigmaCloneOptions          paint_instance;
 
-  GimpPerspectiveCloneMode  clone_mode;
+  LigmaPerspectiveCloneMode  clone_mode;
 };
 
-struct _GimpPerspectiveCloneOptionsClass
+struct _LigmaPerspectiveCloneOptionsClass
 {
-  GimpCloneOptionsClass  parent_class;
+  LigmaCloneOptionsClass  parent_class;
 };
 
 
-GType   gimp_perspective_clone_options_get_type (void) G_GNUC_CONST;
+GType   ligma_perspective_clone_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_PERSPECTIVE_CLONE_OPTIONS_H__  */
+#endif  /*  __LIGMA_PERSPECTIVE_CLONE_OPTIONS_H__  */

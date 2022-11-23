@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,20 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_FLIP_H__
-#define __GIMP_IMAGE_FLIP_H__
+#ifndef __LIGMA_IMAGE_FLIP_H__
+#define __LIGMA_IMAGE_FLIP_H__
 
 
-void   gimp_image_flip      (GimpImage           *image,
-                             GimpContext         *context,
-                             GimpOrientationType  flip_type,
-                             GimpProgress        *progress);
-void   gimp_image_flip_full (GimpImage           *image,
-                             GimpContext         *context,
-                             GimpOrientationType  flip_type,
+void   ligma_image_flip      (LigmaImage           *image,
+                             LigmaContext         *context,
+                             LigmaOrientationType  flip_type,
+                             LigmaProgress        *progress);
+void   ligma_image_flip_full (LigmaImage           *image,
+                             LigmaContext         *context,
+                             LigmaOrientationType  flip_type,
                              gdouble              axis,
                              gboolean             clip_result,
-                             GimpProgress        *progress);
+                             LigmaProgress        *progress);
 
 
-#endif /* __GIMP_IMAGE_FLIP_H__ */
+#endif /* __LIGMA_IMAGE_FLIP_H__ */

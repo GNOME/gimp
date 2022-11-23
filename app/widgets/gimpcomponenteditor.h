@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcomponenteditor.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmacomponenteditor.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COMPONENT_EDITOR_H__
-#define __GIMP_COMPONENT_EDITOR_H__
+#ifndef __LIGMA_COMPONENT_EDITOR_H__
+#define __LIGMA_COMPONENT_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_COMPONENT_EDITOR            (gimp_component_editor_get_type ())
-#define GIMP_COMPONENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMPONENT_EDITOR, GimpComponentEditor))
-#define GIMP_COMPONENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMPONENT_EDITOR, GimpComponentEditorClass))
-#define GIMP_IS_COMPONENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COMPONENT_EDITOR))
-#define GIMP_IS_COMPONENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMPONENT_EDITOR))
-#define GIMP_COMPONENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COMPONENT_EDITOR, GimpComponentEditorClass))
+#define LIGMA_TYPE_COMPONENT_EDITOR            (ligma_component_editor_get_type ())
+#define LIGMA_COMPONENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COMPONENT_EDITOR, LigmaComponentEditor))
+#define LIGMA_COMPONENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COMPONENT_EDITOR, LigmaComponentEditorClass))
+#define LIGMA_IS_COMPONENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COMPONENT_EDITOR))
+#define LIGMA_IS_COMPONENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COMPONENT_EDITOR))
+#define LIGMA_COMPONENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COMPONENT_EDITOR, LigmaComponentEditorClass))
 
 
-typedef struct _GimpComponentEditorClass  GimpComponentEditorClass;
+typedef struct _LigmaComponentEditorClass  LigmaComponentEditorClass;
 
-struct _GimpComponentEditor
+struct _LigmaComponentEditor
 {
-  GimpImageEditor    parent_instance;
+  LigmaImageEditor    parent_instance;
 
   gint               view_size;
 
@@ -49,21 +49,21 @@ struct _GimpComponentEditor
   GtkCellRenderer   *eye_cell;
   GtkCellRenderer   *renderer_cell;
 
-  GimpChannelType    clicked_component;
+  LigmaChannelType    clicked_component;
 };
 
-struct _GimpComponentEditorClass
+struct _LigmaComponentEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_component_editor_get_type      (void) G_GNUC_CONST;
+GType       ligma_component_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_component_editor_new           (gint                 view_size,
-                                                 GimpMenuFactory     *menu_factory);
-void        gimp_component_editor_set_view_size (GimpComponentEditor *editor,
+GtkWidget * ligma_component_editor_new           (gint                 view_size,
+                                                 LigmaMenuFactory     *menu_factory);
+void        ligma_component_editor_set_view_size (LigmaComponentEditor *editor,
                                                  gint                 view_size);
 
 
-#endif  /*  __GIMP_COMPONENT_EDITOR_H__  */
+#endif  /*  __LIGMA_COMPONENT_EDITOR_H__  */

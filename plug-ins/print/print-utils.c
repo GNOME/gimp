@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "print-utils.h"
 
@@ -30,7 +30,7 @@ print_utils_key_file_load_from_rcfile (const gchar *basename)
 
   g_return_val_if_fail (basename != NULL, NULL);
 
-  filename = g_build_filename (gimp_directory (), basename, NULL);
+  filename = g_build_filename (ligma_directory (), basename, NULL);
 
   key_file = g_key_file_new ();
 
@@ -46,10 +46,10 @@ print_utils_key_file_load_from_rcfile (const gchar *basename)
 }
 
 GKeyFile *
-print_utils_key_file_load_from_parasite (GimpImage   *image,
+print_utils_key_file_load_from_parasite (LigmaImage   *image,
                                          const gchar *parasite_name)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   GKeyFile     *key_file;
   GError       *error = NULL;
   const gchar  *parasite_data;
@@ -58,19 +58,19 @@ print_utils_key_file_load_from_parasite (GimpImage   *image,
 
   g_return_val_if_fail (parasite_name != NULL, NULL);
 
-  parasite = gimp_image_get_parasite (image, parasite_name);
+  parasite = ligma_image_get_parasite (image, parasite_name);
 
   if (! parasite)
     return NULL;
 
   key_file = g_key_file_new ();
 
-  parasite_data = gimp_parasite_get_data (parasite, &parasite_size);
+  parasite_data = ligma_parasite_get_data (parasite, &parasite_size);
   if (! g_key_file_load_from_data (key_file, parasite_data, parasite_size,
                                    G_KEY_FILE_NONE, &error))
     {
       g_key_file_free (key_file);
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
 
       g_warning ("Unable to create key file from image parasite '%s': %s",
                  parasite_name, error->message);
@@ -78,7 +78,7 @@ print_utils_key_file_load_from_parasite (GimpImage   *image,
       return NULL;
     }
 
-  gimp_parasite_free (parasite);
+  ligma_parasite_free (parasite);
 
   return key_file;
 }
@@ -104,12 +104,12 @@ print_utils_key_file_save_as_rcfile (GKeyFile    *key_file,
       return;
     }
 
-  filename = g_build_filename (gimp_directory (), basename, NULL);
+  filename = g_build_filename (ligma_directory (), basename, NULL);
 
   if (! g_file_set_contents (filename, contents, length, &error))
     {
       g_warning ("Unable to write settings to '%s': %s",
-                 gimp_filename_to_utf8 (filename), error->message);
+                 ligma_filename_to_utf8 (filename), error->message);
       g_error_free (error);
     }
 
@@ -119,10 +119,10 @@ print_utils_key_file_save_as_rcfile (GKeyFile    *key_file,
 
 void
 print_utils_key_file_save_as_parasite (GKeyFile    *key_file,
-                                       GimpImage   *image,
+                                       LigmaImage   *image,
                                        const gchar *parasite_name)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   gchar        *contents;
   gsize         length;
   GError       *error = NULL;
@@ -139,9 +139,9 @@ print_utils_key_file_save_as_parasite (GKeyFile    *key_file,
       return;
     }
 
-  parasite = gimp_parasite_new (parasite_name, 0, length, contents);
+  parasite = ligma_parasite_new (parasite_name, 0, length, contents);
   g_free (contents);
 
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
 }

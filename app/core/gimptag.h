@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptag.h
+ * ligmatag.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_H__
-#define __GIMP_TAG_H__
+#ifndef __LIGMA_TAG_H__
+#define __LIGMA_TAG_H__
 
 
 #include <glib-object.h>
 
 
-#define GIMP_TYPE_TAG            (gimp_tag_get_type ())
-#define GIMP_TAG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG, GimpTag))
-#define GIMP_TAG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG, GimpTagClass))
-#define GIMP_IS_TAG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAG))
-#define GIMP_IS_TAG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TAG))
-#define GIMP_TAG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG, GimpTagClass))
+#define LIGMA_TYPE_TAG            (ligma_tag_get_type ())
+#define LIGMA_TAG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TAG, LigmaTag))
+#define LIGMA_TAG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TAG, LigmaTagClass))
+#define LIGMA_IS_TAG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TAG))
+#define LIGMA_IS_TAG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TAG))
+#define LIGMA_TAG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TAG, LigmaTagClass))
 
 
-typedef struct _GimpTagClass    GimpTagClass;
+typedef struct _LigmaTagClass    LigmaTagClass;
 
-struct _GimpTag
+struct _LigmaTag
 {
   GObject parent_instance;
 
@@ -45,36 +45,36 @@ struct _GimpTag
   gboolean internal; /* Tags that are not serialized to disk */
 };
 
-struct _GimpTagClass
+struct _LigmaTagClass
 {
   GObjectClass parent_class;
 };
 
-GType         gimp_tag_get_type            (void) G_GNUC_CONST;
+GType         ligma_tag_get_type            (void) G_GNUC_CONST;
 
-GimpTag     * gimp_tag_new                 (const gchar *tag_string);
-GimpTag     * gimp_tag_try_new             (const gchar *tag_string);
+LigmaTag     * ligma_tag_new                 (const gchar *tag_string);
+LigmaTag     * ligma_tag_try_new             (const gchar *tag_string);
 
-const gchar * gimp_tag_get_name            (GimpTag     *tag);
-guint         gimp_tag_get_hash            (GimpTag     *tag);
+const gchar * ligma_tag_get_name            (LigmaTag     *tag);
+guint         ligma_tag_get_hash            (LigmaTag     *tag);
 
-gboolean      gimp_tag_get_internal        (GimpTag     *tag);
-void          gimp_tag_set_internal        (GimpTag     *tag,
+gboolean      ligma_tag_get_internal        (LigmaTag     *tag);
+void          ligma_tag_set_internal        (LigmaTag     *tag,
                                             gboolean     internal);
 
-gboolean      gimp_tag_equals              (GimpTag     *tag,
-                                            GimpTag     *other);
-gint          gimp_tag_compare_func        (const void  *p1,
+gboolean      ligma_tag_equals              (LigmaTag     *tag,
+                                            LigmaTag     *other);
+gint          ligma_tag_compare_func        (const void  *p1,
                                             const void  *p2);
-gint          gimp_tag_compare_with_string (GimpTag     *tag,
+gint          ligma_tag_compare_with_string (LigmaTag     *tag,
                                             const gchar *tag_string);
-gboolean      gimp_tag_has_prefix          (GimpTag     *tag,
+gboolean      ligma_tag_has_prefix          (LigmaTag     *tag,
                                             const gchar *prefix_string);
-gchar       * gimp_tag_string_make_valid   (const gchar *tag_string);
-gboolean      gimp_tag_is_tag_separator    (gunichar     c);
+gchar       * ligma_tag_string_make_valid   (const gchar *tag_string);
+gboolean      ligma_tag_is_tag_separator    (gunichar     c);
 
-void          gimp_tag_or_null_ref         (GimpTag     *tag_or_null);
-void          gimp_tag_or_null_unref       (GimpTag     *tag_or_null);
+void          ligma_tag_or_null_ref         (LigmaTag     *tag_or_null);
+void          ligma_tag_or_null_unref       (LigmaTag     *tag_or_null);
 
 
-#endif /* __GIMP_TAG_H__ */
+#endif /* __LIGMA_TAG_H__ */

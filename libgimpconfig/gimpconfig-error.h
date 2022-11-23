@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
-#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#if !defined (__LIGMA_CONFIG_H_INSIDE__) && !defined (LIGMA_CONFIG_COMPILATION)
+#error "Only <libligmaconfig/ligmaconfig.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CONFIG_ERROR_H__
-#define __GIMP_CONFIG_ERROR_H__
+#ifndef __LIGMA_CONFIG_ERROR_H__
+#define __LIGMA_CONFIG_ERROR_H__
 
 G_BEGIN_DECLS
 
@@ -31,29 +31,29 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpConfigError:
- * @GIMP_CONFIG_ERROR_OPEN:        open failed
- * @GIMP_CONFIG_ERROR_OPEN_ENOENT: file does not exist
- * @GIMP_CONFIG_ERROR_WRITE:       write failed
- * @GIMP_CONFIG_ERROR_PARSE:       parser error
- * @GIMP_CONFIG_ERROR_VERSION:     parser failed due to version mismatch
+ * LigmaConfigError:
+ * @LIGMA_CONFIG_ERROR_OPEN:        open failed
+ * @LIGMA_CONFIG_ERROR_OPEN_ENOENT: file does not exist
+ * @LIGMA_CONFIG_ERROR_WRITE:       write failed
+ * @LIGMA_CONFIG_ERROR_PARSE:       parser error
+ * @LIGMA_CONFIG_ERROR_VERSION:     parser failed due to version mismatch
  *
- * The possible values of a #GError thrown by libgimpconfig.
+ * The possible values of a #GError thrown by libligmaconfig.
  **/
 typedef enum
 {
-  GIMP_CONFIG_ERROR_OPEN,
-  GIMP_CONFIG_ERROR_OPEN_ENOENT,
-  GIMP_CONFIG_ERROR_WRITE,
-  GIMP_CONFIG_ERROR_PARSE,
-  GIMP_CONFIG_ERROR_VERSION
-} GimpConfigError;
+  LIGMA_CONFIG_ERROR_OPEN,
+  LIGMA_CONFIG_ERROR_OPEN_ENOENT,
+  LIGMA_CONFIG_ERROR_WRITE,
+  LIGMA_CONFIG_ERROR_PARSE,
+  LIGMA_CONFIG_ERROR_VERSION
+} LigmaConfigError;
 
-#define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
+#define LIGMA_CONFIG_ERROR (ligma_config_error_quark ())
 
-GQuark        gimp_config_error_quark   (void) G_GNUC_CONST;
+GQuark        ligma_config_error_quark   (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_CONFIG_ERROR_H__ */
+#endif  /* __LIGMA_CONFIG_ERROR_H__ */

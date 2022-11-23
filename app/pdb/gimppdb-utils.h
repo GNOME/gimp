@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,106 +15,106 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_UTILS_H__
-#define __GIMP_PDB_UTILS_H__
+#ifndef __LIGMA_PDB_UTILS_H__
+#define __LIGMA_PDB_UTILS_H__
 
 
-GimpBrush     * gimp_pdb_get_brush              (Gimp               *gimp,
+LigmaBrush     * ligma_pdb_get_brush              (Ligma               *ligma,
                                                  const gchar        *name,
-                                                 GimpPDBDataAccess   access,
+                                                 LigmaPDBDataAccess   access,
                                                  GError            **error);
-GimpBrush     * gimp_pdb_get_generated_brush    (Gimp               *gimp,
+LigmaBrush     * ligma_pdb_get_generated_brush    (Ligma               *ligma,
                                                  const gchar        *name,
-                                                 GimpPDBDataAccess   access,
+                                                 LigmaPDBDataAccess   access,
                                                  GError            **error);
-GimpDynamics  * gimp_pdb_get_dynamics           (Gimp               *gimp,
+LigmaDynamics  * ligma_pdb_get_dynamics           (Ligma               *ligma,
                                                  const gchar        *name,
-                                                 GimpPDBDataAccess   access,
+                                                 LigmaPDBDataAccess   access,
                                                  GError            **error);
-GimpMybrush   * gimp_pdb_get_mybrush            (Gimp               *gimp,
+LigmaMybrush   * ligma_pdb_get_mybrush            (Ligma               *ligma,
                                                  const gchar        *name,
-                                                 GimpPDBDataAccess   access,
+                                                 LigmaPDBDataAccess   access,
                                                  GError            **error);
-GimpPattern   * gimp_pdb_get_pattern            (Gimp               *gimp,
-                                                 const gchar        *name,
-                                                 GError            **error);
-GimpGradient  * gimp_pdb_get_gradient           (Gimp               *gimp,
-                                                 const gchar        *name,
-                                                 GimpPDBDataAccess   access,
-                                                 GError            **error);
-GimpPalette   * gimp_pdb_get_palette            (Gimp               *gimp,
-                                                 const gchar        *name,
-                                                 GimpPDBDataAccess   access,
-                                                 GError            **error);
-GimpFont      * gimp_pdb_get_font               (Gimp               *gimp,
+LigmaPattern   * ligma_pdb_get_pattern            (Ligma               *ligma,
                                                  const gchar        *name,
                                                  GError            **error);
-GimpBuffer    * gimp_pdb_get_buffer             (Gimp               *gimp,
+LigmaGradient  * ligma_pdb_get_gradient           (Ligma               *ligma,
+                                                 const gchar        *name,
+                                                 LigmaPDBDataAccess   access,
+                                                 GError            **error);
+LigmaPalette   * ligma_pdb_get_palette            (Ligma               *ligma,
+                                                 const gchar        *name,
+                                                 LigmaPDBDataAccess   access,
+                                                 GError            **error);
+LigmaFont      * ligma_pdb_get_font               (Ligma               *ligma,
                                                  const gchar        *name,
                                                  GError            **error);
-GimpPaintInfo * gimp_pdb_get_paint_info         (Gimp               *gimp,
+LigmaBuffer    * ligma_pdb_get_buffer             (Ligma               *ligma,
+                                                 const gchar        *name,
+                                                 GError            **error);
+LigmaPaintInfo * ligma_pdb_get_paint_info         (Ligma               *ligma,
                                                  const gchar        *name,
                                                  GError            **error);
 
-gboolean        gimp_pdb_item_is_attached       (GimpItem           *item,
-                                                 GimpImage          *image,
-                                                 GimpPDBItemModify   modify,
+gboolean        ligma_pdb_item_is_attached       (LigmaItem           *item,
+                                                 LigmaImage          *image,
+                                                 LigmaPDBItemModify   modify,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_in_tree        (GimpItem           *item,
-                                                 GimpImage          *image,
-                                                 GimpPDBItemModify   modify,
+gboolean        ligma_pdb_item_is_in_tree        (LigmaItem           *item,
+                                                 LigmaImage          *image,
+                                                 LigmaPDBItemModify   modify,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_in_same_tree   (GimpItem           *item,
-                                                 GimpItem           *item2,
-                                                 GimpImage          *image,
+gboolean        ligma_pdb_item_is_in_same_tree   (LigmaItem           *item,
+                                                 LigmaItem           *item2,
+                                                 LigmaImage          *image,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_not_ancestor   (GimpItem           *item,
-                                                 GimpItem           *not_descendant,
+gboolean        ligma_pdb_item_is_not_ancestor   (LigmaItem           *item,
+                                                 LigmaItem           *not_descendant,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
-                                                 GimpImage          *dest_image,
+gboolean        ligma_pdb_item_is_floating       (LigmaItem           *item,
+                                                 LigmaImage          *dest_image,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_modifiable     (GimpItem           *item,
-                                                 GimpPDBItemModify   modify,
+gboolean        ligma_pdb_item_is_modifiable     (LigmaItem           *item,
+                                                 LigmaPDBItemModify   modify,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_group          (GimpItem           *item,
+gboolean        ligma_pdb_item_is_group          (LigmaItem           *item,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_not_group      (GimpItem           *item,
-                                                 GError            **error);
-
-gboolean        gimp_pdb_layer_is_text_layer    (GimpLayer          *layer,
-                                                 GimpPDBItemModify   modify,
+gboolean        ligma_pdb_item_is_not_group      (LigmaItem           *item,
                                                  GError            **error);
 
-gboolean        gimp_pdb_image_is_base_type     (GimpImage          *image,
-                                                 GimpImageBaseType   type,
-                                                 GError            **error);
-gboolean        gimp_pdb_image_is_not_base_type (GimpImage          *image,
-                                                 GimpImageBaseType   type,
+gboolean        ligma_pdb_layer_is_text_layer    (LigmaLayer          *layer,
+                                                 LigmaPDBItemModify   modify,
                                                  GError            **error);
 
-gboolean        gimp_pdb_image_is_precision     (GimpImage          *image,
-                                                 GimpPrecision       precision,
+gboolean        ligma_pdb_image_is_base_type     (LigmaImage          *image,
+                                                 LigmaImageBaseType   type,
                                                  GError            **error);
-gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
-                                                 GimpPrecision       precision,
+gboolean        ligma_pdb_image_is_not_base_type (LigmaImage          *image,
+                                                 LigmaImageBaseType   type,
                                                  GError            **error);
 
-GimpGuide     * gimp_pdb_image_get_guide        (GimpImage          *image,
+gboolean        ligma_pdb_image_is_precision     (LigmaImage          *image,
+                                                 LigmaPrecision       precision,
+                                                 GError            **error);
+gboolean        ligma_pdb_image_is_not_precision (LigmaImage          *image,
+                                                 LigmaPrecision       precision,
+                                                 GError            **error);
+
+LigmaGuide     * ligma_pdb_image_get_guide        (LigmaImage          *image,
                                                  gint                guide_id,
                                                  GError            **error);
-GimpSamplePoint *
-                gimp_pdb_image_get_sample_point (GimpImage          *image,
+LigmaSamplePoint *
+                ligma_pdb_image_get_sample_point (LigmaImage          *image,
                                                  gint                sample_point_id,
                                                  GError            **error);
 
-GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
+LigmaStroke    * ligma_pdb_get_vectors_stroke     (LigmaVectors        *vectors,
                                                  gint                stroke_id,
-                                                 GimpPDBItemModify   modify,
+                                                 LigmaPDBItemModify   modify,
                                                  GError            **error);
 
-gboolean        gimp_pdb_is_canonical_procedure (const gchar        *procedure_name,
+gboolean        ligma_pdb_is_canonical_procedure (const gchar        *procedure_name,
                                                  GError            **error);
 
 
-#endif /* __GIMP_PDB_UTILS_H__ */
+#endif /* __LIGMA_PDB_UTILS_H__ */

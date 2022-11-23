@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGuide
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGuide
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpguide.h"
+#include "ligmaguide.h"
 
 
 enum
@@ -39,72 +39,72 @@ enum
 };
 
 
-struct _GimpGuidePrivate
+struct _LigmaGuidePrivate
 {
-  GimpOrientationType  orientation;
+  LigmaOrientationType  orientation;
   gint                 position;
 
-  GimpGuideStyle       style;
+  LigmaGuideStyle       style;
 };
 
 
-static void   gimp_guide_get_property (GObject      *object,
+static void   ligma_guide_get_property (GObject      *object,
                                        guint         property_id,
                                        GValue       *value,
                                        GParamSpec   *pspec);
-static void   gimp_guide_set_property (GObject      *object,
+static void   ligma_guide_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaGuide, ligma_guide, LIGMA_TYPE_AUX_ITEM)
 
 
 static void
-gimp_guide_class_init (GimpGuideClass *klass)
+ligma_guide_class_init (LigmaGuideClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->get_property = gimp_guide_get_property;
-  object_class->set_property = gimp_guide_set_property;
+  object_class->get_property = ligma_guide_get_property;
+  object_class->set_property = ligma_guide_set_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
                          "orientation",
                          NULL, NULL,
-                         GIMP_TYPE_ORIENTATION_TYPE,
-                         GIMP_ORIENTATION_UNKNOWN,
+                         LIGMA_TYPE_ORIENTATION_TYPE,
+                         LIGMA_ORIENTATION_UNKNOWN,
                          0);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_POSITION,
                         "position",
                         NULL, NULL,
-                        GIMP_GUIDE_POSITION_UNDEFINED,
-                        GIMP_MAX_IMAGE_SIZE,
-                        GIMP_GUIDE_POSITION_UNDEFINED,
+                        LIGMA_GUIDE_POSITION_UNDEFINED,
+                        LIGMA_MAX_IMAGE_SIZE,
+                        LIGMA_GUIDE_POSITION_UNDEFINED,
                         0);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
                          "style",
                          NULL, NULL,
-                         GIMP_TYPE_GUIDE_STYLE,
-                         GIMP_GUIDE_STYLE_NONE,
+                         LIGMA_TYPE_GUIDE_STYLE,
+                         LIGMA_GUIDE_STYLE_NONE,
                          0);
 }
 
 static void
-gimp_guide_init (GimpGuide *guide)
+ligma_guide_init (LigmaGuide *guide)
 {
-  guide->priv = gimp_guide_get_instance_private (guide);
+  guide->priv = ligma_guide_get_instance_private (guide);
 }
 
 static void
-gimp_guide_get_property (GObject    *object,
+ligma_guide_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpGuide *guide = GIMP_GUIDE (object);
+  LigmaGuide *guide = LIGMA_GUIDE (object);
 
   switch (property_id)
     {
@@ -124,12 +124,12 @@ gimp_guide_get_property (GObject    *object,
 }
 
 static void
-gimp_guide_set_property (GObject      *object,
+ligma_guide_set_property (GObject      *object,
                          guint         property_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpGuide *guide = GIMP_GUIDE (object);
+  LigmaGuide *guide = LIGMA_GUIDE (object);
 
   switch (property_id)
     {
@@ -148,22 +148,22 @@ gimp_guide_set_property (GObject      *object,
     }
 }
 
-GimpGuide *
-gimp_guide_new (GimpOrientationType  orientation,
+LigmaGuide *
+ligma_guide_new (LigmaOrientationType  orientation,
                 guint32              guide_ID)
 {
-  return g_object_new (GIMP_TYPE_GUIDE,
+  return g_object_new (LIGMA_TYPE_GUIDE,
                        "id",          guide_ID,
                        "orientation", orientation,
-                       "style",       GIMP_GUIDE_STYLE_NORMAL,
+                       "style",       LIGMA_GUIDE_STYLE_NORMAL,
                        NULL);
 }
 
 /**
- * gimp_guide_custom_new:
- * @orientation:       the #GimpOrientationType
+ * ligma_guide_custom_new:
+ * @orientation:       the #LigmaOrientationType
  * @guide_ID:          the unique guide ID
- * @guide_style:       the #GimpGuideStyle
+ * @guide_style:       the #LigmaGuideStyle
  *
  * This function returns a new guide and will flag it as "custom".
  * Custom guides are used for purpose "other" than the basic guides
@@ -173,33 +173,33 @@ gimp_guide_new (GimpOrientationType  orientation,
  * wishes to save its state, it has to do it internally.
  * Moreover they don't follow guide snapping settings and never snap.
  *
- * Returns: the custom #GimpGuide.
+ * Returns: the custom #LigmaGuide.
  **/
-GimpGuide *
-gimp_guide_custom_new (GimpOrientationType  orientation,
+LigmaGuide *
+ligma_guide_custom_new (LigmaOrientationType  orientation,
                        guint32              guide_ID,
-                       GimpGuideStyle       guide_style)
+                       LigmaGuideStyle       guide_style)
 {
-  return g_object_new (GIMP_TYPE_GUIDE,
+  return g_object_new (LIGMA_TYPE_GUIDE,
                        "id",          guide_ID,
                        "orientation", orientation,
                        "style",       guide_style,
                        NULL);
 }
 
-GimpOrientationType
-gimp_guide_get_orientation (GimpGuide *guide)
+LigmaOrientationType
+ligma_guide_get_orientation (LigmaGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), GIMP_ORIENTATION_UNKNOWN);
+  g_return_val_if_fail (LIGMA_IS_GUIDE (guide), LIGMA_ORIENTATION_UNKNOWN);
 
   return guide->priv->orientation;
 }
 
 void
-gimp_guide_set_orientation (GimpGuide           *guide,
-                            GimpOrientationType  orientation)
+ligma_guide_set_orientation (LigmaGuide           *guide,
+                            LigmaOrientationType  orientation)
 {
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
+  g_return_if_fail (LIGMA_IS_GUIDE (guide));
 
   guide->priv->orientation = orientation;
 
@@ -207,36 +207,36 @@ gimp_guide_set_orientation (GimpGuide           *guide,
 }
 
 gint
-gimp_guide_get_position (GimpGuide *guide)
+ligma_guide_get_position (LigmaGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), GIMP_GUIDE_POSITION_UNDEFINED);
+  g_return_val_if_fail (LIGMA_IS_GUIDE (guide), LIGMA_GUIDE_POSITION_UNDEFINED);
 
   return guide->priv->position;
 }
 
 void
-gimp_guide_set_position (GimpGuide *guide,
+ligma_guide_set_position (LigmaGuide *guide,
                          gint       position)
 {
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
+  g_return_if_fail (LIGMA_IS_GUIDE (guide));
 
   guide->priv->position = position;
 
   g_object_notify (G_OBJECT (guide), "position");
 }
 
-GimpGuideStyle
-gimp_guide_get_style (GimpGuide *guide)
+LigmaGuideStyle
+ligma_guide_get_style (LigmaGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), GIMP_GUIDE_STYLE_NONE);
+  g_return_val_if_fail (LIGMA_IS_GUIDE (guide), LIGMA_GUIDE_STYLE_NONE);
 
   return guide->priv->style;
 }
 
 gboolean
-gimp_guide_is_custom (GimpGuide *guide)
+ligma_guide_is_custom (LigmaGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), FALSE);
+  g_return_val_if_fail (LIGMA_IS_GUIDE (guide), FALSE);
 
-  return guide->priv->style != GIMP_GUIDE_STYLE_NORMAL;
+  return guide->priv->style != LIGMA_GUIDE_STYLE_NORMAL;
 }

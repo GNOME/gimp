@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdial.h
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmadial.h
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * Based on code from the color-rotate plug-in
  * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
@@ -22,40 +22,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DIAL_H__
-#define __GIMP_DIAL_H__
+#ifndef __LIGMA_DIAL_H__
+#define __LIGMA_DIAL_H__
 
 
-#include "gimpcircle.h"
+#include "ligmacircle.h"
 
 
-#define GIMP_TYPE_DIAL            (gimp_dial_get_type ())
-#define GIMP_DIAL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIAL, GimpDial))
-#define GIMP_DIAL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIAL, GimpDialClass))
-#define GIMP_IS_DIAL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_DIAL))
-#define GIMP_IS_DIAL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIAL))
-#define GIMP_DIAL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIAL, GimpDialClass))
+#define LIGMA_TYPE_DIAL            (ligma_dial_get_type ())
+#define LIGMA_DIAL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DIAL, LigmaDial))
+#define LIGMA_DIAL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DIAL, LigmaDialClass))
+#define LIGMA_IS_DIAL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_DIAL))
+#define LIGMA_IS_DIAL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DIAL))
+#define LIGMA_DIAL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DIAL, LigmaDialClass))
 
 
-typedef struct _GimpDialPrivate GimpDialPrivate;
-typedef struct _GimpDialClass   GimpDialClass;
+typedef struct _LigmaDialPrivate LigmaDialPrivate;
+typedef struct _LigmaDialClass   LigmaDialClass;
 
-struct _GimpDial
+struct _LigmaDial
 {
-  GimpCircle       parent_instance;
+  LigmaCircle       parent_instance;
 
-  GimpDialPrivate *priv;
+  LigmaDialPrivate *priv;
 };
 
-struct _GimpDialClass
+struct _LigmaDialClass
 {
-  GimpCircleClass  parent_class;
+  LigmaCircleClass  parent_class;
 };
 
 
-GType          gimp_dial_get_type          (void) G_GNUC_CONST;
+GType          ligma_dial_get_type          (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_dial_new               (void);
+GtkWidget    * ligma_dial_new               (void);
 
 
-#endif /* __GIMP_DIAL_H__ */
+#endif /* __LIGMA_DIAL_H__ */

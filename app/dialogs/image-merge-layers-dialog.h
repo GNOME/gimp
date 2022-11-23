@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,23 +19,23 @@
 #define __IMAGE_MERGE_LAYERS_DIALOG_H__
 
 
-typedef void (* GimpMergeLayersCallback) (GtkWidget     *dialog,
-                                          GimpImage     *image,
-                                          GimpContext   *context,
-                                          GimpMergeType  merge_type,
+typedef void (* LigmaMergeLayersCallback) (GtkWidget     *dialog,
+                                          LigmaImage     *image,
+                                          LigmaContext   *context,
+                                          LigmaMergeType  merge_type,
                                           gboolean       merge_active_group,
                                           gboolean       discard_invisible,
                                           gpointer       user_data);
 
 
 GtkWidget *
-  image_merge_layers_dialog_new (GimpImage               *image,
-                                 GimpContext             *context,
+  image_merge_layers_dialog_new (LigmaImage               *image,
+                                 LigmaContext             *context,
                                  GtkWidget               *parent,
-                                 GimpMergeType            merge_type,
+                                 LigmaMergeType            merge_type,
                                  gboolean                 merge_active_group,
                                  gboolean                 discard_invisible,
-                                 GimpMergeLayersCallback  callback,
+                                 LigmaMergeLayersCallback  callback,
                                  gpointer                 user_data);
 
 

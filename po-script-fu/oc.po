@@ -1,14 +1,14 @@
 # Translation of oc.po to Occitan
-# Occitan (post 1500) translation for gimp script-fu.
+# Occitan (post 1500) translation for ligma script-fu.
 # Copyright (c) 2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 # Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-05-27 19:36+0000\n"
 "PO-Revision-Date: 2016-10-16 16:38+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
@@ -150,8 +150,8 @@ msgid "_Start Server..."
 msgstr "_Aviar lo servidor..."
 
 #: ../tiny-fu/tiny-fu.c:353
-msgid "_GIMP Online"
-msgstr "_GIMP en linha"
+msgid "_LIGMA Online"
+msgstr "_LIGMA en linha"
 
 #: ../tiny-fu/tiny-fu.c:354
 msgid "_User Manual"
@@ -198,8 +198,8 @@ msgid "_Beveled Pattern"
 msgstr "Motiu _biseutat"
 
 #: ../tiny-fu/tiny-fu.c:377
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../tiny-fu/tiny-fu.c:380
 msgid "Alpha to _Logo"
@@ -329,10 +329,10 @@ msgstr "Crèa un lògo amb de tèxte amb lo contorn marcat e una ombra portada"
 #: ../scripts/chalk.scm:122 ../scripts/chip-away.scm:193
 #: ../scripts/chrome-logo.scm:124 ../scripts/comic-logo.scm:161
 #: ../scripts/coolmetal-logo.scm:175 ../scripts/crystal-logo.scm:215
-#: ../scripts/frosty-logo.scm:147 ../scripts/gimp-headers.scm:155
-#: ../scripts/gimp-headers.scm:178 ../scripts/gimp-labels.scm:127
-#: ../scripts/gimp-labels.scm:143 ../scripts/gimp-labels.scm:159
-#: ../scripts/gimp-labels.scm:175 ../scripts/glossy.scm:274
+#: ../scripts/frosty-logo.scm:147 ../scripts/ligma-headers.scm:155
+#: ../scripts/ligma-headers.scm:178 ../scripts/ligma-labels.scm:127
+#: ../scripts/ligma-labels.scm:143 ../scripts/ligma-labels.scm:159
+#: ../scripts/ligma-labels.scm:175 ../scripts/glossy.scm:274
 #: ../scripts/glowing-logo.scm:115 ../scripts/gradient-bevel-logo.scm:140
 #: ../scripts/i26-gunya2.scm:97 ../scripts/neon-logo.scm:287
 #: ../scripts/news-text.scm:83 ../scripts/pupi-button.scm:193
@@ -353,8 +353,8 @@ msgstr "Tèxte"
 #: ../scripts/chalk.scm:123 ../scripts/chip-away.scm:195
 #: ../scripts/chrome-logo.scm:125 ../scripts/comic-logo.scm:162
 #: ../scripts/coolmetal-logo.scm:176 ../scripts/crystal-logo.scm:216
-#: ../scripts/frosty-logo.scm:148 ../scripts/gimp-headers.scm:157
-#: ../scripts/gimp-headers.scm:180 ../scripts/gimp-labels.scm:177
+#: ../scripts/frosty-logo.scm:148 ../scripts/ligma-headers.scm:157
+#: ../scripts/ligma-headers.scm:180 ../scripts/ligma-labels.scm:177
 #: ../scripts/glossy.scm:275 ../scripts/glowing-logo.scm:116
 #: ../scripts/gradient-bevel-logo.scm:141 ../scripts/i26-gunya2.scm:101
 #: ../scripts/neon-logo.scm:288 ../scripts/news-text.scm:85
@@ -375,8 +375,8 @@ msgstr "Talha de la poliça (pixèls)"
 #: ../scripts/chalk.scm:124 ../scripts/chip-away.scm:194
 #: ../scripts/chrome-logo.scm:126 ../scripts/comic-logo.scm:163
 #: ../scripts/coolmetal-logo.scm:177 ../scripts/crystal-logo.scm:217
-#: ../scripts/frosty-logo.scm:149 ../scripts/gimp-headers.scm:156
-#: ../scripts/gimp-headers.scm:179 ../scripts/gimp-labels.scm:176
+#: ../scripts/frosty-logo.scm:149 ../scripts/ligma-headers.scm:156
+#: ../scripts/ligma-headers.scm:179 ../scripts/ligma-labels.scm:176
 #: ../scripts/glossy.scm:276 ../scripts/glowing-logo.scm:117
 #: ../scripts/gradient-bevel-logo.scm:142 ../scripts/i26-gunya2.scm:100
 #: ../scripts/neon-logo.scm:289 ../scripts/news-text.scm:84
@@ -417,7 +417,7 @@ msgstr "Espessor"
 #: ../scripts/comic-logo.scm:168 ../scripts/contactsheet.scm:334
 #: ../scripts/coolmetal-logo.scm:140 ../scripts/coolmetal-logo.scm:178
 #: ../scripts/frosty-logo.scm:117 ../scripts/frosty-logo.scm:150
-#: ../scripts/gimp-labels.scm:180 ../scripts/glossy.scm:210
+#: ../scripts/ligma-labels.scm:180 ../scripts/glossy.scm:210
 #: ../scripts/glossy.scm:282 ../scripts/glowing-logo.scm:85
 #: ../scripts/glowing-logo.scm:118 ../scripts/gradient-bevel-logo.scm:106
 #: ../scripts/gradient-bevel-logo.scm:145 ../scripts/neon-logo.scm:254
@@ -588,8 +588,8 @@ msgstr "Crèa un boton grafic amb una lusor espectrala per las paginas Web"
 #: ../scripts/basic1-logo.scm:102 ../scripts/basic2-logo.scm:91
 #: ../scripts/basic2-logo.scm:125 ../scripts/beveled-button.scm:154
 #: ../scripts/beveled-pattern-button.scm:129 ../scripts/blended-logo.scm:189
-#: ../scripts/contactsheet.scm:333 ../scripts/gimp-headers.scm:158
-#: ../scripts/gimp-headers.scm:181 ../scripts/gimp-labels.scm:178
+#: ../scripts/contactsheet.scm:333 ../scripts/ligma-headers.scm:158
+#: ../scripts/ligma-headers.scm:181 ../scripts/ligma-labels.scm:178
 #: ../scripts/i26-gunya2.scm:98 ../scripts/news-text.scm:89
 #: ../scripts/pupi-button.scm:198 ../scripts/speed-text.scm:96
 msgid "Text color"
@@ -745,7 +745,7 @@ msgstr "Crèa una linha orizontala (hrule) biseutada per las paginas Web"
 msgid "Width"
 msgstr "Largor"
 
-#: ../scripts/beveled-pattern-hrule.scm:84 ../scripts/gimp-labels.scm:187
+#: ../scripts/beveled-pattern-hrule.scm:84 ../scripts/ligma-labels.scm:187
 #: ../scripts/gradient-example.scm:71 ../scripts/mkbrush.scm:71
 #: ../scripts/mkbrush.scm:135 ../scripts/mkbrush.scm:189
 #: ../scripts/mkbrush.scm:256 ../scripts/swirltile.scm:61
@@ -820,7 +820,7 @@ msgstr "Degradat personalizat"
 #: ../scripts/comic-logo.scm:123 ../scripts/comic-logo.scm:164
 #: ../scripts/coolmetal-logo.scm:141 ../scripts/coolmetal-logo.scm:179
 #: ../scripts/land.scm:86 ../scripts/lava.scm:128 ../scripts/rendermap.scm:89
-#: ../scripts/spyrogimp.scm:354
+#: ../scripts/spyroligma.scm:354
 msgid "Gradient"
 msgstr "Degradat"
 
@@ -1326,11 +1326,11 @@ msgstr "Ombra _portada..."
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Apond una ombra portada a la region seleccionada (o alfa)"
 
-#: ../scripts/drop-shadow.scm:176 ../scripts/gimp-labels.scm:185
+#: ../scripts/drop-shadow.scm:176 ../scripts/ligma-labels.scm:185
 msgid "Offset X"
 msgstr "Descalatge X"
 
-#: ../scripts/drop-shadow.scm:177 ../scripts/gimp-labels.scm:186
+#: ../scripts/drop-shadow.scm:177 ../scripts/ligma-labels.scm:186
 msgid "Offset Y"
 msgstr "Descalatge Y"
 
@@ -1341,7 +1341,7 @@ msgid "Blur radius"
 msgstr "Rai del fosc"
 
 #: ../scripts/drop-shadow.scm:179 ../scripts/fuzzyborder.scm:155
-#: ../scripts/perspective-shadow.scm:208 ../scripts/spyrogimp.scm:353
+#: ../scripts/perspective-shadow.scm:208 ../scripts/spyroligma.scm:353
 msgid "Color"
 msgstr "Color"
 
@@ -1518,109 +1518,109 @@ msgstr "Apondre una ombra"
 msgid "Shadow weight (%)"
 msgstr "Espessor de l'ombra (%)"
 
-#: ../scripts/gimp-headers.scm:149
+#: ../scripts/ligma-headers.scm:149
 msgid "_Big Header..."
 msgstr "_Grand títol..."
 
-#: ../scripts/gimp-headers.scm:150
-msgid "Create an image of a large header using the gimp.org webpage theme"
+#: ../scripts/ligma-headers.scm:150
+msgid "Create an image of a large header using the ligma.org webpage theme"
 msgstr ""
-"Crèa un imatge amb un grand títol en utilizant lo tèma de pagina Web de gimp."
+"Crèa un imatge amb un grand títol en utilizant lo tèma de pagina Web de ligma."
 "org"
 
-#: ../scripts/gimp-headers.scm:159 ../scripts/gimp-headers.scm:182
+#: ../scripts/ligma-headers.scm:159 ../scripts/ligma-headers.scm:182
 #: ../scripts/xach-effect.scm:131
 msgid "Highlight color"
 msgstr "Color d'esclairatge"
 
-#: ../scripts/gimp-headers.scm:160 ../scripts/gimp-headers.scm:183
+#: ../scripts/ligma-headers.scm:160 ../scripts/ligma-headers.scm:183
 msgid "Dark color"
 msgstr "Color escura"
 
-#: ../scripts/gimp-headers.scm:161 ../scripts/gimp-headers.scm:184
-#: ../scripts/gimp-labels.scm:179
+#: ../scripts/ligma-headers.scm:161 ../scripts/ligma-headers.scm:184
+#: ../scripts/ligma-labels.scm:179
 msgid "Shadow color"
 msgstr "Color de l'ombra"
 
-#: ../scripts/gimp-headers.scm:162 ../scripts/gimp-headers.scm:185
+#: ../scripts/ligma-headers.scm:162 ../scripts/ligma-headers.scm:185
 msgid "Autocrop"
 msgstr "Decopatge automatic"
 
-#: ../scripts/gimp-headers.scm:163 ../scripts/gimp-headers.scm:186
-#: ../scripts/gimp-labels.scm:128 ../scripts/gimp-labels.scm:144
-#: ../scripts/gimp-labels.scm:160 ../scripts/gimp-labels.scm:181
+#: ../scripts/ligma-headers.scm:163 ../scripts/ligma-headers.scm:186
+#: ../scripts/ligma-labels.scm:128 ../scripts/ligma-labels.scm:144
+#: ../scripts/ligma-labels.scm:160 ../scripts/ligma-labels.scm:181
 msgid "Remove background"
 msgstr "Levar lo rèireplan"
 
-#: ../scripts/gimp-headers.scm:164 ../scripts/gimp-headers.scm:187
-#: ../scripts/gimp-labels.scm:129 ../scripts/gimp-labels.scm:145
-#: ../scripts/gimp-labels.scm:161 ../scripts/gimp-labels.scm:182
+#: ../scripts/ligma-headers.scm:164 ../scripts/ligma-headers.scm:187
+#: ../scripts/ligma-labels.scm:129 ../scripts/ligma-labels.scm:145
+#: ../scripts/ligma-labels.scm:161 ../scripts/ligma-labels.scm:182
 msgid "Index image"
 msgstr "Imatge indèx"
 
-#: ../scripts/gimp-headers.scm:165 ../scripts/gimp-headers.scm:188
-#: ../scripts/gimp-labels.scm:183
+#: ../scripts/ligma-headers.scm:165 ../scripts/ligma-headers.scm:188
+#: ../scripts/ligma-labels.scm:183
 msgid "Number of colors"
 msgstr "Nombre de colors"
 
-#: ../scripts/gimp-headers.scm:172
+#: ../scripts/ligma-headers.scm:172
 msgid "_Small Header..."
 msgstr "_Pichon títol..."
 
-#: ../scripts/gimp-headers.scm:173
-msgid "Create an image of a small header using the gimp.org webpage theme"
+#: ../scripts/ligma-headers.scm:173
+msgid "Create an image of a small header using the ligma.org webpage theme"
 msgstr ""
-"Crèa un imatge amb un pichon títol en utilizant lo tèma de pagina Web de gimp."
+"Crèa un imatge amb un pichon títol en utilizant lo tèma de pagina Web de ligma."
 "org"
 
-#: ../scripts/gimp-headers.scm:189 ../scripts/gimp-labels.scm:184
+#: ../scripts/ligma-headers.scm:189 ../scripts/ligma-labels.scm:184
 msgid "Select-by-color threshold"
 msgstr "Sulhet de seleccion per color"
 
-#: ../scripts/gimp-labels.scm:121
+#: ../scripts/ligma-labels.scm:121
 msgid "_Tube Button Label..."
 msgstr "Étiqueta de boton _tube..."
 
-#: ../scripts/gimp-labels.scm:122
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#: ../scripts/ligma-labels.scm:122
+msgid "Create an image of a Tube Button Label using the ligma.org webpage theme"
 msgstr ""
 "Crèa un imatge d'un boton tubular de primièr nivèl en utilizant lo tèma de "
-"page Web de gimp.org"
+"page Web de ligma.org"
 
-#: ../scripts/gimp-labels.scm:137
+#: ../scripts/ligma-labels.scm:137
 msgid "T_ube Sub-Button Label..."
 msgstr "Étiq_uette de sosboton tube..."
 
-#: ../scripts/gimp-labels.scm:138
+#: ../scripts/ligma-labels.scm:138
 msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
+"Create an image of a second level Tube Button Label using the ligma.org "
 "webpage theme"
 msgstr ""
 "Crèa un imatge d'un boton tubular de segond nivèl en utilizant lo tèma de "
-"pagina Web de gimp.org"
+"pagina Web de ligma.org"
 
-#: ../scripts/gimp-labels.scm:153
+#: ../scripts/ligma-labels.scm:153
 msgid "Tub_e Sub-Sub-Button Label..."
 msgstr "Etiqu_eta de sos-sosboton tub..."
 
-#: ../scripts/gimp-labels.scm:154
+#: ../scripts/ligma-labels.scm:154
 msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org webpage "
+"Create an image of a third level Tube Button Label using the ligma.org webpage "
 "theme"
 msgstr ""
 "Crèa un imatge d'un boton tubular de troisième nivèl en utilizant lo tèma de "
-"page Web de gimp.org"
+"page Web de ligma.org"
 
-#: ../scripts/gimp-labels.scm:169
+#: ../scripts/ligma-labels.scm:169
 msgid "_General Tube Labels..."
 msgstr "Étiqueta _generala de tube..."
 
-#: ../scripts/gimp-labels.scm:170
+#: ../scripts/ligma-labels.scm:170
 msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage theme"
+"Create an image of a Tube Button Label Header using the ligma.org webpage theme"
 msgstr ""
 "Crèa un imatge d'un boton tubular general en utilizant lo tèma de pagina Web "
-"de gimp.org"
+"de ligma.org"
 
 #: ../scripts/glossy.scm:197 ../scripts/glossy.scm:268
 msgid "Glo_ssy..."
@@ -2323,127 +2323,127 @@ msgstr "Vira d'esquèrra a dreita"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indèx a n colors (0 = demòra en RVB)"
 
-#: ../scripts/spyrogimp.scm:243
+#: ../scripts/spyroligma.scm:243
 msgid "Rendering Spyro"
 msgstr "Rendut espirograf en cors"
 
-#: ../scripts/spyrogimp.scm:317
-msgid "_Spyrogimp..."
+#: ../scripts/spyroligma.scm:317
+msgid "_Spyroligma..."
 msgstr "_Espirograf..."
 
-#: ../scripts/spyrogimp.scm:318
+#: ../scripts/spyroligma.scm:318
 msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "Apond de corbas espirografas, epitrocoïdas e lissajous al calc actual"
 
-#: ../scripts/spyrogimp.scm:326
+#: ../scripts/spyroligma.scm:326
 msgid "Type"
 msgstr "Tipe"
 
-#: ../scripts/spyrogimp.scm:326
+#: ../scripts/spyroligma.scm:326
 msgid "Spyrograph"
 msgstr "Espirograf"
 
-#: ../scripts/spyrogimp.scm:327
+#: ../scripts/spyroligma.scm:327
 msgid "Epitrochoid"
 msgstr "Épitrochoide"
 
-#: ../scripts/spyrogimp.scm:328
+#: ../scripts/spyroligma.scm:328
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../scripts/spyrogimp.scm:329
+#: ../scripts/spyroligma.scm:329
 msgid "Shape"
 msgstr "Forma"
 
-#: ../scripts/spyrogimp.scm:329
+#: ../scripts/spyroligma.scm:329
 msgid "Circle"
 msgstr "Cercle"
 
-#: ../scripts/spyrogimp.scm:330
+#: ../scripts/spyroligma.scm:330
 msgid "Frame"
 msgstr "Quadre"
 
-#: ../scripts/spyrogimp.scm:331
+#: ../scripts/spyroligma.scm:331
 msgid "Triangle"
 msgstr "Triangle"
 
-#: ../scripts/spyrogimp.scm:332
+#: ../scripts/spyroligma.scm:332
 msgid "Square"
 msgstr "Carrat"
 
-#: ../scripts/spyrogimp.scm:333
+#: ../scripts/spyroligma.scm:333
 msgid "Pentagon"
 msgstr "Pentagòn"
 
-#: ../scripts/spyrogimp.scm:334
+#: ../scripts/spyroligma.scm:334
 msgid "Hexagon"
 msgstr "Exagòn"
 
-#: ../scripts/spyrogimp.scm:335
+#: ../scripts/spyroligma.scm:335
 msgid "Polygon: 7 sides"
 msgstr "Poligòn : 7 costats"
 
-#: ../scripts/spyrogimp.scm:336
+#: ../scripts/spyroligma.scm:336
 msgid "Polygon: 8 sides"
 msgstr "Poligòn : 8 costats"
 
-#: ../scripts/spyrogimp.scm:337
+#: ../scripts/spyroligma.scm:337
 msgid "Polygon: 9 sides"
 msgstr "Poligòn : 9 costats"
 
-#: ../scripts/spyrogimp.scm:338
+#: ../scripts/spyroligma.scm:338
 msgid "Polygon: 10 sides"
 msgstr "Poligòn : 10 costats"
 
-#: ../scripts/spyrogimp.scm:339
+#: ../scripts/spyroligma.scm:339
 msgid "Outer teeth"
 msgstr "Denture exteriora"
 
-#: ../scripts/spyrogimp.scm:340
+#: ../scripts/spyroligma.scm:340
 msgid "Inner teeth"
 msgstr "Dentura interiora"
 
-#: ../scripts/spyrogimp.scm:341
+#: ../scripts/spyroligma.scm:341
 msgid "Margin (pixels)"
 msgstr "Marge (pixels)"
 
-#: ../scripts/spyrogimp.scm:342
+#: ../scripts/spyroligma.scm:342
 msgid "Hole ratio"
 msgstr "Ratio del trauc"
 
-#: ../scripts/spyrogimp.scm:343 ../scripts/text-circle.scm:212
+#: ../scripts/spyroligma.scm:343 ../scripts/text-circle.scm:212
 msgid "Start angle"
 msgstr "Angle de despart"
 
-#: ../scripts/spyrogimp.scm:345
+#: ../scripts/spyroligma.scm:345
 msgid "Tool"
 msgstr "Aisina"
 
-#: ../scripts/spyrogimp.scm:345
+#: ../scripts/spyroligma.scm:345
 msgid "Pencil"
 msgstr "Gredon"
 
-#: ../scripts/spyrogimp.scm:346 ../scripts/spyrogimp.scm:348
+#: ../scripts/spyroligma.scm:346 ../scripts/spyroligma.scm:348
 msgid "Brush"
 msgstr "Bròssa"
 
-#: ../scripts/spyrogimp.scm:347
+#: ../scripts/spyroligma.scm:347
 msgid "Airbrush"
 msgstr "Aerograf"
 
-#: ../scripts/spyrogimp.scm:350
+#: ../scripts/spyroligma.scm:350
 msgid "Color method"
 msgstr "Metòde de coloracion"
 
-#: ../scripts/spyrogimp.scm:350
+#: ../scripts/spyroligma.scm:350
 msgid "Solid Color"
 msgstr "Color unida"
 
-#: ../scripts/spyrogimp.scm:351
+#: ../scripts/spyroligma.scm:351
 msgid "Gradient: Loop Sawtooth"
 msgstr "Degradat : reboclatge en dents de rèssa"
 
-#: ../scripts/spyrogimp.scm:352
+#: ../scripts/spyroligma.scm:352
 msgid "Gradient: Loop Triangle"
 msgstr "Degradat : reboclatge en triangle"
 
@@ -2780,8 +2780,8 @@ msgstr "Site Web _oficial"
 
 #: ../scripts/web-browser.scm:180 ../scripts/web-browser.scm:193
 #: ../scripts/web-browser.scm:206 ../scripts/web-browser.scm:219
-msgid "Bookmark to the GIMP web site"
-msgstr "Signet cap al site Web de GIMP"
+msgid "Bookmark to the LIGMA web site"
+msgstr "Signet cap al site Web de LIGMA"
 
 #: ../scripts/web-browser.scm:192
 msgid "_Developer Web Site"

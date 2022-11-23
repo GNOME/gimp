@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpRc serialization routines
- * Copyright (C) 2001-2005  Sven Neumann <sven@gimp.org>
+ * LigmaRc serialization routines
+ * Copyright (C) 2001-2005  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,46 +23,46 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimprc.h"
-#include "gimprc-serialize.h"
-#include "gimprc-unknown.h"
+#include "ligmarc.h"
+#include "ligmarc-serialize.h"
+#include "ligmarc-unknown.h"
 
 
-static gboolean gimp_rc_serialize_properties_diff (GimpConfig       *config,
-                                                   GimpConfig       *compare,
-                                                   GimpConfigWriter *writer);
-static gboolean gimp_rc_serialize_unknown_tokens  (GimpConfig       *config,
-                                                   GimpConfigWriter *writer);
+static gboolean ligma_rc_serialize_properties_diff (LigmaConfig       *config,
+                                                   LigmaConfig       *compare,
+                                                   LigmaConfigWriter *writer);
+static gboolean ligma_rc_serialize_unknown_tokens  (LigmaConfig       *config,
+                                                   LigmaConfigWriter *writer);
 
 
 gboolean
-gimp_rc_serialize (GimpConfig       *config,
-                   GimpConfigWriter *writer,
+ligma_rc_serialize (LigmaConfig       *config,
+                   LigmaConfigWriter *writer,
                    gpointer          data)
 {
-  if (data && GIMP_IS_RC (data))
+  if (data && LIGMA_IS_RC (data))
     {
-      if (! gimp_rc_serialize_properties_diff (config, data, writer))
+      if (! ligma_rc_serialize_properties_diff (config, data, writer))
         return FALSE;
     }
   else
     {
-      if (! gimp_config_serialize_properties (config, writer))
+      if (! ligma_config_serialize_properties (config, writer))
         return FALSE;
     }
 
-  return gimp_rc_serialize_unknown_tokens (config, writer);
+  return ligma_rc_serialize_unknown_tokens (config, writer);
 }
 
 static gboolean
-gimp_rc_serialize_properties_diff (GimpConfig       *config,
-                                   GimpConfig       *compare,
-                                   GimpConfigWriter *writer)
+ligma_rc_serialize_properties_diff (LigmaConfig       *config,
+                                   LigmaConfig       *compare,
+                                   LigmaConfigWriter *writer)
 {
   GList    *diff;
   GList    *list;
@@ -73,17 +73,17 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (config) ==
                         G_TYPE_FROM_INSTANCE (compare), FALSE);
 
-  diff = gimp_config_diff (G_OBJECT (config),
-                           G_OBJECT (compare), GIMP_CONFIG_PARAM_SERIALIZE);
+  diff = ligma_config_diff (G_OBJECT (config),
+                           G_OBJECT (compare), LIGMA_CONFIG_PARAM_SERIALIZE);
 
   for (list = diff; list; list = g_list_next (list))
     {
       GParamSpec *prop_spec = list->data;
 
-      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (config, prop_spec, writer))
+      if (! ligma_config_serialize_property (config, prop_spec, writer))
         {
           retval = FALSE;
           break;
@@ -100,21 +100,21 @@ serialize_unknown_token (const gchar *key,
                          const gchar *value,
                          gpointer     data)
 {
-  GimpConfigWriter *writer = data;
+  LigmaConfigWriter *writer = data;
 
-  gimp_config_writer_open (writer, key);
-  gimp_config_writer_string (writer, value);
-  gimp_config_writer_close (writer);
+  ligma_config_writer_open (writer, key);
+  ligma_config_writer_string (writer, value);
+  ligma_config_writer_close (writer);
 }
 
 static gboolean
-gimp_rc_serialize_unknown_tokens (GimpConfig       *config,
-                                  GimpConfigWriter *writer)
+ligma_rc_serialize_unknown_tokens (LigmaConfig       *config,
+                                  LigmaConfigWriter *writer)
 {
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
-  gimp_config_writer_linefeed (writer);
-  gimp_rc_foreach_unknown_token (config, serialize_unknown_token, writer);
+  ligma_config_writer_linefeed (writer);
+  ligma_rc_foreach_unknown_token (config, serialize_unknown_token, writer);
 
   return TRUE;
 }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptagpopup.h
+ * ligmatagpopup.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_POPUP_H__
-#define __GIMP_TAG_POPUP_H__
+#ifndef __LIGMA_TAG_POPUP_H__
+#define __LIGMA_TAG_POPUP_H__
 
 
-#define GIMP_TYPE_TAG_POPUP            (gimp_tag_popup_get_type ())
-#define GIMP_TAG_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_POPUP, GimpTagPopup))
-#define GIMP_TAG_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_POPUP, GimpTagPopupClass))
-#define GIMP_IS_TAG_POPUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAG_POPUP))
-#define GIMP_IS_TAG_POPUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TAG_POPUP))
-#define GIMP_TAG_POPUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_POPUP, GimpTagPopupClass))
+#define LIGMA_TYPE_TAG_POPUP            (ligma_tag_popup_get_type ())
+#define LIGMA_TAG_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TAG_POPUP, LigmaTagPopup))
+#define LIGMA_TAG_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TAG_POPUP, LigmaTagPopupClass))
+#define LIGMA_IS_TAG_POPUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TAG_POPUP))
+#define LIGMA_IS_TAG_POPUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TAG_POPUP))
+#define LIGMA_TAG_POPUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TAG_POPUP, LigmaTagPopupClass))
 
 
-typedef struct _GimpTagPopupClass  GimpTagPopupClass;
+typedef struct _LigmaTagPopupClass  LigmaTagPopupClass;
 
 typedef struct _PopupTagData PopupTagData;
 
-struct _GimpTagPopup
+struct _LigmaTagPopup
 {
   GtkWindow          parent_instance;
 
-  GimpComboTagEntry *combo_entry;
+  LigmaComboTagEntry *combo_entry;
 
   GtkWidget         *frame;
   GtkWidget         *border_area;
@@ -68,18 +68,18 @@ struct _GimpTagPopup
   gboolean           smooth_scrolling;
 };
 
-struct _GimpTagPopupClass
+struct _LigmaTagPopupClass
 {
   GtkWindowClass  parent_class;
 };
 
 
-GType       gimp_tag_popup_get_type (void) G_GNUC_CONST;
+GType       ligma_tag_popup_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tag_popup_new      (GimpComboTagEntry *entry);
+GtkWidget * ligma_tag_popup_new      (LigmaComboTagEntry *entry);
 
-void        gimp_tag_popup_show     (GimpTagPopup      *popup,
+void        ligma_tag_popup_show     (LigmaTagPopup      *popup,
                                      GdkEvent          *event);
 
 
-#endif  /*  __GIMP_TAG_POPUP_H__  */
+#endif  /*  __LIGMA_TAG_POPUP_H__  */

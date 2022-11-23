@@ -1,8 +1,8 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-crop")
+(icon-name "ligma-tool-crop")
 (name "4×3 Landscape")
-(tool-options "GimpCropOptions"
+(tool-options "LigmaCropOptions"
     (aspect-denominator 3.000000)
     (aspect-numerator 4.000000)
     (desired-fixed-size-height 300.000000)
@@ -11,7 +11,7 @@
     (fixed-rule-active yes)
     (overridden-fixed-aspect yes)
     (overridden-fixed-size yes)
-    (tool "gimp-crop-tool"))
+    (tool "ligma-crop-tool"))
 (use-fg-bg no)
 (use-brush no)
 (use-dynamics no)
@@ -21,4 +21,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,32 +25,32 @@
 
 #include <mypaint-brush.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimp-palettes.h"
-#include "core/gimpdrawable.h"
-#include "core/gimperror.h"
-#include "core/gimpmybrush.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligma-palettes.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaerror.h"
+#include "core/ligmamybrush.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimpmybrushcore.h"
-#include "gimpmybrushsurface.h"
-#include "gimpmybrushoptions.h"
+#include "ligmamybrushcore.h"
+#include "ligmamybrushsurface.h"
+#include "ligmamybrushoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-struct _GimpMybrushCorePrivate
+struct _LigmaMybrushCorePrivate
 {
-  GimpMybrush        *mybrush;
-  GimpMybrushSurface *surface;
+  LigmaMybrush        *mybrush;
+  LigmaMybrushSurface *surface;
   GList              *brushes;
   gboolean            synthetic;
   gint64              last_time;
@@ -59,75 +59,75 @@ struct _GimpMybrushCorePrivate
 
 /*  local function prototypes  */
 
-static void      gimp_mybrush_core_finalize       (GObject           *object);
+static void      ligma_mybrush_core_finalize       (GObject           *object);
 
-static gboolean  gimp_mybrush_core_start          (GimpPaintCore     *paint_core,
+static gboolean  ligma_mybrush_core_start          (LigmaPaintCore     *paint_core,
                                                    GList             *drawables,
-                                                   GimpPaintOptions  *paint_options,
-                                                   const GimpCoords  *coords,
+                                                   LigmaPaintOptions  *paint_options,
+                                                   const LigmaCoords  *coords,
                                                    GError           **error);
-static void      gimp_mybrush_core_interpolate    (GimpPaintCore     *paint_core,
+static void      ligma_mybrush_core_interpolate    (LigmaPaintCore     *paint_core,
                                                    GList             *drawables,
-                                                   GimpPaintOptions  *paint_options,
+                                                   LigmaPaintOptions  *paint_options,
                                                    guint32            time);
-static void      gimp_mybrush_core_paint          (GimpPaintCore     *paint_core,
+static void      ligma_mybrush_core_paint          (LigmaPaintCore     *paint_core,
                                                    GList             *drawables,
-                                                   GimpPaintOptions  *paint_options,
-                                                   GimpSymmetry      *sym,
-                                                   GimpPaintState     paint_state,
+                                                   LigmaPaintOptions  *paint_options,
+                                                   LigmaSymmetry      *sym,
+                                                   LigmaPaintState     paint_state,
                                                    guint32            time);
-static void      gimp_mybrush_core_motion         (GimpPaintCore     *paint_core,
-                                                   GimpDrawable      *drawable,
-                                                   GimpPaintOptions  *paint_options,
-                                                   GimpSymmetry      *sym,
+static void      ligma_mybrush_core_motion         (LigmaPaintCore     *paint_core,
+                                                   LigmaDrawable      *drawable,
+                                                   LigmaPaintOptions  *paint_options,
+                                                   LigmaSymmetry      *sym,
                                                    guint32            time);
-static void      gimp_mybrush_core_create_brushes (GimpMybrushCore   *mybrush,
-                                                   GimpDrawable      *drawable,
-                                                   GimpPaintOptions  *paint_options,
-                                                   GimpSymmetry      *sym);
+static void      ligma_mybrush_core_create_brushes (LigmaMybrushCore   *mybrush,
+                                                   LigmaDrawable      *drawable,
+                                                   LigmaPaintOptions  *paint_options,
+                                                   LigmaSymmetry      *sym);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMybrushCore, gimp_mybrush_core,
-                            GIMP_TYPE_PAINT_CORE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaMybrushCore, ligma_mybrush_core,
+                            LIGMA_TYPE_PAINT_CORE)
 
-#define parent_class gimp_mybrush_core_parent_class
+#define parent_class ligma_mybrush_core_parent_class
 
 
 void
-gimp_mybrush_core_register (Gimp                      *gimp,
-                            GimpPaintRegisterCallback  callback)
+ligma_mybrush_core_register (Ligma                      *ligma,
+                            LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_MYBRUSH_CORE,
-                GIMP_TYPE_MYBRUSH_OPTIONS,
-                "gimp-mybrush",
+  (* callback) (ligma,
+                LIGMA_TYPE_MYBRUSH_CORE,
+                LIGMA_TYPE_MYBRUSH_OPTIONS,
+                "ligma-mybrush",
                 _("Mybrush"),
-                "gimp-tool-mypaint-brush");
+                "ligma-tool-mypaint-brush");
 }
 
 static void
-gimp_mybrush_core_class_init (GimpMybrushCoreClass *klass)
+ligma_mybrush_core_class_init (LigmaMybrushCoreClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
 
-  object_class->finalize        = gimp_mybrush_core_finalize;
+  object_class->finalize        = ligma_mybrush_core_finalize;
 
-  paint_core_class->start       = gimp_mybrush_core_start;
-  paint_core_class->paint       = gimp_mybrush_core_paint;
-  paint_core_class->interpolate = gimp_mybrush_core_interpolate;
+  paint_core_class->start       = ligma_mybrush_core_start;
+  paint_core_class->paint       = ligma_mybrush_core_paint;
+  paint_core_class->interpolate = ligma_mybrush_core_interpolate;
 }
 
 static void
-gimp_mybrush_core_init (GimpMybrushCore *mybrush)
+ligma_mybrush_core_init (LigmaMybrushCore *mybrush)
 {
-  mybrush->private = gimp_mybrush_core_get_instance_private (mybrush);
+  mybrush->private = ligma_mybrush_core_get_instance_private (mybrush);
 }
 
 static void
-gimp_mybrush_core_finalize (GObject *object)
+ligma_mybrush_core_finalize (GObject *object)
 {
-  GimpMybrushCore *core = GIMP_MYBRUSH_CORE (object);
+  LigmaMybrushCore *core = LIGMA_MYBRUSH_CORE (object);
 
   if (core->private->brushes)
     {
@@ -140,20 +140,20 @@ gimp_mybrush_core_finalize (GObject *object)
 }
 
 static gboolean
-gimp_mybrush_core_start (GimpPaintCore     *paint_core,
+ligma_mybrush_core_start (LigmaPaintCore     *paint_core,
                          GList             *drawables,
-                         GimpPaintOptions  *paint_options,
-                         const GimpCoords  *coords,
+                         LigmaPaintOptions  *paint_options,
+                         const LigmaCoords  *coords,
                          GError           **error)
 {
-  GimpMybrushCore *core    = GIMP_MYBRUSH_CORE (paint_core);
-  GimpContext     *context = GIMP_CONTEXT (paint_options);
+  LigmaMybrushCore *core    = LIGMA_MYBRUSH_CORE (paint_core);
+  LigmaContext     *context = LIGMA_CONTEXT (paint_options);
 
-  core->private->mybrush = gimp_context_get_mybrush (context);
+  core->private->mybrush = ligma_context_get_mybrush (context);
 
   if (! core->private->mybrush)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("No MyPaint brushes available for use with this tool."));
       return FALSE;
     }
@@ -162,80 +162,80 @@ gimp_mybrush_core_start (GimpPaintCore     *paint_core,
 }
 
 static void
-gimp_mybrush_core_interpolate (GimpPaintCore    *paint_core,
+ligma_mybrush_core_interpolate (LigmaPaintCore    *paint_core,
                                GList            *drawables,
-                               GimpPaintOptions *paint_options,
+                               LigmaPaintOptions *paint_options,
                                guint32           time)
 {
-  GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
+  LigmaMybrushCore *mybrush = LIGMA_MYBRUSH_CORE (paint_core);
 
   /* If this is the first motion the brush has received then
    * we're being asked to draw a synthetic stroke in line mode
    */
   if (mybrush->private->last_time < 0)
     {
-      GimpCoords saved_coords = paint_core->cur_coords;
+      LigmaCoords saved_coords = paint_core->cur_coords;
 
       paint_core->cur_coords = paint_core->last_coords;
 
       mybrush->private->synthetic = TRUE;
 
-      gimp_paint_core_paint (paint_core, drawables, paint_options,
-                             GIMP_PAINT_STATE_MOTION, time);
+      ligma_paint_core_paint (paint_core, drawables, paint_options,
+                             LIGMA_PAINT_STATE_MOTION, time);
 
       paint_core->cur_coords = saved_coords;
     }
 
-  gimp_paint_core_paint (paint_core, drawables, paint_options,
-                         GIMP_PAINT_STATE_MOTION, time);
+  ligma_paint_core_paint (paint_core, drawables, paint_options,
+                         LIGMA_PAINT_STATE_MOTION, time);
 
   paint_core->last_coords = paint_core->cur_coords;
 }
 
 static void
-gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
+ligma_mybrush_core_paint (LigmaPaintCore    *paint_core,
                          GList            *drawables,
-                         GimpPaintOptions *paint_options,
-                         GimpSymmetry     *sym,
-                         GimpPaintState    paint_state,
+                         LigmaPaintOptions *paint_options,
+                         LigmaSymmetry     *sym,
+                         LigmaPaintState    paint_state,
                          guint32           time)
 {
-  GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
-  GimpContext     *context = GIMP_CONTEXT (paint_options);
+  LigmaMybrushCore *mybrush = LIGMA_MYBRUSH_CORE (paint_core);
+  LigmaContext     *context = LIGMA_CONTEXT (paint_options);
   gint             offset_x;
   gint             offset_y;
-  GimpRGB          fg;
+  LigmaRGB          fg;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
-      gimp_context_get_foreground (context, &fg);
-      gimp_palettes_add_color_history (context->gimp, &fg);
-      gimp_symmetry_set_stateful (sym, TRUE);
+    case LIGMA_PAINT_STATE_INIT:
+      ligma_context_get_foreground (context, &fg);
+      ligma_palettes_add_color_history (context->ligma, &fg);
+      ligma_symmetry_set_stateful (sym, TRUE);
 
-      gimp_item_get_offset (drawables->data, &offset_x, &offset_y);
+      ligma_item_get_offset (drawables->data, &offset_x, &offset_y);
       mybrush->private->surface =
-        gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawables->data),
-                                  gimp_drawable_get_active_mask (drawables->data),
+        ligma_mypaint_surface_new (ligma_drawable_get_buffer (drawables->data),
+                                  ligma_drawable_get_active_mask (drawables->data),
                                   paint_core->mask_buffer,
                                   -offset_x, -offset_y,
-                                  GIMP_MYBRUSH_OPTIONS (paint_options));
+                                  LIGMA_MYBRUSH_OPTIONS (paint_options));
 
-      gimp_mybrush_core_create_brushes (mybrush, drawables->data, paint_options, sym);
+      ligma_mybrush_core_create_brushes (mybrush, drawables->data, paint_options, sym);
 
       mybrush->private->last_time = -1;
       mybrush->private->synthetic = FALSE;
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
-      gimp_mybrush_core_motion (paint_core, drawables->data, paint_options,
+    case LIGMA_PAINT_STATE_MOTION:
+      ligma_mybrush_core_motion (paint_core, drawables->data, paint_options,
                                 sym, time);
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
-      gimp_symmetry_set_stateful (sym, FALSE);
+    case LIGMA_PAINT_STATE_FINISH:
+      ligma_symmetry_set_stateful (sym, FALSE);
       mypaint_surface_unref ((MyPaintSurface *) mybrush->private->surface);
       mybrush->private->surface = NULL;
 
@@ -247,13 +247,13 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
 }
 
 static void
-gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
-                          GimpDrawable     *drawable,
-                          GimpPaintOptions *paint_options,
-                          GimpSymmetry     *sym,
+ligma_mybrush_core_motion (LigmaPaintCore    *paint_core,
+                          LigmaDrawable     *drawable,
+                          LigmaPaintOptions *paint_options,
+                          LigmaSymmetry     *sym,
                           guint32           time)
 {
-  GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
+  LigmaMybrushCore  *mybrush = LIGMA_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
   GList            *iter;
   gdouble           dt = 0.0;
@@ -261,15 +261,15 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   gint              n_strokes;
   gint              i;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-  n_strokes = gimp_symmetry_get_size (sym);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
+  n_strokes = ligma_symmetry_get_size (sym);
 
   /* The number of strokes may change during a motion, depending on
    * the type of symmetry. When that happens, reset the brushes.
    */
   if (g_list_length (mybrush->private->brushes) != n_strokes)
     {
-      gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
+      ligma_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
     }
 
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
@@ -282,7 +282,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
            iter = g_list_next (iter), i++)
         {
           MyPaintBrush *brush  = iter->data;
-          GimpCoords    coords = *(gimp_symmetry_get_coords (sym, i));
+          LigmaCoords    coords = *(ligma_symmetry_get_coords (sym, i));
 
           mypaint_brush_stroke_to (brush,
                                    (MyPaintSurface *) mybrush->private->surface,
@@ -298,10 +298,10 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
     }
   else if (mybrush->private->synthetic)
     {
-      GimpVector2 v = { paint_core->cur_coords.x - paint_core->last_coords.x,
+      LigmaVector2 v = { paint_core->cur_coords.x - paint_core->last_coords.x,
                         paint_core->cur_coords.y - paint_core->last_coords.y };
 
-      dt = 0.0005 * gimp_vector2_length_val (v);
+      dt = 0.0005 * ligma_vector2_length_val (v);
     }
   else
     {
@@ -313,7 +313,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
        iter = g_list_next (iter), i++)
     {
       MyPaintBrush *brush    = iter->data;
-      GimpCoords    coords   = *(gimp_symmetry_get_coords (sym, i));
+      LigmaCoords    coords   = *(ligma_symmetry_get_coords (sym, i));
       gdouble       pressure = coords.pressure;
 
       mypaint_brush_stroke_to (brush,
@@ -338,20 +338,20 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);
       paint_core->y2 = MAX (paint_core->y2, rect.y + rect.height);
 
-      gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
+      ligma_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
     }
 }
 
 static void
-gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
-                                  GimpDrawable     *drawable,
-                                  GimpPaintOptions *paint_options,
-                                  GimpSymmetry     *sym)
+ligma_mybrush_core_create_brushes (LigmaMybrushCore  *mybrush,
+                                  LigmaDrawable     *drawable,
+                                  LigmaPaintOptions *paint_options,
+                                  LigmaSymmetry     *sym)
 {
-  GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
-  GimpContext        *context = GIMP_CONTEXT (paint_options);
-  GimpRGB             fg;
-  GimpHSV             hsv;
+  LigmaMybrushOptions *options = LIGMA_MYBRUSH_OPTIONS (paint_options);
+  LigmaContext        *context = LIGMA_CONTEXT (paint_options);
+  LigmaRGB             fg;
+  LigmaHSV             hsv;
   gint                n_strokes;
   gint                i;
 
@@ -363,15 +363,15 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
     }
 
   if (options->eraser)
-    gimp_context_get_background (context, &fg);
+    ligma_context_get_background (context, &fg);
   else
-    gimp_context_get_foreground (context, &fg);
+    ligma_context_get_foreground (context, &fg);
 
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+  ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                      &fg, &fg);
-  gimp_rgb_to_hsv (&fg, &hsv);
+  ligma_rgb_to_hsv (&fg, &hsv);
 
-  n_strokes = gimp_symmetry_get_size (sym);
+  n_strokes = ligma_symmetry_get_size (sym);
 
   for (i = 0; i < n_strokes; i++)
     {
@@ -379,7 +379,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
       const gchar  *brush_data;
 
       mypaint_brush_from_defaults (brush);
-      brush_data = gimp_mybrush_get_brush_json (mybrush->private->mybrush);
+      brush_data = ligma_mybrush_get_brush_json (mybrush->private->mybrush);
       if (brush_data)
         mypaint_brush_from_string (brush, brush_data);
 
@@ -403,14 +403,14 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_OPAQUE,
                                     options->opaque *
-                                    gimp_context_get_opacity (context));
+                                    ligma_context_get_opacity (context));
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_HARDNESS,
                                     options->hardness);
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_ERASER,
                                     (options->eraser &&
-                                     gimp_drawable_has_alpha (drawable)) ?
+                                     ligma_drawable_has_alpha (drawable)) ?
                                     1.0f : 0.0f);
 
       mypaint_brush_new_stroke (brush);

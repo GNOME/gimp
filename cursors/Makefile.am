@@ -166,37 +166,37 @@ COLOR_PICKER_IMAGES = \
 
 EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
-	gimp-tool-cursors.xcf			\
-	gimp-tool-cursors-x2.xcf
+	ligma-tool-cursors.xcf			\
+	ligma-tool-cursors-x2.xcf
 
 noinst_DATA = \
-	gimp-tool-cursors.gresource.xml		\
-	gimp-color-picker-cursors.gresource.xml
+	ligma-tool-cursors.gresource.xml		\
+	ligma-color-picker-cursors.gresource.xml
 
 CLEANFILES = $(noinst_DATA)
 
 
-gimp-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
+ligma-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/tool-cursors">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/tool-cursors">' >> $@; \
 	  for image in $(CURSOR_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
+ligma-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/color-picker-cursors">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/color-picker-cursors">' >> $@; \
 	  for image in $(COLOR_PICKER_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/color-picker-cursors-raw">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/color-picker-cursors-raw">' >> $@; \
 	  for image in $(COLOR_PICKER_IMAGES); do \
 	    echo "    <file>$$image</file>" >> $@; \
 	  done; \

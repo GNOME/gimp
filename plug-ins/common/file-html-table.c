@@ -1,15 +1,15 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GTM plug-in --- GIMP Table Magic
+ * GTM plug-in --- LIGMA Table Magic
  * Allows images to be exported as HTML tables with different colored cells.
  * It doesn't  have very much practical use other than being able to
- * easily design a table by "painting" it in GIMP, or to make small HTML
+ * easily design a table by "painting" it in LIGMA, or to make small HTML
  * table images/icons.
  *
  * Copyright (C) 1997 Daniel Dunbar
  * Email: ddunbar@diads.com
- * WWW:   http://millennium.diads.com/gimp/
+ * WWW:   http://millennium.diads.com/ligma/
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
  *
  * At first I just wrote a really ugly hack to do it, which I then planned
  * on using once just to see how it worked, and then posting a URL and
- * laughing about it on #gimp.  As it turns out, tigert thought it actually
+ * laughing about it on #ligma.  As it turns out, tigert thought it actually
  * had potential to be a useful plugin, so I started adding features and
  * and making a nice UI.
  *
@@ -51,10 +51,10 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-html-table-save"
@@ -66,12 +66,12 @@ typedef struct _HtmlClass HtmlClass;
 
 struct _Html
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _HtmlClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -80,25 +80,25 @@ struct _HtmlClass
 
 GType                   html_get_type          (void) G_GNUC_CONST;
 
-static GList          * html_query_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * html_create_procedure  (GimpPlugIn           *plug_in,
+static GList          * html_query_procedures  (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * html_create_procedure  (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * html_save              (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * html_save              (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
+                                                LigmaDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
 static gboolean         save_image             (GFile                *file,
                                                 GeglBuffer           *buffer,
                                                 GObject              *config,
                                                 GError              **error);
-static gboolean         save_dialog            (GimpImage            *image,
-                                                GimpProcedure        *procedure,
+static gboolean         save_dialog            (LigmaImage            *image,
+                                                LigmaProcedure        *procedure,
                                                 GObject              *config);
 
 static gboolean         print                  (GOutputStream        *output,
@@ -109,16 +109,16 @@ static gboolean         color_comp             (guchar               *buffer,
                                                 guchar               *buf2);
 
 
-G_DEFINE_TYPE (Html, html, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Html, html, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (HTML_TYPE)
+LIGMA_MAIN (HTML_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 html_class_init (HtmlClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = html_query_procedures;
   plug_in_class->create_procedure = html_create_procedure;
@@ -131,101 +131,101 @@ html_init (Html *html)
 }
 
 static GList *
-html_query_procedures (GimpPlugIn *plug_in)
+html_query_procedures (LigmaPlugIn *plug_in)
 {
   return  g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-html_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+html_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            html_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("HTML table"));
+      ligma_procedure_set_menu_label (procedure, _("HTML table"));
 
-      gimp_procedure_set_documentation (procedure,
-                                        "GIMP Table Magic",
+      ligma_procedure_set_documentation (procedure,
+                                        "LIGMA Table Magic",
                                         "Allows you to draw an HTML table "
-                                        "in GIMP. See help for more info.",
+                                        "in LIGMA. See help for more info.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Daniel Dunbar",
                                       "Daniel Dunbar",
                                       "1998");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "text/html");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "html,htm");
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-caption",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "use-caption",
                                  "Use caption",
                                  _("Enable if you would like to have the table "
                                    "captioned."),
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "caption-text",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "caption-text",
                                 "Caption text",
                                 _("The text for the table caption."),
-                                "Made with GIMP Table Magic",
-                                GIMP_PARAM_READWRITE);
+                                "Made with LIGMA Table Magic",
+                                LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-content",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "cell-content",
                                 "Cell content",
                                 _("The text to go into each cell."),
                                 "&nbsp;",
-                                GIMP_PARAM_READWRITE);
+                                LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-width",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "cell-width",
                                 "Cell width",
                                 _("The width for each table cell. "
                                   "Can be a number or a percent."),
                                 "",
-                                GIMP_PARAM_READWRITE);
+                                LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-height",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "cell-height",
                                 "Cell height",
                                 _("The height for each table cell. "
                                   "Can be a number or a percent."),
                                 "",
-                                GIMP_PARAM_READWRITE);
+                                LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "full-document",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "full-document",
                                  "Full document",
                                  _("If enabled GTM will output a full HTML "
                                    "document with <HTML>, <BODY>, etc. tags "
                                    "instead of just the table html."),
                                  TRUE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "border",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "border",
                              "Border",
                              _("The number of pixels in the table border."),
                              0, 1000, 2,
-                             GIMP_PARAM_READWRITE);
+                             LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "span-tags",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "span-tags",
                                  "Span tags",
                                  _("If enabled GTM will replace any "
                                    "rectangular sections of identically "
                                    "colored blocks with one large cell with "
                                    "ROWSPAN and COLSPAN values."),
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "compress-td-tags",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "compress-td-tags",
                                  "Compress td tags",
                                  _("Enabling this will cause GTM to "
                                    "leave no whitespace between the TD "
@@ -233,52 +233,52 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                    "necessary for pixel level positioning "
                                    "control."),
                                  FALSE,
-                                 GIMP_PARAM_READWRITE);
+                                 LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "cell-padding",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "cell-padding",
                              "Cell padding",
                              _("The amount of cell padding."),
                              0, 1000, 4,
-                             GIMP_PARAM_READWRITE);
+                             LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "cell-spacing",
+      LIGMA_PROC_AUX_ARG_INT (procedure, "cell-spacing",
                              "Cell spacing",
                              _("The amount of cell spacing."),
                              0, 1000, 0,
-                             GIMP_PARAM_READWRITE);
+                             LIGMA_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-html_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+html_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
   GeglBuffer          *buffer;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CALLING_ERROR,
+  if (run_mode != LIGMA_RUN_INTERACTIVE)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CALLING_ERROR,
                                              NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   if (! save_dialog (image, procedure, G_OBJECT (config)))
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CANCEL,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CANCEL,
                                              NULL);
 
   if (n_drawables != 1)
@@ -286,25 +286,25 @@ html_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("HTML table plug-in does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  buffer = gimp_drawable_get_buffer (drawables[0]);
+  buffer = ligma_drawable_get_buffer (drawables[0]);
 
   if (! save_image (file, buffer, G_OBJECT (config),
                     &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
   g_object_unref (buffer);
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
@@ -359,8 +359,8 @@ save_image (GFile       *file,
   cols = gegl_buffer_get_width  (buffer);
   rows = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -387,9 +387,9 @@ save_image (GFile       *file,
     {
       if (! print (output, error,
                    "<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",
-                   gimp_file_get_utf8_name (file)) ||
+                   ligma_file_get_utf8_name (file)) ||
           ! print (output, error, "<H1>%s</H1>\n",
-                   gimp_file_get_utf8_name (file)))
+                   ligma_file_get_utf8_name (file)))
         {
           goto fail;
         }
@@ -534,7 +534,7 @@ save_image (GFile       *file,
       if (! print (output, error, "   </TR>\n"))
         goto fail;
 
-      gimp_progress_update ((double) y / (double) rows);
+      ligma_progress_update ((double) y / (double) rows);
     }
 
   if (config_full_document)
@@ -562,7 +562,7 @@ save_image (GFile       *file,
   g_free (config_cell_width);
   g_free (config_cell_height);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return TRUE;
 
@@ -588,8 +588,8 @@ save_image (GFile       *file,
 }
 
 static gint
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -602,10 +602,10 @@ save_dialog (GimpImage     *image,
   GtkWidget *toggle;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as HTML Table"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -614,20 +614,20 @@ save_dialog (GimpImage     *image,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  if (gimp_image_get_width (image) * gimp_image_get_height (image) > 4096)
+  if (ligma_image_get_width (image) * ligma_image_get_height (image) > 4096)
     {
       GtkWidget *eek;
       GtkWidget *label;
       GtkWidget *hbox;
 
-      frame = gimp_frame_new (_("Warning"));
+      frame = ligma_frame_new (_("Warning"));
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
 
-      eek = gtk_image_new_from_icon_name (GIMP_ICON_WILBER_EEK,
+      eek = gtk_image_new_from_icon_name (LIGMA_ICON_WILBER_EEK,
                                           GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 0);
 
@@ -640,7 +640,7 @@ save_dialog (GimpImage     *image,
     }
 
   /* HTML Page Options */
-  frame = gimp_frame_new (_("HTML Page Options"));
+  frame = ligma_frame_new (_("HTML Page Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -648,12 +648,12 @@ save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gimp_prop_check_button_new (config, "full-document",
+  toggle = ligma_prop_check_button_new (config, "full-document",
                                        _("_Generate full HTML document"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   /* HTML Table Creation Options */
-  frame = gimp_frame_new (_("Table Creation Options"));
+  frame = ligma_frame_new (_("Table Creation Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -663,19 +663,19 @@ save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  toggle = gimp_prop_check_button_new (config, "span-tags",
+  toggle = ligma_prop_check_button_new (config, "span-tags",
                                        _("_Use cellspan"));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 2, 1);
 
-  toggle = gimp_prop_check_button_new (config, "compress-td-tags",
+  toggle = ligma_prop_check_button_new (config, "compress-td-tags",
                                        _("Co_mpress TD tags"));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 2, 1);
 
-  toggle = gimp_prop_check_button_new (config, "use-caption",
+  toggle = ligma_prop_check_button_new (config, "use-caption",
                                        _("C_aption"));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 2, 1, 1);
 
-  entry = gimp_prop_entry_new (config, "caption-text", -1);
+  entry = ligma_prop_entry_new (config, "caption-text", -1);
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_grid_attach (GTK_GRID (grid), entry, 1, 2, 1, 1);
 
@@ -683,14 +683,14 @@ save_dialog (GimpImage     *image,
                           entry,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  entry = gimp_prop_entry_new (config, "cell-content", -1);
+  entry = ligma_prop_entry_new (config, "cell-content", -1);
   gtk_widget_set_size_request (entry, 200, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("C_ell content:"), 0.0, 0.5,
                             entry, 1);
 
   /* HTML Table Options */
-  frame = gimp_frame_new (_("Table Options"));
+  frame = ligma_frame_new (_("Table Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -700,39 +700,39 @@ save_dialog (GimpImage     *image,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  spinbutton = gimp_prop_spin_button_new (config, "border",
+  spinbutton = ligma_prop_spin_button_new (config, "border",
                                           1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Border:"), 0.0, 0.5,
                             spinbutton, 1);
 
-  entry = gimp_prop_entry_new (config, "cell-width", -1);
+  entry = ligma_prop_entry_new (config, "cell-width", -1);
   gtk_widget_set_size_request (entry, 60, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Width:"), 0.0, 0.5,
                             entry, 1);
 
-  entry = gimp_prop_entry_new (config, "cell-height", -1);
+  entry = ligma_prop_entry_new (config, "cell-height", -1);
   gtk_widget_set_size_request (entry, 60, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Height:"), 0.0, 0.5,
                             entry, 1);
 
-  spinbutton = gimp_prop_spin_button_new (config, "cell-padding",
+  spinbutton = ligma_prop_spin_button_new (config, "cell-padding",
                                           1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("Cell-_padding:"), 0.0, 0.5,
                             spinbutton, 1);
 
-  spinbutton = gimp_prop_spin_button_new (config, "cell-spacing",
+  spinbutton = ligma_prop_spin_button_new (config, "cell-spacing",
                                           1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             _("Cell-_spacing:"), 0.0, 0.5,
                             spinbutton, 1);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

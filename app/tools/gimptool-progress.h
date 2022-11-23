@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptool-progress.h
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmatool-progress.h
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PROGRESS_H__
-#define __GIMP_TOOL_PROGRESS_H__
+#ifndef __LIGMA_TOOL_PROGRESS_H__
+#define __LIGMA_TOOL_PROGRESS_H__
 
 
-void   gimp_tool_progress_iface_init (GimpProgressInterface *iface);
+void   ligma_tool_progress_iface_init (LigmaProgressInterface *iface);
 
 
-#endif /* __GIMP_TOOL_PROGRESS */
+#endif /* __LIGMA_TOOL_PROGRESS */

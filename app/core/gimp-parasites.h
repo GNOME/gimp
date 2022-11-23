@@ -1,4 +1,4 @@
-/* gimpparasite.h: Copyright 1998 Jay Cox <jaycox@gimp.org>
+/* ligmaparasite.h: Copyright 1998 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITES_H__
-#define __GIMP_PARASITES_H__
+#ifndef __LIGMA_PARASITES_H__
+#define __LIGMA_PARASITES_H__
 
 
-/* some wrappers to access gimp->parasites, mainly for the PDB */
+/* some wrappers to access ligma->parasites, mainly for the PDB */
 
-gboolean              gimp_parasite_validate     (Gimp               *gimp,
-                                                  const GimpParasite *parasite,
+gboolean              ligma_parasite_validate     (Ligma               *ligma,
+                                                  const LigmaParasite *parasite,
                                                   GError            **error);
-void                  gimp_parasite_attach       (Gimp               *gimp,
-                                                  const GimpParasite *parasite);
-void                  gimp_parasite_detach       (Gimp               *gimp,
+void                  ligma_parasite_attach       (Ligma               *ligma,
+                                                  const LigmaParasite *parasite);
+void                  ligma_parasite_detach       (Ligma               *ligma,
                                                   const gchar        *name);
-const GimpParasite  * gimp_parasite_find         (Gimp               *gimp,
+const LigmaParasite  * ligma_parasite_find         (Ligma               *ligma,
                                                   const gchar        *name);
-gchar              ** gimp_parasite_list         (Gimp               *gimp);
+gchar              ** ligma_parasite_list         (Ligma               *ligma);
 
-void                  gimp_parasite_shift_parent (GimpParasite       *parasite);
+void                  ligma_parasite_shift_parent (LigmaParasite       *parasite);
 
-void                  gimp_parasiterc_load       (Gimp               *gimp);
-void                  gimp_parasiterc_save       (Gimp               *gimp);
+void                  ligma_parasiterc_load       (Ligma               *ligma);
+void                  ligma_parasiterc_save       (Ligma               *ligma);
 
 
-#endif  /*  __GIMP_PARASITES_H__  */
+#endif  /*  __LIGMA_PARASITES_H__  */

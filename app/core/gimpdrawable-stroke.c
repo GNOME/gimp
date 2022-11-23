@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawable-stroke.c
- * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
+ * ligmadrawable-stroke.c
+ * Copyright (C) 2003 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,138 +24,138 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpchannel.h"
-#include "gimpdrawable-fill.h"
-#include "gimpdrawable-stroke.h"
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimpscanconvert.h"
-#include "gimpstrokeoptions.h"
+#include "ligmachannel.h"
+#include "ligmadrawable-fill.h"
+#include "ligmadrawable-stroke.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmascanconvert.h"
+#include "ligmastrokeoptions.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-gimp_drawable_stroke_boundary (GimpDrawable       *drawable,
-                               GimpStrokeOptions  *options,
-                               const GimpBoundSeg *bound_segs,
+ligma_drawable_stroke_boundary (LigmaDrawable       *drawable,
+                               LigmaStrokeOptions  *options,
+                               const LigmaBoundSeg *bound_segs,
                                gint                n_bound_segs,
                                gint                offset_x,
                                gint                offset_y,
                                gboolean            push_undo)
 {
-  GimpScanConvert *scan_convert;
+  LigmaScanConvert *scan_convert;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_STROKE_OPTIONS (options));
   g_return_if_fail (bound_segs == NULL || n_bound_segs != 0);
-  g_return_if_fail (gimp_fill_options_get_style (GIMP_FILL_OPTIONS (options)) !=
-                    GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_if_fail (ligma_fill_options_get_style (LIGMA_FILL_OPTIONS (options)) !=
+                    LIGMA_FILL_STYLE_PATTERN ||
+                    ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL);
 
-  scan_convert = gimp_scan_convert_new_from_boundary (bound_segs, n_bound_segs,
+  scan_convert = ligma_scan_convert_new_from_boundary (bound_segs, n_bound_segs,
                                                       offset_x, offset_y);
 
   if (scan_convert)
     {
-      gimp_drawable_stroke_scan_convert (drawable, options,
+      ligma_drawable_stroke_scan_convert (drawable, options,
                                          scan_convert, push_undo);
-      gimp_scan_convert_free (scan_convert);
+      ligma_scan_convert_free (scan_convert);
     }
 }
 
 gboolean
-gimp_drawable_stroke_vectors (GimpDrawable       *drawable,
-                              GimpStrokeOptions  *options,
-                              GimpVectors        *vectors,
+ligma_drawable_stroke_vectors (LigmaDrawable       *drawable,
+                              LigmaStrokeOptions  *options,
+                              LigmaVectors        *vectors,
                               gboolean            push_undo,
                               GError            **error)
 {
-  const GimpBezierDesc *bezier;
+  const LigmaBezierDesc *bezier;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (gimp_fill_options_get_style (GIMP_FILL_OPTIONS (options)) !=
-                        GIMP_FILL_STYLE_PATTERN ||
-                        gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (LIGMA_IS_STROKE_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (ligma_fill_options_get_style (LIGMA_FILL_OPTIONS (options)) !=
+                        LIGMA_FILL_STYLE_PATTERN ||
+                        ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL,
                         FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  bezier = gimp_vectors_get_bezier (vectors);
+  bezier = ligma_vectors_get_bezier (vectors);
 
   if (bezier && bezier->num_data >= 2)
     {
-      GimpScanConvert *scan_convert = gimp_scan_convert_new ();
+      LigmaScanConvert *scan_convert = ligma_scan_convert_new ();
 
-      gimp_scan_convert_add_bezier (scan_convert, bezier);
-      gimp_drawable_stroke_scan_convert (drawable, options,
+      ligma_scan_convert_add_bezier (scan_convert, bezier);
+      ligma_drawable_stroke_scan_convert (drawable, options,
                                          scan_convert, push_undo);
 
-      gimp_scan_convert_free (scan_convert);
+      ligma_scan_convert_free (scan_convert);
 
       return TRUE;
     }
 
-  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+  g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                        _("Not enough points to stroke"));
 
   return FALSE;
 }
 
 void
-gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
-                                   GimpStrokeOptions *options,
-                                   GimpScanConvert   *scan_convert,
+ligma_drawable_stroke_scan_convert (LigmaDrawable      *drawable,
+                                   LigmaStrokeOptions *options,
+                                   LigmaScanConvert   *scan_convert,
                                    gboolean           push_undo)
 {
   gdouble  width;
-  GimpUnit unit;
+  LigmaUnit unit;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_STROKE_OPTIONS (options));
   g_return_if_fail (scan_convert != NULL);
-  g_return_if_fail (gimp_fill_options_get_style (GIMP_FILL_OPTIONS (options)) !=
-                    GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_if_fail (ligma_fill_options_get_style (LIGMA_FILL_OPTIONS (options)) !=
+                    LIGMA_FILL_STYLE_PATTERN ||
+                    ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL);
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable), NULL, NULL, NULL, NULL))
     return;
 
-  width = gimp_stroke_options_get_width (options);
-  unit  = gimp_stroke_options_get_unit (options);
+  width = ligma_stroke_options_get_width (options);
+  unit  = ligma_stroke_options_get_unit (options);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != LIGMA_UNIT_PIXEL)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      LigmaImage *image = ligma_item_get_image (LIGMA_ITEM (drawable));
       gdouble    xres;
       gdouble    yres;
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      gimp_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
+      ligma_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
 
-      width = gimp_units_to_pixels (width, unit, yres);
+      width = ligma_units_to_pixels (width, unit, yres);
     }
 
-  gimp_scan_convert_stroke (scan_convert, width,
-                            gimp_stroke_options_get_join_style (options),
-                            gimp_stroke_options_get_cap_style (options),
-                            gimp_stroke_options_get_miter_limit (options),
-                            gimp_stroke_options_get_dash_offset (options),
-                            gimp_stroke_options_get_dash_info (options));
+  ligma_scan_convert_stroke (scan_convert, width,
+                            ligma_stroke_options_get_join_style (options),
+                            ligma_stroke_options_get_cap_style (options),
+                            ligma_stroke_options_get_miter_limit (options),
+                            ligma_stroke_options_get_dash_offset (options),
+                            ligma_stroke_options_get_dash_info (options));
 
-  gimp_drawable_fill_scan_convert (drawable, GIMP_FILL_OPTIONS (options),
+  ligma_drawable_fill_scan_convert (drawable, LIGMA_FILL_OPTIONS (options),
                                    scan_convert, push_undo);
 }

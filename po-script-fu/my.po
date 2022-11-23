@@ -1,13 +1,13 @@
-# Burmese translation of gimp-script-fu.
+# Burmese translation of ligma-script-fu.
 # Copyright © 2009, 2010 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
 # BurmaIT Team <burmait@burmait.net>, 2009, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.7.1\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu 2.7.1\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2010-01-29 17:24+0200\n"
 "Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
@@ -36,8 +36,8 @@ msgid "_Start Server..."
 msgstr "ဆာဗာကို စတင်ပါ..."
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_GIMP Online"
-msgstr "_GIMP အွန်လိုင်း"
+msgid "_LIGMA Online"
+msgstr "_LIGMA အွန်လိုင်း"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
@@ -76,8 +76,8 @@ msgid "_Beveled Pattern"
 msgstr "အနားစောင်း နမူနာပုံစံ"
 
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
@@ -286,7 +286,7 @@ msgid "Delta value on color"
 msgstr "အရောင်အတွက် ဒယ်တာ တန်ဖိုး"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:327
 msgid "Frame"
 msgstr "ဘောင်"
 
@@ -637,7 +637,7 @@ msgstr "အချင်း၀က်ကို မှုန်ဝါးစေပ�
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:350
 msgid "Color"
 msgstr "အရောင်"
 
@@ -773,69 +773,69 @@ msgstr "အရိပ် အထူ (%)"
 msgid "Flatten image"
 msgstr "ပြန့်ပြားတဲ့ ရုပ်ပုံ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "လမ်းကြောင်းများကို သုံးစွဲခြင်း"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "သုံးစွဲသူ လက်စွဲကို မှတ်သားပါ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "ကွန်ရက်အတွက် သင့်ရဲ့ ရုပ်ပုံများကို ပြင်ဆင်ခြင်း"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "ဒစ်ဂျစ်တယ် ကင်မရာ ဓါတ်ပုံများနဲ့ လုပ်ဆောင်ခြင်း"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "ဖိုင်များကို ဖန်တီး၊ ဖွင့်နဲ့ သိမ်းဆည်းပါ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "အခြေခံ အယူအဆ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "အညွှန်းစာမျက်နှာများကို သုံးစွဲနည်း"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "ရိုးရိုး ၀တ္ထူများ ရေးဆွဲခြင်း"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "ရွေးချယ်ချက်များကို ဖန်တီးပြီး သုံးစွဲပါ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:178
 msgid "_Main Web Site"
 msgstr "ပင်မ ကွန်ရက် စာမျက်နှာ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP ကွန်ရက်စာမျက်နှာကို မှတ်သားပါ"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:179
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:192
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:205
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:218
+msgid "Bookmark to the LIGMA web site"
+msgstr "LIGMA ကွန်ရက်စာမျက်နှာကို မှတ်သားပါ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
 msgid "_Developer Web Site"
 msgstr "တည်ဆောက်သူများ ကွန်ရက်စာမျက်နှာ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
 msgid "_User Manual Web Site"
 msgstr "သုံးစွဲသူ လက်စွဲ ကွန်ရက် စာမျက်နှာ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
 msgid "Plug-in _Registry"
 msgstr "ယန္တရားငယ် မှတ်ပုံတင်ဌာန"
 
@@ -962,7 +962,7 @@ msgid "Roughness"
 msgstr "ကြမ်းတမ်းမှု"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:351
 msgid "Gradient"
 msgstr "ရောင်စဉ်တန်း"
 
@@ -1372,125 +1372,125 @@ msgstr "ဖေါက်ထွင်းမြင်နိုင်တဲ့ န�
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "n အရောင်များကို ရည်ညွှန်းပါ (၀ = နီစိမ်းပြာ ကျန်တယ်)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:240
 msgid "Rendering Spyro"
 msgstr "စပိုင်ရိုကို တင်ဆက်နေတယ်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "စပိုင်ရိုgimp..."
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:314
+msgid "_Spyroligma..."
+msgstr "စပိုင်ရိုligma..."
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "လက်ရှိအလွာမှာ စပိုင်ရိုဂရပ်များ၊ အီပီထရိုချုပ်များနဲ့၊ လီဆာဂျော် မျဉ်းခုံးများကို ပေါင်းထည့်ပါ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Type"
 msgstr "အမျိုးအစား"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:323
 msgid "Spyrograph"
 msgstr "စပိုင်ရိုဂရပ်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:324
 msgid "Epitrochoid"
 msgstr "အီပီထရိုချုပ်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:325
 msgid "Lissajous"
 msgstr "လီဆာဂျော်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Shape"
 msgstr "ပုံသဏ္ဍာန်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:326
 msgid "Circle"
 msgstr "စက်ဝိုင်း"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:328
 msgid "Triangle"
 msgstr "တြိဂံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:329
 msgid "Square"
 msgstr "စတုရန်းပုံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:330
 msgid "Pentagon"
 msgstr "ပဉ္စဂံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:331
 msgid "Hexagon"
 msgstr "ဆဋ္ဌဂံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:332
 msgid "Polygon: 7 sides"
 msgstr "ဗဟုဂံ - အနား ၇ ခု"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:333
 msgid "Polygon: 8 sides"
 msgstr "ဗဟုဂံ - အနား ၈ ခု"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:334
 msgid "Polygon: 9 sides"
 msgstr "ဗဟုဂံ - အနား ၉ ခု"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:335
 msgid "Polygon: 10 sides"
 msgstr "ဗဟုဂံ - အနား ၁၀ ခု"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:336
 msgid "Outer teeth"
 msgstr "အပြင်ဖက် သွား"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:337
 msgid "Inner teeth"
 msgstr "အတွင်း သွားများ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:338
 msgid "Margin (pixels)"
 msgstr "အနားသတ် (ပစ်ဆယ်များ)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:339
 msgid "Hole ratio"
 msgstr "အပေါက် အချိုး"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:340
 msgid "Start angle"
 msgstr "ထောင့်ကို စတင်ပါ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Tool"
 msgstr "ကိရိယာ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:342
 msgid "Pencil"
 msgstr "ခဲတံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:343
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:345
 msgid "Brush"
 msgstr "စုတ်တံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:344
 msgid "Airbrush"
 msgstr "လေစုတ်တံ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Color method"
 msgstr "အရောင် နည်းလမ်း"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:347
 msgid "Solid Color"
 msgstr "ခိုင်မာတဲ့ အရောင်"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:348
 msgid "Gradient: Loop Sawtooth"
 msgstr "ရောင်စဉ်တန်း - လွှာသွားပုံစံ လည်ပတ်မှု"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+#: ../plug-ins/script-fu/scripts/spyroligma.scm:349
 msgid "Gradient: Loop Triangle"
 msgstr "ရောင်စဉ်တန်း - တြိဂံပုံပုံစံ လည်ပတ်မှု"
 
@@ -2069,13 +2069,13 @@ msgstr "အရိပ် Y အော့ဖ်ဆက်ကို ချထား�
 #~ msgid "Autocrop"
 #~ msgstr "အလိုအလျှောက်လှီးဖြတ်မှု"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုကြီးတဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုကြီးတဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုငယ်တဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုငယ်တဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
 
 #~ msgid "Dark color"
 #~ msgstr "မဲနက်တဲ့ အရောင်"
@@ -2102,29 +2102,29 @@ msgstr "အရိပ် Y အော့ဖ်ဆက်ကို ချထား�
 #~ msgstr "ငယ်တဲ့ ခေါင်းစီး..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ် ခေါင်းစဉ်တခုရဲ့ ရုပ်ပုံတခုကို "
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ် ခေါင်းစဉ်တခုရဲ့ ရုပ်ပုံတခုကို "
 #~ "ဖန်တီးပါ"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ်ရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ်ရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ဒုတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် တခုရဲ့ ရုပ်ပုံတခုကို "
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ဒုတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် တခုရဲ့ ရုပ်ပုံတခုကို "
 #~ "ဖန်တီးပါ"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး တတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် တခုရဲ့ ရုပ်ပုံတခုကို "
+#~ "ligma.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး တတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် တခုရဲ့ ရုပ်ပုံတခုကို "
 #~ "ဖန်တီးပါ"
 
 #~ msgid "T_ube Sub-Button Label..."

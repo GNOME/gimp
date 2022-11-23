@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/tool-presets/Crop
+## Makefile.am for ligma/data/tool-presets/Crop
 
-toolpresetspaintdatadir = $(gimpdatadir)/tool-presets/Crop
+toolpresetspaintdatadir = $(ligmadatadir)/tool-presets/Crop
 
 toolpresetspaintdata_DATA = \
 	16_10.gtp		\

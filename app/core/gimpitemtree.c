@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpitemtree.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmaitemtree.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,15 +26,15 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimpimage-undo-push.h"
-#include "gimpitem.h"
-#include "gimpitemstack.h"
-#include "gimpitemtree.h"
+#include "ligmaimage.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmaitem.h"
+#include "ligmaitemstack.h"
+#include "ligmaitemtree.h"
 
 
 enum
@@ -48,11 +48,11 @@ enum
 };
 
 
-typedef struct _GimpItemTreePrivate GimpItemTreePrivate;
+typedef struct _LigmaItemTreePrivate LigmaItemTreePrivate;
 
-struct _GimpItemTreePrivate
+struct _LigmaItemTreePrivate
 {
-  GimpImage  *image;
+  LigmaImage  *image;
 
   GType       container_type;
   GType       item_type;
@@ -62,135 +62,135 @@ struct _GimpItemTreePrivate
   GHashTable *name_hash;
 };
 
-#define GIMP_ITEM_TREE_GET_PRIVATE(object) \
-        ((GimpItemTreePrivate *) gimp_item_tree_get_instance_private ((GimpItemTree *) (object)))
+#define LIGMA_ITEM_TREE_GET_PRIVATE(object) \
+        ((LigmaItemTreePrivate *) ligma_item_tree_get_instance_private ((LigmaItemTree *) (object)))
 
 
 /*  local function prototypes  */
 
-static void     gimp_item_tree_constructed   (GObject      *object);
-static void     gimp_item_tree_dispose       (GObject      *object);
-static void     gimp_item_tree_finalize      (GObject      *object);
-static void     gimp_item_tree_set_property  (GObject      *object,
+static void     ligma_item_tree_constructed   (GObject      *object);
+static void     ligma_item_tree_dispose       (GObject      *object);
+static void     ligma_item_tree_finalize      (GObject      *object);
+static void     ligma_item_tree_set_property  (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void     gimp_item_tree_get_property  (GObject      *object,
+static void     ligma_item_tree_get_property  (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
-static gint64   gimp_item_tree_get_memsize   (GimpObject   *object,
+static gint64   ligma_item_tree_get_memsize   (LigmaObject   *object,
                                               gint64       *gui_size);
 
-static void     gimp_item_tree_uniquefy_name (GimpItemTree *tree,
-                                              GimpItem     *item,
+static void     ligma_item_tree_uniquefy_name (LigmaItemTree *tree,
+                                              LigmaItem     *item,
                                               const gchar  *new_name);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaItemTree, ligma_item_tree, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_item_tree_parent_class
+#define parent_class ligma_item_tree_parent_class
 
 
 static void
-gimp_item_tree_class_init (GimpItemTreeClass *klass)
+ligma_item_tree_class_init (LigmaItemTreeClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
-  object_class->constructed      = gimp_item_tree_constructed;
-  object_class->dispose          = gimp_item_tree_dispose;
-  object_class->finalize         = gimp_item_tree_finalize;
-  object_class->set_property     = gimp_item_tree_set_property;
-  object_class->get_property     = gimp_item_tree_get_property;
+  object_class->constructed      = ligma_item_tree_constructed;
+  object_class->dispose          = ligma_item_tree_dispose;
+  object_class->finalize         = ligma_item_tree_finalize;
+  object_class->set_property     = ligma_item_tree_set_property;
+  object_class->get_property     = ligma_item_tree_get_property;
 
-  gimp_object_class->get_memsize = gimp_item_tree_get_memsize;
+  ligma_object_class->get_memsize = ligma_item_tree_get_memsize;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CONTAINER_TYPE,
                                    g_param_spec_gtype ("container-type",
                                                        NULL, NULL,
-                                                       GIMP_TYPE_ITEM_STACK,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_TYPE_ITEM_STACK,
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ITEM_TYPE,
                                    g_param_spec_gtype ("item-type",
                                                        NULL, NULL,
-                                                       GIMP_TYPE_ITEM,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_TYPE_ITEM,
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ACTIVE_ITEM,
                                    g_param_spec_object ("active-item",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_ITEM,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_ITEM,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SELECTED_ITEMS,
                                    g_param_spec_pointer ("selected-items",
                                                          NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_item_tree_init (GimpItemTree *tree)
+ligma_item_tree_init (LigmaItemTree *tree)
 {
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   private->name_hash      = g_hash_table_new (g_str_hash, g_str_equal);
   private->selected_items = NULL;
 }
 
 static void
-gimp_item_tree_constructed (GObject *object)
+ligma_item_tree_constructed (GObject *object)
 {
-  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  LigmaItemTree        *tree    = LIGMA_ITEM_TREE (object);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_IMAGE (private->image));
-  gimp_assert (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));
-  gimp_assert (g_type_is_a (private->item_type,      GIMP_TYPE_ITEM));
-  gimp_assert (private->item_type != GIMP_TYPE_ITEM);
+  ligma_assert (LIGMA_IS_IMAGE (private->image));
+  ligma_assert (g_type_is_a (private->container_type, LIGMA_TYPE_ITEM_STACK));
+  ligma_assert (g_type_is_a (private->item_type,      LIGMA_TYPE_ITEM));
+  ligma_assert (private->item_type != LIGMA_TYPE_ITEM);
 
   tree->container = g_object_new (private->container_type,
                                   "name",          g_type_name (private->item_type),
                                   "children-type", private->item_type,
-                                  "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                                  "policy",        LIGMA_CONTAINER_POLICY_STRONG,
                                   NULL);
 }
 
 static void
-gimp_item_tree_dispose (GObject *object)
+ligma_item_tree_dispose (GObject *object)
 {
-  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  LigmaItemTree        *tree    = LIGMA_ITEM_TREE (object);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
-  gimp_item_tree_set_selected_items (tree, NULL);
+  ligma_item_tree_set_selected_items (tree, NULL);
 
-  gimp_container_foreach (tree->container,
-                          (GFunc) gimp_item_removed, NULL);
+  ligma_container_foreach (tree->container,
+                          (GFunc) ligma_item_removed, NULL);
 
-  gimp_container_clear (tree->container);
+  ligma_container_clear (tree->container);
   g_hash_table_remove_all (private->name_hash);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_item_tree_finalize (GObject *object)
+ligma_item_tree_finalize (GObject *object)
 {
-  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  LigmaItemTree        *tree    = LIGMA_ITEM_TREE (object);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_clear_pointer (&private->name_hash, g_hash_table_unref);
   g_clear_object (&tree->container);
@@ -199,12 +199,12 @@ gimp_item_tree_finalize (GObject *object)
 }
 
 static void
-gimp_item_tree_set_property (GObject      *object,
+ligma_item_tree_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (object);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -233,12 +233,12 @@ gimp_item_tree_set_property (GObject      *object,
 }
 
 static void
-gimp_item_tree_get_property (GObject    *object,
+ligma_item_tree_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (object);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -252,7 +252,7 @@ gimp_item_tree_get_property (GObject    *object,
       g_value_set_gtype (value, private->item_type);
       break;
     case PROP_ACTIVE_ITEM:
-      g_value_set_object (value, gimp_item_tree_get_active_item (GIMP_ITEM_TREE (object)));
+      g_value_set_object (value, ligma_item_tree_get_active_item (LIGMA_ITEM_TREE (object)));
       break;
     case PROP_SELECTED_ITEMS:
       g_value_set_pointer (value, private->selected_items);
@@ -265,45 +265,45 @@ gimp_item_tree_get_property (GObject    *object,
 }
 
 static gint64
-gimp_item_tree_get_memsize (GimpObject *object,
+ligma_item_tree_get_memsize (LigmaObject *object,
                             gint64     *gui_size)
 {
-  GimpItemTree *tree    = GIMP_ITEM_TREE (object);
+  LigmaItemTree *tree    = LIGMA_ITEM_TREE (object);
   gint64        memsize = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (tree->container), gui_size);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (tree->container), gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 
 /*  public functions  */
 
-GimpItemTree *
-gimp_item_tree_new (GimpImage *image,
+LigmaItemTree *
+ligma_item_tree_new (LigmaImage *image,
                     GType      container_type,
                     GType      item_type)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (g_type_is_a (container_type, GIMP_TYPE_ITEM_STACK), NULL);
-  g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (g_type_is_a (container_type, LIGMA_TYPE_ITEM_STACK), NULL);
+  g_return_val_if_fail (g_type_is_a (item_type, LIGMA_TYPE_ITEM), NULL);
 
-  return g_object_new (GIMP_TYPE_ITEM_TREE,
+  return g_object_new (LIGMA_TYPE_ITEM_TREE,
                        "image",          image,
                        "container-type", container_type,
                        "item-type",      item_type,
                        NULL);
 }
 
-GimpItem *
-gimp_item_tree_get_active_item (GimpItemTree *tree)
+LigmaItem *
+ligma_item_tree_get_active_item (LigmaItemTree *tree)
 {
   GList *items;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), NULL);
 
-  items = GIMP_ITEM_TREE_GET_PRIVATE (tree)->selected_items;
+  items = LIGMA_ITEM_TREE_GET_PRIVATE (tree)->selected_items;
   if (g_list_length (items) == 1)
     return items->data;
   else
@@ -311,47 +311,47 @@ gimp_item_tree_get_active_item (GimpItemTree *tree)
 }
 
 void
-gimp_item_tree_set_active_item (GimpItemTree *tree,
-                                GimpItem     *item)
+ligma_item_tree_set_active_item (LigmaItemTree *tree,
+                                LigmaItem     *item)
 {
-  gimp_item_tree_set_selected_items (tree,
+  ligma_item_tree_set_selected_items (tree,
                                      g_list_prepend (NULL, item));
 }
 
 GList *
-gimp_item_tree_get_selected_items (GimpItemTree *tree)
+ligma_item_tree_get_selected_items (LigmaItemTree *tree)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), NULL);
 
-  return GIMP_ITEM_TREE_GET_PRIVATE (tree)->selected_items;
+  return LIGMA_ITEM_TREE_GET_PRIVATE (tree)->selected_items;
 }
 
 /**
- * gimp_item_tree_set_selected_items:
+ * ligma_item_tree_set_selected_items:
  * @tree:
  * @items: (transfer container):
  *
  * Sets the list of selected items. @tree takes ownership of @items
- * container (not the #GimpItem themselves).
+ * container (not the #LigmaItem themselves).
  */
 void
-gimp_item_tree_set_selected_items (GimpItemTree *tree,
+ligma_item_tree_set_selected_items (LigmaItemTree *tree,
                                    GList        *items)
 {
-  GimpItemTreePrivate *private;
+  LigmaItemTreePrivate *private;
   GList               *iter;
   gboolean             selection_changed = TRUE;
   gint                 prev_selected_count;
   gint                 selected_count;
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE (tree));
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   for (iter = items; iter; iter = iter->next)
     {
       g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (iter->data, private->item_type));
-      g_return_if_fail (gimp_item_get_tree (iter->data) == tree);
+      g_return_if_fail (ligma_item_get_tree (iter->data) == tree);
     }
 
   prev_selected_count = g_list_length (private->selected_items);
@@ -390,53 +390,53 @@ gimp_item_tree_set_selected_items (GimpItemTree *tree,
     }
 }
 
-GimpItem *
-gimp_item_tree_get_item_by_name (GimpItemTree *tree,
+LigmaItem *
+ligma_item_tree_get_item_by_name (LigmaItemTree *tree,
                                  const gchar  *name)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_hash_table_lookup (GIMP_ITEM_TREE_GET_PRIVATE (tree)->name_hash,
+  return g_hash_table_lookup (LIGMA_ITEM_TREE_GET_PRIVATE (tree)->name_hash,
                               name);
 }
 
 gboolean
-gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
-                               GimpItem      *item,
-                               GimpItem     **parent,
+ligma_item_tree_get_insert_pos (LigmaItemTree  *tree,
+                               LigmaItem      *item,
+                               LigmaItem     **parent,
                                gint          *position)
 {
-  GimpItemTreePrivate *private;
-  GimpContainer       *container;
+  LigmaItemTreePrivate *private;
+  LigmaContainer       *container;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), FALSE);
   g_return_val_if_fail (parent != NULL, FALSE);
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
                         FALSE);
-  g_return_val_if_fail (! gimp_item_is_attached (item), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (item) == private->image, FALSE);
+  g_return_val_if_fail (! ligma_item_is_attached (item), FALSE);
+  g_return_val_if_fail (ligma_item_get_image (item) == private->image, FALSE);
   g_return_val_if_fail (*parent == NULL ||
-                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        *parent == LIGMA_IMAGE_ACTIVE_PARENT ||
                         G_TYPE_CHECK_INSTANCE_TYPE (*parent, private->item_type),
                         FALSE);
   g_return_val_if_fail (*parent == NULL ||
-                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_tree (*parent) == tree, FALSE);
+                        *parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_item_get_tree (*parent) == tree, FALSE);
   g_return_val_if_fail (*parent == NULL ||
-                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (*parent)),
+                        *parent == LIGMA_IMAGE_ACTIVE_PARENT ||
+                        ligma_viewable_get_children (LIGMA_VIEWABLE (*parent)),
                         FALSE);
   g_return_val_if_fail (position != NULL, FALSE);
 
   /*  if we want to insert in the active item's parent container  */
-  if (*parent == GIMP_IMAGE_ACTIVE_PARENT)
+  if (*parent == LIGMA_IMAGE_ACTIVE_PARENT)
     {
       GList    *iter;
-      GimpItem *selected_parent;
+      LigmaItem *selected_parent;
 
       *parent = NULL;
       for (iter = private->selected_items; iter; iter = iter->next)
@@ -445,14 +445,14 @@ gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
            *  branch; add to the selected item's parent container
            *  otherwise
            */
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+          if (ligma_viewable_get_children (LIGMA_VIEWABLE (iter->data)))
             {
               selected_parent = iter->data;
               *position       = 0;
             }
           else
             {
-              selected_parent = gimp_item_get_parent (iter->data);
+              selected_parent = ligma_item_get_parent (iter->data);
             }
 
           /* Only allow if all selected items have the same parent.
@@ -472,7 +472,7 @@ gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
     }
 
   if (*parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (*parent));
+    container = ligma_viewable_get_children (LIGMA_VIEWABLE (*parent));
   else
     container = tree->container;
 
@@ -485,7 +485,7 @@ gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
       for (iter = private->selected_items; iter; iter = iter->next)
         {
           selected_position =
-            gimp_container_get_child_index (container, iter->data);
+            ligma_container_get_child_index (container, iter->data);
 
           /* If one the selected items is not in the specified parent
            * container, fall back to index 0.
@@ -505,127 +505,127 @@ gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
     }
 
   /*  don't add at a non-existing index  */
-  *position = CLAMP (*position, 0, gimp_container_get_n_children (container));
+  *position = CLAMP (*position, 0, ligma_container_get_n_children (container));
 
   return TRUE;
 }
 
 void
-gimp_item_tree_add_item (GimpItemTree *tree,
-                         GimpItem     *item,
-                         GimpItem     *parent,
+ligma_item_tree_add_item (LigmaItemTree *tree,
+                         LigmaItem     *item,
+                         LigmaItem     *parent,
                          gint          position)
 {
-  GimpItemTreePrivate *private;
-  GimpContainer       *container;
-  GimpContainer       *children;
+  LigmaItemTreePrivate *private;
+  LigmaContainer       *container;
+  LigmaContainer       *children;
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE (tree));
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type));
-  g_return_if_fail (! gimp_item_is_attached (item));
-  g_return_if_fail (gimp_item_get_image (item) == private->image);
+  g_return_if_fail (! ligma_item_is_attached (item));
+  g_return_if_fail (ligma_item_get_image (item) == private->image);
   g_return_if_fail (parent == NULL ||
                     G_TYPE_CHECK_INSTANCE_TYPE (parent, private->item_type));
-  g_return_if_fail (parent == NULL || gimp_item_get_tree (parent) == tree);
+  g_return_if_fail (parent == NULL || ligma_item_get_tree (parent) == tree);
   g_return_if_fail (parent == NULL ||
-                    gimp_viewable_get_children (GIMP_VIEWABLE (parent)));
+                    ligma_viewable_get_children (LIGMA_VIEWABLE (parent)));
 
-  gimp_item_tree_uniquefy_name (tree, item, NULL);
+  ligma_item_tree_uniquefy_name (tree, item, NULL);
 
-  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+  children = ligma_viewable_get_children (LIGMA_VIEWABLE (item));
 
   if (children)
     {
-      GList *list = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (children));
+      GList *list = ligma_item_stack_get_item_list (LIGMA_ITEM_STACK (children));
 
       while (list)
         {
-          gimp_item_tree_uniquefy_name (tree, list->data, NULL);
+          ligma_item_tree_uniquefy_name (tree, list->data, NULL);
 
           list = g_list_remove (list, list->data);
         }
     }
 
   if (parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+    container = ligma_viewable_get_children (LIGMA_VIEWABLE (parent));
   else
     container = tree->container;
 
   if (parent)
-    gimp_viewable_set_parent (GIMP_VIEWABLE (item),
-                              GIMP_VIEWABLE (parent));
+    ligma_viewable_set_parent (LIGMA_VIEWABLE (item),
+                              LIGMA_VIEWABLE (parent));
 
-  gimp_container_insert (container, GIMP_OBJECT (item), position);
+  ligma_container_insert (container, LIGMA_OBJECT (item), position);
 
   /*  if the item came from the undo stack, reset its "removed" state  */
-  if (gimp_item_is_removed (item))
-    gimp_item_unset_removed (item);
+  if (ligma_item_is_removed (item))
+    ligma_item_unset_removed (item);
 }
 
 GList *
-gimp_item_tree_remove_item (GimpItemTree *tree,
-                            GimpItem     *item,
+ligma_item_tree_remove_item (LigmaItemTree *tree,
+                            LigmaItem     *item,
                             GList        *new_selected)
 {
-  GimpItemTreePrivate *private;
-  GimpItem            *parent;
-  GimpContainer       *container;
-  GimpContainer       *children;
+  LigmaItemTreePrivate *private;
+  LigmaItem            *parent;
+  LigmaContainer       *container;
+  LigmaContainer       *children;
   gint                 index;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), NULL);
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
                         NULL);
-  g_return_val_if_fail (gimp_item_get_tree (item) == tree, NULL);
+  g_return_val_if_fail (ligma_item_get_tree (item) == tree, NULL);
 
-  parent    = gimp_item_get_parent (item);
-  container = gimp_item_get_container (item);
-  index     = gimp_item_get_index (item);
+  parent    = ligma_item_get_parent (item);
+  container = ligma_item_get_container (item);
+  index     = ligma_item_get_index (item);
 
   g_object_ref (item);
 
   g_hash_table_remove (private->name_hash,
-                       gimp_object_get_name (item));
+                       ligma_object_get_name (item));
 
-  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+  children = ligma_viewable_get_children (LIGMA_VIEWABLE (item));
 
   if (children)
     {
-      GList *list = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (children));
+      GList *list = ligma_item_stack_get_item_list (LIGMA_ITEM_STACK (children));
 
       while (list)
         {
           g_hash_table_remove (private->name_hash,
-                               gimp_object_get_name (list->data));
+                               ligma_object_get_name (list->data));
 
           list = g_list_remove (list, list->data);
         }
     }
 
-  gimp_container_remove (container, GIMP_OBJECT (item));
+  ligma_container_remove (container, LIGMA_OBJECT (item));
 
   if (parent)
-    gimp_viewable_set_parent (GIMP_VIEWABLE (item), NULL);
+    ligma_viewable_set_parent (LIGMA_VIEWABLE (item), NULL);
 
-  gimp_item_removed (item);
+  ligma_item_removed (item);
 
   if (! new_selected)
     {
-      GimpItem *selected   = NULL;
-      gint      n_children = gimp_container_get_n_children (container);
+      LigmaItem *selected   = NULL;
+      gint      n_children = ligma_container_get_n_children (container);
 
       if (n_children > 0)
         {
           index = CLAMP (index, 0, n_children - 1);
 
           selected =
-            GIMP_ITEM (gimp_container_get_child_by_index (container, index));
+            LIGMA_ITEM (ligma_container_get_child_by_index (container, index));
         }
       else if (parent)
         {
@@ -646,48 +646,48 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
 }
 
 gboolean
-gimp_item_tree_reorder_item (GimpItemTree *tree,
-                             GimpItem     *item,
-                             GimpItem     *new_parent,
+ligma_item_tree_reorder_item (LigmaItemTree *tree,
+                             LigmaItem     *item,
+                             LigmaItem     *new_parent,
                              gint          new_index,
                              gboolean      push_undo,
                              const gchar  *undo_desc)
 {
-  GimpItemTreePrivate *private;
-  GimpContainer       *container;
-  GimpContainer       *new_container;
+  LigmaItemTreePrivate *private;
+  LigmaContainer       *container;
+  LigmaContainer       *new_container;
   gint                 n_items;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE (tree), FALSE);
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
                         FALSE);
-  g_return_val_if_fail (gimp_item_get_tree (item) == tree, FALSE);
+  g_return_val_if_fail (ligma_item_get_tree (item) == tree, FALSE);
   g_return_val_if_fail (new_parent == NULL ||
                         G_TYPE_CHECK_INSTANCE_TYPE (new_parent,
                                                     private->item_type),
                         FALSE);
   g_return_val_if_fail (new_parent == NULL ||
-                        gimp_item_get_tree (new_parent) == tree, FALSE);
+                        ligma_item_get_tree (new_parent) == tree, FALSE);
   g_return_val_if_fail (new_parent == NULL ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
+                        ligma_viewable_get_children (LIGMA_VIEWABLE (new_parent)),
                         FALSE);
   g_return_val_if_fail (item != new_parent, FALSE);
   g_return_val_if_fail (new_parent == NULL ||
-                        ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
-                                                     GIMP_VIEWABLE (new_parent)),
+                        ! ligma_viewable_is_ancestor (LIGMA_VIEWABLE (item),
+                                                     LIGMA_VIEWABLE (new_parent)),
                         FALSE);
 
-  container = gimp_item_get_container (item);
+  container = ligma_item_get_container (item);
 
   if (new_parent)
-    new_container = gimp_viewable_get_children (GIMP_VIEWABLE (new_parent));
+    new_container = ligma_viewable_get_children (LIGMA_VIEWABLE (new_parent));
   else
     new_container = tree->container;
 
-  n_items = gimp_container_get_n_children (new_container);
+  n_items = ligma_container_get_n_children (new_container);
 
   if (new_container == container)
     n_items--;
@@ -695,62 +695,62 @@ gimp_item_tree_reorder_item (GimpItemTree *tree,
   new_index = CLAMP (new_index, 0, n_items);
 
   if (new_container != container ||
-      new_index     != gimp_item_get_index (item))
+      new_index     != ligma_item_get_index (item))
     {
       GList *selected_items = g_list_copy (private->selected_items);
       if (push_undo)
-        gimp_image_undo_push_item_reorder (private->image, undo_desc, item);
+        ligma_image_undo_push_item_reorder (private->image, undo_desc, item);
 
       if (new_container != container)
         {
           g_object_ref (item);
 
-          gimp_container_remove (container, GIMP_OBJECT (item));
+          ligma_container_remove (container, LIGMA_OBJECT (item));
 
-          gimp_viewable_set_parent (GIMP_VIEWABLE (item),
-                                    GIMP_VIEWABLE (new_parent));
+          ligma_viewable_set_parent (LIGMA_VIEWABLE (item),
+                                    LIGMA_VIEWABLE (new_parent));
 
-          gimp_container_insert (new_container, GIMP_OBJECT (item), new_index);
+          ligma_container_insert (new_container, LIGMA_OBJECT (item), new_index);
 
           g_object_unref (item);
         }
       else
         {
-          gimp_container_reorder (container, GIMP_OBJECT (item), new_index);
+          ligma_container_reorder (container, LIGMA_OBJECT (item), new_index);
         }
       /* After reorder, selection is likely lost. We must recreate it as
        * it was.
        */
-      gimp_item_tree_set_selected_items (tree, selected_items);
+      ligma_item_tree_set_selected_items (tree, selected_items);
     }
 
   return TRUE;
 }
 
 void
-gimp_item_tree_rename_item (GimpItemTree *tree,
-                            GimpItem     *item,
+ligma_item_tree_rename_item (LigmaItemTree *tree,
+                            LigmaItem     *item,
                             const gchar  *new_name,
                             gboolean      push_undo,
                             const gchar  *undo_desc)
 {
-  GimpItemTreePrivate *private;
+  LigmaItemTreePrivate *private;
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE (tree));
 
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type));
-  g_return_if_fail (gimp_item_get_tree (item) == tree);
+  g_return_if_fail (ligma_item_get_tree (item) == tree);
   g_return_if_fail (new_name != NULL);
 
-  if (strcmp (new_name, gimp_object_get_name (item)))
+  if (strcmp (new_name, ligma_object_get_name (item)))
     {
       if (push_undo)
-        gimp_image_undo_push_item_rename (gimp_item_get_image (item),
+        ligma_image_undo_push_item_rename (ligma_item_get_image (item),
                                           undo_desc, item);
 
-      gimp_item_tree_uniquefy_name (tree, item, new_name);
+      ligma_item_tree_uniquefy_name (tree, item, new_name);
     }
 }
 
@@ -758,32 +758,32 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
 /*  private functions  */
 
 static void
-gimp_item_tree_uniquefy_name (GimpItemTree *tree,
-                              GimpItem     *item,
+ligma_item_tree_uniquefy_name (LigmaItemTree *tree,
+                              LigmaItem     *item,
                               const gchar  *new_name)
 {
-  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  LigmaItemTreePrivate *private = LIGMA_ITEM_TREE_GET_PRIVATE (tree);
 
   if (new_name)
     {
       g_hash_table_remove (private->name_hash,
-                           gimp_object_get_name (item));
+                           ligma_object_get_name (item));
 
-      gimp_object_set_name (GIMP_OBJECT (item), new_name);
+      ligma_object_set_name (LIGMA_OBJECT (item), new_name);
     }
 
   /* Remove any trailing whitespace. */
-  if (gimp_object_get_name (item))
+  if (ligma_object_get_name (item))
     {
-      gchar *name = g_strchomp (g_strdup (gimp_object_get_name (item)));
+      gchar *name = g_strchomp (g_strdup (ligma_object_get_name (item)));
 
-      gimp_object_take_name (GIMP_OBJECT (item), name);
+      ligma_object_take_name (LIGMA_OBJECT (item), name);
     }
 
   if (g_hash_table_lookup (private->name_hash,
-                           gimp_object_get_name (item)))
+                           ligma_object_get_name (item)))
     {
-      gchar      *name        = g_strdup (gimp_object_get_name (item));
+      gchar      *name        = g_strdup (ligma_object_get_name (item));
       gchar      *new_name    = NULL;
       gint        number      = 0;
       gint        precision   = 1;
@@ -825,10 +825,10 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
 
       g_free (name);
 
-      gimp_object_take_name (GIMP_OBJECT (item), new_name);
+      ligma_object_take_name (LIGMA_OBJECT (item), new_name);
     }
 
   g_hash_table_insert (private->name_hash,
-                       (gpointer) gimp_object_get_name (item),
+                       (gpointer) ligma_object_get_name (item),
                        item);
 }

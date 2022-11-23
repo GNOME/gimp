@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpimagecombobox.h
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmaimagecombobox.h
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,38 +19,38 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_IMAGE_COMBO_BOX_H__
-#define __GIMP_IMAGE_COMBO_BOX_H__
+#ifndef __LIGMA_IMAGE_COMBO_BOX_H__
+#define __LIGMA_IMAGE_COMBO_BOX_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 /**
- * GimpImageConstraintFunc:
+ * LigmaImageConstraintFunc:
  * @image:
  * @data: (closure):
  */
-typedef gboolean (* GimpImageConstraintFunc) (GimpImage *image,
+typedef gboolean (* LigmaImageConstraintFunc) (LigmaImage *image,
                                               gpointer   data);
 
 
-#define GIMP_TYPE_IMAGE_COMBO_BOX       (gimp_image_combo_box_get_type ())
-#define GIMP_IMAGE_COMBO_BOX(obj)       (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_COMBO_BOX, GimpImageComboBox))
-#define GIMP_IS_IMAGE_COMBO_BOX(obj)    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_COMBO_BOX)
+#define LIGMA_TYPE_IMAGE_COMBO_BOX       (ligma_image_combo_box_get_type ())
+#define LIGMA_IMAGE_COMBO_BOX(obj)       (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_COMBO_BOX, LigmaImageComboBox))
+#define LIGMA_IS_IMAGE_COMBO_BOX(obj)    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_COMBO_BOX)
 
 
-GType       gimp_image_combo_box_get_type (void) G_GNUC_CONST;
+GType       ligma_image_combo_box_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_image_combo_box_new      (GimpImageConstraintFunc  constraint,
+GtkWidget * ligma_image_combo_box_new      (LigmaImageConstraintFunc  constraint,
                                            gpointer                 data,
                                            GDestroyNotify           data_destroy);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_IMAGE_COMBO_BOX_H__ */
+#endif /* __LIGMA_IMAGE_COMBO_BOX_H__ */

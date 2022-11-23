@@ -16,11 +16,11 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="gimp-tool-offset.svg"
+   sodipodi:docname="ligma-tool-offset.svg"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
   <title
-     id="title7666">GIMP Offset Tool</title>
+     id="title7666">LIGMA Offset Tool</title>
   <defs
      id="defs30573">
     <linearGradient
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>GIMP Offset Tool</dc:title>
+        <dc:title>LIGMA Offset Tool</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Klaus Staedtler</dc:title>
@@ -124,11 +124,11 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <g
-       id="gimp-tool-offset">
+       id="ligma-tool-offset">
       <g
          inkscape:transform-center-y="0.025736985"
          inkscape:transform-center-x="-4.7441149"
-         id="gimp-grid"
+         id="ligma-grid"
          transform="matrix(0.96327079,0,0,0.96336725,0.2938523,1036.6552)">
         <rect
            style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#d3d7cf;fill-opacity:1;fill-rule:nonzero;stroke:#888a85;stroke-width:0.99999905;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
@@ -146,7 +146,7 @@
          id="g3960">
         <path
            d="m 8,1036.6124 -3.5,2.7498 H 7 v 4 H 3.0000601 l -1.201e-4,-2.5 -2.7497286,3.5 2.7497286,3.368 v -2.368 H 7 v 4 H 4.5 l 3.5,2.7498 3.5,-2.7498 H 9 v -4 h 4 v 2.632 l 2.749789,-3.632 -2.749789,-3.5 v 2.5 H 9 v -4 h 2.5 z"
-           id="gimp-tool-move"
+           id="ligma-tool-move"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="ccccccccccccccccccccccccc"
            stroke-miterlimit="10"

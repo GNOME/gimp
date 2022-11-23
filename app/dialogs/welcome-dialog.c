@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * welcome-dialog.c
@@ -26,20 +26,20 @@
 #include <gdk/gdkwayland.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "welcome-dialog.h"
 #include "welcome-dialog-data.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void   welcome_dialog_release_item_activated (GtkListBox    *listbox,
@@ -57,7 +57,7 @@ static void   welcome_size_allocate                 (GtkWidget      *welcome_dia
 
 
 GtkWidget *
-welcome_dialog_create (Gimp *gimp)
+welcome_dialog_create (Ligma *ligma)
 {
   GtkWidget  *welcome_dialog;
   GList      *windows;
@@ -80,13 +80,13 @@ welcome_dialog_create (Gimp *gimp)
   gchar      *tmp;
   gint        row;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
-  title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
-  windows = gimp_get_image_windows (gimp);
-  welcome_dialog = gimp_dialog_new (title,
-                                    "gimp-welcome-dialog",
+  title = g_strdup_printf (_("Welcome to LIGMA %s"), LIGMA_VERSION);
+  windows = ligma_get_image_windows (ligma);
+  welcome_dialog = ligma_dialog_new (title,
+                                    "ligma-welcome-dialog",
                                     windows ?  windows->data : NULL,
                                     0, NULL, NULL,
                                     NULL);
@@ -118,7 +118,7 @@ welcome_dialog_create (Gimp *gimp)
                         "Welcome");
   gtk_widget_show (vbox);
 
-  image = gtk_image_new_from_icon_name ("gimp-wilber",
+  image = gtk_image_new_from_icon_name ("ligma-wilber",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
@@ -132,7 +132,7 @@ welcome_dialog_create (Gimp *gimp)
   /* Welcome title. */
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
-  tmp = g_strdup_printf (_("You installed GIMP %s!"), GIMP_VERSION);
+  tmp = g_strdup_printf (_("You installed LIGMA %s!"), LIGMA_VERSION);
   markup = g_strdup_printf ("<big>%s</big>", tmp);
   g_free (tmp);
   widget = gtk_label_new (NULL);
@@ -153,7 +153,7 @@ welcome_dialog_create (Gimp *gimp)
 
   /* Welcome message: left */
 
-  markup = _("GIMP is a Free Software for image authoring and manipulation.\n"
+  markup = _("LIGMA is a Free Software for image authoring and manipulation.\n"
              "Want to know more?");
 
   widget = gtk_label_new (NULL);
@@ -182,24 +182,24 @@ welcome_dialog_create (Gimp *gimp)
   welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "globe with meridians" emoticone in UTF-8. */
                     "\xf0\x9f\x8c\x90",
-                    _("GIMP website"), "https://www.gimp.org/");
+                    _("LIGMA website"), "https://www.ligma.org/");
   welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "graduation cap" emoticone in UTF-8. */
                     "\xf0\x9f\x8e\x93",
                     _("Tutorials"),
-                    "https://www.gimp.org/tutorials/");
+                    "https://www.ligma.org/tutorials/");
   welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "open book" emoticone in UTF-8. */
                     "\xf0\x9f\x93\x96",
                     _("Documentation"),
-                    "https://docs.gimp.org/");
+                    "https://docs.ligma.org/");
 
   /* XXX: should we add API docs for plug-in developers once it's
    * properly set up? */
 
   /* Welcome message: right */
 
-  markup = _("GIMP is a Community Software under the GNU general public license v3.\n"
+  markup = _("LIGMA is a Community Software under the GNU general public license v3.\n"
              "Want to contribute?");
 
   widget = gtk_label_new (NULL);
@@ -225,18 +225,18 @@ welcome_dialog_create (Gimp *gimp)
                     /* "keyboard" emoticone in UTF-8. */
                     "\xe2\x8c\xa8",
                     _("Contributing"),
-                    "https://www.gimp.org/develop/");
+                    "https://www.ligma.org/develop/");
   welcome_add_link (GTK_GRID (grid), 1, &row,
                     /* "love letter" emoticone in UTF-8. */
                     "\xf0\x9f\x92\x8c",
                     _("Donating"),
-                    "https://www.gimp.org/donating/");
+                    "https://www.ligma.org/donating/");
 
   /*****************/
   /* Release Notes */
   /*****************/
 
-  if (gimp_welcome_dialog_n_items > 0)
+  if (ligma_welcome_dialog_n_items > 0)
     {
       gint n_demos = 0;
 
@@ -254,7 +254,7 @@ welcome_dialog_create (Gimp *gimp)
       gtk_widget_show (hbox);
 
       /* Translators: the %s string will be the version, e.g. "3.0". */
-      tmp = g_strdup_printf (_("GIMP %s Release Notes"), GIMP_VERSION);
+      tmp = g_strdup_printf (_("LIGMA %s Release Notes"), LIGMA_VERSION);
       markup = g_strdup_printf ("<b><big>%s</big></b>", tmp);
       g_free (tmp);
       widget = gtk_label_new (NULL);
@@ -266,7 +266,7 @@ welcome_dialog_create (Gimp *gimp)
       gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
       gtk_widget_show (widget);
 
-      image = gtk_image_new_from_icon_name ("gimp-user-manual",
+      image = gtk_image_new_from_icon_name ("ligma-user-manual",
                                             GTK_ICON_SIZE_DIALOG);
       gtk_widget_set_valign (image, GTK_ALIGN_START);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -274,17 +274,17 @@ welcome_dialog_create (Gimp *gimp)
 
       /* Release note introduction. */
 
-      if (gimp_welcome_dialog_intro_n_paragraphs)
+      if (ligma_welcome_dialog_intro_n_paragraphs)
         {
           GString *introduction = NULL;
 
-          for (gint i = 0; i < gimp_welcome_dialog_intro_n_paragraphs; i++)
+          for (gint i = 0; i < ligma_welcome_dialog_intro_n_paragraphs; i++)
             {
               if (i == 0)
-                introduction = g_string_new (_(gimp_welcome_dialog_intro[i]));
+                introduction = g_string_new (_(ligma_welcome_dialog_intro[i]));
               else
                 g_string_append_printf (introduction, "\n%s",
-                                        _(gimp_welcome_dialog_intro[i]));
+                                        _(ligma_welcome_dialog_intro[i]));
             }
           widget = gtk_label_new (NULL);
           gtk_label_set_markup (GTK_LABEL (widget), introduction->str);
@@ -306,23 +306,23 @@ welcome_dialog_create (Gimp *gimp)
 
       listbox = gtk_list_box_new ();
 
-      for (gint i = 0; i < gimp_welcome_dialog_n_items; i++)
+      for (gint i = 0; i < ligma_welcome_dialog_n_items; i++)
         {
           GtkWidget *row;
           gchar     *markup;
 
           /* Add a bold dot for pretty listing. */
-          if (i < gimp_welcome_dialog_n_items &&
-              gimp_welcome_dialog_demos[i] != NULL)
+          if (i < ligma_welcome_dialog_n_items &&
+              ligma_welcome_dialog_demos[i] != NULL)
             {
               markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s",
-                                        _((gchar *) gimp_welcome_dialog_items[i]));
+                                        _((gchar *) ligma_welcome_dialog_items[i]));
               n_demos++;
             }
           else
             {
               markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s",
-                                        _((gchar *) gimp_welcome_dialog_items[i]));
+                                        _((gchar *) ligma_welcome_dialog_items[i]));
             }
 
           row = gtk_list_box_row_new ();
@@ -346,7 +346,7 @@ welcome_dialog_create (Gimp *gimp)
 
       g_signal_connect (listbox, "row-activated",
                         G_CALLBACK (welcome_dialog_release_item_activated),
-                        gimp);
+                        ligma);
       gtk_widget_show (listbox);
 
       if (n_demos > 0)
@@ -384,11 +384,11 @@ welcome_dialog_create (Gimp *gimp)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      if (GIMP_MINOR_VERSION % 2 == 0)
-        release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
-                                        GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+      if (LIGMA_MINOR_VERSION % 2 == 0)
+        release_link = g_strdup_printf ("https://www.ligma.org/release-notes/ligma-%d.%d.html",
+                                        LIGMA_MAJOR_VERSION, LIGMA_MINOR_VERSION);
       else
-        release_link = g_strdup ("https://www.gimp.org/");
+        release_link = g_strdup ("https://www.ligma.org/");
 
       widget = gtk_link_button_new_with_label (release_link, _("Learn more"));
       gtk_widget_show (widget);
@@ -428,7 +428,7 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
                                        GtkListBoxRow *row,
                                        gpointer       user_data)
 {
-  Gimp         *gimp          = user_data;
+  Ligma         *ligma          = user_data;
   GList        *blink_script  = NULL;
   const gchar  *script_string;
   gchar       **script_steps;
@@ -437,9 +437,9 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
 
   row_index = gtk_list_box_row_get_index (row);
 
-  g_return_if_fail (row_index < gimp_welcome_dialog_n_items);
+  g_return_if_fail (row_index < ligma_welcome_dialog_n_items);
 
-  script_string = gimp_welcome_dialog_demos[row_index];
+  script_string = ligma_welcome_dialog_demos[row_index];
 
   if (script_string == NULL)
     /* Not an error. Some release items have no demos. */
@@ -478,19 +478,19 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
       if (widget_id != NULL)
         widget_id = g_strstrip (widget_id);
 
-      /* All our dockable IDs start with "gimp-". This allows to write
+      /* All our dockable IDs start with "ligma-". This allows to write
        * shorter names in the demo script.
        */
-      if (! g_str_has_prefix (dockable_id, "gimp-"))
+      if (! g_str_has_prefix (dockable_id, "ligma-"))
         {
-          gchar *tmp = g_strdup_printf ("gimp-%s", dockable_id);
+          gchar *tmp = g_strdup_printf ("ligma-%s", dockable_id);
 
           g_free (ids[0]);
           dockable_id = ids[0] = tmp;
         }
 
       /* Blink widget. */
-      if (g_strcmp0 (dockable_id, "gimp-toolbox") == 0)
+      if (g_strcmp0 (dockable_id, "ligma-toolbox") == 0)
         {
           /* All tool button IDs start with "tools-". This allows to
            * write shorter tool names in the demo script.
@@ -503,11 +503,11 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
               widget_id = settings[0] = tmp;
             }
 
-          gimp_blink_toolbox (gimp, widget_id, &blink_script);
+          ligma_blink_toolbox (ligma, widget_id, &blink_script);
         }
       else
         {
-          gimp_blink_dockable (gimp, dockable_id,
+          ligma_blink_dockable (ligma, dockable_id,
                                widget_id, settings_value,
                                &blink_script);
         }
@@ -518,7 +518,7 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
     }
   if (blink_script != NULL)
     {
-      GList *windows = gimp_get_image_windows (gimp);
+      GList *windows = ligma_get_image_windows (ligma);
 
       /* Losing forcus on the welcome dialog on purpose for the main GUI
        * to be more readable.
@@ -526,7 +526,7 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
       if (windows)
         gtk_window_present (windows->data);
 
-      gimp_blink_play_script (blink_script);
+      ligma_blink_play_script (blink_script);
 
       g_list_free (windows);
     }
@@ -592,7 +592,7 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   if (gtk_image_get_storage_type (GTK_IMAGE (image)) == GTK_IMAGE_PIXBUF)
     return;
 
-  monitor = gimp_get_monitor_at_pointer ();
+  monitor = ligma_get_monitor_at_pointer ();
   gdk_monitor_get_workarea (monitor, &workarea);
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
@@ -626,7 +626,7 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   image_width = CLAMP (image_width, min_width, max_width);
   image_height = CLAMP (image_height, min_height, max_height);
 
-  splash_file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
+  splash_file = ligma_data_directory_file ("images", "ligma-splash.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file_at_scale (g_file_peek_path (splash_file),
                                               image_width, image_height,
                                               TRUE, &error);

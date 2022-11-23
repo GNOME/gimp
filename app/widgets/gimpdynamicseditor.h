@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,43 +15,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DYNAMICS_EDITOR_H__
-#define __GIMP_DYNAMICS_EDITOR_H__
+#ifndef __LIGMA_DYNAMICS_EDITOR_H__
+#define __LIGMA_DYNAMICS_EDITOR_H__
 
 
-#include "gimpdataeditor.h"
+#include "ligmadataeditor.h"
 
 
-#define GIMP_TYPE_DYNAMICS_EDITOR            (gimp_dynamics_editor_get_type ())
-#define GIMP_DYNAMICS_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DYNAMICS_EDITOR, GimpDynamicsEditor))
-#define GIMP_DYNAMICS_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DYNAMICS_EDITOR, GimpDynamicsEditorClass))
-#define GIMP_IS_DYNAMICS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DYNAMICS_EDITOR))
-#define GIMP_IS_DYNAMICS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_EDITOR))
-#define GIMP_DYNAMICS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_EDITOR, GimpDynamicsEditorClass))
+#define LIGMA_TYPE_DYNAMICS_EDITOR            (ligma_dynamics_editor_get_type ())
+#define LIGMA_DYNAMICS_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DYNAMICS_EDITOR, LigmaDynamicsEditor))
+#define LIGMA_DYNAMICS_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DYNAMICS_EDITOR, LigmaDynamicsEditorClass))
+#define LIGMA_IS_DYNAMICS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DYNAMICS_EDITOR))
+#define LIGMA_IS_DYNAMICS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DYNAMICS_EDITOR))
+#define LIGMA_DYNAMICS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DYNAMICS_EDITOR, LigmaDynamicsEditorClass))
 
 
-typedef struct _GimpDynamicsEditorClass GimpDynamicsEditorClass;
+typedef struct _LigmaDynamicsEditorClass LigmaDynamicsEditorClass;
 
-struct _GimpDynamicsEditor
+struct _LigmaDynamicsEditor
 {
-  GimpDataEditor  parent_instance;
+  LigmaDataEditor  parent_instance;
 
-  GimpDynamics   *dynamics_model;
+  LigmaDynamics   *dynamics_model;
 
   GtkWidget      *view_selector;
   GtkWidget      *notebook;
 };
 
-struct _GimpDynamicsEditorClass
+struct _LigmaDynamicsEditorClass
 {
-  GimpDataEditorClass  parent_class;
+  LigmaDataEditorClass  parent_class;
 };
 
 
-GType       gimp_dynamics_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_dynamics_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dynamics_editor_new      (GimpContext      *context,
-                                           GimpMenuFactory  *menu_factory);
+GtkWidget * ligma_dynamics_editor_new      (LigmaContext      *context,
+                                           LigmaMenuFactory  *menu_factory);
 
 
-#endif /* __GIMP_DYNAMICS_EDITOR_H__ */
+#endif /* __LIGMA_DYNAMICS_EDITOR_H__ */

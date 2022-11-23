@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp-debug.h
+ * ligma-debug.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,31 +18,31 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DEBUG_H__
-#define __GIMP_DEBUG_H__
+#ifndef __LIGMA_DEBUG_H__
+#define __LIGMA_DEBUG_H__
 
 G_BEGIN_DECLS
 
 
 typedef enum
 {
-  GIMP_DEBUG_PID            = 1 << 0,
-  GIMP_DEBUG_FATAL_WARNINGS = 1 << 1,
-  GIMP_DEBUG_QUERY          = 1 << 2,
-  GIMP_DEBUG_INIT           = 1 << 3,
-  GIMP_DEBUG_RUN            = 1 << 4,
-  GIMP_DEBUG_QUIT           = 1 << 5,
-  GIMP_DEBUG_FATAL_CRITICALS = 1 << 6,
+  LIGMA_DEBUG_PID            = 1 << 0,
+  LIGMA_DEBUG_FATAL_WARNINGS = 1 << 1,
+  LIGMA_DEBUG_QUERY          = 1 << 2,
+  LIGMA_DEBUG_INIT           = 1 << 3,
+  LIGMA_DEBUG_RUN            = 1 << 4,
+  LIGMA_DEBUG_QUIT           = 1 << 5,
+  LIGMA_DEBUG_FATAL_CRITICALS = 1 << 6,
 
-} GimpDebugFlag;
+} LigmaDebugFlag;
 
 
-void   _gimp_debug_init  (const gchar *basename);
-void   _gimp_debug_configure (GimpStackTraceMode stack_trace_mode);
-guint  _gimp_get_debug_flags (void);
-void   _gimp_debug_stop  (void);
+void   _ligma_debug_init  (const gchar *basename);
+void   _ligma_debug_configure (LigmaStackTraceMode stack_trace_mode);
+guint  _ligma_get_debug_flags (void);
+void   _ligma_debug_stop  (void);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_DEBUG_H__ */
+#endif /* __LIGMA_DEBUG_H__ */

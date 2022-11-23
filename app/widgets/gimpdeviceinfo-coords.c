@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,20 +22,20 @@
 
 #include "widgets-types.h"
 
-#include "gimpdeviceinfo.h"
-#include "gimpdeviceinfo-coords.h"
+#include "ligmadeviceinfo.h"
+#include "ligmadeviceinfo-coords.h"
 
 
-static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+static const LigmaCoords default_coords = LIGMA_COORDS_DEFAULT_VALUES;
 
 
 /*  public functions  */
 
 gboolean
-gimp_device_info_get_event_coords (GimpDeviceInfo *info,
+ligma_device_info_get_event_coords (LigmaDeviceInfo *info,
                                    GdkWindow      *window,
                                    const GdkEvent *event,
-                                   GimpCoords     *coords)
+                                   LigmaCoords     *coords)
 {
   gdouble x;
 
@@ -75,49 +75,49 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
 
       if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
         {
-          coords->pressure = gimp_device_info_map_axis (info,
+          coords->pressure = ligma_device_info_map_axis (info,
                                                         GDK_AXIS_PRESSURE,
                                                         coords->pressure);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
         {
-          coords->xtilt = gimp_device_info_map_axis (info,
+          coords->xtilt = ligma_device_info_map_axis (info,
                                                      GDK_AXIS_XTILT,
                                                      coords->xtilt);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
         {
-          coords->ytilt = gimp_device_info_map_axis (info,
+          coords->ytilt = ligma_device_info_map_axis (info,
                                                      GDK_AXIS_YTILT,
                                                      coords->ytilt);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
         {
-          coords->wheel = gimp_device_info_map_axis (info,
+          coords->wheel = ligma_device_info_map_axis (info,
                                                      GDK_AXIS_WHEEL,
                                                      coords->wheel);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_DISTANCE, &coords->distance))
         {
-          coords->distance = gimp_device_info_map_axis (info,
+          coords->distance = ligma_device_info_map_axis (info,
                                                         GDK_AXIS_DISTANCE,
                                                         coords->distance);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_ROTATION, &coords->rotation))
         {
-          coords->rotation = gimp_device_info_map_axis (info,
+          coords->rotation = ligma_device_info_map_axis (info,
                                                         GDK_AXIS_ROTATION,
                                                         coords->rotation);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_SLIDER, &coords->slider))
         {
-          coords->slider = gimp_device_info_map_axis (info,
+          coords->slider = ligma_device_info_map_axis (info,
                                                       GDK_AXIS_SLIDER,
                                                       coords->slider);
         }
@@ -125,17 +125,17 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
       return TRUE;
     }
 
-  gimp_device_info_get_device_coords (info, window, coords);
+  ligma_device_info_get_device_coords (info, window, coords);
 
   return FALSE;
 }
 
 void
-gimp_device_info_get_device_coords (GimpDeviceInfo *info,
+ligma_device_info_get_device_coords (LigmaDeviceInfo *info,
                                     GdkWindow      *window,
-                                    GimpCoords     *coords)
+                                    LigmaCoords     *coords)
 {
-  GdkDevice *device = gimp_device_info_get_device (info, NULL);
+  GdkDevice *device = ligma_device_info_get_device (info, NULL);
   gdouble    axes[GDK_AXIS_LAST] = { 0, };
 
   if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_SLAVE)
@@ -165,7 +165,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_PRESSURE, &coords->pressure))
     {
-      coords->pressure = gimp_device_info_map_axis (info,
+      coords->pressure = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_PRESSURE,
                                                     coords->pressure);
     }
@@ -173,7 +173,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_XTILT, &coords->xtilt))
     {
-      coords->xtilt = gimp_device_info_map_axis (info,
+      coords->xtilt = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_XTILT,
                                                  coords->xtilt);
     }
@@ -181,7 +181,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_YTILT, &coords->ytilt))
     {
-      coords->ytilt = gimp_device_info_map_axis (info,
+      coords->ytilt = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_YTILT,
                                                  coords->ytilt);
     }
@@ -189,7 +189,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_WHEEL, &coords->wheel))
     {
-      coords->wheel = gimp_device_info_map_axis (info,
+      coords->wheel = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_WHEEL,
                                                  coords->wheel);
     }
@@ -197,7 +197,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_DISTANCE, &coords->distance))
     {
-      coords->distance = gimp_device_info_map_axis (info,
+      coords->distance = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_DISTANCE,
                                                     coords->distance);
     }
@@ -205,7 +205,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_ROTATION, &coords->rotation))
     {
-      coords->rotation = gimp_device_info_map_axis (info,
+      coords->rotation = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_ROTATION,
                                                     coords->rotation);
     }
@@ -213,18 +213,18 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_SLIDER, &coords->slider))
     {
-      coords->slider = gimp_device_info_map_axis (info,
+      coords->slider = ligma_device_info_map_axis (info,
                                                   GDK_AXIS_SLIDER,
                                                   coords->slider);
     }
 }
 
 void
-gimp_device_info_get_time_coords (GimpDeviceInfo *info,
+ligma_device_info_get_time_coords (LigmaDeviceInfo *info,
                                   GdkTimeCoord   *event,
-                                  GimpCoords     *coords)
+                                  LigmaCoords     *coords)
 {
-  GdkDevice *device = gimp_device_info_get_device (info, NULL);
+  GdkDevice *device = ligma_device_info_get_device (info, NULL);
 
   *coords = default_coords;
 
@@ -238,7 +238,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_PRESSURE, &coords->pressure))
     {
-      coords->pressure = gimp_device_info_map_axis (info,
+      coords->pressure = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_PRESSURE,
                                                     coords->pressure);
     }
@@ -246,7 +246,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_XTILT, &coords->xtilt))
     {
-      coords->xtilt = gimp_device_info_map_axis (info,
+      coords->xtilt = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_XTILT,
                                                  coords->xtilt);
     }
@@ -254,7 +254,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_YTILT, &coords->ytilt))
     {
-      coords->ytilt = gimp_device_info_map_axis (info,
+      coords->ytilt = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_YTILT,
                                                  coords->ytilt);
     }
@@ -262,7 +262,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_WHEEL, &coords->wheel))
     {
-      coords->wheel = gimp_device_info_map_axis (info,
+      coords->wheel = ligma_device_info_map_axis (info,
                                                  GDK_AXIS_WHEEL,
                                                  coords->wheel);
     }
@@ -270,7 +270,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_DISTANCE, &coords->distance))
     {
-      coords->distance = gimp_device_info_map_axis (info,
+      coords->distance = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_DISTANCE,
                                                     coords->distance);
     }
@@ -278,7 +278,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_ROTATION, &coords->rotation))
     {
-      coords->rotation = gimp_device_info_map_axis (info,
+      coords->rotation = ligma_device_info_map_axis (info,
                                                     GDK_AXIS_ROTATION,
                                                     coords->rotation);
     }
@@ -286,14 +286,14 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_SLIDER, &coords->slider))
     {
-      coords->slider = gimp_device_info_map_axis (info,
+      coords->slider = ligma_device_info_map_axis (info,
                                                   GDK_AXIS_SLIDER,
                                                   coords->slider);
     }
 }
 
 gboolean
-gimp_device_info_get_event_state (GimpDeviceInfo  *info,
+ligma_device_info_get_event_state (LigmaDeviceInfo  *info,
                                   GdkWindow       *window,
                                   const GdkEvent  *event,
                                   GdkModifierType *state)
@@ -301,17 +301,17 @@ gimp_device_info_get_event_state (GimpDeviceInfo  *info,
   if (gdk_event_get_state (event, state))
     return TRUE;
 
-  gimp_device_info_get_device_state (info, window, state);
+  ligma_device_info_get_device_state (info, window, state);
 
   return FALSE;
 }
 
 void
-gimp_device_info_get_device_state (GimpDeviceInfo  *info,
+ligma_device_info_get_device_state (LigmaDeviceInfo  *info,
                                    GdkWindow       *window,
                                    GdkModifierType *state)
 {
-  GdkDevice *device = gimp_device_info_get_device (info, NULL);
+  GdkDevice *device = ligma_device_info_get_device (info, NULL);
 
   switch (gdk_device_get_device_type (device))
     {

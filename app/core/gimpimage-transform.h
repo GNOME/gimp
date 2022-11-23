@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
- * gimpimage-transform.h
+ * ligmaimage-transform.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_TRANSFORM_H__
-#define __GIMP_IMAGE_TRANSFORM_H__
+#ifndef __LIGMA_IMAGE_TRANSFORM_H__
+#define __LIGMA_IMAGE_TRANSFORM_H__
 
 
-void   gimp_image_transform (GimpImage              *image,
-                             GimpContext            *context,
-                             const GimpMatrix3      *matrix,
-                             GimpTransformDirection  direction,
-                             GimpInterpolationType   interpolation_type,
-                             GimpTransformResize     clip_result,
-                             GimpProgress           *progress);
+void   ligma_image_transform (LigmaImage              *image,
+                             LigmaContext            *context,
+                             const LigmaMatrix3      *matrix,
+                             LigmaTransformDirection  direction,
+                             LigmaInterpolationType   interpolation_type,
+                             LigmaTransformResize     clip_result,
+                             LigmaProgress           *progress);
 
 
-#endif /* __GIMP_IMAGE_TRANSFORM_H__ */
+#endif /* __LIGMA_IMAGE_TRANSFORM_H__ */

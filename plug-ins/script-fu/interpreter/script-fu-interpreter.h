@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 #define __SCRIPT_FU_INTERPRETER_H__
 
 GList         *script_fu_interpreter_list_defined_proc_names (
-                                            GimpPlugIn  *plug_in,
+                                            LigmaPlugIn  *plug_in,
                                             const gchar *path_to_this_plugin);
-GimpProcedure *script_fu_interpreter_create_proc_at_path (
-                                            GimpPlugIn  *plug_in,
+LigmaProcedure *script_fu_interpreter_create_proc_at_path (
+                                            LigmaPlugIn  *plug_in,
                                             const gchar *proc_name,
                                             const gchar *path_to_this_script);
 

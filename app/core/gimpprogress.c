@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpprogress.c
- * Copyright (C) 2004  Michael Natterer <mitch@gimp.org>
+ * ligmaprogress.c
+ * Copyright (C) 2004  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpprogress.h"
+#include "ligma.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -40,7 +40,7 @@ enum
 };
 
 
-G_DEFINE_INTERFACE (GimpProgress, gimp_progress, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaProgress, ligma_progress, G_TYPE_OBJECT)
 
 
 static guint progress_signals[LAST_SIGNAL] = { 0 };
@@ -50,13 +50,13 @@ static guint progress_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_progress_default_init (GimpProgressInterface *progress_iface)
+ligma_progress_default_init (LigmaProgressInterface *progress_iface)
 {
   progress_signals[CANCEL] =
     g_signal_new ("cancel",
                   G_TYPE_FROM_INTERFACE (progress_iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProgressInterface, cancel),
+                  G_STRUCT_OFFSET (LigmaProgressInterface, cancel),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
@@ -65,22 +65,22 @@ gimp_progress_default_init (GimpProgressInterface *progress_iface)
 /*  public functions  */
 
 
-GimpProgress *
-gimp_progress_start (GimpProgress *progress,
+LigmaProgress *
+ligma_progress_start (LigmaProgress *progress,
                      gboolean      cancellable,
                      const gchar  *format,
                      ...)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->start)
     {
-      GimpProgress *ret;
+      LigmaProgress *ret;
       va_list       args;
       gchar        *text;
 
@@ -99,26 +99,26 @@ gimp_progress_start (GimpProgress *progress,
 }
 
 void
-gimp_progress_end (GimpProgress *progress)
+ligma_progress_end (LigmaProgress *progress)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->end)
     progress_iface->end (progress);
 }
 
 gboolean
-gimp_progress_is_active (GimpProgress *progress)
+ligma_progress_is_active (LigmaProgress *progress)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), FALSE);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->is_active)
     return progress_iface->is_active (progress);
@@ -127,64 +127,64 @@ gimp_progress_is_active (GimpProgress *progress)
 }
 
 void
-gimp_progress_set_text (GimpProgress *progress,
+ligma_progress_set_text (LigmaProgress *progress,
                         const gchar  *format,
                         ...)
 {
   va_list  args;
   gchar   *message;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
   message = g_strdup_vprintf (format, args);
   va_end (args);
 
-  gimp_progress_set_text_literal (progress, message);
+  ligma_progress_set_text_literal (progress, message);
 
   g_free (message);
 }
 
 void
-gimp_progress_set_text_literal (GimpProgress *progress,
+ligma_progress_set_text_literal (LigmaProgress *progress,
                                 const gchar  *message)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
   g_return_if_fail (message != NULL);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->set_text)
     progress_iface->set_text (progress, message);
 }
 
 void
-gimp_progress_set_value (GimpProgress *progress,
+ligma_progress_set_value (LigmaProgress *progress,
                          gdouble       percentage)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
   percentage = CLAMP (percentage, 0.0, 1.0);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->set_value)
     progress_iface->set_value (progress, percentage);
 }
 
 gdouble
-gimp_progress_get_value (GimpProgress *progress)
+ligma_progress_get_value (LigmaProgress *progress)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), 0.0);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), 0.0);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->get_value)
     return progress_iface->get_value (progress);
@@ -193,26 +193,26 @@ gimp_progress_get_value (GimpProgress *progress)
 }
 
 void
-gimp_progress_pulse (GimpProgress *progress)
+ligma_progress_pulse (LigmaProgress *progress)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->pulse)
     progress_iface->pulse (progress);
 }
 
 guint32
-gimp_progress_get_window_id (GimpProgress *progress)
+ligma_progress_get_window_id (LigmaProgress *progress)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), 0);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), 0);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->get_window_id)
     return progress_iface->get_window_id (progress);
@@ -221,42 +221,42 @@ gimp_progress_get_window_id (GimpProgress *progress)
 }
 
 gboolean
-gimp_progress_message (GimpProgress        *progress,
-                       Gimp                *gimp,
-                       GimpMessageSeverity  severity,
+ligma_progress_message (LigmaProgress        *progress,
+                       Ligma                *ligma,
+                       LigmaMessageSeverity  severity,
                        const gchar         *domain,
                        const gchar         *message)
 {
-  GimpProgressInterface *progress_iface;
+  LigmaProgressInterface *progress_iface;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), FALSE);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (domain != NULL, FALSE);
   g_return_val_if_fail (message != NULL, FALSE);
 
-  progress_iface = GIMP_PROGRESS_GET_IFACE (progress);
+  progress_iface = LIGMA_PROGRESS_GET_IFACE (progress);
 
   if (progress_iface->message)
-    return progress_iface->message (progress, gimp, severity, domain, message);
+    return progress_iface->message (progress, ligma, severity, domain, message);
 
   return FALSE;
 }
 
 void
-gimp_progress_cancel (GimpProgress *progress)
+ligma_progress_cancel (LigmaProgress *progress)
 {
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
   g_signal_emit (progress, progress_signals[CANCEL], 0);
 }
 
 void
-gimp_progress_update_and_flush (gint     min,
+ligma_progress_update_and_flush (gint     min,
                                 gint     max,
                                 gint     current,
                                 gpointer data)
 {
-  gimp_progress_set_value (GIMP_PROGRESS (data),
+  ligma_progress_set_value (LIGMA_PROGRESS (data),
                            (gdouble) (current - min) / (gdouble) (max - min));
 
   while (g_main_context_pending (NULL))

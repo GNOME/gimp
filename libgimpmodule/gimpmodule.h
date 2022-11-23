@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpmodule.h
- * (C) 1999 Austin Donnelly <austin@gimp.org>
+ * ligmamodule.h
+ * (C) 1999 Austin Donnelly <austin@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,82 +19,82 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODULE_H__
-#define __GIMP_MODULE_H__
+#ifndef __LIGMA_MODULE_H__
+#define __LIGMA_MODULE_H__
 
 #include <gio/gio.h>
 #include <gmodule.h>
 
-#define __GIMP_MODULE_H_INSIDE__
+#define __LIGMA_MODULE_H_INSIDE__
 
-#include <libgimpmodule/gimpmoduletypes.h>
+#include <libligmamodule/ligmamoduletypes.h>
 
-#include <libgimpmodule/gimpmoduledb.h>
+#include <libligmamodule/ligmamoduledb.h>
 
-#undef __GIMP_MODULE_H_INSIDE__
+#undef __LIGMA_MODULE_H_INSIDE__
 
 G_BEGIN_DECLS
 
 
 /**
- * GIMP_MODULE_ABI_VERSION:
+ * LIGMA_MODULE_ABI_VERSION:
  *
  * The version of the module system's ABI. Modules put this value into
- * #GimpModuleInfo's @abi_version field so the code loading the modules
+ * #LigmaModuleInfo's @abi_version field so the code loading the modules
  * can check if it was compiled against the same module ABI the modules
  * are compiled against.
  *
- *  GIMP_MODULE_ABI_VERSION is incremented each time one of the
+ *  LIGMA_MODULE_ABI_VERSION is incremented each time one of the
  *  following changes:
  *
- *  - the libgimpmodule implementation (if the change affects modules).
+ *  - the libligmamodule implementation (if the change affects modules).
  *
- *  - one of the classes implemented by modules (currently #GimpColorDisplay,
- *    #GimpColorSelector and #GimpController).
+ *  - one of the classes implemented by modules (currently #LigmaColorDisplay,
+ *    #LigmaColorSelector and #LigmaController).
  **/
-#define GIMP_MODULE_ABI_VERSION 0x0005
+#define LIGMA_MODULE_ABI_VERSION 0x0005
 
 
 /**
- * GimpModuleState:
- * @GIMP_MODULE_STATE_ERROR:       Missing gimp_module_register() function
+ * LigmaModuleState:
+ * @LIGMA_MODULE_STATE_ERROR:       Missing ligma_module_register() function
  *                                 or other error.
- * @GIMP_MODULE_STATE_LOADED:      An instance of a type implemented by
+ * @LIGMA_MODULE_STATE_LOADED:      An instance of a type implemented by
  *                                 this module is allocated.
- * @GIMP_MODULE_STATE_LOAD_FAILED: gimp_module_register() returned %FALSE.
- * @GIMP_MODULE_STATE_NOT_LOADED:  There are no instances allocated of
+ * @LIGMA_MODULE_STATE_LOAD_FAILED: ligma_module_register() returned %FALSE.
+ * @LIGMA_MODULE_STATE_NOT_LOADED:  There are no instances allocated of
  *                                 types implemented by this module.
  *
- * The possible states a #GimpModule can be in.
+ * The possible states a #LigmaModule can be in.
  **/
 typedef enum
 {
-  GIMP_MODULE_STATE_ERROR,
-  GIMP_MODULE_STATE_LOADED,
-  GIMP_MODULE_STATE_LOAD_FAILED,
-  GIMP_MODULE_STATE_NOT_LOADED
-} GimpModuleState;
+  LIGMA_MODULE_STATE_ERROR,
+  LIGMA_MODULE_STATE_LOADED,
+  LIGMA_MODULE_STATE_LOAD_FAILED,
+  LIGMA_MODULE_STATE_NOT_LOADED
+} LigmaModuleState;
 
 
-#define GIMP_MODULE_ERROR (gimp_module_error_quark ())
+#define LIGMA_MODULE_ERROR (ligma_module_error_quark ())
 
-GQuark  gimp_module_error_quark (void) G_GNUC_CONST;
+GQuark  ligma_module_error_quark (void) G_GNUC_CONST;
 
 /**
- * GimpModuleError:
- * @GIMP_MODULE_FAILED: Generic error condition
+ * LigmaModuleError:
+ * @LIGMA_MODULE_FAILED: Generic error condition
  *
  * Types of errors returned by modules
  **/
 typedef enum
 {
-  GIMP_MODULE_FAILED
-} GimpModuleError;
+  LIGMA_MODULE_FAILED
+} LigmaModuleError;
 
 
 /**
- * GimpModuleInfo:
- * @abi_version: The #GIMP_MODULE_ABI_VERSION the module was compiled against.
+ * LigmaModuleInfo:
+ * @abi_version: The #LIGMA_MODULE_ABI_VERSION the module was compiled against.
  * @purpose:     The module's general purpose.
  * @author:      The module's author.
  * @version:     The module's version.
@@ -103,7 +103,7 @@ typedef enum
  *
  * This structure contains information about a loadable module.
  **/
-struct _GimpModuleInfo
+struct _LigmaModuleInfo
 {
   guint32  abi_version;
   gchar   *purpose;
@@ -115,10 +115,10 @@ struct _GimpModuleInfo
 
 
 /**
- * GimpModuleQueryFunc:
+ * LigmaModuleQueryFunc:
  * @module:  The module responsible for this loadable module.
  *
- * The signature of the query function a loadable GIMP module must
+ * The signature of the query function a loadable LIGMA module must
  * implement. In the module, the function must be called [func@Module.query].
  *
  * [class@Module] will copy the returned [struct@ModuleInfo], so the
@@ -128,13 +128,13 @@ struct _GimpModuleInfo
  *
  * Returns: The info struct describing the module.
  **/
-typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
+typedef const LigmaModuleInfo * (* LigmaModuleQueryFunc)    (GTypeModule *module);
 
 /**
- * GimpModuleRegisterFunc:
+ * LigmaModuleRegisterFunc:
  * @module:  The module responsible for this loadable module.
  *
- * The signature of the register function a loadable GIMP module must
+ * The signature of the register function a loadable LIGMA module must
  * implement.  In the module, the function must be called
  * [func@Module.register].
  *
@@ -143,72 +143,72 @@ typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
  *
  * Returns: Whether the registration was succesfull
  **/
-typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
+typedef gboolean               (* LigmaModuleRegisterFunc) (GTypeModule *module);
 
 
-/* GimpModules have to implement these */
-G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
-G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+/* LigmaModules have to implement these */
+G_MODULE_EXPORT const LigmaModuleInfo * ligma_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               ligma_module_register (GTypeModule *module);
 
 
-#define GIMP_TYPE_MODULE            (gimp_module_get_type ())
-#define GIMP_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE, GimpModule))
-#define GIMP_MODULE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE, GimpModuleClass))
-#define GIMP_IS_MODULE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE))
-#define GIMP_IS_MODULE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE))
-#define GIMP_MODULE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE, GimpModuleClass))
+#define LIGMA_TYPE_MODULE            (ligma_module_get_type ())
+#define LIGMA_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MODULE, LigmaModule))
+#define LIGMA_MODULE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MODULE, LigmaModuleClass))
+#define LIGMA_IS_MODULE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MODULE))
+#define LIGMA_IS_MODULE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MODULE))
+#define LIGMA_MODULE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MODULE, LigmaModuleClass))
 
 
-typedef struct _GimpModulePrivate GimpModulePrivate;
-typedef struct _GimpModuleClass   GimpModuleClass;
+typedef struct _LigmaModulePrivate LigmaModulePrivate;
+typedef struct _LigmaModuleClass   LigmaModuleClass;
 
-struct _GimpModule
+struct _LigmaModule
 {
   GTypeModule        parent_instance;
 
-  GimpModulePrivate *priv;
+  LigmaModulePrivate *priv;
 };
 
-struct _GimpModuleClass
+struct _LigmaModuleClass
 {
   GTypeModuleClass  parent_class;
 
-  void (* modified) (GimpModule *module);
+  void (* modified) (LigmaModule *module);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType                  gimp_module_get_type       (void) G_GNUC_CONST;
+GType                  ligma_module_get_type       (void) G_GNUC_CONST;
 
-GimpModule           * gimp_module_new            (GFile           *file,
+LigmaModule           * ligma_module_new            (GFile           *file,
                                                    gboolean         auto_load,
                                                    gboolean         verbose);
 
-GFile                * gimp_module_get_file       (GimpModule      *module);
+GFile                * ligma_module_get_file       (LigmaModule      *module);
 
-void                   gimp_module_set_auto_load  (GimpModule      *module,
+void                   ligma_module_set_auto_load  (LigmaModule      *module,
                                                    gboolean         auto_load);
-gboolean               gimp_module_get_auto_load  (GimpModule      *module);
+gboolean               ligma_module_get_auto_load  (LigmaModule      *module);
 
-gboolean               gimp_module_is_on_disk     (GimpModule      *module);
-gboolean               gimp_module_is_loaded      (GimpModule      *module);
+gboolean               ligma_module_is_on_disk     (LigmaModule      *module);
+gboolean               ligma_module_is_loaded      (LigmaModule      *module);
 
-const GimpModuleInfo * gimp_module_get_info       (GimpModule      *module);
-GimpModuleState        gimp_module_get_state      (GimpModule      *module);
-const gchar          * gimp_module_get_last_error (GimpModule      *module);
+const LigmaModuleInfo * ligma_module_get_info       (LigmaModule      *module);
+LigmaModuleState        ligma_module_get_state      (LigmaModule      *module);
+const gchar          * ligma_module_get_last_error (LigmaModule      *module);
 
-gboolean               gimp_module_query_module   (GimpModule      *module);
+gboolean               ligma_module_query_module   (LigmaModule      *module);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_MODULE_H__ */
+#endif  /* __LIGMA_MODULE_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_UNDO_H__
-#define __GIMP_SAMPLE_POINT_UNDO_H__
+#ifndef __LIGMA_SAMPLE_POINT_UNDO_H__
+#define __LIGMA_SAMPLE_POINT_UNDO_H__
 
 
-#include "gimpauxitemundo.h"
+#include "ligmaauxitemundo.h"
 
 
-#define GIMP_TYPE_SAMPLE_POINT_UNDO            (gimp_sample_point_undo_get_type ())
-#define GIMP_SAMPLE_POINT_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAMPLE_POINT_UNDO, GimpSamplePointUndo))
-#define GIMP_SAMPLE_POINT_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAMPLE_POINT_UNDO, GimpSamplePointUndoClass))
-#define GIMP_IS_SAMPLE_POINT_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAMPLE_POINT_UNDO))
-#define GIMP_IS_SAMPLE_POINT_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAMPLE_POINT_UNDO))
-#define GIMP_SAMPLE_POINT_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT_UNDO, GimpSamplePointUndoClass))
+#define LIGMA_TYPE_SAMPLE_POINT_UNDO            (ligma_sample_point_undo_get_type ())
+#define LIGMA_SAMPLE_POINT_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAMPLE_POINT_UNDO, LigmaSamplePointUndo))
+#define LIGMA_SAMPLE_POINT_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAMPLE_POINT_UNDO, LigmaSamplePointUndoClass))
+#define LIGMA_IS_SAMPLE_POINT_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAMPLE_POINT_UNDO))
+#define LIGMA_IS_SAMPLE_POINT_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAMPLE_POINT_UNDO))
+#define LIGMA_SAMPLE_POINT_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAMPLE_POINT_UNDO, LigmaSamplePointUndoClass))
 
 
-typedef struct _GimpSamplePointUndo      GimpSamplePointUndo;
-typedef struct _GimpSamplePointUndoClass GimpSamplePointUndoClass;
+typedef struct _LigmaSamplePointUndo      LigmaSamplePointUndo;
+typedef struct _LigmaSamplePointUndoClass LigmaSamplePointUndoClass;
 
-struct _GimpSamplePointUndo
+struct _LigmaSamplePointUndo
 {
-  GimpAuxItemUndo    parent_instance;
+  LigmaAuxItemUndo    parent_instance;
 
   gint               x;
   gint               y;
-  GimpColorPickMode  pick_mode;
+  LigmaColorPickMode  pick_mode;
 };
 
-struct _GimpSamplePointUndoClass
+struct _LigmaSamplePointUndoClass
 {
-  GimpAuxItemUndoClass  parent_class;
+  LigmaAuxItemUndoClass  parent_class;
 };
 
 
-GType   gimp_sample_point_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_sample_point_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_SAMPLE_POINT_UNDO_H__ */
+#endif /* __LIGMA_SAMPLE_POINT_UNDO_H__ */

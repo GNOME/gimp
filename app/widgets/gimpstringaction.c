@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpstringaction.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmastringaction.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimpaction-history.h"
-#include "gimpstringaction.h"
+#include "ligmaaction.h"
+#include "ligmaaction-history.h"
+#include "ligmastringaction.h"
 
 
 enum
@@ -38,52 +38,52 @@ enum
 };
 
 
-static void   gimp_string_action_finalize     (GObject      *object);
-static void   gimp_string_action_set_property (GObject      *object,
+static void   ligma_string_action_finalize     (GObject      *object);
+static void   ligma_string_action_set_property (GObject      *object,
                                                guint         prop_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_string_action_get_property (GObject      *object,
+static void   ligma_string_action_get_property (GObject      *object,
                                                guint         prop_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
-static void   gimp_string_action_activate     (GtkAction    *action);
+static void   ligma_string_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE (LigmaStringAction, ligma_string_action, LIGMA_TYPE_ACTION_IMPL)
 
-#define parent_class gimp_string_action_parent_class
+#define parent_class ligma_string_action_parent_class
 
 
 static void
-gimp_string_action_class_init (GimpStringActionClass *klass)
+ligma_string_action_class_init (LigmaStringActionClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
 
-  object_class->finalize     = gimp_string_action_finalize;
-  object_class->set_property = gimp_string_action_set_property;
-  object_class->get_property = gimp_string_action_get_property;
+  object_class->finalize     = ligma_string_action_finalize;
+  object_class->set_property = ligma_string_action_set_property;
+  object_class->get_property = ligma_string_action_get_property;
 
-  action_class->activate = gimp_string_action_activate;
+  action_class->activate = ligma_string_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_string ("value",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_string_action_init (GimpStringAction *action)
+ligma_string_action_init (LigmaStringAction *action)
 {
 }
 
 static void
-gimp_string_action_finalize (GObject *object)
+ligma_string_action_finalize (GObject *object)
 {
-  GimpStringAction *action = GIMP_STRING_ACTION (object);
+  LigmaStringAction *action = LIGMA_STRING_ACTION (object);
 
   g_clear_pointer (&action->value, g_free);
 
@@ -91,12 +91,12 @@ gimp_string_action_finalize (GObject *object)
 }
 
 static void
-gimp_string_action_get_property (GObject    *object,
+ligma_string_action_get_property (GObject    *object,
                                  guint       prop_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpStringAction *action = GIMP_STRING_ACTION (object);
+  LigmaStringAction *action = LIGMA_STRING_ACTION (object);
 
   switch (prop_id)
     {
@@ -110,12 +110,12 @@ gimp_string_action_get_property (GObject    *object,
 }
 
 static void
-gimp_string_action_set_property (GObject      *object,
+ligma_string_action_set_property (GObject      *object,
                                  guint         prop_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpStringAction *action = GIMP_STRING_ACTION (object);
+  LigmaStringAction *action = LIGMA_STRING_ACTION (object);
 
   switch (prop_id)
     {
@@ -129,17 +129,17 @@ gimp_string_action_set_property (GObject      *object,
     }
 }
 
-GimpStringAction *
-gimp_string_action_new (const gchar *name,
+LigmaStringAction *
+ligma_string_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
                         const gchar *help_id,
                         const gchar *value)
 {
-  GimpStringAction *action;
+  LigmaStringAction *action;
 
-  action = g_object_new (GIMP_TYPE_STRING_ACTION,
+  action = g_object_new (LIGMA_TYPE_STRING_ACTION,
                          "name",      name,
                          "label",     label,
                          "tooltip",   tooltip,
@@ -147,18 +147,18 @@ gimp_string_action_new (const gchar *name,
                          "value",     value,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  ligma_action_set_help_id (LIGMA_ACTION (action), help_id);
 
   return action;
 }
 
 static void
-gimp_string_action_activate (GtkAction *action)
+ligma_string_action_activate (GtkAction *action)
 {
-  GimpStringAction *string_action = GIMP_STRING_ACTION (action);
+  LigmaStringAction *string_action = LIGMA_STRING_ACTION (action);
 
-  gimp_action_emit_activate (GIMP_ACTION (action),
+  ligma_action_emit_activate (LIGMA_ACTION (action),
                              g_variant_new_string (string_action->value));
 
-  gimp_action_history_action_activated (GIMP_ACTION (action));
+  ligma_action_history_action_activated (LIGMA_ACTION (action));
 }

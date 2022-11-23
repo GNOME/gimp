@@ -1,4 +1,4 @@
-/* tiff loading for GIMP
+/* tiff loading for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -46,15 +46,15 @@
 
 #include <tiffio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-tiff.h"
 #include "file-tiff-io.h"
 #include "file-tiff-load.h"
 #include "file-tiff-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-tiff-save"
@@ -66,12 +66,12 @@ typedef struct _TiffClass TiffClass;
 
 struct _Tiff
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _TiffClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -80,48 +80,48 @@ struct _TiffClass
 
 GType                    tiff_get_type         (void) G_GNUC_CONST;
 
-static GList           * tiff_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   * tiff_create_procedure (GimpPlugIn           *plug_in,
+static GList           * tiff_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure   * tiff_create_procedure (LigmaPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray  * tiff_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
+static LigmaValueArray  * tiff_load             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
-static GimpValueArray  * tiff_save             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray  * tiff_save             (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
+                                                LigmaDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
-static GimpPDBStatusType tiff_save_rec         (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *orig_image,
+static LigmaPDBStatusType tiff_save_rec         (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *orig_image,
                                                 gint                  n_orig_drawables,
-                                                GimpDrawable        **orig_drawables,
+                                                LigmaDrawable        **orig_drawables,
                                                 GFile                *file,
-                                                GimpProcedureConfig  *config,
-                                                GimpMetadata         *metadata,
+                                                LigmaProcedureConfig  *config,
+                                                LigmaMetadata         *metadata,
                                                 gboolean              retried,
                                                 GError              **error);
 
-static gboolean          image_is_monochrome  (GimpImage            *image);
-static gboolean          image_is_multi_layer (GimpImage            *image);
+static gboolean          image_is_monochrome  (LigmaImage            *image);
+static gboolean          image_is_multi_layer (LigmaImage            *image);
 
 
-G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Tiff, tiff, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (TIFF_TYPE)
+LIGMA_MAIN (TIFF_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 tiff_class_init (TiffClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = tiff_query_procedures;
   plug_in_class->create_procedure = tiff_create_procedure;
@@ -134,7 +134,7 @@ tiff_init (Tiff *tiff)
 }
 
 static GList *
-tiff_query_procedures (GimpPlugIn *plug_in)
+tiff_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -144,77 +144,77 @@ tiff_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-tiff_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+tiff_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            tiff_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
+      ligma_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of the TIFF and BigTIFF file formats",
                                         "Loads files of the Tag Image File Format (TIFF) and "
                                         "its 64-bit offsets variant (BigTIFF)",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & Nick Lamb",
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "1995-1996,1998-2003");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/tiff");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,II*\\0,0,string,MM\\0*");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            tiff_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
+      ligma_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the TIFF or BigTIFF file formats",
                                         "Exports files in the Tag Image File Format (TIFF) or "
                                         "its 64-bit offsets variant (BigTIFF) able to support "
                                         "much bigger file sizes",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",
                                       "1995-1996,2000-2003");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            _("TIFF"));
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/tiff");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bigtiff",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "bigtiff",
                              "Export in BigTIFF variant file format",
                              "The BigTIFF variant file format uses 64-bit offsets, "
                              "hence supporting over 4GiB files and bigger",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
+      LIGMA_PROC_ARG_INT (procedure, "compression",
                          "Co_mpression",
                          "Compression type: { NONE (0), LZW (1), PACKBITS (2), "
                          "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
@@ -222,69 +222,69 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                          0, 6, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
                              "Save color _values from transparent pixels",
                              "Keep the color data masked by an alpha channel "
                              "intact (do not store premultiplied components)",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "cmyk",
                              "Export as _CMYK",
                              "Create a CMYK TIFF image using the soft-proofing color profile",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
                                  "Save La_yers",
                                  "Save Layers",
                                  TRUE,
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
                                  "Crop L_ayers",
                                  "Crop Layers",
                                  TRUE,
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
                                  "Save _GeoTIFF data",
                                  "Save GeoTIFF data",
                                  TRUE,
                                  G_PARAM_READWRITE);
 
-      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_exif      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_iptc      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_xmp       (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
 #ifdef TIFFTAG_ICCPROFILE
-      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_profile   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
 #endif
-      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_comment   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_thumbnail (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_comment   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-tiff_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+tiff_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpPDBStatusType  status;
-  GimpImage         *image             = NULL;
+  LigmaValueArray    *return_vals;
+  LigmaPDBStatusType  status;
+  LigmaImage         *image             = NULL;
   gboolean           resolution_loaded = FALSE;
   gboolean           profile_loaded    = FALSE;
-  GimpMetadata      *metadata;
+  LigmaMetadata      *metadata;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_ui_init (PLUG_IN_BINARY);
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_ui_init (PLUG_IN_BINARY);
 
   status = load_image (file, run_mode, &image,
                        &resolution_loaded,
@@ -292,63 +292,63 @@ tiff_load (GimpProcedure        *procedure,
                        &error);
 
   if (!image)
-    return gimp_procedure_new_return_values (procedure, status, error);
+    return ligma_procedure_new_return_values (procedure, status, error);
 
-  metadata = gimp_image_metadata_load_prepare (image,
+  metadata = ligma_image_metadata_load_prepare (image,
                                                "image/tiff",
                                                file, NULL);
 
   if (metadata)
     {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+      LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
       if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+        flags &= ~LIGMA_METADATA_LOAD_RESOLUTION;
 
       if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+        flags &= ~LIGMA_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image, "image/tiff",
+      ligma_image_metadata_load_finish (image, "image/tiff",
                                        metadata, flags);
 
       g_object_unref (metadata);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-tiff_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+tiff_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpMetadata        *metadata;
+  LigmaProcedureConfig *config;
+  LigmaMetadata        *metadata;
   GError              *error  = NULL;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  metadata = ligma_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/tiff");
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       break;
     default:
       break;
@@ -358,51 +358,51 @@ tiff_save (GimpProcedure        *procedure,
                           n_drawables, drawables,
                           file, config, metadata, FALSE, &error);
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpPDBStatusType
-tiff_save_rec (GimpProcedure        *procedure,
-               GimpRunMode           run_mode,
-               GimpImage            *orig_image,
+static LigmaPDBStatusType
+tiff_save_rec (LigmaProcedure        *procedure,
+               LigmaRunMode           run_mode,
+               LigmaImage            *orig_image,
                gint                  n_orig_drawables,
-               GimpDrawable        **orig_drawables,
+               LigmaDrawable        **orig_drawables,
                GFile                *file,
-               GimpProcedureConfig  *config,
-               GimpMetadata         *metadata,
+               LigmaProcedureConfig  *config,
+               LigmaMetadata         *metadata,
                gboolean              retried,
                GError              **error)
 {
-  GimpImage         *image       = orig_image;
-  GimpDrawable     **drawables   = orig_drawables;
+  LigmaImage         *image       = orig_image;
+  LigmaDrawable     **drawables   = orig_drawables;
   gint               n_drawables = n_orig_drawables;
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export      = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType  status      = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export      = LIGMA_EXPORT_CANCEL;
   gboolean           bigtiff     = FALSE;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (orig_image, procedure, G_OBJECT (config),
-                         n_drawables == 1 ? gimp_drawable_has_alpha (drawables[0]) : TRUE,
+                         n_drawables == 1 ? ligma_drawable_has_alpha (drawables[0]) : TRUE,
                          image_is_monochrome (orig_image),
-                         gimp_image_get_base_type (orig_image) == GIMP_INDEXED,
+                         ligma_image_get_base_type (orig_image) == LIGMA_INDEXED,
                          image_is_multi_layer (orig_image),
                          retried))
         {
-          return GIMP_PDB_CANCEL;
+          return LIGMA_PDB_CANCEL;
         }
     }
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
       {
-        GimpExportCapabilities capabilities;
-        GimpCompression        compression;
+        LigmaExportCapabilities capabilities;
+        LigmaCompression        compression;
         gboolean               save_layers;
         gboolean               crop_layers;
 
@@ -413,35 +413,35 @@ tiff_save_rec (GimpProcedure        *procedure,
                       "crop-layers", &crop_layers,
                       NULL);
 
-        if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
-            compression == GIMP_COMPRESSION_CCITTFAX4)
+        if (compression == LIGMA_COMPRESSION_CCITTFAX3 ||
+            compression == LIGMA_COMPRESSION_CCITTFAX4)
           {
             /* G3/G4 are fax compressions. They only support
              * monochrome images without alpha support.
              */
-            capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
+            capabilities = LIGMA_EXPORT_CAN_HANDLE_INDEXED;
           }
         else
           {
-            capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                            GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                            GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
+            capabilities = (LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                            LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                            LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                            LIGMA_EXPORT_CAN_HANDLE_ALPHA);
           }
 
         if (save_layers && image_is_multi_layer (orig_image))
           {
-            capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+            capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYERS;
 
             if (crop_layers)
-              capabilities |= GIMP_EXPORT_NEEDS_CROP;
+              capabilities |= LIGMA_EXPORT_NEEDS_CROP;
           }
 
-        export = gimp_export_image (&image, &n_drawables, &drawables, "TIFF",
+        export = ligma_export_image (&image, &n_drawables, &drawables, "TIFF",
                                     capabilities);
 
-        if (export == GIMP_EXPORT_CANCEL)
-          return GIMP_PDB_CANCEL;
+        if (export == LIGMA_EXPORT_CANCEL)
+          return LIGMA_PDB_CANCEL;
       }
       break;
 
@@ -456,25 +456,25 @@ tiff_save_rec (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("\"Save layers\" option not set while trying to export multiple layers."));
 
-      status = GIMP_PDB_CALLING_ERROR;
+      status = LIGMA_PDB_CALLING_ERROR;
     }
 #endif
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, orig_image, G_OBJECT (config),
                         metadata, error))
-        status = GIMP_PDB_EXECUTION_ERROR;
+        status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  if (status == GIMP_PDB_EXECUTION_ERROR &&
-      run_mode == GIMP_RUN_INTERACTIVE   &&
+  if (status == LIGMA_PDB_EXECUTION_ERROR &&
+      run_mode == LIGMA_RUN_INTERACTIVE   &&
       ! retried && ! bigtiff && tiff_got_file_size_error ())
     {
       /* Retrying but just once, when the save failed because we exceeded
@@ -491,15 +491,15 @@ tiff_save_rec (GimpProcedure        *procedure,
 }
 
 static gboolean
-image_is_monochrome (GimpImage *image)
+image_is_monochrome (LigmaImage *image)
 {
   guchar   *colors;
   gint      num_colors;
   gboolean  monochrome = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  colors = gimp_image_get_colormap (image, &num_colors);
+  colors = ligma_image_get_colormap (image, &num_colors);
 
   if (colors)
     {
@@ -522,47 +522,47 @@ image_is_monochrome (GimpImage *image)
 }
 
 static gboolean
-image_is_multi_layer (GimpImage *image)
+image_is_multi_layer (LigmaImage *image)
 {
   gint32 n_layers;
 
-  g_free (gimp_image_get_layers (image, &n_layers));
+  g_free (ligma_image_get_layers (image, &n_layers));
 
   return (n_layers > 1);
 }
 
 gint
-gimp_compression_to_tiff_compression (GimpCompression compression)
+ligma_compression_to_tiff_compression (LigmaCompression compression)
 {
   switch (compression)
     {
-    case GIMP_COMPRESSION_NONE:          return COMPRESSION_NONE;
-    case GIMP_COMPRESSION_LZW:           return COMPRESSION_LZW;
-    case GIMP_COMPRESSION_PACKBITS:      return COMPRESSION_PACKBITS;
-    case GIMP_COMPRESSION_ADOBE_DEFLATE: return COMPRESSION_ADOBE_DEFLATE;
-    case GIMP_COMPRESSION_JPEG:          return COMPRESSION_JPEG;
-    case GIMP_COMPRESSION_CCITTFAX3:     return COMPRESSION_CCITTFAX3;
-    case GIMP_COMPRESSION_CCITTFAX4:     return COMPRESSION_CCITTFAX4;
+    case LIGMA_COMPRESSION_NONE:          return COMPRESSION_NONE;
+    case LIGMA_COMPRESSION_LZW:           return COMPRESSION_LZW;
+    case LIGMA_COMPRESSION_PACKBITS:      return COMPRESSION_PACKBITS;
+    case LIGMA_COMPRESSION_ADOBE_DEFLATE: return COMPRESSION_ADOBE_DEFLATE;
+    case LIGMA_COMPRESSION_JPEG:          return COMPRESSION_JPEG;
+    case LIGMA_COMPRESSION_CCITTFAX3:     return COMPRESSION_CCITTFAX3;
+    case LIGMA_COMPRESSION_CCITTFAX4:     return COMPRESSION_CCITTFAX4;
     }
 
   return COMPRESSION_NONE;
 }
 
-GimpCompression
-tiff_compression_to_gimp_compression (gint compression)
+LigmaCompression
+tiff_compression_to_ligma_compression (gint compression)
 {
   switch (compression)
     {
-    case COMPRESSION_NONE:          return GIMP_COMPRESSION_NONE;
-    case COMPRESSION_LZW:           return GIMP_COMPRESSION_LZW;
-    case COMPRESSION_PACKBITS:      return GIMP_COMPRESSION_PACKBITS;
-    case COMPRESSION_DEFLATE:       return GIMP_COMPRESSION_ADOBE_DEFLATE;
-    case COMPRESSION_ADOBE_DEFLATE: return GIMP_COMPRESSION_ADOBE_DEFLATE;
-    case COMPRESSION_OJPEG:         return GIMP_COMPRESSION_JPEG;
-    case COMPRESSION_JPEG:          return GIMP_COMPRESSION_JPEG;
-    case COMPRESSION_CCITTFAX3:     return GIMP_COMPRESSION_CCITTFAX3;
-    case COMPRESSION_CCITTFAX4:     return GIMP_COMPRESSION_CCITTFAX4;
+    case COMPRESSION_NONE:          return LIGMA_COMPRESSION_NONE;
+    case COMPRESSION_LZW:           return LIGMA_COMPRESSION_LZW;
+    case COMPRESSION_PACKBITS:      return LIGMA_COMPRESSION_PACKBITS;
+    case COMPRESSION_DEFLATE:       return LIGMA_COMPRESSION_ADOBE_DEFLATE;
+    case COMPRESSION_ADOBE_DEFLATE: return LIGMA_COMPRESSION_ADOBE_DEFLATE;
+    case COMPRESSION_OJPEG:         return LIGMA_COMPRESSION_JPEG;
+    case COMPRESSION_JPEG:          return LIGMA_COMPRESSION_JPEG;
+    case COMPRESSION_CCITTFAX3:     return LIGMA_COMPRESSION_CCITTFAX3;
+    case COMPRESSION_CCITTFAX4:     return LIGMA_COMPRESSION_CCITTFAX4;
     }
 
-  return GIMP_COMPRESSION_NONE;
+  return LIGMA_COMPRESSION_NONE;
 }

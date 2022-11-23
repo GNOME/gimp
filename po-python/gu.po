@@ -1,10 +1,10 @@
-# translation of gimp-python.HEAD.gu.po to Gujarati
-# translation of gimp-python.HEAD.po to Gujarati
+# translation of ligma-python.HEAD.gu.po to Gujarati
+# translation of ligma-python.HEAD.po to Gujarati
 # Ankit Patel <ankit644@yahoo.com>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python.HEAD.gu\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python.HEAD.gu\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2006-09-13 21:07+0200\n"
 "PO-Revision-Date: 2005-09-26 09:53+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
@@ -19,19 +19,19 @@ msgstr ""
 "\n"
 "\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:43
 msgid "Python Console"
 msgstr "Python કન્સોલ"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:75
 msgid "_Browse..."
 msgstr "શોધો (_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:217
 #, fuzzy
-msgid "Gimp-Python Console"
+msgid "Ligma-Python Console"
 msgstr "Python કન્સોલ"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#: ../plug-ins/pyligma/plug-ins/gtkcons.py:218
 msgid "Interactive Python Development"
 msgstr ""

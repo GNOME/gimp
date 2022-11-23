@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_get_color_profile {
     $blurb = "Returns the image's color profile";
@@ -43,16 +43,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
 
-  profile = gimp_image_get_color_profile (image);
+  profile = ligma_image_get_color_profile (image);
 
   if (profile)
     {
       const guint8 *data;
       gsize         length;
 
-      data = gimp_color_profile_get_icc_profile (profile, &length);
+      data = ligma_color_profile_get_icc_profile (profile, &length);
 
       profile_data = g_memdup2 (data, length);
       num_bytes = length;
@@ -68,7 +68,7 @@ sub image_get_effective_color_profile {
     $help = <<'HELP';
 This procedure returns the color profile that is actually used for
 this image, which is the profile returned by
-gimp_image_get_color_profile() if the image has a profile assigned, or
+ligma_image_get_color_profile() if the image has a profile assigned, or
 a generated default RGB or grayscale profile, according to the image's type.
 HELP
 
@@ -91,16 +91,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
 
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+  profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
   if (profile)
     {
       const guint8 *data;
       gsize         length;
 
-      data = gimp_color_profile_get_icc_profile (profile, &length);
+      data = ligma_color_profile_get_icc_profile (profile, &length);
 
       profile_data = g_memdup2 (data, length);
       num_bytes = length;
@@ -139,15 +139,15 @@ HELP
 {
   if (color_profile)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
+      profile = ligma_color_profile_new_from_icc_profile (color_profile,
                                                          num_bytes,
                                                          error);
 
       if (profile)
         {
-          success = gimp_image_assign_color_profile (image, profile,
+          success = ligma_image_assign_color_profile (image, profile,
                                                      progress, error);
           g_object_unref (profile);
         }
@@ -156,7 +156,7 @@ HELP
     }
   else
     {
-      success = gimp_image_assign_color_profile (image, NULL,
+      success = ligma_image_assign_color_profile (image, NULL,
                                                  progress, error);
     }
 }
@@ -190,13 +190,13 @@ HELP
 {
   if (file)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_file (file, error);
+      profile = ligma_color_profile_new_from_file (file, error);
 
       if (profile)
         {
-          success = gimp_image_assign_color_profile (image, profile,
+          success = ligma_image_assign_color_profile (image, profile,
                                                      progress, error);
           g_object_unref (profile);
         }
@@ -205,7 +205,7 @@ HELP
     }
   else
     {
-      success = gimp_image_assign_color_profile (image, NULL,
+      success = ligma_image_assign_color_profile (image, NULL,
                                                  progress, error);
     }
 }
@@ -240,16 +240,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpColorProfile *profile;
+  LigmaColorProfile *profile;
 
-  profile = gimp_image_get_simulation_profile (image);
+  profile = ligma_image_get_simulation_profile (image);
 
   if (profile)
     {
       const guint8 *data;
       gsize         length;
 
-      data = gimp_color_profile_get_icc_profile (profile, &length);
+      data = ligma_color_profile_get_icc_profile (profile, &length);
 
       profile_data = g_memdup2 (data, length);
       num_bytes = length;
@@ -285,15 +285,15 @@ HELP
 {
   if (color_profile)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
+      profile = ligma_color_profile_new_from_icc_profile (color_profile,
                                                          num_bytes,
                                                          error);
 
       if (profile)
         {
-          gimp_image_set_simulation_profile (image, profile);
+          ligma_image_set_simulation_profile (image, profile);
           g_object_unref (profile);
         }
       else
@@ -303,7 +303,7 @@ HELP
     }
   else
     {
-      gimp_image_set_simulation_profile (image, NULL);
+      ligma_image_set_simulation_profile (image, NULL);
     }
 }
 CODE
@@ -333,13 +333,13 @@ HELP
 {
   if (file)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_file (file, error);
+      profile = ligma_color_profile_new_from_file (file, error);
 
       if (profile)
         {
-          gimp_image_set_simulation_profile (image, profile);
+          ligma_image_set_simulation_profile (image, profile);
           g_object_unref (profile);
         }
       else
@@ -349,7 +349,7 @@ HELP
     }
   else
     {
-      gimp_image_set_simulation_profile (image, NULL);
+      ligma_image_set_simulation_profile (image, NULL);
     }
 }
 CODE
@@ -371,14 +371,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+        { name => 'intent', type => 'enum LigmaColorRenderingIntent',
           desc => "The image's simulation rendering intent." }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  intent = gimp_image_get_simulation_intent (image);
+  intent = ligma_image_get_simulation_intent (image);
 }
 CODE
     );
@@ -396,14 +396,14 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'intent', type => 'enum GimpColorRenderingIntent',
-          desc => 'A GimpColorRenderingIntent' }
+        { name => 'intent', type => 'enum LigmaColorRenderingIntent',
+          desc => 'A LigmaColorRenderingIntent' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_simulation_intent (image, intent);
+  ligma_image_set_simulation_intent (image, intent);
 }
 CODE
     );
@@ -431,7 +431,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  bpc = gimp_image_get_simulation_bpc (image);
+  bpc = ligma_image_get_simulation_bpc (image);
 }
 CODE
     );
@@ -456,7 +456,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_simulation_bpc (image, bpc);
+  ligma_image_set_simulation_bpc (image, bpc);
 }
 CODE
     );
@@ -483,7 +483,7 @@ HELP
           desc => 'The serialized color profile',
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } },
-        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+        { name => 'intent', type => 'enum LigmaColorRenderingIntent',
           desc => 'Rendering intent' },
         { name => 'bpc', type => 'boolean',
           desc => 'Black point compensation' }
@@ -494,15 +494,15 @@ HELP
 {
   if (color_profile)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
+      profile = ligma_color_profile_new_from_icc_profile (color_profile,
                                                          num_bytes,
                                                          error);
 
       if (profile)
         {
-          success = gimp_image_convert_color_profile (image, profile,
+          success = ligma_image_convert_color_profile (image, profile,
                                                       intent, bpc,
                                                       progress, error);
           g_object_unref (profile);
@@ -534,7 +534,7 @@ HELP
           desc => 'The image' },
         { name => 'file', type => 'file',
           desc => 'The file containing the new color profile' },
-        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+        { name => 'intent', type => 'enum LigmaColorRenderingIntent',
           desc => 'Rendering intent' },
         { name => 'bpc', type => 'boolean',
           desc => 'Black point compensation' }
@@ -545,13 +545,13 @@ HELP
 {
   if (file)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_file (file, error);
+      profile = ligma_color_profile_new_from_file (file, error);
 
       if (profile)
         {
-          success = gimp_image_convert_color_profile (image, profile,
+          success = ligma_image_convert_color_profile (image, profile,
                                                       intent, bpc,
                                                       progress, error);
           g_object_unref (profile);
@@ -567,9 +567,9 @@ CODE
 }
 
 @headers = qw(<cairo.h>
-              "libgimpcolor/gimpcolor.h"
-              "core/gimpimage-color-profile.h"
-              "gimp-intl.h");
+              "libligmacolor/ligmacolor.h"
+              "core/ligmaimage-color-profile.h"
+              "ligma-intl.h");
 
 @procs = qw(image_get_color_profile
             image_get_effective_color_profile
@@ -588,7 +588,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Color Profile';
-$doc_title = 'gimpimagecolorprofile';
+$doc_title = 'ligmaimagecolorprofile';
 $doc_short_desc = 'Operations on an image\'s color profile.';
 $doc_long_desc = 'Operations on an image\'s color profile.';
 

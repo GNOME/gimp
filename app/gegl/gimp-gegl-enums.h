@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-enums.h
+ * ligma-gegl-enums.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_ENUMS_H__
-#define __GIMP_GEGL_ENUMS_H__
+#ifndef __LIGMA_GEGL_ENUMS_H__
+#define __LIGMA_GEGL_ENUMS_H__
 
 
-#define GIMP_TYPE_CAGE_MODE (gimp_cage_mode_get_type ())
+#define LIGMA_TYPE_CAGE_MODE (ligma_cage_mode_get_type ())
 
-GType gimp_cage_mode_get_type (void) G_GNUC_CONST;
+GType ligma_cage_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CAGE_MODE_CAGE_CHANGE, /*< desc="Create or adjust the cage"            >*/
-  GIMP_CAGE_MODE_DEFORM       /*< desc="Deform the cage\nto deform the image" >*/
-} GimpCageMode;
+  LIGMA_CAGE_MODE_CAGE_CHANGE, /*< desc="Create or adjust the cage"            >*/
+  LIGMA_CAGE_MODE_DEFORM       /*< desc="Deform the cage\nto deform the image" >*/
+} LigmaCageMode;
 
 
-#endif /* __GIMP_GEGL_ENUMS_H__ */
+#endif /* __LIGMA_GEGL_ENUMS_H__ */

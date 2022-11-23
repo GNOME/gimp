@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Object properties serialization routines
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,34 +19,34 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
-#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#if !defined (__LIGMA_CONFIG_H_INSIDE__) && !defined (LIGMA_CONFIG_COMPILATION)
+#error "Only <libligmaconfig/ligmaconfig.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CONFIG_SERIALIZE_H__
-#define __GIMP_CONFIG_SERIALIZE_H__
+#ifndef __LIGMA_CONFIG_SERIALIZE_H__
+#define __LIGMA_CONFIG_SERIALIZE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-gboolean  gimp_config_serialize_properties         (GimpConfig       *config,
-                                                    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
-                                                    GimpConfigWriter *writer);
+gboolean  ligma_config_serialize_properties         (LigmaConfig       *config,
+                                                    LigmaConfigWriter *writer);
+gboolean  ligma_config_serialize_changed_properties (LigmaConfig       *config,
+                                                    LigmaConfigWriter *writer);
 
-gboolean  gimp_config_serialize_property           (GimpConfig       *config,
+gboolean  ligma_config_serialize_property           (LigmaConfig       *config,
                                                     GParamSpec       *param_spec,
-                                                    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_property_by_name   (GimpConfig       *config,
+                                                    LigmaConfigWriter *writer);
+gboolean  ligma_config_serialize_property_by_name   (LigmaConfig       *config,
                                                     const gchar      *prop_name,
-                                                    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_value              (const GValue     *value,
+                                                    LigmaConfigWriter *writer);
+gboolean  ligma_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CONFIG_SERIALIZE_H__ */
+#endif /* __LIGMA_CONFIG_SERIALIZE_H__ */

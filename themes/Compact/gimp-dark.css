@@ -1,9 +1,9 @@
-/* Dark variant for the Compact theme for GIMP 3.0 */
+/* Dark variant for the Compact theme for LIGMA 3.0 */
 
-@import url("../Default/gimp-dark.css");
+@import url("../Default/ligma-dark.css");
 
 * {
-  -GimpToolPalette-tool-icon-size: small-toolbar;
+  -LigmaToolPalette-tool-icon-size: small-toolbar;
 }
 
 toolpalette button {

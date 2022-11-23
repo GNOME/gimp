@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfont.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- *                    Sven Neumann <sven@gimp.org>
+ * ligmafont.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
+ *                    Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,27 +19,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_H__
-#define __GIMP_FONT_H__
+#ifndef __LIGMA_FONT_H__
+#define __LIGMA_FONT_H__
 
 
-#include "core/gimpdata.h"
+#include "core/ligmadata.h"
 
 
-#define GIMP_TYPE_FONT            (gimp_font_get_type ())
-#define GIMP_FONT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT, GimpFont))
-#define GIMP_FONT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT, GimpFontClass))
-#define GIMP_IS_FONT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FONT))
-#define GIMP_IS_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT))
-#define GIMP_FONT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT, GimpFontClass))
+#define LIGMA_TYPE_FONT            (ligma_font_get_type ())
+#define LIGMA_FONT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FONT, LigmaFont))
+#define LIGMA_FONT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FONT, LigmaFontClass))
+#define LIGMA_IS_FONT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FONT))
+#define LIGMA_IS_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FONT))
+#define LIGMA_FONT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FONT, LigmaFontClass))
 
 
-typedef struct _GimpFontClass GimpFontClass;
+typedef struct _LigmaFontClass LigmaFontClass;
 
 
-GType      gimp_font_get_type     (void) G_GNUC_CONST;
+GType      ligma_font_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_font_get_standard (void);
+LigmaData * ligma_font_get_standard (void);
 
 
-#endif /* __GIMP_FONT_H__ */
+#endif /* __LIGMA_FONT_H__ */

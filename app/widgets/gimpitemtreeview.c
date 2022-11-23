@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpitemtreeview.c
- * Copyright (C) 2001-2011 Michael Natterer <mitch@gimp.org>
+ * ligmaitemtreeview.c
+ * Copyright (C) 2001-2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,37 +25,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
-#include "core/gimpitem-exclusive.h"
-#include "core/gimpitemundo.h"
-#include "core/gimptreehandler.h"
-#include "core/gimpundostack.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage-undo-push.h"
+#include "core/ligmaitem-exclusive.h"
+#include "core/ligmaitemundo.h"
+#include "core/ligmatreehandler.h"
+#include "core/ligmaundostack.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimpaction.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimpitemtreeview.h"
-#include "gimpmenufactory.h"
-#include "gimpviewrenderer.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaaction.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmadnd.h"
+#include "ligmadocked.h"
+#include "ligmaitemtreeview.h"
+#include "ligmamenufactory.h"
+#include "ligmaviewrenderer.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -65,9 +65,9 @@ enum
 };
 
 
-struct _GimpItemTreeViewPrivate
+struct _LigmaItemTreeViewPrivate
 {
-  GimpImage       *image;
+  LigmaImage       *image;
 
   GtkWidget       *options_box;
   GtkSizeGroup    *options_group;
@@ -75,7 +75,7 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *eye_header_image;
   GtkWidget       *lock_header_image;
 
-  GimpItem        *lock_box_item;
+  LigmaItem        *lock_box_item;
   GtkTreePath     *lock_box_path;
   GtkWidget       *lock_popover;
   GtkWidget       *lock_box;
@@ -96,8 +96,8 @@ struct _GimpItemTreeViewPrivate
   GtkCellRenderer *eye_cell;
   GtkCellRenderer *lock_cell;
 
-  GimpTreeHandler *visible_changed_handler;
-  GimpTreeHandler *color_tag_changed_handler;
+  LigmaTreeHandler *visible_changed_handler;
+  LigmaTreeHandler *color_tag_changed_handler;
 };
 
 typedef struct
@@ -105,177 +105,177 @@ typedef struct
   GtkWidget        *toggle;
   const gchar      *icon_name;
 
-  GimpIsLockedFunc  is_locked;
-  GimpCanLockFunc   can_lock;
-  GimpSetLockFunc   lock;
-  GimpUndoLockPush  undo_push;
+  LigmaIsLockedFunc  is_locked;
+  LigmaCanLockFunc   can_lock;
+  LigmaSetLockFunc   lock;
+  LigmaUndoLockPush  undo_push;
 
   const gchar      *tooltip;
   const gchar      *help_id;
 
   /* Signal handling when lock is changed from core. */
   const gchar      *signal_name;
-  GimpTreeHandler  *changed_handler;
+  LigmaTreeHandler  *changed_handler;
 
   /* Undo types and labels. */
-  GimpUndoType      undo_type;
-  GimpUndoType      group_undo_type;
+  LigmaUndoType      undo_type;
+  LigmaUndoType      group_undo_type;
   const gchar      *undo_lock_desc;
   const gchar      *undo_unlock_desc;
   const gchar      *undo_exclusive_desc;
 } LockToggle;
 
 
-static void   gimp_item_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
-static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
+static void   ligma_item_tree_view_view_iface_init   (LigmaContainerViewInterface *view_iface);
+static void   ligma_item_tree_view_docked_iface_init (LigmaDockedInterface *docked_iface);
 
-static void   gimp_item_tree_view_constructed       (GObject           *object);
-static void   gimp_item_tree_view_dispose           (GObject           *object);
+static void   ligma_item_tree_view_constructed       (GObject           *object);
+static void   ligma_item_tree_view_dispose           (GObject           *object);
 
-static void   gimp_item_tree_view_style_updated     (GtkWidget         *widget);
+static void   ligma_item_tree_view_style_updated     (GtkWidget         *widget);
 
-static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
-                                                     GimpImage         *image);
+static void   ligma_item_tree_view_real_set_image    (LigmaItemTreeView  *view,
+                                                     LigmaImage         *image);
 
-static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
+static void   ligma_item_tree_view_image_flush       (LigmaImage         *image,
                                                      gboolean           invalidate_preview,
-                                                     GimpItemTreeView  *view);
+                                                     LigmaItemTreeView  *view);
 
-static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
-                                                     GimpContainer     *container);
-static void   gimp_item_tree_view_set_context       (GimpContainerView *view,
-                                                     GimpContext       *context);
+static void   ligma_item_tree_view_set_container     (LigmaContainerView *view,
+                                                     LigmaContainer     *container);
+static void   ligma_item_tree_view_set_context       (LigmaContainerView *view,
+                                                     LigmaContext       *context);
 
-static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
-                                                     GimpViewable      *viewable,
+static gpointer ligma_item_tree_view_insert_item     (LigmaContainerView *view,
+                                                     LigmaViewable      *viewable,
                                                      gpointer           parent_insert_data,
                                                      gint               index);
-static void  gimp_item_tree_view_insert_items_after (GimpContainerView *view);
-static gboolean gimp_item_tree_view_select_items    (GimpContainerView *view,
+static void  ligma_item_tree_view_insert_items_after (LigmaContainerView *view);
+static gboolean ligma_item_tree_view_select_items    (LigmaContainerView *view,
                                                      GList             *items,
                                                      GList             *paths);
-static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
-                                                     GimpViewable      *item,
+static void   ligma_item_tree_view_activate_item     (LigmaContainerView *view,
+                                                     LigmaViewable      *item,
                                                      gpointer           insert_data);
 
-static gboolean gimp_item_tree_view_drop_possible   (GimpContainerTreeView *view,
-                                                     GimpDndType        src_type,
+static gboolean ligma_item_tree_view_drop_possible   (LigmaContainerTreeView *view,
+                                                     LigmaDndType        src_type,
                                                      GList             *src_viewables,
-                                                     GimpViewable      *dest_viewable,
+                                                     LigmaViewable      *dest_viewable,
                                                      GtkTreePath       *drop_path,
                                                      GtkTreeViewDropPosition  drop_pos,
                                                      GtkTreeViewDropPosition *return_drop_pos,
                                                      GdkDragAction     *return_drag_action);
-static void     gimp_item_tree_view_drop_viewables  (GimpContainerTreeView   *view,
+static void     ligma_item_tree_view_drop_viewables  (LigmaContainerTreeView   *view,
                                                      GList                   *src_viewables,
-                                                     GimpViewable            *dest_viewable,
+                                                     LigmaViewable            *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos);
 
-static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
+static void   ligma_item_tree_view_new_dropped       (GtkWidget         *widget,
                                                      gint               x,
                                                      gint               y,
-                                                     GimpViewable      *viewable,
+                                                     LigmaViewable      *viewable,
                                                      gpointer           data);
-static void gimp_item_tree_view_new_list_dropped    (GtkWidget         *widget,
+static void ligma_item_tree_view_new_list_dropped    (GtkWidget         *widget,
                                                      gint               x,
                                                      gint               y,
                                                      GList             *viewables,
                                                      gpointer           data);
 
-static void   gimp_item_tree_view_item_changed      (GimpImage         *image,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_size_changed      (GimpImage         *image,
-                                                     GimpItemTreeView  *view);
+static void   ligma_item_tree_view_item_changed      (LigmaImage         *image,
+                                                     LigmaItemTreeView  *view);
+static void   ligma_item_tree_view_size_changed      (LigmaImage         *image,
+                                                     LigmaItemTreeView  *view);
 
-static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
+static void   ligma_item_tree_view_name_edited       (GtkCellRendererText *cell,
                                                      const gchar       *path,
                                                      const gchar       *new_name,
-                                                     GimpItemTreeView  *view);
+                                                     LigmaItemTreeView  *view);
 
-static void   gimp_item_tree_view_visible_changed      (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_color_tag_changed    (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lock_changed         (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
+static void   ligma_item_tree_view_visible_changed      (LigmaItem          *item,
+                                                        LigmaItemTreeView  *view);
+static void   ligma_item_tree_view_color_tag_changed    (LigmaItem          *item,
+                                                        LigmaItemTreeView  *view);
+static void   ligma_item_tree_view_lock_changed         (LigmaItem          *item,
+                                                        LigmaItemTreeView  *view);
 
-static void   gimp_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
+static void   ligma_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
                                                      GdkModifierType    state,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lock_clicked      (GtkCellRendererToggle *toggle,
+                                                     LigmaItemTreeView  *view);
+static void   ligma_item_tree_view_lock_clicked      (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
                                                      GdkModifierType    state,
-                                                     GimpItemTreeView  *view);
-static gboolean gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
+                                                     LigmaItemTreeView  *view);
+static gboolean ligma_item_tree_view_lock_button_release (GtkWidget        *widget,
                                          GdkEvent         *event,
-                                         GimpItemTreeView *view);
-static void   gimp_item_tree_view_lock_toggled      (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_update_lock_box   (GimpItemTreeView  *view,
-                                                     GimpItem          *item,
+                                         LigmaItemTreeView *view);
+static void   ligma_item_tree_view_lock_toggled      (GtkWidget         *widget,
+                                                     LigmaItemTreeView  *view);
+static void   ligma_item_tree_view_update_lock_box   (LigmaItemTreeView  *view,
+                                                     LigmaItem          *item,
                                                      GtkTreePath       *path);
-static gboolean gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
+static gboolean ligma_item_tree_view_popover_button_press (GtkWidget        *widget,
                                                           GdkEvent         *event,
-                                                          GimpItemTreeView *view);
+                                                          LigmaItemTreeView *view);
 
-static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *cell,
+static gboolean ligma_item_tree_view_item_pre_clicked(LigmaCellRendererViewable *cell,
                                                      const gchar              *path_str,
                                                      GdkModifierType           state,
-                                                     GimpItemTreeView         *item_view);
+                                                     LigmaItemTreeView         *item_view);
 
-static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_view,
+static void   ligma_item_tree_view_row_expanded      (GtkTreeView       *tree_view,
                                                      GtkTreeIter       *iter,
                                                      GtkTreePath       *path,
-                                                     GimpItemTreeView  *item_view);
+                                                     LigmaItemTreeView  *item_view);
 
-static gint   gimp_item_tree_view_get_n_locks       (GimpItemTreeView *view,
-                                                     GimpItem         *item,
+static gint   ligma_item_tree_view_get_n_locks       (LigmaItemTreeView *view,
+                                                     LigmaItem         *item,
                                                      const gchar     **icon_name);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
-                         GIMP_TYPE_CONTAINER_TREE_VIEW,
-                         G_ADD_PRIVATE (GimpItemTreeView)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_item_tree_view_view_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_item_tree_view_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaItemTreeView, ligma_item_tree_view,
+                         LIGMA_TYPE_CONTAINER_TREE_VIEW,
+                         G_ADD_PRIVATE (LigmaItemTreeView)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONTAINER_VIEW,
+                                                ligma_item_tree_view_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_item_tree_view_docked_iface_init))
 
-#define parent_class gimp_item_tree_view_parent_class
+#define parent_class ligma_item_tree_view_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static LigmaContainerViewInterface *parent_view_iface = NULL;
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
+ligma_item_tree_view_class_init (LigmaItemTreeViewClass *klass)
 {
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass             *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpContainerTreeViewClass *tree_view_class;
+  LigmaContainerTreeViewClass *tree_view_class;
 
-  tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
+  tree_view_class = LIGMA_CONTAINER_TREE_VIEW_CLASS (klass);
 
   view_signals[SET_IMAGE] =
     g_signal_new ("set-image",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpItemTreeViewClass, set_image),
+                  G_STRUCT_OFFSET (LigmaItemTreeViewClass, set_image),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_OBJECT);
+                  LIGMA_TYPE_OBJECT);
 
-  object_class->constructed      = gimp_item_tree_view_constructed;
-  object_class->dispose          = gimp_item_tree_view_dispose;
+  object_class->constructed      = ligma_item_tree_view_constructed;
+  object_class->dispose          = ligma_item_tree_view_dispose;
 
-  widget_class->style_updated    = gimp_item_tree_view_style_updated;
+  widget_class->style_updated    = ligma_item_tree_view_style_updated;
 
-  tree_view_class->drop_possible  = gimp_item_tree_view_drop_possible;
-  tree_view_class->drop_viewables = gimp_item_tree_view_drop_viewables;
+  tree_view_class->drop_possible  = ligma_item_tree_view_drop_possible;
+  tree_view_class->drop_viewables = ligma_item_tree_view_drop_viewables;
 
-  klass->set_image               = gimp_item_tree_view_real_set_image;
+  klass->set_image               = ligma_item_tree_view_real_set_image;
 
   klass->item_type               = G_TYPE_NONE;
   klass->signal_name             = NULL;
@@ -311,68 +311,68 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 }
 
 static void
-gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+ligma_item_tree_view_view_iface_init (LigmaContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container      = gimp_item_tree_view_set_container;
-  iface->set_context        = gimp_item_tree_view_set_context;
-  iface->insert_item        = gimp_item_tree_view_insert_item;
-  iface->insert_items_after = gimp_item_tree_view_insert_items_after;
-  iface->select_items       = gimp_item_tree_view_select_items;
-  iface->activate_item      = gimp_item_tree_view_activate_item;
+  iface->set_container      = ligma_item_tree_view_set_container;
+  iface->set_context        = ligma_item_tree_view_set_context;
+  iface->insert_item        = ligma_item_tree_view_insert_item;
+  iface->insert_items_after = ligma_item_tree_view_insert_items_after;
+  iface->select_items       = ligma_item_tree_view_select_items;
+  iface->activate_item      = ligma_item_tree_view_activate_item;
 }
 
 static void
-gimp_item_tree_view_docked_iface_init (GimpDockedInterface *iface)
+ligma_item_tree_view_docked_iface_init (LigmaDockedInterface *iface)
 {
   iface->get_preview = NULL;
 }
 
 static void
-gimp_item_tree_view_init (GimpItemTreeView *view)
+ligma_item_tree_view_init (LigmaItemTreeView *view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
 
-  view->priv = gimp_item_tree_view_get_instance_private (view);
+  view->priv = ligma_item_tree_view_get_instance_private (view);
 
   view->priv->model_column_visible =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
   view->priv->model_column_viewable =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
   view->priv->model_column_locked =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
   view->priv->model_column_lock_icon =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            G_TYPE_STRING);
 
   view->priv->model_column_color_tag =
-    gimp_container_tree_store_columns_add (tree_view->model_columns,
+    ligma_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
                                            GDK_TYPE_RGBA);
 
-  gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
+  ligma_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->priv->image  = NULL;
 }
 
 static void
-gimp_item_tree_view_constructed (GObject *object)
+ligma_item_tree_view_constructed (GObject *object)
 {
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (object);
-  GimpEditor            *editor          = GIMP_EDITOR (object);
-  GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (object);
-  GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (object);
+  LigmaItemTreeViewClass *item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (object);
+  LigmaEditor            *editor          = LIGMA_EDITOR (object);
+  LigmaContainerTreeView *tree_view       = LIGMA_CONTAINER_TREE_VIEW (object);
+  LigmaItemTreeView      *item_view       = LIGMA_ITEM_TREE_VIEW (object);
   GtkTreeViewColumn     *column;
   GtkWidget             *image;
   GtkIconSize            button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
@@ -389,26 +389,26 @@ gimp_item_tree_view_constructed (GObject *object)
                         NULL);
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
 
-  gimp_container_tree_view_connect_name_edited (tree_view,
-                                                G_CALLBACK (gimp_item_tree_view_name_edited),
+  ligma_container_tree_view_connect_name_edited (tree_view,
+                                                G_CALLBACK (ligma_item_tree_view_name_edited),
                                                 item_view);
 
   g_signal_connect (tree_view->view, "row-expanded",
-                    G_CALLBACK (gimp_item_tree_view_row_expanded),
+                    G_CALLBACK (ligma_item_tree_view_row_expanded),
                     tree_view);
 
   g_signal_connect (tree_view->renderer_cell, "pre-clicked",
-                    G_CALLBACK (gimp_item_tree_view_item_pre_clicked),
+                    G_CALLBACK (ligma_item_tree_view_item_pre_clicked),
                     item_view);
 
   column = gtk_tree_view_column_new ();
-  image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE, button_icon_size);
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_VISIBLE, button_icon_size);
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 0);
   item_view->priv->eye_header_image = image;
 
-  item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
+  item_view->priv->eye_cell = ligma_cell_renderer_toggle_new (LIGMA_ICON_VISIBLE);
   g_object_set (item_view->priv->eye_cell,
                 "xpad",                0,
                 "ypad",                0,
@@ -425,21 +425,21 @@ gimp_item_tree_view_constructed (GObject *object)
                                        item_view->priv->model_column_color_tag,
                                        NULL);
 
-  gimp_container_tree_view_add_toggle_cell (tree_view,
+  ligma_container_tree_view_add_toggle_cell (tree_view,
                                             item_view->priv->eye_cell);
 
   g_signal_connect (item_view->priv->eye_cell, "clicked",
-                    G_CALLBACK (gimp_item_tree_view_eye_clicked),
+                    G_CALLBACK (ligma_item_tree_view_eye_clicked),
                     item_view);
 
   column = gtk_tree_view_column_new ();
-  image = gtk_image_new_from_icon_name (GIMP_ICON_LOCK, button_icon_size);
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_LOCK, button_icon_size);
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
   item_view->priv->lock_header_image = image;
 
-  item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LOCK_MULTI);
+  item_view->priv->lock_cell = ligma_cell_renderer_toggle_new (LIGMA_ICON_LOCK_MULTI);
   g_object_set (item_view->priv->lock_cell,
                 "xpad",      0,
                 "ypad",      0,
@@ -453,24 +453,24 @@ gimp_item_tree_view_constructed (GObject *object)
                                        item_view->priv->model_column_lock_icon,
                                        NULL);
 
-  gimp_container_tree_view_add_toggle_cell (tree_view,
+  ligma_container_tree_view_add_toggle_cell (tree_view,
                                             item_view->priv->lock_cell);
 
   g_signal_connect (item_view->priv->lock_cell, "clicked",
-                    G_CALLBACK (gimp_item_tree_view_lock_clicked),
+                    G_CALLBACK (ligma_item_tree_view_lock_clicked),
                     item_view);
 
-  /*  disable the default GimpContainerView drop handler  */
-  gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (item_view), NULL);
+  /*  disable the default LigmaContainerView drop handler  */
+  ligma_container_view_set_dnd_widget (LIGMA_CONTAINER_VIEW (item_view), NULL);
 
-  gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
+  ligma_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
                                   GTK_DEST_DEFAULT_HIGHLIGHT,
                                   item_view_class->item_type,
                                   TRUE,
                                   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
   item_view->priv->new_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
+    ligma_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->new_action,
                                    item_view_class->new_default_action,
                                    GDK_SHIFT_MASK,
@@ -478,40 +478,40 @@ gimp_item_tree_view_constructed (GObject *object)
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
    */
-  gimp_dnd_viewable_list_dest_add (item_view->priv->new_button,
+  ligma_dnd_viewable_list_dest_add (item_view->priv->new_button,
                                    item_view_class->item_type,
-                                   gimp_item_tree_view_new_list_dropped,
+                                   ligma_item_tree_view_new_list_dropped,
                                    item_view);
-  gimp_dnd_viewable_dest_add (item_view->priv->new_button,
+  ligma_dnd_viewable_dest_add (item_view->priv->new_button,
                               item_view_class->item_type,
-                              gimp_item_tree_view_new_dropped,
+                              ligma_item_tree_view_new_dropped,
                               item_view);
 
   item_view->priv->raise_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
+    ligma_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->raise_action,
                                    item_view_class->raise_top_action,
                                    GDK_SHIFT_MASK,
                                    NULL);
 
   item_view->priv->lower_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
+    ligma_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->lower_action,
                                    item_view_class->lower_bottom_action,
                                    GDK_SHIFT_MASK,
                                    NULL);
 
   item_view->priv->duplicate_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
+    ligma_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->duplicate_action, NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (item_view),
                                   GTK_BUTTON (item_view->priv->duplicate_button),
                                   item_view_class->item_type);
 
   item_view->priv->delete_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
+    ligma_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->delete_action, NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+  ligma_container_view_enable_dnd (LIGMA_CONTAINER_VIEW (item_view),
                                   GTK_BUTTON (item_view->priv->delete_button),
                                   item_view_class->item_type);
 
@@ -519,15 +519,15 @@ gimp_item_tree_view_constructed (GObject *object)
   item_view->priv->lock_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
 
   /*  Lock box: content toggle  */
-  gimp_item_tree_view_add_lock (item_view,
+  ligma_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_content_icon_name,
-                                (GimpIsLockedFunc) gimp_item_get_lock_content,
-                                (GimpCanLockFunc)  gimp_item_can_lock_content,
-                                (GimpSetLockFunc)  gimp_item_set_lock_content,
-                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_content,
+                                (LigmaIsLockedFunc) ligma_item_get_lock_content,
+                                (LigmaCanLockFunc)  ligma_item_can_lock_content,
+                                (LigmaSetLockFunc)  ligma_item_set_lock_content,
+                                (LigmaUndoLockPush) ligma_image_undo_push_item_lock_content,
                                 "lock-content-changed",
-                                GIMP_UNDO_ITEM_LOCK_CONTENT,
-                                GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,
+                                LIGMA_UNDO_ITEM_LOCK_CONTENT,
+                                LIGMA_UNDO_GROUP_ITEM_LOCK_CONTENTS,
                                 _("Lock content"),
                                 _("Unlock content"),
                                 _("Set Item Exclusive Content Lock"),
@@ -535,15 +535,15 @@ gimp_item_tree_view_constructed (GObject *object)
                                 item_view_class->lock_content_help_id);
 
   /*  Lock box: position toggle  */
-  gimp_item_tree_view_add_lock (item_view,
+  ligma_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_position_icon_name,
-                                (GimpIsLockedFunc) gimp_item_get_lock_position,
-                                (GimpCanLockFunc)  gimp_item_can_lock_position,
-                                (GimpSetLockFunc)  gimp_item_set_lock_position,
-                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_position,
+                                (LigmaIsLockedFunc) ligma_item_get_lock_position,
+                                (LigmaCanLockFunc)  ligma_item_can_lock_position,
+                                (LigmaSetLockFunc)  ligma_item_set_lock_position,
+                                (LigmaUndoLockPush) ligma_image_undo_push_item_lock_position,
                                 "lock-position-changed",
-                                GIMP_UNDO_ITEM_LOCK_POSITION,
-                                GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,
+                                LIGMA_UNDO_ITEM_LOCK_POSITION,
+                                LIGMA_UNDO_GROUP_ITEM_LOCK_POSITION,
                                 _("Lock position"),
                                 _("Unlock position"),
                                 _("Set Item Exclusive Position Lock"),
@@ -551,15 +551,15 @@ gimp_item_tree_view_constructed (GObject *object)
                                 item_view_class->lock_position_help_id);
 
   /*  Lock box: visibility toggle  */
-  gimp_item_tree_view_add_lock (item_view,
+  ligma_item_tree_view_add_lock (item_view,
                                 item_view_class->lock_visibility_icon_name,
-                                (GimpIsLockedFunc) gimp_item_get_lock_visibility,
-                                (GimpCanLockFunc)  gimp_item_can_lock_visibility,
-                                (GimpSetLockFunc)  gimp_item_set_lock_visibility,
-                                (GimpUndoLockPush) gimp_image_undo_push_item_lock_visibility,
+                                (LigmaIsLockedFunc) ligma_item_get_lock_visibility,
+                                (LigmaCanLockFunc)  ligma_item_can_lock_visibility,
+                                (LigmaSetLockFunc)  ligma_item_set_lock_visibility,
+                                (LigmaUndoLockPush) ligma_image_undo_push_item_lock_visibility,
                                 "lock-visibility-changed",
-                                GIMP_UNDO_ITEM_LOCK_VISIBILITY,
-                                GIMP_UNDO_GROUP_ITEM_LOCK_VISIBILITY,
+                                LIGMA_UNDO_ITEM_LOCK_VISIBILITY,
+                                LIGMA_UNDO_GROUP_ITEM_LOCK_VISIBILITY,
                                 _("Lock visibility"),
                                 _("Unlock visibility"),
                                 _("Set Item Exclusive Visibility Lock"),
@@ -571,19 +571,19 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_popover_set_modal (GTK_POPOVER (item_view->priv->lock_popover), TRUE);
   g_signal_connect (item_view->priv->lock_popover,
                     "button-press-event",
-                    G_CALLBACK (gimp_item_tree_view_popover_button_press),
+                    G_CALLBACK (ligma_item_tree_view_popover_button_press),
                     item_view);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_popover), item_view->priv->lock_box);
   gtk_widget_show (item_view->priv->lock_box);
 }
 
 static void
-gimp_item_tree_view_dispose (GObject *object)
+ligma_item_tree_view_dispose (GObject *object)
 {
-  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
+  LigmaItemTreeView *view = LIGMA_ITEM_TREE_VIEW (object);
 
   if (view->priv->image)
-    gimp_item_tree_view_set_image (view, NULL);
+    ligma_item_tree_view_set_image (view, NULL);
 
   if (view->priv->lock_popover)
     {
@@ -608,9 +608,9 @@ gimp_item_tree_view_dispose (GObject *object)
 }
 
 static void
-gimp_item_tree_view_style_updated (GtkWidget *widget)
+ligma_item_tree_view_style_updated (GtkWidget *widget)
 {
-  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (widget);
+  LigmaItemTreeView *view = LIGMA_ITEM_TREE_VIEW (widget);
   GList            *children;
   GList            *list;
   const gchar      *old_icon_name;
@@ -712,11 +712,11 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
   /* force the eye and toggle cells to recreate their icon */
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
   g_object_set (view->priv->eye_cell,
-                "icon-name", GIMP_ICON_VISIBLE,
+                "icon-name", LIGMA_ICON_VISIBLE,
                 "icon-size", pixel_icon_size,
                 NULL);
   g_object_set (view->priv->lock_cell,
-                "icon-name", GIMP_ICON_LOCK_MULTI,
+                "icon-name", LIGMA_ICON_LOCK_MULTI,
                 "icon-size", pixel_icon_size,
                 NULL);
 
@@ -724,25 +724,25 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
 }
 
 GtkWidget *
-gimp_item_tree_view_new (GType            view_type,
+ligma_item_tree_view_new (GType            view_type,
                          gint             view_size,
                          gint             view_border_width,
                          gboolean         multiple_selection,
-                         GimpImage       *image,
-                         GimpMenuFactory *menu_factory,
+                         LigmaImage       *image,
+                         LigmaMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
                          const gchar     *ui_path)
 {
-  GimpItemTreeView *item_view;
+  LigmaItemTreeView *item_view;
 
-  g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_ITEM_TREE_VIEW), NULL);
+  g_return_val_if_fail (g_type_is_a (view_type, LIGMA_TYPE_ITEM_TREE_VIEW), NULL);
   g_return_val_if_fail (view_size >  0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        view_size <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         NULL);
-  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (image == NULL || LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (ui_path != NULL, NULL);
 
@@ -754,43 +754,43 @@ gimp_item_tree_view_new (GType            view_type,
                             "selection-mode",  multiple_selection ? GTK_SELECTION_MULTIPLE : GTK_SELECTION_SINGLE,
                             NULL);
 
-  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (item_view),
+  ligma_container_view_set_view_size (LIGMA_CONTAINER_VIEW (item_view),
                                      view_size, view_border_width);
 
-  gimp_item_tree_view_set_image (item_view, image);
+  ligma_item_tree_view_set_image (item_view, image);
 
   return GTK_WIDGET (item_view);
 }
 
 void
-gimp_item_tree_view_set_image (GimpItemTreeView *view,
-                               GimpImage        *image)
+ligma_item_tree_view_set_image (LigmaItemTreeView *view,
+                               LigmaImage        *image)
 {
-  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
   g_signal_emit (view, view_signals[SET_IMAGE], 0, image);
 
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
+  ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (view)), view);
 }
 
-GimpImage *
-gimp_item_tree_view_get_image (GimpItemTreeView *view)
+LigmaImage *
+ligma_item_tree_view_get_image (LigmaItemTreeView *view)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view), NULL);
 
   return view->priv->image;
 }
 
 void
-gimp_item_tree_view_add_options (GimpItemTreeView *view,
+ligma_item_tree_view_add_options (LigmaItemTreeView *view,
                                  const gchar      *label,
                                  GtkWidget        *options)
 {
   gint content_spacing;
   gint button_spacing;
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view));
   g_return_if_fail (GTK_IS_WIDGET (options));
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -800,9 +800,9 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
 
   if (! view->priv->options_box)
     {
-      GimpItemTreeViewClass *item_view_class;
+      LigmaItemTreeViewClass *item_view_class;
 
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+      item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view);
 
       view->priv->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, content_spacing);
       gtk_box_pack_start (GTK_BOX (view), view->priv->options_box,
@@ -855,15 +855,15 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
 }
 
 void
-gimp_item_tree_view_add_lock (GimpItemTreeView *view,
+ligma_item_tree_view_add_lock (LigmaItemTreeView *view,
                               const gchar      *icon_name,
-                              GimpIsLockedFunc  is_locked,
-                              GimpCanLockFunc   can_lock,
-                              GimpSetLockFunc   lock,
-                              GimpUndoLockPush  undo_push,
+                              LigmaIsLockedFunc  is_locked,
+                              LigmaCanLockFunc   can_lock,
+                              LigmaSetLockFunc   lock,
+                              LigmaUndoLockPush  undo_push,
                               const gchar      *signal_name,
-                              GimpUndoType      undo_type,
-                              GimpUndoType      group_undo_type,
+                              LigmaUndoType      undo_type,
+                              LigmaUndoType      group_undo_type,
                               const gchar      *undo_lock_desc,
                               const gchar      *undo_unlock_desc,
                               const gchar      *undo_exclusive_desc,
@@ -900,13 +900,13 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
 
   g_object_set_data (G_OBJECT (toggle), "lock-data", data);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_item_tree_view_lock_toggled),
+                    G_CALLBACK (ligma_item_tree_view_lock_toggled),
                     view);
   g_signal_connect (toggle, "button-release-event",
-                    G_CALLBACK (gimp_item_tree_view_lock_button_release),
+                    G_CALLBACK (ligma_item_tree_view_lock_button_release),
                     view);
 
-  gimp_help_set_help_data (toggle, tooltip, help_id);
+  ligma_help_set_help_data (toggle, tooltip, help_id);
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "button-icon-size", &icon_size,
@@ -918,76 +918,76 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
 }
 
 void
-gimp_item_tree_view_blink_lock (GimpItemTreeView *view,
-                                GimpItem         *item)
+ligma_item_tree_view_blink_lock (LigmaItemTreeView *view,
+                                LigmaItem         *item)
 {
   GtkTreeIter  *iter;
   GtkTreePath  *path;
   GdkRectangle  rect;
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_ITEM (item));
 
   /* Find the item in the tree view. */
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                     (GimpViewable *) item);
-  path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
+  iter = ligma_container_view_lookup (LIGMA_CONTAINER_VIEW (view),
+                                     (LigmaViewable *) item);
+  path = gtk_tree_model_get_path (LIGMA_CONTAINER_TREE_VIEW (view)->model, iter);
 
   /* Scroll dockable to make sure the cell is showing. */
-  gtk_tree_view_scroll_to_cell (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
+  gtk_tree_view_scroll_to_cell (LIGMA_CONTAINER_TREE_VIEW (view)->view, path,
+                                gtk_tree_view_get_column (LIGMA_CONTAINER_TREE_VIEW (view)->view, 1),
                                 FALSE, 0.0, 0.0);
 
   /* Now blink the lock cell of the specified item. */
-  gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                               gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
+  gtk_tree_view_get_cell_area (LIGMA_CONTAINER_TREE_VIEW (view)->view, path,
+                               gtk_tree_view_get_column (LIGMA_CONTAINER_TREE_VIEW (view)->view, 1),
                                &rect);
-  gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
+  gtk_tree_view_convert_bin_window_to_widget_coords (LIGMA_CONTAINER_TREE_VIEW (view)->view,
                                                      rect.x, rect.y, &rect.x, &rect.y);
-  gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
+  ligma_widget_blink_rect (GTK_WIDGET (LIGMA_CONTAINER_TREE_VIEW (view)->view), &rect);
 
   gtk_tree_path_free (path);
 }
 
 GtkWidget *
-gimp_item_tree_view_get_new_button (GimpItemTreeView *view)
+ligma_item_tree_view_get_new_button (LigmaItemTreeView *view)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view), NULL);
 
   return view->priv->new_button;
 }
 
 GtkWidget *
-gimp_item_tree_view_get_delete_button (GimpItemTreeView *view)
+ligma_item_tree_view_get_delete_button (LigmaItemTreeView *view)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view), NULL);
 
   return view->priv->delete_button;
 }
 
 gint
-gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
-                                    GimpViewable             *dest_viewable,
+ligma_item_tree_view_get_drop_index (LigmaItemTreeView         *view,
+                                    LigmaViewable             *dest_viewable,
                                     GtkTreeViewDropPosition   drop_pos,
-                                    GimpViewable            **parent)
+                                    LigmaViewable            **parent)
 {
   gint index = -1;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), -1);
+  g_return_val_if_fail (LIGMA_IS_ITEM_TREE_VIEW (view), -1);
   g_return_val_if_fail (dest_viewable == NULL ||
-                        GIMP_IS_VIEWABLE (dest_viewable), -1);
+                        LIGMA_IS_VIEWABLE (dest_viewable), -1);
   g_return_val_if_fail (parent != NULL, -1);
 
   *parent = NULL;
 
   if (dest_viewable)
     {
-      *parent = gimp_viewable_get_parent (dest_viewable);
-      index   = gimp_item_get_index (GIMP_ITEM (dest_viewable));
+      *parent = ligma_viewable_get_parent (dest_viewable);
+      index   = ligma_item_get_index (LIGMA_ITEM (dest_viewable));
 
       if (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER)
         {
-          GimpContainer *children = gimp_viewable_get_children (dest_viewable);
+          LigmaContainer *children = ligma_viewable_get_children (dest_viewable);
 
           if (children)
             {
@@ -1009,8 +1009,8 @@ gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
 }
 
 static void
-gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
-                                    GimpImage        *image)
+ligma_item_tree_view_real_set_image (LigmaItemTreeView *view,
+                                    LigmaImage        *image)
 {
   if (view->priv->image == image)
     return;
@@ -1018,16 +1018,16 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
   if (view->priv->image)
     {
       g_signal_handlers_disconnect_by_func (view->priv->image,
-                                            gimp_item_tree_view_item_changed,
+                                            ligma_item_tree_view_item_changed,
                                             view);
       g_signal_handlers_disconnect_by_func (view->priv->image,
-                                            gimp_item_tree_view_size_changed,
+                                            ligma_item_tree_view_size_changed,
                                             view);
 
-      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
+      ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (view), NULL);
 
       g_signal_handlers_disconnect_by_func (view->priv->image,
-                                            gimp_item_tree_view_image_flush,
+                                            ligma_item_tree_view_image_flush,
                                             view);
     }
 
@@ -1035,63 +1035,63 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 
   if (view->priv->image)
     {
-      GimpContainer *container;
+      LigmaContainer *container;
 
       container =
-        GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_container (view->priv->image);
+        LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_container (view->priv->image);
 
-      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
+      ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (view), container);
 
       g_signal_connect (view->priv->image,
-                        GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
-                        G_CALLBACK (gimp_item_tree_view_item_changed),
+                        LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
+                        G_CALLBACK (ligma_item_tree_view_item_changed),
                         view);
       g_signal_connect (view->priv->image, "size-changed",
-                        G_CALLBACK (gimp_item_tree_view_size_changed),
+                        G_CALLBACK (ligma_item_tree_view_size_changed),
                         view);
 
       g_signal_connect (view->priv->image, "flush",
-                        G_CALLBACK (gimp_item_tree_view_image_flush),
+                        G_CALLBACK (ligma_item_tree_view_image_flush),
                         view);
 
-      gimp_item_tree_view_item_changed (view->priv->image, view);
+      ligma_item_tree_view_item_changed (view->priv->image, view);
     }
 }
 
 static void
-gimp_item_tree_view_image_flush (GimpImage        *image,
+ligma_item_tree_view_image_flush (LigmaImage        *image,
                                  gboolean          invalidate_preview,
-                                 GimpItemTreeView *view)
+                                 LigmaItemTreeView *view)
 {
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
+  ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (view)), view);
 }
 
 
-/*  GimpContainerView methods  */
+/*  LigmaContainerView methods  */
 
 static void
-gimp_item_tree_view_set_container (GimpContainerView *view,
-                                   GimpContainer     *container)
+ligma_item_tree_view_set_container (LigmaContainerView *view,
+                                   LigmaContainer     *container)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpContainer    *old_container;
+  LigmaItemTreeView *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaContainer    *old_container;
   GList            *list;
 
-  old_container = gimp_container_view_get_container (view);
+  old_container = ligma_container_view_get_container (view);
 
   if (old_container)
     {
-      gimp_tree_handler_disconnect (item_view->priv->visible_changed_handler);
+      ligma_tree_handler_disconnect (item_view->priv->visible_changed_handler);
       item_view->priv->visible_changed_handler = NULL;
 
-      gimp_tree_handler_disconnect (item_view->priv->color_tag_changed_handler);
+      ligma_tree_handler_disconnect (item_view->priv->color_tag_changed_handler);
       item_view->priv->color_tag_changed_handler = NULL;
 
       for (list = item_view->priv->locks; list; list = list->next)
         {
           LockToggle *data = list->data;
 
-          gimp_tree_handler_disconnect (data->changed_handler);
+          ligma_tree_handler_disconnect (data->changed_handler);
           data->changed_handler = NULL;
         }
     }
@@ -1101,45 +1101,45 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
   if (container)
     {
       item_view->priv->visible_changed_handler =
-        gimp_tree_handler_connect (container, "visibility-changed",
-                                   G_CALLBACK (gimp_item_tree_view_visible_changed),
+        ligma_tree_handler_connect (container, "visibility-changed",
+                                   G_CALLBACK (ligma_item_tree_view_visible_changed),
                                    view);
 
       item_view->priv->color_tag_changed_handler =
-        gimp_tree_handler_connect (container, "color-tag-changed",
-                                   G_CALLBACK (gimp_item_tree_view_color_tag_changed),
+        ligma_tree_handler_connect (container, "color-tag-changed",
+                                   G_CALLBACK (ligma_item_tree_view_color_tag_changed),
                                    view);
 
       for (list = item_view->priv->locks; list; list = list->next)
         {
           LockToggle *data = list->data;
 
-          data->changed_handler = gimp_tree_handler_connect (container,
+          data->changed_handler = ligma_tree_handler_connect (container,
                                                              data->signal_name,
-                                                             G_CALLBACK (gimp_item_tree_view_lock_changed),
+                                                             G_CALLBACK (ligma_item_tree_view_lock_changed),
                                                              view);
         }
     }
 }
 
 static void
-gimp_item_tree_view_set_context (GimpContainerView *view,
-                                 GimpContext       *context)
+ligma_item_tree_view_set_context (LigmaContainerView *view,
+                                 LigmaContext       *context)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpImage             *image     = NULL;
-  GimpContext           *old_context;
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
+  LigmaItemTreeView      *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaImage             *image     = NULL;
+  LigmaContext           *old_context;
 
-  old_context = gimp_container_view_get_context (view);
+  old_context = ligma_container_view_get_context (view);
 
   if (old_context)
     {
       g_signal_handlers_disconnect_by_func (old_context,
-                                            gimp_item_tree_view_set_image,
+                                            ligma_item_tree_view_set_image,
                                             item_view);
-      g_signal_handlers_disconnect_by_func (old_context->gimp->config,
-                                            G_CALLBACK (gimp_item_tree_view_style_updated),
+      g_signal_handlers_disconnect_by_func (old_context->ligma->config,
+                                            G_CALLBACK (ligma_item_tree_view_style_updated),
                                             item_view);
     }
 
@@ -1147,43 +1147,43 @@ gimp_item_tree_view_set_context (GimpContainerView *view,
 
   if (context)
     {
-      if (! tree_view->dnd_gimp)
-        tree_view->dnd_gimp = context->gimp;
+      if (! tree_view->dnd_ligma)
+        tree_view->dnd_ligma = context->ligma;
 
       g_signal_connect_swapped (context, "image-changed",
-                                G_CALLBACK (gimp_item_tree_view_set_image),
+                                G_CALLBACK (ligma_item_tree_view_set_image),
                                 item_view);
 
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::theme",
-                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               G_CALLBACK (ligma_item_tree_view_style_updated),
                                item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::override-theme-icon-size",
-                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               G_CALLBACK (ligma_item_tree_view_style_updated),
                                item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
+      g_signal_connect_object (context->ligma->config,
                                "notify::custom-icon-size",
-                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               G_CALLBACK (ligma_item_tree_view_style_updated),
                                item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
-      image = gimp_context_get_image (context);
+      image = ligma_context_get_image (context);
     }
 
-  gimp_item_tree_view_set_image (item_view, image);
+  ligma_item_tree_view_set_image (item_view, image);
 }
 
 static gpointer
-gimp_item_tree_view_insert_item (GimpContainerView *view,
-                                 GimpViewable      *viewable,
+ligma_item_tree_view_insert_item (LigmaContainerView *view,
+                                 LigmaViewable      *viewable,
                                  gpointer           parent_insert_data,
                                  gint               index)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpItem              *item      = GIMP_ITEM (viewable);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
+  LigmaItemTreeView      *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaItem              *item      = LIGMA_ITEM (viewable);
   GtkTreeIter           *iter;
-  GimpRGB                color;
+  LigmaRGB                color;
   gboolean               has_color;
   const gchar           *icon_name;
   gint                   n_locks;
@@ -1191,21 +1191,21 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
 
-  has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
+  has_color = ligma_get_color_tag_color (ligma_item_get_merged_color_tag (item),
                                         &color,
-                                        gimp_item_get_color_tag (item) ==
-                                        GIMP_COLOR_TAG_NONE);
+                                        ligma_item_get_color_tag (item) ==
+                                        LIGMA_COLOR_TAG_NONE);
 
-  n_locks = gimp_item_tree_view_get_n_locks (item_view, item, &icon_name);
+  n_locks = ligma_item_tree_view_get_n_locks (item_view, item, &icon_name);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
 
                       item_view->priv->model_column_visible,
-                      gimp_item_get_visible (item),
+                      ligma_item_get_visible (item),
 
                       item_view->priv->model_column_viewable,
-                      gimp_item_get_visible (item) &&
-                      ! gimp_item_is_visible (item),
+                      ligma_item_get_visible (item) &&
+                      ! ligma_item_is_visible (item),
 
                       item_view->priv->model_column_locked,
                       n_locks > 0,
@@ -1221,24 +1221,24 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
 }
 
 static void
-gimp_item_tree_view_insert_items_after (GimpContainerView *view)
+ligma_item_tree_view_insert_items_after (LigmaContainerView *view)
 {
-  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpItemTreeViewClass *item_view_class;
+  LigmaItemTreeView      *item_view = LIGMA_ITEM_TREE_VIEW (view);
+  LigmaItemTreeViewClass *item_view_class;
   GList                 *selected_items;
 
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+  item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
   selected_items = item_view_class->get_selected_items (item_view->priv->image);
-  gimp_container_view_select_items (view, selected_items);
+  ligma_container_view_select_items (view, selected_items);
 }
 
 static gboolean
-gimp_item_tree_view_select_items (GimpContainerView *view,
+ligma_item_tree_view_select_items (LigmaContainerView *view,
                                   GList             *items,
                                   GList             *paths)
 {
-  GimpItemTreeView *tree_view         = GIMP_ITEM_TREE_VIEW (view);
+  LigmaItemTreeView *tree_view         = LIGMA_ITEM_TREE_VIEW (view);
   gboolean          options_sensitive = FALSE;
   gboolean          success;
 
@@ -1246,13 +1246,13 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
 
   if (items)
     {
-      GimpItemTreeViewClass *item_view_class;
+      LigmaItemTreeViewClass *item_view_class;
 
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
+      item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (tree_view);
       if (TRUE) /* XXX: test if new selection same as old. */
         {
           item_view_class->set_selected_items (tree_view->priv->image, items);
-          gimp_image_flush (tree_view->priv->image);
+          ligma_image_flush (tree_view->priv->image);
 
           items = item_view_class->get_selected_items (tree_view->priv->image);
         }
@@ -1260,7 +1260,7 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
       options_sensitive = TRUE;
     }
 
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
+  ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (tree_view)), tree_view);
 
   if (tree_view->priv->options_box)
     gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
@@ -1269,28 +1269,28 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
 }
 
 static void
-gimp_item_tree_view_activate_item (GimpContainerView *view,
-                                   GimpViewable      *item,
+ligma_item_tree_view_activate_item (LigmaContainerView *view,
+                                   LigmaViewable      *item,
                                    gpointer           insert_data)
 {
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+  LigmaItemTreeViewClass *item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view);
 
   if (parent_view_iface->activate_item)
     parent_view_iface->activate_item (view, item, insert_data);
 
   if (item_view_class->activate_action)
     {
-      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
+      ligma_ui_manager_activate_action (ligma_editor_get_ui_manager (LIGMA_EDITOR (view)),
                                        item_view_class->action_group,
                                        item_view_class->activate_action);
     }
 }
 
 static gboolean
-gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
-                                   GimpDndType              src_type,
+ligma_item_tree_view_drop_possible (LigmaContainerTreeView   *tree_view,
+                                   LigmaDndType              src_type,
                                    GList                   *src_viewables,
-                                   GimpViewable            *dest_viewable,
+                                   LigmaViewable            *dest_viewable,
                                    GtkTreePath             *drop_path,
                                    GtkTreeViewDropPosition  drop_pos,
                                    GtkTreeViewDropPosition *return_drop_pos,
@@ -1306,12 +1306,12 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 
   for (iter = src_viewables; iter; iter = iter->next)
     {
-      GimpViewable *src_viewable = iter->data;
+      LigmaViewable *src_viewable = iter->data;
 
-      if (! GIMP_IS_ITEM (src_viewable) ||
+      if (! LIGMA_IS_ITEM (src_viewable) ||
           (dest_viewable != NULL &&
-           gimp_item_get_image (GIMP_ITEM (src_viewable)) ==
-           gimp_item_get_image (GIMP_ITEM (dest_viewable))))
+           ligma_item_get_image (LIGMA_ITEM (src_viewable)) ==
+           ligma_item_get_image (LIGMA_ITEM (dest_viewable))))
         {
           /* Not an item or from the same image. */
           other_image_items = FALSE;
@@ -1330,7 +1330,7 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
       return TRUE;
     }
 
-  return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+  return LIGMA_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
                                                                        src_type,
                                                                        src_viewables,
                                                                        dest_viewable,
@@ -1341,26 +1341,26 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 }
 
 static void
-gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
+ligma_item_tree_view_drop_viewables (LigmaContainerTreeView   *tree_view,
                                     GList                   *src_viewables,
-                                    GimpViewable            *dest_viewable,
+                                    LigmaViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeViewClass *item_view_class;
-  GimpItemTreeView      *item_view              = GIMP_ITEM_TREE_VIEW (tree_view);
+  LigmaItemTreeViewClass *item_view_class;
+  LigmaItemTreeView      *item_view              = LIGMA_ITEM_TREE_VIEW (tree_view);
   GList                 *iter;
-  GimpImage             *src_image              = NULL;
+  LigmaImage             *src_image              = NULL;
   GType                  src_viewable_type      = G_TYPE_NONE;
   gint                   dest_index             = -1;
   gboolean               src_viewables_reversed = FALSE;
 
   g_return_if_fail (g_list_length (src_viewables) > 0);
 
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+  item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
   for (iter = src_viewables; iter; iter = iter->next)
     {
-      GimpViewable *src_viewable = iter->data;
+      LigmaViewable *src_viewable = iter->data;
 
       /* All dropped viewables must be of the same finale type and come
        * from the same source image.
@@ -1372,8 +1372,8 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
           if (g_type_is_a (src_viewable_type,
                            G_TYPE_FROM_INSTANCE (src_viewable)))
             /* It is possible to move different types of a same
-             * parenting hierarchy, for instance GimpLayer and
-             * GimpGroupLayer.
+             * parenting hierarchy, for instance LigmaLayer and
+             * LigmaGroupLayer.
              */
             src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
 
@@ -1382,15 +1382,15 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
         }
 
       if (src_image == NULL)
-        src_image = gimp_item_get_image (GIMP_ITEM (iter->data));
+        src_image = ligma_item_get_image (LIGMA_ITEM (iter->data));
       else
-        g_return_if_fail (src_image == gimp_item_get_image (GIMP_ITEM (iter->data)));
+        g_return_if_fail (src_image == ligma_item_get_image (LIGMA_ITEM (iter->data)));
     }
 
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER ||
       (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER &&
        dest_viewable                                &&
-       gimp_viewable_get_children (dest_viewable)))
+       ligma_viewable_get_children (dest_viewable)))
     {
       src_viewables_reversed = TRUE;
       src_viewables = g_list_reverse (src_viewables);
@@ -1401,24 +1401,24 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
     {
       GType item_type = item_view_class->item_type;
 
-      gimp_image_undo_group_start (item_view->priv->image,
-                                   GIMP_UNDO_GROUP_LAYER_ADD,
+      ligma_image_undo_group_start (item_view->priv->image,
+                                   LIGMA_UNDO_GROUP_LAYER_ADD,
                                    _("Drop layers"));
 
       for (iter = src_viewables; iter; iter = iter->next)
         {
-          GimpViewable *src_viewable = iter->data;
-          GimpItem     *new_item;
-          GimpItem     *parent;
+          LigmaViewable *src_viewable = iter->data;
+          LigmaItem     *new_item;
+          LigmaItem     *parent;
 
           if (g_type_is_a (src_viewable_type, item_type))
             item_type = G_TYPE_FROM_INSTANCE (src_viewable);
 
-          dest_index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+          dest_index = ligma_item_tree_view_get_drop_index (item_view, dest_viewable,
                                                            drop_pos,
-                                                           (GimpViewable **) &parent);
+                                                           (LigmaViewable **) &parent);
 
-          new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
+          new_item = ligma_item_convert (LIGMA_ITEM (src_viewable),
                                         item_view->priv->image, item_type);
 
           item_view_class->add_item (item_view->priv->image, new_item,
@@ -1427,24 +1427,24 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
     }
   else if (dest_viewable)
     {
-      gimp_image_undo_group_start (item_view->priv->image,
-                                   GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,
-                                   GIMP_ITEM_GET_CLASS (src_viewables->data)->reorder_desc);
+      ligma_image_undo_group_start (item_view->priv->image,
+                                   LIGMA_UNDO_GROUP_IMAGE_ITEM_REORDER,
+                                   LIGMA_ITEM_GET_CLASS (src_viewables->data)->reorder_desc);
 
       for (iter = src_viewables; iter; iter = iter->next)
         {
-          GimpViewable *src_viewable = iter->data;
-          GimpItem     *src_parent;
-          GimpItem     *dest_parent;
+          LigmaViewable *src_viewable = iter->data;
+          LigmaItem     *src_parent;
+          LigmaItem     *dest_parent;
           gint          src_index;
           gint          dest_index;
 
-          src_parent = GIMP_ITEM (gimp_viewable_get_parent (src_viewable));
-          src_index  = gimp_item_get_index (GIMP_ITEM (src_viewable));
+          src_parent = LIGMA_ITEM (ligma_viewable_get_parent (src_viewable));
+          src_index  = ligma_item_get_index (LIGMA_ITEM (src_viewable));
 
-          dest_index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+          dest_index = ligma_item_tree_view_get_drop_index (item_view, dest_viewable,
                                                            drop_pos,
-                                                           (GimpViewable **) &dest_parent);
+                                                           (LigmaViewable **) &dest_parent);
 
           if (src_parent == dest_parent)
             {
@@ -1452,8 +1452,8 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                 dest_index--;
             }
 
-          gimp_image_reorder_item (item_view->priv->image,
-                                   GIMP_ITEM (src_viewable),
+          ligma_image_reorder_item (item_view->priv->image,
+                                   LIGMA_ITEM (src_viewable),
                                    dest_parent,
                                    dest_index,
                                    TRUE, NULL);
@@ -1469,94 +1469,94 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
      */
     src_viewables = g_list_reverse (src_viewables);
 
-  gimp_image_undo_group_end (item_view->priv->image);
-  gimp_image_flush (item_view->priv->image);
+  ligma_image_undo_group_end (item_view->priv->image);
+  ligma_image_flush (item_view->priv->image);
 }
 
 
 /*  "New" functions  */
 
 static void
-gimp_item_tree_view_new_dropped (GtkWidget    *widget,
+ligma_item_tree_view_new_dropped (GtkWidget    *widget,
                                  gint          x,
                                  gint          y,
-                                 GimpViewable *viewable,
+                                 LigmaViewable *viewable,
                                  gpointer      data)
 {
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (data);
-  GimpContainerView     *view            = GIMP_CONTAINER_VIEW (data);
+  LigmaItemTreeViewClass *item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (data);
+  LigmaContainerView     *view            = LIGMA_CONTAINER_VIEW (data);
 
   if (item_view_class->new_default_action &&
-      viewable && gimp_container_view_lookup (view, viewable))
+      viewable && ligma_container_view_lookup (view, viewable))
     {
-      GimpAction *action;
+      LigmaAction *action;
 
-      action = gimp_ui_manager_find_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
+      action = ligma_ui_manager_find_action (ligma_editor_get_ui_manager (LIGMA_EDITOR (view)),
                                             item_view_class->action_group,
                                             item_view_class->new_default_action);
 
       if (action)
         {
           g_object_set (action, "viewable", viewable, NULL);
-          gimp_action_activate (action);
+          ligma_action_activate (action);
           g_object_set (action, "viewable", NULL, NULL);
         }
     }
 }
 
 static void
-gimp_item_tree_view_new_list_dropped (GtkWidget    *widget,
+ligma_item_tree_view_new_list_dropped (GtkWidget    *widget,
                                       gint          x,
                                       gint          y,
                                       GList        *viewables,
                                       gpointer      data)
 {
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (data);
-  GimpContainerView     *view            = GIMP_CONTAINER_VIEW (data);
-  GimpAction            *action;
+  LigmaItemTreeViewClass *item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (data);
+  LigmaContainerView     *view            = LIGMA_CONTAINER_VIEW (data);
+  LigmaAction            *action;
 
-  action = gimp_ui_manager_find_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
+  action = ligma_ui_manager_find_action (ligma_editor_get_ui_manager (LIGMA_EDITOR (view)),
                                         item_view_class->action_group,
                                         item_view_class->new_default_action);
 
   if (item_view_class->new_default_action && viewables && action &&
-      gimp_container_view_contains (view, viewables))
-    gimp_action_activate (action);
+      ligma_container_view_contains (view, viewables))
+    ligma_action_activate (action);
 }
 
-/*  GimpImage callbacks  */
+/*  LigmaImage callbacks  */
 
 static void
-gimp_item_tree_view_item_changed (GimpImage        *image,
-                                  GimpItemTreeView *view)
+ligma_item_tree_view_item_changed (LigmaImage        *image,
+                                  LigmaItemTreeView *view)
 {
   GList *items;
 
-  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (view->priv->image);
+  items = LIGMA_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (view->priv->image);
 
-  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
+  ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (view), items);
 }
 
 static void
-gimp_item_tree_view_size_changed (GimpImage        *image,
-                                  GimpItemTreeView *tree_view)
+ligma_item_tree_view_size_changed (LigmaImage        *image,
+                                  LigmaItemTreeView *tree_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
+  LigmaContainerView *view = LIGMA_CONTAINER_VIEW (tree_view);
   gint               view_size;
   gint               border_width;
 
-  view_size = gimp_container_view_get_view_size (view, &border_width);
+  view_size = ligma_container_view_get_view_size (view, &border_width);
 
-  gimp_container_view_set_view_size (view, view_size, border_width);
+  ligma_container_view_set_view_size (view, view_size, border_width);
 }
 
 static void
-gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
+ligma_item_tree_view_name_edited (GtkCellRendererText *cell,
                                  const gchar         *path_str,
                                  const gchar         *new_name,
-                                 GimpItemTreeView    *view)
+                                 LigmaItemTreeView    *view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
 
@@ -1564,39 +1564,39 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpItem         *item;
+      LigmaViewRenderer *renderer;
+      LigmaItem         *item;
       const gchar      *old_name;
       GError           *error = NULL;
 
-      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+      renderer = ligma_container_tree_store_get_renderer (LIGMA_CONTAINER_TREE_STORE (tree_view->model),
                                                          &iter);
 
-      item = GIMP_ITEM (renderer->viewable);
+      item = LIGMA_ITEM (renderer->viewable);
 
-      old_name = gimp_object_get_name (item);
+      old_name = ligma_object_get_name (item);
 
       if (! old_name) old_name = "";
       if (! new_name) new_name = "";
 
       if (strcmp (old_name, new_name) &&
-          gimp_item_rename (item, new_name, &error))
+          ligma_item_rename (item, new_name, &error))
         {
-          gimp_image_flush (gimp_item_get_image (item));
+          ligma_image_flush (ligma_item_get_image (item));
         }
       else
         {
-          gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
+          gchar *name = ligma_viewable_get_description (renderer->viewable, NULL);
 
           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
+                              LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                               -1);
           g_free (name);
 
           if (error)
             {
-              gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
-                                    GIMP_MESSAGE_WARNING,
+              ligma_message_literal (view->priv->image->ligma, G_OBJECT (view),
+                                    LIGMA_MESSAGE_WARNING,
                                     error->message);
               g_clear_error (&error);
             }
@@ -1612,44 +1612,44 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 /*  "Visible" callbacks  */
 
 static void
-gimp_item_tree_view_visible_changed (GimpItem         *item,
-                                     GimpItemTreeView *view)
+ligma_item_tree_view_visible_changed (LigmaItem         *item,
+                                     LigmaItemTreeView *view)
 {
-  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (view);
-  GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerView     *container_view = LIGMA_CONTAINER_VIEW (view);
+  LigmaContainerTreeView *tree_view      = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = ligma_container_view_lookup (container_view,
+                                     (LigmaViewable *) item);
 
   if (iter)
     {
-      GimpContainer *children;
+      LigmaContainer *children;
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_visible,
-                          gimp_item_get_visible (item),
+                          ligma_item_get_visible (item),
                           view->priv->model_column_viewable,
-                          gimp_item_get_visible (item) &&
-                          ! gimp_item_is_visible (item),
+                          ligma_item_get_visible (item) &&
+                          ! ligma_item_is_visible (item),
                           -1);
 
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+      children = ligma_viewable_get_children (LIGMA_VIEWABLE (item));
 
       if (children)
-        gimp_container_foreach (children,
-                                (GFunc) gimp_item_tree_view_visible_changed,
+        ligma_container_foreach (children,
+                                (GFunc) ligma_item_tree_view_visible_changed,
                                 view);
     }
 }
 
 static void
-gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
+ligma_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
                                  gchar                 *path_str,
                                  GdkModifierType        state,
-                                 GimpItemTreeView      *view)
+                                 LigmaItemTreeView      *view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
 
@@ -1657,49 +1657,49 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpContext      *context;
-      GimpViewRenderer *renderer;
-      GimpItem         *item;
-      GimpImage        *image;
+      LigmaContext      *context;
+      LigmaViewRenderer *renderer;
+      LigmaItem         *item;
+      LigmaImage        *image;
       gboolean          active;
 
-      context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
+      context = ligma_container_view_get_context (LIGMA_CONTAINER_VIEW (view));
 
-      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+      renderer = ligma_container_tree_store_get_renderer (LIGMA_CONTAINER_TREE_STORE (tree_view->model),
                                                          &iter);
       g_object_get (toggle,
                     "active", &active,
                     NULL);
 
-      item = GIMP_ITEM (renderer->viewable);
+      item = LIGMA_ITEM (renderer->viewable);
       g_object_unref (renderer);
 
-      image = gimp_item_get_image (item);
+      image = ligma_item_get_image (item);
 
       if ((state & GDK_SHIFT_MASK) ||
           (state & GDK_MOD1_MASK))
         {
-          gimp_item_toggle_exclusive_visible (item, (state & GDK_MOD1_MASK), context);
+          ligma_item_toggle_exclusive_visible (item, (state & GDK_MOD1_MASK), context);
         }
       else
         {
-          GimpUndo *undo;
+          LigmaUndo *undo;
           gboolean  push_undo = TRUE;
 
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                               GIMP_UNDO_ITEM_VISIBILITY);
+          undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                               LIGMA_UNDO_ITEM_VISIBILITY);
 
-          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+          if (undo && LIGMA_ITEM_UNDO (undo)->item == item)
             push_undo = FALSE;
 
-          if (! gimp_item_set_visible (item, ! active, push_undo))
-            gimp_item_tree_view_blink_lock (view, item);
+          if (! ligma_item_set_visible (item, ! active, push_undo))
+            ligma_item_tree_view_blink_lock (view, item);
 
           if (!push_undo)
-            gimp_undo_refresh_preview (undo, context);
+            ligma_undo_refresh_preview (undo, context);
         }
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 
   gtk_tree_path_free (path);
@@ -1709,36 +1709,36 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
 /*  "Locked" callbacks  */
 
 static void
-gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
+ligma_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
                                   gchar                 *path_str,
                                   GdkModifierType        state,
-                                  GimpItemTreeView      *view)
+                                  LigmaItemTreeView      *view)
 {
   GtkTreePath *path;
   GtkTreeIter  iter;
 
   path = gtk_tree_path_new_from_string (path_str);
 
-  if (gtk_tree_model_get_iter (GIMP_CONTAINER_TREE_VIEW (view)->model,
+  if (gtk_tree_model_get_iter (LIGMA_CONTAINER_TREE_VIEW (view)->model,
                                &iter, path))
     {
-      GimpViewRenderer       *renderer;
-      GimpContainerTreeStore *store;
-      GimpItem               *item;
+      LigmaViewRenderer       *renderer;
+      LigmaContainerTreeStore *store;
+      LigmaItem               *item;
       GdkRectangle            rect;
 
       /* Update the lock state. */
-      store = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (view)->model);
-      renderer = gimp_container_tree_store_get_renderer (store, &iter);
-      item = GIMP_ITEM (renderer->viewable);
+      store = LIGMA_CONTAINER_TREE_STORE (LIGMA_CONTAINER_TREE_VIEW (view)->model);
+      renderer = ligma_container_tree_store_get_renderer (store, &iter);
+      item = LIGMA_ITEM (renderer->viewable);
       g_object_unref (renderer);
-      gimp_item_tree_view_update_lock_box (view, item, path);
+      ligma_item_tree_view_update_lock_box (view, item, path);
 
       /* Change popover position. */
-      gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                                   gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
+      gtk_tree_view_get_cell_area (LIGMA_CONTAINER_TREE_VIEW (view)->view, path,
+                                   gtk_tree_view_get_column (LIGMA_CONTAINER_TREE_VIEW (view)->view, 1),
                                    &rect);
-      gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
+      gtk_tree_view_convert_bin_window_to_widget_coords (LIGMA_CONTAINER_TREE_VIEW (view)->view,
                                                          rect.x, rect.y, &rect.x, &rect.y);
       gtk_popover_set_pointing_to (GTK_POPOVER (view->priv->lock_popover), &rect);
 
@@ -1750,37 +1750,37 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
 /*  "Color Tag" callbacks  */
 
 static void
-gimp_item_tree_view_color_tag_changed (GimpItem         *item,
-                                       GimpItemTreeView *view)
+ligma_item_tree_view_color_tag_changed (LigmaItem         *item,
+                                       LigmaItemTreeView *view)
 {
-  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (view);
-  GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerView     *container_view = LIGMA_CONTAINER_VIEW (view);
+  LigmaContainerTreeView *tree_view      = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = ligma_container_view_lookup (container_view,
+                                     (LigmaViewable *) item);
 
   if (iter)
     {
-      GimpContainer *children;
-      GimpRGB        color;
+      LigmaContainer *children;
+      LigmaRGB        color;
       gboolean       has_color;
 
-      has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
+      has_color = ligma_get_color_tag_color (ligma_item_get_merged_color_tag (item),
                                             &color,
-                                            gimp_item_get_color_tag (item) ==
-                                            GIMP_COLOR_TAG_NONE);
+                                            ligma_item_get_color_tag (item) ==
+                                            LIGMA_COLOR_TAG_NONE);
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_color_tag,
                           has_color ? (GdkRGBA *) &color : NULL,
                           -1);
 
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+      children = ligma_viewable_get_children (LIGMA_VIEWABLE (item));
 
       if (children)
-        gimp_container_foreach (children,
-                                (GFunc) gimp_item_tree_view_color_tag_changed,
+        ligma_container_foreach (children,
+                                (GFunc) ligma_item_tree_view_color_tag_changed,
                                 view);
     }
 }
@@ -1789,19 +1789,19 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
 /*  "Lock Content" callbacks  */
 
 static void
-gimp_item_tree_view_lock_changed (GimpItem         *item,
-                                  GimpItemTreeView *view)
+ligma_item_tree_view_lock_changed (LigmaItem         *item,
+                                  LigmaItemTreeView *view)
 {
-  GimpContainerView     *container_view  = GIMP_CONTAINER_VIEW (view);
-  GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerView     *container_view  = LIGMA_CONTAINER_VIEW (view);
+  LigmaContainerTreeView *tree_view       = LIGMA_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
   const gchar           *icon_name;
   gint                   n_locks;
 
-  iter = gimp_container_view_lookup (container_view,
-                                     (GimpViewable *) item);
+  iter = ligma_container_view_lookup (container_view,
+                                     (LigmaViewable *) item);
 
-  n_locks = gimp_item_tree_view_get_n_locks (view, item, &icon_name);
+  n_locks = ligma_item_tree_view_get_n_locks (view, item, &icon_name);
 
   if (iter)
     gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
@@ -1815,24 +1815,24 @@ gimp_item_tree_view_lock_changed (GimpItem         *item,
                         -1);
 
   if (view->priv->lock_box_item == item)
-    gimp_item_tree_view_update_lock_box (view, item, NULL);
+    ligma_item_tree_view_update_lock_box (view, item, NULL);
 }
 
 static gboolean
-gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
+ligma_item_tree_view_lock_button_release (GtkWidget        *widget,
                                          GdkEvent         *event,
-                                         GimpItemTreeView *view)
+                                         LigmaItemTreeView *view)
 {
   GdkEventButton  *bevent = (GdkEventButton *) event;
   LockToggle      *data;
   GdkModifierType  modifiers;
 
   data      = g_object_get_data (G_OBJECT (widget), "lock-data");
-  modifiers = bevent->state & gimp_get_all_modifiers_mask ();
+  modifiers = bevent->state & ligma_get_all_modifiers_mask ();
 
   if (modifiers == GDK_SHIFT_MASK ||
       modifiers == GDK_MOD1_MASK)
-    gimp_item_toggle_exclusive (view->priv->lock_box_item,
+    ligma_item_toggle_exclusive (view->priv->lock_box_item,
                                 data->is_locked,
                                 data->lock,
                                 data->can_lock,
@@ -1849,12 +1849,12 @@ gimp_item_tree_view_lock_button_release (GtkWidget        *widget,
 }
 
 static void
-gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
-                                  GimpItemTreeView  *view)
+ligma_item_tree_view_lock_toggled (GtkWidget         *widget,
+                                  LigmaItemTreeView  *view)
 {
-  GimpImage   *image = view->priv->image;
+  LigmaImage   *image = view->priv->image;
   LockToggle  *data;
-  GimpUndo    *undo;
+  LigmaUndo    *undo;
   const gchar *undo_label;
   gboolean     push_undo = TRUE;
   gboolean     locked;
@@ -1866,10 +1866,10 @@ gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
       locked == data->is_locked (view->priv->lock_box_item))
     return;
 
-  undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+  undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
                                        data->undo_type);
 
-  if (undo && GIMP_ITEM_UNDO (undo)->item == view->priv->lock_box_item)
+  if (undo && LIGMA_ITEM_UNDO (undo)->item == view->priv->lock_box_item)
     push_undo = FALSE;
 
   if (push_undo)
@@ -1879,7 +1879,7 @@ gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
       else
         undo_label = data->undo_unlock_desc;
 
-      gimp_image_undo_group_start (image, data->group_undo_type,
+      ligma_image_undo_group_start (image, data->group_undo_type,
                                    undo_label);
     }
 
@@ -1889,21 +1889,21 @@ gimp_item_tree_view_lock_toggled (GtkWidget         *widget,
    */
   data->lock (view->priv->lock_box_item, locked, push_undo);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
   if (push_undo)
-    gimp_image_undo_group_end (image);
+    ligma_image_undo_group_end (image);
 }
 
 static gboolean
-gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
+ligma_item_tree_view_item_pre_clicked (LigmaCellRendererViewable *cell,
                                       const gchar              *path_str,
                                       GdkModifierType           state,
-                                      GimpItemTreeView         *item_view)
+                                      LigmaItemTreeView         *item_view)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
+  LigmaContainerTreeView *tree_view = LIGMA_CONTAINER_TREE_VIEW (item_view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
-  GdkModifierType        modifiers = (state & gimp_get_all_modifiers_mask ());
+  GdkModifierType        modifiers = (state & ligma_get_all_modifiers_mask ());
   gboolean               handled   = FALSE;
 
   path = gtk_tree_path_new_from_string (path_str);
@@ -1913,20 +1913,20 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
       ! (modifiers & ~(GDK_MOD1_MASK | GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
       gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpImage        *image    = gimp_item_tree_view_get_image (item_view);
-      GimpViewRenderer *renderer = NULL;
+      LigmaImage        *image    = ligma_item_tree_view_get_image (item_view);
+      LigmaViewRenderer *renderer = NULL;
 
-      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+      renderer = ligma_container_tree_store_get_renderer (LIGMA_CONTAINER_TREE_STORE (tree_view->model),
                                                          &iter);
 
       if (renderer)
         {
-          GimpItem       *item = GIMP_ITEM (renderer->viewable);
-          GimpChannelOps  op   = gimp_modifiers_to_channel_op (state);
+          LigmaItem       *item = LIGMA_ITEM (renderer->viewable);
+          LigmaChannelOps  op   = ligma_modifiers_to_channel_op (state);
 
-          gimp_item_to_selection (item, op,
+          ligma_item_to_selection (item, op,
                                   TRUE, FALSE, 0.0, 0.0);
-          gimp_image_flush (image);
+          ligma_image_flush (image);
 
           g_object_unref (renderer);
 
@@ -1941,8 +1941,8 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
 }
 
 static void
-gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
-                                     GimpItem         *item,
+ligma_item_tree_view_update_lock_box (LigmaItemTreeView *view,
+                                     LigmaItem         *item,
                                      GtkTreePath      *path)
 {
   GList *list;
@@ -1955,20 +1955,20 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
           gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->toggle)))
         {
           g_signal_handlers_block_by_func (data->toggle,
-                                           gimp_item_tree_view_lock_toggled,
+                                           ligma_item_tree_view_lock_toggled,
                                            view);
           g_signal_handlers_block_by_func (data->toggle,
-                                           gimp_item_tree_view_lock_button_release,
+                                           ligma_item_tree_view_lock_button_release,
                                            view);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->toggle),
                                         data->is_locked (item));
 
           g_signal_handlers_unblock_by_func (data->toggle,
-                                             gimp_item_tree_view_lock_toggled,
+                                             ligma_item_tree_view_lock_toggled,
                                              view);
           g_signal_handlers_unblock_by_func (data->toggle,
-                                           gimp_item_tree_view_lock_button_release,
+                                           ligma_item_tree_view_lock_button_release,
                                            view);
         }
       gtk_widget_set_sensitive (data->toggle, data->can_lock (item));
@@ -1984,11 +1984,11 @@ gimp_item_tree_view_update_lock_box (GimpItemTreeView *view,
 }
 
 static gboolean
-gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
+ligma_item_tree_view_popover_button_press (GtkWidget        *widget,
                                           GdkEvent         *event,
-                                          GimpItemTreeView *view)
+                                          LigmaItemTreeView *view)
 {
-  GimpContainerTreeView *tree_view    = GIMP_CONTAINER_TREE_VIEW (view);
+  LigmaContainerTreeView *tree_view    = LIGMA_CONTAINER_TREE_VIEW (view);
   GdkEventButton        *bevent       = (GdkEventButton *) event;
   GdkEvent              *new_event;
   GtkTreeViewColumn     *column;
@@ -2017,7 +2017,7 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
        * should only toggle-hide the lock box.
        */
       if (gtk_tree_path_compare (path, view->priv->lock_box_path) != 0 ||
-          column != gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1))
+          column != gtk_tree_view_get_column (LIGMA_CONTAINER_TREE_VIEW (view)->view, 1))
         {
           /* Propagate the press event to the tree view. */
           new_event = gdk_event_copy (event);
@@ -2045,44 +2045,44 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
 /*  GtkTreeView callbacks  */
 
 static void
-gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
+ligma_item_tree_view_row_expanded (GtkTreeView      *tree_view,
                                   GtkTreeIter      *iter,
                                   GtkTreePath      *path,
-                                  GimpItemTreeView *item_view)
+                                  LigmaItemTreeView *item_view)
 {
-  GimpItemTreeViewClass *item_view_class;
+  LigmaItemTreeViewClass *item_view_class;
   GList                 *selected_items;
   GList                 *list;
 
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+  item_view_class = LIGMA_ITEM_TREE_VIEW_GET_CLASS (item_view);
   selected_items  = item_view_class->get_selected_items (item_view->priv->image);
 
   if (selected_items)
     {
-      GimpContainerTreeStore *store;
-      GimpViewRenderer       *renderer;
-      GimpItem               *expanded_item;
+      LigmaContainerTreeStore *store;
+      LigmaViewRenderer       *renderer;
+      LigmaItem               *expanded_item;
 
-      store    = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (item_view)->model);
-      renderer = gimp_container_tree_store_get_renderer (store, iter);
-      expanded_item = GIMP_ITEM (renderer->viewable);
+      store    = LIGMA_CONTAINER_TREE_STORE (LIGMA_CONTAINER_TREE_VIEW (item_view)->model);
+      renderer = ligma_container_tree_store_get_renderer (store, iter);
+      expanded_item = LIGMA_ITEM (renderer->viewable);
       g_object_unref (renderer);
 
       for (list = selected_items; list; list = list->next)
         {
           /*  don't select an item while it is being inserted  */
-          if (! gimp_container_view_lookup (GIMP_CONTAINER_VIEW (item_view),
+          if (! ligma_container_view_lookup (LIGMA_CONTAINER_VIEW (item_view),
                                             list->data))
             return;
 
           /*  select items only if they were made visible by expanding
            *  their immediate parent. See bug #666561.
            */
-          if (gimp_item_get_parent (list->data) != expanded_item)
+          if (ligma_item_get_parent (list->data) != expanded_item)
             return;
         }
 
-      gimp_container_view_select_items (GIMP_CONTAINER_VIEW (item_view),
+      ligma_container_view_select_items (LIGMA_CONTAINER_VIEW (item_view),
                                         selected_items);
     }
 }
@@ -2091,14 +2091,14 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
 /*  Helper functions.  */
 
 static gint
-gimp_item_tree_view_get_n_locks (GimpItemTreeView *view,
-                                 GimpItem         *item,
+ligma_item_tree_view_get_n_locks (LigmaItemTreeView *view,
+                                 LigmaItem         *item,
                                  const gchar     **icon_name)
 {
   GList *list;
   gint   n_locks = 0;
 
-  *icon_name = GIMP_ICON_LOCK_MULTI;
+  *icon_name = LIGMA_ICON_LOCK_MULTI;
 
   for (list = view->priv->locks; list; list = list->next)
     {

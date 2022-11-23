@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,23 +19,23 @@
 #define __LAYER_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpLayerOptionsCallback) (GtkWidget              *dialog,
-                                           GimpImage              *image,
-                                           GimpLayer              *layer,
-                                           GimpContext            *context,
+typedef void (* LigmaLayerOptionsCallback) (GtkWidget              *dialog,
+                                           LigmaImage              *image,
+                                           LigmaLayer              *layer,
+                                           LigmaContext            *context,
                                            const gchar            *layer_name,
-                                           GimpLayerMode           layer_mode,
-                                           GimpLayerColorSpace     layer_blend_space,
-                                           GimpLayerColorSpace     layer_composite_space,
-                                           GimpLayerCompositeMode  layer_composite_mode,
+                                           LigmaLayerMode           layer_mode,
+                                           LigmaLayerColorSpace     layer_blend_space,
+                                           LigmaLayerColorSpace     layer_composite_space,
+                                           LigmaLayerCompositeMode  layer_composite_mode,
                                            gdouble                 layer_opacity,
-                                           GimpFillType            layer_fill_type,
+                                           LigmaFillType            layer_fill_type,
                                            gint                    layer_width,
                                            gint                    layer_height,
                                            gint                    layer_offset_x,
                                            gint                    layer_offset_y,
                                            gboolean                layer_visible,
-                                           GimpColorTag            layer_color_tag,
+                                           LigmaColorTag            layer_color_tag,
                                            gboolean                layer_lock_content,
                                            gboolean                layer_lock_position,
                                            gboolean                layer_lock_alpha,
@@ -43,9 +43,9 @@ typedef void (* GimpLayerOptionsCallback) (GtkWidget              *dialog,
                                            gpointer                user_data);
 
 
-GtkWidget * layer_options_dialog_new (GimpImage                *image,
-                                      GimpLayer                *layer,
-                                      GimpContext              *context,
+GtkWidget * layer_options_dialog_new (LigmaImage                *image,
+                                      LigmaLayer                *layer,
+                                      LigmaContext              *context,
                                       GtkWidget                *parent,
                                       const gchar              *title,
                                       const gchar              *role,
@@ -53,18 +53,18 @@ GtkWidget * layer_options_dialog_new (GimpImage                *image,
                                       const gchar              *desc,
                                       const gchar              *help_id,
                                       const gchar              *layer_name,
-                                      GimpLayerMode             layer_mode,
-                                      GimpLayerColorSpace       layer_blend_space,
-                                      GimpLayerColorSpace       layer_composite_space,
-                                      GimpLayerCompositeMode    layer_composite_mode,
+                                      LigmaLayerMode             layer_mode,
+                                      LigmaLayerColorSpace       layer_blend_space,
+                                      LigmaLayerColorSpace       layer_composite_space,
+                                      LigmaLayerCompositeMode    layer_composite_mode,
                                       gdouble                   layer_opacity,
-                                      GimpFillType              layer_fill_type,
+                                      LigmaFillType              layer_fill_type,
                                       gboolean                  layer_visible,
-                                      GimpColorTag              layer_color_tag,
+                                      LigmaColorTag              layer_color_tag,
                                       gboolean                  layer_lock_content,
                                       gboolean                  layer_lock_position,
                                       gboolean                  layer_lock_alpha,
-                                      GimpLayerOptionsCallback  callback,
+                                      LigmaLayerOptionsCallback  callback,
                                       gpointer                  user_data);
 
 

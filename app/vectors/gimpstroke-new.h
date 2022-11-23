@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpstroke-new.c
- * Copyright (C) 2006 Simon Budig  <simon@gimp.org>
+ * ligmastroke-new.c
+ * Copyright (C) 2006 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_NEW_H__
-#define __GIMP_VECTORS_NEW_H__
+#ifndef __LIGMA_VECTORS_NEW_H__
+#define __LIGMA_VECTORS_NEW_H__
 
 
-GimpStroke * gimp_stroke_new_from_coords (GimpVectorsStrokeType  type,
-                                          const GimpCoords      *coords,
+LigmaStroke * ligma_stroke_new_from_coords (LigmaVectorsStrokeType  type,
+                                          const LigmaCoords      *coords,
                                           gint                   n_coords,
                                           gboolean               closed);
 
 
-#endif /* __GIMP_VECTORS_NEW_H__ */
+#endif /* __LIGMA_VECTORS_NEW_H__ */

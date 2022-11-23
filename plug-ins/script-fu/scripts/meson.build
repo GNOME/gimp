@@ -18,7 +18,7 @@ scripts = [
   'erase-rows.scm',
   'font-map.scm',
   'fuzzyborder.scm',
-  'gimp-online.scm',
+  'ligma-online.scm',
   'gradient-example.scm',
   'grid-system.scm',
   'guides-from-selection.scm',
@@ -65,10 +65,10 @@ endif
 
 install_data(
   scripts,
-  install_dir: gimpdatadir / 'scripts',
+  install_dir: ligmadatadir / 'scripts',
 )
 
-# scripts interpreted by gimp-script-fu-interpreter
+# scripts interpreted by ligma-script-fu-interpreter
 # Each installed in subdirectory of /plug-in
 # Each have a shebang and executable permission.
 # Like other interpreted plugins.
@@ -84,6 +84,6 @@ foreach plugin : scripts_independent
   srcs = plugin.get('srcs', name + '.scm')
 
   install_data(srcs,
-               install_dir: gimpplugindir / 'plug-ins' / name,
+               install_dir: ligmaplugindir / 'plug-ins' / name,
                install_mode: 'rwxr-xr-x')
 endforeach

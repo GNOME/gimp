@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextTag
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextTag
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_TAG_H__
-#define __GIMP_TEXT_TAG_H__
+#ifndef __LIGMA_TEXT_TAG_H__
+#define __LIGMA_TEXT_TAG_H__
 
 
 /*  GtkTextTag property names  */
 
-#define GIMP_TEXT_PROP_NAME_SIZE     "size"
-#define GIMP_TEXT_PROP_NAME_BASELINE "rise"
-#define GIMP_TEXT_PROP_NAME_KERNING  "rise" /* FIXME */
-#define GIMP_TEXT_PROP_NAME_FONT     "font"
-#define GIMP_TEXT_PROP_NAME_FG_COLOR "foreground-rgba"
-#define GIMP_TEXT_PROP_NAME_BG_COLOR "background-rgba"
+#define LIGMA_TEXT_PROP_NAME_SIZE     "size"
+#define LIGMA_TEXT_PROP_NAME_BASELINE "rise"
+#define LIGMA_TEXT_PROP_NAME_KERNING  "rise" /* FIXME */
+#define LIGMA_TEXT_PROP_NAME_FONT     "font"
+#define LIGMA_TEXT_PROP_NAME_FG_COLOR "foreground-rgba"
+#define LIGMA_TEXT_PROP_NAME_BG_COLOR "background-rgba"
 
 
-gint       gimp_text_tag_get_size     (GtkTextTag *tag);
-gint       gimp_text_tag_get_baseline (GtkTextTag *tag);
-gint       gimp_text_tag_get_kerning  (GtkTextTag *tag);
-gchar    * gimp_text_tag_get_font     (GtkTextTag *tag);
-gboolean   gimp_text_tag_get_fg_color (GtkTextTag *tag,
-                                       GimpRGB    *color);
-gboolean   gimp_text_tag_get_bg_color (GtkTextTag *tag,
-                                       GimpRGB    *color);
+gint       ligma_text_tag_get_size     (GtkTextTag *tag);
+gint       ligma_text_tag_get_baseline (GtkTextTag *tag);
+gint       ligma_text_tag_get_kerning  (GtkTextTag *tag);
+gchar    * ligma_text_tag_get_font     (GtkTextTag *tag);
+gboolean   ligma_text_tag_get_fg_color (GtkTextTag *tag,
+                                       LigmaRGB    *color);
+gboolean   ligma_text_tag_get_bg_color (GtkTextTag *tag,
+                                       LigmaRGB    *color);
 
 
-#endif /* __GIMP_TEXT_TAG_H__ */
+#endif /* __LIGMA_TEXT_TAG_H__ */

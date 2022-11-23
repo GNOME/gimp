@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/tool-presets/FX
+## Makefile.am for ligma/data/tool-presets/FX
 
-toolpresetsfxdatadir = $(gimpdatadir)/tool-presets/FX
+toolpresetsfxdatadir = $(ligmadatadir)/tool-presets/FX
 
 toolpresetsfxdata_DATA = \
 	Crop-16-9.gtp		\

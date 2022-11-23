@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,46 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SOURCE_OPTIONS_H__
-#define __GIMP_SOURCE_OPTIONS_H__
+#ifndef __LIGMA_SOURCE_OPTIONS_H__
+#define __LIGMA_SOURCE_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_SOURCE_OPTIONS            (gimp_source_options_get_type ())
-#define GIMP_SOURCE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptions))
-#define GIMP_SOURCE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptionsClass))
-#define GIMP_IS_SOURCE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_OPTIONS))
-#define GIMP_IS_SOURCE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_OPTIONS))
-#define GIMP_SOURCE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptionsClass))
+#define LIGMA_TYPE_SOURCE_OPTIONS            (ligma_source_options_get_type ())
+#define LIGMA_SOURCE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SOURCE_OPTIONS, LigmaSourceOptions))
+#define LIGMA_SOURCE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SOURCE_OPTIONS, LigmaSourceOptionsClass))
+#define LIGMA_IS_SOURCE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SOURCE_OPTIONS))
+#define LIGMA_IS_SOURCE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SOURCE_OPTIONS))
+#define LIGMA_SOURCE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SOURCE_OPTIONS, LigmaSourceOptionsClass))
 
 
-typedef struct _GimpSourceOptionsClass GimpSourceOptionsClass;
+typedef struct _LigmaSourceOptionsClass LigmaSourceOptionsClass;
 
-struct _GimpSourceOptions
+struct _LigmaSourceOptions
 {
-  GimpPaintOptions     parent_instance;
+  LigmaPaintOptions     parent_instance;
 
   GList               *src_drawables;
   gint                 src_x;
   gint                 src_y;
 
   /* The pickable to use when not in sample merged mode. */
-  GimpPickable        *src_pickable;
-  GimpImage           *src_image;
+  LigmaPickable        *src_pickable;
+  LigmaImage           *src_image;
 
-  GimpSourceAlignMode  align_mode;
+  LigmaSourceAlignMode  align_mode;
   gboolean             sample_merged;
 };
 
-struct _GimpSourceOptionsClass
+struct _LigmaSourceOptionsClass
 {
-  GimpPaintOptionsClass  parent_class;
+  LigmaPaintOptionsClass  parent_class;
 };
 
 
-GType   gimp_source_options_get_type (void) G_GNUC_CONST;
+GType   ligma_source_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SOURCE_OPTIONS_H__  */
+#endif  /*  __LIGMA_SOURCE_OPTIONS_H__  */

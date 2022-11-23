@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdisplay_pdb.c
+ * ligmadisplay_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpdisplay
- * @title: gimpdisplay
+ * SECTION: ligmadisplay
+ * @title: ligmadisplay
  * @short_description: Functions to create, delete and flush displays (views) on an image.
  *
  * Functions to create, delete and flush displays (views) on an image.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_display_id_is_valid:
+ * ligma_display_id_is_valid:
  * @display_id: The display ID to check.
  *
  * Returns TRUE if the display ID is valid.
@@ -50,70 +50,70 @@
  * Since: 3.0
  **/
 gboolean
-gimp_display_id_is_valid (gint display_id)
+ligma_display_id_is_valid (gint display_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean valid = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, display_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-display-id-is-valid",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-display-id-is-valid",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    valid = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return valid;
 }
 
 /**
- * gimp_display_new:
+ * ligma_display_new:
  * @image: The image.
  *
  * Create a new display for the specified image.
  *
  * Creates a new display for the specified image. If the image already
  * has a display, another is added. Multiple displays are handled
- * transparently by GIMP. The newly created display is returned and can
- * be subsequently destroyed with a call to gimp_display_delete(). This
- * procedure only makes sense for use with the GIMP UI, and will result
- * in an execution error if called when GIMP has no UI.
+ * transparently by LIGMA. The newly created display is returned and can
+ * be subsequently destroyed with a call to ligma_display_delete(). This
+ * procedure only makes sense for use with the LIGMA UI, and will result
+ * in an execution error if called when LIGMA has no UI.
  *
  * Returns: (transfer none): The new display.
  **/
-GimpDisplay *
-gimp_display_new (GimpImage *image)
+LigmaDisplay *
+ligma_display_new (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpDisplay *display = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaDisplay *display = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-display-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-display-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    display = GIMP_VALUES_GET_DISPLAY (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    display = LIGMA_VALUES_GET_DISPLAY (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return display;
 }
 
 /**
- * gimp_display_delete:
+ * ligma_display_delete:
  * @display: The display to delete.
  *
  * Delete the specified display.
@@ -127,30 +127,30 @@ gimp_display_new (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_display_delete (GimpDisplay *display)
+ligma_display_delete (LigmaDisplay *display)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DISPLAY, display,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DISPLAY, display,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-display-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-display-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_display_get_window_handle:
+ * ligma_display_get_window_handle:
  * @display: The display to get the window handle from.
  *
  * Get a handle to the native window for an image display.
@@ -166,31 +166,31 @@ gimp_display_delete (GimpDisplay *display)
  * Since: 2.4
  **/
 gint
-gimp_display_get_window_handle (GimpDisplay *display)
+ligma_display_get_window_handle (LigmaDisplay *display)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint window = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DISPLAY, display,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DISPLAY, display,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-display-get-window-handle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-display-get-window-handle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    window = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return window;
 }
 
 /**
- * gimp_display_present:
+ * ligma_display_present:
  * @display: The display to present.
  *
  * Present the specified display.
@@ -203,30 +203,30 @@ gimp_display_get_window_handle (GimpDisplay *display)
  * Since: 3.0
  **/
 gboolean
-gimp_display_present (GimpDisplay *display)
+ligma_display_present (LigmaDisplay *display)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DISPLAY, display,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DISPLAY, display,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-display-present",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-display-present",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_displays_flush:
+ * ligma_displays_flush:
  *
  * Flush all internal changes to the user interface
  *
@@ -238,29 +238,29 @@ gimp_display_present (GimpDisplay *display)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_displays_flush (void)
+ligma_displays_flush (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-displays-flush",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-displays-flush",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_displays_reconnect:
+ * ligma_displays_reconnect:
  * @old_image: The old image (must have at least one display).
  * @new_image: The new image (must not have a display).
  *
@@ -274,26 +274,26 @@ gimp_displays_flush (void)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_displays_reconnect (GimpImage *old_image,
-                         GimpImage *new_image)
+ligma_displays_reconnect (LigmaImage *old_image,
+                         LigmaImage *new_image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, old_image,
-                                          GIMP_TYPE_IMAGE, new_image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, old_image,
+                                          LIGMA_TYPE_IMAGE, new_image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-displays-reconnect",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-displays-reconnect",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

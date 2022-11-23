@@ -1,7 +1,7 @@
-## Makefile.am for gimp/data/gradients
+## Makefile.am for ligma/data/gradients
 
-gradientdatadir = $(gimpdatadir)/gradients
-obsoletegradientdatadir = $(gimpdatadir)/gradients/gimp-obsolete-files
+gradientdatadir = $(ligmadatadir)/gradients
+obsoletegradientdatadir = $(ligmadatadir)/gradients/ligma-obsolete-files
 
 gradientdata_DATA = \
 	Abstract_1.ggr				\

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
 #include "vectors-export-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _VectorsExportDialog VectorsExportDialog;
 
 struct _VectorsExportDialog
 {
-  GimpImage                 *image;
+  LigmaImage                 *image;
   gboolean                   active_only;
-  GimpVectorsExportCallback  callback;
+  LigmaVectorsExportCallback  callback;
   gpointer                   user_data;
 };
 
@@ -53,18 +53,18 @@ static void   vectors_export_dialog_response (GtkWidget           *widget,
 /*  public function  */
 
 GtkWidget *
-vectors_export_dialog_new (GimpImage                 *image,
+vectors_export_dialog_new (LigmaImage                 *image,
                            GtkWidget                 *parent,
                            GFile                     *export_folder,
                            gboolean                   active_only,
-                           GimpVectorsExportCallback  callback,
+                           LigmaVectorsExportCallback  callback,
                            gpointer                   user_data)
 {
   VectorsExportDialog *private;
   GtkWidget           *dialog;
   GtkWidget           *combo;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (export_folder == NULL || G_IS_FILE (export_folder),
                         NULL);
@@ -86,12 +86,12 @@ vectors_export_dialog_new (GimpImage                 *image,
                                         NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-vectors-export");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_window_set_screen (GTK_WINDOW (dialog),
                          gtk_widget_get_screen (parent));
@@ -118,15 +118,15 @@ vectors_export_dialog_new (GimpImage                 *image,
                     G_CALLBACK (vectors_export_dialog_response),
                     private);
 
-  combo = gimp_int_combo_box_new (_("Export the selected paths"),           TRUE,
+  combo = ligma_int_combo_box_new (_("Export the selected paths"),           TRUE,
                                   _("Export all paths from this image"), FALSE,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                  private->active_only);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), combo);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    G_CALLBACK (ligma_int_combo_box_get_active),
                     &private->active_only);
 
   return dialog;

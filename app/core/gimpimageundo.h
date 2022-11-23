@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,30 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_UNDO_H__
-#define __GIMP_IMAGE_UNDO_H__
+#ifndef __LIGMA_IMAGE_UNDO_H__
+#define __LIGMA_IMAGE_UNDO_H__
 
 
-#include "gimpundo.h"
+#include "ligmaundo.h"
 
 
-#define GIMP_TYPE_IMAGE_UNDO            (gimp_image_undo_get_type ())
-#define GIMP_IMAGE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_UNDO, GimpImageUndo))
-#define GIMP_IMAGE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_UNDO, GimpImageUndoClass))
-#define GIMP_IS_IMAGE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_UNDO))
-#define GIMP_IS_IMAGE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_UNDO))
-#define GIMP_IMAGE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_UNDO, GimpImageUndoClass))
+#define LIGMA_TYPE_IMAGE_UNDO            (ligma_image_undo_get_type ())
+#define LIGMA_IMAGE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_UNDO, LigmaImageUndo))
+#define LIGMA_IMAGE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_UNDO, LigmaImageUndoClass))
+#define LIGMA_IS_IMAGE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_UNDO))
+#define LIGMA_IS_IMAGE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_UNDO))
+#define LIGMA_IMAGE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_UNDO, LigmaImageUndoClass))
 
 
-typedef struct _GimpImageUndo      GimpImageUndo;
-typedef struct _GimpImageUndoClass GimpImageUndoClass;
+typedef struct _LigmaImageUndo      LigmaImageUndo;
+typedef struct _LigmaImageUndoClass LigmaImageUndoClass;
 
-struct _GimpImageUndo
+struct _LigmaImageUndo
 {
-  GimpUndo           parent_instance;
+  LigmaUndo           parent_instance;
 
-  GimpImageBaseType  base_type;
-  GimpPrecision      precision;
+  LigmaImageBaseType  base_type;
+  LigmaPrecision      precision;
   gint               width;
   gint               height;
   gint               previous_origin_x;
@@ -47,23 +47,23 @@ struct _GimpImageUndo
   gint               previous_height;
   gdouble            xresolution;
   gdouble            yresolution;
-  GimpUnit           resolution_unit;
-  GimpGrid          *grid;
+  LigmaUnit           resolution_unit;
+  LigmaGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
-  GimpColorProfile  *hidden_profile;
-  GimpMetadata      *metadata;
+  LigmaColorProfile  *hidden_profile;
+  LigmaMetadata      *metadata;
   gchar             *parasite_name;
-  GimpParasite      *parasite;
+  LigmaParasite      *parasite;
 };
 
-struct _GimpImageUndoClass
+struct _LigmaImageUndoClass
 {
-  GimpUndoClass  parent_class;
+  LigmaUndoClass  parent_class;
 };
 
 
-GType   gimp_image_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_image_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_IMAGE_UNDO_H__ */
+#endif /* __LIGMA_IMAGE_UNDO_H__ */

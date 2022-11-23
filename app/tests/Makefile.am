@@ -10,17 +10,17 @@ endif
 
 SUBDIRS = \
 	files		\
-	gimpdir		\
-	gimpdir-empty
+	ligmadir		\
+	ligmadir-empty
 
-# Don't mess with user's gimpdir. Pass in the abs top srcdir to the
-# tests through an environment variable so they can set the gimpdir
+# Don't mess with user's ligmadir. Pass in the abs top srcdir to the
+# tests through an environment variable so they can set the ligmadir
 # they want to use
 TESTS_ENVIRONMENT = \
-	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@ \
-	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@ \
-	GIMP_TESTING_PLUGINDIRS=@abs_top_builddir@/plug-ins/common \
-	GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl
+	LIGMA_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@ \
+	LIGMA_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@ \
+	LIGMA_TESTING_PLUGINDIRS=@abs_top_builddir@/plug-ins/common \
+	LIGMA_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl
 
 # Run tests with xvfb-run if available
 if HAVE_XVFB_RUN
@@ -30,7 +30,7 @@ endif
 
 TESTS = \
 	test-core					\
-	test-gimpidtable				\
+	test-ligmaidtable				\
 	test-save-and-export				\
 	test-session-2-8-compatibility-multi-window	\
 	test-session-2-8-compatibility-single-window	\
@@ -42,22 +42,22 @@ TESTS = \
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
 
-$(TESTS): gimpdir-output gimp-test-icon-theme
+$(TESTS): ligmadir-output ligma-test-icon-theme
 
-noinst_LIBRARIES = libgimpapptestutils.a
-libgimpapptestutils_a_SOURCES = \
-	gimp-app-test-utils.c		\
-	gimp-app-test-utils.h		\
-	gimp-test-session-utils.c	\
-	gimp-test-session-utils.h
+noinst_LIBRARIES = libligmaapptestutils.a
+libligmaapptestutils_a_SOURCES = \
+	ligma-app-test-utils.c		\
+	ligma-app-test-utils.h		\
+	ligma-test-session-utils.c	\
+	ligma-test-session-utils.h
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligmathumb = $(top_builddir)/libligmathumb/libligmathumb-$(LIGMA_API_VERSION).la
 
 if PLATFORM_LINUX
 libdl = -ldl
@@ -79,18 +79,18 @@ AM_CPPFLAGS = \
 
 # We need this due to circular dependencies
 AM_LDFLAGS = \
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_config_param_spec_duplicate		\
-	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)ligma_config_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)ligma_operations_init			\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_procs_register	\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
+	-Wl,-u,$(SYMPREFIX)ligma_pdb_compat_procs_register	\
+	-Wl,-u,$(SYMPREFIX)ligma_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)ligma_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gui_init				\
-	-Wl,-u,$(SYMPREFIX)gimp_tool_cursors_get_resource	\
-	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
+	-Wl,-u,$(SYMPREFIX)ligma_tool_cursors_get_resource	\
+	-Wl,-u,$(SYMPREFIX)ligma_lebl_dialog
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
@@ -121,15 +121,15 @@ LDADD = \
 	../operations/libappoperations.a				\
 	../operations/layer-modes/libapplayermodes.a			\
 	../operations/layer-modes-legacy/libapplayermodeslegacy.a	\
-	libgimpapptestutils.a						\
-	$(libgimpwidgets)						\
-	$(libgimpconfig)						\
-	$(libgimpmath)							\
-	$(libgimpthumb)							\
-	$(libgimpcolor)							\
-	$(libgimpmodule)						\
-	$(libgimpbase)							\
-	$(GIMPICONRC)							\
+	libligmaapptestutils.a						\
+	$(libligmawidgets)						\
+	$(libligmaconfig)						\
+	$(libligmamath)							\
+	$(libligmathumb)							\
+	$(libligmacolor)							\
+	$(libligmamodule)						\
+	$(libligmabase)							\
+	$(LIGMAICONRC)							\
 	$(GTK_LIBS)							\
 	$(APPSTREAM_GLIB_LIBS)						\
 	$(GTK_MAC_INTEGRATION_LIBS)					\
@@ -153,20 +153,20 @@ LDADD = \
 	$(libm)								\
 	$(libdl)
 
-gimpdir-output:
-	mkdir -p gimpdir-output
-	mkdir -p gimpdir-output/brushes
-	mkdir -p gimpdir-output/patterns
-	mkdir -p gimpdir-output/gradients
+ligmadir-output:
+	mkdir -p ligmadir-output
+	mkdir -p ligmadir-output/brushes
+	mkdir -p ligmadir-output/patterns
+	mkdir -p ligmadir-output/gradients
 
-gimp-test-icon-theme:
-	mkdir -p $$(echo $$(find $(top_srcdir)/icons/Color -name [0-9][0-9] -type d | sed 's@.*/\([0-9][0-9]\)$$@gimp-test-icon-theme/hicolor/\1x\1@'))
+ligma-test-icon-theme:
+	mkdir -p $$(echo $$(find $(top_srcdir)/icons/Color -name [0-9][0-9] -type d | sed 's@.*/\([0-9][0-9]\)$$@ligma-test-icon-theme/hicolor/\1x\1@'))
 	for dir in $$(echo $$(find $(top_srcdir)/icons/Color/ -name [0-9][0-9] -type d | sed 's@.*/\([0-9][0-9]\)$$@\1@')); do \
-		(cd gimp-test-icon-theme/hicolor/$${dir}x$${dir}/ && \
+		(cd ligma-test-icon-theme/hicolor/$${dir}x$${dir}/ && \
 		$(LN_S) $(abs_top_srcdir)/icons/Color/$${dir} apps); \
 	done
-	(cd gimp-test-icon-theme/hicolor && $(LN_S) $(abs_top_srcdir)/icons/Color/index.theme index.theme)
+	(cd ligma-test-icon-theme/hicolor && $(LN_S) $(abs_top_srcdir)/icons/Color/index.theme index.theme)
 
 clean-local:
-	rm -rf gimpdir-output
-	rm -fr gimp-test-icon-theme
+	rm -rf ligmadir-output
+	rm -fr ligma-test-icon-theme

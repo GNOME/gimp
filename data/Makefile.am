@@ -1,4 +1,4 @@
-## Makefile.am for gimp/data
+## Makefile.am for ligma/data
 
 SUBDIRS = \
 	brushes		\
@@ -13,12 +13,12 @@ SUBDIRS = \
 	tags		\
 	tool-presets
 
-fontdir = $(gimpdatadir)/fonts
+fontdir = $(ligmadatadir)/fonts
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(fontdir)
-	echo '[package]' > $(DESTDIR)$(gimpdatadir)/gimp-release
-	echo 'revision=@GIMP_PACKAGE_REVISION@' >> $(DESTDIR)$(gimpdatadir)/gimp-release
+	echo '[package]' > $(DESTDIR)$(ligmadatadir)/ligma-release
+	echo 'revision=@LIGMA_PACKAGE_REVISION@' >> $(DESTDIR)$(ligmadatadir)/ligma-release
 
 uninstall-local:
-	rm -f $(DESTDIR)$(gimpdatadir)/gimp-release
+	rm -f $(DESTDIR)$(ligmadatadir)/ligma-release

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,28 +20,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpasync.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawable-histogram.h"
-#include "core/gimphistogram.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmaasync.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadrawable-histogram.h"
+#include "core/ligmahistogram.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdocked.h"
-#include "gimphelp-ids.h"
-#include "gimphistogrambox.h"
-#include "gimphistogrameditor.h"
-#include "gimphistogramview.h"
-#include "gimppropwidgets.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpwidgets-utils.h"
+#include "ligmadocked.h"
+#include "ligmahelp-ids.h"
+#include "ligmahistogrambox.h"
+#include "ligmahistogrameditor.h"
+#include "ligmahistogramview.h"
+#include "ligmapropwidgets.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -51,84 +51,84 @@ enum
 };
 
 
-static void     gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
+static void     ligma_histogram_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void     gimp_histogram_editor_set_property  (GObject            *object,
+static void     ligma_histogram_editor_set_property  (GObject            *object,
                                                      guint               property_id,
                                                      const GValue       *value,
                                                      GParamSpec         *pspec);
-static void     gimp_histogram_editor_get_property  (GObject            *object,
+static void     ligma_histogram_editor_get_property  (GObject            *object,
                                                      guint               property_id,
                                                      GValue             *value,
                                                      GParamSpec         *pspec);
 
-static void     gimp_histogram_editor_set_aux_info  (GimpDocked          *docked,
+static void     ligma_histogram_editor_set_aux_info  (LigmaDocked          *docked,
                                                      GList               *aux_info);
-static GList  * gimp_histogram_editor_get_aux_info  (GimpDocked          *docked);
+static GList  * ligma_histogram_editor_get_aux_info  (LigmaDocked          *docked);
 
-static void     gimp_histogram_editor_set_image     (GimpImageEditor     *editor,
-                                                     GimpImage           *image);
-static void     gimp_histogram_editor_layer_changed (GimpImage           *image,
-                                                     GimpHistogramEditor *editor);
-static void     gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
+static void     ligma_histogram_editor_set_image     (LigmaImageEditor     *editor,
+                                                     LigmaImage           *image);
+static void     ligma_histogram_editor_layer_changed (LigmaImage           *image,
+                                                     LigmaHistogramEditor *editor);
+static void     ligma_histogram_editor_frozen_update (LigmaHistogramEditor *editor,
                                                      const GParamSpec    *pspec);
-static void     gimp_histogram_editor_buffer_update (GimpHistogramEditor *editor,
+static void     ligma_histogram_editor_buffer_update (LigmaHistogramEditor *editor,
                                                      const GParamSpec    *pspec);
-static void     gimp_histogram_editor_update        (GimpHistogramEditor *editor);
+static void     ligma_histogram_editor_update        (LigmaHistogramEditor *editor);
 
-static gboolean gimp_histogram_editor_idle_update   (GimpHistogramEditor *editor);
-static gboolean gimp_histogram_menu_sensitivity     (gint                 value,
+static gboolean ligma_histogram_editor_idle_update   (LigmaHistogramEditor *editor);
+static gboolean ligma_histogram_menu_sensitivity     (gint                 value,
                                                      gpointer             data);
-static void     gimp_histogram_editor_menu_update   (GimpHistogramEditor *editor);
-static void     gimp_histogram_editor_name_update   (GimpHistogramEditor *editor);
-static void     gimp_histogram_editor_info_update   (GimpHistogramEditor *editor);
+static void     ligma_histogram_editor_menu_update   (LigmaHistogramEditor *editor);
+static void     ligma_histogram_editor_name_update   (LigmaHistogramEditor *editor);
+static void     ligma_histogram_editor_info_update   (LigmaHistogramEditor *editor);
 
-static gboolean gimp_histogram_editor_view_draw     (GimpHistogramEditor *editor,
+static gboolean ligma_histogram_editor_view_draw     (LigmaHistogramEditor *editor,
                                                      cairo_t             *cr);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
-                         GIMP_TYPE_IMAGE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_histogram_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaHistogramEditor, ligma_histogram_editor,
+                         LIGMA_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_histogram_editor_docked_iface_init))
 
-#define parent_class gimp_histogram_editor_parent_class
+#define parent_class ligma_histogram_editor_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_histogram_editor_class_init (GimpHistogramEditorClass *klass)
+ligma_histogram_editor_class_init (LigmaHistogramEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
-  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  LigmaImageEditorClass *image_editor_class = LIGMA_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->set_property    = gimp_histogram_editor_set_property;
-  object_class->get_property    = gimp_histogram_editor_get_property;
+  object_class->set_property    = ligma_histogram_editor_set_property;
+  object_class->get_property    = ligma_histogram_editor_get_property;
 
-  image_editor_class->set_image = gimp_histogram_editor_set_image;
+  image_editor_class->set_image = ligma_histogram_editor_set_image;
 
   g_object_class_install_property (object_class, PROP_TRC,
                                    g_param_spec_enum ("trc",
                                                       _("Linear/Perceptual"),
                                                       NULL,
-                                                      GIMP_TYPE_TRC_TYPE,
-                                                      GIMP_TRC_LINEAR,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_TRC_TYPE,
+                                                      LIGMA_TRC_LINEAR,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_histogram_editor_init (GimpHistogramEditor *editor)
+ligma_histogram_editor_init (LigmaHistogramEditor *editor)
 {
-  GimpHistogramView *view;
+  LigmaHistogramView *view;
   GtkWidget         *hbox;
   GtkWidget         *label;
   GtkWidget         *menu;
   GtkWidget         *grid;
   gint               i;
 
-  const gchar *gimp_histogram_editor_labels[] =
+  const gchar *ligma_histogram_editor_labels[] =
     {
       N_("Mean:"),
       N_("Std dev:"),
@@ -138,38 +138,38 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       N_("Percentile:")
     };
 
-  editor->box = gimp_histogram_box_new ();
+  editor->box = ligma_histogram_box_new ();
 
-  gimp_editor_set_show_name (GIMP_EDITOR (editor), TRUE);
+  ligma_editor_set_show_name (LIGMA_EDITOR (editor), TRUE);
 
-  view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  editor->menu = menu = gimp_prop_enum_combo_box_new (G_OBJECT (view),
+  editor->menu = menu = ligma_prop_enum_combo_box_new (G_OBJECT (view),
                                                       "histogram-channel",
                                                       0, 0);
-  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                       "gimp-channel");
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (editor->menu),
-                                      gimp_histogram_menu_sensitivity,
+  ligma_enum_combo_box_set_icon_prefix (LIGMA_ENUM_COMBO_BOX (menu),
+                                       "ligma-channel");
+  ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (editor->menu),
+                                      ligma_histogram_menu_sensitivity,
                                       editor, NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (editor->menu),
                                  view->channel);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
-  gimp_help_set_help_data (editor->menu,
+  ligma_help_set_help_data (editor->menu,
                            _("Histogram channel"), NULL);
 
-  menu = gimp_prop_enum_icon_box_new (G_OBJECT (view),
-                                      "histogram-scale", "gimp-histogram",
+  menu = ligma_prop_enum_icon_box_new (G_OBJECT (view),
+                                      "histogram-scale", "ligma-histogram",
                                       0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
-  menu = gimp_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
-                                      "gimp-color-space",
+  menu = ligma_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
+                                      "ligma-color-space",
                                       -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
@@ -177,14 +177,14 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_widget_show (GTK_WIDGET (editor->box));
 
   g_signal_connect_swapped (view, "range-changed",
-                            G_CALLBACK (gimp_histogram_editor_info_update),
+                            G_CALLBACK (ligma_histogram_editor_info_update),
                             editor);
   g_signal_connect_swapped (view, "notify::histogram-channel",
-                            G_CALLBACK (gimp_histogram_editor_info_update),
+                            G_CALLBACK (ligma_histogram_editor_info_update),
                             editor);
 
   g_signal_connect_swapped (view, "draw",
-                            G_CALLBACK (gimp_histogram_editor_view_draw),
+                            G_CALLBACK (ligma_histogram_editor_view_draw),
                             editor);
 
   grid = gtk_grid_new ();
@@ -197,8 +197,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gint x = (i / 3) * 2;
       gint y = (i % 3);
 
-      label = gtk_label_new (gettext (gimp_histogram_editor_labels[i]));
-      gimp_label_set_attributes (GTK_LABEL (label),
+      label = gtk_label_new (gettext (ligma_histogram_editor_labels[i]));
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
@@ -213,7 +213,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                               "yalign",      0.5,
                               "width-chars", i > 2 ? 9 : 5,
                               NULL);
-      gimp_label_set_attributes (GTK_LABEL (editor->labels[i]),
+      ligma_label_set_attributes (GTK_LABEL (editor->labels[i]),
                                  PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                  -1);
       gtk_grid_attach (GTK_GRID (grid), label, x + 1, y, 1, 1);
@@ -222,25 +222,25 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 }
 
 static void
-gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+ligma_histogram_editor_docked_iface_init (LigmaDockedInterface *docked_iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (docked_iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  docked_iface->set_aux_info = gimp_histogram_editor_set_aux_info;
-  docked_iface->get_aux_info = gimp_histogram_editor_get_aux_info;
+  docked_iface->set_aux_info = ligma_histogram_editor_set_aux_info;
+  docked_iface->get_aux_info = ligma_histogram_editor_get_aux_info;
 }
 
 static void
-gimp_histogram_editor_set_property (GObject      *object,
+ligma_histogram_editor_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (object);
-  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramEditor *editor = LIGMA_HISTOGRAM_EDITOR (object);
+  LigmaHistogramView   *view   = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
   switch (property_id)
     {
@@ -250,16 +250,16 @@ gimp_histogram_editor_set_property (GObject      *object,
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
-          gimp_histogram_view_set_histogram (view, NULL);
+          ligma_histogram_view_set_histogram (view, NULL);
         }
 
       if (editor->bg_histogram)
         {
           g_clear_object (&editor->bg_histogram);
-          gimp_histogram_view_set_background (view, NULL);
+          ligma_histogram_view_set_background (view, NULL);
         }
 
-      gimp_histogram_editor_update (editor);
+      ligma_histogram_editor_update (editor);
       break;
 
    default:
@@ -269,12 +269,12 @@ gimp_histogram_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_histogram_editor_get_property (GObject    *object,
+ligma_histogram_editor_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (object);
+  LigmaHistogramEditor *editor = LIGMA_HISTOGRAM_EDITOR (object);
 
   switch (property_id)
     {
@@ -289,42 +289,42 @@ gimp_histogram_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_histogram_editor_set_aux_info (GimpDocked *docked,
+ligma_histogram_editor_set_aux_info (LigmaDocked *docked,
                                     GList      *aux_info)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (docked);
-  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramEditor *editor = LIGMA_HISTOGRAM_EDITOR (docked);
+  LigmaHistogramView   *view   = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
-  gimp_session_info_aux_set_props (G_OBJECT (view), aux_info,
+  ligma_session_info_aux_set_props (G_OBJECT (view), aux_info,
                                    "histogram-channel",
                                    "histogram-scale",
                                    NULL);
 }
 
 static GList *
-gimp_histogram_editor_get_aux_info (GimpDocked *docked)
+ligma_histogram_editor_get_aux_info (LigmaDocked *docked)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (docked);
-  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramEditor *editor = LIGMA_HISTOGRAM_EDITOR (docked);
+  LigmaHistogramView   *view   = LIGMA_HISTOGRAM_BOX (editor->box)->view;
   GList               *aux_info;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
   return g_list_concat (aux_info,
-                        gimp_session_info_aux_new_from_props (G_OBJECT (view),
+                        ligma_session_info_aux_new_from_props (G_OBJECT (view),
                                                               "histogram-channel",
                                                               "histogram-scale",
                                                               NULL));
 }
 
 static void
-gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
-                                 GimpImage       *image)
+ligma_histogram_editor_set_image (LigmaImageEditor *image_editor,
+                                 LigmaImage       *image)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (image_editor);
-  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramEditor *editor = LIGMA_HISTOGRAM_EDITOR (image_editor);
+  LigmaHistogramView   *view   = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
   if (image_editor->image)
     {
@@ -337,86 +337,86 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       editor->update_pending = FALSE;
 
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_histogram_editor_update,
+                                            ligma_histogram_editor_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_histogram_editor_layer_changed,
+                                            ligma_histogram_editor_layer_changed,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_histogram_editor_menu_update,
+                                            ligma_histogram_editor_menu_update,
                                             editor);
 
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
-          gimp_histogram_view_set_histogram (view, NULL);
+          ligma_histogram_view_set_histogram (view, NULL);
         }
 
       if (editor->bg_histogram)
         {
           g_clear_object (&editor->bg_histogram);
-          gimp_histogram_view_set_background (view, NULL);
+          ligma_histogram_view_set_background (view, NULL);
         }
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
+  LIGMA_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
   if (image)
     {
       g_signal_connect_object (image, "mode-changed",
-                               G_CALLBACK (gimp_histogram_editor_menu_update),
+                               G_CALLBACK (ligma_histogram_editor_menu_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (image, "selected-layers-changed",
-                               G_CALLBACK (gimp_histogram_editor_layer_changed),
+                               G_CALLBACK (ligma_histogram_editor_layer_changed),
                                editor, 0);
       g_signal_connect_object (image, "mask-changed",
-                               G_CALLBACK (gimp_histogram_editor_update),
+                               G_CALLBACK (ligma_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
     }
 
-  gimp_histogram_editor_layer_changed (image, editor);
+  ligma_histogram_editor_layer_changed (image, editor);
 }
 
 GtkWidget *
-gimp_histogram_editor_new (void)
+ligma_histogram_editor_new (void)
 {
-  return g_object_new (GIMP_TYPE_HISTOGRAM_EDITOR, NULL);
+  return g_object_new (LIGMA_TYPE_HISTOGRAM_EDITOR, NULL);
 }
 
 static void
-gimp_histogram_editor_layer_changed (GimpImage           *image,
-                                     GimpHistogramEditor *editor)
+ligma_histogram_editor_layer_changed (LigmaImage           *image,
+                                     LigmaHistogramEditor *editor)
 {
   if (editor->drawable)
     {
-      GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+      LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
-          gimp_histogram_view_set_histogram (view, NULL);
+          ligma_histogram_view_set_histogram (view, NULL);
         }
 
       if (editor->bg_histogram)
         {
           g_clear_object (&editor->bg_histogram);
-          gimp_histogram_view_set_background (view, NULL);
+          ligma_histogram_view_set_background (view, NULL);
         }
 
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            gimp_histogram_editor_name_update,
+                                            ligma_histogram_editor_name_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            gimp_histogram_editor_menu_update,
+                                            ligma_histogram_editor_menu_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            gimp_histogram_editor_update,
+                                            ligma_histogram_editor_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            gimp_histogram_editor_buffer_update,
+                                            ligma_histogram_editor_buffer_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            gimp_histogram_editor_frozen_update,
+                                            ligma_histogram_editor_frozen_update,
                                             editor);
       editor->drawable = NULL;
     }
@@ -425,7 +425,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
     {
       GList *layers;
 
-      layers = gimp_image_get_selected_layers (image);
+      layers = ligma_image_get_selected_layers (image);
       /*
        * TODO: right now, we only support making an histogram for a single
        * layer. In future, it would be nice to have the ability to make the
@@ -437,27 +437,27 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
       editor->drawable = (g_list_length (layers) == 1 ? layers->data : NULL);
     }
 
-  gimp_histogram_editor_menu_update (editor);
+  ligma_histogram_editor_menu_update (editor);
 
   if (editor->drawable)
     {
       g_signal_connect_object (editor->drawable, "notify::frozen",
-                               G_CALLBACK (gimp_histogram_editor_frozen_update),
+                               G_CALLBACK (ligma_histogram_editor_frozen_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "notify::buffer",
-                               G_CALLBACK (gimp_histogram_editor_buffer_update),
+                               G_CALLBACK (ligma_histogram_editor_buffer_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "update",
-                               G_CALLBACK (gimp_histogram_editor_update),
+                               G_CALLBACK (ligma_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "alpha-changed",
-                               G_CALLBACK (gimp_histogram_editor_menu_update),
+                               G_CALLBACK (ligma_histogram_editor_menu_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "name-changed",
-                               G_CALLBACK (gimp_histogram_editor_name_update),
+                               G_CALLBACK (ligma_histogram_editor_name_update),
                                editor, G_CONNECT_SWAPPED);
 
-      gimp_histogram_editor_buffer_update (editor, NULL);
+      ligma_histogram_editor_buffer_update (editor, NULL);
     }
   else if (editor->histogram)
     {
@@ -465,87 +465,87 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
       gtk_widget_queue_draw (GTK_WIDGET (editor->box));
     }
 
-  gimp_histogram_editor_info_update (editor);
-  gimp_histogram_editor_name_update (editor);
+  ligma_histogram_editor_info_update (editor);
+  ligma_histogram_editor_name_update (editor);
 }
 
 static void
-gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
-                                                GimpHistogramEditor *editor)
+ligma_histogram_editor_calculate_async_callback (LigmaAsync           *async,
+                                                LigmaHistogramEditor *editor)
 {
   editor->calculate_async = NULL;
 
-  if (gimp_async_is_finished (async) && editor->histogram)
+  if (ligma_async_is_finished (async) && editor->histogram)
     {
       if (editor->bg_pending)
         {
-          GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+          LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
-          editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);
+          editor->bg_histogram = ligma_histogram_duplicate (editor->histogram);
 
-          gimp_histogram_view_set_background (view, editor->bg_histogram);
+          ligma_histogram_view_set_background (view, editor->bg_histogram);
         }
 
-      gimp_histogram_editor_info_update (editor);
+      ligma_histogram_editor_info_update (editor);
     }
 
   editor->bg_pending = FALSE;
 
   if (editor->update_pending)
-    gimp_histogram_editor_update (editor);
+    ligma_histogram_editor_update (editor);
 }
 
 static gboolean
-gimp_histogram_editor_validate (GimpHistogramEditor *editor)
+ligma_histogram_editor_validate (LigmaHistogramEditor *editor)
 {
   if (editor->recompute || ! editor->histogram)
     {
       if (editor->drawable &&
           /* avoid calculating the histogram of a detached layer.  this can
-           * happen during gimp_image_remove_layer(), as a result of a pending
+           * happen during ligma_image_remove_layer(), as a result of a pending
            * "expose-event" signal (handled in
-           * gimp_histogram_editor_view_expose()) executed through
+           * ligma_histogram_editor_view_expose()) executed through
            * gtk_tree_view_clamp_node_visible(), as a result of the
-           * GimpLayerTreeView in the Layers dialog receiving the image's
+           * LigmaLayerTreeView in the Layers dialog receiving the image's
            * "selected-layers-changed" signal before us.  See bug #795716,
            * comment 6.
            */
-          gimp_item_is_attached (GIMP_ITEM (editor->drawable)))
+          ligma_item_is_attached (LIGMA_ITEM (editor->drawable)))
         {
-          GimpAsync *async;
+          LigmaAsync *async;
 
           if (! editor->histogram)
             {
-              GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+              LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
-              editor->histogram = gimp_histogram_new (editor->trc);
+              editor->histogram = ligma_histogram_new (editor->trc);
 
-              gimp_histogram_clear_values (
+              ligma_histogram_clear_values (
                 editor->histogram,
                 babl_format_get_n_components (
-                  gimp_drawable_get_format (editor->drawable)));
+                  ligma_drawable_get_format (editor->drawable)));
 
-              gimp_histogram_view_set_histogram (view, editor->histogram);
+              ligma_histogram_view_set_histogram (view, editor->histogram);
             }
 
-          async = gimp_drawable_calculate_histogram_async (editor->drawable,
+          async = ligma_drawable_calculate_histogram_async (editor->drawable,
                                                            editor->histogram,
                                                            TRUE);
 
           editor->calculate_async = async;
 
-          gimp_async_add_callback (
+          ligma_async_add_callback (
             async,
-            (GimpAsyncCallback) gimp_histogram_editor_calculate_async_callback,
+            (LigmaAsyncCallback) ligma_histogram_editor_calculate_async_callback,
             editor);
 
           g_object_unref (async);
         }
       else if (editor->histogram)
         {
-          gimp_histogram_clear_values (editor->histogram, 0);
+          ligma_histogram_clear_values (editor->histogram, 0);
 
-          gimp_histogram_editor_info_update (editor);
+          ligma_histogram_editor_info_update (editor);
         }
 
       editor->recompute = FALSE;
@@ -561,12 +561,12 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 }
 
 static void
-gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
+ligma_histogram_editor_frozen_update (LigmaHistogramEditor *editor,
                                      const GParamSpec    *pspec)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
-  if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (editor->drawable)))
+  if (ligma_viewable_preview_is_frozen (LIGMA_VIEWABLE (editor->drawable)))
     {
       /* Only do the background histogram if the histogram is visible.
        * This is a workaround for the fact that recalculating the
@@ -581,10 +581,10 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
             {
               g_source_remove (editor->idle_id);
 
-              gimp_histogram_editor_idle_update (editor);
+              ligma_histogram_editor_idle_update (editor);
             }
 
-          if (gimp_histogram_editor_validate (editor))
+          if (ligma_histogram_editor_validate (editor))
             {
               if (editor->calculate_async)
                 {
@@ -592,10 +592,10 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
                 }
               else
                 {
-                  editor->bg_histogram = gimp_histogram_duplicate (
+                  editor->bg_histogram = ligma_histogram_duplicate (
                     editor->histogram);
 
-                  gimp_histogram_view_set_background (view,
+                  ligma_histogram_view_set_background (view,
                                                       editor->bg_histogram);
                 }
             }
@@ -606,27 +606,27 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
       if (editor->bg_histogram)
         {
           g_clear_object (&editor->bg_histogram);
-          gimp_histogram_view_set_background (view, NULL);
+          ligma_histogram_view_set_background (view, NULL);
         }
 
       editor->bg_pending = FALSE;
 
       if (editor->update_pending)
-        gimp_async_cancel_and_wait (editor->calculate_async);
+        ligma_async_cancel_and_wait (editor->calculate_async);
     }
 }
 
 static void
-gimp_histogram_editor_buffer_update (GimpHistogramEditor *editor,
+ligma_histogram_editor_buffer_update (LigmaHistogramEditor *editor,
                                      const GParamSpec    *pspec)
 {
   g_object_set (editor,
-                "trc", gimp_drawable_get_trc (editor->drawable),
+                "trc", ligma_drawable_get_trc (editor->drawable),
                 NULL);
 }
 
 static void
-gimp_histogram_editor_update (GimpHistogramEditor *editor)
+ligma_histogram_editor_update (LigmaHistogramEditor *editor)
 {
   if (editor->bg_pending)
     {
@@ -638,7 +638,7 @@ gimp_histogram_editor_update (GimpHistogramEditor *editor)
   editor->update_pending = FALSE;
 
   if (editor->calculate_async)
-    gimp_async_cancel_and_wait (editor->calculate_async);
+    ligma_async_cancel_and_wait (editor->calculate_async);
 
   if (editor->idle_id)
     g_source_remove (editor->idle_id);
@@ -646,13 +646,13 @@ gimp_histogram_editor_update (GimpHistogramEditor *editor)
   editor->idle_id =
     g_timeout_add_full (G_PRIORITY_LOW,
                         200,
-                        (GSourceFunc) gimp_histogram_editor_idle_update,
+                        (GSourceFunc) ligma_histogram_editor_idle_update,
                         editor,
                         NULL);
 }
 
 static gboolean
-gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
+ligma_histogram_editor_idle_update (LigmaHistogramEditor *editor)
 {
   editor->idle_id = 0;
 
@@ -666,48 +666,48 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_menu_sensitivity (gint      value,
+ligma_histogram_menu_sensitivity (gint      value,
                                  gpointer  data)
 {
-  GimpHistogramEditor  *editor  = GIMP_HISTOGRAM_EDITOR (data);
-  GimpHistogramChannel  channel = value;
+  LigmaHistogramEditor  *editor  = LIGMA_HISTOGRAM_EDITOR (data);
+  LigmaHistogramChannel  channel = value;
 
   if (editor->histogram)
-    return gimp_histogram_has_channel (editor->histogram, channel);
+    return ligma_histogram_has_channel (editor->histogram, channel);
 
   return FALSE;
 }
 
 static void
-gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
+ligma_histogram_editor_menu_update (LigmaHistogramEditor *editor)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
 
   gtk_widget_queue_draw (editor->menu);
 
   if (editor->histogram &&
-      ! gimp_histogram_has_channel (editor->histogram, view->channel))
+      ! ligma_histogram_has_channel (editor->histogram, view->channel))
     {
-      gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+      ligma_histogram_view_set_channel (view, LIGMA_HISTOGRAM_VALUE);
     }
 }
 
 static void
-gimp_histogram_editor_name_update (GimpHistogramEditor *editor)
+ligma_histogram_editor_name_update (LigmaHistogramEditor *editor)
 {
   const gchar *name = NULL;
 
   if (editor->drawable)
-    name = gimp_object_get_name (editor->drawable);
+    name = ligma_object_get_name (editor->drawable);
 
-  gimp_editor_set_name (GIMP_EDITOR (editor), name);
+  ligma_editor_set_name (LIGMA_EDITOR (editor), name);
 }
 
 static void
-gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
+ligma_histogram_editor_info_update (LigmaHistogramEditor *editor)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
-  GimpHistogram     *hist = editor->histogram;
+  LigmaHistogramView *view = LIGMA_HISTOGRAM_BOX (editor->box)->view;
+  LigmaHistogram     *hist = editor->histogram;
 
   if (hist)
     {
@@ -716,24 +716,24 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
       gdouble count;
       gchar   text[12];
 
-      n_bins = gimp_histogram_n_bins (hist);
+      n_bins = ligma_histogram_n_bins (hist);
 
-      pixels = gimp_histogram_get_count (hist, view->channel, 0, n_bins - 1);
-      count  = gimp_histogram_get_count (hist, view->channel,
+      pixels = ligma_histogram_get_count (hist, view->channel, 0, n_bins - 1);
+      count  = ligma_histogram_get_count (hist, view->channel,
                                          view->start, view->end);
 
       g_snprintf (text, sizeof (text), "%.3f",
-                  gimp_histogram_get_mean (hist, view->channel,
+                  ligma_histogram_get_mean (hist, view->channel,
                                            view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[0]), text);
 
       g_snprintf (text, sizeof (text), "%.3f",
-                  gimp_histogram_get_std_dev (hist, view->channel,
+                  ligma_histogram_get_std_dev (hist, view->channel,
                                               view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[1]), text);
 
       g_snprintf (text, sizeof (text), "%.3f",
-                  gimp_histogram_get_median  (hist, view->channel,
+                  ligma_histogram_get_median  (hist, view->channel,
                                               view->start,
                                               view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);
@@ -759,10 +759,10 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_view_draw (GimpHistogramEditor *editor,
+ligma_histogram_editor_view_draw (LigmaHistogramEditor *editor,
                                  cairo_t             *cr)
 {
-  gimp_histogram_editor_validate (editor);
+  ligma_histogram_editor_validate (editor);
 
   return FALSE;
 }

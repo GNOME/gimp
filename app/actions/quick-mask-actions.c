@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,71 +20,71 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimage-quick-mask.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-quick-mask.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "quick-mask-actions.h"
 #include "quick-mask-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry quick_mask_actions[] =
+static const LigmaActionEntry quick_mask_actions[] =
 {
   { "quick-mask-popup", NULL,
     NC_("quick-mask-action", "Quick Mask Menu"), NULL, NULL, NULL,
-    GIMP_HELP_QUICK_MASK },
+    LIGMA_HELP_QUICK_MASK },
 
   { "quick-mask-configure", NULL,
     NC_("quick-mask-action", "_Configure Color and Opacity..."), NULL, NULL,
     quick_mask_configure_cmd_callback,
-    GIMP_HELP_QUICK_MASK_EDIT }
+    LIGMA_HELP_QUICK_MASK_EDIT }
 };
 
-static const GimpToggleActionEntry quick_mask_toggle_actions[] =
+static const LigmaToggleActionEntry quick_mask_toggle_actions[] =
 {
-  { "quick-mask-toggle", GIMP_ICON_QUICK_MASK_ON,
+  { "quick-mask-toggle", LIGMA_ICON_QUICK_MASK_ON,
     NC_("quick-mask-action", "Toggle _Quick Mask"), "<shift>Q",
     NC_("quick-mask-action", "Toggle Quick Mask on/off"),
     quick_mask_toggle_cmd_callback,
     FALSE,
-    GIMP_HELP_QUICK_MASK_TOGGLE }
+    LIGMA_HELP_QUICK_MASK_TOGGLE }
 };
 
-static const GimpRadioActionEntry quick_mask_invert_actions[] =
+static const LigmaRadioActionEntry quick_mask_invert_actions[] =
 {
   { "quick-mask-invert-on", NULL,
     NC_("quick-mask-action", "Mask _Selected Areas"), NULL, NULL,
     TRUE,
-    GIMP_HELP_QUICK_MASK_INVERT },
+    LIGMA_HELP_QUICK_MASK_INVERT },
 
   { "quick-mask-invert-off", NULL,
     NC_("quick-mask-action", "Mask _Unselected Areas"), NULL, NULL,
     FALSE,
-    GIMP_HELP_QUICK_MASK_INVERT }
+    LIGMA_HELP_QUICK_MASK_INVERT }
 };
 
 
 void
-quick_mask_actions_setup (GimpActionGroup *group)
+quick_mask_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "quick-mask-action",
+  ligma_action_group_add_actions (group, "quick-mask-action",
                                  quick_mask_actions,
                                  G_N_ELEMENTS (quick_mask_actions));
 
-  gimp_action_group_add_toggle_actions (group, "quick-mask-action",
+  ligma_action_group_add_toggle_actions (group, "quick-mask-action",
                                         quick_mask_toggle_actions,
                                         G_N_ELEMENTS (quick_mask_toggle_actions));
 
-  gimp_action_group_add_radio_actions (group, "quick-mask-action",
+  ligma_action_group_add_radio_actions (group, "quick-mask-action",
                                        quick_mask_invert_actions,
                                        G_N_ELEMENTS (quick_mask_invert_actions),
                                        NULL,
@@ -93,28 +93,28 @@ quick_mask_actions_setup (GimpActionGroup *group)
 }
 
 void
-quick_mask_actions_update (GimpActionGroup *group,
+quick_mask_actions_update (LigmaActionGroup *group,
                            gpointer         data)
 {
-  GimpImage *image               = action_data_get_image (data);
+  LigmaImage *image               = action_data_get_image (data);
   gboolean   quick_mask_state    = FALSE;
   gboolean   quick_mask_inverted = FALSE;
-  GimpRGB    quick_mask_color;
+  LigmaRGB    quick_mask_color;
 
   if (image)
     {
-      quick_mask_state    = gimp_image_get_quick_mask_state (image);
-      quick_mask_inverted = gimp_image_get_quick_mask_inverted (image);
+      quick_mask_state    = ligma_image_get_quick_mask_state (image);
+      quick_mask_inverted = ligma_image_get_quick_mask_inverted (image);
 
-      gimp_image_get_quick_mask_color (image, &quick_mask_color);
+      ligma_image_get_quick_mask_color (image, &quick_mask_color);
     }
 
 #define SET_SENSITIVE(action,sensitive) \
-        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (sensitive) != 0, NULL)
 #define SET_ACTIVE(action,active) \
-        gimp_action_group_set_action_active (group, action, (active) != 0)
+        ligma_action_group_set_action_active (group, action, (active) != 0)
 #define SET_COLOR(action,color) \
-        gimp_action_group_set_action_color (group, action, (color), FALSE)
+        ligma_action_group_set_action_color (group, action, (color), FALSE)
 
   SET_SENSITIVE ("quick-mask-toggle", image);
   SET_ACTIVE    ("quick-mask-toggle", quick_mask_state);

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpprojection.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaprojection.h"
 
-#include "paint/gimppaintcore.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintcore.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-utils.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-utils.h"
 
-#include "gimppainttool.h"
-#include "gimppainttool-paint.h"
+#include "ligmapainttool.h"
+#include "ligmapainttool-paint.h"
 
 
 #define DISPLAY_UPDATE_INTERVAL 10000 /* microseconds */
@@ -47,8 +47,8 @@
 
 typedef struct
 {
-  GimpPaintTool          *paint_tool;
-  GimpPaintToolPaintFunc  func;
+  LigmaPaintTool          *paint_tool;
+  LigmaPaintToolPaintFunc  func;
   union
     {
       gpointer            data;
@@ -59,19 +59,19 @@ typedef struct
 typedef struct
 {
   GList        *drawables;
-  GimpCoords    coords;
+  LigmaCoords    coords;
   guint32       time;
 } InterpolateData;
 
 
 /*  local function prototypes  */
 
-static gboolean   gimp_paint_tool_paint_use_thread  (GimpPaintTool   *paint_tool);
-static gpointer   gimp_paint_tool_paint_thread      (gpointer         data);
+static gboolean   ligma_paint_tool_paint_use_thread  (LigmaPaintTool   *paint_tool);
+static gpointer   ligma_paint_tool_paint_thread      (gpointer         data);
 
-static gboolean   gimp_paint_tool_paint_timeout     (GimpPaintTool   *paint_tool);
+static gboolean   ligma_paint_tool_paint_timeout     (LigmaPaintTool   *paint_tool);
 
-static void       gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
+static void       ligma_paint_tool_paint_interpolate (LigmaPaintTool   *paint_tool,
                                                      InterpolateData *data);
 
 
@@ -94,7 +94,7 @@ static volatile gboolean  paint_timeout_pending;
 
 
 static gboolean
-gimp_paint_tool_paint_use_thread (GimpPaintTool *paint_tool)
+ligma_paint_tool_paint_use_thread (LigmaPaintTool *paint_tool)
 {
   if (! paint_tool->draw_line)
     {
@@ -103,12 +103,12 @@ gimp_paint_tool_paint_use_thread (GimpPaintTool *paint_tool)
           static gint use_paint_thread = -1;
 
           if (use_paint_thread < 0)
-            use_paint_thread = g_getenv ("GIMP_NO_PAINT_THREAD") == NULL;
+            use_paint_thread = g_getenv ("LIGMA_NO_PAINT_THREAD") == NULL;
 
           if (use_paint_thread)
             {
               paint_thread = g_thread_new ("paint",
-                                           gimp_paint_tool_paint_thread, NULL);
+                                           ligma_paint_tool_paint_thread, NULL);
             }
         }
 
@@ -119,7 +119,7 @@ gimp_paint_tool_paint_use_thread (GimpPaintTool *paint_tool)
 }
 
 static gpointer
-gimp_paint_tool_paint_thread (gpointer data)
+ligma_paint_tool_paint_thread (gpointer data)
 {
   g_mutex_lock (&paint_queue_mutex);
 
@@ -158,9 +158,9 @@ gimp_paint_tool_paint_thread (gpointer data)
 }
 
 static gboolean
-gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
+ligma_paint_tool_paint_timeout (LigmaPaintTool *paint_tool)
 {
-  GimpPaintCore *core   = paint_tool->core;
+  LigmaPaintCore *core   = paint_tool->core;
   gboolean       update = FALSE;
 
   paint_timeout_pending = TRUE;
@@ -172,13 +172,13 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
   for (GList *iter = paint_tool->drawables; iter; iter = iter->next)
     {
-      update |= gimp_drawable_flush_paint (iter->data);
+      update |= ligma_drawable_flush_paint (iter->data);
       if (update)
         break;
     }
 
-  if (update && GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush)
-    GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush (paint_tool);
+  if (update && LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush)
+    LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush (paint_tool);
 
   paint_timeout_pending = FALSE;
   g_cond_signal (&paint_cond);
@@ -187,31 +187,31 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
   if (update)
     {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (paint_tool);
-      GimpDisplay  *display   = paint_tool->display;
-      GimpImage    *image     = gimp_display_get_image (display);
+      LigmaDrawTool *draw_tool = LIGMA_DRAW_TOOL (paint_tool);
+      LigmaDisplay  *display   = paint_tool->display;
+      LigmaImage    *image     = ligma_display_get_image (display);
 
       if (paint_tool->snap_brush)
-        gimp_draw_tool_pause (draw_tool);
+        ligma_draw_tool_pause (draw_tool);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
-      gimp_display_flush_now (display);
+      ligma_projection_flush_now (ligma_image_get_projection (image), TRUE);
+      ligma_display_flush_now (display);
 
       if (paint_tool->snap_brush)
-        gimp_draw_tool_resume (draw_tool);
+        ligma_draw_tool_resume (draw_tool);
     }
 
   return G_SOURCE_CONTINUE;
 }
 
 static void
-gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
+ligma_paint_tool_paint_interpolate (LigmaPaintTool   *paint_tool,
                                    InterpolateData *data)
 {
-  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
-  GimpPaintCore    *core          = paint_tool->core;
+  LigmaPaintOptions *paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  LigmaPaintCore    *core          = paint_tool->core;
 
-  gimp_paint_core_interpolate (core, data->drawables, paint_options,
+  ligma_paint_core_interpolate (core, data->drawables, paint_options,
                                &data->coords, data->time);
 
   g_list_free (data->drawables);
@@ -223,35 +223,35 @@ gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
 
 
 gboolean
-gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
-                             GimpDisplay       *display,
-                             const GimpCoords  *coords,
+ligma_paint_tool_paint_start (LigmaPaintTool     *paint_tool,
+                             LigmaDisplay       *display,
+                             const LigmaCoords  *coords,
                              guint32            time,
                              gboolean           constrain,
                              GError           **error)
 {
-  GimpTool         *tool;
-  GimpPaintOptions *paint_options;
-  GimpPaintCore    *core;
-  GimpDisplayShell *shell;
-  GimpImage        *image;
+  LigmaTool         *tool;
+  LigmaPaintOptions *paint_options;
+  LigmaPaintCore    *core;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
   GList            *drawables;
   GList            *iter;
-  GimpCoords        curr_coords;
+  LigmaCoords        curr_coords;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
   g_return_val_if_fail (paint_tool->display == NULL, FALSE);
 
-  tool          = GIMP_TOOL (paint_tool);
-  paint_tool    = GIMP_PAINT_TOOL (paint_tool);
-  paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  tool          = LIGMA_TOOL (paint_tool);
+  paint_tool    = LIGMA_PAINT_TOOL (paint_tool);
+  paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
   core          = paint_tool->core;
-  shell         = gimp_display_get_shell (display);
-  image         = gimp_display_get_image (display);
-  drawables     = gimp_image_get_selected_drawables (image);
+  shell         = ligma_display_get_shell (display);
+  image         = ligma_display_get_image (display);
+  drawables     = ligma_image_get_selected_drawables (image);
 
   g_return_val_if_fail (g_list_length (drawables) == 1 ||
                         (g_list_length (drawables) > 1 && paint_tool->can_multi_paint),
@@ -265,21 +265,21 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   /*  If we use a separate paint thread, enter paint mode before starting the
    *  paint core
    */
-  if (gimp_paint_tool_paint_use_thread (paint_tool))
+  if (ligma_paint_tool_paint_use_thread (paint_tool))
     for (iter = drawables; iter; iter = iter->next)
-      gimp_drawable_start_paint (iter->data);
+      ligma_drawable_start_paint (iter->data);
 
   /*  Prepare to start the paint core  */
-  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare)
-    GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare (paint_tool, display);
+  if (LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare)
+    LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare (paint_tool, display);
 
   /*  Start the paint core  */
-  if (! gimp_paint_core_start (core,
+  if (! ligma_paint_core_start (core,
                                drawables, paint_options, &curr_coords,
                                error))
     {
       for (iter = drawables; iter; iter = iter->next)
-        gimp_drawable_end_paint (iter->data);
+        ligma_drawable_end_paint (iter->data);
       g_list_free (drawables);
 
       return FALSE;
@@ -307,50 +307,50 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
       gdouble offset_angle;
       gdouble xres, yres;
 
-      gimp_display_shell_get_constrained_line_params (shell,
+      ligma_display_shell_get_constrained_line_params (shell,
                                                       &offset_angle,
                                                       &xres, &yres);
 
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
-      gimp_paint_core_round_line (core, paint_options,
+      ligma_paint_core_round_line (core, paint_options,
                                   constrain, offset_angle, xres, yres);
     }
 
   /*  Notify subclasses  */
-  if (gimp_paint_tool_paint_use_thread (paint_tool) &&
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start)
+  if (ligma_paint_tool_paint_use_thread (paint_tool) &&
+      LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start)
     {
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start (paint_tool);
+      LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start (paint_tool);
     }
 
   /*  Let the specific painting function initialize itself  */
-  gimp_paint_core_paint (core, drawables, paint_options,
-                         GIMP_PAINT_STATE_INIT, time);
+  ligma_paint_core_paint (core, drawables, paint_options,
+                         LIGMA_PAINT_STATE_INIT, time);
 
   /*  Paint to the image  */
   if (paint_tool->draw_line)
     {
-      gimp_paint_core_interpolate (core, drawables, paint_options,
+      ligma_paint_core_interpolate (core, drawables, paint_options,
                                    &core->cur_coords, time);
     }
   else
     {
-      gimp_paint_core_paint (core, drawables, paint_options,
-                             GIMP_PAINT_STATE_MOTION, time);
+      ligma_paint_core_paint (core, drawables, paint_options,
+                             LIGMA_PAINT_STATE_MOTION, time);
     }
 
-  gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
-  gimp_display_flush_now (display);
+  ligma_projection_flush_now (ligma_image_get_projection (image), TRUE);
+  ligma_display_flush_now (display);
 
   /*  Start the display update timeout  */
-  if (gimp_paint_tool_paint_use_thread (paint_tool))
+  if (ligma_paint_tool_paint_use_thread (paint_tool))
     {
       paint_timeout_id = g_timeout_add_full (
         G_PRIORITY_HIGH_IDLE,
         DISPLAY_UPDATE_INTERVAL / 1000,
-        (GSourceFunc) gimp_paint_tool_paint_timeout,
+        (GSourceFunc) ligma_paint_tool_paint_timeout,
         paint_tool, NULL);
     }
 
@@ -358,29 +358,29 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
 }
 
 void
-gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
+ligma_paint_tool_paint_end (LigmaPaintTool *paint_tool,
                            guint32        time,
                            gboolean       cancel)
 {
-  GimpPaintOptions *paint_options;
-  GimpPaintCore    *core;
+  LigmaPaintOptions *paint_options;
+  LigmaPaintCore    *core;
   GList            *drawables;
 
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool));
   g_return_if_fail (paint_tool->display != NULL);
 
-  paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
   core          = paint_tool->core;
   drawables     = paint_tool->drawables;
 
   /*  Process remaining paint items  */
-  if (gimp_paint_tool_paint_use_thread (paint_tool))
+  if (ligma_paint_tool_paint_use_thread (paint_tool))
     {
       PaintItem *item;
       gboolean   finished = FALSE;
       guint64    end_time;
 
-      g_return_if_fail (gimp_paint_tool_paint_is_active (paint_tool));
+      g_return_if_fail (ligma_paint_tool_paint_is_active (paint_tool));
 
       g_source_remove (paint_timeout_id);
       paint_timeout_id = 0;
@@ -405,7 +405,7 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
             {
               g_mutex_unlock (&paint_queue_mutex);
 
-              gimp_paint_tool_paint_timeout (paint_tool);
+              ligma_paint_tool_paint_timeout (paint_tool);
 
               g_mutex_lock (&paint_queue_mutex);
 
@@ -417,38 +417,38 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
     }
 
   /*  Let the specific painting function finish up  */
-  gimp_paint_core_paint (core, drawables, paint_options,
-                         GIMP_PAINT_STATE_FINISH, time);
+  ligma_paint_core_paint (core, drawables, paint_options,
+                         LIGMA_PAINT_STATE_FINISH, time);
 
   if (cancel)
-    gimp_paint_core_cancel (core, drawables);
+    ligma_paint_core_cancel (core, drawables);
   else
-    gimp_paint_core_finish (core, drawables, TRUE);
+    ligma_paint_core_finish (core, drawables, TRUE);
 
   /*  Notify subclasses  */
-  if (gimp_paint_tool_paint_use_thread (paint_tool) &&
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end)
+  if (ligma_paint_tool_paint_use_thread (paint_tool) &&
+      LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end)
     {
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end (paint_tool);
+      LIGMA_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end (paint_tool);
     }
 
   /*  Exit paint mode  */
-  if (gimp_paint_tool_paint_use_thread (paint_tool))
+  if (ligma_paint_tool_paint_use_thread (paint_tool))
     for (GList *iter = drawables; iter; iter = iter->next)
-      gimp_drawable_end_paint (iter->data);
+      ligma_drawable_end_paint (iter->data);
 
   paint_tool->display = NULL;
   g_clear_pointer (&paint_tool->drawables, g_list_free);
 }
 
 gboolean
-gimp_paint_tool_paint_is_active (GimpPaintTool *paint_tool)
+ligma_paint_tool_paint_is_active (LigmaPaintTool *paint_tool)
 {
-  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool), FALSE);
 
   for (GList *iter = paint_tool->drawables; iter; iter = iter->next)
     {
-      if (gimp_drawable_is_painting (iter->data))
+      if (ligma_drawable_is_painting (iter->data))
         return TRUE;
     }
 
@@ -456,18 +456,18 @@ gimp_paint_tool_paint_is_active (GimpPaintTool *paint_tool)
 }
 
 void
-gimp_paint_tool_paint_push (GimpPaintTool          *paint_tool,
-                            GimpPaintToolPaintFunc  func,
+ligma_paint_tool_paint_push (LigmaPaintTool          *paint_tool,
+                            LigmaPaintToolPaintFunc  func,
                             gpointer                data)
 {
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool));
   g_return_if_fail (func != NULL);
 
-  if (gimp_paint_tool_paint_use_thread (paint_tool))
+  if (ligma_paint_tool_paint_use_thread (paint_tool))
     {
       PaintItem *item;
 
-      g_return_if_fail (gimp_paint_tool_paint_is_active (paint_tool));
+      g_return_if_fail (ligma_paint_tool_paint_is_active (paint_tool));
 
       /*  Push an item to the queue, to be processed by the paint thread  */
 
@@ -486,38 +486,38 @@ gimp_paint_tool_paint_push (GimpPaintTool          *paint_tool,
     }
   else
     {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (paint_tool);
-      GimpDisplay  *display   = paint_tool->display;
-      GimpImage    *image     = gimp_display_get_image (display);
+      LigmaDrawTool *draw_tool = LIGMA_DRAW_TOOL (paint_tool);
+      LigmaDisplay  *display   = paint_tool->display;
+      LigmaImage    *image     = ligma_display_get_image (display);
 
       /*  Paint directly  */
 
-      gimp_draw_tool_pause (draw_tool);
+      ligma_draw_tool_pause (draw_tool);
 
       func (paint_tool, data);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
-      gimp_display_flush_now (display);
+      ligma_projection_flush_now (ligma_image_get_projection (image), TRUE);
+      ligma_display_flush_now (display);
 
-      gimp_draw_tool_resume (draw_tool);
+      ligma_draw_tool_resume (draw_tool);
     }
 }
 
 void
-gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
-                              const GimpCoords *coords,
+ligma_paint_tool_paint_motion (LigmaPaintTool    *paint_tool,
+                              const LigmaCoords *coords,
                               guint32           time)
 {
-  GimpPaintOptions *paint_options;
-  GimpPaintCore    *core;
+  LigmaPaintOptions *paint_options;
+  LigmaPaintCore    *core;
   GList            *drawables;
   InterpolateData  *data;
 
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
+  g_return_if_fail (LIGMA_IS_PAINT_TOOL (paint_tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (paint_tool->display != NULL);
 
-  paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  paint_options = LIGMA_PAINT_TOOL_GET_OPTIONS (paint_tool);
   core          = paint_tool->core;
   drawables     = paint_tool->drawables;
 
@@ -530,12 +530,12 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
   paint_tool->cursor_x = data->coords.x;
   paint_tool->cursor_y = data->coords.y;
 
-  gimp_paint_core_smooth_coords (core, paint_options, &data->coords);
+  ligma_paint_core_smooth_coords (core, paint_options, &data->coords);
 
   /*  Don't paint while the Shift key is pressed for line drawing  */
   if (paint_tool->draw_line)
     {
-      gimp_paint_core_set_current_coords (core, &data->coords);
+      ligma_paint_core_set_current_coords (core, &data->coords);
       g_list_free (data->drawables);
 
       g_slice_free (InterpolateData, data);
@@ -543,7 +543,7 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
       return;
     }
 
-  gimp_paint_tool_paint_push (paint_tool,
-                              (GimpPaintToolPaintFunc) gimp_paint_tool_paint_interpolate,
+  ligma_paint_tool_paint_push (paint_tool,
+                              (LigmaPaintToolPaintFunc) ligma_paint_tool_paint_interpolate,
                               data);
 }

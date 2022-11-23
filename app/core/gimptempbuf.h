@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,53 +15,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMP_BUF_H__
-#define __GIMP_TEMP_BUF_H__
+#ifndef __LIGMA_TEMP_BUF_H__
+#define __LIGMA_TEMP_BUF_H__
 
 
-GimpTempBuf * gimp_temp_buf_new               (gint               width,
+LigmaTempBuf * ligma_temp_buf_new               (gint               width,
                                                gint               height,
                                                const Babl        *format) G_GNUC_WARN_UNUSED_RESULT;
-GimpTempBuf * gimp_temp_buf_new_from_pixbuf   (GdkPixbuf         *pixbuf,
+LigmaTempBuf * ligma_temp_buf_new_from_pixbuf   (GdkPixbuf         *pixbuf,
                                                const Babl        *f_or_null) G_GNUC_WARN_UNUSED_RESULT;
-GimpTempBuf * gimp_temp_buf_copy              (const GimpTempBuf *src) G_GNUC_WARN_UNUSED_RESULT;
+LigmaTempBuf * ligma_temp_buf_copy              (const LigmaTempBuf *src) G_GNUC_WARN_UNUSED_RESULT;
 
-GimpTempBuf * gimp_temp_buf_ref               (const GimpTempBuf *buf);
-void          gimp_temp_buf_unref             (const GimpTempBuf *buf);
+LigmaTempBuf * ligma_temp_buf_ref               (const LigmaTempBuf *buf);
+void          ligma_temp_buf_unref             (const LigmaTempBuf *buf);
 
-GimpTempBuf * gimp_temp_buf_scale             (const GimpTempBuf *buf,
+LigmaTempBuf * ligma_temp_buf_scale             (const LigmaTempBuf *buf,
                                                gint               width,
                                                gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
-gint          gimp_temp_buf_get_width         (const GimpTempBuf *buf);
-gint          gimp_temp_buf_get_height        (const GimpTempBuf *buf);
+gint          ligma_temp_buf_get_width         (const LigmaTempBuf *buf);
+gint          ligma_temp_buf_get_height        (const LigmaTempBuf *buf);
 
-const Babl  * gimp_temp_buf_get_format        (const GimpTempBuf *buf);
-void          gimp_temp_buf_set_format        (GimpTempBuf       *buf,
+const Babl  * ligma_temp_buf_get_format        (const LigmaTempBuf *buf);
+void          ligma_temp_buf_set_format        (LigmaTempBuf       *buf,
                                                const Babl        *format);
 
-guchar      * gimp_temp_buf_get_data          (const GimpTempBuf *buf);
-gsize         gimp_temp_buf_get_data_size     (const GimpTempBuf *buf);
+guchar      * ligma_temp_buf_get_data          (const LigmaTempBuf *buf);
+gsize         ligma_temp_buf_get_data_size     (const LigmaTempBuf *buf);
 
-guchar      * gimp_temp_buf_data_clear        (GimpTempBuf       *buf);
+guchar      * ligma_temp_buf_data_clear        (LigmaTempBuf       *buf);
 
-gpointer      gimp_temp_buf_lock              (const GimpTempBuf *buf,
+gpointer      ligma_temp_buf_lock              (const LigmaTempBuf *buf,
                                                const Babl        *format,
                                                GeglAccessMode     access_mode) G_GNUC_WARN_UNUSED_RESULT;
-void          gimp_temp_buf_unlock            (const GimpTempBuf *buf,
+void          ligma_temp_buf_unlock            (const LigmaTempBuf *buf,
                                                gconstpointer      data);
 
-gsize         gimp_temp_buf_get_memsize       (const GimpTempBuf *buf);
+gsize         ligma_temp_buf_get_memsize       (const LigmaTempBuf *buf);
 
-GeglBuffer  * gimp_temp_buf_create_buffer     (const GimpTempBuf *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
-GdkPixbuf   * gimp_temp_buf_create_pixbuf     (const GimpTempBuf *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
+GeglBuffer  * ligma_temp_buf_create_buffer     (const LigmaTempBuf *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
+GdkPixbuf   * ligma_temp_buf_create_pixbuf     (const LigmaTempBuf *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
 
-GimpTempBuf * gimp_gegl_buffer_get_temp_buf   (GeglBuffer        *buffer);
+LigmaTempBuf * ligma_gegl_buffer_get_temp_buf   (GeglBuffer        *buffer);
 
 
 /*  stats  */
 
-guint64       gimp_temp_buf_get_total_memsize (void);
+guint64       ligma_temp_buf_get_total_memsize (void);
 
 
-#endif  /*  __GIMP_TEMP_BUF_H__  */
+#endif  /*  __LIGMA_TEMP_BUF_H__  */

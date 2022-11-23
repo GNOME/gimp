@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainertreestore.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacontainertreestore.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,15 +27,15 @@
 
 #include "widgets-types.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpviewable.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpcellrendererviewable.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainerview.h"
-#include "gimpviewrenderer.h"
+#include "ligmacellrendererviewable.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainerview.h"
+#include "ligmaviewrenderer.h"
 
 
 enum
@@ -46,83 +46,83 @@ enum
 };
 
 
-typedef struct _GimpContainerTreeStorePrivate GimpContainerTreeStorePrivate;
+typedef struct _LigmaContainerTreeStorePrivate LigmaContainerTreeStorePrivate;
 
-struct _GimpContainerTreeStorePrivate
+struct _LigmaContainerTreeStorePrivate
 {
-  GimpContainerView *container_view;
+  LigmaContainerView *container_view;
   GList             *renderer_cells;
   GList             *renderer_columns;
   gboolean           use_name;
 };
 
 #define GET_PRIVATE(store) \
-        ((GimpContainerTreeStorePrivate *) gimp_container_tree_store_get_instance_private ((GimpContainerTreeStore *) (store)))
+        ((LigmaContainerTreeStorePrivate *) ligma_container_tree_store_get_instance_private ((LigmaContainerTreeStore *) (store)))
 
 
-static void   gimp_container_tree_store_constructed     (GObject                *object);
-static void   gimp_container_tree_store_finalize        (GObject                *object);
-static void   gimp_container_tree_store_set_property    (GObject                *object,
+static void   ligma_container_tree_store_constructed     (GObject                *object);
+static void   ligma_container_tree_store_finalize        (GObject                *object);
+static void   ligma_container_tree_store_set_property    (GObject                *object,
                                                          guint                   property_id,
                                                          const GValue           *value,
                                                          GParamSpec             *pspec);
-static void   gimp_container_tree_store_get_property    (GObject                *object,
+static void   ligma_container_tree_store_get_property    (GObject                *object,
                                                          guint                   property_id,
                                                          GValue                 *value,
                                                          GParamSpec             *pspec);
 
-static void   gimp_container_tree_store_set             (GimpContainerTreeStore *store,
+static void   ligma_container_tree_store_set             (LigmaContainerTreeStore *store,
                                                          GtkTreeIter            *iter,
-                                                         GimpViewable           *viewable);
-static void   gimp_container_tree_store_renderer_update (GimpViewRenderer       *renderer,
-                                                         GimpContainerTreeStore *store);
+                                                         LigmaViewable           *viewable);
+static void   ligma_container_tree_store_renderer_update (LigmaViewRenderer       *renderer,
+                                                         LigmaContainerTreeStore *store);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpContainerTreeStore, gimp_container_tree_store,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaContainerTreeStore, ligma_container_tree_store,
                             GTK_TYPE_TREE_STORE)
 
-#define parent_class gimp_container_tree_store_parent_class
+#define parent_class ligma_container_tree_store_parent_class
 
 
 static void
-gimp_container_tree_store_class_init (GimpContainerTreeStoreClass *klass)
+ligma_container_tree_store_class_init (LigmaContainerTreeStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_container_tree_store_constructed;
-  object_class->finalize     = gimp_container_tree_store_finalize;
-  object_class->set_property = gimp_container_tree_store_set_property;
-  object_class->get_property = gimp_container_tree_store_get_property;
+  object_class->constructed  = ligma_container_tree_store_constructed;
+  object_class->finalize     = ligma_container_tree_store_finalize;
+  object_class->set_property = ligma_container_tree_store_set_property;
+  object_class->get_property = ligma_container_tree_store_get_property;
 
   g_object_class_install_property (object_class, PROP_CONTAINER_VIEW,
                                    g_param_spec_object ("container-view",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER_VIEW,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTAINER_VIEW,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_USE_NAME,
                                    g_param_spec_boolean ("use-name",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_container_tree_store_init (GimpContainerTreeStore *store)
+ligma_container_tree_store_init (LigmaContainerTreeStore *store)
 {
 }
 
 static void
-gimp_container_tree_store_constructed (GObject *object)
+ligma_container_tree_store_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
-gimp_container_tree_store_finalize (GObject *object)
+ligma_container_tree_store_finalize (GObject *object)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (object);
+  LigmaContainerTreeStorePrivate *private = GET_PRIVATE (object);
 
   g_list_free (private->renderer_cells);
   g_list_free (private->renderer_columns);
@@ -131,12 +131,12 @@ gimp_container_tree_store_finalize (GObject *object)
 }
 
 static void
-gimp_container_tree_store_set_property (GObject      *object,
+ligma_container_tree_store_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (object);
+  LigmaContainerTreeStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -154,12 +154,12 @@ gimp_container_tree_store_set_property (GObject      *object,
 }
 
 static void
-gimp_container_tree_store_get_property (GObject    *object,
+ligma_container_tree_store_get_property (GObject    *object,
                                         guint       property_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (object);
+  LigmaContainerTreeStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -180,17 +180,17 @@ gimp_container_tree_store_get_property (GObject    *object,
 /*  public functions  */
 
 GtkTreeModel *
-gimp_container_tree_store_new (GimpContainerView *container_view,
+ligma_container_tree_store_new (LigmaContainerView *container_view,
                                gint               n_columns,
                                GType             *types)
 {
-  GimpContainerTreeStore *store;
+  LigmaContainerTreeStore *store;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (container_view), NULL);
-  g_return_val_if_fail (n_columns >= GIMP_CONTAINER_TREE_STORE_N_COLUMNS, NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_VIEW (container_view), NULL);
+  g_return_val_if_fail (n_columns >= LIGMA_CONTAINER_TREE_STORE_N_COLUMNS, NULL);
   g_return_val_if_fail (types != NULL, NULL);
 
-  store = g_object_new (GIMP_TYPE_CONTAINER_TREE_STORE,
+  store = g_object_new (LIGMA_TYPE_CONTAINER_TREE_STORE,
                         "container-view", container_view,
                         NULL);
 
@@ -200,14 +200,14 @@ gimp_container_tree_store_new (GimpContainerView *container_view,
 }
 
 void
-gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
+ligma_container_tree_store_add_renderer_cell (LigmaContainerTreeStore *store,
                                              GtkCellRenderer        *cell,
                                              gint                    column_number)
 {
-  GimpContainerTreeStorePrivate *private;
+  LigmaContainerTreeStorePrivate *private;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
-  g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CELL_RENDERER_VIEWABLE (cell));
 
   private = GET_PRIVATE (store);
 
@@ -218,15 +218,15 @@ gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
 
 }
 
-GimpViewRenderer *
-gimp_container_tree_store_get_renderer (GimpContainerTreeStore *store,
+LigmaViewRenderer *
+ligma_container_tree_store_get_renderer (LigmaContainerTreeStore *store,
                                         GtkTreeIter            *iter)
 {
-  GimpContainerTreeStorePrivate *private;
-  GimpViewRenderer              *renderer = NULL;
+  LigmaContainerTreeStorePrivate *private;
+  LigmaViewRenderer              *renderer = NULL;
   GList                         *c;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store), NULL);
 
   private = GET_PRIVATE (store);
 
@@ -246,12 +246,12 @@ gimp_container_tree_store_get_renderer (GimpContainerTreeStore *store,
 }
 
 void
-gimp_container_tree_store_set_use_name (GimpContainerTreeStore *store,
+ligma_container_tree_store_set_use_name (LigmaContainerTreeStore *store,
                                         gboolean                use_name)
 {
-  GimpContainerTreeStorePrivate *private;
+  LigmaContainerTreeStorePrivate *private;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
 
   private = GET_PRIVATE (store);
 
@@ -263,27 +263,27 @@ gimp_container_tree_store_set_use_name (GimpContainerTreeStore *store,
 }
 
 gboolean
-gimp_container_tree_store_get_use_name (GimpContainerTreeStore *store)
+ligma_container_tree_store_get_use_name (LigmaContainerTreeStore *store)
 {
-  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store), FALSE);
 
   return GET_PRIVATE (store)->use_name;
 }
 
 static gboolean
-gimp_container_tree_store_set_context_foreach (GtkTreeModel *model,
+ligma_container_tree_store_set_context_foreach (GtkTreeModel *model,
                                                GtkTreePath  *path,
                                                GtkTreeIter  *iter,
                                                gpointer      data)
 {
-  GimpContext      *context = data;
-  GimpViewRenderer *renderer;
+  LigmaContext      *context = data;
+  LigmaViewRenderer *renderer;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
-  gimp_view_renderer_set_context (renderer, context);
+  ligma_view_renderer_set_context (renderer, context);
 
   g_object_unref (renderer);
 
@@ -291,39 +291,39 @@ gimp_container_tree_store_set_context_foreach (GtkTreeModel *model,
 }
 
 void
-gimp_container_tree_store_set_context (GimpContainerTreeStore *store,
-                                       GimpContext            *context)
+ligma_container_tree_store_set_context (LigmaContainerTreeStore *store,
+                                       LigmaContext            *context)
 {
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
 
   gtk_tree_model_foreach (GTK_TREE_MODEL (store),
-                          gimp_container_tree_store_set_context_foreach,
+                          ligma_container_tree_store_set_context_foreach,
                           context);
 }
 
 GtkTreeIter *
-gimp_container_tree_store_insert_item (GimpContainerTreeStore *store,
-                                       GimpViewable           *viewable,
+ligma_container_tree_store_insert_item (LigmaContainerTreeStore *store,
+                                       LigmaViewable           *viewable,
                                        GtkTreeIter            *parent,
                                        gint                    index)
 {
   GtkTreeIter iter;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store), NULL);
 
   if (index == -1)
     gtk_tree_store_append (GTK_TREE_STORE (store), &iter, parent);
   else
     gtk_tree_store_insert (GTK_TREE_STORE (store), &iter, parent, index);
 
-  gimp_container_tree_store_set (store, &iter, viewable);
+  ligma_container_tree_store_set (store, &iter, viewable);
 
   return gtk_tree_iter_copy (&iter);
 }
 
 void
-gimp_container_tree_store_remove_item (GimpContainerTreeStore *store,
-                                       GimpViewable           *viewable,
+ligma_container_tree_store_remove_item (LigmaContainerTreeStore *store,
+                                       LigmaViewable           *viewable,
                                        GtkTreeIter            *iter)
 {
   if (iter)
@@ -348,7 +348,7 @@ gimp_container_tree_store_remove_item (GimpContainerTreeStore *store,
        */
       if (! gtk_tree_model_iter_n_children (model, NULL))
         {
-          GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+          LigmaContainerTreeStorePrivate *private = GET_PRIVATE (store);
           GList                         *list;
 
           for (list = private->renderer_cells; list; list = list->next)
@@ -358,31 +358,31 @@ gimp_container_tree_store_remove_item (GimpContainerTreeStore *store,
 }
 
 void
-gimp_container_tree_store_reorder_item (GimpContainerTreeStore *store,
-                                        GimpViewable           *viewable,
+ligma_container_tree_store_reorder_item (LigmaContainerTreeStore *store,
+                                        LigmaViewable           *viewable,
                                         gint                    new_index,
                                         GtkTreeIter            *iter)
 {
-  GimpContainerTreeStorePrivate *private;
-  GimpViewable                  *parent;
-  GimpContainer                 *container;
+  LigmaContainerTreeStorePrivate *private;
+  LigmaViewable                  *parent;
+  LigmaContainer                 *container;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
 
   private = GET_PRIVATE (store);
 
   if (! iter)
     return;
 
-  parent = gimp_viewable_get_parent (viewable);
+  parent = ligma_viewable_get_parent (viewable);
 
   if (parent)
-    container = gimp_viewable_get_children (parent);
+    container = ligma_viewable_get_children (parent);
   else
-    container = gimp_container_view_get_container (private->container_view);
+    container = ligma_container_view_get_container (private->container_view);
 
   if (new_index == -1 ||
-      new_index == gimp_container_get_n_children (container) - 1)
+      new_index == ligma_container_get_n_children (container) - 1)
     {
       gtk_tree_store_move_before (GTK_TREE_STORE (store), iter, NULL);
     }
@@ -424,31 +424,31 @@ gimp_container_tree_store_reorder_item (GimpContainerTreeStore *store,
 }
 
 gboolean
-gimp_container_tree_store_rename_item (GimpContainerTreeStore *store,
-                                       GimpViewable           *viewable,
+ligma_container_tree_store_rename_item (LigmaContainerTreeStore *store,
+                                       LigmaViewable           *viewable,
                                        GtkTreeIter            *iter)
 {
   gboolean new_name_shorter = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store), FALSE);
 
   if (iter)
     {
-      GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+      LigmaContainerTreeStorePrivate *private = GET_PRIVATE (store);
       gchar                         *name;
       gchar                         *old_name;
 
       if (private->use_name)
-        name = (gchar *) gimp_object_get_name (viewable);
+        name = (gchar *) ligma_object_get_name (viewable);
       else
-        name = gimp_viewable_get_description (viewable, NULL);
+        name = ligma_viewable_get_description (viewable, NULL);
 
       gtk_tree_model_get (GTK_TREE_MODEL (store), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, &old_name,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, &old_name,
                           -1);
 
       gtk_tree_store_set (GTK_TREE_STORE (store), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                           -1);
 
       if (name && old_name && strlen (name) < strlen (old_name))
@@ -464,9 +464,9 @@ gimp_container_tree_store_rename_item (GimpContainerTreeStore *store,
 }
 
 void
-gimp_container_tree_store_clear_items (GimpContainerTreeStore *store)
+ligma_container_tree_store_clear_items (LigmaContainerTreeStore *store)
 {
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
 
   gtk_tree_store_clear (GTK_TREE_STORE (store));
 
@@ -476,7 +476,7 @@ gimp_container_tree_store_clear_items (GimpContainerTreeStore *store)
    */
   if (! gtk_tree_model_iter_n_children (GTK_TREE_MODEL (store), NULL))
     {
-      GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+      LigmaContainerTreeStorePrivate *private = GET_PRIVATE (store);
       GList                         *list;
 
       for (list = private->renderer_cells; list; list = list->next)
@@ -491,19 +491,19 @@ typedef struct
 } SetSizeForeachData;
 
 static gboolean
-gimp_container_tree_store_set_view_size_foreach (GtkTreeModel *model,
+ligma_container_tree_store_set_view_size_foreach (GtkTreeModel *model,
                                                  GtkTreePath  *path,
                                                  GtkTreeIter  *iter,
                                                  gpointer      data)
 {
   SetSizeForeachData *size_data = data;
-  GimpViewRenderer   *renderer;
+  LigmaViewRenderer   *renderer;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
-  gimp_view_renderer_set_size (renderer,
+  ligma_view_renderer_set_size (renderer,
                                size_data->view_size,
                                size_data->border_width);
 
@@ -513,21 +513,21 @@ gimp_container_tree_store_set_view_size_foreach (GtkTreeModel *model,
 }
 
 void
-gimp_container_tree_store_set_view_size (GimpContainerTreeStore *store)
+ligma_container_tree_store_set_view_size (LigmaContainerTreeStore *store)
 {
-  GimpContainerTreeStorePrivate *private;
+  LigmaContainerTreeStorePrivate *private;
   SetSizeForeachData             size_data;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (LIGMA_IS_CONTAINER_TREE_STORE (store));
 
   private = GET_PRIVATE (store);
 
   size_data.view_size =
-    gimp_container_view_get_view_size (private->container_view,
+    ligma_container_view_get_view_size (private->container_view,
                                        &size_data.border_width);
 
   gtk_tree_model_foreach (GTK_TREE_MODEL (store),
-                          gimp_container_tree_store_set_view_size_foreach,
+                          ligma_container_tree_store_set_view_size_foreach,
                           &size_data);
 }
 
@@ -535,36 +535,36 @@ gimp_container_tree_store_set_view_size (GimpContainerTreeStore *store)
 /*  private functions  */
 
 void
-gimp_container_tree_store_columns_init (GType *types,
+ligma_container_tree_store_columns_init (GType *types,
                                         gint  *n_types)
 {
   g_return_if_fail (types != NULL);
   g_return_if_fail (n_types != NULL);
   g_return_if_fail (*n_types == 0);
 
-  gimp_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER ==
-               gimp_container_tree_store_columns_add (types, n_types,
-                                                      GIMP_TYPE_VIEW_RENDERER));
+  ligma_assert (LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER ==
+               ligma_container_tree_store_columns_add (types, n_types,
+                                                      LIGMA_TYPE_VIEW_RENDERER));
 
-  gimp_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME ==
-               gimp_container_tree_store_columns_add (types, n_types,
+  ligma_assert (LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME ==
+               ligma_container_tree_store_columns_add (types, n_types,
                                                       G_TYPE_STRING));
 
-  gimp_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES ==
-               gimp_container_tree_store_columns_add (types, n_types,
+  ligma_assert (LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES ==
+               ligma_container_tree_store_columns_add (types, n_types,
                                                       PANGO_TYPE_ATTR_LIST));
 
-  gimp_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE ==
-               gimp_container_tree_store_columns_add (types, n_types,
+  ligma_assert (LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE ==
+               ligma_container_tree_store_columns_add (types, n_types,
                                                       G_TYPE_BOOLEAN));
 
-  gimp_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA ==
-               gimp_container_tree_store_columns_add (types, n_types,
+  ligma_assert (LIGMA_CONTAINER_TREE_STORE_COLUMN_USER_DATA ==
+               ligma_container_tree_store_columns_add (types, n_types,
                                                       G_TYPE_POINTER));
 }
 
 gint
-gimp_container_tree_store_columns_add (GType *types,
+ligma_container_tree_store_columns_add (GType *types,
                                        gint  *n_types,
                                        GType  type)
 {
@@ -579,42 +579,42 @@ gimp_container_tree_store_columns_add (GType *types,
 }
 
 static void
-gimp_container_tree_store_set (GimpContainerTreeStore *store,
+ligma_container_tree_store_set (LigmaContainerTreeStore *store,
                                GtkTreeIter            *iter,
-                               GimpViewable           *viewable)
+                               LigmaViewable           *viewable)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
-  GimpContext                   *context;
-  GimpViewRenderer              *renderer;
+  LigmaContainerTreeStorePrivate *private = GET_PRIVATE (store);
+  LigmaContext                   *context;
+  LigmaViewRenderer              *renderer;
   gchar                         *name;
   gint                           view_size;
   gint                           border_width;
 
-  context = gimp_container_view_get_context (private->container_view);
+  context = ligma_container_view_get_context (private->container_view);
 
-  view_size = gimp_container_view_get_view_size (private->container_view,
+  view_size = ligma_container_view_get_view_size (private->container_view,
                                                  &border_width);
 
-  renderer = gimp_view_renderer_new (context,
+  renderer = ligma_view_renderer_new (context,
                                      G_TYPE_FROM_INSTANCE (viewable),
                                      view_size, border_width,
                                      FALSE);
-  gimp_view_renderer_set_viewable (renderer, viewable);
-  gimp_view_renderer_remove_idle (renderer);
+  ligma_view_renderer_set_viewable (renderer, viewable);
+  ligma_view_renderer_remove_idle (renderer);
 
   g_signal_connect (renderer, "update",
-                    G_CALLBACK (gimp_container_tree_store_renderer_update),
+                    G_CALLBACK (ligma_container_tree_store_renderer_update),
                     store);
 
   if (private->use_name)
-    name = (gchar *) gimp_object_get_name (viewable);
+    name = (gchar *) ligma_object_get_name (viewable);
   else
-    name = gimp_viewable_get_description (viewable, NULL);
+    name = ligma_viewable_get_description (viewable, NULL);
 
   gtk_tree_store_set (GTK_TREE_STORE (store), iter,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,       renderer,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,           name,
-                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE, TRUE,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER,       renderer,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME,           name,
+                      LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE, TRUE,
                       -1);
 
   if (! private->use_name)
@@ -624,13 +624,13 @@ gimp_container_tree_store_set (GimpContainerTreeStore *store,
 }
 
 static void
-gimp_container_tree_store_renderer_update (GimpViewRenderer       *renderer,
-                                           GimpContainerTreeStore *store)
+ligma_container_tree_store_renderer_update (LigmaViewRenderer       *renderer,
+                                           LigmaContainerTreeStore *store)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+  LigmaContainerTreeStorePrivate *private = GET_PRIVATE (store);
   GtkTreeIter                   *iter;
 
-  iter = gimp_container_view_lookup (private->container_view,
+  iter = ligma_container_view_lookup (private->container_view,
                                      renderer->viewable);
 
   if (iter)

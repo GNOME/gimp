@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpparamspecs-desc.h"
+#include "core/ligmaparamspecs-desc.h"
 
-#include "gimppdb.h"
-#include "gimppdb-query.h"
-#include "gimppdberror.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-query.h"
+#include "ligmapdberror.h"
+#include "ligmaprocedure.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define PDB_REGEX_FLAGS    (G_REGEX_CASELESS | G_REGEX_OPTIMIZE)
@@ -46,7 +46,7 @@ typedef struct _PDBDump PDBDump;
 
 struct _PDBDump
 {
-  GimpPDB       *pdb;
+  LigmaPDB       *pdb;
   GOutputStream *output;
   GError        *error;
 
@@ -57,7 +57,7 @@ typedef struct _PDBQuery PDBQuery;
 
 struct _PDBQuery
 {
-  GimpPDB  *pdb;
+  LigmaPDB  *pdb;
 
   GRegex   *name_regex;
   GRegex   *blurb_regex;
@@ -87,28 +87,28 @@ struct _PDBStrings
 
 /*  local function prototypes  */
 
-static void   gimp_pdb_query_entry  (gpointer       key,
+static void   ligma_pdb_query_entry  (gpointer       key,
                                      gpointer       value,
                                      gpointer       user_data);
-static void   gimp_pdb_print_entry  (gpointer       key,
+static void   ligma_pdb_print_entry  (gpointer       key,
                                      gpointer       value,
                                      gpointer       user_data);
-static void   gimp_pdb_get_strings  (PDBStrings    *strings,
-                                     GimpProcedure *procedure,
+static void   ligma_pdb_get_strings  (PDBStrings    *strings,
+                                     LigmaProcedure *procedure,
                                      gboolean       compat);
-static void   gimp_pdb_free_strings (PDBStrings    *strings);
+static void   ligma_pdb_free_strings (PDBStrings    *strings);
 
 
 /*  public functions  */
 
 gboolean
-gimp_pdb_dump (GimpPDB  *pdb,
+ligma_pdb_dump (LigmaPDB  *pdb,
                GFile    *file,
                GError  **error)
 {
   PDBDump pdb_dump = { 0, };
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -123,13 +123,13 @@ gimp_pdb_dump (GimpPDB  *pdb,
   pdb_dump.dumping_compat = FALSE;
 
   g_hash_table_foreach (pdb->procedures,
-                        gimp_pdb_print_entry,
+                        ligma_pdb_print_entry,
                         &pdb_dump);
 
   pdb_dump.dumping_compat = TRUE;
 
   g_hash_table_foreach (pdb->compat_proc_names,
-                        gimp_pdb_print_entry,
+                        ligma_pdb_print_entry,
                         &pdb_dump);
 
   if (pdb_dump.error)
@@ -138,7 +138,7 @@ gimp_pdb_dump (GimpPDB  *pdb,
 
       g_set_error (error, pdb_dump.error->domain, pdb_dump.error->code,
                    _("Writing PDB file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (file), pdb_dump.error->message);
+                   ligma_file_get_utf8_name (file), pdb_dump.error->message);
       g_clear_error (&pdb_dump.error);
 
       /* Cancel the overwrite initiated by g_file_replace(). */
@@ -156,7 +156,7 @@ gimp_pdb_dump (GimpPDB  *pdb,
 }
 
 gboolean
-gimp_pdb_query (GimpPDB       *pdb,
+ligma_pdb_query (LigmaPDB       *pdb,
                 const gchar   *name,
                 const gchar   *blurb,
                 const gchar   *help,
@@ -170,7 +170,7 @@ gimp_pdb_query (GimpPDB       *pdb,
   PDBQuery pdb_query = { 0, };
   gboolean success   = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
   g_return_val_if_fail (blurb != NULL, FALSE);
   g_return_val_if_fail (help != NULL, FALSE);
@@ -218,12 +218,12 @@ gimp_pdb_query (GimpPDB       *pdb,
   pdb_query.querying_compat = FALSE;
 
   g_hash_table_foreach (pdb->procedures,
-                        gimp_pdb_query_entry, &pdb_query);
+                        ligma_pdb_query_entry, &pdb_query);
 
   pdb_query.querying_compat = TRUE;
 
   g_hash_table_foreach (pdb->compat_proc_names,
-                        gimp_pdb_query_entry, &pdb_query);
+                        ligma_pdb_query_entry, &pdb_query);
 
  cleanup:
 
@@ -270,17 +270,17 @@ match_string (GRegex      *regex,
 }
 
 static void
-gimp_pdb_query_entry (gpointer key,
+ligma_pdb_query_entry (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
   PDBQuery           *pdb_query = user_data;
   GList              *list;
-  GimpProcedure      *procedure;
+  LigmaProcedure      *procedure;
   const gchar        *proc_name;
   PDBStrings          strings;
   GEnumClass         *enum_class;
-  const GimpEnumDesc *type_desc;
+  const LigmaEnumDesc *type_desc;
 
   proc_name = key;
 
@@ -294,10 +294,10 @@ gimp_pdb_query_entry (gpointer key,
 
   procedure = list->data;
 
-  gimp_pdb_get_strings (&strings, procedure, pdb_query->querying_compat);
+  ligma_pdb_get_strings (&strings, procedure, pdb_query->querying_compat);
 
-  enum_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
-  type_desc = gimp_enum_get_desc (enum_class, procedure->proc_type);
+  enum_class = g_type_class_ref (LIGMA_TYPE_PDB_PROC_TYPE);
+  type_desc = ligma_enum_get_desc (enum_class, procedure->proc_type);
   g_type_class_unref  (enum_class);
 
   if (match_string (pdb_query->name_regex,      proc_name)         &&
@@ -316,7 +316,7 @@ gimp_pdb_query_entry (gpointer key,
       pdb_query->list_of_procs[num_procs + 1] = NULL;
     }
 
-  gimp_pdb_free_strings (&strings);
+  ligma_pdb_free_strings (&strings);
 }
 
 /* #define DEBUG_OUTPUT 1 */
@@ -352,7 +352,7 @@ output_string (GString     *dest,
 }
 
 static void
-gimp_pdb_print_entry (gpointer key,
+ligma_pdb_print_entry (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
@@ -375,21 +375,21 @@ gimp_pdb_print_entry (gpointer key,
   else
     list = value;
 
-  proc_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
+  proc_class = g_type_class_ref (LIGMA_TYPE_PDB_PROC_TYPE);
 
   buf    = g_string_new (NULL);
   string = g_string_new (NULL);
 
   for (; list; list = list->next)
     {
-      GimpProcedure      *procedure = list->data;
+      LigmaProcedure      *procedure = list->data;
       PDBStrings          strings;
-      const GimpEnumDesc *type_desc;
+      const LigmaEnumDesc *type_desc;
       gint                i;
 
       num++;
 
-      gimp_pdb_get_strings (&strings, procedure, pdb_dump->dumping_compat);
+      ligma_pdb_get_strings (&strings, procedure, pdb_dump->dumping_compat);
 
 #ifdef DEBUG_OUTPUT
       g_string_append_printf (string, "(");
@@ -407,7 +407,7 @@ gimp_pdb_print_entry (gpointer key,
           output_string (string, proc_name);
         }
 
-      type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
+      type_desc = ligma_enum_get_desc (proc_class, procedure->proc_type);
 
 #ifdef DEBUG_OUTPUT
 
@@ -462,7 +462,7 @@ gimp_pdb_print_entry (gpointer key,
       for (i = 0; i < procedure->num_args; i++)
         {
           GParamSpec *pspec = procedure->args[i];
-          gchar      *desc  = gimp_param_spec_get_desc (pspec);
+          gchar      *desc  = ligma_param_spec_get_desc (pspec);
 
           g_string_append_printf (string, "\n    (\n");
 
@@ -487,7 +487,7 @@ gimp_pdb_print_entry (gpointer key,
       for (i = 0; i < procedure->num_values; i++)
         {
           GParamSpec *pspec = procedure->values[i];
-          gchar      *desc  = gimp_param_spec_get_desc (pspec);
+          gchar      *desc  = ligma_param_spec_get_desc (pspec);
 
           g_string_append_printf (string, "\n    (\n");
 
@@ -510,7 +510,7 @@ gimp_pdb_print_entry (gpointer key,
 
 #endif /* DEBUG_OUTPUT */
 
-      gimp_pdb_free_strings (&strings);
+      ligma_pdb_free_strings (&strings);
     }
 
   g_output_stream_write_all (output, string->str, string->len,
@@ -523,8 +523,8 @@ gimp_pdb_print_entry (gpointer key,
 }
 
 static void
-gimp_pdb_get_strings (PDBStrings    *strings,
-                      GimpProcedure *procedure,
+ligma_pdb_get_strings (PDBStrings    *strings,
+                      LigmaProcedure *procedure,
                       gboolean       compat)
 {
   strings->compat = compat;
@@ -532,7 +532,7 @@ gimp_pdb_get_strings (PDBStrings    *strings,
   if (compat)
     {
       strings->blurb     = g_strdup_printf (COMPAT_BLURB,
-                                            gimp_object_get_name (procedure));
+                                            ligma_object_get_name (procedure));
       strings->help      = g_strdup (strings->blurb);
       strings->authors   = NULL;
       strings->copyright = NULL;
@@ -549,7 +549,7 @@ gimp_pdb_get_strings (PDBStrings    *strings,
 }
 
 static void
-gimp_pdb_free_strings (PDBStrings *strings)
+ligma_pdb_free_strings (PDBStrings *strings)
 {
   if (strings->compat)
     {

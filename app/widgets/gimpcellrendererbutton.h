@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrendererbutton.h
- * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ * ligmacellrendererbutton.h
+ * Copyright (C) 2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CELL_RENDERER_BUTTON_H__
-#define __GIMP_CELL_RENDERER_BUTTON_H__
+#ifndef __LIGMA_CELL_RENDERER_BUTTON_H__
+#define __LIGMA_CELL_RENDERER_BUTTON_H__
 
 
-#define GIMP_TYPE_CELL_RENDERER_BUTTON            (gimp_cell_renderer_button_get_type ())
-#define GIMP_CELL_RENDERER_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CELL_RENDERER_BUTTON, GimpCellRendererButton))
-#define GIMP_CELL_RENDERER_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CELL_RENDERER_BUTTON, GimpCellRendererButtonClass))
-#define GIMP_IS_CELL_RENDERER_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CELL_RENDERER_BUTTON))
-#define GIMP_IS_CELL_RENDERER_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CELL_RENDERER_BUTTON))
-#define GIMP_CELL_RENDERER_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CELL_RENDERER_BUTTON, GimpCellRendererButtonClass))
+#define LIGMA_TYPE_CELL_RENDERER_BUTTON            (ligma_cell_renderer_button_get_type ())
+#define LIGMA_CELL_RENDERER_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CELL_RENDERER_BUTTON, LigmaCellRendererButton))
+#define LIGMA_CELL_RENDERER_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CELL_RENDERER_BUTTON, LigmaCellRendererButtonClass))
+#define LIGMA_IS_CELL_RENDERER_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CELL_RENDERER_BUTTON))
+#define LIGMA_IS_CELL_RENDERER_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CELL_RENDERER_BUTTON))
+#define LIGMA_CELL_RENDERER_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CELL_RENDERER_BUTTON, LigmaCellRendererButtonClass))
 
 
-typedef struct _GimpCellRendererButtonClass GimpCellRendererButtonClass;
+typedef struct _LigmaCellRendererButtonClass LigmaCellRendererButtonClass;
 
-struct _GimpCellRendererButton
+struct _LigmaCellRendererButton
 {
   GtkCellRendererPixbuf  parent_instance;
 };
 
-struct _GimpCellRendererButtonClass
+struct _LigmaCellRendererButtonClass
 {
   GtkCellRendererPixbufClass  parent_class;
 
-  void (* clicked) (GimpCellRendererButton *cell,
+  void (* clicked) (LigmaCellRendererButton *cell,
                     const gchar            *path,
                     GdkModifierType         state);
 };
 
 
-GType             gimp_cell_renderer_button_get_type (void) G_GNUC_CONST;
+GType             ligma_cell_renderer_button_get_type (void) G_GNUC_CONST;
 
-GtkCellRenderer * gimp_cell_renderer_button_new      (void);
+GtkCellRenderer * ligma_cell_renderer_button_new      (void);
 
-void              gimp_cell_renderer_button_clicked  (GimpCellRendererButton *cell,
+void              ligma_cell_renderer_button_clicked  (LigmaCellRendererButton *cell,
                                                       const gchar            *path,
                                                       GdkModifierType         state);
 
 
-#endif /* __GIMP_CELL_RENDERER_BUTTON_H__ */
+#endif /* __LIGMA_CELL_RENDERER_BUTTON_H__ */

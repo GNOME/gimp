@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,14 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "ppmtool.h"
 #include "paper.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static GtkWidget *paper_preview       = NULL;
@@ -65,9 +65,9 @@ static void paper_update_preview (void)
               buf[j] = 255 - buf[j];
         }
     }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (paper_preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (paper_preview),
                           0, 0, 100, 100,
-                          GIMP_GRAY_IMAGE,
+                          LIGMA_GRAY_IMAGE,
                           paper_preview_buffer,
                           100);
 
@@ -109,8 +109,8 @@ void
 paper_restore (void)
 {
   reselect (paper_list, pcvals.selected_paper);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (paper_relief_adjust), pcvals.paper_relief);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (paper_scale_adjust), pcvals.paper_scale);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (paper_relief_adjust), pcvals.paper_relief);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (paper_scale_adjust), pcvals.paper_scale);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_invert), pcvals.paper_invert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_overlay), pcvals.paper_overlay);
 }
@@ -157,7 +157,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  paper_preview = tmpw = gimp_preview_area_new ();
+  paper_preview = tmpw = ligma_preview_area_new ();
   gtk_widget_set_size_request (tmpw, 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show (tmpw);
@@ -168,7 +168,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect_swapped (tmpw, "clicked",
                             G_CALLBACK (paper_select), selection);
-  gimp_help_set_help_data (tmpw, _("Inverts the Papers texture"), NULL);
+  ligma_help_set_help_data (tmpw, _("Inverts the Papers texture"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.paper_invert);
 
@@ -176,7 +176,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gimp_help_set_help_data
+  ligma_help_set_help_data
     (tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.paper_overlay);
@@ -188,23 +188,23 @@ create_paperpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   paper_scale_adjust =
-    gimp_scale_entry_new (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
-  gimp_help_set_help_data (paper_scale_adjust,
+    ligma_scale_entry_new (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
+  ligma_help_set_help_data (paper_scale_adjust,
                            _("Specifies the scale of the texture (in percent of original file)"),
                            NULL);
   g_signal_connect (paper_scale_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.paper_scale);
   gtk_grid_attach (GTK_GRID (grid), paper_scale_adjust, 0, 0, 3, 1);
   gtk_widget_show (paper_scale_adjust);
 
   paper_relief_adjust =
-    gimp_scale_entry_new (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
-  gimp_help_set_help_data (paper_relief_adjust,
+    ligma_scale_entry_new (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
+  ligma_help_set_help_data (paper_relief_adjust,
                            _("Specifies the amount of embossing to apply to the image (in percent)"),
                            NULL);
   g_signal_connect (paper_relief_adjust, "value-changed",
-                    G_CALLBACK (gimpressionist_scale_entry_update_double),
+                    G_CALLBACK (ligmaressionist_scale_entry_update_double),
                     &pcvals.paper_relief);
   gtk_grid_attach (GTK_GRID (grid), paper_relief_adjust, 0, 1, 3, 1);
   gtk_widget_show (paper_relief_adjust);

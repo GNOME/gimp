@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-expand.py -- Delta-decodes GIMP performance logs
+performance-log-expand.py -- Delta-decodes LIGMA performance logs
 Copyright (C) 2018  Ell
 
 This program is free software: you can redistribute it and/or modify

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #define __DYNAMICS_EDITOR_ACTIONS_H__
 
 
-void   dynamics_editor_actions_setup  (GimpActionGroup *group);
-void   dynamics_editor_actions_update (GimpActionGroup *group,
+void   dynamics_editor_actions_setup  (LigmaActionGroup *group);
+void   dynamics_editor_actions_update (LigmaActionGroup *group,
                                        gpointer         data);
 
 

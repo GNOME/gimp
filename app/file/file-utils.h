@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-utils.h
@@ -21,12 +21,12 @@
 #define __FILE_UTILS_H__
 
 
-GFile     * file_utils_filename_to_file  (Gimp         *gimp,
+GFile     * file_utils_filename_to_file  (Ligma         *ligma,
                                           const gchar  *filename,
                                           GError      **error);
 
 GdkPixbuf * file_utils_load_thumbnail    (GFile        *file);
-gboolean    file_utils_save_thumbnail    (GimpImage    *image,
+gboolean    file_utils_save_thumbnail    (LigmaImage    *image,
                                           GFile        *file);
 
 

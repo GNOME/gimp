@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasgrid.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasgrid.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "display-types.h"
 
-#include "core/gimpgrid.h"
-#include "core/gimpimage.h"
+#include "core/ligmagrid.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcanvas-style.h"
-#include "gimpcanvasgrid.h"
-#include "gimpcanvasitem-utils.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scale.h"
+#include "ligmacanvas-style.h"
+#include "ligmacanvasgrid.h"
+#include "ligmacanvasitem-utils.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-scale.h"
 
 
 enum
@@ -47,80 +47,80 @@ enum
 };
 
 
-typedef struct _GimpCanvasGridPrivate GimpCanvasGridPrivate;
+typedef struct _LigmaCanvasGridPrivate LigmaCanvasGridPrivate;
 
-struct _GimpCanvasGridPrivate
+struct _LigmaCanvasGridPrivate
 {
-  GimpGrid *grid;
+  LigmaGrid *grid;
   gboolean  grid_style;
 };
 
 #define GET_PRIVATE(grid) \
-        ((GimpCanvasGridPrivate *) gimp_canvas_grid_get_instance_private ((GimpCanvasGrid *) (grid)))
+        ((LigmaCanvasGridPrivate *) ligma_canvas_grid_get_instance_private ((LigmaCanvasGrid *) (grid)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_grid_finalize     (GObject        *object);
-static void             gimp_canvas_grid_set_property (GObject        *object,
+static void             ligma_canvas_grid_finalize     (GObject        *object);
+static void             ligma_canvas_grid_set_property (GObject        *object,
                                                        guint           property_id,
                                                        const GValue   *value,
                                                        GParamSpec     *pspec);
-static void             gimp_canvas_grid_get_property (GObject        *object,
+static void             ligma_canvas_grid_get_property (GObject        *object,
                                                        guint           property_id,
                                                        GValue         *value,
                                                        GParamSpec     *pspec);
-static void             gimp_canvas_grid_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_grid_draw         (LigmaCanvasItem *item,
                                                        cairo_t        *cr);
-static cairo_region_t * gimp_canvas_grid_get_extents  (GimpCanvasItem *item);
-static void             gimp_canvas_grid_stroke       (GimpCanvasItem *item,
+static cairo_region_t * ligma_canvas_grid_get_extents  (LigmaCanvasItem *item);
+static void             ligma_canvas_grid_stroke       (LigmaCanvasItem *item,
                                                        cairo_t        *cr);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasGrid, gimp_canvas_grid,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasGrid, ligma_canvas_grid,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_grid_parent_class
+#define parent_class ligma_canvas_grid_parent_class
 
 
 static void
-gimp_canvas_grid_class_init (GimpCanvasGridClass *klass)
+ligma_canvas_grid_class_init (LigmaCanvasGridClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->finalize     = gimp_canvas_grid_finalize;
-  object_class->set_property = gimp_canvas_grid_set_property;
-  object_class->get_property = gimp_canvas_grid_get_property;
+  object_class->finalize     = ligma_canvas_grid_finalize;
+  object_class->set_property = ligma_canvas_grid_set_property;
+  object_class->get_property = ligma_canvas_grid_get_property;
 
-  item_class->draw           = gimp_canvas_grid_draw;
-  item_class->get_extents    = gimp_canvas_grid_get_extents;
-  item_class->stroke         = gimp_canvas_grid_stroke;
+  item_class->draw           = ligma_canvas_grid_draw;
+  item_class->get_extents    = ligma_canvas_grid_get_extents;
+  item_class->stroke         = ligma_canvas_grid_stroke;
 
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
-                                                        GIMP_TYPE_GRID,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_GRID,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_GRID_STYLE,
                                    g_param_spec_boolean ("grid-style",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_grid_init (GimpCanvasGrid *grid)
+ligma_canvas_grid_init (LigmaCanvasGrid *grid)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (grid);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (grid);
 
-  private->grid = g_object_new (GIMP_TYPE_GRID, NULL);
+  private->grid = g_object_new (LIGMA_TYPE_GRID, NULL);
 }
 
 static void
-gimp_canvas_grid_finalize (GObject *object)
+ligma_canvas_grid_finalize (GObject *object)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->grid);
 
@@ -128,20 +128,20 @@ gimp_canvas_grid_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_grid_set_property (GObject      *object,
+ligma_canvas_grid_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_GRID:
       {
-        GimpGrid *grid = g_value_get_object (value);
+        LigmaGrid *grid = g_value_get_object (value);
         if (grid)
-          gimp_config_sync (G_OBJECT (grid), G_OBJECT (private->grid), 0);
+          ligma_config_sync (G_OBJECT (grid), G_OBJECT (private->grid), 0);
       }
       break;
     case PROP_GRID_STYLE:
@@ -155,12 +155,12 @@ gimp_canvas_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_grid_get_property (GObject    *object,
+ligma_canvas_grid_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -178,11 +178,11 @@ gimp_canvas_grid_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_grid_draw (GimpCanvasItem *item,
+ligma_canvas_grid_draw (LigmaCanvasItem *item,
                        cairo_t        *cr)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (item);
-  GimpDisplayShell      *shell   = gimp_canvas_item_get_shell (item);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (item);
+  LigmaDisplayShell      *shell   = ligma_canvas_item_get_shell (item);
   gdouble                xspacing, yspacing;
   gdouble                xoffset, yoffset;
   gboolean               vert, horz;
@@ -193,8 +193,8 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
 
 #define CROSSHAIR 2
 
-  gimp_grid_get_spacing (private->grid, &xspacing, &yspacing);
-  gimp_grid_get_offset  (private->grid, &xoffset,  &yoffset);
+  ligma_grid_get_spacing (private->grid, &xspacing, &yspacing);
+  ligma_grid_get_offset  (private->grid, &xoffset,  &yoffset);
 
   g_return_if_fail (xspacing >= 0.0 &&
                     yspacing >= 0.0);
@@ -221,11 +221,11 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   x2 = ceil  (dx2) + 1;
   y2 = ceil  (dy2) + 1;
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       GeglRectangle bounds;
 
-      gimp_display_shell_scale_get_image_unrotated_bounds (
+      ligma_display_shell_scale_get_image_unrotated_bounds (
         shell,
         &bounds.x, &bounds.y, &bounds.width, &bounds.height);
 
@@ -243,19 +243,19 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
       y2 = bounds.y + bounds.height;
     }
 
-  switch (gimp_grid_get_style (private->grid))
+  switch (ligma_grid_get_style (private->grid))
     {
-    case GIMP_GRID_INTERSECTIONS:
+    case LIGMA_GRID_INTERSECTIONS:
       x1 -= CROSSHAIR;
       y1 -= CROSSHAIR;
       x2 += CROSSHAIR;
       y2 += CROSSHAIR;
       break;
 
-    case GIMP_GRID_DOTS:
-    case GIMP_GRID_ON_OFF_DASH:
-    case GIMP_GRID_DOUBLE_DASH:
-    case GIMP_GRID_SOLID:
+    case LIGMA_GRID_DOTS:
+    case LIGMA_GRID_ON_OFF_DASH:
+    case LIGMA_GRID_DOUBLE_DASH:
+    case LIGMA_GRID_SOLID:
       break;
     }
 
@@ -268,9 +268,9 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   if (yoffset < 0.0)
     yoffset += yspacing;
 
-  switch (gimp_grid_get_style (private->grid))
+  switch (ligma_grid_get_style (private->grid))
     {
-    case GIMP_GRID_DOTS:
+    case LIGMA_GRID_DOTS:
       if (vert && horz)
         {
           for (dx = x1 + xoffset; dx <= x2; dx += xspacing)
@@ -288,7 +288,7 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_GRID_INTERSECTIONS:
+    case LIGMA_GRID_INTERSECTIONS:
       if (vert && horz)
         {
           for (dx = x1 + xoffset; dx <= x2; dx += xspacing)
@@ -309,9 +309,9 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
         }
       break;
 
-    case GIMP_GRID_ON_OFF_DASH:
-    case GIMP_GRID_DOUBLE_DASH:
-    case GIMP_GRID_SOLID:
+    case LIGMA_GRID_ON_OFF_DASH:
+    case LIGMA_GRID_DOUBLE_DASH:
+    case LIGMA_GRID_SOLID:
       if (vert)
         {
           for (dx = x1 + xoffset; dx < x2; dx += xspacing)
@@ -336,31 +336,31 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
       break;
     }
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_grid_get_extents (GimpCanvasItem *item)
+ligma_canvas_grid_get_extents (LigmaCanvasItem *item)
 {
-  GimpDisplayShell      *shell = gimp_canvas_item_get_shell (item);
-  GimpImage             *image = gimp_canvas_item_get_image (item);
+  LigmaDisplayShell      *shell = ligma_canvas_item_get_shell (item);
+  LigmaImage             *image = ligma_canvas_item_get_image (item);
   cairo_rectangle_int_t  rectangle;
 
   if (! image)
     return NULL;
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       
       gdouble x1, y1;
       gdouble x2, y2;
       gint    w, h;
 
-      w = gimp_image_get_width  (image);
-      h = gimp_image_get_height (image);
+      w = ligma_image_get_width  (image);
+      h = ligma_image_get_height (image);
 
-      gimp_canvas_item_transform_xy_f (item, 0, 0, &x1, &y1);
-      gimp_canvas_item_transform_xy_f (item, w, h, &x2, &y2);
+      ligma_canvas_item_transform_xy_f (item, 0, 0, &x1, &y1);
+      ligma_canvas_item_transform_xy_f (item, w, h, &x2, &y2);
 
       rectangle.x      = floor (x1);
       rectangle.y      = floor (y1);
@@ -369,7 +369,7 @@ gimp_canvas_grid_get_extents (GimpCanvasItem *item)
     }
   else
     {
-      gimp_canvas_item_untransform_viewport (item,
+      ligma_canvas_item_untransform_viewport (item,
                                              &rectangle.x,
                                              &rectangle.y,
                                              &rectangle.width,
@@ -380,34 +380,34 @@ gimp_canvas_grid_get_extents (GimpCanvasItem *item)
 }
 
 static void
-gimp_canvas_grid_stroke (GimpCanvasItem *item,
+ligma_canvas_grid_stroke (LigmaCanvasItem *item,
                          cairo_t        *cr)
 {
-  GimpCanvasGridPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasGridPrivate *private = GET_PRIVATE (item);
 
   if (private->grid_style)
     {
-      GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+      LigmaDisplayShell *shell = ligma_canvas_item_get_shell (item);
 
-      gimp_canvas_set_grid_style (gimp_canvas_item_get_canvas (item), cr,
+      ligma_canvas_set_grid_style (ligma_canvas_item_get_canvas (item), cr,
                                   private->grid,
                                   shell->offset_x, shell->offset_y);
       cairo_stroke (cr);
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
+      LIGMA_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
     }
 }
 
-GimpCanvasItem *
-gimp_canvas_grid_new (GimpDisplayShell *shell,
-                      GimpGrid         *grid)
+LigmaCanvasItem *
+ligma_canvas_grid_new (LigmaDisplayShell *shell,
+                      LigmaGrid         *grid)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (grid == NULL || GIMP_IS_GRID (grid), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (grid == NULL || LIGMA_IS_GRID (grid), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_GRID,
+  return g_object_new (LIGMA_TYPE_CANVAS_GRID,
                        "shell", shell,
                        "grid",  grid,
                        NULL);

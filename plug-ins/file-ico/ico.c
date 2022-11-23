@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 /* #define ICO_DBG */
 
@@ -34,7 +34,7 @@
 #include "ico-load.h"
 #include "ico-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define LOAD_PROC           "file-ico-load"
 #define LOAD_CUR_PROC       "file-cur-load"
@@ -51,12 +51,12 @@ typedef struct _IcoClass IcoClass;
 
 struct _Ico
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _IcoClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -65,66 +65,66 @@ struct _IcoClass
 
 GType                   ico_get_type         (void) G_GNUC_CONST;
 
-static GList          * ico_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ico_create_procedure (GimpPlugIn           *plug_in,
+static GList          * ico_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * ico_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * ico_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * ico_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * ani_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * ani_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * ani_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * ico_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * ico_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+static LigmaValueArray * ani_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              gint                  size,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * cur_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * ico_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * ani_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * cur_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
+                                              gpointer              run_data);
+static LigmaValueArray * ani_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
+                                              gint                  n_drawables,
+                                              LigmaDrawable        **drawables,
+                                              GFile                *file,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 
-G_DEFINE_TYPE (Ico, ico, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Ico, ico, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (ICO_TYPE)
+LIGMA_MAIN (ICO_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 ico_class_init (IcoClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = ico_query_procedures;
   plug_in_class->create_procedure = ico_create_procedure;
@@ -137,7 +137,7 @@ ico_init (Ico *ico)
 }
 
 static GList *
-ico_query_procedures (GimpPlugIn *plug_in)
+ico_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -153,267 +153,267 @@ ico_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-ico_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+ico_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ico_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows icon"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows icon"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of Windows ICO file format",
                                         "Loads files of Windows ICO file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
                                       "2002");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-ico");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "ico");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\\0\\0\\1\\0");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_CUR_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ico_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows cursor"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows cursor"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of Windows CUR file format",
                                         "Loads files of Windows CUR file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
                                       "2002-2022");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/vnd.microsoft.icon");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "cur");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\\0\\0\\2\\0");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_ANI_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ani_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows animated cursor"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows animated cursor"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads files of Windows ANI file format"),
                                         "Loads files of Windows ANI file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",
                                       "2007-2022");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "application/x-navi-animation");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "ani");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "8,string,ACON");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_ANI_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 ico_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads a preview from a Windows ICO or CUR files",
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann",
-                                      "Sven Neumann <sven@gimp.org>",
+                                      "Sven Neumann <sven@ligma.org>",
                                       "2005");
     }
   else if (! strcmp (name, LOAD_ANI_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 ani_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads a preview from a Windows ANI files"),
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann, James Huang, "
                                       "Alex S.",
                                       "Dom Lachowicz, "
-                                      "Sven Neumann <sven@gimp.org>, "
+                                      "Sven Neumann <sven@ligma.org>, "
                                       "James Huang, Alex S.",
                                       "2007-2022");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ico_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows icon"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows icon"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in Windows ICO file format",
                                         "Saves files in Windows ICO file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
                                       "2002");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-ico");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "ico");
     }
   else if (! strcmp (name, SAVE_CUR_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            cur_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows cursor"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows cursor"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in Windows CUR file format",
                                         "Saves files in Windows CUR file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
                                       "2002-2022");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/vnd.microsoft.icon");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "cur");
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-x",
+      LIGMA_PROC_ARG_INT (procedure, "n-hot-spot-x",
                          "Number of hot spot's X coordinates",
                          "Number of hot spot's X coordinates",
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
+      LIGMA_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
                                  "Hot spot X",
                                  "X coordinates of hot spot (one per layer)",
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-y",
+      LIGMA_PROC_ARG_INT (procedure, "n-hot-spot-y",
                          "Number of hot spot's Y coordinates",
                          "Number of hot spot's Y coordinates",
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
+      LIGMA_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
                                  "Hot spot Y",
                                  "Y coordinates of hot spot (one per layer)",
                                  G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_ANI_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            ani_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Microsoft Windows animated cursor"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+      ligma_procedure_set_menu_label (procedure, _("Microsoft Windows animated cursor"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_BRUSH);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Saves files in Windows ANI file format"),
                                         _("Saves files in Windows ANI file format"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",
                                       "2007-2022");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "application/x-navi-animation");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "ani");
 
-      GIMP_PROC_ARG_STRING (procedure, "cursor-name",
+      LIGMA_PROC_ARG_STRING (procedure, "cursor-name",
                             "Cursor Name",
                             _("Cursor Name (Optional)"),
                             NULL,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "author-name",
+      LIGMA_PROC_ARG_STRING (procedure, "author-name",
                             "Cursor Author",
                             _("Cursor Author (Optional)"),
                             NULL,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
+      LIGMA_PROC_ARG_INT (procedure, "default-delay",
                          "Default delay",
                          "Default delay between frames "
                          "in jiffies (1/60 of a second)",
                          0, G_MAXINT, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-x",
+      LIGMA_PROC_ARG_INT (procedure, "n-hot-spot-x",
                          "Number of hot spot's X coordinates",
                          "Number of hot spot's X coordinates",
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
+      LIGMA_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
                                  "Hot spot X",
                                  "X coordinates of hot spot (one per layer)",
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-y",
+      LIGMA_PROC_ARG_INT (procedure, "n-hot-spot-y",
                          "Number of hot spot's Y coordinates",
                          "Number of hot spot's Y coordinates",
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
+      LIGMA_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
                                  "Hot spot Y",
                                  "Y coordinates of hot spot (one per layer)",
                                  G_PARAM_READWRITE);
@@ -422,15 +422,15 @@ ico_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-ico_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+ico_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -438,28 +438,28 @@ ico_load (GimpProcedure        *procedure,
   image = ico_load_image (file, NULL, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ani_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+ani_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -468,30 +468,30 @@ ani_load (GimpProcedure        *procedure,
                           NULL, NULL, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ico_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+ico_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width;
   gint            height;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -503,34 +503,34 @@ ico_load_thumb (GimpProcedure        *procedure,
                                     &width, &height, 0, &error);
 
   if (image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ani_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+ani_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width;
   gint            height;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -542,55 +542,55 @@ ani_load_thumb (GimpProcedure        *procedure,
                           &width, &height, &error);
 
   if (image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
 
-static GimpValueArray *
-ico_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+ico_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
   status = ico_save_image (file, image, run_mode, &error);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpValueArray *
-cur_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+cur_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status;
   GError              *error        = NULL;
   gint32              *hot_spot_x   = NULL;
   gint32              *hot_spot_y   = NULL;
@@ -599,8 +599,8 @@ cur_save (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "n-hot-spot-x", &n_hot_spot_x,
@@ -614,10 +614,10 @@ cur_save (GimpProcedure        *procedure,
                            &n_hot_spot_y, &hot_spot_y,
                            &error);
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      /* XXX: seems libgimpconfig is not able to serialize
-       * GimpInt32Array args yet anyway. Still leave this here for now,
+      /* XXX: seems libligmaconfig is not able to serialize
+       * LigmaInt32Array args yet anyway. Still leave this here for now,
        * as reminder of missing feature when we see the warnings.
        */
       g_object_set (config,
@@ -630,24 +630,24 @@ cur_save (GimpProcedure        *procedure,
       g_free (hot_spot_y);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpValueArray *
-ani_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+ani_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status;
   GError              *error        = NULL;
   gchar               *inam         = NULL;
   gchar               *iart         = NULL;
@@ -661,8 +661,8 @@ ani_save (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "cursor-name",   &inam,
@@ -684,10 +684,10 @@ ani_save (GimpProcedure        *procedure,
                            &n_hot_spot_y, &hot_spot_y,
                            &header, &ani_info, &error);
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      /* XXX: seems libgimpconfig is not able to serialize
-       * GimpInt32Array args yet anyway. Still leave this here for now,
+      /* XXX: seems libligmaconfig is not able to serialize
+       * LigmaInt32Array args yet anyway. Still leave this here for now,
        * as reminder of missing feature when we see the warnings.
        */
       g_object_set (config,
@@ -709,10 +709,10 @@ ani_save (GimpProcedure        *procedure,
       memset (&ani_info, 0, sizeof (AniSaveInfo));
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 gint

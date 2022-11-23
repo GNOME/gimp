@@ -1,11 +1,11 @@
-# Greek translation for gimp-python.
+# Greek translation for ligma-python.
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002, 2009.
 # Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python 1.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python 1.0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-04-25 09:18+0000\n"
 "PO-Revision-Date: 2022-04-25 13:56+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
@@ -425,8 +425,8 @@ msgid "Python _Console"
 msgstr "_Κονσόλα Python"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Διερμηνέας διαδραστικού GIMP Python"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Διερμηνέας διαδραστικού LIGMA Python"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -777,8 +777,8 @@ msgstr ""
 "ενεργή στρώση, ή αποθήκευση σε μονοπάτι"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Σπειρογράφημα gimp"
+msgid "Spyroligma"
+msgstr "Σπειρογράφημα ligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -807,8 +807,8 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Παρακαλούμε περιμένετε: Αποδίδεται το μοτίβο"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Σπειρογράφημα gimp..."
+msgid "Spyroligma..."
+msgstr "Σπειρογράφημα ligma..."
 
 #~ msgid "Fog _color"
 #~ msgstr "_Χρώμα ομίχλης"
@@ -967,5 +967,5 @@ msgstr "Σπειρογράφημα gimp..."
 #~ msgstr "Κείμενο"
 
 #, fuzzy
-#~ msgid "Gimp-Python Console"
+#~ msgid "Ligma-Python Console"
 #~ msgstr "Κονσόλα Python"

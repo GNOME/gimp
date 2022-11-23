@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,125 +15,125 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_H__
-#define __GIMP_ITEM_H__
+#ifndef __LIGMA_ITEM_H__
+#define __LIGMA_ITEM_H__
 
 
-#include "gimpfilter.h"
+#include "ligmafilter.h"
 
 
-#define GIMP_TYPE_ITEM            (gimp_item_get_type ())
-#define GIMP_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM, GimpItem))
-#define GIMP_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM, GimpItemClass))
-#define GIMP_IS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM))
-#define GIMP_IS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM))
-#define GIMP_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM, GimpItemClass))
+#define LIGMA_TYPE_ITEM            (ligma_item_get_type ())
+#define LIGMA_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ITEM, LigmaItem))
+#define LIGMA_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ITEM, LigmaItemClass))
+#define LIGMA_IS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ITEM))
+#define LIGMA_IS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ITEM))
+#define LIGMA_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ITEM, LigmaItemClass))
 
 
-typedef struct _GimpItemClass GimpItemClass;
+typedef struct _LigmaItemClass LigmaItemClass;
 
-struct _GimpItem
+struct _LigmaItem
 {
-  GimpFilter  parent_instance;
+  LigmaFilter  parent_instance;
 };
 
-struct _GimpItemClass
+struct _LigmaItemClass
 {
-  GimpFilterClass  parent_class;
+  LigmaFilterClass  parent_class;
 
   /*  signals  */
-  void            (* removed)               (GimpItem            *item);
-  void            (* visibility_changed)    (GimpItem            *item);
-  void            (* color_tag_changed)     (GimpItem            *item);
-  void            (* lock_content_changed)  (GimpItem            *item);
-  void            (* lock_position_changed) (GimpItem            *item);
-  void            (* lock_visibility_changed) (GimpItem            *item);
+  void            (* removed)               (LigmaItem            *item);
+  void            (* visibility_changed)    (LigmaItem            *item);
+  void            (* color_tag_changed)     (LigmaItem            *item);
+  void            (* lock_content_changed)  (LigmaItem            *item);
+  void            (* lock_position_changed) (LigmaItem            *item);
+  void            (* lock_visibility_changed) (LigmaItem            *item);
 
   /*  virtual functions  */
-  void            (* unset_removed)      (GimpItem               *item);
-  gboolean        (* is_attached)        (GimpItem               *item);
-  gboolean        (* is_content_locked)  (GimpItem               *item,
-                                          GimpItem              **locked_item);
-  gboolean        (* is_position_locked) (GimpItem               *item,
-                                          GimpItem              **locked_item,
+  void            (* unset_removed)      (LigmaItem               *item);
+  gboolean        (* is_attached)        (LigmaItem               *item);
+  gboolean        (* is_content_locked)  (LigmaItem               *item,
+                                          LigmaItem              **locked_item);
+  gboolean        (* is_position_locked) (LigmaItem               *item,
+                                          LigmaItem              **locked_item,
                                           gboolean                checking_children);
-  gboolean        (* is_visibility_locked) (GimpItem               *item,
-                                            GimpItem              **locked_item);
-  GimpItemTree  * (* get_tree)           (GimpItem               *item);
-  gboolean        (* bounds)             (GimpItem               *item,
+  gboolean        (* is_visibility_locked) (LigmaItem               *item,
+                                            LigmaItem              **locked_item);
+  LigmaItemTree  * (* get_tree)           (LigmaItem               *item);
+  gboolean        (* bounds)             (LigmaItem               *item,
                                           gdouble                *x,
                                           gdouble                *y,
                                           gdouble                *width,
                                           gdouble                *height);
-  GimpItem      * (* duplicate)          (GimpItem               *item,
+  LigmaItem      * (* duplicate)          (LigmaItem               *item,
                                           GType                   new_type);
-  void            (* convert)            (GimpItem               *item,
-                                          GimpImage              *dest_image,
+  void            (* convert)            (LigmaItem               *item,
+                                          LigmaImage              *dest_image,
                                           GType                   old_type);
-  gboolean        (* rename)             (GimpItem               *item,
+  gboolean        (* rename)             (LigmaItem               *item,
                                           const gchar            *new_name,
                                           const gchar            *undo_desc,
                                           GError                **error);
-  void            (* start_move)         (GimpItem               *item,
+  void            (* start_move)         (LigmaItem               *item,
                                           gboolean                push_undo);
-  void            (* end_move)           (GimpItem               *item,
+  void            (* end_move)           (LigmaItem               *item,
                                           gboolean                push_undo);
-  void            (* start_transform)    (GimpItem               *item,
+  void            (* start_transform)    (LigmaItem               *item,
                                           gboolean                push_undo);
-  void            (* end_transform)      (GimpItem               *item,
+  void            (* end_transform)      (LigmaItem               *item,
                                           gboolean                push_undo);
-  void            (* translate)          (GimpItem               *item,
+  void            (* translate)          (LigmaItem               *item,
                                           gdouble                 offset_x,
                                           gdouble                 offset_y,
                                           gboolean                push_undo);
-  void            (* scale)              (GimpItem               *item,
+  void            (* scale)              (LigmaItem               *item,
                                           gint                    new_width,
                                           gint                    new_height,
                                           gint                    new_offset_x,
                                           gint                    new_offset_y,
-                                          GimpInterpolationType   interpolation_type,
-                                          GimpProgress           *progress);
-  void            (* resize)             (GimpItem               *item,
-                                          GimpContext            *context,
-                                          GimpFillType            fill_type,
+                                          LigmaInterpolationType   interpolation_type,
+                                          LigmaProgress           *progress);
+  void            (* resize)             (LigmaItem               *item,
+                                          LigmaContext            *context,
+                                          LigmaFillType            fill_type,
                                           gint                    new_width,
                                           gint                    new_height,
                                           gint                    offset_x,
                                           gint                    offset_y);
-  void            (* flip)               (GimpItem               *item,
-                                          GimpContext            *context,
-                                          GimpOrientationType     flip_type,
+  void            (* flip)               (LigmaItem               *item,
+                                          LigmaContext            *context,
+                                          LigmaOrientationType     flip_type,
                                           gdouble                 axis,
                                           gboolean                clip_result);
-  void            (* rotate)             (GimpItem               *item,
-                                          GimpContext            *context,
-                                          GimpRotationType        rotate_type,
+  void            (* rotate)             (LigmaItem               *item,
+                                          LigmaContext            *context,
+                                          LigmaRotationType        rotate_type,
                                           gdouble                 center_x,
                                           gdouble                 center_y,
                                           gboolean                clip_result);
-  void            (* transform)          (GimpItem               *item,
-                                          GimpContext            *context,
-                                          const GimpMatrix3      *matrix,
-                                          GimpTransformDirection  direction,
-                                          GimpInterpolationType   interpolation_type,
-                                          GimpTransformResize     clip_result,
-                                          GimpProgress           *progress);
-  GimpTransformResize (* get_clip)       (GimpItem               *item,
-                                          GimpTransformResize     clip_result);
-  gboolean        (* fill)               (GimpItem               *item,
-                                          GimpDrawable           *drawable,
-                                          GimpFillOptions        *fill_options,
+  void            (* transform)          (LigmaItem               *item,
+                                          LigmaContext            *context,
+                                          const LigmaMatrix3      *matrix,
+                                          LigmaTransformDirection  direction,
+                                          LigmaInterpolationType   interpolation_type,
+                                          LigmaTransformResize     clip_result,
+                                          LigmaProgress           *progress);
+  LigmaTransformResize (* get_clip)       (LigmaItem               *item,
+                                          LigmaTransformResize     clip_result);
+  gboolean        (* fill)               (LigmaItem               *item,
+                                          LigmaDrawable           *drawable,
+                                          LigmaFillOptions        *fill_options,
                                           gboolean                push_undo,
-                                          GimpProgress           *progress,
+                                          LigmaProgress           *progress,
                                           GError                **error);
-  gboolean        (* stroke)             (GimpItem               *item,
-                                          GimpDrawable           *drawable,
-                                          GimpStrokeOptions      *stroke_options,
+  gboolean        (* stroke)             (LigmaItem               *item,
+                                          LigmaDrawable           *drawable,
+                                          LigmaStrokeOptions      *stroke_options,
                                           gboolean                push_undo,
-                                          GimpProgress           *progress,
+                                          LigmaProgress           *progress,
                                           GError                **error);
-  void            (* to_selection)       (GimpItem               *item,
-                                          GimpChannelOps          op,
+  void            (* to_selection)       (LigmaItem               *item,
+                                          LigmaChannelOps          op,
                                           gboolean                antialias,
                                           gboolean                feather,
                                           gdouble                 feather_radius_x,
@@ -162,253 +162,253 @@ struct _GimpItemClass
 };
 
 
-GType           gimp_item_get_type           (void) G_GNUC_CONST;
+GType           ligma_item_get_type           (void) G_GNUC_CONST;
 
-GimpItem      * gimp_item_new                (GType               type,
-                                              GimpImage          *image,
+LigmaItem      * ligma_item_new                (GType               type,
+                                              LigmaImage          *image,
                                               const gchar        *name,
                                               gint                offset_x,
                                               gint                offset_y,
                                               gint                width,
                                               gint                height);
 
-void            gimp_item_removed            (GimpItem           *item);
-gboolean        gimp_item_is_removed         (GimpItem           *item);
-void            gimp_item_unset_removed      (GimpItem           *item);
+void            ligma_item_removed            (LigmaItem           *item);
+gboolean        ligma_item_is_removed         (LigmaItem           *item);
+void            ligma_item_unset_removed      (LigmaItem           *item);
 
-gboolean        gimp_item_is_attached        (GimpItem           *item);
+gboolean        ligma_item_is_attached        (LigmaItem           *item);
 
-GimpItem      * gimp_item_get_parent         (GimpItem           *item);
+LigmaItem      * ligma_item_get_parent         (LigmaItem           *item);
 
-GimpItemTree  * gimp_item_get_tree           (GimpItem           *item);
-GimpContainer * gimp_item_get_container      (GimpItem           *item);
-GList         * gimp_item_get_container_iter (GimpItem           *item);
-gint            gimp_item_get_index          (GimpItem           *item);
-GList         * gimp_item_get_path           (GimpItem           *item);
+LigmaItemTree  * ligma_item_get_tree           (LigmaItem           *item);
+LigmaContainer * ligma_item_get_container      (LigmaItem           *item);
+GList         * ligma_item_get_container_iter (LigmaItem           *item);
+gint            ligma_item_get_index          (LigmaItem           *item);
+GList         * ligma_item_get_path           (LigmaItem           *item);
 
-gboolean        gimp_item_bounds             (GimpItem           *item,
+gboolean        ligma_item_bounds             (LigmaItem           *item,
                                               gint               *x,
                                               gint               *y,
                                               gint               *width,
                                               gint               *height);
-gboolean        gimp_item_bounds_f           (GimpItem           *item,
+gboolean        ligma_item_bounds_f           (LigmaItem           *item,
                                               gdouble            *x,
                                               gdouble            *y,
                                               gdouble            *width,
                                               gdouble            *height);
 
-GimpItem      * gimp_item_duplicate          (GimpItem           *item,
+LigmaItem      * ligma_item_duplicate          (LigmaItem           *item,
                                               GType               new_type);
-GimpItem      * gimp_item_convert            (GimpItem           *item,
-                                              GimpImage          *dest_image,
+LigmaItem      * ligma_item_convert            (LigmaItem           *item,
+                                              LigmaImage          *dest_image,
                                               GType               new_type);
 
-gboolean        gimp_item_rename             (GimpItem           *item,
+gboolean        ligma_item_rename             (LigmaItem           *item,
                                               const gchar        *new_name,
                                               GError            **error);
 
-gint            gimp_item_get_width          (GimpItem           *item);
-gint            gimp_item_get_height         (GimpItem           *item);
-void            gimp_item_set_size           (GimpItem           *item,
+gint            ligma_item_get_width          (LigmaItem           *item);
+gint            ligma_item_get_height         (LigmaItem           *item);
+void            ligma_item_set_size           (LigmaItem           *item,
                                               gint                width,
                                               gint                height);
 
-void            gimp_item_get_offset         (GimpItem           *item,
+void            ligma_item_get_offset         (LigmaItem           *item,
                                               gint               *offset_x,
                                               gint               *offset_y);
-void            gimp_item_set_offset         (GimpItem           *item,
+void            ligma_item_set_offset         (LigmaItem           *item,
                                               gint                offset_x,
                                               gint                offset_y);
-gint            gimp_item_get_offset_x       (GimpItem           *item);
-gint            gimp_item_get_offset_y       (GimpItem           *item);
+gint            ligma_item_get_offset_x       (LigmaItem           *item);
+gint            ligma_item_get_offset_y       (LigmaItem           *item);
 
-void            gimp_item_start_move         (GimpItem           *item,
+void            ligma_item_start_move         (LigmaItem           *item,
                                               gboolean            push_undo);
-void            gimp_item_end_move           (GimpItem           *item,
-                                              gboolean            push_undo);
-
-void            gimp_item_start_transform    (GimpItem           *item,
-                                              gboolean            push_undo);
-void            gimp_item_end_transform      (GimpItem           *item,
+void            ligma_item_end_move           (LigmaItem           *item,
                                               gboolean            push_undo);
 
-void            gimp_item_translate          (GimpItem           *item,
+void            ligma_item_start_transform    (LigmaItem           *item,
+                                              gboolean            push_undo);
+void            ligma_item_end_transform      (LigmaItem           *item,
+                                              gboolean            push_undo);
+
+void            ligma_item_translate          (LigmaItem           *item,
                                               gdouble             offset_x,
                                               gdouble             offset_y,
                                               gboolean            push_undo);
 
-gboolean        gimp_item_check_scaling      (GimpItem           *item,
+gboolean        ligma_item_check_scaling      (LigmaItem           *item,
                                               gint                new_width,
                                               gint                new_height);
-void            gimp_item_scale              (GimpItem           *item,
+void            ligma_item_scale              (LigmaItem           *item,
                                               gint                new_width,
                                               gint                new_height,
                                               gint                new_offset_x,
                                               gint                new_offset_y,
-                                              GimpInterpolationType interpolation,
-                                              GimpProgress       *progress);
-gboolean        gimp_item_scale_by_factors   (GimpItem           *item,
+                                              LigmaInterpolationType interpolation,
+                                              LigmaProgress       *progress);
+gboolean        ligma_item_scale_by_factors   (LigmaItem           *item,
                                               gdouble             w_factor,
                                               gdouble             h_factor,
-                                              GimpInterpolationType interpolation,
-                                              GimpProgress       *progress);
+                                              LigmaInterpolationType interpolation,
+                                              LigmaProgress       *progress);
 gboolean
-      gimp_item_scale_by_factors_with_origin (GimpItem           *item,
+      ligma_item_scale_by_factors_with_origin (LigmaItem           *item,
                                               gdouble             w_factor,
                                               gdouble             h_factor,
                                               gint                origin_x,
                                               gint                origin_y,
                                               gint                new_origin_x,
                                               gint                new_origin_y,
-                                              GimpInterpolationType interpolation,
-                                              GimpProgress       *progress);
-void            gimp_item_scale_by_origin    (GimpItem           *item,
+                                              LigmaInterpolationType interpolation,
+                                              LigmaProgress       *progress);
+void            ligma_item_scale_by_origin    (LigmaItem           *item,
                                               gint                new_width,
                                               gint                new_height,
-                                              GimpInterpolationType interpolation,
-                                              GimpProgress       *progress,
+                                              LigmaInterpolationType interpolation,
+                                              LigmaProgress       *progress,
                                               gboolean            local_origin);
-void            gimp_item_resize             (GimpItem           *item,
-                                              GimpContext        *context,
-                                              GimpFillType        fill_type,
+void            ligma_item_resize             (LigmaItem           *item,
+                                              LigmaContext        *context,
+                                              LigmaFillType        fill_type,
                                               gint                new_width,
                                               gint                new_height,
                                               gint                offset_x,
                                               gint                offset_y);
-void            gimp_item_resize_to_image    (GimpItem           *item);
+void            ligma_item_resize_to_image    (LigmaItem           *item);
 
-void            gimp_item_flip               (GimpItem           *item,
-                                              GimpContext        *context,
-                                              GimpOrientationType flip_type,
+void            ligma_item_flip               (LigmaItem           *item,
+                                              LigmaContext        *context,
+                                              LigmaOrientationType flip_type,
                                               gdouble             axis,
                                               gboolean            clip_result);
-void            gimp_item_rotate             (GimpItem           *item,
-                                              GimpContext        *context,
-                                              GimpRotationType    rotate_type,
+void            ligma_item_rotate             (LigmaItem           *item,
+                                              LigmaContext        *context,
+                                              LigmaRotationType    rotate_type,
                                               gdouble             center_x,
                                               gdouble             center_y,
                                               gboolean            clip_result);
-void            gimp_item_transform          (GimpItem           *item,
-                                              GimpContext        *context,
-                                              const GimpMatrix3  *matrix,
-                                              GimpTransformDirection direction,
-                                              GimpInterpolationType interpolation_type,
-                                              GimpTransformResize clip_result,
-                                              GimpProgress       *progress);
-GimpTransformResize   gimp_item_get_clip     (GimpItem           *item,
-                                              GimpTransformResize clip_result);
+void            ligma_item_transform          (LigmaItem           *item,
+                                              LigmaContext        *context,
+                                              const LigmaMatrix3  *matrix,
+                                              LigmaTransformDirection direction,
+                                              LigmaInterpolationType interpolation_type,
+                                              LigmaTransformResize clip_result,
+                                              LigmaProgress       *progress);
+LigmaTransformResize   ligma_item_get_clip     (LigmaItem           *item,
+                                              LigmaTransformResize clip_result);
 
-gboolean        gimp_item_fill               (GimpItem           *item,
+gboolean        ligma_item_fill               (LigmaItem           *item,
                                               GList              *drawables,
-                                              GimpFillOptions    *fill_options,
+                                              LigmaFillOptions    *fill_options,
                                               gboolean            push_undo,
-                                              GimpProgress       *progress,
+                                              LigmaProgress       *progress,
                                               GError            **error);
-gboolean        gimp_item_stroke             (GimpItem           *item,
+gboolean        ligma_item_stroke             (LigmaItem           *item,
                                               GList              *drawables,
-                                              GimpContext        *context,
-                                              GimpStrokeOptions  *stroke_options,
-                                              GimpPaintOptions   *paint_options,
+                                              LigmaContext        *context,
+                                              LigmaStrokeOptions  *stroke_options,
+                                              LigmaPaintOptions   *paint_options,
                                               gboolean            push_undo,
-                                              GimpProgress       *progress,
+                                              LigmaProgress       *progress,
                                               GError            **error);
 
-void            gimp_item_to_selection       (GimpItem           *item,
-                                              GimpChannelOps      op,
+void            ligma_item_to_selection       (LigmaItem           *item,
+                                              LigmaChannelOps      op,
                                               gboolean            antialias,
                                               gboolean            feather,
                                               gdouble             feather_radius_x,
                                               gdouble             feather_radius_y);
 
-void            gimp_item_add_offset_node    (GimpItem           *item,
+void            ligma_item_add_offset_node    (LigmaItem           *item,
                                               GeglNode           *node);
-void            gimp_item_remove_offset_node (GimpItem           *item,
+void            ligma_item_remove_offset_node (LigmaItem           *item,
                                               GeglNode           *node);
 
-gint            gimp_item_get_id             (GimpItem           *item);
-GimpItem      * gimp_item_get_by_id          (Gimp               *gimp,
+gint            ligma_item_get_id             (LigmaItem           *item);
+LigmaItem      * ligma_item_get_by_id          (Ligma               *ligma,
                                               gint                id);
 
-GimpTattoo      gimp_item_get_tattoo         (GimpItem           *item);
-void            gimp_item_set_tattoo         (GimpItem           *item,
-                                              GimpTattoo          tattoo);
+LigmaTattoo      ligma_item_get_tattoo         (LigmaItem           *item);
+void            ligma_item_set_tattoo         (LigmaItem           *item,
+                                              LigmaTattoo          tattoo);
 
-GimpImage     * gimp_item_get_image          (GimpItem           *item);
-void            gimp_item_set_image          (GimpItem           *item,
-                                              GimpImage          *image);
+LigmaImage     * ligma_item_get_image          (LigmaItem           *item);
+void            ligma_item_set_image          (LigmaItem           *item,
+                                              LigmaImage          *image);
 
-void            gimp_item_replace_item       (GimpItem           *item,
-                                              GimpItem           *replace);
+void            ligma_item_replace_item       (LigmaItem           *item,
+                                              LigmaItem           *replace);
 
-void               gimp_item_set_parasites   (GimpItem           *item,
-                                              GimpParasiteList   *parasites);
-GimpParasiteList * gimp_item_get_parasites   (GimpItem           *item);
+void               ligma_item_set_parasites   (LigmaItem           *item,
+                                              LigmaParasiteList   *parasites);
+LigmaParasiteList * ligma_item_get_parasites   (LigmaItem           *item);
 
-gboolean        gimp_item_parasite_validate  (GimpItem           *item,
-                                              const GimpParasite *parasite,
+gboolean        ligma_item_parasite_validate  (LigmaItem           *item,
+                                              const LigmaParasite *parasite,
                                               GError            **error);
-void            gimp_item_parasite_attach    (GimpItem           *item,
-                                              const GimpParasite *parasite,
+void            ligma_item_parasite_attach    (LigmaItem           *item,
+                                              const LigmaParasite *parasite,
                                               gboolean            push_undo);
-void            gimp_item_parasite_detach    (GimpItem           *item,
+void            ligma_item_parasite_detach    (LigmaItem           *item,
                                               const gchar        *name,
                                               gboolean            push_undo);
-const GimpParasite * gimp_item_parasite_find (GimpItem           *item,
+const LigmaParasite * ligma_item_parasite_find (LigmaItem           *item,
                                               const gchar        *name);
-gchar        ** gimp_item_parasite_list      (GimpItem           *item);
+gchar        ** ligma_item_parasite_list      (LigmaItem           *item);
 
-gboolean        gimp_item_set_visible        (GimpItem           *item,
+gboolean        ligma_item_set_visible        (LigmaItem           *item,
                                               gboolean            visible,
                                               gboolean            push_undo);
-gboolean        gimp_item_get_visible        (GimpItem           *item);
-gboolean        gimp_item_is_visible         (GimpItem           *item);
+gboolean        ligma_item_get_visible        (LigmaItem           *item);
+gboolean        ligma_item_is_visible         (LigmaItem           *item);
 
-void        gimp_item_bind_visible_to_active (GimpItem           *item,
+void        ligma_item_bind_visible_to_active (LigmaItem           *item,
                                               gboolean            bind);
 
-void            gimp_item_set_color_tag      (GimpItem           *item,
-                                              GimpColorTag        color_tag,
+void            ligma_item_set_color_tag      (LigmaItem           *item,
+                                              LigmaColorTag        color_tag,
                                               gboolean            push_undo);
-GimpColorTag    gimp_item_get_color_tag      (GimpItem           *item);
-GimpColorTag  gimp_item_get_merged_color_tag (GimpItem           *item);
+LigmaColorTag    ligma_item_get_color_tag      (LigmaItem           *item);
+LigmaColorTag  ligma_item_get_merged_color_tag (LigmaItem           *item);
 
-void            gimp_item_set_lock_content   (GimpItem           *item,
+void            ligma_item_set_lock_content   (LigmaItem           *item,
                                               gboolean            lock_content,
                                               gboolean            push_undo);
-gboolean        gimp_item_get_lock_content   (GimpItem           *item);
-gboolean        gimp_item_can_lock_content   (GimpItem           *item);
-gboolean        gimp_item_is_content_locked  (GimpItem           *item,
-                                              GimpItem          **locked_item);
+gboolean        ligma_item_get_lock_content   (LigmaItem           *item);
+gboolean        ligma_item_can_lock_content   (LigmaItem           *item);
+gboolean        ligma_item_is_content_locked  (LigmaItem           *item,
+                                              LigmaItem          **locked_item);
 
-void            gimp_item_set_lock_position  (GimpItem          *item,
+void            ligma_item_set_lock_position  (LigmaItem          *item,
                                               gboolean           lock_position,
                                               gboolean           push_undo);
-gboolean        gimp_item_get_lock_position  (GimpItem          *item);
-gboolean        gimp_item_can_lock_position  (GimpItem          *item);
-gboolean        gimp_item_is_position_locked (GimpItem          *item,
-                                              GimpItem         **locked_item);
+gboolean        ligma_item_get_lock_position  (LigmaItem          *item);
+gboolean        ligma_item_can_lock_position  (LigmaItem          *item);
+gboolean        ligma_item_is_position_locked (LigmaItem          *item,
+                                              LigmaItem         **locked_item);
 
-void            gimp_item_set_lock_visibility  (GimpItem        *item,
+void            ligma_item_set_lock_visibility  (LigmaItem        *item,
                                                 gboolean         lock_visibility,
                                                 gboolean         push_undo);
-gboolean        gimp_item_get_lock_visibility  (GimpItem        *item);
-gboolean        gimp_item_can_lock_visibility  (GimpItem        *item);
-gboolean        gimp_item_is_visibility_locked (GimpItem        *item,
-                                                GimpItem       **locked_item);
+gboolean        ligma_item_get_lock_visibility  (LigmaItem        *item);
+gboolean        ligma_item_can_lock_visibility  (LigmaItem        *item);
+gboolean        ligma_item_is_visibility_locked (LigmaItem        *item,
+                                                LigmaItem       **locked_item);
 
-gboolean        gimp_item_mask_bounds        (GimpItem           *item,
+gboolean        ligma_item_mask_bounds        (LigmaItem           *item,
                                               gint               *x1,
                                               gint               *y1,
                                               gint               *x2,
                                               gint               *y2);
-gboolean        gimp_item_mask_intersect     (GimpItem           *item,
+gboolean        ligma_item_mask_intersect     (LigmaItem           *item,
                                               gint               *x,
                                               gint               *y,
                                               gint               *width,
                                               gint               *height);
 
-gboolean        gimp_item_is_in_set          (GimpItem           *item,
-                                              GimpItemSet         set);
+gboolean        ligma_item_is_in_set          (LigmaItem           *item,
+                                              LigmaItemSet         set);
 
 
-#endif /* __GIMP_ITEM_H__ */
+#endif /* __LIGMA_ITEM_H__ */

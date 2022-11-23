@@ -1,4 +1,4 @@
-# This is the Italian catalog for The GIMP.
+# This is the Italian catalog for The LIGMA.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
 # Marco Ciampa <ciampix@libero.it>, 2003-2021
@@ -12,12 +12,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.0\n"
+"Project-Id-Version: ligma 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-08 20:54+0200\n"
 "PO-Revision-Date: 2021-09-08 20:54+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
-"Language-Team: gimp.linux.it\n"
+"Language-Team: ligma.linux.it\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -427,8 +427,8 @@ msgid "Python _Console"
 msgstr "_Console Python"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interprete interattivo Python di GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interprete interattivo Python di LIGMA"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -781,8 +781,8 @@ msgstr ""
 "attivo o salvare su un percorso"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spirogimp"
+msgid "Spyroligma"
+msgstr "Spiroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -811,5 +811,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Attendere: rendering motivo"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spirogimp..."
+msgid "Spyroligma..."
+msgstr "Spiroligma..."

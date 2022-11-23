@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlevels.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationlevels.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_LEVELS_H__
-#define __GIMP_OPERATION_LEVELS_H__
+#ifndef __LIGMA_OPERATION_LEVELS_H__
+#define __LIGMA_OPERATION_LEVELS_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_LEVELS            (gimp_operation_levels_get_type ())
-#define GIMP_OPERATION_LEVELS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_LEVELS, GimpOperationLevels))
-#define GIMP_OPERATION_LEVELS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_LEVELS, GimpOperationLevelsClass))
-#define GIMP_IS_OPERATION_LEVELS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_LEVELS))
-#define GIMP_IS_OPERATION_LEVELS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_LEVELS))
-#define GIMP_OPERATION_LEVELS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_LEVELS, GimpOperationLevelsClass))
+#define LIGMA_TYPE_OPERATION_LEVELS            (ligma_operation_levels_get_type ())
+#define LIGMA_OPERATION_LEVELS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_LEVELS, LigmaOperationLevels))
+#define LIGMA_OPERATION_LEVELS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_LEVELS, LigmaOperationLevelsClass))
+#define LIGMA_IS_OPERATION_LEVELS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_LEVELS))
+#define LIGMA_IS_OPERATION_LEVELS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_LEVELS))
+#define LIGMA_OPERATION_LEVELS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_LEVELS, LigmaOperationLevelsClass))
 
 
-typedef struct _GimpOperationLevels      GimpOperationLevels;
-typedef struct _GimpOperationLevelsClass GimpOperationLevelsClass;
+typedef struct _LigmaOperationLevels      LigmaOperationLevels;
+typedef struct _LigmaOperationLevelsClass LigmaOperationLevelsClass;
 
-struct _GimpOperationLevels
+struct _LigmaOperationLevels
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 };
 
-struct _GimpOperationLevelsClass
+struct _LigmaOperationLevelsClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType     gimp_operation_levels_get_type  (void) G_GNUC_CONST;
+GType     ligma_operation_levels_get_type  (void) G_GNUC_CONST;
 
-gdouble   gimp_operation_levels_map_input (GimpLevelsConfig     *config,
-                                           GimpHistogramChannel  channel,
+gdouble   ligma_operation_levels_map_input (LigmaLevelsConfig     *config,
+                                           LigmaHistogramChannel  channel,
                                            gdouble               value);
 
 
-#endif /* __GIMP_OPERATION_LEVELS_H__ */
+#endif /* __LIGMA_OPERATION_LEVELS_H__ */

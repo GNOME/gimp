@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
 #include "vectors-import-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _VectorsImportDialog VectorsImportDialog;
 
 struct _VectorsImportDialog
 {
-  GimpImage                 *image;
+  LigmaImage                 *image;
   gboolean                   merge_vectors;
   gboolean                   scale_vectors;
-  GimpVectorsImportCallback  callback;
+  LigmaVectorsImportCallback  callback;
   gpointer                   user_data;
 };
 
@@ -54,12 +54,12 @@ static void   vectors_import_dialog_response (GtkWidget           *dialog,
 /*  public function  */
 
 GtkWidget *
-vectors_import_dialog_new (GimpImage                 *image,
+vectors_import_dialog_new (LigmaImage                 *image,
                            GtkWidget                 *parent,
                            GFile                     *import_folder,
                            gboolean                   merge_vectors,
                            gboolean                   scale_vectors,
-                           GimpVectorsImportCallback  callback,
+                           LigmaVectorsImportCallback  callback,
                            gpointer                   user_data)
 {
   VectorsImportDialog *private;
@@ -68,7 +68,7 @@ vectors_import_dialog_new (GimpImage                 *image,
   GtkWidget           *button;
   GtkFileFilter       *filter;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (import_folder == NULL || G_IS_FILE (import_folder),
                         NULL);
@@ -91,12 +91,12 @@ vectors_import_dialog_new (GimpImage                 *image,
                                         NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-import");
+  gtk_window_set_role (GTK_WINDOW (dialog), "ligma-vectors-import");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_window_set_screen (GTK_WINDOW (dialog),
                          gtk_widget_get_screen (parent));
@@ -144,7 +144,7 @@ vectors_import_dialog_new (GimpImage                 *image,
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &private->merge_vectors);
 
   button = gtk_check_button_new_with_mnemonic (_("_Scale imported paths "
@@ -155,7 +155,7 @@ vectors_import_dialog_new (GimpImage                 *image,
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &private->scale_vectors);
 
   return dialog;

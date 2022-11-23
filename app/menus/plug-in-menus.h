@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __PLUG_IN_MENUS_H__
 
 
-void   plug_in_menus_setup (GimpUIManager *manager,
+void   plug_in_menus_setup (LigmaUIManager *manager,
                             const gchar   *ui_path);
 
 

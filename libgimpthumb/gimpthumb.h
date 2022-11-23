@@ -1,11 +1,11 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * https://specifications.freedesktop.org/thumbnail-spec/
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,17 +22,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_THUMB_H__
-#define __GIMP_THUMB_H__
+#ifndef __LIGMA_THUMB_H__
+#define __LIGMA_THUMB_H__
 
-#define __GIMP_THUMB_H_INSIDE__
+#define __LIGMA_THUMB_H_INSIDE__
 
-#include <libgimpthumb/gimpthumb-types.h>
+#include <libligmathumb/ligmathumb-types.h>
 
-#include <libgimpthumb/gimpthumb-error.h>
-#include <libgimpthumb/gimpthumb-utils.h>
-#include <libgimpthumb/gimpthumbnail.h>
+#include <libligmathumb/ligmathumb-error.h>
+#include <libligmathumb/ligmathumb-utils.h>
+#include <libligmathumb/ligmathumbnail.h>
 
-#undef __GIMP_THUMB_H_INSIDE__
+#undef __LIGMA_THUMB_H_INSIDE__
 
-#endif /* __GIMP_THUMB_H__ */
+#endif /* __LIGMA_THUMB_H__ */

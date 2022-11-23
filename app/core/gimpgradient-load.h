@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_LOAD_H__
-#define __GIMP_GRADIENT_LOAD_H__
+#ifndef __LIGMA_GRADIENT_LOAD_H__
+#define __LIGMA_GRADIENT_LOAD_H__
 
 
-#define GIMP_GRADIENT_FILE_EXTENSION     ".ggr"
-#define GIMP_GRADIENT_SVG_FILE_EXTENSION ".svg"
+#define LIGMA_GRADIENT_FILE_EXTENSION     ".ggr"
+#define LIGMA_GRADIENT_SVG_FILE_EXTENSION ".svg"
 
 
-GList  * gimp_gradient_load     (GimpContext   *context,
+GList  * ligma_gradient_load     (LigmaContext   *context,
                                  GFile         *file,
                                  GInputStream  *input,
                                  GError       **error);
-GList  * gimp_gradient_load_svg (GimpContext   *context,
+GList  * ligma_gradient_load_svg (LigmaContext   *context,
                                  GFile         *file,
                                  GInputStream  *input,
                                  GError       **error);
 
 
-#endif /* __GIMP_GRADIENT_LOAD_H__ */
+#endif /* __LIGMA_GRADIENT_LOAD_H__ */

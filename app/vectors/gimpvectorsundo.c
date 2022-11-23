@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,12 +22,12 @@
 
 #include "vectors-types.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpvectors.h"
-#include "gimpvectorsundo.h"
+#include "ligmavectors.h"
+#include "ligmavectorsundo.h"
 
 
 enum
@@ -39,83 +39,83 @@ enum
 };
 
 
-static void     gimp_vectors_undo_constructed  (GObject             *object);
-static void     gimp_vectors_undo_finalize     (GObject             *object);
-static void     gimp_vectors_undo_set_property (GObject             *object,
+static void     ligma_vectors_undo_constructed  (GObject             *object);
+static void     ligma_vectors_undo_finalize     (GObject             *object);
+static void     ligma_vectors_undo_set_property (GObject             *object,
                                                 guint                property_id,
                                                 const GValue        *value,
                                                 GParamSpec          *pspec);
-static void     gimp_vectors_undo_get_property (GObject             *object,
+static void     ligma_vectors_undo_get_property (GObject             *object,
                                                 guint                property_id,
                                                 GValue              *value,
                                                 GParamSpec          *pspec);
 
-static gint64   gimp_vectors_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_vectors_undo_get_memsize  (LigmaObject          *object,
                                                 gint64              *gui_size);
 
-static void     gimp_vectors_undo_pop          (GimpUndo            *undo,
-                                                GimpUndoMode         undo_mode,
-                                                GimpUndoAccumulator *accum);
+static void     ligma_vectors_undo_pop          (LigmaUndo            *undo,
+                                                LigmaUndoMode         undo_mode,
+                                                LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpVectorsUndo, gimp_vectors_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaVectorsUndo, ligma_vectors_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_vectors_undo_parent_class
+#define parent_class ligma_vectors_undo_parent_class
 
 
 static void
-gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
+ligma_vectors_undo_class_init (LigmaVectorsUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_vectors_undo_constructed;
-  object_class->finalize         = gimp_vectors_undo_finalize;
-  object_class->set_property     = gimp_vectors_undo_set_property;
-  object_class->get_property     = gimp_vectors_undo_get_property;
+  object_class->constructed      = ligma_vectors_undo_constructed;
+  object_class->finalize         = ligma_vectors_undo_finalize;
+  object_class->set_property     = ligma_vectors_undo_set_property;
+  object_class->get_property     = ligma_vectors_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_vectors_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_vectors_undo_get_memsize;
 
-  undo_class->pop                = gimp_vectors_undo_pop;
+  undo_class->pop                = ligma_vectors_undo_pop;
 
   g_object_class_install_property (object_class, PROP_PREV_PARENT,
                                    g_param_spec_object ("prev-parent",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_VECTORS,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_VECTORS,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_POSITION,
                                    g_param_spec_int ("prev-position", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_VECTORS,
                                    g_param_spec_pointer ("prev-vectors", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_vectors_undo_init (GimpVectorsUndo *undo)
+ligma_vectors_undo_init (LigmaVectorsUndo *undo)
 {
   undo->prev_vectors = NULL;
 }
 
 static void
-gimp_vectors_undo_constructed (GObject *object)
+ligma_vectors_undo_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_VECTORS (LIGMA_ITEM_UNDO (object)->item));
 }
 
 static void
-gimp_vectors_undo_finalize (GObject *object)
+ligma_vectors_undo_finalize (GObject *object)
 {
-  GimpVectorsUndo *undo = GIMP_VECTORS_UNDO (object);
+  LigmaVectorsUndo *undo = LIGMA_VECTORS_UNDO (object);
 
   g_clear_pointer (&undo->prev_vectors, g_list_free);
 
@@ -123,12 +123,12 @@ gimp_vectors_undo_finalize (GObject *object)
 }
 
 static void
-gimp_vectors_undo_set_property (GObject      *object,
+ligma_vectors_undo_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpVectorsUndo *vectors_undo = GIMP_VECTORS_UNDO (object);
+  LigmaVectorsUndo *vectors_undo = LIGMA_VECTORS_UNDO (object);
 
   switch (property_id)
     {
@@ -149,12 +149,12 @@ gimp_vectors_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_vectors_undo_get_property (GObject    *object,
+ligma_vectors_undo_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpVectorsUndo *vectors_undo = GIMP_VECTORS_UNDO (object);
+  LigmaVectorsUndo *vectors_undo = LIGMA_VECTORS_UNDO (object);
 
   switch (property_id)
     {
@@ -175,42 +175,42 @@ gimp_vectors_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_vectors_undo_get_memsize (GimpObject *object,
+ligma_vectors_undo_get_memsize (LigmaObject *object,
                                gint64     *gui_size)
 {
-  GimpItemUndo *item_undo = GIMP_ITEM_UNDO (object);
+  LigmaItemUndo *item_undo = LIGMA_ITEM_UNDO (object);
   gint64        memsize   = 0;
 
-  if (! gimp_item_is_attached (item_undo->item))
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (item_undo->item),
+  if (! ligma_item_is_attached (item_undo->item))
+    memsize += ligma_object_get_memsize (LIGMA_OBJECT (item_undo->item),
                                         gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_vectors_undo_pop (GimpUndo            *undo,
-                       GimpUndoMode         undo_mode,
-                       GimpUndoAccumulator *accum)
+ligma_vectors_undo_pop (LigmaUndo            *undo,
+                       LigmaUndoMode         undo_mode,
+                       LigmaUndoAccumulator *accum)
 {
-  GimpVectorsUndo *vectors_undo = GIMP_VECTORS_UNDO (undo);
-  GimpVectors     *vectors      = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+  LigmaVectorsUndo *vectors_undo = LIGMA_VECTORS_UNDO (undo);
+  LigmaVectors     *vectors      = LIGMA_VECTORS (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
-       undo->undo_type == GIMP_UNDO_VECTORS_ADD) ||
-      (undo_mode       == GIMP_UNDO_MODE_REDO &&
-       undo->undo_type == GIMP_UNDO_VECTORS_REMOVE))
+  if ((undo_mode       == LIGMA_UNDO_MODE_UNDO &&
+       undo->undo_type == LIGMA_UNDO_VECTORS_ADD) ||
+      (undo_mode       == LIGMA_UNDO_MODE_REDO &&
+       undo->undo_type == LIGMA_UNDO_VECTORS_REMOVE))
     {
       /*  remove vectors  */
 
       /*  record the current parent and position  */
-      vectors_undo->prev_parent   = gimp_vectors_get_parent (vectors);
-      vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (vectors));
+      vectors_undo->prev_parent   = ligma_vectors_get_parent (vectors);
+      vectors_undo->prev_position = ligma_item_get_index (LIGMA_ITEM (vectors));
 
-      gimp_image_remove_vectors (undo->image, vectors, FALSE,
+      ligma_image_remove_vectors (undo->image, vectors, FALSE,
                                  vectors_undo->prev_vectors);
     }
   else
@@ -219,9 +219,9 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
 
       /*  record the active vectors  */
       g_clear_pointer (&vectors_undo->prev_vectors, g_list_free);
-      vectors_undo->prev_vectors = g_list_copy (gimp_image_get_selected_vectors (undo->image));
+      vectors_undo->prev_vectors = g_list_copy (ligma_image_get_selected_vectors (undo->image));
 
-      gimp_image_add_vectors (undo->image, vectors,
+      ligma_image_add_vectors (undo->image, vectors,
                               vectors_undo->prev_parent,
                               vectors_undo->prev_position, FALSE);
     }

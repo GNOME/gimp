@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Utility functions for GimpConfig.
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Utility functions for LigmaConfig.
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,27 +23,27 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpconfigtypes.h"
+#include "ligmaconfigtypes.h"
 
-#include "gimpconfigwriter.h"
-#include "gimpconfig-iface.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-utils.h"
+#include "ligmaconfigwriter.h"
+#include "ligmaconfig-iface.h"
+#include "ligmaconfig-params.h"
+#include "ligmaconfig-utils.h"
 
 
 /**
- * SECTION: gimpconfig-utils
- * @title: GimpConfig-utils
- * @short_description: Miscellaneous utility functions for libgimpconfig.
+ * SECTION: ligmaconfig-utils
+ * @title: LigmaConfig-utils
+ * @short_description: Miscellaneous utility functions for libligmaconfig.
  *
- * Miscellaneous utility functions for libgimpconfig.
+ * Miscellaneous utility functions for libligmaconfig.
  **/
 
 
 static gboolean
-gimp_config_diff_property (GObject    *a,
+ligma_config_diff_property (GObject    *a,
                            GObject    *b,
                            GParamSpec *prop_spec)
 {
@@ -59,12 +59,12 @@ gimp_config_diff_property (GObject    *a,
 
   if (g_param_values_cmp (prop_spec, &a_value, &b_value))
     {
-      if ((prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
+      if ((prop_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE) &&
           G_IS_PARAM_SPEC_OBJECT (prop_spec)               &&
           g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                 GIMP_TYPE_CONFIG))
+                                 LIGMA_TYPE_CONFIG))
         {
-          if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
+          if (! ligma_config_is_equal_to (g_value_get_object (&a_value),
                                          g_value_get_object (&b_value)))
             {
               retval = TRUE;
@@ -83,7 +83,7 @@ gimp_config_diff_property (GObject    *a,
 }
 
 static GList *
-gimp_config_diff_same (GObject     *a,
+ligma_config_diff_same (GObject     *a,
                        GObject     *b,
                        GParamFlags  flags)
 {
@@ -101,7 +101,7 @@ gimp_config_diff_same (GObject     *a,
 
       if (! flags || ((prop_spec->flags & flags) == flags))
         {
-          if (gimp_config_diff_property (a, b, prop_spec))
+          if (ligma_config_diff_property (a, b, prop_spec))
             list = g_list_prepend (list, prop_spec);
         }
     }
@@ -112,7 +112,7 @@ gimp_config_diff_same (GObject     *a,
 }
 
 static GList *
-gimp_config_diff_other (GObject     *a,
+ligma_config_diff_other (GObject     *a,
                         GObject     *b,
                         GParamFlags  flags)
 {
@@ -134,7 +134,7 @@ gimp_config_diff_other (GObject     *a,
           (a_spec->value_type == b_spec->value_type) &&
           (! flags || (a_spec->flags & b_spec->flags & flags) == flags))
         {
-          if (gimp_config_diff_property (a, b, b_spec))
+          if (ligma_config_diff_property (a, b, b_spec))
             list = g_list_prepend (list, b_spec);
         }
     }
@@ -146,7 +146,7 @@ gimp_config_diff_other (GObject     *a,
 
 
 /**
- * gimp_config_diff:
+ * ligma_config_diff:
  * @a: a #GObject
  * @b: another #GObject object
  * @flags: a mask of GParamFlags
@@ -163,7 +163,7 @@ gimp_config_diff_other (GObject     *a,
  * Since: 2.4
  **/
 GList *
-gimp_config_diff (GObject     *a,
+ligma_config_diff (GObject     *a,
                   GObject     *b,
                   GParamFlags  flags)
 {
@@ -173,15 +173,15 @@ gimp_config_diff (GObject     *a,
   g_return_val_if_fail (G_IS_OBJECT (b), NULL);
 
   if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
-    diff = gimp_config_diff_same (a, b, flags);
+    diff = ligma_config_diff_same (a, b, flags);
   else
-    diff = gimp_config_diff_other (a, b, flags);
+    diff = ligma_config_diff_other (a, b, flags);
 
   return g_list_reverse (diff);
 }
 
 /**
- * gimp_config_sync:
+ * ligma_config_sync:
  * @src: a #GObject
  * @dest: another #GObject
  * @flags: a mask of GParamFlags
@@ -201,7 +201,7 @@ gimp_config_diff (GObject     *a,
  * Since: 2.4
  **/
 gboolean
-gimp_config_sync (GObject     *src,
+ligma_config_sync (GObject     *src,
                   GObject     *dest,
                   GParamFlags  flags)
 {
@@ -216,9 +216,9 @@ gimp_config_sync (GObject     *src,
    *  - it avoids duplicated parameter checks
    */
   if (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest))
-    diff = gimp_config_diff_same (src, dest, (flags | G_PARAM_READWRITE));
+    diff = ligma_config_diff_same (src, dest, (flags | G_PARAM_READWRITE));
   else
-    diff = gimp_config_diff_other (src, dest, flags);
+    diff = ligma_config_diff_other (src, dest, flags);
 
   if (!diff)
     return FALSE;
@@ -250,19 +250,19 @@ gimp_config_sync (GObject     *src,
 }
 
 /**
- * gimp_config_reset_properties:
+ * ligma_config_reset_properties:
  * @object: a #GObject
  *
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec. Properties marked as "construct-only"
  * are not touched.
  *
- * If you want to reset a #GimpConfig object, please use gimp_config_reset().
+ * If you want to reset a #LigmaConfig object, please use ligma_config_reset().
  *
  * Since: 2.4
  **/
 void
-gimp_config_reset_properties (GObject *object)
+ligma_config_reset_properties (GObject *object)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -291,16 +291,16 @@ gimp_config_reset_properties (GObject *object)
         {
           if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
             {
-              if ((prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) &&
-                  (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
+              if ((prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE) &&
+                  (prop_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE) &&
                   g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                         GIMP_TYPE_CONFIG))
+                                         LIGMA_TYPE_CONFIG))
                 {
                   g_value_init (&value, prop_spec->value_type);
 
                   g_object_get_property (object, prop_spec->name, &value);
 
-                  gimp_config_reset (g_value_get_object (&value));
+                  ligma_config_reset (g_value_get_object (&value));
 
                   g_value_unset (&value);
                 }
@@ -334,7 +334,7 @@ gimp_config_reset_properties (GObject *object)
 
 
 /**
- * gimp_config_reset_property:
+ * ligma_config_reset_property:
  * @object: a #GObject
  * @property_name: name of the property to reset
  *
@@ -344,7 +344,7 @@ gimp_config_reset_properties (GObject *object)
  * Since: 2.4
  **/
 void
-gimp_config_reset_property (GObject     *object,
+ligma_config_reset_property (GObject     *object,
                             const gchar *property_name)
 {
   GObjectClass  *klass;
@@ -367,16 +367,16 @@ gimp_config_reset_property (GObject     *object,
 
       if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
         {
-          if ((prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) &&
-              (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
+          if ((prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE) &&
+              (prop_spec->flags & LIGMA_CONFIG_PARAM_AGGREGATE) &&
               g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                     GIMP_TYPE_CONFIG))
+                                     LIGMA_TYPE_CONFIG))
             {
               g_value_init (&value, prop_spec->value_type);
 
               g_object_get_property (object, prop_spec->name, &value);
 
-              gimp_config_reset (g_value_get_object (&value));
+              ligma_config_reset (g_value_get_object (&value));
 
               g_value_unset (&value);
             }
@@ -395,11 +395,11 @@ gimp_config_reset_property (GObject     *object,
 
 
 /*
- * GimpConfig string utilities
+ * LigmaConfig string utilities
  */
 
 /**
- * gimp_config_string_append_escaped:
+ * ligma_config_string_append_escaped:
  * @string: pointer to a #GString
  * @val: a string to append or %NULL
  *
@@ -411,7 +411,7 @@ gimp_config_reset_property (GObject     *object,
  * Since: 2.4
  **/
 void
-gimp_config_string_append_escaped (GString     *string,
+ligma_config_string_append_escaped (GString     *string,
                                    const gchar *val)
 {
   g_return_if_fail (string != NULL);

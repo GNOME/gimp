@@ -10,6 +10,6 @@ lib\gegl-0.4\*.dll
 share\themes\
 bin\gspawn*.exe
 bin\*.dll
-!GIMP
+!LIGMA
 bin\*.dll
 !end

@@ -1,13 +1,13 @@
-# Polish translation for gimp-tags.
-# Copyright © 2011 the gimp authors.
-# This file is distributed under the same license as the gimp package.
+# Polish translation for ligma-tags.
+# Copyright © 2011 the ligma authors.
+# This file is distributed under the same license as the ligma package.
 # Piotr Drąg <piotrdrag@gmail.com>, 2011.
 # Aviary.pl <community-poland@mozilla.org>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2016-08-19 13:40+0200\n"
 "PO-Revision-Date: 2011-01-17 16:34+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "zaokrąglony"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "rozmyty"

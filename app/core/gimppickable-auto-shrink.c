@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,10 +24,10 @@
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpimage.h"
-#include "gimppickable.h"
-#include "gimppickable-auto-shrink.h"
+#include "ligma.h"
+#include "ligmaimage.h"
+#include "ligmapickable.h"
+#include "ligmapickable-auto-shrink.h"
 
 
 typedef enum
@@ -44,22 +44,22 @@ typedef gboolean (* ColorsEqualFunc) (guchar *col1,
 
 /*  local function prototypes  */
 
-static AutoShrinkType   gimp_pickable_guess_bgcolor (GimpPickable *pickable,
+static AutoShrinkType   ligma_pickable_guess_bgcolor (LigmaPickable *pickable,
                                                      guchar       *color,
                                                      gint          x1,
                                                      gint          x2,
                                                      gint          y1,
                                                      gint          y2);
-static gboolean         gimp_pickable_colors_equal  (guchar       *col1,
+static gboolean         ligma_pickable_colors_equal  (guchar       *col1,
                                                      guchar       *col2);
-static gboolean         gimp_pickable_colors_alpha  (guchar       *col1,
+static gboolean         ligma_pickable_colors_alpha  (guchar       *col1,
                                                      guchar       *col2);
 
 
 /*  public functions  */
 
-GimpAutoShrink
-gimp_pickable_auto_shrink (GimpPickable *pickable,
+LigmaAutoShrink
+ligma_pickable_auto_shrink (LigmaPickable *pickable,
                            gint          start_x,
                            gint          start_y,
                            gint          start_width,
@@ -78,15 +78,15 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
   gint             width, height;
   const Babl      *format;
   gint             x, y, abort;
-  GimpAutoShrink   retval = GIMP_AUTO_SHRINK_UNSHRINKABLE;
+  LigmaAutoShrink   retval = LIGMA_AUTO_SHRINK_UNSHRINKABLE;
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE (pickable), FALSE);
   g_return_val_if_fail (shrunk_x != NULL, FALSE);
   g_return_val_if_fail (shrunk_y != NULL, FALSE);
   g_return_val_if_fail (shrunk_width != NULL, FALSE);
   g_return_val_if_fail (shrunk_height != NULL, FALSE);
 
-  gimp_set_busy (gimp_pickable_get_image (pickable)->gimp);
+  ligma_set_busy (ligma_pickable_get_image (pickable)->ligma);
 
   /* You should always keep in mind that x2 and y2 are the NOT the
    * coordinates of the bottomright corner of the area to be
@@ -94,9 +94,9 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
    * to the bottom.
    */
 
-  gimp_pickable_flush (pickable);
+  ligma_pickable_flush (pickable);
 
-  buffer = gimp_pickable_get_buffer (pickable);
+  buffer = ligma_pickable_get_buffer (pickable);
 
   x1 = MAX (start_x, 0);
   y1 = MAX (start_y, 0);
@@ -111,14 +111,14 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
 
   format = babl_format ("R'G'B'A u8");
 
-  switch (gimp_pickable_guess_bgcolor (pickable, bgcolor,
+  switch (ligma_pickable_guess_bgcolor (pickable, bgcolor,
                                        x1, x2 - 1, y1, y2 - 1))
     {
     case AUTO_SHRINK_ALPHA:
-      colors_equal_func = gimp_pickable_colors_alpha;
+      colors_equal_func = ligma_pickable_colors_alpha;
       break;
     case AUTO_SHRINK_COLOR:
-      colors_equal_func = gimp_pickable_colors_equal;
+      colors_equal_func = ligma_pickable_colors_equal;
       break;
     default:
       goto FINISH;
@@ -151,7 +151,7 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
     }
   if (y == y2 && !abort)
     {
-      retval = GIMP_AUTO_SHRINK_EMPTY;
+      retval = LIGMA_AUTO_SHRINK_EMPTY;
       goto FINISH;
     }
   y1 = y - 1;
@@ -220,13 +220,13 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
       *shrunk_width  = x2 - x1;
       *shrunk_height = y2 - y1;
 
-      retval = GIMP_AUTO_SHRINK_SHRINK;
+      retval = LIGMA_AUTO_SHRINK_SHRINK;
     }
 
  FINISH:
 
   g_free (buf);
-  gimp_unset_busy (gimp_pickable_get_image (pickable)->gimp);
+  ligma_unset_busy (ligma_pickable_get_image (pickable)->ligma);
 
   return retval;
 }
@@ -235,7 +235,7 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
 /*  private functions  */
 
 static AutoShrinkType
-gimp_pickable_guess_bgcolor (GimpPickable *pickable,
+ligma_pickable_guess_bgcolor (LigmaPickable *pickable,
                              guchar       *color,
                              gint          x1,
                              gint          x2,
@@ -256,10 +256,10 @@ gimp_pickable_guess_bgcolor (GimpPickable *pickable,
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (! gimp_pickable_get_pixel_at (pickable, x1, y1, format, tl) ||
-      ! gimp_pickable_get_pixel_at (pickable, x1, y2, format, tr) ||
-      ! gimp_pickable_get_pixel_at (pickable, x2, y1, format, bl) ||
-      ! gimp_pickable_get_pixel_at (pickable, x2, y2, format, br))
+  if (! ligma_pickable_get_pixel_at (pickable, x1, y1, format, tl) ||
+      ! ligma_pickable_get_pixel_at (pickable, x1, y2, format, tr) ||
+      ! ligma_pickable_get_pixel_at (pickable, x2, y1, format, bl) ||
+      ! ligma_pickable_get_pixel_at (pickable, x2, y2, format, br))
     {
       return AUTO_SHRINK_NOTHING;
     }
@@ -272,15 +272,15 @@ gimp_pickable_guess_bgcolor (GimpPickable *pickable,
       return AUTO_SHRINK_ALPHA;
     }
 
-  if (gimp_pickable_colors_equal (tl, tr) ||
-      gimp_pickable_colors_equal (tl, bl))
+  if (ligma_pickable_colors_equal (tl, tr) ||
+      ligma_pickable_colors_equal (tl, bl))
     {
       memcpy (color, tl, 4);
       return AUTO_SHRINK_COLOR;
     }
 
-  if (gimp_pickable_colors_equal (br, bl) ||
-      gimp_pickable_colors_equal (br, tr))
+  if (ligma_pickable_colors_equal (br, bl) ||
+      ligma_pickable_colors_equal (br, tr))
     {
       memcpy (color, br, 4);
       return AUTO_SHRINK_COLOR;
@@ -290,7 +290,7 @@ gimp_pickable_guess_bgcolor (GimpPickable *pickable,
 }
 
 static gboolean
-gimp_pickable_colors_equal (guchar *col1,
+ligma_pickable_colors_equal (guchar *col1,
                             guchar *col2)
 {
   gint b;
@@ -305,7 +305,7 @@ gimp_pickable_colors_equal (guchar *col1,
 }
 
 static gboolean
-gimp_pickable_colors_alpha (guchar *dummy,
+ligma_pickable_colors_alpha (guchar *dummy,
                             guchar *col)
 {
   return (col[ALPHA] == 0);

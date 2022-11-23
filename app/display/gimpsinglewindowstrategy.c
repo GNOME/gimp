@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsinglewindowstrategy.c
+ * ligmasinglewindowstrategy.c
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,95 +27,95 @@
 
 #include "display-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdockcolumns.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadockcolumns.h"
+#include "widgets/ligmawindowstrategy.h"
 
-#include "gimpimagewindow.h"
-#include "gimpsinglewindowstrategy.h"
+#include "ligmaimagewindow.h"
+#include "ligmasinglewindowstrategy.h"
 
 
-static void        gimp_single_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface);
-static GtkWidget * gimp_single_window_strategy_show_dockable_dialog       (GimpWindowStrategy          *strategy,
-                                                                           Gimp                        *gimp,
-                                                                           GimpDialogFactory           *factory,
+static void        ligma_single_window_strategy_window_strategy_iface_init (LigmaWindowStrategyInterface *iface);
+static GtkWidget * ligma_single_window_strategy_show_dockable_dialog       (LigmaWindowStrategy          *strategy,
+                                                                           Ligma                        *ligma,
+                                                                           LigmaDialogFactory           *factory,
                                                                            GdkMonitor                  *monitor,
                                                                            const gchar                 *identifiers);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpSingleWindowStrategy, gimp_single_window_strategy, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_WINDOW_STRATEGY,
-                                                gimp_single_window_strategy_window_strategy_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaSingleWindowStrategy, ligma_single_window_strategy, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_WINDOW_STRATEGY,
+                                                ligma_single_window_strategy_window_strategy_iface_init))
 
-#define parent_class gimp_single_window_strategy_parent_class
+#define parent_class ligma_single_window_strategy_parent_class
 
 
 static void
-gimp_single_window_strategy_class_init (GimpSingleWindowStrategyClass *klass)
+ligma_single_window_strategy_class_init (LigmaSingleWindowStrategyClass *klass)
 {
 }
 
 static void
-gimp_single_window_strategy_init (GimpSingleWindowStrategy *strategy)
+ligma_single_window_strategy_init (LigmaSingleWindowStrategy *strategy)
 {
 }
 
 static void
-gimp_single_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface)
+ligma_single_window_strategy_window_strategy_iface_init (LigmaWindowStrategyInterface *iface)
 {
-  iface->show_dockable_dialog = gimp_single_window_strategy_show_dockable_dialog;
+  iface->show_dockable_dialog = ligma_single_window_strategy_show_dockable_dialog;
 }
 
 static GtkWidget *
-gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
-                                                  Gimp               *gimp,
-                                                  GimpDialogFactory  *factory,
+ligma_single_window_strategy_show_dockable_dialog (LigmaWindowStrategy *strategy,
+                                                  Ligma               *ligma,
+                                                  LigmaDialogFactory  *factory,
                                                   GdkMonitor         *monitor,
                                                   const gchar        *identifiers)
 {
-  GList           *windows = gimp_get_image_windows (gimp);
+  GList           *windows = ligma_get_image_windows (ligma);
   GtkWidget       *widget  = NULL;
-  GimpImageWindow *window;
+  LigmaImageWindow *window;
 
   g_return_val_if_fail (windows != NULL, NULL);
 
   /* In single-window mode, there should only be one window... */
-  window = GIMP_IMAGE_WINDOW (windows->data);
+  window = LIGMA_IMAGE_WINDOW (windows->data);
 
-  if (strcmp ("gimp-toolbox", identifiers) == 0)
+  if (strcmp ("ligma-toolbox", identifiers) == 0)
     {
       /* Only allow one toolbox... */
-      if (! gimp_image_window_has_toolbox (window))
+      if (! ligma_image_window_has_toolbox (window))
         {
-          GimpDockColumns *columns;
-          GimpUIManager   *ui_manager = gimp_image_window_get_ui_manager (window);
+          LigmaDockColumns *columns;
+          LigmaUIManager   *ui_manager = ligma_image_window_get_ui_manager (window);
 
-          widget = gimp_dialog_factory_dialog_new (factory, monitor,
+          widget = ligma_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
                                                    GTK_WIDGET (window),
-                                                   "gimp-toolbox",
+                                                   "ligma-toolbox",
                                                    -1 /*view_size*/,
                                                    FALSE /*present*/);
           gtk_widget_show (widget);
 
-          columns = gimp_image_window_get_left_docks (window);
-          gimp_dock_columns_add_dock (columns,
-                                      GIMP_DOCK (widget),
+          columns = ligma_image_window_get_left_docks (window);
+          ligma_dock_columns_add_dock (columns,
+                                      LIGMA_DOCK (widget),
                                       -1 /*index*/);
         }
       else
         {
-          widget = gimp_dialog_factory_find_widget (factory, "gimp-toolbox");
+          widget = ligma_dialog_factory_find_widget (factory, "ligma-toolbox");
         }
     }
-  else if (gimp_dialog_factory_find_widget (factory, identifiers))
+  else if (ligma_dialog_factory_find_widget (factory, identifiers))
     {
       /* if the dialog is already open, simply raise it */
-      return gimp_dialog_factory_dialog_raise (factory, monitor,
+      return ligma_dialog_factory_dialog_raise (factory, monitor,
                                                GTK_WIDGET (window),
                                                identifiers, -1);
    }
@@ -123,20 +123,20 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
     {
       GtkWidget *dockbook;
 
-      dockbook = gimp_image_window_get_default_dockbook (window);
+      dockbook = ligma_image_window_get_default_dockbook (window);
 
       if (! dockbook)
         {
-          GimpDockColumns *dock_columns;
+          LigmaDockColumns *dock_columns;
 
           /* No dock, need to add one */
-          dock_columns = gimp_image_window_get_right_docks (window);
-          gimp_dock_columns_prepare_dockbook (dock_columns,
+          dock_columns = ligma_image_window_get_right_docks (window);
+          ligma_dock_columns_prepare_dockbook (dock_columns,
                                               -1 /*index*/,
                                               &dockbook);
         }
 
-      widget = gimp_dockbook_add_from_dialog_factory (GIMP_DOCKBOOK (dockbook),
+      widget = ligma_dockbook_add_from_dialog_factory (LIGMA_DOCKBOOK (dockbook),
                                                       identifiers);
     }
 
@@ -146,13 +146,13 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
   return widget;
 }
 
-GimpObject *
-gimp_single_window_strategy_get_singleton (void)
+LigmaObject *
+ligma_single_window_strategy_get_singleton (void)
 {
-  static GimpObject *singleton = NULL;
+  static LigmaObject *singleton = NULL;
 
   if (! singleton)
-    singleton = g_object_new (GIMP_TYPE_SINGLE_WINDOW_STRATEGY, NULL);
+    singleton = g_object_new (LIGMA_TYPE_SINGLE_WINDOW_STRATEGY, NULL);
 
   return singleton;
 }

@@ -1,4 +1,4 @@
-/* Middle gray default variant for GIMP 3.0 */
+/* Middle gray default variant for LIGMA 3.0 */
 
 /* Our base color is "middle gray", which is often computed differently
  * according to various definitions.
@@ -10,8 +10,8 @@
 /* Hint for debugging themes:
  * first enable the GTK inspector with
    gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
- * then (after restarting GIMP) call it up with ctrl+shift+i
- * or from GIMP's UI: File > Debug > Start GtkInspector
+ * then (after restarting LIGMA) call it up with ctrl+shift+i
+ * or from LIGMA's UI: File > Debug > Start GtkInspector
  */
 
 /* Basic foreground, background and border colors. */

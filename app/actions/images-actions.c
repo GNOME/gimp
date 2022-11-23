@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,42 +20,42 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "images-actions.h"
 #include "images-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry images_actions[] =
+static const LigmaActionEntry images_actions[] =
 {
-  { "images-popup", GIMP_ICON_DIALOG_IMAGES,
+  { "images-popup", LIGMA_ICON_DIALOG_IMAGES,
     NC_("images-action", "Images Menu"), NULL, NULL, NULL,
-    GIMP_HELP_IMAGE_DIALOG },
+    LIGMA_HELP_IMAGE_DIALOG },
 
-  { "images-raise-views", GIMP_ICON_GO_TOP,
+  { "images-raise-views", LIGMA_ICON_GO_TOP,
     NC_("images-action", "_Raise Views"), NULL,
     NC_("images-action", "Raise this image's displays"),
     images_raise_views_cmd_callback,
     NULL },
 
-  { "images-new-view", GIMP_ICON_DOCUMENT_NEW,
+  { "images-new-view", LIGMA_ICON_DOCUMENT_NEW,
     NC_("images-action", "_New View"), NULL,
     NC_("images-action", "Create a new display for this image"),
     images_new_view_cmd_callback,
     NULL },
 
-  { "images-delete", GIMP_ICON_EDIT_DELETE,
+  { "images-delete", LIGMA_ICON_EDIT_DELETE,
     NC_("images-action", "_Delete Image"), NULL,
     NC_("images-action", "Delete this image"),
     images_delete_image_cmd_callback,
@@ -64,31 +64,31 @@ static const GimpActionEntry images_actions[] =
 
 
 void
-images_actions_setup (GimpActionGroup *group)
+images_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "images-action",
+  ligma_action_group_add_actions (group, "images-action",
                                  images_actions,
                                  G_N_ELEMENTS (images_actions));
 }
 
 void
-images_actions_update (GimpActionGroup *group,
+images_actions_update (LigmaActionGroup *group,
                        gpointer         data)
 {
-  GimpContext *context    = action_data_get_context (data);
-  GimpImage   *image      = NULL;
+  LigmaContext *context    = action_data_get_context (data);
+  LigmaImage   *image      = NULL;
   gint         disp_count = 0;
 
   if (context)
     {
-      image = gimp_context_get_image (context);
+      image = ligma_context_get_image (context);
 
       if (image)
-        disp_count = gimp_image_get_display_count (image);
+        disp_count = ligma_image_get_display_count (image);
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("images-raise-views", image);
   SET_SENSITIVE ("images-new-view",    image);
